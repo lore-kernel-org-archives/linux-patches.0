@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793212115;
-	b=y7t6XwbWO0gOQ/EznTomB6mlqvpZ4UzjwaxCjOiVBxPQ92RLJLSQ5xoLAc01fSltH0VG
-	 o39oP+g8Z9TGiGe2cMVV+Fvbg+zWfQrNp+rb4lepf26nUEs36N/fm7AOxBggzPMdYytdg
-	 F6ndl7/QbWlTvaKlHNxiz0Xfucwe55duhjYNECoe38Y9HShX1SrIpOn68CVCVTJqZnH8u
-	 U3VebEhtPJuR1bsFo5XusRE7qrVjkPd0aklQD8Zg9VKdq/YpgnkDQ7iR/GjiIPS9/iror
-	 BfBGSm5DyTh9c/uS2kqeNIoO7Sf71fyfD+Qn6XVwyIzNzUKNcyeUYy84BqbV8j6BOXg==
+	t=1793212118;
+	b=mZ3WMLSua2mV+uCMuMk/5Er8in8HLZc+p/dBi9B1HrJ45ONfsfcOYcbwtXfrC9GXCiS8
+	 xrTACyMBDFVP12qXYhHgEMJ1vfjN/z0JFd+e91+x917ttMM1fI162GnZcqEA6KhkT/8lg
+	 1LapkDaKRpKvRdUM1UhbpYon/7NZlPmEIm35Yh4qAy5iYwfPZrkhp+FRqHmfNv6sLI1Im
+	 qZFnCeAktmu7GSdCFShPPEBgmtHs0PmU/ZiiCckTh+qsYjBq6l798QYRSGDBON4XN7ftH
+	 4/fClqi6u38tn5CA4DxeC3sy72HTRCoo1Cykm3LKTpHWT/Q+Vy8s1EdU73aHFhDqqXA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793212115;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793212118;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=gWd9mGLAM1ZSOTjN5YJ4xXcw0i3XtromcvTj3Rn++E0=;
-	b=WP3uSYnPitudtjPT/ZAqU2qRO+GMl1/WwDeaCBKbhEmBQDaw5tMNgFgBuMYiRJdDzTOK
-	 6PG2dtSnuPFdP0EiGuTaETDSP68Vmr8IT63iCALqBRpV8u7i+hktoNcQv/U6gQSgYEAy6
-	 jxjGGMN69EoBO1eNfDSzIPFeFMKoOcqpd4KrsKI2/XeE6sP2FPF+i/6Hf6OVOgh4JShlA
-	 DEiNlM7OdmdK5JwWj2UGMBnSf9xrmiC9j2lzgRbF7zZw7pmPEcBAAjfJb0mW/0y0yH8Up
-	 O+v0W75sf/dOAUMDFMijoi/XMfN7HlxLDR8sSQuT1LP8UcBp3J8w08Nh7QYhlLqcYEg==
+	bh=Q5Jc9y2nKGr0Q1v2PhEX0iX9T4azYC+pl79EgJy5Jz4=;
+	b=k+JDqyopbS7AtihcD2b5on6UmHiiIPLFgH+o5GkHS++g/n/CSA+FQHY1z31vqmIohPTX
+	 /XvbwD4COpqW7L6YpFbjXDekyzq6yJc5mn3iAMQI7pmbIY/lXPCoOJslzRqy9y0FMmL8Y
+	 78Qnxni24gkPW3KHBimjDrbAq86gd/5dBU1W356s5rPFnEOOf4fB46ezKfjgETVL51ewU
+	 6ICsLsuM4H2O8e7XSpuDo0/diWA/iZxYFs57gTcBwlk2RkFVugK/sR03X5e7akG1DFIqn
+	 K68myrK7zUNaqeDs32kwSFZKAW0NybUlz56zID/V3hyxodRezfM5WAwV4qWqXKRwfQw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=R6ZrEOSs;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oIfuGV2Q;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84D2A606A31C;
-	Wed, 28 Oct 2026 18:28:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61F58606A31D;
+	Wed, 28 Oct 2026 18:28:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=R6ZrEOSs
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5A6A1F01825;
-	Wed, 28 Oct 2026 18:28:34 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oIfuGV2Q
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B10791F01829;
+	Wed, 28 Oct 2026 18:28:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793212115;
-	bh=gWd9mGLAM1ZSOTjN5YJ4xXcw0i3XtromcvTj3Rn++E0=;
+	s=korg; t=1793212118;
+	bh=Q5Jc9y2nKGr0Q1v2PhEX0iX9T4azYC+pl79EgJy5Jz4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=R6ZrEOSsescPr+YX8fy6XnRs76Ckl7VUGHS28thOGBif/ahB9sZGvLI87NQHHOxFv
-	 26TGYO03EGFvkM27I4fvHlGOz6FsS63wITbjqL2VVG/cUSI0cyEZhVmHzLJLAEgHKy
-	 Bhkd8AQ2H/XeFG/wA/XMny74K7u6u7uzMkXo2ahg=
+	b=oIfuGV2QMLC/6pzKksNwiSfESeWQmU5nUumFY91r4b2c9j6LPf/eb1gDJvBrAwJNQ
+	 5XHD/3B7xAz65ev378iP+O2JDo88R0qvTzo91P/GBEoJlleeVvyUnHHkLYpQ54y7Zb
+	 nIUlUOl/d4ZiunqcBdZsWVwkumBA6bjeTvQ2Fpx0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0043/1887] f2fs: embed f2fs_gc_kthread in f2fs_sb_info
-Date: Wed, 28 Oct 2026 17:35:39 +0100
-Message-ID: <20261028170500.205060621@linuxfoundation.org>
+	Josef Bacik <josef@toxicpanda.com>,
+	Jens Axboe <axboe@kernel.dk>,
+	"Claude Fable 5.1" <noreply@anthropic.com>
+Subject: [PATCH 6.1 0017/1887] io_uring: look up the file before queueing to io-wq
+Date: Wed, 28 Oct 2026 17:35:13 +0100
+Message-ID: <20261028170459.614317947@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,281 +68,138 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit 3d7bca9d583793bb7d0bac0d95a24ddd2e129eed ]
+Commit 98bc044d5a5374f8d3605fe55a8e2df6d6fc3f82 upstream.
 
-Instead of allocating f2fs_gc_kthread dynamically, embed it in
-f2fs_sb_info. This simplifies lifetime management and prepares for
-fixing race conditions during teardown.
+io_prep_async_work() decides by the file of a request what kind of work
+it is for io-wq. I/O on regular files and block devices is bounded work,
+limited to min(SQ entries, 4 * CPUs) workers, for anything else that may
+block indefinitely the limit is RLIMIT_NPROC. Writes to a regular file
+are hashed by the inode, so that they are run one after the other instead
+of having a bunch of workers fight for the inode lock.
 
-- __sbi_store			- remount|shutdown
-				 - f2fs_stop_gc_thread
- - access sbi->gc_thread
-				  - sbi->gc_thread = NULL
- - access sbi->gc_thread->f2fs_gc_task
+Since the file is only assigned when a request is issued, a request that
+is queued without an attempt to issue it, REQ_F_FORCE_ASYNC, doesn't have
+one at that point. io_prep_async_work() takes that for "not a regular
+file or block device":
 
-Fixes: 52190933c37a ("f2fs: sysfs: introduce critical_task_priority")
-Fixes: 7950e9ac638e ("f2fs: stop gc/discard thread after fs shutdown")
-Cc: stable@kernel.org
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
-[ adapted to the 6.1 GC-thread structure without newer zoned-GC fields. ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+- Reads and writes end up as unbound work. 32 reads with IOSQE_ASYNC from
+  a slow block device on a ring with 4 SQ entries get 32 workers, not 4.
+- Writes aren't hashed. Four buffered writes to one file get four
+  workers, three of which do nothing but wait for the lock.
+
+The late assignment is for the benefit of links, where a request may use
+a fixed file that one of its predecessors installs. By the time a request
+gets to io_queue_iowq() these are done, it is as good as issued. Assign
+the file there.
+
+io_assign_file() moves up and is forced inline. With a third caller the
+compiler may stop inlining it, and every request that is issued would
+pay for a call.
+
+IORING_OP_SPLICE is left as it is, unbound and not hashed. The file of
+the request is where it writes to, which says nothing about how long it
+takes: a splice from an empty pipe or a socket into a regular file waits
+for its input. As bounded work, four of these on a ring with 4 SQ entries
+keep all other bounded work of the task from running, and as hashed work
+one of them blocks all writes to that file.
+
+REQ_F_FORCE_ASYNC is not only set for IOSQE_ASYNC. What changes, and
+brings back what was the case before the file assignment was deferred:
+
+- Requests with IOSQE_ASYNC or IOSQE_IO_DRAIN, and all requests that are
+  submitted while a drain is active: reads and writes on regular files
+  and block devices count against the limit for bounded workers, including
+  the one set with IORING_REGISTER_IOWQ_MAX_WORKERS, so fewer of them run
+  at the same time.
+- Of these, writes to one regular file are run one at a time, unless they
+  are O_DIRECT and the filesystem has FOP_DIO_PARALLEL_WRITE.
+- IORING_OP_FALLOCATE and IORING_OP_FTRUNCATE, which always go to io-wq,
+  are run one at a time per file, and in turn with these writes.
+- The descriptor or the fixed file slot is looked up when the request is
+  queued, not when a worker gets around to it, so closing or replacing it
+  in between no longer has an effect on the request.
+
+[ 6.1: io_assign_file() takes no def argument here ]
+Fixes: 6bf9c47a3989 ("io_uring: defer file assignment")
+Assisted-by: LLM
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Link: https://patch.msgid.link/20261015-b4-io-uring-fixes-v1-43-c1556f5d7bf5@toxicpanda.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Co-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/debug.c   |  4 ----
- fs/f2fs/f2fs.h    | 22 +++++++++++++++++++++-
- fs/f2fs/gc.c      | 33 ++++++++++++---------------------
- fs/f2fs/gc.h      | 20 --------------------
- fs/f2fs/segment.c |  9 ++++-----
- fs/f2fs/super.c   |  4 ++--
- fs/f2fs/sysfs.c   | 14 +++++++-------
- 7 files changed, 46 insertions(+), 60 deletions(-)
+ io_uring/io_uring.c |   41 ++++++++++++++++++++++++++++-------------
+ 1 file changed, 28 insertions(+), 13 deletions(-)
 
-diff --git a/fs/f2fs/debug.c b/fs/f2fs/debug.c
-index dd6e8a10193b4..711b4262a0c75 100644
---- a/fs/f2fs/debug.c
-+++ b/fs/f2fs/debug.c
-@@ -280,10 +280,6 @@ static void update_mem_info(struct f2fs_sb_info *sbi)
- get_cache:
- 	si->cache_mem = 0;
- 
--	/* build gc */
--	if (sbi->gc_thread)
--		si->cache_mem += sizeof(struct f2fs_gc_kthread);
--
- 	/* build merge flush thread */
- 	if (SM_I(sbi)->fcc_info)
- 		si->cache_mem += sizeof(struct flush_cmd_control);
-diff --git a/fs/f2fs/f2fs.h b/fs/f2fs/f2fs.h
-index cbf4032b5b7ee..3b1d99d03ab1b 100644
---- a/fs/f2fs/f2fs.h
-+++ b/fs/f2fs/f2fs.h
-@@ -1599,6 +1599,26 @@ struct decompress_io_ctx {
- #define MAX_COMPRESS_LOG_SIZE		8
- #define MAX_COMPRESS_WINDOW_SIZE(log_size)	((PAGE_SIZE) << (log_size))
- 
-+struct f2fs_gc_kthread {
-+	struct task_struct *f2fs_gc_task;
-+	wait_queue_head_t gc_wait_queue_head;
-+
-+	/* for gc sleep time */
-+	unsigned int urgent_sleep_time;
-+	unsigned int min_sleep_time;
-+	unsigned int max_sleep_time;
-+	unsigned int no_gc_sleep_time;
-+
-+	/* for changing gc mode */
-+	unsigned int gc_wake;
-+
-+	/* for GC_MERGE mount option */
-+	wait_queue_head_t fggc_wq;		/*
-+						 * caller of f2fs_balance_fs()
-+						 * will wait on this wait queue.
-+						 */
-+};
-+
- struct f2fs_sb_info {
- 	struct super_block *sb;			/* pointer to VFS super block */
- 	struct proc_dir_entry *s_proc;		/* proc entry */
-@@ -1715,7 +1735,7 @@ struct f2fs_sb_info {
- 						 * semaphore for GC, avoid
- 						 * race between GC and GC or CP
- 						 */
--	struct f2fs_gc_kthread	*gc_thread;	/* GC thread */
-+	struct f2fs_gc_kthread gc_thread;	/* GC thread */
- 	struct atgc_management am;		/* atgc management */
- 	unsigned int cur_victim_sec;		/* current victim section num */
- 	unsigned int gc_mode;			/* current GC state */
-diff --git a/fs/f2fs/gc.c b/fs/f2fs/gc.c
-index 687b2ce82c854..0254e3116e552 100644
---- a/fs/f2fs/gc.c
-+++ b/fs/f2fs/gc.c
-@@ -31,9 +31,9 @@ static unsigned int count_bits(const unsigned long *addr,
- static int gc_thread_func(void *data)
- {
- 	struct f2fs_sb_info *sbi = data;
--	struct f2fs_gc_kthread *gc_th = sbi->gc_thread;
--	wait_queue_head_t *wq = &sbi->gc_thread->gc_wait_queue_head;
--	wait_queue_head_t *fggc_wq = &sbi->gc_thread->fggc_wq;
-+	struct f2fs_gc_kthread *gc_th = &sbi->gc_thread;
-+	wait_queue_head_t *wq = &sbi->gc_thread.gc_wait_queue_head;
-+	wait_queue_head_t *fggc_wq = &sbi->gc_thread.fggc_wq;
- 	unsigned int wait_ms;
- 	struct f2fs_gc_control gc_control = {
- 		.victim_segno = NULL_SEGNO,
-@@ -169,16 +169,10 @@ static int gc_thread_func(void *data)
- 
- int f2fs_start_gc_thread(struct f2fs_sb_info *sbi)
- {
--	struct f2fs_gc_kthread *gc_th;
-+	struct f2fs_gc_kthread *gc_th = &sbi->gc_thread;
- 	dev_t dev = sbi->sb->s_bdev->bd_dev;
- 	int err = 0;
- 
--	gc_th = f2fs_kmalloc(sbi, sizeof(struct f2fs_gc_kthread), GFP_KERNEL);
--	if (!gc_th) {
--		err = -ENOMEM;
--		goto out;
--	}
--
- 	gc_th->urgent_sleep_time = DEF_GC_THREAD_URGENT_SLEEP_TIME;
- 	gc_th->min_sleep_time = DEF_GC_THREAD_MIN_SLEEP_TIME;
- 	gc_th->max_sleep_time = DEF_GC_THREAD_MAX_SLEEP_TIME;
-@@ -186,30 +180,27 @@ int f2fs_start_gc_thread(struct f2fs_sb_info *sbi)
- 
- 	gc_th->gc_wake = 0;
- 
--	sbi->gc_thread = gc_th;
--	init_waitqueue_head(&sbi->gc_thread->gc_wait_queue_head);
--	init_waitqueue_head(&sbi->gc_thread->fggc_wq);
--	sbi->gc_thread->f2fs_gc_task = kthread_run(gc_thread_func, sbi,
-+	init_waitqueue_head(&gc_th->gc_wait_queue_head);
-+	init_waitqueue_head(&gc_th->fggc_wq);
-+	gc_th->f2fs_gc_task = kthread_run(gc_thread_func, sbi,
- 			"f2fs_gc-%u:%u", MAJOR(dev), MINOR(dev));
- 	if (IS_ERR(gc_th->f2fs_gc_task)) {
- 		err = PTR_ERR(gc_th->f2fs_gc_task);
--		kfree(gc_th);
--		sbi->gc_thread = NULL;
-+		gc_th->f2fs_gc_task = NULL;
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -417,17 +417,45 @@ static void io_prep_async_link(struct io
  	}
--out:
- 	return err;
  }
  
- void f2fs_stop_gc_thread(struct f2fs_sb_info *sbi)
- {
--	struct f2fs_gc_kthread *gc_th = sbi->gc_thread;
-+	struct f2fs_gc_kthread *gc_th = &sbi->gc_thread;
- 
--	if (!gc_th)
-+	if (!gc_th->f2fs_gc_task)
- 		return;
++/* Called for every request that is issued: keep it inline */
++static __always_inline bool io_assign_file(struct io_kiocb *req,
++					   unsigned int issue_flags)
++{
++	if (req->file || !io_op_defs[req->opcode].needs_file)
++		return true;
 +
- 	kthread_stop(gc_th->f2fs_gc_task);
-+	gc_th->f2fs_gc_task = NULL;
- 	wake_up_all(&gc_th->fggc_wq);
--	kfree(gc_th);
--	sbi->gc_thread = NULL;
++	if (req->flags & REQ_F_FIXED_FILE)
++		req->file = io_file_get_fixed(req, req->cqe.fd, issue_flags);
++	else
++		req->file = io_file_get_normal(req, req->cqe.fd);
++
++	return !!req->file;
++}
++
+ static void io_queue_iowq(struct io_kiocb *req)
+ {
+ 	struct io_uring_task *tctx = req->task->io_uring;
+ 
+ 	BUG_ON(!tctx);
++	lockdep_assert_held(&req->ctx->uring_lock);
+ 
+ 	if ((current->flags & PF_KTHREAD) || !tctx->io_wq) {
+ 		io_req_task_queue_fail(req, -ECANCELED);
+ 		return;
+ 	}
+ 
++	/*
++	 * The file is looked up as late as possible, as it may be the result
++	 * of an earlier request of the link. This one is up now, and what kind
++	 * of work it is depends on the file. If that fails, leave the error
++	 * handling to the worker.
++	 *
++	 * Not for a splice: whatever it writes to, it may wait for its input
++	 * for ever. It has to remain unbound work that isn't hashed.
++	 */
++	if (req->opcode != IORING_OP_SPLICE)
++		io_assign_file(req, 0);
++
+ 	/* init ->work of the whole link before punting */
+ 	io_prep_async_link(req);
+ 
+@@ -1693,19 +1721,6 @@ static void io_clean_op(struct io_kiocb
+ 	req->flags &= ~IO_REQ_CLEAN_FLAGS;
  }
  
- static int select_gc_type(struct f2fs_sb_info *sbi, int gc_type)
-diff --git a/fs/f2fs/gc.h b/fs/f2fs/gc.h
-index 47357101b03cd..0ff8138f0174f 100644
---- a/fs/f2fs/gc.h
-+++ b/fs/f2fs/gc.h
-@@ -32,26 +32,6 @@
- 
- #define NR_GC_CHECKPOINT_SECS (3)	/* data/node/dentry sections */
- 
--struct f2fs_gc_kthread {
--	struct task_struct *f2fs_gc_task;
--	wait_queue_head_t gc_wait_queue_head;
+-static bool io_assign_file(struct io_kiocb *req, unsigned int issue_flags)
+-{
+-	if (req->file || !io_op_defs[req->opcode].needs_file)
+-		return true;
 -
--	/* for gc sleep time */
--	unsigned int urgent_sleep_time;
--	unsigned int min_sleep_time;
--	unsigned int max_sleep_time;
--	unsigned int no_gc_sleep_time;
+-	if (req->flags & REQ_F_FIXED_FILE)
+-		req->file = io_file_get_fixed(req, req->cqe.fd, issue_flags);
+-	else
+-		req->file = io_file_get_normal(req, req->cqe.fd);
 -
--	/* for changing gc mode */
--	unsigned int gc_wake;
+-	return !!req->file;
+-}
 -
--	/* for GC_MERGE mount option */
--	wait_queue_head_t fggc_wq;		/*
--						 * caller of f2fs_balance_fs()
--						 * will wait on this wait queue.
--						 */
--};
--
- struct gc_inode_list {
- 	struct list_head ilist;
- 	struct radix_tree_root iroot;
-diff --git a/fs/f2fs/segment.c b/fs/f2fs/segment.c
-index d185b209f89a5..db126347ca057 100644
---- a/fs/f2fs/segment.c
-+++ b/fs/f2fs/segment.c
-@@ -415,15 +415,14 @@ void f2fs_balance_fs(struct f2fs_sb_info *sbi, bool need)
- 		f2fs_submit_merged_write(sbi, DATA);
- 		f2fs_submit_all_merged_ipu_writes(sbi);
+ #define REQ_ISSUE_SLOW_FLAGS	(REQ_F_CREDS | REQ_F_ARM_LTIMEOUT)
  
--		if (test_opt(sbi, GC_MERGE) && sbi->gc_thread &&
--					sbi->gc_thread->f2fs_gc_task) {
-+		if (test_opt(sbi, GC_MERGE) && sbi->gc_thread.f2fs_gc_task) {
- 			DEFINE_WAIT(wait);
- 
--			prepare_to_wait(&sbi->gc_thread->fggc_wq, &wait,
-+			prepare_to_wait(&sbi->gc_thread.fggc_wq, &wait,
- 						TASK_UNINTERRUPTIBLE);
--			wake_up(&sbi->gc_thread->gc_wait_queue_head);
-+			wake_up(&sbi->gc_thread.gc_wait_queue_head);
- 			io_schedule();
--			finish_wait(&sbi->gc_thread->fggc_wq, &wait);
-+			finish_wait(&sbi->gc_thread.fggc_wq, &wait);
- 		} else {
- 			struct f2fs_gc_control gc_control = {
- 				.victim_segno = NULL_SEGNO,
-diff --git a/fs/f2fs/super.c b/fs/f2fs/super.c
-index 9d1b5699f5bf1..dc06771fb1e9e 100644
---- a/fs/f2fs/super.c
-+++ b/fs/f2fs/super.c
-@@ -2393,11 +2393,11 @@ static int f2fs_remount(struct super_block *sb, int *flags, char *data)
- 	if ((*flags & SB_RDONLY) ||
- 			(F2FS_OPTION(sbi).bggc_mode == BGGC_MODE_OFF &&
- 			!test_opt(sbi, GC_MERGE))) {
--		if (sbi->gc_thread) {
-+		if (sbi->gc_thread.f2fs_gc_task) {
- 			f2fs_stop_gc_thread(sbi);
- 			need_restart_gc = true;
- 		}
--	} else if (!sbi->gc_thread) {
-+	} else if (!sbi->gc_thread.f2fs_gc_task) {
- 		err = f2fs_start_gc_thread(sbi);
- 		if (err)
- 			goto restore_opts;
-diff --git a/fs/f2fs/sysfs.c b/fs/f2fs/sysfs.c
-index 503a50542ac53..b0607fdd5ad40 100644
---- a/fs/f2fs/sysfs.c
-+++ b/fs/f2fs/sysfs.c
-@@ -68,7 +68,7 @@ static ssize_t f2fs_sbi_show(struct f2fs_attr *a,
- static unsigned char *__struct_ptr(struct f2fs_sb_info *sbi, int struct_type)
- {
- 	if (struct_type == GC_THREAD)
--		return (unsigned char *)sbi->gc_thread;
-+		return (unsigned char *)&sbi->gc_thread;
- 	else if (struct_type == SM_INFO)
- 		return (unsigned char *)SM_I(sbi);
- 	else if (struct_type == DCC_INFO)
-@@ -543,20 +543,20 @@ static ssize_t __sbi_store(struct f2fs_attr *a,
- 			sbi->gc_mode = GC_NORMAL;
- 		} else if (t == 1) {
- 			sbi->gc_mode = GC_URGENT_HIGH;
--			if (sbi->gc_thread) {
--				sbi->gc_thread->gc_wake = 1;
-+			if (sbi->gc_thread.f2fs_gc_task) {
-+				sbi->gc_thread.gc_wake = 1;
- 				wake_up_interruptible_all(
--					&sbi->gc_thread->gc_wait_queue_head);
-+					&sbi->gc_thread.gc_wait_queue_head);
- 				wake_up_discard_thread(sbi, true);
- 			}
- 		} else if (t == 2) {
- 			sbi->gc_mode = GC_URGENT_LOW;
- 		} else if (t == 3) {
- 			sbi->gc_mode = GC_URGENT_MID;
--			if (sbi->gc_thread) {
--				sbi->gc_thread->gc_wake = 1;
-+			if (sbi->gc_thread.f2fs_gc_task) {
-+				sbi->gc_thread.gc_wake = 1;
- 				wake_up_interruptible_all(
--					&sbi->gc_thread->gc_wait_queue_head);
-+					&sbi->gc_thread.gc_wait_queue_head);
- 			}
- 		} else {
- 			return -EINVAL;
--- 
-2.53.0
-
+ static int io_issue_sqe(struct io_kiocb *req, unsigned int issue_flags)
 
 
