@@ -1,57 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213849;
-	b=h4lrhLa1cskS6KvzOkX6+CDpbcSESNtbiLm1PIiSP8Ru2+4Yy/N8qKchFmvItxZzyOdQ
-	 jibTwrlBD8Cy9SY9z9dQ/YE/+6qMCph54iPHzKm9iBbmQsASdrXg8HKpykfUOtWJCYHsW
-	 vFb8zDYBnH1cbjgS/KNM1kRk2SEGNf/zujLe5dCWROKbQEJaR2myRUgxSEsinlugGDvNV
-	 IpRdiC0t840CA33XHTKyMJeOezQjI0xWn8ZKyPEVGs+HnJlohvqHKHobHRXWrqzlFpXCL
-	 pCOJqQpcI88CsT/zjMT1RHWTbeYNOTIqTeG8mMNfP8M1WVXaUOOQYAVQomzqTPs1Zfw==
+	t=1793213853;
+	b=0/r9N8mvCv3sxxwyQp/qRPAnHKX110fiQAbCV2CIGpox8BFdOfOBDzmwyuDe83GEbHEO
+	 9TYXfrMe+oTDBMJkHFN0kzEzNNF0ME9kGxY2FH5vJyBmuq/Hr9nLxO706s5rbpJz4zTbg
+	 crV53ySxULYMYlBDWnzUkkFdmPdyfeB/ss5IXG2joxID1oKEo/yOhbgbtgchtq9zHVyNg
+	 9eh0qxEcWzD4nDigVPigoeBsgffctV0+Kw/w5dl+7rQ8hRvVqwFMjHH9an3Wz0ImIyx5w
+	 SiLuFK/2qOX1I+dhtzRrDhibAkHWhweeDa0sskwYnefVyDC8XDcy7XAcWB8T2T/zRrQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213849;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213853;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=yaJq9NdDEcvjiKGUISjuI3uadDfLyJD0FvA1qvyB6Z4=;
-	b=s4OAF5KPclJUO9fnG3S9XI6Gv5lTrujn+k/s7ZSoAAh+oXurR2kIaG2HUH5BKXzllC48
-	 BykCxN4L4oBKuzscLomr5BwsDcuKvhLN7x5gx4OvePn3Hf2xxOgYFQgwBq09WcwGhz6+4
-	 BEiLng3+cE0R2K/Tgyi44r18BOThBBBsZX+QCyLl5/fozUhXQ7DGWzhhTnm07ydyGftEg
-	 zEc/KfKc2g23ZalGJBJwM+zIN2orx76/bshQqoF8tdQy+t2Vx4+n3UN69Mx58kN3m/R35
-	 zAOSdMAnt6y7LZQHhn9hr0+kIIiikHnKGeG57QEKJB/Qz4fAROx2xIfciSRtCZEp6hw==
+	bh=vfKqAUItxU7uo30NTR5u0Yz+fUhNMhr0Pm9M8TV/zVo=;
+	b=vLE7/reA/0N0ig4wXgmOzRWZMhn3SGBwAdkl/8mE0QQE4jcwvFtzBqa+JTIzs6SScAdd
+	 vNeuWy5wZ0zbUClktzgwaYmlkx4iQdnOL9NG9GB14cfXZyAfaiZGBBn0fEEIivaRgAbQs
+	 VsEPis2iTftsujjNu2xAP9IY+WbzIcet1cwLq1v6A26vAZhz38C8zplUsSLBZs1+GWuAF
+	 Zxs58EArjDv+rLCHuFphCw5dWbONa+2zXGDzXdsCqra6MtnDDF6B3zXgsY7piKWcPvyPz
+	 WJ4EYiFNyZLyJalOFS0hYy1L4L83rgIfp/5GvFcZEbKn94ck6yxaA+Byu5eZzBHHkOg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WhXm+B44;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NsmIylD8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97A77606A31E;
-	Wed, 28 Oct 2026 18:57:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC1C8606A336;
+	Wed, 28 Oct 2026 18:57:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WhXm+B44
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F22331F031E2;
-	Wed, 28 Oct 2026 18:57:28 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NsmIylD8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4EA81F01828;
+	Wed, 28 Oct 2026 18:57:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213849;
-	bh=yaJq9NdDEcvjiKGUISjuI3uadDfLyJD0FvA1qvyB6Z4=;
+	s=korg; t=1793213852;
+	bh=vfKqAUItxU7uo30NTR5u0Yz+fUhNMhr0Pm9M8TV/zVo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WhXm+B44AWoJb5HIXC1p3k+o5sTpkw25yu6MNC24YyxFRT7TvTRZ5bH/lXVtFSf9/
-	 P+/tvDilQonasVC8QYG8hrV+BXlBfu/nhtrnPPr4dZ7jibJYXounIDn8G9aoruvXgZ
-	 DAh8dUjo9SJlemtUH3htgu6eN/cfaM5idKpwAzzA=
+	b=NsmIylD8ni4Hr89bl7FllRKuCZU8fxzzrHzuoeAZ3nNDoQmFztNL8skLO8H/7XIT9
+	 R5FOp9VaZL2vIlAt1fGy2NcWUkvBNEeX85SBIPTKv+ajok9UhDp2MW32kaSbMBAfxB
+	 AaG0RNM9a9nQfCXtlqXbPWnxJjNKJu/Lr6Fyym/A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jann Horn <jannh@google.com>,
-	David Hildenbrand <david@redhat.com>,
-	Andrea Arcangeli <aarcange@redhat.com>,
-	Hugh Dickins <hughd@google.com>,
-	Pavel Emelyanov <xemul@virtuozzo.com>,
-	Qi Zheng <zhengqi.arch@bytedance.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Baokun Li <libaokun1@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0651/1887] userfaultfd: fix checks for huge PMDs
-Date: Wed, 28 Oct 2026 17:45:47 +0100
-Message-ID: <20261028170514.225556825@linuxfoundation.org>
+Subject: [PATCH 6.1 0625/1887] ext4: fix uninitialized ratelimit_state->lock access in __ext4_fill_super()
+Date: Wed, 28 Oct 2026 17:45:21 +0100
+Message-ID: <20261028170513.632746350@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -73,144 +69,136 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jann Horn <jannh@google.com>
+From: Baokun Li <libaokun1@huawei.com>
 
-[ Upstream commit 71c186efc1b2cf1aeabfeff3b9bd5ac4c5ac14d8 ]
+[ Upstream commit b4b4fda34e535756f9e774fb2d09c4537b7dfd1c ]
 
-Patch series "userfaultfd: fix races around pmd_trans_huge() check", v2.
+In the following concurrency we will access the uninitialized rs->lock:
 
-The pmd_trans_huge() code in mfill_atomic() is wrong in three different
-ways depending on kernel version:
+ext4_fill_super
+  ext4_register_sysfs
+   // sysfs registered msg_ratelimit_interval_ms
+                             // Other processes modify rs->interval to
+                             // non-zero via msg_ratelimit_interval_ms
+  ext4_orphan_cleanup
+    ext4_msg(sb, KERN_INFO, "Errors on filesystem, "
+      __ext4_msg
+        ___ratelimit(&(EXT4_SB(sb)->s_msg_ratelimit_state)
+          if (!rs->interval)  // do nothing if interval is 0
+            return 1;
+          raw_spin_trylock_irqsave(&rs->lock, flags)
+            raw_spin_trylock(lock)
+              _raw_spin_trylock
+                __raw_spin_trylock
+                  spin_acquire(&lock->dep_map, 0, 1, _RET_IP_)
+                    lock_acquire
+                      __lock_acquire
+                        register_lock_class
+                          assign_lock_key
+                            dump_stack();
+  ratelimit_state_init(&sbi->s_msg_ratelimit_state, 5 * HZ, 10);
+    raw_spin_lock_init(&rs->lock);
+    // init rs->lock here
 
-1. The pmd_trans_huge() check is racy and can lead to a BUG_ON() (if you hit
-   the right two race windows) - I've tested this in a kernel build with
-   some extra mdelay() calls. See the commit message for a description
-   of the race scenario.
-   On older kernels (before 6.5), I think the same bug can even
-   theoretically lead to accessing transhuge page contents as a page table
-   if you hit the right 5 narrow race windows (I haven't tested this case).
-2. As pointed out by Qi Zheng, pmd_trans_huge() is not sufficient for
-   detecting PMDs that don't point to page tables.
-   On older kernels (before 6.5), you'd just have to win a single fairly
-   wide race to hit this.
-   I've tested this on 6.1 stable by racing migration (with a mdelay()
-   patched into try_to_migrate()) against UFFDIO_ZEROPAGE - on my x86
-   VM, that causes a kernel oops in ptlock_ptr().
-3. On newer kernels (>=6.5), for shmem mappings, khugepaged is allowed
-   to yank page tables out from under us (though I haven't tested that),
-   so I think the BUG_ON() checks in mfill_atomic() are just wrong.
+and get the following dump_stack:
 
-I decided to write two separate fixes for these (one fix for bugs 1+2, one
-fix for bug 3), so that the first fix can be backported to kernels
-affected by bugs 1+2.
+=========================================================
+INFO: trying to register non-static key.
+The code is fine but needs lockdep annotation, or maybe
+you didn't initialize this object before use?
+turning off the locking correctness validator.
+CPU: 12 PID: 753 Comm: mount Tainted: G E 6.7.0-rc6-next-20231222 #504
+[...]
+Call Trace:
+ dump_stack_lvl+0xc5/0x170
+ dump_stack+0x18/0x30
+ register_lock_class+0x740/0x7c0
+ __lock_acquire+0x69/0x13a0
+ lock_acquire+0x120/0x450
+ _raw_spin_trylock+0x98/0xd0
+ ___ratelimit+0xf6/0x220
+ __ext4_msg+0x7f/0x160 [ext4]
+ ext4_orphan_cleanup+0x665/0x740 [ext4]
+ __ext4_fill_super+0x21ea/0x2b10 [ext4]
+ ext4_fill_super+0x14d/0x360 [ext4]
+[...]
+=========================================================
 
-This patch (of 2):
+Normally interval is 0 until s_msg_ratelimit_state is initialized, so
+___ratelimit() does nothing. But registering sysfs precedes initializing
+rs->lock, so it is possible to change rs->interval to a non-zero value
+via the msg_ratelimit_interval_ms interface of sysfs while rs->lock is
+uninitialized, and then a call to ext4_msg triggers the problem by
+accessing an uninitialized rs->lock. Therefore register sysfs after all
+initializations are complete to avoid such problems.
 
-This fixes two issues.
-
-I discovered that the following race can occur:
-
-  mfill_atomic                other thread
-  ============                ============
-                              <zap PMD>
-  pmdp_get_lockless() [reads none pmd]
-  <bail if trans_huge>
-  <if none:>
-                              <pagefault creates transhuge zeropage>
-    __pte_alloc [no-op]
-                              <zap PMD>
-  <bail if pmd_trans_huge(*dst_pmd)>
-  BUG_ON(pmd_none(*dst_pmd))
-
-I have experimentally verified this in a kernel with extra mdelay() calls;
-the BUG_ON(pmd_none(*dst_pmd)) triggers.
-
-On kernels newer than commit 0d940a9b270b ("mm/pgtable: allow
-pte_offset_map[_lock]() to fail"), this can't lead to anything worse than
-a BUG_ON(), since the page table access helpers are actually designed to
-deal with page tables concurrently disappearing; but on older kernels
-(<=6.4), I think we could probably theoretically race past the two
-BUG_ON() checks and end up treating a hugepage as a page table.
-
-The second issue is that, as Qi Zheng pointed out, there are other types
-of huge PMDs that pmd_trans_huge() can't catch: devmap PMDs and swap PMDs
-(in particular, migration PMDs).
-
-On <=6.4, this is worse than the first issue: If mfill_atomic() runs on a
-PMD that contains a migration entry (which just requires winning a single,
-fairly wide race), it will pass the PMD to pte_offset_map_lock(), which
-assumes that the PMD points to a page table.
-
-Breakage follows: First, the kernel tries to take the PTE lock (which will
-crash or maybe worse if there is no "struct page" for the address bits in
-the migration entry PMD - I think at least on X86 there usually is no
-corresponding "struct page" thanks to the PTE inversion mitigation, amd64
-looks different).
-
-If that didn't crash, the kernel would next try to write a PTE into what
-it wrongly thinks is a page table.
-
-As part of fixing these issues, get rid of the check for pmd_trans_huge()
-before __pte_alloc() - that's redundant, we're going to have to check for
-that after the __pte_alloc() anyway.
-
-Backport note: pmdp_get_lockless() is pmd_read_atomic() in older kernels.
-
-Link: https://lkml.kernel.org/r/20240813-uffd-thp-flip-fix-v2-0-5efa61078a41@google.com
-Link: https://lkml.kernel.org/r/20240813-uffd-thp-flip-fix-v2-1-5efa61078a41@google.com
-Fixes: c1a4de99fada ("userfaultfd: mcopy_atomic|mfill_zeropage: UFFDIO_COPY|UFFDIO_ZEROPAGE preparation")
-Signed-off-by: Jann Horn <jannh@google.com>
-Acked-by: David Hildenbrand <david@redhat.com>
-Cc: Andrea Arcangeli <aarcange@redhat.com>
-Cc: Hugh Dickins <hughd@google.com>
-Cc: Jann Horn <jannh@google.com>
-Cc: Pavel Emelyanov <xemul@virtuozzo.com>
-Cc: Qi Zheng <zhengqi.arch@bytedance.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Baokun Li <libaokun1@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20240102133730.1098120-1-libaokun1@huawei.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/userfaultfd.c | 22 ++++++++++++----------
- 1 file changed, 12 insertions(+), 10 deletions(-)
+ fs/ext4/super.c | 22 ++++++++++------------
+ 1 file changed, 10 insertions(+), 12 deletions(-)
 
-diff --git a/mm/userfaultfd.c b/mm/userfaultfd.c
-index 992a0a16846f7..998c7075c62a5 100644
---- a/mm/userfaultfd.c
-+++ b/mm/userfaultfd.c
-@@ -642,21 +642,23 @@ static __always_inline ssize_t __mcopy_atomic(struct mm_struct *dst_mm,
- 		}
+diff --git a/fs/ext4/super.c b/fs/ext4/super.c
+index 76c8c364c5dd1..828cbf2da05cb 100644
+--- a/fs/ext4/super.c
++++ b/fs/ext4/super.c
+@@ -5547,19 +5547,15 @@ static int __ext4_fill_super(struct fs_context *fc, struct super_block *sb)
+ 	if (err)
+ 		goto failed_mount6;
  
- 		dst_pmdval = pmd_read_atomic(dst_pmd);
--		/*
--		 * If the dst_pmd is mapped as THP don't
--		 * override it and just be strict.
--		 */
--		if (unlikely(pmd_trans_huge(dst_pmdval))) {
--			err = -EEXIST;
--			break;
--		}
- 		if (unlikely(pmd_none(dst_pmdval)) &&
- 		    unlikely(__pte_alloc(dst_mm, dst_pmd))) {
- 			err = -ENOMEM;
- 			break;
- 		}
--		/* If an huge pmd materialized from under us fail */
--		if (unlikely(pmd_trans_huge(*dst_pmd))) {
-+		dst_pmdval = pmd_read_atomic(dst_pmd);
-+		/*
-+		 * If the dst_pmd is THP don't override it and just be strict.
-+		 * (This includes the case where the PMD used to be THP and
-+		 * changed back to none after __pte_alloc().)
-+		 */
-+		if (unlikely(!pmd_present(dst_pmdval) || pmd_trans_huge(dst_pmdval) ||
-+			     pmd_devmap(dst_pmdval))) {
-+			err = -EEXIST;
-+			break;
-+		}
-+		if (unlikely(pmd_bad(dst_pmdval))) {
- 			err = -EFAULT;
- 			break;
- 		}
+-	err = ext4_register_sysfs(sb);
+-	if (err)
+-		goto failed_mount7;
+-
+ 	err = ext4_init_orphan_info(sb);
+ 	if (err)
+-		goto failed_mount8;
++		goto failed_mount7;
+ #ifdef CONFIG_QUOTA
+ 	/* Enable quota usage during mount. */
+ 	if (ext4_has_feature_quota(sb) && !sb_rdonly(sb)) {
+ 		err = ext4_enable_quotas(sb);
+ 		if (err)
+-			goto failed_mount9;
++			goto failed_mount8;
+ 	}
+ #endif  /* CONFIG_QUOTA */
+ 
+@@ -5585,7 +5581,7 @@ static int __ext4_fill_super(struct fs_context *fc, struct super_block *sb)
+ 		ext4_msg(sb, KERN_INFO, "recovery complete");
+ 		err = ext4_mark_recovery_complete(sb, es);
+ 		if (err)
+-			goto failed_mount10;
++			goto failed_mount9;
+ 	}
+ 
+ 	if (test_opt(sb, DISCARD) && !bdev_max_discard_sectors(sb->s_bdev))
+@@ -5602,15 +5598,17 @@ static int __ext4_fill_super(struct fs_context *fc, struct super_block *sb)
+ 	atomic_set(&sbi->s_warning_count, 0);
+ 	atomic_set(&sbi->s_msg_count, 0);
+ 
++	/* Register sysfs after all initializations are complete. */
++	err = ext4_register_sysfs(sb);
++	if (err)
++		goto failed_mount9;
++
+ 	return 0;
+ 
+-failed_mount10:
++failed_mount9:
+ 	ext4_quotas_off(sb, EXT4_MAXQUOTAS);
+-failed_mount9: __maybe_unused
++failed_mount8: __maybe_unused
+ 	ext4_release_orphan_info(sb);
+-failed_mount8:
+-	ext4_unregister_sysfs(sb);
+-	kobject_put(&sbi->s_kobj);
+ failed_mount7:
+ 	ext4_unregister_li_request(sb);
+ failed_mount6:
 -- 
 2.53.0
 
