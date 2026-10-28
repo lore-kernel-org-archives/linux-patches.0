@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215844;
-	b=qAtJ6ZwgIxUS0a37JB6d+RC3mOLPGn91nlX0tNQmzUxhB22EpCrgvulFCv1nbuZGC7NJ
-	 4jKkPK+bt34e+4kavDHCvzvboj1eVv2aKaXEK0edOQg8Kfg/E/kqexi7KNI0UJzW1Wkcf
-	 j/ZXIpX+pVDIw2g6bT/K6iAYuafJU/0Je4ePvhIIOg/vI813yETeTU0KIzOeGMLwFM5jq
-	 wHXV7i6Gz07U9YyfwYAQDxzR+AZWeCf3Opc7yCidguPf0uZk/aWquxdI7R3ZgM8uhkIts
-	 L8qBbvGSn4vIUTh0w6KCJBP3X6GZ3jVhkRqXYtqdnqKBQFQcoB+BSO1esZhyQV3/Nzg==
+	t=1793215847;
+	b=vSd4jz770MTB/p8fGIGZyLMC8c3WOmGKiTy3PLDlnNVCC9DuGtEvq4yzQRojqHBcmM2L
+	 LvUGyTmtzk/fpt+EAF1WgucchSpZsbGQl8iCAzysjP+4SDEum4OpxNG6+DVwAWekXbLUh
+	 h/n3tu5ySCBxGcSan9Xxh8VQG2s38Vwj1F16kZ7d/QfGuOlXfpwF93SpBwUba2vySgp2E
+	 oGxdvLNzDZDqBc5Y7Cun3kcpoIISnZMocpWuJOgXcuoWMt3p2VUcwJr6hhMwx3g9yx9LO
+	 S3sxBe/0g9oIBNSuWq+M9bLK45NMyefSCzMYuf7PgMOrL3IuieZuSNoz5pLgXn31jiA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215844;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215847;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=cs5Jw3Bs67wUZPa7TEn5WAhk4Mfot3bk1dAaZZjVmq8=;
-	b=Xt+kAFjnZ942OLNpUlpJ36C1xM9mI8Vfy5rb57cdYhYp9untKu6/+6eolLPVvuUnjFM5
-	 e7DtxnOqgkj5n0IS+U1x7HU4sJmceydPQp5iNHuzIYZsCvak9ARL8rNI2Rgpuafin15h5
-	 bLQzeRCMEnN5cw7GItz1Xj4vVYsF0561Tp8yHnv8yRgosfrHB7wt4WG9EIXflbb+8kri8
-	 Y7R+uvGwjT5F7ubfiAVF1ddVzBEE/1ga8pX6zuoFfb7fen8SHadz+mAUNzqWB/GxGNUzr
-	 2HObLLC9sSNLlCejqHcwis56QogYum4FkxeQxo7yZFyxk4Pdi0Dd4L2VD2pwxvZ5frg==
+	bh=PAwYTBWn3WiFXvjLY9jfEUSPqZDtZprUELr9lmWVLaA=;
+	b=I+5bkHjqAAANTY2qR5hHH5FghsVuEcxmtk7zbxQ2etxkq5WHoCNexWDz47CNd3DzIxr8
+	 ZDNquOIksQKUQ+EMBzz+Og5QbqPs48CCnRY7Tys2o4eV4fjTWCAuvNT2x6lwk2lCEZckR
+	 FCdpafea2243h/4aw0T9ZkJmrDCD+KF4ifd6F6Zo81hswSxZxwfyqbhwdek+TBDoFvP50
+	 zdH2gOqp1LnbJbeakm1tiF857O15TspXWwYJ8eUBqSKZMuko0Kvpuq3Eq0b7W82/DeyKT
+	 vyrzfzAuWlxr+E2gxFygivnwTT7mwzDkQvrxQJDz3mTkil4bj0XyEv+XH66PI9AY6MA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LcPjqD1B;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kTcIIGuc;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 726D3606A31E;
-	Wed, 28 Oct 2026 19:30:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C793606A31A;
+	Wed, 28 Oct 2026 19:30:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LcPjqD1B
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3D8C1F01825;
-	Wed, 28 Oct 2026 19:30:43 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kTcIIGuc
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D5C71F01825;
+	Wed, 28 Oct 2026 19:30:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215844;
-	bh=cs5Jw3Bs67wUZPa7TEn5WAhk4Mfot3bk1dAaZZjVmq8=;
+	s=korg; t=1793215847;
+	bh=PAwYTBWn3WiFXvjLY9jfEUSPqZDtZprUELr9lmWVLaA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LcPjqD1B3RLeqbkRidMiuf4D5h4Fz+h38QPYoDGVC3HFg7/3PG38lp5Vwj/V0beCx
-	 qJ1W+X+VtmHjhZ3EDmz1vg/+0wIw4/XPuphGF1nHdIJB/iJuL7PM/5mBNDnB31Cwbo
-	 7C7BMKUJWXk7Hz8ANDkUt6YfSiwWvKjsDyWUbCMw=
+	b=kTcIIGucOWP48qxgod4zo7VLewUbO6A9OK1Mp3loI5spmAyjG7JVfDWjP/olqh4vC
+	 A3qtaI1Vof8UnSEWWlH4tQ4bzAxuKUMggLRAnMfTMhurTCX3L7QbJoBMQ6AviR0QPS
+	 +PeKEOFRlIPT+Coeet8eyKIt2a5kfa9LRUQcdHbo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Lukas Wunner <lukas@wunner.de>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1351/1887] crypto: virtio - Drop superfluous [as]kcipher_ctx pointer
-Date: Wed, 28 Oct 2026 17:57:27 +0100
-Message-ID: <20261028170530.182856539@linuxfoundation.org>
+Subject: [PATCH 6.1 1352/1887] crypto: virtio - Drop superfluous [as]kcipher_req pointer
+Date: Wed, 28 Oct 2026 17:57:28 +0100
+Message-ID: <20261028170530.206883609@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -70,14 +70,12 @@ Content-Transfer-Encoding: 8bit
 
 From: Lukas Wunner <lukas@wunner.de>
 
-[ Upstream commit dc91d858fb9251b25828ab63ac7220145cef282c ]
+[ Upstream commit 62d027fb49c76475c5256ab69059752f42c3730f ]
 
 The request context virtio_crypto_{akcipher,sym}_request contains a
-pointer to the transform context virtio_crypto_[as]kcipher_ctx.
+pointer to the [as]kcipher_request itself.
 
-The pointer is superfluous as it can be calculated with the cheap
-crypto_akcipher_reqtfm() + akcipher_tfm_ctx() and
-crypto_skcipher_reqtfm() + crypto_skcipher_ctx() combos.
+The pointer is superfluous as it can be calculated with container_of().
 
 Drop the superfluous pointer.
 
@@ -86,87 +84,98 @@ Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Stable-dep-of: f77a956f6a19 ("crypto: virtio - bound the akcipher result length")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/virtio/virtio_crypto_akcipher_algs.c | 8 ++++----
- drivers/crypto/virtio/virtio_crypto_skcipher_algs.c | 5 +----
- 2 files changed, 5 insertions(+), 8 deletions(-)
+ drivers/crypto/virtio/virtio_crypto_akcipher_algs.c | 9 ++++-----
+ drivers/crypto/virtio/virtio_crypto_skcipher_algs.c | 8 +++-----
+ 2 files changed, 7 insertions(+), 10 deletions(-)
 
 diff --git a/drivers/crypto/virtio/virtio_crypto_akcipher_algs.c b/drivers/crypto/virtio/virtio_crypto_akcipher_algs.c
-index ab284f38fd3cd..f110d9a72f6bf 100644
+index f110d9a72f6bf..db3817f5ab46e 100644
 --- a/drivers/crypto/virtio/virtio_crypto_akcipher_algs.c
 +++ b/drivers/crypto/virtio/virtio_crypto_akcipher_algs.c
 @@ -36,7 +36,6 @@ struct virtio_crypto_akcipher_ctx {
  
  struct virtio_crypto_akcipher_request {
  	struct virtio_crypto_request base;
--	struct virtio_crypto_akcipher_ctx *akcipher_ctx;
- 	struct akcipher_request *akcipher_req;
+-	struct akcipher_request *akcipher_req;
  	void *src_buf;
  	void *dst_buf;
-@@ -213,7 +212,8 @@ static int virtio_crypto_alg_akcipher_close_session(struct virtio_crypto_akciphe
- static int __virtio_crypto_akcipher_do_req(struct virtio_crypto_akcipher_request *vc_akcipher_req,
- 		struct akcipher_request *req, struct data_queue *data_vq)
+ 	uint32_t opcode;
+@@ -68,7 +67,9 @@ static void virtio_crypto_dataq_akcipher_callback(struct virtio_crypto_request *
  {
--	struct virtio_crypto_akcipher_ctx *ctx = vc_akcipher_req->akcipher_ctx;
-+	struct crypto_akcipher *atfm = crypto_akcipher_reqtfm(req);
-+	struct virtio_crypto_akcipher_ctx *ctx = akcipher_tfm_ctx(atfm);
- 	struct virtio_crypto_request *vc_req = &vc_akcipher_req->base;
- 	struct virtio_crypto *vcrypto = ctx->vcrypto;
- 	struct virtio_crypto_op_data_req *req_data = vc_req->req_data;
-@@ -273,7 +273,8 @@ static int virtio_crypto_rsa_do_req(struct crypto_engine *engine, void *vreq)
- 	struct akcipher_request *req = container_of(vreq, struct akcipher_request, base);
- 	struct virtio_crypto_akcipher_request *vc_akcipher_req = akcipher_request_ctx(req);
- 	struct virtio_crypto_request *vc_req = &vc_akcipher_req->base;
--	struct virtio_crypto_akcipher_ctx *ctx = vc_akcipher_req->akcipher_ctx;
-+	struct crypto_akcipher *atfm = crypto_akcipher_reqtfm(req);
-+	struct virtio_crypto_akcipher_ctx *ctx = akcipher_tfm_ctx(atfm);
- 	struct virtio_crypto *vcrypto = ctx->vcrypto;
- 	struct data_queue *data_vq = vc_req->dataq;
- 	struct virtio_crypto_op_header *header;
-@@ -319,7 +320,6 @@ static int virtio_crypto_rsa_req(struct akcipher_request *req, uint32_t opcode)
+ 	struct virtio_crypto_akcipher_request *vc_akcipher_req =
+ 		container_of(vc_req, struct virtio_crypto_akcipher_request, base);
+-	struct akcipher_request *akcipher_req;
++	struct akcipher_request *akcipher_req =
++		container_of((void *)vc_akcipher_req, struct akcipher_request,
++			     __ctx);
+ 	int error;
+ 
+ 	switch (vc_req->status) {
+@@ -87,8 +88,7 @@ static void virtio_crypto_dataq_akcipher_callback(struct virtio_crypto_request *
+ 		break;
+ 	}
+ 
+-	akcipher_req = vc_akcipher_req->akcipher_req;
+-	/* actual length maybe less than dst buffer */
++	/* actual length may be less than dst buffer */
+ 	akcipher_req->dst_len = len - sizeof(vc_req->status);
+ 	sg_copy_from_buffer(akcipher_req->dst, sg_nents(akcipher_req->dst),
+ 			    vc_akcipher_req->dst_buf, akcipher_req->dst_len);
+@@ -320,7 +320,6 @@ static int virtio_crypto_rsa_req(struct akcipher_request *req, uint32_t opcode)
  
  	vc_req->dataq = data_vq;
  	vc_req->alg_cb = virtio_crypto_dataq_akcipher_callback;
--	vc_akcipher_req->akcipher_ctx = ctx;
- 	vc_akcipher_req->akcipher_req = req;
+-	vc_akcipher_req->akcipher_req = req;
  	vc_akcipher_req->opcode = opcode;
  
+ 	return crypto_transfer_akcipher_request_to_engine(data_vq->engine, req);
 diff --git a/drivers/crypto/virtio/virtio_crypto_skcipher_algs.c b/drivers/crypto/virtio/virtio_crypto_skcipher_algs.c
-index f7b8715b50744..c93df8a8f67bc 100644
+index c93df8a8f67bc..40d8d95a0f7a4 100644
 --- a/drivers/crypto/virtio/virtio_crypto_skcipher_algs.c
 +++ b/drivers/crypto/virtio/virtio_crypto_skcipher_algs.c
 @@ -31,7 +31,6 @@ struct virtio_crypto_sym_request {
  
  	/* Cipher or aead */
  	uint32_t type;
--	struct virtio_crypto_skcipher_ctx *skcipher_ctx;
- 	struct skcipher_request *skcipher_req;
+-	struct skcipher_request *skcipher_req;
  	uint8_t *iv;
  	/* Encryption? */
-@@ -328,7 +327,7 @@ __virtio_crypto_skcipher_do_req(struct virtio_crypto_sym_request *vc_sym_req,
- 		struct data_queue *data_vq)
+ 	bool encrypt;
+@@ -59,7 +58,9 @@ static void virtio_crypto_dataq_sym_callback
  {
- 	struct crypto_skcipher *tfm = crypto_skcipher_reqtfm(req);
--	struct virtio_crypto_skcipher_ctx *ctx = vc_sym_req->skcipher_ctx;
-+	struct virtio_crypto_skcipher_ctx *ctx = crypto_skcipher_ctx(tfm);
- 	struct virtio_crypto_request *vc_req = &vc_sym_req->base;
- 	unsigned int ivsize = crypto_skcipher_ivsize(tfm);
- 	struct virtio_crypto *vcrypto = ctx->vcrypto;
-@@ -484,7 +483,6 @@ static int virtio_crypto_skcipher_encrypt(struct skcipher_request *req)
+ 	struct virtio_crypto_sym_request *vc_sym_req =
+ 		container_of(vc_req, struct virtio_crypto_sym_request, base);
+-	struct skcipher_request *ablk_req;
++	struct skcipher_request *ablk_req =
++		container_of((void *)vc_sym_req, struct skcipher_request,
++			     __ctx);
+ 	int error;
+ 
+ 	/* Finish the encrypt or decrypt process */
+@@ -79,7 +80,6 @@ static void virtio_crypto_dataq_sym_callback
+ 			error = -EIO;
+ 			break;
+ 		}
+-		ablk_req = vc_sym_req->skcipher_req;
+ 		virtio_crypto_skcipher_finalize_req(vc_sym_req,
+ 							ablk_req, error);
+ 	}
+@@ -483,7 +483,6 @@ static int virtio_crypto_skcipher_encrypt(struct skcipher_request *req)
  
  	vc_req->dataq = data_vq;
  	vc_req->alg_cb = virtio_crypto_dataq_sym_callback;
--	vc_sym_req->skcipher_ctx = ctx;
- 	vc_sym_req->skcipher_req = req;
+-	vc_sym_req->skcipher_req = req;
  	vc_sym_req->encrypt = true;
  
-@@ -509,7 +507,6 @@ static int virtio_crypto_skcipher_decrypt(struct skcipher_request *req)
+ 	return crypto_transfer_skcipher_request_to_engine(data_vq->engine, req);
+@@ -507,7 +506,6 @@ static int virtio_crypto_skcipher_decrypt(struct skcipher_request *req)
  
  	vc_req->dataq = data_vq;
  	vc_req->alg_cb = virtio_crypto_dataq_sym_callback;
--	vc_sym_req->skcipher_ctx = ctx;
- 	vc_sym_req->skcipher_req = req;
+-	vc_sym_req->skcipher_req = req;
  	vc_sym_req->encrypt = false;
  
+ 	return crypto_transfer_skcipher_request_to_engine(data_vq->engine, req);
 -- 
 2.53.0
 
