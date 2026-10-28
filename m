@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216688;
-	b=BFpuHyUcV8aQizK7d47Ie5JQIzs35DFJyHOT9NCRHBGstr6qu3KTiq+kzkZHS7hOn8Vi
-	 /YN5l3sSCrpy+hVSchF8cIxo/c6FPkA+JQ9K2y36eIUk6QVj7hZg8LeWXk8tznOkYDEGE
-	 Qh0AXE/r8hF0mXJR5yRwOJWyA+5PA0A2l7NYIlk/IB6zzsFbFiwV1RXrQD0nVjsTfC6iG
-	 XeWyyCrJybtu+q/J+xnpENlulFS1UfevxihJ6b0tfDqehPOOyWNTGVN1EjjRXVxWl0PDR
-	 c2AJdQWZwoaB/hbn319gIRIyAubRg70PQuCSRDOQTGqn2GWjn3SvpOCcYDyCr8OgLcQ==
+	t=1793216691;
+	b=203m6SYYJ3HOTmXh5pb16T6WinLZu7yC8pEjAj+U6fsp0dy/HcQWSTjHRBEMyyISujWV
+	 cDLSWDNh9DzV3IZM5KA4I8GRPLFrhSzjYP5Wtfltpufl11FIbN+rxbJBCUEpGP1MfhxrZ
+	 ujKnGoIbexOgw5NbXFssC1OxpHwOfsNOHGbd2+ZdIf5b/bpK3btZVf/SdmURQvxfdSlOR
+	 NYltYmNu8oMTexJBCCPJhOI0Mj8wWVDPdCtoLgOmc3QzrT4PmfY5+9p/Azqw+kQdak9k9
+	 /st/Bhne/8xwVy33fZzS985JOKvPJb9sX91Q1tCdE3CwkPQF+4Tt1KiDjia/NNsoWjA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216688;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216691;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=NKa8r24WrLHnZEbVNxoeBxgIAiah1Svoxa9f8VreJBY=;
-	b=Vj1c03kJsGGlXSFoCynjFeOSHBMIsGh2jrvyEIuSybsYrCrhIidyYtiGa4N6eNVLeCQj
-	 A7DXp2f/r9s6C85deSTl3VDyLW07l5rSV7L8j+AF1Di6R2rdd10hNEU+y0BwRza1Zv2QE
-	 k2xupzjnuz6/tLJtmqQyHMQLmqe1Y/1lElS2YKukELjgOiQN9PIzj5wMv7o1Ifjn6FY5z
-	 ioaEHqzic2B0MgKuU3mmw92iX+BslRMx08ZVuQ9HGGY1Q/iqEQOW45rKlak7V4eyj4WfF
-	 B3Yoa7fMYUjsG792yVpR1soVCLFAyu6CG+muL1ZQy1T9RdeZXAy+55AF0+RXD4eDhYQ==
+	bh=b4f5Stt/mw+XlHK2LRkkvvZId4SnhXnFOtGDAS+k1Wg=;
+	b=eajtIgHNTJYrnXloYk6K+4yE577J8LtxP/dZ3orenjsSABEy1lgqiCNvyybsLVvSF6BL
+	 i/LABrvuLhWskpelZBLKnvEMEScYJy1B9bOG5qmsU0DJW+BBnKDyaK8MkH8TBzThBGDHD
+	 XkqHpbUJINCrhQNNVImVdKfTAqIcpa5vbUV+J8Sr3rFOUFtsgstxRP+BrCrKCT2gvYH5c
+	 SA3ZHJHb663RgkajQtyowgbvKSTiddmX6hMwm2Y6cxlS6L1uAOsJSfCdpTjU82WcCe8Dq
+	 2yKArh64MxQZ3+NGCpG9qNksFhrf/iBv4mh6oIXISZkR2a+aSY0OfwunGIdAhYOwQcg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="y/hUzsa6";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hxqtruKx;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51F9D606A320;
-	Wed, 28 Oct 2026 19:44:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B39F606A31A;
+	Wed, 28 Oct 2026 19:44:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=y/hUzsa6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A29BB1F01825;
-	Wed, 28 Oct 2026 19:44:47 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hxqtruKx
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B5AF1F01825;
+	Wed, 28 Oct 2026 19:44:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216688;
-	bh=NKa8r24WrLHnZEbVNxoeBxgIAiah1Svoxa9f8VreJBY=;
+	s=korg; t=1793216691;
+	bh=b4f5Stt/mw+XlHK2LRkkvvZId4SnhXnFOtGDAS+k1Wg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=y/hUzsa6IbLhV8z6MSLeoZfh9INMOgxhoZLGw6bjtng9VdpH/vHZT52a4Yff1K9IA
-	 q9c9nTS8jY+FxArlof4DNhNYFi6O6Zn6J1J7owVIjnEwI8JE/Al5/EIDSzOxU0oR+2
-	 Q3OFq9PjCfw+zDvUHj7rPoSOzL349x79MXbfM9SQ=
+	b=hxqtruKx38dUoMCRwoFrKOSwtty5syr+nK0qKP+53fdA+8zypQJHHvBuwesjQIBv3
+	 MY/UZShaT8/vlxdCt5ssQPL8Xfnix8Kjj6HOYcT3qbAPtEfPqYBhuJER7Zq23W0gbe
+	 T6c3MGnxOl3Uik0WwFkjb/LwP5JOvNv7iAfaxst0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Evgenii Burenchev <evg28bur@yandex.ru>,
-	"Mario Limonciello (AMD)" <superm1@kernel.org>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1642/1887] drm/amd/display: Fix dangling pointer in plane reset function
-Date: Wed, 28 Oct 2026 18:02:18 +0100
-Message-ID: <20261028170536.830509480@linuxfoundation.org>
+Subject: [PATCH 6.1 1602/1887] wifi: ath11k: fix stride mismatch in mac_phy_caps_parse()
+Date: Wed, 28 Oct 2026 18:01:38 +0100
+Message-ID: <20261028170535.924616238@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -70,62 +69,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Evgenii Burenchev <evg28bur@yandex.ru>
+From: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 
-[ Upstream commit 98cad4bd1443975d972f4c7f705980da03722a22 ]
+[ Upstream commit 7a246c72132eb943b5844ba79dad597b47429dba ]
 
-amdgpu_dm_plane_drm_plane_reset() frees the old state before allocating
-a new one. If kzalloc() fails, the function returns without updating
-the state pointer, leaving a dangling pointer to already freed memory.
+Currently, in ath11k_wmi_tlv_mac_phy_caps_parse(), kcalloc() sizes the
+mac_phy_caps buffer as tot_phy_id * len, where len is clamped to
+min(firmware_len, sizeof(struct wmi_mac_phy_capabilities)). The subsequent
+memcpy() destination advances by sizeof(full struct) per slot via C
+pointer arithmetic, not by the clamped len. When firmware sends short
+TLVs, the second and later slots are written past the end of the
+allocation.
 
-Fix this by allocating the new state first. On allocation failure, the
-old state remains untouched and the function safely returns.
+The reader in ath11k_pull_mac_phy_cap_svc_ready_ext() also indexes the
+buffer with full-struct pointer arithmetic, so the allocation must match
+that stride.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+Fix by using kzalloc_objs(), which derives the element size from the
+pointer type, making allocation size and pointer stride provably
+consistent regardless of what len the firmware provides.
 
-Fixes: 5d945cbcd4b1 ("drm/amd/display: Create a file dedicated to planes")
-Signed-off-by: Evgenii Burenchev <evg28bur@yandex.ru>
-Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
-Link: https://patch.msgid.link/20260629090435.9729-3-evg28bur@yandex.ru
-[adjust for movement around current amd-staging-drm-next]
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Compile tested only.
+
+Fixes: 5b90fc760db5 ("ath11k: fix wmi service ready ext tlv parsing")
+Assisted-by: Claude:claude-sonnet-4-6
+Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260728-mac_phy_caps_parse-stride-mismatch-v1-2-27a9c1a3fbd0@oss.qualcomm.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../drm/amd/display/amdgpu_dm/amdgpu_dm_plane.c   | 15 +++++++--------
- 1 file changed, 7 insertions(+), 8 deletions(-)
+ drivers/net/wireless/ath/ath11k/wmi.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_plane.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_plane.c
-index b3a1dbeac4839..bf80846192641 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_plane.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_plane.c
-@@ -1336,19 +1336,18 @@ static const struct drm_plane_helper_funcs dm_plane_helper_funcs = {
+diff --git a/drivers/net/wireless/ath/ath11k/wmi.c b/drivers/net/wireless/ath/ath11k/wmi.c
+index c3f440cae0bfd..b58c84c2f9dd3 100644
+--- a/drivers/net/wireless/ath/ath11k/wmi.c
++++ b/drivers/net/wireless/ath/ath11k/wmi.c
+@@ -4513,14 +4513,16 @@ static int ath11k_wmi_tlv_mac_phy_caps_parse(struct ath11k_base *soc,
+ 	if (svc_rdy_ext->n_mac_phy_caps >= svc_rdy_ext->tot_phy_id)
+ 		return -ENOBUFS;
  
- static void dm_drm_plane_reset(struct drm_plane *plane)
- {
--	struct dm_plane_state *amdgpu_state = NULL;
-+	struct dm_plane_state *amdgpu_state;
-+
-+	amdgpu_state = kzalloc(sizeof(*amdgpu_state), GFP_KERNEL);
-+	if (!amdgpu_state)
-+		return;
+-	len = min_t(u16, len, sizeof(struct wmi_mac_phy_capabilities));
+ 	if (!svc_rdy_ext->n_mac_phy_caps) {
+-		svc_rdy_ext->mac_phy_caps = kcalloc(svc_rdy_ext->tot_phy_id,
+-						    len, GFP_ATOMIC);
++		svc_rdy_ext->mac_phy_caps =
++			kcalloc(svc_rdy_ext->tot_phy_id,
++				sizeof(*svc_rdy_ext->mac_phy_caps),
++				GFP_ATOMIC);
+ 		if (!svc_rdy_ext->mac_phy_caps)
+ 			return -ENOMEM;
+ 	}
  
- 	if (plane->state)
- 		plane->funcs->atomic_destroy_state(plane, plane->state);
- 
--	amdgpu_state = kzalloc(sizeof(*amdgpu_state), GFP_KERNEL);
--	WARN_ON(amdgpu_state == NULL);
--
--	if (amdgpu_state)
--		__drm_atomic_helper_plane_reset(plane, &amdgpu_state->base);
-+	__drm_atomic_helper_plane_reset(plane, &amdgpu_state->base);
- #ifdef CONFIG_DRM_AMD_DC_HDR
--	if (amdgpu_state)
--		amdgpu_state->sdr_boost = DEFAULT_SDR_BOOST;
-+	amdgpu_state->sdr_boost = DEFAULT_SDR_BOOST;
- #endif
- }
- 
++	len = min_t(u16, len, sizeof(struct wmi_mac_phy_capabilities));
+ 	memcpy(svc_rdy_ext->mac_phy_caps + svc_rdy_ext->n_mac_phy_caps, ptr, len);
+ 	svc_rdy_ext->n_mac_phy_caps++;
+ 	return 0;
 -- 
 2.53.0
 
