@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793207465;
-	b=w8Q4wUSqRy+1BMuQqJFQeQNiL5j1eUA3MjhFSnX6YTIGaPgqJGnYU9E+J2SJtfBUVp0E
-	 1MsAbJDWJVE80QPXK6+FDbAUON+pODy5Du7v7ewNj8vjpc/ZUxrerJM1ljYwIR4ZZ8xRj
-	 BXyTBHJqVQbbKgIHRgV0ayWng6D1VkNMGKYY+p8d75wlRtRKb0L69I2O4MBmrb2MyAkBi
-	 RKqZuSTriJpnXToxhiiAbxsEodXPY/LuMSPr+oHut6YkSaEkVPlAJBHpHtN5ZVezIGBSo
-	 9oGhHVxpbRHh+mhCye4YANV2IHN/iJIrrig0kGehyLEFYN2PQ3uiHcMLpNodIi0gm+Q==
+	t=1793207468;
+	b=nBbsPM6/r49xJwz2LmnXX03oHZ0L8mLEh5mUKn8E4GmA5vFQzwRYxF433hV3DFNf5NRu
+	 HvLNED198FtYIDK4KLADVtmzKmiD0KYttukptysqFfs11m00LIk3RgFgJ9T0iKXKaJayJ
+	 ABNC93zQks+5jKKPISW5+9+FnnQ1tY4g+H0u76EMp9AiQ7bCGD8mUrBD4g+URMaCmzImz
+	 +fQrW7QPSqx1moLb/OMuVxFToI4HRFJmvzzfrw5bav07qgKF4He97nlFvOuvB2pz1UYaK
+	 feE/v1hsBI6TXBb6Jkh2N5hSOZ0N6D7R4LSWOeG8qWfFO/XYALjh8FyjZ3VwTieoybA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793207465;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793207468;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=aK5dZws8oiGpj32A0V6is0VBJ4XQWdiv2kIYP/PGbIw=;
-	b=eA5t448jdwi8KE6/498fWJ7xJAuAuciOHxEL3daumkNmemle/gdrDiLCcJ6hHIe5rymH
-	 ZnpCyORnjgEdUQ4gIRaaWYbwtIj5lsI5lwaGpYWhxG7pz/PTzuz7Bf2SAca6jHBCs1QxB
-	 Jlg4jj8wy5EGQKKCM/jY2/yRXHGhSd8iMl8V30Y9TeMUgMXfmDA3CS7Mspzz9znotPM4w
-	 odJIIK6ymlCu3wbDWwCCIzl0jun4uglD4QTqTSAk7Cgy2Z+q3s0XhVUanNixQleu+FtSf
-	 odh5AsLsmX4lsE5MPtugObA6PvLBnj1CY2cMVz8tywEHJnBrjRtEbLmoUCsBIBoDJhg==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=EgRHyO7UfRpgtIzAaAMzgZaVhiRqDhwbiSJz5GelBz4=;
+	b=rFKO6aE5pLexp9i4bp3JRusxrTurLEl5CjcyqIlS5hrGPEoK2rPrFn+HfvmJNrHq7+Uh
+	 dYC+zvK48R0VuSj2TMlgBxE8OQdS2iRgGmhzIj8bgFuG0WvGJNRZji8VRLAiMM1Rn9V8W
+	 5F1VXjPbpK3uvj6ThzvJD2Eh6N1wcNiB7+FD99TWZLRBtDO6g/CU9bPLObq/DszCxaPRo
+	 SwVCluRFjaGPRwxSnt4thzskZlYegkzWNg22mSZIjgtc92Rzl4FqFAzXSL/Ta+uqpCRx4
+	 bqBbyfVVPiWAqLo9zHTSh0+G1nfbIdCi8KPpZTz44v/DA+0X6jCBHnPbhyxI9DBRAMg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PYeo6kLD;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sPB0pO1P;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 507A4606A31A;
-	Wed, 28 Oct 2026 17:11:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FD42606A31E;
+	Wed, 28 Oct 2026 17:11:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PYeo6kLD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0E2B1F01825;
-	Wed, 28 Oct 2026 17:11:04 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sPB0pO1P
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80E371F01828;
+	Wed, 28 Oct 2026 17:11:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793207465;
-	bh=aK5dZws8oiGpj32A0V6is0VBJ4XQWdiv2kIYP/PGbIw=;
+	s=korg; t=1793207468;
+	bh=EgRHyO7UfRpgtIzAaAMzgZaVhiRqDhwbiSJz5GelBz4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PYeo6kLDFk/7CsfGkdZmaqt9bBDknvLoiJbS4e5D6oVhrB/e2EgJspNrnUe1SXZSZ
-	 bH8xHzAIJ9uD1AlusJ2BTl5fqsKmttsTiTBxiHhVsc0RCm2aWl7Ht38F7x+1Vkzr6s
-	 IktEbKzcpba2JGCpz4K+8wn+9XetspZWpvwo30H0=
+	b=sPB0pO1PmTeZxAB++IESXzOb4x0ioSkQvbSh5TOd6jcnS/hMq0hp9omfQp6NPdqAX
+	 DcMZL8RTTXP4oV8+6PQlCPSowy9JCS8l8WSOYrkTV2DIgL/NIk4YJGgoabPS2dmoOV
+	 hz6TNaLJY7mr2l3jhzUliQSs3cHyq+7zK5iwtpd8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Stevenson <dave.stevenson@raspberrypi.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
+	Hyunwoo Kim <imv4bel@gmail.com>,
+	Michal Luczaj <mhal@rbox.co>,
+	Stefano Garzarella <sgarzare@redhat.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 026/247] drm/vc4: hdmi: Move packet RAM enable to PM runtime
-Date: Wed, 28 Oct 2026 17:57:09 +0100
-Message-ID: <20261028165947.985672652@linuxfoundation.org>
+Subject: [PATCH 6.12 027/247] vsock: treat TCP_CLOSING as once-established
+Date: Wed, 28 Oct 2026 17:57:10 +0100
+Message-ID: <20261028165948.010771340@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165947.349197979@linuxfoundation.org>
 References: <20261028165947.349197979@linuxfoundation.org>
@@ -63,141 +64,94 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dave Stevenson <dave.stevenson@raspberrypi.com>
+From: Michal Luczaj <mhal@rbox.co>
 
-[ Upstream commit 3f57b34485dc01e5a2db60a89a6ae5439a897e53 ]
+[ Upstream commit 4f6ac74fa594a918d41255c941256e1d51592d3b ]
 
-Audio can be triggered by the HPD handler and start up before video has
-been restored, calling vc4_hdmi_write_infoframe() for the audio infoframe.
-vc4_hdmi_write_infoframe() needs Packet RAM to be on to store the
-infoframe, however, if the video hasn't been enabled,
-vc4_hdmi_encoder_post_crtc_enable() hasn't been called and therefore, the
-Packet RAM can be disabled by the time vc4_hdmi_write_infoframe() executes,
-causing the following splat:
+Handle the TCP_ESTABLISHED -> TCP_CLOSING transition on OP_RST, which can
+race with the connect loop. Immediately break and return 0 on
+ESTABLISHED/CLOSING. The return value of connect() should reflect what
+happened up to the point the connection was established or failed. Events
+that occur afterwards must not affect it. E.g. even if OP_RW has already
+set sk_err, connect() should still return 0, not ENOBUFS because of it.
+Adapt the inaccurate comment above signal_pending().
 
-[  201.570266] ------------[ cut here ]------------
-[  201.570293] Packet RAM has to be on to store the packet.
-[  201.570367] WARNING: drivers/gpu/drm/vc4/vc4_hdmi.c:683 at vc4_hdmi_write_infoframe+0x404/0x494 [vc4], CPU#0: wireplumber/1606
-[...]
-[  201.658650] Hardware name: Raspberry Pi 4 Model B Rev 1.5 (DT)
-[...]
-[  201.758499] Call trace:
-[  201.760967]  vc4_hdmi_write_infoframe+0x404/0x494 [vc4] (P)
-[  201.766607]  vc4_hdmi_write_audio_infoframe+0x1c/0x28 [vc4]
-[  201.772247]  write_infoframe+0xbc/0x140 [drm_display_helper]
-[  201.777975]  drm_atomic_helper_connector_hdmi_update_audio_infoframe+0x80/0xdc [drm_display_helper]
-[  201.787140]  vc4_hdmi_audio_prepare+0x4ac/0x570 [vc4]
-[  201.792252]  drm_connector_hdmi_audio_prepare+0x24/0x30 [drm_display_helper]
-[  201.799390]  hdmi_codec_prepare+0x100/0x160 [snd_soc_hdmi_codec]
-[  201.805471]  snd_soc_pcm_dai_prepare+0xd4/0x100 [snd_soc_core]
-[  201.811375]  __soc_pcm_prepare+0x60/0x12c [snd_soc_core]
-[  201.816752]  soc_pcm_prepare+0x34/0x58 [snd_soc_core]
-[  201.821863]  snd_pcm_do_prepare+0x70/0x8c [snd_pcm]
-[  201.826798]  snd_pcm_action_nonatomic+0xe4/0x174 [snd_pcm]
-[  201.832350]  snd_pcm_prepare+0xc8/0xd8 [snd_pcm]
-[  201.837021]  snd_pcm_common_ioctl+0x458/0x614 [snd_pcm]
-[  201.842308]  snd_pcm_ioctl+0x30/0x48 [snd_pcm]
-[  201.846802]  __arm64_sys_ioctl+0x88/0xd8
-[  201.850769]  invoke_syscall+0x48/0xf4
-[  201.854470]  el0_svc_common+0x80/0xd8
-[  201.858171]  do_el0_svc+0x1c/0x28
-[  201.861520]  el0_svc+0x3c/0xb0
-[  201.864605]  el0t_64_sync_handler+0x68/0xdc
-[  201.868834]  el0t_64_sync+0x198/0x19c
-[  201.872536] ---[ end trace 0000000000000000 ]---
+Resetting a socket that is still present in connected_table can lead to
+memory corruption. The reporter noted lost transports for in-flight skbs,
+and I have reproduced crashes caused by re-insertion into connected_table.
 
-Considering that Packet RAM enable is essentially a power management
-configuration, move its enabling/disabling to the Runtime PM hooks.
+  list_add double add: new=, prev=, next=.
+  kernel BUG at lib/list_debug.c:35!
+  Oops: invalid opcode: 0000 [#1] SMP KASAN NOPTI
+  Workqueue: vsock-loopback vsock_loopback_work
+  RIP: 0010:__list_add_valid_or_report+0x11f/0x130
+  Call Trace:
+   vsock_insert_connected.cold+0xe/0x13
+   virtio_transport_recv_pkt+0x10e9/0x1460
+   vsock_loopback_work+0x305/0x480
+   process_one_work+0xe4c/0x1560
+   worker_thread+0x4f1/0xd60
+   kthread+0x36e/0x470
+   ret_from_fork+0x47b/0x6b0
+   ret_from_fork_asm+0x1a/0x30
 
-Note that post_crtc_disable() still stops all infoframes, but keeps Packet
-RAM enabled, leaving it to be disabled by runtime suspend.
+This fix is supplementary to commit 002541ef650b ("vsock: Ignore
+signal/timeout on connect() if already established"). Details under Link.
 
-Link: https://github.com/raspberrypi/linux/issues/7069
-Fixes: b47a72f30768 ("drm/vc4: hdmi: Switch to HDMI connector")
-Signed-off-by: Dave Stevenson <dave.stevenson@raspberrypi.com>
-Acked-by: Maxime Ripard <mripard@kernel.org>
-Link: https://patch.msgid.link/20261002-vc4-hdmi-packet-ram-fix-v1-1-3d73148096c9@igalia.com
-Reviewed-by: Maíra Canal <mcanal@igalia.com>
-Signed-off-by: Maíra Canal <mcanal@igalia.com>
+Fixes: d021c344051a ("VSOCK: Introduce VM Sockets")
+Reported-by: Hyunwoo Kim <imv4bel@gmail.com>
+Link: https://lore.kernel.org/netdev/anzT1fREOSyHT99k@v4bel/
+Signed-off-by: Michal Luczaj <mhal@rbox.co>
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+Link: https://patch.msgid.link/20261005-vsock-connect-reset-closing-v4-1-15d41cfda3ed@rbox.co
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/vc4/vc4_hdmi.c | 20 +++++++++++---------
- 1 file changed, 11 insertions(+), 9 deletions(-)
+ net/vmw_vsock/af_vsock.c | 17 ++++++++---------
+ 1 file changed, 8 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/gpu/drm/vc4/vc4_hdmi.c b/drivers/gpu/drm/vc4/vc4_hdmi.c
-index 9655027f1c0ab..7ea1622377b58 100644
---- a/drivers/gpu/drm/vc4/vc4_hdmi.c
-+++ b/drivers/gpu/drm/vc4/vc4_hdmi.c
-@@ -857,7 +857,7 @@ static void vc4_hdmi_encoder_post_crtc_disable(struct drm_encoder *encoder,
+diff --git a/net/vmw_vsock/af_vsock.c b/net/vmw_vsock/af_vsock.c
+index 1fa4dd2ca405b..228e45bf2d769 100644
+--- a/net/vmw_vsock/af_vsock.c
++++ b/net/vmw_vsock/af_vsock.c
+@@ -1633,23 +1633,22 @@ static int vsock_connect(struct socket *sock, struct sockaddr *addr,
+ 		timeout = schedule_timeout(timeout);
+ 		lock_sock(sk);
  
- 	spin_lock_irqsave(&vc4_hdmi->hw_lock, flags);
+-		/* Connection established. Whatever happens to socket once we
+-		 * release it, that's not connect()'s concern. No need to go
++		/* Connection was established. Whatever happens to socket once
++		 * we release it, that's not connect()'s concern. No need to go
+ 		 * into signal and timeout handling. Call it a day.
+ 		 *
+ 		 * Note that allowing to "reset" an already established socket
+ 		 * here is racy and insecure.
+ 		 */
+-		if (sk->sk_state == TCP_ESTABLISHED)
+-			break;
++		if (sk->sk_state == TCP_ESTABLISHED ||
++		    sk->sk_state == TCP_CLOSING) {
++			err = 0;
++			goto out_wait;
++		}
  
--	HDMI_WRITE(HDMI_RAM_PACKET_CONFIG, 0);
-+	HDMI_WRITE(HDMI_RAM_PACKET_CONFIG, VC4_HDMI_RAM_PACKET_ENABLE);
- 
- 	HDMI_WRITE(HDMI_VID_CTL, HDMI_READ(HDMI_VID_CTL) | VC4_HD_VID_CTL_CLRRGB);
- 
-@@ -1616,9 +1616,6 @@ static void vc4_hdmi_encoder_post_crtc_enable(struct drm_encoder *encoder,
- 		WARN_ONCE(ret, "Timeout waiting for "
- 			  "VC4_HDMI_SCHEDULER_CONTROL_HDMI_ACTIVE\n");
- 	} else {
--		HDMI_WRITE(HDMI_RAM_PACKET_CONFIG,
--			   HDMI_READ(HDMI_RAM_PACKET_CONFIG) &
--			   ~(VC4_HDMI_RAM_PACKET_ENABLE));
- 		HDMI_WRITE(HDMI_SCHEDULER_CONTROL,
- 			   HDMI_READ(HDMI_SCHEDULER_CONTROL) &
- 			   ~VC4_HDMI_SCHEDULER_CONTROL_MODE_HDMI);
-@@ -1637,9 +1634,6 @@ static void vc4_hdmi_encoder_post_crtc_enable(struct drm_encoder *encoder,
- 		WARN_ON(!(HDMI_READ(HDMI_SCHEDULER_CONTROL) &
- 			  VC4_HDMI_SCHEDULER_CONTROL_HDMI_ACTIVE));
- 
--		HDMI_WRITE(HDMI_RAM_PACKET_CONFIG,
--			   VC4_HDMI_RAM_PACKET_ENABLE);
--
- 		spin_unlock_irqrestore(&vc4_hdmi->hw_lock, flags);
- 		vc4_hdmi->packet_ram_enabled = true;
- 
-@@ -3125,6 +3119,11 @@ static int vc5_hdmi_init_resources(struct drm_device *drm,
- static int vc4_hdmi_runtime_suspend(struct device *dev)
- {
- 	struct vc4_hdmi *vc4_hdmi = dev_get_drvdata(dev);
-+	unsigned long flags;
-+
-+	spin_lock_irqsave(&vc4_hdmi->hw_lock, flags);
-+	HDMI_WRITE(HDMI_RAM_PACKET_CONFIG, 0);
-+	spin_unlock_irqrestore(&vc4_hdmi->hw_lock, flags);
- 
- 	clk_disable_unprepare(vc4_hdmi->hsm_clock);
- 
-@@ -3134,9 +3133,8 @@ static int vc4_hdmi_runtime_suspend(struct device *dev)
- static int vc4_hdmi_runtime_resume(struct device *dev)
- {
- 	struct vc4_hdmi *vc4_hdmi = dev_get_drvdata(dev);
--	unsigned long __maybe_unused flags;
-+	unsigned long rate, flags;
- 	u32 __maybe_unused value;
--	unsigned long rate;
- 	int ret;
- 
- 	ret = clk_prepare_enable(vc4_hdmi->hsm_clock);
-@@ -3178,6 +3176,10 @@ static int vc4_hdmi_runtime_resume(struct device *dev)
- 	}
- #endif
- 
-+	spin_lock_irqsave(&vc4_hdmi->hw_lock, flags);
-+	HDMI_WRITE(HDMI_RAM_PACKET_CONFIG, VC4_HDMI_RAM_PACKET_ENABLE);
-+	spin_unlock_irqrestore(&vc4_hdmi->hw_lock, flags);
-+
- 	return 0;
- 
- err_disable_clk:
+ 		/* If connection was _not_ established and a signal/timeout came
+ 		 * to be, we want the socket's state reset. User space may want
+-		 * to retry.
+-		 *
+-		 * sk_state != TCP_ESTABLISHED implies that socket is not on
+-		 * vsock_connected_table. We keep the binding and the transport
+-		 * assigned.
++		 * to retry, so we keep the binding and the transport assigned.
+ 		 */
+ 		if (signal_pending(current) || timeout == 0) {
+ 			err = timeout == 0 ? -ETIMEDOUT : sock_intr_errno(timeout);
 -- 
 2.53.0
 
