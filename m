@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214658;
-	b=P3whT2VOIqo40sI1gL32o9n+WBKUdP8ACsi6qGe9D7LocLvKD7kUZ7DiJp8Iwd4uTCIO
-	 KXIUG35P5G7DUPtNlhHxFi8X7krcyvQe8QWICmymfNFvDHwYnstmFG/UMHh7CFFViRhH0
-	 H/Lpw11ROiR1pFB7VDzoNjOwpUgLe51T844AEIYs9zZCpHcTV5J30V5mzpzu9tFfFqfEN
-	 u6Ea+w2GH/86OKr3NkenRc0t/Skl3C6q2o98EVslU9c4e/iUsLwlQGJ1hHEprsKKlEx3R
-	 nD5rwmfU/TpOekxIrdw1RkwFODy/NLM91uXwGlRm9BSdVoax5zrGwGVcl4FxrKD9IIg==
+	t=1793214661;
+	b=P12vDV7Bs2n6YwFo6uEtolMpFgR8R7VIVGhYLG+QRyoFzPbpMv599RpU/fsvJQZtu84k
+	 YKfpmsSGeIEtJQO6AU8kD6Ur5Z1RCFeWA35YyinH47afa7V/lhtPwa0AqFRdUu/IQyctk
+	 iHwUqNHFz0ujMGikyJckN/KyqHDQESlpdnp5EvHctfL7uqtQKmQeBNiCA1CUKyNUzbElv
+	 muXnb+kgSPtN5EVZo9eL+Cb0OMEnBCrL3bJrKYByHpK/Lzav+GuRHe99unPczHYIeQ0th
+	 lQ6KG3yr1w1HRg81127nGyXQBqEI2PY/tzNX3JKPnMvgUGDe9UTBSbSh5kkPmx5n+LA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214658;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214661;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Kpb3S0jfXn1uUgifUGoR62NSB4iKdDsyWgl+PG2ViNA=;
-	b=hyh0P4UtsLPxjPUjznXnz8ZM+5FdPCxKdM1vD2TafltGTdF19mS9iSRoFBg04Ga/cM2M
-	 HicaPYYzvwKd+x9YWfm2ykxa9y1/xfxMSVOOUAH/8Zg5lkY4bz1uAU7zVgosFkqA16v8D
-	 mlYRXSG/aFYtVypR+zE6aziiaiypbJaYqEMEDfd9zs9qKHpPNJkQqnak+pUj3OwhwlhiC
-	 wpwe8+r3z/sPUd8NVudH4F/6wmwqapRNl1cvT5RQpgyj7n77JTCO+oi1FnMU0L5wK6HGJ
-	 JeM2FEgCKRfkzeATWbuUWzxApwo3Y8xP287mtx8OZnwRE6qWITsNDAUZdhmT6aBJ6+g==
+	bh=FWEv/8MjlJyManFnvGSLSUP09r480rzG9tSTQlNalbg=;
+	b=NXO9/LnsgRyQ8aFNeuhfKbU5tHnmmMA8PAY1is4KwvVwkuh6jaVXlWFMTZ06JA2XPf2y
+	 Hrzs15tMrqaPpEbCJqCugtVqoV7OaGeQQ4/XkbFTRFPagLC7JX5MX8uCGXYDq5AG1DSH/
+	 3L33Eruz2qWe8gCfFD1PKCfSgv9evGlmP7I0xyMWAsA4OHF2/XHqwvtgi1vUGtKGO1jmu
+	 xSu/iHriPy4qtqkbr3wiGWQRxUqCi4D6m5bUPNPNUEfRlY0wdy4aLe319S9mNLBkQpaLg
+	 doQColEq0d7Dj2nn8JbMgEIFCrkSFyfxwXCukuQOx+veSZLwlEnhw+KEOCVCC06O4ag==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O90IG0jJ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Jyu2c9Kk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5876606A332;
-	Wed, 28 Oct 2026 19:10:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A76CB606A338;
+	Wed, 28 Oct 2026 19:11:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O90IG0jJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3682B1F01825;
-	Wed, 28 Oct 2026 19:10:57 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Jyu2c9Kk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0576A1F01829;
+	Wed, 28 Oct 2026 19:10:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214657;
-	bh=Kpb3S0jfXn1uUgifUGoR62NSB4iKdDsyWgl+PG2ViNA=;
+	s=korg; t=1793214660;
+	bh=FWEv/8MjlJyManFnvGSLSUP09r480rzG9tSTQlNalbg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=O90IG0jJqDTB4nSiUvHacikZ0kYCSx1piIUDCkBbtVKIZX+CSwm58i5HqXbh4vVcJ
-	 74sWeuaFkU+bLWt0VjfgGWyuifQ2iXiCjwrROgv3C9ie6b5bo6lofKE8W5jH8zKkta
-	 Vy2YSH7El/Hiuwwa+nYTuDHsUOg96w/WqYHqYIB0=
+	b=Jyu2c9KkyQYO1QP3JSzQ1mqoC/Ev7esa93BaeoJ0bimhBLm2aYK/QWyDh6U+39LcV
+	 u7st3xCqOfVDQtzUk+gkq+wo70JZMC4fw4WNcYfeNuatQy4Dq2ZbLnb3+/5vkM5KK6
+	 RakslPY5QlnffUswbuO9A8TtlalnxBveuO/8kTWU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhouyan Deng <dengzhouyan_nwpu@163.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Florian Westphal <fw@strlen.de>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Davidlohr Bueso <dave@stgolabs.net>,
+	Alison Schofield <alison.schofield@intel.com>,
+	Dave Jiang <dave.jiang@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0935/1887] tcp: secure_seq: add back ports to TS offset
-Date: Wed, 28 Oct 2026 17:50:31 +0100
-Message-ID: <20261028170520.689606086@linuxfoundation.org>
+Subject: [PATCH 6.1 0936/1887] cxl/mbox: validate payload size before accessing contents in cxl_payload_from_user_allowed()
+Date: Wed, 28 Oct 2026 17:50:32 +0100
+Message-ID: <20261028170520.712564945@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -71,463 +69,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Davidlohr Bueso <dave@stgolabs.net>
 
-[ Upstream commit 165573e41f2f66ef98940cf65f838b2cb575d9d1 ]
+[ Upstream commit 60b5d1f68338aff2c5af0113f04aefa7169c50c2 ]
 
-This reverts 28ee1b746f49 ("secure_seq: downgrade to per-host timestamp offsets")
+cxl_payload_from_user_allowed() casts and dereferences the input
+payload without first verifying its size. When a raw mailbox command
+is sent with an undersized payload (ie: 1 byte for CXL_MBOX_OP_CLEAR_LOG,
+which expects a 16-byte UUID), uuid_equal() reads past the allocated buffer,
+triggering a KASAN splat:
 
-tcp_tw_recycle went away in 2017.
+BUG: KASAN: slab-out-of-bounds in memcmp+0x176/0x1d0 lib/string.c:683
+Read of size 8 at addr ffff88810130f5c0 by task syz.1.62/2258
 
-Zhouyan Deng reported off-path TCP source port leakage via
-SYN cookie side-channel that can be fixed in multiple ways.
+CPU: 2 UID: 0 PID: 2258 Comm: syz.1.62 Not tainted 6.19.0-dirty #3 PREEMPT(voluntary)
+Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.17.0-0-gb52ca86e094d-prebuilt.qemu.org 04/01/2014
+Call Trace:
+ <TASK>
+ __dump_stack lib/dump_stack.c:94 [inline]
+ dump_stack_lvl+0xab/0xe0 lib/dump_stack.c:120
+ print_address_description mm/kasan/report.c:378 [inline]
+ print_report+0xce/0x650 mm/kasan/report.c:482
+ kasan_report+0xce/0x100 mm/kasan/report.c:595
+ memcmp+0x176/0x1d0 lib/string.c:683
+ uuid_equal include/linux/uuid.h:73 [inline]
+ cxl_payload_from_user_allowed drivers/cxl/core/mbox.c:345 [inline]
+ cxl_mbox_cmd_ctor drivers/cxl/core/mbox.c:368 [inline]
+ cxl_validate_cmd_from_user drivers/cxl/core/mbox.c:522 [inline]
+ cxl_send_cmd+0x9c0/0xb50 drivers/cxl/core/mbox.c:643
+ __cxl_memdev_ioctl drivers/cxl/core/memdev.c:698 [inline]
+ cxl_memdev_ioctl+0x14f/0x190 drivers/cxl/core/memdev.c:713
+ vfs_ioctl fs/ioctl.c:51 [inline]
+ __do_sys_ioctl fs/ioctl.c:597 [inline]
+ __se_sys_ioctl fs/ioctl.c:583 [inline]
+ __x64_sys_ioctl+0x18e/0x210 fs/ioctl.c:583
+ do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+ do_syscall_64+0xa8/0x330 arch/x86/entry/syscall_64.c:94
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+RIP: 0033:0x7fdaf331ba79
+Code: ff ff c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 40 00 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 a8 ff ff ff f7 d8 64 89 01 48
+RSP: 002b:00007fdaf1d77038 EFLAGS: 00000246 ORIG_RAX: 0000000000000010
+RAX: ffffffffffffffda RBX: 00007fdaf3585fa0 RCX: 00007fdaf331ba79
+RDX: 00002000000001c0 RSI: 00000000c030ce02 RDI: 0000000000000003
+RBP: 00007fdaf33749df R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
+R13: 00007fdaf3586038 R14: 00007fdaf3585fa0 R15: 00007ffced2af768
+ </TASK>
 
-One of them is to bring back TCP ports in TS offset randomization.
+Add 'in_size' parameter to cxl_payload_from_user_allowed() and validate
+the payload is large enough.
 
-As a bonus, we perform a single siphash() computation
-to provide both an ISN and a TS offset.
-
-Fixes: 28ee1b746f49 ("secure_seq: downgrade to per-host timestamp offsets")
-Reported-by: Zhouyan Deng <dengzhouyan_nwpu@163.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Acked-by: Florian Westphal <fw@strlen.de>
-Link: https://patch.msgid.link/20260302205527.1982836-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 6179045ccc0c ("cxl/mbox: Block immediate mode in SET_PARTITION_INFO command")
+Fixes: 206f9fa9d555 ("cxl/mbox: Add Clear Log mailbox command")
+Signed-off-by: Davidlohr Bueso <dave@stgolabs.net>
+Reviewed-by: Alison Schofield <alison.schofield@intel.com>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Link: https://patch.msgid.link/20260220001618.963490-2-dave@stgolabs.net
+Signed-off-by: Dave Jiang <dave.jiang@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/secure_seq.h | 47 +++++++++++++++++++----
- include/net/tcp.h        |  6 ++-
- net/core/secure_seq.c    | 80 +++++++++++++++-------------------------
- net/ipv4/syncookies.c    | 10 +++--
- net/ipv4/tcp_input.c     |  8 +++-
- net/ipv4/tcp_ipv4.c      | 37 +++++++++----------
- net/ipv6/syncookies.c    | 11 ++++--
- net/ipv6/tcp_ipv6.c      | 37 +++++++++----------
- 8 files changed, 128 insertions(+), 108 deletions(-)
+ drivers/cxl/core/mbox.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/include/net/secure_seq.h b/include/net/secure_seq.h
-index 21e7fa2a18138..899612c4bec37 100644
---- a/include/net/secure_seq.h
-+++ b/include/net/secure_seq.h
-@@ -5,17 +5,50 @@
- #include <linux/types.h>
- 
- struct net;
-+extern struct net init_net;
-+
-+union tcp_seq_and_ts_off {
-+	struct {
-+		u32 seq;
-+		u32 ts_off;
-+	};
-+	u64 hash64;
-+};
- 
- u64 secure_ipv4_port_ephemeral(__be32 saddr, __be32 daddr, __be16 dport);
- u64 secure_ipv6_port_ephemeral(const __be32 *saddr, const __be32 *daddr,
- 			       __be16 dport);
--u32 secure_tcp_seq(__be32 saddr, __be32 daddr,
--		   __be16 sport, __be16 dport);
--u32 secure_tcp_ts_off(const struct net *net, __be32 saddr, __be32 daddr);
--u32 secure_tcpv6_seq(const __be32 *saddr, const __be32 *daddr,
--		     __be16 sport, __be16 dport);
--u32 secure_tcpv6_ts_off(const struct net *net,
--			const __be32 *saddr, const __be32 *daddr);
-+union tcp_seq_and_ts_off
-+secure_tcp_seq_and_ts_off(const struct net *net, __be32 saddr, __be32 daddr,
-+			  __be16 sport, __be16 dport);
-+
-+static inline u32 secure_tcp_seq(__be32 saddr, __be32 daddr,
-+				 __be16 sport, __be16 dport)
-+{
-+	union tcp_seq_and_ts_off ts;
-+
-+	ts = secure_tcp_seq_and_ts_off(&init_net, saddr, daddr,
-+				       sport, dport);
-+
-+	return ts.seq;
-+}
-+
-+union tcp_seq_and_ts_off
-+secure_tcpv6_seq_and_ts_off(const struct net *net, const __be32 *saddr,
-+			    const __be32 *daddr,
-+			    __be16 sport, __be16 dport);
-+
-+static inline u32 secure_tcpv6_seq(const __be32 *saddr, const __be32 *daddr,
-+				   __be16 sport, __be16 dport)
-+{
-+	union tcp_seq_and_ts_off ts;
-+
-+	ts = secure_tcpv6_seq_and_ts_off(&init_net, saddr, daddr,
-+					 sport, dport);
-+
-+	return ts.seq;
-+}
-+
- u64 secure_dccp_sequence_number(__be32 saddr, __be32 daddr,
- 				__be16 sport, __be16 dport);
- u64 secure_dccpv6_sequence_number(__be32 *saddr, __be32 *daddr,
-diff --git a/include/net/tcp.h b/include/net/tcp.h
-index 245c522387315..51a17dadb7556 100644
---- a/include/net/tcp.h
-+++ b/include/net/tcp.h
-@@ -41,6 +41,7 @@
- #include <net/dst.h>
- #include <net/mptcp.h>
- #include <net/xfrm.h>
-+#include <net/secure_seq.h>
- 
- #include <linux/seq_file.h>
- #include <linux/memcontrol.h>
-@@ -2143,8 +2144,9 @@ struct tcp_request_sock_ops {
- 				       struct sk_buff *skb,
- 				       struct flowi *fl,
- 				       struct request_sock *req);
--	u32 (*init_seq)(const struct sk_buff *skb);
--	u32 (*init_ts_off)(const struct net *net, const struct sk_buff *skb);
-+	union tcp_seq_and_ts_off (*init_seq_and_ts_off)(
-+					const struct net *net,
-+					const struct sk_buff *skb);
- 	int (*send_synack)(const struct sock *sk, struct dst_entry *dst,
- 			   struct flowi *fl, struct request_sock *req,
- 			   struct tcp_fastopen_cookie *foc,
-diff --git a/net/core/secure_seq.c b/net/core/secure_seq.c
-index b0ff6153be623..740642aeaf765 100644
---- a/net/core/secure_seq.c
-+++ b/net/core/secure_seq.c
-@@ -20,7 +20,6 @@
- #include <net/tcp.h>
- 
- static siphash_aligned_key_t net_secret;
--static siphash_aligned_key_t ts_secret;
- 
- #define EPHEMERAL_PORT_SHUFFLE_PERIOD (10 * HZ)
- 
-@@ -28,11 +27,6 @@ static __always_inline void net_secret_init(void)
- {
- 	net_get_random_once(&net_secret, sizeof(net_secret));
- }
--
--static __always_inline void ts_secret_init(void)
--{
--	net_get_random_once(&ts_secret, sizeof(ts_secret));
--}
- #endif
- 
- #ifdef CONFIG_INET
-@@ -53,28 +47,9 @@ static u32 seq_scale(u32 seq)
- #endif
- 
- #if IS_ENABLED(CONFIG_IPV6)
--u32 secure_tcpv6_ts_off(const struct net *net,
--			const __be32 *saddr, const __be32 *daddr)
--{
--	const struct {
--		struct in6_addr saddr;
--		struct in6_addr daddr;
--	} __aligned(SIPHASH_ALIGNMENT) combined = {
--		.saddr = *(struct in6_addr *)saddr,
--		.daddr = *(struct in6_addr *)daddr,
--	};
--
--	if (READ_ONCE(net->ipv4.sysctl_tcp_timestamps) != 1)
--		return 0;
--
--	ts_secret_init();
--	return siphash(&combined, offsetofend(typeof(combined), daddr),
--		       &ts_secret);
--}
--EXPORT_SYMBOL(secure_tcpv6_ts_off);
--
--u32 secure_tcpv6_seq(const __be32 *saddr, const __be32 *daddr,
--		     __be16 sport, __be16 dport)
-+union tcp_seq_and_ts_off
-+secure_tcpv6_seq_and_ts_off(const struct net *net, const __be32 *saddr,
-+			    const __be32 *daddr, __be16 sport, __be16 dport)
- {
- 	const struct {
- 		struct in6_addr saddr;
-@@ -87,14 +62,20 @@ u32 secure_tcpv6_seq(const __be32 *saddr, const __be32 *daddr,
- 		.sport = sport,
- 		.dport = dport
- 	};
--	u32 hash;
-+	union tcp_seq_and_ts_off st;
- 
- 	net_secret_init();
--	hash = siphash(&combined, offsetofend(typeof(combined), dport),
--		       &net_secret);
--	return seq_scale(hash);
-+
-+	st.hash64 = siphash(&combined, offsetofend(typeof(combined), dport),
-+			    &net_secret);
-+
-+	if (READ_ONCE(net->ipv4.sysctl_tcp_timestamps) != 1)
-+		st.ts_off = 0;
-+
-+	st.seq = seq_scale(st.seq);
-+	return st;
- }
--EXPORT_SYMBOL(secure_tcpv6_seq);
-+EXPORT_SYMBOL(secure_tcpv6_seq_and_ts_off);
- 
- u64 secure_ipv6_port_ephemeral(const __be32 *saddr, const __be32 *daddr,
- 			       __be16 dport)
-@@ -118,33 +99,30 @@ EXPORT_SYMBOL(secure_ipv6_port_ephemeral);
- #endif
- 
- #ifdef CONFIG_INET
--u32 secure_tcp_ts_off(const struct net *net, __be32 saddr, __be32 daddr)
--{
--	if (READ_ONCE(net->ipv4.sysctl_tcp_timestamps) != 1)
--		return 0;
--
--	ts_secret_init();
--	return siphash_2u32((__force u32)saddr, (__force u32)daddr,
--			    &ts_secret);
--}
--
- /* secure_tcp_seq_and_tsoff(a, b, 0, d) == secure_ipv4_port_ephemeral(a, b, d),
-  * but fortunately, `sport' cannot be 0 in any circumstances. If this changes,
-  * it would be easy enough to have the former function use siphash_4u32, passing
-  * the arguments as separate u32.
+diff --git a/drivers/cxl/core/mbox.c b/drivers/cxl/core/mbox.c
+index 0c90f13870a43..3e89dc2b60d84 100644
+--- a/drivers/cxl/core/mbox.c
++++ b/drivers/cxl/core/mbox.c
+@@ -223,6 +223,7 @@ static bool cxl_mem_raw_command_allowed(u16 opcode)
+  * cxl_payload_from_user_allowed() - Check contents of in_payload.
+  * @opcode: The mailbox command opcode.
+  * @payload_in: Pointer to the input payload passed in from user space.
++ * @in_size: Size of @payload_in in bytes.
+  *
+  * Return:
+  *  * true	- payload_in passes check for @opcode.
+@@ -237,12 +238,15 @@ static bool cxl_mem_raw_command_allowed(u16 opcode)
+  *
+  * The specific checks are determined by the opcode.
   */
--u32 secure_tcp_seq(__be32 saddr, __be32 daddr,
--		   __be16 sport, __be16 dport)
-+union tcp_seq_and_ts_off
-+secure_tcp_seq_and_ts_off(const struct net *net, __be32 saddr, __be32 daddr,
-+			  __be16 sport, __be16 dport)
+-static bool cxl_payload_from_user_allowed(u16 opcode, void *payload_in)
++static bool cxl_payload_from_user_allowed(u16 opcode, void *payload_in,
++					  size_t in_size)
  {
--	u32 hash;
-+	u32 ports = (__force u32)sport << 16 | (__force u32)dport;
-+	union tcp_seq_and_ts_off st;
+ 	switch (opcode) {
+ 	case CXL_MBOX_OP_SET_PARTITION_INFO: {
+ 		struct cxl_mbox_set_partition_info *pi = payload_in;
  
- 	net_secret_init();
--	hash = siphash_3u32((__force u32)saddr, (__force u32)daddr,
--			    (__force u32)sport << 16 | (__force u32)dport,
--			    &net_secret);
--	return seq_scale(hash);
-+
-+	st.hash64 = siphash_3u32((__force u32)saddr, (__force u32)daddr,
-+				 ports, &net_secret);
-+
-+	if (READ_ONCE(net->ipv4.sysctl_tcp_timestamps) != 1)
-+		st.ts_off = 0;
-+
-+	st.seq = seq_scale(st.seq);
-+	return st;
- }
--EXPORT_SYMBOL_GPL(secure_tcp_seq);
-+EXPORT_SYMBOL_GPL(secure_tcp_seq_and_ts_off);
++		if (in_size < sizeof(*pi))
++			return false;
+ 		if (pi->flags & CXL_SET_PARTITION_IMMEDIATE_FLAG)
+ 			return false;
+ 		break;
+@@ -268,7 +272,8 @@ static int cxl_mbox_cmd_ctor(struct cxl_mbox_cmd *mbox,
+ 		if (IS_ERR(mbox->payload_in))
+ 			return PTR_ERR(mbox->payload_in);
  
- u64 secure_ipv4_port_ephemeral(__be32 saddr, __be32 daddr, __be16 dport)
- {
-diff --git a/net/ipv4/syncookies.c b/net/ipv4/syncookies.c
-index d7202f86566a4..4576e77139252 100644
---- a/net/ipv4/syncookies.c
-+++ b/net/ipv4/syncookies.c
-@@ -353,9 +353,13 @@ struct sock *cookie_v4_check(struct sock *sk, struct sk_buff *skb)
- 	tcp_parse_options(sock_net(sk), skb, &tcp_opt, 0, NULL);
- 
- 	if (tcp_opt.saw_tstamp && tcp_opt.rcv_tsecr) {
--		tsoff = secure_tcp_ts_off(sock_net(sk),
--					  ip_hdr(skb)->daddr,
--					  ip_hdr(skb)->saddr);
-+		union tcp_seq_and_ts_off st;
-+
-+		st = secure_tcp_seq_and_ts_off(sock_net(sk),
-+					       ip_hdr(skb)->daddr,
-+					       ip_hdr(skb)->saddr,
-+					       th->dest, th->source);
-+		tsoff = st.ts_off;
- 		tcp_opt.rcv_tsecr -= tsoff;
- 	}
- 
-diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
-index 488b1926a2eb2..55e5325479c01 100644
---- a/net/ipv4/tcp_input.c
-+++ b/net/ipv4/tcp_input.c
-@@ -7033,6 +7033,7 @@ int tcp_conn_request(struct request_sock_ops *rsk_ops,
- 	struct tcp_sock *tp = tcp_sk(sk);
- 	struct net *net = sock_net(sk);
- 	struct sock *fastopen_sk = NULL;
-+	union tcp_seq_and_ts_off st;
- 	struct request_sock *req;
- 	bool want_cookie = false;
- 	struct dst_entry *dst;
-@@ -7090,8 +7091,11 @@ int tcp_conn_request(struct request_sock_ops *rsk_ops,
- 	if (!dst)
- 		goto drop_and_free;
- 
-+	if (tmp_opt.tstamp_ok || (!want_cookie && !isn))
-+		st = af_ops->init_seq_and_ts_off(net, skb);
-+
- 	if (tmp_opt.tstamp_ok)
--		tcp_rsk(req)->ts_off = af_ops->init_ts_off(net, skb);
-+		tcp_rsk(req)->ts_off = st.ts_off;
- 
- 	if (!want_cookie && !isn) {
- 		int max_syn_backlog = READ_ONCE(net->ipv4.sysctl_max_syn_backlog);
-@@ -7113,7 +7117,7 @@ int tcp_conn_request(struct request_sock_ops *rsk_ops,
- 			goto drop_and_release;
- 		}
- 
--		isn = af_ops->init_seq(skb);
-+		isn = st.seq;
- 	}
- 
- 	tcp_ecn_create_request(req, skb, sk, dst);
-diff --git a/net/ipv4/tcp_ipv4.c b/net/ipv4/tcp_ipv4.c
-index 49135d9b27378..e68f84c08e1c1 100644
---- a/net/ipv4/tcp_ipv4.c
-+++ b/net/ipv4/tcp_ipv4.c
-@@ -98,17 +98,14 @@ static DEFINE_PER_CPU(struct sock *, ipv4_tcp_sk);
- 
- static DEFINE_MUTEX(tcp_exit_batch_mutex);
- 
--static u32 tcp_v4_init_seq(const struct sk_buff *skb)
-+static union tcp_seq_and_ts_off
-+tcp_v4_init_seq_and_ts_off(const struct net *net, const struct sk_buff *skb)
- {
--	return secure_tcp_seq(ip_hdr(skb)->daddr,
--			      ip_hdr(skb)->saddr,
--			      tcp_hdr(skb)->dest,
--			      tcp_hdr(skb)->source);
--}
--
--static u32 tcp_v4_init_ts_off(const struct net *net, const struct sk_buff *skb)
--{
--	return secure_tcp_ts_off(net, ip_hdr(skb)->daddr, ip_hdr(skb)->saddr);
-+	return secure_tcp_seq_and_ts_off(net,
-+					 ip_hdr(skb)->daddr,
-+					 ip_hdr(skb)->saddr,
-+					 tcp_hdr(skb)->dest,
-+					 tcp_hdr(skb)->source);
- }
- 
- int tcp_twsk_unique(struct sock *sk, struct sock *sktw, void *twp)
-@@ -315,15 +312,16 @@ int tcp_v4_connect(struct sock *sk, struct sockaddr *uaddr, int addr_len)
- 	rt = NULL;
- 
- 	if (likely(!tp->repair)) {
-+		union tcp_seq_and_ts_off st;
-+
-+		st = secure_tcp_seq_and_ts_off(net,
-+					       inet->inet_saddr,
-+					       inet->inet_daddr,
-+					       inet->inet_sport,
-+					       usin->sin_port);
- 		if (!tp->write_seq)
--			WRITE_ONCE(tp->write_seq,
--				   secure_tcp_seq(inet->inet_saddr,
--						  inet->inet_daddr,
--						  inet->inet_sport,
--						  usin->sin_port));
--		WRITE_ONCE(tp->tsoffset,
--			   secure_tcp_ts_off(net, inet->inet_saddr,
--					     inet->inet_daddr));
-+			WRITE_ONCE(tp->write_seq, st.seq);
-+		WRITE_ONCE(tp->tsoffset, st.ts_off);
- 	}
- 
- 	atomic_set(&inet->inet_id, get_random_u16());
-@@ -1481,8 +1479,7 @@ const struct tcp_request_sock_ops tcp_request_sock_ipv4_ops = {
- 	.cookie_init_seq =	cookie_v4_init_sequence,
- #endif
- 	.route_req	=	tcp_v4_route_req,
--	.init_seq	=	tcp_v4_init_seq,
--	.init_ts_off	=	tcp_v4_init_ts_off,
-+	.init_seq_and_ts_off	=	tcp_v4_init_seq_and_ts_off,
- 	.send_synack	=	tcp_v4_send_synack,
- };
- 
-diff --git a/net/ipv6/syncookies.c b/net/ipv6/syncookies.c
-index 8698b49dfc8de..99c2ea8c7d768 100644
---- a/net/ipv6/syncookies.c
-+++ b/net/ipv6/syncookies.c
-@@ -161,9 +161,14 @@ struct sock *cookie_v6_check(struct sock *sk, struct sk_buff *skb)
- 	tcp_parse_options(sock_net(sk), skb, &tcp_opt, 0, NULL);
- 
- 	if (tcp_opt.saw_tstamp && tcp_opt.rcv_tsecr) {
--		tsoff = secure_tcpv6_ts_off(sock_net(sk),
--					    ipv6_hdr(skb)->daddr.s6_addr32,
--					    ipv6_hdr(skb)->saddr.s6_addr32);
-+		union tcp_seq_and_ts_off st;
-+
-+		st = secure_tcpv6_seq_and_ts_off(sock_net(sk),
-+						 ipv6_hdr(skb)->daddr.s6_addr32,
-+						 ipv6_hdr(skb)->saddr.s6_addr32,
-+						 tcp_hdr(skb)->dest,
-+						 tcp_hdr(skb)->source);
-+		tsoff = st.ts_off;
- 		tcp_opt.rcv_tsecr -= tsoff;
- 	}
- 
-diff --git a/net/ipv6/tcp_ipv6.c b/net/ipv6/tcp_ipv6.c
-index 9e199a2a43ef1..8503070683d17 100644
---- a/net/ipv6/tcp_ipv6.c
-+++ b/net/ipv6/tcp_ipv6.c
-@@ -112,18 +112,14 @@ static void inet6_sk_rx_dst_set(struct sock *sk, const struct sk_buff *skb)
- 	}
- }
- 
--static u32 tcp_v6_init_seq(const struct sk_buff *skb)
-+static union tcp_seq_and_ts_off
-+tcp_v6_init_seq_and_ts_off(const struct net *net, const struct sk_buff *skb)
- {
--	return secure_tcpv6_seq(ipv6_hdr(skb)->daddr.s6_addr32,
--				ipv6_hdr(skb)->saddr.s6_addr32,
--				tcp_hdr(skb)->dest,
--				tcp_hdr(skb)->source);
--}
--
--static u32 tcp_v6_init_ts_off(const struct net *net, const struct sk_buff *skb)
--{
--	return secure_tcpv6_ts_off(net, ipv6_hdr(skb)->daddr.s6_addr32,
--				   ipv6_hdr(skb)->saddr.s6_addr32);
-+	return secure_tcpv6_seq_and_ts_off(net,
-+					   ipv6_hdr(skb)->daddr.s6_addr32,
-+					   ipv6_hdr(skb)->saddr.s6_addr32,
-+					   tcp_hdr(skb)->dest,
-+					   tcp_hdr(skb)->source);
- }
- 
- static int tcp_v6_pre_connect(struct sock *sk, struct sockaddr *uaddr,
-@@ -323,14 +319,16 @@ static int tcp_v6_connect(struct sock *sk, struct sockaddr *uaddr,
- 	sk_set_txhash(sk);
- 
- 	if (likely(!tp->repair)) {
-+		union tcp_seq_and_ts_off st;
-+
-+		st = secure_tcpv6_seq_and_ts_off(net,
-+						 np->saddr.s6_addr32,
-+						 sk->sk_v6_daddr.s6_addr32,
-+						 inet->inet_sport,
-+						 inet->inet_dport);
- 		if (!tp->write_seq)
--			WRITE_ONCE(tp->write_seq,
--				   secure_tcpv6_seq(np->saddr.s6_addr32,
--						    sk->sk_v6_daddr.s6_addr32,
--						    inet->inet_sport,
--						    inet->inet_dport));
--		tp->tsoffset = secure_tcpv6_ts_off(net, np->saddr.s6_addr32,
--						   sk->sk_v6_daddr.s6_addr32);
-+			WRITE_ONCE(tp->write_seq, st.seq);
-+		tp->tsoffset = st.ts_off;
- 	}
- 
- 	if (tcp_fastopen_defer_connect(sk, &err))
-@@ -837,8 +835,7 @@ const struct tcp_request_sock_ops tcp_request_sock_ipv6_ops = {
- 	.cookie_init_seq =	cookie_v6_init_sequence,
- #endif
- 	.route_req	=	tcp_v6_route_req,
--	.init_seq	=	tcp_v6_init_seq,
--	.init_ts_off	=	tcp_v6_init_ts_off,
-+	.init_seq_and_ts_off	= tcp_v6_init_seq_and_ts_off,
- 	.send_synack	=	tcp_v6_send_synack,
- };
- 
+-		if (!cxl_payload_from_user_allowed(opcode, mbox->payload_in)) {
++		if (!cxl_payload_from_user_allowed(opcode, mbox->payload_in,
++						  in_size)) {
+ 			dev_dbg(cxlds->dev, "%s: input payload not allowed\n",
+ 				cxl_mem_opcode_to_name(opcode));
+ 			kvfree(mbox->payload_in);
 -- 
 2.53.0
 
