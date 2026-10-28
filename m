@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793207571;
-	b=slkEAQfQRsgEFB3HEia2IvH6HcGX+zgVH1z2aPYyHEHFE8fTrk7cw/4vIO5UV/iX8Ut7
-	 0KxGuEggDnAlksErt3ZdSgdh35wW0DPJEPB3slBie3rfmZzD+3eSa9uYyaUkUgWoUg2Cc
-	 1nDH17Grnm9YPUjEpop8fW9BEWmd+c0V90eySYXE2MCwMxNXEXRHrDPxgTO4wVHpM78NF
-	 /4xU/ZNa1vgvlFgUphNhGyxhN67JVcuXw5GJ32B2nMzXlRfN13m5R4BL+VNyGyEPhCw7P
-	 T/dTqVuq5Tqv57z64jjestY1gR6IGYZjI1zRY8sMHQrlQAtAJ12Ev2uO1vo5/Z53mgQ==
+	t=1793207574;
+	b=ttfwQSRDIfw1Iy6RvSt4QCokGASSHUGGLSNp+JgqemLObvELavv/50xOdLC4Sf4aZuxS
+	 z51UjyJdLFS0k37WwHcRvuYQxB1GCbnt27aUEkhpfcg3CdysytvNEQHxfbchWpYSwl8vf
+	 g++uaeHN58sv1zrXQFUxYkZGLO6xQ4ayNwCPxqnkOGcfsKfNXDM4j9Y6kxXyvB6eYH1Mw
+	 b6mpOeTYldLeA/8xbIIKLZqP3+fxr1kNlW/M+k9NL7Kjizm2CednijYT7by5scmI2IOns
+	 9qu2sQCTLUP2RQAb0XKFWedBYu7/2LaDT5r0z2BTZz9uNORI4aZq8baE1SjvFBQeTbw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793207571;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793207574;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=7DzuO4Sf6HqqwrInby43DD8QKTidubN2uL9hSb2nlFM=;
-	b=QSiCUWBg1MdSF2NoB4spIAA47CGIfr4RDtxgMp2orszLsgKqBoKrNTypajDuBZWOYzRZ
-	 QqaD8wcWkEkTMRFw72zLrW5+gWMwgWyuVxLgorQ/HygsdvyI6LG4hxhBWVhVHp7kOvfwE
-	 ORS6h2Dpa+PKT9fZ5U5BV+ODp7Y62OUNiOahkpQTmSc11Px2p7+tmmrtKLLaEUC+Z/ImA
-	 zDXz0U55DwohM8ZOU8C2ji8msP1R10UpohR4qq+3X4PIMo3FlrL7yvrPx3bsbVr6MDqQA
-	 sRLXIEj9Hzt2HRYDnk9nkfLQqBhhJXWO0CB+SdFAhGq6Yr6mOuicGLb1lDLujnV/YEg==
+	bh=6ANc7rjlQP5xaCMUGcKZ39e0wAZYcODqk+4Agyf6wGA=;
+	b=htq6h4tJ+ExYF0WGBN+kq0+yYM6LQpnVMN8zbkFuOvT5r/nzApNH7ZdTbVe4fHSTQJlF
+	 i/YZQ8lxHEAhUNDsuTqPTDJW0s30K3OEs+ShMLVwKNJqBbK79dl8CH9HV8KCQ9qwZn8DD
+	 99JfBhg6sAdpLaHztszIho6rR0w4SgdYQrV+nNIVIXf3J901tVqGBvutHNNxV00Sl+o5d
+	 NZhg4lpw2TmU2A0olH+cMJal4wJHj/zTj+jN53R4krSSC0Vpl/Ud1dtDTXupibkm3Idw3
+	 rSl18LhN7ZrzHF4GPrAvyNaXok8R1AJm7XfsOWjJnNoObNKb0ID9gW9DsmmJGnpA6lA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J9G92JVC;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s4IuYn3x;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B674606A31A;
-	Wed, 28 Oct 2026 17:12:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BF6A606A321;
+	Wed, 28 Oct 2026 17:12:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J9G92JVC
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D7501F01825;
-	Wed, 28 Oct 2026 17:12:50 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s4IuYn3x
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D23F1F01825;
+	Wed, 28 Oct 2026 17:12:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793207570;
-	bh=7DzuO4Sf6HqqwrInby43DD8QKTidubN2uL9hSb2nlFM=;
+	s=korg; t=1793207573;
+	bh=6ANc7rjlQP5xaCMUGcKZ39e0wAZYcODqk+4Agyf6wGA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=J9G92JVCdmw52Wv4+AA4r1qSkia1UY5uF9BuH+5Ua4+An0OlLWWAaPjZBAmdl6K2P
-	 Xj5Wbyuji0AL1NK1KOloEqy2ni8m4ArZpSTL+XJZQkIGDoWwQk7iEY1znB2UMUAKMJ
-	 q8Oj2QHWnSamx8WuDmyQpQDGp5G0OC7ceJy/kcJQ=
+	b=s4IuYn3xFUTmmYEsmR0GcRQj9HqVbOsUiZs+3y6D2mp47a/7wXrR60vQqqYOL/nE4
+	 gQ2DEAnnoYy7wv1GiAOrtu661K4cyDX7cLx+bikHOS84Qu+tL2TzpyB1mNnI7qc+Gf
+	 Pms2szGyVJxz/RztFpvKNnA/krGUZivd/KxO8Hqk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sung Byeongchan <tjdqudcks0424@naver.com>,
-	Ian Kent <raven@themaw.net>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 6.12 063/247] autofs: ignore notification errors from a replaced pipe
-Date: Wed, 28 Oct 2026 17:57:46 +0100
-Message-ID: <20261028165948.875589967@linuxfoundation.org>
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 037/247] regcache: Add ->populate() callback to separate from ->init()
+Date: Wed, 28 Oct 2026 17:57:20 +0100
+Message-ID: <20261028165948.245740819@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165947.349197979@linuxfoundation.org>
 References: <20261028165947.349197979@linuxfoundation.org>
@@ -68,102 +69,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sung Byeongchan <tjdqudcks0424@naver.com>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-commit 65676cd4203c0e41a94caf54080a7f0a95434bda upstream.
+[ Upstream commit 94a3a95f03154d8d4c6206950a7f6ef9a30baec6 ]
 
-autofs_notify_daemon() takes a reference to the current notification
-pipe under wq_mutex, then drops the mutex before writing the request. The
-write can block while the daemon enters catatonic mode and installs a
-replacement pipe.
+In the future changes we would like to change the flow of the cache handling.
+Add ->populate() callback in order to prepare for that.
 
-If the old pipe's reader is then closed, the delayed write returns -EPIPE
-and the generic error path enters catatonic mode again. That transition
-acts on the current superblock state, closes the replacement pipe, and
-releases the new daemon generation's wait queues.
-
-Only enter catatonic mode when the pipe which failed is still the current
-pipe. Factor the already-locked transition so the identity check and state
-change are atomic with respect to another replacement.
-
-This was reproduced on v7.3-rc5-337-gff47652a4b66c in a local QEMU guest.
-An unprivileged UID 65534 lookup filled the old packet pipe before a
-normal CATATONIC/SETPIPEFD restart. On the unmodified kernel, the new pipe
-received HUP and both a pending victim lookup and a later lookup failed
-with ENOENT in two out of two fresh-mount runs.
-
-With this change, the new pipe remained active, received an intact
-304-byte request, and both victim lookups completed in two out of two
-runs. Normal lookup and restart-without-a-blocked-writer controls passed.
-No KASAN, oops, refcount, or lock diagnostic was observed. A source
-reproducer and complete local logs are available privately on request.
-
-The demonstrated impact is limited to denial of a shared autofs service
-during a legitimate daemon restart. No memory corruption, information leak,
-privilege escalation, or code execution primitive was observed.
-
-Fixes: 8d7b48e0bc5fa ("autofs4: add miscellaneous device for ioctls")
-Cc: stable@vger.kernel.org
-Signed-off-by: Sung Byeongchan <tjdqudcks0424@naver.com>
-Link: https://patch.msgid.link/20261007173542.593624-1-tjdqudcks0424@naver.com
-Acked-by: Ian Kent <raven@themaw.net>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Link: https://patch.msgid.link/20251031080540.3970776-2-andriy.shevchenko@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: abff0a48b110 ("regmap: Drop map lock during cache init and exit")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/autofs/waitq.c |   25 +++++++++++++++++++------
- 1 file changed, 19 insertions(+), 6 deletions(-)
+ drivers/base/regmap/internal.h |  1 +
+ drivers/base/regmap/regcache.c | 16 ++++++++++++++++
+ 2 files changed, 17 insertions(+)
 
---- a/fs/autofs/waitq.c
-+++ b/fs/autofs/waitq.c
-@@ -12,15 +12,13 @@
-  */
- static autofs_wqt_t autofs_next_wait_queue = 1;
- 
--void autofs_catatonic_mode(struct autofs_sb_info *sbi)
-+static void autofs_catatonic_mode_locked(struct autofs_sb_info *sbi)
- {
- 	struct autofs_wait_queue *wq, *nwq;
- 
--	mutex_lock(&sbi->wq_mutex);
--	if (sbi->flags & AUTOFS_SBI_CATATONIC) {
--		mutex_unlock(&sbi->wq_mutex);
-+	lockdep_assert_held(&sbi->wq_mutex);
-+	if (sbi->flags & AUTOFS_SBI_CATATONIC)
- 		return;
--	}
- 
- 	pr_debug("entering catatonic mode\n");
- 
-@@ -40,6 +38,21 @@ void autofs_catatonic_mode(struct autofs
- 	fput(sbi->pipe);	/* Close the pipe */
- 	sbi->pipe = NULL;
- 	sbi->pipefd = -1;
-+}
-+
-+void autofs_catatonic_mode(struct autofs_sb_info *sbi)
-+{
-+	mutex_lock(&sbi->wq_mutex);
-+	autofs_catatonic_mode_locked(sbi);
-+	mutex_unlock(&sbi->wq_mutex);
-+}
-+
-+static void autofs_catatonic_mode_for_pipe(struct autofs_sb_info *sbi,
-+					   struct file *pipe)
-+{
-+	mutex_lock(&sbi->wq_mutex);
-+	if (sbi->pipe == pipe)
-+		autofs_catatonic_mode_locked(sbi);
- 	mutex_unlock(&sbi->wq_mutex);
- }
- 
-@@ -170,7 +183,7 @@ static void autofs_notify_daemon(struct
- 		autofs_wait_release(sbi, wq->wait_queue_token, ret);
- 		break;
- 	default:
--		autofs_catatonic_mode(sbi);
-+		autofs_catatonic_mode_for_pipe(sbi, pipe);
- 		break;
+diff --git a/drivers/base/regmap/internal.h b/drivers/base/regmap/internal.h
+index bdb450436cbc5..e3ce87ffdd8c2 100644
+--- a/drivers/base/regmap/internal.h
++++ b/drivers/base/regmap/internal.h
+@@ -186,6 +186,7 @@ struct regcache_ops {
+ 	enum regcache_type type;
+ 	int (*init)(struct regmap *map);
+ 	int (*exit)(struct regmap *map);
++	int (*populate)(struct regmap *map);
+ #ifdef CONFIG_DEBUG_FS
+ 	void (*debugfs_init)(struct regmap *map);
+ #endif
+diff --git a/drivers/base/regmap/regcache.c b/drivers/base/regmap/regcache.c
+index d3659ba3cc112..d2630a55bb50b 100644
+--- a/drivers/base/regmap/regcache.c
++++ b/drivers/base/regmap/regcache.c
+@@ -201,8 +201,24 @@ int regcache_init(struct regmap *map, const struct regmap_config *config)
+ 		if (ret)
+ 			goto err_free;
  	}
- 	fput(pipe);
++
++	if (map->num_reg_defaults && map->cache_ops->populate) {
++		dev_dbg(map->dev, "Populating %s cache\n", map->cache_ops->name);
++		map->lock(map->lock_arg);
++		ret = map->cache_ops->populate(map);
++		map->unlock(map->lock_arg);
++		if (ret)
++			goto err_exit;
++	}
+ 	return 0;
+ 
++err_exit:
++	if (map->cache_ops->exit) {
++		dev_dbg(map->dev, "Destroying %s cache\n", map->cache_ops->name);
++		map->lock(map->lock_arg);
++		ret = map->cache_ops->exit(map);
++		map->unlock(map->lock_arg);
++	}
+ err_free:
+ 	kfree(map->reg_defaults);
+ 	if (map->cache_free)
+-- 
+2.53.0
+
 
 
