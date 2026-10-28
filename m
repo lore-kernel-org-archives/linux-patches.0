@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215273;
-	b=HfTrDcNJ2OhBziMyUFW6zMwa5YL8uiXN7Vf/uYUqvXjuxHCKGbCfVeqXlgOXivJ5S4Wb
-	 neaG1IYzu7+Xa0hKUtdslmXRR2zvjmrQAnuSQrIH4KFKBkOQ2sBcYr4eoTQ7yVTxA3ssI
-	 wGAPlVlER5jl1V8CYRLZrDfeTeU5D/Qk0TDM8GY/pQ27LJyyDQuVXqkkb/b+hScZ71iTN
-	 1G2RJvbvEiM+y7vtYAg5XP5wPI45R6qeXusIMXZEdlTYRpexKfH/t5hOu1RTlqupEotJ9
-	 KtQ+2YAZk1Qk6+C35M9EZjEBzB0oy602WOFqNBNZ3naaSMnwf6uhj7uuHN7L80dD87A==
+	t=1793215276;
+	b=YldYBpoJNBfTTJQm7Bu4rEopMBVedF6030AhGD81LyCUVPlKMITgWnfiIywZ+r5uU7py
+	 wOOrquT0VcIOQZxkDSiGN3cHs/640Ro/7BrGskl0yEza6r8zZUM58SCRTE0+1GCrvPs7B
+	 AhrHMvCAT4EY8grfFznTW4ng7WwhvInfG3KuyRje1rZePHbmK4zUGlDs0gwXqYmIH0+vw
+	 DvNvAcBJpQ4c9vnmu4HJT5NlJaTwh6JMWRw7FTFK5hqTjq8hcg5EQyNiFxxVNOYAx5DJ3
+	 8pHFxQ7ajXt/MecxvrOMHCh0CXhi5Sf84EiHmqRmmnDr//uCnS0b9AtEv3MLtWf/bng==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215273;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215276;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=XFl3zsGrWTd31ATM0WtHBHweZGs2UZxATx7qRL5hc8I=;
-	b=idMmtHja71sw36pi3iHkFJti1ZspfPpazBoIm6ijUw/CmpeS4N+fY5d4UVVrpcOupoeD
-	 tbcpRwQLogzOpIjnHgVSeRg/llq7eHy71vohXPtE56qYgAlv/Uifk/7XdTNJqnZGVyMEe
-	 xETjg/NSxc4lmlKezyoChLnd+ilQctUT89DdOnzzT9qj6Kl25hEImyyR5TJ9kZb/ZC703
-	 VHb3iJ31pbZArER+UozPY0NXZG9DokD4x4YotZpPd/M3/jPEywfSvplDud4p0ugD1cH9R
-	 6ekXh9rPemIwa1rKlPk0r88Rew3N0xcELiUGG0aT7KKW45c8pwZbcPvW/c4RiNZqdzw==
+	bh=VMnuC5aOZB7zURIfS3+DnzxCwfij+H4RzBGRqhqGqLM=;
+	b=u9SVBoosnk9tKjwR552Psa9w1XvX99f7axHzrtiq4V+Fa5A0YIHiRFiyH7qAfJ9q0gCh
+	 IlKl6thOjkC+NyhlrHCRkSOj/crFto9RA5I+t5lK/wAHTJyQpiWRMl0JWMf/DJ2S7Rlkn
+	 BKC/ToTBSv+29ul/KYtpKG49DGAzh+kh5KVOpSuUMfrKYnfoTKaQRlRKqt2DLcyHFgOCz
+	 75ONXIxMftU4A09oCY9mpWYHUZhb53U9BkjAZA9n2LmhzD7A7fA8kGLoPZnn3c4+Vgvs8
+	 KewF4EIeOR8yl5AuecToW84JNMihsIShRqzlRfFAIOOWjile4BJvG+bp6dFIhUt6Cnw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LQ7Ub0bq;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nwJilQQt;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB362606A31F;
-	Wed, 28 Oct 2026 19:21:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA326606A31A;
+	Wed, 28 Oct 2026 19:21:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LQ7Ub0bq
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27D4C1F01828;
-	Wed, 28 Oct 2026 19:21:11 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nwJilQQt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 029C31F01825;
+	Wed, 28 Oct 2026 19:21:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215272;
-	bh=XFl3zsGrWTd31ATM0WtHBHweZGs2UZxATx7qRL5hc8I=;
+	s=korg; t=1793215275;
+	bh=VMnuC5aOZB7zURIfS3+DnzxCwfij+H4RzBGRqhqGqLM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LQ7Ub0bqOAGWLP0qUwICUnHFnqG/ZdKACj3lbBj8z9Jwjb2gwyj/mUfjCScw8ICdN
-	 a+qee+oyFQl35WTx8z3vs5/JM8t87X32AdYBxHfjN2budW58BGLpDXuV0pWjNmEd1s
-	 pQoFeOvUCkdlccYRx1+UmEHY6Lzi4UU+BoCn841I=
+	b=nwJilQQtaYn5EmaFziyTBLcLwJJdxw97y3V0DuZij6mU9VTcY2LQrRYbVjBp4DA62
+	 6TiETBkvQSLV+TH96kSJNXBc5uBafokVHxHLGL/JUIjKV3QCuJ1TW8vcbKgza8ZJvC
+	 DFWheWmHmT9aP99nhxQC2EdjctlFSnMMbrK/g9cs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1153/1887] ksmbd: use opener credentials for ADS I/O
-Date: Wed, 28 Oct 2026 17:54:09 +0100
-Message-ID: <20261028170525.644186265@linuxfoundation.org>
+Subject: [PATCH 6.1 1154/1887] ksmbd: use opener credentials for delete-on-close
+Date: Wed, 28 Oct 2026 17:54:10 +0100
+Message-ID: <20261028170525.668535129@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -71,13 +71,16 @@ Content-Transfer-Encoding: 8bit
 
 From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit baa5e094886fffa7e6272edcb5e08be5ce28262c ]
+[ Upstream commit 52e2f21911158ec961cd5aae19c56460db382af0 ]
 
-Alternate data streams are stored as xattrs. Unlike regular file I/O,
-their read and write paths therefore call VFS xattr helpers which recheck
-inode permissions and LSM policy using the current task credentials.
+Delete-on-close can be completed by deferred or durable handle teardown,
+where no request work is available. Both the base-file unlink and the ADS
+xattr removal consequently run with the ksmbd worker credentials and can
+bypass filesystem permission checks.
 
-Run ADS I/O with the credentials captured when the SMB handle was opened.
+Run both operations with the credentials captured in struct file when the
+handle was opened. This preserves the authenticated user's fsuid, fsgid,
+supplementary groups and capability restrictions at final close.
 
 Cc: stable@vger.kernel.org
 Reported-by: Musaab Khan <musaab.khan@protonmail.com>
@@ -85,76 +88,59 @@ Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/vfs.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ fs/smb/server/vfs.c       | 7 +++++--
+ fs/smb/server/vfs_cache.c | 4 ++++
+ 2 files changed, 9 insertions(+), 2 deletions(-)
 
 diff --git a/fs/smb/server/vfs.c b/fs/smb/server/vfs.c
-index 1da397999941a..bb5ca68f1701f 100644
+index bb5ca68f1701f..992ead0759f7a 100644
 --- a/fs/smb/server/vfs.c
 +++ b/fs/smb/server/vfs.c
-@@ -285,17 +285,20 @@ static ssize_t ksmbd_vfs_getcasexattr(struct user_namespace *user_ns,
- static int ksmbd_vfs_stream_read(struct ksmbd_file *fp, char *buf, loff_t *pos,
- 				 size_t count)
+@@ -1086,13 +1086,15 @@ int ksmbd_vfs_remove_xattr(struct user_namespace *user_ns,
+ 
+ int ksmbd_vfs_unlink(struct file *filp)
  {
 +	const struct cred *saved_cred;
- 	ssize_t v_len;
- 	char *stream_buf = NULL;
+ 	int err = 0;
+ 	struct dentry *dir, *dentry = filp->f_path.dentry;
+ 	struct user_namespace *user_ns = file_mnt_user_ns(filp);
  
- 	ksmbd_debug(VFS, "read stream data pos : %llu, count : %zd\n",
- 		    *pos, count);
- 
-+	saved_cred = override_creds(fp->filp->f_cred);
- 	v_len = ksmbd_vfs_getcasexattr(file_mnt_user_ns(fp->filp),
- 				       fp->filp->f_path.dentry,
- 				       fp->stream.name,
- 				       fp->stream.size,
- 				       &stream_buf);
-+	revert_creds(saved_cred);
- 	if ((int)v_len <= 0)
- 		return (int)v_len;
- 
-@@ -414,6 +417,7 @@ int ksmbd_vfs_read(struct ksmbd_work *work, struct ksmbd_file *fp, size_t count,
- static int ksmbd_vfs_stream_write(struct ksmbd_file *fp, char *buf, loff_t *pos,
- 				  size_t count)
- {
-+	const struct cred *saved_cred;
- 	char *stream_buf = NULL, *wbuf;
- 	struct user_namespace *user_ns = file_mnt_user_ns(fp->filp);
- 	size_t size;
-@@ -434,6 +438,7 @@ static int ksmbd_vfs_stream_write(struct ksmbd_file *fp, char *buf, loff_t *pos,
- 		count = XATTR_SIZE_MAX - *pos;
- 	}
- 
-+	saved_cred = override_creds(fp->filp->f_cred);
- 	v_len = ksmbd_vfs_getcasexattr(user_ns,
- 				       fp->filp->f_path.dentry,
- 				       fp->stream.name,
-@@ -442,14 +447,14 @@ static int ksmbd_vfs_stream_write(struct ksmbd_file *fp, char *buf, loff_t *pos,
- 	if (v_len < 0) {
- 		pr_err("not found stream in xattr : %zd\n", v_len);
- 		err = v_len;
--		goto out;
++	saved_cred = override_creds(filp->f_cred);
+ 	err = mnt_want_write(filp->f_path.mnt);
+ 	if (err)
+-		return err;
 +		goto out_revert;
- 	}
  
- 	if (v_len < size) {
- 		wbuf = kvzalloc(size, GFP_KERNEL);
- 		if (!wbuf) {
- 			err = -ENOMEM;
--			goto out;
-+			goto out_revert;
- 		}
- 
- 		if (v_len > 0)
-@@ -467,6 +472,8 @@ static int ksmbd_vfs_stream_write(struct ksmbd_file *fp, char *buf, loff_t *pos,
- 				 size,
- 				 0,
- 				 true);
+ 	dir = dget_parent(dentry);
+ 	err = ksmbd_vfs_lock_parent(dir, dentry);
+@@ -1112,7 +1114,8 @@ int ksmbd_vfs_unlink(struct file *filp)
+ out:
+ 	dput(dir);
+ 	mnt_drop_write(filp->f_path.mnt);
+-
 +out_revert:
 +	revert_creds(saved_cred);
- 	if (err < 0)
- 		goto out;
+ 	return err;
+ }
  
+diff --git a/fs/smb/server/vfs_cache.c b/fs/smb/server/vfs_cache.c
+index d10cd67d6793c..f59abc34bbfe2 100644
+--- a/fs/smb/server/vfs_cache.c
++++ b/fs/smb/server/vfs_cache.c
+@@ -283,9 +283,13 @@ static void __ksmbd_inode_close(struct ksmbd_file *fp)
+ 		write_unlock(&ci->m_lock);
+ 
+ 		if (remove_stream_xattr) {
++			const struct cred *saved_cred;
++
++			saved_cred = override_creds(filp->f_cred);
+ 			err = ksmbd_vfs_remove_xattr(file_mnt_user_ns(filp),
+ 						     &filp->f_path,
+ 						     fp->stream.name);
++			revert_creds(saved_cred);
+ 			if (err)
+ 				pr_err("remove xattr failed : %s\n",
+ 				       fp->stream.name);
 -- 
 2.53.0
 
