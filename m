@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793210778;
-	b=4POp00U4zAIuq5UEMAte1AfqywP0I9+K4sUNJxDMmIMaWIPxXJcZ76rzZwpnnqOMhoV2
-	 NIHstuzHW2jd5E6sEQo7nIeX3EgnZgF4Hl+kG98uuno+TbIl0TooDfieQzj/OsMoWXtnb
-	 5IfffmVz4d21UVRrThkJD9CHkyvWWOMmlf/v6SZQ1gYDXXmKV9Kq8shU8sKZ3ulSO1TmJ
-	 lb7pyOEJ3JK3ui1mpsoRf1DyrceJBswZhk2PM/X2WnYWvOMgwrTm9swU+XUS+R59ql0bp
-	 yN7UiFli8KIJ1Z/K2zZVGk6j/I7y70cKh2SKLPXeJ104BQtJPepLMANf+XwkpFkcysQ==
+	t=1793210780;
+	b=t4F8re9cBaI5H8QQb7HdjWbYVTWRcoWcR+JF0iXiL7VKAuF76UKQ0dZgy4hwyTgPaf25
+	 7oNMgTuOn/TE6OFrF5F3neCzkNtdBWv7c9bFbzH2/vxgdGUKeOR/9Viww2Ht4QOp6kmhT
+	 EncDCi0ALlf2lIqB1laDvDC8r2avHaW9ZNnC52dAjlDLIcSt7hR8eAJ95kLRZFKCGQ0j7
+	 4VVpaywFXRv1/k0VWQrpJd5nZ6BHyxpdQbanzRKf+nD+7MApyAzcqqdMfqSVPZ5V4ZhHb
+	 a5tJRh/xv/6/6fZeL2LgF31XYAKbIkvEcqo+I6fQI2T43sfPGM0T/KlfEAJUKONHeWQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793210778;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793210780;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=HOdxJmahu9pCb8fQoV/l55BrB2faxRZxFD9QZVZE0Dc=;
-	b=1K764FVI6dN9IbPMBF22zbW7OjsXhBhNxgBeQzHYjYSncrmQEbf456JbBj9HuFEeyYpl
-	 uVt/KjRWDHXh4TKTPqz0kezrD13aYPL/82rFwFAq7d/lUpWCvuVhU5a8yW/fA194r4PLn
-	 Ay8Y74xbegJ5PyK0dl7YUYpPC4niqVS0+6wvCkh2oLM7YtyiNXOBhdvyoA3fST5TawzoJ
-	 t8xh1EyMr9uP8H472nOuHZHvqJ9GFEtrvxuVR6H4CLLxr/wgSdutPKlmBPJF9ErfHqsdk
-	 W3Kc9CSBbRbeYkET9m31wK+Y4XmEts/fIk5HDIhdXpzj+d/vQatXqtH+h1BQY8H8EVg==
+	bh=7sovBnqw+tEwkt+DMueIb7JJ4J6w36EeNrI65tIP0dk=;
+	b=3Qj/hU3XT0hqFk8n3KTk3TMxAYbxxmUB6RYRySi0Ebm6/wJiioKlgUcFV44B+vuT8imS
+	 1ir7UJxoMIfsA4tKYRxH8nN3SwQmjdsTkRkCZSxYNT5GvQx2Z3XEwz07vKgTUvOaYlfbk
+	 dwLaNpFG3WbEF7QY9HmRBsGWk2PQecKIOWYAGf5z/1/+qgniZrA0KMx+acDe/LBSx9B9P
+	 Z1cPDW1T3uEkRwOY67yaLHeh8KFa3Bnpu/xQeQSnZjnRAeoWorrcS5SLYO29WQLN/TbmA
+	 ujAXEVfKHkoGeZA4m7+5HXq2ZL9yZhRBKktPrwxvGpxRKL81mHnBsVXGKFKG2mZVW2g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=umqKQZUI;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Sn2M928m;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B50A7606A31A;
-	Wed, 28 Oct 2026 18:06:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D809606A321;
+	Wed, 28 Oct 2026 18:06:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=umqKQZUI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5DD71F01829;
-	Wed, 28 Oct 2026 18:06:16 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Sn2M928m
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A02D81F01828;
+	Wed, 28 Oct 2026 18:06:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793210777;
-	bh=HOdxJmahu9pCb8fQoV/l55BrB2faxRZxFD9QZVZE0Dc=;
+	s=korg; t=1793210780;
+	bh=7sovBnqw+tEwkt+DMueIb7JJ4J6w36EeNrI65tIP0dk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=umqKQZUIaaIGwdukAWFzN8yVNv5xpNUbdxad+b+NaW6Kbt9bKhvXyKE2R2sTdRdAr
-	 B7CAucqvBIYUt8oiv2RbEsRKCdh1LgVf2DpCnBJcGg34KesQBMFkRUWBeWRlR6p7Af
-	 1gkYNg4xvrcj71v01PYTJzjAwljFfFxAKlzuomqc=
+	b=Sn2M928mSuJ42l0IgH36H+K0YwOkQX8GS/79CEzBBYD3wc48ZY5gU7FDHyGMUkhrw
+	 VXnenMQHTjzMq4LpRWqNT7dA6j/VfZlE4p087NXoJZd9FB+rew+f4kFGwYpGEU4VL1
+	 ivtlmUstaEmMgUMLS6xFIyhDNApd+ggpoRQNEUws=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Xin Long <lucien.xin@gmail.com>,
-	Aaron Conole <aconole@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Chen Changcheng <chenchangcheng@kylinos.cn>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 146/571] openvswitch: add nf_ct_is_confirmed check before assigning the helper
-Date: Wed, 28 Oct 2026 17:54:53 +0100
-Message-ID: <20261028170011.480269653@linuxfoundation.org>
+Subject: [PATCH 5.15 129/571] HID: alps: unregister DualPoint Stick input device on remove
+Date: Wed, 28 Oct 2026 17:54:36 +0100
+Message-ID: <20261028170011.079898148@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -70,65 +68,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xin Long <lucien.xin@gmail.com>
+From: Chen Changcheng <chenchangcheng@kylinos.cn>
 
-[ Upstream commit 3c1860543fccc1d0cfe3fd6b190e414a418fe60e ]
+[ Upstream commit aa9dde93e05a837645fdfd577eea71f0733f0694 ]
 
-A WARN_ON call trace would be triggered when 'ct(commit, alg=helper)'
-applies on a confirmed connection:
+alps_input_configured() allocates a second input device ("DualPoint
+Stick") with input_allocate_device() and registers it, but the
+alps_driver struct has no .remove handler and input2 is not tracked in
+hdev->inputs.  The default remove path (hid_hw_stop -> hidinput_disconnect)
+only iterates hdev->inputs, so input2 is never unregistered and leaks
+on every device removal.
 
-  WARNING: CPU: 0 PID: 1251 at net/netfilter/nf_conntrack_extend.c:98
-  RIP: 0010:nf_ct_ext_add+0x12d/0x150 [nf_conntrack]
-  Call Trace:
-   <TASK>
-   nf_ct_helper_ext_add+0x12/0x60 [nf_conntrack]
-   __nf_ct_try_assign_helper+0xc4/0x160 [nf_conntrack]
-   __ovs_ct_lookup+0x72e/0x780 [openvswitch]
-   ovs_ct_execute+0x1d8/0x920 [openvswitch]
-   do_execute_actions+0x4e6/0xb60 [openvswitch]
-   ovs_execute_actions+0x60/0x140 [openvswitch]
-   ovs_packet_cmd_execute+0x2ad/0x310 [openvswitch]
-   genl_family_rcv_msg_doit.isra.15+0x113/0x150
-   genl_rcv_msg+0xef/0x1f0
+Add a .remove handler that stops the device first (preventing URB
+callbacks from touching input2 during teardown) and then unregisters
+input2.
 
-which can be reproduced with these OVS flows:
-
-  table=0, in_port=veth1,tcp,tcp_dst=2121,ct_state=-trk
-  actions=ct(commit, table=1)
-  table=1, in_port=veth1,tcp,tcp_dst=2121,ct_state=+trk+new
-  actions=ct(commit, alg=ftp),normal
-
-The issue was introduced by commit 248d45f1e193 ("openvswitch: Allow
-attaching helper in later commit") where it somehow removed the check
-of nf_ct_is_confirmed before asigning the helper. This patch is to fix
-it by bringing it back.
-
-Fixes: 248d45f1e193 ("openvswitch: Allow attaching helper in later commit")
-Reported-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Xin Long <lucien.xin@gmail.com>
-Acked-by: Aaron Conole <aconole@redhat.com>
-Tested-by: Aaron Conole <aconole@redhat.com>
-Link: https://lore.kernel.org/r/c5c9092a22a2194650222bffaf786902613deb16.1665085502.git.lucien.xin@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 2562756dde55 ("HID: add Alps I2C HID Touchpad-Stick support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Chen Changcheng <chenchangcheng@kylinos.cn>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/openvswitch/conntrack.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/hid/hid-alps.c | 19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
 
-diff --git a/net/openvswitch/conntrack.c b/net/openvswitch/conntrack.c
-index f0f0204a0e2b6..ff610c320c284 100644
---- a/net/openvswitch/conntrack.c
-+++ b/net/openvswitch/conntrack.c
-@@ -1037,7 +1037,8 @@ static int __ovs_ct_lookup(struct net *net, struct sw_flow_key *key,
- 		 * connections which we will commit, we may need to attach
- 		 * the helper here.
- 		 */
--		if (info->commit && info->helper && !nfct_help(ct)) {
-+		if (!nf_ct_is_confirmed(ct) && info->commit &&
-+		    info->helper && !nfct_help(ct)) {
- 			int err = __nf_ct_try_assign_helper(ct, info->ct,
- 							    GFP_ATOMIC);
- 			if (err)
+diff --git a/drivers/hid/hid-alps.c b/drivers/hid/hid-alps.c
+index 35df84426196c..25da180175007 100644
+--- a/drivers/hid/hid-alps.c
++++ b/drivers/hid/hid-alps.c
+@@ -825,6 +825,24 @@ static int alps_probe(struct hid_device *hdev, const struct hid_device_id *id)
+ 	return 0;
+ }
+ 
++static void alps_remove(struct hid_device *hdev)
++{
++	struct alps_dev *data = hid_get_drvdata(hdev);
++
++	/*
++	 * input2 ("DualPoint Stick") is allocated separately and is not
++	 * tracked in hdev->inputs, so the default remove path
++	 * (hid_hw_stop -> hidinput_disconnect) does not unregister it.
++	 *
++	 * Stop the device first so that no URB callback can touch input2
++	 * while it is being unregistered, then drop it explicitly.
++	 */
++	hid_hw_stop(hdev);
++
++	if (data->input2)
++		input_unregister_device(data->input2);
++}
++
+ static const struct hid_device_id alps_id[] = {
+ 	{ HID_DEVICE(HID_BUS_ANY, HID_GROUP_ANY,
+ 		USB_VENDOR_ID_ALPS_JP, HID_DEVICE_ID_ALPS_U1_DUAL) },
+@@ -847,6 +865,7 @@ static struct hid_driver alps_driver = {
+ 	.input_configured	= alps_input_configured,
+ 	.resume			= pm_ptr(alps_post_resume),
+ 	.reset_resume		= pm_ptr(alps_post_reset),
++	.remove			= alps_remove,
+ };
+ 
+ module_hid_driver(alps_driver);
 -- 
 2.53.0
 
