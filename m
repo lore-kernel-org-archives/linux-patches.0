@@ -1,100 +1,58 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.remote-ip=209.85.208.42
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=fail;
-	t=1793210205;
-	b=MDPi0zbLeSAVEBFCMGTTdMBtAcfzzP59IWhLttOzR/hwWHZef2sr+LUgz6FB/No+/Cjg
-	 NHkoXkBGXHSat1xPP/rqo6JdUDWY3EsxWDhjHWs4KAx5perupNsnXD5f3E57iuSRGaEpa
-	 KUkwK0I4VwfJBySr/aSCeH/jMeNQOMDKeDQYyBftGIFKn3Xq4q2qlOTb1bLJo6iUqIDko
-	 H8Z0GJPeXoAxZZPso6vYScWbpduJeKRIj72O+L8mjedTq+kSBl0yTBw1zxt5skN2EsQ3Z
-	 iu8Zi95KxxPAz2t9tORmQoh8u8f7WHaAaWzCNqY4HqVU0V6lFwyfypvNtqf6sxfj5Ew==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793210205;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
-	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
-	 Message-ID:Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
-	bh=+7QuCpMDuaPEn/821Gdh04dyOpLKWIkef/TiSBsZIMo=;
-	b=O+Lij8zOb4KOSvDF8VnAzWm7AWkkE5JmGk2FS+iijUbr6py4pdg7mHV2uN7hL1ZVUV1j
-	 +oHGSJREaQbHcnG8h+74cc+EhWXXhQWcaLQz3gj22olaMUdch5Va9mtmxZEL5H/jlmd0i
-	 KENZxXycOC8V/GcxYzPE5uarGH1H00bLHHKRpl7wpEOVyk+SM6f6011a1lllaeT9hB4h2
-	 Ls4Q4uOWhpZml8dDkLpQQl552jDLssQZgIY/7eQvJZMh6TemOE/FGxVQA86FzqWr3Xhis
-	 RYDZNQ6+MhFTUWe9+PF0b3h2RpcP6g66o/jdsSDwOk/Gk+pbfpaBSs/F1s38PqjLNDg==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=eXgMSbJg;
-	arc=fail smtp.remote-ip=209.85.208.42
-Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1793210213;
+	b=w0uPmwWP0A/ZoVJnH6/vdzJFZU58CFKtpGLyPb44mxhVd77Ne4PBpP90+XVvmuySxsso
+	 4qbYtagUHGUL2WOzCTOKnds++SxjR9j2YzAstJAAaaKXBZZNsZ5YdEKxl3dLCFh7SVKzZ
+	 sBuTFmc4S7xP73uxfFsKsdraMcKmABCXKYUriZSaQdAZDuYsGLNDv7w6vzyilogxSttH1
+	 vlaAGB9lhyxDXEtjapc5dPLgD1gNBAljaxrGmAV0qMDw1qPDobB8Rsk43xDgEaXg2VKNu
+	 kDIylycPj6HbdWaAjKFPmuiPWg3lHGju+Mf0O473t2MP3zbamWVqXzu/2ywaVCGdLAQ==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793210213;
+	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
+	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=x+w/vPf5IiVzZwfQVLdRrXo3t23ZGGEzhPHo1o+Yx44=;
+	b=TLApnRUgAVQ4naN9XnZ8UpR51FaZJdZRulYfZpi4od6U6VPdkuskfDZxnxy8/yrXQskc
+	 +/B1mz/wa4C0Q4hGghGRyofzxx789MLE6oxwoMVh9/WqeOLLsZqaCD7fJzFUwkqved/VE
+	 Ma1dZLMHp3NxLgLWEwUV2uPvMhQm+CPtR5dUDnVM9n0eTVN6ij/tW+fqnkMdQInMkg6Wj
+	 KDTYo9Pt1JGY1btA3WkUU+ESpGPIx9HOcKpEC2Hpbd6B40BhSXtHiZPvTHIth6CNxNshz
+	 CLGJn5FQFI0/1zCQo5Yy5KqyzT2L0XS3+BZWRB9IMeFdE8FaQKgU6Cc1zrxGBeJmQzw==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=weY0wCyU;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60AA6606A31E
-	for <patches@lists.linux.dev>; Wed, 28 Oct 2026 17:56:45 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 60AA6606A31E
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4B2E606A31A;
+	Wed, 28 Oct 2026 17:56:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=eXgMSbJg
-Received: by mail-ed1-f42.google.com with SMTP id 4fb4d7f45d1cf-6b1dae0febeso2034859a12.2
-        for <patches@lists.linux.dev>; Wed, 28 Oct 2026 10:56:45 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1793210204; cv=none;
-        d=google.com; s=arc-20260327;
-        b=FilNrM5DHV3Y/r6Naguk/vvo5VjlaDgJkuPaKnKdSfp7emRTX7IQZW4wPFbtddIjGy
-         sVC58TxzK01D/96Z+OMCbBzjpg4EmKqYKULoPkgpUYkyTqrF/xr8z12so6Ie4+s062TY
-         Pi8/GdaFfM1Mf7HlQtEhatelOs3A1pLQHCw7E9GbvYD11iX9LsptKkSer9r/NOT3oykQ
-         3kvzElvCklsKjPIdk+8lyNwn0br8YTZVq/g6Ru+wzzJ5KfXTMKX29gcCc9NFciPYLCbz
-         SJiQ4EJZgIov2ofO4wE6WXDArdDGcd8IQuidlcq78RNxAWVGaDiawYwDqiG2x+2EmqSM
-         wn9Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=+7QuCpMDuaPEn/821Gdh04dyOpLKWIkef/TiSBsZIMo=;
-        fh=iyOIARXbTk61NaYCZpasG9A5zKtPLjhZstSVuMHZtl0=;
-        b=cgfM4qzAKN8Q40uaLA8DjY6S2IgFXyWF9vcGuI29FxNwdKDQRpopTUBIwxFhc3AOzu
-         WNXhAs4g+GM7gBni4V+EKmaUvhlFCJ3rCDVg82pDV6GOfNA+T9Ic6Wsxu1/E+C2jeKF9
-         lcfC86qmfy2jFtFwIzU3oukK2KZVSqHOrJBfhzXmHke0lvbWDCoVMd9t4ehsaNXE1Tfs
-         Q0MyWWVoa/oOYKaou9NOd0D3NCtqj1Ta5qTnDdTXq4KKu+qgMtxQTzjdJks4E6o/M0XM
-         v471a0NSE9P2dzppAWFbCaNgpcWPAYa6zlmUb1+4bHv6TF5I7dLhAFPjFwov5vpu5a4r
-         86pw==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793210204; x=1793815004; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=+7QuCpMDuaPEn/821Gdh04dyOpLKWIkef/TiSBsZIMo=;
-        b=eXgMSbJgmaQwmABNm2EzY0lQ5LGhyGM1blcUYArkIv9J7LiyXN4Vhh/sMgKJ1vjYUh
-         gKPRYBsosDAuJeixZaLkAx+ltjA0nXzq1u2ces6qxvI39k6lM2HTfH5hhevVGhXf9l2o
-         /EvNkBzsHgw1iIgU3F6/GnPhm+gsyXZVnE6vHwpcrp5loOG96VsbFq4ezgoMSv2V/Pws
-         RNxZdcINhBEwHZ+YbAqWap8qZqvBHXhAI8M/ffceDV+O9uzHmuBSqEv4ltH3DfMUfBDU
-         12F8OTrlLlmuitBKPfqmhA2DcPKVUSQdA0HCEsCXsxfCnraSq/MlEqJLXiCdZavpQLWE
-         sU2A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793210204; x=1793815004;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=+7QuCpMDuaPEn/821Gdh04dyOpLKWIkef/TiSBsZIMo=;
-        b=eFyTL4/sSJsflZIdKhsReTtmRETYxjHxJ4A0GgoEOM7BwOUQAmwwL0yX/Jqulp50Cx
-         te7B4+9CD93mNdnduu0fVehgxjg1PbdZ/U51rNaJ24fAApdE8e/tzo8I8v0dp2saR+he
-         7meHqvFGxGcjRaT65q2NwTXaW6WXeFdaby8p2qf6e2/aDaBaouMHMgMGyCp+UE1X/AcR
-         S8//jQytiakYeOre9nhibB/rHSYGB4eiC3AM8wJRZrtY9T7/rw5Nqn2eABy40Y/Ds7jI
-         23MaVeY1duqMVqC3ob8dpUoVEbKr5EI+dxBvIImrsFz/CvBsBWZJ0LIEfZ0J6kAWVRbw
-         4eBg==
-X-Forwarded-Encrypted: i=1; AKwUvBxQ4VW2vytRUhlYTsuK6ultl9BQ/HfHkFrp6GSQpwRqfBiwxWZB9OzXi3odvQVRZOKXsDgzhzU6@lists.linux.dev
-X-Gm-Message-State: AFq9FYJeG3ht1v1LskZhOzi2I757FDRt6NJtp8LQ3cmiYA99Vm0pZG6Q
-	7qaSJIHXq1Np7LKDCQ3Xb05jnATv0hlNXY8tyDtQwxd+YT3N4J4nPxb7JZaoDWZcKNaNnQaxxBZ
-	0oLVFG+9dUUeso+vvDYxgcNW39RhZH+Y=
-X-Gm-Gg: AYBFou2Tk62wZo1ZP+J6LmAAKTN3wnE0cEjdJbk2uBTr1XMt2X3WcJlEGuEukUs04Mg
-	jvYdmY5Ji0Qis38cEJTGfj29eAT6qxIagflJPJC+HUBJpuZBIQaMWi/ifkta2ceMqh2RIEQ85uC
-	vn/O+IXn2h05Raihsxa1pCdUvdlsTOQHRouTmn3Lk47AA0gMv2nS70imJpOD2s7noRF4O2I20Ry
-	bBuHJtcRpD5MnvjvQSgFglrXYHrNxDDhwPw87GllJBsGBIGvwLk+rTENyyVnxwcv+RcEf5l66kx
-	i0jrmx3qcuGPhMvVJd+LEmvhGruQoUmxKaYnLSDGprV/cXybv+YuwUzfeatKpo7WyT+OH49Cjfh
-	AiVyM6P9lxGc9AtjaHNPdiuJl6u0mOy5CFfe2NgJ3TjHNssYjwXp5/FmF0queroLTiC33Iw==
-X-Received: by 2002:aa7:d152:0:b0:6b4:21b3:a407 with SMTP id
- 4fb4d7f45d1cf-6b49cbec0d5mr1632982a12.22.1793210203401; Wed, 28 Oct 2026
- 10:56:43 -0700 (PDT)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=weY0wCyU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4163B1F01825;
+	Wed, 28 Oct 2026 17:56:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1793210212;
+	bh=x+w/vPf5IiVzZwfQVLdRrXo3t23ZGGEzhPHo1o+Yx44=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=weY0wCyUEbsmOav0atlKTsLOVbobpnNIqSsEUBLgBtHhPha21AHlah+flw1kQ74gd
+	 v7uVrPjNBRfllolMKKj0MLt/lITqsT3V2olTx+9EqsmIeGEftmun0PBbIOWVyE4oO8
+	 Ip6c5RNMG2YGfe7IHHKK1iQiuhJS7Xxsp4FVP+1U=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Vitaly Prosyak <vitaly.prosyak@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 099/168] drm/exec: dont immediately add prelocked obj to array of locked objs
+Date: Wed, 28 Oct 2026 18:00:35 +0100
+Message-ID: <20261028165945.430147101@linuxfoundation.org>
+X-Mailer: git-send-email 2.56.0
+In-Reply-To: <20261028165943.089486480@linuxfoundation.org>
+References: <20261028165943.089486480@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -104,36 +62,203 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261028165947.349197979@linuxfoundation.org> <20261028165950.290722602@linuxfoundation.org>
-In-Reply-To: <20261028165950.290722602@linuxfoundation.org>
-From: Amir Goldstein <amir73il@gmail.com>
-Date: Wed, 28 Oct 2026 19:56:32 +0200
-X-Gm-Features: AclHuK-tumKlKRu862aY7gzIO6eryO1Aqbm0yAf8iy9yxR8Czrude8p5hPdV6F4
-Message-ID: <CAOQ4uxjuTuVpx9GV86vt8JwKk9qOPayV7dx_86EofozKkK_kWQ@mail.gmail.com>
-Subject: Re: [PATCH 6.12 122/247] fs: get rid of __FMODE_NONOTIFY kludge
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	Al Viro <viro@zeniv.linux.org.uk>, Jan Kara <jack@suse.cz>, 
-	Guenter Roeck <linux@roeck-us.net>, Edvard Conrad <edvard@tuta.io>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Wed, Oct 28, 2026 at 7:15=E2=80=AFPM Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> 6.12-stable review patch.  If anyone has any objections, please let me kn=
-ow.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
-Objection.
+------------------
 
-This causes a (potential) deadlock regression:
+From: Christian König <ckoenig.leichtzumerken@gmail.com>
 
-https://lore.kernel.org/linux-unionfs/P4sl5iz--F-9@tuta.io/
+[ Upstream commit 26401a4999f1596a515b2e704e7066ac09306488 ]
 
-Working on a fix, but no reason to backport a commit, which is essentially
-code cleanup that causes a regression.
+When a contention is detected the drm_exec object grabs a reference to
+the contended object, unlocks all other objects and pre-locks the
+contended one before anything else.
 
-Not sure if this already hit other LTS kernels.
+The problem is that it is possible that this pre-locked object was about
+to be destroyed and drm_exec is now holding the last reference to it.
 
-Thanks,
-Amir.
+So we never actually see this pre-locked object again to be explicitly
+locked and so also never reserve a slot for a dma_fence object on it.
+
+Should the driver now use drm_exec_for_each_locked_object() to add a new
+fence to all locked objects we eventually see a warning or even a
+BUG_ON() to prevent random memory corruption.
+
+Fix this by keeping the prelocked object out of the array of locked objs
+until it was explicitly mentioned by the driver again.
+
+If the prelocked object is never mentioned again by the driver
+just unlock and drop the reference at the end of the locking loop.
+
+Signed-off-by: Christian König <christian.koenig@amd.com>
+Reported-by: Vitaly Prosyak <vitaly.prosyak@amd.com>
+Reviewed-by: Vitaly Prosyak <vitaly.prosyak@amd.com>
+Tested-by: Vitaly Prosyak <vitaly.prosyak@amd.com>
+Fixes: 09593216bff1 ("drm: execution context for GEM buffers v7")
+CC: stable@vger.kernel.org # v6.6+
+Link: https://lore.kernel.org/r/20261007124657.9664-1-christian.koenig@amd.com
+[ sashal: Adapted iterator documentation to preserve the existing explicit index parameter. ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ drivers/gpu/drm/drm_exec.c | 73 ++++++++++++++++++++++----------------
+ include/drm/drm_exec.h     |  9 ++---
+ 2 files changed, 48 insertions(+), 34 deletions(-)
+
+diff --git a/drivers/gpu/drm/drm_exec.c b/drivers/gpu/drm/drm_exec.c
+index d22d487a8356b..4947447598ef5 100644
+--- a/drivers/gpu/drm/drm_exec.c
++++ b/drivers/gpu/drm/drm_exec.c
+@@ -50,6 +50,16 @@
+ /* Dummy value used to initially enter the retry loop */
+ #define DRM_EXEC_DUMMY ((void *)~0)
+ 
++/* Unlock and put the prelocked obj */
++static void drm_exec_drop_prelocked(struct drm_exec *exec)
++{
++	if (exec->prelocked) {
++		dma_resv_unlock(exec->prelocked->resv);
++		drm_gem_object_put(exec->prelocked);
++		exec->prelocked = NULL;
++	}
++}
++
+ /* Unlock all objects and drop references */
+ static void drm_exec_unlock_all(struct drm_exec *exec)
+ {
+@@ -61,8 +71,7 @@ static void drm_exec_unlock_all(struct drm_exec *exec)
+ 		drm_gem_object_put(obj);
+ 	}
+ 
+-	drm_gem_object_put(exec->prelocked);
+-	exec->prelocked = NULL;
++	drm_exec_drop_prelocked(exec);
+ }
+ 
+ /**
+@@ -114,6 +123,14 @@ EXPORT_SYMBOL(drm_exec_fini);
+ bool drm_exec_cleanup(struct drm_exec *exec)
+ {
+ 	if (likely(!exec->contended)) {
++
++		/*
++		 * The contended and prelocked object might never be passed to
++		 * drm_exec_lock_obj() again. This can happen when the object
++		 * is about to be cleaned up and we now hold the last reference
++		 * to it. Make sure that we don't unnecessarily keep it around.
++		 */
++		drm_exec_drop_prelocked(exec);
+ 		ww_acquire_done(&exec->ticket);
+ 		return false;
+ 	}
+@@ -172,16 +189,16 @@ static int drm_exec_lock_contended(struct drm_exec *exec)
+ 		dma_resv_lock_slow(obj->resv, &exec->ticket);
+ 	}
+ 
+-	ret = drm_exec_obj_locked(exec, obj);
+-	if (unlikely(ret))
+-		goto error_unlock;
++	/*
++	 * It is perfectly possible that we see another contention before the
++	 * first one is fully handled.
++	 */
++	drm_exec_drop_prelocked(exec);
+ 
++	/* We move the reference from contended to prelocked here */
+ 	exec->prelocked = obj;
+ 	return 0;
+ 
+-error_unlock:
+-	dma_resv_unlock(obj->resv);
+-
+ error_dropref:
+ 	drm_gem_object_put(obj);
+ 	return ret;
+@@ -209,35 +226,31 @@ int drm_exec_lock_obj(struct drm_exec *exec, struct drm_gem_object *obj)
+ 	if (exec->prelocked == obj) {
+ 		drm_gem_object_put(exec->prelocked);
+ 		exec->prelocked = NULL;
+-		return 0;
+-	}
++	} else {
++		if (exec->flags & DRM_EXEC_INTERRUPTIBLE_WAIT)
++			ret = dma_resv_lock_interruptible(obj->resv,
++							  &exec->ticket);
++		else
++			ret = dma_resv_lock(obj->resv, &exec->ticket);
++
++		if (unlikely(ret == -EDEADLK)) {
++			drm_gem_object_get(obj);
++			exec->contended = obj;
++			return -EDEADLK;
++		}
+ 
+-	if (exec->flags & DRM_EXEC_INTERRUPTIBLE_WAIT)
+-		ret = dma_resv_lock_interruptible(obj->resv, &exec->ticket);
+-	else
+-		ret = dma_resv_lock(obj->resv, &exec->ticket);
++		if (unlikely(ret == -EALREADY) &&
++		    exec->flags & DRM_EXEC_IGNORE_DUPLICATES)
++			return 0;
+ 
+-	if (unlikely(ret == -EDEADLK)) {
+-		drm_gem_object_get(obj);
+-		exec->contended = obj;
+-		return -EDEADLK;
++		if (unlikely(ret))
++			return ret;
+ 	}
+ 
+-	if (unlikely(ret == -EALREADY) &&
+-	    exec->flags & DRM_EXEC_IGNORE_DUPLICATES)
+-		return 0;
+-
+-	if (unlikely(ret))
+-		return ret;
+-
+ 	ret = drm_exec_obj_locked(exec, obj);
+ 	if (ret)
+-		goto error_unlock;
+-
+-	return 0;
++		dma_resv_unlock(obj->resv);
+ 
+-error_unlock:
+-	dma_resv_unlock(obj->resv);
+ 	return ret;
+ }
+ EXPORT_SYMBOL(drm_exec_lock_obj);
+diff --git a/include/drm/drm_exec.h b/include/drm/drm_exec.h
+index b5bf0b6da791c..fe2f21f4f066f 100644
+--- a/include/drm/drm_exec.h
++++ b/include/drm/drm_exec.h
+@@ -71,7 +71,8 @@ drm_exec_obj(struct drm_exec *exec, unsigned long index)
+  * @index: unsigned long index for the iteration
+  * @obj: the current GEM object
+  *
+- * Iterate over all the locked GEM objects inside the drm_exec object.
++ * Iterate over all the explicitly locked GEM objects inside the drm_exec
++ * container, except for the contended and implicit prelocked one.
+  */
+ #define drm_exec_for_each_locked_object(exec, index, obj)		\
+ 	for ((index) = 0; ((obj) = drm_exec_obj(exec, index)); ++(index))
+@@ -83,9 +84,9 @@ drm_exec_obj(struct drm_exec *exec, unsigned long index)
+  * @index: unsigned long index for the iteration
+  * @obj: the current GEM object
+  *
+- * Iterate over all the locked GEM objects inside the drm_exec object in
+- * reverse locking order. Note that @index may go below zero and wrap,
+- * but that will be caught by drm_exec_obj(), returning a NULL object.
++ * Iterate over all the explicitly locked GEM objects inside the drm_exec
++ * container in reverse locking order. Note that @index may go below zero and wrap
++ * around, but that will be caught by drm_exec_obj(), returning a NULL object.
+  */
+ #define drm_exec_for_each_locked_object_reverse(exec, index, obj)	\
+ 	for ((index) = (exec)->num_objects - 1;				\
+-- 
+2.53.0
+
+
+
