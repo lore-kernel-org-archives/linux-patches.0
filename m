@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215267;
-	b=DnuBnXqLKThB/es1VbHv6v49mFHpXmlAlb2IZcdDQvpfMzEm+3BfcpMDtQQL5tiCKHZx
-	 DfcIBQEqtVcLJO4osAO+0o41rKpeXSgfriw9Q5VK8XeNh7mYC30b4LIztOl3QFLge42w0
-	 oZPgfA9YkDx5tKGtPekDOB7tzMI30qxaprfOiHZntKhRIojRbOOrJnGcy+isv8FBGbX7j
-	 uXwJ5HXGBs/lPyuFCAhDvSqOydCyLZkj9c8NKxmb6WwC3nGi+uyuZ1xzq00zg7A5PQw5+
-	 e+elK/qaJOXcsDa3IoSu5Kbf7hXzrgfRHZliLWk1PNMuzmLZjAV3YgNiTikEeInNGKg==
+	t=1793215270;
+	b=pNzyNdp6yyIXk+WLALlJObXJ3wh4BTvGcExRu7Qaa6nV2bOJjKbTzLXwWh1//NAklQKJ
+	 5+HCukdc42Q1Bc6Yv0s68vEsUth4G8BzRDC9avCqsOkvXW1XFM/uqsMDpX0c4BbV2/cQB
+	 XTVYR+SnXFlioi1Y0E1aFylgZHpCUxJ8eKMNlwxCa1Z2Czz0siI+/Fd0slOWdG5fyPk0K
+	 Sp/CmKv5CxBgQC2nERZf2QRwZQgL9Z/oVfyNvnvxJr/ZEpRDzzGKcw6nwR2ct6dFRISVI
+	 1VFV+r6pGSn+znKTZ2eu+orZ26IFc5MiZwr6m2uuOmKTYQeiq/aRf1xIdk7N3JmtUcA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215267;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215270;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=CLBL3mM3rGIaRHdnqwrncXCzKspsu55JV8taVRPfP88=;
-	b=LScI/91wSWRME0kwXuQVMf8oMkTYgU8z12qbqJ0V3IqwS8QW5FWaUuY0J/dImrxxOt3c
-	 rAMRp+nSU0oUTYLh1ZTVfBTRe84ah5beR7pI2MJSQPN1uKNhgSobIYNEQ42HHtwjCnf/9
-	 l8lExksB+yTVGW8vRi5vCMgvwjdZgAtzfnal1Y+E7vp06tz02AhaebrgvFn0FetF9DwOg
-	 vqA5mLx0iIUu4yaPrjUFRD+96ylVVacIAcGv+x28S6LsWZfzNxihcmhIOOdtDUH7PsqeZ
-	 HbnEUHn15WwqPg8VjtdbSxUDZSzlv+HEPVZ3pQXkBDEdUBrUyRzZMPDqv1kWD4s3Qig==
+	bh=+JvT7RdxK1R9y0S+os5YxoQJuRQGsOZeoIMV6iUSWS0=;
+	b=SOLQM26LhjN5Ks4+++zdI0+lR5Y9WAJmuGtIVvP0MLBjmus8PuZCysWMLZiycJoWsIbK
+	 iTEKcMNzqSRpTNviMt4dY8xB0Tg00Zpz8rkntuP4mV/Ce2yDRaioQ/sEDpFH8O2hQVmTL
+	 hu7lrwB9++PVVVzcm4QyYwKSEltHevUnYFEDAMoJ4iCnSaf6XkQPlGrmUj0wgjTiV3bmz
+	 DnuTyp/Z2zrFbd6bEuN491upDCYo0ajOSDXDA8C1bEcCcTEhhPkPBNusXoeMCNda0adZY
+	 tPt0110dzbKQvMiuJ5d7RqLpuxulhbf5zZZt5d1+T4PyYCE6ypLumeC5A78yueuImpQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e9fA+efy;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="ZCC17/F9";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B232606A31A;
-	Wed, 28 Oct 2026 19:21:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 030B5606A31A;
+	Wed, 28 Oct 2026 19:21:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e9fA+efy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B7CF1F01825;
-	Wed, 28 Oct 2026 19:21:06 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZCC17/F9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 521E61F01825;
+	Wed, 28 Oct 2026 19:21:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215267;
-	bh=CLBL3mM3rGIaRHdnqwrncXCzKspsu55JV8taVRPfP88=;
+	s=korg; t=1793215269;
+	bh=+JvT7RdxK1R9y0S+os5YxoQJuRQGsOZeoIMV6iUSWS0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=e9fA+efyrrRlOyGc1TMGV66puCCd4KOM/yQzOXsqqyegnoyrCglOTQCQ+ATaAWXbq
-	 kZnITXs9E8O+Ayw4ZlMMOgExI+LaVbzcVHB70UAHUp6hQ4BODkFZ9Ld2It8iAfaCCl
-	 WuqQGt3zKq5JNRPVnbSldzzmjzH0TrA9gJG/LEuo=
+	b=ZCC17/F9P6TLOQBiA+hhASoBAFUmtd0KouFue7s/FhCBm4AktykSIlMHmCCgi+U/V
+	 u1+MF0BEkUm5M3UUxKxe4SHta7VOic6xuBWJVqg1UVLipQ7v++3zMSmUYpemwA3DXN
+	 AAMoMWHBc9hBqonkuYzVH+qsKRpWGpTyL4ULHkEM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haofeng Li <lihaofeng@kylinos.cn>,
-	ChenXiaoSong <chenxiaosong@kylinos.cn>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1152/1887] ksmbd: validate NTLMv2 response before updating session key
-Date: Wed, 28 Oct 2026 17:54:08 +0100
-Message-ID: <20261028170525.620470721@linuxfoundation.org>
+Subject: [PATCH 6.1 1135/1887] hwmon: (lm90) Stop work before releasing hwmon device
+Date: Wed, 28 Oct 2026 17:53:51 +0100
+Message-ID: <20261028170525.234326902@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -70,128 +68,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haofeng Li <lihaofeng@kylinos.cn>
+From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit 954d196bebb2b50151cb96454c72dc113b2af1ac ]
+[ Upstream commit b09a45601094c7f4ec4db8090b825fa61e169d93 ]
 
-ksmbd_auth_ntlmv2() derives the NTLMv2 session key into
-sess->sess_key before it verifies the NTLMv2 response.
-ksmbd_decode_ntlmssp_auth_blob() then continues into KEY_XCH even
-when ksmbd_auth_ntlmv2() failed.
+Sashiko reports:
 
-With SMB3 multichannel binding, the failed authentication operates on
-an existing session and the session setup error path does not expire
-binding sessions. A client can send a binding session setup with a
-bad NT proof and KEY_XCH and still modify sess->sess_key before
-STATUS_LOGON_FAILURE is returned.
+In lm90_probe(), the devm action to cancel the alert_work and report_work
+(lm90_restore_conf) is registered in lm90_init_client() before
+devm_hwmon_device_register_with_info() is called.
 
-Relevant path:
+Because devm executes cleanup actions in reverse order during module
+unbind or probe failure, the hwmon device is unregistered and freed first.
 
-  smb2_sess_setup()
-    -> conn->binding = true
-    -> ntlm_authenticate()
-       -> session_user()
-       -> ksmbd_decode_ntlmssp_auth_blob()
-          -> ksmbd_auth_ntlmv2()
-             -> calc_ntlmv2_hash()
-             -> hmac_md5_usingrawkey(..., sess->sess_key)
-             -> crypto_memneq() returns mismatch
-          -> KEY_XCH arc4_crypt(..., sess->sess_key, ...)
-    -> out_err without expiring the binding session
+If lm90_alert_work() or lm90_report_alarms() runs in the window between
+the hwmon device being freed and the delayed works being cancelled,
+lm90_update_alarms() will dereference the freed data->hwmon_dev here.
 
-Derive the base session key into a local buffer and copy it to
-sess->sess_key only after the proof matches. Return immediately on
-authentication failure so KEY_XCH is only processed after successful
-authentication.
+Fix the problem by canceling the workers separately after registering
+the hwmon device and before registering the interrupt handler. This ensures
+that the workers are canceled after interrupts are disabled and before
+the hwmon device is released. Add "shutdown" flag to indicate that device
+shutdown is in progress to prevent workers from being re-armed.
 
-Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
-Fixes: f9929ef6a2a5 ("ksmbd: add support for key exchange")
-Cc: stable@vger.kernel.org
-Signed-off-by: Haofeng Li <lihaofeng@kylinos.cn>
-Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: f6d0775119fb9 ("hwmon: (lm90) Rework alarm/status handling")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/auth.c | 22 ++++++++++++++++------
- 1 file changed, 16 insertions(+), 6 deletions(-)
+ drivers/hwmon/lm90.c | 24 ++++++++++++++++++++----
+ 1 file changed, 20 insertions(+), 4 deletions(-)
 
-diff --git a/fs/smb/server/auth.c b/fs/smb/server/auth.c
-index 6509814770938..57be9520f8790 100644
---- a/fs/smb/server/auth.c
-+++ b/fs/smb/server/auth.c
-@@ -72,13 +72,12 @@ void ksmbd_copy_gss_neg_header(void *buf)
+diff --git a/drivers/hwmon/lm90.c b/drivers/hwmon/lm90.c
+index 7ce75e64cc3ca..8970927bef8ab 100644
+--- a/drivers/hwmon/lm90.c
++++ b/drivers/hwmon/lm90.c
+@@ -694,6 +694,7 @@ struct lm90_data {
+ 	struct mutex update_lock;
+ 	struct delayed_work alert_work;
+ 	struct work_struct report_work;
++	bool shutdown;		/* true if shutting down */
+ 	bool valid;		/* true if register values are valid */
+ 	bool alarms_valid;	/* true if status register values are valid */
+ 	unsigned long last_updated; /* in jiffies */
+@@ -1112,6 +1113,9 @@ static void lm90_report_alarms(struct work_struct *work)
  
- /**
-  * ksmbd_gen_sess_key() - function to generate session key
-- * @sess:	session of connection
-+ * @sess_key:	output buffer for the session key
-  * @hash:	source hash value to be used for find session key
-  * @hmac:	source hmac value to be used for finding session key
-  *
-  */
--static int ksmbd_gen_sess_key(struct ksmbd_session *sess, char *hash,
--			      char *hmac)
-+static int ksmbd_gen_sess_key(char *sess_key, char *hash, char *hmac)
+ static int lm90_update_alarms_locked(struct lm90_data *data, bool force)
  {
- 	struct ksmbd_crypto_ctx *ctx;
- 	int rc;
-@@ -111,7 +110,7 @@ static int ksmbd_gen_sess_key(struct ksmbd_session *sess, char *hash,
- 		goto out;
- 	}
- 
--	rc = crypto_shash_final(CRYPTO_HMACMD5(ctx), sess->sess_key);
-+	rc = crypto_shash_final(CRYPTO_HMACMD5(ctx), sess_key);
- 	if (rc) {
- 		ksmbd_debug(AUTH, "Could not generate hmacmd5 hash error %d\n", rc);
- 		goto out;
-@@ -222,6 +221,7 @@ int ksmbd_auth_ntlmv2(struct ksmbd_conn *conn, struct ksmbd_session *sess,
- {
- 	char ntlmv2_hash[CIFS_ENCPWD_SIZE];
- 	char ntlmv2_rsp[CIFS_HMAC_MD5_HASH_SIZE];
-+	char sess_key[SMB2_NTLMV2_SESSKEY_SIZE];
- 	struct ksmbd_crypto_ctx *ctx = NULL;
- 	char *construct = NULL;
- 	int rc, len;
-@@ -276,19 +276,27 @@ int ksmbd_auth_ntlmv2(struct ksmbd_conn *conn, struct ksmbd_session *sess,
- 	ksmbd_release_crypto_ctx(ctx);
- 	ctx = NULL;
- 
--	rc = ksmbd_gen_sess_key(sess, ntlmv2_hash, ntlmv2_rsp);
-+	rc = ksmbd_gen_sess_key(sess_key, ntlmv2_hash, ntlmv2_rsp);
- 	if (rc) {
- 		ksmbd_debug(AUTH, "Could not generate sess key\n");
- 		goto out;
- 	}
- 
- 	if (crypto_memneq(ntlmv2->ntlmv2_hash, ntlmv2_rsp,
--			  CIFS_HMAC_MD5_HASH_SIZE))
-+			  CIFS_HMAC_MD5_HASH_SIZE)) {
- 		rc = -EINVAL;
-+		goto out;
-+	}
++	if (data->shutdown)
++		return 0;
 +
-+	memcpy(sess->sess_key, sess_key, sizeof(sess_key));
-+	rc = 0;
- out:
- 	if (ctx)
- 		ksmbd_release_crypto_ctx(ctx);
- 	kfree(construct);
-+	memzero_explicit(ntlmv2_hash, sizeof(ntlmv2_hash));
-+	memzero_explicit(ntlmv2_rsp, sizeof(ntlmv2_rsp));
-+	memzero_explicit(sess_key, sizeof(sess_key));
- 	return rc;
+ 	if (force || !data->alarms_valid ||
+ 	    time_after(jiffies, data->alarms_updated + msecs_to_jiffies(data->update_interval))) {
+ 		struct i2c_client *client = data->client;
+@@ -2557,15 +2561,23 @@ static void lm90_restore_conf(void *_data)
+ 	struct lm90_data *data = _data;
+ 	struct i2c_client *client = data->client;
+ 
+-	cancel_delayed_work_sync(&data->alert_work);
+-	cancel_work_sync(&data->report_work);
+-
+ 	/* Restore initial configuration */
+ 	if (data->flags & LM90_HAVE_CONVRATE)
+ 		lm90_write_convrate(data, data->convrate_orig);
+ 	lm90_write_reg(client, LM90_REG_CONFIG1, data->config_orig);
  }
  
-@@ -345,6 +353,8 @@ int ksmbd_decode_ntlmssp_auth_blob(struct authenticate_message *authblob,
- 				nt_len - CIFS_ENCPWD_SIZE,
- 				domain_name, conn->ntlmssp.cryptkey);
- 	kfree(domain_name);
-+	if (ret)
-+		return ret;
++static void lm90_stop_work(void *_data)
++{
++	struct lm90_data *data = _data;
++
++	mutex_lock(&data->update_lock);
++	data->shutdown = true;
++	mutex_unlock(&data->update_lock);
++	cancel_delayed_work_sync(&data->alert_work);
++	cancel_work_sync(&data->report_work);
++}
++
+ static int lm90_init_client(struct i2c_client *client, struct lm90_data *data)
+ {
+ 	struct device_node *np = client->dev.of_node;
+@@ -2914,6 +2926,10 @@ static int lm90_probe(struct i2c_client *client)
  
- 	/* The recovered secondary session key */
- 	if (conn->ntlmssp.client_flags & NTLMSSP_NEGOTIATE_KEY_XCH) {
+ 	data->hwmon_dev = hwmon_dev;
+ 
++	err = devm_add_action_or_reset(&client->dev, lm90_stop_work, data);
++	if (err)
++		return err;
++
+ 	if (client->irq) {
+ 		dev_dbg(dev, "IRQ: %d\n", client->irq);
+ 		err = devm_request_threaded_irq(dev, client->irq,
+@@ -2942,7 +2958,7 @@ static void lm90_alert(struct i2c_client *client, enum i2c_alert_protocol type,
+ 		 */
+ 		struct lm90_data *data = i2c_get_clientdata(client);
+ 
+-		if ((data->flags & LM90_HAVE_BROKEN_ALERT) &&
++		if (!data->shutdown && (data->flags & LM90_HAVE_BROKEN_ALERT) &&
+ 		    (data->current_alarms & data->alert_alarms)) {
+ 			if (!(data->config & 0x80)) {
+ 				dev_dbg(&client->dev, "Disabling ALERT#\n");
 -- 
 2.53.0
 
