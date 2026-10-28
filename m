@@ -1,62 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793217048;
-	b=OgctWE+UtxpL2MyZNT8t/HrhMDO4hVav/svPk/IQIKrranxYmvX4arKTMYS4DGZZ80XX
-	 EorVBQXUMTU1SEGGFX5PZdF8TUkq4jKUq/tGbsAOktm83jjyPbJR9sFJSl6BukuGOkQ7p
-	 xsoFvQb4gUa2EU5XVpACraL0D4QR7S8rWuNJ0deRK4fgEVg9ZLNtElSKiRU/uB3tkuoo1
-	 SAG0M78HUCO7gKFDzVv1ULTxYOqlzeO3nns0x12D1Y/MRCumNAbjmXkHNTbt9WbMFdy76
-	 7mJ5/g9BHkOGCEc2vW7YxNWnx5H7y4Z/lb7EeVdGVdDIwpjEYlIfQTYsWNTZ7/pPWlA==
+	t=1793217051;
+	b=xHN8NXHSgFvE86/Jb0TJngSwUzLBBZQ3v+/lA4QSaZXBgwj3TOf0Fx47f3ngZEZOH0ef
+	 Gna/i7hz+GaNQZ0tVRIb/tJlUEc9vCDOprBBySRoByDighmqA5pwAKBTR1wgJtlh7DxVc
+	 mijrx3cT5LDT/vSWYYh3WekbZsjtY4jYq6/CSxGeheYcYpcaH0haZGlV9CGhE1SucWvIJ
+	 NAKK6LFsrUHTbH85fjt97SlHFS2gDc9i0cQ7WDT31qN7pYbVeGUr/L36aE+pZoq/qWM/M
+	 kyxvr++KerjNAM0CSsdxw6TRVjhYlHd4UOk8p/RQcvmtrsrMYIiHiIagvmIr+7/XZfQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793217048;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793217051;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=XSUdkgSDfH4R5akaUwLA/RLz6vDfVWZVLldPkKw0HRc=;
-	b=ZBhjzefYnmKOjEFDN91WCIAiNbP5P4TI8WpF36+IKkgF13BptRnW52QSzwFEny8TeksN
-	 KBrd+JzPqfQzQdwYzCBm9xCtx5frhTKU5FiQauVfZ1UAqJhMbopE6EjjZ/9Gnu6gftwAt
-	 dpwd7wqfk9fuPCF2FlQj5Gq30brYvdpOSGia0XM0x+ncCcD+k3OVLuiOMavbKpX5w8WXi
-	 +FQ3Azf63DFvqbnaOs8hLHuSKVXovpioBtSITzantj1BDgWNRdnTYjoFGg2JHeogpi2Gu
-	 p6ss2ZYMKo+3jcfnuvadrLauY7u+bh2qe8TAKsn0hhhVjiQ7IkPGHheJ0yKGrSYj+qw==
+	bh=7A/jHczpgxifNgk7op33HtMhelo4HHFrgmhQ69b0wcU=;
+	b=dYs25j437Yfa5k+Koxd13CRM7Z4m06THZRsH7h49lBlDyo8+3UiWjQdZoDO0bNdncPhE
+	 mqBG7+HLQ2ph6ACPmnShK6V8+ME5ZfXV68Zu2YRopEVArofpQmcDqZhMBzmG0AqTjb8UL
+	 hKdxRSGToe9g6tNM3eGz5EZiCLKWEv3TcJNoIz46fgjuaYQBbKErZGDDxOQhC3X7OwFf6
+	 LC/jJZ5AgNs9QYJuAi+uqN8/MpuDAl5O8kxYbSEExFQttV8WIghQ5qcwYjnDSdmx7VqdI
+	 v7ERwMv8M5ThYAis5OQCHzEM6Ub5JT6rfBEFA3IBxfibtOhsBkg7vlRrNzye3l61UYQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wy+vSC1M;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="N/3FPyYh";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B685606A320;
-	Wed, 28 Oct 2026 19:50:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5389A606A320;
+	Wed, 28 Oct 2026 19:50:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wy+vSC1M
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7D2F1F01825;
-	Wed, 28 Oct 2026 19:50:47 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N/3FPyYh
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE8461F01825;
+	Wed, 28 Oct 2026 19:50:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793217048;
-	bh=XSUdkgSDfH4R5akaUwLA/RLz6vDfVWZVLldPkKw0HRc=;
+	s=korg; t=1793217051;
+	bh=7A/jHczpgxifNgk7op33HtMhelo4HHFrgmhQ69b0wcU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wy+vSC1MScjL4eeRD1PJx2Ar8KIIZs8hjz2GAtVG1eH9Bj8A1jacwTEvYQUUchBZN
-	 7BDpB/jGfHpsHjK/4A+GOC/6/9rrS9x10dgF5OZ37xQ0pV+oh4E26HvIM0v4Sdeq3n
-	 8HbeAO/XE2aspHy2avNltpQWk5vKl4i4HmWBkJSY=
+	b=N/3FPyYhoN2UayuAbJzKdVLTLogFXeZbh4hvfOX7eexp8908GL9WtmecO8nOX8jjW
+	 wcknrgDdCukEGrWQsGSeb60lIwWO4LgpfTzidMkL18L6mHIvOGf5w0j2P/wPn2e9m7
+	 fu9trBLKdbe118cs2E02bUHAPcC53sB3sLyivzbI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+38a0cbd267eff2d286ff@syzkaller.appspotmail.com,
-	Kairui Song <kasong@tencent.com>,
-	Chengming Zhou <chengming.zhou@linux.dev>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Michal Hocko <mhocko@suse.com>,
-	Muchun Song <muchun.song@linux.dev>,
-	Qi Zheng <zhengqi.arch@bytedance.com>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
-	Sasha Levin <sashal@kernel.org>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	Yu Zhao <yuzhao@google.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 1769/1887] mm, madvise: fix potential workingset node list_lru leaks
-Date: Wed, 28 Oct 2026 18:04:25 +0100
-Message-ID: <20261028170539.710439546@linuxfoundation.org>
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	TencentOS Corvus AI <corvus@tencent.com>,
+	Jun Yang <junvyyang@tencent.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 1770/1887] net: bridge: mcast: dont truncate the port group walk on teardown
+Date: Wed, 28 Oct 2026 18:04:26 +0100
+Message-ID: <20261028170539.732590514@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -78,90 +69,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kairui Song <kasong@tencent.com>
+From: Jun Yang <littleddfu@gmail.com>
 
-[ Upstream commit 62e72d2cf702a5e2fb53d9c46ed900d9384e4a06 ]
+commit 5a3f7a683aee56e1f15c9d53041f3236767eaae7 upstream.
 
-Since commit 5abc1e37afa0 ("mm: list_lru: allocate list_lru_one only when
-needed"), all list_lru users need to allocate the items using the new
-infrastructure that provides list_lru info for slab allocation, ensuring
-that the corresponding memcg list_lru is allocated before use.
+__br_multicast_disable_port_ctx() and br_multicast_del_port() walk
+port->mglist with hlist_for_each_entry_safe(). However,
+br_multicast_find_del_pg() can also delete other entries from the same
+list through br_multicast_fwd_src_remove() or __fwd_del_star_excl().
 
-For workingset shadow nodes (which are xa_node), users are converted to
-use the new infrastructure by commit 9bbdc0f32409 ("xarray: use
-kmem_cache_alloc_lru to allocate xa_node").  The xas->xa_lru will be set
-correctly for filemap users.  However, there is a missing case: xa_node
-allocations caused by madvise(..., MADV_COLLAPSE).
+If such an entry is the iterator's saved next node, hlist_del_init()
+clears its ->next and terminates the walk early. The reproducer triggers
+this in both teardown walks, leaving port groups in the bridge mdb with
+a dangling ->key.port after del_nbp() frees the port:
 
-madvise(..., MADV_COLLAPSE) will also read in the absent parts of file
-map, and there will be xa_nodes allocated for the caller's memcg (assuming
-it's not rootcg).  However, these allocations won't trigger memcg list_lru
-allocation because the proper xas info was not set.
+  BUG: KASAN: slab-use-after-free in __mdb_fill_info+0x1191/0x1320
+   __mdb_fill_info+0x1191/0x1320
+   br_mdb_dump+0x594/0xe40
+   rtnl_mdb_dump+0x1cf/0x5d0
 
-If nothing else has allocated other xa_nodes for that memcg to trigger
-list_lru creation, and memory pressure starts to evict file pages,
-workingset_update_node will try to add these xa_nodes to their
-corresponding memcg list_lru, and it does not exist (NULL).  So they will
-be added to rootcg's list_lru instead.
+Use hlist_del_init_rcu() to unlink the group while preserving ->next.
+br_multicast_del_pg() and the teardown walks run under
+br->multicast_lock. The GC worker must acquire the same lock before
+detaching the group for destruction, so the node remains alive while
+the walk uses the preserved pointer.
 
-This shouldn't be a significant issue in practice, but it is indeed
-unexpected behavior, and these xa_nodes will not be reclaimed effectively.
-And may lead to incorrect counting of the list_lru->nr_items counter.
+Preserving ->next means a walk can now reach a group that an earlier
+iteration already deleted as a side effect. That group is off mp->ports,
+so br_multicast_find_del_pg() would fall through its port scan and hit
+the trailing WARN_ON(1). Skip such groups at the top of that helper: a
+port group is put on port->mglist when it is created and only unlinked
+when it is deleted, so hlist_unhashed() identifies exactly this case.
 
-This problem wasn't exposed until recent commit 28e98022b31ef
-("mm/list_lru: simplify reparenting and initial allocation") added a
-sanity check: only dying memcg could have a NULL list_lru when
-list_lru_{add,del} is called.  This problem triggered this WARNING.
-
-So make madvise(..., MADV_COLLAPSE) also call xas_set_lru() to pass the
-list_lru which we may want to insert xa_node into later.  And move
-mapping_set_update to mm/internal.h, and turn into a macro to avoid
-including extra headers in mm/internal.h.
-
-Link: https://lkml.kernel.org/r/20241222122936.67501-1-ryncsn@gmail.com
-Fixes: 9bbdc0f32409 ("xarray: use kmem_cache_alloc_lru to allocate xa_node")
-Reported-by: syzbot+38a0cbd267eff2d286ff@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/lkml/675d01e9.050a0220.37aaf.00be.GAE@google.com/
-Signed-off-by: Kairui Song <kasong@tencent.com>
-Cc: Chengming Zhou <chengming.zhou@linux.dev>
-Cc: Johannes Weiner <hannes@cmpxchg.org>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Muchun Song <muchun.song@linux.dev>
-Cc: Qi Zheng <zhengqi.arch@bytedance.com>
-Cc: Roman Gushchin <roman.gushchin@linux.dev>
-Cc: Sasha Levin <sashal@kernel.org>
-Cc: Shakeel Butt <shakeel.butt@linux.dev>
-Cc: Yu Zhao <yuzhao@google.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: b08123684bd5 ("net: bridge: mcast: install S,G entries automatically based on reports")
+Cc: stable@vger.kernel.org
+Suggested-by: Nikolay Aleksandrov <razor@blackwall.org>
+Reported-by: TencentOS Corvus AI <corvus@tencent.com>
+Signed-off-by: Jun Yang <junvyyang@tencent.com>
+Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
+Link: https://patch.msgid.link/20260831111330.199543-1-junvyyang@tencent.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/khugepaged.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/bridge/br_multicast.c |   13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/mm/khugepaged.c b/mm/khugepaged.c
-index ded9a00b20b58..4c3581364cb28 100644
---- a/mm/khugepaged.c
-+++ b/mm/khugepaged.c
-@@ -19,6 +19,7 @@
- #include <linux/page_table_check.h>
- #include <linux/swapops.h>
- #include <linux/shmem_fs.h>
-+#include <linux/dax.h>
+--- a/net/bridge/br_multicast.c
++++ b/net/bridge/br_multicast.c
+@@ -689,7 +689,11 @@ static void __br_multicast_del_pg(struct
+ 	struct hlist_node *tmp;
  
- #include <asm/tlb.h>
- #include <asm/pgalloc.h>
-@@ -1788,6 +1789,8 @@ static int collapse_file(struct mm_struct *mm, unsigned long addr,
- 	if (result != SCAN_SUCCEED)
- 		goto out;
+ 	rcu_assign_pointer(*pp, pg->next);
+-	hlist_del_init(&pg->mglist);
++	/* Keep ->next (held under multicast_lock, freed later by the GC work):
++	 * a port->mglist teardown walk may have latched this node as its next,
++	 * and deleting other groups of the same port must not truncate it.
++	 */
++	hlist_del_init_rcu(&pg->mglist);
+ 	br_multicast_eht_clean_sets(pg);
+ 	hlist_for_each_entry_safe(ent, tmp, &pg->src_list, node)
+ 		br_multicast_del_group_src(ent, false);
+@@ -723,6 +727,13 @@ static void br_multicast_find_del_pg(str
+ 	struct net_bridge_mdb_entry *mp;
+ 	struct net_bridge_port_group *p;
  
-+	mapping_set_update(&xas, mapping);
++	/* A teardown walk over port->mglist can reach a group that an earlier
++	 * iteration already deleted as a side effect. It is off mp->ports by
++	 * now, so skip it instead of falling through to the WARN_ON() below.
++	 */
++	if (hlist_unhashed(&pg->mglist))
++		return;
 +
- 	/*
- 	 * Ensure we have slots for all the pages in the range.  This is
- 	 * almost certainly a no-op because most of the pages must be present
--- 
-2.53.0
-
+ 	mp = br_mdb_ip_get(br, &pg->key.addr);
+ 	if (WARN_ON(!mp))
+ 		return;
 
 
