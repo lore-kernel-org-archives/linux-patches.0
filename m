@@ -1,54 +1,65 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793212408;
-	b=naEtCRSC3R8N7wQNzSHEhbUWMlwYwTSm3Q8tbp7SNOCjhHizm6Q0bA/K8kseZhLX0OXz
-	 0F6FNrRNVzD3GRDOeYw/DHguVPDddDwWfARGk2wJfTGbky82uaDUauOlXCcPDGcYR7Pv9
-	 R3QMtX3Eu2bZdQrgqN9sPXJRbjPaXWY9zbDE3yIu2SzKvoKMgv1QNj0NUKjcpe8pqmnnG
-	 5IdzjChxS4zJJOkO3wqzt/Qzux8Nv8vPnv1qXbHPVa/y+Rj29cDp1Z5SBBMoAq2ONU84+
-	 kQ4QtdsxlM5S41+fwJCp5OIWtMyBshTJ3LPbzTg+O0Q24edEKhWMgCb2LshVZBREFPw==
+	t=1793212410;
+	b=Ft0LhK3JGw0xTsPXT+zh2TLOCN5EUrSfDL3P4bZw0Ecry2TBZyf0YPs3RlRd3GwmD1Sz
+	 PtjN6ScCR9KaFMFCvSbMSu0IvxQjcGlXrJw4UHrCmeCeOEVsZTvtbQnAfPZZX2kZcfOD9
+	 mjxiF4ld4UozyFe8ubeigmcBEyvUB1LxceJkeOhSquHNx1HG0/TNQfZOR0Ppd9x9IX4BM
+	 5YQMkmbIARhFGJJC80IXlfPXj9amUrOeQihsvK1ssdUgZWDph2UnIs3/t95QJcf10zp0+
+	 YJHFt35mRB/tSO9vNo9FvWvxqO7zGy/XXxNCqscBi4rg/eNbz8zcD+/wY/c5Zz1Fn0g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793212408;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793212410;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=DT/qJLhUm/34MRu0M4npWj9gtTbpcuW+MH6VOWlkbA4=;
-	b=M37hvsqW46cnCp5emjHQ/kM/tUt0di6bNlrdUulFgwN0zjgsTlv3M/GhLRtv5Bc4T9lK
-	 o29UsGhsWjF/kqT7rLnWVw0ukxIv/tpEqBfMN1RLMvsclxkUCBoDlnJnvBwQ7UL+25VDs
-	 yplbpYtG5htUgouJH7J+9DhQ1wHUvfFyXHdYr/uvLUXQtIqIJP07DNb+GP2AcYB3vdHpj
-	 omI55U1P6FRANv//5EfssVwTckwvO35rg+Af/FVIZpwENfaW+Lsbk5OzS3SBnSJbPEN5B
-	 1vJwapRKxt8ZUoz2Tjr/QaSEQ3K9AFViDFPzNHmTCn/AvKQKVDSrhzdAmLJrm28NLfA==
+	bh=2HXLQWVTm3bRnWOQDmIrsvaGHRvymYwMo+HLGDurxm4=;
+	b=OTCn6ZD86Eyi0MDS57GjtMSRRh53q4pxU5ifl8j7GCpqK2iwxYwk3rYtQPHP7S1rnFnz
+	 WEJEjZPv96qang0yQQbZG+O+Ty4WNIdUbp+PG9O2mzogQIRKtZv820RFx02pE2J6qLz27
+	 QO8joGPr5nAvD/LAgsgTQ9zl9TmkoQqedbIReoAmrHsb7X0jFaN162fWd0t6YEiICFTvL
+	 0580h7/IUMk+X4GUr9+KIVzQaSDv3hxQJq9ifY0FIuu87tqfGQIgA6Zs8TSUwLTKR0yPT
+	 dQgTU6VscHKFQOjEz0Udnsvsazb6Z+ZwwSjL81w8aHkQoxFzxZOsNlvEw25qfs3bCJw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Yces/QXM";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Z8xWWgUn;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A65A2606A32A;
-	Wed, 28 Oct 2026 18:33:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A3AA606A31D;
+	Wed, 28 Oct 2026 18:33:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Yces/QXM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0202B1F031E3;
-	Wed, 28 Oct 2026 18:33:26 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Z8xWWgUn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A97871F031E0;
+	Wed, 28 Oct 2026 18:33:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793212407;
-	bh=DT/qJLhUm/34MRu0M4npWj9gtTbpcuW+MH6VOWlkbA4=;
+	s=korg; t=1793212410;
+	bh=2HXLQWVTm3bRnWOQDmIrsvaGHRvymYwMo+HLGDurxm4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Yces/QXMdOlEWazZfjJ5RXap85XpE+H4M70sgwasBJejU9RmqSz7TrKXzVXE7ocTG
-	 hq3cl739DqzsbmpJZx9l4Swq6mPWpqOJkIa21sSE6vRnRQ8UsxDCrOvcp7Vqvc5BgI
-	 jvsw5VB+IjahKpkVUV348LaXNFZzI/54Eyg9zXlo=
+	b=Z8xWWgUnQBt815PfJkywe//FetmMuxBsIMU5RaDQOlPow7jO1Jn+yOZ7IbX8O4+Si
+	 8C9Ujl8/kozegLcSECsmwfeDcZkLRimdmI90t/i/+3g4sOqjMvh3LYwx+XtGYDArP0
+	 qVO5HqtI24R+EV8dmY6H/8EEgP4dKBalM9nj+gT0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Waiman Long <longman@redhat.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Muchun Song <songmuchun@bytedance.com>,
+	Jinjiang Tu <tujinjiang@huawei.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
+	Lance Yang <lance.yang@linux.dev>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>,
+	Minchan Kim <minchan@kernel.org>,
+	Harry Yoo <harry@kernel.org>,
+	Hiroyouki Kamezawa <kamezawa.hiroyu@jp.fujitsu.com>,
+	Jann Horn <jannh@google.com>,
+	Kefeng Wang <wangkefeng.wang@huawei.com>,
+	Larry Woodman <lwoodman@redhat.com>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Nanyong Sun <sunnanyong@huawei.com>,
+	Rik van Riel <riel@surriel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0142/1887] mm/kmemleak: fix UAF bug in kmemleak_scan()
-Date: Wed, 28 Oct 2026 17:37:18 +0100
-Message-ID: <20261028170502.466658570@linuxfoundation.org>
+Subject: [PATCH 6.1 0143/1887] mm/rmap: fix missing barrier between anon_vma init and vma->anon_vma publish
+Date: Wed, 28 Oct 2026 17:37:19 +0100
+Message-ID: <20261028170502.489980604@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -70,119 +81,186 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Waiman Long <longman@redhat.com>
+From: Jinjiang Tu <tujinjiang@huawei.com>
 
-[ Upstream commit 782e4179535971c3574c367bfaaefea8970b3e0b ]
+[ Upstream commit b6ac0b3f6013c168f22cad97e79967accacb08e1 ]
 
-Commit 6edda04ccc7c ("mm/kmemleak: prevent soft lockup in first object
-iteration loop of kmemleak_scan()") fixes soft lockup problem in
-kmemleak_scan() by periodically doing a cond_resched().  It does take a
-reference of the current object before doing it.  Unfortunately, if the
-object has been deleted from the object_list, the next object pointed to
-by its next pointer may no longer be valid after coming back from
-cond_resched().  This can result in use-after-free and other nasty
-problem.
+On arm64 server, we find that a task trying to grab the anon_vma lock
+triggers hungtask.
 
-Fix this problem by adding a del_state flag into kmemleak_object structure
-to synchronize the object deletion process between kmemleak_cond_resched()
-and __remove_object() to make sure that the object remained in the
-object_list in the duration of the cond_resched() call.
+INFO: task main:2354726 blocked for more than 120 seconds.
+      Tainted: G            E     5.10.0-0021.aarch64 #1
+"echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
+task:main            state:D stack:    0 pid:2354726 ppid:2350673 flags:0x00000a01
+Call trace:
+ __switch_to+0x7c/0xbc
+ __schedule+0x3b4/0x8a0
+ schedule+0x50/0xe0
+ rwsem_down_write_slowpath+0x3cc/0x6cc
+ down_write+0x60/0x260
+ __anon_vma_prepare+0x6c/0x210
+ do_anonymous_page+0x258/0x660
+ handle_pte_fault+0x188/0x214
+ __handle_mm_fault+0x1b0/0x380
+ handle_mm_fault+0xf4/0x284
+ do_page_fault+0x19c/0x494
+ do_translation_fault+0xcc/0xf8
+ do_mem_abort+0x48/0xac
+ el0_da+0x44/0x80
+ el0_sync_handler+0x88/0xb4
+ el0_sync+0x160/0x180
 
-Link: https://lkml.kernel.org/r/20230119040111.350923-3-longman@redhat.com
-Fixes: 6edda04ccc7c ("mm/kmemleak: prevent soft lockup in first object iteration loop of kmemleak_scan()")
-Signed-off-by: Waiman Long <longman@redhat.com>
-Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
-Cc: Muchun Song <songmuchun@bytedance.com>
+After analyzing the vmcore, we found the anon_vma->root->rwsem.count is
+-1.  There is another anon_vma whose anon_vma->root->rwsem.count is 1, the
+anon_vma->root->rwsem.owner shows the lock is held, but the stack of the
+task shows the task doesn't hold the anon_vma lock.
+
+After adding more debugging info, we found __anon_vma_prepare() reuses
+anon_vma and triggers the UAF of anon_vma->root due to missing memory
+barrier, leading to locking and unlocking two different anon_vma->root,
+thus leading to an anon_vma will never be unlocked, and another anon_vma
+couldn't be locked anymore.
+
+This race requires two adjacent VMAs that are not merged but are
+anon_vma-compatible (e.g., they differ in VMA_ACCESS_FLAGS that can be
+changed by mprotect()).  Two threads fault on each VMA concurrently, both
+calling __anon_vma_prepare() with only mmap_lock held for reading.
+
+    THREAD A                             THREAD B
+__anon_vma_prepare                __anon_vma_prepare
+ find_mergeable_anon_vma() -> NULL
+ anon_vma = anon_vma_alloc();
+   anon_vma->root = anon_vma;
+ // the two stores may be reordered
+ vma->anon_vma = anon_vma;
+                                   // finds A's anon_vma
+                                   anon_vma = find_mergeable_anon_vma(vma);
+                                   anon_vma_lock_write(anon_vma);
+                                     // may still see the old root
+                                     down_write(&anon_vma->root->rwsem);
+                                   anon_vma_unlock_write(anon_vma);
+                                     // see the new root, never unlock old
+                                     up_write(&anon_vma->root->rwsem);
+
+thread A triggers page fault and calls __anon_vma_prepare() to prepare
+anon_vma for the faulting vma.  __anon_vma_prepare() allocates and
+initializes a new anon_vma, and then publishes it to the vma with a plain
+store.  anon_vma_prepare() only requires the mmap_lock to be held for
+reading, so two threads can fault on adjacent VMAs at the same time.
+While thread A publishes a new anon_vma, thread B could find the anon_vma
+via find_mergeable_anon_vma() and then locks anon_vma->root->rwsem.
+
+The store to anon_vma->root in anon_vma_alloc() and the store to
+vma->anon_vma can be reordered.  The anon_vma_lock_write() and spin_lock()
+only provide acquire semantics, which do not prevent prior stores from
+being reordered after them.  The release semantics of the corresponding
+spin_unlock() and anon_vma_unlock_write() come too late, the store to
+vma->anon_vma is already published before they take effect.  As a result,
+thread B can observe the following order:
+
+    vma->anon_vma = anon_vma;
+    anon_vma->root = anon_vma;
+
+The anon_vma slab is SLAB_TYPESAFE_BY_RCU, so a newly allocated anon_vma
+may reuse memory from a previously freed one.  The constructor
+(anon_vma_ctor) does not reset anon_vma->root, and __put_anon_vma()
+doesn't clear it either, so the old root value persists until
+anon_vma_alloc() overwrites it.  If that store isn't visible, thread B
+reads a root that points to the old anon_vma and locks it.
+
+As a result, thread B can call anon_vma_lock_write() with the old root,
+and call anon_vma_unlock_write() with the new root, leading to an anon_vma
+will never be unlocked, and another anon_vma couldn't be locked anymore
+(its count is dropped from 0 to -1 due to wrong unlock).
+
+To fix it, change the plain store `vma->anon_vma = anon_vma` to store
+release, so that the fields of anon_vma are visible before anon_vma is
+published to vma->anon_vma.
+
+At read side, the load of anon_vma and anon_vma->root have address
+dependency.  According to Documentation/memory-barriers.txt and some
+investigations, only Alpha needs address-dependency barriers and it has
+been handled by READ_ONCE() in reusable_anon_vma().
+
+We reproduced this issue in v5.10 with KSM enabled.  The kernel doesn't
+merge commit cf7e7a3503df ("mm: prevent KSM from breaking VMA merging for
+new VMAs"), so there are many adjacent VMAs that aren't merged but are
+compatible for anon_vma.
+
+Without this fix, our production environment could reproduce this issue
+about 2-5 times each month.  After adding a smp_mb() before
+anon_vma_lock_write(anon_vma) in __anon_vma_prepare(), which is different
+to this patch, this issue hasn't been reproduced for one month.
+
+Link: https://lore.kernel.org/20260908122924.554373-1-tujinjiang@huawei.com
+Fixes: 5c341ee1dfc8 ("mm: track the root (oldest) anon_vma")
+Signed-off-by: Jinjiang Tu <tujinjiang@huawei.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reviewed-by: Lance Yang <lance.yang@linux.dev>
+Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Acked-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
+Cc: Minchan Kim <minchan@kernel.org>
+Cc: Harry Yoo <harry@kernel.org>
+Cc: Hiroyouki Kamezawa <kamezawa.hiroyu@jp.fujitsu.com>
+Cc: Jann Horn <jannh@google.com>
+Cc: Jinjiang Tu <tujinjiang@huawei.com>
+Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
+Cc: Larry Woodman <lwoodman@redhat.com>
+Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Nanyong Sun <sunnanyong@huawei.com>
+Cc: Rik van Riel <riel@surriel.com>
+Cc: <stable@vger.kernel.org>
+[ adjusted context for mm/mmap.c and the existing anon_vma_chain_link() helper. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/kmemleak.c | 35 +++++++++++++++++++++++++++++------
- 1 file changed, 29 insertions(+), 6 deletions(-)
+ mm/mmap.c | 8 ++++++++
+ mm/rmap.c | 6 +++++-
+ 2 files changed, 13 insertions(+), 1 deletion(-)
 
-diff --git a/mm/kmemleak.c b/mm/kmemleak.c
-index fa01854e32b09..3e41e669e2528 100644
---- a/mm/kmemleak.c
-+++ b/mm/kmemleak.c
-@@ -13,11 +13,12 @@
+diff --git a/mm/mmap.c b/mm/mmap.c
+index f93526b3df0c3..d39e31f15e86c 100644
+--- a/mm/mmap.c
++++ b/mm/mmap.c
+@@ -1131,6 +1131,13 @@ static int anon_vma_compatible(struct vm_area_struct *a, struct vm_area_struct *
+  * acceptable for merging, so we can do all of this optimistically. But
+  * we do that READ_ONCE() to make sure that we never re-load the pointer.
   *
-  * The following locks and mutexes are used by kmemleak:
-  *
-- * - kmemleak_lock (raw_spinlock_t): protects the object_list modifications and
-- *   accesses to the object_tree_root (or object_phys_tree_root). The
-- *   object_list is the main list holding the metadata (struct kmemleak_object)
-- *   for the allocated memory blocks. The object_tree_root and object_phys_tree_root
-- *   are red black trees used to look-up metadata based on a pointer to the
-+ * - kmemleak_lock (raw_spinlock_t): protects the object_list as well as
-+ *   del_state modifications and accesses to the object_tree_root (or
-+ *   object_phys_tree_root). The object_list is the main list holding the
-+ *   metadata (struct kmemleak_object) for the allocated memory blocks.
-+ *   The object_tree_root and object_phys_tree_root are red
-+ *   black trees used to look-up metadata based on a pointer to the
-  *   corresponding memory block. The object_phys_tree_root is for objects
-  *   allocated with physical address. The kmemleak_object structures are
-  *   added to the object_list and object_tree_root (or object_phys_tree_root)
-@@ -147,6 +148,7 @@ struct kmemleak_object {
- 	struct rcu_head rcu;		/* object_list lockless traversal */
- 	/* object usage count; object freed when use_count == 0 */
- 	atomic_t use_count;
-+	unsigned int del_state;		/* deletion state */
- 	unsigned long pointer;
- 	size_t size;
- 	/* pass surplus references to this pointer */
-@@ -177,6 +179,11 @@ struct kmemleak_object {
- /* flag set for object allocated with physical address */
- #define OBJECT_PHYS		(1 << 4)
++ * The READ_ONCE() establishes an address dependency between anon_vma and
++ * any access to its fields, which pairs with the assignment to
++ * vma->anon_vma performed with release semantics in __anon_vma_prepare().
++ *
++ * This is especially important as anon_vma's are SLAB_TYPESAFE_BY_RCU so
++ * accessing an uninitialised anon_vma's fields may result in a UAF.
++ *
+  * IOW: that the "list_is_singular()" test on the anon_vma_chain only
+  * matters for the 'stable anon_vma' case (ie the thing we want to avoid
+  * is to return an anon_vma that is "complex" due to having gone through
+@@ -1143,6 +1150,7 @@ static int anon_vma_compatible(struct vm_area_struct *a, struct vm_area_struct *
+ static struct anon_vma *reusable_anon_vma(struct vm_area_struct *old, struct vm_area_struct *a, struct vm_area_struct *b)
+ {
+ 	if (anon_vma_compatible(a, b)) {
++		/* Paired with a memory barrier in __anon_vma_prepare(). */
+ 		struct anon_vma *anon_vma = READ_ONCE(old->anon_vma);
  
-+/* set when __remove_object() called */
-+#define DELSTATE_REMOVED	(1 << 0)
-+/* set to temporarily prevent deletion from object_list */
-+#define DELSTATE_NO_DELETE	(1 << 1)
-+
- #define HEX_PREFIX		"    "
- /* number of bytes to print per line; must be 16 or 32 */
- #define HEX_ROW_SIZE		16
-@@ -570,7 +577,9 @@ static void __remove_object(struct kmemleak_object *object)
- 	rb_erase(&object->rb_node, object->flags & OBJECT_PHYS ?
- 				   &object_phys_tree_root :
- 				   &object_tree_root);
--	list_del_rcu(&object->object_list);
-+	if (!(object->del_state & DELSTATE_NO_DELETE))
-+		list_del_rcu(&object->object_list);
-+	object->del_state |= DELSTATE_REMOVED;
- }
- 
- /*
-@@ -636,6 +645,7 @@ static void __create_object(unsigned long ptr, size_t size,
- 	object->count = 0;			/* white color initially */
- 	object->jiffies = jiffies;
- 	object->checksum = 0;
-+	object->del_state = 0;
- 
- 	/* task information */
- 	if (in_hardirq()) {
-@@ -1473,9 +1483,22 @@ static void kmemleak_cond_resched(struct kmemleak_object *object)
- 	if (!get_object(object))
- 		return;	/* Try next object */
- 
-+	raw_spin_lock_irq(&kmemleak_lock);
-+	if (object->del_state & DELSTATE_REMOVED)
-+		goto unlock_put;	/* Object removed */
-+	object->del_state |= DELSTATE_NO_DELETE;
-+	raw_spin_unlock_irq(&kmemleak_lock);
-+
- 	rcu_read_unlock();
- 	cond_resched();
- 	rcu_read_lock();
-+
-+	raw_spin_lock_irq(&kmemleak_lock);
-+	if (object->del_state & DELSTATE_REMOVED)
-+		list_del_rcu(&object->object_list);
-+	object->del_state &= ~DELSTATE_NO_DELETE;
-+unlock_put:
-+	raw_spin_unlock_irq(&kmemleak_lock);
- 	put_object(object);
- }
- 
+ 		if (anon_vma && list_is_singular(&old->anon_vma_chain))
+diff --git a/mm/rmap.c b/mm/rmap.c
+index 886000da89a6f..8e74d143433ae 100644
+--- a/mm/rmap.c
++++ b/mm/rmap.c
+@@ -210,7 +210,11 @@ int __anon_vma_prepare(struct vm_area_struct *vma)
+ 	/* page_table_lock to protect against threads */
+ 	spin_lock(&mm->page_table_lock);
+ 	if (likely(!vma->anon_vma)) {
+-		vma->anon_vma = anon_vma;
++		/*
++		 * Make anon_vma fields visible before anon_vma is published.
++		 * Paired with an address dependency in reusable_anon_vma().
++		 */
++		smp_store_release(&vma->anon_vma, anon_vma);
+ 		anon_vma_chain_link(vma, avc, anon_vma);
+ 		anon_vma->num_active_vmas++;
+ 		allocated = NULL;
 -- 
 2.53.0
 
