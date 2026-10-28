@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793212535;
-	b=2uVUhhIcEt5hP5UIvdolRLMf68k69hUkw0e+/NTym/Azn4YLWxxIAwq2P36Ilb4A3IDL
-	 4frWKGDVAJ7waACZmDXmuSwF1gkCDyuacQSiq/OBgkI61qmkgEtdf+RnsXfOaO2ylWD+5
-	 e7nvqKOTKicA4rBWfG8lwOZ3u2AvWf2qq0kMcQPhJrtsUaFFlNBbYXX5d7yvyfyKlTIiX
-	 GT3Sa2aHbPefSlQ9c6KHiAk/AQVloHphgjXPGP6k/NaYyPPAOvkugo8yDWjqTKXIakMJl
-	 AH1zJPId8zCWy7Wv/pTNHQtEC3L6O6t3uWivjb6Xe8mcQ+9ZJjPfny0hWsO2GQm6VBQ==
+	t=1793212538;
+	b=t9dkasj9g6RCteYomD77S7vFtB7DrCKLy1uUTcyHOf8KCn/gPwtqDfIidUXzUwC/Mvoj
+	 4+49sEZhnSUWbj/L1V0xRFSaJ3g6BRXfwu2qynWGygkCF8HvbIu6w/KUoQ9b5fBo/wV9n
+	 CsGUvv69tbIA0U9On/iErjtWgP1kIDdAUr0Y+pbjt3m9+Wtts2CxGFsiis9jBXuplwKxX
+	 EqAGe++82tYsvK7KBzqPQS1FbbVNaHw6kh8gKqAOkGGB3fYciAqo6IKnwgtHmHAARBm8o
+	 Tk17SrtPzNx637dRa6Vpu19txT2DNjB4AUAwpLut0FmYEn/fnSnCw3X4gwvuXgxAmfg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793212535;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793212538;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=LUx7rCjhTFyqQzTc7x2km+p/bVF1e+rwV119uqNZ5LU=;
-	b=xhVJjDzadM3PGa+FbjSKTutf4gfZOSeyVf3B2f8I10GrhCEf+hO6Run22oDBT/xdy+UB
-	 7VopJXdB5cgaN4m+2qO1Faqd5yiTe5/KCJQFZTvwdVQ+p29ZiBH9Kjxy7JtYfucMN5wzs
-	 0QldZXOceq/lJ+4wl7B+CrrmUjiug+qJDGDGeHFCAxitKdr+VbSyotB14nmJS/rQpIQXt
-	 iCptRbJx1g9T2qSJtlm8Pw98uaDDuKCkEbV/fAJ9hdwWR9vUEcziyiq4tPYIbB5Whf1yp
-	 dK3cYssV9BHL3+V2kCzgGSRKhtjCKynMm4R+dpWQF5dzt3h2oX003IPuUG7uDFo3yog==
+	bh=ymmZrncgv2MRlt7i8vCduf/j7gViFHXqMAyOyGClxCQ=;
+	b=dTBLYzGF3u+e87K0L6JXx/guUdDEEzorJCYa0my2R/EZZp4V26J+R7bFIr1l2ZRFr3Hd
+	 Lva+C/yNXmM51ZvKLoUxKoWbRe9sDIqGiHMGVm0Y8jq0DXjK7CnCUeOhCzGuxYc797Pvd
+	 aouc+DTqSGsU1iRlt2ucO57PdtG8gimEPwN1s0xZubxLzJmabFcGFpL65OV5SsiCdseaw
+	 FFSbL/mcJPM1cOQIqzMp4v0dfjOubHt55e5d81RK7R0SqpeYheiSRXN/hrBiazONCuk+x
+	 AOuiWIz4damD8AM0TnM9rXAW+BBcsHQ1J0nljGUnUx30J4wj+M1DZmgnmTOYhZi3wgA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=q7TI7NIU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="pm/Rxi04";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B68D606A31D;
-	Wed, 28 Oct 2026 18:35:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A025606A31C;
+	Wed, 28 Oct 2026 18:35:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=q7TI7NIU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAB961F01829;
-	Wed, 28 Oct 2026 18:35:34 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pm/Rxi04
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA31C1F01825;
+	Wed, 28 Oct 2026 18:35:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793212535;
-	bh=LUx7rCjhTFyqQzTc7x2km+p/bVF1e+rwV119uqNZ5LU=;
+	s=korg; t=1793212538;
+	bh=ymmZrncgv2MRlt7i8vCduf/j7gViFHXqMAyOyGClxCQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=q7TI7NIU4uLE90mJd63Sb3Bsy7Bygu+6ur/hZfkwuezD5NhEQ96ZDuMBdsW2k1Da/
-	 PiAi28Qzou/GMbb6PCGmo9HFgDEtR+vj8R8rXYQ+N/8V4Pctn2JD9SiczJ5UgGSpgS
-	 mVlnCPyaeRI9mQDlLMuBd7hFu9D5JHtTMSwOIfEo=
+	b=pm/Rxi04DOrNbp6B/TreKlGSzr2vWK8oqzD71q8oecZcu8wc620RwwhGBJtVzZk/C
+	 dhTK/1JD4ZQhUNEgz2GDeW7n2J/xqlRPoIagWoPY3Jey28Zhme+yIcMbRyI6DsBw8a
+	 mB2nhITg7HqlxqdhARa07yFVme4+LxHubDLieEtk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Berg <benjamin.berg@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Rob Clark <robdclark@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0187/1887] wifi: cfg80211: avoid double free if updating BSS fails
-Date: Wed, 28 Oct 2026 17:38:03 +0100
-Message-ID: <20261028170503.490769871@linuxfoundation.org>
+Subject: [PATCH 6.1 0188/1887] drm/msm/adreno: Assign msm_gpu->pdev earlier to avoid nullptrs
+Date: Wed, 28 Oct 2026 17:38:04 +0100
+Message-ID: <20261028170503.512891335@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,46 +68,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Berg <benjamin.berg@intel.com>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-[ Upstream commit acc44cbd7727115f9381c35c2898b1b5af665ec8 ]
+[ Upstream commit 16007768551d5bfe53426645401435ca8d2ef54f ]
 
-cfg80211_update_known_bss will always consume the passed IEs. As such,
-cfg80211_update_assoc_bss_entry also needs to always set the pointers to
-NULL so that no double free can occur.
+There are some cases, such as the one uncovered by Commit 46d4efcccc68
+("drm/msm/a6xx: Avoid a nullptr dereference when speedbin setting fails")
+where
 
-Note that hitting this would probably require being connected to a
-hidden BSS which is then doing a channel switch while also switching to
-be not hidden anymore at the same time.
+msm_gpu_cleanup() : platform_set_drvdata(gpu->pdev, NULL);
 
-Signed-off-by: Benjamin Berg <benjamin.berg@intel.com>
-Reviewed-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://msgid.link/20231220133549.8891edb28d51.Id09c5145363e990ff5237decd58296302e2d53c8@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+is called on gpu->pdev == NULL, as the GPU device has not been fully
+initialized yet.
+
+Turns out that there's more than just the aforementioned path that
+causes this to happen (e.g. the case when there's speedbin data in the
+catalog, but opp-supported-hw is missing in DT).
+
+Assigning msm_gpu->pdev earlier seems like the least painful solution
+to this, therefore do so.
+
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Patchwork: https://patchwork.freedesktop.org/patch/602742/
+Signed-off-by: Rob Clark <robdclark@chromium.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/scan.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/msm/adreno/adreno_gpu.c | 2 ++
+ drivers/gpu/drm/msm/msm_gpu.c           | 1 -
+ 2 files changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/wireless/scan.c b/net/wireless/scan.c
-index ecf9021219380..a8901e07e96d6 100644
---- a/net/wireless/scan.c
-+++ b/net/wireless/scan.c
-@@ -2695,10 +2695,9 @@ void cfg80211_update_assoc_bss_entry(struct wireless_dev *wdev,
+diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+index 396f12b550479..8ff98efb0e8d8 100644
+--- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+@@ -1052,6 +1052,8 @@ int adreno_gpu_init(struct drm_device *drm, struct platform_device *pdev,
+ 	adreno_gpu->revn = adreno_gpu->info->revn;
+ 	adreno_gpu->rev = *rev;
  
- 	if (new) {
- 		/* to save time, update IEs for transmitting bss only */
--		if (cfg80211_update_known_bss(rdev, cbss, new, false)) {
--			new->pub.proberesp_ies = NULL;
--			new->pub.beacon_ies = NULL;
--		}
-+		cfg80211_update_known_bss(rdev, cbss, new, false);
-+		new->pub.proberesp_ies = NULL;
-+		new->pub.beacon_ies = NULL;
++	gpu->pdev = pdev;
++
+ 	if (adreno_read_speedbin(dev, &speedbin) || !speedbin)
+ 		speedbin = 0xffff;
+ 	adreno_gpu->speedbin = (uint16_t) (0xffff & speedbin);
+diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
+index 3802495003258..9385419a78dbf 100644
+--- a/drivers/gpu/drm/msm/msm_gpu.c
++++ b/drivers/gpu/drm/msm/msm_gpu.c
+@@ -938,7 +938,6 @@ int msm_gpu_init(struct drm_device *drm, struct platform_device *pdev,
+ 	gpu->cx_collapse = devm_reset_control_get_optional_exclusive(&pdev->dev,
+ 			"cx_collapse");
  
- 		list_for_each_entry_safe(nontrans_bss, tmp,
- 					 &new->pub.nontrans_list,
+-	gpu->pdev = pdev;
+ 	platform_set_drvdata(pdev, &gpu->adreno_smmu);
+ 
+ 	msm_devfreq_init(gpu);
 -- 
 2.53.0
 
