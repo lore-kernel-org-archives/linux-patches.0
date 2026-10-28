@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793207625;
-	b=o2TqaMW79T7L/LFWcg8yTO9KSj9uukM0zU/r3uIJ5AB/7FBvj/CVOE0vckrse2F9l/pq
-	 19T86enqU1chkUIWD51dY5Da+UP9CpEoaBiDTrK9so+TwcsOjwPtx9Ysutr2qVebCthrg
-	 wnSI8zRp1+7BJ6lesBNLdVfkLhstZ4Iw93GGjpCC54TzsKZSGT/Dy5PV5tMnR0b0HqKWJ
-	 UnJPKmfu5YiC6TD5Ktled+OWyXwLmKFFy0TLOnVSOA0AFmWqG8yEC+uzvO6WSrORFCGUT
-	 bShTMfoW3eiikTzie13pFRfgVd3s9phNOMwop9B1aoYvDNZ8V6tZh4h27mAcbxNxrFg==
+	t=1793207628;
+	b=qzfuu9JuG05pGOgpqCbYOw3m1caF5vuHpSOJFqiIt5sbN5hD6CONsviAjb0fQJIE0pnQ
+	 Wyjetsn1OBF0QgOppoFxh0Y38J/QykhmGe3pJKyDBeoZSqyfgeMA6i2KimB7j9VOr8kh3
+	 Y3VpivYWpvJ7p4CqqLoZ6E6w6m1AEZJnLgpvMFtQQWdJBxij1ALKA+kLPEgF0AUYihDN5
+	 Ezaln2DIWPYhdVuhz8fOoDBJ+gry9irf0fs5L5UUdh08+CTpTSQ1h3DDBwRCmJi2DYytn
+	 Rmhu+1kU71kq3dK9OEB5M6P+YeOkcTl8//qp8o1NblS8j4c6hzBogN4lojZqXvPYUgw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793207625;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793207628;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=vAgW1DXm5crOjxWrCr3+rldbdKKhrvWvTM7yvfvpX1s=;
-	b=3yjaH2edzmUkBB1RtvxLArwZJ920ARHafdUafJ2KNSwHHG17cvYtqjWsj2BBsoyc4OmI
-	 /wHM+4e1mImbzVboFcRIBL7umSGfmYD+Knx2JOV6zF/XbhnlTycR7pEf3NvfYySVWCWn4
-	 BGqLCTuheIE95Jc5f+Z45EP7g4LbKGE1apz2ZuwNXKK+ZrOTfJU73aC9Y6TzIuLt1Lu6P
-	 o27JL8J64JetEP0n+eLND3/Jr8KOaswRFQOiQSee0IeQ3OymXgnhE9/gVptDT4n/acWx/
-	 iDS9nhatNNTQnPCHbpYCmxCvoRYToSTzuDKuvajGRXbD+fhA+WjYJN+BD5EMNT/VYuA==
+	bh=NAbRhoIXbxlfldWULqnnaPRlaaX+D9j3kKhNuHthMdo=;
+	b=ouCOsqCiBz29hsnVKmgMGQKhZhmaAYHC0QTcZA72JbpA37vk/KTlM9UUPu0j9slzYoNJ
+	 kGGr2Do6iVywe3plFyPlxEUvlnH2PKC/KNh3WNk3DHKtgQmfbD6airEMDttk+TrLNpZ6p
+	 Fqn7rl0+E0CDbz32O0bH8v2t3orBSG2uUV87483ov0gFU4t1MkRdw1eProOIpvCa2duO7
+	 c/E9B2Tw+7Om94KcWSoXYbsxYsYMrh63tHjdHIAQqp0VHz2LdQZqlUlsFXLSyuOO60FrX
+	 zJP2nrIWG29shygY5h4JeMjnaFXA5R41UpyllvC6OtEHIivmVUTCthyfPNJW4So62Mg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xQDBCDUK;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BKJTnQo5;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A0E3606A31C;
-	Wed, 28 Oct 2026 17:13:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F022A606A31D;
+	Wed, 28 Oct 2026 17:13:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xQDBCDUK
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B11E1F01828;
-	Wed, 28 Oct 2026 17:13:44 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BKJTnQo5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 365DA1F01825;
+	Wed, 28 Oct 2026 17:13:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793207625;
-	bh=vAgW1DXm5crOjxWrCr3+rldbdKKhrvWvTM7yvfvpX1s=;
+	s=korg; t=1793207627;
+	bh=NAbRhoIXbxlfldWULqnnaPRlaaX+D9j3kKhNuHthMdo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xQDBCDUKNxfyoufg5FVqEPJtkSQpdTfJXur5gT+viuNDJf8YRCeVsfo0Ds1b/RINb
-	 RCN5Yt2KH5PKnKFj2rUBZOzdRPQ1S4TJZaqi4Vrl0CNejm9y1AsVvKBlkYx+Tw9aJe
-	 dV/EMdFNSUq1B5NexBiNS4OWYNBTDSujW/OVtg8c=
+	b=BKJTnQo51rdKrS1UHnSGe8HAksoYbXeMSvxFmYgB8/x3J1OMc1B2d9IRaXIpCzLHk
+	 bSssjD67cClnr1hyjrPIhX8IYFz1jaiMlIVJMKOZ8osmSXL39iAWGaKSMIejrvImIU
+	 nAcZC/g/QhtIcRbh9LsRVDjF0nvsTXOyGE6YkOQw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Brown <broonie@kernel.org>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Michael Reeves <michael.reeves077@gmail.com>,
-	Peng Fan <peng.fan@nxp.com>,
+	Kyle Zeng <kylebot@openai.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 039/247] regmap: Drop map lock during cache init and exit
-Date: Wed, 28 Oct 2026 17:57:22 +0100
-Message-ID: <20261028165948.293919127@linuxfoundation.org>
+Subject: [PATCH 6.12 040/247] netlink: reset skb headers before unicast and multicast filtering
+Date: Wed, 28 Oct 2026 17:57:23 +0100
+Message-ID: <20261028165948.319069352@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165947.349197979@linuxfoundation.org>
 References: <20261028165947.349197979@linuxfoundation.org>
@@ -70,132 +68,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Reeves <michael.reeves077@gmail.com>
+From: Kyle Zeng <kylebot@openai.com>
 
-[ Upstream commit abff0a48b110fe52d43999b4cb7c793a510a6bf1 ]
+[ Upstream commit 8bf659bd54e1f00e34cf5244b1d289c506fa47c0 ]
 
-On systems with CONFIG_PROVE_RAW_LOCK_NESTING enabled, Apple GPIO probe
-triggers an "Invalid wait context" lockdep warning.
+Socket filters can use SKF_NET_OFF and SKF_LL_OFF to read relative to
+an skb's network and MAC headers. Netlink producers may reserve
+headroom without resetting those headers, allowing a receiving socket's
+filter to read data before the initialized message.
 
-The driver uses a regmap with a raw spinlock and REGCACHE_FLAT. During
-regcache_init(), regcache_flat_init() allocates memory while holding the
-raw spinlock. The memory allocator can acquire a non-raw spinlock, which
-causes an invalid raw-to-non-raw lock nesting error. The abbreviated call
-chain is:
+For example, IWPM HELLO replies are allocated with dev_alloc_skb(),
+which reserves NET_SKB_PAD bytes. An unprivileged NETLINK_RDMA user can
+attach a classic socket filter and disclose this headroom through the
+length of the delivered reply. The resets in netlink_dump() do not help
+because IWPM sends a separately allocated skb through netlink_unicast().
 
-  apple_gpio_pinctrl_probe
-    regcache_init
-      regcache_flat_init
-        __kmalloc_noprof
-          __pcs_replace_empty_main
-            refill_objects
-              _raw_spin_lock_irqsave
+Reset both headers before running the receiver's filter in unicast and
+broadcast delivery, as is already done for dump skbs. This also covers
+other netlink producers that reserve headroom without changing their
+allocation or message-building code.
 
-Cache allocation occurs before the regmap is published, cache destruction
-occurs after users have stopped accessing it, and regmap_reinit_cache()
-requires callers to prevent concurrent access. Remove the outer map lock
-from cache initialization and destruction. Keep it for cache population
-and normal register access.
-
-The Maple cache still uses its internal spinlock during teardown. That
-lock can also be acquired from hard IRQ context during register access.
-Add Maple-state irqsave helpers and use them during teardown to preserve
-the lock's IRQ-safe lockdep state.
-
-Fixes: fd4ebc07b4df ("regmap: Hold the regmap lock when allocating and freeing the cache")
-Suggested-by: Mark Brown <broonie@kernel.org>
-Suggested-by: Liam R. Howlett <liam@infradead.org>
-Signed-off-by: Michael Reeves <michael.reeves077@gmail.com>
-Reviewed-by: Peng Fan <peng.fan@nxp.com>
-Link: https://patch.msgid.link/20261006-regcache-lifecycle-submit-v3-2-37bdd82fd47c@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: b1153f29ee07 ("netlink: make socket filters work on netlink")
+Assisted-by: LLM
+Signed-off-by: Kyle Zeng <kylebot@openai.com>
+Link: https://patch.msgid.link/20261006224232.50724-1-kylebot@openai.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/regmap/regcache-maple.c | 9 +++++++--
- drivers/base/regmap/regcache.c       | 6 ------
- include/linux/maple_tree.h           | 4 ++++
- 3 files changed, 11 insertions(+), 8 deletions(-)
+ net/netlink/af_netlink.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/base/regmap/regcache-maple.c b/drivers/base/regmap/regcache-maple.c
-index 34440e188f925..82d9410591654 100644
---- a/drivers/base/regmap/regcache-maple.c
-+++ b/drivers/base/regmap/regcache-maple.c
-@@ -296,16 +296,21 @@ static int regcache_maple_exit(struct regmap *map)
- 	struct maple_tree *mt = map->cache;
- 	MA_STATE(mas, mt, 0, UINT_MAX);
- 	unsigned int *entry;
-+	unsigned long flags;
+diff --git a/net/netlink/af_netlink.c b/net/netlink/af_netlink.c
+index e250d4a3d0309..a0a8f185ccdeb 100644
+--- a/net/netlink/af_netlink.c
++++ b/net/netlink/af_netlink.c
+@@ -1338,6 +1338,8 @@ int netlink_unicast(struct sock *ssk, struct sk_buff *skb,
+ 	if (netlink_is_kernel(sk))
+ 		return netlink_unicast_kernel(sk, skb, ssk);
  
- 	/* if we've already been called then just return */
- 	if (!mt)
- 		return 0;
- 
--	mas_lock(&mas);
-+	/*
-+	 * Register access may take the Maple lock from hard IRQ context, so
-+	 * preserve its IRQ-safe lockdep state during teardown.
-+	 */
-+	mas_lock_irqsave(&mas, flags);
- 	mas_for_each(&mas, entry, UINT_MAX)
- 		kfree(entry);
- 	__mt_destroy(mt);
--	mas_unlock(&mas);
-+	mas_unlock_irqrestore(&mas, flags);
- 
- 	kfree(mt);
- 	map->cache = NULL;
-diff --git a/drivers/base/regmap/regcache.c b/drivers/base/regmap/regcache.c
-index 0e929e7ac68aa..5592cd704cf04 100644
---- a/drivers/base/regmap/regcache.c
-+++ b/drivers/base/regmap/regcache.c
-@@ -195,9 +195,7 @@ int regcache_init(struct regmap *map, const struct regmap_config *config)
- 	if (map->cache_ops->init) {
- 		dev_dbg(map->dev, "Initializing %s cache\n",
- 			map->cache_ops->name);
--		map->lock(map->lock_arg);
- 		ret = map->cache_ops->init(map);
--		map->unlock(map->lock_arg);
- 		if (ret)
- 			goto err_free;
++	skb_reset_network_header(skb);
++	skb_reset_mac_header(skb);
+ 	if (sk_filter(sk, skb)) {
+ 		err = skb->len;
+ 		kfree_skb(skb);
+@@ -1472,6 +1474,8 @@ static void do_one_broadcast(struct sock *sk,
+ 		goto out;
  	}
-@@ -215,9 +213,7 @@ int regcache_init(struct regmap *map, const struct regmap_config *config)
- err_exit:
- 	if (map->cache_ops->exit) {
- 		dev_dbg(map->dev, "Destroying %s cache\n", map->cache_ops->name);
--		map->lock(map->lock_arg);
- 		map->cache_ops->exit(map);
--		map->unlock(map->lock_arg);
- 	}
- err_free:
- 	kfree(map->reg_defaults);
-@@ -241,9 +237,7 @@ void regcache_exit(struct regmap *map)
- 	if (map->cache_ops->exit) {
- 		dev_dbg(map->dev, "Destroying %s cache\n",
- 			map->cache_ops->name);
--		map->lock(map->lock_arg);
- 		map->cache_ops->exit(map);
--		map->unlock(map->lock_arg);
- 	}
- }
  
-diff --git a/include/linux/maple_tree.h b/include/linux/maple_tree.h
-index ecbcc2b3e59a6..4300f7746f2dc 100644
---- a/include/linux/maple_tree.h
-+++ b/include/linux/maple_tree.h
-@@ -466,9 +466,13 @@ struct ma_wr_state {
- };
- 
- #define mas_lock(mas)           spin_lock(&((mas)->tree->ma_lock))
-+#define mas_lock_irqsave(mas, flags) \
-+		spin_lock_irqsave(&((mas)->tree->ma_lock), flags)
- #define mas_lock_nested(mas, subclass) \
- 		spin_lock_nested(&((mas)->tree->ma_lock), subclass)
- #define mas_unlock(mas)         spin_unlock(&((mas)->tree->ma_lock))
-+#define mas_unlock_irqrestore(mas, flags) \
-+		spin_unlock_irqrestore(&((mas)->tree->ma_lock), flags)
- 
- /*
-  * Special values for ma_state.node.
++	skb_reset_network_header(p->skb2);
++	skb_reset_mac_header(p->skb2);
+ 	if (sk_filter(sk, p->skb2)) {
+ 		kfree_skb(p->skb2);
+ 		p->skb2 = NULL;
 -- 
 2.53.0
 
