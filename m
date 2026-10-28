@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793212127;
-	b=TUKOYrecactcv+Vblpv7IIwoJRuzMyfxAwQ16mYR4T/Ekz/yR2S1IfhhmxCZa+cCEWbJ
-	 sRFPsP9o6KgZjjThCPN/5iAg9V1iLhcU5JOlr0spwbbwMSFER33iHMmgbr7W3lOkq6d2R
-	 5uPTMvONryIAbqj5cGzHQjyxLbCLZjAMkjdvZG4s2KisHat3lWOD7ctkPDFJH0K1WP2E7
-	 Mo8pOcDrL+9q4Jyosf3ay5EFjX2fWSOHf8tZUFyL4oVMaJ9gVvpUpFeGWl2kYYP8lexyW
-	 ApthH9n9CThLLRFXPIv3dAg2sO2bb0AjlWB0EK97OPgSahMlmU3PwIiSgU4JUXfQuhQ==
+	t=1793212130;
+	b=diPSCUooLNUGyXm0o/OFFIh0t7vCyg/MhuzXgCqkRnpSkXypiRwQCR8Hnc9y8udFqAPo
+	 NudTWnmdvQc5VVoN028Yz/XguD8cs/nNJz+VmPqasLD6kADh3ulUZ/Jct1pDB7Ta34Xfu
+	 xcAIEX1X99anLCqHK5kmZEGP8EvovNiCLB0zPiAfI8Z5XbP1wl6qbvj9p7nekexMID7la
+	 NN51FYp6EQfX8ncBMsg15HXseT3DNJpYV3IIhBh7Wt9x+n+A6E/xgcL6CoG0Mw7kDwpiV
+	 aadUv136ixYxRksURA5MgQMdNTrusWMrBeE+kcwOxX66IsRInSpjqhvq6eKsOjTDzkA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793212127;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793212130;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=vi03zcmLHQj62HAjdmvn1huQO8dIRLQfKyOreOcxNR4=;
-	b=vvXqADQp6lAdBvKBEY5sJXXBB4K878u1hzrpatz7NJDb9Uvj8XlF0Osm36phEiOEC2zi
-	 gHIZlrpAJFyaIqxo3VTUUGCXgH/52uNYzLbYscCDNzqlp/42QJeiKZlyeD1079wZw3pGb
-	 exBEFzKNNMhAMinXgZ4XH2Bv2GNNPNXCDfIghniePGEL3zKDFjbsnxnVrU5vs9Fdf4NX/
-	 /hNqBbcKms/jYUVtsvH04BrLhdUcPrnFHd2Sre0Sf7z91lkw7L2kmZLhf0OZFRKBsdcvG
-	 UYKkVltmYckTnV+XZFWrumf6cYHDZAk+WopEaGIx7MHQuFZKnONl0u5WNh1etyz8jOg==
+	bh=kUEXoENoA9c7L4yiunNTkFzhEkJf6v+B0VyDbCxuDMY=;
+	b=jTkpYFdeKy8Ij1Pn9HgHSr8sOFqauH+ZmfQsZxesg4AVaGfYL0F5QSDOSLcqsSdfO9gr
+	 34VH5uPr02Fd8Vbeo7CC8aSoa70q//apTUdmM3CJgDsohPTw2Vw8fG0rdwr2nKZKqR4j9
+	 XZOEI/3KGYj+8UZDhojpkz5At/PedvqcsIBrA9o8PT4MBSWVh88GKd7iTxnXM4U36zr+o
+	 U0E99dAPhtZytlw4D8O+AP8h9qUcKSjJ2WR/p++taEQxKNyMwYkXw+nUduFoDsI8LDVXm
+	 DUcJw0zTiCyd/8h6BG2eAHPf499WNIP2bZEm3xsp6KDGOVU7hF7I6OQNcgDWr4XMrsg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yP8DwtkP;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=y6A3WixG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E13E6606A31C;
-	Wed, 28 Oct 2026 18:28:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3C03606A31A;
+	Wed, 28 Oct 2026 18:28:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yP8DwtkP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AEFC1F01825;
-	Wed, 28 Oct 2026 18:28:46 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=y6A3WixG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21A311F01825;
+	Wed, 28 Oct 2026 18:28:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793212126;
-	bh=vi03zcmLHQj62HAjdmvn1huQO8dIRLQfKyOreOcxNR4=;
+	s=korg; t=1793212129;
+	bh=kUEXoENoA9c7L4yiunNTkFzhEkJf6v+B0VyDbCxuDMY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yP8DwtkPXs4ErBlVLShKliJN6SW8eQxjpjIlARN62n/GZlD5pdBKDx7XPHMHepvqK
-	 u9tWIgBVyx0VhXoF6mB+444402zI4FhnkLKojXZWbSD6+wKQ2zWCWTferk4LdfzVQ4
-	 YGMl1UZrWLYh83sbJc9Ypwp79T1qjVZFnQH1Uopk=
+	b=y6A3WixGGBUaZUcC1QP3N5tM4/ul7ebcHBJ0lbUkY7CU9UcXOY2eOUkoKrYNtFkNw
+	 XgdUu+mNV4ixUt5urdSFE/7PcpT1JpT9SGi5oQWeuM/qdMB3bdw4il0MtW5nfRLxEM
+	 HAacG/35ND64dkCSOS/LH/3LWyl/eFmnIwli6goE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	XingWang Xiang <v3rdant.xiang@gmail.com>,
+	Vega <vega@nebusec.ai>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Yilin Zhu <zylzyl2333@gmail.com>,
+	Zhiling Zou <zhilinz@nebusec.ai>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0046/1887] genetlink: pin family module during policy dump
-Date: Wed, 28 Oct 2026 17:35:42 +0100
-Message-ID: <20261028170500.274994754@linuxfoundation.org>
+Subject: [PATCH 6.1 0047/1887] net: bridge: use option bits for CFM/MRP frame handlers
+Date: Wed, 28 Oct 2026 17:35:43 +0100
+Message-ID: <20261028170500.297350639@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,109 +71,290 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: XingWang Xiang <v3rdant.xiang@gmail.com>
+From: Zhiling Zou <zhilinz@nebusec.ai>
 
-[ Upstream commit 6a1094c34d176827b2b173e163dcc964a13af93f ]
+[ Upstream commit 7a49e6b16f36b8e085521699adbca3e321b6dd0c ]
 
-The generic netlink controller's policy dump keeps pointers to the target
-family's operation and policy tables in its callback state.  A dump may be
-split across multiple skbs and remain pending after the initial request.
+CFM and MRP register a global br_frame_type whose hlist_node is linked
+into the per-bridge frame_type_list when the first MEP/MRP instance is
+created. Enabling the protocol on multiple bridges therefore inserts the
+same node into multiple lists. Unregistering it on one bridge then
+corrupts list state belonging to another.
 
-Netlink pins the module which owns the dump callback, but in this case
-that is the controller's owner rather than the target family's owner.  The
-target family can consequently be unregistered and its module unloaded
-while a policy dump is pending.  Advancing the dump then dereferences
-policy memory from the unloaded module.
+These handlers can only be installed once per bridge, and they are
+uncommon. Track their per-bridge enable state with net_bridge option
+bits, which already live on the Rx hot cache line, and dispatch the
+matching handler directly from the receive path. Check both bits
+together first as an unlikely case.
 
-Take a reference to the target family's module when the dump starts.
-Drop it from the error and done paths.  This matches the lifetime for which
-the dump context retains the family and policy pointers.
+Remove the generic frame_type_list and br_frame_type helpers, which
+have had no other users since CFM and MRP were added. That shrinks
+struct net_bridge by 8 bytes and drops the list walk from the fast
+path. When neither protocol is compiled in, BR_CFM_MRP_OPTS is 0 and
+the compiler prunes the branch.
 
-Fixes: d07dcf9aadd6 ("netlink: add infrastructure to expose policies to userspace")
+Fixes: 90c628dd47ff ("net: bridge: extend the process of special frames")
+Fixes: dc32cbb3dbd7 ("bridge: cfm: Kernel space implementation of CFM. CCM frame RX added.")
 Cc: stable@vger.kernel.org
-Signed-off-by: XingWang Xiang <v3rdant.xiang@gmail.com>
-Link: https://patch.msgid.link/20260902084317.4092542-1-v3rdant.xiang@gmail.com
+Reported-by: Vega <vega@nebusec.ai>
+Suggested-by: Nikolay Aleksandrov <razor@blackwall.org>
+Co-developed-by: Yilin Zhu <zylzyl2333@gmail.com>
+Signed-off-by: Yilin Zhu <zylzyl2333@gmail.com>
+Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
+Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
+Link: https://patch.msgid.link/0345b9d5aa60ba416f6738ff1b87140f0a749cb8.1788417901.git.zhilinz@nebusec.ai
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ adapted split-operation iterator handling to the older genl_ops and opidx interfaces. ]
+[ Adjusted bridge option enum context because BROPT_MDB_OFFLOAD_FAIL_NOTIFICATION and BROPT_FDB_LOCAL_VLAN_0 are absent. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netlink/genetlink.c | 28 +++++++++++++++++++++-------
- 1 file changed, 21 insertions(+), 7 deletions(-)
+ net/bridge/br_cfm.c     | 11 +++--------
+ net/bridge/br_device.c  |  1 -
+ net/bridge/br_input.c   | 35 ++++++++++++++---------------------
+ net/bridge/br_mrp.c     | 13 +++----------
+ net/bridge/br_private.h | 26 +++++++++++++++-----------
+ 5 files changed, 35 insertions(+), 51 deletions(-)
 
-diff --git a/net/netlink/genetlink.c b/net/netlink/genetlink.c
-index 3a3b29ff63b31..4ededd793767c 100644
---- a/net/netlink/genetlink.c
-+++ b/net/netlink/genetlink.c
-@@ -1159,6 +1159,7 @@ static int genl_ctrl_event(int event, const struct genl_family *family,
- struct ctrl_dump_policy_ctx {
- 	struct netlink_policy_dump_state *state;
- 	const struct genl_family *rt;
-+	struct module *owner;
- 	unsigned int opidx;
- 	u32 op;
- 	u16 fam_id;
-@@ -1202,6 +1203,9 @@ static int ctrl_dumppolicy_start(struct netlink_callback *cb)
- 		return -ENOENT;
- 
- 	ctx->rt = rt;
-+	ctx->owner = rt->module;
-+	if (!try_module_get(ctx->owner))
-+		return -ENOENT;
- 
- 	if (tb[CTRL_ATTR_OP]) {
- 		ctx->single_op = true;
-@@ -1210,14 +1214,19 @@ static int ctrl_dumppolicy_start(struct netlink_callback *cb)
- 		err = genl_get_cmd(ctx->op, rt, &op);
- 		if (err) {
- 			NL_SET_BAD_ATTR(cb->extack, tb[CTRL_ATTR_OP]);
--			return err;
-+			goto err_put_owner;
- 		}
- 
--		if (!op.policy)
--			return -ENODATA;
-+		if (!op.policy) {
-+			err = -ENODATA;
-+			goto err_put_owner;
-+		}
- 
--		return netlink_policy_dump_add_policy(&ctx->state, op.policy,
--						      op.maxattr);
-+		err = netlink_policy_dump_add_policy(&ctx->state, op.policy,
-+						     op.maxattr);
-+		if (err)
-+			goto err_free_state;
-+		return 0;
- 	}
- 
- 	for (i = 0; i < genl_get_cmd_cnt(rt); i++) {
-@@ -1232,12 +1241,16 @@ static int ctrl_dumppolicy_start(struct netlink_callback *cb)
- 		}
- 	}
- 
--	if (!ctx->state)
--		return -ENODATA;
-+	if (!ctx->state) {
-+		err = -ENODATA;
-+		goto err_put_owner;
-+	}
- 	return 0;
- 
- err_free_state:
- 	netlink_policy_dump_free(ctx->state);
-+err_put_owner:
-+	module_put(ctx->owner);
- 	return err;
+diff --git a/net/bridge/br_cfm.c b/net/bridge/br_cfm.c
+index a89aec8314164..b9a3546fb4b44 100644
+--- a/net/bridge/br_cfm.c
++++ b/net/bridge/br_cfm.c
+@@ -367,7 +367,7 @@ static u32 ccm_tlv_extract(struct sk_buff *skb, u32 index,
  }
  
-@@ -1372,6 +1385,7 @@ static int ctrl_dumppolicy_done(struct netlink_callback *cb)
- 	struct ctrl_dump_policy_ctx *ctx = (void *)cb->ctx;
+ /* note: already called with rcu_read_lock */
+-static int br_cfm_frame_rx(struct net_bridge_port *port, struct sk_buff *skb)
++int br_cfm_frame_rx(struct net_bridge_port *port, struct sk_buff *skb)
+ {
+ 	u32 mdlevel, interval, size, index, max;
+ 	const struct br_cfm_common_hdr *hdr;
+@@ -489,11 +489,6 @@ static int br_cfm_frame_rx(struct net_bridge_port *port, struct sk_buff *skb)
+ 	return 1;
+ }
  
- 	netlink_policy_dump_free(ctx->state);
-+	module_put(ctx->owner);
+-static struct br_frame_type cfm_frame_type __read_mostly = {
+-	.type = cpu_to_be16(ETH_P_CFM),
+-	.frame_handler = br_cfm_frame_rx,
+-};
+-
+ int br_cfm_mep_create(struct net_bridge *br,
+ 		      const u32 instance,
+ 		      struct br_cfm_mep_create *const create,
+@@ -559,7 +554,7 @@ int br_cfm_mep_create(struct net_bridge *br,
+ 	INIT_DELAYED_WORK(&mep->ccm_tx_dwork, ccm_tx_work_expired);
+ 
+ 	if (hlist_empty(&br->mep_list))
+-		br_add_frame(br, &cfm_frame_type);
++		br_opt_toggle(br, BROPT_CFM_ENABLED, true);
+ 
+ 	hlist_add_tail_rcu(&mep->head, &br->mep_list);
+ 
+@@ -588,7 +583,7 @@ static void mep_delete_implementation(struct net_bridge *br,
+ 	kfree_rcu(mep, rcu);
+ 
+ 	if (hlist_empty(&br->mep_list))
+-		br_del_frame(br, &cfm_frame_type);
++		br_opt_toggle(br, BROPT_CFM_ENABLED, false);
+ }
+ 
+ int br_cfm_mep_delete(struct net_bridge *br,
+diff --git a/net/bridge/br_device.c b/net/bridge/br_device.c
+index 052986e05e620..9966a3e093232 100644
+--- a/net/bridge/br_device.c
++++ b/net/bridge/br_device.c
+@@ -508,7 +508,6 @@ void br_dev_setup(struct net_device *dev)
+ 	spin_lock_init(&br->lock);
+ 	INIT_LIST_HEAD(&br->port_list);
+ 	INIT_HLIST_HEAD(&br->fdb_list);
+-	INIT_HLIST_HEAD(&br->frame_type_list);
+ #if IS_ENABLED(CONFIG_BRIDGE_MRP)
+ 	INIT_HLIST_HEAD(&br->mrp_list);
+ #endif
+diff --git a/net/bridge/br_input.c b/net/bridge/br_input.c
+index aca6db6f95355..bfc7de46a7054 100644
+--- a/net/bridge/br_input.c
++++ b/net/bridge/br_input.c
+@@ -286,17 +286,25 @@ static int nf_hook_bridge_pre(struct sk_buff *skb, struct sk_buff **pskb)
+ 	return RX_HANDLER_CONSUMED;
+ }
+ 
++#define BR_CFM_MRP_OPTS \
++	((IS_ENABLED(CONFIG_BRIDGE_CFM) ? BIT(BROPT_CFM_ENABLED) : 0UL) | \
++	 (IS_ENABLED(CONFIG_BRIDGE_MRP) ? BIT(BROPT_MRP_ENABLED) : 0UL))
++
+ /* Return 0 if the frame was not processed otherwise 1
+  * note: already called with rcu_read_lock
+  */
+ static int br_process_frame_type(struct net_bridge_port *p,
+ 				 struct sk_buff *skb)
+ {
+-	struct br_frame_type *tmp;
++	struct net_bridge *br = p->br;
++
++	if (skb->protocol == htons(ETH_P_CFM) &&
++	    br_opt_get(br, BROPT_CFM_ENABLED))
++		return br_cfm_frame_rx(p, skb);
+ 
+-	hlist_for_each_entry_rcu(tmp, &p->br->frame_type_list, list)
+-		if (unlikely(tmp->type == skb->protocol))
+-			return tmp->frame_handler(p, skb);
++	if (skb->protocol == htons(ETH_P_MRP) &&
++	    br_opt_get(br, BROPT_MRP_ENABLED))
++		return br_mrp_process(p, skb);
+ 
+ 	return 0;
+ }
+@@ -389,7 +397,8 @@ static rx_handler_result_t br_handle_frame(struct sk_buff **pskb)
+ 		}
+ 	}
+ 
+-	if (unlikely(br_process_frame_type(p, skb)))
++	if (unlikely((READ_ONCE(p->br->options) & BR_CFM_MRP_OPTS) &&
++		     br_process_frame_type(p, skb)))
+ 		return RX_HANDLER_PASS;
+ 
+ forward:
+@@ -430,19 +439,3 @@ rx_handler_func_t *br_get_rx_handler(const struct net_device *dev)
+ 
+ 	return br_handle_frame;
+ }
+-
+-void br_add_frame(struct net_bridge *br, struct br_frame_type *ft)
+-{
+-	hlist_add_head_rcu(&ft->list, &br->frame_type_list);
+-}
+-
+-void br_del_frame(struct net_bridge *br, struct br_frame_type *ft)
+-{
+-	struct br_frame_type *tmp;
+-
+-	hlist_for_each_entry(tmp, &br->frame_type_list, list)
+-		if (ft == tmp) {
+-			hlist_del_rcu(&ft->list);
+-			return;
+-		}
+-}
+diff --git a/net/bridge/br_mrp.c b/net/bridge/br_mrp.c
+index a837ff7d6f36d..79d6bc62179e2 100644
+--- a/net/bridge/br_mrp.c
++++ b/net/bridge/br_mrp.c
+@@ -6,13 +6,6 @@
+ static const u8 mrp_test_dmac[ETH_ALEN] = { 0x1, 0x15, 0x4e, 0x0, 0x0, 0x1 };
+ static const u8 mrp_in_test_dmac[ETH_ALEN] = { 0x1, 0x15, 0x4e, 0x0, 0x0, 0x3 };
+ 
+-static int br_mrp_process(struct net_bridge_port *p, struct sk_buff *skb);
+-
+-static struct br_frame_type mrp_frame_type __read_mostly = {
+-	.type = cpu_to_be16(ETH_P_MRP),
+-	.frame_handler = br_mrp_process,
+-};
+-
+ static bool br_mrp_is_ring_port(struct net_bridge_port *p_port,
+ 				struct net_bridge_port *s_port,
+ 				struct net_bridge_port *port)
+@@ -486,7 +479,7 @@ static void br_mrp_del_impl(struct net_bridge *br, struct br_mrp *mrp)
+ 	kfree_rcu(mrp, rcu);
+ 
+ 	if (hlist_empty(&br->mrp_list))
+-		br_del_frame(br, &mrp_frame_type);
++		br_opt_toggle(br, BROPT_MRP_ENABLED, false);
+ }
+ 
+ /* Adds a new MRP instance.
+@@ -536,7 +529,7 @@ int br_mrp_add(struct net_bridge *br, struct br_mrp_instance *instance)
+ 	rcu_assign_pointer(mrp->s_port, p);
+ 
+ 	if (hlist_empty(&br->mrp_list))
+-		br_add_frame(br, &mrp_frame_type);
++		br_opt_toggle(br, BROPT_MRP_ENABLED, true);
+ 
+ 	INIT_DELAYED_WORK(&mrp->test_work, br_mrp_test_work_expired);
+ 	INIT_DELAYED_WORK(&mrp->in_test_work, br_mrp_in_test_work_expired);
+@@ -1241,7 +1234,7 @@ static int br_mrp_rcv(struct net_bridge_port *p,
+  * normal forwarding.
+  * note: already called with rcu_read_lock
+  */
+-static int br_mrp_process(struct net_bridge_port *p, struct sk_buff *skb)
++int br_mrp_process(struct net_bridge_port *p, struct sk_buff *skb)
+ {
+ 	/* If there is no MRP instance do normal forwarding */
+ 	if (likely(!(p->flags & BR_MRP_AWARE)))
+diff --git a/net/bridge/br_private.h b/net/bridge/br_private.h
+index 617e636a8a4c2..8c0912283df79 100644
+--- a/net/bridge/br_private.h
++++ b/net/bridge/br_private.h
+@@ -459,12 +459,13 @@ enum net_bridge_opts {
+ 	BROPT_VLAN_BRIDGE_BINDING,
+ 	BROPT_MCAST_VLAN_SNOOPING_ENABLED,
+ 	BROPT_MST_ENABLED,
++	BROPT_CFM_ENABLED,
++	BROPT_MRP_ENABLED,
+ };
+ 
+ struct net_bridge {
+ 	spinlock_t			lock;
+ 	spinlock_t			hash_lock;
+-	struct hlist_head		frame_type_list;
+ 	struct net_device		*dev;
+ 	unsigned long			options;
+ 	/* These fields are accessed on each packet */
+@@ -861,16 +862,6 @@ int nbp_backup_change(struct net_bridge_port *p, struct net_device *backup_dev);
+ int br_handle_frame_finish(struct net *net, struct sock *sk, struct sk_buff *skb);
+ rx_handler_func_t *br_get_rx_handler(const struct net_device *dev);
+ 
+-struct br_frame_type {
+-	__be16			type;
+-	int			(*frame_handler)(struct net_bridge_port *port,
+-						 struct sk_buff *skb);
+-	struct hlist_node	list;
+-};
+-
+-void br_add_frame(struct net_bridge *br, struct br_frame_type *ft);
+-void br_del_frame(struct net_bridge *br, struct br_frame_type *ft);
+-
+ static inline bool br_rx_handler_check_rcu(const struct net_device *dev)
+ {
+ 	return rcu_dereference(dev->rx_handler) == br_get_rx_handler(dev);
+@@ -1931,6 +1922,7 @@ int br_mrp_parse(struct net_bridge *br, struct net_bridge_port *p,
+ bool br_mrp_enabled(struct net_bridge *br);
+ void br_mrp_port_del(struct net_bridge *br, struct net_bridge_port *p);
+ int br_mrp_fill_info(struct sk_buff *skb, struct net_bridge *br);
++int br_mrp_process(struct net_bridge_port *p, struct sk_buff *skb);
+ #else
+ static inline int br_mrp_parse(struct net_bridge *br, struct net_bridge_port *p,
+ 			       struct nlattr *attr, int cmd,
+@@ -1954,6 +1946,11 @@ static inline int br_mrp_fill_info(struct sk_buff *skb, struct net_bridge *br)
  	return 0;
  }
  
++static inline int br_mrp_process(struct net_bridge_port *p, struct sk_buff *skb)
++{
++	return 0;
++}
++
+ #endif
+ 
+ /* br_cfm.c */
+@@ -1962,6 +1959,7 @@ int br_cfm_parse(struct net_bridge *br, struct net_bridge_port *p,
+ 		 struct nlattr *attr, int cmd, struct netlink_ext_ack *extack);
+ bool br_cfm_created(struct net_bridge *br);
+ void br_cfm_port_del(struct net_bridge *br, struct net_bridge_port *p);
++int br_cfm_frame_rx(struct net_bridge_port *port, struct sk_buff *skb);
+ int br_cfm_config_fill_info(struct sk_buff *skb, struct net_bridge *br);
+ int br_cfm_status_fill_info(struct sk_buff *skb,
+ 			    struct net_bridge *br,
+@@ -1986,6 +1984,12 @@ static inline void br_cfm_port_del(struct net_bridge *br,
+ {
+ }
+ 
++static inline int br_cfm_frame_rx(struct net_bridge_port *port,
++				  struct sk_buff *skb)
++{
++	return 0;
++}
++
+ static inline int br_cfm_config_fill_info(struct sk_buff *skb, struct net_bridge *br)
+ {
+ 	return -EOPNOTSUPP;
 -- 
 2.53.0
 
