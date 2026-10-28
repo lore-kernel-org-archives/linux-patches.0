@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213580;
-	b=bQ1WpqTHm3fOwzJySV14RWebrCXzi/liqDvEoB145qNoS4mPRrx2woeEEN5bgJXZzmum
-	 FlcLWr7fOAY75zKUWQp0rgYGyOVvC5oKSpqJkFaKkle6RQgfKyoiJc/YFN43BLeL74iC4
-	 CyZJrNuioecu1GRH+CaksJMAJQT7r1DAMS/HL/ccc2vHw8bauibA1dAhsticqp05652oi
-	 furCog779G8jVaFAuv6EQI38wpLH5oNiaNV3v40QCR+q4Etz5MKv5m/fyXFB2IjeM7xqE
-	 vEImqK5vG2ytWaQbqgMxhQQ9tPjO+PHaij3OCA+Fk6aZ75ztmP5IpKBjGbsTHt/pcow==
+	t=1793213583;
+	b=TznUUokNxky3JCOk5LLimFaLPgkZiyDfGqfXVKv4GylutUxmdWmaRt7reNsQS1Ub68su
+	 SF12ZnhUnFhkSzfTKb7CBheaXibkWQY2noIcaQOH/7akF6NbWHfeH0CkKK66pu98W5IEU
+	 U55iU8yILnPdXw2/xXu6yJJwZYdFcyH3MJxO8ZUk+E7gAxxslCLJ6qNWKHwIYLgpYHKBf
+	 bXNdR4Rrsg4j9Sf/i7hZVg8xrsdAIB5UEdqtC1xbuaZjbTOdST5Vkr6aw3ArNsT3Yk3Zl
+	 FxlFDUpc15ZK3mMRqSkWBgIEvxhHY8s42h0sjbUHvmuKCOMUnn7Ov12xAzl6hI67xuw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213580;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213583;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+ZC/JSBxbxcosRYhdBjQEVfqlw3vFHzTCeIlF0NN+GQ=;
-	b=SdyLmAcZ4xH1e/QUB/zM21qEbGjhQkS56hF7tCTSaq0Jt8A1Boum3vp0zy7/nd3LDqwi
-	 E6LnpydnF/cl+DRZrKli9aVqUblYbvdxN7kr8YABrgiQWE7cFoZ+zpU+aPbOcs0eiCxHR
-	 f1tS7xS5kI7JD3CSWnBcgUg3MTLbkoMagEs8FBwjhnAuBByb+PVuATQAgawmZT5CyAEa7
-	 UC2yQ+L+V3gog7c2HCTPOTdHHo5b2SAqd6QvEjTE2sBLWU5uQtflfredUppu+FDSPXe1l
-	 q+1jxbtCUgi8KrTb6H858fa1ar1q/rVsa0nzdejPNu7+h62nIyA3F+h7UpcOnsO0vZQ==
+	bh=YAh5Q+j3wHYpo8zH0xw6ajaJ6zAnjgfU5z/Bz0EqsMs=;
+	b=MJYMnJufKjtHi/SC9npj1XF0zeXwzqBoN0qvf4m8BEmpaDYQsD0VY/PWzRYKu7PuVJ0q
+	 xnFfaPqvm9c8mVb+MlcRyZ5pSbjnviL6Zg1jMziGi2oIWZMnrz5zzl4wkgcQ1FGmy4B0F
+	 yHEzDBDJZ82Z/A06Rino4GGSHcoE3wxWCTxprZoccWeXrsFvH0UWZAae1OP4pPbfsj/9a
+	 iYFOcBtLPsQhJrDllp253MzURpV0EE67G7gs0fzVshcb7dbdLGXNT8thmwuSpWgIbbD8B
+	 20H3V0AtGXNxh4zY4zZY6JKNZuY87venWH+6haoMUrByFv6jBfuUZY0vzUK1TX+F1RQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xQEjBPTP;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GIK05R9u;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77C31606A31A;
-	Wed, 28 Oct 2026 18:53:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FD6B606A31F;
+	Wed, 28 Oct 2026 18:53:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xQEjBPTP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7AAB1F01825;
-	Wed, 28 Oct 2026 18:52:59 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GIK05R9u
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A68211F01825;
+	Wed, 28 Oct 2026 18:53:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213580;
-	bh=+ZC/JSBxbxcosRYhdBjQEVfqlw3vFHzTCeIlF0NN+GQ=;
+	s=korg; t=1793213583;
+	bh=YAh5Q+j3wHYpo8zH0xw6ajaJ6zAnjgfU5z/Bz0EqsMs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xQEjBPTPPACjlxiDcRbheRm7VfxleK5I4f2UEVEIhfOyYrT/j+4cJyIbpD4lPgTyg
-	 NSoDxeK2lVFXgKk8dp3LOOGf1QtH4fA4Wqt0bdTfOGq3C0lt3Qcgajws/0wCI2omku
-	 HIGhor0eo1M6FKR92BQPMITusy3MMflV0aYhcKgM=
+	b=GIK05R9uNicMiRtrpPrHpIG+4+pT25/Q49AbwDP9PeA1G8oxg7U8EYkUmZC1OE11F
+	 OS5Kxc2FrsanzcnE6agZhYgGSqGB8jh4YEEJvETY8JUYI1QgMtkLkTlxa+OeYS5D5q
+	 vzvgEvlU1MyhXM5L2bIgp6+4NgKDVmvQWY4IPRUU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhipeng Lu <alexious@zju.edu.cn>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	Alvin Lee <alvin.lee2@amd.com>,
+	Wayne Lin <wayne.lin@amd.com>,
+	Ilya Bakoulin <ilya.bakoulin@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0556/1887] SUNRPC: fix a memleak in gss_import_v2_context
-Date: Wed, 28 Oct 2026 17:44:12 +0100
-Message-ID: <20261028170512.033198137@linuxfoundation.org>
+Subject: [PATCH 6.1 0557/1887] drm/amd/display: Fix hang/underflow when transitioning to ODM4:1
+Date: Wed, 28 Oct 2026 17:44:13 +0100
+Message-ID: <20261028170512.055930907@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,67 +71,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhipeng Lu <alexious@zju.edu.cn>
+From: Ilya Bakoulin <ilya.bakoulin@amd.com>
 
-[ Upstream commit e67b652d8e8591d3b1e569dbcdfcee15993e91fa ]
+[ Upstream commit e7b2b108cdeab76a7e7324459e50b0c1214c0386 ]
 
-The ctx->mech_used.data allocated by kmemdup is not freed in neither
-gss_import_v2_context nor it only caller gss_krb5_import_sec_context,
-which frees ctx on error.
+[Why]
+Under some circumstances, disabling an OPTC and attempting to reclaim
+its OPP(s) for a different OPTC could cause a hang/underflow due to OPPs
+not being properly disconnected from the disabled OPTC.
 
-Thus, this patch reform the last call of gss_import_v2_context to the
-gss_krb5_import_ctx_v2, preventing the memleak while keepping the return
-formation.
+[How]
+Ensure that all OPPs are unassigned from an OPTC when it gets disabled.
 
-Fixes: 47d848077629 ("gss_krb5: handle new context format from gssd")
-Signed-off-by: Zhipeng Lu <alexious@zju.edu.cn>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Reviewed-by: Alvin Lee <alvin.lee2@amd.com>
+Acked-by: Wayne Lin <wayne.lin@amd.com>
+Signed-off-by: Ilya Bakoulin <ilya.bakoulin@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/auth_gss/gss_krb5_mech.c | 17 ++++++++++++++---
- 1 file changed, 14 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/amd/display/dc/dcn314/dcn314_optc.c | 7 +++++++
+ drivers/gpu/drm/amd/display/dc/dcn32/dcn32_optc.c   | 7 +++++++
+ 2 files changed, 14 insertions(+)
 
-diff --git a/net/sunrpc/auth_gss/gss_krb5_mech.c b/net/sunrpc/auth_gss/gss_krb5_mech.c
-index 1c092b05c2bba..8fc6f25468ac6 100644
---- a/net/sunrpc/auth_gss/gss_krb5_mech.c
-+++ b/net/sunrpc/auth_gss/gss_krb5_mech.c
-@@ -471,6 +471,7 @@ gss_import_v2_context(const void *p, const void *end, struct krb5_ctx *ctx,
- 	u64 seq_send64;
- 	int keylen;
- 	u32 time32;
-+	int ret;
+diff --git a/drivers/gpu/drm/amd/display/dc/dcn314/dcn314_optc.c b/drivers/gpu/drm/amd/display/dc/dcn314/dcn314_optc.c
+index 7dd36e402bac7..56487ba4d00e6 100644
+--- a/drivers/gpu/drm/amd/display/dc/dcn314/dcn314_optc.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn314/dcn314_optc.c
+@@ -139,6 +139,13 @@ static bool optc314_disable_crtc(struct timing_generator *optc)
+ 	REG_UPDATE(OTG_CONTROL,
+ 			OTG_MASTER_EN, 0);
  
- 	p = simple_get_bytes(p, end, &ctx->flags, sizeof(ctx->flags));
- 	if (IS_ERR(p))
-@@ -528,14 +529,24 @@ gss_import_v2_context(const void *p, const void *end, struct krb5_ctx *ctx,
- 
- 	switch (ctx->enctype) {
- 	case ENCTYPE_DES3_CBC_RAW:
--		return context_derive_keys_des3(ctx, gfp_mask);
-+		ret = context_derive_keys_des3(ctx, gfp_mask);
-+		break;
- 	case ENCTYPE_AES128_CTS_HMAC_SHA1_96:
- 	case ENCTYPE_AES256_CTS_HMAC_SHA1_96:
--		return context_derive_keys_new(ctx, gfp_mask);
-+		ret = context_derive_keys_new(ctx, gfp_mask);
-+		break;
- 	default:
--		return -EINVAL;
-+		ret = -EINVAL;
-+	}
-+	if (ret) {
-+		p = ERR_PTR(ret);
-+		goto out_free;
- 	}
- 
-+	return 0;
++	REG_UPDATE_5(OPTC_DATA_SOURCE_SELECT,
++			OPTC_SEG0_SRC_SEL, 0xf,
++			OPTC_SEG1_SRC_SEL, 0xf,
++			OPTC_SEG2_SRC_SEL, 0xf,
++			OPTC_SEG3_SRC_SEL, 0xf,
++			OPTC_NUM_OF_INPUT_SEGMENT, 0);
 +
-+out_free:
-+	kfree(ctx->mech_used.data);
- out_err:
- 	return PTR_ERR(p);
- }
+ 	REG_UPDATE(CONTROL,
+ 			VTG0_ENABLE, 0);
+ 
+diff --git a/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_optc.c b/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_optc.c
+index 37c645a882dd8..4a2fa9bb5393c 100644
+--- a/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_optc.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_optc.c
+@@ -145,6 +145,13 @@ static bool optc32_disable_crtc(struct timing_generator *optc)
+ 	REG_UPDATE(OTG_CONTROL,
+ 			OTG_MASTER_EN, 0);
+ 
++	REG_UPDATE_5(OPTC_DATA_SOURCE_SELECT,
++			OPTC_SEG0_SRC_SEL, 0xf,
++			OPTC_SEG1_SRC_SEL, 0xf,
++			OPTC_SEG2_SRC_SEL, 0xf,
++			OPTC_SEG3_SRC_SEL, 0xf,
++			OPTC_NUM_OF_INPUT_SEGMENT, 0);
++
+ 	REG_UPDATE(CONTROL,
+ 			VTG0_ENABLE, 0);
+ 
 -- 
 2.53.0
 
