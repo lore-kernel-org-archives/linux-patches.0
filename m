@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214791;
-	b=iTTNZG6VE+or3qwNWJlJoVSvpvJBvgxZvKtH3XHB9yuCghq6450x0FdtdLWWO4Nwl8ye
-	 dAHwQyHd874LxufoAQFmM8nsoLxp3u2rQzCib/1/sfEBlfRzwr8tI/lOObf/TiV5doFMC
-	 7Txqzg8Adup/oAd1Yntx1IfAKwmskvpxxchy7297B+GMn9aHJnuCcE4BtRA9FJ9/cL+zO
-	 8onOoKNDzhCNwPu8CKIL5pYrORQgPM8yyeOK912lJdMFrhbh4N+Kk9iwSQfCyZ+Onze2q
-	 zNaGxYtw7+4Ojc+G75fCrF+KOB0TsW6vP6eiAPn2M1eCOTjzcq4AOUBK3MN+pvdu8Ag==
+	t=1793214793;
+	b=5KB4zMD+F+tPO2avgx+806dF0MRUv1KpUreolnPzP8LNGEHew4/p9kzIYbquNql3dp8a
+	 BvqP8oNjJAuTNFVKTztsBRxmlLOfC7DZmPq9Vu/jmJ8YvlirmfD5SGrg01DHsjCAXt7qs
+	 Kzc80OiiMrpw+Oy3ElSMTUOJyu5vi9ElI5mittZqI8Z5tOITDismaRWQtVCweHmEo7kBZ
+	 5Uw6MavfQE8qPNzHAMV8JT3AsQuu8y1EfR1tYkkrBj4v0F2gCwWN/viG0LSu+fKpl+pTU
+	 NE2pbYpcg0eXPAOI6SoHxNpSuTaRMZLH0fHWUV1pSTlEvE5EWefOlFyfbjSYKegpOjA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214791;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214793;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/V7thOG9tN7Ax/1sA8/KakwLOeCZfC2AP6ySxawEo3U=;
-	b=vyIgG0b3ZkUgijrzkrAFRQcG2IiabMPpyF4tRMi4Av4Rawth4VserWLTUqLxv1TXCa+6
-	 x2QEQ8r8vxebLcpvUhvbDBHmdgp9PyFVG5OmMsFeGn8doLrqNzKqhXDDlOXkiPTb/DB/h
-	 8ikIsOXOZEq0SuRT0TftQfJGa9orhY4yncc2/S2YUWCadGGiqJtLrWQSBa1le5kvL4ccE
-	 2A4jy7PMb2lHAZBQeX97I8HVBPcWsCChKGv2JI7B9BFj1J8F9aXv/yrMtHHKA160edZdu
-	 97Wgcyj+6lSb2Zo9ifH0Gxq2n410ELOkDNOAgQ+BXvhMHMtAKCZiUMk0CqXbq4aZN0w==
+	bh=jKp2zs5iQglS37TlXcjms0bE4fabdkCXai7xwDqDps8=;
+	b=jWpc/R+XyUlRQs4SN8/kaIY2Nzzgk7PomWeohhxOixhW+Q9HGvcCkhz80ec2d7DUWGci
+	 yQIqk5r7xyCQYYI0fnI/ORG5UY1+IZyywrrUfvxZBFif91s+ggu8U3EW9aW0gHFs3RP6/
+	 DCulrPSNaw86+10d36+Tr4oDwobdl3BvJ4WdevHgcDvzx31kUvEANdA3d/W0wfGq4dEfj
+	 0gx4bzTFegVxr99O9yQyz9D1DpfMUtvEiZaqG17c1qamXYXh2jXrdT4FOZKlqRxknGGvv
+	 1gtAOmSVjUULoNWhl1oLOd1aoLXiP5yfQUP4KWzAHhHw+UyOlfVmTHIWkJ8zVceQrzg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TJlhDhjd;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JsB7uiRm;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F160C606B7E4;
-	Wed, 28 Oct 2026 19:13:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FDA9606A32F;
+	Wed, 28 Oct 2026 19:13:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TJlhDhjd
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20C271F01825;
-	Wed, 28 Oct 2026 19:13:09 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JsB7uiRm
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E38BA1F01825;
+	Wed, 28 Oct 2026 19:13:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214790;
-	bh=/V7thOG9tN7Ax/1sA8/KakwLOeCZfC2AP6ySxawEo3U=;
+	s=korg; t=1793214793;
+	bh=jKp2zs5iQglS37TlXcjms0bE4fabdkCXai7xwDqDps8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TJlhDhjdNUZkCni8osbN56qN0lfH+vwD5cIQ6dgF8FDzBQIkNGje8Elw8Huoumtik
-	 essQd4qfs0AwP1kK2rtH/W7jzonzopXhkyYXvhoW3tSMxfrow0vX3HMQshQxlX6CRj
-	 ib0QvXsT4sHv2NVNXstiF00sPEkL3ekgxc8hHRgs=
+	b=JsB7uiRmA34aL6mzLumNSzsBAA27ynL4dahsxzPC6z1gUTnQI34GAg+j7IZfM9cES
+	 9uV+4Mdk4OPfayA9rB2gN2oVTpVrOUiBy5zrY+odZ8NdhXmlbYMOtibGrRj6tjl97H
+	 giIvBOLNt2x54Yp2k1Z+7EacaWCxeJ880+A2RqJY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yiming Qian <yimingqian591@gmail.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Justin Iurman <justin.iurman@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Keenan Dong <keenanat2000@gmail.com>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0982/1887] ipv6: ioam: fix potential NULL dereferences in __ioam6_fill_trace_data()
-Date: Wed, 28 Oct 2026 17:51:18 +0100
-Message-ID: <20261028170521.757809828@linuxfoundation.org>
+Subject: [PATCH 6.1 0983/1887] xfrm: account XFRMA_IF_ID in aevent size calculation
+Date: Wed, 28 Oct 2026 17:51:19 +0100
+Message-ID: <20261028170521.780011401@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -70,116 +68,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Keenan Dong <keenanat2000@gmail.com>
 
-[ Upstream commit 4e65a8b8daa18d63255ec58964dd192c7fdd9f8b ]
+[ Upstream commit 7081d46d32312f1a31f0e0e99c6835a394037599 ]
 
-We need to check __in6_dev_get() for possible NULL value, as
-suggested by Yiming Qian.
+xfrm_get_ae() allocates the reply skb with xfrm_aevent_msgsize(), then
+build_aevent() appends attributes including XFRMA_IF_ID when x->if_id is
+set.
 
-Also add skb_dst_dev_rcu() instead of skb_dst_dev(),
-and two missing READ_ONCE().
+xfrm_aevent_msgsize() does not include space for XFRMA_IF_ID. For states
+with if_id, build_aevent() can fail with -EMSGSIZE and hit BUG_ON(err < 0)
+in xfrm_get_ae(), turning a malformed netlink interaction into a kernel
+panic.
 
-Note that @dev can't be NULL.
+Account XFRMA_IF_ID in the size calculation unconditionally and replace
+the BUG_ON with normal error unwinding.
 
-Fixes: 9ee11f0fff20 ("ipv6: ioam: Data plane support for Pre-allocated Trace")
-Reported-by: Yiming Qian <yimingqian591@gmail.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Justin Iurman <justin.iurman@gmail.com>
-Link: https://patch.msgid.link/20260402101732.1188059-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 7e6526404ade ("xfrm: Add a new lookup key to match xfrm interfaces.")
+Reported-by: Keenan Dong <keenanat2000@gmail.com>
+Signed-off-by: Keenan Dong <keenanat2000@gmail.com>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/ioam6.c | 26 ++++++++++++++++----------
- 1 file changed, 16 insertions(+), 10 deletions(-)
+ net/xfrm/xfrm_user.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/net/ipv6/ioam6.c b/net/ipv6/ioam6.c
-index 8db53f4da6604..05d8d9a5b3537 100644
---- a/net/ipv6/ioam6.c
-+++ b/net/ipv6/ioam6.c
-@@ -650,6 +650,9 @@ static void __ioam6_fill_trace_data(struct sk_buff *skb,
- 				    struct ioam6_schema *sc,
- 				    unsigned int sclen, bool is_input)
- {
-+	/* Note: skb_dst_dev_rcu() can't be NULL at this point. */
-+	struct net_device *dev = skb_dst_dev_rcu(skb);
-+	struct inet6_dev *i_skb_dev, *idev;
- 	struct timespec64 ts;
- 	ktime_t tstamp;
- 	u64 raw64;
-@@ -660,13 +663,16 @@ static void __ioam6_fill_trace_data(struct sk_buff *skb,
+diff --git a/net/xfrm/xfrm_user.c b/net/xfrm/xfrm_user.c
+index 6fb79def144c8..9041a9885854f 100644
+--- a/net/xfrm/xfrm_user.c
++++ b/net/xfrm/xfrm_user.c
+@@ -2366,7 +2366,8 @@ static inline unsigned int xfrm_aevent_msgsize(struct xfrm_state *x)
+ 	       + nla_total_size_64bit(sizeof(struct xfrm_lifetime_cur))
+ 	       + nla_total_size(sizeof(struct xfrm_mark))
+ 	       + nla_total_size(4) /* XFRM_AE_RTHR */
+-	       + nla_total_size(4); /* XFRM_AE_ETHR */
++	       + nla_total_size(4) /* XFRM_AE_ETHR */
++	       + nla_total_size(sizeof(x->if_id)); /* XFRMA_IF_ID */
+ }
  
- 	data = trace->data + trace->remlen * 4 - trace->nodelen * 4 - sclen * 4;
+ static int build_aevent(struct sk_buff *skb, struct xfrm_state *x, const struct km_event *c)
+@@ -2467,7 +2468,12 @@ static int xfrm_get_ae(struct sk_buff *skb, struct nlmsghdr *nlh,
+ 	c.portid = nlh->nlmsg_pid;
  
-+	i_skb_dev = skb->dev ? __in6_dev_get(skb->dev) : NULL;
-+	idev = __in6_dev_get(dev);
-+
- 	/* hop_lim and node_id */
- 	if (trace->type.bit0) {
- 		byte = ipv6_hdr(skb)->hop_limit;
- 		if (is_input)
- 			byte--;
+ 	err = build_aevent(r_skb, x, &c);
+-	BUG_ON(err < 0);
++	if (err < 0) {
++		spin_unlock_bh(&x->lock);
++		xfrm_state_put(x);
++		kfree_skb(r_skb);
++		return err;
++	}
  
--		raw32 = dev_net(skb_dst(skb)->dev)->ipv6.sysctl.ioam6_id;
-+		raw32 = READ_ONCE(dev_net(dev)->ipv6.sysctl.ioam6_id);
- 
- 		*(__be32 *)data = cpu_to_be32((byte << 24) | raw32);
- 		data += sizeof(__be32);
-@@ -674,18 +680,18 @@ static void __ioam6_fill_trace_data(struct sk_buff *skb,
- 
- 	/* ingress_if_id and egress_if_id */
- 	if (trace->type.bit1) {
--		if (!skb->dev)
-+		if (!i_skb_dev)
- 			raw16 = IOAM6_U16_UNAVAILABLE;
- 		else
--			raw16 = (__force u16)__in6_dev_get(skb->dev)->cnf.ioam6_id;
-+			raw16 = (__force u16)READ_ONCE(i_skb_dev->cnf.ioam6_id);
- 
- 		*(__be16 *)data = cpu_to_be16(raw16);
- 		data += sizeof(__be16);
- 
--		if (skb_dst(skb)->dev->flags & IFF_LOOPBACK)
-+		if ((dev->flags & IFF_LOOPBACK) || !idev)
- 			raw16 = IOAM6_U16_UNAVAILABLE;
- 		else
--			raw16 = (__force u16)__in6_dev_get(skb_dst(skb)->dev)->cnf.ioam6_id;
-+			raw16 = (__force u16)READ_ONCE(idev->cnf.ioam6_id);
- 
- 		*(__be16 *)data = cpu_to_be16(raw16);
- 		data += sizeof(__be16);
-@@ -765,7 +771,7 @@ static void __ioam6_fill_trace_data(struct sk_buff *skb,
- 		if (is_input)
- 			byte--;
- 
--		raw64 = dev_net(skb_dst(skb)->dev)->ipv6.sysctl.ioam6_id_wide;
-+		raw64 = READ_ONCE(dev_net(dev)->ipv6.sysctl.ioam6_id_wide);
- 
- 		*(__be64 *)data = cpu_to_be64(((u64)byte << 56) | raw64);
- 		data += sizeof(__be64);
-@@ -773,18 +779,18 @@ static void __ioam6_fill_trace_data(struct sk_buff *skb,
- 
- 	/* ingress_if_id and egress_if_id (wide) */
- 	if (trace->type.bit9) {
--		if (!skb->dev)
-+		if (!i_skb_dev)
- 			raw32 = IOAM6_U32_UNAVAILABLE;
- 		else
--			raw32 = __in6_dev_get(skb->dev)->cnf.ioam6_id_wide;
-+			raw32 = READ_ONCE(i_skb_dev->cnf.ioam6_id_wide);
- 
- 		*(__be32 *)data = cpu_to_be32(raw32);
- 		data += sizeof(__be32);
- 
--		if (skb_dst(skb)->dev->flags & IFF_LOOPBACK)
-+		if ((dev->flags & IFF_LOOPBACK) || !idev)
- 			raw32 = IOAM6_U32_UNAVAILABLE;
- 		else
--			raw32 = __in6_dev_get(skb_dst(skb)->dev)->cnf.ioam6_id_wide;
-+			raw32 = READ_ONCE(idev->cnf.ioam6_id_wide);
- 
- 		*(__be32 *)data = cpu_to_be32(raw32);
- 		data += sizeof(__be32);
+ 	err = nlmsg_unicast(xfrm_net_nlsk(net, skb), r_skb, NETLINK_CB(skb).portid);
+ 	spin_unlock_bh(&x->lock);
 -- 
 2.53.0
 
