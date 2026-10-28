@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793211590;
-	b=Th89rE026qvtyApBYwwsDidIC6bCDu8HrgCo84iU3FS9NcqHYs62rAa6+qKPSxSLYLl4
-	 y7SMcAUSJqUGbMs9PcWrL33yCQXFYxaMBg7jCt1BgKL7Xusb+7QMLomglXxOtcBeFwye3
-	 QPvj40l0sgKtGQurpM5FYf2BpUwQGYYehARQG12NmA4BmvUXeJTVAmoLyXdjJYgSQLk9r
-	 /nsiKj4p3v+4AZaQDh/TxTtis7xfjB23F6ENz/W2DBg1ghW3aOgCG+7j6Bf3ucC7PSauk
-	 zBEopS/vP+zlZGcUlrk1elegiOiSYeOBXGCNniEsP9AJj8Yj1rq341vK/E/6hh9Md+w==
+	t=1793211593;
+	b=EiXyKG6Ia+91L/ls5p9vZ1VLcOQvuxaNMdZ0QYvHxX79xvnE9hvtWjBtWfwBkBjO/zj8
+	 49hqHahzE3s8GZwgYf23/rc6G+fC1oKH/ZmcvGoWVeV/ocK7d3rmu52Q/Dj0BprgTJvmP
+	 V6R5AbBsNTxmR6PzllFOZSSoH7l6/S680KmFET8a0WDd3E5yLTgHHc0alNL6bgBlBqNo1
+	 /zcL4mx/WY3wE5Gpj/CzCKqK1UNEXdalYK0eGazapQNfwG27cNokAtuB1M60IPZPKwG2d
+	 +t1nkPHnldS8T8AhwWtkOOmZCjwQskBxFnHJLlVXa7WWAvnZcHaC5gFiCHJXXjlDE0g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793211590;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793211593;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=JGxwjcxDawE6k2RorftgHnA+ef0R4ADb1YVSHHOl1ug=;
-	b=mHHBE8ScbAiC9mZVSUYH7Sj0d8vFOBXhjONcqGsB5YPZ6RyA638QLDY7p5QqRiKw4gMp
-	 qDGalU4RBanrYqPu0oZqzyxeDz3+iJ2kWgHt4Z0ksVLxxArKSShgegys2e2l6dOyf5e/R
-	 Q+uc/7xz7IhjJ12CMzcPqhgrrev4dwvATd2qq/Lc8WqmC6o5ifBSCksyMpCtcaCyb//wj
-	 uCMl+010jKNRnHTd5chP6yFAlzGABacvT1K/76gSBXhr5HioNAXe9lQuTkigyvPExRAss
-	 JeKQW1jiWMJo8ktCm9rHi7D1GUc2/Jbh67Nelfi6lXvR33+ffHNvPbaA5SLw7wJjaRg==
+	bh=fJoZiBXFXBymd9huq2t1yPESzY+2h3aTHHbCWmTjpyU=;
+	b=F4mNzODG2btk+wCWnZbzhBx9fuBaMDgdNMnpeGxekUClWULWgWDe3whIB9vx46oBoukk
+	 O8zP3BGQHScPHSNWtOdu0WEX60lvwcnVP4cJ2Y2l6zlCwLTZpm4tDe0d9DeAD8uNB0vlp
+	 qcYtpzaKa0Zhczwtyl8l1k+nZi1MC033GmwanJK5WexsMxMvIf52KJCNV2XDvdHgpvZlK
+	 w3kmT8bTdJN6XK+TYdGY6x6+HC3LWZrD973X+4HI9Y5ZO0sXfeYMlBDoKB7mddK4kRsEE
+	 RSahExga0g4nSRKTYOR9ayV0lAISOgZJ3Eyiar7/lR47Bnq7KdL9VBOueyxBLxoq8IQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oLJnZHxF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t2KTXC8X;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37062606A31D;
-	Wed, 28 Oct 2026 18:19:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBEDB606A31D;
+	Wed, 28 Oct 2026 18:19:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oLJnZHxF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40E191F01825;
-	Wed, 28 Oct 2026 18:19:49 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t2KTXC8X
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17C6C1F01825;
+	Wed, 28 Oct 2026 18:19:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793211589;
-	bh=JGxwjcxDawE6k2RorftgHnA+ef0R4ADb1YVSHHOl1ug=;
+	s=korg; t=1793211592;
+	bh=fJoZiBXFXBymd9huq2t1yPESzY+2h3aTHHbCWmTjpyU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oLJnZHxFYLf+AVtrt8OdtfbWXkVIe1eDwi7v2uN3TyOApx88Ct2UQsPhd3WnN/tGz
-	 8JTHcwb97JcWIRpXE0kdOfptMTzLnHrj9tjS7tfIVnlkTcOBFV5KjpudpcrrmN9UtR
-	 DjC1wdYUfNtBxMoWISCA83rQGKUdE/YK756/miI4=
+	b=t2KTXC8X1dxopUkWVjH4qc5kEAUMLe3s4tJsaPJbsuOOEYNRIPBZoNfed3qmCkPmb
+	 ywv+FsXZ8u8V3SDDnaHEKrd1k1cHiIS/h8TkszJ2YUywNtQMm0qhkPTae3W+F8NH6N
+	 gZuK9imhYXByi+9Ptyf69mt2y6MxHuW0NGpvUCwE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiri Pirko <jiri@nvidia.com>,
-	Marc Harvey <marcharvey@google.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Eric Dumazet <edumazet@google.com>,
+	David Ahern <dsahern@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 432/571] net: team: Rename port_disabled team mode op to port_tx_disabled
-Date: Wed, 28 Oct 2026 17:59:39 +0100
-Message-ID: <20261028170018.271475355@linuxfoundation.org>
+Subject: [PATCH 5.15 415/571] ipv6: use RCU in ip6_xmit()
+Date: Wed, 28 Oct 2026 17:59:22 +0100
+Message-ID: <20261028170017.858422473@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -70,76 +70,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Harvey <marcharvey@google.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit cfa477df2cc62ba53cb936669886361152b594a7 ]
+[ Upstream commit 9085e56501d93af9f2d7bd16f7fcfacdde47b99c ]
 
-This team mode op is only used by the load balance mode, and it only
-uses it in the tx path.
+Use RCU in ip6_xmit() in order to use dst_dev_rcu() to prevent
+possible UAF.
 
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Signed-off-by: Marc Harvey <marcharvey@google.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20260409-teaming-driver-internal-v7-3-f47e7589685d@google.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Stable-dep-of: b7454f1940c5 ("net: team: stop reusing skb after queue override")
+Fixes: 4a6ce2b6f2ec ("net: introduce a new function dst_dev_put()")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://patch.msgid.link/20250828195823.3958522-4-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+(cherry picked from commit 9085e56501d93af9f2d7bd16f7fcfacdde47b99c)
+[Harshit: Resolve conflict for missing BIG TCP hop-jumbo context]
+Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/team/team.c                  | 4 ++--
- drivers/net/team/team_mode_loadbalance.c | 4 ++--
- include/linux/if_team.h                  | 2 +-
- 3 files changed, 5 insertions(+), 5 deletions(-)
+ net/ipv6/ip6_output.c | 35 +++++++++++++++++++++--------------
+ 1 file changed, 21 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/net/team/team.c b/drivers/net/team/team.c
-index 98500e76f095f..0d2fd43fd00a4 100644
---- a/drivers/net/team/team.c
-+++ b/drivers/net/team/team.c
-@@ -964,8 +964,8 @@ static void team_port_disable(struct team *team,
+diff --git a/net/ipv6/ip6_output.c b/net/ipv6/ip6_output.c
+index ab745cda1179b..6db5f25017363 100644
+--- a/net/ipv6/ip6_output.c
++++ b/net/ipv6/ip6_output.c
+@@ -257,33 +257,34 @@ bool ip6_autoflowlabel(struct net *net, const struct ipv6_pinfo *np)
+ int ip6_xmit(const struct sock *sk, struct sk_buff *skb, struct flowi6 *fl6,
+ 	     __u32 mark, struct ipv6_txoptions *opt, int tclass, u32 priority)
  {
- 	if (!team_port_enabled(port))
- 		return;
--	if (team->ops.port_disabled)
--		team->ops.port_disabled(team, port);
-+	if (team->ops.port_tx_disabled)
-+		team->ops.port_tx_disabled(team, port);
- 	hlist_del_rcu(&port->hlist);
- 	__reconstruct_port_hlist(team, port->index);
- 	port->index = -1;
-diff --git a/drivers/net/team/team_mode_loadbalance.c b/drivers/net/team/team_mode_loadbalance.c
-index b095a4b4957bb..89ee6bee049c1 100644
---- a/drivers/net/team/team_mode_loadbalance.c
-+++ b/drivers/net/team/team_mode_loadbalance.c
-@@ -672,7 +672,7 @@ static void lb_port_leave(struct team *team, struct team_port *port)
- 	free_percpu(lb_port_priv->pcpu_stats);
- }
+-	struct net *net = sock_net(sk);
+ 	const struct ipv6_pinfo *np = inet6_sk(sk);
+ 	struct in6_addr *first_hop = &fl6->daddr;
+ 	struct dst_entry *dst = skb_dst(skb);
+-	struct net_device *dev = dst->dev;
+ 	struct inet6_dev *idev = ip6_dst_idev(dst);
++	struct net *net = sock_net(sk);
+ 	unsigned int head_room;
++	struct net_device *dev;
+ 	struct ipv6hdr *hdr;
+ 	u8  proto = fl6->flowi6_proto;
+ 	int seg_len = skb->len;
+-	int hlimit = -1;
++	int ret, hlimit = -1;
+ 	u32 mtu;
  
--static void lb_port_disabled(struct team *team, struct team_port *port)
-+static void lb_port_tx_disabled(struct team *team, struct team_port *port)
- {
- 	lb_tx_hash_to_port_mapping_null_port(team, port);
- }
-@@ -682,7 +682,7 @@ static const struct team_mode_ops lb_mode_ops = {
- 	.exit			= lb_exit,
- 	.port_enter		= lb_port_enter,
- 	.port_leave		= lb_port_leave,
--	.port_disabled		= lb_port_disabled,
-+	.port_tx_disabled	= lb_port_tx_disabled,
- 	.receive		= lb_receive,
- 	.transmit		= lb_transmit,
- };
-diff --git a/include/linux/if_team.h b/include/linux/if_team.h
-index ef1f566b90a05..a1fadb70dd52e 100644
---- a/include/linux/if_team.h
-+++ b/include/linux/if_team.h
-@@ -121,7 +121,7 @@ struct team_mode_ops {
- 	int (*port_enter)(struct team *team, struct team_port *port);
- 	void (*port_leave)(struct team *team, struct team_port *port);
- 	void (*port_change_dev_addr)(struct team *team, struct team_port *port);
--	void (*port_disabled)(struct team *team, struct team_port *port);
-+	void (*port_tx_disabled)(struct team *team, struct team_port *port);
- };
++	rcu_read_lock();
++
++	dev = dst_dev_rcu(dst);
+ 	head_room = sizeof(struct ipv6hdr) + LL_RESERVED_SPACE(dev);
+ 	if (opt)
+ 		head_room += opt->opt_nflen + opt->opt_flen;
  
- extern int team_modeop_port_enter(struct team *team, struct team_port *port);
+ 	if (unlikely(head_room > skb_headroom(skb))) {
+-		/* Make sure idev stays alive */
+-		rcu_read_lock();
++		/* idev stays alive while we hold rcu_read_lock(). */
+ 		skb = skb_expand_head(skb, head_room);
+ 		if (!skb) {
+ 			IP6_INC_STATS(net, idev, IPSTATS_MIB_OUTDISCARDS);
+-			rcu_read_unlock();
+-			return -ENOBUFS;
++			ret = -ENOBUFS;
++			goto unlock;
+ 		}
+-		rcu_read_unlock();
+ 	}
+ 
+ 	if (opt) {
+@@ -331,17 +332,21 @@ int ip6_xmit(const struct sock *sk, struct sk_buff *skb, struct flowi6 *fl6,
+ 		 * skb to its handler for processing
+ 		 */
+ 		skb = l3mdev_ip6_out((struct sock *)sk, skb);
+-		if (unlikely(!skb))
+-			return 0;
++		if (unlikely(!skb)) {
++			ret = 0;
++			goto unlock;
++		}
+ 
+ 		/* hooks should never assume socket lock is held.
+ 		 * we promote our socket to non const
+ 		 */
+-		return NF_HOOK(NFPROTO_IPV6, NF_INET_LOCAL_OUT,
+-			       net, (struct sock *)sk, skb, NULL, dev,
+-			       dst_output);
++		ret = NF_HOOK(NFPROTO_IPV6, NF_INET_LOCAL_OUT,
++			      net, (struct sock *)sk, skb, NULL, dev,
++			      dst_output);
++		goto unlock;
+ 	}
+ 
++	ret = -EMSGSIZE;
+ 	skb->dev = dev;
+ 	/* ipv6_local_error() does not require socket lock,
+ 	 * we promote our socket to non const
+@@ -350,7 +355,9 @@ int ip6_xmit(const struct sock *sk, struct sk_buff *skb, struct flowi6 *fl6,
+ 
+ 	IP6_INC_STATS(net, idev, IPSTATS_MIB_FRAGFAILS);
+ 	kfree_skb(skb);
+-	return -EMSGSIZE;
++unlock:
++	rcu_read_unlock();
++	return ret;
+ }
+ EXPORT_SYMBOL(ip6_xmit);
+ 
 -- 
 2.53.0
 
