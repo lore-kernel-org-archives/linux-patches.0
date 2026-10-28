@@ -1,54 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213957;
-	b=c8SkJzBIyN3zbXzoTgcogjfPn4qB1L7ZQ3yf9AU+vtf7ILNMxVYHRjj6gLi2RYcQlC0J
-	 4QxPgSzRJIpCJkcujxGEUTMQKHs9IpShpUnECMDVFQNgwhcd4A+FKLwBRZVFTl43DSWPo
-	 fRvpXkfkvA5E0hjassg/6XcxFrTYWl3vBINkkt46F5EihWQLGMNpIDKgZ2FNQ9Ea/lO4U
-	 xiUsZmJR8bqQuKg0Uo9j9lrWCYiJsIUAW2R2SkRUDArM6ROgyrYqTh68Qww04V3WaHL+p
-	 +K1UDH2Gg87S/xHlR3IPrlnF9E+T9sofxrqwgLP27vur1sk7p1vjk0b2ZkWsnR6Sw3g==
+	t=1793213960;
+	b=GCz6v2eMQIcfz9ntZJCAHPvchudhw7nmc1N/KBGxywXxMilPuiRugjfJx3pMog2VT+1q
+	 mX+UHxFm2rjQSEq67FewfWGIKLv4q/tS7JSviLmt+nxaDCjd2cb8HtmrTOMLg/OYN0HUM
+	 g7Hh9FlseIvbi+lfFb8k0gl00LVg7Mdt0DypVq6B4+Y9Gc+aSIG+C/wCkQASg1O95MZs1
+	 4BMM3vkd6YA30l5Y6mFLk8pHA/PhPAe926+8HjzgENU9sj5xACm78E9wo4EqUylZ3Cu1t
+	 uE5tCh7KsSHLbor0PZ6RFTmq4DVv5fjpM5msWYCh6QTBBQkX+TACnlfGRU0p+O2s3lA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213957;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213960;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=sKizPVP3B0g0LgH1dWxTxq6WYwAKh8CbCWTp6OwoGDI=;
-	b=RrymdNwYHbrrh+eT0gHXthiMhMoVjq0pvg4J0t2iW6vXR0csE4stebiT3o1lg2WSgPR6
-	 1vm/oK4uvkVZOz305Vcm6gGscuwzSfD5eqze5GJVJAFriYR8t9JeX5i+UoIeQKKjAiyoo
-	 PNRX5eHLPujNL6tl5ravP0SexRZMESaKnSj5+fkkZrzPbeaaGe9CctFyjSzqcxqdq+xla
-	 9tbxqARbWhiK8Ai/FjbM2HXluTksVRvcWxmwEx3nFKS2bnhc9jigIPxZMht62lLwe3KWc
-	 guKyJJ4LbH3BRJcDnNeNYNTqL4aC7a3Ge6mx8z9S3fIKIcExWSR2ozJFEjiK6BFxNBw==
+	bh=HBnYQ3/59Or5Yk8e1zxFt9m5i/MNiRVfb7JWWI2Mino=;
+	b=jGYAHBzQzp5Y/UBoX+wjkgbun0v69W6YRF3JXs5NrDsfB1NslBnKx9sWDbx8a2Y3jvwl
+	 aDiFtAFW5KxUnKQ+ZN4BjWzB3gcuGsBbER5MNwWmfR8BthbNHpWApIela4FyBpfKovs9/
+	 BqxsfcfhVNYq4CAf35nhrOZ1jP7NHAUpmPVr7t7N2CQcgL9XsPGoXqp2r7nJnvBxhxhEY
+	 26hpDyM+KF69Bi0IzPSd2tZrbTqDHr1GjICGCn0cRi/ty4Qdtqhwm369B/yMiF+rM6TpK
+	 Eau5cVFqQXi8OLe99EZuuTMFbZDg4r1Curtf7X3o+geELpdVgBq1MSiRugq5nfGUM8A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=loYEERUV;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=p6XFD7lS;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A3CC606A31C;
-	Wed, 28 Oct 2026 18:59:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA0A7606A31A;
+	Wed, 28 Oct 2026 18:59:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=loYEERUV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 338C51F01825;
-	Wed, 28 Oct 2026 18:59:16 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=p6XFD7lS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B2B81F01825;
+	Wed, 28 Oct 2026 18:59:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213956;
-	bh=sKizPVP3B0g0LgH1dWxTxq6WYwAKh8CbCWTp6OwoGDI=;
+	s=korg; t=1793213959;
+	bh=HBnYQ3/59Or5Yk8e1zxFt9m5i/MNiRVfb7JWWI2Mino=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=loYEERUV2JwOlHC44wpd4VGhz3zeJgqo+kdEQpfZ40pW+D2tCNCoc2VIwuuxVfwcr
-	 nW4FDOP+dv0r16jpNEi3Mv/igk4bPZn0CT/aGDuA+VgBe9n5wjrlE5N5BlQU7LLtEK
-	 ZKZ1MHgZHr1QFlW8L+iMrAdw7OMo2wvYYzzpb8y4=
+	b=p6XFD7lSYhBxtsvXWr14VnVBsxcyJdMHIlHNmiXbubOu1GyigHGELyQAxuq5krizB
+	 q5TFhLdHCgCEvBjdInU9dMb+JPg1/kh2V2Oql97CnAGmT9h/NSLYtZsItKldhu3+PW
+	 h7zLvcrORBqLO2oCuCf5IqCW5lFcAS3+uU8Halnc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xinqi Zhang <quic_xinqzhan@quicinc.com>,
-	Cristian Marussi <cristian.marussi@arm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Sudeep Holla <sudeep.holla@arm.com>,
+	David Howells <dhowells@redhat.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	linux-afs@lists.infradead.org,
+	linux-fsdevel@vger.kernel.org,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0689/1887] firmware: arm_scmi: Fix slab-use-after-free in scmi_bus_notifier()
-Date: Wed, 28 Oct 2026 17:46:25 +0100
-Message-ID: <20261028170515.092451105@linuxfoundation.org>
+Subject: [PATCH 6.1 0690/1887] afs: Fix lock recursion
+Date: Wed, 28 Oct 2026 17:46:26 +0100
+Message-ID: <20261028170515.114466619@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -70,153 +71,208 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xinqi Zhang <quic_xinqzhan@quicinc.com>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit 295416091e44806760ccf753aeafdafc0ae268f3 ]
+[ Upstream commit 610a79ffea02102899a1373fe226d949944a7ed6 ]
 
-The scmi_dev->name is released prematurely in __scmi_device_destroy(),
-which causes slab-use-after-free when accessing scmi_dev->name in
-scmi_bus_notifier(). So move the release of scmi_dev->name to
-scmi_device_release() to avoid slab-use-after-free.
+afs_wake_up_async_call() can incur lock recursion.  The problem is that it
+is called from AF_RXRPC whilst holding the ->notify_lock, but it tries to
+take a ref on the afs_call struct in order to pass it to a work queue - but
+if the afs_call is already queued, we then have an extraneous ref that must
+be put... calling afs_put_call() may call back down into AF_RXRPC through
+rxrpc_kernel_shutdown_call(), however, which might try taking the
+->notify_lock again.
 
-  |  BUG: KASAN: slab-use-after-free in strncmp+0xe4/0xec
-  |  Read of size 1 at addr ffffff80a482bcc0 by task swapper/0/1
-  |
-  |  CPU: 1 PID: 1 Comm: swapper/0 Not tainted 6.6.38-debug #1
-  |  Hardware name: Qualcomm Technologies, Inc. SA8775P Ride (DT)
-  |  Call trace:
-  |   dump_backtrace+0x94/0x114
-  |   show_stack+0x18/0x24
-  |   dump_stack_lvl+0x48/0x60
-  |   print_report+0xf4/0x5b0
-  |   kasan_report+0xa4/0xec
-  |   __asan_report_load1_noabort+0x20/0x2c
-  |   strncmp+0xe4/0xec
-  |   scmi_bus_notifier+0x5c/0x54c
-  |   notifier_call_chain+0xb4/0x31c
-  |   blocking_notifier_call_chain+0x68/0x9c
-  |   bus_notify+0x54/0x78
-  |   device_del+0x1bc/0x840
-  |   device_unregister+0x20/0xb4
-  |   __scmi_device_destroy+0xac/0x280
-  |   scmi_device_destroy+0x94/0xd0
-  |   scmi_chan_setup+0x524/0x750
-  |   scmi_probe+0x7fc/0x1508
-  |   platform_probe+0xc4/0x19c
-  |   really_probe+0x32c/0x99c
-  |   __driver_probe_device+0x15c/0x3c4
-  |   driver_probe_device+0x5c/0x170
-  |   __driver_attach+0x1c8/0x440
-  |   bus_for_each_dev+0xf4/0x178
-  |   driver_attach+0x3c/0x58
-  |   bus_add_driver+0x234/0x4d4
-  |   driver_register+0xf4/0x3c0
-  |   __platform_driver_register+0x60/0x88
-  |   scmi_driver_init+0xb0/0x104
-  |   do_one_initcall+0xb4/0x664
-  |   kernel_init_freeable+0x3c8/0x894
-  |   kernel_init+0x24/0x1e8
-  |   ret_from_fork+0x10/0x20
-  |
-  |  Allocated by task 1:
-  |   kasan_save_stack+0x2c/0x54
-  |   kasan_set_track+0x2c/0x40
-  |   kasan_save_alloc_info+0x24/0x34
-  |   __kasan_kmalloc+0xa0/0xb8
-  |   __kmalloc_node_track_caller+0x6c/0x104
-  |   kstrdup+0x48/0x84
-  |   kstrdup_const+0x34/0x40
-  |   __scmi_device_create.part.0+0x8c/0x408
-  |   scmi_device_create+0x104/0x370
-  |   scmi_chan_setup+0x2a0/0x750
-  |   scmi_probe+0x7fc/0x1508
-  |   platform_probe+0xc4/0x19c
-  |   really_probe+0x32c/0x99c
-  |   __driver_probe_device+0x15c/0x3c4
-  |   driver_probe_device+0x5c/0x170
-  |   __driver_attach+0x1c8/0x440
-  |   bus_for_each_dev+0xf4/0x178
-  |   driver_attach+0x3c/0x58
-  |   bus_add_driver+0x234/0x4d4
-  |   driver_register+0xf4/0x3c0
-  |   __platform_driver_register+0x60/0x88
-  |   scmi_driver_init+0xb0/0x104
-  |   do_one_initcall+0xb4/0x664
-  |   kernel_init_freeable+0x3c8/0x894
-  |   kernel_init+0x24/0x1e8
-  |   ret_from_fork+0x10/0x20
-  |
-  |  Freed by task 1:
-  |   kasan_save_stack+0x2c/0x54
-  |   kasan_set_track+0x2c/0x40
-  |   kasan_save_free_info+0x38/0x5c
-  |   __kasan_slab_free+0xe8/0x164
-  |   __kmem_cache_free+0x11c/0x230
-  |   kfree+0x70/0x130
-  |   kfree_const+0x20/0x40
-  |   __scmi_device_destroy+0x70/0x280
-  |   scmi_device_destroy+0x94/0xd0
-  |   scmi_chan_setup+0x524/0x750
-  |   scmi_probe+0x7fc/0x1508
-  |   platform_probe+0xc4/0x19c
-  |   really_probe+0x32c/0x99c
-  |   __driver_probe_device+0x15c/0x3c4
-  |   driver_probe_device+0x5c/0x170
-  |   __driver_attach+0x1c8/0x440
-  |   bus_for_each_dev+0xf4/0x178
-  |   driver_attach+0x3c/0x58
-  |   bus_add_driver+0x234/0x4d4
-  |   driver_register+0xf4/0x3c0
-  |   __platform_driver_register+0x60/0x88
-  |   scmi_driver_init+0xb0/0x104
-  |   do_one_initcall+0xb4/0x664
-  |   kernel_init_freeable+0x3c8/0x894
-  |   kernel_init+0x24/0x1e8
-  |   ret_from_fork+0x10/0x20
+This case isn't very common, however, so defer it to a workqueue.  The oops
+looks something like:
 
-Fixes: ee7a9c9f67c5 ("firmware: arm_scmi: Add support for multiple device per protocol")
-Signed-off-by: Xinqi Zhang <quic_xinqzhan@quicinc.com>
-Reviewed-by: Cristian Marussi <cristian.marussi@arm.com>
-Reviewed-by: Bjorn Andersson <andersson@kernel.org>
-Message-Id: <20241016-fix-arm-scmi-slab-use-after-free-v2-1-1783685ef90d@quicinc.com>
-Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
+  BUG: spinlock recursion on CPU#0, krxrpcio/7001/1646
+   lock: 0xffff888141399b30, .magic: dead4ead, .owner: krxrpcio/7001/1646, .owner_cpu: 0
+  CPU: 0 UID: 0 PID: 1646 Comm: krxrpcio/7001 Not tainted 6.12.0-rc2-build3+ #4351
+  Hardware name: ASUS All Series/H97-PLUS, BIOS 2306 10/09/2014
+  Call Trace:
+   <TASK>
+   dump_stack_lvl+0x47/0x70
+   do_raw_spin_lock+0x3c/0x90
+   rxrpc_kernel_shutdown_call+0x83/0xb0
+   afs_put_call+0xd7/0x180
+   rxrpc_notify_socket+0xa0/0x190
+   rxrpc_input_split_jumbo+0x198/0x1d0
+   rxrpc_input_data+0x14b/0x1e0
+   ? rxrpc_input_call_packet+0xc2/0x1f0
+   rxrpc_input_call_event+0xad/0x6b0
+   rxrpc_input_packet_on_conn+0x1e1/0x210
+   rxrpc_input_packet+0x3f2/0x4d0
+   rxrpc_io_thread+0x243/0x410
+   ? __pfx_rxrpc_io_thread+0x10/0x10
+   kthread+0xcf/0xe0
+   ? __pfx_kthread+0x10/0x10
+   ret_from_fork+0x24/0x40
+   ? __pfx_kthread+0x10/0x10
+   ret_from_fork_asm+0x1a/0x30
+   </TASK>
+
+Signed-off-by: David Howells <dhowells@redhat.com>
+Link: https://lore.kernel.org/r/1394602.1729162732@warthog.procyon.org.uk
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: linux-afs@lists.infradead.org
+cc: linux-fsdevel@vger.kernel.org
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/arm_scmi/bus.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ fs/afs/internal.h |  2 ++
+ fs/afs/rxrpc.c    | 79 ++++++++++++++++++++++++++++++++++-------------
+ 2 files changed, 59 insertions(+), 22 deletions(-)
 
-diff --git a/drivers/firmware/arm_scmi/bus.c b/drivers/firmware/arm_scmi/bus.c
-index 36f75b6629db0..323e1e48cabde 100644
---- a/drivers/firmware/arm_scmi/bus.c
-+++ b/drivers/firmware/arm_scmi/bus.c
-@@ -301,7 +301,10 @@ EXPORT_SYMBOL_GPL(scmi_driver_unregister);
+diff --git a/fs/afs/internal.h b/fs/afs/internal.h
+index fd4310272ccc1..325be1d29a71e 100644
+--- a/fs/afs/internal.h
++++ b/fs/afs/internal.h
+@@ -99,6 +99,7 @@ struct afs_call {
+ 	wait_queue_head_t	waitq;		/* processes awaiting completion */
+ 	struct work_struct	async_work;	/* async I/O processor */
+ 	struct work_struct	work;		/* actual work processor */
++	struct work_struct	free_work;	/* Deferred free processor */
+ 	struct rxrpc_call	*rxcall;	/* RxRPC call handle */
+ 	struct key		*key;		/* security for this call */
+ 	struct afs_net		*net;		/* The network namespace */
+@@ -1283,6 +1284,7 @@ extern int __net_init afs_open_socket(struct afs_net *);
+ extern void __net_exit afs_close_socket(struct afs_net *);
+ extern void afs_charge_preallocation(struct work_struct *);
+ extern void afs_put_call(struct afs_call *);
++void afs_deferred_put_call(struct afs_call *call);
+ extern void afs_make_call(struct afs_addr_cursor *, struct afs_call *, gfp_t);
+ extern long afs_wait_for_call_to_complete(struct afs_call *, struct afs_addr_cursor *);
+ extern struct afs_call *afs_alloc_flat_call(struct afs_net *,
+diff --git a/fs/afs/rxrpc.c b/fs/afs/rxrpc.c
+index a0715e5dc38d5..0658523bd7865 100644
+--- a/fs/afs/rxrpc.c
++++ b/fs/afs/rxrpc.c
+@@ -16,6 +16,7 @@
  
- static void scmi_device_release(struct device *dev)
- {
--	kfree(to_scmi_dev(dev));
-+	struct scmi_device *scmi_dev = to_scmi_dev(dev);
+ struct workqueue_struct *afs_async_calls;
+ 
++static void afs_deferred_free_worker(struct work_struct *work);
+ static void afs_wake_up_call_waiter(struct sock *, struct rxrpc_call *, unsigned long);
+ static void afs_wake_up_async_call(struct sock *, struct rxrpc_call *, unsigned long);
+ static void afs_process_async_call(struct work_struct *);
+@@ -153,6 +154,7 @@ static struct afs_call *afs_alloc_call(struct afs_net *net,
+ 	call->debug_id = atomic_inc_return(&rxrpc_debug_id);
+ 	refcount_set(&call->ref, 1);
+ 	INIT_WORK(&call->async_work, afs_process_async_call);
++	INIT_WORK(&call->free_work, afs_deferred_free_worker);
+ 	init_waitqueue_head(&call->waitq);
+ 	spin_lock_init(&call->state_lock);
+ 	call->iter = &call->def_iter;
+@@ -163,6 +165,34 @@ static struct afs_call *afs_alloc_call(struct afs_net *net,
+ 	return call;
+ }
+ 
++static void afs_free_call(struct afs_call *call)
++{
++	struct afs_net *net = call->net;
++	int o;
 +
-+	kfree_const(scmi_dev->name);
-+	kfree(scmi_dev);
++	ASSERT(!work_pending(&call->async_work));
++
++	if (call->rxcall) {
++		rxrpc_kernel_end_call(net->socket, call->rxcall);
++		call->rxcall = NULL;
++	}
++	if (call->type->destructor)
++		call->type->destructor(call);
++
++	afs_unuse_server_notime(call->net, call->server, afs_server_trace_put_call);
++	afs_put_addrlist(call->alist);
++	kfree(call->request);
++
++	o = atomic_read(&net->nr_outstanding_calls);
++	trace_afs_call(call->debug_id, afs_call_trace_free, 0, o,
++		       __builtin_return_address(0));
++	kfree(call);
++
++	o = atomic_dec_return(&net->nr_outstanding_calls);
++	if (o == 0)
++		wake_up_var(&net->nr_outstanding_calls);
++}
++
+ /*
+  * Dispose of a reference on a call.
+  */
+@@ -177,30 +207,34 @@ void afs_put_call(struct afs_call *call)
+ 	o = atomic_read(&net->nr_outstanding_calls);
+ 	trace_afs_call(debug_id, afs_call_trace_put, r - 1, o,
+ 		       __builtin_return_address(0));
++	if (zero)
++		afs_free_call(call);
++}
+ 
+-	if (zero) {
+-		ASSERT(!work_pending(&call->async_work));
+-		ASSERT(call->type->name != NULL);
+-
+-		if (call->rxcall) {
+-			rxrpc_kernel_end_call(net->socket, call->rxcall);
+-			call->rxcall = NULL;
+-		}
+-		if (call->type->destructor)
+-			call->type->destructor(call);
++static void afs_deferred_free_worker(struct work_struct *work)
++{
++	struct afs_call *call = container_of(work, struct afs_call, free_work);
+ 
+-		afs_unuse_server_notime(call->net, call->server, afs_server_trace_put_call);
+-		afs_put_addrlist(call->alist);
+-		kfree(call->request);
++	afs_free_call(call);
++}
+ 
+-		trace_afs_call(call->debug_id, afs_call_trace_free, 0, o,
+-			       __builtin_return_address(0));
+-		kfree(call);
++/*
++ * Dispose of a reference on a call, deferring the cleanup to a workqueue
++ * to avoid lock recursion.
++ */
++void afs_deferred_put_call(struct afs_call *call)
++{
++	struct afs_net *net = call->net;
++	unsigned int debug_id = call->debug_id;
++	bool zero;
++	int r, o;
+ 
+-		o = atomic_dec_return(&net->nr_outstanding_calls);
+-		if (o == 0)
+-			wake_up_var(&net->nr_outstanding_calls);
+-	}
++	zero = __refcount_dec_and_test(&call->ref, &r);
++	o = atomic_read(&net->nr_outstanding_calls);
++	trace_afs_call(debug_id, afs_call_trace_put, r - 1, o,
++		       __builtin_return_address(0));
++	if (zero)
++		schedule_work(&call->free_work);
  }
  
- static void __scmi_device_destroy(struct scmi_device *scmi_dev)
-@@ -314,7 +317,6 @@ static void __scmi_device_destroy(struct scmi_device *scmi_dev)
- 	if (scmi_dev->protocol_id == SCMI_PROTOCOL_SYSTEM)
- 		atomic_set(&scmi_syspower_registered, 0);
- 
--	kfree_const(scmi_dev->name);
- 	ida_free(&scmi_bus_id, scmi_dev->id);
- 	device_unregister(&scmi_dev->dev);
+ static struct afs_call *afs_get_call(struct afs_call *call,
+@@ -667,7 +701,8 @@ static void afs_wake_up_call_waiter(struct sock *sk, struct rxrpc_call *rxcall,
  }
-@@ -386,7 +388,6 @@ __scmi_device_create(struct device_node *np, struct device *parent,
  
- 	return scmi_dev;
- put_dev:
--	kfree_const(scmi_dev->name);
- 	put_device(&scmi_dev->dev);
- 	ida_free(&scmi_bus_id, id);
- 	return NULL;
+ /*
+- * wake up an asynchronous call
++ * Wake up an asynchronous call.  The caller is holding the call notify
++ * spinlock around this, so we can't call afs_put_call().
+  */
+ static void afs_wake_up_async_call(struct sock *sk, struct rxrpc_call *rxcall,
+ 				   unsigned long call_user_ID)
+@@ -684,7 +719,7 @@ static void afs_wake_up_async_call(struct sock *sk, struct rxrpc_call *rxcall,
+ 			       __builtin_return_address(0));
+ 
+ 		if (!queue_work(afs_async_calls, &call->async_work))
+-			afs_put_call(call);
++			afs_deferred_put_call(call);
+ 	}
+ }
+ 
 -- 
 2.53.0
 
