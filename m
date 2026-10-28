@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793209301;
-	b=u2j0RE2EhhhyyD6PCAM8wQLBHACpqA2pyyU9XZMURRmrXHRnMQMgU8wtdHGw8zrhhjk6
-	 MLv8VaOhruSnME96i8eX5RA58dA+kSvl+6I/P48mPOj2D4bKIvWrewy/yTn4UBeI5WMB6
-	 RuNF/aJ8sf0lZcnkwJZhwMlI5d0JuRxbfvQEA9p8s1BfxAbBvosOtIIHkSAD1KEGUijP7
-	 BMBPBR/T62tcVa/iiE7tTyB+lXPi5K+ACEtyl7Fa+0OBNdgsaM02XwaQBFDUjFj3wWLAs
-	 5fO1q3bvkPT190W1SipvR+mU3kexIaGIhC2wZSwqpWrYF02ZTksnRqsAWa5UuGs4V4A==
+	t=1793209304;
+	b=ej6MWL6EqEtNcybENlp2nAGiH0qEHjNdTk7n/g5XsgKRqfOqZV0bE1al3fPG4URKj2zW
+	 dhP2/p7KeuAsTAOmFB5kvtvnNdkca62Uf6l0yzxyNnP06NllG7h1xJWvRedsWAzDNEeZY
+	 FjF2nF0fw5+a96VmqGGYGiG9EUvWSiKS9rzEd7wTiACoANLo0z8YpBJ9XGVXopzfrBSXl
+	 wOMIWHAiHuOSueiphc9UMRgl+IO2Nc/dE5uCkj5LZHcLOY83TuTanIRBEwxpN53CAoCWE
+	 UxuawL5bcky+WdAMh+BU5vvw2YKwkPTCQ9/lIpi/J5GwECr+M3tgfGCyll5OzcIDFlA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793209301;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793209304;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=UbUoh8MTcT9M+JVpVhh7v7x/nLyDaW14SYF5bfuBCNM=;
-	b=jCDkS+kxEgZOYx/biVYjtXLG1X5Ze7VY1q3HxKLdmcCalPCFsjTO9tlxP7rR+/Sf4tWS
-	 vjHMJ41SkpIifuW1mcLEFdfqKM9Ac1jQR4ME1j3RR2pDOTuHw2CRjrK52q3HVLmhUjjEv
-	 j+e+AGhslX+PZLaQQijrsUL+i+GjgnajXysu3ELxhmzHcIpBkQ6qB1AcQtOv+wd7wc+b+
-	 8xR3w0HhxBEdKTWf2M5DhMyBHYpYqVEZ4zVWkaX1D7UNc1xXApf0cnuCx+o8OpJp4nGwR
-	 27JxshN6gXRN/Ats9e6sXJiqiva+uyraLlmu7cXNJh3aLsct8hrtIfmQtZ2O/wG+NxA==
+	bh=Mr8adRJ1G3ghWrIBZo95puWWXtMoSmhwAEqhnTWV9Gc=;
+	b=Hk8aDtekSS2GhRPEoOz9ABGorXNuDBWoDS8JSEAQ7Rq2BOOxu+6IgBvtaJXi54CAR2ng
+	 Mec0VTeS5Fp8fuR+ekGreok4RQl4BMrThWhwvzHU+v3Do0N++R6M9h5KkOx48elj87AN2
+	 lPX6V3pwgUTurP+NEckpbptPVeRN9lcI78PC7AwDNdZYsPfklxb/6ttbzs383yOTOVQnB
+	 7TzuTUDLLXnxZKTMUzwDldeci3oS4O7pvMxHzjpoF2GWAZgV4nfrutXLcFCzO36/yilbN
+	 uf6GGh0GxlEYI/e1BeRcC0vpI2HAFdNCvrhtWg/sawqgUU4Lh+faIcOrLp4Q+WLz0Fw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pOnXuazL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D1lfqJ9R;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 788E8606A31A;
-	Wed, 28 Oct 2026 17:41:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59562606A31E;
+	Wed, 28 Oct 2026 17:41:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pOnXuazL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6B011F01825;
-	Wed, 28 Oct 2026 17:41:40 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D1lfqJ9R
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A953A1F01825;
+	Wed, 28 Oct 2026 17:41:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793209301;
-	bh=UbUoh8MTcT9M+JVpVhh7v7x/nLyDaW14SYF5bfuBCNM=;
+	s=korg; t=1793209304;
+	bh=Mr8adRJ1G3ghWrIBZo95puWWXtMoSmhwAEqhnTWV9Gc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pOnXuazLgW70Jhc+x2iTe44KTALaECoK4rN7zKkBPxIQq8Hku9ioBrEwKlY6+ofFp
-	 52dqGg9jFwUOCmJDuHorRyPlw40Xf2Y6oJXHCgyhd9lPqWqg9eMuhgTiUTum01EJJN
-	 CZ/tpULUQuX6kfU+3XTurzJIlK/LJwIv2FkrYNFw=
+	b=D1lfqJ9R53hcjgOuICOb86zQYlL2KYf8M6KD6qoLBzv3e69Do6AAN+gCnUdlNiJdW
+	 ysZIeLVQy5Ql95/gn1yug7JzbzrhR1mjZ6L97xzkTcvqZR8Me7DLM/M34noLiXNLzO
+	 1JtqDSm2yFDikGkJErnQ/J/HI2WOyZ3C6o9+eTMc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiri Pirko <jiri@nvidia.com>,
-	Marc Harvey <marcharvey@google.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
+	Xiang Mei <xmei5@asu.edu>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 380/516] net: team: Rename port_disabled team mode op to port_tx_disabled
-Date: Wed, 28 Oct 2026 17:58:52 +0100
-Message-ID: <20261028170012.484741152@linuxfoundation.org>
+Subject: [PATCH 5.10 381/516] net: team: fix NULL pointer dereference in team_xmit during mode change
+Date: Wed, 28 Oct 2026 17:58:53 +0100
+Message-ID: <20261028170012.507597577@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -70,76 +70,147 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Harvey <marcharvey@google.com>
+From: Weiming Shi <bestswngs@gmail.com>
 
-[ Upstream commit cfa477df2cc62ba53cb936669886361152b594a7 ]
+[ Upstream commit 25fe708bbc59289d3d1ea4b126fbc1b460a072a5 ]
 
-This team mode op is only used by the load balance mode, and it only
-uses it in the tx path.
+__team_change_mode() clears team->ops with memset() before restoring
+safe dummy handlers via team_adjust_ops(). A concurrent team_xmit()
+running under RCU on another CPU can read team->ops.transmit during
+this window and call a NULL function pointer, crashing the kernel.
 
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Signed-off-by: Marc Harvey <marcharvey@google.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20260409-teaming-driver-internal-v7-3-f47e7589685d@google.com
+The race requires a mode change (CAP_NET_ADMIN) concurrent with
+transmit on the team device.
+
+ BUG: kernel NULL pointer dereference, address: 0000000000000000
+ Oops: 0010 [#1] SMP KASAN NOPTI
+ RIP: 0010:0x0
+ Call Trace:
+  team_xmit (drivers/net/team/team_core.c:1853)
+  dev_hard_start_xmit (net/core/dev.c:3904)
+  __dev_queue_xmit (net/core/dev.c:4871)
+  packet_sendmsg (net/packet/af_packet.c:3109)
+  __sys_sendto (net/socket.c:2265)
+
+The original code assumed that no ports means no traffic, so mode
+changes could freely memset()/memcpy() the ops.  AF_PACKET with
+forced carrier breaks that assumption.
+
+Prevent the race instead of making it safe: replace memset()/memcpy()
+with per-field updates that never touch transmit or receive.  Those
+two handlers are managed solely by team_adjust_ops(), which already
+installs dummies when tx_en_port_count == 0 (always true during mode
+change since no ports are present).  WRITE_ONCE/READ_ONCE prevent
+store/load tearing on the handler pointers.
+
+synchronize_net() before exit_op() drains in-flight readers that may
+still reference old mode state from before port removal switched the
+handlers to dummies.
+
+Fixes: 3d249d4ca7d0 ("net: introduce ethernet teaming device")
+Reported-by: Xiang Mei <xmei5@asu.edu>
+Signed-off-by: Weiming Shi <bestswngs@gmail.com>
+Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Link: https://patch.msgid.link/20260521081159.1491563-3-bestswngs@gmail.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Stable-dep-of: b7454f1940c5 ("net: team: stop reusing skb after queue override")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/team/team.c                  | 4 ++--
- drivers/net/team/team_mode_loadbalance.c | 4 ++--
- include/linux/if_team.h                  | 2 +-
- 3 files changed, 5 insertions(+), 5 deletions(-)
+ drivers/net/team/team.c | 45 +++++++++++++++++++++++++++++------------
+ 1 file changed, 32 insertions(+), 13 deletions(-)
 
 diff --git a/drivers/net/team/team.c b/drivers/net/team/team.c
-index 58dfecea5ef96..c91dbd5262643 100644
+index c91dbd5262643..0ccd2edfc9d41 100644
 --- a/drivers/net/team/team.c
 +++ b/drivers/net/team/team.c
-@@ -963,8 +963,8 @@ static void team_port_disable(struct team *team,
- {
- 	if (!team_port_enabled(port))
- 		return;
--	if (team->ops.port_disabled)
--		team->ops.port_disabled(team, port);
-+	if (team->ops.port_tx_disabled)
-+		team->ops.port_tx_disabled(team, port);
- 	hlist_del_rcu(&port->hlist);
- 	__reconstruct_port_hlist(team, port->index);
- 	port->index = -1;
-diff --git a/drivers/net/team/team_mode_loadbalance.c b/drivers/net/team/team_mode_loadbalance.c
-index 32aef8ac4a14d..161b70981c0b0 100644
---- a/drivers/net/team/team_mode_loadbalance.c
-+++ b/drivers/net/team/team_mode_loadbalance.c
-@@ -672,7 +672,7 @@ static void lb_port_leave(struct team *team, struct team_port *port)
- 	free_percpu(lb_port_priv->pcpu_stats);
+@@ -534,21 +534,23 @@ static void team_adjust_ops(struct team *team)
+ 
+ 	if (!team->en_port_count || !team_is_mode_set(team) ||
+ 	    !team->mode->ops->transmit)
+-		team->ops.transmit = team_dummy_transmit;
++		WRITE_ONCE(team->ops.transmit, team_dummy_transmit);
+ 	else
+-		team->ops.transmit = team->mode->ops->transmit;
++		WRITE_ONCE(team->ops.transmit, team->mode->ops->transmit);
+ 
+ 	if (!team->en_port_count || !team_is_mode_set(team) ||
+ 	    !team->mode->ops->receive)
+-		team->ops.receive = team_dummy_receive;
++		WRITE_ONCE(team->ops.receive, team_dummy_receive);
+ 	else
+-		team->ops.receive = team->mode->ops->receive;
++		WRITE_ONCE(team->ops.receive, team->mode->ops->receive);
  }
  
--static void lb_port_disabled(struct team *team, struct team_port *port)
-+static void lb_port_tx_disabled(struct team *team, struct team_port *port)
- {
- 	lb_tx_hash_to_port_mapping_null_port(team, port);
- }
-@@ -682,7 +682,7 @@ static const struct team_mode_ops lb_mode_ops = {
- 	.exit			= lb_exit,
- 	.port_enter		= lb_port_enter,
- 	.port_leave		= lb_port_leave,
--	.port_disabled		= lb_port_disabled,
-+	.port_tx_disabled	= lb_port_tx_disabled,
- 	.receive		= lb_receive,
- 	.transmit		= lb_transmit,
- };
-diff --git a/include/linux/if_team.h b/include/linux/if_team.h
-index ef1f566b90a05..a1fadb70dd52e 100644
---- a/include/linux/if_team.h
-+++ b/include/linux/if_team.h
-@@ -121,7 +121,7 @@ struct team_mode_ops {
- 	int (*port_enter)(struct team *team, struct team_port *port);
- 	void (*port_leave)(struct team *team, struct team_port *port);
- 	void (*port_change_dev_addr)(struct team *team, struct team_port *port);
--	void (*port_disabled)(struct team *team, struct team_port *port);
-+	void (*port_tx_disabled)(struct team *team, struct team_port *port);
- };
+ /*
+- * We can benefit from the fact that it's ensured no port is present
+- * at the time of mode change. Therefore no packets are in fly so there's no
+- * need to set mode operations in any special way.
++ * team_change_mode() ensures no ports are present during mode change,
++ * but lockless readers can still reach team_xmit().  Avoid touching
++ * transmit/receive -- they are already set to dummies by
++ * team_adjust_ops() since no ports are enabled.  synchronize_net()
++ * drains in-flight readers before destroying old mode state.
+  */
+ static int __team_change_mode(struct team *team,
+ 			      const struct team_mode *new_mode)
+@@ -557,9 +559,21 @@ static int __team_change_mode(struct team *team,
+ 	if (team_is_mode_set(team)) {
+ 		void (*exit_op)(struct team *team) = team->ops.exit;
  
- extern int team_modeop_port_enter(struct team *team, struct team_port *port);
+-		/* Clear ops area so no callback is called any longer */
+-		memset(&team->ops, 0, sizeof(struct team_mode_ops));
+-		team_adjust_ops(team);
++		/* Clear cold-path ops used only under RTNL.  transmit and
++		 * receive are already dummies (no ports) so leave them
++		 * alone -- overwriting them is the source of the race.
++		 */
++		team->ops.init = NULL;
++		team->ops.exit = NULL;
++		team->ops.port_enter = NULL;
++		team->ops.port_leave = NULL;
++		team->ops.port_change_dev_addr = NULL;
++		team->ops.port_tx_disabled = NULL;
++
++		/* Wait for in-flight readers before tearing down mode
++		 * state they may reference.
++		 */
++		synchronize_net();
+ 
+ 		if (exit_op)
+ 			exit_op(team);
+@@ -582,7 +596,12 @@ static int __team_change_mode(struct team *team,
+ 	}
+ 
+ 	team->mode = new_mode;
+-	memcpy(&team->ops, new_mode->ops, sizeof(struct team_mode_ops));
++	team->ops.init = new_mode->ops->init;
++	team->ops.exit = new_mode->ops->exit;
++	team->ops.port_enter = new_mode->ops->port_enter;
++	team->ops.port_leave = new_mode->ops->port_leave;
++	team->ops.port_change_dev_addr = new_mode->ops->port_change_dev_addr;
++	team->ops.port_tx_disabled = new_mode->ops->port_tx_disabled;
+ 	team_adjust_ops(team);
+ 
+ 	return 0;
+@@ -738,7 +757,7 @@ static rx_handler_result_t team_handle_frame(struct sk_buff **pskb)
+ 		/* allow exact match delivery for disabled ports */
+ 		res = RX_HANDLER_EXACT;
+ 	} else {
+-		res = team->ops.receive(team, port, skb);
++		res = READ_ONCE(team->ops.receive)(team, port, skb);
+ 	}
+ 	if (res == RX_HANDLER_ANOTHER) {
+ 		struct team_pcpu_stats *pcpu_stats;
+@@ -1736,7 +1755,7 @@ static netdev_tx_t team_xmit(struct sk_buff *skb, struct net_device *dev)
+ 
+ 	tx_success = team_queue_override_transmit(team, skb);
+ 	if (!tx_success)
+-		tx_success = team->ops.transmit(team, skb);
++		tx_success = READ_ONCE(team->ops.transmit)(team, skb);
+ 	if (tx_success) {
+ 		struct team_pcpu_stats *pcpu_stats;
+ 
 -- 
 2.53.0
 
