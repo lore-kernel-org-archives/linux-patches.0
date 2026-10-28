@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793207676;
-	b=lm+YErmm09MjfhD6OKwJgHO3ELujd3AlQagJkRoZ+haHl8r34j+/Q80cVbdvzMnXVUmb
-	 3xPbry8g5GUmOY2a0CtLxCSPmyO3SMusUEruRCdvrPUOlK72kV6tBJzBpIyT+r3q/30SI
-	 e9FWFSNTYYWAGZu/RGhY2VlyWFW9WeAqu3kZZI4RoOojMi74o4IMMjmsjpqzpvZgwcK8o
-	 p2lLUkNHgPZkma3nSjwEarXB1+TZsnC+XsylcyPa0acdBN0VwlNK9rsqGkGxbTDL33Xz0
-	 n9ei8rlG0iYRDps6VnP1URAPcLmBRpW3u9BK+ykZ5aJZOcnL327JkX34K0PFQVppHrA==
+	t=1793207679;
+	b=G9QMZ+nW4rqxeWMQS0rN+c0ASRL20d+Wp7aMdeMqsZ2QsqGD4LvH9E5zUi9sCAfiHwxT
+	 8cb9ju0yaj2PsIqZF39aSPjJChiI1MTJC3U0qy2TmpgZZ39mtdHUhayiMyxQSFlZsKQoy
+	 edES4JoR/n+xocuIXhVeQt3lgT5NpuPMGWdG+IuV5aI4DtS2lt94qHWS2tY40jR6iPVXc
+	 g3NVuoQfH44djqqrQYuo6AICjv4KrpVsL9A5CLGASzbovbYI1VgEXDu6tPmm9S6IHwcFd
+	 BeiakLeivJFVGT7w+zPwIRPKV/5UfEVFxZFWLA7HCpbYRVkKrb5EPFyoetpfcaAdOPw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793207676;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793207679;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=wxewN5N4pTRQ1g7OwMjJimiA0J6931LZEy6rdOlbhZE=;
-	b=a3OtXt5aF9/TXSbf0b0ZcqumleW77Abf7OcNzWQLxawc57KiZ3/fdLfOfSjpidzgkMzN
-	 Z5UzWSCbBqQ9YI+4hEGi7y5C3uWCSkD+2MHTZFUxJgMeXpxMKstsPLn4U1T4i48/f0hf/
-	 nXz9PNw4ECfwNkSvboKdzIyapud9OF/qnWqSlAXZhHhixP/93sK8F1/wmpC2dfQEviEXQ
-	 irFMjh1S2D+DCJj6vpmaqNok4v6KcX9O+5GVeqoxh1iiaetL5vv81bfriS7uVjAsyDvnb
-	 mQS7kvd4KTZJWPFffDxlnPQEC2rZ8c7nTDkxgNvSyMuev1Yz223xqtzMDX6QjSK3FNg==
+	bh=TsC5KhooFVHQ9FJoXOZM+BlJxuiy+9aGbwXrA5ucU6c=;
+	b=g7VgW50gRaykwdAFFAvmtgo1sAPhoFyIYlddvEvGWChu3X3XCvhQPQGrsg6UPs+DZn5Y
+	 7RkbK5ob+/Eey7PmZOw6SjChnBOd+8BrtkIFoW51hsuTdANpOvM/CcUlfCq3ifuQ94EL3
+	 R+HtFMqxiF6IrcCOPrS9Orn+nC9HecpH2mkjNLRSXgqBV/anvIH0al1MlosdN4vFf/OBU
+	 4WvAkqxKXIHfFayk45CKHvuTfooygOCI25rJSSrcX1I6Rc6ekAs1epeCz7AaJktt+NOcA
+	 Emg/XFimJ+44BajuWA/tJScSytVK5U61S8XuOWLqZXMy8otdWX3YyvrZFwi8m3FpmLA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fiDblbxN;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sH+4xe5f;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32C4D606A31F;
-	Wed, 28 Oct 2026 17:14:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0E7D606A31C;
+	Wed, 28 Oct 2026 17:14:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fiDblbxN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85F181F01825;
-	Wed, 28 Oct 2026 17:14:35 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sH+4xe5f
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50AF51F01825;
+	Wed, 28 Oct 2026 17:14:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793207676;
-	bh=wxewN5N4pTRQ1g7OwMjJimiA0J6931LZEy6rdOlbhZE=;
+	s=korg; t=1793207678;
+	bh=TsC5KhooFVHQ9FJoXOZM+BlJxuiy+9aGbwXrA5ucU6c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fiDblbxNLoHOTLNhZ5CbFdG+zcyozcO/f+BE164q0fFIy07wAVDGAGDsdcUUgFkfE
-	 s4rQ4fNkl4AVfVyldg5cSCUmKnEMTee2CJ2c1BIdRUg5Mw7Wc9MOvmDvHXIFs9Bkf+
-	 ALbMv7S1R/Sv/rgBvU5MaRTfsQcoCLCSzTr77fRk=
+	b=sH+4xe5fo833Y9KKskig56IzQ+Z2AeQMQ/ggQDYAYeI6d+9c/0rdMzUNQTsqZHLoH
+	 NCpr/oUjSWa0hSILL+Tt9tBaM0kxV9shGl4zw7h5llmrWr0T0ghJ28QC3TaWehUsOJ
+	 SIPv98n4EvefkVuTlsShMMoOrR6bDxYek5BqqL64=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Marzinski <bmarzins@redhat.com>,
-	Matthew Sakai <msakai@redhat.com>,
-	Ming-Hung Tsai <mtsai@redhat.com>,
+	"Jose Fernandez (Anthropic)" <jose.fernandez@linux.dev>,
+	Ben Cressey <ben@cressey.dev>,
 	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 6.12 100/247] dm cache: fix issue with background work locking
-Date: Wed, 28 Oct 2026 17:58:23 +0100
-Message-ID: <20261028165949.763667633@linuxfoundation.org>
+Subject: [PATCH 6.12 101/247] dm-crypt: fix a tiny race condition in crypt_dec_pending
+Date: Wed, 28 Oct 2026 17:58:24 +0100
+Message-ID: <20261028165949.787417188@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165947.349197979@linuxfoundation.org>
 References: <20261028165947.349197979@linuxfoundation.org>
@@ -69,158 +68,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Marzinski <bmarzins@redhat.com>
+From: Ben Cressey <ben@cressey.dev>
 
-commit bc9781c0247de107876f32929f1637db93a42b34 upstream.
+commit 148845aa1921d95ef5dc851c76e6a284f6657df6 upstream.
 
-dm cache used a rw_semaphore for background_work_lock. Write locks on
-rw_semaphores have strict owner semantics, but there was no guarantee
-that the process that locked background_work_lock was the same process
-that unlocked it. This can be easily seen using a kernel compiled with
-CONFIG_DEBUG_RWSEMS. Given a dm cache device <cache>, run: 'dmsetup
-suspend <cache> && dmsetup resume <cache>'. This will trigger a kernel
-warning:
+crypt_dec_pending reads io->error before calling atomic_dec_and_test.
+Another context, for example crypt_endio called from an interrupt, may
+set io->error and drop its reference between the read and the
+decrement. crypt_dec_pending then drops the last reference and completes
+the bio with the stale status - so a read that failed and was never
+decrypted, or a write that failed, is reported as successful.
 
-DEBUG_RWSEMS_WARN_ON((rwsem_owner(sem) != current) && !rwsem_test_oflags(sem, RWSEM_NONSPINNABLE))
+The read was placed before the decrement by commit b35f8caa0890 ("dm
+crypt: wait for endio to complete before destruction"), because that
+commit freed dm_crypt_io before calling bio_endio. This is no longer the
+case, dm_crypt_io lives in the per-bio data now.
 
-triggered by cache_resume(). To fix this, switch from a rw_semaphore to
-a spinlock and a wait queue. dm cache already has a wait queue and
-associated counter, migration_wait and nr_allocated_migrations, that was
-getting woken up when background work was getting completed, but wasn't
-actually used by anything. This is replaced by the background_work queue
-and counter.
+Read io->error after atomic_dec_and_test instead. atomic_dec_and_test is
+fully ordered, so no additional barrier is needed.
 
-Fixes: b29d4986d0da ("dm cache: significant rework to leverage dm-bio-prison-v2")
+Fixes: b35f8caa0890 ("dm crypt: wait for endio to complete before destruction")
 Cc: stable@vger.kernel.org
-Signed-off-by: Benjamin Marzinski <bmarzins@redhat.com>
-Reviewed-by: Matthew Sakai <msakai@redhat.com>
-Reviewed-by: Ming-Hung Tsai <mtsai@redhat.com>
+Reviewed-by: Jose Fernandez (Anthropic) <jose.fernandez@linux.dev>
+Signed-off-by: Ben Cressey <ben@cressey.dev>
+Assisted-by: Claude:unspecified
 Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-cache-target.c |   55 +++++++++++++++++++++----------------------
- 1 file changed, 28 insertions(+), 27 deletions(-)
+ drivers/md/dm-crypt.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/drivers/md/dm-cache-target.c
-+++ b/drivers/md/dm-cache-target.c
-@@ -339,8 +339,6 @@ struct cache {
- 	struct list_head invalidation_requests;
- 
- 	sector_t migration_threshold;
--	wait_queue_head_t migration_wait;
--	atomic_t nr_allocated_migrations;
- 
- 	/*
- 	 * The number of in flight migrations that are performing
-@@ -396,7 +394,11 @@ struct cache {
- 	bool loaded_mappings:1;
- 	bool loaded_discards:1;
- 
--	struct rw_semaphore background_work_lock;
-+	/* background work management */
-+	bool background_work_allowed;
-+	unsigned background_work_nr;
-+	spinlock_t background_work_lock;
-+	wait_queue_head_t background_work_wait;
- 
- 	struct batcher committer;
- 	struct work_struct commit_ws;
-@@ -487,19 +489,13 @@ static struct dm_cache_migration *alloc_
- 	memset(mg, 0, sizeof(*mg));
- 
- 	mg->cache = cache;
--	atomic_inc(&cache->nr_allocated_migrations);
- 
- 	return mg;
- }
- 
- static void free_migration(struct dm_cache_migration *mg)
+--- a/drivers/md/dm-crypt.c
++++ b/drivers/md/dm-crypt.c
+@@ -1837,7 +1837,6 @@ static void crypt_dec_pending(struct dm_
  {
--	struct cache *cache = mg->cache;
--
--	if (atomic_dec_and_test(&cache->nr_allocated_migrations))
--		wake_up(&cache->migration_wait);
--
--	mempool_free(mg, &cache->migration_pool);
-+	mempool_free(mg, &mg->cache->migration_pool);
+ 	struct crypt_config *cc = io->cc;
+ 	struct bio *base_bio = io->base_bio;
+-	blk_status_t error = io->error;
+ 
+ 	if (!atomic_dec_and_test(&io->io_pending))
+ 		return;
+@@ -1859,7 +1858,7 @@ static void crypt_dec_pending(struct dm_
+ 	else
+ 		kfree(io->integrity_metadata);
+ 
+-	base_bio->bi_status = error;
++	base_bio->bi_status = io->error;
+ 
+ 	bio_endio(base_bio);
  }
- 
- /*----------------------------------------------------------------*/
-@@ -1029,34 +1025,39 @@ static void calc_discard_block_range(str
- 
- static void prevent_background_work(struct cache *cache)
- {
--	lockdep_off();
--	down_write(&cache->background_work_lock);
--	lockdep_on();
-+	spin_lock_irq(&cache->background_work_lock);
-+	cache->background_work_allowed = false;
-+	wait_event_lock_irq(cache->background_work_wait,
-+			    cache->background_work_nr == 0,
-+			    cache->background_work_lock);
-+	spin_unlock_irq(&cache->background_work_lock);
- }
- 
- static void allow_background_work(struct cache *cache)
- {
--	lockdep_off();
--	up_write(&cache->background_work_lock);
--	lockdep_on();
-+	spin_lock_irq(&cache->background_work_lock);
-+	cache->background_work_allowed = true;
-+	spin_unlock_irq(&cache->background_work_lock);
- }
- 
- static bool background_work_begin(struct cache *cache)
- {
- 	bool r;
- 
--	lockdep_off();
--	r = down_read_trylock(&cache->background_work_lock);
--	lockdep_on();
--
-+	spin_lock_irq(&cache->background_work_lock);
-+	r = cache->background_work_allowed;
-+	if (r)
-+		cache->background_work_nr++;
-+	spin_unlock_irq(&cache->background_work_lock);
- 	return r;
- }
- 
- static void background_work_end(struct cache *cache)
- {
--	lockdep_off();
--	up_read(&cache->background_work_lock);
--	lockdep_on();
-+	spin_lock_irq(&cache->background_work_lock);
-+	if (--cache->background_work_nr == 0)
-+		wake_up(&cache->background_work_wait);
-+	spin_unlock_irq(&cache->background_work_lock);
- }
- 
- /*----------------------------------------------------------------*/
-@@ -2515,9 +2516,7 @@ static int cache_create(struct cache_arg
- 
- 	spin_lock_init(&cache->lock);
- 	bio_list_init(&cache->deferred_bios);
--	atomic_set(&cache->nr_allocated_migrations, 0);
- 	atomic_set(&cache->nr_io_migrations, 0);
--	init_waitqueue_head(&cache->migration_wait);
- 
- 	r = -ENOMEM;
- 	atomic_set(&cache->nr_dirty, 0);
-@@ -2599,8 +2598,10 @@ static int cache_create(struct cache_arg
- 		     issue_op, cache, cache->wq);
- 	dm_iot_init(&cache->tracker);
- 
--	init_rwsem(&cache->background_work_lock);
--	prevent_background_work(cache);
-+	init_waitqueue_head(&cache->background_work_wait);
-+	spin_lock_init(&cache->background_work_lock);
-+	cache->background_work_allowed = false;
-+	cache->background_work_nr = 0;
- 
- 	*result = cache;
- 	return 0;
 
 
