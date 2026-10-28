@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793211089;
-	b=FbiwuGxwzqTV5hG7+BXxa6FO0CkhuRdLmdjrm0KvDJwBaPFFcTrjmmZ9sUDvUbNkowR8
-	 oUPd+HLwmkLZLghOtuuMF+u1fylAoHxKHoPJ/6WQ5V96/Gc8BB23fduLpWivjqU4hQiR/
-	 Tc/4iMoQXpiIhY6d17g06F82nxFAe+jMTNOindR573ydd9DCfgsHdqbGla3nanujOt/dW
-	 XbfL4KSbB4DonWHd0P8Bb5iot5PCAMR9WuA18PHKkyv4GgJpxpCjvbewRfxELqJ5wvhA2
-	 yz2+EzmVM6ovXafW7ttdVr9ffxDzuctGTWUnU0hK2gIupipQlnKMc8jcJqO6F80ZoOg==
+	t=1793211092;
+	b=mpqyLSNRqzSfX78G9l0nX4T6l7Qz/fIoe86UsGIaa6ABLCNFYasNIY+aAkc4Q3Ga2QP6
+	 7pPAPs/4ODeiW9DMgMpRYI4Ba65EMN0hN4rpeW2DstgF0DbSrAPsIpJRiTh7UFQ8am5ah
+	 spYY3PV43E11UGkakm1mDYXluYCAkqdaIgu7retcGBpnPHK7baMYa+sbItY5Faej5KJgP
+	 D+G1BwqVQx1BojxPXn8wQiaWN1Ol5t6dFtQ7AoKERVgwqKBW8Kz3krHzs+m7+giF/a2+M
+	 xmO59wk7yg1olXu7tli/a1JlfhP0av0ZD/vrQVYkmZY+PIrA/p1r9f9ToLD/ZuvzrqQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793211089;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793211092;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=YTNhL3EQBIlZnk9QycpvtMH+o2kqRtSWywAV+/J27nA=;
-	b=sZwXdnu6cM7JcPXOG2JymG6DJQYg6duPSNeYc31lOp3UYOsir5HGWzhYqoV6QsDRewnr
-	 Ls8Rmir3OHO+64kXOcmWc8qSUgzCZxoRsAP9aMbQl9qus7lMGbA5hhX5vpic+UK252kAz
-	 In0lmnaLSAXE0EbYXncTTpxnszX3hnQwjNWrJHdkV4gshfn6YGZZJT/VqchuPI19KHLUW
-	 h4mkrV4mcFKB9oAQHG8tzQI1Bk+nTqGyUnSth2GDcJKg0Sm8hZQKJeiz7pA/iVUDuw4pS
-	 fxH1x9VACx+tFgVaXsl8pDBdw5QBh6Lq7gsKCRUXitiiEBJojiiywFpamBFz0wMIQMg==
+	bh=HMUazfsrqDdwki1QRi9YIwTnHlb7ohYhQbReYCW76Js=;
+	b=l75VjDRn1JQHl/pbxwUPZrOReNNInuLOHUnwvfZX/d+qDREdoEcoDlcq9P8VC8rDILBi
+	 UKLJfeH9vBCM8ItBaTevaxCmOoa58dFS1Lsuud2drS0Jy/tk16cEiP5QQjLYH5JXt3eXR
+	 iaJaKAt/H3Bi/4iR+0MZtdqK6WQiTx3eJ57RFnaTx9DDtwjrGtlVI1lITByylCrb4zdNx
+	 bUQr8WbH71DtQL9aBSweRVDevq+JSj7D5iS4PAMaOMaAQZIAGkYBHe+fsgwc38v4iJ4WB
+	 HmlGAHkHQcZL7E2oNv6aihXw9rIa0Oo5bliQlr2ZTqKRqjuR9YfDcF6v53LE58mKGOg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=amssHC4l;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qzkT4mpf;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6244E60A3822;
-	Wed, 28 Oct 2026 18:11:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4985C60A3831;
+	Wed, 28 Oct 2026 18:11:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=amssHC4l
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEE301F01828;
-	Wed, 28 Oct 2026 18:11:28 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qzkT4mpf
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87DCC1F01829;
+	Wed, 28 Oct 2026 18:11:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793211089;
-	bh=YTNhL3EQBIlZnk9QycpvtMH+o2kqRtSWywAV+/J27nA=;
+	s=korg; t=1793211092;
+	bh=HMUazfsrqDdwki1QRi9YIwTnHlb7ohYhQbReYCW76Js=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=amssHC4lF8UNIBPi00qbBvI6bW8eeWUGFMfDIb2qAEvb/jAKkF22KP9VrSFzWna3h
-	 4rVgPJDCBbZZbjYeYjTWGJrRamJu4h9ZuSU/jXiI6TpKvuqFvVgutEFP74HMjLhnzm
-	 /pBhvQtjTFxTB3MV5wVYVtte8Zeb8N+jetQe8YXg=
+	b=qzkT4mpfInAHB6295mhKey0wyNgAOTDSK7GZcgOvB3HTGPnHYQaMPEoY9AciGPDdV
+	 h9UzaxqwAX9nl96YQ9dtonz3iQUppEfG/tAU0fMU6dDrpqD43SUTD1gisl92ThGWam
+	 OF5bwjaT9mGHYDcSCwL2+UhLC59NFvsQqoq00gAY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Gu <ustc.gu@gmail.com>,
+	Arka Mondal <arkamondalofficial@gmail.com>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
 	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Subject: [PATCH 5.15 254/571] iio: adc: sun4i-gpadc-iio: drop underflowing pm_runtime_put() calls
-Date: Wed, 28 Oct 2026 17:56:41 +0100
-Message-ID: <20261028170014.031344149@linuxfoundation.org>
+Subject: [PATCH 5.15 255/571] iio: gyro: adis16136: fix unprotected debugfs reads
+Date: Wed, 28 Oct 2026 17:56:42 +0100
+Message-ID: <20261028170014.056296718@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -67,43 +68,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Gu <ustc.gu@gmail.com>
+From: Arka Mondal <arkamondalofficial@gmail.com>
 
-commit 8b958dd214ad0c003f56549e9e039cb8067dc1a2 upstream.
+commit 2b498df75d6c29aa3e760127ae0f0003df598b53 upstream.
 
-Neither the error path in sun4i_gpadc_probe() nor sun4i_gpadc_remove()
-ever holds a runtime PM usage count. So the pm_runtime_put() in both
-places always triggers the "Runtime PM usage count underflow!" warning
-on every failed probe and every unbind.
+The serial_number file operations are open coded and never call
+debugfs_file_get(), which debugfs_create_file_unsafe() requires.
+debugfs_remove_recursive() therefore does not wait for a read in
+progress, and unbind frees the iio_dev underneath it.
 
-Drop both calls.
+Use debugfs_create_file() instead.
 
-Fixes: d1caa9905538 ("iio: adc: add support for Allwinner SoCs ADC")
-Signed-off-by: Felix Gu <ustc.gu@gmail.com>
+Fixes: 9aaea09b4cbd ("gyro:adis16136: fix debugfs_simple_attr.cocci warnings")
+Signed-off-by: Arka Mondal <arkamondalofficial@gmail.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
 Cc: stable@vger.kernel.org
 Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/adc/sun4i-gpadc-iio.c |    2 --
- 1 file changed, 2 deletions(-)
+ drivers/iio/gyro/adis16136.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/iio/adc/sun4i-gpadc-iio.c
-+++ b/drivers/iio/adc/sun4i-gpadc-iio.c
-@@ -664,7 +664,6 @@ err_map:
- 	if (!info->no_irq && IS_ENABLED(CONFIG_THERMAL_OF))
- 		iio_map_array_unregister(indio_dev);
+--- a/drivers/iio/gyro/adis16136.c
++++ b/drivers/iio/gyro/adis16136.c
+@@ -145,7 +145,7 @@ static int adis16136_debugfs_init(struct
+ 	struct adis16136 *adis16136 = iio_priv(indio_dev);
+ 	struct dentry *d = iio_get_debugfs_dentry(indio_dev);
  
--	pm_runtime_put(&pdev->dev);
- 	pm_runtime_disable(&pdev->dev);
- 
- 	return ret;
-@@ -675,7 +674,6 @@ static int sun4i_gpadc_remove(struct pla
- 	struct iio_dev *indio_dev = platform_get_drvdata(pdev);
- 	struct sun4i_gpadc_iio *info = iio_priv(indio_dev);
- 
--	pm_runtime_put(&pdev->dev);
- 	pm_runtime_disable(&pdev->dev);
- 
- 	if (!IS_ENABLED(CONFIG_THERMAL_OF))
+-	debugfs_create_file_unsafe("serial_number", 0400,
++	debugfs_create_file("serial_number", 0400,
+ 		d, adis16136, &adis16136_serial_fops);
+ 	debugfs_create_file_unsafe("product_id", 0400,
+ 		d, adis16136, &adis16136_product_id_fops);
 
 
