@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214878;
-	b=dNxI8+MzG4M1nx4FpTxTrOpNwaqZPGMoHvAurZ7Ol9iUmpM9wIScKtH5AfC0yvWTC1Yr
-	 8Wo53JfDg3A/75zAnBzWlckA65oGfq3KfcbGdI/Z4b5UtuhV2+ast5SI9Ww4lqoMa95vs
-	 EEQXKhEHDYRRb5k9j0SB0uWrap3/Mj0GvBbxRJ2cuoB+7ZVCIPw07BPWI6O+WTgS6OIvC
-	 uvDyb4zWqqQ+NnO8DVnmDPJk5TBc6G0Tsxqvo4F4jk7y/IFAuYDYFpdmlafzNoblC6oZ4
-	 F9l4jhOy2Zm2pT5srcOTMmZOhJs6dZyzJSY5b621K72N7962SsEYDgy+8MAf3BRxpaQ==
+	t=1793214881;
+	b=xvw5HE0fF7PfFE7Q0iRA7UmaTKpsp/ca910xmamLYmbz1QG6v+kp0QEvIhueBmSX4zIL
+	 pamFXsFN1HU9Qwct5+9AK48RM4pvFIOaYlX4hFTYUcr91RngPJGQGUr0D6lNmjmeuAwX1
+	 Z0oa3mWANX57ScZidxteS32vGTN0D7MHKkE1tOzb7dYyDANnj/zINnW3GQVvrbbQAgMAf
+	 E4chi3/bKRaw17MSjg4hsQ5Rlntdwk0MB44BR7kUgZX3+/RhJh+cClrWRR1m5qbECd+g2
+	 c+YYF/U5usbBTgiYV6DmypSXSnjdOwOAfqU6pd0Wqiknm6Gs9VHPkQnZaJa0f5Bf5gQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214878;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214881;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/uW7WFm2b7L08msGnMuIya51wCMMtGPMQvUe2jOw804=;
-	b=DpS3cL8/SbAXpfKWgkTfjvLQ9Hzhlc7YSgpwHW9YSO7dXXmTgLdzwIathZBnsSl/Va2Z
-	 Y6Gi61bCI1rMrhQ7+ik6hi/V9SGRBQfp4xD0pLSlvAOM4DsfoWp5GgGeXzJdKrCKwfw2x
-	 oxBByCTaNMWZdXOmUf7l+6Kmt6CyLP+BvlNDuzHfFY2TFXXGm+jUesaLIsdLvxYD0492b
-	 5VsN0wy2IFMO4WC6RiIV7z3Yrcc+uwiVCH6vJrwc7+eIYWNufc9NkLizR27o6IRI7yTrl
-	 IoMTvreq9s6OMZfy9ZNyaVmUOwmrAGomMwYjUhyGIeyDy7Ef/ReuIGYonGzMsIq2fRA==
+	bh=hQLXVKWHuOqyxowyQcJuVSojUe3WOGocwJi8U/XBJT8=;
+	b=LZYKANAts9K9Rhut0x8uPPcxWwiJWWb0c/jEyVdKd7O88MsiZ9iW4R4S2DrEaQpPypKy
+	 /30i1JsLaZhJj+6kgAWx2texRUAsBE1DfbcJ1Pd8ZTmflMLy16gFjSRqBqS4e4KMoVfp9
+	 Ub+vJSEjHYjdDB4JGtFMM6P/EeBui8O7V6wRqafGM9TKsgtE98wBwaGlWnk6s6pai3vY8
+	 kqiTb4/qQQvuRii3XEuXqciZS7JvTDjzjas7cgMPSSj3TF+ACOqjocsa+GkrgFIK+upUd
+	 E26nQSGctu0v38eMdDYjCZnXYuGjW9Fqeh+rwTI7Y7TkN6UgLFI8nKviisJXBz6t2zg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2vhMV1vV;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="p7sUz/hc";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93349606A337;
-	Wed, 28 Oct 2026 19:14:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19A14606AB3B;
+	Wed, 28 Oct 2026 19:14:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2vhMV1vV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E4E91F01825;
-	Wed, 28 Oct 2026 19:14:37 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=p7sUz/hc
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B5A41F01828;
+	Wed, 28 Oct 2026 19:14:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214878;
-	bh=/uW7WFm2b7L08msGnMuIya51wCMMtGPMQvUe2jOw804=;
+	s=korg; t=1793214881;
+	bh=hQLXVKWHuOqyxowyQcJuVSojUe3WOGocwJi8U/XBJT8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2vhMV1vVk8ll0Y0qfOAUtOJ8wo0OGe5Xq+QMaopURttqlseGYaqFmc+2+anpJ/pBp
-	 UklvvG9FEnvOXXVCN/JWKOMbjpCJ2p4GujrgSEbS4CFRpk65eywtc7LGTiOrzsqUlW
-	 q+x+o+V0A7h7QeRquPa+VJ/lG29jzVcGUl9s+Rx8=
+	b=p7sUz/hcR59rfrYa1qCdQmcF13yHSNbYg5gm+Wi5nmhP5sZRLQO2UXBKWtfZ/K3Yl
+	 K25zO5i+Vzl8RE6/+By8LicdUh6i29Lwb/DWFkDsfgvn2USb5qg7GhjV7ZE8CvawGK
+	 KscR+MELLOW3c26lt1Zuvj4DHaIBmGRnJaRWXdmU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Vladimir Riabchun <ferr.lambarginio@gmail.com>,
+	Farhat Abbas <fabbas@cloudlinux.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1014/1887] i3c: mipi-i3c-hci: Fix race in DMA ring dequeue
-Date: Wed, 28 Oct 2026 17:51:50 +0100
-Message-ID: <20261028170522.492186865@linuxfoundation.org>
+Subject: [PATCH 6.1 1015/1887] scsi: qla2xxx: Completely fix fcport double free
+Date: Wed, 28 Oct 2026 17:51:51 +0100
+Message-ID: <20261028170522.514714427@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,74 +69,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adrian Hunter <adrian.hunter@intel.com>
+From: Vladimir Riabchun <ferr.lambarginio@gmail.com>
 
-[ Upstream commit 1dca8aee80eea76d2aae21265de5dd64f6ba0f09 ]
+[ Upstream commit c0b7da13a04bd70ef6070bfb9ea85f582294560a ]
 
-The HCI DMA dequeue path (hci_dma_dequeue_xfer()) may be invoked for
-multiple transfers that timeout around the same time.  However, the
-function is not serialized and can race with itself.
+In qla24xx_els_dcmd_iocb() sp->free is set to qla2x00_els_dcmd_sp_free().
+When an error happens, this function is called by qla2x00_sp_release(),
+when kref_put() releases the first and the last reference.
 
-When a timeout occurs, hci_dma_dequeue_xfer() stops the ring, processes
-incomplete transfers, and then restarts the ring.  If another timeout
-triggers a parallel call into the same function, the two instances may
-interfere with each other - stopping or restarting the ring at unexpected
-times.
+qla2x00_els_dcmd_sp_free() frees fcport by calling qla2x00_free_fcport().
+Doing it one more time after kref_put() is a bad idea.
 
-Add a mutex so that hci_dma_dequeue_xfer() is serialized with respect to
-itself.
-
-Fixes: 9ad9a52cce282 ("i3c/master: introduce the mipi-i3c-hci driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260306072451.11131-7-adrian.hunter@intel.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Fixes: 82f522ae0d97 ("scsi: qla2xxx: Fix double free of fcport")
+Fixes: 4895009c4bb7 ("scsi: qla2xxx: Prevent command send on chip reset")
+Signed-off-by: Vladimir Riabchun <ferr.lambarginio@gmail.com>
+Signed-off-by: Farhat Abbas <fabbas@cloudlinux.com>
+Link: https://patch.msgid.link/aYsDln9NFQQsPDgg@vova-pc
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i3c/master/mipi-i3c-hci/core.c | 2 ++
- drivers/i3c/master/mipi-i3c-hci/dma.c  | 2 ++
- drivers/i3c/master/mipi-i3c-hci/hci.h  | 1 +
- 3 files changed, 5 insertions(+)
+ drivers/scsi/qla2xxx/qla_iocb.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/i3c/master/mipi-i3c-hci/core.c b/drivers/i3c/master/mipi-i3c-hci/core.c
-index 3c5ce4a64f808..b9a6073499ee2 100644
---- a/drivers/i3c/master/mipi-i3c-hci/core.c
-+++ b/drivers/i3c/master/mipi-i3c-hci/core.c
-@@ -751,6 +751,8 @@ static int i3c_hci_probe(struct platform_device *pdev)
- 	if (IS_ERR(hci->base_regs))
- 		return PTR_ERR(hci->base_regs);
+diff --git a/drivers/scsi/qla2xxx/qla_iocb.c b/drivers/scsi/qla2xxx/qla_iocb.c
+index f080e19529272..3984b42fe0dd4 100644
+--- a/drivers/scsi/qla2xxx/qla_iocb.c
++++ b/drivers/scsi/qla2xxx/qla_iocb.c
+@@ -2754,7 +2754,6 @@ qla24xx_els_dcmd_iocb(scsi_qla_host_t *vha, int els_opcode,
+ 	if (!elsio->u.els_logo.els_logo_pyld) {
+ 		/* ref: INIT */
+ 		kref_put(&sp->cmd_kref, qla2x00_sp_release);
+-		qla2x00_free_fcport(fcport);
+ 		return QLA_FUNCTION_FAILED;
+ 	}
  
-+	mutex_init(&hci->control_mutex);
-+
- 	platform_set_drvdata(pdev, hci);
- 	/* temporary for dev_printk's, to be replaced in i3c_master_register */
- 	hci->master.dev.init_name = dev_name(&pdev->dev);
-diff --git a/drivers/i3c/master/mipi-i3c-hci/dma.c b/drivers/i3c/master/mipi-i3c-hci/dma.c
-index 7b13508ccca66..60da4be20c5f2 100644
---- a/drivers/i3c/master/mipi-i3c-hci/dma.c
-+++ b/drivers/i3c/master/mipi-i3c-hci/dma.c
-@@ -450,6 +450,8 @@ static bool hci_dma_dequeue_xfer(struct i3c_hci *hci,
- 	bool did_unqueue = false;
- 	u32 ring_status;
+@@ -2779,7 +2778,6 @@ qla24xx_els_dcmd_iocb(scsi_qla_host_t *vha, int els_opcode,
+ 	if (rval != QLA_SUCCESS) {
+ 		/* ref: INIT */
+ 		kref_put(&sp->cmd_kref, qla2x00_sp_release);
+-		qla2x00_free_fcport(fcport);
+ 		return QLA_FUNCTION_FAILED;
+ 	}
  
-+	guard(mutex)(&hci->control_mutex);
-+
- 	ring_status = rh_reg_read(RING_STATUS);
- 	if (ring_status & RING_STATUS_RUNNING) {
- 		/* stop the ring */
-diff --git a/drivers/i3c/master/mipi-i3c-hci/hci.h b/drivers/i3c/master/mipi-i3c-hci/hci.h
-index f109923f6c3f3..39490bc9f84f6 100644
---- a/drivers/i3c/master/mipi-i3c-hci/hci.h
-+++ b/drivers/i3c/master/mipi-i3c-hci/hci.h
-@@ -43,6 +43,7 @@ struct i3c_hci {
- 	const struct hci_io_ops *io;
- 	void *io_data;
- 	const struct hci_cmd_ops *cmd;
-+	struct mutex control_mutex;
- 	atomic_t next_cmd_tid;
- 	u32 caps;
- 	unsigned int quirks;
 -- 
 2.53.0
 
