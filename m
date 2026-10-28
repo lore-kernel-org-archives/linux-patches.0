@@ -1,51 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793211115;
-	b=sJz2pTw0jRByYDL2DZrYVns6XdQhjsheG1bQ4GPVV+9S/2fWaZXj8YwfuCn0nI93c+qq
-	 7T42D0yD/B16ZRi8ohT6MNP9rzIxMEZ0BJOUSnnVM6DNkx326PC4zMXGMGjhkXu0FqcVM
-	 YrHSmH3i3VidV5aneV3Lcih2ncijxZG71jEbU01nmncIDnijPT34tPJUK9hA+zLgJLBmj
-	 sZOkRKiM9PoL+hSWa/zHFIJTKkUtiNtkrJAwFVB4K+Akkbzzk+kMtOtenfrmJJe5W76Vd
-	 858ROm6FgSsPyIKXj2eseBYlVBENGgpf+yZJoK9Ynw6rETuqXceYC2fs9+H5eAEtyQg==
+	t=1793211117;
+	b=1GQWpmQXs0Grn8FyLNWkME1W6ricSCJ0EXP6dsIK6EBu9w+5JzemL+1jPiMWuoH1PoSm
+	 pjwtLjGUbKNtDFw0ms++INReuo1l9uqn0tG2YBGz/wnY1wsNADH6eK8kDr1TR36bmVyxV
+	 +X+IMPsHpedlFY9SECb4FYoVuZx9RwpXm2d7C8s1qElp3piXq+a3jSvL77ItVTtsTOnBg
+	 dH/zKXP8taD4VDwM/Vu4IAvtqyeQtlQx26iYsN0FYVa7TgIMGKgDwxd04hdTfFMyTqbqG
+	 TAuEk46DOsXZVCb5crdGQrwddg8Pk9wnUutK64QHfZeHuM3rqZlSylOeYn6wYQVguDg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793211115;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793211117;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=faGAEr+hqgde3TXar7wJakadRpUYMn/OvakZxG/n7L4=;
-	b=V/FXi04RDWMD7Uc8OZsvHXjQaKyS9ziUj661TMSSp/dj0tUmplDdGmLeMMNKme17qtlT
-	 simPG/n5OMXYF0B1K8tT2cjoPOb4pgfyWd7v9DBkoTJ1mFrbS5Qc3FPIsXws5+NOCWtDV
-	 u+1fUQ8kC29bpyUjL1MmnkZ1GCb0k9v2USQy77O/0KgzZUrlGLrhpxNh08uO1loN66CiE
-	 HaggrHk1soiD7zlKwLdKpnzShoP/HF2B83URlPEoxWYFvArz1a7sT9kRSsxPhxTJjnfRL
-	 BcULpPkmqAGBJK1mxHLYJlGVHElV+h+5HQneYSHT01i2J+6AnQs/KcpLgoNCDmpsz6g==
+	bh=9fCM6HZX+4OLLWwd8lBgdvsQY+aRgS4vnHuJq+fCod0=;
+	b=VHMGAwbn5q7l5oMv095r8XC+mY+DLaqM68SvbS8bKsXbezySlwpxis3KuML+gQInvwSK
+	 2qf1Z610cdAsFy9SRptjcSDoeCCJptGjDqiSF27kSpdGBzVaVqypQPfqtNZGDn/iJdeYR
+	 myW93A9LOF2OLpPXCj4Hwss+fSmKBrc8zPjxVusrJgVv3pCJCtaBv2W8ESk1GqZxhTrTc
+	 SrfSWU7CbWQ07SxYPFjlrXy6gNfZxP5xACyfOmEiBi6QJpTjpFgawgNIr4wSF8vuLXHdY
+	 UgUWSJ9Dng1MbFtt28BqZOmf2BP2mlFslQtmFzApQ6kAHmlPo/l1cmNBVGa3b0eU3QQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="hsGT/hmk";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eK2k0NSq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF7F560A5BE9;
-	Wed, 28 Oct 2026 18:11:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AAA960A6F4B;
+	Wed, 28 Oct 2026 18:11:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hsGT/hmk
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 191F71F031E0;
-	Wed, 28 Oct 2026 18:11:53 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eK2k0NSq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECCAF1F01825;
+	Wed, 28 Oct 2026 18:11:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793211114;
-	bh=faGAEr+hqgde3TXar7wJakadRpUYMn/OvakZxG/n7L4=;
+	s=korg; t=1793211117;
+	bh=9fCM6HZX+4OLLWwd8lBgdvsQY+aRgS4vnHuJq+fCod0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hsGT/hmkN+zvfhNIwPkh+lL3miOlOvckHqdJFW5kpJJQWqIwvILKau5flaTUH3vVZ
-	 psK2+abOnihwj9o/ISAbVCmZutbEr9vzT+rW00ra4UmbYsyK6Vh6eSytm9HLOlVXoH
-	 /l6YuURXMkwIVt5vxPmMs0jtP2/f3NX92WHjtkXA=
+	b=eK2k0NSqRRkp9Jn1ky1VxJ8myomuQ2+LiY3E+eXFmBD7pbY7HUNS+cOaWFZPtmQSu
+	 Z1V4objea+2c+0x1VEh9Kifv7fqr5+PMJtBHA9Zo1ZCuqLSiROQXCpzcLdnNQd+dw/
+	 R6P2cjCFRkyIjxrHf+d/gDNE/36qo6d4LDYpq+xo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fan Wu <fanwu01@zju.edu.cn>,
-	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Subject: [PATCH 5.15 262/571] iio: trigger: cancel reenable_work before freeing trigger
-Date: Wed, 28 Oct 2026 17:56:49 +0100
-Message-ID: <20261028170014.221492104@linuxfoundation.org>
+	Victor Nogueira <victor@mojatatu.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Pedro Tammela <pctammela@mojatatu.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>,
+	"Miguel Gazquez (Schneider Electric)" <miguel.gazquez@bootlin.com>
+Subject: [PATCH 5.15 263/571] net: sched: cls_u32: Undo tcf_bind_filter if u32_replace_hw_knode
+Date: Wed, 28 Oct 2026 17:56:50 +0100
+Message-ID: <20261028170014.244173426@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -67,41 +72,122 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: Victor Nogueira <victor@mojatatu.com>
 
-commit 2a57b9246cecd5dd797a42eb310d6c8816f26d9e upstream.
+[ Upstream commit 9cb36faedeafb9720ac236aeae2ea57091d90a09 ]
 
-iio_trigger_notify_done_atomic() defers ->reenable() into
-trig->reenable_work on the system workqueue, and the worker dereferences
-the owning trigger through container_of().  Nothing cancels this work
-before iio_trig_release() frees the trigger, so a worker armed by the
-last in-flight IRQ can outlive the free and touch freed memory.
+When u32_replace_hw_knode fails, we need to undo the tcf_bind_filter
+operation done at u32_set_parms.
 
-Cancel it at the top of iio_trig_release(), which every free path
-reaches through the device core's final put_device().
-
-Found by an in-house static analysis tool.
-
-Fixes: 9020ef659885 ("iio: trigger: Fix a scheduling whilst atomic issue seen on tsc2046")
-Cc: stable@vger.kernel.org
-Assisted-by: Codex:gpt-5.6
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
-Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: d34e3e181395 ("net: cls_u32: Add support for skip-sw flag to tc u32 classifier.")
+Signed-off-by: Victor Nogueira <victor@mojatatu.com>
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Reviewed-by: Pedro Tammela <pctammela@mojatatu.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Miguel Gazquez (Schneider Electric) <miguel.gazquez@bootlin.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/industrialio-trigger.c |    2 ++
- 1 file changed, 2 insertions(+)
+ net/sched/cls_u32.c | 38 +++++++++++++++++++++++++++++---------
+ 1 file changed, 29 insertions(+), 9 deletions(-)
 
---- a/drivers/iio/industrialio-trigger.c
-+++ b/drivers/iio/industrialio-trigger.c
-@@ -513,6 +513,8 @@ static void iio_trig_release(struct devi
- 	struct iio_trigger *trig = to_iio_trigger(device);
- 	int i;
+diff --git a/net/sched/cls_u32.c b/net/sched/cls_u32.c
+index 23f9e2b5f3b60..b36eced10ff40 100644
+--- a/net/sched/cls_u32.c
++++ b/net/sched/cls_u32.c
+@@ -709,8 +709,23 @@ static const struct nla_policy u32_policy[TCA_U32_MAX + 1] = {
+ 	[TCA_U32_FLAGS]		= { .type = NLA_U32 },
+ };
  
-+	cancel_work_sync(&trig->reenable_work);
++static void u32_unbind_filter(struct tcf_proto *tp, struct tc_u_knode *n,
++			      struct nlattr **tb)
++{
++	if (tb[TCA_U32_CLASSID])
++		tcf_unbind_filter(tp, &n->res);
++}
 +
- 	if (trig->subirq_base) {
- 		for (i = 0; i < CONFIG_IIO_CONSUMERS_PER_TRIGGER; i++) {
- 			irq_modify_status(trig->subirq_base + i,
++static void u32_bind_filter(struct tcf_proto *tp, struct tc_u_knode *n,
++			    unsigned long base, struct nlattr **tb)
++{
++	if (tb[TCA_U32_CLASSID]) {
++		n->res.classid = nla_get_u32(tb[TCA_U32_CLASSID]);
++		tcf_bind_filter(tp, &n->res, base);
++	}
++}
++
+ static int u32_set_parms(struct net *net, struct tcf_proto *tp,
+-			 unsigned long base,
+ 			 struct tc_u_knode *n, struct nlattr **tb,
+ 			 struct nlattr *est, u32 flags,
+ 			 struct netlink_ext_ack *extack)
+@@ -756,10 +771,6 @@ static int u32_set_parms(struct net *net, struct tcf_proto *tp,
+ 		if (ht_old)
+ 			ht_old->refcnt--;
+ 	}
+-	if (tb[TCA_U32_CLASSID]) {
+-		n->res.classid = nla_get_u32(tb[TCA_U32_CLASSID]);
+-		tcf_bind_filter(tp, &n->res, base);
+-	}
+ 
+ 	if (ifindex >= 0)
+ 		n->ifindex = ifindex;
+@@ -898,7 +909,7 @@ static int u32_change(struct net *net, struct sk_buff *in_skb,
+ 		if (!new)
+ 			return -ENOMEM;
+ 
+-		err = u32_set_parms(net, tp, base, new, tb,
++		err = u32_set_parms(net, tp, new, tb,
+ 				    tca[TCA_RATE], flags, extack);
+ 
+ 		if (err) {
+@@ -906,8 +917,12 @@ static int u32_change(struct net *net, struct sk_buff *in_skb,
+ 			return err;
+ 		}
+ 
++		u32_bind_filter(tp, new, base, tb);
++
+ 		err = u32_replace_hw_knode(tp, new, flags, extack);
+ 		if (err) {
++			u32_unbind_filter(tp, new, tb);
++
+ 			__u32_destroy_key(new);
+ 			return err;
+ 		}
+@@ -1108,15 +1123,18 @@ static int u32_change(struct net *net, struct sk_buff *in_skb,
+ 	}
+ #endif
+ 
+-	err = u32_set_parms(net, tp, base, n, tb, tca[TCA_RATE], flags,
++	err = u32_set_parms(net, tp, n, tb, tca[TCA_RATE], flags,
+ 			    extack);
++
++	u32_bind_filter(tp, n, base, tb);
++
+ 	if (err == 0) {
+ 		struct tc_u_knode __rcu **ins;
+ 		struct tc_u_knode *pins;
+ 
+ 		err = u32_replace_hw_knode(tp, n, flags, extack);
+ 		if (err)
+-			goto errhw;
++			goto errunbind;
+ 
+ 		if (!tc_in_hw(n->flags))
+ 			n->flags |= TCA_CLS_FLAGS_NOT_IN_HW;
+@@ -1134,7 +1152,9 @@ static int u32_change(struct net *net, struct sk_buff *in_skb,
+ 		return 0;
+ 	}
+ 
+-errhw:
++errunbind:
++	u32_unbind_filter(tp, n, tb);
++
+ #ifdef CONFIG_CLS_U32_MARK
+ 	free_percpu(n->pcpu_success);
+ #endif
+-- 
+2.53.0
+
 
 
