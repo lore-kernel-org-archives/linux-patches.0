@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793208066;
-	b=5g6ZtdL5gRDoiMCc5p2mUQMaj1bwlvffntyGvWE+JLNjsg87E1cY57vzNZi9jYNybg2/
-	 A0QevYu2nkpdHH3XyGAaQmgXzFkYwvuJ/otlAr0LD438Q5X6tv63yuToNiT5rRlgyCoc4
-	 VJciWn/+XIh6JngecXinv7Xh9E0g4BBbeRGbXZFGdSE0XiN/SAHjilT6wume7KVCbm/1x
-	 VAY72pDGd8rZcfo0d76I1F5J1uczn0s85de+qxDhHwk4BVF2TXvVS60JdtHZ6CBqPaOkG
-	 M/Eh4GmmUs9ffEXmd1++6gsuZ7/LllmJ9hox03vwzwhqsDIeDEtS2EYGXv8IHxI5dnQ==
+	t=1793208070;
+	b=hR7HiWZkojLBWIuOl7USxniiai3ciQdbxBmvSnUNxI0fwcDUig24uEvuhoqjkB6cacYw
+	 EA1MqpOPzEWM2ugXFQuiE71WpCCTpEVqfndrAcwtKvOej2AASjJBZJAfU/5VhPBqszrky
+	 3lJPT0zR2wnJ2N9qkX71A5liwwlXh6TB57hGKPnffOxMLXI1ibvfzbUe7JIL0aNrBOzrL
+	 oINrI0uVT1MfnsEn6XF9zn87FH7A3ffy4jbMQa3uMu0L3WbakKx34PAYSKpr231g6wF4g
+	 uoPXygzseZKAAvHfqi+ndx+XheU4IXuDXvxRMddyokYgfQ32+XvrU53bKoFJApwJN6A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793208066;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793208070;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=NODNaJFEL56IKVupwWLYwKrboDiugSjTnVRe5yZUZeE=;
-	b=L/rxW6C1EjvpjVQ104KkevKwxhVjl/TPEh7e0wtLFKWSQiS451Bzs0hzVExLK4YyWC3W
-	 N6mo11xuw7iAB5TgQVQwSpR3pwSU1ZA60CuxF1A1V5MwhVB9W0WgiUy+nL486kpM/vXLg
-	 jf4yR1ymLuENN+Utmgi370pL9ggZCcCFnTer8ODOo0ldKtzpGbpAypDytDJ5TGANFGLQE
-	 41JhsG2TLMQgg15t5riV9x6dDFIDDQMini5UJs0MMvtvxR+OztS2ZJZpC3rdmaM1PzNFO
-	 RCQlnARp5rz0qAx8X2tDTqx4PV7B5ruCL7xEDnBohitFDvFhkDOZx/kkvvqFjM/OTcg==
+	bh=wWkQt2CONgMICu+Pf678EHgXmpixbrHSxvlbJYtMzjs=;
+	b=J/yf2I47O/Z9Sg1U902IJnqGO2cbhhkE/Z3u1ewCM++FgeBqgdKmicZ88IWdaaUnqp6e
+	 ALycBrs6+9TcxZHfakUebVtRsO5dIG8u1vjaX2H6H3FKPXzoFpRE4Vi9/jwSx82ScJirc
+	 wG4SdBMzWgKbWXNC59PTTtVmp+HSU6llzM7uvamWZlG9HkUfMv7LB1nKpr/9sG+I8pYZB
+	 apCj7ZeSawKo/h6xJPhA/5jFCR9eB1+hJJw4SGNWuHqBy32fcCG97G9vflrjyHW2MoTrw
+	 VSTJ5i3nvCN1D5iY/UHFUyn9PFX7wALcVq72op2Tcd+Y/sMBPPu7UdIEERiMUSlunhg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DYft3bab;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="OKHk9J/u";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98780606A32F;
-	Wed, 28 Oct 2026 17:21:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C110A606A31C;
+	Wed, 28 Oct 2026 17:21:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DYft3bab
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E59611F01828;
-	Wed, 28 Oct 2026 17:21:05 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OKHk9J/u
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD4611F01825;
+	Wed, 28 Oct 2026 17:21:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793208066;
-	bh=NODNaJFEL56IKVupwWLYwKrboDiugSjTnVRe5yZUZeE=;
+	s=korg; t=1793208069;
+	bh=wWkQt2CONgMICu+Pf678EHgXmpixbrHSxvlbJYtMzjs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DYft3babKPlOzDZokF+X7xCEJ+NP8nXmcQSLQKzCwW++wJiSvrwgUrsu2Ua/o8hJT
-	 RrgOgx4hRtcL/8kkaHoZ4/uozOrE4iqEcM7359gj2XhjXxbJAZ53BlTeBTIXFtisuX
-	 yjVaXyhZMRLzxr75mdBUJtIw1FZ6afs8MwVEMlpw=
+	b=OKHk9J/uNsra/+nwlQG7gwTaibKtQUlgfupI3ydgFuMSwTTznr9w1EwhImTF2LlPw
+	 eNhOtGSEcPVQqT8CwCIt2dJ8H2BSm647aVkaQ4ySBlQCppzB6kQLrU8imauycuPCNs
+	 BOpA/t9mcTzXE/IW8CG21aG2Qi3A1iQdbIwxW5W8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Weiming Shi <bestswngs@gmail.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 6.12 238/247] asymmetric_keys: reject trust keys without IDs
-Date: Wed, 28 Oct 2026 18:00:41 +0100
-Message-ID: <20261028165953.058104501@linuxfoundation.org>
+	Josef Bacik <josef@toxicpanda.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.12 221/247] io_uring: look up the file before queueing to io-wq
+Date: Wed, 28 Oct 2026 18:00:24 +0100
+Message-ID: <20261028165952.655387529@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165947.349197979@linuxfoundation.org>
 References: <20261028165947.349197979@linuxfoundation.org>
@@ -68,64 +67,138 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Josef Bacik <josef@toxicpanda.com>
 
-commit 9695df3b1db4ac4534274d38ee16e3b9b0bf910e upstream.
+Commit 98bc044d5a5374f8d3605fe55a8e2df6d6fc3f82 upstream.
 
-The PKCS#8 parser deliberately leaves the asym_key_ids payload slot
-empty. key_or_keyring_common() unconditionally dereferences that slot
-when a PKCS#8 key is supplied to a key_or_keyring restriction. Both the
-plain and :chain forms reach this branch, allowing an unprivileged caller
-to trigger a NULL pointer dereference through KEYCTL_RESTRICT_KEYRING
-followed by add_key().
+io_prep_async_work() decides by the file of a request what kind of work
+it is for io-wq. I/O on regular files and block devices is bounded work,
+limited to min(SQ entries, 4 * CPUs) workers, for anything else that may
+block indefinitely the limit is RLIMIT_NPROC. Writes to a regular file
+are hashed by the inode, so that they are run one after the other instead
+of having a bunch of workers fight for the inode lock.
 
- Oops: general protection fault, probably for non-canonical address 0xdffffc0000000000
- KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
- RIP: 0010:key_or_keyring_common (crypto/asymmetric_keys/restrict.c:205 crypto/asymmetric_keys/restrict.c:279)
- Call Trace:
-  <TASK>
-  __key_create_or_update (security/keys/key.c:884)
-  key_create_or_update (security/keys/key.c:1021)
-  __do_sys_add_key (security/keys/keyctl.c:134)
-  do_syscall_64 (arch/x86/entry/common.c:52 arch/x86/entry/common.c:83)
-  entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:130)
-  </TASK>
- Kernel panic - not syncing: Fatal exception
+Since the file is only assigned when a request is issued, a request that
+is queued without an attempt to issue it, REQ_F_FORCE_ASYNC, doesn't have
+one at that point. io_prep_async_work() takes that for "not a regular
+file or block device":
 
-Reject an asymmetric restriction key without key IDs. A PKCS#8 private
-key cannot identify the signer of a candidate certificate and is not a
-valid trust anchor.
+- Reads and writes end up as unbound work. 32 reads with IOSQE_ASYNC from
+  a slow block device on a ring with 4 SQ entries get 32 workers, not 4.
+- Writes aren't hashed. Four buffered writes to one file get four
+  workers, three of which do nothing but wait for the lock.
 
-Fixes: 3c58b2362ba8 ("KEYS: Implement PKCS#8 RSA Private Key parser [ver #2]")
-Cc: stable@vger.kernel.org
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Link: https://lore.kernel.org/r/20260429181629.110802-2-bestswngs@gmail.com
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+The late assignment is for the benefit of links, where a request may use
+a fixed file that one of its predecessors installs. By the time a request
+gets to io_queue_iowq() these are done, it is as good as issued. Assign
+the file there.
+
+io_assign_file() moves up and is forced inline. With a third caller the
+compiler may stop inlining it, and every request that is issued would
+pay for a call.
+
+IORING_OP_SPLICE is left as it is, unbound and not hashed. The file of
+the request is where it writes to, which says nothing about how long it
+takes: a splice from an empty pipe or a socket into a regular file waits
+for its input. As bounded work, four of these on a ring with 4 SQ entries
+keep all other bounded work of the task from running, and as hashed work
+one of them blocks all writes to that file.
+
+REQ_F_FORCE_ASYNC is not only set for IOSQE_ASYNC. What changes, and
+brings back what was the case before the file assignment was deferred:
+
+- Requests with IOSQE_ASYNC or IOSQE_IO_DRAIN, and all requests that are
+  submitted while a drain is active: reads and writes on regular files
+  and block devices count against the limit for bounded workers, including
+  the one set with IORING_REGISTER_IOWQ_MAX_WORKERS, so fewer of them run
+  at the same time.
+- Of these, writes to one regular file are run one at a time, unless they
+  are O_DIRECT and the filesystem has FOP_DIO_PARALLEL_WRITE.
+- IORING_OP_FALLOCATE and IORING_OP_FTRUNCATE, which always go to io-wq,
+  are run one at a time per file, and in turn with these writes.
+- The descriptor or the fixed file slot is looked up when the request is
+  queued, not when a worker gets around to it, so closing or replacing it
+  in between no longer has an effect on the request.
+
+Fixes: 6bf9c47a3989 ("io_uring: defer file assignment")
+Assisted-by: LLM
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Link: https://patch.msgid.link/20261015-b4-io-uring-fixes-v1-43-c1556f5d7bf5@toxicpanda.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- crypto/asymmetric_keys/restrict.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ io_uring/io_uring.c |   43 +++++++++++++++++++++++++++++--------------
+ 1 file changed, 29 insertions(+), 14 deletions(-)
 
---- a/crypto/asymmetric_keys/restrict.c
-+++ b/crypto/asymmetric_keys/restrict.c
-@@ -240,10 +240,14 @@ static int key_or_keyring_common(struct
- 			if (IS_ERR(key))
- 				key = NULL;
- 		} else if (trusted->type == &key_type_asymmetric) {
-+			const struct asymmetric_key_ids *kids;
- 			const struct asymmetric_key_id **signer_ids;
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -481,17 +481,46 @@ static void io_prep_async_link(struct io
+ 	}
+ }
  
--			signer_ids = (const struct asymmetric_key_id **)
--				asymmetric_key_ids(trusted)->id;
-+			kids = asymmetric_key_ids(trusted);
-+			if (!kids)
-+				return -ENOKEY;
++/* Called for every request that is issued: keep it inline */
++static __always_inline bool io_assign_file(struct io_kiocb *req,
++					   const struct io_issue_def *def,
++					   unsigned int issue_flags)
++{
++	if (req->file || !def->needs_file)
++		return true;
 +
-+			signer_ids = (const struct asymmetric_key_id **)kids->id;
++	if (req->flags & REQ_F_FIXED_FILE)
++		req->file = io_file_get_fixed(req, req->cqe.fd, issue_flags);
++	else
++		req->file = io_file_get_normal(req, req->cqe.fd);
++
++	return !!req->file;
++}
++
+ static void io_queue_iowq(struct io_kiocb *req)
+ {
+ 	struct io_uring_task *tctx = req->task->io_uring;
  
- 			/*
- 			 * The auth_ids come from the candidate key (the
+ 	BUG_ON(!tctx);
++	lockdep_assert_held(&req->ctx->uring_lock);
+ 
+ 	if ((current->flags & PF_KTHREAD) || !tctx->io_wq) {
+ 		io_req_task_queue_fail(req, -ECANCELED);
+ 		return;
+ 	}
+ 
++	/*
++	 * The file is looked up as late as possible, as it may be the result
++	 * of an earlier request of the link. This one is up now, and what kind
++	 * of work it is depends on the file. If that fails, leave the error
++	 * handling to the worker.
++	 *
++	 * Not for a splice: whatever it writes to, it may wait for its input
++	 * for ever. It has to remain unbound work that isn't hashed.
++	 */
++	if (req->opcode != IORING_OP_SPLICE)
++		io_assign_file(req, &io_issue_defs[req->opcode], 0);
++
+ 	/* init ->work of the whole link before punting */
+ 	io_prep_async_link(req);
+ 
+@@ -1724,20 +1753,6 @@ queue:
+ 	spin_unlock(&ctx->completion_lock);
+ }
+ 
+-static bool io_assign_file(struct io_kiocb *req, const struct io_issue_def *def,
+-			   unsigned int issue_flags)
+-{
+-	if (req->file || !def->needs_file)
+-		return true;
+-
+-	if (req->flags & REQ_F_FIXED_FILE)
+-		req->file = io_file_get_fixed(req, req->cqe.fd, issue_flags);
+-	else
+-		req->file = io_file_get_normal(req, req->cqe.fd);
+-
+-	return !!req->file;
+-}
+-
+ #define REQ_ISSUE_SLOW_FLAGS	(REQ_F_CREDS | REQ_F_ARM_LTIMEOUT)
+ 
+ static int io_issue_sqe(struct io_kiocb *req, unsigned int issue_flags)
 
 
