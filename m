@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216418;
-	b=tm00SqM16aEn3mN0ZsxQuMzQL0ZcxKpgF5dNb741VSeRtqmCWCwpYiMzZNfSqrbt0o0B
-	 tFNcw5y8J/NWskE4RBNg7qDw0kf8c90ZItksF+uvnA0jDu0DkUssEUoOqa+qGsAeOWhWU
-	 Ye8P0fpPt7c6VE1tI1u0/XmG2PlLGDNUwXQuYoEeeb7yHqMI087vhA9RmGwZWDlUnaq6t
-	 6LISZod1uHI13gn0XZVT7HCxLd4muHtdqlPep5vaRRCQXpjiGgcmdv/dvlFcfSWpeCrXN
-	 qeTyooFoSGUkQhTJsQYIGe/ycWAIFCY2qKvd/fcFG8zW45AtGEMgIkgl7eoFU1M7KtA==
+	t=1793216421;
+	b=NRhUqqfaJAwLYKGgrMxW7lG6Eow4MFsrvh+fuxS2If8c0HttYrKTe8UBhymI+leJVO6B
+	 qfcOr8dBDKDmk2B2g9FQQbOy33yf/Gph2HeSgkfRJA7npRKWv/BYXs40ZgjFeLhNPdhQJ
+	 1OrchuDSrPQVVNbyHE3wnjezebz6zRhe6dRJLFTWgawXTs95+D4CmW9WcF2TEdy8+LJys
+	 qROFOJw86wZVLejxIt/8n6SlQrrL+id6B8KM1tcyHoxTBhur7bzRfsX9Nkjeaez6NDjFe
+	 R0kA61/5LJIZumHhX9IKizmogRK7nnY6su6iYRk9lEIBOiKhj25HvQ6d4CeX/QMJnNg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216418;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216421;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=v5wlOwOXwthGLZ2jPmFgnnMHWopnhCL0pnKJ1GFsv+c=;
-	b=DxrNcJ25QkZPj1KpXZjZ6tSmHw3MOr3cgSqNmoETLO9pCQx1hM0f/KSRRUYBgfNK9rNy
-	 RGg4QtfVSZhn9+L1qJ72gT+WdBi2q4ob/wXXhiFgqLtx0gZS0SGgP03ex0RycLaXppQO8
-	 gswWR1WjIzVgnNhuIP8/Y8cAjuCxadbLxm7RmT+cro+VV7Br0RsZQ+gfj+ChcpwLF+eK9
-	 VcHqqtKkYgxldyfxwFQmvUG6wMi7BzzABDpopgoY7b0xJ2r92BRZcduJLPYe1feyN0U/n
-	 xnb9wueEVmSzjqXEZOZ8552MABF/8MO32eEXbgxTzAlVNognfH0K/isVVQCx8flL1xA==
+	bh=WZipF4ssF223KqpJiCE8ivVoL1+UMRo7dji9b/viTT4=;
+	b=CglY+lYi3TRbTd0SM5W6KLj3ON/eLhI/5PrjcI1kB0NAEGRdvEbbYchzBeK0juX94fBG
+	 iuqaQr9+Dx9sFxihwmvjG26adxCZjPlsA073JXoW/9STlgkWnK3WwR3DVFMCZ/9JeDx6I
+	 GyikVxHpYaj/fS/4axIEOhkU32H/CWewWidmtPXieiE4VLq+McuMRDCGAvc7D5XwB8k+B
+	 OXkLkNtmEr0kZR8fkMOzsoVJi8lcuPS4HfqoZx51dpH5wZwBu2LbAe/qQcA6t1qtLGpJr
+	 yVzdRf6pGDQLPhaIVLq7DYIrhnIsxG4CRRhWi9fQQ49+gl28tQ+PdAl2H7lxtOd4t4Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZkHoUl73;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y1HShpEZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35AEE60A2604;
-	Wed, 28 Oct 2026 19:40:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54E27606A33F;
+	Wed, 28 Oct 2026 19:40:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZkHoUl73
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87BE21F031E0;
-	Wed, 28 Oct 2026 19:40:17 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y1HShpEZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64D781F01825;
+	Wed, 28 Oct 2026 19:40:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216418;
-	bh=v5wlOwOXwthGLZ2jPmFgnnMHWopnhCL0pnKJ1GFsv+c=;
+	s=korg; t=1793216420;
+	bh=WZipF4ssF223KqpJiCE8ivVoL1+UMRo7dji9b/viTT4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZkHoUl73WrGyB3lc4ywje639D/HEvrhsAeKttp39Y4KYHIkrwtPZIS+7Vv+VhOLQF
-	 +vxFqBfp6TNVOJJbainCKD454SZvFKbQqSj3Si1THZUpGXwADKQqp/jdFREhsHZA0V
-	 0zcwNRZvK99utzA8o53JvSByEDruzmwDnBIe2cLU=
+	b=Y1HShpEZ9Umt/GRcFPutr1GAlimGU2/zJhRtVaCxKgNDBfB1fV8c35JBTyOkmOBH2
+	 HI90dMzsRoOM3vD12zkfktIPIWSBfa0zYTJ3wHW/G7hQ8tq/tEWz8LswRpaQvdBCOr
+	 bIld5VHG+4UEW0qaoDmg+v8QcHyi/vxuFgSUnw6Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Tejun Heo <tj@kernel.org>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1547/1887] blk-iocost: clear delay state when freeing policy data
-Date: Wed, 28 Oct 2026 18:00:43 +0100
-Message-ID: <20261028170534.671291880@linuxfoundation.org>
+Subject: [PATCH 6.1 1548/1887] blk-iolatency: clear delay state when freeing policy data
+Date: Wed, 28 Oct 2026 18:00:44 +0100
+Message-ID: <20261028170534.694674494@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -71,63 +71,59 @@ Content-Transfer-Encoding: 8bit
 
 From: Usama Arif <usama.arif@linux.dev>
 
-[ Upstream commit 97cb95d2148835ae86ff916b145aef332d40439d ]
+[ Upstream commit 8935bf22c0a0db517a7f72f7097300e05dd852f5 ]
 
-iocg_kick_delay() turns sufficiently large debt into an explicit
-block-cgroup delay with blkcg_set_delay(), setting blkg->use_delay to
--1 and incrementing blkcg->congestion_count.  Clearing it again depends
-on iocg_kick_delay() running from the period timer, the waitq timer or
-the issue path.
+io.latency can throttle a group which has no latency target of its own.
+When a sibling misses its target, check_scale_change() scales down its
+peers, and a peer that reaches queue depth one gets blkcg_use_delay()
+called on it on every further scale-down, even with min_lat_nsec == 0.
 
-ioc_pd_free() removes the iocg from active_iocgs and cancels its waitq
-timer, and no further bios can arrive, so once it has run nothing is
-left which can reduce the debt and clear the delay.  The blkcg stays
-marked congested for the rest of its life.
+iolatency_pd_offline() resets the target through
+iolatency_set_min_lat_nsec(), which clears the delay only on a nonzero
+to zero transition, so it never clears such a peer.  Freeing the policy
+data then leaves blkg->use_delay set and blkcg->congestion_count
+elevated with nothing left that can drop it.
 
 blk_cgroup_congested() then returns true for every task in that cgroup
-and its descendants: page_cache_sync_ra() cuts readahead to a single
-page, page_cache_async_ra() skips it altogether, and
-__folio_throttle_swaprate() takes swap_avail_lock and schedules a
-throttle on anonymous folio allocation.
+and its descendants for as long as the cgroup lives: page_cache_sync_ra()
+cuts readahead to a single page, page_cache_async_ra() skips it
+altogether, and __folio_throttle_swaprate() takes swap_avail_lock and
+schedules a throttle on anonymous folio allocation.
 
-Clear it explicitly, after the list removal and the synchronous
-hrtimer_cancel() so that neither timer processing nor an I/O path can
-re-arm it.  The free callback can also see policy data which was never
-attached to a blkg, hence the pd->blkg check.
+Clear the delay in iolatency_pd_free().  By then bio-held blkg
+references have drained, or the queue is frozen for policy
+deactivation, so check_scale_change() cannot re-arm it.  The free
+callback can also see policy data which was never attached to a blkg,
+hence the pd->blkg check.
 
-Fixes: 7caa47151ab2 ("blkcg: implement blk-iocost")
+Fixes: d70675121546 ("block: introduce blk-iolatency io controller")
 Signed-off-by: Usama Arif <usama.arif@linux.dev>
 Acked-by: Tejun Heo <tj@kernel.org>
-Link: https://patch.msgid.link/20260814165712.510132-3-usama.arif@linux.dev
+Link: https://patch.msgid.link/20260814165712.510132-2-usama.arif@linux.dev
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-iocost.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ block/blk-iolatency.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/block/blk-iocost.c b/block/blk-iocost.c
-index eeda41267bd43..814ad657cc56e 100644
---- a/block/blk-iocost.c
-+++ b/block/blk-iocost.c
-@@ -3016,6 +3016,7 @@ static void iocg_release(struct rcu_head *rcu)
- static void ioc_pd_free(struct blkg_policy_data *pd)
+diff --git a/block/blk-iolatency.c b/block/blk-iolatency.c
+index 884be27f0dda5..10d0ffccc874d 100644
+--- a/block/blk-iolatency.c
++++ b/block/blk-iolatency.c
+@@ -1037,6 +1037,15 @@ static void iolat_release(struct rcu_head *rcu)
+ 
+ static void iolatency_pd_free(struct blkg_policy_data *pd)
  {
- 	struct ioc_gq *iocg = pd_to_iocg(pd);
 +	struct blkcg_gq *blkg = pd_to_blkg(pd);
- 	struct ioc *ioc = iocg->ioc;
- 	unsigned long flags;
- 
-@@ -3038,6 +3039,12 @@ static void ioc_pd_free(struct blkg_policy_data *pd)
- 		hrtimer_cancel(&iocg->waitq_timer);
- 	}
- 
-+	/* off ->active_iocgs and timer gone, so nothing can re-arm the delay */
-+	iocg->delay = 0;
-+	iocg->indelay_since = 0;
++
++	/*
++	 * Groups throttled as collateral have min_lat_nsec == 0, so
++	 * iolatency_pd_offline() leaves their delay set.  Drop it here, where
++	 * no in-flight bio can re-arm it via check_scale_change().
++	 */
 +	if (blkg)
 +		blkcg_clear_delay(blkg);
-+
- 	call_rcu(&pd->rcu_head, iocg_release);
+ 	call_rcu(&pd->rcu_head, iolat_release);
  }
  
 -- 
