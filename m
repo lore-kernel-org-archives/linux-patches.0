@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793208622;
-	b=wfKuoxhxymd/4D7JwNkzWz5FNx7AFH9GI5v5R5g11PTBWzVNy846678GgN3mL1qj196n
-	 lTDTRgG1guwhWh6TuL3Lzt4hbozb1TQgfo0C/ayWOlrbjm/+I6NOMOzWHzS6j9RbAtmGA
-	 8OLnyAHD2Nfyg07KbvYrSPJAN8JSOp+1T89oODZhz8oFZ3tFExjBbF1A12AWDTXppZuzh
-	 B5cL6NLJ4uloLXFpzAzwvcn6ja5NYqyQ+8oEzwiPh1JabM7yGmYrnuliuXgczJ2myOSpY
-	 Dtqc9UjnATouD1YRaDyPRfobXAHVqvI8wAlDGHEVfp7oFoykXEFRurPsrGfO0MyRQiQ==
+	t=1793208625;
+	b=Gb96N1YsHM+FyRks/PY6q9+I+WOTjBF/2LjIiWXmCp/aTllqB3KCxhJPVMvW4RT2hLFL
+	 nP4TDFNG+YND1N3D05xIwa9ukUlHe8nPRAvQ+pgTb9M+Nxo1W/Q4IAxC2J959R3ZFfpei
+	 j5AZSxrb8G574pPDoauTx9Dt+SmTDpTchrLy8hF6FASscFLsA6du3gcDHzeNxu4sqcdPS
+	 luSnVlSKcoMhvCFtkq99bjdLglkqYRtIgrd6zjSnhSWd0iqBR7ekilRHq3FAL0BG68ML2
+	 dGInxfCkm7ztU2A8taknLIDvRHfbqil7JnTj6IyFa0bA63azZETQl8PcpBkGv2VLDaA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793208622;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793208625;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=9UZWZ0h0BM203KFqzjxFkI82acLvZuX6J9fTMrugcI8=;
-	b=cHrX+DkokJ1tWv0FwhFBEwaSqViW9jsbmO8PXwB1zslR1lTpjVyfRnSa6BbEbVDg+YIt
-	 IK4FVUQbflhI7hm2aa0DikSVpTWZ/4dPwOIKWS5dk/Pyf/Z7ZP312ea+Qa/izdJ66Ubk3
-	 dzWRexWHLeJe1wnOJwa84IgzZHHHYjXhxcsSBwGWLSrbBBgfT3BYbqriSJKNrDYxdfVsl
-	 UDEuFex/fXZSrveMaxwDb4n8ymz7avToStVKZSp8fg/3FtaaKmZziAP0ARnh+Ig/3JZtg
-	 zHwKp27pTy8aC0qAZEGonD46QyUMr/t8KNUNf//0Vk/9xBy50GYCdJTv0BTUyOPQmfA==
+	bh=VGx5No6eXHVMHwXbxVlxTUR/HGHnS/eHObm1HNDKzlU=;
+	b=TNkM9jJXukSvPpoIYimkGihlvn6BfYZ+OuHjCwmx6u08YSZBBG5+PzwxAVlwu5tNfm4x
+	 dhOZPB7GKFast8vujZyqFZOIp2AOCt2z1dsuQa5lw6mNvRnfuzA7DhXrNeHvxApT8sV06
+	 buOxiklT0YLhfr+FHqYhSfy4eJWHP0fUWUWT+QiW8IdlIRjSg90im1thkppjmQnVvrJ+t
+	 4TSs8ttsurvZqzN0OhKAFQ66xVxJebveOG/nfThvzoXXpPxvIzGxE/97KhqD3WK+l4kCV
+	 fW0jEfDf6FnIUTqx38w/vkJcTX4qwqKTr0xGVkSnuLtAcOkj749WaPrWWzcdmViRz4A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Cgbn5G/I";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X6o1rDlP;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B0D3606A31A;
-	Wed, 28 Oct 2026 17:30:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0130B606A31F;
+	Wed, 28 Oct 2026 17:30:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Cgbn5G/I
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 682FF1F01825;
-	Wed, 28 Oct 2026 17:30:21 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X6o1rDlP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50A771F01825;
+	Wed, 28 Oct 2026 17:30:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793208622;
-	bh=9UZWZ0h0BM203KFqzjxFkI82acLvZuX6J9fTMrugcI8=;
+	s=korg; t=1793208624;
+	bh=VGx5No6eXHVMHwXbxVlxTUR/HGHnS/eHObm1HNDKzlU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Cgbn5G/IEwYZ9UF1YCvFukCZa3TribyjnfWM665O7HbEGGHI4yI54oE0+Alfp7yHa
-	 UlWsuAim53M8YLTyAQlWwTtWlo23ZxuB8xUAU34rDPngJisiGK2k3iNTPB65WO2o7X
-	 IeS/IUKGChuJ3kNowsnwJnNx5Yb8qTNPsuugB8Rw=
+	b=X6o1rDlP97a2PsqJnXsJkAuIZkB/CNL5l7uOZz/HMuCjAkvZbZmuDDnvs9SlSBXlk
+	 D0yZW8Hovw53mqQMViHg8p+AWJm9LNMTXbzuoGx8pHaokkuqiou7ILfpgCqlxlJGMJ
+	 2LN2s8I5rXje/V8el8tZrXC3BLG+1V3d1xVE80/Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martino Papero <martino.papero@lcb.to.it>,
-	Hans de Goede <johannes.goede@oss.qualcomm.com>,
+	Heiko Brey <cico0815@gmx.de>,
+	Lovekesh Solanki <lovekeshsolanki00@gmail.com>,
 	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 5.10 182/516] Input: atkbd - skip deactivate for Lenovo IdeaPad Slim 3 15IWC11
-Date: Wed, 28 Oct 2026 17:55:34 +0100
-Message-ID: <20261028170007.816681307@linuxfoundation.org>
+Subject: [PATCH 5.10 183/516] Input: i8042 - add nomux quirk for Fujitsu LIFEBOOK U7410
+Date: Wed, 28 Oct 2026 17:55:35 +0100
+Message-ID: <20261028170007.840608919@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -68,50 +68,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Martino Papero <martino.papero@lcb.to.it>
+From: Lovekesh Solanki <lovekeshsolanki00@gmail.com>
 
-commit 3bf8d603fd45649c106cae6290a10f20b1bbb569 upstream.
+commit 495cd7f858b45d2ffa9b685bba3a8c23c1ca4dd3 upstream.
 
-The internal keyboard on the Lenovo IdeaPad Slim 3 15IWC11 (83RR)
-does not work correctly with the default i8042 settings. Using
-i8042.nopnp=1 and i8042.dumbkbd=1 restores keyboard input, but prevents
-the Caps Lock LED from working. Using i8042.nopnp=1 alone does not fix
-the keyboard.
+On the Fujitsu LIFEBOOK U7410 the internal keyboard and touchpad die
+shortly after boot if i8042 multiplexing controller is probed and
+switched to muxed mode. These multiplexing setup commands disturb the EC
+emulated keyboard and atkbd reports "Spurious ACK" and "Unknown key
+pressed" warnings, after which both keyboard and touchpad stop
+delivering events. Both touchpad and keyboard work in BIOS and GRUB.
 
-The laptop works correctly when atkbd_deactivate_fixup is used instead.
-Add a DMI quirk for the 83RR to enable it.
+Disabling multiplexer using i8042.nomux=1 makes both devices work on
+warm/cold boot.
 
-This was tested without any i8042 command-line parameters. Keyboard
-input and the Caps Lock LED work correctly, including after suspend
-and resume and after a cold boot.
+Add a DMI quirk to force nomux mode for this model.
 
-Link: https://lore.kernel.org/all/4f43465f-98ba-4722-8e29-03df20315369@kernel.org/
-Signed-off-by: Martino Papero <martino.papero@lcb.to.it>
-Reviewed-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
-Link: https://patch.msgid.link/c0b597b8-e7ad-4fba-a2bb-5d252e3dfbd3@lcb.to.it
+Reported-by: Heiko Brey <cico0815@gmx.de>
+Link: https://lore.kernel.org/all/89f36f3f5e4c2d07b9ff72bc0b355875c336e498.camel@gmx.de/
+Signed-off-by: Lovekesh Solanki <lovekeshsolanki00@gmail.com>
+Link: https://patch.msgid.link/20260920113541.1484808-1-lovekeshsolanki00@gmail.com
 Cc: stable@vger.kernel.org
 Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/keyboard/atkbd.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/input/serio/i8042-acpipnpio.h |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/drivers/input/keyboard/atkbd.c
-+++ b/drivers/input/keyboard/atkbd.c
-@@ -1955,6 +1955,14 @@ static const struct dmi_system_id atkbd_
- 		.callback = atkbd_deactivate_fixup,
+--- a/drivers/input/serio/i8042-acpipnpio.h
++++ b/drivers/input/serio/i8042-acpipnpio.h
+@@ -661,6 +661,15 @@ static const struct dmi_system_id i8042_
+ 		.driver_data = (void *)(SERIO_QUIRK_NOAUX)
  	},
  	{
-+		/* Lenovo IdeaPad Slim 3 15IWC11 (83RR) */
++		/* Fujitsu LIFEBOOK U7410 */
++		/* Mux mode also disturbs the EC keyboard, causing spurious ACKs */
 +		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "83RR"),
++			DMI_MATCH(DMI_SYS_VENDOR, "FUJITSU CLIENT COMPUTING LIMITED"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "LIFEBOOK U7410"),
 +		},
-+		.callback = atkbd_deactivate_fixup,
++		.driver_data = (void *)(SERIO_QUIRK_NOMUX)
 +	},
 +	{
- 		/* Xiaomi Book Pro 14 (TM2424) */
+ 		/* Gigabyte M912 */
  		.matches = {
- 			DMI_MATCH(DMI_SYS_VENDOR, "XIAOMI"),
+ 			DMI_MATCH(DMI_SYS_VENDOR, "GIGABYTE"),
 
 
