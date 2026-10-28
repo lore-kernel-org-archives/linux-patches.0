@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793209304;
-	b=ej6MWL6EqEtNcybENlp2nAGiH0qEHjNdTk7n/g5XsgKRqfOqZV0bE1al3fPG4URKj2zW
-	 dhP2/p7KeuAsTAOmFB5kvtvnNdkca62Uf6l0yzxyNnP06NllG7h1xJWvRedsWAzDNEeZY
-	 FjF2nF0fw5+a96VmqGGYGiG9EUvWSiKS9rzEd7wTiACoANLo0z8YpBJ9XGVXopzfrBSXl
-	 wOMIWHAiHuOSueiphc9UMRgl+IO2Nc/dE5uCkj5LZHcLOY83TuTanIRBEwxpN53CAoCWE
-	 UxuawL5bcky+WdAMh+BU5vvw2YKwkPTCQ9/lIpi/J5GwECr+M3tgfGCyll5OzcIDFlA==
+	t=1793209307;
+	b=fnw9dC/LGyGfB8dwMWo/k81laM0HuyH2/Ch3J4HOjss1saZDLXykfSG1ZVn4CTHBkT1L
+	 beB0h+kkU3I45b/DKO0mAMf64yp030XUf3rycO1I8agnOboHYiAkFUU9eAd5UJR1C2lR/
+	 fNv7rnxR2pHOXKL8vJ+ayuytGopxoS6W1j72hVlx1qe5aKGKdE4gsapfTDuSgDY6Bei2o
+	 g6kHeI2msRvB06P3FZg8Ts9zc63MOu4t+ZBKe8q7SKjGcdKJQYm2JigE07CCuN/5bQ5du
+	 qckiYVrco+QmSY3g7opyFGvuNfuT93Hv+U2wV+3eJpcij1Gxg0T1GDB53zM2+oPBCVQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793209304;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793209307;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Mr8adRJ1G3ghWrIBZo95puWWXtMoSmhwAEqhnTWV9Gc=;
-	b=Hk8aDtekSS2GhRPEoOz9ABGorXNuDBWoDS8JSEAQ7Rq2BOOxu+6IgBvtaJXi54CAR2ng
-	 Mec0VTeS5Fp8fuR+ekGreok4RQl4BMrThWhwvzHU+v3Do0N++R6M9h5KkOx48elj87AN2
-	 lPX6V3pwgUTurP+NEckpbptPVeRN9lcI78PC7AwDNdZYsPfklxb/6ttbzs383yOTOVQnB
-	 7TzuTUDLLXnxZKTMUzwDldeci3oS4O7pvMxHzjpoF2GWAZgV4nfrutXLcFCzO36/yilbN
-	 uf6GGh0GxlEYI/e1BeRcC0vpI2HAFdNCvrhtWg/sawqgUU4Lh+faIcOrLp4Q+WLz0Fw==
+	bh=T9DUowpNYdRgAd9tcKGycFcTFZUYD0Qrl/nigXkxDQg=;
+	b=hAiEsa04qCF8FLXXqk5BJESTv03z87bET6/pyliqVHI1UOHIJyab8TYFyFT0zM0W4WJV
+	 TlDPHK5riIBOlLh3qReGPO5PGXw6mVrXugXzwwIQMVTxxYjEvO4pOXqZYGChSLdzx7Rrd
+	 GcFIzwy1c/UGePMcPB3gimTGsFFWVJQw34Kl9hfsWL4sub7onQX6F6OVu/ZCC0xjZfOjb
+	 hg8TqO9qDrdH7iABcm88w1zdGXdmZxjI/DE9DFEButskYOQgnAbUV2evUHDLRi6Zf/pUL
+	 JBgQJ5zZpoMtzDTOfgPPisNvUeHb/PnSGSG6psBJt6Gpbya7YA0nMr/qXKVNu627+NQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D1lfqJ9R;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wC0Yn4ei;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59562606A31E;
-	Wed, 28 Oct 2026 17:41:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32FC8606A31D;
+	Wed, 28 Oct 2026 17:41:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D1lfqJ9R
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A953A1F01825;
-	Wed, 28 Oct 2026 17:41:43 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wC0Yn4ei
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84FA81F01825;
+	Wed, 28 Oct 2026 17:41:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793209304;
-	bh=Mr8adRJ1G3ghWrIBZo95puWWXtMoSmhwAEqhnTWV9Gc=;
+	s=korg; t=1793209307;
+	bh=T9DUowpNYdRgAd9tcKGycFcTFZUYD0Qrl/nigXkxDQg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=D1lfqJ9R53hcjgOuICOb86zQYlL2KYf8M6KD6qoLBzv3e69Do6AAN+gCnUdlNiJdW
-	 ysZIeLVQy5Ql95/gn1yug7JzbzrhR1mjZ6L97xzkTcvqZR8Me7DLM/M34noLiXNLzO
-	 1JtqDSm2yFDikGkJErnQ/J/HI2WOyZ3C6o9+eTMc=
+	b=wC0Yn4eifEs6WHEixtSfl7FB4878BpSrkTFKRJO7BeezCUtvXOSRFblxY8MKcck9M
+	 xBmqoBNdfx7yXWRGVZtSe2soWpMYHvN2ZkbaeqV9b1CUSoiuA6lu45eCU/bV4sM0oy
+	 jx2BtkXBZZukDadLt2WZanURHdcG2k9W6uVlTtW0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Weiming Shi <bestswngs@gmail.com>,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Michele Dionisio <michele.dionisio@gmail.com>,
+	Arend van Spriel <arend.vanspriel@broadcom.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 381/516] net: team: fix NULL pointer dereference in team_xmit during mode change
-Date: Wed, 28 Oct 2026 17:58:53 +0100
-Message-ID: <20261028170012.507597577@linuxfoundation.org>
+Subject: [PATCH 5.10 372/516] wifi: brcmfmac: fix P2P device removal race in brcmf_detach()
+Date: Wed, 28 Oct 2026 17:58:44 +0100
+Message-ID: <20261028170012.298816721@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -70,146 +69,135 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Michele Dionisio <michele.dionisio@gmail.com>
 
-[ Upstream commit 25fe708bbc59289d3d1ea4b126fbc1b460a072a5 ]
+[ Upstream commit 08a3f02fea636e97a7422d1512f76dacdb5b0887 ]
 
-__team_change_mode() clears team->ops with memset() before restoring
-safe dummy handlers via team_adjust_ops(). A concurrent team_xmit()
-running under RCU on another CPU can read team->ops.transmit during
-this window and call a NULL function pointer, crashing the kernel.
+When the driver is removed while the user space process that created
+the P2P device (e.g. wpa_supplicant) is still exiting, the P2P device
+interface is removed twice and the kernel crashes.
 
-The race requires a mode change (CAP_NET_ADMIN) concurrent with
-transmit on the team device.
+The two paths are:
 
- BUG: kernel NULL pointer dereference, address: 0000000000000000
- Oops: 0010 [#1] SMP KASAN NOPTI
- RIP: 0010:0x0
- Call Trace:
-  team_xmit (drivers/net/team/team_core.c:1853)
-  dev_hard_start_xmit (net/core/dev.c:3904)
-  __dev_queue_xmit (net/core/dev.c:4871)
-  packet_sendmsg (net/packet/af_packet.c:3109)
-  __sys_sendto (net/socket.c:2265)
+ - wpa_supplicant, on exit, sends NL80211_CMD_DEL_INTERFACE for the P2P
+   device. nl80211_del_interface() holds RTNL and the wiphy mutex and
+   calls brcmf_p2p_del_vif(), which disables discovery and waits up to
+   1.5 s for BRCMF_E_IF_DEL. Then it calls brcmf_remove_interface(),
+   which unregisters the wdev and frees the vif and the ifp.
 
-The original code assumed that no ports means no traffic, so mode
-changes could freely memset()/memcpy() the ops.  AF_PACKET with
-forced carrier breaks that assumption.
+ - brcmf_detach() sets the bus down, so BRCMF_E_IF_DEL never arrives,
+   and calls brcmf_remove_interface(ifp, false) for the same ifp.
+   brcmf_p2p_ifp_removed() reads ifp->vif and then blocks on
+   rtnl_lock(). When brcmf_p2p_del_vif() releases RTNL, it calls
+   cfg80211_unregister_wdev() on the wdev that was already unregistered
+   and freed.
 
-Prevent the race instead of making it safe: replace memset()/memcpy()
-with per-field updates that never touch transmit or receive.  Those
-two handlers are managed solely by team_adjust_ops(), which already
-installs dummies when tx_en_port_count == 0 (always true during mode
-change since no ports are present).  WRITE_ONCE/READ_ONCE prevent
-store/load tearing on the handler pointers.
+The second list_del_rcu() of wdev->list faults on LIST_POISON2:
 
-synchronize_net() before exit_op() drains in-flight readers that may
-still reference old mode state from before port removal switched the
-handlers to dummies.
+  brcmfmac: brcmf_p2p_del_vif delete P2P vif
+  brcmfmac: brcmf_p2p_deinit_discovery enter
+  brcmfmac: brcmf_p2p_del_vif P2P: GO_NEG_PHASE status cleared
+  brcmfmac: brcmf_detach Enter
+  brcmfmac: brcmf_bus_change_state 1 -> 0
+  brcmfmac: brcmf_remove_interface Enter, bsscfgidx=1, ifidx=0
+  brcmfmac: brcmf_del_if Enter, bsscfgidx=1, ifidx=0
+  brcmfmac: brcmf_p2p_ifp_removed P2P: device interface removed
+  [1.5 s later, brcmf_p2p_del_vif() timed out]
+  brcmfmac: brcmf_remove_interface Enter, bsscfgidx=1, ifidx=0
+  brcmfmac: brcmf_del_if Enter, bsscfgidx=1, ifidx=0
+  brcmfmac: brcmf_p2p_ifp_removed P2P: device interface removed
+  Unable to handle kernel paging request at virtual address dead000000000122
+  Internal error: Oops: 96000044 [#1] PREEMPT_RT SMP
+  pc : _cfg80211_unregister_wdev+0x6c/0x264 [cfg80211]
+  Call trace:
+   _cfg80211_unregister_wdev+0x6c/0x264 [cfg80211]
+   cfg80211_unregister_wdev+0x10/0x1c [cfg80211]
+   brcmf_p2p_ifp_removed+0x84/0xb0 [brcmfmac]
+   brcmf_remove_interface+0x1f4/0x254 [brcmfmac]
+   brcmf_detach+0x88/0x180 [brcmfmac]
+   brcmf_sdio_remove+0x90/0x7b0 [brcmfmac]
+   brcmf_sdiod_remove+0x20/0xa0 [brcmfmac]
+   brcmf_ops_sdio_remove+0xbc/0x12c [brcmfmac]
+   sdio_bus_remove+0x38/0x144
+   device_release_driver_internal+0x1e8/0x2c0
+   device_release_driver+0x14/0x20
+   brcmf_sdio_bus_remove+0x2c/0x40 [brcmfmac]
+   brcmf_fwvid_unregister_vendor+0xd8/0x170 [brcmfmac]
+   __exit_compat+0x18/0x418 [brcmfmac_cyw]
+   __arm64_sys_delete_module+0x1ac/0x244
 
-Fixes: 3d249d4ca7d0 ("net: introduce ethernet teaming device")
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Link: https://patch.msgid.link/20260521081159.1491563-3-bestswngs@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Stable-dep-of: b7454f1940c5 ("net: team: stop reusing skb after queue override")
+The log was taken with debug=0x406 on an i.MX 8M Plus board with a
+CYW55513 (Sona IF513) on SDIO. The driver is the Ezurio backport of
+brcmfmac from v6.18.22 on a 5.4-rt kernel. The code involved is the same
+in mainline.
+
+To reproduce:
+
+  1. Start wpa_supplicant on wlan0 and let it associate. It creates the
+     P2P device (iw dev shows "type P2P-device").
+  2. Stop wpa_supplicant and remove the driver without waiting for
+     wpa_supplicant to exit:
+
+       kill $(pidof wpa_supplicant)
+       rmmod brcmfmac_cyw brcmfmac
+
+The crash is reproducible on that board.
+
+For the interface without a netdev (the P2P device), take RTNL and the
+wiphy mutex in brcmf_detach() before reading iflist, and remove it with
+locked=true. If brcmf_p2p_del_vif() runs first, brcmf_detach() finds the
+slot empty. If brcmf_detach() runs first, nl80211 does not find the wdev
+any more. The interfaces with a netdev are removed as before, because
+brcmf_del_if() takes RTNL on its own for the primary interface.
+
+Fixes: 9831bcb987df ("brcmfmac: Deleting of p2p device is leaking memory.")
+Cc: stable@vger.kernel.org
+Assisted-by: claude-opus-5-5
+Signed-off-by: Michele Dionisio <michele.dionisio@gmail.com>
+Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
+Link: https://patch.msgid.link/20260924123027.4122909-2-michele.dionisio@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+[ sashal: Removed unavailable wiphy_lock() and wiphy_unlock() calls to rely solely on RTNL locking. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/team/team.c | 45 +++++++++++++++++++++++++++++------------
- 1 file changed, 32 insertions(+), 13 deletions(-)
+ .../broadcom/brcm80211/brcmfmac/core.c        | 25 +++++++++++++++++--
+ 1 file changed, 23 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/team/team.c b/drivers/net/team/team.c
-index c91dbd5262643..0ccd2edfc9d41 100644
---- a/drivers/net/team/team.c
-+++ b/drivers/net/team/team.c
-@@ -534,21 +534,23 @@ static void team_adjust_ops(struct team *team)
- 
- 	if (!team->en_port_count || !team_is_mode_set(team) ||
- 	    !team->mode->ops->transmit)
--		team->ops.transmit = team_dummy_transmit;
-+		WRITE_ONCE(team->ops.transmit, team_dummy_transmit);
- 	else
--		team->ops.transmit = team->mode->ops->transmit;
-+		WRITE_ONCE(team->ops.transmit, team->mode->ops->transmit);
- 
- 	if (!team->en_port_count || !team_is_mode_set(team) ||
- 	    !team->mode->ops->receive)
--		team->ops.receive = team_dummy_receive;
-+		WRITE_ONCE(team->ops.receive, team_dummy_receive);
- 	else
--		team->ops.receive = team->mode->ops->receive;
-+		WRITE_ONCE(team->ops.receive, team->mode->ops->receive);
- }
- 
- /*
-- * We can benefit from the fact that it's ensured no port is present
-- * at the time of mode change. Therefore no packets are in fly so there's no
-- * need to set mode operations in any special way.
-+ * team_change_mode() ensures no ports are present during mode change,
-+ * but lockless readers can still reach team_xmit().  Avoid touching
-+ * transmit/receive -- they are already set to dummies by
-+ * team_adjust_ops() since no ports are enabled.  synchronize_net()
-+ * drains in-flight readers before destroying old mode state.
-  */
- static int __team_change_mode(struct team *team,
- 			      const struct team_mode *new_mode)
-@@ -557,9 +559,21 @@ static int __team_change_mode(struct team *team,
- 	if (team_is_mode_set(team)) {
- 		void (*exit_op)(struct team *team) = team->ops.exit;
- 
--		/* Clear ops area so no callback is called any longer */
--		memset(&team->ops, 0, sizeof(struct team_mode_ops));
--		team_adjust_ops(team);
-+		/* Clear cold-path ops used only under RTNL.  transmit and
-+		 * receive are already dummies (no ports) so leave them
-+		 * alone -- overwriting them is the source of the race.
-+		 */
-+		team->ops.init = NULL;
-+		team->ops.exit = NULL;
-+		team->ops.port_enter = NULL;
-+		team->ops.port_leave = NULL;
-+		team->ops.port_change_dev_addr = NULL;
-+		team->ops.port_tx_disabled = NULL;
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c
+index b763495317f6c..309799d9ca433 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c
+@@ -1476,8 +1476,29 @@ void brcmf_detach(struct device *dev)
+ 	brcmf_bus_change_state(bus_if, BRCMF_BUS_DOWN);
+ 	/* make sure primary interface removed last */
+ 	for (i = BRCMF_MAX_IFS - 1; i > -1; i--) {
+-		if (drvr->iflist[i])
+-			brcmf_remove_interface(drvr->iflist[i], false);
++		struct brcmf_if *ifp = drvr->iflist[i];
 +
-+		/* Wait for in-flight readers before tearing down mode
-+		 * state they may reference.
++		if (!ifp)
++			continue;
++
++		if (ifp->ndev) {
++			brcmf_remove_interface(ifp, false);
++			continue;
++		}
++
++		/* The P2P device interface has no netdev. Its removal can
++		 * race with NL80211_CMD_DEL_INTERFACE issued by a user space
++		 * process that is exiting (e.g. wpa_supplicant), which ends
++		 * in brcmf_p2p_del_vif() under RTNL. If
++		 * both paths remove the interface, the wdev is unregistered
++		 * twice and the vif is used after being freed. Take the same
++		 * lock and re-read iflist, so only one path removes it.
 +		 */
-+		synchronize_net();
- 
- 		if (exit_op)
- 			exit_op(team);
-@@ -582,7 +596,12 @@ static int __team_change_mode(struct team *team,
++		rtnl_lock();
++		ifp = drvr->iflist[i];
++		if (ifp)
++			brcmf_remove_interface(ifp, true);
++		rtnl_unlock();
  	}
- 
- 	team->mode = new_mode;
--	memcpy(&team->ops, new_mode->ops, sizeof(struct team_mode_ops));
-+	team->ops.init = new_mode->ops->init;
-+	team->ops.exit = new_mode->ops->exit;
-+	team->ops.port_enter = new_mode->ops->port_enter;
-+	team->ops.port_leave = new_mode->ops->port_leave;
-+	team->ops.port_change_dev_addr = new_mode->ops->port_change_dev_addr;
-+	team->ops.port_tx_disabled = new_mode->ops->port_tx_disabled;
- 	team_adjust_ops(team);
- 
- 	return 0;
-@@ -738,7 +757,7 @@ static rx_handler_result_t team_handle_frame(struct sk_buff **pskb)
- 		/* allow exact match delivery for disabled ports */
- 		res = RX_HANDLER_EXACT;
- 	} else {
--		res = team->ops.receive(team, port, skb);
-+		res = READ_ONCE(team->ops.receive)(team, port, skb);
- 	}
- 	if (res == RX_HANDLER_ANOTHER) {
- 		struct team_pcpu_stats *pcpu_stats;
-@@ -1736,7 +1755,7 @@ static netdev_tx_t team_xmit(struct sk_buff *skb, struct net_device *dev)
- 
- 	tx_success = team_queue_override_transmit(team, skb);
- 	if (!tx_success)
--		tx_success = team->ops.transmit(team, skb);
-+		tx_success = READ_ONCE(team->ops.transmit)(team, skb);
- 	if (tx_success) {
- 		struct team_pcpu_stats *pcpu_stats;
+ 	brcmf_bus_stop(drvr->bus_if);
  
 -- 
 2.53.0
