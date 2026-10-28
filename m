@@ -1,51 +1,60 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215587;
-	b=pUlSLCF79+MNhmFAF6O8pWBUj2hXeKZsZJMmA+ubtTm5lvyTOeYQ6GSKdGGCv4MtM4yG
-	 Rbb2jvLzgqGJKpIJy1gAo1iqaK+Zf9d+Bejaf9sRtt8r2cbfxCqPpRjlpAXNvC18cOqwj
-	 7FwpZhS2y1T3TJWl/he5bwocZVJoQuVVBHc6MB1ksMr1V4LyTryumf7nkUDE0AgTecYtH
-	 ZU0WnJixRY7PuJgCXKmDy76QIGHhmuMotDkNyObStrHJt42p3aYti36EdVH4AUzrKd0d9
-	 Sin8dZGfHx20frmZElCrjUPvc3t24p/DISGICSxiO0MIeoHr4ckDhwSKh9+nETYj6dA==
+	t=1793215589;
+	b=hgCQsA4p2GugUftx3056AjU182kGUZpP6JDHNlJJCdtoVuvzcoHtl8Vqv7gEcjyJMBHs
+	 jkPfDFaItCV3szFvTjxbksT9VkVANMiqFddl2yXPcptb08Dm9TtT6h86yL2vwa/i2BB8U
+	 F5HunPkrwE5f04sWPfozIeYQiHn/OmpIl4V2UKj+c7n6HD9lDmfpy97vfnH2gJCpp8C9b
+	 fHeV9F6gK4lSaSNiwci5Rr5BXSJ/q/0C9aFv9rBWA9nIWbYHPXVF8hzUWo0F1vpVR1kr+
+	 dJDuxt+NlkQsDgZIg0eTjZGT3GqT3uy3k2S2HaOOm/+c1A29RjFHyTfCI22dX0Uq7tQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215587;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215589;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=16OSbPrpdfOYwOqPLyxrzHS+cXB3pj0qROjGC7CZgL0=;
-	b=TMo55LhsMeO2faHl6zV3w1wg2+t5SRvnYWSynKn0ucYCuu5uV9v+KTqGW2+tYokmEUcQ
-	 jRypXRJ+H+zRgm+0GVYdYv7x9KOK6vZ5cyqZm1+lQatmb0Z2AUMXn9kBZwyTiC/rnNIQ5
-	 HrvxveSGB2L/rJKmo63q/9JO9xV/zQ1Apq40na6NTt/ryHDGXQP/Nqm938ETumwRH1wqG
-	 IcXjMJ3KuXJDX2Nkl40ys2dttTdn0r4YAnMD+D2US+kZ9xvJQmAGkvxZmbtz4mNnkwRcP
-	 /AUQZv5ALYyGVTqMj6VJl3bGUt5Uw0xR31nkl+/7yHtPH/i+ypWh4Mg9/aSEgx2+mkQ==
+	bh=P1Dv4SU6tEWgKGirixMqcCSTHyyT+U9jdXtxHdCkh48=;
+	b=JS7rCw5o43WEF/AoWAxFmo0mrECmxrlbNikNY5FKtZA0H9WJXY7U9uTCJMG5lA0dYQ8/
+	 LbaixCKplhqleJNsXxVK37BKeSjBmg72mzrjXhSGXPRciAXA7bEscXDEKXQVPZhNWDrzB
+	 im5T8NqZzfAcABRDSUcsfGpAZTIQt0lbsSUwQhPtezRqYw5B69HLQ7dYKjRp8mBTqLQuo
+	 r7Q8ptg3Z1s5NEOdTxFIoEdbeHgKoFQXdIiQs/YF0f7mLZ26pLTHditjeR6g+TvdL/I88
+	 maJaklgqDDyH4Xb3FIhx2hcruYvKtk0RfsgO9bmIk7wY371HCacAAPsSwjel9JcvnTw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LXJ5TIhq;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=w8z+77nC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCD9B606A31A;
-	Wed, 28 Oct 2026 19:26:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FFED606A31A;
+	Wed, 28 Oct 2026 19:26:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LXJ5TIhq
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 182471F01825;
-	Wed, 28 Oct 2026 19:26:25 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=w8z+77nC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCA141F01825;
+	Wed, 28 Oct 2026 19:26:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215586;
-	bh=16OSbPrpdfOYwOqPLyxrzHS+cXB3pj0qROjGC7CZgL0=;
+	s=korg; t=1793215589;
+	bh=P1Dv4SU6tEWgKGirixMqcCSTHyyT+U9jdXtxHdCkh48=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LXJ5TIhq+DfcHw9bCeB/BPVIgtKQqcZyY4osPiujRE1tpKzX8Au89nCaXm5iq6q9x
-	 p9vinULxkabWEcgD/Jvk30TXw/g/L9RIctlhOaHrGTmwvsU2VrxAPmMxg7XMYkHYGk
-	 G64YqmeVkyLmXwDdv4362k5bTfLU/ENmu7b/n0lw=
+	b=w8z+77nCkiRwah0zl2/pJvEKLaZSuZT1HA9+vGw+H7ppp/emMUp6Av3eD7lRgmX3f
+	 LVs+cuD+tWogqK7ak8WvXsEWBcEFlDNTHb1mCrD+aj5aRVQFLa9JoCz5kKiMeCoG4f
+	 QTpRpweKjH95aHCqApr/ADHWyaBlYJnhnhgJPpwY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Zhang Cen <rollkingzzc@gmail.com>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Gui-Dong Han <2045gemini@gmail.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Jun Piao <piaojun@huawei.com>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1261/1887] netfilter: cttimeout: detach dataplane timeout policy and repurpose refcount
-Date: Wed, 28 Oct 2026 17:55:57 +0100
-Message-ID: <20261028170528.122140491@linuxfoundation.org>
+Subject: [PATCH 6.1 1262/1887] ocfs2: validate fast symlink target during inode read
+Date: Wed, 28 Oct 2026 17:55:58 +0100
+Message-ID: <20261028170528.143907282@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -67,482 +76,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Zhang Cen <rollkingzzc@gmail.com>
 
-[ Upstream commit 7d6a9cdb8d3a51d9cfe546a09a518ab3d2671549 ]
+[ Upstream commit e234973f286ed2e8961a24561ec91594ec3e3ff8 ]
 
-Add a refcount for struct nf_ct_timeout which is used by ct extension to
-set the custom ct timeout policy, this tells us that the ct timeout is
-being used by a conntrack entry. When the last conntrack entry drops the
-refcount on the ct timeout, the ct timeout is released.
+ocfs2_validate_inode_block() already rejects several inconsistent
+self-contained dinodes before they are exposed to the rest of the
+filesystem.  Fast symlinks need the same treatment.
 
-Remove the refcount for control plane which controls if the ruleset
-refers to the timeout policy. After this update, it is possible to
-remove the ct timeout policy from nfnetlink_cttimeout immediately.
-This is for simplicity not to handle two refcounts on a single object.
+A zero-cluster symlink is treated as a fast symlink and later read through
+page_get_link() and ocfs2_fast_symlink_read_folio().  That path uses
+strnlen() on the inline payload and then copies len + 1 bytes into the
+folio.  If a corrupt dinode stores an i_size that does not fit the inline
+area or omits the terminating NUL at i_size, that copy reads past the end
+of the inode block buffer.
 
-Remove nf_queue_nf_hook_drop(): a packet sitting in nfqueue will just
-hold a reference to the nf_ct_timeout object until packet is reinjected,
-since this is part of the ct extension, this will be released by the
-time the conntrack is freed.
+Reject zero-cluster symlink dinodes whose i_size exceeds the inline
+fast-symlink capacity or whose inline payload is not NUL-terminated
+exactly at i_size when the inode block is validated.  This keeps malformed
+fast symlinks from reaching the read path.
 
-nf_ct_untimeout() is still called to clean up in a best effort basis:
-the ct timeout on existing entries gets removed when the ct timeout goes
-away, but as long as the iptables ruleset still refers to the ct timeout
-through a template, new conntracks may keep attaching it and extend its
-lifetime until the rule is removed.
+Validation reproduced this kernel report:
+KASAN use-after-free in ocfs2_fast_symlink_read_folio+0x12c/0x1f0
+RIP: 0033:0x7f5c6d859aa7
+Read of size 3905
+Call trace:
+  dump_stack_lvl+0x66/0xa0 (?:?)
+  print_report+0xce/0x630 (?:?)
+  ocfs2_fast_symlink_read_folio+0x12c/0x1f0 (fs/ocfs2/inode.c:?)
+  srso_alias_return_thunk+0x5/0xfbef5 (?:?)
+  __virt_addr_valid+0x19f/0x330 (?:?)
+  kasan_report+0xe0/0x110 (?:?)
+  kasan_check_range+0x105/0x1b0 (?:?)
+  __asan_memcpy+0x23/0x60 (?:?)
+  filemap_read_folio+0x27/0xe0 (?:?)
+  filemap_read_folio+0x35/0xe0 (?:?)
+  do_read_cache_folio+0x138/0x230 (?:?)
+  __page_get_link+0x26/0x110 (?:?)
+  page_get_link+0x2e/0x70 (?:?)
+  vfs_readlink+0x15e/0x250 (?:?)
+  touch_atime+0x4d/0x370 (?:?)
+  do_readlinkat+0x186/0x200 (?:?)
+  do_user_addr_fault+0x65a/0x890 (?:?)
+  __x64_sys_readlink+0x46/0x60 (?:?)
+  do_syscall_64+0x115/0x6a0 (arch/x86/entry/syscall_64.c:87)
+  entry_SYSCALL_64_after_hwframe+0x77/0x7f (?:?)
 
-nf_ct_untimeout() is not called anymore from module removal path, this
-is unlikely to find timeouts give module refcount is bumped, and the new
-refcount already tracks the ct timeout policy use so it is released when
-unused.
-
-Fixes: 50978462300f ("netfilter: add cttimeout infrastructure for fine timeout tuning")
-Fixes: 7e0b2b57f01d ("netfilter: nft_ct: add ct timeout support")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Link: https://lore.kernel.org/20260528151230.361127-1-rollkingzzc@gmail.com
+Fixes: ea022dfb3c2a ("ocfs: simplify symlink handling")
+Assisted-by: Codex:gpt-5.5
+Signed-off-by: Zhang Cen <rollkingzzc@gmail.com>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Cc: Gui-Dong Han <2045gemini@gmail.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Jun Piao <piaojun@huawei.com>
+Cc: Heming Zhao <heming.zhao@suse.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/netfilter/nf_conntrack_timeout.h |  27 ++++-
- net/netfilter/nf_conntrack_core.c            |   6 +-
- net/netfilter/nf_conntrack_timeout.c         |  27 ++++-
- net/netfilter/nfnetlink_cttimeout.c          | 112 +++++++++----------
- net/netfilter/nft_ct.c                       |   7 +-
- net/netfilter/xt_CT.c                        |   2 +-
- 6 files changed, 107 insertions(+), 74 deletions(-)
+ fs/ocfs2/inode.c | 23 +++++++++++++++++++++++
+ 1 file changed, 23 insertions(+)
 
-diff --git a/include/net/netfilter/nf_conntrack_timeout.h b/include/net/netfilter/nf_conntrack_timeout.h
-index 3a66d4abb6d68..d60aa86be0194 100644
---- a/include/net/netfilter/nf_conntrack_timeout.h
-+++ b/include/net/netfilter/nf_conntrack_timeout.h
-@@ -12,6 +12,7 @@
- #define CTNL_TIMEOUT_NAME_MAX	32
- 
- struct nf_ct_timeout {
-+	refcount_t		refcnt;
- 	__u16			l3num;
- 	const struct nf_conntrack_l4proto *l4proto;
- 	struct rcu_head		rcu;
-@@ -22,6 +23,22 @@ struct nf_conn_timeout {
- 	struct nf_ct_timeout __rcu *timeout;
- };
- 
-+static inline void nf_ct_timeout_put(const struct nf_conn *ct)
-+{
-+#ifdef CONFIG_NF_CONNTRACK_TIMEOUT
-+	struct nf_conn_timeout *timeout_ext;
-+	struct nf_ct_timeout *timeout;
-+
-+	timeout_ext = nf_ct_ext_find(ct, NF_CT_EXT_TIMEOUT);
-+	if (!timeout_ext)
-+		return;
-+
-+	timeout = rcu_dereference(timeout_ext->timeout);
-+	if (timeout && refcount_dec_and_test(&timeout->refcnt))
-+		kfree_rcu(timeout, rcu);
-+#endif
-+}
-+
- static inline unsigned int *
- nf_ct_timeout_data(const struct nf_conn_timeout *t)
- {
-@@ -56,8 +73,14 @@ struct nf_conn_timeout *nf_ct_timeout_ext_add(struct nf_conn *ct,
- #ifdef CONFIG_NF_CONNTRACK_TIMEOUT
- 	struct nf_conn_timeout *timeout_ext;
- 
-+	if (!timeout)
-+		return NULL;
-+
- 	timeout_ext = nf_ct_ext_add(ct, NF_CT_EXT_TIMEOUT, gfp);
--	if (timeout_ext == NULL)
-+	if (!timeout_ext || timeout_ext->timeout)
-+		return NULL;
-+
-+	if (!refcount_inc_not_zero(&timeout->refcnt))
- 		return NULL;
- 
- 	rcu_assign_pointer(timeout_ext->timeout, timeout);
-@@ -75,7 +98,7 @@ static inline unsigned int *nf_ct_timeout_lookup(const struct nf_conn *ct)
- 	struct nf_conn_timeout *timeout_ext;
- 
- 	timeout_ext = nf_ct_timeout_find(ct);
--	if (timeout_ext)
-+	if (timeout_ext && rcu_access_pointer(timeout_ext->timeout))
- 		timeouts = nf_ct_timeout_data(timeout_ext);
- #endif
- 	return timeouts;
-diff --git a/net/netfilter/nf_conntrack_core.c b/net/netfilter/nf_conntrack_core.c
-index 342627b0d32b5..0b5739a5c784e 100644
---- a/net/netfilter/nf_conntrack_core.c
-+++ b/net/netfilter/nf_conntrack_core.c
-@@ -1717,16 +1717,18 @@ void nf_conntrack_free(struct nf_conn *ct)
- 	 */
- 	WARN_ON(refcount_read(&ct->ct_general.use) != 0);
- 
-+	rcu_read_lock();
- 	if (ct->status & IPS_SRC_NAT_DONE) {
- 		const struct nf_nat_hook *nat_hook;
- 
--		rcu_read_lock();
- 		nat_hook = rcu_dereference(nf_nat_hook);
- 		if (nat_hook)
- 			nat_hook->remove_nat_bysrc(ct);
--		rcu_read_unlock();
+diff --git a/fs/ocfs2/inode.c b/fs/ocfs2/inode.c
+index 73b2dda9ffe7b..ed7b4be3ea7a5 100644
+--- a/fs/ocfs2/inode.c
++++ b/fs/ocfs2/inode.c
+@@ -1585,6 +1585,29 @@ int ocfs2_validate_inode_block(struct super_block *sb,
+ 		goto bail;
  	}
  
-+	nf_ct_timeout_put(ct);
-+	rcu_read_unlock();
++	if (S_ISLNK(le16_to_cpu(di->i_mode)) &&
++	    !le32_to_cpu(di->i_clusters)) {
++		int max_inline = ocfs2_fast_symlink_chars(sb);
++		u64 i_size = le64_to_cpu(di->i_size);
 +
- 	kfree(ct->ext);
- 	kmem_cache_free(nf_conntrack_cachep, ct);
- 	cnet = nf_ct_pernet(net);
-diff --git a/net/netfilter/nf_conntrack_timeout.c b/net/netfilter/nf_conntrack_timeout.c
-index 0cc584d3dbb1d..c81becde2afa9 100644
---- a/net/netfilter/nf_conntrack_timeout.c
-+++ b/net/netfilter/nf_conntrack_timeout.c
-@@ -25,17 +25,32 @@
- const struct nf_ct_timeout_hooks __rcu *nf_ct_timeout_hook __read_mostly;
- EXPORT_SYMBOL_GPL(nf_ct_timeout_hook);
- 
-+/* nf_ct_iterate_cleanup() holds the conntrack lock. */
- static int untimeout(struct nf_conn *ct, void *timeout)
- {
- 	struct nf_conn_timeout *timeout_ext = nf_ct_timeout_find(ct);
- 
- 	if (timeout_ext) {
--		const struct nf_ct_timeout *t;
-+		struct nf_ct_timeout *t;
- 
--		t = rcu_access_pointer(timeout_ext->timeout);
-+		rcu_read_lock();
-+		t = rcu_dereference(timeout_ext->timeout);
-+		if (!t) {
-+			rcu_read_unlock();
-+			return 0;
++		if (i_size >= max_inline) {
++			rc = ocfs2_error(sb,
++					 "Invalid dinode #%llu: fast symlink i_size %llu exceeds max %d\n",
++					 (unsigned long long)bh->b_blocknr,
++					 (unsigned long long)i_size,
++					 max_inline - 1);
++			goto bail;
 +		}
- 
--		if (!timeout || t == timeout)
-+		if (!timeout || t == timeout) {
- 			RCU_INIT_POINTER(timeout_ext->timeout, NULL);
 +
-+			/* No race with nf_conntrack_free() which is called
-+			 * only after the conntrack has been removed from
-+			 * the hashes.
-+			 */
-+			if (refcount_dec_and_test(&t->refcnt))
-+				kfree_rcu(t, rcu);
++		if (strnlen((char *)di->id2.i_symlink, i_size + 1) != i_size) {
++			rc = ocfs2_error(sb,
++					 "Invalid dinode #%llu: fast symlink is not NUL-terminated at i_size %llu\n",
++					 (unsigned long long)bh->b_blocknr,
++					 (unsigned long long)i_size);
++			goto bail;
 +		}
-+		rcu_read_unlock();
- 	}
- 
- 	/* We are not intended to delete this conntrack. */
-@@ -70,6 +85,8 @@ int nf_ct_set_timeout(struct net *net, struct nf_conn *ct,
- 	const char *errmsg = NULL;
- 	int ret = 0;
- 
-+	WARN_ON_ONCE(!nf_ct_is_template(ct));
-+
- 	rcu_read_lock();
- 	h = rcu_dereference(nf_ct_timeout_hook);
- 	if (!h) {
-@@ -127,6 +144,8 @@ void nf_ct_destroy_timeout(struct nf_conn *ct)
- 	struct nf_conn_timeout *timeout_ext;
- 	const struct nf_ct_timeout_hooks *h;
- 
-+	WARN_ON_ONCE(!nf_ct_is_template(ct));
-+
- 	rcu_read_lock();
- 	h = rcu_dereference(nf_ct_timeout_hook);
- 
-@@ -139,6 +158,8 @@ void nf_ct_destroy_timeout(struct nf_conn *ct)
- 			if (t)
- 				h->timeout_put(t);
- 			RCU_INIT_POINTER(timeout_ext->timeout, NULL);
-+			if (t && refcount_dec_and_test(&t->refcnt))
-+				kfree_rcu(t, rcu);
- 		}
- 	}
- 	rcu_read_unlock();
-diff --git a/net/netfilter/nfnetlink_cttimeout.c b/net/netfilter/nfnetlink_cttimeout.c
-index f466af4f85317..eb4d4a3be922f 100644
---- a/net/netfilter/nfnetlink_cttimeout.c
-+++ b/net/netfilter/nfnetlink_cttimeout.c
-@@ -37,11 +37,8 @@ struct ctnl_timeout {
- 	struct list_head	head;
- 	struct list_head	free_head;
- 	struct rcu_head		rcu_head;
--	refcount_t		refcnt;
- 	char			name[CTNL_TIMEOUT_NAME_MAX];
--
--	/* must be at the end */
--	struct nf_ct_timeout	timeout;
-+	struct nf_ct_timeout	*timeout;
- };
- 
- struct nfct_timeout_pernet {
-@@ -133,12 +130,12 @@ static int cttimeout_new_timeout(struct sk_buff *skb,
- 			/* You cannot replace one timeout policy by another of
- 			 * different kind, sorry.
- 			 */
--			if (matching->timeout.l3num != l3num ||
--			    matching->timeout.l4proto->l4proto != l4num)
-+			if (matching->timeout->l3num != l3num ||
-+			    matching->timeout->l4proto->l4proto != l4num)
- 				return -EINVAL;
- 
--			return ctnl_timeout_parse_policy(&matching->timeout.data,
--							 matching->timeout.l4proto,
-+			return ctnl_timeout_parse_policy(&matching->timeout->data,
-+							 matching->timeout->l4proto,
- 							 info->net,
- 							 cda[CTA_TIMEOUT_DATA]);
- 		}
-@@ -154,26 +151,35 @@ static int cttimeout_new_timeout(struct sk_buff *skb,
- 		goto err_proto_put;
- 	}
- 
--	timeout = kzalloc(sizeof(struct ctnl_timeout) +
--			  l4proto->ctnl_timeout.obj_size, GFP_KERNEL);
-+	timeout = kzalloc(sizeof(*timeout), GFP_KERNEL);
- 	if (timeout == NULL) {
- 		ret = -ENOMEM;
- 		goto err_proto_put;
- 	}
- 
--	ret = ctnl_timeout_parse_policy(&timeout->timeout.data, l4proto,
-+	timeout->timeout = kzalloc(sizeof(*timeout->timeout) +
-+				   l4proto->ctnl_timeout.obj_size, GFP_KERNEL);
-+	if (!timeout->timeout) {
-+		ret = -ENOMEM;
-+		goto err;
 +	}
 +
-+	ret = ctnl_timeout_parse_policy(&timeout->timeout->data, l4proto,
- 					info->net, cda[CTA_TIMEOUT_DATA]);
- 	if (ret < 0)
--		goto err;
-+		goto err_free_timeout_policy;
+ 	if (le32_to_cpu(di->i_flags) & OCFS2_CHAIN_FL) {
+ 		struct ocfs2_chain_list *cl = &di->id2.i_chain;
  
- 	strcpy(timeout->name, nla_data(cda[CTA_TIMEOUT_NAME]));
--	timeout->timeout.l3num = l3num;
--	timeout->timeout.l4proto = l4proto;
--	refcount_set(&timeout->refcnt, 1);
-+	timeout->timeout->l3num = l3num;
-+	timeout->timeout->l4proto = l4proto;
-+	refcount_set(&timeout->timeout->refcnt, 1);
- 	__module_get(THIS_MODULE);
- 	list_add_tail_rcu(&timeout->head, &pernet->nfct_timeout_list);
- 
- 	return 0;
-+
-+err_free_timeout_policy:
-+	kfree(timeout->timeout);
- err:
- 	kfree(timeout);
- err_proto_put:
-@@ -186,7 +192,7 @@ ctnl_timeout_fill_info(struct sk_buff *skb, u32 portid, u32 seq, u32 type,
- {
- 	struct nlmsghdr *nlh;
- 	unsigned int flags = portid ? NLM_F_MULTI : 0;
--	const struct nf_conntrack_l4proto *l4proto = timeout->timeout.l4proto;
-+	const struct nf_conntrack_l4proto *l4proto = timeout->timeout->l4proto;
- 	struct nlattr *nest_parms;
- 	int ret;
- 
-@@ -198,17 +204,17 @@ ctnl_timeout_fill_info(struct sk_buff *skb, u32 portid, u32 seq, u32 type,
- 
- 	if (nla_put_string(skb, CTA_TIMEOUT_NAME, timeout->name) ||
- 	    nla_put_be16(skb, CTA_TIMEOUT_L3PROTO,
--			 htons(timeout->timeout.l3num)) ||
-+			 htons(timeout->timeout->l3num)) ||
- 	    nla_put_u8(skb, CTA_TIMEOUT_L4PROTO, l4proto->l4proto) ||
- 	    nla_put_be32(skb, CTA_TIMEOUT_USE,
--			 htonl(refcount_read(&timeout->refcnt))))
-+			 htonl(refcount_read(&timeout->timeout->refcnt))))
- 		goto nla_put_failure;
- 
- 	nest_parms = nla_nest_start(skb, CTA_TIMEOUT_DATA);
- 	if (!nest_parms)
- 		goto nla_put_failure;
- 
--	ret = l4proto->ctnl_timeout.obj_to_nlattr(skb, &timeout->timeout.data);
-+	ret = l4proto->ctnl_timeout.obj_to_nlattr(skb, &timeout->timeout->data);
- 	if (ret < 0)
- 		goto nla_put_failure;
- 
-@@ -308,23 +314,17 @@ static int cttimeout_get_timeout(struct sk_buff *skb,
- 	return ret;
- }
- 
--/* try to delete object, fail if it is still in use. */
--static int ctnl_timeout_try_del(struct net *net, struct ctnl_timeout *timeout)
-+static void ctnl_timeout_del(struct net *net, struct ctnl_timeout *timeout)
- {
--	int ret = 0;
-+	/* We are protected by nfnl mutex. */
-+	list_del_rcu(&timeout->head);
-+	nf_ct_untimeout(net, timeout->timeout);
- 
--	/* We want to avoid races with ctnl_timeout_put. So only when the
--	 * current refcnt is 1, we decrease it to 0.
--	 */
--	if (refcount_dec_if_one(&timeout->refcnt)) {
--		/* We are protected by nfnl mutex. */
--		list_del_rcu(&timeout->head);
--		nf_ct_untimeout(net, &timeout->timeout);
--		kfree_rcu(timeout, rcu_head);
--	} else {
--		ret = -EBUSY;
--	}
--	return ret;
-+	if (refcount_dec_and_test(&timeout->timeout->refcnt))
-+		kfree_rcu(timeout->timeout, rcu);
-+
-+	kfree_rcu(timeout, rcu_head);
-+	module_put(THIS_MODULE);
- }
- 
- static int cttimeout_del_timeout(struct sk_buff *skb,
-@@ -339,7 +339,7 @@ static int cttimeout_del_timeout(struct sk_buff *skb,
- 	if (!cda[CTA_TIMEOUT_NAME]) {
- 		list_for_each_entry_safe(cur, tmp, &pernet->nfct_timeout_list,
- 					 head)
--			ctnl_timeout_try_del(info->net, cur);
-+			ctnl_timeout_del(info->net, cur);
- 
- 		return 0;
- 	}
-@@ -349,10 +349,8 @@ static int cttimeout_del_timeout(struct sk_buff *skb,
- 		if (strncmp(cur->name, name, CTNL_TIMEOUT_NAME_MAX) != 0)
- 			continue;
- 
--		ret = ctnl_timeout_try_del(info->net, cur);
--		if (ret < 0)
--			return ret;
--
-+		ctnl_timeout_del(info->net, cur);
-+		ret = 0;
- 		break;
- 	}
- 	return ret;
-@@ -519,24 +517,22 @@ static struct nf_ct_timeout *ctnl_timeout_find_get(struct net *net,
- 		if (strncmp(timeout->name, name, CTNL_TIMEOUT_NAME_MAX) != 0)
- 			continue;
- 
--		if (!refcount_inc_not_zero(&timeout->refcnt))
-+		if (!refcount_inc_not_zero(&timeout->timeout->refcnt))
- 			goto err;
- 		matching = timeout;
-+		__module_get(THIS_MODULE);
- 		break;
- 	}
- err:
--	return matching ? &matching->timeout : NULL;
-+	return matching ? matching->timeout : NULL;
- }
- 
--static void ctnl_timeout_put(struct nf_ct_timeout *t)
-+static void ctnl_timeout_put(struct nf_ct_timeout *timeout)
- {
--	struct ctnl_timeout *timeout =
--		container_of(t, struct ctnl_timeout, timeout);
-+	if (refcount_dec_and_test(&timeout->refcnt))
-+		kfree_rcu(timeout, rcu);
- 
--	if (refcount_dec_and_test(&timeout->refcnt)) {
--		kfree_rcu(timeout, rcu_head);
--		module_put(THIS_MODULE);
--	}
-+	module_put(THIS_MODULE);
- }
- 
- static const struct nfnl_callback cttimeout_cb[IPCTNL_MSG_TIMEOUT_MAX] = {
-@@ -617,8 +613,11 @@ static void __net_exit cttimeout_net_exit(struct net *net)
- 	list_for_each_entry_safe(cur, tmp, &pernet->nfct_timeout_freelist, free_head) {
- 		list_del(&cur->free_head);
- 
--		if (refcount_dec_and_test(&cur->refcnt))
--			kfree_rcu(cur, rcu_head);
-+		if (refcount_dec_and_test(&cur->timeout->refcnt))
-+			kfree_rcu(cur->timeout, rcu);
-+
-+		kfree_rcu(cur, rcu_head);
-+		module_put(THIS_MODULE);
- 	}
- }
- 
-@@ -657,24 +656,13 @@ static int __init cttimeout_init(void)
- 	return ret;
- }
- 
--static int untimeout(struct nf_conn *ct, void *timeout)
--{
--	struct nf_conn_timeout *timeout_ext = nf_ct_timeout_find(ct);
--
--	if (timeout_ext)
--		RCU_INIT_POINTER(timeout_ext->timeout, NULL);
--
--	return 0;
--}
--
- static void __exit cttimeout_exit(void)
- {
- 	nfnetlink_subsys_unregister(&cttimeout_subsys);
- 
- 	unregister_pernet_subsys(&cttimeout_ops);
- 	RCU_INIT_POINTER(nf_ct_timeout_hook, NULL);
--
--	nf_ct_iterate_destroy(untimeout, NULL);
-+	synchronize_net();
- }
- 
- module_init(cttimeout_init);
-diff --git a/net/netfilter/nft_ct.c b/net/netfilter/nft_ct.c
-index 7f3d54a44be4c..ce147b96ef557 100644
---- a/net/netfilter/nft_ct.c
-+++ b/net/netfilter/nft_ct.c
-@@ -910,8 +910,6 @@ static void nft_ct_timeout_obj_eval(struct nft_object *obj,
- 		}
- 	}
- 
--	rcu_assign_pointer(timeout->timeout, priv->timeout);
--
- 	/* adjust the timeout as per 'new' state. ct is unconfirmed,
- 	 * so the current timestamp must not be added.
- 	 */
-@@ -962,6 +960,7 @@ static int nft_ct_timeout_obj_init(const struct nft_ctx *ctx,
- 
- 	timeout->l3num = l3num;
- 	timeout->l4proto = l4proto;
-+	refcount_set(&timeout->refcnt, 1);
- 
- 	ret = nf_ct_netns_get(ctx->net, ctx->family);
- 	if (ret < 0)
-@@ -982,10 +981,10 @@ static void nft_ct_timeout_obj_destroy(const struct nft_ctx *ctx,
- 	struct nft_ct_timeout_obj *priv = nft_obj_data(obj);
- 	struct nf_ct_timeout *timeout = priv->timeout;
- 
--	nf_queue_nf_hook_drop(ctx->net);
- 	nf_ct_untimeout(ctx->net, timeout);
- 	nf_ct_netns_put(ctx->net, ctx->family);
--	kfree_rcu(priv->timeout, rcu);
-+	if (refcount_dec_and_test(&timeout->refcnt))
-+		kfree_rcu(priv->timeout, rcu);
- }
- 
- static int nft_ct_timeout_obj_dump(struct sk_buff *skb,
-diff --git a/net/netfilter/xt_CT.c b/net/netfilter/xt_CT.c
-index 498f5871c84a0..90a295cf5ec6b 100644
---- a/net/netfilter/xt_CT.c
-+++ b/net/netfilter/xt_CT.c
-@@ -284,7 +284,7 @@ static void xt_ct_tg_destroy(const struct xt_tgdtor_param *par,
- 	struct nf_conn_help *help;
- 
- 	if (ct) {
--		if (info->helper[0] || info->timeout[0])
-+		if (info->helper[0])
- 			nf_queue_nf_hook_drop(par->net);
- 
- 		help = nfct_help(ct);
 -- 
 2.53.0
 
