@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213682;
-	b=jZVT6TeQADTaPsB1zZ+yJOJ5ZfCTZjrmTFueIkwlV/ZQsjSCnYn9dStB0ZuG8ePfbEfz
-	 4OMFh9V0U5oRnCjgzSBGpGLZxAMseIg6j9i03NK0bd1flweXuKzLefVz+5iDnMLdFDuHI
-	 YznXFYVV3XoUjKGXiawQ0yRbWDFl1UFmgapUUos1Hhg2n1sYWurJuIenV943qgFREzFE+
-	 ShVSDiRihlr4Oz4GtqKyVdnO/7OcjDQmxJD7cAw/Ie6V2sCduIaICk5vcsU28cDNCNsr8
-	 e2ib+jP3uxCHiUsRot1vqnzAjPR9aSvSsGHzO3IVKOkrATI+HUb+QMoBoWewF/6L4Vg==
+	t=1793213685;
+	b=kZ+xC2GGPgAmAQdlQwNY0iRR9XNkSiTUlHdrlLP/pYiswmJBvYcg/QS2b80iSlil5YOT
+	 tW7vBxGfHFXhtYpGYFmMSuvYbVjSITzRMBEexQuYEMzfEkiJ/1Ls5xqfHY+/LVNAnhmh/
+	 sS4g2KwTaRNPm13FghRPLozlgCv2WY1kBowdTtsHN3qIG1nwgzzhWs53l49zABHHhF2Zt
+	 0qP5ih8sNEBWL/Twi5JvhY+c5W3xIVNyuoeWU8HnPoS3Ae6cB7bkl21Cc+i8VSKs7eaDJ
+	 iyTPP5ultrOn7L34TsG8OaIGc4vvHkLbvq9X9rN4xo1Pg4V/FQXy8edIYwMj6fhTCZg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213682;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213685;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=GbEbjAGGGEjiVrMnv0hlen8NRbh1LOL/JoWYr6ehEWo=;
-	b=IMCJwUQduNWisoEwDgSQ3l/M9B6/PLkvAD5JOArrXRrDy7X15tjgCzv49AiD5cjde45J
-	 hb5US51FO2uzrQNkg+CHkSk2JVW3Uv9OypIXPow55iz0kFBzIGycXWrXxiLBkGE6hxsDo
-	 49JKh2E6Rn8qC3XKq75RXYkqWqMf/glKI/ubo7/Yz645jnqLzRAaOkEpWFRlVb7A171Cv
-	 639To04JO9+rsaRfjnL5u+z7zbFXUYQDTaynm0BqAJ2PMP3QLd578XmkXguTmmZQk8NB7
-	 zNHb96jrxK9OhdEqjvbRxVDHrI7BcrA5d39CZxemBOVqVahZOmuJfwddmhx+KGJtKzw==
+	bh=iHRyYCnmSUk/e8U2d7J2zlTq52//2t9mlgb0q+bvd4o=;
+	b=aKfe9uwqOehDL4xt9Onph8EBeT+Sb4C2JJBDO0Jo759hsz0rKsUfTLSJFvNlVU7bwthb
+	 0TR7MJgnzJ9Vu2X8Ffd8pGILpEpA/fh3EXw05gVI+rX1tYupp6JdFbZbW06VFh8NxmsN7
+	 XtV1EST0VnpqvKUbNdeKyo+Pw/lWGInagkULS1swQ9Eh64YVtkMeQ+FR3jBfLI4qcp+EO
+	 zrMkMs9XhWa+noA1iOBsidefNareMji3wYW72gDDcD//GaHldIY1uwb865H4/DMT/bAzx
+	 gXdF9yofg2xcqR8fa0IJCjrP4FpFb/Wmk44UgbdfNYwZykS/Gngrjz6IeRo3O/63Tww==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CSeFs2pu;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NjcAVkMf;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CF3A606A33B;
-	Wed, 28 Oct 2026 18:54:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 675AE606A33D;
+	Wed, 28 Oct 2026 18:54:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CSeFs2pu
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EC851F031E1;
-	Wed, 28 Oct 2026 18:54:41 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NjcAVkMf
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 770621F01825;
+	Wed, 28 Oct 2026 18:54:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213682;
-	bh=GbEbjAGGGEjiVrMnv0hlen8NRbh1LOL/JoWYr6ehEWo=;
+	s=korg; t=1793213685;
+	bh=iHRyYCnmSUk/e8U2d7J2zlTq52//2t9mlgb0q+bvd4o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CSeFs2pu7oUS+gMm/CIGvrRgDQ/p/GmpepUoXS7ehfaxDtdMj4zx1BSvl6cHS2RnS
-	 78uHxhBYOtPvNH4Em5ZeByeYFO99M5wCHmvo90itWTsCLPXCpOB3skFWMwYblN3NQu
-	 423TOORAxXwHJe4Ril7xbMIK/E49QEfxOTIH42NQ=
+	b=NjcAVkMfLm0zTeaM2lDu42q736gkZzZIg3QzW4KJXqTvwhX0/oKAncnKNUxCrAvYl
+	 LdovfqFyaUl5aZKNwc3jLHu37RR4Wva197tvhcGrU5/vDVi7V2R7bAqQmeUYGjZNQZ
+	 33nHTHZt+1Rb73j5eQd6vQ/JxSLhAj9/osjQERmM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Anup Patel <anup@brainfault.org>,
+	Andrew Jones <ajones@ventanamicro.com>,
+	Atish Patra <atishp@rivosinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0593/1887] Bluetooth: hci_core: Fix possible buffer overflow
-Date: Wed, 28 Oct 2026 17:44:49 +0100
-Message-ID: <20261028170512.914123598@linuxfoundation.org>
+Subject: [PATCH 6.1 0594/1887] perf: RISC-V: Define helper functions expose hpm counter width and count
+Date: Wed, 28 Oct 2026 17:44:50 +0100
+Message-ID: <20261028170512.935769327@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -67,34 +69,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Atish Patra <atishp@rivosinc.com>
 
-[ Upstream commit 81137162bfaa7278785b24c1fd2e9e74f082e8e4 ]
+[ Upstream commit 585e351ff359c032ea7ab48d999b252ba09f8051 ]
 
-struct hci_dev_info has a fixed size name[8] field so in the event that
-hdev->name is bigger than that strcpy would attempt to write past its
-size, so this fixes this problem by switching to use strscpy.
+KVM module needs to know how many hardware counters and the counter
+width that the platform supports. Otherwise, it will not be able to show
+optimal value of virtual counters to the guest. The virtual hardware
+counters also need to have the same width as the logical hardware
+counters for simplicity. However, there shouldn't be mapping between
+virtual hardware counters and logical hardware counters. As we don't
+support hetergeneous harts or counters with different width as of now,
+the implementation relies on the counter width of the first available
+programmable counter.
 
-Fixes: dcda165706b9 ("Bluetooth: hci_core: Fix build warnings")
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Reviewed-by: Anup Patel <anup@brainfault.org>
+Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
+Signed-off-by: Atish Patra <atishp@rivosinc.com>
+Signed-off-by: Anup Patel <anup@brainfault.org>
+Stable-dep-of: 34b567868777 ("perf: RISCV: Fix panic on pmu overflow handler")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/perf/riscv_pmu_sbi.c   | 37 ++++++++++++++++++++++++++++++++--
+ include/linux/perf/riscv_pmu.h |  3 +++
+ 2 files changed, 38 insertions(+), 2 deletions(-)
 
-diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
-index f79c84a9e0c05..20bf36e88bea3 100644
---- a/net/bluetooth/hci_core.c
-+++ b/net/bluetooth/hci_core.c
-@@ -877,7 +877,7 @@ int hci_get_dev_info(void __user *arg)
- 	else
- 		flags = hdev->flags;
+diff --git a/drivers/perf/riscv_pmu_sbi.c b/drivers/perf/riscv_pmu_sbi.c
+index 5aab43a3ffb92..622fe7c982509 100644
+--- a/drivers/perf/riscv_pmu_sbi.c
++++ b/drivers/perf/riscv_pmu_sbi.c
+@@ -43,12 +43,15 @@ static const struct attribute_group *riscv_pmu_attr_groups[] = {
+ };
  
--	strcpy(di.name, hdev->name);
-+	strscpy(di.name, hdev->name, sizeof(di.name));
- 	di.bdaddr   = hdev->bdaddr;
- 	di.type     = (hdev->bus & 0x0f);
- 	di.flags    = flags;
+ /*
+- * RISC-V doesn't have hetergenous harts yet. This need to be part of
++ * RISC-V doesn't have heterogeneous harts yet. This need to be part of
+  * per_cpu in case of harts with different pmu counters
+  */
+ static union sbi_pmu_ctr_info *pmu_ctr_list;
+ static unsigned int riscv_pmu_irq;
+ 
++/* Cache the available counters in a bitmask */
++static unsigned long cmask;
++
+ struct sbi_pmu_event_data {
+ 	union {
+ 		union {
+@@ -264,6 +267,37 @@ static bool pmu_sbi_ctr_is_fw(int cidx)
+ 	return (info->type == SBI_PMU_CTR_TYPE_FW) ? true : false;
+ }
+ 
++/*
++ * Returns the counter width of a programmable counter and number of hardware
++ * counters. As we don't support heterogeneous CPUs yet, it is okay to just
++ * return the counter width of the first programmable counter.
++ */
++int riscv_pmu_get_hpm_info(u32 *hw_ctr_width, u32 *num_hw_ctr)
++{
++	int i;
++	union sbi_pmu_ctr_info *info;
++	u32 hpm_width = 0, hpm_count = 0;
++
++	if (!cmask)
++		return -EINVAL;
++
++	for_each_set_bit(i, &cmask, RISCV_MAX_COUNTERS) {
++		info = &pmu_ctr_list[i];
++		if (!info)
++			continue;
++		if (!hpm_width && info->csr != CSR_CYCLE && info->csr != CSR_INSTRET)
++			hpm_width = info->width;
++		if (info->type == SBI_PMU_CTR_TYPE_HW)
++			hpm_count++;
++	}
++
++	*hw_ctr_width = hpm_width;
++	*num_hw_ctr = hpm_count;
++
++	return 0;
++}
++EXPORT_SYMBOL_GPL(riscv_pmu_get_hpm_info);
++
+ static int pmu_sbi_ctr_get_idx(struct perf_event *event)
+ {
+ 	struct hw_perf_event *hwc = &event->hw;
+@@ -798,7 +832,6 @@ static void riscv_pmu_destroy(struct riscv_pmu *pmu)
+ static int pmu_sbi_device_probe(struct platform_device *pdev)
+ {
+ 	struct riscv_pmu *pmu = NULL;
+-	unsigned long cmask = 0;
+ 	int ret = -ENODEV;
+ 	int num_counters;
+ 
+diff --git a/include/linux/perf/riscv_pmu.h b/include/linux/perf/riscv_pmu.h
+index e17e86ad6f3a2..a1c3f77714810 100644
+--- a/include/linux/perf/riscv_pmu.h
++++ b/include/linux/perf/riscv_pmu.h
+@@ -73,6 +73,9 @@ void riscv_pmu_legacy_skip_init(void);
+ static inline void riscv_pmu_legacy_skip_init(void) {};
+ #endif
+ struct riscv_pmu *riscv_pmu_alloc(void);
++#ifdef CONFIG_RISCV_PMU_SBI
++int riscv_pmu_get_hpm_info(u32 *hw_ctr_width, u32 *num_hw_ctr);
++#endif
+ 
+ #endif /* CONFIG_RISCV_PMU */
+ 
 -- 
 2.53.0
 
