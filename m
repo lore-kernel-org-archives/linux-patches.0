@@ -1,59 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215511;
-	b=imG9g5fH/RrYYNzPnvx7m9XPR7dmMFWU7yVU53nHGVoynuQ4BGfKLYHaDw4OJO3DDSp7
-	 p/qnR9fRpY4GQRK7S02ZBmELKCDHOR6wp5mKq6ui645qrciN3f03l7eijjvyj11i5iH5S
-	 +b9RWvPtGTk/+wbr/2d1n9wZIsR5J8+pJ2nCDkK70NlgG5s53fyDlE0qCEjiCWFYa3YAk
-	 cWFZ1XM6Jb6zpcedUwEiIWxxKP62VH/duqdeTWMH3Nk4ULsxDOJE3KzryTMyyvQwa1kws
-	 +mtOZDCqm0WjjIVhqz4wY66Mp6d8PfpWHjX5DWWA7VZoBiBs1a1mzhTyxCVChbRPzXw==
+	t=1793215514;
+	b=4No2AQD0pnkJhGH/WbXnma6lm3tess+FUDxC8gEPjAOhwCZ06+e9X/TXoGGVzs4eb1O/
+	 B+Fe8inbRygOULPh7f5orQbaSIP2Nn3ALtD5R4Z/jECgKKnxk85/UISwSxmNT9iQhelRn
+	 fFACCV+thWvDHPyGKTh95b+26hq4dQ5XDWOri/a385igq/K0bd226ypPeD3mNGQpD/YXE
+	 3nwiUrmxe7i7XGr3HYuofaJgGgPsk0C0cCt7gjsqNWsI9IrX9UNKdO2tGsb8IWkGPuSy8
+	 ztFVzFdlsulcOKGZJUYJIRJH/hHUkjNaoW51P8zi8LErQxRAxY6lQLx7pz1U67B/euw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215511;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215514;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/KmowxCtAgMgmsmBvRChH5gIM8PcrzLnPt5++EQ5R5E=;
-	b=Th26vjK2P2PhtrpXdsA5TGTdhFmtB3Q1MjPyWDEFn3rIJabfls4g4po0oXTcTwiSHeHW
-	 vLT4qR6Pb+rzlBc0ZmzjAEfkm+tArCPLxI5MPiEBCs0kcove+Kt+IvKnHk4bntVtDjA4+
-	 Hj8FOLmitSF/IQYK9a6+fDk+ynOZwT6svQRgAt4vX4LFrEaUDhglkD6AwLGcgjV6/MihI
-	 Rv58dJJ7PTWLx6C4b4tJMWchKnmb1/O2UwBF3mUSElE4CEkM7A9aRa/T/h2ZwyMXh0y2Z
-	 lCNRFucKqn4zSJAgVb+bFM7nucE+E640F2wjkzqoRpefIy7SKNdvzNv6R9WLexEGECQ==
+	bh=EjqSHG2sbw8604nssVDDJQroCJw5T9NJIuLNBOSNJXc=;
+	b=I30BxTNduECp7leLXmwtivLDJuVVye2m+1t54Cy0o0YQhPZOhDCF3zxyRLvhKYx0TW+X
+	 kU/AMXJ1NFpEVJHikiYH57xqh8lkqBQTYKlzVZAakQ2jB50v0Y9wboYpx4fn1Xm5fww4p
+	 0kLjgEMo3wJC5G4vOczRQIkzTYcNP5HpCMk5z6Wl98d5+gAE719zZIXr/j/D05xB7BeqR
+	 dzGjoBNgrUUVkxyS0yj0MVicT/wPPMI8I1Y03ZqIsJMB+auGk77f3pTyffvZa+qFablz9
+	 7dGTlegTO7HWt+26dOJWhzbgQZ3xfYWBGDn66Hc+eaS5Gai0B5Mfpl3CqTSR+YYPBqA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=j0rmFtOy;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=V3Wx9KtQ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 831E0606A31D;
-	Wed, 28 Oct 2026 19:25:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65CDE606A322;
+	Wed, 28 Oct 2026 19:25:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=j0rmFtOy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D82161F01825;
-	Wed, 28 Oct 2026 19:25:10 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=V3Wx9KtQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4D1D1F01825;
+	Wed, 28 Oct 2026 19:25:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215511;
-	bh=/KmowxCtAgMgmsmBvRChH5gIM8PcrzLnPt5++EQ5R5E=;
+	s=korg; t=1793215514;
+	bh=EjqSHG2sbw8604nssVDDJQroCJw5T9NJIuLNBOSNJXc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=j0rmFtOyQh3f6eNlbosvEnD3iaxYRwp54Pzwwk53TnJHn0lRZdM31ihmrRP+sUmrS
-	 4zV5Q3LE8eIAgJ9wUj1sdpZe0SvMqGndFNLR3b0PwNThVhuZXzp8J8/SsBnXUi+8To
-	 wS+hbZ6y9isDEDnU+cBgV+SVQT0gLciU58DgdbcQ=
+	b=V3Wx9KtQ1n3ytJJiUTQgnpyGZTxe8Dw//45sjm5sKId9JtdUjLBK8YQCbxLJcMsU8
+	 VMEe64KLiiiv9uwEmp2rUD1gWSr7MSLb8QSMu7Ldo/Eb7Y32/MxP4Y0Vyd1x5mv7y1
+	 xY1jNpMBbZ1E5nf+rYjKlVma1wQ5QTymYXy8Av10=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	Wyatt Feng <bronzed_45_vested@icloud.com>,
-	Yuan Tan <yuantan098@gmail.com>,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Zhengchuan Liang <zcliangcn@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Chen Cheng <chencheng@fnnas.com>,
+	Yu Kuai <yukuai@fygo.io>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1237/1887] netfilter: nft_compat: ebtables emulation must reject non-bridge targets
-Date: Wed, 28 Oct 2026 17:55:33 +0100
-Message-ID: <20261028170527.573412481@linuxfoundation.org>
+Subject: [PATCH 6.1 1238/1887] md/raid5: avoid R5_Overlap races while breaking stripe batches
+Date: Wed, 28 Oct 2026 17:55:34 +0100
+Message-ID: <20261028170527.595289638@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -75,80 +68,127 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Chen Cheng <chencheng@fnnas.com>
 
-[ Upstream commit 9dbba7e694ec045f21ede2f892fb42b81b4e1692 ]
+[ Upstream commit 55b77337bdd088c77461588e5ec094421b89911b ]
 
-xtables targets return netfilter verdicts: NF_ACCEPT, NF_DROP, and so
-on.  ebtables targets return incompatible verdicts: EBT_ACCEPT,
-EBT_DROP, ...   We cannot allow fallback to NFPROTO_UNSPEC.
+KCSAN report a race in break_stripe_batch_list() vs. raid5_make_request()
+on sh->dev[i].flags (plain word write vs. atomic bit op)..
 
-ebtables doesn't permit this since
-11ff7288beb2 ("netfilter: ebtables: reject non-bridge targets")
-but that commit missed the nft_compat layer.
+and .. one possible scenario is:
 
-Reported-by: Ren Wei <n05ec@lzu.edu.cn>
-Reported-by: Wyatt Feng <bronzed_45_vested@icloud.com>
-Reported-by: Yuan Tan <yuantan098@gmail.com>
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Reported-by: Zhengchuan Liang <zcliangcn@gmail.com>
-Reported-by: Xin Liu <bird@lzu.edu.cn>
-Fixes: 0ca743a55991 ("netfilter: nf_tables: add compatibility layer for x_tables")
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+CPU1                            CPU2
+break_stripe_batch_list(sh1)
+-> handle sh2
+-> lock(sh2)
+-> sh2->batch_head = NULL
+-> unlock(sh2)
+-> test_and_clear_bit(R5_Overlap, sh2->dev[i].flags)
+-> wake_up_bit(sh2->dev[i].flags)
+                                raid5_make_request()
+                                -> add_all_stripe_bios(sh2)
+                                -> lock(sh2)
+                                -> stripe_bio_overlaps(sh2) returns true
+				   batch_head is NULL, so new bio overlap
+				   exist bio on sh2 -> true
+                                -> set_bit(R5_Overlap, sh2->dev[i].flags)
+                                -> unlock(sh2)
+                                -> wait_on_bit(sh2->dev[i].flags)
+-> sh2->dev[i].flags = sh1->dev[i].flags & ~R5_Overlap
+
+No wait_up_bit(), CPU2 could be wait_on_bit() forever...
+
+Fix by :
+- Expand the protect zone.
+- Use batch_head's device flag's snaphot when no held head_sh->stripe_lock.
+- Move sh/head_sh->batch_head = NULL to the end of protected zone , and ,
+  any concurrent add_all_stripe_bios() grabs sh->stripe_lock now either:
+	- see batch_head != null, and , is rejected by stripe_bio_overlaps()
+	  under the lock (no R5_Overlap wait ) , or ,
+	- sees batch_head == NULL, only after dev[i].flags has already been
+	  set and the prior R5_Overlap waiters worken.
+
+KCSAN report:
+================================================
+  BUG: KCSAN: data-race in break_stripe_batch_list / raid5_make_request
+
+  write (marked) to 0xffff8e89c8117548 of 8 bytes by task 4042 on cpu 0:
+    raid5_make_request+0xea0/0x2930
+    md_handle_request+0x4a2/0xa40
+    md_submit_bio+0x109/0x1a0
+    __submit_bio+0x2ec/0x390
+    submit_bio_noacct_nocheck+0x457/0x710
+    submit_bio_noacct+0x2a7/0xc20
+    submit_bio+0x56/0x250
+    blkdev_direct_IO+0x54c/0xda0
+    blkdev_write_iter+0x38f/0x570
+    aio_write+0x22b/0x490
+    io_submit_one+0xa51/0xf70
+    __x64_sys_io_submit+0xf7/0x220
+    x64_sys_call+0x1907/0x1c60
+    do_syscall_64+0x130/0x570
+    entry_SYSCALL_64_after_hwframe+0x76/0x7e
+
+  read to 0xffff8e89c8117548 of 8 bytes by task 4010 on cpu 5:
+    break_stripe_batch_list+0x249/0x480
+    handle_stripe_clean_event+0x720/0x9b0
+    handle_stripe+0x32fb/0x4500
+    handle_active_stripes.isra.0+0x6e0/0xa50
+    raid5d+0x7e0/0xba0
+    md_thread+0x15a/0x2d0
+    kthread+0x1e3/0x220
+    ret_from_fork+0x37a/0x410
+    ret_from_fork_asm+0x1a/0x30
+
+  value changed: 0x0000000000000019 -> 0x0000000000000099 --> R5_Overlap
+
+Fixes: fb642b92c267 ("md/raid5: duplicate some more handle_stripe_clean_event code in break_stripe_batch_list")
+
+Signed-off-by: Chen Cheng <chencheng@fnnas.com>
+Link: https://patch.msgid.link/20260619041013.1207148-1-chencheng@fnnas.com
+Signed-off-by: Yu Kuai <yukuai@fygo.io>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_compat.c | 24 +++++++++++++++++++++---
- 1 file changed, 21 insertions(+), 3 deletions(-)
+ drivers/md/raid5.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/net/netfilter/nft_compat.c b/net/netfilter/nft_compat.c
-index 1e8142e64e808..67a138b9be3a6 100644
---- a/net/netfilter/nft_compat.c
-+++ b/net/netfilter/nft_compat.c
-@@ -389,6 +389,22 @@ static int nft_target_validate(const struct nft_ctx *ctx,
- 	return 0;
- }
- 
-+static int nft_target_bridge_validate(const struct nft_ctx *ctx,
-+				      const struct nft_expr *expr)
-+{
-+	struct xt_target *target = expr->ops->data;
+diff --git a/drivers/md/raid5.c b/drivers/md/raid5.c
+index dd0864df1d8cf..092cf1d0008ee 100644
+--- a/drivers/md/raid5.c
++++ b/drivers/md/raid5.c
+@@ -4958,25 +4958,27 @@ static void break_stripe_batch_list(struct stripe_head *head_sh,
+ 		sh->check_state = head_sh->check_state;
+ 		sh->reconstruct_state = head_sh->reconstruct_state;
+ 		spin_lock_irq(&sh->stripe_lock);
+-		sh->batch_head = NULL;
+-		spin_unlock_irq(&sh->stripe_lock);
+ 		for (i = 0; i < sh->disks; i++) {
+ 			if (test_and_clear_bit(R5_Overlap, &sh->dev[i].flags))
+ 				do_wakeup = 1;
+-			sh->dev[i].flags = head_sh->dev[i].flags &
++			sh->dev[i].flags = READ_ONCE(head_sh->dev[i].flags) &
+ 				(~((1 << R5_WriteError) | (1 << R5_Overlap)));
+ 		}
++		sh->batch_head = NULL;
++		spin_unlock_irq(&sh->stripe_lock);
 +
-+	/* Do not allow UNSPEC to stand-in for NFPROTO_BRIDGE
-+	 * targets: they are incompatible.  ebtables targets return
-+	 * EBT_ACCEPT, DROP and so on which are not compatible with
-+	 * NF_ACCEPT, NF_DROP and so on.
-+	 */
-+	if (target->family != NFPROTO_BRIDGE)
-+		return -ENOENT;
+ 		if (handle_flags == 0 ||
+ 		    sh->state & handle_flags)
+ 			set_bit(STRIPE_HANDLE, &sh->state);
+ 		raid5_release_stripe(sh);
+ 	}
+ 	spin_lock_irq(&head_sh->stripe_lock);
+-	head_sh->batch_head = NULL;
+-	spin_unlock_irq(&head_sh->stripe_lock);
+ 	for (i = 0; i < head_sh->disks; i++)
+ 		if (test_and_clear_bit(R5_Overlap, &head_sh->dev[i].flags))
+ 			do_wakeup = 1;
++	head_sh->batch_head = NULL;
++	spin_unlock_irq(&head_sh->stripe_lock);
 +
-+	return nft_target_validate(ctx, expr);
-+}
-+
- static void __nft_match_eval(const struct nft_expr *expr,
- 			     struct nft_regs *regs,
- 			     const struct nft_pktinfo *pkt,
-@@ -916,14 +932,16 @@ nft_target_select_ops(const struct nft_ctx *ctx,
- 	ops->init = nft_target_init;
- 	ops->destroy = nft_target_destroy;
- 	ops->dump = nft_target_dump;
--	ops->validate = nft_target_validate;
- 	ops->data = target;
- 	ops->reduce = NFT_REDUCE_READONLY;
+ 	if (head_sh->state & handle_flags)
+ 		set_bit(STRIPE_HANDLE, &head_sh->state);
  
--	if (family == NFPROTO_BRIDGE)
-+	if (family == NFPROTO_BRIDGE) {
- 		ops->eval = nft_target_eval_bridge;
--	else
-+		ops->validate = nft_target_bridge_validate;
-+	} else {
- 		ops->eval = nft_target_eval_xt;
-+		ops->validate = nft_target_validate;
-+	}
- 
- 	return ops;
- err:
 -- 
 2.53.0
 
