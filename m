@@ -1,51 +1,70 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214805;
-	b=TEf/BmkcE197aqTloE0GPqtUyupKwO/fTWcRAvr9eFFp54Gj7LrRTdtl0EzrpTzw4VUi
-	 VONE0WyG9mvQzZ4VXWUo3NmQQcKs9585CjYWzPR5tVEV8KBKmtvnH0sUp830aRynssCcY
-	 ZRYPqGeQVDS0xJwCwgPFikptr9W73wxB3GYS/ooLoCrsy/R1HL8yxWQMfmu3UmkzmyzHN
-	 vcP0PGoEyPwGpdvOoKIY+jqrTNEbbpJlbu97VJQboUIj2sfplIYMj7hYCT0PVYcLK0P43
-	 WFFjoP6CxMUSjFTTUG4YSkzhXjS8hWg58LT9tzSywIxlY8De8y6WvlcF2bZ2W3ailcg==
+	t=1793214808;
+	b=5pdrxvDqx86XlDA+mS9q5f71dhPRLaewWMdBtxALaH3XuNNkCL+RtEljkIfA85o0fEHo
+	 GU2IoyTVysVBsKmftbKQ1tcCxZ49I0W5Keb5zrJLzBlbCrAuo/vQyhe7HAElwYKMNcDRu
+	 hoMUm8BwF6DCpbrQoFVNrctteeSB8zdn7csS2KGdFuO3kUgIApScPboDIX5r8VnLFerNE
+	 NlTd2JASOJ3gNDBc+PU6b/FdDVm1W5mPzfqCCi/LaSCotxEUqgv80NjN7zXQxQvB0ifDy
+	 OEurtqoZ13DVh2Tk3Jukw2sriQeeYCD6YL8w5ZB+rYZBp4fX4h4xN19GRXMLEf4L3nQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214805;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214808;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=CgEHp7g0l1b+Xk318RN2PBnjcqg+c7r4a/9QoZkUJEk=;
-	b=yNW7LMbYuFGSFtOGylAOG8bEvafH7Q0tL7+UJwP3ZiGaxhaWCvJxmIqG3IqNTtPBbSz2
-	 PWfKZ8Ny5BqCobh5xpSoUyvNWyH6LbdNRwbUlGd0fl0bJAumTiW0Frvc0BLRtmNU6L9X9
-	 xEiu6ZsJ264TIZbWP+Cpkwx/0sbTgQyvppSvkIHLQAU9hwTYDb1Wq0pXhtKgWcBiweU7n
-	 4f8DzO0M9C0zYIuDmaxUZckU0ax2Xmoshv0L82UEtJI2z7EXVpkrrzZxNTXAsBQJ0nx57
-	 fdEiUSXm68j9s+lUkhWGRsDkGk7C/CuEq6gwM3/qlmI+h6x1rVY0w15CQj8EMRs2kxg==
+	bh=pqDQXdboVbu9YezszE39zNPWCCsMkzs02zo1n/IoTgw=;
+	b=Bi8Sv2bjGRA3MZuqEGV/TJ1+tDWj+YNz/a5uCNIc1wWdLV46wA4iF2P0jT9gh+skpooz
+	 swGWM7lcVSOzyxyTDUGGZ5DPfj1eFNf5JlGtZrtzoUiYBnPgmvoqL6umQN2gVUQtuhAWo
+	 mULJUpTDoIRNcED+h2GR08G8vaI0rOdDIoQN35k2nBV2kPxYan4hQtX81Mn/zuTHt4RQm
+	 dNPwCsF9gQkqDjqc8cIVPZ+/FNYqCrksS7HnkVJP407no7yX/dVQNXwdh99PNle42ZdLf
+	 ChpNxMHooHbV4wC+S/AZXijSBrHMDKCUf/oLWIrxIJu68B1sOZ+Fg+5Lelc/pW2sDbw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QG6aiiBQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zpksx5BM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E487606A33A;
-	Wed, 28 Oct 2026 19:13:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEB9F606A31C;
+	Wed, 28 Oct 2026 19:13:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QG6aiiBQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C6A11F031E0;
-	Wed, 28 Oct 2026 19:13:24 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zpksx5BM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB5F41F031E2;
+	Wed, 28 Oct 2026 19:13:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214804;
-	bh=CgEHp7g0l1b+Xk318RN2PBnjcqg+c7r4a/9QoZkUJEk=;
+	s=korg; t=1793214807;
+	bh=pqDQXdboVbu9YezszE39zNPWCCsMkzs02zo1n/IoTgw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QG6aiiBQ1y87Goyfmtwn1d46dZ8cV7cp4Kj4DNrPmPIUBR4hM9ESCsla4u7AU7CQG
-	 nUo1sfNLl2ffBBWrMt1ii9qZANLDZS4k18nDeirJ1TRV3+6yB3J1gqU9uPx5+e5TxD
-	 GXW92QQFYMSvgcnEGRJOELknW4iVk0/Ae3peS8lo=
+	b=zpksx5BMH4hOx7WoXaYAJC94SOPtTuZaH9HUXWJ9KPgJcJTCvZs/QE+1XM7oCrCX1
+	 V8ChKewwkn5J1BhclHpRZGJf4xqWFjbCNIK4UqmUZ3NpueeyZ0vdxiVRGxzzRkjY82
+	 LkuLpJF7FDtZ2uYZGboPE/BheMTOj4GQwt3z5Eyc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
+	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
+	Mimi Zohar <zohar@linux.ibm.com>,
+	Alexander Graf <graf@amazon.com>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	Borislav Betkov <bp@alien8.de>,
+	guoweikang <guoweikang.kernel@gmail.com>,
+	Henry Willard <henry.willard@oracle.com>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	Jiri Bohac <jbohac@suse.cz>,
+	Joel Granados <joel.granados@kernel.org>,
+	Jonathan McDowell <noodles@fb.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Paul Webb <paul.x.webb@oracle.com>,
+	Sohil Mehta <sohil.mehta@intel.com>,
+	Sourabh Jain <sourabhjain@linux.ibm.com>,
+	Thomas Gleinxer <tglx@linutronix.de>,
+	Yifei Liu <yifei.l.liu@oracle.com>,
+	Baoquan He <bhe@redhat.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0986/1887] ALSA: mixer: oss: Add card disconnect checkpoints
-Date: Wed, 28 Oct 2026 17:51:22 +0100
-Message-ID: <20261028170521.847990122@linuxfoundation.org>
+Subject: [PATCH 6.1 0987/1887] ima: verify the previous kernels IMA buffer lies in addressable RAM
+Date: Wed, 28 Oct 2026 17:51:23 +0100
+Message-ID: <20261028170521.871825335@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -67,117 +86,127 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
 
-[ Upstream commit 084d5d44418148662365eced3e126ad1a81ee3e2 ]
+[ Upstream commit 10d1c75ed4382a8e79874379caa2ead8952734f9 ]
 
-ALSA OSS mixer layer calls the kcontrol ops rather individually, and
-pending calls might be not always caught at disconnecting the device.
+Patch series "Address page fault in ima_restore_measurement_list()", v3.
 
-For avoiding the potential UAF scenarios, add sanity checks of the
-card disconnection at each entry point of OSS mixer accesses.  The
-rwsem is taken just before that check, hence the rest context should
-be covered by that properly.
+When the second-stage kernel is booted via kexec with a limiting command
+line such as "mem=<size>" we observe a pafe fault that happens.
 
-Link: https://patch.msgid.link/20260209121212.171430-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+    BUG: unable to handle page fault for address: ffff97793ff47000
+    RIP: ima_restore_measurement_list+0xdc/0x45a
+    #PF: error_code(0x0000)  not-present page
+
+This happens on x86_64 only, as this is already fixed in aarch64 in
+commit: cbf9c4b9617b ("of: check previous kernel's ima-kexec-buffer
+against memory bounds")
+
+This patch (of 3):
+
+When the second-stage kernel is booted with a limiting command line (e.g.
+"mem=<size>"), the IMA measurement buffer handed over from the previous
+kernel may fall outside the addressable RAM of the new kernel.  Accessing
+such a buffer can fault during early restore.
+
+Introduce a small generic helper, ima_validate_range(), which verifies
+that a physical [start, end] range for the previous-kernel IMA buffer lies
+within addressable memory:
+	- On x86, use pfn_range_is_mapped().
+	- On OF based architectures, use page_is_ram().
+
+Link: https://lkml.kernel.org/r/20251231061609.907170-1-harshit.m.mogalapalli@oracle.com
+Link: https://lkml.kernel.org/r/20251231061609.907170-2-harshit.m.mogalapalli@oracle.com
+Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Reviewed-by: Mimi Zohar <zohar@linux.ibm.com>
+Cc: Alexander Graf <graf@amazon.com>
+Cc: Ard Biesheuvel <ardb@kernel.org>
+Cc: Borislav Betkov <bp@alien8.de>
+Cc: guoweikang <guoweikang.kernel@gmail.com>
+Cc: Henry Willard <henry.willard@oracle.com>
+Cc: "H. Peter Anvin" <hpa@zytor.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Jiri Bohac <jbohac@suse.cz>
+Cc: Joel Granados <joel.granados@kernel.org>
+Cc: Jonathan McDowell <noodles@fb.com>
+Cc: Mike Rapoport <rppt@kernel.org>
+Cc: Paul Webb <paul.x.webb@oracle.com>
+Cc: Sohil Mehta <sohil.mehta@intel.com>
+Cc: Sourabh Jain <sourabhjain@linux.ibm.com>
+Cc: Thomas Gleinxer <tglx@linutronix.de>
+Cc: Yifei Liu <yifei.l.liu@oracle.com>
+Cc: Baoquan He <bhe@redhat.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/oss/mixer_oss.c | 32 ++++++++++++++++++++++++++++++++
- 1 file changed, 32 insertions(+)
+ include/linux/ima.h                |  1 +
+ security/integrity/ima/ima_kexec.c | 35 ++++++++++++++++++++++++++++++
+ 2 files changed, 36 insertions(+)
 
-diff --git a/sound/core/oss/mixer_oss.c b/sound/core/oss/mixer_oss.c
-index abc99ae333282..ecb4af6709598 100644
---- a/sound/core/oss/mixer_oss.c
-+++ b/sound/core/oss/mixer_oss.c
-@@ -540,6 +540,10 @@ static void snd_mixer_oss_get_volume1_vol(struct snd_mixer_oss_file *fmixer,
- 	if (numid == ID_UNKNOWN)
- 		return;
- 	down_read(&card->controls_rwsem);
-+	if (card->shutdown) {
-+		up_read(&card->controls_rwsem);
-+		return;
-+	}
- 	kctl = snd_ctl_find_numid_locked(card, numid);
- 	if (!kctl) {
- 		up_read(&card->controls_rwsem);
-@@ -579,6 +583,10 @@ static void snd_mixer_oss_get_volume1_sw(struct snd_mixer_oss_file *fmixer,
- 	if (numid == ID_UNKNOWN)
- 		return;
- 	down_read(&card->controls_rwsem);
-+	if (card->shutdown) {
-+		up_read(&card->controls_rwsem);
-+		return;
-+	}
- 	kctl = snd_ctl_find_numid_locked(card, numid);
- 	if (!kctl) {
- 		up_read(&card->controls_rwsem);
-@@ -645,6 +653,10 @@ static void snd_mixer_oss_put_volume1_vol(struct snd_mixer_oss_file *fmixer,
- 	if (numid == ID_UNKNOWN)
- 		return;
- 	down_read(&card->controls_rwsem);
-+	if (card->shutdown) {
-+		up_read(&card->controls_rwsem);
-+		return;
-+	}
- 	kctl = snd_ctl_find_numid_locked(card, numid);
- 	if (!kctl) {
- 		up_read(&card->controls_rwsem);
-@@ -688,6 +700,10 @@ static void snd_mixer_oss_put_volume1_sw(struct snd_mixer_oss_file *fmixer,
- 	if (numid == ID_UNKNOWN)
- 		return;
- 	down_read(&card->controls_rwsem);
-+	if (card->shutdown) {
-+		up_read(&card->controls_rwsem);
-+		return;
-+	}
- 	kctl = snd_ctl_find_numid_locked(card, numid);
- 	if (!kctl) {
- 		up_read(&card->controls_rwsem);
-@@ -833,6 +849,10 @@ static int snd_mixer_oss_get_recsrc2(struct snd_mixer_oss_file *fmixer, unsigned
- 		goto __free_only;
- 	}
- 	down_read(&card->controls_rwsem);
-+	if (card->shutdown) {
-+		err = -ENODEV;
-+		goto __unlock;
-+	}
- 	kctl = snd_mixer_oss_test_id(mixer, "Capture Source", 0);
- 	if (! kctl) {
- 		err = -ENOENT;
-@@ -886,6 +906,10 @@ static int snd_mixer_oss_put_recsrc2(struct snd_mixer_oss_file *fmixer, unsigned
- 		goto __free_only;
- 	}
- 	down_read(&card->controls_rwsem);
-+	if (card->shutdown) {
-+		err = -ENODEV;
-+		goto __unlock;
-+	}
- 	kctl = snd_mixer_oss_test_id(mixer, "Capture Source", 0);
- 	if (! kctl) {
- 		err = -ENOENT;
-@@ -937,6 +961,10 @@ static int snd_mixer_oss_build_test(struct snd_mixer_oss *mixer, struct slot *sl
- 	int err;
+diff --git a/include/linux/ima.h b/include/linux/ima.h
+index 83ddee788583e..21f442c3fa887 100644
+--- a/include/linux/ima.h
++++ b/include/linux/ima.h
+@@ -145,6 +145,7 @@ static inline int ima_measure_critical_data(const char *event_label,
+ #ifdef CONFIG_HAVE_IMA_KEXEC
+ int __init ima_free_kexec_buffer(void);
+ int __init ima_get_kexec_buffer(void **addr, size_t *size);
++int ima_validate_range(phys_addr_t phys, size_t size);
+ #endif
  
- 	down_read(&card->controls_rwsem);
-+	if (card->shutdown) {
-+		up_read(&card->controls_rwsem);
-+		return -ENODEV;
+ #ifdef CONFIG_IMA_SECURE_AND_OR_TRUSTED_BOOT
+diff --git a/security/integrity/ima/ima_kexec.c b/security/integrity/ima/ima_kexec.c
+index 419dc405c8310..9a63c9a327d48 100644
+--- a/security/integrity/ima/ima_kexec.c
++++ b/security/integrity/ima/ima_kexec.c
+@@ -12,6 +12,8 @@
+ #include <linux/kexec.h>
+ #include <linux/of.h>
+ #include <linux/ima.h>
++#include <linux/mm.h>
++#include <linux/overflow.h>
+ #include "ima.h"
+ 
+ #ifdef CONFIG_IMA_KEXEC
+@@ -164,3 +166,36 @@ void __init ima_load_kexec_buffer(void)
+ 		pr_debug("Error restoring the measurement list: %d\n", rc);
+ 	}
+ }
++
++/*
++ * ima_validate_range - verify a physical buffer lies in addressable RAM
++ * @phys: physical start address of the buffer from previous kernel
++ * @size: size of the buffer
++ *
++ * On success return 0. On failure returns -EINVAL so callers can skip
++ * restoring.
++ */
++int ima_validate_range(phys_addr_t phys, size_t size)
++{
++	unsigned long start_pfn, end_pfn;
++	phys_addr_t end_phys;
++
++	if (check_add_overflow(phys, (phys_addr_t)size - 1, &end_phys))
++		return -EINVAL;
++
++	start_pfn = PHYS_PFN(phys);
++	end_pfn = PHYS_PFN(end_phys);
++
++#ifdef CONFIG_X86
++	if (!pfn_range_is_mapped(start_pfn, end_pfn))
++#else
++	if (!page_is_ram(start_pfn) || !page_is_ram(end_pfn))
++#endif
++	{
++		pr_warn("IMA: previous kernel measurement buffer %pa (size 0x%zx) lies outside available memory\n",
++			&phys, size);
++		return -EINVAL;
 +	}
- 	kcontrol = snd_mixer_oss_test_id(mixer, name, index);
- 	if (kcontrol == NULL) {
- 		up_read(&card->controls_rwsem);
-@@ -1069,6 +1097,10 @@ static int snd_mixer_oss_build_input(struct snd_mixer_oss *mixer,
- 	if (snd_mixer_oss_build_test_all(mixer, ptr, &slot))
- 		return 0;
- 	down_read(&mixer->card->controls_rwsem);
-+	if (mixer->card->shutdown) {
-+		up_read(&mixer->card->controls_rwsem);
-+		return -ENODEV;
-+	}
- 	kctl = NULL;
- 	if (!ptr->index)
- 		kctl = snd_mixer_oss_test_id(mixer, "Capture Source", 0);
++
++	return 0;
++}
 -- 
 2.53.0
 
