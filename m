@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215757;
-	b=0pJTjASU7n8i8nxsU49vMaqsPGfhqe+agQoQmGqjVXm1l4xWas0yy+rbPVSdwVvINX1K
-	 BcchsWrnyui5cXWQtjG3lJ9xZ5kSq4NsCA947GnTTQCtM36/m/ZliLZuaTWGHN/vzcQXc
-	 /pUqA9HVZNuhlnN6DlrYRg6IT8RpODPJ2+FVl8BuvfEnJal+A2TVBVkQghbo3q40SIQmb
-	 97wiQz6/nkpli8GogWH7KJc6YH/fGQcAX/qS/dc4UPSp9SpOGsyNGnO1wWGqt9JWw8L+f
-	 sazevKWL4AfvCRNoQaVJbMcP02Xke1LO2sBYgYdzi7bhsTzhYLW3w1TgpTLvvgLscDA==
+	t=1793215760;
+	b=dlmOfP0kOtMedcE4BE5lGsDNtbPmQT5iSsQDYXp9gvYMzkPbXnAT5rQaQNjpfsAgye8p
+	 lyKWexOarcEJoErWYhZbDEDUC5tDrdEitwpNpuOa3+5dDN3YLJCex38XOEmLKYrAsK0m1
+	 IY5IXZlThAFiJjqwKEsv1423uDlq9/E6WE7fCt0DODNG34gi1lU6FX2XpQidxjuc/LzDK
+	 1CoN6u3u3v/Z3na43lKXpz50WMdud2cXgy9W98AwqkuDwYM8sIymurWNSMJ54AT2He0cW
+	 /4Kx8US1pf27oJgAvdIYdslCWDlFGIsSv0ueDtX7QP3PRgZNjWnVOhZih6BWTHQnLig==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215757;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215760;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ExlK1Z0w08UB6FEJx5QQWXodvXchRNugHo7PxUaaJrc=;
-	b=xO/GDhuh6o6Exd8vnS54ZOO5NoHm3kqEn7QIFzVgCLXMqNqVCrQrfDw900IlA4nlwShF
-	 BhJ6FbFUjGmwHUNi/oHCSjy5hcPRrzQv3RtgAu+Z6iPqyPX3Xp+Dfo82NG13NntDCeIeZ
-	 HEDUafU+3zZe01yTlhlErbcYR+bGiUkFKSuv2KBGcNGI1UAZZmSuKki6th0xMded3O9zX
-	 ukDA2+mwuOVr4Lao+yiRmmmYR+3E+0dWPYZq8TEBnnAxc6l6nqBt9XFxKvy/f9O1ukT2d
-	 TOJzjmC3uj1NE2iUmJ5eqEUmoSxP/wEtNGt8x+GcQtJioQ3KrEKz91s6olc9YhqsjFQ==
+	bh=3u4G7ALlMciLVBl+p5GfnqkN6gamldoqflL/T0IX6FQ=;
+	b=JAXd16I/3tcN3lJ9JKVX01KaRiLfhq1S/4iIJ2BseF5YfwNb4IUTFLAfqA6jR0siUdaI
+	 jP38KFxxSDl4yRx/nZ23dGM74AjvTIVqF6c0FV3P2WcW+tPP/FB1Js3DHe5NUT6Yd1Q7k
+	 Tq3YToY7a8zgpUSAOhmxrDftTX1wV6VBo+Z1a0Vi3LlbTKsPdl/5JXecZbsj9jT43hnjJ
+	 SlhCL+S+qktCoA/37eBm1SQF5PP6EY+jBDJ7uSa/N9DeVOy4pGk7e9o/66L6C4dGiH62F
+	 w0YmxxQnMSa8/HM/WhZVfXSsZgPCZNU/PVOQ/gycsWGt4zBnM8VKcjntOWtu2e2izeA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fvTGCCaf;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oosdZEeo;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DD11606A31A;
-	Wed, 28 Oct 2026 19:29:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91296606A31A;
+	Wed, 28 Oct 2026 19:29:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fvTGCCaf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE8A21F01825;
-	Wed, 28 Oct 2026 19:29:16 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oosdZEeo
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FD3D1F01825;
+	Wed, 28 Oct 2026 19:29:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215757;
-	bh=ExlK1Z0w08UB6FEJx5QQWXodvXchRNugHo7PxUaaJrc=;
+	s=korg; t=1793215760;
+	bh=3u4G7ALlMciLVBl+p5GfnqkN6gamldoqflL/T0IX6FQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fvTGCCafWV19xWU8R7El1uYK5/ot9JPqez/5fZyJkVrzmrQ4TYQaOEckXRmaf7zpV
-	 ge9Xkyk+bLadDe6jUbmHK8mYaZBisR1QkJJqAg3WIwpSgleATA0MngFgoKuqiuLK9Q
-	 P1dvlmWF+b8r7X4GezmRtPhDXmaU9nmVbV6Wtoxo=
+	b=oosdZEeo2D16OngFeK1OaikDT52DHTrxMdGKIrdoFJkR4vsuHeq+nCBuxytHuZ4GN
+	 g1hyOxqzydgQuk6zuMQyVgSFyk0u8fhfOZWD0guOYhgCMWFNJ8fQlEr4XBEg10G4ks
+	 2NBetU/aR2agEuFrLRnQylwoFM1yQXp2M8I70rns=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Borntraeger <borntraeger@linux.ibm.com>,
-	Finn Callies <fcallies@linux.ibm.com>,
-	Harald Freudenberger <freude@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>,
+	Geetha sowjanya <gakula@marvell.com>,
+	Hariprasad Kelam <hkelam@marvell.com>,
+	Ratheesh Kannoth <rkannoth@marvell.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1279/1887] s390/zcrypt: Close speculative mem read possibility
-Date: Wed, 28 Oct 2026 17:56:15 +0100
-Message-ID: <20261028170528.529384471@linuxfoundation.org>
+Subject: [PATCH 6.1 1280/1887] octeontx2-af: Block VFs from clobbering special CGX PKIND state
+Date: Wed, 28 Oct 2026 17:56:16 +0100
+Message-ID: <20261028170528.553585363@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -70,58 +70,284 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harald Freudenberger <freude@linux.ibm.com>
+From: Hariprasad Kelam <hkelam@marvell.com>
 
-[ Upstream commit e935cd525af4c6ed2e2c6404aa27ca19c7f39ddb ]
+[ Upstream commit 3bd438a58e910db5dc369aa25dfed1fc95f1b596 ]
 
-The domain value is extracted from a given CCA or EP11 ioctl struct
-when a CPRB is about to be sent. Thus this is a user controlled value.
-Under some special conditions (custom device node used, administrative
-load) this value is used as an array index after bounds checking, but
-without speculation barrier.
+PF and VF NIX LFs that share a CGX LMAC reuse the same hardware PKIND
+programming. When HiGig2 or EDSA parsing is enabled, a VF NIX LF alloc must
+not reset the LMAC RX PKIND or default TX parse config over the PF setup.
 
-Add the missing array_index_nospec() call to prevent speculative
-execution where this domain value is used.
+Add cgx_get_pkind() and rvu_cgx_is_pkind_config_permitted() so VFs skip
+cgx_set_pkind(), rvu_npc_set_pkind(), and NIX_AF_LFX_TX_PARSE_CFG updates
+when the LMAC is using NPC_RX_HIGIG_PKIND or NPC_RX_EDSA_PKIND.
 
-Fixes: cfd68b33094e ("s390/zcrypt: Filter admin CPRBs on custom devices")
-Cc: stable@vger.kernel.org
-Reported-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-Reviewed-by: Finn Callies <fcallies@linux.ibm.com>
-Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+Fixes: 94d942c5fb97 ("octeontx2-af: Config pkind for CGX mapped PFs")
+Cc: Geetha sowjanya <gakula@marvell.com>
+Signed-off-by: Hariprasad Kelam <hkelam@marvell.com>
+Signed-off-by: Ratheesh Kannoth <rkannoth@marvell.com>
+Link: https://patch.msgid.link/20260722081229.1653619-1-rkannoth@marvell.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/s390/crypto/zcrypt_api.c | 3 +++
- 1 file changed, 3 insertions(+)
+ .../net/ethernet/marvell/octeontx2/af/cgx.c   | 12 +++
+ .../net/ethernet/marvell/octeontx2/af/cgx.h   |  1 +
+ .../net/ethernet/marvell/octeontx2/af/rvu.h   |  2 +
+ .../ethernet/marvell/octeontx2/af/rvu_cgx.c   | 79 +++++++++++++++++++
+ .../ethernet/marvell/octeontx2/af/rvu_nix.c   | 22 +++++-
+ .../ethernet/marvell/octeontx2/af/rvu_npc.c   | 29 ++++---
+ 6 files changed, 131 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/s390/crypto/zcrypt_api.c b/drivers/s390/crypto/zcrypt_api.c
-index d75affe6f4b67..d0e18a0806244 100644
---- a/drivers/s390/crypto/zcrypt_api.c
-+++ b/drivers/s390/crypto/zcrypt_api.c
-@@ -26,6 +26,7 @@
- #include <linux/cdev.h>
- #include <linux/ctype.h>
- #include <linux/capability.h>
-+#include <linux/nospec.h>
- #include <asm/debug.h>
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/cgx.c b/drivers/net/ethernet/marvell/octeontx2/af/cgx.c
+index d28dfe11227b9..c6e94b6a1085c 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/cgx.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/cgx.c
+@@ -495,6 +495,18 @@ int cgx_set_pkind(void *cgxd, u8 lmac_id, int pkind)
+ 	return 0;
+ }
  
- #define CREATE_TRACE_POINTS
-@@ -929,6 +930,7 @@ static long _zcrypt_send_cprb(bool userspace, struct ap_perms *perms,
- 	tdom = *domain;
- 	if (perms != &ap_perms && tdom < AP_DOMAINS) {
- 		if (ap_msg.flags & AP_MSG_FLAG_ADMIN) {
-+			tdom = array_index_nospec(tdom, AP_DOMAINS);
- 			if (!test_bit_inv(tdom, perms->adm)) {
- 				rc = -ENODEV;
- 				goto out;
-@@ -1121,6 +1123,7 @@ static long _zcrypt_send_ep11_cprb(bool userspace, struct ap_perms *perms,
++int cgx_get_pkind(void *cgxd, u8 lmac_id, int *pkind)
++{
++	struct cgx *cgx = cgxd;
++
++	if (!is_lmac_valid(cgx, lmac_id))
++		return -ENODEV;
++
++	*pkind = cgx_read(cgx, lmac_id, CGXX_CMRX_RX_ID_MAP);
++	*pkind = *pkind & 0x3F;
++	return 0;
++}
++
+ static u8 cgx_get_lmac_type(void *cgxd, int lmac_id)
+ {
+ 	struct cgx *cgx = cgxd;
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/cgx.h b/drivers/net/ethernet/marvell/octeontx2/af/cgx.h
+index 09ddb00f63cc7..4ac86fa3a6d07 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/cgx.h
++++ b/drivers/net/ethernet/marvell/octeontx2/af/cgx.h
+@@ -136,6 +136,7 @@ int cgx_get_cgxid(void *cgxd);
+ int cgx_get_lmac_cnt(void *cgxd);
+ void *cgx_get_pdata(int cgx_id);
+ int cgx_set_pkind(void *cgxd, u8 lmac_id, int pkind);
++int cgx_get_pkind(void *cgxd, u8 lmac_id, int *pkind);
+ int cgx_lmac_evh_register(struct cgx_event_cb *cb, void *cgxd, int lmac_id);
+ int cgx_lmac_evh_unregister(void *cgxd, int lmac_id);
+ int cgx_get_tx_stats(void *cgxd, int lmac_id, int idx, u64 *tx_stat);
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu.h b/drivers/net/ethernet/marvell/octeontx2/af/rvu.h
+index c0a2f4ca5c17a..354b28acff0c5 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rvu.h
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu.h
+@@ -868,6 +868,8 @@ void npc_read_mcam_entry(struct rvu *rvu, struct npc_mcam *mcam,
+ 			 int blkaddr, u16 src, struct mcam_entry *entry,
+ 			 u8 *intf, u8 *ena);
+ bool is_cgx_config_permitted(struct rvu *rvu, u16 pcifunc);
++bool rvu_cgx_check_permission_and_set_pkind(struct rvu *rvu, u16 pcifunc, int pkind);
++bool rvu_cgx_is_pkind_config_permitted(struct rvu *rvu, u16 pcifunc);
+ bool is_mac_feature_supported(struct rvu *rvu, int pf, int feature);
+ u32  rvu_cgx_get_fifolen(struct rvu *rvu);
+ void *rvu_first_cgx_pdata(struct rvu *rvu);
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_cgx.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_cgx.c
+index cc6d6c94f4002..f1ef9ecad1bd4 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_cgx.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_cgx.c
+@@ -1260,3 +1260,82 @@ int rvu_mbox_handler_cgx_prio_flow_ctrl_cfg(struct rvu *rvu,
+ 	mac_ops->mac_get_pfc_frm_cfg(cgxd, lmac_id, &rsp->tx_pause, &rsp->rx_pause);
+ 	return err;
+ }
++
++/* Do not allow CGX-mapped VFs to overwrite PKIND when special parse kinds
++ * (HiGig, EDSA, etc.) are in use on the shared LMAC. VFs must not program
++ * NPC_TX_DEF_PKIND on NIX_AF_LFX_TX_PARSE_CFG in that case: the PF owns
++ * parse mode and no separate NPC_TX_HIGIG_PKIND is installed on the VF LF.
++ * TX-parse callers skip the write when denied; rvu_lf_reset() clears each LF
++ * before alloc so the next permitted owner programs NPC_TX_DEF_PKIND.
++ */
++bool rvu_cgx_is_pkind_config_permitted(struct rvu *rvu, u16 pcifunc)
++{
++	int pf, err, rxpkind;
++	u8 cgx_id, lmac_id;
++	void *cgxd;
++
++	pf = rvu_get_pf(pcifunc);
++
++	if (!(pcifunc & RVU_PFVF_FUNC_MASK))
++		return true;
++
++	if (!is_pf_cgxmapped(rvu, pf))
++		return true;
++
++	rvu_get_cgx_lmac_id(rvu->pf2cgxlmac_map[pf], &cgx_id, &lmac_id);
++	cgxd = rvu_cgx_pdata(cgx_id, rvu);
++	err = cgx_get_pkind(cgxd, lmac_id, &rxpkind);
++	if (err)
++		return false;
++
++	switch (rxpkind) {
++	case NPC_RX_HIGIG_PKIND:
++	case NPC_RX_EDSA_PKIND:
++		return false;
++	default:
++		return true;
++	}
++}
++
++/* Do not allow CGX-mapped VFs to overwrite PKIND when special parse kinds
++ * (HiGig, EDSA, etc.) are in use on the shared LMAC.
++ */
++bool rvu_cgx_check_permission_and_set_pkind(struct rvu *rvu, u16 pcifunc, int pkind)
++{
++	int pf, err, rxpkind;
++	u8 cgx_id, lmac_id;
++	struct cgx *cgxd;
++
++	pf = rvu_get_pf(pcifunc);
++
++	if (!is_pf_cgxmapped(rvu, pf))
++		return false;
++
++	rvu_get_cgx_lmac_id(rvu->pf2cgxlmac_map[pf], &cgx_id, &lmac_id);
++	cgxd = rvu_cgx_pdata(cgx_id, rvu);
++
++	mutex_lock(&cgxd->lock);
++	if (!is_vf(pcifunc))
++		goto set;
++
++	err = cgx_get_pkind(cgxd, lmac_id, &rxpkind);
++	if (err)
++		goto err;
++
++	switch (rxpkind) {
++	case NPC_RX_HIGIG_PKIND:
++	case NPC_RX_EDSA_PKIND:
++		goto err;
++	default:
++		break;
++	}
++
++set:
++	cgx_set_pkind(rvu_cgx_pdata(cgx_id, rvu), lmac_id, pkind);
++	mutex_unlock(&cgxd->lock);
++	return true;
++
++err:
++	mutex_unlock(&cgxd->lock);
++	return false;
++}
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
+index 3d4985e2f9db2..8b2e59e864d3a 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
+@@ -324,8 +324,8 @@ static int nix_interface_init(struct rvu *rvu, u16 pcifunc, int type, int nixlf,
+ 		pfvf->tx_chan_cnt = 1;
+ 		rsp->tx_link = cgx_id * hw->lmac_per_cgx + lmac_id;
  
- 	if (perms != &ap_perms && domain < AP_DOMAINS) {
- 		if (ap_msg.flags & AP_MSG_FLAG_ADMIN) {
-+			domain = array_index_nospec(domain, AP_DOMAINS);
- 			if (!test_bit_inv(domain, perms->adm)) {
- 				rc = -ENODEV;
- 				goto out_free;
+-		cgx_set_pkind(rvu_cgx_pdata(cgx_id, rvu), lmac_id, pkind);
+-		rvu_npc_set_pkind(rvu, pkind, pfvf);
++		if (rvu_cgx_check_permission_and_set_pkind(rvu, pcifunc, pkind))
++			rvu_npc_set_pkind(rvu, pkind, pfvf);
+ 
+ 		break;
+ 	case NIX_INTF_TYPE_LBK:
+@@ -1314,11 +1314,13 @@ int rvu_mbox_handler_nix_lf_alloc(struct rvu *rvu,
+ 				  struct nix_lf_alloc_req *req,
+ 				  struct nix_lf_alloc_rsp *rsp)
+ {
+-	int nixlf, qints, hwctx_size, intf, err, rc = 0;
++	int nixlf, qints, hwctx_size, intf, err, rc = 0, pf;
+ 	struct rvu_hwinfo *hw = rvu->hw;
+ 	u16 pcifunc = req->hdr.pcifunc;
++	u8 cgx_id = 0, lmac_id = 0;
+ 	struct rvu_block *block;
+ 	struct rvu_pfvf *pfvf;
++	struct cgx *cgxd;
+ 	u64 cfg, ctx_cfg;
+ 	int blkaddr;
+ 
+@@ -1486,8 +1488,20 @@ int rvu_mbox_handler_nix_lf_alloc(struct rvu *rvu,
+ 	rvu_write64(rvu, blkaddr, NIX_AF_LFX_RX_CFG(nixlf), req->rx_cfg);
+ 
+ 	/* Configure pkind for TX parse config */
++
++	pf = rvu_get_pf(pcifunc);
+ 	cfg = NPC_TX_DEF_PKIND;
+-	rvu_write64(rvu, blkaddr, NIX_AF_LFX_TX_PARSE_CFG(nixlf), cfg);
++
++	if (is_pf_cgxmapped(rvu, pf) && is_vf(pcifunc)) {
++		rvu_get_cgx_lmac_id(rvu->pf2cgxlmac_map[pf], &cgx_id, &lmac_id);
++		cgxd = rvu_cgx_pdata(cgx_id, rvu);
++		mutex_lock(&cgxd->lock);
++		if (rvu_cgx_is_pkind_config_permitted(rvu, pcifunc))
++			rvu_write64(rvu, blkaddr, NIX_AF_LFX_TX_PARSE_CFG(nixlf), cfg);
++		mutex_unlock(&cgxd->lock);
++	} else {
++		rvu_write64(rvu, blkaddr, NIX_AF_LFX_TX_PARSE_CFG(nixlf), cfg);
++	}
+ 
+ 	intf = is_afvf(pcifunc) ? NIX_INTF_TYPE_LBK : NIX_INTF_TYPE_CGX;
+ 	if (is_sdp_pfvf(pcifunc))
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc.c
+index 65ad7476e6098..ed1b66ea0aeff 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc.c
+@@ -16,6 +16,7 @@
+ #include "cgx.h"
+ #include "npc_profile.h"
+ #include "rvu_npc_hash.h"
++#include "lmac_common.h"
+ 
+ #define RSVD_MCAM_ENTRIES_PER_PF	3 /* Broadcast, Promisc and AllMulticast */
+ #define RSVD_MCAM_ENTRIES_PER_NIXLF	1 /* Ucast for LFs */
+@@ -3337,10 +3338,11 @@ int rvu_npc_set_parse_mode(struct rvu *rvu, u16 pcifunc, u64 mode, u8 dir,
+ 
+ {
+ 	struct rvu_pfvf *pfvf = rvu_get_pfvf(rvu, pcifunc);
+-	int blkaddr, nixlf, rc, intf_mode;
+ 	int pf = rvu_get_pf(pcifunc);
++	int blkaddr, nixlf, rc, intf_mode;
++	u8 cgx_id = 0, lmac_id = 0;
+ 	u64 rxpkind, txpkind;
+-	u8 cgx_id, lmac_id;
++	struct cgx *cgxd;
+ 
+ 	/* use default pkind to disable edsa/higig */
+ 	rxpkind = rvu_npc_get_pkind(rvu, pf);
+@@ -3364,12 +3366,8 @@ int rvu_npc_set_parse_mode(struct rvu *rvu, u16 pcifunc, u64 mode, u8 dir,
+ 		/* rx pkind set req valid only for cgx mapped PFs */
+ 		if (!is_cgx_config_permitted(rvu, pcifunc))
+ 			return 0;
+-		rvu_get_cgx_lmac_id(rvu->pf2cgxlmac_map[pf], &cgx_id, &lmac_id);
+-
+-		rc = cgx_set_pkind(rvu_cgx_pdata(cgx_id, rvu), lmac_id,
+-				   rxpkind);
+-		if (rc)
+-			return rc;
++		if (!rvu_cgx_check_permission_and_set_pkind(rvu, pcifunc, rxpkind))
++			return -EINVAL;
+ 	}
+ 
+ 	if (dir & PKIND_TX) {
+@@ -3378,8 +3376,19 @@ int rvu_npc_set_parse_mode(struct rvu *rvu, u16 pcifunc, u64 mode, u8 dir,
+ 		if (rc)
+ 			return rc;
+ 
+-		rvu_write64(rvu, blkaddr, NIX_AF_LFX_TX_PARSE_CFG(nixlf),
+-			    txpkind);
++		if (is_pf_cgxmapped(rvu, pf) && is_vf(pcifunc)) {
++			rvu_get_cgx_lmac_id(rvu->pf2cgxlmac_map[pf], &cgx_id,
++					    &lmac_id);
++			cgxd = rvu_cgx_pdata(cgx_id, rvu);
++			mutex_lock(&cgxd->lock);
++			if (rvu_cgx_is_pkind_config_permitted(rvu, pcifunc))
++				rvu_write64(rvu, blkaddr, NIX_AF_LFX_TX_PARSE_CFG(nixlf),
++					    txpkind);
++			mutex_unlock(&cgxd->lock);
++		} else {
++			rvu_write64(rvu, blkaddr, NIX_AF_LFX_TX_PARSE_CFG(nixlf),
++				    txpkind);
++		}
+ 	}
+ 
+ 	pfvf->intf_mode = intf_mode;
 -- 
 2.53.0
 
