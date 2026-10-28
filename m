@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215549;
-	b=4RW5MixNUQLtmapdseEc5txSrBzbG/0tsVKMxEJsCpOGQ7Z7FCoZ5ZKUE39SxXXCgYEu
-	 V9h7zjaYOWW5kE/Le89cPqU6feqFK6XpOSSIc6ZwpVBeMuJR2hB60RgK55O2ByZT65hfm
-	 ftCqXGArRZtCIl+pt8/BZfyjkKo7tg2aSpESbVVrNORPPSZ5QjAvgAPS5lW+AFvHQvtXw
-	 IJ39WjORg9/BGfCD0Uc0NlohUWCYrdWAFIY6cHoe0r9XZcj4jI+OIxRDmxrpSmw43DjUe
-	 DyWX/lMaY3FcofH4zCAsybz3QGBPxE+5HVzUStzcwSs5uGldFiBkCS1CIlEw1K4egwA==
+	t=1793215552;
+	b=i3YSAOKGjLhdkk4mYMf+x7Ps3RztGKMk0Dw9W82+kRFPqMjVHibrkVh7cABTclLQORYu
+	 RD8s0ObSzxOrHLxJh2kKM116s8tGYPZNzRwytAgnodcgul/D9T236dB5UC9zTPS0NAT/Z
+	 AHVZgOysA+Jg6OaeBo6RDuAofdooNJ5zibn6OEZH0AFub2kj/fNeV1SxLGHsxRZBHVb4D
+	 wdnIEQ+tVcsB5HtYtNyyPLPkwKIR+lP9/F6TlxbazN2n56YSxUI0RmJRUaO/neEpcxeez
+	 udSKV74Z6JKxQSjRhZ8N0TJykDs2twi93m+m72/nk/8Ke73/Mp+srrrFVr5ANUhlJew==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215549;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215552;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=1PZA0Es+JSl6WcKVtfxg1eTLdet4oPxZ17gZO8dO1cg=;
-	b=etydbfUJlqUw6ap90L3Rt7JHhcmDWzO+1yv8+bi0iPOYNTTQyezQRzlG2wpvReaE7Taf
-	 WhPDJI1WJuQignY7RAReFv00dAfoEkcx7MQ00282F/IH4YAbZHSoyuRDccjrIM222dHSE
-	 phSCe769O+m0NPUtVqBoSNXyiJejNIndVHd7b7wSLBWdM4u//PDZTL6C3HbTOsgTxtzfD
-	 lDdeLjGysLy7CcEUZXkrezj6jAku/PhNgwvhj7nspDeIoEYOPlvADqbPVrMdPg9GkDXI4
-	 q7E3wVATpAzF0hlz5r454iCxbgYbdK8q579B3E6DWeARo9zJtd5sZSfGM1MgEvV7aag==
+	bh=wkD36Bn987DY807VmqtlNdry9ZS6k0e44Fewyy/2kbM=;
+	b=rx/UAsO686L8+Dq+2vIzAFKwhJp7JeiVSMi89EfmtVjGZr2GeGkHeMInWVt96y2XgKGf
+	 ROfAowAe1ejtIvuwz9TSW2GBxcqW4cJzeSNlv44k8WIoUG7qRmsBZdr/p/E3GNYGgwKXc
+	 2oGBfN8RFT4otnA/bj8KAxpyeA4x3HeZi1XCregv54ZKTpmxIwH7h7VzTR+IJ+FChUWXS
+	 Zcf+bEeyckdheExYFYA0yAOPQwsUVFlrBwr6KcOdyFFL5XFzdF9/P8/7IvrsyTO2ZOdv0
+	 u6PisBulUlmVLA0vMUTX0pTy2Lp4uK/L838Nnw2am1R9I6Lp9yR/8AWpJaESXNPjyXQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0b9Ag3RZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ecvSwq2p;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94F46606A31A;
-	Wed, 28 Oct 2026 19:25:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FC2C606A31C;
+	Wed, 28 Oct 2026 19:25:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0b9Ag3RZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E483A1F01825;
-	Wed, 28 Oct 2026 19:25:48 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ecvSwq2p
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDE8D1F01825;
+	Wed, 28 Oct 2026 19:25:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215549;
-	bh=1PZA0Es+JSl6WcKVtfxg1eTLdet4oPxZ17gZO8dO1cg=;
+	s=korg; t=1793215552;
+	bh=wkD36Bn987DY807VmqtlNdry9ZS6k0e44Fewyy/2kbM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0b9Ag3RZrdmkV/m6tBf8KY3V4UqR4Qx+l27cALkGW6C/Nv4L3X0Yb/BrZWAu6MGgf
-	 dvujbRkMPAxXRKZY6i/bXzLaUKhZNE1ZP776ouUuPWWarM1122eQ/mIUZxnaK0Tll5
-	 B5Ri51EMWRYpe8WXQGKPB4RUl1BR38u763zVD3a8=
+	b=ecvSwq2p5wA0mdrOI1Z+bdCMmcaaJHwNOwgq2PmgW+Onm4ZNXwF4cutgWyyMaBNJn
+	 HpMJItpsgmWrbxvZzsbxXVWmNWePlXtkHp9TmPrL1jR2X5K59rTCqXTFXfiQe+sCXG
+	 OSOTfYoSoj7gy1oiDhJlaXFxpUVSsBcK8IOXEV/0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Cen Zhang <zzzccc427@gmail.com>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1249/1887] ALSA: seq: Clean up fifo locking with guard
-Date: Wed, 28 Oct 2026 17:55:45 +0100
-Message-ID: <20261028170527.846683247@linuxfoundation.org>
+Subject: [PATCH 6.1 1250/1887] ALSA: seq: avoid stale FIFO cells during resize
+Date: Wed, 28 Oct 2026 17:55:46 +0100
+Message-ID: <20261028170527.869527404@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -67,104 +68,176 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit 9314e34e37292f2d3d43dcc8a7f54366b4c0811d ]
+[ Upstream commit e546128291f8d688dcb931827e2efd2aa6c0734d ]
 
-Yet more cleanup, now for seq_fifo.c about its refcount calls; the
-manual refcount calls (either snd_use_lock_*() or snd_seq_fifo_lock())
-are replaced with guard(snd_seq_fifo).
+snd_seq_fifo_resize() still needs to publish the replacement pool
+before it waits for FIFO users. A blocking snd_seq_read() holds
+f->use_lock while it sleeps, so concurrent senders must be able to
+queue to the new pool and wake that reader instead of failing against a
+closing old pool.
 
-Only code refactoring, and no behavior change.
+However, snd_seq_fifo_event_in() duplicates an event before it takes
+f->lock, and snd_seq_read() can dequeue a cell and later call
+snd_seq_fifo_cell_putback() if copy_to_user() or
+snd_seq_expand_var_event() fails. If resize swaps f->pool and detaches
+oldhead in between, either path can relink an old-pool cell after the
+snapshot. That stale cell sits outside the drained oldhead list, keeps
+oldpool->counter elevated, and can leave snd_seq_pool_delete() waiting
+for the retired pool to drain.
 
+Keep the existing swap-before-wait ordering in snd_seq_fifo_resize(),
+but reject stale cells before any FIFO relink. Revalidate event-in cells
+under f->lock and retry them against the published replacement pool, and
+free stale putback cells instead of linking them back into the FIFO.
+
+The buggy scenario involves two paths, with each column showing the
+order within that path:
+
+resize path:                    relink path:
+1. Allocate newpool.             1. Take f->use_lock.
+2. Swap f->pool to newpool and   2. Duplicate or dequeue an old-pool
+   detach oldhead.                  cell before oldpool closes.
+3. Mark oldpool closing and      3. Reach a later relink point after
+   wait for FIFO users.             resize published newpool.
+4. Free oldhead and delete       4. Relink the old-pool cell after
+   oldpool.                         resize detached oldhead.
+                                 5. Drop f->use_lock.
+
+The reproducer reports a resize ioctl blocked in the expected pool
+teardown path:
+
+signal: resize iteration=98 target_pool=4 exceeded 250ms
+        (elapsed=251ms)
+diagnostic: resize_tid=651 wchan=snd_seq_pool_done
+diagnostic: resize_tid=651 stack=
+  snd_seq_pool_done+0x5b/0x140
+  snd_seq_pool_delete+0x7a/0x90
+  snd_seq_fifo_resize+0x193/0x1e0
+  snd_seq_ioctl_set_client_pool+0x214/0x260
+  snd_seq_ioctl+0x119/0x540
+  __x64_sys_ioctl+0xd1/0x120
+  do_syscall_64+0xbb/0x2f0
+  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+A second run with larger pools hit the same target path:
+
+signal: resize iteration=32 target_pool=64 exceeded 250ms
+        (elapsed=251ms)
+diagnostic: resize_tid=663 wchan=snd_seq_pool_done
+diagnostic: resize_tid=663 stack=
+  snd_seq_pool_done+0x5b/0x140
+  snd_seq_pool_delete+0x7a/0x90
+  snd_seq_fifo_resize+0x193/0x1e0
+  snd_seq_ioctl_set_client_pool+0x214/0x260
+  snd_seq_ioctl+0x119/0x540
+  __x64_sys_ioctl+0xd1/0x120
+  do_syscall_64+0xbb/0x2f0
+  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+Fixes: 2d7d54002e39 ("ALSA: seq: Fix race during FIFO resize")
+
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Link: https://patch.msgid.link/20260614004801.3507773-2-zzzccc427@gmail.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20250827080520.7544-8-tiwai@suse.de
-Stable-dep-of: e546128291f8 ("ALSA: seq: avoid stale FIFO cells during resize")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/seq/seq_clientmgr.c |  3 +--
- sound/core/seq/seq_fifo.c      | 15 ++++-----------
- sound/core/seq/seq_fifo.h      |  1 +
- 3 files changed, 6 insertions(+), 13 deletions(-)
+ sound/core/seq/seq_fifo.c | 52 ++++++++++++++++++++++++++++-----------
+ 1 file changed, 37 insertions(+), 15 deletions(-)
 
-diff --git a/sound/core/seq/seq_clientmgr.c b/sound/core/seq/seq_clientmgr.c
-index 37930d74e3947..0b0a2f7c07879 100644
---- a/sound/core/seq/seq_clientmgr.c
-+++ b/sound/core/seq/seq_clientmgr.c
-@@ -439,7 +439,7 @@ static ssize_t snd_seq_read(struct file *file, char __user *buf, size_t count,
- 
- 	cell = NULL;
- 	err = 0;
--	snd_seq_fifo_lock(fifo);
-+	guard(snd_seq_fifo)(fifo);
- 
- 	if (IS_ENABLED(CONFIG_SND_SEQ_UMP) && client->midi_version > 0)
- 		aligned_size = sizeof(struct snd_seq_ump_event);
-@@ -498,7 +498,6 @@ static ssize_t snd_seq_read(struct file *file, char __user *buf, size_t count,
- 		if (err == -EAGAIN && result > 0)
- 			err = 0;
- 	}
--	snd_seq_fifo_unlock(fifo);
- 
- 	return (err < 0) ? err : result;
- }
 diff --git a/sound/core/seq/seq_fifo.c b/sound/core/seq/seq_fifo.c
-index 3a10b081f129c..f23c6b7ae2403 100644
+index f23c6b7ae2403..c3dfe04c3883d 100644
 --- a/sound/core/seq/seq_fifo.c
 +++ b/sound/core/seq/seq_fifo.c
-@@ -106,12 +106,11 @@ int snd_seq_fifo_event_in(struct snd_seq_fifo *f,
+@@ -101,13 +101,17 @@ int snd_seq_fifo_event_in(struct snd_seq_fifo *f,
+ 			  struct snd_seq_event *event)
+ {
+ 	struct snd_seq_event_cell *cell;
++	struct snd_seq_pool *pool;
++	bool linked;
+ 	int err;
+ 
  	if (snd_BUG_ON(!f))
  		return -EINVAL;
  
--	snd_use_lock_use(&f->use_lock);
-+	guard(snd_seq_fifo)(f);
- 	err = snd_seq_event_dup(f->pool, event, &cell, 1, NULL, NULL); /* always non-blocking */
+ 	guard(snd_seq_fifo)(f);
+-	err = snd_seq_event_dup(f->pool, event, &cell, 1, NULL, NULL); /* always non-blocking */
++retry:
++	pool = READ_ONCE(f->pool);
++	err = snd_seq_event_dup(pool, event, &cell, 1, NULL, NULL); /* always non-blocking */
  	if (err < 0) {
  		if ((err == -ENOMEM) || (err == -EAGAIN))
  			atomic_inc(&f->overflow);
--		snd_use_lock_free(&f->use_lock);
- 		return err;
+@@ -115,14 +119,24 @@ int snd_seq_fifo_event_in(struct snd_seq_fifo *f,
  	}
  		
-@@ -130,8 +129,6 @@ int snd_seq_fifo_event_in(struct snd_seq_fifo *f,
- 	if (waitqueue_active(&f->input_sleep))
- 		wake_up(&f->input_sleep);
+ 	/* append new cells to fifo */
++	linked = false;
+ 	scoped_guard(spinlock_irqsave, &f->lock) {
+-		if (f->tail != NULL)
+-			f->tail->next = cell;
+-		f->tail = cell;
+-		if (f->head == NULL)
+-			f->head = cell;
+-		cell->next = NULL;
+-		f->cells++;
++		if (cell->pool == f->pool) {
++			if (f->tail)
++				f->tail->next = cell;
++			f->tail = cell;
++			if (!f->head)
++				f->head = cell;
++			cell->next = NULL;
++			f->cells++;
++			linked = true;
++		}
++	}
++
++	if (!linked) {
++		/* Retry against the replacement pool after resize publishes it. */
++		snd_seq_cell_free(cell);
++		goto retry;
+ 	}
  
--	snd_use_lock_free(&f->use_lock);
--
- 	return 0; /* success */
- 
- }
-@@ -263,14 +260,10 @@ int snd_seq_fifo_resize(struct snd_seq_fifo *f, int poolsize)
- /* get the number of unused cells safely */
- int snd_seq_fifo_unused_cells(struct snd_seq_fifo *f)
+ 	/* wakeup client */
+@@ -194,13 +208,21 @@ int snd_seq_fifo_cell_out(struct snd_seq_fifo *f,
+ void snd_seq_fifo_cell_putback(struct snd_seq_fifo *f,
+ 			       struct snd_seq_event_cell *cell)
  {
--	int cells;
--
- 	if (!f)
- 		return 0;
- 
--	snd_use_lock_use(&f->use_lock);
--	scoped_guard(spinlock_irqsave, &f->lock)
--		cells = snd_seq_unused_cells(f->pool);
--	snd_use_lock_free(&f->use_lock);
--	return cells;
-+	guard(snd_seq_fifo)(f);
-+	guard(spinlock_irqsave)(&f->lock);
-+	return snd_seq_unused_cells(f->pool);
++	bool linked = false;
++
+ 	if (cell) {
+-		guard(spinlock_irqsave)(&f->lock);
+-		cell->next = f->head;
+-		f->head = cell;
+-		if (!f->tail)
+-			f->tail = cell;
+-		f->cells++;
++		scoped_guard(spinlock_irqsave, &f->lock) {
++			if (cell->pool == f->pool) {
++				cell->next = f->head;
++				f->head = cell;
++				if (!f->tail)
++					f->tail = cell;
++				f->cells++;
++				linked = true;
++			}
++		}
++		if (!linked)
++			snd_seq_cell_free(cell);
+ 	}
  }
-diff --git a/sound/core/seq/seq_fifo.h b/sound/core/seq/seq_fifo.h
-index b56a7b897c9c3..4c9c49127746b 100644
---- a/sound/core/seq/seq_fifo.h
-+++ b/sound/core/seq/seq_fifo.h
-@@ -37,6 +37,7 @@ int snd_seq_fifo_event_in(struct snd_seq_fifo *f, struct snd_seq_event *event);
- /* lock fifo from release */
- #define snd_seq_fifo_lock(fifo)		snd_use_lock_use(&(fifo)->use_lock)
- #define snd_seq_fifo_unlock(fifo)	snd_use_lock_free(&(fifo)->use_lock)
-+DEFINE_GUARD(snd_seq_fifo, struct snd_seq_fifo *, snd_seq_fifo_lock(_T), snd_seq_fifo_unlock(_T))
  
- /* get a cell from fifo - fifo should be locked */
- int snd_seq_fifo_cell_out(struct snd_seq_fifo *f, struct snd_seq_event_cell **cellp, int nonblock);
+@@ -236,7 +258,7 @@ int snd_seq_fifo_resize(struct snd_seq_fifo *f, int poolsize)
+ 		oldpool = f->pool;
+ 		oldhead = f->head;
+ 		/* exchange pools */
+-		f->pool = newpool;
++		WRITE_ONCE(f->pool, newpool);
+ 		f->head = NULL;
+ 		f->tail = NULL;
+ 		f->cells = 0;
 -- 
 2.53.0
 
