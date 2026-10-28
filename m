@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214779;
-	b=BbjanAKwRMJslXFln803bMsz4M9HKM0PnYx0YIFIkQI2wSkiTaZ+w+CNk5ESoO2eE8d9
-	 pFq6fZH/b/rw908BdzWh3BG0deSSYk9vKgVmeWyvNC5vYClE22t78DESLyO3ybUKsutmh
-	 XCL4Cv/+/KK31Dy1vGXWJuokoCvHW++qX9ex1Co/iXADT+I6jHeVDPcPKMAx1k+Gm3PXS
-	 GFuyBDbKI8xTqSZ8b2xQwQ9D4Eiy5CRveCajXGSVBnOc6aY1PogKnqpJVAQQB24ZXZZ23
-	 a8LU01misLXvWBlZDdd6KaRsxxLu7TysFXTFqBXDkLeI6FhKXPV5kYaDQV3Cu2kueBg==
+	t=1793214782;
+	b=fltfWH3AKTyCkALLUfKlLzbjAx365ze78rWLTDKHO8IUTxxqWqqO3ikeiRSXsaYLPa7A
+	 jIcQsZOrDSN4WVSiU2DVnjnfqHMervKj6WwdIzQMxH7cTbsswcj25tJqQAmnOXVxhkTNZ
+	 H8VNqHN/57WfvyqKtQzTnwsbkeOG0wjUg+Lj0v00DSZqzy8PX75LPsrvj+dyYVCr0gJQZ
+	 +ZiY6iF5WlqTSAYmeDoZ/7cFJMPHDTotNHwyGjPpdWeEdxtoh+GjLrzWWMALueoexklL1
+	 tYyi+2JDEKxesy1yYVpjzzbEEA7TbiEnJWNvdjRiSKsEbTaOq5/lR5BArMXhqdAmZBQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214779;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214782;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=p302TmqCXuDpfItjYMbPmaRoSojsnhMGaqJPkRxUYWw=;
-	b=ZmfuB00IKRLbpINj96IV3tPnDOZuh8km8/wt7psA5Pse4oG6Qu//l32DIQpd5fO657aZ
-	 f52SYo5o6diG07h46x5ERk/XPzxLiniU6HamUGUxhun8KgzgSV3CYNIWpu01VAm2JgrMh
-	 oY3AoGCasXWJRZq52+a10fld92vqOkb3fVZAdyPa/lAYKRYMcOG4IcxfJVHDr4rAvBm++
-	 rFPlw2Y5hq/yZCjhKCH5bbzB7o7AszF7PvafUTilZejB3R//6CqZmaxpwTydhB+PVY8UG
-	 O/gsB1/uoaDdTUEqcTYktSFZWuzotY0lPUZxu6w/K7TyZnwJJUOIbCDmOZ2Ds2KZ1Vg==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=xI0heFA8g2SN0Swp/v19/MjTFiQKmiaSa6GZtI0GIdQ=;
+	b=zOh0R8MJmd6gzORrvvLnrKvatek2ZFkmOebgoED9EC8lNADN/4++AE/+BpMwVN1UNNes
+	 BC3KIdNoElFsuTtE+rQMxWYEJ9XIw+6Pzjt5e9sRp56sLtzwvAWb5BPmo1MwNZeCvO2Ty
+	 SyEg2Stc4Nl3k8oYofQYDOlBnze3eT3iCDboJd2SiY720QTTV4q8w3uvKQEmBB7LoPMap
+	 K+A9P9fEcKEC3TihoyuypNX9svQ88iinpfd2oQmUv0bcC8dyDlDiPhaYEbDKAyc1Dxq+x
+	 fEwLreuwbOL/k1LpL3P0LVrVwZSRkM0dOuQJwHX2gGvc7LMRDnOkP1C4DVjOfOlHN2w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L77YyJbG;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JvI5L7+m;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 589B3606B7CF;
-	Wed, 28 Oct 2026 19:12:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72AC0606A31D;
+	Wed, 28 Oct 2026 19:13:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L77YyJbG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9F411F031E0;
-	Wed, 28 Oct 2026 19:12:58 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JvI5L7+m
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CBF81F01828;
+	Wed, 28 Oct 2026 19:13:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214779;
-	bh=p302TmqCXuDpfItjYMbPmaRoSojsnhMGaqJPkRxUYWw=;
+	s=korg; t=1793214782;
+	bh=xI0heFA8g2SN0Swp/v19/MjTFiQKmiaSa6GZtI0GIdQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=L77YyJbGIxCeX3F5ayQxRYk/gUgsZ6840R+dnfNeqarYj2FWpj526uYWQSp9nfmCT
-	 RTmyOXCu+tGFo0JncwbfUMLXrcrd6wNJ6pJ1HvQxCpRiU/bclvQRH3OobKe5wxdJuW
-	 fuE2HU5dXEI5Wu68DF4dpNoE61UcTP24tojyxdQc=
+	b=JvI5L7+mp/i47Lh6vd4378sWs2BAe7KoqgkCDILW5Irw8mZOVTkFsntPyUBxIpr7o
+	 /zwaiWFJEZFJmtsfzgC52hxlQWNxHmXkcEDj/iVQR0lNpW5SUjfdxAcCwwl6YPZ0e8
+	 2JB0L+M+BmHjxdzYgef5q4+NjgSJXw7Fl+WTK78w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Lee Jones <lee@kernel.org>,
+	=?UTF-8?q?G=C3=BCnther=20Noack?= <gnoack@google.com>,
 	Benjamin Tissoires <bentiss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0978/1887] HID: core: Mitigate potential OOB by removing bogus memset()
-Date: Wed, 28 Oct 2026 17:51:14 +0100
-Message-ID: <20261028170521.665325769@linuxfoundation.org>
+Subject: [PATCH 6.1 0979/1887] HID: logitech-hidpp: Prevent use-after-free on force feedback initialisation failure
+Date: Wed, 28 Oct 2026 17:51:15 +0100
+Message-ID: <20261028170521.688598689@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -62,6 +63,7 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
@@ -70,45 +72,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Lee Jones <lee@kernel.org>
 
-[ Upstream commit 0a3fe972a7cb1404f693d6f1711f32bc1d244b1c ]
+[ Upstream commit f7a4c78bfeb320299c1b641500fe7761eadbd101 ]
 
-The memset() in hid_report_raw_event() has the good intention of
-clearing out bogus data by zeroing the area from the end of the incoming
-data string to the assumed end of the buffer.  However, as we have
-previously seen, doing so can easily result in OOB reads and writes in
-the subsequent thread of execution.
+Presently, if the force feedback initialisation fails when probing the
+Logitech G920 Driving Force Racing Wheel for Xbox One, an error number
+will be returned and propagated before the userspace infrastructure
+(sysfs and /dev/input) has been torn down.  If userspace ignores the
+errors and continues to use its references to these dangling entities, a
+UAF will promptly follow.
 
-The current suggestion from one of the HID maintainers is to remove the
-memset() and simply return if the incoming event buffer size is not
-large enough to fill the associated report.
-
-Suggested-by Benjamin Tissoires <bentiss@kernel.org>
+We have 2 options; continue to return the error, but ensure that all of
+the infrastructure is torn down accordingly or continue to treat this
+condition as a warning by emitting the message but returning success.
+It is thought that the original author's intention was to emit the
+warning but keep the device functional, less the force feedback feature,
+so let's go with that.
 
 Signed-off-by: Lee Jones <lee@kernel.org>
-[bentiss: changed the return value]
+Reviewed-by: Günther Noack <gnoack@google.com>
 Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-core.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/hid/hid-logitech-hidpp.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/hid/hid-core.c b/drivers/hid/hid-core.c
-index 4b717cc838cf1..66deabcfb68b8 100644
---- a/drivers/hid/hid-core.c
-+++ b/drivers/hid/hid-core.c
-@@ -2052,9 +2052,9 @@ int hid_report_raw_event(struct hid_device *hid, enum hid_report_type type, u8 *
+diff --git a/drivers/hid/hid-logitech-hidpp.c b/drivers/hid/hid-logitech-hidpp.c
+index 37fe852dd2da9..ebaca3588342f 100644
+--- a/drivers/hid/hid-logitech-hidpp.c
++++ b/drivers/hid/hid-logitech-hidpp.c
+@@ -4278,10 +4278,12 @@ static int hidpp_probe(struct hid_device *hdev, const struct hid_device_id *id)
+ 
+ 	if (hidpp->quirks & HIDPP_QUIRK_CLASS_G920) {
+ 		ret = hidpp_ff_init(hidpp, &data);
+-		if (ret)
++		if (ret) {
+ 			hid_warn(hidpp->hid_dev,
+ 		     "Unable to initialize force feedback support, errno %d\n",
+ 				 ret);
++			ret = 0;
++		}
  	}
  
- 	if (csize < rsize) {
--		dbg_hid("report %d is too short, (%d < %d)\n", report->id,
--			csize, rsize);
--		memset(cdata + csize, 0, rsize - csize);
-+		hid_warn_ratelimited(hid, "Event data for report %d was too short (%d vs %d)\n",
-+				     report->id, rsize, csize);
-+		return -EINVAL;
- 	}
- 
- 	if ((hid->claimed & HID_CLAIMED_HIDDEV) && hid->hiddev_report_event)
+ 	/*
 -- 
 2.53.0
 
