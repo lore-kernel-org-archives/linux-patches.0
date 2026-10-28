@@ -1,55 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214346;
-	b=H/1bfmvlUDCpWyijIj2VmCLii43UkWxay7sNiT+NDK10cU0YhAD78aGg5R67NHprbHIq
-	 g4MQPwPX2gzhBEXAXBsZNiExeG6Rk645+0BnNPJ04bmrylFiZZKbG0Fw4IEx/S7K2y5qJ
-	 pTkp58cwlYb8KLIesXbQloQN2JaUSOa/o/HO6pJFwhuiYZe947xa/dO7oJEunJ6UG/OUu
-	 u44PfwppGoHqB9t23CZ55PUd68kW6DII+YsGvqr56QyFda8Ppz5dXTIz16qrf1xVR0KRy
-	 KOzYVyH03gpmNXSv3LtR8em4MqdPgcDrbP5Jd0VPz+HNjmyOcbv3/hkHaIQ5y8/3EwA==
+	t=1793214349;
+	b=oDbiwmvk7Z7hq90Gnho8cUDQLqnWsmO2m3qimhcnmFGrlNaAcHZtRZLUOsWZz9YOy2Sm
+	 q5yu1AorgbpsXp48UsTctY3VWkaCILq528AuCDhoFtd0WPjykRI8Opwk0c+nOLUksgmdp
+	 lisPvf0NcbAU9MmIwPOYUZ4VWDtWYJxVRY4MUqzFkI2FiDw2ikIKw+d1e9Ii6EqsvOmC0
+	 tLWgy+1k0MTG988Ob1emhvQN0oYxZ5JOpm1mXhar3C2aXuFb+QGjlVGJapIjNU0cbk+4I
+	 VZC4q/5UiKg1eJjVSidSOK2VG6X0REWyFhQP+ngZizjN/8dwxZ/AsSZ0mHl8OZwE3yA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214346;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214349;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=BMaHI817346fguy4Vsxf3eo/9Tain7zc+OXjN8Prfpo=;
-	b=vYR3Hcry3IWNvgEBJgcNj4UeIem8klJ4KYgEnWEPwLMdfDdCecvt4AVIzHtEyYpczJeC
-	 jJzTym4MayCf0z71MQxPmPpP7uvEpniy9UZEMm4+RDu6fmQ8z4dY6WLRhYsM5TDlOkcqi
-	 CrMDMs2ts1ZOs88LF96L6C38BTt2hLBj4nYDP6k2NN2cIoKb1oGscNtbqJ8DTrkwZX70o
-	 heve3yAFH24YFlaA+dEHwKQ92862ByrkrOunPD0Z13L3qQ9K9EbjtyBok4TCXvHw8Bum7
-	 Q4LIf5zmv3Uuaj8FsJIM15AWUmrBNugnrKo72SduoAU8y6nKm3hhkZkrxgupfPn6S2Q==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=XwnfSqs9lPFq2gaWcBFSuKba8kzgjLBZNidySGkgqPo=;
+	b=xxXB1ltXTsOScezLQPUVFn6zCuP5OhHvnv2Fcg55XJpxfWCQBhouypBrbRkQNqztDq6/
+	 nVfCIc/tmwX7oToqb7+wnY88yU2wWrslPzXyon/YuAKgS+UFP0Y2eRGyM5jZ+g2XAXQ43
+	 AfyX/Ihvf7Uy/6uPbQm9jAJxjzyB2QAsC9N5BAtn4ZU47vl/pgASgDkx2Q5jcBvDE6Tot
+	 9DRmc9j3miIpAwhmX4OccPJuy0dPNu5Ychee4qKtIqk2tj7p4n4sMLXOG8740GxfR1Q/O
+	 aZuRc2ebii5q6Vimgat+f4GvCfK0zzJtjL5Lh+Hqaqzh7XsQ3fKSo1rQiEcqZjHwi0A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VAbOGFZB;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ys7WT1cw;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F9B9606BFBC;
-	Wed, 28 Oct 2026 19:05:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1B66606A326;
+	Wed, 28 Oct 2026 19:05:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VAbOGFZB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55CD91F01825;
-	Wed, 28 Oct 2026 19:05:45 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ys7WT1cw
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C3501F01828;
+	Wed, 28 Oct 2026 19:05:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214345;
-	bh=BMaHI817346fguy4Vsxf3eo/9Tain7zc+OXjN8Prfpo=;
+	s=korg; t=1793214348;
+	bh=XwnfSqs9lPFq2gaWcBFSuKba8kzgjLBZNidySGkgqPo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VAbOGFZBMJVXa2M9GOaUU/nnz5ZXENL1uMs0pF0F+uPlvWXSG4pcBW4KR02mrxxz0
-	 wjWM1rY8OQStw/wLHm/sRB9DCP3qvk8UDuZMofO2TfaPfA8Y20n+LnyGGHUwLgqWXy
-	 s3Kq2aA01B1W6NMiU7nRT7qVe+MYltFdaC42beCo=
+	b=Ys7WT1cwSpOUFh2pVbob3ZTevK3FUv3nwz3zK2g/AjSXObgQhA8KROqzmyMA/RZwC
+	 zVpfFjbL6KGO5iIk5yagtA82mmo5Cz0Z8wVNPDGBF4S9DpVs5pxpsoBOhLnYQ5qZRh
+	 Xj04RqQvOt7i301aBwdR3JhMhhtYCElp4knVbzdc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Matti Vaittinen <mazziesaccount@gmail.com>,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+	Ohad Sharabi <osharabi@habana.ai>,
+	Oded Gabbay <ogabbay@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0809/1887] iio: st_sensors: core and lsm9ds0 switch to devm_regulator_bulk_get_enable()
-Date: Wed, 28 Oct 2026 17:48:25 +0100
-Message-ID: <20261028170517.838662277@linuxfoundation.org>
+Subject: [PATCH 6.1 0827/1887] habanalabs: remove support to export dmabuf from handle
+Date: Wed, 28 Oct 2026 17:48:43 +0100
+Message-ID: <20261028170518.244284596@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -65,217 +62,290 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From: Ohad Sharabi <osharabi@habana.ai>
 
-[ Upstream commit 9e855d77b1ec57704d23e25761a97e6e64abed66 ]
+[ Upstream commit 303dad15ed8ccbb1702f3476642d8a43680f97b5 ]
 
-These drivers only turns the power on at probe and off via a custom
-devm_add_action_or_reset() callback. The two regulators were handled
-separately so also switch to bulk registration.
-The new devm_regulator_bulk_get_enable() replaces all this boilerplate
-code.
+The API to the user which allows exporting DMA buffer from handle is
+deprecated here. It was never used as it is relevant only for Gaudi2,
+and the user stack has yet to add support for dmabuf in Gaudi2.
 
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Cc: Linus Walleij <linus.walleij@linaro.org>
-Cc: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Reviewed-by: Matti Vaittinen <mazziesaccount@gmail.com>
-Reviewed-by: Nuno Sá <nuno.sa@analog.com>
-Link: https://lore.kernel.org/r/20221016163409.320197-8-jic23@kernel.org
-Stable-dep-of: 9f92e93e257b ("iio: common: st_sensors: Fix use of uninitialize device structs")
+Looking forward, a modified API to export DMA buffer for ASICs that
+supports virtual memory will be added.
+
+Until the new API will be ready- exporting DMA buffer will not be
+supported for ASICs with virtual memory.
+
+Signed-off-by: Ohad Sharabi <osharabi@habana.ai>
+Reviewed-by: Oded Gabbay <ogabbay@kernel.org>
+Signed-off-by: Oded Gabbay <ogabbay@kernel.org>
+Stable-dep-of: 33927f3d0ecd ("habanalabs: fix UAF in export_dmabuf()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../iio/common/st_sensors/st_sensors_core.c   | 39 ++---------
- drivers/iio/imu/st_lsm9ds0/st_lsm9ds0_core.c  | 65 ++-----------------
- include/linux/iio/common/st_sensors.h         |  4 --
- 3 files changed, 14 insertions(+), 94 deletions(-)
+ drivers/misc/habanalabs/common/habanalabs.h |   5 -
+ drivers/misc/habanalabs/common/memory.c     | 143 ++------------------
+ 2 files changed, 9 insertions(+), 139 deletions(-)
 
-diff --git a/drivers/iio/common/st_sensors/st_sensors_core.c b/drivers/iio/common/st_sensors/st_sensors_core.c
-index dcc032f687403..6c3705f3838d1 100644
---- a/drivers/iio/common/st_sensors/st_sensors_core.c
-+++ b/drivers/iio/common/st_sensors/st_sensors_core.c
-@@ -219,47 +219,22 @@ int st_sensors_set_axis_enable(struct iio_dev *indio_dev, u8 axis_enable)
- }
- EXPORT_SYMBOL_NS(st_sensors_set_axis_enable, IIO_ST_SENSORS);
+diff --git a/drivers/misc/habanalabs/common/habanalabs.h b/drivers/misc/habanalabs/common/habanalabs.h
+index e6eabcdda1c5c..ca4b5ce5e6f8e 100644
+--- a/drivers/misc/habanalabs/common/habanalabs.h
++++ b/drivers/misc/habanalabs/common/habanalabs.h
+@@ -1732,8 +1732,6 @@ struct hl_cs_counters_atomic {
+  * struct hl_dmabuf_priv - a dma-buf private object.
+  * @dmabuf: pointer to dma-buf object.
+  * @ctx: pointer to the dma-buf owner's context.
+- * @phys_pg_pack: pointer to physical page pack if the dma-buf was exported for
+- *                memory allocation handle.
+  * @device_address: physical address of the device's memory. Relevant only
+  *                  if phys_pg_pack is NULL (dma-buf was exported from address).
+  *                  The total size can be taken from the dmabuf object.
+@@ -1741,7 +1739,6 @@ struct hl_cs_counters_atomic {
+ struct hl_dmabuf_priv {
+ 	struct dma_buf			*dmabuf;
+ 	struct hl_ctx			*ctx;
+-	struct hl_vm_phys_pg_pack	*phys_pg_pack;
+ 	uint64_t			device_address;
+ };
  
--static void st_reg_disable(void *reg)
--{
--	regulator_disable(reg);
--}
+@@ -2105,7 +2102,6 @@ struct hl_vm_hw_block_list_node {
+  * @node: used to attach to deletion list that is used when all the allocations are cleared
+  *        at the teardown of the context.
+  * @mapping_cnt: number of shared mappings.
+- * @exporting_cnt: number of dma-buf exporting.
+  * @asid: the context related to this list.
+  * @page_size: size of each page in the pack.
+  * @flags: HL_MEM_* flags related to this list.
+@@ -2121,7 +2117,6 @@ struct hl_vm_phys_pg_pack {
+ 	u64			total_size;
+ 	struct list_head	node;
+ 	atomic_t		mapping_cnt;
+-	u32			exporting_cnt;
+ 	u32			asid;
+ 	u32			page_size;
+ 	u32			flags;
+diff --git a/drivers/misc/habanalabs/common/memory.c b/drivers/misc/habanalabs/common/memory.c
+index a49038da3f6d0..7ae0779fbf072 100644
+--- a/drivers/misc/habanalabs/common/memory.c
++++ b/drivers/misc/habanalabs/common/memory.c
+@@ -371,12 +371,6 @@ static int free_device_memory(struct hl_ctx *ctx, struct hl_mem_in *args)
+ 		return -EINVAL;
+ 	}
  
- int st_sensors_power_enable(struct iio_dev *indio_dev)
+-	if (phys_pg_pack->exporting_cnt) {
+-		spin_unlock(&vm->idr_lock);
+-		dev_dbg(hdev->dev, "handle %u is exported, cannot free\n", handle);
+-		return -EINVAL;
+-	}
+-
+ 	/* must remove from idr before the freeing of the physical pages as the refcount of the pool
+ 	 * is also the trigger of the idr destroy
+ 	 */
+@@ -1700,29 +1694,19 @@ static struct sg_table *hl_map_dmabuf(struct dma_buf_attachment *attachment,
+ 					enum dma_data_direction dir)
  {
--	struct st_sensor_data *pdata = iio_priv(indio_dev);
-+	static const char * const regulator_names[] = { "vdd", "vddio" };
- 	struct device *parent = indio_dev->dev.parent;
- 	int err;
+ 	struct dma_buf *dma_buf = attachment->dmabuf;
+-	struct hl_vm_phys_pg_pack *phys_pg_pack;
+ 	struct hl_dmabuf_priv *hl_dmabuf;
+ 	struct hl_device *hdev;
+ 	struct sg_table *sgt;
  
- 	/* Regulators not mandatory, but if requested we should enable them. */
--	pdata->vdd = devm_regulator_get(parent, "vdd");
--	if (IS_ERR(pdata->vdd))
--		return dev_err_probe(&indio_dev->dev, PTR_ERR(pdata->vdd),
--				     "unable to get Vdd supply\n");
--
--	err = regulator_enable(pdata->vdd);
--	if (err != 0) {
--		dev_warn(&indio_dev->dev,
--			 "Failed to enable specified Vdd supply\n");
--		return err;
--	}
--
--	err = devm_add_action_or_reset(parent, st_reg_disable, pdata->vdd);
-+	err = devm_regulator_bulk_get_enable(parent,
-+					     ARRAY_SIZE(regulator_names),
-+					     regulator_names);
- 	if (err)
--		return err;
-+		return dev_err_probe(&indio_dev->dev, err,
-+				     "unable to enable supplies\n");
+ 	hl_dmabuf = dma_buf->priv;
+ 	hdev = hl_dmabuf->ctx->hdev;
+-	phys_pg_pack = hl_dmabuf->phys_pg_pack;
  
--	pdata->vdd_io = devm_regulator_get(parent, "vddio");
--	if (IS_ERR(pdata->vdd_io))
--		return dev_err_probe(&indio_dev->dev, PTR_ERR(pdata->vdd_io),
--				     "unable to get Vdd_IO supply\n");
+ 	if (!attachment->peer2peer) {
+ 		dev_dbg(hdev->dev, "Failed to map dmabuf because p2p is disabled\n");
+ 		return ERR_PTR(-EPERM);
+ 	}
+ 
+-	if (phys_pg_pack)
+-		sgt = alloc_sgt_from_device_pages(hdev,
+-						phys_pg_pack->pages,
+-						phys_pg_pack->npages,
+-						phys_pg_pack->page_size,
+-						attachment->dev,
+-						dir);
+-	else
+-		sgt = alloc_sgt_from_device_pages(hdev,
++	sgt = alloc_sgt_from_device_pages(hdev,
+ 						&hl_dmabuf->device_address,
+ 						1,
+ 						hl_dmabuf->dmabuf->size,
+@@ -1763,18 +1747,8 @@ static void hl_unmap_dmabuf(struct dma_buf_attachment *attachment,
+ static void hl_release_dmabuf(struct dma_buf *dmabuf)
+ {
+ 	struct hl_dmabuf_priv *hl_dmabuf = dmabuf->priv;
+-	struct hl_ctx *ctx = hl_dmabuf->ctx;
+-	struct hl_device *hdev = ctx->hdev;
+-	struct hl_vm *vm = &hdev->vm;
 -
--	err = regulator_enable(pdata->vdd_io);
--	if (err != 0) {
--		dev_warn(&indio_dev->dev,
--			 "Failed to enable specified Vdd_IO supply\n");
--		return err;
+-	if (hl_dmabuf->phys_pg_pack) {
+-		spin_lock(&vm->idr_lock);
+-		hl_dmabuf->phys_pg_pack->exporting_cnt--;
+-		spin_unlock(&vm->idr_lock);
 -	}
+ 
+ 	hl_ctx_put(hl_dmabuf->ctx);
 -
--	return devm_add_action_or_reset(parent, st_reg_disable, pdata->vdd_io);
-+	return 0;
+ 	kfree(hl_dmabuf);
  }
- EXPORT_SYMBOL_NS(st_sensors_power_enable, IIO_ST_SENSORS);
  
-diff --git a/drivers/iio/imu/st_lsm9ds0/st_lsm9ds0_core.c b/drivers/iio/imu/st_lsm9ds0/st_lsm9ds0_core.c
-index ae7bc815382fb..e887b45cdbcd7 100644
---- a/drivers/iio/imu/st_lsm9ds0/st_lsm9ds0_core.c
-+++ b/drivers/iio/imu/st_lsm9ds0/st_lsm9ds0_core.c
-@@ -18,58 +18,6 @@
+@@ -1785,7 +1759,7 @@ static const struct dma_buf_ops habanalabs_dmabuf_ops = {
+ 	.release = hl_release_dmabuf,
+ };
  
- #include "st_lsm9ds0.h"
+-static int export_dmabuf_common(struct hl_ctx *ctx,
++static int export_dmabuf(struct hl_ctx *ctx,
+ 				struct hl_dmabuf_priv *hl_dmabuf,
+ 				u64 total_size, int flags, int *dmabuf_fd)
+ {
+@@ -1849,6 +1823,11 @@ static int export_dmabuf_from_addr(struct hl_ctx *ctx, u64 device_addr,
  
--static int st_lsm9ds0_power_enable(struct device *dev, struct st_lsm9ds0 *lsm9ds0)
--{
--	int ret;
--
--	/* Regulators not mandatory, but if requested we should enable them. */
--	lsm9ds0->vdd = devm_regulator_get(dev, "vdd");
--	if (IS_ERR(lsm9ds0->vdd))
--		return dev_err_probe(dev, PTR_ERR(lsm9ds0->vdd),
--				     "unable to get Vdd supply\n");
--
--	ret = regulator_enable(lsm9ds0->vdd);
--	if (ret) {
--		dev_warn(dev, "Failed to enable specified Vdd supply\n");
--		return ret;
--	}
--
--	lsm9ds0->vdd_io = devm_regulator_get(dev, "vddio");
--	if (IS_ERR(lsm9ds0->vdd_io)) {
--		regulator_disable(lsm9ds0->vdd);
--		return dev_err_probe(dev, PTR_ERR(lsm9ds0->vdd_io),
--				     "unable to get Vdd_IO supply\n");
--	}
--	ret = regulator_enable(lsm9ds0->vdd_io);
--	if (ret) {
--		dev_warn(dev, "Failed to enable specified Vdd_IO supply\n");
--		regulator_disable(lsm9ds0->vdd);
--		return ret;
--	}
+ 	prop = &hdev->asic_prop;
+ 
++	if (prop->dram_supports_virtual_memory) {
++		dev_dbg(hdev->dev, "Export not supported for devices with virtual memory\n");
++		return -EOPNOTSUPP;
++	}
++
+ 	if (!IS_ALIGNED(device_addr, PAGE_SIZE)) {
+ 		dev_dbg(hdev->dev,
+ 			"exported device memory address 0x%llx should be aligned to 0x%lx\n",
+@@ -1890,99 +1869,7 @@ static int export_dmabuf_from_addr(struct hl_ctx *ctx, u64 device_addr,
+ 
+ 	hl_dmabuf->device_address = device_addr;
+ 
+-	rc = export_dmabuf_common(ctx, hl_dmabuf, size, flags, dmabuf_fd);
+-	if (rc)
+-		goto err_free_dmabuf_wrapper;
 -
 -	return 0;
+-
+-err_free_dmabuf_wrapper:
+-	kfree(hl_dmabuf);
+-	return rc;
 -}
 -
--static void st_lsm9ds0_power_disable(void *data)
+-/**
+- * export_dmabuf_from_handle() - export a dma-buf object for the given memory
+- *                               handle.
+- * @ctx: pointer to the context structure.
+- * @handle: device memory allocation handle.
+- * @flags: DMA-BUF file/FD flags.
+- * @dmabuf_fd: pointer to result FD that represents the dma-buf object.
+- *
+- * Create and export a dma-buf object for an existing memory allocation inside
+- * the device memory, and return a FD which is associated with the dma-buf
+- * object.
+- *
+- * Return: 0 on success, non-zero for failure.
+- */
+-static int export_dmabuf_from_handle(struct hl_ctx *ctx, u64 handle, int flags,
+-					int *dmabuf_fd)
 -{
--	struct st_lsm9ds0 *lsm9ds0 = data;
+-	struct hl_vm_phys_pg_pack *phys_pg_pack;
+-	struct hl_dmabuf_priv *hl_dmabuf;
+-	struct hl_device *hdev = ctx->hdev;
+-	struct asic_fixed_properties *prop;
+-	struct hl_vm *vm = &hdev->vm;
+-	u64 bar_address;
+-	int rc, i;
 -
--	regulator_disable(lsm9ds0->vdd_io);
--	regulator_disable(lsm9ds0->vdd);
--}
+-	prop = &hdev->asic_prop;
 -
--static int devm_st_lsm9ds0_power_enable(struct st_lsm9ds0 *lsm9ds0)
--{
--	struct device *dev = lsm9ds0->dev;
--	int ret;
+-	if (upper_32_bits(handle)) {
+-		dev_dbg(hdev->dev, "no match for handle 0x%llx\n", handle);
+-		return -EINVAL;
+-	}
 -
--	ret = st_lsm9ds0_power_enable(dev, lsm9ds0);
--	if (ret)
--		return ret;
+-	spin_lock(&vm->idr_lock);
 -
--	return devm_add_action_or_reset(dev, st_lsm9ds0_power_disable, lsm9ds0);
--}
+-	phys_pg_pack = idr_find(&vm->phys_pg_pack_handles, (u32) handle);
+-	if (!phys_pg_pack) {
+-		spin_unlock(&vm->idr_lock);
+-		dev_dbg(hdev->dev, "no match for handle 0x%x\n", (u32) handle);
+-		return -EINVAL;
+-	}
 -
- static int st_lsm9ds0_probe_accel(struct st_lsm9ds0 *lsm9ds0, struct regmap *regmap)
- {
- 	const struct st_sensor_settings *settings;
-@@ -92,8 +40,6 @@ static int st_lsm9ds0_probe_accel(struct st_lsm9ds0 *lsm9ds0, struct regmap *reg
- 	data->sensor_settings = (struct st_sensor_settings *)settings;
- 	data->irq = lsm9ds0->irq;
- 	data->regmap = regmap;
--	data->vdd = lsm9ds0->vdd;
--	data->vdd_io = lsm9ds0->vdd_io;
+-	/* increment now to avoid freeing device memory while exporting */
+-	phys_pg_pack->exporting_cnt++;
+-
+-	spin_unlock(&vm->idr_lock);
+-
+-	if (phys_pg_pack->vm_type != VM_TYPE_PHYS_PACK) {
+-		dev_dbg(hdev->dev, "handle 0x%llx does not represent DRAM memory\n", handle);
+-		rc = -EINVAL;
+-		goto err_dec_exporting_cnt;
+-	}
+-
+-	for (i = 0 ; i < phys_pg_pack->npages ; i++) {
+-
+-		bar_address = hdev->dram_pci_bar_start +
+-						(phys_pg_pack->pages[i] -
+-						prop->dram_base_address);
+-
+-		if (bar_address + phys_pg_pack->page_size >
+-			hdev->dram_pci_bar_start + prop->dram_pci_bar_size ||
+-			bar_address + phys_pg_pack->page_size < bar_address) {
+-
+-			dev_dbg(hdev->dev,
+-				"DRAM memory range 0x%llx (+0x%x) is outside of PCI BAR boundaries\n",
+-				phys_pg_pack->pages[i],
+-				phys_pg_pack->page_size);
+-
+-			rc = -EINVAL;
+-			goto err_dec_exporting_cnt;
+-		}
+-	}
+-
+-	hl_dmabuf = kzalloc(sizeof(*hl_dmabuf), GFP_KERNEL);
+-	if (!hl_dmabuf) {
+-		rc = -ENOMEM;
+-		goto err_dec_exporting_cnt;
+-	}
+-
+-	hl_dmabuf->phys_pg_pack = phys_pg_pack;
+-
+-	rc = export_dmabuf_common(ctx, hl_dmabuf, phys_pg_pack->total_size,
+-				flags, dmabuf_fd);
++	rc = export_dmabuf(ctx, hl_dmabuf, size, flags, dmabuf_fd);
+ 	if (rc)
+ 		goto err_free_dmabuf_wrapper;
  
- 	return st_accel_common_probe(lsm9ds0->accel);
+@@ -1990,12 +1877,6 @@ static int export_dmabuf_from_handle(struct hl_ctx *ctx, u64 handle, int flags,
+ 
+ err_free_dmabuf_wrapper:
+ 	kfree(hl_dmabuf);
+-
+-err_dec_exporting_cnt:
+-	spin_lock(&vm->idr_lock);
+-	phys_pg_pack->exporting_cnt--;
+-	spin_unlock(&vm->idr_lock);
+-
+ 	return rc;
  }
-@@ -120,19 +66,22 @@ static int st_lsm9ds0_probe_magn(struct st_lsm9ds0 *lsm9ds0, struct regmap *regm
- 	data->sensor_settings = (struct st_sensor_settings *)settings;
- 	data->irq = lsm9ds0->irq;
- 	data->regmap = regmap;
--	data->vdd = lsm9ds0->vdd;
--	data->vdd_io = lsm9ds0->vdd_io;
  
- 	return st_magn_common_probe(lsm9ds0->magn);
- }
+@@ -2270,13 +2151,7 @@ int hl_mem_ioctl(struct hl_fpriv *hpriv, void *data)
+ 		break;
  
- int st_lsm9ds0_probe(struct st_lsm9ds0 *lsm9ds0, struct regmap *regmap)
- {
-+	struct device *dev = lsm9ds0->dev;
-+	static const char * const regulator_names[] = { "vdd", "vddio" };
- 	int ret;
- 
--	ret = devm_st_lsm9ds0_power_enable(lsm9ds0);
-+	/* Regulators not mandatory, but if requested we should enable them. */
-+	ret = devm_regulator_bulk_get_enable(dev, ARRAY_SIZE(regulator_names),
-+					     regulator_names);
- 	if (ret)
--		return ret;
-+		return dev_err_probe(dev, ret,
-+				     "unable to enable Vdd supply\n");
- 
- 	/* Setup accelerometer device */
- 	ret = st_lsm9ds0_probe_accel(lsm9ds0, regmap);
-diff --git a/include/linux/iio/common/st_sensors.h b/include/linux/iio/common/st_sensors.h
-index c34e648f07e28..ae8b755955358 100644
---- a/include/linux/iio/common/st_sensors.h
-+++ b/include/linux/iio/common/st_sensors.h
-@@ -224,8 +224,6 @@ struct st_sensor_settings {
-  * @mount_matrix: The mounting matrix of the sensor.
-  * @sensor_settings: Pointer to the specific sensor settings in use.
-  * @current_fullscale: Maximum range of measure by the sensor.
-- * @vdd: Pointer to sensor's Vdd power supply
-- * @vdd_io: Pointer to sensor's Vdd-IO power supply
-  * @regmap: Pointer to specific sensor regmap configuration.
-  * @enabled: Status of the sensor (false->off, true->on).
-  * @odr: Output data rate of the sensor [Hz].
-@@ -244,8 +242,6 @@ struct st_sensor_data {
- 	struct iio_mount_matrix mount_matrix;
- 	struct st_sensor_settings *sensor_settings;
- 	struct st_sensor_fullscale_avl *current_fullscale;
--	struct regulator *vdd;
--	struct regulator *vdd_io;
- 	struct regmap *regmap;
- 
- 	bool enabled;
+ 	case HL_MEM_OP_EXPORT_DMABUF_FD:
+-		if (hdev->asic_prop.dram_supports_virtual_memory)
+-			rc = export_dmabuf_from_handle(ctx,
+-					args->in.export_dmabuf_fd.handle,
+-					args->in.flags,
+-					&dmabuf_fd);
+-		else
+-			rc = export_dmabuf_from_addr(ctx,
++		rc = export_dmabuf_from_addr(ctx,
+ 					args->in.export_dmabuf_fd.handle,
+ 					args->in.export_dmabuf_fd.mem_size,
+ 					args->in.flags,
 -- 
 2.53.0
 
