@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215638;
-	b=08kmLGayIQQ1ti7uuToqUo99fCuj/bDNHUaKzzItD8eqTa3MeIQDtlFOMI5V1Sh/Ufw7
-	 B/JlnoKsnYDQ9V3lryPiOTZnX5P9QokTeQUKX8xdITXbuKl/hUfXG7m49AjDXnEY9GU7B
-	 zY7yhEd7H7jsi/dtQ7wCS1L/kMi/cbjh4LHnQvfj6fWoqLpDZuoAPoWlGL21ds7WpGYmw
-	 kBs9iG6ucS/j2bNQC8mpxbE2Na9XIBvl076jPAm47xZHXks9vtqHnozI7JKR0Rx/PcHij
-	 kfrj2UKcXGOWlNgpVED60ogdPXpt4IbPwiCIv7U96/ng9JGez1nZ8XPfysSyw0gTtOw==
+	t=1793215641;
+	b=oC+JZwAIuNItrt6SQ0G9mO1RAvcNMqCXMAvCpHhoapZPMDcKQVkTRM7YguH1TrffIPfq
+	 47XRjpuvVpAYen9crcCcH0jhsDJjhUNIWWkgPu9luqk/ytxxkv0jke4/5HKpaNBQZfzYv
+	 UWjfaK3+ojveXh3Dx0FWzO46a+A2SV/6tA74Ro6jvSN+eeoMX5ApzJKE3z4YRbtTEE4op
+	 08m5E5ciovxkRQr9qkKDqKJI9xtsmTbk8LgUA0XpBlZorSHUm+TfWOlJEd0UkiQtos959
+	 ffi7lTROabpooLJR0BHyMOruKXfFitWS1ikK5Pkk7pz9NkAYn6YzLS/70DTFx/hYmSw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215638;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215641;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=dpLJlhYcFtKcEIs9cd698Bjc3k115dV04ts/k8AOMWQ=;
-	b=08RMkzjvrUz5fnN0fIUSobbqBbPAcnckUnvmuOTxPnC5X81wzSv9K4Zb1cQyU9YxzZn0
-	 lJZdtsZxXfPHqbFwtnZPQ8ZYc5m3WlJQE36hW8/iohH4ntKc+bCYMPMs9FJAfZ2Lo7ZU4
-	 xzixb11zpraeWFN1nR4emf3zNsapRgQ95kR0SID3d6IGrUESi3M2rueyq79TnW0qzWoK+
-	 1BoeLmuVWDT7HIw5toVRWoK88XNLPQ8nPZ6lTDkhzfpDeVloiJ4hnaJw5kZ+wJLsiGGOM
-	 C6L4Z/5pXN8SF8ZxYm5EPuDUtl8zKHt17j9QESGm9LWAaPfVrxTKQJAqaKwTFDQedkQ==
+	bh=hHs7OCDB7aod2T5756Ymnh0IxKkb3hMNFrHtsHgmPxg=;
+	b=U1+SGG3ONmwUJp6x/nNZL7dbB7Jvu8K0HHKMBe2uLUZY6Yi0BF6zHMzbruPLi1yttsd+
+	 lchRLDHm1mSAqRV5lsenVTbRbgaY3ovFA8II3DGxqCn4BUo48KYDmnnGjUdDO8aT8MLKQ
+	 vb658XcQbrYjqQh8FYzlxZ+llIaFKLpgUzuMbWmAsX8Z96G2JLmcpNAi8ta5YDESrjbQN
+	 NMn2SzoGx9LgbWLbZLgC1OZ3hajp1KOsLjCZ/8ZSdMLQ0B6W1ugmRXTpCgIooT2rEBva7
+	 sLH2Dff9gk61xsBXG6vmGg1q9OXSCGvwGiTg6ZtXzo+BDnxmCIyPspzL6+6DsrEDA9w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pwBkYl9F;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1n8gI1ix;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEA9B606A31C;
-	Wed, 28 Oct 2026 19:27:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CACAE606A31E;
+	Wed, 28 Oct 2026 19:27:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pwBkYl9F
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07F4F1F01825;
-	Wed, 28 Oct 2026 19:27:16 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1n8gI1ix
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF1111F01825;
+	Wed, 28 Oct 2026 19:27:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215637;
-	bh=dpLJlhYcFtKcEIs9cd698Bjc3k115dV04ts/k8AOMWQ=;
+	s=korg; t=1793215640;
+	bh=hHs7OCDB7aod2T5756Ymnh0IxKkb3hMNFrHtsHgmPxg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pwBkYl9F0q78r+skvSbkD9W8O/M1ezs3yHKVm3umRezrZM2d89SZnx5+bGc/eYoF3
-	 D2N26AACRyeVuxkRiCggqGe3GojoXhoyPN/qca7azIwHTjD1U4UEmf7ViKi5sFkgHL
-	 YYeI14GGhbHSNsXJdFoJjsOF/CBh/nxFf8liarA4=
+	b=1n8gI1ixglE/Hfx/lOVzpnQLQUZgM2/52tDhNE2B1Zt9aMNOuCNezMVEVgF+36hNb
+	 iFGupa6JxG3X9fjN0VyFLufGGI3wnm3jKqWiP76I4PM68AnuSiMi7HjjMx0pAO7vyE
+	 l79H5jvywNEEztqLUe9gGDp9NorZPZ/HeERvFctM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pauli Virtanen <pav@iki.fi>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	syzbot+eca845fb8c18dd6b44c1@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1281/1887] Bluetooth: ISO: hold sk properly in iso_conn_ready
-Date: Wed, 28 Oct 2026 17:56:17 +0100
-Message-ID: <20261028170528.577359665@linuxfoundation.org>
+Subject: [PATCH 6.1 1282/1887] net: udp_tunnel: fix memory leak in udp_tunnel_nic_unregister()
+Date: Wed, 28 Oct 2026 17:56:18 +0100
+Message-ID: <20261028170528.601215549@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,92 +69,152 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pauli Virtanen <pav@iki.fi>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 0d255e63fcf3f13a570d7ac11678fa1164ac015c ]
+[ Upstream commit 080695e6f005e2396f1207fd69d24c442cb230c6 ]
 
-sk deref in iso_conn_ready must be done either under conn->lock, or
-holding a refcount, to avoid concurrent close. conn->sk is currently
-accessed without either:
+syzbot reported a memory leak [1] in the UDP tunnel NIC offload code.
 
-    [Task 1]            [Task 2]
-                        iso_sock_release
-    iso_conn_ready
-      sk = conn->sk
-                          lock_sock(sk)
-                            conn->sk = NULL
-      lock_sock(sk)
-                          release_sock(sk)
-                          iso_sock_kill(sk)
-       UAF on sk deref
+When device registration fails (e.g. in register_netdevice()), netdev core
+unwinds by sending a single NETDEV_UNREGISTER notification. If work was queued
+during NETDEV_REGISTER (utn->work_pending is set), udp_tunnel_nic_unregister()
+returns early:
 
-Fix possible UAF by holding sk refcount in iso_conn_ready().  Also
-recheck after lock_sock that the socket is still valid.  Adjust locking
-so conn->sk is cleared only under lock_sock.
+	if (utn->work_pending)
+		return;
 
-Fixes: 27c24fda62b60 ("Bluetooth: switch to lock_sock in SCO")
-Signed-off-by: Pauli Virtanen <pav@iki.fi>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Because failed registrations do not enter netdev_wait_allrefs_any(), no
+subsequent NETDEV_UNREGISTER rebroadcast will ever occur. As a result, the
+struct udp_tunnel_nic allocated in udp_tunnel_nic_alloc() is leaked
+permanently.
+
+Fix this by removing the early return. Instead, synchronously cancel any
+pending work with cancel_delayed_work_sync() before freeing @utn.
+
+To be able to call cancel_delayed_work_sync() while holding RTNL (the work also
+needs RTNL), switch udp_tunnel_nic_device_sync_work() to rtnl_trylock(). If RTNL
+is contended, requeue the work with a 1 jiffy delay (via queue_delayed_work())
+to prevent high CPU contention while waiting for RTNL lock.
+
+The utn->work_pending bookkeeping is no longer needed and is removed, as
+the workqueue core already tracks the pending/running state of the work.
+
+[1]
+BUG: memory leak
+unreferenced object 0xffff888127d5f840 (size 96):
+  comm "syz-executor", pid 5806, jiffies 4294942188
+  backtrace (crc 99fdb6c8):
+    __kmalloc_noprof+0x3bf/0x550
+    udp_tunnel_nic_alloc net/ipv4/udp_tunnel_nic.c:756 [inline]
+    udp_tunnel_nic_register net/ipv4/udp_tunnel_nic.c:833 [inline]
+    udp_tunnel_nic_netdevice_event+0x804/0xab0 net/ipv4/udp_tunnel_nic.c:931
+    notifier_call_chain+0x59/0x160 kernel/notifier.c:85
+    call_netdevice_notifiers_info+0x7d/0xb0 net/core/dev.c:2250
+    register_netdevice+0xc10/0xeb0 net/core/dev.c:11478
+
+Fixes: cc4e3835eff4 ("udp_tunnel: add central NIC RX port offload infrastructure")
+Reported-by: syzbot+eca845fb8c18dd6b44c1@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/6a632b15.dde6c935.cf6c8.0011.GAE@google.com/T/#u
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260724091137.1792543-1-edumazet@google.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/iso.c | 27 +++++++++++++++++++++------
- 1 file changed, 21 insertions(+), 6 deletions(-)
+ net/ipv4/udp_tunnel_nic.c | 34 ++++++++++++++++++----------------
+ 1 file changed, 18 insertions(+), 16 deletions(-)
 
-diff --git a/net/bluetooth/iso.c b/net/bluetooth/iso.c
-index 2281a915c6533..999ed7df4dfa3 100644
---- a/net/bluetooth/iso.c
-+++ b/net/bluetooth/iso.c
-@@ -1463,14 +1463,11 @@ static void iso_sock_ready(struct sock *sk)
- {
- 	BT_DBG("sk %p", sk);
+diff --git a/net/ipv4/udp_tunnel_nic.c b/net/ipv4/udp_tunnel_nic.c
+index e6d6c4f716379..98f73221a6bff 100644
+--- a/net/ipv4/udp_tunnel_nic.c
++++ b/net/ipv4/udp_tunnel_nic.c
+@@ -31,19 +31,17 @@ struct udp_tunnel_nic_table_entry {
+  * @dev:	netdev pointer
+  * @need_sync:	at least one port start changed
+  * @need_replay: space was freed, we need a replay of all ports
+- * @work_pending: @work is currently scheduled
+  * @n_tables:	number of tables under @entries
+  * @missed:	bitmap of tables which overflown
+  * @entries:	table of tables of ports currently offloaded
+  */
+ struct udp_tunnel_nic {
+-	struct work_struct work;
++	struct delayed_work work;
  
--	if (!sk)
--		return;
-+	lockdep_assert(lockdep_sock_is_held(sk));
+ 	struct net_device *dev;
  
--	lock_sock(sk);
- 	iso_sock_clear_timer(sk);
- 	sk->sk_state = BT_CONNECTED;
- 	sk->sk_state_change(sk);
--	release_sock(sk);
+ 	u8 need_sync:1;
+ 	u8 need_replay:1;
+-	u8 work_pending:1;
+ 
+ 	unsigned int n_tables;
+ 	unsigned long missed;
+@@ -301,7 +299,7 @@ udp_tunnel_nic_device_sync(struct net_device *dev, struct udp_tunnel_nic *utn)
+ 	const struct udp_tunnel_nic_info *info = dev->udp_tunnel_nic_info;
+ 	bool may_sleep;
+ 
+-	if (!utn->need_sync || utn->work_pending)
++	if (!utn->need_sync)
+ 		return;
+ 
+ 	/* Drivers which sleep in the callback need to update from
+@@ -310,10 +308,8 @@ udp_tunnel_nic_device_sync(struct net_device *dev, struct udp_tunnel_nic *utn)
+ 	may_sleep = info->flags & UDP_TUNNEL_NIC_INFO_MAY_SLEEP;
+ 	if (!may_sleep)
+ 		__udp_tunnel_nic_device_sync(dev, utn);
+-	if (may_sleep || utn->need_replay) {
+-		queue_work(udp_tunnel_nic_workqueue, &utn->work);
+-		utn->work_pending = 1;
+-	}
++	if (may_sleep || utn->need_replay)
++		queue_delayed_work(udp_tunnel_nic_workqueue, &utn->work, 0);
  }
  
- struct iso_list_data {
-@@ -1488,14 +1485,32 @@ static bool iso_match_big(struct sock *sk, void *data)
- static void iso_conn_ready(struct iso_conn *conn)
+ static bool
+@@ -705,10 +701,16 @@ udp_tunnel_nic_replay(struct net_device *dev, struct udp_tunnel_nic *utn)
+ static void udp_tunnel_nic_device_sync_work(struct work_struct *work)
  {
- 	struct sock *parent;
--	struct sock *sk = conn->sk;
-+	struct sock *sk;
- 	struct hci_ev_le_big_sync_estabilished *ev;
- 	struct hci_conn *hcon;
+ 	struct udp_tunnel_nic *utn =
+-		container_of(work, struct udp_tunnel_nic, work);
++		container_of(work, struct udp_tunnel_nic, work.work);
  
- 	BT_DBG("conn %p", conn);
+-	rtnl_lock();
+-	utn->work_pending = 0;
++	/* We cannot block on RTNL here, otherwise we would deadlock with
++	 * udp_tunnel_nic_unregister() calling cancel_delayed_work_sync()
++	 * while holding RTNL. Requeue with 1 jiffy delay if RTNL is contended.
++	 */
++	if (!rtnl_trylock()) {
++		queue_delayed_work(udp_tunnel_nic_workqueue, &utn->work, 1);
++		return;
++	}
+ 	__udp_tunnel_nic_device_sync(utn->dev, utn);
  
-+	iso_conn_lock(conn);
-+	sk = iso_sock_hold(conn);
-+	iso_conn_unlock(conn);
-+
- 	if (sk) {
--		iso_sock_ready(conn->sk);
-+		lock_sock(sk);
-+
-+		/* conn->sk may have become NULL if racing with sk close, but
-+		 * due to held hdev->lock, it can't become different sk.
-+		 */
-+		if (!conn->sk) {
-+			release_sock(sk);
-+			sock_put(sk);
-+			return;
-+		}
-+
-+		iso_sock_ready(sk);
-+
-+		release_sock(sk);
-+		sock_put(sk);
- 	} else {
- 		hcon = conn->hcon;
- 		if (!hcon)
+ 	if (utn->need_replay)
+@@ -727,7 +729,7 @@ udp_tunnel_nic_alloc(const struct udp_tunnel_nic_info *info,
+ 	if (!utn)
+ 		return NULL;
+ 	utn->n_tables = n_tables;
+-	INIT_WORK(&utn->work, udp_tunnel_nic_device_sync_work);
++	INIT_DELAYED_WORK(&utn->work, udp_tunnel_nic_device_sync_work);
+ 
+ 	utn->entries = kmalloc_array(n_tables, sizeof(void *), GFP_KERNEL);
+ 	if (!utn->entries)
+@@ -868,11 +870,11 @@ udp_tunnel_nic_unregister(struct net_device *dev, struct udp_tunnel_nic *utn)
+ 	 */
+ 	udp_tunnel_nic_flush(dev, utn);
+ 
+-	/* Wait for the work to be done using the state, netdev core will
+-	 * retry unregister until we give up our reference on this device.
++	/* Make sure no work is running or queued before freeing @utn.
++	 * The work handler uses rtnl_trylock(), so it will not deadlock
++	 * against the RTNL we are holding here.
+ 	 */
+-	if (utn->work_pending)
+-		return;
++	cancel_delayed_work_sync(&utn->work);
+ 
+ 	udp_tunnel_nic_free(utn);
+ release_dev:
 -- 
 2.53.0
 
