@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793207182;
-	b=Z7mRc1snGhMgKqQnpGV0yEJfRUb2U+148kPOhLS0n7Bo++YVEnil+3O+CrNceb43ZJ9G
-	 ieemPPrRaLyaqYUe4VjRDecXjmUQSI7ZSYZCy9eU9hdLjMX2fiay3g1xOyo0XX3JqezqP
-	 RJCx78UriY3cmi3G0sBVGW7C6qFKenAXgZmRtnD0OhfuNl/dQ2zVvNt1a9DbiT3XiGsjv
-	 ssIZdaoLWtwRLptwXTqI2P4uj7Cconceph7PBCtGH3U04nxMWgmTqOqkOI0ZIvZbfwzIY
-	 qRQZrni4HRD9iWQOhnT7rnRr+NbWuXqTNRT/Cq+tZGYxqXAgrUgrw0J6memxAO21V/w==
+	t=1793207185;
+	b=az0zsGDpa2oRTnY0HlpX1G34GqX42S7W2keOlE6o+fWA6dPC7Q+ERMcHw21qLHDuQDq7
+	 B/PrtA37LVwKXYkFTlftHo4b1Aw3QinkSzkLtyTIyfJb7vMdz7hxSz5sOcLC+zRWQKwe1
+	 r68aNP4CCKpFkNh0Lo5ll4SkgNFXWfPZEUCN9/3g4XMDNbUlG2Z19FZMGiHj91sP857ry
+	 ZnLOuUnJF2KrkCTzzZgEzt9xsV9L/Ezo3cc6XRTA5cPW4Ry5h5Q1x2pnKC3XCFrTLMZi1
+	 aB7W1nQll12pvVO9MGXTU8WAvKgF3oTs8sAr64Jr6ejweJo+vMhF+XLfX5dS/1Vx8SQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793207182;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793207185;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=IfnO+ra8jf+kc8Ol/XZi7l0+1VM/xzfmvFBW98OfKM0=;
-	b=DfSpijTqTTzoqbQ88Eo3AUm5Fi8PaG/wgeYMu9vUJvPD8gy8z7Ss1e2ko5nawee6TWyv
-	 NqbtLQ1Pfov+fFbNitaAJSfe8Sr+Lo0X1RBxagGd3faAcB27BWE2KGpcRZELc7JiccxCU
-	 MoROV2N3gY/mLJlScdaEBqlj14fCSi3AzTh3+AQfahDqllJWKHZdtgHNXYQ4VfCt6Syva
-	 y8ODCm+8Fmj0mBy5fhny5zc7Sv5GAndezzozMAgFnbNDO9toQ5NlrKgvYwk554n6rl5+d
-	 bjWSnm1QwHA/gP00DlwEgbcefxORiRPB3NSeLOi02PWZ6QhNDsOcSNBvHweMqcixfUQ==
+	bh=1oz4a2i43F9EYfpwZ4xp3s+B2sQqnV+Wo08jQpIBwmk=;
+	b=48DJQWxHiXTEnTjbeJFfi+eJklWISkqtBXqjgxlk5SPWvK/U/4elTCp1egBltzfPkjFT
+	 y8pgsF3U/tBmfyn9RJqM10aL1oVDwDpYWfpWcIyUAqP2IjZmc95Xofryl8aNTThmFYzYI
+	 sz1juziTEHB1o5jtkw77Kp/1RRt5IBz7LlTiPgn5MVfrloDN+0zstQ2AvZIpp6m9VVWqd
+	 1WpC1OdIDRItMWtTilvnMFMbk1UaYx/yz1KCsNwdpvmATjWJ/pxEjAAknZ6V3/hMOu8st
+	 VHYGWYH/rkGkaQx9ScTe7pBnPffgx+yt3bqBWhognwxXYwXrpO/2P6GT0cRtDs/BMRw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rysf3mtP;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=re7cw+wW;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6655606A31F;
-	Wed, 28 Oct 2026 17:06:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACF78606A31E;
+	Wed, 28 Oct 2026 17:06:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rysf3mtP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22CD71F031E0;
-	Wed, 28 Oct 2026 17:06:20 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=re7cw+wW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED6D81F01829;
+	Wed, 28 Oct 2026 17:06:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793207181;
-	bh=IfnO+ra8jf+kc8Ol/XZi7l0+1VM/xzfmvFBW98OfKM0=;
+	s=korg; t=1793207184;
+	bh=1oz4a2i43F9EYfpwZ4xp3s+B2sQqnV+Wo08jQpIBwmk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rysf3mtPg3XSFrgFkfJRdyWjD1UdUaMmyu17Ft+KcF9pHl0a+31G02IZOlTGKLl4h
-	 g14/SCR7ylFgwYZO1p+IIcVufFq9Xi+DVlCflPOPqdanZd9T00Ts0bflK0aAGpafGM
-	 CmwI+h6xHyqKUAjwXXTGgEL48Tmx2KNI7ylJkb8Y=
+	b=re7cw+wWTldW9erT9mJc4XOLcSvhoioGbmRkcnFQegOzJRuRlPnhUwqSRytJYaiVc
+	 qs68H5ensMjBqAd3cWfViSWunEj6sLCl2w3zyxzGiI7CA3pYOCPOP1oLZDJKUh9ozt
+	 mypqh7gdGv2ThCY2wxoz41UVFHrdOGu2LGgMPD+o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jens Axboe <axboe@kernel.dk>,
-	Oleg Nesterov <oleg@redhat.com>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 7.2 16/88] io-wq: order the exit bit against worker creation task work
-Date: Wed, 28 Oct 2026 17:59:24 +0100
-Message-ID: <20261028165942.497675794@linuxfoundation.org>
+	Josef Bacik <josef@toxicpanda.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 7.2 17/88] io_uring/waitid: own the request before clearing ->head
+Date: Wed, 28 Oct 2026 17:59:25 +0100
+Message-ID: <20261028165942.521239100@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165942.107695352@linuxfoundation.org>
 References: <20261028165942.107695352@linuxfoundation.org>
@@ -68,52 +67,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Josef Bacik <josef@toxicpanda.com>
 
-Commit 0e5663856b69219ef2f02e04bac9f5c5be19718a upstream.
+Commit c254eec4364b9f4b4cbdce43be3fb4df5a651a70 upstream.
 
-io_wq_exit_workers() cancels task work for queued worker creation with
-task_work_cancel_match(). That has a plain load of task->task_works.
+io_waitid_remove_wq() only takes the wait queue lock if ->head is set.
+io_waitid_wait() clears ->head first thing, before it tries to become the
+owner of the request by bumping ->refs. If somebody else owns the request
+at that point, nothing keeps it from completing the request while the
+wake up handler is still going to touch it:
 
-io_queue_worker_create() adds the new entry and tests IO_WQ_BIT_EXIT to
-cancel it if the workqueue is already on its way out.
+CPU0 (io_waitid_wait)                 CPU1 (io_waitid, holds a ref)
+list_del_init(&wait->entry)
+smp_store_release(&iw->head, NULL)
+                                      __do_wait() finds another child
+                                      io_waitid_remove_wq()
+                                        // ->head == NULL, no locking
+                                      io_waitid_finish(), IOU_COMPLETE
+                                      // request freed and reused
+atomic_fetch_inc(&iw->refs)
 
-That must be ordered. task_work_add() has a full barrier via cmpxchg().
-But io_wq_exit_start() sets the bit with set_bit() which doesn't have
-any memory ordering.
+The same goes for __io_waitid_cancel() if it claims the request in that
+window. ->refs is part of the per opcode data of the request, so this
+increments whatever the next user of the request keeps there. If that
+happens to be zero, the handler concludes that it owns the request, and
+queues io_waitid_cb() for it. With the window held open by a delay, and
+the request reused for a receive that is waiting for data:
 
-So afaict, on weakly ordered architectures the exiting task may load
-task_works before the store of the bit is visible. The other side tests
-the bit before the store is visible as well. So the entry remains queued
-with worker_refs and the exiting task waits on worker_done indefinitely.
+  BUG: KASAN: slab-use-after-free in __wake_up_common+0x1ca/0x1f0
+   __wake_up_sync_key+0x36/0x50
+   sock_def_readable+0xf1/0x420
+   unix_stream_sendmsg+0x60b/0x1110
+  Allocated by task 87:
+   io_arm_apoll+0x1ed/0x940
+  Freed by task 87:
+   __io_submit_flush_completions+0x118d/0x1a10
+   tctx_task_work_run+0x327/0x950
 
-If the task still has rings then io_uring_del_tctx_node() provides the
-barrier via test_and_set_bit() in io_wq_set_exit_on_idle(). When it
-has closed all rings though that barrier is gone.
+Only clear ->head once the handler owns the request. If it doesn't, the
+owner finds ->head set and has to wait for the lock, which is held by the
+caller of the handler. Deleting the already deleted entry again is
+harmless.
 
-Add the barrier after the set_bit().
-
-Fixes: 71a85387546e ("io-wq: check for wq exit after adding new worker task_work")
-Cc: stable@vger.kernel.org
-Reviewed-by: Jens Axboe <axboe@kernel.dk>
-Acked-by: Oleg Nesterov <oleg@redhat.com>
-Link: https://patch.msgid.link/20260921-work-coredump-fixes-v3-4-8e4adb1619e6@kernel.org
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Fixes: ab673c1bcaf2 ("io_uring/waitid: use io_waitid_remove_wq() consistently")
+Assisted-by: LLM
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Link: https://patch.msgid.link/20261015-b4-io-uring-fixes-v1-1-c1556f5d7bf5@toxicpanda.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/io-wq.c |    2 ++
- 1 file changed, 2 insertions(+)
+ io_uring/waitid.c |   10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
---- a/io_uring/io-wq.c
-+++ b/io_uring/io-wq.c
-@@ -1319,6 +1319,8 @@ static bool io_task_work_match(struct ca
- void io_wq_exit_start(struct io_wq *wq)
- {
- 	set_bit(IO_WQ_BIT_EXIT, &wq->state);
-+	/* Pairs with task_work_add() in io_queue_worker_create(). */
-+	smp_mb__after_atomic();
- }
+--- a/io_uring/waitid.c
++++ b/io_uring/waitid.c
+@@ -265,12 +265,18 @@ static int io_waitid_wait(struct wait_qu
+ 		return 0;
  
- static void io_wq_cancel_tw_create(struct io_wq *wq)
+ 	list_del_init(&wait->entry);
+-	smp_store_release(&iw->head, NULL);
+ 
+-	/* cancel is in progress */
++	/*
++	 * Cancel or issue is in progress. Leave ->head alone, so that whoever
++	 * owns the request has to take the wait queue lock, which we hold,
++	 * before it can complete and free it.
++	 */
+ 	if (atomic_fetch_inc(&iw->refs) & IO_WAITID_REF_MASK)
+ 		return 1;
+ 
++	/* pairs with the smp_load_acquire() in io_waitid_remove_wq() */
++	smp_store_release(&iw->head, NULL);
++
+ 	req->io_task_work.func = io_waitid_cb;
+ 	__io_req_task_work_add(req, IOU_F_TWQ_IN_WAKE);
+ 	return 1;
 
 
