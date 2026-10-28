@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793212664;
-	b=hzxrCgl2poqa2zdkNOipLL/9N2h3n5EV3rdDroCilSP5F9HVhz5Vr5CMi6fE97F0JGML
-	 GZ/hpYOeuk4z23zupHewOUV5CbPZHJ5+x243sKNpwZM16CD3/vdO20uMqep/ToiI0j6cI
-	 BpGEx84DLwG4lzPp3WTgxJltwBjpm7/ww0cG6VxL3b7LVPvvDi1gJRXG11+Zz92ny88ah
-	 JrLazkpi2FLx75ohxItOLcMgHFYF+wv4K2qrXT0WaTekJO9RM5bpl4em3xxKVRFt6ne2X
-	 EkYPQYWWmo4SDq5nNzOJM3xAQRKDMxkwmJ355I6pOl/D7I4XtS6nZu3T8+GzhLWsN0w==
+	t=1793212667;
+	b=Jjn3q6Tq3WCktXVDIOzGuQKqshvj1tk+ln2RR+n/3c1jINywL5mv+ytcoA1QyKTEWRSQ
+	 1Ch1lcmw+ewdg0R8D4MCOs4/0IAW8QAcz1QgE3Gp6ex865qcc03oZfDmWcU/DzQfmRFIW
+	 oef5rPCrCIH8yzcHmSRXp6CdVFWHQ5cFweO3eTnJQeM09rPOjJq6EddPA6ifhqrLUpU05
+	 j5odixmtVLn90RnycCRlYP4TYD67VQ0pCniteswMR53kfG1ejvFhAIQ3I0Cop5HqCb7Qg
+	 3BuG6HqC29w6A9G3ohp5VXuxP9XVgnQ/HFaYSGEbiCYFqbt1/OWtSEtVcK6leXQfoHA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793212664;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793212667;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Q0MusYc/5Mdr6xz14BGkbPpOYYchRBDfUae1r81B76U=;
-	b=Q/RywOuujNqJ3pUNRee9Bczj0ZCRRO0v9Y1SK96715kI1UfEubxkNcM3PhQ+jWpEH+Wm
-	 HkHo9D3p37LNW3ehO7SusIabvJk3BajwPTMhhgFpI/7ReIwvv8cwo9Lx0qnYipoNolTuO
-	 l8quQNoA0k8IRjcc9caMAmJn+7MZipvExxA5d61T+P3/NGM6FqPaJ3UZ0402emWfresIx
-	 X4Me/Mmt4FzUQb9pnZCpANnyR4Tqx1I/zavsvIvOZ1oqk0A6Kt2PblM6n4/SikczY/mMN
-	 OFAYy0To/fHDj5oz6/gJm0uBoTQUUqU4JOU33lCTcfE98TR/Qp2SVt6Ml4LB54iDMzA==
+	bh=QikC9QCsldawvabFOEGWBN8UgxtXcgsdIu6E1z7a7Ls=;
+	b=JFtgTxl95RAEucyAWL4U90UV/cUlW+fOVeHpfg/QM6KEep+2/8iZXKRsFyix1miB1AJ2
+	 IfmT/rIp8GlGGfsMFUQOQ0nKvwQowiL9qfHOy6lprqHWZVlzhBq9I6aMFF7AeBV+5J27B
+	 X4dTl7vdEXJmn8T5KCHL48fM1KYY1GKHSl8QwXgVi6mSvKG6PTfBtr6KBRswvBVMmjPSK
+	 6DudPTriRi6xm9/Sinu6uuyVJ5LHVcAs1ldvt0mGaB1DBhX9ClvnRmfaye98nA5SVMiXU
+	 xDwoOii+ymOo+cOr/JgVENVmj5IPbvt1QJq1ceuprwHfQr5oeBq7/aE9PDcJfRw3v3g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eVjGqLHe;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zMF5mq76;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D39E1606A31A;
-	Wed, 28 Oct 2026 18:37:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA198606A324;
+	Wed, 28 Oct 2026 18:37:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eVjGqLHe
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBD1D1F01825;
-	Wed, 28 Oct 2026 18:37:42 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zMF5mq76
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C09311F01828;
+	Wed, 28 Oct 2026 18:37:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793212663;
-	bh=Q0MusYc/5Mdr6xz14BGkbPpOYYchRBDfUae1r81B76U=;
+	s=korg; t=1793212666;
+	bh=QikC9QCsldawvabFOEGWBN8UgxtXcgsdIu6E1z7a7Ls=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eVjGqLHebKx/6o0EpfvVMC6k9/sS4cdBXT6gNjdjM/m6Xg4zVzbvtC8W7Y26TKdkq
-	 VGRQhIDz75DMRzYjZ35ZvXgAzODH/LVjshiU8pAWxI1E3McsM5+V67w81/EXkyZBCm
-	 qbIOBfxG7yusOZvu8YuUsTA3mg3xOlhrAr8FZXN0=
+	b=zMF5mq76N+mT8o21wlPIcUbSwPe2hEh4e58DQ9bTiZhYC9oU5D0d2ZGKADyKBSpaI
+	 zKGOvf2KNLs1YKhGPnETEIJmlknnZaNnfClrd7Nmb5V0QYosAmQqOnGDboLujNUdJ+
+	 si5uWCdjIVZwaUPvWAXyccQCmusdEzziLht+S/Wg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	syzbot+217e3f1283cafe80586e@syzkaller.appspotmail.com,
+	Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0232/1887] netfilter: ipset: do not update comments from kernel-side adds
-Date: Wed, 28 Oct 2026 17:38:48 +0100
-Message-ID: <20261028170504.510896027@linuxfoundation.org>
+Subject: [PATCH 6.1 0233/1887] Bluetooth: hci_sync: dont drain cmd_sync backlog on unregister
+Date: Wed, 28 Oct 2026 17:38:49 +0100
+Message-ID: <20261028170504.534152081@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,49 +69,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>
 
-[ Upstream commit a442c8a89fb9c531f9d6ab86120c31decd778d51 ]
+[ Upstream commit b1f24c1ab52345e810c42a1a81286cb5a7c92252 ]
 
-'Fixes' commit stopped calling ip_set_init_comment() for hash types
-from kernel-side-adds (xtables .. -j SET).  ip_set_init_comment() says:
+hci_unregister_dev() disables cmd_work and cmd_timer, then calls
+hci_cmd_sync_clear(), whose cancel_work_sync() waits for
+hci_cmd_sync_work() to return. That worker dequeues and runs every
+entry on cmd_sync_work_list. With cmd_work disabled nothing reaches
+the controller, so each queued HCI command waits the full
+HCI_CMD_TIMEOUT (2s).
 
-   "The kadt functions don't use the comment extensions in any way."
+The backlog has no bound. Userspace can keep queuing MGMT commands
+such as MGMT_OP_GET_CLOCK_INFO against a controller that doesn't
+answer. Closing /dev/vhci then blocks in vhci_release() for
+backlog * 2s:
 
-But bitmap set type calls the function from kadt cb too.
+  INFO: task syz-executor:5749 blocked for more than 143 seconds.
+   cancel_work_sync
+   hci_cmd_sync_clear
+   hci_unregister_dev
+   vhci_release
 
-While this appears to be safe (serialized via the set spinlock), it seems
-better to not call the init function either, least of all to keep
-behaviour consistent.
+In a local reproduction the backlog held more than 5000 entries,
+which comes to hours of hang.
 
-ip_set_list calls ip_set_init_comment() only from uadt cb, it can be
-kept as-is.
+Stop the worker from taking new entries once HCI_UNREGISTER is set,
+and wake any request still waiting with -ENODEV before cancelling
+the work. The entries left over are destroyed with -ECANCELED by the
+existing sweep in hci_cmd_sync_clear(). They stay on the list until
+the work has stopped, so hci_cmd_sync_dequeue() and friends still see
+them. A callback already running may still issue another command,
+which delays unregister by at most one timeout per remaining command,
+not by the whole backlog.
 
-This was triggered by yet another LLM review, hinting that the existing
-rcu_dereference_protected() cannot be downgraded to only check if the
-nfnl mutex is held.
-
-Fixes: f30415929be8 ("netfilter: ipset: do not update comments from kernel-side hash adds")
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: 008ee9eb8a11 ("Bluetooth: hci_sync: Fix not processing all entries on cmd_sync_work")
+Reported-by: syzbot+217e3f1283cafe80586e@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=217e3f1283cafe80586e
+Signed-off-by: Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/ipset/ip_set_bitmap_gen.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/bluetooth/hci_sync.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/net/netfilter/ipset/ip_set_bitmap_gen.h b/net/netfilter/ipset/ip_set_bitmap_gen.h
-index 605d54d2bd7e6..3dc2ebbe4800c 100644
---- a/net/netfilter/ipset/ip_set_bitmap_gen.h
-+++ b/net/netfilter/ipset/ip_set_bitmap_gen.h
-@@ -157,7 +157,7 @@ mtype_add(struct ip_set *set, void *value, const struct ip_set_ext *ext,
+diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
+index 5825ab89eb22a..4e4eae12ee3fb 100644
+--- a/net/bluetooth/hci_sync.c
++++ b/net/bluetooth/hci_sync.c
+@@ -308,6 +308,10 @@ static void hci_cmd_sync_work(struct work_struct *work)
+ 	while (1) {
+ 		struct hci_cmd_sync_work_entry *entry;
  
- 	if (SET_WITH_COUNTER(set))
- 		ip_set_init_counter(ext_counter(x, set), ext);
--	if (SET_WITH_COMMENT(set))
-+	if (SET_WITH_COMMENT(set) && !ext->target)
- 		ip_set_init_comment(set, ext_comment(x, set), ext);
- 	if (SET_WITH_SKBINFO(set))
- 		ip_set_init_skbinfo(ext_skbinfo(x, set), ext);
++		/* Leave the backlog to hci_cmd_sync_clear() */
++		if (hci_dev_test_flag(hdev, HCI_UNREGISTER))
++			break;
++
+ 		mutex_lock(&hdev->cmd_sync_work_lock);
+ 		entry = list_first_entry_or_null(&hdev->cmd_sync_work_list,
+ 						 struct hci_cmd_sync_work_entry,
+@@ -677,6 +681,8 @@ void hci_cmd_sync_clear(struct hci_dev *hdev)
+ {
+ 	struct hci_cmd_sync_work_entry *entry, *tmp;
+ 
++	/* cmd_work is disabled, the pending request can only time out */
++	hci_cmd_sync_cancel_sync(hdev, ENODEV);
+ 	cancel_work_sync(&hdev->cmd_sync_work);
+ 	cancel_work_sync(&hdev->reenable_adv_work);
+ 
 -- 
 2.53.0
 
