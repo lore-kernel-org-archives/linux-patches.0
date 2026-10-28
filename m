@@ -1,55 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793210686;
-	b=KDOhYAun6BEZdhIhe5XqEWCP987AmwG81olARPyzE7zrQ2NRAXDGIo5tI8CbBdYUYzCE
-	 baUvXfmAr/n51sCYVwtWCPeo09PFnyzij2vBGddnpzgURISGwYRzlqKIlrxdBA6IhX5Gx
-	 FJnsarg3YqKgl5EuBsMpweh0ittbADx7G0lMGKZfsPUFiR+YIg8VddQgcPwaPHh+0VKkp
-	 K9tjh6sHgR5CubmPVvGEENu+FLKDWD2ZDyeM1nTAW0mwfX0hx1GcqE6TFbbzeq4eu32Xu
-	 tSPQC+/pzV9q8dC/NQdb+3h8KO9gFxcbZT0RcG10QnA/GzTk53OdqGvHgdgst3OtVQw==
+	t=1793210689;
+	b=oR6qHqZzFCvkk+U+c2bK+tE6sjk6M8UTRiXgjdIcLqec2Lv4THoK/vHDnJngNf3Mv4Tg
+	 beChx56YtkfZAh4ojrncC+EVuzFhNhi4W7PiABEK1z/J4eNtx5F5alsZWbE3q5MBD+K7W
+	 C6Lt2R8TWKJctjewZ7qyVHE5uRcEWCqrBhePRE7m7wtDzdexO6H9in0bn/xw5A9/M1x+4
+	 2HT2gTOPgSvWoBO1rPdYo20A0W83RZEejbGCSe5zrRyzyl7GX3eXdDUp/we05KX1+8fG6
+	 9esnoDkvq0seoekXGMtCZNiyhVrac1tpSisuSR2BaxAwB5n4duLAAJ2NlkKa/TEOQ8w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793210686;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793210689;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Ec6km8RqlSRXq/xrGak545OeBKH6/OdjiWvywYlIl7w=;
-	b=peZJ2YIAqUK472EdBaFgVKUMrE0AYjsjOLgyTnk9syh/HpJOH52mBzqNqNZmOQ/Wn+2U
-	 zYyxC+jZLsd63vK22wX7S9F7QlH2ebj3cy2PGTcZu4Nsazj6dUWRYUl/lJ8FDQb+N4hbi
-	 kZfd+0QetzaEgP/lpEm+zhNZsK3MsXm4hBka/uBnCpABWmLSfVvulWQowDWXsBIvL8seb
-	 TUdNeRqrqDdNcRpWcZFYS2SS76Zt5ISMVCXdZIh5qOhHivhB85pWH5udPlCcd3l1JDLkz
-	 imNA7sBoar9IsacA8cbwwy1boUaE2Swr5nYEHQAEFMnDvv1XtNo7PXnxnU0PZYhhYIA==
+	bh=0VlY2DSI+4rfVIGDfVJNP7RZThS+n/As5idFmvUqVsI=;
+	b=f8SO9/IHUlYpd2gY8W7BKpBPG605BvhiMWr2u540WBBAdZeLNXrtqUdVUbyo05sC4l9w
+	 FYH8LGLQK1cFTGrhKCGhPcwJPqk8jn6lWssAju1sWKajaI7ZYpctNrZl0+avWLUZiuOhA
+	 E7N+1JaWUf6U1pO9BWRg/HFyMzUp4ff5Wp+YWLIvg5eI26lElrJdTNi9VD3naexW5AhK/
+	 BEINcJtxKZoGDlBLGIJeI8RmPPnnwyDNG2n3nOZXmh/+QYl0sUHrwb/63JM0+jZiE+0Xe
+	 djxJsLZaGPb5mv8s3ppeHS8ha+oZQLgdRfn2FeArRLgXf/oGVNA9GyFeFV+c+i2FAwQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="DxpL/kGY";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gave1g3P;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A974606A31C;
-	Wed, 28 Oct 2026 18:04:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 544AB606A31A;
+	Wed, 28 Oct 2026 18:04:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DxpL/kGY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C03621F01825;
-	Wed, 28 Oct 2026 18:04:45 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gave1g3P
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1D081F01825;
+	Wed, 28 Oct 2026 18:04:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793210686;
-	bh=Ec6km8RqlSRXq/xrGak545OeBKH6/OdjiWvywYlIl7w=;
+	s=korg; t=1793210689;
+	bh=0VlY2DSI+4rfVIGDfVJNP7RZThS+n/As5idFmvUqVsI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DxpL/kGY8hLO/lyAU0H1wXjZRJxboGIYRO9IDNfyC9XjMgXCU1vEpmXaqlujVzneI
-	 dAVFtRV/ddDeprik3oXgNq3nRfENM4TlIpb0EBHPKgt4sD/21EJXuK82dwMeOsaYMx
-	 B6iopN6LtnKfb+2R0JeV1JZW/c7a1NbGBNu2GIe8=
+	b=gave1g3PLx0NUwqhUy7s5L0GQjHumKfWDJjVAD3gk0PVYwJML3W4mqEOnSxfx0lzx
+	 sDEAPEluWPmAKf+I6W5ztZKMztQvZ0LAqpDPXrrqC1HWy+5L0RTnoqRZGk8s+c5soP
+	 +Jh42q8kMNhlaBwaNxEOyTwojhYze8bLoLU1lvac=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Luxing Yin <root@tr0jan.top>,
-	Zihan Xi <zihanx@nebusec.ai>,
-	Frank Sorenson <sorenson@redhat.com>,
-	Paulo Alcantara <pc@manguebit.org>,
+	Thorsten Blum <thorsten.blum@linux.dev>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 112/571] smb: client: fix create context out-of-bounds reads
-Date: Wed, 28 Oct 2026 17:54:19 +0100
-Message-ID: <20261028170010.677715187@linuxfoundation.org>
+Subject: [PATCH 5.15 113/571] net: ipconfig: Remove outdated comment and indent code block
+Date: Wed, 28 Oct 2026 17:54:20 +0100
+Message-ID: <20261028170010.701645172@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -71,197 +68,130 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zihan Xi <zihanx@nebusec.ai>
+From: Thorsten Blum <thorsten.blum@linux.dev>
 
-[ Upstream commit 67f4c1c6a1b51e203d986779299824d1c2c590a6 ]
+[ Upstream commit e405b3c9d4aaa10972525fe2ea5cf94224020561 ]
 
-smb2_parse_contexts() validates the complete create-context area but
-does not limit each record to its Next field before dispatching it.  A
-malformed chain can therefore expose bytes beyond the current context to
-a handler.  The QFid handler also used a full response-structure cast
-although it only reads DiskFileId.
+The comment has been around ever since commit 1da177e4c3f4
+("Linux-2.6.12-rc2") and can be removed. Remove it and indent the code
+block accordingly.
 
-The SMB2/SMB3 lease parsers made the same layout assumption: they read
-LeaseState and LeaseFlags at canonical offsets rather than at
-DataOffset.  A valid non-canonical DataOffset could therefore yield
-unrelated in-bounds data, while a short DataLength was still accepted.
-
-Limit each context to its Next value, reject offsets before the context
-header, and reject malformed chains.  Bound the name range by the current
-context and do not dispatch a known handler when DataLength is zero.  Read
-the QFid DiskFileId only when the context data covers that field.  Parse the
-lease context from DataOffset and require DataLength to match the v1 or v2
-lease_context size used by ksmbd.  A size mismatch skips lease parsing
-without failing the open.
-
-Fixes: b8c32dbb0deb ("CIFS: Request SMB2.1 leases")
-Fixes: f047390a097e ("CIFS: Add create lease v2 context for SMB3")
-Fixes: 89a5bfa350fa ("smb3: optimize open to not send query file internal info")
-Cc: stable@vger.kernel.org
-Reported-by: Vega <vega@nebusec.ai>
-Assisted-by: LLM
-Co-developed-by: Luxing Yin <root@tr0jan.top>
-Signed-off-by: Luxing Yin <root@tr0jan.top>
-Signed-off-by: Zihan Xi <zihanx@nebusec.ai>
-Tested-by: Frank Sorenson <sorenson@redhat.com>
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+Link: https://patch.msgid.link/20260109121128.170020-2-thorsten.blum@linux.dev
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: e47a1958e12a ("net: ipconfig: bound DHCP option construction")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/cifs/smb2ops.c | 28 ++++++++++++++++++++--------
- fs/cifs/smb2pdu.c | 44 ++++++++++++++++++++++++++++++++++----------
- 2 files changed, 54 insertions(+), 18 deletions(-)
+ net/ipv4/ipconfig.c | 89 +++++++++++++++++++++------------------------
+ 1 file changed, 42 insertions(+), 47 deletions(-)
 
-diff --git a/fs/cifs/smb2ops.c b/fs/cifs/smb2ops.c
-index c3c5c68c5cccb..deed3b5e78065 100644
---- a/fs/cifs/smb2ops.c
-+++ b/fs/cifs/smb2ops.c
-@@ -4416,25 +4416,37 @@ smb3_create_lease_buf(u8 *lease_key, u8 oplock)
- static __u8
- smb2_parse_lease_buf(void *buf, unsigned int *epoch, char *lease_key)
+diff --git a/net/ipv4/ipconfig.c b/net/ipv4/ipconfig.c
+index 816d8aad5a684..083782a4e010d 100644
+--- a/net/ipv4/ipconfig.c
++++ b/net/ipv4/ipconfig.c
+@@ -668,8 +668,18 @@ static const u8 ic_bootp_cookie[4] = { 99, 130, 83, 99 };
+ static void __init
+ ic_dhcp_init_options(u8 *options, struct ic_device *d)
  {
--	struct create_lease *lc = (struct create_lease *)buf;
-+	struct create_context *cc = buf;
-+	struct lease_context lc;
+-	u8 mt = ((ic_servaddr == NONE)
+-		 ? DHCPDISCOVER : DHCPREQUEST);
++	static const u8 ic_req_params[] = {
++		1,	/* Subnet mask */
++		3,	/* Default gateway */
++		6,	/* DNS server */
++		12,	/* Host name */
++		15,	/* Domain name */
++		17,	/* Boot path */
++		26,	/* MTU */
++		40,	/* NIS domain name */
++		42,	/* NTP servers */
++	};
++	u8 mt = (ic_servaddr == NONE) ? DHCPDISCOVER : DHCPREQUEST;
+ 	u8 *e = options;
+ 	int len;
  
- 	*epoch = 0; /* not used */
--	if (lc->lcontext.LeaseFlags & SMB2_LEASE_FLAG_BREAK_IN_PROGRESS_LE)
-+	if (le32_to_cpu(cc->DataLength) != sizeof(lc))
-+		return 0;
-+
-+	memcpy(&lc, (u8 *)cc + le16_to_cpu(cc->DataOffset), sizeof(lc));
-+	if (lc.LeaseFlags & SMB2_LEASE_FLAG_BREAK_IN_PROGRESS_LE)
- 		return SMB2_OPLOCK_LEVEL_NOCHANGE;
--	return le32_to_cpu(lc->lcontext.LeaseState);
-+	return le32_to_cpu(lc.LeaseState);
- }
- 
- static __u8
- smb3_parse_lease_buf(void *buf, unsigned int *epoch, char *lease_key)
- {
--	struct create_lease_v2 *lc = (struct create_lease_v2 *)buf;
-+	struct create_context *cc = buf;
-+	struct lease_context_v2 lc;
-+
-+	if (le32_to_cpu(cc->DataLength) != sizeof(lc)) {
-+		*epoch = 0;
-+		return 0;
-+	}
- 
--	*epoch = le16_to_cpu(lc->lcontext.Epoch);
--	if (lc->lcontext.LeaseFlags & SMB2_LEASE_FLAG_BREAK_IN_PROGRESS_LE)
-+	memcpy(&lc, (u8 *)cc + le16_to_cpu(cc->DataOffset), sizeof(lc));
-+	*epoch = le16_to_cpu(lc.Epoch);
-+	if (lc.LeaseFlags & SMB2_LEASE_FLAG_BREAK_IN_PROGRESS_LE)
- 		return SMB2_OPLOCK_LEVEL_NOCHANGE;
- 	if (lease_key)
--		memcpy(lease_key, &lc->lcontext.LeaseKey, SMB2_LEASE_KEY_SIZE);
--	return le32_to_cpu(lc->lcontext.LeaseState);
-+		memcpy(lease_key, lc.LeaseKey, SMB2_LEASE_KEY_SIZE);
-+	return le32_to_cpu(lc.LeaseState);
- }
- 
- static unsigned int
-diff --git a/fs/cifs/smb2pdu.c b/fs/cifs/smb2pdu.c
-index 52e63bd6b717b..372ec3b9deb0f 100644
---- a/fs/cifs/smb2pdu.c
-+++ b/fs/cifs/smb2pdu.c
-@@ -2019,11 +2019,17 @@ create_reconnect_durable_buf(struct cifs_fid *fid)
- static void
- parse_query_id_ctxt(struct create_context *cc, struct smb2_file_all_info *buf)
- {
--	struct create_disk_id_rsp *pdisk_id = (struct create_disk_id_rsp *)cc;
-+	u16 doff = le16_to_cpu(cc->DataOffset);
-+	u32 dlen = le32_to_cpu(cc->DataLength);
-+	u8 *beg;
- 
--	cifs_dbg(FYI, "parse query id context 0x%llx 0x%llx\n",
--		pdisk_id->DiskFileId, pdisk_id->VolumeId);
--	buf->IndexNumber = pdisk_id->DiskFileId;
-+	if (dlen < sizeof(__le64))
-+		return;
-+
-+	beg = (u8 *)cc + doff;
-+	memcpy(&buf->IndexNumber, beg, sizeof(__le64));
-+	cifs_dbg(FYI, "parse query id context 0x%llx\n",
-+		 le64_to_cpu(buf->IndexNumber));
- }
- 
- static void
-@@ -2071,6 +2077,7 @@ int smb2_parse_contexts(struct TCP_Server_Info *server,
- 	struct smb2_create_rsp *rsp = rsp_iov->iov_base;
- 	struct create_context *cc;
- 	size_t rem, off, len;
-+	size_t cc_len;
- 	size_t doff, dlen;
- 	size_t noff, nlen;
- 	char *name;
-@@ -2093,29 +2100,41 @@ int smb2_parse_contexts(struct TCP_Server_Info *server,
- 		buf->IndexNumber = 0;
- 
- 	while (rem >= sizeof(*cc)) {
-+		off = le32_to_cpu(cc->Next);
-+		if (off) {
-+			if ((off & 0x7) || off >= rem || off < sizeof(*cc))
-+				return -EINVAL;
-+			cc_len = off;
-+		} else {
-+			cc_len = rem;
-+		}
-+
- 		doff = le16_to_cpu(cc->DataOffset);
- 		dlen = le32_to_cpu(cc->DataLength);
--		if (check_add_overflow(doff, dlen, &len) || len > rem)
-+		if (doff < sizeof(*cc) ||
-+		    check_add_overflow(doff, dlen, &len) || len > cc_len)
- 			return -EINVAL;
- 
- 		noff = le16_to_cpu(cc->NameOffset);
- 		nlen = le16_to_cpu(cc->NameLength);
--		if (noff + nlen > doff)
-+		if (noff < sizeof(*cc) ||
-+		    check_add_overflow(noff, nlen, &len) || len > cc_len ||
-+		    (dlen && len > doff))
- 			return -EINVAL;
- 
- 		name = (char *)cc + noff;
- 		switch (nlen) {
- 		case 4:
--			if (!strncmp(name, SMB2_CREATE_REQUEST_LEASE, 4)) {
-+			if (dlen && !strncmp(name, SMB2_CREATE_REQUEST_LEASE, 4)) {
- 				*oplock = server->ops->parse_lease_buf(cc, epoch,
- 								       lease_key);
--			} else if (buf &&
-+			} else if (dlen && buf &&
- 				   !strncmp(name, SMB2_CREATE_QUERY_ON_DISK_ID, 4)) {
- 				parse_query_id_ctxt(cc, buf);
- 			}
- 			break;
- 		case 16:
--			if (posix && !memcmp(name, smb3_create_tag_posix, 16))
-+			if (dlen && posix && !memcmp(name, smb3_create_tag_posix, 16))
- 				parse_posix_ctxt(cc, buf, posix);
- 			break;
- 		default:
-@@ -2127,13 +2146,18 @@ int smb2_parse_contexts(struct TCP_Server_Info *server,
- 		}
- 
- 		off = le32_to_cpu(cc->Next);
--		if (!off)
-+		if (!off) {
-+			rem = 0;
- 			break;
-+		}
- 		if (check_sub_overflow(rem, off, &rem))
- 			return -EINVAL;
- 		cc = (struct create_context *)((u8 *)cc + off);
+@@ -694,51 +704,36 @@ ic_dhcp_init_options(u8 *options, struct ic_device *d)
+ 		e += 4;
  	}
  
-+	if (rem)
-+		return -EINVAL;
+-	/* always? */
+-	{
+-		static const u8 ic_req_params[] = {
+-			1,	/* Subnet mask */
+-			3,	/* Default gateway */
+-			6,	/* DNS server */
+-			12,	/* Host name */
+-			15,	/* Domain name */
+-			17,	/* Boot path */
+-			26,	/* MTU */
+-			40,	/* NIS domain name */
+-			42,	/* NTP servers */
+-		};
+-
+-		*e++ = 55;	/* Parameter request list */
+-		*e++ = sizeof(ic_req_params);
+-		memcpy(e, ic_req_params, sizeof(ic_req_params));
+-		e += sizeof(ic_req_params);
+-
+-		if (ic_host_name_set) {
+-			*e++ = 12;	/* host-name */
+-			len = strlen(utsname()->nodename);
+-			*e++ = len;
+-			memcpy(e, utsname()->nodename, len);
+-			e += len;
+-		}
+-		if (*vendor_class_identifier) {
+-			pr_info("DHCP: sending class identifier \"%s\"\n",
+-				vendor_class_identifier);
+-			*e++ = 60;	/* Class-identifier */
+-			len = strlen(vendor_class_identifier);
+-			*e++ = len;
+-			memcpy(e, vendor_class_identifier, len);
+-			e += len;
+-		}
+-		len = strlen(dhcp_client_identifier + 1);
+-		/* the minimum length of identifier is 2, include 1 byte type,
+-		 * and can not be larger than the length of options
+-		 */
+-		if (len >= 1 && len < 312 - (e - options) - 1) {
+-			*e++ = 61;
+-			*e++ = len + 1;
+-			memcpy(e, dhcp_client_identifier, len + 1);
+-			e += len + 1;
+-		}
++	*e++ = 55;	/* Parameter request list */
++	*e++ = sizeof(ic_req_params);
++	memcpy(e, ic_req_params, sizeof(ic_req_params));
++	e += sizeof(ic_req_params);
 +
- 	if (rsp->OplockLevel != SMB2_OPLOCK_LEVEL_LEASE)
- 		*oplock = rsp->OplockLevel;
++	if (ic_host_name_set) {
++		*e++ = 12;	/* host-name */
++		len = strlen(utsname()->nodename);
++		*e++ = len;
++		memcpy(e, utsname()->nodename, len);
++		e += len;
++	}
++	if (*vendor_class_identifier) {
++		pr_info("DHCP: sending class identifier \"%s\"\n",
++			vendor_class_identifier);
++		*e++ = 60;	/* Class-identifier */
++		len = strlen(vendor_class_identifier);
++		*e++ = len;
++		memcpy(e, vendor_class_identifier, len);
++		e += len;
++	}
++	len = strlen(dhcp_client_identifier + 1);
++	/* the minimum length of identifier is 2, include 1 byte type,
++	 * and can not be larger than the length of options
++	 */
++	if (len >= 1 && len < 312 - (e - options) - 1) {
++		*e++ = 61;
++		*e++ = len + 1;
++		memcpy(e, dhcp_client_identifier, len + 1);
++		e += len + 1;
+ 	}
  
+ 	*e++ = 255;	/* End of the list */
 -- 
 2.53.0
 
