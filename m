@@ -1,54 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213425;
-	b=HhOD8Q+v21li/OS6IHnJMozuFREMz6Sr5Jn0uPzBqLTHNMx1wrgaHxsau0/URyqZlxfp
-	 G/YghYpSZRqkXJbGdUZjiClW04Yj5T9IhyCINGihy5eU6Spv24syAvlsavimOiiqwPHc3
-	 4AySVztWk83OK230R91kBxgx3sQUP1K26MRDoGCZNim44KqREFjTGeyofszBdQJn4UPR5
-	 Rtpbl+6koAqJkfp6pJ527cmstaAOVS33yGkIwq5znY5FfjGEp3OXhZdMFOCmI8gV6EdJH
-	 zczHANdl395E3nnfK7dmxmN7LfVHD+9iiAPR7AjOtfCPgk+NdVXzjb9zO8nTkmjNkwA==
+	t=1793213428;
+	b=jw+HMu+1YFHFO7iIY4LwieEpzoLRIILCgYNDRB25P9cqviv5bWXw/tnL98UDhUNlkvWx
+	 bmhVRK4Uvw1QfBE4cVjIoqy8mhtUI8xO+Ewar7o9W3Dp+eW7VuDASiUOil8erEl2VX8CU
+	 g2M/3W3OxeN5tXSBKV4Vo08HtDAo/ugFSuWwvd+/FeY5wv6ae4I6C2iv5zitqEqBFM6Fm
+	 aYAtN7cCwN8A3aQI5DKg/qZq146B5A15BxG/PS5NgSVQJBN+S6p/RkkUt7wAUMu1EXFrT
+	 GaPyGphcvNt8osPQOhXK8EoVqpNTj0hYg8mDrj8ychY71e0/pDAJY0prJKlcgcuHsDA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213425;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213428;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=SYJl6x7FafoJB0oJGo+WsTCZ8j6ic0UmRdHgO0r2Xxc=;
-	b=orTRQFvc5LQj6puzmOh1pET0b6i3+soGr5j70cZcmBR7RsJuAoq96baJkDQhVjttCPBn
-	 AyEj6AvncgwSv7EtrVS8i4ONekjg3oMbVMFnG4Eoz/FN4IU12iB+6dJqSI7ueczPrIZAG
-	 tTvNIPmhYm9ZQWokrE0ZFGIDzT8Z1/PX72bgoyVehyLAIkHWxSNn59lNxUG5UnuDL6y7h
-	 xixlyR/dScfmVKD00QUqJoVrfsuqh9Q3dbaq2iivXW9Au3ILPteSBYSLyq5SF5zZP6UAn
-	 E+ctYsOu3/br6gLRzCwyl5OvD28lnX4OF1Mb501HyIbErGhV0g+94UtoSpGVm52YA4A==
+	bh=1Ovq51iY/uHBh1TkF61NHBKul+E0x/zdvSMrrwDaFCc=;
+	b=oCY3zi2l30PFK0B0h+9iecwKs3+M2vdCkX5xSVOWcjftpOTEVp91e/vleqH9hZaujhR3
+	 6LghNk9ASwqvITxEbfBxDuAaZOCoxzdmPwcKLFpFH31mxs9KI0QMmI8g9wJ1S3WxzE7Zs
+	 8C+RWirh9bevm9QwTFd/nk+qPhY+XDE79kTuOgQnJX6HjtoZr1HpsaJCBPOlyee81XucB
+	 ixYKOwLcZQTiITqn9QVGwAB4OpHTPAzmS79rfnRVVQQ/8fGxpSthJejUmqMX6fku4erAA
+	 fGq64dEV9kVsTAgV2DTWo7+XVXMp6VabBk5d7AvS6Vvrn3GyJ/Y1RUe51HXhOS+knlQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="ZgYV/su8";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PxQZYmAj;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68E56606A31A;
-	Wed, 28 Oct 2026 18:50:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E869E606A31E;
+	Wed, 28 Oct 2026 18:50:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZgYV/su8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A22D1F01825;
-	Wed, 28 Oct 2026 18:50:24 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PxQZYmAj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 491741F01825;
+	Wed, 28 Oct 2026 18:50:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213424;
-	bh=SYJl6x7FafoJB0oJGo+WsTCZ8j6ic0UmRdHgO0r2Xxc=;
+	s=korg; t=1793213427;
+	bh=1Ovq51iY/uHBh1TkF61NHBKul+E0x/zdvSMrrwDaFCc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZgYV/su81SVO3D8U3V2J5dSDHcWoEriK/TZraR8bIFxQAyzUi11nQkZNqThLqtegl
-	 DQTGHLhJKsf+314Hd71EMSKhNBAqOffcfhwCtCy6y7gXexR6fHUCbrBJspZmScbYCA
-	 zKxL3WABSvU2REfb/oq8arxTR94mdQU5FEUk+FVE=
+	b=PxQZYmAj8C6pAe44iDtQKdt+do3kFeXdi0jZ9ySB6Ci5ZzcVnIoueoFC2fXZwKach
+	 omAKZtKW9WkQ/PrW5lSZAVRFpCQQMm08Md6veUFHv8+vLwvZGjJgxvi7e5QLymXuH4
+	 7DzHWPTbn2ZubxL1zRE86ATymG6gzhZaw11/4eF0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Changyul Lee <lcy8047@gmail.com>,
-	Sang-Hoon Choi <csh0052@gmail.com>,
-	Linus Walleij <linusw@kernel.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Ezrak1e <ezrakiez@gmail.com>,
+	Alexander Aring <aahringo@redhat.com>,
+	David Teigland <teigland@redhat.com>,
+	Srikanth C S <srikanth.c.s@oracle.com>,
+	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0484/1887] gpio: exar: initialize the ID before registering its cleanup
-Date: Wed, 28 Oct 2026 17:43:00 +0100
-Message-ID: <20261028170510.277048235@linuxfoundation.org>
+Subject: [PATCH 6.1 0502/1887] dlm: validate length in dlm_search_rsb_tree
+Date: Wed, 28 Oct 2026 17:43:18 +0100
+Message-ID: <20261028170510.722114403@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -70,51 +71,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sang-Hoon Choi <csh0052@gmail.com>
+From: Ezrak1e <ezrakiez@gmail.com>
 
-[ Upstream commit 4d69e74034b208588636ecc177e0dd43a7696af3 ]
+[ Upstream commit 080e5563f878c64e697b89e7439d730d0daad882 ]
 
-devm_add_action_or_reset() invokes the cleanup action immediately when
-registering the action fails.  gpio_exar_probe() currently stores the
-allocated ID in exar_gpio only after registering the action, so that
-failure makes exar_devm_ida_free() release ID 0.  If the allocated ID is
-nonzero, this leaks that ID and can free ID 0 belonging to another device.
+The len parameter in dlm_dump_rsb_name() is not validated and comes
+from network messages. When it exceeds DLM_RESNAME_MAXLEN, it can
+cause out-of-bounds write in dlm_search_rsb_tree().
 
-Store the ID before registering the cleanup action so both the immediate
-failure path and normal device teardown release the correct allocation.
+Add length validation to prevent potential buffer overflow.
 
-Fixes: 5300ebb695fa ("gpio: exar: use devm action for freeing the IDA and drop remove()")
-Reported-by: Changyul Lee <lcy8047@gmail.com>
-Assisted-by: LLM
-Signed-off-by: Sang-Hoon Choi <csh0052@gmail.com>
-Reviewed-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/179070265834.12871.48183786512201899.idr-bug-79@gmail.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Signed-off-by: Ezrak1e <ezrakiez@gmail.com>
+Signed-off-by: Alexander Aring <aahringo@redhat.com>
+Signed-off-by: David Teigland <teigland@redhat.com>
+[ Contextual conflict due to dlm_search_rsb_tree() using the RB-tree
+implementation instead of rhashtable.]
+Signed-off-by: Srikanth C S <srikanth.c.s@oracle.com>
+Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-exar.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/dlm/lock.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpio/gpio-exar.c b/drivers/gpio/gpio-exar.c
-index e641bc96c4e71..0096f8a9377bd 100644
---- a/drivers/gpio/gpio-exar.c
-+++ b/drivers/gpio/gpio-exar.c
-@@ -196,6 +196,7 @@ static int gpio_exar_probe(struct platform_device *pdev)
- 	index = ida_alloc(&ida_index, GFP_KERNEL);
- 	if (index < 0)
- 		return index;
-+	exar_gpio->index = index;
+diff --git a/fs/dlm/lock.c b/fs/dlm/lock.c
+index d5aeda3399f95..8c2d4bc290177 100644
+--- a/fs/dlm/lock.c
++++ b/fs/dlm/lock.c
+@@ -456,6 +456,8 @@ int dlm_search_rsb_tree(struct rb_root *tree, const void *name, int len,
+ 	struct dlm_rsb *r;
+ 	int rc;
  
- 	ret = devm_add_action_or_reset(dev, exar_devm_ida_free, exar_gpio);
- 	if (ret)
-@@ -211,7 +212,6 @@ static int gpio_exar_probe(struct platform_device *pdev)
- 	exar_gpio->gpio_chip.set = exar_set_value;
- 	exar_gpio->gpio_chip.base = -1;
- 	exar_gpio->gpio_chip.ngpio = ngpios;
--	exar_gpio->index = index;
- 	exar_gpio->first_pin = first_pin;
- 
- 	ret = devm_gpiochip_add_data(dev, &exar_gpio->gpio_chip, exar_gpio);
++	if (len > DLM_RESNAME_MAXLEN)
++		return -EINVAL;
+ 	while (node) {
+ 		r = rb_entry(node, struct dlm_rsb, res_hashnode);
+ 		rc = rsb_cmp(r, name, len);
 -- 
 2.53.0
 
