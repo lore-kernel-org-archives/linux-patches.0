@@ -1,55 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214972;
-	b=zJvy69ICwHw+5fEkbSsRSk7UiQerAveX3/nHX/ax69RMrquuPdLzNOwlS8N9NDHC7Nmh
-	 7JeuzRNi1WBgBkGaF9oX9WvbZ73mXQNMpXV+yt2CZRRXb1aX8s0pmxC38FqKk/LO30yS8
-	 wHNn723U/qOfRFfvbx/qw6Q+Fh5hEFmjrrbfWItIF5JeZpK/qzg66YgFD2xFcRMoRh8+2
-	 k1MaR9zZofaeBLol8xMs611F+pfdJIugHKJ8zuEQSlJo0GGK3IaMxuFMDKhre6khzwLAl
-	 qvpQ+/3g2xIkY7lv9nrL9PtamNCB8o2bQrSU0nJIPph3D9Am/dhsuw/ApYCRkIfwChA==
+	t=1793214975;
+	b=2jMtEDT6aVbGlSQXDxgwGThIQhvx10qS8KTD8W/W7KrfyPiHf1DpFseQ9anS37ZVEaqY
+	 IH3ENBLAD7/q38k1DZrSxHg+RrKtheNP95w4vLXB9lV5QOOPiT9qQHui9sqj8zAulHto2
+	 VmspaEOC/pZDlbCSGXNXMVxQHh+aXApz01DU7AU81VDGio9eUF0gRM9BnIFSFGAqD+VQP
+	 MUOL5zrFWvmdvRnXCJAsMpYyJcT14cFOIcOlcdW8S6I+CkhI3El4QZfEx73Vk4Eivjsoc
+	 g8EE3I2zdoonqmfa8VxTxhffmXpysFLEHLZBLGmcyR6C8OFgyDBZMJ9FNkmlZ64aJiA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214972;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214975;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=rmldblHX4r9PfqsVAf23e7Ne6oFVnvS7c6ChQlSXyds=;
-	b=fIyni4p5am5cC1q1tc5KG59GUbSwhfUmtduZHXMAxeisNsMRresoX6EGERp5zW/5nYYv
-	 xCaxULaa0HpozhZdn85hwPY/2MGG91WUMr3cAlW82rItBpzqAkBNzz281ljMx8ifMR82s
-	 wGD7FMl7NXTmxOmh44JKewhcw/7HDmKPAyN9RN2zfudtFGDaOCbFTTzg/18TheS0QD2Ls
-	 us9HUjK0WW32uTesLMNlhqIPaS2o1FtJSx60DEsBH5d06XNmCx3Fo6Q0ZAB8fg19T4DsY
-	 cSeWTbUE7PG2aRLl2fc/txPuw2oApNLW0v5GGUJiozk8YKYgw24VBFV5GBQOe0Oktfw==
+	bh=rlTpdhTlLS0PtCcQxAWErunyDL+W6GEd4g3ghw/yF8I=;
+	b=PedZkBmzSv10FaptU19h0EVyz3O9iSjQWdkJrJDz7Dus9l6hsx5+TSG7G39a8GydXFka
+	 CmjpR7z5AFwIzdqkoA3BP3sD+HjYYKGAKneie7YbrboR4wlHDAfN0N/gn4GAAZV7AFdjl
+	 rSGpD0aUlmbs97yqJ6doPLs7/NzovPabiDUZmqi8SCa5FIW0yThYx6mQqzY5+hs9eIVSL
+	 YCt5AjZwhgqAc+0aWhVqJv0tXBFoJKHZDY/03su31iqnCLejwOJyvM7qNJrBRKxmr7miK
+	 4W+GvEwrlPNF++1nfwsvv5zOpdSrwgai2dvDTJFHtxB9vJdTSumflXJsNzUDP1yqWaw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x55bi9v7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l79iEKYQ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77476606A32F;
-	Wed, 28 Oct 2026 19:16:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29EC960A2612;
+	Wed, 28 Oct 2026 19:16:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x55bi9v7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A9311F01825;
-	Wed, 28 Oct 2026 19:16:11 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l79iEKYQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 775581F01829;
+	Wed, 28 Oct 2026 19:16:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214972;
-	bh=rmldblHX4r9PfqsVAf23e7Ne6oFVnvS7c6ChQlSXyds=;
+	s=korg; t=1793214975;
+	bh=rlTpdhTlLS0PtCcQxAWErunyDL+W6GEd4g3ghw/yF8I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=x55bi9v7wkj9Md4s5dzhKDKGjOcgtZOufDXFatWIwGuidUQe0ZgZkP2q3s5kJ+PBf
-	 hei7PqKhMXAvka9Z7kRLO96S5Uoa2MQ13Aa++SNwZusuelLJK1Y6wAxv0+hBJiiqnX
-	 tQSH+Hf2WjKyVT4dioieN/XbAlN4voMPSpdPmtTk=
+	b=l79iEKYQuldu2rdAsCcEtL5V0YW99/rc7VT1xiooGjZcNCVSAQkWVx0pJ1bx4ZBtx
+	 BCzl2C2/uggUCf7ScZzmvOh+Ri5sOll70CHBB0tqC2tnIvyu88oQP/srrdfLnA6bOC
+	 Ddo2LSe+2PDvsKW7qWfZVMPOwkOov5u33FL3+pfI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tengda Wu <wutengda2@huawei.com>,
-	Yao Kai <yaokai34@huawei.com>,
-	Joel Fernandes <joelagnelf@nvidia.com>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	Boqun Feng <boqun.feng@gmail.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1040/1887] rcu: Fix rcu_read_unlock() deadloop due to softirq
-Date: Wed, 28 Oct 2026 17:52:16 +0100
-Message-ID: <20261028170523.078104444@linuxfoundation.org>
+	Takashi Iwai <tiwai@suse.de>,
+	Sasha Levin <sashal@kernel.org>,
+	Jaeyoung Chung <jjy600901@snu.ac.kr>
+Subject: [PATCH 6.1 1049/1887] ALSA: pcm: oss: Fix data race at accessing runtime.oss.trigger
+Date: Wed, 28 Oct 2026 17:52:25 +0100
+Message-ID: <20261028170523.280653886@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -71,168 +68,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yao Kai <yaokai34@huawei.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit d41e37f26b3157b3f1d10223863519a943aa239b ]
+[ Upstream commit 901ac0ff15edf9503162e2cf6579bd11a30f1ed4 ]
 
-Commit 5f5fa7ea89dc ("rcu: Don't use negative nesting depth in
-__rcu_read_unlock()") removes the recursion-protection code from
-__rcu_read_unlock(). Therefore, we could invoke the deadloop in
-raise_softirq_irqoff() with ftrace enabled as follows:
+Currently the runtime.oss.trigger field may be accessed concurrently
+without protection, which may lead to the data race.  And, in this
+case, it may lead to more severe problem because it's a bit field; as
+writing the data, it may overwrite other bit fields as well, which
+confuses the operation completely, as spotted by fuzzing.
 
-WARNING: CPU: 0 PID: 0 at kernel/trace/trace.c:3021 __ftrace_trace_stack.constprop.0+0x172/0x180
-Modules linked in: my_irq_work(O)
-CPU: 0 UID: 0 PID: 0 Comm: swapper/0 Tainted: G O 6.18.0-rc7-dirty #23 PREEMPT(full)
-Tainted: [O]=OOT_MODULE
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
-RIP: 0010:__ftrace_trace_stack.constprop.0+0x172/0x180
-RSP: 0018:ffffc900000034a8 EFLAGS: 00010002
-RAX: 0000000000000000 RBX: 0000000000000004 RCX: 0000000000000000
-RDX: 0000000000000003 RSI: ffffffff826d7b87 RDI: ffffffff826e9329
-RBP: 0000000000090009 R08: 0000000000000005 R09: ffffffff82afbc4c
-R10: 0000000000000008 R11: 0000000000011d7a R12: 0000000000000000
-R13: ffff888003874100 R14: 0000000000000003 R15: ffff8880038c1054
-FS:  0000000000000000(0000) GS:ffff8880fa8ea000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 000055b31fa7f540 CR3: 00000000078f4005 CR4: 0000000000770ef0
-PKRU: 55555554
-Call Trace:
- <IRQ>
- trace_buffer_unlock_commit_regs+0x6d/0x220
- trace_event_buffer_commit+0x5c/0x260
- trace_event_raw_event_softirq+0x47/0x80
- raise_softirq_irqoff+0x6e/0xa0
- rcu_read_unlock_special+0xb1/0x160
- unwind_next_frame+0x203/0x9b0
- __unwind_start+0x15d/0x1c0
- arch_stack_walk+0x62/0xf0
- stack_trace_save+0x48/0x70
- __ftrace_trace_stack.constprop.0+0x144/0x180
- trace_buffer_unlock_commit_regs+0x6d/0x220
- trace_event_buffer_commit+0x5c/0x260
- trace_event_raw_event_softirq+0x47/0x80
- raise_softirq_irqoff+0x6e/0xa0
- rcu_read_unlock_special+0xb1/0x160
- unwind_next_frame+0x203/0x9b0
- __unwind_start+0x15d/0x1c0
- arch_stack_walk+0x62/0xf0
- stack_trace_save+0x48/0x70
- __ftrace_trace_stack.constprop.0+0x144/0x180
- trace_buffer_unlock_commit_regs+0x6d/0x220
- trace_event_buffer_commit+0x5c/0x260
- trace_event_raw_event_softirq+0x47/0x80
- raise_softirq_irqoff+0x6e/0xa0
- rcu_read_unlock_special+0xb1/0x160
- unwind_next_frame+0x203/0x9b0
- __unwind_start+0x15d/0x1c0
- arch_stack_walk+0x62/0xf0
- stack_trace_save+0x48/0x70
- __ftrace_trace_stack.constprop.0+0x144/0x180
- trace_buffer_unlock_commit_regs+0x6d/0x220
- trace_event_buffer_commit+0x5c/0x260
- trace_event_raw_event_softirq+0x47/0x80
- raise_softirq_irqoff+0x6e/0xa0
- rcu_read_unlock_special+0xb1/0x160
- __is_insn_slot_addr+0x54/0x70
- kernel_text_address+0x48/0xc0
- __kernel_text_address+0xd/0x40
- unwind_get_return_address+0x1e/0x40
- arch_stack_walk+0x9c/0xf0
- stack_trace_save+0x48/0x70
- __ftrace_trace_stack.constprop.0+0x144/0x180
- trace_buffer_unlock_commit_regs+0x6d/0x220
- trace_event_buffer_commit+0x5c/0x260
- trace_event_raw_event_softirq+0x47/0x80
- __raise_softirq_irqoff+0x61/0x80
- __flush_smp_call_function_queue+0x115/0x420
- __sysvec_call_function_single+0x17/0xb0
- sysvec_call_function_single+0x8c/0xc0
- </IRQ>
+Fix it by covering runtime.oss.trigger bit fled also with the existing
+params_lock mutex in both snd_pcm_oss_get_trigger() and
+snd_pcm_oss_poll().
 
-Commit b41642c87716 ("rcu: Fix rcu_read_unlock() deadloop due to IRQ work")
-fixed the infinite loop in rcu_read_unlock_special() for IRQ work by
-setting a flag before calling irq_work_queue_on(). We fix this issue by
-setting the same flag before calling raise_softirq_irqoff() and rename the
-flag to defer_qs_pending for more common.
-
-Fixes: 5f5fa7ea89dc ("rcu: Don't use negative nesting depth in __rcu_read_unlock()")
-Reported-by: Tengda Wu <wutengda2@huawei.com>
-Signed-off-by: Yao Kai <yaokai34@huawei.com>
-Reviewed-by: Joel Fernandes <joelagnelf@nvidia.com>
-Tested-by: Paul E. McKenney <paulmck@kernel.org>
-Signed-off-by: Joel Fernandes <joelagnelf@nvidia.com>
-Signed-off-by: Boqun Feng <boqun.feng@gmail.com>
+Reported-and-tested-by: Jaeyoung Chung <jjy600901@snu.ac.kr>
+Closes: https://lore.kernel.org/20260423145330.210035-1-jjy600901@snu.ac.kr
+Cc: <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20260424112205.123703-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/rcu/tree.h        |  2 +-
- kernel/rcu/tree_plugin.h | 15 +++++++++------
- 2 files changed, 10 insertions(+), 7 deletions(-)
+ sound/core/oss/pcm_oss.c | 29 +++++++++++++++++++++++------
+ 1 file changed, 23 insertions(+), 6 deletions(-)
 
-diff --git a/kernel/rcu/tree.h b/kernel/rcu/tree.h
-index 4770ff998f27d..e5f74554e3e60 100644
---- a/kernel/rcu/tree.h
-+++ b/kernel/rcu/tree.h
-@@ -186,7 +186,7 @@ struct rcu_data {
- 					/*  during and after the last grace */
- 					/* period it is aware of. */
- 	struct irq_work defer_qs_iw;	/* Obtain later scheduler attention. */
--	int defer_qs_iw_pending;	/* Scheduler attention pending? */
-+	int defer_qs_pending;		/* irqwork or softirq pending? */
- 	struct work_struct strict_work;	/* Schedule readers for strict GPs. */
+diff --git a/sound/core/oss/pcm_oss.c b/sound/core/oss/pcm_oss.c
+index 80dae370a0d58..d5cd728c30a00 100644
+--- a/sound/core/oss/pcm_oss.c
++++ b/sound/core/oss/pcm_oss.c
+@@ -2161,10 +2161,16 @@ static int snd_pcm_oss_get_trigger(struct snd_pcm_oss_file *pcm_oss_file)
  
- 	/* 2) batch handling */
-diff --git a/kernel/rcu/tree_plugin.h b/kernel/rcu/tree_plugin.h
-index 7dd83a4d86810..9958f73d7ee10 100644
---- a/kernel/rcu/tree_plugin.h
-+++ b/kernel/rcu/tree_plugin.h
-@@ -475,8 +475,8 @@ rcu_preempt_deferred_qs_irqrestore(struct task_struct *t, unsigned long flags)
- 	union rcu_special special;
- 
- 	rdp = this_cpu_ptr(&rcu_data);
--	if (rdp->defer_qs_iw_pending == DEFER_QS_PENDING)
--		rdp->defer_qs_iw_pending = DEFER_QS_IDLE;
-+	if (rdp->defer_qs_pending == DEFER_QS_PENDING)
-+		rdp->defer_qs_pending = DEFER_QS_IDLE;
- 
- 	/*
- 	 * If RCU core is waiting for this CPU to exit its critical section,
-@@ -635,7 +635,7 @@ static void rcu_preempt_deferred_qs_handler(struct irq_work *iwp)
- 	 * 5. Deferred QS reporting does not happen.
- 	 */
- 	if (rcu_preempt_depth() > 0)
--		WRITE_ONCE(rdp->defer_qs_iw_pending, DEFER_QS_IDLE);
-+		WRITE_ONCE(rdp->defer_qs_pending, DEFER_QS_IDLE);
- 
- 	local_irq_restore(flags);
+ 	psubstream = pcm_oss_file->streams[SNDRV_PCM_STREAM_PLAYBACK];
+ 	csubstream = pcm_oss_file->streams[SNDRV_PCM_STREAM_CAPTURE];
+-	if (psubstream && psubstream->runtime && psubstream->runtime->oss.trigger)
+-		result |= PCM_ENABLE_OUTPUT;
+-	if (csubstream && csubstream->runtime && csubstream->runtime->oss.trigger)
+-		result |= PCM_ENABLE_INPUT;
++	if (psubstream && psubstream->runtime) {
++		guard(mutex)(&psubstream->runtime->oss.params_lock);
++		if (psubstream->runtime->oss.trigger)
++			result |= PCM_ENABLE_OUTPUT;
++	}
++	if (csubstream && csubstream->runtime) {
++		guard(mutex)(&csubstream->runtime->oss.params_lock);
++		if (csubstream->runtime->oss.trigger)
++			result |= PCM_ENABLE_INPUT;
++	}
+ 	return result;
  }
-@@ -674,7 +674,10 @@ static void rcu_read_unlock_special(struct task_struct *t)
- 			// Using softirq, safe to awaken, and either the
- 			// wakeup is free or there is either an expedited
- 			// GP in flight or a potential need to deboost.
--			raise_softirq_irqoff(RCU_SOFTIRQ);
-+			if (rdp->defer_qs_pending != DEFER_QS_PENDING) {
-+				rdp->defer_qs_pending = DEFER_QS_PENDING;
-+				raise_softirq_irqoff(RCU_SOFTIRQ);
-+			}
- 		} else {
- 			// Enabling BH or preempt does reschedule, so...
- 			// Also if no expediting and no possible deboosting,
-@@ -683,13 +686,13 @@ static void rcu_read_unlock_special(struct task_struct *t)
- 			set_tsk_need_resched(current);
- 			set_preempt_need_resched();
- 			if (IS_ENABLED(CONFIG_IRQ_WORK) && irqs_were_disabled &&
--			    expboost && rdp->defer_qs_iw_pending != DEFER_QS_PENDING &&
-+			    expboost && rdp->defer_qs_pending != DEFER_QS_PENDING &&
- 			    cpu_online(rdp->cpu)) {
- 				// Get scheduler to re-evaluate and call hooks.
- 				// If !IRQ_WORK, FQS scan will eventually IPI.
- 				rdp->defer_qs_iw =
- 					IRQ_WORK_INIT_HARD(rcu_preempt_deferred_qs_handler);
--				rdp->defer_qs_iw_pending = DEFER_QS_PENDING;
-+				rdp->defer_qs_pending = DEFER_QS_PENDING;
- 				irq_work_queue_on(&rdp->defer_qs_iw, rdp->cpu);
- 			}
+ 
+@@ -2839,6 +2845,17 @@ static int snd_pcm_oss_capture_ready(struct snd_pcm_substream *substream)
+ 						runtime->oss.period_frames;
+ }
+ 
++static bool need_input_retrigger(struct snd_pcm_runtime *runtime)
++{
++	bool ret;
++
++	guard(mutex)(&runtime->oss.params_lock);
++	ret = runtime->oss.trigger;
++	if (ret)
++		runtime->oss.trigger = 0;
++	return ret;
++}
++
+ static __poll_t snd_pcm_oss_poll(struct file *file, poll_table * wait)
+ {
+ 	struct snd_pcm_oss_file *pcm_oss_file;
+@@ -2871,11 +2888,11 @@ static __poll_t snd_pcm_oss_poll(struct file *file, poll_table * wait)
+ 		    snd_pcm_oss_capture_ready(csubstream))
+ 			mask |= EPOLLIN | EPOLLRDNORM;
+ 		snd_pcm_stream_unlock_irq(csubstream);
+-		if (ostate != SNDRV_PCM_STATE_RUNNING && runtime->oss.trigger) {
++		if (ostate != SNDRV_PCM_STATE_RUNNING &&
++		    need_input_retrigger(runtime)) {
+ 			struct snd_pcm_oss_file ofile;
+ 			memset(&ofile, 0, sizeof(ofile));
+ 			ofile.streams[SNDRV_PCM_STREAM_CAPTURE] = pcm_oss_file->streams[SNDRV_PCM_STREAM_CAPTURE];
+-			runtime->oss.trigger = 0;
+ 			snd_pcm_oss_set_trigger(&ofile, PCM_ENABLE_INPUT);
  		}
+ 	}
 -- 
 2.53.0
 
