@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793212800;
-	b=FcX3owVu+CxnGw1Ix40jmchSrgT8O3t9efePAO4Oj1ggy3zMenxnHYISMRHLtv7sw5D6
-	 JUFVMYJZjGlI/n3uL5Iho4YlfLmAnCknXWjijgbXC/WL9QQe6rw8VGriIKyS2d3uWXLq4
-	 FiwZb0MvFNkakb+z6v734K4d4WDvNAxCm3o8aHKCDvRAeJMuYALYC0Prmn7TvRl2fMfDn
-	 PNZLLmpIzcffrIYf97i/n1/VKNnbSHlDo339YJ7BbqMAK9Ktvz0ztrpcYZ3J/XL0k81xs
-	 jUz9XThee4oGgwX7FIUJ+VoSZ1upltwc6X45oxX237+Hn3WogaOCsu8LShPj68MSDRg==
+	t=1793212803;
+	b=o+r6JIzGMgFX3s2XjCt8MOehdhxuZ9zPVbcpvQa/xP1HzpgYud2qNMgM2TDpWhMCiQhq
+	 CFmj7EAafn1F375GWNr1lQUfEhxDVfUGEi89/p838hKaZ5hUxdtpi3c3zt4WFAwo/BqbW
+	 K6PrB/5YMPaF89P25w13kAMILH1Stx/Ohsmfz6JRfsNWeseMWPLWV7hK96S7LSp/9B3wK
+	 8mwFcACAz1elRJNK3NXEovY2dXIgwfkKtH1vrAxnJroxLHd01OIrJtDNgmbnsS5YPGYtP
+	 rb1OqztGcVsSpEWgCT0xwoWeSg+CdCdp41qE3+AI91zAKZXJLeM0gVCXBsU0OR27giA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793212800;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793212803;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=L1aM3O5+IcZqGWzKMzTvBfIbk+ylWT4Lfh7YMBKYkyY=;
-	b=k7Vj/SZDPn1ynG019NbfTlP7RNNCCFD97mVZFVcK1zVKxUawI9JpdsB1AUSQhG5ORNWB
-	 nRzb3NUREITYaOkVhelBvxJbA0q02ZidbhVUR1C2FejFWEYtgYplihz1iSSNu6qFbj03T
-	 RIDyVselmN+khqzmisCX82apl3UIsd3j7xT8PwYTkiSxTQqa2q2KBOM5IGdJX5R1GRdcL
-	 gc8wQPI8M4f/9BvTX9WiJLyXu6XLc1rTVYu5RIQSkdCzoYuR8Vc0ZyIWe2v7HJO+i9HTn
-	 JYSrQhha7xGbZi6/c6+dRaLzch8mAVfpne2c6/vJiKcs5URSIDnympmXJ0DONUP28SA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=hUAXDJL2dRzzaOh5VGN8ZDL0bQnHNN2UNPVLjpoLd1Q=;
+	b=4mRFxWsaSuQvpmttH6EJpvY02ubx7aUPlImo+ElXTpPQykDnIfK2H9lxOr9aeebMWace
+	 v1NiTZl+Hc7ssT4p++0NG1HGvshAHhqNXfwDMslGWg4AJNLvV4N+Q6IVmrw0ZMCM62bTM
+	 vr71y1JjmF7XcO8NUBFfcGxUkyDV2uxjXI/QZxkrGFIZJestqiTuTI+tFxChd2vZyFCJN
+	 kaPDpYOP3HHk4u/czoNvH0ERJz+ens6uiuMuQjr0PZw/nH1W+X29wJ8B68NvIXc/HBX9D
+	 682pZo5BfBh7WRkO0JotZlbRmP7yk5ZPi3msUyWJwXJ9yfLn2x6xSbnIiSJplZb/2Sw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ROolM+DX;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=viDzg1J4;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A974606A31A;
-	Wed, 28 Oct 2026 18:40:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 605D1606A31A;
+	Wed, 28 Oct 2026 18:40:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ROolM+DX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D536E1F01825;
-	Wed, 28 Oct 2026 18:39:59 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=viDzg1J4
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2DC91F01825;
+	Wed, 28 Oct 2026 18:40:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793212800;
-	bh=L1aM3O5+IcZqGWzKMzTvBfIbk+ylWT4Lfh7YMBKYkyY=;
+	s=korg; t=1793212803;
+	bh=hUAXDJL2dRzzaOh5VGN8ZDL0bQnHNN2UNPVLjpoLd1Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ROolM+DXBlxgMtV78R/xwciZQTXJ+UPf4ZoCKIZVnyiJbItpeoqDt9jMVyx9iiWcF
-	 FPkwQk022SH/nmc7ryDrsJNd1MS7MFep0OrdzDBXNkOQMCQ+sYacjULurd6YDDE1Gb
-	 sRJOGwZNkhzpLQsDUsSq9yj23B2UQsHWgX+pi2v8=
+	b=viDzg1J4FN7mzejuleYmZ8toHwrkUJrI3tXwFwCbfMG8ID/BkZphVz975rpZLOeKs
+	 3fSTjRa7SYtvt7irMtYON0G0PZPIHZ0hN0B1wPhwlFoR/r8WwfNmyyGBugw2OGoi8U
+	 HQOssvmlvl9UriWVbNMQXY5V8+ueDf2z1O8/yjx4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Yuchao Zhang <ndaugoing@gmail.com>,
-	=?UTF-8?q?Micha=C5=82=20Nazarewicz?= <mina86@mina86.com>
-Subject: [PATCH 6.1 0280/1887] usb: gadget: f_fs: Fix NULL pointer dereference in FUNCTIONFS_ENDPOINT_DESC
-Date: Wed, 28 Oct 2026 17:39:36 +0100
-Message-ID: <20261028170505.600883385@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
+	Peter Chen <peter.chen@kernel.org>
+Subject: [PATCH 6.1 0281/1887] usb: chipidea: tegra: disable runtime PM on resume failure
+Date: Wed, 28 Oct 2026 17:39:37 +0100
+Message-ID: <20261028170505.623654282@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -62,95 +63,54 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yuchao Zhang <ndaugoing@gmail.com>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-commit 9cd072788c76595529eb38f42bf94d23852f8534 upstream.
+commit f1d6f7d25fe88ee49aaad96c8649e090fc3a4b68 upstream.
 
-When user space sets up FunctionFS with only full-speed descriptors
-(e.g., flags = FUNCTIONFS_HAS_FS_DESC) and the gadget operates at a
-higher speed (such as USB_SPEED_HIGH or USB_SPEED_SUPER),
-config_ep_by_speed() detects that the function lacks descriptors for
-the current speed, logs a warning, and falls back to full-speed
-descriptors. The endpoint is then successfully enabled via
-usb_ep_enable(), and epfile->ep becomes valid.
+tegra_usb_probe() enables runtime PM before resuming the device. If
+pm_runtime_resume_and_get() fails, probe returns without disabling runtime
+PM. The later error paths reach pm_runtime_force_suspend(), but this early
+return bypasses that cleanup.
 
-However, when user space subsequently issues the FUNCTIONFS_ENDPOINT_DESC
-ioctl to query the endpoint descriptor, ffs_epfile_ioctl() selects the
-descriptor index solely based on gadget->speed:
+Disable runtime PM before returning the resume error. Do not use the
+fail_power_off path: the failed resume did not retain a usage reference,
+so its pm_runtime_put_sync_suspend() would be unbalanced.
 
-	switch (epfile->ffs->gadget->speed) {
-	case USB_SPEED_SUPER:
-	case USB_SPEED_SUPER_PLUS:
-		desc_idx = 2;
-		break;
-	case USB_SPEED_HIGH:
-		desc_idx = 1;
-		break;
-	default:
-		desc_idx = 0;
-	}
-	desc = epfile->ep->descs[desc_idx];
-	memcpy(&desc1, desc, desc->bLength);
+This issue was identified during our ongoing static-analysis research while
+reviewing kernel code.
 
-Because user space only supplied full-speed descriptors,
-epfile->ep->descs[1] is NULL. Dereferencing desc->bLength triggers an
-immediate kernel NULL pointer dereference panic.
-
-Fix this by falling back through lower speed descriptors if the current
-speed descriptor was not supplied, matching the fallback logic in
-config_ep_by_speed() and historical f_fs behavior. If still missing,
-fall back to epfile->ep->ep->desc (the active descriptor), and return
--EINVAL safely if no valid descriptor is found. In addition, mark desc
-as const to match struct usb_ep::desc and avoid discarding qualifiers.
-
-Fixes: c559a3534109 ("usb: gadget: f_fs: add ioctl returning ep descriptor")
-Cc: stable@kernel.org
-Signed-off-by: Yuchao Zhang <ndaugoing@gmail.com>
-Acked-by: Michał Nazarewicz <mina86@mina86.com>
-Link: https://patch.msgid.link/20260918005438.81263-2-ndaugoing@gmail.com
+Fixes: 8b85e11c1a7a ("usb: chipidea: tegra: Add runtime PM and OPP support")
+Cc: stable <stable@kernel.org>
+Assisted-by: OpenAI:GPT-5.6
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Acked-by: Peter Chen <peter.chen@kernel.org>
+Link: https://patch.msgid.link/20260913041033.25144-1-mhun512@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/f_fs.c |   15 +++++++++++++--
- 1 file changed, 13 insertions(+), 2 deletions(-)
+ drivers/usb/chipidea/ci_hdrc_tegra.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/gadget/function/f_fs.c
-+++ b/drivers/usb/gadget/function/f_fs.c
-@@ -1351,8 +1351,9 @@ static long ffs_epfile_ioctl(struct file
- 		break;
- 	case FUNCTIONFS_ENDPOINT_DESC:
- 	{
-+		const struct usb_endpoint_descriptor *desc;
-+		struct usb_endpoint_descriptor desc1;
- 		int desc_idx;
--		struct usb_endpoint_descriptor desc1, *desc;
+--- a/drivers/usb/chipidea/ci_hdrc_tegra.c
++++ b/drivers/usb/chipidea/ci_hdrc_tegra.c
+@@ -307,8 +307,10 @@ static int tegra_usb_probe(struct platfo
  
- 		switch (epfile->ffs->gadget->speed) {
- 		case USB_SPEED_SUPER:
-@@ -1366,7 +1367,17 @@ static long ffs_epfile_ioctl(struct file
- 			desc_idx = 0;
- 		}
+ 	pm_runtime_enable(&pdev->dev);
+ 	err = pm_runtime_resume_and_get(&pdev->dev);
+-	if (err)
++	if (err) {
++		pm_runtime_disable(&pdev->dev);
+ 		return err;
++	}
  
--		desc = epfile->ep->descs[desc_idx];
-+		do {
-+			desc = epfile->ep->descs[desc_idx];
-+		} while (!desc && --desc_idx >= 0);
-+
-+		if (!desc)
-+			desc = epfile->ep->ep->desc;
-+		if (!desc) {
-+			ret = -EINVAL;
-+			break;
-+		}
-+
- 		memcpy(&desc1, desc, desc->bLength);
- 
- 		spin_unlock_irq(&epfile->ffs->eps_lock);
+ 	if (device_property_present(&pdev->dev, "nvidia,needs-double-reset"))
+ 		usb->needs_double_reset = true;
 
 
