@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213790;
-	b=nhkOG7oofOjRP3EluhNH8u2YgQkkJiD9fmOt8mzRZlNRLU9Z/6EBaO8vIxbmzGPN3CWr
-	 zSpSIT1gCRbyXjJXGt/+X91DuvzppU8g9qi+BnBpKLe5O/eXoOIWQSA9hpYYJTuvtUwez
-	 pzV0x2TUM10I4ipu7/nD+z8d9uCXwSOQK8+N+LyrA65qkw82RRJhKHjb92K1YmJC1VJdy
-	 Mx0pHej3+5F3HykLEOZr+quxv378phA4CdeW7KuAHzb3LX2k6demGPYle2R5gqrpS8SJR
-	 sI3ajDFuBMTzKwQD/m+egkj1GNYfe46ohIAtT7T7YPJ086X5TcTrcUT5Y1FUw5ApicA==
+	t=1793213793;
+	b=h5svoU+fEWPRPbpnU7JFGIjUEAD97fRZqM8La8stpg6jAi+3FpFcazQ+jHtxwbmK9TuS
+	 miRQMW2zovPrODwJ+HKGWjVFlUQSohGuSAlmNkZ/KoXPp1QdtLx3aeC3jtwrQ8MbnCatx
+	 2iz+1hsUK+p9ZZx9Gm0iX3S2sLqo3Pp3VGZCRN6o2j8nYCVU9H6oOegh8xiKon63kCavx
+	 N/dMRhe8pr9PmrjUVW0SNmR+dbu2t9109tJc0sqsfMNpktUz97jz7AZEqcwrDTcEHjcQl
+	 FMXAuqjkHJ6xC/aAZw3gPoo1yagG34vZbfEhtYFuUqV2itAAqnpuBMMqlg37DPO807Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213790;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213793;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=7/n1qvoWWCK4JAdskADB3gbEFor2Zs7+CP2gHgWLW8k=;
-	b=fxQDnLfzAj5Zi7CBR7NqdZgNQPzE9bzklAV9TzIpU8iHbhmFmyA0gO0zC0cElmxnlm/j
-	 QnPWTk51BdAZL/Ui9ufOsVK1/M51DXzpcpo3Yc35sghlaW5Ow0UWohCNR+DChYz3Ma7cB
-	 ck7kU1fAnWY+dAJHs2mzgJKyhkaf5eF4ztotzMP12aBjWExqU7VxlvBn9l+d+yhKPQ2t0
-	 EU4ZQ8M+cZkYg4DoCBNsFZy4DEjif43Ze0XaA7JAuxNyFHvLGEop3cgX3lUx+HCtkRe8R
-	 25x2Rg8QfhphiROZp8hre7PBAzJdAJ2BoJxpzp4FyIPnj20peoobdyOyupIKkh6iL2w==
+	bh=PDJeYsofSE6atR37wnVXn3P5KmOjuOJFbAUjUfzKZ/o=;
+	b=lpkuaQiZtQpUbA74ML1TtPwDMuPaXSP78l5cv91KSd6bKrsA2w+dID1nc8Y6/bVuAHwY
+	 vAE/XDZjeIIU7S2UcuJPDHBbvNrJtaZeaTjTVU+koGdjk56djMNYloGBvwSA1Hf+lgkTK
+	 UyMj7pMlIbpqSISAbkogU7ynJpg5kB4aXkbncdYlFL4jOdCpH91cpTg8nAf6GLavc74uM
+	 U/F+EJGOQOkadXW3V0fZWM/Wtr0WF1+oriZ2QKSYWlitIdeKjmP2EJIXGeijgif4DzOPk
+	 /GH0JYGcHd4PjaOkNzxHeXfTzyjaLEb6PDz1Da31qSMrPylYk8rJH7hUX6h8Vj5fuZQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=d7fZGA8o;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=o+P199rZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5403A606A31A;
-	Wed, 28 Oct 2026 18:56:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3432A606A31C;
+	Wed, 28 Oct 2026 18:56:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=d7fZGA8o
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A36351F01825;
-	Wed, 28 Oct 2026 18:56:29 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=o+P199rZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 824CD1F01825;
+	Wed, 28 Oct 2026 18:56:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213790;
-	bh=7/n1qvoWWCK4JAdskADB3gbEFor2Zs7+CP2gHgWLW8k=;
+	s=korg; t=1793213793;
+	bh=PDJeYsofSE6atR37wnVXn3P5KmOjuOJFbAUjUfzKZ/o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=d7fZGA8oEhD5WyHWankqq6v13e7PJdczZXkzD/iHT4CT7FqP4WgX33BUCw7WgzdiE
-	 dY+dFJ2ZgKv4l+IJZfyeA+3HTutYDdUoi5HDS7O+2f29UiwY0IzF1GPiIVgO5KbyKh
-	 R28+Ohv1BtCZfoRoQizcwYNCkVBY9/8YX6jLLnVI=
+	b=o+P199rZOAX1GS38oOJXoPvqJkbeD1OcKbysKp4/S/c7ySmtWRozalHLkjFa8CyvE
+	 YMNl1Ss/Xue9VXyIv8X6nsdi5yJFQoE+lQhJnTgcktVKXKddsc45yEVlume8dzKM+g
+	 Wi9+7C4+dpQ1obaxMCU8K1pqvj1tCorI4MgnPXVw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
+	George Stark <gnstark@salutedevices.com>,
+	Andy Shevchenko <andy.shevchenko@gmail.com>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0623/1887] platform/x86: x86-android-tablets: Unregister devices in reverse order
-Date: Wed, 28 Oct 2026 17:45:19 +0100
-Message-ID: <20261028170513.586473580@linuxfoundation.org>
+Subject: [PATCH 6.1 0632/1887] leds: an30259a: Use devm_mutex_init() for mutex initialization
+Date: Wed, 28 Oct 2026 17:45:28 +0100
+Message-ID: <20261028170513.790703942@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -67,89 +69,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: George Stark <gnstark@salutedevices.com>
 
-[ Upstream commit 3de0f2627ef849735f155c1818247f58404dddfe ]
+[ Upstream commit c382e2e3eccb6b7ca8c7aff5092c1668428e7de6 ]
 
-Not all subsystems support a device getting removed while there are
-still consumers of the device with a reference to the device.
+In this driver LEDs are registered using devm_led_classdev_register()
+so they are automatically unregistered after module's remove() is done.
+led_classdev_unregister() calls module's led_set_brightness() to turn off
+the LEDs and that callback uses mutex which was destroyed already
+in module's remove() so use devm API instead.
 
-One example of this is the regulator subsystem. If a regulator gets
-unregistered while there are still drivers holding a reference
-a WARN() at drivers/regulator/core.c:5829 triggers, e.g.:
-
- WARNING: CPU: 1 PID: 1587 at drivers/regulator/core.c:5829 regulator_unregister
- Hardware name: Intel Corp. VALLEYVIEW C0 PLATFORM/BYT-T FFD8, BIOS BLADE_21.X64.0005.R00.1504101516 FFD8_X64_R_2015_04_10_1516 04/10/2015
- RIP: 0010:regulator_unregister
- Call Trace:
-  <TASK>
-  regulator_unregister
-  devres_release_group
-  i2c_device_remove
-  device_release_driver_internal
-  bus_remove_device
-  device_del
-  device_unregister
-  x86_android_tablet_remove
-
-On the Lenovo Yoga Tablet 2 series the bq24190 charger chip also provides
-a 5V boost converter output for powering USB devices connected to the micro
-USB port, the bq24190-charger driver exports this as a Vbus regulator.
-
-On the 830 (8") and 1050 ("10") models this regulator is controlled by
-a platform_device and x86_android_tablet_remove() removes platform_device-s
-before i2c_clients so the consumer gets removed first.
-
-But on the 1380 (13") model there is a lc824206xa micro-USB switch
-connected over I2C and the extcon driver for that controls the regulator.
-The bq24190 i2c-client *must* be registered first, because that creates
-the regulator with the lc824206xa listed as its consumer. If the regulator
-has not been registered yet the lc824206xa driver will end up getting
-a dummy regulator.
-
-Since in this case both the regulator provider and consumer are I2C
-devices, the only way to ensure that the consumer is unregistered first
-is to unregister the I2C devices in reverse order of in which they were
-created.
-
-For consistency and to avoid similar problems in the future change
-x86_android_tablet_remove() to unregister all device types in reverse
-order.
-
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20240406125058.13624-1-hdegoede@redhat.com
+Signed-off-by: George Stark <gnstark@salutedevices.com>
+Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
+Link: https://lore.kernel.org/r/20240411161032.609544-9-gnstark@salutedevices.com
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/x86-android-tablets.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/leds/leds-an30259a.c | 14 ++++----------
+ 1 file changed, 4 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/platform/x86/x86-android-tablets.c b/drivers/platform/x86/x86-android-tablets.c
-index 94710471d7dd2..2063e1ac9d0bd 100644
---- a/drivers/platform/x86/x86-android-tablets.c
-+++ b/drivers/platform/x86/x86-android-tablets.c
-@@ -1748,19 +1748,19 @@ static void x86_android_tablet_cleanup(void)
- {
- 	int i;
+diff --git a/drivers/leds/leds-an30259a.c b/drivers/leds/leds-an30259a.c
+index e072ee5409f7e..374011e3121e3 100644
+--- a/drivers/leds/leds-an30259a.c
++++ b/drivers/leds/leds-an30259a.c
+@@ -296,7 +296,10 @@ static int an30259a_probe(struct i2c_client *client)
+ 	if (err < 0)
+ 		return err;
  
--	for (i = 0; i < serdev_count; i++) {
-+	for (i = serdev_count - 1; i >= 0; i--) {
- 		if (serdevs[i])
- 			serdev_device_remove(serdevs[i]);
- 	}
+-	mutex_init(&chip->mutex);
++	err = devm_mutex_init(&client->dev, &chip->mutex);
++	if (err)
++		return err;
++
+ 	chip->client = client;
+ 	i2c_set_clientdata(client, chip);
  
- 	kfree(serdevs);
+@@ -330,17 +333,9 @@ static int an30259a_probe(struct i2c_client *client)
+ 	return 0;
  
--	for (i = 0; i < pdev_count; i++)
-+	for (i = pdev_count - 1; i >= 0; i--)
- 		platform_device_unregister(pdevs[i]);
+ exit:
+-	mutex_destroy(&chip->mutex);
+ 	return err;
+ }
  
- 	kfree(pdevs);
+-static void an30259a_remove(struct i2c_client *client)
+-{
+-	struct an30259a *chip = i2c_get_clientdata(client);
+-
+-	mutex_destroy(&chip->mutex);
+-}
+-
+ static const struct of_device_id an30259a_match_table[] = {
+ 	{ .compatible = "panasonic,an30259a", },
+ 	{ /* sentinel */ },
+@@ -360,7 +355,6 @@ static struct i2c_driver an30259a_driver = {
+ 		.of_match_table = of_match_ptr(an30259a_match_table),
+ 	},
+ 	.probe_new = an30259a_probe,
+-	.remove = an30259a_remove,
+ 	.id_table = an30259a_id,
+ };
  
--	for (i = 0; i < i2c_client_count; i++)
-+	for (i = i2c_client_count - 1; i >= 0; i--)
- 		i2c_unregister_device(i2c_clients[i]);
- 
- 	kfree(i2c_clients);
 -- 
 2.53.0
 
