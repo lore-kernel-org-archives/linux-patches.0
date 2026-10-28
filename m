@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793211658;
-	b=m6MWNSyYHFxStFlDTXZ4HGppX1hODyLrBRmp4/CA8LZ6pGmyW5uLpRXQVH3oUfd8U3ED
-	 krDU0i/hSpWOBd2iuRG4ODc6lT3il2onlljgADfQe5Zu+gJ07aZY4qxG5A8DVwNGlbbJC
-	 6H8olA6kSQBYyECFWLG6lj1JJDH/JKyiAsQVUugSm28qyBlxJ0LyEZHRbNxiUGAOsiye/
-	 pqqtwdxbGPopvKJaA9ISOhdBiUi0BOqKjdqK+4/zuUgXooK9pOdJpRUIOugJy7dDEwGG6
-	 Sh23EWUOSMABzzw3yXD1nh1/gER+7fsbtmHOEzndEKvL0Z1t9HZooxNMRIrnYuYhx0Q==
+	t=1793211661;
+	b=StkP71kpFpZRMMvSArXkwoOkJonAUnUqAP8URVHhZYFJgbb1asBBDi+EDDizi7+nVwed
+	 mpfFJkki8dzkGFAIgqAbxiJkxr2nUpYWN401vJR/UWQ5CS3eBYmn/ZCEjGxitih+cdfYo
+	 tmjD15vEkcaqDIoO6ln0teJvGckSX5/itMjlq/CsL+UUYAnBDI8YPxSAUIcYuuhrFxS8H
+	 7teV9MnDZnBGaZ6a8n/qw/LR93YlnQNSklJZganZ7fMJZmQzCwmPoX4SYQ/K6qi+FEMo4
+	 s9e09KH2TvlN6HR3OabtCmORXDK+F1oj0zZt7l7P8hBYkz4n4J0URQTsvMuJunC3OUg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793211658;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793211661;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=xcsmTlhUWYPqRZGKAAnGqP0dD3I61vYs6C1aZHBdYMc=;
-	b=uwWXJU5HsyYKaqa7bqrO/LtdgQkeaMA3UmGdjrKxrXaAr4m1K6p1qESjNDt94TbFgmGC
-	 jLW070lJrnihergcMmK8qJsB/rMhB5ysZCtHYQ3N5mtMoS7O9Uo1PanBmfZIGrQDdal7P
-	 Opo//brSOzj8CSQ0MrN1gO433fbogcHX37EU2twxw/+PweCxCxGFYrJvnUuVYuFTu+ehz
-	 LYCmpxHtCbr8mwBFDW0GYuR9TnUguDpqcEdJZ3xjQe5kN7uVmXf2myVnxEVSNaLSWg+oh
-	 cX+cjJCEhiFs507P208IflnKJMqp3qOa+sPV2MCkOU9O9q6gwbNkB8SM16ru5G6SYYA==
+	bh=LqoRdeQ/GrS8FWzLzzEZcUdEmFFGOTYzvmv2XN44J8c=;
+	b=puJEbZ4It8BKK+10T+tgbGkGOig4Pv0RqAP0vWF0XeuJCEP8Tstx7A0efRzTkVJW7mHa
+	 p2Q9M0osFdf0xGZLFkrQlDWgugcEDzpbiOV/RiU3kZQ+kxO/IvnG6Ytp9YHbujndvbPWk
+	 qPYTTYKWFQfrZdGybwcjALZEZXDRhntAKv+XQBNEVzXTfN2pYAVMxrfpm9A47cQ4nDSiT
+	 3Ewf3OjAG2fjIjs5aD1vSbR3G03G/dUuCstarMk1e7hzJPgoJgKj3/5QuCOX1Ars4N2Qy
+	 SnIta1mxxqkkaEkaVLb5lUFveevx/XVvFZgmY5y4qkk8v3YBdeqUVoBv2z0eppeVCCQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=K24MJZho;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VK46EpZG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DBF2606A31A;
-	Wed, 28 Oct 2026 18:20:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02D40606A31D;
+	Wed, 28 Oct 2026 18:21:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=K24MJZho
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C3701F01825;
-	Wed, 28 Oct 2026 18:20:57 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VK46EpZG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FB681F01825;
+	Wed, 28 Oct 2026 18:21:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793211658;
-	bh=xcsmTlhUWYPqRZGKAAnGqP0dD3I61vYs6C1aZHBdYMc=;
+	s=korg; t=1793211660;
+	bh=LqoRdeQ/GrS8FWzLzzEZcUdEmFFGOTYzvmv2XN44J8c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=K24MJZhoJouUSIWCIh3qhB1WDBhlWIXMxVLU1Ev2YfYP3YLt+U9pLOj1aDu4Vttbz
-	 4VfuINRUHWQYetFlC29NSwQP6/tySF6lsZJos81teaGs7bstf0KBNFxNJ5sETCUCzc
-	 6xHOjm5HyDW/DviZmPBNgNgSq/Yhe9HgxM9n1Zmk=
+	b=VK46EpZGT2xpJQ2EiDGCjQxHLUKURS6xX13pvtW0wBcPr4DSG5XNFx8mUWu4f2s/K
+	 SksyiCpv2hq87ciq2vxQG6tkfaJEvrRfZbYDtGKQnW6J7FVjROzn+sy/ZR4jo+fVAU
+	 iDtulflwOleS6RFAdwfQrI8ENqf6jq7ygFXLFZ/g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hangbin Liu <liuhangbin@gmail.com>,
-	Florian Westphal <fw@strlen.de>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Jiri Slaby <jslaby@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 453/571] netfilter: nf_tables: fix crash when nf_trace is enabled
-Date: Wed, 28 Oct 2026 18:00:00 +0100
-Message-ID: <20261028170018.775821369@linuxfoundation.org>
+Subject: [PATCH 5.15 454/571] tty: finish kernel-doc of tty_struct members
+Date: Wed, 28 Oct 2026 18:00:01 +0100
+Message-ID: <20261028170018.799500258@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -69,102 +67,165 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Jiri Slaby <jslaby@suse.cz>
 
-[ Upstream commit 399a14ec7993d605740de7b2cd5c0ce8407d12ed ]
+[ Upstream commit 18e6c0751cf9ae0631a2623e31af2bf504f72c30 ]
 
-do not access info->pkt when info->trace is not 1.
-nft_traceinfo is not initialized, except when tracing is enabled.
+There are already pieces of kernel-doc documentation for struct
+tty_struct in tty.h. Finish the documentation for the members which were
+undocumented yet.
 
-The 'nft_trace_enabled' static key cannot be used for this, we must
-always check info->trace first.
+It also includes tuning the already existing pieces like flow and ctrl,
+especially adding highlights to them.
 
-Pass nft_pktinfo directly to avoid this.
-
-Fixes: e34b9ed96ce3 ("netfilter: nf_tables: avoid skb access on nf_stolen")
-Reported-by: Hangbin Liu <liuhangbin@gmail.com>
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Jiri Slaby <jslaby@suse.cz>
+Link: https://lore.kernel.org/r/20211126081611.11001-2-jslaby@suse.cz
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 5dad87615c98 ("tty: add break_wait kernel-doc")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_tables_core.c | 21 ++++++++++-----------
- 1 file changed, 10 insertions(+), 11 deletions(-)
+ include/linux/tty.h | 79 ++++++++++++++++++++++++++++++++++++---------
+ 1 file changed, 64 insertions(+), 15 deletions(-)
 
-diff --git a/net/netfilter/nf_tables_core.c b/net/netfilter/nf_tables_core.c
-index 4ee62c0da1b31..bbbd3bbbd1eaa 100644
---- a/net/netfilter/nf_tables_core.c
-+++ b/net/netfilter/nf_tables_core.c
-@@ -34,25 +34,23 @@ static noinline void __nft_trace_packet(struct nft_traceinfo *info,
- 	nft_trace_notify(info);
- }
+diff --git a/include/linux/tty.h b/include/linux/tty.h
+index 9501a8640baa8..b1a626978efdc 100644
+--- a/include/linux/tty.h
++++ b/include/linux/tty.h
+@@ -122,33 +122,84 @@ struct tty_operations;
+ /**
+  * struct tty_struct - state associated with a tty while open
+  *
+- * @flow.lock: lock for flow members
+- * @flow.stopped: tty stopped/started by tty_stop/tty_start
+- * @flow.tco_stopped: tty stopped/started by TCOOFF/TCOON ioctls (it has
+- *		      precedense over @flow.stopped)
++ * @magic: magic value set early in @alloc_tty_struct to %TTY_MAGIC, for
++ *	   debugging purposes
++ * @kref: reference counting by tty_kref_get() and tty_kref_put(), reaching zero
++ *	  frees the structure
++ * @dev: class device or %NULL (e.g. ptys, serdev)
++ * @driver: &struct tty_driver operating this tty
++ * @ops: &struct tty_operations of @driver for this tty (open, close, etc.)
++ * @index: index of this tty (e.g. to construct @name like tty12)
++ * @ldisc_sem: protects line discipline changes (@ldisc) -- lock tty not pty
++ * @ldisc: the current line discipline for this tty (n_tty by default)
++ * @atomic_write_lock: protects against concurrent writers, i.e. locks
++ *		       @write_cnt, @write_buf and similar
++ * @legacy_mutex: leftover from history (BKL -> BTM -> @legacy_mutex),
++ *		  protecting several operations on this tty
++ * @throttle_mutex: protects against concurrent tty_throttle_safe() and
++ *		    tty_unthrottle_safe() (but not tty_unthrottle())
++ * @termios_rwsem: protects @termios and @termios_locked
++ * @winsize_mutex: protects @winsize
++ * @termios: termios for the current tty, copied from/to @driver.termios
++ * @termios_locked: locked termios (by %TIOCGLCKTRMIOS and %TIOCSLCKTRMIOS
++ *		    ioctls)
++ * @name: name of the tty constructed by tty_line_name() (e.g. ttyS3)
++ * @flags: bitwise OR of %TTY_THROTTLED, %TTY_IO_ERROR, ...
++ * @count: count of open processes, reaching zero cancels all the work for
++ *	   this tty and drops a @kref too (but does not free this tty)
++ * @winsize: size of the terminal "window" (cf. @winsize_mutex)
++ * @flow: flow settings grouped together, see also @flow.unused
++ * @flow.lock: lock for @flow members
++ * @flow.stopped: tty stopped/started by stop_tty()/start_tty()
++ * @flow.tco_stopped: tty stopped/started by %TCOOFF/%TCOON ioctls (it has
++ *		      precedence over @flow.stopped)
+  * @flow.unused: alignment for Alpha, so that no members other than @flow.* are
+  *		 modified by the same 64b word store. The @flow's __aligned is
+  *		 there for the very same reason.
+- * @ctrl.lock: lock for ctrl members
++ * @ctrl: control settings grouped together, see also @ctrl.unused
++ * @ctrl.lock: lock for @ctrl members
+  * @ctrl.pgrp: process group of this tty (setpgrp(2))
+  * @ctrl.session: session of this tty (setsid(2)). Writes are protected by both
+- *		  @ctrl.lock and legacy mutex, readers must use at least one of
++ *		  @ctrl.lock and @legacy_mutex, readers must use at least one of
+  *		  them.
+- * @ctrl.pktstatus: packet mode status (bitwise OR of TIOCPKT_* constants)
++ * @ctrl.pktstatus: packet mode status (bitwise OR of %TIOCPKT_ constants)
+  * @ctrl.packet: packet mode enabled
++ * @ctrl.unused: alignment for Alpha, see @flow.unused for explanation
++ * @hw_stopped: not controlled by the tty layer, under @driver's control for CTS
++ *		handling
++ * @receive_room: bytes permitted to feed to @ldisc without any being lost
++ * @flow_change: controls behavior of throttling, see tty_throttle_safe() and
++ *		 tty_unthrottle_safe()
++ * @link: link to another pty (master -> slave and vice versa)
++ * @fasync: state for %O_ASYNC (for %SIGIO); managed by fasync_helper()
++ * @write_wait: concurrent writers are waiting in this queue until they are
++ *		allowed to write
++ * @read_wait: readers wait for data in this queue
++ * @hangup_work: normally a work to perform a hangup (do_tty_hangup()); while
++ *		 freeing the tty, (re)used to release_one_tty()
++ * @disc_data: pointer to @ldisc's private data (e.g. to &struct n_tty_data)
++ * @driver_data: pointer to @driver's private data (e.g. &struct uart_state)
++ * @files_lock:	protects @tty_files list
++ * @tty_files: list of (re)openers of this tty (i.e. linked &struct
++ *	       tty_file_private)
++ * @closing: when set during close, n_tty processes only START & STOP chars
++ * @write_buf: temporary buffer used during tty_write() to copy user data to
++ * @write_cnt: count of bytes written in tty_write() to @write_buf
++ * @SAK_work: if the tty has a pending do_SAK, it is queued here
++ * @port: persistent storage for this device (i.e. &struct tty_port)
+  *
+  * All of the state associated with a tty while the tty is open. Persistent
+- * storage for tty devices is referenced here as @port in struct tty_port.
++ * storage for tty devices is referenced here as @port and is documented in
++ * &struct tty_port.
+  */
+ struct tty_struct {
+ 	int	magic;
+ 	struct kref kref;
+-	struct device *dev;	/* class device or NULL (e.g. ptys, serdev) */
++	struct device *dev;
+ 	struct tty_driver *driver;
+ 	const struct tty_operations *ops;
+ 	int index;
  
--static inline void nft_trace_packet(struct nft_traceinfo *info,
-+static inline void nft_trace_packet(const struct nft_pktinfo *pkt,
-+				    struct nft_traceinfo *info,
- 				    const struct nft_chain *chain,
- 				    const struct nft_rule *rule,
- 				    enum nft_trace_types type)
- {
- 	if (static_branch_unlikely(&nft_trace_enabled)) {
--		const struct nft_pktinfo *pkt = info->pkt;
--
- 		info->nf_trace = pkt->skb->nf_trace;
- 		info->rule = rule;
- 		__nft_trace_packet(info, chain, type);
- 	}
- }
+-	/* Protects ldisc changes: Lock tty not pty */
+ 	struct ld_semaphore ldisc_sem;
+ 	struct tty_ldisc *ldisc;
  
--static inline void nft_trace_copy_nftrace(struct nft_traceinfo *info)
-+static inline void nft_trace_copy_nftrace(const struct nft_pktinfo *pkt,
-+					  struct nft_traceinfo *info)
- {
- 	if (static_branch_unlikely(&nft_trace_enabled)) {
--		const struct nft_pktinfo *pkt = info->pkt;
--
- 		if (info->trace)
- 			info->nf_trace = pkt->skb->nf_trace;
- 	}
-@@ -96,7 +94,6 @@ static noinline void __nft_trace_verdict(struct nft_traceinfo *info,
- 					 const struct nft_chain *chain,
- 					 const struct nft_regs *regs)
- {
--	const struct nft_pktinfo *pkt = info->pkt;
- 	enum nft_trace_types type;
+@@ -157,12 +208,11 @@ struct tty_struct {
+ 	struct mutex throttle_mutex;
+ 	struct rw_semaphore termios_rwsem;
+ 	struct mutex winsize_mutex;
+-	/* Termios values are protected by the termios rwsem */
+ 	struct ktermios termios, termios_locked;
+ 	char name[64];
+ 	unsigned long flags;
+ 	int count;
+-	struct winsize winsize;		/* winsize_mutex */
++	struct winsize winsize;
  
- 	switch (regs->verdict.code) {
-@@ -110,7 +107,9 @@ static noinline void __nft_trace_verdict(struct nft_traceinfo *info,
- 		break;
- 	default:
- 		type = NFT_TRACETYPE_RULE;
--		info->nf_trace = pkt->skb->nf_trace;
-+
-+		if (info->trace)
-+			info->nf_trace = info->pkt->skb->nf_trace;
- 		break;
- 	}
+ 	struct {
+ 		spinlock_t lock;
+@@ -181,7 +231,7 @@ struct tty_struct {
+ 	} __aligned(sizeof(unsigned long)) ctrl;
  
-@@ -261,10 +260,10 @@ nft_do_chain(struct nft_pktinfo *pkt, void *priv)
- 		switch (regs.verdict.code) {
- 		case NFT_BREAK:
- 			regs.verdict.code = NFT_CONTINUE;
--			nft_trace_copy_nftrace(&info);
-+			nft_trace_copy_nftrace(pkt, &info);
- 			continue;
- 		case NFT_CONTINUE:
--			nft_trace_packet(&info, chain, rule,
-+			nft_trace_packet(pkt, &info, chain, rule,
- 					 NFT_TRACETYPE_RULE);
- 			continue;
- 		}
-@@ -306,7 +305,7 @@ nft_do_chain(struct nft_pktinfo *pkt, void *priv)
- 		goto next_rule;
- 	}
+ 	int hw_stopped;
+-	unsigned int receive_room;	/* Bytes free for queue */
++	unsigned int receive_room;
+ 	int flow_change;
  
--	nft_trace_packet(&info, basechain, NULL, NFT_TRACETYPE_POLICY);
-+	nft_trace_packet(pkt, &info, basechain, NULL, NFT_TRACETYPE_POLICY);
+ 	struct tty_struct *link;
+@@ -192,7 +242,7 @@ struct tty_struct {
+ 	struct work_struct hangup_work;
+ 	void *disc_data;
+ 	void *driver_data;
+-	spinlock_t files_lock;		/* protects tty_files list */
++	spinlock_t files_lock;
+ 	struct list_head tty_files;
  
- 	if (static_branch_unlikely(&nft_counters_enabled))
- 		nft_update_chain_stats(basechain, pkt);
+ #define N_TTY_BUF_SIZE 4096
+@@ -200,7 +250,6 @@ struct tty_struct {
+ 	int closing;
+ 	unsigned char *write_buf;
+ 	int write_cnt;
+-	/* If the tty has a pending do_SAK, queue it here - akpm */
+ 	struct work_struct SAK_work;
+ 	struct tty_port *port;
+ } __randomize_layout;
 -- 
 2.53.0
 
