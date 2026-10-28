@@ -1,55 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793211906;
-	b=vArm1pq5OyQXMsAiXFBZs06CB5c1c/NDmtnJ1TF6qwySqNjfBnn4GIH+5QG87qXMLlG7
-	 jMwhWOS0Pd9WQSaJ6VvNuK8cdKFDREPG8JxCw/DlcLMZFX0IkkyceyRtghvk33KqTIqWo
-	 7DcJy6H/w1Eh1C1euVpsHTeRDrXYSNS+9Vou7MYlvuaJ9xesVRn9KpKu9NUgiwMKz7A9b
-	 K+LC0Izk3JVNuI1zsWOZDNvNkgcCopu9uIEK/ZQ6Bnk6Pwpy5u02DJOgvXr9hq62zOtPL
-	 8AAhPP+Pef/sc/8ICqZnbRt8or8CKibdTEIrU5/xnEeNOMuF9ELXjuXGCfbJHYayIAA==
+	t=1793211909;
+	b=PSXs2yDatsI+q05Dl0QWPlHvrXgkpZfstGY+Dy2zhuBE73w8l6VAdcFuoiETBGq0K0Ib
+	 UdEylYvdyE8CDUrKMUaecD/HqmvcqIpr8eVn121nsVF5NZMGwFIzWOTSkXgynyMrJqXmo
+	 rEN82kD/zqCB/ch230Km4mvZsj7P1UBeJxDHZKefhC+yFlrVt5/4byxHaXF1rZq2C2dRo
+	 mPNmiHiL1a50WuG71cRoDzhBL/mHbC1EyxNWmEtWyskX9QrsF3HoZ90FymGhV2s20jO71
+	 5sAeFK/Lz5UxU4/iZ+3/iTRcXgy97ljLaqqxsARlDDMm94KStMaPHn42WF7Rk2Em44Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793211906;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793211909;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=d9Knhropfm/aj1MhgKPn/ogrkodypbN8LNGdurOOBqQ=;
-	b=LqTE7e244LM7hWKFmgkfywUF/1ZxW2Z52EtTTJXHITzkfGf0szfwsl8ufdtLTQR9e5SA
-	 /f9dzWfqkgJySUCHpTZ4C1DyrCZiEBwT8UatboTewFq0bGYzhty2qNQ9reeYduFZRKqrt
-	 mJfK6JfspH18LMA6tpofRFXZglvpPT4i6akwQUk7+f6gxeUfuBny+PSKm+wsJCDpv/Peu
-	 PGJqkyImOrxN7hQnmi1yi7WMhkrnSiqooIaMyyWV1PzuTEVaLhfdjZmZUSAjbNa6obuwW
-	 B8sp6Jq/96b0B5RkbKyY1Pc6kZoen5q2EY15MY9y9bWba2BzSDkGPvZSSerqxvtAoJg==
+	bh=7JQ7ALKWJT1IJS337O8tFALPk3gQHy4XfZzv7klNaU4=;
+	b=0NWMgTlfKGt9c23E5HRmHzprPL9O5nesI2JUKgbAaD0m/sRiikrjn4hydNSkGaeEyFKA
+	 pMfI+eiZ2JexlYooEGg+TeGleeNI43GE+XmrdC2d3VEUnDe9iIWM9UCX8FsZdPH4oftN0
+	 /HSnc1nsKXu/NdfwvKBAY9RXWSleb1NHQFp32Fd81JWLu2PXgBS1+3FXi7MlroLDZC6Ge
+	 /1hs0HPsB1nFkS3guCN3gow6xKrUlZOr+fzQvPIKWXLNUVGDsWDA1NfDDBIu4YJ3mN8dK
+	 DZivKoxvwMbfKzGWpwLgbvxDNVpnZ8mQWEh0ZMhRIoFLLuvz7VUM9ysw/JXEHvixuWg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WFtwumF7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ViVXSo8F;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87694606A31A;
-	Wed, 28 Oct 2026 18:25:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 626F3606A31D;
+	Wed, 28 Oct 2026 18:25:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WFtwumF7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAA6C1F01825;
-	Wed, 28 Oct 2026 18:25:05 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ViVXSo8F
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3BB51F01825;
+	Wed, 28 Oct 2026 18:25:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793211906;
-	bh=d9Knhropfm/aj1MhgKPn/ogrkodypbN8LNGdurOOBqQ=;
+	s=korg; t=1793211909;
+	bh=7JQ7ALKWJT1IJS337O8tFALPk3gQHy4XfZzv7klNaU4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WFtwumF72BvEb8G5I/tgmhScZ4Cij1FHjDvIY+RCr27ExzM4opY6ggQh16OAm+zVY
-	 7KiTfmAvKOGVVvLcDmjvJuZ2gVAhg1+x7MVV6wkm1lfMhMWuSJmQvHsmUL1K8yb4Av
-	 wEc+SoY0rp7lvLwP67Yl8iFm0rPan1gT8DVjRFeE=
+	b=ViVXSo8FZ2CNOW14EfO2JSINYEw85mFgZjo8wc3UYAcX5HRz0e9wx+uB53jMIt5Fc
+	 8OJHdl4U1CuhlUhx3tx/J/7FZJGMp+xgevgy7RdMvPlYPB02DZO6AMDyUzeEnCKbWP
+	 DDKpgBDjc3KY6yzLZP8sJ/Gj0CjZNzzWFoO7312I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amit Klein <aksecurity@gmail.com>,
-	Noam Caspi <noam.caspi@mail.huji.ac.il>,
-	Ido Schimmel <idosch@nvidia.com>,
-	David Ahern <dsahern@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Andi Shyti <andi.shyti@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 541/571] ipv4: udp: Create exceptions before socket matching
-Date: Wed, 28 Oct 2026 18:01:28 +0100
-Message-ID: <20261028170020.873502830@linuxfoundation.org>
+Subject: [PATCH 5.15 542/571] i2c: viai2c-wmt: Fix clock leak in wmt_i2c_probe()
+Date: Wed, 28 Oct 2026 18:01:29 +0100
+Message-ID: <20261028170020.898434578@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -71,86 +68,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit 4c3499f79f8c7e8561266bcc220a18538cec0458 ]
+[ Upstream commit aaabefc79b0ff0018e8e3832169bbe359d0551fc ]
 
-Currently, when ICMP Fragmentation Needed and Redirect Message packets
-are locally delivered and quote a UDP packet, a FIB nexthop exception
-(FNHE) is only created if the kernel can match the UDP packet to an
-existing socket.
+In wmt_i2c_probe(), i2c->clk is acquired using of_clk_get(). If any
+subsequent operation fails or when the module is unloaded, the clock
+reference count is never decremented via clk_put(), leading to a
+resource leak.
 
-This behavior allows off-path attackers to conduct a side-channel attack
-on the FNHE cache in order to discover the ephemeral port used by a
-connected UDP socket.
+Switch to devm_clk_get() so that the clock is automatically managed
+and released.
 
-Commit 6457378fe796 ("ipv4: use siphash instead of Jenkins in
-fnhe_hashfun()") and commit 67d6d681e15b ("ipv4: make exception cache
-less predictible") tried to mitigate such attacks by making it harder
-for attackers to discover hash collisions in the FNHE cache and by
-randomizing the number of exceptions a hash bucket can hold,
-respectively. Unfortunately, both of the mitigations can be bypassed.
-
-Instead, mitigate such attacks by always creating a FNHE, even before
-trying to find a matching socket. Do that by calling ipv4_update_pmtu()
-and ipv4_redirect(), the helpers used when the quoted packet did not
-originate from a socket.
-
-This means that guesses (right or wrong) from an off-path attacker will
-always result in a FNHE being created or updated in the cache that the
-attacker can observe.
-
-Pass an oif of 0, in a similar fashion to icmp_err(). This is also the
-oif used by the socket path for sockets that are not bound to a device.
-
-Note that this does not allow attackers to create FNHEs that they could
-not create before, as both helpers can already be reached with little to
-no validation. For example, by sending an ICMP error that quotes an ICMP
-Echo Reply or one that quotes a UDP source port that matches a wildcard
-socket.
-
-Also note that in the good case (matched socket) the above scheme comes
-at the cost of an extra route lookup, as the no socket helpers perform
-their own lookup before the one performed by ipv4_sk_update_pmtu() /
-ipv4_sk_redirect(). When the two resolve to different nexthops, it also
-results in two exceptions being created for the same destination IP. One
-in the FNHE cache of the nexthop resolved by the no socket helpers and
-another in the FNHE cache of the nexthop used by the socket.
-
-Fixes: 4895c771c7f0 ("ipv4: Add FIB nexthop exceptions.")
+Fixes: 560746eb79d3 ("i2c: vt8500: Add support for I2C bus on Wondermedia SoCs")
 Cc: stable@vger.kernel.org
-Reported-by: Amit Klein <aksecurity@gmail.com>
-Reported-by: Noam Caspi <noam.caspi@mail.huji.ac.il>
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://patch.msgid.link/20260828192344.2596928-3-idosch@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ sashal: inlined udp_err_update_exception() into the existing udp_err() wrapper ]
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Link: https://patch.msgid.link/20260916070631.1965713-1-vulab@iscas.ac.cn
+[ sashal: adapted the clock assignment to use i2c_dev instead of i2c ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/udp.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/i2c/busses/i2c-wmt.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/ipv4/udp.c b/net/ipv4/udp.c
-index 3ebd5765fb9f3..65780cf993eac 100644
---- a/net/ipv4/udp.c
-+++ b/net/ipv4/udp.c
-@@ -821,6 +821,15 @@ int __udp4_lib_err(struct sk_buff *skb, u32 info, struct udp_table *udptable)
+diff --git a/drivers/i2c/busses/i2c-wmt.c b/drivers/i2c/busses/i2c-wmt.c
+index 88f5aafdce5b4..33d085e564f57 100644
+--- a/drivers/i2c/busses/i2c-wmt.c
++++ b/drivers/i2c/busses/i2c-wmt.c
+@@ -391,7 +391,7 @@ static int wmt_i2c_probe(struct platform_device *pdev)
+ 		return -EINVAL;
+ 	}
  
- int udp_err(struct sk_buff *skb, u32 info)
- {
-+	const int type = icmp_hdr(skb)->type;
-+	const int code = icmp_hdr(skb)->code;
-+	struct net *net = dev_net(skb->dev);
-+
-+	if (type == ICMP_DEST_UNREACH && code == ICMP_FRAG_NEEDED)
-+		ipv4_update_pmtu(skb, net, info, 0, IPPROTO_UDP);
-+	else if (type == ICMP_REDIRECT)
-+		ipv4_redirect(skb, net, 0, IPPROTO_UDP);
-+
- 	return __udp4_lib_err(skb, info, &udp_table);
- }
- 
+-	i2c_dev->clk = of_clk_get(np, 0);
++	i2c_dev->clk = devm_clk_get(&pdev->dev, NULL);
+ 	if (IS_ERR(i2c_dev->clk)) {
+ 		dev_err(&pdev->dev, "unable to request clock\n");
+ 		return PTR_ERR(i2c_dev->clk);
 -- 
 2.53.0
 
