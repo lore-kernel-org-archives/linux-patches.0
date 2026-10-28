@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793210133;
-	b=rhlO9p1XKU2oHXTOJhBW0+mNPhSuT/l8R7v8z3C8n165h81Vzie/WAx9GUYku55M1IZa
-	 dFo5HEKF7/ruLdfvJRG3tJuqXkEtmWSaQNX9RskJhpqBcoxlMT5yJllTCSB5Ho88IY0+a
-	 fCMji8oVxM1KQwk+oRBxs+KNP+v7WFY38S3ftur829SRcEZx30x8jueGVC2oyGtj8XNWW
-	 Gjm/nOe2LHMTrSoSqQhhesTHt0zEtVtOmiO61c72OOzgEzGSGIGzOpNz/HqE+D/Bb8Drc
-	 tzppJlsMc+aHUJX+bXe290ZQNzX4VPMwYztWgAu3/sBxMV30NViSWyOJkhuaDYUE8yQ==
+	t=1793210136;
+	b=I1G3+CuTFhNuZ6nMHyiPK6WxtBQMNADOwjnyuhsSiFAw2ocoIP+OViENuPXwdfx8FIWW
+	 TyAoZvud5biP0gw9YWuYiJWnau4q3kzbzEqExTz32v8bAkU+u4aIrF9Gn79T9s/gU9B12
+	 7tUjQPFRGfyK86WkSLndL0xihZtf2+5IlHKgew+ZHr/DfmvZgJy1uXQTte8ciSjbq0WOz
+	 bQB9FQK/LhSWJTauJmYPr4fkt8ly2w0aUm3ekJj3drr7nbEYobNGFTmXbQr63qJVbotFn
+	 hmgC02grzlPv48OM7Hvi5eJwtaf2XZ+VrDI1wcy7z40sBV+03SdMdu29WhxEFOVM9kQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793210133;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793210136;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=mX9jcFdF9OqMwSqFA8eywBxEUiyhMOhwE+BsnMg27PA=;
-	b=MZbzTQWWNM1n+RiRlEo0PMQ30ny+aKlzsgfNJUuvSUz+6evis992rlPd0KFbc8aW9Wue
-	 Q2lMUGcICaeEBvMxmg5eZ7R0PelmR7DYWQ47cQMeJFI3VE6kBhE1HY+y0aqMdJVxfJVB1
-	 klPXZSOAe0pJzQuIoxptYkzYf6uGLSbXgBmEL0vAFb6OdbcwFawegrZz95qtLLbR81J2b
-	 B8R47RqnKykemGN/zZQBqLbyWhEyWGFsMWTSvGEBELgvpRFkFy5RJTGxbp9+/9XH/b/bu
-	 792Z+FzOIEg7ywfrvk+eVPLQd/kfuHvQoeCPZLKvQH0D9pkMpDCpEasG/P5lbKrsu1Q==
+	bh=93DVdv1C2E/TpW41E7tWZFuTEj5esAjYbu28oa2BcDw=;
+	b=BEJ1tbyHU+ygCkFUE00LPuaqtG3h8DmHB7eWEcNRMc504UkGn7udvTUnsAoowz19K2In
+	 VXtBKvIK42WlINlNx3cO5YqSWOv4aU0B0azVadWqz36UUQjSUxid7hxntZQzPT+bAw0Vv
+	 jHHIT+yuOVQ/wKUMYY0IAtIZFpY/c+JyTieMCs8t3A+GJxgaxqgoQvj8wB8sJSVGelHf2
+	 vzMxSD5QqJMneXai97i2NinpP8mmaP5oqOnqDQi6EhpwYQ5/Vb8cUfJmfw7x5AmLp2LJq
+	 roYuyu9G/KvQIoAI4pdj6K+86W9Ed8yZ/Sb2ak5fsvPHDYvqa0O/p4QzaGqCxgv6kCA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=K35XgjN4;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="j1fvGJn/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70C0C606A31D;
-	Wed, 28 Oct 2026 17:55:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 557C7606A31C;
+	Wed, 28 Oct 2026 17:55:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=K35XgjN4
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFFE31F01825;
-	Wed, 28 Oct 2026 17:55:32 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=j1fvGJn/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A360C1F01828;
+	Wed, 28 Oct 2026 17:55:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793210133;
-	bh=mX9jcFdF9OqMwSqFA8eywBxEUiyhMOhwE+BsnMg27PA=;
+	s=korg; t=1793210136;
+	bh=93DVdv1C2E/TpW41E7tWZFuTEj5esAjYbu28oa2BcDw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=K35XgjN4WXDpIiuworW8YUBMJxh8vKZbdgkEqjozZYxzxy9RkNmfc/WmUlbPjodsi
-	 CSFkbmQi4QJnqqD8a4z+8Eibi861TES0v/YZQXH61pH6kPX4sXNPNmzgqhBv0lArsk
-	 HsG9bg1OfD8uojKQXsXJ2+BU5X8YHIPGi/IFbILk=
+	b=j1fvGJn/5/V/p6K2yyModoEi9ueEWQMAr/jTmbCWLpsD4xjLmfBvN3lH0z8nVFATy
+	 WBtWgdNgoJlP+k8ZP3congRUkIBvpLKEHMlEyEvjLtA4oiLRhc3BHEQu2vnI56bsNp
+	 XF76u3ZFzYzNC54FP6KsYS4Yv/zRxZUa/UYDWRZM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ChenXiaoSong <chenxiaosong@chenxiaosong.com>,
-	Aleksandr Khromov <haa@amicon.ru>,
-	Namjae Jeon <linkinjeon@kernel.org>
-Subject: [PATCH 6.6 087/168] ksmbd: zero the FS_OBJECT_ID_INFORMATION buffer before filling it in
-Date: Wed, 28 Oct 2026 18:00:23 +0100
-Message-ID: <20261028165945.147810931@linuxfoundation.org>
+	Loic Poulain <loic.poulain@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Andi Shyti <andi.shyti@kernel.org>
+Subject: [PATCH 6.6 052/168] i2c: qcom-cci: Fix HALT_ACK reset request being dropped
+Date: Wed, 28 Oct 2026 17:59:48 +0100
+Message-ID: <20261028165944.320345930@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165943.089486480@linuxfoundation.org>
 References: <20261028165943.089486480@linuxfoundation.org>
@@ -68,54 +68,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aleksandr Khromov <haa@amicon.ru>
+From: Loic Poulain <loic.poulain@oss.qualcomm.com>
 
-commit 399aa12450a61a5c73dc77e73f069ece9687c95d upstream.
+commit 195f3d74b5de98969dc4fad956393bb00787efd1 upstream.
 
-smb2_get_info_filesystem() reports 64 bytes for FS_OBJECT_ID_INFORMATION,
-that is the whole of struct object_id_info, but writes only 46 of them:
+A HALT_ACK interrupt indicates that the corresponding I2C master has
+entered the halted state and must be reset before further operation.
 
- - objid[] is 16 bytes, and when the volume UUID is not available only
-   sizeof(stfs.f_fsid) (8) bytes are copied into it;
- - extended_info.version_string[] is STRING_LENGTH (28) bytes, and only
-   strlen("1.1.0") (5) bytes are copied into it.
+The M0 and M1 HALT_ACK status bits may be asserted simultaneously in a
+single interrupt. However, the interrupt handler currently overwrites
+the reset mask when processing each HALT_ACK condition, causing the
+first reset request to be lost if both events are reported together.
 
-The response buffer is zeroed on allocation (kvzalloc() in
-smb2_allocate_rsp_buf()), so for a standalone request the remaining 31
-bytes are zero.  In a compound request they need not be.  The offset of
-the next response is advanced by the length pinned for the previous one,
-so if a preceding command wrote its reply into the buffer and then
-failed, smb2_set_err_rsp() pins only the short error response and the
-next reply lands inside the area that has already been written.  Only
-the header is cleared there:
+Accumulate reset requests instead of overwriting them so that both
+masters are properly reset when M0 and M1 HALT_ACK events occur in the
+same interrupt.
 
-	memset((char *)rsp_hdr, 0, sizeof(struct smb2_hdr) + 2);
-
-The client then receives up to 31 bytes of a response it was not meant
-to see, including one that failed with an access denied error.
-
-Clear the structure before filling it in.  As a side effect
-version_string is now NUL terminated.
-
-Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
-Suggested-by: ChenXiaoSong <chenxiaosong@chenxiaosong.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Aleksandr Khromov <haa@amicon.ru>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Fixes: e517526195de4 ("i2c: Add Qualcomm CCI I2C driver")
+Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
+Cc: <stable@vger.kernel.org> # v5.8+
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Link: https://patch.msgid.link/20261012-cci-fixes-v1-1-8cd4eb1fc5f9@oss.qualcomm.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/smb2pdu.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/i2c/busses/i2c-qcom-cci.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -5685,6 +5685,7 @@ static int smb2_get_info_filesystem(stru
- 		struct object_id_info *info;
+--- a/drivers/i2c/busses/i2c-qcom-cci.c
++++ b/drivers/i2c/busses/i2c-qcom-cci.c
+@@ -168,12 +168,12 @@ static irqreturn_t cci_isr(int irq, void
+ 	}
  
- 		info = (struct object_id_info *)(rsp->Buffer);
-+		memset(info, 0, sizeof(*info));
+ 	if (unlikely(val & CCI_IRQ_STATUS_0_I2C_M0_Q0Q1_HALT_ACK)) {
+-		reset = CCI_RESET_CMD_M0_MASK;
++		reset |= CCI_RESET_CMD_M0_MASK;
+ 		ret = IRQ_HANDLED;
+ 	}
  
- 		if (path.mnt->mnt_sb->s_uuid_len == 16)
- 			memcpy(info->objid, path.mnt->mnt_sb->s_uuid.b,
+ 	if (unlikely(val & CCI_IRQ_STATUS_0_I2C_M1_Q0Q1_HALT_ACK)) {
+-		reset = CCI_RESET_CMD_M1_MASK;
++		reset |= CCI_RESET_CMD_M1_MASK;
+ 		ret = IRQ_HANDLED;
+ 	}
+ 
 
 
