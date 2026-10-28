@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
 	t=1793214032;
-	b=HDmrJZqxgLxzIOmG+Ke/OUr9cKZF9QTzc8nLMaA3ST2m4w0vt4E2bXOkp6obKQlOPRhl
-	 C2vxB6wtKhuXeBJQ7B6Wxyd9p8RrU2lswKvnSNeAFq8p6myCzGiP0lxRMTuROzrV7AW0n
-	 abfELjA+t5XJ0LRaCplhhl7bBqyshvGEdi1Yn67eKoeb3vonAE686c1cBjkBrm93HbWhd
-	 FlP3K3MDnhC7vjoUsRwecZk5257eol2txXCZgVEPvEUbxZI4w8Z2lGz8TD97s9XNMV5Rq
-	 ngJDmGWThGJnuEcDQoGvk88xO6g7VHCuv+P0ol0lZ52t95o26BIsVPBFe7jpQxsHmeQ==
+	b=BT+ljKZE6whpKBsPxLfc05ZDQAtNb9y4AV8sriQ2TonF9+44W7hk2SbwGXFO+/749dYB
+	 iwg8T9QOMsCGnNhAnD+kTcS4jGMr3NftScY/6RGudSkJT1fb65R8LA9g1HqAmZLnTgTZt
+	 mkqw5pbX0BTYbexwrDMrMAu09lchBf6SdVmtR7b+jIbx7JVAQK5xvpEZZyzMvKzHKZEOR
+	 5C00PERMmc4O7+ojJ41tMlQdEvb1lNbNTNKgj0bUhmqoMHKkysD2+STXN+RrWFeCAk50r
+	 +e/GAe8emAtrowJkqkvlriiNGD6TRNVfnztA7VHD4lFH5dSCNN1XZZyH3ukq0thuH3A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
 	a=rsa-sha256; c=relaxed/relaxed; t=1793214032;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=tJyZ7n7JFSFZZiKFm+aHbCfmDNzLcc9V8k5GB1tJ/Jg=;
-	b=SCsySFotwruAy8sCbTy3y4mZ4JRRhfC8tSn7wWl21A1Qk25fdsrqH7Gt5zMoeltfRCMq
-	 pi/Zb5+BJ+uahsJ95sVEueiMmEiGRMROxrjqnzdpSzi5GG0Xh7441xmlTJNIKHgrVbEhG
-	 XsFyAz+XfRIWJQhFFKF72uDBium3CeMyZhZpuQJGPJ0nNM42xPrjD2kdAgV6ws6bWNx/Z
-	 q922VkvMZ0KJNXkEmITZpX3IyjfpaKClcoI/FjwNvS9Rf2C2yjLjK/oOJUaZWqdARaB1c
-	 o1DmSJ2zwLzlyql5WovyTk3ZN3XMWJKnGnP6g0D3VtCRmDPFmNyRZcj3+MRgJ3ajKqA==
+	bh=CzhA8FLKqIe88Wkkz41Ie3xII/XLucvNKOEAGM9cI3M=;
+	b=49A9/PP2ZULuNltGQmLRfAgZubHICtGI7c2E4pO7W1jHIbxKxeKeDf0stFu7inOKpy9H
+	 NI0Yu7WIQJgZ88cN7DhN18UXyfYnNUfIKnj+Utr0ux2aOWYp7chi7ktLALu5DFadBAsFt
+	 DtyVhj+BNsS22H/shkG0+ocxmi1IdX/CqoW91VaCukrwBQqRr3tWBGXZNZCemTnzbR1ga
+	 se4lQfXzzgGNxP9T91EVsqKyYitrADmXImVmSvankwDcNzRAppbksyGVZBzD7LoyJsRl0
+	 SmT6WpQ/V1zVMd9SrEo9oU5wWKQzINwwsQvIItIB3yPuvbaxHe54fGqUfrpP5NiIjTQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P3IqzERW;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=b7HwUQWg;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56B6B606A31C;
-	Wed, 28 Oct 2026 19:00:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9551606A324;
+	Wed, 28 Oct 2026 19:00:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P3IqzERW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DE6B1F01825;
-	Wed, 28 Oct 2026 19:00:25 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=b7HwUQWg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 115D31F031E0;
+	Wed, 28 Oct 2026 19:00:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214025;
-	bh=tJyZ7n7JFSFZZiKFm+aHbCfmDNzLcc9V8k5GB1tJ/Jg=;
+	s=korg; t=1793214031;
+	bh=CzhA8FLKqIe88Wkkz41Ie3xII/XLucvNKOEAGM9cI3M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=P3IqzERWdz+vR6sflCaqevqKQzX79ytxg5WRXBPRV9lZiZOv28Wt16KJ44uccoNdb
-	 gj80Z+q2KlpfIK0KG/oFBDi5tVXUueuKVayu0SgciH8S5oRrERWerXJTTydqKbObLo
-	 QHvn8QIC/6abGVgxOyCtQF2VIz0N7scynzDA5B1c=
+	b=b7HwUQWgO4LCVgYoJCm03HREP2rRT1E5ihY0oaNPtpFGfIpQJTro2p1/XEQ0VWPei
+	 eAkff8miA5fVRuxcb36QjdUTibiN7IxHtTLneRtfVMcrzImwQYeq8gwSaLJ6hr+I45
+	 z6twIiubG1K6YxqxM3dgCKmLPYcNl8ROFrcT6yok=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Garry <john.garry@huawei.com>,
+	Yihang Li <liyihang9@huawei.com>,
 	Xiang Chen <chenxiang66@hisilicon.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0711/1887] scsi: hisi_sas: Add function complete_v3_hw()
-Date: Wed, 28 Oct 2026 17:46:47 +0100
-Message-ID: <20261028170515.602413892@linuxfoundation.org>
+Subject: [PATCH 6.1 0713/1887] scsi: hisi_sas: Allocate DFX memory during dump trigger
+Date: Wed, 28 Oct 2026 17:46:49 +0100
+Message-ID: <20261028170515.650466972@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,90 +69,255 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Chen <chenxiang66@hisilicon.com>
+From: Yihang Li <liyihang9@huawei.com>
 
-[ Upstream commit 538a60468966f47c53071d06db27bb78c2aaa81d ]
+[ Upstream commit 63f0733d07ce60252e885602b39571ade0441015 ]
 
-Put the work of processing cq slots in a separate function,
-complete_v3_hw(), which can then be used by cq_thread_v3_hw() and other
-functions when adding poll support.
+Currently, if CONFIG_SCSI_HISI_SAS_DEBUGFS_DEFAULT_ENABLE is enabled, the
+memory space used by DFX is allocated during device initialization, which
+occupies a large number of memory resources. The memory usage before and
+after the driver is loaded is as follows:
 
-Co-developed-by: John Garry <john.garry@huawei.com>
-Signed-off-by: John Garry <john.garry@huawei.com>
+Memory usage before the driver is loaded:
+$ free -m
+         total        used        free      shared  buff/cache   available
+Mem:     867352        2578      864037          11         735  861681
+Swap:    4095           0        4095
+
+Memory usage after the driver which include 4 HBAs is loaded:
+$ insmod hisi_sas_v3_hw.ko
+$ free -m
+         total        used        free      shared  buff/cache	available
+Mem:     867352        4760      861848          11	  743   859495
+Swap:    4095           0        4095
+
+The driver with 4 HBAs connected will allocate about 110 MB of memory
+without enabling debugfs.
+
+Therefore, to avoid wasting memory resources, DFX memory is allocated
+during dump triggering. The dump may fail due to memory allocation
+failure. After this change, each dump costs about 10 MB of memory, and each
+dump lasts about 100 ms.
+
+Signed-off-by: Yihang Li <liyihang9@huawei.com>
 Signed-off-by: Xiang Chen <chenxiang66@hisilicon.com>
-Link: https://lore.kernel.org/r/1678169355-76215-2-git-send-email-chenxiang66@hisilicon.com
+Link: https://lore.kernel.org/r/1694571327-78697-4-git-send-email-chenxiang66@hisilicon.com
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-
-[ Keep the cond_resched() call at the end of cq_thread_v3_hw() after the
-  split. Also pass need_lock to the hisi_sas_do_release_task() call added
-  by the SATA_DISK_ERR dependency, which this tree's function requires. ]
-
 Stable-dep-of: 9f564f15f884 ("scsi: hisi_sas: Create all dump files during debugfs initialization")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/hisi_sas/hisi_sas_main.c  |  2 +-
- drivers/scsi/hisi_sas/hisi_sas_v3_hw.c | 17 ++++++++++++-----
- 2 files changed, 13 insertions(+), 6 deletions(-)
+ drivers/scsi/hisi_sas/hisi_sas.h       |   2 +-
+ drivers/scsi/hisi_sas/hisi_sas_v3_hw.c | 113 +++++++++++++------------
+ 2 files changed, 62 insertions(+), 53 deletions(-)
 
-diff --git a/drivers/scsi/hisi_sas/hisi_sas_main.c b/drivers/scsi/hisi_sas/hisi_sas_main.c
-index 2f13bb9771d64..e13fa623ff5a6 100644
---- a/drivers/scsi/hisi_sas/hisi_sas_main.c
-+++ b/drivers/scsi/hisi_sas/hisi_sas_main.c
-@@ -1646,7 +1646,7 @@ static int hisi_sas_abort_task(struct sas_task *task)
- 			 */
- 			if ((sas_dev->dev_status == HISI_SAS_DEV_NCQ_ERR) &&
- 			    qc && qc->scsicmd) {
--				hisi_sas_do_release_task(hisi_hba, task, slot);
-+				hisi_sas_do_release_task(hisi_hba, task, slot, true);
- 				rc = TMF_RESP_FUNC_COMPLETE;
- 			} else {
- 				rc = hisi_sas_softreset_ata_disk(device);
+diff --git a/drivers/scsi/hisi_sas/hisi_sas.h b/drivers/scsi/hisi_sas/hisi_sas.h
+index 2885ea87fd1eb..b0f3110c60558 100644
+--- a/drivers/scsi/hisi_sas/hisi_sas.h
++++ b/drivers/scsi/hisi_sas/hisi_sas.h
+@@ -342,7 +342,7 @@ struct hisi_sas_hw {
+ 				u8 reg_index, u8 reg_count, u8 *write_data);
+ 	void (*wait_cmds_complete_timeout)(struct hisi_hba *hisi_hba,
+ 					   int delay_ms, int timeout_ms);
+-	void (*debugfs_snapshot_regs)(struct hisi_hba *hisi_hba);
++	int (*debugfs_snapshot_regs)(struct hisi_hba *hisi_hba);
+ 	int complete_hdr_size;
+ 	struct scsi_host_template *sht;
+ };
 diff --git a/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c b/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
-index 2b19c515acdeb..63db4a2ea7ba7 100644
+index 13019517e8469..c3d4c7e26b492 100644
 --- a/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
 +++ b/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
-@@ -2407,15 +2407,14 @@ static void slot_complete_v3_hw(struct hisi_hba *hisi_hba,
- 		task->task_done(task);
+@@ -554,7 +554,7 @@ static int prot_mask;
+ module_param(prot_mask, int, 0444);
+ MODULE_PARM_DESC(prot_mask, " host protection capabilities mask, def=0x0 ");
+ 
+-static void debugfs_snapshot_regs_v3_hw(struct hisi_hba *hisi_hba);
++static int debugfs_snapshot_regs_v3_hw(struct hisi_hba *hisi_hba);
+ 
+ static u32 hisi_sas_read32(struct hisi_hba *hisi_hba, u32 off)
+ {
+@@ -3774,37 +3774,6 @@ static void debugfs_create_files_v3_hw(struct hisi_hba *hisi_hba)
+ 			    &debugfs_ras_v3_hw_fops);
  }
  
--static irqreturn_t  cq_thread_v3_hw(int irq_no, void *p)
-+static void complete_v3_hw(struct hisi_sas_cq *cq)
+-static void debugfs_snapshot_regs_v3_hw(struct hisi_hba *hisi_hba)
+-{
+-	int debugfs_dump_index = hisi_hba->debugfs_dump_index;
+-	struct device *dev = hisi_hba->dev;
+-	u64 timestamp = local_clock();
+-
+-	if (debugfs_dump_index >= hisi_sas_debugfs_dump_count) {
+-		dev_warn(dev, "dump count exceeded!\n");
+-		return;
+-	}
+-
+-	do_div(timestamp, NSEC_PER_MSEC);
+-	hisi_hba->debugfs_timestamp[debugfs_dump_index] = timestamp;
+-
+-	debugfs_snapshot_prepare_v3_hw(hisi_hba);
+-
+-	debugfs_snapshot_global_reg_v3_hw(hisi_hba);
+-	debugfs_snapshot_port_reg_v3_hw(hisi_hba);
+-	debugfs_snapshot_axi_reg_v3_hw(hisi_hba);
+-	debugfs_snapshot_ras_reg_v3_hw(hisi_hba);
+-	debugfs_snapshot_cq_reg_v3_hw(hisi_hba);
+-	debugfs_snapshot_dq_reg_v3_hw(hisi_hba);
+-	debugfs_snapshot_itct_reg_v3_hw(hisi_hba);
+-	debugfs_snapshot_iost_reg_v3_hw(hisi_hba);
+-
+-	debugfs_create_files_v3_hw(hisi_hba);
+-
+-	debugfs_snapshot_restore_v3_hw(hisi_hba);
+-	hisi_hba->debugfs_dump_index++;
+-}
+-
+ static ssize_t debugfs_trigger_dump_v3_hw_write(struct file *file,
+ 						const char __user *user_buf,
+ 						size_t count, loff_t *ppos)
+@@ -3812,9 +3781,6 @@ static ssize_t debugfs_trigger_dump_v3_hw_write(struct file *file,
+ 	struct hisi_hba *hisi_hba = file->f_inode->i_private;
+ 	char buf[8];
+ 
+-	if (hisi_hba->debugfs_dump_index >= hisi_sas_debugfs_dump_count)
+-		return -EFAULT;
+-
+ 	if (count > 8)
+ 		return -EFAULT;
+ 
+@@ -3825,7 +3791,10 @@ static ssize_t debugfs_trigger_dump_v3_hw_write(struct file *file,
+ 		return -EFAULT;
+ 
+ 	down(&hisi_hba->sem);
+-	debugfs_snapshot_regs_v3_hw(hisi_hba);
++	if (debugfs_snapshot_regs_v3_hw(hisi_hba)) {
++		up(&hisi_hba->sem);
++		return -EFAULT;
++	}
+ 	up(&hisi_hba->sem);
+ 
+ 	return count;
+@@ -4583,22 +4552,34 @@ static void debugfs_release_v3_hw(struct hisi_hba *hisi_hba, int dump_index)
+ 	int i;
+ 
+ 	devm_kfree(dev, hisi_hba->debugfs_iost_cache[dump_index].cache);
++	hisi_hba->debugfs_iost_cache[dump_index].cache = NULL;
+ 	devm_kfree(dev, hisi_hba->debugfs_itct_cache[dump_index].cache);
++	hisi_hba->debugfs_itct_cache[dump_index].cache = NULL;
+ 	devm_kfree(dev, hisi_hba->debugfs_iost[dump_index].iost);
++	hisi_hba->debugfs_iost[dump_index].iost = NULL;
+ 	devm_kfree(dev, hisi_hba->debugfs_itct[dump_index].itct);
++	hisi_hba->debugfs_itct[dump_index].itct = NULL;
+ 
+-	for (i = 0; i < hisi_hba->queue_count; i++)
++	for (i = 0; i < hisi_hba->queue_count; i++) {
+ 		devm_kfree(dev, hisi_hba->debugfs_dq[dump_index][i].hdr);
++		hisi_hba->debugfs_dq[dump_index][i].hdr = NULL;
++	}
+ 
+-	for (i = 0; i < hisi_hba->queue_count; i++)
++	for (i = 0; i < hisi_hba->queue_count; i++) {
+ 		devm_kfree(dev,
+ 			   hisi_hba->debugfs_cq[dump_index][i].complete_hdr);
++		hisi_hba->debugfs_cq[dump_index][i].complete_hdr = NULL;
++	}
+ 
+-	for (i = 0; i < DEBUGFS_REGS_NUM; i++)
++	for (i = 0; i < DEBUGFS_REGS_NUM; i++) {
+ 		devm_kfree(dev, hisi_hba->debugfs_regs[dump_index][i].data);
++		hisi_hba->debugfs_regs[dump_index][i].data = NULL;
++	}
+ 
+-	for (i = 0; i < hisi_hba->n_phy; i++)
++	for (i = 0; i < hisi_hba->n_phy; i++) {
+ 		devm_kfree(dev, hisi_hba->debugfs_port_reg[dump_index][i].data);
++		hisi_hba->debugfs_port_reg[dump_index][i].data = NULL;
++	}
+ }
+ 
+ static const struct hisi_sas_debugfs_reg *debugfs_reg_array_v3_hw[DEBUGFS_REGS_NUM] = {
+@@ -4611,7 +4592,7 @@ static int debugfs_alloc_v3_hw(struct hisi_hba *hisi_hba, int dump_index)
  {
--	struct hisi_sas_cq *cq = p;
--	struct hisi_hba *hisi_hba = cq->hisi_hba;
--	struct hisi_sas_slot *slot;
- 	struct hisi_sas_complete_v3_hdr *complete_queue;
--	u32 rd_point = cq->rd_point, wr_point;
-+	struct hisi_hba *hisi_hba = cq->hisi_hba;
-+	u32 rd_point, wr_point;
- 	int queue = cq->id;
+ 	const struct hisi_sas_hw *hw = hisi_hba->hw;
+ 	struct device *dev = hisi_hba->dev;
+-	int p, c, d, r, i;
++	int p, c, d, r;
+ 	size_t sz;
  
-+	rd_point = cq->rd_point;
- 	complete_queue = hisi_hba->complete_hdr[queue];
+ 	for (r = 0; r < DEBUGFS_REGS_NUM; r++) {
+@@ -4691,11 +4672,48 @@ static int debugfs_alloc_v3_hw(struct hisi_hba *hisi_hba, int dump_index)
  
- 	wr_point = hisi_sas_read32(hisi_hba, COMPL_Q_0_WR_PTR +
-@@ -2424,6 +2423,7 @@ static irqreturn_t  cq_thread_v3_hw(int irq_no, void *p)
- 	while (rd_point != wr_point) {
- 		struct hisi_sas_complete_v3_hdr *complete_hdr;
- 		struct device *dev = hisi_hba->dev;
-+		struct hisi_sas_slot *slot;
- 		u32 dw0, dw1, dw3;
- 		int iptt;
+ 	return 0;
+ fail:
+-	for (i = 0; i < hisi_sas_debugfs_dump_count; i++)
+-		debugfs_release_v3_hw(hisi_hba, i);
++	debugfs_release_v3_hw(hisi_hba, dump_index);
+ 	return -ENOMEM;
+ }
  
-@@ -2466,6 +2466,13 @@ static irqreturn_t  cq_thread_v3_hw(int irq_no, void *p)
- 	/* update rd_point */
- 	cq->rd_point = rd_point;
- 	hisi_sas_write32(hisi_hba, COMPL_Q_0_RD_PTR + (0x14 * queue), rd_point);
++static int debugfs_snapshot_regs_v3_hw(struct hisi_hba *hisi_hba)
++{
++	int debugfs_dump_index = hisi_hba->debugfs_dump_index;
++	struct device *dev = hisi_hba->dev;
++	u64 timestamp = local_clock();
++
++	if (debugfs_dump_index >= hisi_sas_debugfs_dump_count) {
++		dev_warn(dev, "dump count exceeded!\n");
++		return -EINVAL;
++	}
++
++	if (debugfs_alloc_v3_hw(hisi_hba, debugfs_dump_index)) {
++		dev_warn(dev, "failed to alloc memory\n");
++		return -ENOMEM;
++	}
++
++	do_div(timestamp, NSEC_PER_MSEC);
++	hisi_hba->debugfs_timestamp[debugfs_dump_index] = timestamp;
++
++	debugfs_snapshot_prepare_v3_hw(hisi_hba);
++
++	debugfs_snapshot_global_reg_v3_hw(hisi_hba);
++	debugfs_snapshot_port_reg_v3_hw(hisi_hba);
++	debugfs_snapshot_axi_reg_v3_hw(hisi_hba);
++	debugfs_snapshot_ras_reg_v3_hw(hisi_hba);
++	debugfs_snapshot_cq_reg_v3_hw(hisi_hba);
++	debugfs_snapshot_dq_reg_v3_hw(hisi_hba);
++	debugfs_snapshot_itct_reg_v3_hw(hisi_hba);
++	debugfs_snapshot_iost_reg_v3_hw(hisi_hba);
++
++	debugfs_create_files_v3_hw(hisi_hba);
++
++	debugfs_snapshot_restore_v3_hw(hisi_hba);
++	hisi_hba->debugfs_dump_index++;
++
++	return 0;
 +}
 +
-+static irqreturn_t cq_thread_v3_hw(int irq_no, void *p)
-+{
-+	struct hisi_sas_cq *cq = p;
-+
-+	complete_v3_hw(cq);
- 	cond_resched();
+ static void debugfs_phy_down_cnt_init_v3_hw(struct hisi_hba *hisi_hba)
+ {
+ 	struct dentry *dir = debugfs_create_dir("phy_down_cnt",
+@@ -4782,7 +4800,6 @@ static void debugfs_exit_v3_hw(struct hisi_hba *hisi_hba)
+ static void debugfs_init_v3_hw(struct hisi_hba *hisi_hba)
+ {
+ 	struct device *dev = hisi_hba->dev;
+-	int i;
  
- 	return IRQ_HANDLED;
+ 	hisi_hba->debugfs_dir = debugfs_create_dir(dev_name(dev),
+ 						   hisi_sas_debugfs_dir);
+@@ -4799,14 +4816,6 @@ static void debugfs_init_v3_hw(struct hisi_hba *hisi_hba)
+ 
+ 	debugfs_phy_down_cnt_init_v3_hw(hisi_hba);
+ 	debugfs_fifo_init_v3_hw(hisi_hba);
+-
+-	for (i = 0; i < hisi_sas_debugfs_dump_count; i++) {
+-		if (debugfs_alloc_v3_hw(hisi_hba, i)) {
+-			debugfs_exit_v3_hw(hisi_hba);
+-			dev_dbg(dev, "failed to init debugfs!\n");
+-			break;
+-		}
+-	}
+ }
+ 
+ static int
 -- 
 2.53.0
 
