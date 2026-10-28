@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793217243;
-	b=x0rndqVOAXPmi5eVvBKCsdyt4wF2jmoEsug+PW0amrBoEc+Co6HWTAhRYpmu+2OmzTK+
-	 GSHKgqHbffQSch2p/7MZKFS20h/AmgH2X+A/NkIvg5NzLh3sIH8iMBZB5QYXwWq58l2/H
-	 /+zSSaBiqCzEcoa78Whq22u2349uzAYvgJWD1huOD/SqoMFPqz1BUmywGlNydLIkMsIEQ
-	 j02FeUsOE3FQZd/Fe65YovnRUwTRpc26YoPoH1a7y2UqIp2HPluJql9qpHnDg0GsGaTXl
-	 ZmXPSaCWHvc67rOU+wvFErKtzMXkOLLoLy1nZSr4U8tbqsACd9SkMss+N4AdAVMRy/w==
+	t=1793217245;
+	b=g1ossSm1L8FRnLuYSsITId/bQ+wAOVzow5/zQcX7UkGJYW1V1eJwKV5jbctS0w4h6dan
+	 MN1mwc8LaJJPFpRjWwZg3Y1m65NnVFGjWxP4gDXITEhXamEBLiv00BdqTrhtOTuWts1Uo
+	 4yK18frv7TZqNg0pTKlmAwEzob2KBtpv5ufQdaJAzn2xIC9uAaVFWugifeDRX0T7yUoxs
+	 LtDkGeUyoXpb6queL6PzJsGyq5Vb23UPTF99RkV6/yW+o5JtdZVFtwRFll+AoDxymIObi
+	 qPygUtTqU1kRPeELp/kUjfvWmlIWem5KnP01w0CsYZxOLica7xWe4/7B8FeOsR+lz0Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793217243;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793217245;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=QFBkk7ThSxn+OOQp/DQJD+rOk5JUzRh5tEXyZMwlwKQ=;
-	b=2IdosWye/o4f1fTBSLh3kovjFHIx6l2IP00/oCgrWXpyIVSmx69sEMUjWdVa+ORqahuf
-	 dtw+zX8zkLEZ7pXt2hT+KRavo0cAKGBGm234ucyXDnkZ1fK9kar7g93499xqEkci7JxVL
-	 XfzhSE8e8JUd/ojiqvoDTnPbv4qoVdoQo2Gv9RdrBiNkSQImamkQRMhOo0kWXJiL0YGzG
-	 FM8RgIfTjL1Laj/H0+1NC3SfliDfTbbc9n7wj97MrEmj0x+m0CTrK/vQCJ0uKYJvQxoY+
-	 qzn2OqqTVjW+nakn1BLO8uUT41q2iRrKmaYLeVCPKgHuOBMlPdrvHXhizz7t+3hPgBQ==
+	bh=nasb8Yb7LeNQcdQgOabCxQ5CpZ/H54nFmoG6fue0D68=;
+	b=ZPWje9sMohSgEnjLo1l11FmpVrytqiDcpsHX/AziMoh7FZb5Of9zH5FRsFqIwfyiSyYE
+	 ay8S7p53C9LWvoM2ORg9aQdtGtXAYE9jtl+FvuRsUHvdiYJlpToh/86UNdAo3BJ52sDbI
+	 EbY+WcKps4ddEFaDcEk20V10rmDXNj4bTWftcHleZlehPZPEQc1ZwoMqJDmOZp4UdI8/w
+	 +4oiSG4YHeggM/1/10jw9vJ1DEbuSX4iMUI1AVMK0DgaEnbho5X+6kknSbm0ooMBmsEDg
+	 1PyiyDMfBLgw7rI85WwuA5mtcCIxk22hm4i795Z0t+acEJ5axV97ykROJFO+faYpVfw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oqcF4lmR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CQysrumL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D801A606A320;
-	Wed, 28 Oct 2026 19:54:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B8BD606A31E;
+	Wed, 28 Oct 2026 19:54:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oqcF4lmR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FE471F01828;
-	Wed, 28 Oct 2026 19:54:02 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CQysrumL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA8321F031E1;
+	Wed, 28 Oct 2026 19:54:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793217242;
-	bh=QFBkk7ThSxn+OOQp/DQJD+rOk5JUzRh5tEXyZMwlwKQ=;
+	s=korg; t=1793217245;
+	bh=nasb8Yb7LeNQcdQgOabCxQ5CpZ/H54nFmoG6fue0D68=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oqcF4lmRdk2LrbovZKcFcn3LLqWH0xz3vhV+aqjPRJEYudfC3I/pwiFqzn0HQJK+O
-	 5BZk4VLt8HR35eKa9qYIF31TWDKQyEsP2AHRB6YYEvEHCLJjfpHwSn4zypQ3amj70F
-	 YZ/HPR/pKU14Bee3nb2ZBT4vkSiIcai6eBNvMCiw=
+	b=CQysrumLYgyFfsC3CZBvx2pHQ143LNcZIq57qgCE+LISK/3dIVQgvGQJlbsZpQQeY
+	 u15/xP5ATgQBtSiKi5NsFlUh8MUinn0BWHrwMw+VlqpLViq0QSkc4YK6XyGZPlZRdx
+	 zsb0+IydZAf/i9xlkVSjTJZOAo6az/qiBY8y/zTs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Jose Fernandez (Anthropic)" <jose.fernandez@linux.dev>,
-	Ben Cressey <ben@cressey.dev>,
-	Mikulas Patocka <mpatocka@redhat.com>,
+	Frank Sorenson <sorenson@redhat.com>,
+	Paulo Alcantara <pc@manguebit.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1791/1887] dm-integrity: fix infinite loop on discard with large tag size
-Date: Wed, 28 Oct 2026 18:04:47 +0100
-Message-ID: <20261028170540.205938163@linuxfoundation.org>
+Subject: [PATCH 6.1 1792/1887] cifs: add revalidation on FSCTL failure in smb2_duplicate_extents()
+Date: Wed, 28 Oct 2026 18:04:48 +0100
+Message-ID: <20261028170540.227138395@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,46 +68,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ben Cressey <ben@cressey.dev>
+From: Frank Sorenson <sorenson@redhat.com>
 
-[ Upstream commit 18d80c77b4c7dd20699e81cedfbbff4e9d198f28 ]
+[ Upstream commit 53676a5e28231186c9f56d87b7998b640699bc15 ]
 
-When integrity_metadata handles a discard, it fills a buffer with
-DISCARD_FILLER and writes it over the tags, max_blocks blocks at a
-time. If the kmalloc fails, the buffer is the on-stack array
-checksums_onstack and max_size is set to HASH_MAX_DIGESTSIZE. So if the
-tag size is larger than HASH_MAX_DIGESTSIZE, max_blocks is zero, bi_size
-is never decremented and the loop never terminates.
+smb2_duplicate_extents() has no handling for
+FSCTL_DUPLICATE_EXTENTS_TO_FILE failure: when the FSCTL fails, local
+inode metadata may be stale from the pre-extension or from concurrent
+remote writes, but is never refreshed.
 
-Fix this by using sizeof(checksums_onstack) as max_size. The array has
-MAX_TAG_SIZE bytes since commit b93b6643e9b5 ("dm integrity: fix a
-crash with unusually large tag size"), so max_blocks is at least 1.
+Force revalidation on FSCTL failure and use i_size_read() for the
+pre-extension check.
 
-Fixes: 84597a44a9d8 ("dm integrity: add optional discard support")
+Fixes: cfc63fc8126a ("smb3: fix cached file size problems in duplicate extents (reflink)")
 Cc: stable@vger.kernel.org
-Reviewed-by: Jose Fernandez (Anthropic) <jose.fernandez@linux.dev>
-Signed-off-by: Ben Cressey <ben@cressey.dev>
-Assisted-by: Claude:unspecified
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-[ sashal: Adjusted context for the max_blocks calculation without extra_space. ]
+Signed-off-by: Frank Sorenson <sorenson@redhat.com>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+[ sashal: adapted the if/else block to a standalone failure check because the success-path metadata query is absent ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm-integrity.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/smb/client/smb2ops.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/md/dm-integrity.c b/drivers/md/dm-integrity.c
-index 4fcd7d821568f..8a7422a54a896 100644
---- a/drivers/md/dm-integrity.c
-+++ b/drivers/md/dm-integrity.c
-@@ -1830,7 +1830,7 @@ static void integrity_metadata(struct work_struct *w)
+diff --git a/fs/smb/client/smb2ops.c b/fs/smb/client/smb2ops.c
+index ecc5f27ff1413..5a07d411a00a6 100644
+--- a/fs/smb/client/smb2ops.c
++++ b/fs/smb/client/smb2ops.c
+@@ -2027,7 +2027,7 @@ smb2_duplicate_extents(const unsigned int xid,
+ 		src_off, dest_off, len);
  
- 		if (unlikely(dio->op == REQ_OP_DISCARD)) {
- 			unsigned int bi_size = dio->bio_details.bi_iter.bi_size;
--			unsigned int max_size = likely(checksums != checksums_onstack) ? PAGE_SIZE : HASH_MAX_DIGESTSIZE;
-+			unsigned int max_size = likely(checksums != checksums_onstack) ? PAGE_SIZE : sizeof(checksums_onstack);
- 			unsigned int max_blocks = max_size / ic->tag_size;
+ 	inode = d_inode(trgtfile->dentry);
+-	if (inode->i_size < dest_off + len) {
++	if (i_size_read(inode) < dest_off + len) {
+ 		rc = smb2_set_file_size(xid, tcon, trgtfile, dest_off + len, false);
+ 		if (rc)
+ 			goto duplicate_extents_out;
+@@ -2052,6 +2052,11 @@ smb2_duplicate_extents(const unsigned int xid,
+ 	if (ret_data_len > 0)
+ 		cifs_dbg(FYI, "Non-zero response length in duplicate extents\n");
  
- 			memset(checksums, DISCARD_FILLER, max_size);
++	if (rc) {
++		CIFS_I(inode)->time = 0; /* force reval */
++		cifs_invalidate_cache(inode, 0);
++	}
++
+ duplicate_extents_out:
+ 	return rc;
+ }
 -- 
 2.53.0
 
