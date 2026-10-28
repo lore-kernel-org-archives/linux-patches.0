@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793212865;
-	b=Q8ix+Pw3CxQ8C2CoHxvAZhn1hLmKKmhqbjoDUQzi+ERzve/sPG1ZT2+z0hdMIoRdfirz
-	 Ta4iH84PbrFh4XAF33/b0QmRczsygWXbR4FdnTtWgF39VgC/8EfQDNFVBbPDoFiMU8kEb
-	 MdOKAvRX+jbEV86Hwk1AFCgHzZQt/KekAGW3JMBL+bgxdR1aTZPTgyLwSLxqY2wSjAtRm
-	 Xa4aBiuN25745yfs2D+mq7zeS9a6KgwD0KftSZcgkr+0PtFotYL8u4QUfxkC9wQ/mmzcI
-	 +1yJRo9i49EboVXLLv57c6qg6NphPA3W3/CuEKtvHyjHs6ZdxYqNteMk65LnWqrredg==
+	t=1793212868;
+	b=LWv+GT3aA7UWI6wkzr0ijvmmJy6uy8fxHl2Djt9aZaRLhTXRzZC7TOcnzCfECmVo2Q5o
+	 AtiJlNhM8v3kQxMAa2HUX1gKmGNu3AWiigHD9q0nP1VPkR8YUURBUtxR/Egz815PCCDQo
+	 K7rqvNQc2xx4l1/s+F6LfbbTuustqendYy9A1KiN4YamBYtanqVxzjgZq6xs+HhZidkPf
+	 kgBQKKiDFAMECu3KOBZRvDZ9RtC1vKpUhCJn88/ZPFaYBtUFewr2DayIypBR0CoSCcBEe
+	 Xz6tW0RtlG9p4loYIHr/D5aTm7Lyu3uIWv5qFTBe8nBRMEWuAzjA0ho1Y5imHQAF2pw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793212865;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793212868;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ZBRhe8pK7eWcRS5ODG3zGv3s+UdXU6PkyZ/Q/vXRYVk=;
-	b=Jp1bXRRxHNPDEVdfOn6zg/5TIubXXmVTwWJqqX7FkIEjv4KyAc7HGYDL/xIIfbcu0bfB
-	 wU48UsXpvqjkMiSI5CsL8no2FeWbTd2agDb0HzF5sLQc2H77n/d5sRU3ubmDE5O270cwz
-	 yDVh4anrtl62m9NlTGdbul33lXNvL+GKTw5rdKubpy7y3uqF0zUtDBeIYJ+oh8BV+Ie/W
-	 mbIw4DENleYkBbmYAZenE32dJdEI9KH+icUnhPElOsPi4olFZI1niU486M8W4/u41/Itz
-	 8rTDCR7+Cncw56Ad+CuumSXO4MmildLXKagk6gMVJANmE92y2fRl2hPqpX0/MMKyAtQ==
+	bh=xsLAjhgB1RXyAbdwcPhC+yYA9sP3hUE19Hqgfzgr27s=;
+	b=wuZnX4XhX2goXIgq1BISZ2DitbPIZnhwNna2p9sk7MItlFQdbfEs0J4wUgNtk6KCjZbR
+	 pIMggiTUqRm+4aN+VZzEdr4jO0KOmH+A4DCONGbWKD9nlT4N+1HbQB5CBF1nJJFu/inqc
+	 SwOXDRI1d576w8uSn/fB8nTz6JLv9MeOdf/QrVYlrd+ISnSPh+4JPrD60HSsX7MWy5om7
+	 ZCRZLXN3jIbD8VbKaTYRjzpD4qBgzFpf/nBP+dAjs7vvyhnhVZ/gbj3lnagMF/HdGgxV0
+	 uXbJ/rFQ4wD/EkC1IDboC72lWZfQwgZ1/Ig+6ooTU+qqkxv27DqJpyqBLb7USZ/+QgQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c6kFc8X4;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=o9kBBoyk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E69C606A320;
-	Wed, 28 Oct 2026 18:41:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67319606A31E;
+	Wed, 28 Oct 2026 18:41:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c6kFc8X4
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1F2E1F01825;
-	Wed, 28 Oct 2026 18:41:04 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=o9kBBoyk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B52C91F01828;
+	Wed, 28 Oct 2026 18:41:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793212865;
-	bh=ZBRhe8pK7eWcRS5ODG3zGv3s+UdXU6PkyZ/Q/vXRYVk=;
+	s=korg; t=1793212868;
+	bh=xsLAjhgB1RXyAbdwcPhC+yYA9sP3hUE19Hqgfzgr27s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=c6kFc8X45SaovHdE5cLZ1xU1g+xQNXAfJY7ZG1LIqnLTyep2UtJKhhpOxmduWApov
-	 HioE1y9O3OHWz1WsqpMNaGqEJ9ITi8XWPZv3h0ara4qlelADUi8wzrKT4ViG1BMfPT
-	 4PjwwQNW2AH1Xl9FrGN13FsefHKBiKG2eQoPsMGE=
+	b=o9kBBoykuixyanyzlhZQ6W//jxrLDI9TB2LQRq/kqOqWdBwX58Y/1t7ao08iQwPuH
+	 S3B7ziJPzNY57k608PVMPLH4iAtYoZm0YjG0JA5PkQ1mpd8CRamlKuEPgJlqQ5WOgh
+	 ZfAfaVPbWmuXSn63mAQUMAzghVItWixP0dNcMpbo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengfeng Ye <nicoyip.dev@gmail.com>,
+	Chandrashekar Devegowda <chandrashekar.devegowda@intel.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.1 0305/1887] Bluetooth: hci_core: Serialize fragmented ISO packet queueing
-Date: Wed, 28 Oct 2026 17:40:01 +0100
-Message-ID: <20261028170506.170564305@linuxfoundation.org>
+Subject: [PATCH 6.1 0306/1887] Bluetooth: btintel: fix buffer over-read in btintel_hw_error()
+Date: Wed, 28 Oct 2026 17:40:02 +0100
+Message-ID: <20261028170506.193181282@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -67,72 +67,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chengfeng Ye <nicoyip.dev@gmail.com>
+From: Chandrashekar Devegowda <chandrashekar.devegowda@intel.com>
 
-commit 1a572db43c057566771b485598ad2e66cb390821 upstream.
+commit 40eb4b18ad167b63644c27fa67a7400ba050379a upstream.
 
-The fragmented path in hci_queue_iso() calls __skb_queue_tail() without
-holding conn->data_q.lock. The socket lock serializes senders, but the
-transmit worker can concurrently remove packets from this queue using
-skb_dequeue().
+The "Exception info %s" print uses skb->data + 1, but the 12-byte
+payload is not guaranteed to be NUL-terminated and can be read past
+its end.
 
-After an insertion saves the old tail pointer, hci_sched_iso() can dequeue
-that packet and pass it to the driver. The driver can free the packet
-before the insertion resumes and writes to the old tail's next pointer,
-causing a use-after-free. Concurrent updates can also corrupt the queue.
+Bound the print with "%.*s" and skb->len - 1.
 
-KASAN reported:
-
-  BUG: KASAN: slab-use-after-free in hci_send_iso+0xc7d/0xe10
-  Call Trace:
-   hci_send_iso+0xc7d/0xe10
-   iso_sock_sendmsg+0x710/0x900
-   __sys_sendto+0x34a/0x3a0
-
-  Allocated by task 86:
-   __alloc_skb+0xdd/0x820
-   alloc_skb_with_frags+0x7e/0x770
-   sock_alloc_send_pskb+0x67a/0x820
-   bt_skb_sendmsg.constprop.0+0xc0/0x6c0
-   iso_sock_sendmsg+0x44e/0x900
-
-  Freed by task 90:
-   kmem_cache_free+0xcb/0x3d0
-   vhci_read+0x33f/0x4d0
-   vfs_read+0x177/0xa20
-
-Hold the queue lock across the entire fragment batch, as hci_queue_acl()
-does, to serialize insertion against dequeue while preserving fragment
-ordering.
-
-Fixes: 26afbd826ee3 ("Bluetooth: Add initial implementation of CIS connections")
+Fixes: 973bb97e5aee ("Bluetooth: btintel: Add generic function for handling hardware errors")
 Cc: stable@vger.kernel.org
-Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
+Signed-off-by: Chandrashekar Devegowda <chandrashekar.devegowda@intel.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/hci_core.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/bluetooth/btintel.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/net/bluetooth/hci_core.c
-+++ b/net/bluetooth/hci_core.c
-@@ -3291,6 +3291,8 @@ static void hci_queue_iso(struct hci_con
- 
- 		skb_shinfo(skb)->frag_list = NULL;
- 
-+		spin_lock_bh(&queue->lock);
-+
- 		__skb_queue_tail(queue, skb);
- 
- 		do {
-@@ -3305,6 +3307,8 @@ static void hci_queue_iso(struct hci_con
- 
- 			__skb_queue_tail(queue, skb);
- 		} while (list);
-+
-+		spin_unlock_bh(&queue->lock);
+--- a/drivers/bluetooth/btintel.c
++++ b/drivers/bluetooth/btintel.c
+@@ -248,7 +248,8 @@ static void btintel_hw_error(struct hci_
+ 		goto unlock;
  	}
- }
+ 
+-	bt_dev_err(hdev, "Exception info %s", (char *)(skb->data + 1));
++	bt_dev_err(hdev, "Exception info %.*s", (int)(skb->len - 1),
++		   (char *)(skb->data + 1));
+ 
+ 	kfree_skb(skb);
  
 
 
