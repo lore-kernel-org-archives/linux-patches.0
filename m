@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793209464;
-	b=Ff0ZSqC1vr6kLNg05xwUv07GZlFdvXQYfW6HhR1ZRiLQ1F8GJO6mEk7l18gs4G+DDcVW
-	 3wlK+HdLsOLtzO5irz/LFAsun7yCIwjsdEwpwn9C3YFWv+JJ7E1fASA1npJFC7mk2Fwdh
-	 j6SN01dkKdI3B5O2gGo01hEhv34VlL7u08yqFSu6SgZb5mXJVa5TlDx/IlFf7XbQvd2hO
-	 7VmlzkWd3ptzM8Re9MM7sy056twUBtGMKHfAzLPBonpuZzmQ2JjCljtcd/pXCmSKlaiqB
-	 CW3RE3VT+fowIXBF3kPa6DB+JfJdWkp60B2li2eWoyzWm5XCmQpv2IA5jql/dlZrp9w==
+	t=1793209466;
+	b=RN3NcDBa6/3rYLSyiI1zPVhFLzcFXF8UDl/EFpK0Rxc4p9FqTkq6/4HziXCHRWD/AvjQ
+	 n20M6uU0NNCxRPLF/eMKsL9p0LZJ1uVH6kzs0nh+kn7XxnbBwQraqq0CV+qkfHmWzYVP2
+	 HEvTbXj0cjzyus0s6fooR/EWrgOGp5MVmCuX8ml5jTs5lGoz9OoPbdkwj7fsRANh4PsCH
+	 lTfzTpFHLpnhAiApPXVRWiYTS04ALCUGmcRf7qSl1CwEdXvOJfcK/ElgkrKlAy88U02Fv
+	 Za6vf8JyNfUg/v8ZMuvGxuM3prOvY/FvIEbLosyRoRovTgmYq/rx3sTwMgtdDoPHD6g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793209464;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793209466;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=kC88VgLItR4wut/PNn+z6ig0q7anDmqnQy9Y7YXgVSM=;
-	b=d8Da7Nc27Z1I2Q986Z0DxcRAEgi+yyvmRb3TSoM055kMeOOzfVR333GuLLp4Dg2Qulpd
-	 atcBjEs8yIpOQ1+U3Uk/6Z5iUWqENKq4+WjLvUUNPW/ergt/1+CAFpUB0g6HvulWH4UkJ
-	 MpSrPk9Hs9rLdzg3lNqsEWvrseYyxOoEzEffKkdtf6XgAsA45zyY7xaDc/9gYUlnkotkO
-	 ZNRAWhcvVUVDsEa2ku/01Gs36YwHU7gymnNRmYeRp19VIVddmh6hDPQkIa8fTV8jQrQ5Y
-	 R8joVETuMrtlS0rmM3Z254/UTFkzPFQbYwBq+Cl7UzFqzjWZK56uLya4jwjisDAxb1g==
+	bh=NPYWw1YBe1iTCMIuO9ZrbIo5VPlFZNfTQrFo9DGCmdc=;
+	b=vw0bG4pWTZfl0oBZvAqLhCewGpLNtjftzK4i5A3RcTjOpKjE05WI4dR1Ap9lu97g6Wbi
+	 uYdgdiGO1QXCI8T+gLSLsyxFPJ15bp0fXRGZp0AfhlPJyeehyCO/6liUM8u1ifODchF3C
+	 eGif7ZlzrSMJRGnnFY7qrks5bANUtNu3CSDDdSEJx9by1FgjJFg96bV3obzwUVdJV5kaH
+	 VWEojq7j3O64bi6gONGyYmE9WQNRcBHSkhM55MWn6PzpOtjmioS9SR32UFYHNsDXcR4Wu
+	 JItpqOWCUjSi5/7/0FBLfIsb5sefSejnbgHqsEE2wOMJYaLS9KsicZHV8S21+7vVsAQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s5O9jq8j;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TiJi9d8a;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1E7D606A31C;
-	Wed, 28 Oct 2026 17:44:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 907DF606A31A;
+	Wed, 28 Oct 2026 17:44:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s5O9jq8j
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C5F61F01825;
-	Wed, 28 Oct 2026 17:44:22 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TiJi9d8a
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFFC11F01825;
+	Wed, 28 Oct 2026 17:44:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793209463;
-	bh=kC88VgLItR4wut/PNn+z6ig0q7anDmqnQy9Y7YXgVSM=;
+	s=korg; t=1793209466;
+	bh=NPYWw1YBe1iTCMIuO9ZrbIo5VPlFZNfTQrFo9DGCmdc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=s5O9jq8jwV7x7BErh2xeLHtLiq6PfnYIbhrFTyiHCJBL8AakDenhsvRz4oPV9i4hr
-	 J0z29ObHiqUjvEOniSNNO6M5snQOASdf0Jn8op8ahXWAX+5wqHRyC+lQcUXrtYmbXY
-	 3/wlpVyaoZrn6XMEqBhCeXUyONdQY3aQBaXKhxaA=
+	b=TiJi9d8as65e1v1QLXROzIIhGnlbYV7EVxL0Ire7UNSBorYRSNhPkkHQymn3YJO1M
+	 pnEroNK4mXuar1xqBLTfvofvOBaqac/y9c4Nv8BIBNhgX0DckORQYfzBXpJSfBn2pK
+	 R+rfcwYGEWHAav9apqsK2FaWSB7bI4ylaNZGZu2o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	TencentOS Corvus AI <corvus@tencent.com>,
-	Aohan Mei <henrymei@tencent.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.10 481/516] net/sched: cls_flower: validate mask pointer after nla_next()
-Date: Wed, 28 Oct 2026 18:00:33 +0100
-Message-ID: <20261028170014.874516906@linuxfoundation.org>
+	Lee Jones <lee@kernel.org>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Steven Rostedt <rostedt@goodmis.org>
+Subject: [PATCH 5.10 482/516] tracing/histograms: Reject non-stacktrace fields for synthetic stacktrace fields
+Date: Wed, 28 Oct 2026 18:00:34 +0100
+Message-ID: <20261028170014.898133962@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -68,61 +68,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aohan Mei <henrymei@tencent.com>
+From: Lee Jones <lee@kernel.org>
 
-commit fee10655709c5c597e8e9f722f3035d9ea31ff3a upstream.
+commit a244c241593b5b38a08f0df2cb43c26574efbdcb upstream.
 
-fl_set_enc_opt() iterates the key's nested tunnel-option attributes
-with nla_for_each_attr() while advancing a single mask pointer via
-nla_next() at the bottom of each loop, so the mask cursor is driven
-by the number of key attributes rather than by the mask's own
-attributes.  The nla_ok() added by commit c96adff956191 ("cls_flower:
-call nla_ok() before nla_next()") only validates the mask pointer
-that was just consumed; the pointer produced by nla_next() is used by
-the next iteration (fl_set_geneve_opt() and siblings) without any
-validation.
+In check_synth_field(), when a synthetic event field is a stacktrace
+(field->is_stack) and the histogram field is not a "long[" stacktrace
+array, validation falls through to the generic size and signedness
+comparison.
 
-The mask's nested attributes are validated with NL_VALIDATE_LIBERAL,
-which merely warns on trailing bytes that do not form a complete
-attribute.  A mask carrying one valid attribute plus 1-3 residue
-bytes (or a non-aligned attribute length making msk_depth negative)
-therefore reaches the next iteration with msk_depth != 0, so neither
-the !msk_depth check in fl_set_enc_opt() nor the !depth check in the
-per-type helpers fires.  nla_type() then reads past the mask payload
-and nla_parse_nested_deprecated() iterates with an nla_len taken
-from those bytes, reading well beyond the mask attribute (KASAN:
-slab-out-of-bounds read in __nla_validate_parse from fl_change()).
+Because parse_synth_field() sets a stacktrace field's type to
+"__data_loc unsigned long[]", its size is sizeof(u64) and
+synth_field_signed() marks it as signed.  Consequently, any 8-byte
+signed scalar histogram field passes the fallback check, and its scalar
+value is subsequently dereferenced as a kernel stacktrace pointer in
+get_field_size() and trace_stack().
 
-Validate the advanced mask pointer as well: when the mask is not
-legitimately exhausted (msk_depth != 0) and the new pointer fails
-nla_ok(), reject the filter with -EINVAL.  An exactly exhausted mask
-still skips the check, preserving exact-match behaviour for the
-remaining key attributes.
+Furthermore, checking strstr(hist_field->type, "long[") is insufficient
+because tracepoint fields defined with __bitmask() or __rel_bitmask()
+also have type "__data_loc unsigned long[]" or "__rel_loc unsigned
+long[]", whilst create_hist_field() treats them as 4-byte scalar values
+without HIST_FIELD_FL_STACKTRACE.
 
-Fixes: c96adff95619 ("cls_flower: call nla_ok() before nla_next()")
-Reported-by: TencentOS Corvus AI <corvus@tencent.com>
+Propagate HIST_FIELD_FL_STACKTRACE to variable references and field
+variables (whilst excluding variable aliases from per-element
+stacktrace capture), and reject any mismatch between
+HIST_FIELD_FL_STACKTRACE and field->is_stack in check_synth_field().
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Aohan Mei <henrymei@tencent.com>
-Link: https://patch.msgid.link/20260826025123.62758-1-ljp1205831794@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 00cf3d672a9d ("tracing: Allow synthetic events to pass around stacktraces")
+Link: https://patch.msgid.link/20261013112449.1006088-1-lee@kernel.org
+Signed-off-by: Lee Jones <lee@kernel.org>
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+[Lee: Omit create_var_field() and hist_trigger_elt_update() hunks as
+      288709c9f3b0 ("tracing: Allow stacktraces to be saved as histogram
+      variables") is not present]
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/cls_flower.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ kernel/trace/trace_events_hist.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
---- a/net/sched/cls_flower.c
-+++ b/net/sched/cls_flower.c
-@@ -1406,6 +1406,11 @@ static int fl_set_enc_opt(struct nlattr
- 			return -EINVAL;
- 		}
- 		nla_opt_msk = nla_next(nla_opt_msk, &msk_depth);
-+
-+		if (msk_depth && !nla_ok(nla_opt_msk, msk_depth)) {
-+			NL_SET_ERR_MSG(extack, "A mask attribute is invalid");
-+			return -EINVAL;
-+		}
- 	}
+--- a/kernel/trace/trace_events_hist.c
++++ b/kernel/trace/trace_events_hist.c
+@@ -1751,7 +1751,8 @@ static int init_var_ref(struct hist_fiel
+ 	ref_field->size = var_field->size;
+ 	ref_field->is_signed = var_field->is_signed;
+ 	ref_field->flags |= var_field->flags &
+-		(HIST_FIELD_FL_TIMESTAMP | HIST_FIELD_FL_TIMESTAMP_USECS);
++		(HIST_FIELD_FL_TIMESTAMP | HIST_FIELD_FL_TIMESTAMP_USECS |
++		 HIST_FIELD_FL_STACKTRACE);
  
- 	return 0;
+ 	if (system) {
+ 		ref_field->system = kstrdup(system, GFP_KERNEL);
+@@ -2743,6 +2744,7 @@ static struct field_var *create_field_va
+ 		ret =  -ENOMEM;
+ 		goto err;
+ 	}
++	var->flags |= val->flags & HIST_FIELD_FL_STACKTRACE;
+ 
+ 	field_var->var = var;
+ 	field_var->val = val;
+@@ -3354,7 +3356,10 @@ static int check_synth_field(struct synt
+ 	    && field->is_dynamic)
+ 		return 0;
+ 
+-	if (strstr(hist_field->type, "long[") && field->is_stack)
++	if (!!(hist_field->flags & HIST_FIELD_FL_STACKTRACE) != field->is_stack)
++		return -EINVAL;
++
++	if (field->is_stack)
+ 		return 0;
+ 
+ 	if (strcmp(field->type, hist_field->type) != 0) {
 
 
