@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215581;
-	b=ZbZrn0kNKIXKUQbrY0KUJwi8V51jfbub/YJ7Zo69VCdtJP6pSEhdzyHLIaP0dApHPnXY
-	 UsXIPzIm2JWC309DEU35tqiUkGFe109/V98PS595nzJagsZFjyG2KGZ4XJpVWpKzSIeI1
-	 XFxrEKRWvzsFEsygkmFFU5SsmPMC7i4gEAmX8T0Y07lD1+umX5pWUgZcnh811xN7pxiiF
-	 bG476xOcqdeet22v0CvS24g7oibqbR/D1d1p4ycHaJwjRZU850cJVQYPYckPBK36BdbHo
-	 +zsXisZOh4vYwpWirYeP/mtImBo6ELLLpn+rnWxvYxIvo9iVuZJhrtRhxI/LwdBvpQQ==
+	t=1793215584;
+	b=1ykybWHC8lp10de7B5OKT2N2IrPBSPBvylN9JdwAZRZknu1J5w54jxqjL8oHOArWucB3
+	 Tj3czp7HsWNyEpcfnY1edtTrSJu7i0tNPrR+MhgrLwp/GbXLzGTOdZPfA1Tkli8F7uhbL
+	 B0P5B3YmjlVnQMLmqR5mfi1s+PmX1vx4REcj8gtvNmD6PTVc6yutEAECX/TFGvEd31Khs
+	 qQWs4nUJ8J4INZFW3PdgpLuIcqVvBAj3/8fzOQywTrUlODV3BcTa6tLFGN0OlSm9JhFQo
+	 7EB1Hthgp/e1HItLoW7rKemJurO/ITo946lFICaEzsEC0QdtLH7ztBg/WXZL5MijJfQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215581;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215584;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=gmZaN4TXWmWPTZvfsqUZ71sGUn8QH/uVyfH7BiHW7X0=;
-	b=nJLqlzFwrt8Va8KXQXBZdGflWw5TBxzCu3zs507cUc7bOirIHZcFWeARue3rGJ1RbTAT
-	 gLA/SRjYELPZnFzXrNSHgtASpWInMym5kmDTyrXslOosIercgiOB7UA5FFmQCGldOAqTr
-	 x5s/aiMS01bT5hW2qfnst9Vv0MQaHi0VME2pHQqu8aAxKwzboKonKbfHpVaSVoGEMQnlh
-	 M7wpMySnF9wXKLKjZfksZVqFE30DyooaOTnwZhd+Ma0g50Qpa2Vwc+WENUTjMSwfc7kzn
-	 x4IMdBsOJBknLYCcUwDd39yBcXCxODPFisY4+v9bOD2lQFu/RA/yWr20Qfr+hsibClQ==
+	bh=de4vgNILq7ToikStSrLKg9txR2Eb9m4rFIwbMI++CpY=;
+	b=CLH0ZEJjutyTY0w5ep8yJddXOMMzt48pXAcg4AbQMHHJbylnWCH0T+u3CWeVq24l61+D
+	 Xh2w032thzjclbftH8G5R/5r5uShp8+pFCFr/FjA6zBY2/CyR++6iQIxbA1SpK5F2tvEn
+	 Mg/m1hya004BIkSss0TsnUqDuxmWHFWsJYlrtTqisHu5qsoc+VKf2zcl9wxncomlgCxJn
+	 oUHP90wdGV1l165CyFLUMzI1Fwg+QcDeBlFXuS4x931Kr3eZQBGBEE7hvDBif8mUiORWb
+	 FE7tGeXfHJDfsAMUZG/ZU3qwJsxlDivtREFKoFgACFubbPimzn1CPM81YuNt9ISbySQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Dn0dhBhW;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dujQEe5E;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 527F2606A31C;
-	Wed, 28 Oct 2026 19:26:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E418F606A31A;
+	Wed, 28 Oct 2026 19:26:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Dn0dhBhW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63E971F01825;
-	Wed, 28 Oct 2026 19:26:20 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dujQEe5E
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E8611F01825;
+	Wed, 28 Oct 2026 19:26:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215580;
-	bh=gmZaN4TXWmWPTZvfsqUZ71sGUn8QH/uVyfH7BiHW7X0=;
+	s=korg; t=1793215583;
+	bh=de4vgNILq7ToikStSrLKg9txR2Eb9m4rFIwbMI++CpY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Dn0dhBhWaUR7+pDWLuZhH7lQAXmGFYI8P34YbDwN59iAlUnLqbaxQ+ySWHLLNKWG+
-	 lGx3/GELevablma5VBU+g4DCMXmmAcYwgE+Sm2waALmHxYun4ElN+TScPpO4t0+ESv
-	 tWDC9UoxI+X+2vLgvWVolxsU2umo22IsmCu5iGjA=
+	b=dujQEe5ElVsHDxXK1uTrv1TA795Ip1FgW4IU4SO0VPZg/vllub5r8MiBS5QptJtZ7
+	 5HaLw5k6SDdjmps9qpsNmINY1IyzysKoPMSml5fls/WE7iDJksa2YOI/kGoxMT7Hkl
+	 WLwvMc4kiGxHmIREx3sZhlGDMMOgASiwAanQPvSk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Bernard Metzler <bmt@zurich.ibm.com>,
-	Guoqing Jiang <guoqing.jiang@linux.dev>,
-	Leon Romanovsky <leon@kernel.org>,
+	Shuangpeng Bai <shuangpeng.kernel@gmail.com>,
+	Bernard Metzler <bernard.metzler@linux.dev>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1259/1887] RDMA/siw: Introduce siw_destroy_cep_sock
-Date: Wed, 28 Oct 2026 17:55:55 +0100
-Message-ID: <20261028170528.077526778@linuxfoundation.org>
+Subject: [PATCH 6.1 1260/1887] RDMA/siw: Fix endpoint/socket association handling
+Date: Wed, 28 Oct 2026 17:55:56 +0100
+Message-ID: <20261028170528.100932898@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -70,82 +69,129 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guoqing Jiang <guoqing.jiang@linux.dev>
+From: Bernard Metzler <bernard.metzler@linux.dev>
 
-[ Upstream commit d9a5b48681315a5881cea24bc8f384da02828e88 ]
+[ Upstream commit ea4f6f6c53577fb3f05dbd78b15e586772d49831 ]
 
-Add one helper to simplify code a bit.
+Disassociating a socket from an endpoint via siw_socket_disassoc() may
+release the last reference on that endpoint and free it. Therefore, don't
+clear the endpoints socket pointer after calling that function, but
+within.
 
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202310091735.oG7bTvLR-lkp@intel.com/`
-Acked-by: Bernard Metzler <bmt@zurich.ibm.com>
-Signed-off-by: Guoqing Jiang <guoqing.jiang@linux.dev>
-Link: https://lore.kernel.org/r/20231113115726.12762-17-guoqing.jiang@linux.dev
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
-Stable-dep-of: ea4f6f6c5357 ("RDMA/siw: Fix endpoint/socket association handling")
+This fixes a:
+
+  BUG: KASAN: slab-use-after-free in siw_cm_work_handler (drivers/infiniband/sw/siw/siw_cm.c:1053 drivers/infiniband/sw/siw/siw_cm.c:1075)
+
+which occurred after processing a malformed MPA request during connection
+establishment, causing the new endpoint to be closed.
+
+Fixes: 6c52fdc244b5c ("rdma/siw: connection management")
+Link: https://patch.msgid.link/r/20260604160808.30948-1-bernard.metzler@linux.dev
+Reported-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
+Signed-off-by: Bernard Metzler <bernard.metzler@linux.dev>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/siw/siw_cm.c | 26 ++++++++++++--------------
- 1 file changed, 12 insertions(+), 14 deletions(-)
+ drivers/infiniband/sw/siw/siw_cm.c | 30 +++++++++++++++---------------
+ 1 file changed, 15 insertions(+), 15 deletions(-)
 
 diff --git a/drivers/infiniband/sw/siw/siw_cm.c b/drivers/infiniband/sw/siw/siw_cm.c
-index 19932fc8856d7..c4311413c64d4 100644
+index c4311413c64d4..2ffac1c94df38 100644
 --- a/drivers/infiniband/sw/siw/siw_cm.c
 +++ b/drivers/infiniband/sw/siw/siw_cm.c
-@@ -370,6 +370,15 @@ static void siw_free_cm_id(struct siw_cep *cep)
- 	cep->cm_id = NULL;
+@@ -93,6 +93,7 @@ static void siw_socket_disassoc(struct socket *s)
+ 		cep = sk_to_cep(sk);
+ 		if (cep) {
+ 			siw_sk_restore_upcalls(sk, cep);
++			cep->sock = NULL;
+ 			siw_cep_put(cep);
+ 		} else {
+ 			pr_warn("siw: cannot restore sk callbacks: no ep\n");
+@@ -372,10 +373,11 @@ static void siw_free_cm_id(struct siw_cep *cep)
+ 
+ static void siw_destroy_cep_sock(struct siw_cep *cep)
+ {
+-	if (cep->sock) {
+-		siw_socket_disassoc(cep->sock);
+-		sock_release(cep->sock);
+-		cep->sock = NULL;
++	struct socket *s = cep->sock;
++
++	if (s) {
++		siw_socket_disassoc(s);
++		sock_release(s);
+ 	}
  }
  
-+static void siw_destroy_cep_sock(struct siw_cep *cep)
-+{
-+	if (cep->sock) {
-+		siw_socket_disassoc(cep->sock);
-+		sock_release(cep->sock);
-+		cep->sock = NULL;
-+	}
-+}
+@@ -1005,7 +1007,6 @@ static void siw_accept_newconn(struct siw_cep *cep)
+ 	if (new_s) {
+ 		siw_socket_disassoc(new_s);
+ 		sock_release(new_s);
+-		new_cep->sock = NULL;
+ 	}
+ 	siw_dbg_cep(cep, "error %d\n", rv);
+ }
+@@ -1157,6 +1158,8 @@ static void siw_cm_work_handler(struct work_struct *w)
+ 		WARN(1, "Undefined CM work type: %d\n", work->type);
+ 	}
+ 	if (release_cep) {
++		struct socket *s = cep->sock;
 +
- /*
-  * siw_qp_cm_drop()
-  *
-@@ -427,14 +436,7 @@ void siw_qp_cm_drop(struct siw_qp *qp, int schedule)
- 		}
- 		cep->state = SIW_EPSTATE_CLOSED;
- 
--		if (cep->sock) {
--			siw_socket_disassoc(cep->sock);
--			/*
--			 * Immediately close socket
--			 */
--			sock_release(cep->sock);
--			cep->sock = NULL;
--		}
-+		siw_destroy_cep_sock(cep);
- 		if (cep->qp) {
+ 		siw_dbg_cep(cep,
+ 			    "release: timer=%s, QP[%u]\n",
+ 			    cep->mpa_timer ? "y" : "n",
+@@ -1182,10 +1185,9 @@ static void siw_cm_work_handler(struct work_struct *w)
  			cep->qp = NULL;
  			siw_qp_put(qp);
-@@ -1698,9 +1700,7 @@ int siw_accept(struct iw_cm_id *id, struct iw_cm_conn_param *params)
- error_unlock:
- 	up_write(&qp->state_lock);
- error:
--	siw_socket_disassoc(cep->sock);
--	sock_release(cep->sock);
--	cep->sock = NULL;
-+	siw_destroy_cep_sock(cep);
+ 		}
+-		if (cep->sock) {
+-			siw_socket_disassoc(cep->sock);
+-			sock_release(cep->sock);
+-			cep->sock = NULL;
++		if (s) {
++			siw_socket_disassoc(s);
++			sock_release(s);
+ 		}
+ 		if (cep->cm_id) {
+ 			siw_free_cm_id(cep);
+@@ -1513,7 +1515,6 @@ int siw_connect(struct iw_cm_id *id, struct iw_cm_conn_param *params)
+ 	if (cep) {
+ 		siw_socket_disassoc(s);
+ 		sock_release(s);
+-		cep->sock = NULL;
  
- 	cep->state = SIW_EPSTATE_CLOSED;
+ 		cep->qp = NULL;
  
-@@ -1745,9 +1745,7 @@ int siw_reject(struct iw_cm_id *id, const void *pdata, u8 pd_len)
- 		cep->mpa.hdr.params.bits |= MPA_RR_FLAG_REJECT; /* reject */
- 		siw_send_mpareqrep(cep, pdata, pd_len);
- 	}
--	siw_socket_disassoc(cep->sock);
--	sock_release(cep->sock);
--	cep->sock = NULL;
-+	siw_destroy_cep_sock(cep);
+@@ -1877,7 +1878,6 @@ int siw_create_listen(struct iw_cm_id *id, int backlog)
+ 		siw_cep_set_inuse(cep);
  
- 	cep->state = SIW_EPSTATE_CLOSED;
+ 		siw_free_cm_id(cep);
+-		cep->sock = NULL;
+ 		siw_socket_disassoc(s);
+ 		cep->state = SIW_EPSTATE_CLOSED;
  
+@@ -1898,6 +1898,7 @@ static void siw_drop_listeners(struct iw_cm_id *id)
+ 	 */
+ 	list_for_each_safe(p, tmp, (struct list_head *)id->provider_data) {
+ 		struct siw_cep *cep = list_entry(p, struct siw_cep, listenq);
++		struct socket *s = cep->sock;
+ 
+ 		list_del(p);
+ 
+@@ -1906,10 +1907,9 @@ static void siw_drop_listeners(struct iw_cm_id *id)
+ 		siw_cep_set_inuse(cep);
+ 
+ 		siw_free_cm_id(cep);
+-		if (cep->sock) {
+-			siw_socket_disassoc(cep->sock);
+-			sock_release(cep->sock);
+-			cep->sock = NULL;
++		if (s) {
++			siw_socket_disassoc(s);
++			sock_release(s);
+ 		}
+ 		cep->state = SIW_EPSTATE_CLOSED;
+ 		siw_cep_set_free_and_put(cep);
 -- 
 2.53.0
 
