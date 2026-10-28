@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793210984;
-	b=JZQLBJh7VoIlwuoKbIqG2BOFiizD5yL/bO7j6DtJGF8CKYQP63J8kDhF+Ke9qgGctZN3
-	 /Le8LElrS0Y+LDEQeBS67tc1YFtD9Vc2hgZaa7eJK2UCdi2J75xQokTvAmY6HD8E+wHgM
-	 Md8qWufulT2KSDd0oDumZqRspPM23gMYAqEkIey2AHJ16DSHDXtx7VaPeRiAFBKZ9oviG
-	 s61NQzJd1BblfizNGYBcdpQToXFErt+PvlZUzXIiK7KmQ+o+Gzud5KZvz8EOq2gwDqbCU
-	 h9EygIK6Y1GC/BGMIyihODN9FEaCZhl+CjBbcc3bMYlDFvpbh8xihIBTCjSNQ4bmjmA==
+	t=1793210987;
+	b=BcGvNYkgAtkZtoveQ36bHpHyAzfJWfcFNQIKtag+cUAtaeLDp4mr1aKqkmCgXo7dRVCn
+	 QTxWU77mOc5YA3PHrXat6ryn784wHjyrmhzjod8oEjk9+fhPncXWwmkBLQ1NyukwD+g/Y
+	 UjIUA2az8IktjDT+oBU72qvlLv7jWiYB5zQqx4BcGSvaYkKPQsFRZJqGl5g5TxvIwjWlJ
+	 fdatpiAt6k2pu34xubN0fmm6cy3vYbp2UTvP+d7J8lZ/lx5hHM7u/T7SbqU/kmApDCW5E
+	 G7OnFcD4KHg5BsCgNwsLYaXSTscopAXjKbUiARZmDg2fpX9UKsWFaFfozFmyguiyyFg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793210984;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793210987;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=d6f3aiG9bG80rueTJkbIrC0drBwkFtqyxsLWLVaYzVg=;
-	b=1GhyxdpVbG6lPqlfdaMt6kj6NXbPU2idbF53sMxqHoEnj4R9L+OVzkHQVooWKXYyEXYg
-	 FupGHAJNnzRemjkOVMfkqRa5pgxzhLwz9JiDHdNjNBVkoSAo3eHTQ2sTwN2VBx90t4YC+
-	 HehDXA6eTP0o/Unjwop45R3PoJ1pB5XJbXDaI8EAtx8cmNSI31sYOBPWXcXPBr7gtZCjJ
-	 pq1BgV9Ffn/aifGGJAnwVHUKcbX4LiwC225ZaYeGHNYwQ6zoH7c0MstM0MaoB7H8EpNtm
-	 PjNazGeeFB9TZ0tDdaYVOc5tfIG0QZBoTvwy7WgbVCb7vMi2+/F105kvLy8xmausTVg==
+	bh=R0QqxZl0S9ALZymRycoWmo7tgUeN9xFSeM+w02Kc9bg=;
+	b=iGhJnHllVazVnvMFJzxXANn/pEnBESEN/UuSoAhokIwPgJr4KUfNzri9mSHLkQJgVtVo
+	 tuD8tg+dKRGDpSik5tl2bJOEXx4N2rvV6QtvSxw2nqcV9Nn2oOcRqsC5LbiXPuaVvfkVA
+	 lE5V26NunnZuDGhUwyhoXiicOCGS7a5Rz7YGwlSIhVpMzepLeOGG++cBemIMpDKRbH0sG
+	 rJY65morKVCC1W+bC6hcGqMDtvO3+Al5pdNH2t0mAXgyeqB/KtUG6Xj1s7UAWFWR3kpie
+	 C5xx9J8mlSwq82yvS4h9XCVipAD5Sm1T8Hr+f2rAQA8x6g98RCd8rYbvjHvmYll0q9w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GqjEBbag;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bdGuF7H+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1FD6606A31E;
-	Wed, 28 Oct 2026 18:09:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B57A60A2611;
+	Wed, 28 Oct 2026 18:09:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GqjEBbag
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3E3D1F031E6;
-	Wed, 28 Oct 2026 18:09:43 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bdGuF7H+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC6FE1F01829;
+	Wed, 28 Oct 2026 18:09:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793210984;
-	bh=d6f3aiG9bG80rueTJkbIrC0drBwkFtqyxsLWLVaYzVg=;
+	s=korg; t=1793210987;
+	bh=R0QqxZl0S9ALZymRycoWmo7tgUeN9xFSeM+w02Kc9bg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GqjEBbagLDzXANf+8ebvqw4OazBOqVAcDT7enoycTFu27DSxmb85HjkWsziQz+jmX
-	 rxGirhqBxn/RJaBOTopDbDItshyvKAf8iQ8tHbElbHtXcpUqZYXTspdAE9JDyimmUX
-	 aa4ixqAcnsLSpSRah39gMgyeoiyiOxVzeaFDEFb4=
+	b=bdGuF7H+wkqryE0UN/x4CWKpOv9gTMIAV898/HMXwtwURyPAHsl8d5dmFpBaKCG+h
+	 KGBJONTbvtAnuJDWzpKoHezdoa6chQIejMcvlEIwl/v+uWdkKJ3x6K24Gp2uzpAskQ
+	 mLyRRxohVMF2AlXZTcY3UDDXTP9fsGEzZnyOVZU8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot@kernel.org,
-	Arnd Bergmann <arnd@arndb.de>,
-	Johan Hovold <johan@kernel.org>,
-	Jiri Slaby <jirislaby@kernel.org>,
-	stable@kernel.org
-Subject: [PATCH 5.15 216/571] tty: amiserial: fix broken TIOCMIWAIT
-Date: Wed, 28 Oct 2026 17:56:03 +0100
-Message-ID: <20261028170013.127336554@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Joshua Rogers <linux@joshua.hu>,
+	Jiri Slaby <jirislaby@kernel.org>
+Subject: [PATCH 5.15 217/571] tty: vcc: zero-initialize control packet in vcc_send_ctl()
+Date: Wed, 28 Oct 2026 17:56:04 +0100
+Message-ID: <20261028170013.152013360@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -70,54 +68,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Joshua Rogers <linux@joshua.hu>
 
-commit 615f35fd5aee169cc4881a8594f2fa234a4d0bb8 upstream.
+commit 1f71f565e3585da1098ff19ca3c24687dab59185 upstream.
 
-A change replacing interruptible_sleep_on() inadvertently broke the
-TIOCMIWAIT implementation which now immediately returns -EIO (unless
-there is a racing modem status update).
+The stack-allocated struct vio_vcc pkt was partially initialized,
+leaving the tag.stype_env field uninitialized before being sent via
+ldc_write(), potentially leaking kernel stack data to the LDC peer.
 
-Replace the old hangup (and signal) detection with a check for the
-TTY_IO_ERROR flag which is set on hangup.
-
-Fixes: 591cee0a3563 ("tty/amiserial: avoid interruptible_sleep_on")
-Reported-by: sashiko-bot@kernel.org
-Link: https://lore.kernel.org/20260910132029.D80801F00898@smtp.kernel.org
-Cc: stable@kernel.org	# 3.14
-Cc: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Johan Hovold <johan@kernel.org>
+Assisted-by: AISLE:Snapshot
+Cc: stable <stable@kernel.org>
+Signed-off-by: Joshua Rogers <linux@joshua.hu>
 Reviewed-by: Jiri Slaby <jirislaby@kernel.org>
-Link: https://patch.msgid.link/20260911090132.723531-1-johan@kernel.org
+Link: https://patch.msgid.link/20260803-aisle-tty-vcc-v2-1-a50bc9b15193@linuxfoundation.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/amiserial.c |    9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ drivers/tty/vcc.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/tty/amiserial.c
-+++ b/drivers/tty/amiserial.c
-@@ -1144,11 +1144,6 @@ static int rs_ioctl(struct tty_struct *t
- 				local_irq_save(flags);
- 				cnow = info->icount; /* atomic copy */
- 				local_irq_restore(flags);
--				if (cnow.rng == cprev.rng && cnow.dsr == cprev.dsr && 
--				    cnow.dcd == cprev.dcd && cnow.cts == cprev.cts) {
--					ret = -EIO; /* no change => error */
--					break;
--				}
- 				if ( ((arg & TIOCM_RNG) && (cnow.rng != cprev.rng)) ||
- 				     ((arg & TIOCM_DSR) && (cnow.dsr != cprev.dsr)) ||
- 				     ((arg & TIOCM_CD)  && (cnow.dcd != cprev.dcd)) ||
-@@ -1156,6 +1151,10 @@ static int rs_ioctl(struct tty_struct *t
- 					ret = 0;
- 					break;
- 				}
-+				if (tty_io_error(tty)) {
-+					ret = -EIO;
-+					break;
-+				}
- 				schedule();
- 				/* see if a signal did it */
- 				if (signal_pending(current)) {
+--- a/drivers/tty/vcc.c
++++ b/drivers/tty/vcc.c
+@@ -491,7 +491,7 @@ static ssize_t domain_show(struct device
+ 
+ static int vcc_send_ctl(struct vcc_port *port, int ctl)
+ {
+-	struct vio_vcc pkt;
++	struct vio_vcc pkt = {};
+ 	int rv;
+ 
+ 	pkt.tag.type = VIO_TYPE_CTRL;
 
 
