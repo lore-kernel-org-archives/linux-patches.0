@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214097;
-	b=M1tjD2mq0Uz2AsFSliQrioHmBJsemwsWDhv3xm9ubW6yIEjuDQSsCRjRR4iBndzCCVfL
-	 nlVhkyA0swJ9yGf8TIxFW4N33mSUD1UENiWjFxAzZ0WRwJuGjqV8IEFBORB81wyBxJB8w
-	 ZfkcAkYS47A/pc1h8P/AeqxMLDUD4CTai4NK9qgyo9QeOkoqxxv4w2rho4FG8U5128Sk2
-	 uosgJBgvVuExNkyuNPGBhGgAroPX1yxeNRLUWutFTry76hN6jTRta+j00WdmXHdeeSKuc
-	 YrhOatDDIzCe8ZFI74a+uV/5F+sSZbp856qTXIw2P3Uy8R4CyHYVln3aHEi4rxOcMFw==
+	t=1793214099;
+	b=QyWCgrf70Pv4QUmr4MC2LpGTHsWf85NVAKatkZtx36m7N0L42VeW7gefXTmQVEt0g3ZK
+	 QVFEB7XcxAocF0zbxltaE1PP5u1h/tRZekNkhqazsu6raCqbBDX+9Ea+c4H3kdULBfPmS
+	 SM2uJ09FKxapvTy9xiU5sHzyJsALt7UCnPpbtrS6tUxG2iCwXB2QwkWmH0oy0z/F7hpVw
+	 +Cw4NxPam/ZlcaCu931nlb0p/ubpio4OOHh1AKWLiJKldGB9p+91Gs+dfk3in1qK2oCoz
+	 BfNMJcdk6eXPyzh6bUfoSTTLUizW5TrA5PLte0u+SfwxFltYh+8NwS25SbzJ0sXS1gw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214097;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214099;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=5m7Ti3QPkPlUSJ9Km0dAazQe2KN3OUSG/b2ww+5ZVO0=;
-	b=vNVoj26Hkrf7RYIDAagWUuSCXdJBVDa+F0XSatZpqj1K7Qsv7GIDyll4vjKelTzXWSj2
-	 dTKO8Za0QK/LQHbuejh8m63nsdi6l5ELILSjji903FyXgjaFo1qG6oo+xdxwBVciKLiZU
-	 OzqsxU/LD+99z0I0Xg8lgcZ8RY0poMWIN/1hZlVGQ/ly2QjS4Bh/pg5So6HZHqK6ye0da
-	 1+Ddsqyj1BurMNFf1om5kYW/XdOYGcq8+7MJOH7CZ6Q3h+XbD75RfeKAQ9teg5CBn2s2q
-	 XrP1vsl+Wklx1NooGVoqT2s5pbmgFt0rBDXuf7ntQT9Hx0WyIAVLDgGzapJv6CuC4Ow==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=ldJUSmWmTO+l02wayCpITRmQgaGDr7M2fI5MlF7ywe0=;
+	b=hW2WCnIPN360scK3d9IjnSX81Xfysql6gzprcfwsOuSah2nYG4aPNYmhowQK5zHO2i8Q
+	 aNy3p3FwzxZJhEAkJTw2Ar+Bg5PTUN5uhj6pD1E0lEqhcQwd+CriUObjGZ6QwRroot9PL
+	 IBfL8PHBnqFQ4k4nJRBUXwA7hhtk9d4Lc/muF0O2Q5ZfLliXw3e+gCLaGUjaYKRIg20TB
+	 GBRkycCuoc4VACvLrAmBR9CRDWUIO36nyAvyANfZ04ktEq3WjBIyvZZK8f6yq6oht/gRL
+	 lqSe+QcehatnzvOVoq3IVP47BaDxyofF9AY5EFPqT+Pfn6h6447uO8faNNE2qVF6ZgA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S3qEQL0b;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qfZwPdIs;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4288606A31A;
-	Wed, 28 Oct 2026 19:01:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39EAE606A31A;
+	Wed, 28 Oct 2026 19:01:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S3qEQL0b
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9F6E1F01825;
-	Wed, 28 Oct 2026 19:01:35 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qfZwPdIs
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 895B41F01825;
+	Wed, 28 Oct 2026 19:01:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214096;
-	bh=5m7Ti3QPkPlUSJ9Km0dAazQe2KN3OUSG/b2ww+5ZVO0=;
+	s=korg; t=1793214099;
+	bh=ldJUSmWmTO+l02wayCpITRmQgaGDr7M2fI5MlF7ywe0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=S3qEQL0btVnsrDMhALMTcyO8+vQcE6Ume6QEHcoCibsyQKV3X2M1X31Rq1Pg2/tPz
-	 rrxpDZHh5JiegH52Dy7oN/hGYmDicQckJe9bs20ElNhVFrcnjxhXKj42NXd/AwDWwt
-	 +rvyyyBYkOCcrDo3YXx1MB5FWPwKI6joKISRgbfc=
+	b=qfZwPdIsn5LvJrRqXQbUTCJ8wpCh/Xgjs5QpCfJmC5xTPxJzLyuAZ3woBBDhOZwCI
+	 i0H9DVF+C7Aso7ccNVNsm0AITaGh4/waBXXagLurF4yhdDX3ezGW1AQsSnThemyGCT
+	 DLuG/83bjsoL+HoBR2J6Yl9caW5TRctMsO6rwzP4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
-	Kory Maincent <kory.maincent@bootlin.com>,
-	=?UTF-8?q?Niklas=20S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Iain Lane <iain@orangesquash.org.uk>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0738/1887] net: ravb: Fix missing rtnl lock in suspend/resume path
-Date: Wed, 28 Oct 2026 17:47:14 +0100
-Message-ID: <20261028170516.241189706@linuxfoundation.org>
+Subject: [PATCH 6.1 0739/1887] x86/PCI: Avoid PME from D3hot/D3cold for AMD Rembrandt and Phoenix USB4
+Date: Wed, 28 Oct 2026 17:47:15 +0100
+Message-ID: <20261028170516.263401886@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -64,110 +63,129 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kory Maincent <kory.maincent@bootlin.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit 2c2ebb2b49573e5f8726112ad06b1dffc3c9ea03 ]
+[ Upstream commit 7d08f21f8c6307cb05cabb8d86e90ff6ccba57e9 ]
 
-Fix the suspend/resume path by ensuring the rtnl lock is held where
-required. Calls to ravb_open, ravb_close and wol operations must be
-performed under the rtnl lock to prevent conflicts with ongoing ndo
-operations.
+Iain reports that USB devices can't be used to wake a Lenovo Z13 from
+suspend.  This occurs because on some AMD platforms, even though the Root
+Ports advertise PME_Support for D3hot and D3cold, wakeup events from
+devices on a USB4 controller don't result in wakeup interrupts from the
+Root Port when amd-pmc has put the platform in a hardware sleep state.
 
-Without this fix, the following warning is triggered:
-[   39.032969] =============================
-[   39.032983] WARNING: suspicious RCU usage
-[   39.033019] -----------------------------
-[   39.033033] drivers/net/phy/phy_device.c:2004 suspicious
-rcu_dereference_protected() usage!
-...
-[   39.033597] stack backtrace:
-[   39.033613] CPU: 0 UID: 0 PID: 174 Comm: python3 Not tainted
-6.13.0-rc7-next-20250116-arm64-renesas-00002-g35245dfdc62c #7
-[   39.033623] Hardware name: Renesas SMARC EVK version 2 based on
-r9a08g045s33 (DT)
-[   39.033628] Call trace:
-[   39.033633]  show_stack+0x14/0x1c (C)
-[   39.033652]  dump_stack_lvl+0xb4/0xc4
-[   39.033664]  dump_stack+0x14/0x1c
-[   39.033671]  lockdep_rcu_suspicious+0x16c/0x22c
-[   39.033682]  phy_detach+0x160/0x190
-[   39.033694]  phy_disconnect+0x40/0x54
-[   39.033703]  ravb_close+0x6c/0x1cc
-[   39.033714]  ravb_suspend+0x48/0x120
-[   39.033721]  dpm_run_callback+0x4c/0x14c
-[   39.033731]  device_suspend+0x11c/0x4dc
-[   39.033740]  dpm_suspend+0xdc/0x214
-[   39.033748]  dpm_suspend_start+0x48/0x60
-[   39.033758]  suspend_devices_and_enter+0x124/0x574
-[   39.033769]  pm_suspend+0x1ac/0x274
-[   39.033778]  state_store+0x88/0x124
-[   39.033788]  kobj_attr_store+0x14/0x24
-[   39.033798]  sysfs_kf_write+0x48/0x6c
-[   39.033808]  kernfs_fop_write_iter+0x118/0x1a8
-[   39.033817]  vfs_write+0x27c/0x378
-[   39.033825]  ksys_write+0x64/0xf4
-[   39.033833]  __arm64_sys_write+0x18/0x20
-[   39.033841]  invoke_syscall+0x44/0x104
-[   39.033852]  el0_svc_common.constprop.0+0xb4/0xd4
-[   39.033862]  do_el0_svc+0x18/0x20
-[   39.033870]  el0_svc+0x3c/0xf0
-[   39.033880]  el0t_64_sync_handler+0xc0/0xc4
-[   39.033888]  el0t_64_sync+0x154/0x158
-[   39.041274] ravb 11c30000.ethernet eth0: Link is Down
+If amd-pmc will be involved in the suspend, remove D3hot and D3cold from
+the PME_Support mask of Root Ports above USB4 controllers so we avoid those
+states if we need wakeups.
 
-Reported-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
-Closes: https://lore.kernel.org/netdev/4c6419d8-c06b-495c-b987-d66c2e1ff848@tuxon.dev/
-Fixes: 0184165b2f42 ("ravb: add sleep PM suspend/resume support")
-Signed-off-by: Kory Maincent <kory.maincent@bootlin.com>
-Tested-by: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Restore D3 support at resume so that it can be used by runtime suspend.
+
+This affects both AMD Rembrandt and Phoenix SoCs.
+
+"pm_suspend_target_state == PM_SUSPEND_ON" means we're doing runtime
+suspend, and amd-pmc will not be involved.  In that case PMEs work as
+advertised in D3hot/D3cold, so we don't need to do anything.
+
+Note that amd-pmc is technically optional, and there's no need for this
+quirk if it's not present, but we assume it's always present because power
+consumption is so high without it.
+
+Fixes: 9d26d3a8f1b0 ("PCI: Put PCIe ports into D3 during suspend")
+Link: https://lore.kernel.org/r/20231004144959.158840-1-mario.limonciello@amd.com
+Reported-by: Iain Lane <iain@orangesquash.org.uk>
+Closes: https://forums.lenovo.com/t5/Ubuntu/Z13-can-t-resume-from-suspend-with-external-USB-keyboard/m-p/5217121
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+[bhelgaas: commit log, move to arch/x86/pci/fixup.c, add #includes]
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Cc: stable@vger.kernel.org
+Stable-dep-of: b1049f2d6869 ("PCI: Avoid putting some root ports into D3 on TUXEDO Sirius Gen1")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/renesas/ravb_main.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ arch/x86/pci/fixup.c | 59 ++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 59 insertions(+)
 
-diff --git a/drivers/net/ethernet/renesas/ravb_main.c b/drivers/net/ethernet/renesas/ravb_main.c
-index dcacd691b2efd..40b82f00e6e55 100644
---- a/drivers/net/ethernet/renesas/ravb_main.c
-+++ b/drivers/net/ethernet/renesas/ravb_main.c
-@@ -3028,10 +3028,12 @@ static int __maybe_unused ravb_suspend(struct device *dev)
+diff --git a/arch/x86/pci/fixup.c b/arch/x86/pci/fixup.c
+index 6ea3a64764b9a..0e9f26e236d48 100644
+--- a/arch/x86/pci/fixup.c
++++ b/arch/x86/pci/fixup.c
+@@ -3,9 +3,11 @@
+  * Exceptions for specific devices. Usually work-arounds for fatal design flaws.
+  */
  
- 	netif_device_detach(ndev);
++#include <linux/bitfield.h>
+ #include <linux/delay.h>
+ #include <linux/dmi.h>
+ #include <linux/pci.h>
++#include <linux/suspend.h>
+ #include <linux/vgaarb.h>
+ #include <asm/amd_nb.h>
+ #include <asm/hpet.h>
+@@ -944,3 +946,60 @@ DECLARE_PCI_FIXUP_RESUME(PCI_VENDOR_ID_AMD, 0x1122,
+ 			quirk_amd_nbio_7_11_disable_enhanced_atomic);
  
-+	rtnl_lock();
- 	if (priv->wol_enabled)
- 		ret = ravb_wol_setup(ndev);
- 	else
- 		ret = ravb_close(ndev);
-+	rtnl_unlock();
- 
- 	if (priv->info->ccc_gac)
- 		ravb_ptp_stop(ndev);
-@@ -3083,12 +3085,16 @@ static int __maybe_unused ravb_resume(struct device *dev)
- 		ravb_ptp_init(ndev, priv->pdev);
- 
- 	if (netif_running(ndev)) {
-+		rtnl_lock();
- 		if (priv->wol_enabled) {
- 			ret = ravb_wol_restore(ndev);
--			if (ret)
-+			if (ret) {
-+				rtnl_unlock();
- 				return ret;
-+			}
- 		}
- 		ret = ravb_open(ndev);
-+		rtnl_unlock();
- 		if (ret < 0)
- 			return ret;
- 		ravb_set_rx_mode(ndev);
+ #endif
++
++#ifdef CONFIG_SUSPEND
++/*
++ * Root Ports on some AMD SoCs advertise PME_Support for D3hot and D3cold, but
++ * if the SoC is put into a hardware sleep state by the amd-pmc driver, the
++ * Root Ports don't generate wakeup interrupts for USB devices.
++ *
++ * When suspending, remove D3hot and D3cold from the PME_Support advertised
++ * by the Root Port so we don't use those states if we're expecting wakeup
++ * interrupts.  Restore the advertised PME_Support when resuming.
++ */
++static void amd_rp_pme_suspend(struct pci_dev *dev)
++{
++	struct pci_dev *rp;
++
++	/*
++	 * PM_SUSPEND_ON means we're doing runtime suspend, which means
++	 * amd-pmc will not be involved so PMEs during D3 work as advertised.
++	 *
++	 * The PMEs *do* work if amd-pmc doesn't put the SoC in the hardware
++	 * sleep state, but we assume amd-pmc is always present.
++	 */
++	if (pm_suspend_target_state == PM_SUSPEND_ON)
++		return;
++
++	rp = pcie_find_root_port(dev);
++	if (!rp->pm_cap)
++		return;
++
++	rp->pme_support &= ~((PCI_PM_CAP_PME_D3hot|PCI_PM_CAP_PME_D3cold) >>
++				    PCI_PM_CAP_PME_SHIFT);
++	dev_info_once(&rp->dev, "quirk: disabling D3cold for suspend\n");
++}
++
++static void amd_rp_pme_resume(struct pci_dev *dev)
++{
++	struct pci_dev *rp;
++	u16 pmc;
++
++	rp = pcie_find_root_port(dev);
++	if (!rp->pm_cap)
++		return;
++
++	pci_read_config_word(rp, rp->pm_cap + PCI_PM_PMC, &pmc);
++	rp->pme_support = FIELD_GET(PCI_PM_CAP_PME_MASK, pmc);
++}
++/* Rembrandt (yellow_carp) */
++DECLARE_PCI_FIXUP_SUSPEND(PCI_VENDOR_ID_AMD, 0x162e, amd_rp_pme_suspend);
++DECLARE_PCI_FIXUP_RESUME(PCI_VENDOR_ID_AMD, 0x162e, amd_rp_pme_resume);
++DECLARE_PCI_FIXUP_SUSPEND(PCI_VENDOR_ID_AMD, 0x162f, amd_rp_pme_suspend);
++DECLARE_PCI_FIXUP_RESUME(PCI_VENDOR_ID_AMD, 0x162f, amd_rp_pme_resume);
++/* Phoenix (pink_sardine) */
++DECLARE_PCI_FIXUP_SUSPEND(PCI_VENDOR_ID_AMD, 0x1668, amd_rp_pme_suspend);
++DECLARE_PCI_FIXUP_RESUME(PCI_VENDOR_ID_AMD, 0x1668, amd_rp_pme_resume);
++DECLARE_PCI_FIXUP_SUSPEND(PCI_VENDOR_ID_AMD, 0x1669, amd_rp_pme_suspend);
++DECLARE_PCI_FIXUP_RESUME(PCI_VENDOR_ID_AMD, 0x1669, amd_rp_pme_resume);
++#endif /* CONFIG_SUSPEND */
 -- 
 2.53.0
 
