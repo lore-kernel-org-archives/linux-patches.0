@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214241;
-	b=iWGgKEMjDBjC740tQJ6BP+VZTJatmKpNorwhkCLshFZmHl+06k3dXHVLcffdM9qTuAq/
-	 6/KDEE6QPR8dmnEmMwpY/wy2BLczKi+pB+qx8J9Bidc2MY59xiDD2y5AY1oUAdm+/LQpD
-	 eMjTywaYNPDKh28IhUjAS/Arx9LdvU4jT2X+Xm8ooPMSWOS89SOZgFk9kD6Go6sSGdxsH
-	 0N4vIYnr5JjCZKQM0t1pzVGQmseeY8AzkBqtEdEsEU0oNlptUWA+orFdNoqT3hcBj8nig
-	 mkUKs/8nTrizWQVH00Y3aBDdNsAPT3ynrC0r/n5F8spRkB95qdJYLeuqlMcokba0caA==
+	t=1793214244;
+	b=sRTOz6Z+cnrD/d6r6SwQBy/pkVztmVxAH0iV2X3oOP9ZLBLKsc4oo+mwWYQD3dNViSQE
+	 qXndtYn1ukZ6cNHt4kLgvjePFj9GOlHjbyisSn5tZ81pdr4GybuTYFysUjwL2iuyIf3dB
+	 Ktm3gQXhM1W3Fz0VBY3Re/P4I0dNv4uTNJEX0L751svz2h895zN9waVQwSNgKLJxuJeoy
+	 7t7SyCLygHD008y80SigKYMmJnwTHdb3OA8wexnBDnq/3GJiQ4jgoq+NYoyucXuuGEmzc
+	 79GlpjUEKRK0RirqKFSzzew9KtMGK9b2Am27nM7uQdNOLPifmv1A6Nbjxq+Fgt3tP7w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214241;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214244;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=J4N8/FTWEPY56em3nN7OUFKNrDVt1Rd+olO70cEr82E=;
-	b=u3oKALbrITamO0sU6mSeRPgy37NC7jS2znOA6eIwxWs96l4+A4KFkf3Ibv8Z0+O7wSqC
-	 LrA3Rl8iimbbALt8IO6TuExuDjlC8MOsRlk+ZB3ZoTC0moOEVgYm5En8JqM5MjoTNmtwd
-	 Ok8rvXUduQgSjx1Q21mJLsMxnKHqGi8YaZts/rwC9C+GNZl+zaMFArFCz2O+qdlr7MW11
-	 GWF0GSfsGkKZ3++hPhTc4/H1MxqsVRGWjW/vOcclYtVM1dYjhmj0oUr08HkqBVkK6q7QJ
-	 O6czPv8lxwSNwe824pYQZz2K16AnDuqn4GMqRiqAXLiC29LKsl/ugw7CpF330dMe9OA==
+	bh=Qf3xBflMxV0t1bQfMfsjSpLiQuZymbet7qNNh4j20uE=;
+	b=Mx4c3TcEho/MezbRRO3Zw+Zhmo7lZxiDYd28RvUKiCfDorBHHQV0xvuvth7qx3Un1WcJ
+	 vd04RUjjyKKRcVk8nA9yEo7JfRU0bT2MJeDT8LG650274L1osIKtVB6fsRv6vMGvnObdo
+	 Yri+9ba2Y1WECz+J9Zo4TtDsSswbzip2qaNO/Fq3qSVIjTVd8bYsziqM2YVnsKhXI6ylt
+	 y6Tdi5gDSVAPE77TXkC+7rFQJ4lk2rh+WpOrfFnGCX4jLfagMqDYd33S+GrPuD8dgwxqJ
+	 +F/wxFkiUk/6VTNDdZTJC0KLGsamxWfeiIdi+62BKexvISemcNcGuf3jqp2RZFqLorw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bA4+hM1S;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yn2Juc39;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2692D60A262C;
-	Wed, 28 Oct 2026 19:04:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E984860A380E;
+	Wed, 28 Oct 2026 19:04:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bA4+hM1S
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A03791F031E1;
-	Wed, 28 Oct 2026 19:04:00 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yn2Juc39
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E8591F031E2;
+	Wed, 28 Oct 2026 19:04:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214241;
-	bh=J4N8/FTWEPY56em3nN7OUFKNrDVt1Rd+olO70cEr82E=;
+	s=korg; t=1793214243;
+	bh=Qf3xBflMxV0t1bQfMfsjSpLiQuZymbet7qNNh4j20uE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bA4+hM1SIIT03DiIec3IQmWy9fvcxryD2eHCmIyDmNrCrmdCfkIhuWvzcy8mAH4oY
-	 ijifjkX+G+SUsyxixutf9wQZ8Lz4gCjDPeMOYtSzBGSjYUeGhCr5HwTxf1mu570nSp
-	 EY3FBs0fnDCZCAaSFpLltkxfKxVb+SQ2e1eeqGpY=
+	b=yn2Juc39n+JMVQYR9+zM/1lrMg8gub5ZiWDXuIdmZ47ZCB2IKOquzYZLJIXs5qAJG
+	 /wdHZnSjmc9aRl9MFY3MGJUODz/i3AIjR0R4cK5uFWwa4wDfFYwr8JqApRX+hDTsxX
+	 m6H+r2T3+UgOyNdB6TRNDhJWqC4EJTHuLOFC0ukE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Eric Auger <eauger@redhat.com>,
+	Hongyu Ning <hongyu.ning@linux.intel.com>,
+	Eric Auger <eric.auger@redhat.com>,
+	Jason Wang <jasowang@redhat.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0789/1887] wifi: iwlwifi: fix debug actions order
-Date: Wed, 28 Oct 2026 17:48:05 +0100
-Message-ID: <20261028170517.389510932@linuxfoundation.org>
+Subject: [PATCH 6.1 0790/1887] virtio: break and reset virtio devices on device_shutdown()
+Date: Wed, 28 Oct 2026 17:48:06 +0100
+Message-ID: <20261028170517.411226577@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,72 +71,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Michael S. Tsirkin <mst@redhat.com>
 
-[ Upstream commit eb29b4ffafb20281624dcd2cbb768d6f30edf600 ]
+[ Upstream commit 8bd2fa086a04886798b505f28db4002525895203 ]
 
-The order of actions taken for debug was implemented incorrectly.
-Now we implemented the dump split and do the FW reset only in the
-middle of the dump (rather than the FW killing itself on error.)
-As a result, some of the actions taken when applying the config
-will now crash the device, so we need to fix the order.
+Hongyu reported a hang on kexec in a VM. QEMU reported invalid memory
+accesses during the hang.
 
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20250308231427.6de7fa8e63ed.I40632c48e2a67a8aca05def572a934b88ce7934b@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+	Invalid read at addr 0x102877002, size 2, region '(null)', reason: rejected
+	Invalid write at addr 0x102877A44, size 2, region '(null)', reason: rejected
+	...
+
+It was traced down to virtio-console. Kexec works fine if virtio-console
+is not in use.
+
+The issue is that virtio-console continues to write to the MMIO even after
+underlying virtio-pci device is reset.
+
+Additionally, Eric noticed that IOMMUs are reset before devices, if
+devices are not reset on shutdown they continue to poke at guest memory
+and get errors from the IOMMU. Some devices get wedged then.
+
+The problem can be solved by breaking all virtio devices on virtio
+bus shutdown, then resetting them.
+
+Reported-by: Eric Auger <eauger@redhat.com>
+Reported-by: Hongyu Ning <hongyu.ning@linux.intel.com>
+Message-ID: <c1dbc7dbad9b445245d3348f19e6742b0be07347.1740094946.git.mst@redhat.com>
+Tested-by: Eric Auger <eric.auger@redhat.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/iwl-dbg-tlv.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/virtio/virtio.c | 29 +++++++++++++++++++++++++++++
+ 1 file changed, 29 insertions(+)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/iwl-dbg-tlv.c b/drivers/net/wireless/intel/iwlwifi/iwl-dbg-tlv.c
-index b7165082bdd80..a14a4437a0940 100644
---- a/drivers/net/wireless/intel/iwlwifi/iwl-dbg-tlv.c
-+++ b/drivers/net/wireless/intel/iwlwifi/iwl-dbg-tlv.c
-@@ -1,6 +1,6 @@
- // SPDX-License-Identifier: GPL-2.0 OR BSD-3-Clause
- /*
-- * Copyright (C) 2018-2023 Intel Corporation
-+ * Copyright (C) 2018-2025 Intel Corporation
-  */
- #include <linux/firmware.h>
- #include "iwl-drv.h"
-@@ -1361,15 +1361,15 @@ void _iwl_dbg_tlv_time_point(struct iwl_fw_runtime *fwrt,
- 	switch (tp_id) {
- 	case IWL_FW_INI_TIME_POINT_EARLY:
- 		iwl_dbg_tlv_init_cfg(fwrt);
--		iwl_dbg_tlv_apply_config(fwrt, conf_list);
- 		iwl_dbg_tlv_update_drams(fwrt);
- 		iwl_dbg_tlv_tp_trigger(fwrt, sync, trig_list, tp_data, NULL);
-+		iwl_dbg_tlv_apply_config(fwrt, conf_list);
- 		break;
- 	case IWL_FW_INI_TIME_POINT_AFTER_ALIVE:
- 		iwl_dbg_tlv_apply_buffers(fwrt);
- 		iwl_dbg_tlv_send_hcmds(fwrt, hcmd_list);
--		iwl_dbg_tlv_apply_config(fwrt, conf_list);
- 		iwl_dbg_tlv_tp_trigger(fwrt, sync, trig_list, tp_data, NULL);
-+		iwl_dbg_tlv_apply_config(fwrt, conf_list);
- 		break;
- 	case IWL_FW_INI_TIME_POINT_PERIODIC:
- 		iwl_dbg_tlv_set_periodic_trigs(fwrt);
-@@ -1379,14 +1379,14 @@ void _iwl_dbg_tlv_time_point(struct iwl_fw_runtime *fwrt,
- 	case IWL_FW_INI_TIME_POINT_MISSED_BEACONS:
- 	case IWL_FW_INI_TIME_POINT_FW_DHC_NOTIFICATION:
- 		iwl_dbg_tlv_send_hcmds(fwrt, hcmd_list);
--		iwl_dbg_tlv_apply_config(fwrt, conf_list);
- 		iwl_dbg_tlv_tp_trigger(fwrt, sync, trig_list, tp_data,
- 				       iwl_dbg_tlv_check_fw_pkt);
-+		iwl_dbg_tlv_apply_config(fwrt, conf_list);
- 		break;
- 	default:
- 		iwl_dbg_tlv_send_hcmds(fwrt, hcmd_list);
--		iwl_dbg_tlv_apply_config(fwrt, conf_list);
- 		iwl_dbg_tlv_tp_trigger(fwrt, sync, trig_list, tp_data, NULL);
-+		iwl_dbg_tlv_apply_config(fwrt, conf_list);
- 		break;
- 	}
+diff --git a/drivers/virtio/virtio.c b/drivers/virtio/virtio.c
+index 1ef094427f299..0d3481250fb98 100644
+--- a/drivers/virtio/virtio.c
++++ b/drivers/virtio/virtio.c
+@@ -340,6 +340,34 @@ static void virtio_dev_remove(struct device *_d)
+ 	of_node_put(dev->dev.of_node);
  }
+ 
++static void virtio_dev_shutdown(struct device *_d)
++{
++	struct virtio_device *dev = dev_to_virtio(_d);
++	struct virtio_driver *drv = drv_to_virtio(dev->dev.driver);
++
++	/*
++	 * Stop accesses to or from the device.
++	 * We only need to do it if there's a driver - no accesses otherwise.
++	 */
++	if (!drv)
++		return;
++
++	/*
++	 * Some devices get wedged if you kick them after they are
++	 * reset. Mark all vqs as broken to make sure we don't.
++	 */
++	virtio_break_device(dev);
++	/*
++	 * Guarantee that any callback will see vq->broken as true.
++	 */
++	virtio_synchronize_cbs(dev);
++	/*
++	 * As IOMMUs are reset on shutdown, this will block device access to memory.
++	 * Some devices get wedged if this happens, so reset to make sure it does not.
++	 */
++	dev->config->reset(dev);
++}
++
+ static struct bus_type virtio_bus = {
+ 	.name  = "virtio",
+ 	.match = virtio_dev_match,
+@@ -347,6 +375,7 @@ static struct bus_type virtio_bus = {
+ 	.uevent = virtio_uevent,
+ 	.probe = virtio_dev_probe,
+ 	.remove = virtio_dev_remove,
++	.shutdown = virtio_dev_shutdown,
+ };
+ 
+ int register_virtio_driver(struct virtio_driver *driver)
 -- 
 2.53.0
 
