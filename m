@@ -1,61 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793217080;
-	b=1HRJcBLhi65SFsMk9fGK2wUo9+JVcaO0eY7uuHwVjM2oLLkRP6E+uUGw9lNGQGZsKrsn
-	 S9Uc1hC046O8ImVd8UOp60qPOVevGm+QpIfow3PsxuQve0HVgrTLrHaUbmcCqi4xDJwLQ
-	 itqT6QhSVngcchwCqc3SWPxJGuHVMaZ2yD1bTN93yAdcRNsfdpmq65yAEaaRLOMXeJ/Ri
-	 O2B8Axlgpma/rqz31lxJsf6R40VZTktPSyP7fp44iRzOO2ojS3tKmHHC+YIHg4dsmKvZ5
-	 /ib4OqmvPNkJNt8NMQTFKVjyWq60I/8whY4qqDiXaSbmHZRO2+4aoIoq4HMl+Okm5vA==
+	t=1793217083;
+	b=oG2XPd+sJ0DGNRimIcHyNZ2zvK38hSiLiCBqz0hruyG099S1tNRgzydTp0qCl8BO0wvU
+	 PUaWa03HwzNZMIjTk7d5msfKY57cCX3M6HxxOmoGb9ag0SMMFdR0RRCRca6pX1+Q6h7yt
+	 5dPLeU3KSXhn1ag3Lz285Us9eJtFtEG5ZawT6ztblqBONMGbNqzFeO76kfKRCzd45YJG9
+	 Yp7ChQ7Os4KrkaqetxdAG0kpTP4gDxYZjAgn116FoUJAqJxwL1+aeWOVFsC1ay6D591jI
+	 ediffdcSNFi3bELlApjU2DrYjMCpVYRtDu4vgVp2UYD1XBCZmg8EaJ1VmBcTQAdvABw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793217080;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793217083;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=i6f0QeEq1H2S/vNkISekiiOHHXnBUKuLQOaQmB90gW8=;
-	b=B1Maooa+z99G3CGfPfyaHH4uWQ9Ry+W1X1jhAOM4u+NQgV7v7cFRkKURQcMD9j72OAIw
-	 Z+qy9zIsB4r9rWl+J7xB70LvzVlurHvmsnc5BeANiIllr0vkunLWF7ANQiKzVRqh/hm+a
-	 /Y/Qw05DDfIspUV9PB/td1p8/BH9PWs2MqnQR2Oy/mGsyY5xgVkdg2P4Ac/H7kz+N1LGs
-	 4VM8/pmCRRvSbQ8elleeFsx+79gIE9IkxGsK163S9T5WaXD6ZHuxLVf4lsHuRYIe4DO7O
-	 Izl83dBG1jsh8xFxVcKVLUPjvpUVI3gAztYXrVvWQlvxIYnJVZceYyumpti0ynwRkJA==
+	bh=INjtBxSpuM6FdsOIWWMsp8ewDhcpy+yBYNHvrEa6D88=;
+	b=cvhgLokbBSwhA3L1ttRSm7ECcDFvZoOjh7Jl6OoUMW+FF/5Md41o2knbKKpfnfK21hwH
+	 9JlyWmA5TVjjuGZDD4jrydcF85J8A+zASjTz5BN4cfGkw46Nmnt8NALbM3XruUfp1e9Lg
+	 b0gS51u+k+ZZ9bZPBMZQCKcQJdaV+174p7rMQNXDJPDOGKD2GqvjQZ5hgXjqnkjVbLRTT
+	 CCxKG7OdVcy6/vdaV6ipg33sUKkiwQBzALIK9LPudcGKSfr+kF9OHfYcrUsAcsmBnaNjX
+	 rO5PxGQDZpVfLs9Ox01uZ6dD0hP4jZSrxR4qhnLqL9lNi7e3LeobnnO3aUUC4eZQmbA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cEA3Knjf;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=m8IuWK6n;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0013606A31C;
-	Wed, 28 Oct 2026 19:51:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5A49606A320;
+	Wed, 28 Oct 2026 19:51:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cEA3Knjf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 292521F01825;
-	Wed, 28 Oct 2026 19:51:19 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=m8IuWK6n
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 068E51F01825;
+	Wed, 28 Oct 2026 19:51:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793217079;
-	bh=i6f0QeEq1H2S/vNkISekiiOHHXnBUKuLQOaQmB90gW8=;
+	s=korg; t=1793217082;
+	bh=INjtBxSpuM6FdsOIWWMsp8ewDhcpy+yBYNHvrEa6D88=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cEA3Knjfro/xa3uY/aqbHrDvleEL0bjiAqx5XJ0BYGiDcDil+KFVzhTMRNe4a+vjm
-	 mEkKvILMoUaI9INn62v7yeVbA7BXapoCjMZWa3DemmJjbmEFp3K7u3jvoWPt0x8yPV
-	 5FdNlbWEeQoye4M58+qFUsIDppBgT7Qj0f5LNQ64=
+	b=m8IuWK6nvNM0crtrshwnqHnsvbn5cd107cW3hpsL4kRTzikVGJMXToo4vT0Vyem3k
+	 Se5CBYqGVXKHCjN61JukAnXEAzw1Kx3gsV5yM2KIfh+WKafRsGpIOg/IpBlxp0ftKN
+	 LxIFIllDCwS0hLfC33Z3LYC8QlrifhQkwaUMKuuQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniil Stas <daniil.stas@posteo.net>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Chris Healy <cphealy@gmail.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	linux-kernel@vger.kernel.org,
-	linux-scsi@vger.kernel.org,
-	linux-ide@vger.kernel.org,
-	linux-hwmon@vger.kernel.org,
-	"Nobuhiro Iwamatsu (CIP)" <nobuhiro.iwamatsu.x90@mail.toshiba>,
+	"Dae R. Jeong" <threeearcat@gmail.com>,
+	AutonomousCodeSecurity@microsoft.com,
+	"Cen Zhang (Microsoft)" <cenzhang@linux.microsoft.com>,
+	Bradley Morgan <brads@mainlining.org>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1779/1887] hwmon: (drivetemp) Fix driver producing garbage data when SCSI errors occur
-Date: Wed, 28 Oct 2026 18:04:35 +0100
-Message-ID: <20261028170539.934442300@linuxfoundation.org>
+Subject: [PATCH 6.1 1780/1887] watch_queue: Fix note pool publication race in watch_queue_set_size()
+Date: Wed, 28 Oct 2026 18:04:36 +0100
+Message-ID: <20261028170539.958012375@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -77,70 +71,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniil Stas <daniil.stas@posteo.net>
+From: Cen Zhang (Microsoft) <cenzhang@linux.microsoft.com>
 
-commit 82163d63ae7a4c36142cd252388737205bb7e4b9 upstream.
+[ Upstream commit 5e531d62f1f8834faf7a4eed0d41105cf6570a8f ]
 
-scsi_execute_cmd() function can return both negative (linux codes) and
-positive (scsi_cmnd result field) error codes.
+There is a race between watch_queue_set_size() and post_one_notification().
+watch_queue_set_size() publishes wqueue->notes, notes_bitmap, nr_pages and
+nr_notes with plain stores, and post_one_notification() reads them with
+plain loads under a different lock, so nothing orders the four stores
+against the poster's loads: depending on the build, notes can be stored
+last (gcc 14 on x86-64 does this).  Since keyctl_watch_key() lets a watch
+attach to a queue before it is sized, post_one_notification() can already
+be running on another CPU at that moment: it reads nr_notes > 0, passes
+its bounds check, and then reads notes while it is still NULL,
+dereferencing notes[0].
 
-Currently the driver just passes error codes of scsi_execute_cmd() to
-hwmon core, which is incorrect because hwmon only checks for negative
-error codes. This leads to hwmon reporting uninitialized data to
-userspace in case of SCSI errors (for example if the disk drive was
-disconnected).
+An unprivileged user triggers this reliably by watching one of its own
+keys through a notification pipe and racing ioctl(IOC_WATCH_QUEUE_SET_SIZE)
+on that pipe against keyctl(KEYCTL_SETPERM) on the key from another CPU,
+triggering:
 
-This patch checks scsi_execute_cmd() output and returns -EIO if it's
-error code is positive.
+  BUG: kernel NULL pointer dereference, address: 0000000000000000
+  RIP: 0010:post_one_notification.isra.0+0xa2/0x1e0
+  Call Trace:
+   __post_watch_notification+0x148/0x180
+   keyctl_setperm_key+0x119/0x130
+   do_syscall_64+0x108/0x4c0
+   entry_SYSCALL_64_after_hwframe+0x77/0x7f
+  Kernel panic - not syncing: Fatal exception in interrupt
 
-Fixes: 5b46903d8bf37 ("hwmon: Driver for disk and solid state drives with temperature sensors")
-Signed-off-by: Daniil Stas <daniil.stas@posteo.net>
-Cc: Guenter Roeck <linux@roeck-us.net>
-Cc: Chris Healy <cphealy@gmail.com>
-Cc: Linus Walleij <linus.walleij@linaro.org>
-Cc: Martin K. Petersen <martin.petersen@oracle.com>
-Cc: Bart Van Assche <bvanassche@acm.org>
-Cc: linux-kernel@vger.kernel.org
-Cc: linux-scsi@vger.kernel.org
-Cc: linux-ide@vger.kernel.org
-Cc: linux-hwmon@vger.kernel.org
-Link: https://lore.kernel.org/r/20250105213618.531691-1-daniil.stas@posteo.net
-[groeck: Avoid inline variable declaration for portability]
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Nobuhiro Iwamatsu (CIP) <nobuhiro.iwamatsu.x90@mail.toshiba>
+Fix this by publishing nr_notes last with smp_store_release(), and by
+reading it once with smp_load_acquire() in post_one_notification() before
+the bitmap and the page array are touched.  A poster that observes a
+non-zero nr_notes then also observes the pool behind it; one that observes
+zero drops the notification as before.
+
+Fixes: c73be61cede5 ("pipe: Add general notification queue support")
+Reported-by: Dae R. Jeong <threeearcat@gmail.com>
+Closes: https://lore.kernel.org/all/ZT-S8Q7tyutcvu_q@dragonet/
+Reported-by: AutonomousCodeSecurity@microsoft.com
+Suggested-by: Dae R. Jeong <threeearcat@gmail.com>
+Signed-off-by: Cen Zhang (Microsoft) <cenzhang@linux.microsoft.com>
+Link: https://patch.msgid.link/20261009224715.46121-1-cenzhang@linux.microsoft.com
+Reviewed-by: Bradley Morgan <brads@mainlining.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+[ sashal: Retained the mask variable in post_one_notification() for direct ring-buffer indexing. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/drivetemp.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ kernel/watch_queue.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/hwmon/drivetemp.c b/drivers/hwmon/drivetemp.c
-index 5bac2b0fc7bb6..b3de637a3a1f2 100644
---- a/drivers/hwmon/drivetemp.c
-+++ b/drivers/hwmon/drivetemp.c
-@@ -165,6 +165,7 @@ static int drivetemp_scsi_command(struct drivetemp_data *st,
- {
- 	u8 scsi_cmd[MAX_COMMAND_SIZE];
- 	int data_dir;
-+	int err;
+diff --git a/kernel/watch_queue.c b/kernel/watch_queue.c
+index a72ea1c2f59fe..506776c113794 100644
+--- a/kernel/watch_queue.c
++++ b/kernel/watch_queue.c
+@@ -102,7 +102,7 @@ static bool post_one_notification(struct watch_queue *wqueue,
+ 	struct pipe_inode_info *pipe = wqueue->pipe;
+ 	struct pipe_buffer *buf;
+ 	struct page *page;
+-	unsigned int head, tail, mask, note, offset, len;
++	unsigned int head, tail, mask, note, offset, len, nr_notes;
+ 	bool done = false;
  
- 	memset(scsi_cmd, 0, sizeof(scsi_cmd));
- 	scsi_cmd[0] = ATA_16;
-@@ -192,9 +193,12 @@ static int drivetemp_scsi_command(struct drivetemp_data *st,
- 	scsi_cmd[12] = lba_high;
- 	scsi_cmd[14] = ata_command;
+ 	spin_lock_irq(&pipe->rd_wait.lock);
+@@ -113,8 +113,10 @@ static bool post_one_notification(struct watch_queue *wqueue,
+ 	if (pipe_full(head, tail, pipe->ring_size))
+ 		goto lost;
  
--	return scsi_execute_req(st->sdev, scsi_cmd, data_dir,
--				st->smartdata, ATA_SECT_SIZE, NULL, HZ, 5,
--				NULL);
-+	err = scsi_execute_req(st->sdev, scsi_cmd, data_dir,
-+			       st->smartdata, ATA_SECT_SIZE, NULL, HZ, 5,
-+			       NULL);
-+	if (err > 0)
-+		err = -EIO;
-+	return err;
- }
+-	note = find_first_bit(wqueue->notes_bitmap, wqueue->nr_notes);
+-	if (note >= wqueue->nr_notes)
++	/* Pairs with the smp_store_release() in watch_queue_set_size(). */
++	nr_notes = smp_load_acquire(&wqueue->nr_notes);
++	note = find_first_bit(wqueue->notes_bitmap, nr_notes);
++	if (note >= nr_notes)
+ 		goto lost;
  
- static int drivetemp_ata_command(struct drivetemp_data *st, u8 feature,
+ 	page = wqueue->notes[note / WATCH_QUEUE_NOTES_PER_PAGE];
+@@ -299,7 +301,8 @@ long watch_queue_set_size(struct pipe_inode_info *pipe, unsigned int nr_notes)
+ 	wqueue->notes = pages;
+ 	wqueue->notes_bitmap = bitmap;
+ 	wqueue->nr_pages = nr_pages;
+-	wqueue->nr_notes = nr_notes;
++	/* Pairs with the smp_load_acquire() in post_one_notification(). */
++	smp_store_release(&wqueue->nr_notes, nr_notes);
+ 	return 0;
+ 
+ error_p:
 -- 
 2.53.0
 
