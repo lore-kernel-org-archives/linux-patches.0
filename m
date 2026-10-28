@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793211869;
-	b=d7kcvcYZgtiEWiRSbWTgiGC6YlDjupZBCobvbkCN+OQtyLVBpnhbrgQQ/V/7F+MYes+H
-	 zyIvbelSq002cEdJROkDjAEIaHkdJ/KlLwNxjQ41HAkBYlCA2A+4ha7D8ggqqBRyqVTze
-	 v+mIR6qsMnsebqzzvq4rMHpz353C3Ief4BdKBJ6F7xs9d/FoDPZJ8QyQn2bJchNY4jJxj
-	 pe5N8y6N+mhZIwgaBUpseSjBCbANpOMdJKDOJaMwFDgWjK93DIijfCpgAvMlSBp8p+JlC
-	 NWcwC4Z3/cNVRl5JN0V68gk2gDVv5sOlKMFXIkVmT2owJu/lBhwKUZ0K/jgdn/ivyAQ==
+	t=1793211872;
+	b=Fb+59fC/9dhbjblvRIWvaEWY8UNbedh7Ggqm09tufaFfXmN/RophoVi7OjLeqaB6EPpG
+	 pe8u0z/cVGdIVX0Fak1DeDC348CRgheMP6twHfAgxw8jlu9xBXM1v80qM2wrBMFIJRD/g
+	 +cLePYOUVHb3OO05kTti3iMLmsYeWUhmQ545RiXT0lW0hFoSwTU7rbb0DBiIIrlGBDdi9
+	 x/KO0WzyWnAambEQA8nnQdcUYxzBPiPaq/ewCPJgkVx+ni7aiWm8lI2C4jFpSyJX4vgJ4
+	 hfEFGzUt/Deiwa4qyNmG4XFaFpUt3T4YKo9um5E3JQn02PxjsPTLv8V6cPNHsGKroEw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793211869;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793211872;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=i56i69OR2ujoczzzuYWNwI1bQDvlatkp8ggOY8jP/Ek=;
-	b=RjkwS4v6uk64YJBwZ5/glLd44e2NwXPIX1VOenMFgozGPYwCfebbXNXbKdaYsSQSlvGm
-	 fyUeKayZba4Tb95e2lFxwqVR3pCQxznba858JkZRTn+8SHvFPcQew+zPYdD7/MFYJ7A7H
-	 kS2tz6eSJMiVFHE3mR0LgNuW90P5Ry50dhW/hUP189wNJGl6oVhed09jajfCrKEOANKYS
-	 nMr7Up4acMjuzu4pREjIawI8HYjYjz97h6BhjXdCsG6EYEqBSz+SoobosVEDN5/ETre4D
-	 QIy5YlF3xMX3f2pjM8fZO4qvNb/T5C42MJprAbZrl9pzNnRzl3TlmIvQ2KDjhH409sg==
+	bh=Io7nbV8ymd75KN/a46Ht0gbrD2jcGeB5dUVOkQq0EQ8=;
+	b=Fw7MQrwIvFpxRK/7IT758zmaY9Dxs7Dats7esm3+zd0+NwLXxRkZ1q+zxbLip6kB2r2e
+	 nr77if54OuffGK+rAAlygwI+aWfra3o3I+MxRz9zAKhnz0ZYvy4sdBwiT9CTPPCddK2ro
+	 HLT/G2QeMAx73lTYqAj9pmcFLx0U+vxZ37gWBwxOFZs1Cb5mzISu2dcBj7OfjN2xNDakM
+	 4nnHo8LRBdkbH23gYTgEMGqeZZNFqflknHsB4RFkYH7ZvRM+6YqQ1/T5aGHAM5bVZCOcc
+	 HmOfN37cjXdt8JzmK4mGP6U92GGliWsx+xpas69oUhxwRJzswFMDuzjJI/OnQjkeshA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P8Sc7WPI;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vAfRtqQZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94ECD606A323;
-	Wed, 28 Oct 2026 18:24:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71FBD606A31F;
+	Wed, 28 Oct 2026 18:24:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P8Sc7WPI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3C1D1F01825;
-	Wed, 28 Oct 2026 18:24:28 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vAfRtqQZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2D971F01825;
+	Wed, 28 Oct 2026 18:24:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793211869;
-	bh=i56i69OR2ujoczzzuYWNwI1bQDvlatkp8ggOY8jP/Ek=;
+	s=korg; t=1793211872;
+	bh=Io7nbV8ymd75KN/a46Ht0gbrD2jcGeB5dUVOkQq0EQ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=P8Sc7WPIlBs32/uxISu5a5TWqiLz28xlXG7gz1dPqsuSYskdq0bl7MfhKLlgBuQGK
-	 v2Wvfg/qkQD/70lFs1ICOEQZRl2JVBmuUqQUQAjJJoRSDkxg37HH4UkpgU0Ng990Kt
-	 4tlHe3P5/tKvn1u6B+DxuGQZWsrOkhGb/NT3jPtI=
+	b=vAfRtqQZ6n32rTfLjvtmH6VEymT7RQfae4RlrmNpjsjt+GBBAOrCl/14swjfjhMHP
+	 rtX/n0k6jBNvlOufkxuygX96rg5rbqxeHKqr8MrH/QbQe0+dKpvW31CVXkP+dhA3pK
+	 N6BY8As2FlzeqdNL9FalROnftkyb7Zjl/fGIIBu8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dingisoul <dingiso.kernel@gmail.com>,
-	Laurence Oberman <loberman@redhat.com>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 530/571] scsi: st: Fix use-after-free race between st_remove() and st_open()
-Date: Wed, 28 Oct 2026 18:01:17 +0100
-Message-ID: <20261028170020.606598943@linuxfoundation.org>
+	Genjian Zhang <zhanggenjian@kylinos.cn>,
+	Mikulas Patocka <mpatocka@redhat.com>
+Subject: [PATCH 5.15 513/571] dm-ebs: fix incorrect device offset check in ebs_ctr()
+Date: Wed, 28 Oct 2026 18:01:00 +0100
+Message-ID: <20261028170020.201574891@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -69,75 +67,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Laurence Oberman <loberman@redhat.com>
+From: Genjian Zhang <zhanggenjian@kylinos.cn>
 
-commit 71caf7f84bd62a4bf91cc95abd2de690afb8d15f upstream.
+commit 7ac81e2d2240f2c57bd073b0733e0b2abca38e82 upstream.
 
-st_remove() drops the probe reference on the scsi_tape with kref_put()
-and only afterwards removes its index from st_index_idr. If that was the
-last reference, scsi_tape_release() frees the structure while it is
-still published in the idr.
+<offset> is a backing-device sector offset; ti->len is the virtual
+target length. Comparing them rejects valid tables, e.g.:
 
-scsi_tape_get(), called from st_open(), looks up the tape in
-st_index_idr and takes a reference under st_ref_mutex and
-st_index_lock. remove_cdevs() does not wait for opens that are already
-past chrdev_open(), so an open that is blocked on st_ref_mutex while
-st_remove() holds it can take the mutex as soon as st_remove() drops it,
-find the freed tpnt in the idr and call kref_get() on it:
+  dmsetup create ebs0 --table "0 1048576 ebs /dev/sda 2097152 1 8"
+  -> ebs: Invalid device offset sector (-EINVAL)
 
-  BUG: KASAN: slab-use-after-free in st_open
-  Write of size 4 ...
-   st_open (drivers/scsi/st.c:254 drivers/scsi/st.c:1291)
-   chrdev_open
-  ...
-  Freed by task ...:
-   kfree
-   st_remove (drivers/scsi/st.c:4512)
+Drop the check. Bounds against the backing device are already
+enforced later by device_area_is_invalid() via ebs_iterate_devices().
 
-Remove the index from the idr before dropping the reference, all under
-st_ref_mutex. A concurrent scsi_tape_get() now either runs first and
-holds a valid reference that keeps the tape alive, or runs afterwards
-and finds nothing, so st_open() fails with -ENXIO.
-
-This restores the ordering st_remove() had before the conversion to
-st_index_idr, where the tape was unpublished from scsi_tapes[] before
-the final kref_put().
-
-Fixes: 6c648d95a6af ("[SCSI] st: get rid of scsi_tapes array")
 Cc: stable@vger.kernel.org
-Reported-by: Dingisoul <dingiso.kernel@gmail.com>
-Closes: https://lore.kernel.org/linux-scsi/20261007211520.1428497-1-dingiso.kernel@gmail.com/
-Tested-by: Dingisoul <dingiso.kernel@gmail.com>
-Signed-off-by: Laurence Oberman <loberman@redhat.com>
-Link: https://patch.msgid.link/20261013202548.249628-1-loberman@redhat.com
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
-[ loberman: st_remove() still returns int in 5.15; context adjusted ]
-Signed-off-by: Laurence Oberman <loberman@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: d3c7b35c20d6 ("dm: add emulated block size target")
+Signed-off-by: Genjian Zhang <zhanggenjian@kylinos.cn>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/st.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/md/dm-ebs-target.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/scsi/st.c b/drivers/scsi/st.c
-index 65b23015d1f23..2783419ef5f42 100644
---- a/drivers/scsi/st.c
-+++ b/drivers/scsi/st.c
-@@ -4439,11 +4439,11 @@ static int st_remove(struct device *dev)
- 	remove_cdevs(tpnt);
+--- a/drivers/md/dm-ebs-target.c
++++ b/drivers/md/dm-ebs-target.c
+@@ -263,8 +263,7 @@ static int ebs_ctr(struct dm_target *ti,
  
- 	mutex_lock(&st_ref_mutex);
--	kref_put(&tpnt->kref, scsi_tape_release);
--	mutex_unlock(&st_ref_mutex);
- 	spin_lock(&st_index_lock);
- 	idr_remove(&st_index_idr, index);
- 	spin_unlock(&st_index_lock);
-+	kref_put(&tpnt->kref, scsi_tape_release);
-+	mutex_unlock(&st_ref_mutex);
- 	return 0;
- }
- 
--- 
-2.53.0
-
+ 	r = -EINVAL;
+ 	if (sscanf(argv[1], "%llu%c", &tmp, &dummy) != 1 ||
+-	    tmp != (sector_t)tmp ||
+-	    (sector_t)tmp >= ti->len) {
++	    tmp != (sector_t)tmp) {
+ 		ti->error = "Invalid device offset sector";
+ 		goto bad;
+ 	}
 
 
