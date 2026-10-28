@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215310;
-	b=dLkwpsQIAM4/gqCxYgB3SYGL0As65c9seRWE3Yp9tqwqvpU3s/WuKQC9YGxDBVH+1aWU
-	 iykm4a/ePnTDEmBe5m9HlNzhKi6WI3mTiS+iYuDB9tRWEUOxXUf3tFo1HqSudlRxx5xCN
-	 NQNj1RNkoC3JizFxeCZpZa00Vc4wrpWVNqoTnZiPkdptsE76bCGEOwc+GI/4MJr2oR2dr
-	 cFZfxWa5cV+WYdZ2roPlGTZO8LJK7iuHV3WlWFZUGiPpL9G8fAW1/RRU5zNvR7oaLq0yX
-	 7xP/1Eaq7NQrrJCfpcrTfpS2l4gXhLx6fNFfW2v2pbZ7P+8fAxg+SFE6vn04XTtDE/g==
+	t=1793215312;
+	b=HRBbcVzs/s70cF4lpTK3Re/scPlMPeWRKPw0SVKssndtMym9yvG5+ALWA8qY+KKb3RC1
+	 VhDqhGQ49C8Snu07o/f7z81F8Yx4ppwe7928zLXkYg4IZ6BvQ1V/uztrHMjt9K74jSXZ8
+	 jVa1MbnJMCkvwho9tqGiXJVRIT091YkbqgyIKu60f613gOkF4T5DUoqtXu2gIEXx2MWTX
+	 Qa1GpiRIiTBJ2fh3iGWOtyK/fIEAl9cyoHR6W7r008iihPS7souNoimb17brlOgjHSF04
+	 JVxSfYONhTt4UntWL08GtuOaGoCeScRQ7OjVItNnNbSyKJuXvW1WbTTutjjneFVpFYw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215310;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215312;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=TGQH1ij78B7e3phM5uNJpmNzyYa1wzcPTtEsir0BcgQ=;
-	b=QcgyVw3XcGn5q5iYa2DrpQUuO++einaUk/Up9zNoiqJssonusjprL99oWdW2ZwkaDZw7
-	 91Wh+e1+B1ou/xG+/2bTgigo9Yqi+yO8Q7tHRL7x2AibPoo7QFB5P2ZPKIuViEBYJEIQD
-	 Vaz5WsKARqYRPIk5VCQGLVCfHF18b0eavugKbqWvEumyL/Bl46lG7UGK6QFK5T96cMBAo
-	 KtBOcqu/H1e5I3SjBbArJ5iPlrUyBxe43mbx3fh/vHDPINp0wyD9HMifzVBf4y8pL1kBh
-	 hL6zsVCexLvPy6p9L5SUDDnDqO6ol8UU4WpF/JgyPEKQV5FRK5mtxqLt2+os6EnWWYg==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=0bSD7jHwD5EK+279SHQSLcq2+o4NMyiYIxfgWeX5dUA=;
+	b=maWtIWddEB94PUFQKE2e4jA0Qe5gcuaHw+6PeVsvgjfGIlx451THkcK2GiCLVbIBwWgK
+	 6qkh3kvfaqDyt+bRIM01QyJl+HrIFrEyIDaaF8YjlgHasp9FOj2SxZRS5zmKHyuEsMb4F
+	 sodu8v8VD/lC2/klaWaYpsRwanTT5aPKzoiyQQN8aMZMEw5AqCLPFtF3QhLv7+xGT6BZY
+	 Ziad4S7joMWhWYgXkAOtpBfVCbnV5yOyFsKpeMrGXSBTlMoHOrR7RYW3qllNALb7QMpu1
+	 Q4F4TSCHcYJvlxjBCQ1gJlQE2w8pKI1mhaZaxRH/nWvuMXv/2tZMavXRTAKWz3ABGFQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rHVZaQ9x;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="XZMbuB/C";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3726606A31D;
-	Wed, 28 Oct 2026 19:21:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B587606A31A;
+	Wed, 28 Oct 2026 19:21:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rHVZaQ9x
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E59E1F01828;
-	Wed, 28 Oct 2026 19:21:48 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XZMbuB/C
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBFD81F01825;
+	Wed, 28 Oct 2026 19:21:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215309;
-	bh=TGQH1ij78B7e3phM5uNJpmNzyYa1wzcPTtEsir0BcgQ=;
+	s=korg; t=1793215312;
+	bh=0bSD7jHwD5EK+279SHQSLcq2+o4NMyiYIxfgWeX5dUA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rHVZaQ9xsR4yle0Cx/vjdpXtBWbvmbyXkDiZUgwT8Cxf0Zr47fBkiWcUzABgP3HVX
-	 sH7tncb9dYqWAcE7bVraJWUWaTfom3SreTdfRcL2Prcsj6HwCakTxug22EfPbNHMyY
-	 XLbTLpihBpI2cns2mGf5p68ZkN+sccM4jFyXOKgg=
+	b=XZMbuB/CFrrVk40xDktdGffUbfLTlua36KPQ8Gk7mli4YDKd/UvOKR9O3i7WMJjgH
+	 hbtIPncyAKFBaAYKrUQrI+Kh+Lco6virTAsxNwV2VIQIjuwm7ND99X/jPAPLxRoe6C
+	 kk4l05ueP9OPJbMaR2mZyeGygsb1SUbZ5/mJ/Wmw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Linmao Li <lilinmao@kylinos.cn>,
+	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1165/1887] media: vivid: fix cleanup bugs in vivid_init()
-Date: Wed, 28 Oct 2026 17:54:21 +0100
-Message-ID: <20261028170525.914419936@linuxfoundation.org>
+Subject: [PATCH 6.1 1166/1887] drm/vc4: Shut down BO cache timer before teardown
+Date: Wed, 28 Oct 2026 17:54:22 +0100
+Message-ID: <20261028170525.937156802@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -62,66 +62,51 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Linmao Li <lilinmao@kylinos.cn>
 
-[ Upstream commit a07c179a92e949172ca52f6d4a13202ea88cd4b7 ]
+[ Upstream commit 6273dd3ffb54ec581855b82ae77331b66028249c ]
 
-When platform_device_register() fails in vivid_init(), the embedded
-struct device in vivid_pdev has already been initialized by
-device_initialize(), but the failure path jumps to free_output_strings
-without dropping the device reference for the current platform device:
+The BO cache timer callback schedules time_work, and time_work can rearm
+the timer through vc4_bo_cache_free_old().
 
-  vivid_init()
-    -> platform_device_register(&vivid_pdev)
-       -> device_initialize(&vivid_pdev.dev)
-       -> setup_pdev_dma_masks(&vivid_pdev)
-       -> platform_device_add(&vivid_pdev)
+vc4_bo_cache_destroy() deletes the timer and then cancels the work, which
+does not break that cycle: the work being cancelled can rearm the timer,
+and the timer then queues work again after teardown.
 
-This leads to a reference leak when platform_device_register() fails.
-Fix this by calling platform_device_put() before jumping to the common
-cleanup path.
+Use timer_shutdown_sync() instead, so the timer cannot be rearmed and the
+cycle ends with cancel_work_sync().
 
-Also, the unreg_driver label incorrectly calls
-platform_driver_register() instead of platform_driver_unregister(),
-which breaks cleanup when workqueue creation fails after successful
-driver registration. Fix that as well.
-
-The reference leak was identified by a static analysis tool I developed
-and confirmed by manual review. The incorrect cleanup call was found
-during code inspection.
-
-Fixes: f46d740fb0258 ("[media] vivid: turn this into a platform_device")
-Fixes: d7c969f37515d ("media: vivid: Add 'Is Connected To' menu controls")
+Fixes: c826a6e10644 ("drm/vc4: Add a BO cache.")
 Cc: stable@vger.kernel.org
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Linmao Li <lilinmao@kylinos.cn>
+Link: https://patch.msgid.link/20260720084426.1632508-1-lilinmao@kylinos.cn
+Reviewed-by: Maíra Canal <mcanal@igalia.com>
+Signed-off-by: Maíra Canal <mcanal@igalia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/test-drivers/vivid/vivid-core.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/vc4/vc4_bo.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/test-drivers/vivid/vivid-core.c b/drivers/media/test-drivers/vivid/vivid-core.c
-index f28440e6c9f89..c8fe0a6a86cba 100644
---- a/drivers/media/test-drivers/vivid/vivid-core.c
-+++ b/drivers/media/test-drivers/vivid/vivid-core.c
-@@ -2163,8 +2163,10 @@ static int __init vivid_init(void)
- 	int ret;
+diff --git a/drivers/gpu/drm/vc4/vc4_bo.c b/drivers/gpu/drm/vc4/vc4_bo.c
+index d687afb3c4426..898aabca45a71 100644
+--- a/drivers/gpu/drm/vc4/vc4_bo.c
++++ b/drivers/gpu/drm/vc4/vc4_bo.c
+@@ -1050,7 +1050,7 @@ static void vc4_bo_cache_destroy(struct drm_device *dev, void *unused)
+ 	struct vc4_dev *vc4 = to_vc4_dev(dev);
+ 	int i;
  
- 	ret = platform_device_register(&vivid_pdev);
--	if (ret)
-+	if (ret) {
-+		platform_device_put(&vivid_pdev);
- 		return ret;
-+	}
+-	del_timer(&vc4->bo_cache.time_timer);
++	timer_shutdown_sync(&vc4->bo_cache.time_timer);
+ 	cancel_work_sync(&vc4->bo_cache.time_work);
  
- 	ret = platform_driver_register(&vivid_pdrv);
- 	if (ret)
+ 	vc4_bo_cache_purge(dev);
 -- 
 2.53.0
 
