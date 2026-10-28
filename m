@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793212533;
-	b=GWI50j036i87iHGpHMq+7B1kF87Fa9a/NfvvmoLXH/7HE6dcA+y9iZYIX3J8BR8J+Pgg
-	 G5rVPZLrHA6cqHPMZelzCTOCdB0LG9mZ4+QDJmZFo5zSqft6yvGedVCLw9l2NCV/h6vWP
-	 wIN1tFFt4dBxDrCc3PBy81qmzinntIHKIOuLiz4fgBrQQaYf4NRymYQ+AT02JNoiLAvik
-	 90tNRqo2v8EVbJQbqvSYrHSVL33zAfXUWoC9/S0CvA3b5NXuPIGW0nzokFiObFi0kmxqK
-	 gfG7S6Ur8BR+sObE2RSIn6+1ertPQDZZb9DGrAd6dUiFoNlUAX6klamjbmai2VCguqQ==
+	t=1793212535;
+	b=2uVUhhIcEt5hP5UIvdolRLMf68k69hUkw0e+/NTym/Azn4YLWxxIAwq2P36Ilb4A3IDL
+	 4frWKGDVAJ7waACZmDXmuSwF1gkCDyuacQSiq/OBgkI61qmkgEtdf+RnsXfOaO2ylWD+5
+	 e7nvqKOTKicA4rBWfG8lwOZ3u2AvWf2qq0kMcQPhJrtsUaFFlNBbYXX5d7yvyfyKlTIiX
+	 GT3Sa2aHbPefSlQ9c6KHiAk/AQVloHphgjXPGP6k/NaYyPPAOvkugo8yDWjqTKXIakMJl
+	 AH1zJPId8zCWy7Wv/pTNHQtEC3L6O6t3uWivjb6Xe8mcQ+9ZJjPfny0hWsO2GQm6VBQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793212533;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793212535;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=jP8LvkG3gW1Nuogkrfz/zYbYDOUb2bY4HOSxrA6h7PY=;
-	b=ATgfvE71Wr3ugiYK3WAhGd08hPwRxIx6L1Q/umGCSBpZI3P/NjA9fdCHW7+cGwvuZltT
-	 6+MLY2K6it7S/FF8jmhVhlAgvJL1f3VEh4e+J4bt2rj8nhqGwrwrZZ3Gxrwjmps6Hzg0l
-	 wyGAnwWeaIJpSJ6qbdkFIyMLBQf6UitQyS9MGvj7OquZl2MF2GvvyU9dKYDObwo5Ogvzq
-	 WpaN1KhOX9QQ6Nj0zF8Y3V1CqIYww48t+cg6u3PUbsLIcRA3Pyc3GlDudY0B/3ZsDMjy+
-	 FCNzUnbU9dW/8sQSmLMv19jiEypwb+2Rh+99zylcMSgZ8NG1VlZ7+Yle3GkI/HdozfA==
+	bh=LUx7rCjhTFyqQzTc7x2km+p/bVF1e+rwV119uqNZ5LU=;
+	b=xhVJjDzadM3PGa+FbjSKTutf4gfZOSeyVf3B2f8I10GrhCEf+hO6Run22oDBT/xdy+UB
+	 7VopJXdB5cgaN4m+2qO1Faqd5yiTe5/KCJQFZTvwdVQ+p29ZiBH9Kjxy7JtYfucMN5wzs
+	 0QldZXOceq/lJ+4wl7B+CrrmUjiug+qJDGDGeHFCAxitKdr+VbSyotB14nmJS/rQpIQXt
+	 iCptRbJx1g9T2qSJtlm8Pw98uaDDuKCkEbV/fAJ9hdwWR9vUEcziyiq4tPYIbB5Whf1yp
+	 dK3cYssV9BHL3+V2kCzgGSRKhtjCKynMm4R+dpWQF5dzt3h2oX003IPuUG7uDFo3yog==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZzfcOYtD;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=q7TI7NIU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB7D8606A31A;
-	Wed, 28 Oct 2026 18:35:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B68D606A31D;
+	Wed, 28 Oct 2026 18:35:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZzfcOYtD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F349D1F01825;
-	Wed, 28 Oct 2026 18:35:31 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=q7TI7NIU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAB961F01829;
+	Wed, 28 Oct 2026 18:35:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793212532;
-	bh=jP8LvkG3gW1Nuogkrfz/zYbYDOUb2bY4HOSxrA6h7PY=;
+	s=korg; t=1793212535;
+	bh=LUx7rCjhTFyqQzTc7x2km+p/bVF1e+rwV119uqNZ5LU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZzfcOYtDxbxK3LZF0Ri45ZLo1IezPrdZNCN17H8hONQ7RDPSzxJTTldRnKDDNfOYY
-	 c+aNe00DYhvskXhvhMs718HHzfoEuDemdrVvBiOA5vT9k6tBI1lBlqfs9BLMf/8B1m
-	 ZR4p2D5iPU4pUtXkdj0MjzdJPqKQhQ0p15cvF6GA=
+	b=q7TI7NIU4uLE90mJd63Sb3Bsy7Bygu+6ur/hZfkwuezD5NhEQ96ZDuMBdsW2k1Da/
+	 PiAi28Qzou/GMbb6PCGmo9HFgDEtR+vj8R8rXYQ+N/8V4Pctn2JD9SiczJ5UgGSpgS
+	 mVlnCPyaeRI9mQDlLMuBd7hFu9D5JHtTMSwOIfEo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Artem Dinaburg <artem@trailofbits.com>,
+	Benjamin Berg <benjamin.berg@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0186/1887] x86/CPU/AMD: Clear virtualized VMLOAD/VMSAVE on Zen4 client
-Date: Wed, 28 Oct 2026 17:38:02 +0100
-Message-ID: <20261028170503.468434197@linuxfoundation.org>
+Subject: [PATCH 6.1 0187/1887] wifi: cfg80211: avoid double free if updating BSS fails
+Date: Wed, 28 Oct 2026 17:38:03 +0100
+Message-ID: <20261028170503.490769871@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,50 +69,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Benjamin Berg <benjamin.berg@intel.com>
 
-[ Upstream commit a5ca1dc46a6b610dd4627d8b633d6c84f9724ef0 ]
+[ Upstream commit acc44cbd7727115f9381c35c2898b1b5af665ec8 ]
 
-A number of Zen4 client SoCs advertise the ability to use virtualized
-VMLOAD/VMSAVE, but using these instructions is reported to be a cause
-of a random host reboot.
+cfg80211_update_known_bss will always consume the passed IEs. As such,
+cfg80211_update_assoc_bss_entry also needs to always set the pointers to
+NULL so that no double free can occur.
 
-These instructions aren't intended to be advertised on Zen4 client
-so clear the capability.
+Note that hitting this would probably require being connected to a
+hidden BSS which is then doing a channel switch while also switching to
+be not hidden anymore at the same time.
 
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Cc: stable@vger.kernel.org
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=219009
-Assisted-by: LLM
-Signed-off-by: Artem Dinaburg <artem@trailofbits.com>
+Signed-off-by: Benjamin Berg <benjamin.berg@intel.com>
+Reviewed-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://msgid.link/20231220133549.8891edb28d51.Id09c5145363e990ff5237decd58296302e2d53c8@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/cpu/amd.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ net/wireless/scan.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/arch/x86/kernel/cpu/amd.c b/arch/x86/kernel/cpu/amd.c
-index a61606a614bd7..8d9c067992e5f 100644
---- a/arch/x86/kernel/cpu/amd.c
-+++ b/arch/x86/kernel/cpu/amd.c
-@@ -1161,6 +1161,17 @@ static void init_amd_zen3(struct cpuinfo_x86 *c)
- static void init_amd_zen4(struct cpuinfo_x86 *c)
- {
- 	init_amd_zen_common();
-+
-+	/*
-+	 * These Zen4 SoCs advertise support for virtualized VMLOAD/VMSAVE
-+	 * in some BIOS versions but they can lead to random host reboots.
-+	 */
-+	switch (c->x86_model) {
-+	case 0x18 ... 0x1f:
-+	case 0x60 ... 0x7f:
-+		clear_cpu_cap(c, X86_FEATURE_V_VMSAVE_VMLOAD);
-+		break;
-+	}
- }
+diff --git a/net/wireless/scan.c b/net/wireless/scan.c
+index ecf9021219380..a8901e07e96d6 100644
+--- a/net/wireless/scan.c
++++ b/net/wireless/scan.c
+@@ -2695,10 +2695,9 @@ void cfg80211_update_assoc_bss_entry(struct wireless_dev *wdev,
  
- static void init_amd(struct cpuinfo_x86 *c)
+ 	if (new) {
+ 		/* to save time, update IEs for transmitting bss only */
+-		if (cfg80211_update_known_bss(rdev, cbss, new, false)) {
+-			new->pub.proberesp_ies = NULL;
+-			new->pub.beacon_ies = NULL;
+-		}
++		cfg80211_update_known_bss(rdev, cbss, new, false);
++		new->pub.proberesp_ies = NULL;
++		new->pub.beacon_ies = NULL;
+ 
+ 		list_for_each_entry_safe(nontrans_bss, tmp,
+ 					 &new->pub.nontrans_list,
 -- 
 2.53.0
 
