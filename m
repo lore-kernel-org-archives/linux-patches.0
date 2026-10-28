@@ -1,53 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214901;
-	b=NHwmC36+b8S5RP//1FYMU0GE0f4pEcPKoqUg2CuJGMSfnQU5eF3Thsp//CLXRunR8l6x
-	 1iCN7nG2hMPhU4jZCSH/4aJGosqbWL7Zakfa3Qth8gAztxpkcZYL7zvdk1SlBgShdRNgW
-	 pcKdPLJllMDtUbmlRfQtg6yRPRNxw934gdNtSILQu6nsGlMLhiH5surEaovEa3A8lrE2C
-	 enOEW1GJHbtWJAtvnW7k8VZq4NDYWT58vZfys44elUife7NzZ71vd/9TQ2z/1NyuT4xsn
-	 Q7Qd1h6k4K7vGbY+ZPMVtVvdAcfUz0z/AkONYqu1xUK6Px8oLcWJZKzpKjerDBqAFow==
+	t=1793214904;
+	b=T/ZBL7mmAnR9MMEzypFAZxGvorh+gzKVbuzhPKcGv9THq/3lR9v1xPDDsDkTXPKzfmft
+	 kiRPPcM8KDf39e3nsVh3fR75/D6BZA73H3PB13GBYvmEuV3JHJY0G3bj/xbb7TR46qhJO
+	 BN+XBRthimCagZUcMj2MJyVFBIuh0mFxqjrZBIv+XQmcL0iH2bTZReWqJQ5cxohepP+Z1
+	 78jiIdobM6zfCZyu88bGyy5gH9ghH+3x3PTDnn86x7W8LYlTEnAXo+XqOZd5Xv5TBwvRH
+	 ZVilhCbUnt1xb//704IUei/ifr4R9txmwb9xWd7rcSKE/7jeiOfOwo5cSQw3weWADXw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214901;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214904;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=6s6puFskJDceLHooS5i1Tg3T5xhC9c2Q5QMevwuVmM0=;
-	b=lzZXL9HkFicTpV+32tRCigW4En82M2lsBviuZYLcmoA6naS8d532ChVBl0DAGg05S8EV
-	 HpOUcp+zAIFiBKEZKZ4h0iFBBdcM1yJaPRjTIrC7u00Js44y9my7hUHp1njPYlkpDYMfR
-	 SBjtNMAEmkHb++Q9aBPpGLeJUqWQ+9+vVOvxm0D4Ymp4C4X2Eth1KUd7kPz5EBRcBZAEf
-	 jv3+2NCUYoCxfukpgS//0MaBCF1NZeP0n3qoqyiRARFI9ufbD748exz/R2m3p+5Sr7ye+
-	 HZRIL0LsjrVbZOwTpBMzErkAX1T14+doPxZqz6WZ0Wc0KlKd5bA/NmW1pH7fIEWTsLA==
+	bh=qLgMoITsx/q+U8dPEgDRdl6uFMWPjR8CCaL5Jds6Y0o=;
+	b=i9KkUUwxM6NEHXKjsrx2/cWgTEz2vjjQYzpIrKocihmNmTjwpZrA0tx8u/gvbk//F4W+
+	 kKqZVZJZ+m4JPCHz1MWx/agKz5Dq2Lod9Ceq27CbaPsmeeCGFXqqgr5h+eCVeiPz5XbKL
+	 37+03bICHIFprqn2JUtXY1nTbZEDbHi34k5PaJ53OtdFDJP10gqgNiB6ngyNMM4U3psCc
+	 yQWM9XiKf3cznaKGuPqQs2pVkoIipfDalIKxSa3W4uUfbCJsFWOBTpEmjGQcdPVW1Nbs7
+	 XseRX7/edkcna++uZgheIUR89c2sUwVxYqI/OTLQUycoWq05Oy0v/fWbz+WAbuxOjqA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aZ3M5t+S;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ax0LDgad;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7E09606AB0E;
-	Wed, 28 Oct 2026 19:15:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2BAE606A339;
+	Wed, 28 Oct 2026 19:15:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aZ3M5t+S
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 343A91F01825;
-	Wed, 28 Oct 2026 19:15:00 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ax0LDgad
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 106C31F01825;
+	Wed, 28 Oct 2026 19:15:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214900;
-	bh=6s6puFskJDceLHooS5i1Tg3T5xhC9c2Q5QMevwuVmM0=;
+	s=korg; t=1793214903;
+	bh=qLgMoITsx/q+U8dPEgDRdl6uFMWPjR8CCaL5Jds6Y0o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aZ3M5t+SaGCr9sFDXhZSgd6WYNVOv/zkNmPtpvpcTqDddc4N4KYjiy6ctenqlHFCj
-	 q7/2F+M8Y8SMeXkpb5PkKAPLicZGk45pqoSYwmwxuFxJPbgf6THKZZ4NAejJWYAWT8
-	 c/TyarGm5L9OcfYW/ZKygtkEH6XCnizKIgDWKwKg=
+	b=Ax0LDgadLcZoRfY1bgBCf69Isz8W+KDEdfs6zWtHr84allBzWzuw35eXtddBEwFxY
+	 CTK6PBGIwPdRNQ7WfQ/qd6/OfaQnHjK0JGTegqiu2bBnKMMtzo60UNj9fcBoB+jTdt
+	 InEgH6IRZLQz/kQtI8/son1t3V/vISvQ+SvLhFXU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shota Zaizen <s@zaizen.me>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	syzbot+881d65229ca4f9ae8c84@syzkaller.appspotmail.com,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jiri Pirko <jiri@nvidia.com>,
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
+	Stanislav Fomichev <sdf@fomichev.me>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1022/1887] ksmbd: validate inherited ACE SID length
-Date: Wed, 28 Oct 2026 17:51:58 +0100
-Message-ID: <20261028170522.673064148@linuxfoundation.org>
+Subject: [PATCH 6.1 0996/1887] team: avoid NETDEV_CHANGEMTU event when unregistering slave
+Date: Wed, 28 Oct 2026 17:51:32 +0100
+Message-ID: <20261028170522.079888535@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,148 +72,143 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shota Zaizen <s@zaizen.me>
+From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
 
-[ Upstream commit 996454bc0da84d5a1dedb1a7861823087e01a7ae ]
+[ Upstream commit bb4c698633c0e19717586a6524a33196cff01a32 ]
 
-smb_inherit_dacl() walks the parent directory DACL loaded from the
-security descriptor xattr. It verifies that each ACE contains the fixed
-SID header before using it, but does not verify that the variable-length
-SID described by sid.num_subauth is fully contained in the ACE.
+syzbot is reporting
 
-A malformed inheritable ACE can advertise more subauthorities than are
-present in the ACE. compare_sids() may then read past the ACE.
-smb_set_ace() also clamps the copied destination SID, but used the
-unchecked source SID count to compute the inherited ACE size. That could
-advance the temporary inherited ACE buffer pointer and nt_size accounting
-past the allocated buffer.
+  unregister_netdevice: waiting for netdevsim0 to become free. Usage count = 3
+  ref_tracker: netdev@ffff88807dcf8618 has 1/2 users at
+       __netdev_tracker_alloc include/linux/netdevice.h:4400 [inline]
+       netdev_hold include/linux/netdevice.h:4429 [inline]
+       inetdev_init+0x201/0x4e0 net/ipv4/devinet.c:286
+       inetdev_event+0x251/0x1610 net/ipv4/devinet.c:1600
+       notifier_call_chain+0x19d/0x3a0 kernel/notifier.c:85
+       call_netdevice_notifiers_mtu net/core/dev.c:2318 [inline]
+       netif_set_mtu_ext+0x5aa/0x800 net/core/dev.c:9886
+       netif_set_mtu+0xd7/0x1b0 net/core/dev.c:9907
+       dev_set_mtu+0x126/0x260 net/core/dev_api.c:248
+       team_port_del+0xb07/0xcb0 drivers/net/team/team_core.c:1333
+       team_del_slave drivers/net/team/team_core.c:1936 [inline]
+       team_device_event+0x207/0x5b0 drivers/net/team/team_core.c:2929
+       notifier_call_chain+0x19d/0x3a0 kernel/notifier.c:85
+       call_netdevice_notifiers_extack net/core/dev.c:2281 [inline]
+       call_netdevice_notifiers net/core/dev.c:2295 [inline]
+       __dev_change_net_namespace+0xcb7/0x2050 net/core/dev.c:12592
+       do_setlink+0x2ce/0x4590 net/core/rtnetlink.c:3060
+       rtnl_changelink net/core/rtnetlink.c:3776 [inline]
+       __rtnl_newlink net/core/rtnetlink.c:3935 [inline]
+       rtnl_newlink+0x15a9/0x1be0 net/core/rtnetlink.c:4072
+       rtnetlink_rcv_msg+0x7d5/0xbe0 net/core/rtnetlink.c:6958
+       netlink_rcv_skb+0x232/0x4b0 net/netlink/af_netlink.c:2550
+       netlink_unicast_kernel net/netlink/af_netlink.c:1318 [inline]
+       netlink_unicast+0x80f/0x9b0 net/netlink/af_netlink.c:1344
+       netlink_sendmsg+0x813/0xb40 net/netlink/af_netlink.c:1894
 
-Fix this by validating the parent ACE SID count and SID length before
-using the SID during inheritance. Compute the inherited ACE size from the
-copied SID so the size matches the bounded destination SID. Reject the
-inherited DACL if size accumulation would overflow smb_acl.size or the
-security descriptor allocation size.
+problem. Ido Schimmel found steps to reproduce
 
-Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
-Signed-off-by: Shota Zaizen <s@zaizen.me>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+  ip link add name team1 type team
+  ip link add name dummy1 mtu 1499 master team1 type dummy
+  ip netns add ns1
+  ip link set dev dummy1 netns ns1
+  ip -n ns1 link del dev dummy1
+
+and also found that the same issue was fixed in the bond driver in
+commit f51048c3e07b ("bonding: avoid NETDEV_CHANGEMTU event when
+unregistering slave").
+
+Let's do similar thing for the team driver, with commit ad7c7b2172c3 ("net:
+hold netdev instance lock during sysfs operations") and commit 303a8487a657
+("net: s/__dev_set_mtu/__netif_set_mtu/") also applied.
+
+Reported-by: syzbot+881d65229ca4f9ae8c84@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=881d65229ca4f9ae8c84
+Suggested-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: Jiri Pirko <jiri@nvidia.com>
+Fixes: 3d249d4ca7d0 ("net: introduce ethernet teaming device")
+Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Acked-by: Stanislav Fomichev <sdf@fomichev.me>
+Link: https://patch.msgid.link/20260224125709.317574-2-idosch@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smbacl.c | 66 +++++++++++++++++++++++++++++++++---------
- 1 file changed, 52 insertions(+), 14 deletions(-)
+ drivers/net/team/team.c | 21 +++++++++++++++------
+ 1 file changed, 15 insertions(+), 6 deletions(-)
 
-diff --git a/fs/smb/server/smbacl.c b/fs/smb/server/smbacl.c
-index fb48a504435d6..a338884d2115f 100644
---- a/fs/smb/server/smbacl.c
-+++ b/fs/smb/server/smbacl.c
-@@ -1105,7 +1105,26 @@ static void smb_set_ace(struct smb_ace *ace, const struct smb_sid *sid, u8 type,
- 	ace->flags = flags;
- 	ace->access_req = access_req;
- 	smb_copy_sid(&ace->sid, sid);
--	ace->size = cpu_to_le16(1 + 1 + 2 + 4 + 1 + 1 + 6 + (sid->num_subauth * 4));
-+	ace->size = cpu_to_le16(1 + 1 + 2 + 4 + 1 + 1 + 6 +
-+				(ace->sid.num_subauth * 4));
-+}
-+
-+static int smb_append_inherited_ace(struct smb_ace **ace, int *nt_size,
-+				    int *ace_cnt, const struct smb_sid *sid,
-+				    u8 type, u8 flags, __le32 access_req)
-+{
-+	int ace_size;
-+
-+	smb_set_ace(*ace, sid, type, flags, access_req);
-+	ace_size = le16_to_cpu((*ace)->size);
-+	/* pdacl->size is __le16 and includes struct smb_acl. */
-+	if (check_add_overflow(*nt_size, ace_size, nt_size) ||
-+	    *nt_size > U16_MAX - (int)sizeof(struct smb_acl))
-+		return -EINVAL;
-+
-+	(*ace_cnt)++;
-+	*ace = (struct smb_ace *)((char *)*ace + ace_size);
-+	return 0;
+diff --git a/drivers/net/team/team.c b/drivers/net/team/team.c
+index 386c989641a3e..9d5f7026adec4 100644
+--- a/drivers/net/team/team.c
++++ b/drivers/net/team/team.c
+@@ -1361,7 +1361,7 @@ static int team_port_add(struct team *team, struct net_device *port_dev,
+ 
+ static void __team_port_change_port_removed(struct team_port *port);
+ 
+-static int team_port_del(struct team *team, struct net_device *port_dev)
++static int team_port_del(struct team *team, struct net_device *port_dev, bool unregister)
+ {
+ 	struct net_device *dev = team->dev;
+ 	struct team_port *port;
+@@ -1399,7 +1399,10 @@ static int team_port_del(struct team *team, struct net_device *port_dev)
+ 	__team_port_change_port_removed(port);
+ 
+ 	team_port_set_orig_dev_addr(port);
+-	dev_set_mtu(port_dev, port->orig.mtu);
++	if (unregister)
++		__dev_set_mtu(port_dev, port->orig.mtu);
++	else
++		dev_set_mtu(port_dev, port->orig.mtu);
+ 	kfree_rcu(port, rcu);
+ 	netdev_info(dev, "Port device %s removed\n", portname);
+ 	__team_compute_features(team);
+@@ -1714,7 +1717,7 @@ static void team_uninit(struct net_device *dev)
+ 
+ 	mutex_lock(&team->lock);
+ 	list_for_each_entry_safe(port, tmp, &team->port_list, list)
+-		team_port_del(team, port->dev);
++		team_port_del(team, port->dev, false);
+ 
+ 	__team_change_mode(team, NULL); /* cleanup */
+ 	__team_options_unregister(team, team_options, ARRAY_SIZE(team_options));
+@@ -2025,13 +2028,14 @@ static int team_add_slave(struct net_device *dev, struct net_device *port_dev,
+ 	return err;
  }
  
- int smb_inherit_dacl(struct ksmbd_conn *conn,
-@@ -1193,6 +1212,12 @@ int smb_inherit_dacl(struct ksmbd_conn *conn,
- 				CIFS_SID_BASE_SIZE)
- 			break;
+-static int team_del_slave(struct net_device *dev, struct net_device *port_dev)
++static int __team_del_slave(struct net_device *dev, struct net_device *port_dev,
++			    bool unregister)
+ {
+ 	struct team *team = netdev_priv(dev);
+ 	int err;
  
-+		if (parent_aces->sid.num_subauth > SID_MAX_SUB_AUTHORITIES ||
-+		    pace_size < offsetof(struct smb_ace, sid) +
-+				CIFS_SID_BASE_SIZE +
-+				sizeof(__le32) * parent_aces->sid.num_subauth)
-+			break;
+ 	mutex_lock(&team->lock);
+-	err = team_port_del(team, port_dev);
++	err = team_port_del(team, port_dev, unregister);
+ 	mutex_unlock(&team->lock);
+ 
+ 	if (err)
+@@ -2047,6 +2051,11 @@ static int team_del_slave(struct net_device *dev, struct net_device *port_dev)
+ 	return err;
+ }
+ 
++static int team_del_slave(struct net_device *dev, struct net_device *port_dev)
++{
++	return __team_del_slave(dev, port_dev, false);
++}
 +
- 		aces_size -= pace_size;
- 
- 		flags = parent_aces->flags;
-@@ -1222,22 +1247,24 @@ int smb_inherit_dacl(struct ksmbd_conn *conn,
- 		}
- 
- 		if (is_dir && creator && flags & CONTAINER_INHERIT_ACE) {
--			smb_set_ace(aces, psid, parent_aces->type, inherited_flags,
--				    parent_aces->access_req);
--			nt_size += le16_to_cpu(aces->size);
--			ace_cnt++;
--			aces = (struct smb_ace *)((char *)aces + le16_to_cpu(aces->size));
-+			rc = smb_append_inherited_ace(&aces, &nt_size, &ace_cnt,
-+						      psid, parent_aces->type,
-+						      inherited_flags,
-+						      parent_aces->access_req);
-+			if (rc)
-+				goto free_aces_base;
- 			flags |= INHERIT_ONLY_ACE;
- 			psid = creator;
- 		} else if (is_dir && !(parent_aces->flags & NO_PROPAGATE_INHERIT_ACE)) {
- 			psid = &parent_aces->sid;
- 		}
- 
--		smb_set_ace(aces, psid, parent_aces->type, flags | inherited_flags,
--			    parent_aces->access_req);
--		nt_size += le16_to_cpu(aces->size);
--		aces = (struct smb_ace *)((char *)aces + le16_to_cpu(aces->size));
--		ace_cnt++;
-+		rc = smb_append_inherited_ace(&aces, &nt_size, &ace_cnt, psid,
-+					      parent_aces->type,
-+					      flags | inherited_flags,
-+					      parent_aces->access_req);
-+		if (rc)
-+			goto free_aces_base;
- pass:
- 		parent_aces = (struct smb_ace *)((char *)parent_aces + pace_size);
- 	}
-@@ -1247,7 +1274,7 @@ int smb_inherit_dacl(struct ksmbd_conn *conn,
- 		struct smb_acl *pdacl;
- 		struct smb_sid *powner_sid = NULL, *pgroup_sid = NULL;
- 		int powner_sid_size = 0, pgroup_sid_size = 0, pntsd_size;
--		int pntsd_alloc_size;
-+		size_t pntsd_alloc_size;
- 
- 		if (parent_pntsd->osidoffset) {
- 			powner_sid = (struct smb_sid *)((char *)parent_pntsd +
-@@ -1260,8 +1287,19 @@ int smb_inherit_dacl(struct ksmbd_conn *conn,
- 			pgroup_sid_size = 1 + 1 + 6 + (pgroup_sid->num_subauth * 4);
- 		}
- 
--		pntsd_alloc_size = sizeof(struct smb_ntsd) + powner_sid_size +
--			pgroup_sid_size + sizeof(struct smb_acl) + nt_size;
-+		if (check_add_overflow(sizeof(struct smb_ntsd),
-+				       (size_t)powner_sid_size,
-+				       &pntsd_alloc_size) ||
-+		    check_add_overflow(pntsd_alloc_size,
-+				       (size_t)pgroup_sid_size,
-+				       &pntsd_alloc_size) ||
-+		    check_add_overflow(pntsd_alloc_size, sizeof(struct smb_acl),
-+				       &pntsd_alloc_size) ||
-+		    check_add_overflow(pntsd_alloc_size, (size_t)nt_size,
-+				       &pntsd_alloc_size)) {
-+			rc = -EINVAL;
-+			goto free_aces_base;
-+		}
- 
- 		pntsd = kzalloc(pntsd_alloc_size, GFP_KERNEL);
- 		if (!pntsd) {
+ static netdev_features_t team_fix_features(struct net_device *dev,
+ 					   netdev_features_t features)
+ {
+@@ -3146,7 +3155,7 @@ static int team_device_event(struct notifier_block *unused,
+ 					       !!netif_oper_up(port->dev));
+ 		break;
+ 	case NETDEV_UNREGISTER:
+-		team_del_slave(port->team->dev, dev);
++		__team_del_slave(port->team->dev, dev, true);
+ 		break;
+ 	case NETDEV_FEAT_CHANGE:
+ 		if (!port->team->notifier_ctx) {
 -- 
 2.53.0
 
