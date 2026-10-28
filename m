@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793212939;
-	b=ZlDL8VTZgMzHJdWyHLeBYh7XyZOcXH0qHwsqPFRFNWJZkEfoFh2KZ5Dn9il5k2R2P1XN
-	 qvdJQIL9p8WhLQlKAs04pmxw9xyrN+vHMgymXw9fx+VTEsqlTkPEW6cgNiTVd1LfjgKJP
-	 fhHgpJu0W8PkgwC7bApn5irZRx5qXhfs2tN3OQ4r85RXPXTBW7aL4MU/l3AylDdKoZE7z
-	 0Q1Tj2t1HM2wGOgKXCCDKpogr9BUW+Y9wyzBz8TjZGwkqaFOhVnVfhy7WDgPSv5jplTxp
-	 gelpYiRE90dt3N2PdBr99QDnCVqgMROrI8p5GszmuPzi6xIdWgzOexowpu2X37zr4lA==
+	t=1793212942;
+	b=VkRu/C4I8GbqW86HheHKVvESJInDNCCsJyKJ6c124pYNscwFsAcGTKsajA90dGknLmKm
+	 ZrQANQOZ9hB49kJ29sPN2kixNZS8x53P8L5HWTKx8LZnjg0KDP1Gait8pQ8aAb5nhit2G
+	 XYgDOugwBmRbW4t/nrglGXyQ1BDQ8gYmrhLc6ikCCTkq3aU9RDq10nC0Hwwd7tl62mBaf
+	 tI/7bUAL+J+ieO44ZeW3dHMnB9d02fgW6Ls/F9qP67qN8ytbg6Bya5SA+bqkDY0Vj+7ZQ
+	 kNWeQWSA1kS36HoyBUF/IIfsfLFtXcN2luYdQ8swLvx2Y4L89UJ9eay8MURG7QM2ILQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793212939;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793212942;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=DO4IBxyTOYk0UN2XfrbRzd7slZMP2asBwQFftwZXipw=;
-	b=XoRLvR+4vQJEgGyHVRnCyNJcvcm99za2Us2sWO5t0YPxgi7K3uLmvVGGh+WBklDe6Quz
-	 T3ClS17vXoOjlU4KsPoC093oA1iZCpRXK39rF+s69l9QjsPoo2h5vlUsTQ/gZJMMjLZM+
-	 rgiqn+EdVxwB5HFh8C5P1ExF9U5LjwhA3ccLuvZINW8Xr3HSnYBb1EaC1V2kUEzogt3/3
-	 ARSHVb5IxgAQxN9GNZHc0N26fZA1NRBH3d04IRK6gMO63JidOrQJkaDF5/8afuQ9v0vGO
-	 LNsf3ETYxQgUhhQV095vtY+tAuLcoUp1XEHwA1vX/AzJLIWCtwsZoW1xhxwnCCwf9pg==
+	bh=Ic0j1A0NG4+j3QH98JXX2gWEHFwo6HhQtofWILbYvVk=;
+	b=ag7NrAvdkYW1BHTzGmeraNZYDldF7uwGPuYt3GVOe+Zdhq4oLgLR8f6ac4J7rVqPBfdh
+	 n3AfL99R9xSJ4PmlGrVeMXkEAzYeX1QYUtkOTM3I29cMT2v3LfxGhhJAnSrRfW23e4tNK
+	 alLWScRAI2OMI9MHsRmrXWhedP20HMP9pAM8BKLiEuSrac7tJYXBrQy4qdrRo/q2K8xY+
+	 aJ8ZqXRC8suBdieoGmlr4hOcNRPWAa/Nd+BT9xvFfntNDAFsotSZoGSQYrnN6L2kQHOLG
+	 j+Yk1xYnQUlb9Vm8FbkwRYm1NIZwXqshFXMCTFeTF/TvKx46sNcOK76A4De4Nd81rsg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JXmXW4by;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jhS+IqUG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 892A1606A320;
-	Wed, 28 Oct 2026 18:42:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56803606A31A;
+	Wed, 28 Oct 2026 18:42:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JXmXW4by
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAD9A1F01825;
-	Wed, 28 Oct 2026 18:42:18 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jhS+IqUG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA14B1F01825;
+	Wed, 28 Oct 2026 18:42:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793212939;
-	bh=DO4IBxyTOYk0UN2XfrbRzd7slZMP2asBwQFftwZXipw=;
+	s=korg; t=1793212942;
+	bh=Ic0j1A0NG4+j3QH98JXX2gWEHFwo6HhQtofWILbYvVk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JXmXW4byOMaDfsrEdNMq5rcPhUfZ/6tN2EBJGZgxG355hgTkOcx84Adht3DFrPagj
-	 CN+d8DrmVNZFo19yaKdDt7nLkfCGkM126KHbIf7UIPh8UVGk+LJCbcmr1eMRs3uhRX
-	 QsxgTuASKGLVu+b7YvRSAac7l+DWjcjVvhD38Wg0=
+	b=jhS+IqUGrSvhdtSfee6LqPj9L58XggcVSuF+W36MBxSCHRK8GTHNIT6ljwAVmBuVl
+	 uPgCswDOIuINNKN4JN4WShgnAVMdb8uEVT7n6Tm5TJQqhg3juZYvIbIcbkMfdh5C8q
+	 Ggll2guf312UqHSRWM6xHdJI2aAgut537Xg6jqkw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Borzeszkowski <alan.borzeszkowski@linux.intel.com>,
+	Kurt Lieber <kurt@lieber.org>,
 	Mika Westerberg <mika.westerberg@linux.intel.com>
-Subject: [PATCH 6.1 0329/1887] thunderbolt: Fix KASAN reported use-after-free when request is canceled
-Date: Wed, 28 Oct 2026 17:40:25 +0100
-Message-ID: <20261028170506.717260558@linuxfoundation.org>
+Subject: [PATCH 6.1 0330/1887] thunderbolt: Disable CL states for the Anker Prime TB5 dock
+Date: Wed, 28 Oct 2026 17:40:26 +0100
+Message-ID: <20261028170506.741017754@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -67,245 +67,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mika Westerberg <mika.westerberg@linux.intel.com>
+From: Kurt Lieber <kurt@lieber.org>
 
-commit a02188ddc24b7872f0c5e0c5873f827318717803 upstream.
+commit 395e9f2967a7ac6898026e8f136c369805dc2fd9 upstream.
 
-Alan reported that when doing stress testing sometimes KASAN notices
-use-after-free during control channel operation (stripped down keeping
-the relevant parts):
+The Anker Prime TB5 dock identifies itself in the DROM as 01ea:83b5.
+Its router config space is an Intel Barlow Ridge 80G hub (8087:5786).
+The upstream lane adapter advertises CL0s, CL1, and CL2. With CLx left
+enabled, TMU uni-directional LowRes setup fails with -ENOTCONN, the USB3
+and DisplayPort tunnels are aborted, and the router reconnects in a loop.
+Loading thunderbolt with clx=0 keeps the link up on this machine.
 
- BUG: KASAN: slab-use-after-free in tb_cfg_request_sync+0x240/0x250 [thunderbolt]
- Read of size 24 at addr ffff88811067f290 by task kworker/u40:2/1760
-  <TASK>
-  tb_cfg_request_sync+0x240/0x250 [thunderbolt]
-  tb_cfg_read_raw+0x367/0x510 [thunderbolt]
-  tb_cfg_read+0xec/0x240 [thunderbolt]
-  tb_port_get_link_generation+0x258/0x420 [thunderbolt]
-  tb_usb3_consumed_bandwidth+0x1c1/0x2c0 [thunderbolt]
-  tb_tunnel_consumed_bandwidth+0xfd/0x910 [thunderbolt]
-  tb_available_bandwidth+0x5f2/0xeb0 [thunderbolt]
-  tb_recalc_estimated_bandwidth+0x2a0/0x1bc0 [thunderbolt]
-  tb_handle_dp_bandwidth_request+0x1897/0x5e20 [thunderbolt]
-  process_one_work+0x675/0x1230
-  worker_thread+0x5e6/0xf70
-  kthread+0x365/0x470
-  ret_from_fork+0x54d/0x710
-  ret_from_fork_asm+0x1a/0x30
-  </TASK>
+Match the DROM id together with the Barlow Ridge hub id and disable CL
+states for this dock only. QUIRK_NO_CLX takes the same early-out as the
+module parameter, without disabling CLx for every other router.
 
- Allocated by task 1760:
-  __kmalloc_cache_noprof+0x1ee/0x550
-  tb_cfg_read_raw+0x1d3/0x510 [thunderbolt]
-  tb_cfg_read+0xec/0x240 [thunderbolt]
-  tb_port_get_link_generation+0x258/0x420 [thunderbolt]
-  tb_usb3_consumed_bandwidth+0x1c1/0x2c0 [thunderbolt]
-  tb_tunnel_consumed_bandwidth+0xfd/0x910 [thunderbolt]
-  tb_available_bandwidth+0x5f2/0xeb0 [thunderbolt]
-  tb_recalc_estimated_bandwidth+0x2a0/0x1bc0 [thunderbolt]
-  tb_handle_dp_bandwidth_request+0x1897/0x5e20 [thunderbolt]
-  process_one_work+0x675/0x1230
-  worker_thread+0x5e6/0xf70
-  kthread+0x365/0x470
-  ret_from_fork+0x54d/0x710
-  ret_from_fork_asm+0x1a/0x30
-
- Freed by task 926:
-  kfree+0x18f/0x4a0
-  tb_cfg_request_put+0xb7/0xe0 [thunderbolt]
-  tb_cfg_request_work+0x82/0x120 [thunderbolt]
-  process_one_work+0x675/0x1230
-  worker_thread+0x5e6/0xf70
-  kthread+0x365/0x470
-  ret_from_fork+0x54d/0x710
-  ret_from_fork_asm+0x1a/0x30
-
- Second to last potentially related work creation:
-  __queue_work+0x575/0xd00
-  queue_work_on+0x77/0x80
-  tb_cfg_request_cancel+0xc7/0x260 [thunderbolt]
-  tb_cfg_request_sync+0x1f6/0x250 [thunderbolt]
-  tb_cfg_read_raw+0x367/0x510 [thunderbolt]
-  tb_cfg_read+0xec/0x240 [thunderbolt]
-  tb_port_get_link_generation+0x258/0x420 [thunderbolt]
-  tb_usb3_consumed_bandwidth+0x1c1/0x2c0 [thunderbolt]
-  tb_tunnel_consumed_bandwidth+0xfd/0x910 [thunderbolt]
-  tb_available_bandwidth+0x5f2/0xeb0 [thunderbolt]
-  tb_recalc_estimated_bandwidth+0x2a0/0x1bc0 [thunderbolt]
-  tb_handle_dp_bandwidth_request+0x1897/0x5e20 [thunderbolt]
-  process_one_work+0x675/0x1230
-  worker_thread+0x5e6/0xf70
-  kthread+0x365/0x470
-  ret_from_fork+0x54d/0x710
-  ret_from_fork_asm+0x1a/0x30
-
-The last stack trace is helpful because it shows that we are cancelling
-a request and looking at tb_cfg_request_cancel() what might happen is
-that tb_cfg_request_work() completes right before tb_cfg_request_cancel()
-starts and because of this it will call schedule_work() queueing the
-same work to run again. However, it is already removed from the
-request_queue and reference count is dropped so when
-tb_cfg_request_work() triggers again it will access memory that is
-already released.
-
-Fix this so that we first make sure a cancelled request is not handed
-away from tb_cfg_request_find() or scheduled to run. Then instead of
-relying on the worker to clean up the request we will do it in
-tb_cfg_request_cancel() after the work is canceled from running. Make
-tb_cfg_request_dequeue() release the request only if it was actually
-removed from the queue.
-
-Reported-by: Alan Borzeszkowski <alan.borzeszkowski@linux.intel.com>
-Fixes: d7f781bfdbf4 ("thunderbolt: Rework control channel to be more reliable")
+Closes: https://lore.kernel.org/linux-usb/SJ0PR15MB4696D491504DB667AA8E0617A3812@SJ0PR15MB4696.namprd15.prod.outlook.com/
 Cc: stable@vger.kernel.org
+Assisted-by: LLM
+Signed-off-by: Kurt Lieber <kurt@lieber.org>
 Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thunderbolt/ctl.c |   63 ++++++++++++++++++++++------------------------
- 1 file changed, 31 insertions(+), 32 deletions(-)
+ drivers/thunderbolt/quirks.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/thunderbolt/ctl.c
-+++ b/drivers/thunderbolt/ctl.c
-@@ -65,7 +65,6 @@ struct tb_ctl {
- #define tb_ctl_dbg(ctl, format, arg...) \
- 	dev_dbg(&(ctl)->nhi->pdev->dev, format, ## arg)
- 
--static DECLARE_WAIT_QUEUE_HEAD(tb_cfg_request_cancel_queue);
- /* Serializes access to request kref_get/put */
- static DEFINE_MUTEX(tb_cfg_request_lock);
- 
-@@ -123,41 +122,42 @@ void tb_cfg_request_put(struct tb_cfg_re
- static int tb_cfg_request_enqueue(struct tb_ctl *ctl,
- 				  struct tb_cfg_request *req)
- {
-+	tb_cfg_request_get(req);
-+
- 	WARN_ON(test_bit(TB_CFG_REQUEST_ACTIVE, &req->flags));
- 	WARN_ON(req->ctl);
- 
--	mutex_lock(&ctl->request_queue_lock);
-+	guard(mutex)(&ctl->request_queue_lock);
- 	if (!ctl->running) {
--		mutex_unlock(&ctl->request_queue_lock);
-+		tb_cfg_request_put(req);
- 		return -ENOTCONN;
- 	}
- 	req->ctl = ctl;
- 	list_add_tail(&req->list, &ctl->request_queue);
- 	set_bit(TB_CFG_REQUEST_ACTIVE, &req->flags);
--	mutex_unlock(&ctl->request_queue_lock);
- 	return 0;
- }
- 
--static void tb_cfg_request_dequeue(struct tb_cfg_request *req)
-+static bool tb_cfg_request_is_active(struct tb_cfg_request *req)
- {
--	struct tb_ctl *ctl = req->ctl;
--
--	mutex_lock(&ctl->request_queue_lock);
--	if (!test_bit(TB_CFG_REQUEST_ACTIVE, &req->flags)) {
--		mutex_unlock(&ctl->request_queue_lock);
--		return;
--	}
-+	return test_bit(TB_CFG_REQUEST_ACTIVE, &req->flags);
-+}
- 
--	list_del(&req->list);
--	clear_bit(TB_CFG_REQUEST_ACTIVE, &req->flags);
--	if (test_bit(TB_CFG_REQUEST_CANCELED, &req->flags))
--		wake_up(&tb_cfg_request_cancel_queue);
--	mutex_unlock(&ctl->request_queue_lock);
-+static bool tb_cfg_request_is_canceled(struct tb_cfg_request *req)
-+{
-+	return test_bit(TB_CFG_REQUEST_CANCELED, &req->flags);
- }
- 
--static bool tb_cfg_request_is_active(struct tb_cfg_request *req)
-+static void tb_cfg_request_dequeue(struct tb_cfg_request *req)
- {
--	return test_bit(TB_CFG_REQUEST_ACTIVE, &req->flags);
-+	struct tb_ctl *ctl = req->ctl;
-+
-+	guard(mutex)(&ctl->request_queue_lock);
-+	if (tb_cfg_request_is_active(req)) {
-+		list_del(&req->list);
-+		clear_bit(TB_CFG_REQUEST_ACTIVE, &req->flags);
-+		tb_cfg_request_put(req);
-+	}
- }
- 
- static struct tb_cfg_request *
-@@ -168,7 +168,7 @@ tb_cfg_request_find(struct tb_ctl *ctl,
- 	mutex_lock(&pkg->ctl->request_queue_lock);
- 	list_for_each_entry(iter, &pkg->ctl->request_queue, list) {
- 		tb_cfg_request_get(iter);
--		if (iter->match(iter, pkg)) {
-+		if (!tb_cfg_request_is_canceled(iter) && iter->match(iter, pkg)) {
- 			req = iter;
- 			break;
- 		}
-@@ -495,8 +495,11 @@ static void tb_ctl_rx_callback(struct tb
- 	 */
- 	req = tb_cfg_request_find(pkg->ctl, pkg);
- 	if (req) {
--		if (req->copy(req, pkg))
--			schedule_work(&req->work);
-+		scoped_guard(mutex, &pkg->ctl->request_queue_lock) {
-+			if (!tb_cfg_request_is_canceled(req) &&
-+			    req->copy(req, pkg))
-+				schedule_work(&req->work);
-+		}
- 		tb_cfg_request_put(req);
- 	}
- 
-@@ -508,11 +511,10 @@ static void tb_cfg_request_work(struct w
- {
- 	struct tb_cfg_request *req = container_of(work, typeof(*req), work);
- 
--	if (!test_bit(TB_CFG_REQUEST_CANCELED, &req->flags))
-+	if (!tb_cfg_request_is_canceled(req))
- 		req->callback(req->callback_data);
- 
- 	tb_cfg_request_dequeue(req);
--	tb_cfg_request_put(req);
- }
- 
- /**
-@@ -536,10 +538,9 @@ int tb_cfg_request(struct tb_ctl *ctl, s
- 	INIT_WORK(&req->work, tb_cfg_request_work);
- 	INIT_LIST_HEAD(&req->list);
- 
--	tb_cfg_request_get(req);
- 	ret = tb_cfg_request_enqueue(ctl, req);
- 	if (ret)
--		goto err_put;
-+		return ret;
- 
- 	ret = tb_ctl_tx(ctl, req->request, req->request_size,
- 			req->request_type);
-@@ -553,9 +554,6 @@ int tb_cfg_request(struct tb_ctl *ctl, s
- 
- err_dequeue:
- 	tb_cfg_request_dequeue(req);
--err_put:
--	tb_cfg_request_put(req);
--
- 	return ret;
- }
- 
-@@ -569,9 +567,10 @@ err_put:
-  */
- void tb_cfg_request_cancel(struct tb_cfg_request *req, int err)
- {
--	set_bit(TB_CFG_REQUEST_CANCELED, &req->flags);
--	schedule_work(&req->work);
--	wait_event(tb_cfg_request_cancel_queue, !tb_cfg_request_is_active(req));
-+	scoped_guard(mutex, &req->ctl->request_queue_lock)
-+		set_bit(TB_CFG_REQUEST_CANCELED, &req->flags);
-+	cancel_work_sync(&req->work);
-+	tb_cfg_request_dequeue(req);
- 	req->result.err = err;
- }
- 
+--- a/drivers/thunderbolt/quirks.c
++++ b/drivers/thunderbolt/quirks.c
+@@ -92,6 +92,9 @@ static const struct tb_quirk tb_quirks[]
+ 		  quirk_usb3_maximum_bandwidth },
+ 	{ 0x8087, PCI_DEVICE_ID_INTEL_BARLOW_RIDGE_HUB_40G_BRIDGE, 0x0000, 0x0000,
+ 		  quirk_usb3_maximum_bandwidth },
++	/* CLx is unstable on the Anker Prime TB5 dock (DROM 01ea:83b5) */
++	{ 0x8087, PCI_DEVICE_ID_INTEL_BARLOW_RIDGE_HUB_80G_BRIDGE, 0x01ea, 0x83b5,
++		  quirk_clx_disable },
+ 	/*
+ 	 * Block Runtime PM in DP redrive mode for Intel Barlow Ridge host
+ 	 * controllers.
 
 
