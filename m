@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793217202;
-	b=5tiJbTpSKiESs6XKQuhJ9RTTC50Fv2Xqc7F3zGpRxgUgBe+OVMGchCm6ITdwuRaV1x8D
-	 CrSCwTgDCduDVjQtHAymR/nz2+AIVNnKSU7szFVP02deoruQ7ccCKeD8qCKShBxCahxRG
-	 GtSAfVTzigt1CLC4vHV3gjXl/1ifE/7EyZ12S3mMRdVPH3DlcnHUFuJvXtUw69uUtU3dD
-	 r2qJ/YpMRXKNfdPLIWxCbmc9lxt61U3qiKEtvMNyeN4vFxKH/ePjRoS+HC67d4jR9oVeY
-	 fqtOPz/YZGX3buv8w7W/9idI3s/od63K/odOdk/9sc06MAjClVsbclvOiALE25Y+CAw==
+	t=1793217205;
+	b=1Ut4wHyWm0LKvMqZgk6nQ8n300HB6U/k+dl596JeATnKt0MTKEUe8tdKkHSb4Z3uLoFC
+	 EjFVtbooNJx151azYTIEjZHVopfwwk2HQmTPapz0yWimeAlgyG4N2n2KsI9FeuKjpzhh7
+	 lqyGrBYs0gO0Oq7JXj/uOP436QGVxV2t8lQymF8jhBBTHGVtD8BQ/ha4DsccbgQp2bAcV
+	 T+nmHOMoho/+dA4yd1bjuDdGO9HDlGp4/FYIXQT76LvkXpGvtweNfPme3I3GQi6HA5RIU
+	 8CGLajaSNTrgJON0gU6aPisVCqwuiwtZ+KpM9Tr51cOfhi2MfinipLISNXagKBGb5gw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793217202;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793217205;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=nlZ45O4DHRwVnFENYXr7Sn2yyYIoYh9ZCmV7Rix5Jpg=;
-	b=v+0PfG4h/jIe23oo9jP4wbFxwV0PqZP4QAcO5L71HbR7VJm/EGuChZwyiOWhJ2OGgh5y
-	 qrQfdqS+qyoB2+2QxbeGytSIUk1nw4NexHaLxLh/mZLPvlYlV4RR50QkCgjdkVfg/t7du
-	 11Ffl5riN6L1cENjWmvDjZUweiCrugCuy46nXYShXDXriRMo2NG5+cC2M2xLSWzC/X92e
-	 9TSu2zBPyXrh9mEWzAVChCYaNDWozW3CU4o0E81tQm9Fbl6VYiWRcRM6gkD/BDu5qg/MU
-	 OxVPYi+wpPqrmbTC/TPUdmAZzqhJcJov3Oz9lS1h+mGXVl5hPmgNrPwHqZlIgOOON1w==
+	bh=w+GhH6CVPI0Fuaz64fq9NfNfJPOhFmOanrGYo4K/Vxs=;
+	b=C8cNV0mKkOEGWImQP9kcv5FVVupqtEoVCe3wnHHapEHXNn4uXMY8i7GgOKQ9vq2Bj3Py
+	 qcy9XR9GOzxVEn/4MQPszfUu59kMFsB24f9i9y+BX5MnPntgpdB5lISY7GOmF0dlqQpZN
+	 Z0DQSNbxcLnq3r1Gyq6NP9r5H4ZTBC8RsIq/1q5+QMtKE2PX9oo6JgsFspAR+ujfrMoD9
+	 yLaDD1evuQ+AjV00cjBm8ydGUa/8NbGEHz0AVMsfFlXeeqkLEHgyub8irGu7Qp1Ol8YYI
+	 GC0/LKx8Ufs2bdNSwYqxcCktnORstHgnrDZD5GICx1TszptwVtpupAFTZaee7czZSyg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t0qKOoX4;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="c/13sHvd";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1440D606A31C;
-	Wed, 28 Oct 2026 19:53:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D1FE606A31E;
+	Wed, 28 Oct 2026 19:53:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t0qKOoX4
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C55A1F01825;
-	Wed, 28 Oct 2026 19:53:21 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c/13sHvd
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FE3C1F01825;
+	Wed, 28 Oct 2026 19:53:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793217201;
-	bh=nlZ45O4DHRwVnFENYXr7Sn2yyYIoYh9ZCmV7Rix5Jpg=;
+	s=korg; t=1793217205;
+	bh=w+GhH6CVPI0Fuaz64fq9NfNfJPOhFmOanrGYo4K/Vxs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=t0qKOoX4SMYlkdVH9FXpjDCi5/Jyl+5hqneZl3/WKWWxGb+IRe95cXNJXbufLtsc9
-	 ABnx/u7qDV/s/ugl+bd3yOVGN0/qHgO86Lc9ewzqfAT92x/l6aOx2t/Fgda43bfE35
-	 WV1iB9H7Qt6KD8jRglAFuomRmMHa0EJ3t95GJW5k=
+	b=c/13sHvdl6st20kOKin1zns/YgLxWjUMTTsAbszALmE+2jBw1Yv82oXE0ffFJRVKJ
+	 sR19QLVUK0z4WRitdclLFwC5ZUENk5VZkWuKvsjaTg4cT2jN/WWDMQsEhHN5a5TbQf
+	 QtzGsHx9SPeEP1wzxbAaBecE3rcr3QOyZoLc1UeE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike Tipton <quic_mdtipton@quicinc.com>,
-	Rob Clark <robdclark@chromium.org>,
-	Georgi Djakov <djakov@kernel.org>,
+	Amit Klein <aksecurity@gmail.com>,
+	Noam Caspi <noam.caspi@mail.huji.ac.il>,
+	Ido Schimmel <idosch@nvidia.com>,
+	David Ahern <dsahern@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1822/1887] interconnect: Dont access req_list while its being manipulated
-Date: Wed, 28 Oct 2026 18:05:18 +0100
-Message-ID: <20261028170540.904587413@linuxfoundation.org>
+Subject: [PATCH 6.1 1787/1887] ipv4: udp: Create exceptions before socket matching
+Date: Wed, 28 Oct 2026 18:04:43 +0100
+Message-ID: <20261028170540.116084639@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,104 +71,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mike Tipton <quic_mdtipton@quicinc.com>
+From: Ido Schimmel <idosch@nvidia.com>
 
-[ Upstream commit de1bf25b6d771abdb52d43546cf57ad775fb68a1 ]
+[ Upstream commit 4c3499f79f8c7e8561266bcc220a18538cec0458 ]
 
-The icc_lock mutex was split into separate icc_lock and icc_bw_lock
-mutexes in [1] to avoid lockdep splats. However, this didn't adequately
-protect access to icc_node::req_list.
+Currently, when ICMP Fragmentation Needed and Redirect Message packets
+are locally delivered and quote a UDP packet, a FIB nexthop exception
+(FNHE) is only created if the kernel can match the UDP packet to an
+existing socket.
 
-The icc_set_bw() function will eventually iterate over req_list while
-only holding icc_bw_lock, but req_list can be modified while only
-holding icc_lock. This causes races between icc_set_bw(), of_icc_get(),
-and icc_put().
+This behavior allows off-path attackers to conduct a side-channel attack
+on the FNHE cache in order to discover the ephemeral port used by a
+connected UDP socket.
 
-Example A:
+Commit 6457378fe796 ("ipv4: use siphash instead of Jenkins in
+fnhe_hashfun()") and commit 67d6d681e15b ("ipv4: make exception cache
+less predictible") tried to mitigate such attacks by making it harder
+for attackers to discover hash collisions in the FNHE cache and by
+randomizing the number of exceptions a hash bucket can hold,
+respectively. Unfortunately, both of the mitigations can be bypassed.
 
-  CPU0                               CPU1
-  ----                               ----
-  icc_set_bw(path_a)
-    mutex_lock(&icc_bw_lock);
-                                     icc_put(path_b)
-                                       mutex_lock(&icc_lock);
-    aggregate_requests()
-      hlist_for_each_entry(r, ...
-                                       hlist_del(...
-        <r = invalid pointer>
+Instead, mitigate such attacks by always creating a FNHE, even before
+trying to find a matching socket. Do that by calling ipv4_update_pmtu()
+and ipv4_redirect(), the helpers used when the quoted packet did not
+originate from a socket.
 
-Example B:
+This means that guesses (right or wrong) from an off-path attacker will
+always result in a FNHE being created or updated in the cache that the
+attacker can observe.
 
-  CPU0                               CPU1
-  ----                               ----
-  icc_set_bw(path_a)
-    mutex_lock(&icc_bw_lock);
-                                     path_b = of_icc_get()
-                                       of_icc_get_by_index()
-                                         mutex_lock(&icc_lock);
-                                         path_find()
-                                           path_init()
-    aggregate_requests()
-      hlist_for_each_entry(r, ...
-                                             hlist_add_head(...
-        <r = invalid pointer>
+Pass an oif of 0, in a similar fashion to icmp_err(). This is also the
+oif used by the socket path for sockets that are not bound to a device.
 
-Fix this by ensuring icc_bw_lock is always held before manipulating
-icc_node::req_list. The additional places icc_bw_lock is held don't
-perform any memory allocations, so we should still be safe from the
-original lockdep splats that motivated the separate locks.
+Note that this does not allow attackers to create FNHEs that they could
+not create before, as both helpers can already be reached with little to
+no validation. For example, by sending an ICMP error that quotes an ICMP
+Echo Reply or one that quotes a UDP source port that matches a wildcard
+socket.
 
-[1] commit af42269c3523 ("interconnect: Fix locking for runpm vs reclaim")
+Also note that in the good case (matched socket) the above scheme comes
+at the cost of an extra route lookup, as the no socket helpers perform
+their own lookup before the one performed by ipv4_sk_update_pmtu() /
+ipv4_sk_redirect(). When the two resolve to different nexthops, it also
+results in two exceptions being created for the same destination IP. One
+in the FNHE cache of the nexthop resolved by the no socket helpers and
+another in the FNHE cache of the nexthop used by the socket.
 
-Signed-off-by: Mike Tipton <quic_mdtipton@quicinc.com>
-Fixes: af42269c3523 ("interconnect: Fix locking for runpm vs reclaim")
-Reviewed-by: Rob Clark <robdclark@chromium.org>
-Link: https://lore.kernel.org/r/20240305225652.22872-1-quic_mdtipton@quicinc.com
-Signed-off-by: Georgi Djakov <djakov@kernel.org>
+Fixes: 4895c771c7f0 ("ipv4: Add FIB nexthop exceptions.")
+Cc: stable@vger.kernel.org
+Reported-by: Amit Klein <aksecurity@gmail.com>
+Reported-by: Noam Caspi <noam.caspi@mail.huji.ac.il>
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://patch.msgid.link/20260828192344.2596928-3-idosch@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ sashal: Inlined udp_err_update_exception() into the existing udp_err() wrapper before calling __udp4_lib_err(). ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/interconnect/core.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ net/ipv4/udp.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/interconnect/core.c b/drivers/interconnect/core.c
-index 40e2f110c5339..180015512aa40 100644
---- a/drivers/interconnect/core.c
-+++ b/drivers/interconnect/core.c
-@@ -162,6 +162,8 @@ static struct icc_path *path_init(struct device *dev, struct icc_node *dst,
+diff --git a/net/ipv4/udp.c b/net/ipv4/udp.c
+index 271bf781fe54b..3c41aed3788c0 100644
+--- a/net/ipv4/udp.c
++++ b/net/ipv4/udp.c
+@@ -879,6 +879,15 @@ int __udp4_lib_err(struct sk_buff *skb, u32 info, struct udp_table *udptable)
  
- 	path->num_nodes = num_nodes;
- 
-+	mutex_lock(&icc_bw_lock);
+ int udp_err(struct sk_buff *skb, u32 info)
+ {
++	const int type = icmp_hdr(skb)->type;
++	const int code = icmp_hdr(skb)->code;
++	struct net *net = dev_net(skb->dev);
 +
- 	for (i = num_nodes - 1; i >= 0; i--) {
- 		node->provider->users++;
- 		hlist_add_head(&path->reqs[i].req_node, &node->req_list);
-@@ -172,6 +174,8 @@ static struct icc_path *path_init(struct device *dev, struct icc_node *dst,
- 		node = node->reverse;
- 	}
- 
-+	mutex_unlock(&icc_bw_lock);
++	if (type == ICMP_DEST_UNREACH && code == ICMP_FRAG_NEEDED)
++		ipv4_update_pmtu(skb, net, info, 0, IPPROTO_UDP);
++	else if (type == ICMP_REDIRECT)
++		ipv4_redirect(skb, net, 0, IPPROTO_UDP);
 +
- 	return path;
+ 	return __udp4_lib_err(skb, info, &udp_table);
  }
  
-@@ -779,12 +783,16 @@ void icc_put(struct icc_path *path)
- 		pr_err("%s: error (%d)\n", __func__, ret);
- 
- 	mutex_lock(&icc_lock);
-+	mutex_lock(&icc_bw_lock);
-+
- 	for (i = 0; i < path->num_nodes; i++) {
- 		node = path->reqs[i].node;
- 		hlist_del(&path->reqs[i].req_node);
- 		if (!WARN_ON(!node->provider->users))
- 			node->provider->users--;
- 	}
-+
-+	mutex_unlock(&icc_bw_lock);
- 	mutex_unlock(&icc_lock);
- 
- 	kfree_const(path->name);
 -- 
 2.53.0
 
