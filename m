@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793209410;
-	b=W9Y6IfDDyNlGsB4IPJRw/MrDUqnMypdLWAhN46bvWHkI+yWKCU7E676Os7UScUotVR8v
-	 atVc+VbWuaaXHG3RGG1a9hbA0XBIP6i2ybEkKwHNF8MLIZwCAmCUdWpH4VDkOPwTCxUEa
-	 zPka1PFaZfnC3J2K/iAwtqKOrGZcpdvqVjZSwPrlMntfvVacRHC/kov69ZVUXrnl9WiXR
-	 P2K5F3H08uWpUI+hfBnVvf+NMZYaqpT09THCBQrOLuzSPO0EZBVvj3A/QP+QF3PZX2AVn
-	 qMgjCPPxe/9ieVlGyA8goHkn7ZCfM89kCsLQFs/A+/NQnsTXsfRhDkQIJqF+zAqUeSA==
+	t=1793209413;
+	b=VF5RgMT6QafVHO2a4vCDUsX5jGhCLPIaBhCAVst1AMETJHiai5eqd7Zs55iDJVGWUEw9
+	 UG4uTOKUiaMi92BM6Dcc+Iy8f+1jutleOSYwEMJSo9JDVE3Bwz74vv7QcV8D8HNf/a8zt
+	 kKdprGRyzod5ilw7MpPsHulGJKniVPmdG8OJGDf4ku/8M6tt6mQl0uEIHj2nkk9jpcYvy
+	 SOBq+jr/fiIPl+wg1/Z2l51nB3JY4R1TAQgoAsDOOIgPYBUZru+Z+UgATtTOQewBhgDIy
+	 JQQMJbtA+gaRM8IQpULhxA+TvYNaWSEZEcNOQqdlwatXJ2lLYIyG8jtR3xFut+HdiJA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793209410;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793209413;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=JmQAX0QJnA6d6TZs8IRkfYj2xbaZm0nOds9ixGekM/4=;
-	b=ioTunPMrYrJggIUze1J33/pLmwakv1xxTeARtlnYOCa6wDvZIojorRwPl6/4iCtRqapZ
-	 jmKZNpd/pGJqHs3CJHD1yefQgwUnIubxnRJMJFdrfV3NSvKn84wrO4PDQwOChaKzRJfAm
-	 q96vVhHxm78QXr3tDVboFVilHfj7qPAlj0a5tJbfxFW1d7km9AQHVjLtefE/J2VBdHTHh
-	 /y6tzFcijFwgi1zSPs2O3plQI+9NX3Lcv9+VQtj825Q/LAYWDDCOr7DryIoidrupxgHJB
-	 nViXuyeZuKoNaq867ZtQP00tqXL2gATUNJ0FDNbdEkL4e1/pS4BGPdnlT6vycEtdc9g==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=KQBRKdGB9uKHMBTLQoHp6QWTd0QwJ5JoVQ5vg2SqvXs=;
+	b=RfelgMyi2CaNolYxXtdoGq9lW9N/Q64lZLYj8uq/+51VgLWLj2sTNMzQILTbEk/oamyk
+	 XB4KDAgTWKwlrUUhP6nB70wQIyisffkazHZ2zDRg7lK1+4Rix6D6LXjNifosQQwPmYLId
+	 +aG8ZiTfxsHH0q0Ch5PluO/YulBt3nA0rLKbOc14rbc+wbd8L0bSiJnKxYFF5Fg6trfpA
+	 djre27K4mFApofgwicZ94fmg0wDX9lyE3dVoiRP2pmMKEvRj8LYjXM8UZUjsTBYjNjLla
+	 c4kZQCKOn87u0BuGLjKIvKI/2TALDl3cQLHHO1fI3EfocBJpqbbIk+MdkLWWNcMPC4w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yhtlXHQZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h8tSaDAI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA3EB606A31C;
-	Wed, 28 Oct 2026 17:43:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B8DF606A31C;
+	Wed, 28 Oct 2026 17:43:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yhtlXHQZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDDC41F01825;
-	Wed, 28 Oct 2026 17:43:28 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h8tSaDAI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAD481F01825;
+	Wed, 28 Oct 2026 17:43:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793209409;
-	bh=JmQAX0QJnA6d6TZs8IRkfYj2xbaZm0nOds9ixGekM/4=;
+	s=korg; t=1793209412;
+	bh=KQBRKdGB9uKHMBTLQoHp6QWTd0QwJ5JoVQ5vg2SqvXs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yhtlXHQZ/Io3mt/AG7klcRnwJFveidcAaftdbNBSqyH+gnYNrd8+xNjMaHkxwrqnt
-	 JuhvQRL28aWqlp/CLE3/zEBb6O87/Mc2QOHLQe2ak2zbBCJ8Vz2QTrkbXx8M2plrRd
-	 dIWrD44272XDAjopx4QARj5IZIv4rAPMpaqiwxXI=
+	b=h8tSaDAIAhvDSNYpBQ9VZiS8luQpibeGaUm6NCKuQrRi2biCqt2q0H0TqMFKe9oaw
+	 XtA+bZrDfaMpKpj+YvK8leHTjJujXC5IBNAHVSAZxSTjbtp1SInJM0K0wm4zl1KF58
+	 +Nlyc0vSflrWo50uKMbHCNSYjqyDDxPpr33CQ7zs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike Christie <michael.christie@oracle.com>,
-	Yehyeong Lee <yhlee@isslab.korea.ac.kr>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>
-Subject: [PATCH 5.10 459/516] scsi: libiscsi: Validate the task named by a management response
-Date: Wed, 28 Oct 2026 18:00:11 +0100
-Message-ID: <20261028170014.352760363@linuxfoundation.org>
+	Alex Deucher <alexander.deucher@amd.com>,
+	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>
+Subject: [PATCH 5.10 460/516] drm/amdgpu/sdma3: Work around POLL_REGMEM / FENCE hang
+Date: Wed, 28 Oct 2026 18:00:12 +0100
+Message-ID: <20261028170014.375814975@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -62,88 +61,114 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
+From: Timur Kristóf <timur.kristof@gmail.com>
 
-commit 11bffcd9cb346732eab2914ef44fe777a3f0b585 upstream.
+commit 752480ad62964edf0254e151110d3e53a7cb37de upstream.
 
-__iscsi_complete_pdu() fetches the task for five response types from one
-place and checks only that the index resolved:
+SDMA can randomly hang on Polaris 10. Hard to reproduce,
+but has been occurring sporadically in the Mesa CI
+on the RADV Polaris 10 job even when Mesa isn't using
+the SDMA engine.
 
-      case ISCSI_OP_LOGOUT_RSP:
-      case ISCSI_OP_LOGIN_RSP:
-      case ISCSI_OP_TEXT_RSP:
-      case ISCSI_OP_SCSI_TMFUNC_RSP:
-      case ISCSI_OP_NOOP_IN:
-              task = iscsi_itt_to_task(conn, hdr->itt);
-              if (!task)
-                      return ISCSI_ERR_BAD_ITT;
+When Mesa actually uses the SDMA on Polaris, the hang
+becomes more frequent and the reproduction rate goes up
+significantly in the CI system.
 
-iscsi_itt_to_task() bounds the index against cmds_max and looks at
-nothing else, so a target can name any slot in the pool, including one
-that has never been used. task->conn is then NULL, and both
-iscsi_nop_out_rsp() and iscsi_complete_task() dereference it. One
-unsolicited NOP-In is enough; a Text Response carrying the same ITT
-crashes in iscsi_complete_task() instead.
+We don't know why the hangs occur, but it seems
+that inserting a single NOP packet before each
+POLL_REGMEM and FENCE packet works around it.
+At the moment it's unclear which GPUs are affected,
+so let's apply this to SDMA 3.x for now.
 
-Require the task to be in flight and not a SCSI command, the way
-iscsi_itt_to_ctask() does for the command opcodes.
+Note that this issue is not documented or acknowledged by AMD.
 
-[    6.298634] Oops: general protection fault, probably for non-canonical address 0xdffffc000000000c: 0000 [#1] SMP KASAN NOPTI
-[    6.298642] KASAN: null-ptr-deref in range [0x0000000000000060-0x0000000000000067]
-[    6.298652] CPU: 1 UID: 0 PID: 111 Comm: iscsistart Not tainted 7.2.0-rc5-ISCSI1-gf5098b6bae76 #1 PREEMPT(lazy)
-[    6.298654] Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-[    6.298656] RIP: 0010:iscsi_nop_out_rsp.constprop.0+0x46/0x160
-[    6.298691] Code: c1 ea 03 48 83 ec 08 80 3c 02 00 0f 85 f5 00 00 00 48 b8 00 00 00 00 00 fc ff df 48 8b 6b 58 48 8d 7d 60 48 89 fa 48 c1 ea 03 <80> 3c 02 00 0f 85 c0 00 00 00 48 8b 45 60 48 39 c3 74 50 48 b8 00
-[    6.298698] RSP: 0018:ffff88806c907be8 EFLAGS: 00010206
-[    6.298701] RAX: dffffc0000000000 RBX: ffff888006116800 RCX: 0000000000000020
-[    6.298702] RDX: 000000000000000c RSI: ffff88800525d578 RDI: 0000000000000060
-[    6.298703] RBP: 0000000000000000 R08: 0000000000000000 R09: 0000000000000000
-[    6.298706] R10: 0000000000000020 R11: 0000000000000000 R12: 0000000000000000
-[    6.298706] R13: 000000000000002e R14: ffff8880056eb440 R15: ffff888006116800
-[    6.298707] FS:  00007fc02d1c2740(0000) GS:ffff8880b29bc000(0000) knlGS:0000000000000000
-[    6.298710] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[    6.298711] CR2: 000055fe3b56ddf8 CR3: 00000000053b9004 CR4: 0000000000770ef0
-[    6.298712] PKRU: 55555554
-[    6.298713] Call Trace:
-[    6.298714]  <IRQ>
-[    6.298714]  __iscsi_complete_pdu+0x13a8/0x22a0
-[    6.298758]  iscsi_complete_pdu+0x54/0xa0
-[    6.298759]  iscsi_tcp_hdr_recv_done+0x870/0x2c80
-[    6.298778]  iscsi_tcp_recv_skb+0x31e/0xec0
-[    6.298800]  iscsi_sw_tcp_recv+0x12f/0x390
-[    6.298804]  __tcp_read_sock+0x1ab/0x810
-[    6.298812]  iscsi_sw_tcp_data_ready+0x18b/0x510
-[    6.298814]  tcp_rcv_established+0x1f56/0x3a00
-[    6.298842]  tcp_v4_do_rcv+0x449/0x960
-[    6.298847]  tcp_v4_rcv+0x2245/0x3bc0
-
-Fixes: 7996a778ff8c ("[SCSI] iscsi: add libiscsi")
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit c343a27ed90823d08de125f7c447d96d056b75d9)
 Cc: stable@vger.kernel.org
-Reviewed-by: Mike Christie <michael.christie@oracle.com>
-Signed-off-by: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
-Link: https://patch.msgid.link/20261007015842.634893-4-yhlee@isslab.korea.ac.kr
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/libiscsi.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/sdma_v3_0.c |   25 +++++++++++++++++++++----
+ 1 file changed, 21 insertions(+), 4 deletions(-)
 
---- a/drivers/scsi/libiscsi.c
-+++ b/drivers/scsi/libiscsi.c
-@@ -1201,7 +1201,7 @@ int __iscsi_complete_pdu(struct iscsi_co
- 	case ISCSI_OP_SCSI_TMFUNC_RSP:
- 	case ISCSI_OP_NOOP_IN:
- 		task = iscsi_itt_to_task(conn, hdr->itt);
--		if (!task)
-+		if (!task || task->state == ISCSI_TASK_FREE || task->sc)
- 			return ISCSI_ERR_BAD_ITT;
- 		break;
- 	default:
+--- a/drivers/gpu/drm/amd/amdgpu/sdma_v3_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/sdma_v3_0.c
+@@ -458,6 +458,9 @@ static void sdma_v3_0_ring_emit_hdp_flus
+ 	else
+ 		ref_and_mask = REG_SET_FIELD(ref_and_mask, GPU_HDP_FLUSH_DONE, SDMA1, 1);
+ 
++	/* Hang workaround */
++	amdgpu_ring_write(ring, SDMA_PKT_NOP_HEADER_OP(SDMA_OP_NOP));
++
+ 	amdgpu_ring_write(ring, SDMA_PKT_HEADER_OP(SDMA_OP_POLL_REGMEM) |
+ 			  SDMA_PKT_POLL_REGMEM_HEADER_HDP_FLUSH(1) |
+ 			  SDMA_PKT_POLL_REGMEM_HEADER_FUNC(3)); /* == */
+@@ -483,6 +486,10 @@ static void sdma_v3_0_ring_emit_fence(st
+ 				      unsigned flags)
+ {
+ 	bool write64bit = flags & AMDGPU_FENCE_FLAG_64BIT;
++
++	/* Hang workaround */
++	amdgpu_ring_write(ring, SDMA_PKT_NOP_HEADER_OP(SDMA_OP_NOP));
++
+ 	/* write the fence */
+ 	amdgpu_ring_write(ring, SDMA_PKT_HEADER_OP(SDMA_OP_FENCE));
+ 	amdgpu_ring_write(ring, lower_32_bits(addr));
+@@ -491,7 +498,11 @@ static void sdma_v3_0_ring_emit_fence(st
+ 
+ 	/* optionally write high bits as well */
+ 	if (write64bit) {
++		/* Hang workaround */
++		amdgpu_ring_write(ring, SDMA_PKT_NOP_HEADER_OP(SDMA_OP_NOP));
++
+ 		addr += 4;
++
+ 		amdgpu_ring_write(ring, SDMA_PKT_HEADER_OP(SDMA_OP_FENCE));
+ 		amdgpu_ring_write(ring, lower_32_bits(addr));
+ 		amdgpu_ring_write(ring, upper_32_bits(addr));
+@@ -1043,6 +1054,9 @@ static void sdma_v3_0_ring_emit_pipeline
+ 	uint32_t seq = ring->fence_drv.sync_seq;
+ 	uint64_t addr = ring->fence_drv.gpu_addr;
+ 
++	/* Hang workaround */
++	amdgpu_ring_write(ring, SDMA_PKT_NOP_HEADER_OP(SDMA_OP_NOP));
++
+ 	/* wait for idle */
+ 	amdgpu_ring_write(ring, SDMA_PKT_HEADER_OP(SDMA_OP_POLL_REGMEM) |
+ 			  SDMA_PKT_POLL_REGMEM_HEADER_HDP_FLUSH(0) |
+@@ -1070,6 +1084,9 @@ static void sdma_v3_0_ring_emit_vm_flush
+ {
+ 	amdgpu_gmc_emit_flush_gpu_tlb(ring, vmid, pd_addr);
+ 
++	/* Hang workaround */
++	amdgpu_ring_write(ring, SDMA_PKT_NOP_HEADER_OP(SDMA_OP_NOP));
++
+ 	/* wait for flush */
+ 	amdgpu_ring_write(ring, SDMA_PKT_HEADER_OP(SDMA_OP_POLL_REGMEM) |
+ 			  SDMA_PKT_POLL_REGMEM_HEADER_HDP_FLUSH(0) |
+@@ -1579,11 +1596,11 @@ static const struct amdgpu_ring_funcs sd
+ 	.get_wptr = sdma_v3_0_ring_get_wptr,
+ 	.set_wptr = sdma_v3_0_ring_set_wptr,
+ 	.emit_frame_size =
+-		6 + /* sdma_v3_0_ring_emit_hdp_flush */
++		6 + 1 + /* sdma_v3_0_ring_emit_hdp_flush */
+ 		3 + /* hdp invalidate */
+-		6 + /* sdma_v3_0_ring_emit_pipeline_sync */
+-		VI_FLUSH_GPU_TLB_NUM_WREG * 3 + 6 + /* sdma_v3_0_ring_emit_vm_flush */
+-		10 + 10 + 10, /* sdma_v3_0_ring_emit_fence x3 for user fence, vm fence */
++		6 + 1 + /* sdma_v3_0_ring_emit_pipeline_sync */
++		VI_FLUSH_GPU_TLB_NUM_WREG * 3 + 6 + 1 + /* sdma_v3_0_ring_emit_vm_flush */
++		(10 + 1) * 3, /* sdma_v3_0_ring_emit_fence x3 for user fence, vm fence */
+ 	.emit_ib_size = 7 + 6, /* sdma_v3_0_ring_emit_ib */
+ 	.emit_ib = sdma_v3_0_ring_emit_ib,
+ 	.emit_fence = sdma_v3_0_ring_emit_fence,
 
 
