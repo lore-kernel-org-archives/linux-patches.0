@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793212996;
-	b=zvvO3WhumE0sw+zHRc1IEDZI5i9ME65t6vQzwN0vx9dhb5+GZdY96djriI8Yd2KYuXgH
-	 SgTekj5e7k76XxLbS4Dx0E+s3t+PbbDQLNZnERc1hQ4cTH20hHTlMIabahFuiveiirhbj
-	 6saJ725Vs02odkBJZwTdOPhxkvSEDc71C2jOYtfbDwAf7DqBp0R4k7K8tvwhJkKFtM9Ew
-	 XtJiwwzMiyOrxDb74MAlvk53o9LezGGDliQtkWz8QspJ1nWGVu5qv/lkHOLAJMcCl5Ohz
-	 93N5r6M7RHJV3IYnOb27QAnxuVTWza1VhNjnYJV4CHWQ4JMQo9pzR9ekKekRPIncx5A==
+	t=1793212999;
+	b=CXiKxReFLz0Xa4FpaFzoS0iKHz+3twPjZ5sFblTyjkKA6P5u65oY5b8F8Wqw5QczbwbL
+	 vzXdbIqKUuKFvGffB2c7eJJrv97fS1sTSUsRIwcBfXaeAKBrqCWCU541Lm8MdfaldWuiX
+	 Q/MJ/5k4l/7pdIOxozI7jI7F/ySGiLSbGcArYxuNMwgQncdJp4YSXFRTrDUDJyPGe3lI1
+	 Dcty+NI7wYjsqZvgAYBm+Rt3JJmxxLHVXGhPWn2jowa8UIrSe16ODdkktru+7rBJ/NVpr
+	 8ElZ7vRObSVaSghSQk762y7bwvMzTr6DAvgrG9myNSMceqSmKEsJp0YIfiM1+ZbBX7w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793212996;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793212999;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=oa85CwLsEj76pR5EVtv5WDcF1tJYhnr49pGlqI3Zi98=;
-	b=JRImBDfa1NKL8YaQLD25aziLVyWiOmveHc197pmY3zwR170W0e3QGn1UqxDv5EQFeoeV
-	 p4qZ5aJH+VXOCuL4YnDxy1+tlMQJUTs/68nECXt4wrA6A4xzFV7zJ1GjjVTbKfsNjxqde
-	 4/KRazA6ygufWMfUiprLfBKX5FI1EZOk1OmHRetElIEQdxNMHVlV77y48ehcPUz4HjsdS
-	 WfwBo+Ae2p0veAfFUhBMq0974Q6cGmioSKhQfjNOSul6LFVbrmBYklkCzOTpnFJP3y8Bw
-	 HemqGTdmIFRmsZrdra/8Z4UyOu79IB70Zz6+7QpdiHH9cT3GtRmw9ZMDJ8XEBxBC5mg==
+	bh=oDG2MaDmM49cdYsOvPLuduS/R3e2Uqtx74lo74Tbp1A=;
+	b=sCRFMMLPxFFhzm3StnD8QUwEtIzwkGCqJf6vWKl0OLS7rqGlVOgJtoPJYQvpZbQBVt0s
+	 0+hZu84aCyTFCZuTZMBzTeAgGpir7q8CAS1IU6AVRDzkGUausdd0Y1X+7VqH1IvXj1geo
+	 va3hdyVH0XQbr7F4x3OSzqWHRGStYNg0yR/oWZ/xJsXn31WqevrIrFRxkpaHB7MMnodhZ
+	 2LVDewumvVMaO8su2jbvRNZnvrcOxwc+xWcywi2FGW8I6aZ8egRTGuJQCVxZgIdKVj1/s
+	 xfaRC35SgUd9V1ROjEAuPPafefYTWwxWAS6k1zt1CoUzTQ5vKmiTCXB4p7JruS3IC/g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q56ClPAM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LMwQljuj;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61643606A31A;
-	Wed, 28 Oct 2026 18:43:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 363D8606A31C;
+	Wed, 28 Oct 2026 18:43:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q56ClPAM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE1301F01825;
-	Wed, 28 Oct 2026 18:43:15 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LMwQljuj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85AA21F01825;
+	Wed, 28 Oct 2026 18:43:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793212996;
-	bh=oa85CwLsEj76pR5EVtv5WDcF1tJYhnr49pGlqI3Zi98=;
+	s=korg; t=1793212999;
+	bh=oDG2MaDmM49cdYsOvPLuduS/R3e2Uqtx74lo74Tbp1A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Q56ClPAMPHTjYos3XTBXoH5lt73vEg1rhlfxNPO9b7WM5x/86L+wvDr5fxTKi4UyJ
-	 qms8wVrUFonzd1IkOT/pjJ9PfzleMr7lixPANXSVGgzNIrnf35GPGBS9RAwY/MroVa
-	 9fkeJ9fL6YdNbVlBLfvK1z2Sis2NGGuFzrtE2s1I=
+	b=LMwQljuj3xdesEwrnu21NKU+Np4DxQ0OALr1kjkEulCums5BYKXcEA7nQjTAdc2QE
+	 42F6pM5ao79H2VqdTAC6UgFSVI+9GMoXZPQbWnTCSvSBl5oAGLXnbAzZzReLt3AKJ4
+	 85Fh26tcycg7/mot0bcjxb41Asmw3K3pm3LGEAuI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0351/1887] SUNRPC: fix gssx_dec_option_array error path bugs
-Date: Wed, 28 Oct 2026 17:40:47 +0100
-Message-ID: <20261028170507.216758332@linuxfoundation.org>
+Subject: [PATCH 6.1 0352/1887] SUNRPC: reject duplicate CREDS_VALUE options
+Date: Wed, 28 Oct 2026 17:40:48 +0100
+Message-ID: <20261028170507.239534136@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -71,112 +71,75 @@ Content-Transfer-Encoding: 8bit
 
 From: Chris Mason <clm@meta.com>
 
-[ Upstream commit 5e9a94539b1ec17a89177d952badfd0d844d694a ]
+[ Upstream commit 2e4ce62385c1b8a887c5370af058ac7b52a8eaf9 ]
 
-Four coupled defects in the gssx XDR option-array decoder make the
-error paths unsafe: a NULL deref in the caller, a refcount leak on
-the decoded group_info, and a latent use-after-free that the leak
-fix would otherwise expose.
+gssx_dec_option_array() walks the wire-supplied option array and, for
+every entry whose name matches CREDS_VALUE, calls
+gssx_dec_linux_creds() on the same struct svc_cred. That helper
+unconditionally installs a fresh groups_alloc() result into
+creds->cr_group_info without releasing whatever pointer was already
+there:
 
-gssx_dec_option_array() sets oa->count = 1 before allocating
-oa->data.  If that allocation fails, -ENOMEM is returned with
-oa->count == 1 and oa->data == NULL.  All other error paths jump
-to free_oa: which frees oa->data and NULLs it but also leaves
-oa->count == 1.  The caller trusts the count:
+    for (i = 0; i < count; i++) {
+        ... decode name ...
+        if (length == sizeof(CREDS_VALUE) &&
+            memcmp(p, CREDS_VALUE, sizeof(CREDS_VALUE)) == 0) {
+            err = gssx_dec_linux_creds(xdr, creds);
+            ...
+        }
+    }
 
-    gssp_accept_sec_context_upcall()
-      gssx_dec_accept_sec_context()
-        gssx_dec_option_array()        /* fails, count=1 data=NULL */
-      data = res.options.data[0].value /* NULL deref */
+A reply that carries two CREDS_VALUE entries therefore overwrites
+cr_group_info on the second iteration and orphans the group_info
+allocated by the first call. The earlier free_creds path only
+releases the last cr_group_info via free_svc_cred(), so the first
+allocation's refcount stays at one and its kvmalloc-backed storage
+is leaked. No in-tree caller of gssp_accept_sec_context_upcall()
+expects more than one CREDS_VALUE per reply.
 
-Independently, free_creds: releases the partially decoded svc_cred
-with a bare kfree(creds).  gssx_dec_linux_creds() installs a
-groups_alloc() result into creds->cr_group_info; that object is
-kvmalloc-backed and refcounted, and only put_group_info() reaches
-kvfree().  A plain kfree(creds) drops the wrapper and leaks the
-group_info allocation.
+Fix by tracking whether a CREDS_VALUE option has already been
+decoded and returning -EINVAL on any subsequent match, so the
+free_creds path releases the single group_info that was installed.
 
-The natural fix for the leak is to call free_svc_cred(creds) before
-kfree(creds), but free_svc_cred() invokes put_group_info() on
-creds->cr_group_info unconditionally when non-NULL.  The existing
-out_free_groups: path in gssx_dec_linux_creds() already called
-groups_free() on that pointer without clearing it, so once
-free_svc_cred() is wired in, the subsequent put_group_info() would
-touch freed memory.
-
-Fix all four together:
-
-  - Move the oa->count = 1 assignment below the oa->data allocation
-    so it is never set when oa->data is NULL.
-  - Reset oa->count to 0 at free_oa: so count and data stay
-    coherent and the caller sees an empty option array.
-  - Call free_svc_cred(creds) before kfree(creds) at free_creds:
-    so the refcounted cr_group_info is released.  free_svc_cred()
-    either NULL-guards each field explicitly (cr_group_info has
-    an if() check) or delegates to a helper that is NULL-safe
-    itself (kfree for the string fields, gss_mech_put() which
-    guards with if(gm) at gss_mech_switch.c:342), so it is safe
-    to call on a partially decoded svc_cred where only
-    cr_uid/cr_gid/cr_group_info have been written and everything
-    else is zero from kzalloc.
-  - In gssx_dec_linux_creds()'s out_free_groups: path, release
-    cr_group_info with put_group_info() rather than groups_free()
-    so the teardown matches free_svc_cred()'s refcount-aware path,
-    and clear the pointer so a later free_svc_cred() on the same
-    creds does not release it a second time.
-
-Fixes: 3cfcfc102a5e ("SUNRPC: fix some memleaks in gssx_dec_option_array")
+Fixes: 1d658336b05f ("SUNRPC: Add RPC based upcall mechanism for RPCGSS auth")
 Cc: stable@vger.kernel.org
 Assisted-by: kres (claude-opus-4-7)
 Signed-off-by: Chris Mason <clm@meta.com>
 Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260528-tier2-v1-2-d026a1415e0b@oracle.com
+Link: https://patch.msgid.link/20260528-tier2-v1-3-d026a1415e0b@oracle.com
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/auth_gss/gss_rpc_xdr.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ net/sunrpc/auth_gss/gss_rpc_xdr.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
 diff --git a/net/sunrpc/auth_gss/gss_rpc_xdr.c b/net/sunrpc/auth_gss/gss_rpc_xdr.c
-index ee91f4d641e6f..ac9ae42a69762 100644
+index ac9ae42a69762..967943ae61c62 100644
 --- a/net/sunrpc/auth_gss/gss_rpc_xdr.c
 +++ b/net/sunrpc/auth_gss/gss_rpc_xdr.c
-@@ -222,7 +222,8 @@ static int gssx_dec_linux_creds(struct xdr_stream *xdr,
- 
- 	return 0;
- out_free_groups:
--	groups_free(creds->cr_group_info);
-+	put_group_info(creds->cr_group_info);
-+	creds->cr_group_info = NULL;
- 	return err;
- }
- 
-@@ -242,12 +243,12 @@ static int gssx_dec_option_array(struct xdr_stream *xdr,
- 		return 0;
- 
- 	/* we recognize only 1 currently: CREDS_VALUE */
--	oa->count = 1;
--
- 	oa->data = kmalloc(sizeof(struct gssx_option), GFP_KERNEL);
- 	if (!oa->data)
- 		return -ENOMEM;
- 
-+	oa->count = 1;
-+
- 	creds = kzalloc(sizeof(struct svc_cred), GFP_KERNEL);
- 	if (!creds) {
- 		err = -ENOMEM;
-@@ -294,8 +295,10 @@ static int gssx_dec_option_array(struct xdr_stream *xdr,
- 	return 0;
- 
- free_creds:
-+	free_svc_cred(creds);
- 	kfree(creds);
- free_oa:
-+	oa->count = 0;
- 	kfree(oa->data);
- 	oa->data = NULL;
- 	return err;
+@@ -231,6 +231,7 @@ static int gssx_dec_option_array(struct xdr_stream *xdr,
+ 				 struct gssx_option_array *oa)
+ {
+ 	struct svc_cred *creds;
++	bool creds_decoded = false;
+ 	u32 count, i;
+ 	__be32 *p;
+ 	int err;
+@@ -281,9 +282,14 @@ static int gssx_dec_option_array(struct xdr_stream *xdr,
+ 		if (length == sizeof(CREDS_VALUE) &&
+ 		    memcmp(p, CREDS_VALUE, sizeof(CREDS_VALUE)) == 0) {
+ 			/* We have creds here. parse them */
++			if (creds_decoded) {
++				err = -EINVAL;
++				goto free_creds;
++			}
+ 			err = gssx_dec_linux_creds(xdr, creds);
+ 			if (err)
+ 				goto free_creds;
++			creds_decoded = true;
+ 			oa->data[0].value.len = 1; /* presence */
+ 		} else {
+ 			/* consume uninteresting buffer */
 -- 
 2.53.0
 
