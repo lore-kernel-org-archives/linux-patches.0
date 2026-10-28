@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793212252;
-	b=YvlE9HMJOoqka7FCe7nf/Jv44KE/9+3pfdMg+GD9yh0QcQhKxlcCYYkGfxIrrRMql4kg
-	 bFPfIseRc3okKpjJzAzBLME4NoRDfv6trRJuO2EV5QtFogT1Iqod5d/gEMmlMaldWY0I1
-	 McD5G0nkFkeaFsOW3M4X6jDInhNHMfjJPTUzniDefG7HZd8EEwTy+49stN5h1uPLXkyBW
-	 uUs1DtGrTnG4X9xgqeuY9cNNEW6X6wpATvnrup9Lb19FcCCCkZbY5nPkYKJZr1TYbfGvp
-	 Vh6QiYIKd8bBDk/eOe9MoCQ3YonYW+Imbj37lLhz5P+ry3yq4pzE6wLOn+pOcwqJVUw==
+	t=1793212255;
+	b=Z5cxrvlOHulgaIyGG1zQuD4tBrKoR0YisOhp6vQlm9mtYrphs01mU6rZrpP3SHoTXpe3
+	 APDMDh+q7jzhdAxAQMYmeY8RzTWakUi6LdMXfBuuG8I50H3j6EVbs1qqt5RJHKnCvLlEK
+	 btk95hbgWCaRkNPuNDiSZ2W3fakf3j5ky5m5odSk5yzMGXLbV4mRciu9V+47r78+w9GhB
+	 mq03pQ4pZ8FZXwENZQ2v4jrBizWzNfhgr5JpIZ7DdaPTlI324/C4PyjMxTbZSHR+VnzHk
+	 7mU/WMdjRAytCXOI8sdSYZI3vwvGv3a3IcUmM72CThsbRkXTlNKoqjRFhdUVbDQFe5A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793212252;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793212255;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=bCGSHupccDVL7zf/SivVwqwHHDXHegHghmkkyb3dWaA=;
-	b=GP5/eZu2u728snyEp7/wnNnLiZgd6JZxJzcrlMfO2B/71pDz3Qhv2SMCkZuQNeyjMCQK
-	 glGAZDZ7i89I29/R4p9Kt5mvU5KEqfsm8BjfCVDecJtRAd7DgaqQi8Jxrc9s52+HGRzoO
-	 sfQiJcu0gfWkVlXBgxcZljBCIWLBE5V0IzCGtZqLdv53lmp7dgfhh5Kns3o1LWjU18qwZ
-	 FGH0pxIpL03x0wKY7pA3Od0dV3YVc0Wlt5RiQ6SzGZd592Ky1QvsRjhHgG4f799mUS4WN
-	 Nxcjt9mBFlIXicV+t+cTTv8/ucR8V4G8lG6BDU9X55M3OGJ6XAYEN/ot438q1HLgisA==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=5n0l88v4m4P6ZpNECJ8FHgFLcWN6X7uXv1Q1bCEqOtI=;
+	b=1VqT4N+QunHXOOWn83trWmZ2XQY6Uah85yHgqrkqFbnm9Xzjrg8jNdXpLoNyM4kZYkE7
+	 /78XU/F6GG2AHSMN1ErsmCi1gJdXjOTwDuc4j5AAKCMfJyp79yS/ibw7EDQoixr0LF9Uf
+	 5h68s7y3uLTvaYiMb29Y8hOfbzA+R9R+Pf34LUVuPJJ7dwWVSbladYfpcLns6xBD6wdzA
+	 smYX1J/0FmI/G34cz6Bub6/xclrnvhCRoRqqhewr3y8xUTDQlvYYjF6jjw8OoVbXaspPf
+	 mJ+SjWlywBPW8+uPNaFWXPOFd6Wm7aI8z5kuOY2NsXDXlMcO7P8xVoVCGKTYM5GGs2Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jx+EvZBt;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="0GWr//C+";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D15EB606A32D;
-	Wed, 28 Oct 2026 18:30:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD0A2606A321;
+	Wed, 28 Oct 2026 18:30:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jx+EvZBt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30FC21F031E1;
-	Wed, 28 Oct 2026 18:30:51 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0GWr//C+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B5511F031E0;
+	Wed, 28 Oct 2026 18:30:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793212251;
-	bh=bCGSHupccDVL7zf/SivVwqwHHDXHegHghmkkyb3dWaA=;
+	s=korg; t=1793212254;
+	bh=5n0l88v4m4P6ZpNECJ8FHgFLcWN6X7uXv1Q1bCEqOtI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jx+EvZBt5Z6O5UmJ8lbSfB4iObXrBvbaMT/6N3A+P9wdQq51BVtPp3KOoUUT73Eq3
-	 +T0uq1PhViPufyOYd8JAVsm5bdb2nQty7URa85tLbDD2LzBNqtWTH39RVh906ra/Ed
-	 bzuYW+tE027hQzTLHPiBwtyJPg+mIFbmZHJypD5M=
+	b=0GWr//C+7L395l8N2X6QcIhnrEODY1YqO2SDkx02Tk7bo60MIYU3bzulKkaS1K8E4
+	 Rt17OdbM+DVM5ay2C0rIzJfKdLsgmShgEpaHRINZriNsl+ZCBf9jnZglzN9pJYriQd
+	 OZL22tHuqlDk0JZC0L3+ar8THUYNmEm1Rfa+Z3jo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Longlong Xia <xialonglong@kylinos.cn>,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
-	Jens Axboe <axboe@kernel.dk>,
-	Minchan Kim <minchan@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Can Peng <pengcan@kylinos.cn>,
+	Linus Walleij <linusw@kernel.org>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0064/1887] zram: fix out-of-bounds access in read_block_state()
-Date: Wed, 28 Oct 2026 17:36:00 +0100
-Message-ID: <20261028170500.687037761@linuxfoundation.org>
+Subject: [PATCH 6.1 0091/1887] hwrng: stm32 - Fix runtime PM cleanup on registration failure
+Date: Wed, 28 Oct 2026 17:36:27 +0100
+Message-ID: <20261028170501.305653954@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -65,61 +63,73 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Longlong Xia <xialonglong@kylinos.cn>
+From: Can Peng <pengcan@kylinos.cn>
 
-[ Upstream commit 391f057f44a51cc9418da5cba78b014324174264 ]
+[ Upstream commit 1163a476a568f6c0f852d469c8e4c5a5f805adac ]
 
-read_block_state() calculates nr_pages before taking dev_lock.  If the
-device is reset and reinitialized with a smaller disksize before lock
-acquisition, nr_pages still describes the old table.  The subsequent loop
-can then call slot_lock() past the end of the newly allocated table.
+stm32_rng_probe() enables autosuspend and runtime PM before registering the
+hwrng. If devm_hwrng_register() fails, probe returns with runtime PM left
+enabled and autosuspend still selected.
 
-Read disksize after acquiring dev_lock and checking that the device is
-initialized.  The read lock then keeps the table and its bound stable for
-the duration of the scan.
+The remove callback also only disables runtime PM and does not undo
+pm_runtime_use_autosuspend().
 
-Link: https://lore.kernel.org/20260804065919.3970386-3-xialonglong2025@163.com
-Fixes: c0265342bff4 ("zram: introduce zram memory tracking")
-Assisted-by: Codex:gpt-5.6-sol
-Signed-off-by: Longlong Xia <xialonglong@kylinos.cn>
-Reviewed-by: Sergey Senozhatsky <senozhatsky@chromium.org>
-Cc: Jens Axboe <axboe@kernel.dk>
-Cc: Minchan Kim <minchan@kernel.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Use devm_pm_runtime_enable() so runtime PM is unwound automatically on
+probe failure and driver detach. Since the managed cleanup also disables
+runtime PM,drop the remove callback.
+
+Fixes: c6a97c42e399 ("hwrng: stm32 - add support for STM32 HW RNG")
+Cc: stable@vger.kernel.org
+Signed-off-by: Can Peng <pengcan@kylinos.cn>
+Reviewed-by: Linus Walleij <linusw@kernel.org>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+[ adapted to the older driver’s relocated int-returning remove callback and existing err variable. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/zram/zram_drv.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/char/hw_random/stm32-rng.c | 12 +++---------
+ 1 file changed, 3 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/block/zram/zram_drv.c b/drivers/block/zram/zram_drv.c
-index de5533fadc675..740ca88bb6733 100644
---- a/drivers/block/zram/zram_drv.c
-+++ b/drivers/block/zram/zram_drv.c
-@@ -903,7 +903,7 @@ static ssize_t read_block_state(struct file *file, char __user *buf,
- 	char *kbuf;
- 	ssize_t index, written = 0;
- 	struct zram *zram = file->private_data;
--	unsigned long nr_pages = zram->disksize >> PAGE_SHIFT;
-+	unsigned long nr_pages;
+diff --git a/drivers/char/hw_random/stm32-rng.c b/drivers/char/hw_random/stm32-rng.c
+index bc22178f83e83..440c001c746b1 100644
+--- a/drivers/char/hw_random/stm32-rng.c
++++ b/drivers/char/hw_random/stm32-rng.c
+@@ -156,18 +156,13 @@ static int stm32_rng_probe(struct platform_device *ofdev)
  
- 	kbuf = kvmalloc(count, GFP_KERNEL);
- 	if (!kbuf)
-@@ -916,6 +916,8 @@ static ssize_t read_block_state(struct file *file, char __user *buf,
- 		return -EINVAL;
- 	}
+ 	pm_runtime_set_autosuspend_delay(dev, 100);
+ 	pm_runtime_use_autosuspend(dev);
+-	pm_runtime_enable(dev);
++	err = devm_pm_runtime_enable(dev);
++	if (err)
++		return err;
  
-+	nr_pages = zram->disksize >> PAGE_SHIFT;
-+
- 	for (index = *ppos; index < nr_pages; index++) {
- 		int copied;
- 		struct timespec64 ts;
+ 	return devm_hwrng_register(dev, &priv->rng);
+ }
+ 
+-static int stm32_rng_remove(struct platform_device *ofdev)
+-{
+-	pm_runtime_disable(&ofdev->dev);
+-
+-	return 0;
+-}
+-
+ #ifdef CONFIG_PM
+ static int stm32_rng_runtime_suspend(struct device *dev)
+ {
+@@ -209,7 +204,6 @@ static struct platform_driver stm32_rng_driver = {
+ 		.of_match_table = stm32_rng_match,
+ 	},
+ 	.probe = stm32_rng_probe,
+-	.remove = stm32_rng_remove,
+ };
+ 
+ module_platform_driver(stm32_rng_driver);
 -- 
 2.53.0
 
