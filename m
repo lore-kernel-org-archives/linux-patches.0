@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216520;
-	b=0cqX9rtY8Is7CDR4KjWnxLLkPCP7/dk7VpWAI183VxEL05v4HCcd4sbpwNTTIPjIM657
-	 xuMiNmRP4yIdvEf6VU3hR3GJAPQIGE5SDCteikNQGIcZm6Gpymi42UpvDCTuBpV6DiNbh
-	 KIgfzZocVjYk1GJ5j2nS2Sh9zh7ESlcdJNtZmSx+js1knqctFJ8Gzjjd3/Hed5YububIt
-	 m3bjrO/jwu6wZlq+kr76uvsKVmzBLGFqh+EvIbuqyuDswBOk1cLxj7xxUPQwvG+VHBjvQ
-	 h0U9+Xsmdts5JNnveSa4V5yP2uywSWM1eRt7yDdUcMDaHNSn11wbriZA9Ya2JQ1QSbQ==
+	t=1793216523;
+	b=Du4rgy8cNbvd+lRiLzb9fGRVGCVuRgtGUIuuS2nOZ7Wcw+wVZdpDPRgQhtnUWMG9ZOhU
+	 JO7n2BGpP3NQJPKDLOAH991kJEDgYmpejfKL0oHnvXjUXabUROFHbCXgvZBKXUdmEkqw0
+	 eSkoojro2Nh05QkVEFYVoa22UBLQDHrrK3+CRPkWjYToLM+jYU/VRUuRGN035+CgnPpft
+	 5hrzNluBHtMToaAKN+Ppa7P4MUbV9XdbCmEGU/Y+n+xh3PGxTaE4X5FsRtWrNqlcNvnKf
+	 hURr/Ae7wOpeufZ1Xq03zjQ9U7rBiIXXXv+IuLCi+h2deKixELMmS9QjQQVcbJBTiug==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216520;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216523;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=s/UOgk8zGwPooMYvT8D/OL/H1pXPlYLDGlw4nyoIGNA=;
-	b=JpAal7aakuiJRumQnkMUo6xBytEUW0NWlOGT+qSs9KAgGrw+mn32BwZ/D+VxcxVRVckL
-	 5meEiSzjkIZ9dBWYnQbg1GexOk2Y9UwTg45syJJpPR9v17TLboyXUOEg1oHWllS4zkVpn
-	 HLa6HINxvBJh5cth4uymm4P2Hobgo/1TocDIqE0CmOTou7BlrFzpwBERXAq8exq9dGTxC
-	 OKA5qLhPMz23skicSyZU4FGSODXAaqGw24k0g5jYHzJAC1SMojEIsqANXN3JpyxRNSgSB
-	 Y4DQHd0KjGU9dagvLcPIAcTgRKRhMM7IRhCMlfI6hBU7HZT067iqw/FSc4eDTVfaSBw==
+	bh=sv3DIDWIQpCdIn5GC55dXSttXuPDbUHlkh1ISWd5Jzs=;
+	b=Opx4qnbG5OcJ2SYF5Q+KbOwVB4ND0Y56CiSysChMkdwdePZbRlhG4eK8FLJZo4rWTuDB
+	 iexI97IZADVrIrioJsIeAyK3pL1YQ9NCuxcE5kAHskVriNMbk9V8A/9X3rR+tLdPmxchV
+	 EdFg5I+eE6RthpNAnZkJNoy7ErlgaAAzlhGuZTc7Tojeny5aZ6NmG7SO4pqRyHfFGPYwG
+	 nyDHMAvbu05F7x2zU9mntksBhPf8qs8Mu8K+J/16/eAHQJ3vA4XAnmi4N/dFOXlYxTgZD
+	 /9tFp7SP9mMVQP1AavldPR5ayjRBmU9USh2BKfEqXJeodCl3k06pLhUv/8hanmiIBsw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rXxzDP5J;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I8XHKip7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D077606A31C;
-	Wed, 28 Oct 2026 19:42:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33031606A31C;
+	Wed, 28 Oct 2026 19:42:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rXxzDP5J
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD9271F01825;
-	Wed, 28 Oct 2026 19:41:59 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I8XHKip7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD7481F01825;
+	Wed, 28 Oct 2026 19:42:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216520;
-	bh=s/UOgk8zGwPooMYvT8D/OL/H1pXPlYLDGlw4nyoIGNA=;
+	s=korg; t=1793216523;
+	bh=sv3DIDWIQpCdIn5GC55dXSttXuPDbUHlkh1ISWd5Jzs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rXxzDP5Jlb6DwgdenIMoW38M98dNMUQxytvkpyzw/AVCPyQmi1+lh69PS96WwALJS
-	 uwqqGla2h7ejuOIhWCZbIsUZDD5YsCTTC3w5dah1NOmNx1+rm/3SjXGgne8nFdRfz6
-	 U9A7uJvkyXr1wzZFR6htuAl9+PMQqHNc1iWn602g=
+	b=I8XHKip742Lna+lGdgUHKV30WyLZeldklS2fmR4PPW5dlezaQQnqvh/n94A6sxd6H
+	 ZfHNWwERbPmZDzPPT5mO9DPeKtCJm/r/W3HHaOTm4KPZvDOce7iRrqC5f38T2iU1mj
+	 XpJj6lAYtGleCjzousxyzz3Yrc365dcEOzhjU46s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Karl Mehltretter <kmehltretter@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1584/1887] tty: skip cdev_del() when no cdev is registered
-Date: Wed, 28 Oct 2026 18:01:20 +0100
-Message-ID: <20261028170535.513237657@linuxfoundation.org>
+Subject: [PATCH 6.1 1585/1887] serial: core: clear freed pointers on uart_register_driver() failure
+Date: Wed, 28 Oct 2026 18:01:21 +0100
+Message-ID: <20261028170535.537332179@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,39 +69,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit c3b5623fd97648f2747444aa8932ae604662df93 ]
+[ Upstream commit 61a2fb25551be0375bc16ef2a70c987dfca26183 ]
 
-TTY device registration can fail before a cdev is allocated.
-Serial core keeps the port so setserial can still use it, and later
-removal passes the NULL cdev slot to cdev_del(), causing a NULL-pointer
-dereference.
+uart_register_driver() leaves drv->state pointing to freed memory when
+tty_alloc_driver() fails. If tty_register_driver() fails, drv->tty_driver
+also retains a pointer after its reference is dropped.
 
-Only delete the cdev when the slot is not NULL.
+Drivers that use drv->state as an "already registered" flag can then skip
+registration on the next probe and pass the freed state to
+uart_add_one_port().
 
-Fixes: a3a10ce3429e ("Avoid usb reset crashes by making tty_io cdevs truly dynamic")
-Fixes: da4c279942b0 ("serial: enable serdev support")
+This issue was found with failslab on QEMU's raspi1ap board by
+failing registration and binding the PL011 port again.
+
+Clear both pointers on their failure paths, as uart_unregister_driver()
+already does.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: 9e845abfc8a8 ("serial: fix NULL pointer dereference")
 Assisted-by: Claude:claude-fable-5
 Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Link: https://patch.msgid.link/20260731181844.11330-4-kmehltretter@gmail.com
+Link: https://patch.msgid.link/20260731181844.11330-3-kmehltretter@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/tty_io.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/tty/serial/serial_core.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/tty/tty_io.c b/drivers/tty/tty_io.c
-index 1e78cc10b77d4..1e36eda7fd3b2 100644
---- a/drivers/tty/tty_io.c
-+++ b/drivers/tty/tty_io.c
-@@ -3314,7 +3314,7 @@ EXPORT_SYMBOL_GPL(tty_register_device_attr);
- void tty_unregister_device(struct tty_driver *driver, unsigned index)
- {
- 	device_destroy(&tty_class, MKDEV(driver->major, driver->minor_start) + index);
--	if (!(driver->flags & TTY_DRIVER_DYNAMIC_ALLOC)) {
-+	if (!(driver->flags & TTY_DRIVER_DYNAMIC_ALLOC) && driver->cdevs[index]) {
- 		cdev_del(driver->cdevs[index]);
- 		driver->cdevs[index] = NULL;
- 	}
+diff --git a/drivers/tty/serial/serial_core.c b/drivers/tty/serial/serial_core.c
+index 4b035292a3840..3e2ecbf5dd91d 100644
+--- a/drivers/tty/serial/serial_core.c
++++ b/drivers/tty/serial/serial_core.c
+@@ -2812,8 +2812,10 @@ int uart_register_driver(struct uart_driver *drv)
+ 	for (i = 0; i < drv->nr; i++)
+ 		tty_port_destroy(&drv->state[i].port);
+ 	tty_driver_kref_put(normal);
++	drv->tty_driver = NULL;
+ out_kfree:
+ 	kfree(drv->state);
++	drv->state = NULL;
+ out:
+ 	return retval;
+ }
 -- 
 2.53.0
 
