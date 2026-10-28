@@ -1,55 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793210891;
-	b=xQQjZ/ziqlgzV2xEqCF8Lbes5L8lP6lDoYi8DeoYvIPpDDzzWSfehfmn1nNORqeUKink
-	 xJdEsLjlOZT4clRS/U5+AMZ0KRC2skxp5vKN+z0HqLwVfU5N3nQAoQHjJBsgTkdd9FiyU
-	 KrL07YSCLJN/U10Tw7e6KEayMXunuxj1qVgdvdJG0WXsELRTkW0bEBmjPKdXltD8Kj21o
-	 hIMBtma3mMrF/eZWWjkFYb7Duf5dKPmO4ivr3FuvpFgx7GpcM5FyhpXKh5kG9VrxAQ4B5
-	 Fa1iR436Nsn0kVb0acbRq8pIxNP2wzib1WCvWoiW3N85wHLpYiart3gT1Et5JfwjCJw==
+	t=1793210894;
+	b=fzdq7xqHOZbQWomSSvfIZ8oSWswm6/qfEluIuG+lmbVjDHa89uDchRsRWn//to08tAzP
+	 U8NhSbZFSc3fzXLgNHr14W3GmifRUNA8U3qGMaaXPRxDxG70ySjWtwafcUKoMIXzGhgzK
+	 mvSuERkpnOSqL2JyKwyomVmRtFcO+GpzD9cU0z6fC7HsY8f+/0dR9yVGfDaz2W7fhHMzy
+	 RdjUijoUv6HtzEhs7BARGq8uuKHcbsvT8HnQgt2VVfflTGTVMaSFAOJ4ZzssaKS73J6Y7
+	 AOVxsGbruG5nM7mrm+7u1KhuaC0fc2SOMm+/FQOYp2nv4e1rltyN2Ql3btkYCqIKzzA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793210891;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793210894;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=G6CZvj/Qqb+HxPJFGCrx0rZ35cJ31MmJvpYuY3+auZ0=;
-	b=mMa1RmqnHOpvqNNOHq0p+J3nMnQKnt2NVFn3sKZXJj8lp6qVw2c+MSPhttwug2UqPBor
-	 lvQ+oltF74DAsrO3Ce8zzF2PVGqfD4BD6myLucbifU2nIlZUkUUboheg6MSiUUKMz42fY
-	 U9r0IaJUGrNZ8cbcQq4XR5Q7Qn4COnDeWjnLOFl8xKPutVzZExM4yNGkBKK6bekXe/LaW
-	 QiqGW+BLK+hr18XsdI8p3uzqRQQocQ3twXWSCcbGLFTXcRQFSHqmw1WR9PNJgm9f0fuEq
-	 YeAfaCLCIB3r99gcmsVY70+girFqNNm6JS0MtENh5sEQnPANxx+QgfNrjgpPPCWUtzw==
+	bh=paHC5iwUxc1y8ncr2Gkc62SCMub6Svxv8JqZOkONUL8=;
+	b=AHNPmQfmXgZPXXuZlUFlc4cafLjY4eUwtVDMeVqHAF7wG8uPesbXbCIJo1nq+3RkRwgM
+	 MXTg1fru0ZEme9ooGwwPiU3rdmZVLJ1kMVIo/dikcL4jMSHggrpcwCc+WJYapHxqrd/LE
+	 S12c1VPfsoHK0P4u1VlDGrRgorX93/BGKz+yF0n2T7XX2mAEPmEQbpstjVhqpEW7d43zP
+	 nkNITWoam+1GKqXazgDiz8PJ9FFRgWmUqDU1FgQeYg1EImpQGLLoG9zPtINJFZQgdl2nb
+	 XQuuOl79QQ9NqNdCqVTiGibrBpSUS9t0Cmv3iAdmm4P4+v4N6CAJxmEk4DzNaQFZwuQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Afv/6unc";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nfb9w2Fq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF1D3606A31A;
-	Wed, 28 Oct 2026 18:08:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4E3C606A31A;
+	Wed, 28 Oct 2026 18:08:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Afv/6unc
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 520C31F01825;
-	Wed, 28 Oct 2026 18:08:10 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nfb9w2Fq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2342E1F01825;
+	Wed, 28 Oct 2026 18:08:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793210890;
-	bh=G6CZvj/Qqb+HxPJFGCrx0rZ35cJ31MmJvpYuY3+auZ0=;
+	s=korg; t=1793210893;
+	bh=paHC5iwUxc1y8ncr2Gkc62SCMub6Svxv8JqZOkONUL8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Afv/6uncWxiedK7fAhAyAmI33A0fdtbne+vbVizxNvmquYSBFvoAhA02VrmsRlh8f
-	 SJrPKjAqPQ809SQbtyiQX9biSJwS24MNUzqwKu3SK7atNnMiQh6qtwRoap56wJ1bvr
-	 jne6jgYwgvQ7PwobPm7izBZzUDbXmdiwf7iE/63k=
+	b=nfb9w2Fqv7oFjPDsonLd8Z96gK9Gt0YAb/ipPbUDWzY0PbVVokt/JYRby+K00s97X
+	 O6gRCYnCyiTSklPUvecaosmtZ6YlpueXbFFHLVezgM0oGKMpNvNiL+5td7C0++9x0l
+	 WYEJWBInwUmgQZlO8t+xyiIQLI02Ljl4onYcIT/s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Paasch <cpaasch@apple.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Florian Westphal <fw@strlen.de>,
-	Eric Dumazet <edumazet@google.com>,
+	syzbot+9408fbe0e6452a12e9ab@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@kernel.org>,
+	Xuanqiang Luo <luoxuanqiang@kylinos.cn>,
+	Ido Schimmel <idosch@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 186/571] net: add and use skb_get_hash_net
-Date: Wed, 28 Oct 2026 17:55:33 +0100
-Message-ID: <20261028170012.424462288@linuxfoundation.org>
+Subject: [PATCH 5.15 187/571] ipv6: sr: use skb_get_hash_net() in seg6_make_flowlabel()
+Date: Wed, 28 Oct 2026 17:55:34 +0100
+Message-ID: <20261028170012.448332274@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -71,167 +71,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Eric Dumazet <edumazet@kernel.org>
 
-[ Upstream commit b975d3ee5962237c1e2f5d5aeeaaf0dc2173486c ]
+[ Upstream commit 8ec454dcd00ce3375119111c6394964455b36d0d ]
 
-Years ago flow dissector gained ability to delegate flow dissection
-to a bpf program, scoped per netns.
+Since commit d58e468b1112 ("flow_dissector: implements flow dissector
+BPF hook") __skb_flow_dissect() needs a net pointer, either from
+skb->dev, skb->sk, or since commit 3cbf4ffba5ee ("net: plumb network
+namespace into __skb_flow_dissect") a caller provided pointer.
 
-Unfortunately, skb_get_hash() only gets an sk_buff argument instead
-of both net+skb.  This means the flow dissector needs to obtain the
-netns pointer from somewhere else.
+syzbot was able to reach seg6_make_flowlabel() with an skb having
+neither skb->dev nor skb->sk set: a TIPC UDP bearer sends a discovery
+message through an IPv4 route using seg6 encap, while
+net.ipv6.seg6_flowlabel is set to 1.
 
-The netns is derived from skb->dev, and if that is not available, from
-skb->sk.  If neither is set, we hit a (benign) WARN_ON_ONCE().
+seg6_make_flowlabel() already has a net pointer, use skb_get_hash_net().
 
-Trying both dev and sk covers most cases, but not all, as recently
-reported by Christoph Paasch.
+WARNING: net/core/flow_dissector.c:1131 at __skb_flow_dissect+0x910/0x5368 net/core/flow_dissector.c:1126, CPU#0: syz.0.17/4930
+Call trace:
+  __skb_flow_dissect+0x910/0x5368 net/core/flow_dissector.c:1126 (P)
+  __skb_get_hash_net+0xe0/0x29c net/core/flow_dissector.c:1903
+  skb_get_hash include/linux/skbuff.h:1663 [inline]
+  seg6_make_flowlabel+0xcc/0x1ec net/ipv6/seg6_iptunnel.c:132
+  __seg6_do_srh_encap+0x320/0xbf4 net/ipv6/seg6_iptunnel.c:161
+  seg6_do_srh+0x4b4/0xa44 net/ipv6/seg6_iptunnel.c:431
+  seg6_output_core+0x164/0x688 net/ipv6/seg6_iptunnel.c:681
+  seg6_output+0x44/0x1ac net/ipv6/seg6_iptunnel.c:744
+  lwtunnel_output+0x3d0/0x664 net/core/lwtunnel.c:356
+  dst_output include/net/dst.h:470 [inline]
+  ip_local_out+0x110/0x148 net/ipv4/ip_output.c:131
+  iptunnel_xmit+0x50c/0xd38 net/ipv4/ip_tunnel_core.c:97
+  udp_tunnel_xmit_skb+0x220/0x348 net/ipv4/udp_tunnel_core.c:187
+  tipc_udp_xmit+0x75c/0x9c0 net/tipc/udp_media.c:202
+  tipc_udp_send_msg+0x214/0x374 net/tipc/udp_media.c:274
+  tipc_bearer_xmit_skb+0x260/0x3b0 net/tipc/bearer.c:576
+  tipc_enable_bearer net/tipc/bearer.c:366 [inline]
+  __tipc_nl_bearer_enable+0xc90/0xfb0 net/tipc/bearer.c:1048
+  tipc_nl_bearer_enable+0x2c/0x48 net/tipc/bearer.c:1057
+  genl_family_rcv_msg_doit+0x1e4/0x2d4 net/netlink/genetlink.c:1114
 
-In case of nf-generated tcp reset, both sk and dev are NULL:
-
-WARNING: .. net/core/flow_dissector.c:1104
- skb_flow_dissect_flow_keys include/linux/skbuff.h:1536 [inline]
- skb_get_hash include/linux/skbuff.h:1578 [inline]
- nft_trace_init+0x7d/0x120 net/netfilter/nf_tables_trace.c:320
- nft_do_chain+0xb26/0xb90 net/netfilter/nf_tables_core.c:268
- nft_do_chain_ipv4+0x7a/0xa0 net/netfilter/nft_chain_filter.c:23
- nf_hook_slow+0x57/0x160 net/netfilter/core.c:626
- __ip_local_out+0x21d/0x260 net/ipv4/ip_output.c:118
- ip_local_out+0x26/0x1e0 net/ipv4/ip_output.c:127
- nf_send_reset+0x58c/0x700 net/ipv4/netfilter/nf_reject_ipv4.c:308
- nft_reject_ipv4_eval+0x53/0x90 net/ipv4/netfilter/nft_reject_ipv4.c:30
- [..]
-
-syzkaller did something like this:
-table inet filter {
-  chain input {
-    type filter hook input priority filter; policy accept;
-    meta nftrace set 1
-    tcp dport 42 reject with tcp reset
-   }
-   chain output {
-    type filter hook output priority filter; policy accept;
-    # empty chain is enough
-   }
-}
-
-... then sends a tcp packet to port 42.
-
-Initial attempt to simply set skb->dev from nf_reject_ipv4 doesn't cover
-all cases: skbs generated via ipv4 igmp_send_report trigger similar splat.
-
-Moreover, Pablo Neira found that nft_hash.c uses __skb_get_hash_symmetric()
-which would trigger same warn splat for such skbs.
-
-Lets allow callers to pass the current netns explicitly.
-The nf_trace infrastructure is adjusted to use the new helper.
-
-__skb_get_hash_symmetric is handled in the next patch.
-
-Reported-by: Christoph Paasch <cpaasch@apple.com>
-Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/494
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/20240608221057.16070-2-fw@strlen.de
+Fixes: d58e468b1112 ("flow_dissector: implements flow dissector BPF hook")
+Reported-by: syzbot+9408fbe0e6452a12e9ab@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/6abac2eb.3654fce1.1bec97.0000.GAE@google.com/
+Signed-off-by: Eric Dumazet <edumazet@kernel.org>
+Reviewed-by: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20260928194524.3617299-1-edumazet@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 8ec454dcd00c ("ipv6: sr: use skb_get_hash_net() in seg6_make_flowlabel()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/skbuff.h          | 12 ++++++++++--
- net/core/flow_dissector.c       | 15 +++++++++++----
- net/netfilter/nf_tables_trace.c |  2 +-
- 3 files changed, 22 insertions(+), 7 deletions(-)
+ net/ipv6/seg6_iptunnel.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/linux/skbuff.h b/include/linux/skbuff.h
-index 24ceeab1b509f..e2483ac59382c 100644
---- a/include/linux/skbuff.h
-+++ b/include/linux/skbuff.h
-@@ -1346,7 +1346,7 @@ __skb_set_sw_hash(struct sk_buff *skb, __u32 hash, bool is_l4)
- 	__skb_set_hash(skb, hash, true, is_l4);
- }
- 
--void __skb_get_hash(struct sk_buff *skb);
-+void __skb_get_hash_net(const struct net *net, struct sk_buff *skb);
- u32 __skb_get_hash_symmetric(const struct sk_buff *skb);
- u32 skb_get_poff(const struct sk_buff *skb);
- u32 __skb_get_poff(const struct sk_buff *skb, const void *data,
-@@ -1426,10 +1426,18 @@ void skb_flow_dissect_hash(const struct sk_buff *skb,
- 			   struct flow_dissector *flow_dissector,
- 			   void *target_container);
- 
-+static inline __u32 skb_get_hash_net(const struct net *net, struct sk_buff *skb)
-+{
-+	if (!skb->l4_hash && !skb->sw_hash)
-+		__skb_get_hash_net(net, skb);
-+
-+	return skb->hash;
-+}
-+
- static inline __u32 skb_get_hash(struct sk_buff *skb)
- {
- 	if (!skb->l4_hash && !skb->sw_hash)
--		__skb_get_hash(skb);
-+		__skb_get_hash_net(NULL, skb);
- 
- 	return skb->hash;
- }
-diff --git a/net/core/flow_dissector.c b/net/core/flow_dissector.c
-index db5677fbf81d3..b02348f5a4f82 100644
---- a/net/core/flow_dissector.c
-+++ b/net/core/flow_dissector.c
-@@ -1685,7 +1685,8 @@ u32 __skb_get_hash_symmetric(const struct sk_buff *skb)
- EXPORT_SYMBOL_GPL(__skb_get_hash_symmetric);
- 
- /**
-- * __skb_get_hash: calculate a flow hash
-+ * __skb_get_hash_net: calculate a flow hash
-+ * @net: associated network namespace, derived from @skb if NULL
-  * @skb: sk_buff to calculate flow hash from
-  *
-  * This function calculates a flow hash based on src/dst addresses
-@@ -1693,18 +1694,24 @@ EXPORT_SYMBOL_GPL(__skb_get_hash_symmetric);
-  * on success, zero indicates no valid hash.  Also, sets l4_hash in skb
-  * if hash is a canonical 4-tuple hash over transport ports.
-  */
--void __skb_get_hash(struct sk_buff *skb)
-+void __skb_get_hash_net(const struct net *net, struct sk_buff *skb)
- {
- 	struct flow_keys keys;
+diff --git a/net/ipv6/seg6_iptunnel.c b/net/ipv6/seg6_iptunnel.c
+index 3e4dd21416136..2820e8a8dfee8 100644
+--- a/net/ipv6/seg6_iptunnel.c
++++ b/net/ipv6/seg6_iptunnel.c
+@@ -116,7 +116,7 @@ static __be32 seg6_make_flowlabel(struct net *net, struct sk_buff *skb,
  	u32 hash;
  
-+	memset(&keys, 0, sizeof(keys));
-+
-+	__skb_flow_dissect(net, skb, &flow_keys_dissector,
-+			   &keys, NULL, 0, 0, 0,
-+			   FLOW_DISSECTOR_F_STOP_AT_FLOW_LABEL);
-+
- 	__flow_hash_secret_init();
- 
--	hash = ___skb_get_hash(skb, &keys, &hashrnd);
-+	hash = __flow_hash_from_keys(&keys, &hashrnd);
- 
- 	__skb_set_sw_hash(skb, hash, flow_keys_have_l4(&keys));
- }
--EXPORT_SYMBOL(__skb_get_hash);
-+EXPORT_SYMBOL(__skb_get_hash_net);
- 
- __u32 skb_get_hash_perturb(const struct sk_buff *skb,
- 			   const siphash_key_t *perturb)
-diff --git a/net/netfilter/nf_tables_trace.c b/net/netfilter/nf_tables_trace.c
-index ed4b067bfb6af..1d28ce62c3372 100644
---- a/net/netfilter/nf_tables_trace.c
-+++ b/net/netfilter/nf_tables_trace.c
-@@ -289,7 +289,7 @@ void nft_trace_init(struct nft_traceinfo *info, const struct nft_pktinfo *pkt,
- 	net_get_random_once(&trace_key, sizeof(trace_key));
- 
- 	info->skbid = (u32)siphash_3u32(hash32_ptr(skb),
--					skb_get_hash(skb),
-+					skb_get_hash_net(nft_net(pkt), skb),
- 					skb->skb_iif,
- 					&trace_key);
- }
+ 	if (do_flowlabel > 0) {
+-		hash = skb_get_hash(skb);
++		hash = skb_get_hash_net(net, skb);
+ 		hash = rol32(hash, 16);
+ 		flowlabel = (__force __be32)hash & IPV6_FLOWLABEL_MASK;
+ 	} else if (!do_flowlabel && skb->protocol == htons(ETH_P_IPV6)) {
 -- 
 2.53.0
 
