@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216612;
-	b=nmG7GrwkK8gOVFnyBA5xvg9emgbcziB5RJQh/GiiHVRY7gzjUtAXTfdEPjQrO5huFHsj
-	 afnCkaQWk1WqJ1W279AEGByHAv1F6vvPvWNR13K2vPS2a2TmrZYnX/bxQba7i5x71wBPu
-	 8csczkh8x925oKiKd1QdH1XiU9rwGGFqMr7Rwp8DdvPjYej/dog8jKiR38Tm/NY2zwdyj
-	 EVrGPorPX/p8syN1p0n1FztqgO5XCfoteVfPCWbFSSnG9bLtTlV7tAA3XDxYq4xJWMX5G
-	 zTzlaRS/Fl2u00Egg4iR3TcIv/4cJ0GgHq11jvtaJVzR/THN8EefbxF1HeNk1++UWgQ==
+	t=1793216615;
+	b=jhJu7Hslypiyz/dMmxLJcVGdc2nu7aqAB3EEdEqJH/quQqRxmI/5Mf0Eaa2YhIUkRmf6
+	 T3+bQm3Mx/v9wz+7M+DX3q6e6CWnrDST9IwkYr4dtnlIHTBbP8pgC3oLb5/xAMbatYUlR
+	 SLf3mGYaw+s8ovZKJee2dHx+GM94YBAAqk7ZGoiPGTTv03mun67LgfyPUmu5WIwXKNrOK
+	 tcrdknezLdtkHi82d7NAFx1jpoWZcsqyY0919ZNx4/XbFFpbdwGxQZkImQDe6cjDu93Wc
+	 ivjCMAWNM527Lu2VHkT05K4jud8nynLY63tI1D8fpJMUqWAg77Z1vMmOnZKjW56i8lQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216612;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216615;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=pAZRHh/e59UjGlqQFIzHahRuD5m6Y9u3bAASncod4Lo=;
-	b=AqpbiYOjeJX6FlSGNlgQOmy4i0YhJsbgxPn02BrJ1QzUkDvOjzFHdilqTMrYVgXepjQS
-	 IIvFDOFjKmHr4em200lu1VqoLttrm2B7BqI7ixQFoVBfJnwdnXIBiMmcIUpgq89wHkDlW
-	 eYwxsLlot4i6CGpBxVgvxCisfzOCF9wAJQ4wA3ejU7fffvYzaeiOwASHredI59Rlwqevs
-	 fuAMaQe7xrfCGeomkb+cCKrDdjnfNqX8VgsDJ6V+ueC0riawzAKbIQv994ZEY57ua+b9R
-	 jSi60n0j43zJzgMjR34oEia2SYv6bHuVeRhqEdqnPjDivKkRbKbsbGyqbJa+2Q+3GFQ==
+	bh=5UR2YCNCLZj2V93eIYurPZ89d6hjX57JgZHSG2ZFfoI=;
+	b=ngVknCX4ZD2qdaGBszccXUBcJUXV57m5fqC+3AHmmFdSA21NW4NEs+OsUkWOi2WUBd1q
+	 MOnDhPqjPf56Ykga6/Qki6dmjkP/Q4/2hYxOQGxxZv7lIwUfRneeqFQVgGbFDVApHsHu8
+	 VDghYZh8p6aEaJPFm+DvmhfJJQN10rcY3JM2fCS+LJuCtkTG/uq+XAOLvt1QNoZI/rvCK
+	 pgJAC/5zPr7pcHtqChV+lkxDj4jhMeR2WEfS+g5h49v8LIWM1Th+TRlxV9WqWmEoNw1+4
+	 TK9y0jvo3YGHmCa+8oV8BvSHQJbPfxnv25ATPgJ68CPw1A2Fl+P7dfEzvBTpFUUVULw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Njk04i9q;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NtHqK742;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B055606A322;
-	Wed, 28 Oct 2026 19:43:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA147606A31A;
+	Wed, 28 Oct 2026 19:43:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Njk04i9q
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 326C31F01825;
-	Wed, 28 Oct 2026 19:43:31 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NtHqK742
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1670C1F01825;
+	Wed, 28 Oct 2026 19:43:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216611;
-	bh=pAZRHh/e59UjGlqQFIzHahRuD5m6Y9u3bAASncod4Lo=;
+	s=korg; t=1793216614;
+	bh=5UR2YCNCLZj2V93eIYurPZ89d6hjX57JgZHSG2ZFfoI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Njk04i9qeAKftIFNEMmNvK3zYW9EnCn6ky7MmYmZ4vkWYXRjise/LAe6cWboLZeL/
-	 ou1pd1bq+5ziQ+3CYWg1Bysn3Xn7Dyg/NtLiu2+U9wIRzEraL1qHk3UQD2mT9YvNsp
-	 EGNMkayHj7SG7dq1qoh5E5esi8X0vIPS6icrp6P0=
+	b=NtHqK742ifvMezsaIfxj2EzuSwBmaRHo2RHp1MpKxfP4E+lkbKPxdypjWOTt+mBxd
+	 K+sbQEvd8vCxlfgHc1NL9KLDLLUXytos3EgShFNuZD3Bepv0n40ne2vcSu3cEXNdsE
+	 Z+/u6C6iosxg9NgwSKl3+K+8EmWMfIuhQCSd2MxM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
-	Emil Tsalapatis <emil@etsalapatis.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Koichiro Den <den@valinux.co.jp>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1617/1887] bpf: Zero queue and stack outputs on lock failure
-Date: Wed, 28 Oct 2026 18:01:53 +0100
-Message-ID: <20261028170536.265559574@linuxfoundation.org>
+Subject: [PATCH 6.1 1618/1887] dmaengine: dw-edma: Terminate all descriptors without callbacks
+Date: Wed, 28 Oct 2026 18:01:54 +0100
+Message-ID: <20261028170536.287440337@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,56 +69,204 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+From: Koichiro Den <den@valinux.co.jp>
 
-[ Upstream commit 7ac6e1ae41a09f1dd4baeeff1d028ae49ee01232 ]
+[ Upstream commit 99109a51efd28c9a661fbfb9469b023c517b31d1 ]
 
-Queue and stack pop/peek helpers accept an uninitialized output buffer
-because the verifier expects the helper to initialize it. The empty-map
-error path clears the buffer, but a failed lock acquisition returns
--EBUSY without writing it.
+The DMA Engine client documentation says in the "Terminate APIs" section
+of Documentation/driver-api/dmaengine/client.rst:
 
-Clear the output before returning -EBUSY so BPF programs cannot observe
-uninitialized stack contents after a failed helper call.
+"No callback functions will be called for any incomplete transfers."
 
-Fixes: a34a9f1a19af ("bpf: Avoid deadlock when using queue and stack maps from NMI")
-Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
-Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
-Link: https://lore.kernel.org/bpf/20260719125419.1782196-1-memxor@gmail.com
-Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+dw-edma instead calls vchan_cookie_complete() when a deferred STOP reaches
+the interrupt handler. This schedules a callback for the active descriptor
+and leaves other issued or submitted descriptors queued. A late callback
+after dmaengine_terminate_sync() can dereference client state that has
+already been freed, while leftover descriptors may later restart into
+reused buffers or leak.
+
+Move all issued and submitted descriptors to the terminated list whenever
+termination completes. For a pending STOP, do this from both the DONE and
+ABORT paths. Complete their cookies in order without scheduling callbacks.
+
+A STOP can remain pending until the running transfer raises an
+interrupt. Make device_synchronize() wait for such a pending STOP to
+complete before releasing terminated descriptors. Reuse it from
+free_chan_resources(), then release the remaining virt-dma resources.
+Sleep instead of busy-polling while waiting, and warn if the existing
+timeout expires.
+
+Fixes: e63d79d1ffcd ("dmaengine: Add Synopsys eDMA IP core driver")
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Koichiro Den <den@valinux.co.jp>
+Link: https://patch.msgid.link/20260717180639.2643243-3-den@valinux.co.jp
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/queue_stack_maps.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/dma/dw-edma/dw-edma-core.c | 90 +++++++++++++++++++++++++-----
+ 1 file changed, 76 insertions(+), 14 deletions(-)
 
-diff --git a/kernel/bpf/queue_stack_maps.c b/kernel/bpf/queue_stack_maps.c
-index a8fe640318c6c..a088132163b1e 100644
---- a/kernel/bpf/queue_stack_maps.c
-+++ b/kernel/bpf/queue_stack_maps.c
-@@ -103,8 +103,10 @@ static int __queue_map_get(struct bpf_map *map, void *value, bool delete)
- 	void *ptr;
+diff --git a/drivers/dma/dw-edma/dw-edma-core.c b/drivers/dma/dw-edma/dw-edma-core.c
+index e68cb0ea76977..d46d3f89f9963 100644
+--- a/drivers/dma/dw-edma/dw-edma-core.c
++++ b/drivers/dma/dw-edma/dw-edma-core.c
+@@ -7,6 +7,7 @@
+  */
  
- 	if (in_nmi()) {
--		if (!raw_spin_trylock_irqsave(&qs->lock, flags))
-+		if (!raw_spin_trylock_irqsave(&qs->lock, flags)) {
-+			memset(value, 0, qs->map.value_size);
- 			return -EBUSY;
-+		}
- 	} else {
- 		raw_spin_lock_irqsave(&qs->lock, flags);
- 	}
-@@ -138,8 +140,10 @@ static int __stack_map_get(struct bpf_map *map, void *value, bool delete)
- 	u32 index;
+ #include <linux/module.h>
++#include <linux/delay.h>
+ #include <linux/device.h>
+ #include <linux/kernel.h>
+ #include <linux/dmaengine.h>
+@@ -199,6 +200,35 @@ static int dw_edma_start_transfer(struct dw_edma_chan *chan)
+ 	return 1;
+ }
  
- 	if (in_nmi()) {
--		if (!raw_spin_trylock_irqsave(&qs->lock, flags))
-+		if (!raw_spin_trylock_irqsave(&qs->lock, flags)) {
-+			memset(value, 0, qs->map.value_size);
- 			return -EBUSY;
-+		}
++static void dw_edma_terminate_vdesc(struct virt_dma_desc *vd)
++{
++	list_del(&vd->node);
++	dma_cookie_complete(&vd->tx);
++	vchan_terminate_vdesc(vd);
++}
++
++static void dw_edma_terminate_vdesc_list(struct list_head *head)
++{
++	struct virt_dma_desc *vd, *_vd;
++
++	list_for_each_entry_safe(vd, _vd, head, node)
++		dw_edma_terminate_vdesc(vd);
++}
++
++/* Must be called with vc.lock held. */
++static void dw_edma_terminate_all_descs(struct dw_edma_chan *chan)
++{
++	/*
++	 * This order must not be reversed. Cookies are assigned when
++	 * descriptors are submitted, so desc_issued contains older cookies
++	 * than desc_submitted. Completing desc_submitted first could move
++	 * chan->vc.chan.completed_cookie backwards when desc_issued is
++	 * terminated afterwards.
++	 */
++	dw_edma_terminate_vdesc_list(&chan->vc.desc_issued);
++	dw_edma_terminate_vdesc_list(&chan->vc.desc_submitted);
++}
++
+ static int dw_edma_device_config(struct dma_chan *dchan,
+ 				 struct dma_slave_config *config)
+ {
+@@ -256,20 +286,22 @@ static int dw_edma_device_terminate_all(struct dma_chan *dchan)
+ 	struct dw_edma_chan *chan = dchan2dw_edma_chan(dchan);
+ 	int err = 0;
+ 
++	guard(spinlock_irqsave)(&chan->vc.lock);
++
+ 	if (!chan->configured) {
+-		/* Do nothing */
++		dw_edma_terminate_all_descs(chan);
+ 	} else if (chan->status == EDMA_ST_PAUSE) {
++		dw_edma_terminate_all_descs(chan);
+ 		chan->status = EDMA_ST_IDLE;
+-		chan->configured = false;
+ 	} else if (chan->status == EDMA_ST_IDLE) {
+-		chan->configured = false;
++		dw_edma_terminate_all_descs(chan);
+ 	} else if (dw_edma_v0_core_ch_status(chan) == DMA_COMPLETE) {
+ 		/*
+ 		 * The channel is in a false BUSY state, probably didn't
+ 		 * receive or lost an interrupt
+ 		 */
++		dw_edma_terminate_all_descs(chan);
+ 		chan->status = EDMA_ST_IDLE;
+-		chan->configured = false;
+ 	} else if (chan->request > EDMA_REQ_PAUSE) {
+ 		err = -EPERM;
  	} else {
- 		raw_spin_lock_irqsave(&qs->lock, flags);
+@@ -626,8 +658,7 @@ static void dw_edma_done_interrupt(struct dw_edma_chan *chan)
+ 			break;
+ 
+ 		case EDMA_REQ_STOP:
+-			list_del(&vd->node);
+-			vchan_cookie_complete(vd);
++			dw_edma_terminate_all_descs(chan);
+ 			chan->request = EDMA_REQ_NONE;
+ 			chan->status = EDMA_ST_IDLE;
+ 			break;
+@@ -648,7 +679,9 @@ static void dw_edma_abort_interrupt(struct dw_edma_chan *chan)
+ 
+ 	spin_lock_irqsave(&chan->vc.lock, flags);
+ 	vd = vchan_next_desc(&chan->vc);
+-	if (vd) {
++	if (vd && chan->request == EDMA_REQ_STOP) {
++		dw_edma_terminate_all_descs(chan);
++	} else if (vd) {
+ 		dw_hdma_set_callback_result(vd, DMA_TRANS_ABORTED);
+ 		list_del(&vd->node);
+ 		vchan_cookie_complete(vd);
+@@ -727,21 +760,49 @@ static int dw_edma_alloc_chan_resources(struct dma_chan *dchan)
+ 	return 0;
+ }
+ 
+-static void dw_edma_free_chan_resources(struct dma_chan *dchan)
++static void dw_edma_wait_termination(struct dma_chan *dchan)
+ {
++	struct dw_edma_chan *chan = dchan2dw_edma_chan(dchan);
+ 	unsigned long timeout = jiffies + msecs_to_jiffies(5000);
+-	int ret;
++	bool stopping;
+ 
++	/*
++	 * A STOP may be deferred to a later interrupt while the channel is still
++	 * running. Wait until that handler completes the termination.
++	 */
+ 	while (time_before(jiffies, timeout)) {
+-		ret = dw_edma_device_terminate_all(dchan);
+-		if (!ret)
+-			break;
++		scoped_guard(spinlock_irqsave, &chan->vc.lock)
++			stopping = chan->request == EDMA_REQ_STOP;
+ 
+-		if (time_after_eq(jiffies, timeout))
++		if (!stopping)
+ 			return;
+ 
+-		cpu_relax();
++		fsleep(1000);
  	}
++
++	dev_warn(chan->dw->chip->dev,
++		 "timeout waiting for channel termination\n");
++}
++
++static void dw_edma_device_synchronize(struct dma_chan *dchan)
++{
++	struct dw_edma_chan *chan = dchan2dw_edma_chan(dchan);
++
++	dw_edma_wait_termination(dchan);
++	vchan_synchronize(&chan->vc);
++}
++
++static void dw_edma_free_chan_resources(struct dma_chan *dchan)
++{
++	struct dw_edma_chan *chan = dchan2dw_edma_chan(dchan);
++
++	dw_edma_device_terminate_all(dchan);
++	dw_edma_device_synchronize(dchan);
++
++	scoped_guard(spinlock_irqsave, &chan->vc.lock)
++		chan->configured = false;
++
++	vchan_free_chan_resources(&chan->vc);
+ }
+ 
+ static int dw_edma_channel_setup(struct dw_edma *dw, bool write,
+@@ -853,6 +914,7 @@ static int dw_edma_channel_setup(struct dw_edma *dw, bool write,
+ 	dma->device_pause = dw_edma_device_pause;
+ 	dma->device_resume = dw_edma_device_resume;
+ 	dma->device_terminate_all = dw_edma_device_terminate_all;
++	dma->device_synchronize = dw_edma_device_synchronize;
+ 	dma->device_issue_pending = dw_edma_device_issue_pending;
+ 	dma->device_tx_status = dw_edma_device_tx_status;
+ 	dma->device_prep_slave_sg = dw_edma_device_prep_slave_sg;
 -- 
 2.53.0
 
