@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793207716;
-	b=GimkyR0tcZt6rDuViSDd+T6LqAZ/ysfmSbOwtcfCNcgaYYjSvfS8XApXYDU2gJ74PU8Q
-	 m3e8MYewXRwvKrPp6QvOHqYMyj4fGQ4TVlYjpJ5WZh3Pg8Fh+cqBfQDIe5E1I4K+vrJfJ
-	 mBb9c+8843/Hq42Nh+tumUTN9yZyU++2cmkHsAkuERlO49p/HVlChiMlLNnl6a4dMHgew
-	 DgeG2XoDuiE8LS3Or19VnxAQnNkdeRLlGAR/8NFYigsaFxT/3RKOp8uY5ajusEtrwIufZ
-	 igYFNR9wCam87Gx2uMClV2icLbzV7IV5TWKUtHSn8ZM8hgx+XckUSthstwpkY/NwpFA==
+	t=1793207719;
+	b=SSW6rCOR9eEUNZvZm6AAe6rIB+IZTnRNKJByYDsX4QQ8RTznKNavW06dpFmKc51RtVAS
+	 I++hCYZPuyFGaMyRmsl22JXdsWJrPAwj66bEKKSJxCqc7VpA8W4Qn4XKIcmmqIkq24Z/2
+	 v5ApHDUCYYE4Q6Bgnb0u5yRWzLDK7YBrsUF+qtSgUqlRltevPQakfYGteeeWCWOvLV6LP
+	 J5koFPc/+Jx4HzqKIsb5iYfWAZZ0bfqUOmRPxjWGhaUuCGhrEJh8S73aNBfxwcjGW7wLh
+	 tCfh7fYk4/joe2NixYIGm5T9HaS7Qv0mnpvHeyxd8DTtlsBe/rcDBxZOGTuRn9IH1uw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793207716;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793207719;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=xUUKOffxg7JTJTIWr4tdJMpCntPy4VTSaMTULXjMK54=;
-	b=Lyxm2p9dS/Eppue2PZM1+P8v5EvD8ffrn8uMMtIaCc+w/K8HNCkPPxJ6dbGitiJA2NM9
-	 cWYQth80PRGXoW0JECjkmpeti9E9Q6ebu6oJUxet7qlqyNkNch0MMGnEGRxvRF9IOSym8
-	 PHhgHLdpUljSKmNa97pavFvxj665ADLwgchgQ8eFwDpr3TBSaYu230wXa8DXXcSi29mee
-	 a7phPa12ibhKVmMM8LDagW9KTe/VxqJ7Hx7WrT1ilzZHJ/0njNgQMI+Xkoy3p7CBUb8xw
-	 d7csdOnIuR2MzLBJd7ckF9buyhXD1P0VkSYvd7EhXZRR1xgV8Vg0bUZUWHboLqeTL9Q==
+	bh=bsrFVUKAAfpf5A+IdRpct5FQ+eVVJal1ffQ8m4ZHuXc=;
+	b=Mrg67QUU0sj+/cOqqBo7RhS6bFWDi14kTr/JGKa+fa4FQ6Q0y5xJwVp7H9xQco/hGSg0
+	 ajoDolSO2iTzpy/xkdNzdeWmXykDbt/VldBGN84lMgO9yhoxnbLcSRQb0iF81/gghUcml
+	 HJZPib6cg0/UEPtNFzcoxOMojtRaA5rSBPI4Ro7mZq7MTXncJXnVbXejWMBpc5DZQKZUx
+	 an1S26pcQbGPY8hFsGhyJ/CysLuzg89HFnnY+/8oMn9/xBTmK2gW9SnC+ckP5YYi7WUI1
+	 3UNSCQRviAHAimiE17ixNmoLYG98tkNnGl7uedeO6dCB/L3jrC6YzzVWcMpuSDVI8Dw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QufsXM2p;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zIHTaFK8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32F1A606A31E;
-	Wed, 28 Oct 2026 17:15:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AFEC606A31A;
+	Wed, 28 Oct 2026 17:15:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QufsXM2p
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8174D1F031E0;
-	Wed, 28 Oct 2026 17:15:15 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zIHTaFK8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6767D1F01828;
+	Wed, 28 Oct 2026 17:15:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793207716;
-	bh=xUUKOffxg7JTJTIWr4tdJMpCntPy4VTSaMTULXjMK54=;
+	s=korg; t=1793207719;
+	bh=bsrFVUKAAfpf5A+IdRpct5FQ+eVVJal1ffQ8m4ZHuXc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QufsXM2pQ4MB7o33rrIwYXvIsXp6NpWMcogHYoO43zycS3s6XdYGHB61EMl1lKS3E
-	 FKB2bgKBIfpeCvBu/yuIdV7r1cLeRE/R6oxzpflbQ3KkIeHIYjlzQt9qJDZSVVQLxh
-	 eyIrtg1vsgj8Jj/VXpG0gv6cuEepM/UP7UbnGehM=
+	b=zIHTaFK822PwIcHuGqLM0A9l8a0u+/eSneitMPBAE9L1nWjrRH/AAU63bO7ZMiSIs
+	 fIvsEWDjviaii3kmqFdlRTYPwERLbZlJ2gOJY/nhqeTSaUVMLGmYpCC2l808UvKNLC
+	 z11TyLc/Bsxy965WQAJs0Sxo96VANkNT9b9ZgoO8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Niklas Schnelle <schnelle@linux.ibm.com>,
-	Benjamin Block <bblock@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>
-Subject: [PATCH 6.12 113/247] s390/pci: Fix leak of uninitialized kernel data in SCLP report
-Date: Wed, 28 Oct 2026 17:58:36 +0100
-Message-ID: <20261028165950.074737852@linuxfoundation.org>
+	Vega <vega@nebusec.ai>,
+	Zihan Xi <zihanx@nebusec.ai>,
+	Eric Dumazet <edumazet@google.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 114/247] ipv4: avoid divide by zero in fib_rebalance
+Date: Wed, 28 Oct 2026 17:58:37 +0100
+Message-ID: <20261028165950.098236400@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165947.349197979@linuxfoundation.org>
 References: <20261028165947.349197979@linuxfoundation.org>
@@ -69,45 +70,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Niklas Schnelle <schnelle@linux.ibm.com>
+From: Zihan Xi <zihanx@nebusec.ai>
 
-commit 8ac60ae2a307a50b599bf5d300b448d638f3ba29 upstream.
+commit 5046d2880fec7d49ebed2fd2866747ee1d06ad71 upstream.
 
-While report_error_write() checks that the provided buffer is at least
-as large as the header struct, but not that it is large enough to
-contain the report with the length claimed by report->length. If
-user-space provides a short buffer, meaning a larger report->length than
-the actually written payload, up to around 4K of kernel data from past
-the kmalloc(len + 1) sized buffer allocated in kernfs_fop_write_iter()
-will leak into the SCLP report.
+fib_rebalance() computes the total eligible nexthop weight in one pass
+and programs upper bounds in a second pass. A concurrent change to
+ignore_routes_with_linkdown can make the first pass return zero while
+the second pass sees an eligible nexthop, resulting in division by zero.
 
-However, as the entity processing the SCLP is privileged and able to
-access at least the page including the report, this does not leak data
-that entity could not access but it is still an out of bounds read and
-a malformed error report that should be rejected.
+If the first pass reports a zero total, set each nexthop upper bound to
+-1 and skip the division. This matches the IPv6 fix in commit
+d2c26c2911dd ("ipv6: avoid divide by zero in rt6_multipath_rebalance")
+and preserves the lock-free rebalance path.
 
-Fixes: 368704a65be8 ("s390/pci: add report_error attribute")
+Fixes: 0e884c78ee19 ("ipv4: L3 hash-based multipath")
 Cc: stable@vger.kernel.org
-Signed-off-by: Niklas Schnelle <schnelle@linux.ibm.com>
-Reviewed-by: Benjamin Block <bblock@linux.ibm.com>
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Reported-by: Vega <vega@nebusec.ai>
+Signed-off-by: Zihan Xi <zihanx@nebusec.ai>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20260827182514.4667-2-zihanx@nebusec.ai
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/pci/pci_sysfs.c |    3 +++
- 1 file changed, 3 insertions(+)
+ net/ipv4/fib_semantics.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/s390/pci/pci_sysfs.c
-+++ b/arch/s390/pci/pci_sysfs.c
-@@ -150,6 +150,9 @@ static ssize_t report_error_write(struct
- 	if (off || (count < sizeof(*report)))
- 		return -EINVAL;
+--- a/net/ipv4/fib_semantics.c
++++ b/net/ipv4/fib_semantics.c
+@@ -856,7 +856,7 @@ static void fib_rebalance(struct fib_inf
+ 	change_nexthops(fi) {
+ 		int upper_bound;
  
-+	if (count < (report->length + sizeof(*report)))
-+		return -EINVAL;
-+
- 	ret = sclp_pci_report(report, zdev->fh, zdev->fid);
- 
- 	return ret ? ret : count;
+-		if (nexthop_nh->fib_nh_flags & RTNH_F_DEAD) {
++		if (!total || nexthop_nh->fib_nh_flags & RTNH_F_DEAD) {
+ 			upper_bound = -1;
+ 		} else if (ip_ignore_linkdown(nexthop_nh->fib_nh_dev) &&
+ 			   nexthop_nh->fib_nh_flags & RTNH_F_LINKDOWN) {
 
 
