@@ -1,51 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793207906;
-	b=GYnSMsQC7KBDGxdz87LbTnuYg01xGMwqTRiD4EE3FklbDq0ToZvazbYYYB5+KdVCfWvg
-	 h2XQVWxmVHzZNqNJurnY5SS4yQIFQUAXNuKEtLQM3KMjaYfFo9VDbixewJkvK2rfajrB/
-	 +veU03biRZ8CftcnuscVgHYDqECzrPwoC5MlWtVF1xhZ1jtbh3tsg4JcuY/bgPu0UGZhL
-	 sKGDfFHMDbV4g3GpWr5Sk9HNGgjPqdWnUYwQd8bMKWF/Cc6YI2hve7bUl69Zmn0teDaoq
-	 gX5E261tVyAagSaHeAbT0Oia9mmujUF3ebD1i6yMcD4NkdyABfgI5lvL0JEGPVE+mdw==
+	t=1793207909;
+	b=EX1x853cfCYXN+/EYkzLSDiRWH12wCU7TtlKYlvJaHlM4bmdoJh/ms0VTQY0Ts7PXL4F
+	 HkQFJvcr81QPM1adMGGdR3qUmOd5d9Hx01MnzN9H9ohAxYiv99lVhE0KkaBTnERPMjl0u
+	 lEHkWlgF7G2kYTH/dRYqnvUyQHZBlElBAks9OHJ6EWtUCgHiJGqKnyw5vr9sb9HDifDue
+	 98EbbYcTRoULJML6abc5wX9doHobLGy+PS8LNJY6HzTWK50sI2fMDG9Phc16u1Kz/n1iN
+	 wdfyXswsfmX05KYydJw0C8AVphc5UHSEuvvW/1BywZk/D51X5WspOaPYEQ+oAjaRGcQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793207906;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793207909;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=hZqyXtnZTz88a116rKtedxPNep676er3ahEZoQAK6DA=;
-	b=Sf/OlBXHIC/95Qm75scXRF5mKo23gigNtvF8SY0i7UvxX+geAeFiVkHVl2txOKS0L0NU
-	 5LByYKX/dLY4/BSge8lTR+D6xeyMm5gBVuTR6bI3mD/Meg+Xp5Qpl3PjubOIj2TF3ajUO
-	 pE+PYK/8KNSLVRm7lHrMkKIysg+KWsAPXlKdoJc8RtpIlnIODmACj22Zh5YqA59Qt07sn
-	 7o8xAwCiQAcw2pvVqQhsZEtsr96ftrPXF6kNFXGb5Xf8xeCLuVRFDbnDbWstcE5L4WU/N
-	 ryTT1OzxDheiu6esumSYPq3CAuQuodkU+S13XXJGGuZ8WmTO61IMxBHmajSnoLaEg6Q==
+	bh=YBDce2htL4XKw5BCbIalf3chXxHL1RhOXjdteOZrVhE=;
+	b=de5OK70jUsCzBgU7xz3IjaWM0hQkCu/YPPrDAMGWG0wjZYSkBUk94BuoEW+H7qqTz5Vn
+	 Hay7ApGcE9MneTsadicvvX2MvtjoCHhSHsvDbPVE1tFd5eRIl90ZNfwTWypC0dkq+ovNi
+	 ljFygT3n8UIat2WuK30Tla3KgEqq5CPqDjgLjXl5jAXaM4j744xxoCFVnh57rgWw96xyg
+	 PfFbv8su38Q4Noc729g6w6GKCrzT0cFSgj93X4qTyCyR7Slr0hKMBK9k9PMjlpQBLke0H
+	 HJFZhNsAXK5GAiLWVlqqQKj/VNqUaNbEOkvpGPtO7MzypfawGLobSTe98gzAVAR2LIw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="EfFfnH/O";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JhznjsGC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70C12606A31A;
-	Wed, 28 Oct 2026 17:18:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 379E5606A31A;
+	Wed, 28 Oct 2026 17:18:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EfFfnH/O
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C45171F01825;
-	Wed, 28 Oct 2026 17:18:25 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JhznjsGC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F1CD1F01825;
+	Wed, 28 Oct 2026 17:18:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793207906;
-	bh=hZqyXtnZTz88a116rKtedxPNep676er3ahEZoQAK6DA=;
+	s=korg; t=1793207909;
+	bh=YBDce2htL4XKw5BCbIalf3chXxHL1RhOXjdteOZrVhE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EfFfnH/ON/itfXPWkVZpe0qzUJTih0yoplFcy0Vay9L9y6iYSRnspt/iIt495Ry4H
-	 mcw2y4KUpRVexSxLSaAynbmqxNdqFQKuOq0ZnR1SAiF5wB5Dp6IX/KfpdT4IO2wBR5
-	 zivoDudOZd0nx/qqsvjmAY1Kr5TNdeysXQ0DtW2Q=
+	b=JhznjsGCe6gGoKo0TcxrRvhyf4+gpMeuWi6h8BwEKo867WC2CHQKzy4c0y3/AyTNr
+	 HPpGDpx+QYHzRPd5s5ydbaGpIiH3GhG8CU1LXTchsX+B2mU6axgKG0Z/3G8ZEdgtJY
+	 U1zMwQ4EL5DM7Eym525lVn6IKJwOhVV3oINI0jvc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bernard Pidoux <bernard.f6bvp@gmail.com>,
+	stable@vger.kernek.org,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Hannes Reinecke <hare@kernel.org>,
+	Jens Axboe <axboe@kernel.dk>,
+	Stanley Jhu <stanleyjhu@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 174/247] ax25: read the connections ax25_dev only once when walking ax25_list
-Date: Wed, 28 Oct 2026 17:59:37 +0100
-Message-ID: <20261028165951.541723205@linuxfoundation.org>
+Subject: [PATCH 6.12 183/247] block: avoid potential deadlock on zone revalidation failure
+Date: Wed, 28 Oct 2026 17:59:46 +0100
+Message-ID: <20261028165951.754539833@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165947.349197979@linuxfoundation.org>
 References: <20261028165947.349197979@linuxfoundation.org>
@@ -67,126 +72,226 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bernard Pidoux <bernard.f6bvp@gmail.com>
+From: Damien Le Moal <dlemoal@kernel.org>
 
-ax25_kill_by_device() detaches a connection from a device that goes
-down by setting s->ax25_dev to NULL. It does so after it has dropped
-ax25_list_lock, while the connection is still on ax25_list.
+commit 3dd63dba8f9cb6990a40af7ed66ee0159f475819 upstream.
 
-__ax25_find_cb() and ax25_find_listener() walk that list and test
-s->ax25_dev against NULL before they dereference it, but they load the
-pointer a second time for the dereference. ax25_send_to_raw()
-dereferences it without any test. If ax25_kill_by_device() clears the
-pointer in between, the walker dereferences NULL:
+If revalidating the zones of a zoned block device with
+blk_revalidate_disk_zones() fails during a SCSI disk rescan, the following
+lockdep splat is thrown:
 
-  Oops: general protection fault, probably for non-canonical address
-  KASAN: null-ptr-deref in range [0x0000000000000010-0x0000000000000017]
-  RIP: 0010:ax25_find_cb+0x121/0x330 [ax25]
-   ax25_send_frame+0xdc/0x980 [ax25]
-   rose_send_frame+0xce/0x270 [rose]
-   rose_transmit_restart_request+0x1b3/0x260 [rose]
-   rose_transmit_link+0x31d/0x560 [rose]
-   rose_write_internal+0x3ab/0x15b0 [rose]
-   rose_release+0x2b2/0x4b0 [rose]
+[  347.251859] [  T11230] sda: failed to revalidate zones
 
-Load the pointer once in the three walkers and use that value, and add
-the missing NULL test to ax25_send_to_raw(). The ax25_dev itself cannot
-go away under the walker: ax25_kill_by_device() has to take
-ax25_list_lock again, in ax25_cb_del(), before the device teardown gets
-as far as freeing it.
+[  347.261380] [  T11230] ======================================================
+[  347.263882] [  T11230] WARNING: possible circular locking dependency detected
+[  347.266353] [  T11230] 7.1.0+ #1194 Not tainted
+[  347.268052] [  T11230] ------------------------------------------------------
+[  347.270537] [  T11230] tcsh/11230 is trying to acquire lock:
+[  347.272555] [  T11230] ffffffff8f91d400 (wq_pool_mutex){+.+.}-{4:4}, at: destroy_workqueue+0x15d/0x8d0
+[  347.275914] [  T11230]
+                          but task is already holding lock:
+[  347.278646] [  T11230] ffff88812fa1bcc0 (&q->q_usage_counter(io)#5){++++}-{0:0}, at: blk_mq_freeze_queue_nomemsave+0x16/0x30
+[  347.282503] [  T11230]
+                          which lock already depends on the new lock.
 
-The oops above was obtained on 6.12.94 with KASAN, after 382 seconds of
-the syzbot C reproducer of the ax25_find_cb() use-after-free report,
-with the interface brought up again in a loop, while testing an earlier
-version of the next patch. With this series the same test runs for 600
-seconds without an oops.
+[  347.286239] [  T11230]
+                          the existing dependency chain (in reverse order) is:
+[  347.289408] [  T11230]
+                          -> #2 (&q->q_usage_counter(io)#5){++++}-{0:0}:
+[  347.292437] [  T11230]        blk_alloc_queue+0x5ca/0x750
+[  347.294379] [  T11230]        blk_mq_alloc_queue+0x14c/0x240
+[  347.296375] [  T11230]        scsi_alloc_sdev+0x871/0xd10 [scsi_mod]
+[  347.298619] [  T11230]        scsi_probe_and_add_lun+0x600/0xc50 [scsi_mod]
+[  347.301056] [  T11230]        __scsi_scan_target+0x187/0x3b0 [scsi_mod]
+[  347.303385] [  T11230]        scsi_scan_channel+0xf2/0x180 [scsi_mod]
+[  347.305651] [  T11230]        scsi_scan_host_selected+0x20b/0x2d0 [scsi_mod]
+[  347.308119] [  T11230]        do_scan_async+0x42/0x420 [scsi_mod]
+[  347.310276] [  T11230]        async_run_entry_fn+0x94/0x5a0
+[  347.312284] [  T11230]        process_one_work+0x8da/0x1690
+[  347.314287] [  T11230]        worker_thread+0x5fe/0x1010
+[  347.316216] [  T11230]        kthread+0x358/0x450
+[  347.317675] [  T11230]        ret_from_fork+0x5b9/0x8e0
+[  347.319181] [  T11230]        ret_from_fork_asm+0x11/0x20
+[  347.320778] [  T11230]
+                          -> #1 (fs_reclaim){+.+.}-{0:0}:
+[  347.322890] [  T11230]        fs_reclaim_acquire+0xd5/0x120
+[  347.324464] [  T11230]        __kmalloc_cache_node_noprof+0x39/0x620
+[  347.326223] [  T11230]        init_rescuer+0x19b/0x560
+[  347.327697] [  T11230]        workqueue_init+0x33b/0x6a0
+[  347.329224] [  T11230]        kernel_init_freeable+0x2eb/0x600
+[  347.330881] [  T11230]        kernel_init+0x1c/0x140
+[  347.332334] [  T11230]        ret_from_fork+0x5b9/0x8e0
+[  347.333847] [  T11230]        ret_from_fork_asm+0x11/0x20
+[  347.335360] [  T11230]
+                          -> #0 (wq_pool_mutex){+.+.}-{4:4}:
+[  347.337510] [  T11230]        __lock_acquire+0xdea/0x2260
+[  347.339030] [  T11230]        lock_acquire+0x187/0x2f0
+[  347.340495] [  T11230]        __mutex_lock+0x1ab/0x2600
+[  347.341464] [  T11230]        destroy_workqueue+0x15d/0x8d0
+[  347.342485] [  T11230]        disk_free_zone_resources+0xd5/0x560
+[  347.343577] [  T11230]        blk_revalidate_disk_zones+0x620/0xac7
+[  347.344723] [  T11230]        sd_zbc_revalidate_zones+0x1dd/0x790 [sd_mod]
+[  347.345938] [  T11230]        sd_revalidate_disk+0xc66/0x8e60 [sd_mod]
+[  347.347112] [  T11230]        scsi_rescan_device+0x1f9/0x310 [scsi_mod]
+[  347.348318] [  T11230]        store_rescan_field+0x19/0x20 [scsi_mod]
+[  347.349507] [  T11230]        kernfs_fop_write_iter+0x3d2/0x5e0
+[  347.350565] [  T11230]        vfs_write+0x469/0x1000
+[  347.351484] [  T11230]        ksys_write+0x116/0x250
+[  347.352403] [  T11230]        do_syscall_64+0xf0/0x6e0
+[  347.353361] [  T11230]        entry_SYSCALL_64_after_hwframe+0x4b/0x53
+[  347.354533] [  T11230]
+                          other info that might help us debug this:
 
-Signed-off-by: Bernard Pidoux <bernard.f6bvp@gmail.com>
-Assisted-by: Claude:claude-opus-5-5
-(cherry picked from commit 3696f3cf8690e335a2cc7e8103f018bc205de738)
+[  347.356432] [  T11230] Chain exists of:
+                            wq_pool_mutex --> fs_reclaim --> &q->q_usage_counter(io)#5
+
+[  347.358919] [  T11230]  Possible unsafe locking scenario:
+
+[  347.360307] [  T11230]        CPU0                    CPU1
+[  347.361327] [  T11230]        ----                    ----
+[  347.362340] [  T11230]   lock(&q->q_usage_counter(io)#5);
+[  347.363344] [  T11230]                                lock(fs_reclaim);
+[  347.364526] [  T11230]                                lock(&q->q_usage_counter(io)#5);
+[  347.365968] [  T11230]   lock(wq_pool_mutex);
+[  347.366811] [  T11230]
+                           *** DEADLOCK ***
+
+This happens because SCSI disk rescan is executed from a work context
+and a failure of blk_revalidate_disk_zones() causes a call to
+disk_free_zone_resources() which will free the disk zone write plug
+workqueue.
+
+Avoid this by delaying the destruction of the disk zone write plug
+workqueue to disk_release(). Do this by introducing the function
+disk_release_zone_resources() and using this new function from
+disk_release(). This new function destroys the zone write plugs workqueue
+and calls disk_free_zone_resources(), thus allowing to remove the call to
+destroy_workqueue() from disk_free_zone_resources().
+disk_alloc_zone_resources() is modified to not create the disk zone
+write plug work queue if it already exists.
+
+Fixes: a8f59e5a5dea ("block: use a per disk workqueue for zone write plugging")
+Cc: stable@vger.kernek.org
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Hannes Reinecke <hare@kernel.org>
+Link: https://patch.msgid.link/20260701082155.1369996-1-dlemoal@kernel.org
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+[ stanleyjhu: 6.12.y has no zone write plug kthread worker and does not
+  use WQ_PERCPU, so only the workqueue part applies:
+  disk_alloc_zone_resources() reuses an existing workqueue,
+  disk_free_zone_resources() drains it instead of destroying it, and
+  the new disk_release_zone_resources() destroys it from
+  disk_release(). ]
+Signed-off-by: Stanley Jhu <stanleyjhu@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ax25/af_ax25.c | 18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
+ block/blk-zoned.c | 37 +++++++++++++++++++++++++++----------
+ block/blk.h       |  4 ++--
+ block/genhd.c     |  2 +-
+ 3 files changed, 30 insertions(+), 13 deletions(-)
 
-diff --git a/net/ax25/af_ax25.c b/net/ax25/af_ax25.c
-index 9f7bda3b511e3..0a5cd835d289d 100644
---- a/net/ax25/af_ax25.c
-+++ b/net/ax25/af_ax25.c
-@@ -91,7 +91,7 @@ static void ax25_kill_by_device(struct net_device *dev)
- 			if (!sk) {
- 				spin_unlock_bh(&ax25_list_lock);
- 				ax25_disconnect(s, ENETUNREACH);
--				s->ax25_dev = NULL;
-+				WRITE_ONCE(s->ax25_dev, NULL);
- 				ax25_cb_del(s);
- 				spin_lock_bh(&ax25_list_lock);
- 				goto again;
-@@ -100,7 +100,7 @@ static void ax25_kill_by_device(struct net_device *dev)
- 			spin_unlock_bh(&ax25_list_lock);
- 			lock_sock(sk);
- 			ax25_disconnect(s, ENETUNREACH);
--			s->ax25_dev = NULL;
-+			WRITE_ONCE(s->ax25_dev, NULL);
- 			if (sk->sk_socket) {
- 				netdev_put(ax25_dev->dev,
- 					   &s->dev_tracker);
-@@ -172,6 +172,7 @@ void ax25_cb_add(ax25_cb *ax25)
- struct sock *ax25_find_listener(ax25_address *addr, int digi,
- 	struct net_device *dev, int type)
+diff --git a/block/blk-zoned.c b/block/blk-zoned.c
+index e3d6e7a18868a..d6f7e487bfe56 100644
+--- a/block/blk-zoned.c
++++ b/block/blk-zoned.c
+@@ -1408,11 +1408,20 @@ static int disk_alloc_zone_resources(struct gendisk *disk,
+ 	if (!disk->zone_wplugs_pool)
+ 		goto free_hash;
+ 
+-	disk->zone_wplugs_wq =
+-		alloc_workqueue("%s_zwplugs", WQ_MEM_RECLAIM | WQ_HIGHPRI,
+-				pool_size, disk->disk_name);
+-	if (!disk->zone_wplugs_wq)
+-		goto destroy_pool;
++	/*
++	 * We may already have a zone write plug workqueue as this function may
++	 * be called after disk_free_zone_resources(), which does not destroy
++	 * the workqueue (the zone write plugs workqueue is destroyed at
++	 * disk_release() time).
++	 */
++	if (!disk->zone_wplugs_wq) {
++		disk->zone_wplugs_wq =
++			alloc_workqueue("%s_zwplugs",
++					WQ_MEM_RECLAIM | WQ_HIGHPRI,
++					pool_size, disk->disk_name);
++		if (!disk->zone_wplugs_wq)
++			goto destroy_pool;
++	}
+ 
+ 	return 0;
+ 
+@@ -1469,15 +1478,13 @@ static unsigned int disk_set_conv_zones_bitmap(struct gendisk *disk,
+ 	return nr_conv_zones;
+ }
+ 
+-void disk_free_zone_resources(struct gendisk *disk)
++static void disk_free_zone_resources(struct gendisk *disk)
  {
-+	ax25_dev *ax25_dev;
- 	ax25_cb *s;
+ 	if (!disk->zone_wplugs_pool)
+ 		return;
  
- 	spin_lock(&ax25_list_lock);
-@@ -181,7 +182,8 @@ struct sock *ax25_find_listener(ax25_address *addr, int digi,
- 		if (s->sk && !ax25cmp(&s->source_addr, addr) &&
- 		    s->sk->sk_type == type && s->sk->sk_state == TCP_LISTEN) {
- 			/* If device is null we match any device */
--			if (s->ax25_dev == NULL || s->ax25_dev->dev == dev) {
-+			ax25_dev = READ_ONCE(s->ax25_dev);
-+			if (ax25_dev == NULL || ax25_dev->dev == dev) {
- 				sock_hold(s->sk);
- 				spin_unlock(&ax25_list_lock);
- 				return s->sk;
-@@ -226,14 +228,16 @@ static ax25_cb *__ax25_find_cb(const ax25_address *src_addr,
- 			       ax25_address *dest_addr, ax25_digi *digi,
- 			       struct net_device *dev)
+-	if (disk->zone_wplugs_wq) {
+-		destroy_workqueue(disk->zone_wplugs_wq);
+-		disk->zone_wplugs_wq = NULL;
+-	}
++	if (disk->zone_wplugs_wq)
++		drain_workqueue(disk->zone_wplugs_wq);
+ 
+ 	disk_destroy_zone_wplugs_hash_table(disk);
+ 
+@@ -1496,6 +1503,16 @@ void disk_free_zone_resources(struct gendisk *disk)
+ 	disk->nr_zones = 0;
+ }
+ 
++void disk_release_zone_resources(struct gendisk *disk)
++{
++	if (disk->zone_wplugs_wq) {
++		destroy_workqueue(disk->zone_wplugs_wq);
++		disk->zone_wplugs_wq = NULL;
++	}
++
++	disk_free_zone_resources(disk);
++}
++
+ static inline bool disk_need_zone_resources(struct gendisk *disk)
  {
-+	ax25_dev *ax25_dev;
- 	ax25_cb *s;
+ 	/*
+diff --git a/block/blk.h b/block/blk.h
+index b3a7e518d7999..4500ba33dc7af 100644
+--- a/block/blk.h
++++ b/block/blk.h
+@@ -489,7 +489,7 @@ static inline struct bio *blk_queue_bounce(struct bio *bio,
  
- 	ax25_for_each(s, &ax25_list) {
- 		if (s->sk && s->sk->sk_type != SOCK_SEQPACKET)
- 			continue;
--		if (s->ax25_dev == NULL)
-+		ax25_dev = READ_ONCE(s->ax25_dev);
-+		if (ax25_dev == NULL)
- 			continue;
--		if (ax25cmp(&s->source_addr, src_addr) == 0 && ax25cmp(&s->dest_addr, dest_addr) == 0 && s->ax25_dev->dev == dev) {
-+		if (ax25cmp(&s->source_addr, src_addr) == 0 && ax25cmp(&s->dest_addr, dest_addr) == 0 && ax25_dev->dev == dev) {
- 			if (digi != NULL && digi->ndigi != 0) {
- 				if (s->digipeat == NULL)
- 					continue;
-@@ -293,15 +297,17 @@ ax25_cb *ax25_cb_add_unique(ax25_cb *ax25)
- 
- void ax25_send_to_raw(ax25_address *addr, struct sk_buff *skb, int proto)
+ #ifdef CONFIG_BLK_DEV_ZONED
+ void disk_init_zone_resources(struct gendisk *disk);
+-void disk_free_zone_resources(struct gendisk *disk);
++void disk_release_zone_resources(struct gendisk *disk);
+ static inline bool bio_zone_write_plugging(struct bio *bio)
  {
-+	ax25_dev *ax25_dev;
- 	ax25_cb *s;
- 	struct sk_buff *copy;
+ 	return bio_flagged(bio, BIO_ZONE_WRITE_PLUGGING);
+@@ -550,7 +550,7 @@ int blkdev_zone_mgmt_ioctl(struct block_device *bdev, blk_mode_t mode,
+ static inline void disk_init_zone_resources(struct gendisk *disk)
+ {
+ }
+-static inline void disk_free_zone_resources(struct gendisk *disk)
++static inline void disk_release_zone_resources(struct gendisk *disk)
+ {
+ }
+ static inline bool bio_zone_write_plugging(struct bio *bio)
+diff --git a/block/genhd.c b/block/genhd.c
+index f4f18ca70aa05..4063ee78c27bd 100644
+--- a/block/genhd.c
++++ b/block/genhd.c
+@@ -1219,7 +1219,7 @@ static void disk_release(struct device *dev)
  
- 	spin_lock(&ax25_list_lock);
- 	ax25_for_each(s, &ax25_list) {
-+		ax25_dev = READ_ONCE(s->ax25_dev);
- 		if (s->sk != NULL && ax25cmp(&s->source_addr, addr) == 0 &&
- 		    s->sk->sk_type == SOCK_RAW &&
- 		    s->sk->sk_protocol == proto &&
--		    s->ax25_dev->dev == skb->dev &&
-+		    ax25_dev && ax25_dev->dev == skb->dev &&
- 		    atomic_read(&s->sk->sk_rmem_alloc) <= s->sk->sk_rcvbuf) {
- 			if ((copy = skb_clone(skb, GFP_ATOMIC)) == NULL)
- 				continue;
+ 	disk_release_events(disk);
+ 	kfree(disk->random);
+-	disk_free_zone_resources(disk);
++	disk_release_zone_resources(disk);
+ 	xa_destroy(&disk->part_tbl);
+ 
+ 	disk->queue->disk = NULL;
 -- 
 2.53.0
 
