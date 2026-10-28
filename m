@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793210139;
-	b=mtDZ1Efa1L+Sqw+tLPCq6KowCb9yCCEWEhS2yMNdHy7+IdKjkZKQsXVPpvy0jeZTVvB/
-	 c//TWsQkwAt8QyoOTPAPe3+ROyGa16Fol2OaFpGSwL47cb76Hdr2UBjmJrrIRN+Fe9Pg/
-	 usggz/qlB9lRa0PA4RQuVAD/7G37ONBvD/rrITizwfA08nYS45330/Pg13hsLTcSwbmtn
-	 OxYe8xiU/vuGy6NB+z9UA0IS6tXGmN/aACYwpC0zGe0DF37QlkFnl2ETXo4DutIr9XRBU
-	 vVD+eow+xFOeUmVJc3zWuAmD5WExBEQC72lynqrByp/LYHovkoKVb5wLjg1TwpZyIKw==
+	t=1793210142;
+	b=XHzQ+LdyM9z0hA+fo4WldGYQGAtL3od+7foMo2K5YfUf7HYKVOLo8YFOvkovpKmYkmvy
+	 QsjfuBqwyzafgrfKuqhELAM5VoJ2AMj/MMEvt+xocdUbuty31Ag2kxbe1b35eATmMOtDB
+	 0KhpaI4q5clfiNMVHPaNIwHRBLR5syrcm7aHnqPSTSR14ASpsMd5t1Yt8FsBsK6OzIHEK
+	 K0dP/KpZQD9NFfREjfDxAPAMinGaahfCV8vL8mWfUrobt/hn/Y0nJzShjjqyw7X7XBMPW
+	 wAEW/qx2StlY6NsdMOtMoWjfYT/k7G2EXVYZ0BkHxDF/WEkm6Xg5tQfL9BZq4gv07hg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793210139;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793210142;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=HUINRV/msbJphN0gyVjzbiAncDWUK4P+jGagPQojNSg=;
-	b=3a4KFAEMH0xh2hPS/lfjS4pxD2BvCa4zVCmBYRNiAtaLYdHhBp4ASMrF593IMm/haEp5
-	 Q2bXIG4voSQSGVlwSeyizrrA3ujIVTLzQNb710uDN5zc+JggHv6hGhaJHMYQ52R+mcKKB
-	 Orf1c6UIL4tj6BcA10E9Dk0X2hcWojrRW3H9hOzB7Z2S1DURCM4pYEZ8SEYTFh9ggCXdt
-	 eaJD+MifR4pXL5B/DUSY81b8UWupMmReZ9AfWKfmS1+hX/9htGG7ShAyyjf52VY8z6DXk
-	 zEHpQ1BpSdydi/Rx/X5HEfhYPVGMWoHu1P0t+n7iEYTVat8oZl9J0XPcnhgOi6wl0bQ==
+	bh=HIFjIz42B0rZfyyzfvpLfzH8mGEizYkPkrlJt08EIFQ=;
+	b=JSskwIukwQ7R+EMDUD0D+uppEUEUkEt0ARQTzjc9EqBLaVB1OQzVoG2GZZOT8w6jdWwQ
+	 T99F/aU0hBZ675BZwvl6ervHxXVrjf/d+gXExH2Qai57FR58bBskUVcekkEqeWMfbgbl0
+	 zOfY9w2wm2DKSrxarMmeubStUDeSeC1zVHsW6CBqX2Wu8n5WNqRvc0FlXjPd8lKMXUkBK
+	 MkzOeLD3chrmsOLKw97nVQp9fr9k4WANMMr7VG0r26HgcFm/tAkViyY4ZeyRcPAQOh/Tv
+	 3CJkpKUwFMNmaoMnEnAtLW7b2rcTlygdD9RGjKnTSfvfUJWh1tdw8bQ8JRJa+YUJ6UA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qvnJFVYh;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JEwQQSt4;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3509F606A31A;
-	Wed, 28 Oct 2026 17:55:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12684606A31D;
+	Wed, 28 Oct 2026 17:55:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qvnJFVYh
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 837E51F01825;
-	Wed, 28 Oct 2026 17:55:38 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JEwQQSt4
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61C141F01828;
+	Wed, 28 Oct 2026 17:55:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793210139;
-	bh=HUINRV/msbJphN0gyVjzbiAncDWUK4P+jGagPQojNSg=;
+	s=korg; t=1793210141;
+	bh=HIFjIz42B0rZfyyzfvpLfzH8mGEizYkPkrlJt08EIFQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qvnJFVYhBFd55jd4CHkHRrbxq9YsvrE9o5MB8D7LUnuuGwnJZplEatbbebSYJpe1L
-	 u3TW1me8IzY0nlrZqtMEJR/LX+3HiUeD8vLEdGvDFv2nz1eG90a3xRXnxGkOGjwXQa
-	 lHP5OXuH2SJTcIGnRDCHLPuUIiYZzvbG0Ucn7Ebg=
+	b=JEwQQSt4PFshkNMmP316JLvGK460HFpJz81QRkQ5MMQL8Gj0LkHHCeQvVhJRKBqVf
+	 /fMWQC/mWAOR9ZiCC0X1K1bqO+kXnG33+DeTsY9ZjFL+kcufCu6RFNnVUpwnfplbIb
+	 u/ABoZ2BpiDIMBAs1tlBHm6kFYohOIwB6SRy/XTA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	TencentOS Corvus AI <corvus@tencent.com>,
-	Aohan Mei <henrymei@tencent.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 088/168] net/sched: cls_flower: validate mask pointer after nla_next()
-Date: Wed, 28 Oct 2026 18:00:24 +0100
-Message-ID: <20261028165945.171976961@linuxfoundation.org>
+	Frank Sorenson <sorenson@redhat.com>,
+	Paulo Alcantara <pc@manguebit.org>
+Subject: [PATCH 6.6 089/168] smb: client: fix heap overflow in cifs_do_set_acl()
+Date: Wed, 28 Oct 2026 18:00:25 +0100
+Message-ID: <20261028165945.196813555@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165943.089486480@linuxfoundation.org>
 References: <20261028165943.089486480@linuxfoundation.org>
@@ -68,61 +67,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aohan Mei <henrymei@tencent.com>
+From: Frank Sorenson <sorenson@redhat.com>
 
-commit fee10655709c5c597e8e9f722f3035d9ea31ff3a upstream.
+commit 1dac61e2c29d1a71784604b48cf3b1234a65ec29 upstream.
 
-fl_set_enc_opt() iterates the key's nested tunnel-option attributes
-with nla_for_each_attr() while advancing a single mask pointer via
-nla_next() at the bottom of each loop, so the mask cursor is driven
-by the number of key attributes rather than by the mask's own
-attributes.  The nla_ok() added by commit c96adff956191 ("cls_flower:
-call nla_ok() before nla_next()") only validates the mask pointer
-that was just consumed; the pointer produced by nla_next() is used by
-the next iteration (fl_set_geneve_opt() and siblings) without any
-validation.
+cifs_set_acl() validates ACL size using posix_acl_xattr_size():
 
-The mask's nested attributes are validated with NL_VALIDATE_LIBERAL,
-which merely warns on trailing bytes that do not form a complete
-attribute.  A mask carrying one valid attribute plus 1-3 residue
-bytes (or a non-aligned attribute length making msk_depth negative)
-therefore reaches the next iteration with msk_depth != 0, so neither
-the !msk_depth check in fl_set_enc_opt() nor the !depth check in the
-per-type helpers fires.  nla_type() then reads past the mask payload
-and nla_parse_nested_deprecated() iterates with an nla_len taken
-from those bytes, reading well beyond the mask attribute (KASAN:
-slab-out-of-bounds read in __nla_validate_parse from fl_change()).
+        4 + (count * 8)  // 4-byte header + 8 bytes per ACE
 
-Validate the advanced mask pointer as well: when the mask is not
-legitimately exhausted (msk_depth != 0) and the new pointer fails
-nla_ok(), reject the filter with -EINVAL.  An exactly exhausted mask
-still skips the check, preserving exact-match behaviour for the
-remaining key attributes.
+cifs_do_set_acl() then calls posix_acl_to_cifs() to write the CIFS
+wire format into the same buffer:
 
-Fixes: c96adff95619 ("cls_flower: call nla_ok() before nla_next()")
-Reported-by: TencentOS Corvus AI <corvus@tencent.com>
+        6 + (count * 10)  // 6-byte header + 10 bytes per ACE
+
+An ACL that passes the xattr-based check in cifs_set_acl() can
+overflow the heap when posix_acl_to_cifs() writes the larger CIFS
+format.
+
+Validate the CIFS format size against the remaining buffer space and
+USHRT_MAX before converting--data_count is __u16, so sizes above
+USHRT_MAX truncate the on-wire packet length, causing the server to
+apply a partial ACL.  Replace MaxDataCount = 1000 with
+min(CIFSMaxBufSize, USHRT_MAX).
+
+Fixes: dc1af4c4b4721 ("cifs: implement set acl method")
 Cc: stable@vger.kernel.org
-Signed-off-by: Aohan Mei <henrymei@tencent.com>
-Link: https://patch.msgid.link/20260826025123.62758-1-ljp1205831794@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Frank Sorenson <sorenson@redhat.com>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/cls_flower.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ fs/smb/client/cifssmb.c |   13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
---- a/net/sched/cls_flower.c
-+++ b/net/sched/cls_flower.c
-@@ -1589,6 +1589,11 @@ static int fl_set_enc_opt(struct nlattr
- 			return -EINVAL;
- 		}
- 		nla_opt_msk = nla_next(nla_opt_msk, &msk_depth);
-+
-+		if (msk_depth && !nla_ok(nla_opt_msk, msk_depth)) {
-+			NL_SET_ERR_MSG(extack, "A mask attribute is invalid");
-+			return -EINVAL;
-+		}
- 	}
+--- a/fs/smb/client/cifssmb.c
++++ b/fs/smb/client/cifssmb.c
+@@ -3152,6 +3152,7 @@ int cifs_do_set_acl(const unsigned int x
+ 	int rc = 0;
+ 	int bytes_returned = 0;
+ 	__u16 params, byte_count, data_count, param_offset, offset;
++	size_t cifs_acl_size, bytes_available;
  
- 	return 0;
+ 	cifs_dbg(FYI, "In SetPosixACL (Unix) for path %s\n", fileName);
+ setAclRetry:
+@@ -3170,8 +3171,7 @@ setAclRetry:
+ 	}
+ 	params = 6 + name_len;
+ 	pSMB->MaxParameterCount = cpu_to_le16(2);
+-	/* BB find max SMB size from sess */
+-	pSMB->MaxDataCount = cpu_to_le16(1000);
++	pSMB->MaxDataCount = cpu_to_le16(min_t(unsigned int, CIFSMaxBufSize, USHRT_MAX));
+ 	pSMB->MaxSetupCount = 0;
+ 	pSMB->Reserved = 0;
+ 	pSMB->Flags = 0;
+@@ -3183,6 +3183,15 @@ setAclRetry:
+ 	parm_data = ((char *)pSMB) + sizeof(pSMB->hdr.smb_buf_length) + offset;
+ 	pSMB->ParameterOffset = cpu_to_le16(param_offset);
+ 
++	/* make sure we can fit the larger cifs_posix_aces in the buffer */
++	cifs_acl_size = sizeof(struct cifs_posix_acl) +
++		       (acl->a_count * sizeof(struct cifs_posix_ace));
++	bytes_available = (CIFSMaxBufSize + MAX_HEADER_SIZE(tcon->ses->server)) - offset;
++	if (cifs_acl_size > bytes_available || cifs_acl_size > USHRT_MAX) {
++		rc = -E2BIG;
++		goto setACLerrorExit;
++	}
++
+ 	/* convert to on the wire format for POSIX ACL */
+ 	data_count = posix_acl_to_cifs(parm_data, acl, acl_type);
+ 
 
 
