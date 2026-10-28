@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793208872;
-	b=khVms2pIDMrXErTevt+0pcsPKD3WLMQ835KKIKkkxKbB4gzzs7oKmtN+rzhLVQqor2Ju
-	 rPHThav4C+KCdPflqb/AMB6uZPNx6d9bYhTRMQl8zTasZ169JbxxAFdvjMZkdfaJzIqxm
-	 pCIO/xzJ+XXG6jjXtxG18E0cLZIIs7R6MCF7Q1ahOmiSFac9KcwnmUVZHXjnG9prn5PhU
-	 +LBg2x3gRzcPoGw5iPKzQpLv/PyGfPAtNH5C2nlzjqDtyZYFWglyheVLzvnfq9MO/hcgo
-	 bKDDlQ9ZzXgKDdZuMy8raVPV11SfTS0J4QVhapbe+60PZ+u7AjusZgN8O4wHOF+h4kg==
+	t=1793208875;
+	b=CdPfGMLZCL0QgkCvRN+h6cdGUORb28uFV2w3O5PAUKauB816pqlUekw35vmtx8WLVqvW
+	 GLvF1sZ1dW6uBFPBRZbsgIt6OinNht1TUjVyY3fxpcjYzAMedYeI85HPTtjCZvYr/ct9b
+	 mMcguC1X0r/1KYvJSKFQE3tmYZBTG/HhpKkbHdcibQPllJwwffXTPX1jR5uteLcWDtDz5
+	 y6FvCREbXvAdQ6+tqUu8iSWNzU8gkcguF6QU8vyli9Io+jf0h1E+vdY7hWsnVgHhxoS+L
+	 hUWudwytGN5MZNXWZ6inRdcXu8dwwghug0gcqQ7cK8MDf+imSpHjHc9XwCgKYBb8tQw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793208872;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793208875;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=MuHZSGnpFBK8sUjpVAwR47e3KjswNE+CCZeOuC/bnG8=;
-	b=xSe1qsfzDlS5a6ktD7CZn+DkTH31sZPgPJHNFr/BFtgGYFfGx6WLDlSGGM/l16Ycj46G
-	 vvprUC0ZYFg3Y3qZi08ddQpGN9nHZU0CgR91TEzV0Z4Txen2AG8Mb3eXlabkXL1PsE+Me
-	 gXKBytXGD2PXuypfZN1ReCJGn22A5mxmBTHkznbL2IXZ0oVkm3b0eKMPzYS6YAqCl+XXV
-	 Sf8LFnQ+Ut577aqtNop7US+jnCqAos7J3/EFd1AW/oremhT9P31XP3gNYbOtHXx+X83G8
-	 0PRI5uP+ye8gGXD9TJb0jJbdwFmgZhD1xLRGzRAo8OuUCC9lD5/i0qf1jLNSIw/z7+Q==
+	bh=/gYVytuEAqy6qZOjkBW4JFLe+CCSx7HCbHiosE9cSWw=;
+	b=AJPsie3fh87YrJDiQLK8eXim6IY3mo13UR3yCZZ+GGpqklPWl8WsQT+ssCenIYqmQf8F
+	 dPKH+tohqIEzQqYml0OYsL1bH5ZjMwdIUAXs7f3qU6YtS7FupM79fRHhhJDToUY66P/sb
+	 JYZk08qRUgLU6jaGRYTuZuFoRWsf72rYBSEY07LvPRsj8DFFVdBGX7kXFQe8bINHnjRB8
+	 IfRlNOKnxNVJI/1jMUcCbGTUDZ2Ygog/YKNbZsYGq3bjQyVsaGXonukLUKcVCI6cU8CR2
+	 u7rVG/6DzvAun3L89errTYSXVBa6UnzUheZ1uzlq74Jh9W0Q5ATlhSU2axYrV2Sl/lw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sqZpY9NK;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zDXSH2E3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25D8E606A31D;
-	Wed, 28 Oct 2026 17:34:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E513C606A31A;
+	Wed, 28 Oct 2026 17:34:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sqZpY9NK
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7970C1F01825;
-	Wed, 28 Oct 2026 17:34:31 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zDXSH2E3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 460901F01825;
+	Wed, 28 Oct 2026 17:34:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793208872;
-	bh=MuHZSGnpFBK8sUjpVAwR47e3KjswNE+CCZeOuC/bnG8=;
+	s=korg; t=1793208874;
+	bh=/gYVytuEAqy6qZOjkBW4JFLe+CCSx7HCbHiosE9cSWw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sqZpY9NKGbHbG6kXbP8AHJbsxGYJsjCVWIh1RNCdSZ5I32zhuG9ieE0ausE3aaOhy
-	 IcN9NFvWUOMjxHdCPHxO7EC8Fsn67PPgsOcjXe5JVYdY+dygxhnZdq6WryL4baD86w
-	 3N6Z9JHosbBvlRSGcs3Y2sgultG+olOh4WFVoBuI=
+	b=zDXSH2E36PjFzl78KIkCHxU9AJMT/xBodH8R3UJ43k3at6E1bsvBWBgQbmER4sJjk
+	 nV8ZsH1jp3EDpHzeR6XHwsGhHUQlzGAMPC84fOUmQ5+UaUjL2AXMy7ig0lboMPpbiN
+	 t0ihtpYr4YECStiSb1XB9kIe0OaKZ6rZcdKHscfY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhengchuan Liang <zcliangcn@gmail.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Kyle Zeng <kylebot@openai.com>,
+	Bruno Produit <bruno.produit@trailofbits.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 271/516] perf: Require kernel access for text poke events
-Date: Wed, 28 Oct 2026 17:57:03 +0100
-Message-ID: <20261028170009.912510220@linuxfoundation.org>
+Subject: [PATCH 5.10 272/516] ALSA: seq: Serialize compat port-info ioctls
+Date: Wed, 28 Oct 2026 17:57:04 +0100
+Message-ID: <20261028170009.935818342@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -68,51 +69,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhengchuan Liang <zcliangcn@gmail.com>
+From: Kyle Zeng <kylebot@openai.com>
 
-[ Upstream commit 357e8a77a501d96c9517f01f4a211eed5e9c9184 ]
+[ Upstream commit 95b2e0361c88753afa030c10698be0a1a5b67650 ]
 
-Perf events with exclude_kernel=1 can be opened without kernel perf
-access. However, exclude_kernel does not suppress text-poke sideband
-records. Every PERF_RECORD_TEXT_POKE is marked PERF_RECORD_MISC_KERNEL
-and contains a raw kernel instruction address.
+The native sequencer ioctl path serializes handler calls with
+client->ioctl_mutex, but the translated port-info compat path invokes the
+same handlers through snd_seq_kernel_client_ctl() without taking that
+mutex.
 
-An unprivileged task can therefore open and mmap a task-local software
-event with text_poke=1. Both opening a count-only tracepoint event and
-configuring UDP GRO for ESP-in-UDP cause updates to inline static calls;
-the observer receives the relocated addresses of the modified instructions.
-For a known kernel image, any such address reveals the runtime kernel
-text base despite KASLR.
+This lets concurrent compat CREATE_PORT requests pass the port-count
+check before any request reaches the serialized insertion. The computed
+integer port index can then exceed the address field range and wrap to an
+existing index. Subsequent subscriber teardown can resolve the duplicate
+address to the wrong port and access a freed subscriber.
 
-Call perf_allow_kernel() whenever attr.text_poke is set, regardless of
-exclude_kernel. Events that neither monitor kernel execution nor request
-text-poke records retain their existing permissions.
+Take ioctl_mutex while dispatching converted port-info requests, matching
+the native ioctl path. All translated port-info commands share this
+helper, so their accesses to the client port state are serialized as
+well.
 
-Fixes: e17d43b93e54 ("perf: Add perf text poke event")
-Assisted-by: LLM
-Signed-off-by: Zhengchuan Liang <zcliangcn@gmail.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Fixes: b3defb791b26 ("ALSA: seq: Make ioctls race-free")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/99131354c41e23188f778b92f90363775b482395.1790573390.git.zcliangcn@gmail.com
-[ sashal: Adapted the condition to the existing exclude_kernel check without callchain checks. ]
+Assisted-by: Codex:gpt-5.6-sol gpt-6-astra
+Signed-off-by: Kyle Zeng <kylebot@openai.com>
+Signed-off-by: Bruno Produit <bruno.produit@trailofbits.com>
+Link: https://patch.msgid.link/20260917105643.90102-1-bruno.produit@trailofbits.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+[ sashal: Replaced scoped_guard() with explicit mutex_lock() and mutex_unlock() for GNU89 compatibility. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/events/core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/core/seq/seq_compat.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/kernel/events/core.c b/kernel/events/core.c
-index 68df0d569f4c2..d08c276dffa83 100644
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -11936,7 +11936,7 @@ SYSCALL_DEFINE5(perf_event_open,
- 	if (err)
- 		return err;
+diff --git a/sound/core/seq/seq_compat.c b/sound/core/seq/seq_compat.c
+index 54723566ce242..35f67ba5e16ee 100644
+--- a/sound/core/seq/seq_compat.c
++++ b/sound/core/seq/seq_compat.c
+@@ -44,7 +44,9 @@ static int snd_seq_call_port_info_ioctl(struct snd_seq_client *client, unsigned
+ 		goto error;
+ 	data->kernel = NULL;
  
--	if (!attr.exclude_kernel) {
-+	if (!attr.exclude_kernel || attr.text_poke) {
- 		err = perf_allow_kernel(&attr);
- 		if (err)
- 			return err;
++	mutex_lock(&client->ioctl_mutex);
+ 	err = snd_seq_kernel_client_ctl(client->number, cmd, data);
++	mutex_unlock(&client->ioctl_mutex);
+ 	if (err < 0)
+ 		goto error;
+ 
 -- 
 2.53.0
 
