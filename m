@@ -1,52 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214627;
-	b=5P4cEPutFEYegRz3PQ1ZLpo6j+grwuV4wk6w3oaxLOPWEooYo6DUClS23TANvodOej8T
-	 1geIS/+L3dzYAzynDrs9/VuOtfSv+a5mgRzX0lvL6nDYThSGJSPs4oOd7aKptneolfOxc
-	 Nld1NeUu9oO0fIQBmSE/+VXQWNF/65A2uEZTDXrBQvcyf5Zq1Hi8VgxmUzhzkD+SGqsQ4
-	 WOxP/AY7RP877WK5nNrtgHqMgua7rYMmSP3GcOXQHj0dybewfjLYxVuRbarXbf/9YAHEP
-	 9TXKa+iHCHVbrdDiGjyiroSQ3MPzUqAFHtHvqZiIFrvrvyxfrPXa7rmq6MpL/JWfbgQ==
+	t=1793214629;
+	b=qVswnA2mlY+y+EgfMIy1Ghkd4l0+ZMdpPAKXR3PFgBmEd6BfRpH4Y/RmJ5mAIEKWCoVw
+	 81zlzWNlCA2TNN+esgf/cDRr92tUqy0Xyzz3Xyo/Ira8QOcmLEFUc158Azh87OaS+yIjp
+	 XnTuVqOauDiBRJD+BdiZGs7CfNwQt6iLW7eCtgALgcLw8NxJfkJ6+dNyy/6wE7dGS3u4f
+	 8JNfY3JsIp9Mfa52+dG0fEBD5IsA9c0tAIxupeJYs9kb5OpJdlhgE/zeNgOKj5PBBjMX3
+	 1Sgz9bEU8b/u0rXjLmpLjK6SAlGriu08ansYcGAZcKj1kis+18HXtkbmZ/DeQ/Ij9ZA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214627;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214629;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=KIAo1HZv7m5geVVJpxqW2uAKr+Th7T7xfykRLn+jfMo=;
-	b=3AckNsP0J8xPUEy/GVjasmF3LMlzYBZOmHm/OSGjdUo9ZBzKkoppSxEXsgf3pn2Q4Are
-	 7u1j/gcMkXUqylgm3xQwOhfYtXRhliysOAEWQ5WRHhfOvgVs4ZMwM1fJ8szRHoNFrW+dy
-	 kFLZPGuk50fcmKO52R5kchx/YuJzP7HBLGc+tbjqeP5h63tkXwL9F5xo0Cfi2NoY7Q3ij
-	 /UdZ6n4xElI1uyB4qoMeQpA8mGNP/975cVuls/tPtDhdHyYoTKA0i4GCi6N4yC4Wf+zfr
-	 Xz96lMzXRAH4MMOSGl/KHWjmL8w/AYGI7ynInCYoxgr6kOWp2LEmGDqsJLmAxA+SnEg==
+	bh=RwIHcvbqyBxF69og3/LxUq3xKSkw/sK9S1hrCPvruKs=;
+	b=rOHDm1oRITPdz0AOg74AWlOTT7Yo2U9yD0+RXAWk/XSoN6hig8KIhr1nXpkFP60zjUjx
+	 9O5U4DGQo2ACDckebB6yPskBxEUmgPkX8vkz3GzmD6J1LwG120ovZSTZnBKLi61QDBmuH
+	 lLlP4sUvAUQWKiesckQuB37Uky2XxQVRt2iawu/DaDp4TNk4ao978Ph0c6CZC2SCYXyt9
+	 WM2GCPmQV/NE9F8XM0cIBMqfnrFJO1pRlVyb09yKjnGsA/osHs3AfmwodA40k2FHZzHM0
+	 Z7GjL1HL/Xm3uY2pSF1Rio8kS1tZLsX456iGYCEK93i+3gz/HYuOp9t0NvKV3p7JMjg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gjkWZx5I;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mJIhZoX7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEF29606AB25;
-	Wed, 28 Oct 2026 19:10:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 990A4606AB21;
+	Wed, 28 Oct 2026 19:10:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gjkWZx5I
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AC9D1F031E1;
-	Wed, 28 Oct 2026 19:10:25 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mJIhZoX7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF0B11F01825;
+	Wed, 28 Oct 2026 19:10:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214626;
-	bh=KIAo1HZv7m5geVVJpxqW2uAKr+Th7T7xfykRLn+jfMo=;
+	s=korg; t=1793214629;
+	bh=RwIHcvbqyBxF69og3/LxUq3xKSkw/sK9S1hrCPvruKs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gjkWZx5INDFORD7OXR8U9rYxvP+dMoQ+uRE36twLR6YS28J7pmq3jMy3fGe6OSIjr
-	 8XlFvPCVTRqMgD6t+7qYTf6KRR1Hp1ZI+lrciPRp2XcILvIYiHlhp09mVsvD4Xuchi
-	 mr4xBntqHrdcHug1Nbj2o4un/pn+Yr+Weskvwcco=
+	b=mJIhZoX7sVK2/mA7mW5uxXOc2S0U6LyOqcOrSSYLVKwKBY2qXL4rdxBU43ooVfYPP
+	 zQWkeNFPdBr+y3SE+m9xheTqxdZAVRQxH5Tf/RQl0KiWhybtyWeCGmexpl+HHRQJwo
+	 rjE1mC+K4XuaYWTEkPPIDWLJrNXefA+eB0RJ9Ajo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Coddington <bcodding@hammerspace.com>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	syzbot+6182afad5045e6703b3d@syzkaller.appspotmail.com,
+	David Howells <dhowells@redhat.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	Simon Horman <horms@kernel.org>,
+	linux-afs@lists.infradead.org,
+	stable@kernel.org,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0925/1887] pNFS: Fix a deadlock when returning a delegation during open()
-Date: Wed, 28 Oct 2026 17:50:21 +0100
-Message-ID: <20261028170520.465713758@linuxfoundation.org>
+Subject: [PATCH 6.1 0926/1887] rxrpc: Fix data-race warning and potential load/store tearing
+Date: Wed, 28 Oct 2026 17:50:22 +0100
+Message-ID: <20261028170520.488736142@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,215 +73,227 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Trond Myklebust <trond.myklebust@hammerspace.com>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit 857bf9056291a16785ae3be1d291026b2437fc48 ]
+[ Upstream commit 5d5fe8bcd331f1e34e0943ec7c18432edfcf0e8b ]
 
-Ben Coddington reports seeing a hang in the following stack trace:
-  0 [ffffd0b50e1774e0] __schedule at ffffffff9ca05415
-  1 [ffffd0b50e177548] schedule at ffffffff9ca05717
-  2 [ffffd0b50e177558] bit_wait at ffffffff9ca061e1
-  3 [ffffd0b50e177568] __wait_on_bit at ffffffff9ca05cfb
-  4 [ffffd0b50e1775c8] out_of_line_wait_on_bit at ffffffff9ca05ea5
-  5 [ffffd0b50e177618] pnfs_roc at ffffffffc154207b [nfsv4]
-  6 [ffffd0b50e1776b8] _nfs4_proc_delegreturn at ffffffffc1506586 [nfsv4]
-  7 [ffffd0b50e177788] nfs4_proc_delegreturn at ffffffffc1507480 [nfsv4]
-  8 [ffffd0b50e1777f8] nfs_do_return_delegation at ffffffffc1523e41 [nfsv4]
-  9 [ffffd0b50e177838] nfs_inode_set_delegation at ffffffffc1524a75 [nfsv4]
- 10 [ffffd0b50e177888] nfs4_process_delegation at ffffffffc14f41dd [nfsv4]
- 11 [ffffd0b50e1778a0] _nfs4_opendata_to_nfs4_state at ffffffffc1503edf [nfsv4]
- 12 [ffffd0b50e1778c0] _nfs4_open_and_get_state at ffffffffc1504e56 [nfsv4]
- 13 [ffffd0b50e177978] _nfs4_do_open at ffffffffc15051b8 [nfsv4]
- 14 [ffffd0b50e1779f8] nfs4_do_open at ffffffffc150559c [nfsv4]
- 15 [ffffd0b50e177a80] nfs4_atomic_open at ffffffffc15057fb [nfsv4]
- 16 [ffffd0b50e177ad0] nfs4_file_open at ffffffffc15219be [nfsv4]
- 17 [ffffd0b50e177b78] do_dentry_open at ffffffff9c09e6ea
- 18 [ffffd0b50e177ba8] vfs_open at ffffffff9c0a082e
- 19 [ffffd0b50e177bd0] dentry_open at ffffffff9c0a0935
+Fix the following:
 
-The issue is that the delegreturn is being asked to wait for a layout
-return that cannot complete because a state recovery was initiated. The
-state recovery cannot complete until the open() finishes processing the
-delegations it was given.
+        BUG: KCSAN: data-race in rxrpc_peer_keepalive_worker / rxrpc_send_data_packet
 
-The solution is to propagate the existing flags that indicate a
-non-blocking call to the function pnfs_roc(), so that it knows not to
-wait in this situation.
+which is reporting an issue with the reads and writes to ->last_tx_at in:
 
-Reported-by: Benjamin Coddington <bcodding@hammerspace.com>
-Fixes: 29ade5db1293 ("pNFS: Wait on outstanding layoutreturns to complete in pnfs_roc()")
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+        conn->peer->last_tx_at = ktime_get_seconds();
+
+and:
+
+        keepalive_at = peer->last_tx_at + RXRPC_KEEPALIVE_TIME;
+
+The lockless accesses to these to values aren't actually a problem as the
+read only needs an approximate time of last transmission for the purposes
+of deciding whether or not the transmission of a keepalive packet is
+warranted yet.
+
+Also, as ->last_tx_at is a 64-bit value, tearing can occur on a 32-bit
+arch.
+
+Fix both of these by switching to an unsigned int for ->last_tx_at and only
+storing the LSW of the time64_t.  It can then be reconstructed at need
+provided no more than 68 years has elapsed since the last transmission.
+
+Fixes: ace45bec6d77 ("rxrpc: Fix firewall route keepalive")
+Reported-by: syzbot+6182afad5045e6703b3d@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/r/695e7cfb.050a0220.1c677c.036b.GAE@google.com/
+Signed-off-by: David Howells <dhowells@redhat.com>
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: Simon Horman <horms@kernel.org>
+cc: linux-afs@lists.infradead.org
+cc: stable@kernel.org
+Link: https://patch.msgid.link/1107124.1768903985@warthog.procyon.org.uk
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/nfs4proc.c |  6 ++---
- fs/nfs/pnfs.c     | 58 +++++++++++++++++++++++++++++++++--------------
- fs/nfs/pnfs.h     | 17 ++++++--------
- 3 files changed, 51 insertions(+), 30 deletions(-)
+ net/rxrpc/ar-internal.h |  9 ++++++++-
+ net/rxrpc/conn_event.c  |  4 ++--
+ net/rxrpc/output.c      | 10 +++++-----
+ net/rxrpc/peer_event.c  | 17 ++++++++++++++++-
+ net/rxrpc/proc.c        |  4 ++--
+ net/rxrpc/rxkad.c       |  4 ++--
+ 6 files changed, 35 insertions(+), 13 deletions(-)
 
-diff --git a/fs/nfs/nfs4proc.c b/fs/nfs/nfs4proc.c
-index 9f352f1a6eb1e..333ed7e8d4c68 100644
---- a/fs/nfs/nfs4proc.c
-+++ b/fs/nfs/nfs4proc.c
-@@ -3798,8 +3798,8 @@ int nfs4_do_close(struct nfs4_state *state, gfp_t gfp_mask, int wait)
- 	calldata->res.seqid = calldata->arg.seqid;
- 	calldata->res.server = server;
- 	calldata->res.lr_ret = -NFS4ERR_NOMATCHING_LAYOUT;
--	calldata->lr.roc = pnfs_roc(state->inode,
--			&calldata->lr.arg, &calldata->lr.res, msg.rpc_cred);
-+	calldata->lr.roc = pnfs_roc(state->inode, &calldata->lr.arg,
-+				    &calldata->lr.res, msg.rpc_cred, wait);
- 	if (calldata->lr.roc) {
- 		calldata->arg.lr_args = &calldata->lr.arg;
- 		calldata->res.lr_res = &calldata->lr.res;
-@@ -6748,7 +6748,7 @@ static int _nfs4_proc_delegreturn(struct inode *inode, const struct cred *cred,
- 	data->inode = nfs_igrab_and_active(inode);
- 	if (data->inode || issync) {
- 		data->lr.roc = pnfs_roc(inode, &data->lr.arg, &data->lr.res,
--					cred);
-+					cred, issync);
- 		if (data->lr.roc) {
- 			data->args.lr_args = &data->lr.arg;
- 			data->res.lr_res = &data->lr.res;
-diff --git a/fs/nfs/pnfs.c b/fs/nfs/pnfs.c
-index 99a93c63708df..26d509b6ebd10 100644
---- a/fs/nfs/pnfs.c
-+++ b/fs/nfs/pnfs.c
-@@ -1427,10 +1427,9 @@ pnfs_commit_and_return_layout(struct inode *inode)
- 	return ret;
+diff --git a/net/rxrpc/ar-internal.h b/net/rxrpc/ar-internal.h
+index 8499ceb7719c8..fbec55c7e6dc5 100644
+--- a/net/rxrpc/ar-internal.h
++++ b/net/rxrpc/ar-internal.h
+@@ -303,7 +303,7 @@ struct rxrpc_peer {
+ 	struct hlist_head	error_targets;	/* targets for net error distribution */
+ 	struct rb_root		service_conns;	/* Service connections */
+ 	struct list_head	keepalive_link;	/* Link in net->peer_keepalive[] */
+-	time64_t		last_tx_at;	/* Last time packet sent here */
++	unsigned int		last_tx_at;	/* Last time packet sent here (time64_t LSW) */
+ 	seqlock_t		service_conn_lock;
+ 	spinlock_t		lock;		/* access lock */
+ 	unsigned int		if_mtu;		/* interface MTU for this peer */
+@@ -986,6 +986,13 @@ void rxrpc_encap_err_rcv(struct sock *sk, struct sk_buff *skb, unsigned int udp_
+ void rxrpc_error_report(struct sock *);
+ void rxrpc_peer_keepalive_worker(struct work_struct *);
+ 
++/* Update the last transmission time on a peer for keepalive purposes. */
++static inline void rxrpc_peer_mark_tx(struct rxrpc_peer *peer)
++{
++	/* To avoid tearing on 32-bit systems, we only keep the LSW. */
++	WRITE_ONCE(peer->last_tx_at, ktime_get_seconds());
++}
++
+ /*
+  * peer_object.c
+  */
+diff --git a/net/rxrpc/conn_event.c b/net/rxrpc/conn_event.c
+index 293922df2a891..8079094844c0e 100644
+--- a/net/rxrpc/conn_event.c
++++ b/net/rxrpc/conn_event.c
+@@ -142,7 +142,7 @@ static void rxrpc_conn_retransmit_call(struct rxrpc_connection *conn,
+ 	}
+ 
+ 	ret = kernel_sendmsg(conn->params.local->socket, &msg, iov, ioc, len);
+-	conn->params.peer->last_tx_at = ktime_get_seconds();
++	rxrpc_peer_mark_tx(conn->params.peer);
+ 	if (ret < 0)
+ 		trace_rxrpc_tx_fail(chan->call_debug_id, serial, ret,
+ 				    rxrpc_tx_point_call_final_resend);
+@@ -262,7 +262,7 @@ static int rxrpc_abort_connection(struct rxrpc_connection *conn,
+ 
+ 	trace_rxrpc_tx_packet(conn->debug_id, &whdr, rxrpc_tx_point_conn_abort);
+ 
+-	conn->params.peer->last_tx_at = ktime_get_seconds();
++	rxrpc_peer_mark_tx(conn->params.peer);
+ 
+ 	_leave(" = 0");
+ 	return 0;
+diff --git a/net/rxrpc/output.c b/net/rxrpc/output.c
+index 3d9032fae9d91..6fb0c67ef8bb4 100644
+--- a/net/rxrpc/output.c
++++ b/net/rxrpc/output.c
+@@ -254,7 +254,7 @@ int rxrpc_send_ack_packet(struct rxrpc_call *call, bool ping,
+ 		rtt_slot = rxrpc_begin_rtt_probe(call, serial, rxrpc_rtt_tx_ping);
+ 
+ 	ret = kernel_sendmsg(conn->params.local->socket, &msg, iov, 2, len);
+-	conn->params.peer->last_tx_at = ktime_get_seconds();
++	rxrpc_peer_mark_tx(conn->params.peer);
+ 	if (ret < 0)
+ 		trace_rxrpc_tx_fail(call->debug_id, serial, ret,
+ 				    rxrpc_tx_point_call_ack);
+@@ -333,7 +333,7 @@ int rxrpc_send_abort_packet(struct rxrpc_call *call)
+ 
+ 	ret = kernel_sendmsg(conn->params.local->socket,
+ 			     &msg, iov, 1, sizeof(pkt));
+-	conn->params.peer->last_tx_at = ktime_get_seconds();
++	rxrpc_peer_mark_tx(conn->params.peer);
+ 	if (ret < 0)
+ 		trace_rxrpc_tx_fail(call->debug_id, serial, ret,
+ 				    rxrpc_tx_point_call_abort);
+@@ -449,7 +449,7 @@ int rxrpc_send_data_packet(struct rxrpc_call *call, struct sk_buff *skb,
+ 	 *     message and update the peer record
+ 	 */
+ 	ret = kernel_sendmsg(conn->params.local->socket, &msg, iov, 2, len);
+-	conn->params.peer->last_tx_at = ktime_get_seconds();
++	rxrpc_peer_mark_tx(conn->params.peer);
+ 
+ 	up_read(&conn->params.local->defrag_sem);
+ 	if (ret < 0) {
+@@ -525,7 +525,7 @@ int rxrpc_send_data_packet(struct rxrpc_call *call, struct sk_buff *skb,
+ 				IP_PMTUDISC_DONT);
+ 		ret = kernel_sendmsg(conn->params.local->socket, &msg,
+ 				     iov, 2, len);
+-		conn->params.peer->last_tx_at = ktime_get_seconds();
++		rxrpc_peer_mark_tx(conn->params.peer);
+ 
+ 		ip_sock_set_mtu_discover(conn->params.local->socket->sk,
+ 				IP_PMTUDISC_DO);
+@@ -674,6 +674,6 @@ void rxrpc_send_keepalive(struct rxrpc_peer *peer)
+ 		trace_rxrpc_tx_packet(peer->debug_id, &whdr,
+ 				      rxrpc_tx_point_version_keepalive);
+ 
+-	peer->last_tx_at = ktime_get_seconds();
++	rxrpc_peer_mark_tx(peer);
+ 	_leave("");
+ }
+diff --git a/net/rxrpc/peer_event.c b/net/rxrpc/peer_event.c
+index 32561e9567fe3..77005c97dd904 100644
+--- a/net/rxrpc/peer_event.c
++++ b/net/rxrpc/peer_event.c
+@@ -515,6 +515,21 @@ static void rxrpc_distribute_error(struct rxrpc_peer *peer, int error,
+ 	}
  }
  
--bool pnfs_roc(struct inode *ino,
--		struct nfs4_layoutreturn_args *args,
--		struct nfs4_layoutreturn_res *res,
--		const struct cred *cred)
-+bool pnfs_roc(struct inode *ino, struct nfs4_layoutreturn_args *args,
-+	      struct nfs4_layoutreturn_res *res, const struct cred *cred,
-+	      bool sync)
- {
- 	struct nfs_inode *nfsi = NFS_I(ino);
- 	struct nfs_open_context *ctx;
-@@ -1441,7 +1440,7 @@ bool pnfs_roc(struct inode *ino,
- 	nfs4_stateid stateid;
- 	enum pnfs_iomode iomode = 0;
- 	bool layoutreturn = false, roc = false;
--	bool skip_read = false;
-+	bool skip_read;
- 
- 	if (!nfs_have_layout(ino))
- 		return false;
-@@ -1454,20 +1453,14 @@ bool pnfs_roc(struct inode *ino,
- 		lo = NULL;
- 		goto out_noroc;
- 	}
--	pnfs_get_layout_hdr(lo);
--	if (test_bit(NFS_LAYOUT_RETURN_LOCK, &lo->plh_flags)) {
--		spin_unlock(&ino->i_lock);
--		rcu_read_unlock();
--		wait_on_bit(&lo->plh_flags, NFS_LAYOUT_RETURN,
--				TASK_UNINTERRUPTIBLE);
--		pnfs_put_layout_hdr(lo);
--		goto retry;
--	}
- 
- 	/* no roc if we hold a delegation */
-+	skip_read = false;
- 	if (nfs4_check_delegation(ino, FMODE_READ)) {
--		if (nfs4_check_delegation(ino, FMODE_WRITE))
-+		if (nfs4_check_delegation(ino, FMODE_WRITE)) {
-+			lo = NULL;
- 			goto out_noroc;
-+		}
- 		skip_read = true;
- 	}
- 
-@@ -1476,12 +1469,43 @@ bool pnfs_roc(struct inode *ino,
- 		if (state == NULL)
- 			continue;
- 		/* Don't return layout if there is open file state */
--		if (state->state & FMODE_WRITE)
-+		if (state->state & FMODE_WRITE) {
-+			lo = NULL;
- 			goto out_noroc;
-+		}
- 		if (state->state & FMODE_READ)
- 			skip_read = true;
- 	}
- 
-+	if (skip_read) {
-+		bool writes = false;
++/*
++ * Reconstruct the last transmission time.  The difference calculated should be
++ * valid provided no more than ~68 years elapsed since the last transmission.
++ */
++static time64_t rxrpc_peer_get_tx_mark(const struct rxrpc_peer *peer, time64_t base)
++{
++	s32 last_tx_at = READ_ONCE(peer->last_tx_at);
++	s32 base_lsw = base;
++	s32 diff = last_tx_at - base_lsw;
 +
-+		list_for_each_entry(lseg, &lo->plh_segs, pls_list) {
-+			if (lseg->pls_range.iomode != IOMODE_READ) {
-+				writes = true;
-+				break;
-+			}
-+		}
-+		if (!writes) {
-+			lo = NULL;
-+			goto out_noroc;
-+		}
-+	}
++	diff = clamp(diff, -RXRPC_KEEPALIVE_TIME, RXRPC_KEEPALIVE_TIME);
 +
-+	pnfs_get_layout_hdr(lo);
-+	if (test_bit(NFS_LAYOUT_RETURN_LOCK, &lo->plh_flags)) {
-+		if (!sync) {
-+			pnfs_set_plh_return_info(
-+				lo, skip_read ? IOMODE_RW : IOMODE_ANY, 0);
-+			goto out_noroc;
-+		}
-+		spin_unlock(&ino->i_lock);
-+		rcu_read_unlock();
-+		wait_on_bit(&lo->plh_flags, NFS_LAYOUT_RETURN,
-+			    TASK_UNINTERRUPTIBLE);
-+		pnfs_put_layout_hdr(lo);
-+		goto retry;
-+	}
++	return diff + base;
++}
++
+ /*
+  * Perform keep-alive pings.
+  */
+@@ -541,7 +556,7 @@ static void rxrpc_peer_keepalive_dispatch(struct rxrpc_net *rxnet,
+ 		if (__rxrpc_use_local(peer->local)) {
+ 			spin_unlock_bh(&rxnet->peer_hash_lock);
  
- 	list_for_each_entry_safe(lseg, next, &lo->plh_segs, pls_list) {
- 		if (skip_read && lseg->pls_range.iomode == IOMODE_READ)
-@@ -1521,7 +1545,7 @@ bool pnfs_roc(struct inode *ino,
- out_noroc:
- 	spin_unlock(&ino->i_lock);
- 	rcu_read_unlock();
--	pnfs_layoutcommit_inode(ino, true);
-+	pnfs_layoutcommit_inode(ino, sync);
- 	if (roc) {
- 		struct pnfs_layoutdriver_type *ld = NFS_SERVER(ino)->pnfs_curr_ld;
- 		if (ld->prepare_layoutreturn)
-diff --git a/fs/nfs/pnfs.h b/fs/nfs/pnfs.h
-index c95f8a26ee1b4..0cc6f9a295f2c 100644
---- a/fs/nfs/pnfs.h
-+++ b/fs/nfs/pnfs.h
-@@ -296,10 +296,9 @@ int pnfs_mark_matching_lsegs_return(struct pnfs_layout_hdr *lo,
- 				u32 seq);
- int pnfs_mark_layout_stateid_invalid(struct pnfs_layout_hdr *lo,
- 		struct list_head *lseg_list);
--bool pnfs_roc(struct inode *ino,
--		struct nfs4_layoutreturn_args *args,
--		struct nfs4_layoutreturn_res *res,
--		const struct cred *cred);
-+bool pnfs_roc(struct inode *ino, struct nfs4_layoutreturn_args *args,
-+	      struct nfs4_layoutreturn_res *res, const struct cred *cred,
-+	      bool sync);
- int pnfs_roc_done(struct rpc_task *task, struct nfs4_layoutreturn_args **argpp,
- 		  struct nfs4_layoutreturn_res **respp, int *ret);
- void pnfs_roc_release(struct nfs4_layoutreturn_args *args,
-@@ -770,12 +769,10 @@ pnfs_layoutcommit_outstanding(struct inode *inode)
- 	return false;
- }
+-			keepalive_at = peer->last_tx_at + RXRPC_KEEPALIVE_TIME;
++			keepalive_at = rxrpc_peer_get_tx_mark(peer, base) + RXRPC_KEEPALIVE_TIME;
+ 			slot = keepalive_at - base;
+ 			_debug("%02x peer %u t=%d {%pISp}",
+ 			       cursor, peer->debug_id, slot, &peer->srx.transport);
+diff --git a/net/rxrpc/proc.c b/net/rxrpc/proc.c
+index 47d36554ad311..ee07785860a01 100644
+--- a/net/rxrpc/proc.c
++++ b/net/rxrpc/proc.c
+@@ -234,13 +234,13 @@ static int rxrpc_peer_seq_show(struct seq_file *seq, void *v)
+ 	now = ktime_get_seconds();
+ 	seq_printf(seq,
+ 		   "UDP   %-47.47s %-47.47s %3u"
+-		   " %3u %5u %6llus %8u %8u\n",
++		   " %3u %5u %6ds %8u %8u\n",
+ 		   lbuff,
+ 		   rbuff,
+ 		   refcount_read(&peer->ref),
+ 		   peer->cong_cwnd,
+ 		   peer->mtu,
+-		   now - peer->last_tx_at,
++		   (s32)now - (s32)READ_ONCE(peer->last_tx_at),
+ 		   peer->srtt_us >> 3,
+ 		   jiffies_to_usecs(peer->rto_j));
  
--
--static inline bool
--pnfs_roc(struct inode *ino,
--		struct nfs4_layoutreturn_args *args,
--		struct nfs4_layoutreturn_res *res,
--		const struct cred *cred)
-+static inline bool pnfs_roc(struct inode *ino,
-+			    struct nfs4_layoutreturn_args *args,
-+			    struct nfs4_layoutreturn_res *res,
-+			    const struct cred *cred, bool sync)
- {
- 	return false;
+diff --git a/net/rxrpc/rxkad.c b/net/rxrpc/rxkad.c
+index 84a61fa18bc06..038c4f2e8cef8 100644
+--- a/net/rxrpc/rxkad.c
++++ b/net/rxrpc/rxkad.c
+@@ -780,7 +780,7 @@ static int rxkad_issue_challenge(struct rxrpc_connection *conn)
+ 		return -EAGAIN;
+ 	}
+ 
+-	conn->params.peer->last_tx_at = ktime_get_seconds();
++	rxrpc_peer_mark_tx(conn->params.peer);
+ 	trace_rxrpc_tx_packet(conn->debug_id, &whdr,
+ 			      rxrpc_tx_point_rxkad_challenge);
+ 	_leave(" = 0");
+@@ -838,7 +838,7 @@ static int rxkad_send_response(struct rxrpc_connection *conn,
+ 		return -EAGAIN;
+ 	}
+ 
+-	conn->params.peer->last_tx_at = ktime_get_seconds();
++	rxrpc_peer_mark_tx(conn->params.peer);
+ 	_leave(" = 0");
+ 	return 0;
  }
 -- 
 2.53.0
