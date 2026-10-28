@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793212976;
-	b=C5P1qZPoy7GMCarKLXprV2cl5OwMwrNonooiIxnzBfI5wpLAG6U0ScqAXcK6/UcwlfUv
-	 /k85YNWnHAmJ9TOPTYNF3CIg2KFTg8tm98wFCsqeHVaCu0d4I3ewTuscOu09x2kPCAOFw
-	 R3pKq4Nl1qYOMhcESvQEYmNrCjCJzvfCpHTM+xgfTUQteTqHV3caCpaweLFfqPycbTeK7
-	 d/Jng1MJ3ht/pvu7sSfrExkbbeZ3y5SThvxhr986uCi/Dn9lW3eylTOfjsWdW9QxcuyQt
-	 ihj/UwCX1kjCWmyKxrTvPsb6POWvYNpWRZqn47sU6Ke+cc4N8VgwrEuKjL0sxrZQunw==
+	t=1793212979;
+	b=ooq6azFTgRt1oYt7oy7tPJBr7JPBzVKeWdRhhvLJHu4StxfQKMLw0GLAsF3l+iEf0Jla
+	 Zhc6yvyqmQlAjQfaTeYd7iVS3um0cuL7re1uPk4E8XrNIGN3QcTGg5/CB/85DzsXa7WvR
+	 d7VsqY4gaTDj1a6Pq5XxuHBJjtum4ZrQCsdr+CBw7bkadjOOeaFl6inDeA+WTf0uZ6mfv
+	 uw2BQa0i7DvngIDBib96ZlXz9DLvTj4gReiIatfxMKVdIYrk9bL9disr/VKTTQhvKP6EG
+	 TcJB1BFuCWq0W8WelWshgxHaz/DdOcxF4L6a8fkM/7iEj25LjsSTsb4+6XdTmJ4qpIg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793212976;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793212979;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=H6AElbSb5Yk4AJ7/8V64+1V+zcE+sd5TA2zU/RfQY/Q=;
-	b=EttT+hcbInDVIK1P9K1ZiNdEElYNK337l6xz1c2UU0/2hWNIptb45w4P/vuIDKmkAV4e
-	 RIVjQrzE16XzUXuPfaUfCYZQugjvWYTKaRGHHly8gIdDFOU4sFNsXFuAvzS5aKcR3ldGe
-	 z7aUPgz1SEzehaiZSA5FkBhWHI09uQ+UxBI72NnUQC/iHdZjPRa0lrE6bAle2wIn/FKzR
-	 r3A9EsBemQrVycgS7i4NyZ5N1sOSiAquyEbiml+VYjZtvB82cMZO7wvBvJtFRVZTBivcm
-	 UESGUiScTcfUs2GVKShdDkr3i1viO5537GmLtxLL6n2ieFq/sTQbk1fxtF/uxBnFMkw==
+	bh=pUfG3qotXNxb8aOxb2JSfo4WBgPNbtyIsN4vBAinkow=;
+	b=aQfKxOEUYPwsOc5gSoQD818SFEffbVimdl+IU296CCgzN/QNzAzwUwgYX+0CCDMZrAyo
+	 xkBhVB2g4d+2vO0cVt1ub/N3hGwQPc+PGS8Qnizx4GpBdNSgjXZWKKEDvJhjCjDGebG/W
+	 oD8/NqefBIljUelHclfhiHGm1Gl9TdxWpFXkotRYFlwsbmIkAkl8mFkbn7mnBbcJY/fsi
+	 HZOK7aOcPRRiQlYMeUhlzzkCXILgHDZ82oMTeuK6zkvXGIxIU2ATrEkS/sAcTv480VJei
+	 SyNV+xZEehbn/JRNf7VzSL6XavQfG49RYZYBLSW3ye9Lx4dj21JWcbIq6UYMSU1i04g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GJi6HyAY;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hH+AIWVT;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85AD2606A320;
-	Wed, 28 Oct 2026 18:42:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F546606A31C;
+	Wed, 28 Oct 2026 18:42:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GJi6HyAY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0B611F01825;
-	Wed, 28 Oct 2026 18:42:55 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hH+AIWVT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3A1C1F01829;
+	Wed, 28 Oct 2026 18:42:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793212976;
-	bh=H6AElbSb5Yk4AJ7/8V64+1V+zcE+sd5TA2zU/RfQY/Q=;
+	s=korg; t=1793212979;
+	bh=pUfG3qotXNxb8aOxb2JSfo4WBgPNbtyIsN4vBAinkow=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GJi6HyAYh0YLRXXwxL+cV38ka/5TAxXOnxbQBUwDt8YlDZ+md6I4norUGOc35jrEZ
-	 LsCERMqHC3bOBiXLVtlTgm3oPz0lfqVVyCQD5n83Iw9ZqVhEF/YqMI6Q5tTbwxXOf6
-	 OfnnE3X/ED+KnYeJU35mqwtbSXCD2uA48L/7LxYc=
+	b=hH+AIWVTRl/GfBYSFyafvjmfRdFXITL41tcjGiFBn1YpKtOSmENy7fcC3LFEiWYvE
+	 2OmwpQCF4Zzqv0Mz82Xgwty4+eJLMXmCc408jpGAf4rkt5Sdn7V0l0xOIRqxYBtWAB
+	 MB3Y0NWZ+zuGH253DAuadK4bm2Bbv4DBnbszT7P4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Zeng <kylebot@openai.com>,
-	Bruno Produit <bruno.produit@trailofbits.com>,
+	co+24304d323d28f156@bugs.sh,
+	Xiang Mei <xmei5@asu.edu>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.1 0299/1887] ALSA: seq: Serialize compat port-info ioctls
-Date: Wed, 28 Oct 2026 17:39:55 +0100
-Message-ID: <20261028170506.033413265@linuxfoundation.org>
+Subject: [PATCH 6.1 0300/1887] ALSA: ua101: reject mismatched capture/playback packet sizes
+Date: Wed, 28 Oct 2026 17:39:56 +0100
+Message-ID: <20261028170506.055683301@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,50 +68,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kyle Zeng <kylebot@openai.com>
+From: Xiang Mei <xmei5@asu.edu>
 
-commit 95b2e0361c88753afa030c10698be0a1a5b67650 upstream.
+commit 86f86e6fdedc33c5b8d38b9208b350f8accf57ee upstream.
 
-The native sequencer ioctl path serializes handler calls with
-client->ioctl_mutex, but the translated port-info compat path invokes the
-same handlers through snd_seq_kernel_client_ctl() without taking that
-mutex.
+detect_usb_format() cross-checks bSubframeSize, bBitResolution and
+tSamFreq between the capture and playback interfaces, but never relates
+the two endpoints' wMaxPacketSize and bNrChannels.  Each playback URB
+gets a buffer of ua->playback.max_packet_bytes, while the number of
+bytes written into it is derived from the capture stream:
+capture_urb_complete() computes frames from the received capture packet
+and capture.frame_bytes, and start_usb_playback() and playback_work()
+multiply that by playback.frame_bytes.
 
-This lets concurrent compat CREATE_PORT requests pass the port-count
-check before any request reaches the serialized insertion. The computed
-integer port index can then exceed the address field range and wrap to an
-existing index. Subsequent subscriber teardown can resolve the duplicate
-address to the wrong port and access a freed subscriber.
+A device declaring a large capture wMaxPacketSize with few capture
+channels and a small playback wMaxPacketSize with many playback channels
+therefore memset()s and memcpy()s past the end of the playback buffer,
+in open() of the PCM node the driver registers during probe.
+usb_submit_urb() rejects the over-long iso_frame_desc[0].length with
+-EMSGSIZE, but only after the write.
 
-Take ioctl_mutex while dispatching converted port-info requests, matching
-the native ioctl path. All translated port-info commands share this
-helper, so their accesses to the client port state are serialized as
-well.
+Reject such descriptors at probe time.  Genuine UA-101/UA-1000 hardware
+declares proportional packet sizes and is unaffected.
 
-Fixes: b3defb791b26 ("ALSA: seq: Make ioctls race-free")
+  BUG: KASAN: slab-out-of-bounds in start_usb_playback (sound/usb/misc/ua101.c:586)
+  Write of size 2048 at addr ffff8881098f3c00 by task exploit/5021
+  Call Trace:
+   __asan_memset (mm/kasan/shadow.c:84)
+   start_usb_playback (sound/usb/misc/ua101.c:586)
+   playback_pcm_open (sound/usb/misc/ua101.c:679)
+   snd_pcm_open_substream (sound/core/pcm_native.c:2829)
+   snd_pcm_open (sound/core/pcm_native.c:2865 sound/core/pcm_native.c:2932)
+   snd_pcm_playback_open (sound/core/pcm_native.c:2891)
+   snd_open (sound/core/sound.c:166)
+   chrdev_open (fs/char_dev.c:411)
+   do_dentry_open (fs/open.c:996)
+   vfs_open (fs/open.c:1101)
+   path_openat (fs/namei.c:4837 fs/namei.c:5000)
+   do_file_open (fs/namei.c:5029)
+   do_sys_openat2 (fs/open.c:1417)
+   __x64_sys_openat (fs/open.c:1423 fs/open.c:1439 fs/open.c:1434)
+   do_syscall_64 (arch/x86/entry/syscall_64.c:61 arch/x86/entry/syscall_64.c:84)
+   entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
+
+  The buggy address belongs to the object at ffff8881098f3c00
+   which belongs to the cache kmalloc-192 of size 192
+  The buggy address is located 0 bytes inside of
+   allocated 168-byte region [ffff8881098f3c00, ffff8881098f3ca8)
+
 Cc: stable@vger.kernel.org
-Assisted-by: Codex:gpt-5.6-sol gpt-6-astra
-Signed-off-by: Kyle Zeng <kylebot@openai.com>
-Signed-off-by: Bruno Produit <bruno.produit@trailofbits.com>
-Link: https://patch.msgid.link/20260917105643.90102-1-bruno.produit@trailofbits.com
+Fixes: 63978ab3e3e9 ("sound: add Edirol UA-101 support")
+Reported-by: <co+24304d323d28f156@bugs.sh>
+Assisted-by: LLM
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
+Link: https://patch.msgid.link/20260918225753.1278505-1-xmei5@asu.edu
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/core/seq/seq_compat.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ sound/usb/misc/ua101.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/sound/core/seq/seq_compat.c
-+++ b/sound/core/seq/seq_compat.c
-@@ -44,7 +44,9 @@ static int snd_seq_call_port_info_ioctl(
- 		goto error;
- 	data->kernel = NULL;
- 
--	err = snd_seq_kernel_client_ctl(client->number, cmd, data);
-+	scoped_guard(mutex, &client->ioctl_mutex) {
-+		err = snd_seq_kernel_client_ctl(client->number, cmd, data);
+--- a/sound/usb/misc/ua101.c
++++ b/sound/usb/misc/ua101.c
+@@ -1022,6 +1022,15 @@ static int detect_usb_format(struct ua10
+ 	}
+ 	ua->playback.usb_pipe = usb_sndisocpipe(ua->dev, usb_endpoint_num(epd));
+ 	ua->playback.max_packet_bytes = usb_endpoint_maxp(epd);
++
++	if (ua->capture.max_packet_bytes / ua->capture.frame_bytes *
++	    ua->playback.frame_bytes > ua->playback.max_packet_bytes) {
++		dev_err(&ua->dev->dev,
++			"playback packet size %u too small for %u capture frames\n",
++			ua->playback.max_packet_bytes,
++			ua->capture.max_packet_bytes / ua->capture.frame_bytes);
++		return -ENXIO;
 +	}
- 	if (err < 0)
- 		goto error;
+ 	return 0;
+ }
  
 
 
