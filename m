@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213708;
-	b=X58XRdG3Qdeyv98Wg1+/ceDenyCQW+k1gvxLD3tcjCjE3C69oaeb6B5Z1qYFGUDqcEU3
-	 bfvFBNRia+oH4Ak1xsly1osT2sXkd+VVK2/yw37rjv2R60jGx56DNGVRBehX7j3t7N6yi
-	 bDCqf0GQGOC2GWSPaWBGoWHF3hJLlzSWo8vr3OcXlFgW0UJZrb8wg7vQRQ8hkREpffP6h
-	 QlH7ylWRrL0ld57vpUcPbQSE0IvNWZclQW6lQvGM/tAn4VMtuMxoplFWndr5jxCc2zUgh
-	 ewTaMLU/nykeBvx/VqVyIl1yOPct/Etym01kISsh9KPoY/YRlPMx2AXrF6AloTEVPTA==
+	t=1793213710;
+	b=lVIoJu0hH37TE94qZiobZFYuf1FNKosjyPABOkDQ6g/i1U5cigyslvbGsBebfBgCtO9h
+	 iqK+CHa0QYxyrQZ88BajmUAo3DM23losG5Zal+0Vz9JIvnGmX0KdJVSdUsU8rMyELY+QJ
+	 poIwnp25yCzA7H+st2Dk3wKVwu1HuUXOGFmOtrEDblIYZsGmQ8dQYUVJl4vguAxQxjmyi
+	 ewI1AuwPZ49G1UKQZNkPrmMcmz3qA3MrVLTpe99k2io66bVRjKuCaxh07a7uMHEz8abLh
+	 jF1HlGrXiGidjHC49ritB4IhbiUdN8DL+JLMgVxBDwcRYtTnifNIQdUyifFHViVSg/w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213708;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213710;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=NiICB2epTg00shcnn34LDceK79XF/uYblrD9Ey3fUck=;
-	b=c3eQi9uKT7xNKfbrYlxRZU2QL06C0mQyPsE6Fp+/C1XSgZa9S2y9mTZPc+qXob/Ez/rw
-	 iM2XpsEnHunPeHfHtAVdD4SfoWad80za/q+63+OMEjlu7A8ONJpxVy8lS0Mksc53EfDjN
-	 o4//dGQS/EyDyBK90TDx74IiNxBsP1HnXqAvkPnQQCIScEFVvGlkp9Fi6oZiQgNRG9Kq7
-	 tl9RSDKWP/5p1oneHicaBvOzmJzyT/uisAMBz5xS/4K06Anx9NxoNQ3wDeuMBSR3QRT/o
-	 dlQHVlPOKffwDFudQQFPo86dmS21cXTVOYydf4MzEWBg/XK3qfRJcU6t51vZ5eMrCwQ==
+	bh=B+3q47k8QUF2IqGAsCJi0oG6TUyIRjfJXGdoGbklsl0=;
+	b=xmbNF4kVeglCbg9TM0I2uWqnJRrnL5Hity/zKpVW2eiyTkhowb/m34LZRRZi4W7UVXDT
+	 bWK6hHYsq5RnXIeMd6g1zIr4GNzF6eqI5QPVaGTQ+0xV2gh5+zd8QwjPvTUlGUxCADhbE
+	 tXRyYpxtRzLbSkmlbb4SqbpLOA6+plQ3o9+JmLHgjqg+i+FbD4kjZ7GPPuAKpLE8TS/aK
+	 b2l9vbPykv5tmqsDkPVYJlfH65TliVmPw+aZdb9A0tT/tlR2my9c23qFptneWIRDHnh0Q
+	 hTmft6XeXKDBSC6mnyloe/GPCDwrPGoUtiGcv0eUhF3jn5Qie4nr2RIE0T9ffJtFP/Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=peKybH22;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AbBJZNQ6;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4B34606A31D;
-	Wed, 28 Oct 2026 18:55:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C5A1606A31A;
+	Wed, 28 Oct 2026 18:55:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=peKybH22
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 210C01F01825;
-	Wed, 28 Oct 2026 18:55:06 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AbBJZNQ6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F21AE1F01825;
+	Wed, 28 Oct 2026 18:55:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213707;
-	bh=NiICB2epTg00shcnn34LDceK79XF/uYblrD9Ey3fUck=;
+	s=korg; t=1793213710;
+	bh=B+3q47k8QUF2IqGAsCJi0oG6TUyIRjfJXGdoGbklsl0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=peKybH22CGGrG/cu9zP2rSKsq6TaR3W3nfJe8CL1bujOJkr+boCjbJJYuh0YgPhvF
-	 qsNllMsNTKSrtnuFFcwXsVT86ZXJxJTEp7rujgsrOT40lkXqgHf2Bc+FmVbxSwOGUK
-	 2kSHtzAYB+PnldO0YoWO2msGfih85is+ix4bH7Jw=
+	b=AbBJZNQ6tRRtV4hwnd9MCEo2imvXOG8fDFjOcFYOzp1Sz0k0gkya6cqTfj3Xka/2m
+	 JpIio5YjpALJMA1UI8ypLz6wAhzFnCuxGoA5EuYbgu2GbfDyo/fXLG1TlTaKDK+6A8
+	 Hr8rL3T93LIUMCCKzXNQ82Dywr2n1n9Rp9I6U7zw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0601/1887] drm/amd/display: fix NULL checks for adev->dm.dc in amdgpu_dm_fini()
-Date: Wed, 28 Oct 2026 17:44:57 +0100
-Message-ID: <20261028170513.092401853@linuxfoundation.org>
+Subject: [PATCH 6.1 0602/1887] ASoC: SOF: ipc4-pcm: Workaround for crashed firmware on system suspend
+Date: Wed, 28 Oct 2026 17:44:58 +0100
+Message-ID: <20261028170513.115448022@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,64 +71,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
 
-[ Upstream commit 2a3cfb9a24a28da9cc13d2c525a76548865e182c ]
+[ Upstream commit c40aad7c81e5fba34b70123ed7ce3397fa62a4d2 ]
 
-Since 'adev->dm.dc' in amdgpu_dm_fini() might turn out to be NULL
-before the call to dc_enable_dmub_notifications(), check
-beforehand to ensure there will not be a possible NULL-ptr-deref
-there.
+When the system is suspended while audio is active, the
+sof_ipc4_pcm_hw_free() is invoked to reset the pipelines since during
+suspend the DSP is turned off, streams will be re-started after resume.
 
-Also, since commit 1e88eb1b2c25 ("drm/amd/display: Drop
-CONFIG_DRM_AMD_DC_HDCP") there are two separate checks for NULL in
-'adev->dm.dc' before dc_deinit_callbacks() and dc_dmub_srv_destroy().
-Clean up by combining them all under one 'if'.
+If the firmware crashes during while audio is running (or when we reset
+the stream before suspend) then the sof_ipc4_set_multi_pipeline_state()
+will fail with IPC error and the state change is interrupted.
+This will cause misalignment between the kernel and firmware state on next
+DSP boot resulting errors returned by firmware for IPC messages, eventually
+failing the audio resume.
+On stream close the errors are ignored so the kernel state will be
+corrected on the next DSP boot, so the second boot after the DSP panic.
 
-Found by Linux Verification Center (linuxtesting.org) with static
-analysis tool SVACE.
+If sof_ipc4_trigger_pipelines() is called from sof_ipc4_pcm_hw_free() then
+state parameter is SOF_IPC4_PIPE_RESET and only in this case.
 
-Fixes: 81927e2808be ("drm/amd/display: Support for DMUB AUX")
-Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Treat a forced pipeline reset similarly to how we treat a pcm_free by
+ignoring error on state sending to allow the kernel's state to be
+consistent with the state the firmware will have after the next boot.
+
+Link: https://github.com/thesofproject/sof/issues/8721
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
+Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Link: https://msgid.link/r/20240213115233.15716-1-peter.ujfalusi@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c  | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ sound/soc/sof/ipc4-pcm.c | 17 +++++++++++++++--
+ 1 file changed, 15 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-index 8c150bf0aa1dd..53ec5f3a8e6f3 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -1881,19 +1881,19 @@ static void amdgpu_dm_fini(struct amdgpu_device *adev)
- 		hdcp_destroy(&adev->dev->kobj, adev->dm.hdcp_workqueue);
- 		adev->dm.hdcp_workqueue = NULL;
- 	}
-+#endif
+diff --git a/sound/soc/sof/ipc4-pcm.c b/sound/soc/sof/ipc4-pcm.c
+index 732872395980a..2a8501d14e0af 100644
+--- a/sound/soc/sof/ipc4-pcm.c
++++ b/sound/soc/sof/ipc4-pcm.c
+@@ -86,7 +86,9 @@ static int sof_ipc4_trigger_pipelines(struct snd_soc_component *component,
+ 			if (ret < 0) {
+ 				dev_err(sdev->dev, "failed to pause pipeline %d\n",
+ 					swidget->pipeline_id);
+-				return ret;
++				if (sdev->fw_state != SOF_FW_CRASHED ||
++				    state != SOF_IPC4_PIPE_RESET)
++					return ret;
+ 			}
+ 		}
  
--	if (adev->dm.dc)
-+	if (adev->dm.dc) {
-+#ifdef CONFIG_DRM_AMD_DC_HDCP
- 		dc_deinit_callbacks(adev->dm.dc);
- #endif
--
--	if (adev->dm.dc)
- 		dc_dmub_srv_destroy(&adev->dm.dc->ctx->dmub_srv);
--
--	if (dc_enable_dmub_notifications(adev->dm.dc)) {
--		kfree(adev->dm.dmub_notify);
--		adev->dm.dmub_notify = NULL;
--		destroy_workqueue(adev->dm.delayed_hpd_wq);
--		adev->dm.delayed_hpd_wq = NULL;
-+		if (dc_enable_dmub_notifications(adev->dm.dc)) {
-+			kfree(adev->dm.dmub_notify);
-+			adev->dm.dmub_notify = NULL;
-+			destroy_workqueue(adev->dm.delayed_hpd_wq);
-+			adev->dm.delayed_hpd_wq = NULL;
-+		}
- 	}
+@@ -100,7 +102,18 @@ static int sof_ipc4_trigger_pipelines(struct snd_soc_component *component,
+ 		if (ret < 0) {
+ 			dev_err(sdev->dev, "failed to set state %d for pipeline %d\n",
+ 				state, swidget->pipeline_id);
+-			break;
++			/*
++			 * workaround: if the firmware is crashed while setting the
++			 * pipelines to reset state we must ignore the error code and
++			 * reset it to 0.
++			 * Since the firmware is crashed we will not send IPC messages
++			 * and we are going to see errors printed, but the state of the
++			 * widgets will be correct for the next boot.
++			 */
++			if (sdev->fw_state != SOF_FW_CRASHED || state != SOF_IPC4_PIPE_RESET)
++				break;
++
++			ret = 0;
+ 		}
  
- 	if (adev->dm.dmub_bo)
+ 		pipeline->state = state;
 -- 
 2.53.0
 
