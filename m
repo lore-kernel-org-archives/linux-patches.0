@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214094;
-	b=Thn/WTJRxK83FbdX8124vR5DYvqVr1PDkzzoZvaVMYgsjBaDpC0V6MRarlsBXIrmqfbe
-	 CH89ZFzV/hLinWbUaN3h6NWLLz+S2DfqZxY2kyjCyJafAfqOQCokcUKit6oRRoL/35g/4
-	 NGS0E0bB30l/TAmneZ2PltvHK+ItdfzQ4lkAbMzjYICPXTKtX/0GdC9WmrGHM2bW+J+fZ
-	 vjwaBOsy/MK6ox9skwX3nKHkKqILVnxc/cKB5aIF3CKfFR2LIpHVXAmAei5onpy0eyAp+
-	 7Crbmlr9KfWWsW4u/c1yQQiJRB1cFAcrFbRxI07sXcVHsGDzTVYGUIFxd3zIhCDwNqQ==
+	t=1793214097;
+	b=M1tjD2mq0Uz2AsFSliQrioHmBJsemwsWDhv3xm9ubW6yIEjuDQSsCRjRR4iBndzCCVfL
+	 nlVhkyA0swJ9yGf8TIxFW4N33mSUD1UENiWjFxAzZ0WRwJuGjqV8IEFBORB81wyBxJB8w
+	 ZfkcAkYS47A/pc1h8P/AeqxMLDUD4CTai4NK9qgyo9QeOkoqxxv4w2rho4FG8U5128Sk2
+	 uosgJBgvVuExNkyuNPGBhGgAroPX1yxeNRLUWutFTry76hN6jTRta+j00WdmXHdeeSKuc
+	 YrhOatDDIzCe8ZFI74a+uV/5F+sSZbp856qTXIw2P3Uy8R4CyHYVln3aHEi4rxOcMFw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214094;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214097;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=Mop4gBrYZIAdciieu/61D5VsTH7nDuKAelUe8PqrKdk=;
-	b=KPyMYxxofy96QAhI48VtDnR0VxGUpFtTiVTL2zDEMaSiD6fWMt+Lz/y4UBhNnzunEaIU
-	 dj6PL4+pSsSPlUowsPW/+4IXo8zqu9duilWK7rJQKG5jjHOPNpWpmH/9oo2hHNOIhIphO
-	 gQGNmdvqY1QvrWV/62hMzvXROyNvTPQs/vryWStaA9ofnP/XfycMKk+nSNLgSzEtcBkmD
-	 blk3VbZqJkjwgnaRbtZg4F74/ge3PFh82f5LU2+oa459SSFqSX4/IPpsiIMbTWVu03bBd
-	 21J33FAvtCDXQMQ42dI4247w2PidYjz/Pb/rpPcnL7qalhAULg6hHBgcWdGAmr2AS9w==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=5m7Ti3QPkPlUSJ9Km0dAazQe2KN3OUSG/b2ww+5ZVO0=;
+	b=vNVoj26Hkrf7RYIDAagWUuSCXdJBVDa+F0XSatZpqj1K7Qsv7GIDyll4vjKelTzXWSj2
+	 dTKO8Za0QK/LQHbuejh8m63nsdi6l5ELILSjji903FyXgjaFo1qG6oo+xdxwBVciKLiZU
+	 OzqsxU/LD+99z0I0Xg8lgcZ8RY0poMWIN/1hZlVGQ/ly2QjS4Bh/pg5So6HZHqK6ye0da
+	 1+Ddsqyj1BurMNFf1om5kYW/XdOYGcq8+7MJOH7CZ6Q3h+XbD75RfeKAQ9teg5CBn2s2q
+	 XrP1vsl+Wklx1NooGVoqT2s5pbmgFt0rBDXuf7ntQT9Hx0WyIAVLDgGzapJv6CuC4Ow==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PBpYL6t6;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S3qEQL0b;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD971606A31F;
-	Wed, 28 Oct 2026 19:01:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4288606A31A;
+	Wed, 28 Oct 2026 19:01:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PBpYL6t6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F096F1F01825;
-	Wed, 28 Oct 2026 19:01:32 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S3qEQL0b
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9F6E1F01825;
+	Wed, 28 Oct 2026 19:01:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214093;
-	bh=Mop4gBrYZIAdciieu/61D5VsTH7nDuKAelUe8PqrKdk=;
+	s=korg; t=1793214096;
+	bh=5m7Ti3QPkPlUSJ9Km0dAazQe2KN3OUSG/b2ww+5ZVO0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PBpYL6t6BHTUd7899s2AZ/dpgCs/18QntGt+ec7LrY04GJQc6a9tR71rBgIcohjNm
-	 p86xMt7vWXYi1k4nFGMr5bSuQjawHKFjI43/78TO+zJHkWQkaCUHeE4LC66nrl+IQp
-	 rJeNM0+iZ//oPf1Vlk1sGsflbGKhN2jSkOzw3AMo=
+	b=S3qEQL0btVnsrDMhALMTcyO8+vQcE6Ume6QEHcoCibsyQKV3X2M1X31Rq1Pg2/tPz
+	 rrxpDZHh5JiegH52Dy7oN/hGYmDicQckJe9bs20ElNhVFrcnjxhXKj42NXd/AwDWwt
+	 +rvyyyBYkOCcrDo3YXx1MB5FWPwKI6joKISRgbfc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
+	Kory Maincent <kory.maincent@bootlin.com>,
+	=?UTF-8?q?Niklas=20S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0737/1887] net: ipv6: fix dst ref loops in rpl, seg6 and ioam6 lwtunnels
-Date: Wed, 28 Oct 2026 17:47:13 +0100
-Message-ID: <20261028170516.219464307@linuxfoundation.org>
+Subject: [PATCH 6.1 0738/1887] net: ravb: Fix missing rtnl lock in suspend/resume path
+Date: Wed, 28 Oct 2026 17:47:14 +0100
+Message-ID: <20261028170516.241189706@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -62,77 +64,110 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Kory Maincent <kory.maincent@bootlin.com>
 
-[ Upstream commit 92191dd1073088753821b862b791dcc83e558e07 ]
+[ Upstream commit 2c2ebb2b49573e5f8726112ad06b1dffc3c9ea03 ]
 
-Some lwtunnels have a dst cache for post-transformation dst.
-If the packet destination did not change we may end up recording
-a reference to the lwtunnel in its own cache, and the lwtunnel
-state will never be freed.
+Fix the suspend/resume path by ensuring the rtnl lock is held where
+required. Calls to ravb_open, ravb_close and wol operations must be
+performed under the rtnl lock to prevent conflicts with ongoing ndo
+operations.
 
-Discovered by the ioam6.sh test, kmemleak was recently fixed
-to catch per-cpu memory leaks. I'm not sure if rpl and seg6
-can actually hit this, but in principle I don't see why not.
+Without this fix, the following warning is triggered:
+[   39.032969] =============================
+[   39.032983] WARNING: suspicious RCU usage
+[   39.033019] -----------------------------
+[   39.033033] drivers/net/phy/phy_device.c:2004 suspicious
+rcu_dereference_protected() usage!
+...
+[   39.033597] stack backtrace:
+[   39.033613] CPU: 0 UID: 0 PID: 174 Comm: python3 Not tainted
+6.13.0-rc7-next-20250116-arm64-renesas-00002-g35245dfdc62c #7
+[   39.033623] Hardware name: Renesas SMARC EVK version 2 based on
+r9a08g045s33 (DT)
+[   39.033628] Call trace:
+[   39.033633]  show_stack+0x14/0x1c (C)
+[   39.033652]  dump_stack_lvl+0xb4/0xc4
+[   39.033664]  dump_stack+0x14/0x1c
+[   39.033671]  lockdep_rcu_suspicious+0x16c/0x22c
+[   39.033682]  phy_detach+0x160/0x190
+[   39.033694]  phy_disconnect+0x40/0x54
+[   39.033703]  ravb_close+0x6c/0x1cc
+[   39.033714]  ravb_suspend+0x48/0x120
+[   39.033721]  dpm_run_callback+0x4c/0x14c
+[   39.033731]  device_suspend+0x11c/0x4dc
+[   39.033740]  dpm_suspend+0xdc/0x214
+[   39.033748]  dpm_suspend_start+0x48/0x60
+[   39.033758]  suspend_devices_and_enter+0x124/0x574
+[   39.033769]  pm_suspend+0x1ac/0x274
+[   39.033778]  state_store+0x88/0x124
+[   39.033788]  kobj_attr_store+0x14/0x24
+[   39.033798]  sysfs_kf_write+0x48/0x6c
+[   39.033808]  kernfs_fop_write_iter+0x118/0x1a8
+[   39.033817]  vfs_write+0x27c/0x378
+[   39.033825]  ksys_write+0x64/0xf4
+[   39.033833]  __arm64_sys_write+0x18/0x20
+[   39.033841]  invoke_syscall+0x44/0x104
+[   39.033852]  el0_svc_common.constprop.0+0xb4/0xd4
+[   39.033862]  do_el0_svc+0x18/0x20
+[   39.033870]  el0_svc+0x3c/0xf0
+[   39.033880]  el0t_64_sync_handler+0xc0/0xc4
+[   39.033888]  el0t_64_sync+0x154/0x158
+[   39.041274] ravb 11c30000.ethernet eth0: Link is Down
 
-Fixes: 8cb3bf8bff3c ("ipv6: ioam: Add support for the ip6ip6 encapsulation")
-Fixes: 6c8702c60b88 ("ipv6: sr: add support for SRH encapsulation and injection with lwtunnels")
-Fixes: a7a29f9c361f ("net: ipv6: add rpl sr tunnel")
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250130031519.2716843-2-kuba@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+Closes: https://lore.kernel.org/netdev/4c6419d8-c06b-495c-b987-d66c2e1ff848@tuxon.dev/
+Fixes: 0184165b2f42 ("ravb: add sleep PM suspend/resume support")
+Signed-off-by: Kory Maincent <kory.maincent@bootlin.com>
+Tested-by: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/ioam6_iptunnel.c | 9 ++++++---
- net/ipv6/rpl_iptunnel.c   | 9 ++++++---
- 2 files changed, 12 insertions(+), 6 deletions(-)
+ drivers/net/ethernet/renesas/ravb_main.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/net/ipv6/ioam6_iptunnel.c b/net/ipv6/ioam6_iptunnel.c
-index 3a6065faaf9bf..b536eae433d79 100644
---- a/net/ipv6/ioam6_iptunnel.c
-+++ b/net/ipv6/ioam6_iptunnel.c
-@@ -365,9 +365,12 @@ static int ioam6_output(struct net *net, struct sock *sk, struct sk_buff *skb)
- 				goto drop;
- 			}
+diff --git a/drivers/net/ethernet/renesas/ravb_main.c b/drivers/net/ethernet/renesas/ravb_main.c
+index dcacd691b2efd..40b82f00e6e55 100644
+--- a/drivers/net/ethernet/renesas/ravb_main.c
++++ b/drivers/net/ethernet/renesas/ravb_main.c
+@@ -3028,10 +3028,12 @@ static int __maybe_unused ravb_suspend(struct device *dev)
  
--			local_bh_disable();
--			dst_cache_set_ip6(&ilwt->cache, dst, &fl6.saddr);
--			local_bh_enable();
-+			/* cache only if we don't create a dst reference loop */
-+			if (skb_dst(skb)->lwtstate != dst->lwtstate) {
-+				local_bh_disable();
-+				dst_cache_set_ip6(&ilwt->cache, dst, &fl6.saddr);
-+				local_bh_enable();
+ 	netif_device_detach(ndev);
+ 
++	rtnl_lock();
+ 	if (priv->wol_enabled)
+ 		ret = ravb_wol_setup(ndev);
+ 	else
+ 		ret = ravb_close(ndev);
++	rtnl_unlock();
+ 
+ 	if (priv->info->ccc_gac)
+ 		ravb_ptp_stop(ndev);
+@@ -3083,12 +3085,16 @@ static int __maybe_unused ravb_resume(struct device *dev)
+ 		ravb_ptp_init(ndev, priv->pdev);
+ 
+ 	if (netif_running(ndev)) {
++		rtnl_lock();
+ 		if (priv->wol_enabled) {
+ 			ret = ravb_wol_restore(ndev);
+-			if (ret)
++			if (ret) {
++				rtnl_unlock();
+ 				return ret;
 +			}
  		}
- 
- 		skb_dst_drop(skb);
-diff --git a/net/ipv6/rpl_iptunnel.c b/net/ipv6/rpl_iptunnel.c
-index cde14e180a85c..be38d40188ec0 100644
---- a/net/ipv6/rpl_iptunnel.c
-+++ b/net/ipv6/rpl_iptunnel.c
-@@ -236,9 +236,12 @@ static int rpl_output(struct net *net, struct sock *sk, struct sk_buff *skb)
- 			goto drop;
- 		}
- 
--		local_bh_disable();
--		dst_cache_set_ip6(&rlwt->cache, dst, &fl6.saddr);
--		local_bh_enable();
-+		/* cache only if we don't create a dst reference loop */
-+		if (orig_dst->lwtstate != dst->lwtstate) {
-+			local_bh_disable();
-+			dst_cache_set_ip6(&rlwt->cache, dst, &fl6.saddr);
-+			local_bh_enable();
-+		}
- 
- 		err = skb_cow_head(skb, LL_RESERVED_SPACE(dst->dev));
- 		if (unlikely(err))
+ 		ret = ravb_open(ndev);
++		rtnl_unlock();
+ 		if (ret < 0)
+ 			return ret;
+ 		ravb_set_rx_mode(ndev);
 -- 
 2.53.0
 
