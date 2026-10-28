@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793217277;
-	b=dnM8ImMwrsgNzHzHcCTN/59jmdhIgYcS8RqWUpQTWOP0/YQXWR7veYFHchwzrbV2jPmI
-	 SkKp8uhb3M0x9QeoaAaSfQdDqkN60KKfZbPAgHZz+ysYqfdz2EjaUXWz1zjzy6456tyGm
-	 Uese5Y9UMrluszTkUk4N0l0QnK9csxQFWiPBNl3wfEbVwxi8OgleHWZN7+uWJVckmyBkR
-	 DIHeHQd7QlZfs5/yuWMg3R8ezZkqJpR3JKHiYvlraYYaIboWJ83fYNR1iAgNdVKrkCaD+
-	 agVHJ5mhVStMl0jaYUPFpFTCKXhfU+dKBAoddJJZsxggQKrsmBUQAl+03KQQrtyGZtQ==
+	t=1793217280;
+	b=VMREznYwZe4uhvh63YfM4Q8zIUFLX3KYWg+tFGe9T88F13ISjpo3owtIcNDqvI9/PJBL
+	 +Opn9CBj+qbxi3cywWr9Motiye7/TA2aDMmBWnyJhjMFvD1vqVcBoJJRcTyybuSB+kETy
+	 9lKW4AlWUY26ZBXChs+fLdKDBAqu0/YvAJQlHs7Mn6x6839U4YGug8G6HoGlnfDcM7cDO
+	 GNS6yZlNndK5MY6ZwhC70hdVgUwYuU99aY6sRpgKKs/UKSH3lJdoV9QynPKr9wY9ToATh
+	 SOz++7pfpfkbopeiDdlRipwbticBxl7e6Nv54ruaHt9d6kF0mcSVsewpzEAFkIcSE2w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793217277;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793217280;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+3BWn8gUJbUXvaDAlgDeMs3+2xdreEobR+3OQeIppRg=;
-	b=HeYwmIRk/p+cUrgxBwg3WiQKEniYJBBFgbvkRQ6yZ0oxUr+SSERwpRR/Q551S9enbg0P
-	 ut3cMyQ197TxbDPbWGFQk5jm9/eAymery8Gemi82MQ8MCTVvzde4e/r/vXwZ/P6bqno3u
-	 ccna/Frg7HqLS1O4p5+qTxXMMxd722TCJA4sGXJJhNDtE9Jtrwp7TOytvB+MKjgTZNEsi
-	 GTgTV4THMb/6sXWA/hpgotg/pSBKxrI79pcBlRRB8Edh1bDR41EspNist8IIF/b0XqlqE
-	 MG4MNp0tiVU9KyfLMYBMnrcBnfxl8262tMMd+epuD67V+hgMCe53ShfbI0HsZxR/YSA==
+	bh=VS6lUGGwwoGTFZ9UXdeNKJT5JaPy7vCT5t5Sn8eARCE=;
+	b=slAMleEYCTivkRvjSHW+qOsj5tJOveQvnTTjA+TvnL3aMZ+E5Q9z1itNneyfF58mQmWF
+	 UDJcDFjDPk/xUkslwopiS47dBXwS4H2SXQXPyI0RLu94J3eL9zlhuc64f2ZRQwNenKIOe
+	 G3llpydEHl+7qGfOiIcBxAGkv5MohFSUxPgtSXp/ELNKVeO+Zzni87eGu4ver+Zer566S
+	 3K1eic9UrCsx7gphqtBN33NGY5XUgYtivnqwjl4iPjG0mPFTeZ0gMNbGYcekVoZ9DFjyX
+	 ZcWzpMMg5AbrnrPhshORWCrM4FHdNV9KF2+mn5JvtF+KuXaSw3bmCJbQa2bVsagJoNA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PYhNvvBr;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IpFD8ges;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49ACD606A31A;
-	Wed, 28 Oct 2026 19:54:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36964606A31A;
+	Wed, 28 Oct 2026 19:54:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PYhNvvBr
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94D121F01825;
-	Wed, 28 Oct 2026 19:54:36 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IpFD8ges
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 859881F01825;
+	Wed, 28 Oct 2026 19:54:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793217277;
-	bh=+3BWn8gUJbUXvaDAlgDeMs3+2xdreEobR+3OQeIppRg=;
+	s=korg; t=1793217280;
+	bh=VS6lUGGwwoGTFZ9UXdeNKJT5JaPy7vCT5t5Sn8eARCE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PYhNvvBrIlEeJ69x6qpj7qJpqRebqSG8Q/RLWIlmq+zboGm8TAv0NWt1oiPPZysE5
-	 SOkhlkarLB4POHu3p7nCjyMK0aoQ5aeMP87Qrc/OUo5fJ8l5LoxyfJyxzTK3Apdoh6
-	 q89gPXXWcQBhBPJ0lD3igFawjFmc6Izw/VBW9R78=
+	b=IpFD8ges0rXa/JObMi8irEl5Qtofes2c5IabFpzqag0xH1YPpUUfSh5Eu+7p1Mtol
+	 yXJFGJPq1pO+rXBh4a75cb3OkS/0Fp0AklMCuMCbAe42L89H2ZKhIX9c+6C+0jOJf1
+	 0jmYu9ug+0Ef9OE2uUG2rV1WEkESeE2m1CPiOPhE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Michael Guralnik <michaelgur@nvidia.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Qihang <q.h.hack.winter@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1849/1887] RDMA/mlx5: Follow rb_key.ats when creating new mkeys
-Date: Wed, 28 Oct 2026 18:05:45 +0100
-Message-ID: <20261028170541.526597837@linuxfoundation.org>
+Subject: [PATCH 6.1 1850/1887] ksmbd: pin conn during async oplock break notification
+Date: Wed, 28 Oct 2026 18:05:46 +0100
+Message-ID: <20261028170541.548908974@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,40 +69,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Gunthorpe <jgg@nvidia.com>
+From: Qihang <q.h.hack.winter@gmail.com>
 
-[ Upstream commit f637040c3339a2ed8c12d65ad03f9552386e2fe7 ]
+[ Upstream commit aa5d8f3f96aa11a4a54ce993c11ce8af11c546f9 ]
 
-When a cache ent already exists but doesn't have any mkeys in it the cache
-will automatically create a new one based on the specification in the
-ent->rb_key.
+smb2_oplock_break_noti() and smb2_lease_break_noti() store a ksmbd_conn
+pointer in an async ksmbd_work and then queue that work on ksmbd-io.  The
+work only increments conn->r_count, which prevents teardown from passing
+the pending-request wait after the increment, but it does not pin the
+struct ksmbd_conn object.
 
-ent->ats was missed when creating the new key and so ma_translation_mode
-was not being set even though the ent requires it.
+If connection teardown races with an oplock break notification, the last
+conn reference can be dropped before the queued worker finishes.  The
+worker then uses the freed conn in ksmbd_conn_write() and
+ksmbd_conn_r_count_dec().
 
-Cc: stable@vger.kernel.org
-Fixes: 73d09b2fe833 ("RDMA/mlx5: Introduce mlx5r_cache_rb_key")
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-Reviewed-by: Michael Guralnik <michaelgur@nvidia.com>
-Link: https://lore.kernel.org/r/7c5613458ecb89fbe5606b7aa4c8d990bdea5b9a.1716900410.git.leon@kernel.org
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Take a real conn reference when publishing the conn pointer to the async
+work item, and drop it after the notification work has decremented
+r_count.  Apply the same lifetime rule to lease break notification, which
+uses the same work->conn pattern.
+
+Fixes: 3aa660c05924 ("ksmbd: prevent connection release during oplock break notification")
+Signed-off-by: Qihang <q.h.hack.winter@gmail.com>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx5/mr.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/smb/server/oplock.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/hw/mlx5/mr.c b/drivers/infiniband/hw/mlx5/mr.c
-index 6d0ef4a5406ba..dacda8d63c5a6 100644
---- a/drivers/infiniband/hw/mlx5/mr.c
-+++ b/drivers/infiniband/hw/mlx5/mr.c
-@@ -295,6 +295,7 @@ static void set_cache_mkc(struct mlx5_cache_ent *ent, void *mkc)
- 	MLX5_SET(mkc, mkc, access_mode_1_0, ent->rb_key.access_mode & 0x3);
- 	MLX5_SET(mkc, mkc, access_mode_4_2,
- 		(ent->rb_key.access_mode >> 2) & 0x7);
-+	MLX5_SET(mkc, mkc, ma_translation_mode, !!ent->rb_key.ats);
+diff --git a/fs/smb/server/oplock.c b/fs/smb/server/oplock.c
+index 64724b371e5f1..9272b33340fc8 100644
+--- a/fs/smb/server/oplock.c
++++ b/fs/smb/server/oplock.c
+@@ -758,6 +758,7 @@ static void __smb2_oplock_break_noti(struct work_struct *wk)
+ out:
+ 	ksmbd_free_work_struct(work);
+ 	ksmbd_conn_r_count_dec(conn);
++	ksmbd_conn_put(conn);
+ }
  
- 	MLX5_SET(mkc, mkc, translations_octword_size,
- 		 get_mkc_octo_size(ent->rb_key.access_mode,
+ /**
+@@ -788,7 +789,7 @@ static int smb2_oplock_break_noti(struct oplock_info *opinfo)
+ 	br_info->open_trunc = opinfo->open_trunc;
+ 
+ 	work->request_buf = (char *)br_info;
+-	work->conn = conn;
++	work->conn = ksmbd_conn_get(conn);
+ 	work->sess = opinfo->sess;
+ 
+ 	if (opinfo->op_state == OPLOCK_ACK_WAIT) {
+@@ -862,6 +863,7 @@ static void __smb2_lease_break_noti(struct work_struct *wk)
+ out:
+ 	ksmbd_free_work_struct(work);
+ 	ksmbd_conn_r_count_dec(conn);
++	ksmbd_conn_put(conn);
+ }
+ 
+ /**
+@@ -897,7 +899,7 @@ static int smb2_lease_break_noti(struct oplock_info *opinfo)
+ 	memcpy(br_info->lease_key, lease->lease_key, SMB2_LEASE_KEY_SIZE);
+ 
+ 	work->request_buf = (char *)br_info;
+-	work->conn = conn;
++	work->conn = ksmbd_conn_get(conn);
+ 	work->sess = opinfo->sess;
+ 
+ 	if (opinfo->op_state == OPLOCK_ACK_WAIT) {
 -- 
 2.53.0
 
