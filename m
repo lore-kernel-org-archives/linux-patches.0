@@ -1,53 +1,49 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
 	t=1793212638;
-	b=ZU43rR5CGkemG14NTLojXlEVGVkok5e+rBMb9gZzfxKIIRD/Yjr6QbZRBc6UZzdIYHDp
-	 eZM+2JbeYMhjMJ+lquGRS+1D8JCfsk6Tv5AnSkyYFDcOqAGNGQXjS9kB3caQ2rwxV6T8K
-	 45wJsOQx+3xC8FJjLUwYMafd8zBc3fCvO1J3fl1BF4iuwa61Uati0jsWC9UeS/bgG7u4n
-	 z12wGWIxMR/AjG0JIZM4fAqfIkyR661/gbHRNnX8sDpb3WZVmZ0PwmX93WiFFPDoVycGS
-	 f7UvW2qtR1od4h4InItOqP1HhN+TNpu4qYKv0gylPoTLCJK6bzkl1JGAmmAtfoSzinw==
+	b=1/VJKBTqJBrzB1N6az4tCYOZj1jdV5xK8wg/eHSAUZaD5mAQQuyu21f+F0nQ6ACkSOUJ
+	 4VKIG8cdxbZjQkOTqX3FlKxMDUTc3ps5fNYBCLRssGQ/AnfW9u401U2z/4z7HJNMN8gpU
+	 b6kRDKtldpVlnArHzmDsiCREJh1WesvFMxRqdkEywlDLTh8kf5AIJ8WHwztkVjW042nAf
+	 Q9kfzEf9lq/tCoqcxXN5hxcj8uSr71ESCZ1oyRPlmDDZCfBW8fx6aOUcGNsCD828D60fb
+	 m+GdHb9aNI8l3oBmStcdgnx52rar6HIMguj5HOXwOJEK66p0ZBC8P44VwMmlQf9FNkg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
 	a=rsa-sha256; c=relaxed/relaxed; t=1793212638;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=dJYBD773GRVZML2iD3Yl/mRsnuJY+kZPsVVpKgiN8JQ=;
-	b=CDS/CfH37vt50bi6374VTpnlzTvvKM1Vb5A5mgf1r2lwRuqkQaJRDC3Jtqhxfy+exK5N
-	 hI+gs0ow1SEXIT5ZsMYKucel0nqMkD+rgmOblyjmvAHuDECQPJzmj5cfvZmPQZUNf1Qnl
-	 g5TShOGmP13u929E1EK37dP9te2p2KbewGPayYiIcAQQh4OR/3PV/Wvg6V2PeRWdtCq2+
-	 MC2pdkhKLBZL19qZ4GmzKI/y0nP8DJqLeVJWwJiFoEyGCsswdqJUMz4r1lMuv00FL6xqt
-	 R7I06H4H75O/8+OKZjIc1okd5q5BmvG8NRhHBzgLEtC1BuKGSqc6TaidrOCsYIZ++bQ==
+	bh=/BadyjsmHL7nd4/IxhaS2BeJMct1N/MPdTRd2i5T/iY=;
+	b=l5pcmfykD1fOovhmoMSMj3zZeYnGSwOG7mjP5D3tTTawunxw0QJK8jEKgHlJxY3p3nb/
+	 maZnrI/cbtnutkbfHF6mmHN5SlGkBKcMasQRlmZz3OdvgwjGniyVPduMkmgPMSRBRSpiL
+	 2R+6hBUn3t1eTG0/jgln4N7esBBn9BbUIoJ7vxnWxNpkaTKGf0ayPxKLRlWT4QtzYp9nC
+	 Tpq+Ue9/3n+PquK+0iSvTSUzkyBYpfdrfpHdQfA6Xvwb2PzttgGXOW1ds06dPJuGqfFXw
+	 iNqi03NioJJKws3DiwoFwlDmudz1N2glb6TcZ0/abDNz3FJXHDm/WVHW+OwlniNBZkQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="b/mMbZUt";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFBF4606A31A;
-	Wed, 28 Oct 2026 18:37:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=b/mMbZUt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C7AB1F01828;
-	Wed, 28 Oct 2026 18:37:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25683606A31D;
+	Wed, 28 Oct 2026 18:37:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 755851F01825;
+	Wed, 28 Oct 2026 18:37:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793212637;
-	bh=dJYBD773GRVZML2iD3Yl/mRsnuJY+kZPsVVpKgiN8JQ=;
+	s=korg; t=1793212635;
+	bh=/BadyjsmHL7nd4/IxhaS2BeJMct1N/MPdTRd2i5T/iY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=b/mMbZUtbq7SSKaKwja62OJRzrOjuudDcTcalEvOqA2pWv8Zf8Ek7AZtrD8ZLH31M
-	 aGzjXUhqQYl2wbq50UJjMUKA3jL82oiwj7TRLd8+E89dBN/qL9FAPGxqE1AOajnPMw
-	 jRY1s/zrgBXfrpTYRjQ7PVD3pgsVwZ5XMmhpzJig=
+	b=1gfbu75nuFlDbLj8cme+e6q/MC6Df8jtAm4YQr0vs0GPTBan+cQMCMWCnrdLzarg5
+	 nRG99f1tPgNrqYwOoyFL5WhnQJVLoOXpAOK81Jz1o6+OJ/aovNCVfJYx5pepMQh6uW
+	 eMOw3yobegMmAItdVS7gJ3ZXXfMveNoGdEJzOODA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manush Prajwal <manushprajwal555@gmail.com>,
-	Conor Dooley <conor.dooley@microchip.com>,
+	Liu Dalin <liudalin@kylinsec.com.cn>,
 	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0224/1887] rtc: mpfs: fix unchecked devm_clk_get() error pointer in probe()
-Date: Wed, 28 Oct 2026 17:38:40 +0100
-Message-ID: <20261028170504.330021098@linuxfoundation.org>
+Subject: [PATCH 6.1 0223/1887] rtc: dev: zero-initialize struct rtc_wkalrm to prevent information leak
+Date: Wed, 28 Oct 2026 17:38:39 +0100
+Message-ID: <20261028170504.307783881@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,60 +65,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Manush Prajwal <manushprajwal555@gmail.com>
+From: Liu Dalin <liudalin@kylinsec.com.cn>
 
-[ Upstream commit ac41b05d15db3134e839148290d67415ee0bdb58 ]
+[ Upstream commit 0ee5c5d804d592a8328a425b9274487d393d3a05 ]
 
-devm_clk_get(&pdev->dev, "rtcref")'s return value was passed straight
-into clk_get_rate() without checking it for an error first, unlike the
-"rtc" clock a few lines above which is correctly checked with
-IS_ERR(). clk_get_rate() only guards against a NULL clk, not an error
-pointer:
+The struct rtc_wkalrm has padding holes after the 'pending' member.
+When returned to userspace via the RTC_WKALRM_RD ioctl, uninitialized
+kernel stack data residing in these holes may be leaked.
 
-	if (!clk)
-		return 0;
-	...
-	rate = clk_core_get_rate_recalc(clk->core);
+Zero-initialize the struct at declaration to eliminate this information
+leak risk.
 
-so if devm_clk_get() ever returns an error pointer here (for example
-ERR_PTR(-EPROBE_DEFER), which is the normal, expected outcome if the
-clkcfg clock-provider this RTC depends on has not registered its
-clocks yet by the time this driver probes), clk_get_rate() dereferences
-that error pointer instead of returning 0, crashing instead of letting
-probe defer.
+Fixes smatch warnings:
+- drivers/rtc/dev.c:392 rtc_dev_ioctl() warn: check that 'alarm' doesn't
+  leak information (struct has a hole after 'pending')
 
-Capture the clock in the existing 'clk' local and check it with
-IS_ERR() before calling clk_get_rate(), matching the handling already
-used for the "rtc" clock in this same function.
-
-Signed-off-by: Manush Prajwal <manushprajwal555@gmail.com>
-Fixes: 0b31d703598d ("rtc: Add driver for Microchip PolarFire SoC")
-Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
-Link: https://patch.msgid.link/6a9d4b02.7d74b517.206c4c.75f8@mx.google.com
+Fixes: 36e14f5fdfdf ("rtc: rename core files")
+Assisted-by: smatch:2.0 [static analysis]
+Signed-off-by: Liu Dalin <liudalin@kylinsec.com.cn>
+Link: https://patch.msgid.link/B28B7DE18F3A9447+20260827015444.3314227-1-liudalin@kylinsec.com.cn
 Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-mpfs.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/rtc/dev.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/rtc/rtc-mpfs.c b/drivers/rtc/rtc-mpfs.c
-index d329e0eb66c44..e530b7868f999 100644
---- a/drivers/rtc/rtc-mpfs.c
-+++ b/drivers/rtc/rtc-mpfs.c
-@@ -256,8 +256,12 @@ static int mpfs_rtc_probe(struct platform_device *pdev)
- 		return ret;
- 	}
+diff --git a/drivers/rtc/dev.c b/drivers/rtc/dev.c
+index 4aad9bb998683..8ff910017b105 100644
+--- a/drivers/rtc/dev.c
++++ b/drivers/rtc/dev.c
+@@ -207,7 +207,7 @@ static long rtc_dev_ioctl(struct file *file,
+ 	struct rtc_device *rtc = file->private_data;
+ 	const struct rtc_class_ops *ops = rtc->ops;
+ 	struct rtc_time tm;
+-	struct rtc_wkalrm alarm;
++	struct rtc_wkalrm alarm = { 0 };
+ 	struct rtc_param param;
+ 	void __user *uarg = (void __user *)arg;
  
-+	clk = devm_clk_get(&pdev->dev, "rtcref");
-+	if (IS_ERR(clk))
-+		return PTR_ERR(clk);
-+
- 	/* prescaler hardware adds 1 to reg value */
--	prescaler = clk_get_rate(devm_clk_get(&pdev->dev, "rtcref")) - 1;
-+	prescaler = clk_get_rate(clk) - 1;
- 	if (prescaler > MAX_PRESCALER_COUNT) {
- 		dev_dbg(&pdev->dev, "invalid prescaler %lu\n", prescaler);
- 		return -EINVAL;
 -- 
 2.53.0
 
