@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793212689;
-	b=xaGvtBUVPiZqxEhnvVQVHowaRIWjmxq0UH12eEngH2C7zk/4qWxoDVAGoPnFzMdBkwVE
-	 pTtU5bcT8GMoGIEywzz336MRhks01r/QEId1LKhrE7dIqAvy2W339Tk3iOe2yxjtMCYUf
-	 0ECq3UEfk659yCNgRJ9SWXTgtbptLEigxGyApMPKOMNJoO8xtiSfKGRpctbYT8ghTICm5
-	 AaKncbPRbTE/7hwu0MGVlcBJklbwSiSs6PDO8f2pDcEK7bMZTIt9tOahzOaINeRn8NiCI
-	 UyxusFzc617DuvORhAUtO9FYva0d3ULHvW0ZvvAiW5eis3bnL6RMOFqLBKxO8rfcTHA==
+	t=1793212692;
+	b=oOKT0we6z966040DYu8m+lPsckpsCO7ZRlKCGU8l/XDPWWyjVrVpBX9UZh8HIrsbzIF5
+	 SbKeDRE1i6x+skf+3HuF/mAueC1HwFeH4hYcHiT7C4YnpJkhxjm0PIzSfmegn/nC3lLRd
+	 K52yD+YlAKeTzaoKezY9HnlzTIAtceDtHRBRJAk4sv3T9Gse/jIaMP83VYr1/1kziB9an
+	 XZSQQulD9+7S/90ahjrWuTUd9JnC/uCl0iQ3nkyOMYpGZTcMdIHQ4MqDhkipoD1J2HClQ
+	 mpLMn2mrO7anm39tDALBeYHx8/OHD+KB8qMJF21xbfupTqIYIGNrQa4WMYxYbt9DEIQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793212689;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793212692;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=RfgGRbopCOuO3U+lFGOL1rE31K0Upf+RMEHXXenXdek=;
-	b=lgJSHg8LtKF4MDY8tgRFqKdiLhki+Qv4s2b7F+X/BxDGHyfviwadRPaeu9Jl6qBKPQJi
-	 TswmGiQNMq3wiVzGypa5WvdUod4kX1TijF8b9/2Vk/W1YiFZsGrroagKJPLNlGm34wYCW
-	 /Nyyev5E+D3f8RhFXXcj/uSxRqet0A4+SOHn5ws6l+8nwQlYJvYb4rqWOavxFUumqQEG8
-	 UWc3+Fm4Hk3MNVj5gcjXWNLzxJeK6tadfXblwgWRzgj6QWtULLTZFVAUR6i7+E+DIX9IY
-	 XJPDPM1kRvwNLbv+VCk3px0bRtxp5bUFSF0RMbg9pRK84oYD5BCKihGWvbnkY7iXnaQ==
+	bh=YN3YhPJKu6uHkzDrLuBB1VRLnynFVUJ7bjJR+eRgsFM=;
+	b=RuQ0CsP1xJAPX3YeNkgmrPIzQExmO7AvhfAaDBPtTEZ3tw7hKCZplSGIySEKDDtPJgjG
+	 7WI2Jcj6S3NiqbhmaNQr3hlQ190QHLc1OrCVOSJXA3puBKnUfVW3rxGLshbjIiAmh5a0M
+	 2fCaplBEBwabnodneteoV8XUzMO9VakrN2uuMSU/LxWmkS6kJmJHBZpGKa7QYcUIvfBTB
+	 CelaBFdHGWr7tw4JG93tKIbIFYPF4NLtOzLS1NTWMbCBMzXmLrSaGX1HClKL/EJWEyYRh
+	 b5Pm4G2wP+kGRsYzzBw/36yMpHXmKA29q2dmmxC26eyLWVVHqLSXjrOKyobNQmftm7Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DfABVeS9;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g+9GHZ4Z;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 582BA606A31A;
-	Wed, 28 Oct 2026 18:38:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 415B8606A31C;
+	Wed, 28 Oct 2026 18:38:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DfABVeS9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A72031F01825;
-	Wed, 28 Oct 2026 18:38:08 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g+9GHZ4Z
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EF2D1F01825;
+	Wed, 28 Oct 2026 18:38:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793212689;
-	bh=RfgGRbopCOuO3U+lFGOL1rE31K0Upf+RMEHXXenXdek=;
+	s=korg; t=1793212692;
+	bh=YN3YhPJKu6uHkzDrLuBB1VRLnynFVUJ7bjJR+eRgsFM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DfABVeS9VCt420222Jmt0/aAkEnq2vusTv4Px380ruUVuL2dmg1iMWyYb5dtNOJtT
-	 RdZ0ez8zMKX/APbopAD5hRca5JILMhbn0m713pScagE6KEBtVKRoXmVFnG5IFa6EI/
-	 +mOBdE3rSbM/ksdH4GK2Ewc6Dasf/WAIiFu5kCzk=
+	b=g+9GHZ4ZEIV2skPOKTuGl4qHrHzMkzWo6XkVZAn0uVjSw09I9whE1nBJpYJHoUKvN
+	 EmfE2EkKei11hkfaAEgBSiWPTnRom2vTNI7gK2rRk96nM2+jB6uaZGhsDrJx79Vmjs
+	 Yw49CKJXTaXbPWmO2TdRCai0rU1RK1JEBJcqzipQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Duoming Zhou <duoming@zju.edu.cn>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Wim Van Sebroeck <wim@linux-watchdog.org>,
+	Julian Anastasov <ja@ssi.bg>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0205/1887] watchdog: cpu5wdt.c: Fix use-after-free bug caused by cpu5wdt_trigger
-Date: Wed, 28 Oct 2026 17:38:21 +0100
-Message-ID: <20261028170503.898898669@linuxfoundation.org>
+Subject: [PATCH 6.1 0241/1887] ipvs: fix missing counter decrement in lblc
+Date: Wed, 28 Oct 2026 17:38:57 +0100
+Message-ID: <20261028170504.715901111@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,44 +68,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Duoming Zhou <duoming@zju.edu.cn>
+From: Julian Anastasov <ja@ssi.bg>
 
-[ Upstream commit 573601521277119f2e2ba5f28ae6e87fc594f4d4 ]
+[ Upstream commit bdac17779f46817f60103baf09f0370546c3f023 ]
 
-When the cpu5wdt module is removing, the origin code uses del_timer() to
-de-activate the timer. If the timer handler is running, del_timer() could
-not stop it and will return directly. If the port region is released by
-release_region() and then the timer handler cpu5wdt_trigger() calls outb()
-to write into the region that is released, the use-after-free bug will
-happen.
+LBLC may delete cache entries for destinations that are
+removed or overloaded and replace them with available ones.
+But ip_vs_lblc_new() forgets to decrement the tbl->entries
+counter after calling ip_vs_lblc_del(). This can lead to
+increased shrinking of the cache with every new garbage
+collection.
 
-Change del_timer() to timer_shutdown_sync() in order that the timer handler
-could be finished before the port region is released.
-
-Fixes: e09d9c3e9f85 ("watchdog: cpu5wdt.c: add missing del_timer call")
-Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://lore.kernel.org/r/20240324140444.119584-1-duoming@zju.edu.cn
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
+Fixes: 2f3d771a35fe ("ipvs: do not use dest after ip_vs_dest_put in LBLC")
+Link: https://sashiko.dev/#/patchset/0bdd5abe9968ded7ca2b9cb6844ba83d94cc8d53.1787318053.git.zhilinz%40nebusec.ai
+Signed-off-by: Julian Anastasov <ja@ssi.bg>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/watchdog/cpu5wdt.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/netfilter/ipvs/ip_vs_lblc.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/watchdog/cpu5wdt.c b/drivers/watchdog/cpu5wdt.c
-index 688b112e712ba..9f279c0e13a66 100644
---- a/drivers/watchdog/cpu5wdt.c
-+++ b/drivers/watchdog/cpu5wdt.c
-@@ -252,7 +252,7 @@ static void cpu5wdt_exit(void)
- 	if (cpu5wdt_device.queue) {
- 		cpu5wdt_device.queue = 0;
- 		wait_for_completion(&cpu5wdt_device.stop);
--		del_timer(&cpu5wdt_device.timer);
-+		timer_shutdown_sync(&cpu5wdt_device.timer);
+diff --git a/net/netfilter/ipvs/ip_vs_lblc.c b/net/netfilter/ipvs/ip_vs_lblc.c
+index e2480f33a1963..9b0832f56f14e 100644
+--- a/net/netfilter/ipvs/ip_vs_lblc.c
++++ b/net/netfilter/ipvs/ip_vs_lblc.c
+@@ -205,6 +205,7 @@ ip_vs_lblc_new(struct ip_vs_lblc_table *tbl, const union nf_inet_addr *daddr,
+ 		if (en->dest == dest)
+ 			return en;
+ 		ip_vs_lblc_del(en);
++		atomic_dec(&tbl->entries);
  	}
- 
- 	misc_deregister(&cpu5wdt_misc);
+ 	en = kmalloc(sizeof(*en), GFP_ATOMIC);
+ 	if (!en)
 -- 
 2.53.0
 
