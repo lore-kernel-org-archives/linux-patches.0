@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793208334;
-	b=CYWwWDz0zq0MDFagsin+8N0bWadbPxApXQlAswEu7zr71gzLscakvgKrdrq9W0o0Xris
-	 ToIc9Sw3oLdEXrDLGga7p0UMwVLlTbYkuD1+3U/CXOGdFzUMcuVEOTFIp3Kt93REpTbcr
-	 UHP7nWAdbBnRvP9NAL9N0d8QN/7uq72s01wuGg6MYcExPZAmb/a7wSIV1zG2mH0Y/iZLR
-	 NJUMihJc2jEZqlTYOefvuFWJwM3DUnlQD6zsGoen5ceM8G2fTeuUVGb+ezHJI8CoV7JOR
-	 gmT0hs0n27vPgLwuZR4CednTUe+yfYFJgk59AAsOCzMUY6lHYt+la8JTg5eUsUmncGw==
+	t=1793208337;
+	b=4Nr9m0gf3MAh9/mAHUAf030bYyDik+EdXsfo2NgupjmzuO6F49dhCH0tTrPAacIsDfTo
+	 N60jAgYwaWFjm3dKkyPtalOZeuhZNpPc7y0lMynXxDaRCfsUcvOzMmzqr9ojLmG+laKyk
+	 B+xixiW9O+REesl/oa4xi4q7bLiOHt/GZI+Zn7npFhV2VQMF0X7mBWIwLVF2alFkKq4Tr
+	 XZoDalTMmPIkDAHkkeMjlFUtgEk+cKgvaKX7l8/dQG9YVqaEqDFfMt/CwUhmXd00aWbQr
+	 b0CNetVudhgnLNfWu4HA9oQutNp5WE7x1rutkWxBItGkkPqN4F6J67ZpbmWQtkAyOsw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793208334;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793208337;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=u+I3bvwmsRdRqT1x1XTGDFpCjq1xMSTBL5PYXWEKXMo=;
-	b=VeWEFtKJDOSRrgG1uc+hcnxwwmNjR/92pCwBuCWq7pSbvgu0fgtEQRSljbrg091E0Xg1
-	 NS1CuVmNrPZU4c2OCBkr7CESzCHw02btHUgS0VqLhu9Xeoa6uI25DDIOrnNR9QqdxsCo6
-	 Uy3iI4vH8c7lnF0DiZi0kje+zBRJiukmW7EJAzqDGX9+mB6ORU1JvLnOsXcKvy1SMjWhY
-	 xyQRkqr6GIH8PiWNsAgLwRyml/bdE1XCB9eLrqC5wgCI586iBHf5NGJ3dMbXQVD+LfRR9
-	 Wn1KNFfiUfr0hzfEu5RSxAJoj4uB5/eb4/IJo3zviOmB8QBFvGa6vHpO9d7DuKpn/YA==
+	bh=h1ZdFJxrkAL9hk7U2BTYHKH+GWyqBAr+oJJlAiclVPw=;
+	b=yeu6LgDA9n3XdOPG7INOleZek7ldTonzACkKyH+t0jkt85X9BsvCc8hVIjibiRL1oiSi
+	 jPQFR1g0FBlaS67jVL0rio/abMXcTDWs8vXrxQ1caeM1WFL+Ub+fhURvFrHlfXy4vVYt3
+	 UaxCB9frGfspor5X3Y86Rr46Z7kPqDECKr3ObPBuazt736YCyF9HuYSxFFJHtRX46lT5z
+	 eg329u398xCZSZ47Ql0puZen167UFaLAHoL7BST359F5LkPUoOEKhN2wzBFB+olskwzqM
+	 vLrkiywLXhkMrnJ2xmTXlUICnp1EmJNrR4YLvDvQ4CdCaVVGEReocdfZDDkeHRzcHCw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="NcT6U/7N";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="g9AcPtp/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BEF8606A32A;
-	Wed, 28 Oct 2026 17:25:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D64D606A31C;
+	Wed, 28 Oct 2026 17:25:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NcT6U/7N
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBDD11F01828;
-	Wed, 28 Oct 2026 17:25:33 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g9AcPtp/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD27B1F01828;
+	Wed, 28 Oct 2026 17:25:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793208334;
-	bh=u+I3bvwmsRdRqT1x1XTGDFpCjq1xMSTBL5PYXWEKXMo=;
+	s=korg; t=1793208337;
+	bh=h1ZdFJxrkAL9hk7U2BTYHKH+GWyqBAr+oJJlAiclVPw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NcT6U/7NQ2jW4itVUZKDqOZUrP73j6NYiDrGKsOu3xbR8WRUE3kxdaPEPJzLdpRxT
-	 sFlzEJae+WxQ7XFFlzaMe++1wI+ZreJ9A4mXk0AmyRT+UASATuqv5a4hyXZGWLM2jN
-	 793xECwZE4k6+5BLj9D6SlNEksBUqa+GT4vEi1V0=
+	b=g9AcPtp/jlKjcMQTE05RZlfrJg/pz2S4GgchDohoSzIbATP2dTqtOVDwUpgZeR1W6
+	 DucZpOQWLzexGVT99FN+KHPQvtu5rgyS+ijjEC/Gts8IsIUKpjaZ68QKBey8rmQZAI
+	 7RQhqv9lAVz845FjMbrBEzsd3sx8B70Np1vjp9Kg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Will Deacon <will@kernel.org>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 082/516] arm64: mm: Fix the lockless page-table walk in show_pte()
-Date: Wed, 28 Oct 2026 17:53:54 +0100
-Message-ID: <20261028170005.461757106@linuxfoundation.org>
+Subject: [PATCH 5.10 083/516] ALSA: parisc: Fix assignment in if condition
+Date: Wed, 28 Oct 2026 17:53:55 +0100
+Message-ID: <20261028170005.484153993@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -68,106 +67,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit a77644d009dece1104b6fcc6e322b0e4503db0d6 ]
+[ Upstream commit 6ea9a2b84cc354ffd028195edb4e3d60d47f7bcb ]
 
-show_pte() walks page tables locklessly and can run with interrupts
-enabled. A concurrent teardown can free a table page while it is being
-walked. It can also clear a parent entry after show_pte() checked it; the
-regular pXd_offset() helpers then reread the cleared entry and can derive a
-bogus lower-level pointer and fault again.
+PARISC harmony driver code contains an assignment in if condition,
+which is a bad coding style that may confuse readers and occasionally
+lead to bugs.
 
-Use the lockless offset helpers with the saved parent entries, as
-gup_fast() does, and pass the saved PMD to pte_offset_map().
+This patch is merely for coding-style fixes, no functional changes.
 
-For task page tables, arm64 selects MMU_GATHER_RCU_TABLE_FREE. Disable
-local interrupts around the walk to hold off RCU-deferred table frees and
-block the tlb_remove_table_sync_one() IPI until the walk is finished.
-
-Place the IRQ guard after the header print. This does not make the output a
-consistent snapshot, but prevents the task page-table walk from
-dereferencing a released table page or deriving a pointer from a different
-parent value.
-
-Fixes: 1d18c47c735e ("arm64: MMU fault handling and page table management")
-Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Signed-off-by: Will Deacon <will@kernel.org>
-[ replaced guard(irqsave)() with explicit local_irq_save()/local_irq_restore() to avoid declaration-after-statement warnings. ]
+Link: https://lore.kernel.org/r/20210608140540.17885-67-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Stable-dep-of: 33abb7491e89 ("ALSA: harmony: initialize locks before requesting IRQ")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/mm/fault.c | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ sound/parisc/harmony.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/arch/arm64/mm/fault.c b/arch/arm64/mm/fault.c
-index d8baedd160de0..edf82cced64dd 100644
---- a/arch/arm64/mm/fault.c
-+++ b/arch/arm64/mm/fault.c
-@@ -14,6 +14,7 @@
- #include <linux/mm.h>
- #include <linux/hardirq.h>
- #include <linux/init.h>
-+#include <linux/irqflags.h>
- #include <linux/kprobes.h>
- #include <linux/uaccess.h>
- #include <linux/page-flags.h>
-@@ -116,6 +117,7 @@ static inline unsigned long mm_to_pgd_phys(struct mm_struct *mm)
- static void show_pte(unsigned long addr)
- {
- 	struct mm_struct *mm;
-+	unsigned long flags;
- 	pgd_t *pgdp;
- 	pgd_t pgd;
+diff --git a/sound/parisc/harmony.c b/sound/parisc/harmony.c
+index f2ca0a701987f..1440db8b4177f 100644
+--- a/sound/parisc/harmony.c
++++ b/sound/parisc/harmony.c
+@@ -915,10 +915,9 @@ snd_harmony_create(struct snd_card *card,
+ 	spin_lock_init(&h->mixer_lock);
+ 	spin_lock_init(&h->lock);
  
-@@ -139,6 +141,9 @@ static void show_pte(unsigned long addr)
- 	pr_alert("%s pgtable: %luk pages, %llu-bit VAs, pgdp=%016lx\n",
- 		 mm == &init_mm ? "swapper" : "user", PAGE_SIZE / SZ_1K,
- 		 vabits_actual, mm_to_pgd_phys(mm));
-+
-+	local_irq_save(flags);
-+
- 	pgdp = pgd_offset(mm, addr);
- 	pgd = READ_ONCE(*pgdp);
- 	pr_alert("[%016lx] pgd=%016llx", addr, pgd_val(pgd));
-@@ -152,31 +157,32 @@ static void show_pte(unsigned long addr)
- 		if (pgd_none(pgd) || pgd_bad(pgd))
- 			break;
+-        if ((err = snd_device_new(card, SNDRV_DEV_LOWLEVEL,
+-                                  h, &ops)) < 0) {
+-                goto free_and_ret;
+-        }
++	err = snd_device_new(card, SNDRV_DEV_LOWLEVEL, h, &ops);
++	if (err < 0)
++		goto free_and_ret;
  
--		p4dp = p4d_offset(pgdp, addr);
-+		p4dp = p4d_offset_lockless(pgdp, pgd, addr);
- 		p4d = READ_ONCE(*p4dp);
- 		pr_cont(", p4d=%016llx", p4d_val(p4d));
- 		if (p4d_none(p4d) || p4d_bad(p4d))
- 			break;
+ 	*rchip = h;
  
--		pudp = pud_offset(p4dp, addr);
-+		pudp = pud_offset_lockless(p4dp, p4d, addr);
- 		pud = READ_ONCE(*pudp);
- 		pr_cont(", pud=%016llx", pud_val(pud));
- 		if (pud_none(pud) || pud_bad(pud))
- 			break;
- 
--		pmdp = pmd_offset(pudp, addr);
-+		pmdp = pmd_offset_lockless(pudp, pud, addr);
- 		pmd = READ_ONCE(*pmdp);
- 		pr_cont(", pmd=%016llx", pmd_val(pmd));
- 		if (pmd_none(pmd) || pmd_bad(pmd))
- 			break;
- 
--		ptep = pte_offset_map(pmdp, addr);
-+		ptep = pte_offset_map(&pmd, addr);
- 		pte = READ_ONCE(*ptep);
- 		pr_cont(", pte=%016llx", pte_val(pte));
- 		pte_unmap(ptep);
- 	} while(0);
- 
- 	pr_cont("\n");
-+	local_irq_restore(flags);
- }
- 
- /*
 -- 
 2.53.0
 
