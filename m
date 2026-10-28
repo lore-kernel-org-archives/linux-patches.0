@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793217263;
-	b=kBzjerdhdxvNF+dNdEorzP07ixHS2+D6OUppY9m+FamapjKMd1NOh+wWoK9Ejviw4kUL
-	 /3zypvDvia3EySLSPMXaCk1hqe/WCanBBOtT6D50yLk+oSqTHgnI6uxchr9ult/UzMKZK
-	 Ho49U6HNyHjHqulJlvWDvGDP6BPH7GQDmRpo7qPoUgA7WPzYj7peiWFwTzypSJzAKUDmn
-	 Gj5rGFmnvN33/jWDb8T9Zd5P07jwEKhOknEatkAd+C3b2bDU5IhGvjdWi7E4svHEJ4D2M
-	 +2hoiXeCqTmyf/4SCfzgk0Axn4WgB6JHIwnsqQhTZINPv/lfQ/rbXjg506kmR531KmQ==
+	t=1793217266;
+	b=uFc19eSyDK7PK2jy3vtyVwlGoDPf/uQYN21NuO9ILwvcaqX90Zakk0Mrp5r0YRu6SjUI
+	 M1+F94AlgGaQmFnUEx0vsfdVQ5fTyAfvQEIVObh0oL13rhu1VYvMRRrsZfyob4EEH3MeW
+	 julkSYhq44eKYUjpMtM1Qmk35qD/rkYZCr39hIBukXZvPXGgfGK3wVmqT5Pb+azV6u4U4
+	 YDmIFC6Xv2UlsrxfK+9l4nPfModROiy8rkaPjd+rUCNSLj2RToK5aW14I34kDppEQc/Dn
+	 Ut3dYLfXCtb8zLRR6Ru8fMwKG3H2aCAqg4+udphNiF21NOAeud9a/zvcMRVl/30Li9w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793217263;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793217266;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=MhHSXQdSKtoSrIv3Y/PC/OcuJaQwgp3ZJaHO7Evgq7s=;
-	b=Nly6H1oMFty3OQdTjlMrCLWbTxyHAx6O81fWROc8wEcZp0Mk2Gx6YKLWKjsrXwrIDvlk
-	 iTVZyTokJEOqPZ5W3Ir0YLtljOOYjniRElX8F0HdYzeCc8QTCPDf8KtCKs/8vs37wq22D
-	 BTfkgSdBo8F08rYgE90iCDNG5bJb449it1YGeQl36/oF0KxZeIEP9rvv1LBupAh16Vy0a
-	 /3e9B6Wi7T6ycVVA5QdvzhHjxPzWL/Q5JcwVBO1MkysUcOq2MOxz6DYxSNRn+JrmE0eS/
-	 bscm1z43+S7g6B8mpsepHpYAzHDQMMQBoGDK3ND/GxyySCnU098IndaJDUuLVI7s4Hg==
+	bh=WTzJfia0sD2KIUrcYKcb0QUEylpJe20ZmHc6Noy5q/o=;
+	b=oUUm7xsuy0naFZPaAtAwNdGw9A8+q4v6ua9f3uA/kS2OZfsEqaxP45PZAZMHLy8kdwiY
+	 X7qM6kfSDplEl+duE7ozN9ObQr4PfsRNw8gg5kaG3EllmxhdnB7Vmjg0s8FMZ53xtRs3X
+	 bvZnU2Klt3X+8uBFTr2zyUuMUTow654gsJvEeBnfwcaHoYw9WdoQpKqmLvsELLHuBNYto
+	 Xn7yshQXAIX0ywc/xm9GBuCEliWkGv4COFmo1yIY8m2lmFC2LUia7lBPeimXyERHYcjzd
+	 C5x3z/zUkvzMA/7tvrYQKC4M8A+4M1aEou/xBLHXZwrwA8yjr9ErjLoURQ1G4bPgrkA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=o7VgRpgO;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hQ0kum7A;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD3AE606A31C;
-	Wed, 28 Oct 2026 19:54:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0870606A31C;
+	Wed, 28 Oct 2026 19:54:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=o7VgRpgO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29FF41F01825;
-	Wed, 28 Oct 2026 19:54:21 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hQ0kum7A
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 188431F01825;
+	Wed, 28 Oct 2026 19:54:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793217262;
-	bh=MhHSXQdSKtoSrIv3Y/PC/OcuJaQwgp3ZJaHO7Evgq7s=;
+	s=korg; t=1793217265;
+	bh=WTzJfia0sD2KIUrcYKcb0QUEylpJe20ZmHc6Noy5q/o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=o7VgRpgODzXTzmQsfUmeR49cmwtE89+wkvBZDvRthLvK1Amo/MyGV5FxJEjWEJEf0
-	 BLZqGMQ2+7UGCX0guoLB5+wxxtsjYtpGCSNv5QNgzpM7dpr5g4+MDs1E6ueRHRBuck
-	 7z+DYqebTWMlVtrgp7/vebwVZgkGQvc1CwwxjhFE=
+	b=hQ0kum7AqnH6IKdLjsXNdXKci6vQtdovqIaOVBz65xhVU1v+6y6LlY5SlV6W7Z9k1
+	 0FHK+RNkWMFwdxUd5mmT7wmrvkTXj6z8l72oQZmLckl5xHgLeUc4yYqnGsC32SPdyC
+	 1MYTAahInwoRPc9wHQmijKx9gbOmgwlP/lCTMnfg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Xiang Chen <chenxiang66@hisilicon.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1844/1887] scsi: hisi_sas: Check before using pointer variables
-Date: Wed, 28 Oct 2026 18:05:40 +0100
-Message-ID: <20261028170541.411941258@linuxfoundation.org>
+Subject: [PATCH 6.1 1845/1887] scsi: hisi_sas: Fix a deadlock issue related to automatic dump
+Date: Wed, 28 Oct 2026 18:05:41 +0100
+Message-ID: <20261028170541.435112936@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -71,47 +71,121 @@ Content-Transfer-Encoding: 8bit
 
 From: Yihang Li <liyihang9@huawei.com>
 
-[ Upstream commit 8dd10296be8562a45c6c6794dd492a2b7dccede8 ]
+[ Upstream commit 3c4f53b2c341ec6428b98cb51a89a09b025d0953 ]
 
-In commit 4b329abc9180 ("scsi: hisi_sas: Move slot variable definition in
-hisi_sas_abort_task()"), we move the variables slot to the function head.
-However, the variable slot may be NULL, we should check it in each branch.
+If we issue a disabling PHY command, the device attached with it will go
+offline, if a 2 bit ECC error occurs at the same time, a hung task may be
+found:
 
-Fixes: 4b329abc9180 ("scsi: hisi_sas: Move slot variable definition in hisi_sas_abort_task()")
+[ 4613.652388] INFO: task kworker/u256:0:165233 blocked for more than 120 seconds.
+[ 4613.666297] "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
+[ 4613.674809] task:kworker/u256:0  state:D stack:    0 pid:165233 ppid:     2 flags:0x00000208
+[ 4613.683959] Workqueue: 0000:74:02.0_disco_q sas_revalidate_domain [libsas]
+[ 4613.691518] Call trace:
+[ 4613.694678]  __switch_to+0xf8/0x17c
+[ 4613.698872]  __schedule+0x660/0xee0
+[ 4613.703063]  schedule+0xac/0x240
+[ 4613.706994]  schedule_timeout+0x500/0x610
+[ 4613.711705]  __down+0x128/0x36c
+[ 4613.715548]  down+0x240/0x2d0
+[ 4613.719221]  hisi_sas_internal_abort_timeout+0x1bc/0x260 [hisi_sas_main]
+[ 4613.726618]  sas_execute_internal_abort+0x144/0x310 [libsas]
+[ 4613.732976]  sas_execute_internal_abort_dev+0x44/0x60 [libsas]
+[ 4613.739504]  hisi_sas_internal_task_abort_dev.isra.0+0xbc/0x1b0 [hisi_sas_main]
+[ 4613.747499]  hisi_sas_dev_gone+0x174/0x250 [hisi_sas_main]
+[ 4613.753682]  sas_notify_lldd_dev_gone+0xec/0x2e0 [libsas]
+[ 4613.759781]  sas_unregister_common_dev+0x4c/0x7a0 [libsas]
+[ 4613.765962]  sas_destruct_devices+0xb8/0x120 [libsas]
+[ 4613.771709]  sas_do_revalidate_domain.constprop.0+0x1b8/0x31c [libsas]
+[ 4613.778930]  sas_revalidate_domain+0x60/0xa4 [libsas]
+[ 4613.784716]  process_one_work+0x248/0x950
+[ 4613.789424]  worker_thread+0x318/0x934
+[ 4613.793878]  kthread+0x190/0x200
+[ 4613.797810]  ret_from_fork+0x10/0x18
+[ 4613.802121] INFO: task kworker/u256:4:316722 blocked for more than 120 seconds.
+[ 4613.816026] "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
+[ 4613.824538] task:kworker/u256:4  state:D stack:    0 pid:316722 ppid:     2 flags:0x00000208
+[ 4613.833670] Workqueue: 0000:74:02.0 hisi_sas_rst_work_handler [hisi_sas_main]
+[ 4613.841491] Call trace:
+[ 4613.844647]  __switch_to+0xf8/0x17c
+[ 4613.848852]  __schedule+0x660/0xee0
+[ 4613.853052]  schedule+0xac/0x240
+[ 4613.856984]  schedule_timeout+0x500/0x610
+[ 4613.861695]  __down+0x128/0x36c
+[ 4613.865542]  down+0x240/0x2d0
+[ 4613.869216]  hisi_sas_controller_prereset+0x58/0x1fc [hisi_sas_main]
+[ 4613.876324]  hisi_sas_rst_work_handler+0x40/0x8c [hisi_sas_main]
+[ 4613.883019]  process_one_work+0x248/0x950
+[ 4613.887732]  worker_thread+0x318/0x934
+[ 4613.892204]  kthread+0x190/0x200
+[ 4613.896118]  ret_from_fork+0x10/0x18
+[ 4613.900423] INFO: task kworker/u256:1:348985 blocked for more than 121 seconds.
+[ 4613.914341] "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
+[ 4613.922852] task:kworker/u256:1  state:D stack:    0 pid:348985 ppid:     2 flags:0x00000208
+[ 4613.931984] Workqueue: 0000:74:02.0_event_q sas_port_event_worker [libsas]
+[ 4613.939549] Call trace:
+[ 4613.942702]  __switch_to+0xf8/0x17c
+[ 4613.946892]  __schedule+0x660/0xee0
+[ 4613.951083]  schedule+0xac/0x240
+[ 4613.955015]  schedule_timeout+0x500/0x610
+[ 4613.959725]  wait_for_common+0x200/0x610
+[ 4613.964349]  wait_for_completion+0x3c/0x5c
+[ 4613.969146]  flush_workqueue+0x198/0x790
+[ 4613.973776]  sas_porte_broadcast_rcvd+0x1e8/0x320 [libsas]
+[ 4613.979960]  sas_port_event_worker+0x54/0xa0 [libsas]
+[ 4613.985708]  process_one_work+0x248/0x950
+[ 4613.990420]  worker_thread+0x318/0x934
+[ 4613.994868]  kthread+0x190/0x200
+[ 4613.998800]  ret_from_fork+0x10/0x18
+
+This is because when the device goes offline, we obtain the hisi_hba
+semaphore and send the ABORT_DEV command to the device. However, the
+internal abort timed out due to the 2 bit ECC error and triggers automatic
+dump. In addition, since the hisi_hba semaphore has been obtained, the dump
+cannot be executed and the controller cannot be reset.
+
+Therefore, the deadlocks occur on the following circular dependencies:
+hisi_sas_dev_gone() -> down() -> hisi_sas_internal_task_abort_dev() -> ...
+-> hisi_sas_internal_abort_timeout() -> down().
+
+The deadlock is triggered only when the timeout occurs during device goes
+offline. To fix this issue, use .rst_ha_timeout to distinguish the scenario
+where a device goes offline from other scenarios.
+
+Fixes: 2ff07b5c6fe9 ("scsi: hisi_sas: Directly call register snapshot instead of using workqueue")
 Signed-off-by: Yihang Li <liyihang9@huawei.com>
 Signed-off-by: Xiang Chen <chenxiang66@hisilicon.com>
-Link: https://lore.kernel.org/r/1702525516-51258-4-git-send-email-chenxiang66@hisilicon.com
+Link: https://lore.kernel.org/r/1705904747-62186-2-git-send-email-chenxiang66@hisilicon.com
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/hisi_sas/hisi_sas_main.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/scsi/hisi_sas/hisi_sas_main.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/scsi/hisi_sas/hisi_sas_main.c b/drivers/scsi/hisi_sas/hisi_sas_main.c
-index b5375a1bd41de..1032da57210a9 100644
+index 1032da57210a9..5d2442678926f 100644
 --- a/drivers/scsi/hisi_sas/hisi_sas_main.c
 +++ b/drivers/scsi/hisi_sas/hisi_sas_main.c
-@@ -1605,7 +1605,10 @@ static int hisi_sas_abort_task(struct sas_task *task)
- 	task->task_state_flags |= SAS_TASK_STATE_ABORTED;
- 	spin_unlock_irqrestore(&task->task_state_lock, flags);
+@@ -1911,9 +1911,17 @@ static bool hisi_sas_internal_abort_timeout(struct sas_task *task,
+ 	struct hisi_sas_internal_abort_data *timeout = data;
  
--	if (slot && task->task_proto & SAS_PROTOCOL_SSP) {
-+	if (!slot)
-+		goto out;
-+
-+	if (task->task_proto & SAS_PROTOCOL_SSP) {
- 		u16 tag = slot->idx;
- 		int rc2;
+ 	if (hisi_sas_debugfs_enable && hisi_hba->debugfs_itct[0].itct) {
+-		down(&hisi_hba->sem);
++		/*
++		 * If timeout occurs in device gone scenario, to avoid
++		 * circular dependency like:
++		 * hisi_sas_dev_gone() -> down() -> ... ->
++		 * hisi_sas_internal_abort_timeout() -> down().
++		 */
++		if (!timeout->rst_ha_timeout)
++			down(&hisi_hba->sem);
+ 		hisi_hba->hw->debugfs_snapshot_regs(hisi_hba);
+-		up(&hisi_hba->sem);
++		if (!timeout->rst_ha_timeout)
++			up(&hisi_hba->sem);
+ 	}
  
-@@ -1652,7 +1655,7 @@ static int hisi_sas_abort_task(struct sas_task *task)
- 				rc = hisi_sas_softreset_ata_disk(device);
- 			}
- 		}
--	} else if (slot && task->task_proto & SAS_PROTOCOL_SMP) {
-+	} else if (task->task_proto & SAS_PROTOCOL_SMP) {
- 		/* SMP */
- 		u32 tag = slot->idx;
- 		struct hisi_sas_cq *cq = &hisi_hba->cq[slot->dlvry_queue];
+ 	if (task->task_state_flags & SAS_TASK_STATE_DONE) {
 -- 
 2.53.0
 
