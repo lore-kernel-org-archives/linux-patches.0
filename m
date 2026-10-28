@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793208613;
-	b=WiA8Py6I+Iry/O9j9k9VCsP1nQgqkQtHVyeZb6gQxQFCZR3Y5G72yVucK+Vp3RqLu6e9
-	 Xsy4MBP+QeWfUYjakve5KuxaQNdNyyL06F9tS41pTBGna5AnHalmf7NjVYJMj55oizcFq
-	 AI6QTky1KP3t46mRYjeaTBZ2rH9ZqOYGYDWT4PJkcWu7UDm4kPRwjPZJ0tB34+TeosCd3
-	 K1ALiqGeesYAusokuF2QXwIZfqjUweHH2c92XDMkgixRdaTrDixMwXOVXky1gLcibfsod
-	 agbapb3BIIfg9SDiEckq/FOO+8LxVW1zV6Xp2zXGjHC8C8AIaf0bhhMCmoatplH6DuA==
+	t=1793208616;
+	b=oAQQe7ktQahl3F5qVEJ4Ebg0mfwXxsXVs5ZxQgcML0gKfymdW21Qvp1hfg9QGGkPBUSm
+	 COuLnj1iiu3uJQevKXz2DiD3thz0HsFkCz87H9YLk/aR1ugyPB8Py7r9wA43Wy3ZYfikp
+	 j17dmSt1Xq9GzL2MMq4T8yzCSB2AJr3hVfy9qHZpB9Xvtu3Vz+r8CTN9k3nxWlk40Zt9I
+	 kXoBZBka+4VcpezJWGEUXwy0/Li3y3zvAg6CDi3/RCoToyr22OmvHgqEjM5bt0Ko8ojuh
+	 BzAG8cGLLvfZCfS+WPNzqf3+Eji1LF/d6QOLRwqo3bN6QfNXhPLFd5yKyLD8FXObk5Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793208613;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793208616;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=qPLFmXDjpIydrUYQHHbcf9pYN7fc2SbYKYjECf/7LEg=;
-	b=DvAdP68wy5/B1yumFuEPi9lLnUCPO1y5Lrcbb3ez9+SL7YK6dXnKyDtDZJf0zj4fu4dE
-	 BnFIV+bqaWd4qWW2MZnhKFOzs6W7gCKF4w96iuqrjIKzQOz0lfPWiw40YqmUDL5lRB5I3
-	 waB9c51MNahYIGAOOUiHezVottpwXCkqIKFYxQNRqqZ2V7BiZ2n23DNM0B1P6OL85iG4v
-	 xoJjR+z7GGyFgRjBBVcGChcK0/1ZnNk9SI/ofksMtICSdH5+ER4coZzQC+8V2T/BtlELk
-	 pXgtAoVyAzNAm3tZ0gs8t4pM48mUr+vaByfDLJq3wWgCNqfY2ATi2QZqlrFcH996KFw==
+	bh=3sXVpIj00dbN3amM8zQ9hBZeDTREVNbGL+9mFdmRaPw=;
+	b=WL3BLI6TkvJDjU2SYETWNcd9FyV9yFBfQFq02DEKX5zltvotqImVClMQ2AcfNwavu62H
+	 b52DZaGHE//1qaY0oyOoNqm/djlFJSbOh3Dlxmp1yT8Seg6oekSiVmVtOt4XauWV5oymO
+	 4IONEI9Vuw2tuixWzlTBAorTT5IxI3bUboxpVjmYmbUS0LW5cdrnGXScc/RMvMhFQ3CZA
+	 7r4pv7TUBR1e6H59SYDfWeMVDjI+ILWq9knuKmZjd2BcGHQwlJKnaebyvI+QuSA+MphuM
+	 hjxMltZC17qojTazLRZxpeNX82JFUNAwaMgArQx8vBLpnuBvU8VPbuPRKu1WUp3+zFQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zF5AIJAf;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DdJM8mCW;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A046606A31C;
-	Wed, 28 Oct 2026 17:30:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 560DB606A327;
+	Wed, 28 Oct 2026 17:30:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zF5AIJAf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA1B91F01825;
-	Wed, 28 Oct 2026 17:30:12 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DdJM8mCW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A57721F031E0;
+	Wed, 28 Oct 2026 17:30:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793208613;
-	bh=qPLFmXDjpIydrUYQHHbcf9pYN7fc2SbYKYjECf/7LEg=;
+	s=korg; t=1793208616;
+	bh=3sXVpIj00dbN3amM8zQ9hBZeDTREVNbGL+9mFdmRaPw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zF5AIJAfB2CMOeoUV7axVl49wReoOaCErpg5jdtGbYMIv+j67GplsKB9Uy/sfNFWQ
-	 C/wdHt0iy3HyoqJtnd2Kxtam+1GFlK1LGLd9itp5hF071LGIRlVUa/C2J5vfkPFfib
-	 k1jZ6dB8oPKHnpV7ODbrjLQ2/R6KAaAQUivEb1M8=
+	b=DdJM8mCWlhlHeFv45DRy3DG97qKU+rMtzb6otKyWlUh4rrgoUj9TXkzAjxRPB+qiL
+	 PilQLtEiCVlXGBsy81jzEbTRrqcW162oCaI6hFi0dJpBqmauNuh1OuZ1rfOVczJQ/A
+	 2cH7UitfDK0gvZKiGeRm6ryPdRE4VntfP5Trf8WE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Imre Kaloz <kaloz@kernel.org>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 5.10 180/516] drm/radeon: Read the VRAM VBIOS signature with readb()
-Date: Wed, 28 Oct 2026 17:55:32 +0100
-Message-ID: <20261028170007.768419914@linuxfoundation.org>
+	Benjamin Berg <benjamin.berg@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 145/516] wifi: cfg80211: avoid double free if updating BSS fails
+Date: Wed, 28 Oct 2026 17:54:57 +0100
+Message-ID: <20261028170006.943703394@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -67,47 +69,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Imre Kaloz <kaloz@kernel.org>
+From: Benjamin Berg <benjamin.berg@intel.com>
 
-commit de1eab13efef83fd2b76f4688de5bf672644596f upstream.
+[ Upstream commit acc44cbd7727115f9381c35c2898b1b5af665ec8 ]
 
-igp_read_bios_from_vram() checked bios[0]/bios[1] with a plain
-__iomem load, which faults on sparc64 before the copy runs at all.
-radeon_read_bios() already reads its two signature bytes with
-readb() ahead of its own copy; use the same accessor here, keeping
-the check before the allocation.
+cfg80211_update_known_bss will always consume the passed IEs. As such,
+cfg80211_update_assoc_bss_entry also needs to always set the pointers to
+NULL so that no double free can occur.
 
-Fixes: b442962a9e82 ("drm/radeon/kms: add support for "Surround View"")
-Signed-off-by: Imre Kaloz <kaloz@kernel.org>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 09155b8932e5013dbce0f5cdff7d75264a279ee5)
-Cc: stable@vger.kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Note that hitting this would probably require being connected to a
+hidden BSS which is then doing a channel switch while also switching to
+be not hidden anymore at the same time.
+
+Signed-off-by: Benjamin Berg <benjamin.berg@intel.com>
+Reviewed-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://msgid.link/20231220133549.8891edb28d51.Id09c5145363e990ff5237decd58296302e2d53c8@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/radeon/radeon_bios.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ net/wireless/scan.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
---- a/drivers/gpu/drm/radeon/radeon_bios.c
-+++ b/drivers/gpu/drm/radeon/radeon_bios.c
-@@ -49,6 +49,7 @@
- static bool igp_read_bios_from_vram(struct radeon_device *rdev)
- {
- 	uint8_t __iomem *bios;
-+	uint8_t val1, val2;
- 	resource_size_t vram_base;
- 	resource_size_t size = 256 * 1024; /* ??? */
+diff --git a/net/wireless/scan.c b/net/wireless/scan.c
+index 058f3c1f87914..7e6e72ae6d5a9 100644
+--- a/net/wireless/scan.c
++++ b/net/wireless/scan.c
+@@ -2751,10 +2751,9 @@ void cfg80211_update_assoc_bss_entry(struct wireless_dev *wdev,
  
-@@ -63,7 +64,10 @@ static bool igp_read_bios_from_vram(stru
- 		return false;
- 	}
+ 	if (new) {
+ 		/* to save time, update IEs for transmitting bss only */
+-		if (cfg80211_update_known_bss(rdev, cbss, new, false)) {
+-			new->pub.proberesp_ies = NULL;
+-			new->pub.beacon_ies = NULL;
+-		}
++		cfg80211_update_known_bss(rdev, cbss, new, false);
++		new->pub.proberesp_ies = NULL;
++		new->pub.beacon_ies = NULL;
  
--	if (size == 0 || bios[0] != 0x55 || bios[1] != 0xaa) {
-+	val1 = readb(&bios[0]);
-+	val2 = readb(&bios[1]);
-+
-+	if (size == 0 || val1 != 0x55 || val2 != 0xaa) {
- 		iounmap(bios);
- 		return false;
- 	}
+ 		list_for_each_entry_safe(nontrans_bss, tmp,
+ 					 &new->pub.nontrans_list,
+-- 
+2.53.0
+
 
 
