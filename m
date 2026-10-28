@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793211359;
-	b=1vnDvkFAVJe2RLeD8rt3XDhnUjtilq0TkZDs3ahHq9bWxnoSkBI+9mTBjIiYH2ST68p6
-	 uabcCoD1F1tCDdEdFnKcGalEoFvmRQDS5o56zD12wOvCGJ2LrUG06dPO2LgWfytHe0ITM
-	 6dw5ENbtibqKXg604IYDfqFA7BqYocLX0sGk8g2VtGfotweUsMaQDF0Ha5SzkSYRs28VL
-	 w2G3qKOJwVRqAIYMxajjjOtVByG+OGuGBaDTdnwAo1nINElpPIRZzuD33XhqiuMV0icku
-	 357d9o3ozcycKbumN4lRiL/ik7OXzmZFeWDjjf8HmEDuQ46C/DrQckB/v9GT1FwwKLA==
+	t=1793211362;
+	b=l5WpOEd5ncgqLHR9Pd6tkbC4ryIdzMjO8mcKiHBE5Ef9yeyCdPePLlt8xKbRRAYSL1P/
+	 aU1M7spzs4S/67i6l2IQZsNAQr06e/LQAL13OcDRQoBAMIVkof2l+YCw+qZe1Okb+8+SO
+	 CHYSuT/KgpTpItp45/GhzCa/ADsqJkSm4WNQooJnm329HZT+mR4rlURtlQtIn9N1owN7X
+	 18rKegu2w4pTqcGO/I5RXe/hcdvVwzEGzvZxif6rCoWGo+OlPgd9VRtfHSDHVI4fPifx6
+	 DV/F+2WZLfzpuo1gcxQicQ8mVauEhKH+jQbadeNcJmJeM4zLsn422b3wutU5E+7WdNw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793211359;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793211362;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=lZXgrIt3lCowo0EdFf31m3gTO3DWzHGg7xh5GC7K8kI=;
-	b=HcFu9Q/rc3K+eVzXxgKDnSs6ravmT1tLVWkBjuhJ0heC+XSmEmUNb2nDJfxt48u9fF9x
-	 YeYHenOym/A/HKMgVnhk9omTDI4Bfl21WfZPQUWQNtUfeFzPkkZEVj4miytiJyxsX3dw/
-	 aDXHXV5Fwi1ffXJu2fVnfq2VK9E1NCbTlbIRRi1N9OuD0A42YxQTD1XUzyqssci4l5GnY
-	 LgxYTB3HcUFxKSXdg4/A8GC3J9Tbqe6w7DfaGkY1zcsI8rQghygbsp08SmaRuzbWGZ3Ou
-	 /qgTGNQZg2J1MnoICEzGxKQ7VQ1tEm5WcVs7TyDVt9m522jjzZEa+GG3bnMKAGi4U9g==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=PiMy7eIb0fyXpBXzUb5jTRvMwOZzYsNP2PhunvE3i1M=;
+	b=R/QXx45fcqw27De9azuUe+t0lE5BIEH7GXXrFlSvtmbw6x3Oq/Zfc2rLDkU/OhkgU8OW
+	 mFIG8T97LEKTXRgEDXRyMaZi9OcSYLHDZGSgzVO4+tRuWD4+I5GCIW4B758Y43Bxh1+tL
+	 BGMcPlq24D6+HtCCYYRnXfJLK0UFX6EmaJDCsz9Mktv+EHfo66Vh/DoHQ6udJCYq7mM5W
+	 kIpiH88w+WUYBeRCEqgRxcbhnugvDrJz8HPR09wnioZg7yeCm+uQqMoFY7P6ew0aAZxkg
+	 2/q4rtAE2ZuvZAw/s+LeHX4BOW+YUzHyZvGU4t7Ax7TCQ95HtwL78nqzUQ91CzctvGg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sQFdkfRt;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=as+eFuGL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55F56606A31A;
-	Wed, 28 Oct 2026 18:15:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32F85606A32C;
+	Wed, 28 Oct 2026 18:16:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sQFdkfRt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6B1A1F01825;
-	Wed, 28 Oct 2026 18:15:58 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=as+eFuGL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 842761F01825;
+	Wed, 28 Oct 2026 18:16:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793211359;
-	bh=lZXgrIt3lCowo0EdFf31m3gTO3DWzHGg7xh5GC7K8kI=;
+	s=korg; t=1793211362;
+	bh=PiMy7eIb0fyXpBXzUb5jTRvMwOZzYsNP2PhunvE3i1M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sQFdkfRt8WAIJYyoSa8YijUBA3CvYBfaP41RBduphi6R6Kt/B2t8t5vb0jNRzyqvk
-	 MzxCleLYCBXXXYxOp4Au2qe+SXZkfK3WhsbN9i3K2vGzKSiavsSn2dudfAO9zzkfi+
-	 nF7cyvHFycavt/bizK6gKc07jPO2QB0UQaZZGTjo=
+	b=as+eFuGLrfFPKkAmtY5HJH2Ng5ozOkwMiH/XMuIjE4E1QWX0QQ+FqL9oPIJQghC6S
+	 ZMslCcKNLkr583p1ezfg0tJWttliLi7ATZni5ezvmvFZuXfANjnheDy6lq2Bkw9yyj
+	 9aVUILcEzRFw3DDqXGJSvDQocscyTE3T8Uyv0jR0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michele Dionisio <michele.dionisio@gmail.com>,
-	Arend van Spriel <arend.vanspriel@broadcom.com>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 5.15 349/571] wifi: brcmfmac: fix P2P device removal race in brcmf_detach()
-Date: Wed, 28 Oct 2026 17:58:16 +0100
-Message-ID: <20261028170016.297561906@linuxfoundation.org>
+	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
+	"Jason A. Donenfeld" <Jason@zx2c4.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 350/571] wireguard: noise: reject response consumption after intermediate initiation
+Date: Wed, 28 Oct 2026 17:58:17 +0100
+Message-ID: <20261028170016.320462147@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -62,140 +62,104 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michele Dionisio <michele.dionisio@gmail.com>
+From: Jason A. Donenfeld <Jason@zx2c4.com>
 
-commit 08a3f02fea636e97a7422d1512f76dacdb5b0887 upstream.
+commit d0305f8d90029556260c6824b61c493c424eba9e upstream.
 
-When the driver is removed while the user space process that created
-the P2P device (e.g. wpa_supplicant) is still exiting, the P2P device
-interface is removed twice and the kernel crashes.
+Two threads begin processing the identical response message, received
+twice. The first thread, A, runs. While it's running, the second one,
+B, gets partway through, and during that slow calculation, or even while
+blocking on down_write(), A completes and then also a handshake
+initiation that's already been queued up runs in thread C, which itself
+takes that same down_write(). The handshake initiation creation
+succeeds, and sets the state back to waiting-for-response, and calls
+up_write(), at which point thread B resumes, because either its finished
+its calculations or was finally allowed to acquire down_write(). Thread
+B then copies the state back to the peer, and begins a new session,
+using that state, which is the same session as the one made in thread A.
 
-The two paths are:
+Thread A			Thread B			Thread C
 
- - wpa_supplicant, on exit, sends NL80211_CMD_DEL_INTERFACE for the P2P
-   device. nl80211_del_interface() holds RTNL and the wiphy mutex and
-   calls brcmf_p2p_del_vif(), which disables discovery and waits up to
-   1.5 s for BRCMF_E_IF_DEL. Then it calls brcmf_remove_interface(),
-   which unregisters the wdev and frees the vif and the ifp.
+down_read()
+ sA = handshake->state
+ memcpy(cA, handshake->crypto)
+up_read()
+if (sA != 1)
+ goto fail
+slow_crypto(cA)
+				down_read()
+				 sB = handshake->state
+				 memcpy(cB, handshake->crypto)
+				up_read()
+				if (sB != 1)
+				 goto fail
+				slow_crypto(cB)
+down_write()
+ if (sA != handshake->state)
+  goto fail
+ memcpy(handshake->crypto, cA)
+ handshake->state = 2
+up_write()
+down_write()
+ if (handshake->state != 2)
+  goto fail
+ derive_session(handshake->crypto)
+up_write()
+								down_write()
+								 slow_crypto(handshake->crypto)
+								 handshake->state = 1
+								up_write()
+				down_write()
+				 if (sB != handshake->state)
+				   goto fail
+				 memcpy(handshake->crypto, cB)
+				 handshake->state = 2
+				up_write()
+				down_write()
+				 if (handshake->state != 2)
+				  goto fail
+				 derive_session(handshake->crypto)
+				up_write()
 
- - brcmf_detach() sets the bus down, so BRCMF_E_IF_DEL never arrives,
-   and calls brcmf_remove_interface(ifp, false) for the same ifp.
-   brcmf_p2p_ifp_removed() reads ifp->vif and then blocks on
-   rtnl_lock(). When brcmf_p2p_del_vif() releases RTNL, it calls
-   cfg80211_unregister_wdev() on the wdev that was already unregistered
-   and freed.
+This seems basically impossible to hit in a meaningful way in practice,
+but ensure that it absolutely cannot happen by comparing the ephemeral
+private key that's on the stack with the latest one that the peer's
+handshake state has.
 
-The second list_del_rcu() of wdev->list faults on LIST_POISON2:
-
-  brcmfmac: brcmf_p2p_del_vif delete P2P vif
-  brcmfmac: brcmf_p2p_deinit_discovery enter
-  brcmfmac: brcmf_p2p_del_vif P2P: GO_NEG_PHASE status cleared
-  brcmfmac: brcmf_detach Enter
-  brcmfmac: brcmf_bus_change_state 1 -> 0
-  brcmfmac: brcmf_remove_interface Enter, bsscfgidx=1, ifidx=0
-  brcmfmac: brcmf_del_if Enter, bsscfgidx=1, ifidx=0
-  brcmfmac: brcmf_p2p_ifp_removed P2P: device interface removed
-  [1.5 s later, brcmf_p2p_del_vif() timed out]
-  brcmfmac: brcmf_remove_interface Enter, bsscfgidx=1, ifidx=0
-  brcmfmac: brcmf_del_if Enter, bsscfgidx=1, ifidx=0
-  brcmfmac: brcmf_p2p_ifp_removed P2P: device interface removed
-  Unable to handle kernel paging request at virtual address dead000000000122
-  Internal error: Oops: 96000044 [#1] PREEMPT_RT SMP
-  pc : _cfg80211_unregister_wdev+0x6c/0x264 [cfg80211]
-  Call trace:
-   _cfg80211_unregister_wdev+0x6c/0x264 [cfg80211]
-   cfg80211_unregister_wdev+0x10/0x1c [cfg80211]
-   brcmf_p2p_ifp_removed+0x84/0xb0 [brcmfmac]
-   brcmf_remove_interface+0x1f4/0x254 [brcmfmac]
-   brcmf_detach+0x88/0x180 [brcmfmac]
-   brcmf_sdio_remove+0x90/0x7b0 [brcmfmac]
-   brcmf_sdiod_remove+0x20/0xa0 [brcmfmac]
-   brcmf_ops_sdio_remove+0xbc/0x12c [brcmfmac]
-   sdio_bus_remove+0x38/0x144
-   device_release_driver_internal+0x1e8/0x2c0
-   device_release_driver+0x14/0x20
-   brcmf_sdio_bus_remove+0x2c/0x40 [brcmfmac]
-   brcmf_fwvid_unregister_vendor+0xd8/0x170 [brcmfmac]
-   __exit_compat+0x18/0x418 [brcmfmac_cyw]
-   __arm64_sys_delete_module+0x1ac/0x244
-
-The log was taken with debug=0x406 on an i.MX 8M Plus board with a
-CYW55513 (Sona IF513) on SDIO. The driver is the Ezurio backport of
-brcmfmac from v6.18.22 on a 5.4-rt kernel. The code involved is the same
-in mainline.
-
-To reproduce:
-
-  1. Start wpa_supplicant on wlan0 and let it associate. It creates the
-     P2P device (iw dev shows "type P2P-device").
-  2. Stop wpa_supplicant and remove the driver without waiting for
-     wpa_supplicant to exit:
-
-       kill $(pidof wpa_supplicant)
-       rmmod brcmfmac_cyw brcmfmac
-
-The crash is reproducible on that board.
-
-For the interface without a netdev (the P2P device), take RTNL and the
-wiphy mutex in brcmf_detach() before reading iflist, and remove it with
-locked=true. If brcmf_p2p_del_vif() runs first, brcmf_detach() finds the
-slot empty. If brcmf_detach() runs first, nl80211 does not find the wdev
-any more. The interfaces with a netdev are removed as before, because
-brcmf_del_if() takes RTNL on its own for the primary interface.
-
-Fixes: 9831bcb987df ("brcmfmac: Deleting of p2p device is leaking memory.")
 Cc: stable@vger.kernel.org
-Assisted-by: claude-opus-5-5
-Signed-off-by: Michele Dionisio <michele.dionisio@gmail.com>
-Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
-Link: https://patch.msgid.link/20260924123027.4122909-2-michele.dionisio@gmail.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: e7096c131e51 ("net: WireGuard secure network tunnel")
+Reported-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
+Link: https://patch.msgid.link/20261008130124.724119-4-Jason@zx2c4.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c |   27 ++++++++++++++--
- 1 file changed, 25 insertions(+), 2 deletions(-)
+ drivers/net/wireguard/noise.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c
-@@ -1481,8 +1481,31 @@ void brcmf_detach(struct device *dev)
- 	brcmf_bus_change_state(bus_if, BRCMF_BUS_DOWN);
- 	/* make sure primary interface removed last */
- 	for (i = BRCMF_MAX_IFS - 1; i > -1; i--) {
--		if (drvr->iflist[i])
--			brcmf_remove_interface(drvr->iflist[i], false);
-+		struct brcmf_if *ifp = drvr->iflist[i];
-+
-+		if (!ifp)
-+			continue;
-+
-+		if (ifp->ndev) {
-+			brcmf_remove_interface(ifp, false);
-+			continue;
-+		}
-+
-+		/* The P2P device interface has no netdev. Its removal can
-+		 * race with NL80211_CMD_DEL_INTERFACE issued by a user space
-+		 * process that is exiting (e.g. wpa_supplicant), which ends
-+		 * in brcmf_p2p_del_vif() under RTNL and the wiphy mutex. If
-+		 * both paths remove the interface, the wdev is unregistered
-+		 * twice and the vif is used after being freed. Take the same
-+		 * locks and re-read iflist, so only one path removes it.
-+		 */
-+		rtnl_lock();
-+		wiphy_lock(drvr->wiphy);
-+		ifp = drvr->iflist[i];
-+		if (ifp)
-+			brcmf_remove_interface(ifp, true);
-+		wiphy_unlock(drvr->wiphy);
-+		rtnl_unlock();
- 	}
- 	brcmf_bus_stop(drvr->bus_if);
+--- a/drivers/net/wireguard/noise.c
++++ b/drivers/net/wireguard/noise.c
+@@ -784,10 +784,11 @@ wg_noise_handshake_consume_response(stru
  
+ 	/* Success! Copy everything to peer */
+ 	down_write(&handshake->lock);
+-	/* It's important to check that the state is still the same, while we
+-	 * have an exclusive lock.
++	/* Check that the state is the same and that this is still the
++	 * initiation we started with, while we have an exclusive lock.
+ 	 */
+-	if (handshake->state != state) {
++	if (handshake->state != state ||
++	    crypto_memneq(handshake->ephemeral_private, ephemeral_private, NOISE_PUBLIC_KEY_LEN)) {
+ 		up_write(&handshake->lock);
+ 		goto fail;
+ 	}
 
 
