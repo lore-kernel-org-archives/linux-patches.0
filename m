@@ -1,57 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213566;
-	b=EDjf5xx6qt2uQYAkwkGu8vxZqOVvdWyDyP2yQiU2BZzZMIywYn5+CmDXyPYJjOfBl+KO
-	 6gUzi8sun8rEbvVVrBJ/4v46ip6CXoEwDu8NIi0KvkIqgtfD57BeJYIwQ84GM6+/MVmeq
-	 bgTL5tsfLxD3QzH7jDEOTUCdki5hDtVchVY0p5LDCLiDcOR7Nf02xUH8gr2hN7h8M1zEX
-	 wr1Ecy84mU1UTfVcIZXdZF29lCG/oYCVeQw9BxusopLhR4ZNLgCqNWKq1mE8Y1sDa33R6
-	 JSJh3zk8zDXzA1UFTIkMrldCIduFIx+ZUo4dZao8YadkZJmc3CbYfMXtlGMOne3zUuw==
+	t=1793213569;
+	b=12iQKB36XJoiHsVxMTAHexJZRgFNryBrsz9yyUCf4v0Vrc9RLzKBUWSRpt78kH/AQUQt
+	 3n36OM/1nF9F/21vfYHSWhuKeznzWldoZCNqe6XTh/gK0n1qL+v+n1tGyqcV2zPnIDybt
+	 u5VBCydgXLVzyYzjl+ba6FYgSGpzXgnXgf6w2NvNHvVWfnNCkzTrZv342ZWawmMo+H9sH
+	 aAAc//7n3BFT7cmXVmkGbiXqHWSXyGP5lwX8e+aj36j8GbsmjuHtADJXELEaB6s5dZL96
+	 DWYNk6YfKex/zPGsHag7Jk465Lf194xaTkWgnG1VU14FWBh9bXeGqtS0vHs1LqxQtiQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213566;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213569;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Nq3nw1XHTnBI3fqdC9CN+rV15wZ/ewU7h+1VTUY3feY=;
-	b=hvDvyMtpDZLFMkmUSkwiM8hiifTjGEQ5goLWrGqn2cEj2NZukKsmmfL1ngHaY5HlFPQ1
-	 hChdF7fw0IEQmWByDOyEvlHvh7aWNC58X2+l1KK/Q3V8khSqUxrvoCxOcvszdc2uiCE+C
-	 +hHN+tK3BNBlJviX38J8nK3FT3L+dmYxYUOsp82c/93yhS+Yok4dCQXnpd4Ar8deDu1Eu
-	 3ONzJjMleXusO/F3Lnk7YXSkkv4z5QEPcFMOjAfds5VxF4Als4Q7nAS38KqcBspqruJHR
-	 6rg7kf/A8fBXD3v27MoeW+Ie2gIUCz8idAqdtN7mNcp7DwmP46kag9zkQCKi7b7sDRA==
+	bh=GzB6HrTdfav/2/oloGvwKDoea6vX7P+rmuwpRsdAQRs=;
+	b=JrzkSts8/PONAEV0AmCPKN64pPaKS+4+E9pSXNIbhR13q2r2UfcIdE0IfuWSiyLRiMKx
+	 Z+Luy0TwX9w/+7o85ymDyCVRmkwMkD/baCnLY6vbrLjRC0GK3+pMlPukdng0v11unbUYt
+	 12mSJl/Ce0ynBoTZYdeaAOUEbX8mbIShDDrfzUKbXxpOXWKeWCbb3ee/5YgC2rwZ+oCKp
+	 rv7ZvA4Yzxww8ox0OW7CcDIWEs1cqRIAJHPxX2IGYhHTa10L5O9ahGeXLkjJ8xwpLVTUn
+	 C8J1eaM3CwqOfwSEFFeyVH/3TVUO95W+VlQvmSwVfkOYpl9eyqNl4/yx3CUvUnfVKIQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="hxWHKPZ/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="e+kd/1BQ";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F299606A31A;
-	Wed, 28 Oct 2026 18:52:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EEEF606A31A;
+	Wed, 28 Oct 2026 18:52:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hxWHKPZ/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B62201F01825;
-	Wed, 28 Oct 2026 18:52:45 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e+kd/1BQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A6301F01825;
+	Wed, 28 Oct 2026 18:52:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213566;
-	bh=Nq3nw1XHTnBI3fqdC9CN+rV15wZ/ewU7h+1VTUY3feY=;
+	s=korg; t=1793213569;
+	bh=GzB6HrTdfav/2/oloGvwKDoea6vX7P+rmuwpRsdAQRs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hxWHKPZ/NguVV3YqVASVge6ZEzgG/AbJgdOPjwp1OmcEvX8kY5WZI59ulvYyz2P+q
-	 lh/WEGyKgu42JOp1SLgfpvqlRny1P8jAKDGwmG8FElhYzf5q2mAKMBBmub7ib6g1Fr
-	 radJNZZ/D+9rc7uyDxErVK9apT0tfvPLa2x5x53I=
+	b=e+kd/1BQMgU34JjhCD2owhVz4dIGYjdHzcS495sATERSUIBJ6mmRLJDzX+sVz6i79
+	 unZxb91s2KrTkMThFEhsPCH6RL68ZlXRHNGg7NYHDh/h6M99lgsVwQuiVvJn2M1JHH
+	 OaITplyiKv4ZwYMBKMR+AkOl65yvX223MZsr97k8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	"Huang, Ying" <ying.huang@intel.com>,
-	Matthew Wilcox <willy@infradead.org>,
-	David Hildenbrand <david@redhat.com>,
-	Xu Yu <xuyu@linux.alibaba.com>,
-	Zi Yan <ziy@nvidia.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Paloma Arellano <quic_parellan@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0551/1887] mm: migrate: fix getting incorrect page mapping during page migration
-Date: Wed, 28 Oct 2026 17:44:07 +0100
-Message-ID: <20261028170511.914118225@linuxfoundation.org>
+Subject: [PATCH 6.1 0552/1887] drm/msm/dpu: Add mutex lock in control vblank irq
+Date: Wed, 28 Oct 2026 17:44:08 +0100
+Message-ID: <20261028170511.937676583@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -73,128 +68,225 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baolin Wang <baolin.wang@linux.alibaba.com>
+From: Paloma Arellano <quic_parellan@quicinc.com>
 
-[ Upstream commit d1adb25df7111de83b64655a80b5a135adbded61 ]
+[ Upstream commit 45284ff733e4caf6c118aae5131eb7e7cf3eea5a ]
 
-When running stress-ng testing, we found below kernel crash after a few hours:
+Add a mutex lock to control vblank irq to synchronize vblank
+enable/disable operations happening from different threads to prevent
+race conditions while registering/unregistering the vblank irq callback.
 
-Unable to handle kernel NULL pointer dereference at virtual address 0000000000000000
-pc : dentry_name+0xd8/0x224
-lr : pointer+0x22c/0x370
-sp : ffff800025f134c0
-......
-Call trace:
-  dentry_name+0xd8/0x224
-  pointer+0x22c/0x370
-  vsnprintf+0x1ec/0x730
-  vscnprintf+0x2c/0x60
-  vprintk_store+0x70/0x234
-  vprintk_emit+0xe0/0x24c
-  vprintk_default+0x3c/0x44
-  vprintk_func+0x84/0x2d0
-  printk+0x64/0x88
-  __dump_page+0x52c/0x530
-  dump_page+0x14/0x20
-  set_migratetype_isolate+0x110/0x224
-  start_isolate_page_range+0xc4/0x20c
-  offline_pages+0x124/0x474
-  memory_block_offline+0x44/0xf4
-  memory_subsys_offline+0x3c/0x70
-  device_offline+0xf0/0x120
-  ......
+v4: -Removed vblank_ctl_lock from dpu_encoder_virt, so it is only a
+    parameter of dpu_encoder_phys.
+    -Switch from atomic refcnt to a simple int counter as mutex has
+    now been added
+v3: Mistakenly did not change wording in last version. It is done now.
+v2: Slightly changed wording of commit message
 
-After analyzing the vmcore, I found this issue is caused by page migration.
-The scenario is that, one thread is doing page migration, and we will use the
-target page's ->mapping field to save 'anon_vma' pointer between page unmap and
-page move, and now the target page is locked and refcount is 1.
-
-Currently, there is another stress-ng thread performing memory hotplug,
-attempting to offline the target page that is being migrated. It discovers that
-the refcount of this target page is 1, preventing the offline operation, thus
-proceeding to dump the page. However, page_mapping() of the target page may
-return an incorrect file mapping to crash the system in dump_mapping(), since
-the target page->mapping only saves 'anon_vma' pointer without setting
-PAGE_MAPPING_ANON flag.
-
-There are seveval ways to fix this issue:
-(1) Setting the PAGE_MAPPING_ANON flag for target page's ->mapping when saving
-'anon_vma', but this can confuse PageAnon() for PFN walkers, since the target
-page has not built mappings yet.
-(2) Getting the page lock to call page_mapping() in __dump_page() to avoid crashing
-the system, however, there are still some PFN walkers that call page_mapping()
-without holding the page lock, such as compaction.
-(3) Using target page->private field to save the 'anon_vma' pointer and 2 bits
-page state, just as page->mapping records an anonymous page, which can remove
-the page_mapping() impact for PFN walkers and also seems a simple way.
-
-So I choose option 3 to fix this issue, and this can also fix other potential
-issues for PFN walkers, such as compaction.
-
-Link: https://lkml.kernel.org/r/e60b17a88afc38cb32f84c3e30837ec70b343d2b.1702641709.git.baolin.wang@linux.alibaba.com
-Fixes: 64c8902ed441 ("migrate_pages: split unmap_and_move() to _unmap() and _move()")
-Signed-off-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Reviewed-by: "Huang, Ying" <ying.huang@intel.com>
-Cc: Matthew Wilcox <willy@infradead.org>
-Cc: David Hildenbrand <david@redhat.com>
-Cc: Xu Yu <xuyu@linux.alibaba.com>
-Cc: Zi Yan <ziy@nvidia.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Paloma Arellano <quic_parellan@quicinc.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Patchwork: https://patchwork.freedesktop.org/patch/571854/
+Link: https://lore.kernel.org/r/20231212231101.9240-2-quic_parellan@quicinc.com
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/migrate.c | 27 ++++++++++++---------------
- 1 file changed, 12 insertions(+), 15 deletions(-)
+ .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h  |  4 ++-
+ .../drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c  | 33 +++++++++++------
+ .../drm/msm/disp/dpu1/dpu_encoder_phys_vid.c  | 35 ++++++++++++-------
+ .../drm/msm/disp/dpu1/dpu_encoder_phys_wb.c   |  1 -
+ 4 files changed, 48 insertions(+), 25 deletions(-)
 
-diff --git a/mm/migrate.c b/mm/migrate.c
-index 161ab6e2713d2..72ee6896a2cb2 100644
---- a/mm/migrate.c
-+++ b/mm/migrate.c
-@@ -1010,32 +1010,29 @@ static int move_to_new_folio(struct folio *dst, struct folio *src,
- }
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h
+index f2af07d87f56f..f1f022e9dcf71 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h
+@@ -177,6 +177,7 @@ enum dpu_intr_idx {
+  * @hw_wb:		Hardware interface to the wb registers
+  * @dpu_kms:		Pointer to the dpu_kms top level
+  * @cached_mode:	DRM mode cached at mode_set time, acted on in enable
++ * @vblank_ctl_lock:	Vblank ctl mutex lock to protect vblank_refcount
+  * @enabled:		Whether the encoder has enabled and running a mode
+  * @split_role:		Role to play in a split-panel configuration
+  * @intf_mode:		Interface mode
+@@ -207,13 +208,14 @@ struct dpu_encoder_phys {
+ 	struct dpu_hw_wb *hw_wb;
+ 	struct dpu_kms *dpu_kms;
+ 	struct drm_display_mode cached_mode;
++	struct mutex vblank_ctl_lock;
+ 	enum dpu_enc_split_role split_role;
+ 	enum dpu_intf_mode intf_mode;
+ 	enum dpu_intf intf_idx;
+ 	enum dpu_wb wb_idx;
+ 	spinlock_t *enc_spinlock;
+ 	enum dpu_enc_enable_state enable_state;
+-	atomic_t vblank_refcount;
++	int vblank_refcount;
+ 	atomic_t vsync_cnt;
+ 	atomic_t underrun_cnt;
+ 	atomic_t pending_ctlstart_cnt;
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
+index 7581e418418f1..b3cb507c052a6 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
+@@ -246,7 +246,8 @@ static int dpu_encoder_phys_cmd_control_vblank_irq(
+ 		return -EINVAL;
+ 	}
  
- /*
-- * To record some information during migration, we use some unused
-- * fields (mapping and private) of struct folio of the newly allocated
-- * destination folio.  This is safe because nobody is using them
-- * except us.
-+ * To record some information during migration, we use unused private
-+ * field of struct folio of the newly allocated destination folio.
-+ * This is safe because nobody is using it except us.
-  */
--union migration_ptr {
--	struct anon_vma *anon_vma;
--	struct address_space *mapping;
-+enum {
-+	PAGE_WAS_MAPPED = BIT(0),
- };
-+
- static void __migrate_folio_record(struct folio *dst,
--				   unsigned long page_was_mapped,
-+				   int page_was_mapped,
- 				   struct anon_vma *anon_vma)
+-	refcount = atomic_read(&phys_enc->vblank_refcount);
++	mutex_lock(&phys_enc->vblank_ctl_lock);
++	refcount = phys_enc->vblank_refcount;
+ 
+ 	/* Slave encoders don't report vblank */
+ 	if (!dpu_encoder_phys_cmd_is_master(phys_enc))
+@@ -262,16 +263,24 @@ static int dpu_encoder_phys_cmd_control_vblank_irq(
+ 		      phys_enc->hw_pp->idx - PINGPONG_0,
+ 		      enable ? "true" : "false", refcount);
+ 
+-	if (enable && atomic_inc_return(&phys_enc->vblank_refcount) == 1)
+-		ret = dpu_core_irq_register_callback(phys_enc->dpu_kms,
+-				phys_enc->irq[INTR_IDX_RDPTR],
+-				dpu_encoder_phys_cmd_pp_rd_ptr_irq,
+-				phys_enc);
+-	else if (!enable && atomic_dec_return(&phys_enc->vblank_refcount) == 0)
+-		ret = dpu_core_irq_unregister_callback(phys_enc->dpu_kms,
+-				phys_enc->irq[INTR_IDX_RDPTR]);
++	if (enable) {
++		if (phys_enc->vblank_refcount == 0)
++			ret = dpu_core_irq_register_callback(phys_enc->dpu_kms,
++					phys_enc->irq[INTR_IDX_RDPTR],
++					dpu_encoder_phys_cmd_pp_rd_ptr_irq,
++					phys_enc);
++		if (!ret)
++			phys_enc->vblank_refcount++;
++	} else if (!enable) {
++		if (phys_enc->vblank_refcount == 1)
++			ret = dpu_core_irq_unregister_callback(phys_enc->dpu_kms,
++					phys_enc->irq[INTR_IDX_RDPTR]);
++		if (!ret)
++			phys_enc->vblank_refcount--;
++	}
+ 
+ end:
++	mutex_unlock(&phys_enc->vblank_ctl_lock);
+ 	if (ret) {
+ 		DRM_ERROR("vblank irq err id:%u pp:%d ret:%d, enable %s/%d\n",
+ 			  DRMID(phys_enc->parent),
+@@ -287,7 +296,7 @@ static void dpu_encoder_phys_cmd_irq_control(struct dpu_encoder_phys *phys_enc,
  {
--	union migration_ptr ptr = { .anon_vma = anon_vma };
--	dst->mapping = ptr.mapping;
--	dst->private = (void *)page_was_mapped;
-+	dst->private = (void *)anon_vma + page_was_mapped;
- }
+ 	trace_dpu_enc_phys_cmd_irq_ctrl(DRMID(phys_enc->parent),
+ 			phys_enc->hw_pp->idx - PINGPONG_0,
+-			enable, atomic_read(&phys_enc->vblank_refcount));
++			enable, phys_enc->vblank_refcount);
  
- static void __migrate_folio_extract(struct folio *dst,
- 				   int *page_was_mappedp,
- 				   struct anon_vma **anon_vmap)
- {
--	union migration_ptr ptr = { .mapping = dst->mapping };
--	*anon_vmap = ptr.anon_vma;
--	*page_was_mappedp = (unsigned long)dst->private;
--	dst->mapping = NULL;
-+	unsigned long private = (unsigned long)dst->private;
+ 	if (enable) {
+ 		dpu_core_irq_register_callback(phys_enc->dpu_kms,
+@@ -777,6 +786,9 @@ struct dpu_encoder_phys *dpu_encoder_phys_cmd_init(
+ 	phys_enc->hw_mdptop = p->dpu_kms->hw_mdp;
+ 	phys_enc->intf_idx = p->intf_idx;
+ 
++	mutex_init(&phys_enc->vblank_ctl_lock);
++	phys_enc->vblank_refcount = 0;
 +
-+	*anon_vmap = (struct anon_vma *)(private & ~PAGE_WAS_MAPPED);
-+	*page_was_mappedp = private & PAGE_WAS_MAPPED;
- 	dst->private = NULL;
- }
+ 	dpu_encoder_phys_cmd_init_ops(&phys_enc->ops);
+ 	phys_enc->parent = p->parent;
+ 	phys_enc->parent_ops = p->parent_ops;
+@@ -789,7 +801,6 @@ struct dpu_encoder_phys *dpu_encoder_phys_cmd_init(
+ 	for (i = 0; i < ARRAY_SIZE(phys_enc->irq); i++)
+ 		phys_enc->irq[i] = -EINVAL;
  
+-	atomic_set(&phys_enc->vblank_refcount, 0);
+ 	atomic_set(&phys_enc->pending_kickoff_cnt, 0);
+ 	atomic_set(&phys_enc->pending_ctlstart_cnt, 0);
+ 	atomic_set(&cmd_enc->pending_vblank_cnt, 0);
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
+index 4b7952c4e639f..3b45a50aa9854 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
+@@ -375,7 +375,8 @@ static int dpu_encoder_phys_vid_control_vblank_irq(
+ 	int ret = 0;
+ 	int refcount;
+ 
+-	refcount = atomic_read(&phys_enc->vblank_refcount);
++	mutex_lock(&phys_enc->vblank_ctl_lock);
++	refcount = phys_enc->vblank_refcount;
+ 
+ 	/* Slave encoders don't report vblank */
+ 	if (!dpu_encoder_phys_vid_is_master(phys_enc))
+@@ -388,18 +389,26 @@ static int dpu_encoder_phys_vid_control_vblank_irq(
+ 	}
+ 
+ 	DRM_DEBUG_VBL("id:%u enable=%d/%d\n", DRMID(phys_enc->parent), enable,
+-		      atomic_read(&phys_enc->vblank_refcount));
++		      refcount);
+ 
+-	if (enable && atomic_inc_return(&phys_enc->vblank_refcount) == 1)
+-		ret = dpu_core_irq_register_callback(phys_enc->dpu_kms,
+-				phys_enc->irq[INTR_IDX_VSYNC],
+-				dpu_encoder_phys_vid_vblank_irq,
+-				phys_enc);
+-	else if (!enable && atomic_dec_return(&phys_enc->vblank_refcount) == 0)
+-		ret = dpu_core_irq_unregister_callback(phys_enc->dpu_kms,
+-				phys_enc->irq[INTR_IDX_VSYNC]);
++	if (enable) {
++		if (phys_enc->vblank_refcount == 0)
++			ret = dpu_core_irq_register_callback(phys_enc->dpu_kms,
++					phys_enc->irq[INTR_IDX_VSYNC],
++					dpu_encoder_phys_vid_vblank_irq,
++					phys_enc);
++		if (!ret)
++			phys_enc->vblank_refcount++;
++	} else if (!enable) {
++		if (phys_enc->vblank_refcount == 1)
++			ret = dpu_core_irq_unregister_callback(phys_enc->dpu_kms,
++					phys_enc->irq[INTR_IDX_VSYNC]);
++		if (!ret)
++			phys_enc->vblank_refcount--;
++	}
+ 
+ end:
++	mutex_unlock(&phys_enc->vblank_ctl_lock);
+ 	if (ret) {
+ 		DRM_ERROR("failed: id:%u intf:%d ret:%d enable:%d refcnt:%d\n",
+ 			  DRMID(phys_enc->parent),
+@@ -607,7 +616,7 @@ static void dpu_encoder_phys_vid_irq_control(struct dpu_encoder_phys *phys_enc,
+ 	trace_dpu_enc_phys_vid_irq_ctrl(DRMID(phys_enc->parent),
+ 			    phys_enc->hw_intf->idx - INTF_0,
+ 			    enable,
+-			    atomic_read(&phys_enc->vblank_refcount));
++			   phys_enc->vblank_refcount);
+ 
+ 	if (enable) {
+ 		ret = dpu_encoder_phys_vid_control_vblank_irq(phys_enc, true);
+@@ -703,6 +712,9 @@ struct dpu_encoder_phys *dpu_encoder_phys_vid_init(
+ 
+ 	DPU_DEBUG_VIDENC(phys_enc, "\n");
+ 
++	mutex_init(&phys_enc->vblank_ctl_lock);
++	phys_enc->vblank_refcount = 0;
++
+ 	dpu_encoder_phys_vid_init_ops(&phys_enc->ops);
+ 	phys_enc->parent = p->parent;
+ 	phys_enc->parent_ops = p->parent_ops;
+@@ -713,7 +725,6 @@ struct dpu_encoder_phys *dpu_encoder_phys_vid_init(
+ 	for (i = 0; i < ARRAY_SIZE(phys_enc->irq); i++)
+ 		phys_enc->irq[i] = -EINVAL;
+ 
+-	atomic_set(&phys_enc->vblank_refcount, 0);
+ 	atomic_set(&phys_enc->pending_kickoff_cnt, 0);
+ 	init_waitqueue_head(&phys_enc->pending_kickoff_wq);
+ 	phys_enc->enable_state = DPU_ENC_DISABLED;
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
+index fd5f9d04f81e6..462fa58c660df 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
+@@ -735,7 +735,6 @@ struct dpu_encoder_phys *dpu_encoder_phys_wb_init(
+ 		phys_enc->irq[i] = -EINVAL;
+ 
+ 	atomic_set(&phys_enc->pending_kickoff_cnt, 0);
+-	atomic_set(&phys_enc->vblank_refcount, 0);
+ 	wb_enc->wb_done_timeout_cnt = 0;
+ 
+ 	init_waitqueue_head(&phys_enc->pending_kickoff_wq);
 -- 
 2.53.0
 
