@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793209951;
-	b=KNeLO9tXDEUNs+ef0r8Oc8Fta2o6JhHrzZGqzX392TvXYgDthUHJeD27CqwI/MtszzkO
-	 H/mqM3OCXxKvrShcgD8q61fe+m9YukU1CXvj/Kw3EecFtCSKWEMyGY0LJ/Ozy/6t4CcRd
-	 Zs7hjGPwffF9l0Wr2ANOhUgRjrwUY242jgBSef5JkWOrUjLSesC1iQ5LJl0f7ZyvLr+RZ
-	 abw4bPlh4/wBWz1kzT5xSJeAkuyXPuIdX5fj/t1u1/mx6xHdzPf56NDNWXi3FxD9avNX9
-	 W1SZwpd9A1SbeUxhKfpIeShdXtidNLDgEk8RBMUsOCH0WzQuScs0vffe5Re7orhgVdw==
+	t=1793209954;
+	b=LXGk6k5pY3yiAxpFfmZu0SOkprK0ju2m6vgNC7A/y1PlXci5A9XzQmBqo/mgPwXqqEmy
+	 bqxWQFJ8Miueku1BbJoN/Cl0KZku321tMmoPqqBhggwV0awaYF/LVmdVhMp0wb4QvJ1Yc
+	 JCSJ7WY0N7bi00zCw40JiPAIakpt/3JA0A1rnKMbEGnywDfD2ZN0/qTaooQeEVbd5Wdzf
+	 QWrmQecb/T5Bns2VryQoaJYoDf9pSuEXx31FkwY+05Kfk2R9YAi5xXDOGzN7w925Girjr
+	 TX234kI430UWVsQIcRYa4nPHshRnkMDaIuQ6jy4I5VXN7KlaKr8Wd0SW5SkO3yt+foQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793209951;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793209954;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=x/8BAwcQhuwK00+p0sxmABMVivl6VFS6qc4tNtIgIwk=;
-	b=NdDGfuXTsvaZDdtRX8lwmyV766wWZGOBpDEeG8KWYVkK8cn76agQIuuIjjP2YEKdek4g
-	 hEhCAz7p8cP47ukLeyPTZ6bwrPguqn7Gvzr/v4jXBh7L1aLF/ajsmgG3vvC5NoKL8lNos
-	 9Oq6cpCOMD8wKp8Z1y0ftQdNFq/f+Vw7KynncczZQrum9HawFIzdpr3tr07CgDQNzvCLL
-	 DlSNh/6dsiQADpIxDlgOb68JLxTqGD+8QNNHSY9RfY/3yzlzKsILLymq9pMGP9zeIZ8W+
-	 XF9WkKogtGAsps/gUPbJn7aIV5+lFp3Tp0Yb52Zt5QX7R3ReU9soDoGDzUfZZf2Gbfg==
+	bh=0hP90MuB3qBrmUNxjGdxD7W1bMyPrVwM3QKGJFZOgpU=;
+	b=ivYckYiHRH+fIMkl6rn+YjjNQJGFQr0cQRHajEkv4fgpcBNezfPm0HW37QGD6TJXHUiX
+	 6qDEgpAAQbudbb5Kw7MwwzGVywc9dSnsVSk54z7ISxL4iEflD6mr7jxjcWbm8oEr5sRoN
+	 hQzkIclRjmKA8qPt6hvyOppU/U197Cr+aykQ4M5RfjuqvRxDkSj2g3ttCo+uEoEIcC2rz
+	 jK9kb2WogNeqF0aT4VaosD/XSUywr38vbE2CcctEJXeIrGS4SIT37Qwcv1v7Mqxu2five
+	 SvI7a62AMYiVVBTpERgb8FIYvedV9AQOhqAkl7fTBTg91SYuwPaNsPEtUl9IOQKoZUg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KFrUJckS;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kZ9Q1MFt;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A61E606A31A;
-	Wed, 28 Oct 2026 17:52:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1DEE606A31C;
+	Wed, 28 Oct 2026 17:52:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KFrUJckS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BF251F01825;
-	Wed, 28 Oct 2026 17:52:30 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kZ9Q1MFt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E3761F01825;
+	Wed, 28 Oct 2026 17:52:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793209951;
-	bh=x/8BAwcQhuwK00+p0sxmABMVivl6VFS6qc4tNtIgIwk=;
+	s=korg; t=1793209953;
+	bh=0hP90MuB3qBrmUNxjGdxD7W1bMyPrVwM3QKGJFZOgpU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KFrUJckSbpzEZvZ5R8aMgC5mRBMdmVx6+RI/F+Xsx5zyG7/Ar86cd/O/0N2V2eAHi
-	 46dOfDxImzMYPCmb4gmta5izsiUw56EZ0tPo4KSARLqnXU1Tn9n+teO88z/6yOUtZH
-	 F/63j4TgEyXYJJpXcq/5GZkFmAtS3UXKjhu5XVqE=
+	b=kZ9Q1MFtDjQBMIBT1MDWCpBxbxMvzD1ZkLzgo1Ytl4i8jhC0OpI7Ku+qMGHT/5aEA
+	 1IQWSPQN/dpgVl9QsE5wskYgZZUCqAxhT9VZF1PP1a+BO5XkR9NM4WCOTc52bcnDkK
+	 ba/UB3PIZYMK7YpSh7c04bLVKDWPkok2aEiuyyTE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Keith Busch <kbusch@kernel.org>,
-	Dinh Nguyen <dinguyen@kernel.org>,
+	Laurence Oberman <loberman@redhat.com>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 024/168] nios2: fix __wsum type degradation in csum_fold()
-Date: Wed, 28 Oct 2026 17:59:20 +0100
-Message-ID: <20261028165943.669544472@linuxfoundation.org>
+Subject: [PATCH 6.6 025/168] scsi: st: Save the visited block for the partition the drive is in
+Date: Wed, 28 Oct 2026 17:59:21 +0100
+Message-ID: <20261028165943.693721367@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165943.089486480@linuxfoundation.org>
 References: <20261028165943.089486480@linuxfoundation.org>
@@ -69,41 +68,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Keith Busch <kbusch@kernel.org>
+From: Laurence Oberman <loberman@redhat.com>
 
-[ Upstream commit b963f2345fa20417401c51a69dedb6a58eea33a9 ]
+[ Upstream commit c9e9f024dd4f61f0f6636c9f2ed0830f87060e11 ]
 
-csum_fold() shifts a bitwise __wsum type, which sparse reports as
-"restricted __wsum degrades to integer". Sparse only checks the body of
-a static inline once something instantiates it, so this went unnoticed
-until a recent block layer change added the first csum_fold() caller to
-a file built on this architecture.
+set_location() saves the current tape location before switching
+partitions, so that switch_partition() can return to it later. It reads
+the location with READ POSITION but stores it in the st_partstat of
+STp->partition, ignoring the partition the drive reports.
 
-Force cast to a __u32 for the shift, as the other architectures do.
+The two differ after a device reset. When the reset is recovered with
+MTREW, MTSEEK or MTEOM, st_ioctl() sets STp->partition = 0 and calls
+switch_partition() to return to STp->new_partition. A drive that was in
+partition 1 is still there, so set_location() files the partition 1
+position under partition 0. The next switch to partition 0 locates to
+that block: if partition 0 holds less data, MTSETPART fails with EIO
+(BLANK CHECK), otherwise the tape is silently positioned at the wrong
+block.
 
-Fixes: eea9507a69d6 ("nios2: Library functions")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202609222053.5gjiJjtb-lkp@intel.com/
-Signed-off-by: Keith Busch <kbusch@kernel.org>
-Signed-off-by: Dinh Nguyen <dinguyen@kernel.org>
+IBM ULTRIUM-TD5 (LTO-5), LU reset in partition 1 at block 1025:
+
+  st 12:0:0:0: [st0] Visited block 1025 for partition 0 saved.
+  ...
+  st 12:0:0:0: [st0] Setting block to 1025 and partition to 0.
+  st 12:0:0:0: [st0] Error: 402, cmd: 2b 2 0 0 0 4
+  st 12:0:0:0: [st0] Sense Key : Blank Check [current]
+  st 12:0:0:0: [st0] Add. Sense: End-of-data detected
+
+Store the location in the st_partstat of the partition reported by READ
+POSITION. With the fix:
+
+  st 12:0:0:0: [st0] Visited block 1025 for partition 1 saved.
+
+This is a pre-existing issue. It was not caught when testing the recent
+st reset series because the partition test was only run on scsi_debug:
+on the LTO drive it was skipped, since can-partitions is off in the test
+harness's stinit.conf, as is normal for LTO. scsi_debug hides the
+problem because its emulated tape returns to the beginning of partition
+0 on an LU reset. It was found while validating a backport of that
+series to RHEL 9.8, when the partition tests were run on real hardware
+with can-partitions enabled. The same failure then reproduced on
+unmodified RHEL 9.8 and on upstream, and the fix makes the test pass on
+v7.3-rc3 and RHEL 9.8 with an LTO-5.
+
+The harness (https://gitlab.com/loberman/tapetest, test X03) now refuses
+to silently skip the partition tests on hardware.
+
+Fixes: 7081dc75df79 ("scsi: st: Restore some drive settings after reset")
+Assisted-by: Claude
+Signed-off-by: Laurence Oberman <loberman@redhat.com>
+Link: https://patch.msgid.link/20261006164250.773840-1-loberman@redhat.com
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/nios2/include/asm/checksum.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/scsi/st.c | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
-diff --git a/arch/nios2/include/asm/checksum.h b/arch/nios2/include/asm/checksum.h
-index 69004e07a1ba3..b6b415ae17a08 100644
---- a/arch/nios2/include/asm/checksum.h
-+++ b/arch/nios2/include/asm/checksum.h
-@@ -27,7 +27,7 @@ static inline __sum16 csum_fold(__wsum sum)
- 		"add	%0, %0, r8\n"
- 		"nor	%0, %0, %0\n"
- 		: "=r" (sum)
--		: "r" (sum << 16), "0" (sum)
-+		: "r" ((__force u32)sum << 16), "0" (sum)
- 		: "r8");
- 	return (__force __sum16) sum;
- }
+diff --git a/drivers/scsi/st.c b/drivers/scsi/st.c
+index f9ab45c4bb40d..defbc1507980a 100644
+--- a/drivers/scsi/st.c
++++ b/drivers/scsi/st.c
+@@ -3195,14 +3195,20 @@ static int set_location(struct scsi_tape *STp, unsigned int block, int partition
+ 	    partition >= ST_NBR_PARTITIONS)
+ 		return (-EINVAL);
+ 	if (partition != STp->partition) {
+-		if (get_location(STp, &blk, &p, 1))
++		/*
++		 * Save the location for the partition the drive reports,
++		 * not for STp->partition: after a reset STp->partition may
++		 * not match the partition the drive is in.
++		 */
++		if (get_location(STp, &blk, &p, 1) ||
++		    p < 0 || p >= ST_NBR_PARTITIONS)
+ 			STps->last_block_valid = 0;
+ 		else {
+-			STps->last_block_valid = 1;
+-			STps->last_block_visited = blk;
++			STp->ps[p].last_block_valid = 1;
++			STp->ps[p].last_block_visited = blk;
+ 			DEBC_printk(STp, "Visited block %d for "
+ 				    "partition %d saved.\n",
+-				    blk, STp->partition);
++				    blk, p);
+ 		}
+ 	}
+ 
 -- 
 2.53.0
 
