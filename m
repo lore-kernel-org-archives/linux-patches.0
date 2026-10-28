@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214060;
-	b=BXzOKaVdqasuuDjZ706/f/4pXbC0F1kRs/m3eyjZMkJZn53dXV9b7cpSaE7Xab2lz3BS
-	 F5lDAia+vs75YwUrFRqiarMc1yZDB5MbP9SMubyJBG8vm65Mr0i0Xjw/2CZfo3xeD9i4Q
-	 lXOf9BtbpeeliyP98q9u5JNbESPZbY3hudSfGY4YmTMqs0UkOLV/i6HK7zPWHMkEPFV4L
-	 XJ/HYLi5ZPadD4VJyjY95YSJHgGSd/LpoKVNXBpL/qpRz9kJ1YxC6c2h4xG97fM+C+hp9
-	 5mvqEDq3MEYj2JfYdmMXe2Bg4CzqDQG184NB0fb8Zuv7WLyztYd3TIUBjHQXXwLOnmg==
+	t=1793214063;
+	b=f+JqoFwCUDoCAeO1OmmUUiTl0HRXSRw3rlEtO6HcIGpnDBjaDWde7VzPUj+6BtI5FLk4
+	 REvGMTdXMonxNKfMzLTQICSBIcjp8GDQCETa9f4/hmBptbfpa7sYxwEnnI9gEV/XOh+HG
+	 kfq3PYSyFcjxPyaqI9ZPVWO7l9BneHvquWH0dm4hTDgywxPXcv02Um23R/PsSMSdjv8EV
+	 0vSu5s+J+9A8IvYAFRPQhWqOhwtvp5n0IZ1+OS5+tIOHuLuxAMArB39SUTWOQ/BbxvXDF
+	 7S49VEH6sjocByvrvauxCgwt6JF2BC+I+veFnf4sqvV+51Hb+G43kYYhq81hvXrqJsA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214060;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214063;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Bw1HiPdsYQfqAXNNp/lMMlIoSaFQKggUaxtQ6SXkgJU=;
-	b=l48TiARpgWr/Kzlaf9HwXhZU9szXpsAg60wPE1nSglY6211Lg6Z+VkcYnKcKxB2jGFW8
-	 XTBruAbJKLY0EqaKvKZO5ed+Yvt9hMJqnyOJaPBi2s8fWsj+Pt9ilZP/BxLfoP7iDQlUR
-	 WYKJoHJTUsa5RGOi+Lvh0zD1jZzxF9mW7k2AyARwhgATJ6ARCJAZMqzHOMsrLPd7yDWGO
-	 X7JHmazXO/VvvUpBeqEOg4+aXC0DxrrUbv9MTcaX+W3uCNoWFyRrw1XLzsVNI7MkHWWor
-	 /R0HBNCS6j8f9jjMgUkpSo5TJngSfBH8hMR/LLRNr8MWlHU4XTR+8e3CH3jHykMv28Q==
+	bh=hb5e887l/vq8X2t8iWoCJlQ5sdwpTQXqRL8bZdm166g=;
+	b=Kgu7WgOLkSb6LPhSONbgpj2lnTBjDWNQe3eqnqqBWX+zYiFvhrEFHCYFskrB/GMSOKaj
+	 4gJOhthmQMmocy0KjaIrgVXQJs0loRi7Hm022W9wl6ZmTLPL5lRMoZkd508QQuKMnS4wI
+	 EoZocsJ8OpQl8FCieHreogEHaiO7YmoeXDu/oYoyD7jM24K4vcrXgrERoWvdwSrckvAHZ
+	 EW8/hU3Vx2psrDkZwAGLl6b9FV4jJVqZOFXu2zK9DO3h5WKCaEkP9XVvMTuGrikQSQMat
+	 /InUsLpTLKB07Xoe3ldBVg2ajUX9wROtXjRMzZJ6R7+MWqyvJ7GflPu96Zk1U2FCOSw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OAUiOOZE;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=d2ny1lvn;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE8E5606A332;
-	Wed, 28 Oct 2026 19:00:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD982606A31A;
+	Wed, 28 Oct 2026 19:01:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OAUiOOZE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A3101F01825;
-	Wed, 28 Oct 2026 19:00:58 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=d2ny1lvn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16F761F01825;
+	Wed, 28 Oct 2026 19:01:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214059;
-	bh=Bw1HiPdsYQfqAXNNp/lMMlIoSaFQKggUaxtQ6SXkgJU=;
+	s=korg; t=1793214062;
+	bh=hb5e887l/vq8X2t8iWoCJlQ5sdwpTQXqRL8bZdm166g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OAUiOOZEbQ1GUYgT47mfW5amchXrNR1YPS+NpiFBXOTo/WrpwcO12JlqF4KjeKAeS
-	 89o8G6sMFB6FmPoOmhBhiwHGeUsDABmWNb5D69wZYlNaRbk2vTK+j+YQcbo3qEkPW5
-	 IcvuWOXxFCEvn3pa9CJbfRo59uj5oXKHH5UT1DGc=
+	b=d2ny1lvnn94kwTiBegkMmaKfwpKXCmtxljpoLAojOR/91Hi/c/xfAym97zp5V84iF
+	 p4xmU7I+3VGcQU2VpR1b4U5tx1X3NEed/XbtHUVefJgOz7086+u6nBggrlrV5sdEZP
+	 WMnjU3mmGT5ZDLnUx/e0MvE1tt6uvbi2W28y7JFg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+5f9f31cb7d985f584d8e@syzkaller.appspotmail.com,
-	Florian Westphal <fw@strlen.de>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Dmitry Vyukov <dvyukov@google.com>
-Subject: [PATCH 6.1 0726/1887] xfrm: state: fix out-of-bounds read during lookup
-Date: Wed, 28 Oct 2026 17:47:02 +0100
-Message-ID: <20261028170515.969653793@linuxfoundation.org>
+	Gaurav Batra <gbatra@linux.ibm.com>,
+	Nilay Shroff <nilay@linux.ibm.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 0727/1887] powerpc/pseries/iommu: IOMMU incorrectly marks MMIO range in DDW
+Date: Wed, 28 Oct 2026 17:47:03 +0100
+Message-ID: <20261028170515.993034655@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -70,252 +69,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Gaurav Batra <gbatra@linux.ibm.com>
 
-[ Upstream commit e952837f3ddb0ff726d5b582aa1aad9aa38d024d ]
+[ Upstream commit 8f70caad82e9c088ed93b4fea48d941ab6441886 ]
 
-lookup and resize can run in parallel.
+Power Hypervisor can possibily allocate MMIO window intersecting with
+Dynamic DMA Window (DDW) range, which is over 32-bit addressing.
 
-The xfrm_state_hash_generation seqlock ensures a retry, but the hash
-functions can observe a hmask value that is too large for the new hlist
-array.
+These MMIO pages needs to be marked as reserved so that IOMMU doesn't map
+DMA buffers in this range.
 
-rehash does:
-  rcu_assign_pointer(net->xfrm.state_bydst, ndst) [..]
-  net->xfrm.state_hmask = nhashmask;
+The current code is not marking these pages correctly which is resulting
+in LPAR to OOPS while booting. The stack is at below
 
-While state lookup does:
-  h = xfrm_dst_hash(net, daddr, saddr, tmpl->reqid, encap_family);
-  hlist_for_each_entry_rcu(x, net->xfrm.state_bydst + h, bydst) {
+BUG: Unable to handle kernel data access on read at 0xc00800005cd40000
+Faulting instruction address: 0xc00000000005cdac
+Oops: Kernel access of bad area, sig: 11 [#1]
+LE PAGE_SIZE=64K MMU=Hash SMP NR_CPUS=2048 NUMA pSeries
+Modules linked in: af_packet rfkill ibmveth(X) lpfc(+) nvmet_fc nvmet nvme_keyring crct10dif_vpmsum nvme_fc nvme_fabrics nvme_core be2net(+) nvme_auth rtc_generic nfsd auth_rpcgss nfs_acl lockd grace sunrpc fuse configfs ip_tables x_tables xfs libcrc32c dm_service_time ibmvfc(X) scsi_transport_fc vmx_crypto gf128mul crc32c_vpmsum dm_mirror dm_region_hash dm_log dm_multipath dm_mod sd_mod scsi_dh_emc scsi_dh_rdac scsi_dh_alua t10_pi crc64_rocksoft_generic crc64_rocksoft sg crc64 scsi_mod
+Supported: Yes, External
+CPU: 8 PID: 241 Comm: kworker/8:1 Kdump: loaded Not tainted 6.4.0-150600.23.14-default #1 SLE15-SP6 b44ee71c81261b9e4bab5e0cde1f2ed891d5359b
+Hardware name: IBM,9080-M9S POWER9 (raw) 0x4e2103 0xf000005 of:IBM,FW950.B0 (VH950_149) hv:phyp pSeries
+Workqueue: events work_for_cpu_fn
+NIP:  c00000000005cdac LR: c00000000005e830 CTR: 0000000000000000
+REGS: c00001400c9ff770 TRAP: 0300   Not tainted  (6.4.0-150600.23.14-default)
+MSR:  800000000280b033 <SF,VEC,VSX,EE,FP,ME,IR,DR,RI,LE>  CR: 24228448  XER: 00000001
+CFAR: c00000000005cdd4 DAR: c00800005cd40000 DSISR: 40000000 IRQMASK: 0
+GPR00: c00000000005e830 c00001400c9ffa10 c000000001987d00 c00001400c4fe800
+GPR04: 0000080000000000 0000000000000001 0000000004000000 0000000000800000
+GPR08: 0000000004000000 0000000000000001 c00800005cd40000 ffffffffffffffff
+GPR12: 0000000084228882 c00000000a4c4f00 0000000000000010 0000080000000000
+GPR16: c00001400c4fe800 0000000004000000 0800000000000000 c00000006088b800
+GPR20: c00001401a7be980 c00001400eff3800 c000000002a2da68 000000000000002b
+GPR24: c0000000026793a8 c000000002679368 000000000000002a c0000000026793c8
+GPR28: 000008007effffff 0000080000000000 0000000000800000 c00001400c4fe800
+NIP [c00000000005cdac] iommu_table_reserve_pages+0xac/0x100
+LR [c00000000005e830] iommu_init_table+0x80/0x1e0
+Call Trace:
+[c00001400c9ffa10] [c00000000005e810] iommu_init_table+0x60/0x1e0 (unreliable)
+[c00001400c9ffa90] [c00000000010356c] iommu_bypass_supported_pSeriesLP+0x9cc/0xe40
+[c00001400c9ffc30] [c00000000005c300] dma_iommu_dma_supported+0xf0/0x230
+[c00001400c9ffcb0] [c00000000024b0c4] dma_supported+0x44/0x90
+[c00001400c9ffcd0] [c00000000024b14c] dma_set_mask+0x3c/0x80
+[c00001400c9ffd00] [c0080000555b715c] be_probe+0xc4/0xb90 [be2net]
+[c00001400c9ffdc0] [c000000000986f3c] local_pci_probe+0x6c/0x110
+[c00001400c9ffe40] [c000000000188f28] work_for_cpu_fn+0x38/0x60
+[c00001400c9ffe70] [c00000000018e454] process_one_work+0x314/0x620
+[c00001400c9fff10] [c00000000018f280] worker_thread+0x2b0/0x620
+[c00001400c9fff90] [c00000000019bb18] kthread+0x148/0x150
+[c00001400c9fffe0] [c00000000000ded8] start_kernel_thread+0x14/0x18
 
-This is only safe in case the update to state_bydst is larger than
-net->xfrm.xfrm_state_hmask (or if the lookup function gets
-serialized via state spinlock again).
+There are 2 issues in the code
 
-Fix this by prefetching state_hmask and the associated pointers.
-The xfrm_state_hash_generation seqlock retry will ensure that the pointer
-and the hmask will be consistent.
+1. The index is "int" while the address is "unsigned long". This results in
+   negative value when setting the bitmap.
 
-The existing helpers, like xfrm_dst_hash(), are now unsafe for RCU side,
-add lockdep assertions to document that they are only safe for insert
-side.
+2. The DMA offset is page shifted but the MMIO range is used as-is (64-bit
+   address). MMIO address needs to be page shifted as well.
 
-xfrm_state_lookup_byaddr() uses the spinlock rather than RCU.
-AFAICS this is an oversight from back when state lookup was converted to
-RCU, this lock should be replaced with RCU in a future patch.
+Fixes: 3c33066a2190 ("powerpc/kernel/iommu: Add new iommu_table_in_use() helper")
 
-Reported-by: syzbot+5f9f31cb7d985f584d8e@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/CACT4Y+azwfrE3uz6A5ZErov5YN2LYBN5KrsymBerT36VU8qzBA@mail.gmail.com/
-Diagnosed-by: Dmitry Vyukov <dvyukov@google.com>
-Fixes: c2f672fc9464 ("xfrm: state lookup can be lockless")
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Signed-off-by: Gaurav Batra <gbatra@linux.ibm.com>
+Reviewed-by: Nilay Shroff <nilay@linux.ibm.com>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20241206210039.93172-1-gbatra@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xfrm/xfrm_state.c | 77 ++++++++++++++++++++++++++++++++++---------
- 1 file changed, 62 insertions(+), 15 deletions(-)
+ arch/powerpc/kernel/iommu.c            | 2 +-
+ arch/powerpc/platforms/pseries/iommu.c | 3 ++-
+ 2 files changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/net/xfrm/xfrm_state.c b/net/xfrm/xfrm_state.c
-index 4b0835cb58f5d..ecafa6950139f 100644
---- a/net/xfrm/xfrm_state.c
-+++ b/net/xfrm/xfrm_state.c
-@@ -34,6 +34,8 @@
- 
- #define xfrm_state_deref_prot(table, net) \
- 	rcu_dereference_protected((table), lockdep_is_held(&(net)->xfrm.xfrm_state_lock))
-+#define xfrm_state_deref_check(table, net) \
-+	rcu_dereference_check((table), lockdep_is_held(&(net)->xfrm.xfrm_state_lock))
- 
- static void xfrm_state_gc_task(struct work_struct *work);
- 
-@@ -61,6 +63,8 @@ static inline unsigned int xfrm_dst_hash(struct net *net,
- 					 u32 reqid,
- 					 unsigned short family)
+diff --git a/arch/powerpc/kernel/iommu.c b/arch/powerpc/kernel/iommu.c
+index 81bd60c8094c1..e10df1b5b6309 100644
+--- a/arch/powerpc/kernel/iommu.c
++++ b/arch/powerpc/kernel/iommu.c
+@@ -685,7 +685,7 @@ static void iommu_table_clear(struct iommu_table *tbl)
+ static void iommu_table_reserve_pages(struct iommu_table *tbl,
+ 		unsigned long res_start, unsigned long res_end)
  {
-+	lockdep_assert_held(&net->xfrm.xfrm_state_lock);
-+
- 	return __xfrm_dst_hash(daddr, saddr, reqid, family, net->xfrm.state_hmask);
- }
+-	int i;
++	unsigned long i;
  
-@@ -69,6 +73,8 @@ static inline unsigned int xfrm_src_hash(struct net *net,
- 					 const xfrm_address_t *saddr,
- 					 unsigned short family)
- {
-+	lockdep_assert_held(&net->xfrm.xfrm_state_lock);
-+
- 	return __xfrm_src_hash(daddr, saddr, family, net->xfrm.state_hmask);
- }
+ 	WARN_ON_ONCE(res_end < res_start);
+ 	/*
+diff --git a/arch/powerpc/platforms/pseries/iommu.c b/arch/powerpc/platforms/pseries/iommu.c
+index d5b5d1a4ec166..41e7400bc3194 100644
+--- a/arch/powerpc/platforms/pseries/iommu.c
++++ b/arch/powerpc/platforms/pseries/iommu.c
+@@ -1510,7 +1510,8 @@ static bool enable_ddw(struct pci_dev *dev, struct device_node *pdn)
  
-@@ -76,11 +82,15 @@ static inline unsigned int
- xfrm_spi_hash(struct net *net, const xfrm_address_t *daddr,
- 	      __be32 spi, u8 proto, unsigned short family)
- {
-+	lockdep_assert_held(&net->xfrm.xfrm_state_lock);
-+
- 	return __xfrm_spi_hash(daddr, spi, proto, family, net->xfrm.state_hmask);
- }
+ 		iommu_table_setparms_common(newtbl, pci->phb->bus->number, create.liobn, win_addr,
+ 					    1UL << len, page_shift, NULL, &iommu_table_lpar_multi_ops);
+-		iommu_init_table(newtbl, pci->phb->node, start, end);
++		iommu_init_table(newtbl, pci->phb->node,
++				 start >> page_shift, end >> page_shift);
  
- static unsigned int xfrm_seq_hash(struct net *net, u32 seq)
- {
-+	lockdep_assert_held(&net->xfrm.xfrm_state_lock);
-+
- 	return __xfrm_seq_hash(seq, net->xfrm.state_hmask);
- }
+ 		pci->table_group->tables[1] = newtbl;
  
-@@ -944,15 +954,37 @@ xfrm_init_tempstate(struct xfrm_state *x, const struct flowi *fl,
- 	x->props.family = tmpl->encap_family;
- }
- 
--static struct xfrm_state *__xfrm_state_lookup(struct net *net, u32 mark,
-+struct xfrm_hash_state_ptrs {
-+	const struct hlist_head *bydst;
-+	const struct hlist_head *bysrc;
-+	const struct hlist_head *byspi;
-+	unsigned int hmask;
-+};
-+
-+static void xfrm_hash_ptrs_get(const struct net *net, struct xfrm_hash_state_ptrs *ptrs)
-+{
-+	unsigned int sequence;
-+
-+	do {
-+		sequence = read_seqcount_begin(&net->xfrm.xfrm_state_hash_generation);
-+
-+		ptrs->bydst = xfrm_state_deref_check(net->xfrm.state_bydst, net);
-+		ptrs->bysrc = xfrm_state_deref_check(net->xfrm.state_bysrc, net);
-+		ptrs->byspi = xfrm_state_deref_check(net->xfrm.state_byspi, net);
-+		ptrs->hmask = net->xfrm.state_hmask;
-+	} while (read_seqcount_retry(&net->xfrm.xfrm_state_hash_generation, sequence));
-+}
-+
-+static struct xfrm_state *__xfrm_state_lookup(const struct xfrm_hash_state_ptrs *state_ptrs,
-+					      u32 mark,
- 					      const xfrm_address_t *daddr,
- 					      __be32 spi, u8 proto,
- 					      unsigned short family)
- {
--	unsigned int h = xfrm_spi_hash(net, daddr, spi, proto, family);
-+	unsigned int h = __xfrm_spi_hash(daddr, spi, proto, family, state_ptrs->hmask);
- 	struct xfrm_state *x;
- 
--	hlist_for_each_entry_rcu(x, net->xfrm.state_byspi + h, byspi) {
-+	hlist_for_each_entry_rcu(x, state_ptrs->byspi + h, byspi) {
- 		if (x->props.family != family ||
- 		    x->id.spi       != spi ||
- 		    x->id.proto     != proto ||
-@@ -969,15 +1001,16 @@ static struct xfrm_state *__xfrm_state_lookup(struct net *net, u32 mark,
- 	return NULL;
- }
- 
--static struct xfrm_state *__xfrm_state_lookup_byaddr(struct net *net, u32 mark,
-+static struct xfrm_state *__xfrm_state_lookup_byaddr(const struct xfrm_hash_state_ptrs *state_ptrs,
-+						     u32 mark,
- 						     const xfrm_address_t *daddr,
- 						     const xfrm_address_t *saddr,
- 						     u8 proto, unsigned short family)
- {
--	unsigned int h = xfrm_src_hash(net, daddr, saddr, family);
-+	unsigned int h = __xfrm_src_hash(daddr, saddr, family, state_ptrs->hmask);
- 	struct xfrm_state *x;
- 
--	hlist_for_each_entry_rcu(x, net->xfrm.state_bysrc + h, bysrc) {
-+	hlist_for_each_entry_rcu(x, state_ptrs->bysrc + h, bysrc) {
- 		if (x->props.family != family ||
- 		    x->id.proto     != proto ||
- 		    !xfrm_addr_equal(&x->id.daddr, daddr, family) ||
-@@ -997,14 +1030,17 @@ static struct xfrm_state *__xfrm_state_lookup_byaddr(struct net *net, u32 mark,
- static inline struct xfrm_state *
- __xfrm_state_locate(struct xfrm_state *x, int use_spi, int family)
- {
-+	struct xfrm_hash_state_ptrs state_ptrs;
- 	struct net *net = xs_net(x);
- 	u32 mark = x->mark.v & x->mark.m;
- 
-+	xfrm_hash_ptrs_get(net, &state_ptrs);
-+
- 	if (use_spi)
--		return __xfrm_state_lookup(net, mark, &x->id.daddr,
-+		return __xfrm_state_lookup(&state_ptrs, mark, &x->id.daddr,
- 					   x->id.spi, x->id.proto, family);
- 	else
--		return __xfrm_state_lookup_byaddr(net, mark,
-+		return __xfrm_state_lookup_byaddr(&state_ptrs, mark,
- 						  &x->id.daddr,
- 						  &x->props.saddr,
- 						  x->id.proto, family);
-@@ -1067,6 +1103,7 @@ xfrm_state_find(const xfrm_address_t *daddr, const xfrm_address_t *saddr,
- 		unsigned short family, u32 if_id)
- {
- 	static xfrm_address_t saddr_wildcard = { };
-+	struct xfrm_hash_state_ptrs state_ptrs;
- 	struct net *net = xp_net(pol);
- 	unsigned int h, h_wildcard;
- 	struct xfrm_state *x, *x0, *to_put;
-@@ -1083,8 +1120,10 @@ xfrm_state_find(const xfrm_address_t *daddr, const xfrm_address_t *saddr,
- 	sequence = read_seqcount_begin(&net->xfrm.xfrm_state_hash_generation);
- 
- 	rcu_read_lock();
--	h = xfrm_dst_hash(net, daddr, saddr, tmpl->reqid, encap_family);
--	hlist_for_each_entry_rcu(x, net->xfrm.state_bydst + h, bydst) {
-+	xfrm_hash_ptrs_get(net, &state_ptrs);
-+
-+	h = __xfrm_dst_hash(daddr, saddr, tmpl->reqid, encap_family, state_ptrs.hmask);
-+	hlist_for_each_entry_rcu(x, state_ptrs.bydst + h, bydst) {
- 		if (x->props.family == encap_family &&
- 		    x->props.reqid == tmpl->reqid &&
- 		    (mark & x->mark.m) == x->mark.v &&
-@@ -1100,8 +1139,9 @@ xfrm_state_find(const xfrm_address_t *daddr, const xfrm_address_t *saddr,
- 	if (best || acquire_in_progress)
- 		goto found;
- 
--	h_wildcard = xfrm_dst_hash(net, daddr, &saddr_wildcard, tmpl->reqid, encap_family);
--	hlist_for_each_entry_rcu(x, net->xfrm.state_bydst + h_wildcard, bydst) {
-+	h_wildcard = __xfrm_dst_hash(daddr, &saddr_wildcard, tmpl->reqid,
-+				     encap_family, state_ptrs.hmask);
-+	hlist_for_each_entry_rcu(x, state_ptrs.bydst + h_wildcard, bydst) {
- 		if (x->props.family == encap_family &&
- 		    x->props.reqid == tmpl->reqid &&
- 		    (mark & x->mark.m) == x->mark.v &&
-@@ -1119,7 +1159,7 @@ xfrm_state_find(const xfrm_address_t *daddr, const xfrm_address_t *saddr,
- 	x = best;
- 	if (!x && !error && !acquire_in_progress) {
- 		if (tmpl->id.spi &&
--		    (x0 = __xfrm_state_lookup(net, mark, daddr, tmpl->id.spi,
-+		    (x0 = __xfrm_state_lookup(&state_ptrs, mark, daddr, tmpl->id.spi,
- 					      tmpl->id.proto, encap_family)) != NULL) {
- 			to_put = x0;
- 			error = -EEXIST;
-@@ -1807,10 +1847,13 @@ struct xfrm_state *
- xfrm_state_lookup(struct net *net, u32 mark, const xfrm_address_t *daddr, __be32 spi,
- 		  u8 proto, unsigned short family)
- {
-+	struct xfrm_hash_state_ptrs state_ptrs;
- 	struct xfrm_state *x;
- 
- 	rcu_read_lock();
--	x = __xfrm_state_lookup(net, mark, daddr, spi, proto, family);
-+	xfrm_hash_ptrs_get(net, &state_ptrs);
-+
-+	x = __xfrm_state_lookup(&state_ptrs, mark, daddr, spi, proto, family);
- 	rcu_read_unlock();
- 	return x;
- }
-@@ -1821,10 +1864,14 @@ xfrm_state_lookup_byaddr(struct net *net, u32 mark,
- 			 const xfrm_address_t *daddr, const xfrm_address_t *saddr,
- 			 u8 proto, unsigned short family)
- {
-+	struct xfrm_hash_state_ptrs state_ptrs;
- 	struct xfrm_state *x;
- 
- 	spin_lock_bh(&net->xfrm.xfrm_state_lock);
--	x = __xfrm_state_lookup_byaddr(net, mark, daddr, saddr, proto, family);
-+
-+	xfrm_hash_ptrs_get(net, &state_ptrs);
-+
-+	x = __xfrm_state_lookup_byaddr(&state_ptrs, mark, daddr, saddr, proto, family);
- 	spin_unlock_bh(&net->xfrm.xfrm_state_lock);
- 	return x;
- }
 -- 
 2.53.0
 
