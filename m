@@ -1,60 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214323;
-	b=InzrrtY6qQAxy9bxlM2Eg8WfYWJWukS+n+oRNXsEOwfy0umeCvA6enJdgw7z0hAKFS8u
-	 nODc+5Jvn3UfceIZP+EgWEk06uIWDGgYY3k7vtxhcg5UEaw7TKJMJYTl0NEwij521t/Fa
-	 2uWmmo44d7N8cXRkZBsTLZhmgVjeKWlAkb2Y+SgFKKZMIiEv/ZNUS8vy5gXghQNMqyWwO
-	 IRFpRDkwdgL7cCtpz2nJKoAPDgkTR074PepVPNPrOiJ1NlnP1N3FYSXJa7mnorINdEuOW
-	 VFbEyDnQ8p47s/bjv71Mj3+uq+g9Iq7RMtnwXhl0KiECx7rH526wimQnmafuF0Hmdew==
+	t=1793214326;
+	b=EY3MIscRMua16vHW2QChZkKP8N2pjLgg6XpRXTkp4YYONyBczOxxzC+J1XGFnhgVmnr0
+	 iRKxo9QtRv72Q4OcqeE7rFPO55XGuKYfo8tl3Vt2MW08J56bqe5I/XO9uW3PO9u53XPY4
+	 hy4rAT3AKbDh7nni7KJXjCQg6pTMn/qP2/3v4jKqTbCdjQuArlZkGDxy43O3QtyZDXJ8U
+	 2iDYEOgs4mGvisI+kk1e2IJNRXXRDg5wqihkckRDXTmH9ifpPVC6ipBkWR0wEUGZwh+0D
+	 XJXJTmsrNpcjIAx+HMlcQk7TrsFCKyUhfFIVSmrdtBXY2Lsj2oUT9mZBioFeN32otBg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214323;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214326;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=dV235mNtpF1DtZ8sKKS77sPKO/CHA7joeHcY/AWQYVo=;
-	b=BNI90AUpV1tmodkLf1AghapkWSEmVhvEZGqeB33QOQfveIcQisoNQVWVZsd5FD8+GZZY
-	 2TmlvOzHiYa4/tGsZIliyAk3Bdomp5k3/YXJyXu3asWaAyMj2e0l1Tyv0HDUHd49l2HK3
-	 +z9C9Y8mqENZyO/719l4Uf0PRfarJbeWST6GJoC+3VtsNdIERp5TRPr907gDNcyXn0p2C
-	 iG781WPcoj17K7weGEo0bYKXo0uqJWLzSGgwYytIf2LA0dywpXF1raXH5sd9OkLN2dOxd
-	 k44r+gd7PVStp3iv9X6BbiJeSw547+TlszsW6cDNH0rDum3m90SDCTwdZKEB51y2iOQ==
+	bh=kLLChNpNSlHGT++IvjCv6y515ZGHqKCTDGuySMASndw=;
+	b=2ntTGPjuWnvylG4YhvqbTCG8InV6SpCKCZSodV6HQkY1eaYg2usnoPn0Sdg1mZnScfFn
+	 Lin4DD1x/SUe4FA6EKIjGYws80GmlUM2V//Q6WuCpZrZp6WT64EiKM25FWyRi/ZtBLS9G
+	 6kBVnSFaDopWlxIzYOwZ9VSC/oJZi3dljqpIcUgKOq2z1aIWJbtt4D8Pr6pU9rXAFa3qO
+	 1zDfzN4kuJ7//Qq2nKPVfWIVKEXjGZqsknjR2gK97ZfZf9Z/retpR65nKZaaqwUun0vnd
+	 42zii1Wi3AnfTiJuEqxK5F6HL0mwE+u7VV5A4yBB8cUtbWzXrK/FoyCB7xqGd0x+hmQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eWAYhWG4;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=f7uLbl4u;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72760606BFA1;
-	Wed, 28 Oct 2026 19:05:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EC9F606BF8C;
+	Wed, 28 Oct 2026 19:05:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eWAYhWG4
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCEC11F01825;
-	Wed, 28 Oct 2026 19:05:22 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=f7uLbl4u
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F0421F01825;
+	Wed, 28 Oct 2026 19:05:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214323;
-	bh=dV235mNtpF1DtZ8sKKS77sPKO/CHA7joeHcY/AWQYVo=;
+	s=korg; t=1793214326;
+	bh=kLLChNpNSlHGT++IvjCv6y515ZGHqKCTDGuySMASndw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eWAYhWG40a2CfzijDXaubicmT0NDYSUvhIyuJAOK0qvyuGqBbeBsStVVsLsicHadw
-	 5sPzT9Uze983mpmSIw+dJWLTMs++mEu/9hBlRP6lRKPO4ih58wZYE8pJGjPlRcLu5/
-	 dpPzYX94Kat7LVwIe4VmWfnpSqEo+9OhJMQoh2vw=
+	b=f7uLbl4ucu9dsQlxblWXfoi7xdOGUqliBnnblPN6nG1T+5YGsCyMvLNpWGyxR9/mB
+	 cDbwxFUIOylvE8sj8P10vh1R+zaovKjX84WX4wZSxq1FmmwKpaRpcG8UO4Nmtc5IVO
+	 f44mvTJQMwIQX8bpksYvKzbrLcXd43l6oURc4xrs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Ingo Molnar <mingo@redhat.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Tomas Glozar <tglozar@redhat.com>,
-	Juri Lelli <jlelli@redhat.com>,
-	Clark Williams <williams@redhat.com>,
-	John Kacur <jkacur@redhat.com>,
-	Nam Cao <namcao@linutronix.de>,
-	Gabriele Monaco <gmonaco@redhat.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Yuezhang Mo <Yuezhang.Mo@sony.com>,
+	Andy Wu <Andy.Wu@sony.com>,
+	Aoyama Wataru <wataru.aoyama@sony.com>,
+	Sungjong Seo <sj1557.seo@samsung.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0819/1887] rv: Use strings in da monitors tracepoints
-Date: Wed, 28 Oct 2026 17:48:35 +0100
-Message-ID: <20261028170518.062934474@linuxfoundation.org>
+Subject: [PATCH 6.1 0820/1887] exfat: remove unnecessary arguments from exfat_find_dir_entry()
+Date: Wed, 28 Oct 2026 17:48:36 +0100
+Message-ID: <20261028170518.085562397@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -76,187 +71,121 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gabriele Monaco <gmonaco@redhat.com>
+From: Yuezhang Mo <Yuezhang.Mo@sony.com>
 
-[ Upstream commit 7f904ff6e58d398c4336f3c19c42b338324451f7 ]
+[ Upstream commit 72880cb5f157514d797d5f6ab3184bbde671a18a ]
 
-Using DA monitors tracepoints with KASAN enabled triggers the following
-warning:
+This commit removes argument 'num_entries' and 'type' from
+exfat_find_dir_entry().
 
- BUG: KASAN: global-out-of-bounds in do_trace_event_raw_event_event_da_monitor+0xd6/0x1a0
- Read of size 32 at addr ffffffffaada8980 by task ...
- Call Trace:
-  <TASK>
- [...]
-  do_trace_event_raw_event_event_da_monitor+0xd6/0x1a0
-  ? __pfx_do_trace_event_raw_event_event_da_monitor+0x10/0x10
-  ? trace_event_sncid+0x83/0x200
-  trace_event_sncid+0x163/0x200
- [...]
- The buggy address belongs to the variable:
-  automaton_snep+0x4e0/0x5e0
+Code refinement, no functional changes.
 
-This is caused by the tracepoints reading 32 bytes __array instead of
-__string from the automata definition. Such strings are literals and
-reading 32 bytes ends up in out of bound memory accesses (e.g. the next
-automaton's data in this case).
-The error is harmless as, while printing the string, we stop at the null
-terminator, but it should still be fixed.
-
-Use the __string facilities while defining the tracepoints to avoid
-reading out of bound memory.
-
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Tomas Glozar <tglozar@redhat.com>
-Cc: Juri Lelli <jlelli@redhat.com>
-Cc: Clark Williams <williams@redhat.com>
-Cc: John Kacur <jkacur@redhat.com>
-Link: https://lore.kernel.org/20250728135022.255578-4-gmonaco@redhat.com
-Fixes: 792575348ff7 ("rv/include: Add deterministic automata monitor definition via C macros")
-Reviewed-by: Nam Cao <namcao@linutronix.de>
-Signed-off-by: Gabriele Monaco <gmonaco@redhat.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Yuezhang Mo <Yuezhang.Mo@sony.com>
+Reviewed-by: Andy Wu <Andy.Wu@sony.com>
+Reviewed-by: Aoyama Wataru <wataru.aoyama@sony.com>
+Reviewed-by: Sungjong Seo <sj1557.seo@samsung.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Stable-dep-of: 99f9a97dce39 ("exfat: add cluster chain loop check for dir")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/trace/events/rv.h | 76 +++++++++++++++++++--------------------
- 1 file changed, 38 insertions(+), 38 deletions(-)
+ fs/exfat/dir.c      | 12 +++++++-----
+ fs/exfat/exfat_fs.h |  3 +--
+ fs/exfat/namei.c    | 10 ++--------
+ 3 files changed, 10 insertions(+), 15 deletions(-)
 
-diff --git a/include/trace/events/rv.h b/include/trace/events/rv.h
-index 56592da9301c0..da213b91da330 100644
---- a/include/trace/events/rv.h
-+++ b/include/trace/events/rv.h
-@@ -16,23 +16,23 @@ DECLARE_EVENT_CLASS(event_da_monitor,
- 	TP_ARGS(state, event, next_state, final_state),
+diff --git a/fs/exfat/dir.c b/fs/exfat/dir.c
+index dc12e463be1a0..dda10bca9ac98 100644
+--- a/fs/exfat/dir.c
++++ b/fs/exfat/dir.c
+@@ -931,7 +931,7 @@ enum {
+  */
+ int exfat_find_dir_entry(struct super_block *sb, struct exfat_inode_info *ei,
+ 		struct exfat_chain *p_dir, struct exfat_uni_name *p_uniname,
+-		int num_entries, unsigned int type, struct exfat_hint *hint_opt)
++		struct exfat_hint *hint_opt)
+ {
+ 	int i, rewind = 0, dentry = 0, end_eidx = 0, num_ext = 0, len;
+ 	int order, step, name_len = 0;
+@@ -942,6 +942,10 @@ int exfat_find_dir_entry(struct super_block *sb, struct exfat_inode_info *ei,
+ 	struct exfat_hint *hint_stat = &ei->hint_stat;
+ 	struct exfat_hint_femp candi_empty;
+ 	struct exfat_sb_info *sbi = EXFAT_SB(sb);
++	int num_entries = exfat_calc_num_entries(p_uniname);
++
++	if (num_entries < 0)
++		return num_entries;
  
- 	TP_STRUCT__entry(
--		__array(	char,	state,		MAX_DA_NAME_LEN	)
--		__array(	char,	event,		MAX_DA_NAME_LEN	)
--		__array(	char,	next_state,	MAX_DA_NAME_LEN	)
--		__field(	bool,	final_state			)
-+		__string(	state,		state		)
-+		__string(	event,		event		)
-+		__string(	next_state,	next_state	)
-+		__field(	bool,		final_state	)
- 	),
+ 	dentries_per_clu = sbi->dentries_per_clu;
  
- 	TP_fast_assign(
--		memcpy(__entry->state,		state,		MAX_DA_NAME_LEN);
--		memcpy(__entry->event,		event,		MAX_DA_NAME_LEN);
--		memcpy(__entry->next_state,	next_state,	MAX_DA_NAME_LEN);
--		__entry->final_state		= final_state;
-+		__assign_str(state, state);
-+		__assign_str(event, event);
-+		__assign_str(next_state, next_state);
-+		__entry->final_state = final_state;
- 	),
+@@ -1010,10 +1014,8 @@ int exfat_find_dir_entry(struct super_block *sb, struct exfat_inode_info *ei,
+ 				step = DIRENT_STEP_FILE;
+ 				hint_opt->clu = clu.dir;
+ 				hint_opt->eidx = i;
+-				if (type == TYPE_ALL || type == entry_type) {
+-					num_ext = ep->dentry.file.num_ext;
+-					step = DIRENT_STEP_STRM;
+-				}
++				num_ext = ep->dentry.file.num_ext;
++				step = DIRENT_STEP_STRM;
+ 				brelse(bh);
+ 				continue;
+ 			}
+diff --git a/fs/exfat/exfat_fs.h b/fs/exfat/exfat_fs.h
+index 5a1251207ab22..eae52c5b20b2b 100644
+--- a/fs/exfat/exfat_fs.h
++++ b/fs/exfat/exfat_fs.h
+@@ -62,7 +62,6 @@ enum {
+ #define TYPE_PADDING		0x0402
+ #define TYPE_ACLTAB		0x0403
+ #define TYPE_BENIGN_SEC		0x0800
+-#define TYPE_ALL		0x0FFF
  
- 	TP_printk("%s x %s -> %s %s",
--		__entry->state,
--		__entry->event,
--		__entry->next_state,
-+		__get_str(state),
-+		__get_str(event),
-+		__get_str(next_state),
- 		__entry->final_state ? "(final)" : "")
- );
+ #define MAX_CHARSET_SIZE	6 /* max size of multi-byte character */
+ #define MAX_NAME_LENGTH		255 /* max len of file name excluding NULL */
+@@ -467,7 +466,7 @@ void exfat_update_dir_chksum_with_entry_set(struct exfat_entry_set_cache *es);
+ int exfat_calc_num_entries(struct exfat_uni_name *p_uniname);
+ int exfat_find_dir_entry(struct super_block *sb, struct exfat_inode_info *ei,
+ 		struct exfat_chain *p_dir, struct exfat_uni_name *p_uniname,
+-		int num_entries, unsigned int type, struct exfat_hint *hint_opt);
++		struct exfat_hint *hint_opt);
+ int exfat_alloc_new_dir(struct inode *inode, struct exfat_chain *clu);
+ struct exfat_dentry *exfat_get_dentry(struct super_block *sb,
+ 		struct exfat_chain *p_dir, int entry, struct buffer_head **bh);
+diff --git a/fs/exfat/namei.c b/fs/exfat/namei.c
+index ae36930408e6b..7f84ea80c8a6c 100644
+--- a/fs/exfat/namei.c
++++ b/fs/exfat/namei.c
+@@ -600,7 +600,7 @@ static int exfat_create(struct user_namespace *mnt_userns, struct inode *dir,
+ static int exfat_find(struct inode *dir, struct qstr *qname,
+ 		struct exfat_dir_entry *info)
+ {
+-	int ret, dentry, num_entries, count;
++	int ret, dentry, count;
+ 	struct exfat_chain cdir;
+ 	struct exfat_uni_name uni_name;
+ 	struct super_block *sb = dir->i_sb;
+@@ -619,10 +619,6 @@ static int exfat_find(struct inode *dir, struct qstr *qname,
+ 	if (ret)
+ 		return ret;
  
-@@ -43,18 +43,18 @@ DECLARE_EVENT_CLASS(error_da_monitor,
- 	TP_ARGS(state, event),
+-	num_entries = exfat_calc_num_entries(&uni_name);
+-	if (num_entries < 0)
+-		return num_entries;
+-
+ 	/* check the validation of hint_stat and initialize it if required */
+ 	if (ei->version != (inode_peek_iversion_raw(dir) & 0xffffffff)) {
+ 		ei->hint_stat.clu = cdir.dir;
+@@ -632,9 +628,7 @@ static int exfat_find(struct inode *dir, struct qstr *qname,
+ 	}
  
- 	TP_STRUCT__entry(
--		__array(	char,	state,		MAX_DA_NAME_LEN	)
--		__array(	char,	event,		MAX_DA_NAME_LEN	)
-+		__string(	state,	state	)
-+		__string(	event,	event	)
- 	),
+ 	/* search the file name for directories */
+-	dentry = exfat_find_dir_entry(sb, ei, &cdir, &uni_name,
+-			num_entries, TYPE_ALL, &hint_opt);
+-
++	dentry = exfat_find_dir_entry(sb, ei, &cdir, &uni_name, &hint_opt);
+ 	if (dentry < 0)
+ 		return dentry; /* -error value */
  
- 	TP_fast_assign(
--		memcpy(__entry->state,		state,		MAX_DA_NAME_LEN);
--		memcpy(__entry->event,		event,		MAX_DA_NAME_LEN);
-+		__assign_str(state, state);
-+		__assign_str(event, event);
- 	),
- 
- 	TP_printk("event %s not expected in the state %s",
--		__entry->event,
--		__entry->state)
-+		__get_str(event),
-+		__get_str(state))
- );
- 
- #ifdef CONFIG_RV_MON_WIP
-@@ -76,26 +76,26 @@ DECLARE_EVENT_CLASS(event_da_monitor_id,
- 	TP_ARGS(id, state, event, next_state, final_state),
- 
- 	TP_STRUCT__entry(
--		__field(	int,	id				)
--		__array(	char,	state,		MAX_DA_NAME_LEN	)
--		__array(	char,	event,		MAX_DA_NAME_LEN	)
--		__array(	char,	next_state,	MAX_DA_NAME_LEN	)
--		__field(	bool,	final_state			)
-+		__field(	int,		id		)
-+		__string(	state,		state		)
-+		__string(	event,		event		)
-+		__string(	next_state,	next_state	)
-+		__field(	bool,		final_state	)
- 	),
- 
- 	TP_fast_assign(
--		memcpy(__entry->state,		state,		MAX_DA_NAME_LEN);
--		memcpy(__entry->event,		event,		MAX_DA_NAME_LEN);
--		memcpy(__entry->next_state,	next_state,	MAX_DA_NAME_LEN);
--		__entry->id			= id;
--		__entry->final_state		= final_state;
-+		__assign_str(state, state);
-+		__assign_str(event, event);
-+		__assign_str(next_state, next_state);
-+		__entry->id		= id;
-+		__entry->final_state	= final_state;
- 	),
- 
- 	TP_printk("%d: %s x %s -> %s %s",
- 		__entry->id,
--		__entry->state,
--		__entry->event,
--		__entry->next_state,
-+		__get_str(state),
-+		__get_str(event),
-+		__get_str(next_state),
- 		__entry->final_state ? "(final)" : "")
- );
- 
-@@ -106,21 +106,21 @@ DECLARE_EVENT_CLASS(error_da_monitor_id,
- 	TP_ARGS(id, state, event),
- 
- 	TP_STRUCT__entry(
--		__field(	int,	id				)
--		__array(	char,	state,		MAX_DA_NAME_LEN	)
--		__array(	char,	event,		MAX_DA_NAME_LEN	)
-+		__field(	int,	id	)
-+		__string(	state,	state	)
-+		__string(	event,	event	)
- 	),
- 
- 	TP_fast_assign(
--		memcpy(__entry->state,		state,		MAX_DA_NAME_LEN);
--		memcpy(__entry->event,		event,		MAX_DA_NAME_LEN);
--		__entry->id			= id;
-+		__assign_str(state, state);
-+		__assign_str(event, event);
-+		__entry->id	= id;
- 	),
- 
- 	TP_printk("%d: event %s not expected in the state %s",
- 		__entry->id,
--		__entry->event,
--		__entry->state)
-+		__get_str(event),
-+		__get_str(state))
- );
- 
- #ifdef CONFIG_RV_MON_WWNR
 -- 
 2.53.0
 
