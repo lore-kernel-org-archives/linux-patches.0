@@ -1,56 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213815;
-	b=3L2oMJzX4YBuLm3W6yiYJzvFSEK9HAoopd9AWgkG7Y6WAqerQfLnrvcuPQnVUryrRxwI
-	 2ZqScTeFu5bqpXbTOk9phtVKZRheBzzmNuhtlQ3yM4CVVZR/9Q3kthyYh93CAjxUBRVQf
-	 wgj40y0x00VLvO7klrAGJwElxT/3BXU6sjxCCVWuJp0X95hBxXI0St8GDXrKOExoPTbTT
-	 uIrc2Folhr14rK151q53ZqHfirCwTsyqGADWqNb0EFjCD30+j2KdiWB3iTc+tVvQH7X9a
-	 vCiGRXyFpEjJeMcFrpEeP/3Hl16auc4spk03ryShXIb41/uWcNF6A/GQGeklhihRSSw==
+	t=1793213818;
+	b=VY+UQtVja0oWuP40U13wN9nnP5BsAYadIT+b1cBP6k54z6RjA2JbqvueJFTbPlXNddAB
+	 NnxHG9Zoxe6XpWNFZP70WcUOIroGOt10GEX/mSme+M6L3cu825ldOOVGSwQ9I4EnwVR5E
+	 qmiz7rvUhAfEb/8BM8wqKrA69/c/sE7WWUwad/Jir9mhxypOuhhBWm9dSdlAy1dMHZVm9
+	 ioaUkJfUBv6r/b99ClO4OYq2keRQmlD7j2lTi29oimmApGDpZycajA75qCkBWotI2uY7q
+	 O5E9AwCFujHqkenVNF7l9/PrYJ3S0x8xQDFDXNuI+OP1QG6msg4frpxUozS/Ae3Gpfg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213815;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213818;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=fIspIweQIzSNnnP4+qt+ZPC4XN2qbPUfV6H5VsLpMrQ=;
-	b=spwwTWwmBuS1TOBL6YQia5EweDB7SBRussvY8GlmeIadviwf0/Jp5uyFksvK+Ph1py3u
-	 nPTV5lVcxNG8hNxQKB1DsdN4uAVwKTDfSmhIUsqPonDswnBvPdRq+R94cZZ1g4/xDYAUJ
-	 OYlbZP2T7uuAZVIPfvfcipdzbicXr+ddDkk6nvv213Z2LhPnWGrmeXzKbbXowYeHtjTzr
-	 OvieeUjudQNZ0LQHpXrk5xAHyhLZh9FMssMpVKbSiA/OPkDl5gz1JRpwQoIkmsMRK/222
-	 egm4EliQa0BYHeOJLamoeflnCmxLKzDox6szS1FTKj4DPpnpbFtx6vHc2Rpi0r2VVbA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=6k3PxehrfSu3v+beRbDRLql320ui3YUJ5Q4Xw8k1wnE=;
+	b=FO/GcHQ+Jjc5UNkwKsU4/cbi4CCcxXhaA5wcCHjxYVDLruKIzpvLhlVBb50gL2Zyt1mq
+	 ICK9C/w6VewTJEXh7M7wlQ7U6Xxx8C8GZRRDmNjeUG1B3BXf3Rn8MVIBT7K/x2X9wdiCX
+	 3aMJvRZtAIwXW1snqNLEmv7rDndDd7xn8w2flMLxF4Fo1DkuzBrVDBavLO9S97CCMLpuj
+	 3e5udOmHNkRlmsrt0D7XKMHkp3HAgdb3ObLdR19h1vH9fZFKbe8Fa7FD2SVfYBDlqbNsR
+	 s/Wx8y+F2m30e/vhnHKAu1KiW9Bfl4XB1mNtnSMGtFVty3S5tydt38jiWCVz+gGXX1Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DH0UqZwK;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DmyPhFA6;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 972A5606A31C;
-	Wed, 28 Oct 2026 18:56:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71C91606A31D;
+	Wed, 28 Oct 2026 18:56:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DH0UqZwK
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEE291F01825;
-	Wed, 28 Oct 2026 18:56:54 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DmyPhFA6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C222A1F01825;
+	Wed, 28 Oct 2026 18:56:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213815;
-	bh=fIspIweQIzSNnnP4+qt+ZPC4XN2qbPUfV6H5VsLpMrQ=;
+	s=korg; t=1793213818;
+	bh=6k3PxehrfSu3v+beRbDRLql320ui3YUJ5Q4Xw8k1wnE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DH0UqZwKDkiTyMHBwPVLlaxlaokD5U9p/RGivOBp0MxQ36rbRtYImuSxA177NIyAB
-	 q5wPimx4hvhLhB4hG9O2F8srWz6ZTwBYzOPly6Zwffwv6JeqYbmjrxwvmET/rEiU+P
-	 dzrnDEP7b5+SOZ5LquBX1OynP2WDbrHu+jn3n8Sg=
+	b=DmyPhFA6zWt/VJuJ4Wk7DA36A/tzAutVpOVsjzgBNcIAjVlnQesp/OFV0XjM57x6S
+	 W1de5XLvsrZ3xZNT3bDB7VTugdjQxbz4Q/V4aaChyEJ2K60PuSmYXAq6e7YQfJ4ieT
+	 mA6Cyuy5EHvvDp1+ct5yQwN7X/F3yjTnfwIYZXhY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Niklas Cassel <cassel@kernel.org>,
+	Sibi Sankar <quic_sibis@quicinc.com>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0640/1887] PCI: endpoint: pci-epf-test: Make use of cached epc_features in pci_epf_test_core_init()
-Date: Wed, 28 Oct 2026 17:45:36 +0100
-Message-ID: <20261028170513.974823066@linuxfoundation.org>
+Subject: [PATCH 6.1 0641/1887] soc: qcom: icc-bwmon: Fix refcount imbalance seen during bwmon_remove
+Date: Wed, 28 Oct 2026 17:45:37 +0100
+Message-ID: <20261028170513.998186452@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -66,90 +63,74 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+From: Sibi Sankar <quic_sibis@quicinc.com>
 
-[ Upstream commit 5a5095a8bd1bd349cce1c879e5e44407a34dda8a ]
+[ Upstream commit 24086640ab39396eb1a92d1cb1cd2f31b2677c52 ]
 
-Instead of getting the epc_features from pci_epc_get_features() API, use
-the cached pci_epf_test::epc_features value to avoid the NULL check. Since
-the NULL check is already performed in pci_epf_test_bind(), having one more
-check in pci_epf_test_core_init() is redundant and it is not possible to
-hit the NULL pointer dereference.
+The following warning is seen during bwmon_remove due to refcount
+imbalance, fix this by releasing the OPPs after use.
 
-Also with commit a01e7214bef9 ("PCI: endpoint: Remove "core_init_notifier"
-flag"), 'epc_features' got dereferenced without the NULL check, leading to
-the following false positive Smatch warning:
+Logs:
+WARNING: at drivers/opp/core.c:1640 _opp_table_kref_release+0x150/0x158
+Hardware name: Qualcomm Technologies, Inc. X1E80100 CRD (DT)
+...
+Call trace:
+_opp_table_kref_release+0x150/0x158
+dev_pm_opp_remove_table+0x100/0x1b4
+devm_pm_opp_of_table_release+0x10/0x1c
+devm_action_release+0x14/0x20
+devres_release_all+0xa4/0x104
+device_unbind_cleanup+0x18/0x60
+device_release_driver_internal+0x1ec/0x228
+driver_detach+0x50/0x98
+bus_remove_driver+0x6c/0xbc
+driver_unregister+0x30/0x60
+platform_driver_unregister+0x14/0x20
+bwmon_driver_exit+0x18/0x524 [icc_bwmon]
+__arm64_sys_delete_module+0x184/0x264
+invoke_syscall+0x48/0x118
+el0_svc_common.constprop.0+0xc8/0xe8
+do_el0_svc+0x20/0x2c
+el0_svc+0x34/0xdc
+el0t_64_sync_handler+0x13c/0x158
+el0t_64_sync+0x190/0x194
+--[ end trace 0000000000000000 ]---
 
-  drivers/pci/endpoint/functions/pci-epf-test.c:784 pci_epf_test_core_init() error: we previously assumed 'epc_features' could be null (see line 747)
-
-Thus, remove the redundant NULL check and also use the epc_features::
-{msix_capable/msi_capable} flags directly to avoid local variables.
-
-[kwilczynski: commit log]
-Fixes: 5e50ee27d4a5 ("PCI: pci-epf-test: Add support to defer core initialization")
-Closes: https://lore.kernel.org/linux-pci/024b5826-7180-4076-ae08-57d2584cca3f@moroto.mountain
-Link: https://lore.kernel.org/linux-pci/20240418-pci-epf-test-fix-v2-1-eacd54831444@linaro.org
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Reviewed-by: Niklas Cassel <cassel@kernel.org>
+Fixes: 0276f69f13e2 ("soc: qcom: icc-bwmon: Set default thresholds dynamically")
+Fixes: b9c2ae6cac40 ("soc: qcom: icc-bwmon: Add bandwidth monitoring driver")
+Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20240613164506.982068-1-quic_sibis@quicinc.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/endpoint/functions/pci-epf-test.c | 14 +++-----------
- 1 file changed, 3 insertions(+), 11 deletions(-)
+ drivers/soc/qcom/icc-bwmon.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/pci/endpoint/functions/pci-epf-test.c b/drivers/pci/endpoint/functions/pci-epf-test.c
-index 3fe2187cdd0ba..fb47ce721e095 100644
---- a/drivers/pci/endpoint/functions/pci-epf-test.c
-+++ b/drivers/pci/endpoint/functions/pci-epf-test.c
-@@ -782,19 +782,11 @@ static int pci_epf_test_core_init(struct pci_epf *epf)
- {
- 	struct pci_epf_test *epf_test = epf_get_drvdata(epf);
- 	struct pci_epf_header *header = epf->header;
--	const struct pci_epc_features *epc_features;
-+	const struct pci_epc_features *epc_features = epf_test->epc_features;
- 	struct pci_epc *epc = epf->epc;
- 	struct device *dev = &epf->dev;
--	bool msix_capable = false;
--	bool msi_capable = true;
- 	int ret;
+diff --git a/drivers/soc/qcom/icc-bwmon.c b/drivers/soc/qcom/icc-bwmon.c
+index 7829549993c92..2e0a45cd6921f 100644
+--- a/drivers/soc/qcom/icc-bwmon.c
++++ b/drivers/soc/qcom/icc-bwmon.c
+@@ -604,11 +604,13 @@ static int bwmon_probe(struct platform_device *pdev)
+ 	opp = dev_pm_opp_find_bw_floor(dev, &bwmon->max_bw_kbps, 0);
+ 	if (IS_ERR(opp))
+ 		return dev_err_probe(dev, PTR_ERR(opp), "failed to find max peak bandwidth\n");
++	dev_pm_opp_put(opp);
  
--	epc_features = pci_epc_get_features(epc, epf->func_no, epf->vfunc_no);
--	if (epc_features) {
--		msix_capable = epc_features->msix_capable;
--		msi_capable = epc_features->msi_capable;
--	}
--
- 	if (epf->vfunc_no <= 1) {
- 		ret = pci_epc_write_header(epc, epf->func_no, epf->vfunc_no, header);
- 		if (ret) {
-@@ -807,7 +799,7 @@ static int pci_epf_test_core_init(struct pci_epf *epf)
- 	if (ret)
- 		return ret;
+ 	bwmon->min_bw_kbps = 0;
+ 	opp = dev_pm_opp_find_bw_ceil(dev, &bwmon->min_bw_kbps, 0);
+ 	if (IS_ERR(opp))
+ 		return dev_err_probe(dev, PTR_ERR(opp), "failed to find min peak bandwidth\n");
++	dev_pm_opp_put(opp);
  
--	if (msi_capable) {
-+	if (epc_features->msi_capable) {
- 		ret = pci_epc_set_msi(epc, epf->func_no, epf->vfunc_no,
- 				      epf->msi_interrupts);
- 		if (ret) {
-@@ -816,7 +808,7 @@ static int pci_epf_test_core_init(struct pci_epf *epf)
- 		}
- 	}
+ 	bwmon->dev = dev;
  
--	if (msix_capable) {
-+	if (epc_features->msix_capable) {
- 		ret = pci_epc_set_msix(epc, epf->func_no, epf->vfunc_no,
- 				       epf->msix_interrupts,
- 				       epf_test->test_reg_bar,
 -- 
 2.53.0
 
