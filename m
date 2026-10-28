@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793208323;
-	b=iP4mvgyenTfyl2oLsjoT6FCxpSUK4mpeitPkarpA+d3s2+BBCUAtf9jT20ZiL+7RZk9h
-	 LHQlBIvMUokVFv4rhVeJ+nRUTQOOdZWJpWi3FYFy3Z5suNd9kXpLhCYTzqAnQUP3qzzmi
-	 vOrI3piUYa7gvSEyphZkI/aEMyxqvH7YpFZBA5XIsr/hvlNNi7LVNyBpeG4qeVPN2BibQ
-	 i298KLC2Kj5CgdYX+AsfaKL5OFdOSb/Q/DPCFvM2XUbEHaWgkr894+jxgL2BuhSkS0VMY
-	 nTtBVM6FWXK5ERmLqdHX8T4BRemTqp7UkBlqCwDVV8Uzu3nbo120ndwk6vxPTkTbTzw==
+	t=1793208326;
+	b=gg9wsTyGbePjqSB5huVyQOUJbgGia5PlIU52RrN43vn8g6hrJiRHlIIecuA1tXC7A3vU
+	 wdt0tQmV8aPYogB8WYVXXv2s74XlSEcB/IE/YTopJz2mYxVev+dzOGH9BAVFlttsI5Hzb
+	 DB+YU4jcjecpNBfg13ujg7yInBoDxKv19UUFCfRLiBYMRR2XP3km3ywm85gqx0pjo3oe+
+	 1ZwR4Lft0C7Ygsfh99hgRyuE2/MrabhAIrwCOY/xpFqvuM2ke5UwtzTIKRL+oy28CAgL3
+	 M7newi6h/Z7URhGujXmLiWTOoYtJbVnai7W4jzMMqqNobBMHxXz6vBXyS0JKYiINTIA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793208323;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793208326;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=iBTBtxr3flPf/K9RtkHTHH7hiPR0cyEwp1tFHxEPEbQ=;
-	b=DV09/+5Fnm4r/JK/Qd60SVg9seQsPm2ce1MgLx40T0TGrbob7czFCUw8V9smr1dijHUT
-	 MGINDyXAlMIcy87AUtqQh1n7Cd/xibL5/MJvEeo0Z6pHw9yE6M0XEoZdl04FQqwyoqsWn
-	 SxyTomDipPuHLXzbI7NNq5YLWjfJhwLfxd5AnpxdCVR6UeIg4XVylucwyQHwSXoZ1Gjit
-	 aVNoXJRVm2Nh2ucXtND7/GGVtx4AZkM1MZAYsRKV0fHHzCSvrHVW5IW/VoUhsoPs/Hd6P
-	 WFnvC1udcEUVkp1FQCWwIp9XLaUt21fkn2HL4gwi8pmA1riBLcU7eeQU1nZ8WQ/KvwQ==
+	bh=gHJhOjXyWmdX7N1PI5P2DTbWQTYSMzazzmsZeexRjbQ=;
+	b=KYDvMisJ3oe6wMV6IwITiDtS3CTsux0DfsNVQRTCtOW85igEP8LW1gTfEzoU9qKpLuxE
+	 zSmDZXxMDy8cI9xAIsSRbR9qVANBeJ3XdLpMQY17W+11Lt5EfvWA2c+j5e/Dugl/dWmS8
+	 7wJ8pYtu+meDjrgPDq7I57JAMI4+X7hoEA1riPJX9JqQo/mSgd7mDGtRlRKuEwlOKrJUa
+	 PAzobxKOkIIjQFHREnas4to1Joi487O6X5frCYhJacIzgXhd99FW3vzaQbVBH6sGoAPvw
+	 82iG2bImNGguORiwPnhqusPQ1iC1lpEHtX9chWJw0PGbhm0VFIatRrzNT6/F526T23A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uUHpiBOL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Iz9C5JVv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35652606A31A;
-	Wed, 28 Oct 2026 17:25:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13ADB606A31A;
+	Wed, 28 Oct 2026 17:25:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uUHpiBOL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88A631F01825;
-	Wed, 28 Oct 2026 17:25:22 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Iz9C5JVv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69E4D1F01825;
+	Wed, 28 Oct 2026 17:25:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793208323;
-	bh=iBTBtxr3flPf/K9RtkHTHH7hiPR0cyEwp1tFHxEPEbQ=;
+	s=korg; t=1793208325;
+	bh=gHJhOjXyWmdX7N1PI5P2DTbWQTYSMzazzmsZeexRjbQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uUHpiBOLgqg5QHT9HOhACI72M8nyHeNuCe8DPj65A6bv30dH3erR6XQ/8dzYwnDhL
-	 7mhWbVttfyijChYdJXeFtS+mdYAYxLCKARjF+c7wJ5GYr/fdzsWQkHmxvoWiLJOWnO
-	 V8N7Mu92mO5y6sNPdDrE8tEf2cP4+wBL9yzsCaB4=
+	b=Iz9C5JVvqyIz5RPfYXQxAuPruCLJFpdpppFNZtRACQnxWlb8CYLHqCLdTHPxzsGYL
+	 1eNxzu2yBVgaMU7qtBb8Gx8cJ2OoVxzBaM4CZH3TuXxRWNx1l4g+rDJdKpLwDTLPNi
+	 bw9c3rlq9tyU9d3FTUGLTxnmQgboo8c1ClbE/a04=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuan-Wei Chiu <visitorckw@gmail.com>,
-	James Clark <james.clark@linaro.org>,
-	Suzuki K Poulose <suzuki.poulose@arm.com>,
+	Sudip Mukherjee <sudipm.mukherjee@gmail.com>,
+	Teddy Wang <teddy.wang@siliconmotion.com>,
+	linux-fbdev@vger.kernel.org,
+	linux-staging@lists.linux.dev,
+	Lee Jones <lee.jones@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 052/516] coresight: etm3x: Fix cntr_val_show() to match cntr_val_store() behavior
-Date: Wed, 28 Oct 2026 17:53:24 +0100
-Message-ID: <20261028170004.763651061@linuxfoundation.org>
+Subject: [PATCH 5.10 079/516] staging: sm750fb: sm750_accel: Provide description for accel and fix function naming
+Date: Wed, 28 Oct 2026 17:53:51 +0100
+Message-ID: <20261028170005.392470895@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -69,70 +71,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuan-Wei Chiu <visitorckw@gmail.com>
+From: Lee Jones <lee.jones@linaro.org>
 
-[ Upstream commit 41fb4e925528aefa4b7a5f76c7f81db99c0d0f38 ]
+[ Upstream commit d12dd1e0e3b96b1a2c9ffdb0fa9c115aeb82b569 ]
 
-The cntr_val_show() function was intended to print the values of all
-counters using a loop. However, due to a buffer overwrite issue with
-sprintf(), it effectively only displayed the value of the last counter.
+Fixes the following W=1 kernel build warning(s):
 
-The companion function, cntr_val_store(), allows users to modify a
-specific counter selected by 'cntr_idx'. To maintain consistency
-between read and write operations and to align with the ETM4x driver
-behavior, modify cntr_val_show() to report only the value of the
-currently selected counter.
+ drivers/staging/sm750fb/sm750_accel.c:155: warning: Function parameter or member 'accel' not described in 'sm750_hw_copyarea'
+ drivers/staging/sm750fb/sm750_accel.c:155: warning: expecting prototype for sm750_hm_copyarea(). Prototype was for sm750_hw_copyarea() instead
+ drivers/staging/sm750fb/sm750_accel.c:321: warning: Function parameter or member 'accel' not described in 'sm750_hw_imageblit'
 
-This change removes the loop and the "counter %d:" prefix, printing
-only the hexadecimal value. It also adopts sysfs_emit() for standard
-sysfs output formatting.
-
-Fixes: a939fc5a71ad ("coresight-etm: add CoreSight ETM/PTM driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
-Reviewed-by: James Clark <james.clark@linaro.org>
-Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-Link: https://lore.kernel.org/r/20251202082613.3265761-1-visitorckw@gmail.com
+Cc: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
+Cc: Teddy Wang <teddy.wang@siliconmotion.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: linux-fbdev@vger.kernel.org
+Cc: linux-staging@lists.linux.dev
+Signed-off-by: Lee Jones <lee.jones@linaro.org>
+Link: https://lore.kernel.org/r/20210414181129.1628598-26-lee.jones@linaro.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: cc7cd2a92281 ("staging: sm750fb: fix mono image source stride mismatch in lynxfb_ops_imageblit()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../hwtracing/coresight/coresight-etm3x-sysfs.c   | 15 ++++-----------
- 1 file changed, 4 insertions(+), 11 deletions(-)
+ drivers/staging/sm750fb/sm750_accel.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/hwtracing/coresight/coresight-etm3x-sysfs.c b/drivers/hwtracing/coresight/coresight-etm3x-sysfs.c
-index e8c7649f123e7..30fae661090fe 100644
---- a/drivers/hwtracing/coresight/coresight-etm3x-sysfs.c
-+++ b/drivers/hwtracing/coresight/coresight-etm3x-sysfs.c
-@@ -716,26 +716,19 @@ static DEVICE_ATTR_RW(cntr_rld_event);
- static ssize_t cntr_val_show(struct device *dev,
- 			     struct device_attribute *attr, char *buf)
- {
--	int i, ret = 0;
- 	u32 val;
- 	struct etm_drvdata *drvdata = dev_get_drvdata(dev->parent);
- 	struct etm_config *config = &drvdata->config;
- 
- 	if (!local_read(&drvdata->mode)) {
- 		spin_lock(&drvdata->spinlock);
--		for (i = 0; i < drvdata->nr_cntr; i++)
--			ret += sprintf(buf, "counter %d: %x\n",
--				       i, config->cntr_val[i]);
-+		val = config->cntr_val[config->cntr_idx];
- 		spin_unlock(&drvdata->spinlock);
--		return ret;
--	}
--
--	for (i = 0; i < drvdata->nr_cntr; i++) {
--		val = etm_readl(drvdata, ETMCNTVRn(i));
--		ret += sprintf(buf, "counter %d: %x\n", i, val);
-+	} else {
-+		val = etm_readl(drvdata, ETMCNTVRn(config->cntr_idx));
- 	}
- 
--	return ret;
-+	return sysfs_emit(buf, "%#x\n", val);
+diff --git a/drivers/staging/sm750fb/sm750_accel.c b/drivers/staging/sm750fb/sm750_accel.c
+index 8faa601c700b2..24b9077a634a6 100644
+--- a/drivers/staging/sm750fb/sm750_accel.c
++++ b/drivers/staging/sm750fb/sm750_accel.c
+@@ -131,7 +131,8 @@ int sm750_hw_fillrect(struct lynx_accel *accel,
  }
  
- static ssize_t cntr_val_store(struct device *dev,
+ /**
+- * sm750_hm_copyarea
++ * sm750_hw_copyarea
++ * @accel: Acceleration device data
+  * @sBase: Address of source: offset in frame buffer
+  * @sPitch: Pitch value of source surface in BYTE
+  * @sx: Starting x coordinate of source surface
+@@ -298,6 +299,7 @@ static unsigned int deGetTransparency(struct lynx_accel *accel)
+ 
+ /**
+  * sm750_hw_imageblit
++ * @accel: Acceleration device data
+  * @pSrcbuf: pointer to start of source buffer in system memory
+  * @srcDelta: Pitch value (in bytes) of the source buffer, +ive means top down
+  *	      and -ive mean button up
 -- 
 2.53.0
 
