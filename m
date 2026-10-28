@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216280;
-	b=S34pWNA+ScjbMvVIneYrqFNJSVsm/pYrkvEBGyFRsQSmFwfxbfYjuhwjyr+mLgbIgj+w
-	 sd5kJrgiV/O9WmE3hNI87MG387XiQEn8rqU42SAqvfeqpz0GZT4nVX3fObDBbmv6lyFJP
-	 wgh/eOFQRJl38xh/On1YV0zL2nqMhA7BHMRoOhQr3Vcu0z0XyIYlTsTfU7nY24jz5CRI8
-	 HqZhcHixqrGtZmZJDz6feflXZQKFJyunOlhGDFoSiGemmcACl73w2ehwjufZ31mdoa1+s
-	 Ec92hP8BlIFoDk28BSjyb0CQtXQNHvvmiLHSOtKSxmbRRmKSl8xBedv0bpCRr/numdQ==
+	t=1793216283;
+	b=o7r5TXAguNKbx8mfEwUMSzNDNbsnyYQ8xAcjWD6QOeQT9VTjTQh/xRYN59sjjkevbkzR
+	 1JGR9wmpNA2fskAwtkEPGVw4FJ//NhK6DdyqXYJ3WPL2mKsXPNKGdJu0HApatEFpbBAXg
+	 Fgyv8k02Hi3AbVRUAABdamPhHMOvBaDuCwXzw3eqUCQNYA9gf6hoZHoliHjMF8qml8qVM
+	 dNaBY9AjyemvCmbrWMy3/4gcvExp5NykMJgbsQA38s8MIF9D8yy9C5pFHSYPekUxkLn7H
+	 Gkdyi758KsOSWxS/TWezhO4EQAk7p6Ur6CLiQG/uKhGDXg4l0eZiVXkwGrAt3epRFgQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216280;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216283;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=79me9rlSnnEjFjgEQ8GtdXAPEtg6rSZcDw2NFMk/YiQ=;
-	b=L6xb73vcCrJrepOGsgp1UjQRQqpW93b68heMg5x8QJVeGEh1rCysxrXhnS1HHTEwTPTJ
-	 iyBzoiRSq+aw2KjRFz3b1koWWoSrOw6KhnxX6C5GspGBijmwy50yewiabh3DiZ0szp+ks
-	 S5pWDio8ATxaW1eR/Wf8yzw6ofrDUsJoZ3ZkQdxC93uc1TYNNs0L0Lakhz2lxZYWxjFXD
-	 qAdaQCyPCb0t7wEVmPMKLOIxkH/dNeJHFmFYcpdQZIRqShKl8IQ+EXrrGUcGytFcYe+GH
-	 DBDBQGNf/Oa66IheLMLGeos07hPPl4I4NBgcK9ZJ38dVj58hbxM7r56+YYXEreq7GNg==
+	bh=XPWN9KptCdgTar7b/i/6R8wvff6YcIRr0hi6YKF1CVU=;
+	b=1M38ZEVObyxf0uAb4EHm4ARcYV0ZQhgwJ2bpcLldeZRGgqI2GIWYC1ang/6dFByyoHSP
+	 HgVz+HWSfXU1JeO6ruF2RSIa9+qtUQlKCkJQkuwRVrT9NA+yv+uLvjoXUYsDYQbahbxwf
+	 mSYPqlMT6Nt2TWdfAKufhPfIzTwxov7/VHaCH8XvsNE0qosGeqh1tsfVGw5KpGEZdmTeq
+	 iGdeUvS40qFSQwspewWdwPxwLJdyumqJUVlBCFrAqNUXL1y7Z+WPi5YCQM/T/Hrp8LMiu
+	 CrUyqW1wRqC1S1QOBoFy0MZLVZ25bHMQd29+s92oqB9QFARfbwMC+XYy33wYXPBLWKg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WACAQuey;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2HEVkWgy;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B050B606A31C;
-	Wed, 28 Oct 2026 19:37:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C92AA606A31A;
+	Wed, 28 Oct 2026 19:38:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WACAQuey
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EC331F01825;
-	Wed, 28 Oct 2026 19:37:58 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2HEVkWgy
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D66A01F01825;
+	Wed, 28 Oct 2026 19:38:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216279;
-	bh=79me9rlSnnEjFjgEQ8GtdXAPEtg6rSZcDw2NFMk/YiQ=;
+	s=korg; t=1793216282;
+	bh=XPWN9KptCdgTar7b/i/6R8wvff6YcIRr0hi6YKF1CVU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WACAQueyVg4mCfTQO16CbFb/7U59CZw/O1bXfXyDHNzfASN76ojgqxrbfv5vxbWmn
-	 gecrtykDQ8NoxyggF9xWjvnr2rbR+n5HKcxRWTMHHq+2/IkBjqozPXV5Tq9vgjDnqC
-	 Ca3grIHgnm6ZDdevAbWb68Fz/7vwMTzEShcffmAc=
+	b=2HEVkWgyaU86AnmY/KLfp6rwxdnYvDP4ZYV6WEJhv0UaN3dosPm82SN9ZwgoFdBbu
+	 cdzSxT0qFnkuHzk+DxB27h8m68346TzVOs7F/pHQ95vsxw4i9mMsoyd13fPuah5swu
+	 C+3wDlRevDch0J0qU4mhSPG6rvVuRJxQDfEuKXcI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Petr Tesarik <petrtesarik@huaweicloud.com>,
 	Christoph Hellwig <hch@lst.de>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Greg Ungerer <gerg@linux-m68k.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1501/1887] dma-direct: cleanup parameters to dma_direct_optimal_gfp_mask
-Date: Wed, 28 Oct 2026 17:59:57 +0100
-Message-ID: <20261028170533.616099470@linuxfoundation.org>
+Subject: [PATCH 6.1 1502/1887] dma-direct: simplify the use atomic pool logic in dma_direct_alloc
+Date: Wed, 28 Oct 2026 17:59:58 +0100
+Message-ID: <20261028170533.639823286@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,75 +69,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Petr Tesarik <petrtesarik@huaweicloud.com>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit 25a4ce564921db0973b74c04e0ea23bd2ee12a3a ]
+[ Upstream commit b1da46d70e5427a9ba5eae28bcca29a20e68a442 ]
 
-Since both callers of dma_direct_optimal_gfp_mask() pass
-dev->coherent_dma_mask as the second argument, it is better to
-remove that parameter altogether.
+The logic in dma_direct_alloc when to use the atomic pool vs remapping
+grew a bit unreadable.  Consolidate it into a single check, and clean
+up the set_uncached vs remap logic a bit as well.
 
-Not only is reducing number of parameters good for readability, but
-the new function signature is also more logical: The optimal flags
-depend only on data contained in struct device.
-
-While touching this code, let's also rename phys_mask to phys_limit
-in dma_direct_alloc_from_pool(), because it is indeed a limit.
-
-Signed-off-by: Petr Tesarik <petrtesarik@huaweicloud.com>
 Signed-off-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Robin Murphy <robin.murphy@arm.com>
+Reviewed-by: Greg Ungerer <gerg@linux-m68k.org>
+Tested-by: Greg Ungerer <gerg@linux-m68k.org>
 Stable-dep-of: 94a04ad732c9 ("dma-direct: return struct page from dma_direct_alloc_from_pool()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/dma/direct.c | 15 +++++++--------
- 1 file changed, 7 insertions(+), 8 deletions(-)
+ kernel/dma/direct.c | 25 ++++++++++---------------
+ 1 file changed, 10 insertions(+), 15 deletions(-)
 
 diff --git a/kernel/dma/direct.c b/kernel/dma/direct.c
-index d4215739efc71..d6871a3fe5f6a 100644
+index d6871a3fe5f6a..621a711224574 100644
 --- a/kernel/dma/direct.c
 +++ b/kernel/dma/direct.c
-@@ -44,10 +44,11 @@ u64 dma_direct_get_required_mask(struct device *dev)
- 	return (1ULL << (fls64(max_dma) - 1)) * 2 - 1;
- }
+@@ -240,27 +240,22 @@ void *dma_direct_alloc(struct device *dev, size_t size,
+ 					dma_handle);
  
--static gfp_t dma_direct_optimal_gfp_mask(struct device *dev, u64 dma_mask,
--				  u64 *phys_limit)
-+static gfp_t dma_direct_optimal_gfp_mask(struct device *dev, u64 *phys_limit)
- {
--	u64 dma_limit = min_not_zero(dma_mask, dev->bus_dma_limit);
-+	u64 dma_limit = min_not_zero(
-+		dev->coherent_dma_mask,
-+		dev->bus_dma_limit);
+ 		/*
+-		 * Otherwise remap if the architecture is asking for it.  But
+-		 * given that remapping memory is a blocking operation we'll
+-		 * instead have to dip into the atomic pools.
++		 * Otherwise we require the architecture to either be able to
++		 * mark arbitrary parts of the kernel direct mapping uncached,
++		 * or remapped it uncached.
+ 		 */
++		set_uncached = IS_ENABLED(CONFIG_ARCH_HAS_DMA_SET_UNCACHED);
+ 		remap = IS_ENABLED(CONFIG_DMA_DIRECT_REMAP);
+-		if (remap) {
+-			if (dma_direct_use_pool(dev, gfp))
+-				return dma_direct_alloc_from_pool(dev, size,
+-						dma_handle, gfp);
+-		} else {
+-			if (!IS_ENABLED(CONFIG_ARCH_HAS_DMA_SET_UNCACHED))
+-				return NULL;
+-			set_uncached = true;
+-		}
++		if (!set_uncached && !remap)
++			return NULL;
+ 	}
  
  	/*
- 	 * Optimistically try the zone that the physical address mask falls
-@@ -126,8 +127,7 @@ static struct page *__dma_direct_alloc_pages(struct device *dev, size_t size,
- 	if (is_swiotlb_for_alloc(dev))
- 		return dma_direct_alloc_swiotlb(dev, size);
+-	 * Decrypting memory may block, so allocate the memory from the atomic
+-	 * pools if we can't block.
++	 * Remapping or decrypting memory may block, allocate the memory from
++	 * the atomic pools instead if we aren't allowed block.
+ 	 */
+-	if (force_dma_unencrypted(dev) && dma_direct_use_pool(dev, gfp))
++	if ((remap || force_dma_unencrypted(dev)) &&
++	    dma_direct_use_pool(dev, gfp))
+ 		return dma_direct_alloc_from_pool(dev, size, dma_handle, gfp);
  
--	gfp |= dma_direct_optimal_gfp_mask(dev, dev->coherent_dma_mask,
--					   &phys_limit);
-+	gfp |= dma_direct_optimal_gfp_mask(dev, &phys_limit);
- 	page = dma_alloc_contiguous(dev, size, gfp);
- 	if (page) {
- 		if (!dma_coherent_ok(dev, page_to_phys(page), size) ||
-@@ -172,14 +172,13 @@ static void *dma_direct_alloc_from_pool(struct device *dev, size_t size,
- 		dma_addr_t *dma_handle, gfp_t gfp)
- {
- 	struct page *page;
--	u64 phys_mask;
-+	u64 phys_limit;
- 	void *ret;
- 
- 	if (WARN_ON_ONCE(!IS_ENABLED(CONFIG_DMA_COHERENT_POOL)))
- 		return NULL;
- 
--	gfp |= dma_direct_optimal_gfp_mask(dev, dev->coherent_dma_mask,
--					   &phys_mask);
-+	gfp |= dma_direct_optimal_gfp_mask(dev, &phys_limit);
- 	page = dma_alloc_from_pool(dev, size, &ret, gfp, dma_coherent_ok);
- 	if (!page)
- 		return NULL;
+ 	/* we always manually zero the memory once we are done */
 -- 
 2.53.0
 
