@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215077;
-	b=Y393aioRd3wKt9PVnA+ZQeYmqbttHYlJXNn+D670wnvuLx7FJ+LMKmAjWJXGTQ9CCJ6f
-	 4Flob94xx0OPSB6TCru6WAOsLWvOSs9i7ciI4YdCiGW/lmMiibjoEWYx8J8aRlKE1JrG+
-	 3tJ5oL05fvkUZadg00GiL4BHiOycLTRyTGf1P9xHgCj0V4xwShLdpBipt4sZrw0D3uV4L
-	 XY6GlKOUVccHie6mM2Fwy6Vjp0poNH1sc9cunPLBcEY3HCqF/2oOGE8aY7oDeJL+/asE7
-	 VjLL1meznDVEOlHUB40tQXtxgiVq+wuqYEJ1UYm2++2fFjrx6Nf1jXxDGPcyhCwG0fw==
+	t=1793215080;
+	b=gJ27buzBA5X0rnwF1zwNJP/lHAAhDhMqOsudSFj6yQCki/iejzppy/j4XciQkxGRbS52
+	 ao+4XWEQoHEqZciimCXXYCOXmDk8ZR9D91yzTk9lQ+Rogev1lq4gKqCEov1Jccd7/cui+
+	 9lcv/Q9KNDlMaI3saegjvfOBAGMVvCqRZqxySyoS4Mc1AVuNLSTNJrMKPucP6ii9bKuuy
+	 sO9e8KGdAQ9k29x7Sql5fxrKUpCwVigTgEm7cOJahVFxuFd0GGjgFJfKN/DAGroVA3J8Y
+	 6mLafLGt8njxRNVTWTildA+tlvfGcU4crc5WxLSpDKjSqS36005XD5o9CeViYTNbwPA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215077;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215080;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=dPkCkwVLJJo16zQ5XEOI1FnW05CnCGKneTjZm+blsZU=;
-	b=bEYC86JnReSqHONyQH6nQoU9P59YRnZUofr9ihXmPP9ywK7GPt3SwS69gwgCYRQBvpi6
-	 IFF3+NY4xy8WyBrsJBgX1rC1/IUAp7w/aN5aaAod0dAYvLj+NzgNqkK08GoVDxYAuWEXJ
-	 occDheWkwQtkx/tn4acJ0ooqS5mvG/+nKSbDwy89xW2+lWPqHd1E/SEX398DpOEQsLzpJ
-	 a2Vp8lnjMrg9YYFvXejsmlzrz4h9letix3unEWwFX266SCZ+kwiV0gIkzYsoaVl2ViBu4
-	 2AehIZfsIBODlQ3vRj64uFTrQneKnOtP2nmNAhe/0GGeTvl0MPlFMnodbc4D1GjeRYA==
+	bh=/KOyYB4a3dp8RIEG9XbkONwq0RFunvZRIP+00KejeYE=;
+	b=vkOCLJgJfWJG54ajVjdq10ToKDk9mxhAxyZHbYRxyqvs3oRh3eYozFOFkiI8NW51GL60
+	 xklgue0CI4/1q6GmIYAJB0pcizj4QMK3cLwCWtEjf7+PYtHommv4n/GP3wT+JrUNEnX3E
+	 NYYCvNRPvbVCA1QwvXe44RfEZ+gJv/99i0s8UJDC4thohJ8bXkiNiZ661/LRAF02z/+iM
+	 cw+nz5+L5KvpA/Aodroe1ltnnKgdOG//Y53voxIYo+hwrZ9Z83gHS6PNjB63sNWavJYoZ
+	 xzHhCAz1Rm8gByI0nURtplxwh4ZahdEuQ3we8Fpqi5l5hW0touWB6Bj3yYihZNYbIEQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dlPvhDvy;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CSS65B+V;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19192606A31C;
-	Wed, 28 Oct 2026 19:17:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 297E2606A31A;
+	Wed, 28 Oct 2026 19:17:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dlPvhDvy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69FF91F01825;
-	Wed, 28 Oct 2026 19:17:56 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CSS65B+V
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 448FD1F01825;
+	Wed, 28 Oct 2026 19:17:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215077;
-	bh=dPkCkwVLJJo16zQ5XEOI1FnW05CnCGKneTjZm+blsZU=;
+	s=korg; t=1793215079;
+	bh=/KOyYB4a3dp8RIEG9XbkONwq0RFunvZRIP+00KejeYE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dlPvhDvyQ2Y6/lgltD47lvf+piFhNv+GBc9aBen8KacUZuvOzIQ6ELzG+jpWCDMZl
-	 +BE+GlLmWe74kt1PhCAMs9erwPtJ5VigiCVGFg7e9t2XvlHxmb/zKZVD7t1xsiCqHM
-	 Kn+JGfkOsDL7y5mSr2hjsTZdKPWwJT4F32z3iXN4=
+	b=CSS65B+VjQV+leq8Xz+n95IH9BsUZxjRUMJGJTIhzo/hShGU/aCARwVKrdWYiC6qy
+	 XBMkO7cvFGNVhQCY5i04DhJCR72CmqwBeSDzxFA+DFMmy6Ujov77lkYVWXUZBSPQ9F
+	 PKFzxAnPQ/mybzmww3836UAcSbtaCMjKubHvi530=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+c1e9aedbd913fadad617@syzkaller.appspotmail.com,
-	Deepanshu Kartikey <Kartikey406@gmail.com>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Vasant Hegde <vasant.hegde@amd.com>,
+	Joerg Roedel <joerg.roedel@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1082/1887] fs/ntfs3: fix missing run load for vcn0 in attr_data_get_block_locked()
-Date: Wed, 28 Oct 2026 17:52:58 +0100
-Message-ID: <20261028170524.028023737@linuxfoundation.org>
+Subject: [PATCH 6.1 1083/1887] iommu/amd: Fix clone_alias() to use the original devices devid
+Date: Wed, 28 Oct 2026 17:52:59 +0100
+Message-ID: <20261028170524.050715786@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,71 +68,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Deepanshu Kartikey <kartikey406@gmail.com>
+From: Vasant Hegde <vasant.hegde@amd.com>
 
-[ Upstream commit d7ea8495fd307b58f8867acd81a1b40075b1d3ba ]
+[ Upstream commit faad224fe0f0857a04ff2eb3c90f0de57f47d0f3 ]
 
-When a compressed or sparse attribute has its clusters frame-aligned,
-vcn is rounded down to the frame start using cmask, which can result
-in vcn != vcn0. In this case, vcn and vcn0 may reside in different
-attribute segments.
+Currently clone_alias() assumes first argument (pdev) is always the
+original device pointer. This function is called by
+pci_for_each_dma_alias() which based on topology decides to send
+original or alias device details in first argument.
 
-The code already handles the case where vcn is in a different segment
-by loading its runs before allocation. However, it fails to load runs
-for vcn0 when vcn0 resides in a different segment than vcn. This causes
-run_lookup_entry() to return SPARSE_LCN for vcn0 since its segment was
-never loaded into the in-memory run list, triggering the WARN_ON(1).
+This meant that the source devid used to look up and copy the DTE
+may be incorrect, leading to wrong or stale DTE entries being
+propagated to alias device.
 
-Fix this by adding a missing check for vcn0 after the existing vcn
-segment check. If vcn0 falls outside the current segment range
-[svcn, evcn1), find and load the attribute segment containing vcn0
-before performing the run lookup.
+Fix this by passing the original pdev as the opaque data argument to
+both the direct clone_alias() call and pci_for_each_dma_alias(). Inside
+clone_alias(), retrieve the original device from data and compute devid
+from it.
 
-The following scenario triggers the bug:
-  attr_data_get_block_locked()
-    vcn = vcn0 & cmask        <- vcn != vcn0 after frame alignment
-    load runs for vcn segment <- vcn0 segment not loaded!
-    attr_allocate_clusters()  <- allocation succeeds
-    run_lookup_entry(vcn0)    <- vcn0 not in run -> SPARSE_LCN
-    WARN_ON(1)                <- bug fires here!
-
-Reported-by: syzbot+c1e9aedbd913fadad617@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=c1e9aedbd913fadad617
-Fixes: c380b52f6c57 ("fs/ntfs3: Change new sparse cluster processing")
-Signed-off-by: Deepanshu Kartikey <Kartikey406@gmail.com>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Fixes: 3332364e4ebc ("iommu/amd: Support multiple PCI DMA aliases in device table")
+Signed-off-by: Vasant Hegde <vasant.hegde@amd.com>
+Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/attrib.c | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ drivers/iommu/amd/iommu.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/fs/ntfs3/attrib.c b/fs/ntfs3/attrib.c
-index db4f2dffed950..c037f5307657a 100644
---- a/fs/ntfs3/attrib.c
-+++ b/fs/ntfs3/attrib.c
-@@ -1048,6 +1048,22 @@ int attr_data_get_block(struct ntfs_inode *ni, CLST vcn, CLST clen, CLST *lcn,
- 			if (err)
- 				goto out;
- 		}
-+
-+		if (vcn0 < svcn || evcn1 <= vcn0) {
-+			struct ATTRIB *attr2;
-+			struct ATTR_LIST_ENTRY *le2 = le_b;
-+			struct mft_inode *mi2;
-+
-+			attr2 = ni_find_attr(ni, attr_b, &le2, ATTR_DATA, NULL,
-+					     0, &vcn0, &mi2);
-+			if (!attr2) {
-+				err = -EINVAL;
-+				goto out;
-+			}
-+			err = attr_load_runs(attr2, ni, run, NULL);
-+			if (err)
-+				goto out;
-+		}
- 	}
+diff --git a/drivers/iommu/amd/iommu.c b/drivers/iommu/amd/iommu.c
+index 79833cc4a524a..07d9d2f09417a 100644
+--- a/drivers/iommu/amd/iommu.c
++++ b/drivers/iommu/amd/iommu.c
+@@ -217,10 +217,11 @@ static struct iommu_dev_data *search_dev_data(struct amd_iommu *iommu, u16 devid
+ 	return NULL;
+ }
  
- 	if (vcn + to_alloc > asize)
+-static int clone_alias(struct pci_dev *pdev, u16 alias, void *data)
++static int clone_alias(struct pci_dev *pdev_origin, u16 alias, void *data)
+ {
+ 	struct amd_iommu *iommu;
+ 	struct dev_table_entry *dev_table;
++	struct pci_dev *pdev = data;
+ 	u16 devid = pci_dev_id(pdev);
+ 
+ 	if (devid == alias)
+@@ -252,9 +253,9 @@ static void clone_aliases(struct amd_iommu *iommu, struct device *dev)
+ 	 * part of the PCI DMA aliases if it's bus differs
+ 	 * from the original device.
+ 	 */
+-	clone_alias(pdev, iommu->pci_seg->alias_table[pci_dev_id(pdev)], NULL);
++	clone_alias(pdev, iommu->pci_seg->alias_table[pci_dev_id(pdev)], pdev);
+ 
+-	pci_for_each_dma_alias(pdev, clone_alias, NULL);
++	pci_for_each_dma_alias(pdev, clone_alias, pdev);
+ }
+ 
+ static void setup_aliases(struct amd_iommu *iommu, struct device *dev)
 -- 
 2.53.0
 
