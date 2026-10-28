@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213600;
-	b=DrT6g/QK5ZDixooPNypE0IzTkkWapulrocjayxCGacSzaCO5v9f5yetw4ka+N2b0MZ02
-	 SoD4acqXQ+pvuMrmyKzn2qvEWq/IX3+SKHLV82xpgdmPIoc3SJH8w5Al/1RLH114XTjqh
-	 bUGSMfc0TNSPj0/pGB2XUNvT0YxcYLhA0aaw6lgYPtbo+R2cvwoP90Y+bhAq6+FFvrM/V
-	 cxbb3lf9PWmlzbuv9xx+WAMT5dwV8mujvwalzgNkDdcQtcvgkI7+wdhhmB83eo62n7xYo
-	 T7JpPn6iGRO2PQe0rzMeZYMMZiG4G7/nP+9H+tLYOLZrY/Gy6+bv9MBP/JobgDCkxqg==
+	t=1793213603;
+	b=Fqw1WbilrVRQmsxJZSr2Tre4E0Ycldi0CgMBJ+OagtF1/qlBWrhCOLtKSfMl1JY28gwp
+	 YC5SXqNcND4FQ20mOoShZS1+/Vt0/zIoRkiTOgxCgk3VjzHvVf0qGP1mTfnOfpqGbpNA9
+	 tDUvXpoqLzBh4WPcdp1kiNF6XkrewTWorcsNzGCuoxdDLYhMDW+RtdTK/dKVQohe/x+3j
+	 65k3sd8qDvYvvw2z0lnRmrchSO2VHOQbKhndbxWTktxnwuAFUh6haYxMTJ7uFWA8aVwb2
+	 7LjtpkQ6xtNG5qMUNFepdx7YKd6ONVnO1NV1uu6XhdxLGEEoZ6YSBn7xatVCHwSnH2Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213600;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213603;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=vkGhinbNbX0IkfHo3rs6c99SG+f3d7ozyS1PFxXIQFQ=;
-	b=YIa/6Oam7FZUEwRTpkD/K/xTr9rGnANfVNS4ZhcIFbnhs0yVgQY0eaO72bKTD0G4GdhG
-	 0akdSFHOazQCJWkYsFyYgKtsDNDjPzyvOlkl5XBmLGoqWX79GvxjVFPiQeDYQOrZIKNGO
-	 20R7sDbznRVJmHFdraSFTDxL/VeP1l6INuCKtI+rp/fgcQc3gZfWMj0Syk1IwmeUXaHLV
-	 /vL5pqAvCLYCk47rfBGjB5Ohs7DxoeKd/OVkwxn3MyxnrOxqdQXsEEh9LmVrZhVMbUrVE
-	 9SxuCNO5AfFs2Dfri8RH/2hGzi79RNvaTA6Jv05wBqgZ+fzq71NihQmwa63Tkt9MdTw==
+	bh=oamgGZZZh+lpfMbXr4ySFPl3RGIp+uQMBWgjaLopL20=;
+	b=dz6VLuY+1mbRHXSD53KDfHtXDRO9HhEf4xzQesOFHFU+y/o4p6An0UwfqGKuDqQFcst3
+	 ZWNcmNmx+Y3Xl/6zxBiTomvHIkHW/C1mwb2VdIXwKhkKr5IQPOBuMFcVqU2jI4kw3NMmx
+	 9xO/42a2M1QNRL7DrQ0eWFbXzgFemqVh5uSMg0QDA4SnG5nQTeCbKnHrjnAkMMay36Ya4
+	 vovAMCq/rBGwnxYCTu65ZTy0N6GGo9PiO/Y8uW6yGiXKe+aCVZM3DceyAryP6Nxwag5wD
+	 YCxHqWF0rGi28TzIWdLEVil2oxQirR3ZWrGZ4d8blppJAagMwvWD85SXbGSc+D6FyOA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AA2YnzXX;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rckDVrIB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87EC3606A31C;
-	Wed, 28 Oct 2026 18:53:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24EFB606A31D;
+	Wed, 28 Oct 2026 18:53:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AA2YnzXX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A58B81F01825;
-	Wed, 28 Oct 2026 18:53:19 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rckDVrIB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75BD01F01825;
+	Wed, 28 Oct 2026 18:53:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213600;
-	bh=vkGhinbNbX0IkfHo3rs6c99SG+f3d7ozyS1PFxXIQFQ=;
+	s=korg; t=1793213603;
+	bh=oamgGZZZh+lpfMbXr4ySFPl3RGIp+uQMBWgjaLopL20=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AA2YnzXXItJwOJmg0G0DmNLcPzQ/JCFa8RlZ9XaPFBV3rF2h6wTiOXLzJbaj+PJ+2
-	 wlJilGfHesQ8Ltr97sRWHb9flZnaJLyqbsDJP+RfeOiojp6Qys652UMgGJS2VCp0uo
-	 BrP/b4SxsL1PMfICIuKpeEcDt36o9nSd6hUNmYcg=
+	b=rckDVrIBXiXKb8iUjjP89ruupwf1Sz2hOVL1t3rJufDTe01M6UGMvdjGg/W4f8tgE
+	 B3vjJFXyuJCStTcEhj2hUYx3LrwGh1kWOthfaZl1PZzLYeg+Z1rFi57Tv43PAvBYs1
+	 0RWJOcYT8Kn9vUaSUxJ43r/xzx3HDSMsbqMumrng=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fei Shao <fshao@chromium.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Andrzej Pietrasiewicz <andrzej.p@collabora.com>,
-	Sebastian Fricke <sebastian.fricke@collabora.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	syzbot+6898da502aef574c5f8a@syzkaller.appspotmail.com,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0562/1887] media: mediatek: vcodec: Only free buffer VA that is not NULL
-Date: Wed, 28 Oct 2026 17:44:18 +0100
-Message-ID: <20261028170512.178208884@linuxfoundation.org>
+Subject: [PATCH 6.1 0563/1887] ext4: avoid deadlock in fs reclaim with page writeback
+Date: Wed, 28 Oct 2026 17:44:19 +0100
+Message-ID: <20261028170512.202584688@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -71,45 +69,230 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fei Shao <fshao@chromium.org>
+From: Jan Kara <jack@suse.cz>
 
-[ Upstream commit eb005c801ec70ff4307727bd3bd6e8280169ef32 ]
+[ Upstream commit 00d873c17e29cc32d90ca852b82685f1673acaa5 ]
 
-In the MediaTek vcodec driver, while mtk_vcodec_mem_free() is mostly
-called only when the buffer to free exists, there are some instances
-that didn't do the check and triggered warnings in practice.
+Ext4 has a filesystem wide lock protecting ext4_writepages() calls to
+avoid races with switching of journalled data flag or inode format. This
+lock can however cause a deadlock like:
 
-We believe those checks were forgotten unintentionally. Add the checks
-back to fix the warnings.
+CPU0                            CPU1
 
-Signed-off-by: Fei Shao <fshao@chromium.org>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: Andrzej Pietrasiewicz <andrzej.p@collabora.com>
-Signed-off-by: Sebastian Fricke <sebastian.fricke@collabora.com>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+ext4_writepages()
+  percpu_down_read(sbi->s_writepages_rwsem);
+                                ext4_change_inode_journal_flag()
+                                  percpu_down_write(sbi->s_writepages_rwsem);
+                                    - blocks, all readers block from now on
+  ext4_do_writepages()
+    ext4_init_io_end()
+      kmem_cache_zalloc(io_end_cachep, GFP_KERNEL)
+        fs_reclaim frees dentry...
+          dentry_unlink_inode()
+            iput() - last ref =>
+              iput_final() - inode dirty =>
+                write_inode_now()...
+                  ext4_writepages() tries to acquire sbi->s_writepages_rwsem
+                    and blocks forever
+
+Make sure we cannot recurse into filesystem reclaim from writeback code
+to avoid the deadlock.
+
+Reported-by: syzbot+6898da502aef574c5f8a@syzkaller.appspotmail.com
+Link: https://lore.kernel.org/all/0000000000004c66b405fa108e27@google.com
+Fixes: c8585c6fcaf2 ("ext4: fix races between changing inode journal mode and ext4_writepages")
+CC: stable@vger.kernel.org
+Signed-off-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20230504124723.20205-1-jack@suse.cz
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/mediatek/vcodec/venc/venc_h264_if.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ fs/ext4/ext4.h    | 24 ++++++++++++++++++++++++
+ fs/ext4/inode.c   | 18 ++++++++++--------
+ fs/ext4/migrate.c | 11 ++++++-----
+ 3 files changed, 40 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/media/platform/mediatek/vcodec/venc/venc_h264_if.c b/drivers/media/platform/mediatek/vcodec/venc/venc_h264_if.c
-index dc35ec7f9c049..e070bd258ce6f 100644
---- a/drivers/media/platform/mediatek/vcodec/venc/venc_h264_if.c
-+++ b/drivers/media/platform/mediatek/vcodec/venc/venc_h264_if.c
-@@ -304,11 +304,12 @@ static void h264_enc_free_work_buf(struct venc_h264_inst *inst)
- 	 * other buffers need to be freed by AP.
- 	 */
- 	for (i = 0; i < VENC_H264_VPU_WORK_BUF_MAX; i++) {
--		if (i != VENC_H264_VPU_WORK_BUF_SKIP_FRAME)
-+		if (i != VENC_H264_VPU_WORK_BUF_SKIP_FRAME && inst->work_bufs[i].va)
- 			mtk_vcodec_mem_free(inst->ctx, &inst->work_bufs[i]);
+diff --git a/fs/ext4/ext4.h b/fs/ext4/ext4.h
+index b1a4fcfdb5483..6d3f888f7e556 100644
+--- a/fs/ext4/ext4.h
++++ b/fs/ext4/ext4.h
+@@ -1778,6 +1778,30 @@ static inline struct ext4_inode_info *EXT4_I(struct inode *inode)
+ 	return container_of(inode, struct ext4_inode_info, vfs_inode);
+ }
+ 
++static inline int ext4_writepages_down_read(struct super_block *sb)
++{
++	percpu_down_read(&EXT4_SB(sb)->s_writepages_rwsem);
++	return memalloc_nofs_save();
++}
++
++static inline void ext4_writepages_up_read(struct super_block *sb, int ctx)
++{
++	memalloc_nofs_restore(ctx);
++	percpu_up_read(&EXT4_SB(sb)->s_writepages_rwsem);
++}
++
++static inline int ext4_writepages_down_write(struct super_block *sb)
++{
++	percpu_down_write(&EXT4_SB(sb)->s_writepages_rwsem);
++	return memalloc_nofs_save();
++}
++
++static inline void ext4_writepages_up_write(struct super_block *sb, int ctx)
++{
++	memalloc_nofs_restore(ctx);
++	percpu_up_write(&EXT4_SB(sb)->s_writepages_rwsem);
++}
++
+ static inline int ext4_valid_inum(struct super_block *sb, unsigned long ino)
+ {
+ 	return ino == EXT4_ROOT_INO ||
+diff --git a/fs/ext4/inode.c b/fs/ext4/inode.c
+index ef801e13ca460..f9e9264a825a3 100644
+--- a/fs/ext4/inode.c
++++ b/fs/ext4/inode.c
+@@ -2710,11 +2710,12 @@ static int ext4_writepages(struct address_space *mapping,
+ 	struct ext4_sb_info *sbi = EXT4_SB(mapping->host->i_sb);
+ 	struct blk_plug plug;
+ 	bool give_up_on_write = false;
++	int alloc_ctx;
+ 
+ 	if (unlikely(ext4_forced_shutdown(EXT4_SB(inode->i_sb))))
+ 		return -EIO;
+ 
+-	percpu_down_read(&sbi->s_writepages_rwsem);
++	alloc_ctx = ext4_writepages_down_read(inode->i_sb);
+ 	trace_ext4_writepages(inode, wbc);
+ 
+ 	/*
+@@ -2924,7 +2925,7 @@ static int ext4_writepages(struct address_space *mapping,
+ out_writepages:
+ 	trace_ext4_writepages_result(inode, wbc, ret,
+ 				     nr_to_write - wbc->nr_to_write);
+-	percpu_up_read(&sbi->s_writepages_rwsem);
++	ext4_writepages_up_read(inode->i_sb, alloc_ctx);
+ 	return ret;
+ }
+ 
+@@ -2935,17 +2936,18 @@ static int ext4_dax_writepages(struct address_space *mapping,
+ 	long nr_to_write = wbc->nr_to_write;
+ 	struct inode *inode = mapping->host;
+ 	struct ext4_sb_info *sbi = EXT4_SB(mapping->host->i_sb);
++	int alloc_ctx;
+ 
+ 	if (unlikely(ext4_forced_shutdown(EXT4_SB(inode->i_sb))))
+ 		return -EIO;
+ 
+-	percpu_down_read(&sbi->s_writepages_rwsem);
++	alloc_ctx = ext4_writepages_down_read(inode->i_sb);
+ 	trace_ext4_writepages(inode, wbc);
+ 
+ 	ret = dax_writeback_mapping_range(mapping, sbi->s_daxdev, wbc);
+ 	trace_ext4_writepages_result(inode, wbc, ret,
+ 				     nr_to_write - wbc->nr_to_write);
+-	percpu_up_read(&sbi->s_writepages_rwsem);
++	ext4_writepages_up_read(inode->i_sb, alloc_ctx);
+ 	return ret;
+ }
+ 
+@@ -6172,7 +6174,7 @@ int ext4_change_inode_journal_flag(struct inode *inode, int val)
+ 	journal_t *journal;
+ 	handle_t *handle;
+ 	int err;
+-	struct ext4_sb_info *sbi = EXT4_SB(inode->i_sb);
++	int alloc_ctx;
+ 
+ 	/*
+ 	 * We have to be very careful here: changing a data block's
+@@ -6210,7 +6212,7 @@ int ext4_change_inode_journal_flag(struct inode *inode, int val)
+ 		}
  	}
  
--	mtk_vcodec_mem_free(inst->ctx, &inst->pps_buf);
-+	if (inst->pps_buf.va)
-+		mtk_vcodec_mem_free(inst->ctx, &inst->pps_buf);
+-	percpu_down_write(&sbi->s_writepages_rwsem);
++	alloc_ctx = ext4_writepages_down_write(inode->i_sb);
+ 	jbd2_journal_lock_updates(journal);
  
- 	mtk_vcodec_debug_leave(inst);
+ 	/*
+@@ -6227,7 +6229,7 @@ int ext4_change_inode_journal_flag(struct inode *inode, int val)
+ 		err = jbd2_journal_flush(journal, 0);
+ 		if (err < 0) {
+ 			jbd2_journal_unlock_updates(journal);
+-			percpu_up_write(&sbi->s_writepages_rwsem);
++			ext4_writepages_up_write(inode->i_sb, alloc_ctx);
+ 			return err;
+ 		}
+ 		ext4_clear_inode_flag(inode, EXT4_INODE_JOURNAL_DATA);
+@@ -6235,7 +6237,7 @@ int ext4_change_inode_journal_flag(struct inode *inode, int val)
+ 	ext4_set_aops(inode);
+ 
+ 	jbd2_journal_unlock_updates(journal);
+-	percpu_up_write(&sbi->s_writepages_rwsem);
++	ext4_writepages_up_write(inode->i_sb, alloc_ctx);
+ 
+ 	if (val)
+ 		filemap_invalidate_unlock(inode->i_mapping);
+diff --git a/fs/ext4/migrate.c b/fs/ext4/migrate.c
+index 0be0467ae6dd2..a5e1492bbaaa5 100644
+--- a/fs/ext4/migrate.c
++++ b/fs/ext4/migrate.c
+@@ -408,7 +408,6 @@ static int free_ext_block(handle_t *handle, struct inode *inode)
+ 
+ int ext4_ext_migrate(struct inode *inode)
+ {
+-	struct ext4_sb_info *sbi = EXT4_SB(inode->i_sb);
+ 	handle_t *handle;
+ 	int retval = 0, i;
+ 	__le32 *i_data;
+@@ -418,6 +417,7 @@ int ext4_ext_migrate(struct inode *inode)
+ 	unsigned long max_entries;
+ 	__u32 goal, tmp_csum_seed;
+ 	uid_t owner[2];
++	int alloc_ctx;
+ 
+ 	/*
+ 	 * If the filesystem does not support extents, or the inode
+@@ -434,7 +434,7 @@ int ext4_ext_migrate(struct inode *inode)
+ 		 */
+ 		return retval;
+ 
+-	percpu_down_write(&sbi->s_writepages_rwsem);
++	alloc_ctx = ext4_writepages_down_write(inode->i_sb);
+ 
+ 	/*
+ 	 * Worst case we can touch the allocation bitmaps and a block
+@@ -586,7 +586,7 @@ int ext4_ext_migrate(struct inode *inode)
+ 	unlock_new_inode(tmp_inode);
+ 	iput(tmp_inode);
+ out_unlock:
+-	percpu_up_write(&sbi->s_writepages_rwsem);
++	ext4_writepages_up_write(inode->i_sb, alloc_ctx);
+ 	return retval;
+ }
+ 
+@@ -605,6 +605,7 @@ int ext4_ind_migrate(struct inode *inode)
+ 	ext4_fsblk_t			blk;
+ 	handle_t			*handle;
+ 	int				ret, ret2 = 0;
++	int				alloc_ctx;
+ 
+ 	if (!ext4_has_feature_extents(inode->i_sb) ||
+ 	    (!ext4_test_inode_flag(inode, EXT4_INODE_EXTENTS)))
+@@ -621,7 +622,7 @@ int ext4_ind_migrate(struct inode *inode)
+ 	if (test_opt(inode->i_sb, DELALLOC))
+ 		ext4_alloc_da_blocks(inode);
+ 
+-	percpu_down_write(&sbi->s_writepages_rwsem);
++	alloc_ctx = ext4_writepages_down_write(inode->i_sb);
+ 
+ 	handle = ext4_journal_start(inode, EXT4_HT_MIGRATE, 1);
+ 	if (IS_ERR(handle)) {
+@@ -665,6 +666,6 @@ int ext4_ind_migrate(struct inode *inode)
+ 	up_write(&EXT4_I(inode)->i_data_sem);
+ 	ext4_journal_stop(handle);
+ out_unlock:
+-	percpu_up_write(&sbi->s_writepages_rwsem);
++	ext4_writepages_up_write(inode->i_sb, alloc_ctx);
+ 	return ret;
  }
 -- 
 2.53.0
