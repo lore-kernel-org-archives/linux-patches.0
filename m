@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793211047;
-	b=FPk5c5Mig8zGq2nLJGi3lWuedo4LgywJWJkfX7h6dET/qNZAWO4i9MvUQ55yjJ0hh6ml
-	 aAVbKYV+btdBYkSdyAI4i3cXqmA01cO0coWDS/Aq/cKbBHaWmWyhRXIFBf+FVSvonaPh0
-	 gv2u7dSQPtnULEfoSdNf3b1fNWdjcnmXEVgFMsRVW/GwVyK2y9UjAoAv+1yb368E37it0
-	 LNxMS40lNofXDxl8WCd6TnXg/lQvUlKAcys91Bs+r0bKUbC5CF5651vlnfmYFL7+8ZBZm
-	 TYhenKqCSTuLo/bJVKXhzm1+6+ruOPt5NDgmp844/C9a8Npmd9Lr+TFOAi9YfyiLYbg==
+	t=1793211050;
+	b=iOsEQrF0FsP/iUQXrto9iOoJoQylC8v4xVv0TBH6wdtmiFFAQi85yJSe3CPdWUQDcJGu
+	 62raBeERow/3Qcnn/eeWi6rwP3TYcuptcfH4ngSZ/a4h0EdL69ScNr3uFkYQ6OSzgSRAm
+	 1C338WXfosfv49PCk73UE7TYPKiIbPnYDQq5GGPQDkP1AykPe5ALF8P5zUsfAefxbUGlE
+	 KlzhodneLUA49ZSVRCpOkxskRmb0xmVk4r39/pO8ITmzKZJW/sJ+EB0dyi73cIu3If4Ug
+	 3syURLIoa4lQH/9awgsQQT+eWUii8uTtAwmZulKbjg1Ol4IjW1ErIZN2QbPNTPDrm9w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793211047;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793211050;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=mOX0q4dUtnv4O0KH9LhiM6CiCRWjwx1y04YGPdmUpHM=;
-	b=ZJDpQpnl5CYLGYt3/31DhgGa5hNkL9QyJ0QEwt8E+qcgBAXhC5RLjqhR2rB1cbH23QaU
-	 K3eu9fSCNyFIXW1pAHNPx2WcBIzdu9InUcL7Z08k1yDxO3MIn1nL1Xmm8NlwmGYGhem77
-	 PftOziUi/Ie9sZThkMp5gPCl2nj7ja3t7/ERdeMZpPu0DnDIMAOGc6towTmIGzbf2Uag2
-	 iSUq/QODpq4I+4yeaSShB0GtRq2aSpSwG8rCq5eqt+s8kBtvNLGT+7Ryor7Wl2NsjOJtS
-	 tDRgArQoTer/jCPrbBuVQWhTTGkGtN1DeuZAbN4e9YHEuR9A3Rsud/esWVMLShTHeXg==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=2IzG7GFkeex8JaAE/HP/Czm7QLOkivBVidnBlxX9i/0=;
+	b=m33lJjFlnJb1ZD9AJCM1tTTNo9O+qO4Ga1y78GXzzziWq8Nw75LWAF5sFwp+gUyDYhFi
+	 IGqexJ/WmU6e0hMjlSgTpXzd8gxPqJ7MHYd3v4sAUrcOW/nMBpPfmDPRv+XABed3y3qfK
+	 nGz8ApGU13nQ4itu4BLLzMLxrjallBSgsLS/7uketWdnLGdOmCXEgwjt5GgRvFml2PDNM
+	 fb9rIk+eK32g8z2wr9+TFsNaV3SVfdnu7SVudElIMbh3/l/Xr/hklasw2GX9snx5tWXuV
+	 VU6NmXm3eaacMVsQz2LzKkYc7Ln7kXeyzExmvtf0hvzrggHqmzVWiXE/ZuQLImoIOAg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jhM8abY7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mwhF6raT;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 089CA60A5BFE;
-	Wed, 28 Oct 2026 18:10:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9B2260A6F78;
+	Wed, 28 Oct 2026 18:10:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jhM8abY7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 578561F031E6;
-	Wed, 28 Oct 2026 18:10:46 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mwhF6raT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 328031F031EA;
+	Wed, 28 Oct 2026 18:10:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793211046;
-	bh=mOX0q4dUtnv4O0KH9LhiM6CiCRWjwx1y04YGPdmUpHM=;
+	s=korg; t=1793211049;
+	bh=2IzG7GFkeex8JaAE/HP/Czm7QLOkivBVidnBlxX9i/0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jhM8abY7Ox+NOaSPubbB+7RsQ5Ab80u2OrESim7UnFc0tmpeKqwJWPXR++9GIn4Mo
-	 Lm+yt07ZGZoaUShGoTAR78TshxxR9ZKuK1K0aYaNj5XrSE4idTRB8yuSMVTKDqs5tT
-	 HvKW0O8bPa3m4anDfdjHRkhPiMliHZtZo8ZSabrE=
+	b=mwhF6raTq5U4xLNan/ez8uw3vnnyfv/yAudCnvIJr/y3J/h1TulWN3PViqsyZoQ9V
+	 Qq3lk5OHogB0ajSrCqXMUanGWbC2Hael5BiOkKOroFwvLl9VqlbwiE5wz/NI2rEEZT
+	 CglB1QxHzCZ12eUbdazoTkzZGDLrejdrs9KrBIuQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?J=C3=A9r=C3=A9my=20Carrat?= <jeremy.carrat@icloud.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 5.15 241/571] USB: serial: cp210x: add Corsair AX1500i Power Supply
-Date: Wed, 28 Oct 2026 17:56:28 +0100
-Message-ID: <20261028170013.724230814@linuxfoundation.org>
+	co+24304d323d28f156@bugs.sh,
+	Xiang Mei <xmei5@asu.edu>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 5.15 224/571] ALSA: ua101: reject mismatched capture/playback packet sizes
+Date: Wed, 28 Oct 2026 17:56:11 +0100
+Message-ID: <20261028170013.317029707@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -61,59 +62,89 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jérémy Carrat <jeremy.carrat@icloud.com>
+From: Xiang Mei <xmei5@asu.edu>
 
-commit d84e27d87738634b92001500435ae4dadba10a13 upstream.
+commit 86f86e6fdedc33c5b8d38b9208b350f8accf57ee upstream.
 
-The Corsair AX1500i power supply exposes its Corsair Link monitoring
-interface on a mini-USB port through an on-board CP2103, using a
-Corsair-specific product ID. Without the ID in the table no driver binds
-and no tty is created.
+detect_usb_format() cross-checks bSubframeSize, bBitResolution and
+tSamFreq between the capture and playback interfaces, but never relates
+the two endpoints' wMaxPacketSize and bNrChannels.  Each playback URB
+gets a buffer of ua->playback.max_packet_bytes, while the number of
+bytes written into it is derived from the capture stream:
+capture_urb_complete() computes frames from the received capture packet
+and capture.frame_bytes, and start_usb_playback() and playback_work()
+multiply that by playback.frame_bytes.
 
-Tested by forcing the driver association with
+A device declaring a large capture wMaxPacketSize with few capture
+channels and a small playback wMaxPacketSize with many playback channels
+therefore memset()s and memcpy()s past the end of the playback buffer,
+in open() of the PCM node the driver registers during probe.
+usb_submit_urb() rejects the over-long iso_frame_desc[0].length with
+-EMSGSIZE, but only after the write.
 
-  echo 1b1c 1c02 > /sys/bus/usb-serial/drivers/cp210x/new_id
+Reject such descriptors at probe time.  Genuine UA-101/UA-1000 hardware
+declares proportional packet sizes and is unaffected.
 
-and then setting the serial port to 115200 8N1. Adding the ID is sufficient
-to talk to the device: the tty reaches a USB-to-SMBus bridge sitting behind
-the UART, which identifies itself as "USB to SMB Bridge (Firmware by Ross
-Fosler)" version 0.9 and relays PMBus reads to the power supply controller.
-Input voltage and current, input and output power, internal temperature and
-fan speed were all read back on an AX1500i.
+  BUG: KASAN: slab-out-of-bounds in start_usb_playback (sound/usb/misc/ua101.c:586)
+  Write of size 2048 at addr ffff8881098f3c00 by task exploit/5021
+  Call Trace:
+   __asan_memset (mm/kasan/shadow.c:84)
+   start_usb_playback (sound/usb/misc/ua101.c:586)
+   playback_pcm_open (sound/usb/misc/ua101.c:679)
+   snd_pcm_open_substream (sound/core/pcm_native.c:2829)
+   snd_pcm_open (sound/core/pcm_native.c:2865 sound/core/pcm_native.c:2932)
+   snd_pcm_playback_open (sound/core/pcm_native.c:2891)
+   snd_open (sound/core/sound.c:166)
+   chrdev_open (fs/char_dev.c:411)
+   do_dentry_open (fs/open.c:996)
+   vfs_open (fs/open.c:1101)
+   path_openat (fs/namei.c:4837 fs/namei.c:5000)
+   do_file_open (fs/namei.c:5029)
+   do_sys_openat2 (fs/open.c:1417)
+   __x64_sys_openat (fs/open.c:1423 fs/open.c:1439 fs/open.c:1434)
+   do_syscall_64 (arch/x86/entry/syscall_64.c:61 arch/x86/entry/syscall_64.c:84)
+   entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
 
-  [    7.806181] usb 3-14: New USB device found, idVendor=1b1c, idProduct=1c02, bcdDevice= 1.00
-  [  698.526754] usbcore: registered new interface driver cp210x
-  [  698.526767] usbserial: USB Serial support registered for cp210x
-  [  698.527863] cp210x 3-14:1.0: cp210x converter detected
-  [  698.529263] usb 3-14: cp210x converter now attached to ttyUSB0
-
-The related AX1600i (1b1c:1c11, iProduct "USB API") is expected to be the
-same kind of device but has not been tested here, so it is not added.
+  The buggy address belongs to the object at ffff8881098f3c00
+   which belongs to the cache kmalloc-192 of size 192
+  The buggy address is located 0 bytes inside of
+   allocated 168-byte region [ffff8881098f3c00, ffff8881098f3ca8)
 
 Cc: stable@vger.kernel.org
-Signed-off-by: Jérémy Carrat <jeremy.carrat@icloud.com>
-Signed-off-by: Johan Hovold <johan@kernel.org>
+Fixes: 63978ab3e3e9 ("sound: add Edirol UA-101 support")
+Reported-by: <co+24304d323d28f156@bugs.sh>
+Assisted-by: LLM
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
+Link: https://patch.msgid.link/20260918225753.1278505-1-xmei5@asu.edu
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/cp210x.c |    1 +
- 1 file changed, 1 insertion(+)
+ sound/usb/misc/ua101.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/drivers/usb/serial/cp210x.c
-+++ b/drivers/usb/serial/cp210x.c
-@@ -223,6 +223,7 @@ static const struct usb_device_id id_tab
- 	{ USB_DEVICE(0x19CF, 0x3000) }, /* Parrot NMEA GPS Flight Recorder */
- 	{ USB_DEVICE(0x1ADB, 0x0001) }, /* Schweitzer Engineering C662 Cable */
- 	{ USB_DEVICE(0x1B1C, 0x1C00) }, /* Corsair USB Dongle */
-+	{ USB_DEVICE(0x1B1C, 0x1C02) }, /* Corsair AX1500i Power Supply */
- 	{ USB_DEVICE(0x1B93, 0x1013) }, /* Phoenix Contact UPS Device */
- 	{ USB_DEVICE(0x1BA4, 0x0002) },	/* Silicon Labs 358x factory default */
- 	{ USB_DEVICE(0x1BE3, 0x07A6) }, /* WAGO 750-923 USB Service Cable */
+--- a/sound/usb/misc/ua101.c
++++ b/sound/usb/misc/ua101.c
+@@ -1022,6 +1022,15 @@ static int detect_usb_format(struct ua10
+ 	}
+ 	ua->playback.usb_pipe = usb_sndisocpipe(ua->dev, usb_endpoint_num(epd));
+ 	ua->playback.max_packet_bytes = usb_endpoint_maxp(epd);
++
++	if (ua->capture.max_packet_bytes / ua->capture.frame_bytes *
++	    ua->playback.frame_bytes > ua->playback.max_packet_bytes) {
++		dev_err(&ua->dev->dev,
++			"playback packet size %u too small for %u capture frames\n",
++			ua->playback.max_packet_bytes,
++			ua->capture.max_packet_bytes / ua->capture.frame_bytes);
++		return -ENXIO;
++	}
+ 	return 0;
+ }
+ 
 
 
