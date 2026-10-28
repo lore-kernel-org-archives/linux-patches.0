@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214731;
-	b=0IgiUJNkorI/n4/HlfTxNrcccdVioEQw74pyWqdJLuKntdV28r2FqE3L8PSEQQPyW4eW
-	 a2A39yHxcySwl4ZnHjLQYwOFTGL/LbEFwx0SoDnb/Enf9fFoZ9XbDX95BQeeLN9ZRTUKe
-	 0aaJoAg7JLGS/bDTyhZgONCWzFpxrMo45L0fWeoDcCl6krQ2uh/m1wy+QluK0ivc5irlR
-	 UUpw/Tr0DqZj9sdDuxfOIMhb2jRDmYAaxXvKgFZ7wF+lEa10UZd/rR7J3mo989aJ17SXx
-	 Bfd2oD2L1Up44Jk8MObpnPzUFF3+ohqcRxRxwuWTlm4xKzHzOa5jOm7a+9YAnUH9a5Q==
+	t=1793214734;
+	b=r36o4bifAmpRxEy40tFysBIJd0frLeqtqwSMc/KNObvfsiB9sCtNuYes8ZxZ6urRTEXW
+	 k4P51FjTvBtMGGBYbropYa4uIfHx7yYMyxhf4FR1T4Q9n9Z+r7ppXUk15mZG2jhicHOfm
+	 O+M6u9MPcL2L4Bk0imOXoNfbsAYb4+S+EuMyZSyfwAEHRUfwWjbmCYao9pQ6CVeuzPEW6
+	 HrvX0AXT3UDaAbQmXhLFWKc3jt73BanzHE+X6e/8+4dmBTGraqxTZQf7/TDNv0EjFuZAy
+	 O7dHbwvcTkWz1/W9yGaDguVUUWzqCTxzLCVY7XMIXc/4sHL+ub9XKyqSphfIzWf5TRg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214731;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214734;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=j7F42CH9/Gubo2jkLX0lqsGTAoOUZJaUTVjT8DdGV5Q=;
-	b=E7y7IA1AxSXP+eq8yMIp3E3RyWA+HyHk5IGouzNHO95w5YFBkwryMgBSbfsd5tPoL0ZC
-	 8ZtQkcCciH5Nq94QDtFAV3OYoI4pDvZ9myDK4Scaa6WLdMf8KkqmTunulEvERBWY8lkmc
-	 jO+05CeW4BvHP6ppIvDcTc1XgJTKuFwxcyKtBdzdNopzG4bd3nY7MsTU6WAOjchvjOhUT
-	 JFYCmKIzHiQeJZ410Kao0CSSHGjPBbXJzjwejQFzMKfzUKLXVlYXMbT8uVL7e4YGn9JKW
-	 HEBrx8CQPZmsYpT6WS3KAV81mLVhlEpWuoMGEJi+kHQPq+FkGCB/CXJwuGXGbtd/now==
+	bh=61QqEj3MpiLb0fnG3QTu/1KZLtrjSad2V2fX/Elm88I=;
+	b=1A2Az0e6nWvfqvwcmzIt5VwKc13WhH++iaPAcEmZJ8d2W1r5D3KW8aN4HCUWRBKArTm8
+	 9jWRqZcZ/Smzu2nwiLRjPZgAUoBpm9HrRTdoBCY/vjP2INM7gvUnIsSiiwdHHHWQa1Wsi
+	 cy9Oft1bb1CVyGK6gX7MbzvyucO1Q1HpHdYMrww0SdeyHV9ubH/41Vc9wpNnOo17RKEh4
+	 Iu+VngBXkb8Mv/3zEJ1usjGfWoXw0ALezwxmDuiTGy4dxf1WKmuJHTpXw8Y3+Dwvc2mD6
+	 VpF6EnveE6uXRf150x+uE40cNTkEtoGYH3R1m8WAmceiP4h5TjD4zlhHKyvtYYHK+qA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kwWB13sY;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qA0PuMjC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BE46606AB31;
-	Wed, 28 Oct 2026 19:12:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DD1E606AB2A;
+	Wed, 28 Oct 2026 19:12:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kwWB13sY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED23D1F01825;
-	Wed, 28 Oct 2026 19:12:10 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qA0PuMjC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0C741F031E1;
+	Wed, 28 Oct 2026 19:12:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214731;
-	bh=j7F42CH9/Gubo2jkLX0lqsGTAoOUZJaUTVjT8DdGV5Q=;
+	s=korg; t=1793214734;
+	bh=61QqEj3MpiLb0fnG3QTu/1KZLtrjSad2V2fX/Elm88I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kwWB13sYUWEHG1Umqqw5tgWGM+m8iSaWDGzS7u4rGXD1a6h7sVctd6/+oPs0fcB7Q
-	 TiCcWFhlGH5LQafzFeleKTR6t8Yu04mcUSWyp90V9xkS5dFYpPxsDQeaOiDmakaaD2
-	 Ks0rJgBjl66mjT262EUZVOGK3DNoiaS1vXmL1JAc=
+	b=qA0PuMjCOlqDPQ3c8iT+cXpAzT/l29jf5lpGp3caha+EA9iR4jJiBudDu2c3K/zJV
+	 eA34ckwDTfzLAiePL/5r5nXk4tO3k5EubPlMeByTXEcH72hrek/sAy7Xgyd67luvKq
+	 SjmoDuu2GpZPwbfIIb9NPd9HbwQMD9WXLgwNdO38=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Kuen-Han Tsai <khtsai@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0963/1887] ksmbd: validate response sizes in ipc_validate_msg()
-Date: Wed, 28 Oct 2026 17:50:59 +0100
-Message-ID: <20261028170521.322538788@linuxfoundation.org>
+Subject: [PATCH 6.1 0964/1887] usb: gadget: f_rndis: Fix net_device lifecycle with device_move
+Date: Wed, 28 Oct 2026 17:51:00 +0100
+Message-ID: <20261028170521.345870045@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,84 +67,196 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Kuen-Han Tsai <khtsai@google.com>
 
-[ Upstream commit d6a6aa81eac2c9bff66dc6e191179cb69a14426b ]
+[ Upstream commit e367599529dc42578545a7f85fde517b35b3cda7 ]
 
-ipc_validate_msg() computes the expected message size for each
-response type by adding (or multiplying) attacker-controlled fields
-from the daemon response to a fixed struct size in unsigned int
-arithmetic.  Three cases can overflow:
+The net_device is allocated during function instance creation and
+registered during the bind phase with the gadget device as its sysfs
+parent. When the function unbinds, the parent device is destroyed, but
+the net_device survives, resulting in dangling sysfs symlinks:
 
-  KSMBD_EVENT_RPC_REQUEST:
-      msg_sz = sizeof(struct ksmbd_rpc_command) + resp->payload_sz;
-  KSMBD_EVENT_SHARE_CONFIG_REQUEST:
-      msg_sz = sizeof(struct ksmbd_share_config_response) +
-               resp->payload_sz;
-  KSMBD_EVENT_LOGIN_REQUEST_EXT:
-      msg_sz = sizeof(struct ksmbd_login_response_ext) +
-               resp->ngroups * sizeof(gid_t);
+  console:/ # ls -l /sys/class/net/usb0
+  lrwxrwxrwx ... /sys/class/net/usb0 ->
+  /sys/devices/platform/.../gadget.0/net/usb0
+  console:/ # ls -l /sys/devices/platform/.../gadget.0/net/usb0
+  ls: .../gadget.0/net/usb0: No such file or directory
 
-resp->payload_sz is __u32 and resp->ngroups is __s32.  Each addition
-can wrap in unsigned int; the multiplication by sizeof(gid_t) mixes
-signed and size_t, so a negative ngroups is converted to SIZE_MAX
-before the multiply.  A wrapped value of msg_sz that happens to
-equal entry->msg_sz bypasses the size check on the next line, and
-downstream consumers (smb2pdu.c:6742 memcpy using rpc_resp->payload_sz,
-kmemdup in ksmbd_alloc_user using resp_ext->ngroups) then trust the
-unverified length.
+Use device_move() to reparent the net_device between the gadget device
+tree and /sys/devices/virtual across bind and unbind cycles. During the
+final unbind, calling device_move(NULL) moves the net_device to the
+virtual device tree before the gadget device is destroyed. On rebinding,
+device_move() reparents the device back under the new gadget, ensuring
+proper sysfs topology and power management ordering.
 
-Use check_add_overflow() on the RPC_REQUEST and SHARE_CONFIG_REQUEST
-paths to detect integer overflow without constraining functional
-payload size; userspace ksmbd-tools grows NDR responses in 4096-byte
-chunks for calls like NetShareEnumAll, so a hard transport cap is
-unworkable on the response side.  For LOGIN_REQUEST_EXT, reject
-resp->ngroups outside the signed [0, NGROUPS_MAX] range up front and
-report the error from ipc_validate_msg() so it fires at the IPC
-boundary; with that bound the subsequent multiplication and addition
-stay well below UINT_MAX.  The now-redundant ngroups check and
-pr_err in ksmbd_alloc_user() are removed.
+To maintain compatibility with legacy composite drivers (e.g., multi.c),
+the borrowed_net flag is used to indicate whether the network device is
+shared and pre-registered during the legacy driver's bind phase.
 
-This is the response-side analogue of aab98e2dbd64 ("ksmbd: fix
-integer overflows on 32 bit systems"), which hardened the request
-side.
-
-Fixes: 0626e6641f6b ("cifsd: add server handler for central processing and tranport layers")
-Fixes: a77e0e02af1c ("ksmbd: add support for supplementary groups")
+Fixes: f466c6353819 ("usb: gadget: f_rndis: convert to new function interface with backward compatibility")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-6
-Assisted-by: Codex:gpt-5-4
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Kuen-Han Tsai <khtsai@google.com>
+Link: https://patch.msgid.link/20260320-usb-net-lifecycle-v1-7-4886b578161b@google.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/transport_ipc.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/usb/gadget/function/f_rndis.c | 42 ++++++++++++++++-----------
+ drivers/usb/gadget/function/u_rndis.h | 31 +++++++++++++++-----
+ 2 files changed, 48 insertions(+), 25 deletions(-)
 
-diff --git a/fs/smb/server/transport_ipc.c b/fs/smb/server/transport_ipc.c
-index 89fae5e1886ae..63d0e8bf39aa5 100644
---- a/fs/smb/server/transport_ipc.c
-+++ b/fs/smb/server/transport_ipc.c
-@@ -13,6 +13,7 @@
- #include <net/genetlink.h>
- #include <linux/socket.h>
- #include <linux/workqueue.h>
-+#include <linux/overflow.h>
+diff --git a/drivers/usb/gadget/function/f_rndis.c b/drivers/usb/gadget/function/f_rndis.c
+index 57c2246d0a4aa..8cdb2f4088950 100644
+--- a/drivers/usb/gadget/function/f_rndis.c
++++ b/drivers/usb/gadget/function/f_rndis.c
+@@ -679,6 +679,7 @@ rndis_bind(struct usb_configuration *c, struct usb_function *f)
  
- #include "vfs_cache.h"
- #include "transport_ipc.h"
-@@ -478,7 +479,9 @@ static int ipc_validate_msg(struct ipc_msg_table_entry *entry)
- 	if (entry->type == KSMBD_EVENT_RPC_REQUEST) {
- 		struct ksmbd_rpc_command *resp = entry->response;
+ 	struct f_rndis_opts *rndis_opts;
+ 	struct usb_os_desc_table        *os_desc_table __free(kfree) = NULL;
++	struct net_device		*net __free(detach_gadget) = NULL;
+ 	struct usb_request		*request __free(free_usb_request) = NULL;
  
--		msg_sz = sizeof(struct ksmbd_rpc_command) + resp->payload_sz;
-+		if (check_add_overflow(sizeof(struct ksmbd_rpc_command),
-+				       resp->payload_sz, &msg_sz))
-+			return -EINVAL;
- 	} else if (entry->type == KSMBD_EVENT_SPNEGO_AUTHEN_REQUEST) {
- 		struct ksmbd_spnego_authen_response *resp = entry->response;
+ 	if (!can_support_rndis(c))
+@@ -696,21 +697,18 @@ rndis_bind(struct usb_configuration *c, struct usb_function *f)
+ 		rndis_iad_descriptor.bFunctionClass = rndis_opts->class;
+ 		rndis_iad_descriptor.bFunctionSubClass = rndis_opts->subclass;
+ 		rndis_iad_descriptor.bFunctionProtocol = rndis_opts->protocol;
+-	}
  
+-	/*
+-	 * in drivers/usb/gadget/configfs.c:configfs_composite_bind()
+-	 * configurations are bound in sequence with list_for_each_entry,
+-	 * in each configuration its functions are bound in sequence
+-	 * with list_for_each_entry, so we assume no race condition
+-	 * with regard to rndis_opts->bound access
+-	 */
+-	if (!rndis_opts->bound) {
+-		gether_set_gadget(rndis_opts->net, cdev->gadget);
+-		status = gether_register_netdev(rndis_opts->net);
+-		if (status)
+-			return status;
+-		rndis_opts->bound = true;
++		if (rndis_opts->bind_count == 0 && !rndis_opts->borrowed_net) {
++			if (!device_is_registered(&rndis_opts->net->dev)) {
++				gether_set_gadget(rndis_opts->net, cdev->gadget);
++				status = gether_register_netdev(rndis_opts->net);
++			} else
++				status = gether_attach_gadget(rndis_opts->net, cdev->gadget);
++
++			if (status)
++				return status;
++			net = rndis_opts->net;
++		}
+ 	}
+ 
+ 	us = usb_gstrings_attach(cdev, rndis_strings,
+@@ -809,6 +807,9 @@ rndis_bind(struct usb_configuration *c, struct usb_function *f)
+ 	}
+ 	rndis->notify_req = no_free_ptr(request);
+ 
++	rndis_opts->bind_count++;
++	no_free_ptr(net);
++
+ 	/* NOTE:  all that is done without knowing or caring about
+ 	 * the network link ... which is unavailable to this code
+ 	 * until we're activated via set_alt().
+@@ -827,11 +828,11 @@ void rndis_borrow_net(struct usb_function_instance *f, struct net_device *net)
+ 	struct f_rndis_opts *opts;
+ 
+ 	opts = container_of(f, struct f_rndis_opts, func_inst);
+-	if (opts->bound)
++	if (device_is_registered(&opts->net->dev))
+ 		gether_cleanup(netdev_priv(opts->net));
+ 	else
+ 		free_netdev(opts->net);
+-	opts->borrowed_net = opts->bound = true;
++	opts->borrowed_net = true;
+ 	opts->net = net;
+ }
+ EXPORT_SYMBOL_GPL(rndis_borrow_net);
+@@ -889,7 +890,7 @@ static void rndis_free_inst(struct usb_function_instance *f)
+ 
+ 	opts = container_of(f, struct f_rndis_opts, func_inst);
+ 	if (!opts->borrowed_net) {
+-		if (opts->bound)
++		if (device_is_registered(&opts->net->dev))
+ 			gether_cleanup(netdev_priv(opts->net));
+ 		else
+ 			free_netdev(opts->net);
+@@ -958,6 +959,9 @@ static void rndis_free(struct usb_function *f)
+ static void rndis_unbind(struct usb_configuration *c, struct usb_function *f)
+ {
+ 	struct f_rndis		*rndis = func_to_rndis(f);
++	struct f_rndis_opts	*rndis_opts;
++
++	rndis_opts = container_of(f->fi, struct f_rndis_opts, func_inst);
+ 
+ 	kfree(f->os_desc_table);
+ 	f->os_desc_n = 0;
+@@ -965,6 +969,10 @@ static void rndis_unbind(struct usb_configuration *c, struct usb_function *f)
+ 
+ 	kfree(rndis->notify_req->buf);
+ 	usb_ep_free_request(rndis->notify, rndis->notify_req);
++
++	rndis_opts->bind_count--;
++	if (rndis_opts->bind_count == 0 && !rndis_opts->borrowed_net)
++		gether_detach_gadget(rndis_opts->net);
+ }
+ 
+ static struct usb_function *rndis_alloc(struct usb_function_instance *fi)
+diff --git a/drivers/usb/gadget/function/u_rndis.h b/drivers/usb/gadget/function/u_rndis.h
+index a8c409b2f52f9..4e64619714dc2 100644
+--- a/drivers/usb/gadget/function/u_rndis.h
++++ b/drivers/usb/gadget/function/u_rndis.h
+@@ -15,12 +15,34 @@
+ 
+ #include <linux/usb/composite.h>
+ 
++/**
++ * struct f_rndis_opts - RNDIS function options
++ * @func_inst: USB function instance.
++ * @vendor_id: Vendor ID.
++ * @manufacturer: Manufacturer string.
++ * @net: The net_device associated with the RNDIS function.
++ * @bind_count: Tracks the number of configurations the RNDIS function is
++ *              bound to, preventing double-registration of the @net device.
++ * @borrowed_net: True if the net_device is shared and pre-registered during
++ *                the legacy composite driver's bind phase (e.g., multi.c).
++ *                If false, the RNDIS function will register the net_device
++ *                during its own bind phase.
++ * @rndis_interf_group: ConfigFS group for RNDIS interface.
++ * @rndis_os_desc: USB OS descriptor for RNDIS.
++ * @rndis_ext_compat_id: Extended compatibility ID.
++ * @class: USB class.
++ * @subclass: USB subclass.
++ * @protocol: USB protocol.
++ * @lock: Protects the data from concurrent access by configfs read/write
++ *        and create symlink/remove symlink operations.
++ * @refcnt: Reference counter for the function instance.
++ */
+ struct f_rndis_opts {
+ 	struct usb_function_instance	func_inst;
+ 	u32				vendor_id;
+ 	const char			*manufacturer;
+ 	struct net_device		*net;
+-	bool				bound;
++	int				bind_count;
+ 	bool				borrowed_net;
+ 
+ 	struct config_group		*rndis_interf_group;
+@@ -30,13 +52,6 @@ struct f_rndis_opts {
+ 	u8				class;
+ 	u8				subclass;
+ 	u8				protocol;
+-
+-	/*
+-	 * Read/write access to configfs attributes is handled by configfs.
+-	 *
+-	 * This is to protect the data from concurrent access by read/write
+-	 * and create symlink/remove symlink.
+-	 */
+ 	struct mutex			lock;
+ 	int				refcnt;
+ };
 -- 
 2.53.0
 
