@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793208864;
-	b=Xeed7UZUzr3KsWQAJi/Pczs/ltq9voUgHhZDYarJXwedj8hvsZDugK+O39bDWCu5b2DT
-	 XF8qyhC9z8RxvLyVzdTeXGGLua7fQsr7Gcek8H0SlwX8PBErNmuTY0gKCji2zoq4C3QNb
-	 B1WkcURNa4Fv5I2MFAX+uj9Tt34hQl3Qe8SsvBHVXwb40o6EOeYeXZnNwiKbj3izUAfB3
-	 RPMgAp9Fdd9Y0kK/ofdMxvwtCC4iHBPVQz9umlEphplRVdurlpQFokFnqE9QjT6A2Fp48
-	 14Xd5DlC33AfItQfYbPDPYLJ2T9uhhb5z76Mq+KoKKH7UIZtostnOURBy6nZmLk+Q5g==
+	t=1793208866;
+	b=YphXhFkVIlSGrpJD5w4jkA47bcheaN25Yp6T65vwKWnn5ctUZuRODGjLi6Hp2X3RnDF+
+	 c3XOlybYYNhD+nsM6jYPMsQ9WN6JBxpsvnlL10d4WdQDOul9l87WKGvZp44yX+nQKsXTN
+	 kP3/gZo3ZNMR3vuPLp+F4haUSS0goMBVTbxqmmiSfx9TSFwdrdFe0SzGjelLGptR3MN1Z
+	 +bUmve9twJ3KMYow6yOZFdepTH5gaZaS5g7CnIJf2YS4JZDsP8G/rzdvjfawa8x91Ugqp
+	 SNM4OfRQ0qJ7pG5q4Z7lRzyePmQn6FqI3FDf3ZhMIfAGJUIePdQ898yxq5bG9Y0swMw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793208864;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793208866;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=6Du0bvhCO2mNDloa++0dqA+HiawQtYMdzpoaxpQFK1g=;
-	b=W+7NnQY9GvkkscUTjGnR4lp7vm8s6YJzTXfPyiSM7bGsfCZj00aOqxZqK3kpRFULqbz5
-	 CvZ87vj/7lW0gHC85JKbCyWNo16X/wlh3es9JzNsPFtrm7+wm+XE0ol0f5EIx3hKL8am5
-	 pjiyF3Vu4nrSe0O4Xr6QBupM81dhyZ1ssdnfg/x9Se77ceCAt6aAkxzv8vTptaHuikzbI
-	 Hl2y6vTiApAYZ+4Pd/X3G6E9UQ+wnu3K0ElO95xODS3xCzyz7LCf4MW9cuhRNpUTDW7Mk
-	 yjENQUQ86BDhT3G1FutzCEB61z0nkW2r8/7xed609UHMZ8cYGeS3K6zI7ZfiPAG5LSg==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=xONkWxlGolvkSxmeZS5DQo2WIfFhozLCZUQLmSXK0E8=;
+	b=guMw7YuXdXzujSJXbrHocCACSL0JeHOo+zCCsB42nJdjFkdOo9mn9Yy9MYWrU4vm4SIh
+	 3cLlGTlRVIEEATFH/cu79qlJZkUPhD346/IrvBIsuUUBtHoK/dGR4DE7LRnglB9QqDXWL
+	 nTxCLkYf+6is5TnM6ukxan+0uj4hx8t71uoqXTlwLTFsupDhQjzFSa52dp2lpqIyp9CuG
+	 kynmV0DeEXAQSPxO2cHx1nSzwpeGxoKogcjNgSQeMkSG5nyeLiKcYoa/bQDhaqpFzjHOF
+	 15lpu5UKdRo8eTD/afzZVIOYtVSJCIGeCLD1lBuTp87yzkA5anKVov9nl2GVigOHLRA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Qt8Q94d1;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pAKjl5FU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD286606A31A;
-	Wed, 28 Oct 2026 17:34:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8ACDE606A31A;
+	Wed, 28 Oct 2026 17:34:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Qt8Q94d1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 093ED1F01825;
-	Wed, 28 Oct 2026 17:34:22 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pAKjl5FU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA9AD1F01825;
+	Wed, 28 Oct 2026 17:34:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793208863;
-	bh=6Du0bvhCO2mNDloa++0dqA+HiawQtYMdzpoaxpQFK1g=;
+	s=korg; t=1793208866;
+	bh=xONkWxlGolvkSxmeZS5DQo2WIfFhozLCZUQLmSXK0E8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Qt8Q94d1ez8PWsq0dcdseiiu4KDigwsJQCIhx17aB8zwHDVxR7SJoOq6RubNAsffi
-	 hPchzWTvVLtYxCsgavBcpt1gESWV4d2qRzTPX/PBE2TBS2m05uJf3jCTE3dnGPt+XM
-	 vsPamCIISZKe1dxAfpIdf91xvFBosQu+hEjZcCFQ=
+	b=pAKjl5FUIDHJQG7FWuMfY13ofGvgCdEYanKNM452Sld930WNle8zzdK/K9I+GlTVV
+	 eYGxD9CEw4kxb6vWPtRDU9B1mUSo9VuWX6Zu9kpCESQHshr30klI4pBaUAXfHcZVtt
+	 JoKm8dJGGE5yTP0uaEe3LfEJWaHJMom1gGHhq6fc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	stable@kernel.org,
+	Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 268/516] drm/amd/pm/si: Check AMD_IS_MOBILITY flag for PPSMC_SYSTEMFLAG_GPIO_DC
-Date: Wed, 28 Oct 2026 17:57:00 +0100
-Message-ID: <20261028170009.841881215@linuxfoundation.org>
+Subject: [PATCH 5.10 269/516] soc: qcom: geni-se: Correct QUP Core ICC vote constants
+Date: Wed, 28 Oct 2026 17:57:01 +0100
+Message-ID: <20261028170009.865275467@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -63,73 +63,66 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Timur Kristóf <timur.kristof@gmail.com>
+From: Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>
 
-[ Upstream commit cd883d0a3937df82a5ea03709ba8ba623b868419 ]
+[ Upstream commit 1cd9b1be5a9c56fd69e3f555b200a1844f9b873e ]
 
-Unfortunately, some desktop boards eg. the FirePro D500
-have the HARDWAREDC platform flag set and also have
-a battery power state configured in their VBIOS.
-This makes no sense for a desktop GPU and results in
-incorrect behaviour: the clocks are stuck at lowest.
+The GENI_TO_CORE ("qup-core") ICC vote selects the QUP Core 2X clock
+rate. The CORE_2X_*_MHZ constants are expressed in Bps, but their
+values are several orders of magnitude too small. For example, the
+50 MHz threshold is represented by 2500 rather than 25000000 Bps.
 
-We observed that the kernel driver can work around
-the issue in two possible ways:
-1. Set PPSMC_SWSTATE_FLAG_DC on all power states
-2. Clear PPSMC_SYSTEMFLAG_GPIO_DC
+As a result, clients using these constants can severely under-vote the
+QUP Core clock.
 
-We think that the PPSMC_SYSTEMFLAG_GPIO_DC flag
-makes the SMC assume it's running on battery even
-though this is a desktop machine with no battery,
-and that's why it doesn't do DPM on power states
-without PPSMC_SYSTEMFLAG_GPIO_DC.
+Correct the constants to their intended Bps thresholds so that the ICC
+provider selects the corresponding QUP Core 2X clock rate. Drop the unused
+definitions.
 
-Issue was uncovered by "Fix updating clock limits from
-power states" because previously the limits for the
-battery state were not tracked separately. However,
-battery power state has lower frequencies and voltages,
-so the kernel doesn't set the DC flag on the current
-power state anymore. That causes the SMC to be stuck
-on the lowest clocks.
-
-Let's clear PPSMC_SYSTEMFLAG_GPIO_DC on desktop GPUs.
-We can use the AMD_IS_MOBILITY flag to determine that.
-
-Fixes: e6c5d36756e7 ("drm/amd/pm/si: Fix updating clock limits from power states")
-Closes: https://gitlab.freedesktop.org/mesa/mesa/-/work_items/16352
-Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
-Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
-Link: https://patch.msgid.link/20260923120354.1027996-1-timur.kristof@gmail.com
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 58473c7c49ce9f5f5a4a1c24ffb9aa1d3c8771f4)
-Cc: stable@vger.kernel.org
+Fixes: 58ffbba6a399 ("soc: qcom: geni: Support for ICC voting")
+Cc: stable@kernel.org
+Signed-off-by: Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260915-correct-icc-bandwidth-vote-constants-v2-1-f78eb611204e@oss.qualcomm.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/pm/powerplay/si_dpm.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ include/linux/qcom-geni-se.h | 15 +++++----------
+ 1 file changed, 5 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/pm/powerplay/si_dpm.c b/drivers/gpu/drm/amd/pm/powerplay/si_dpm.c
-index f4bb4d2c3f77b..79e23092c052a 100644
---- a/drivers/gpu/drm/amd/pm/powerplay/si_dpm.c
-+++ b/drivers/gpu/drm/amd/pm/powerplay/si_dpm.c
-@@ -5164,7 +5164,8 @@ static int si_init_smc_table(struct amdgpu_device *adev)
- 		break;
- 	}
+diff --git a/include/linux/qcom-geni-se.h b/include/linux/qcom-geni-se.h
+index 964cfe68f72cc..9e98c4525a0ed 100644
+--- a/include/linux/qcom-geni-se.h
++++ b/include/linux/qcom-geni-se.h
+@@ -252,17 +252,12 @@ struct geni_se {
+ #define QUP_SE_VERSION_2_5                  0x20050000
  
--	if (adev->pm.dpm.platform_caps & ATOM_PP_PLATFORM_CAP_HARDWAREDC)
-+	if ((adev->flags & AMD_IS_MOBILITY) &&
-+	    (adev->pm.dpm.platform_caps & ATOM_PP_PLATFORM_CAP_HARDWAREDC))
- 		table->systemFlags |= PPSMC_SYSTEMFLAG_GPIO_DC;
+ /*
+- * Define bandwidth thresholds that cause the underlying Core 2X interconnect
+- * clock to run at the named frequency. These baseline values are recommended
+- * by the hardware team, and are not dynamically scaled with GENI bandwidth
+- * beyond basic on/off.
++ * QUP Core 2X clock votes used by GENI clients through the "qup-core" ICC
++ * path. Values are in Bps and must be converted with Bps_to_icc() before
++ * setting avg_bw.
+  */
+-#define CORE_2X_19_2_MHZ		960
+-#define CORE_2X_50_MHZ			2500
+-#define CORE_2X_100_MHZ			5000
+-#define CORE_2X_150_MHZ			7500
+-#define CORE_2X_200_MHZ			10000
+-#define CORE_2X_236_MHZ			16383
++#define CORE_2X_19_2_MHZ		9600000
++#define CORE_2X_50_MHZ			25000000
  
- 	if (adev->pm.dpm.platform_caps & ATOM_PP_PLATFORM_CAP_REGULATOR_HOT) {
+ #define GENI_DEFAULT_BW			Bps_to_icc(1000)
+ 
 -- 
 2.53.0
 
