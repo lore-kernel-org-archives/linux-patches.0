@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216171;
-	b=EKyefSroZQ7TXb0XeQr+WynU4m3vXB34un3mk9lVG6wkwYLaa/WXCNcNBoTrenmL1aFB
-	 gkAzBM0ueJh6OOp0k6IP4pYAUJ4Fua78xMrII6tQFrLsLVfL0zc6jltiVpZ+HEHBu0+il
-	 eFmyOHbkM4L50/k6txiqb8qu1xjAP1+yKci0sfGlgbGog5rWKNn42JHQYvFfGmOWVSQGq
-	 09YaVwjOsLgb/H/4XcFEiEJwFdT5nnTV3dTfXnYc6erVr2GTkhiwWgbTX53vMKad2jQzV
-	 ep1IEsqEtc6IcSo9VJBgK0bejeMtUk9gZQabMkoGkEL4bY86OEuCaZQRue0o3aQYvig==
+	t=1793216173;
+	b=gjoTX2CRdui0Q0pxYfuU3oOA1v2I3uJhP5Mv0HT2zIvdYanji42X+/Mw/cV2U3a5EcTt
+	 13ui73NqKuMz3CVhLmSSZkL4tGsrDI6W09eGq2uJ2jJh46hh7W8koccKsUH6d4I98U/OR
+	 zYIKFnEdLhlY7ckdvJjkBKxTVdX5slLTrmvINWnI5cd8Se+hsmNXyWRNBegLVZEVA2Riw
+	 TTt1rOiCxd8QV3DwYxGPt0suJQndfvKeivZiVvwySuAsnuQzXDkiwEyR4mgf8LW10LqKL
+	 /pr5zymsLLwu7rUWB0lA4YZAlNWuVkpatVCynpFcoZAJc1rl9ci/Z8YQwawOj4j4e5Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216171;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216173;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=e82IiJuNOW0ov9D1SoVNf72CIk8Sorli6pCqiHc/Xq0=;
-	b=LRJMy4MP2yQtSIYYp1yNs18J9dm5ssWMt3Ro1/qojnrLfvC4LAMEGpMdzJehc5ILRfUi
-	 FVHd9TW1pE31b3uV56aDCcmgvh6t4xrUBDnTXP8rULSNAZ1m3HPf0XuKc03TUN44qUp3S
-	 8Hos+Bnp+M5if19VE1jI5a7vsPQ8gJA6u8ckg368W+ZgjpGn5nvKwP2oi4DfG8HOiJJXa
-	 CwrnQC7/OjvdEQhuGTCI4SueRnzR3BemkSKoFVXMAevaTJ1r+ITrYHmsXyzhaV8Qmzrmn
-	 bDU8q70VaYb3KaO1aw9M+BnjmOZW7Ewn/E2ZWo2oF+05zSlokzG/gxcgK3NI1xSdU9A==
+	bh=Xchktx0oJeb0x2KbS9cSJoiRtANV6rHwR3XteJuDkp8=;
+	b=2FkL5G7O5NiYu1vY/3d1pMs4aeTWkrEBREXSult9KTFpzSUH7OJOvwlv2J2wROYmmV7g
+	 YDEUkYP0lY9bJeBUDHzF4iCiQ8Lkoq2rSLVwlm3Q5HSkzoa9LfXunhDFyuc6HJkkWoHr0
+	 ndyco9AKUBtvrYsRyjI49FK4O8GIDJFP4nFLUJUhoJ2QG2eoo/ryvhY0SNEJFxw/9SB2H
+	 gkygckvFqzIaysSIr2Y8vgQwp03ye0CyxXO6iHw2QEU0hoKri/mKH+79Vz2wdUXekgOr/
+	 oUx3XRAxJUDlDS7mpSKYn4clyp7BMVUlMvN2D+j8zCD19Qjm55S6d/WmyuIF8+V+zRA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=R1c6rQcO;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uQRLSEJR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0AC8606A31C;
-	Wed, 28 Oct 2026 19:36:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7462A606A321;
+	Wed, 28 Oct 2026 19:36:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=R1c6rQcO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 005EE1F01825;
-	Wed, 28 Oct 2026 19:36:09 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uQRLSEJR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5AF31F01825;
+	Wed, 28 Oct 2026 19:36:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216170;
-	bh=e82IiJuNOW0ov9D1SoVNf72CIk8Sorli6pCqiHc/Xq0=;
+	s=korg; t=1793216173;
+	bh=Xchktx0oJeb0x2KbS9cSJoiRtANV6rHwR3XteJuDkp8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=R1c6rQcO/EI+XG0gZxC4Nqoce3NSU3jWl6SffRLS9ZpXoAhUNg1L87qKcdszfq0JE
-	 YWRz11Q+9UUJm1eW4BIkNtgls58lCb/BvdnCPSTK3mIL4xUdKQClHR8irhQ4I3wi+0
-	 1VpTOu75ahx+ef8okxRuV+bl2V8XRGpADMABu/58=
+	b=uQRLSEJRj2ObXehyrxUpvqQcpeXLOrOAu/wwysKrCOCPDhMd85+hKeJgge189To5j
+	 8LAfemA8ZBRuBC1jlOB1U0962qL31e/sy+opxNzBKHgsVtp+QVFMFKHvUJRPtK1uzX
+	 lX37ZN9AlO3MiHWrQ07iYBdxfi2E9A2xX9xKdSWU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cen Zhang <zzzccc427@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Tao Chen <chen.dylane@linux.dev>,
+	STAR Labs SG <info@starlabs.sg>,
+	Daniel Borkmann <borkmann@iogearbox.net>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1458/1887] Bluetooth: 6lowpan: hold L2CAP conn across debugfs control
-Date: Wed, 28 Oct 2026 17:59:14 +0100
-Message-ID: <20261028170532.639070122@linuxfoundation.org>
+Subject: [PATCH 6.1 1467/1887] bpf: Disable preemption in __bpf_get_stack
+Date: Wed, 28 Oct 2026 17:59:23 +0100
+Message-ID: <20261028170532.839410011@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,202 +71,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang <zzzccc427@gmail.com>
+From: Daniel Borkmann <borkmann@iogearbox.net>
 
-[ Upstream commit 518aa9505fa10ea5662349e5d2efd8c9e32a820b ]
+[ Upstream commit b1a47b2708d4e95dbd23aee2ec83752190897b3f ]
 
-get_l2cap_conn() looks up an LE hci_conn under hdev protection, but
-then drops that protection before reading hcon->l2cap_data and before
-lowpan_control_write() later dereferences conn->hcon.  A disconnect or
-device close can tear down the same L2CAP connection in that window.
+get_perf_callchain() returns a per-CPU perf_callchain_entry buffer and
+releases its recursion slot via put_callchain_entry() before returning,
+so nothing keeps the entry reserved while __bpf_get_stack() consumes
+it below.
 
-The buggy scenario involves two paths, with each column showing the order
-within that path:
+A preemptible BPF program (e.g. a non-sleepable raw tracepoint program
+on a PREEMPT kernel, which runs under migrate_disable() but not
+preempt_disable()) can be scheduled out between obtaining the entry
+and the copy. Another task scheduled on the same CPU then reuses the
+same per-CPU buffer and overwrites trace->nr with a larger value.
+copy_len is then computed from the inflated trace->nr and can exceed
+the caller's buffer, causing an out-of-bounds write in the memcpy()
+and in the build_id path.
 
-6LoWPAN control write:              HCI disconnect/device close:
-  1. get_l2cap_conn() finds hcon      1. hci_disconn_cfm() dispatches
-     and hcon->l2cap_data.               the L2CAP disconnect callback.
-  2. get_l2cap_conn() drops hdev      2. l2cap_conn_del() clears
-     protection and returns conn.        hcon->l2cap_data and drops the
-                                         L2CAP connection reference.
-  3. lowpan_control_write() reads     3. hci_conn_del() removes and drops
-     conn->hcon.                         the HCI connection.
+The rcu_read_lock() taken here alone does not prevent this. It is
+only taken on the may_fault path, and under CONFIG_PREEMPT_RCU it does
+not disable preemption; it merely keeps perf's callchain buffer array
+alive (freed via call_rcu()) and does nothing to stop another task
+from reusing the entry.
 
-Take a reference to the L2CAP connection with
-l2cap_conn_hold_unless_zero() while hdev is still locked, and drop that
-reference after the debugfs command's last use of conn.  This mirrors the
-existing L2CAP ACL receive-side handoff and keeps the connection
-dereferenceable after leaving hdev protection.  Export the existing helper
-so the bluetooth_6lowpan module can use the same lifetime primitive.
+Disable preemption around obtaining the callchain entry and copying
+it into the caller's buffer, so the entry cannot be reused underneath
+us and trace->nr stays bounded by max_depth. Build ID resolution may
+fault and is therefore deferred until after preemption is re-enabled;
+by then the instruction pointers have already been copied into buf,
+so it operates only on that private copy. Note, preempt_disable() also
+subsumes the buffer-lifetime guarantee the rcu_read_lock() provided,
+since a preempt-disabled section is an RCU read-side critical section
+for the callchain buffers' call_rcu() reclaim.
 
-Validation reproduced this kernel report:
-BUG: KASAN: slab-use-after-free in lowpan_control_write+0x374/0x520
-The buggy address belongs to the object at ffff888111b9d000 which belongs
-to the cache kmalloc-1k of size 1024
-The buggy address is located 0 bytes inside of freed 1024-byte region
-[ffff888111b9d000, ffff888111b9d400)
-Read of size 8
-Call trace:
-  dump_stack_lvl+0x66/0xa0
-  print_report+0xce/0x5f0
-  lowpan_control_write+0x374/0x520 (net/bluetooth/6lowpan.c:1131)
-  srso_alias_return_thunk+0x5/0xfbef5
-  __virt_addr_valid+0x19f/0x330
-  kasan_report+0xe0/0x110
-  __debugfs_file_get+0xf7/0x400
-  full_proxy_write+0x9e/0xd0
-  vfs_write+0x1b0/0x810
-  ksys_write+0xd2/0x170
-  dnotify_flush+0x32/0x220
-  do_syscall_64+0x115/0x6a0 (arch/x86/entry/syscall_64.c:87)
-  entry_SYSCALL_64_after_hwframe+0x77/0x7f
-Allocated by task stack:
-  kasan_save_stack+0x33/0x60
-  kasan_save_track+0x17/0x60
-  __kasan_kmalloc+0xaa/0xb0
-  l2cap_conn_add+0x45/0x520
-  l2cap_chan_connect+0xac6/0xd90
-  l2cap_sock_connect+0x216/0x350
-  __sys_connect+0x101/0x130
-  __x64_sys_connect+0x40/0x50
-  do_syscall_64+0x115/0x6a0 (arch/x86/entry/syscall_64.c:87)
-  entry_SYSCALL_64_after_hwframe+0x77/0x7f
-Freed by task stack:
-  kasan_save_stack+0x33/0x60
-  kasan_save_track+0x17/0x60
-  kasan_save_free_info+0x3b/0x60
-  __kasan_slab_free+0x5f/0x80
-  kfree+0x313/0x590
-  hci_conn_hash_flush+0xc0/0x140
-  hci_dev_close_sync+0x41a/0xb00
-  hci_dev_close+0x12f/0x160
-  hci_sock_ioctl+0x157/0x570
-  sock_do_ioctl+0xf7/0x210
-  sock_ioctl+0x32f/0x490
-  __x64_sys_ioctl+0xc7/0x110
-  do_syscall_64+0x115/0x6a0 (arch/x86/entry/syscall_64.c:87)
-  entry_SYSCALL_64_after_hwframe+0x77/0x7f
-  kasan_record_aux_stack+0xa7/0xc0
-  insert_work+0x32/0x100
-  __queue_work+0x262/0xa60
-  queue_work_on+0xad/0xb0
-  l2cap_connect_cfm+0x4ef/0x670
-  hci_le_remote_feat_complete_evt+0x247/0x430
-  hci_event_packet+0x360/0x6f0
-  hci_rx_work+0x2ae/0x7a0
-  process_one_work+0x4fd/0xbc0
-  worker_thread+0x2d8/0x570
-  kthread+0x1ad/0x1f0
-  ret_from_fork+0x3c9/0x540
-  ret_from_fork_asm+0x1a/0x30
+Fixes: c195651e565a ("bpf: add bpf_get_stack helper")
+Reported-by: Tao Chen <chen.dylane@linux.dev>
+Reported-by: STAR Labs SG <info@starlabs.sg>
+Signed-off-by: Daniel Borkmann <borkmann@iogearbox.net>
+Signed-off-by: Jiri Olsa <jolsa@kernel.org>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/bpf/20260803210149.296496-11-jolsa@kernel.org
 
-Fixes: 6b8d4a6a0314 ("Bluetooth: 6LoWPAN: Use connected oriented channel instead of fixed one")
-Assisted-by: Codex:gpt-5.5
-Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Closes: https://lore.kernel.org/bpf/20260206090653.1336687-1-chen.dylane@linux.dev/
+[ changed Fixes: commit ]
+
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/bluetooth/l2cap.h |  1 +
- net/bluetooth/6lowpan.c       | 22 ++++++++++++++++------
- net/bluetooth/l2cap_core.c    |  3 ++-
- 3 files changed, 19 insertions(+), 7 deletions(-)
+ kernel/bpf/stackmap.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/include/net/bluetooth/l2cap.h b/include/net/bluetooth/l2cap.h
-index ce799df6cbb36..b317c89935e90 100644
---- a/include/net/bluetooth/l2cap.h
-+++ b/include/net/bluetooth/l2cap.h
-@@ -980,6 +980,7 @@ void __l2cap_physical_cfm(struct l2cap_chan *chan, int result);
+diff --git a/kernel/bpf/stackmap.c b/kernel/bpf/stackmap.c
+index dcbc3b314d5c3..49652d55ba708 100644
+--- a/kernel/bpf/stackmap.c
++++ b/kernel/bpf/stackmap.c
+@@ -433,6 +433,7 @@ static long __bpf_get_stack(struct pt_regs *regs, struct task_struct *task,
+ 	if (sysctl_perf_event_max_stack < max_depth)
+ 		max_depth = sysctl_perf_event_max_stack;
  
- struct l2cap_conn *l2cap_conn_get(struct l2cap_conn *conn);
- void l2cap_conn_put(struct l2cap_conn *conn);
-+struct l2cap_conn *l2cap_conn_hold_unless_zero(struct l2cap_conn *conn);
- 
- int l2cap_register_user(struct l2cap_conn *conn, struct l2cap_user *user);
- void l2cap_unregister_user(struct l2cap_conn *conn, struct l2cap_user *user);
-diff --git a/net/bluetooth/6lowpan.c b/net/bluetooth/6lowpan.c
-index e59032c67116a..1b5a5bee3d07f 100644
---- a/net/bluetooth/6lowpan.c
-+++ b/net/bluetooth/6lowpan.c
-@@ -998,16 +998,20 @@ static int get_l2cap_conn(char *buf, bdaddr_t *addr, u8 *addr_type,
- 
- 	hci_dev_lock(hdev);
- 	hcon = hci_conn_hash_lookup_le(hdev, addr, le_addr_type);
--	hci_dev_unlock(hdev);
--	hci_dev_put(hdev);
--
--	if (!hcon)
-+	if (!hcon) {
-+		hci_dev_unlock(hdev);
-+		hci_dev_put(hdev);
- 		return -ENOENT;
++	preempt_disable();
+ 	if (trace_in)
+ 		trace = trace_in;
+ 	else if (kernel && task)
+@@ -440,11 +441,15 @@ static long __bpf_get_stack(struct pt_regs *regs, struct task_struct *task,
+ 	else
+ 		trace = get_perf_callchain(regs, 0, kernel, user, max_depth,
+ 					   crosstask, false);
+-	if (unlikely(!trace))
++	if (unlikely(!trace)) {
++		preempt_enable();
+ 		goto err_fault;
 +	}
  
--	*conn = (struct l2cap_conn *)hcon->l2cap_data;
-+	*conn = hcon->l2cap_data ?
-+		l2cap_conn_hold_unless_zero(hcon->l2cap_data) : NULL;
+-	if (trace->nr < skip)
++	if (trace->nr < skip) {
++		preempt_enable();
+ 		goto err_fault;
++	}
  
- 	BT_DBG("conn %p dst %pMR type %u", *conn, &hcon->dst, hcon->dst_type);
+ 	trace_nr = trace->nr - skip;
+ 	trace_nr = (trace_nr <= num_elem) ? trace_nr : num_elem;
+@@ -455,6 +460,7 @@ static long __bpf_get_stack(struct pt_regs *regs, struct task_struct *task,
+ 		stack_map_get_build_id_offset(buf, ips, trace_nr, user);
+ 	else
+ 		memcpy(buf, ips, copy_len);
++	preempt_enable();
  
-+	hci_dev_unlock(hdev);
-+	hci_dev_put(hdev);
-+
- 	return 0;
- }
- 
-@@ -1131,18 +1135,22 @@ static ssize_t lowpan_control_write(struct file *fp,
- 		if (conn) {
- 			struct lowpan_peer *peer;
- 
--			if (!is_bt_6lowpan(conn->hcon))
-+			if (!is_bt_6lowpan(conn->hcon)) {
-+				l2cap_conn_put(conn);
- 				return -EINVAL;
-+			}
- 
- 			peer = lookup_peer(conn);
- 			if (peer) {
- 				BT_DBG("6LoWPAN connection already exists");
-+				l2cap_conn_put(conn);
- 				return -EALREADY;
- 			}
- 
- 			BT_DBG("conn %p dst %pMR type %d user %u", conn,
- 			       &conn->hcon->dst, conn->hcon->dst_type,
- 			       addr_type);
-+			l2cap_conn_put(conn);
- 		}
- 
- 		ret = bt_6lowpan_connect(&addr, addr_type);
-@@ -1158,6 +1166,8 @@ static ssize_t lowpan_control_write(struct file *fp,
- 			return ret;
- 
- 		ret = bt_6lowpan_disconnect(conn, addr_type);
-+		if (conn)
-+			l2cap_conn_put(conn);
- 		if (ret < 0)
- 			return ret;
- 
-diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
-index e570b44c16003..15bb4ca915134 100644
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -7821,7 +7821,7 @@ static void l2cap_recv_reset(struct l2cap_conn *conn)
- 	conn->rx_len = 0;
- }
- 
--static struct l2cap_conn *l2cap_conn_hold_unless_zero(struct l2cap_conn *c)
-+struct l2cap_conn *l2cap_conn_hold_unless_zero(struct l2cap_conn *c)
- {
- 	BT_DBG("conn %p orig refcnt %u", c, kref_read(&c->ref));
- 
-@@ -7830,6 +7830,7 @@ static struct l2cap_conn *l2cap_conn_hold_unless_zero(struct l2cap_conn *c)
- 
- 	return c;
- }
-+EXPORT_SYMBOL(l2cap_conn_hold_unless_zero);
- 
- void l2cap_recv_acldata(struct hci_conn *hcon, struct sk_buff *skb, u16 flags)
- {
+ 	if (size > copy_len)
+ 		memset(buf + copy_len, 0, size - copy_len);
 -- 
 2.53.0
 
