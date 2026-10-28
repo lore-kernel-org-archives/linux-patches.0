@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214218;
-	b=p8cWxfk/c+zUUVqqwX9a1KQz9dCiYiLuXFUKc0c8cyFvTXLFgb0v++Is3Tjk2DQemNJQ
-	 taPpCphxyFRIdGdVYqRXZlMbxIETh+pYaHYhQNmFxErvockErgxfcQNSERjd4sGzjfzIZ
-	 1jWtkoXPLK0325kRlIZ3OrCyD9YBLdzkVpqorhNQP4gdh0qpCqL2US9KXcJD1TZnfOemr
-	 jfpeCr1biR3Nwor0//Mcr9dx/KOqwiJ8nSSfcbnS58T0vDQkKX/9+wgco3WEtXMRD4QNf
-	 WxkULqHbNMXuia132zyyJc21Zma4D9ntjz6iP4y3+BaXH953DYIwHPDr/NF8sMTRrGQ==
+	t=1793214221;
+	b=LyXgaNx+NnVS16sG67LvDWrnMcXgGFQt7t16ZWMVeeqlKBoKyPhUie+V2b0l3A/UicsL
+	 wOIl00+3hUhGvtRh3y4FH8CMXO5bXR9U8IVexsFOL5C8HApBzofqfsr5/DSKi10MM/4rb
+	 UXhReaCRJpl4XGlgLZBn9TAvQEB1UkVbA/u3TLQYKR+uans1uorQ6oklFsPlegRHfIyyz
+	 Sf4NC+W5akuL98U0cOKVPPjO/i0rGr2r2dD4RZRMAbhCQGDLaaT0KhY9zfwK4OZ2Abytg
+	 lBi589srHhPer6hbSJ/Mg6FQSwLQv9nYEvd/TEYcBpUNCP276irxn87KS1ZaFpbTrBA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214218;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214221;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=6+tux3Aq2foz7me+OQj2Bm6B7ZF+kiBDsinnjyJMaX4=;
-	b=Q21r7mh6yA9YOu88rglNKX6Z4/aZcFRlgJ5+cbev/452XnyQZKBipy9/K7SKQ+DpS8Zf
-	 V0GLSg0uTpY9UOazbIOpAo3VWeAGJ2wlkNyJbZ95Ovzc/GW8qYdsX/Udyp9RbIe/dQRCR
-	 bFRGTgnxbpIVRZBORYIliVTIMapehym3Fa8Tdh2mQaLzT9LjlKR/d3TUwaPSmwZOWHaBN
-	 DekUjQmKoesh2iOSnkA/q7MhdjPFuqSSuoFsvB/H/4NSL1raEIOFLnP14hNpRiANWksPS
-	 q4hkPpY8ube24NHaTMohueIZho714AKPa2uMADmhKN5jmKmt7cjGMhX3K5sQmIf85rg==
+	bh=2vNMLPiAi5I7+u4HlTHG6Z7B4HYl7zLL19m+qlYBlRY=;
+	b=Jd5C4jBKafA3KM957bb75pVTUFdyOGgqlBFge5n8SLWgAFayycn7I2pu7EapcY0RSkIP
+	 O8nv82mPtF3rkt8s5qjkafBG4TQyU846ygjsYWy/RJtIjEWRGGuU9TDNbsgCsxrAp19Fq
+	 g76o9cM3Svqh2W0uova9i4DIG/J8yd0Qks50GJAMLSle9eZw8wJXuD/ZI+7vYtdDJclgD
+	 R5RFW27jHytwRZzl9QYaejfj/G5gcFDe0xGFPLr2bv3w5XNWYGb7R7VSV8ni3UEm4/ak3
+	 gpgXPqWW2Wj+HJWYvikpyw6SN5nHPHC1mAam4591yhaExbSNSc/TlyKzREy1iTOm+sQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yin5vc8r;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tplxPFTk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62347606A327;
-	Wed, 28 Oct 2026 19:03:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 380E060A2622;
+	Wed, 28 Oct 2026 19:03:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yin5vc8r
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF61E1F013C0;
-	Wed, 28 Oct 2026 19:03:37 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tplxPFTk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89F811F013C8;
+	Wed, 28 Oct 2026 19:03:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214218;
-	bh=6+tux3Aq2foz7me+OQj2Bm6B7ZF+kiBDsinnjyJMaX4=;
+	s=korg; t=1793214221;
+	bh=2vNMLPiAi5I7+u4HlTHG6Z7B4HYl7zLL19m+qlYBlRY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yin5vc8r3GOkDGC+yBXKL457LkKBz5IQ+UnUu9dqFV5OurECqUqpbuoivVKqvyaBr
-	 liiO/sHgZMneO7DTlcphuBx3c10nuhw6BjdMMXgUOst2FgV/Qj/nBWgGfZD+rgmgPY
-	 tYokZhEtJJluXF7P33gDyJviGdU2LUVEN3iv5F68=
+	b=tplxPFTkVtUR8EIBkNj5ean4YuL+/sW0zbLKye1y7YqZGjRA9CZvTr6TF11/qYjUD
+	 L1IhNLKeTczQcH2kFxdooojcHixYRVpcbAoDUT4q8SNN7fgJjaDRfGhUzzKRtSoL7H
+	 6Xb2vuLksDb9gzKJLO27t6NygSC6R0uhe3aDX1I4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bart Van Assche <bvanassche@acm.org>,
-	Peter Griffin <peter.griffin@linaro.org>,
-	Chanho Park <chanho61.park@samsung.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	syzbot+e76d52dadc089b9d197f@syzkaller.appspotmail.com,
+	syzbot+1065a199625a388fce60@syzkaller.appspotmail.com,
+	Matt Johnston <matt@codeconstruct.com.au>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0781/1887] scsi: ufs: exynos: Disable iocc if dma-coherent property isnt set
-Date: Wed, 28 Oct 2026 17:47:57 +0100
-Message-ID: <20261028170517.212436492@linuxfoundation.org>
+Subject: [PATCH 6.1 0782/1887] net: mctp: Dont access ifa_index when missing
+Date: Wed, 28 Oct 2026 17:47:58 +0100
+Message-ID: <20261028170517.234858016@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -70,82 +70,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Griffin <peter.griffin@linaro.org>
+From: Matt Johnston <matt@codeconstruct.com.au>
 
-[ Upstream commit f92bb7436802f8eb7ee72dc911a33c8897fde366 ]
+[ Upstream commit f11cf946c0a92c560a890d68e4775723353599e1 ]
 
-If dma-coherent property isn't set then descriptors are non-cacheable
-and the iocc shareability bits should be disabled. Without this UFS can
-end up in an incompatible configuration and suffer from random cache
-related stability issues.
+In mctp_dump_addrinfo, ifa_index can be used to filter interfaces, but
+only when the struct ifaddrmsg is provided. Otherwise it will be
+comparing to uninitialised memory - reproducible in the syzkaller case from
+dhcpd, or busybox "ip addr show".
 
-Suggested-by: Bart Van Assche <bvanassche@acm.org>
-Fixes: cc52e15397cc ("scsi: ufs: ufs-exynos: Support ExynosAuto v9 UFS")
-Signed-off-by: Peter Griffin <peter.griffin@linaro.org>
-Link: https://lore.kernel.org/r/20250319-exynos-ufs-stability-fixes-v2-3-96722cc2ba1b@linaro.org
-Cc: Chanho Park <chanho61.park@samsung.com>
-Cc: stable@vger.kernel.org
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+The kernel MCTP implementation has always filtered by ifa_index, so
+existing userspace programs expecting to dump MCTP addresses must
+already be passing a valid ifa_index value (either 0 or a real index).
+
+BUG: KMSAN: uninit-value in mctp_dump_addrinfo+0x208/0xac0 net/mctp/device.c:128
+ mctp_dump_addrinfo+0x208/0xac0 net/mctp/device.c:128
+ rtnl_dump_all+0x3ec/0x5b0 net/core/rtnetlink.c:4380
+ rtnl_dumpit+0xd5/0x2f0 net/core/rtnetlink.c:6824
+ netlink_dump+0x97b/0x1690 net/netlink/af_netlink.c:2309
+
+Fixes: 583be982d934 ("mctp: Add device handling and netlink interface")
+Reported-by: syzbot+e76d52dadc089b9d197f@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/68135815.050a0220.3a872c.000e.GAE@google.com/
+Reported-by: syzbot+1065a199625a388fce60@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/681357d6.050a0220.14dd7d.000d.GAE@google.com/
+Signed-off-by: Matt Johnston <matt@codeconstruct.com.au>
+Link: https://patch.msgid.link/20250508-mctp-addr-dump-v2-1-c8a53fd2dd66@codeconstruct.com.au
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ufs/host/ufs-exynos.c | 17 +++++++++++++----
- drivers/ufs/host/ufs-exynos.h |  3 ++-
- 2 files changed, 15 insertions(+), 5 deletions(-)
+ net/mctp/device.c | 15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/ufs/host/ufs-exynos.c b/drivers/ufs/host/ufs-exynos.c
-index 17db3f8c8c516..6bb8da1436867 100644
---- a/drivers/ufs/host/ufs-exynos.c
-+++ b/drivers/ufs/host/ufs-exynos.c
-@@ -200,8 +200,8 @@ static int exynosauto_ufs_drv_init(struct device *dev, struct exynos_ufs *ufs)
- 	/* IO Coherency setting */
- 	if (ufs->sysreg) {
- 		return regmap_update_bits(ufs->sysreg,
--					  ufs->shareability_reg_offset,
--					  UFS_SHARABLE, UFS_SHARABLE);
-+					  ufs->iocc_offset,
-+					  UFS_SHARABLE, ufs->iocc_val);
- 	}
+diff --git a/net/mctp/device.c b/net/mctp/device.c
+index 47407c07afc27..365726010340d 100644
+--- a/net/mctp/device.c
++++ b/net/mctp/device.c
+@@ -120,12 +120,19 @@ static int mctp_dump_addrinfo(struct sk_buff *skb, struct netlink_callback *cb)
+ 	struct net_device *dev;
+ 	struct ifaddrmsg *hdr;
+ 	struct mctp_dev *mdev;
+-	int ifindex;
++	int ifindex = 0;
+ 	int idx = 0, rc;
  
- 	attr->tx_dif_p_nsec = 3200000;
-@@ -1102,12 +1102,21 @@ static int exynos_ufs_parse_dt(struct device *dev, struct exynos_ufs *ufs)
- 		ufs->sysreg = NULL;
- 	else {
- 		if (of_property_read_u32_index(np, "samsung,sysreg", 1,
--					       &ufs->shareability_reg_offset)) {
-+					       &ufs->iocc_offset)) {
- 			dev_warn(dev, "can't get an offset from sysreg. Set to default value\n");
--			ufs->shareability_reg_offset = UFS_SHAREABILITY_OFFSET;
-+			ufs->iocc_offset = UFS_SHAREABILITY_OFFSET;
- 		}
- 	}
+-	hdr = nlmsg_data(cb->nlh);
+-	// filter by ifindex if requested
+-	ifindex = hdr->ifa_index;
++	/* Filter by ifindex if a header is provided */
++	if (cb->nlh->nlmsg_len >= nlmsg_msg_size(sizeof(*hdr))) {
++		hdr = nlmsg_data(cb->nlh);
++		ifindex = hdr->ifa_index;
++	} else {
++		if (cb->strict_check) {
++			NL_SET_ERR_MSG(cb->extack, "mctp: Invalid header for addr dump request");
++			return -EINVAL;
++		}
++	}
  
-+	/*
-+	 * no 'dma-coherent' property means the descriptors are
-+	 * non-cacheable so iocc shareability should be disabled.
-+	 */
-+	if (of_dma_is_coherent(dev->of_node))
-+		ufs->iocc_val = UFS_SHARABLE;
-+	else
-+		ufs->iocc_val = 0;
-+
- 	ufs->pclk_avail_min = PCLK_AVAIL_MIN;
- 	ufs->pclk_avail_max = PCLK_AVAIL_MAX;
- 
-diff --git a/drivers/ufs/host/ufs-exynos.h b/drivers/ufs/host/ufs-exynos.h
-index a4bd6646d7f13..65aa04d41c3eb 100644
---- a/drivers/ufs/host/ufs-exynos.h
-+++ b/drivers/ufs/host/ufs-exynos.h
-@@ -212,7 +212,8 @@ struct exynos_ufs {
- 	ktime_t entry_hibern8_t;
- 	const struct exynos_ufs_drv_data *drv_data;
- 	struct regmap *sysreg;
--	u32 shareability_reg_offset;
-+	u32 iocc_offset;
-+	u32 iocc_val;
- 
- 	u32 opts;
- #define EXYNOS_UFS_OPT_HAS_APB_CLK_CTRL		BIT(0)
+ 	rcu_read_lock();
+ 	for (; mcb->h < NETDEV_HASHENTRIES; mcb->h++, mcb->idx = 0) {
 -- 
 2.53.0
 
