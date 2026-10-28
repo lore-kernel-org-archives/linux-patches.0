@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216960;
-	b=PQJb7AKLn+zDhsOSurBMO5UHdnhrdsU4e/LTSyyXCD7glQccEHmzXCgtpAJf5dyrxoHC
-	 WdIdr+UleTgMY9wA/jEcT7r+q9+FqzyJ0VYt7EC4nYu5WqV92glSZldLilEUqwRKaMc7U
-	 dWp/3xj5UG6emkp2oMnTKqBE837owHCmGNHTQyRiuZiaEsHca2flEJ6vAKI6G4ON/3Cip
-	 /5+vOB57C55V+A5UAnTZE9sgRBWME0Sf31tq+ICLFom96UL0FoQ8gFiD/Enhld13JmCgu
-	 PjtMWv9UhJyXEH2A3F3qNHpP7ughi0TT5okuWCqEbgwkbS6XhnBIfiLyzwPerTCnJUg==
+	t=1793216962;
+	b=CZyOXuNUKbYa4MBkCiCz5h0gRhwpCcVln0vbD5hLooZXUuD6AqsA6SEjkfcguORg2qOk
+	 X5nUMkLsW4xU0MOP3FW5g8Q0CehLGQw68z5H2ScucX+7z81U+JTrxsLmDkC/j62wHftx9
+	 T68Csa3xce/U4u+QjAMpstcGgLtkJes1gfMZiAhvXj5b4sFEeBuVlh/Zm9w+n1PsTcqGK
+	 VOk7Z59zVWRdDKn+TQRNZb9t1gCnyWX33olPBS63g7WCCylckB+jH5NHRLHi57zCXJHDT
+	 T8BzGJS63Do27j675BJcgFGoCkghCc/gQU0E/jO0K98PFl4Lj/mrqkQ/ckIc8C2ZBUQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216960;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216962;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=o0+QEtSLQbuvW65SrNnNzd5Js/6ASD356qfLKxtd25k=;
-	b=e5KEtjUwC7XzdnAXWypqkUOdeeiKieQeeodd/E8l/GOFthcCjYJ5J9suE8To45eZ/O2b
-	 J5j3U9KLLidPRfcLfyv3SUiD7HRwsbNMlcsUt77xYFUOR1gVeveeP0xpTRUMaZMqEksQw
-	 4XFQ2b5FQcP4FXmX3QjugAG+Ed/53q/qPCBGBt+ZRfcAAbLpzQb5vHG23Nkbq2zCZ4llz
-	 K58R1uybjFsmOss4+aIOExFRZCuvPiGNy47xtd/P1hTWfNfXgHuMs+MMh8mi3b6+IeykE
-	 JMPfMsWthIsh69R8D7wbcogtYSbxUd48J7rs52jyUUjyCHRvMWDgmM7+Hd+B7y1JAHw==
+	bh=fWkQJIz2fgOCA2OjaWQw+KhTicrr2X1duIuRL1qzdvQ=;
+	b=cGRrW/6hTBvOy/e5piHUoaDQFX5kR6edYhZgccsPD/AkdxBO6DyPF6nRW9SIQV1sOl8/
+	 1gccjyRKx9bweB/3T8/eWGL7jpzIcu9NwfWzIoO6sUbWRXCw0y4EezP5TJlr9wWXtvKIY
+	 bXpsayuFvJVXgjXKpA/vLaYw5WV35n9u4r3SbUmebRLAWiNr+U1XFsB0mra7UqnHTW0Xt
+	 r1pJGagqBtwhTscIdOn4XisnnPzdo60M4um7BciSfd4l/CLmAkS/Z/Hx+XrtqIirQ3Gdt
+	 3fD0uMMftODp9q1CdQm9b5d5J0+5PX1DQXWjED4JptQ6fUa91kUX+WHkvKQTweGvDIQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wZTI6ud7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hZS72Ezz;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEA16606A31C;
-	Wed, 28 Oct 2026 19:49:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DDAA606A31A;
+	Wed, 28 Oct 2026 19:49:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wZTI6ud7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A0041F01825;
-	Wed, 28 Oct 2026 19:49:18 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hZS72Ezz
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE1AF1F01825;
+	Wed, 28 Oct 2026 19:49:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216959;
-	bh=o0+QEtSLQbuvW65SrNnNzd5Js/6ASD356qfLKxtd25k=;
+	s=korg; t=1793216962;
+	bh=fWkQJIz2fgOCA2OjaWQw+KhTicrr2X1duIuRL1qzdvQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wZTI6ud7nmGMZAv20ysszVLQsLZw4F4B+LbLz/SNCPYmkGQkfdlwFxYqF4uA59VJG
-	 ejyjjwojIOgPUQk97Cv0HySW3w2ud6AALRp29wDuhCy+I226CVKzz7TrCJAueQ9hwZ
-	 uWcYAumVkum75aAOgWIC8QntSkuabyiZjMdbDqmA=
+	b=hZS72EzzWdcju81PYLm689qGt2QVo7wB2GmUMtuNlwdFvcxAiScVBtixf2aCZYST5
+	 lmkBlmgNMihtzz9u3gibgfdm3pYYP9FtJ/tYIiRIMRREANH0JxGgh3Ehs61sl3vfcX
+	 ANaFjsJeGTpKaIvexj7mZRgtLdNrtB+KiXHaPdVE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Zhiling Zou <zhilinz@nebusec.ai>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	syzbot+60332fd095f8bb2946ad@syzkaller.appspotmail.com,
+	David Carlier <devnexen@gmail.com>,
+	Stefan Schmidt <stefan@datenfreihafen.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1695/1887] ipv6: flowlabel: cap duplicate leases per socket
-Date: Wed, 28 Oct 2026 18:03:11 +0100
-Message-ID: <20261028170538.026658478@linuxfoundation.org>
+Subject: [PATCH 6.1 1696/1887] ieee802154: hwsim: serialize pib updates to fix double-free
+Date: Wed, 28 Oct 2026 18:03:12 +0100
+Message-ID: <20261028170538.049739030@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -71,85 +69,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhiling Zou <zhilinz@nebusec.ai>
+From: David Carlier <devnexen@gmail.com>
 
-[ Upstream commit 8d6cd188508513503805c156165de38e4e4a8615 ]
+[ Upstream commit 979d5b8de8ed4e1f997aef12da5694b99be7b871 ]
 
-ipv6_flowlabel_get() allocates an ipv6_fl_socklist entry for every
-successful GET. The recheck path for a compatible existing flowlabel
-links another lease without applying any lease admission check. Repeated
-GET requests for one shareable label can therefore grow a socket's lease
-list without bound.
+hwsim_update_pib() does an unserialized read-swap-free of phy->pib:
 
-Reject a new unprivileged lease once the socket already holds
-FL_MAX_PER_SOCK leases. Check this on the shared recheck path so reuse
-of a globally interned label, including the fl_intern() collision path,
-is covered as well. New-label admission remains under the existing
-mem_check() policy.
+	pib_old = rtnl_dereference(phy->pib);
+	...
+	rcu_assign_pointer(phy->pib, pib);
+	kfree_rcu(pib_old, rcu);
 
-Use capable(CAP_NET_ADMIN) rather than ns_capable(), matching
-mem_check(). An unprivileged user must not bypass the cap by creating a
-user namespace and a netns where they have CAP_NET_ADMIN, which would
-still consume host memory.
+It assumes the RTNL is held, but ->set_channel is not always called
+under it: the mac802154 scan worker changes channels via
+drv_set_channel() without the RTNL. Such an update can race an
+RTNL-held one on the same phy; both read the same pib_old and both
+kfree_rcu() it, double-freeing the object. With SLUB percpu sheaves
+batching kfree_rcu(), this surfaces as a KASAN invalid-free in
+rcu_free_sheaf().
 
-Check the capability only when the socket reaches the limit, so
-successful unprivileged GET requests below the cap do not generate a
-capability audit. Do the admission check before updating linger and
-expires so a rejected GET does not refresh the shared label, matching
-the existing socket-list allocation failure path.
+struct hwsim_phy has no lock for pib. Add one and make the swap atomic
+with rcu_replace_pointer() under it, dropping the misleading
+rtnl_dereference().
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: syzbot+60332fd095f8bb2946ad@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=60332fd095f8bb2946ad
+Fixes: f25da51fdc38 ("ieee802154: hwsim: add replacement for fakelb")
+Signed-off-by: David Carlier <devnexen@gmail.com>
 Cc: stable@vger.kernel.org
-Reported-by: Vega <vega@nebusec.ai>
-Suggested-by: Ido Schimmel <idosch@nvidia.com>
-Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/83f8535972ff6e3741548476a1d50dec24c758be.1788415194.git.zhilinz@nebusec.ai
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://lore.kernel.org/20260709221858.158063-1-devnexen@gmail.com
+Signed-off-by: Stefan Schmidt <stefan@datenfreihafen.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/ip6_flowlabel.c | 20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
+ drivers/net/ieee802154/mac802154_hwsim.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/net/ipv6/ip6_flowlabel.c b/net/ipv6/ip6_flowlabel.c
-index eb0d517aa6cb3..ce441f7970a91 100644
---- a/net/ipv6/ip6_flowlabel.c
-+++ b/net/ipv6/ip6_flowlabel.c
-@@ -460,6 +460,22 @@ fl_create(struct net *net, struct sock *sk, struct in6_flowlabel_req *freq,
- 	return NULL;
- }
+diff --git a/drivers/net/ieee802154/mac802154_hwsim.c b/drivers/net/ieee802154/mac802154_hwsim.c
+index 9b3da61840a8f..1b00efc44dcb0 100644
+--- a/drivers/net/ieee802154/mac802154_hwsim.c
++++ b/drivers/net/ieee802154/mac802154_hwsim.c
+@@ -69,6 +69,8 @@ struct hwsim_phy {
+ 	struct ieee802154_hw *hw;
+ 	u32 idx;
  
-+static bool fl_sock_at_lease_limit(const struct sock *sk)
-+{
-+	const struct ipv6_pinfo *np = inet6_sk(sk);
-+	const struct ipv6_fl_socklist *sfl;
-+	int count = 0;
-+
-+	rcu_read_lock_bh();
-+	for_each_sk_fl_rcu(np, sfl) {
-+		if (++count >= FL_MAX_PER_SOCK)
-+			break;
-+	}
-+	rcu_read_unlock_bh();
-+
-+	return count >= FL_MAX_PER_SOCK;
-+}
-+
- static int mem_check(struct sock *sk)
- {
- 	struct ipv6_pinfo *np = inet6_sk(sk);
-@@ -670,6 +686,10 @@ static int ipv6_flowlabel_get(struct sock *sk, struct in6_flowlabel_req *freq,
- 			err = -ENOMEM;
- 			if (!sfl1)
- 				goto release;
-+			err = -ENOBUFS;
-+			if (fl_sock_at_lease_limit(sk) &&
-+			    !capable(CAP_NET_ADMIN))
-+				goto release;
- 			if (fl->linger > fl1->linger)
- 				fl1->linger = fl->linger;
- 			if ((long)(fl->expires - fl1->expires) > 0)
++	/* Serializes phy->pib_updates. */
++	spinlock_t pib_lock;
+ 	struct hwsim_pib __rcu *pib;
+ 
+ 	bool suspended;
+@@ -100,8 +102,10 @@ static int hwsim_hw_channel(struct ieee802154_hw *hw, u8 page, u8 channel)
+ 	pib->page = page;
+ 	pib->channel = channel;
+ 
+-	pib_old = rtnl_dereference(phy->pib);
+-	rcu_assign_pointer(phy->pib, pib);
++	spin_lock_bh(&phy->pib_lock);
++	pib_old = rcu_replace_pointer(phy->pib, pib,
++				      lockdep_is_held(&phy->pib_lock));
++	spin_unlock_bh(&phy->pib_lock);
+ 	kfree_rcu(pib_old, rcu);
+ 	return 0;
+ }
+@@ -789,6 +793,7 @@ static int hwsim_add_one(struct genl_info *info, struct device *dev,
+ 		goto err_pib;
+ 	}
+ 
++	spin_lock_init(&phy->pib_lock);
+ 	pib->channel = 13;
+ 	rcu_assign_pointer(phy->pib, pib);
+ 	phy->idx = idx;
 -- 
 2.53.0
 
