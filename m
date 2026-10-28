@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793212641;
-	b=baH/J93+t4ML+BsbQ9YrPxgbeKuZx8jBaYAtWJXx79/AhPtGbtagOd8S6pKBYeMWRA0y
-	 PATDltnkQ0vrFc/yTO8grMas6UdqMgcF9kx/hq72OM8jZjjRbAvibusk5/tI4vd/LX30m
-	 j9QwgnYVRgelbyFgtDl8lzhdwFNOvSMIPw/XBvvQLp5uxwMtdKNwOxc6RSPJBtg3fyrca
-	 sTIxxPhGRpawtoXknAW4FchzqK285yGWPaN8+P8lBmZ0XNWlzAgJxh0scMeZRPuNFTRGM
-	 KdyaxcWh8CAE6UiyR4D8r/QPyGq8Pw+bLWjgDfnXpEuyl8QFHteI2AXg+zCIf20Njzw==
+	t=1793212643;
+	b=FL9sjO+HSjez01EHU/RJ49WCsYM0AcOUo+qfGijbFm3Xz9e3d2rPChPMZnKAJ8tQsZ51
+	 rgIhjyRtyXlUf3Bc9elt4VnPPltXmTf51my4AJYV/mzb/lcfod1YEwOBnOmgBEfCO9ENE
+	 nEifWlaxNTlWIry759sQlolU6VHTeosxBW7rVqzuv56sdXMttKEFNQYUhnokj7V47T0Bw
+	 lSfLZ7RRv6STE3mj6fG68TsSCsMyE6YPg9VuM00XCmn2xVnZk5YjNhCpZkpMA6QjHm/g6
+	 JcWxReWM6s8fdyVsaanIlMHG5h44pjPisc415YgWDeWshVRjjrDL9p6dZVdkM6kXuKw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793212641;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793212643;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=RBuIkpIzjC4KbS4LCJEADHpLfBy4mTzDh9z2+FGvJJE=;
-	b=mPvgEkLlWIxEfLDxsBNwiCo5ge6wJKc3HWUb3QObjQUSSB8ByEySfujO5BPtiI9IP5in
-	 NS0iX1f85Sy0GnvQZBvIz4kVAIUD5TeYLKtES3IEzTQaDQDpTuofRcVKs6AW+EP0KqJf9
-	 2hHKElVjPFkUaJLUT1brqc5X7Qp13Z91+u3ToiMlDSSGG4QHF5qpFEzD91Ker6eULP0om
-	 2hcWO74kfT0q3YgQT/1K3aq1lq0G1Oyduhu3ZS3+FqXQo2JGnyihRI+e09uD4tu4qkJRJ
-	 b5Rc1LGJW+FXlarTnP2m2a0Ew5/Kai1vy9CkaoeLStYeIA6KW7DLTPa4bFiyAZcY8xw==
+	bh=KrkUZ9Yb7/7Gm7qo0eC8VJqYT/ZQEcciS3ExfIblMfg=;
+	b=GVKSTSt5vcVpHnB1/lMd1/LZKK9OrohvECPCAVEF3+pKYGRFmypOXzQxVbZGnraqkUpa
+	 JVFvSFlX6OsLz85UoDnbOeruaZimLYbLpesSqbuhsGsxfmUMVPHRsRAobFLcX7xuZzFub
+	 1JVDMAopcPLXHo8NAosfENfMxSDVflKzoqM9wueWMWCyUdMeYCjat6W4O5UUoYvwm1d28
+	 dNWN8fQjerxhMPthLk0d0AWzrRB7l5/uNhWYYUklxc4rMzgIz6x3NLU77pmnfwqSqhcSN
+	 62WGmZkG3nkVZx8K9PqZDi10TJd6uxXB6KkfRq+zl8wpbYA8U+iGVbwQ3TzXsywyyFQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YSv2DGQS;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vVXO1wEP;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10FCF606A31A;
-	Wed, 28 Oct 2026 18:37:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FA51606A31C;
+	Wed, 28 Oct 2026 18:37:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YSv2DGQS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25B6C1F01825;
-	Wed, 28 Oct 2026 18:37:19 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vVXO1wEP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F15C31F01825;
+	Wed, 28 Oct 2026 18:37:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793212640;
-	bh=RBuIkpIzjC4KbS4LCJEADHpLfBy4mTzDh9z2+FGvJJE=;
+	s=korg; t=1793212643;
+	bh=KrkUZ9Yb7/7Gm7qo0eC8VJqYT/ZQEcciS3ExfIblMfg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YSv2DGQStl1qqoh5sCAWom7i1G7AlejtQGdoFPscSxsuJOsN6DX+u2tY16BqrECu7
-	 A9/4qlBT7/W9e2dNwDlp8BRHMkdL26VFTt4/C1EDi3wl0G4icb19IcpWlHvmv8x2Kz
-	 jMlIRb6b2PhEYD1j1qeLJp5RQfMP2Ng4YQ/pqodg=
+	b=vVXO1wEP3Gwx19gHz6C+C/435cOyITx9qMvvBjefdXDGhJDvTPKDwaufuZp1ec7z5
+	 2VlwYVQeb1LiWOhYEz6JOncQ3HX7+t7hCuiIS4KN1PwFw8XZORMAF+e5jaTDT12gpJ
+	 DfVOqrWCNB1XgkqxsL7e+kvJz60i4vnn2U2ZdfZM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yilin Zhang <yilinzhang@moonshot.ai>,
-	Zhao Li <enderaoelyther@gmail.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Cezary Rojewski <cezary.rojewski@intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0225/1887] wifi: cfg80211: preserve hidden-group beacon IE ownership
-Date: Wed, 28 Oct 2026 17:38:41 +0100
-Message-ID: <20261028170504.353063342@linuxfoundation.org>
+Subject: [PATCH 6.1 0226/1887] ASoC: codecs: rt286: Revert delay value for jack setup
+Date: Wed, 28 Oct 2026 17:38:42 +0100
+Message-ID: <20261028170504.377315380@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,73 +68,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhao Li <enderaoelyther@gmail.com>
+From: Cezary Rojewski <cezary.rojewski@intel.com>
 
-[ Upstream commit cc45f313d85533d647ce619326302aad6f797c14 ]
+[ Upstream commit d30fba93ebfc11e4604a7fcc73fdf28684191dde ]
 
-A hidden-group probe-response entry borrows its beacon IEs from the
-group's beacon entry. cfg80211_update_assoc_bss_entry() can pass such
-an entry to cfg80211_update_known_bss() when merging scan entries
-after a channel switch.
+Fat fingered the change when reorganizing the jack-detect
+initialization. Equivalent changes for rt274 and rt298:
 
-Copying the borrowed beacon_ies into the associated entry gives the
-same allocation two owners. Releasing the group's beacon entry can
-then leave the associated entry pointing to freed IEs, which are
-freed again when that entry is released.
+Commit a43b4394bb35 ("ASoC: codecs: rt274: Always init jack_detect_work")
+Commit 1eb73102da28 ("ASoC: codecs: rt298: Reorganize jack detect handling")
 
-Skip beacon IE replacement when the source entry belongs to a hidden
-group. Preserve probe-response processing, the subsequent metadata
-updates, and the existing rejection path for conflicting hidden
-beacon updates.
+carry no update to the delay value.
 
-Fixes: 0afd425b1b64 ("cfg80211: fix duplicated scan entries after channel switch")
-Reported-by: Yilin Zhang <yilinzhang@moonshot.ai>
-Closes: https://lore.kernel.org/linux-wireless/20260901080427.1983015-1-yilinzhang@moonshot.ai/
-Assisted-by: Codex:gpt-6-astra
-Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+>From user perspective, no difference has been observed between 1250 and
+50 values on Intel's SkyLake, KabyLake and AmberLake configurations.
+
+Fixes: 3082afe097cc ("ASoC: codecs: rt286: Reorganize jack detect handling")
+Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
+Link: https://patch.msgid.link/20260918111745.3589393-1-cezary.rojewski@intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/scan.c | 22 ++++++++++++----------
- 1 file changed, 12 insertions(+), 10 deletions(-)
+ sound/soc/codecs/rt286.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/wireless/scan.c b/net/wireless/scan.c
-index a8901e07e96d6..d6bd95857abf2 100644
---- a/net/wireless/scan.c
-+++ b/net/wireless/scan.c
-@@ -1784,20 +1784,22 @@ cfg80211_update_known_bss(struct cfg80211_registered_device *rdev,
- 			return false;
- 		}
+diff --git a/sound/soc/codecs/rt286.c b/sound/soc/codecs/rt286.c
+index ceb56647e369e..42ed864c062f9 100644
+--- a/sound/soc/codecs/rt286.c
++++ b/sound/soc/codecs/rt286.c
+@@ -951,7 +951,7 @@ static int rt286_probe(struct snd_soc_component *component)
  
--		old = rcu_access_pointer(known->pub.beacon_ies);
-+		if (!new->pub.hidden_beacon_bss) {
-+			old = rcu_access_pointer(known->pub.beacon_ies);
+ 	if (rt286->i2c->irq)
+ 		schedule_delayed_work(&rt286->jack_detect_work,
+-				      msecs_to_jiffies(50));
++				      msecs_to_jiffies(1250));
+ 	return 0;
+ }
  
--		rcu_assign_pointer(known->pub.beacon_ies, new->pub.beacon_ies);
-+			rcu_assign_pointer(known->pub.beacon_ies, new->pub.beacon_ies);
- 
--		/* Override IEs if they were from a beacon before */
--		if (old == rcu_access_pointer(known->pub.ies))
--			rcu_assign_pointer(known->pub.ies, new->pub.beacon_ies);
-+			/* Override IEs if they were from a beacon before */
-+			if (old == rcu_access_pointer(known->pub.ies))
-+				rcu_assign_pointer(known->pub.ies, new->pub.beacon_ies);
- 
--		cfg80211_update_hidden_bsses(known,
--					     rcu_access_pointer(new->pub.beacon_ies),
--					     old);
-+			cfg80211_update_hidden_bsses(known,
-+						     rcu_access_pointer(new->pub.beacon_ies),
-+						     old);
- 
--		if (old)
--			kfree_rcu((struct cfg80211_bss_ies *)old, rcu_head);
-+			if (old)
-+				kfree_rcu((struct cfg80211_bss_ies *)old, rcu_head);
-+		}
- 	}
- 
- 	known->pub.beacon_interval = new->pub.beacon_interval;
 -- 
 2.53.0
 
