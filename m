@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793211553;
-	b=Sg9Eo2ATMLhItgfFHL2QQdvX6wRbGZabeS3vIGx1e9sFKL25kEiBqdHW3rxfHugwEOFr
-	 l6NL6e5fwq0KIb8pZFaCdPLvKgNA3uA6PeFxROeFBsAsFF1cqcpz9h6XBYp+IcaVu1Qox
-	 ZOJ1ofASkOD5ppZqru+NMIj2fzUGBmpOoIkk2W51KTOE7tWRR12vmktgR67g21sTzasiH
-	 Y3nL6jld6m7dAZoAmVVzPHDVVdcfhdDi7UpPsOFbXPMrrl0WPGFu3X/y9AZfXzf/jO8k8
-	 IW4uvPsCIdPL5b75XfLVQimwSaSizfwQkOQUuxQmOtFVe3gBPkBq+nxYRTImYnBek1g==
+	t=1793211556;
+	b=InSk+RSAQv9qi7inGmLLXViP3LJ9UtfZ6z6PisX0V6yYHPpNl/2M5mEcWSEyhwr6eyTj
+	 io+vVKu9M+QZ49DuLK1dXi97FknODJ3AIk8lp/5F4756h3WZx3EF3rSGSpyqj4J1MWC9Z
+	 YWkeYVNjdITG61IcZcGB9Wrdl+D68nuddDU6ojWP3u/rUlJ0wdWkCjbXRsPTcgqGHyYiF
+	 /ydRZD1N4jXba525j7XXqpy5WdgaNZkYLWmpXc7riPj6VnblgGhUm67BeS+hYcyvIyUt7
+	 fB1erYGp3WW4lp+Sp5MBWxM0mdLDKh2X7g7fulgClRjFlF9zerYqVPEsj7/DigQwHew==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793211553;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793211556;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ig9Xy0PfJtSxqUaW5FqndI7B/QewKPxQ5wTctk6r4X8=;
-	b=PzwUyWiEUsj/aTSrMh/9YT1JZL67EHvQ67ju4j4cgBJ70CpHOGjfENwebuwUi8zPtjI/
-	 xE0srrbC+tE3aDuoI+j8XQDs8QuseWEdhWZVuRZVc/G9+jiUny7miluLT/uVby7iO9Nqj
-	 KXEDy2SBTTcIJMvEv0hhB3LgA++CPowTCpPKXe5XcWvV/kuCoQsczJYqRRC7ezAILn5Te
-	 YbTDkRBd0h5IuBb+mAfYjFPfIdDnAz3pppjMwj/RnBV6wkrZeW9uhG3gdLcbHwswQE7+P
-	 tEs2cOEeJAKSjF32by/I0Lko2FPu1EsA6iwj5V8he4muHJ3RCbrmV8NuteXyrJ6AHHQ==
+	bh=Q4LgMR9Ki+b/Bj4HM9fWmJqqqpo4nPVyWJsWWpIDmtM=;
+	b=Sa36Fb6Un9QjKAKKU62hcTLKRxdrtd7lBaKsVXQSPpbCHJyu16t3EVpDRJGs89eErASS
+	 NIrq0WiRYZLPNS3iKTZF/BzrYD5VbcbkUC8y1GTjSS+qMG/WEOdVI+RoVeotk6+p57eTg
+	 Y5k/EcRq4XB1HMQq0pUa5LzFRkWH4cAXtFQ7+8DoKtTQLptYaXCUUBS/ZMlppoSwPWSVE
+	 EgVIut6HzIypD+vR5VRVzKnioqKQ2l7SdPTOJPUQvr0HiFlwzsF1XJe6kaJjHxULZsimO
+	 Gzdz4SEftSvdF/XQx5OexaZwbZclUShukSc3sqyNCdE3VjAv/kEmGXtZbGMvZoItK8A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=K6k4VpGY;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dfwd93pe;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17846606A31A;
-	Wed, 28 Oct 2026 18:19:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8007606A31C;
+	Wed, 28 Oct 2026 18:19:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=K6k4VpGY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 654911F01825;
-	Wed, 28 Oct 2026 18:19:12 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dfwd93pe
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 437341F01825;
+	Wed, 28 Oct 2026 18:19:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793211552;
-	bh=ig9Xy0PfJtSxqUaW5FqndI7B/QewKPxQ5wTctk6r4X8=;
+	s=korg; t=1793211555;
+	bh=Q4LgMR9Ki+b/Bj4HM9fWmJqqqpo4nPVyWJsWWpIDmtM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=K6k4VpGYtb0/Dzpg4rrPCEo2bvL30gyovi8ZiQ3DaWAKjnzwBOKJe0+HkT+ZJ4S20
-	 Wr+5iqeRNbfVep0qmpKND4/kqaQkh70tnxux5bxRg2YkdBYxmms8w0taWk2/hBMHFi
-	 5md8Wc+NZtDRURjHT9VsrayrCKYouPvZ/fDpSEU8=
+	b=dfwd93peaPXq7Cc/A1/PAYpyabN6qU8RhixPO3Wgf9X78bxJhdCDnmx4gWNlmdJCg
+	 9wkujbarPW4OSpxN6HtMek7jIBs7e0bVZVp5CApLt3L0Tsli3m7KM29tIzgbBQe9qu
+	 p8UUtbMwB784ZTLQa6H8vHIMp7naQZvCdeijT7Ro=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Zixuan Chai <petalzu987@gmail.com>,
-	Ren Wei <weir@nebusec.ai>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 5.15 373/571] net: bridge: avoid recursive multicast port cleanup
-Date: Wed, 28 Oct 2026 17:58:40 +0100
-Message-ID: <20261028170016.863522557@linuxfoundation.org>
+	Fredrik Nyberg <fredrik.nyberg@volvocars.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 374/571] net: usb: ax88179_178a: fix rx frame length for non-last packets
+Date: Wed, 28 Oct 2026 17:58:41 +0100
+Message-ID: <20261028170016.887246904@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -69,91 +68,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zixuan Chai <petalzu987@gmail.com>
+From: Fredrik Nyberg <fredrik.nyberg@volvocars.com>
 
-commit 5158353121bae4f552cb677ce8c5c3ef52f93a0d upstream.
+commit 9b6c20f788472d2042717a3c2f1bc60b2b77083e upstream.
 
-br_multicast_sg_del_exclude_ports() removes automatically added STAR_EXCL
-port groups by calling br_multicast_del_pg(). For S,G entries, that
-deletion calls back into br_multicast_sg_del_exclude_ports(), so a large
-number of STAR_EXCL ports consumes one kernel stack frame per port and can
-hit the stack guard page.
+Commit 4ce62d5b2f7a ("net: usb: ax88179_178a: stop lying about
+skb->truesize") replaced skb_clone() with a copy into a new skb for
+every packet of a bulk-in transfer except the last one. The copy skips
+the 2-byte IP alignment pseudo header but still copies pkt_len bytes,
+and pkt_len includes that header. Each of these frames is therefore
+delivered with two extra trailing bytes: the 0xeeee pseudo header of
+the next slot when the frame ends on an 8-byte boundary, or slot
+padding otherwise. The last packet is still trimmed to pkt_len - 2.
 
-Keep the complete port-group deletion path for cleanup, but suppress the
-S,G exclude-port cleanup while that helper is already walking the same
-entry. Normal deletion callers retain the existing behavior.
+IPv4 and IPv6 trim the extra bytes, so most traffic is unaffected.
+Anything that relies on the frame length is not. MACsec takes the ICV
+from the last 16 bytes and drops every such frame as InPktsNotValid. In
+our setup that was 0.2-1.2% of received MACsec frames, depending on how
+many frames shared a transfer, including service discovery multicast.
 
-Fixes: 8266a0491e92 ("net: bridge: mcast: handle port group filter modes")
+Allocate and copy pkt_len - 2 bytes, like the last-packet path.
+
+Fixes: 4ce62d5b2f7a ("net: usb: ax88179_178a: stop lying about skb->truesize")
 Cc: stable@vger.kernel.org
-Reported-by: Vega <vega@nebusec.ai>
-Assisted-by: LLM
-Signed-off-by: Zixuan Chai <petalzu987@gmail.com>
-Signed-off-by: Ren Wei <weir@nebusec.ai>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Fredrik Nyberg <fredrik.nyberg@volvocars.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20261002-ax88179-rx-len-v1-1-f01a2a295079@volvocars.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bridge/br_multicast.c |   23 ++++++++++++++++++-----
- 1 file changed, 18 insertions(+), 5 deletions(-)
+ drivers/net/usb/ax88179_178a.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/net/bridge/br_multicast.c
-+++ b/net/bridge/br_multicast.c
-@@ -80,6 +80,10 @@ __br_multicast_add_group(struct net_brid
- 			 bool blocked);
- static void br_multicast_find_del_pg(struct net_bridge *br,
- 				     struct net_bridge_port_group *pg);
-+static void __br_multicast_del_pg(struct net_bridge_mdb_entry *mp,
-+				  struct net_bridge_port_group *pg,
-+				  struct net_bridge_port_group __rcu **pp,
-+				  bool sg_del_exclude_ports);
- static void __br_multicast_stop(struct net_bridge_mcast *brmctx);
+--- a/drivers/net/usb/ax88179_178a.c
++++ b/drivers/net/usb/ax88179_178a.c
+@@ -1483,11 +1483,11 @@ static int ax88179_rx_fixup(struct usbne
+ 			return 1;
+ 		}
  
- static int br_mc_disabled_update(struct net_device *dev, bool value,
-@@ -436,7 +440,7 @@ static void br_multicast_sg_del_exclude_
- 	for (pp = &sgmp->ports;
- 	     (p = mlock_dereference(*pp, sgmp->br)) != NULL;) {
- 		if (!(p->flags & MDB_PG_FLAGS_PERMANENT))
--			br_multicast_del_pg(sgmp, p, pp);
-+			__br_multicast_del_pg(sgmp, p, pp, false);
- 		else
- 			pp = &p->next;
- 	}
-@@ -675,9 +679,10 @@ static void br_multicast_destroy_port_gr
- 	kfree_rcu(pg, rcu);
- }
+-		ax_skb = netdev_alloc_skb_ip_align(dev->net, pkt_len);
++		ax_skb = netdev_alloc_skb_ip_align(dev->net, pkt_len - 2);
+ 		if (!ax_skb)
+ 			return 0;
+-		skb_put(ax_skb, pkt_len);
+-		memcpy(ax_skb->data, skb->data + 2, pkt_len);
++		skb_put(ax_skb, pkt_len - 2);
++		memcpy(ax_skb->data, skb->data + 2, pkt_len - 2);
  
--void br_multicast_del_pg(struct net_bridge_mdb_entry *mp,
--			 struct net_bridge_port_group *pg,
--			 struct net_bridge_port_group __rcu **pp)
-+static void __br_multicast_del_pg(struct net_bridge_mdb_entry *mp,
-+				  struct net_bridge_port_group *pg,
-+				  struct net_bridge_port_group __rcu **pp,
-+				  bool sg_del_exclude_ports)
- {
- 	struct net_bridge *br = pg->key.port->br;
- 	struct net_bridge_group_src *ent;
-@@ -692,7 +697,8 @@ void br_multicast_del_pg(struct net_brid
- 	if (!br_multicast_is_star_g(&mp->addr)) {
- 		rhashtable_remove_fast(&br->sg_port_tbl, &pg->rhnode,
- 				       br_sg_port_rht_params);
--		br_multicast_sg_del_exclude_ports(mp);
-+		if (sg_del_exclude_ports)
-+			br_multicast_sg_del_exclude_ports(mp);
- 	} else {
- 		br_multicast_star_g_handle_mode(pg, MCAST_INCLUDE);
- 	}
-@@ -703,6 +709,13 @@ void br_multicast_del_pg(struct net_brid
- 		mod_timer(&mp->timer, jiffies);
- }
- 
-+void br_multicast_del_pg(struct net_bridge_mdb_entry *mp,
-+			 struct net_bridge_port_group *pg,
-+			 struct net_bridge_port_group __rcu **pp)
-+{
-+	__br_multicast_del_pg(mp, pg, pp, true);
-+}
-+
- static void br_multicast_find_del_pg(struct net_bridge *br,
- 				     struct net_bridge_port_group *pg)
- {
+ 		ax88179_rx_checksum(ax_skb, pkt_hdr);
+ 		usbnet_skb_return(dev, ax_skb);
 
 
