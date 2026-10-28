@@ -1,54 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214102;
-	b=VPMIbD2j4lKFSw5ZcQ/pU1gAqL8lTkRt7eg7YLTN62wOf6t/Rd+H6ByTD4dAJJhVzmK6
-	 GtaRblpC6uV9YI2qUXjB2mEpiRlJp42lWpkCSp8r2r1BR9pdMnkfH+KI56yjX7nQxlvOS
-	 kaRZZtyT8cfJRGckyw5eBxHltqmMlOS7V+fA6H2aRB9cOwWVRpf41oWDr5bwWA4OF2F2P
-	 Dh9iEyiEzgkGWzN6iWzl/GpGaH3defDk3GDh0XbYdo/TDRoWry/CpVB2bdy/SMC5djVIv
-	 zhwyOIoSf/CWIgwjMKX4MEFxTPtrOSDKQH3T9QZqJfzlfHka/X+5OVkj0a9SiG1UW2Q==
+	t=1793214105;
+	b=v7Cot9iblzXrkH/VWDNLSvDfw8gnKDqT4AnD9CFifKtRfAu42QgJf3fUkYJ15WaoZ2sY
+	 l6IZaLynHlqmlGzmc2R1lE6kQ1Z4l9oynihID+IQIVFlgSL2fKddsUqjBHCIwOnePWHqh
+	 +rXh6CK6X1LV0Vfr2LhEEsn1fdHv269ZXHTNPgusmhb1Uoih7WnWUfYLjTERdTVTxvEyI
+	 Vw7/sELiUJ1Cm/UGTCJ5+Fl3opg7flMxJvGRl2BPJvXv6lIQ2IJKeP1nn8ZnpAd06bjss
+	 L6UMgd9mjmWdM18THJlcBaCCzCji8I+r73PEbAOSYpf1AO59Iva5agKNh7QfydUFB/w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214102;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214105;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=gn2Z9u3Nx+wWYCqhc7G5CcXDjVINPKXSET2H5FlMU0w=;
-	b=Xi3xj1hsmwZm1kqFphOQjsUqDiDvJ0RaipkYd97Tm79I4B40grOkdasEEYeVrYjZ9Lzz
-	 NaHgYeDy+zTzrJLIDUJttzYVEXGdjuwPeSpzA/Fi6rK0NJL15LCRO7OpgU98FNB/u3vNy
-	 n0WjLb5iAbodeOkiIoTomTB9m3gkHITbzKpiHa05hl15VXUgetQ6wtm2e9eQjKR8T+bH7
-	 Jh7qa6DMteOOiacxC/bespAZIgXm7wOpn/IlcpkuYQqhe5TOaBqYhkIx5OEb8g0pMrSuy
-	 fXKTjVmf6SQZ/XH9rE3gWmvII79BIjdu1+S/0HXXkFKcy99M8NLqqbRvJpGzBip33Ww==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=UiVIC9YFgbD7v7QPuwulGBmjd/OhYAmLzcABVjX1Jfk=;
+	b=aBYwNhdfcUjA0Mis58EG6ciLRAgx4AGvNLr76G+Mv3x9oNbTqBiVw0nUomtoemu5a2W2
+	 6ytxVVeiz80VYXCDRJ68SOGdSKwd2P8GfW/uxEhFgAtK6KSet6d5x8Azh876AVpHt3iw4
+	 yxET94Wbgs+jQczdB9xjhNpyEb+mJyMoDz6/ZI9/TJNN4LLK4upTkV0hSZfzwuJPehwnK
+	 +YD2LfKObasIpkhIxbIyc38xXErNYKuztAou3Zl89dbMgOVUnJamPhzwityzAb32ZXn02
+	 AmlV4ygBnkZWzx9NZv74l1mobA8wIBsY9/3fBMeHPbkNWKjmJCvzgsCkslT78jy24lQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=napDZGa9;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L3pzy1RT;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BD14606A31A;
-	Wed, 28 Oct 2026 19:01:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCE81606A31A;
+	Wed, 28 Oct 2026 19:01:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=napDZGa9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68E2E1F01825;
-	Wed, 28 Oct 2026 19:01:41 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L3pzy1RT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F2F41F01825;
+	Wed, 28 Oct 2026 19:01:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214102;
-	bh=gn2Z9u3Nx+wWYCqhc7G5CcXDjVINPKXSET2H5FlMU0w=;
+	s=korg; t=1793214104;
+	bh=UiVIC9YFgbD7v7QPuwulGBmjd/OhYAmLzcABVjX1Jfk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=napDZGa9ekMUKCK3iFKMy9p6KDeFWDYQ/OSOdZcY3Mglabx2kU16vMwGFgpAQaalc
-	 Syen8pcVUK7Rh3XDkKP/86PQsi404MhzDMgmZiKydeqOdsnPZmWHERowPx/E7mLzNM
-	 aZJsQBuZk6oaQB4xloUWI/oIZpOM9oU9zMKB2/Pw=
+	b=L3pzy1RThVb8bCsU4BB6zB3JJnovai55kw2JdpfOm2/s2Q3A0E7JtWbVkrqJblzNs
+	 XLuNk3x8BI56IZmRPL5aBKuuspSyoTy8S6Kz2b24JUqPjiCkEqtXok5ZxUY6J6nIQD
+	 3K8kAKD/zIZhOFKopFc4R/Lj8Do5QILQTzpAoag4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Georg Gottleuber <ggo@tuxedocomputers.com>,
-	Werner Sembach <wse@tuxedocomputers.com>,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Seppo Ingalsuo <seppo.ingalsuo@linux.intel.com>,
+	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Liam Girdwood <liam.r.girdwood@intel.com>,
+	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0740/1887] PCI: Avoid putting some root ports into D3 on TUXEDO Sirius Gen1
-Date: Wed, 28 Oct 2026 17:47:16 +0100
-Message-ID: <20261028170516.285485993@linuxfoundation.org>
+Subject: [PATCH 6.1 0741/1887] ASoC: SOF: ipc4-topology: Harden loops for looking up ALH copiers
+Date: Wed, 28 Oct 2026 17:47:17 +0100
+Message-ID: <20261028170516.308910320@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -64,91 +66,76 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Werner Sembach <wse@tuxedocomputers.com>
+From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
 
-[ Upstream commit b1049f2d68693c80a576c4578d96774a68df2bad ]
+[ Upstream commit 6fd60136d256b3b948333ebdb3835f41a95ab7ef ]
 
-commit 9d26d3a8f1b0 ("PCI: Put PCIe ports into D3 during suspend") sets the
-policy that all PCIe ports are allowed to use D3.  When the system is
-suspended if the port is not power manageable by the platform and won't be
-used for wakeup via a PME this sets up the policy for these ports to go
-into D3hot.
+Other, non DAI copier widgets could have the same  stream name (sname) as
+the ALH copier and in that case the copier->data is NULL, no alh_data is
+attached, which could lead to NULL pointer dereference.
+We could check for this NULL pointer in sof_ipc4_prepare_copier_module()
+and avoid the crash, but a similar loop in sof_ipc4_widget_setup_comp_dai()
+will miscalculate the ALH device count, causing broken audio.
 
-This policy generally makes sense from an OSPM perspective but it leads to
-problems with wakeup from suspend on the TUXEDO Sirius 16 Gen 1 with a
-specific old BIOS. This manifests as a system hang.
+The correct fix is to harden the matching logic by making sure that the
+1. widget is a DAI widget - so dai = w->private is valid
+2. the dai (and thus the copier) is ALH copier
 
-On the affected Device + BIOS combination, add a quirk for the root port of
-the problematic controller to ensure that these root ports are not put into
-D3hot at suspend.
-
-This patch is based on
-
-  https://lore.kernel.org/linux-pci/20230708214457.1229-2-mario.limonciello@amd.com
-
-but with the added condition both in the documentation and in the code to
-apply only to the TUXEDO Sirius 16 Gen 1 with a specific old BIOS and only
-the affected root ports.
-
-Fixes: 9d26d3a8f1b0 ("PCI: Put PCIe ports into D3 during suspend")
-Suggested-by: Mario Limonciello <mario.limonciello@amd.com>
-Link: https://lore.kernel.org/r/20250114222436.1075456-1-wse@tuxedocomputers.com
-Co-developed-by: Georg Gottleuber <ggo@tuxedocomputers.com>
-Signed-off-by: Georg Gottleuber <ggo@tuxedocomputers.com>
-Signed-off-by: Werner Sembach <wse@tuxedocomputers.com>
-Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
-Cc: <stable@vger.kernel.org> # 6.1+
+Fixes: a150345aa758 ("ASoC: SOF: ipc4-topology: add SoundWire/ALH aggregation support")
+Reported-by: Seppo Ingalsuo <seppo.ingalsuo@linux.intel.com>
+Link: https://github.com/thesofproject/sof/pull/9652
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Reviewed-by: Liam Girdwood <liam.r.girdwood@intel.com>
+Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
+Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Link: https://patch.msgid.link/20250206084642.14988-1-peter.ujfalusi@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/pci/fixup.c | 30 ++++++++++++++++++++++++++++++
- 1 file changed, 30 insertions(+)
+ sound/soc/sof/ipc4-topology.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/arch/x86/pci/fixup.c b/arch/x86/pci/fixup.c
-index 0e9f26e236d48..7d06107ab9826 100644
---- a/arch/x86/pci/fixup.c
-+++ b/arch/x86/pci/fixup.c
-@@ -1002,4 +1002,34 @@ DECLARE_PCI_FIXUP_SUSPEND(PCI_VENDOR_ID_AMD, 0x1668, amd_rp_pme_suspend);
- DECLARE_PCI_FIXUP_RESUME(PCI_VENDOR_ID_AMD, 0x1668, amd_rp_pme_resume);
- DECLARE_PCI_FIXUP_SUSPEND(PCI_VENDOR_ID_AMD, 0x1669, amd_rp_pme_suspend);
- DECLARE_PCI_FIXUP_RESUME(PCI_VENDOR_ID_AMD, 0x1669, amd_rp_pme_resume);
-+
-+/*
-+ * Putting PCIe root ports on Ryzen SoCs with USB4 controllers into D3hot
-+ * may cause problems when the system attempts wake up from s2idle.
-+ *
-+ * On the TUXEDO Sirius 16 Gen 1 with a specific old BIOS this manifests as
-+ * a system hang.
-+ */
-+static const struct dmi_system_id quirk_tuxeo_rp_d3_dmi_table[] = {
-+	{
-+		.matches = {
-+			DMI_EXACT_MATCH(DMI_SYS_VENDOR, "TUXEDO"),
-+			DMI_EXACT_MATCH(DMI_BOARD_NAME, "APX958"),
-+			DMI_EXACT_MATCH(DMI_BIOS_VERSION, "V1.00A00_20240108"),
-+		},
-+	},
-+	{}
-+};
-+
-+static void quirk_tuxeo_rp_d3(struct pci_dev *pdev)
-+{
-+	struct pci_dev *root_pdev;
-+
-+	if (dmi_check_system(quirk_tuxeo_rp_d3_dmi_table)) {
-+		root_pdev = pcie_find_root_port(pdev);
-+		if (root_pdev)
-+			root_pdev->dev_flags |= PCI_DEV_FLAGS_NO_D3;
-+	}
-+}
-+DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_AMD, 0x1502, quirk_tuxeo_rp_d3);
- #endif /* CONFIG_SUSPEND */
+diff --git a/sound/soc/sof/ipc4-topology.c b/sound/soc/sof/ipc4-topology.c
+index ee6f6edec970c..413dc2d8afb65 100644
+--- a/sound/soc/sof/ipc4-topology.c
++++ b/sound/soc/sof/ipc4-topology.c
+@@ -515,7 +515,7 @@ static int sof_ipc4_widget_setup_comp_dai(struct snd_sof_widget *swidget)
+ 		}
+ 
+ 		list_for_each_entry(w, &sdev->widget_list, list) {
+-			if (w->widget->sname &&
++			if (!WIDGET_IS_DAI(w->id) || !w->widget->sname ||
+ 			    strcmp(w->widget->sname, swidget->widget->sname))
+ 				continue;
+ 
+@@ -1237,17 +1237,20 @@ sof_ipc4_prepare_copier_module(struct snd_sof_widget *swidget,
+ 			 */
+ 			i = 0;
+ 			list_for_each_entry(w, &sdev->widget_list, list) {
+-				if (w->widget->sname &&
++				if (!WIDGET_IS_DAI(w->id) || !w->widget->sname ||
+ 				    strcmp(w->widget->sname, swidget->widget->sname))
+ 					continue;
+ 
+ 				dai = w->private;
+ 				alh_copier = (struct sof_ipc4_copier *)dai->private;
++				if (alh_copier->dai_type != SOF_DAI_INTEL_ALH)
++					continue;
+ 				alh_data = &alh_copier->data;
+ 				blob->alh_cfg.mapping[i].alh_id = alh_data->gtw_cfg.node_id;
+ 				blob->alh_cfg.mapping[i].channel_mask = ch_mask;
+ 				i++;
+ 			}
++			blob->alh_cfg.count = i;
+ 			if (blob->alh_cfg.count > 1) {
+ 				int group_id;
+ 
 -- 
 2.53.0
 
