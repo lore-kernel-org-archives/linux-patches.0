@@ -1,52 +1,50 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793210006;
-	b=kLlkqIsnYalKz5nGozrqkU72c8rhSuCVraP2dkIYc9BxvqBkfuB7B7huxXrozDuH4ukv
-	 jrTvJ+2/q3AyGgCFXJ8inlNgD/8bxKFh3qxaugBJ4MxY7wxbLBAbyBMIjSA4ufTIShrgj
-	 4TUU/UlxRexsR4b/vn0MnM6mLS/PZ4oCJaYBAQpOO68Un80KJuFsEEAbVi00rmSwSeKKa
-	 1Tv3BwXzVnoFSySsPhDO8M4BUb3Nv0yZEIyVaR/2/6ku68NxAybj8mqIbBWnHn9PqjAYS
-	 0UR8sXuz4LNytgwOMxNtrHIAuY5k1HilJDTLBgmdurWLF4o7I8TEIGIXYjJhf0mJWcg==
+	t=1793210008;
+	b=ixP882+UTI9adQvn0sDIkuDIFi1baYXJh5XL+fATqmBLI783tmwavQQvCvIWx6jH2ik8
+	 +9ZM+DLefFHSiQILMhlrRY+pSQnFxQIHZncDfl2ATvN/NfG8cAKyQKmIzZbAf3GLh4oH0
+	 1O5vs0LY3UpFE318rPffiDcRKU6hQHjWgv8+FsZ1fgOArc9fmyUWHvdFm42EKYVjhEf/Q
+	 1/rQxZpbYz/poX2NTkxn/UwbxZUFNr9ewmL3FJRYBWtiaAhql5tRlpDLdZDKaycWuNXIh
+	 MNJ8Mfx+2EKqVv5XsjkAp/nry5iaWbCLW304z4xw/Fj8KNA1hIr1FFcCOUYS7IuJvVg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793210006;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793210008;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=2ou7kq+ZTwHvGnSFJ/Efmiioi1aE2F2Yg0uLLBkKONc=;
-	b=q8TbSUEBuUWqw4LtlfaD4U7oSbffyXIzEFhlghgqyMk3ddn0JDFegq25PaY7vAH8WENc
-	 c4L4C0yCjcXmtWflY8eTHLhr7ekkscDghXgvAjlmO2bLggJSVURJK1t480J7G0rtoY2Xv
-	 7yV5QpeFshoc7XGwsBp3q7fZh9Yeb1MOzgrRw9yuXEyTQhquKKShXj/m1IXlx2KdIxxxm
-	 1RPxtiaYm8FhlKSPV3X4qD9PgRPLbjnBov80XUQ890+05f/91V0cstoCSyYrEE1P6u1y3
-	 /Sfd1XVnCxNj5MgOKbY8bxBOmNDYF06stahzy9jMfgH5k7X5aHh3K0akOGy9voYtIuQ==
+	bh=Gbno2xsMupQj/uCDtB0ldgd7sjwzoTwTL9A4mWn6HXk=;
+	b=FNuCcbO3C6hv3n5IfkMbORzOpDRceDp63pLkK3l90KsJe/2jYCS5AqPnjoNJwGY/mTNA
+	 SbbL0gsh0OuNEX5qU2jnlnaFxKQ2MbIQk8YE4lhMwAiNrSDIEI70RRD0S47TW+axEYAkv
+	 BUhxy/bF6I5Lh0VS2rpUZ6hSQm3pmY6irCe7lhzAczg+nhAfkPkxefTuJX7erfuBTNRX7
+	 Tavb6vsnnRbfJVW8zF62pt2OPqXtuEKkBOkWVZta8fg4ZXyxJCT6lreZ79SPCh4s2ftu7
+	 64pd05ZdUUcuyIQ58gq/2eeXXN2yiXWUgkJnwzonAnaDYP1a2P+rVwtFMB7pVwUlpwA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UcM7vFpe;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RfA6Iui2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE441606A31A;
-	Wed, 28 Oct 2026 17:53:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F1DC606A31A;
+	Wed, 28 Oct 2026 17:53:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UcM7vFpe
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6FB51F01825;
-	Wed, 28 Oct 2026 17:53:24 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RfA6Iui2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D1E01F01825;
+	Wed, 28 Oct 2026 17:53:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793210005;
-	bh=2ou7kq+ZTwHvGnSFJ/Efmiioi1aE2F2Yg0uLLBkKONc=;
+	s=korg; t=1793210008;
+	bh=Gbno2xsMupQj/uCDtB0ldgd7sjwzoTwTL9A4mWn6HXk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UcM7vFpeB43vrrTLDEZ1NH+Gxh63nzssQvso3Gm+g9ecGqoQg0u/sc04909qKYYdL
-	 jaL5hh2OCEmT56hOIjQnsehPWRreul9Ns0/pcGQkxYFF0jC/UsJShmjvFyLjPUhn/W
-	 xFNl3BxqaRpmKTCTOtLGY0Y/5GdeuQJ4zoAxWAXg=
+	b=RfA6Iui2usRMcwgMYCaOfJppLzKZpds0iu6xND5UgoBphVVSdCcfYyAsBuleyw+m+
+	 qmXgiKkqWmnataFllkacsITe8inti96c/Ii24Lhj5vUa07PfdQvERkwG+W8GpjxneD
+	 7B1hL2uvm4rSvAKNX3NfFgqp3vmPVk5FuE6oMPT8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sung Byeongchan <tjdqudcks0424@naver.com>,
-	Ian Kent <raven@themaw.net>,
 	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 6.6 041/168] autofs: ignore notification errors from a replaced pipe
-Date: Wed, 28 Oct 2026 17:59:37 +0100
-Message-ID: <20261028165944.063823570@linuxfoundation.org>
+Subject: [PATCH 6.6 042/168] unicode: free the map after a grace period
+Date: Wed, 28 Oct 2026 17:59:38 +0100
+Message-ID: <20261028165944.086696010@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165943.089486480@linuxfoundation.org>
 References: <20261028165943.089486480@linuxfoundation.org>
@@ -68,102 +66,122 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sung Byeongchan <tjdqudcks0424@naver.com>
+From: Christian Brauner <brauner@kernel.org>
 
-commit 65676cd4203c0e41a94caf54080a7f0a95434bda upstream.
+commit a96c5299bd7305eb984377681eb3222a57376405 upstream.
 
-autofs_notify_daemon() takes a reference to the current notification
-pipe under wq_mutex, then drops the mutex before writing the request. The
-write can block while the daemon enters catatonic mode and installs a
-replacement pipe.
+generic_ci_d_hash() and generic_ci_d_compare() read sb->s_encoding and
+dereference the unicode map while a pathwalk in rcu mode holds nothing
+but rcu_read_lock(). The filesystems that use them, ext4, f2fs and
+tmpfs, drop the map with utf8_unload() from ->put_super(), which runs
+when the last reference to the mount goes away. A lookup that is still
+inside such a filesystem at that point reads a freed map.
 
-If the old pipe's reader is then closed, the delayed write returns -EPIPE
-and the generic error path enters catatonic mode again. That transition
-acts on the current superblock state, closes the replacement pipe, and
-releases the new daemon generation's wait queues.
+With a pathwalk held up in utf8_casefold_hash() while the last reference
+to a casefolded tmpfs goes away:
 
-Only enter catatonic mode when the pipe which failed is still the current
-pipe. Factor the already-locked transition so the identity check and state
-change are atomic with respect to another replacement.
+  BUG: KASAN: slab-use-after-free in utf8nlookup+0x74c/0x950
+  Read of size 8 at addr ff110001030fe658 by task walker/98
+  Call Trace:
+   <TASK>
+   utf8nlookup+0x74c/0x950
+   utf8byte+0x160/0x1560
+   utf8_casefold_hash+0x167/0x230
+   generic_ci_d_hash+0xdd/0x1c0
+   link_path_walk+0x11ad/0x1d30
+   path_lookupat+0x63/0xb00
+   filename_lookup+0x1f1/0x5b0
+   vfs_statx+0xd7/0x3b0
+  [...]
+  Allocated by task 94:
+   __kmalloc_cache_noprof+0x249/0x560
+   utf8_load+0x4e/0x570
+   shmem_parse_opt_casefold.isra.0+0x92/0x270
+  [...]
+  Freed by task 97:
+   kfree+0x1db/0x5b0
+   shmem_put_super+0x72/0x170
+   generic_shutdown_super+0x14c/0x530
+   kill_anon_super+0x3a/0x60
+   deactivate_locked_super+0x9c/0xf0
+   cleanup_mnt+0x9f/0x130
 
-This was reproduced on v7.3-rc5-337-gff47652a4b66c in a local QEMU guest.
-An unprivileged UID 65534 lookup filled the old packet pipe before a
-normal CATATONIC/SETPIPEFD restart. On the unmodified kernel, the new pipe
-received HUP and both a pending victim lookup and a later lookup failed
-with ENOENT in two out of two fresh-mount runs.
+So far that has been hard to hit. umount(2) waits for a grace period
+in namespace_unlock() before it drops the mount, so only a mount whose
+last reference goes away elsewhere, like the close of a file or a chdir
+out of a lazily unmounted directory, can race a walker. So it is
+reachable.
 
-With this change, the new pipe remained active, received an intact
-304-byte request, and both victim lookups completed in two out of two
-runs. Normal lookup and restart-without-a-blocked-writer controls passed.
-No KASAN, oops, refcount, or lock diagnostic was observed. A source
-reproducer and complete local logs are available privately on request.
+Delay the free until a grace period has passed. The map and the data
+table it holds a reference to then outlive any pathwalk that found the
+superblock before the mount went away. The reference on the data table
+module is dropped from the rcu callback as well. utf8-core is built in
+whenever CONFIG_UNICODE is set, so there is no module exit that would
+have to wait for the callbacks.
 
-The demonstrated impact is limited to denial of a shared autofs service
-during a legitimate daemon restart. No memory corruption, information leak,
-privilege escalation, or code execution primitive was observed.
+Overlayfs points the s_encoding of an overlay at the map of its first
+layer without taking a reference of its own. That stays correct. The
+layer is held by the overlay, so its map is dropped only after the
+overlay is gone.
 
-Fixes: 8d7b48e0bc5fa ("autofs4: add miscellaneous device for ioctls")
+Fixes: b886ee3e778e ("ext4: Support case-insensitive file name lookups")
 Cc: stable@vger.kernel.org
-Signed-off-by: Sung Byeongchan <tjdqudcks0424@naver.com>
-Link: https://patch.msgid.link/20261007173542.593624-1-tjdqudcks0424@naver.com
-Acked-by: Ian Kent <raven@themaw.net>
+Link: https://patch.msgid.link/20261009-work-fixes-rcu-v1-6-7446d2d335e6@kernel.org
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/autofs/waitq.c |   25 +++++++++++++++++++------
- 1 file changed, 19 insertions(+), 6 deletions(-)
+ fs/unicode/utf8-core.c  |   21 +++++++++++++++++----
+ include/linux/unicode.h |    1 +
+ 2 files changed, 18 insertions(+), 4 deletions(-)
 
---- a/fs/autofs/waitq.c
-+++ b/fs/autofs/waitq.c
-@@ -12,15 +12,13 @@
-  */
- static autofs_wqt_t autofs_next_wait_queue = 1;
- 
--void autofs_catatonic_mode(struct autofs_sb_info *sbi)
-+static void autofs_catatonic_mode_locked(struct autofs_sb_info *sbi)
- {
- 	struct autofs_wait_queue *wq, *nwq;
- 
--	mutex_lock(&sbi->wq_mutex);
--	if (sbi->flags & AUTOFS_SBI_CATATONIC) {
--		mutex_unlock(&sbi->wq_mutex);
-+	lockdep_assert_held(&sbi->wq_mutex);
-+	if (sbi->flags & AUTOFS_SBI_CATATONIC)
- 		return;
--	}
- 
- 	pr_debug("entering catatonic mode\n");
- 
-@@ -40,6 +38,21 @@ void autofs_catatonic_mode(struct autofs
- 	fput(sbi->pipe);	/* Close the pipe */
- 	sbi->pipe = NULL;
- 	sbi->pipefd = -1;
-+}
-+
-+void autofs_catatonic_mode(struct autofs_sb_info *sbi)
-+{
-+	mutex_lock(&sbi->wq_mutex);
-+	autofs_catatonic_mode_locked(sbi);
-+	mutex_unlock(&sbi->wq_mutex);
-+}
-+
-+static void autofs_catatonic_mode_for_pipe(struct autofs_sb_info *sbi,
-+					   struct file *pipe)
-+{
-+	mutex_lock(&sbi->wq_mutex);
-+	if (sbi->pipe == pipe)
-+		autofs_catatonic_mode_locked(sbi);
- 	mutex_unlock(&sbi->wq_mutex);
+--- a/fs/unicode/utf8-core.c
++++ b/fs/unicode/utf8-core.c
+@@ -3,6 +3,7 @@
+ #include <linux/kernel.h>
+ #include <linux/string.h>
+ #include <linux/slab.h>
++#include <linux/rcupdate.h>
+ #include <linux/parser.h>
+ #include <linux/errno.h>
+ #include <linux/stringhash.h>
+@@ -205,12 +206,24 @@ out_free_um:
  }
+ EXPORT_SYMBOL(utf8_load);
  
-@@ -170,7 +183,7 @@ static void autofs_notify_daemon(struct
- 		autofs_wait_release(sbi, wq->wait_queue_token, ret);
- 		break;
- 	default:
--		autofs_catatonic_mode(sbi);
-+		autofs_catatonic_mode_for_pipe(sbi, pipe);
- 		break;
- 	}
- 	fput(pipe);
++static void utf8_unload_rcu(struct rcu_head *head)
++{
++	struct unicode_map *um = container_of(head, struct unicode_map, rcu);
++
++	symbol_put(utf8_data_table);
++	kfree(um);
++}
++
++/*
++ * A pathwalk in rcu mode may still be in ->d_hash() or ->d_compare() of a
++ * filesystem that is being torn down and read the map through its
++ * superblock, so the map and the tables it points to have to outlive the
++ * grace period.
++ */
+ void utf8_unload(struct unicode_map *um)
+ {
+-	if (um) {
+-		symbol_put(utf8_data_table);
+-		kfree(um);
+-	}
++	if (um)
++		call_rcu(&um->rcu, utf8_unload_rcu);
+ }
+ EXPORT_SYMBOL(utf8_unload);
+ 
+--- a/include/linux/unicode.h
++++ b/include/linux/unicode.h
+@@ -51,6 +51,7 @@ struct unicode_map {
+ 	unsigned int version;
+ 	const struct utf8data *ntab[UTF8_NMAX];
+ 	const struct utf8data_table *tables;
++	struct rcu_head rcu;
+ };
+ 
+ int utf8_validate(const struct unicode_map *um, const struct qstr *str);
 
 
