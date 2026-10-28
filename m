@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214717;
-	b=C4mfeePXELM2Y32oko+EK969mUu4rspybaPPwPDR2Und5B+Oul8O1s8v0P73/w8AfNRB
-	 6GfvDfo9VldlOCVKgJ4DxtX78KjKWkyPFu2SgK3nLgy7Z6AFXOVcWdNSlAKTlcVKLp47n
-	 8SgHBtJBmuTJGgTdGglqoaSLCXhDp5RIywy19A+PmWiaHbul2bhjXKGUNqRmSFT/ttH9c
-	 C6QtwkpNXzy/MdCct4d0T0GfUxPqQCbehRCWOEE/LO02yHPVYMYahtt2z/dOd6WsAxGan
-	 5xAnt8DHGLL1mwIWxJ7wiZJF5SoiKaYORpJoRcINKgARcg4ftsT5VQD2W6WwdcM1s/w==
+	t=1793214720;
+	b=xq+Ln2vEiWAS79mI/N4PMCRlqBwzmw4/DeQyGSLHYl/n99D2OPinXlYnVJ757CftKMYd
+	 xoJvgKCL58NkSVvIGO3tLgTIAsqkGfIF3yITb9izxYGM1oRTNpSsSQumEF41z6j7q16Ru
+	 lVf83wyMa1j44t2iy4+CXTPL1JYFCgwpvMmTKnQpfq+XFNo0X/2NuuC9dto4w4jU+yQ1g
+	 Q8/wthxLIGeXh035Fzd9i0k91eon/S+uFizL4e62wszQeYjnWnUM5saXvkEKSgE0e6Ftx
+	 RNJkfmwKpALt1tMaABPaOcIEitu0CI4jyS4Kv17o5Z2fBNEfYYnkITU0rbdAbTWOQrg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214717;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214720;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=SGEM/eo4rypWV3Ct+l1qtzfoSzrJ392hlQLgm+mB/Oc=;
-	b=TyUPXyzuxyhNRi6KVq9p+fmelpP4ow4utPVHFP2EdZ88VxWitmEYOTTyZH07409Hex7z
-	 dHC06QZiaZDdiiiNlEj4ozSZCO4FSMpZW4x7N+vQNZL8VJwirkpnO+NMWDeKJ3QmBmKlX
-	 +L3wxAuO+OlXGeq802oQVEiPeoZGo4eoLvX6kN1Ot7CKmMrYahgbQ3WdkHPk6as+10kgA
-	 Sq3lOU3FRD0fVn6rJD1MUe8UOBXIQe34270VTGBqWTFcOLQoZPNXGlDP6C0dX5osJSvJh
-	 oFz+vLnK11xHPOu6Kew1h0IDK/MGwqbSw17rzpCByV0YdH06WU060TYDHv4vY9ivYKA==
+	bh=dsqlJfNwTwW48CplkBSQuXr9KnYzN4Y0vFKhn3IveQA=;
+	b=xpYecfKcUhyznOfV3J9Fu6zqebKATc8xRwRheK6SN8QDnLfzJakBDlROuKqIvpKzL0eN
+	 f/cVjIv+tmvpnzSjF3RQBFHPK68zWv0Vo957l3RjvKD2+bBLDXoUJvgqWrvADetDA8FbW
+	 MMjfcskUecMpW+VaHsH5wu+nCvMkCOBmjCGevqHY4AlZljbCg4UVBxfBBhwb1wLCY+UJv
+	 Xlw+e4osPViq1+B3CNfbu/TRMgA9QLuPIHVijk71dZOLcX81R3FKc6J37t+5ZPfDlqMmP
+	 5QNgvuagWy1lCh1IYVIATakH7C0a1QVBMUyrj3nthNET13eKljoROxPiRX0AOaM4R4g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZVZysmMo;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I23MZGRW;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63F7B606A33E;
-	Wed, 28 Oct 2026 19:11:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37A59606AB01;
+	Wed, 28 Oct 2026 19:12:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZVZysmMo
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4F291F01828;
-	Wed, 28 Oct 2026 19:11:56 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I23MZGRW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88CBD1F01825;
+	Wed, 28 Oct 2026 19:11:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214717;
-	bh=SGEM/eo4rypWV3Ct+l1qtzfoSzrJ392hlQLgm+mB/Oc=;
+	s=korg; t=1793214720;
+	bh=dsqlJfNwTwW48CplkBSQuXr9KnYzN4Y0vFKhn3IveQA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZVZysmMoZcCFBgMSs7hURXxlSET37qyYXY9st4kvd1B5gzbJxZ//95/7rnQzkerw7
-	 XHig3GXCnLY/6HUQc7DCI/El5wpKh7ql9wjgHxXV9uYCHqv1O5EIOe9Ecv/pObjNA0
-	 vedy6UsLIfDeV+jnoxNHaZ8JaJtQ+TP4XcbUyHHk=
+	b=I23MZGRWJpaRQHxZuZpP2S0vRfv6njPKyVWp3ELHJN4RBLO/EAu/K1GGZPqY93K4Z
+	 R09l4/GyohyYlUJRNaCnU02MbRSh1vAlzZViQeizRQDgtjIBMkcoenq2x2ry8mTWaH
+	 vx5kHbe7MBmPmSaWvFvgkhtsYg33TqMXR9Zyq3Xc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jacky Bai <ping.bai@nxp.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	Florian Westphal <fw@strlen.de>,
+	Qi Tang <tpluszz77@gmail.com>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0958/1887] pmdomain: imx8mp-blk-ctrl: Keep the NOC_HDCP clock enabled
-Date: Wed, 28 Oct 2026 17:50:54 +0100
-Message-ID: <20261028170521.207141959@linuxfoundation.org>
+Subject: [PATCH 6.1 0959/1887] xfrm: hold dev ref until after transport_finish NF_HOOK
+Date: Wed, 28 Oct 2026 17:50:55 +0100
+Message-ID: <20261028170521.231353887@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,55 +69,134 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jacky Bai <ping.bai@nxp.com>
+From: Qi Tang <tpluszz77@gmail.com>
 
-[ Upstream commit e91d5f94acf68618ea3ad9c92ac28614e791ae7d ]
+[ Upstream commit 1c428b03840094410c5fb6a5db30640486bbbfcb ]
 
-Keep the NOC_HDCP clock always enabled to fix the potential hang
-caused by the NoC ADB400 port power down handshake.
+After async crypto completes, xfrm_input_resume() calls dev_put()
+immediately on re-entry before the skb reaches transport_finish.
+The skb->dev pointer is then used inside NF_HOOK and its okfn,
+which can race with device teardown.
 
-Fixes: 77b0ddb42add ("soc: imx: add i.MX8MP HDMI blk ctrl HDCP/HRV_MWR")
-Signed-off-by: Jacky Bai <ping.bai@nxp.com>
+Remove the dev_put from the async resumption entry and instead
+drop the reference after the NF_HOOK call in transport_finish,
+using a saved device pointer since NF_HOOK may consume the skb.
+This covers NF_DROP, NF_QUEUE and NF_STOLEN paths that skip
+the okfn.
+
+For non-transport exits (decaps, gro, drop) and secondary
+async return points, release the reference inline when
+async is set.
+
+Suggested-by: Florian Westphal <fw@strlen.de>
+Fixes: acf568ee859f ("xfrm: Reinject transport-mode packets through tasklet")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Qi Tang <tpluszz77@gmail.com>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/imx/imx8mp-blk-ctrl.c | 8 +-------
- 1 file changed, 1 insertion(+), 7 deletions(-)
+ net/ipv4/xfrm4_input.c |  5 ++++-
+ net/ipv6/xfrm6_input.c |  5 ++++-
+ net/xfrm/xfrm_input.c  | 15 ++++++++++++---
+ 3 files changed, 20 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/soc/imx/imx8mp-blk-ctrl.c b/drivers/soc/imx/imx8mp-blk-ctrl.c
-index 65848f6b8f352..5357711b2584c 100644
---- a/drivers/soc/imx/imx8mp-blk-ctrl.c
-+++ b/drivers/soc/imx/imx8mp-blk-ctrl.c
-@@ -250,9 +250,6 @@ static void imx8mp_hdmi_blk_ctrl_power_on(struct imx8mp_blk_ctrl *bc,
- 		regmap_set_bits(bc->regmap, HDMI_RTX_RESET_CTL0, BIT(12));
- 		regmap_clear_bits(bc->regmap, HDMI_TX_CONTROL0, BIT(3));
- 		break;
--	case IMX8MP_HDMIBLK_PD_HDCP:
--		regmap_set_bits(bc->regmap, HDMI_RTX_CLK_CTL0, BIT(11));
--		break;
- 	case IMX8MP_HDMIBLK_PD_HRV:
- 		regmap_set_bits(bc->regmap, HDMI_RTX_CLK_CTL1, BIT(3) | BIT(4) | BIT(5));
- 		regmap_set_bits(bc->regmap, HDMI_RTX_RESET_CTL0, BIT(15));
-@@ -306,9 +303,6 @@ static void imx8mp_hdmi_blk_ctrl_power_off(struct imx8mp_blk_ctrl *bc,
- 		regmap_clear_bits(bc->regmap, HDMI_RTX_CLK_CTL0, BIT(7));
- 		regmap_clear_bits(bc->regmap, HDMI_RTX_CLK_CTL1, BIT(22) | BIT(24));
- 		break;
--	case IMX8MP_HDMIBLK_PD_HDCP:
--		regmap_clear_bits(bc->regmap, HDMI_RTX_CLK_CTL0, BIT(11));
--		break;
- 	case IMX8MP_HDMIBLK_PD_HRV:
- 		regmap_clear_bits(bc->regmap, HDMI_RTX_RESET_CTL0, BIT(15));
- 		regmap_clear_bits(bc->regmap, HDMI_RTX_CLK_CTL1, BIT(3) | BIT(4) | BIT(5));
-@@ -337,7 +331,7 @@ static int imx8mp_hdmi_power_notifier(struct notifier_block *nb,
- 	regmap_write(bc->regmap, HDMI_RTX_CLK_CTL0, 0x0);
- 	regmap_write(bc->regmap, HDMI_RTX_CLK_CTL1, 0x0);
- 	regmap_set_bits(bc->regmap, HDMI_RTX_CLK_CTL0,
--			BIT(0) | BIT(1) | BIT(10));
-+			BIT(0) | BIT(1) | BIT(10) | BIT(11));
- 	regmap_set_bits(bc->regmap, HDMI_RTX_RESET_CTL0, BIT(0));
+diff --git a/net/ipv4/xfrm4_input.c b/net/ipv4/xfrm4_input.c
+index f6e90ba50b639..d05e8ff9c37bf 100644
+--- a/net/ipv4/xfrm4_input.c
++++ b/net/ipv4/xfrm4_input.c
+@@ -48,6 +48,7 @@ int xfrm4_transport_finish(struct sk_buff *skb, int async)
+ {
+ 	struct xfrm_offload *xo = xfrm_offload(skb);
+ 	struct iphdr *iph = ip_hdr(skb);
++	struct net_device *dev = skb->dev;
  
- 	/*
+ 	iph->protocol = XFRM_MODE_SKB_CB(skb)->protocol;
+ 
+@@ -71,8 +72,10 @@ int xfrm4_transport_finish(struct sk_buff *skb, int async)
+ 	}
+ 
+ 	NF_HOOK(NFPROTO_IPV4, NF_INET_PRE_ROUTING,
+-		dev_net(skb->dev), NULL, skb, skb->dev, NULL,
++		dev_net(dev), NULL, skb, dev, NULL,
+ 		xfrm4_rcv_encap_finish);
++	if (async)
++		dev_put(dev);
+ 	return 0;
+ }
+ 
+diff --git a/net/ipv6/xfrm6_input.c b/net/ipv6/xfrm6_input.c
+index 00d2a1b8b679e..cd96299dfe2f7 100644
+--- a/net/ipv6/xfrm6_input.c
++++ b/net/ipv6/xfrm6_input.c
+@@ -41,6 +41,7 @@ static int xfrm6_transport_finish2(struct net *net, struct sock *sk,
+ int xfrm6_transport_finish(struct sk_buff *skb, int async)
+ {
+ 	struct xfrm_offload *xo = xfrm_offload(skb);
++	struct net_device *dev = skb->dev;
+ 	int nhlen = skb->data - skb_network_header(skb);
+ 
+ 	skb_network_header(skb)[IP6CB(skb)->nhoff] =
+@@ -66,8 +67,10 @@ int xfrm6_transport_finish(struct sk_buff *skb, int async)
+ 	}
+ 
+ 	NF_HOOK(NFPROTO_IPV6, NF_INET_PRE_ROUTING,
+-		dev_net(skb->dev), NULL, skb, skb->dev, NULL,
++		dev_net(dev), NULL, skb, dev, NULL,
+ 		xfrm6_transport_finish2);
++	if (async)
++		dev_put(dev);
+ 	return 0;
+ }
+ 
+diff --git a/net/xfrm/xfrm_input.c b/net/xfrm/xfrm_input.c
+index de2e8b16b217a..b39bb4662d4b2 100644
+--- a/net/xfrm/xfrm_input.c
++++ b/net/xfrm/xfrm_input.c
+@@ -634,11 +634,14 @@ int xfrm_input(struct sk_buff *skb, int nexthdr, __be32 spi, int encap_type)
+ 		else
+ 			nexthdr = x->type->input(x, skb);
+ 
+-		if (nexthdr == -EINPROGRESS)
++		if (nexthdr == -EINPROGRESS) {
++			if (async)
++				dev_put(skb->dev);
+ 			return 0;
+-resume:
+-		dev_put(skb->dev);
++		}
+ 
++		dev_put(skb->dev);
++resume:
+ 		spin_lock(&x->lock);
+ 		if (nexthdr < 0) {
+ 			if (nexthdr == -EBADMSG) {
+@@ -704,6 +707,8 @@ int xfrm_input(struct sk_buff *skb, int nexthdr, __be32 spi, int encap_type)
+ 			sp->olen = 0;
+ 		if (skb_valid_dst(skb))
+ 			skb_dst_drop(skb);
++		if (async)
++			dev_put(skb->dev);
+ 		gro_cells_receive(&gro_cells, skb);
+ 		return 0;
+ 	} else {
+@@ -723,6 +728,8 @@ int xfrm_input(struct sk_buff *skb, int nexthdr, __be32 spi, int encap_type)
+ 				sp->olen = 0;
+ 			if (skb_valid_dst(skb))
+ 				skb_dst_drop(skb);
++			if (async)
++				dev_put(skb->dev);
+ 			gro_cells_receive(&gro_cells, skb);
+ 			return err;
+ 		}
+@@ -733,6 +740,8 @@ int xfrm_input(struct sk_buff *skb, int nexthdr, __be32 spi, int encap_type)
+ drop_unlock:
+ 	spin_unlock(&x->lock);
+ drop:
++	if (async)
++		dev_put(skb->dev);
+ 	xfrm_rcv_cb(skb, family, x && x->type ? x->type->proto : nexthdr, -1);
+ 	kfree_skb(skb);
+ 	return 0;
 -- 
 2.53.0
 
