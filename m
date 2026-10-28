@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793208719;
-	b=Gqv+nfaFDPDhfPFAnpgWQ8c63rlhGhY+4H3SS8PBU1Q67MAKkEOwiz68MG4u0qkMjn+t
-	 id6Mrt73Rr8M73jiQXwodFYL9AYRqTMK6VGu5UFpJzEmr2X3Tiw9SjK7WvLaqlWa9K7i7
-	 WCTXBfr/Lc6zL78/iCvfEk+cG+TOQvxhifTPTgXmzXGotD3R6QKr4fdYF/9gzOhFv67xA
-	 LLu0Fxv+OzcK5w0/t4dPAqIh11PDD6ghj4zBp25zodppKJuff9leLZvBxUQ1PR/waQjv0
-	 zjwOnVJTFkTLL1dSTIZwUHyUNY/Og/xDhq1JFeJ6gzmJzMPIVoDqyQn6wLOmCQbwPtA==
+	t=1793208722;
+	b=3opoYHJKtXKciKSSa2Yd8hr1kN4Lzq/CnMbrOYSY0dSd2G87Sa41FobvzBjZ6yIEtSqC
+	 PU6s93drXEVvcZ+OLcivRa0ttzUuycJ1hhMt6IANqqqXM8OMT/3qo/Z4URkU7DaIl3nLb
+	 F4Zdqc+CACVokuiY3XH2WQ8ap3A+Kv77AEKIToYdIdWZ2YWnLDuZfKCLsc+nDwlivA8Op
+	 O8qKax3v11wxvLL3Wrh494a0tdTgZyjo9GLUgIpnPOrw1Ncb1p5EG2RrYoC5/qxndI83t
+	 aOOg4htqKEzODc9+5zB0R3U0vSGXvNLgn2Tkffh8VWOVpzjlPgvxYD5WgvYWFwD3OSQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793208719;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793208722;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Z2IgGQ56yLPc0ENKhel4byyp9KEHt0DMpEtncY2+i9g=;
-	b=yQ8CWwNtHKtlaUwwcHMo+covd4V56vP94DPqqoDIX5MnU9R/5BTIZjoK4yTnEJGinFzI
-	 jhcGv0uUGW+Hmc4t0TZCzIz75PxkR0z+5YaWQlTm5Z49H07QTN/Kawym6iNHOLsX53eRj
-	 ZsctPLybYE+4mS4fxDowhPodWUz1ipAZfMie8FZIMWVaMZzwM35VwzwRKsfY67nSD5xKI
-	 3+0t+wP5hYDvaE0RwfK++qfKS6TdOjRAlUGREDciuhWJ5ry5nRY9nL1dl7ZK4l3Aqs0Hi
-	 umaxotAiZVBvRJoQstpnDlZZt5vLIYU+7l3yhQd0AMzFtPmmyi6gPeMWYyQF5QazlUg==
+	bh=4HmCWa+U1HE+3siSzoSUJVYe7XxHmv0N6HbScYUQ7bo=;
+	b=iI6Z/KTOLZvCdZMbt9l0DlUjJtiQk68AER0q3ObdslzgYvSPS7rtStsp4BBNfUja/Q91
+	 yGu11NAcpIIwcPaMkA2f7gfPybPTCAzMU1WE1o1NQTWPozFPnXoDu1JfBJwWJzFrwGH8x
+	 v/XbttEA6KC/pkM77U1bJE85J8ibbuObXxpo1G9nPKmibSFc7U+1ZfNM3Urf64zCdgXOo
+	 MJwqp4CRD55YEo3zH+3omRZY0adcA4j7B6OOE/vwiBk/bsRG2fdmP0wHYbBb4HiLMcgK3
+	 a+W0X+DqKZqMyjGMC/aAhNx1rEuCILwhWkxu1Nlh7K+jJ7yBPdQp7B4HxPyNpOiJBkg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="CtWX/Amo";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="tBD9/kTC";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4029C606A31A;
-	Wed, 28 Oct 2026 17:31:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A17B606A31A;
+	Wed, 28 Oct 2026 17:32:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CtWX/Amo
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50D471F01828;
-	Wed, 28 Oct 2026 17:31:58 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tBD9/kTC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24F331F01825;
+	Wed, 28 Oct 2026 17:32:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793208718;
-	bh=Z2IgGQ56yLPc0ENKhel4byyp9KEHt0DMpEtncY2+i9g=;
+	s=korg; t=1793208721;
+	bh=4HmCWa+U1HE+3siSzoSUJVYe7XxHmv0N6HbScYUQ7bo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CtWX/AmoSwOULbEsXMgVbg9PICf0CRNyJd1dk26y67I9zEIsyfOR1x8qxHLzosCfc
-	 8R7kgPBIrauJyycCzDDrkSSG7HDUUnu8u3jDtMOJ16ZaJWvozOM94mPYmVDJOJSWso
-	 BV4FGc9IL7aHcdRNvpL4kNRRTPRUVsC5Smpg9FL4=
+	b=tBD9/kTC1HnimIvZYO7H7wywKyowBhpOZ/zixILI2yDPFMCIgttnUTWagzMyMIden
+	 ML+cXc4e0umoJhJYWU4FRPXl/wT4MttwwKaPX1AmYcFNX1iH7fpjpJu4AEWtfQF0Nr
+	 fta0LySJYklRqYRu5NKCRbrTsfBknETj5hg/zC/o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Edward Karpicz <webmaster@toradex.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Mehmet Fide <mehmet.fide@screeningeagle.com>
-Subject: [PATCH 5.10 217/516] mtd: rawnand: vf610_nfc: fix reads on chips with more than 64 bytes of OOB
-Date: Wed, 28 Oct 2026 17:56:09 +0100
-Message-ID: <20261028170008.643330355@linuxfoundation.org>
+	Tianchu Chen <flynnnchen@tencent.com>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 5.10 218/516] wifi: cw1200: fix TX padding OOB read leaking heap data to device
+Date: Wed, 28 Oct 2026 17:56:10 +0100
+Message-ID: <20261028170008.665745639@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -68,189 +67,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mehmet Fide <mehmet.fide@screeningeagle.com>
+From: Tianchu Chen <flynnnchen@tencent.com>
 
-commit 37adc9c5789c76db3b1ee7aeec3999b8503020d0 upstream.
+commit 7c1611780823b76219cb1478db53dfd890c4a9a2 upstream.
 
-The controller transfers 64 spare bytes per page and the driver only
-implements the matching 64-byte ECC layout, so attach_chip() shrinks
-mtd->oobsize when the chip provides more. That clamp does not survive:
-nand_scan_tail() runs nanddev_init() after ->attach_chip(), and it
-restores mtd->oobsize from the memory organization, which still holds
-the value detected from the chip. The driver then transfers writesize
-plus the chip's full OOB size, the hardware ECC parity ends up at a
-different offset than the layout the controller was set up for, and
-every ECC-protected read fails with -EBADMSG.
+The TX path rounds the transfer size up to the bus alignment
+(align_size(), up to 511 bytes for SDIO, 1 byte for SPI) but sends
+the padded length straight from the frame buffer, which has no room
+reserved for the padding.  cw1200_data_write() therefore reads past
+the end of the frame and the bus transfer carries those bytes to the
+device.  A bogus device can collect up to 511 bytes of kernel heap
+data per TX frame.
 
-Measured on a Colibri VF61 (MX30LF4G28AC, 2048-byte pages, 112 bytes of
-OOB): with the clamp lost, UBI cannot read the erase counter headers of
-the pages U-Boot has just written, and the on-flash bad block table
-written by an older kernel reads back with ECC errors, so the board
-does not boot. Kernels before commit a7ab085d7c16 ("mtd: rawnand:
-Initialize the nand_device object") are not affected because nothing
-overwrote the clamp there, which is why the same chip works with a v4.4
-kernel and with U-Boot, whose copy of this driver has no memory
-organization to restore the value from. Edward Karpicz reported that
-the clamp no longer takes effect on this chip; see the link below.
+The RX path does not have this problem: it allocates the skb with
+the aligned length (alloc_len) before reading.
 
-Instead of modifying the memory organization, keep the detected OOB
-size and give the driver its own mtd_ooblayout_ops: the same layout the
-NAND core uses for large pages, but computed on the first 64 OOB bytes
-instead of the whole OOB, so the ECC bytes stay where U-Boot and the
-old kernels put them. The data paths transfer writesize plus those 64
-bytes, as the controller always has.
+Compute the exact padding with the bus align_size() callback, make
+sure queued TX frames have tailroom for it, and zero the padding
+bytes before the transfer so nothing past the frame is exposed.
 
-Since mtd->oobsize now reports the chip's real spare size, fill the
-tail of oob_poi with 0xff after the 64 transferred bytes on ECC page
-reads: the core may copy the full mtd->oobsize from it, which would
-otherwise expose whatever the buffer held before. 0xff also matches
-what a raw read returns from flash, since the write path only ever
-programs the first 64 spare bytes.
+This is not expected to change driver behavior on most cases: frame
+contents and transfer sizes are unchanged, only the content of the
+padding bytes (previously undefined stale memory, now zero), which
+the device never reads since the WSM header carries the real frame
+length.  The skb expansion can only fail under memory exhaustion,
+in which case the frame is dropped like on the existing error paths
+of cw1200_tx().
 
-Reported-by: Edward Karpicz <webmaster@toradex.com>
-Link: https://community.toradex.com/t/colibri-vf50-vf61-on-the-current-bsp-mainline-u-boot-v2026-07-and-linux-6-18-lts/30735
-Suggested-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Fixes: a7ab085d7c16 ("mtd: rawnand: Initialize the nand_device object")
+Discovered by Atuin - Automated Vulnerability Discovery Engine.
+
+Fixes: a910e4a94f69 ("cw1200: add driver for the ST-E CW1100 & CW1200 WLAN chipsets")
 Cc: stable@vger.kernel.org
-Signed-off-by: Mehmet Fide <mehmet.fide@screeningeagle.com>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Assisted-by: LLM
+Signed-off-by: Tianchu Chen <flynnnchen@tencent.com>
+Link: https://patch.msgid.link/7982b4a7e64f74e2068790ec389ca680a081f730@linux.dev
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/nand/raw/vf610_nfc.c |   72 ++++++++++++++++++++++++++++++++-------
- 1 file changed, 60 insertions(+), 12 deletions(-)
+ drivers/net/wireless/st/cw1200/bh.c   |    8 +++++++-
+ drivers/net/wireless/st/cw1200/txrx.c |   14 ++++++++++++++
+ 2 files changed, 21 insertions(+), 1 deletion(-)
 
---- a/drivers/mtd/nand/raw/vf610_nfc.c
-+++ b/drivers/mtd/nand/raw/vf610_nfc.c
-@@ -504,6 +504,11 @@ static int vf610_nfc_exec_op(struct nand
- 				      check_only);
- }
- 
-+static unsigned int vf610_nfc_spare_size(struct mtd_info *mtd)
-+{
-+	return min_t(unsigned int, mtd->oobsize, 64);
-+}
-+
- static inline int vf610_nfc_correct_data(struct nand_chip *chip, uint8_t *dat,
- 					 uint8_t *oob, int page)
+--- a/drivers/net/wireless/st/cw1200/bh.c
++++ b/drivers/net/wireless/st/cw1200/bh.c
+@@ -352,6 +352,7 @@ static int cw1200_bh_tx_helper(struct cw
+ 			       int *tx_burst)
  {
-@@ -521,7 +526,7 @@ static inline int vf610_nfc_correct_data
- 		return ecc_count;
- 
- 	nfc->data_access = true;
--	nand_read_oob_op(&nfc->chip, page, 0, oob, mtd->oobsize);
-+	nand_read_oob_op(&nfc->chip, page, 0, oob, vf610_nfc_spare_size(mtd));
- 	nfc->data_access = false;
- 
- 	/*
-@@ -529,7 +534,7 @@ static inline int vf610_nfc_correct_data
- 	 * at least less then half of the ECC strength.
- 	 */
- 	return nand_check_erased_ecc_chunk(dat, nfc->chip.ecc.size, oob,
--					   mtd->oobsize, NULL, 0,
-+					   vf610_nfc_spare_size(mtd), NULL, 0,
- 					   flips_threshold);
- }
- 
-@@ -550,7 +555,7 @@ static int vf610_nfc_read_page(struct na
- {
- 	struct vf610_nfc *nfc = chip_to_nfc(chip);
- 	struct mtd_info *mtd = nand_to_mtd(chip);
--	int trfr_sz = mtd->writesize + mtd->oobsize;
-+	int trfr_sz = mtd->writesize + vf610_nfc_spare_size(mtd);
- 	u32 row = 0, cmd1 = 0, cmd2 = 0, code = 0;
- 	int stat;
- 
-@@ -576,11 +581,16 @@ static int vf610_nfc_read_page(struct na
- 	 */
- 	vf610_nfc_rd_from_sram(buf, nfc->regs + NFC_MAIN_AREA(0),
- 			       mtd->writesize, false);
--	if (oob_required)
-+	if (oob_required) {
-+		unsigned int spare = vf610_nfc_spare_size(mtd);
-+
- 		vf610_nfc_rd_from_sram(chip->oob_poi,
- 				       nfc->regs + NFC_MAIN_AREA(0) +
- 						   mtd->writesize,
--				       mtd->oobsize, false);
-+				       spare, false);
-+		/* Not transferred, and never written: reads back erased */
-+		memset(chip->oob_poi + spare, 0xff, mtd->oobsize - spare);
-+	}
- 
- 	stat = vf610_nfc_correct_data(chip, buf, chip->oob_poi, page);
- 
-@@ -598,7 +608,7 @@ static int vf610_nfc_write_page(struct n
- {
- 	struct vf610_nfc *nfc = chip_to_nfc(chip);
- 	struct mtd_info *mtd = nand_to_mtd(chip);
--	int trfr_sz = mtd->writesize + mtd->oobsize;
-+	int trfr_sz = mtd->writesize + vf610_nfc_spare_size(mtd);
- 	u32 row = 0, cmd1 = 0, cmd2 = 0, code = 0;
- 	u8 status;
+ 	size_t tx_len;
++	size_t aligned_len;
+ 	u8 *data;
  	int ret;
-@@ -739,6 +749,49 @@ static void vf610_nfc_init_controller(st
- 	}
- }
+ 	struct wsm_hdr *wsm;
+@@ -384,9 +385,14 @@ static int cw1200_bh_tx_helper(struct cw
  
-+/*
-+ * With 64 byte OOB chips the core's large page layout matches what
-+ * U-Boot uses, and on chips with more, U-Boot and older kernels clamped
-+ * mtd->oobsize to 64. Modifying the OOB size is no longer possible, the
-+ * actual chip geometry must be respected, so to avoid breaking those
-+ * existing setups use our own layout: the core's large page one,
-+ * computed over the first 64 spare bytes only.
-+ */
-+static int vf610_nfc_ooblayout_ecc(struct mtd_info *mtd, int section,
-+				   struct mtd_oob_region *oobregion)
-+{
-+	struct nand_device *nand = mtd_to_nanddev(mtd);
-+	unsigned int total_ecc_bytes = nand->ecc.ctx.total;
-+
-+	if (section || !total_ecc_bytes)
-+		return -ERANGE;
-+
-+	oobregion->length = total_ecc_bytes;
-+	oobregion->offset = vf610_nfc_spare_size(mtd) - oobregion->length;
-+
-+	return 0;
-+}
-+
-+static int vf610_nfc_ooblayout_free(struct mtd_info *mtd, int section,
-+				    struct mtd_oob_region *oobregion)
-+{
-+	struct nand_device *nand = mtd_to_nanddev(mtd);
-+	unsigned int total_ecc_bytes = nand->ecc.ctx.total;
-+
-+	if (section)
-+		return -ERANGE;
-+
-+	oobregion->length = vf610_nfc_spare_size(mtd) - total_ecc_bytes - 2;
-+	oobregion->offset = 2;
-+
-+	return 0;
-+}
-+
-+static const struct mtd_ooblayout_ops vf610_nfc_ooblayout_ops = {
-+	.ecc = vf610_nfc_ooblayout_ecc,
-+	.free = vf610_nfc_ooblayout_free,
-+};
-+
- static int vf610_nfc_attach_chip(struct nand_chip *chip)
- {
- 	struct mtd_info *mtd = nand_to_mtd(chip);
-@@ -769,12 +822,7 @@ static int vf610_nfc_attach_chip(struct
- 		return -ENXIO;
- 	}
+ 	atomic_add(1, &priv->bh_tx);
  
--	/* Only 64 byte ECC layouts known */
--	if (mtd->oobsize > 64)
--		mtd->oobsize = 64;
--
--	/* Use default large page ECC layout defined in NAND core */
--	mtd_set_ooblayout(mtd, nand_get_large_page_ooblayout());
-+	mtd_set_ooblayout(mtd, &vf610_nfc_ooblayout_ops);
- 	if (chip->ecc.strength == 32) {
- 		nfc->ecc_mode = ECC_60_BYTE;
- 		chip->ecc.bytes = 60;
+-	tx_len = priv->hwbus_ops->align_size(
++	aligned_len = priv->hwbus_ops->align_size(
+ 		priv->hwbus_priv, tx_len);
+ 
++	/* Zero the bus alignment padding so no stale data is sent. */
++	if (aligned_len > tx_len)
++		memset(data + tx_len, 0, aligned_len - tx_len);
++	tx_len = aligned_len;
++
+ 	/* Check if not exceeding CW1200 capabilities */
+ 	if (WARN_ON_ONCE(tx_len > EFFECTIVE_BUF_SIZE))
+ 		pr_debug("Write aligned len: %zu\n", tx_len);
+--- a/drivers/net/wireless/st/cw1200/txrx.c
++++ b/drivers/net/wireless/st/cw1200/txrx.c
+@@ -14,6 +14,7 @@
+ #include "wsm.h"
+ #include "bh.h"
+ #include "sta.h"
++#include "hwbus.h"
+ #include "debug.h"
+ 
+ #define CW1200_INVALID_RATE_ID (0xFF)
+@@ -716,6 +717,7 @@ void cw1200_tx(struct ieee80211_hw *dev,
+ 	struct ieee80211_sta *sta;
+ 	struct wsm_tx *wsm;
+ 	bool tid_update = false;
++	size_t pad_len;
+ 	u8 flags = 0;
+ 	int ret;
+ 
+@@ -765,6 +767,18 @@ void cw1200_tx(struct ieee80211_hw *dev,
+ 	rcu_read_lock();
+ 	sta = rcu_dereference(t.sta);
+ 
++	/*
++	 * The bus transfer is padded up to the bus alignment and the
++	 * padding is transferred from the frame buffer.  Make sure the
++	 * buffer has room for the padding so the device never receives
++	 * data past the end of the frame.
++	 */
++	pad_len = priv->hwbus_ops->align_size(priv->hwbus_priv, skb->len) -
++		skb->len;
++	if (skb_tailroom(skb) < pad_len &&
++	    pskb_expand_head(skb, 0, pad_len, GFP_ATOMIC))
++		goto drop;
++
+ 	spin_lock_bh(&priv->ps_state_lock);
+ 	{
+ 		tid_update = cw1200_tx_h_pm_state(priv, &t);
 
 
