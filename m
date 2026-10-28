@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793217355;
-	b=MyzN2L4qOvMi5XW/Ac7s4Nk1xBVxPnfGY0rAEC9BDqRcYs+CyTDjOFX3k6Ukrx1NAnMU
-	 vUU4sVMt5JXXYr36I/Nhd9HR1aufW2P5KcCR8jW4UF1X8XhiHGYi0O+/ah677I5nh9TLm
-	 4VnwXmtzjK811pNjPO0FncsNiYJ1IKlLAP8FJN0DkbTiRzt0dANRXOCTWqzkgPOqpTtDk
-	 w27dQ7/vOQC7biIuk6t90Vy7jpBXkzLtDX47Hw2HPNwCHAIvtWCXXYSUalfM6Trvy0v7i
-	 w/5Ck9iAdcB8NFJTBGPTJpF+cqjx/ZIajOvYQd4d4zetDQxso/hzGFS4HHiBo2YIWRg==
+	t=1793217358;
+	b=yt4yQjMAPlAiTzae/jc2UT5saRAstgxePvzPIXvWaEauec9BEcCupfHgOf+0GcKEHntP
+	 hciR3Eo7WuGzZe9zr2aynPzzfpebxqK4+18kHd2XSmu7bEZAVasKs+EF6qlA43LA45S/q
+	 UFobpc1FIPdvAFCZBK5oX1FQYZ2c03iTvBKfGThsQWk8O0r5JDXOAzBbHCk2kKdvupUJL
+	 NnWqySRV56Mcolgj1wd39oSxJiT9P3c/F9AySpnwcMP0fAbEuGtHNfElE5iYxA+ElGs8g
+	 95by+ZtZYyrpfVSPJBQ2OKuDLTjHxH7dbC+7pCBeZO/UD3XMT7CXertyfwa8wBax4VA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793217355;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793217358;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=9v6T1CpFvU3CIOUxZNeXebm7XBYUZ8PriC+RFspv/yM=;
-	b=npycCHmrc+mLggJuaMxPnQkypLesbC/y4R11SfWkNAr2eBRpJvbFjMotgvRFsntXsXda
-	 jzyzZfNHIFOBjibX2uzkNyj28IdDRxhY6Lq5/AC3P167n3Rr9/VOBpaIaMS+7gjxd8wx3
-	 h+D8tuD6SUIf2eYX9J9+WylzQ4TMH1OXwtIbRj5mUq0bg1Hs6avf+3MEGVXxTz8Jyue3S
-	 R+kPF7VuaZKedQNLjPYk2G+jQ6C4TKIWYIi9FGyGA++0pxnIdqtF8+O+wAg+OVlD3v9wx
-	 QIZkpaVnYP3toZ3xRqnKYPetX7h3Lc+HxTQGfsSqlptQEWbjaYNcljEGc1fC09vh3lQ==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=w3hMwOvFExnWxotrDvTt8ByYjYGJxhYI9PFKM4nwNKE=;
+	b=uwscWGcz4JcytCkbVj0LVElplbXeI8+2FUgOZZOmDCpxsIXmUBCNUR5GndM/KlUmB09H
+	 n2WIq8EFmCH2MULpka/cegRZM/RWoU9Src3p+wq9MvzBqEUUhQxP4VeANzUq4uMycusME
+	 MpXPbRL/5j+VDi5uByx77DWC/b6WSnGYwnDiJZJRjUULb+iL6yUNwO/Kl9cwNAq6WC16L
+	 r8q7FTYuIYqC4nyqn43mUt5E4G7RZt+R6ybrHxeyOqxvv09/Psy7k6VRUXUGUSEK1OG1Z
+	 OC6FO02dX+BsrAPZ5oCxQnx0EAu0jV0HXbjAY+hEUctEiIbTaz9ZOWrrC9trCun4l1g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A3OTBWsN;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GW4qucNB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36316606A31A;
-	Wed, 28 Oct 2026 19:55:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF5FD606A31A;
+	Wed, 28 Oct 2026 19:55:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A3OTBWsN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 561531F01825;
-	Wed, 28 Oct 2026 19:55:54 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GW4qucNB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A7211F01828;
+	Wed, 28 Oct 2026 19:55:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793217354;
-	bh=9v6T1CpFvU3CIOUxZNeXebm7XBYUZ8PriC+RFspv/yM=;
+	s=korg; t=1793217357;
+	bh=w3hMwOvFExnWxotrDvTt8ByYjYGJxhYI9PFKM4nwNKE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=A3OTBWsNoYTjIyU19ORYlbPnWpfTfn9h94I+eb94miv+9OQ7QKzs676jDBj1uKySZ
-	 D/B76I56gWe7dQeVrieDuV7vBz+H0jC+T2uf+5UXztgpEwn//qwvjtQYapAO58laqI
-	 l8H8xI+r0utQ3jZI133KbqzPJKSkECaNcRHZ1+iI=
+	b=GW4qucNBS0oufHeedRhAkDs6wN1gRYhFn5jv7cuwyCEzFkIk9hrWHN/5JDuZyqehI
+	 yL1YmLvjWbN1T1TGdbUGW45Ap7ctl/uaVA/hMRcwqvNdV6bHNOuDM8YB9R0tILw5hU
+	 qsvgvoiLZJlDk5evUmmzenYolID3knSmzoSkpQx8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	HyeongJun An <sammiee5311@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Kees Cook <keescook@chromium.org>,
+	Nathan Lynch <nathanl@linux.ibm.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1873/1887] ALSA: seq: Dont leak the extension cell pointer in the bounce payload
-Date: Wed, 28 Oct 2026 18:06:09 +0100
-Message-ID: <20261028170542.078132094@linuxfoundation.org>
+Subject: [PATCH 6.1 1874/1887] seq_buf: Make DECLARE_SEQ_BUF() usable
+Date: Wed, 28 Oct 2026 18:06:10 +0100
+Message-ID: <20261028170542.101144073@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -62,84 +63,61 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: HyeongJun An <sammiee5311@gmail.com>
+From: Nathan Lynch <nathanl@linux.ibm.com>
 
-[ Upstream commit 59e1592d3c270ff4642d5d6dc55c545306eb0693 ]
+[ Upstream commit 7a8e9cdf9405819105ae7405cd91e482bf574b01 ]
 
-The bounce_error_event() embeds the failed event in the bounce payload
-by pointing data.ext.ptr at it.  When that event is a queued
-variable-length event, its own data.ext.ptr holds the address of its
-first extension cell, put there by snd_seq_event_dup().  The payload
-goes out verbatim through snd_seq_expand_var_event(), so the address
-reaches userspace.
+Using the address operator on the array doesn't work:
 
-That is the same address commit 705dd6dcbc0e ("ALSA: seq: Clear
-variable event pointer on read") removed from the event header.  The
-read path still clears it there, just above the call that expands the
-payload.
+./include/linux/seq_buf.h:27:27: error: initialization of ‘char *’
+  from incompatible pointer type ‘char (*)[128]’
+  [-Werror=incompatible-pointer-types]
+   27 |                 .buffer = &__ ## NAME ## _buffer,       \
+      |                           ^
 
-Embed a sanitised copy instead, treated exactly as snd_seq_read()
-treats the header.  A stack copy is enough because delivery is
-synchronous and snd_seq_event_dup() copies before returning.
+Apart from fixing that, we can improve DECLARE_SEQ_BUF() by using a
+compound literal to define the buffer array without attaching a name
+to it. This makes the macro a single statement, allowing constructs
+such as:
 
-An unprivileged client reaches this by setting SNDRV_SEQ_FILTER_BOUNCE,
-queueing a variable-length event to a port that does not exist and
-reading the bounce back.  Eight bytes on 64-bit, from its own pool.
+  static DECLARE_SEQ_BUF(my_seq_buf, MYSB_SIZE);
 
-Fixes: efc86691e4d8 ("ALSA: seq: Fix kernel heap address leak in bounce_error_event()")
-Assisted-by: Claude:claude-opus-5
-Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
-Link: https://patch.msgid.link/20260811131835.3837024-1-sammiee5311@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+to work as intended.
+
+Link: https://lkml.kernel.org/r/20240116-declare-seq-buf-fix-v1-1-915db4692f32@linux.ibm.com
+
+Cc: stable@vger.kernel.org
+Acked-by: Kees Cook <keescook@chromium.org>
+Fixes: dcc4e5728eea ("seq_buf: Introduce DECLARE_SEQ_BUF and seq_buf_str()")
+Signed-off-by: Nathan Lynch <nathanl@linux.ibm.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/seq/seq_clientmgr.c | 16 ++++++++++------
- 1 file changed, 10 insertions(+), 6 deletions(-)
+ include/linux/seq_buf.h | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/sound/core/seq/seq_clientmgr.c b/sound/core/seq/seq_clientmgr.c
-index 140e1510b8de5..5763ad14f5638 100644
---- a/sound/core/seq/seq_clientmgr.c
-+++ b/sound/core/seq/seq_clientmgr.c
-@@ -554,7 +554,7 @@ static int bounce_error_event(struct snd_seq_client *client,
- 			      struct snd_seq_event *event,
- 			      int err, int atomic, int hop)
- {
--	struct snd_seq_event bounce_ev;
-+	struct snd_seq_event bounce_ev, quoted;
- 	int result;
+diff --git a/include/linux/seq_buf.h b/include/linux/seq_buf.h
+index d9db59f420a49..468d8c5eef4a0 100644
+--- a/include/linux/seq_buf.h
++++ b/include/linux/seq_buf.h
+@@ -22,9 +22,8 @@ struct seq_buf {
+ };
  
- 	if (client == NULL ||
-@@ -570,15 +570,19 @@ static int bounce_error_event(struct snd_seq_client *client,
- 		 * For user clients, send SNDRV_SEQ_EVENT_BOUNCE with the
- 		 * original event embedded as variable-length data.  This
- 		 * avoids exposing data.quote.event (a kernel pointer) to
--		 * userspace.  The variable-length path in snd_seq_event_dup()
--		 * copies the event data from data.ext.ptr into chained cells,
--		 * and snd_seq_expand_var_event() copies only the data content
--		 * -- never the pointer -- to userspace.
-+		 * userspace.  Sanitise the embedded copy too - a queued
-+		 * variable-length event carries the address of its own
-+		 * extension cell, and the payload goes out verbatim.
- 		 */
-+		quoted = *event;
-+		if (snd_seq_ev_is_variable(&quoted)) {
-+			quoted.data.ext.len &= ~SNDRV_SEQ_EXT_MASK;
-+			quoted.data.ext.ptr = NULL;
-+		}
- 		bounce_ev.type = SNDRV_SEQ_EVENT_BOUNCE;
- 		bounce_ev.flags = SNDRV_SEQ_EVENT_LENGTH_VARIABLE;
- 		bounce_ev.data.ext.len = sizeof(struct snd_seq_event);
--		bounce_ev.data.ext.ptr = (char *)event;
-+		bounce_ev.data.ext.ptr = (char *)&quoted;
- 	} else {
- 		/*
- 		 * For kernel clients, quote the event pointer directly.
+ #define DECLARE_SEQ_BUF(NAME, SIZE)			\
+-	char __ ## NAME ## _buffer[SIZE] = "";		\
+ 	struct seq_buf NAME = {				\
+-		.buffer = &__ ## NAME ## _buffer,	\
++		.buffer = (char[SIZE]) { 0 },		\
+ 		.size = SIZE,				\
+ 	}
+ 
 -- 
 2.53.0
 
