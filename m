@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793212973;
-	b=GKR9sf1MvOOh0mT2plm7/Q93sZeRfGEmrv+2kBqyOliVGxdk57YQtdVmmo5+GaYmaRRx
-	 Whmt1JG9BDjZpD2aJRk3ClI4wvTKFDEzAaYAF3aESJrpdW6fNBezyNUgZclGC4GJxp7C3
-	 amZkMYXVn2DKvkDICC4gg9Wr47w79K1ljEH8tjr9FydTUsBx3rIgCkmivYVoEFoIeuaPp
-	 e7oRUI781XQRuXgEdr76oAruaaSdWxAgdZH3kOPbvnvbT1oUHzVd0t3rO4UFtnnCc1XAt
-	 87rBblSae3ZzRz5bGK4aQKTu17qd2Fdtem8fQnPK8Grul+NLKG3rRXzrpMvvLIwv0gw==
+	t=1793212976;
+	b=C5P1qZPoy7GMCarKLXprV2cl5OwMwrNonooiIxnzBfI5wpLAG6U0ScqAXcK6/UcwlfUv
+	 /k85YNWnHAmJ9TOPTYNF3CIg2KFTg8tm98wFCsqeHVaCu0d4I3ewTuscOu09x2kPCAOFw
+	 R3pKq4Nl1qYOMhcESvQEYmNrCjCJzvfCpHTM+xgfTUQteTqHV3caCpaweLFfqPycbTeK7
+	 d/Jng1MJ3ht/pvu7sSfrExkbbeZ3y5SThvxhr986uCi/Dn9lW3eylTOfjsWdW9QxcuyQt
+	 ihj/UwCX1kjCWmyKxrTvPsb6POWvYNpWRZqn47sU6Ke+cc4N8VgwrEuKjL0sxrZQunw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793212973;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793212976;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=nJi3kW9chbexC0hjy09qjH/mDRMooGuePZsIAG2QjSs=;
-	b=4c2mW5PLzfiMpCXweVabi1wODIQEsW8MIr1vIYuTLJPyLozAemdWgfaRYBmHizegihHj
-	 SupYXHgdxz/p88GgzPwtaIcAQNqBwEzbERHRUrSHsvV9NK342NLfCEEEJD1ipeMlFf6Y4
-	 XH8l+gjg19X5cuvF7mCcxpSXg3DeLUS8ZN9yrmnyY+b7yNm588EdU2Rs3xkcwG2as8E59
-	 k+WVFdU+7yqOpFw/3fqHc/rKCjqJmXn7ZY4yKIovUlig7me3S8I/72MtOxJN/8BDI4Drn
-	 MJdWQLtNvxQgPkscAcA1mb16bEXG1aj50/lGHMplKREAmWyGSKRrBXNLiFuQqAH892A==
+	bh=H6AElbSb5Yk4AJ7/8V64+1V+zcE+sd5TA2zU/RfQY/Q=;
+	b=EttT+hcbInDVIK1P9K1ZiNdEElYNK337l6xz1c2UU0/2hWNIptb45w4P/vuIDKmkAV4e
+	 RIVjQrzE16XzUXuPfaUfCYZQugjvWYTKaRGHHly8gIdDFOU4sFNsXFuAvzS5aKcR3ldGe
+	 z7aUPgz1SEzehaiZSA5FkBhWHI09uQ+UxBI72NnUQC/iHdZjPRa0lrE6bAle2wIn/FKzR
+	 r3A9EsBemQrVycgS7i4NyZ5N1sOSiAquyEbiml+VYjZtvB82cMZO7wvBvJtFRVZTBivcm
+	 UESGUiScTcfUs2GVKShdDkr3i1viO5537GmLtxLL6n2ieFq/sTQbk1fxtF/uxBnFMkw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1SJpfYCq;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GJi6HyAY;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96C79606A321;
-	Wed, 28 Oct 2026 18:42:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85AD2606A320;
+	Wed, 28 Oct 2026 18:42:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1SJpfYCq
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E47F21F031E0;
-	Wed, 28 Oct 2026 18:42:52 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GJi6HyAY
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0B611F01825;
+	Wed, 28 Oct 2026 18:42:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793212973;
-	bh=nJi3kW9chbexC0hjy09qjH/mDRMooGuePZsIAG2QjSs=;
+	s=korg; t=1793212976;
+	bh=H6AElbSb5Yk4AJ7/8V64+1V+zcE+sd5TA2zU/RfQY/Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1SJpfYCq58cJ4YssgO4YMaWaHWJNyCYWH+4qOc46WeS2rl9tP+mw3ad/TnIdTdVEp
-	 ONYCeB7xQJlKnFdUlypMZY02PcHsLd8sbsx3Ex27FCfTsHbLT6JHcsuW0jjDvSUh9z
-	 +7NmAqK/NXQtch6h85OJ0zth33a8gysnk9a10MPA=
+	b=GJi6HyAYh0YLRXXwxL+cV38ka/5TAxXOnxbQBUwDt8YlDZ+md6I4norUGOc35jrEZ
+	 LsCERMqHC3bOBiXLVtlTgm3oPz0lfqVVyCQD5n83Iw9ZqVhEF/YqMI6Q5tTbwxXOf6
+	 OfnnE3X/ED+KnYeJU35mqwtbSXCD2uA48L/7LxYc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arka Mondal <arkamondalofficial@gmail.com>,
-	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Subject: [PATCH 6.1 0340/1887] iio: imu: adis16400: fix unprotected debugfs reads
-Date: Wed, 28 Oct 2026 17:40:36 +0100
-Message-ID: <20261028170506.963439146@linuxfoundation.org>
+	Kyle Zeng <kylebot@openai.com>,
+	Bruno Produit <bruno.produit@trailofbits.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.1 0299/1887] ALSA: seq: Serialize compat port-info ioctls
+Date: Wed, 28 Oct 2026 17:39:55 +0100
+Message-ID: <20261028170506.033413265@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -67,44 +68,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arka Mondal <arkamondalofficial@gmail.com>
+From: Kyle Zeng <kylebot@openai.com>
 
-commit d94787287a113a1326211647d5e0deed1e9de105 upstream.
+commit 95b2e0361c88753afa030c10698be0a1a5b67650 upstream.
 
-adis16400_serial_number_fops is open coded and never calls
-debugfs_file_get(), so debugfs_remove_recursive() does not wait for a
-read in progress and unbind frees the iio_dev underneath it.
+The native sequencer ioctl path serializes handler calls with
+client->ioctl_mutex, but the translated port-info compat path invokes the
+same handlers through snd_seq_kernel_client_ctl() without taking that
+mutex.
 
-Commit ae1d37a9bb4b ("iio: imu: adis16400: use DEFINE_DEBUGFS_ATTRIBUTE
-instead of DEFINE_SIMPLE_ATTRIBUTE") converted product_id and
-flash_count to DEFINE_DEBUGFS_ATTRIBUTE, which protects itself, but
-moved all three files to debugfs_create_file_unsafe().
+This lets concurrent compat CREATE_PORT requests pass the port-count
+check before any request reaches the serialized insertion. The computed
+integer port index can then exceed the address field range and wrap to an
+existing index. Subsequent subscriber teardown can resolve the duplicate
+address to the wrong port and access a freed subscriber.
 
-serial_number prints three registers as "%.4x-%.4x-%.4x" and
-DEFINE_DEBUGFS_ATTRIBUTE() formats a single u64, so it cannot be
-converted without changing what the file returns. adis16475 and
-adis16550 already use debugfs_create_file() for their open coded
-files. Use it here too.
+Take ioctl_mutex while dispatching converted port-info requests, matching
+the native ioctl path. All translated port-info commands share this
+helper, so their accesses to the client port state are serialized as
+well.
 
-Fixes: ae1d37a9bb4b ("iio: imu: adis16400: use DEFINE_DEBUGFS_ATTRIBUTE instead of DEFINE_SIMPLE_ATTRIBUTE")
-Signed-off-by: Arka Mondal <arkamondalofficial@gmail.com>
+Fixes: b3defb791b26 ("ALSA: seq: Make ioctls race-free")
 Cc: stable@vger.kernel.org
-Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Assisted-by: Codex:gpt-5.6-sol gpt-6-astra
+Signed-off-by: Kyle Zeng <kylebot@openai.com>
+Signed-off-by: Bruno Produit <bruno.produit@trailofbits.com>
+Link: https://patch.msgid.link/20260917105643.90102-1-bruno.produit@trailofbits.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/imu/adis16400.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/core/seq/seq_compat.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/iio/imu/adis16400.c
-+++ b/drivers/iio/imu/adis16400.c
-@@ -279,7 +279,7 @@ static int adis16400_debugfs_init(struct
- 	struct dentry *d = iio_get_debugfs_dentry(indio_dev);
+--- a/sound/core/seq/seq_compat.c
++++ b/sound/core/seq/seq_compat.c
+@@ -44,7 +44,9 @@ static int snd_seq_call_port_info_ioctl(
+ 		goto error;
+ 	data->kernel = NULL;
  
- 	if (st->variant->flags & ADIS16400_HAS_SERIAL_NUMBER)
--		debugfs_create_file_unsafe("serial_number", 0400,
-+		debugfs_create_file("serial_number", 0400,
- 				d, st, &adis16400_serial_number_fops);
- 	if (st->variant->flags & ADIS16400_HAS_PROD_ID)
- 		debugfs_create_file_unsafe("product_id", 0400,
+-	err = snd_seq_kernel_client_ctl(client->number, cmd, data);
++	scoped_guard(mutex, &client->ioctl_mutex) {
++		err = snd_seq_kernel_client_ctl(client->number, cmd, data);
++	}
+ 	if (err < 0)
+ 		goto error;
+ 
 
 
