@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793208875;
-	b=CdPfGMLZCL0QgkCvRN+h6cdGUORb28uFV2w3O5PAUKauB816pqlUekw35vmtx8WLVqvW
-	 GLvF1sZ1dW6uBFPBRZbsgIt6OinNht1TUjVyY3fxpcjYzAMedYeI85HPTtjCZvYr/ct9b
-	 mMcguC1X0r/1KYvJSKFQE3tmYZBTG/HhpKkbHdcibQPllJwwffXTPX1jR5uteLcWDtDz5
-	 y6FvCREbXvAdQ6+tqUu8iSWNzU8gkcguF6QU8vyli9Io+jf0h1E+vdY7hWsnVgHhxoS+L
-	 hUWudwytGN5MZNXWZ6inRdcXu8dwwghug0gcqQ7cK8MDf+imSpHjHc9XwCgKYBb8tQw==
+	t=1793208878;
+	b=fv6taboNolSqK+3oLp5J124KB0lQIE9iKsjxhT/6rrjcTGqrJ7U8YxbkYhOQeM928mTt
+	 De4fcIsGEFv7lCN/sQwuBLGH3xZ11i8Z5qW4YyLzCKiq44zGMaO0YRWok4Ci+bOwOj/EV
+	 1QRhFxqlA8Oj/RCO5KGMT1WOtfMAkZeJSjLUhsqrBz+D00aRxABIg2qq/etvQ9/5z+m71
+	 POuAVDcAtPADz4yGyTv17/3k8UERVfNX1jbfSPaucwOXnUggiZicUFbHRnt3ajHoMAoeC
+	 o551M+U7gPII/WHAHibCfd1H+7ebbAusJ52jdwh8qLqLW9Kphq8Ued8gUkrflIJb4RA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793208875;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793208878;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/gYVytuEAqy6qZOjkBW4JFLe+CCSx7HCbHiosE9cSWw=;
-	b=AJPsie3fh87YrJDiQLK8eXim6IY3mo13UR3yCZZ+GGpqklPWl8WsQT+ssCenIYqmQf8F
-	 dPKH+tohqIEzQqYml0OYsL1bH5ZjMwdIUAXs7f3qU6YtS7FupM79fRHhhJDToUY66P/sb
-	 JYZk08qRUgLU6jaGRYTuZuFoRWsf72rYBSEY07LvPRsj8DFFVdBGX7kXFQe8bINHnjRB8
-	 IfRlNOKnxNVJI/1jMUcCbGTUDZ2Ygog/YKNbZsYGq3bjQyVsaGXonukLUKcVCI6cU8CR2
-	 u7rVG/6DzvAun3L89errTYSXVBa6UnzUheZ1uzlq74Jh9W0Q5ATlhSU2axYrV2Sl/lw==
+	bh=9wvicJtUFP++8wfS6ng8VTrcUw5giHEH7IH2sYzqpmA=;
+	b=LCCvmcJ0hi1bZOKjjvDEpNgIFTGCJZLE3tQhZL5FTBqqfMpbNcnf3YEXqTzK+ORG4PYX
+	 Gyw+HiA6c/+uFjnSuAEN0/KGASsARxMQl6O8LrW7YYtpdkoy72lMG9Bah176SKU0Weam5
+	 R9riHRn/C2nKte21YRrICqcyEPxi86xy2WUrnpxONAzvVXlx9lYcj73W+KXIjThhuinpe
+	 DLnMIb1GfSEXEmNCBwtSuca9ieC3xX0CmG2F7as8xFvUlViUzXbeSNvoigLkoMvT3zAUi
+	 YTiGESe1iO9JSBunLPnyrb1AqQTPqw7evyUzQaeiuZ45skKXjsUoiegLIJFvwXmWCFg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zDXSH2E3;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pitrIYWE;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E513C606A31A;
-	Wed, 28 Oct 2026 17:34:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDA0A606A31D;
+	Wed, 28 Oct 2026 17:34:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zDXSH2E3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 460901F01825;
-	Wed, 28 Oct 2026 17:34:34 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pitrIYWE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 197E91F01825;
+	Wed, 28 Oct 2026 17:34:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793208874;
-	bh=/gYVytuEAqy6qZOjkBW4JFLe+CCSx7HCbHiosE9cSWw=;
+	s=korg; t=1793208877;
+	bh=9wvicJtUFP++8wfS6ng8VTrcUw5giHEH7IH2sYzqpmA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zDXSH2E36PjFzl78KIkCHxU9AJMT/xBodH8R3UJ43k3at6E1bsvBWBgQbmER4sJjk
-	 nV8ZsH1jp3EDpHzeR6XHwsGhHUQlzGAMPC84fOUmQ5+UaUjL2AXMy7ig0lboMPpbiN
-	 t0ihtpYr4YECStiSb1XB9kIe0OaKZ6rZcdKHscfY=
+	b=pitrIYWE8ojLSoO7LW1I7aGwxz1YcKvTufUD2w99lFrMvytXTaSVTH1hN9emuhHf6
+	 eZRgZVSNbp/rJIcEr8Rjx4v93d9XJ6G+LuspTWBiJvJmT2VzwHNqtyxGfeGZwHAP5k
+	 auKeuya9e4Zs4hY4yG0wDmLFMocOv0ProLXE2oiE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Zeng <kylebot@openai.com>,
-	Bruno Produit <bruno.produit@trailofbits.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Beata Michalska <beata.michalska@arm.com>,
+	Vladimir Murzin <vladimir.murzin@arm.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 272/516] ALSA: seq: Serialize compat port-info ioctls
-Date: Wed, 28 Oct 2026 17:57:04 +0100
-Message-ID: <20261028170009.935818342@linuxfoundation.org>
+Subject: [PATCH 5.10 273/516] arm64: errata: Factor out broken AMU const counter cap
+Date: Wed, 28 Oct 2026 17:57:05 +0100
+Message-ID: <20261028170009.959656179@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -69,53 +69,121 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kyle Zeng <kylebot@openai.com>
+From: Beata Michalska <beata.michalska@arm.com>
 
-[ Upstream commit 95b2e0361c88753afa030c10698be0a1a5b67650 ]
+[ Upstream commit 573371caf7aea8582212da81dcead2c3f48fac4b ]
 
-The native sequencer ioctl path serializes handler calls with
-client->ioctl_mutex, but the translated port-info compat path invokes the
-same handlers through snd_seq_kernel_client_ctl() without taking that
-mutex.
+Move the workaround from the erratum 2457168-specific cpucap to a generic
+broken AMU constant-counter one. This keeps the existing Cortex-A510
+handling unchanged while allowing other errata with similar AMU constant
+counter issue to share the capability bit and call sites.
 
-This lets concurrent compat CREATE_PORT requests pass the port-count
-check before any request reaches the serialized insertion. The computed
-integer port index can then exceed the address field range and wrap to an
-existing index. Subsequent subscriber teardown can resolve the duplicate
-address to the wrong port and access a freed subscriber.
+Signed-off-by: Beata Michalska <beata.michalska@arm.com>
+Reviewed-by: Vladimir Murzin <vladimir.murzin@arm.com>
+Signed-off-by: Will Deacon <will@kernel.org>
 
-Take ioctl_mutex while dispatching converted port-info requests, matching
-the native ioctl path. All translated port-info commands share this
-helper, so their accesses to the client port state are serialized as
-well.
+Dropped changes related to CPPC/FFH as support for that is not available
+here. Additionally renamed define for WORKAROUND_2457168 to new one,
+WORKAROUND_BROKEN_AMU_CONSTCNT to reuse it as this kernel still relies
+on the cpucaps header file for the workaround/errata ids.
 
-Fixes: b3defb791b26 ("ALSA: seq: Make ioctls race-free")
-Cc: stable@vger.kernel.org
-Assisted-by: Codex:gpt-5.6-sol gpt-6-astra
-Signed-off-by: Kyle Zeng <kylebot@openai.com>
-Signed-off-by: Bruno Produit <bruno.produit@trailofbits.com>
-Link: https://patch.msgid.link/20260917105643.90102-1-bruno.produit@trailofbits.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-[ sashal: Replaced scoped_guard() with explicit mutex_lock() and mutex_unlock() for GNU89 compatibility. ]
+[ Beata: Dropped changes related to CPPC/FFH as support for that is not available here. Additionally renamed define for WORKAROUND_2457168 to new one, WORKAROUND_BROKEN_AMU_CONSTCNT to reuse it as this kernel still relies on the cpucaps header file for the workaround/errata ids. ]
+Signed-off-by: Beata Michalska <beata.michalska@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/seq/seq_compat.c | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/arm64/Kconfig               |  8 ++++++++
+ arch/arm64/include/asm/cpucaps.h |  2 +-
+ arch/arm64/kernel/cpu_errata.c   | 19 ++++++++++++++-----
+ arch/arm64/kernel/cpufeature.c   |  2 +-
+ 4 files changed, 24 insertions(+), 7 deletions(-)
 
-diff --git a/sound/core/seq/seq_compat.c b/sound/core/seq/seq_compat.c
-index 54723566ce242..35f67ba5e16ee 100644
---- a/sound/core/seq/seq_compat.c
-+++ b/sound/core/seq/seq_compat.c
-@@ -44,7 +44,9 @@ static int snd_seq_call_port_info_ioctl(struct snd_seq_client *client, unsigned
- 		goto error;
- 	data->kernel = NULL;
+diff --git a/arch/arm64/Kconfig b/arch/arm64/Kconfig
+index 15182435b7a4f..ae4036d549fc9 100644
+--- a/arch/arm64/Kconfig
++++ b/arch/arm64/Kconfig
+@@ -673,9 +673,17 @@ config ARM64_ERRATUM_1508412
  
-+	mutex_lock(&client->ioctl_mutex);
- 	err = snd_seq_kernel_client_ctl(client->number, cmd, data);
-+	mutex_unlock(&client->ioctl_mutex);
- 	if (err < 0)
- 		goto error;
+ 	  If unsure, say Y.
  
++config ARM64_WORKAROUND_BROKEN_AMU_CONSTCNT
++	bool
++	# Targeting errata affecting AMEVCNTR01, the AMU constant counter.
++	# On affected CPUs the counter may not increment at the expected rate,
++	# making it unreliable. As a result, AMU users should treat it as
++	# unavailable rather than relying on misleading counter values.
++
+ config ARM64_ERRATUM_2457168
+ 	bool "Cortex-A510: 2457168: workaround for AMEVCNTR01 incrementing incorrectly"
+ 	depends on ARM64_AMU_EXTN
++	select ARM64_WORKAROUND_BROKEN_AMU_CONSTCNT
+ 	default y
+ 	help
+ 	  This option adds the workaround for ARM Cortex-A510 erratum 2457168.
+diff --git a/arch/arm64/include/asm/cpucaps.h b/arch/arm64/include/asm/cpucaps.h
+index 931c88182fb8b..419eb982335fb 100644
+--- a/arch/arm64/include/asm/cpucaps.h
++++ b/arch/arm64/include/asm/cpucaps.h
+@@ -67,7 +67,7 @@
+ #define ARM64_MTE				57
+ #define ARM64_WORKAROUND_1508412		58
+ #define ARM64_SPECTRE_BHB			59
+-#define ARM64_WORKAROUND_2457168		60
++#define ARM64_WORKAROUND_BROKEN_AMU_CONSTCNT	60
+ #define ARM64_WORKAROUND_1742098		61
+ #define ARM64_WORKAROUND_SPECULATIVE_SSBS	62
+ 
+diff --git a/arch/arm64/kernel/cpu_errata.c b/arch/arm64/kernel/cpu_errata.c
+index 201a7e29fa113..df83ff9a767d0 100644
+--- a/arch/arm64/kernel/cpu_errata.c
++++ b/arch/arm64/kernel/cpu_errata.c
+@@ -260,6 +260,16 @@ static const struct arm64_cpu_capabilities arm64_repeat_tlbi_list[] = {
+ };
+ #endif
+ 
++#ifdef CONFIG_ARM64_WORKAROUND_BROKEN_AMU_CONSTCNT
++static const struct midr_range workaround_amu_constcnt_list[] = {
++#ifdef CONFIG_ARM64_ERRATUM_2457168
++	/* Cortex-A510 r0p0-r1p1 */
++	MIDR_RANGE(MIDR_CORTEX_A510, 0, 0, 1, 1),
++#endif
++	{}
++};
++#endif /* CONFIG_ARM64_WORKAROUND_BROKEN_AMU_CONSTCNT */
++
+ #ifdef CONFIG_CAVIUM_ERRATUM_27456
+ const struct midr_range cavium_erratum_27456_cpus[] = {
+ 	/* Cavium ThunderX, T88 pass 1.x - 2.1 */
+@@ -611,13 +621,12 @@ const struct arm64_cpu_capabilities arm64_errata[] = {
+ 				  1, 0),
+ 	},
+ #endif
+-#ifdef CONFIG_ARM64_ERRATUM_2457168
++#ifdef CONFIG_ARM64_WORKAROUND_BROKEN_AMU_CONSTCNT
+ 	{
+-		.desc = "ARM erratum 2457168",
+-		.capability = ARM64_WORKAROUND_2457168,
++		.desc = "Broken AMU AMEVCNTR01 (const counter)",
++		.capability = ARM64_WORKAROUND_BROKEN_AMU_CONSTCNT,
+ 		.type = ARM64_CPUCAP_WEAK_LOCAL_CPU_FEATURE,
+-		/* Cortex-A510 r0p0-r1p1 */
+-		CAP_MIDR_RANGE(MIDR_CORTEX_A510, 0, 0, 1, 1)
++		CAP_MIDR_RANGE_LIST(workaround_amu_constcnt_list)
+ 	},
+ #endif
+ #ifdef CONFIG_ARM64_ERRATUM_1742098
+diff --git a/arch/arm64/kernel/cpufeature.c b/arch/arm64/kernel/cpufeature.c
+index e055ec3a5cfb8..63ffb1993dcd7 100644
+--- a/arch/arm64/kernel/cpufeature.c
++++ b/arch/arm64/kernel/cpufeature.c
+@@ -1608,7 +1608,7 @@ static void cpu_amu_enable(struct arm64_cpu_capabilities const *cap)
+ 		cpumask_set_cpu(smp_processor_id(), &amu_cpus);
+ 
+ 		/* 0 reference values signal broken/disabled counters */
+-		if (!this_cpu_has_cap(ARM64_WORKAROUND_2457168))
++		if (!this_cpu_has_cap(ARM64_WORKAROUND_BROKEN_AMU_CONSTCNT))
+ 			init_cpu_freq_invariance_counters();
+ 	}
+ }
 -- 
 2.53.0
 
