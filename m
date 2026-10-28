@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793212339;
-	b=qAd/sJ20hfb2Nc20JMmyl8gZVjML3yJzhyiFrJ1MHb9sNnl096zIuqf1JyKI6vHor5n3
-	 5vmZlF4Ge+rPZai+3A6/eIC9TD0oyk5j/VGSePZNhwes7S0gFxqqrNxbcYQtUQ8RihWij
-	 0BH030nDWy38s15XQKbE45YgcH5gkm34Ko3suMsSMQsd2jtiUvDHtRz/b+UAHlRICxeLL
-	 qiDYm5BKJD6+J+GYknrdopH8LCekh3S9v/5rlziLf/X+iiWV+423NzJC85cT25kw5PlUN
-	 gVPf8XrPZXOCAIjSMq85MLR6TU0SyygLa7mLvfxeq8ztIP5/+ClVUXIoEYEmTYAi96Q==
+	t=1793212342;
+	b=jlP2adDTly3StigggRJ/IP//EkwXQh1wBBvILS55ApJ1X8BcQyEYBVtR3/YIVa0bRp73
+	 gnYfY3HZBTEIhKa+B8e6u+8Y3ZfGf3C2BBUnGGd79eCM23sluOVXffKmXIOyztE95P/wV
+	 17zDNyFlKROHaoq69IrRrGceaIUvl0nUO5SX3ZaZBAb8GxIQuDnFKn6XvBAwZTqesF5eZ
+	 gP5F2gvOEZkQr7qTGcYKqHUdLMbZ0h5Pd5lqguR5M+hZoXy8WkSYa3LFgnWFJQVSxg7KD
+	 86c/AsoEpPT4LqHET0W9hEKSDu5YopVyGUjowCfcvRY8wmCf/+uzEr/bUd8n0MpzjHA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793212339;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793212342;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=dShQ3uowCerfzLJa663MYDpMuMJkjecy6vJ3Xj3sIfo=;
-	b=uz5Xv0Q60BolftwJe0QOFy0PV7GWWvofxvmNz/fXPl/jAdz407X9CI/p5A9VAdHmgYzZ
-	 8HumRDZknFHrr+omMqF2Vhg3o4dJSrhmwdNBOIvy+lsYOgQvwqcK7iZc97sS5gKWPR54f
-	 YErGYEvvHl5NIW4dSSAI6tA+5iIqvA4crWeD8kIGafz+hvu6x7OxUoaUq4KlVwDPII1Tk
-	 psksMxOdXHuJ6j0m4bikdPNBRgSJk0cux6g/GpwG1xO8Qw++m+ojJPCouHh5jzSozpJCW
-	 19tj1Rk8I9Hjh0ghL7YtYuUFmlDnnwapqiK8ucZo5MHhzc/f3LW+N4sfw416dsMn+TA==
+	bh=ClNAdFa5FGspOuxz4XBr9o3kcwf9GLCke6jJavHPj3s=;
+	b=QPn9Gr82EYp/h9F5izj/T2fuJiH0mXCDWiNea4nihbQp7i8y+kE18inwVC93zVsFYNul
+	 /u0KhhXaIadqL5vr1j1Tz5KMivrQfn13AedzBkmreVpRsmp1Tz0z9QtDVdDgpSNAU92nZ
+	 ThFE8UmISYv29hauQVbZorCx2+DbHsztgTERKrx+M3+wF7KI+xmbb3yjzrfhQEjVNvI0H
+	 JOzHEUW27F/0YF8MseR1HEKtpAI37UEJl45eigH/vi/fqt+dMyGj4mvKqVnzmA8fxB1nH
+	 IncTG/qB6G8UOJVr3r/6H+7vwkMtfWXDeQF91qXint01UXv24jL+7DvVPFYE0hLo+zw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=plqAtiEJ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tY8dIiNU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F19C606A31C;
-	Wed, 28 Oct 2026 18:32:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50B78606A31C;
+	Wed, 28 Oct 2026 18:32:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=plqAtiEJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BEA81F01825;
-	Wed, 28 Oct 2026 18:32:18 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tY8dIiNU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FF9C1F01825;
+	Wed, 28 Oct 2026 18:32:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793212339;
-	bh=dShQ3uowCerfzLJa663MYDpMuMJkjecy6vJ3Xj3sIfo=;
+	s=korg; t=1793212342;
+	bh=ClNAdFa5FGspOuxz4XBr9o3kcwf9GLCke6jJavHPj3s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=plqAtiEJul7LkERv6RnwHtMsUf8+vkQhZvPziz/MyKPDJM4UGZsNdfr/ihkyCF6ue
-	 A4mjd1/kFRYHQYkkONX7pVFlPvHqfgxvs+Fs4Ox4R7izbPFGbl0JuO39yipRAmf0Dv
-	 Rme8EuOEXZh+WBGuUAwuFq11ju8zd+B+xgEDvqU4=
+	b=tY8dIiNUgaFVD1MqbTgbNjybnsaFqo9uSMNFhJcNsUu4bQ92sUAcfsArALJMH9VnW
+	 2nribLX6jOzBO5XoDMoA+ixNseCswdmd4AcTC2cpxDLE5hRryd/N/0xKGAbqXNBUGE
+	 v/DqqIgyqH71ZdSAFIK4Sccnx8vJyV0fvtZJ0jjI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sahil Chandna <sahilchandna@linux.microsoft.com>,
-	Haiyang Zhang <haiyangz@microsoft.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Nikhil Gurudasani <nikhilgurudasani314@gmail.com>,
+	Gao Xiang <xiang@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0120/1887] net: mana: Reserve extra CQ slot for the fence completion CQE
-Date: Wed, 28 Oct 2026 17:36:56 +0100
-Message-ID: <20261028170501.967520415@linuxfoundation.org>
+Subject: [PATCH 6.1 0121/1887] erofs: preserve LZMA decoders on resize failure
+Date: Wed, 28 Oct 2026 17:36:57 +0100
+Message-ID: <20261028170501.992817841@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,57 +68,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sahil Chandna <sahilchandna@linux.microsoft.com>
+From: Nikhil Gurudasani <nikhilgurudasani314@gmail.com>
 
-[ Upstream commit 80dd7e754b3aa9637a0758ad93fa209f9650ec48 ]
+[ Upstream commit 617d0d8d199ba1790c94310fd75a22d01c97a8d6 ]
 
-The RX completion queue is sized to hold exactly one CQE per posted RX WQE.
-MANA_FENCE_RQ makes hardware post an additional CQE_RX_OBJECT_FENCE after
-the packet CQEs. The current sizing reserves no extra slot for it and in
-rare cases, CQ has no guaranteed slot for the fence CQE when it is full of
-packet CQEs. This can lead to dropping the fence completion while the
-driver waits holding RTNL lock throughout the timeout duration.
-Reserve one extra CQE slot for CQE_RX_OBJECT_FENCE. mana_gd_alloc_memory()
-requires queue_size to be a power-of-two and at least MANA_PAGE_SIZE;
-the reservation pushes cq_size past a power-of-two, so round up the CQ size
-in mana_create_rxq().
+The pool-resize path frees each stream's old decoder before allocating
+its replacement. If an allocation fails after some streams have already
+been replaced, the failed stream is put back on the list with state ==
+NULL. z_erofs_lzma_max_dictsize is still advanced as if the whole
+pool had been resized.
 
+An existing LZMA mount can select the broken stream and pass
+NULL to xz_dec_microlzma_reset(). A retry at the same size also
+skip another resize attempt. Since the global maximum was advanced,
+thus, the invalid state is left unrepaired.
+
+Allocate each replacement before freeing the old decoder, temporarily
+retaining one old decoder during allocation. Stop at the first failure
+and advance z_erofs_lzma_max_dictsize only after all streams satisfy
+the request.
+
+Record each stream's dictionary capacity so retries can skip streams
+already enlarged before a partial failure.
+
+Fixes: 622ceaddb764 ("erofs: lzma compression support")
 Cc: stable@vger.kernel.org
-Fixes: 6cc74443a773 ("net: mana: Add RX fencing")
-Signed-off-by: Sahil Chandna <sahilchandna@linux.microsoft.com>
-Reviewed-by: Haiyang Zhang <haiyangz@microsoft.com>
-Link: https://patch.msgid.link/20260901121837.3503240-1-sahilchandna@linux.microsoft.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ Replaced MANA_PAGE_ALIGN() with PAGE_ALIGN() to match the older tree. ]
+Signed-off-by: Nikhil Gurudasani <nikhilgurudasani314@gmail.com>
+Reviewed-by: Gao Xiang <xiang@kernel.org>
+Signed-off-by: Gao Xiang <xiang@kernel.org>
+[ Retained the existing `struct xz_buf buf` member alongside the new `dict_size` field. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/microsoft/mana/mana_en.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ fs/erofs/decompressor_lzma.c | 18 ++++++++++++++----
+ 1 file changed, 14 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/microsoft/mana/mana_en.c b/drivers/net/ethernet/microsoft/mana/mana_en.c
-index 4afcb202e3509..2d1e5b83a0769 100644
---- a/drivers/net/ethernet/microsoft/mana/mana_en.c
-+++ b/drivers/net/ethernet/microsoft/mana/mana_en.c
-@@ -1662,6 +1662,10 @@ static int mana_alloc_rx_wqe(struct mana_port_context *apc,
- 		*cq_size += COMP_ENTRY_SIZE;
+diff --git a/fs/erofs/decompressor_lzma.c b/fs/erofs/decompressor_lzma.c
+index b1ac88a820f2d..c6e6ceae48a3b 100644
+--- a/fs/erofs/decompressor_lzma.c
++++ b/fs/erofs/decompressor_lzma.c
+@@ -6,6 +6,7 @@
+ struct z_erofs_lzma {
+ 	struct z_erofs_lzma *next;
+ 	struct xz_dec_microlzma *state;
++	unsigned int dict_size;
+ 	struct xz_buf buf;
+ 	u8 bounce[PAGE_SIZE];
+ };
+@@ -132,11 +133,19 @@ int z_erofs_load_lzma_config(struct super_block *sb,
+ 	err = 0;
+ 	/* 2. walk each isolated stream and grow max dict_size if needed */
+ 	for (strm = head; strm; strm = strm->next) {
++		struct xz_dec_microlzma *state;
++
++		if (strm->dict_size >= dict_size)
++			continue;
++		state = xz_dec_microlzma_alloc(XZ_PREALLOC, dict_size);
++		if (!state) {
++			err = -ENOMEM;
++			break;
++		}
+ 		if (strm->state)
+ 			xz_dec_microlzma_end(strm->state);
+-		strm->state = xz_dec_microlzma_alloc(XZ_PREALLOC, dict_size);
+-		if (!strm->state)
+-			err = -ENOMEM;
++		strm->state = state;
++		strm->dict_size = dict_size;
  	}
  
-+	/* Reserve an extra slot for Fence completion
-+	 * event (CQE_RX_OBJECT_FENCE) in case RX CQ is full.
-+	 */
-+	*cq_size += COMP_ENTRY_SIZE;
- 	return 0;
+ 	/* 3. push back all to the global list and update max dict_size */
+@@ -146,7 +155,8 @@ int z_erofs_load_lzma_config(struct super_block *sb,
+ 	spin_unlock(&z_erofs_lzma_lock);
+ 	wake_up_all(&z_erofs_lzma_wq);
+ 
+-	z_erofs_lzma_max_dictsize = dict_size;
++	if (!err)
++		z_erofs_lzma_max_dictsize = dict_size;
+ 	mutex_unlock(&lzma_resize_mutex);
+ 	return err;
  }
- 
-@@ -1715,7 +1719,7 @@ static struct mana_rxq *mana_create_rxq(struct mana_port_context *apc,
- 		goto out;
- 
- 	rq_size = PAGE_ALIGN(rq_size);
--	cq_size = PAGE_ALIGN(cq_size);
-+	cq_size = PAGE_ALIGN(roundup_pow_of_two(cq_size));
- 
- 	/* Create RQ */
- 	memset(&spec, 0, sizeof(spec));
 -- 
 2.53.0
 
