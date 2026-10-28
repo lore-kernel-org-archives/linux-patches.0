@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793210572;
-	b=EZtwhqVVBV7uQlV93lObgcI6c+1mw/Jk/80wvah/7BtBi8ynx5Gsl3IvjyUBU9HhtOux
-	 B8tIkgtXeLEKg7vENwtoa4QIUc1BRnBcRsyoksNnUzexySNkZa9IKDqHU3pptEpdySwmq
-	 HLOQRCIw0FTlWsMI1el3CpAY1HL0ZZd3dSXG9bovAaNBEg2s7/oIf8a6+a3zWuEzkcIoZ
-	 pRC7QYGvlD37h0rFNDBZUlgiLbUn4lVnO22rE3Gk3GxWPT6iZ2WAgdS81Kjtkti4qZQdq
-	 bDHyMvFpjAzcDvuc5qdQXxziVIipvPy4xJf3NXvdSlPy8yHDKrlLd2SSQpgmMZldE5Q==
+	t=1793210576;
+	b=aDf+Z4jfmDg/k8xY1ZepbIZt8buiNFL10tnR5RBRhJcdGLlPXnUDOhSSjCq4py0F0W6r
+	 rez139ZSOu1snBPAdGl4cMs3sKysocsYNLiuos0AiiJvBvwx5BnJh9EJBR7qy5caMBGrP
+	 EU5vhGSpHEPRWJJYCid2q9v7Nl/bkyVs7hPCOtqpIGhyaJrOkN/gHvkiP++uUebnX2/wh
+	 dGZBkkzuzSZP8FNjUaf8TvmLca4ctDQOlUn1W15Yf5JVVJogl/oUdeD/ykP1WV+wvYC0C
+	 SdoGAvFCjSYZfeORAbB299ShisPlOmPYLP+aiINlQ+L0XnrUAGtWZTmk3lwHYxAhpVg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793210572;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793210576;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=ffO4710DpFkbcaZQARZYAeEOgZC8pUd8eMgt44eySUM=;
-	b=FXe24RmSbV9MhSzh9vVXN9xvGoi6i349vPFWAQhXM7GCi1mdgccu8xh7vsEcd0TLBF8H
-	 JJzkfOBElmlQMLodFO1wr8LjDZTOabczhh5cvJ02ykTV+BHNuOXMBHzoRdh+rNnNsKbUs
-	 YjHlf36K0SgX1r4nkEr4mSxsmNN3nu3ZVqxGXhDilTEk1dOlcYCzTBAN+MSCd+StbEsoa
-	 bOoRCf7pjCbmn2VJ7A6yvFnctjw67C6647X6j3saxpKdndYxvrlH52FexVFDz7Q8xs+e8
-	 lGfgRBKn6yzIVMA9Sy3aC8w453MiW6nUSclwvQB+CfJk8+vGF6LCNRVUHb77DwAmZsQ==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=NVP2ockrnfuDJ2EQmKLFzIHnco1LjYU6VtVYFshSjRc=;
+	b=Bg1aAutO4IJdNuH2rmKIcnFpYDRYv6VM+Ma/eppfPARiGDmUMhSazD357aOItCwFsPxY
+	 ICCSUXx4b8in6Pu5zKXH+IRU9sClAZxjRRm0keBC9kSIWo2h4v+bHGIeJ/xNx7YHgTy6S
+	 Fl+yrQJnMiXCSptiuhdmdc3vRL2aZDG6okf2IrPqhAWO86dc+9Uyc4zFJalllxYLNND4t
+	 ljVPGyBOPzyn+IpNsraIJlcstNMvzOu/h82hCR/Q8tGZ1MsotgX4QYAoVcpSvd4QhgJWS
+	 8CjU/TDKYHOQ72fEe1zNtQmmawPH7O9wkoG1otFGYGIgt8ofcWuZVT88gH3IqSAsUaA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kVPu0z2F;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1zhKOayj;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55303606A31D;
-	Wed, 28 Oct 2026 18:02:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DFA6606A31D;
+	Wed, 28 Oct 2026 18:02:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kVPu0z2F
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A66CE1F01825;
-	Wed, 28 Oct 2026 18:02:51 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1zhKOayj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F1CF1F01825;
+	Wed, 28 Oct 2026 18:02:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793210572;
-	bh=ffO4710DpFkbcaZQARZYAeEOgZC8pUd8eMgt44eySUM=;
+	s=korg; t=1793210575;
+	bh=NVP2ockrnfuDJ2EQmKLFzIHnco1LjYU6VtVYFshSjRc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kVPu0z2FdaPaDEev41HdI09ccARnwKEMgIZ76SsSVMrzibE+v/kAXsxiPAVPcyHAr
-	 GXoxZrwljddO/X9dDoWzSAzlsjUnRmrTxmT7fj8VVkbEiJyzKw5jasIL7pF63aVYiG
-	 ai9hDj0Cq5UF6XKzusLcKvFOS5kjbmh6Z4iafOwE=
+	b=1zhKOayjiYKHs5Vc0p0W7bM7rJHnPAagdaFHG1HhcNLpP/x+t/gsS9KhdhU88e2xQ
+	 7YtjROKcsjSXYDTaS3slXlK6TmxBEUuvUhpMz6kHNb3Zr812kFUf8y9w49TiDq8yUG
+	 g8ZAeBgVxQMXVTZ9ECkHjn2foklb5TlIWM/ZKKow=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
+	Can Peng <pengcan@kylinos.cn>,
+	Linus Walleij <linusw@kernel.org>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 036/571] ALSA: usb-audio: Optimize the copy of packet sizes for implicit fb handling
-Date: Wed, 28 Oct 2026 17:53:03 +0100
-Message-ID: <20261028170008.882129667@linuxfoundation.org>
+Subject: [PATCH 5.15 072/571] hwrng: stm32 - Fix runtime PM cleanup on registration failure
+Date: Wed, 28 Oct 2026 17:53:39 +0100
+Message-ID: <20261028170009.734826015@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -61,70 +63,73 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Can Peng <pengcan@kylinos.cn>
 
-[ Upstream commit 36adb51ac0b19edb32ffeea3fe66b174bad25ead ]
+[ Upstream commit 1163a476a568f6c0f852d469c8e4c5a5f805adac ]
 
-We did manual copies over loop for the packet data update of the
-implicit feedback, but this can be optimized with a simple memcpy().
+stm32_rng_probe() enables autosuspend and runtime PM before registering the
+hwrng. If devm_hwrng_register() fails, probe returns with runtime PM left
+enabled and autosuspend still selected.
 
-Along with it, change the data type of snd_usb_packet_info struct to
-align with other (from uint32_t to int).
+The remove callback also only disables runtime PM and does not undo
+pm_runtime_use_autosuspend().
 
-No functional changes but only code optimizations.
+Use devm_pm_runtime_enable() so runtime PM is unwound automatically on
+probe failure and driver detach. Since the managed cleanup also disables
+runtime PM,drop the remove callback.
 
-Link: https://patch.msgid.link/20260216141209.1849200-3-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Stable-dep-of: 76a986c980bb ("ALSA: usb-audio: Clamp implicit feedback packet count to URB capacity")
+Fixes: c6a97c42e399 ("hwrng: stm32 - add support for STM32 HW RNG")
+Cc: stable@vger.kernel.org
+Signed-off-by: Can Peng <pengcan@kylinos.cn>
+Reviewed-by: Linus Walleij <linusw@kernel.org>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+[ adapted to the older driver’s relocated int-returning remove callback and existing err variable. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/card.h     | 2 +-
- sound/usb/endpoint.c | 6 +++---
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ drivers/char/hw_random/stm32-rng.c | 12 +++---------
+ 1 file changed, 3 insertions(+), 9 deletions(-)
 
-diff --git a/sound/usb/card.h b/sound/usb/card.h
-index 6ec95b2edf863..ac5505ce046de 100644
---- a/sound/usb/card.h
-+++ b/sound/usb/card.h
-@@ -89,7 +89,7 @@ struct snd_usb_endpoint {
- 	struct snd_urb_ctx urb[MAX_URBS];
+diff --git a/drivers/char/hw_random/stm32-rng.c b/drivers/char/hw_random/stm32-rng.c
+index bc22178f83e83..440c001c746b1 100644
+--- a/drivers/char/hw_random/stm32-rng.c
++++ b/drivers/char/hw_random/stm32-rng.c
+@@ -156,18 +156,13 @@ static int stm32_rng_probe(struct platform_device *ofdev)
  
- 	struct snd_usb_packet_info {
--		uint32_t packet_size[MAX_PACKS_HS];
-+		int packet_size[MAX_PACKS_HS];
- 		int packets;
- 	} next_packet[MAX_URBS];
- 	unsigned int next_packet_head;	/* ring buffer offset to read */
-diff --git a/sound/usb/endpoint.c b/sound/usb/endpoint.c
-index e995b7ab88b19..aab0ea614f4a8 100644
---- a/sound/usb/endpoint.c
-+++ b/sound/usb/endpoint.c
-@@ -477,7 +477,7 @@ int snd_usb_queue_pending_output_urbs(struct snd_usb_endpoint *ep,
- 		unsigned long flags;
- 		struct snd_usb_packet_info *packet;
- 		struct snd_urb_ctx *ctx = NULL;
--		int err, i;
-+		int err;
+ 	pm_runtime_set_autosuspend_delay(dev, 100);
+ 	pm_runtime_use_autosuspend(dev);
+-	pm_runtime_enable(dev);
++	err = devm_pm_runtime_enable(dev);
++	if (err)
++		return err;
  
- 		spin_lock_irqsave(&ep->lock, flags);
- 		if ((!implicit_fb || ep->next_packet_queued > 0) &&
-@@ -497,8 +497,8 @@ int snd_usb_queue_pending_output_urbs(struct snd_usb_endpoint *ep,
- 		/* copy over the length information */
- 		if (implicit_fb) {
- 			ctx->packets = packet->packets;
--			for (i = 0; i < packet->packets; i++)
--				ctx->packet_size[i] = packet->packet_size[i];
-+			memcpy(ctx->packet_size, packet->packet_size,
-+			       packet->packets * sizeof(packet->packet_size[0]));
- 		}
+ 	return devm_hwrng_register(dev, &priv->rng);
+ }
  
- 		/* call the data handler to fill in playback data */
+-static int stm32_rng_remove(struct platform_device *ofdev)
+-{
+-	pm_runtime_disable(&ofdev->dev);
+-
+-	return 0;
+-}
+-
+ #ifdef CONFIG_PM
+ static int stm32_rng_runtime_suspend(struct device *dev)
+ {
+@@ -209,7 +204,6 @@ static struct platform_driver stm32_rng_driver = {
+ 		.of_match_table = stm32_rng_match,
+ 	},
+ 	.probe = stm32_rng_probe,
+-	.remove = stm32_rng_remove,
+ };
+ 
+ module_platform_driver(stm32_rng_driver);
 -- 
 2.53.0
 
