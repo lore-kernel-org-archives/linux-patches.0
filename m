@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215153;
-	b=4ifOkXjU+DzryzGKFo0JvyIdWlHQY0CJJJ513RQcuNhsfzlNR2obDT52esvLD5mXshyb
-	 5IO9HKfiwD5qvWET5U04KvTnKAqFetXDveCJwJO6Tvb/4bQK6lNgxc04CjpBfe0M8c1Wh
-	 AfrRHQXQN5m06c5bKJXN1ZZNCRtP6XENBFkn6SvqOJVOfRXonCCwa6HRp87UWbZyMz4d2
-	 NCfq1DhcE+h8jQE96qGOzo8zrI9kcncVj+eKdJOlUIXwJPXuw1rhUjFifj14y9pXB//ew
-	 mHA61ykcv0F9sFzo550QC7A6PeGumeEyxmQj49hF0PGWk9DoE3h4/jsq/oweutBe/IA==
+	t=1793215156;
+	b=SP8d1efDFN2uJlKEOTAExZZe9JVIMYcHoYVkcZArd3fjkkIvD1V/fOvqB3Gzq3v+Ya3F
+	 zmkqtnA29crpDFjEXRYRvaXerp9v6jXePvG6Mm3ySMqZ5AUufQFoaAqi4Ge41yC1qoaWP
+	 atCN1lNHv1vhrFkgn6um0QehKoiS1DvVtycfEs/UBYrMMX4aJ3kCy1cCeitzw3AP7pSSN
+	 6qKhb8Ix/7J6taceBHAdMd7RqGsvmi7n479Bunt+sizU9tpxgW8TYVNQf97fyb6FrGI9T
+	 sVrknQqTg/MBdMhZej6Y5nnuJhADI3HYurfa6DYmoEKS5nBTcryjtm09ogHCdMqSjRw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215153;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215156;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ThENVLXnHDil3cm5qbLoRIOjbV94UmvajAxaYx+UG78=;
-	b=yD2M0GFGLy9rq6tu1sku7KFvOoA8tx07bezw58Fr0pgMv28hgieAshFulcjJSZ+9DF0P
-	 lm5wSQBA6eBCN0+NwmJWF+CO0q0agX2HdCnkaDXBcQ49znes6HuhMRKKG9S4hlcjRSkTH
-	 WEod4T790VB/HH5Iy6t/GeaIk8avqsSmyzeok3h90i97tDI6AMjz34nLECEtdfTJTSoV7
-	 sGZNXrCHkdeKSyHxNwpYysjcMO3fpUhu1pO2q6zFMrvpxW5ddCTyg7LMDGxKOMcQNTFgm
-	 HtM176OSn0muAgfHvqkVkjekCdfAartk4meR+AhU5+NGSiR9utx5KFNlfoJ7+ZnaaCQ==
+	bh=52S9HXsy9R9k0OWEAt6qrIHUyUZLcxZyBHKTCzLnNeo=;
+	b=3Ot7MEnbfNrf3wXLrEMBEeW+K03ILUE9QcMKHhq8K4qf/5SIxzB6gyvmZWVKryMdHbC9
+	 xKR18LhVxKZT5LsOq3qWkubwxS1pcnxTPG4WE45dx1B50oVTYtgmUqjkfndowxXYd5zkL
+	 Nvmd5UE5JcuZW2TaFqMKopKzCEBQ3niwhmgDyJmxc9efVO8zzb2aHSMTpKNON0XFWnQRB
+	 +pOzhWlW9jGJa5AJjp/hjaJRfU86RjW1cu5mRhe6otlwaD72FgXqkmRmcML98A2q/r/Ru
+	 m/AtxSCbrvaUbTIL9Ucq2BAHRKkZ+8SXFzKjTeVxAjDBIq5URE4DqdyJuqQaWGIixWQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EPNQ6ZXo;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="WqZ/I5zf";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E6F1606A32C;
-	Wed, 28 Oct 2026 19:19:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3904B606A31A;
+	Wed, 28 Oct 2026 19:19:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EPNQ6ZXo
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF2271F01825;
-	Wed, 28 Oct 2026 19:19:12 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WqZ/I5zf
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8991C1F01825;
+	Wed, 28 Oct 2026 19:19:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215153;
-	bh=ThENVLXnHDil3cm5qbLoRIOjbV94UmvajAxaYx+UG78=;
+	s=korg; t=1793215156;
+	bh=52S9HXsy9R9k0OWEAt6qrIHUyUZLcxZyBHKTCzLnNeo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EPNQ6ZXo18lnfQRQ69jy7hk0JOTTt4/d95oFBLa3L5hCiAVmyCU+qNaJ/SCfIc9Ir
-	 D6LYMjfqbR9V+EQddaORUk7geIsxZ35bzRpFbiF+n4GTFS6hzwhQXVfbrTAtpreLQE
-	 w6ScDbzQZmTtUZh/NTjuIHqP8bMTCUOrrUFXAuY0=
+	b=WqZ/I5zf75HV+hlYdR6ZdxY9E7bzjlr74IF81QTSvT3LzijtU+jvigCV9hccBvCt2
+	 QDe6OCKjifHRKk63mQ7OU4uBmav0oMB/msgF9sSEwa3dKGDUy5+wT9eExWWHpjyg4A
+	 +j5wxEYusDwOgIEV4W1brFoaNQSYmzbDCm63+QAg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harish Kasiviswanathan <Harish.Kasiviswanathan@amd.com>,
-	Alysa Liu <Alysa.Liu@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Anna Maniscalco <anna.maniscalco2000@gmail.com>,
+	Rob Clark <robin.clark@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1111/1887] drm/amdkfd: Add upper bound check for num_of_nodes
-Date: Wed, 28 Oct 2026 17:53:27 +0100
-Message-ID: <20261028170524.686954065@linuxfoundation.org>
+Subject: [PATCH 6.1 1112/1887] drm/msm: always recover the gpu
+Date: Wed, 28 Oct 2026 17:53:28 +0100
+Message-ID: <20261028170524.709660396@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,73 +68,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alysa Liu <Alysa.Liu@amd.com>
+From: Anna Maniscalco <anna.maniscalco2000@gmail.com>
 
-[ Upstream commit 74b73fa56a395d46745e4f245225963e9f8be7f1 ]
+[ Upstream commit 01a0d6cd7032e9993feea19fadb03ef9d5b488f2 ]
 
-drm/amdkfd: Add upper bound check for num_of_nodes
-in kfd_ioctl_get_process_apertures_new.
+Previously, in case there was no more work to do, recover worker
+wouldn't trigger recovery and would instead rely on the gpu going to
+sleep and then resuming when more work is submitted.
 
-Reviewed-by: Harish Kasiviswanathan <Harish.Kasiviswanathan@amd.com>
-Signed-off-by: Alysa Liu <Alysa.Liu@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 98ff46a5ea090c14d2cdb4f5b993b05d74f3949f)
+Recover_worker will first increment the fence of the hung ring so, if
+there's only one job submitted to a ring and that causes an hang, it
+will early out.
+
+There's no guarantee that the gpu will suspend and resume before more
+work is submitted and if the gpu is in a hung state it will stay in that
+state and probably trigger a timeout again.
+
+Just stop checking and always recover the gpu.
+
+Signed-off-by: Anna Maniscalco <anna.maniscalco2000@gmail.com>
 Cc: stable@vger.kernel.org
+Patchwork: https://patchwork.freedesktop.org/patch/704066/
+Message-ID: <20260210-recovery_suspend_fix-v1-1-00ed9013da04@gmail.com>
+Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_chardev.c  |  3 +++
- drivers/gpu/drm/amd/amdkfd/kfd_priv.h     |  1 +
- drivers/gpu/drm/amd/amdkfd/kfd_topology.c | 11 +++++++++++
- 3 files changed, 15 insertions(+)
+ drivers/gpu/drm/msm/msm_gpu.c | 30 ++++++++++++++----------------
+ 1 file changed, 14 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c b/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
-index 4853a8b43f08b..38652724f3d9a 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
-@@ -772,6 +772,9 @@ static int kfd_ioctl_get_process_apertures_new(struct file *filp,
- 		goto out_unlock;
+diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
+index f280c8f13dd49..55cbebe7a1681 100644
+--- a/drivers/gpu/drm/msm/msm_gpu.c
++++ b/drivers/gpu/drm/msm/msm_gpu.c
+@@ -421,25 +421,23 @@ static void recover_worker(struct kthread_work *work)
+ 		msm_update_fence(ring->fctx, fence);
  	}
  
-+	if (args->num_of_nodes > kfd_topology_get_num_devices())
-+		return -EINVAL;
-+
- 	/* Fill in process-aperture information for all available
- 	 * nodes, but not more than args->num_of_nodes as that is
- 	 * the amount of memory allocated by user
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_priv.h b/drivers/gpu/drm/amd/amdkfd/kfd_priv.h
-index ac4a344bacd81..6af058e146ed8 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_priv.h
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_priv.h
-@@ -1048,6 +1048,7 @@ struct kfd_dev *kfd_device_by_id(uint32_t gpu_id);
- struct kfd_dev *kfd_device_by_pci_dev(const struct pci_dev *pdev);
- struct kfd_dev *kfd_device_by_adev(const struct amdgpu_device *adev);
- int kfd_topology_enum_kfd_devices(uint8_t idx, struct kfd_dev **kdev);
-+uint32_t kfd_topology_get_num_devices(void);
- int kfd_numa_node_to_apic_id(int numa_node_id);
- void kfd_double_confirm_iommu_support(struct kfd_dev *gpu);
+-	if (msm_gpu_active(gpu)) {
+-		gpu->funcs->recover(gpu);
++	gpu->funcs->recover(gpu);
  
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_topology.c b/drivers/gpu/drm/amd/amdkfd/kfd_topology.c
-index d841200a405b5..1960792da0665 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_topology.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_topology.c
-@@ -2109,6 +2109,17 @@ int kfd_topology_remove_device(struct kfd_dev *gpu)
- 	return res;
- }
+-		/* retire completed submits, plus the one that hung: */
+-		retire_submits(gpu);
++	/* retire completed submits, plus the one that hung: */
++	retire_submits(gpu);
  
-+uint32_t kfd_topology_get_num_devices(void)
-+{
-+	uint32_t num_devices;
-+
-+	down_read(&topology_lock);
-+	num_devices = sys_props.num_devices;
-+	up_read(&topology_lock);
-+
-+	return num_devices;
-+}
-+
- /* kfd_topology_enum_kfd_devices - Enumerate through all devices in KFD
-  *	topology. If GPU device is found @idx, then valid kfd_dev pointer is
-  *	returned through @kdev
+-		/*
+-		 * Replay all remaining submits starting with highest priority
+-		 * ring
+-		 */
+-		for (i = 0; i < gpu->nr_rings; i++) {
+-			struct msm_ringbuffer *ring = gpu->rb[i];
+-			unsigned long flags;
++	/*
++	 * Replay all remaining submits starting with highest priority
++	 * ring
++	 */
++	for (i = 0; i < gpu->nr_rings; i++) {
++		struct msm_ringbuffer *ring = gpu->rb[i];
++		unsigned long flags;
+ 
+-			spin_lock_irqsave(&ring->submit_lock, flags);
+-			list_for_each_entry(submit, &ring->submits, node)
+-				gpu->funcs->submit(gpu, submit);
+-			spin_unlock_irqrestore(&ring->submit_lock, flags);
+-		}
++		spin_lock_irqsave(&ring->submit_lock, flags);
++		list_for_each_entry(submit, &ring->submits, node)
++			gpu->funcs->submit(gpu, submit);
++		spin_unlock_irqrestore(&ring->submit_lock, flags);
+ 	}
+ 
+ 	pm_runtime_put(&gpu->pdev->dev);
 -- 
 2.53.0
 
