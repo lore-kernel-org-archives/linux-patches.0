@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213765;
-	b=ZQHHzk5oRCYY70RtyaNpmGwaN6vdUeNVRUtjWIQtv0QFFSaViBGUwPEwANfcMy8YoCoy
-	 1n/Rrhac0WSjDijBUC6FFPegRUGBU3BylvACFduAJHrboHhZsY1fJbHvUws4xejPiog/Y
-	 zriw8xgg1C1K3ua7Tg+9fY4LnVrckMSINigsfnneSCgbD1mzCTlxGxPXXQS1kQ2FK7QsI
-	 u0FZxzmxH3y27qNSVs0ahK0ULHbDv5vQjEf6TAGVslRFDm7lYfiblxNdhD56IcOGtPXxw
-	 dlBfdUznrxFYL07lUHCseiseQT66CXKDQj2rcc/jmS/ZMliM9KV7vR8jJXgfwgX5qaA==
+	t=1793213767;
+	b=fquQZFebakpng/Ny2R05q2S1wJf4iMWypsMSPTSOfQz/VA+qkBNfYjyUyvgkqNcIasbV
+	 M1ZZtEdtrSbxS4+KCJwk+Oh5rCdxOpHuoP8xys52RXZND/CJXen69QgNC+RPHdu3aXdqC
+	 L+rKKUOWG69IFGzlLn0Ll29jfN23AL91tazp9EHOarlJ8+3h46FSa+oYqQEc6Fr4lbYiq
+	 SkDyxvInLUwStnokJShq8Y7/kJtmEntXAbkeFVE+XtAcctvMDEaHSZ/Cq/oaeZnCLfoTR
+	 zi57ycxuVeYzqnw6RMCZr/kxAFcBtCGUEi7ho6pTYxWA5R4xAJPDyq0i1p2YbxpDZDA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213765;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213767;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=HgmcWvu0pXOMhWOZRrXjIKjzXKWSS7CCgtKhn1rQR0k=;
-	b=2ZkGJfdGQxUg1wQ46JxFBN42RT8gSySCLKwR1rYJu6foOwObE1MSpySfXpRyroKSweFz
-	 VKjmcQxfobdSFl9cQQkSbywJmELCAuPoW3gotFDuaZukDSG4CIsTJp1z6dltR3PqBJE/E
-	 LmPFy9HZL8E7iOS1PyFviNzUYAlNl2TzteFmQQghhWbEVTnZtaI0rcHBQyzgNOoiNvtgB
-	 aJtHQymc7M7kn/ft0mIvzx8r+7ikP/8mNC2yfkPNvUzJKSHxVIOVyF8tnKh0LQLOJEJQc
-	 o1qABfNrA5DO5ZX0adq4Eyv/WFcY6Yfh4YRD9V/mp6yYXsDPyntKhTzQ8w2bPDets/g==
+	bh=kLEHcTBI8SiMxLYF7tzaDLrF7AYhATS09WddHUyzbMo=;
+	b=JeqxKHrqNrK6t7zvBo3sXwsMarawlNBXyqA3QdVIhUuOJLhdhAlYPcjiwK+Ox5skUQDn
+	 1+ih9y9BAoOmjLSy9Rs8lgalpf4WYaqnKRSevfr/4/KChHP2NKN5TEkVL14L+yJV62lvQ
+	 bor0LDFncinESjTQtbmlbLA+/Tp/46hJ7RmUkj0bYh+d6oYvfVKuhmh11DUHwv9heK+uS
+	 U9ki148oHJE8BXSfu+ES1MdO7zUW8rFnhUUhhs1DcYj+cPhBjaYOnVBJvmLW3xpsuyqav
+	 p2l5XPOzYULXH/xdE97Chsp93nBmcQWC3yFBbBNtiDP1d6jP/OBN3KMyOhDGhGtI4fw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g+ILHK+l;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pQEiJEUj;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFE8C606A31A;
-	Wed, 28 Oct 2026 18:56:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DC45606A31C;
+	Wed, 28 Oct 2026 18:56:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g+ILHK+l
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D6B21F01825;
-	Wed, 28 Oct 2026 18:56:03 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pQEiJEUj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E31031F01828;
+	Wed, 28 Oct 2026 18:56:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213764;
-	bh=HgmcWvu0pXOMhWOZRrXjIKjzXKWSS7CCgtKhn1rQR0k=;
+	s=korg; t=1793213767;
+	bh=kLEHcTBI8SiMxLYF7tzaDLrF7AYhATS09WddHUyzbMo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=g+ILHK+l0/nNuvgj/iJIgWTrRL8UKy9NKj68xSzwB3xDdCBGqnmAh460C+9WTXUSy
-	 ldX/FueQay0IFXxCWRiqZ6UPtMFjj9PlW6WRcksjYa58s2Z27kleBIk5vobEBsTDUZ
-	 u/2pn/fMgYobxvjpVAFImgZcf9ZlaVukZdGNR0mg=
+	b=pQEiJEUj/IRT2d1UqPl9dNh7OTc+YS02SGCWs7zmpgZDWcqC88XjOzWOBO/JSld0r
+	 mw+0wzQTFc0CfNVzhsaLPkyLdu0kV2f3xJs5vmNzXMkVqGbZQ3GwQ+0aChLvd+rh6T
+	 TV++UJMpG5KdWHvKDbrOQB55I0XEqHbT3z4kFF44=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andreas Gruenbacher <agruenba@redhat.com>,
-	David Teigland <teigland@redhat.com>,
+	Xiaolei Wang <xiaolei.wang@windriver.com>,
+	Simon Horman <horms@kernel.org>,
+	Serge Semin <fancer.lancer@gmail.com>,
+	Andrew Halaney <ahalaney@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0619/1887] gfs2: Fix potential glock use-after-free on unmount
-Date: Wed, 28 Oct 2026 17:45:15 +0100
-Message-ID: <20261028170513.497649269@linuxfoundation.org>
+Subject: [PATCH 6.1 0620/1887] net: stmmac: move the EST lock to struct stmmac_priv
+Date: Wed, 28 Oct 2026 17:45:16 +0100
+Message-ID: <20261028170513.520003832@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,196 +71,186 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andreas Gruenbacher <agruenba@redhat.com>
+From: Xiaolei Wang <xiaolei.wang@windriver.com>
 
-[ Upstream commit d98779e687726d8f8860f1c54b5687eec5f63a73 ]
+[ Upstream commit 36ac9e7f2e5786bd37c5cd91132e1f39c29b8197 ]
 
-When a DLM lockspace is released and there ares still locks in that
-lockspace, DLM will unlock those locks automatically.  Commit
-fb6791d100d1b started exploiting this behavior to speed up filesystem
-unmount: gfs2 would simply free glocks it didn't want to unlock and then
-release the lockspace.  This didn't take the bast callbacks for
-asynchronous lock contention notifications into account, which remain
-active until until a lock is unlocked or its lockspace is released.
+Reinitialize the whole EST structure would also reset the mutex
+lock which is embedded in the EST structure, and then trigger
+the following warning. To address this, move the lock to struct
+stmmac_priv. We also need to reacquire the mutex lock when doing
+this initialization.
 
-To prevent those callbacks from accessing deallocated objects, put the
-glocks that should not be unlocked on the sd_dead_glocks list, release
-the lockspace, and only then free those glocks.
+DEBUG_LOCKS_WARN_ON(lock->magic != lock)
+WARNING: CPU: 3 PID: 505 at kernel/locking/mutex.c:587 __mutex_lock+0xd84/0x1068
+ Modules linked in:
+ CPU: 3 PID: 505 Comm: tc Not tainted 6.9.0-rc6-00053-g0106679839f7-dirty #29
+ Hardware name: NXP i.MX8MPlus EVK board (DT)
+ pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+ pc : __mutex_lock+0xd84/0x1068
+ lr : __mutex_lock+0xd84/0x1068
+ sp : ffffffc0864e3570
+ x29: ffffffc0864e3570 x28: ffffffc0817bdc78 x27: 0000000000000003
+ x26: ffffff80c54f1808 x25: ffffff80c9164080 x24: ffffffc080d723ac
+ x23: 0000000000000000 x22: 0000000000000002 x21: 0000000000000000
+ x20: 0000000000000000 x19: ffffffc083bc3000 x18: ffffffffffffffff
+ x17: ffffffc08117b080 x16: 0000000000000002 x15: ffffff80d2d40000
+ x14: 00000000000002da x13: ffffff80d2d404b8 x12: ffffffc082b5a5c8
+ x11: ffffffc082bca680 x10: ffffffc082bb2640 x9 : ffffffc082bb2698
+ x8 : 0000000000017fe8 x7 : c0000000ffffefff x6 : 0000000000000001
+ x5 : ffffff8178fe0d48 x4 : 0000000000000000 x3 : 0000000000000027
+ x2 : ffffff8178fe0d50 x1 : 0000000000000000 x0 : 0000000000000000
+ Call trace:
+  __mutex_lock+0xd84/0x1068
+  mutex_lock_nested+0x28/0x34
+  tc_setup_taprio+0x118/0x68c
+  stmmac_setup_tc+0x50/0xf0
+  taprio_change+0x868/0xc9c
 
-As an additional measure, ignore unexpected ast and bast callbacks if
-the receiving glock is dead.
-
-Fixes: fb6791d100d1b ("GFS2: skip dlm_unlock calls in unmount")
-Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
-Cc: David Teigland <teigland@redhat.com>
+Fixes: b2aae654a479 ("net: stmmac: add mutex lock to protect est parameters")
+Signed-off-by: Xiaolei Wang <xiaolei.wang@windriver.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Serge Semin <fancer.lancer@gmail.com>
+Reviewed-by: Andrew Halaney <ahalaney@redhat.com>
+Link: https://lore.kernel.org/r/20240513014346.1718740-2-xiaolei.wang@windriver.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/gfs2/glock.c      | 35 ++++++++++++++++++++++++++++++++---
- fs/gfs2/glock.h      |  1 +
- fs/gfs2/incore.h     |  1 +
- fs/gfs2/lock_dlm.c   | 12 +++++++++++-
- fs/gfs2/ops_fstype.c |  1 +
- fs/gfs2/super.c      |  3 ---
- 6 files changed, 46 insertions(+), 7 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/stmmac.h   |  2 ++
+ .../net/ethernet/stmicro/stmmac/stmmac_ptp.c   |  8 ++++----
+ .../net/ethernet/stmicro/stmmac/stmmac_tc.c    | 18 ++++++++++--------
+ include/linux/stmmac.h                         |  1 -
+ 4 files changed, 16 insertions(+), 13 deletions(-)
 
-diff --git a/fs/gfs2/glock.c b/fs/gfs2/glock.c
-index 428c1db295fa1..d0ec9487e8820 100644
---- a/fs/gfs2/glock.c
-+++ b/fs/gfs2/glock.c
-@@ -167,19 +167,46 @@ static bool glock_blocked_by_withdraw(struct gfs2_glock *gl)
- 	return true;
- }
- 
--void gfs2_glock_free(struct gfs2_glock *gl)
-+static void __gfs2_glock_free(struct gfs2_glock *gl)
- {
--	struct gfs2_sbd *sdp = gl->gl_name.ln_sbd;
--
- 	gfs2_glock_assert_withdraw(gl, atomic_read(&gl->gl_revokes) == 0);
- 	rhashtable_remove_fast(&gl_hash_table, &gl->gl_node, ht_parms);
- 	smp_mb();
- 	wake_up_glock(gl);
- 	call_rcu(&gl->gl_rcu, gfs2_glock_dealloc);
-+}
-+
-+void gfs2_glock_free(struct gfs2_glock *gl) {
-+	struct gfs2_sbd *sdp = gl->gl_name.ln_sbd;
-+
-+	__gfs2_glock_free(gl);
- 	if (atomic_dec_and_test(&sdp->sd_glock_disposal))
- 		wake_up(&sdp->sd_glock_wait);
- }
- 
-+void gfs2_glock_free_later(struct gfs2_glock *gl) {
-+	struct gfs2_sbd *sdp = gl->gl_name.ln_sbd;
-+
-+	spin_lock(&lru_lock);
-+	list_add(&gl->gl_lru, &sdp->sd_dead_glocks);
-+	spin_unlock(&lru_lock);
-+	if (atomic_dec_and_test(&sdp->sd_glock_disposal))
-+		wake_up(&sdp->sd_glock_wait);
-+}
-+
-+static void gfs2_free_dead_glocks(struct gfs2_sbd *sdp)
-+{
-+	struct list_head *list = &sdp->sd_dead_glocks;
-+
-+	while(!list_empty(list)) {
-+		struct gfs2_glock *gl;
-+
-+		gl = list_first_entry(list, struct gfs2_glock, gl_lru);
-+		list_del_init(&gl->gl_lru);
-+		__gfs2_glock_free(gl);
-+	}
-+}
-+
- /**
-  * gfs2_glock_hold() - increment reference count on glock
-  * @gl: The glock to hold
-@@ -2263,6 +2290,8 @@ void gfs2_gl_hash_clear(struct gfs2_sbd *sdp)
- 	wait_event_timeout(sdp->sd_glock_wait,
- 			   atomic_read(&sdp->sd_glock_disposal) == 0,
- 			   HZ * 600);
-+	gfs2_lm_unmount(sdp);
-+	gfs2_free_dead_glocks(sdp);
- 	glock_hash_walk(dump_glock_func, sdp);
- }
- 
-diff --git a/fs/gfs2/glock.h b/fs/gfs2/glock.h
-index f6dd94ce74998..ca1669cf9299e 100644
---- a/fs/gfs2/glock.h
-+++ b/fs/gfs2/glock.h
-@@ -270,6 +270,7 @@ extern void gfs2_gl_dq_holders(struct gfs2_sbd *sdp);
- extern void gfs2_glock_thaw(struct gfs2_sbd *sdp);
- extern void gfs2_glock_add_to_lru(struct gfs2_glock *gl);
- extern void gfs2_glock_free(struct gfs2_glock *gl);
-+extern void gfs2_glock_free_later(struct gfs2_glock *gl);
- 
- extern int __init gfs2_glock_init(void);
- extern void gfs2_glock_exit(void);
-diff --git a/fs/gfs2/incore.h b/fs/gfs2/incore.h
-index 113aeb5877027..7a630de1c1a0b 100644
---- a/fs/gfs2/incore.h
-+++ b/fs/gfs2/incore.h
-@@ -837,6 +837,7 @@ struct gfs2_sbd {
- 	struct gfs2_holder sd_freeze_gh;
- 	atomic_t sd_freeze_state;
- 	struct mutex sd_freeze_mutex;
-+	struct list_head sd_dead_glocks;
- 
- 	char sd_fsname[GFS2_FSNAME_LEN + 3 * sizeof(int) + 2];
- 	char sd_table_name[GFS2_FSNAME_LEN];
-diff --git a/fs/gfs2/lock_dlm.c b/fs/gfs2/lock_dlm.c
-index 4f44173e8a361..001555ccceebc 100644
---- a/fs/gfs2/lock_dlm.c
-+++ b/fs/gfs2/lock_dlm.c
-@@ -121,6 +121,11 @@ static void gdlm_ast(void *arg)
- 	struct gfs2_glock *gl = arg;
- 	unsigned ret = gl->gl_state;
- 
-+	/* If the glock is dead, we only react to a dlm_unlock() reply. */
-+	if (__lockref_is_dead(&gl->gl_lockref) &&
-+	    gl->gl_lksb.sb_status != -DLM_EUNLOCK)
-+		return;
-+
- 	gfs2_update_reply_times(gl);
- 	BUG_ON(gl->gl_lksb.sb_flags & DLM_SBF_DEMOTED);
- 
-@@ -171,6 +176,9 @@ static void gdlm_bast(void *arg, int mode)
- {
- 	struct gfs2_glock *gl = arg;
- 
-+	if (__lockref_is_dead(&gl->gl_lockref))
-+		return;
-+
- 	switch (mode) {
- 	case DLM_LOCK_EX:
- 		gfs2_glock_cb(gl, LM_ST_UNLOCKED);
-@@ -291,6 +299,8 @@ static void gdlm_put_lock(struct gfs2_glock *gl)
- 	struct lm_lockstruct *ls = &sdp->sd_lockstruct;
- 	int error;
- 
-+	BUG_ON(!__lockref_is_dead(&gl->gl_lockref));
-+
- 	if (gl->gl_lksb.sb_lkid == 0) {
- 		gfs2_glock_free(gl);
- 		return;
-@@ -305,7 +315,7 @@ static void gdlm_put_lock(struct gfs2_glock *gl)
- 
- 	if (test_bit(SDF_SKIP_DLM_UNLOCK, &sdp->sd_flags) &&
- 	    !gl->gl_lksb.sb_lvbptr) {
--		gfs2_glock_free(gl);
-+		gfs2_glock_free_later(gl);
- 		return;
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac.h b/drivers/net/ethernet/stmicro/stmmac/stmmac.h
+index 0b9cc3fbf5d69..7c7ed92094d11 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac.h
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac.h
+@@ -243,6 +243,8 @@ struct stmmac_priv {
+ 	struct stmmac_extra_stats xstats ____cacheline_aligned_in_smp;
+ 	struct stmmac_safety_stats sstats;
+ 	struct plat_stmmacenet_data *plat;
++	/* Protect est parameters */
++	struct mutex est_lock;
+ 	struct dma_features dma_cap;
+ 	struct stmmac_counters mmc;
+ 	int hw_cap_support;
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.c
+index d1ad9161de3ae..db5b03d48afef 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.c
+@@ -79,11 +79,11 @@ static int stmmac_adjust_time(struct ptp_clock_info *ptp, s64 delta)
+ 	/* If EST is enabled, disabled it before adjust ptp time. */
+ 	if (priv->plat->est && priv->plat->est->enable) {
+ 		est_rst = true;
+-		mutex_lock(&priv->plat->est->lock);
++		mutex_lock(&priv->est_lock);
+ 		priv->plat->est->enable = false;
+ 		stmmac_est_configure(priv, priv->ioaddr, priv->plat->est,
+ 				     priv->plat->clk_ptp_rate);
+-		mutex_unlock(&priv->plat->est->lock);
++		mutex_unlock(&priv->est_lock);
  	}
  
-diff --git a/fs/gfs2/ops_fstype.c b/fs/gfs2/ops_fstype.c
-index 26a70b9676d53..ec019e38cf7fa 100644
---- a/fs/gfs2/ops_fstype.c
-+++ b/fs/gfs2/ops_fstype.c
-@@ -137,6 +137,7 @@ static struct gfs2_sbd *init_sbd(struct super_block *sb)
- 	init_waitqueue_head(&sdp->sd_log_flush_wait);
- 	atomic_set(&sdp->sd_freeze_state, SFS_UNFROZEN);
- 	mutex_init(&sdp->sd_freeze_mutex);
-+	INIT_LIST_HEAD(&sdp->sd_dead_glocks);
+ 	write_lock_irqsave(&priv->ptp_lock, flags);
+@@ -96,7 +96,7 @@ static int stmmac_adjust_time(struct ptp_clock_info *ptp, s64 delta)
+ 		ktime_t current_time_ns, basetime;
+ 		u64 cycle_time;
  
- 	return sdp;
+-		mutex_lock(&priv->plat->est->lock);
++		mutex_lock(&priv->est_lock);
+ 		priv->ptp_clock_ops.gettime64(&priv->ptp_clock_ops, &current_time);
+ 		current_time_ns = timespec64_to_ktime(current_time);
+ 		time.tv_nsec = priv->plat->est->btr_reserve[0];
+@@ -113,7 +113,7 @@ static int stmmac_adjust_time(struct ptp_clock_info *ptp, s64 delta)
+ 		priv->plat->est->enable = true;
+ 		ret = stmmac_est_configure(priv, priv->ioaddr, priv->plat->est,
+ 					   priv->plat->clk_ptp_rate);
+-		mutex_unlock(&priv->plat->est->lock);
++		mutex_unlock(&priv->est_lock);
+ 		if (ret)
+ 			netdev_err(priv->dev, "failed to configure EST\n");
+ 	}
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_tc.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_tc.c
+index e9aac51c1b9b7..1ff53ffb05a5a 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_tc.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_tc.c
+@@ -1013,17 +1013,19 @@ static int tc_setup_taprio(struct stmmac_priv *priv,
+ 		if (!plat->est)
+ 			return -ENOMEM;
  
-diff --git a/fs/gfs2/super.c b/fs/gfs2/super.c
-index 14b3f66938ea8..4b56a163669ca 100644
---- a/fs/gfs2/super.c
-+++ b/fs/gfs2/super.c
-@@ -641,10 +641,7 @@ static void gfs2_put_super(struct super_block *sb)
- 	gfs2_gl_hash_clear(sdp);
- 	truncate_inode_pages_final(&sdp->sd_aspace);
- 	gfs2_delete_debugfs_file(sdp);
--	/*  Unmount the locking protocol  */
--	gfs2_lm_unmount(sdp);
+-		mutex_init(&priv->plat->est->lock);
++		mutex_init(&priv->est_lock);
+ 	} else {
++		mutex_lock(&priv->est_lock);
+ 		memset(plat->est, 0, sizeof(*plat->est));
++		mutex_unlock(&priv->est_lock);
+ 	}
  
--	/*  At this point, we're through participating in the lockspace  */
- 	gfs2_sys_fs_del(sdp);
- 	free_sbd(sdp);
- }
+ 	size = qopt->num_entries;
+ 
+-	mutex_lock(&priv->plat->est->lock);
++	mutex_lock(&priv->est_lock);
+ 	priv->plat->est->gcl_size = size;
+ 	priv->plat->est->enable = qopt->enable;
+-	mutex_unlock(&priv->plat->est->lock);
++	mutex_unlock(&priv->est_lock);
+ 
+ 	for (i = 0; i < size; i++) {
+ 		s64 delta_ns = qopt->entries[i].interval;
+@@ -1054,7 +1056,7 @@ static int tc_setup_taprio(struct stmmac_priv *priv,
+ 		priv->plat->est->gcl[i] = delta_ns | (gates << wid);
+ 	}
+ 
+-	mutex_lock(&priv->plat->est->lock);
++	mutex_lock(&priv->est_lock);
+ 	/* Adjust for real system time */
+ 	priv->ptp_clock_ops.gettime64(&priv->ptp_clock_ops, &current_time);
+ 	current_time_ns = timespec64_to_ktime(current_time);
+@@ -1073,7 +1075,7 @@ static int tc_setup_taprio(struct stmmac_priv *priv,
+ 	priv->plat->est->ctr[1] = (u32)ctr;
+ 
+ 	if (fpe && !priv->dma_cap.fpesel) {
+-		mutex_unlock(&priv->plat->est->lock);
++		mutex_unlock(&priv->est_lock);
+ 		return -EOPNOTSUPP;
+ 	}
+ 
+@@ -1084,7 +1086,7 @@ static int tc_setup_taprio(struct stmmac_priv *priv,
+ 
+ 	ret = stmmac_est_configure(priv, priv->ioaddr, priv->plat->est,
+ 				   priv->plat->clk_ptp_rate);
+-	mutex_unlock(&priv->plat->est->lock);
++	mutex_unlock(&priv->est_lock);
+ 	if (ret) {
+ 		netdev_err(priv->dev, "failed to configure EST\n");
+ 		goto disable;
+@@ -1101,11 +1103,11 @@ static int tc_setup_taprio(struct stmmac_priv *priv,
+ 
+ disable:
+ 	if (priv->plat->est) {
+-		mutex_lock(&priv->plat->est->lock);
++		mutex_lock(&priv->est_lock);
+ 		priv->plat->est->enable = false;
+ 		stmmac_est_configure(priv, priv->ioaddr, priv->plat->est,
+ 				     priv->plat->clk_ptp_rate);
+-		mutex_unlock(&priv->plat->est->lock);
++		mutex_unlock(&priv->est_lock);
+ 	}
+ 
+ 	priv->plat->fpe_cfg->enable = false;
+diff --git a/include/linux/stmmac.h b/include/linux/stmmac.h
+index 06e879cdbff82..ffa2e307ff407 100644
+--- a/include/linux/stmmac.h
++++ b/include/linux/stmmac.h
+@@ -115,7 +115,6 @@ struct stmmac_axi {
+ 
+ #define EST_GCL		1024
+ struct stmmac_est {
+-	struct mutex lock;
+ 	int enable;
+ 	u32 btr_reserve[2];
+ 	u32 btr_offset[2];
 -- 
 2.53.0
 
