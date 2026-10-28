@@ -1,56 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793210145;
-	b=01d6p2rPDUtssuOg8hd+SzIblFA61MOLDrNn2PvlnVRBhlmHwIxL4mgpqtHL/wh6ppTm
-	 lfsM1V3F5dpGGQzqSVAZ9UlFv/K1bX6mvhLnl49AD48t9ZtC0AOoaOiMT4fIJI8uK0kyw
-	 o1scttZuyNoDtPJbi9xgyLZTRM6GY1vqZusThiVnPFvsdt6+Jx3V0L8foum3gG2AiB/nz
-	 BiCpZMQkVKrL6cY/AmBQsDQ7NKJGTuGiy9V5+7AaBcIIHAuJrQputsdI+GnyyxtVx++Sn
-	 z9qSYGB/JpcDSgXUSdrbbCgQ2mIeh9cjDTe0HDOfBfvbBOvo2r+9m4359YBjUYHgdNQ==
+	t=1793210148;
+	b=w1PafrIQCA1AtSlgxEpQpoMgFu34DHjcgD9YRexR+pEskcGRIi5EMTcMA3XQALA7Qnh3
+	 Nb3pWP8zJhybR4cRUXNjTmoyUHfI1X9eoVU7f1wwAherpmekbH6L3KBK4tMDXKp6g4azz
+	 HOV+PC89r7o/xKaL0X3xjswU+HraTvd+kr4w8mjQYh42Vc6UxTWmq6uQuhRCJFY3k6HMx
+	 jqzrS6P/gNeEKaCu6Bi+3o7JU8RnHaaK6z1wLzqKjH/CU/EmX49PTSjQzc1fevnp3mFne
+	 QitGxOJ+2XianSNLMOegrhpti9YHCi6PWULONg+8N5ia2ADBoyN7nkYIchE3GMfcvAw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793210145;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793210148;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=U5i+8fWiEdalFn7/MVUK8fWM0zpAVVZJsK2y6SBDWxo=;
-	b=lsXuiBYu7ki4CwHClJRVhdN1AZHKuqK2zSVtxgQ2JLV14CEK1lPZHQfnQzq6KtVlSeUx
-	 qHy3oLNpCJ5pMg2yD0S8u7FeJfZQCMCiAHja63ChUW+q1mA9B/LfxUwYDV8b3qQPopJnD
-	 zVLTMQNSEzHIOgRWJqXDSD0XJ1lkqzanYhyThtCw7TrO7jsBV5nfM5j1FmhMWDfqZZ79T
-	 UuRA0772Z0jLJINJf81h1TmNZOutQ0JE06nyOhhmpl+quBccu/mNcmwqjwUC5DVtwDNhj
-	 CMfzlW4pKea62sdUdNwURHNkdRRU0PhiaVxY4uYXBSxzBFuKrZvgMko3QslumTXEhdg==
+	bh=ICiOmf1curphpEbxcNnnczd4vTrJix6JDy/PvGS6xaI=;
+	b=YKExSFyJaMgtUamomMaXD8mp0IECm/rT21B1fwsJoOfAzB2DUsZfKbvNDUbBQIY3M8kU
+	 sIuowdNttRIz9JYXaLlcjsvbyXEKMpQFhvZp1K3UObATEyoRvog9M4aqAPpEYserP1//G
+	 PFERsvkX8SiCJUU9AfW8cMXHVaxSGF4eCsgHSfDk/qfhW2k3yrcqKlza0RBYWEr8mBHNz
+	 rL8yLbGibdQniD4LL1yOWqL+xCH2VzC+SAn9KZBIibV+tlrHdscwBDSNdGxjlDYBFJqF6
+	 em8nt7MgKDsc1LCKO6vXS4/zMIJe/ijh87c1OZMfK38uGfWOP2V20E3GyVWXz18gdsA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0qebs46Z;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=H2dv41pj;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE768606A31C;
-	Wed, 28 Oct 2026 17:55:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3AE4606A31D;
+	Wed, 28 Oct 2026 17:55:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0qebs46Z
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40ECA1F01825;
-	Wed, 28 Oct 2026 17:55:44 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=H2dv41pj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 114831F01825;
+	Wed, 28 Oct 2026 17:55:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793210144;
-	bh=U5i+8fWiEdalFn7/MVUK8fWM0zpAVVZJsK2y6SBDWxo=;
+	s=korg; t=1793210147;
+	bh=ICiOmf1curphpEbxcNnnczd4vTrJix6JDy/PvGS6xaI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0qebs46ZqCAUTczlmtnd68VKgUhfxVQJYFVeEovj96i6qaeljiT5ScqhZhGa36yov
-	 A2+by5HBQih43v4isFFNH5o7rg4XvNGdZjEnSXhHM87HVUOP6ypALojGWSJEcmg4AC
-	 nWcJ9cC/2ncGeO6LPWlU0Kfm/fxKi5qQdfQ5bxeA=
+	b=H2dv41pjBYNUEotUeeTWneCuEeXicxaWsuo43Wr1qGlHPdM87FBnWosnJZE9gACi0
+	 uot4nMwDBepspXskEc9weedZNUE3BBFxC8rqIICMraJwUXj1037vZOwB10mxnue5On
+	 aGfDLfbSLnF0jL+wVz2E0/uvFcnOUB6J0dew0LUY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jacob Shivers <jshivers@redhat.com>,
-	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
-	Shyam Prasad N <sprasad@microsoft.com>,
-	Tom Talpey <tom@talpey.com>,
-	Bharath SM <bharathsm@microsoft.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Paulo Alcantara <pc@manguebit.org>
-Subject: [PATCH 6.6 090/168] smb: client: fix multiuser mount with krb5
-Date: Wed, 28 Oct 2026 18:00:26 +0100
-Message-ID: <20261028165945.219682089@linuxfoundation.org>
+	Dingisoul <dingiso.kernel@gmail.com>,
+	Laurence Oberman <loberman@redhat.com>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 091/168] scsi: st: Fix use-after-free race between st_remove() and st_open()
+Date: Wed, 28 Oct 2026 18:00:27 +0100
+Message-ID: <20261028165945.243880336@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165943.089486480@linuxfoundation.org>
 References: <20261028165943.089486480@linuxfoundation.org>
@@ -72,94 +69,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.org>
+From: Laurence Oberman <loberman@redhat.com>
 
-commit 69499395867332364ed4ac8b546537eb3bab6ebb upstream.
+commit 71caf7f84bd62a4bf91cc95abd2de690afb8d15f upstream.
 
-Customer reported that they could no longer mount their SMB shares
-with multiuser mount option and krb5.  Turned out that the client
-wasn't duplicating username option when creating multiuser
-connections, therefore failing to retrieve credentials as
-cifs.upcall(8) couldn't find them in keytab.
+st_remove() drops the probe reference on the scsi_tape with kref_put()
+and only afterwards removes its index from st_index_idr. If that was the
+last reference, scsi_tape_release() frees the structure while it is
+still published in the idr.
 
-Fix this by duplicating username option (if set) from original fs
-context before creating multiuser connections with krb5.
+scsi_tape_get(), called from st_open(), looks up the tape in
+st_index_idr and takes a reference under st_ref_mutex and
+st_index_lock. remove_cdevs() does not wait for opens that are already
+past chrdev_open(), so an open that is blocked on st_ref_mutex while
+st_remove() holds it can take the mutex as soon as st_remove() drops it,
+find the freed tpnt in the idr and call kref_get() on it:
 
-Reproducer:
+  BUG: KASAN: slab-use-after-free in st_open
+  Write of size 4 ...
+   st_open (drivers/scsi/st.c:254 drivers/scsi/st.c:1291)
+   chrdev_open
+  ...
+  Freed by task ...:
+   kfree
+   st_remove (drivers/scsi/st.c:4512)
 
-  ```
-  $ ktutil
-  ktutil:  add_entry -password -p testuser -k 1 -e aes256-cts
-  Password for testuser@ZELDA.TEST:
-  ktutil:  write_kt /etc/krb5.keytab
-  ktutil:  quit
-  $ klist -ke
-  Keytab name: FILE:/etc/krb5.keytab
-  KVNO Principal
-   ---- ----------------------------------------------------------------
-     1 testuser@ZELDA.TEST (aes256-cts-hmac-sha1-96)
-  $ mount.cifs //w22-root2/scratch /mnt/1 -o \
-      	uid=1000,sec=krb5,username=testuser@ZELDA.TEST,multiuser
-  mount error(13): Permission denied
-  Refer to the mount.cifs(8) manual page (e.g. man mount.cifs) and
-  kernel log messages (dmesg)
-  ```
+Remove the index from the idr before dropping the reference, all under
+st_ref_mutex. A concurrent scsi_tape_get() now either runs first and
+holds a valid reference that keeps the tape alive, or runs afterwards
+and finds nothing, so st_open() fails with -ENXIO.
 
-Reported-by: Jacob Shivers <jshivers@redhat.com>
-Fixes: 12b4c5d98cd7 ("smb: client: fix krb5 mount with username option")
-Cc: Ronnie Sahlberg <ronniesahlberg@gmail.com>
-Cc: Shyam Prasad N <sprasad@microsoft.com>
-Cc: Tom Talpey <tom@talpey.com>
-Cc: Bharath SM <bharathsm@microsoft.com>
-Cc: Namjae Jeon <linkinjeon@kernel.org>
+This restores the ordering st_remove() had before the conversion to
+st_index_idr, where the tape was unpublished from scsi_tapes[] before
+the final kref_put().
+
+Fixes: 6c648d95a6af ("[SCSI] st: get rid of scsi_tapes array")
 Cc: stable@vger.kernel.org
-Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: Dingisoul <dingiso.kernel@gmail.com>
+Closes: https://lore.kernel.org/linux-scsi/20261007211520.1428497-1-dingiso.kernel@gmail.com/
+Tested-by: Dingisoul <dingiso.kernel@gmail.com>
+Signed-off-by: Laurence Oberman <loberman@redhat.com>
+Link: https://patch.msgid.link/20261013202548.249628-1-loberman@redhat.com
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+[ loberman: st_remove() still returns int in 6.6; context adjusted ]
+Signed-off-by: Laurence Oberman <loberman@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/connect.c |   21 ++++++++++++++++-----
- 1 file changed, 16 insertions(+), 5 deletions(-)
+ drivers/scsi/st.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/smb/client/connect.c
-+++ b/fs/smb/client/connect.c
-@@ -4147,14 +4147,25 @@ cifs_setup_session(const unsigned int xi
- 	return rc;
+diff --git a/drivers/scsi/st.c b/drivers/scsi/st.c
+index defbc1507980a..e302e366fa278 100644
+--- a/drivers/scsi/st.c
++++ b/drivers/scsi/st.c
+@@ -4449,11 +4449,11 @@ static int st_remove(struct device *dev)
+ 	remove_cdevs(tpnt);
+ 
+ 	mutex_lock(&st_ref_mutex);
+-	kref_put(&tpnt->kref, scsi_tape_release);
+-	mutex_unlock(&st_ref_mutex);
+ 	spin_lock(&st_index_lock);
+ 	idr_remove(&st_index_idr, index);
+ 	spin_unlock(&st_index_lock);
++	kref_put(&tpnt->kref, scsi_tape_release);
++	mutex_unlock(&st_ref_mutex);
+ 	return 0;
  }
  
--static int
--cifs_set_vol_auth(struct smb3_fs_context *ctx, struct cifs_ses *ses)
-+static int set_fs_context_auth(struct smb3_fs_context *ctx,
-+			       struct cifs_ses *ses)
- {
- 	ctx->sectype = ses->sectype;
- 
--	/* krb5 is special, since we don't need username or pw */
--	if (ctx->sectype == Kerberos)
-+	/*
-+	 * krb5 is special as we might need to pass username (passwordless) down
-+	 * to cifs.upcall(8) for keytab.
-+	 */
-+	if (ctx->sectype == Kerberos) {
-+		if (ses->user_name && ses->user_name[0]) {
-+			ctx->username = kstrndup(ses->user_name,
-+						 CIFS_MAX_USERNAME_LEN,
-+						 GFP_KERNEL);
-+			if (!ctx->username)
-+				return -ENOMEM;
-+		}
- 		return 0;
-+	}
- 
- 	return cifs_set_cifscreds(ctx, ses);
- }
-@@ -4193,7 +4204,7 @@ cifs_construct_tcon(struct cifs_sb_info
- 	ctx->witness = master_tcon->use_witness;
- 	ctx->dfs_root_ses = master_tcon->ses->dfs_root_ses;
- 
--	rc = cifs_set_vol_auth(ctx, master_tcon->ses);
-+	rc = set_fs_context_auth(ctx, master_tcon->ses);
- 	if (rc) {
- 		tcon = ERR_PTR(rc);
- 		goto out;
+-- 
+2.53.0
+
 
 
