@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215341;
-	b=SacUcu/AC68cG9jyuKwgZi+RYAbKb4W1ZMPZpUjhbEWku3LgoRb3MqFsqNBwFnadeCoL
-	 W0D5By3phsARmvJnG+0o/j2sWFKlSYdyugnOketC0ggDOt8Y8KKw2aWGsdnhd208vZveL
-	 I7h+TOkyalC8MRDCNtA5UDB8HjV6XZFWcCJw6mQS94Gk1BacIwE2yxHae/6OxJiEBb5tE
-	 GzRVGzdW3oCehqSSsVHQ/z9LXkvIAyolY9bwuRbwWBtDk4PtAscfIO/cFKyVLYM9+HZO2
-	 sNjiLOokyVKQKssZD4/kWWEtzzZP6jTtRxitKbzGF3V55AKfBb9YlIyZWFKHg4Vjz2g==
+	t=1793215344;
+	b=mqp9M0ni8UuVOwFgLMs6zjQykAcdsQr438/ayXdVaSjUe5dj/V6/SB0bIXEjKuBzXgV+
+	 +LHb+sqSzUaubjfQLZcQSgHYS4rMHgOvQhsx3rQatzrAMaD87UQu9qvZbQXwRXBiwWF2u
+	 KoBOGpDi2gstFKRqx3LVc3hQJd8OfHl2xx0x1q15clCuF35Ur1kvlkcVS7gGH8YSs/lk6
+	 8MJlJeWliyqTyFvg2q7JcfwdleQ+Ci9H1Tv27Bzdpb8SVGQymQcv5RmgzcGfOrfGSM9Qa
+	 N3N3UmdBxm0URAvtRSug0J9xVbuFSJNCxCx+xzjIMpMxZy8KXoiane8d3kvAcITgmDw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215341;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215344;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=WUlGrOZO4ewah58wcp3InYyDsZXzXGpyRwgIVqciZFA=;
-	b=0yKgM2stUBIeKgGTL9RT8j+z7DGhf2pcdDft+Z++AWimJwqMOzWGUXmkkodIdb3BGpF9
-	 rusl9Bm6EPnzJT9uyfbOJwwSLDKYBDwCx9rYu1FQcAS/g9vL3bawVqmcxV7p22QfRZ0NO
-	 9Hl7cvrLAh7WQI6sAYIBLgOaY/SahEoaldy5InOLFcZCGQCSuA6bMsi8AnsOjjP+G2KCF
-	 WR2Ct/7h5uGx6RE++Zj/Nyomp0iu9BvvBEmttdtmr0UCh9NBr5gKc2FzNugsrtZumpywb
-	 3Q62X9wuDjukI2W6NvmQFWyOzUSo+Cy76SfHi/1gS/um1TQl4w4JnYh/cXcn34M5vNw==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=v1sqSFT03hVCJTcTTK/Xq7tXctAPIle7QyUCvnWiRic=;
+	b=dIZ0aoC6OXwT7CtzNrZ7xRyjorz80mHOdkj8B4qMH9iH7RUAq28WfpufbaurDdT0HLb6
+	 AaEZJq12BZQHk5hOct0keJE2mn77Eh9xIBFpApk8CnAi9GvStANMAA5COcV+S/2gOGg0w
+	 r4bFo7u/tLAmiuGLIbEviKUDNuifBnqRGUIAbVDqdhx4+zW0gdG88HZv3mOAXLCf+wwGM
+	 tx67FA2EAEzVmEbi0Puc5/TMulAjOBCKPYLy7mSK1/P0q0WI31B01dH1ixqUaWL8aaVNK
+	 2AxlF6+hP3nAtBygTrbK2o+qMycaARDVkxZZ0tLkjA864DPwk53aRGZb0AtZmkYMWlg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Fua7HIuu;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=b3dGBko5;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0A25606A31A;
-	Wed, 28 Oct 2026 19:22:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B79CD606A31A;
+	Wed, 28 Oct 2026 19:22:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Fua7HIuu
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CFAC1F01825;
-	Wed, 28 Oct 2026 19:22:20 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=b3dGBko5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11ACD1F01825;
+	Wed, 28 Oct 2026 19:22:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215340;
-	bh=WUlGrOZO4ewah58wcp3InYyDsZXzXGpyRwgIVqciZFA=;
+	s=korg; t=1793215343;
+	bh=v1sqSFT03hVCJTcTTK/Xq7tXctAPIle7QyUCvnWiRic=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Fua7HIuuiFZxO9jXfDjSg5GWvYEzOzrcYZ6IuJvJk5U4lngKGgGclceo+lqUa4cCr
-	 obKntP+XHLiDM7oHyoAQY+r9q+OzZH9nfKe2qIF/DH+r2JRuc1Gs+xFrlqm3+KCN0H
-	 loilLrH3qj8x4DUYxXVI1PRqutuROj4yDpWOLsWc=
+	b=b3dGBko5RHnyPsJ7ZkO28VS71IET/1UjXBBcNkoMI9neKOtw6Rs0sGKZHzHkHhlm8
+	 Kw0bfEwFRtm/CJr75itYEcyspKlX/MjVpLwYD+/G1aRsmuK/jUPkQAgTbfTCejMAnl
+	 qN0j8+BB5bk1SaUP/AtVnYaPX621Fky2V79bBuDA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Zhu <James.Zhu@amd.com>,
-	Lijo Lazar <lijo.lazar@amd.com>,
+	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>,
+	Chengming Gui <Jack.Gui@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1175/1887] drm/amdgpu: keep amdgpu_ctx_mgr in ctx structure
-Date: Wed, 28 Oct 2026 17:54:31 +0100
-Message-ID: <20261028170526.145437639@linuxfoundation.org>
+Subject: [PATCH 6.1 1176/1887] drm/amdgpu: Fix context pstate override handling
+Date: Wed, 28 Oct 2026 17:54:32 +0100
+Message-ID: <20261028170526.167986172@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -63,62 +64,171 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: James Zhu <James.Zhu@amd.com>
+From: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
 
-[ Upstream commit c30e326e488ec43f6b0931f16ddba16a3370ed4a ]
+[ Upstream commit c1dc4ccb82c9e56325d8e7514ca4c90bd1efb351 ]
 
-Keep amdgpu_ctx_mgr in ctx structure to track fpriv.
+There are several problems in the context pstate handling code.
 
-v2: add missing fpriv declaration lost in rebase
+The most serious ones are potential use-after-free and NULL pointer
+dereferences at context initialization time. Both are due
+amdgpu_ctx_init() not holding the adev->pm.stable_pstate_ctx_lock, which
+is otherwise used from both sysfs and the context code itself for
+modifying and clearing the stored context pointer.
 
-Signed-off-by: James Zhu <James.Zhu@amd.com>
-Acked-by: Lijo Lazar <lijo.lazar@amd.com>
+Second issue is that context fini can trample over the pstate
+configuration set via sysfs. This is due the restore state
+(ctx->stable_pstate) being saved at context init time, and not if, or when
+the context actually changes the pstate. As the context exits it will
+therefore incorrectly restore to what was set before the sysfs override
+was requested.
+
+The simplest fix is to drastically simplify how the state is tracked, by
+clearly defining the points at which pstate ownership is taken and
+released, and to handle all transitions under the correct lock.
+
+Instead of at context init time, the previous state is saved only at the
+point the context overrides the current state, and is restored on context
+exit only if the context is still the owner of the current override state.
+
+Signed-off-by: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
+Fixes: 79610d304133 ("drm/amdgpu: fix pstate setting issue")
+Cc: Chengming Gui <Jack.Gui@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Cc: "Christian König" <christian.koenig@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Stable-dep-of: c1dc4ccb82c9 ("drm/amdgpu: Fix context pstate override handling")
+(cherry picked from commit 1b5e413713c0a93bc1818394d0ce49aaad21bd27)
+Cc: <stable@vger.kernel.org> # v6.1+
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_ctx.c | 2 ++
- drivers/gpu/drm/amd/amdgpu/amdgpu_ctx.h | 1 +
- 2 files changed, 3 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_ctx.c | 71 +++++++++++++++----------
+ 1 file changed, 42 insertions(+), 29 deletions(-)
 
 diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_ctx.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_ctx.c
-index 3898b67c35bc3..c88dbba8b312b 100644
+index c88dbba8b312b..9663da2e3ca92 100644
 --- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ctx.c
 +++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ctx.c
-@@ -304,6 +304,7 @@ static int amdgpu_ctx_get_stable_pstate(struct amdgpu_ctx *ctx,
- static int amdgpu_ctx_init(struct amdgpu_ctx_mgr *mgr, int32_t priority,
+@@ -305,7 +305,6 @@ static int amdgpu_ctx_init(struct amdgpu_ctx_mgr *mgr, int32_t priority,
  			   struct drm_file *filp, struct amdgpu_ctx *ctx)
  {
-+	struct amdgpu_fpriv *fpriv = filp->driver_priv;
- 	u32 current_stable_pstate;
+ 	struct amdgpu_fpriv *fpriv = filp->driver_priv;
+-	u32 current_stable_pstate;
  	int r;
  
-@@ -332,6 +333,7 @@ static int amdgpu_ctx_init(struct amdgpu_ctx_mgr *mgr, int32_t priority,
- 	else
- 		ctx->stable_pstate = current_stable_pstate;
+ 	r = amdgpu_ctx_priority_permit(filp, priority);
+@@ -323,37 +322,22 @@ static int amdgpu_ctx_init(struct amdgpu_ctx_mgr *mgr, int32_t priority,
+ 	ctx->vram_lost_counter = atomic_read(&mgr->adev->vram_lost_counter);
+ 	ctx->init_priority = priority;
+ 	ctx->override_priority = AMDGPU_CTX_PRIORITY_UNSET;
+-
+-	r = amdgpu_ctx_get_stable_pstate(ctx, &current_stable_pstate);
+-	if (r)
+-		return r;
+-
+-	if (mgr->adev->pm.stable_pstate_ctx)
+-		ctx->stable_pstate = mgr->adev->pm.stable_pstate_ctx->stable_pstate;
+-	else
+-		ctx->stable_pstate = current_stable_pstate;
++	ctx->stable_pstate = AMDGPU_CTX_STABLE_PSTATE_NONE;
  
-+	ctx->ctx_mgr = &(fpriv->ctx_mgr);
+ 	ctx->ctx_mgr = &(fpriv->ctx_mgr);
  	return 0;
  }
  
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_ctx.h b/drivers/gpu/drm/amd/amdgpu/amdgpu_ctx.h
-index 0fa0e56daf67e..f1e27b6e16f48 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ctx.h
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ctx.h
-@@ -57,6 +57,7 @@ struct amdgpu_ctx {
- 	unsigned long			ras_counter_ce;
- 	unsigned long			ras_counter_ue;
- 	uint32_t			stable_pstate;
-+	struct amdgpu_ctx_mgr		*ctx_mgr;
- };
+-static int amdgpu_ctx_set_stable_pstate(struct amdgpu_ctx *ctx,
+-					u32 stable_pstate)
++static int __amdgpu_ctx_set_stable_pstate(struct amdgpu_ctx *ctx,
++					  u32 stable_pstate)
+ {
+ 	struct amdgpu_device *adev = ctx->mgr->adev;
+ 	enum amd_dpm_forced_level level;
++	struct amdgpu_ctx *current_ctx;
+ 	u32 current_stable_pstate;
+-	int r;
++	int r = 0;
  
- struct amdgpu_ctx_mgr {
+-	mutex_lock(&adev->pm.stable_pstate_ctx_lock);
+-	if (adev->pm.stable_pstate_ctx && adev->pm.stable_pstate_ctx != ctx) {
+-		r = -EBUSY;
+-		goto done;
+-	}
+-
+-	r = amdgpu_ctx_get_stable_pstate(ctx, &current_stable_pstate);
+-	if (r || (stable_pstate == current_stable_pstate))
+-		goto done;
++	lockdep_assert_held(&adev->pm.stable_pstate_ctx_lock);
+ 
+ 	switch (stable_pstate) {
+ 	case AMDGPU_CTX_STABLE_PSTATE_NONE:
+@@ -372,17 +356,41 @@ static int amdgpu_ctx_set_stable_pstate(struct amdgpu_ctx *ctx,
+ 		level = AMD_DPM_FORCED_LEVEL_PROFILE_PEAK;
+ 		break;
+ 	default:
+-		r = -EINVAL;
+-		goto done;
++		return -EINVAL;
+ 	}
+ 
++	current_ctx = adev->pm.stable_pstate_ctx;
++	if (current_ctx && current_ctx != ctx)
++		return -EBUSY;
++
++	r = amdgpu_ctx_get_stable_pstate(ctx, &current_stable_pstate);
++	if (r || current_stable_pstate == stable_pstate)
++		return r;
++
+ 	r = amdgpu_dpm_force_performance_level(adev, level);
++	if (r)
++		return r;
+ 
+-	if (level == AMD_DPM_FORCED_LEVEL_AUTO)
+-		adev->pm.stable_pstate_ctx = NULL;
+-	else
++	if (!current_ctx) {
+ 		adev->pm.stable_pstate_ctx = ctx;
+-done:
++		/*
++		 * Serialized by context taking ownership for the first time
++		 * while holding adev->pm.stable_pstate_ctx_lock).
++		 */
++		WRITE_ONCE(ctx->stable_pstate, current_stable_pstate);
++	}
++
++	return 0;
++}
++
++static int amdgpu_ctx_set_stable_pstate(struct amdgpu_ctx *ctx,
++					u32 stable_pstate)
++{
++	struct amdgpu_device *adev = ctx->mgr->adev;
++	int r;
++
++	mutex_lock(&adev->pm.stable_pstate_ctx_lock);
++	r = __amdgpu_ctx_set_stable_pstate(ctx, stable_pstate);
+ 	mutex_unlock(&adev->pm.stable_pstate_ctx_lock);
+ 
+ 	return r;
+@@ -408,7 +416,12 @@ static void amdgpu_ctx_fini(struct kref *ref)
+ 	}
+ 
+ 	if (drm_dev_enter(adev_to_drm(adev), &idx)) {
+-		amdgpu_ctx_set_stable_pstate(ctx, ctx->stable_pstate);
++		mutex_lock(&adev->pm.stable_pstate_ctx_lock);
++		if (adev->pm.stable_pstate_ctx == ctx) {
++			__amdgpu_ctx_set_stable_pstate(ctx, ctx->stable_pstate);
++			adev->pm.stable_pstate_ctx = NULL;
++		}
++		mutex_unlock(&adev->pm.stable_pstate_ctx_lock);
+ 		drm_dev_exit(idx);
+ 	}
+ 
 -- 
 2.53.0
 
