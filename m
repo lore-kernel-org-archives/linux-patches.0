@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216002;
-	b=DmxfH0gPCr2zfOlpBo27twYM5qvSaj1K4ZSDR0G8PDwNh4oR1ykEZW84bEiQcyr8lIIF
-	 u+norMwrRGnZNYLFepjjJ3dcRgreyfSwYn5LpxJGZC4/3EgAmEhVLJ+qmJykMR/21fx2a
-	 1Gb/lhAeXYAeeev2dPNk3wRQ2NAKIZVNnE7cCfeSaCYg/OuOz65lJL7DmNp5cDLIGh+G7
-	 VO60Y1nrseMa4FDA3MGrWhZV2mP43J9SoRleXsAcdir2DEaxwBAWoV2CPKnXRO5YPe9ww
-	 dQNlPoTqs1XQRRIiAvZp/VIWtDTD7DezMdZ5ZZxlWUSp0sSxDwMWwDonoMtb5jWv8Rw==
+	t=1793216005;
+	b=w2KwWmR26diWO9JG1MdZ+6ZUL/oCE6eO+jjqEWXHy4xvSk50dS4zhbaAA3L9iXWgweTO
+	 VSHsW5RPnWr1FK4GyRjiXY8zAcQCQ5B79vsNSw2vf3NkbXbkGLEZu8kIQJG91m/WYPL5D
+	 DsnRDRPMJPvVAPsUk3Q024z2/skj61X1SsJ7ZvzctoXQ5KqstCMQA8CPxSXEo0Hfttvs2
+	 fGoOGbnEKdkwRfzRVbcX225y01euryBahMuC2uWM7SrTsf39VorzQlo4ohTIGFyEfRIJN
+	 DrLQM7OOzZm4xyQAq4PvcDOFaBqcN+5Z1fmDBfl/YjKO8nRsDkMG9BjbWzCQDBJIajQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216002;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216005;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=H/a2gMQ3goTS7Qe9nHYlIzoXJpzn8soyEi6mQ/t4uJg=;
-	b=WvKDihYDOlWqwlmlgDr520EdXK2IpNEnSXHxq9gU9q+XQS5lW/73lIynz0u21/Lfa9n9
-	 MO6lU+4U1088oqRC2cND2xPY+huq+RfbYE7LYG+u0IBLVu1C7zEa6TV9wFHS7N2q2ZEF/
-	 HVOlb2ja948iOCG2yWSKyYGzSqZd6eQBpR4o623V+qEV45eoj85DawIEwXsDMc64VJZwH
-	 C9Bv1GBGxRUJO0iRqzqGHnmR3vo7XQ+9EK1sAxBmpYPpuNKRm3HF1oquyarlBVeirFoEZ
-	 9AlRpcvnbCs3amn6tl/E2ChOqudHO3/7tpynZXGHlEjioSxH0roFQ6gViE3HwTPIrOA==
+	bh=jWcKZT//01f2902rGuGx9aD2R15/yzXrz4XfNIR2lHI=;
+	b=XnmHorhxhqL4YtEcylVGu/OkQU+B2IRCec0qAr7su5do84ryD/fWGrlDTyW1CQDSp5xO
+	 YSpag3UkxPGWK1wxSQ4XFpxTA4mBClgNZA6R8buk7k443XYzDhcAcIBqMcYq/hw8StcYS
+	 6uBUDkLkyE102QhM7uqsoiIcFca2XBF6Q49UEPpl1/Fg4KtUDZ+yKck9tWFHIvtslAjMk
+	 K6/ZIBJMfpMXVhMRp37nuZNgffb8DG7/uJ7gdPPnQTfD7GUWe3M9Vrlk3HhHIpoemXycR
+	 JH3h5mwLpR2nkJmq9u/mDSpOYv9T8f8AUzAorbCbdro1aHUE2LfnwX6vyogvih2IUXA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mNAOxKHC;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JddZ0mtK;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E5B3606A31A;
-	Wed, 28 Oct 2026 19:33:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64C32606A31D;
+	Wed, 28 Oct 2026 19:33:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mNAOxKHC
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCAE31F01825;
-	Wed, 28 Oct 2026 19:33:21 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JddZ0mtK
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFE891F01825;
+	Wed, 28 Oct 2026 19:33:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216002;
-	bh=H/a2gMQ3goTS7Qe9nHYlIzoXJpzn8soyEi6mQ/t4uJg=;
+	s=korg; t=1793216005;
+	bh=jWcKZT//01f2902rGuGx9aD2R15/yzXrz4XfNIR2lHI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mNAOxKHCkFw6evbF3FEMoe6jR9YHbjxc0vdax+Vr6LN67+cvB+/kUi8kzYze33bIx
-	 SfAELFmBt7NZOfLVfrZek2JHwE5teylQHNxP4rOb20oaq1/nks3El3UTqop+oHxpWU
-	 ofuejrjK0aoVjxefkOq6cyZyDdJJ6I4gMpNvGb8A=
+	b=JddZ0mtKAKr6zyLarBK9xcQs5VqkRZ1vH17hxSxeualFaIvE2I1qx4RUZBcvtH0GL
+	 VFbDAh5dYxWPbPWZVyUJoyFZaIBRUzDzhQIPdWjN9SYHMy+QVmxdyxdQ7raJEKUpLR
+	 D3PK/z8QjUS0xUNnpPZmSOWxchFmxH7WVhVBj2ak=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <clm@meta.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	Andrea Mayer <andrea.mayer@uniroma2.it>,
+	Xiang Mei <xmei5@asu.edu>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1405/1887] SUNRPC: svcauth_gss: enforce krb5 token minimum length
-Date: Wed, 28 Oct 2026 17:58:21 +0100
-Message-ID: <20261028170531.426221161@linuxfoundation.org>
+Subject: [PATCH 6.1 1406/1887] ipv6: rpl: fix NULL dereference of idev in ipv6_rpl_srh_rcv()
+Date: Wed, 28 Oct 2026 17:58:22 +0100
+Message-ID: <20261028170531.449652598@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,68 +70,141 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Mason <clm@meta.com>
+From: Andrea Mayer <andrea.mayer@uniroma2.it>
 
-[ Upstream commit a919c5c88769cf8fb3ec071e6078d830bf512489 ]
+[ Upstream commit f826df95332c07380206dbd54178b6eefb311aba ]
 
-svcauth_gss_unwrap_priv() validates only an upper bound on the
-wire-supplied opaque length before handing the buffer to
-gss_unwrap():
+ipv6_rpl_srh_rcv() dereferences idev from __in6_dev_get() without a NULL
+check when reading idev->cnf.rpl_seg_enabled.
 
-    if (len > xdr_stream_remaining(xdr))
-            goto unwrap_failed;
-    offset = xdr_stream_pos(xdr);
-    ...
-    maj_stat = gss_unwrap(ctx, offset, offset + len, buf);
+When the device's MTU drops below IPV6_MIN_MTU, addrconf_ifdown() clears
+dev->ip6_ptr through RCU_INIT_POINTER(). A packet that passed the idev
+check in ip6_rcv_core() can then reach ipv6_rpl_srh_rcv() with
+dev->ip6_ptr already NULL.
 
-The wire value `len` flows unchanged as the upper bound into the
-krb5 unwrap path, so a len in [0, 16] passes this check and is
-handed to gss_unwrap(). For a krb5 v2 context that lands in
-gss_krb5_unwrap_v2(), which reads the 16-byte RFC 4121 token
-header fields at ptr+4 and ptr+6 and then calls rotate_left()
-before any integrity check. With a sub-header length the header
-reads run past the token, and _rotate_left()'s `shift %= buf->len`
-path can divide by zero when buf->len has been driven to zero by
-the truncated token. A header-only token (len == 16) is equally
-invalid: with a non-zero RRC field and the opaque blob ending at
-the XDR buffer boundary, rotate_left() builds a zero-length
-subbuffer, reaching the same division.
+Reproduced by flooding the receiving interface with ping6 traffic while
+flapping its MTU between 1500 and 1200:
 
-Reject the token at the server entry point before it reaches the
-krb5 unwrap core. A valid sealed RFC 4121 token must contain
-the 16-byte header plus at least some encrypted payload.
+ BUG: KASAN: null-ptr-deref in ipv6_rpl_srh_rcv+0xb3/0x1070
+ Read of size 4 at addr 00000000000006b4 by task ping6/394
 
-Fix by adding a minimum-length check immediately after the
-existing upper-bound check:
+ CPU: 2 UID: 0 PID: 394 Comm: ping6 Not tainted 7.2.0-rc7-micro-vm-dev-00095-g24ef02f934ee #240 PREEMPT(full)
+ Call Trace:
+  <IRQ>
+  kasan_report+0xc6/0x100
+  ipv6_rpl_srh_rcv+0xb3/0x1070
+  ip6_protocol_deliver_rcu+0x759/0x9a0
+  ip6_input_finish+0xa8/0x1b0
+  ip6_input+0xe1/0x490
+  ipv6_rcv+0x33d/0x460
+  __netif_receive_skb_one_core+0xd6/0x130
+  process_backlog+0x2cc/0xa00
+  __napi_poll.constprop.0+0x56/0x270
+  net_rx_action+0x327/0x730
+  handle_softirqs+0x11e/0x630
+  do_softirq+0xb3/0xf0
+  </IRQ>
 
-    if (len <= GSS_KRB5_TOK_HDR_LEN)
-            goto unwrap_failed;
+Both ipv6_rpl_srh_rcv() and ipv6_srh_rcv() are called only from
+ipv6_rthdr_rcv(), which already has an idev lookup.
 
-Fixes: 7c9fdcfb1b64 ("[PATCH] knfsd: svcrpc: gss: server-side implementation of rpcsec_gss privacy")
+Fix the NULL dereference on the RPL path by checking idev in
+ipv6_rthdr_rcv(), before it calls either function. The callees take idev as
+an argument and no longer call __in6_dev_get(), so the packet is now
+dropped in one place, with SKB_DROP_REASON_IPV6DISABLED on both paths.
+
+Fixes: 8610c7c6e3bd ("net: ipv6: add support for rpl sr exthdr")
 Cc: stable@vger.kernel.org
-Assisted-by: kres (claude-opus-4-7)
-Signed-off-by: Chris Mason <clm@meta.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260524010213.557424-2-cel@kernel.org
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Andrea Mayer <andrea.mayer@uniroma2.it>
+Tested-by: Xiang Mei <xmei5@asu.edu>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260817132644.2223-1-andrea.mayer@uniroma2.it
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/auth_gss/svcauth_gss.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/ipv6/exthdrs.c | 26 ++++++++++++--------------
+ 1 file changed, 12 insertions(+), 14 deletions(-)
 
-diff --git a/net/sunrpc/auth_gss/svcauth_gss.c b/net/sunrpc/auth_gss/svcauth_gss.c
-index 7d15429dfd7ab..5567c1f426a79 100644
---- a/net/sunrpc/auth_gss/svcauth_gss.c
-+++ b/net/sunrpc/auth_gss/svcauth_gss.c
-@@ -1003,6 +1003,8 @@ svcauth_gss_unwrap_priv(struct svc_rqst *rqstp, u32 seq, struct gss_ctx *ctx)
- 	}
- 	if (len > xdr_stream_remaining(xdr))
- 		goto unwrap_failed;
-+	if (len <= GSS_KRB5_TOK_HDR_LEN)
-+		goto unwrap_failed;
- 	offset = xdr_stream_pos(xdr);
+diff --git a/net/ipv6/exthdrs.c b/net/ipv6/exthdrs.c
+index afed094c8ac02..4bd1f9548bd7d 100644
+--- a/net/ipv6/exthdrs.c
++++ b/net/ipv6/exthdrs.c
+@@ -373,23 +373,16 @@ static void seg6_update_csum(struct sk_buff *skb)
+ 			   (__be32 *)addr);
+ }
  
- 	saved_len = buf->len;
+-static int ipv6_srh_rcv(struct sk_buff *skb)
++static int ipv6_srh_rcv(struct sk_buff *skb, struct inet6_dev *idev)
+ {
+ 	struct inet6_skb_parm *opt = IP6CB(skb);
+ 	struct net *net = dev_net(skb->dev);
+ 	struct ipv6_sr_hdr *hdr;
+-	struct inet6_dev *idev;
+ 	struct in6_addr *addr;
+ 	int accept_seg6;
+ 
+ 	hdr = (struct ipv6_sr_hdr *)skb_transport_header(skb);
+ 
+-	idev = __in6_dev_get(skb->dev);
+-	if (!idev) {
+-		kfree_skb(skb);
+-		return -1;
+-	}
+-
+ 	accept_seg6 = net->ipv6.devconf_all->seg6_enabled;
+ 	if (accept_seg6 > idev->cnf.seg6_enabled)
+ 		accept_seg6 = idev->cnf.seg6_enabled;
+@@ -497,12 +490,11 @@ static int ipv6_srh_rcv(struct sk_buff *skb)
+ 	return -1;
+ }
+ 
+-static int ipv6_rpl_srh_rcv(struct sk_buff *skb)
++static int ipv6_rpl_srh_rcv(struct sk_buff *skb, struct inet6_dev *idev)
+ {
+ 	struct ipv6_rpl_sr_hdr *hdr, *ohdr, *chdr;
+ 	struct inet6_skb_parm *opt = IP6CB(skb);
+ 	struct net *net = dev_net(skb->dev);
+-	struct inet6_dev *idev;
+ 	struct ipv6hdr *oldhdr;
+ 	unsigned int chdr_len;
+ 	unsigned char *buf;
+@@ -511,8 +503,6 @@ static int ipv6_rpl_srh_rcv(struct sk_buff *skb)
+ 	u64 n = 0;
+ 	u32 r;
+ 
+-	idev = __in6_dev_get(skb->dev);
+-
+ 	accept_rpl_seg = net->ipv6.devconf_all->rpl_seg_enabled;
+ 	if (accept_rpl_seg > idev->cnf.rpl_seg_enabled)
+ 		accept_rpl_seg = idev->cnf.rpl_seg_enabled;
+@@ -719,10 +709,14 @@ static int ipv6_rthdr_rcv(struct sk_buff *skb)
+ 	switch (hdr->type) {
+ 	case IPV6_SRCRT_TYPE_4:
+ 		/* segment routing */
+-		return ipv6_srh_rcv(skb);
++		if (!idev)
++			goto disabled;
++		return ipv6_srh_rcv(skb, idev);
+ 	case IPV6_SRCRT_TYPE_3:
+ 		/* rpl segment routing */
+-		return ipv6_rpl_srh_rcv(skb);
++		if (!idev)
++			goto disabled;
++		return ipv6_rpl_srh_rcv(skb, idev);
+ 	default:
+ 		break;
+ 	}
+@@ -870,6 +864,10 @@ static int ipv6_rthdr_rcv(struct sk_buff *skb)
+ 	icmpv6_param_prob(skb, ICMPV6_HDR_FIELD,
+ 			  (&hdr->type) - skb_network_header(skb));
+ 	return -1;
++
++disabled:
++	kfree_skb_reason(skb, SKB_DROP_REASON_IPV6DISABLED);
++	return -1;
+ }
+ 
+ static const struct inet6_protocol rthdr_protocol = {
 -- 
 2.53.0
 
