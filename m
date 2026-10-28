@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793210447;
-	b=HNH33GSz2jU3CT0T2CTMeU7K0D1MVc/GTfC32xNkfElGk/FkNPzhSbhxuGDw/zkMDzX/
-	 K/6dlbBe1/knR6dWk0nz45amDHqBMzgrpbvUQgYEeRxosEDiPBa8excBbFuohbh0tGFGG
-	 cEVZZX3qenbgPhhhnPBTRy2UZnJjwJ4ejJOgTbc1dJiUregA5qdU2rwjamHW0+BPouhoZ
-	 0AWuzWk967wlSifPmFynSu1KXuDwhUSu7CIktEr2Kn0bj1xBArTnKckXYObXKCSmGVnmR
-	 DwlFW+/HQ+SPfEksTQEfkyU/vlBVhHLkiU/I1Rpi/pMx8rEdkm84/hv1+IXU0LT23yg==
+	t=1793210449;
+	b=VQYoC0b/aUTpE7EIO2SNMZtH2yarXKXmbrRurGof+mfzBGdzIN7Yh47GiL08DHqKySih
+	 rX8CC0OiL/vFJEDsGYRsoFA2YmRThP4qe7UwUNFIj/Gig47raqlOgXqSQE8UtwoubUhy0
+	 CnOfI9w2+5GHsoh2ZaQRlwnEK5g1K0BGKY/b/VoTFJhWAoLpNTTJ4CzBZE0pLGK9BebNy
+	 7P2rMiJrayI+9NO07WxpQ8MNA27WUY+YtHnaINAHPm2MQ0T2kQj0WnJkdwFQk2C2q4W1t
+	 41ufjNF02jhvgVsm75wfj6hqF67Us+/qgPfHjeVkTnELuUiGq3P0BnAQoHI5gOGKLQA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793210447;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793210449;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=e5rqKJnuxe4fgJUweHWn7iZXggJTu0FRLYfLgDFOdm8=;
-	b=NorE6fjSJh/gIB+oNyHKQLdA78qPpPFTu5SLDf3oYGHuVJNxt7C+eHsII21iN9+ED/Ab
-	 SCDM57WwOcx9auJ4VJgnGSrt8OcTTM/X/VPVH0Df2PCp+eCsoQCOxemkg+6lk5664nNv+
-	 K8Ee8l9iV3cQEIWIs6gBVO5K/t4cj35T5geuFUResFe73AH5TmNGzV4NdLxoGgSnzzeEn
-	 AEYLegttjjO+AFE4kA/B5XyZ1ohV2qZYVa8O0n3eu8/cCRdhsjRQxL+wNv1szUx0J56/w
-	 5cKnuJDon2Zl0TzHuWPJ2BggvNmsZcAM5AAqdzAxmUjhhDbr1CLxPTsBimfasUhSwmQ==
+	bh=IaO5cwY/19qEXR0rYkT5DYJIrD5uyq296t8XT8X3TaM=;
+	b=LkByCNXeYS1PktVhy15B/Br7fWtINJMkMviDN3RNn8r35DhDLEFD1Hke92cXS8E8zkaA
+	 /+p4XofSznnTlX8lttH6MRWbYQ7VMkR2WGQeQKYEIjQse4qTqSQ7K5/30EnDChep3Zzmt
+	 BnC7wLuot9cwLMsTzwl/KwNDiVQyElZDr/vfx4UrFjuZRB95txWngEoIfMQw0DiKgrQrY
+	 AGTtiY+MTHeHIB6aYOCCCZqqjJ0SqzVjgFS9DYNsKGAMA3EbBpndrCn2niPiDBzCRtg87
+	 M/mk7Te1ytyXeYG9L8DGnSG155RgAi0i2wZkFHY8xA7WapveqiyFCIaJI0FPupOrwFA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0FLuQCU9;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZEMioHcW;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7A76606A31A;
-	Wed, 28 Oct 2026 18:00:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B32D606A31C;
+	Wed, 28 Oct 2026 18:00:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0FLuQCU9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8D001F01825;
-	Wed, 28 Oct 2026 18:00:45 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZEMioHcW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D117F1F01825;
+	Wed, 28 Oct 2026 18:00:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793210446;
-	bh=e5rqKJnuxe4fgJUweHWn7iZXggJTu0FRLYfLgDFOdm8=;
+	s=korg; t=1793210449;
+	bh=IaO5cwY/19qEXR0rYkT5DYJIrD5uyq296t8XT8X3TaM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0FLuQCU9KEPSNtE27GqvB7F44BIYo7kXgWvjSUbHU8wg50/GjLeM9aPD8up31/9Yv
-	 gbBfDiePP4q5Tb7T+Ncnbur5FHjWCBvRKoCu9VvgiyADwMXwPs2e1OycNupbBX1Qy6
-	 NAcvslqiAGr927ha3ej0Lkts4/oAlgKTz2qREvWg=
+	b=ZEMioHcWGgi6AwJbOj5/6v4YEb3vV/VAkDueEzEUWteJlhKATwF9K6UJlmhn6j1LA
+	 lIJslRvyE0YD3dFbbneZCZuPdldJnxJ6vhL2Z+UGwR00S84D8Jyhb/a/FhqMn8NPjk
+	 PIzN1/PPU0qvcL1emRNlu5k+WksNu3pN7E79VWFY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Xu Rao <raoxu@uniontech.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 029/571] Bluetooth: btqcomsmd: destroy RPMsg endpoints before freeing hci_dev
-Date: Wed, 28 Oct 2026 17:52:56 +0100
-Message-ID: <20261028170008.714212059@linuxfoundation.org>
+Subject: [PATCH 5.15 003/571] device property: Add cleanup.h based fwnode_handle_put() scope based cleanup.
+Date: Wed, 28 Oct 2026 17:52:30 +0100
+Message-ID: <20261028170008.097034283@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -70,71 +69,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xu Rao <raoxu@uniontech.com>
+From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 
-[ Upstream commit f5a427b16e45210dee656b0860728f3d496dee85 ]
+[ Upstream commit 59ed5e2d505bf5f9b4af64d0021cd0c96aec1f7c ]
 
-The command and ACL RPMsg endpoints store struct btqcomsmd as their
-callback private data. The receive callbacks dereference btq->hdev
-without taking an hci_dev reference.
+Useful where the fwnode_handle was obtained from a call such as
+fwnode_find_reference() as it will safely do nothing if IS_ERR() is true
+and will automatically release the reference on the variable leaving
+scope.
 
-The current teardown order frees the hci_dev before destroying the RPMsg
-endpoints in both the hci_register_dev() error path and the driver remove
-path. If WCNSS delivers data in that window, the endpoint callback can
-run with an already freed hci_dev and pass it to the Bluetooth core.
-
-For qcom_smd endpoints, rpmsg_destroy_ept() closes the channel and clears
-the callback under the channel recv_lock. The receive path holds the same
-lock while invoking the callback, so destroying the endpoints first both
-prevents new callbacks and serializes with any callback already running.
-
-Destroy the command and ACL endpoints before hci_free_dev(). Keep
-hci_unregister_dev() first during remove so the HCI core stops issuing
-operations before the transport endpoints are shut down. In the full
-registration-error cleanup path, return directly after freeing the hci_dev
-to avoid falling through to the partial-construction labels and destroying
-the endpoints twice.
-
-Fixes: 5052de8deff5 ("soc: qcom: smd: Transition client drivers from smd to rpmsg")
-Fixes: 9a39a927be01 ("Bluetooth: btqcomsmd: Fix a resource leak in error handling paths in the probe function")
-Cc: stable@vger.kernel.org
-Acked-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Signed-off-by: Xu Rao <raoxu@uniontech.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Link: https://lore.kernel.org/r/20240217164249.921878-3-jic23@kernel.org
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Stable-dep-of: 190069255582 ("device property: fix infinite loop in fwnode_for_each_child_node()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btqcomsmd.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ include/linux/property.h | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/bluetooth/btqcomsmd.c b/drivers/bluetooth/btqcomsmd.c
-index 88dbb2f3fabf9..4ce8354ebb86b 100644
---- a/drivers/bluetooth/btqcomsmd.c
-+++ b/drivers/bluetooth/btqcomsmd.c
-@@ -188,7 +188,10 @@ static int btqcomsmd_probe(struct platform_device *pdev)
- 	return 0;
+diff --git a/include/linux/property.h b/include/linux/property.h
+index 840f0545d4f9d..180d4a027ab38 100644
+--- a/include/linux/property.h
++++ b/include/linux/property.h
+@@ -11,6 +11,7 @@
+ #define _LINUX_PROPERTY_H_
  
- hci_free_dev:
-+	rpmsg_destroy_ept(btq->cmd_channel);
-+	rpmsg_destroy_ept(btq->acl_channel);
- 	hci_free_dev(hdev);
-+	return ret;
- destroy_cmd_channel:
- 	rpmsg_destroy_ept(btq->cmd_channel);
- destroy_acl_channel:
-@@ -202,10 +205,11 @@ static void btqcomsmd_remove(struct platform_device *pdev)
- 	struct btqcomsmd *btq = platform_get_drvdata(pdev);
+ #include <linux/bits.h>
++#include <linux/cleanup.h>
+ #include <linux/fwnode.h>
+ #include <linux/types.h>
  
- 	hci_unregister_dev(btq->hdev);
--	hci_free_dev(btq->hdev);
+@@ -124,6 +125,8 @@ struct fwnode_handle *device_get_named_child_node(struct device *dev,
+ struct fwnode_handle *fwnode_handle_get(struct fwnode_handle *fwnode);
+ void fwnode_handle_put(struct fwnode_handle *fwnode);
  
- 	rpmsg_destroy_ept(btq->cmd_channel);
- 	rpmsg_destroy_ept(btq->acl_channel);
++DEFINE_FREE(fwnode_handle, struct fwnode_handle *, fwnode_handle_put(_T))
 +
-+	hci_free_dev(btq->hdev);
- }
+ int fwnode_irq_get(const struct fwnode_handle *fwnode, unsigned int index);
+ int fwnode_irq_get_byname(const struct fwnode_handle *fwnode, const char *name);
  
- static const struct of_device_id btqcomsmd_of_match[] = {
 -- 
 2.53.0
 
