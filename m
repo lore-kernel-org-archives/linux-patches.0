@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793209971;
-	b=dN6OG5rKChM46XhPC9drkAssUhCN+7PUZWeAtxbRN/ySeb1wlS4ZxeYKIAPc7dMG0ZeH
-	 S3V6DXTUzekcb1s/poFwrFUAFdGelxkQB1cnr+/HKLVGSWQ22DBfwJ48wzV6u+UmlB1rm
-	 k0C+bbOiM0qOZjVnKy8y+iawOZ0Yrd8K9kLpVqz5kx8xCa8XmRm9Qx1uhe/c8lyPjFHN8
-	 /gjujboVzFu7OaK4iY9tnH+R8IqeqqCPduC3cE4x+j2SnbvTXiruvZR/bdf0mjVpQtE8M
-	 VwQmqP3zjyu1VYS/AczGKxorQIwcgtt70zhwe9TmuEMVhVQ5lafP9hfVVC4OotvxqnA==
+	t=1793209974;
+	b=G0pKcYlou2+utfW/juBEYnr0eYchMbQH8Ripq8JLO2AY8UOto11ec0r4ZXlyb2N66PMQ
+	 aJLrI2QapDkpWrpks2l9X5B3z9vg35ZnxSfTRx9IOzVwx0T+eVHfBch7wvjuuz6DAUdnM
+	 LWINaEi+vGE7MokOvARfPCbFxhQzvv47ci8oPfxUA3hJ0qEETaY9sgq8+/9uwLGiUOmYi
+	 sLiNtOIdvOJYDQy3qEVu2uX6c2acE0CTosSNzwSPYuDVXTRWWxJnoZXAlCHRpMGIY/5TA
+	 maoDYM6s9KU8ZdcFzmAeCBxmSlLLHG3pSZs+j4kHrKqt4qZAfXQOVasxAL6MpshJXUg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793209971;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793209974;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=s7KqYBq6ViNjN4UMPG8wxJcPExw8apscKktYyPyG5eM=;
-	b=KXe2lj+Eyk7PyX1S78cW06uBS0Csf+LmWXs6c75AiNXEtseeSWeJaqIr1/VmxZaLsBpJ
-	 mw/LWngDbDKhSCgWS/XITlyillZH5eBIXT1G9iS18F/4QuhERWyqODqzpG3ZahD+3v3n5
-	 F2esY2X4BQRQXDecgYh1kfv5WMhYV9juiv5TN1Mb6VLpnAJzfqGvDXyg4D+JdTa2f7ld3
-	 EDfk78bAPEH8C+HPeUXEkrAc7D2r20tw3f19SAvABT+1j/6e9RS8qGcVFwduAxBt01VRH
-	 AN+TFlCKXL5uNFJ7JpiYu8Ggfu3VxNoZgCN/BDrGbCSA45TN70YLZrkbNGvHAnwyolA==
+	bh=XXg6dK7HlB4vQnVqtLTE9CD2DtTvECfkSmSABiKV04w=;
+	b=A1PiThzogelLZO+m5/NIa6KStFPrt+i2Y4A6ZIVIqT5+Sgy4hvKONy1269zIvSM0TS8D
+	 BRAitZjb46mZG7WU1o1gFPBEiZWqNlzgB5umeP9h9qi+9v7v5rhb87BuWx/FJgmTDurik
+	 kt9kENHB8+afW1qtmC9cZ5D4n4dm2mgdvOC2/5WfX4x3YxBJe2z0UPuTiiT/LSsf7Vq1/
+	 FM6KNPk/4WLJUixsqOMvwg49zucOS28pWaE9wjl57/a0Ytwbk9lMuJyAcNYKrtWU0obDR
+	 oQAzxukvYVW+YQwnbo4Qigb2uPZAqPvWCpTZdQvVeP1wt3wJwJ619kehUiqueVX00hQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BmcGm4gG;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vmBSwmxR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EB8E606A31A;
-	Wed, 28 Oct 2026 17:52:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB120606A31D;
+	Wed, 28 Oct 2026 17:52:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BmcGm4gG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AF731F01825;
-	Wed, 28 Oct 2026 17:52:50 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vmBSwmxR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42E0D1F01825;
+	Wed, 28 Oct 2026 17:52:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793209970;
-	bh=s7KqYBq6ViNjN4UMPG8wxJcPExw8apscKktYyPyG5eM=;
+	s=korg; t=1793209973;
+	bh=XXg6dK7HlB4vQnVqtLTE9CD2DtTvECfkSmSABiKV04w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BmcGm4gGLrsQV8pVqQoTtux1dtwyQ1s/b+0i+BXD+8KdUTuRiC9VK54Ft+F9Wg8w9
-	 FFasyxGHmbY6Ph0tub3OIfX/PFiMaQGd4xda2YVWBm04E3QvKJ9VhzJdrSIOu6AxD4
-	 lP39tEgjUrtwwsvnobGXi+m8AGw5LYmaPmpdrcUM=
+	b=vmBSwmxRf26BniTs02Ma1A3pcUnFLq2MOwAG45INdzcYPwvq94luZuMpOmTqnM4rI
+	 CSecgQvmQyPFxRevsIsWk65wUrC0pnt24d85ldisIyX44NMwLKPvHYXUyUWFdqbXd1
+	 f+T1/Zxdv5pHIrsdayBIHcZ8eluX4eZCIMSuZfB8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Kaiser <martin@kaiser.cx>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Xingui Yang <yangxingui@huawei.com>,
+	John Garry <john.garry@linux.dev>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 030/168] tracing: probes: error if BTF is required but unavailable
-Date: Wed, 28 Oct 2026 17:59:26 +0100
-Message-ID: <20261028165943.810607088@linuxfoundation.org>
+Subject: [PATCH 6.6 031/168] scsi: libsas: Fix SMP IO deadlock during HA resume
+Date: Wed, 28 Oct 2026 17:59:27 +0100
+Message-ID: <20261028165943.833514220@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165943.089486480@linuxfoundation.org>
 References: <20261028165943.089486480@linuxfoundation.org>
@@ -69,49 +69,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Martin Kaiser <martin@kaiser.cx>
+From: Xingui Yang <yangxingui@huawei.com>
 
-[ Upstream commit 66c658033d842bb75f81f20aaa4a378fe47be1a1 ]
+[ Upstream commit 81e097a064b28b4a1f6ca1a8b433e659c1bd64c0 ]
 
-traceprobe_expand_meta_args expands probe arguments based on BTF info.
+smp_execute_task_sg() calls pm_runtime_get_sync() on the host before
+issuing an SMP command. When that command is itself issued from the HA
+resume path, the get_sync() deadlocks: it waits for the ongoing resume
+(the device is RPM_RESUMING), while the resume is blocked in
+sas_drain_work() waiting for that same SMP IO to complete.
 
-Return an error if we have arguments that need expanding but BTF is not
-supported.
+The deadlock needs an expander-attached SATA disk. During
+sas_resume_ha() -> sas_drain_work(), DISCE_RESUME -> sas_resume_sata()
+-> ata_sas_port_resume() requests ATA_EH_RESET, and the hard reset for
+such a disk is done via SMP PHY CONTROL (sas_ata_hard_reset() ->
+sas_phy_reset() -> sas_smp_phy_control() ->
+smp_execute_task_sg()). Direct-attached SATA resets through
+lldd_control_phy() and SSP devices use TMFs, so neither hits this.
 
-The params variable is now unused, it can be removed.
+Replace the get_sync()/put_sync() pair with
+pm_runtime_get_noresume()/pm_runtime_put(). smp_execute_task_sg() only
+needs to hold off autosuspend while the SMP is in flight, and it must
+not try to resume the host: a sync resume issued from the HA resume path
+itself is what deadlocks, and by the time sas_resume_ha() runs, hw_init
+has already reinitialized the hardware, so the device is accessible
+without one.
 
-Link: https://lore.kernel.org/all/20261014083838.31020-1-martin@kaiser.cx/
+The usage reference is still required. Discovery work normally runs
+inside an event worker's PM reference, taken at sas_notify_port_event()
+notify time and held until the handler has flushed the disco
+queue. sas_rediscover_ex_phy() however requeues DISCE_REVALIDATE_DOMAIN
+from within the revalidation worker itself, and flush_workqueue() does
+not wait for work items queued during execution, so that chained
+revalidation runs with no outer PM reference - without the
+get_noresume(), its SMP could race autosuspend.
 
-Fixes: d157d7694460 ("tracing/probes: Support BTF field access from $retval")
-Signed-off-by: Martin Kaiser <martin@kaiser.cx>
-Reviewed-by: Steven Rostedt <rostedt@goodmis.org>
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+For the BSG path, sas_smp_handler() is the only caller which may find
+the host autosuspended: expander SMP requests do not go through any SCSI
+device request queue, so nothing else in that path holds the host
+awake. Resume it there with pm_runtime_resume_and_get() and check the
+result.
+
+Fixes: 3dbbbf656b850 ("scsi: libsas: Fix HA resume deadlock and hisi_sas disk-wake race")
+Signed-off-by: Xingui Yang <yangxingui@huawei.com>
+Reviewed-by: John Garry <john.garry@linux.dev>
+Link: https://patch.msgid.link/20260928040234.992912-1-yangxingui@huawei.com
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace_probe.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/scsi/libsas/sas_expander.c | 14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/trace/trace_probe.c b/kernel/trace/trace_probe.c
-index a43d974fbccc7..d6bde7a03b57a 100644
---- a/kernel/trace/trace_probe.c
-+++ b/kernel/trace/trace_probe.c
-@@ -1663,7 +1663,6 @@ const char **traceprobe_expand_meta_args(int argc, const char *argv[],
- 					 int *new_argc, char *buf, int bufsize,
- 					 struct traceprobe_parse_context *ctx)
- {
--	const struct btf_param *params = NULL;
- 	int i, j, n, used, ret, args_idx = -1;
- 	const char **new_argv = NULL;
+diff --git a/drivers/scsi/libsas/sas_expander.c b/drivers/scsi/libsas/sas_expander.c
+index e97f4e01a865a..16cc1c14b9f45 100644
+--- a/drivers/scsi/libsas/sas_expander.c
++++ b/drivers/scsi/libsas/sas_expander.c
+@@ -40,7 +40,11 @@ static int smp_execute_task_sg(struct domain_device *dev,
+ 		to_sas_internal(dev->port->ha->shost->transportt);
+ 	struct sas_ha_struct *ha = dev->port->ha;
  
-@@ -1681,7 +1680,7 @@ const char **traceprobe_expand_meta_args(int argc, const char *argv[],
- 		if (args_idx != -1) {
- 			/* $arg* requires BTF info */
- 			trace_probe_log_err(0, NOSUP_BTFARG);
--			return (const char **)params;
-+			return ERR_PTR(-EOPNOTSUPP);
+-	pm_runtime_get_sync(ha->dev);
++	/*
++	 * Non-blocking: a sync resume here would deadlock against
++	 * sas_drain_work() during HA resume.
++	 */
++	pm_runtime_get_noresume(ha->dev);
+ 	mutex_lock(&dev->ex_dev.cmd_mutex);
+ 	for (retry = 0; retry < 3; retry++) {
+ 		if (test_bit(SAS_DEV_GONE, &dev->state)) {
+@@ -113,7 +117,7 @@ static int smp_execute_task_sg(struct domain_device *dev,
  		}
- 		*new_argc = argc;
- 		return NULL;
+ 	}
+ 	mutex_unlock(&dev->ex_dev.cmd_mutex);
+-	pm_runtime_put_sync(ha->dev);
++	pm_runtime_put(ha->dev);
+ 
+ 	BUG_ON(retry == 3 && task != NULL);
+ 	sas_free_task(task);
+@@ -2142,6 +2146,11 @@ void sas_smp_handler(struct bsg_job *job, struct Scsi_Host *shost,
+ 		goto out;
+ 	}
+ 
++	/* The host may have autosuspended, resume it here. */
++	ret = pm_runtime_resume_and_get(dev->port->ha->dev);
++	if (ret)
++		goto out;
++
+ 	ret = smp_execute_task_sg(dev, job->request_payload.sg_list,
+ 			job->reply_payload.sg_list);
+ 	if (ret >= 0) {
+@@ -2149,6 +2158,7 @@ void sas_smp_handler(struct bsg_job *job, struct Scsi_Host *shost,
+ 		rcvlen = job->reply_payload.payload_len - ret;
+ 		ret = 0;
+ 	}
++	pm_runtime_put(dev->port->ha->dev);
+ 
+ out:
+ 	bsg_job_done(job, ret, rcvlen);
 -- 
 2.53.0
 
