@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215830;
-	b=lJLt5K37umh4swQVniOeiy1GwcOpYssl4E2yjjHiM0tgz6A9AWbqya6NqQZ+7NJM+W/J
-	 w5qeBdA3RMb2JTDb/oj023Rj29OKtAYBfjymQif6f/ykivjzJ9psmWB+fiX8/MxQTRi7c
-	 bbfPjTMGh6Ch9mezE45aRRR6qH5gqw9dvRykuQEAJyPKQz9cVFAmhEUPvJvVDx2v+OPsD
-	 rKuajUvtF+L0F23ATi4DZ9CfX/X2G3fQkQeuLKjpQmhrsIaVjjGWrqJ8JlVyQ+H24mfzl
-	 unVQMlACFXpk1VWYLfFBN0VG24nKqo3mVhthY001Xb2dBliBeUBLw/1slVE2g7Mdn3A==
+	t=1793215833;
+	b=rpftdxhN1GaRcCn2fb4n0N8s5QMt2O7vKzAJ5xQibXrZ+z6kcajhLsRWpYcThjBpleo7
+	 Z0AtBrc4+bpEfvAyafcY6bjPAdWyFpcLprSRbNUNlOLTRMBSToLeW5Ssg7O1wtqXY73b7
+	 J4jgBPTR4UjGJ8jWfV2RjVdPScpR4bH11j3rKdkuXW6Q6xZoawyxCkHHNR2c4EuMAH6mj
+	 7SlotycA945eTF2USW4y0L+V1198F4w4W0P9b+DBItD/rB7CEL0gnlRJQ/jn0/xsx+4t0
+	 G8EAgm+RTVomPczXIaVEwp8rr3F+DoXg09PujeFG2BG6f4okZpYw59BtDqj+sZptPtw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215830;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215833;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=QQ/zaoatNpOpYnQ0HMpYuCYDUhaGne4U2sr4aEFdWjk=;
-	b=E6JRYBfU4q1EL7IGT4L3cICaj9HZpA8ZEqZNapa0CM/RRmjW8ALILpmLrLaXaqf8FXJe
-	 FjldDCSIqwi5URztEbtLR93Y4B8E1bARnwM41hgdbTHSlubejBUmxhgMqAUidK1Qk1JWE
-	 cU26WJDuozHGjN3leSJzJE0bK7WWUIV7dDoKpjRau8l2iuSVm9OfRpa8yE2x6p0n5lU4F
-	 REJBhA/ih2G66KBTeGFklW1Cdexm0Mg95Jgsva9Yk33i9aJLK4xC74VCPoqA48Bp6+CD5
-	 ffmI/KZjod1CKqjwdaqyrCKDt9QT0wxRoACY0hITODhi0tmEm1c8DkPj0n8I/yIUY4w==
+	bh=vifZ0tW6YlHOk1VoAEbzAohFZZspXuMyfRt2M6chpUY=;
+	b=h0KRKmEXk+rN/u0cchOOzgaIyhVvXDv5DJ3eSOfyMcPAg3JvbiTbw4Arshzh4WMnv8yQ
+	 rDsg5LX15iwtIIJzC6BkxiIrbk0evCHHhmv5puf1t0E+cbfR2zmBckIW+atnXg04kI/s/
+	 0EGw0fOFT60H4eVLJjoEYipZenNtNMR3OmTEVrkX/65fmIRX+HxS9yUNithCLKsc4hMUo
+	 fKgkS/KY3U62Ks3EAikbNtgMh1idTC4inxz4FxisDUhOQ8HxNuG5JclZNTuau6+rzZnuj
+	 Cvuk2SVIDbOm9AzVbpz/Jp5z8mi7WVcS/Jg1iyIZeJ9MiEa2h5zr3V/IgLJwEtxMyeQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rUhClB4x;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GMgDeFjj;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B01BE606A31A;
-	Wed, 28 Oct 2026 19:30:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2C35606A31E;
+	Wed, 28 Oct 2026 19:30:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rUhClB4x
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A20E1F01825;
-	Wed, 28 Oct 2026 19:30:28 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GMgDeFjj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E98FE1F01825;
+	Wed, 28 Oct 2026 19:30:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215829;
-	bh=QQ/zaoatNpOpYnQ0HMpYuCYDUhaGne4U2sr4aEFdWjk=;
+	s=korg; t=1793215832;
+	bh=vifZ0tW6YlHOk1VoAEbzAohFZZspXuMyfRt2M6chpUY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rUhClB4xC9w44FCtXiF1lr7xgucvvpJh2b0QVSoxCPogoQPmiHkDvYYqGdIaqAc5k
-	 WbxBPp5DFrfn2JWcO4nqcRFzOJBJS42Og5tb2dfBFvmBsC8KQx6XsVOQHlrSphiW/t
-	 pcyucPXHj/s6K4JC6Ob4QU+3MUVtMei+qcnjLDXo=
+	b=GMgDeFjjUYLArXRrHUuoXeCdmD3svACGP1StEQKIV9p++gL2ZeQUJLGpPgFlB5OPU
+	 5BuFkf77h+3fw7z3Wbl9l+qmPx/7jlGxpcqdEj0Wn4Zl1rpz5gaqkCoHkEUBGVawMb
+	 5I1X7vyXJqcWMMFbkXnHCCcXPf68Lb/WWztC3mGE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cen Zhang <zzzccc427@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Ali Ahmet Memis <ali@iusegentoo.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1320/1887] ALSA: seq: oss: Serialize readq reset state with q->lock
-Date: Wed, 28 Oct 2026 17:56:56 +0100
-Message-ID: <20261028170529.467761426@linuxfoundation.org>
+Subject: [PATCH 6.1 1347/1887] Bluetooth: ISO: zero the sockaddr before returning it in getname
+Date: Wed, 28 Oct 2026 17:57:23 +0100
+Message-ID: <20261028170530.092432579@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,199 +68,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang <zzzccc427@gmail.com>
+From: Ali Ahmet Memis <ali@iusegentoo.com>
 
-[ Upstream commit 49ce92d207820f588b0406add82f053decfbe5d9 ]
+[ Upstream commit 884cf2cc957da7ac178a0e6c6c69ddfec0481cc8 ]
 
-snd_seq_oss_readq_clear() resets qlen, head, and tail without
-q->lock even though the normal reader and producer paths serialize the
-same ring state under that spinlock. A reset can therefore race
-snd_seq_oss_readq_free() or snd_seq_oss_readq_put_event() and leave
-stale records in the queue, drop freshly queued ones, or report the
-wrong readiness after wakeup. KCSAN reports a data race between
-snd_seq_oss_readq_clear() and snd_seq_oss_readq_free().
+iso_sock_getname() fills a struct sockaddr_iso in place and returns its
+size without clearing it first, so bytes it does not write are copied to
+user space from the kernel stack. The getsockname(2) and getpeername(2)
+paths both run through do_getsockname(), which hands getname() an
+uninitialized sockaddr_storage on the stack and copies back up to the
+number of bytes getname() returns, so the driver has to initialize every
+byte it accounts for.
 
-Take q->lock while clearing the ring and resetting input_time. Factor
-the enqueue logic into a caller-locked helper so
-snd_seq_oss_readq_put_timestamp() updates its suppression state under
-the same lock instead of racing the reset path.
+Two ranges are left uninitialized:
 
-The buggy scenario involves two paths, with each column showing the
-order within that path:
+  - struct sockaddr_iso is 10 bytes but only 9 are written (family,
+    iso_bdaddr, iso_bdaddr_type), leaking the trailing pad byte on every
+    call.
 
-reset path:                      locked readq updater:
-1. snd_seq_oss_reset() or        1. A reader or callback producer
-   release reaches                  takes q->lock on the same queue.
-   snd_seq_oss_readq_clear().
-2. snd_seq_oss_readq_clear()     2. The updater tests or modifies
-   resets qlen, head, tail,         qlen, head, and tail.
-   and input_time.
-3. snd_seq_oss_readq_clear()     3. The updater completes its
-   wakes sleepers on                read-modify-write sequence.
-   q->midi_sleep.
-4. Without q->lock, the reset    4. The resulting ring state drives
-   can overlap the locked           later reads and readiness.
-   update.
+  - for a broadcast peer (BIS_LINK or PA_LINK) the returned length grows
+    by sizeof(struct sockaddr_iso_bc), but only bc_sid, bc_num_bis and
+    bc_bis are filled; bc_bdaddr and bc_bdaddr_type, the first 7 bytes of
+    that structure, are never written.
 
-KCSAN reports:
+An unprivileged process can open a BTPROTO_ISO socket and reach the pad
+leak with getsockname(); the broadcast leak needs an established BIS/PA
+connection. l2cap and rfcomm already memset their sockaddr in getname
+for the same reason; do the same here.
 
-BUG: KCSAN: data-race in snd_seq_oss_readq_clear /
-snd_seq_oss_readq_free
-
-write to 0xffff8881069fe608 of 4 bytes by task 120516 on cpu 0:
-  snd_seq_oss_readq_free+0x6c/0x80
-  snd_seq_oss_read+0xcb/0x250
-  odev_read+0x38/0x60
-  vfs_read+0xff/0x600
-  ksys_read+0xb4/0x140
-  __x64_sys_read+0x46/0x60
-  do_syscall_64+0xbb/0x2f0
-  entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-read to 0xffff8881069fe608 of 4 bytes by task 120517 on cpu 1:
-  snd_seq_oss_readq_clear+0x1f/0x90
-  snd_seq_oss_reset+0xa7/0xf0
-  snd_seq_oss_ioctl+0x6f6/0x7e0
-  odev_ioctl+0x56/0xc0
-  __x64_sys_ioctl+0xd1/0x120
-  do_syscall_64+0xbb/0x2f0
-  entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-value changed: 0x00000001 -> 0x00000000
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-
-Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
-Link: https://patch.msgid.link/20260614004801.3507773-1-zzzccc427@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: ccf74f2390d6 ("Bluetooth: Add BTPROTO_ISO socket type")
+Fixes: 0a766a0affb5 ("Bluetooth: ISO: Fix getpeername not returning sockaddr_iso_bc fields")
+Cc: stable@vger.kernel.org
+Signed-off-by: Ali Ahmet Memis <ali@iusegentoo.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/seq/oss/seq_oss_readq.c | 83 +++++++++++++++++++-----------
- 1 file changed, 52 insertions(+), 31 deletions(-)
+ net/bluetooth/iso.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/sound/core/seq/oss/seq_oss_readq.c b/sound/core/seq/oss/seq_oss_readq.c
-index f0db5d3dcba47..b7cdb1c61f265 100644
---- a/sound/core/seq/oss/seq_oss_readq.c
-+++ b/sound/core/seq/oss/seq_oss_readq.c
-@@ -73,13 +73,17 @@ snd_seq_oss_readq_delete(struct seq_oss_readq *q)
- void
- snd_seq_oss_readq_clear(struct seq_oss_readq *q)
- {
--	if (q->qlen) {
--		q->qlen = 0;
--		q->head = q->tail = 0;
-+	scoped_guard(spinlock_irqsave, &q->lock) {
-+		if (q->qlen) {
-+			q->qlen = 0;
-+			q->head = 0;
-+			q->tail = 0;
-+		}
-+		q->input_time = (unsigned long)-1;
- 	}
-+
- 	/* if someone sleeping, wake'em up */
- 	wake_up(&q->midi_sleep);
--	q->input_time = (unsigned long)-1;
- }
+diff --git a/net/bluetooth/iso.c b/net/bluetooth/iso.c
+index 999ed7df4dfa3..5bf91e702330d 100644
+--- a/net/bluetooth/iso.c
++++ b/net/bluetooth/iso.c
+@@ -1080,6 +1080,7 @@ static int iso_sock_getname(struct socket *sock, struct sockaddr *addr,
  
- /*
-@@ -136,28 +140,37 @@ int snd_seq_oss_readq_sysex(struct seq_oss_readq *q, int dev,
- /*
-  * copy an event to input queue:
-  * return zero if enqueued
-+ * caller must hold lock
-  */
--int
--snd_seq_oss_readq_put_event(struct seq_oss_readq *q, union evrec *ev)
-+static int snd_seq_oss_readq_put_event_locked(struct seq_oss_readq *q,
-+					      union evrec *ev)
- {
--	unsigned long flags;
--
--	spin_lock_irqsave(&q->lock, flags);
--	if (q->qlen >= q->maxlen - 1) {
--		spin_unlock_irqrestore(&q->lock, flags);
-+	if (q->qlen >= q->maxlen - 1)
- 		return -ENOMEM;
--	}
+ 	BT_DBG("sock %p, sk %p", sock, sk);
  
- 	memcpy(&q->q[q->tail], ev, sizeof(*ev));
- 	q->tail = (q->tail + 1) % q->maxlen;
- 	q->qlen++;
++	memset(sa, 0, sizeof(struct sockaddr_iso));
+ 	addr->sa_family = AF_BLUETOOTH;
  
--	/* wake up sleeper */
--	wake_up(&q->midi_sleep);
-+	return 0;
-+}
- 
--	spin_unlock_irqrestore(&q->lock, flags);
-+/*
-+ * copy an event to input queue:
-+ * return zero if enqueued
-+ */
-+int
-+snd_seq_oss_readq_put_event(struct seq_oss_readq *q, union evrec *ev)
-+{
-+	int rc;
- 
--	return 0;
-+	scoped_guard(spinlock_irqsave, &q->lock) {
-+		rc = snd_seq_oss_readq_put_event_locked(q, ev);
-+		if (!rc)
-+			wake_up(&q->midi_sleep);
-+	}
-+
-+	return rc;
- }
- 
- 
-@@ -215,23 +228,31 @@ snd_seq_oss_readq_poll(struct seq_oss_readq *q, struct file *file, poll_table *w
- int
- snd_seq_oss_readq_put_timestamp(struct seq_oss_readq *q, unsigned long curt, int seq_mode)
- {
--	if (curt != q->input_time) {
--		union evrec rec;
--		memset(&rec, 0, sizeof(rec));
--		switch (seq_mode) {
--		case SNDRV_SEQ_OSS_MODE_SYNTH:
--			rec.echo = (curt << 8) | SEQ_WAIT;
--			snd_seq_oss_readq_put_event(q, &rec);
--			break;
--		case SNDRV_SEQ_OSS_MODE_MUSIC:
--			rec.t.code = EV_TIMING;
--			rec.t.cmd = TMR_WAIT_ABS;
--			rec.t.time = curt;
--			snd_seq_oss_readq_put_event(q, &rec);
--			break;
-+	int queued = 0;
-+
-+	scoped_guard(spinlock_irqsave, &q->lock) {
-+		if (curt != q->input_time) {
-+			union evrec rec;
-+
-+			memset(&rec, 0, sizeof(rec));
-+			switch (seq_mode) {
-+			case SNDRV_SEQ_OSS_MODE_SYNTH:
-+				rec.echo = (curt << 8) | SEQ_WAIT;
-+				queued = !snd_seq_oss_readq_put_event_locked(q, &rec);
-+				break;
-+			case SNDRV_SEQ_OSS_MODE_MUSIC:
-+				rec.t.code = EV_TIMING;
-+				rec.t.cmd = TMR_WAIT_ABS;
-+				rec.t.time = curt;
-+				queued = !snd_seq_oss_readq_put_event_locked(q, &rec);
-+				break;
-+			}
-+			q->input_time = curt;
- 		}
--		q->input_time = curt;
- 	}
-+	if (queued)
-+		wake_up(&q->midi_sleep);
-+
- 	return 0;
- }
- 
+ 	if (peer) {
 -- 
 2.53.0
 
