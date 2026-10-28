@@ -1,53 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793210629;
-	b=mquxviMR04S7sQE7d546dd5PDpuzmOtOvxoJH0m9TS9+0mPEDcYdiqitiiyy05+BiRJL
-	 hY0r0JamzFFeDO6dVKx1ztgC4yV0IYb12e8aHgcQl8BGYuVDI7uAoAHKzU9WClzwnJU7X
-	 JntysPt3GMSdxDjy5NJMVQpn9pzlsMgkStM+12ke4jnX+wZEi0f3MRPFBDNd8x+oTmr9o
-	 ni3sK8R5XSeJ+/Y51FlvqN/CKuIVa6aE+Qdi7nUoOytYycgo/zBJz8EOSwqLgx+VQJDi/
-	 PqCoxPtLA3XUOv3v6Na1vhDiGe3ZsTyxkH6EkoX6OLh5xqZZhp3MVbcSi1+HmJ+NMzg==
+	t=1793210632;
+	b=AV8RgfMA2/ZqMeI0VGevVIMqpm1rNccLBALwehiVU5bqX3UQAkZ+5WxxZeDDyetT+ttY
+	 6w3SaLFHjvNvgVI8uUFKgXoonGrFYtmYfBNls9u5YuuugRYT1UTQe792J52RajyhxcSIg
+	 dptBR5O7KfuYLbAwv6KO7/iuHWqAn9JpD1JgAXi9m3iFV/037WCaJJwEdTd3perm0Cyz7
+	 CQT1BwooVwHWK4ykZ0I5vPHk6xN9QZThIJHQMNhPkuRVnUpfkumVyDPWjbRgXbvgwWD28
+	 RiPCTCBOIGofiCQXmTaS4fQUfDd9IEqcTcD1a2yF9nX84kgVXoocBElatJOtuDj9Ryw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793210629;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793210632;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=bkxYtUVTrAHLKZU1zqSJFwrx8xhefswfAt9+dgUntVQ=;
-	b=rQAPIfa925YUe3iEbIfkR4eSjPbihq66FL25g9KruVNHW5e4xLUvS5jcEaVBirRYRr2e
-	 g/8XnnzeMrqr3TrbOlRT0at7xiIif4yEI6z4fi/bv54Un9kIVNIabzSMXoo2AgbrFIlRQ
-	 CaJPr7idfLjJZPefFJd/8ahpfvA72BSCPHSjPNXqbHTjm400Q7KV/YtT749CsVKTaL9kG
-	 UdOClcefp3njQmDGY+DgUpaEvI+Vce6SyyewQHyQoRnM1MhG9D94wKXl7eRZOSh5SHoKK
-	 AkABKdDQsdfxQV3vFbqwVZ7J5dqdLXZLvZ+PgY6rQ4PaakuFtLKiMWzL2yLnCrqnmvg==
+	bh=pOS/6ZL4KoFnlUc+2dxJKUmeIdhLlO7gu6lnnwbsYOs=;
+	b=y8bokcNO6CeTzIfB/iCwwWmYqPv+5leq9ddS3Aczt5wHBmrC9EvjZ8RbcDGct+DwrX35
+	 ZJtWJexGVVTUAqvK2qFH1lonticM9M2IFEZTRQyIuAaY8nKTA0MvdECMjl40wBXj7JNm8
+	 kETJC4dvVnJ7kPAlf8QzX+CqaDM/iKNS88E/IKyyE6dB2oQWz4A3sySkXbxYC0d2Y1zXp
+	 7jcSH+Bwa7Chd3y/t54JWeWp/uTeLux+zhZN8G350KAiQWoc8x3G0BnvOIMH4zFOE9bP1
+	 oHbPnyG4HxRxNmPaZqK1RnqtyaicRo7OoMJtmoNi+fEppkcPKjoPYalGdoZ3pJMBnlA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zj+xkCAu;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cTtU7VIS;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CD24606A31D;
-	Wed, 28 Oct 2026 18:03:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EA0A606A31A;
+	Wed, 28 Oct 2026 18:03:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zj+xkCAu
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA7CF1F01825;
-	Wed, 28 Oct 2026 18:03:48 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cTtU7VIS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A67FB1F01825;
+	Wed, 28 Oct 2026 18:03:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793210629;
-	bh=bkxYtUVTrAHLKZU1zqSJFwrx8xhefswfAt9+dgUntVQ=;
+	s=korg; t=1793210632;
+	bh=pOS/6ZL4KoFnlUc+2dxJKUmeIdhLlO7gu6lnnwbsYOs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zj+xkCAuQdxkG/jG+Na9BevmQBhA9zD8MmrlFWw4Ccv4jSw8JAt3lsqgOrfY6beXj
-	 NNIifAEv0HRglXWwR4SLZOzO+l1jXx+FbOmedLD6TiYj5aAVpbioy9y48pRqDACUWf
-	 dJ5Lui8E63M20Jf2Dfz09jRc3pf4e+8y5U4kzRWc=
+	b=cTtU7VISbeg24Qu61+xU4wAz6SMw49dSCmM36Ui/XyOL/1h+xIh2ekyLvPfH1ev0C
+	 ArUqNQbUfvPTWcxT5bnF89HpjYsv+6r8J5B1GU7deLEr1Ot7s3zqHuBgMkZewL9/ap
+	 5iI0L9njLa3KqQEs2fEAMuAWguPzD/fy4BIOs6uc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vincent Donnefort <vdonnefort@google.com>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Steven Rostedt <rostedt@goodmis.org>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Paulo Alcantara <pc@manguebit.org>,
+	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
+	Shyam Prasad N <sprasad@microsoft.com>,
+	Tom Talpey <tom@talpey.com>,
+	Bharath SM <bharathsm@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 094/571] ring-buffer: Acquire the lock with irqsave in rb_wake_up_waiters()
-Date: Wed, 28 Oct 2026 17:54:01 +0100
-Message-ID: <20261028170010.253708148@linuxfoundation.org>
+Subject: [PATCH 5.15 095/571] smb: client: fix file type corruption in cifs_reparse_point_to_fattr()
+Date: Wed, 28 Oct 2026 17:54:02 +0100
+Message-ID: <20261028170010.276699926@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -69,54 +72,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+From: Paulo Alcantara <pc@manguebit.org>
 
-[ Upstream commit 815e07c8fe885a87751c2496a30ae0dcd4118210 ]
+[ Upstream commit 6bd360447941357e959414a525aa62576a448116 ]
 
-rb_wake_up_waiters() is a irq_work callback which is initialized with
-init_irq_work(). As such it will be invoked in thread context on
-PREEMPT_RT. Invoking the callback in IRQ context on PREEMPT_RT is not an
-option due its usage of wake_up_all().  Since this callback may run in
-thread context, it needs to acquire ring_buffer_per_cpu::reader_lock with
-disabling interrupts and may not assume that they are disabled.
+Setting the file type in cf_mode without clearing the existing S_IFMT
+bits first is wrong as it corrupts the file type when cf_mode already
+has type bits set (e.g. S_IFREG | S_IFLNK == S_IFDIR | S_IFREG).
 
-Use raw_spinlock_irqsave() to acquire ring_buffer_per_cpu::reader_lock.
+Clear S_IFMT before setting S_IFLNK for native and SMB1 symlinks.
 
+Closes: https://sashiko.dev/#/patchset/20260906181540.647469-1-pc%40manguebit.org
+Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+Cc: Ronnie Sahlberg <ronniesahlberg@gmail.com>
+Cc: Shyam Prasad N <sprasad@microsoft.com>
+Cc: Tom Talpey <tom@talpey.com>
+Cc: Bharath SM <bharathsm@microsoft.com>
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260911102152.YEtwkBj9@linutronix.de
-Fixes: 68282dd930ea3 ("ring-buffer: Fix resetting of shortest_full")
-Reviewed-by: Vincent Donnefort <vdonnefort@google.com>
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
-[ Replaced scoped_guard() with explicit raw_spin_lock_irqsave()/raw_spin_unlock_irqrestore() calls for GNU89 compatibility. ]
+[ Moved the fix from missing reparse.c to smb311_posix_info_to_fattr() in inode.c. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/ring_buffer.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ fs/cifs/inode.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/kernel/trace/ring_buffer.c b/kernel/trace/ring_buffer.c
-index 84f3b0d0bc887..9c43f01fa2c2a 100644
---- a/kernel/trace/ring_buffer.c
-+++ b/kernel/trace/ring_buffer.c
-@@ -877,15 +877,15 @@ static void rb_wake_up_waiters(struct irq_work *work)
- 		/* Only cpu_buffer sets the above flags */
- 		struct ring_buffer_per_cpu *cpu_buffer =
- 			container_of(rbwork, struct ring_buffer_per_cpu, irq_work);
-+		unsigned long flags;
+diff --git a/fs/cifs/inode.c b/fs/cifs/inode.c
+index bb0b172c5a74d..388904b6bc030 100644
+--- a/fs/cifs/inode.c
++++ b/fs/cifs/inode.c
+@@ -623,6 +623,7 @@ smb311_posix_info_to_fattr(struct cifs_fattr *fattr, struct smb311_posix_qinfo *
+ 	/* fattr->cf_rdev = le32_to_cpu(info->DeviceId); */
  
--		/* Called from interrupt context */
--		raw_spin_lock(&cpu_buffer->reader_lock);
-+		raw_spin_lock_irqsave(&cpu_buffer->reader_lock, flags);
- 		rbwork->wakeup_full = false;
- 		rbwork->full_waiters_pending = false;
- 
- 		/* Waking up all waiters, they will reset the shortest full */
- 		cpu_buffer->shortest_full = 0;
--		raw_spin_unlock(&cpu_buffer->reader_lock);
-+		raw_spin_unlock_irqrestore(&cpu_buffer->reader_lock, flags);
- 
- 		wake_up_all(&rbwork->full_waiters);
- 	}
+ 	if (symlink) {
++		fattr->cf_mode &= ~S_IFMT;
+ 		fattr->cf_mode |= S_IFLNK;
+ 		fattr->cf_dtype = DT_LNK;
+ 	} else if (fattr->cf_cifsattrs & ATTR_DIRECTORY) {
 -- 
 2.53.0
 
