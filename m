@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793217346;
-	b=cT9PC/Cfpe4xwYwME15lnzPGgLpOsTlDIvTZospMm9cnIf03oi0TE/CFA82JZv/ZKRis
-	 yUu+0bJ3lIBYMSG+NltuVHwbylDxjng3nF5wnnZbqDm5SNGKhEIVfAJwQD/Ah5AsSasXz
-	 xhz+3ExwHAgPmX0KMDCdClxEy4vq5d5lwYKYaaabZoylg5JvwPXT2ntKkznTzDs4FMrXm
-	 F8wNw5cclvp8LmBRsSDPPJG6OKsNDMG+jx3fLGYyeVjiZ5DjzJAj6Yw2171zTIk9d+nsQ
-	 lqMzn/q7Yi2/Z2JiQLtzNqPBkQM/gva73mDazAHWLDXclfBzC5lmX/VT2ug0UX+9nzw==
+	t=1793217349;
+	b=fTYWQXzCw61+c+IMZhp4zX1BEorAi2ugmwV4b13HxL5xi5AZBq5AmZkVjALx/MjA9HrN
+	 k3Y92qYg8raXSzglsmuCJA2b7YSNXDsInvnOCyfcRDFk25eV5cR7HclZ8852uWt6c1feX
+	 9up2z6WYTtI9XL5cliZJlmeL0E0s+n5LdIDzwaJt23599oVdG9vFSaHo2izcylYM7Di7u
+	 PxGUGyFCp3Rh93DVpKtdO/M5G6JOtogZwMCZP8kanlS/G3lMqkVTg4xwJGA9lqHspl9EB
+	 3rsPbblwUdvc97fL314BqZoQwenJsTzkcTmogLPjqzhlf527W9O/qeIt2+eK/XD1Whg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793217346;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793217349;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=3rFOGGjHinSqfpf0poMiqPbuj2VfAWUO2MZWlpVcIv0=;
-	b=GGTemfPrLrpY9lFOEPK7THIrvMXzy9OhTtCo28Ig9nTJpc+PVOwDPx8qqa0SsGVy69jE
-	 H97sdxo7KLlMYNXoHsyO4gnomfKdtRT7sMkYqqP5NTsi0vf7RUX2Jw1ggiKK1tKX2TFBh
-	 NgeUyBNL6X3kSpDTZ5Qm+Ohuw7gPYtLM5UoNiRD3HkmUOeTCIoRiMjwZRgN9dETa/IVdK
-	 qQr0hAtUsnIN4YLJGL7mlH+RLjhqOtj5fn1yIPal0mENtcXFXGlgfOhqjrP4UncKCMlK0
-	 r4GRTpIbdQRUU7UJH2+aA7GyVpo2zqYdflP4gjAgD8Kkx1vdxBfROjeG+dWUMuiJxEA==
+	bh=PnIumiAxUQ3XRlRRkMT/wm5jN0YrAeJ0VkX1XOo1UG8=;
+	b=PMktxIJD4G6eF5Wc7J4FtTM0SimE02rwwkhaIAjiDHujaW5k0T1jzEG1gOiyz/ZGSFTl
+	 FQ/Pmm90YkerkHc4cFKXJE4+x/f6L7a6lgZl8zuKnvpaSzeTk35pPjcJvldK9WBZZd4JL
+	 9D1657EWtl9bjoPLbNxgo3HRsiZ2CKV7u0JDzBD8klWsEe4n2BgrG9UpZeMfcFGTaUPLs
+	 9OzHhrKZ2qWqMaEFXVst+ezR6WGmXzJpP+Wx63f3rtd0zm0+T8koqD3ww5OxsMNTRsvRL
+	 4Dae0mhbzPUdlWUAmiuGMMMkQV5j4RW9+fs4A38HSweoQ9XhMrcmAEADlETIlxQlfQw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qMT1BA3K;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VO4TZxFt;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60E0A606A31A;
-	Wed, 28 Oct 2026 19:55:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42DBD606A31D;
+	Wed, 28 Oct 2026 19:55:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qMT1BA3K
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0C931F01825;
-	Wed, 28 Oct 2026 19:55:45 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VO4TZxFt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A6561F01825;
+	Wed, 28 Oct 2026 19:55:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793217346;
-	bh=3rFOGGjHinSqfpf0poMiqPbuj2VfAWUO2MZWlpVcIv0=;
+	s=korg; t=1793217349;
+	bh=PnIumiAxUQ3XRlRRkMT/wm5jN0YrAeJ0VkX1XOo1UG8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qMT1BA3KLMXRrYxgajccBU4i2+2Tqv2hebjML3jml6ez/13z8vascYkqr6wnUwMga
-	 KMpFdosuBlIYik1ZqjcZXjt+Gn6Ardho41aN2NUVZvHtaokmWIdhq943Mfm4DfEbNw
-	 SFh0hHIgYzP4J9oAp859Z6Wupwcqf1oHOdHa8S/M=
+	b=VO4TZxFtqsIdCXufdu5cBs8zYjsBwZs4s55tvccK3d+C4qAcAP6TNm+Lf1UDGeEwZ
+	 ds+KCS+9D4oZFu9W9mSkB6pn1VMrw5JkBb7IY+lQCNtcOqk5tcyf4N4rgW2tXNn9RI
+	 VDQKX/2pvp9N/FFyrw6hqywEK2dWB+lAD+u7gBbE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Sudeep Holla <sudeep.holla@kernel.org>,
+	syzbot+b6919040d9958e2fc1ae@syzkaller.appspotmail.com,
+	ThangNN99 <ngocthang2710.1999@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1835/1887] firmware: arm_scmi: Reject out of range DT protocol IDs
-Date: Wed, 28 Oct 2026 18:05:31 +0100
-Message-ID: <20261028170541.205173741@linuxfoundation.org>
+Subject: [PATCH 6.1 1871/1887] Bluetooth: hci_core: Fix queuing tx_work after workqueue is drained
+Date: Wed, 28 Oct 2026 18:06:07 +0100
+Message-ID: <20261028170542.030444773@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,63 +69,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sudeep Holla <sudeep.holla@kernel.org>
+From: ThangNN99 <ngocthang2710.1999@gmail.com>
 
-[ Upstream commit 59407ccb52130f2c81f4b3cbe4f14114afceb54f ]
+[ Upstream commit 6610c6fe4b8936c232048e6049bf77c70a6f759c ]
 
-SCMI protocol IDs carried in message headers are limited by
-MSG_PROTOCOL_ID_MASK. The DT parsing paths noticed protocol IDs
-outside that range, but only logged an error and then kept processing
-the invalid value.
+hci_send_acl(), hci_send_sco() and hci_send_iso() queue hdev->tx_work
+unconditionally. They can run from the L2CAP/SCO/ISO socket send path
+while hci_dev_close_sync() is draining hdev->workqueue (HCIDEVDOWN
+racing with a socket write). Since that queue_work() is not chained
+work from the tx_work worker itself, __queue_work() sees the queue
+marked __WQ_DRAINING, warns "cannot queue %ps on wq %s", and drops
+the work:
 
-That lets a malformed 32-bit DT reg value reach helpers which take a u8
-protocol ID, where it can be truncated and/or treated as a different
-protocol.
+  WARNING: CPU: 1 PID: 5985 at kernel/workqueue.c:2352 __queue_work
+  Call Trace:
+   queue_work_on
+   l2cap_chan_send
+   l2cap_sock_sendmsg
+   ...
 
-For channel setup, two different out-of-range values can also be used as
-distinct IDR keys while aliasing the generated SCMI protocol identity.
+hci_dev_close_sync() already sets HCI_CMD_DRAIN_WORKQUEUE before
+draining, but only hci_cmd_work() and handle_cmd_cnt_and_timer()
+check it before queuing. Route the tx_work producers through the
+same guard via a shared hci_sched_tx() helper.
 
-Skip DT protocol nodes whose reg value does not fit the SCMI protocol ID
-field before setting up channels or creating protocol devices.
-
-Fixes: 05a2801d8b90 ("firmware: arm_scmi: Use dedicated devices to initialize channels")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Link: https://patch.msgid.link/20260714-scmi_core_fixes-v6-7-3afe499d46e3@kernel.org
-Signed-off-by: Sudeep Holla <sudeep.holla@kernel.org>
+Fixes: 525daaea459f ("Bluetooth: hci_sync: Set HCI_CMD_DRAIN_WORKQUEUE during device close")
+Reported-by: syzbot+b6919040d9958e2fc1ae@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=b6919040d9958e2fc1ae
+Signed-off-by: ThangNN99 <ngocthang2710.1999@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/arm_scmi/driver.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ net/bluetooth/hci_core.c | 17 ++++++++++++++---
+ 1 file changed, 14 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/firmware/arm_scmi/driver.c b/drivers/firmware/arm_scmi/driver.c
-index 2f959a3183273..ed32f48c8fe3b 100644
---- a/drivers/firmware/arm_scmi/driver.c
-+++ b/drivers/firmware/arm_scmi/driver.c
-@@ -2194,9 +2194,11 @@ static int scmi_channels_setup(struct scmi_info *info)
- 		if (of_property_read_u32(child, "reg", &prot_id))
- 			continue;
+diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
+index aebb48bae2a48..c07e7c2ad76ae 100644
+--- a/net/bluetooth/hci_core.c
++++ b/net/bluetooth/hci_core.c
+@@ -3222,6 +3222,17 @@ static void hci_queue_acl(struct hci_chan *chan, struct sk_buff_head *queue,
+ 	bt_dev_dbg(hdev, "chan %p queued %d", chan, skb_queue_len(queue));
+ }
  
--		if (!FIELD_FIT(MSG_PROTOCOL_ID_MASK, prot_id))
-+		if (!FIELD_FIT(MSG_PROTOCOL_ID_MASK, prot_id)) {
- 			dev_err(info->dev,
- 				"Out of range protocol %d\n", prot_id);
-+			continue;
-+		}
++/* Queue hdev->tx_work, unless hdev->workqueue is being drained by
++ * hci_dev_close_sync(), which would otherwise WARN and drop the work.
++ */
++static void hci_sched_tx(struct hci_dev *hdev)
++{
++	rcu_read_lock();
++	if (!hci_dev_test_flag(hdev, HCI_CMD_DRAIN_WORKQUEUE))
++		queue_work(hdev->workqueue, &hdev->tx_work);
++	rcu_read_unlock();
++}
++
+ void hci_send_acl(struct hci_chan *chan, struct sk_buff *skb, __u16 flags)
+ {
+ 	struct hci_dev *hdev = chan->conn->hdev;
+@@ -3230,7 +3241,7 @@ void hci_send_acl(struct hci_chan *chan, struct sk_buff *skb, __u16 flags)
  
- 		ret = scmi_txrx_setup(info, child, prot_id);
- 		if (ret) {
-@@ -2403,8 +2405,10 @@ static int scmi_probe(struct platform_device *pdev)
- 		if (of_property_read_u32(child, "reg", &prot_id))
- 			continue;
+ 	hci_queue_acl(chan, &chan->data_q, skb, flags);
  
--		if (!FIELD_FIT(MSG_PROTOCOL_ID_MASK, prot_id))
-+		if (!FIELD_FIT(MSG_PROTOCOL_ID_MASK, prot_id)) {
- 			dev_err(dev, "Out of range protocol %d\n", prot_id);
-+			continue;
-+		}
+-	queue_work(hdev->workqueue, &hdev->tx_work);
++	hci_sched_tx(hdev);
+ }
  
- 		if (!scmi_is_protocol_implemented(handle, prot_id)) {
- 			dev_err(dev, "SCMI protocol %d not implemented\n",
+ /* Send SCO data */
+@@ -3255,7 +3266,7 @@ void hci_send_sco(struct hci_conn *conn, struct sk_buff *skb)
+ 	bt_dev_dbg(hdev, "hcon %p queued %d", conn,
+ 		   skb_queue_len(&conn->data_q));
+ 
+-	queue_work(hdev->workqueue, &hdev->tx_work);
++	hci_sched_tx(hdev);
+ }
+ 
+ /* Send ISO data */
+@@ -3330,7 +3341,7 @@ void hci_send_iso(struct hci_conn *conn, struct sk_buff *skb)
+ 
+ 	hci_queue_iso(conn, &conn->data_q, skb);
+ 
+-	queue_work(hdev->workqueue, &hdev->tx_work);
++	hci_sched_tx(hdev);
+ }
+ 
+ /* ---- HCI TX task (outgoing data) ---- */
 -- 
 2.53.0
 
