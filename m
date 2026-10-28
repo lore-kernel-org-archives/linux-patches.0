@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216983;
-	b=Uaoh8Y3S6JAOU79lERU7CRHUOIX2PyStVWhQS+GXTCs0y/Sgr/U1CI7aURFAXPZWLVSE
-	 STwlC65hOLvh9Z/ywx3JDdGVcFGoHZha9SD60EFJb0YlupCoZb5UtultqcFaxkzx0RDvX
-	 0SKJkEbMcgGAQgkUrLiNWO8hZz9ZJBM4sQAa3/5DVBSsdC+ybxcTX153B7p1HYwkngMch
-	 fs9mFg+X5W/xhBqqgZYT8G7XU51xRrYbYb9mqpIXIoN8hkOhnOFB11KLZRdSHvyF0/hRg
-	 zFd1RldUhI69HHN0HzHCscrwXy2cy4naHlXrSFjvYc4MAAPzLQnPtA54FgKmd31tBLw==
+	t=1793216986;
+	b=fKR7XrgIVVDRr2Wzri4q8+StIQr6+dUsccGKBDg/H6IPgYKxs44t0fc+5Oe7DzbxX7Re
+	 0KOPHjBqd5ocLG9tUHM/5cq+UErq/WX1kPm6NIYT9i6htax9vyHcnJLnvoNQprfT7jntf
+	 LRf7AdbA/RMa9/S3Ni740pGlFv+3yg7dgFbq843hiEotCID+iz7EVtionwmv9f+7WYkMu
+	 6BfBqGc6Fp3OIz0IaWmZ7nYKTwbC5dfZf/G3VLIbqK9IsG7egznzcK+MfTQ/Ey1rI4v/w
+	 AknwgX5QsnCQwoP9+jFvOa94ojz3MfCr2u50rq0k2cT1YHY6OGAFtAnWdV64XspcgFA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216983;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216986;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=1dxWVXpedzUBDiEDNSwbsxqX2HbmIhPbGYcp8GiHFrI=;
-	b=xX1x+85toIuwbIP0RcrDlQ/nY3J/FZ3IkC69v7FkjxVpz6UNkA+8T1I2VIt9y8nIRFJl
-	 dvaORn/iw89QQTOnkzmzKP7dwd0jeLpCe96fLb7JBunRT4mwo5asT6W5sPAffGhPXzO5q
-	 HY65Ewc9gNILDG6iaV84K3aTKJdNZFlaeoxJejl8HYxro+ddSdwTWVjCUZnsD34tzUoz2
-	 ut4Qc0BDHy5s/LGLO9giy4uGgpFz1xReNqNDDd+rRBywL0G+kJzYP1QZqThATuDPP5yjQ
-	 pcqxNLtNlIwA7BtuJpf+ovJk1cmkiOec52dlCig0uWdb6QqiIgaTUo1rkxBuurIbGbA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=9VvzlFxVLlhKnLzMnfJWsnC2ny+Zsrj3sIlXmAvUZh0=;
+	b=YdMWLPrbbql3xidTbv7g3SwDbIRQQwshGKxOEmttW4Vp+PaAceupjDepa3WM05SQsZLZ
+	 /wNNxNj3zoxcg1mOqc8NTKL8jYRWGCD52Nc3OyzBDC0CPIGp0rRQoS9IfaLecZAG3be0N
+	 /FZNq5EDwJ3nY3ZDehZ2jRAwr0cTEaJnTgakFV6gTAKja1RZTkKGZuB60+ZUj3+Q8Cp1w
+	 IYU0ofjo70jv6mlwa4FKCIABFO4r97adNn62IiaaKeOJpC/Vv6RMlTvd8M44fP+c0YY+T
+	 Ayca34BbBOCfXmEkg2UJimQs6MmcFZpI7iRWdxw61rkVhrHZ37bo6IG1tI32e/oGfkw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GoWLYPDD;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="uQ/JBjW8";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D967606A31C;
-	Wed, 28 Oct 2026 19:49:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E566C606A320;
+	Wed, 28 Oct 2026 19:49:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GoWLYPDD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 669FB1F01825;
-	Wed, 28 Oct 2026 19:49:42 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uQ/JBjW8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4224A1F01825;
+	Wed, 28 Oct 2026 19:49:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216983;
-	bh=1dxWVXpedzUBDiEDNSwbsxqX2HbmIhPbGYcp8GiHFrI=;
+	s=korg; t=1793216985;
+	bh=9VvzlFxVLlhKnLzMnfJWsnC2ny+Zsrj3sIlXmAvUZh0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GoWLYPDDFvGCaoTvU5Fqd5WL3Uo3MAc9TrPkM2i/AnU6egFJvhng55vZUd7z6XKdY
-	 p/RbOhG/vmy2hRhF9s44J4UeFGzSsqjRau1aIouB6oCPFdQFnOLdVkApJWDgBkPkC5
-	 BWeJHfyMVSnuDf9Ror0MujWMJnWPvr+B5jiqjx/U=
+	b=uQ/JBjW8YQPa06emhsyfrd0+zKcm7+ZRtfkrH5Ch+mVmOvOzpwV07SNl7biLs40ek
+	 Alcel5XuG7/cw6le8jKcECCPXHwQimY+Cf3rWbvf+Ud7i8PkBf+7COEHoRNalrfqAw
+	 0AGD2I2ttGr647EDEKFfF+jOSC3sGWdMXjDKtju0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Michal=20Such=C3=A1nek?= <msuchanek@suse.de>,
-	Amit Machhiwal <amachhiw@linux.ibm.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Tengda Wu <wutengda@huaweicloud.com>,
 	Steven Rostedt <rostedt@goodmis.org>
-Subject: [PATCH 6.1 1748/1887] tracing: Do not initialize tracefs work if tracing is disabled
-Date: Wed, 28 Oct 2026 18:04:04 +0100
-Message-ID: <20261028170539.234995834@linuxfoundation.org>
+Subject: [PATCH 6.1 1749/1887] tracing: Fix hist trigger timestamps for buffered events
+Date: Wed, 28 Oct 2026 18:04:05 +0100
+Message-ID: <20261028170539.258881262@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -63,76 +61,99 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Amit Machhiwal <amachhiw@linux.ibm.com>
+From: Tengda Wu <wutengda@huaweicloud.com>
 
-commit b3b974008388ab59e44d764ba7a63c988fec2524 upstream.
+commit 9414ca3b99e5a7f1f3bf51c2a01b383e1b355dd0 upstream.
 
-If trace buffer allocation fails during early boot (e.g.  in
-early_trace_init() -> allocate_trace_buffers()), tracing_disabled is
-left set to 1 and the global trace array events list remains
-uninitialized.
+Syzkaller triggered a WARN_ON_ONCE(!nest) warning:
 
-Later during boot, tracer_init_tracefs() (invoked via fs_initcall)
-queues tracerfs_init_work asynchronously without checking if tracing was
-disabled.  When tracer_init_tracefs_work_func() runs, it calls
-event_trace_init() and init_tracer_tracefs(&global_trace, NULL)
-unconditionally.  This leads to __find_event_file() dereferencing an
-uninitialized tr->events list, causing an early boot NULL pointer
-dereference Oops:
+  WARNING: kernel/trace/ring_buffer.c:821 at ring_buffer_event_time_stamp
+  Call trace:
+    ring_buffer_event_time_stamp
+    hist_field_timestamp
+    hist_fn_call
+    event_hist_trigger
+    event_triggers_call
+    __event_trigger_test_discard
+    trace_event_buffer_commit
+    do_trace_event_raw_event_sched_switch
+    trace_event_raw_event_sched_switch
 
-  BUG: Kernel NULL pointer dereference on read at 0x00000010
-  Faulting instruction address: 0xc000000000485be0
-  Oops: Kernel access of bad area, sig: 7 [#1]
-  ...
-  NIP [c000000000485be0] __find_event_file+0x70/0x3c0
-  LR  [c000000000448874] init_tracer_tracefs+0x274/0xc80
-  Call Trace:
-   init_tracer_tracefs+0x274/0xc80
-   tracer_init_tracefs_work_func+0x50/0x320
-   process_one_work+0x1e8/0x5c0
-   worker_thread+0x1dc/0x3d0
-   kthread+0x194/0x1b0
-   start_kernel_thread+0x14/0x18
+The warning is probabilistically reproducible and is related to syzkaller
+executing the following commands:
 
-Check tracing_disabled at the beginning of tracer_init_tracefs_work_func()
-and return immediately if tracing is disabled or failed to initialize,
-preventing the crash.
+  echo 'prev_pid == 999999' > events/sched/sched_switch/filter
+  echo 'hist:keys=common_timestamp' > events/sched/sched_switch/trigger
+
+The specific triggering process is as follows:
+
+CPU 0                                           CPU 1
+(context switching)                             (echo 'hist:keys=common_timestamp' > \
+                                                        events/sched/sched_switch/trigger)
+do_trace_event_raw_event_##call
+  trace_event_buffer_lock_reserve
+    if (!tr->no_filter_buffering_ref &&
+        trace_file->flags & EVENT_FILE_FL_FILTERED)
+        return entry;  // return directly
+                                                event_hist_trigger_parse
+                                                  hist_register_trigger
+                                                    tracing_set_filter_buffering(file->tr, true);
+                                                      tr->no_filter_buffering_ref++;
+    __trace_buffer_lock_reserve
+      rb_start_commit
+        local_inc(&cpu_buffer->committing);  // skipped and not executed
+  trace_event_buffer_commit
+    __event_trigger_test_discard
+      event_triggers_call
+        event_hist_trigger
+          hist_fn_call
+            hist_field_timestamp
+              ring_buffer_event_time_stamp
+                nest = local_read(&cpu_buffer->committing);
+                WARN_ON_ONCE(!nest)  // trigger warning
+
+The root cause is that when an event file has a filter attached and the
+hist trigger has not yet been attached, trace_event_buffer_lock_reserve()
+writes the event into the per-CPU trace_buffered_event temp buffer instead
+of reserving it in the ring buffer, so cpu_buffer->committing is not
+incremented. When the event is later processed at commit time by a hist
+trigger, hist_field_timestamp() -> ring_buffer_event_time_stamp() sees a
+zero committing count, triggering WARN_ON_ONCE(!nest).
+
+tracing_event_time_stamp() was added by commit d8279bfc5e959 ("tracing:
+Add tracing_event_time_stamp() API") for exactly this case: if the event
+is the per-CPU trace_buffered_event, it returns the current ring buffer
+timestamp. But it never gained a caller. Use it in hist_field_timestamp(),
+so that a hist trigger that races onto a buffered event records the
+current time, which is only marginally later than when the event was
+recorded, instead of warning and recording a bogus timestamp.
 
 Cc: stable@vger.kernel.org
-Fixes: 6621a7004684 ("tracing: make tracer_init_tracefs initcall asynchronous")
-Link: https://patch.msgid.link/20261009163557.88467-2-amachhiw@linux.ibm.com
-Reported-by: Michal Suchánek <msuchanek@suse.de>
-Closes: https://lore.kernel.org/all/arYskzbiaNzBR9MD@kunlun.suse.cz/
-Signed-off-by: Amit Machhiwal <amachhiw@linux.ibm.com>
-Tested-by: Michal Suchánek <msuchanek@suse.de>
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Link: https://patch.msgid.link/20260929104015.1689921-1-wutengda@huaweicloud.com
+Fixes: b94bc80df648 ("tracing: Use a no_filter_buffering_ref to stop using the filter buffer")
+Signed-off-by: Tengda Wu <wutengda@huaweicloud.com>
 Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ kernel/trace/trace_events_hist.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/kernel/trace/trace.c
-+++ b/kernel/trace/trace.c
-@@ -10005,6 +10005,12 @@ static struct notifier_block trace_modul
+--- a/kernel/trace/trace_events_hist.c
++++ b/kernel/trace/trace_events_hist.c
+@@ -863,7 +863,7 @@ static u64 hist_field_timestamp(struct h
+ 	struct hist_trigger_data *hist_data = hist_field->hist_data;
+ 	struct trace_array *tr = hist_data->event_file->tr;
  
- static __init void tracer_init_tracefs_work_func(struct work_struct *work)
- {
-+	/*
-+	 * Do not attempt to initialize tracefs if tracing was disabled or
-+	 * failed to allocate
-+	 */
-+	if (tracing_disabled)
-+		return;
+-	u64 ts = ring_buffer_event_time_stamp(buffer, rbe);
++	u64 ts = tracing_event_time_stamp(buffer, rbe);
  
- 	event_trace_init();
- 
+ 	if (hist_data->attrs->ts_in_usecs && trace_clock_in_ns(tr))
+ 		ts = ns2usecs(ts);
 
 
