@@ -1,51 +1,50 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793211056;
-	b=SYqtTSFPwTGME7PROVx9GelX2HvkmGSm7tysY/hjbwGPbqzctrhvfnBGpevPAtV4VkxY
-	 zMICljADgldR1Mi/NTvRfj7D5whcpgPkR0p241Vg98hOR3cSBGwm+p2o5YbBJvE69d4/p
-	 ASYi77j67GURd/LB20CLSyivkAEq5H1bnBVIMhaDF7jb8kN0Rk19nbGg55/BmBOv2e887
-	 PwtzTHmmgQVyT1S81hvep1PmCCmofR19sJbLlqhiSGv32CO2h030Z4J44OFLDFytEeBPT
-	 Jzu1NTFz8jqn5jLqbevONu2/taNYh+NTKgoexZvY55za761YL9DrtzN7jCIE3/LfhOQ==
+	t=1793211058;
+	b=QiDpW6X0kIIR1csG/Re5zfGZm0eLPUc6Vl+fpYG0WodNex88/gsIxCfyt0931TOgzrFq
+	 /DyhB5A5Va4kWFt/42JWp6XOjKQT4W6KE7itkHLRZPy2OgWrjxkWdaevR26mTFQTeNjFF
+	 ELhF8mOFqURSiMSChdWD68F1tmbo3ydugPgZCJ4D+Cg5xkYHo9CbWHJUJDdN3AGWev7XW
+	 g5LsZ/pJrSb69kbOSGVHqOqZa5nHI84/3BEDexvzxujzkwlNWB1nTtYJWPNuL9svyAGSg
+	 +8u7JUmPSHJSVgK/BOSc3kPDJpnrQPda/V3WGtH4cX/BwHoAaS7HkFEHgfFR19nTHCA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793211056;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793211058;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ahF4VIiyt3jkf0HTLMEykgaeBuVkXH9VM4vdghLtmdg=;
-	b=ByTXyuCzRdxwAzo6QAJyEPOy3dM2OUgPybg8Aujw4jizzPtKfNd8EkGpgUeQoU1+L+9d
-	 rxqxDRKfpvlA8l9bnyByYKR2CeYcKIGGOepnQp4tmtunzZ3z3R2tuEM3Z+aq/K/oTwOr0
-	 fj5opTgELvxQW1TNoHuz+ZLbbP65wabHaiJngRbJQTuqhBbHEYOFKtQAx4+Xj1ZQkzVIl
-	 EOCS3LS/6iTXacWR0Nf9zcq37KPs0GiU+dEr6dX+JBygADHtdvpTTs+RdYIu95fUc8ZHD
-	 1yvoxbF9X9UBETOdyK1cy4xeOwpizyoaUPi3vKzIBph+RvZJZskCpI7ieOcEXPVoTew==
+	bh=OTakROPhkF5Vq+ji66gmzB7VcfhJV781phDDCVBDob8=;
+	b=NgpRK9QAnoHGmPv0pm89B5kCRsCffgRui/j9djpZ0q3q15JksKcWj+Bd0I8qqLI9hrff
+	 GCZePFjKJlFNjpxmfJZB9Qbd79+UdcEJwhN04OmFV3hjqLRd6FUz9xoFkgeChUf2FuTx4
+	 sLkhna6+4t+qj3msoWulEcgU8oibXwjtm1BEG2sKsjRZFijpgOnQKAKs67N88ATALpx+3
+	 OdpUOXYlPS7mt4MgjdMNfAFx0jBip56vlKGRWkEjN0OZopUycRIQfj31ntHKGWJE9ezhf
+	 hXzfR+T9qCCWj7QMRHmlxTyW8m4XKUFI/e9fPpoI6EJWO9j1k+vZ38d6UOG3tCLhrHQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qomNeZrN;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NlqaWERJ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A401C606A969;
-	Wed, 28 Oct 2026 18:10:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 764A2606A969;
+	Wed, 28 Oct 2026 18:10:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qomNeZrN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2E871F01829;
-	Wed, 28 Oct 2026 18:10:54 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NlqaWERJ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A68761F031E3;
+	Wed, 28 Oct 2026 18:10:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793211055;
-	bh=ahF4VIiyt3jkf0HTLMEykgaeBuVkXH9VM4vdghLtmdg=;
+	s=korg; t=1793211058;
+	bh=OTakROPhkF5Vq+ji66gmzB7VcfhJV781phDDCVBDob8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qomNeZrNAk5Jtt7TwsWx4jrJPRlVcRH74UOuhl5nfoZNVke8IwpQh4shAlBvi9fyj
-	 o/A9XzPLuhbeYXv5rGnjqqJyPVcB13REMp56BwKWpGtjVTmDBlHgJUSANPxbkDtwvi
-	 Wr4TKWFxlmfvqVuWjlEQBhzWKBL00u0CsNu+bkOE=
+	b=NlqaWERJzswDO/ynEfD0Y6AvWC1NZ/VVo3uhXl1PoU42cK8JQSsYNULV5c92i1prc
+	 ZAsTstzjIh6l++MoonRbVdRBoXgfg3RX48vTGf5e+swEzDkZI1+2EwT529fpG6IFs4
+	 rkeJRR5Oks4ProYfL5OsAfqfK0onwmb8EEqQLx/M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bill Pemberton <wfp5p@virginia.edu>,
 	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 5.15 243/571] USB: serial: ssu100: fix baud rate overflow
-Date: Wed, 28 Oct 2026 17:56:30 +0100
-Message-ID: <20261028170013.772097965@linuxfoundation.org>
+Subject: [PATCH 5.15 244/571] USB: serial: fix dynamic id driver deregistration race
+Date: Wed, 28 Oct 2026 17:56:31 +0100
+Message-ID: <20261028170013.796172407@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -69,75 +68,30 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan@kernel.org>
 
-commit afc235a217360c6859068d2e37a4df305c4d1be2 upstream.
+commit 63594e8ffe097bc0b7639936f33799a7653dded2 upstream.
 
-The requested baud rate is incorrectly truncated to 16 bits so that
-line speeds above 65535 bps cannot be set.
+Only free the dynamic ids after having deregistered the driver and
+removed the "new_id" attribute to avoid leaking any id added by a racing
+write to the attribute.
 
-Use 32 bits for the rate and remainder while rejecting rates outside of
-[50,460800] to avoid having the divisor or remainder overflow.
-
-This issue was flagged by an LLM.
-
-Fixes: 52af95459939 ("USB: add USB serial ssu100 driver")
-Cc: stable@vger.kernel.org	# 2.6.36
-Cc: Bill Pemberton <wfp5p@virginia.edu>
-Assisted-by: LLM
+Fixes: 93bacefc4cc0 ("USB serial: add dynamic id support to usb-serial core")
+Cc: stable@vger.kernel.org	# 2.6.21
 Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/ssu100.c |   18 ++++++++++++++++--
- 1 file changed, 16 insertions(+), 2 deletions(-)
+ drivers/usb/serial/bus.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/serial/ssu100.c
-+++ b/drivers/usb/serial/ssu100.c
-@@ -34,6 +34,7 @@
+--- a/drivers/usb/serial/bus.c
++++ b/drivers/usb/serial/bus.c
+@@ -167,7 +167,7 @@ int usb_serial_bus_register(struct usb_s
  
- #define  SERIAL_EVEN_PARITY         (UART_LCR_PARITY | UART_LCR_EPAR)
- 
-+#define  MIN_BAUD_RATE              50
- #define  MAX_BAUD_RATE              460800
- 
- #define ATC_DISABLED                0x00
-@@ -219,9 +220,10 @@ static void ssu100_set_termios(struct tt
+ void usb_serial_bus_deregister(struct usb_serial_driver *driver)
  {
- 	struct usb_device *dev = port->serial->dev;
- 	struct ktermios *termios = &tty->termios;
--	u16 baud, divisor, remainder;
-+	speed_t baud, remainder;
- 	unsigned int cflag = termios->c_cflag;
- 	u16 urb_value = 0; /* will hold the new flags */
-+	u16 divisor;
- 	int result;
- 
- 	if (cflag & PARENB) {
-@@ -251,6 +253,18 @@ static void ssu100_set_termios(struct tt
- 	if (!baud)
- 		baud = 9600;
- 
-+	if (baud < MIN_BAUD_RATE || baud > MAX_BAUD_RATE) {
-+		if (old_termios)
-+			baud = tty_termios_baud_rate(old_termios);
-+		else
-+			baud = clamp(baud, MIN_BAUD_RATE, MAX_BAUD_RATE);
-+
-+		tty_encode_baud_rate(tty, baud, baud);
-+
-+		if (!baud)
-+			baud = 9600;
-+	}
-+
- 	dev_dbg(&port->dev, "%s - got baud = %d\n", __func__, baud);
- 
- 
-@@ -326,7 +340,7 @@ static int ssu100_open(struct tty_struct
- 		dev_dbg(&port->dev, "%s - set uart failed\n", __func__);
- 
- 	if (tty)
--		ssu100_set_termios(tty, port, &tty->termios);
-+		ssu100_set_termios(tty, port, NULL);
- 
- 	return usb_serial_generic_open(tty, port);
+-	free_dynids(driver);
+ 	driver_unregister(&driver->driver);
++	free_dynids(driver);
  }
+ 
 
 
