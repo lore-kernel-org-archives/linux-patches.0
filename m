@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215520;
-	b=gLqufk4PC/2hhH7sOwrfIpnI8i31YBZOCuK80H12KnQsEMMfEbH77zx2Fa5ryizEwN/d
-	 Qe6mQRsMb1uGp7vz1b/6dhaZOVksA8DXOi5TUAPROxLAdMiczZ6syKpC8Wqlqb3Tb07oE
-	 9HrepTHsr89uqMQTvSOj1EA/qu41TKgmltfP30a8Ho7/ltGZBRxCAtYgZkQfyKvwDjAkZ
-	 2ZFcwhqrZhw+PK8KpmbNc8ARhyIsvKYPcJGq3RfrOZy/4SkWLJrcluFK3eMZMGZzmh4Mn
-	 HJQzr2gps8oBNf+NkaFTS51PUonXVuPDm4+eyfQOo/IQD51LsFZAtEynWGadc5UiPpw==
+	t=1793215524;
+	b=BvV3x+rv/h2/gn/qHgZwYIAgFH28a+Py8BA0k23WyQ7ETlcYcN5vX0OOJuH7bmV1KedP
+	 4W3nJosP6xU0Li0J9ifF9CSiyFVbJv/9UYQz4LsrcXWnFy5HXUa1L2sTKI/0OmgCUAXj3
+	 WzU82fEPn/3i5t/MOxu8lQbasxerCm4geS8AiAx9H4PAev6HmS4ebN/PaF4DljJtzH3r6
+	 MtCbcmIJu1xm44sdtIxWnGDdYvp0g/Sentvvum/kpYdhJcFF8I2l3GnRNmIIbz2EWo3pq
+	 EZjXotPE3cW2SljoaatXwShl9n3xpVkTmMqM8wWJej/5AJ4W6VEpyHivGOei9cI+rag==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215520;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215524;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=M4HV1cfgefdXAYPo7bVu2sLWrT3L4d4eXXityHNFGYE=;
-	b=KaeTv2r5rxWN8KwobuFjGkzs9yIRuGLzkZE6kFWoxows/HKGpjypPlmRpies3aBfB78d
-	 X6czclWLuuz8VyFprEGUrAsCtDGwk2Bwt++BAXwBbRjLwwWEhbwOKWIbm4+ixqFU1ANYC
-	 6tCZzveu+UDRLXr0SKBqrXzFnxW5r7tCZTz4yX4YORJhHOvEOEHzu1OFE7H/TCUG39hqQ
-	 mwKD2CNDnlnyO35KeQG4iR1suCH1UznOxjkrmhDh9K0rqB4nMyDjjUQkuKCtIE90FLS8N
-	 v1dP+P829I1mqeFgo85IpGnw5Ou6BZlNxODXs2mAnac6KC9oSfaTqFvjFfXhmWqN4Aw==
+	bh=JikQJhFjxPKsFj/DijcsuIipD35IZTpC7g5S0jXMyhw=;
+	b=0ARVjA1/17AG5faj2t/1zZdpZygiQY+qIqomCTA3hoSUcGaiKeKuDcupxa8hKA7zC6Od
+	 HWvTx4cFlXZ5I5df2zWc0p2SmRkZZsrUHQjPzs5O1ndjE0VaRGT0VDig49ecH+PVTtRoC
+	 4BYaJE6FClYBmwMIUIy0K3/+xAq10oJaWOwi8gylLJKm2PVPo+AZwSCHgkZgF+dus5/Uj
+	 Ha7N+ZMrE9aP/KK2yOPRxeMzb4catFWl+5JOlzR6W0vU7hdEPzeAOCSd1BRbFWnSUgkyq
+	 4P7cA9DQwnqmMnX62ZmUFl85toWru3ZmGxvJq7BmEY3vnnCTriBUkemxnE7F1Pn001w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bSMRftw0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HAg1zu2Q;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97837606A321;
-	Wed, 28 Oct 2026 19:25:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6CDA606A31C;
+	Wed, 28 Oct 2026 19:25:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bSMRftw0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E97E11F01825;
-	Wed, 28 Oct 2026 19:25:19 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HAg1zu2Q
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C02771F031E1;
+	Wed, 28 Oct 2026 19:25:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215520;
-	bh=M4HV1cfgefdXAYPo7bVu2sLWrT3L4d4eXXityHNFGYE=;
+	s=korg; t=1793215523;
+	bh=JikQJhFjxPKsFj/DijcsuIipD35IZTpC7g5S0jXMyhw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bSMRftw0gcVfbe2dByCydbJm0Mb3HyqoAPCxncyNier2EpEwPzgnsbLugZdWnR01V
-	 OlnjD8CUExQb5PvI9BidIrizso/9wOlB74pXat378ChrzmFjevbX/3KwvZ1sdhRmlq
-	 CA4tUv1rcNnCaG3zJE8r77CDw09fSRXM4oJaTlVQ=
+	b=HAg1zu2QDuSJVayXHfBHlajFuGTA2AMQzexE3GZaKDzjys6JXoB5l2GgcxvY+Cv15
+	 vx3QbHNx+c8UX5siSvE6dKXdlakkueK/h+9/3PeUFfODFVYm/ShBDgAdLrfEooSiZB
+	 PkuJCv8oZPnWXSpHDgR4hpnmBbCcO7SUPK2+okGY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>,
-	Yu Kuai <yukuai@fygo.io>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Hannes Reinecke <hare@suse.de>,
+	John Garry <john.g.garry@oracle.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1240/1887] md/raid10: fix writes_pending and barrier reference leaks on discard failures
-Date: Wed, 28 Oct 2026 17:55:36 +0100
-Message-ID: <20261028170527.640929219@linuxfoundation.org>
+Subject: [PATCH 6.1 1241/1887] md/raid10: Handle bio_split() errors
+Date: Wed, 28 Oct 2026 17:55:37 +0100
+Message-ID: <20261028170527.663536561@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,47 +70,134 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>
+From: John Garry <john.g.garry@oracle.com>
 
-[ Upstream commit 393d687131d8aa8c7e4de2cb494438e145d20fc2 ]
+[ Upstream commit 4cf58d9529097328b669e3c8693ed21e3a041903 ]
 
-raid10_make_request() acquires a writes_pending reference with
-md_write_start() before calling raid10_handle_discard(). Several failure
-paths in raid10_handle_discard() complete the bio and return without
-releasing the corresponding reference, causing md_write_end() to be
-skipped.
+Add proper bio_split() error handling. For any error, call
+raid_end_bio_io() and return. Except for discard, where we end the bio
+directly.
 
-Call md_write_end() before returning from these failure paths to keep
-writes_pending accounting balanced.
-
-Additionally, discard split allocation failures can occur after
-wait_barrier() succeeds. Those paths return without calling
-allow_barrier(), leaking the associated barrier reference.
-
-Release the barrier before returning from those paths.
-
-Fixes: c9aa889b035f ("md: raid10 add nowait support")
-Fixes: 4cf58d952909 ("md/raid10: Handle bio_split() errors")
-Signed-off-by: Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>
-Link: https://patch.msgid.link/20260613182810.1317258-4-abd.masalkhi@gmail.com
-Signed-off-by: Yu Kuai <yukuai@fygo.io>
+Reviewed-by: Yu Kuai <yukuai3@huawei.com>
+Reviewed-by: Hannes Reinecke <hare@suse.de>
+Signed-off-by: John Garry <john.g.garry@oracle.com>
+Link: https://lore.kernel.org/r/20241111112150.3756529-7-john.g.garry@oracle.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Stable-dep-of: e045d6ed33f8 ("md/raid10: fix writes_pending leak on write request failures")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid10.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/md/raid10.c | 47 ++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 46 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/md/raid10.c b/drivers/md/raid10.c
-index 82562c49a14e2..df93471de1e97 100644
+index df93471de1e97..10d60030ac9d9 100644
 --- a/drivers/md/raid10.c
 +++ b/drivers/md/raid10.c
-@@ -1678,6 +1678,7 @@ static int raid10_handle_discard(struct mddev *mddev, struct bio *bio)
+@@ -1181,6 +1181,7 @@ static void raid10_read_request(struct mddev *mddev, struct bio *bio,
+ 	int slot = r10_bio->read_slot;
+ 	struct md_rdev *err_rdev = NULL;
+ 	gfp_t gfp = GFP_NOIO;
++	int error;
  
- 	if (!wait_barrier(conf, bio->bi_opf & REQ_NOWAIT)) {
- 		bio_wouldblock_error(bio);
-+		md_write_end(mddev);
- 		return 0;
+ 	if (slot >= 0 && r10_bio->devs[slot].rdev) {
+ 		/*
+@@ -1233,6 +1234,10 @@ static void raid10_read_request(struct mddev *mddev, struct bio *bio,
+ 	if (max_sectors < bio_sectors(bio)) {
+ 		struct bio *split = bio_split(bio, max_sectors,
+ 					      gfp, &conf->bio_split);
++		if (IS_ERR(split)) {
++			error = PTR_ERR(split);
++			goto err_handle;
++		}
+ 		bio_chain(split, bio);
+ 		allow_barrier(conf);
+ 		submit_bio_noacct(bio);
+@@ -1265,6 +1270,11 @@ static void raid10_read_request(struct mddev *mddev, struct bio *bio,
+ 	                              r10_bio->sector);
+ 	submit_bio_noacct(read_bio);
+ 	return;
++err_handle:
++	atomic_dec(&rdev->nr_pending);
++	bio->bi_status = errno_to_blk_status(error);
++	set_bit(R10BIO_Uptodate, &r10_bio->state);
++	raid_end_bio_io(r10_bio);
+ }
+ 
+ static void raid10_write_one_disk(struct mddev *mddev, struct r10bio *r10_bio,
+@@ -1409,9 +1419,10 @@ static void raid10_write_request(struct mddev *mddev, struct bio *bio,
+ 				 struct r10bio *r10_bio)
+ {
+ 	struct r10conf *conf = mddev->private;
+-	int i;
++	int i, k;
+ 	sector_t sectors;
+ 	int max_sectors;
++	int error;
+ 
+ 	if ((mddev_is_clustered(mddev) &&
+ 	     md_cluster_ops->area_resyncing(mddev, WRITE,
+@@ -1547,6 +1558,10 @@ static void raid10_write_request(struct mddev *mddev, struct bio *bio,
+ 	if (r10_bio->sectors < bio_sectors(bio)) {
+ 		struct bio *split = bio_split(bio, r10_bio->sectors,
+ 					      GFP_NOIO, &conf->bio_split);
++		if (IS_ERR(split)) {
++			error = PTR_ERR(split);
++			goto err_handle;
++		}
+ 		bio_chain(split, bio);
+ 		allow_barrier(conf);
+ 		submit_bio_noacct(bio);
+@@ -1567,6 +1582,26 @@ static void raid10_write_request(struct mddev *mddev, struct bio *bio,
+ 			raid10_write_one_disk(mddev, r10_bio, bio, true, i);
  	}
+ 	one_write_done(r10_bio);
++	return;
++err_handle:
++	for (k = 0;  k < i; k++) {
++		int d = r10_bio->devs[k].devnum;
++		struct md_rdev *rdev = conf->mirrors[d].rdev;
++		struct md_rdev *rrdev = conf->mirrors[d].replacement;
++
++		if (r10_bio->devs[k].bio) {
++			rdev_dec_pending(rdev, mddev);
++			r10_bio->devs[k].bio = NULL;
++		}
++		if (r10_bio->devs[k].repl_bio) {
++			rdev_dec_pending(rrdev, mddev);
++			r10_bio->devs[k].repl_bio = NULL;
++		}
++	}
++
++	bio->bi_status = errno_to_blk_status(error);
++	set_bit(R10BIO_Uptodate, &r10_bio->state);
++	raid_end_bio_io(r10_bio);
+ }
  
+ static void __make_request(struct mddev *mddev, struct bio *bio, int sectors)
+@@ -1718,6 +1753,11 @@ static int raid10_handle_discard(struct mddev *mddev, struct bio *bio)
+ 	if (remainder) {
+ 		split_size = stripe_size - remainder;
+ 		split = bio_split(bio, split_size, GFP_NOIO, &conf->bio_split);
++		if (IS_ERR(split)) {
++			bio->bi_status = errno_to_blk_status(PTR_ERR(split));
++			bio_endio(bio);
++			return 0;
++		}
+ 		bio_chain(split, bio);
+ 		allow_barrier(conf);
+ 		/* Resend the fist split part */
+@@ -1728,6 +1768,11 @@ static int raid10_handle_discard(struct mddev *mddev, struct bio *bio)
+ 	if (remainder) {
+ 		split_size = bio_sectors(bio) - remainder;
+ 		split = bio_split(bio, split_size, GFP_NOIO, &conf->bio_split);
++		if (IS_ERR(split)) {
++			bio->bi_status = errno_to_blk_status(PTR_ERR(split));
++			bio_endio(bio);
++			return 0;
++		}
+ 		bio_chain(split, bio);
+ 		allow_barrier(conf);
+ 		/* Resend the second split part */
 -- 
 2.53.0
 
