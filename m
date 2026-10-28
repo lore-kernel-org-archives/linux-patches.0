@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793210772;
-	b=sAPnCdP2xnnpASnX00rxytaduqfeSGbL0XXA0+MHFw8FDA2yI4QFQTDoZs6GeOzSyA34
-	 FQA7zujBYVaGCYpR157xpreYwJd7yUTkYOaDXL5/vJUGgc4Wf1H9F37Un2OLDMabUhxNg
-	 o4A9skL6HqQeg2Hxa0pWD+WkbrhUd/pOWAj6QDA3TE8whay9IxAlHH16CfqDW6aRHbYKr
-	 yrR8l/pWIVSNmmw3qG/BuIfZhA/AG02LXrOw6Cf1t7rxKddWuqj/NZt88ms9BssIYfJRg
-	 98rm5kzfQeqYV2yfNJ3cyurKwRt38sYfdfFoFoQEaZlct9D8IYn4n+OuBg1oX2pMjGw==
+	t=1793210775;
+	b=1aB5Rq3HfLnsh2f8lryPBKYZFfrg3sB25t9g+YiuLxXQAP7qG8fS8b1OFnGXIu7h9u7g
+	 YFLGsmU0uGRbEYG6jaTRLOzGJ0kQO3+GipwnuAberBwsjRADe1cMyWwVGnRHtDUKVa0Xt
+	 ucwQTF/Ap9vfIYwW8x/VuPkcKNR5sqZt6hkvpVaWhdSEvva7F97y6kqLWFSkRbjtCh0P7
+	 HhhfzyXt03cKVmO03LUECx9x/9q+L3Gz6G/qDngy/oDAgq9pujfrJ2tnzRNFqdBZXszIA
+	 EjmgNP9SMpqlGrR1UUDeq4JnLJaY/Wjzegm9Dgs1ixmaFmOaOQPB13YTekkZBW0iX+w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793210772;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793210775;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=w5kmJFEPQ+hLtjSSr9xRDViN5MmT4AouuD4ib3JZgck=;
-	b=CGWr/nsWLLU0m+BIKE+XsCG4961hFat6Tb2hk0qhHx9mbXIvVQ4P3FsFptWx+Yiujq1J
-	 4oMRK+WXAjEG76Q53NEFIhmwarLAMXdi0GkO72D3SAWACY4W3rRURSLlAZ9bc68ociIIS
-	 8Gt4xfMypyZTIMoDOYKtj5eANLAlv38cvLtS21jFLj9zSCHCfiKqKdmCkMmVVjSBTk4Fm
-	 R8P5lA0t+K7YOcWF76TJzH0OpGeqFtP1eknnha3czCbpWmtQ5LkQdy6sS3HUuEXCn7btu
-	 5wVsHP/yhSXUfDAIyeOS+R1uTohkkWt6N9J7GfM2ik5FclzfsRDrdC8RkLFqX2k9cyA==
+	bh=0almAwZBC61cP+kC1QB6cGtOZJg3HgCUqV7UPJa5xk4=;
+	b=KKG8dQEBZqOWKTMczThbFk9esy/34QPEOyZxxc4ZzhKtCq3RwLmEcD7rGorqGc9Hb7ry
+	 7IOJ5m0mknjzNW0MNSm5flcvMQXMn9ZlFyNbXAd2ISA01IQkSY/kXnrSqN7GwIYRIPuSu
+	 f3PlRu+E4ZpQicvhU6oZu6I48uJ/PXGRpGg8T9vT4sc1I75ZhRa0nor17hn+Fvk6bFV5l
+	 ofGILUyvKaCm3Cl3JK0RoE3YoryIAcBQVLrong/oK2OPmi08vT34E47BUnHl0kkXW8s7M
+	 HdPYGzm/NwZpxQ71PtlyCTeEZQutSkqizLzwXqp5gX3UfLQHVBUrnJ1vVpuGkMe90vQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zgyeRWnG;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XIbrgYAW;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1148C606A31A;
-	Wed, 28 Oct 2026 18:06:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D42A1606A31A;
+	Wed, 28 Oct 2026 18:06:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zgyeRWnG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E0B81F01825;
-	Wed, 28 Oct 2026 18:06:10 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XIbrgYAW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE0131F01825;
+	Wed, 28 Oct 2026 18:06:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793210771;
-	bh=w5kmJFEPQ+hLtjSSr9xRDViN5MmT4AouuD4ib3JZgck=;
+	s=korg; t=1793210774;
+	bh=0almAwZBC61cP+kC1QB6cGtOZJg3HgCUqV7UPJa5xk4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zgyeRWnGPzFEAlZaADvkMh8TBougQlyU+w4L9wB5uuKkY5nUCUUBSBm5wt+k99zTi
-	 hGOdt/2mFPX0DGnJfD7QSIaT6FE7ozpHckj7DoyxTdyT0bQBjL1J5/Rtn2DJplI7O/
-	 aCPrtKQvYn8EV7qzLrFUyyN4q+UfMTmzhObMs7a8=
+	b=XIbrgYAW/KH8ZdC9YfiHMWjirNM7Rm8CHN9y+rHDiJ7VxiZcLolIR+WDqI5uJ9uw+
+	 nSSJUcgCbfKXZeFJcve56ulT1VQqc0UsSv9lr45zLxSmSo7Nrv6yUPEQ1cmQTCsaUo
+	 5bO0nix/z9mwDFffEgjy6iJTqHEHgovzZgzU0pwU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
 	Rob Clark <robdclark@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 144/571] drm/msm/adreno: Assign msm_gpu->pdev earlier to avoid nullptrs
-Date: Wed, 28 Oct 2026 17:54:51 +0100
-Message-ID: <20261028170011.432166557@linuxfoundation.org>
+Subject: [PATCH 5.15 145/571] drm/msm/a6xx: Avoid a nullptr dereference when speedbin setting fails
+Date: Wed, 28 Oct 2026 17:54:52 +0100
+Message-ID: <20261028170011.456762591@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -70,58 +70,45 @@ Content-Transfer-Encoding: 8bit
 
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-[ Upstream commit 16007768551d5bfe53426645401435ca8d2ef54f ]
+[ Upstream commit 46d4efcccc688cbacdd70a238bedca510acaa8e4 ]
 
-There are some cases, such as the one uncovered by Commit 46d4efcccc68
-("drm/msm/a6xx: Avoid a nullptr dereference when speedbin setting fails")
-where
+Calling a6xx_destroy() before adreno_gpu_init() leads to a null pointer
+dereference on:
 
 msm_gpu_cleanup() : platform_set_drvdata(gpu->pdev, NULL);
 
-is called on gpu->pdev == NULL, as the GPU device has not been fully
-initialized yet.
+as gpu->pdev is only assigned in:
 
-Turns out that there's more than just the aforementioned path that
-causes this to happen (e.g. the case when there's speedbin data in the
-catalog, but opp-supported-hw is missing in DT).
+a6xx_gpu_init()
+|_ adreno_gpu_init
+    |_ msm_gpu_init()
 
-Assigning msm_gpu->pdev earlier seems like the least painful solution
-to this, therefore do so.
+Instead of relying on handwavy null checks down the cleanup chain,
+explicitly de-allocate the LLC data and free a6xx_gpu instead.
 
+Fixes: 76efc2453d0e ("drm/msm/gpu: Fix crash during system suspend after unbind")
 Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Patchwork: https://patchwork.freedesktop.org/patch/602742/
+Patchwork: https://patchwork.freedesktop.org/patch/588919/
 Signed-off-by: Rob Clark <robdclark@chromium.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/adreno/adreno_gpu.c | 2 ++
- drivers/gpu/drm/msm/msm_gpu.c           | 1 -
- 2 files changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-index 37e6984a89ced..ef046d30ed02a 100644
---- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-@@ -934,6 +934,8 @@ int adreno_gpu_init(struct drm_device *drm, struct platform_device *pdev,
- 	adreno_gpu->revn = adreno_gpu->info->revn;
- 	adreno_gpu->rev = config->rev;
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+index 95c31009bbec1..ae35e7be077fd 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+@@ -1867,7 +1867,8 @@ struct msm_gpu *a6xx_gpu_init(struct drm_device *dev)
  
-+	gpu->pdev = pdev;
-+
- 	adreno_gpu_config.ioname = "kgsl_3d0_reg_memory";
+ 	ret = a6xx_set_supported_hw(&pdev->dev, config->rev);
+ 	if (ret) {
+-		a6xx_destroy(&(a6xx_gpu->base.base));
++		a6xx_llc_slices_destroy(a6xx_gpu);
++		kfree(a6xx_gpu);
+ 		return ERR_PTR(ret);
+ 	}
  
- 	adreno_gpu_config.nr_rings = nr_rings;
-diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
-index 8250d86d11e7a..eec4ee4be93c1 100644
---- a/drivers/gpu/drm/msm/msm_gpu.c
-+++ b/drivers/gpu/drm/msm/msm_gpu.c
-@@ -900,7 +900,6 @@ int msm_gpu_init(struct drm_device *drm, struct platform_device *pdev,
- 	if (IS_ERR(gpu->gpu_cx))
- 		gpu->gpu_cx = NULL;
- 
--	gpu->pdev = pdev;
- 	platform_set_drvdata(pdev, &gpu->adreno_smmu);
- 
- 	msm_devfreq_init(gpu);
 -- 
 2.53.0
 
