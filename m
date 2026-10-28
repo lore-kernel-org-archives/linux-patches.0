@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214864;
-	b=mjP2toQRfdwvG5KapFqKG4VV5KIRrI2qtdKKZ6duovurpl7346QY3jdtDJnZN7+bxmDg
-	 81Fm0hUojgNlyo+pnGS4R+Z8mLH+GCZLp2I/o7LLPlex6e7+FMu7K8tE7BgIfCInTHLgC
-	 jddoH0KBWDJ2uxRgAX46QLLh61eAB0yKsJQu8mL78EsLD0kLjzTZqrKaCuh7TmPwF8AG+
-	 yTRGdJrmQIcLEwdh5ZUZONn7PQG/S3kvSeR+DvS8SXoqFwlLFhAxAR6WarGesfErePyZ4
-	 TaqtP4EgkyDEKFPxOOWdSQarBFo67+TJuuf0SMpy36CnVoy1qXRejw4NVq0GCXmk/+w==
+	t=1793214867;
+	b=a7t1I2ahn6gzkGzgBnj5M1ZxE/QRVmpKtuu+235nC4jGVjtewuGwjY8nB1Dr1p1cYB7r
+	 +SIKy+aCznVP7aECILdEWoa2FU2W+VzwgxZ5XRSloTZu0Gdh7DztiIq0HkBX0Cvas9qrI
+	 s7wsyqzHObVTpHrZpbBFdHrQ4t0J90GAIpGxTaGgxy6dQvcNkeqHYI7meXP8skBO+P9pD
+	 AJQY+nrAmYhqePV4015pO2+Gx/GwTnQp/y4jEH8rE2sWxHJbPQZU1cmcUjoeFGvvonSlw
+	 iVTGfMKh4FTIniMazt3gbvopHmCzaYnFFJKHe//Ff9CklmcnJUH3MiU2ikUl0xrkCkw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214864;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214867;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=CRIRrXCPaow1McgmTvoz80cHC41hCuOYBrTV8DXnpxE=;
-	b=JET7wd23YkXugzgCr4K3E+DvFxKDXYEForz0DhQmuZWZ0AnnAs+e/I5/zTrADTBiJGl2
-	 rc7mso7WibnjXjofA4y/G100OGn3Y7+tc8+LUz26rJRZqQfE/KDEDuxLsjIOfGLeJNekX
-	 yW73E0xZeuUhPiOz9vMzislEhVREkDoA5SkKKEZVxMfph7mTP9IMNv2PCN1Xy36vDcTKk
-	 onnVbvl9l9CIQj1NZIRdtHctyOTzY4t6FsIa8rb7BF2K/YG/sY3ItS2K6BzSCCaHrpaPp
-	 6w1ORyxo8+n4RYp8rJRiQ+A21yq5Trg3rhY1OCNRkSQ8s5yfDEPqzsJWoCwVDvMVTxQ==
+	bh=sV3QV47797ohXeNS3xo4ia+pu+5voErYOBo/w6CMO9k=;
+	b=vuL13+nYvR14FGW11Q4wBo1p+PhqH7t1t8SwvrT74363jstzyVMP4a+mt6SM1QhsiQHC
+	 q10l7NCA/qbCaadbZKk3WIxKUrlFjx1vBl1LloSkN+/U84D3E9UCwCcK5cnX4Gn/JHfkF
+	 rhEYxq/ogj282widQ/DtXigBAVALYm/1TCZUpwCyt57PcO+tWSPpcdYPROk1AxVvo1LV7
+	 fnR6c+rssghyURENS1FEooMJrPq42Uc3o8uXBi53OAuRXWPeo4mapsSBHS3CHAujOYO6n
+	 /ZaG1fh0btqqIGrwg59w/ERfZryfzecFKwl5ZzP5GGBXw9Yo6p8hnf/XaelmnXZRVKg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pYj5oxnF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Bs77mBSX;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BB67606A329;
-	Wed, 28 Oct 2026 19:14:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4679606A329;
+	Wed, 28 Oct 2026 19:14:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pYj5oxnF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CD8C1F01825;
-	Wed, 28 Oct 2026 19:14:23 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Bs77mBSX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FEB61F01825;
+	Wed, 28 Oct 2026 19:14:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214864;
-	bh=CRIRrXCPaow1McgmTvoz80cHC41hCuOYBrTV8DXnpxE=;
+	s=korg; t=1793214866;
+	bh=sV3QV47797ohXeNS3xo4ia+pu+5voErYOBo/w6CMO9k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pYj5oxnFSlodjYfvlYqqwjnxt17SNk9eVmEJSjK3NBjMT4sQRrqjqRivJYtwqrg5L
-	 juTZQoKnyvbGFVUBPqzw/HkbQA+j0g1xa7UPA6UWEjRNSR4jEtcW8ieum0A+esCnHF
-	 Nd4CltLk3IN4S9VNtJ5nDlogmdK6SrJwDijhKxCc=
+	b=Bs77mBSX/dztnixj3JB+N1SEYRWXy1HZPL5L5LTkciFA/q3euIRvsEiipwrspp+Sv
+	 IcyjarktQJaloKrisZo/AJkSIb0nqMmQMLb57qlWJrWfxjOaQ/WUm1dKeYNJVIh4Bk
+	 aeuGLM2AFYWA38uRTwWjP0voAjeTxDsC4QEBmRWQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ming Qian <ming.qian@oss.nxp.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Boris Burkov <boris@bur.io>,
+	Qu Wenruo <wqu@suse.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1010/1887] media: verisilicon: Avoid G2 bus error while decoding H.264 and HEVC
-Date: Wed, 28 Oct 2026 17:51:46 +0100
-Message-ID: <20261028170522.399131320@linuxfoundation.org>
+Subject: [PATCH 6.1 1011/1887] btrfs: reserve enough transaction items for qgroup ioctls
+Date: Wed, 28 Oct 2026 17:51:47 +0100
+Message-ID: <20261028170522.421874876@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -70,171 +70,145 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming Qian <ming.qian@oss.nxp.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit e0203ddf9af7c8e170e1e99ce83b4dc07f0cd765 ]
+[ Upstream commit f9a4e3015db1aeafbef407650eb8555445ca943e ]
 
-For the i.MX8MQ platform, there is a hardware limitation: the g1 VPU and
-g2 VPU cannot decode simultaneously; otherwise, it will cause below bus
-error and produce corrupted pictures, even potentially lead to system hang.
+Currently our qgroup ioctls don't reserve any space, they just do a
+transaction join, which does not reserve any space, neither for the quota
+tree updates nor for the delayed refs generated when updating the quota
+tree. The quota root uses the global block reserve, which is fine most of
+the time since we don't expect a lot of updates to the quota root, or to
+be too close to -ENOSPC such that other critical metadata updates need to
+resort to the global reserve.
 
-[  110.527986] hantro-vpu 38310000.video-codec: frame decode timed out.
-[  110.583517] hantro-vpu 38310000.video-codec: bus error detected.
+However this is not optimal, as not reserving proper space may result in a
+transaction abort due to not reserving space for delayed refs and then
+abusing the use of the global block reserve.
 
-Therefore, it is necessary to ensure that g1 and g2 operate alternately.
-This allows for successful multi-instance decoding of H.264 and HEVC.
+For example, the following reproducer (which is unlikely to model any
+real world use case, but just to illustrate the problem), triggers such a
+transaction abort due to -ENOSPC when running delayed refs:
 
-To achieve this, g1 and g2 share the same v4l2_m2m_dev, and then the
-v4l2_m2m_dev can handle the scheduling.
+  $ cat test.sh
+  #!/bin/bash
 
-Fixes: cb5dd5a0fa518 ("media: hantro: Introduce G2/HEVC decoder")
-Cc: stable@vger.kernel.org
-Signed-off-by: Ming Qian <ming.qian@oss.nxp.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Co-developed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+  DEV=/dev/nullb0
+  MNT=/mnt/nullb0
+
+  umount $DEV &> /dev/null
+  # Limit device to 1G so that it's much faster to reproduce the issue.
+  mkfs.btrfs -f -b 1G $DEV
+  mount -o commit=600 $DEV $MNT
+
+  fallocate -l 800M $MNT/filler
+  btrfs quota enable $MNT
+
+  for ((i = 1; i <= 400000; i++)); do
+      btrfs qgroup create 1/$i $MNT
+  done
+
+  umount $MNT
+
+When running this, we can see in dmesg/syslog that a transaction abort
+happened:
+
+  [436.490] BTRFS error (device nullb0): failed to run delayed ref for logical 30408704 num_bytes 16384 type 176 action 1 ref_mod 1: -28
+  [436.493] ------------[ cut here ]------------
+  [436.494] BTRFS: Transaction aborted (error -28)
+  [436.495] WARNING: fs/btrfs/extent-tree.c:2247 at btrfs_run_delayed_refs+0xd9/0x110 [btrfs], CPU#4: umount/2495372
+  [436.497] Modules linked in: btrfs loop (...)
+  [436.508] CPU: 4 UID: 0 PID: 2495372 Comm: umount Tainted: G        W           6.19.0-rc8-btrfs-next-225+ #1 PREEMPT(full)
+  [436.510] Tainted: [W]=WARN
+  [436.511] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.2-0-gea1b7a073390-prebuilt.qemu.org 04/01/2014
+  [436.513] RIP: 0010:btrfs_run_delayed_refs+0xdf/0x110 [btrfs]
+  [436.514] Code: 0f 82 ea (...)
+  [436.518] RSP: 0018:ffffd511850b7d78 EFLAGS: 00010292
+  [436.519] RAX: 00000000ffffffe4 RBX: ffff8f120dad37e0 RCX: 0000000002040001
+  [436.520] RDX: 0000000000000002 RSI: 00000000ffffffe4 RDI: ffffffffc090fd80
+  [436.522] RBP: 0000000000000000 R08: 0000000000000001 R09: ffffffffc04d1867
+  [436.523] R10: ffff8f18dc1fffa8 R11: 0000000000000003 R12: ffff8f173aa89400
+  [436.524] R13: 0000000000000000 R14: ffff8f173aa89400 R15: 0000000000000000
+  [436.526] FS:  00007fe59045d840(0000) GS:ffff8f192e22e000(0000) knlGS:0000000000000000
+  [436.527] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+  [436.528] CR2: 00007fe5905ff2b0 CR3: 000000060710a002 CR4: 0000000000370ef0
+  [436.530] Call Trace:
+  [436.530]  <TASK>
+  [436.530]  btrfs_commit_transaction+0x73/0xc00 [btrfs]
+  [436.531]  ? btrfs_attach_transaction_barrier+0x1e/0x70 [btrfs]
+  [436.532]  sync_filesystem+0x7a/0x90
+  [436.533]  generic_shutdown_super+0x28/0x180
+  [436.533]  kill_anon_super+0x12/0x40
+  [436.534]  btrfs_kill_super+0x12/0x20 [btrfs]
+  [436.534]  deactivate_locked_super+0x2f/0xb0
+  [436.534]  cleanup_mnt+0xea/0x180
+  [436.535]  task_work_run+0x58/0xa0
+  [436.535]  exit_to_user_mode_loop+0xed/0x480
+  [436.536]  ? __x64_sys_umount+0x68/0x80
+  [436.536]  do_syscall_64+0x2a5/0xf20
+  [436.537]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+  [436.537] RIP: 0033:0x7fe5906b6217
+  [436.538] Code: 0d 00 f7 (...)
+  [436.540] RSP: 002b:00007ffcd87a61f8 EFLAGS: 00000246 ORIG_RAX: 00000000000000a6
+  [436.541] RAX: 0000000000000000 RBX: 00005618b9ecadc8 RCX: 00007fe5906b6217
+  [436.541] RDX: 0000000000000000 RSI: 0000000000000000 RDI: 00005618b9ecb100
+  [436.542] RBP: 0000000000000000 R08: 00007ffcd87a4fe0 R09: 00000000ffffffff
+  [436.544] R10: 0000000000000103 R11: 0000000000000246 R12: 00007fe59081626c
+  [436.544] R13: 00005618b9ecb100 R14: 0000000000000000 R15: 00005618b9ecacc0
+  [436.545]  </TASK>
+  [436.545] ---[ end trace 0000000000000000 ]---
+
+Fix this by changing the qgroup ioctls to use start transaction instead of
+joining so that proper space is reserved for the delayed refs generated
+for the updates to the quota root. This way we don't get any transaction
+abort.
+
+Reviewed-by: Boris Burkov <boris@bur.io>
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/verisilicon/hantro.h   |  2 +
- .../media/platform/verisilicon/hantro_drv.c   | 42 +++++++++++++++++--
- .../media/platform/verisilicon/imx8m_vpu_hw.c |  8 ++++
- 3 files changed, 49 insertions(+), 3 deletions(-)
+ fs/btrfs/ioctl.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/media/platform/verisilicon/hantro.h b/drivers/media/platform/verisilicon/hantro.h
-index 2989ebc631cc0..fca6ef4a11665 100644
---- a/drivers/media/platform/verisilicon/hantro.h
-+++ b/drivers/media/platform/verisilicon/hantro.h
-@@ -76,6 +76,7 @@ struct hantro_irq {
-  * @double_buffer:		core needs double buffering
-  * @legacy_regs:		core uses legacy register set
-  * @late_postproc:		postproc must be set up at the end of the job
-+ * @shared_devices:		an array of device ids that cannot run concurrently
-  */
- struct hantro_variant {
- 	unsigned int enc_offset;
-@@ -100,6 +101,7 @@ struct hantro_variant {
- 	unsigned int double_buffer : 1;
- 	unsigned int legacy_regs : 1;
- 	unsigned int late_postproc : 1;
-+	const struct of_device_id *shared_devices;
- };
- 
- /**
-diff --git a/drivers/media/platform/verisilicon/hantro_drv.c b/drivers/media/platform/verisilicon/hantro_drv.c
-index 092ee1681c3ea..29baefc93628c 100644
---- a/drivers/media/platform/verisilicon/hantro_drv.c
-+++ b/drivers/media/platform/verisilicon/hantro_drv.c
-@@ -13,6 +13,7 @@
- #include <linux/clk.h>
- #include <linux/module.h>
- #include <linux/of.h>
-+#include <linux/of_platform.h>
- #include <linux/platform_device.h>
- #include <linux/pm.h>
- #include <linux/pm_runtime.h>
-@@ -939,6 +940,41 @@ static int hantro_disable_multicore(struct hantro_dev *vpu)
- 	return 0;
- }
- 
-+static struct v4l2_m2m_dev *hantro_get_v4l2_m2m_dev(struct hantro_dev *vpu)
-+{
-+	struct device_node *node;
-+	struct hantro_dev *shared_vpu;
-+
-+	if (!vpu->variant || !vpu->variant->shared_devices)
-+		goto init_new_m2m_dev;
-+
-+	for_each_matching_node(node, vpu->variant->shared_devices) {
-+		struct platform_device *pdev;
-+		struct v4l2_m2m_dev *m2m_dev;
-+
-+		pdev = of_find_device_by_node(node);
-+		if (!pdev)
-+			continue;
-+
-+		shared_vpu = platform_get_drvdata(pdev);
-+		if (IS_ERR_OR_NULL(shared_vpu) || shared_vpu == vpu) {
-+			platform_device_put(pdev);
-+			continue;
-+		}
-+
-+		v4l2_m2m_get(shared_vpu->m2m_dev);
-+		m2m_dev = shared_vpu->m2m_dev;
-+		platform_device_put(pdev);
-+
-+		of_node_put(node);
-+
-+		return m2m_dev;
-+	}
-+
-+init_new_m2m_dev:
-+	return v4l2_m2m_init(&vpu_m2m_ops);
-+}
-+
- static int hantro_probe(struct platform_device *pdev)
- {
- 	const struct of_device_id *match;
-@@ -1093,7 +1129,7 @@ static int hantro_probe(struct platform_device *pdev)
+diff --git a/fs/btrfs/ioctl.c b/fs/btrfs/ioctl.c
+index bc1f605e55a20..cae064c262cc9 100644
+--- a/fs/btrfs/ioctl.c
++++ b/fs/btrfs/ioctl.c
+@@ -4667,7 +4667,8 @@ static long btrfs_ioctl_qgroup_assign(struct file *file, void __user *arg)
+ 		goto drop_write;
  	}
- 	platform_set_drvdata(pdev, vpu);
  
--	vpu->m2m_dev = v4l2_m2m_init(&vpu_m2m_ops);
-+	vpu->m2m_dev = hantro_get_v4l2_m2m_dev(vpu);
- 	if (IS_ERR(vpu->m2m_dev)) {
- 		v4l2_err(&vpu->v4l2_dev, "Failed to init mem2mem device\n");
- 		ret = PTR_ERR(vpu->m2m_dev);
-@@ -1134,7 +1170,7 @@ static int hantro_probe(struct platform_device *pdev)
- 	hantro_remove_enc_func(vpu);
- err_m2m_rel:
- 	media_device_cleanup(&vpu->mdev);
--	v4l2_m2m_release(vpu->m2m_dev);
-+	v4l2_m2m_put(vpu->m2m_dev);
- err_v4l2_unreg:
- 	v4l2_device_unregister(&vpu->v4l2_dev);
- err_clk_unprepare:
-@@ -1157,7 +1193,7 @@ static int hantro_remove(struct platform_device *pdev)
- 	hantro_remove_dec_func(vpu);
- 	hantro_remove_enc_func(vpu);
- 	media_device_cleanup(&vpu->mdev);
--	v4l2_m2m_release(vpu->m2m_dev);
-+	v4l2_m2m_put(vpu->m2m_dev);
- 	v4l2_device_unregister(&vpu->v4l2_dev);
- 	clk_bulk_unprepare(vpu->variant->num_clocks, vpu->clocks);
- 	reset_control_assert(vpu->resets);
-diff --git a/drivers/media/platform/verisilicon/imx8m_vpu_hw.c b/drivers/media/platform/verisilicon/imx8m_vpu_hw.c
-index d89c2c3501aa8..80539f7573c18 100644
---- a/drivers/media/platform/verisilicon/imx8m_vpu_hw.c
-+++ b/drivers/media/platform/verisilicon/imx8m_vpu_hw.c
-@@ -359,6 +359,12 @@ const struct hantro_variant imx8mq_vpu_variant = {
- 	.num_regs = ARRAY_SIZE(imx8mq_reg_names)
- };
+-	trans = btrfs_join_transaction(root);
++	/* 2 BTRFS_QGROUP_RELATION_KEY items. */
++	trans = btrfs_start_transaction(root, 2);
+ 	if (IS_ERR(trans)) {
+ 		ret = PTR_ERR(trans);
+ 		goto out;
+@@ -4729,7 +4730,11 @@ static long btrfs_ioctl_qgroup_create(struct file *file, void __user *arg)
+ 		goto out;
+ 	}
  
-+static const struct of_device_id imx8mq_vpu_shared_resources[] __initconst = {
-+	{ .compatible = "nxp,imx8mq-vpu-g1", },
-+	{ .compatible = "nxp,imx8mq-vpu-g2", },
-+	{ /* sentinel */ }
-+};
-+
- const struct hantro_variant imx8mq_vpu_g1_variant = {
- 	.dec_fmts = imx8m_vpu_dec_fmts,
- 	.num_dec_fmts = ARRAY_SIZE(imx8m_vpu_dec_fmts),
-@@ -372,6 +378,7 @@ const struct hantro_variant imx8mq_vpu_g1_variant = {
- 	.num_irqs = ARRAY_SIZE(imx8mq_irqs),
- 	.clk_names = imx8mq_g1_clk_names,
- 	.num_clocks = ARRAY_SIZE(imx8mq_g1_clk_names),
-+	.shared_devices = imx8mq_vpu_shared_resources,
- };
+-	trans = btrfs_join_transaction(root);
++	/*
++	 * 1 BTRFS_QGROUP_INFO_KEY item.
++	 * 1 BTRFS_QGROUP_LIMIT_KEY item.
++	 */
++	trans = btrfs_start_transaction(root, 2);
+ 	if (IS_ERR(trans)) {
+ 		ret = PTR_ERR(trans);
+ 		goto out;
+@@ -4775,7 +4780,8 @@ static long btrfs_ioctl_qgroup_limit(struct file *file, void __user *arg)
+ 		goto drop_write;
+ 	}
  
- const struct hantro_variant imx8mq_vpu_g2_variant = {
-@@ -387,6 +394,7 @@ const struct hantro_variant imx8mq_vpu_g2_variant = {
- 	.num_irqs = ARRAY_SIZE(imx8mq_g2_irqs),
- 	.clk_names = imx8mq_g2_clk_names,
- 	.num_clocks = ARRAY_SIZE(imx8mq_g2_clk_names),
-+	.shared_devices = imx8mq_vpu_shared_resources,
- };
- 
- const struct hantro_variant imx8mm_vpu_g1_variant = {
+-	trans = btrfs_join_transaction(root);
++	/* 1 BTRFS_QGROUP_LIMIT_KEY item. */
++	trans = btrfs_start_transaction(root, 1);
+ 	if (IS_ERR(trans)) {
+ 		ret = PTR_ERR(trans);
+ 		goto out;
 -- 
 2.53.0
 
