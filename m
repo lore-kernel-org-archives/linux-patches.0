@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793208516;
-	b=ky66033hGe9i2mQPddr49O/UE6j01NV6Jaq5DvRdtKObH3zAgx3mrnAuZa5WamxeEM21
-	 YXL6zSIEkNcq8oc8fmaFDeJHaHIFwW7vJPm7A6BqJOV53Yws/OsmFX6ZcpzY4mx6FIwZl
-	 J63lzHZCabRm97Uz95g0UbJDPoVl0x6m1EbDqHzknYTVLd5fPUvFLdSmOJ/TTg+XM/7fc
-	 3Ygm+VLjCJ1lq5cxDPcU681qoBmYoCyKJer9U9hCxIRubygkw2pGDT/9oOygqtImNFMUK
-	 UGmgfBTz7dc3kY9EnWQF4VbRsP+dm+jWCq5jdSkSGRS960DJ8ZFlFjpsDogZwaNGlzA==
+	t=1793208519;
+	b=JfUrnlq50WRv87Vq2W2gDlU2Ul4+Ng8xzeKlqHmcowYA1YtCf5jz4hzKDp4C4P1maKjS
+	 loX65/C3/szxEJiTnkQC8EsGN8j7qTK05WJCOD83C2LEbuNrKvCW9O1mxZ9zwZbN5UlnO
+	 7jklEU1Vcb3p6RkAVY1HQ5cOlvnK5wFX7JDrrHuveUlqSLs2faAslUOJUrUA2qEvMLenZ
+	 tGSyZJtwFcyYPDkDwJMoUKG7r2S+QIB4qe1XeRbwAzRt+P5YVj8Gx1uXyGCvWCVcvHVgz
+	 gBUBFLR3p8Z9de1vHKS87R38eAfui3pXLyM6w9W9N8M79Gkh/SilxLTr2JGU5qTRiFw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793208516;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793208519;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=x18o3Fl/9WQ8cIkyIESVkLFX90ZgmxnW/ZT9EOI+z0Y=;
-	b=RqmNp4eRkQYxaHJGOmSJNJQDr1XjH92aA9mTzIUczbx12Azpc9YKrHHLsAQ+asAL8+Sv
-	 xQJaiIJBkhfSq5qGGpYiNWwAFGjhBtosp7brORijPxJMqW4a/RvNhhNCzvfSQheKF8J/5
-	 jlP5986VGYmeTHxrRdbmjeVFzMhmqpu2GtRQJci6gcH1WsewJ6RXqmGp7XgoRXa8VLWjr
-	 Tusfs9mLh7S6XRDG4wV+YuJQROwVzuDvsSvkBHWAzmWaKMs/wz+28V38ODnuB2xF+Lq1U
-	 1GMi+BgAXVJDAnOh8DrBYvhVkoaiBGNxFB9RevSc5a4Duj0FCpNeqwTSCRt1e7160pg==
+	bh=XkrW4fIx4vQ6LgSdzPZRicrqj7vpawvIr6o+NxrB7Og=;
+	b=u1U9+kUy41gbExzv1+dftrpSokYNe6hB4j16euPaEGTSXePxDpK06phnyXMflAjFxoue
+	 ewuH6sEIvmVkZ8t7udcYlqTuQVukMIX+AzAboHzZuaDy9Mn0M0eKn8NrqNy+ocVDQGZLA
+	 jFXFL4BbUDFT4eJJD6V+28IpRZn34uemUTr5bKxnOMBkykOTIMRhPrbXrop+knQ0Zal2p
+	 Ik1EUMLfj+JQ2OX82w6pybK5qpqWMKyGjNm96X/xQCh8s79SPEu+364c9S1JE2RG4XAeT
+	 anzPohG3GI2PdyIC7uSJ3U3h6yG+aQ7jEXP0GWjly+NDT0i4Kdy/ZoGf0TGR+mwCn5w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="b/RW7eJI";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="wsafDP/q";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 954C9606A31A;
-	Wed, 28 Oct 2026 17:28:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7792E606A31A;
+	Wed, 28 Oct 2026 17:28:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=b/RW7eJI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D7811F01825;
-	Wed, 28 Oct 2026 17:28:35 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wsafDP/q
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C61971F01825;
+	Wed, 28 Oct 2026 17:28:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793208516;
-	bh=x18o3Fl/9WQ8cIkyIESVkLFX90ZgmxnW/ZT9EOI+z0Y=;
+	s=korg; t=1793208519;
+	bh=XkrW4fIx4vQ6LgSdzPZRicrqj7vpawvIr6o+NxrB7Og=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=b/RW7eJICn7RgK/+P3vnirrHAZqA/c7dq7v3XmfT5ORqmBGgxXY2oUmLZ4mmtcf52
-	 b/bwes6zgvnVBs/FATLLjUarjHqNl4r0l5pxTi03k+LaSwuXKsbJGYVmEoxxaVMja5
-	 oTvc2PohvDQP7e5F6tEfzr5aWJh5EEn6zB+fFVe4=
+	b=wsafDP/qGJAPipytgnKCZ02FchoWe4aNfJTen4jD4bdvsrQC3DqDdIUm+AEfe6adH
+	 7J8YY8efOxyfrca7i9K2ELdF+1Vi4tYAVzbQWkmznofUWgLQCpcfoc47V4j4yJNNEV
+	 FbaLg1BumgR3C5j+WdSOgKmYeGQYJ77/EE0zGnrk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Wim Van Sebroeck <wim@linux-watchdog.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Rob Clark <robdclark@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 104/516] watchdog: rtd119x: Use devm_clk_get_enabled() helper
-Date: Wed, 28 Oct 2026 17:54:16 +0100
-Message-ID: <20261028170005.982225708@linuxfoundation.org>
+Subject: [PATCH 5.10 095/516] drm/msm/dsi: do not enable PHYs when called for the slave DSI interface
+Date: Wed, 28 Oct 2026 17:54:07 +0100
+Message-ID: <20261028170005.773165803@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -69,70 +68,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit 6cc0768ba6f5293a4435612164a2cfbf2edbd025 ]
+[ Upstream commit a14440042fe8dac6b7c507a946f46a6f50c9c05d ]
 
-The devm_clk_get_enabled() helper:
-   - calls devm_clk_get()
-   - calls clk_prepare_enable() and registers what is needed in order to
-     call clk_disable_unprepare() when needed, as a managed resource.
+Move the call to dsi_mgr_phy_enable after checking whether the DSI
+interface is slave, so that PHY enablement happens together with the
+host enablement.
 
-This simplifies the code and avoids the need of a dedicated function used
-with devm_add_action_or_reset().
-
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://lore.kernel.org/r/14b521b821279bc5111dc80b55d0936c5767c737.1672418470.git.christophe.jaillet@wanadoo.fr
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
-Stable-dep-of: 5af7d2cbd20f ("watchdog: rtd119x: Avoid division by zero")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20210609211211.2561090-1-dmitry.baryshkov@linaro.org
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+Stable-dep-of: 6cd33b6f4155 ("drm/msm/dsi: round 6G byte clock rate to the PLL-achievable value")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/watchdog/rtd119x_wdt.c | 16 +---------------
- 1 file changed, 1 insertion(+), 15 deletions(-)
+ drivers/gpu/drm/msm/dsi/dsi_manager.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/watchdog/rtd119x_wdt.c b/drivers/watchdog/rtd119x_wdt.c
-index 834b94ff3f903..95c8d7abce42e 100644
---- a/drivers/watchdog/rtd119x_wdt.c
-+++ b/drivers/watchdog/rtd119x_wdt.c
-@@ -94,16 +94,10 @@ static const struct of_device_id rtd119x_wdt_dt_ids[] = {
- 	 { }
- };
+diff --git a/drivers/gpu/drm/msm/dsi/dsi_manager.c b/drivers/gpu/drm/msm/dsi/dsi_manager.c
+index fb421ca56b3da..5736665da97b5 100644
+--- a/drivers/gpu/drm/msm/dsi/dsi_manager.c
++++ b/drivers/gpu/drm/msm/dsi/dsi_manager.c
+@@ -381,14 +381,14 @@ static void dsi_mgr_bridge_pre_enable(struct drm_bridge *bridge)
+ 	if (!msm_dsi_device_connected(msm_dsi))
+ 		return;
  
--static void rtd119x_clk_disable_unprepare(void *data)
--{
--	clk_disable_unprepare(data);
--}
--
- static int rtd119x_wdt_probe(struct platform_device *pdev)
- {
- 	struct device *dev = &pdev->dev;
- 	struct rtd119x_watchdog_device *data;
--	int ret;
- 
- 	data = devm_kzalloc(dev, sizeof(*data), GFP_KERNEL);
- 	if (!data)
-@@ -113,18 +107,10 @@ static int rtd119x_wdt_probe(struct platform_device *pdev)
- 	if (IS_ERR(data->base))
- 		return PTR_ERR(data->base);
- 
--	data->clk = devm_clk_get(dev, NULL);
-+	data->clk = devm_clk_get_enabled(dev, NULL);
- 	if (IS_ERR(data->clk))
- 		return PTR_ERR(data->clk);
- 
--	ret = clk_prepare_enable(data->clk);
+-	ret = dsi_mgr_phy_enable(id, phy_shared_timings);
 -	if (ret)
--		return ret;
--	ret = devm_add_action_or_reset(dev, rtd119x_clk_disable_unprepare,
--				       data->clk);
--	if (ret)
--		return ret;
+-		goto phy_en_fail;
 -
- 	data->wdt_dev.info = &rtd119x_wdt_info;
- 	data->wdt_dev.ops = &rtd119x_wdt_ops;
- 	data->wdt_dev.timeout = 120;
+ 	/* Do nothing with the host if it is slave-DSI in case of dual DSI */
+ 	if (is_dual_dsi && !IS_MASTER_DSI_LINK(id))
+ 		return;
+ 
++	ret = dsi_mgr_phy_enable(id, phy_shared_timings);
++	if (ret)
++		goto phy_en_fail;
++
+ 	ret = msm_dsi_host_power_on(host, &phy_shared_timings[id], is_dual_dsi);
+ 	if (ret) {
+ 		pr_err("%s: power on host %d failed, %d\n", __func__, id, ret);
 -- 
 2.53.0
 
