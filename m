@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793208816;
-	b=WPrpdQXlhgcIiCINycRQVYNCNxCCg+pDf68+NhHWZw5sA7+cBh+fcwgYFPkPHo3Hp3wG
-	 yuDpDFXE3MTkbwNLwTp0xl/O+5NUgcqYLXCObIyCfMeXlN2drQb/sYFu+DZ5GQcVjBG41
-	 f7j136i2uiJ/As1CBmPUrP6RpKyTf8L+Tc/mMRJugJD90Zbg/8rUKgRHaEwTBNFT1TVcj
-	 mOGL3T/JDmWuxfN04dejRd0fNfY95T3/5zp8DGlxlcv124nKx+q1M6Io+n8Ou/MV31FfB
-	 GLLevHXhvhkcLY1+LMfL6PdmESTvsflHngi/bP58PA93rW1/XWpvMHIu8Eyw8DQ3L/Q==
+	t=1793208819;
+	b=CgerFUQS7t6BqyfoKA3vTDwX5mTRj7FpOIYAyQSqG56u8qXIhPGmfDgSIYY/4JxJQ9Lc
+	 Gql3s79aL28qlRFVQBZG9f9PuxOxHcyVLr3v9jPmYsjpLcYw04aMk6a2Q6a13kkolKYyA
+	 VtLxSj/TYnyojx7DC0SoKWaeBvndsICmgNfkP9GJilIfZi4eF7v/fAoWsaufa1F2eoJiK
+	 nw+pGIWAai5pYiNRLkhyoLYPQgRkKmxBzsydkqp56lCusHMAgR40bHbiGsSEho6tdNVtc
+	 M10lf71ymQMDjYxXqHw6JJgf5FiEbBzEZ2Vneez5qvrUFpMfMt/Dg97iFFTDqmm2F8A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793208816;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793208819;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=lSjs+A7LU5zh279d9Ydpsw1knuU34QN4VakHY8UqUkw=;
-	b=ryxosk76MxbAleUp/4VddEg9/6U3bxgLomUMF5cFJ9NNytYCn+ZfnHActC8LGjidlT1B
-	 D3ySUJQjjiEnYWmZnK/ae3xjRafPT6Jlr0eTN+oeJ/fNbmZUSYGHNBaRakj2ZxbdPMiLv
-	 1/N40GXbY8BVVdol09jOah9eOHF+MpvyuRBTgk3DRrs6bwPvjSvmlFdzJe/1XepfTDIUN
-	 uWP1F0xVsG2zx8xRY/nkOuW6BJKsdYw9uXi7wghBY7l9WEpYIfGFb0mOxT4RYugOozJGQ
-	 rs+jemZFjNJLJrQ+lOWZOpbQNX3pI9vfqpu+LWGBki44dlJvmC4DyDqfv6xPpHsa9cg==
+	bh=EioETapF1pb1TB7GKh8p/1SojglXq7gRU9tW9C8jqKw=;
+	b=AVtpyzNCAvH7aBY7aa0j3dlx8vJZ3w8kesCbvOcmTRZU53fgTRvgW5+A9zhAi6CgxYx/
+	 c6Q0V+e0ylEVdS4b4GgyMV8JqJcdoOeRRElWZcNZEpxDcbfjnQ9D5NDlWSYeZ/oB74kwd
+	 4RYU9pUmK1k5Dl02K/dv76mKlHsfVyBYnNw/AxkCCqUxk43caVA89APqQwQ0aDhpwgRkD
+	 IRwIES4agqtgBZbZBrLvoTEu/S0awRo6PyXkcYVgNRRoUnbbIf2byog0TmsxaoOOHDNsB
+	 H9diB8C/5IVnXegPuTc5oTQFIc9pQ5eb6DFqQ17d82SL7yxj2wDF1gj2ABjxn3eX3Xg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LXvXCAzR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=o3pjthkC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1785606A338;
-	Wed, 28 Oct 2026 17:33:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA93F606A32D;
+	Wed, 28 Oct 2026 17:33:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LXvXCAzR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 206AB1F031E0;
-	Wed, 28 Oct 2026 17:33:34 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=o3pjthkC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCFAA1F031EA;
+	Wed, 28 Oct 2026 17:33:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793208815;
-	bh=lSjs+A7LU5zh279d9Ydpsw1knuU34QN4VakHY8UqUkw=;
+	s=korg; t=1793208818;
+	bh=EioETapF1pb1TB7GKh8p/1SojglXq7gRU9tW9C8jqKw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LXvXCAzRHZcpgjEuw5GX/16XNFbtzTjYuwmNO42ktaznY8VrtLeqkxXadOWd+3aSf
-	 /rhC1b6nQtvBP2a2CCFaBzbmqSS+PNqAuYFVuiWbwXLD9iXb1VwWbdC3jLxi3Od5rQ
-	 eg8ke27ulepo0ljBYVcxQFF9tn6olzmJgEuoc+9s=
+	b=o3pjthkCDejXtQzShtczcSy0xvRoCMVYmNj/7wdxiSliGlWB9hq43sJ2BiOUvYUQk
+	 +OioqJdZfetxss0igvGPv7dzS7J8aOcK+BkJcgWW0VmBqIButKwavIhHLwQhPPxQHR
+	 IhCfQBBm9AtbJJWvvB+K/1HlKs5Qems2PLImTi1w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Sorenson <sorenson@redhat.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Paulo Alcantara <pc@manguebit.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 253/516] smb: client: split cifsFileInfo bitfields to avoid shared-byte RMW races
-Date: Wed, 28 Oct 2026 17:56:45 +0100
-Message-ID: <20261028170009.488833807@linuxfoundation.org>
+	Felix Gu <ustc.gu@gmail.com>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Subject: [PATCH 5.10 236/516] iio: adc: sun4i-gpadc-iio: drop underflowing pm_runtime_put() calls
+Date: Wed, 28 Oct 2026 17:56:28 +0100
+Message-ID: <20261028170009.094863011@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -69,57 +67,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Frank Sorenson <sorenson@redhat.com>
+From: Felix Gu <ustc.gu@gmail.com>
 
-[ Upstream commit 19465a9aeb664f1d710d0d22c07c31bfb7c85446 ]
+commit 8b958dd214ad0c003f56549e9e039cb8067dc1a2 upstream.
 
-The invalidHandle, swapfile, oplock_break_cancelled, offload,
-and status_file_deleted fields are stored in the same bitfield byte
-in struct cifsFileInfo, but are updated in different code paths that
-may run simultaneously, and are protected by different locks.  Since
-bitfield assignments generate byte-level read-modify-write operations,
-a modification to one flag can overwrite a concurrent modification to
-another flag.
+Neither the error path in sun4i_gpadc_probe() nor sun4i_gpadc_remove()
+ever holds a runtime PM usage count. So the pm_runtime_put() in both
+places always triggers the "Runtime PM usage count underflow!" warning
+on every failed probe and every unbind.
 
-To avoid these races, convert these flags from a bitfield to
-separate bool fields.
+Drop both calls.
 
-Closes: https://lore.kernel.org/r/7689764e-c0f6-4016-9557-b54cf4a3de4e@redhat.com
-Fixes: 3bc303c254335 ("cifs: convert oplock breaks to use slow_work facility (try #4)")
-Fixes: 4e8aea30f7751 ("smb3: enable swap on SMB3 mounts")
-Fixes: ffceb7640cbfe ("smb: client: do not defer close open handles to deleted files")
-Fixes: 173217bd73365 ("smb3: retrying on failed server close")
-Signed-off-by: Frank Sorenson <sorenson@redhat.com>
+Fixes: d1caa9905538 ("iio: adc: add support for Allwinner SoCs ADC")
+Signed-off-by: Felix Gu <ustc.gu@gmail.com>
 Cc: stable@vger.kernel.org
-Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
-(cherry picked from commit 19465a9aeb664f1d710d0d22c07c31bfb7c85446)
-[ status_file_deleted and offload not present in kernel 5.10 ]
-Signed-off-by: Frank Sorenson <sorenson@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/cifs/cifsglob.h | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/iio/adc/sun4i-gpadc-iio.c |    2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/fs/cifs/cifsglob.h b/fs/cifs/cifsglob.h
-index d0905aa0b04cd..8a5cdf4ba0ae6 100644
---- a/fs/cifs/cifsglob.h
-+++ b/fs/cifs/cifsglob.h
-@@ -1322,9 +1322,9 @@ struct cifsFileInfo {
- 	struct dentry *dentry;
- 	struct tcon_link *tlink;
- 	unsigned int f_flags;
--	bool invalidHandle:1;	/* file closed via session abend */
--	bool swapfile:1;
--	bool oplock_break_cancelled:1;
-+	bool invalidHandle;	/* file closed via session abend */
-+	bool swapfile;
-+	bool oplock_break_cancelled;
- 	unsigned int oplock_epoch; /* epoch from the lease break */
- 	__u32 oplock_level; /* oplock/lease level from the lease break */
- 	int count;
--- 
-2.53.0
-
+--- a/drivers/iio/adc/sun4i-gpadc-iio.c
++++ b/drivers/iio/adc/sun4i-gpadc-iio.c
+@@ -664,7 +664,6 @@ err_map:
+ 	if (!info->no_irq && IS_ENABLED(CONFIG_THERMAL_OF))
+ 		iio_map_array_unregister(indio_dev);
+ 
+-	pm_runtime_put(&pdev->dev);
+ 	pm_runtime_disable(&pdev->dev);
+ 
+ 	return ret;
+@@ -675,7 +674,6 @@ static int sun4i_gpadc_remove(struct pla
+ 	struct iio_dev *indio_dev = platform_get_drvdata(pdev);
+ 	struct sun4i_gpadc_iio *info = iio_priv(indio_dev);
+ 
+-	pm_runtime_put(&pdev->dev);
+ 	pm_runtime_disable(&pdev->dev);
+ 
+ 	if (!IS_ENABLED(CONFIG_THERMAL_OF))
 
 
