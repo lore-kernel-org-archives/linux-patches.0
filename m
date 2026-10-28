@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214777;
-	b=A7YOL4jiFMM2AIGOkJq9GD900KhPQdXgp5on7NyVZEqQ1+Dj28RWg/jHbpgT+bmXk0h8
-	 JgLKddgePJVqUPJI5qLV8y0fwOfKoPLAUZTQs3ZjFb9MH/kr2DhJpN8pnQE08nEl1pQ7N
-	 PqQAYTOtrvTihXGgQs/PHKlS2dMHL2Sm2T5026n8/DgPdhcfwk/AJ/eoxcWr15+dHEDlZ
-	 Iqkm4CxBM/HKgy/ERM8GGbQCY/HX+rO4BSzcwW77KglNtHL4Ji8IYcU5fGFJAgFwuCwJh
-	 pIuahzOcGJQw1OrCU0JHpjMwO+mhLWWjzVwAW2J+F8D2DpI0wGIB2aDsqaz9ZkrvBKA==
+	t=1793214779;
+	b=BbjanAKwRMJslXFln803bMsz4M9HKM0PnYx0YIFIkQI2wSkiTaZ+w+CNk5ESoO2eE8d9
+	 pFq6fZH/b/rw908BdzWh3BG0deSSYk9vKgVmeWyvNC5vYClE22t78DESLyO3ybUKsutmh
+	 XCL4Cv/+/KK31Dy1vGXWJuokoCvHW++qX9ex1Co/iXADT+I6jHeVDPcPKMAx1k+Gm3PXS
+	 GFuyBDbKI8xTqSZ8b2xQwQ9D4Eiy5CRveCajXGSVBnOc6aY1PogKnqpJVAQQB24ZXZZ23
+	 a8LU01misLXvWBlZDdd6KaRsxxLu7TysFXTFqBXDkLeI6FhKXPV5kYaDQV3Cu2kueBg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214777;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214779;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=b3qNDVu/HSMqMc9xRyQp1oDLje8pJAr40q/7SI2UWcA=;
-	b=VtGmby0TGC1FcvjUUOslObe3BqZIZ91EKnUC9BaRx2606sEckrpwG9iyoXmZX23sg0bB
-	 FTylcKMLkwEBN3DalKhWUxscErQTpNYJLbZzRPB7cwVeftL94GIq8IS5aGjKnSL5oru5U
-	 3hZc3Pa88hGMUnlG4byLbeBbQtr92Mvt1MtYKs7jjW15MT9nMD3bI7D/LMQfVNaQU85g5
-	 whyI13w+TOo0aolqGOaU+fLqYGGLSXwtalaNd+un01fBE/93nzFQzun4OXoUTMtYIuwA5
-	 iFxBlslEbq3ifc8WM9LJkMil9+tX7xaL9l1fk3wGQ6f2eY+bhi3CU57CjLFG9QbeuQg==
+	bh=p302TmqCXuDpfItjYMbPmaRoSojsnhMGaqJPkRxUYWw=;
+	b=ZmfuB00IKRLbpINj96IV3tPnDOZuh8km8/wt7psA5Pse4oG6Qu//l32DIQpd5fO657aZ
+	 f52SYo5o6diG07h46x5ERk/XPzxLiniU6HamUGUxhun8KgzgSV3CYNIWpu01VAm2JgrMh
+	 oY3AoGCasXWJRZq52+a10fld92vqOkb3fVZAdyPa/lAYKRYMcOG4IcxfJVHDr4rAvBm++
+	 rFPlw2Y5hq/yZCjhKCH5bbzB7o7AszF7PvafUTilZejB3R//6CqZmaxpwTydhB+PVY8UG
+	 O/gsB1/uoaDdTUEqcTYktSFZWuzotY0lPUZxu6w/K7TyZnwJJUOIbCDmOZ2Ds2KZ1Vg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TihbuEui;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L77YyJbG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B66C2606B7CF;
-	Wed, 28 Oct 2026 19:12:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 589B3606B7CF;
+	Wed, 28 Oct 2026 19:12:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TihbuEui
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2F161F031E0;
-	Wed, 28 Oct 2026 19:12:55 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L77YyJbG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9F411F031E0;
+	Wed, 28 Oct 2026 19:12:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214776;
-	bh=b3qNDVu/HSMqMc9xRyQp1oDLje8pJAr40q/7SI2UWcA=;
+	s=korg; t=1793214779;
+	bh=p302TmqCXuDpfItjYMbPmaRoSojsnhMGaqJPkRxUYWw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TihbuEuiQZqP6eEdTEZJQkXizda3xse7hub6Edh81c36CdG9XES8uvbYOzJUNz4k5
-	 +CKHjhe06QRjLdZVlthARZ6RslnR0RN7Cd0yyIo/7xUXt4jHScRUXiV8ClRc91Jwre
-	 5j5Q+Y76+X0e2TEd+gzxFbgrCr5p7jPxiNRrAFQs=
+	b=L77YyJbGIxCeX3F5ayQxRYk/gUgsZ6840R+dnfNeqarYj2FWpj526uYWQSp9nfmCT
+	 RTmyOXCu+tGFo0JncwbfUMLXrcrd6wNJ6pJ1HvQxCpRiU/bclvQRH3OobKe5wxdJuW
+	 fuE2HU5dXEI5Wu68DF4dpNoE61UcTP24tojyxdQc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Chen <chenl311@chinatelecom.cn>,
-	Jiri Kosina <jkosina@suse.com>,
+	Lee Jones <lee@kernel.org>,
+	Benjamin Tissoires <bentiss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0977/1887] HID: rate-limit hid_warn to prevent log flooding
-Date: Wed, 28 Oct 2026 17:51:13 +0100
-Message-ID: <20261028170521.643125948@linuxfoundation.org>
+Subject: [PATCH 6.1 0978/1887] HID: core: Mitigate potential OOB by removing bogus memset()
+Date: Wed, 28 Oct 2026 17:51:14 +0100
+Message-ID: <20261028170521.665325769@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,60 +68,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Chen <chenl311@chinatelecom.cn>
+From: Lee Jones <lee@kernel.org>
 
-[ Upstream commit 4051ead99888f101be92c7ce90d2de09aac6fd1c ]
+[ Upstream commit 0a3fe972a7cb1404f693d6f1711f32bc1d244b1c ]
 
-Syzkaller can create many uhid devices that trigger
-repeated warnings like:
+The memset() in hid_report_raw_event() has the good intention of
+clearing out bogus data by zeroing the area from the end of the incoming
+data string to the assumed end of the buffer.  However, as we have
+previously seen, doing so can easily result in OOB reads and writes in
+the subsequent thread of execution.
 
-  "hid-generic xxxx: unknown main item tag 0x0"
+The current suggestion from one of the HID maintainers is to remove the
+memset() and simply return if the incoming event buffer size is not
+large enough to fill the associated report.
 
-These messages can flood the system log, especially if a crash occurs
-(e.g., with a slow UART console, leading to soft lockups). To mitigate
-this, convert `hid_warn()` to use `dev_warn_ratelimited()`.
+Suggested-by Benjamin Tissoires <bentiss@kernel.org>
 
-This helps reduce log noise and improves system stability under fuzzing
-or faulty device scenarios.
-
-Signed-off-by: Li Chen <chenl311@chinatelecom.cn>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
-Stable-dep-of: 0a3fe972a7cb ("HID: core: Mitigate potential OOB by removing bogus memset()")
+Signed-off-by: Lee Jones <lee@kernel.org>
+[bentiss: changed the return value]
+Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-core.c | 4 ++--
- include/linux/hid.h    | 2 ++
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ drivers/hid/hid-core.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/hid/hid-core.c b/drivers/hid/hid-core.c
-index 9ad52318a86de..4b717cc838cf1 100644
+index 4b717cc838cf1..66deabcfb68b8 100644
 --- a/drivers/hid/hid-core.c
 +++ b/drivers/hid/hid-core.c
-@@ -642,9 +642,9 @@ static int hid_parser_main(struct hid_parser *parser, struct hid_item *item)
- 	default:
- 		if (item->tag >= HID_MAIN_ITEM_TAG_RESERVED_MIN &&
- 			item->tag <= HID_MAIN_ITEM_TAG_RESERVED_MAX)
--			hid_warn(parser->device, "reserved main item tag 0x%x\n", item->tag);
-+			hid_warn_ratelimited(parser->device, "reserved main item tag 0x%x\n", item->tag);
- 		else
--			hid_warn(parser->device, "unknown main item tag 0x%x\n", item->tag);
-+			hid_warn_ratelimited(parser->device, "unknown main item tag 0x%x\n", item->tag);
- 		ret = 0;
+@@ -2052,9 +2052,9 @@ int hid_report_raw_event(struct hid_device *hid, enum hid_report_type type, u8 *
  	}
  
-diff --git a/include/linux/hid.h b/include/linux/hid.h
-index 941a58f4b5bb6..09f6ba66f1db2 100644
---- a/include/linux/hid.h
-+++ b/include/linux/hid.h
-@@ -1248,6 +1248,8 @@ do {									\
- 	dev_notice(&(hid)->dev, fmt, ##__VA_ARGS__)
- #define hid_warn(hid, fmt, ...)				\
- 	dev_warn(&(hid)->dev, fmt, ##__VA_ARGS__)
-+#define hid_warn_ratelimited(hid, fmt, ...)				\
-+	dev_warn_ratelimited(&(hid)->dev, fmt, ##__VA_ARGS__)
- #define hid_info(hid, fmt, ...)				\
- 	dev_info(&(hid)->dev, fmt, ##__VA_ARGS__)
- #define hid_dbg(hid, fmt, ...)				\
+ 	if (csize < rsize) {
+-		dbg_hid("report %d is too short, (%d < %d)\n", report->id,
+-			csize, rsize);
+-		memset(cdata + csize, 0, rsize - csize);
++		hid_warn_ratelimited(hid, "Event data for report %d was too short (%d vs %d)\n",
++				     report->id, rsize, csize);
++		return -EINVAL;
+ 	}
+ 
+ 	if ((hid->claimed & HID_CLAIMED_HIDDEV) && hid->hiddev_report_event)
 -- 
 2.53.0
 
