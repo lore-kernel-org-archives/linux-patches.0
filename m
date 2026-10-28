@@ -1,52 +1,50 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793207315;
-	b=1+DFKm1WHyWgCx4D4iYXy3NUIef+71PEFSquue32alMTLIGsFGXi9burq0y+3r+hxPsB
-	 BeAcOmCwQ74w83QcZHw99f4nh+G2GIE/Fx+VQe53FMtbHZovEl4CW1H/QYWYQ6cup0chJ
-	 t5ZiDY0yTKI6WtJYVCAkcKGeT9MhKtG0CMVAeiWsmwaiJ5esUVFteZgllgUW9QFGsP38W
-	 6RNB+HD3bxpDc8v7d8eSJF9cPgEoe5jUS8XhS4ZmMNuBPYIrm41/fRAxb6y7ylR8XmmlR
-	 +fcnkSg9I10E1gys4mR+XTq7CPtW7O9Kh22OQudXoCmCgabOgQW7jb/XAX4Zg/IA7/w==
+	t=1793207318;
+	b=09TuiDj6593MzKjHjs+NOrIRL1b+xokHjUO0l7410vLiVhzC3rExxrNrguwJYk75SAtD
+	 8CR4c5+zBWisf4xfHDu2FPozynxhL0Srv8mqlJj0Kpb9UWlCg7AchMA9bcu/c0VuxkhQw
+	 2aUJNhBLLtbiCMuY445z+aCLHRpP4YosgMYmxMwxRwMrFCrFRxCgg5A40Ei78C7jiN/9x
+	 tJMdMGDSYN3QKXm6lb1ZyYPd3cuGDYsIAUQjUB5WgPwnLDcypylOcwhxvJX+gvfsp+VjM
+	 CFlEthuBvfoXfX3lTr9snVwwz7UMvklZdaGK40S2/r9KnPgjtJtaHjwFSNjFrwPiHyw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793207315;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793207318;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=4p+delEiCoeIL6oDKnpIYfooCjbMKyCclAFxTAOQDG8=;
-	b=OO0/mIuCP00c+Lt0CUr2OgeaC3cZqPz4/jW9wu7/vMTq1pXxUCmByVuxeWG89bDvxvJs
-	 sN7HRo0w6VG9yt3BHnFkr0F6yCTm4zVzzVfYTs090mM/4yBVHuTgvJLDtynuq3QTrgt2r
-	 S5rK9euv/0JCUVm4xSV6aBdWwRS7i+bq9NXpb88VYzsGlbEd9oT0Zj690y+mjWYJ/nQsu
-	 Ne1APesJE4/PiCP8V+vMSH1p9TrrO+ZoDLefEcFU4kEazmxtDpCoXR/cX7gtwE0KVdzsZ
-	 iBVMAfFBIey9RD/hdn4AsXCp3XxYFJumQPpaaCZUodu1faiAX35fwgtE1mTn09y1ekA==
+	bh=elpP2pnVRdzq4d7vYuikkrccT1+EXiJJFmmamzozhLs=;
+	b=n/iInnbZ4myRIm/kahrmECqteBYB7+4NHw3aNwnMia4MATZaAKPRma9iiZNyzviEqMCD
+	 pPtYob8OMUkEteMlyFeV107Qf59QEvSY0FXmkRj1pKA7/KAWSCYZqMSJFCMmn/mTls5fK
+	 MYvBJF2oJNpG0jSOJI8FilM5UM23emrh/ZghThBIv/mm7H33ylwnp3kebFRGsSt9IC3hH
+	 Iiba5hxB0c1yTkb/qeXS90iH8B8+xBkrzw4GEa8hnC5EqsKLgFs+3VVj0fGZmWnVzObQi
+	 Fq28at3AgZTDTbr3IeYuD4xwMipgnNtUig4aT8XxO1vjVAyV5be8GV2Ykdq9oK0Cs/A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aZpJFbxs;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="liMDNm/h";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6C9D606A31E;
-	Wed, 28 Oct 2026 17:08:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02199606A31C;
+	Wed, 28 Oct 2026 17:08:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aZpJFbxs
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 438C71F031E4;
-	Wed, 28 Oct 2026 17:08:34 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=liMDNm/h
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 196361F01825;
+	Wed, 28 Oct 2026 17:08:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793207314;
-	bh=4p+delEiCoeIL6oDKnpIYfooCjbMKyCclAFxTAOQDG8=;
+	s=korg; t=1793207317;
+	bh=elpP2pnVRdzq4d7vYuikkrccT1+EXiJJFmmamzozhLs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aZpJFbxso5ePBVThLjQi4vr735hQVlsC5UxiNbOfH6sVFPZtci5H0RQCcixWy1LIf
-	 PzQMeOFLi23HVAbEMI5c0wwoZRyuKVMg8H80F+9bPc7ur5RKbUV1Zdy7Kobt92VXt9
-	 /oP4S9f7SSm4qDQW3See3ymgOxcR+8mmOpMuajh0=
+	b=liMDNm/hF2nd61iN82G0dX65Q4tuJYGOHzke3bTMNWVed+i5s9YZ6KjIsetAwdpmC
+	 KiSdrWKft5svlRV8rBfVSGw+vtUlXsn4hN3bFtK/CDy8yl7Egvqlmk/N76R3VBb9vY
+	 PPSYsTJsNBl6NsSLDzqWvlx4b3uUIIm6apKN8J7U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Juanlu Herrero <juanlu@fastmail.com>,
-	Anand Natarajan <anand@meta.com>,
 	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 7.2 60/88] io_uring/poll: avoid retry wakeup loss when dropping ownership
-Date: Wed, 28 Oct 2026 18:00:08 +0100
-Message-ID: <20261028165943.524610850@linuxfoundation.org>
+Subject: [PATCH 7.2 61/88] io_uring/timeout: dont put a sequence target behind the last flush
+Date: Wed, 28 Oct 2026 18:00:09 +0100
+Message-ID: <20261028165943.550062337@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165942.107695352@linuxfoundation.org>
 References: <20261028165942.107695352@linuxfoundation.org>
@@ -68,41 +66,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Juanlu Herrero <juanlu@fastmail.com>
+From: Jens Axboe <axboe@kernel.dk>
 
-Commit 937d38dcacd675dc0572d6c9b6743960df3128ed upstream.
+Commit fdfce905a58edea053ee7b68b5bd4348dd1b36e0 upstream.
 
-If a wakeup sets IO_POLL_RETRY_FLAG between the owning task consuming
-the existing instance of IO_POLL_RETRY_FLAG and the loop check
-of io_poll_check_events(), then we stall on processing the request
-until an unrelated wakeup comes along.
+io_timeout_fn() and io_kill_timeout() bump ->cq_timeouts when a timeout
+fires, but its CQE is only posted later from task_work. Until then the
+sequence io_timeout() computes is one below the last flush per fired
+timeout. Now that ->cq_last_tm_flush is kept while sequence timeouts are
+pending, a timeout armed in that window with a small offset gets a target
+behind the base. Its distance from the base wraps, and it's never
+completed by events, only by its timer. With DEFER_TASKRUN that window
+is as wide as the application makes it, as submission runs before the
+local task_work.
 
-Using atomic_cmpxchg instead of atomic_sub_return to guarantee both the
-count v and poll_refs are 0 and no wake-ups are missed.
+Nothing but those in flight CQEs separates the two, so use the last
+flush as the base for the target when the sequence is behind it.
 
-Cc: stable@vger.kernel.org
-Fixes: a26a35e9019f ("io_uring: make poll refs more robust")
-Signed-off-by: Juanlu Herrero <juanlu@fastmail.com>
-Assisted-by: LLM
-Suggested-by: Anand Natarajan <anand@meta.com>
-Link: https://patch.msgid.link/20261013-pu-cmpxchg-v1-1-4ddc10fd8a03@fastmail.com
+Fixes: c6c0b3eba88c ("io_uring/timeout: don't skip over reached sequences")
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/poll.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ io_uring/timeout.c |   10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
---- a/io_uring/poll.c
-+++ b/io_uring/poll.c
-@@ -330,7 +330,8 @@ static int io_poll_check_events(struct i
- 		 * Release all references, retry if someone tried to restart
- 		 * task_work while we were executing it.
- 		 */
--	} while (atomic_sub_return(v, &req->poll_refs) & IO_POLL_REF_MASK);
-+		v &= IO_POLL_REF_MASK;
-+	} while (atomic_cmpxchg(&req->poll_refs, v, 0) != v);
+--- a/io_uring/timeout.c
++++ b/io_uring/timeout.c
+@@ -690,7 +690,6 @@ int io_timeout(struct io_kiocb *req, uns
+ 	}
  
- 	io_napi_add(req);
- 	return IOU_POLL_NO_ACTION;
+ 	tail = data_race(ctx->cached_cq_tail) - atomic_read(&ctx->cq_timeouts);
+-	timeout->target_seq = tail + off;
+ 
+ 	/*
+ 	 * Update the last seq here in case io_flush_timeouts() hasn't, it only
+@@ -705,6 +704,15 @@ int io_timeout(struct io_kiocb *req, uns
+ 	base = ctx->cq_last_tm_flush;
+ 
+ 	/*
++	 * A fired timeout bumps ->cq_timeouts before its CQE is posted, which
++	 * leaves the sequence behind the last flush until it is. Nothing else
++	 * separates the two then, so count from the flush.
++	 */
++	if ((s32)(tail - base) < 0)
++		tail = base;
++	timeout->target_seq = tail + off;
++
++	/*
+ 	 * Insertion sort, ensuring the first entry in the list is always
+ 	 * the one we need first.
+ 	 */
 
 
