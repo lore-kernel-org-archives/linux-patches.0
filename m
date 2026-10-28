@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793208531;
-	b=Qrak3idv98oJu0y7E0h9nSAMpLZ5XRxM3jWtNMp4fUNogw+2y3B3zyCLgGw/JtittQ2F
-	 2IHminZuvWfL4StXO4VWbZwgHKmQkqs2UoWs98ub2TvWkVSPlFsg4R0fDyDVPUickK7LZ
-	 91hgVdREZhM/UDLy+Zw49DRQ/RAKARddQ20mwoHpQLaPIsE0Aa//NMTNPeoUQmfa1KXXe
-	 HV0u9m6Zk5YR6YATQZKlxrXwf/P3mxEtbp/6hFqXMS7xTIfN/M0HKMOnYhNkAUBYJycx4
-	 dQ2p4fBh8emJXLIdI+EpW28U3qpm8Um6SoDZROoWFW/XaLlTxaB6Wjyp38N/yCZI37g==
+	t=1793208534;
+	b=tIt9R1SgbvJZLiZWD5P0fe0LUVKCNzFraaHzYZmDGRU/zjDtWdY4IEHepWaG/1+CXFWQ
+	 14d/dGEpUzCtVnVmIf7JHOEfo+ZvN3+9hNkP7Ok66XUQGxdEUdvmQLovsJBQvWifucIuN
+	 e4gkbqwCWnXMcF9E14NGhTvLDSiLNzLLqyA037Qrs4JGy0GhWKGJSKy1UlRl/R6C8KJl9
+	 VJqfYUxDt8c1ZNqQfqifbFcPOR0HQDB1QJ4eLd2S2IexK1fS5GEBcytPQylRUxSLsjmVg
+	 NWJHC+oIArql8kAGygvei3BIFfzDDRJ+vze1sOn4/LhGtCAUh008GQ+uorqapn1mOoQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793208531;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793208534;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=uulRfrBfvgaxfJ5FXltRM8oOuVCTMJHrqvMPXS8enQA=;
-	b=5goSGtW8tHcv4qG9o75LMt55HDgtTFnfeeA985wO54RFGyxytE4BwUNHFhQ10N9OIvlJ
-	 pYfhZJt9+/5ZC2NER2VsyTS4bgLOrWIVMhdHTOLKdToupXGfu/s9X/2EJE98Tbm8Vtp7o
-	 jTo2fUcm+ekzZN8otx/b3B29C6w9nsWinHlxfjmrNl6E6dIkbRFgZ5mQcbJcT9My0QENp
-	 wCTkb0glBz7/uJa/gJevM2H6ss4siHExz/FxNlOak/Vx8tt9d9oysHjfjARzO7Ac+5m8o
-	 UrDhbuqpx9Vpp3sXS/TkS+x7j17Yszjdfm3uVcAbJ0L9nqGyaCN1eAiEqORw5lLtkTw==
+	bh=9VPcCYznS2Nh91+h+v5E2s4MeOk1tOU3RYx8TDusZGE=;
+	b=0xpnuBiOR7G3vFIFmG08//AZ9ANkmTHtfo0xr/YT1Tb2JJ4gmxDBhL/M0DWXY2ATQodE
+	 Aq3I4fX4Njs+vj28/cwVz8Bs8wQ1b51/6qINfVsh2PKScnyM17MaTnll4pvJ49nZUFSaN
+	 BrNYit0rOi2PTDxsVLPOzkMVsyV600EytHyk1h4WMejNsJ355JQl4ekd7sLQjNR7C1obn
+	 4Jy3lWdFwmviDrhxCzeyUBmCgop9KzyIyyoPFLJYsnGQZ9bPVbRcBwVacX9ROXVBVHN5D
+	 3ekbC/xHmV+xmCxJajsScISei/UHPDCM4P1dnB/pjYfhKXGNgDOGWjGPJqDYzbdUV4A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gqpAYMee;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SdcPqSbl;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D44C1606A31E;
-	Wed, 28 Oct 2026 17:28:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B297F606A31D;
+	Wed, 28 Oct 2026 17:28:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gqpAYMee
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 323351F01825;
-	Wed, 28 Oct 2026 17:28:50 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SdcPqSbl
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EF991F01825;
+	Wed, 28 Oct 2026 17:28:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793208530;
-	bh=uulRfrBfvgaxfJ5FXltRM8oOuVCTMJHrqvMPXS8enQA=;
+	s=korg; t=1793208533;
+	bh=9VPcCYznS2Nh91+h+v5E2s4MeOk1tOU3RYx8TDusZGE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gqpAYMeeC9bZ3TriUEDfXK+5/CxqSvQaxtY1HBQHaXlfSdgudpor1/TQJ5/TKN8LN
-	 LPCJERK3hqZBdKwTXmWhGm+xX1uhHroVxq93JsWctb8bVo6l+XuH9KRGTFXUd6LwfC
-	 JyHpTag/KgR5H6DkJgZfLx5FrDiQraV3tG6BDfEE=
+	b=SdcPqSblUmivUAX2xTlAkTebChsfrwUEkV0lUdzNun+S2SmJGlDdWqa3l6/5hmXJR
+	 3JYA1y2nkrChJUVBUUNOEhjesKir65Dq03Rpr/3SpgAJUMwPiH1xUjJPzGS7TWu9QG
+	 erxjOVwVrGr9LSAkE9jfTnBd26fSk/2WsEmjC+Xo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	co+be8fa7ea6f77fdce@bugs.sh,
-	Xiang Mei <xmei5@asu.edu>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.10 153/516] ALSA: line6: reject oversized playback packets
-Date: Wed, 28 Oct 2026 17:55:05 +0100
-Message-ID: <20261028170007.131319372@linuxfoundation.org>
+	syzbot+652670cf249077eb498b@syzkaller.appspotmail.com,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Fernando Fernandez Mancera <fmancera@suse.de>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 154/516] hsr: Remove WARN_ONCE() in hsr_addr_is_self().
+Date: Wed, 28 Oct 2026 17:55:06 +0100
+Message-ID: <20261028170007.154613584@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -68,83 +70,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-commit 61b0a5a114fa4552892da5c0ff2f42e63bf08c6b upstream.
+[ Upstream commit afd0f17ca46258cec3a5cc48b8df9327fe772490 ]
 
-Each playback URB is handed a slice of out.buffer that is exactly
-LINE6_ISO_PACKETS * max_packet_size_out bytes, sized from the OUT
-endpoint, but the number of bytes written into that slice is never
-compared against it.
+syzbot reported the warning [0] in hsr_addr_is_self(),
+whose assumption is simply wrong.
 
-submit_audio_out_urb() takes the frame count from prev_fsize, which
-audio_in_callback() derived from the *IN* endpoint's received packet
-length, and rescales it with the playback frame size; when prev_fsize is
-still zero it synthesizes a length from the sample rate instead.  On a
-device declaring a large IN wMaxPacketSize and a small OUT
-wMaxPacketSize, the resulting memcpy(), or the memset() when the
-playback stream is idle, runs past its slice and, as the reproducer
-below shows, beyond the allocation.
+hsr->self_node is cleared in hsr_del_self_node(), which
+is called from hsr_dellink().
 
-usb_submit_urb() is not a backstop.  max_packet_size_out comes from
-usb_maxpacket(), which returns only the low 11 bits of wMaxPacketSize,
-while USB core validates a high-speed isochronous length against that
-base scaled by usb_endpoint_maxp_mult().  A length of up to three times
-the allocated slice is therefore accepted, and even a rejected URB is
-only rejected after the write.
+Since dev->rtnl_link_ops->dellink() is called before
+unregister_netdevice_many(), there is a window when
+user can find the device but without hsr->self_node.
 
-Reject a packet that does not fit the slice the driver allocated for it.
-Clamping it instead would silently shorten the capture-derived rate
-feedback and desynchronize the two streams.
+Let's remove WARN_ONCE() in hsr_addr_is_self().
 
-  BUG: KASAN: slab-out-of-bounds in submit_audio_out_urb (sound/usb/line6/playback.c:229)
-  Write of size 1024 at addr ffff888100bbd400 by task kworker/1:2/5002
-  Workqueue: events line6_startup_work
-  Call Trace:
-   __asan_memcpy (mm/kasan/shadow.c:106)
-   submit_audio_out_urb (sound/usb/line6/playback.c:229)
-   line6_submit_audio_out_all_urbs (sound/usb/line6/playback.c:291)
-   line6_stream_start (sound/usb/line6/pcm.c:194)
-   line6_pcm_acquire (sound/usb/line6/pcm.c:337)
-   line6_startup_work (sound/usb/line6/driver.c:728)
-   process_one_work (kernel/workqueue.c:3396)
-   worker_thread (kernel/workqueue.c:3479 kernel/workqueue.c:3560)
-   kthread (kernel/kthread.c:436)
-   ret_from_fork (arch/x86/kernel/process.c:158)
-   ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
+[0]:
+HSR: No self node
+WARNING: net/hsr/hsr_framereg.c:39 at hsr_addr_is_self+0x211/0x3f0 net/hsr/hsr_framereg.c:39, CPU#0: syz.4.16848/17220
+Modules linked in:
+CPU: 0 UID: 0 PID: 17220 Comm: syz.4.16848 Tainted: G             L      syzkaller #0 PREEMPT_{RT,(full)}
+Tainted: [L]=SOFTLOCKUP
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 04/18/2026
+RIP: 0010:hsr_addr_is_self+0x211/0x3f0 net/hsr/hsr_framereg.c:39
+Code: 33 2f 41 0f b7 dd 89 ee 09 de 31 ff e8 c8 b4 c6 f6 09 dd 74 54 e8 0f b0 c6 f6 31 ed eb 53 e8 06 b0 c6 f6 48 8d 3d 2f 50 9c 04 <67> 48 0f b9 3a 31 ed eb 42 e8 c1 13 1f 00 89 c5 31 ff 89 c6 e8 96
+RSP: 0018:ffffc900041c70e0 EFLAGS: 00010283
+RAX: ffffffff8afdc6ca RBX: ffffffff8afdc4e6 RCX: 0000000000080000
+RDX: ffffc90010493000 RSI: 0000000000000948 RDI: ffffffff8f9a1700
+RBP: 0000000000000001 R08: 0000000000000000 R09: 0000000000000000
+R10: ffffc900041c71e8 R11: fffff52000838e3f R12: dffffc0000000000
+R13: ffff888041f9e3c0 R14: ffff888086ee3802 R15: 0000000000000000
+FS:  00007f6fe985d6c0(0000) GS:ffff888126176000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007f80bd437dac CR3: 0000000025096000 CR4: 00000000003526f0
+DR0: ffffffffffffffff DR1: 00000000000001f8 DR2: 0000000000000002
+DR3: ffffffffefffff15 DR6: 00000000ffff0ff0 DR7: 0000000000000400
+Call Trace:
+ <TASK>
+ check_local_dest net/hsr/hsr_forward.c:592 [inline]
+ fill_frame_info net/hsr/hsr_forward.c:728 [inline]
+ hsr_forward_skb+0xa11/0x2a80 net/hsr/hsr_forward.c:739
+ hsr_dev_xmit+0x253/0x370 net/hsr/hsr_device.c:236
+ __netdev_start_xmit include/linux/netdevice.h:5368 [inline]
+ netdev_start_xmit include/linux/netdevice.h:5377 [inline]
+ xmit_one net/core/dev.c:3888 [inline]
+ dev_hard_start_xmit+0x2df/0x860 net/core/dev.c:3904
+ __dev_queue_xmit+0x1428/0x3900 net/core/dev.c:4870
+ neigh_output include/net/neighbour.h:556 [inline]
+ ip_finish_output2+0xcec/0x10b0 net/ipv4/ip_output.c:237
+ ip_send_skb net/ipv4/ip_output.c:1510 [inline]
+ ip_push_pending_frames+0x8b/0x110 net/ipv4/ip_output.c:1530
+ raw_sendmsg+0x1547/0x1a50 net/ipv4/raw.c:659
+ sock_sendmsg_nosec net/socket.c:787 [inline]
+ __sock_sendmsg net/socket.c:802 [inline]
+ ____sys_sendmsg+0x7da/0x9c0 net/socket.c:2698
+ ___sys_sendmsg+0x2a5/0x360 net/socket.c:2752
+ __sys_sendmsg net/socket.c:2784 [inline]
+ __do_sys_sendmsg net/socket.c:2789 [inline]
+ __se_sys_sendmsg net/socket.c:2787 [inline]
+ __x64_sys_sendmsg+0x1c3/0x2a0 net/socket.c:2787
+ do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+ do_syscall_64+0x15f/0xf80 arch/x86/entry/syscall_64.c:94
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+RIP: 0033:0x7f6feb62ce59
+Code: ff c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 44 00 00 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 e8 ff ff ff f7 d8 64 89 01 48
+RSP: 002b:00007f6fe985d028 EFLAGS: 00000246 ORIG_RAX: 000000000000002e
+RAX: ffffffffffffffda RBX: 00007f6feb8a6090 RCX: 00007f6feb62ce59
+RDX: 0000000000000000 RSI: 0000200000000000 RDI: 0000000000000004
+RBP: 00007f6feb6c2d6f R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
+R13: 00007f6feb8a6128 R14: 00007f6feb8a6090 R15: 00007ffcf01cc488
+ </TASK>
 
-  The buggy address belongs to the object at ffff888100bbd400
-   which belongs to the cache kmalloc-256 of size 256
-  The buggy address is located 0 bytes inside of
-   allocated 256-byte region [ffff888100bbd400, ffff888100bbd500)
-
-Cc: stable@vger.kernel.org
-Fixes: 7a0f55aeeb8f ("ALSA: line6: Support assymetrical in/out configurations")
-Reported-by: <co+be8fa7ea6f77fdce@bugs.sh>
-Assisted-by: LLM
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-Link: https://patch.msgid.link/20260918234014.1318325-1-xmei5@asu.edu
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: f266a683a480 ("net/hsr: Better frame dispatch")
+Reported-by: syzbot+652670cf249077eb498b@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/6a1a861e.b111c304.35cd64.0016.GAE@google.com/
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>
+Link: https://patch.msgid.link/20260530064300.340793-1-kuniyu@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/line6/playback.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ net/hsr/hsr_framereg.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
---- a/sound/usb/line6/playback.c
-+++ b/sound/usb/line6/playback.c
-@@ -182,6 +182,13 @@ static int submit_audio_out_urb(struct s
+diff --git a/net/hsr/hsr_framereg.c b/net/hsr/hsr_framereg.c
+index b715509f6b07e..e2e393a033a7c 100644
+--- a/net/hsr/hsr_framereg.c
++++ b/net/hsr/hsr_framereg.c
+@@ -45,10 +45,8 @@ bool hsr_addr_is_self(struct hsr_priv *hsr, unsigned char *addr)
  
- 		fsize *= bytes_per_frame;
+ 	rcu_read_lock();
+ 	sn = rcu_dereference(hsr->self_node);
+-	if (!sn) {
+-		WARN_ONCE(1, "HSR: No self node\n");
++	if (!sn)
+ 		goto out;
+-	}
  
-+		if (fsize > line6pcm->max_packet_size_out) {
-+			dev_err(line6pcm->line6->ifcdev,
-+				"playback packet too large: %d > %d\n",
-+				fsize, line6pcm->max_packet_size_out);
-+			return -EMSGSIZE;
-+		}
-+
- 		fout->offset = urb_size;
- 		fout->length = fsize;
- 		urb_size += fsize;
+ 	if (ether_addr_equal(addr, sn->macaddress_A) ||
+ 	    ether_addr_equal(addr, sn->macaddress_B))
+-- 
+2.53.0
+
 
 
