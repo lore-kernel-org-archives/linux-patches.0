@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793209820;
-	b=trfy7xIvgSYgdgupPuORfw4KxrbqZmRwWfU07O3CTt1LrNRV6xXRxgnHOHIZ39tbzPez
-	 hXx0Hd1wUbjr5AC+idPGFipWBmdgMI48pvUveLmKpNO2vE8YF+daoZ9FSZRfmFDHf1cCY
-	 fV82qQwuvJrBP4wwTRQAxZJmTnCoZOdq0Pg7du1OE3fdnBq85OM5I/6lnwmvSH63ypXDn
-	 P287lk3cn0T8uZkwseuzGQpLBsy2/KcZlhkCo4OR5C8V59K1dSkYnad3a8lQ8r0J+3P9S
-	 63ii3FmqyrvzQy+MMxlq83D8ImIujxM0Oef6weUp6gCLwlr9VoIh4Pv9UWci8aiUPqQ==
+	t=1793209822;
+	b=2nm2AQlaJLxymBnjHWN+pP4p1AW7gjbzv5wPLnSiAYNzwDaIpSmGm77kwE15qrzpUdBr
+	 zCopRCJFCFItAtx1/T604uV1z8BydNZvMduCOEW+V4zfLEchMSrEnKSXpiLryn6DW2dws
+	 GVLAp79ETNTkmYzPDAbMMtcyA7dG/bULv64lwOWmtQsqOXSHk/v1ZnPNS0uRK7Ay3yE72
+	 4Pdz+UCQPvFwaQZ66dBNADLnshp+U5uq12RxW+T9fI0sU+3j346n7MFuW9B8gHzy3MCWP
+	 DwD+xshSac7FJjFZo5GLPryD751P87VEuyfuWqSkI3BKlDzV3YPDr7qefq4VLDUzrPA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793209820;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793209822;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=21ZSfipS7MUxgvFR2FreX8bFPWv4e+zRaF+2UvZv0xI=;
-	b=tcPgUSkcW8xvJ/ggi5/a4wLS1+HB7NL1GQqYckTzsD5Wn8mpcWcN7XSwErWCQ/cB5H+2
-	 5Fd7K03CzmNd8jAP5XBtJ+uFfewCY5ihj5TN4A9AJ0BIkZbYQOgiqD/NEb+KCG1y47ick
-	 +/0AUea+hF+hj0d2KxV6YKrOrdV69Dz06zSa/DAJASkJtKprXAqLNDoisZCDXZuuTULVI
-	 at4kT8lQHIMm5gnZyKdRRhWRVgWx553F14QAB64KjG7G8HV1wkpZH343AlRX0klcDIsCg
-	 zECsEvtsFIL2mfvmeXUhyz6ZCnJ8ZextHXwp5+zFP/HldVMn0IvoXLhpZHnZu9wQx7Q==
+	bh=x+HxWpUAw7BulpMbSN9DdoJND0rt37DJLspz0rxDvlU=;
+	b=NXCwMa/nqvWobfwVUhWk/zOmlgQwpAQ5uR6ngR//ZnpTk0UqpCf8wchqqORG7BSEg9LA
+	 NKK4EnHYicIcefRHNorrHQUBFPifmlyMvth2uCsHcrohwA0NGAGr9MSHP3Ev6p2aKpB2N
+	 rMAHuc/t2F6yGAFSEtN76Qccl8UseeI7WxFBOpls4E1tW0Ay8MSu1xmwnJTxTQgoWJkDm
+	 MMIotGRjhEozKtJux4Qs9P9shBpvLSeXAH+mtUjTTi/6fB6vkS2lHoOxItJrVCJ+2KVzS
+	 lcn/hJUJ9IcBbL+HbK0yXxMEThcirJuILdgmJKTOnOe8klasW575NxGUFdpYzeqgJ0Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=djPOdHRV;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cSwYhp8H;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9FCD606A323;
-	Wed, 28 Oct 2026 17:50:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D9B6606A31D;
+	Wed, 28 Oct 2026 17:50:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=djPOdHRV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06DAE1F01825;
-	Wed, 28 Oct 2026 17:50:18 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cSwYhp8H
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA3621F01828;
+	Wed, 28 Oct 2026 17:50:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793209819;
-	bh=21ZSfipS7MUxgvFR2FreX8bFPWv4e+zRaF+2UvZv0xI=;
+	s=korg; t=1793209822;
+	bh=x+HxWpUAw7BulpMbSN9DdoJND0rt37DJLspz0rxDvlU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=djPOdHRV3Gzb4TPVlQ3tti1TdGj6IjQJDwH6fPzIJLiOXVShhyZqBZkBGVa2guNDJ
-	 ecRFY/UZ21hnl4SseBCS5Casu/aM2ywObJQ9uiB4Ue5J//ojFfc5/3iLSTCGe9OshK
-	 miCqUVYnnOwdfJRU3+AoUrlKC+c6HeRcDeuXHvKg=
+	b=cSwYhp8HH2INIR5FwuVgmYVMMEaT9IJjK9H8uyoEDsU5KdwO5jIGHP/GbF1gONDe+
+	 sX7j5e5ilX9R5k07nYjvJL92ino7VuZ3lMzT9vme5mq964rgBvhcVc8BPDU+/P5acr
+	 S9+qCTQbPKbACOeCJHd1+n3u+PmI9QcznBJisurA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tamaki Yanagawa <ty@000ty.net>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.18 086/109] io_uring/net: keep recv buffer select length within MAX_RW_COUNT
-Date: Wed, 28 Oct 2026 18:01:10 +0100
-Message-ID: <20261028165944.381728108@linuxfoundation.org>
+	Jens Axboe <axboe@kernel.dk>,
+	Oleg Nesterov <oleg@redhat.com>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>
+Subject: [PATCH 6.18 043/109] io-wq: order the exit bit against worker creation task work
+Date: Wed, 28 Oct 2026 18:00:27 +0100
+Message-ID: <20261028165943.377231070@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165942.357251485@linuxfoundation.org>
 References: <20261028165942.357251485@linuxfoundation.org>
@@ -67,40 +68,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tamaki Yanagawa <ty@000ty.net>
+From: Christian Brauner <brauner@kernel.org>
 
-Commit 96262cfab554cf11412de7a6247f0e82c94e130f upstream.
+Commit 0e5663856b69219ef2f02e04bac9f5c5be19718a upstream.
 
-Since commit dcbd1c054848 ("io_uring/net: let io_recv_buf_select return
-the length of the buffer region"), io_recv_buf_select() returns the
-selected length as an int. For a non-bundle recv with sqe->len == 0 the
-length comes from the ring provided buffer, which can be up to 4G, so a
-buffer of 2G or more makes io_recv() fail the request with a bogus
-negative result (e.g. -2147483648) instead of receiving into it. Clamp
-the length to MAX_RW_COUNT, which import_ubuf() limits the transfer to
-anyway.
+io_wq_exit_workers() cancels task work for queued worker creation with
+task_work_cancel_match(). That has a plain load of task->task_works.
 
-Fixes: dcbd1c054848 ("io_uring/net: let io_recv_buf_select return the length of the buffer region")
+io_queue_worker_create() adds the new entry and tests IO_WQ_BIT_EXIT to
+cancel it if the workqueue is already on its way out.
+
+That must be ordered. task_work_add() has a full barrier via cmpxchg().
+But io_wq_exit_start() sets the bit with set_bit() which doesn't have
+any memory ordering.
+
+So afaict, on weakly ordered architectures the exiting task may load
+task_works before the store of the bit is visible. The other side tests
+the bit before the store is visible as well. So the entry remains queued
+with worker_refs and the exiting task waits on worker_done indefinitely.
+
+If the task still has rings then io_uring_del_tctx_node() provides the
+barrier via test_and_set_bit() in io_wq_set_exit_on_idle(). When it
+has closed all rings though that barrier is gone.
+
+Add the barrier after the set_bit().
+
+Fixes: 71a85387546e ("io-wq: check for wq exit after adding new worker task_work")
 Cc: stable@vger.kernel.org
-Signed-off-by: Tamaki Yanagawa <ty@000ty.net>
-Assisted-by: Claude:claude-opus-5-5
-Link: https://patch.msgid.link/20261018042227.1105-1-ty@000ty.net
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Reviewed-by: Jens Axboe <axboe@kernel.dk>
+Acked-by: Oleg Nesterov <oleg@redhat.com>
+Link: https://patch.msgid.link/20260921-work-coredump-fixes-v3-4-8e4adb1619e6@kernel.org
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/net.c |    2 ++
+ io_uring/io-wq.c |    2 ++
  1 file changed, 2 insertions(+)
 
---- a/io_uring/net.c
-+++ b/io_uring/net.c
-@@ -1195,6 +1195,8 @@ static int io_recv_buf_select(struct io_
- 		*sel = io_buffer_select(req, &len, sr->buf_group, issue_flags);
- 		if (!sel->addr)
- 			return -ENOBUFS;
-+		/* ring provided buffers can be up to 4G, keep len an int */
-+		len = min_t(size_t, len, MAX_RW_COUNT);
- 		sr->buf = sel->addr;
- 		sr->len = len;
- map_ubuf:
+--- a/io_uring/io-wq.c
++++ b/io_uring/io-wq.c
+@@ -1320,6 +1320,8 @@ static bool io_task_work_match(struct ca
+ void io_wq_exit_start(struct io_wq *wq)
+ {
+ 	set_bit(IO_WQ_BIT_EXIT, &wq->state);
++	/* Pairs with task_work_add() in io_queue_worker_create(). */
++	smp_mb__after_atomic();
+ }
+ 
+ static void io_wq_cancel_tw_create(struct io_wq *wq)
 
 
