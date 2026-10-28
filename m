@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793208158;
-	b=0/7FLifD0o8oImPWVaH41SJZMQWpvbTLsNSkomAH9Yy/rf9t99Q8LSesYQRLDtfQg9gh
-	 6Zu6oeGZUIkovBF63Ff3gJsS24mtpd19aLnZtr10rS9RGa0/OJkrD9adreYaSA/LFwewv
-	 B8seJ3wZr0LglpWX924szhaL7W4UrrQzyKf6crcRSkZ9zszbbySSxF7S9DbNmWT4UzH3h
-	 XFm6stce42AETGItKa/IvbF4mIeHF4NfWIKxDwBrdOxKzaxlYXsRTmFnPS9EHleUBP6u3
-	 9CN7TO4BqnN49HjshBOjX2wVn8sQ1zN8+5qluSDBXEXxyAax/+Clvcnz4l3ha9lx4+A==
+	t=1793208161;
+	b=E59y95fdcxfKUdVlbTiTd7ep4kELApcNeYV+W426cjGlrAIw/0mPIMQtftxcUf2jNHqi
+	 6ZRrWpZQV4Pt3SRYxhP2O+NzQ8h0ZJNwv0O1/c54GLF3ISQxryWMeDhUIu+nKjYypk38g
+	 9b2i9vXSBrgXmTFdTvAPZ4peCeMZWqfiUTuICTwuDOMgBSz/H5+CtedYe6vzhrW3KVNub
+	 /Yp3AFOqr9cCLGdREevIJKgYexccSJdDOkmfyh1uWJcuiPK+Xzlb1Pw/WbmuvWeGme17M
+	 6gTTOFXT6Avp7BKroAPy6voQCTEbyTE/YEVMpVA6DANidZg1PFGcrMUjyo1qYAEGmLg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793208158;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793208161;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=FlOwLe75JZNoBRfOIgHuRHqX2mmrWMsq7VoDnUooZcA=;
-	b=fIagfL4wO+tZ0lHKEXisNVNGM5NzU5RKsyBzyXvRBVK+0jk0IyEi7ip3XWIgHDfNwN9D
-	 8LAkGnjsJ9Ox+JoptzuoWpdues/qgnzE5v7Pym7J6XYNutuPX9+dVCV6WYdn4moQCSN/Q
-	 +FSyVuAo5ZNvKnYvNpKJHN+wW+x22q0RsZqFJvQ00n6M5o7Fjo3b649nca+FLDHDTIywQ
-	 ObJmDh8F6pxLfi8mjSxQ+ViV9GYBuMXARogtfDzR8DVO3iOZPeQACsN4z0Y0M8fuHCYlr
-	 j2WSxizlMuWuYoJspx3MLhO+onHrKjpuNwc4o1QcoeW1XNMZt6RmExpLSvv8ozvH1fQ==
+	bh=RPL2p3+aA/HANLBeaqVu2RC7FobHdKkaI4OLV7Awi3c=;
+	b=ggrVOTtTsvwEstYbqi4svzpuTjaOECd7zlqUt8DjVYbq0UqQqPNp+QZGMhSk2XQW9Ibl
+	 mwMqSPV/YTwNb9v8Z7H1WbSfa/QW1xzYwf/fmRkNUGD3lXw6lf20pkACI38xzK1H4ovM/
+	 gxS0XQ2ftT1a3ZAhi5/wyKVb4CozvI9ywATTj88+5kUWflTSs1x9vS+oiTqZU2wGDaXnZ
+	 /q3WsoNc9ptrE7o4dq+iFbn0/rnGH+etHP10k2o4Ad+A2Frq9N6S1cUa6DK7Dy60F7oCl
+	 UC+Uy6XARjOkGXx3zmQGoLXkby2BAWEjYp+JxomgFZ96XN+KliaxEBa+LiZeJSZJYOQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=COfFIILe;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AItjB+EA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E618C606A31D;
-	Wed, 28 Oct 2026 17:22:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDD17606A321;
+	Wed, 28 Oct 2026 17:22:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=COfFIILe
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4377C1F01825;
-	Wed, 28 Oct 2026 17:22:37 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AItjB+EA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B8D81F01825;
+	Wed, 28 Oct 2026 17:22:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793208157;
-	bh=FlOwLe75JZNoBRfOIgHuRHqX2mmrWMsq7VoDnUooZcA=;
+	s=korg; t=1793208160;
+	bh=RPL2p3+aA/HANLBeaqVu2RC7FobHdKkaI4OLV7Awi3c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=COfFIILeabkZ0PB2GHHlW5bdL64S6u/TJcUShP7z8r6iee1LtZTW4JOdkpRAB5rBS
-	 3sou6rZhAF7n5L7mRoNC9irfElik11li8MXsqWLAqJ98R7qJ1lYzRKdKCy2w/NcIa4
-	 SARBth5uiJXsVGXgyyamrz3FEFl2xo03lOX0AQhk=
+	b=AItjB+EAJscV3kC7Pz/iHHPpY2JUbGsfHCZWamwr8/iiOrT+DY5ptT7Nq6E1hpiZv
+	 i9O8HtGuaGIIVFd/G5fk3zf/05W9DYqJKr2ws3KlvM1GXA66qJerTjhGn5jmjCo3oV
+	 /fgI9vw9y5cHtuhd/NHgt2f+aHZBacDtcUDNSDpo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Borntraeger <borntraeger@linux.ibm.com>,
-	Matthew Rosato <mjrosato@linux.ibm.com>,
-	Claudio Imbrenda <imbrenda@linux.ibm.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 022/516] KVM: s390: Zero initialize data structures for inject_pfault_token
-Date: Wed, 28 Oct 2026 17:52:54 +0100
-Message-ID: <20261028170004.053572631@linuxfoundation.org>
+Subject: [PATCH 5.10 005/516] nfsd: fix nfsd_file leak on inter-server COPY setup failure
+Date: Wed, 28 Oct 2026 17:52:37 +0100
+Message-ID: <20261028170003.653972153@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -69,49 +68,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Borntraeger <borntraeger@linux.ibm.com>
+From: Jeff Layton <jlayton@kernel.org>
 
-[ Upstream commit 4e2c7f7cbc27418f9a290399b986c1b85ff93b90 ]
+[ Upstream commit 88a76145451d703eedd867b5989bf73d17340399 ]
 
-__kvm_inject_pfault_token() only sets .type and .u.ext.ext_params2 of
-the on-stack struct kvm_s390_irq but the full ext substructure is copied
-into the cpu local variable on inject. ext_params and pad contain stale
-stack values.
+When nfsd4_setup_inter_ssc() fails, nfsd4_copy() returns
+nfserr_offload_denied directly, bypassing the out: label where
+release_copy_files() would drop the nf_dst reference taken by
+nfs4_preprocess_stateid_op(). Each failed inter-server COPY
+leaks one nfsd_file, pinning file/inode/dentry/vfsmount.
 
-Interrupt delivery only uses ext_params2, so nothing leaks to the guest,
-but a host user can use the migration ioctls to get to the data.
+Fix by setting status and jumping to out: instead of returning
+directly.
 
-Fix by zero-initializing the irq struct.
-Do the same for the inti data structure.
-
-Fixes: 383d0b050106 ("KVM: s390: handle pending local interrupts via bitmap")
+Fixes: ce0887ac96d3 ("NFSD add nfs4 inter ssc to nfsd4_copy")
 Cc: stable@vger.kernel.org
-Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Reviewed-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
-Signed-off-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
-Message-ID: <20260805110455.7200-3-borntraeger@linux.ibm.com>
-[ Adjusted context for missing inti_mem and ret declarations in __kvm_inject_pfault_token(). ]
+Assisted-by: kres:claude-opus-4-7
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Link: https://patch.msgid.link/20260531-nfsd-testing-v1-3-7bfa481b0540@kernel.org
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+[ adjusted cleanup paths to omit unavailable trace_nfsd_copy_*() calls ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/kvm/kvm-s390.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/nfsd/nfs4proc.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/arch/s390/kvm/kvm-s390.c b/arch/s390/kvm/kvm-s390.c
-index 87efa46657e3c..7d9623f4df68a 100644
---- a/arch/s390/kvm/kvm-s390.c
-+++ b/arch/s390/kvm/kvm-s390.c
-@@ -3933,8 +3933,8 @@ long kvm_arch_fault_in_page(struct kvm_vcpu *vcpu, gpa_t gpa, int writable)
- static void __kvm_inject_pfault_token(struct kvm_vcpu *vcpu, bool start_token,
- 				      unsigned long token)
- {
--	struct kvm_s390_interrupt inti;
--	struct kvm_s390_irq irq;
-+	struct kvm_s390_interrupt inti = {};
-+	struct kvm_s390_irq irq = {};
+diff --git a/fs/nfsd/nfs4proc.c b/fs/nfsd/nfs4proc.c
+index 9095bd7c145c6..2ef88a7d22e37 100644
+--- a/fs/nfsd/nfs4proc.c
++++ b/fs/nfsd/nfs4proc.c
+@@ -1778,12 +1778,14 @@ nfsd4_copy(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
+ 			goto out;
+ 		}
+ 		status = nfsd4_setup_inter_ssc(rqstp, cstate, copy);
+-		if (status)
+-			return nfserr_offload_denied;
++		if (status) {
++			status = nfserr_offload_denied;
++			goto out;
++		}
+ 	} else {
+ 		status = nfsd4_setup_intra_ssc(rqstp, cstate, copy);
+ 		if (status)
+-			return status;
++			goto out;
+ 	}
  
- 	if (start_token) {
- 		irq.u.ext.ext_params2 = token;
+ 	memcpy(&copy->fh, &cstate->current_fh.fh_handle,
 -- 
 2.53.0
 
