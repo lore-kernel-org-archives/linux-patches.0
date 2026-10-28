@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216657;
-	b=bzkqTopKmxweYsY9jplFBzn/SvCUWBZi2ryfHbnvSGkIhyFzA1YjxOis4uiLh+RJbTia
-	 TEqXS1V8HNYCXDPmPPZ749fi4PePkPupYSHyojy5eAOycaSdxzCGjN/JqPepYAdRkgmw2
-	 bpE5A9V4L2V0b8W8Fqr2G+XbTCk4PMuN/u+5+TmlsfkO2fSIjffRqGIMmfIwgWdMwyT86
-	 re31oSqyI3S83gUCAdW6cBseU7TvOTNMebLwx4Tfx01cdyK/uU8BCdsGiy58GnEco3zN7
-	 1A870TQ9TL8za+CYFgVA+3Unv9lm9H/Yio9b0tC35maA3t7t+jKy6DVBDdS9gykMrEw==
+	t=1793216660;
+	b=vKBbxgL2kUTAbQL0dzUMil8uWVpUz1Urp6vDxOAkk4Van2v8cJG/eYoBi/QK8WwPR1oG
+	 Jui5VexGSD5tOD2Ng6FM3aZRinII2ZP6nGZd192mW3Gbhk4j8Rrf5B0rmqz4Twh4ytxzw
+	 i7eAgF1htKQDdl0wR1mLd8V+8L6VxbYPgJ8AFREZWfLR3c/Txzwv6XasPQobPCa5p19dx
+	 kw4bNhW8LrQRVO5duNyz3igrFDlG1eYbVCEmXE0HUk9sN2yeUnGX+H4xH9aQYPoXzpKzk
+	 59VZWBTgfGzNAc0IJpwxbzhnzx9hALLlTyaf7cxFcTzCXc4If+PaOV3k2rc5FwRlpXQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216657;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216660;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=tt6mZfnZxgYZp8604CDmpAL282/3FvfFqj0c8SB65K8=;
-	b=hZT7dSqxsvnbf5zSOi+z9/++xT5/a7ia1avs2i27DrYq/qK26Umtc3ItXBfEmlEUT2Hc
-	 Azs4mc+Zk7CuiCwDw1+4kikmK1MEDuzlIHAT8GLTQIF7RPfsnoSE6iBlWpXSNUMFoIqBJ
-	 /jlVOFIDXB1mxCdx+RfJXtFdTGYXFoFFOctwNs+gDXs/yDOL6ksBNsOHZjniJTfEQfb/6
-	 0fsfuj99Macf/ikxs1D7ugpL04Im+RS4+5j9t2HS/9x2ZiqhICbnCa7R2Si+LhcLO4s3i
-	 pknmx5YxaWYyTzits+x9k/kDb67NUl+0CtWYIbg3uUZql/9vR9S302CQkcIwRvUu1QA==
+	bh=vVSNwhfV41Inxq0EXc1f+U/68Uqsvc5CaeE8sFVNB3U=;
+	b=hczqqt2yPTJD9PXmpxmlDxuMeBKXxhfK/u0gMFqt9kIoOvT8Qm7rAeFlSnvcIpIVeZiJ
+	 +6RIG4lKz6+SLGAjmdaocxcwDSvm6qVjLGi6dUnm1E4JoUW0EEyZpEUExUocKqnV1lM3Y
+	 yKgouOEyXG/VXNfs3bxGX7QtAFUEUkqFCn3RCIx7eZ4YB44VnoZA318k12ndompseR2SH
+	 ROoTxiSfx7IC8RwWVtu9cMeFoxNYJTF/pdoiNN/x1fGmSmBzbnMAr/9a8Dd0Pf57928MX
+	 8sa21Lu3tFjm74K1q5YkpYKStF0PWALGOlyi5r/d1nfJDaL3SJX2i74F8CpVLRWN9Fw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mNm2fs9E;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ajtwce6u;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AFB7606A31A;
-	Wed, 28 Oct 2026 19:44:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14787606A31E;
+	Wed, 28 Oct 2026 19:44:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mNm2fs9E
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 671651F01825;
-	Wed, 28 Oct 2026 19:44:16 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ajtwce6u
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D8B71F01825;
+	Wed, 28 Oct 2026 19:44:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216656;
-	bh=tt6mZfnZxgYZp8604CDmpAL282/3FvfFqj0c8SB65K8=;
+	s=korg; t=1793216659;
+	bh=vVSNwhfV41Inxq0EXc1f+U/68Uqsvc5CaeE8sFVNB3U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mNm2fs9EJvJ2BchHfuFIeGlWeWM/Gdo8WnUWZzWVeJSsAnvVipNpHYwrqbBHrKyjP
-	 NXnhRghJOtF1C95Qnd8rMEEx7HNKzil5Q8jrN4SK3Xrz+kFDhxAKMhUrlTnicmGr25
-	 5e0xHnUt5WbfFP7RXew4aZKWftteKSCI86eAAIYg=
+	b=Ajtwce6uRkTtePqQcLsDE3pANX4pdVXpzyWIyYwIQFYYFx2p1wAshCHwtsVfJTVn9
+	 ssDl4UYgm8YM1SCAp6s0wG8hWhhIiXEBxHhe7EkE95aJgpLcGE2/jWrIhMP55h3qqx
+	 6e9sNarzUol9zJz4dW47LdUO7oEcPA1PvFRXeM38=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Malaya Kumar Rout <malayarout91@gmail.com>,
-	Thomas Gleixner <tglx@kernel.org>,
+	Chen Ridong <chenridong@huawei.com>,
+	Waiman Long <longman@redhat.com>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1632/1887] time/namespace: Validate nanosecond field in proc_timens_set_offset()
-Date: Wed, 28 Oct 2026 18:02:08 +0100
-Message-ID: <20261028170536.604014169@linuxfoundation.org>
+Subject: [PATCH 6.1 1633/1887] cgroup/cpuset: introduce cpuset-v1.c
+Date: Wed, 28 Oct 2026 18:02:09 +0100
+Message-ID: <20261028170536.628209933@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,47 +69,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Malaya Kumar Rout <malayarout91@gmail.com>
+From: Chen Ridong <chenridong@huawei.com>
 
-[ Upstream commit 06aba58e58492d2b8eae059274caed29025ea96e ]
+[ Upstream commit 71e934a80863c2a9f4d27ee3360dc17e0a609aa6 ]
 
-The function validates tv_sec to be within [-KTIME_SEC_MAX, KTIME_SEC_MAX]
-but never validates that tv_nsec is within the valid range of
-[0, NSEC_PER_SEC-1] before using it in timespec64_add().
+This patch introduces the cgroup/cpuset-v1.c source file which will be
+used for all legacy (cgroup v1) cpuset cgroup code. It also introduces
+cgroup/cpuset-internal.h to keep declarations shared between
+cgroup/cpuset.c and cpuset/cpuset-v1.c.
 
-timespec64_add() expects both timespec64 structures to have normalized
-values with tv_nsec in the range [0, 999999999]. If off->val.tv_nsec
-contains invalid values (negative or >= NSEC_PER_SEC), it could lead to
-incorrect calculations or unexpected behavior.
+As of now, let's compile it if CONFIG_CPUSET is set. Later on it can be
+switched to use a separate config option, so that the legacy code won't be
+compiled if not required.
 
-Add validation to ensure tv_nsec is within the valid range before
-performing the addition.
-
-Fixes: 04a8682a71be ("fs/proc: Introduce /proc/pid/timens_offsets")
-Signed-off-by: Malaya Kumar Rout <malayarout91@gmail.com>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Link: https://patch.msgid.link/20260704093429.89350-1-malayarout91@gmail.com
+Signed-off-by: Chen Ridong <chenridong@huawei.com>
+Acked-by: Waiman Long <longman@redhat.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
+Stable-dep-of: 95220e1f18f6 ("cgroup/cpuset: Make nr_deadline_tasks an atomic_t")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/time/namespace.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ MAINTAINERS                     | 2 ++
+ kernel/cgroup/Makefile          | 2 +-
+ kernel/cgroup/cpuset-internal.h | 6 ++++++
+ kernel/cgroup/cpuset-v1.c       | 3 +++
+ 4 files changed, 12 insertions(+), 1 deletion(-)
+ create mode 100644 kernel/cgroup/cpuset-internal.h
+ create mode 100644 kernel/cgroup/cpuset-v1.c
 
-diff --git a/kernel/time/namespace.c b/kernel/time/namespace.c
-index aec832801c26c..439a5e6f5ae4c 100644
---- a/kernel/time/namespace.c
-+++ b/kernel/time/namespace.c
-@@ -398,6 +398,11 @@ int proc_timens_set_offset(struct file *file, struct task_struct *p,
- 		    off->val.tv_sec < -KTIME_SEC_MAX)
- 			goto out;
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 563492fd3ca26..bf4a79088f500 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -5293,6 +5293,8 @@ S:	Maintained
+ T:	git git://git.kernel.org/pub/scm/linux/kernel/git/tj/cgroup.git
+ F:	Documentation/admin-guide/cgroup-v1/cpusets.rst
+ F:	include/linux/cpuset.h
++F:	kernel/cgroup/cpuset-internal.h
++F:	kernel/cgroup/cpuset-v1.c
+ F:	kernel/cgroup/cpuset.c
  
-+		if (off->val.tv_nsec < 0 || off->val.tv_nsec >= NSEC_PER_SEC) {
-+			err = -EINVAL;
-+			goto out;
-+		}
+ CONTROL GROUP - MEMORY RESOURCE CONTROLLER (MEMCG)
+diff --git a/kernel/cgroup/Makefile b/kernel/cgroup/Makefile
+index 12f8457ad1f90..005ac4c675cb1 100644
+--- a/kernel/cgroup/Makefile
++++ b/kernel/cgroup/Makefile
+@@ -4,6 +4,6 @@ obj-y := cgroup.o rstat.o namespace.o cgroup-v1.o freezer.o
+ obj-$(CONFIG_CGROUP_FREEZER) += legacy_freezer.o
+ obj-$(CONFIG_CGROUP_PIDS) += pids.o
+ obj-$(CONFIG_CGROUP_RDMA) += rdma.o
+-obj-$(CONFIG_CPUSETS) += cpuset.o
++obj-$(CONFIG_CPUSETS) += cpuset.o cpuset-v1.o
+ obj-$(CONFIG_CGROUP_MISC) += misc.o
+ obj-$(CONFIG_CGROUP_DEBUG) += debug.o
+diff --git a/kernel/cgroup/cpuset-internal.h b/kernel/cgroup/cpuset-internal.h
+new file mode 100644
+index 0000000000000..034de3cbf3add
+--- /dev/null
++++ b/kernel/cgroup/cpuset-internal.h
+@@ -0,0 +1,6 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
 +
- 		tp = timespec64_add(tp, off->val);
- 		/*
- 		 * KTIME_SEC_MAX is divided by 2 to be sure that KTIME_MAX is
++#ifndef __CPUSET_INTERNAL_H
++#define __CPUSET_INTERNAL_H
++
++#endif /* __CPUSET_INTERNAL_H */
+diff --git a/kernel/cgroup/cpuset-v1.c b/kernel/cgroup/cpuset-v1.c
+new file mode 100644
+index 0000000000000..bdec4b1969867
+--- /dev/null
++++ b/kernel/cgroup/cpuset-v1.c
+@@ -0,0 +1,3 @@
++// SPDX-License-Identifier: GPL-2.0-or-later
++
++#include "cpuset-internal.h"
 -- 
 2.53.0
 
