@@ -1,49 +1,61 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=185.128.211.58
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793220261;
-	b=q1d81OwFVSr8wtr6OD7vWYsjGCcQw1upEA8jIPlykjUSlPV3Q9lT9ItwDf+LwlHOORX+
-	 aKqbFCv64GLz8NUSZ3pgX3dJMTtMea06rxIOaQduqXa5Nq6/QqwOnay5FapLTxd8Pi9qv
-	 M/cLGX8YnycePYhCjuELB+4pp8TErNWKRor3sRtJcNru861FpVXbVdXVE3RF9KyvIE575
-	 GFS1a+Fq+7EE2Ou8lRv4xd7qmoVG3Y8OibyN6h5p5Bp+xnPKie9WpxMdr13HbrKbk2w7i
-	 AO94VRGVvB+MybBs6XWwlb/0Bp5PWT8DrhFmPWR/0RnklDLninVsc+Li3DHgZxTrknQ==
+	t=1793221475;
+	b=Et5Osls77uBqni2A5Fc5FVbJy7+CNqT1h7T9Nx6KvXEaxGqc57UDerJWx8a7plYiNTeB
+	 W2LJIFLqo7yJkRGJTH6aYLTmEMecRLGVvwT5jXFsHDVnKZbDA9amsZmt41R80egmvOxVp
+	 D9v0B9jVP6f3UlgnFC/z75CEwSv35vD+kYHT7AG7BxAOU+S96JrJ81p39E2F7cFws3u5Q
+	 y67jCdpiYYjjIThjgU5CdCyxmGG8T9/AsmKEnUokNvvhz8pr/5hZloTaftjam8cXio2GN
+	 u0baOZxTMTCgsQXuDlGCadFEDprf+np/gzABCsE6blSr+VhpzNbgz4fzP/zRvgMz2eQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793220261;
-	h=DMARC-Filter:Date:From:To:Cc:Subject:Message-ID:References:
-	 MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=g+Rym2cDLBRRDNbSlQFoptvg30+FcJygQ4+cHMDKrAI=;
-	b=Vxqd06/toVt1LJ6jRGXTACatDphnF7o9e85dW3tM7YQ1FAVhKC3kJLJKXRk/+w74r/9H
-	 qijzKf8vfj6iQSt3y4dcV3q+6ZNOGN7M6uAXKOyTqhOFmzqcW0kd8VQv8NyPFweYBVaGV
-	 f+ngOjdn467nuxdMWt2BfnHMfbBqPNsaTlvKnaYhQRWZkXf5oLw63lugrgs59CBgpe74B
-	 iRBu/UVDeVBzW/iNAqphErAM/dziQR456wWnnA1qgaEl6IkEdvX7EsJqB79sRmkJ8rG7f
-	 sYpshvUi51PabS0NkC4tR53Tu/RUV+XQtRLcJoIDvEfioq+pdMBteXvQT85jKK+8EQA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793221475;
+	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
+	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
+	bh=EMYPMS5FO1bwNUoeczH2HUUreu/6T5PLlD+DKwBPIWo=;
+	b=b4WO29l5q8ZtUldMnnZ5gZhUS2gr9cBL5LCnPvHezDifYwoGRkEOjkG1Klu+COjZzQEU
+	 rtosJWgIdXfLuEjEpgZHIuhbVU4zuXk6mkqYy4wtFTFQP48lXCY4OuRyfKt8YZZZrLFOr
+	 /4hs2OFI4SaWI/+i+UYnkqKbeC3aJOZELB5sCH1tGkF0TRGQ4oIl69VN8doeAXzcloXvd
+	 u8yAqJ2bX0eBlHlfZCajNtHsN1VSp0nT5y0d0/us8FuGtrTwvV4TQjVf8Rm98Vd6Ftwij
+	 cbhp9iBeR8V/rzILflUsROSrO/gJLggm76xfBc16Php/w2PAZu6nEForKHy2CMMg9pg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=none header.from=librecast.net;
-	spf=pass smtp.mailfrom=librecast.net;
-	arc=none smtp.remote-ip=185.128.211.58
-Received: from bregans-1.gladserv.net (bregans-1.gladserv.net [185.128.211.58])
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=T5jGn2Uy;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD85A606A31A;
-	Wed, 28 Oct 2026 20:44:19 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org AD85A606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=librecast.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=librecast.net
-Date: Wed, 28 Oct 2026 21:44:11 +0100
-From: Brett A C Sheffield <bacs@librecast.net>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org,
-	pavel@nabladev.com, jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
-	hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
-	sr@sladewatkins.com
-Subject: Re: [PATCH 6.1 0000/1887] 6.1.191-rc1 review
-Message-ID: <auJem0IIOw9Ibiw-@karahi.librecast.net>
-References: <20261028170459.200466217@linuxfoundation.org>
- <auJTCcqMDEmAS7Q_@karahi.librecast.net>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D7AF606A31C;
+	Wed, 28 Oct 2026 21:04:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=T5jGn2Uy
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CEF51F01825;
+	Wed, 28 Oct 2026 21:04:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1793221474;
+	bh=EMYPMS5FO1bwNUoeczH2HUUreu/6T5PLlD+DKwBPIWo=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=T5jGn2UyEkA8BDqyiSluS0fW9XUoYBNbIWU+LwRgRzxntOVRER+isjJrvyeJ5dOiK
+	 SV9tSi2musBQcoaACMjgljbKfviy+euPxbf9Y3Env5gf+/NqRQRLdSLbPT5+LYN945
+	 MvQVyuyb/FlomK4m4CKdnOe0fxy+U0wTcYFoCF4KGwRJBtCse14MGp/t1ATD4KX1ap
+	 gBTY9yFUdakNV9SUs8xW5lZ65Esg0gEBv7GxSTCB0StvHR0Sax5YXthBsHp1MqSfdK
+	 lWoKZgPlkrJFf6GCG3nmGpq1RjPhOCvqga5UDm7tln+CGgwbr1dLMZk031giQTndjm
+	 LrQvK6jOQcToA==
+From: Sasha Levin <sashal@kernel.org>
+To: Aviv Bakal <avivb@amazon.com>
+Cc: patches@lists.linux.dev,
+	stable@vger.kernel.org,
+	robin.murphy@arm.com,
+	ilkka@os.amperecomputing.com,
+	will@kernel.org,
+	mark.rutland@arm.com,
+	linux-arm-kernel@lists.infradead.org,
+	linux-perf-users@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH AUTOSEL 6.18] perf/arm-cmn: Add workarounds for CMN-S3 on Graviton5
+Date: Wed, 28 Oct 2026 17:04:32 -0400
+Message-ID: <20261028210432.2386109-1-sashal@kernel.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <179250706537.3484860.18363532452101434862@amazon.com>
+References: <20261019135441.1420968-1-sashal@kernel.org> <20261019135441.1420968-145-sashal@kernel.org> <179250706537.3484860.18363532452101434862@amazon.com>
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -53,59 +65,15 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <auJTCcqMDEmAS7Q_@karahi.librecast.net>
+Content-Transfer-Encoding: 8bit
 
-On 2026-10-28 20:54, Brett A C Sheffield wrote:
-> On 2026-10-28 17:34, Greg Kroah-Hartman wrote:
-> > This is the start of the stable review cycle for the 6.1.191 release.
-> > There are 1887 patches in this series, all will be posted as a response
-> > to this one.  If anyone has any issues with these being applied, please
-> > let me know.
-> 
-> Build failure on amd64 with amdgpu:
-> 
->   CC [M]  drivers/gpu/drm/amd/amdgpu/../display/dmub/src/dmub_dcn315.o
->   CC [M]  drivers/gpu/drm/amd/amdgpu/../display/dmub/src/dmub_dcn316.o
->   CC [M]  drivers/gpu/drm/amd/amdgpu/../display/dmub/src/dmub_dcn32.o
->   LD [M]  drivers/gpu/drm/amd/amdgpu/amdgpu.o
->   AR      drivers/gpu/built-in.a
->   AR      drivers/built-in.a
-> make: *** [Makefile:2040: .] Error 2
-> 
-> No time to bisect just now but will try to have a look tomorrow.
+On Tue, Oct 20, 2026 at 05:37:45PM +0300, Aviv Bakal wrote:
+>Please drop this from AUTOSEL -- it's new-silicon enablement, and its
+>parent commit 56603c28d916 isn't in 6.18.y, so the static_assert in
+>arm-cmn.c would fail.
 
-Fortunately it was a build failure, so I just left that running:
-
-git bisect start
-# status: waiting for both 'good' and 'bad' commits
-# bad: [adc8e434cf08c73b0f02dab2c15319315f07172f] Linux 6.12.115-rc1
-git bisect bad adc8e434cf08c73b0f02dab2c15319315f07172f
-# status: waiting for 'good' commit(s), 'bad' commit known
-# good: [85d82e0d7c2dfd3e75d34f35b7ebbf41f45c9c4e] Linux 6.12.114
-git bisect good 85d82e0d7c2dfd3e75d34f35b7ebbf41f45c9c4e
-# good: [0e1dbd1409918dbd331cd9c382ce64736dcf3272] ksmbd: fill in FileSysIdentifier in FS_POSIX_INFORMATION
-git bisect good 0e1dbd1409918dbd331cd9c382ce64736dcf3272
-# good: [617f27c3fa85742e9d468a2145e3676af6b2498d] Bluetooth: L2CAP: refuse __l2cap_chan_add if chan already has conn
-git bisect good 617f27c3fa85742e9d468a2145e3676af6b2498d
-# good: [1476a3a7d286ad7763025337f20bb841b24c72ea] io_uring: don't pass restart error codes to userspace
-git bisect good 1476a3a7d286ad7763025337f20bb841b24c72ea
-# good: [be00113e49ff42c2c007993dd05cf4bdd1c2bfeb] keys: Protect the type name while describing a key
-git bisect good be00113e49ff42c2c007993dd05cf4bdd1c2bfeb
-# good: [6270098a65994bdf26b736b2ad6614e5b9078ad6] coredump: hold RCU while releasing parked threads
-git bisect good 6270098a65994bdf26b736b2ad6614e5b9078ad6
-# good: [41af0a793777ede3f1839bcd8abae92a5c901fe4] fork: release the files of a failed fork after sched_cancel_fork()
-git bisect good 41af0a793777ede3f1839bcd8abae92a5c901fe4
-# good: [6da107042aaa43b05f4c16bee65afc2e9b5f7561] signal: allow taks to temporarily block TIF_NOTIFY_SIGNAL
-git bisect good 6da107042aaa43b05f4c16bee65afc2e9b5f7561
-# good: [da1419eb5d34caf39c1f3abad5b95a601a35114f] fanotify: Fix crash in fanotify_init(2)
-git bisect good da1419eb5d34caf39c1f3abad5b95a601a35114f
-# first 'bad' commit: [adc8e434cf08c73b0f02dab2c15319315f07172f] Linux 6.12.115-rc1
-
+Dropped, thanks.
 
 -- 
-Brett Sheffield (he/him)
-Librecast - Decentralising the Internet with Multicast
-https://librecast.net/
-https://blog.brettsheffield.com/
+Thanks,
+Sasha
