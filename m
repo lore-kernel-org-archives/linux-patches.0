@@ -1,52 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215541;
-	b=0j3KpXRumocfa8xGPem7f8zNoVQTiVVoeOOZ8i6PQEXdkmY+mvoyq5xHnwBN7x1DJn+r
-	 fKyh2Lou6eu8YoMdQhCCVvntQ3XGnUiKLPi7mMdwk7vJX9K6lknH8pO2Bz/VEp9I2yE2t
-	 IxKPmYhLIRWavXz7NCXCFngjFlmEjG8cnPxlSlySz05p50rQ8wb8OSPiT3yyvWF6+esZG
-	 yh+L9GE2t9WYqEE6nOe6l+ZFy7IbXxspdCVojYF2HaooHM4GRE0m9xfJZSO8FreWWO8bW
-	 OjjM7dUyzhDgE5yP0yFYsKDQUNDDUGYbFnfpoWNaxDU0lMbLtpz6CnXZzHQv1sV1w+w==
+	t=1793215544;
+	b=M1oEL4qLWIgNrjyM/iFCqqBRDQajMS7IepfC3z0JlivbQGloqAdfDwYoFHFCHxw6+n93
+	 68bojA5XJymGkV+S7Yt3VMbO/Cc9Wae//Qg2KXfXFHX/egH7X+oAkPmrbKJ5xMEWv3uUC
+	 JomdZA/4BFEi7odPAtpHqZe86x+Jau9eSLVgzXbpLHbV06w2pGxJnbtXMovWxtOFYDnMb
+	 4HrA2+4ZVI0Go6JZ3VS0N2OXXGVF+MCXzccI4jCSMCPVG38AelWBUGSubmQSubNNvl3MH
+	 1e0eKydj6swmZ5dvLyjWOZLVm1CGYdJ1S+doCMKRyL/0WdawGZFgsmLga8R9Rp+eiBA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215541;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215544;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=bG3bi1FrLFUFE1gtt3Z9zm1EnpL6aH6Z1mbJcleAEKM=;
-	b=Jc9SeAcXz1YtBuR8VSqm8ikAElIrXhYY/m/m9xP6j2kwCxYZqMSm7VBJwAEWMhex7XH7
-	 BbfQjKfldTQ/Qm7J7Gvfx76FN64fUPFuIr66NSOeFh5igTCA9v98gRPv7blV8imnqd5f4
-	 6LMg6VNPkLDWzVkJiFyuzC5egm1cYOxE/a+VRu71A28SSTDP30x50DMhivMlTvBDd0q0S
-	 7ZfbsFj9Io3kziL1XiAkd6A5J/DSp9rVxUDHVK7nA806GE5GHLBl06zPrCBLT+DPKaBPb
-	 i0hkRfPO8F+T764NuGXxnxvaPB67Z7ZLUBYEcr+XsS5+WsXgwwBK0c/dnzCvSWTTllQ==
+	bh=+TOivd6SF5aJDQjk3d3pfcj8zCZhvjj10pNX8/S0Dqk=;
+	b=AxJ21G9szbezzqGklA6GA2+XHAKGMZ8XPpGpFrcGBi/NR4wcmgMAZfcBOxDvluVlTUGn
+	 BXN35JV1EkYWNYmdbxtrVTPkOEa2W7uqWjJ9J81ZnILu2RcJHXeb4a8aNmqbxfgsQJ5dI
+	 BZa6Kfs3xpNv4N9hHmEAfTnqBuOmouVUoTkZKfwpWT4C3koqSsPqlOD1sQprH2xMeR5H1
+	 ozfxg5bED0uyEFwtIVFWcb5pD0dOjvNS8sYwgw1+DZrYkl2Kd/OLOkW5hScGvk1NwaMMq
+	 U9getbzv5Yp7B9vmzzhwOnkYfQDnGoie/7ACTZ+a9h0Jivhpg5rdvaE3sUwVXJpzydA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MG1VnNcW;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RIko8+tk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 492BF606A31A;
-	Wed, 28 Oct 2026 19:25:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16DE0606A31A;
+	Wed, 28 Oct 2026 19:25:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MG1VnNcW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68C021F01825;
-	Wed, 28 Oct 2026 19:25:40 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RIko8+tk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E9CA1F01825;
+	Wed, 28 Oct 2026 19:25:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215540;
-	bh=bG3bi1FrLFUFE1gtt3Z9zm1EnpL6aH6Z1mbJcleAEKM=;
+	s=korg; t=1793215543;
+	bh=+TOivd6SF5aJDQjk3d3pfcj8zCZhvjj10pNX8/S0Dqk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MG1VnNcW8sRigZxZ9FYhLVO/96uRugHRIu5LuxgU3uA0wJwVEKGncAWjTIqxFYww8
-	 V38QMg6NR57ACrOIOXlxRkMQz6AaevOPm8qN68Z8MIwcvHtUNaOUqSSq/u8bzV/gdX
-	 ulLEnU6IiDak41WwxRoVCarA3DJevEpY4RmPAAsU=
+	b=RIko8+tkISuPzUC0MEG2pTLJmYBXAcWKXIiNZ8QOTEIcE6XlWZYgb7Hg4mALImkfG
+	 2TMndurlwkmalMvx1obfeKZnAhtvX0QVN1Nsv1KOAOtAENBTZh5NPJK4FNeaj/x/vM
+	 oSH1A42q3vpfqIiOmCe9g/VwuuG4DdvU3N+gKmS0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jacob Moroni <jmoroni@google.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	syzbot+9307c991a6d07ce6e6d8@syzkaller.appspotmail.com,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Jakub Sitnicki <jakub@cloudflare.com>,
+	Emil Tsalapatis <emil@etsalapatis.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1246/1887] RDMA/irdma: Replace waitqueue and flag with completion
-Date: Wed, 28 Oct 2026 17:55:42 +0100
-Message-ID: <20261028170527.779604736@linuxfoundation.org>
+Subject: [PATCH 6.1 1247/1887] sockmap: Fix use-after-free in udp_bpf_recvmsg()
+Date: Wed, 28 Oct 2026 17:55:43 +0100
+Message-ID: <20261028170527.801848242@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,119 +72,193 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jacob Moroni <jmoroni@google.com>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit d9c8c45e6d2f438a3c8e643ae78b59454fa0fadd ]
+[ Upstream commit c010995b29c8939c6aa69e3cb26f8dbee163d156 ]
 
-The driver previously used a waitqueue along with an explicit
-request_done flag, but without proper barriers around request_done.
+syzbot reported use-after-free of struct sk_msg in sk_msg_recvmsg(). [0]
 
-An earlier patch by Gui-Dong Han <hanguidong02@gmail.com> attempted
-to fix this by adding the missing memory barriers. Rather than
-adding the barriers, this patch replaces the waitqueue+flag with
-a completion, which is designed for this exact purpose.
+sk_msg_recvmsg() peeks sk_msg from psock->ingress_msg under a lock,
+but its processing is lockless.
 
-Fixes: 44d9e52977a1 ("RDMA/irdma: Implement device initialization definitions")
-Fixes: 915cc7ac0f8e ("RDMA/irdma: Add miscellaneous utility definitions")
-Link: https://patch.msgid.link/r/20260616155601.1081448-1-jmoroni@google.com
-Signed-off-by: Jacob Moroni <jmoroni@google.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Thus, sk_msg_recvmsg() must be serialised by callers, otherwise
+multiple threads could touch the same sk_msg.
+
+For example, TCP uses lock_sock(), and AF_UNIX uses unix_sk(sk)->iolock.
+
+Initially, udp_bpf_recvmsg() had used lock_sock(), but the cited
+commit removed it.
+
+Let's serialise sk_msg_recvmsg() with lock_sock() in udp_bpf_recvmsg().
+
+Note that holding spin_lock_bh(&sk->sk_receive_queue.lock) is not
+an option due to copy_page_to_iter() in sk_msg_recvmsg().
+
+[0]:
+BUG: KASAN: slab-use-after-free in sk_msg_recvmsg+0xb54/0xc30 net/core/skmsg.c:428
+Read of size 4 at addr ffff88814cdcf000 by task syz.0.24/6020
+
+CPU: 1 UID: 0 PID: 6020 Comm: syz.0.24 Not tainted syzkaller #0 PREEMPT(full)
+Hardware name: Google Compute Engine/Google Compute Engine, BIOS Google 01/13/2026
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0xe8/0x150 lib/dump_stack.c:120
+ print_address_description mm/kasan/report.c:378 [inline]
+ print_report+0xba/0x230 mm/kasan/report.c:482
+ kasan_report+0x117/0x150 mm/kasan/report.c:595
+ sk_msg_recvmsg+0xb54/0xc30 net/core/skmsg.c:428
+ udp_bpf_recvmsg+0x4bd/0xe00 net/ipv4/udp_bpf.c:84
+ inet_recvmsg+0x260/0x270 net/ipv4/af_inet.c:891
+ sock_recvmsg_nosec net/socket.c:1078 [inline]
+ sock_recvmsg+0x1a8/0x270 net/socket.c:1100
+ ____sys_recvmsg+0x1e6/0x4a0 net/socket.c:2812
+ ___sys_recvmsg+0x215/0x590 net/socket.c:2854
+ do_recvmmsg+0x334/0x800 net/socket.c:2949
+ __sys_recvmmsg net/socket.c:3023 [inline]
+ __do_sys_recvmmsg net/socket.c:3046 [inline]
+ __se_sys_recvmmsg net/socket.c:3039 [inline]
+ __x64_sys_recvmmsg+0x198/0x250 net/socket.c:3039
+ do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+ do_syscall_64+0xe2/0xf80 arch/x86/entry/syscall_64.c:94
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+RIP: 0033:0x7fb319f9aeb9
+Code: ff c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 44 00 00 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 e8 ff ff ff f7 d8 64 89 01 48
+RSP: 002b:00007fb31ad97028 EFLAGS: 00000246 ORIG_RAX: 000000000000012b
+RAX: ffffffffffffffda RBX: 00007fb31a216090 RCX: 00007fb319f9aeb9
+RDX: 0000000000000001 RSI: 0000200000000400 RDI: 0000000000000004
+RBP: 00007fb31a008c1f R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000040000021 R11: 0000000000000246 R12: 0000000000000000
+R13: 00007fb31a216128 R14: 00007fb31a216090 R15: 00007ffe21dd0a98
+ </TASK>
+
+Allocated by task 6019:
+ kasan_save_stack mm/kasan/common.c:57 [inline]
+ kasan_save_track+0x3e/0x80 mm/kasan/common.c:78
+ poison_kmalloc_redzone mm/kasan/common.c:398 [inline]
+ __kasan_kmalloc+0x93/0xb0 mm/kasan/common.c:415
+ kasan_kmalloc include/linux/kasan.h:263 [inline]
+ __kmalloc_cache_noprof+0x3d1/0x6e0 mm/slub.c:5780
+ kmalloc_noprof include/linux/slab.h:957 [inline]
+ kzalloc_noprof include/linux/slab.h:1094 [inline]
+ alloc_sk_msg net/core/skmsg.c:510 [inline]
+ sk_psock_skb_ingress_self+0x60/0x350 net/core/skmsg.c:612
+ sk_psock_verdict_apply net/core/skmsg.c:1038 [inline]
+ sk_psock_verdict_recv+0x7d9/0x8d0 net/core/skmsg.c:1236
+ udp_read_skb+0x73e/0x7e0 net/ipv4/udp.c:2045
+ sk_psock_verdict_data_ready+0x12d/0x550 net/core/skmsg.c:1257
+ __udp_enqueue_schedule_skb+0xc54/0x10b0 net/ipv4/udp.c:1789
+ __udp_queue_rcv_skb net/ipv4/udp.c:2346 [inline]
+ udp_queue_rcv_one_skb+0xac5/0x19c0 net/ipv4/udp.c:2475
+ __udp4_lib_mcast_deliver+0xc06/0xcf0 net/ipv4/udp.c:2585
+ __udp4_lib_rcv+0x10f6/0x2620 net/ipv4/udp.c:2724
+ ip_protocol_deliver_rcu+0x282/0x440 net/ipv4/ip_input.c:207
+ ip_local_deliver_finish+0x3bb/0x6f0 net/ipv4/ip_input.c:241
+ NF_HOOK+0x336/0x3c0 include/linux/netfilter.h:318
+ dst_input include/net/dst.h:474 [inline]
+ ip_sublist_rcv_finish+0x221/0x2a0 net/ipv4/ip_input.c:584
+ ip_list_rcv_finish net/ipv4/ip_input.c:628 [inline]
+ ip_sublist_rcv+0x5c6/0xa70 net/ipv4/ip_input.c:644
+ ip_list_rcv+0x3f1/0x450 net/ipv4/ip_input.c:678
+ __netif_receive_skb_list_ptype net/core/dev.c:6195 [inline]
+ __netif_receive_skb_list_core+0x7e5/0x810 net/core/dev.c:6242
+ __netif_receive_skb_list net/core/dev.c:6294 [inline]
+ netif_receive_skb_list_internal+0x995/0xcf0 net/core/dev.c:6385
+ netif_receive_skb_list+0x54/0x410 net/core/dev.c:6437
+ xdp_recv_frames net/bpf/test_run.c:269 [inline]
+ xdp_test_run_batch net/bpf/test_run.c:350 [inline]
+ bpf_test_run_xdp_live+0x1946/0x1cf0 net/bpf/test_run.c:379
+ bpf_prog_test_run_xdp+0x81c/0x1160 net/bpf/test_run.c:1396
+ bpf_prog_test_run+0x2c7/0x340 kernel/bpf/syscall.c:4703
+ __sys_bpf+0x5cb/0x920 kernel/bpf/syscall.c:6182
+ __do_sys_bpf kernel/bpf/syscall.c:6274 [inline]
+ __se_sys_bpf kernel/bpf/syscall.c:6272 [inline]
+ __x64_sys_bpf+0x7c/0x90 kernel/bpf/syscall.c:6272
+ do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+ do_syscall_64+0xe2/0xf80 arch/x86/entry/syscall_64.c:94
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+Freed by task 6021:
+ kasan_save_stack mm/kasan/common.c:57 [inline]
+ kasan_save_track+0x3e/0x80 mm/kasan/common.c:78
+ kasan_save_free_info+0x46/0x50 mm/kasan/generic.c:584
+ poison_slab_object mm/kasan/common.c:253 [inline]
+ __kasan_slab_free+0x5c/0x80 mm/kasan/common.c:285
+ kasan_slab_free include/linux/kasan.h:235 [inline]
+ slab_free_hook mm/slub.c:2540 [inline]
+ slab_free mm/slub.c:6674 [inline]
+ kfree+0x1be/0x650 mm/slub.c:6882
+ kfree_sk_msg include/linux/skmsg.h:385 [inline]
+ sk_msg_recvmsg+0xaa8/0xc30 net/core/skmsg.c:483
+ udp_bpf_recvmsg+0x4bd/0xe00 net/ipv4/udp_bpf.c:84
+ inet_recvmsg+0x260/0x270 net/ipv4/af_inet.c:891
+ sock_recvmsg_nosec net/socket.c:1078 [inline]
+ sock_recvmsg+0x1a8/0x270 net/socket.c:1100
+ ____sys_recvmsg+0x1e6/0x4a0 net/socket.c:2812
+ ___sys_recvmsg+0x215/0x590 net/socket.c:2854
+ do_recvmmsg+0x334/0x800 net/socket.c:2949
+ __sys_recvmmsg net/socket.c:3023 [inline]
+ __do_sys_recvmmsg net/socket.c:3046 [inline]
+ __se_sys_recvmmsg net/socket.c:3039 [inline]
+ __x64_sys_recvmmsg+0x198/0x250 net/socket.c:3039
+ do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+ do_syscall_64+0xe2/0xf80 arch/x86/entry/syscall_64.c:94
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+Fixes: 9f2470fbc4cb ("skmsg: Improve udp_bpf_recvmsg() accuracy")
+Reported-by: syzbot+9307c991a6d07ce6e6d8@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/69922ac9.a70a0220.2c38d7.00e0.GAE@google.com/
+Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Reviewed-by: Jakub Sitnicki <jakub@cloudflare.com>
+Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Link: https://lore.kernel.org/r/20260615021959.140010-5-jiayuan.chen@linux.dev
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/irdma/hw.c    |  7 +++----
- drivers/infiniband/hw/irdma/main.h  |  3 +--
- drivers/infiniband/hw/irdma/utils.c | 12 +++++-------
- 3 files changed, 9 insertions(+), 13 deletions(-)
+ net/ipv4/udp_bpf.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/infiniband/hw/irdma/hw.c b/drivers/infiniband/hw/irdma/hw.c
-index 918a2d783141f..6f71edf4e5e1e 100644
---- a/drivers/infiniband/hw/irdma/hw.c
-+++ b/drivers/infiniband/hw/irdma/hw.c
-@@ -994,9 +994,9 @@ static int irdma_create_cqp(struct irdma_pci_f *rf)
- 	INIT_LIST_HEAD(&cqp->cqp_avail_reqs);
- 	INIT_LIST_HEAD(&cqp->cqp_pending_reqs);
- 
--	/* init the waitqueue of the cqp_requests and add them to the list */
-+	/* init the completion of the cqp_requests and add them to the list */
- 	for (i = 0; i < sqsize; i++) {
--		init_waitqueue_head(&cqp->cqp_requests[i].waitq);
-+		init_completion(&cqp->cqp_requests[i].comp);
- 		list_add_tail(&cqp->cqp_requests[i].list, &cqp->cqp_avail_reqs);
+diff --git a/net/ipv4/udp_bpf.c b/net/ipv4/udp_bpf.c
+index 44271ba1adec1..bcb4378d53549 100644
+--- a/net/ipv4/udp_bpf.c
++++ b/net/ipv4/udp_bpf.c
+@@ -51,7 +51,9 @@ static int udp_msg_wait_data(struct sock *sk, struct sk_psock *psock,
+ 	sk_set_bit(SOCKWQ_ASYNC_WAITDATA, sk);
+ 	ret = udp_msg_has_data(sk, psock);
+ 	if (!ret) {
++		release_sock(sk);
+ 		wait_woken(&wait, TASK_INTERRUPTIBLE, timeo);
++		lock_sock(sk);
+ 		ret = udp_msg_has_data(sk, psock);
  	}
- 	init_waitqueue_head(&cqp->remove_wq);
-@@ -2086,8 +2086,7 @@ void irdma_cqp_ce_handler(struct irdma_pci_f *rf, struct irdma_sc_cq *cq)
- 			cqp_request->compl_info.error = info.error;
+ 	sk_clear_bit(SOCKWQ_ASYNC_WAITDATA, sk);
+@@ -80,6 +82,7 @@ static int udp_bpf_recvmsg(struct sock *sk, struct msghdr *msg, size_t len,
+ 		goto out;
+ 	}
  
- 			if (cqp_request->waiting) {
--				WRITE_ONCE(cqp_request->request_done, true);
--				wake_up(&cqp_request->waitq);
-+				complete_all(&cqp_request->comp);
- 				irdma_put_cqp_request(&rf->cqp, cqp_request);
- 			} else {
- 				if (cqp_request->callback_fcn)
-diff --git a/drivers/infiniband/hw/irdma/main.h b/drivers/infiniband/hw/irdma/main.h
-index e38172af69395..7f8428d00a9fb 100644
---- a/drivers/infiniband/hw/irdma/main.h
-+++ b/drivers/infiniband/hw/irdma/main.h
-@@ -153,13 +153,12 @@ struct irdma_cqp_compl_info {
- 
- struct irdma_cqp_request {
- 	struct cqp_cmds_info info;
--	wait_queue_head_t waitq;
-+	struct completion comp;
- 	struct list_head list;
- 	refcount_t refcnt;
- 	void (*callback_fcn)(struct irdma_cqp_request *cqp_request);
- 	void *param;
- 	struct irdma_cqp_compl_info compl_info;
--	bool request_done; /* READ/WRITE_ONCE macros operate on it */
- 	bool waiting:1;
- 	bool dynamic:1;
- };
-diff --git a/drivers/infiniband/hw/irdma/utils.c b/drivers/infiniband/hw/irdma/utils.c
-index b66910b2942c2..9187614e7442f 100644
---- a/drivers/infiniband/hw/irdma/utils.c
-+++ b/drivers/infiniband/hw/irdma/utils.c
-@@ -445,7 +445,7 @@ struct irdma_cqp_request *irdma_alloc_and_get_cqp_request(struct irdma_cqp *cqp,
- 		if (cqp_request) {
- 			cqp_request->dynamic = true;
- 			if (wait)
--				init_waitqueue_head(&cqp_request->waitq);
-+				init_completion(&cqp_request->comp);
++	lock_sock(sk);
+ msg_bytes_ready:
+ 	copied = sk_msg_recvmsg(sk, psock, msg, len, flags);
+ 	if (!copied) {
+@@ -91,11 +94,17 @@ static int udp_bpf_recvmsg(struct sock *sk, struct msghdr *msg, size_t len,
+ 		if (data) {
+ 			if (psock_has_data(psock))
+ 				goto msg_bytes_ready;
++
++			release_sock(sk);
++
+ 			ret = sk_udp_recvmsg(sk, msg, len, flags, addr_len);
+ 			goto out;
  		}
+ 		copied = -EAGAIN;
  	}
- 	if (!cqp_request) {
-@@ -482,7 +482,7 @@ void irdma_free_cqp_request(struct irdma_cqp *cqp,
- 	if (cqp_request->dynamic) {
- 		kfree(cqp_request);
- 	} else {
--		WRITE_ONCE(cqp_request->request_done, false);
-+		reinit_completion(&cqp_request->comp);
- 		cqp_request->callback_fcn = NULL;
- 		cqp_request->waiting = false;
- 
-@@ -516,8 +516,7 @@ irdma_free_pending_cqp_request(struct irdma_cqp *cqp,
- {
- 	if (cqp_request->waiting) {
- 		cqp_request->compl_info.error = true;
--		WRITE_ONCE(cqp_request->request_done, true);
--		wake_up(&cqp_request->waitq);
-+		complete_all(&cqp_request->comp);
- 	}
- 	wait_event_timeout(cqp->remove_wq,
- 			   refcount_read(&cqp_request->refcnt) == 1, 1000);
-@@ -571,9 +570,8 @@ static int irdma_wait_event(struct irdma_pci_f *rf,
- 	cqp_timeout.compl_cqp_cmds = atomic64_read(&rf->sc_dev.cqp->completed_ops);
- 	do {
- 		irdma_cqp_ce_handler(rf, &rf->ccq.sc_cq);
--		if (wait_event_timeout(cqp_request->waitq,
--				       READ_ONCE(cqp_request->request_done),
--				       msecs_to_jiffies(CQP_COMPL_WAIT_TIME_MS)))
-+		if (wait_for_completion_timeout(&cqp_request->comp,
-+					msecs_to_jiffies(CQP_COMPL_WAIT_TIME_MS)))
- 			break;
- 
- 		irdma_check_cqp_progress(&cqp_timeout, &rf->sc_dev);
++
++	release_sock(sk);
++
+ 	ret = copied;
+ out:
+ 	sk_psock_put(sk, psock);
 -- 
 2.53.0
 
