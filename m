@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793211963;
-	b=nzb2Oux1dRcIclgxfwCHJXpKFoVNLyI+YeDwSVfwxf6/Z2t5JXaoFHfHFmUvVbf/Fu7J
-	 3Y+SVXZUWvMgyGilw70MuOnlTBgqeYj3xPZQBwhgHerYjxTKQ/ANIKsi3HLs56CSziD26
-	 p7NaxoPwe+/dRX5mxqCcCBg8uFHVI62m6PA8Pn4BVYaZdnNGeHx5n5t8xkT+Zg1vrvc9C
-	 H1yexbgFst3w2URh/kcL+R3CpIebNYz+v5xYKJ+0r8ScyMF+w/WLosZwekM5OefaBipte
-	 U5Hkr2UkoPl2pLPlQggjkoCpjKESuHkwb0JHMvnBipdRJMGXxcRzDZ/OhY+uqMDUOPw==
+	t=1793211966;
+	b=rle1bSYeJB5c9uvFjWHWtliY/MxW4gob6JCv2Skl67CiopfbyhbCBogqpw/iWMdEIoAD
+	 qab//8qnbTmz9Y2Nl1isG4+L10qqI7LlTndlM7oOrgKl3foWmJMLwxPS0E86aduqZGWqV
+	 RDfAsljIUuX/IoK6VNrkWPcR552jX8UCMu+CDAIdLHf6w6251Zs2vkgJU/AtWVJ8GfRyR
+	 QaKqrlFxF5wmojOPO9weltqLUshIPVUWReFMu3KtFDOSjAAhClg/98owt31hXb8E5IBrr
+	 DZcVnl33+/Pj93Ck6hN2dUse3psIMxlP5cY5f8fXpeaTa9OiZNhWG13+Aim4PkkgOZg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793211963;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793211966;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=x5knw/V6ZewgqE46Txp7s+HC3UHXzWRnEz4ag9YtrcM=;
-	b=lj5ie8ozsiAzvIurXyX5iFjXKmnEZ+d9ibadX6eYQZUIbB1D1NaoCWWpk3v5EZO8XLix
-	 4wlyX2jpzkX+NCMi5WXLGubdQb1j5vvJ02ffldvZBMOenS/DuYQrneBckxJL2AUJU9qGC
-	 4V6lv5bbjTBK2JXSjCQjGB4YmBtq0QY4T+VqXZSERWY6eafnIROgkxpDFQQ4On+eSgxd7
-	 GXkggB0FwW+l/7yPxpjXjsTW8OkYrBoD7rLWzZdaSkc+32NsYdW5Jg6yDE/innX0nwVy6
-	 kruguoPGegRx84mvjHACPwG3VxAdl7qBElw08UcZLqnE9jIgCoz4oBpAcuWD4AFa8/A==
+	bh=/XjqRQiUh3YZlHoNn4jJToO1HgTz60xq+gwyvkLZooY=;
+	b=2UW9VI530/k7yoD6FqgwhX/gWyNl5ULrMoeVaahLwuTXgzobzn3o95RKetlxhf5vvihU
+	 PXQeJuI1URMtR8N+4cUX9ua9PwqfySfbGW4MOhVdbvpP+GCj9f05U2T0SDT5y+xXtsKky
+	 6jACWhTJ4Q/FGdhQc+xLl1JauSCvrK9F2d5NoiIlehdbDojiT8JdbCBdf1jpWvN7cbCGb
+	 8Y2p3dxDGn4p786HsUaTd/53rz9RK9TvenyCQ+fjI/pxrYpqMw92A3XWM2JQ7aO0nwRZH
+	 84a4pjjsAzn/HzlzHAVA3klVTEzqJLFYC/rGxWbflDjPa6EVEIQfFgqR9tPuI0w+gdQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wlRDEIFu;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vsaKDEL7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 836FF606A31A;
-	Wed, 28 Oct 2026 18:26:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 661DF606A31C;
+	Wed, 28 Oct 2026 18:26:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wlRDEIFu
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3CA81F01828;
-	Wed, 28 Oct 2026 18:26:02 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vsaKDEL7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 672BE1F01825;
+	Wed, 28 Oct 2026 18:26:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793211963;
-	bh=x5knw/V6ZewgqE46Txp7s+HC3UHXzWRnEz4ag9YtrcM=;
+	s=korg; t=1793211965;
+	bh=/XjqRQiUh3YZlHoNn4jJToO1HgTz60xq+gwyvkLZooY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wlRDEIFuLqYctD9pJb2ICsx3aa0HP1WKWpmTNkhdJTvYEDUSqiKaN+2fC4PCH1eat
-	 AElBsjz8/dFVdmRYBF+29EaqvrF4AfJAE6wb4kGK+YLritPE/YmdmKHutlsqQpW+tC
-	 9+KQbxxTi+FNecH/Xlz50BWlbEZ3C5RmcqWllFXI=
+	b=vsaKDEL7Lsyz634eylLvO6iFp6D20TajVx+TodIGlllmIwxjYoOY1AF5KI8ZaBGv5
+	 m2eXhxmwTIqLsUatLzoqsjPEiQhR9BvGVdU2i7RIKZ8SMydsqEsmFJnc9GPo+evUr+
+	 piTgw7FppnWnEOVkf/vD/ghhQEX37N+kAURPsXcI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Schauer <florian@schauer.to>,
-	Jesper Dangaard Brouer <hawk@kernel.org>,
-	Eric Dumazet <edumazet@google.com>,
+	Aswin Karuvally <aswin@linux.ibm.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 517/571] page_pool: keep frag_offset aligned for odd-sized requests
-Date: Wed, 28 Oct 2026 18:01:04 +0100
-Message-ID: <20261028170020.298055623@linuxfoundation.org>
+Subject: [PATCH 5.15 518/571] s390/ctcm: Prevent XID null dereference
+Date: Wed, 28 Oct 2026 18:01:05 +0100
+Message-ID: <20261028170020.320948202@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -69,126 +67,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Schauer <florian@schauer.to>
+From: Aswin Karuvally <aswin@linux.ibm.com>
 
-commit dc0df5a0c62ccea1d0e08d39a4dc9064de81d411 upstream.
+commit b264d8422779d69febce914efc47a92a85cc382c upstream.
 
-page_pool_alloc_frag_netmem() rounds the requested fragment size with
+The mpc_validate_xid() function sets grp->saved_xid2->xid2_flag2 to 0x40
+to signal XID validation error. If peer XID is NULL or r/w channel
+pairing mismatch happens, grp->saved_xid2 is never initialized. An
+attempt to set the flag in such case leads to NULL dereference.
 
-	size = ALIGN(size, dma_get_cache_alignment());
+Fix this by using the always available priv->xid->xid2_flag2 instead of
+grp->saved_xid2->xid2_flag2 for validation errors.
 
-dma_get_cache_alignment() returns 1 unless the architecture defines
-ARCH_DMA_MINALIGN, which DMA-coherent architectures such as x86 do not.
-There the ALIGN() is a no-op and pool->frag_offset advances by the raw,
-unrounded size.
-
-A single caller asking for an odd size then leaves frag_offset misaligned
-for every fragment carved out of that page afterwards.  The pool is shared,
-so the damage is not confined to the caller that caused it.
-
-The per-cpu system_page_pool used by generic XDP hits this.
-skb_pp_cow_data() allocates its fragments with the raw packet length:
-
-	size = min_t(u32, len, PAGE_SIZE);
-	truesize = size;
-	page = page_pool_dev_alloc(pool, &page_off, &truesize);
-
-leaving frag_offset odd for whatever is carved out of that page next.  Its
-own head allocation is already aligned -- SKB_HEAD_ALIGN(size) plus the
-XDP_PACKET_HEADROOM its callers pass -- so it is a later user of the shared
-pool that pays: page_pool_dev_alloc_va() returns a misaligned buffer,
-napi_build_skb() installs it as skb->head, and skb_shinfo(skb) ==
-skb->head + skb->end is misaligned with it.
-
-skb_shinfo()->dataref is a 4-byte atomic_t at offset 0x20, so the
-atomic_inc() in __skb_clone() straddles a cache line.  On x86 with split
-lock detection -- fatal for kernel split locks by default -- this panics
-the machine:
-
-  Oops: Split lock detected
-  RIP: 0010:skb_clone+0x154/0x1e0
-  Call Trace:
-   <IRQ>
-   raw_local_deliver+0x1ed/0x2c0
-   ip_protocol_deliver_rcu+0x54/0x1c0
-   ip_local_deliver_finish+0x85/0x100
-   ip_local_deliver+0x67/0x100
-   __netif_receive_skb_one_core+0x85/0xa0
-   process_backlog+0x87/0x130
-
-Reproduced by attaching any generic-mode XDP program to loopback and
-opening a RAW IPPROTO_UDP socket, which makes raw_local_deliver() clone
-every locally delivered UDP packet; ordinary DNS traffic then triggers it,
-roughly once per 2500 clones.  Observed on 6.12.101 and 7.1.8.
-
-Tracing page_pool_alloc_frag_netmem() over one such run shows the
-amplification -- two odd-sized requests, nine misaligned offsets:
-
-  requested size & 7:   0: 17035    5: 1    7: 1
-  frag_offset & 7:      0: 17028    3: 1    4: 1    5: 1    6: 1    7: 5
-
-and skb_pp_cow_data() returning heads that were aligned on entry:
-
-  head 0xffff8f4c86aeac00 -> 0xffff8f4c53a9a9c4 (&7=4)
-  head 0xffff8f4d6a8a42c0 -> 0xffff8f4c4f7b7a45 (&7=5)
-
-Round the fragment size up to at least the alignment struct skb_shared_info
-requires, so fragments are always suitably aligned for the objects callers
-build on them.  Architectures needing a larger DMA alignment keep it.
-
-This also makes the remainder computed in page_pool_alloc_netmem(),
-
-	*size = max_size - *offset;
-
-aligned, since max_size is a power of two -- which fixes the matching
-misalignment of skb->end.
-
-Verified with a controlled A/B under QEMU/KVM: same tree, same config,
-same compiler, same rootfs and identical traffic, differing only by this
-patch.  A SEC("xdp.frags") XDP_PASS program on lo plus UDP datagrams
-larger than max_head_size drives skb_pp_cow_data()'s fragment loop, which
-passes raw packet lengths to the pool.  Measured at the return of
-skb_pp_cow_data():
-
-                          unpatched   patched
-  skb_pp_cow_data calls       40800     40800
-  misaligned skb->head         1120         0
-  dataref at line offset >60     80         0
-
-The last row counts the accesses that actually fault:
-skb_shinfo()->dataref sits at head+end+0x20 and is a 4-byte atomic, so
-`lock incl` splits a 64-byte cache line only when that address lands at
-offset 61..63.  All 80 occurrences were at offset 61; the panic reported
-above was at offset 62.  Eliminating the misalignment removes every one
-of them.
-
-Same class of bug as commit 3bed3cc4156e ("net: Do not allocate page
-fragments that are not skb aligned"), which fixed the older
-netdev_alloc_frag()/napi_alloc_frag() allocators.
-
-Fixes: 53e0961da1c7 ("page_pool: add frag page recycling support in page pool")
+Fixes: 293d984f0e36 ("ctcm: infrastructure for replaced ctc driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Florian Schauer <florian@schauer.to>
-Acked-by: Jesper Dangaard Brouer <hawk@kernel.org>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260828060822.2628276-1-florian@schauer.to
+Signed-off-by: Aswin Karuvally <aswin@linux.ibm.com>
+Link: https://patch.msgid.link/20260827063408.2168914-1-aswin@linux.ibm.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/page_pool.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/s390/net/ctcm_mpc.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/net/core/page_pool.c
-+++ b/net/core/page_pool.c
-@@ -594,7 +594,8 @@ struct page *page_pool_alloc_frag(struct
- 		    size > max_size))
- 		return NULL;
+--- a/drivers/s390/net/ctcm_mpc.c
++++ b/drivers/s390/net/ctcm_mpc.c
+@@ -824,7 +824,7 @@ static void mpc_action_go_ready(fsm_inst
  
--	size = ALIGN(size, dma_get_cache_alignment());
-+	size = ALIGN(size, max_t(unsigned int, dma_get_cache_alignment(),
-+				 __alignof__(struct skb_shared_info)));
- 	*offset = pool->frag_offset;
+ 	fsm_deltimer(&grp->timer);
  
- 	if (page && *offset + size > max_size) {
+-	if (grp->saved_xid2->xid2_flag2 == 0x40) {
++	if (priv->xid->xid2_flag2 == 0x40) {
+ 		priv->xid->xid2_flag2 = 0x00;
+ 		if (grp->estconnfunc) {
+ 			grp->estconnfunc(grp->port_num, 1,
+@@ -1633,7 +1633,6 @@ done:
+ 			"The XID used in the MPC protocol is not valid, "
+ 			"rc = %d\n", rc);
+ 		priv->xid->xid2_flag2 = 0x40;
+-		grp->saved_xid2->xid2_flag2 = 0x40;
+ 	}
+ 
+ 	return rc;
 
 
