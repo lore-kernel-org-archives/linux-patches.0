@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793210070;
-	b=hwwEcPA267r57B1N4dSJh/RGMSP+HOJnyfzEMuw23bnbWumeTcET1hgSkGG+/EFR6j/1
-	 hvdAtB1img+gOSxi2eS/FpNtLJUqrNm4mq/ONdFMesj25ThIChXzzqt2fpRdC04mrPsbB
-	 3bhRVVLS5QdwN/6WtOnO/AETb3iFVOBoty5//eE4znqVtCC0AJ+ddR7E2JXIC+aYlAv7N
-	 DFWhCUny8MVTp+BnStXRYe63gvRMFKVcsVoq+2MrUgFQ+iGGUVsq1MAbO650oX0+IUP7M
-	 CSqY1GrjM1beNvQHq/Yl4eQfqL7zjo0qPtfOViZZMmtC8zSWTb1nQCnxZx1zrnbPHrw==
+	t=1793210073;
+	b=2idY2a0ufPCijGLHWspUNh/euZhbivu+JhtS+HufjzSOamlQ5RYaDcblJGRvZKfuqA9J
+	 2id+qtkiPTiVwxApG3DfYh0EntMNj880lzgAzMsyfL/SfQ9vvuRCXWTnfkqax1EGWVXBj
+	 BTFbyfn5Fp5qCwgeYzxMjpk+OU4un24+JnXpjmmHVpxJnjlLn30BjRfmP2YoI6r5vOFJC
+	 /L4uonpNYYek0UQQpnVgd5a1NsqD473A0srS95c0ePPMeXyacmEIcBlUoVPptTzJ9Xu87
+	 zS0FGZk1/05kkHdFZKydz2r8yQtKSY8d0e7m0HbwA9kdjMnv6I9D13t8j16kPJa/TEw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793210070;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793210073;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ghoO1yOKU8FcHNmmg4ObnMbUZ9Q/GCHzmWl29vRumwU=;
-	b=FuA6dTnzirmYr4DdFBQ8t4iW/ZRfPKJIEWl8qzjOX8cLarbliUPFN5inzphYjWJpRIud
-	 Ci8e6kkepOFgA1l/gDGYGv96xxhrjtTdLUrsUT9N/gnniimKE0pbjlAQwqwdD/NrmHPBh
-	 F3Ti4NaAu6kEZv8lCx7UkTzGP2cTmpaXtpC1Tb9FHxsrWzlWiazz7tNfedqA2mGR2+Uuh
-	 lV8WjbjR610JtRff5eX1LHYLDPdU8gR8R2n+jVbktVk9M6oqPhg2B9xrI57ZHwSPT99mK
-	 qXKhFjbnNAdEX6DKSeelBGpxCFi2f7zAWtuqmRhXxgVmfQv6SeSp9/RK9ilMd5JuvJg==
+	bh=ttQjy72C6DH9vV4FMNO1NDHh2qtbjy5eckRVpVA5h/Q=;
+	b=xGavnbdzo088ikRF8JuSQmO6WS9x1wJt+rpZbSOA/KSkkjvzOlGIJC31ff9xl5DJHxBh
+	 bFIDektI/RuLt1hQ7ZqtlhjusBMQMAaBsWILrZBeucdQjBgcSSRcZ9xwC9TbAGPCsfcHj
+	 8CPjSIHZ7EaPeXCyviTCEhvv2SxXLb43n6KlNOsccaM92epCiYhIdk9B2ww5iiBX/Xw4n
+	 fyTkHouiL6Fo3fpNZvvV4h5u7pMFT/E/JhwvJyb2+t2hxyDqoMKbC7rxQ7LEi23zGaRPh
+	 KWUQb8yq508TxLRs46p5n787EezPJgDz4hcmcgtpZugIyJ1mx7KLtGpvhMOYOguGUZQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sv9kAfVU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=M90+zvTi;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 961C4606A322;
-	Wed, 28 Oct 2026 17:54:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DEE4606A31C;
+	Wed, 28 Oct 2026 17:54:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sv9kAfVU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E77521F01825;
-	Wed, 28 Oct 2026 17:54:29 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=M90+zvTi
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB4311F01825;
+	Wed, 28 Oct 2026 17:54:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793210070;
-	bh=ghoO1yOKU8FcHNmmg4ObnMbUZ9Q/GCHzmWl29vRumwU=;
+	s=korg; t=1793210073;
+	bh=ttQjy72C6DH9vV4FMNO1NDHh2qtbjy5eckRVpVA5h/Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sv9kAfVUS+Kc7TQ3PPqBQh4Cr1anQe5xz3rhEiXw+8e01O1Xr+C4uFtDmRSCrQg1l
-	 plFfhCgEDwo0ngNfUEKWYkxzmrbXJ1XchqNXkgpjY9HGPnqPdR9lJUoWOgzTaxU9F6
-	 C0fFCoIjqhdQXfTbHeYPOpiyJYvmSc8KSlg1O5p0=
+	b=M90+zvTiShrxBp94vUIGvKJ6tRKrd2YJ5tdhIwbXTRsjPj/SzOiZefN1jHBHViInj
+	 AOH66GJ9knYR+gqp3hsmWS69EyyheGXwmUhky31+jhDa5YmIoQAVCXLWldfpmvsGRN
+	 mm9lUa/DPh8v0tTADb/0+tqiLLTBTRkBoFLBSl8Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	Etienne Perot <eperot@google.com>,
-	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 6.6 067/168] cgroup: fix spurious SIGKILL of CLONE_INTO_CGROUP children
-Date: Wed, 28 Oct 2026 18:00:03 +0100
-Message-ID: <20261028165944.672894980@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Subject: [PATCH 6.6 050/168] tools: gpio: fix building from the top level with O=
+Date: Wed, 28 Oct 2026 17:59:46 +0100
+Message-ID: <20261028165944.274034481@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165943.089486480@linuxfoundation.org>
 References: <20261028165943.089486480@linuxfoundation.org>
@@ -68,88 +67,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Etienne Perot <eperot@google.com>
+From: Sasha Levin <sashal@kernel.org>
 
-commit 8e359920216689b3b79e0fe8961a77fe312a511f upstream.
+commit 52336337f1a01ad803c7f3ddb23f40222e9ad58d upstream.
 
-Since commit b69bb476dee9 ("cgroup: fix race between fork and
-cgroup.kill"), the fork path snapshots the kill_seq of the child's
-future cgroup into kargs->kill_seq, and cgroup_post_fork() SIGKILLs
-the child if that cgroup's kill_seq has changed in the meantime, to
-catch forks racing with a cgroup.kill sweep.
+"make O=<dir> tools/gpio" fails:
 
-For CLONE_INTO_CGROUP, however, the snapshot in cgroup_css_set_fork()
-is taken before the target cgroup has been resolved: kargs->cgrp is
-always NULL at this point (it is only set at the end of the function).
-So the "if (kargs->cgrp)" branch is dead code and the snapshot always
-records the kill_seq of the parent's cgroup. cgroup_post_fork() then
-compares it with the kill_seq of the target cgroup, so the child gets
-SIGKILLed whenever the two cgroups have been killed a different number
-of times.
+  Makefile:27: /tools/build/Makefile.include: No such file or directory
 
-As a result, once cgroup.kill has been written to a cgroup, every
-child subsequently cloned into it with clone3(CLONE_INTO_CGROUP) is
-killed on the spot, for as long as the cgroup exists: kill_seq is not
-exposed to userspace and never resets.
+tools/Makefile clears srctree, and the gpio Makefile only works it out
+again when building_out_of_srctree is not set, which the top-level
+Makefile sets for O= builds.
 
-Re-snapshot kill_seq from the target cgroup once it has been resolved,
-and drop the dead branch at the early snapshot site.
+Also work out srctree when it is empty, as tools/bpf/Makefile does
+since commit a89b2cbf71d64 ("tools, bpf: Fix build for 'make -s
+tools/bpf O=<dir>'").
 
-This does not reopen the race fixed by b69bb476dee9. For
-CLONE_INTO_CGROUP, everything from the snapshot to the check in
-cgroup_post_fork() runs with cgroup_mutex held, and kill_seq is
-only ever incremented under cgroup_mutex.
-
-tj: Updated the comment above kill_seq to reflect the new serialization
-rules as suggested by Shakeel Butt.
-
-Fixes: b69bb476dee9 ("cgroup: fix race between fork and cgroup.kill")
+Fixes: 4a6a6f5c4aeed ("tools: gpio: Use !building_out_of_srctree to determine srctree")
 Cc: stable@vger.kernel.org
-Cc: Shakeel Butt <shakeel.butt@linux.dev>
 Assisted-by: LLM
-Signed-off-by: Etienne Perot <eperot@google.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://patch.msgid.link/20261011223358.2327625-5-sashal@kernel.org
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/cgroup-defs.h |    5 ++++-
- kernel/cgroup/cgroup.c      |    6 ++----
- 2 files changed, 6 insertions(+), 5 deletions(-)
+ tools/gpio/Makefile |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/include/linux/cgroup-defs.h
-+++ b/include/linux/cgroup-defs.h
-@@ -435,7 +435,10 @@ struct cgroup {
- 
- 	int nr_threaded_children;	/* # of live threaded child cgroups */
- 
--	/* sequence number for cgroup.kill, serialized by css_set_lock. */
-+	/*
-+	 * Sequence number for cgroup.kill. Incremented with both cgroup_mutex
-+	 * and css_set_lock held. Readers hold either one.
-+	 */
- 	unsigned int kill_seq;
- 
- 	struct kernfs_node *kn;		/* cgroup kernfs entry */
---- a/kernel/cgroup/cgroup.c
-+++ b/kernel/cgroup/cgroup.c
-@@ -6449,10 +6449,7 @@ static int cgroup_css_set_fork(struct ke
- 	spin_lock_irq(&css_set_lock);
- 	cset = task_css_set(current);
- 	get_css_set(cset);
--	if (kargs->cgrp)
--		kargs->kill_seq = kargs->cgrp->kill_seq;
--	else
--		kargs->kill_seq = cset->dfl_cgrp->kill_seq;
-+	kargs->kill_seq = cset->dfl_cgrp->kill_seq;
- 	spin_unlock_irq(&css_set_lock);
- 
- 	if (!(kargs->flags & CLONE_INTO_CGROUP)) {
-@@ -6517,6 +6514,7 @@ static int cgroup_css_set_fork(struct ke
- 	put_css_set(cset);
- 	fput(f);
- 	kargs->cgrp = dst_cgrp;
-+	kargs->kill_seq = dst_cgrp->kill_seq;
- 	return ret;
- 
- err:
+--- a/tools/gpio/Makefile
++++ b/tools/gpio/Makefile
+@@ -7,7 +7,13 @@ bindir ?= /usr/bin
+ # isn't set and when invoked from selftests build, where srctree
+ # is set to ".". building_out_of_srctree is undefined for in srctree
+ # builds
++ifeq ($(srctree),)
++update_srctree := 1
++endif
+ ifndef building_out_of_srctree
++update_srctree := 1
++endif
++ifeq ($(update_srctree),1)
+ srctree := $(patsubst %/,%,$(dir $(CURDIR)))
+ srctree := $(patsubst %/,%,$(dir $(srctree)))
+ endif
 
 
