@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793212601;
-	b=nl2mulI0gKfFz9DLCtfmwWb3FMStsJlwN9WEMX2J4YsIGPDkEqwp0zsj+vwWR3Ale2fJ
-	 tL9wwmN/ODj9XNzKxHuTfhtRbPIV9K/mtHXqR6AJJ2WSmQJr6A1hZuQxHa7DbwXiqDxrR
-	 uxOHRtzeO4gKa4uIdOr6m8JkwO1dNAdT83sin0jZVx32g/2ze/g5RAA/C26MSiGslfUGT
-	 8+Uk9PHnOwup1NdKfOTnEkTcIwx8d7Q2EKTMcHEdnVDSiNro9iMpS3Zg8c3k6ENmsdF9Y
-	 9Pd+twqneW8ODQptch1HLOenloSaYvAlHfOAG9WSvpmflDxVlY4mM1X86uQKkl4Br3g==
+	t=1793212604;
+	b=JTFIJZUSUvHmDugKjyW214N1RIuUstM/r2cxWgjiI5I5sMMLVjoOhKX0dkiOrfa/G9eJ
+	 RCpI5qzHgE2tX5rRjXWEeQ7uiqy52CjbD7zGYQ0PU2haCW6z2FDLAaNXBT+JDEPgTvas3
+	 ml6Fh1/xOXGrrdJxVQ9xscjczCzDCMyh9nha5HVFLBtOvfmdqZFe9xkfWQCx8p2FxxfPH
+	 ffmgj4VktZptv4Jg/uQ/WLc5na6seCVQWe3BQC4oQRBnMpgblsQu3D0zrpp/Glc1iHUfg
+	 T5ssOJCg8gPlvkqWh45+4yxMRlDZhIekhN2thZuqUYxherBEsp0xWgG/zqFmtJhCa6Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793212601;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793212604;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=H32rgRewYsRZrYRCsumgVZKwdDZw7E+UbPYP7xs1Cvk=;
-	b=nLgCrqUJMvbWVkO2hSG+AgbRRNbDmNB8WiZvbxT6IZ56xIXGBhHSFu50V844x174QBFN
-	 V4fjWm9G0rJcKP6SYc4QBkv00jMOwwj+lEnf//o1HN74vF7Fs3rLXlvpdhWF/BNOdGKYm
-	 RhLmMVvtkqn+CrTw2UO5USK3scu8NAHSUZulBQMybhyqa+P0yfZrxqp//zZ5Yqk/QdkgZ
-	 t8Sfkn1NCsjYMM7Tm1OX2TSvrykZoDe/wRFV8ttjvUn394KydqnvzSoCuSzrbxlaO/YmN
-	 8Y2cBmWD27uDJm9EFU+S/3s0GkPSFUjiL/HWIdPsvYbTQQYYA9N3UyVv8EzhtP8b3fQ==
+	bh=Pa7kSOHiyvA/VYJZLuxqICwHYef1wbl6YzUJyekkKrA=;
+	b=xk6j+NaaGoy0btaoBs+RDRwuFRifwDzfGOvN9+FKnZMI/KVoYgGoNGmjp76WdspfTr2m
+	 TW90LeAwKL+ADZeWgxMpA0lueK8t2NH6Dv9hzrvBKT0rS9HCJ4KBTSfyjDybbwfCxTBHI
+	 TY3H7qGoCCkIoYCifuDdgqtmphm/Af0GeiJTza8yxUsZP0HKU17n0u4+1wnv6H6fg7ez2
+	 3xHCtTU1J17B79WzQEUQ6AFLuXY3bngzcB7A/ZsA53sX8rxD5Uc5EtgQgp7MMpLqmWKmB
+	 pceC0MKe7oCcPKxnORVV+iGJ/Ksxpg0wyzUyl3/jpln+oQv3C4ZYdUjAwZJshGUBaTw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0TAUewT6;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GeLGL6Wi;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB5A5606A31C;
-	Wed, 28 Oct 2026 18:36:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAFFC606A31A;
+	Wed, 28 Oct 2026 18:36:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0TAUewT6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4789C1F01825;
-	Wed, 28 Oct 2026 18:36:40 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GeLGL6Wi
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 240021F01828;
+	Wed, 28 Oct 2026 18:36:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793212600;
-	bh=H32rgRewYsRZrYRCsumgVZKwdDZw7E+UbPYP7xs1Cvk=;
+	s=korg; t=1793212603;
+	bh=Pa7kSOHiyvA/VYJZLuxqICwHYef1wbl6YzUJyekkKrA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0TAUewT6Qm2B8UONH5oSaKTCLnJPt9KSm2QcsgwQKhOShGzGvRfRaACYoTWH/PT/L
-	 8hoWVx37LtAT9C3fTFbjowftAwP6FmbBBtgCeVx8xrfF3JrmFQKaIu3nsp112rGP4Q
-	 MHeFwJZyOzlk02+1uW88u2m+L9EyQB/dWSgNn+90=
+	b=GeLGL6Wi5Hmr4TseDyRjwOW9LgkocJr/zaoLub5sZZ9XTA08ARGl7HqRGB2W3bStc
+	 Hmm1pGfYs4D2KKXJ3rigg9mAMK/uw1VWLtWd4RHal8Z+eoqbGQDNWq90ev8l60vSiq
+	 US7LJiZy9m169w0vwh4MI76f5mM9fpAVboJDOU2w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SJ Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Kunwu Chan <kunwu.chan@gmail.com>,
+	Tomas Winkler <tomas.winkler@intel.com>,
+	Alexander Usyskin <alexander.usyskin@intel.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0212/1887] mm/damon/core: dont skip damos_adjust_quota() while esz is not zero
-Date: Wed, 28 Oct 2026 17:38:28 +0100
-Message-ID: <20261028170504.057174629@linuxfoundation.org>
+Subject: [PATCH 6.1 0213/1887] mtd: use refcount to prevent corruption
+Date: Wed, 28 Oct 2026 17:38:29 +0100
+Message-ID: <20261028170504.080498675@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,75 +69,241 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: SJ Park <sj@kernel.org>
+From: Tomas Winkler <tomas.winkler@intel.com>
 
-[ Upstream commit 52ae167ce16609c7e6fffef588b3c2c26de2db19 ]
+[ Upstream commit 19bfa9ebebb5ec0695def57eb1d80de7e9cab369 ]
 
-DAMOS could unexpectedly stop working when a user disables quota using the
-online parameters commit feature.  Fix it by correcting a wrong quota
-unset check in damos_adjust_quota().
+When underlying device is removed mtd core will crash
+in case user space is holding open handle.
+Need to use proper refcounting so device is release
+only when has no users.
 
-DAMON users could disable all quotas by unsetting time and size quotas,
-and removing all quota goals.  The intention of disabling quotas would be
-making DAMOS run at full speed.  When such quota disabled setup is
-detected, damos_adjust_quota() skips all its work.  The skipped works
-include effective size quota (damos_quota->esz) updates and charged quota
-amount (damos_quota->charged_sz) resets.  The intention is to avoid doing
-unnecessary work when quotas are disabled.
-
-However, users could do the setup while effective size quota is non-zero,
-by doing the disabling with the online DAMON parameters commit feature.
-In this case, because the effective size quota exists, DAMOS will keep
-working with the quota until it is fully charged.  After the effective
-quota is fully charged, the charged quota amount (damos_quota->charged_sz)
-cannot be reset because damos_adjust_quota() skips it.  Then, DAMOS stops
-working until the quota is newly set or DAMON is entirely restarted.
-
-The problem happens because damos_adjust_quota() assumes the user setup
-for disabling quota immediately disabled it.  In reality, the quota is
-still working until the effective size quota is also updated to zero.
-Other logic for catching that uses damos_quota_is_set(), which understands
-the fact and therefore checks the effective size quota in addition to the
-user setup.  Fix the issue by using damos_quota_is_set() in
-damos_adjust_quota() to determine if its works should be skipped.
-
-The user impact is a non-deterministic and unexpected DAMOS stop behavior.
-That is, users would disable quotas using the online parameters commit
-feature, expecting DAMOS will run at full speed.  However, depending on
-the timing, the setup can be updated while the effective size quota is
-non-zero.  Due to the above mentioned internal mechanism, DAMOS stops
-working instead of running at full speed.  It is unexpected behavior.  It
-is also non-deterministic because sometimes the setup is done when the
-effective size quota is zero, depending on the timing.  It doesn't cause
-critical issues like crashes or leaks.  Users can simply set a reasonable
-quota again, or restart DAMON.  But definitely it is an unexpected and
-non-deterministic behavior that makes it difficult to reliably use.  Also
-investigating the root cause of the behavior would be quite difficult.
-
-Link: https://lore.kernel.org/20260916135020.86483-1-sj@kernel.org
-Fixes: da87878010e5 ("mm/damon/sysfs: support online inputs update")
-Signed-off-by: SJ Park <sj@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Kunwu Chan <kunwu.chan@gmail.com>
-Cc: <stable@vger.kernel.org> # 5.19.x
+Signed-off-by: Tomas Winkler <tomas.winkler@intel.com>
+Signed-off-by: Alexander Usyskin <alexander.usyskin@intel.com>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://lore.kernel.org/linux-mtd/20230620131905.648089-2-alexander.usyskin@intel.com
+Stable-dep-of: 12b31d1acd20 ("mtd: core: call _get_device() with the master MTD")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/damon/core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mtd/mtdcore.c   | 72 ++++++++++++++++++++++-------------------
+ drivers/mtd/mtdcore.h   |  1 +
+ drivers/mtd/mtdpart.c   | 14 ++++----
+ include/linux/mtd/mtd.h |  2 +-
+ 4 files changed, 49 insertions(+), 40 deletions(-)
 
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 7afbc20833ea4..568f24da26e6e 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -869,7 +869,7 @@ static void kdamond_apply_schemes(struct damon_ctx *c)
- 		if (!s->wmarks.activated)
- 			continue;
+diff --git a/drivers/mtd/mtdcore.c b/drivers/mtd/mtdcore.c
+index ad527bdbd4632..565b948c99dda 100644
+--- a/drivers/mtd/mtdcore.c
++++ b/drivers/mtd/mtdcore.c
+@@ -92,10 +92,33 @@ static void mtd_release(struct device *dev)
+ 	struct mtd_info *mtd = dev_get_drvdata(dev);
+ 	dev_t index = MTD_DEVT(mtd->index);
  
--		if (!quota->ms && !quota->sz)
-+		if (!quota->esz && !quota->ms && !quota->sz)
- 			continue;
++	if (mtd_is_partition(mtd))
++		release_mtd_partition(mtd);
++
+ 	/* remove /dev/mtdXro node */
+ 	device_destroy(&mtd_class, index + 1);
+ }
  
- 		/* New charge window starts */
++static void mtd_device_release(struct kref *kref)
++{
++	struct mtd_info *mtd = container_of(kref, struct mtd_info, refcnt);
++
++	debugfs_remove_recursive(mtd->dbg.dfs_dir);
++
++	/* Try to remove the NVMEM provider */
++	nvmem_unregister(mtd->nvmem);
++
++	device_unregister(&mtd->dev);
++
++	/* Clear dev so mtd can be safely re-registered later if desired */
++	memset(&mtd->dev, 0, sizeof(mtd->dev));
++
++	idr_remove(&mtd_idr, mtd->index);
++	of_node_put(mtd_get_of_node(mtd));
++
++	module_put(THIS_MODULE);
++}
++
+ #define MTD_DEVICE_ATTR_RO(name) \
+ static DEVICE_ATTR(name, 0444, mtd_##name##_show, NULL)
+ 
+@@ -674,7 +697,7 @@ int add_mtd_device(struct mtd_info *mtd)
+ 	}
+ 
+ 	mtd->index = i;
+-	mtd->usecount = 0;
++	kref_init(&mtd->refcnt);
+ 
+ 	/* default value if not set by driver */
+ 	if (mtd->bitflip_threshold == 0)
+@@ -776,7 +799,6 @@ int del_mtd_device(struct mtd_info *mtd)
+ {
+ 	int ret;
+ 	struct mtd_notifier *not;
+-	struct device_node *mtd_of_node;
+ 
+ 	mutex_lock(&mtd_table_mutex);
+ 
+@@ -790,28 +812,8 @@ int del_mtd_device(struct mtd_info *mtd)
+ 	list_for_each_entry(not, &mtd_notifiers, list)
+ 		not->remove(mtd);
+ 
+-	if (mtd->usecount) {
+-		printk(KERN_NOTICE "Removing MTD device #%d (%s) with use count %d\n",
+-		       mtd->index, mtd->name, mtd->usecount);
+-		ret = -EBUSY;
+-	} else {
+-		mtd_of_node = mtd_get_of_node(mtd);
+-		debugfs_remove_recursive(mtd->dbg.dfs_dir);
+-
+-		/* Try to remove the NVMEM provider */
+-		nvmem_unregister(mtd->nvmem);
+-
+-		device_unregister(&mtd->dev);
+-
+-		/* Clear dev so mtd can be safely re-registered later if desired */
+-		memset(&mtd->dev, 0, sizeof(mtd->dev));
+-
+-		idr_remove(&mtd_idr, mtd->index);
+-		of_node_put(mtd_of_node);
+-
+-		module_put(THIS_MODULE);
+-		ret = 0;
+-	}
++	kref_put(&mtd->refcnt, mtd_device_release);
++	ret = 0;
+ 
+ out_error:
+ 	mutex_unlock(&mtd_table_mutex);
+@@ -1210,19 +1212,21 @@ int __get_mtd_device(struct mtd_info *mtd)
+ 	if (!try_module_get(master->owner))
+ 		return -ENODEV;
+ 
++	kref_get(&mtd->refcnt);
++
+ 	if (master->_get_device) {
+ 		err = master->_get_device(mtd);
+ 
+ 		if (err) {
++			kref_put(&mtd->refcnt, mtd_device_release);
+ 			module_put(master->owner);
+ 			return err;
+ 		}
+ 	}
+ 
+-	master->usecount++;
+-
+ 	while (mtd->parent) {
+-		mtd->usecount++;
++		if (IS_ENABLED(CONFIG_MTD_PARTITIONED_MASTER) || mtd->parent != master)
++			kref_get(&mtd->parent->refcnt);
+ 		mtd = mtd->parent;
+ 	}
+ 
+@@ -1309,18 +1313,20 @@ void __put_mtd_device(struct mtd_info *mtd)
+ {
+ 	struct mtd_info *master = mtd_get_master(mtd);
+ 
+-	while (mtd->parent) {
+-		--mtd->usecount;
+-		BUG_ON(mtd->usecount < 0);
+-		mtd = mtd->parent;
+-	}
++	while (mtd != master) {
++		struct mtd_info *parent = mtd->parent;
+ 
+-	master->usecount--;
++		kref_put(&mtd->refcnt, mtd_device_release);
++		mtd = parent;
++	}
+ 
+ 	if (master->_put_device)
+ 		master->_put_device(master);
+ 
+ 	module_put(master->owner);
++
++	if (IS_ENABLED(CONFIG_MTD_PARTITIONED_MASTER))
++		kref_put(&master->refcnt, mtd_device_release);
+ }
+ EXPORT_SYMBOL_GPL(__put_mtd_device);
+ 
+diff --git a/drivers/mtd/mtdcore.h b/drivers/mtd/mtdcore.h
+index b5eefeabf310d..b014861a06a6f 100644
+--- a/drivers/mtd/mtdcore.h
++++ b/drivers/mtd/mtdcore.h
+@@ -12,6 +12,7 @@ int __must_check add_mtd_device(struct mtd_info *mtd);
+ int del_mtd_device(struct mtd_info *mtd);
+ int add_mtd_partitions(struct mtd_info *, const struct mtd_partition *, int);
+ int del_mtd_partitions(struct mtd_info *);
++void release_mtd_partition(struct mtd_info *mtd);
+ 
+ struct mtd_partitions;
+ 
+diff --git a/drivers/mtd/mtdpart.c b/drivers/mtd/mtdpart.c
+index f4419fdf36a0b..f9cb2d9720404 100644
+--- a/drivers/mtd/mtdpart.c
++++ b/drivers/mtd/mtdpart.c
+@@ -32,6 +32,12 @@ static inline void free_partition(struct mtd_info *mtd)
+ 	kfree(mtd);
+ }
+ 
++void release_mtd_partition(struct mtd_info *mtd)
++{
++	WARN_ON(!list_empty(&mtd->part.node));
++	free_partition(mtd);
++}
++
+ static struct mtd_info *allocate_partition(struct mtd_info *parent,
+ 					   const struct mtd_partition *part,
+ 					   int partno, uint64_t cur_offset)
+@@ -310,13 +316,11 @@ static int __mtd_del_partition(struct mtd_info *mtd)
+ 
+ 	sysfs_remove_files(&mtd->dev.kobj, mtd_partition_attrs);
+ 
++	list_del_init(&mtd->part.node);
+ 	err = del_mtd_device(mtd);
+ 	if (err)
+ 		return err;
+ 
+-	list_del(&mtd->part.node);
+-	free_partition(mtd);
+-
+ 	return 0;
+ }
+ 
+@@ -335,6 +339,7 @@ static int __del_mtd_partitions(struct mtd_info *mtd)
+ 			__del_mtd_partitions(child);
+ 
+ 		pr_info("Deleting %s MTD partition\n", child->name);
++		list_del_init(&child->part.node);
+ 		ret = del_mtd_device(child);
+ 		if (ret < 0) {
+ 			pr_err("Error when deleting partition \"%s\" (%d)\n",
+@@ -342,9 +347,6 @@ static int __del_mtd_partitions(struct mtd_info *mtd)
+ 			err = ret;
+ 			continue;
+ 		}
+-
+-		list_del(&child->part.node);
+-		free_partition(child);
+ 	}
+ 
+ 	return err;
+diff --git a/include/linux/mtd/mtd.h b/include/linux/mtd/mtd.h
+index 7c58c44662b87..914a9f974baaa 100644
+--- a/include/linux/mtd/mtd.h
++++ b/include/linux/mtd/mtd.h
+@@ -379,7 +379,7 @@ struct mtd_info {
+ 
+ 	struct module *owner;
+ 	struct device dev;
+-	int usecount;
++	struct kref refcnt;
+ 	struct mtd_debug_info dbg;
+ 	struct nvmem_device *nvmem;
+ 	struct nvmem_device *otp_user_nvmem;
 -- 
 2.53.0
 
