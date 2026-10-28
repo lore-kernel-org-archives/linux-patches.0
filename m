@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793207744;
-	b=4NuPVPSy32KqOr8pZjl5z74boXuzQKrkTTUOWbNUEsqr2cab+Y5CswOjWwlr0msDpZkY
-	 b7HaUZ0XaqgaT9HPGM8vkSlkFuKE2zHVaR+CfTnLxLb5UcYkcPAhLPkKMEUY5Gr50jYoL
-	 ANV6kEXXtlsvJcpk3PfpFzrfCLiJ5/2QV+z7aDCBPwupEHeVI8ceA91f82/M95gnqGymG
-	 snGwvo6+nc+woKBKZIVVmtxkDHu+MVHN+Chemu8r20srbwzNVnA+6Dxqnc07zXe3OWRGl
-	 aFNL+nY6Sbmaqj9BeVfgtGniG8+c3a164RzjL3w++AKwb6MhuoDrRv/jsLkIMSC4Jkw==
+	t=1793207747;
+	b=mWj0AYjt2wDW27iqPa5+0TWiRP5fx/m/u4lkZNXlQ6uX2dPjOIK4t9dfU7+rRsVusYUG
+	 QU3fHIXJCtNHz7x+syPbbjgm8eXPGgl44iFtJrTv/uFDXl/dEplx9j30R42by7o/h8vh6
+	 /i4ePch4/Ex/et+2xc0G7FoG72ir1Ozp4PUGQqphvO0iIwmONLQVF1LIxd7TDywsAZ0wH
+	 GrFwHLFWKYr33OrF+54+RSSXmvLJz1hzNUKgHAMENbAo62+l9m5hk6agIjxG6xi/BIj5Y
+	 Qf1B+QAng1pF9032+lbORrb7OhfI8qhf8AQvuj/2kXthAx1qWJpXZhE0bj3z5ZSxqcQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793207744;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793207747;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=e/FMbjyBVsFk0zo4ZGyCX9WOCzXz2VdNW2oD/aXGvCk=;
-	b=T9PMlxFekgxBN15fAJxT7Q/zlI53McWdXOc3p4G+scmzjGN4SS8zmw2RQaO41eHaPOIC
-	 ItA2/kJcr7O9Euwj+n7XPTTxd+McWj/WFELXJ0WCXiQNZvEq3SE3VVyZLM9DU3VYlSCud
-	 JoWWPG161kHo+Ppmkm+crA2ISPeZxTR62wnVLiDy066SQuVHZ0m5Lj/YJVt7+rTmQSvlU
-	 +9Ep+21Y3M/AbChDOooi1ACHINuZTtc1xJqMkdF4ESE3WFSDsixfp+cYbqvJT2K3HHzrk
-	 AndxORff38sDK1ZKYRZZbdZOZzG0KgR6HN99nydraFD0mNZAq24aTPyXNU4WsGh8qTw==
+	bh=6KAMN5J9XJhUgVz1lmK4ISJqTBeScZhMn5/5opUL7hI=;
+	b=PcjcChBw7rjg0N3y3NU8x48z13CaUSCL8+0PoFOvvDmFBwyfrwyegyTzQZiJHsltxHPv
+	 f0/+NHyzm42kUw7O/eqx2Nmq8EqIH96wNop7QfB+ZFJ43PYHe14eBvwPOmBmL1pn/VOgd
+	 7asOTqr9HnaEOUoGL571ZPCtiEDigDqg9rpshCPg3rTQyVXc5y0jMlUphL8NVAEcba2MV
+	 v3Gm8N0RhUIBlYDhT8jCXFQ4FuYi08GViBN9cGgFKnIgrgotJBZhWRKjtMqgJaXGl4yTT
+	 380ce8i1AwGVE35DxOrN909jT3JguiS8vrvTvYzxYubwXW6RvmYtj8pJgX2zjtBbEeg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZTBiYg+c;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Rh1hz/WS";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C549606A31C;
-	Wed, 28 Oct 2026 17:15:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32E5A606A31D;
+	Wed, 28 Oct 2026 17:15:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZTBiYg+c
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD4171F031E0;
-	Wed, 28 Oct 2026 17:15:43 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Rh1hz/WS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84A7B1F031E0;
+	Wed, 28 Oct 2026 17:15:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793207744;
-	bh=e/FMbjyBVsFk0zo4ZGyCX9WOCzXz2VdNW2oD/aXGvCk=;
+	s=korg; t=1793207747;
+	bh=6KAMN5J9XJhUgVz1lmK4ISJqTBeScZhMn5/5opUL7hI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZTBiYg+cdQLxZvysa+NaBynDiJ0a6JuiodiHqdNIL+VTlnHVezD/JFRacDOHqnFUI
-	 NAcQ/lOCNTOnOHDM//ylXSc1WUPKCFI/1abu98FKgtFLlqEQ66wYAm9ZxuDYGPK9hK
-	 1uiMeAxHMDY0oSzFHIhIbU4fLl4ZmCWP7zLqBnoc=
+	b=Rh1hz/WSV/70ZxXGqfIiPswzKF7ZwRczBNfqBs5hiSjs9NoooaLzU6uNSK6QUxHcW
+	 jkqfTNLzDKgw6l+Nua3SQq8j9Dd7cnkvX95FuQSTRua970o2oRdA8xFhr6gMCjcxIc
+	 pzVOVNOXiM9mkF7HIuy06RCPOYuJMA2yaqX5O2lA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	Amir Goldstein <amir73il@gmail.com>,
-	Jan Kara <jack@suse.cz>,
-	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 6.12 122/247] fs: get rid of __FMODE_NONOTIFY kludge
-Date: Wed, 28 Oct 2026 17:58:45 +0100
-Message-ID: <20261028165950.290722602@linuxfoundation.org>
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	TencentOS Corvus AI <corvus@tencent.com>,
+	Jun Yang <junvyyang@tencent.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 123/247] net: bridge: mcast: dont truncate the port group walk on teardown
+Date: Wed, 28 Oct 2026 17:58:46 +0100
+Message-ID: <20261028165950.315365716@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165947.349197979@linuxfoundation.org>
 References: <20261028165947.349197979@linuxfoundation.org>
@@ -69,190 +69,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Al Viro <viro@zeniv.linux.org.uk>
+From: Jun Yang <littleddfu@gmail.com>
 
-commit ebe559609d7829b52c6642b581860760984faf9d upstream.
+commit 5a3f7a683aee56e1f15c9d53041f3236767eaae7 upstream.
 
-All it takes to get rid of the __FMODE_NONOTIFY kludge is switching
-fanotify from anon_inode_getfd() to anon_inode_getfile_fmode() and adding
-a dentry_open_nonotify() helper to be used by fanotify on the other path.
-That's it - no more weird shit in OPEN_FMODE(), etc.
+__br_multicast_disable_port_ctx() and br_multicast_del_port() walk
+port->mglist with hlist_for_each_entry_safe(). However,
+br_multicast_find_del_pg() can also delete other entries from the same
+list through br_multicast_fwd_src_remove() or __fwd_del_star_excl().
 
-Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
-Link: https://lore.kernel.org/linux-fsdevel/20241113043003.GH3387508@ZenIV/
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
-Signed-off-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/d1231137e7b661a382459e79a764259509a4115d.1731684329.git.josef@toxicpanda.com
-Cc: Guenter Roeck <linux@roeck-us.net>
+If such an entry is the iterator's saved next node, hlist_del_init()
+clears its ->next and terminates the walk early. The reproducer triggers
+this in both teardown walks, leaving port groups in the bridge mdb with
+a dangling ->key.port after del_nbp() frees the port:
+
+  BUG: KASAN: slab-use-after-free in __mdb_fill_info+0x1191/0x1320
+   __mdb_fill_info+0x1191/0x1320
+   br_mdb_dump+0x594/0xe40
+   rtnl_mdb_dump+0x1cf/0x5d0
+
+Use hlist_del_init_rcu() to unlink the group while preserving ->next.
+br_multicast_del_pg() and the teardown walks run under
+br->multicast_lock. The GC worker must acquire the same lock before
+detaching the group for destruction, so the node remains alive while
+the walk uses the preserved pointer.
+
+Preserving ->next means a walk can now reach a group that an earlier
+iteration already deleted as a side effect. That group is off mp->ports,
+so br_multicast_find_del_pg() would fall through its port scan and hit
+the trailing WARN_ON(1). Skip such groups at the top of that helper: a
+port group is put on port->mglist when it is created and only unlinked
+when it is deleted, so hlist_unhashed() identifies exactly this case.
+
+Fixes: b08123684bd5 ("net: bridge: mcast: install S,G entries automatically based on reports")
+Cc: stable@vger.kernel.org
+Suggested-by: Nikolay Aleksandrov <razor@blackwall.org>
+Reported-by: TencentOS Corvus AI <corvus@tencent.com>
+Signed-off-by: Jun Yang <junvyyang@tencent.com>
+Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
+Link: https://patch.msgid.link/20260831111330.199543-1-junvyyang@tencent.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/fcntl.c                         |    4 ++--
- fs/notify/fanotify/fanotify_user.c |   25 ++++++++++++++++---------
- fs/open.c                          |   23 +++++++++++++++++++----
- include/linux/fs.h                 |    6 +++---
- include/uapi/asm-generic/fcntl.h   |    1 -
- 5 files changed, 40 insertions(+), 19 deletions(-)
+ net/bridge/br_multicast.c |   13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
---- a/fs/fcntl.c
-+++ b/fs/fcntl.c
-@@ -1166,10 +1166,10 @@ static int __init fcntl_init(void)
- 	 * Exceptions: O_NONBLOCK is a two bit define on parisc; O_NDELAY
- 	 * is defined as O_NONBLOCK on some platforms and not on others.
- 	 */
--	BUILD_BUG_ON(21 - 1 /* for O_RDONLY being 0 */ !=
-+	BUILD_BUG_ON(20 - 1 /* for O_RDONLY being 0 */ !=
- 		HWEIGHT32(
- 			(VALID_OPEN_FLAGS & ~(O_NONBLOCK | O_NDELAY)) |
--			__FMODE_EXEC | __FMODE_NONOTIFY));
-+			__FMODE_EXEC));
+--- a/net/bridge/br_multicast.c
++++ b/net/bridge/br_multicast.c
+@@ -813,7 +813,11 @@ static void __br_multicast_del_pg(struct
+ 	struct hlist_node *tmp;
  
- 	fasync_cache = kmem_cache_create("fasync_cache",
- 					 sizeof(struct fasync_struct), 0,
---- a/fs/notify/fanotify/fanotify_user.c
-+++ b/fs/notify/fanotify/fanotify_user.c
-@@ -100,8 +100,7 @@ static void __init fanotify_sysctls_init
-  *
-  * Internal and external open flags are stored together in field f_flags of
-  * struct file. Only external open flags shall be allowed in event_f_flags.
-- * Internal flags like FMODE_NONOTIFY, FMODE_EXEC, FMODE_NOCMTIME shall be
-- * excluded.
-+ * Internal flags like FMODE_EXEC shall be excluded.
-  */
- #define	FANOTIFY_INIT_ALL_EVENT_F_BITS				( \
- 		O_ACCMODE	| O_APPEND	| O_NONBLOCK	| \
-@@ -258,12 +257,11 @@ static int create_fd(struct fsnotify_gro
- 		return client_fd;
+ 	rcu_assign_pointer(*pp, pg->next);
+-	hlist_del_init(&pg->mglist);
++	/* Keep ->next (held under multicast_lock, freed later by the GC work):
++	 * a port->mglist teardown walk may have latched this node as its next,
++	 * and deleting other groups of the same port must not truncate it.
++	 */
++	hlist_del_init_rcu(&pg->mglist);
+ 	br_multicast_eht_clean_sets(pg);
+ 	hlist_for_each_entry_safe(ent, tmp, &pg->src_list, node)
+ 		br_multicast_del_group_src(ent, false);
+@@ -848,6 +852,13 @@ static void br_multicast_find_del_pg(str
+ 	struct net_bridge_mdb_entry *mp;
+ 	struct net_bridge_port_group *p;
  
- 	/*
--	 * we need a new file handle for the userspace program so it can read even if it was
--	 * originally opened O_WRONLY.
-+	 * We provide an fd for the userspace program, so it could access the
-+	 * file without generating fanotify events itself.
- 	 */
--	new_file = dentry_open(path,
--			       group->fanotify_data.f_flags | __FMODE_NONOTIFY,
--			       current_cred());
-+	new_file = dentry_open_nonotify(path, group->fanotify_data.f_flags,
-+					current_cred());
- 	if (IS_ERR(new_file)) {
- 		put_unused_fd(client_fd);
- 		client_fd = PTR_ERR(new_file);
-@@ -1400,6 +1398,7 @@ SYSCALL_DEFINE2(fanotify_init, unsigned
- 	unsigned int fid_mode = flags & FANOTIFY_FID_BITS;
- 	unsigned int class = flags & FANOTIFY_CLASS_BITS;
- 	unsigned int internal_flags = 0;
-+	struct file *file;
- 
- 	pr_debug("%s: flags=%x event_f_flags=%x\n",
- 		 __func__, flags, event_f_flags);
-@@ -1468,7 +1467,7 @@ SYSCALL_DEFINE2(fanotify_init, unsigned
- 	    (!(fid_mode & FAN_REPORT_NAME) || !(fid_mode & FAN_REPORT_FID)))
- 		return -EINVAL;
- 
--	f_flags = O_RDWR | __FMODE_NONOTIFY;
-+	f_flags = O_RDWR;
- 	if (flags & FAN_CLOEXEC)
- 		f_flags |= O_CLOEXEC;
- 	if (flags & FAN_NONBLOCK)
-@@ -1546,10 +1545,18 @@ SYSCALL_DEFINE2(fanotify_init, unsigned
- 			goto out_destroy_group;
- 	}
- 
--	fd = anon_inode_getfd("[fanotify]", &fanotify_fops, group, f_flags);
-+	fd = get_unused_fd_flags(f_flags);
- 	if (fd < 0)
- 		goto out_destroy_group;
- 
-+	file = anon_inode_getfile_fmode("[fanotify]", &fanotify_fops, group,
-+					f_flags, FMODE_NONOTIFY);
-+	if (IS_ERR(file)) {
-+		fd = PTR_ERR(file);
-+		put_unused_fd(fd);
-+		goto out_destroy_group;
-+	}
-+	fd_install(fd, file);
- 	return fd;
- 
- out_destroy_group:
---- a/fs/open.c
-+++ b/fs/open.c
-@@ -1124,6 +1124,23 @@ struct file *dentry_open(const struct pa
- }
- EXPORT_SYMBOL(dentry_open);
- 
-+struct file *dentry_open_nonotify(const struct path *path, int flags,
-+				  const struct cred *cred)
-+{
-+	struct file *f = alloc_empty_file(flags, cred);
-+	if (!IS_ERR(f)) {
-+		int error;
++	/* A teardown walk over port->mglist can reach a group that an earlier
++	 * iteration already deleted as a side effect. It is off mp->ports by
++	 * now, so skip it instead of falling through to the WARN_ON() below.
++	 */
++	if (hlist_unhashed(&pg->mglist))
++		return;
 +
-+		f->f_mode |= FMODE_NONOTIFY;
-+		error = vfs_open(path, f);
-+		if (error) {
-+			fput(f);
-+			f = ERR_PTR(error);
-+		}
-+	}
-+	return f;
-+}
-+
- /**
-  * dentry_create - Create and open a file
-  * @path: path to create
-@@ -1221,7 +1238,7 @@ inline struct open_how build_open_how(in
- inline int build_open_flags(const struct open_how *how, struct open_flags *op)
- {
- 	u64 flags = how->flags;
--	u64 strip = __FMODE_NONOTIFY | O_CLOEXEC;
-+	u64 strip = O_CLOEXEC;
- 	int lookup_flags = 0;
- 	int acc_mode = ACC_MODE(flags);
- 
-@@ -1229,9 +1246,7 @@ inline int build_open_flags(const struct
- 			 "struct open_flags doesn't yet handle flags > 32 bits");
- 
- 	/*
--	 * Strip flags that either shouldn't be set by userspace like
--	 * FMODE_NONOTIFY or that aren't relevant in determining struct
--	 * open_flags like O_CLOEXEC.
-+	 * Strip flags that aren't relevant in determining struct open_flags.
- 	 */
- 	flags &= ~strip;
- 
---- a/include/linux/fs.h
-+++ b/include/linux/fs.h
-@@ -2784,6 +2784,8 @@ static inline struct file *file_open_roo
- }
- struct file *dentry_open(const struct path *path, int flags,
- 			 const struct cred *creds);
-+struct file *dentry_open_nonotify(const struct path *path, int flags,
-+				  const struct cred *cred);
- struct file *dentry_create(const struct path *path, int flags, umode_t mode,
- 			   const struct cred *cred);
- struct path *backing_file_user_path(const struct file *f);
-@@ -3719,11 +3721,9 @@ struct ctl_table;
- int __init list_bdev_fs_names(char *buf, size_t size);
- 
- #define __FMODE_EXEC		((__force int) FMODE_EXEC)
--#define __FMODE_NONOTIFY	((__force int) FMODE_NONOTIFY)
- 
- #define ACC_MODE(x) ("\004\002\006\006"[(x)&O_ACCMODE])
--#define OPEN_FMODE(flag) ((__force fmode_t)(((flag + 1) & O_ACCMODE) | \
--					    (flag & __FMODE_NONOTIFY)))
-+#define OPEN_FMODE(flag) ((__force fmode_t)((flag + 1) & O_ACCMODE))
- 
- static inline bool is_sxid(umode_t mode)
- {
---- a/include/uapi/asm-generic/fcntl.h
-+++ b/include/uapi/asm-generic/fcntl.h
-@@ -6,7 +6,6 @@
- 
- /*
-  * FMODE_EXEC is 0x20
-- * FMODE_NONOTIFY is 0x4000000
-  * These cannot be used by userspace O_* until internal and external open
-  * flags are split.
-  * -Eric Paris
+ 	mp = br_mdb_ip_get(br, &pg->key.addr);
+ 	if (WARN_ON(!mp))
+ 		return;
 
 
