@@ -1,52 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213770;
-	b=Uk1IC/XvBRUGDfV9kcWxspUQHuR79ZJtyH/Zaz+ZEPvP8rdRreibAuAA0MdeT1RaJDRU
-	 bvkZzHogZSXzgTwv632s2l5gxQhzQjYraUqtbu4gk8VbmLCCQqnogXoTsou8eSDR8NGrN
-	 cucrL1vwFslDVFoWFp70oLUV/kgSvfuzxYuatwt6Lq5a5I+zCxIwHzeR+0BfIteyY3SwL
-	 FoCd3faKwjFhVyTEL2CzkDIV4df+mtFO8ZRzv6PhhPrFL8cjK8039rPl2vMwK7QzYWjqX
-	 y3qaUzognWT88BToeOmEPDYv9OCfSkvKM5xR2OJURRrweOowucDFjiTsJjcWI6ySE7g==
+	t=1793213773;
+	b=4P9v67ZOumxnXTHqxOpKd/XHfgpld+KZnicXSS80X1WW7ZwKU9OfiQYay2Zzs5/9ksAR
+	 B0S5bfsPzVhHHAbebu0YyeXgEAJ4jaGcKBFljH3sFtFVz8RTKTnI0x6E2WsiLZh8ATvAJ
+	 5hXWZsU+LwR5x7AhrzGGzMQWJuWRjHgA80nzWu1P2TDMdSZS8y2A1aiDC0lLsBrefIX3g
+	 ufAjIyJNXbndnAZlMEpPgo1zY5mn4mQsXrapnjoUj1n/z7ZpN6jpYXwwHXi1nMIZOUzOu
+	 WiqUmCobg/IXn3CdLcbSS+35GVBLDTibiIXHcykEuv7/GdVwNSsGX+aoT5dZHY8pe9Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213770;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213773;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=itfHqFJTiwNBzBcxkxopnSjPqzS21jKJwwth4oYSKvA=;
-	b=DofoVnYmNOEROanwfa5NZxOin4463WZqNpIB7/tlmjJRTy3SEchFhSoKFkBFbtpH1iZE
-	 HvsUNzIE2+DmsQYwuoOHTKRS+cEP6Rpven+YqhTpXuXLkYWOfCuWVTRJCrghxjL2sF6HS
-	 LbDwLb2/buWlQM+Bhhr8+I4J0JDMCAFWgvaWKX3Hnb+gcCcC9h8dMBwFzVg+48UfBvv8X
-	 ejTodR70Vkrsm9ym2Z2FLmX58+MwXFmtzRxnTvipaWS98omI6Nyh3V8Ffu7YbUEj7ZHzC
-	 l85w+1Mu0+qt3iwx1D5faj4nOu5iN4tOr9rhX158nuDnKbC2gyHeksIYHZeSLb8rGKg==
+	bh=51g+3I2HTKORk1mFF1gb75CkfimuaoL7jrcc4LBi0WM=;
+	b=eYm4KB6rkFPUGvhaSR9TKL+m7RJsE+0zNreLBMoTjjedZEAgj9JKzs78wA7eXkh4qPuZ
+	 uB7r4kVOMhjNQfBESaGqI0C9GDJ+8FW0RhkQ7nrFEVsjf++12L+iBQHO4r8yujcJE5BpW
+	 +7ISTS58dF2DGwff6NgccpPpgQIKjZIBmBFvz+as0tY7Q8Ew/ef1xL+oJBzlzbfXKQL76
+	 daV+qKmZyCWbp4Jf3Jt66Rnv47FbpcxjlEd+1Esvf41GFDftgyiHYvHT3yJaUSe99pI1s
+	 /BOsb65G0U9DdmjtG3AyPfK8wbUMwfIGBxhpgzxbjpAyy7cjpWpC/rseaapEhGcCWWg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=b8aIGB0T;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DqOMHF8v;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A1D9606A31D;
-	Wed, 28 Oct 2026 18:56:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8343F606A31A;
+	Wed, 28 Oct 2026 18:56:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=b8aIGB0T
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B93A51F01829;
-	Wed, 28 Oct 2026 18:56:09 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DqOMHF8v
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9841F1F01825;
+	Wed, 28 Oct 2026 18:56:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213770;
-	bh=itfHqFJTiwNBzBcxkxopnSjPqzS21jKJwwth4oYSKvA=;
+	s=korg; t=1793213773;
+	bh=51g+3I2HTKORk1mFF1gb75CkfimuaoL7jrcc4LBi0WM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=b8aIGB0T+ZIjkUW4f3weUe96iP7dJvqqN1IlM0AfdCHfxUfB8ctVo1eL1g/08GVI0
-	 VXv1ogn94BRT1GeYYC/X9iDnt0OwORoALKfuGqQe6aPQtXaQdbWL39Nqba3+R5kgFr
-	 iE9ameY6NxlxPq74FGwWxjEY5bMtU4zH0tvikdws=
+	b=DqOMHF8v6ovKTPSw0XOaLq/2UKYKxNGYz1HxfC5QtrTViaOA7lYcKS7vqoSZRcX3O
+	 dlNly+nJV4WmcTKJCREfnvl4gejXLlcKw6cBL9tY46Be40m4k4Gn64JwlUAd1wm5O0
+	 dGb2+KBwJzaOjU4RqZyHIxFrOp6MBYoB6s7sJRA4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksandr Mishin <amishin@t-argos.ru>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Yongqiang Sun <yongqiang.sun@amd.com>,
+	Anthony Koo <Anthony.Koo@amd.com>,
+	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0621/1887] drm/msm/dpu: Add callback function pointer check before its call
-Date: Wed, 28 Oct 2026 17:45:17 +0100
-Message-ID: <20261028170513.541855340@linuxfoundation.org>
+Subject: [PATCH 6.1 0580/1887] drm/amd/display: Fix panel_cntl could be null in dcn21_set_backlight_level()
+Date: Wed, 28 Oct 2026 17:44:36 +0100
+Message-ID: <20261028170512.616489617@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,43 +72,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aleksandr Mishin <amishin@t-argos.ru>
+From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
 
-[ Upstream commit 530f272053a5e72243a9cb07bb1296af6c346002 ]
+[ Upstream commit e96fddb32931d007db12b1fce9b5e8e4c080401b ]
 
-In dpu_core_irq_callback_handler() callback function pointer is compared to NULL,
-but then callback function is unconditionally called by this pointer.
-Fix this bug by adding conditional return.
+'panel_cntl' structure used to control the display panel could be null,
+dereferencing it could lead to a null pointer access.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+Fixes the below:
+drivers/gpu/drm/amd/amdgpu/../display/dc/hwss/dcn21/dcn21_hwseq.c:269 dcn21_set_backlight_level() error: we previously assumed 'panel_cntl' could be null (see line 250)
 
-Fixes: c929ac60b3ed ("drm/msm/dpu: allow just single IRQ callback")
-Signed-off-by: Aleksandr Mishin <amishin@t-argos.ru>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Patchwork: https://patchwork.freedesktop.org/patch/588237/
-Link: https://lore.kernel.org/r/20240408085523.12231-1-amishin@t-argos.ru
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Fixes: 474ac4a875ca ("drm/amd/display: Implement some asic specific abm call backs.")
+Cc: Yongqiang Sun <yongqiang.sun@amd.com>
+Cc: Anthony Koo <Anthony.Koo@amd.com>
+Cc: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
+Cc: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+Reviewed-by: Anthony Koo <Anthony.Koo@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/display/dc/dcn21/dcn21_hwseq.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
-index 75e1b89c9eacf..346bb684a35d0 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
-@@ -156,8 +156,10 @@ static void dpu_core_irq_callback_handler(struct dpu_kms *dpu_kms, int irq_idx)
- {
- 	VERB("irq_idx=%d\n", irq_idx);
+diff --git a/drivers/gpu/drm/amd/display/dc/dcn21/dcn21_hwseq.c b/drivers/gpu/drm/amd/display/dc/dcn21/dcn21_hwseq.c
+index 13340ea84e7d0..5910cde0408d0 100644
+--- a/drivers/gpu/drm/amd/display/dc/dcn21/dcn21_hwseq.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn21/dcn21_hwseq.c
+@@ -207,16 +207,21 @@ bool dcn21_set_backlight_level(struct pipe_ctx *pipe_ctx,
+ 	union dmub_rb_cmd cmd;
+ 	struct dc_context *dc = pipe_ctx->stream->ctx;
+ 	struct abm *abm = pipe_ctx->stream_res.abm;
+-	uint32_t otg_inst = pipe_ctx->stream_res.tg->inst;
++	struct timing_generator *tg = pipe_ctx->stream_res.tg;
+ 	struct panel_cntl *panel_cntl = pipe_ctx->stream->link->panel_cntl;
++	uint32_t otg_inst;
++
++	if (!abm || !tg || !panel_cntl)
++		return false;
++
++	otg_inst = tg->inst;
  
--	if (!dpu_kms->hw_intr->irq_tbl[irq_idx].cb)
-+	if (!dpu_kms->hw_intr->irq_tbl[irq_idx].cb) {
- 		DRM_ERROR("no registered cb, idx:%d\n", irq_idx);
-+		return;
-+	}
+ 	if (dc->dc->res_pool->dmcu) {
+ 		dce110_set_backlight_level(pipe_ctx, backlight_pwm_u16_16, frame_ramp);
+ 		return true;
+ 	}
  
- 	atomic_inc(&dpu_kms->hw_intr->irq_tbl[irq_idx].count);
+-	if (abm && panel_cntl)
+-		dmub_abm_set_pipe(abm, otg_inst, SET_ABM_PIPE_NORMAL, panel_cntl->inst);
++	dmub_abm_set_pipe(abm, otg_inst, SET_ABM_PIPE_NORMAL, panel_cntl->inst);
  
+ 	memset(&cmd, 0, sizeof(cmd));
+ 	cmd.abm_set_backlight.header.type = DMUB_CMD__ABM;
 -- 
 2.53.0
 
