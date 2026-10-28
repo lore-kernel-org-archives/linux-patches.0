@@ -1,55 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213802;
-	b=figWPOH2iLS/Io1Grl7usFlcuU0NuCrNR6rpJIVpUenlum9xdswIpglGY2iR99XiRp2H
-	 ZlGOsLWm0q2xzJ2xd9XoiKaKhr5NMLA4t7Iwk3l9oOgYZao1FHNBIkVXXcRKb3f/RW5PK
-	 vjadg1ni77R9mKx09edMopOZqdGpU9qbQpw/LKji6REBbzioPglGLSmFPXKDyZbzfzT4G
-	 q+tZXvAHQ6Lywb0b6MG/Oyel6E4bCACoBi1tEG3GAxAIHORxtwNEhUVkMquJswSyusgML
-	 fM03Q6lWSiIhuQ0LHJ/iW/jN2vOo9Tx0QbDCaevAwUO6xPS9e38hwsxKvzqRBkIi5Rg==
+	t=1793213804;
+	b=zUmaDEjxh3x5mZ7MRslAr9JaB7jSOWd8So9NG7KWFEMktytB5+1lBakZWOQY6AiDLuM+
+	 euI/iUVLoQsVJBzAVL99JszZhK5F7insl3IZI8T89rgmcehVp18qEBiNPSE4K3CgdJ/av
+	 j8PaWYHAgfnHZ+iABw0wAcqK4OYEP87HRO+wmi0Kp/QczRrBvIAYYsOirYolbSykjsQiv
+	 5234nBP8MhP8sVCG4LamI/YevHZbaKPuCVnrB1QYZVR4O2xNVoA5Bcba4fcyriWCYJR7f
+	 zifd79bsidSwt8CTg2394TeLcPc+17+KuhILRFFC/0tVU5AaWctFMjkD8y9NBXHzWgQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213802;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213804;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ednnxBaCufW+lO8mupMsyCGKFmUwV2XhFYz/ARhH8hY=;
-	b=VWc/CbU3QCy5m3ILMQCiOSbzXgXp4dthio5/XMtd/eW3qVXa7Yb60RG24PLITvqP1RL9
-	 74ExvEPlm0m1RuI1iitYOTjGUBwDRV/v/o6h31tBgbbYTcLI7m+W/pkm+SspyvklYviWa
-	 sw8CltJYMcz8E68lnESy+M/2dniWGS6cFiZMUbeNQn/qjySP8XcE6ONBA04AWYboZMVPp
-	 YJfVvJlVR8jVfR/LwmKNmkzURWCFWvZOtgeJ4LP+TiqvTg+JNs495BG9yr6NrVkYLfhJD
-	 UJy5ENKvNuiTGrY5YROcRuRoHWgoZ3K8xKLpbJjNFkr2WpBbXl9dy9WDbrOUK7KSwmQ==
+	bh=p9fdoHuw5Vw3WvebHxq/uWWzTJk1JDLME9aU0b2VLbc=;
+	b=ZqqUit/uw1r8ybs5qv15X4CWIIgbA8LqMd0/iuPwV8/RBWhSMVpjKqOXxC1wNFRGNiLw
+	 XgXSvsK7zfMrX1yn5tBMWe1c9aN2ExuRLwx4C+rHzC8EbmbicuRqrzMt2hXR1P3v/lntj
+	 Zz5VmL/8SeiI/EjY8HkO3N01zcFApMWIjBCba/DaJmyfB3qkMsmYaIzjqi1798MUfD1CY
+	 zVSu8bZfsWtU82CE8oxh7+xdr4wmH7Isc1XPs/EJPWkLV6PGThAjHkeJ2GqixoJbwJbtZ
+	 TAi/KdV8OBnKoMw+ieLh65ubfzlSB4yUoVrXsFduJm88GhbpaO55tX+NFzvHy6aV0Ww==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vDoVaPSQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a1aKM0II;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7AD5606A31E;
-	Wed, 28 Oct 2026 18:56:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83903606A31A;
+	Wed, 28 Oct 2026 18:56:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vDoVaPSQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0819A1F01825;
-	Wed, 28 Oct 2026 18:56:40 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a1aKM0II
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D42961F01825;
+	Wed, 28 Oct 2026 18:56:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213801;
-	bh=ednnxBaCufW+lO8mupMsyCGKFmUwV2XhFYz/ARhH8hY=;
+	s=korg; t=1793213804;
+	bh=p9fdoHuw5Vw3WvebHxq/uWWzTJk1JDLME9aU0b2VLbc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vDoVaPSQzf8no1kpZsRalOEFSmqkYB8SKZDUmkmhumJtpuupZImqxtdXjHeCoLkWx
-	 vg9bXePcmyto8VCayXx94PdHXxr+dGW+lDPsc28eHKMt51cBJ4WMS3PuACBk2I+FJi
-	 HaIAudjhkE3mk+kps2MStq0C9WLVDYJvm2gaard4=
+	b=a1aKM0IIXQU4o9GpQBG/kY7iCvAOQecdmq3c0es1rH4FUMyqTkuqdTPXtk0GTE3DQ
+	 fu5r1JzVE9+9CM4hE4CZMYEZgFtXmus8xV5AHqv/1grT5thwPj7OPmZcwaUtIfLSre
+	 ttr5bttf9FgCNfoCsvpEnDbULVfYKNwsOLOyDAsk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harald Freudenberger <freude@linux.ibm.com>,
-	Ingo Franzki <ifranzki@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
+	Jules Irenge <jbi.octave@gmail.com>,
 	Holger Dengler <dengler@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
 	Alexander Gordeev <agordeev@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0635/1887] s390/pkey: Wipe copies of clear-key structures on failure
-Date: Wed, 28 Oct 2026 17:45:31 +0100
-Message-ID: <20261028170513.859632006@linuxfoundation.org>
+Subject: [PATCH 6.1 0636/1887] s390/pkey: Use kfree_sensitive() to fix Coccinelle warnings
+Date: Wed, 28 Oct 2026 17:45:32 +0100
+Message-ID: <20261028170513.882934160@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -71,84 +70,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Holger Dengler <dengler@linux.ibm.com>
+From: Jules Irenge <jbi.octave@gmail.com>
 
-[ Upstream commit d65d76a44ffe74c73298ada25b0f578680576073 ]
+[ Upstream commit 22e6824622e8a8889df0f8fc4ed5aea0e702a694 ]
 
-Wipe all sensitive data from stack for all IOCTLs, which convert a
-clear-key into a protected- or secure-key.
+Replace memzero_explicit() and kfree() with kfree_sensitive() to fix
+warnings reported by Coccinelle:
 
-Reviewed-by: Harald Freudenberger <freude@linux.ibm.com>
-Reviewed-by: Ingo Franzki <ifranzki@linux.ibm.com>
-Acked-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Holger Dengler <dengler@linux.ibm.com>
+WARNING opportunity for kfree_sensitive/kvfree_sensitive (line 1506)
+WARNING opportunity for kfree_sensitive/kvfree_sensitive (line 1643)
+WARNING opportunity for kfree_sensitive/kvfree_sensitive (line 1770)
+
+Signed-off-by: Jules Irenge <jbi.octave@gmail.com>
+Reviewed-by: Holger Dengler <dengler@linux.ibm.com>
+Link: https://lore.kernel.org/r/ZjqZkNi_JUJu73Rg@octinomon.home
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/s390/crypto/pkey_api.c | 16 +++++++++-------
- 1 file changed, 9 insertions(+), 7 deletions(-)
+ drivers/s390/crypto/pkey_api.c | 9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
 
 diff --git a/drivers/s390/crypto/pkey_api.c b/drivers/s390/crypto/pkey_api.c
-index f1686f172fbf5..96fcaa0b6ff90 100644
+index 96fcaa0b6ff90..2e7a56073cc00 100644
 --- a/drivers/s390/crypto/pkey_api.c
 +++ b/drivers/s390/crypto/pkey_api.c
-@@ -1187,9 +1187,7 @@ static long pkey_unlocked_ioctl(struct file *filp, unsigned int cmd,
- 		rc = cca_clr2seckey(kcs.cardnr, kcs.domain, kcs.keytype,
- 				    kcs.clrkey.clrkey, kcs.seckey.seckey);
- 		DEBUG_DBG("%s cca_clr2seckey()=%d\n", __func__, rc);
--		if (rc)
--			break;
--		if (copy_to_user(ucs, &kcs, sizeof(kcs)))
-+		if (!rc && copy_to_user(ucs, &kcs, sizeof(kcs)))
+@@ -1299,8 +1299,7 @@ static long pkey_unlocked_ioctl(struct file *filp, unsigned int cmd,
+ 			return PTR_ERR(kkey);
+ 		rc = pkey_keyblob2pkey(kkey, ktp.keylen, &ktp.protkey);
+ 		DEBUG_DBG("%s pkey_keyblob2pkey()=%d\n", __func__, rc);
+-		memzero_explicit(kkey, ktp.keylen);
+-		kfree(kkey);
++		kfree_sensitive(kkey);
+ 		if (!rc && copy_to_user(utp, &ktp, sizeof(ktp)))
  			rc = -EFAULT;
- 		memzero_explicit(&kcs, sizeof(kcs));
- 		break;
-@@ -1218,9 +1216,7 @@ static long pkey_unlocked_ioctl(struct file *filp, unsigned int cmd,
- 		rc = pkey_clr2protkey(kcp.keytype,
- 				      &kcp.clrkey, &kcp.protkey);
- 		DEBUG_DBG("%s pkey_clr2protkey()=%d\n", __func__, rc);
--		if (rc)
--			break;
--		if (copy_to_user(ucp, &kcp, sizeof(kcp)))
-+		if (!rc && copy_to_user(ucp, &kcp, sizeof(kcp)))
- 			rc = -EFAULT;
- 		memzero_explicit(&kcp, sizeof(kcp));
- 		break;
-@@ -1362,11 +1358,14 @@ static long pkey_unlocked_ioctl(struct file *filp, unsigned int cmd,
- 		if (copy_from_user(&kcs, ucs, sizeof(kcs)))
- 			return -EFAULT;
- 		apqns = _copy_apqns_from_user(kcs.apqns, kcs.apqn_entries);
--		if (IS_ERR(apqns))
-+		if (IS_ERR(apqns)) {
-+			memzero_explicit(&kcs, sizeof(kcs));
- 			return PTR_ERR(apqns);
-+		}
- 		kkey = kzalloc(klen, GFP_KERNEL);
- 		if (!kkey) {
- 			kfree(apqns);
-+			memzero_explicit(&kcs, sizeof(kcs));
- 			return -ENOMEM;
- 		}
- 		rc = pkey_clr2seckey2(apqns, kcs.apqn_entries,
-@@ -1376,15 +1375,18 @@ static long pkey_unlocked_ioctl(struct file *filp, unsigned int cmd,
+ 		memzero_explicit(&ktp, sizeof(ktp));
+@@ -1438,8 +1437,7 @@ static long pkey_unlocked_ioctl(struct file *filp, unsigned int cmd,
+ 					kkey, ktp.keylen, &ktp.protkey);
+ 		DEBUG_DBG("%s pkey_keyblob2pkey2()=%d\n", __func__, rc);
  		kfree(apqns);
+-		memzero_explicit(kkey, ktp.keylen);
+-		kfree(kkey);
++		kfree_sensitive(kkey);
+ 		if (!rc && copy_to_user(utp, &ktp, sizeof(ktp)))
+ 			rc = -EFAULT;
+ 		memzero_explicit(&ktp, sizeof(ktp));
+@@ -1564,8 +1562,7 @@ static long pkey_unlocked_ioctl(struct file *filp, unsigned int cmd,
+ 					protkey, &protkeylen);
+ 		DEBUG_DBG("%s pkey_keyblob2pkey3()=%d\n", __func__, rc);
+ 		kfree(apqns);
+-		memzero_explicit(kkey, ktp.keylen);
+-		kfree(kkey);
++		kfree_sensitive(kkey);
  		if (rc) {
- 			kfree_sensitive(kkey);
-+			memzero_explicit(&kcs, sizeof(kcs));
+ 			kfree_sensitive(protkey);
  			break;
- 		}
- 		if (kcs.key) {
- 			if (kcs.keylen < klen) {
- 				kfree_sensitive(kkey);
-+				memzero_explicit(&kcs, sizeof(kcs));
- 				return -EINVAL;
- 			}
- 			if (copy_to_user(kcs.key, kkey, klen)) {
- 				kfree_sensitive(kkey);
-+				memzero_explicit(&kcs, sizeof(kcs));
- 				return -EFAULT;
- 			}
- 		}
 -- 
 2.53.0
 
