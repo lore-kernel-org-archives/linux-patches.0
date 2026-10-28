@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793207488;
-	b=P94h4aUHu52vW/IMdho3EppSy/L8Iv08XGFtUX7p/C2d2baqZcbmKwlOt/2zsmRO1gb3
-	 Z8JKzEB3xop6xSmon5V7nvXqKvHiGwpr4RSxtVJ5DqEaxtZTBvwz1y7Q8lCohDGzsy4l+
-	 cmvqfQEoVWtz6RTkdOxHOdiCJ7xiL1+SB6Fr1JzUOEqyWTKwErGFMaSt0sCGIg16bhMzs
-	 vzTDytgz91NnhUH3jE29IlifSeBfhICQCrD/5IF1TcWg0F19AiSmPV9pQb9fjqYLcgGm8
-	 Y2V2b06EXTaAJ4IElZiRa2ofpMdiyHZqNuOQbtQTOQYyAyO+KWlSqTmSssTV6KPIQAA==
+	t=1793207491;
+	b=agAHi8MiorXAEma8ZS8QAJT8HP0tHvaIMzzJVDn4fbILrn9xgqIYccsZ+HYhb8llTXBW
+	 GIRhwgeA7MyNNgvYlVNVDQcegNxbNLQd0A2GiWDLiDpjJlQyGNAJZDG4xZ6cDFLIexvp0
+	 uW2fX3qTTKmAarZIcyS+d9TiOu0pgJz9yjKJEEqklusJHdVEfjip5CI/oucn3X6l5euIE
+	 1oRpE41saGWOFuqmUKIMyyvAo4aZWrPaMcrjDXrhyiKTC/mpeL/awVuhGKay5/5u/KaEg
+	 439XgXw+RvppZ3QYsTIfxglJKWYgZjxL7GNckZkxExWb2t8McJLZjVs64H1lJ0I0vzw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793207488;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793207491;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=jZblX0CbneEdqdBruIMtZ/Zo+SElIvXhQtWD0iTwa0A=;
-	b=H2Dl4ZjNt/+FF/b/lBcWggpwJEzm9L9BiU00x5JwCiOR9SU6WjoSFkQT8XVTA4b9leCL
-	 wLFAJkWf+2NMaLDahXQcFJi4DlOi62WzEt6HssHF0T20+NIKy8o93gf75bhUdk4e07W0e
-	 f91CPDmiCJ0AgQhBwbqwEywF++5OXsCj7bXuLqxJ+/cvjsXOLWWocOKNpzkpYMWTUI4yT
-	 wG/XPsXo0b02cuybsNkG+t90+Di19QcjoY8HBuYmm5ENXXcQw1/OucrJmIXU1zIuRUKz8
-	 k6rJmI+HSCpmrklej4l9986VcFgEzGTf4aVk8NI3fTXpyZih8gYmKbwYWjG7oeAbunA==
+	bh=uzrklgFpCpYt9+0BQnvH3P+4vaIjV4giBqwn8+Z0J/s=;
+	b=wTbsAjlmKxmgTCV85qPBVw2SfkicyHh6xEph0LDNxtPGA4vihup6Qn4w/W2YpW3nnmXR
+	 Ppn+Vgbmu89UeypZdEH11QXg5Pt68YszYeJLT0u48E05Q7H3nfXHZJrWytemGnF9NKFtP
+	 ko9ellsBabcqRTsiiSYmBvovwtadm7eXD5kbWX9R4H1t4aI2bnfZuWX8bZQy+UrMRC6yc
+	 VQNlkQ3zUOE7W3p9D4MMYxjNUpZX2j9GU8UYP6VZrtC3WwNnhQ/qAoNO0ymXHdu2th9CW
+	 oez3v/FK2u4R+JO8TClQhdvvKOyeckxnd86TIeUyqrGtqdN4aTqisAYoeCdcHcTyXew==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Uqg720v4;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="CtSGpn//";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42612606A337;
-	Wed, 28 Oct 2026 17:11:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E1A7606A31A;
+	Wed, 28 Oct 2026 17:11:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Uqg720v4
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85EC11F031E4;
-	Wed, 28 Oct 2026 17:11:27 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CtSGpn//
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D4B51F031EF;
+	Wed, 28 Oct 2026 17:11:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793207488;
-	bh=jZblX0CbneEdqdBruIMtZ/Zo+SElIvXhQtWD0iTwa0A=;
+	s=korg; t=1793207491;
+	bh=uzrklgFpCpYt9+0BQnvH3P+4vaIjV4giBqwn8+Z0J/s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Uqg720v4YFhxIInvC2mS8S0GPJnTVekal40CL5VJwKMXBqoiGN6WDiEQmPZbvunzU
-	 NeRq7HaasW3hUFIRoxxErMcVdDJWqXLrobt5vHHEtz2x8fJU0ZNCBStuklq+elPnj/
-	 P4g+6f8Wf2ixXPxlqJnxl9fVsilySAz9t5RrDlU8=
+	b=CtSGpn//jCM4okst0glASDJ3HBTniJ8PgU+wbOljtzIwqfIYYGGs7UTNh6YCyF3+5
+	 KDufLv8yYhPbaw8uj7vFBMACqtusU9YrtZolIaoO6kZ4Fepx5nSTKGBdVl4Ui9iB+8
+	 3+gkXEVq7FRHMcU1Bj7d6IGh3dGdw4lc+TljsmQQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	HyeongJun An <sammiee5311@gmail.com>,
-	Cezary Rojewski <cezary.rojewski@intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	Bernard Pidoux <bernard.f6bvp@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 033/247] ASoC: pcm3168a: Fix the DAC zero flag polarity bit
-Date: Wed, 28 Oct 2026 17:57:16 +0100
-Message-ID: <20261028165948.149809170@linuxfoundation.org>
+Subject: [PATCH 6.12 004/247] rose: clear neighbour pointer in rose_kill_by_device()
+Date: Wed, 28 Oct 2026 17:56:47 +0100
+Message-ID: <20261028165947.460440677@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165947.349197979@linuxfoundation.org>
 References: <20261028165947.349197979@linuxfoundation.org>
@@ -69,46 +67,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: HyeongJun An <sammiee5311@gmail.com>
+From: Bernard Pidoux <bernard.f6bvp@gmail.com>
 
-[ Upstream commit b26edc925c1cfa0184cd270ed81d4833db045ce0 ]
+rose_kill_by_device() drops the neighbour reference but leaves
+rose->neighbour pointing at it, unlike every other rose_neigh_put() site
+(see "rose: clear neighbour pointer after rose_neigh_put() in state
+machines"). The heartbeat STATE_0 reaping path then puts the same
+neighbour a second time, causing a rose_neigh refcount underflow and a
+use-after-free.
 
-The DAC Zero Flag Polarity enum uses PCM3168A_DAC_ATSPDA_SHIFT, which
-is bit 6 of register 70. That bit is ATSPDA, the attenuation speed,
-which the DAC Volume Rate Multiplier enum already owns. The datasheet
-puts ZREV, the zero flag polarity, at bit 0. The header defines
-PCM3168A_DAC_ZREV_SHIFT for it, but nothing uses it.
+Set rose->neighbour = NULL after the put, restoring the invariant.
 
-So changing the zero flag polarity changes the attenuation speed, and
-ZREV cannot be set.
+Signed-off-by: Bernard Pidoux <bernard.f6bvp@gmail.com>
 
-Use PCM3168A_DAC_ZREV_SHIFT.
-
-Fixes: a9b17a638af5 ("ASoC: pcm3168a: Add driver for pcm3168a codec")
-Link: https://www.ti.com/lit/ds/symlink/pcm3168a.pdf
-Assisted-by: Claude:claude-opus-5-5
-Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
-Reviewed-by: Cezary Rojewski <cezary.rojewski@intel.com>
-Link: https://patch.msgid.link/20261008130953.2446692-4-sammiee5311@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+(cherry picked from commit 606e42d195b467480d4d405f8814c48d1651a76a)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/pcm3168a.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/rose/af_rose.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/codecs/pcm3168a.c b/sound/soc/codecs/pcm3168a.c
-index ad1564e7d8faa..ce68b239b9ef9 100644
---- a/sound/soc/codecs/pcm3168a.c
-+++ b/sound/soc/codecs/pcm3168a.c
-@@ -103,7 +103,7 @@ static SOC_ENUM_SINGLE_DECL(pcm3168a_dac_zf_func, PCM3168A_DAC_ATT_DEMP_ZF,
- static const char *const pcm3168a_pol[] = { "Active High", "Active Low" };
- 
- static SOC_ENUM_SINGLE_DECL(pcm3168a_dac_zf_pol, PCM3168A_DAC_ATT_DEMP_ZF,
--		PCM3168A_DAC_ATSPDA_SHIFT, pcm3168a_pol);
-+		PCM3168A_DAC_ZREV_SHIFT, pcm3168a_pol);
- 
- static const char *const pcm3168a_con[] = { "Differential", "Single-Ended" };
- 
+diff --git a/net/rose/af_rose.c b/net/rose/af_rose.c
+index 5aedbbf105c33..e0294a5183b47 100644
+--- a/net/rose/af_rose.c
++++ b/net/rose/af_rose.c
+@@ -216,8 +216,16 @@ static void rose_kill_by_device(struct net_device *dev)
+ 			 * looping forever in ROSE_STATE_0 with no owner.
+ 			 */
+ 			sock_set_flag(sk, SOCK_DESTROY);
+-			if (rose->neighbour)
++			if (rose->neighbour) {
+ 				rose_neigh_put(rose->neighbour);
++				/* Clear the pointer after dropping the reference, as
++				 * every other rose_neigh_put() site does.  Otherwise
++				 * rose_heartbeat_expiry() (STATE_0 reaping) sees a stale
++				 * rose->neighbour and puts it a second time -> rose_neigh
++				 * refcount underflow / use-after-free.
++				 */
++				rose->neighbour = NULL;
++			}
+ 			netdev_put(rose->device, &rose->dev_tracker);
+ 			rose->device = NULL;
+ 		}
 -- 
 2.53.0
 
