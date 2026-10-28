@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793208983;
-	b=P1g72kiszgLO0ypaG4M+GrITK/Wtdts1I1g7PQakFzaLmvt6hDQFFbfXxt3JvOSCJOK+
-	 TDezH8QA8FA/CwRSIrJmDuqb1k5gw1G7nY55igsZgOQ0uy0dCTiqgZlsnfzhevPkh6I6l
-	 FTJ3sX1+PAdPn8ifhPn1b727C3KSbP1eBFyNv6Jyl2smzHuoqpadDIk3Eq2l87fFdHYyQ
-	 I5912KP5KKTezDZ+G4hOsB8oNZXAYgTvywid7Ag61ycd8GikI/g6+sISSfvuBzda5ok8a
-	 /wZUFfO9rwTdO7i2kh6DaNMhh06ZdwTVSq8xPrSvNH6bA5rNKbu0WY6akN0bIBEyprA==
+	t=1793208985;
+	b=UPG8dWf9twCRzQeIhxjXmo7FAdMneGxkpDauKm2kI7XJ5VgO4TcQTKgFt6W6bIwqOcrv
+	 FSVW19Ve3ypLctOXKupvGW/bCKRxwQpkDVdLGfHPgv9am5adq5ZbEUlb64TFVVzhTtSqE
+	 HpZuKlolefdB7tAeaIWcerOZ7MqADVZlgYEDCqfTByvdSmna31LVscJHBHiHgrqGNlhpg
+	 1q7lYKU2rAhl7prm/KYfAg1RZcwIi1xKoUjiX1hCaXkqKdLxDlu63GpRIoJERJ5mxG8ep
+	 lP9Xcjrb9Gigs0JahPRUy2EgvaVS0eipsUXumTA9IRYfr/zpHvRJP26RQvurlapYPAQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793208983;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793208985;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=tFh+VYH1SLVTo+3u46ZXqJDUTNCeENLQX4a1lZtnH/8=;
-	b=5k9Eg++X4N7TzRUJh3yG4mjWEqBJjHYU71lW1wAgfgfhsSJXOZZgG71Au/lqgVs4PF/Y
-	 hLfXHAd7+Cs/5bU/BAicVKMhlzcRhJQE5b+mX11HdlidjgubwHnDLovVEaHheeTDSQnlT
-	 ReKkeTIwa0IY88rSuJp8ipD5Q+M9N6PEkRTXhgBjf1OUmxJyI93FKp94BtpqKxK6eFWDZ
-	 JrrDr7AeMtdPpn68uVk0PMuc48x8gp/oiD2qhxBO97IggUkyzJC+oj5BsqwH3ZZDkASlJ
-	 s/iro/YFrl9JiHwiESUJjbvssWEnAt7JTrfFcn3WYvROElV7bIKRrwcLtbI3bePX1GQ==
+	bh=oM8Hc2qNoXE1v27Zi7mZ1/ykBrHpAr6rLgOFeb0A5n8=;
+	b=quj6hz0ZOz1UL6TPgLzIjWaTYjXVmNOL7gypkpda69Ljp0SpXsD2g2LhDD+4V9CVXy7K
+	 tNE/EpiDjjtJuJHtR//jPYDmmuH2Vn3BCZie7GQ7UjUV4IApK6y/OgJxAFRAeCOyt2FEp
+	 Abmaq9MIejH316OUso91M6miCf2wQ6y9mgZogettetnBfwMnU9ilb+DSMNXelKlJoFHRs
+	 47prxysIpf3t8t7Iw19TsllESDssZ3IeyaXptD9eSWIpyQE4aPILXZ+PF2ehe/wwcCci1
+	 ZuP6JpTL+2szBvZC7M93u3mySwGuKKo5/PyZTd+K68TEV3mgobMchb+Mlq78OsFpjZQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hhrgU26O;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fzvQeApo;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA62E606A31D;
-	Wed, 28 Oct 2026 17:36:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74A64606A31A;
+	Wed, 28 Oct 2026 17:36:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hhrgU26O
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E010C1F01825;
-	Wed, 28 Oct 2026 17:36:21 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fzvQeApo
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C39CD1F01828;
+	Wed, 28 Oct 2026 17:36:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793208982;
-	bh=tFh+VYH1SLVTo+3u46ZXqJDUTNCeENLQX4a1lZtnH/8=;
+	s=korg; t=1793208985;
+	bh=oM8Hc2qNoXE1v27Zi7mZ1/ykBrHpAr6rLgOFeb0A5n8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hhrgU26OUZs4hWw3p+DmE/6GPHME6l8ELxnRHyafmUGsZr1+RJb4wkDhMBXaS1taI
-	 qKef9UhjBXZAWr4nIR7hHkCps8zOwtsiFtp9aneEYjrHrGRTyUFgj3CsKPLhpIBh1l
-	 03TwMPszcGBoJ8jP20zTgigWHk/2xMuLIUVw4kY8=
+	b=fzvQeApoyyfqGqfAq0UNopof+c8IorlChU9S7PQNrRHeiDznCTIic+YsHKpZQOkU6
+	 ktbOK2ahm0DNktl53p3s6E5c1L5xyGjAOUlkNaLRvtnQK+iRzhQA0lV5tEmivGG1Oy
+	 TEr+boFm1MFGakoWoV9d2YiRQDCH3Kv0TDhAouko=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Cong Nguyen <congnt264@gmail.com>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
 	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 310/516] iio: adc: aspeed: propagate reset deassert errors
-Date: Wed, 28 Oct 2026 17:57:42 +0100
-Message-ID: <20261028170010.833844617@linuxfoundation.org>
+Subject: [PATCH 5.10 311/516] iio: adc: max1363: sign-extend bipolar differential channel reads
+Date: Wed, 28 Oct 2026 17:57:43 +0100
+Message-ID: <20261028170010.857229986@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -68,41 +69,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Cong Nguyen <congnt264@gmail.com>
 
-[ Upstream commit 95e4eb426b4bd666fa2f37886c0ddf74a0cc6167 ]
+[ Upstream commit 91908c0a78baddc8572aa3ab69e62ee2eb496ba4 ]
 
-aspeed_adc_probe() continues to register ADC resources after deasserting
-the shared reset, even if the reset controller reports a failure.
+MAX1363 differential channels are bipolar, but max1363_read_single_chan()
+masks the raw value to the ADC resolution without sign-extending it.
+Negative differential readings are therefore reported to userspace as
+large positive values (e.g. -1 as 4095 on a 12-bit part).
 
-A failed deassertion leaves the hardware unavailable, so stop probing
-before installing the cleanup action and enabling the ADC.
+Sign-extend the masked value from the resolution bit for differential
+channels. Single-ended channels are unipolar and are left unchanged.
 
-Fixes: edf7550a1f93 ("iio: adc: aspeed: Deassert reset in probe")
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Fixes: d1325cf45077 ("Staging: IIO: max1363 ADC driver")
 Cc: stable@vger.kernel.org
+Assisted-by: Claude:claude-opus-4
+Signed-off-by: Cong Nguyen <congnt264@gmail.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
 Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-[ sashal: Changed the direct error return to a jump to the existing reset_error label. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/adc/aspeed_adc.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/iio/adc/max1363.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/iio/adc/aspeed_adc.c b/drivers/iio/adc/aspeed_adc.c
-index 34ec0c28b2dff..012cc9291bef3 100644
---- a/drivers/iio/adc/aspeed_adc.c
-+++ b/drivers/iio/adc/aspeed_adc.c
-@@ -221,7 +221,9 @@ static int aspeed_adc_probe(struct platform_device *pdev)
- 		ret = PTR_ERR(data->rst);
- 		goto reset_error;
+diff --git a/drivers/iio/adc/max1363.c b/drivers/iio/adc/max1363.c
+index 29c1824162cd0..c427fdf93dcbd 100644
+--- a/drivers/iio/adc/max1363.c
++++ b/drivers/iio/adc/max1363.c
+@@ -409,6 +409,14 @@ static int max1363_read_single_chan(struct iio_dev *indio_dev,
+ 		}
+ 		data = rxbuf[0];
  	}
--	reset_control_deassert(data->rst);
-+	ret = reset_control_deassert(data->rst);
-+	if (ret)
-+		goto reset_error;
++
++	/*
++	 * Differential channels are bipolar and the device returns the sample
++	 * in two's complement, so sign-extend it from the resolution bit.
++	 */
++	if (chan->differential)
++		data = sign_extend32(data, st->chip_info->bits - 1);
++
+ 	*val = data;
  
- 	model_data = of_device_get_match_data(&pdev->dev);
- 
+ error_ret:
 -- 
 2.53.0
 
