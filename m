@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216997;
-	b=EZ5EqU/tq1YblsBz0VkKBfkgSHO6d5wB3CWqs6a1Gdgc0Khu1buRbPlrYmIz0Fmmc+A0
-	 yr1bO5a82FJO1bP+NAJfz8wOLElRLGKh6SRnR49EECdS5AhLQCjNdth3V2wS8z59QF9/a
-	 yy0oCM9vfIv4PvtRpvpJ+4xRd5htkj2W0h/cTLnEf30Gnopb2VTEok5LNOFbKRoYodb97
-	 Z8Nl6w1jIse8q9w5fyMBSHbCN2jiZYoHjzkw58agTI0KRSY220PoLf9+5ogSIqGhjPSPd
-	 mrxTy6nJl23F/0BOdi/EQt9GHi9FWoaQ7AeV/RlrkZAoxhcj0aKWAgFVFUq8Qi4FSbA==
+	t=1793217000;
+	b=SrVrX1VWyymcojw22I/Tay72w0GBcOm9d1QY+4lppShEHP6FCXXto7D5sRssZX0qOZIw
+	 i5jkgZk4ZcIXmHCD5PuMGgkeqR8qdRxVYUmXwWHo+7/hu6tRzDq+mYwVKmOECwfMSPgAW
+	 qpffusoClS6sPWEKSeSmzFeVXBi/sZC1zM7AFCCcVhtPHkX+VoAiwW+setCg0NZ6CNWmM
+	 4SF8nQ0mb365ajVDUPRvUtRDyYWTLsC5zL8zGSlhQJ8NR7+GQmK5wWtMz2C90fl5NtXjr
+	 ckh2Dy8ou3SqmnxPBTEFPLGwwk7ZoXkXBBsrdNWJP/yQNPUqQJ3E9e3/Kavz180xvuQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216997;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793217000;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=IIoA8suxfmIPiDrYY2PInvGkhAJy8CzJpy42p1CbqeQ=;
-	b=E3nW7yZatFwKxjAydooGcYc+L/WesmAX730MzsRELg4ApILaxmWV5dEYIBiuyCtuNX1+
-	 A/CImSlCGUAlePzNMzEc9ETlzPGU53NgLONe8sExps3xoZzt8TsKgoAZs1dsq0PXLkgNo
-	 fkQ2UyCx+rR4MifVR6E4jOdhzeJLY9796GULoLypGVmWP+jeBpSDsd3FtvUsuE+pCVjJi
-	 Avy+arFw3CyeCVJD20GZzFvIs7RyRiKt/qoYI8tcupU6UutPEY+3PKYvQu+Xzyw+XKXSr
-	 GUeeVSc/1tEk0cLYgkbn4QxnwR4HJZ50paWe3aDe4Jku0Bc2XWCV4A3kPTC3mBCUZ5A==
+	bh=i0q7w1D2Gfj/7robNvJWI91XaaYpg1MPI5ENGPdVO7I=;
+	b=pLv9guD76NFBIq0j2qIPX9WeS1R6ZWum+rq2lpOYDxoJ+EY8IV+vEDksuvvisW2+5MwO
+	 F8tjRQl8xZCjSsvigLvoEP+fFRkgUvhpXwkc+GALPPkN1Rlv1vYTjBXOaI1Z9304sKyrM
+	 1/XpmJaG43WMC1De69DdsqyTSQhGC0XnyPjCAaD1RI3OgTVdG4SBI0lYcqq+YkzYnvTC7
+	 8omx7rtze5leVLZxpxg8zhLpJa58jExgn3hHUmuoI+ZmpKNhWPVJGUkJEeMI5RDzv94ya
+	 N53ylAHot2k5e9iKeXimXGmkj567oaU8rkO3Tt190z+lpDjm4kvS5hMsF8iAsToUM1w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Bswd/4jf";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aq4pszJ+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61828606A326;
-	Wed, 28 Oct 2026 19:49:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E05E606A322;
+	Wed, 28 Oct 2026 19:50:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Bswd/4jf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF9531F01825;
-	Wed, 28 Oct 2026 19:49:56 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aq4pszJ+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C94E1F01829;
+	Wed, 28 Oct 2026 19:49:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216997;
-	bh=IIoA8suxfmIPiDrYY2PInvGkhAJy8CzJpy42p1CbqeQ=;
+	s=korg; t=1793217000;
+	bh=i0q7w1D2Gfj/7robNvJWI91XaaYpg1MPI5ENGPdVO7I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Bswd/4jfPYtvyuIqH4L3pTV1ZaRxvZA7c1lhtuun4Jo4Hsn9IQ0hbRIfNmUN8e8FI
-	 Nl6xIc/qljW9bGtTngTScAIE+/AOmmZ+fIMUSmpgJ80XKXLYH4rc+nlQ0wXdYNG/n4
-	 H1FhCH+jYNV/voo210GqFJ0qKZyH86tx/iKnugDk=
+	b=aq4pszJ+wN6ECPWjZJ0REBbOfg5g3tExOXrPMhxL2fTGwNqSOSD9vXHI6W5XIyHnD
+	 vOd3uN8FhSKBdHJStVOBIIzI3Hv0J0+cwygygDA6MK7z7TEYvsSrVM8lpMSvlxPwQr
+	 5oAtnClHCFPNzZIhlTUltsAeGjSZZTDyPF9ViPE4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	Etienne Perot <eperot@google.com>,
-	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 6.1 1753/1887] cgroup: fix spurious SIGKILL of CLONE_INTO_CGROUP children
-Date: Wed, 28 Oct 2026 18:04:09 +0100
-Message-ID: <20261028170539.350978060@linuxfoundation.org>
+	Ben Marzinski <bmarzins@redhat.com>,
+	Ming-Hung Tsai <mtsai@redhat.com>,
+	Mikulas Patocka <mpatocka@redhat.com>
+Subject: [PATCH 6.1 1754/1887] dm cache: fix demotion stats in passthrough mode
+Date: Wed, 28 Oct 2026 18:04:10 +0100
+Message-ID: <20261028170539.374200654@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,88 +68,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Etienne Perot <eperot@google.com>
+From: Ming-Hung Tsai <mtsai@redhat.com>
 
-commit 8e359920216689b3b79e0fe8961a77fe312a511f upstream.
+commit 2ccb8878c149443c6acf628b438c9c942c20abb2 upstream.
 
-Since commit b69bb476dee9 ("cgroup: fix race between fork and
-cgroup.kill"), the fork path snapshots the kill_seq of the child's
-future cgroup into kargs->kill_seq, and cgroup_post_fork() SIGKILLs
-the child if that cgroup's kill_seq has changed in the meantime, to
-catch forks racing with a cgroup.kill sweep.
+The demotion counter is incremented per incoming write bio before the
+invalidation begins, causing the demotion count to exceed the actual
+number of cached blocks when multiple bios target the same cached
+block. Additionally, the counter is incremented unconditionally
+regardless of invalidation failure.
 
-For CLONE_INTO_CGROUP, however, the snapshot in cgroup_css_set_fork()
-is taken before the target cgroup has been resolved: kargs->cgrp is
-always NULL at this point (it is only set at the end of the function).
-So the "if (kargs->cgrp)" branch is dead code and the snapshot always
-records the kill_seq of the parent's cgroup. cgroup_post_fork() then
-compares it with the kill_seq of the target cgroup, so the child gets
-SIGKILLed whenever the two cgroups have been killed a different number
-of times.
+Reproduce steps:
 
-As a result, once cgroup.kill has been written to a cgroup, every
-child subsequently cloned into it with clone3(CLONE_INTO_CGROUP) is
-killed on the spot, for as long as the cgroup exists: kill_seq is not
-exposed to userspace and never resets.
+1. Create a cache device consisting of 512 cache entries
 
-Re-snapshot kill_seq from the target cgroup once it has been resolved,
-and drop the dead branch at the early snapshot site.
+modprobe brd rd_size=262144
+dmsetup create cmeta --table "0 8192 linear /dev/ram0 0"
+dmsetup create cdata --table "0 65536 linear /dev/ram0 8192"
+dmsetup create corig --table "0 65536 linear /dev/ram0 262144"
+dd if=/dev/zero of=/dev/mapper/cmeta bs=4k count=1 oflag=direct
+dmsetup create cache --table "0 65536 cache /dev/mapper/cmeta \
+/dev/mapper/cdata /dev/mapper/corig 128 2 metadata2 writethrough smq 0"
 
-This does not reopen the race fixed by b69bb476dee9. For
-CLONE_INTO_CGROUP, everything from the snapshot to the check in
-cgroup_post_fork() runs with cgroup_mutex held, and kill_seq is
-only ever incremented under cgroup_mutex.
+2. Populate the cache, and record the number of cached blocks
 
-tj: Updated the comment above kill_seq to reflect the new serialization
-rules as suggested by Shakeel Butt.
+fio --name=populate --filename=/dev/mapper/cache --rw=randwrite --bs=4k \
+--direct=1 --ioengine=libaio --iodepth=32 --io_size=2048m
+nr_cached=$(dmsetup status cache | awk '{split($7, a, "/"); print a[1]}')
 
-Fixes: b69bb476dee9 ("cgroup: fix race between fork and cgroup.kill")
+3. Reload the cache into passthrough mode
+
+dmsetup suspend cache
+dmsetup reload cache --table "0 65536 cache /dev/mapper/cmeta \
+/dev/mapper/cdata /dev/mapper/corig 128 2 metadata2 passthrough smq 0"
+dmsetup resume cache
+
+4. Write to the passthrough cache with multiple jobs to trigger
+   multiple bios hitting the same cached block.
+
+fio --filename=/dev/mapper/cache --name=test --rw=write --bs=4k \
+--direct=1 --ioengine=libaio --iodepth=32 --numjobs=4
+
+5. Check if demoted matches cached block count. These numbers should
+   match but may differ due to overcounting per bio.
+
+nr_demoted=$(dmsetup status cache | awk '{print $12}')
+echo "$nr_cached, $nr_demoted"
+
+Fix by moving the demotion counter increment into invalidate_complete(),
+gated on the success flag.
+
+Reported-by: Ben Marzinski <bmarzins@redhat.com>
+Fixes: b29d4986d0da ("dm cache: significant rework to leverage dm-bio-prison-v2")
 Cc: stable@vger.kernel.org
-Cc: Shakeel Butt <shakeel.butt@linux.dev>
-Assisted-by: LLM
-Signed-off-by: Etienne Perot <eperot@google.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Signed-off-by: Ming-Hung Tsai <mtsai@redhat.com>
+Reviewed-by: Benjamin Marzinski <bmarzins@redhat.com>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/cgroup-defs.h |    5 ++++-
- kernel/cgroup/cgroup.c      |    6 ++----
- 2 files changed, 6 insertions(+), 5 deletions(-)
+ drivers/md/dm-cache-target.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/include/linux/cgroup-defs.h
-+++ b/include/linux/cgroup-defs.h
-@@ -421,7 +421,10 @@ struct cgroup {
+--- a/drivers/md/dm-cache-target.c
++++ b/drivers/md/dm-cache-target.c
+@@ -1461,6 +1461,9 @@ static void invalidate_complete(struct d
+ 	struct bio_list bios;
+ 	struct cache *cache = mg->cache;
  
- 	int nr_threaded_children;	/* # of live threaded child cgroups */
- 
--	/* sequence number for cgroup.kill, serialized by css_set_lock. */
-+	/*
-+	 * Sequence number for cgroup.kill. Incremented with both cgroup_mutex
-+	 * and css_set_lock held. Readers hold either one.
-+	 */
- 	unsigned int kill_seq;
- 
- 	struct kernfs_node *kn;		/* cgroup kernfs entry */
---- a/kernel/cgroup/cgroup.c
-+++ b/kernel/cgroup/cgroup.c
-@@ -6443,10 +6443,7 @@ static int cgroup_css_set_fork(struct ke
- 	spin_lock_irq(&css_set_lock);
- 	cset = task_css_set(current);
- 	get_css_set(cset);
--	if (kargs->cgrp)
--		kargs->kill_seq = kargs->cgrp->kill_seq;
--	else
--		kargs->kill_seq = cset->dfl_cgrp->kill_seq;
-+	kargs->kill_seq = cset->dfl_cgrp->kill_seq;
- 	spin_unlock_irq(&css_set_lock);
- 
- 	if (!(kargs->flags & CLONE_INTO_CGROUP)) {
-@@ -6511,6 +6508,7 @@ static int cgroup_css_set_fork(struct ke
- 	put_css_set(cset);
- 	fput(f);
- 	kargs->cgrp = dst_cgrp;
-+	kargs->kill_seq = dst_cgrp->kill_seq;
- 	return ret;
- 
- err:
++	if (success)
++		atomic_inc(&cache->stats.demotion);
++
+ 	bio_list_init(&bios);
+ 	if (mg->cell) {
+ 		if (dm_cell_unlock_v2(cache->prison, mg->cell, &bios))
+@@ -1732,7 +1735,6 @@ static int map_bio(struct cache *cache,
+ 		if (passthrough_mode(cache)) {
+ 			if (bio_data_dir(bio) == WRITE) {
+ 				bio_drop_shared_lock(cache, bio);
+-				atomic_inc(&cache->stats.demotion);
+ 				invalidate_start(cache, cblock, block, bio);
+ 				return DM_MAPIO_SUBMITTED;
+ 			} else
 
 
