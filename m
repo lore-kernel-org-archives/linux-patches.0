@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213010;
-	b=I/3Alxh8UptZvOCSUQkiPvMiXhbTSa8B4HO7+S19OOdYqGGbqFC78hwgKZyDXKyLf1qL
-	 9lxCNFxI9iLqf8bD/imIb9lN0OS98/0pqf8V8+AdVd/KFxfKpBMWup1DDIi0NZv5B24L9
-	 5SohPGhjzBkFCXxLHY52n2yRCfRAB87iFHLrsOR3oL6brd+IKnTkvRKc0sdirze4vBWzr
-	 pyMEwt7ks5cVcYUPe1oZaWGb1kpwwrLYZ8NS6CRj2ot3Ce0/P1xwRgQIn5ao5sLdO+fAJ
-	 zVersIRBobSdo0hCa2J/h7GCwbCdoXLGbVPxKMXmAP/aAJx6ZKJJTMU7tLbmVkVdyjA==
+	t=1793213013;
+	b=tLCWmIQkI35bW7vTejJXw6k+DbJpJ6dD1zu+6RvyQlYM8r/vTfiG10hH8oPbzZavOgOW
+	 LrH9Rzo2PmoY9vRPIJ32bGa3vQZD9fCeTv3OXJu173v8aEp+vJaXmOw2dCb14E/aTHjgr
+	 nlh8Cls2Q6bcLAozm1IKRPl9N/z0YIRWva/Uu3m2S5FwXrBWJqPepXdskUk/rWcTNMlcj
+	 qjDhp6xVBm6pBPc7KHfM8AOCbvDYXo99cag9VH8lAOePpDwd/bOQWDLvNkkpe+FUPjuOW
+	 GM8LvtIO+YQfks7rKfpBCC97Gjpj2nmU0jeBOXbFSzcvPmLUd3iQp2OK+Ko467AXm3g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213010;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213013;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=PLfTgGloLZ8V2bOdzytaTa53vj5DZ+xI00ShqLfxF5w=;
-	b=DO6UYfs3yMjgZHhxA8aItlnV6jN/y/Ng/FYSgrGeG8NeHT+2ab4CNDPVgqTEgjXhTeb/
-	 nBxAhLERQrkgLzuv6JTHLaOKTzkQjnZbQJJLBkmlRnWHSrrdwFdmWgQxRFJExeVTpSKd6
-	 542sS23c96RUABIb2HH4f3bR1f3/XH+e4tlVqQyW6GXc8i7/Ubl0k6ECp+gHJB+JKGU+P
-	 BzBTvgsaSEk7nwK0/EkxDcbGeGNFUzosNHcUHJXQ0fV1QKwMopKE4l8z/DIVInKyP00KP
-	 1GjkzTnDE/Zr3viy5nbEGza+HuQGacwIAC/dKZO+Nk+QKBaxaNNLRQeS6ufflIKPHHg==
+	bh=ZBDnXDn8ZvJ6twLr4l9aX7GA0l9gWiV71vga1x+uFWk=;
+	b=y+j8xa+qY6/gKID8Uxxran2k8Scaf9lYpG9R4bMgmjAso2aD0qel8Qh5h3p4E+6K97ab
+	 Y+Dj35IWtRVxAgOXiX7yQJ1d8SD3R+3HC4Hh738Qg+ilrNX8lVXFJgeFu0tDuQ76Vypj5
+	 34SFm+ci6x2/eUGU1TH1Q2yQTJYzaZbwT7wy1EFJuqWrrjpWxogv3CMCMO0QmSaoqoFC5
+	 L4Aq9tKNJqRViKESQRJaw6jCX12vN6GHAFbAFAblIUjMjes8kfnWMaWo66j1xXkxDgQca
+	 HWK8P/4IibT9G6FvmYjoJXaG+OBp058DWLE1yAnNWoWOBdAcC4xnOT1XRN71ao9ODeA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LLDac6zV;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="en4T4Gz/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A5A6606A31C;
-	Wed, 28 Oct 2026 18:43:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 430E4606A31A;
+	Wed, 28 Oct 2026 18:43:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LLDac6zV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD5BD1F01825;
-	Wed, 28 Oct 2026 18:43:29 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=en4T4Gz/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93E701F01825;
+	Wed, 28 Oct 2026 18:43:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213010;
-	bh=PLfTgGloLZ8V2bOdzytaTa53vj5DZ+xI00ShqLfxF5w=;
+	s=korg; t=1793213013;
+	bh=ZBDnXDn8ZvJ6twLr4l9aX7GA0l9gWiV71vga1x+uFWk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LLDac6zVJJwMjbRrgAS43ZpsDIlLqHCZQMm27MKT0yUIvJPEuvkTCQhy5Z4uWdW4h
-	 bWyJdGWnJfbrF67qxKErCra/ozTZcv4kkNKXC/8PmyPQvbgWBS9YNnK9CMCbRkPZAy
-	 vrsT0oFtjRfE+k0hHx3IGkUB+2mSgw4TkcE0DWdQ=
+	b=en4T4Gz/JyHBJASuOyMBX1+97458Kwg7irk1SYVL8OnZUMoRDiXLZg1KJKwq/GH1Y
+	 CLkLd14FLLmU8pszd1BcqvhF0M6YfyCf96UttU3Q8UEDstRSaMXAyw6MlgSR51kFWw
+	 LLHbybcwCeOXJhQiGkQUQ2IfLEWxdx6+O9bi/viU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Frank Sorenson <sorenson@redhat.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Paulo Alcantara <pc@manguebit.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0356/1887] mptcp: prevent race between disconnect() and rtx
-Date: Wed, 28 Oct 2026 17:40:52 +0100
-Message-ID: <20261028170507.332999326@linuxfoundation.org>
+Subject: [PATCH 6.1 0357/1887] smb: client: split cifsFileInfo bitfields to avoid shared-byte RMW races
+Date: Wed, 28 Oct 2026 17:40:53 +0100
+Message-ID: <20261028170507.356013869@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,56 +69,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Frank Sorenson <sorenson@redhat.com>
 
-[ Upstream commit 85c580b0d8590520ae00a15c29e9fb9c99427a3e ]
+[ Upstream commit 19465a9aeb664f1d710d0d22c07c31bfb7c85446 ]
 
-Sashiko noted that the two event can race, leading to inconsistent
-status. Prevent the race using the synchronous timer stop operation.
+The invalidHandle, swapfile, oplock_break_cancelled, offload,
+and status_file_deleted fields are stored in the same bitfield byte
+in struct cifsFileInfo, but are updated in different code paths that
+may run simultaneously, and are protected by different locks.  Since
+bitfield assignments generate byte-level read-modify-write operations,
+a modification to one flag can overwrite a concurrent modification to
+another flag.
 
+To avoid these races, convert these flags from a bitfield to
+separate bool fields.
+
+Closes: https://lore.kernel.org/r/7689764e-c0f6-4016-9557-b54cf4a3de4e@redhat.com
+Fixes: 3bc303c254335 ("cifs: convert oplock breaks to use slow_work facility (try #4)")
+Fixes: 4e8aea30f7751 ("smb3: enable swap on SMB3 mounts")
+Fixes: ffceb7640cbfe ("smb: client: do not defer close open handles to deleted files")
+Fixes: 173217bd73365 ("smb3: retrying on failed server close")
+Signed-off-by: Frank Sorenson <sorenson@redhat.com>
 Cc: stable@vger.kernel.org
-Fixes: b29fcfb54cd7 ("mptcp: full disconnect implementation")
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260908-net-mptcp-misc-fixes-7-3-rc1-v2-6-df1de70348b6@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ sashal: Use TCP_RTO_MIN for msk->timer_ival instead of
-  icsk->icsk_rto_min, as ea4eb2adb0d3 ("mptcp: honour configured
-  min/max RTO in retransmit paths") is not in this tree. ]
+Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+(cherry picked from commit 19465a9aeb664f1d710d0d22c07c31bfb7c85446)
+[ status_file_deleted not present in kernel 6.1 ]
+Signed-off-by: Frank Sorenson <sorenson@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mptcp/protocol.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ fs/smb/client/cifsglob.h | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/net/mptcp/protocol.c b/net/mptcp/protocol.c
-index 593d196dfa8bb..5d6dff88bf209 100644
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -3269,6 +3269,7 @@ static void mptcp_copy_inaddrs(struct sock *msk, const struct sock *ssk)
- 
- static int mptcp_disconnect(struct sock *sk, int flags)
- {
-+	struct inet_connection_sock *icsk = inet_csk(sk);
- 	struct mptcp_sock *msk = mptcp_sk(sk);
- 
- 	/* We are on the fastopen error path. We can't call straight into the
-@@ -3281,8 +3282,13 @@ static int mptcp_disconnect(struct sock *sk, int flags)
- 	mptcp_check_listen_stop(sk);
- 	inet_sk_state_store(sk, TCP_CLOSE);
- 
--	mptcp_stop_rtx_timer(sk);
--	mptcp_stop_tout_timer(sk);
-+	/* The later subflow close can not kick again the tout timer,
-+	 * as the msk is already in closed status.
-+	 */
-+	msk->timer_ival = TCP_RTO_MIN;
-+	sk_stop_timer_sync(sk, &sk->mptcp_retransmit_timer);
-+	icsk->icsk_mtup.probe_timestamp = 0;
-+	sk_stop_timer_sync(sk, &icsk->mptcp_tout_timer);
- 
- 	if (mptcp_sk(sk)->token)
- 		mptcp_event(MPTCP_EVENT_CLOSED, mptcp_sk(sk), NULL, GFP_KERNEL);
+diff --git a/fs/smb/client/cifsglob.h b/fs/smb/client/cifsglob.h
+index a5e9f79c10f90..c37f10eedddf2 100644
+--- a/fs/smb/client/cifsglob.h
++++ b/fs/smb/client/cifsglob.h
+@@ -1337,10 +1337,10 @@ struct cifsFileInfo {
+ 	struct dentry *dentry;
+ 	struct tcon_link *tlink;
+ 	unsigned int f_flags;
+-	bool invalidHandle:1;	/* file closed via session abend */
+-	bool swapfile:1;
+-	bool oplock_break_cancelled:1;
+-	bool offload:1; /* offload final part of _put to a wq */
++	bool invalidHandle;	/* file closed via session abend */
++	bool swapfile;
++	bool oplock_break_cancelled;
++	bool offload; /* offload final part of _put to a wq */
+ 	__u16 oplock_epoch; /* epoch from the lease break */
+ 	__u32 oplock_level; /* oplock/lease level from the lease break */
+ 	int count;
 -- 
 2.53.0
 
