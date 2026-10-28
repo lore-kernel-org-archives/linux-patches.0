@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793211246;
-	b=DAwZhY6OrkwXmvrxeAbcmX9swH9uVBrQvo+4Xb2q5XKA3fRhl/QytgvucoMNh2LzJEWU
-	 Z8aqYtNRzLg9OMKxOWuGOeUvyH6arA9zW/6k36gRHn7HRC8CF9Wp7Tn0MGLhqmfjP5YtX
-	 Byf+Ls12MnpqUbbO41iQoEbz4evyq+p9563Hh78CJH9/VRGUl9U4v1oFnEMkbQaN4qkwF
-	 ntNr8sdtc15oe2hUDpMqBDsQPb6gjlf6TgdZp1ZgpiSRv+7pnsejFK+pz02D5d3Jg4JHY
-	 6zWyB2Cq40Rt6/Mb3ifduJ6pCveJEHbdzh1J/0gGBu7hs/nQGqBzfyVQLRoTO2T6x7A==
+	t=1793211249;
+	b=ggteyTBqbxKKIPoezYBwB6Tqgwg9UwJChbSIVK45J4RwUONFzu3S4kQYytGk90xSDWov
+	 lOgIjPS+KiRj48nFYKP6Vy5zI9BEiK9xSpnj11ARMRtfOAFKAoOb1+Qy9IttcZ/2s3CFi
+	 dyG/Umh7bO+zLWE1g+QTd+8D48TsJGNdXowSIfNx+PRukNqGGxPFj/NA5H9ez0Sff94Cl
+	 ARwU9XfCsXXRf9lZaAD304Wwbls9v0iHDoHkC62B4nr/N7eY9tTKMD3Y99XNsyX5Z22Rp
+	 BImwThIFdkVBeqvLC7T3PKl74K989FGLEUxWeX9Kp0D+iuATOFAcF0FyMoG8H5cmfmA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793211246;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793211249;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=z+lJQvf9wNiQVLMi1sSa+Uj/xUaCHLm+RtZ5Tkcz6fk=;
-	b=pcX4GLar3NZkjOTctZf+MgM+icSWnD5TfvcHuN6BIllWUgzLF8BsZ+N5LwkdJXBWMJMz
-	 DEatOg6fE5L0882M4F+nFxERhZRd9lucRAEIhc5hz3diF+QFkf3Ab6Nj4bVGqXBjoq1SY
-	 7ODtXiAXJ+Sa2UTS71ABt2XZZ3rm18qtbMxgByumw0pY6Kd7ttX8iAbM3ZcZL6U6xB6Vy
-	 jpjAaOHN25lxMcIFwV8kq61zUT7oQZLRQa36cjAN3yT51Ms4CNiag8ycLcy5JKrQJ/pqd
-	 Y/1MkPRQGSORRv2XzAcXooVel3IDLkw+Qyo0UJahoRaM2rBFqhIONIQIvTl+Cj+XPCg==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=SA7CR1ima9ptwi2UhtHqYbf5aTIvWLlUNfSTBaU5lhA=;
+	b=KgbRAeuWrun/ImAZlJ6Rteql1Pn8u8/8Imk0T67cGhYaG7bj2rKtm3NK1u6Dg1tR4I0G
+	 zdZ9cvwrmdcCsYH48WAdc1LvidnZSsbrGpzHh57R+WXlVugsdvR+Uv3z2HznBjDQ1lOWy
+	 m93rdGPSM504M82hx0TYh6Jif9wmGKlTtF47APd+r8iCfyyV8TIEfaa/8SAd1ITitZmpT
+	 axtOHFPJOfI55dX3DSuun9Rj+ZYwZVJgJWTbN07Ij/4dCuDuHtQUgGOOuwIcEejwHCCar
+	 tUUPfklHljyCUzMl10NrFpNnb7IZuzTwbVSvqT955qZU9plmdmFcL9PPp3V/Cm6Zdhw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="EZL/RkPx";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PET4gsTt;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC96260A2639;
-	Wed, 28 Oct 2026 18:14:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3F8560A3801;
+	Wed, 28 Oct 2026 18:14:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EZL/RkPx
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20E641F01825;
-	Wed, 28 Oct 2026 18:14:04 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PET4gsTt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2E0E1F01825;
+	Wed, 28 Oct 2026 18:14:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793211245;
-	bh=z+lJQvf9wNiQVLMi1sSa+Uj/xUaCHLm+RtZ5Tkcz6fk=;
+	s=korg; t=1793211248;
+	bh=SA7CR1ima9ptwi2UhtHqYbf5aTIvWLlUNfSTBaU5lhA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EZL/RkPx1XOg/MEs4D14TjXhApAGgrEU7PBKiSqgmIFjR/4JgfK1jtza+5jygtS1q
-	 T8kINBu3nSQ7vDIp8cJ45U6SyqYciTc2iHLNid6B6rm6rACTgIUi9HaXWmKK11YuYQ
-	 GcafCTgDbxeNtlH0D0HXDDHqX4MJerlmOcfOGwZ8=
+	b=PET4gsTtnVOpziOmT8i2K5XKNF1JcKc0fQ0oRfyVZgXdYqltnzwPsljqI8DXatw1Y
+	 /zYA2543jntXa6A2Ds3i+gd3lW2z/XdUgXl6CPhblH8WrNquRpfKQKDbAMYBLoD9nA
+	 htci57+Zxn8HTOxD4Ure7l0xddRR7zENcLYT0EcQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Kalle Valo <kvalo@kernel.org>,
+	stable <stable@kernel.org>,
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 273/571] wifi: wl12xx: Drop if with an always false condition
-Date: Wed, 28 Oct 2026 17:57:00 +0100
-Message-ID: <20261028170014.479610877@linuxfoundation.org>
+Subject: [PATCH 5.15 309/571] USB: dwc2: shut down wakeup timer before freeing HCD state
+Date: Wed, 28 Oct 2026 17:57:36 +0100
+Message-ID: <20261028170015.330736230@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -62,50 +63,58 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-[ Upstream commit 69ddcea564437ce4b0d5143f37a9154fcef8d3d2 ]
+[ Upstream commit fd772af9512cdecb83de34a461801533828e77fd ]
 
-The remove callback is only called after probe completed successfully.
-In this case platform_set_drvdata() was called with a non-NULL argument
-(in wlcore_probe()) and so wl is never NULL.
+dwc2_wakeup_detected() accesses the DWC2 host state and can rearm the
+wakeup timer.  dwc2_hcd_free() currently deletes the timer only after
+freeing host-owned state, and timer_delete() does not synchronize a
+callback or prevent it from being queued again.
 
-This is a preparation for making platform remove callbacks return void.
+Stop and shut down the timer in dwc2_hcd_release(), before the HCD
+resources are freed.  This covers both the HCD initialization error path
+and normal HCD removal.
 
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20220715224619.ht7bbzzrmysielm7@pengutronix.de
-Stable-dep-of: a8b8881d0c1a ("wifi: wlcore: Fix runtime PM leak in wlcore_remove()")
+Fixes: 7359d482eb4d ("staging: HCD files for the DWC2 driver")
+Cc: stable <stable@kernel.org>
+Assisted-by: Codex:GPT-5
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Reviewed-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Link: https://patch.msgid.link/20260904065323.4047026-1-runyu.xiao@seu.edu.cn
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+[ sashal: Adapted the timer removal hunk to match del_timer() instead of timer_delete(). ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ti/wl12xx/main.c | 3 ---
- 1 file changed, 3 deletions(-)
+ drivers/usb/dwc2/hcd.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/ti/wl12xx/main.c b/drivers/net/wireless/ti/wl12xx/main.c
-index c6da0cfb4afbe..d06a2c4194479 100644
---- a/drivers/net/wireless/ti/wl12xx/main.c
-+++ b/drivers/net/wireless/ti/wl12xx/main.c
-@@ -1924,13 +1924,10 @@ static int wl12xx_remove(struct platform_device *pdev)
- 	struct wl1271 *wl = platform_get_drvdata(pdev);
- 	struct wl12xx_priv *priv;
+diff --git a/drivers/usb/dwc2/hcd.c b/drivers/usb/dwc2/hcd.c
+index 109b02830d882..cfc02759f4921 100644
+--- a/drivers/usb/dwc2/hcd.c
++++ b/drivers/usb/dwc2/hcd.c
+@@ -5115,14 +5115,13 @@ static void dwc2_hcd_free(struct dwc2_hsotg *hsotg)
+ 	}
  
--	if (!wl)
--		goto out;
- 	priv = wl->priv;
- 
- 	kfree(priv->rx_mem_addr);
- 
--out:
- 	return wlcore_remove(pdev);
+ 	cancel_work_sync(&hsotg->phy_reset_work);
+-
+-	del_timer(&hsotg->wkp_timer);
  }
  
+ static void dwc2_hcd_release(struct dwc2_hsotg *hsotg)
+ {
+ 	/* Turn off all host-specific interrupts */
+ 	dwc2_disable_host_interrupts(hsotg);
++	timer_shutdown_sync(&hsotg->wkp_timer);
+ 
+ 	dwc2_hcd_free(hsotg);
+ }
 -- 
 2.53.0
 
