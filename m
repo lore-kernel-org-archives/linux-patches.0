@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216222;
-	b=sSlSVMRrivzLNB3er4byzZRFKN9p89ZvSbb7uGgQ33uTroW+3lPN/KfCleovzgMLPgwo
-	 KWV3zdvBkRiRLcZqUKHCKuuJsxDQkLFQGxb9SEYF0kpfzfCPbeBGLWtpysJCrnvRW0HOn
-	 +m33QrwNylqOExj7SWf2+kuEPmQW2zY+QglPE2obu702fKYBHL9t8/AbGAU7feNhhplgw
-	 ukztOxmFO/JiJb2yx4TfOSbSAmvOv/1WagfRIykCAT3FckV46htijMJlz5awZb87qAqtm
-	 YtuIKZVKwabgDfyt2YHQLSWgtQ3TdY7LGiggvd51B/LzB9aE4AZF7mKtJl9KBrXEP7g==
+	t=1793216225;
+	b=vqrgZc433U2LJAa8UBSP2hN+718VwOJ8O42dVs5VakPcZJ/krldYeyKyfECwiF9bOtua
+	 +cLxTPfIEK26EprKLjTZ/zxb9LMRms+Qr4wV7KTCNeqreloL5YlfAZmREo81rvS7OMsC9
+	 uxjw7O4XxRFoyrq6nf8sRl9A2GN6daCXTN7METhCCb6ntRk5OrRPk2XnqScABIbMBsyM4
+	 g0yT2obmotUZdosGTGqIS2bZkEYL5oGVqAiGddkybALKy5Dxe+p3fRntO0xsnjp6UH4MP
+	 5DhGzYV54Km/MYZ8ovcwH96UhpMrov3YnFJPApXo6jZGxZ7Ru+MyaasNJ6r7pzTY72A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216222;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216225;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=h8g6uXKnZziSlwBrg0xVkJjRniwb5/s+K5oY3G4y9Pk=;
-	b=vxKSK4Bkk49EzHemoeN1HxabKWZQnrg/F647J9bKlaPoIkC1ee22tY+ULY/NhzurnVJo
-	 xxHIgEmrUzXaGv47VWDxeqWWUlYftgBD3BJ4d35gszMpqxOhtAGOwSMG9Wj1SZg8Hg4TO
-	 tikyQysmFmFXdFYYn8a/x0qA5vIuxI/AnM5vTZK4NkcOusmXu4f/vhapGB184RK4r672u
-	 VZALvNld1dJNgLDfFvZXgj7ZX+iuUO/srQjtdhsyu/OEllexsZA1O7djqAVPVmHgzXOUE
-	 N7kXZK4zIZNZc8mAl6BOobZK0EXI3zOOBLHnoeQjMDH7QbZy+yjFAn3v0YwRY59txDg==
+	bh=4JjHSvdoWc119pkB0s/yMi6ZkMtjMdldgeTZM7nLslE=;
+	b=Znl865ke5esbdhYrISJSXWC+D2hOak1LOChnEJRRIqq5ISvFxOhAqikzypVxTzUDwZRa
+	 w+5Lv4je1rCm1+8iJizNVxuRnsxOrx41WDpxWyv5NgwJuvkgDWCQq/x/kBadxIfzIsYh2
+	 wjpWiuohyzpjso8ofeoc+/hK19Sy0qsgsGCg2od0WOzyV0T6pX+bkRBb875nYUud7M+He
+	 5abnIjoI1Y3MBD6mrsgACCLJbn06Fl/7LIFEYPHKfSlzP2HbAs3Z6zmKdbBOWyrDQ1Vh5
+	 9LLNSWKHQLEjWDWomR/1FyAMIYSk4KJdJQCMDh7ZSglznpAwDalHMJGZuqaAWx+vsMA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ezJvK6ep;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O5dptoDA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 981E3606A32A;
-	Wed, 28 Oct 2026 19:37:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E94F606A333;
+	Wed, 28 Oct 2026 19:37:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ezJvK6ep
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0FAD1F031E4;
-	Wed, 28 Oct 2026 19:37:01 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O5dptoDA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80A951F01828;
+	Wed, 28 Oct 2026 19:37:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216222;
-	bh=h8g6uXKnZziSlwBrg0xVkJjRniwb5/s+K5oY3G4y9Pk=;
+	s=korg; t=1793216225;
+	bh=4JjHSvdoWc119pkB0s/yMi6ZkMtjMdldgeTZM7nLslE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ezJvK6epsF0BWDVv3L+nHGBo/R2/r1cN07EDAjVoXVi9bdPRDK5SaKGEbuwuZk06M
-	 ms/6KTKMPrrUlkRXWjL7Wd120yWl2ad8G17cDo3u2fLZ0mXYpg54n70VFQq9wvjjz5
-	 Z72fGVNKtCuixUGn7dYV7G7/BlneJrQ1M/9bd+uw=
+	b=O5dptoDAftG7901hEeuAYSOVyeMh7bqPC0TlIsKSUXIq86+PLSnTyg3fJk2AewOup
+	 467CCRbtqoAIY+Ko2U1hLkmmT7TsKWqj8oOQnc4snGVy6FzWzSsLzbBgJjOBzz0VDW
+	 Nwd7WR6oRfTqRH+5je81j4Z8zLtCg97/bbeSXXFc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Jesse Zhang <Jesse.Zhang@amd.com>,
+	stable@kernel.org,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1483/1887] drm/amdgpu: force complete the KIQ ring fences on reset
-Date: Wed, 28 Oct 2026 17:59:39 +0100
-Message-ID: <20261028170533.199254712@linuxfoundation.org>
+Subject: [PATCH 6.1 1484/1887] f2fs: fix to clear dirty flag on folio in error path
+Date: Wed, 28 Oct 2026 17:59:40 +0100
+Message-ID: <20261028170533.221181343@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,49 +69,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jesse Zhang <Jesse.Zhang@amd.com>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit fd65d1742992361fc2201ecb4e43411e6e417fcb ]
+[ Upstream commit 5b86eab84ac8e9289b5afc52ef88ab18ba5bacab ]
 
-Like the MES scheduler ring, the KIQ ring sets no_scheduler = true and uses a
-polling fence, so it is skipped by the force-completion loop in
-amdgpu_device_pre_asic_reset(). Its hw fence value lives in wb (GTT) memory and
-survives a MODE1 reset while fence_drv.sync_seq keeps advancing, so after a
-reset the first KIQ submission can poll forever on a seq that is never written
-back.
+If node block is corrupted due to chksum mismatch or inconsistent
+footer info, it needs to drop clear flag of node folio, in order
+to persist inconsistent node data to storage.
 
-Force complete the KIQ ring fences too so their hw fence is realigned to
-sync_seq.
-
-Cc: stable@vger.kernel.org
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Suggested-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Jesse Zhang <Jesse.Zhang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@kernel.org
+Fixes: b42b179bda9f ("f2fs: fix to do checksum even if inode page is uptodate")
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_device.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ fs/f2fs/node.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-index fda32238cc6b3..87599141e9037 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-@@ -4956,6 +4956,14 @@ int amdgpu_device_pre_asic_reset(struct amdgpu_device *adev,
- 		amdgpu_fence_driver_force_completion(ring);
- 	}
- 
-+	/*
-+	 * KIQ rings are polling-fence/no_scheduler like MES, so realign their
-+	 * fence too (one ring per XCC), otherwise the first post-reset KIQ
-+	 * submission polls forever on a stale seq.
-+	 */
-+	if (adev->gfx.kiq.ring.fence_drv.initialized && adev->gfx.kiq.ring.sched.ready)
-+		amdgpu_fence_driver_force_completion(&adev->gfx.kiq.ring);
-+
- 	amdgpu_fence_driver_isr_toggle(adev, false);
- 
- 	if (job && job->vm)
+diff --git a/fs/f2fs/node.c b/fs/f2fs/node.c
+index 8df943d6ee626..81ca7b42b984c 100644
+--- a/fs/f2fs/node.c
++++ b/fs/f2fs/node.c
+@@ -1510,7 +1510,7 @@ static struct page *__get_node_page(struct f2fs_sb_info *sbi, pgoff_t nid,
+ 	f2fs_handle_error(sbi, ERROR_INCONSISTENT_FOOTER);
+ 	err = -EFSCORRUPTED;
+ out_err:
+-	ClearPageUptodate(page);
++	clear_node_page_dirty(page);
+ out_put_err:
+ 	/* ENOENT comes from read_node_page which is not an error. */
+ 	if (err != -ENOENT)
 -- 
 2.53.0
 
