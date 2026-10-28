@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214230;
-	b=NZRf4I4vuuUBLCg65Of7zzVS9ULVnndeUmznOlBottyLTAXkdAx5hwJOfpigYZAnL3WD
-	 sbhAm7kVscWuHhwrJXYlSgtzfPpaU7GTmGxf7O80LaF8fPFVC+x7sFWNiDYvcu6UlJhuR
-	 Wu7/hooTIDcUL7sssvB4DD9E8QBgMLOsgfDQTv0ZfhCIPiXpvBWEJpvkiF6N2ua3ccLsy
-	 Mwh5+DET3hYqdKOjOn7O2+JpkZa7cuOQdeUx+L7yMMf5nNIceJCNDP6i7A09KiZzr9YRn
-	 Od1mTD6YqZDhD3Y5IvEXAKijOGFy+39cIm6xKyh6Zvzxl/IXoE4fr0nJgF9kRoUQ09A==
+	t=1793214232;
+	b=UAcSSGu5f+DW05X0RM8Gepl/d/cf6rbZkoVSZVdwoGBHqVXKzFZ0yy7CryCPAJmnhpo9
+	 PoDPdl6gvY+vN+NtxX9h++ES8KQxt/iFfyrYFwYE8gRs7ZcoYL7uY+dRpM84EkfBJWUTo
+	 eylyr8KRUDGTaAIwFqTOAEswH1OYV3+S1Mi/OkaaheLiYv2Xe1kNu3r1+9oGdK3UhMZqf
+	 BlI5HLoip9O8kB+lv5Q+gi067Pyz/8JGc1sS+WRJd7fU91DG9pFhFTGqesFaLZ/O9S7ap
+	 Q3yzwVuxKLVooDm0WsopCkTIgUyWKGs5utJe8nbOQy/cmEO++g5vU48I3+E9SZOqWQg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214230;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214232;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=lxsgy+5WSV7qZsX9/as8XL2vg/nGD0qZLLFD3Ye9r1o=;
-	b=O+Qmk8G6zZ8aOd77Zd9kly9G0MKPcYkXbSGr9+QWO6RsY7Mz2O9idAJk5+OLHd5EowLf
-	 FzTqX/x4zbc+vKLcPCX7KPZN6fRqLhoamCc6piKnp1oZQvhoExa1QQJdbNI4HZgcdrIF7
-	 stNKRdUH05qcQzGmwm0pk3Lf4aTzidC01cUgwEKm1mHaeSex1helm32YzTn2Taj5aiHvu
-	 k2r8rcoZ+zpN+cIZYFXxlz3zGBFrbvobtUcVYC5aRnpitpVKoBzubPx7EV62FKCUJ+B0l
-	 X3aAA0kmVO5qZj9d567Occg/ANPqdYdoXzr9pnoZ7ipryJ6Tgxbvr1ObjEZ/Z+SAC4g==
+	bh=ie+ea88qX1WYv5Al8j5dG5EFXLU70WwpOvlhPt5djIA=;
+	b=L8nmTOWXWwAZ+BlXQYJwC9Gh1YWEejrCQaVC/BjJQuFVQPgfVluA/2Eh6qjR+wSShBtx
+	 sKplPbODypabE8Fw1MVNnxoiw+JkcVuKKLJzrrRbH8HdbRDsmnfwHfk7gBe/ZO2WnI0FR
+	 cMm5pDbjXe7mKfXbR/vAtiXXuTTldCVmHNkJo58USwaffn9pH1ChqFjUH8+Wid0Wd/ZHi
+	 EeG+DjLv92uPYpOqh5SKjIwbB2X8Dljrl5yyzitcOFIphfLgnHCrYaKYNey1WWXC93RrY
+	 0cERlJymUzD1mNLapEAiNDaAEX8HmWuipPUxPbfkDtiin5sGcHdM2jYOicgGAh7vBQg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lG9ZCXVI;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eGoPZw+2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B457D606A329;
-	Wed, 28 Oct 2026 19:03:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 814E3606A329;
+	Wed, 28 Oct 2026 19:03:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lG9ZCXVI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 112831F01825;
-	Wed, 28 Oct 2026 19:03:48 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eGoPZw+2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D47011F01825;
+	Wed, 28 Oct 2026 19:03:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214229;
-	bh=lxsgy+5WSV7qZsX9/as8XL2vg/nGD0qZLLFD3Ye9r1o=;
+	s=korg; t=1793214232;
+	bh=ie+ea88qX1WYv5Al8j5dG5EFXLU70WwpOvlhPt5djIA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lG9ZCXVITthJRbgzLESJwL/VxfjhrktnTR2zpoxMn4aClxphCcpoKegzO1HEoJgdn
-	 dZ6CGm/w4wfq36KA6Q6YfQENfnrp0g669ssJKujX+kjt+IezZ9J2uLo26EudL3G5w5
-	 lE6wi0bt0Fhi7hJaoiDoGtq5OJ53z8pkqFfbG5X0=
+	b=eGoPZw+2YXdzaYRuAx8TrNRRk6X0HJVkWvq8PqjlKhPFzdklH/9zrODaUdZA4+rCZ
+	 JqbZyIIeooS/EDImdEGaHRvEd8jFYoUzmemCIFR3sLDpLzpBOnHsCzCbyhiN/+FJP8
+	 /4ezLYglOSd+bMua4wvCCxQM4KU/qW4QgYJOXvVo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Philippe Simons <simons.philippe@gmail.com>,
 	Andre Przywara <andre.przywara@arm.com>,
-	Evgeny Boger <boger@wirenboard.com>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
 	Chen-Yu Tsai <wens@csie.org>,
-	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0785/1887] clk: sunxi-ng: h616: Reparent CPU clock during frequency changes
-Date: Wed, 28 Oct 2026 17:48:01 +0100
-Message-ID: <20261028170517.301743917@linuxfoundation.org>
+Subject: [PATCH 6.1 0786/1887] clk: sunxi-ng: h616: Reparent GPU clock during frequency changes
+Date: Wed, 28 Oct 2026 17:48:02 +0100
+Message-ID: <20261028170517.324213703@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -70,48 +70,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andre Przywara <andre.przywara@arm.com>
+From: Philippe Simons <simons.philippe@gmail.com>
 
-[ Upstream commit 087b4083d3f9d202266debc6b684b0662c96f51b ]
+[ Upstream commit eb963d7948ce6571939c6875424b557b25f16610 ]
 
-The H616 user manual recommends to re-parent the CPU clock during
-frequency changes of the PLL, and recommends PLL_PERI0(1X), which runs
-at 600 MHz. Also it asks to disable and then re-enable the PLL lock bit,
-after the factor changes have been applied.
+The H616 manual does not state that the GPU PLL supports
+dynamic frequency configuration, so we must take extra care when changing
+the frequency. Currently any attempt to do device DVFS on the GPU lead
+to panfrost various ooops, and GPU hangs.
 
-Add clock notifiers for the PLL and the CPU mux clock, using the existing
-notifier callbacks, and tell them to use mux 4 (the PLL_PERI0(1X) source),
-and bit 29 (the LOCK_ENABLE) bit. The existing code already follows the
-correct algorithms.
+The manual describes the algorithm for changing the PLL
+frequency, which the CPU PLL notifier code already support, so we reuse
+that to reparent the GPU clock to GPU1 clock during frequency
+changes.
 
-Signed-off-by: Andre Przywara <andre.przywara@arm.com>
-Link: https://lore.kernel.org/r/20241025105620.1891596-1-andre.przywara@arm.com
-Tested-by: Evgeny Boger <boger@wirenboard.com>
-Reviewed-by: Chen-Yu Tsai <wens@csie.org>
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
-Stable-dep-of: eb963d7948ce ("clk: sunxi-ng: h616: Reparent GPU clock during frequency changes")
+Signed-off-by: Philippe Simons <simons.philippe@gmail.com>
+Reviewed-by: Andre Przywara <andre.przywara@arm.com>
+Reviewed-by: Jernej Skrabec <jernej.skrabec@gmail.com>
+Link: https://patch.msgid.link/20250220113808.1122414-2-simons.philippe@gmail.com
+Signed-off-by: Chen-Yu Tsai <wens@csie.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/sunxi-ng/ccu-sun50i-h616.c | 28 ++++++++++++++++++++++++--
- 1 file changed, 26 insertions(+), 2 deletions(-)
+ drivers/clk/sunxi-ng/ccu-sun50i-h616.c | 36 +++++++++++++++++++++++++-
+ 1 file changed, 35 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/clk/sunxi-ng/ccu-sun50i-h616.c b/drivers/clk/sunxi-ng/ccu-sun50i-h616.c
-index 21e918582aa56..e52f94822aff8 100644
+index e52f94822aff8..5831bcfbe5002 100644
 --- a/drivers/clk/sunxi-ng/ccu-sun50i-h616.c
 +++ b/drivers/clk/sunxi-ng/ccu-sun50i-h616.c
-@@ -1090,11 +1090,24 @@ static const u32 usb2_clk_regs[] = {
- 	SUN50I_H616_USB3_CLK_REG,
+@@ -318,10 +318,16 @@ static SUNXI_CCU_M_WITH_MUX_GATE(gpu0_clk, "gpu0", gpu0_parents, 0x670,
+ 				       24, 1,	/* mux */
+ 				       BIT(31),	/* gate */
+ 				       CLK_SET_RATE_PARENT);
++
++/*
++ * This clk is needed as a temporary fall back during GPU PLL freq changes.
++ * Set CLK_IS_CRITICAL flag to prevent from being disabled.
++ */
++#define SUN50I_H616_GPU_CLK1_REG        0x674
+ static SUNXI_CCU_M_WITH_GATE(gpu1_clk, "gpu1", "pll-periph0-2x", 0x674,
+ 					0, 2,	/* M */
+ 					BIT(31),/* gate */
+-					0);
++					CLK_IS_CRITICAL);
+ 
+ static SUNXI_CCU_GATE(bus_gpu_clk, "bus-gpu", "psi-ahb1-ahb2",
+ 		      0x67c, BIT(0), 0);
+@@ -1103,6 +1109,19 @@ static struct ccu_pll_nb sun50i_h616_pll_cpu_nb = {
+ 	.lock		= BIT(28),
  };
  
-+static struct ccu_mux_nb sun50i_h616_cpu_nb = {
-+	.common		= &cpux_clk.common,
-+	.cm		= &cpux_clk.mux,
++static struct ccu_mux_nb sun50i_h616_gpu_nb = {
++	.common		= &gpu0_clk.common,
++	.cm		= &gpu0_clk.mux,
 +	.delay_us	= 1, /* manual doesn't really say */
-+	.bypass_index	= 4, /* PLL_PERI0@600MHz, as recommended by manual */
++	.bypass_index	= 1, /* GPU_CLK1@400MHz */
 +};
 +
-+static struct ccu_pll_nb sun50i_h616_pll_cpu_nb = {
-+	.common		= &pll_cpux_clk.common,
++static struct ccu_pll_nb sun50i_h616_pll_gpu_nb = {
++	.common		= &pll_gpu_clk.common,
 +	.enable		= BIT(29),	/* LOCK_ENABLE */
 +	.lock		= BIT(28),
 +};
@@ -119,32 +136,35 @@ index 21e918582aa56..e52f94822aff8 100644
  static int sun50i_h616_ccu_probe(struct platform_device *pdev)
  {
  	void __iomem *reg;
- 	u32 val;
--	int i;
-+	int ret, i;
+@@ -1151,6 +1170,14 @@ static int sun50i_h616_ccu_probe(struct platform_device *pdev)
+ 	val &= ~(GENMASK(21, 16) | BIT(0));
+ 	writel(val | (11 << 16) | BIT(0), reg + SUN50I_H616_PLL_AUDIO_REG);
  
- 	reg = devm_platform_ioremap_resource(pdev, 0);
- 	if (IS_ERR(reg))
-@@ -1147,7 +1160,18 @@ static int sun50i_h616_ccu_probe(struct platform_device *pdev)
- 	val |= BIT(24);
- 	writel(val, reg + SUN50I_H616_HDMI_CEC_CLK_REG);
++	/*
++	 * Set the input-divider for the gpu1 clock to 3, to reach a safe 400 MHz.
++	 */
++	val = readl(reg + SUN50I_H616_GPU_CLK1_REG);
++	val &= ~GENMASK(1, 0);
++	val |= 2;
++	writel(val, reg + SUN50I_H616_GPU_CLK1_REG);
++
+ 	/*
+ 	 * First clock parent (osc32K) is unusable for CEC. But since there
+ 	 * is no good way to force parent switch (both run with same frequency),
+@@ -1171,6 +1198,13 @@ static int sun50i_h616_ccu_probe(struct platform_device *pdev)
+ 	/* Re-lock the CPU PLL after any rate changes */
+ 	ccu_pll_notifier_register(&sun50i_h616_pll_cpu_nb);
  
--	return devm_sunxi_ccu_probe(&pdev->dev, reg, &sun50i_h616_ccu_desc);
-+	ret = devm_sunxi_ccu_probe(&pdev->dev, reg, &sun50i_h616_ccu_desc);
-+	if (ret)
-+		return ret;
++	/* Reparent GPU during GPU PLL rate changes */
++	ccu_mux_notifier_register(pll_gpu_clk.common.hw.clk,
++				  &sun50i_h616_gpu_nb);
 +
-+	/* Reparent CPU during CPU PLL rate changes */
-+	ccu_mux_notifier_register(pll_cpux_clk.common.hw.clk,
-+				  &sun50i_h616_cpu_nb);
++	/* Re-lock the GPU PLL after any rate changes */
++	ccu_pll_notifier_register(&sun50i_h616_pll_gpu_nb);
 +
-+	/* Re-lock the CPU PLL after any rate changes */
-+	ccu_pll_notifier_register(&sun50i_h616_pll_cpu_nb);
-+
-+	return 0;
+ 	return 0;
  }
  
- static const struct of_device_id sun50i_h616_ccu_ids[] = {
 -- 
 2.53.0
 
