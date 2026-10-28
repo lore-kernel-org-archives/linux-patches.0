@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793208946;
-	b=dlhXFrnNyglAr4ICagbStqVVZxLNrEM9YsI5I8geGnyF0UDPlxzwuK/AYgfA2FjtdRjz
-	 kKm08vOfZT5/7UOufqNlfBl0k1n2O9fC7EsT2VNbRhPswYhKikkLRKoQQbQtzQQVvpEgj
-	 7oUG3spuRJqJoF6OUjLB1zU+MUrXEQ27TJFNNwITvKTw8DDIEd7rXP7oKLwOXKWhD+7rt
-	 Mkjj7tZeb6zKARF1LX01S3WiSUXtB8bVhAbdtpMF2h85WOLbCELsSI/uRH9ecExxt4jRa
-	 4zAB7mYBVBjWM4/ESNsAvP5gWh89NDapwr1jFLl6GNGjLeCTawSSP7iQ9uYwiagg2fA==
+	t=1793208943;
+	b=fWenO8+HWfgWHggXGI9RIA7qDs097Q+wgdz8jGiHY25rdfefxtQgMdXsjTD3a+L/hitD
+	 +8CheiGpPvgJ8MqkPEX71j+HWMuBaW2T7KVaXX7OvXFkq+Kgd+SEAt4FNebitkX1Z/Gis
+	 fjRoAF7YASmlfAwdzWD65iqKi1zvb0CXTBHXD1lkIf2eXbZB1HGbMZ4wzZW5ky1Eplv8G
+	 o0oErgvu9jJ3ab0dDRQV3Z7reUsDMn3rpQ14lzFWMwk5gzKCfvV+twc/9VOetBILDZNs+
+	 e4KWPNQXRwm9DZbPY3WWwytgw1Eu90QRI5XLXmSzdVledmlMiSgS9Oo0jZoODNBO1GQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793208946;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793208943;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=JfN1ai2FQH4K8ksVGKn+Oq2LFawicx8XN/7NfYe3yLI=;
-	b=Z3GOeOWf5sNJjXUFbxFPV+uqA+O7Sl3UZB/B7HzUL6yaToPsTUL8deHelzFL16Ijek7+
-	 /nczlB3oLpouQNS24BQBh7Lo8c5GSmGQT74lMCDvOOhrPXJzELHz7li4bz4wcxKn4o/72
-	 HThA1ZgkzaSB13ZCMzravFf7aiyU7SiZrKwpkvnTR0GGj+U+pdy/HRapHq+vtRLSfqvzY
-	 VZB1HRvyPE5mAnwxBHkp28C56kCZEpeoQ3p5wYbj3P++2oPuJSHm26bpBoktx9ffWmHm0
-	 WQJJoEcTaQERsE62E0FCslJhaKu6Z0TNZdCV1TsbrxvXWhKIcbxVK4ejkL7CT2O6fcw==
+	bh=ZBhAkBz2l6eYTFGAS9avKDq+q7VTAgYeN9MR9AgdAr4=;
+	b=AgOpgISPzLmps1zoCOPfGTWHDbxaxIXpr2U5splKaBHCK8uz3jT2NcJ4QXP3LWgiUBjF
+	 sRLEcUglv5zjlyh3ppSA0BGjII4Qly/We6wo0xirIFPzye0GyxtEsVdz1PctJz8czOLLE
+	 uWR6hVmzkQPlIMBszVPSycfOvC2HeBk7jzoVT/4ZZV4bKOvw1BBGUw7xkFe8W7cF+eDnL
+	 04rgODqWoHwkXfEyqCIE0xNmy+ywNqY8Jri01RfynX6sKA5+O3NDUheQ34DBE+6M9ulX/
+	 18l4RG1nBMPhESIgOvCyfdSDfaeJBV/JEf5K/3VWfdoe+jjrPiTtWuQJN4Fv1ZRiv8Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C15VWoAb;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MPh830np;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1747D606A32E;
-	Wed, 28 Oct 2026 17:35:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 402C560A2630;
+	Wed, 28 Oct 2026 17:35:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C15VWoAb
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68D7C1F031E2;
-	Wed, 28 Oct 2026 17:35:45 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MPh830np
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EBB61F031EF;
+	Wed, 28 Oct 2026 17:35:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793208946;
-	bh=JfN1ai2FQH4K8ksVGKn+Oq2LFawicx8XN/7NfYe3yLI=;
+	s=korg; t=1793208943;
+	bh=ZBhAkBz2l6eYTFGAS9avKDq+q7VTAgYeN9MR9AgdAr4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=C15VWoAbMcRVDmemOS+7thhaDd2gJH3UNqAS/IEmc6C3lCgxobj27tNQM9Rsvr4F+
-	 24TW5rwQh0fLxtsL0v2lbjbfbmGnZrglSysravcvTRdLuQtjf1dcREGCLmLYyhzcrE
-	 y9mQ68a+/HIXb37+daZkRbaC4wPqdoRrm0uWhYqg=
+	b=MPh830nplrA+mU+Ubm2e3QnHqCoymext4nf7dNB8jcj9W3wA6saFvrcWyCunNC1fF
+	 NL8iMaYrHRYtExe0i3KiBn5lnZhw/V6R/BjO3ir8j6so/FB2E95gkLpwqW2gyGCoNl
+	 SVjhxTrRNU+Aoeauz4UO7ms/ioGd7YieMFOVPJwE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan@kernel.org>,
+	Zhao Li <enderaoelyther@gmail.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 299/516] USB: serial: clean up core error labels
-Date: Wed, 28 Oct 2026 17:57:31 +0100
-Message-ID: <20261028170010.575050701@linuxfoundation.org>
+Subject: [PATCH 5.10 298/516] wifi: mac80211: account proxy paths against the mesh path limit
+Date: Wed, 28 Oct 2026 17:57:30 +0100
+Message-ID: <20261028170010.552018773@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -67,131 +68,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Zhao Li <enderaoelyther@gmail.com>
 
-[ Upstream commit 96a83c95c3da5ba55ea2cf6ce87de10fc03417a9 ]
+[ Upstream commit a5f35d4b112af1415ff06bd501c8cc26cc08aa8b ]
 
-Clean up the core error labels by consistently naming them after what
-they do rather than after from where they are jumped to.
+Proxy-path churn can drive the interface path counter negative and let
+later mesh path additions exceed MESH_MAX_MPATHS.
 
-Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Stable-dep-of: 646e5b28b4fd ("USB: serial: fix driver deregistration order")
+mesh_path_free_rcu() decrements the interface mpaths counter for entries
+from both the mesh and proxy path tables, but mpp_path_add() never
+reserves a slot in that counter. Removing or expiring a proxy path
+therefore returns a slot that was never charged.
+
+mesh_path_add() uses the same counter to enforce MESH_MAX_MPATHS, so once
+it falls below the number of installed paths the limit no longer holds.
+
+Reserve the shared quota before allocating a proxy path and release it on
+every unsuccessful addition. Mesh and proxy paths now share one
+1024-entry budget, so mpp_path_add() can return -ENOSPC at that limit.
+
+Fixes: ece1a2e7e860 ("mac80211: Remove mesh paths when an interface is removed")
+Cc: stable@vger.kernel.org
+Assisted-by: LLM sparse kasan
+Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
+Link: https://patch.msgid.link/20260916113649.28315-3-enderaoelyther@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+[ sashal: adapted error handling to the absence of mesh_fast_tx_flush_addr() ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/serial/usb-serial.c | 34 ++++++++++++++++-----------------
- 1 file changed, 16 insertions(+), 18 deletions(-)
+ net/mac80211/mesh_pathtbl.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/usb/serial/usb-serial.c b/drivers/usb/serial/usb-serial.c
-index aad5e167d1eab..338fd0d5e65e1 100644
---- a/drivers/usb/serial/usb-serial.c
-+++ b/drivers/usb/serial/usb-serial.c
-@@ -187,17 +187,17 @@ static int serial_install(struct tty_driver *driver, struct tty_struct *tty)
+diff --git a/net/mac80211/mesh_pathtbl.c b/net/mac80211/mesh_pathtbl.c
+index 9482b49b7f333..7478ea5786299 100644
+--- a/net/mac80211/mesh_pathtbl.c
++++ b/net/mac80211/mesh_pathtbl.c
+@@ -449,10 +449,15 @@ int mpp_path_add(struct ieee80211_sub_if_data *sdata,
+ 	if (is_multicast_ether_addr(dst))
+ 		return -ENOTSUPP;
  
- 	serial = port->serial;
- 	if (!try_module_get(serial->type->driver.owner))
--		goto error_module_get;
-+		goto err_put_serial;
++	if (!atomic_add_unless(&sdata->u.mesh.mpaths, 1, MESH_MAX_MPATHS))
++		return -ENOSPC;
++
+ 	new_mpath = mesh_path_new(sdata, dst, GFP_ATOMIC);
  
- 	retval = usb_autopm_get_interface(serial->interface);
- 	if (retval)
--		goto error_get_interface;
-+		goto err_put_module;
+-	if (!new_mpath)
++	if (!new_mpath) {
++		atomic_dec(&sdata->u.mesh.mpaths);
+ 		return -ENOMEM;
++	}
  
- 	init_termios = (driver->termios[idx] == NULL);
+ 	memcpy(new_mpath->mpp, mpp, ETH_ALEN);
+ 	tbl = &sdata->u.mesh.mpp_paths;
+@@ -465,8 +470,10 @@ int mpp_path_add(struct ieee80211_sub_if_data *sdata,
+ 		hlist_add_head_rcu(&new_mpath->walk_list, &tbl->walk_head);
+ 	spin_unlock_bh(&tbl->walk_lock);
  
- 	retval = tty_standard_install(driver, tty);
- 	if (retval)
--		goto error_init_termios;
-+		goto err_put_autopm;
+-	if (ret)
++	if (ret) {
+ 		kfree(new_mpath);
++		atomic_dec(&sdata->u.mesh.mpaths);
++	}
  
- 	mutex_unlock(&serial->disc_mutex);
- 
-@@ -209,11 +209,11 @@ static int serial_install(struct tty_driver *driver, struct tty_struct *tty)
- 
- 	return retval;
- 
-- error_init_termios:
-+err_put_autopm:
- 	usb_autopm_put_interface(serial->interface);
-- error_get_interface:
-+err_put_module:
- 	module_put(serial->type->driver.owner);
-- error_module_get:
-+err_put_serial:
- 	usb_serial_put(serial);
- 	mutex_unlock(&serial->disc_mutex);
- 	return retval;
-@@ -1287,7 +1287,7 @@ static int __init usb_serial_init(void)
- 	result = bus_register(&usb_serial_bus_type);
- 	if (result) {
- 		pr_err("%s - registering bus driver failed\n", __func__);
--		goto exit_bus;
-+		goto err_put_driver;
- 	}
- 
- 	usb_serial_tty_driver->driver_name = "usbserial";
-@@ -1308,25 +1308,23 @@ static int __init usb_serial_init(void)
- 	result = tty_register_driver(usb_serial_tty_driver);
- 	if (result) {
- 		pr_err("%s - tty_register_driver failed\n", __func__);
--		goto exit_reg_driver;
-+		goto err_unregister_bus;
- 	}
- 
- 	/* register the generic driver, if we should */
- 	result = usb_serial_generic_register();
- 	if (result < 0) {
- 		pr_err("%s - registering generic driver failed\n", __func__);
--		goto exit_generic;
-+		goto err_unregister_driver;
- 	}
- 
- 	return result;
- 
--exit_generic:
-+err_unregister_driver:
- 	tty_unregister_driver(usb_serial_tty_driver);
--
--exit_reg_driver:
-+err_unregister_bus:
- 	bus_unregister(&usb_serial_bus_type);
--
--exit_bus:
-+err_put_driver:
- 	pr_err("%s - returning with error %d\n", __func__, result);
- 	put_tty_driver(usb_serial_tty_driver);
- 	return result;
-@@ -1471,13 +1469,13 @@ int usb_serial_register_drivers(struct usb_serial_driver *const serial_drivers[]
- 
- 	rc = usb_register(udriver);
- 	if (rc)
--		goto failed_usb_register;
-+		goto err_free_driver;
- 
- 	for (sd = serial_drivers; *sd; ++sd) {
- 		(*sd)->usb_driver = udriver;
- 		rc = usb_serial_register(*sd);
- 		if (rc)
--			goto failed;
-+			goto err_deregister_drivers;
- 	}
- 
- 	/* Now set udriver's id_table and look for matches */
-@@ -1485,11 +1483,11 @@ int usb_serial_register_drivers(struct usb_serial_driver *const serial_drivers[]
- 	rc = driver_attach(&udriver->drvwrap.driver);
- 	return 0;
- 
-- failed:
-+err_deregister_drivers:
- 	while (sd-- > serial_drivers)
- 		usb_serial_deregister(*sd);
- 	usb_deregister(udriver);
--failed_usb_register:
-+err_free_driver:
- 	kfree(udriver);
- 	return rc;
- }
+ 	sdata->u.mesh.mpp_paths_generation++;
+ 	return ret;
 -- 
 2.53.0
 
