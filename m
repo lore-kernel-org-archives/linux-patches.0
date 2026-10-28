@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793210965;
-	b=WlAPCpH0y0jBe5d3Mc2QWEnDQExY2CAP2cXjwJucCucwl/tdYcfx7QYu9ea7r0I2CRhb
-	 ArEw+DSrKLrHHLhiXopL3EAh8/1NputpSKYhHwfH5wFbESuAMwr9LzgJPpQK/e8tEFYGt
-	 QJUd7F+hHCK0m8b0XQg+NkqAMQMxUFHcm60777ZVqLLwtSOP89GLRmsoFS0dpdkKpC5Ek
-	 +QdaEImFO0mpMmGJPF+aDz8Z9HqxaZHHHZ1GhDh2GIA4O8ebWqEhEitdhNcX2FspIdl6d
-	 DhVTIyn+ujnC5g8EPayIAtyHxzGw/qcKKRJG6hsS5z8GKeOdhhSKwnKgTRSGoR1UUFQ==
+	t=1793210967;
+	b=g430f5cM9dBLRMQHOdpIU9TgLlkbaRwkgTLZ5DqkqGtgQz0rsetkHVYuulsC9vFy8Lzj
+	 zyGql7blmo57w3mCinV9sZRr00bX7xkJl3w51GXSId43gwxTzq+5aHO+KapKPzUdityG4
+	 jBWtWFOKmmHB/gcaavDogrGRm3r/4iOefMJuvLMsv7Y6FUsakhOGhO4SkVC3l8KRoyeDI
+	 +p1ZNT6wZ/+LY7OYiT3gj4mOoOw67HauFXGCOFrQzzRNx2BZg5QdxDcpRyTsKrZG24ZHs
+	 OBHsNLO/faiCaN5uRn0G4a9+GYYvqefQ7uV+ZO+5MWi+6T+KK7jqfJeHtfRdlnf6tVg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793210965;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793210967;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=8y1O3SvUq45mmQbThr+kz/c8NFBcJX4HUZ00m+HG89U=;
-	b=FHUr2ajOBMorrviXzbe2saV1kcRr5HLq13VJNeeP1Cuz4i5MVpoWhxAva4LfqnzY68bi
-	 VMlKPP23nMpQmTu3YmPo8JdE3CkytagWQhrWlpQZQguAxv3/jZ7l95N7cIum6f6apjtYw
-	 8+ULsL9YhJxjUNAWxv/jd3wzHbM6S2C1fWkj1oVDDW7MhnyCz4i4+hHDDo+L7bXUYumCq
-	 KePDgig0EPbF4YDa6wQV1/Y6+IxD6o+aE+F0z7sSArMziI7gqL6bHsqiPX8qV7umKsEWR
-	 93v8aNiBXwzcIt0yE/oq+XZXPAxmmrvqwkoGkGoX39sqQmf+GOkg66oSrRVV9I9nt1Q==
+	bh=qJV/RNvaBK89HmxNXLV5qNGH9p5NqQA4EuZFUAWiJZE=;
+	b=jn0LENcMCrnBnkOORZonvJJteNVNtwR03ntzvD8ME7A02fej02TQ1J4WYSELOWnH+Y0w
+	 dEULNjv3DleaC9bVet7Ri8UUGAo6jg/+HSPwMmyXM/hYQmMplpVeYl2xhzp2bwEJb9bfH
+	 Ran8GB+oYFSV/5mTTFZvfmM16dfP3abF1AZfh9KKn+bZFweLGmXi9/tPUVmIlx0XyJP3w
+	 UIX0cFJ11qEaslXUxMu795x09IzEFW12kbVyJWomudM/NteiRciXUDMJS7tzAGN4Jxbw8
+	 H6V0PKoBZ1imUe8J7Kl54LVZe/rvL2xvu0e8Zar5ZEq3W5AglReoaWcdZpqhnT22X2w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wP4AEOD6;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nizdbw+J;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1C1F606A31C;
-	Wed, 28 Oct 2026 18:09:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BE52606A31A;
+	Wed, 28 Oct 2026 18:09:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wP4AEOD6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F16C01F01825;
-	Wed, 28 Oct 2026 18:09:23 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nizdbw+J
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC4351F01828;
+	Wed, 28 Oct 2026 18:09:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793210964;
-	bh=8y1O3SvUq45mmQbThr+kz/c8NFBcJX4HUZ00m+HG89U=;
+	s=korg; t=1793210967;
+	bh=qJV/RNvaBK89HmxNXLV5qNGH9p5NqQA4EuZFUAWiJZE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wP4AEOD6Ia6EeHYNcfxIA7L8H+neX6IxvpOJoWK6DDo2RlnSGA5ANvWqjZw8IbsRA
-	 6qD7gUDZ0KOSZcTqFfPAUgJUfqii72zqPPeH1iXdFLEoS14qZcczRwWnsPlIf+BSiz
-	 S+jyfX66I8AID4srIKMLsEcu9YCsZz4Z+eR/q7Hw=
+	b=nizdbw+JNv/QdXuCN48LQoIke8JBJUMHWYBLFDVcUcqm+Yd6E0Nu7m4TiIozRfwpU
+	 lFihfk3IjHVPUJSysDzv/0udS1djMtccxGx0tWk6Bsl9C8Q21G2lUNw+3DL/rc4IBe
+	 PlXE4otyljYyVdCMn4mIe+LBCaGxUzyeL7wG5ghM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Amit Sunil Dhamne <amitsd@google.com>,
-	Badhri Jagan Sridharan <badhri@google.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 5.15 210/571] usb: typec: tcpm: recover after failure to start the frs ams
-Date: Wed, 28 Oct 2026 17:55:57 +0100
-Message-ID: <20261028170012.984699597@linuxfoundation.org>
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
+	stable <stable@kernel.org>
+Subject: [PATCH 5.15 211/571] usb: typec: tipd: fix uninitialized typec_partner_desc in tps6598x_connect()
+Date: Wed, 28 Oct 2026 17:55:58 +0100
+Message-ID: <20261028170013.009273398@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -69,75 +68,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Amit Sunil Dhamne <amitsd@google.com>
+From: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
 
-commit 90156585765b29304f07b0e4a1c56a969876fcfc upstream.
+commit c4b27b3605788bbf9e4251f3cd4ab94645ab036f upstream.
 
-Reset the port if the tcpm fails to start the FAST_ROLE_SWAP AMS by
-initiating error recovery on it.
+tps6598x_connect() passes a stack-allocated typec_partner_desc to
+typec_register_partner() after initializing only usb_pd, accessory and
+identity.
 
-This helps in cases where some cables (incorrectly) signal an FRS to
-an FRS capable port during disconnection. The TCPC autonomously starts
-sourcing VBUS on detecting the FRS signal. However, the VBUS sourcing is
-left on when the FAST_ROLE_SWAP AMS fails to start (as tcpm_sink_tx_ok
-is 0 as CC is open due to the cable disconnect). This is because the
-code sets the state to INVALID_STATE without resetting the port state.
+typec_register_partner() copies attach and deattach from the descriptor
+into the partner. With those fields left unset, garbage function pointers
+may be stored and later invoked from typec_partner_link_device() when a USB
+device is linked to the port. Uninitialized pd_revision and usb_capability
+similarly leak stack data through partner sysfs.
 
-Log snippet before changes:
-[  101.401960] AMS FAST_ROLE_SWAP start
-[  101.401971] Sink TX No Go
-[  101.401982] sourcing vbus
-[  101.401987] VBUS on
-[  101.402159] VBUS on
-[  109.257809] CC1: 0 -> 0, CC2: 5 -> 0 [state SNK_READY, polarity 1, disconnected]
-[  111.267442] VBUS on
+Zero-initialize the descriptor so optional callbacks remain NULL and the
+remaining fields are zero.
 
-After changes:
-[   70.541211] AMS FAST_ROLE_SWAP start
-[   70.541220] Sink TX No Go
-[   70.541228] state change SNK_READY -> ERROR_RECOVERY [rev3 NONE_AMS]
-[   70.541362] VBUS on
-[   70.541365] sourcing vbus
-[   70.541367] VBUS on
-[   70.541374] state change ERROR_RECOVERY -> PORT_RESET [rev3 NONE_AMS]
-[   70.541410] disable vbus discharge ret:0
-[   70.543028] Setting usb_comm capable false
-[   70.544009] Setting voltage/current limit 0 mV 0 mA
-[   70.544034] polarity 0
-[   70.544239] Requesting mux state 0, usb-role 0, orientation 0
-[   70.555550] cc:=0
-[   70.555595] pending state change PORT_RESET -> PORT_RESET_WAIT_OFF @ 100 ms [rev3 NONE_AMS]
-[   70.555697] VBUS off
-[   70.555702] VBUS VSAFE0V
-[   70.555762] CC1: 5 -> 0, CC2: 0 -> 0 [state PORT_RESET, polarity 0, disconnected]
-[   70.587794] VBUS off
-[   70.587799] VBUS VSAFE0V
-[   70.655672] state change PORT_RESET -> PORT_RESET_WAIT_OFF [delayed 100 ms]
-[   70.655682] state change PORT_RESET_WAIT_OFF -> SNK_UNATTACHED [rev3 NONE_AMS]
-[   70.655686] Start toggling
-[   70.656274] CC1: 0 -> 0, CC2: 0 -> 0 [state TOGGLING, polarity 0, disconnected]
-
-Fixes: 0908c5aca31e ("usb: typec: tcpm: AMS and Collision Avoidance")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Amit Sunil Dhamne <amitsd@google.com>
-Reviewed-by: Badhri Jagan Sridharan <badhri@google.com>
-Acked-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://patch.msgid.link/20260903-frs-error-handling-v1-1-ad0fee541847@google.com
+Fixes: 0a4c005bd171 ("usb: typec: driver for TI TPS6598x USB Power Delivery controllers")
+Cc: stable <stable@kernel.org> # 5.15+
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Signed-off-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
+Link: https://patch.msgid.link/20260906131942.83153-2-radhey.shyam.pandey@amd.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/tcpm/tcpm.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/typec/tipd/core.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/drivers/usb/typec/tcpm/tcpm.c
-+++ b/drivers/usb/typec/tcpm/tcpm.c
-@@ -5459,7 +5459,7 @@ static void tcpm_pd_event_handler(struct
- 				port->upcoming_state = FR_SWAP_SEND;
- 				ret = tcpm_ams_start(port, FAST_ROLE_SWAP);
- 				if (ret == -EAGAIN)
--					port->upcoming_state = INVALID_STATE;
-+					tcpm_set_state(port, ERROR_RECOVERY, 0);
- 			} else {
- 				tcpm_log(port, "Discarding FRS_SIGNAL! Not in sink ready");
- 			}
+--- a/drivers/usb/typec/tipd/core.c
++++ b/drivers/usb/typec/tipd/core.c
+@@ -218,7 +218,7 @@ static void tps6598x_set_data_role(struc
+ 
+ static int tps6598x_connect(struct tps6598x *tps, u32 status)
+ {
+-	struct typec_partner_desc desc;
++	struct typec_partner_desc desc = { };
+ 	enum typec_pwr_opmode mode;
+ 	u16 pwr_status;
+ 	int ret;
+@@ -234,7 +234,6 @@ static int tps6598x_connect(struct tps65
+ 
+ 	desc.usb_pd = mode == TYPEC_PWR_MODE_PD;
+ 	desc.accessory = TYPEC_ACCESSORY_NONE; /* XXX: handle accessories */
+-	desc.identity = NULL;
+ 
+ 	if (desc.usb_pd) {
+ 		ret = tps6598x_read_partner_identity(tps);
 
 
