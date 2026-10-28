@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214431;
-	b=JzFia//MEHpCImoDPCg+MdvgLHQ1k6MbDiUKE/PdGUNh75QtTH8rQsUZHShzDxRrEYw0
-	 UgHVNgQEwbHlnNumg6PDlx/TH+0dUIYOG8O9c0vLrK0s67lehEgJAb76TGlAu6fruTJTW
-	 UYCy6VYqeUnbqWGurHiOhuY9ow+FgiHihirHDF69QZiwQxyrBLZuKgDkdakkaD7F17pxf
-	 Li8fTSZeqRjeiXSlHY1gh4dVEPFEkTTkLnKVtUodtqdDUlffMetfkxBXQCKmRPWWI1dvY
-	 IdAO9JsoUx6Ip73X6ttBE52Lm1uBe7KNo1OaYxCNBt2PnUUdyvOb4LKo525Nr2+qULw==
+	t=1793214434;
+	b=kEtX+CCQQmOG59K3QE8kPOYJranpUW+he4VvQRMRhGw3wi6cG0+mImU0b4nMTrlI7Fj2
+	 mcJwikuOR70SVtFn+EsW/pHufCNIMHa3OFzVPa9Q/go8kzOdLj00Jy1Lor4+LaTzfXSrU
+	 d2LnMRp63TgQdnemN4i0e+8RdM8/ha3oi+qOBySL0vrmc98Rh+QaayqQrDCSSIOAi6ZF5
+	 H2GyLF4pSakQh9KJ/Et7S+tzMUiuoM7xpIfCLw0y3uCVQusAEa59fWIBK1JXHhl5njw1k
+	 sDaT5KwvpwC4thaxQ5SX8Yewvci4ukvh4tM2myh0E6aTGPWfs0n/8hLjhkd6r++0byQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214431;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214434;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/KCh5w2e1cY1b08f+D621gCQNumLMz+MA518rOgYs0A=;
-	b=gE2fQ1PXLqTxaAfvohd9j09azUj2F9kM6/6ofMe9S/cVQ4wvjZwT8ZTyhC1QFqKClLQ7
-	 M7FHihka+Acg4C829PHPnKbLP7JsMX3p267EmLY3Z1jeRwiYE+fxNGD3gE/BL28SwFnUC
-	 h3eZxh8II0bNEE2D3LQQ0qo8UVJ+BznAmFH4ZAzdudh0RG6wB6v5gBAhoBLOrUBlTJfLB
-	 8P3Fmnhix19G+Yw/lAEPnrLtL9xkdwGlgZ4U7TP8LFAAOgNugdP9NpTDdcnUrBLWAFGu9
-	 FLvOPtbTxkJTuYW/RFeBCGlLV3JQPL/bTaLK/zGrS2iyNHBiHpQgTyVy2Xj9W/QL7Cg==
+	bh=80BZSx/Sa0zTuZ5QSyRMyZN5Ul2iCGn4jt3XpV8XQ/4=;
+	b=QJ9vsc6zFMdJQjYgT+su5bK1uKzWGIxEq2+nv8SZnufIDZ5gih25wSBHsFbypqdCY3de
+	 rQeIv30pAzDiTrDlGxT8LW9JqtHddGCe12sU7lbSt/HxQs2dNIbDFdGp4zOnG1uxMcHob
+	 dgBuHTwviJvUf23Kkj+6DwB5xVY/zPZLcmkomJ1u2Mn7I9c5W77OaGLi65bUySxffKA/q
+	 xM+eEB1kaeu3a3mzBydMMfUGq2BZC3QM18LDBcad59QxNDb49MdpqFi1jAHkiSL0Xgcva
+	 WFl6QyktZfQxez8AZYslZAwUu4E3bQNxnlrUOp+H8NQH6G1L4TiptL+DGBCS9+BE1Pw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jomR7rmG;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KEJd4qGM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3818606BF98;
-	Wed, 28 Oct 2026 19:07:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB817606BFA1;
+	Wed, 28 Oct 2026 19:07:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jomR7rmG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 218511F01828;
-	Wed, 28 Oct 2026 19:07:09 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KEJd4qGM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F12EB1F01828;
+	Wed, 28 Oct 2026 19:07:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214430;
-	bh=/KCh5w2e1cY1b08f+D621gCQNumLMz+MA518rOgYs0A=;
+	s=korg; t=1793214433;
+	bh=80BZSx/Sa0zTuZ5QSyRMyZN5Ul2iCGn4jt3XpV8XQ/4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jomR7rmGJtcwz6whV6gyj7G0QV32bWGxP9ZlK2X21kabphgMxxNezqklYn2DU31UF
-	 gS8CJQcqGEDUdbLnqAfTQ9QjMa5vCNM/5oU3Di90ZpY1R3f8r5S/SeyHCZERDq4Y2I
-	 vy0Bmlf2ZnmmP1b1nII93mhYFu1I3xNF9tdATP3c=
+	b=KEJd4qGMRPTU5OiNXxeQIuOS6ojldl1gr8t+hwoT/1HC16yAt/SIcUCdSekyf7sv9
+	 ujxpQ8LnDfx2cc6SZ4K1VO6uUPXm2v+m5bMoVD+3r47UClVOhvDFKjtmqSDrAYe7jE
+	 3WNkAQ4Oe/awtDLSZ5ZBAR1pNxL00gEDm3c6SEwQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	wenglianfa <wenglianfa@huawei.com>,
-	Junxian Huang <huangjunxian6@hisilicon.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Saeed Mahameed <saeedm@nvidia.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0813/1887] RDMA/hns: Fix double destruction of rsv_qp
-Date: Wed, 28 Oct 2026 17:48:29 +0100
-Message-ID: <20261028170517.927849772@linuxfoundation.org>
+Subject: [PATCH 6.1 0814/1887] net/mlx5e: Provide intermediate pointer to access IPsec struct
+Date: Wed, 28 Oct 2026 17:48:30 +0100
+Message-ID: <20261028170517.949278376@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,134 +69,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: wenglianfa <wenglianfa@huawei.com>
+From: Leon Romanovsky <leonro@nvidia.com>
 
-[ Upstream commit c6957b95ecc5b63c5a4bb4ecc28af326cf8f6dc8 ]
+[ Upstream commit 7bddb659bd0fc4e9022d3a3a2260540c01856e68 ]
 
-rsv_qp may be double destroyed in error flow, first in free_mr_init(),
-and then in hns_roce_exit(). Fix it by moving the free_mr_init() call
-into hns_roce_v2_init().
+Improve readability by providing direct pointer to struct mlx5e_ipsec.
 
-list_del corruption, ffff589732eb9b50->next is LIST_POISON1 (dead000000000100)
-WARNING: CPU: 8 PID: 1047115 at lib/list_debug.c:53 __list_del_entry_valid+0x148/0x240
-...
-Call trace:
- __list_del_entry_valid+0x148/0x240
- hns_roce_qp_remove+0x4c/0x3f0 [hns_roce_hw_v2]
- hns_roce_v2_destroy_qp_common+0x1dc/0x5f4 [hns_roce_hw_v2]
- hns_roce_v2_destroy_qp+0x22c/0x46c [hns_roce_hw_v2]
- free_mr_exit+0x6c/0x120 [hns_roce_hw_v2]
- hns_roce_v2_exit+0x170/0x200 [hns_roce_hw_v2]
- hns_roce_exit+0x118/0x350 [hns_roce_hw_v2]
- __hns_roce_hw_v2_init_instance+0x1c8/0x304 [hns_roce_hw_v2]
- hns_roce_hw_v2_reset_notify_init+0x170/0x21c [hns_roce_hw_v2]
- hns_roce_hw_v2_reset_notify+0x6c/0x190 [hns_roce_hw_v2]
- hclge_notify_roce_client+0x6c/0x160 [hclge]
- hclge_reset_rebuild+0x150/0x5c0 [hclge]
- hclge_reset+0x10c/0x140 [hclge]
- hclge_reset_subtask+0x80/0x104 [hclge]
- hclge_reset_service_task+0x168/0x3ac [hclge]
- hclge_service_task+0x50/0x100 [hclge]
- process_one_work+0x250/0x9a0
- worker_thread+0x324/0x990
- kthread+0x190/0x210
- ret_from_fork+0x10/0x18
-
-Fixes: fd8489294dd2 ("RDMA/hns: Fix Use-After-Free of rsv_qp on HIP08")
-Signed-off-by: wenglianfa <wenglianfa@huawei.com>
-Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
-Link: https://patch.msgid.link/20250703113905.3597124-2-huangjunxian6@hisilicon.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Reviewed-by: Saeed Mahameed <saeedm@nvidia.com>
+Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Stable-dep-of: 6d19c44b5c6d ("net/mlx5e: Remove skb secpath if xfrm state is not found")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hns/hns_roce_hw_v2.c | 25 +++++++++++-----------
- drivers/infiniband/hw/hns/hns_roce_main.c  |  5 +++--
- 2 files changed, 16 insertions(+), 14 deletions(-)
+ .../mellanox/mlx5/core/en_accel/ipsec_rxtx.c         | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-index 1c180a6b1c078..122be4aae304d 100644
---- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-@@ -3013,14 +3013,22 @@ static int hns_roce_v2_init(struct hns_roce_dev *hr_dev)
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_rxtx.c b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_rxtx.c
+index c4a84f0a3b733..318695a6aba2c 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_rxtx.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_rxtx.c
+@@ -314,23 +314,23 @@ void mlx5e_ipsec_offload_handle_rx_skb(struct net_device *netdev,
+ 				       struct mlx5_cqe64 *cqe)
  {
- 	int ret;
+ 	u32 ipsec_meta_data = be32_to_cpu(cqe->ft_metadata);
+-	struct mlx5e_priv *priv;
++	struct mlx5e_priv *priv = netdev_priv(netdev);
++	struct mlx5e_ipsec *ipsec = priv->ipsec;
+ 	struct xfrm_offload *xo;
+ 	struct xfrm_state *xs;
+ 	struct sec_path *sp;
+ 	u32  sa_handle;
  
-+	if (hr_dev->pci_dev->revision == PCI_REVISION_ID_HIP08) {
-+		ret = free_mr_init(hr_dev);
-+		if (ret) {
-+			dev_err(hr_dev->dev, "failed to init free mr!\n");
-+			return ret;
-+		}
-+	}
-+
- 	/* The hns ROCEE requires the extdb info to be cleared before using */
- 	ret = hns_roce_clear_extdb_list_info(hr_dev);
- 	if (ret)
--		return ret;
-+		goto err_clear_extdb_failed;
+ 	sa_handle = MLX5_IPSEC_METADATA_HANDLE(ipsec_meta_data);
+-	priv = netdev_priv(netdev);
+ 	sp = secpath_set(skb);
+ 	if (unlikely(!sp)) {
+-		atomic64_inc(&priv->ipsec->sw_stats.ipsec_rx_drop_sp_alloc);
++		atomic64_inc(&ipsec->sw_stats.ipsec_rx_drop_sp_alloc);
+ 		return;
+ 	}
  
- 	ret = get_hem_table(hr_dev);
- 	if (ret)
--		return ret;
-+		goto err_clear_extdb_failed;
+-	xs = mlx5e_ipsec_sadb_rx_lookup(priv->ipsec, sa_handle);
++	xs = mlx5e_ipsec_sadb_rx_lookup(ipsec, sa_handle);
+ 	if (unlikely(!xs)) {
+-		atomic64_inc(&priv->ipsec->sw_stats.ipsec_rx_drop_sadb_miss);
++		atomic64_inc(&ipsec->sw_stats.ipsec_rx_drop_sadb_miss);
+ 		return;
+ 	}
  
- 	if (hr_dev->is_vf)
- 		return 0;
-@@ -3035,6 +3043,9 @@ static int hns_roce_v2_init(struct hns_roce_dev *hr_dev)
- 
- err_llm_init_failed:
- 	put_hem_table(hr_dev);
-+err_clear_extdb_failed:
-+	if (hr_dev->pci_dev->revision == PCI_REVISION_ID_HIP08)
-+		free_mr_exit(hr_dev);
- 
- 	return ret;
+@@ -351,6 +351,6 @@ void mlx5e_ipsec_offload_handle_rx_skb(struct net_device *netdev,
+ 		xo->status = CRYPTO_INVALID_PACKET_SYNTAX;
+ 		break;
+ 	default:
+-		atomic64_inc(&priv->ipsec->sw_stats.ipsec_rx_drop_syndrome);
++		atomic64_inc(&ipsec->sw_stats.ipsec_rx_drop_syndrome);
+ 	}
  }
-@@ -6939,21 +6950,11 @@ static int __hns_roce_hw_v2_init_instance(struct hnae3_handle *handle)
- 		goto error_failed_roce_init;
- 	}
- 
--	if (hr_dev->pci_dev->revision == PCI_REVISION_ID_HIP08) {
--		ret = free_mr_init(hr_dev);
--		if (ret) {
--			dev_err(hr_dev->dev, "failed to init free mr!\n");
--			goto error_failed_free_mr_init;
--		}
--	}
- 
- 	handle->priv = hr_dev;
- 
- 	return 0;
- 
--error_failed_free_mr_init:
--	hns_roce_exit(hr_dev);
--
- error_failed_roce_init:
- 	kfree(hr_dev->priv);
- 
-diff --git a/drivers/infiniband/hw/hns/hns_roce_main.c b/drivers/infiniband/hw/hns/hns_roce_main.c
-index 5702176a733ab..e6eca4105c1a9 100644
---- a/drivers/infiniband/hw/hns/hns_roce_main.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_main.c
-@@ -835,6 +835,9 @@ static int hns_roce_setup_hca(struct hns_roce_dev *hr_dev)
- 
- 	spin_lock_init(&hr_dev->sm_lock);
- 
-+	INIT_LIST_HEAD(&hr_dev->qp_list);
-+	spin_lock_init(&hr_dev->qp_list_lock);
-+
- 	if (hr_dev->caps.flags & HNS_ROCE_CAP_FLAG_CQ_RECORD_DB ||
- 	    hr_dev->caps.flags & HNS_ROCE_CAP_FLAG_QP_RECORD_DB) {
- 		INIT_LIST_HEAD(&hr_dev->pgdir_list);
-@@ -979,8 +982,6 @@ int hns_roce_init(struct hns_roce_dev *hr_dev)
- 		}
- 	}
- 
--	INIT_LIST_HEAD(&hr_dev->qp_list);
--	spin_lock_init(&hr_dev->qp_list_lock);
- 	INIT_LIST_HEAD(&hr_dev->dip_list);
- 	spin_lock_init(&hr_dev->dip_list_lock);
- 
 -- 
 2.53.0
 
