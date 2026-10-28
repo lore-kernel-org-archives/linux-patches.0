@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216977;
-	b=C+6EW7fTUvbkr7ofLdoKM//U27sdJsOqsifcfFfRA9NNPtOzBgG8WxrFzSMcGLNRCaoa
-	 4yH2g8ljOQ9XISLpcGcxzatmtgbQo4Fc7r96XlBeTiaWlfhXE07vX+7NYc/feYwtqb0W5
-	 UPDm7uNHTmFKQTriZ00AYy24CQXUF5iai/vLW3WM3LVZM4nyivGbBm6tSpd1XD5+0nmi6
-	 qbsKzkuhZP3bx2+fVXMKi/b6VPM3pw3shvbjFq+cG/iv8b5pXLW42VO2HBH7E9ENc863F
-	 nRSLhOKAxvCQnxCPxloGGSGaR3zuaE8x7gRjRqCfiVuxfd3t9O6HVu0zjzqNO5rRbFw==
+	t=1793216980;
+	b=fcVH5KllO653J7qpbmYrCxVFjqLojk0lkAjVmQ7YVnweNX0g+OFf22pvc89l+c+Z/TpX
+	 61tjCf8dYLcspUSYpbNT4USuvwet+MEpRMZQu1kgrL4Oh08ZAyJJdFuTmQ+G+6m55NRTr
+	 XqvbSx7Yjg+oeuliVADywUtxF88CIc7jktmsgehS6vV/ULAh7G/OjhPuUeuWi+pYEKFnv
+	 jQOQEje5hxcFYCofWJzn9rk4bymhX/bh6cwzju9WG36rjXNSeNa0BDZFij5/J0mx8lqUH
+	 QgMrYl+roEgE9VGE/oxBLIJlmO9USmZw/qsiwJgvZS49FT28vy///Imixx7xLwZqp+Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216977;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216980;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=pHqIaYrPUevwmKMB+wyn57L+bGzP6bsYyY7jTqwetWQ=;
-	b=DuYeUucWpUZb9mxg4xqREAaIr6JQerFgEiQAvzYG3EZpYxb0+6joopuqygOIjvKYfoPH
-	 lzwMr8cuxIBDUR6HtOb+vDYbftjv4Z9KHHDx/jwidtJZMWVW4UJxPkjG8DGX/Ef7EACz9
-	 IjiIRIcnTS/xQIuTNBS3U+XpwToszZ/v3htCYqNxB+bP6VtrfJ6IJZnd6QYDrJphsX5ao
-	 b4D0E8gL76Ar4bLwEy0L2mGNj/cW+F25ExNR5zh92xZccxB1B2sf2NoPJXQCFumiX+MJx
-	 JcQ7gQX483UcFF+YmQqLhtGQPVB+C60r+s5yeW1/7TgWDq/dHYLqIE2gW1x5L1PtTHw==
+	bh=Nv0IToGCmvbK4jTNa74I7AGjkxcV+d8plGybRMX8+l8=;
+	b=kJgvWjGlJYzknYTEwquHg5AOrnAuQL/5iNXmxn99wn+dCbyrBD91Sx1XcX3jZkD7cex/
+	 LSiFRhjv4lq9xASIvXw4ntaMlVYmC86gFF0xVrlt6aIfiWk6oOLbH8mhQf2bY+87u3Wz7
+	 sJei6eBVs9thmAxBydPHDGJHRHaOAsCkCkWWtUix75ui2vSk2rKv+h/jtxKB8bKQ1DmxQ
+	 r2y+8kasWaFu+1Vsz1478D462zl5UVcXbLess22zOOdgMr0nmGbLMVwtXy51ooh5/Maf1
+	 vfd6YpKmQT9CjaLF8AvxG9K+xYaR99U2Fla5XoAy5yeUExs/PGh2RfdCQs3VM6FFz1w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KfG6nsLi;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1Vy5fkqa;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50EDC606A31A;
-	Wed, 28 Oct 2026 19:49:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68EEE606A31A;
+	Wed, 28 Oct 2026 19:49:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KfG6nsLi
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A103D1F01825;
-	Wed, 28 Oct 2026 19:49:36 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1Vy5fkqa
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8051B1F01825;
+	Wed, 28 Oct 2026 19:49:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216977;
-	bh=pHqIaYrPUevwmKMB+wyn57L+bGzP6bsYyY7jTqwetWQ=;
+	s=korg; t=1793216980;
+	bh=Nv0IToGCmvbK4jTNa74I7AGjkxcV+d8plGybRMX8+l8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KfG6nsLiM7ktbUQaINHh9I64Y9saqgXWqufOUnWWU07KzDIe17FtQEX5bV4Mc+jmi
-	 lyqk5aoqhACdLRZpkg2wPqAzlWqy4CW76KU4AUHZBUJkuhfAYvwp70h5RubNU03cjx
-	 upYckAdsFWbk7raXiJx6MLpUEmbynHfhzVKMzg+w=
+	b=1Vy5fkqaVnf4957W/adSmMcwo49Oa5QDxO+CgGUsB/+yfbk977ctg57T0cp4tyCw2
+	 WUEifAl6zqNAt6wrHKOZ6o45dH7Vdjv96DNB9W4LAFkdpWejvDBYf4riNL20/6ZfUq
+	 +rHA0gh5A0OegLrflmRinbm5ux0nN5QpeaYbFgUA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daehyeon Ko <4ncienth@gmail.com>,
-	Xin Long <lucien.xin@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.1 1738/1887] sctp: revalidate output stream after association connect wait
-Date: Wed, 28 Oct 2026 18:03:54 +0100
-Message-ID: <20261028170539.005468836@linuxfoundation.org>
+	Donggeun Yoo <donggeunyoo.kernel@gmail.com>,
+	Steven Rostedt <rostedt@goodmis.org>
+Subject: [PATCH 6.1 1747/1887] tracing: Fix the shift out of bounds in the log2 histogram modifier
+Date: Wed, 28 Oct 2026 18:04:03 +0100
+Message-ID: <20261028170539.211253700@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,118 +67,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daehyeon Ko <4ncienth@gmail.com>
+From: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
 
-commit b7ad72414c673ce1fa1f463e807cd4f34f8be9bf upstream.
+commit 647c2f97fcb94bc642cefe6db004999974563f06 upstream.
 
-When message interleaving is enabled, the first send waits for association
-establishment before building its data chunks.  The wait drops the socket
-lock, and handshake processing can reduce the output stream count to the
-peer-advertised inbound stream count.  sctp_stream_init() then frees the
-extension of every removed stream.
+The .log2 key modifier files a value under its base-2 order:
 
-The sender resumes with the stream that it checked before the wait.  If the
-peer removed that stream, sctp_outq_tail() later dereferences its NULL
-extension.  Fatal-oops policies then panic the host.
+  # echo 'hist:keys=bytes_req.log2' > events/kmem/kmalloc/trigger
 
-KASAN: null-ptr-deref in range [0x38-0x3f]
-RIP: sctp_outq_tail+0x49e/0xaa0
-Call Trace:
- sctp_primitive_SEND
- sctp_sendmsg_to_asoc
- sctp_sendmsg
+hist_field_log2() computes that as ilog2(roundup_pow_of_two(val)). The
+out-of-line form of roundup_pow_of_two() is
 
-A range check alone is insufficient.  Stream reconfiguration can grow the
-output count again while the lock is released without recreating extensions
-freed by the earlier shrink.  The stream can then be in range while its
-extension remains NULL.  The send-buffer wait has the same issue.
+	return 1UL << fls_long(n - 1);
 
-Factor the range and extension checks into a helper and repeat both after
-each send-path wait that drops the socket lock.  Once the lock is
-reacquired, the validation remains stable through data creation and
-queueing.
+which shifts by 64 on a 64-bit kernel both when n is 0, where n - 1
+wraps to ULONG_MAX, and when n is above 2^63. Both are ordinary keys,
+because the field fetch hands every value over as a u64: a syscall
+argument of 0 reaches the first, and one above 2^63 reaches the second.
 
-If validation fails after the connect wait, the auto-created association is
-already established.  Return ESRCH so the existing caller path keeps it
-under state-machine ownership instead of freeing it directly, which would
-leave protocol, counter and socket state inconsistent.
+Keying sys_enter_lseek on offset.log2 and passing 0, 1, 2, 3, 1000,
+2^63+1 and U64_MAX gives
 
-Fixes: 668c9beb9020 ("sctp: implement assign_number for sctp_stream_interleave")
+  { offset: ~ 2^1  } hitcount:          1
+  { offset: ~ 2^10 } hitcount:          1
+  { offset: ~ 2^2  } hitcount:          1
+  { offset: ~ 2^0  } hitcount:          4
+
+Keys above 2^63 land in the lowest bucket. With CONFIG_UBSAN_SHIFT=y
+the shift is also reported:
+
+  UBSAN: shift-out-of-bounds in include/linux/log2.h:57:13
+  shift exponent 64 is too large for 64-bit type 'long unsigned int'
+   __ubsan_handle_shift_out_of_bounds.cold+0xdd/0x1cb
+   hist_fn_call.cold+0x8b/0xd9
+   event_hist_trigger+0x1cc/0x790
+   ftrace_syscall_enter+0x197/0x360
+   do_syscall_64+0x402/0x4b0
+
+Use order_base_2(), which is ilog2(n - 1) + 1 for n > 1 and 0 below
+that. It returns what the old expression returned on every input the
+old one was defined for. Where it was not, 0 stays in bucket 0, which
+is where x86_64 had been putting it, and the keys above 2^63 move into
+bucket 64.
+
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Daehyeon Ko <4ncienth@gmail.com>
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/20261007035739.3472432-1-4ncienth@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Link: https://patch.msgid.link/20260916002735.808520-1-donggeunyoo.kernel@gmail.com
+Fixes: 4b94f5b7b4a5 ("tracing: Add hist trigger 'log2' modifier")
+Signed-off-by: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
+Assisted-by: Claude:claude-fable-5
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sctp/socket.c |   33 +++++++++++++++++++++------------
- 1 file changed, 21 insertions(+), 12 deletions(-)
+ kernel/trace/trace_events_hist.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/sctp/socket.c
-+++ b/net/sctp/socket.c
-@@ -1784,6 +1784,18 @@ static int sctp_sendmsg_check_sflags(str
- 	return 1;
+--- a/kernel/trace/trace_events_hist.c
++++ b/kernel/trace/trace_events_hist.c
+@@ -281,7 +281,7 @@ static u64 hist_field_log2(struct hist_f
+ 
+ 	u64 val = hist_fn_call(operand, elt, buffer, rbe, event);
+ 
+-	return (u64) ilog2(roundup_pow_of_two(val));
++	return order_base_2(val);
  }
  
-+static int sctp_sendmsg_check_stream(struct sctp_association *asoc,
-+				     struct sctp_sndrcvinfo *sinfo)
-+{
-+	if (unlikely(sinfo->sinfo_stream >= asoc->stream.outcnt))
-+		return -EINVAL;
-+
-+	if (unlikely(!SCTP_SO(&asoc->stream, sinfo->sinfo_stream)->ext))
-+		return sctp_stream_init_ext(&asoc->stream, sinfo->sinfo_stream);
-+
-+	return 0;
-+}
-+
- static int sctp_sendmsg_to_asoc(struct sctp_association *asoc,
- 				struct msghdr *msg, size_t msg_len,
- 				struct sctp_transport *transport,
-@@ -1798,16 +1810,9 @@ static int sctp_sendmsg_to_asoc(struct s
- 	long timeo;
- 	int err;
- 
--	if (sinfo->sinfo_stream >= asoc->stream.outcnt) {
--		err = -EINVAL;
-+	err = sctp_sendmsg_check_stream(asoc, sinfo);
-+	if (err)
- 		goto err;
--	}
--
--	if (unlikely(!SCTP_SO(&asoc->stream, sinfo->sinfo_stream)->ext)) {
--		err = sctp_stream_init_ext(&asoc->stream, sinfo->sinfo_stream);
--		if (err)
--			goto err;
--	}
- 
- 	if (sp->disable_fragments && msg_len > asoc->frag_point) {
- 		err = -EMSGSIZE;
-@@ -1828,10 +1833,9 @@ static int sctp_sendmsg_to_asoc(struct s
- 		err = sctp_wait_for_sndbuf(asoc, transport, &timeo, msg_len);
- 		if (err)
- 			goto err;
--		if (unlikely(sinfo->sinfo_stream >= asoc->stream.outcnt)) {
--			err = -EINVAL;
-+		err = sctp_sendmsg_check_stream(asoc, sinfo);
-+		if (err)
- 			goto err;
--		}
- 	}
- 
- 	if (sctp_state(asoc, CLOSED)) {
-@@ -1846,6 +1850,11 @@ static int sctp_sendmsg_to_asoc(struct s
- 				err = -ESRCH;
- 				goto err;
- 			}
-+			err = sctp_sendmsg_check_stream(asoc, sinfo);
-+			if (err) {
-+				err = -ESRCH;
-+				goto err;
-+			}
- 		} else {
- 			wait_connect = true;
- 		}
+ static u64 hist_field_bucket(struct hist_field *hist_field,
 
 
