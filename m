@@ -1,54 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215677;
-	b=4jt5jGWjQd9Zl5iipq+EHsVPDFrYanki5MVhNgAWVz5pp1PCkBR35zEWDf5uviMI19mF
-	 hg6+2lDsJY9qQrpwxc7PQsE2u8VhVdQ/a5PnvlG9FlY1JhIeGYG59QGoVMVOnreZwJg+w
-	 04gyfBgr+nrVmWdh0v3JVqSuckJZ/m44wnQ9U8VNFFUy0DWbi6s5HUAqDNW35t4ZukQ9k
-	 /OQ2PEE631O3Fne0oWQBaRFhhIM+NI+2ISqOoi61+4t49M6i4C+Msq+a7CDX0jWbRiuuI
-	 WTSiffQGDs8Sn2FRGTBpVMHck8z9u/bpyubBhlRFItPtAFWmWYBkulQkH3140HcqCwA==
+	t=1793215680;
+	b=pI8mx3C9vasq78WxEnS7DiSzvwyIw8/7ma1r24rk6OAmbyZxLLzOHSxqoZP4hMThY61G
+	 /TbI8pxnp6+buSwkdJDbO2obPmOwtBkqHACmE5AI9qDVHmFK6qb4hB40pQ/z3eZyFLfDA
+	 GY9bLc/j0kcA9bvBQ1DV70oFoZLK7GX6L3MZOSlgTdRNAd9mcX+ED85YswbpJFTdVe6qy
+	 ckLjBbsgNhbbcnF8PanpYfge7/8R0zqrUtSihBmHoA2v1MGiWXsvcI4z3IZwJWlY+WK9S
+	 89egIDPQBt5/L0ICm60vRx6AJYc1ylIyjwxifRvdpO3Ehbc+mP4IZfyArlTtTETaFnQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215677;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215680;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=GhVUEtIiZhbofSOAQcqAGNo1RXuoGulH5RseFb5RfTc=;
-	b=zjWgW2GoTxMPwsTRfRZIJFY3elyuGpt5EXtlpkXYmjsycM1zHpiDdrIVuRzwxZUndKtR
-	 yjHz5kCKVDTbM173KDMz8GYBygMpQQZEMk+lJ6TggSlldEiWmdMnHP61TwIFe6c9L/sFg
-	 3qbaRJeYsHZuh3R+uVk0HXdmHv5dvNZA59aHBiib+T7fhPs8EdUn//a3cnS5oDMgiG+ds
-	 edVEoY2hPkGfk/9EGWjRVWGtMRNSus6zJZDTxuOAuHBRBgq2nyKzmOPdUg4zTKsTLgZdq
-	 +5FiKuQ4y9ix9dbezouCI8Nn75/lW1dqQDMF0G6sxGd9XCMUHu2Z69nAdMlirOyI4mw==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=UvuqR36WHDA0Pr/7lFVBvAxJpF9sutxjQv+193E+DfM=;
+	b=xirw0bCgNbK71hufLm3hmeeWEmumEz2WGfHcmNDbsA0tOpVngDVzh3FvmfyhwMNqS/C4
+	 dLveUig/fBMGy0FqXwVjelOyeiKYS6/oDb2zuWSIm831/GQjR1uGl2JwKqGD/GzhfAADq
+	 gjgVQL0Q1bDYZMwgI6FsARo9He0hpkqDiFUSr6zcRTTU/P7zH78SmzbLlTv5nI+cUkuJc
+	 CqNTK8nAZZ+hTAB2Fqi2d/34WabndrRXzVOvaTcSfn527FU9Pwj38xMI5MCLLWucXgIEb
+	 80+4+CSpOLZy9asQHPhF11cpl16h1mI5vk6YWLWoa8IR+oFvbcEzgY1gHtHFyyB8Piw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UxPdsajV;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hcNckX9Y;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8411E606A31C;
-	Wed, 28 Oct 2026 19:27:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C6BD606A31A;
+	Wed, 28 Oct 2026 19:28:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UxPdsajV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8B621F01825;
-	Wed, 28 Oct 2026 19:27:56 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hcNckX9Y
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A10521F031E0;
+	Wed, 28 Oct 2026 19:27:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215677;
-	bh=GhVUEtIiZhbofSOAQcqAGNo1RXuoGulH5RseFb5RfTc=;
+	s=korg; t=1793215680;
+	bh=UvuqR36WHDA0Pr/7lFVBvAxJpF9sutxjQv+193E+DfM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UxPdsajVu4o9p8c/r29M2qvwIe2/rkzmGdGSvE2/xUYm6zhzKOEI1ISdXKhEsvIuw
-	 skjVWxCTBVKX1i4kdi1QUDbLGXXrPXquSVCsGj2nCHY0lW374uehCNn1X34ejWpZoV
-	 zS24HYV0mSLYRYeSE9hfZiJ1gJ0ezo6GlNcjZDyc=
+	b=hcNckX9YpR+ytSlKpPXq/gHyhl2G+gUhLPzpn1lKRf3/qinb1yGa95xIbEEjwSzU3
+	 SE8iRFFslyDl47NEBKZzOA0l7zGKCjV/Y3Q1NmVbtos2+N71QjbECXEvCk/0djbEGG
+	 jfr5ZfY3SNOH349ScbFUnmzsxHa3kvTajk/VYVgQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+76d4e3a055aec3b007ec@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	=?UTF-8?q?Asbj=C3=B8rn=20Sloth=20T=C3=B8nnesen?= <ast@fiberby.net>,
+	Jiri Pirko <jiri@nvidia.com>,
+	Simon Horman <horms@kernel.org>,
+	Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1294/1887] netfilter: nf_flow_table: drop existing skb dst before skb_dst_set_noref()
-Date: Wed, 28 Oct 2026 17:56:30 +0100
-Message-ID: <20261028170528.871901648@linuxfoundation.org>
+Subject: [PATCH 6.1 1295/1887] net: sched: cls_api: add skip_sw counter
+Date: Wed, 28 Oct 2026 17:56:31 +0100
+Message-ID: <20261028170528.893718415@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -64,72 +65,68 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Asbjørn Sloth Tønnesen <ast@fiberby.net>
 
-[ Upstream commit 8aecf0bbcc72605592134c917c222207d8f63ab0 ]
+[ Upstream commit f631ef39d81956a2ee69d25039781ceae1162f62 ]
 
-Incoming skbs passing through netfilter flowtable offload hooks (or XFRM
-offload path) might already carry a ref-counted dst_entry assigned during
-earlier RX or routing steps.
+Maintain a count of skip_sw filters.
 
-Calling skb_dst_set_noref() when skb already holds a ref-counted dst
-overwrites skb->_skb_refdst, leaking the previous dst_entry reference
-count and triggering a DEBUG_NET_WARN_ON_ONCE assertion in
-skb_dst_check_unset():
+This counter is protected by the cb_lock, and is updated
+at the same time as offloadcnt.
 
-  WARNING: at skb_dst_check_unset include/linux/skbuff.h:1170
-  WARNING: at skb_dst_set_noref include/linux/skbuff.h:1234
-  WARNING: at nf_flow_offload_ip_hook+0xf6c/0x2b60 net/netfilter/nf_flow_table_ip.c:864
-
-Drop any existing dst_entry reference with skb_dst_drop(skb) before
-setting the non-referenced flowtable destination.
-
-Fixes: 2a79fd3908ac ("netfilter: nf_flow_table: attach dst to skbs")
-Reported-by: syzbot+76d4e3a055aec3b007ec@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/6a71b141.9511d2ce.1fc5b9.033b.GAE@google.com/T/#u
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Link: https://patch.msgid.link/20260804093328.1831847-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Asbjørn Sloth Tønnesen <ast@fiberby.net>
+Reviewed-by: Jiri Pirko <jiri@nvidia.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: a347304b2ca1 ("net/sched: cls_api: Always acquire rtnl_lock when destroying locked classifiers")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_flow_table_ip.c | 3 +++
- 1 file changed, 3 insertions(+)
+ include/net/sch_generic.h | 1 +
+ net/sched/cls_api.c       | 4 ++++
+ 2 files changed, 5 insertions(+)
 
-diff --git a/net/netfilter/nf_flow_table_ip.c b/net/netfilter/nf_flow_table_ip.c
-index 523228e969ab4..cd744ac065cd0 100644
---- a/net/netfilter/nf_flow_table_ip.c
-+++ b/net/netfilter/nf_flow_table_ip.c
-@@ -262,6 +262,7 @@ static unsigned int nf_flow_xmit_xfrm(struct sk_buff *skb,
- 				      struct dst_entry *dst)
- {
- 	skb_orphan(skb);
-+	skb_dst_drop(skb);
- 	skb_dst_set_noref(skb, dst);
- 	dst_output(state->net, state->sk, skb);
- 	return NF_STOLEN;
-@@ -417,6 +418,7 @@ nf_flow_offload_ip_hook(void *priv, struct sk_buff *skb,
- 		outdev = rt->dst.dev;
- 		skb->dev = outdev;
- 		nexthop = rt_nexthop(rt, flow->tuplehash[!dir].tuple.src_v4.s_addr);
-+		skb_dst_drop(skb);
- 		skb_dst_set_noref(skb, &rt->dst);
- 		neigh_xmit(NEIGH_ARP_TABLE, outdev, &nexthop, skb);
- 		ret = NF_STOLEN;
-@@ -678,6 +680,7 @@ nf_flow_offload_ipv6_hook(void *priv, struct sk_buff *skb,
- 		outdev = rt->dst.dev;
- 		skb->dev = outdev;
- 		nexthop = rt6_nexthop(rt, &flow->tuplehash[!dir].tuple.src_v6);
-+		skb_dst_drop(skb);
- 		skb_dst_set_noref(skb, &rt->dst);
- 		neigh_xmit(NEIGH_ND_TABLE, outdev, nexthop, skb);
- 		ret = NF_STOLEN;
+diff --git a/include/net/sch_generic.h b/include/net/sch_generic.h
+index ae7b5535eeb13..b3c7325339eb7 100644
+--- a/include/net/sch_generic.h
++++ b/include/net/sch_generic.h
+@@ -477,6 +477,7 @@ struct tcf_block {
+ 	struct flow_block flow_block;
+ 	struct list_head owner_list;
+ 	bool keep_dst;
++	atomic_t skipswcnt; /* Number of skip_sw filters */
+ 	atomic_t offloadcnt; /* Number of oddloaded filters */
+ 	unsigned int nooffloaddevcnt; /* Number of devs unable to do offload */
+ 	unsigned int lockeddevcnt; /* Number of devs that require rtnl lock. */
+diff --git a/net/sched/cls_api.c b/net/sched/cls_api.c
+index 44139ca96a1e7..44215aada059b 100644
+--- a/net/sched/cls_api.c
++++ b/net/sched/cls_api.c
+@@ -3302,6 +3302,8 @@ static void tcf_block_offload_inc(struct tcf_block *block, u32 *flags)
+ 	if (*flags & TCA_CLS_FLAGS_IN_HW)
+ 		return;
+ 	*flags |= TCA_CLS_FLAGS_IN_HW;
++	if (tc_skip_sw(*flags))
++		atomic_inc(&block->skipswcnt);
+ 	atomic_inc(&block->offloadcnt);
+ }
+ 
+@@ -3310,6 +3312,8 @@ static void tcf_block_offload_dec(struct tcf_block *block, u32 *flags)
+ 	if (!(*flags & TCA_CLS_FLAGS_IN_HW))
+ 		return;
+ 	*flags &= ~TCA_CLS_FLAGS_IN_HW;
++	if (tc_skip_sw(*flags))
++		atomic_dec(&block->skipswcnt);
+ 	atomic_dec(&block->offloadcnt);
+ }
+ 
 -- 
 2.53.0
 
