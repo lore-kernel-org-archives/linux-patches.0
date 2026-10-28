@@ -1,63 +1,86 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.160.174
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793217412;
-	b=HnuGJk6kkIo9P9dSF/XZyPmgMq8e5PzoRFd7xOakOW/VF/DTVrEXK4xcdSZR2/3aP7o4
-	 +HcHXwPNSfITO1gXwmiTUzEXRdb5vjxfYIuVpCns487RRXSrSlfGo0RWiL0o7YAS1v0vW
-	 NtLstbWwtFTMD47bb7NZk+iG/aTZfHSa6HKi9EyIkwbiezLtJZrid+L3CY1vKhWVJCyBZ
-	 KgLHEIqjyzbTUBNbGUtaaXcbE91r6wlTKbBlJ6vMR3h7jt8/70Ae9rsrmtjkryOzCgQE4
-	 RbMHaQsmsrcFkTCBXciGoaRlR547/KLJz7wCvfQHsTXHnKw3n/4RiQKop1FqmcvcjhQ==
+	t=1793218554;
+	b=5ejoMr9YQlfdCphUYd4Q10+j9ZETsn6H2rpH7iJYGXcPoBvz5tsPlyCijt7SOyCCNeln
+	 PfrjccdUgdFWRz42lceisAspsSYl8ErTvY0s8J04R0Uzy6CCde6JbM26XBp0/n76tcWbR
+	 UKIyQSTBHmrjh+dw7vGh+5nZLS2W1q1+xna+RXxLuwvD9LeZ1M1ZkFVD75hjT2XaVbytb
+	 aZfKCcnBrjx5vePyCqdY7ilUYES5D71ztUXUBoK83lrBld8qT2H725kKwALbqAFQr8d3H
+	 cQEqYBYolT7QiAXnCXckEyTM8scr0C7Y0KqOHj7RY1k87wZBIRrPuJXXA/jjE9EKS7g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793217412;
-	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
-	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=lDCCyZs090mjyFzpIOUmUQf+QPPxNcQl1xjTIF86VDU=;
-	b=UT4CJYXyzoO2RKCW0uN8+FUCC1JSK6ebDuZkoSNqiW1HdL5Adsr5LlVx9oIby2jJA0JM
-	 QeWW7JEhXIu+j2uCqFuqHEL+N7WzO2pA/JwKptI4gfpzn8U4Kq/Op0k22nC+PslysSDF3
-	 b0W4koNU6yA14hKAd21G07bcnvTAjOMknx43H1QBNwBqZTxqXtCfBnMy3a2IdICkPXnwD
-	 FOM3Ev/ocZ1MysN7o6ef2ilUh7sZAcdJd3ULcPjM7etmwWVVjAolN9LldebQCT6HVH/Zu
-	 WE53ZhYFeqz5GwBwiAZHsn5D/Oq2OHY+tc+OxLOAYeZLyAAVAVG9T3GtU7VYBs59gug==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793218554;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-ID:Date:
+	 MIME-Version:User-Agent:Subject:To:Cc:References:Content-Language:
+	 From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
+	bh=sE7YL0Mu7zAtP+r+dItmrpgUYmZe1QgZ8AhEij2E0bY=;
+	b=SaVmW/InFBXG+eh1ess8DresNs5HDPrrgMqDxgZ73MOLgVwF3+lDFecfzyL8ib62kxni
+	 NCkWukmAxDHDSc2F6HahrlcHuFn8drgNGEEbORAj9fQGGFGcAtbVh5eYG2Ud2irRDoOog
+	 CKLUdkqWoQV2LivfSs8/23qD0pfxUsiE3IYVZWXf60JXO4VLUmuLAlcYGJYGqJEfgJ5Ol
+	 vQshZ/Jb0xFOZZ9hEjLgwkq/CC3eEFwjUc0mFWG2oD2k8kZWjB5RLtzjlvmQsJOSpPJPo
+	 zeOETeG/wZfa2+xi7B4HtIH8dxIXv7GQZ9h0X8k92l5D6A+i7tUPvLH+fSlh67yGUlg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="TqdBpx/w";
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=fXntLAww;
+	arc=none smtp.remote-ip=209.85.160.174
+Received: from mail-qt1-f174.google.com (mail-qt1-f174.google.com [209.85.160.174])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 186B3606A31C;
-	Wed, 28 Oct 2026 19:56:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE1CD606A321
+	for <patches@lists.linux.dev>; Wed, 28 Oct 2026 20:15:53 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org DE1CD606A321
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TqdBpx/w
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B8901F01825;
-	Wed, 28 Oct 2026 19:56:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793217411;
-	bh=lDCCyZs090mjyFzpIOUmUQf+QPPxNcQl1xjTIF86VDU=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TqdBpx/wBUb8yRaZX36sbuuKmmKFFOACM9kaRkEPYMjBhRbClYUouOuzRwMwE6DkQ
-	 U8Q0/droAyI18FDl+bEaoGWBHMQjQGSbMbu3/FFwAvvLlHEfT2Ojkuk+NHQj/Iv+1x
-	 itKKKZn7CkjILakltF0Bbi1UnVdkgg6NwZtN2PpU=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Xiaolei Wang <xiaolei.wang@windriver.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Alexander Potapenko <glider@google.com>,
-	Andrey Konovalov <andreyknvl@gmail.com>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Zhaoyang Huang <zhaoyang.huang@unisoc.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1878/1887] mm/kmemleak: use object_cache instead of kmemleak_initialized to check in set_track_prepare()
-Date: Wed, 28 Oct 2026 18:06:14 +0100
-Message-ID: <20261028170542.192176805@linuxfoundation.org>
-X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
-References: <20261028170459.200466217@linuxfoundation.org>
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=fXntLAww
+Received: by mail-qt1-f174.google.com with SMTP id d75a77b69052e-535179e995bso14280281cf.0
+        for <patches@lists.linux.dev>; Wed, 28 Oct 2026 13:15:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1793218553; x=1793823353; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=sE7YL0Mu7zAtP+r+dItmrpgUYmZe1QgZ8AhEij2E0bY=;
+        b=fXntLAww3wqfPWkAJxtGL9ENxcqwggowayhOkjuHOw1sD5CY/D+cF4JBbB2t9qTsK8
+         eoT586p02KiXra4v8T9BiyFOoV2CoCD3cNGYtW0Y8M+EuMaxNDo2DObpl1L1r6sByyvJ
+         3tPqJX2okCwnzNTFO5TaQw8ectz3L8wdtf2eTO0ydLf+fFnTt2zibWOLjKkl+cD+qfOa
+         5yx3TKUUzPeyxx4eWViuJd1zc0KgvMfsj2r57uOpcHaR5cF6Au3Q4EIL+sSKKqUBgHiB
+         hSlAgxvhluxn7JYBFK/X6KVWX/1CNizCy2n8rmKDGgoJfEJCI5XGuJ1aDhHzGKWAFTdw
+         vbWQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793218553; x=1793823353;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=sE7YL0Mu7zAtP+r+dItmrpgUYmZe1QgZ8AhEij2E0bY=;
+        b=AomRT52bIvl/5LGGY6T2lxYP2OHOUwwo82/iQTQ7xPZ1vXKQdQ3ToVyPGe5IJwEy38
+         zZuFtq6aw49uElEcMfzCIt2I6RoMldp3kuMBCPS/zCxW4gKznraMpOaJOssOfESzY9pj
+         5YknacVU07elcjpzHLPSn0MZhFDgD7zLHE7SCo73YCAnB1A3e0rr3pSH1VXJyPs5Ej4h
+         EtQVb5hQgeHYPg3c/lWFx1/NDEROpqOF/htiELF8zbYWdyDAzV/QCa7KIZChjTNpKaML
+         K6Seyh3xEtpGlrmKaEAjxvPR3V1A8HOsQW/gtVrsVHszhh7uQdy3370saZfb8io5e8DN
+         ZteQ==
+X-Gm-Message-State: AFq9FYI80F/3G0iugVn9/kTsqoUKRzuiJjY6YDmQ649NgnmHddyNrf7b
+	W69epmL/a1y06XE9i84jwA9a5ovKWrlb5MZyGGhckLwWKH8+UW4CtuKY
+X-Gm-Gg: AYBFou3qInsyZDJWZcRLLUOjDPuYdCsQtRLZyAXm3YD8h7LKMDnN/g/7OiTI3r5CnBx
+	UmbjxR9LgYkCm5ogymHICiWa26v0xuRvrWanvpUFIjVKSex/YVTRmvJmd3uJYLLR4AFWRqxcYZY
+	odLDnn9vItPIhw5Nv8rmmzqRPwYBLh/HHajgYxheOkBElVSMYDUKM2r5rLgRk+yI+ql4irnSGPB
+	VjU1DzIUM5clF7dfPeUjHb0mwL0MU1SZFG97nJIcZCo/tN5Fb9WBHuqUMLhEGpXR5Spk8WqmeIp
+	2BRH5YQbUqXwp1vUjhu2e57gEBp72pGf1I4SHLggfGmXVU22CkrT8YI7eVHwfTVWjvpIdxmQmnI
+	BKtQe0bhRdeLNeKIY8dI68/9FPiM2KLdEpLLUHu2i6jGWBKhLhF0AL4D8qcKe2NUcJiElLVon/K
+	8sNpQI074SLM01k9aSO+EpIuXTqhpSQ8jG3PQIrWQh+uzQ7DkOSf5g6qU4LWTghbu7Xm7ugnuzd
+	1VOsMcD5GaZV6j6ZJqdD/8F99l83fhO0AwKShQ3khyw+QXGILGEmwimG+o68026jpcI6Gderz6G
+	lOZiPzxjYq3dNywusmeZc6xKkYQ8YCES4Sw41UggpMh4y2UmtgFUQl/B
+X-Received: by 2002:a05:622a:506:b0:535:2794:851c with SMTP id d75a77b69052e-53fcbfdf35bmr60489901cf.39.1793218552723;
+        Wed, 28 Oct 2026 13:15:52 -0700 (PDT)
+Received: from [10.67.48.245] ([192.19.223.252])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-538394c38easm112809151cf.7.2026.10.28.13.15.49
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 28 Oct 2026 13:15:51 -0700 (PDT)
+Message-ID: <131ac3f8-8658-4b78-bc0c-746cc49cc526@gmail.com>
+Date: Wed, 28 Oct 2026 13:15:46 -0700
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -67,79 +90,45 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 5.10 000/516] 5.10.273-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
+ sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
+ hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
+ sr@sladewatkins.com
+References: <20261028170003.522232767@linuxfoundation.org>
+Content-Language: en-US, fr-FR
+From: Florian Fainelli <f.fainelli@gmail.com>
+In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+On 10/28/26 09:52, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.10.273 release.
+> There are 516 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Fri, 30 Oct 2026 16:59:22 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.273-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
-------------------
+On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
+BMIPS_GENERIC:
 
-From: Xiaolei Wang <xiaolei.wang@windriver.com>
-
-[ Upstream commit 835bc157da689f834d10296d0942aed88b310b4f ]
-
-Patch series "mm/kmemleak: use object_cache instead of
-kmemleak_initialized", v3.
-
-Use object_cache instead of kmemleak_initialized to check in
-set_track_prepare(), so that memory leaks after kmemleak_init() can be
-recorded and Rename kmemleak_initialized to kmemleak_late_initialized
-
-unreferenced object 0xc674ca80 (size 64):
- comm "swapper/0", pid 1, jiffies 4294938337 (age 204.880s)
- hex dump (first 32 bytes):
-  80 55 75 c6 80 54 75 c6 00 55 75 c6 80 52 75 c6 .Uu..Tu..Uu..Ru.
-  00 53 75 c6 00 00 00 00 00 00 00 00 00 00 00 00 .Su..........
-
-This patch (of 2):
-
-kmemleak_initialized is set in kmemleak_late_init(), which also means that
-there is no call trace which object's memory leak is before
-kmemleak_late_init(), so use object_cache instead of kmemleak_initialized
-to check in set_track_prepare() to avoid no call trace records when there
-is a memory leak in the code between kmemleak_init() and
-kmemleak_late_init().
-
-unreferenced object 0xc674ca80 (size 64):
- comm "swapper/0", pid 1, jiffies 4294938337 (age 204.880s)
- hex dump (first 32 bytes):
-  80 55 75 c6 80 54 75 c6 00 55 75 c6 80 52 75 c6 .Uu..Tu..Uu..Ru.
-  00 53 75 c6 00 00 00 00 00 00 00 00 00 00 00 00 .Su..........
-
-Link: https://lkml.kernel.org/r/20230815144128.3623103-1-xiaolei.wang@windriver.com
-Link: https://lkml.kernel.org/r/20230815144128.3623103-2-xiaolei.wang@windriver.com
-Fixes: 56a61617dd22 ("mm: use stack_depot for recording kmemleak's backtrace")
-Signed-off-by: Xiaolei Wang <xiaolei.wang@windriver.com>
-Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
-Cc: Alexander Potapenko <glider@google.com>
-Cc: Andrey Konovalov <andreyknvl@gmail.com>
-Cc: Vlastimil Babka <vbabka@suse.cz>
-Cc: Zhaoyang Huang <zhaoyang.huang@unisoc.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- mm/kmemleak.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
-
-diff --git a/mm/kmemleak.c b/mm/kmemleak.c
-index add87fc14ca6d..4e5bc3cec3ca6 100644
---- a/mm/kmemleak.c
-+++ b/mm/kmemleak.c
-@@ -611,7 +611,12 @@ static noinline depot_stack_handle_t set_track_prepare(void)
- 	unsigned long entries[MAX_TRACE];
- 	unsigned int nr_entries;
- 
--	if (!kmemleak_initialized)
-+	/*
-+	 * Use object_cache to determine whether kmemleak_init() has
-+	 * been invoked. stack_depot_early_init() is called before
-+	 * kmemleak_init() in mm_core_init().
-+	 */
-+	if (!object_cache)
- 		return 0;
- 	nr_entries = stack_trace_save(entries, ARRAY_SIZE(entries), 3);
- 	trace_handle = stack_depot_save(entries, nr_entries, GFP_NOWAIT);
+Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
 -- 
-2.53.0
-
-
-
+Florian
