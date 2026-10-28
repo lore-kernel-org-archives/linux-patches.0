@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793210381;
-	b=emiu89wgih5ASJBucKTzgESW4W0zdDq0XxnVj77Mk0zWpSvDhfqCwn62jLVesjMkx+Pd
-	 aTS8R48RHeO5nlXGMQMek6v3YmcI2YpqkuUes25GAdLKp6J3ou11T8bybmaUXClTZcmwP
-	 gJYUHFESK/eQv+y1AJYUDOzYqiwm/IbiYLJMpNZBqu8H0l3pYqPnSvHarUpu8NkYKYUoE
-	 2fzCvd+m7uwsjHBQr838a1x0IOOtHosgBXGa12TjQX9Hu8s9B012V7zwcQpvyeaYNOZsl
-	 QTI5iytBD+qSx2yNyHPrXv/VxSYfq/878XrNyts87LMgLz7DYLNx/tOugStcVr0K/+A==
+	t=1793210383;
+	b=bgaxVhn7vEY52Uuc2Y4F3VmTms4thUfkCiq326AOdr5yJASwLi+TzUu/cikkikWEJgzy
+	 lm8yCSofyEUYt2BanodjyV+fbgTABAq5jRb7m+oqupX6Wsgdt668WZH7g2XZB9rRGKozg
+	 8Xekt9TVLH3rsZa4Msw1GBslgdX2PEJN6rbfkRFm4XrSd3zCFP9n6l8vaqpeZnmJZLz5z
+	 3azSyFFZ/O5QurHbIkpnTNkEzMzdiqOLulk3grfn55POiEL9UOP0iuWXn9S+WrNk+ob3L
+	 Q79hqnmJs0ydRksKN6+ruTeW4mjyr4fjQJOLCLlJhQdrIzf7702Eu2XG/WDLxDSjSVA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793210381;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793210383;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=jzmGSYSXcBEYCUuAKX7Hs239pyRqcqZiiGtlG4fvL24=;
-	b=y+OX58MRof80n+F2AuyfkjVjfWeynKLMuosMQaFlXaJUgQ3ZE6lIUycJW6Si5l+9OPkH
-	 nl0X0iXixxjNkrrtcV0HFP3jr+sLhfFpBvrEcaybJD1Hj3I8UnsL2rJ/i49bc6GYieNzZ
-	 kAuaQ3LE1aDwh7SCRa5NtnFV4vK6pWV7Cg/2I5uwhq8pqL5bIozz0cMpt02dZWm4WUlbv
-	 2esQrawtm+NZPUMEwXenfanXuN1O2ScfQgONxK80BCMRCplKR0MtI7w7NBxPDQL1F1z6s
-	 XxJnRZchFhz1WIql4VYykDMznVI4hIG5p+rtU0gD+2+jIgGQib+lkH1fq9jHzEARXpw==
+	bh=O6OknoB0OEZkvxmC0Wi3RxKnbmjmFRVgaPQ8pqIQEy8=;
+	b=Jb7mGT/0L9qB8C68Hr3W5DFVpvR4zq/kuA9GDq//LM4UYwgcTRN06fv7QAb0EBAbyHte
+	 9kb31m+2uzI5gXSqGBO56T95S3ob8O+BuyK83D5MlhSvKqH1IN6OQcRFEjgQD9FahKUrD
+	 ildkY6avXrdfzkanMGXrVqNc+t6f5eGPQk5EG/SOXiKWL5mI+E0oCv1VhUUTFtXQLjjvm
+	 Tsbe5znEDdfD36Wzo0Pqu30fwKc7Z+fd5c+/RhYjP9BqJe93bfFb6z0d1AA++sw7TgF/Z
+	 b98KhPnrMaVOj2ulh7U4+3miQ3AHe0vmqD/HRcHmNARgwsxifjTNSCSKYpqrzwEzkug==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=itSl6Zjl;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g21XNJV9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5A16606A31C;
-	Wed, 28 Oct 2026 17:59:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 825B0606A31C;
+	Wed, 28 Oct 2026 17:59:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=itSl6Zjl
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 031661F01825;
-	Wed, 28 Oct 2026 17:59:39 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g21XNJV9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D327E1F01825;
+	Wed, 28 Oct 2026 17:59:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793210380;
-	bh=jzmGSYSXcBEYCUuAKX7Hs239pyRqcqZiiGtlG4fvL24=;
+	s=korg; t=1793210383;
+	bh=O6OknoB0OEZkvxmC0Wi3RxKnbmjmFRVgaPQ8pqIQEy8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=itSl6ZjlxZ5vR8Kp02nwkdAXBrU6rEnmku1SVPpBju6NU3Fachsbkm8pAGxuaiGEM
-	 f41nu42hOqnX4ntwiAg87Og8NCiGeqhiq9izJr+R3+uGczM9rVxmZVfKFoWSQvJK2i
-	 q1dnvT8A0qyR+7QKGx6t50DFdg3xb85i/A4H3V9w=
+	b=g21XNJV9FAjhYg7GboUp3cCF5ZW9HrN/rWDN4/Yj4ivhXILjP9mFWL0lnH5zOAZ9F
+	 2UKvjp8xDF8Q3MGTxLZVdufsblE7fdr3pjP1ty7uB2dUVJEFNyHtcUrglNqOQt0Nal
+	 KY9Qc2sOsCQ1l12HuGkLaRuBuqEoy9ySaRrwh62U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cen Zhang <zzzccc427@gmail.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>
-Subject: [PATCH 6.6 154/168] keys: Check the authorization payload in process keyring searches
-Date: Wed, 28 Oct 2026 18:01:30 +0100
-Message-ID: <20261028165946.730926632@linuxfoundation.org>
+	Josef Bacik <josef@toxicpanda.com>,
+	Jens Axboe <axboe@kernel.dk>,
+	"Claude Fable 5.1" <noreply@anthropic.com>
+Subject: [PATCH 6.6 145/168] io_uring: dont pass restart error codes to userspace
+Date: Wed, 28 Oct 2026 18:01:21 +0100
+Message-ID: <20261028165946.517537545@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165943.089486480@linuxfoundation.org>
 References: <20261028165943.089486480@linuxfoundation.org>
@@ -67,75 +68,125 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang <zzzccc427@gmail.com>
+From: Josef Bacik <josef@toxicpanda.com>
 
-commit 0a0ec45bf577a9b4d4960567f20d3877ef480de9 upstream.
+Commit e1a64bc64897f4c2fe460922c345f2ed8f889b5f upstream.
 
-An authorization payload and its saved credentials must remain valid
-while search_process_keyrings_rcu() searches the requestor's keyrings.
-The function validates the authorization key, then separately loads
-payload.data[0] and unconditionally reads rka->cred. Validation does
-not prevent request_key_auth_revoke() from clearing the payload.
+-ERESTARTSYS and friends are instructions for the system call exit code,
+which either restarts the call or turns them into -EINTR. They are not
+supposed to be seen by applications. A request isn't a system call,
+nobody looks at what it returns before that is put into a CQE.
 
-A request-key helper can assume authority and fork a descendant that
-inherits the authorization key. If the descendant misses in its own
-keyrings, it falls back to the saved requestor credentials. Successful
-target instantiation invalidates the authorization key without clearing
-the payload. After the helper exits, UMH_WAIT_PROC returns to the
-requester, which calls complete_request_key() and revokes that key.
+The read/write and the networking opcodes convert these codes to -EINTR
+by hand. The others don't. An io-wq worker that is blocked in the open of
+a FIFO, a tty or some other device, or in a splice from an empty pipe,
+and that gets interrupted because the request is cancelled, completes it
+with -512:
 
-With the descendant paused after validation, the paths can interleave
-as follows:
+  IORING_OP_OPENAT, IOSQE_ASYNC       // FIFO without a writer
+  IORING_OP_ASYNC_CANCEL              // -EALREADY, worker is signalled
+  CQE of the open: res == -512
 
-  1. The descendant enters search_process_keyrings_rcu() under RCU and
-     key_validate() succeeds.
-  2. The helper instantiates the target, invalidates the authorization
-     key, and exits.
-  3. The requester resumes from UMH_WAIT_PROC, calls
-     complete_request_key(), and revokes the authorization key.
-     request_key_auth_revoke() sets its payload pointer to NULL.
-  4. The descendant loads NULL and dereferences rka->cred.
+There are more candidates, like whatever a file system or driver returns
+from ->flush(), ->fsync(), ->fallocate() or ->uring_cmd(), or breaking a
+lease or delegation.
 
-This NULL dereference can oops the kernel. RCU delays payload disposal
-but does not prevent the pointer from being cleared.
+Take care of it in io_issue_sqe(), which all of them go through. The
+helper is moved from rw.c as is. The cost is a compare and a branch that
+is not taken per request.
 
-Load the payload with dereference_key_rcu() and require a non-NULL
-result before validating the authorization key and searching its saved
-credentials. A non-NULL payload and its credentials remain alive for
-the caller's RCU read-side section; a cleared payload skips the fallback
-search and follows the existing error selection.
-
-KASAN report as below:
-
-    Oops: general protection fault, probably for non-canonical address 0xdffffc0000000005: 0000 [#1] SMP KASAN NOPTI
-    KASAN: null-ptr-deref in range [0x0000000000000028-0x000000000000002f]
-    RIP: 0010:search_process_keyrings_rcu+0x32b/0x790
-
-Cc: stable@vger.kernel.org
-Fixes: e59428f721ee ("keys: Move the RCU locks outwards from the keyring search functions")
+[ 6.6: io_issue_sqe() returns IOU_OK and an error straight away ]
+Fixes: 15b71abe7b52 ("io_uring: add support for IORING_OP_OPENAT")
 Assisted-by: LLM
-Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
-Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Link: https://lore.kernel.org/r/pm-key-management-objects-candidate-0004-v3-598361863b76bc25d58d@gmail.com
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Link: https://patch.msgid.link/20261015-b4-io-uring-fixes-v1-39-c1556f5d7bf5@toxicpanda.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Co-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/keys/process_keys.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ io_uring/io_uring.c |    8 +++++++-
+ io_uring/io_uring.h |   18 ++++++++++++++++++
+ io_uring/rw.c       |   18 ------------------
+ 3 files changed, 25 insertions(+), 19 deletions(-)
 
---- a/security/keys/process_keys.c
-+++ b/security/keys/process_keys.c
-@@ -556,9 +556,8 @@ key_ref_t search_process_keyrings_rcu(st
- 	    ) {
- 		const struct cred *cred = ctx->cred;
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -1906,6 +1906,9 @@ static int io_issue_sqe(struct io_kiocb
+ 	}
  
--		if (key_validate(cred->request_key_auth) == 0) {
--			rka = ctx->cred->request_key_auth->payload.data[0];
+ 	if (ret == IOU_OK) {
++		/* not all handlers take care of the internal restart codes */
++		if (unlikely(req->cqe.res <= -ERESTARTSYS))
++			req->cqe.res = io_fixup_restart_res(req->cqe.res);
+ 		if (issue_flags & IO_URING_F_COMPLETE_DEFER)
+ 			io_req_complete_defer(req);
+ 		else
+@@ -1914,8 +1917,11 @@ static int io_issue_sqe(struct io_kiocb
+ 		return 0;
+ 	}
+ 
+-	if (ret != IOU_ISSUE_SKIP_COMPLETE)
++	if (ret != IOU_ISSUE_SKIP_COMPLETE) {
++		if (unlikely(ret <= -ERESTARTSYS))
++			ret = io_fixup_restart_res(ret);
+ 		return ret;
++	}
+ 
+ 	/* If the op doesn't have a file, we're not polling for it */
+ 	if ((req->ctx->flags & IORING_SETUP_IOPOLL) && def->iopoll_queue)
+--- a/io_uring/io_uring.h
++++ b/io_uring/io_uring.h
+@@ -193,6 +193,24 @@ static __always_inline bool io_fill_cqe_
+ 	return true;
+ }
+ 
++static inline ssize_t io_fixup_restart_res(ssize_t ret)
++{
++	switch (ret) {
++	case -ERESTARTSYS:
++	case -ERESTARTNOINTR:
++	case -ERESTARTNOHAND:
++	case -ERESTART_RESTARTBLOCK:
++		/*
++		 * We can't just restart the syscall, since previously
++		 * submitted sqes may already be in progress. Just fail
++		 * this IO with EINTR.
++		 */
++		return -EINTR;
++	default:
++		return ret;
++	}
++}
++
+ static inline void req_set_fail(struct io_kiocb *req)
+ {
+ 	req->flags |= REQ_F_FAIL;
+--- a/io_uring/rw.c
++++ b/io_uring/rw.c
+@@ -140,24 +140,6 @@ void io_readv_writev_cleanup(struct io_k
+ 	kfree(io->free_iovec);
+ }
+ 
+-static inline ssize_t io_fixup_restart_res(ssize_t ret)
+-{
+-	switch (ret) {
+-	case -ERESTARTSYS:
+-	case -ERESTARTNOINTR:
+-	case -ERESTARTNOHAND:
+-	case -ERESTART_RESTARTBLOCK:
+-		/*
+-		 * We can't just restart the syscall, since previously
+-		 * submitted sqes may already be in progress. Just fail
+-		 * this IO with EINTR.
+-		 */
+-		return -EINTR;
+-	default:
+-		return ret;
+-	}
+-}
 -
-+		rka = dereference_key_rcu(cred->request_key_auth);
-+		if (rka && key_validate(cred->request_key_auth) == 0) {
- 			//// was search_process_keyrings() [ie. recursive]
- 			ctx->cred = rka->cred;
- 			key_ref = search_cred_keyrings_rcu(ctx);
+ static inline void io_rw_done(struct kiocb *kiocb, ssize_t ret)
+ {
+ 	/* IO was queued async, completion will happen later */
 
 
