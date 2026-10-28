@@ -1,56 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214176;
-	b=3RmgmeHLS4Dm1Ie4pYAAyLYBYzotJ4J6wRQMa0NZmm4tLmjmtMhYFA7J6rHaVWAI7duB
-	 9JWkDM8dSkhO0H1O0AtP2HDZe0r7L+uLUGP9GGds2dhVcXqWaMp3fKkir+YvoInx4Irt3
-	 w3gqwXtiSO0o4X2Puu2ZXqCKrV4GuvEGUHWfL0Epzd1stjiHdrL/Zhg8CmIOefsy956P9
-	 24nH4MLiIjUSsp2JTbldYZQB+hFxR3JWZZHY5lDrcsusNiBfQSWsmwp+BT44BW6Lk5hdP
-	 429koa46HUYgnBft3SZWTl+iPT5bpUoC5jQqSt7Ff6tMvhTglMn7EYI99GJ7t38UrEw==
+	t=1793214179;
+	b=lilZ75DpVNzqxxHY1cfkUDxgwQUr3oy4JwNm9cNaEH9DC0BNeDyY12ZuHDB2l2RjuWJO
+	 mgdlDO+5vbCUT/SyFdLhLzs8bgypqpa997eGFoC7SqWQE4GxZ6AKS3YeLhSy+VbaKD5bq
+	 AhlYRr/nHH99vF7QKp3EXduNSlcUHEPlHpTsEbC2qo+PB3qGAHRwhWr0ZW3r+79pM7TPg
+	 chKbCAgOStUVCga7A8h7JaOjZfxpeXRsu97ErVU2bAspnLn1OdjVUxmVqJq9GY/xxILss
+	 u0nWQZeebJANjdTPXb0lMb4XK170WzjzCZn9oq5q7AbR1CAoaAVqVHGQkM0oEChjZ7A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214176;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214179;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=BKKsmL21+knYv/5Vff3eDj9F+Nvk5ydOxSgT70MAHiE=;
-	b=0pjlO5gBqyZGOK+4N4p57CKYWfzrbDwmS7IFxHlWcfmofKmTzyWxGkixBPQ6d6ChuLIi
-	 qS4Fx4btQbugdwUZmqyU69prX7wrmnibfGLECZcbL26Lc/3d8ic2D6Vqp0Rd5SlIRp6i8
-	 SKzJNlOiMwNuLMX8oZ6G+eJpJcX3+ng2ZTMNNM/lfSvlXB3FG3vffY6yFeYOQvqRcXNDR
-	 yrRGXvVPgMttLExvvqZxb8T2NcknAkSH6S+2IjVukoD+fpUMOELO7u7ne9SdOX3MEr4M8
-	 2KMpWYe2xRaXg8wIoEt5IhArMtPxMsMuZF8kQLq5BPPV+KbDFUq7pLl+VNeHECpi5/A==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=cRcjWdaPLq99uo3Z44eB1i1u8QaY2tKj2C2KjZmlqu0=;
+	b=vaIB05iOLcf9QQau1HLbQqovmOyMX61bfDJoz1/szDh6RhIYn4yNzLv58eARdLwoDi70
+	 hjDa97ZMqOVsQI1YjrFDNDKs7WmBRnx71kFAKi6Y3CdLjL0Ooq6hwj0UIDvLiHKFUF4mU
+	 bRm2Z+OnAHwfEb6cbvGu9MnPJXMSrm3gv1pZ208aYhCoBAFAqTNZp7FuzxxrP1tXgX8Rh
+	 2F47tBgWSmw9KRzGdYkA7DvPntx4gBwctN1RmjvN8WfQoFFNINmby+APPC2i10NMFGcQz
+	 +08BhIi0tFrTkMVSjYh3/vaZ9TsuHJoRs8jAp+IlPgfiRPp9koC/OYrig6NnBHyE6Og==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bb+iaa9M;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yD6chgu7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D83FE606A31A;
-	Wed, 28 Oct 2026 19:02:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD18B606A31D;
+	Wed, 28 Oct 2026 19:02:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bb+iaa9M
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AA4A1F01825;
-	Wed, 28 Oct 2026 19:02:55 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yD6chgu7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E9E11F01825;
+	Wed, 28 Oct 2026 19:02:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214175;
-	bh=BKKsmL21+knYv/5Vff3eDj9F+Nvk5ydOxSgT70MAHiE=;
+	s=korg; t=1793214178;
+	bh=cRcjWdaPLq99uo3Z44eB1i1u8QaY2tKj2C2KjZmlqu0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bb+iaa9MsNI3FGhLbWQYGf9YEFsbM2yB0a720Cr34tRoruTWBmfJmit6mVQnNoZ9a
-	 dXWP6+O4OHOYuEX6GKHbrVGpI4S2jTzq1s55aBXbdaTME24rep7OLY3g1ZXGBb96Sp
-	 YNRG3o+oUDr9ooxpJj4qW7TQmxUd4hMwPTFePElU=
+	b=yD6chgu7c4KWyS+k1UIFDvJkaIxxdxHqTta5AnPJ8WOXbI0lsW1MLqxxQOSe/FvKj
+	 kIh5kjnak9fYruaSbYAFIRN2psBaIr0Q7pvEPPbseK6b71XGOxsNa0C9njPD50m+bx
+	 9LzKjDjVyzvr28wFbalshk/LlgmLUW0QuWRm8xeo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>,
-	Tejun Heo <tj@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Lai Jiangshan <jiangshanlai@gmail.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Matthew Brost <matthew.brost@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0723/1887] workqueue: Do not warn when cancelling WQ_MEM_RECLAIM work from !WQ_MEM_RECLAIM worker
-Date: Wed, 28 Oct 2026 17:46:59 +0100
-Message-ID: <20261028170515.895270849@linuxfoundation.org>
+	Ed Santiago <santiago@redhat.com>,
+	Stefano Brivio <sbrivio@redhat.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Willem de Bruijn <willemb@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>,
+	David Gibson <david@gibson.dropbear.id.au>
+Subject: [PATCH 6.1 0724/1887] udp: Deal with race between UDP socket address change and rehash
+Date: Wed, 28 Oct 2026 17:47:00 +0100
+Message-ID: <20261028170515.920434604@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -66,125 +66,305 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
+From: Stefano Brivio <sbrivio@redhat.com>
 
-[ Upstream commit de35994ecd2dd6148ab5a6c5050a1670a04dec77 ]
+[ Upstream commit a502ea6fa94b1f7be72a24bcf9e3f5f6b7e6e90c ]
 
-After commit
-746ae46c1113 ("drm/sched: Mark scheduler work queues with WQ_MEM_RECLAIM")
-amdgpu started seeing the following warning:
+If a UDP socket changes its local address while it's receiving
+datagrams, as a result of connect(), there is a period during which
+a lookup operation might fail to find it, after the address is changed
+but before the secondary hash (port and address) and the four-tuple
+hash (local and remote ports and addresses) are updated.
 
- [ ] workqueue: WQ_MEM_RECLAIM sdma0:drm_sched_run_job_work [gpu_sched] is flushing !WQ_MEM_RECLAIM events:amdgpu_device_delay_enable_gfx_off [amdgpu]
-...
- [ ] Workqueue: sdma0 drm_sched_run_job_work [gpu_sched]
-...
- [ ] Call Trace:
- [ ]  <TASK>
-...
- [ ]  ? check_flush_dependency+0xf5/0x110
-...
- [ ]  cancel_delayed_work_sync+0x6e/0x80
- [ ]  amdgpu_gfx_off_ctrl+0xab/0x140 [amdgpu]
- [ ]  amdgpu_ring_alloc+0x40/0x50 [amdgpu]
- [ ]  amdgpu_ib_schedule+0xf4/0x810 [amdgpu]
- [ ]  ? drm_sched_run_job_work+0x22c/0x430 [gpu_sched]
- [ ]  amdgpu_job_run+0xaa/0x1f0 [amdgpu]
- [ ]  drm_sched_run_job_work+0x257/0x430 [gpu_sched]
- [ ]  process_one_work+0x217/0x720
-...
- [ ]  </TASK>
+Secondary hash chains were introduced by commit 30fff9231fad ("udp:
+bind() optimisation") and, as a result, a rehash operation became
+needed to make a bound socket reachable again after a connect().
 
-The intent of the verifcation done in check_flush_depedency is to ensure
-forward progress during memory reclaim, by flagging cases when either a
-memory reclaim process, or a memory reclaim work item is flushed from a
-context not marked as memory reclaim safe.
+This operation was introduced by commit 719f835853a9 ("udp: add
+rehash on connect()") which isn't however a complete fix: the
+socket will be found once the rehashing completes, but not while
+it's pending.
 
-This is correct when flushing, but when called from the
-cancel(_delayed)_work_sync() paths it is a false positive because work is
-either already running, or will not be running at all. Therefore
-cancelling it is safe and we can relax the warning criteria by letting the
-helper know of the calling context.
+This is noticeable with a socat(1) server in UDP4-LISTEN mode, and a
+client sending datagrams to it. After the server receives the first
+datagram (cf. _xioopen_ipdgram_listen()), it issues a connect() to
+the address of the sender, in order to set up a directed flow.
 
-Signed-off-by: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
-Fixes: fca839c00a12 ("workqueue: warn if memory reclaim tries to flush !WQ_MEM_RECLAIM workqueue")
-References: 746ae46c1113 ("drm/sched: Mark scheduler work queues with WQ_MEM_RECLAIM")
-Cc: Tejun Heo <tj@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Lai Jiangshan <jiangshanlai@gmail.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Cc: Christian König <christian.koenig@amd.com
-Cc: Matthew Brost <matthew.brost@intel.com>
-Cc: <stable@vger.kernel.org> # v4.5+
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Now, if the client, running on a different CPU thread, happens to
+send a (subsequent) datagram while the server's socket changes its
+address, but is not rehashed yet, this will result in a failed
+lookup and a port unreachable error delivered to the client, as
+apparent from the following reproducer:
+
+  LEN=$(($(cat /proc/sys/net/core/wmem_default) / 4))
+  dd if=/dev/urandom bs=1 count=${LEN} of=tmp.in
+
+  while :; do
+  	taskset -c 1 socat UDP4-LISTEN:1337,null-eof OPEN:tmp.out,create,trunc &
+  	sleep 0.1 || sleep 1
+  	taskset -c 2 socat OPEN:tmp.in UDP4:localhost:1337,shut-null
+  	wait
+  done
+
+where the client will eventually get ECONNREFUSED on a write()
+(typically the second or third one of a given iteration):
+
+  2024/11/13 21:28:23 socat[46901] E write(6, 0x556db2e3c000, 8192): Connection refused
+
+This issue was first observed as a seldom failure in Podman's tests
+checking UDP functionality while using pasta(1) to connect the
+container's network namespace, which leads us to a reproducer with
+the lookup error resulting in an ICMP packet on a tap device:
+
+  LOCAL_ADDR="$(ip -j -4 addr show|jq -rM '.[] | .addr_info[0] | select(.scope == "global").local')"
+
+  while :; do
+  	./pasta --config-net -p pasta.pcap -u 1337 socat UDP4-LISTEN:1337,null-eof OPEN:tmp.out,create,trunc &
+  	sleep 0.2 || sleep 1
+  	socat OPEN:tmp.in UDP4:${LOCAL_ADDR}:1337,shut-null
+  	wait
+  	cmp tmp.in tmp.out
+  done
+
+Once this fails:
+
+  tmp.in tmp.out differ: char 8193, line 29
+
+we can finally have a look at what's going on:
+
+  $ tshark -r pasta.pcap
+      1   0.000000           :: ? ff02::16     ICMPv6 110 Multicast Listener Report Message v2
+      2   0.168690 88.198.0.161 ? 88.198.0.164 UDP 8234 60260 ? 1337 Len=8192
+      3   0.168767 88.198.0.161 ? 88.198.0.164 UDP 8234 60260 ? 1337 Len=8192
+      4   0.168806 88.198.0.161 ? 88.198.0.164 UDP 8234 60260 ? 1337 Len=8192
+      5   0.168827 c6:47:05:8d:dc:04 ? Broadcast    ARP 42 Who has 88.198.0.161? Tell 88.198.0.164
+      6   0.168851 9a:55:9a:55:9a:55 ? c6:47:05:8d:dc:04 ARP 42 88.198.0.161 is at 9a:55:9a:55:9a:55
+      7   0.168875 88.198.0.161 ? 88.198.0.164 UDP 8234 60260 ? 1337 Len=8192
+      8   0.168896 88.198.0.164 ? 88.198.0.161 ICMP 590 Destination unreachable (Port unreachable)
+      9   0.168926 88.198.0.161 ? 88.198.0.164 UDP 8234 60260 ? 1337 Len=8192
+     10   0.168959 88.198.0.161 ? 88.198.0.164 UDP 8234 60260 ? 1337 Len=8192
+     11   0.168989 88.198.0.161 ? 88.198.0.164 UDP 4138 60260 ? 1337 Len=4096
+     12   0.169010 88.198.0.161 ? 88.198.0.164 UDP 42 60260 ? 1337 Len=0
+
+On the third datagram received, the network namespace of the container
+initiates an ARP lookup to deliver the ICMP message.
+
+In another variant of this reproducer, starting the client with:
+
+  strace -f pasta --config-net -u 1337 socat UDP4-LISTEN:1337,null-eof OPEN:tmp.out,create,trunc 2>strace.log &
+
+and connecting to the socat server using a loopback address:
+
+  socat OPEN:tmp.in UDP4:localhost:1337,shut-null
+
+we can more clearly observe a sendmmsg() call failing after the
+first datagram is delivered:
+
+  [pid 278012] connect(173, 0x7fff96c95fc0, 16) = 0
+  [...]
+  [pid 278012] recvmmsg(173, 0x7fff96c96020, 1024, MSG_DONTWAIT, NULL) = -1 EAGAIN (Resource temporarily unavailable)
+  [pid 278012] sendmmsg(173, 0x561c5ad0a720, 1, MSG_NOSIGNAL) = 1
+  [...]
+  [pid 278012] sendmmsg(173, 0x561c5ad0a720, 1, MSG_NOSIGNAL) = -1 ECONNREFUSED (Connection refused)
+
+and, somewhat confusingly, after a connect() on the same socket
+succeeded.
+
+Until commit 4cdeeee9252a ("net: udp: prefer listeners bound to an
+address"), the race between receive address change and lookup didn't
+actually cause visible issues, because, once the lookup based on the
+secondary hash chain failed, we would still attempt a lookup based on
+the primary hash (destination port only), and find the socket with the
+outdated secondary hash.
+
+That change, however, dropped port-only lookups altogether, as side
+effect, making the race visible.
+
+To fix this, while avoiding the need to make address changes and
+rehash atomic against lookups, reintroduce primary hash lookups as
+fallback, if lookups based on four-tuple and secondary hashes fail.
+
+To this end, introduce a simplified lookup implementation, which
+doesn't take care of SO_REUSEPORT groups: if we have one, there are
+multiple sockets that would match the four-tuple or secondary hash,
+meaning that we can't run into this race at all.
+
+v2:
+  - instead of synchronising lookup operations against address change
+    plus rehash, reintroduce a simplified version of the original
+    primary hash lookup as fallback
+
+v1:
+  - fix build with CONFIG_IPV6=n: add ifdef around sk_v6_rcv_saddr
+    usage (Kuniyuki Iwashima)
+  - directly use sk_rcv_saddr for IPv4 receive addresses instead of
+    fetching inet_rcv_saddr (Kuniyuki Iwashima)
+  - move inet_update_saddr() to inet_hashtables.h and use that
+    to set IPv4/IPv6 addresses as suitable (Kuniyuki Iwashima)
+  - rebase onto net-next, update commit message accordingly
+
+Reported-by: Ed Santiago <santiago@redhat.com>
+Link: https://github.com/containers/podman/issues/24147
+Analysed-by: David Gibson <david@gibson.dropbear.id.au>
+Fixes: 30fff9231fad ("udp: bind() optimisation")
+Signed-off-by: Stefano Brivio <sbrivio@redhat.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/workqueue.c | 22 +++++++++++++---------
- 1 file changed, 13 insertions(+), 9 deletions(-)
+ net/ipv4/udp.c | 56 ++++++++++++++++++++++++++++++++++++++++++++++++++
+ net/ipv6/udp.c | 50 ++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 106 insertions(+)
 
-diff --git a/kernel/workqueue.c b/kernel/workqueue.c
-index 0e6aa523ef557..70d6e7779c2e6 100644
---- a/kernel/workqueue.c
-+++ b/kernel/workqueue.c
-@@ -2607,23 +2607,27 @@ static int rescuer_thread(void *__rescuer)
-  * check_flush_dependency - check for flush dependency sanity
-  * @target_wq: workqueue being flushed
-  * @target_work: work item being flushed (NULL for workqueue flushes)
-+ * @from_cancel: are we called from the work cancel path
-  *
-  * %current is trying to flush the whole @target_wq or @target_work on it.
-- * If @target_wq doesn't have %WQ_MEM_RECLAIM, verify that %current is not
-- * reclaiming memory or running on a workqueue which doesn't have
-- * %WQ_MEM_RECLAIM as that can break forward-progress guarantee leading to
-- * a deadlock.
-+ * If this is not the cancel path (which implies work being flushed is either
-+ * already running, or will not be at all), check if @target_wq doesn't have
-+ * %WQ_MEM_RECLAIM and verify that %current is not reclaiming memory or running
-+ * on a workqueue which doesn't have %WQ_MEM_RECLAIM as that can break forward-
-+ * progress guarantee leading to a deadlock.
-  */
- static void check_flush_dependency(struct workqueue_struct *target_wq,
--				   struct work_struct *target_work)
-+				   struct work_struct *target_work,
-+				   bool from_cancel)
- {
--	work_func_t target_func = target_work ? target_work->func : NULL;
-+	work_func_t target_func;
- 	struct worker *worker;
+diff --git a/net/ipv4/udp.c b/net/ipv4/udp.c
+index 6f745efa0db4b..271bf781fe54b 100644
+--- a/net/ipv4/udp.c
++++ b/net/ipv4/udp.c
+@@ -414,6 +414,49 @@ u32 udp_ehashfn(const struct net *net, const __be32 laddr, const __u16 lport,
+ 			      udp_ehash_secret + net_hash_mix(net));
+ }
  
--	if (target_wq->flags & WQ_MEM_RECLAIM)
-+	if (from_cancel || target_wq->flags & WQ_MEM_RECLAIM)
- 		return;
++/**
++ * udp4_lib_lookup1() - Simplified lookup using primary hash (destination port)
++ * @net:	Network namespace
++ * @saddr:	Source address, network order
++ * @sport:	Source port, network order
++ * @daddr:	Destination address, network order
++ * @hnum:	Destination port, host order
++ * @dif:	Destination interface index
++ * @sdif:	Destination bridge port index, if relevant
++ * @udptable:	Set of UDP hash tables
++ *
++ * Simplified lookup to be used as fallback if no sockets are found due to a
++ * potential race between (receive) address change, and lookup happening before
++ * the rehash operation. This function ignores SO_REUSEPORT groups while scoring
++ * result sockets, because if we have one, we don't need the fallback at all.
++ *
++ * Called under rcu_read_lock().
++ *
++ * Return: socket with highest matching score if any, NULL if none
++ */
++static struct sock *udp4_lib_lookup1(struct net *net,
++				     __be32 saddr, __be16 sport,
++				     __be32 daddr, unsigned int hnum,
++				     int dif, int sdif,
++				     const struct udp_table *udptable)
++{
++	unsigned int slot = udp_hashfn(net, hnum, udptable->mask);
++	struct udp_hslot *hslot = &udptable->hash[slot];
++	struct sock *sk, *result = NULL;
++	int score, badness = 0;
++
++	sk_for_each_rcu(sk, &hslot->head) {
++		score = compute_score(sk, net,
++				      saddr, sport, daddr, hnum, dif, sdif);
++		if (score > badness) {
++			result = sk;
++			badness = score;
++		}
++	}
++
++	return result;
++}
++
+ /* called with rcu_read_lock() */
+ static struct sock *udp4_lib_lookup2(struct net *net,
+ 				     __be32 saddr, __be16 sport,
+@@ -541,6 +584,19 @@ struct sock *__udp4_lib_lookup(struct net *net, __be32 saddr,
+ 	result = udp4_lib_lookup2(net, saddr, sport,
+ 				  htonl(INADDR_ANY), hnum, dif, sdif,
+ 				  hslot2, skb);
++	if (!IS_ERR_OR_NULL(result))
++		goto done;
++
++	/* Primary hash (destination port) lookup as fallback for this race:
++	 *   1. __ip4_datagram_connect() sets sk_rcv_saddr
++	 *   2. lookup (this function): new sk_rcv_saddr, hashes not updated yet
++	 *   3. rehash operation updating _secondary and four-tuple_ hashes
++	 * The primary hash doesn't need an update after 1., so, thanks to this
++	 * further step, 1. and 3. don't need to be atomic against the lookup.
++	 */
++	result = udp4_lib_lookup1(net, saddr, sport, daddr, hnum, dif, sdif,
++				  udptable);
++
+ done:
+ 	if (IS_ERR(result))
+ 		return NULL;
+diff --git a/net/ipv6/udp.c b/net/ipv6/udp.c
+index 96a46dc473360..8697f473357c2 100644
+--- a/net/ipv6/udp.c
++++ b/net/ipv6/udp.c
+@@ -160,6 +160,49 @@ static int compute_score(struct sock *sk, struct net *net,
+ 	return score;
+ }
  
- 	worker = current_wq_worker();
-+	target_func = target_work ? target_work->func : NULL;
- 
- 	WARN_ONCE(current->flags & PF_MEMALLOC,
- 		  "workqueue: PF_MEMALLOC task %d(%s) is flushing !WQ_MEM_RECLAIM %s:%ps",
-@@ -2857,7 +2861,7 @@ void __flush_workqueue(struct workqueue_struct *wq)
- 		list_add_tail(&this_flusher.list, &wq->flusher_overflow);
- 	}
- 
--	check_flush_dependency(wq, NULL);
-+	check_flush_dependency(wq, NULL, false);
- 
- 	mutex_unlock(&wq->mutex);
- 
-@@ -3032,7 +3036,7 @@ static bool start_flush_work(struct work_struct *work, struct wq_barrier *barr,
- 		pwq = worker->current_pwq;
- 	}
- 
--	check_flush_dependency(pwq->wq, work);
-+	check_flush_dependency(pwq->wq, work, from_cancel);
- 
- 	insert_wq_barrier(pwq, barr, work, worker);
- 	raw_spin_unlock_irq(&pool->lock);
++/**
++ * udp6_lib_lookup1() - Simplified lookup using primary hash (destination port)
++ * @net:	Network namespace
++ * @saddr:	Source address, network order
++ * @sport:	Source port, network order
++ * @daddr:	Destination address, network order
++ * @hnum:	Destination port, host order
++ * @dif:	Destination interface index
++ * @sdif:	Destination bridge port index, if relevant
++ * @udptable:	Set of UDP hash tables
++ *
++ * Simplified lookup to be used as fallback if no sockets are found due to a
++ * potential race between (receive) address change, and lookup happening before
++ * the rehash operation. This function ignores SO_REUSEPORT groups while scoring
++ * result sockets, because if we have one, we don't need the fallback at all.
++ *
++ * Called under rcu_read_lock().
++ *
++ * Return: socket with highest matching score if any, NULL if none
++ */
++static struct sock *udp6_lib_lookup1(struct net *net,
++				     const struct in6_addr *saddr, __be16 sport,
++				     const struct in6_addr *daddr,
++				     unsigned int hnum, int dif, int sdif,
++				     const struct udp_table *udptable)
++{
++	unsigned int slot = udp_hashfn(net, hnum, udptable->mask);
++	struct udp_hslot *hslot = &udptable->hash[slot];
++	struct sock *sk, *result = NULL;
++	int score, badness = 0;
++
++	sk_for_each_rcu(sk, &hslot->head) {
++		score = compute_score(sk, net,
++				      saddr, sport, daddr, hnum, dif, sdif);
++		if (score > badness) {
++			result = sk;
++			badness = score;
++		}
++	}
++
++	return result;
++}
++
+ /* called with rcu_read_lock() */
+ static struct sock *udp6_lib_lookup2(struct net *net,
+ 		const struct in6_addr *saddr, __be16 sport,
+@@ -288,6 +331,13 @@ struct sock *__udp6_lib_lookup(struct net *net,
+ 	result = udp6_lib_lookup2(net, saddr, sport,
+ 				  &in6addr_any, hnum, dif, sdif,
+ 				  hslot2, skb);
++	if (!IS_ERR_OR_NULL(result))
++		goto done;
++
++	/* Cover address change/lookup/rehash race: see __udp4_lib_lookup() */
++	result = udp6_lib_lookup1(net, saddr, sport, daddr, hnum, dif, sdif,
++				  udptable);
++
+ done:
+ 	if (IS_ERR(result))
+ 		return NULL;
 -- 
 2.53.0
 
