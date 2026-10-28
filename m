@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214247;
-	b=rQUqy6nJ/NFImGQhJ0n1se9XSxmC5mJehuYoJQHI7SDCMphJgQ+7DGy1FPkKNjRXlsEX
-	 QfXwAjylgT3j307MxTkb0tTI9kx9cZa94RwFtxoFBa6y8VflGRr19QSWrQ0I1aaWs0bfc
-	 Lu0dBc4HXGKvYHJb5lxUzHEQ0MezO58QpACRgWcmU7eJ/bE1Y2PC9I33A54zrvNeMiBl4
-	 Jqm1M17zXV8oYRZVOsEWnDi4HJrmoswinhIfIhDnD7LOtc30MlwS6tqrFvqNIiVwYbj8a
-	 zjh6f9uC3G+EUeXBELrLmEDcVRG8DlSSpWPYZm9nDC0sc2pLF256eZ7HxOfo1iiJuHg==
+	t=1793214249;
+	b=uIIsWNHByS8yJBd+PY+hJ0CW7EGLZBVreeCX3kQaKTXuF2xB7iom5x2bKnIJh3Tes4dn
+	 UUbX/gTpSMGKlnloorb7DKsM4QiKjfHVx3W9gPoXhnTVjo2zbVTPsDws75fa41uCaiwn/
+	 gXS1OhPxGqwSbOKM27FtXBg7GOk1SiuhVGmzZuRdxAWnlBWzSLzFZwebLVIsVWkp1Hkrh
+	 i4D4SF56OEzv08nSg0U8wm6bs0+lUCQvye2oGjbcvsQJwVykmIO34ZzPyckHGn6NMxL69
+	 FVFLANQGeCvXCPDmJNA/xqGgdZwtuE/vOljoMWMTsM1yHYTgvb9Igip0wqhHISxXa9w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214247;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214249;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=4eNRnOpxULF7efB+btNx56pBuzayB25HPyh1I20TngQ=;
-	b=F3KJSqyIeCgjislJt3pqMRe27Q94flNO7uO6OJ46UbuoLvCDrWdYL9kgmEjQ38xOqDXE
-	 AsedidZb8dAYUV4F+0pc1YcNg0jycBtQ9ASOlDEdaXWQ30/rUWG/ee2QYV8TLV6Miche6
-	 gvxTp9Jht1HHgGrrdC4gJk7xTKHIQq2vpEVyOYmvC28Vz/Vw0aN79krbjqKvGgqpUGbSD
-	 5W9RCBbfJ89oe0X5k6rhEboG2k0eudRPK7nzEI0jpvRo62wfKG/cc+kA1/QX1wpgQphh7
-	 rJI4z6HzZvS6jGAsQezwqTQxebNU57j91F2aOEYeBxNNvJk5+fFOOXztzF1f76ARipQ==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=mbpEZ7r+3VJfx2vWIfbPb0oOoe//QqS8nfUj3OHF+sI=;
+	b=B+tuF0Co2ltcfIWCcxyBw9auj4YuBDADkYHFgOejBXex9T3iFlM+YPV8hIalVBWip+ST
+	 QuXx86PIxc/iAZvPAoVWKoPFvBZXMciqxSkP04NThrk0XvVtH/6a3M1Ch63DuSP63ume4
+	 HoJ+GOmbbWBihUB53OeYuKaHbZepahNrzOS9jATsoxB6UAXrTbMuRGsx8PLkiEQoaXcJZ
+	 US10lucqAAMOqH+GFsBJJyFXwVLrD/SstQm1lQ0IGkFlqFJCq6HI/AXUr3ST/TRZb6f5B
+	 BJSgebRZ9KZovGzEe5vImW3gdjPmuwUSPhB1PdMfdpXRmM0gD38tSp/vjv1SLVgcq8w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FfRv7qXs;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Fsj+tWUa;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C183960A3825;
-	Wed, 28 Oct 2026 19:04:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D434606A31D;
+	Wed, 28 Oct 2026 19:04:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FfRv7qXs
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F10D1F031E0;
-	Wed, 28 Oct 2026 19:04:05 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Fsj+tWUa
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBD0B1F01829;
+	Wed, 28 Oct 2026 19:04:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214246;
-	bh=4eNRnOpxULF7efB+btNx56pBuzayB25HPyh1I20TngQ=;
+	s=korg; t=1793214249;
+	bh=mbpEZ7r+3VJfx2vWIfbPb0oOoe//QqS8nfUj3OHF+sI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FfRv7qXsW7+saOdmv+ygT/xCyf4Eftf7LtK52Vnzbyw9D/7vnnoHD8NHWe0Zv/BJ9
-	 6PMlKB+ds+kpeOtzIn8kiwAJpbFAJrbk4YcNNoLmSSEijYx9uDXjapHR+H/5k4ofZJ
-	 xbTQ7qSeowGqMfC9NvuSSJQgbNuXxKSj8QbMNP3M=
+	b=Fsj+tWUaslqL18PvLaKDeZcrQnyLO2RanlFRnoxlmoiS6aT5sc1amauWOl66v9HPI
+	 lv42MY5w9kk24VbsdE+Pc2a9utvkZY4LBdLCNTwcfCV5LUXMXP6JJ84OHRacj+h3Q2
+	 O2jyIT4wnSD0KBucDmIvRZrlpkWMuLziX6tiak+Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+33841dc6aa3e1d86b78a@syzkaller.appspotmail.com,
-	Murad Masimov <m.masimov@mt-integration.ru>,
-	"David S. Miller" <davem@davemloft.net>,
+	Niklas Cassel <cassel@kernel.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Christian Bruel <christian.bruel@foss.st.com>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0764/1887] ax25: Remove broken autobind
-Date: Wed, 28 Oct 2026 17:47:40 +0100
-Message-ID: <20261028170516.827632563@linuxfoundation.org>
+Subject: [PATCH 6.1 0791/1887] PCI: endpoint: pci-epf-test: Fix double free that causes kernel to oops
+Date: Wed, 28 Oct 2026 17:48:07 +0100
+Message-ID: <20261028170517.433281711@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -63,237 +64,71 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Murad Masimov <m.masimov@mt-integration.ru>
+From: Christian Bruel <christian.bruel@foss.st.com>
 
-[ Upstream commit 2f6efbabceb6b2914ee9bafb86d9a51feae9cce8 ]
+[ Upstream commit 934e9d137d937706004c325fa1474f9e3f1ba10a ]
 
-Binding AX25 socket by using the autobind feature leads to memory leaks
-in ax25_connect() and also refcount leaks in ax25_release(). Memory
-leak was detected with kmemleak:
+Fix a kernel oops found while testing the stm32_pcie Endpoint driver
+with handling of PERST# deassertion:
 
-================================================================
-unreferenced object 0xffff8880253cd680 (size 96):
-backtrace:
-__kmalloc_node_track_caller_noprof (./include/linux/kmemleak.h:43)
-kmemdup_noprof (mm/util.c:136)
-ax25_rt_autobind (net/ax25/ax25_route.c:428)
-ax25_connect (net/ax25/af_ax25.c:1282)
-__sys_connect_file (net/socket.c:2045)
-__sys_connect (net/socket.c:2064)
-__x64_sys_connect (net/socket.c:2067)
-do_syscall_64 (arch/x86/entry/common.c:52 arch/x86/entry/common.c:83)
-entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:130)
-================================================================
+During EP initialization, pci_epf_test_alloc_space() allocates all BARs,
+which are further freed if epc_set_bar() fails (for instance, due to no
+free inbound window).
 
-When socket is bound, refcounts must be incremented the way it is done
-in ax25_bind() and ax25_setsockopt() (SO_BINDTODEVICE). In case of
-autobind, the refcounts are not incremented.
+However, when pci_epc_set_bar() fails, the error path:
 
-This bug leads to the following issue reported by Syzkaller:
+  pci_epc_set_bar() ->
+    pci_epf_free_space()
 
-================================================================
-ax25_connect(): syz-executor318 uses autobind, please contact jreuter@yaina.de
-------------[ cut here ]------------
-refcount_t: decrement hit 0; leaking memory.
-WARNING: CPU: 0 PID: 5317 at lib/refcount.c:31 refcount_warn_saturate+0xfa/0x1d0 lib/refcount.c:31
-Modules linked in:
-CPU: 0 UID: 0 PID: 5317 Comm: syz-executor318 Not tainted 6.14.0-rc4-syzkaller-00278-gece144f151ac #0
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2~bpo12+1 04/01/2014
-RIP: 0010:refcount_warn_saturate+0xfa/0x1d0 lib/refcount.c:31
-...
-Call Trace:
- <TASK>
- __refcount_dec include/linux/refcount.h:336 [inline]
- refcount_dec include/linux/refcount.h:351 [inline]
- ref_tracker_free+0x6af/0x7e0 lib/ref_tracker.c:236
- netdev_tracker_free include/linux/netdevice.h:4302 [inline]
- netdev_put include/linux/netdevice.h:4319 [inline]
- ax25_release+0x368/0x960 net/ax25/af_ax25.c:1080
- __sock_release net/socket.c:647 [inline]
- sock_close+0xbc/0x240 net/socket.c:1398
- __fput+0x3e9/0x9f0 fs/file_table.c:464
- __do_sys_close fs/open.c:1580 [inline]
- __se_sys_close fs/open.c:1565 [inline]
- __x64_sys_close+0x7f/0x110 fs/open.c:1565
- do_syscall_x64 arch/x86/entry/common.c:52 [inline]
- do_syscall_64+0xf3/0x230 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
- ...
- </TASK>
-================================================================
+does not clear the previous assignment to epf_test->reg[bar].
 
-Considering the issues above and the comments left in the code that say:
-"check if we can remove this feature. It is broken."; "autobinding in this
-may or may not work"; - it is better to completely remove this feature than
-to fix it because it is broken and leads to various kinds of memory bugs.
+Then, if the host reboots, the PERST# deassertion restarts the BAR
+allocation sequence with the same allocation failure (no free inbound
+window), creating a double free situation since epf_test->reg[bar] was
+deallocated and is still non-NULL.
 
-Now calling connect() without first binding socket will result in an
-error (-EINVAL). Userspace software that relies on the autobind feature
-might get broken. However, this feature does not seem widely used with
-this specific driver as it was not reliable at any point of time, and it
-is already broken anyway. E.g. ax25-tools and ax25-apps packages for
-popular distributions do not use the autobind feature for AF_AX25.
+Thus, make sure that pci_epf_alloc_space() and pci_epf_free_space()
+invocations are symmetric, and as such, set epf_test->reg[bar] to NULL
+when memory is freed.
 
-Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: syzbot+33841dc6aa3e1d86b78a@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=33841dc6aa3e1d86b78a
-Signed-off-by: Murad Masimov <m.masimov@mt-integration.ru>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Reviewed-by: Niklas Cassel <cassel@kernel.org>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Signed-off-by: Christian Bruel <christian.bruel@foss.st.com>
+Link: https://lore.kernel.org/r/20250124123043.96112-1-christian.bruel@foss.st.com
+[kwilczynski: commit log]
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/ax25.h    |  1 -
- net/ax25/af_ax25.c    | 30 ++++++------------
- net/ax25/ax25_route.c | 74 -------------------------------------------
- 3 files changed, 10 insertions(+), 95 deletions(-)
+ drivers/pci/endpoint/functions/pci-epf-test.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/include/net/ax25.h b/include/net/ax25.h
-index e9465aa07a4e7..6b29f3a30cfa0 100644
---- a/include/net/ax25.h
-+++ b/include/net/ax25.h
-@@ -419,7 +419,6 @@ void ax25_rt_device_down(struct net_device *);
- int ax25_rt_ioctl(unsigned int, void __user *);
- extern const struct seq_operations ax25_rt_seqops;
- ax25_route *ax25_get_route(ax25_address *addr, struct net_device *dev);
--int ax25_rt_autobind(ax25_cb *, ax25_address *);
- struct sk_buff *ax25_rt_build_path(struct sk_buff *, ax25_address *,
- 				   ax25_address *, ax25_digi *);
- void ax25_rt_free(void);
-diff --git a/net/ax25/af_ax25.c b/net/ax25/af_ax25.c
-index 862e03493b7ed..64b81a693e25e 100644
---- a/net/ax25/af_ax25.c
-+++ b/net/ax25/af_ax25.c
-@@ -1270,28 +1270,18 @@ static int __must_check ax25_connect(struct socket *sock,
+diff --git a/drivers/pci/endpoint/functions/pci-epf-test.c b/drivers/pci/endpoint/functions/pci-epf-test.c
+index fb47ce721e095..53f1236cd91d7 100644
+--- a/drivers/pci/endpoint/functions/pci-epf-test.c
++++ b/drivers/pci/endpoint/functions/pci-epf-test.c
+@@ -735,6 +735,7 @@ static void pci_epf_test_unbind(struct pci_epf *epf)
+ 					  epf_bar);
+ 			pci_epf_free_space(epf, epf_test->reg[bar], bar,
+ 					   PRIMARY_INTERFACE);
++			epf_test->reg[bar] = NULL;
  		}
  	}
- 
--	/*
--	 *	Must bind first - autobinding in this may or may not work. If
--	 *	the socket is already bound, check to see if the device has
--	 *	been filled in, error if it hasn't.
--	 */
-+	/* Must bind first - autobinding does not work. */
- 	if (sock_flag(sk, SOCK_ZAPPED)) {
--		/* check if we can remove this feature. It is broken. */
--		printk(KERN_WARNING "ax25_connect(): %s uses autobind, please contact jreuter@yaina.de\n",
--			current->comm);
--		if ((err = ax25_rt_autobind(ax25, &fsa->fsa_ax25.sax25_call)) < 0) {
--			kfree(digi);
--			goto out_release;
--		}
-+		kfree(digi);
-+		err = -EINVAL;
-+		goto out_release;
-+	}
- 
--		ax25_fillin_cb(ax25, ax25->ax25_dev);
--		ax25_cb_add(ax25);
--	} else {
--		if (ax25->ax25_dev == NULL) {
--			kfree(digi);
--			err = -EHOSTUNREACH;
--			goto out_release;
--		}
-+	/* Check to see if the device has been filled in, error if it hasn't. */
-+	if (ax25->ax25_dev == NULL) {
-+		kfree(digi);
-+		err = -EHOSTUNREACH;
-+		goto out_release;
- 	}
- 
- 	if (sk->sk_type == SOCK_SEQPACKET &&
-diff --git a/net/ax25/ax25_route.c b/net/ax25/ax25_route.c
-index 69de75db0c9c2..10577434f40bf 100644
---- a/net/ax25/ax25_route.c
-+++ b/net/ax25/ax25_route.c
-@@ -373,80 +373,6 @@ ax25_route *ax25_get_route(ax25_address *addr, struct net_device *dev)
- 	return ax25_rt;
  }
- 
--/*
-- *	Adjust path: If you specify a default route and want to connect
-- *      a target on the digipeater path but w/o having a special route
-- *	set before, the path has to be truncated from your target on.
-- */
--static inline void ax25_adjust_path(ax25_address *addr, ax25_digi *digipeat)
--{
--	int k;
--
--	for (k = 0; k < digipeat->ndigi; k++) {
--		if (ax25cmp(addr, &digipeat->calls[k]) == 0)
--			break;
--	}
--
--	digipeat->ndigi = k;
--}
--
--
--/*
-- *	Find which interface to use.
-- */
--int ax25_rt_autobind(ax25_cb *ax25, ax25_address *addr)
--{
--	ax25_uid_assoc *user;
--	ax25_route *ax25_rt;
--	int err = 0;
--
--	ax25_route_lock_use();
--	ax25_rt = ax25_get_route(addr, NULL);
--	if (!ax25_rt) {
--		ax25_route_lock_unuse();
--		return -EHOSTUNREACH;
--	}
--	rcu_read_lock();
--	if ((ax25->ax25_dev = ax25_dev_ax25dev(ax25_rt->dev)) == NULL) {
--		err = -EHOSTUNREACH;
--		goto put;
--	}
--
--	user = ax25_findbyuid(current_euid());
--	if (user) {
--		ax25->source_addr = user->call;
--		ax25_uid_put(user);
--	} else {
--		if (ax25_uid_policy && !capable(CAP_NET_BIND_SERVICE)) {
--			err = -EPERM;
--			goto put;
--		}
--		ax25->source_addr = *(ax25_address *)ax25->ax25_dev->dev->dev_addr;
--	}
--
--	if (ax25_rt->digipeat != NULL) {
--		ax25->digipeat = kmemdup(ax25_rt->digipeat, sizeof(ax25_digi),
--					 GFP_ATOMIC);
--		if (ax25->digipeat == NULL) {
--			err = -ENOMEM;
--			goto put;
--		}
--		ax25_adjust_path(addr, ax25->digipeat);
--	}
--
--	if (ax25->sk != NULL) {
--		local_bh_disable();
--		bh_lock_sock(ax25->sk);
--		sock_reset_flag(ax25->sk, SOCK_ZAPPED);
--		bh_unlock_sock(ax25->sk);
--		local_bh_enable();
--	}
--
--put:
--	rcu_read_unlock();
--	ax25_route_lock_unuse();
--	return err;
--}
- 
- struct sk_buff *ax25_rt_build_path(struct sk_buff *skb, ax25_address *src,
- 	ax25_address *dest, ax25_digi *digi)
+@@ -769,6 +770,7 @@ static int pci_epf_test_set_bar(struct pci_epf *epf)
+ 		if (ret) {
+ 			pci_epf_free_space(epf, epf_test->reg[bar], bar,
+ 					   PRIMARY_INTERFACE);
++			epf_test->reg[bar] = NULL;
+ 			dev_err(dev, "Failed to set BAR%d\n", bar);
+ 			if (bar == test_reg_bar)
+ 				return ret;
 -- 
 2.53.0
 
