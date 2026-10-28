@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793210444;
-	b=ThgV6cJB69TXF6rkx5uVAQlxeu8CNKvL640dgDytIwMv7KTX39oOHfWc/f/is9CIWkJf
-	 V1S8SUUWkudDLO7QuHgKxDtNH30YOCWo1HYGK+7wX++cIjQncEToLe6/TY+Jcx6+PR7cY
-	 wiv3TtJLl2KA9VecemF+J3jR2t4zId0jToq8nJaS3PVWmq7qk3FUwsfPeWc3APhuRhMb8
-	 b4zvjO7G0pek8PxK/s71bHjjNTsUAikJQE3oBcL2iADroWfLtz8/VdjoanfzurQZU5Sbi
-	 EroNHrZdcz7MJwxlhIPotFQ4iag+M60hp8Lti6MKcwB9asJsDNzV6ulhzpOP2KZ5urw==
+	t=1793210447;
+	b=HNH33GSz2jU3CT0T2CTMeU7K0D1MVc/GTfC32xNkfElGk/FkNPzhSbhxuGDw/zkMDzX/
+	 K/6dlbBe1/knR6dWk0nz45amDHqBMzgrpbvUQgYEeRxosEDiPBa8excBbFuohbh0tGFGG
+	 cEVZZX3qenbgPhhhnPBTRy2UZnJjwJ4ejJOgTbc1dJiUregA5qdU2rwjamHW0+BPouhoZ
+	 0AWuzWk967wlSifPmFynSu1KXuDwhUSu7CIktEr2Kn0bj1xBArTnKckXYObXKCSmGVnmR
+	 DwlFW+/HQ+SPfEksTQEfkyU/vlBVhHLkiU/I1Rpi/pMx8rEdkm84/hv1+IXU0LT23yg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793210444;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793210447;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=TUDPBrgGJJ5VkljRDHVzDF9EYpDMQvzRS+udrdge4Kc=;
-	b=FjfdXXUtCcRhxck9SM3OltajrhNR8i8CcpmMQtF1vyA7MQL/6/p+kldGxwv6E9ARPh/B
-	 3l2ua3F9is1scIVk9Z1F9DAI7foOZeIuLoN51I2A4lwN45DIpBQwJMylvQdAo8SS+ofhi
-	 U9ieCBxk42m6+zSNJJ5J+p5hwE+LsnJbL4S2CL2qk60D1DvjJ3N2ZVCOJAmQzkWmmjslb
-	 qybIHO1nwXIGhLRqWzcV+nja/K+KV2Ngxjyj5kMSfWL3qp2LLhHrDtclqCZyHtsodZ3j2
-	 cHHgi0wNqKdDpvOan2UiNuLSYRiRnI3jt6HazObVyGsmh18T4EU8ngZWQBYz35or1hw==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=e5rqKJnuxe4fgJUweHWn7iZXggJTu0FRLYfLgDFOdm8=;
+	b=NorE6fjSJh/gIB+oNyHKQLdA78qPpPFTu5SLDf3oYGHuVJNxt7C+eHsII21iN9+ED/Ab
+	 SCDM57WwOcx9auJ4VJgnGSrt8OcTTM/X/VPVH0Df2PCp+eCsoQCOxemkg+6lk5664nNv+
+	 K8Ee8l9iV3cQEIWIs6gBVO5K/t4cj35T5geuFUResFe73AH5TmNGzV4NdLxoGgSnzzeEn
+	 AEYLegttjjO+AFE4kA/B5XyZ1ohV2qZYVa8O0n3eu8/cCRdhsjRQxL+wNv1szUx0J56/w
+	 5cKnuJDon2Zl0TzHuWPJ2BggvNmsZcAM5AAqdzAxmUjhhDbr1CLxPTsBimfasUhSwmQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pTpYVLgg;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0FLuQCU9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACC8C606A321;
-	Wed, 28 Oct 2026 18:00:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7A76606A31A;
+	Wed, 28 Oct 2026 18:00:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pTpYVLgg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 081AE1F01825;
-	Wed, 28 Oct 2026 18:00:42 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0FLuQCU9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8D001F01825;
+	Wed, 28 Oct 2026 18:00:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793210443;
-	bh=TUDPBrgGJJ5VkljRDHVzDF9EYpDMQvzRS+udrdge4Kc=;
+	s=korg; t=1793210446;
+	bh=e5rqKJnuxe4fgJUweHWn7iZXggJTu0FRLYfLgDFOdm8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pTpYVLggbd/YWJCwbM2w3izHN+S0sCZLKoc4s4RAqRcn5YkVwkb1fZvrDarK58s/R
-	 idCCgSuZK9gSxa8k8egiOhQ0r2P6iiSwZQh0RARH9k6EA/lMJ2IwIAqpqjVxKzKeMh
-	 KHokWMUZdRRTwuc2AUxZruJEIrNLlfATTkoU7nlE=
+	b=0FLuQCU9KEPSNtE27GqvB7F44BIYo7kXgWvjSUbHU8wg50/GjLeM9aPD8up31/9Yv
+	 gbBfDiePP4q5Tb7T+Ncnbur5FHjWCBvRKoCu9VvgiyADwMXwPs2e1OycNupbBX1Qy6
+	 NAcvslqiAGr927ha3ej0Lkts4/oAlgKTz2qREvWg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Xu Rao <raoxu@uniontech.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 028/571] Bluetooth: btqcomsmd: Convert to platform remove callback returning void
-Date: Wed, 28 Oct 2026 17:52:55 +0100
-Message-ID: <20261028170008.691166390@linuxfoundation.org>
+Subject: [PATCH 5.15 029/571] Bluetooth: btqcomsmd: destroy RPMsg endpoints before freeing hci_dev
+Date: Wed, 28 Oct 2026 17:52:56 +0100
+Message-ID: <20261028170008.714212059@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -62,69 +64,77 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+From: Xu Rao <raoxu@uniontech.com>
 
-[ Upstream commit 4a62832f565c950d645a4f7b199a0a7985815940 ]
+[ Upstream commit f5a427b16e45210dee656b0860728f3d496dee85 ]
 
-The .remove() callback for a platform driver returns an int which makes
-many driver authors wrongly assume it's possible to do error handling by
-returning an error code. However the value returned is ignored (apart
-from emitting a warning) and this typically results in resource leaks.
+The command and ACL RPMsg endpoints store struct btqcomsmd as their
+callback private data. The receive callbacks dereference btq->hdev
+without taking an hci_dev reference.
 
-To improve here there is a quest to make the remove callback return
-void. In the first step of this quest all drivers are converted to
-.remove_new(), which already returns void. Eventually after all drivers
-are converted, .remove_new() will be renamed to .remove().
+The current teardown order frees the hci_dev before destroying the RPMsg
+endpoints in both the hci_register_dev() error path and the driver remove
+path. If WCNSS delivers data in that window, the endpoint callback can
+run with an already freed hci_dev and pass it to the Bluetooth core.
 
-Trivially convert this driver from always returning zero in the remove
-callback to the void returning variant.
+For qcom_smd endpoints, rpmsg_destroy_ept() closes the channel and clears
+the callback under the channel recv_lock. The receive path holds the same
+lock while invoking the callback, so destroying the endpoints first both
+prevents new callbacks and serializes with any callback already running.
 
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Destroy the command and ACL endpoints before hci_free_dev(). Keep
+hci_unregister_dev() first during remove so the HCI core stops issuing
+operations before the transport endpoints are shut down. In the full
+registration-error cleanup path, return directly after freeing the hci_dev
+to avoid falling through to the partial-construction labels and destroying
+the endpoints twice.
+
+Fixes: 5052de8deff5 ("soc: qcom: smd: Transition client drivers from smd to rpmsg")
+Fixes: 9a39a927be01 ("Bluetooth: btqcomsmd: Fix a resource leak in error handling paths in the probe function")
+Cc: stable@vger.kernel.org
+Acked-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Signed-off-by: Xu Rao <raoxu@uniontech.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Stable-dep-of: f5a427b16e45 ("Bluetooth: btqcomsmd: destroy RPMsg endpoints before freeing hci_dev")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btqcomsmd.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/bluetooth/btqcomsmd.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/bluetooth/btqcomsmd.c b/drivers/bluetooth/btqcomsmd.c
-index 11c7e04bf3947..88dbb2f3fabf9 100644
+index 88dbb2f3fabf9..4ce8354ebb86b 100644
 --- a/drivers/bluetooth/btqcomsmd.c
 +++ b/drivers/bluetooth/btqcomsmd.c
-@@ -197,7 +197,7 @@ static int btqcomsmd_probe(struct platform_device *pdev)
- 	return ret;
- }
+@@ -188,7 +188,10 @@ static int btqcomsmd_probe(struct platform_device *pdev)
+ 	return 0;
  
--static int btqcomsmd_remove(struct platform_device *pdev)
-+static void btqcomsmd_remove(struct platform_device *pdev)
- {
+ hci_free_dev:
++	rpmsg_destroy_ept(btq->cmd_channel);
++	rpmsg_destroy_ept(btq->acl_channel);
+ 	hci_free_dev(hdev);
++	return ret;
+ destroy_cmd_channel:
+ 	rpmsg_destroy_ept(btq->cmd_channel);
+ destroy_acl_channel:
+@@ -202,10 +205,11 @@ static void btqcomsmd_remove(struct platform_device *pdev)
  	struct btqcomsmd *btq = platform_get_drvdata(pdev);
  
-@@ -206,8 +206,6 @@ static int btqcomsmd_remove(struct platform_device *pdev)
+ 	hci_unregister_dev(btq->hdev);
+-	hci_free_dev(btq->hdev);
  
  	rpmsg_destroy_ept(btq->cmd_channel);
  	rpmsg_destroy_ept(btq->acl_channel);
--
--	return 0;
++
++	hci_free_dev(btq->hdev);
  }
  
  static const struct of_device_id btqcomsmd_of_match[] = {
-@@ -218,7 +216,7 @@ MODULE_DEVICE_TABLE(of, btqcomsmd_of_match);
- 
- static struct platform_driver btqcomsmd_driver = {
- 	.probe = btqcomsmd_probe,
--	.remove = btqcomsmd_remove,
-+	.remove_new = btqcomsmd_remove,
- 	.driver  = {
- 		.name  = "btqcomsmd",
- 		.of_match_table = btqcomsmd_of_match,
 -- 
 2.53.0
 
