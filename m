@@ -1,56 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215544;
-	b=M1oEL4qLWIgNrjyM/iFCqqBRDQajMS7IepfC3z0JlivbQGloqAdfDwYoFHFCHxw6+n93
-	 68bojA5XJymGkV+S7Yt3VMbO/Cc9Wae//Qg2KXfXFHX/egH7X+oAkPmrbKJ5xMEWv3uUC
-	 JomdZA/4BFEi7odPAtpHqZe86x+Jau9eSLVgzXbpLHbV06w2pGxJnbtXMovWxtOFYDnMb
-	 4HrA2+4ZVI0Go6JZ3VS0N2OXXGVF+MCXzccI4jCSMCPVG38AelWBUGSubmQSubNNvl3MH
-	 1e0eKydj6swmZ5dvLyjWOZLVm1CGYdJ1S+doCMKRyL/0WdawGZFgsmLga8R9Rp+eiBA==
+	t=1793215547;
+	b=V0KQfMaURbBDPBzAHNICg6GjQMu+bFMPr+iyHDGool2tWBrS/WvMTmPp2ZR+sO+PUCK0
+	 NIkqC39bVqw4/9RsPP1jEmhTCZ3Fl3+FYjARYT5H8HKNNHJErtQwvOhi+yHkN6t6rR15f
+	 Jkt580pjfs6kxY3/C+eOSpZbtxBuCASSJMDZhDtbhTPPmilzKUAB5bsbZudbSq6YsHody
+	 9DH1ILjGtgK3vlh68+4PbF7M+Tw+dGtWDOldYWXriWG1wrzV8QQSrxRr1HaQhh0Khll+g
+	 QvZ164yj6kqK5B7lCRZ5FISTXUjhtMMJdQlS1MxAergpyTkOmbOaWk7aLIewztGmcYw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215544;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215547;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+TOivd6SF5aJDQjk3d3pfcj8zCZhvjj10pNX8/S0Dqk=;
-	b=AxJ21G9szbezzqGklA6GA2+XHAKGMZ8XPpGpFrcGBi/NR4wcmgMAZfcBOxDvluVlTUGn
-	 BXN35JV1EkYWNYmdbxtrVTPkOEa2W7uqWjJ9J81ZnILu2RcJHXeb4a8aNmqbxfgsQJ5dI
-	 BZa6Kfs3xpNv4N9hHmEAfTnqBuOmouVUoTkZKfwpWT4C3koqSsPqlOD1sQprH2xMeR5H1
-	 ozfxg5bED0uyEFwtIVFWcb5pD0dOjvNS8sYwgw1+DZrYkl2Kd/OLOkW5hScGvk1NwaMMq
-	 U9getbzv5Yp7B9vmzzhwOnkYfQDnGoie/7ACTZ+a9h0Jivhpg5rdvaE3sUwVXJpzydA==
+	bh=BZOfr0V4qTMJXK9z+9bma39BvvUuNmDkvqmE4SeBrkA=;
+	b=mXu/zPmX6ldsnQ0VPUXH8hHq2eUdOnmhJOKTrnjCOBY0qg+qHgUCO9q/P3gF05as90On
+	 uyjuDQVEjkkjZ5JmhEKcIqHfUneDCnQ+6GB1TIVH18JOYn27IT53uMjYPqrfxO1Ai3BHj
+	 4tyvtUsE59x75+VmY2CzdnAQqL04FiZFK15YZEo7cC1jnvfSG83ebiBdd/zbl65tv7w3h
+	 bXXBDfjvIPWqP5cpnXGNdDjVROCxUilKZKo9fZYfWSTcgYkzbbIy27EY/ui5rqYVNgCKL
+	 IY42GEcYTsBGYql6vcPnP+u+p0msdEUcdHTdtzVCHt0qcD2VpQdNwRzceBLg8s52Z9Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RIko8+tk;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LshEWpA+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16DE0606A31A;
-	Wed, 28 Oct 2026 19:25:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD88F606A31A;
+	Wed, 28 Oct 2026 19:25:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RIko8+tk
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E9CA1F01825;
-	Wed, 28 Oct 2026 19:25:43 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LshEWpA+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 173041F01825;
+	Wed, 28 Oct 2026 19:25:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215543;
-	bh=+TOivd6SF5aJDQjk3d3pfcj8zCZhvjj10pNX8/S0Dqk=;
+	s=korg; t=1793215546;
+	bh=BZOfr0V4qTMJXK9z+9bma39BvvUuNmDkvqmE4SeBrkA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RIko8+tkISuPzUC0MEG2pTLJmYBXAcWKXIiNZ8QOTEIcE6XlWZYgb7Hg4mALImkfG
-	 2TMndurlwkmalMvx1obfeKZnAhtvX0QVN1Nsv1KOAOtAENBTZh5NPJK4FNeaj/x/vM
-	 oSH1A42q3vpfqIiOmCe9g/VwuuG4DdvU3N+gKmS0=
+	b=LshEWpA+MZsNQeik0kn025DGi9NIMySyuBdYawhDrY9pkDydPvkPiO+Zv7gJDzcl+
+	 Re9+fckCLeBMeFeDJBN08jCerxGYi1MG86Im1bicncUWl/G2GhCDFnq09FMe0DYGCw
+	 6bpyynHMl4vMJexz+VUvhyGYNhvBhZPdoXWEqWQw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+9307c991a6d07ce6e6d8@syzkaller.appspotmail.com,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Jakub Sitnicki <jakub@cloudflare.com>,
-	Emil Tsalapatis <emil@etsalapatis.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1247/1887] sockmap: Fix use-after-free in udp_bpf_recvmsg()
-Date: Wed, 28 Oct 2026 17:55:43 +0100
-Message-ID: <20261028170527.801848242@linuxfoundation.org>
+Subject: [PATCH 6.1 1248/1887] ALSA: seq: fifo: Use guard() for locking
+Date: Wed, 28 Oct 2026 17:55:44 +0100
+Message-ID: <20261028170527.823996926@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -72,193 +67,140 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit c010995b29c8939c6aa69e3cb26f8dbee163d156 ]
+[ Upstream commit 68f014a58b6540847b0939a9a4023ed6eb834608 ]
 
-syzbot reported use-after-free of struct sk_msg in sk_msg_recvmsg(). [0]
+We can simplify the code gracefully with new guard() macro and co for
+automatic cleanup of locks.
 
-sk_msg_recvmsg() peeks sk_msg from psock->ingress_msg under a lock,
-but its processing is lockless.
+Only the code refactoring, and no functional changes.
 
-Thus, sk_msg_recvmsg() must be serialised by callers, otherwise
-multiple threads could touch the same sk_msg.
-
-For example, TCP uses lock_sock(), and AF_UNIX uses unix_sk(sk)->iolock.
-
-Initially, udp_bpf_recvmsg() had used lock_sock(), but the cited
-commit removed it.
-
-Let's serialise sk_msg_recvmsg() with lock_sock() in udp_bpf_recvmsg().
-
-Note that holding spin_lock_bh(&sk->sk_receive_queue.lock) is not
-an option due to copy_page_to_iter() in sk_msg_recvmsg().
-
-[0]:
-BUG: KASAN: slab-use-after-free in sk_msg_recvmsg+0xb54/0xc30 net/core/skmsg.c:428
-Read of size 4 at addr ffff88814cdcf000 by task syz.0.24/6020
-
-CPU: 1 UID: 0 PID: 6020 Comm: syz.0.24 Not tainted syzkaller #0 PREEMPT(full)
-Hardware name: Google Compute Engine/Google Compute Engine, BIOS Google 01/13/2026
-Call Trace:
- <TASK>
- dump_stack_lvl+0xe8/0x150 lib/dump_stack.c:120
- print_address_description mm/kasan/report.c:378 [inline]
- print_report+0xba/0x230 mm/kasan/report.c:482
- kasan_report+0x117/0x150 mm/kasan/report.c:595
- sk_msg_recvmsg+0xb54/0xc30 net/core/skmsg.c:428
- udp_bpf_recvmsg+0x4bd/0xe00 net/ipv4/udp_bpf.c:84
- inet_recvmsg+0x260/0x270 net/ipv4/af_inet.c:891
- sock_recvmsg_nosec net/socket.c:1078 [inline]
- sock_recvmsg+0x1a8/0x270 net/socket.c:1100
- ____sys_recvmsg+0x1e6/0x4a0 net/socket.c:2812
- ___sys_recvmsg+0x215/0x590 net/socket.c:2854
- do_recvmmsg+0x334/0x800 net/socket.c:2949
- __sys_recvmmsg net/socket.c:3023 [inline]
- __do_sys_recvmmsg net/socket.c:3046 [inline]
- __se_sys_recvmmsg net/socket.c:3039 [inline]
- __x64_sys_recvmmsg+0x198/0x250 net/socket.c:3039
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0xe2/0xf80 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-RIP: 0033:0x7fb319f9aeb9
-Code: ff c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 44 00 00 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 e8 ff ff ff f7 d8 64 89 01 48
-RSP: 002b:00007fb31ad97028 EFLAGS: 00000246 ORIG_RAX: 000000000000012b
-RAX: ffffffffffffffda RBX: 00007fb31a216090 RCX: 00007fb319f9aeb9
-RDX: 0000000000000001 RSI: 0000200000000400 RDI: 0000000000000004
-RBP: 00007fb31a008c1f R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000040000021 R11: 0000000000000246 R12: 0000000000000000
-R13: 00007fb31a216128 R14: 00007fb31a216090 R15: 00007ffe21dd0a98
- </TASK>
-
-Allocated by task 6019:
- kasan_save_stack mm/kasan/common.c:57 [inline]
- kasan_save_track+0x3e/0x80 mm/kasan/common.c:78
- poison_kmalloc_redzone mm/kasan/common.c:398 [inline]
- __kasan_kmalloc+0x93/0xb0 mm/kasan/common.c:415
- kasan_kmalloc include/linux/kasan.h:263 [inline]
- __kmalloc_cache_noprof+0x3d1/0x6e0 mm/slub.c:5780
- kmalloc_noprof include/linux/slab.h:957 [inline]
- kzalloc_noprof include/linux/slab.h:1094 [inline]
- alloc_sk_msg net/core/skmsg.c:510 [inline]
- sk_psock_skb_ingress_self+0x60/0x350 net/core/skmsg.c:612
- sk_psock_verdict_apply net/core/skmsg.c:1038 [inline]
- sk_psock_verdict_recv+0x7d9/0x8d0 net/core/skmsg.c:1236
- udp_read_skb+0x73e/0x7e0 net/ipv4/udp.c:2045
- sk_psock_verdict_data_ready+0x12d/0x550 net/core/skmsg.c:1257
- __udp_enqueue_schedule_skb+0xc54/0x10b0 net/ipv4/udp.c:1789
- __udp_queue_rcv_skb net/ipv4/udp.c:2346 [inline]
- udp_queue_rcv_one_skb+0xac5/0x19c0 net/ipv4/udp.c:2475
- __udp4_lib_mcast_deliver+0xc06/0xcf0 net/ipv4/udp.c:2585
- __udp4_lib_rcv+0x10f6/0x2620 net/ipv4/udp.c:2724
- ip_protocol_deliver_rcu+0x282/0x440 net/ipv4/ip_input.c:207
- ip_local_deliver_finish+0x3bb/0x6f0 net/ipv4/ip_input.c:241
- NF_HOOK+0x336/0x3c0 include/linux/netfilter.h:318
- dst_input include/net/dst.h:474 [inline]
- ip_sublist_rcv_finish+0x221/0x2a0 net/ipv4/ip_input.c:584
- ip_list_rcv_finish net/ipv4/ip_input.c:628 [inline]
- ip_sublist_rcv+0x5c6/0xa70 net/ipv4/ip_input.c:644
- ip_list_rcv+0x3f1/0x450 net/ipv4/ip_input.c:678
- __netif_receive_skb_list_ptype net/core/dev.c:6195 [inline]
- __netif_receive_skb_list_core+0x7e5/0x810 net/core/dev.c:6242
- __netif_receive_skb_list net/core/dev.c:6294 [inline]
- netif_receive_skb_list_internal+0x995/0xcf0 net/core/dev.c:6385
- netif_receive_skb_list+0x54/0x410 net/core/dev.c:6437
- xdp_recv_frames net/bpf/test_run.c:269 [inline]
- xdp_test_run_batch net/bpf/test_run.c:350 [inline]
- bpf_test_run_xdp_live+0x1946/0x1cf0 net/bpf/test_run.c:379
- bpf_prog_test_run_xdp+0x81c/0x1160 net/bpf/test_run.c:1396
- bpf_prog_test_run+0x2c7/0x340 kernel/bpf/syscall.c:4703
- __sys_bpf+0x5cb/0x920 kernel/bpf/syscall.c:6182
- __do_sys_bpf kernel/bpf/syscall.c:6274 [inline]
- __se_sys_bpf kernel/bpf/syscall.c:6272 [inline]
- __x64_sys_bpf+0x7c/0x90 kernel/bpf/syscall.c:6272
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0xe2/0xf80 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-Freed by task 6021:
- kasan_save_stack mm/kasan/common.c:57 [inline]
- kasan_save_track+0x3e/0x80 mm/kasan/common.c:78
- kasan_save_free_info+0x46/0x50 mm/kasan/generic.c:584
- poison_slab_object mm/kasan/common.c:253 [inline]
- __kasan_slab_free+0x5c/0x80 mm/kasan/common.c:285
- kasan_slab_free include/linux/kasan.h:235 [inline]
- slab_free_hook mm/slub.c:2540 [inline]
- slab_free mm/slub.c:6674 [inline]
- kfree+0x1be/0x650 mm/slub.c:6882
- kfree_sk_msg include/linux/skmsg.h:385 [inline]
- sk_msg_recvmsg+0xaa8/0xc30 net/core/skmsg.c:483
- udp_bpf_recvmsg+0x4bd/0xe00 net/ipv4/udp_bpf.c:84
- inet_recvmsg+0x260/0x270 net/ipv4/af_inet.c:891
- sock_recvmsg_nosec net/socket.c:1078 [inline]
- sock_recvmsg+0x1a8/0x270 net/socket.c:1100
- ____sys_recvmsg+0x1e6/0x4a0 net/socket.c:2812
- ___sys_recvmsg+0x215/0x590 net/socket.c:2854
- do_recvmmsg+0x334/0x800 net/socket.c:2949
- __sys_recvmmsg net/socket.c:3023 [inline]
- __do_sys_recvmmsg net/socket.c:3046 [inline]
- __se_sys_recvmmsg net/socket.c:3039 [inline]
- __x64_sys_recvmmsg+0x198/0x250 net/socket.c:3039
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0xe2/0xf80 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-Fixes: 9f2470fbc4cb ("skmsg: Improve udp_bpf_recvmsg() accuracy")
-Reported-by: syzbot+9307c991a6d07ce6e6d8@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/69922ac9.a70a0220.2c38d7.00e0.GAE@google.com/
-Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Reviewed-by: Jakub Sitnicki <jakub@cloudflare.com>
-Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Link: https://lore.kernel.org/r/20260615021959.140010-5-jiayuan.chen@linux.dev
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://lore.kernel.org/r/20240227085306.9764-13-tiwai@suse.de
+Stable-dep-of: e546128291f8 ("ALSA: seq: avoid stale FIFO cells during resize")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/udp_bpf.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ sound/core/seq/seq_fifo.c | 55 +++++++++++++++++----------------------
+ 1 file changed, 24 insertions(+), 31 deletions(-)
 
-diff --git a/net/ipv4/udp_bpf.c b/net/ipv4/udp_bpf.c
-index 44271ba1adec1..bcb4378d53549 100644
---- a/net/ipv4/udp_bpf.c
-+++ b/net/ipv4/udp_bpf.c
-@@ -51,7 +51,9 @@ static int udp_msg_wait_data(struct sock *sk, struct sk_psock *psock,
- 	sk_set_bit(SOCKWQ_ASYNC_WAITDATA, sk);
- 	ret = udp_msg_has_data(sk, psock);
- 	if (!ret) {
-+		release_sock(sk);
- 		wait_woken(&wait, TASK_INTERRUPTIBLE, timeo);
-+		lock_sock(sk);
- 		ret = udp_msg_has_data(sk, psock);
+diff --git a/sound/core/seq/seq_fifo.c b/sound/core/seq/seq_fifo.c
+index f8e02e98709ab..3a10b081f129c 100644
+--- a/sound/core/seq/seq_fifo.c
++++ b/sound/core/seq/seq_fifo.c
+@@ -88,12 +88,11 @@ void snd_seq_fifo_clear(struct snd_seq_fifo *f)
+ 	atomic_set(&f->overflow, 0);
+ 
+ 	snd_use_lock_sync(&f->use_lock);
+-	spin_lock_irq(&f->lock);
++	guard(spinlock_irq)(&f->lock);
+ 	/* drain the fifo */
+ 	while ((cell = fifo_cell_out(f)) != NULL) {
+ 		snd_seq_cell_free(cell);
  	}
- 	sk_clear_bit(SOCKWQ_ASYNC_WAITDATA, sk);
-@@ -80,6 +82,7 @@ static int udp_bpf_recvmsg(struct sock *sk, struct msghdr *msg, size_t len,
- 		goto out;
+-	spin_unlock_irq(&f->lock);
+ }
+ 
+ 
+@@ -102,7 +101,6 @@ int snd_seq_fifo_event_in(struct snd_seq_fifo *f,
+ 			  struct snd_seq_event *event)
+ {
+ 	struct snd_seq_event_cell *cell;
+-	unsigned long flags;
+ 	int err;
+ 
+ 	if (snd_BUG_ON(!f))
+@@ -118,15 +116,15 @@ int snd_seq_fifo_event_in(struct snd_seq_fifo *f,
+ 	}
+ 		
+ 	/* append new cells to fifo */
+-	spin_lock_irqsave(&f->lock, flags);
+-	if (f->tail != NULL)
+-		f->tail->next = cell;
+-	f->tail = cell;
+-	if (f->head == NULL)
+-		f->head = cell;
+-	cell->next = NULL;
+-	f->cells++;
+-	spin_unlock_irqrestore(&f->lock, flags);
++	scoped_guard(spinlock_irqsave, &f->lock) {
++		if (f->tail != NULL)
++			f->tail->next = cell;
++		f->tail = cell;
++		if (f->head == NULL)
++			f->head = cell;
++		cell->next = NULL;
++		f->cells++;
++	}
+ 
+ 	/* wakeup client */
+ 	if (waitqueue_active(&f->input_sleep))
+@@ -199,16 +197,13 @@ int snd_seq_fifo_cell_out(struct snd_seq_fifo *f,
+ void snd_seq_fifo_cell_putback(struct snd_seq_fifo *f,
+ 			       struct snd_seq_event_cell *cell)
+ {
+-	unsigned long flags;
+-
+ 	if (cell) {
+-		spin_lock_irqsave(&f->lock, flags);
++		guard(spinlock_irqsave)(&f->lock);
+ 		cell->next = f->head;
+ 		f->head = cell;
+ 		if (!f->tail)
+ 			f->tail = cell;
+ 		f->cells++;
+-		spin_unlock_irqrestore(&f->lock, flags);
+ 	}
+ }
+ 
+@@ -239,17 +234,17 @@ int snd_seq_fifo_resize(struct snd_seq_fifo *f, int poolsize)
+ 		return -ENOMEM;
  	}
  
-+	lock_sock(sk);
- msg_bytes_ready:
- 	copied = sk_msg_recvmsg(sk, psock, msg, len, flags);
- 	if (!copied) {
-@@ -91,11 +94,17 @@ static int udp_bpf_recvmsg(struct sock *sk, struct msghdr *msg, size_t len,
- 		if (data) {
- 			if (psock_has_data(psock))
- 				goto msg_bytes_ready;
-+
-+			release_sock(sk);
-+
- 			ret = sk_udp_recvmsg(sk, msg, len, flags, addr_len);
- 			goto out;
- 		}
- 		copied = -EAGAIN;
- 	}
-+
-+	release_sock(sk);
-+
- 	ret = copied;
- out:
- 	sk_psock_put(sk, psock);
+-	spin_lock_irq(&f->lock);
+-	/* remember old pool */
+-	oldpool = f->pool;
+-	oldhead = f->head;
+-	/* exchange pools */
+-	f->pool = newpool;
+-	f->head = NULL;
+-	f->tail = NULL;
+-	f->cells = 0;
+-	/* NOTE: overflow flag is not cleared */
+-	spin_unlock_irq(&f->lock);
++	scoped_guard(spinlock_irq, &f->lock) {
++		/* remember old pool */
++		oldpool = f->pool;
++		oldhead = f->head;
++		/* exchange pools */
++		f->pool = newpool;
++		f->head = NULL;
++		f->tail = NULL;
++		f->cells = 0;
++		/* NOTE: overflow flag is not cleared */
++	}
+ 
+ 	/* close the old pool and wait until all users are gone */
+ 	snd_seq_pool_mark_closing(oldpool);
+@@ -268,16 +263,14 @@ int snd_seq_fifo_resize(struct snd_seq_fifo *f, int poolsize)
+ /* get the number of unused cells safely */
+ int snd_seq_fifo_unused_cells(struct snd_seq_fifo *f)
+ {
+-	unsigned long flags;
+ 	int cells;
+ 
+ 	if (!f)
+ 		return 0;
+ 
+ 	snd_use_lock_use(&f->use_lock);
+-	spin_lock_irqsave(&f->lock, flags);
+-	cells = snd_seq_unused_cells(f->pool);
+-	spin_unlock_irqrestore(&f->lock, flags);
++	scoped_guard(spinlock_irqsave, &f->lock)
++		cells = snd_seq_unused_cells(f->pool);
+ 	snd_use_lock_free(&f->use_lock);
+ 	return cells;
+ }
 -- 
 2.53.0
 
