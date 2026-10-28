@@ -1,69 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793210116;
-	b=tgAZ/X735SIHXnnbBRWtkQBIJJKgdIfNLE4GfJxeWoGDTS0uHXj4kfKMx8LodLcJ3mI+
-	 3tQyeuvVw2y5ff+cy957rMK5wuzkFN+2IB8h0t8ehE1lc3tXaJ36ifQfZiKjfgvjjm/WO
-	 iHqnAD/CqFoWOaN5HpV1a+ulY3bb1F0JhxTp1/gzyzDC179vV4rF68ho3MrI2PqB47KiQ
-	 kjayldOyCuKDSh806AVwv4iVeBXKGMSrIwOiTgFBpoMQbBNS1qGxBihZuL+vubdWApc0q
-	 fWjKsrZMEyIWkvmlFloYFTtZLnesfPb0HB/EJiDBedY/Fxc3b9YVjn+6e1ZUpVeIgOA==
+	t=1793210119;
+	b=glGTdxLjb1Q98Sgy4+N8jRQax6rNBspKvDq0K6u/TpsELl/Hl2Kwh6mtep5q+v/F8JWV
+	 TP7arBKBbIOAiiDWGvYt/MLwMkvGUjOcz+wBlad0lEcmOdfLMWwXrpxnFKXJKzAQX6BF/
+	 r1FBysYNnMEjOTOoK4FQ3FTciSd75wNIcsg/cg1DWqUJ4L3CxiD6Inqj7Ie6E+uoulF7l
+	 RgpzFqs/RO3ngT+n2EaeqKGk0rnjvpDp0Ay4JnLnYFTD43Eou8yXUEG67tA3aLG7eN/vr
+	 4K4VKXAa1MbVhfCwZgmPCKS55s7InJFiXWsD7KS/8tIDYASk56YlKQu+MmwzO3TscTg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793210116;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793210119;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=BonKGL94rD2vwf1Ucji8J/k9Dlo1V8uC2e3+5vF/g5M=;
-	b=rl1N+EvSqggkji8+jehS/qMh6/D/WtC2B8sdZj/CJnf3LKcgIakC6addm6qCYlX9yrxV
-	 0HkQfWKX6MuVFZsL7iWheQuKO/zkODaTOh+G8qroZQIJ4aYx4UA5VP6derYqiqpWrlJM7
-	 sdymeHXkSL3kxA/hnxhemc6tZTjiWJWR5cWD5rVhgeHfIQkcPhijxmoNwR/ofCWmn7MbB
-	 l8w8rmaMusR0eEBaS6UXkMfrB7o5UCp16CIANUHgvoXQEk74UkojqWxY68qcg6HHVkCK2
-	 YHc+m3+HPAfhGtz4j3eSYi82HRASMiTA42d3rDQAalF8iGw4jpFweNNqiOZsJYxErTg==
+	bh=LYDOoEIk4ZeNbFmoUODWbmIUgAGgdF9Hf+DCtI/MVT0=;
+	b=qxlv2ZWNZLKNFGbSU3pJfS3kXzapW8wJdgjzZqweLCHgDQybBzwmkZJ2L5UMy06llnd7
+	 9SDKQ22dO0fFfDfLR+i/svPIiyTe4DlaXpSJ5FiddOPFdk6KmEaQr5q0556uUR+0nEkUR
+	 mlZgSUK3EOUfNQoSmLqyF/kTg57/Sl2VAO7AqMqCxCn+r6pQylnvWKrMGwLLlrXAkN5qk
+	 Y07dBhF4TQpJ37XfCg3aocCOoOLv0oMlZxO6QF0axrfG48G/98MnwBjpgI0mdfT5wnV0z
+	 00eJORc4mwY885wlbx+TDgx8zt5Sg3A7oY9B72v0ABcWEgyfBpnFGlokEBUWjZ63tjg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aK9OLHVT;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LOBwIk5s;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86E2D606A31A;
-	Wed, 28 Oct 2026 17:55:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6863E606A31C;
+	Wed, 28 Oct 2026 17:55:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aK9OLHVT
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3D231F01825;
-	Wed, 28 Oct 2026 17:55:15 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LOBwIk5s
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFDA71F01825;
+	Wed, 28 Oct 2026 17:55:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793210116;
-	bh=BonKGL94rD2vwf1Ucji8J/k9Dlo1V8uC2e3+5vF/g5M=;
+	s=korg; t=1793210119;
+	bh=LYDOoEIk4ZeNbFmoUODWbmIUgAGgdF9Hf+DCtI/MVT0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aK9OLHVTfw0imXaE7hwZFgA98KaUiKKNi3o4HICRAQv8UHg5ASv8NHfNFgNJ8h7pS
-	 G0bmkNB8PQrQZYDCGnR9k4gHLpcnawpGe9e2KDe0fg6Fj7YOdhO436u7CyMviba/4M
-	 hD1ltjVzDsm6tieDDGBOllBVPRYeK8z/voMtWHm0=
+	b=LOBwIk5s729PXlq9pikrA0pBC6wlBf1OUQNubfYFZIdQ0aHKFgYojqiSKWJ6KpxI7
+	 hpRjOTCNH/COw+/uIySoY2Yinr3EbLP/8IQEF1+kZ9NSuTUJb5Ci8EYWoBbCqs2Td9
+	 HP6D45Q/uR3QDvK5V0ndcrIIfRLEekjmScNDoLxg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matt Fleming <mfleming@cloudflare.com>,
-	syzbot+c5b060ce82921a2fd500@syzkaller.appspotmail.com,
-	Zi Yan <ziy@nvidia.com>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Barry Song <baohua@kernel.org>,
-	Dave Chinner <david@fromorbit.com>,
-	Dev Jain <dev.jain@arm.com>,
-	Kairui Song <ryncsn@gmail.com>,
-	Lance Yang <lance.yang@linux.dev>,
-	Liam Howlett <liam@infradead.org>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Muchun Song <muchun.song@linux.dev>,
-	Nico Pache <npache@redhat.com>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Hyunwoo Kim <imv4bel@gmail.com>,
+	Paolo Bonzini <pbonzini@redhat.com>,
+	Sean Christopherson <seanjc@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 081/168] mm/huge_memory: initialise workingset state before folio split
-Date: Wed, 28 Oct 2026 18:00:17 +0100
-Message-ID: <20261028165945.003412512@linuxfoundation.org>
+Subject: [PATCH 6.6 082/168] KVM: x86/mmu: Preserve nested TDP shadow page tables if they are used as roots
+Date: Wed, 28 Oct 2026 18:00:18 +0100
+Message-ID: <20261028165945.027893664@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165943.089486480@linuxfoundation.org>
 References: <20261028165943.089486480@linuxfoundation.org>
@@ -85,60 +69,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matt Fleming <mfleming@cloudflare.com>
+From: Hyunwoo Kim <imv4bel@gmail.com>
 
-[ Upstream commit aca1f2d5de17e138bc6c4859126b77e516b82541 ]
+[ Upstream commit 7a2c70e777a00c32ebafd376a6fe31ebb91c5b20 ]
 
-xas_try_split() adds __GFP_ACCOUNT for page-cache xa_nodes, but
-__folio_split() leaves the xa_state's xa_lru unset.  That lets a live,
-memcg-charged xa_node exist without being linked into the mapping's
-shadow_nodes list_lru; when reclaim later walks the list_lru it trips
-VM_WARN_ON(!css_is_dying()).
+kvm_mmu_zap_oldest_mmu_pages() excludes a shadow page whose root_count
+is non-zero from top-level reclaim, because such a page cannot be
+freed. The path in mmu_page_zap_pte() that recursively zaps a parentless
+nested TDP child has no such check. As a result, a shadow page can
+be zapped even if the page itself can't be freed; as the comment in
+kvm_mmu_zap_oldest_mmu_pages() notes, zapping it will just force vCPUs
+to rebuild the page.
 
-Use mapping_set_update() to install both the workingset update callback
-and the shadow_nodes list_lru on the xa_state.
+As in top-level reclaim, do not recursively prepare zapping of a
+nested TDP child whose root_count is non-zero.
 
-Link: https://lore.kernel.org/20260725101419.3938406-1-matt@readmodwrite.com
-Fixes: 58729c04cf10 ("mm/huge_memory: add buddy allocator like (non-uniform) folio_split()")
-Signed-off-by: Matt Fleming <mfleming@cloudflare.com>
-Reported-by: syzbot+c5b060ce82921a2fd500@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=c5b060ce82921a2fd500
-Reviewed-by: Zi Yan <ziy@nvidia.com>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
-Cc: Barry Song <baohua@kernel.org>
-Cc: Dave Chinner <david@fromorbit.com>
-Cc: Dev Jain <dev.jain@arm.com>
-Cc: Kairui Song <ryncsn@gmail.com>
-Cc: Lance Yang <lance.yang@linux.dev>
-Cc: Liam Howlett <liam@infradead.org>
-Cc: Lorenzo Stoakes <ljs@kernel.org>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: Muchun Song <muchun.song@linux.dev>
-Cc: Nico Pache <npache@redhat.com>
-Cc: Roman Gushchin <roman.gushchin@linux.dev>
-Cc: Ryan Roberts <ryan.roberts@arm.com>
-Cc: Shakeel Butt <shakeel.butt@linux.dev>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 2de4085cccea ("KVM: x86/MMU: Recursively zap nested TDP SPs when zapping last/only parent")
+Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+[sean: resolve minor conflict due to lack of lockless aging in 6.12]
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/huge_memory.c | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/x86/kvm/mmu/mmu.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/mm/huge_memory.c b/mm/huge_memory.c
-index 28502c539cabb..4aa032e96fa60 100644
---- a/mm/huge_memory.c
-+++ b/mm/huge_memory.c
-@@ -2746,6 +2746,8 @@ int split_huge_page_to_list(struct page *page, struct list_head *list)
- 			goto out;
+diff --git a/arch/x86/kvm/mmu/mmu.c b/arch/x86/kvm/mmu/mmu.c
+index b243cb405808a..5bff73562cbd1 100644
+--- a/arch/x86/kvm/mmu/mmu.c
++++ b/arch/x86/kvm/mmu/mmu.c
+@@ -2508,7 +2508,9 @@ static int mmu_page_zap_pte(struct kvm *kvm, struct kvm_mmu_page *sp,
+ 			 * avoids retaining a large number of stale nested SPs.
+ 			 */
+ 			if (tdp_enabled && invalid_list &&
+-			    child->role.guest_mode && !child->parent_ptes.val)
++			    child->role.guest_mode &&
++			    !child->root_count &&
++			    !child->parent_ptes.val)
+ 				return kvm_mmu_prepare_zap_page(kvm, child,
+ 								invalid_list);
  		}
- 
-+		mapping_set_update(&xas, mapping);
-+
- 		xas_split_alloc(&xas, folio, folio_order(folio), gfp);
- 		if (xas_error(&xas)) {
- 			ret = xas_error(&xas);
 -- 
 2.53.0
 
