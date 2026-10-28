@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213013;
-	b=tLCWmIQkI35bW7vTejJXw6k+DbJpJ6dD1zu+6RvyQlYM8r/vTfiG10hH8oPbzZavOgOW
-	 LrH9Rzo2PmoY9vRPIJ32bGa3vQZD9fCeTv3OXJu173v8aEp+vJaXmOw2dCb14E/aTHjgr
-	 nlh8Cls2Q6bcLAozm1IKRPl9N/z0YIRWva/Uu3m2S5FwXrBWJqPepXdskUk/rWcTNMlcj
-	 qjDhp6xVBm6pBPc7KHfM8AOCbvDYXo99cag9VH8lAOePpDwd/bOQWDLvNkkpe+FUPjuOW
-	 GM8LvtIO+YQfks7rKfpBCC97Gjpj2nmU0jeBOXbFSzcvPmLUd3iQp2OK+Ko467AXm3g==
+	t=1793213016;
+	b=IiGg4QEZI8KTbF+mE7BMpFe74YMk8QHNWWH8huYr/dj0xomG7IQJ7HugoqLv+8oCW8K4
+	 t5APV4bZqUpGGwDBzr7+03vXnM0Xe+rbhACbPjRmqppxhQMaffzmZmLqjDgf3yhU8BHeZ
+	 kvlfCby/LdFq5Qfr+1uZm5yulE0JXFJf5cBVvqdEZN66mSk2ZJKS0Aim7hHD/O3X1NiX8
+	 mvl8bm5Mm3p+VxAIK0mlIpYKUq8fTslMDjfnkljQgRyAfwg4bKg0WZON1+yOBXtY6pYf9
+	 K1f6W+/zjZclLYfhbfolgt3bzjVg53u7nQJ39TU+Sntu/Fn6whbLmI3XVG/r9pCBgVw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213013;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213016;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=ZBDnXDn8ZvJ6twLr4l9aX7GA0l9gWiV71vga1x+uFWk=;
-	b=y+j8xa+qY6/gKID8Uxxran2k8Scaf9lYpG9R4bMgmjAso2aD0qel8Qh5h3p4E+6K97ab
-	 Y+Dj35IWtRVxAgOXiX7yQJ1d8SD3R+3HC4Hh738Qg+ilrNX8lVXFJgeFu0tDuQ76Vypj5
-	 34SFm+ci6x2/eUGU1TH1Q2yQTJYzaZbwT7wy1EFJuqWrrjpWxogv3CMCMO0QmSaoqoFC5
-	 L4Aq9tKNJqRViKESQRJaw6jCX12vN6GHAFbAFAblIUjMjes8kfnWMaWo66j1xXkxDgQca
-	 HWK8P/4IibT9G6FvmYjoJXaG+OBp058DWLE1yAnNWoWOBdAcC4xnOT1XRN71ao9ODeA==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=xpO/PKupbHk81AsjPDWm0wZSaWHYTMNjbLIcY0L53E0=;
+	b=sfGfkug9eUUwbp4uGOs01odWuemi3Za8eapFpERsDdmzTo/knbhJCYQagsWTwTaAQj+d
+	 F/VZ6iaJIS8A+9vIK8KK+ZlAthjeRhVMXwD+thiKyusjZTH19ydR5Ris5w8RzD0pvf9Rj
+	 bwKrtAlZu5mUsPUXkjWkie0DrIe2ydzrsTCx/fLLO0yeMoyy30oueKk0kX2E3Hyf2xJrM
+	 iJ8NXSFZeORHGj0bv9UWHSpJ+n57XDOl1/iKjccxexashW7ueRA6uxdcQbEqQRCuE27ZP
+	 46JlMAUZnfcVkdmpmA33sHW9aEGARRTBJv449A0MpH1WKPG43wWFQBIBRTgSGAu5uug==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="en4T4Gz/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Dgc9WH5T;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 430E4606A31A;
-	Wed, 28 Oct 2026 18:43:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DEE6606A31C;
+	Wed, 28 Oct 2026 18:43:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=en4T4Gz/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93E701F01825;
-	Wed, 28 Oct 2026 18:43:32 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Dgc9WH5T
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F2D61F01825;
+	Wed, 28 Oct 2026 18:43:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213013;
-	bh=ZBDnXDn8ZvJ6twLr4l9aX7GA0l9gWiV71vga1x+uFWk=;
+	s=korg; t=1793213015;
+	bh=xpO/PKupbHk81AsjPDWm0wZSaWHYTMNjbLIcY0L53E0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=en4T4Gz/JyHBJASuOyMBX1+97458Kwg7irk1SYVL8OnZUMoRDiXLZg1KJKwq/GH1Y
-	 CLkLd14FLLmU8pszd1BcqvhF0M6YfyCf96UttU3Q8UEDstRSaMXAyw6MlgSR51kFWw
-	 LLHbybcwCeOXJhQiGkQUQ2IfLEWxdx6+O9bi/viU=
+	b=Dgc9WH5T/tWzuFmRCy/vRcNa0NvIKdLj8jZePZn1m14Nm4BcD0cKwJHzLsYQDljFY
+	 Nq/UBtPbxXakZDgVx3P3cMFuv4CoKzrzZlODAp1ZusNLCa4k8s/mzIygBaov+gRF3Y
+	 G/L1utNFu2YAZ1X9eWbPkxoEZGs3sEI4mNrXOprI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Sorenson <sorenson@redhat.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Paulo Alcantara <pc@manguebit.org>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0357/1887] smb: client: split cifsFileInfo bitfields to avoid shared-byte RMW races
-Date: Wed, 28 Oct 2026 17:40:53 +0100
-Message-ID: <20261028170507.356013869@linuxfoundation.org>
+Subject: [PATCH 6.1 0358/1887] wifi: wlcore: Convert to platform remove callback returning void
+Date: Wed, 28 Oct 2026 17:40:54 +0100
+Message-ID: <20261028170507.379651165@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -63,63 +62,129 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Frank Sorenson <sorenson@redhat.com>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit 19465a9aeb664f1d710d0d22c07c31bfb7c85446 ]
+[ Upstream commit f00928012886a07ca6817ea70eb4856ce280ce05 ]
 
-The invalidHandle, swapfile, oplock_break_cancelled, offload,
-and status_file_deleted fields are stored in the same bitfield byte
-in struct cifsFileInfo, but are updated in different code paths that
-may run simultaneously, and are protected by different locks.  Since
-bitfield assignments generate byte-level read-modify-write operations,
-a modification to one flag can overwrite a concurrent modification to
-another flag.
+The .remove() callback for a platform driver returns an int which makes
+many driver authors wrongly assume it's possible to do error handling by
+returning an error code.  However the value returned is (mostly) ignored
+and this typically results in resource leaks. To improve here there is a
+quest to make the remove callback return void. In the first step of this
+quest all drivers are converted to .remove_new() which already returns
+void.
 
-To avoid these races, convert these flags from a bitfield to
-separate bool fields.
+wlcore_remove() returned zero unconditionally. With that converted to
+return void instead, the wl12xx and wl18xx driver can be converted to
+.remove_new trivially.
 
-Closes: https://lore.kernel.org/r/7689764e-c0f6-4016-9557-b54cf4a3de4e@redhat.com
-Fixes: 3bc303c254335 ("cifs: convert oplock breaks to use slow_work facility (try #4)")
-Fixes: 4e8aea30f7751 ("smb3: enable swap on SMB3 mounts")
-Fixes: ffceb7640cbfe ("smb: client: do not defer close open handles to deleted files")
-Fixes: 173217bd73365 ("smb3: retrying on failed server close")
-Signed-off-by: Frank Sorenson <sorenson@redhat.com>
-Cc: stable@vger.kernel.org
-Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
-(cherry picked from commit 19465a9aeb664f1d710d0d22c07c31bfb7c85446)
-[ status_file_deleted not present in kernel 6.1 ]
-Signed-off-by: Frank Sorenson <sorenson@redhat.com>
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20230912171249.755901-1-u.kleine-koenig@pengutronix.de
+Stable-dep-of: a8b8881d0c1a ("wifi: wlcore: Fix runtime PM leak in wlcore_remove()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/cifsglob.h | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/net/wireless/ti/wl12xx/main.c   | 6 +++---
+ drivers/net/wireless/ti/wl18xx/main.c   | 2 +-
+ drivers/net/wireless/ti/wlcore/main.c   | 6 ++----
+ drivers/net/wireless/ti/wlcore/wlcore.h | 2 +-
+ 4 files changed, 7 insertions(+), 9 deletions(-)
 
-diff --git a/fs/smb/client/cifsglob.h b/fs/smb/client/cifsglob.h
-index a5e9f79c10f90..c37f10eedddf2 100644
---- a/fs/smb/client/cifsglob.h
-+++ b/fs/smb/client/cifsglob.h
-@@ -1337,10 +1337,10 @@ struct cifsFileInfo {
- 	struct dentry *dentry;
- 	struct tcon_link *tlink;
- 	unsigned int f_flags;
--	bool invalidHandle:1;	/* file closed via session abend */
--	bool swapfile:1;
--	bool oplock_break_cancelled:1;
--	bool offload:1; /* offload final part of _put to a wq */
-+	bool invalidHandle;	/* file closed via session abend */
-+	bool swapfile;
-+	bool oplock_break_cancelled;
-+	bool offload; /* offload final part of _put to a wq */
- 	__u16 oplock_epoch; /* epoch from the lease break */
- 	__u32 oplock_level; /* oplock/lease level from the lease break */
- 	int count;
+diff --git a/drivers/net/wireless/ti/wl12xx/main.c b/drivers/net/wireless/ti/wl12xx/main.c
+index d06a2c4194479..de045fe4ca1eb 100644
+--- a/drivers/net/wireless/ti/wl12xx/main.c
++++ b/drivers/net/wireless/ti/wl12xx/main.c
+@@ -1919,7 +1919,7 @@ static int wl12xx_probe(struct platform_device *pdev)
+ 	return ret;
+ }
+ 
+-static int wl12xx_remove(struct platform_device *pdev)
++static void wl12xx_remove(struct platform_device *pdev)
+ {
+ 	struct wl1271 *wl = platform_get_drvdata(pdev);
+ 	struct wl12xx_priv *priv;
+@@ -1928,7 +1928,7 @@ static int wl12xx_remove(struct platform_device *pdev)
+ 
+ 	kfree(priv->rx_mem_addr);
+ 
+-	return wlcore_remove(pdev);
++	wlcore_remove(pdev);
+ }
+ 
+ static const struct platform_device_id wl12xx_id_table[] = {
+@@ -1939,7 +1939,7 @@ MODULE_DEVICE_TABLE(platform, wl12xx_id_table);
+ 
+ static struct platform_driver wl12xx_driver = {
+ 	.probe		= wl12xx_probe,
+-	.remove		= wl12xx_remove,
++	.remove_new	= wl12xx_remove,
+ 	.id_table	= wl12xx_id_table,
+ 	.driver = {
+ 		.name	= "wl12xx_driver",
+diff --git a/drivers/net/wireless/ti/wl18xx/main.c b/drivers/net/wireless/ti/wl18xx/main.c
+index 0b3cf8477c6cd..d4a89401f2c47 100644
+--- a/drivers/net/wireless/ti/wl18xx/main.c
++++ b/drivers/net/wireless/ti/wl18xx/main.c
+@@ -2033,7 +2033,7 @@ MODULE_DEVICE_TABLE(platform, wl18xx_id_table);
+ 
+ static struct platform_driver wl18xx_driver = {
+ 	.probe		= wl18xx_probe,
+-	.remove		= wlcore_remove,
++	.remove_new	= wlcore_remove,
+ 	.id_table	= wl18xx_id_table,
+ 	.driver = {
+ 		.name	= "wl18xx_driver",
+diff --git a/drivers/net/wireless/ti/wlcore/main.c b/drivers/net/wireless/ti/wlcore/main.c
+index 2c3f7fbd04330..b5ae25e7ed897 100644
+--- a/drivers/net/wireless/ti/wlcore/main.c
++++ b/drivers/net/wireless/ti/wlcore/main.c
+@@ -6734,7 +6734,7 @@ int wlcore_probe(struct wl1271 *wl, struct platform_device *pdev)
+ }
+ EXPORT_SYMBOL_GPL(wlcore_probe);
+ 
+-int wlcore_remove(struct platform_device *pdev)
++void wlcore_remove(struct platform_device *pdev)
+ {
+ 	struct wlcore_platdev_data *pdev_data = dev_get_platdata(&pdev->dev);
+ 	struct wl1271 *wl = platform_get_drvdata(pdev);
+@@ -6749,7 +6749,7 @@ int wlcore_remove(struct platform_device *pdev)
+ 	if (pdev_data->family && pdev_data->family->nvs_name)
+ 		wait_for_completion(&wl->nvs_loading_complete);
+ 	if (!wl->initialized)
+-		return 0;
++		return;
+ 
+ 	if (wl->wakeirq >= 0) {
+ 		dev_pm_clear_wake_irq(wl->dev);
+@@ -6769,8 +6769,6 @@ int wlcore_remove(struct platform_device *pdev)
+ 
+ 	free_irq(wl->irq, wl);
+ 	wlcore_free_hw(wl);
+-
+-	return 0;
+ }
+ EXPORT_SYMBOL_GPL(wlcore_remove);
+ 
+diff --git a/drivers/net/wireless/ti/wlcore/wlcore.h b/drivers/net/wireless/ti/wlcore/wlcore.h
+index 81c94d390623b..1f8511bf9bb35 100644
+--- a/drivers/net/wireless/ti/wlcore/wlcore.h
++++ b/drivers/net/wireless/ti/wlcore/wlcore.h
+@@ -497,7 +497,7 @@ struct wl1271 {
+ };
+ 
+ int wlcore_probe(struct wl1271 *wl, struct platform_device *pdev);
+-int wlcore_remove(struct platform_device *pdev);
++void wlcore_remove(struct platform_device *pdev);
+ struct ieee80211_hw *wlcore_alloc_hw(size_t priv_size, u32 aggr_buf_size,
+ 				     u32 mbox_size);
+ int wlcore_free_hw(struct wl1271 *wl);
 -- 
 2.53.0
 
