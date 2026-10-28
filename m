@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214652;
-	b=cjXAfXlnBX4AtdNI5L/iWK6wDchoYi+fVYYhP1VAZYPp9LSV8pVRA5mIfMQf2C/Fowmh
-	 XjGMZpgyNZ9RR1ltbhKF0y/ozWwQNC8NZTTXiK+4Vfq+BD9Eg/TBrATWPoQQQDuP/toZz
-	 eMznyFTTCnCH9zYshoDWRPdNhczdEvjjSN/Dl6pItWgHzTQdH+KUy1IAMcyZfeRKq0Rf2
-	 9AOq4hhn79ZGuCFW2cHGDqMMD5xwFrKFMpa2+ZmQdivmqHO0u99mPaMXvrFm6xKlbK393
-	 y+EI9K2DRhKv/j1Gs3F65ZfkQG240vSjQHk5y82mMbptgJy76xb4xacAuSm5a6Qi9Qg==
+	t=1793214655;
+	b=5DnOasqckfM4NkXoVDG0qQb+hD44KeiqGjpfYn/ixaY+xT82ng/3XXYPwEy5bRBUfGE7
+	 73/OYblmp+SWcjIljH0UnEUYeExFNaL4BLAEImOBldassNHLsIhOXeBBnm0Kud8qOpsEb
+	 nox/8x6oKbUfgLtBiG7VjDu3n1di8qDW297EFAAEY0ULTNc00uUCEiAWAhXt/1XHj9B94
+	 kgxPY/JUPoL0K9HlJndWuV/8Is/DZXBpZxWRrgaeOAgtQYHxyUaYtb9JJfuJinUBOcvE9
+	 Wwzj92/mVMDEpUvi/xn9rV1+4Qtj5cvhiVerKVBJ/Upj8fOs1C67/uAGlzEXGacFniA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214652;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214655;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=pzEODlOLm65RIfgslKpFIbq3HT8/jIjWYaL0SrE69f0=;
-	b=HTz2uCOZViNYP4TSnUMNDqQGUlcXL/1I9922t5YN7y1DcT6CV033lRe22KY4NuDpe1bJ
-	 oAzSul5n/a4XmaCuMy/BTHd2ZP5ClB0zYg6mmRp/4GjWAA13jpeoBDbqEzyx54ilw1e3k
-	 mMxooNkTnZ4y8jfik2KaymvBE64DG6BmoLOfan6AQ+XitTNwiTb64157QaZ42EpwgqQ6h
-	 xROZKjeFMi95MwYL0tGsjkozAT51bLqrpZDeeDeToXvv/LRS7SFbix+D/nOvxJHQ5l3nn
-	 D6nKxzKk5WIZId8/Gd7LqoWWcfVprOqvX60VLloIOfGoiZ3BxLseTeL3gQwKVCYEbEA==
+	bh=3Pf36+kstbtfoRyGtpUyHnXVSWJ/oyF1xDL45XANKvM=;
+	b=rufFtuU/8BbNDYUh+R0/nkC9pU8AC2tJhcXWbIvdotIVhxSJLDCgTyjnev79BBgFXpq/
+	 PTAkIuqEoKZrxEGOif6j95veuSRNfTwZ9jr3ot5hTbJZyg0+QM2DjqImtbVM+WWMgc3Xl
+	 BWwTjZNfpogU+Iz8IcYUvO0CYdUf4mp/+RkvtNISr98Jlfp48KRoMMYIRiNacnaWdu7/A
+	 R0p17QvLRCsWMluwqC0N7xFMbxYH4KAGEmX9hnMV/dQUAjn9ru+BvfGV+8zvdbW8okK0C
+	 Wvq32kFwnfGRCKni5SGH8Y5I8xb8DxH5hULVHmlKdvOlbj7kNBkCKHXLXZYUOUIm8lw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P+7+jJNJ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t8fpQR6Q;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8048D606AB18;
-	Wed, 28 Oct 2026 19:10:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FB59606A31F;
+	Wed, 28 Oct 2026 19:10:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P+7+jJNJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F01A1F01825;
-	Wed, 28 Oct 2026 19:10:51 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t8fpQR6Q
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60B701F01825;
+	Wed, 28 Oct 2026 19:10:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214652;
-	bh=pzEODlOLm65RIfgslKpFIbq3HT8/jIjWYaL0SrE69f0=;
+	s=korg; t=1793214654;
+	bh=3Pf36+kstbtfoRyGtpUyHnXVSWJ/oyF1xDL45XANKvM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=P+7+jJNJ8UbyTMq208ZdPRvNjWCL6dP1sqw7jxQmf79Bf9Gt+dSjSGIcd1hZSO+hE
-	 ca2cUaZfyOhkLR8kfgHOUxkdQJJEYvjo7NkaZdk0s/PvizUVkrDgGe75i7TtThxOd0
-	 dwe/ms42B4zktcxBX1fpQvT28NU8Y10cXHX/KVxI=
+	b=t8fpQR6Q6sgzu3C4HKMtm12ilnGvSjoQvva7LY4UOjHdtJ8AIsW+F8iU0W+jPyPO2
+	 0QCroNSSXJ2r1WnWY31KAUdXFHSgHgYzool5yqlHAYCFNJiuBKMk2n8cVRiLmex0I0
+	 Nq8bWRxmr9SOg616BHEqOeqE6upuGgaQPhzYkX8o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiaming Zhang <r772577952@gmail.com>,
-	Boris Burkov <boris@bur.io>,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Qu Wenruo <wqu@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Igor Stepansky <igor.stepansky@orca.security>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0933/1887] btrfs: reject new transactions if the fs is fully read-only
-Date: Wed, 28 Oct 2026 17:50:29 +0100
-Message-ID: <20261028170520.644107036@linuxfoundation.org>
+Subject: [PATCH 6.1 0934/1887] ksmbd: add chann_lock to protect ksmbd_chann_list xarray
+Date: Wed, 28 Oct 2026 17:50:30 +0100
+Message-ID: <20261028170520.667447497@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -71,140 +69,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qu Wenruo <wqu@suse.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 1972f44c189c8aacde308fa9284e474c1a5cbd9f ]
+[ Upstream commit 4f3a06cc57976cafa8c6f716646be6c79a99e485 ]
 
-[BUG]
-There is a bug report where a heavily fuzzed fs is mounted with all
-rescue mount options, which leads to the following warnings during
-unmount:
+ksmbd_chann_list xarray lacks synchronization, allowing use-after-free in
+multi-channel sessions (between lookup_chann_list() and ksmbd_chann_del).
 
-  BTRFS: Transaction aborted (error -22)
-  Modules linked in:
-  CPU: 0 UID: 0 PID: 9758 Comm: repro.out Not tainted
-  6.19.0-rc5-00002-gb71e635feefc #7 PREEMPT(full)
-  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
-  RIP: 0010:find_free_extent_update_loop fs/btrfs/extent-tree.c:4208 [inline]
-  RIP: 0010:find_free_extent+0x52f0/0x5d20 fs/btrfs/extent-tree.c:4611
-  Call Trace:
-   <TASK>
-   btrfs_reserve_extent+0x2cd/0x790 fs/btrfs/extent-tree.c:4705
-   btrfs_alloc_tree_block+0x1e1/0x10e0 fs/btrfs/extent-tree.c:5157
-   btrfs_force_cow_block+0x578/0x2410 fs/btrfs/ctree.c:517
-   btrfs_cow_block+0x3c4/0xa80 fs/btrfs/ctree.c:708
-   btrfs_search_slot+0xcad/0x2b50 fs/btrfs/ctree.c:2130
-   btrfs_truncate_inode_items+0x45d/0x2350 fs/btrfs/inode-item.c:499
-   btrfs_evict_inode+0x923/0xe70 fs/btrfs/inode.c:5628
-   evict+0x5f4/0xae0 fs/inode.c:837
-   __dentry_kill+0x209/0x660 fs/dcache.c:670
-   finish_dput+0xc9/0x480 fs/dcache.c:879
-   shrink_dcache_for_umount+0xa0/0x170 fs/dcache.c:1661
-   generic_shutdown_super+0x67/0x2c0 fs/super.c:621
-   kill_anon_super+0x3b/0x70 fs/super.c:1289
-   btrfs_kill_super+0x41/0x50 fs/btrfs/super.c:2127
-   deactivate_locked_super+0xbc/0x130 fs/super.c:474
-   cleanup_mnt+0x425/0x4c0 fs/namespace.c:1318
-   task_work_run+0x1d4/0x260 kernel/task_work.c:233
-   exit_task_work include/linux/task_work.h:40 [inline]
-   do_exit+0x694/0x22f0 kernel/exit.c:971
-   do_group_exit+0x21c/0x2d0 kernel/exit.c:1112
-   __do_sys_exit_group kernel/exit.c:1123 [inline]
-   __se_sys_exit_group kernel/exit.c:1121 [inline]
-   __x64_sys_exit_group+0x3f/0x40 kernel/exit.c:1121
-   x64_sys_call+0x2210/0x2210 arch/x86/include/generated/asm/syscalls_64.h:232
-   do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
-   do_syscall_64+0xe8/0xf80 arch/x86/entry/syscall_64.c:94
-   entry_SYSCALL_64_after_hwframe+0x77/0x7f
-  RIP: 0033:0x44f639
-  Code: Unable to access opcode bytes at 0x44f60f.
-  RSP: 002b:00007ffc15c4e088 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
-  RAX: ffffffffffffffda RBX: 00000000004c32f0 RCX: 000000000044f639
-  RDX: 000000000000003c RSI: 00000000000000e7 RDI: 0000000000000001
-  RBP: 0000000000000001 R08: ffffffffffffffc0 R09: 0000000000000000
-  R10: 0000000000000000 R11: 0000000000000246 R12: 00000000004c32f0
-  R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
-   </TASK>
+Adds rw_semaphore chann_lock to struct ksmbd_session and protects
+all xa_load/xa_store/xa_erase accesses.
 
-Since rescue mount options will mark the full fs read-only, there should
-be no new transaction triggered.
-
-But during unmount we will evict all inodes, which can trigger a new
-transaction, and triggers warnings on a heavily corrupted fs.
-
-[CAUSE]
-Btrfs allows new transaction even on a read-only fs, this is to allow
-log replay happen even on read-only mounts, just like what ext4/xfs do.
-
-However with rescue mount options, the fs is fully read-only and cannot
-be remounted read-write, thus in that case we should also reject any new
-transactions.
-
-[FIX]
-If we find the fs has rescue mount options, we should treat the fs as
-error, so that no new transaction can be started.
-
-Reported-by: Jiaming Zhang <r772577952@gmail.com>
-Link: https://lore.kernel.org/linux-btrfs/CANypQFYw8Nt8stgbhoycFojOoUmt+BoZ-z8WJOZVxcogDdwm=Q@mail.gmail.com/
-Reviewed-by: Boris Burkov <boris@bur.io>
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Signed-off-by: Qu Wenruo <wqu@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Cc: stable@vger.kernel.org
+Reported-by: Igor Stepansky <igor.stepansky@orca.security>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/ctree.h   |  6 ++++++
- fs/btrfs/disk-io.c | 13 +++++++++++++
- 2 files changed, 19 insertions(+)
+ fs/smb/server/mgmt/user_session.c |  5 +++++
+ fs/smb/server/mgmt/user_session.h |  1 +
+ fs/smb/server/smb2pdu.c           | 12 +++++++++++-
+ 3 files changed, 17 insertions(+), 1 deletion(-)
 
-diff --git a/fs/btrfs/ctree.h b/fs/btrfs/ctree.h
-index 90a6b36f8baf4..e115ba97dd44a 100644
---- a/fs/btrfs/ctree.h
-+++ b/fs/btrfs/ctree.h
-@@ -1626,6 +1626,12 @@ enum {
- 	BTRFS_MOUNT_IGNOREDATACSUMS		= (1UL << 30),
- };
+diff --git a/fs/smb/server/mgmt/user_session.c b/fs/smb/server/mgmt/user_session.c
+index 605e17c7b2a17..33ae100fd07ed 100644
+--- a/fs/smb/server/mgmt/user_session.c
++++ b/fs/smb/server/mgmt/user_session.c
+@@ -32,12 +32,14 @@ static void free_channel_list(struct ksmbd_session *sess)
+ 	struct channel *chann;
+ 	unsigned long index;
  
-+/* These mount options require a full read-only fs, no new transaction is allowed. */
-+#define BTRFS_MOUNT_FULL_RO_MASK		\
-+	(BTRFS_MOUNT_NOLOGREPLAY |		\
-+	 BTRFS_MOUNT_IGNOREBADROOTS |		\
-+	 BTRFS_MOUNT_IGNOREDATACSUMS)
-+
- #define BTRFS_DEFAULT_COMMIT_INTERVAL	(30)
- #define BTRFS_DEFAULT_MAX_INLINE	(2048)
++	down_write(&sess->chann_lock);
+ 	xa_for_each(&sess->ksmbd_chann_list, index, chann) {
+ 		xa_erase(&sess->ksmbd_chann_list, index);
+ 		kfree(chann);
+ 	}
  
-diff --git a/fs/btrfs/disk-io.c b/fs/btrfs/disk-io.c
-index 203ff9bbad431..dd804bfc3a497 100644
---- a/fs/btrfs/disk-io.c
-+++ b/fs/btrfs/disk-io.c
-@@ -3417,6 +3417,15 @@ int btrfs_check_features(struct btrfs_fs_info *fs_info, bool is_rw_mount)
- 	return 0;
+ 	xa_destroy(&sess->ksmbd_chann_list);
++	up_write(&sess->chann_lock);
  }
  
-+static bool fs_is_full_ro(const struct btrfs_fs_info *fs_info)
-+{
-+	if (!sb_rdonly(fs_info->sb))
-+		return false;
-+	if (unlikely(fs_info->mount_opt & BTRFS_MOUNT_FULL_RO_MASK))
-+		return true;
-+	return false;
-+}
-+
- int __cold open_ctree(struct super_block *sb, struct btrfs_fs_devices *fs_devices,
- 		      char *options)
+ static void __session_rpc_close(struct ksmbd_session *sess,
+@@ -220,7 +222,9 @@ static int ksmbd_chann_del(struct ksmbd_conn *conn, struct ksmbd_session *sess)
  {
-@@ -3798,6 +3807,10 @@ int __cold open_ctree(struct super_block *sb, struct btrfs_fs_devices *fs_device
+ 	struct channel *chann;
+ 
++	down_write(&sess->chann_lock);
+ 	chann = xa_erase(&sess->ksmbd_chann_list, (long)conn);
++	up_write(&sess->chann_lock);
+ 	if (!chann)
+ 		return -ENOENT;
+ 
+@@ -422,6 +426,7 @@ static struct ksmbd_session *__session_create(int protocol)
+ 	rwlock_init(&sess->tree_conns_lock);
+ 	atomic_set(&sess->refcnt, 2);
+ 	init_rwsem(&sess->rpc_lock);
++	init_rwsem(&sess->chann_lock);
+ 
+ 	ret = __init_smb2_session(sess);
+ 	if (ret)
+diff --git a/fs/smb/server/mgmt/user_session.h b/fs/smb/server/mgmt/user_session.h
+index 011362e975b00..90ae30ba402f4 100644
+--- a/fs/smb/server/mgmt/user_session.h
++++ b/fs/smb/server/mgmt/user_session.h
+@@ -49,6 +49,7 @@ struct ksmbd_session {
+ 	char				sess_key[CIFS_KEY_SIZE];
+ 
+ 	struct hlist_node		hlist;
++	struct rw_semaphore		chann_lock;
+ 	struct xarray			ksmbd_chann_list;
+ 	struct xarray			tree_conns;
+ 	struct ida			tree_conn_ida;
+diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
+index 16477ad9dde8d..b05a9488aaa4d 100644
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -78,7 +78,13 @@ static inline bool check_session_id(struct ksmbd_conn *conn, u64 id)
+ 
+ struct channel *lookup_chann_list(struct ksmbd_session *sess, struct ksmbd_conn *conn)
+ {
+-	return xa_load(&sess->ksmbd_chann_list, (long)conn);
++	struct channel *chann;
++
++	down_read(&sess->chann_lock);
++	chann = xa_load(&sess->ksmbd_chann_list, (long)conn);
++	up_read(&sess->chann_lock);
++
++	return chann;
+ }
+ 
+ /**
+@@ -1580,7 +1586,9 @@ static int ntlm_authenticate(struct ksmbd_work *work,
+ 				return -ENOMEM;
+ 
+ 			chann->conn = conn;
++			down_write(&sess->chann_lock);
+ 			xa_store(&sess->ksmbd_chann_list, (long)conn, chann, GFP_KERNEL);
++			up_write(&sess->chann_lock);
  		}
  	}
  
-+	/* If the fs has any rescue options, no transaction is allowed. */
-+	if (fs_is_full_ro(fs_info))
-+		set_bit(BTRFS_FS_STATE_ERROR, &fs_info->fs_state);
-+
- 	fs_info->fs_root = btrfs_get_fs_root(fs_info, BTRFS_FS_TREE_OBJECTID, true);
- 	if (IS_ERR(fs_info->fs_root)) {
- 		err = PTR_ERR(fs_info->fs_root);
+@@ -1673,7 +1681,9 @@ static int krb5_authenticate(struct ksmbd_work *work,
+ 				return -ENOMEM;
+ 
+ 			chann->conn = conn;
++			down_write(&sess->chann_lock);
+ 			xa_store(&sess->ksmbd_chann_list, (long)conn, chann, GFP_KERNEL);
++			up_write(&sess->chann_lock);
+ 		}
+ 	}
+ 
 -- 
 2.53.0
 
