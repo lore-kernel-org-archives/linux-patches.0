@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793209108;
-	b=mrHU7toJ4iSuFjqQhyPj5WiICy2fLR/vqyGaxObcskcz/Mk/E45PXxOKqZ8yW/j5EJHG
-	 b+seQZK5IeLQEr18sMSoenVtC62NbIgeh6vBhd/cOoDB8nxuVYwukSI2wpATm/8Sho3tL
-	 vOIuFJy65q2ncL/wrXd8ErMeDzUSekXhjKW3N0GeloapzA0+diSIZ0dB+zUT5gZ+XWfhL
-	 E7+PsCx0TnscOEIQs5zfXVvNbem8sokHCZh74awZ24cBixZkTKuAzlWq5MtPBfTA97qaP
-	 rY+w4NABn3+Nz2gLIuRWXiIFZRxyD+t962mxdnIfItvtBQlXEYWsVvOwVJYHbir4dUw==
+	t=1793209111;
+	b=bwlUb6k1WUe2jMOmkXQLiDIHZm5rDjIIJRaoMOYytbYO6eS2zbcQ5ExCv0xJ1w7uSamX
+	 ZNWtNSpJEjNCVkMZV+SgdQLVyRzA2/wGboQvAjsnrsFuTMzrF4+Yv3YbVcB1rp7sR98ef
+	 bRNncE0gXbBUCrIxa7+8mpSatsFHT4XQRhsu7uEqWNtLOs8iDEpolQv/yTtWeOzdQPCIt
+	 w/cBZMuKXlgIbizlMqEC6rntSkpCeyCXPWcDinZBWM35GwVFZL5gjclfdFTOfXDj8ZBql
+	 XSEimHhUbStR+Thwfhh5cJ0m9/B+HTOvCpDio0lqYktyvJLP3D+oabwGTObs4nCWtuw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793209108;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793209111;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=X5FBKvS4d1/7BGMTQHICiMfRyLYYF8lHrsyw7q4KRnQ=;
-	b=RHa6KZX8WrpO9XAw3G0ZwBqyP0mm9s3inUby2Hq97MFZzLAmSECJH60Fl5HVmQe1DG0S
-	 V1sWLfrK9oOrYYiycwdepDbvng3GhfTE6qdf6POhzASsMABPcuF/7QJlF/JgjiHecIomD
-	 KtZbk8DxPYvlwxYFFZBasacdAp2irfhc1FyLxA11mgtEysnn/lYV/+ihb3mpCsZfvtSe9
-	 htW32ojQCQ0sQ4XPDVa7fa49f7oEzOS5g5LTJTfeGuoeA7wNj5tDdEJbZdSLmlxOO6Bxj
-	 468JJFTCZM3qHzzFWuECWfKmyJlrO6wKq5WfMowjjZ+g34QJn4NwtSSQnyxK5bJkBVQ==
+	bh=j28edNERyGku7Sxo7txDaJz+RmMlshTAEq6uWLX1pis=;
+	b=3V1tTnEWEEENtIdfSqWK8b4FbNxpTDxxvPJIM1gvhRQaQ+v4gvr/TFkt8bypqaTu05xp
+	 hMmYoRigSvXTv0G3BT/vVZ9v3r1w0S3uLJFfJnN+4UUar8RBWAWdAFhf0acmeE4XbxIIT
+	 6Z/Y4wm02dMly1nhRyja2TjEfqoJjbtNo4URSel1sRXcPWHR87C+uROvGiuMAYxf7zdm2
+	 bs5I/+Hlk2yLPzAdG/b+lBwXbg/7EV7UHPY8UrnScZGCqFOBgR8S0BVxG1oyMgXivAEaZ
+	 qGnfJuSBh3SUikUNrSofOaAPUs3nbO+eFuUf93day8LemRAFCkjLG7e3ojfY7+yXk+w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eR0pEmmV;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aaIAWAxN;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14BE5606A32F;
-	Wed, 28 Oct 2026 17:38:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0884606A32F;
+	Wed, 28 Oct 2026 17:38:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eR0pEmmV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65BA21F01825;
-	Wed, 28 Oct 2026 17:38:27 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aaIAWAxN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39A6A1F01825;
+	Wed, 28 Oct 2026 17:38:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793209107;
-	bh=X5FBKvS4d1/7BGMTQHICiMfRyLYYF8lHrsyw7q4KRnQ=;
+	s=korg; t=1793209110;
+	bh=j28edNERyGku7Sxo7txDaJz+RmMlshTAEq6uWLX1pis=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eR0pEmmVwEYmfm0LVtjsveQlL785JRD+O8Vex53cHZHPNPfvm1WIdXpjeHRIY4TsD
-	 JenoBm+JMrg0o+6bJNiUnv38P43NaEhbMiikJ7/FDgRV8BhLEC8b7a8bKmmAvuoJ3y
-	 k29h6oJueptQOEMQXMVME6Fx+5tlWHmWBMB4zM6A=
+	b=aaIAWAxN88tnc1+CrYKPDPHdE2PBoIfF/PjGHuqifi1hwGtdLOGbDhz9njnypiEvx
+	 jt83m7ppQAg+Cqv0/HAEvSlYbTl8mSWO9XFllN8AFMySdDYtlP4lZVDp/S03GrY2gz
+	 HjiZ8/m+7psGEiv+NNJmL4eaoqvu7zOl3Nw7QW7w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Sashiko (gemini)" <sashiko-bot@kernel.org>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 355/516] net/sched: em_text: reject unterminated algo before autoload
-Date: Wed, 28 Oct 2026 17:58:27 +0100
-Message-ID: <20261028170011.898456112@linuxfoundation.org>
+	syzbot+ccffdf05833ebdaeae70@syzkaller.appspotmail.com,
+	Raj Ojha <rajojha047@gmail.com>,
+	Ulf Hansson <ulfh@kernel.org>
+Subject: [PATCH 5.10 329/516] memstick: core: wait for request completion before freeing card
+Date: Wed, 28 Oct 2026 17:58:01 +0100
+Message-ID: <20261028170011.282443443@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -69,63 +68,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jamal Hadi Salim <jhs@mojatatu.com>
+From: Raj Ojha <rajojha047@gmail.com>
 
-[ Upstream commit c9728fcf2e7fb4a7a8d08ebd9524c3b02ae1a021 ]
+commit aa0a37b5024d921e96ac4f8f487c8bfbf1f1a582 upstream.
 
-This is a follow-up to commit 9c572a83037a ("net/sched: fix potential
-stack infoleak in em_text_dump()"), which zero-initialised the dump-side
-struct. Sashiko pointed at a pre-existing bug that exposed the change-side
-input-validation gap open.
+In memstick_alloc_card() and memstick_set_rw_addr(),
+wait_for_completion_timeout() is used to wait for device identification
+and address configuration requests to complete.
 
-em_text_change() casts the raw netlink attribute payload to struct
-tcf_em_text and passes conf->algo, a 16-byte array with no enforced NUL
-terminator, to textsearch_prepare().  On the TS_AUTOLOAD retry
-textsearch_prepare() calls request_module("ts_%s", algo); vsnprintf()
-walks %s until it finds a NUL, so an algo[] with no NUL reads past the
-array into the adjacent struct fields and payload and feeds those bytes
-to the usermode helper command line.  This is an out-of-bounds read and
-a kernel memory disclosure.
+The memstick subsystem does not provide an abort or cancellation
+callback in struct memstick_host for in-flight requests. If
+wait_for_completion_timeout() expires (for instance, when a USB transfer
+or command retry is delayed), memstick_alloc_card() returns an error and
+frees the memstick_dev structure via kfree(card).
 
-Reject the attribute when no NUL exists within TC_EM_TEXT_ALGOSIZ bytes,
-matching the check xt_string has had since 3ab720881b6e.
+However, the host controller driver (such as rtsx_usb_ms) is still
+running the request asynchronously in worker context. When the transfer
+eventually finishes, the driver writes into host->req->data, which
+points to memory inside the already freed card structure. This leads to
+a KASAN slab-use-after-free write:
 
-Conditions to recreate the bug:
-- CAP_NET_ADMIN on the target netns (namespace-local via unshare -Urn
-  is enough)
-- install clsact on an interface, then add a basic filter with one text
-  ematch whose algo[] is 16 bytes with no NUL (e.g. "A"*16) and
-  pattern_len at least 1
-- the add fails with -ENOENT and the kernel invokes modprobe with a
-  module name made of "ts_" plus the 16 bytes and the adjacent payload
+  BUG: KASAN: slab-use-after-free in ms_read_bytes+0x8fe/0x990
+  Write of size 1 at addr ffff88813c188079 by task kworker/1:5/5239
+  Workqueue: events rtsx_usb_ms_handle_req
+  Call Trace:
+   ms_read_bytes+0x8fe/0x990 drivers/memstick/host/rtsx_usb_ms.c:450
+   rtsx_usb_ms_issue_cmd drivers/memstick/host/rtsx_usb_ms.c:477 [inline]
+   rtsx_usb_ms_handle_req+0x557/0x1a00 drivers/memstick/host/rtsx_usb_ms.c:531
+   process_one_work+0xac7/0x1b10 kernel/workqueue.c:3396
+   worker_thread+0x5ef/0xe50 kernel/workqueue.c:3560
+   kthread+0x373/0x450 kernel/kthread.c:436
 
-Fixes: d675c989ed2d4 ("[PKT_SCHED]: Packet classification based on textsearch (ematch)")
-Reported-by: Sashiko (gemini) <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20260918133953.12494-1-bernard.ladenthin%40gmail.com
-Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://patch.msgid.link/QDISC-2DIU.v1.20260929183844@mojatatu.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+  Allocated by task 1662:
+   memstick_alloc_card drivers/memstick/core/memstick.c:383 [inline]
+   memstick_check+0x2c1/0x10d0 drivers/memstick/core/memstick.c:452
+   process_one_work+0xac7/0x1b10 kernel/workqueue.c:3396
+
+  Freed by task 1662:
+   kfree+0x20c/0x650 mm/slub.c:6792
+   memstick_alloc_card drivers/memstick/core/memstick.c:420 [inline]
+   memstick_check+0x72b/0x10d0 drivers/memstick/core/memstick.c:452
+   process_one_work+0xac7/0x1b10 kernel/workqueue.c:3396
+
+Host controller drivers (rtsx_usb_ms, jmb38x_ms, tifm_ms, r592) already
+implement their own hardware and bus timeouts, and callers in
+mspro_block and ms_block already rely on wait_for_completion()
+unconditionally.
+
+Replace wait_for_completion_timeout() with wait_for_completion() in
+memstick_set_rw_addr() and memstick_alloc_card() so that the card
+structure is never freed while an asynchronous request is in flight.
+
+Fixes: baf8532a147d ("memstick: initial commit for Sony MemoryStick support")
+Reported-by: syzbot+ccffdf05833ebdaeae70@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=ccffdf05833ebdaeae70
+Cc: stable@vger.kernel.org
+Signed-off-by: Raj Ojha <rajojha047@gmail.com>
+Signed-off-by: Ulf Hansson <ulfh@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/em_text.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/memstick/core/memstick.c |    8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
 
-diff --git a/net/sched/em_text.c b/net/sched/em_text.c
-index f176afb70559e..1df4d16f44f3e 100644
---- a/net/sched/em_text.c
-+++ b/net/sched/em_text.c
-@@ -51,6 +51,9 @@ static int em_text_change(struct net *net, void *data, int len,
- 	if (len < sizeof(*conf) || len < (sizeof(*conf) + conf->pattern_len))
- 		return -EINVAL;
+--- a/drivers/memstick/core/memstick.c
++++ b/drivers/memstick/core/memstick.c
+@@ -369,9 +369,7 @@ int memstick_set_rw_addr(struct memstick
+ {
+ 	card->next_request = h_memstick_set_rw_addr;
+ 	memstick_new_req(card->host);
+-	if (!wait_for_completion_timeout(&card->mrq_complete,
+-			msecs_to_jiffies(500)))
+-		card->current_mrq.error = -ETIMEDOUT;
++	wait_for_completion(&card->mrq_complete);
  
-+	if (!memchr(conf->algo, '\0', sizeof(conf->algo)))
-+		return -EINVAL;
-+
- 	if (conf->from_layer > conf->to_layer)
- 		return -EINVAL;
+ 	return card->current_mrq.error;
+ }
+@@ -405,9 +403,7 @@ static struct memstick_dev *memstick_all
  
--- 
-2.53.0
-
+ 		card->next_request = h_memstick_read_dev_id;
+ 		memstick_new_req(host);
+-		if (!wait_for_completion_timeout(&card->mrq_complete,
+-				msecs_to_jiffies(500)))
+-			card->current_mrq.error = -ETIMEDOUT;
++		wait_for_completion(&card->mrq_complete);
+ 
+ 		if (card->current_mrq.error)
+ 			goto err_out;
 
 
