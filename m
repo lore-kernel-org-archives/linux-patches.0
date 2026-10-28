@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215074;
-	b=M38ofHM4UpSP13JgGPAbezx+BeDJ3lGLly06jmUAVTfGIPf7R0h5steUysaWGaVVogpT
-	 1iy30oXCCaD0aKM9Pe5IGxMhj41GsGPkdyhDNEQwETxXDyXZn112d5xBtHe/TgU/3WW4V
-	 jBtG7sWj/9n3gyIOvICLCg+fp95bjChfwmZdF/fi/4BJkUpqP9nObRGjkdFzOqz3gRQfb
-	 ae9Nlb5nnpVFavVRJA6Vtw5osz7C5uuDzgrnMPFfTXbA7xItvTYxlkLCbmkjA6bpDvKs2
-	 mf3oj3B8uzB4bn62eGBJhK6UDPIVcYYhzfUSLbo6Vgd9MCJkK2kuF57OQIEPQFzik3w==
+	t=1793215077;
+	b=Y393aioRd3wKt9PVnA+ZQeYmqbttHYlJXNn+D670wnvuLx7FJ+LMKmAjWJXGTQ9CCJ6f
+	 4Flob94xx0OPSB6TCru6WAOsLWvOSs9i7ciI4YdCiGW/lmMiibjoEWYx8J8aRlKE1JrG+
+	 3tJ5oL05fvkUZadg00GiL4BHiOycLTRyTGf1P9xHgCj0V4xwShLdpBipt4sZrw0D3uV4L
+	 XY6GlKOUVccHie6mM2Fwy6Vjp0poNH1sc9cunPLBcEY3HCqF/2oOGE8aY7oDeJL+/asE7
+	 VjLL1meznDVEOlHUB40tQXtxgiVq+wuqYEJ1UYm2++2fFjrx6Nf1jXxDGPcyhCwG0fw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215074;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215077;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=YLIHqsUlOaG7drsuC93er1KBq2Dl4PtUBIz/qr5xFMo=;
-	b=dfXgJ+tuJdpsKxeXIfWOIZ4yBWGd4XmexlKQTin+sDfaz9+6vOYlEajkf+AUWMXdIL3k
-	 9KeJC5qTkrKx9JTRqQL58OoDaxO0i5BBmYABM+k2HFnyBAFVkHk80PcinfwfXVN3HO/ux
-	 Vj53DMxRddLRrHNm9OoGcnwRDso2QkDy86FZYY1mWhZBj3UmDABCJ//0SVu7+DC0QywYS
-	 fsYbLKXCkV8oy/pYm7JCDSyg2CDGJSH0mQ7DtFe66tGNEcDG8fq2+shB1K2ArpwBNx/iO
-	 IT1WrPCyMb7hGaTQhLMiiFDihaKDilSH899Y1VeaKRIIBXbhZ+zGi0462ZDKdwckYEQ==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=dPkCkwVLJJo16zQ5XEOI1FnW05CnCGKneTjZm+blsZU=;
+	b=bEYC86JnReSqHONyQH6nQoU9P59YRnZUofr9ihXmPP9ywK7GPt3SwS69gwgCYRQBvpi6
+	 IFF3+NY4xy8WyBrsJBgX1rC1/IUAp7w/aN5aaAod0dAYvLj+NzgNqkK08GoVDxYAuWEXJ
+	 occDheWkwQtkx/tn4acJ0ooqS5mvG/+nKSbDwy89xW2+lWPqHd1E/SEX398DpOEQsLzpJ
+	 a2Vp8lnjMrg9YYFvXejsmlzrz4h9letix3unEWwFX266SCZ+kwiV0gIkzYsoaVl2ViBu4
+	 2AehIZfsIBODlQ3vRj64uFTrQneKnOtP2nmNAhe/0GGeTvl0MPlFMnodbc4D1GjeRYA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OWjGG2vM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dlPvhDvy;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42AD6606A31A;
-	Wed, 28 Oct 2026 19:17:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19192606A31C;
+	Wed, 28 Oct 2026 19:17:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OWjGG2vM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9026C1F01825;
-	Wed, 28 Oct 2026 19:17:53 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dlPvhDvy
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69FF91F01825;
+	Wed, 28 Oct 2026 19:17:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215074;
-	bh=YLIHqsUlOaG7drsuC93er1KBq2Dl4PtUBIz/qr5xFMo=;
+	s=korg; t=1793215077;
+	bh=dPkCkwVLJJo16zQ5XEOI1FnW05CnCGKneTjZm+blsZU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OWjGG2vMpQSrpdQvORx0fnPzGyR/+3bxG99jV97Fth0EJD6bsUSU+GtU23enYzeCW
-	 0JZVPuIEG5bSQSXpnAbzvRDVVv3CK0pZGcYOVRruqYi0s85uMqJkkZE2byvYc2JCbD
-	 XR0nHxEdeuEYvd+24JWAwzodRxIRKb07dkefSpw0=
+	b=dlPvhDvyQ2Y6/lgltD47lvf+piFhNv+GBc9aBen8KacUZuvOzIQ6ELzG+jpWCDMZl
+	 +BE+GlLmWe74kt1PhCAMs9erwPtJ5VigiCVGFg7e9t2XvlHxmb/zKZVD7t1xsiCqHM
+	 Kn+JGfkOsDL7y5mSr2hjsTZdKPWwJT4F32z3iXN4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan@kernel.org>,
-	=?UTF-8?q?Damien=20Ri=C3=A9gel?= <damien.riegel@silabs.com>,
+	syzbot+c1e9aedbd913fadad617@syzkaller.appspotmail.com,
+	Deepanshu Kartikey <Kartikey406@gmail.com>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1081/1887] greybus: raw: fix use-after-free on cdev close
-Date: Wed, 28 Oct 2026 17:52:57 +0100
-Message-ID: <20261028170524.005152470@linuxfoundation.org>
+Subject: [PATCH 6.1 1082/1887] fs/ntfs3: fix missing run load for vcn0 in attr_data_get_block_locked()
+Date: Wed, 28 Oct 2026 17:52:58 +0100
+Message-ID: <20261028170524.028023737@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -62,192 +63,77 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Damien Riégel <damien.riegel@silabs.com>
+From: Deepanshu Kartikey <kartikey406@gmail.com>
 
-[ Upstream commit 983cc2c7efbce04ecbf6328448d895044dd6ab31 ]
+[ Upstream commit d7ea8495fd307b58f8867acd81a1b40075b1d3ba ]
 
-This addresses a use-after-free bug when a raw bundle is disconnected
-but its chardev is still opened by an application. When the application
-releases the cdev, it causes the following panic when init on free is
-enabled (CONFIG_INIT_ON_FREE_DEFAULT_ON=y):
+When a compressed or sparse attribute has its clusters frame-aligned,
+vcn is rounded down to the frame start using cmask, which can result
+in vcn != vcn0. In this case, vcn and vcn0 may reside in different
+attribute segments.
 
-        refcount_t: underflow; use-after-free.
-        WARNING: CPU: 0 PID: 139 at lib/refcount.c:28 refcount_warn_saturate+0xd0/0x130
-         ...
-        Call Trace:
-         <TASK>
-         cdev_put+0x18/0x30
-         __fput+0x255/0x2a0
-         __x64_sys_close+0x3d/0x80
-         do_syscall_64+0xa4/0x290
-         entry_SYSCALL_64_after_hwframe+0x77/0x7f
+The code already handles the case where vcn is in a different segment
+by loading its runs before allocation. However, it fails to load runs
+for vcn0 when vcn0 resides in a different segment than vcn. This causes
+run_lookup_entry() to return SPARSE_LCN for vcn0 since its segment was
+never loaded into the in-memory run list, triggering the WARN_ON(1).
 
-The cdev is contained in the "gb_raw" structure, which is freed in the
-disconnect operation. When the cdev is released at a later time,
-cdev_put gets an address that points to freed memory.
+Fix this by adding a missing check for vcn0 after the existing vcn
+segment check. If vcn0 falls outside the current segment range
+[svcn, evcn1), find and load the attribute segment containing vcn0
+before performing the run lookup.
 
-To fix this use-after-free, convert the struct device from a pointer to
-being embedded, that makes the lifetime of the cdev and of this device
-the same. Then, use cdev_device_add, which guarantees that the device
-won't be released until all references to the cdev have been released.
-Finally, delegate the freeing of the structure to the device release
-function, instead of freeing immediately in the disconnect callback.
+The following scenario triggers the bug:
+  attr_data_get_block_locked()
+    vcn = vcn0 & cmask        <- vcn != vcn0 after frame alignment
+    load runs for vcn segment <- vcn0 segment not loaded!
+    attr_allocate_clusters()  <- allocation succeeds
+    run_lookup_entry(vcn0)    <- vcn0 not in run -> SPARSE_LCN
+    WARN_ON(1)                <- bug fires here!
 
-Fixes: e806c7fb8e9b ("greybus: raw: add raw greybus kernel driver")
-Reviewed-by: Johan Hovold <johan@kernel.org>
-Signed-off-by: Damien Riégel <damien.riegel@silabs.com>
-Link: https://patch.msgid.link/20260324140039.40001-1-damien.riegel@silabs.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: syzbot+c1e9aedbd913fadad617@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=c1e9aedbd913fadad617
+Fixes: c380b52f6c57 ("fs/ntfs3: Change new sparse cluster processing")
+Signed-off-by: Deepanshu Kartikey <Kartikey406@gmail.com>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/greybus/raw.c | 67 +++++++++++++++++------------------
- 1 file changed, 33 insertions(+), 34 deletions(-)
+ fs/ntfs3/attrib.c | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-diff --git a/drivers/staging/greybus/raw.c b/drivers/staging/greybus/raw.c
-index 2a375f407d389..eb55b54d7d771 100644
---- a/drivers/staging/greybus/raw.c
-+++ b/drivers/staging/greybus/raw.c
-@@ -21,9 +21,8 @@ struct gb_raw {
- 	struct list_head list;
- 	int list_data;
- 	struct mutex list_lock;
--	dev_t dev;
- 	struct cdev cdev;
--	struct device *device;
-+	struct device dev;
- };
- 
- struct raw_data {
-@@ -145,6 +144,15 @@ static int gb_raw_send(struct gb_raw *raw, u32 len, const char __user *data)
- 	return retval;
- }
- 
-+static void raw_dev_release(struct device *dev)
-+{
-+	struct gb_raw *raw = container_of(dev, struct gb_raw, dev);
+diff --git a/fs/ntfs3/attrib.c b/fs/ntfs3/attrib.c
+index db4f2dffed950..c037f5307657a 100644
+--- a/fs/ntfs3/attrib.c
++++ b/fs/ntfs3/attrib.c
+@@ -1048,6 +1048,22 @@ int attr_data_get_block(struct ntfs_inode *ni, CLST vcn, CLST clen, CLST *lcn,
+ 			if (err)
+ 				goto out;
+ 		}
 +
-+	ida_free(&minors, MINOR(raw->dev.devt));
++		if (vcn0 < svcn || evcn1 <= vcn0) {
++			struct ATTRIB *attr2;
++			struct ATTR_LIST_ENTRY *le2 = le_b;
++			struct mft_inode *mi2;
 +
-+	kfree(raw);
-+}
-+
- static int gb_raw_probe(struct gb_bundle *bundle,
- 			const struct greybus_bundle_id *id)
- {
-@@ -161,15 +169,30 @@ static int gb_raw_probe(struct gb_bundle *bundle,
- 	if (cport_desc->protocol_id != GREYBUS_PROTOCOL_RAW)
- 		return -ENODEV;
- 
-+	minor = ida_alloc(&minors, GFP_KERNEL);
-+	if (minor < 0)
-+		return minor;
-+
- 	raw = kzalloc(sizeof(*raw), GFP_KERNEL);
--	if (!raw)
-+	if (!raw) {
-+		ida_free(&minors, minor);
- 		return -ENOMEM;
-+	}
-+
-+	device_initialize(&raw->dev);
-+	raw->dev.devt = MKDEV(raw_major, minor);
-+	raw->dev.class = raw_class;
-+	raw->dev.parent = &bundle->dev;
-+	raw->dev.release = raw_dev_release;
-+	retval = dev_set_name(&raw->dev, "gb!raw%d", minor);
-+	if (retval)
-+		goto error_put_device;
- 
- 	connection = gb_connection_create(bundle, le16_to_cpu(cport_desc->id),
- 					  gb_raw_request_handler);
- 	if (IS_ERR(connection)) {
- 		retval = PTR_ERR(connection);
--		goto error_free;
-+		goto error_put_device;
++			attr2 = ni_find_attr(ni, attr_b, &le2, ATTR_DATA, NULL,
++					     0, &vcn0, &mi2);
++			if (!attr2) {
++				err = -EINVAL;
++				goto out;
++			}
++			err = attr_load_runs(attr2, ni, run, NULL);
++			if (err)
++				goto out;
++		}
  	}
  
- 	INIT_LIST_HEAD(&raw->list);
-@@ -178,46 +201,26 @@ static int gb_raw_probe(struct gb_bundle *bundle,
- 	raw->connection = connection;
- 	greybus_set_drvdata(bundle, raw);
- 
--	minor = ida_simple_get(&minors, 0, 0, GFP_KERNEL);
--	if (minor < 0) {
--		retval = minor;
--		goto error_connection_destroy;
--	}
--
--	raw->dev = MKDEV(raw_major, minor);
- 	cdev_init(&raw->cdev, &raw_fops);
- 
- 	retval = gb_connection_enable(connection);
- 	if (retval)
--		goto error_remove_ida;
-+		goto error_connection_destroy;
- 
--	retval = cdev_add(&raw->cdev, raw->dev, 1);
-+	retval = cdev_device_add(&raw->cdev, &raw->dev);
- 	if (retval)
- 		goto error_connection_disable;
- 
--	raw->device = device_create(raw_class, &connection->bundle->dev,
--				    raw->dev, raw, "gb!raw%d", minor);
--	if (IS_ERR(raw->device)) {
--		retval = PTR_ERR(raw->device);
--		goto error_del_cdev;
--	}
--
- 	return 0;
- 
--error_del_cdev:
--	cdev_del(&raw->cdev);
--
- error_connection_disable:
- 	gb_connection_disable(connection);
- 
--error_remove_ida:
--	ida_simple_remove(&minors, minor);
--
- error_connection_destroy:
- 	gb_connection_destroy(connection);
- 
--error_free:
--	kfree(raw);
-+error_put_device:
-+	put_device(&raw->dev);
- 	return retval;
- }
- 
-@@ -228,11 +231,8 @@ static void gb_raw_disconnect(struct gb_bundle *bundle)
- 	struct raw_data *raw_data;
- 	struct raw_data *temp;
- 
--	// FIXME - handle removing a connection when the char device node is open.
--	device_destroy(raw_class, raw->dev);
--	cdev_del(&raw->cdev);
-+	cdev_device_del(&raw->cdev, &raw->dev);
- 	gb_connection_disable(connection);
--	ida_simple_remove(&minors, MINOR(raw->dev));
- 	gb_connection_destroy(connection);
- 
- 	mutex_lock(&raw->list_lock);
-@@ -241,8 +241,7 @@ static void gb_raw_disconnect(struct gb_bundle *bundle)
- 		kfree(raw_data);
- 	}
- 	mutex_unlock(&raw->list_lock);
--
--	kfree(raw);
-+	put_device(&raw->dev);
- }
- 
- /*
+ 	if (vcn + to_alloc > asize)
 -- 
 2.53.0
 
