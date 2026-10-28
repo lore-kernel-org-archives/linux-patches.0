@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793211407;
-	b=zvWT4IH9VwojVEK7DVgsCOdurK1xxgTxGOy771SuBbfrTL0FT1IZIQ9XWj/Tn39VLMLK
-	 PgrXbcK/lSYiDKxItMKOI6SRJBQIFwKA9T+cSt2IHdu2dV2wGXDNeJtG/NjNUOB3KoOnb
-	 vjHJ8QeGY07SdA/oGSHyrORiWyrwShWgiZOBruCK+pmjFL8OFwBaTBBxTLuNfcUGB0VRS
-	 D2VEvhNs1JvtPWks+rXsrgTnkkC5E45SZnjJnYrdj3GwwDWXHdNnzHRw62zmgYjN+BOmp
-	 6FRWoadZZnTGib1jk8ihsDfSlmqm151fTo84a16mQNpPaSuFKnN8qmPCBTREAMnsl+w==
+	t=1793211410;
+	b=rfu9YwYrfPl2x5rWJk73z7gMtx1X+zw2Po2nlBy1WgwFc+W3GygbBQFoJwNy6sza4+Zx
+	 gCCGery0TEv/11jQHxQu/Wq9OJYMDZxT9t+taBkXbf4wUq6g/cRzgvoYhZYgdcprPNMSR
+	 nnvnnLkwcun0DwQXiIJoKnCmjbzvF+ySksOyB89AtC2Q4VKTZ0yttCqpgx3+nmo4cuCEe
+	 hEPmsvPZkFRwEMR6I8YxZei8sx72LeBCL/zlPd0JOEyjYNQdvI3jUnoQ3IY9O9WpZDdpg
+	 RPmWSw4Pe5wOMB4XHUe0xQ0G+t7rgEXr/R2ZU1RUEfDl2s97uhp85IuVBoJdhv7p74Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793211407;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793211410;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=x68vQlWjit/IIogwzw46D9feAzj94lTbisB24uaiF/I=;
-	b=qOM2qoypTFUPkzoxAR6dzBJ2MZul/oJgKr0VOEiUpUy67Kf7uDd+O3bMIe0KMCypxAKs
-	 fB+6H452vtkOYGoBvwiSI1It+Js7/on4Hu9Gne0HUj8c79MSGAcsZ0+jj0s0Jr3S8mc6e
-	 ldtTSf2vDwiuSBV8VMAHY06QmylMju3Ocpc0NQ2KuPG+cCENsgtaa+x3fNyc03BlrJ8To
-	 kZR1/UuhppeAoBjAem8MJb78uSU90pGQszkkuuZS3oM4WOQP2qzk16hdMcqZ3vvKB3ZY+
-	 VKQMivcnlwaPuq7nZOpH7UW52SXPZH5Mk+Amu2EgEFTWCIbZcRc35hvcnkUaLc6DXVw==
+	bh=WAYj4j/3XJ/WIeWB6CLgyLVNDpdcxiguP5t/X0VNNNg=;
+	b=JPVXrseSAwWgbecD5CPsIncG4Ue/4yrltqVVU7q9jIE3oAev/lDYehK1occI1hHcshAm
+	 zEuLSyvkrPwSPtgvZkb8faWtZOakwmlftUjwGW6nyidAGlBOd7e+Yl2U/eKGJ/j+LzkAg
+	 m1lKtGRZVYonAG1kwNHhuhNBg259sMROQ91xF4t0GXdeZkOj1WWYtVPdo7MrkEpw2kcDF
+	 Kzck07Ail18tfSo4z1WnnAET3iTbp+YLLvFJRhI0Eb/WTwqR6ktUQE/PcHhNkrDB9Zy7L
+	 n1WibJ/Vo7oc4vZztTa8jV364wxc4DgVtjd1dbdfBR+ObJJswgnwFn14jNxLOfrMwUg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=apEa2Vxi;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hh5lx45C;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B9CF606A321;
-	Wed, 28 Oct 2026 18:16:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77BFF606A321;
+	Wed, 28 Oct 2026 18:16:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=apEa2Vxi
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDE3D1F01825;
-	Wed, 28 Oct 2026 18:16:46 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hh5lx45C
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C87D41F01825;
+	Wed, 28 Oct 2026 18:16:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793211407;
-	bh=x68vQlWjit/IIogwzw46D9feAzj94lTbisB24uaiF/I=;
+	s=korg; t=1793211410;
+	bh=WAYj4j/3XJ/WIeWB6CLgyLVNDpdcxiguP5t/X0VNNNg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=apEa2Vxi0594TKjgRJNLTyT90JYeCj//iN9o/1ANuYBnuIu8kJGUWoz4kSnRBAdL9
-	 uTmWx5hO3nUPFXyto0xmSv1LO8hRb1vsIlFFggDaF8Xjk+3DOG8BcGyCGbmZ/3db0r
-	 OP+IXFNARnYt/y9daQLzp/cz4qch1gw9QUwXqE8A=
+	b=hh5lx45CupEvlGfNAnEMDDd7SnqQrlXAogfe5A9d6ONjUb9bgYHThK/w7yVae0qIE
+	 Fmm3b8kiR0A5RwREgssurO9ZxpuIRsqSYqx5y2qYniBmXuzxj/Eh/V0q/aU5PutDj9
+	 jdaoDEpmk7pvnJxvAm2Gr8DIkiEqBErDiaqX3acs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Borzeszkowski <alan.borzeszkowski@linux.intel.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Nick Bowler <nbowler@draconx.ca>,
+	syzbot+473d7477c523b41d4046@syzkaller.appspotmail.com,
+	Johan Hovold <johan@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 321/571] thunderbolt: Fix KASAN reported use-after-free when request is canceled
-Date: Wed, 28 Oct 2026 17:57:48 +0100
-Message-ID: <20261028170015.618913258@linuxfoundation.org>
+Subject: [PATCH 5.15 322/571] USB: serial: fix ioctl hangup race
+Date: Wed, 28 Oct 2026 17:57:49 +0100
+Message-ID: <20261028170015.644043564@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -68,236 +69,254 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mika Westerberg <mika.westerberg@linux.intel.com>
+From: Johan Hovold <johan@kernel.org>
 
-[ Upstream commit a02188ddc24b7872f0c5e0c5873f827318717803 ]
+[ Upstream commit ae0e61d95677efa778379853e495d748e6efbf95 ]
 
-Alan reported that when doing stress testing sometimes KASAN notices
-use-after-free during control channel operation (stripped down keeping
-the relevant parts):
+The tty ioctls can race with hangup and end up calling into a tty driver
+for a device that is already gone or powered down.
 
- BUG: KASAN: slab-use-after-free in tb_cfg_request_sync+0x240/0x250 [thunderbolt]
- Read of size 24 at addr ffff88811067f290 by task kworker/u40:2/1760
-  <TASK>
-  tb_cfg_request_sync+0x240/0x250 [thunderbolt]
-  tb_cfg_read_raw+0x367/0x510 [thunderbolt]
-  tb_cfg_read+0xec/0x240 [thunderbolt]
-  tb_port_get_link_generation+0x258/0x420 [thunderbolt]
-  tb_usb3_consumed_bandwidth+0x1c1/0x2c0 [thunderbolt]
-  tb_tunnel_consumed_bandwidth+0xfd/0x910 [thunderbolt]
-  tb_available_bandwidth+0x5f2/0xeb0 [thunderbolt]
-  tb_recalc_estimated_bandwidth+0x2a0/0x1bc0 [thunderbolt]
-  tb_handle_dp_bandwidth_request+0x1897/0x5e20 [thunderbolt]
-  process_one_work+0x675/0x1230
-  worker_thread+0x5e6/0xf70
-  kthread+0x365/0x470
-  ret_from_fork+0x54d/0x710
-  ret_from_fork_asm+0x1a/0x30
-  </TASK>
+Serialise the callbacks using the tty port mutex and add the missing
+checks to make sure the port has not been hung up before accessing port
+driver data or hardware.
 
- Allocated by task 1760:
-  __kmalloc_cache_noprof+0x1ee/0x550
-  tb_cfg_read_raw+0x1d3/0x510 [thunderbolt]
-  tb_cfg_read+0xec/0x240 [thunderbolt]
-  tb_port_get_link_generation+0x258/0x420 [thunderbolt]
-  tb_usb3_consumed_bandwidth+0x1c1/0x2c0 [thunderbolt]
-  tb_tunnel_consumed_bandwidth+0xfd/0x910 [thunderbolt]
-  tb_available_bandwidth+0x5f2/0xeb0 [thunderbolt]
-  tb_recalc_estimated_bandwidth+0x2a0/0x1bc0 [thunderbolt]
-  tb_handle_dp_bandwidth_request+0x1897/0x5e20 [thunderbolt]
-  process_one_work+0x675/0x1230
-  worker_thread+0x5e6/0xf70
-  kthread+0x365/0x470
-  ret_from_fork+0x54d/0x710
-  ret_from_fork_asm+0x1a/0x30
+This specifically avoids dereferencing a NULL-pointer if a device is
+disconnected during lengthy break signalling.
 
- Freed by task 926:
-  kfree+0x18f/0x4a0
-  tb_cfg_request_put+0xb7/0xe0 [thunderbolt]
-  tb_cfg_request_work+0x82/0x120 [thunderbolt]
-  process_one_work+0x675/0x1230
-  worker_thread+0x5e6/0xf70
-  kthread+0x365/0x470
-  ret_from_fork+0x54d/0x710
-  ret_from_fork_asm+0x1a/0x30
+Note that TIOCGICOUNT and TIOCMIWAIT do not access port driver data or
+hardware and are therefore not affected by the race.
 
- Second to last potentially related work creation:
-  __queue_work+0x575/0xd00
-  queue_work_on+0x77/0x80
-  tb_cfg_request_cancel+0xc7/0x260 [thunderbolt]
-  tb_cfg_request_sync+0x1f6/0x250 [thunderbolt]
-  tb_cfg_read_raw+0x367/0x510 [thunderbolt]
-  tb_cfg_read+0xec/0x240 [thunderbolt]
-  tb_port_get_link_generation+0x258/0x420 [thunderbolt]
-  tb_usb3_consumed_bandwidth+0x1c1/0x2c0 [thunderbolt]
-  tb_tunnel_consumed_bandwidth+0xfd/0x910 [thunderbolt]
-  tb_available_bandwidth+0x5f2/0xeb0 [thunderbolt]
-  tb_recalc_estimated_bandwidth+0x2a0/0x1bc0 [thunderbolt]
-  tb_handle_dp_bandwidth_request+0x1897/0x5e20 [thunderbolt]
-  process_one_work+0x675/0x1230
-  worker_thread+0x5e6/0xf70
-  kthread+0x365/0x470
-  ret_from_fork+0x54d/0x710
-  ret_from_fork_asm+0x1a/0x30
-
-The last stack trace is helpful because it shows that we are cancelling
-a request and looking at tb_cfg_request_cancel() what might happen is
-that tb_cfg_request_work() completes right before tb_cfg_request_cancel()
-starts and because of this it will call schedule_work() queueing the
-same work to run again. However, it is already removed from the
-request_queue and reference count is dropped so when
-tb_cfg_request_work() triggers again it will access memory that is
-already released.
-
-Fix this so that we first make sure a cancelled request is not handed
-away from tb_cfg_request_find() or scheduled to run. Then instead of
-relying on the worker to clean up the request we will do it in
-tb_cfg_request_cancel() after the work is canceled from running. Make
-tb_cfg_request_dequeue() release the request only if it was actually
-removed from the queue.
-
-Reported-by: Alan Borzeszkowski <alan.borzeszkowski@linux.intel.com>
-Fixes: d7f781bfdbf4 ("thunderbolt: Rework control channel to be more reliable")
-Cc: stable@vger.kernel.org
-Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
-[ sashal: Replaced guard()/scoped_guard() with explicit mutex locking for GNU89 compatibility. ]
+Fixes: f34d7a5b7010 ("tty: The big operations rework")
+Reported-by: Nick Bowler <nbowler@draconx.ca>
+Link: https://lore.kernel.org/all/CADyTPExB2kYOOwkO0JqGhKaYVDqO9uS9WCw0J=MCTdVhcGOogA@mail.gmail.com/
+Reported-by: syzbot+473d7477c523b41d4046@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/r/6a9087a4.4d659fcc.734b4.0013.GAE@google.com
+Cc: stable@vger.kernel.org	# 2.6.26
+Signed-off-by: Johan Hovold <johan@kernel.org>
+[ sashal: Adapted to void-returning break_ctl() and the older termios signature while omitting hunks for absent XR RS-485 handlers. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thunderbolt/ctl.c | 47 +++++++++++++++++++--------------------
- 1 file changed, 23 insertions(+), 24 deletions(-)
+ drivers/usb/serial/generic.c    | 10 +++-
+ drivers/usb/serial/usb-serial.c | 92 ++++++++++++++++++++++++++-------
+ 2 files changed, 82 insertions(+), 20 deletions(-)
 
-diff --git a/drivers/thunderbolt/ctl.c b/drivers/thunderbolt/ctl.c
-index 7c070a58f4b95..36c64ed467d55 100644
---- a/drivers/thunderbolt/ctl.c
-+++ b/drivers/thunderbolt/ctl.c
-@@ -65,7 +65,6 @@ struct tb_ctl {
- #define tb_ctl_dbg(ctl, format, arg...) \
- 	dev_dbg(&(ctl)->nhi->pdev->dev, format, ## arg)
- 
--static DECLARE_WAIT_QUEUE_HEAD(tb_cfg_request_cancel_queue);
- /* Serializes access to request kref_get/put */
- static DEFINE_MUTEX(tb_cfg_request_lock);
- 
-@@ -123,11 +122,14 @@ void tb_cfg_request_put(struct tb_cfg_request *req)
- static int tb_cfg_request_enqueue(struct tb_ctl *ctl,
- 				  struct tb_cfg_request *req)
+diff --git a/drivers/usb/serial/generic.c b/drivers/usb/serial/generic.c
+index 15b6dee3a8e50..64890f6d78e03 100644
+--- a/drivers/usb/serial/generic.c
++++ b/drivers/usb/serial/generic.c
+@@ -268,6 +268,7 @@ EXPORT_SYMBOL_GPL(usb_serial_generic_chars_in_buffer);
+ void usb_serial_generic_wait_until_sent(struct tty_struct *tty, long timeout)
  {
-+	tb_cfg_request_get(req);
+ 	struct usb_serial_port *port = tty->driver_data;
++	struct tty_port *tport = &port->port;
+ 	unsigned int bps;
+ 	unsigned long period;
+ 	unsigned long expire;
+@@ -287,7 +288,14 @@ void usb_serial_generic_wait_until_sent(struct tty_struct *tty, long timeout)
+ 					__func__, jiffies_to_msecs(timeout),
+ 					jiffies_to_msecs(period));
+ 	expire = jiffies + timeout;
+-	while (!port->serial->type->tx_empty(port)) {
++	for (;;) {
++		mutex_lock(&tport->mutex);
++		if (tty_io_error(tty) || port->serial->type->tx_empty(port)) {
++			mutex_unlock(&tport->mutex);
++			break;
++		}
++		mutex_unlock(&tport->mutex);
 +
- 	WARN_ON(test_bit(TB_CFG_REQUEST_ACTIVE, &req->flags));
- 	WARN_ON(req->ctl);
- 
- 	mutex_lock(&ctl->request_queue_lock);
- 	if (!ctl->running) {
-+		tb_cfg_request_put(req);
- 		mutex_unlock(&ctl->request_queue_lock);
- 		return -ENOTCONN;
- 	}
-@@ -138,28 +140,24 @@ static int tb_cfg_request_enqueue(struct tb_ctl *ctl,
- 	return 0;
- }
- 
-+static bool tb_cfg_request_is_active(struct tb_cfg_request *req)
-+{
-+	return test_bit(TB_CFG_REQUEST_ACTIVE, &req->flags);
-+}
-+
- static void tb_cfg_request_dequeue(struct tb_cfg_request *req)
- {
- 	struct tb_ctl *ctl = req->ctl;
- 
- 	mutex_lock(&ctl->request_queue_lock);
--	if (!test_bit(TB_CFG_REQUEST_ACTIVE, &req->flags)) {
--		mutex_unlock(&ctl->request_queue_lock);
--		return;
-+	if (tb_cfg_request_is_active(req)) {
-+		list_del(&req->list);
-+		clear_bit(TB_CFG_REQUEST_ACTIVE, &req->flags);
-+		tb_cfg_request_put(req);
- 	}
--
--	list_del(&req->list);
--	clear_bit(TB_CFG_REQUEST_ACTIVE, &req->flags);
--	if (test_bit(TB_CFG_REQUEST_CANCELED, &req->flags))
--		wake_up(&tb_cfg_request_cancel_queue);
- 	mutex_unlock(&ctl->request_queue_lock);
- }
- 
--static bool tb_cfg_request_is_active(struct tb_cfg_request *req)
--{
--	return test_bit(TB_CFG_REQUEST_ACTIVE, &req->flags);
--}
--
- static struct tb_cfg_request *
- tb_cfg_request_find(struct tb_ctl *ctl, struct ctl_pkg *pkg)
- {
-@@ -169,7 +167,8 @@ tb_cfg_request_find(struct tb_ctl *ctl, struct ctl_pkg *pkg)
- 	mutex_lock(&pkg->ctl->request_queue_lock);
- 	list_for_each_entry(req, &pkg->ctl->request_queue, list) {
- 		tb_cfg_request_get(req);
--		if (req->match(req, pkg)) {
-+		if (!test_bit(TB_CFG_REQUEST_CANCELED, &req->flags) &&
-+		    req->match(req, pkg)) {
- 			found = true;
+ 		schedule_timeout_interruptible(period);
+ 		if (signal_pending(current))
  			break;
- 		}
-@@ -496,8 +495,11 @@ static void tb_ctl_rx_callback(struct tb_ring *ring, struct ring_frame *frame,
- 	 */
- 	req = tb_cfg_request_find(pkg->ctl, pkg);
- 	if (req) {
--		if (req->copy(req, pkg))
-+		mutex_lock(&pkg->ctl->request_queue_lock);
-+		if (!test_bit(TB_CFG_REQUEST_CANCELED, &req->flags) &&
-+		    req->copy(req, pkg))
- 			schedule_work(&req->work);
-+		mutex_unlock(&pkg->ctl->request_queue_lock);
- 		tb_cfg_request_put(req);
+diff --git a/drivers/usb/serial/usb-serial.c b/drivers/usb/serial/usb-serial.c
+index 97a031033e946..ec84825d45aae 100644
+--- a/drivers/usb/serial/usb-serial.c
++++ b/drivers/usb/serial/usb-serial.c
+@@ -401,17 +401,13 @@ static unsigned int serial_chars_in_buffer(struct tty_struct *tty)
+ static void serial_wait_until_sent(struct tty_struct *tty, int timeout)
+ {
+ 	struct usb_serial_port *port = tty->driver_data;
+-	struct usb_serial *serial = port->serial;
+ 
+ 	dev_dbg(&port->dev, "%s\n", __func__);
+ 
+ 	if (!port->serial->type->wait_until_sent)
+ 		return;
+ 
+-	mutex_lock(&serial->disc_mutex);
+-	if (!serial->disconnected)
+-		port->serial->type->wait_until_sent(tty, timeout);
+-	mutex_unlock(&serial->disc_mutex);
++	port->serial->type->wait_until_sent(tty, timeout);
+ }
+ 
+ static void serial_throttle(struct tty_struct *tty)
+@@ -439,8 +435,13 @@ static int serial_get_serial(struct tty_struct *tty, struct serial_struct *ss)
+ 	struct usb_serial_port *port = tty->driver_data;
+ 	struct tty_port *tport = &port->port;
+ 	unsigned int close_delay, closing_wait;
++	int ret = 0;
+ 
+ 	mutex_lock(&tport->mutex);
++	if (tty_io_error(tty)) {
++		ret = -EIO;
++		goto out_unlock;
++	}
+ 
+ 	close_delay = jiffies_to_msecs(tport->close_delay) / 10;
+ 	closing_wait = tport->closing_wait;
+@@ -453,10 +454,10 @@ static int serial_get_serial(struct tty_struct *tty, struct serial_struct *ss)
+ 
+ 	if (port->serial->type->get_serial)
+ 		port->serial->type->get_serial(tty, ss);
+-
++out_unlock:
+ 	mutex_unlock(&tport->mutex);
+ 
+-	return 0;
++	return ret;
+ }
+ 
+ static int serial_set_serial(struct tty_struct *tty, struct serial_struct *ss)
+@@ -472,6 +473,10 @@ static int serial_set_serial(struct tty_struct *tty, struct serial_struct *ss)
+ 		closing_wait = msecs_to_jiffies(closing_wait * 10);
+ 
+ 	mutex_lock(&tport->mutex);
++	if (tty_io_error(tty)) {
++		ret = -EIO;
++		goto out_unlock;
++	}
+ 
+ 	if (!capable(CAP_SYS_ADMIN)) {
+ 		if (close_delay != tport->close_delay ||
+@@ -499,6 +504,7 @@ static int serial_ioctl(struct tty_struct *tty,
+ 					unsigned int cmd, unsigned long arg)
+ {
+ 	struct usb_serial_port *port = tty->driver_data;
++	struct tty_port *tport = &port->port;
+ 	int retval = -ENOIOCTLCMD;
+ 
+ 	dev_dbg(&port->dev, "%s - cmd 0x%04x\n", __func__, cmd);
+@@ -509,8 +515,21 @@ static int serial_ioctl(struct tty_struct *tty,
+ 			retval = port->serial->type->tiocmiwait(tty, arg);
+ 		break;
+ 	default:
+-		if (port->serial->type->ioctl)
++		if (!port->serial->type->ioctl)
++			break;
++
++		if (cmd == TIOCSRS485)
++			down_write(&tty->termios_rwsem);
++
++		mutex_lock(&tport->mutex);
++		if (tty_io_error(tty))
++			retval = -EIO;
++		else
+ 			retval = port->serial->type->ioctl(tty, cmd, arg);
++		mutex_unlock(&tport->mutex);
++
++		if (cmd == TIOCSRS485)
++			up_write(&tty->termios_rwsem);
  	}
  
-@@ -513,7 +515,6 @@ static void tb_cfg_request_work(struct work_struct *work)
- 		req->callback(req->callback_data);
- 
- 	tb_cfg_request_dequeue(req);
--	tb_cfg_request_put(req);
- }
- 
- /**
-@@ -537,10 +538,9 @@ int tb_cfg_request(struct tb_ctl *ctl, struct tb_cfg_request *req,
- 	INIT_WORK(&req->work, tb_cfg_request_work);
- 	INIT_LIST_HEAD(&req->list);
- 
--	tb_cfg_request_get(req);
- 	ret = tb_cfg_request_enqueue(ctl, req);
- 	if (ret)
--		goto err_put;
-+		return ret;
- 
- 	ret = tb_ctl_tx(ctl, req->request, req->request_size,
- 			req->request_type);
-@@ -554,9 +554,6 @@ int tb_cfg_request(struct tb_ctl *ctl, struct tb_cfg_request *req,
- 
- err_dequeue:
- 	tb_cfg_request_dequeue(req);
--err_put:
--	tb_cfg_request_put(req);
--
- 	return ret;
- }
- 
-@@ -570,9 +567,11 @@ int tb_cfg_request(struct tb_ctl *ctl, struct tb_cfg_request *req,
-  */
- void tb_cfg_request_cancel(struct tb_cfg_request *req, int err)
+ 	return retval;
+@@ -519,25 +538,40 @@ static int serial_ioctl(struct tty_struct *tty,
+ static void serial_set_termios(struct tty_struct *tty, struct ktermios *old)
  {
-+	mutex_lock(&req->ctl->request_queue_lock);
- 	set_bit(TB_CFG_REQUEST_CANCELED, &req->flags);
--	schedule_work(&req->work);
--	wait_event(tb_cfg_request_cancel_queue, !tb_cfg_request_is_active(req));
-+	mutex_unlock(&req->ctl->request_queue_lock);
-+	cancel_work_sync(&req->work);
-+	tb_cfg_request_dequeue(req);
- 	req->result.err = err;
+ 	struct usb_serial_port *port = tty->driver_data;
++	struct tty_port *tport = &port->port;
+ 
+ 	dev_dbg(&port->dev, "%s\n", __func__);
+ 
+-	if (port->serial->type->set_termios)
+-		port->serial->type->set_termios(tty, port, old);
+-	else
++	if (!port->serial->type->set_termios) {
+ 		tty_termios_copy_hw(&tty->termios, old);
++		return;
++	}
++
++	mutex_lock(&tport->mutex);
++	if (!tty_io_error(tty))
++		port->serial->type->set_termios(tty, port, old);
++	mutex_unlock(&tport->mutex);
  }
  
+ static int serial_break(struct tty_struct *tty, int break_state)
+ {
+ 	struct usb_serial_port *port = tty->driver_data;
++	struct tty_port *tport = &port->port;
++	int ret = 0;
+ 
+ 	dev_dbg(&port->dev, "%s\n", __func__);
+ 
+-	if (port->serial->type->break_ctl)
++	if (!port->serial->type->break_ctl)
++		return 0;
++
++	mutex_lock(&tport->mutex);
++	if (tty_io_error(tty))
++		ret = -EIO;
++	else
+ 		port->serial->type->break_ctl(tty, break_state);
++	mutex_unlock(&tport->mutex);
+ 
+-	return 0;
++	return ret;
+ }
+ 
+ static int serial_proc_show(struct seq_file *m, void *v)
+@@ -578,24 +612,44 @@ static int serial_proc_show(struct seq_file *m, void *v)
+ static int serial_tiocmget(struct tty_struct *tty)
+ {
+ 	struct usb_serial_port *port = tty->driver_data;
++	struct tty_port *tport = &port->port;
++	int ret;
+ 
+ 	dev_dbg(&port->dev, "%s\n", __func__);
+ 
+-	if (port->serial->type->tiocmget)
+-		return port->serial->type->tiocmget(tty);
+-	return -ENOTTY;
++	if (!port->serial->type->tiocmget)
++		return -ENOTTY;
++
++	mutex_lock(&tport->mutex);
++	if (tty_io_error(tty))
++		ret = -EIO;
++	else
++		ret = port->serial->type->tiocmget(tty);
++	mutex_unlock(&tport->mutex);
++
++	return ret;
+ }
+ 
+ static int serial_tiocmset(struct tty_struct *tty,
+ 			    unsigned int set, unsigned int clear)
+ {
+ 	struct usb_serial_port *port = tty->driver_data;
++	struct tty_port *tport = &port->port;
++	int ret;
+ 
+ 	dev_dbg(&port->dev, "%s\n", __func__);
+ 
+-	if (port->serial->type->tiocmset)
+-		return port->serial->type->tiocmset(tty, set, clear);
+-	return -ENOTTY;
++	if (!port->serial->type->tiocmset)
++		return -ENOTTY;
++
++	mutex_lock(&tport->mutex);
++	if (tty_io_error(tty))
++		ret = -EIO;
++	else
++		ret = port->serial->type->tiocmset(tty, set, clear);
++	mutex_unlock(&tport->mutex);
++
++	return ret;
+ }
+ 
+ static int serial_get_icount(struct tty_struct *tty,
 -- 
 2.53.0
 
