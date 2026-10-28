@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793208115;
-	b=p7MtzLZdTMeg125UsQP5Gok+3IGXVBu1F1lcxU899FVLs15TpszwJdU+4qkF2EYZY7PT
-	 kAKMHy410yqi1PJsYdW3ejmdvrXs0OA1xO7ntphBIrSX/t7cfJXk2PjHdbSKe4g80/fZW
-	 6gDdr8cuSVKwuktC/jlLhzHdgMtPnyry6v0dp3+qAfuqeUpQeHVihmnUwkm41yo5HiKqy
-	 jjr+uT8v7tdx56ifJ9tMVKDh51gLR7tjNe2QghueC8kTdrsFsXZeL1wGleWqqH0Yngz17
-	 zhu/7vbFIMtGz6PQxEZXGPP+KIKifTUQPzIjkCmXU2McxJB/1B4ROi703XjMPRU9NeA==
+	t=1793208118;
+	b=E7hbXDZdsq6Bqh63YamUQnmsAHV9b5hJ7cLzLVq0Zg9pWMpRiNn9hs9uKt104l90Uyia
+	 xVxuNvMj21s35LKp6nycphry83GxGHoPq2lKjypLjTNYWluIuhO73x5bJg5VgsWcHD2Bc
+	 IYi7jW5mogAAzQgGdXYDd/+TBsSfW8HUi4AjSg1WjBHTsWgbdEpQoIyYp8ir6Ax+FbiLx
+	 E9Uk5a9PPaQiVn6FywKH6uYigM+jzCWx0Sq4VyDl2NQrksj3sONKP3pj3hb5FU+wmY0pL
+	 nTALAV+25fWR34WhSYk+DVC0C2meSGd1GdZ7o0GspIAj1KCLKtcZeao+O/kQIgyoDGA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793208115;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793208118;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Jq0PYz3Uisx3S/jBae3QMRb3Tg3CDR6dbUNz8TrBZV0=;
-	b=s02yJYg9dqKydxMawHOWyYigCZ2BO7LLczyIvxfG4lbVfzAPoUjaAm2IMM0fmQQFwmbp
-	 hMZ0Lhj4OB7sHhigvLFXMhx5JJSjK2PCUkzU/E7uCmR1q3EIwy6bdqdnefiZB6hfvWh7p
-	 V4ZyIi7wVeUHXZtNT2w79cYo7+YtkOLlGQSn27hcIxd8ABMtRg+P/HB7X/dxRIQtAmTiS
-	 6iA5d8/ewW/VDukjfdKNIfgezXMq8cfrHiyxQ2Ypgfo3ASQ914ZYSkCvzAFVAt1JDVIn6
-	 97PHFX7ns79ieBpDL6fR0tsirPe2ReU649Qe5Thd848mRE0q+mW27shFPaN/b8KLGZQ==
+	bh=tbx9hAZNGVQv1qqSjudAmp4OsNGdD5a1kQyxKo9AOq4=;
+	b=g4V3AH8qOQc7M5AYdqLRoFKa6M6amDvA2kGfTIkhdzUKIR+sEzXpTvsN4K2yK5S33vqh
+	 QlwTZ1/mtP999ubLuvoG4ouW3Pq47KXmIInkNEEtOaFL5C6pefm3fnBmbooDwD7hLdXDA
+	 bW6x6er4MxVhamq24WtN6xKH9/jVYJRkEZqMXtJMfB1xuKtcao/EmvbvaMa1BfmsfOdGq
+	 dTBtqGAcZO95qbILLCI/QK/IHBRBV+3zl/gTboeXh+tEKuai8LREc+t7kLg7Gy+1SXnPP
+	 hf9KhXQj9iVR52sZ+GQjM9n+yq2v+ikrnQqwLaLlDaM9nbmpa/xnbz36SNRYCZ2RfbQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sDgJUiMd;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Oo8jOvqn;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 296D6606A334;
-	Wed, 28 Oct 2026 17:21:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C91DA606A324;
+	Wed, 28 Oct 2026 17:21:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sDgJUiMd
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F5831F01825;
-	Wed, 28 Oct 2026 17:21:54 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Oo8jOvqn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F9411F031E2;
+	Wed, 28 Oct 2026 17:21:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793208114;
-	bh=Jq0PYz3Uisx3S/jBae3QMRb3Tg3CDR6dbUNz8TrBZV0=;
+	s=korg; t=1793208117;
+	bh=tbx9hAZNGVQv1qqSjudAmp4OsNGdD5a1kQyxKo9AOq4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sDgJUiMdPq6KbYsczyicWx7BegtG2eTIgZCwPhpQePzKg5osGTveDLznabPxL0gW1
-	 zAzAzkuqVH0ipZ3E2pFWYTuCM6mk6AZWoij9raC+p5+PemodWQagVUE2lNWwzZj1vX
-	 6p8vQnIZ13amnOFgwNkKy6xiwvaMLlYOHTA432YA=
+	b=Oo8jOvqnpqfHkngdJj72l6UauFG5EXO4lVgusZGbLtBKHeTl7VeMoYjj9HOSgQZ0z
+	 sQlUibHNnvb5iAL7gvnYcaDrMfZkIxVJwjREoKYK7lDCGJutBTRtMV/WQmX/1lrwqw
+	 SMBembjvd1YmDv6PKL2+q0C3ytg8lPwaYbh3obS0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Austin Schuh <austin.linux@gmail.com>,
+	Josef Bacik <josef@toxicpanda.com>,
 	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.12 228/247] io_uring/wait: wake real-time waiters from hard interrupt context
-Date: Wed, 28 Oct 2026 18:00:31 +0100
-Message-ID: <20261028165952.820099300@linuxfoundation.org>
+Subject: [PATCH 6.12 219/247] io_uring/timeout: no ABS update of multishot timeouts
+Date: Wed, 28 Oct 2026 18:00:22 +0100
+Message-ID: <20261028165952.608240458@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165947.349197979@linuxfoundation.org>
 References: <20261028165947.349197979@linuxfoundation.org>
@@ -67,90 +67,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Austin Schuh <austin.linux@gmail.com>
+From: Josef Bacik <josef@toxicpanda.com>
 
-Commit 5b01d5955ac206e38097f777eff6ab2a8b948c41 upstream.
+Commit b088ae34d4da730dc647261b893a6eb622fe5e1f upstream.
 
-Since commit cebf123c634a ("io_uring: implement our own schedule timeout
-handling"), a CQ wait with a timeout sleeps on io_uring's own hrtimer
-instead of an hrtimer sleeper.  On PREEMPT_RT, an hrtimer that isn't
-marked for hard interrupt expiry expires in the per-CPU ktimers thread,
-which runs at SCHED_FIFO 1.  A real-time task waiting in io_uring_enter()
-is therefore not woken at its deadline while any other real-time task is
-runnable on its CPU: the wakeup waits until every one of them has blocked.
+IORING_TIMEOUT_MULTISHOT can't be combined with IORING_TIMEOUT_ABS, prep
+rejects that, as the request is armed again with the same value each time
+it fires. IORING_TIMEOUT_UPDATE doesn't check and takes an absolute time
+for a multishot timeout. The first expiry is as asked for, but
+io_timeout_complete() then arms the timer with ->mode of the original
+request, i.e. it uses the absolute time as the interval. With
+CLOCK_MONOTONIC the next expiry is an uptime away, with CLOCK_REALTIME
+more than fifty years.
 
-hrtimer sleepers, which schedule_hrtimeout_range_clock() used to give
-io_uring, don't have this problem: __hrtimer_setup_sleeper() marks the
-timer hard when the sleeping task is in a real-time or deadline class.
-Both of io_uring's callbacks are fine in hard interrupt context:
-io_cqring_timer_wakeup() sets a flag and calls wake_up_process(), and
-io_cqring_min_timer_wakeup() only reads ring state, under RCU, before
-doing the same or re-arming the timer.  Apply the sleeper rule to them.
+Fail such an update with -EINVAL, and do so before the timeout is
+touched.
 
-Measured on a Jetson Orin Nano running 6.18.39-rt with this change
-backported: a SCHED_FIFO 40 task waits in io_uring_enter() for 40,000
-deadlines 500us apart, while a SCHED_FIFO 20 task runs bursts of up to
-1ms on the same CPU.  Before, 6,647 wakeups were more than 100us late,
-the latest by 1,040us, and 2,758 deadlines passed without a wakeup at
-all.  After, none were more than 100us late and the latest was 18us.
-
-This mirrors epoll: epoll_pwait2() waits on an hrtimer sleeper, so its
-timeout is already hard for real-time tasks, and on the same setup it
-was never more than 17us late.
-
-[ 6.12: the wait code is still in io_uring.c, hrtimer_init_on_stack() API ]
-Fixes: cebf123c634a ("io_uring: implement our own schedule timeout handling")
-Cc: stable@vger.kernel.org
+Fixes: ea97f6c8558e ("io_uring: add support for multishot timeouts")
 Assisted-by: LLM
-Signed-off-by: Austin Schuh <austin.linux@gmail.com>
-Link: https://patch.msgid.link/20261017171726.601443-1-austin.linux@gmail.com
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Link: https://patch.msgid.link/20261015-b4-io-uring-fixes-v1-41-c1556f5d7bf5@toxicpanda.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/io_uring.c |   14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ io_uring/timeout.c |   38 ++++++++++++++++++++++++++------------
+ 1 file changed, 26 insertions(+), 12 deletions(-)
 
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -48,6 +48,7 @@
- #include <linux/uio.h>
- #include <linux/bits.h>
- 
-+#include <linux/sched/rt.h>
- #include <linux/sched/signal.h>
- #include <linux/fs.h>
- #include <linux/file.h>
-@@ -2495,12 +2496,21 @@ out_wake:
- 	return io_cqring_timer_wakeup(timer);
+--- a/io_uring/timeout.c
++++ b/io_uring/timeout.c
+@@ -254,22 +254,29 @@ static enum hrtimer_restart io_timeout_f
+ 	return HRTIMER_NORESTART;
  }
  
-+/* Same policy as for hrtimer sleepers, see __hrtimer_setup_sleeper(). */
-+static enum hrtimer_mode io_cqring_timer_mode(void)
-+{
-+	if (IS_ENABLED(CONFIG_PREEMPT_RT) && rt_or_dl_task_policy(current))
-+		return HRTIMER_MODE_ABS_HARD;
-+	return HRTIMER_MODE_ABS;
+-static struct io_kiocb *io_timeout_extract(struct io_ring_ctx *ctx,
+-					   struct io_cancel_data *cd)
++static struct io_kiocb *io_timeout_find(struct io_ring_ctx *ctx,
++					struct io_cancel_data *cd)
+ 	__must_hold(&ctx->timeout_lock)
+ {
+ 	struct io_timeout *timeout;
+-	struct io_timeout_data *io;
+-	struct io_kiocb *req = NULL;
+ 
+ 	list_for_each_entry(timeout, &ctx->timeout_list, list) {
+-		struct io_kiocb *tmp = cmd_to_io_kiocb(timeout);
++		struct io_kiocb *req = cmd_to_io_kiocb(timeout);
+ 
+-		if (io_cancel_req_match(tmp, cd)) {
+-			req = tmp;
+-			break;
+-		}
++		if (io_cancel_req_match(req, cd))
++			return req;
+ 	}
++	return NULL;
 +}
 +
- static int io_cqring_schedule_timeout(struct io_wait_queue *iowq,
- 				      clockid_t clock_id, ktime_t start_time)
++static struct io_kiocb *io_timeout_extract(struct io_ring_ctx *ctx,
++					   struct io_cancel_data *cd)
++	__must_hold(&ctx->timeout_lock)
++{
++	struct io_kiocb *req = io_timeout_find(ctx, cd);
++	struct io_timeout *timeout;
++	struct io_timeout_data *io;
++
+ 	if (!req)
+ 		return ERR_PTR(-ENOENT);
+ 
+@@ -400,14 +407,21 @@ static int io_timeout_update(struct io_r
+ 	__must_hold(&ctx->timeout_lock)
  {
-+	enum hrtimer_mode mode = io_cqring_timer_mode();
- 	ktime_t timeout;
+ 	struct io_cancel_data cd = { .ctx = ctx, .data = user_data, };
+-	struct io_kiocb *req = io_timeout_extract(ctx, &cd);
++	struct io_kiocb *req = io_timeout_find(ctx, &cd);
+ 	struct io_timeout *timeout = io_kiocb_to_cmd(req, struct io_timeout);
+ 	struct io_timeout_data *data;
  
--	hrtimer_init_on_stack(&iowq->t, clock_id, HRTIMER_MODE_ABS);
-+	hrtimer_init_on_stack(&iowq->t, clock_id, mode);
- 	if (iowq->min_timeout) {
- 		timeout = ktime_add_ns(iowq->min_timeout, start_time);
- 		iowq->t.function = io_cqring_min_timer_wakeup;
-@@ -2510,7 +2520,7 @@ static int io_cqring_schedule_timeout(st
- 	}
+-	if (IS_ERR(req))
+-		return PTR_ERR(req);
++	if (!req)
++		return -ENOENT;
  
- 	hrtimer_set_expires_range_ns(&iowq->t, timeout, 0);
--	hrtimer_start_expires(&iowq->t, HRTIMER_MODE_ABS);
-+	hrtimer_start_expires(&iowq->t, mode);
- 
- 	if (!READ_ONCE(iowq->hit_timeout))
- 		schedule();
+ 	data = req->async_data;
++	/* multishot requests only make sense with rel values */
++	if ((data->flags & IORING_TIMEOUT_MULTISHOT) && mode == HRTIMER_MODE_ABS)
++		return -EINVAL;
++
++	req = io_timeout_extract(ctx, &cd);
++	if (IS_ERR(req))
++		return PTR_ERR(req);
+ 	/* for a multishot request this isn't a sequence, keep the repeats */
+ 	if (!(data->flags & IORING_TIMEOUT_MULTISHOT))
+ 		timeout->off = 0; /* noseq */
 
 
