@@ -1,51 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793211121;
-	b=uiHLl1CgoHx/T9lhiLppYWBfUUcbBogYCkdMxa+vHdPW69Q+flApULUXv0ua5hOCWdF2
-	 ROpjguxJdYW+NRrOZ0FpNj4+EPLQHtv6QoJVRuNQQnPEW7Z0rsyokNtG660Dizc9GK64w
-	 SkY1QLVyYzJ4/+E7X8P8cYhYuXOLpX630WDSmKDQ2wi8Pef7Xhg5T9S9PreIR+y0LEk1Q
-	 xK9LhH2XEXrAXxbWa7IRIJRCI2evp2/tfNPxamRUkKx2VRDft65OQtMu8Nu+3hlS3A/kO
-	 35PVeZ6F0Up4E4Cjql/K0TyIxLEi8+KVejT9szd2Nc5jrGUIYgDpv+jNo1KSx9OnGTA==
+	t=1793211126;
+	b=meTBEporoDfWhsvu5E408dAfnPfFCQhtOJ7gP+9YkKaK2I8ayYiDLhfp+82Fje/UtHFm
+	 2IojcOLFWCr05NsHf5MnRkVv1xmdoDmMGcO/2l492DFuIuNC7jxqVXtqw4HJsAUbNlWPJ
+	 WBETN7aDU4kqiBqUzmSzsdsSgGvkgsy/juQCVmOrWVe6sXzPzPtPegKzlGBeoOouhjZzy
+	 RJAbYKBybubSlsW47oehxsZRZiZl4Rxw3O6VdwvytQe4MsruW9LaMPChbsY3GnOB7grVj
+	 mq7CnCNOd2C+nO8kuQlQYLAIg6fW8APdwkRSVNMcab8J/8Umk2Frw8Ef1CQy4tc+TZQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793211121;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793211126;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=4exrs0XwAEfiDoBvjBBUHisZ+ZV5dRYbl3lOwMI2G0E=;
-	b=wmbT6+PC3/rwV3iY//enoC4IQ8KqMWdJYxHExDrDgxXYiSmH7N0QJSgSyMQVJDh1cDf7
-	 1jv+UG0yISem6xspOe4K+R+zul82k159tKJMrcIxfapmjeG+89ZQjgaKNB+t5B6Bk0fdx
-	 YRH5Hqdw5FiCwOat8p+IZxWACgRzqvOQzqV4+opNV2pmGJbkvKilla7rdwGaRW8BU9eAi
-	 nn1FYGb3JHd+2n1QiUk5JiKGLR5sIkBA/AD/hmLA0vP3hUdTtu+T42V4RJk/bNmSTgWsh
-	 88xeohRc51iM8fPmh3/KD4UO2ZYZzisHRAV5LzuB46FbO1yW6yESFVlnHFD/QzYbGfw==
+	bh=m7akp7VlxwhUdzJ4zg4oBqEPOcV7OizcKc6+KrlWQ9c=;
+	b=UOlxCpaHCYfMVX+w41uuWP6sp64mZh1oOqmGXHEz9qDCLo8q0gYaECmWeJPg5fimVPhj
+	 xwDOb2seJ/8YW76sEQ5xqvNelnt31zdlVYQkJNIIMaUkdnP5HJx/mXHn7FceY5qx5d9CQ
+	 eLoYAIuavirWUIvNbcHnbJtGUKwBHWrY/VrJH8szo/OpSwkankJA5caGa3nI4IRTSJ+Tc
+	 e0aMMZOJmfqE/JrYEE5I6sBKgef71wqv0DUvGridr84Hiee8vDIALmY+9xXmqLrIeBXrU
+	 +0vtdh74GZvzMu2BgPae/pMhcl97KN0ApLip2P7MQWaG1wNDHL1qJDLQ3U4VqiV84Ug==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VeLs+yzz;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KV+5D2xY;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8277360A6F4C;
-	Wed, 28 Oct 2026 18:12:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03C8960A6F62;
+	Wed, 28 Oct 2026 18:12:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VeLs+yzz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B93A31F01828;
-	Wed, 28 Oct 2026 18:11:59 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KV+5D2xY
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 573D21F01829;
+	Wed, 28 Oct 2026 18:12:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793211120;
-	bh=4exrs0XwAEfiDoBvjBBUHisZ+ZV5dRYbl3lOwMI2G0E=;
+	s=korg; t=1793211125;
+	bh=m7akp7VlxwhUdzJ4zg4oBqEPOcV7OizcKc6+KrlWQ9c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VeLs+yzzMOctDPhIK7URa6l9jMDCiixrM2syclpPpYNrBrKQwuocHYTbiLTSw6PqQ
-	 4pj/pCxK9UyWEZggLgZIb5BpcTxHwc2OdJ+3AbQXRBaIkjvTuIS4XT0jPx+JlyyUPM
-	 d6MP4mzJZPaouABr6JjRbwXyykt6KE8NEvzB2IWc=
+	b=KV+5D2xYvYIZo6hOwp+xSLJMjZshUyoLnM1PiHLygUm9/XQcddVir+E3tkyeDmW7u
+	 C9nyssv1I8KCBFTDh61uww88fTS3X+m2jVVcDq6wTQIWPKqZzk+vfs9Y2YJDjElQdh
+	 ygpOdJffi1a87QriJTOvDn2dGGJY2pco0nHqZFTU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Liebold <simonlie@amazon.de>,
+	Caleb Connolly <caleb.connolly@linaro.org>,
+	Amit Pundir <amit.pundir@linaro.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 264/571] Revert "scsi: sd: sd_zbc: Use logical blocks as unit when querying zones"
-Date: Wed, 28 Oct 2026 17:56:51 +0100
-Message-ID: <20261028170014.267491845@linuxfoundation.org>
+Subject: [PATCH 5.15 266/571] arm64: dts: qcom: sdm845-db845c: Mark cont splash memory region as reserved
+Date: Wed, 28 Oct 2026 17:56:53 +0100
+Message-ID: <20261028170014.315085326@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -67,103 +70,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Simon Liebold <simonlie@amazon.de>
+From: Amit Pundir <amit.pundir@linaro.org>
 
-This reverts commit 9c78f3cf77855600c0d27f5b5acdf918bc61328e, the 5.15.y
-backport of upstream 43af5da09efb.
+[ Upstream commit 110e70fccce4f22b53986ae797d665ffb1950aa6 ]
 
-43af5da09efb is a cleanup ("slightly simplifies sd_zbc_report_zones()"),
-not a fix. It entered 5.15.y only as a Stable-dep-of: 93dde0bf2f39
-("scsi: scsi_debug: Fix REPORT ZONES alloc_len underflow OOB write"),
-which touches only scsi_debug.c and does not actually depend on it.
+Adding a reserved memory region for the framebuffer memory
+(the splash memory region set up by the bootloader).
 
-On its own it zeroes the capacity of host-managed SMR drives at boot. It
-changed the REPORT ZONES loop advance from
+It fixes a kernel panic (arm-smmu: Unhandled context fault
+at this particular memory region) reported on DB845c running
+v5.10.y.
 
-	sector += sd_zbc_zone_sectors(sdkp) * i;	/* sector_t, 64-bit */
-to
-	lba += sdkp->zone_blocks * i;			/* u32, wraps */
-
-(zone_info.zone_blocks on 5.15.y after bffcb7d6a287). zone_blocks is
-u32, so the product is computed in 32 bits and wraps before being
-widened into the 64-bit lba. A drive returning >= 8192 zones in one
-REPORT ZONES (~2 TiB+ at 256 MiB zones, i.e. any modern HM-SMR part)
-overflows on the first iteration; the next batch is requested at a
-wrapped LBA, the block layer rejects the backward jump, and sd truncates
-the device to zero:
-
-	sdX: Zone gap at sectors 18219532288..1039663104
-	sdX: failed to revalidate zones
-
-(524288 * 34751 = 18219532288, mod 2^32 = 1039663104.)
-
-Mainline never shipped this: in the same series, patch 7 c976e588b34e
-("scsi: sd: sd_zbc: Hide gap zones") rewrote the loop to advance per
-descriptor from 64-bit device values. 5.15.y took patch 4 and the
-intervening 628617be8968 but not c976e588b34e, keeping the broken
-intermediate state.
-
-Reverting is preferred over pulling in c976e588b34e: it is a ZBC-2
-feature (gap zones, constant zone-starting-LBA granularity) adding ~130
-lines across sd_zbc.c, sd.h and include/scsi/scsi_proto.h. It gains
-nothing for the constant-zone-size HM-SMR drives 5.15.y serves, which
-the restored sector_t advance already handles correctly.
-
-The revert conflicted with bffcb7d6a287 (which renamed the field on the
-advance line); resolved by keeping the restored "sector +=
-sd_zbc_zone_sectors(sdkp) * i", which reads zone_info.zone_blocks via
-logical_to_sectors() and is 64-bit. 93dde0bf2f39 stays in place and is
-unaffected.
-
-Signed-off-by: Simon Liebold <simonlie@amazon.de>
+Cc: stable@vger.kernel.org # v5.10+
+Reviewed-by: Caleb Connolly <caleb.connolly@linaro.org>
+Signed-off-by: Amit Pundir <amit.pundir@linaro.org>
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/20230726132719.2117369-2-amit.pundir@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/sd_zbc.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ arch/arm64/boot/dts/qcom/sdm845-db845c.dts | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/scsi/sd_zbc.c b/drivers/scsi/sd_zbc.c
-index 90d0f8ddd179c..d84a9c1d76c5a 100644
---- a/drivers/scsi/sd_zbc.c
-+++ b/drivers/scsi/sd_zbc.c
-@@ -223,7 +223,7 @@ int sd_zbc_report_zones(struct gendisk *disk, sector_t sector,
- 			unsigned int nr_zones, report_zones_cb cb, void *data)
- {
- 	struct scsi_disk *sdkp = scsi_disk(disk);
--	sector_t lba = sectors_to_logical(sdkp->device, sector);
-+	sector_t capacity = logical_to_sectors(sdkp->device, sdkp->capacity);
- 	unsigned int nr, i;
- 	unsigned char *buf;
- 	size_t offset, buflen = 0;
-@@ -234,7 +234,7 @@ int sd_zbc_report_zones(struct gendisk *disk, sector_t sector,
- 		/* Not a zoned device */
- 		return -EOPNOTSUPP;
+diff --git a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
+index cf2df9e2ccf30..798c566674f8b 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
++++ b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
+@@ -85,6 +85,14 @@ hdmi_con: endpoint {
+ 		};
+ 	};
  
--	if (!sdkp->capacity)
-+	if (!capacity)
- 		/* Device gone or invalid */
- 		return -ENODEV;
++	reserved-memory {
++		/* Cont splash region set up by the bootloader */
++		cont_splash_mem: framebuffer@9d400000 {
++			reg = <0x0 0x9d400000 0x0 0x2400000>;
++			no-map;
++		};
++	};
++
+ 	lt9611_1v8: lt9611-vdd18-regulator {
+ 		compatible = "regulator-fixed";
+ 		regulator-name = "LT9611_1V8";
+@@ -488,6 +496,7 @@ &i2c14 {
+ };
  
-@@ -242,8 +242,9 @@ int sd_zbc_report_zones(struct gendisk *disk, sector_t sector,
- 	if (!buf)
- 		return -ENOMEM;
+ &mdss {
++	memory-region = <&cont_splash_mem>;
+ 	status = "okay";
+ };
  
--	while (zone_idx < nr_zones && lba < sdkp->capacity) {
--		ret = sd_zbc_do_report_zones(sdkp, buf, buflen, lba, true);
-+	while (zone_idx < nr_zones && sector < capacity) {
-+		ret = sd_zbc_do_report_zones(sdkp, buf, buflen,
-+				sectors_to_logical(sdkp->device, sector), true);
- 		if (ret)
- 			goto out;
- 
-@@ -261,7 +262,7 @@ int sd_zbc_report_zones(struct gendisk *disk, sector_t sector,
- 			zone_idx++;
- 		}
- 
--		lba += sdkp->zone_info.zone_blocks * i;
-+		sector += sd_zbc_zone_sectors(sdkp) * i;
- 	}
- 
- 	ret = zone_idx;
 -- 
 2.53.0
 
