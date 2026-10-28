@@ -1,55 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793217017;
-	b=Tu0YY/dzb3zFzE2PqK5iy6rjh2VgIOuinsj1Tev590JMH9DhfFwjsnWdgFbHQNKqey1C
-	 wQ6aU0O/d9/3tY7HiTbE//cYMYtW9eSK3euoisj6ZO4boBDxEqChLjB42lrmnu0Rlv5UA
-	 3I1FoT5XQDrvft6sZaQI0jk9iWeIrB+gIOKy0N9KJlsWaKOgUFXZG/hg13DHI6XmTLX5J
-	 9E8G3i0HwUcAnFylQHDNaUz0s7SfQFzixavpTzGTOLniWCSGdo4UnirfsRw/tKYQWsY/1
-	 74Xj7mmV4hSHD/4cAsii6wy/gJn1rDBhrwkKyRD6n9wTa/EfpGB1N6qh8OWaRXm5GkQ==
+	t=1793217020;
+	b=4hnGoUGkeUahKGblsPVPXGCIZwlQQMUh0KGUttWct37Ku0mEEW/wfsKfKGLURRt/2Lb0
+	 N+voMPIqacyx8AJnsc2EMR2ph30ZdFjkd0YaBYWhCuPxg+w7rI0l8GjJqG7AbxSBMdWyL
+	 TdX2XF/yBllMi94ujzpVYiqz6B0eAdFMvRIqC3xfZXCUVG5WUEuJEePuIPPcwMj1DLAVy
+	 FPIqReaQjPLUOHcw3HLvhJsO2Q6Pea9Rgz+FLvGScmDZanATbJ8Wdw5ALnx7HlzgAeTFg
+	 E8gnQNC4d9+kVJK09t69UXAnmSkSf08B3U9Gdrd57vZUncSzrqK3mKEDj+Jc5tV/n0Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793217017;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793217020;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Feihw7WLUDkdsYPTwl0B48kpN711w1Vdf0EiUEDn3I0=;
-	b=MDXtCEvzxsXwM/q5JAChffS9SU7fqsIK9d6DlRA8gR1OnL+x2SzMcxvFkiOYQY7snqSd
-	 PEzLNxKCDSZVQnEhSXm0EORt9Xb4ele5cycqogdNsu5ga+o56n63eLZ3zukqlfNHCNH/C
-	 vyxC1SupvEdVbsYcnSZ/46xYfk6HQppGFPH6u3egYoUbdDbTprs01n+UMxlXx2RgGw5kv
-	 gxQ8ObWa8aJjgM9yyZ9hPw38RazwoL2ihQNB8FFaNsQjco3GVQiKbLSCfu/PCEbYx0qk+
-	 DozDTS7/mMnj7R8Egnp151/FxD2S1PI9xrT6wtSO++C3X//XuNxQ2IRgAaS4Qg1CSgQ==
+	bh=Jdr3LNQk+yNt3iv6LCPNNaMSv7Y4tMkgrR0XuDDAJm8=;
+	b=pP4qgauDMYsbgUWzZxQ7zTqOo9i2AbI8EybdtK6q1OSM8pbVOZ1mvojwJXMCroqDOT7X
+	 1BjDefdicoMa8Phe5MrOivhCOm2XpC1J00b3MLOVtPQlFdzfV4i32Pn8wRYoJfvV0+UhE
+	 XkBIRtivELQMQNuyTlDG4JrqbwP/u8m6sryowq0vbw4FDAxpr+gd6cC4v1VdnCJo1i2kZ
+	 5eh2Cb2ZqF7TztMVZxh6RPw1NdPC9m0jpGtvXQwFHS4978NQTFB0gRjCLrmmBpxl6RrHm
+	 PL3tFuAdz0v1KsSthykPvVkUG4AY9zUrmnHC7YvKhwfhGvNZDP6ZeoU/lKm/Psj2zqQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WnTzKpBM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fhTiloXW;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56909606A330;
-	Wed, 28 Oct 2026 19:50:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D36B606A321;
+	Wed, 28 Oct 2026 19:50:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WnTzKpBM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A978D1F01825;
-	Wed, 28 Oct 2026 19:50:16 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fhTiloXW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88E6A1F01825;
+	Wed, 28 Oct 2026 19:50:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793217017;
-	bh=Feihw7WLUDkdsYPTwl0B48kpN711w1Vdf0EiUEDn3I0=;
+	s=korg; t=1793217020;
+	bh=Jdr3LNQk+yNt3iv6LCPNNaMSv7Y4tMkgrR0XuDDAJm8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WnTzKpBMfYt14RJeMBpK8dMvyd0riWPFv+7/IebNkYK0fFKGJn1D1nIDemvIboP9f
-	 Eh1dl97f3VN0hrbjUQRxhQ/+qhefCZ0X8NugTUs2Gx9/5nelgHrukl8LS7h0B2AI/l
-	 WNgED4YQS2Xxev6nIMbapyZTQnwdv3Pg/7FrUvxc=
+	b=fhTiloXWo13qxuzxxjA1/xsLgiV+7jc+X9hxDA5ZAAisptLxCFUa8VlXceBVBGpLD
+	 SDaMTxG7a6MdbI//FSPka6NqPCC2uFbwcIlDJoMH+FYmBpvQPU7e6rZ1Ubp4tZMDO/
+	 NsvdZui6X7P7Vcr587AaqcdhdeaW+2/oGllyFy/0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Dr. Thomas Orgis" <thomas.orgis@uni-hamburg.de>,
-	Carlos Maiolino <cmaiolino@redhat.com>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Serge Hallyn <sergeh@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 6.1 1759/1887] xfs: fix capability check in xfs
-Date: Wed, 28 Oct 2026 18:04:15 +0100
-Message-ID: <20261028170539.484257084@linuxfoundation.org>
+	Chengfeng Ye <nicoyip.dev@gmail.com>,
+	Tung Nguyen <tung.quang.nguyen@est.tech>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 1760/1887] tipc: protect node reset trace dump with node lock
+Date: Wed, 28 Oct 2026 18:04:16 +0100
+Message-ID: <20261028170539.509663994@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -71,80 +68,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Carlos Maiolino <cem@kernel.org>
+From: Chengfeng Ye <nicoyip.dev@gmail.com>
 
-commit e2f62a9744ebad3bcb6347a648e615026e9efeff upstream.
+commit dddf197f29ba5e47a476dde82bf542ca2e0d5e5e upstream.
 
-An user reported a bug where he managed to evade group's quota
-by changing a file's gid to a different group id the same user
-belonged to, even though quotas were enforced on both gids and the
-file's size was big enough to exceed the quota's hardlimit.
+The tipc_node_reset_links trace event asks tipc_node_dump() to walk the
+node's link entries. Unlike the other node events that request link data,
+this event runs without the node lock.
 
-Commit eba0549bc7d1 replaced a capable() call by a
-has_capability_noaudit() to prevent unnecessary selinux audit messages.
-Turns out that both calls have slightly different semantics even though
-their documentation seems similar. Where in a nutshell:
+This permits bearer teardown to free a link while the trace callback is
+dumping it:
 
-capable() - Tests the task's effective credentials
-has_ns_capability_noaudit() - Tests the task's real credentials
+  CPU 0                                CPU 1
+  trace_tipc_node_reset_links()
+    tipc_node_dump()
+      l = n->links[0].link
+                                       tipc_node_write_lock()
+                                       kfree(l)
+                                       n->links[0].link = NULL
+                                       tipc_node_write_unlock()
+      tipc_link_dump(l)
 
-This most of the time has no practical difference but in some cases like
-changing attrs (specifically group id in this case) through a NFS client
-this will allow the quota code to use XFS_QMOPT_FORCE_RES, effectively
-bypassing quota accounting checks.
+tipc_link_dump() then dereferences the stale pointer. KASAN reported:
 
-Using instead ns_capable_noaudit() should fix this issue and prevent
-selinux audit messages.
+  BUG: KASAN: slab-use-after-free in tipc_link_dump
+  Read of size 4 by task poc/115
+  Call Trace:
+   tipc_link_dump+0x10cb/0x16b0
+   tipc_node_dump+0x4bb/0x740
+   trace_event_raw_event_tipc_node_class+0x258/0x360
+   tipc_node_reset_links+0x14d/0x1a0
+   tipc_rcv+0x13f5/0x3030
+   tipc_udp_recv+0x4e3/0x670
+  Allocated by task 0:
+   tipc_link_create+0x1e1/0x1020
+   tipc_node_check_dest+0x7d2/0x11a0
+   tipc_disc_rcv+0xdbf/0x1430
+  Freed by task 89:
+   kfree+0x131/0x3c0
+   tipc_node_link_down+0x267/0x4b0
+   tipc_node_delete_links+0xec/0x160
+   bearer_disable+0x107/0x260
 
-This also fix the remaining calls to has_capability_noaudit()
+Take the node write lock around the trace event. This serializes the
+dump against tipc_node_link_down(delete=true), which frees the link
+under the same write lock.
 
-Fixes: eba0549bc7d1 ("xfs: don't generate selinux audit messages for capability testing")
-Cc: stable@vger.kernel.org # v5.18
-Reported-by: Dr. Thomas Orgis <thomas.orgis@uni-hamburg.de>
-Signed-off-by: Carlos Maiolino <cmaiolino@redhat.com>
-Reviewed-by: Darrick J. Wong <djwong@kernel.org>
-Reviewed-by: Serge Hallyn <sergeh@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
+Fixes: eb18a510b5cd ("tipc: add trace_events for tipc node")
+Cc: stable@vger.kernel.org
+Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
+Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
+Link: https://patch.msgid.link/20260825190141.242219-1-nicoyip.dev@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/xfs_fsmap.c |    2 +-
- fs/xfs/xfs_ioctl.c |    2 +-
- fs/xfs/xfs_iops.c  |    2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
+ net/tipc/node.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/fs/xfs/xfs_fsmap.c
-+++ b/fs/xfs/xfs_fsmap.c
-@@ -902,7 +902,7 @@ xfs_getfsmap(
- 		return -EINVAL;
+--- a/net/tipc/node.c
++++ b/net/tipc/node.c
+@@ -1335,7 +1335,9 @@ static void tipc_node_reset_links(struct
  
- 	use_rmap = xfs_has_rmapbt(mp) &&
--		   has_capability_noaudit(current, CAP_SYS_ADMIN);
-+		   ns_capable_noaudit(&init_user_ns, CAP_SYS_ADMIN);
- 	head->fmh_entries = 0;
+ 	pr_warn("Resetting all links to %x\n", n->addr);
  
- 	/* Set up our device handlers. */
---- a/fs/xfs/xfs_ioctl.c
-+++ b/fs/xfs/xfs_ioctl.c
-@@ -1222,7 +1222,7 @@ xfs_ioctl_setattr_get_trans(
- 		goto out_error;
- 
- 	error = xfs_trans_alloc_ichange(ip, NULL, NULL, pdqp,
--			has_capability_noaudit(current, CAP_FOWNER), &tp);
-+			ns_capable_noaudit(&init_user_ns, CAP_FOWNER), &tp);
- 	if (error)
- 		goto out_error;
- 
---- a/fs/xfs/xfs_iops.c
-+++ b/fs/xfs/xfs_iops.c
-@@ -707,7 +707,7 @@ xfs_setattr_nonsize(
++	tipc_node_write_lock(n);
+ 	trace_tipc_node_reset_links(n, true, " ");
++	tipc_node_write_unlock_fast(n);
+ 	for (i = 0; i < MAX_BEARERS; i++) {
+ 		tipc_node_link_down(n, i, false);
  	}
- 
- 	error = xfs_trans_alloc_ichange(ip, udqp, gdqp, NULL,
--			has_capability_noaudit(current, CAP_FOWNER), &tp);
-+			ns_capable_noaudit(&init_user_ns, CAP_FOWNER), &tp);
- 	if (error)
- 		goto out_dqrele;
- 
 
 
