@@ -1,53 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213855;
-	b=uEQhmQR1pfj/pLARs06ubKC5255y7BmUSOU31eJz3JC2FOmkGgy65F5aJpQCbnrUnnbb
-	 g2ZFwOFXbYhT3I9FIXgRadZRqYgbgwQQ/zQjyeDFi90Ktyn9Xxzubg5F9vTYzRMIcXl/n
-	 svVAb/S8BMka902rxfLvFgVXwzAJtlFW1XkZWv8zXdx4mc2DVjmnrQKR0A9ZfQVhL5+XO
-	 T32/nCiltCBurkC3c91mgwT9vxf7ZofIqXqcxt9X1srEDDNasVqaI46Woktb/2SwceSdx
-	 C+aevcKrTAo2CkKHg6lJ6NIq+sphEF2BefrzehXJ04cY7C9qnBDp2Ai8OOUlfdxvgOQ==
+	t=1793213858;
+	b=tZ8SW9heDgu69n/MnLQch41MZQRprYiChtQWwqkJxEj28fMvfJfd9JsXjmh6DkJSnHED
+	 iLxhUC6JacAQqus17tQttrlN3zKxUJl5iMVl0aGbJPvgjSai9lXiqI/xIdKdYm8MBxZAu
+	 IXtx0Uki5KhY7lkkpPl5qT+2yJLffM7u3f5Bbhop+q+6Hkd2AqiURJ40C0eyYngSd7Oby
+	 ZGofYnLplNkdalgWGk1P6LS9yQtJdXbiJiG2TudrYV92cw1bQFOJ/ftx77yl8FJpSoUkq
+	 8PFQl+t/evNwvy5FIZEEMdFlslDgAFi9/HAtGApG3m/ep5oK4LXHZOeC2nkYpuOinww==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213855;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213858;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=qdgt/TpVSAsuaUMqswGz0ArOLb4WPHQxfWEuJSbqPgw=;
-	b=HO+Hxzl7a90yMNFD1FL/kJdzFXlv9ABZYusUBL1kKkmeXUjxhrt5UBM82tuiCZ/ENltJ
-	 CK/mf0eoVXTarKTXs7H3JFlskFsOcPi5ftMRou9dwrG3iV0GhVFL5xK+2JBz6x8MCMOfY
-	 PMC+ReNu1Ls1dbu+q5aN/DtSSkYjSS0St1yDhaG3bHZUIJBzgwJGSM13QY+bdKy6s+9ck
-	 s9/9opDHdmix0ZrAm1kqfiFqQNB6nJGKgwbbKjPqWnk6SzQH5SJHANf+n5mbZiqpWMkoI
-	 QuChSo6oK4xrVq5nrNMvyQER/9bK9Ut/odfOTkeQ1pXuthoWXHckjih99amK0fcXfxg==
+	bh=tXZZcEseIwLawWvOv24PDfplxQIl30Z//K6yA32FB+0=;
+	b=n2/6VyntDEA/tITuvtd9nAgzccVzquz1X9mFmBmrI8Qnh5NbF6+9q2oEPzpU2HfFXuSY
+	 pnldrZPxoXNYW85FCQcId9MiAUt28JRPf2rBmANjmqMnSqIKWVa5iUo1mOH83PFO9WziX
+	 RQeQzeHq+mLyYZWyx9VEU2Ph4WyXb32D8sT8OENc1vsY8WucjD7xfL/bREUfnkPnN6e5S
+	 fHtS3RamUdOZquixeoswhMDk1zFRFetLbE6QuFyL86ufU2EJgRCI2LlKxOgZsVfXk1an7
+	 FTaYsXiZ4k/gwP9kRrm2o/+/Ypyb3pjwj/hisiQolDf9UH5CyP5yOChDIP8PD6jOYgA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vx8T1gGI;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="cu//Zz5e";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A7D5606A31C;
-	Wed, 28 Oct 2026 18:57:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16133606A31C;
+	Wed, 28 Oct 2026 18:57:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vx8T1gGI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99D371F01829;
-	Wed, 28 Oct 2026 18:57:34 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cu//Zz5e
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F16B1F01825;
+	Wed, 28 Oct 2026 18:57:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213855;
-	bh=qdgt/TpVSAsuaUMqswGz0ArOLb4WPHQxfWEuJSbqPgw=;
+	s=korg; t=1793213857;
+	bh=tXZZcEseIwLawWvOv24PDfplxQIl30Z//K6yA32FB+0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vx8T1gGIUk3UV9Wm28y8jkaRnW3fSY7ZfdNo4k67LsxmYx2PUO4WnEfeChU37mnb+
-	 bz/AnNuL4I68Oz68CnMa81RH1WpnByK1iF/kpT7/cJrHMeXDCU+2bVB5W9fGfJQ205
-	 srYvbX9ex7XNGkiKapV2+1A6KWr4g4z0z1eA572s=
+	b=cu//Zz5etDC9fmI8mwFKQ2EfH0k++ADKHkxUfyqpYGhrGP8e3jS/qBsuCm9kfQbfm
+	 VkiAnPQWzIX19zv3IButJYa3zklvQNDsFOiFwaYQDQnCa+2EWbAg1hbiHyE/Owow8q
+	 rGK+0XnjR233rNI+b7k0gjWfITawXrZVgHF0JAUs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
-	Lenko Donchev <lenko.donchev@gmail.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Rodrigo Siqueira <rodrigo.siqueira@amd.com>,
+	Tom Chung <chiahsuan.chung@amd.com>,
+	Hersen Wu <hersenxs.wu@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0652/1887] drm/amd/display: Use kcalloc() instead of kzalloc()
-Date: Wed, 28 Oct 2026 17:45:48 +0100
-Message-ID: <20261028170514.248329485@linuxfoundation.org>
+Subject: [PATCH 6.1 0653/1887] drm/amd/display: Add missing NULL pointer check within dpcd_extend_address_range
+Date: Wed, 28 Oct 2026 17:45:49 +0100
+Message-ID: <20261028170514.272129485@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,38 +72,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lenko Donchev <lenko.donchev@gmail.com>
+From: Hersen Wu <hersenxs.wu@amd.com>
 
-[ Upstream commit f634ee1737e7b856bd4c3f040af867007d1cb7b8 ]
+[ Upstream commit 5524fa301ba649f8cf00848f91468e0ba7e4f24c ]
 
-We are trying to get rid of all multiplications from allocation
-functions to prevent integer overflows. Here the multiplication is
-obviously safe, but using kcalloc() is more appropriate and improves
-readability. This patch has no effect on runtime behavior.
+[Why & How]
+ASSERT if return NULL from kcalloc.
 
-Link: https://www.kernel.org/doc/html/next/process/deprecated.html#open-coded-arithmetic-in-allocator-arguments
-Link: https://github.com/KSPP/linux/issues/162
-
-Reviewed-by: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
-Signed-off-by: Lenko Donchev <lenko.donchev@gmail.com>
-Signed-off-by: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
+Reviewed-by: Alex Hung <alex.hung@amd.com>
+Reviewed-by: Rodrigo Siqueira <rodrigo.siqueira@amd.com>
+Acked-by: Tom Chung <chiahsuan.chung@amd.com>
+Signed-off-by: Hersen Wu <hersenxs.wu@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Stable-dep-of: 5524fa301ba6 ("drm/amd/display: Add missing NULL pointer check within dpcd_extend_address_range")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/core/dc_link_dpcd.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/display/dc/core/dc_link_dpcd.c | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/drivers/gpu/drm/amd/display/dc/core/dc_link_dpcd.c b/drivers/gpu/drm/amd/display/dc/core/dc_link_dpcd.c
-index aefca9756dbe8..5ec6f079b08c4 100644
+index 5ec6f079b08c4..f3838286c1725 100644
 --- a/drivers/gpu/drm/amd/display/dc/core/dc_link_dpcd.c
 +++ b/drivers/gpu/drm/amd/display/dc/core/dc_link_dpcd.c
-@@ -161,7 +161,7 @@ static void dpcd_extend_address_range(
- 	if (new_addr_range.start != in_address || new_addr_range.end != end_address) {
+@@ -162,6 +162,7 @@ static void dpcd_extend_address_range(
  		*out_address = new_addr_range.start;
  		*out_size = ADDRESS_RANGE_SIZE(new_addr_range.start, new_addr_range.end);
--		*out_data = kzalloc(*out_size * sizeof(**out_data), GFP_KERNEL);
-+		*out_data = kcalloc(*out_size, sizeof(**out_data), GFP_KERNEL);
+ 		*out_data = kcalloc(*out_size, sizeof(**out_data), GFP_KERNEL);
++		ASSERT(*out_data);
  	}
  }
  
