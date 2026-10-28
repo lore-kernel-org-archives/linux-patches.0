@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213203;
-	b=AQKfFta5ZdBJux7DYpB5edlVXpAEmloi9z+Ouxr0ZOtjAAWvrGlmC5dDJuhKr9gSfLsy
-	 7/SDdr9VqlMjlA/wsNDMgUblKAmjwvx6dhTCln2RAle9H7L5k0FDgQ4rMG7mZcoHIY/7W
-	 ES356BFQjjTJfrjy9BWst/2gg7gI0d2mK+v2SflymKZkdmmUKyydTrlJPEQ/K7tIlEQzH
-	 YaqLgn40g0E1Rf/GNOIRJWA1IbHQDb2qxhnwHGGHg8qIacpaY3Ex6G52E7NzFm7hQeMPr
-	 GViW9zqQYGNpQQjEzrOFGq0VmihJk/a5N7RcBR11ITXYW5mH81qbGIqAxsoWeAozjjw==
+	t=1793213206;
+	b=gZDOmBRk34XAdJlXilFLWhYbjLgse1/z2rma+2wH2/Sila42HJczdsjOefX0s2A4NePp
+	 0QlC3gGwdcxUY0VV+zX3GQHb23B6UIUe1cYguEo260OPAWCPbwdHRxCkYFxf4ka/x5DGt
+	 Uk9TI7DXC8ArJqfBuR00jfQMJiUkmUnknFB8zskMm6XtphX3pmjwButON+SBJ6hRUQdoL
+	 +uDxodOdFPeye0n3y7yXRmZQsjkDHmGLkzX/CcVJ4zbYLkshunQmAqqjgZdwVHPp4cquo
+	 17eLkHivmKxc9Jzkbb1p9pBeKoFRmEMHJ3e9z3xppLumTAwHuR4zZXPmBZwi4rn8rkw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213203;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213206;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=RAtEyVOV+RAWRKHW5y7+M6xtiuCu5kDcOM4ZKf1CPbU=;
-	b=I2krBAzG32ysvO8QvmTtYl644oS0UexJ1k86b46MpZcKO96dj3pSigUtodwAHC4PeR0k
-	 ScQUamDdy9LZPDG3l7V8LCK53CocC1j7lpb0allamh/5XP2Tk/ih/igZmbU4yFbqqtOWG
-	 NBfEyl0SWEvb12RObpp0r1p1yTtX+rmqhtjmiE9jaNrt3Aw26w4JLQYRK4eptzox6h9kS
-	 gg/OS0SBx6Ylo9OoJo7vWE4SamEVCpZB5g8/r83y49RUGzTJQIWoXnCNvSKrDLLJpt6l/
-	 5unV9yDhEbv86X8e/bzK0acUXmjzjvRkgELR4kI5VyhnJpW4tPVi1uprhwoVHfP9kzg==
+	bh=t6XMQ5WbGS5EH+Zz71nfIVIvY4A42CD+a6imH8or6A4=;
+	b=YkhzGkyYg4hCPVyKYIl3odadPgsRHqX9uq5VMDoSrB7xeQ8z0q8xYtITn4zkViRKf4M0
+	 p0l7eC9OWTg3tVQtcdjHHUZj7visdW2uTRF5jNTda5zo4L8cT+27D/UtQk1abYzUPJ1cL
+	 CZWbI19IAlGRppBJB82s2JDKo5WHtv6qekH91AVJ26RJ9jmyYjjaXRqaEBcF+tNsMFX2k
+	 qXytDLuJcvxFLGCrmoX2+Kled/hf09c0pLQYLHp2QtcCVdXulG6ODaZjM8OI2g4z3SPW9
+	 HZXUmP1NQRYIO8NTFq850DMKHUcQjYkTWFopFNvuuAiIaRE/9/LVDjo1wlDRxxOwwyA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yE2fuIUT;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IJUOhURX;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8598B606A31A;
-	Wed, 28 Oct 2026 18:46:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65468606A31A;
+	Wed, 28 Oct 2026 18:46:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yE2fuIUT
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5AE31F01825;
-	Wed, 28 Oct 2026 18:46:42 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IJUOhURX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B43341F01825;
+	Wed, 28 Oct 2026 18:46:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213203;
-	bh=RAtEyVOV+RAWRKHW5y7+M6xtiuCu5kDcOM4ZKf1CPbU=;
+	s=korg; t=1793213206;
+	bh=t6XMQ5WbGS5EH+Zz71nfIVIvY4A42CD+a6imH8or6A4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yE2fuIUTLK2506hrl7lbt3hKFu89Rz+H/6F+zy9odl3VmDwg3nR5XnxL9Pa4bq3GX
-	 f/LuxFhIkUR2dCv9+qcU2HCELdH7ZSoooH5xcrtqTPiPsa7AO7yz0a2+L5vrVJva/V
-	 Gla9+2Fax6nbigwmkY9WX6+PrWvlOXQ5106PWx04=
+	b=IJUOhURXpZDUf+oC29Kw/dA7dvMZ1+RfnKRuyKZZhw5BcYOH0yUW7LGgSkyFC52nL
+	 WFbhAT4c6GX9Ne3AQnkjKLlyUBXsrOJ8786J5sggvZF7iuq9zf/YbolIZu2Sfv7KHB
+	 qCbwffQARq7xc6Ex1isV4jgO5jhXCh6aHT00d71c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrey Misiurov <andrey.misyrov@gmail.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0422/1887] scsi: lpfc: Fix use-after-free of mboxq in lpfc_sli4_driver_resource_setup()
-Date: Wed, 28 Oct 2026 17:41:58 +0100
-Message-ID: <20261028170508.836716892@linuxfoundation.org>
+	Benjamin Tissoires <bentiss@kernel.org>,
+	Jiri Kosina <jkosina@suse.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Lee Jones <lee@kernel.org>
+Subject: [PATCH 6.1 0423/1887] HID: core: introduce hid_safe_input_report()
+Date: Wed, 28 Oct 2026 17:41:59 +0100
+Message-ID: <20261028170508.860818435@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -67,54 +69,149 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrey Misiurov <andrey.misyrov@gmail.com>
+From: Benjamin Tissoires <bentiss@kernel.org>
 
-The 6.1.y backport of upstream commit 1bd28625e25b ("scsi: lpfc: Fix
-memory leak in lpfc_sli4_driver_resource_setup()") added the new
-mempool_free() of mboxq in the wrong place. Upstream frees mboxq after
-the error handling of lpfc_get_sli4_parameters(). In 6.1.y the hunk
-landed before that call, right after the NVMET WWN loop:
+[ Upstream commit 206342541fc887ae919774a43942dc883161fece ]
 
-	mempool_free(mboxq, phba->mbox_mem_pool);
-	lpfc_nvme_mod_param_dep(phba);
-	rc = lpfc_get_sli4_parameters(phba, mboxq);
+hid_input_report() is used in too many places to have a commit that
+doesn't cross subsystem borders. Instead of changing the API, introduce
+a new one when things matters in the transport layers:
+- usbhid
+- i2chid
 
-mbox_mem_pool is created a few lines earlier in the same function, so
-the pool is full and mempool_free() really kfree()s mboxq.
-lpfc_get_sli4_parameters() then builds and issues a mailbox command in
-freed memory. This happens on every SLI4 probe. Its error paths also
-free mboxq a second time.
+This effectively revert to the old behavior for those two transport
+layers.
 
-Move the mempool_free() to where upstream and the other stable trees
-have it.
-
-Fixes: 299f5baa1321 ("scsi: lpfc: Fix memory leak in lpfc_sli4_driver_resource_setup()")
-Signed-off-by: Andrey Misiurov <andrey.misyrov@gmail.com>
+Fixes: 0a3fe972a7cb ("HID: core: Mitigate potential OOB by removing bogus memset()")
+Cc: stable@vger.kernel.org
+Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+(cherry picked from commit a9527c32cc9d98252dc975d6fcb29f2013d0f63a)
+[Lee: Implement hid_safe_input_report() directly and wrap it from
+      hid_input_report() as 67eccf151d76 ("HID: add source argument to
+      HID low level functions") is not present]
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/lpfc/lpfc_init.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hid/hid-core.c             | 26 ++++++++++++++++++++++++--
+ drivers/hid/i2c-hid/i2c-hid-core.c |  7 ++++---
+ drivers/hid/usbhid/hid-core.c      | 11 ++++++-----
+ include/linux/hid.h                |  2 ++
+ 4 files changed, 36 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/scsi/lpfc/lpfc_init.c b/drivers/scsi/lpfc/lpfc_init.c
-index 13ebbe4a71c47..fc5a640b7f742 100644
---- a/drivers/scsi/lpfc/lpfc_init.c
-+++ b/drivers/scsi/lpfc/lpfc_init.c
-@@ -8175,7 +8175,6 @@ lpfc_sli4_driver_resource_setup(struct lpfc_hba *phba)
- 			}
- 		}
+diff --git a/drivers/hid/hid-core.c b/drivers/hid/hid-core.c
+index 61dde8e3fbb25..3b1952e66ca42 100644
+--- a/drivers/hid/hid-core.c
++++ b/drivers/hid/hid-core.c
+@@ -2085,14 +2085,36 @@ EXPORT_SYMBOL_GPL(hid_report_raw_event);
+  * @interrupt: distinguish between interrupt and control transfers
+  *
+  * This is data entry for lower layers.
++ * Legacy, please use hid_safe_input_report() instead.
+  */
+ int hid_input_report(struct hid_device *hid, enum hid_report_type type, u8 *data,
+ 		     u32 size, int interrupt)
++{
++	return hid_safe_input_report(hid, type, data, size, size, interrupt);
++}
++EXPORT_SYMBOL_GPL(hid_input_report);
++
++/**
++ * hid_safe_input_report - report data from lower layer (usb, bt...)
++ *
++ * @hid: hid device
++ * @type: HID report type (HID_*_REPORT)
++ * @data: report contents
++ * @bufsize: allocated size of the data buffer
++ * @size: useful size of data parameter
++ * @interrupt: distinguish between interrupt and control transfers
++ *
++ * This is data entry for lower layers.
++ * Please use this function instead of the non safe version because we provide
++ * here the size of the buffer, allowing hid-core to make smarter decisions
++ * regarding the incoming buffer.
++ */
++int hid_safe_input_report(struct hid_device *hid, enum hid_report_type type, u8 *data,
++			  size_t bufsize, u32 size, int interrupt)
+ {
+ 	struct hid_report_enum *report_enum;
+ 	struct hid_driver *hdrv;
+ 	struct hid_report *report;
+-	size_t bufsize = size;
+ 	int ret = 0;
+ 
+ 	if (!hid)
+@@ -2137,7 +2159,7 @@ int hid_input_report(struct hid_device *hid, enum hid_report_type type, u8 *data
+ 	up(&hid->driver_input_lock);
+ 	return ret;
+ }
+-EXPORT_SYMBOL_GPL(hid_input_report);
++EXPORT_SYMBOL_GPL(hid_safe_input_report);
+ 
+ bool hid_match_one_id(const struct hid_device *hdev,
+ 		      const struct hid_device_id *id)
+diff --git a/drivers/hid/i2c-hid/i2c-hid-core.c b/drivers/hid/i2c-hid/i2c-hid-core.c
+index 9559c96d44b4d..d301dc5acd31e 100644
+--- a/drivers/hid/i2c-hid/i2c-hid-core.c
++++ b/drivers/hid/i2c-hid/i2c-hid-core.c
+@@ -539,9 +539,10 @@ static void i2c_hid_get_input(struct i2c_hid *ihid)
+ 		if (ihid->hid->group != HID_GROUP_RMI)
+ 			pm_wakeup_event(&ihid->client->dev, 0);
+ 
+-		hid_input_report(ihid->hid, HID_INPUT_REPORT,
+-				ihid->inbuf + sizeof(__le16),
+-				ret_size - sizeof(__le16), 1);
++		hid_safe_input_report(ihid->hid, HID_INPUT_REPORT,
++				      ihid->inbuf + sizeof(__le16),
++				      ihid->bufsize - sizeof(__le16),
++				      ret_size - sizeof(__le16), 1);
  	}
--	mempool_free(mboxq, phba->mbox_mem_pool);
  
- 	lpfc_nvme_mod_param_dep(phba);
- 
-@@ -8209,6 +8208,7 @@ lpfc_sli4_driver_resource_setup(struct lpfc_hba *phba)
- 			goto out_free_bsmbx;
- 		}
- 	}
-+	mempool_free(mboxq, phba->mbox_mem_pool);
- 
- 	/*
- 	 * 1 for cmd, 1 for rsp, NVME adds an extra one
+ 	return;
+diff --git a/drivers/hid/usbhid/hid-core.c b/drivers/hid/usbhid/hid-core.c
+index ccf0aad99a4b9..3bfca6c3b5286 100644
+--- a/drivers/hid/usbhid/hid-core.c
++++ b/drivers/hid/usbhid/hid-core.c
+@@ -281,9 +281,9 @@ static void hid_irq_in(struct urb *urb)
+ 			break;
+ 		usbhid_mark_busy(usbhid);
+ 		if (!test_bit(HID_RESUME_RUNNING, &usbhid->iofl)) {
+-			hid_input_report(urb->context, HID_INPUT_REPORT,
+-					 urb->transfer_buffer,
+-					 urb->actual_length, 1);
++			hid_safe_input_report(urb->context, HID_INPUT_REPORT,
++					      urb->transfer_buffer, urb->transfer_buffer_length,
++					      urb->actual_length, 1);
+ 			/*
+ 			 * autosuspend refused while keys are pressed
+ 			 * because most keyboards don't wake up when
+@@ -480,9 +480,10 @@ static void hid_ctrl(struct urb *urb)
+ 	switch (status) {
+ 	case 0:			/* success */
+ 		if (usbhid->ctrl[usbhid->ctrltail].dir == USB_DIR_IN)
+-			hid_input_report(urb->context,
++			hid_safe_input_report(urb->context,
+ 				usbhid->ctrl[usbhid->ctrltail].report->type,
+-				urb->transfer_buffer, urb->actual_length, 0);
++				urb->transfer_buffer, urb->transfer_buffer_length,
++				urb->actual_length, 0);
+ 		break;
+ 	case -ESHUTDOWN:	/* unplug */
+ 		unplug = 1;
+diff --git a/include/linux/hid.h b/include/linux/hid.h
+index 9fde4e8839c91..803bbaccec6ab 100644
+--- a/include/linux/hid.h
++++ b/include/linux/hid.h
+@@ -960,6 +960,8 @@ extern void hidinput_disconnect(struct hid_device *);
+ int hid_set_field(struct hid_field *, unsigned, __s32);
+ int hid_input_report(struct hid_device *hid, enum hid_report_type type, u8 *data, u32 size,
+ 		     int interrupt);
++int hid_safe_input_report(struct hid_device *hid, enum hid_report_type type, u8 *data,
++			  size_t bufsize, u32 size, int interrupt);
+ struct hid_field *hidinput_get_led_field(struct hid_device *hid);
+ unsigned int hidinput_count_leds(struct hid_device *hid);
+ __s32 hidinput_calc_abs_res(const struct hid_field *field, __u16 code);
 -- 
 2.53.0
 
