@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793208454;
-	b=J8snlMoyMlHm1ZLsKJm9XAuiLSyiy8zvhCf5KAu83kFvr9fhc3jhpFUek3V3Cvt6t7Id
-	 ACzsAr2AqAJorTCB+k+DFhsLUlgZzuKYhI2CNPnG/qfVgbDBQeSovAM+HUmpyIxP1qZ97
-	 hOhOy8hjflFFhxlUrxJGyXcqJDYvr46IGouKTBgxKeDIHgueJ1IdZ1x9oKy/JhX6up/uR
-	 Gi7ZQyLSv/WwHQcqEPEAp9sA+sDfqhw+FSXfs3gv4FXdZVHZLYbNlGpPnUIIqrW6j8Zw9
-	 MD/q1oflumB/JlKO/aFWOPwayZrUBo/+McRxkyYwtDNVJq5qgMZr2qDHAkSx51/XEOw==
+	t=1793208457;
+	b=CqEZNv/rp4PglNqeE+XscBqPfKbxRaqZVDlrGX6m3GKlG5x5PVxiacdHcDv4iv9XhHSg
+	 h5njuBAMA+LuwyqsWATjwhzbVcJxdwHbLnVsM/9A8rbObFyy4899GEtzMbncbvk3DwGIh
+	 GmBcdUuBvNORjm2m1V2O4yIaDwiVsc3sKXG1Xd7ChxupsFe6hTiS/WAN7YiYut90rqCMR
+	 KfUduMNQkF/o/RUGaTe2LPt8hyJytjQZ8SK8S74anbeZ6lTrCBmN6I8j4qR1kvzaCiABz
+	 YOmlPF0JzFMhsdIgl1/WqDAtEBh9LvcncxSXI9RhQknR77aFJMw77rsqMyi68kNEIZw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793208454;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793208457;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Ei3vG4u7gEGeyT7oSDXpb3x9UTvxQQ9w7iLvHEvqGcQ=;
-	b=LiUTODXTtTojOZFtt02sdTq+pZrjYPpXVtdF+ESKjntR1iCXrXil5Usk41K3BTaiP/Eg
-	 OPKtrc4KLcXuOP0iDi7K6fvpkfRMILcG0KQalYJoD5tR3hMZzQp3K/5VHyMDvBwWbuMoi
-	 BgpLXzgB15i7K+Dj2C87YZujzhRkSOPpyPxcTqyPT3qWkTCL7oct/c/5yea6BHpZoDjBK
-	 1FLo//yskyNk0HaJYIyFcGSYN5gUpFnF5iqT1PEW2A3xC3G+vuYR9Wm+S894m+kqA7LzY
-	 KaKwo8ZF31Es9E8uEH38Cg3vO0JKh/ms0UWU+bLR4ZdGf75YAsJcKVwk0mTol5SfdLw==
+	bh=GJWkUTyKpgRw3O9r30fdQL1OaTYYWC0hYABO6Pssw0U=;
+	b=XuBjbfvk5ts4O57ogAzGvQIrcn/eQLzP4cxTNG9f14vDgKngbHkqPysQDi5aQq7tiJk5
+	 gm4Tz6EpPLElwGUaHUYDBLTLHmzFA09/Bog6jlT/0+J9v+QgrXpDUdom0P7K2uEOQEXGX
+	 jPTmpDiBT6IXGajeezxrBzePi/1/F37ZQO1vLhPPjbraUk2ZrPNYt4Nx2JsT9gvdETDTV
+	 j1vh9uQ2/NE9WsUQxU9oaugt6C3hMT0Pfkmh3GZkYOmN1qewt3sQcAjxZxPH5mO/xfXxu
+	 IDQ6fZcoiVeKNSGTJKu3RuT+QVp4EBLz7UPo/zQLUbQTkErnp1McgTDM1h+gYahdAZQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sGMIRp+V;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YKshQASl;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52E7A606A31D;
-	Wed, 28 Oct 2026 17:27:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 279CB606A31A;
+	Wed, 28 Oct 2026 17:27:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sGMIRp+V
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A37AC1F01825;
-	Wed, 28 Oct 2026 17:27:33 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YKshQASl
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 796F31F01825;
+	Wed, 28 Oct 2026 17:27:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793208454;
-	bh=Ei3vG4u7gEGeyT7oSDXpb3x9UTvxQQ9w7iLvHEvqGcQ=;
+	s=korg; t=1793208457;
+	bh=GJWkUTyKpgRw3O9r30fdQL1OaTYYWC0hYABO6Pssw0U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sGMIRp+Vf5Nw6qWHv7+w+w3ilz9Bt307FDwwngVi9dBalY/jUUloYGHMP3ues8tCk
-	 5qmAq75f8q3bMddtMcac4raG5wgfIrGCthfWDijbYXFH4nKMwnMKGxBiujVczH946c
-	 FALjumcnP8t8SYdPjZnUNyAhFNYmcjAduPCHS1Yc=
+	b=YKshQASlzbJbI0DnIbSHcQEZ+5B6cO+UcW02X9ZRso9/YEF7LGtuyPg+kDMLF9+1E
+	 iL1EVU1Zem2dMs1MgzRMeTjczAEZaNV2ZjVp/CzcIk5Lg+sihVyn10imnaTaXvXQGG
+	 yoFYSrI5Ucwx9lab/rBlhgaKFWpc9aHSoAxuxvL8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Zihan Xi <zihanx@nebusec.ai>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Paulo Alcantara <pc@manguebit.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 098/516] ipmr: account multicast table and route memory
-Date: Wed, 28 Oct 2026 17:54:10 +0100
-Message-ID: <20261028170005.844305083@linuxfoundation.org>
+Subject: [PATCH 5.10 125/516] smb: client: use finish_no_open() for non-regular inodes
+Date: Wed, 28 Oct 2026 17:54:37 +0100
+Message-ID: <20261028170006.475163655@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -70,82 +68,155 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zihan Xi <zihanx@nebusec.ai>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit b7ee18725f2292ab554aa96a101ae42d45f008bd ]
+[ Upstream commit e66cf1625ec4a3fe68346119f371def713fd0a4d ]
 
-A netadmin in a user+net namespace can create many IPv4 and IPv6
-multicast routing tables with MRT_TABLE and MRT6_TABLE. Each unseen
-id allocates an mr_table via the shared mr_table_alloc(), links it
-into the per-net list, and leaves it until netns teardown. Those
-objects were not charged to memcg, so the host unreclaimable slab
-grows with the table count.
+An O_CREAT open can find an existing symlink or another non-regular
+inode. cifs_atomic_open() calls finish_open() on it and attaches a
+cifsFileInfo. Symlink inodes have no CIFS release operation, so the
+dentry reference held by cifsFileInfo is leaked. FMODE_OPENED also
+prevents the VFS from following the symlink.
 
-Account mr_table allocations with GFP_KERNEL_ACCOUNT and mark the
-IPv4/IPv6 MFC caches SLAB_ACCOUNT. This matches the established
-handling of IP addresses, routes and alternate interface names.
+Track whether cifs_do_create() returned an open server handle. For
+non-regular inodes, close the handle if present, remove the pending
+open, and call finish_no_open() so the VFS can continue the lookup.
+Do not set FMODE_CREATED unless a regular file was opened. For
+O_NOFOLLOW with __O_REGULAR, return -ELOOP before the VFS's
+-EFTYPE check.
 
-Unresolved MFC entries are still allocated from softIRQ with
-GFP_ATOMIC and are not charged. They expire after 10 seconds and are
-bounded by the socket receive queue; see commit 0079ad8e8dc3
-("ipmr: remove hard code cache_resolve_queue_len limit").
+Defer closing a legacy POSIX handle on a non-regular inode until
+after inode lookup. This avoids closing it again if lookup fails.
 
-Fixes: f0ad0860d01e ("ipv4: ipmr: support multiple tables")
-Fixes: d1db275dd3f6 ("ipv6: ip6mr: support multiple tables")
+Fixes: d2c127197dfc ("cifs: implement i_op->atomic_open()")
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
 Cc: stable@vger.kernel.org
-Reported-by: Vega <vega@nebusec.ai>
-Signed-off-by: Zihan Xi <zihanx@nebusec.ai>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/050b58f7fc6b45da0fb12768ebb62d18fa46133d.1788784801.git.zihanx@nebusec.ai
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ adapted upstream allocation helpers to existing kzalloc() and kmem_cache_create() calls. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/ipmr.c      | 3 ++-
- net/ipv4/ipmr_base.c | 2 +-
- net/ipv6/ip6mr.c     | 2 +-
- 3 files changed, 4 insertions(+), 3 deletions(-)
+ fs/cifs/dir.c | 37 +++++++++++++++++++++++++++----------
+ 1 file changed, 27 insertions(+), 10 deletions(-)
 
-diff --git a/net/ipv4/ipmr.c b/net/ipv4/ipmr.c
-index 6e4f91e76e2d3..f17b36a978486 100644
---- a/net/ipv4/ipmr.c
-+++ b/net/ipv4/ipmr.c
-@@ -3130,7 +3130,8 @@ int __init ip_mr_init(void)
+diff --git a/fs/cifs/dir.c b/fs/cifs/dir.c
+index 73d43d8911aa5..0366ac28ff07c 100644
+--- a/fs/cifs/dir.c
++++ b/fs/cifs/dir.c
+@@ -225,7 +225,7 @@ check_name(struct dentry *direntry, struct cifs_tcon *tcon)
+ static int
+ cifs_do_create(struct inode *inode, struct dentry *direntry, unsigned int xid,
+ 	       struct tcon_link *tlink, unsigned oflags, umode_t mode,
+-	       __u32 *oplock, struct cifs_fid *fid)
++	       __u32 *oplock, struct cifs_fid *fid, bool *opened)
+ {
+ 	int rc = -ENOENT;
+ 	int create_options = CREATE_NOT_DIR;
+@@ -239,6 +239,7 @@ cifs_do_create(struct inode *inode, struct dentry *direntry, unsigned int xid,
+ 	struct TCP_Server_Info *server = tcon->ses->server;
+ 	struct cifs_open_parms oparms;
  
- 	mrt_cachep = kmem_cache_create("ip_mrt_cache",
- 				       sizeof(struct mfc_cache),
--				       0, SLAB_HWCACHE_ALIGN | SLAB_PANIC,
-+				       0, SLAB_HWCACHE_ALIGN | SLAB_PANIC |
-+				       SLAB_ACCOUNT,
- 				       NULL);
++	*opened = false;
+ 	*oplock = 0;
+ 	if (tcon->ses->server->oplocks)
+ 		*oplock = REQ_OPLOCK;
+@@ -254,6 +255,7 @@ cifs_do_create(struct inode *inode, struct dentry *direntry, unsigned int xid,
+ 				     oflags, oplock, &fid->netfid, xid);
+ 		switch (rc) {
+ 		case 0:
++			*opened = true;
+ 			if (newinode == NULL) {
+ 				/* query inode info */
+ 				goto cifs_create_get_file_info;
+@@ -270,11 +272,9 @@ cifs_do_create(struct inode *inode, struct dentry *direntry, unsigned int xid,
+ 				/*
+ 				 * The server may allow us to open things like
+ 				 * FIFOs, but the client isn't set up to deal
+-				 * with that. If it's not a regular file, just
+-				 * close it and proceed as if it were a normal
+-				 * lookup.
++				 * with that. Keep the handle until the caller
++				 * can finish the lookup.
+ 				 */
+-				CIFSSMBClose(xid, tcon, fid->netfid);
+ 				goto cifs_create_get_file_info;
+ 			}
+ 			/* success, no need to query */
+@@ -370,6 +370,7 @@ cifs_do_create(struct inode *inode, struct dentry *direntry, unsigned int xid,
+ 		cifs_dbg(FYI, "cifs_create returned 0x%x\n", rc);
+ 		goto out;
+ 	}
++	*opened = true;
  
- 	err = register_pernet_subsys(&ipmr_net_ops);
-diff --git a/net/ipv4/ipmr_base.c b/net/ipv4/ipmr_base.c
-index 8b5b6f196cdc4..fb9796e21074f 100644
---- a/net/ipv4/ipmr_base.c
-+++ b/net/ipv4/ipmr_base.c
-@@ -38,7 +38,7 @@ mr_table_alloc(struct net *net, u32 id,
- 	struct mr_table *mrt;
- 	int err;
+ 	/*
+ 	 * If Open reported that we actually created a file then we now have to
+@@ -452,7 +453,7 @@ cifs_do_create(struct inode *inode, struct dentry *direntry, unsigned int xid,
+ 	return rc;
  
--	mrt = kzalloc(sizeof(*mrt), GFP_KERNEL);
-+	mrt = kzalloc(sizeof(*mrt), GFP_KERNEL_ACCOUNT);
- 	if (!mrt)
- 		return ERR_PTR(-ENOMEM);
- 	mrt->id = id;
-diff --git a/net/ipv6/ip6mr.c b/net/ipv6/ip6mr.c
-index c6fc951b01476..43bb75ea93898 100644
---- a/net/ipv6/ip6mr.c
-+++ b/net/ipv6/ip6mr.c
-@@ -1357,7 +1357,7 @@ int __init ip6_mr_init(void)
+ out_err:
+-	if (server->ops->close)
++	if (*opened && server->ops->close)
+ 		server->ops->close(xid, tcon, fid);
+ 	if (newinode)
+ 		iput(newinode);
+@@ -472,6 +473,8 @@ cifs_atomic_open(struct inode *inode, struct dentry *direntry,
+ 	struct cifs_pending_open open;
+ 	__u32 oplock;
+ 	struct cifsFileInfo *file_info;
++	bool is_regular;
++	bool opened;
  
- 	mrt_cachep = kmem_cache_create("ip6_mrt_cache",
- 				       sizeof(struct mfc6_cache),
--				       0, SLAB_HWCACHE_ALIGN,
-+				       0, SLAB_HWCACHE_ALIGN | SLAB_ACCOUNT,
- 				       NULL);
- 	if (!mrt_cachep)
- 		return -ENOMEM;
+ 	/*
+ 	 * Posix open is only called (at lookup time) for file create now. For
+@@ -526,16 +529,29 @@ cifs_atomic_open(struct inode *inode, struct dentry *direntry,
+ 	cifs_add_pending_open(&fid, tlink, &open);
+ 
+ 	rc = cifs_do_create(inode, direntry, xid, tlink, oflags, mode,
+-			    &oplock, &fid);
++			    &oplock, &fid, &opened);
+ 
+ 	if (rc) {
+ 		cifs_del_pending_open(&open);
+ 		goto out;
+ 	}
+ 
+-	if ((oflags & (O_CREAT | O_EXCL)) == (O_CREAT | O_EXCL))
++	is_regular = d_is_reg(direntry);
++	if (!is_regular || !opened) {
++		if (opened && server->ops->close)
++			server->ops->close(xid, tcon, &fid);
++		cifs_del_pending_open(&open);
++	}
++
++	if (is_regular && opened &&
++	    (oflags & (O_CREAT | O_EXCL)) == (O_CREAT | O_EXCL))
+ 		file->f_mode |= FMODE_CREATED;
+ 
++	if (!is_regular || !opened) {
++		rc = finish_no_open(file, NULL);
++		goto out;
++	}
++
+ 	rc = finish_open(file, direntry, generic_file_open);
+ 	if (rc) {
+ 		if (server->ops->close)
+@@ -585,6 +601,7 @@ int cifs_create(struct inode *inode, struct dentry *direntry, umode_t mode,
+ 	struct TCP_Server_Info *server;
+ 	struct cifs_fid fid;
+ 	__u32 oplock;
++	bool opened;
+ 
+ 	cifs_dbg(FYI, "cifs_create parent inode = 0x%p name is: %pd and dentry = 0x%p\n",
+ 		 inode, direntry, direntry);
+@@ -601,8 +618,8 @@ int cifs_create(struct inode *inode, struct dentry *direntry, umode_t mode,
+ 		server->ops->new_lease_key(&fid);
+ 
+ 	rc = cifs_do_create(inode, direntry, xid, tlink, oflags, mode,
+-			    &oplock, &fid);
+-	if (!rc && server->ops->close)
++			    &oplock, &fid, &opened);
++	if (!rc && opened && server->ops->close)
+ 		server->ops->close(xid, tcon, &fid);
+ 
+ 	cifs_put_tlink(tlink);
 -- 
 2.53.0
 
