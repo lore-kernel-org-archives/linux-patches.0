@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793208203;
-	b=wX2JWdJzhm2LtELhPO/WH4wbL3X8ukaISUYw+qglBLYe8IWzBgYJfrCAo52CVHhCcDli
-	 fr5odJ+G8GolDgCDqIKmHH2hJUpsfwi7ufn3jp5Gv58zDFBenP32mHWG2LTTq4FR56PQ5
-	 3nAHrI5wJCXbvgcsGW7SNvSgCSihVxSek8nYZLrVFydRbfxNyjag72FEPVThivx7OHIX5
-	 aN9yiT8sYZEu+iRfmRO69mUbD3BSGqWYLKtdkmXJbJCD1Wy6d3JtwjBKQLT7eWuUR2JCW
-	 zxkfMLT2ozB2pOl3uAXhlO5e8lKY3ft7MA3JkG0DLKHOpPeteu9UP4wAFwO/UrSxHGQ==
+	t=1793208206;
+	b=DUGVeD7A8BfA2T+caRSuBAuXYeHfwlI2y9Ldi1LRRCrztN565pwZ3i1wbSdwfkAiinwU
+	 Wy1/NtgZz+SgUB4yG1XfhRhjOdGnDV+8ehT++GVHvwe1xxZlmqz+/PH2kuuwYwpLDs+44
+	 LB3WMi6T0/O0xljudbnkjZaNq4WNk6MKRscHMPsIGhA34FME3BJfHkSE/GTAjOWuZbSQL
+	 /e7yiZ7nOW9KnCiq+pV+wW7Iz96Odb4BBXacSSETATo3HP6Qsz/M2MkapQRvtwK2tM+Xu
+	 LcnFu7Uwq3ggq4MGNW/6NilT3PI1YJR71jLsNFQD5ZETa6wWDmRJVf9SRuES+Qf50mw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793208203;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793208206;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=o6vhZKsUPTEXMaV2itdjy05DiEsWxCcoFKfdYhnP+kM=;
-	b=pSB3kDwN9MTYpjlX7AdKxxEqBxK8spsdsubGpG256JOta9vwY1DQt7E6U/MEM7fpDCcT
-	 79NuBH0/EI0+Kop7r+95mWmrR2sLTvn/c68vkesYpMeAnpxiQsSmk0OrJQPKETjfgCdmC
-	 DuKtu42bsphD/2QmznEORqs2jQBgvlhnepRDYRRAm32wjngXCaDLOkkw8tCGn6cpHhtTG
-	 NKPGlPtPWVvOh8S/BMeX6rJzlOWYd/ibFenMmojSVd0YIYKh5MdX5mNEBTLnYMICXONyP
-	 WGP8Gg943ySryZ84vmm5KMUn2nA9USkdUq8FWsAVuU/w+Tgt//PBIt4C56l+j5GN1Tg==
+	bh=E+BZ8vAb6D+FpqmZfEfBjMYkdUxzkZIi7fnL25KJA4Q=;
+	b=K89nB0WueMPNMCa2Q+Pcs/FHzRNyzz8+4Sxq1Iu0dGmHbD0Bpt+gGzm5mUyjm9WOlyRX
+	 EI6rR7kNu0CCdRaYPVvIWbuEBdoAlbxvL81ILV0WYmeXgdojfHzZynKcQJwBdMfGbvKM2
+	 CZfY/cmGUf+oAz3zJYwNakhhpkPMOrD/EgufbT35kFks7bzf2y6cCb+B3MA5iufhngvSI
+	 vpxiFk2l6ESy8H0lIdF+E3yAtqMqoxbhgrDg4vluJT1DMzXeMjMwjEn7XkXJwoPCH/MJd
+	 z0PGaG3g10keTZ7PEgzKs39TVnsrjOEyPQhzaQTfKHytG6qvcu9lCcfZGHrFPTxuieg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CZ6Y+JQT;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=V1ZWjAvM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85FF3606A31D;
-	Wed, 28 Oct 2026 17:23:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61AAA606A31C;
+	Wed, 28 Oct 2026 17:23:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CZ6Y+JQT
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D79311F01825;
-	Wed, 28 Oct 2026 17:23:22 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=V1ZWjAvM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B23361F031E2;
+	Wed, 28 Oct 2026 17:23:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793208203;
-	bh=o6vhZKsUPTEXMaV2itdjy05DiEsWxCcoFKfdYhnP+kM=;
+	s=korg; t=1793208206;
+	bh=E+BZ8vAb6D+FpqmZfEfBjMYkdUxzkZIi7fnL25KJA4Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CZ6Y+JQTZzMDgjBlI6VR98fC5Nz9Lm6j8b4kUdpeBhpzTZp/UwkBGOdPNZIaaoMQx
-	 nyGAx//lLmjuGMbZ/f1jPlpU/JhxD8tf+UhcdAkTa0cZYHnTMLL9YE0d0CH+ECPVib
-	 E+FRlhojlvyVBj2/rUNEpJwf78pEI8Zx+CIIUrNc=
+	b=V1ZWjAvM3E0mgzgbbeI6H1a2BCW9osDGhtfh/S263qNqAmdedTigfm8g29yYyiQsa
+	 TDWKe3GIRnxkZOgxVUyHzP2Z2+0LOEabW8u18DeTQOrXi0Aln893qG02Tz96cp/zKk
+	 g8KGkOB0bs4BLMbRNHNTUjBHcclvJK0KrMgUWJpg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	David Howells <dhowells@redhat.com>,
 	Paulo Alcantara <pc@manguebit.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 036/516] smb: client: fix potential OOB read in smb3_enum_snapshots()
-Date: Wed, 28 Oct 2026 17:53:08 +0100
-Message-ID: <20261028170004.384819817@linuxfoundation.org>
+Subject: [PATCH 5.10 037/516] smb: client: fix next_buffer UAF and NextCommand bounds in compound PDUs
+Date: Wed, 28 Oct 2026 17:53:09 +0100
+Message-ID: <20261028170004.408090123@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -71,56 +71,70 @@ Content-Transfer-Encoding: 8bit
 
 From: Frank Sorenson <sorenson@redhat.com>
 
-[ Upstream commit 4775c3b7a597907e0b97556c7986fda238a377ae ]
+[ Upstream commit 05762c5bc1cfdcac36747994fde2c04387a457f1 ]
 
-If snapshot_array_size is smaller than GMT_TOKEN_SIZE,
-smb3_enum_snapshots() sets ret_data_len to
-sizeof(struct smb_snapshot_array) without verifying the actual length
-of the server's reply.
+Fix several related bounds checking and pointer lifecycle issues in
+receive_encrypted_standard()'s handling of compound encrypted frames:
 
-Because SMB2_ioctl() places no lower bound on the server-supplied
-OutputCount and allocates retbuf to exactly that length, a short reply
-results in ret_data_len exceeding the size of retbuf. The subsequent
-copy_to_user() then reads past the end of retbuf, leaking adjacent slab
-memory to userspace.  The subsequent clamp check is ineffective as it
-only reduces ret_data_len.
+- Clear next_buffer after assigning it to server->bigbuf. A stale
+  next_buffer pointer can lead to a use-after-free on subsequent
+  error paths.
+- Update pdu_length to the decrypted plaintext size (buf_size). Using
+  the pre-decryption length allows NextCommand to point into stale
+  ciphertext residue.
+- Reject next_cmd values smaller than MID_HEADER_SIZE(server).
+- Fix an integer overflow in the upper bound check by verifying
+  pdu_length - next_cmd < MID_HEADER_SIZE(server), ensuring the
+  trailing slice is large enough for a header.
 
-Fix this by rejecting replies shorter than
-sizeof(struct smb_snapshot_array) with -EIO. Note that the bound is set
-to the 12-byte struct size rather than the 16-byte
-MIN_SNAPSHOT_ARRAY_SIZE defined in MS-SMB2 3.3.5.15.1, because 12 bytes
-is exactly what copy_to_user() attempts to read.
-
-Fixes: e02789a53d71 ("smb3: enumerating snapshots was leaving part of the data off end")
+Fixes: b24df3e30cbf ("cifs: update receive_encrypted_standard to handle compounded responses")
 Cc: stable@vger.kernel.org
 Signed-off-by: Frank Sorenson <sorenson@redhat.com>
 Reviewed-by: David Howells <dhowells@redhat.com>
 Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+[ Replaced unavailable MID_HEADER_SIZE(server) with (HEADER_SIZE(server) - 1). ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/cifs/smb2ops.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ fs/cifs/smb2ops.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
 diff --git a/fs/cifs/smb2ops.c b/fs/cifs/smb2ops.c
-index 51f8ea0c89065..8fb3db801d3ab 100644
+index 8fb3db801d3ab..1113d0904b630 100644
 --- a/fs/cifs/smb2ops.c
 +++ b/fs/cifs/smb2ops.c
-@@ -2165,8 +2165,14 @@ smb3_enum_snapshots(const unsigned int xid, struct cifs_tcon *tcon,
- 		 * and retry the ioctl again with larger array size sufficient
- 		 * to hold all of the snapshot GMT tokens on the second try.
- 		 */
--		if (snapshot_in.snapshot_array_size < GMT_TOKEN_SIZE)
-+		if (snapshot_in.snapshot_array_size < GMT_TOKEN_SIZE) {
-+			if (ret_data_len < sizeof(struct smb_snapshot_array)) {
-+				rc = -EIO;
-+				kfree(retbuf);
-+				return rc;
-+			}
- 			ret_data_len = sizeof(struct smb_snapshot_array);
-+		}
+@@ -4973,6 +4973,7 @@ receive_encrypted_standard(struct TCP_Server_Info *server,
+ 	length = decrypt_raw_data(server, buf, buf_size, NULL, 0, 0, false);
+ 	if (length)
+ 		return length;
++	pdu_length = buf_size;
  
+ 	next_is_large = server->large_buf;
+ one_more:
+@@ -4985,8 +4986,15 @@ receive_encrypted_standard(struct TCP_Server_Info *server,
+ 	}
+ 
+ 	if (next_cmd) {
+-		if (WARN_ON_ONCE(next_cmd > pdu_length))
++		if (next_cmd < (HEADER_SIZE(server) - 1) ||
++		    next_cmd > pdu_length ||
++		    pdu_length - next_cmd < (HEADER_SIZE(server) - 1)) {
++			unsigned int max_next = pdu_length > (unsigned int)(HEADER_SIZE(server) - 1) ?
++					pdu_length - (unsigned int)(HEADER_SIZE(server) - 1) : 0;
++			cifs_server_dbg(VFS, "invalid NextCommand offset %u out of range [%zu, %u]\n",
++					next_cmd, (HEADER_SIZE(server) - 1), max_next);
+ 			return -1;
++		}
+ 		if (next_is_large)
+ 			next_buffer = (char *)cifs_buf_get();
+ 		else
+@@ -5022,6 +5030,7 @@ receive_encrypted_standard(struct TCP_Server_Info *server,
+ 			server->bigbuf = buf = next_buffer;
+ 		else
+ 			server->smallbuf = buf = next_buffer;
++		next_buffer = NULL;
+ 		goto one_more;
+ 	} else if (ret != 0) {
  		/*
- 		 * We return struct SRV_SNAPSHOT_ARRAY, followed by
 -- 
 2.53.0
 
