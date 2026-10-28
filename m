@@ -1,51 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793207185;
-	b=az0zsGDpa2oRTnY0HlpX1G34GqX42S7W2keOlE6o+fWA6dPC7Q+ERMcHw21qLHDuQDq7
-	 B/PrtA37LVwKXYkFTlftHo4b1Aw3QinkSzkLtyTIyfJb7vMdz7hxSz5sOcLC+zRWQKwe1
-	 r68aNP4CCKpFkNh0Lo5ll4SkgNFXWfPZEUCN9/3g4XMDNbUlG2Z19FZMGiHj91sP857ry
-	 ZnLOuUnJF2KrkCTzzZgEzt9xsV9L/Ezo3cc6XRTA5cPW4Ry5h5Q1x2pnKC3XCFrTLMZi1
-	 aB7W1nQll12pvVO9MGXTU8WAvKgF3oTs8sAr64Jr6ejweJo+vMhF+XLfX5dS/1Vx8SQ==
+	t=1793207187;
+	b=IYOm4i3CFrbGWD0bouo99eEV/IKzneR7FvpiBBfka6+Bs8I6AMx3sp/i+qUDhAtcHAP4
+	 omIspitRlcvGu/1xMuVZbkvXeNIWXsvRhuf9erhdSIC7P1pI2LL6YMw4Xgn8vmmyL8H1K
+	 e98KpGDZLMWobMuqwDky9qItd1L42zS7RiHtlCcKGZEU2rYtB58Xz9sCpihpXlu3BPUbz
+	 WXdf33gHD+oWDvJLwBEcV2B8n0qjKS++6Yu9h2SIxXcBtTv2HH86LHfp2PQX1xMoRde5D
+	 Si/tJ/KGiduWeTHZYAWHMIK4wbA4XH+ja/3cpTpyzjxQVMtO+xAKgwNHTjSwCALwgRQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793207185;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793207187;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=1oz4a2i43F9EYfpwZ4xp3s+B2sQqnV+Wo08jQpIBwmk=;
-	b=48DJQWxHiXTEnTjbeJFfi+eJklWISkqtBXqjgxlk5SPWvK/U/4elTCp1egBltzfPkjFT
-	 y8pgsF3U/tBmfyn9RJqM10aL1oVDwDpYWfpWcIyUAqP2IjZmc95Xofryl8aNTThmFYzYI
-	 sz1juziTEHB1o5jtkw77Kp/1RRt5IBz7LlTiPgn5MVfrloDN+0zstQ2AvZIpp6m9VVWqd
-	 1WpC1OdIDRItMWtTilvnMFMbk1UaYx/yz1KCsNwdpvmATjWJ/pxEjAAknZ6V3/hMOu8st
-	 VHYGWYH/rkGkaQx9ScTe7pBnPffgx+yt3bqBWhognwxXYwXrpO/2P6GT0cRtDs/BMRw==
+	bh=SnO9l+Hn3v7bDBgWbIJAdqc8qBSje/qPMHPZWzV+vWQ=;
+	b=jYNLjUc5i2CZHgKNENeP+27W5tXv4RbusNeZGii0ZOsE1idAIoIL/ips7OpWmnY1Bll4
+	 jiGfCYvZs+3eUXp+4omFz4dMUS7gzRqMyioe5buIgk+woDMdJNkriNcTOnbNQKCPXNUDq
+	 exWaiIaB1HH4gHQeGm2Nwi13K7jxYGLTc9xFWLwfIkm7Gc8hWmoYr1PmotzYII2NlJ9Sm
+	 I0XFrNv9S5n2fhsuPBXhXc67UbawItEc6uy7ApY1f17SHcptwAJ3vaDgyRTBDDVmItVIi
+	 7c3c4g8TNGK8EAgsfx5zh/Bvenn55jr255ZVkgQIpgwo8DaJFTX6J+fBWGBs+QLDmYQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=re7cw+wW;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1HXrfmyD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACF78606A31E;
-	Wed, 28 Oct 2026 17:06:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66882606A31A;
+	Wed, 28 Oct 2026 17:06:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=re7cw+wW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED6D81F01829;
-	Wed, 28 Oct 2026 17:06:23 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1HXrfmyD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B739D1F01828;
+	Wed, 28 Oct 2026 17:06:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793207184;
-	bh=1oz4a2i43F9EYfpwZ4xp3s+B2sQqnV+Wo08jQpIBwmk=;
+	s=korg; t=1793207187;
+	bh=SnO9l+Hn3v7bDBgWbIJAdqc8qBSje/qPMHPZWzV+vWQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=re7cw+wWTldW9erT9mJc4XOLcSvhoioGbmRkcnFQegOzJRuRlPnhUwqSRytJYaiVc
-	 qs68H5ensMjBqAd3cWfViSWunEj6sLCl2w3zyxzGiI7CA3pYOCPOP1oLZDJKUh9ozt
-	 mypqh7gdGv2ThCY2wxoz41UVFHrdOGu2LGgMPD+o=
+	b=1HXrfmyDwPhBfUT00irGQgVQPttEDAhSE/ulU4pak8hsDFgJM2bee6EUF0sC2y/7f
+	 K5/eSXBTHg1snIUNK5v60NUg4YGANVf+cZFX6Ss/joPDr17oD7ourF1crPkJH98MiI
+	 by3SS9NdUHeu7F1fjD274YJc/2JO4F/Lz5AaRJ0Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 7.2 17/88] io_uring/waitid: own the request before clearing ->head
-Date: Wed, 28 Oct 2026 17:59:25 +0100
-Message-ID: <20261028165942.521239100@linuxfoundation.org>
+	Baolin Liu <liubaolin@kylinos.cn>,
+	Hyunchul Lee <hyc.lee@gmail.com>,
+	Hongling Zeng <zenghongling@kylinos.cn>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.2 02/88] ntfs: fix race between fallocate and mmap reads
+Date: Wed, 28 Oct 2026 17:59:10 +0100
+Message-ID: <20261028165942.169861736@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165942.107695352@linuxfoundation.org>
 References: <20261028165942.107695352@linuxfoundation.org>
@@ -67,80 +70,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Hongling Zeng <zenghongling@kylinos.cn>
 
-Commit c254eec4364b9f4b4cbdce43be3fb4df5a651a70 upstream.
+[ Upstream commit 67aded1da114dc44808315f249bd9e7e440f799d ]
 
-io_waitid_remove_wq() only takes the wait queue lock if ->head is set.
-io_waitid_wait() clears ->head first thing, before it tries to become the
-owner of the request by bumping ->refs. If somebody else owns the request
-at that point, nothing keeps it from completing the request while the
-wake up handler is still going to touch it:
+The fallocate implementation only takes invalidate_lock for punch hole,
+collapse range, and insert range operations. For standard allocation modes
+(mode == 0, FALLOC_FL_KEEP_SIZE), the lock is not held.
 
-CPU0 (io_waitid_wait)                 CPU1 (io_waitid, holds a ref)
-list_del_init(&wait->entry)
-smp_store_release(&iw->head, NULL)
-                                      __do_wait() finds another child
-                                      io_waitid_remove_wq()
-                                        // ->head == NULL, no locking
-                                      io_waitid_finish(), IOU_COMPLETE
-                                      // request freed and reused
-atomic_fetch_inc(&iw->refs)
+During ntfs_attr_fallocate(), new clusters are mapped to the runlist via
+ntfs_attr_map_cluster() before being zeroed by ntfs_dio_zero_range(). This
+creates a window where concurrent mmap page faults can read uninitialized
+disk data.
 
-The same goes for __io_waitid_cancel() if it claims the request in that
-window. ->refs is part of the per opcode data of the request, so this
-increments whatever the next user of the request keeps there. If that
-happens to be zero, the handler concludes that it owns the request, and
-queues io_waitid_cb() for it. With the window held open by a delay, and
-the request reused for a receive that is waiting for data:
+Since mmap uses filemap_fault() which takes invalidate_lock in shared mode,
+it can fault in pages during this window and expose old disk contents to
+userspace. This is an information leak and data integrity issue.
 
-  BUG: KASAN: slab-use-after-free in __wake_up_common+0x1ca/0x1f0
-   __wake_up_sync_key+0x36/0x50
-   sock_def_readable+0xf1/0x420
-   unix_stream_sendmsg+0x60b/0x1110
-  Allocated by task 87:
-   io_arm_apoll+0x1ed/0x940
-  Freed by task 87:
-   __io_submit_flush_completions+0x118d/0x1a10
-   tctx_task_work_run+0x327/0x950
+Fix by taking invalidate_lock for all fallocate operations, not just for
+punch/collapse/insert modes. This prevents concurrent page faults from
+accessing unzeroed clusters during the allocation window.
 
-Only clear ->head once the handler owns the request. If it doesn't, the
-owner finds ->head set and has to wait for the lock, which is held by the
-caller of the handler. Deleting the already deleted entry again is
-harmless.
-
-Fixes: ab673c1bcaf2 ("io_uring/waitid: use io_waitid_remove_wq() consistently")
-Assisted-by: LLM
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Link: https://patch.msgid.link/20261015-b4-io-uring-fixes-v1-1-c1556f5d7bf5@toxicpanda.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 495e90fa3348 ("ntfs: update attrib operations")
+Cc: stable@vger.kernel.org
+Reviewed-by: Baolin Liu <liubaolin@kylinos.cn>
+Reviewed-by: Hyunchul Lee <hyc.lee@gmail.com>
+Signed-off-by: Hongling Zeng <zenghongling@kylinos.cn>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Stable-dep-of: 0fecc393f206 ("ntfs: take invalidate_lock in ntfs_filemap_page_mkwrite")
+Signed-off-by: Hyunchul Lee <hyc.lee@gmail.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/waitid.c |   10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ fs/ntfs/file.c | 14 ++++----------
+ 1 file changed, 4 insertions(+), 10 deletions(-)
 
---- a/io_uring/waitid.c
-+++ b/io_uring/waitid.c
-@@ -265,12 +265,18 @@ static int io_waitid_wait(struct wait_qu
- 		return 0;
+diff --git a/fs/ntfs/file.c b/fs/ntfs/file.c
+index fb8e525743970..317bb249150fd 100644
+--- a/fs/ntfs/file.c
++++ b/fs/ntfs/file.c
+@@ -1061,7 +1061,6 @@ static long ntfs_fallocate(struct file *file, int mode, loff_t offset, loff_t le
+ 	struct ntfs_volume *vol = ni->vol;
+ 	int err = 0;
+ 	loff_t old_size;
+-	bool map_locked = false;
  
- 	list_del_init(&wait->entry);
--	smp_store_release(&iw->head, NULL);
+ 	if (mode & ~(NTFS_FALLOC_FL_SUPPORTED))
+ 		return -EOPNOTSUPP;
+@@ -1090,16 +1089,12 @@ static long ntfs_fallocate(struct file *file, int mode, loff_t offset, loff_t le
  
--	/* cancel is in progress */
-+	/*
-+	 * Cancel or issue is in progress. Leave ->head alone, so that whoever
-+	 * owns the request has to take the wait queue lock, which we hold,
-+	 * before it can complete and free it.
-+	 */
- 	if (atomic_fetch_inc(&iw->refs) & IO_WAITID_REF_MASK)
- 		return 1;
+ 	inode_lock(vi);
+ 	if (NInoCompressed(ni) || NInoEncrypted(ni)) {
+-		err = -EOPNOTSUPP;
+-		goto out;
++		inode_unlock(vi);
++		return -EOPNOTSUPP;
+ 	}
  
-+	/* pairs with the smp_load_acquire() in io_waitid_remove_wq() */
-+	smp_store_release(&iw->head, NULL);
-+
- 	req->io_task_work.func = io_waitid_cb;
- 	__io_req_task_work_add(req, IOU_F_TWQ_IN_WAKE);
- 	return 1;
+ 	inode_dio_wait(vi);
+-	if (mode & (FALLOC_FL_PUNCH_HOLE | FALLOC_FL_COLLAPSE_RANGE |
+-		    FALLOC_FL_INSERT_RANGE)) {
+-		filemap_invalidate_lock(vi->i_mapping);
+-		map_locked = true;
+-	}
++	filemap_invalidate_lock(vi->i_mapping);
+ 
+ 	switch (mode & FALLOC_FL_MODE_MASK) {
+ 	case FALLOC_FL_ALLOCATE_RANGE:
+@@ -1124,8 +1119,7 @@ static long ntfs_fallocate(struct file *file, int mode, loff_t offset, loff_t le
+ 
+ 	err = file_modified(file);
+ out:
+-	if (map_locked)
+-		filemap_invalidate_unlock(vi->i_mapping);
++	filemap_invalidate_unlock(vi->i_mapping);
+ 	if (!err) {
+ 		if (mode == 0 && NInoNonResident(ni) &&
+ 		    offset > old_size) {
+-- 
+2.53.0
+
 
 
