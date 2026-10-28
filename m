@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793207417;
-	b=Pu77Vskql0maL9typuA9Ptp/mXPMMbtz4LLmsNKXKIDqmzJvZ/QVefA+42qUJhdSFdS4
-	 nwkmleWlgDnMtPsX8SzHftxVzHqHALksdSObTfxyJFDKWgwif7jUcBzr1cWR9CmPkkYMV
-	 x8ZPdxU3jDVJoXFiEuId2MPTMA9yn7QGEEvpPswWGtuAU6ZBRv34fS7/lq7wzyo+tg/5J
-	 opJVYu2/Ok/FE7U7jtNNBsNiOWnmHgoSydtE6tqPUAgv5zgJmKutZrUFjhuPwZug27RU4
-	 czMQi69O4bYh1uQkUVu2+KUnnBdq3KefpnJ08B8SwGnnbGRVNRqTOGcJ1fy5kjYbgbw==
+	t=1793207420;
+	b=u5X4f6TObovRE1sFXMOD3b9GEcW1+Jr1s1VAktjsoWUd5/S4IuhI1wAW5c2T2sxjuQDM
+	 G2qaD9OHsxlKujb3pYJmWViORj48K3cvxr5nNXalA+4MQEKHJCE0jzurARifTLHyDccJz
+	 +HmbB8QSDk0AuPIwjHRuhcfLTyqHNRuWS9X6eDDPpbilMoTEkN7iV3JtWi7/6ZOw6tS1r
+	 1e8VJ38lbNnfhXNjKEOIqiEbhM6dtwzBWQ57jb6UewjPbRjAjI56EVeLyPWPPDzdHyjAl
+	 MlJylIqhHqJitmnRZayI3rJ1ldQxlHuYuImj0QE41e4/kU/4VKxcyMIXPyCkPLxrFQQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793207417;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793207420;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=AzCXF0tYu7y+dM+yKgoOjkBTBmUMoJpiFAwLgledSME=;
-	b=y6+3Dkcc23fT9rl7h+y7XDuz+XsdEpw2hUyW24Qg0zD8T3TeJYjqvM9W08bbqHVGMYcf
-	 vqgZrSFOVNLspkvgz4LsBxf8kyS0nlHAK+5eSLkuuFF3yUxOsZZTQvqwMOpDN6N6haEK7
-	 6n33tozDCmGHADbIvoXsFv0tYTHKMepl1tklib3yF1+XFFOZ6r7oysC7i4ACA7L/50xmv
-	 S9Q6hSLbtTOgWjDupF/eqILjzHIZ83P3o1jVWczqBnBSfh6rOJSwroOqQbFEGijQa4YBT
-	 P0SynYN5gys6KnQ8ctEzLoMavTfuurxrX8olByh5NEVMU6cklQE7fKX7fwPRRopH7aw==
+	bh=N1PgLUGJ4AZBm0C9a8WtvUmwLVOFDYdkhwiCEUBIe6k=;
+	b=GT37o2XqC7/u2cxd6BY7ltwSN2MaipavwbtPqC2a6D06bddfEkW0VFMifLv3k1HQ71Li
+	 UYDcb8aVZhEZOFibLrju9ile41azyGpuXa8G82sctJu39Nbde/cO7DhcYBR9taqhdiWu7
+	 SwOt1G0+G5HqgNc2QjGSv0Z4tjfJLSaB3zLammPRM+qQrZkcU23tqTkSiRP9HogjKvtSj
+	 1hqdzPfog5UG7RZrq37WquRjyAQ82ty7R7+O8kMjLWGfNESgBL5NaxsYyT2+iqyxb5bSk
+	 78y60GyAHdes+blO74n0KFrR54tkrxO668QuKsJdZcpJ9KLpQkGesMOm6NsgfrwNiYg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VQEgbW34;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sNKhUjU4;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E26FD606A31A;
-	Wed, 28 Oct 2026 17:10:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1992606A31A;
+	Wed, 28 Oct 2026 17:10:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VQEgbW34
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E0491F01825;
-	Wed, 28 Oct 2026 17:10:16 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sNKhUjU4
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C55C1F01825;
+	Wed, 28 Oct 2026 17:10:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793207416;
-	bh=AzCXF0tYu7y+dM+yKgoOjkBTBmUMoJpiFAwLgledSME=;
+	s=korg; t=1793207419;
+	bh=N1PgLUGJ4AZBm0C9a8WtvUmwLVOFDYdkhwiCEUBIe6k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VQEgbW340ZytikjmKQLgtcq6RZ8h7Sk47VQMOWlVqFN3xyHF1k03Zbhlwr2D7bfvA
-	 8DZciQEBKimjo012XUtCOZ7boKTpP6vP9wESVpa61VjldPy9KtMSO66bVW4VFbcrzE
-	 XtOfwayffYlA9AhM6uOCJ5ny/9BbGVW7vFG/A8Ew=
+	b=sNKhUjU48gNW4aFvZPk20YHB4fSzey1qLabTIiCSqWixfu0042jDJIKaQyllVpov3
+	 d4ws5tczkfkfzKFe9kmz3EslNV8i2HNHQqN4uht2kkqp0hMzKBozad/CoiD3RhCYNi
+	 7PdSKfixr4jjal45hJact0xDXthabKCg+whavSac=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Bernard Pidoux <bernard.f6bvp@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 010/247] rose: hold a reference on incoming sockets queued for accept()
-Date: Wed, 28 Oct 2026 17:56:53 +0100
-Message-ID: <20261028165947.601458126@linuxfoundation.org>
+Subject: [PATCH 6.12 011/247] ax25: bound REJ-driven fast retransmits with the existing N2 counter
+Date: Wed, 28 Oct 2026 17:56:54 +0100
+Message-ID: <20261028165947.624662093@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165947.349197979@linuxfoundation.org>
 References: <20261028165947.349197979@linuxfoundation.org>
@@ -69,149 +69,102 @@ Content-Transfer-Encoding: 8bit
 
 From: Bernard Pidoux <bernard.f6bvp@gmail.com>
 
-rose_rx_call_request() creates the socket for an incoming call and
-queues the call's skb on the listening socket with skb->sk pointing at
-it, without taking a reference. If the caller clears the call before
-it is accepted, rose_disconnect() leaves that socket in STATE_0 with
-SOCK_DEAD set, and since commit "rose: release netdev ref and destroy
-orphaned incoming sockets" rose_heartbeat_expiry() reaps such orphaned
-sockets and frees them. The skb stays on the listener's queue, so:
+REJ deliberately bypasses the T1/N2 backoff to trigger an immediate
+go-back-N retransmit -- that is the whole point of REJ, fast recovery
+from a single lost or out-of-order frame. But unlike every other
+recovery path in this same state machine (T1 timeout, state 4
+enquiry/DM, state 1/2 SABM retries), the REJ case in
+ax25_std_state3_machine() never touches n2count, so it has no bound.
 
-- closing the listener makes rose_destroy_socket() walk its queue and
-  set flags and restart the heartbeat on the freed socket;
-- accept() can hand the freed socket to user space.
+If something keeps corrupting or reordering every retransmitted burst
+-- lossy RF, or packet reordering over a UDP-based transport such as
+axudp -- each attempt draws an immediate fresh REJ and the link
+retransmits at wire/CPU speed indefinitely, a "machine-gun" storm that
+never reaches the N2 give-up already relied on everywhere else in this
+file.
 
-On a live node running a KASAN kernel, stopping the FPAC daemons shortly
-after a local (loopback) call had been set up and dropped gave:
+Reported independently twice: Chris Maness (KQ6UP) on a plain AX.25
+link with no ROSE involved at all, and observed live on a ROSE/FPAC
+White Pages link (f6bvp-8<->f6bvp-10, same LAN, so plain network
+reordering over the Internet is not the trigger there -- likely lossy
+retransmission of the same PDU) reaching ~5900 pkt/s. Both hit the same
+code path since ax25_std_in.c is shared regardless of what rides on
+top of AX.25.
 
-  BUG: KASAN: slab-use-after-free in rose_destroy_socket+0x24a/0x570 [rose]
-  Write of size 8 ... by task fpacwpd
-   rose_destroy_socket
-   rose_release
-  Allocated by task 0: ... rose_rx_call_request <- rose_loopback_timer
-  Freed by task ...: ... sk_free <- rose_heartbeat_expiry
-  refcount_t: addition on 0; use-after-free.
-   rose_start_heartbeat <- rose_destroy_socket <- rose_release
+Count consecutive REJ-driven fast retransmits the same way a T1
+timeout already does in this state, and once N2 of them have failed to
+get an in-sequence frame through, fall back to the paced state 4
+enquiry -- which will genuinely disconnect after N2 further tries if
+the link stays bad, exactly like every other recovery path already
+does. A single frame accepted in sequence resets the counter, so an
+isolated REJ during otherwise healthy traffic never gets close to N2.
 
-followed a few seconds later by a page fault in the re-armed heartbeat
-and a kernel panic.
+Deployed on three Raspberry Pi nodes (f6bvp-12, f6bvp-8, f6bvp-10)
+since 2026-09-13, running live production AX.25/ROSE/NET-ROM traffic
+since, with no recurrence of the machine-gun storm and no other AX.25
+regression observed.
 
-Make the listener's queue own a reference on each pending socket,
-taken when the call is queued and dropped by rose_accept() or by the
-listener's rose_destroy_socket() once the skb is off the queue. Have
-the heartbeat set SOCK_DESTROY under the socket lock before reaping a
-dead socket, as the other reaping paths already do, and make both
-consumers check it under the child's lock: rose_accept() skips a
-reaped socket and waits for the next call, and rose_destroy_socket()
-no longer re-arms the heartbeat of a socket that is gone.
-
-Fixes: df12be096302 ("rose: release netdev ref and destroy orphaned incoming sockets")
 Signed-off-by: Bernard Pidoux <bernard.f6bvp@gmail.com>
-(cherry picked from commit 6b0223a4795f5db52dee038a7a29e9906122b0f7)
+(cherry picked from commit a3aa611e37d4345ebcc98c847dedaf4bcf23c7ee)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rose/af_rose.c    | 44 ++++++++++++++++++++++++++++++++++++++-----
- net/rose/rose_timer.c |  5 +++++
- 2 files changed, 44 insertions(+), 5 deletions(-)
+ net/ax25/ax25_std_in.c | 36 ++++++++++++++++++++++++++++++++++++
+ 1 file changed, 36 insertions(+)
 
-diff --git a/net/rose/af_rose.c b/net/rose/af_rose.c
-index e0294a5183b47..420408a5ad61c 100644
---- a/net/rose/af_rose.c
-+++ b/net/rose/af_rose.c
-@@ -390,11 +390,25 @@ void rose_destroy_socket(struct sock *sk)
- 	rose_clear_queues(sk);		/* Flush the queues */
- 
- 	while ((skb = skb_dequeue(&sk->sk_receive_queue)) != NULL) {
--		if (skb->sk != sk) {	/* A pending connection */
--			/* Queue the unaccepted socket for death */
--			sock_set_flag(skb->sk, SOCK_DEAD);
--			rose_start_heartbeat(skb->sk);
--			rose_sk(skb->sk)->state = ROSE_STATE_0;
-+		struct sock *child = skb->sk;
-+
-+		if (child != sk) {	/* A pending connection */
-+			/* Queue the unaccepted socket for death, unless
-+			 * rose_heartbeat_expiry() has already reaped it or is
-+			 * about to (SOCK_DESTROY).
+diff --git a/net/ax25/ax25_std_in.c b/net/ax25/ax25_std_in.c
+index ba176196ae068..f280683f83fcf 100644
+--- a/net/ax25/ax25_std_in.c
++++ b/net/ax25/ax25_std_in.c
+@@ -196,6 +196,38 @@ static int ax25_std_state3_machine(ax25_cb *ax25, struct sk_buff *skb, int frame
+ 		if (ax25_validate_nr(ax25, nr)) {
+ 			ax25_frames_acked(ax25, nr);
+ 			ax25_calculate_rtt(ax25);
++			/*
++			 * REJ triggers an immediate go-back-N retransmit,
++			 * deliberately bypassing the T1/N2 backoff that
++			 * paces every other recovery path in this state
++			 * machine -- that is the whole point of REJ, fast
++			 * recovery from a single lost/out-of-order frame.
++			 * But unlike every other recovery path here, this
++			 * one never touches n2count, so it has no bound: if
++			 * something keeps corrupting or reordering each
++			 * retransmitted burst (lossy RF, or reordering over
++			 * a UDP-based link such as axudp), every attempt
++			 * draws an immediate fresh REJ and the link is
++			 * retransmitted at wire/CPU speed indefinitely
++			 * ("machine-gun" storm), never reaching the N2 give
++			 * up that bounds every other recovery attempt.
++			 * Count consecutive REJ-driven fast retransmits the
++			 * same way a T1 timeout would in this state, and
++			 * once N2 of them have failed to make it through,
++			 * fall back to the normal paced state 4 enquiry
++			 * (which will genuinely give up and disconnect after
++			 * N2 further tries if the link stays bad). A single
++			 * frame accepted in sequence resets the counter (see
++			 * the AX25_I case below), so an isolated REJ during
++			 * otherwise healthy traffic never gets close to N2.
 +			 */
-+			local_bh_disable();
-+			bh_lock_sock_nested(child);
-+			if (!sock_flag(child, SOCK_DESTROY)) {
-+				sock_set_flag(child, SOCK_DEAD);
-+				rose_start_heartbeat(child);
-+				rose_sk(child)->state = ROSE_STATE_0;
++			if (ax25->n2count == ax25->n2) {
++				ax25->n2count = 1;
++				ax25_std_transmit_enquiry(ax25);
++				ax25->state = AX25_STATE_4;
++				break;
 +			}
-+			bh_unlock_sock(child);
-+			local_bh_enable();
-+
-+			skb->sk = NULL;
-+			sock_put(child);	/* the queue's reference */
- 		}
- 
- 		kfree_skb(skb);
-@@ -980,6 +994,7 @@ static int rose_accept(struct socket *sock, struct socket *newsock,
- 	 *	The write queue this time is holding sockets ready to use
- 	 *	hooked into the SABM we saved
- 	 */
-+again:
- 	for (;;) {
- 		prepare_to_wait(sk_sleep(sk), &wait, TASK_INTERRUPTIBLE);
- 
-@@ -1005,12 +1020,27 @@ static int rose_accept(struct socket *sock, struct socket *newsock,
- 		goto out_release;
- 
- 	newsk = skb->sk;
-+	lock_sock_nested(newsk, SINGLE_DEPTH_NESTING);
-+	if (sock_flag(newsk, SOCK_DESTROY)) {
-+		/* The call went away and rose_heartbeat_expiry() reaped (or
-+		 * is about to reap) the socket before it was accepted: drop
-+		 * it and wait for the next one.
-+		 */
-+		release_sock(newsk);
-+		skb->sk = NULL;
-+		kfree_skb(skb);
-+		sk_acceptq_removed(sk);
-+		sock_put(newsk);	/* the queue's reference */
-+		goto again;
-+	}
- 	sock_graft(newsk, newsock);
-+	release_sock(newsk);
- 
- 	/* Now attach up the new socket */
- 	skb->sk = NULL;
- 	kfree_skb(skb);
- 	sk_acceptq_removed(sk);
-+	sock_put(newsk);		/* the queue's reference */
- 
- out_release:
- 	release_sock(sk);
-@@ -1124,6 +1154,10 @@ int rose_rx_call_request(struct sk_buff *skb, struct net_device *dev, struct ros
- 
- 	rose_insert_socket(make);
- 
-+	/* The listener's queue holds a reference on the pending socket
-+	 * until rose_accept() or rose_destroy_socket() takes it off.
-+	 */
-+	sock_hold(make);
- 	skb_queue_head(&sk->sk_receive_queue, skb);
- 
- 	rose_start_heartbeat(make);
-diff --git a/net/rose/rose_timer.c b/net/rose/rose_timer.c
-index 3cd7e020422a5..5ba0c89e4ee1b 100644
---- a/net/rose/rose_timer.c
-+++ b/net/rose/rose_timer.c
-@@ -188,6 +188,11 @@ static void rose_heartbeat_expiry(struct timer_list *t)
- 				rose_neigh_put(rose->neighbour);
- 				rose->neighbour = NULL;
- 			}
-+			/* Tell rose_accept() and the listener's teardown, which
-+			 * may still hold this socket on their queue, that it is
-+			 * gone.
++			ax25->n2count++;
+ 			ax25_stop_t1timer(ax25);
+ 			ax25_start_t3timer(ax25);
+ 			ax25_requeue_frames(ax25);
+@@ -226,6 +258,10 @@ static int ax25_std_state3_machine(ax25_cb *ax25, struct sk_buff *skb, int frame
+ 			if (ax25->condition & AX25_COND_OWN_RX_BUSY)
+ 				ax25->vr = ns;	/* ax25->vr - 1 */
+ 			ax25->condition &= ~AX25_COND_REJECT;
++			/* Genuine forward progress: a frame made it through in
++			 * sequence, so this is not part of a REJ storm.
 +			 */
-+			sock_set_flag(sk, SOCK_DESTROY);
- 			bh_unlock_sock(sk);
- 			rose_destroy_socket(sk);
- 			sock_put(sk);
++			ax25->n2count = 0;
+ 			if (pf) {
+ 				ax25_std_enquiry_response(ax25);
+ 			} else {
 -- 
 2.53.0
 
