@@ -1,58 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793211850;
-	b=ZrqKN/cjvo2nWCuznT/KcDFwEOifFjgkYp6EUlbmyP0cGKo/uTrGq/CvErvz+kfNiRYz
-	 BEy4jKGZdCgB8IHLsng+/Ufl8Acidzd5vT6WMhfbHBOSqpLsgZUZ+Io3U3xiT8N2YjK91
-	 xT3Xo18fJP0bO4pv83Rq0RZTX3CoM8hpZf7xXHIm5uSN9l4ObE1b+wDvOZOaEBT5ZqYKz
-	 t9dSBWZgnMinyNhfYuQP+WmTr7WIS+9hOlp429M7Tn3SqZX7xzEZeifLXW5KWnxbxcZ32
-	 Wpl27kU61dHS/lOvkIOdSsR+Jfje++s8cenFQMK0woxVfYqDGL+XqP1D7eszdD+i/5w==
+	t=1793211852;
+	b=j0OqTb1qeZk+TqIiDOBe5peVTvxY5N4oEUzpWrO8iv3k1Ky7DKciuyJdfWJyAt6vk/zd
+	 pScgH1pNFU4iOtSBs9enLy+obo2HJJ4Eu8Jjso2QsvjXoUyrjTu/Mr+xuermG6uJ/iB83
+	 NiGVk2JHT3udSFKQ6dOmJOZyojXk9I4ApDLllizokA4u5IPE46RRUNX8kavcyPa8pZ5eN
+	 FF+pYd5/MqVt1sQ+5U4i/O0K6rI/Od7dbkdC+zue43MD/Z3OAiDwKEWnt0HzkbwicFowH
+	 zXpPARyO3anPm1liAQKdKAZ0iTa6C+hhjxp9EEEKqWmWcqmziTkn0+iIHjviCC1zGDg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793211850;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793211852;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=q2w8jR4Q/7c5YZCMiUjisrIl5w86mPwJixCwvKKloa0=;
-	b=tm3M11r39FuPgipEnTgs6rTrQj1O8y3a3BQBgDNYiYIA2c5TaGptmsxsSMUdl0IDJgCr
-	 Ov7YKXx4kL1Mn4X5o6yHMLrW3HYMfDhfoGteG9auidJAsJP0E0F18BT9xrbt/7fcSys+/
-	 0n6aMSHaG/2KYg0FKRdDD14OQxE/98xX4GAZWFaMq5HTW15V9Nu0g3LUHRslVjzZBvX0b
-	 X6Z3W0DwMDqTPr6yidNiMm9rmL6oPN8xqJLkj6XVHXwn3AR7vwYax41DBEqVopdbvRXC9
-	 7XnvMyU1BU3QM6Rq71rvOa2a6RzKA7HAaJZFSAXpZ0maMT1RLTWmocMbOTrhjIlxqHw==
+	bh=Kr4yN178N5p3m6rhKRZqZmuVBkPA9xRylTALR1tlcsY=;
+	b=YffnZGRRDmnVVy/lhHW0L6qtWi8CiaB8MplVgQQn9OCS36AcEK5HAzEtFA0tZI4jdSuB
+	 4Sx/QcmptglS1u3HFCBkwY9hkDB9mskPGXq4zWtsOftdKRr86vqqdMKI1s81Ct01WSB3H
+	 YDfoNHyoxcnK8qUzzAMRLxtL0IPUhh/aAEd1UJxsAhrLpduSQaMrxZQ6EWtbkNl/teWH4
+	 54uxAC+LdqL8n6GF5JKTrIz2lyICKV2l1lixSewkaTfiMe8NC3iRqSDJ53UqtWJAaktW7
+	 vKNLTIL5FpcKGq7mAArk4/b32wo6jFlQ/Yl+puxl5m5VHCLage6hEt6kZcKpuTLDBjw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PuPO8MCc;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ID0AHyxk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8DA7606A31D;
-	Wed, 28 Oct 2026 18:24:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83183606A31A;
+	Wed, 28 Oct 2026 18:24:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PuPO8MCc
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 068571F01825;
-	Wed, 28 Oct 2026 18:24:08 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ID0AHyxk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D49F11F01825;
+	Wed, 28 Oct 2026 18:24:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793211849;
-	bh=q2w8jR4Q/7c5YZCMiUjisrIl5w86mPwJixCwvKKloa0=;
+	s=korg; t=1793211852;
+	bh=Kr4yN178N5p3m6rhKRZqZmuVBkPA9xRylTALR1tlcsY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PuPO8MCcTylOL/smyKEhuVBAUvJ0rty1a228vrGgttvP/Qh4gKwa4I3X8kmzua8mq
-	 OKSY32bmTNXkLJSza7dNMhQIgfEKFJNnfYzrvllqWL9KzBWzZNcqjWIpZ2Xszc2LM1
-	 gkt9/B7U8GzS0nAT+yGglqw2qN+WwlKb0AmVC8uA=
+	b=ID0AHyxkV/HvhNYeJpm2r2UDPytnmGcEwI4UrExhjyTVRov0nxNtctfQZ1lIWNIz9
+	 YHA3kaIbMCj7SHdNRJNM5ii8f467c3/mrLp5xu4lRjX7I+YydulSzfxD+2y3W/m+lT
+	 TB59cdVEI4i94k6OD/eHj8F03e+97ni1Cb8a3Vas=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicholas Carlini <npc@anthropic.com>,
-	David Howells <dhowells@redhat.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
-	Paul Moore <paul@paul-moore.com>,
-	James Morris James Morris <jmorris@namei.org>,
-	"Serge E. Hallyn" <serge@hallyn.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	"Miguel Gazquez (Schneider Electric)" <miguel.gazquez@bootlin.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 523/571] security/keys: fix missed RCU read section on lookup
-Date: Wed, 28 Oct 2026 18:01:10 +0100
-Message-ID: <20261028170020.440738910@linuxfoundation.org>
+	Zhang Changzhong <zhangchangzhong@huawei.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	"Miguel Gazquez (Schneider Electric)" <miguel.gazquez@bootlin.com>
+Subject: [PATCH 5.15 524/571] net/sched: cls_u32: skip hash tables in u32_bind_class()
+Date: Wed, 28 Oct 2026 18:01:11 +0100
+Message-ID: <20261028170020.465005500@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -74,51 +70,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Zhang Changzhong <zhangchangzhong@huawei.com>
 
-commit 43a1e3744548e6fd85873e6fb43e293eb4010694 upstream.
+[ Upstream commit 6d3724e616faf952c3adcf8414fc21a828ef3709 ]
 
-Nicholas Carlini reports that the keyring code calls assoc_array_find()
-in find_key_to_update() without holding the RCU read lock, while the
-assoc_array_gc() code really is designed around removing the node from
-the tree and then freeing it after an RCU grace-period.
+u32_walk() enumerates both struct tc_u_hnode and struct tc_u_knode
+through the walker callback. u32_bind_class() unconditionally casts the
+passed fh to tc_u_knode and accesses &n->res, so when fh is actually a
+tc_u_hnode, which has no tcf_result member, this results in a
+slab-out-of-bounds read of res->classid in tc_cls_bind_class().
 
-The regular key handling doesn't see this because holding the keyring
-semaphore hides any lifetime issues, but the persistent key handling
-uses a different model.
+The issue can be reproduced with the following commands:
 
-Instead of extending the keyring locking, just do the simple RCU locking
-that the assoc_array was designed for.
+    tc qdisc add dev lo root handle 1: hfsc
+    tc class add dev lo parent 1: classid 1:1 hfsc sc rate 1000kbit
+    tc filter add dev lo parent 1:1 protocol ip prio 1 u32 match u32 0 0 flowid 1:1
+    tc class add dev lo parent 1: classid 1:2 hfsc sc rate 2000kbit
 
-[ Moved the guard at the top of the function to solve a compilation
-issue ]
+Fix this by skipping hash tables via the TC_U32_KEY(handle) check.
 
-Reported-by: Nicholas Carlini <npc@anthropic.com>
-Cc: David Howells <dhowells@redhat.com>
-Cc: Jarkko Sakkinen <jarkko@kernel.org>
-Cc: Paul Moore <paul@paul-moore.com>
-Cc: James Morris James Morris <jmorris@namei.org>
-Cc: Serge E. Hallyn <serge@hallyn.com>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 07d79fc7d94e ("net_sched: add reverse binding for tc class")
+Signed-off-by: Zhang Changzhong <zhangchangzhong@huawei.com>
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Link: https://patch.msgid.link/1786089038-36366-1-git-send-email-zhangchangzhong@huawei.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Miguel Gazquez (Schneider Electric) <miguel.gazquez@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/keys/keyring.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/sched/cls_u32.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/security/keys/keyring.c b/security/keys/keyring.c
-index fc26d339a962b..5b366911aac58 100644
---- a/security/keys/keyring.c
-+++ b/security/keys/keyring.c
-@@ -1105,6 +1105,7 @@ key_ref_t find_key_to_update(key_ref_t keyring_ref,
+diff --git a/net/sched/cls_u32.c b/net/sched/cls_u32.c
+index b36eced10ff40..cb4d2bfd03d24 100644
+--- a/net/sched/cls_u32.c
++++ b/net/sched/cls_u32.c
+@@ -1318,6 +1318,9 @@ static void u32_bind_class(void *fh, u32 classid, unsigned long cl, void *q,
  {
- 	struct key *keyring, *key;
- 	const void *object;
-+	guard(rcu)();
+ 	struct tc_u_knode *n = fh;
  
- 	keyring = key_ref_to_ptr(keyring_ref);
- 
++	if (TC_U32_KEY(n->handle) == 0)
++		return;
++
+ 	if (n && n->res.classid == classid) {
+ 		if (cl)
+ 			__tcf_bind_filter(q, &n->res, base);
 -- 
 2.53.0
 
