@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793212524;
-	b=5CPEqixC7ZSgs5aOUCG5SSCam8ElEf9l0xKkUCW/tqojwsmGkXDKtoeasphKtUacUayS
-	 uPKWgGuSJt/isaCHuthXk6aKbXHJ5p+WuzhJ9O7eQTE+d6eigI7y+XUFEWlEjDVnjkuvt
-	 qbBxS9q3zB1n+Q6QlSxrwrB6mWpkEBI8U7oVynIwqUppbTdRqi5qGUeewA2brce4ut6Dz
-	 Z41Tj0nZPiypLbJm2o1SRqM3PG4Rgm0+d8xJGeC+pFnak7jTMGUMOqowl42fSzzYG/s4l
-	 3JWWSeLV/fbAYFJR6aGWbf67NMdJNenXGS/vU4CI31EuEjwPr5bN1ZqMFBtrTFGF+9Q==
+	t=1793212527;
+	b=rmCrRJX1P2D2xw7mAuTEZ2YM/qYLCkbAra7SHDeCKixiMFKc6GvD0xTPH76m39RZOhB8
+	 JVvXPVJxKxYyID1sBvJWzRqq461qmckxPuBOV4u5eNOIZtt28hliRVNwHSJTQaGRgm5dB
+	 uK4lK7vLVaIFX00hqOxYpgnBbltKJTqaMcwDT73AjsJo00VYMXj23Ll7zAPFpyvCFt/VO
+	 KoBSRbyw9WTPKXBVuWvb9+9v58TCvSNJM6tNRdoXSWkvwnfltxgEhBp8IAfXXkMjdj7eR
+	 NqUObc558CWoss6AbxUBTllYHfIqzX6zZB5mziTCMF10l/ZpmgqTRV8Fp9dq+jxNCyw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793212524;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793212527;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=UiNTKiC7Kv7H/Knr8D6Uyltjlo146IMFZPiyhKI7Fto=;
-	b=pIKQOuZXMCbTjHekxfRQ9/fE+90XGSBzl65n/eIdahbwfVAv8ZbrcpX8tBnlipFUNSXz
-	 Bi9FdL1Ik+F8QsqzhzCtT3A+yrNyWV/dJOvv4jjHbGqfw9PB9Yo9ArnQ29dCBrz3RKXDP
-	 ojsPRwWzUZTJLqmp8tkx+8dhIlGlGQV2kkHpeaq3LL8szGVfTMDKd5TeX34sfqytvoyMz
-	 Ss04gWszXpcQPfrF+PyDrZbuFlj+Ni6kgqe6xMdw2ja2SPjQiPcTW9jkNE4OzyL1khLgT
-	 RSMOi7RzHb14NiPvDy3qy1s/noF+tPqeFXRPCADmGdW7I/N5UE3F06iDAregW7R/kiQ==
+	bh=LFTgpGd4xCbSoKI67dIJQ86Xpucajwcd+BHElqAnzVA=;
+	b=B9CWaUVh1N4Ov5eaUF2al+2oGedLFI/63HQKJLQKU81Uh7Z+Sa8vNhh4/zHl1hVBZuRJ
+	 C5IgykZZxF3h/GY0MnyDDEWz3mCIyuzMRmjrjWCawOzDWrNPpnQKVUHToj5Ab87Lde4ZD
+	 /YAe0nrviLIGrRCKz7hzkBYBwM5sAcGPKrWNk2tHryFNSjjE/9htCaPsdjUvT+1BWbxwO
+	 AithCRdRinSywPtlTVBkzxF2Mfc0B7O+wYE1Ufkgl9Yo7MMoiWuHK88yexPxbAHsBJEuw
+	 tlJFUdVR06PUU8HcnbAAkmXnEHnxa/zDec89pYvWbBjUmv0lVB3s9MS/r6VLm9N9tlA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pfGeKNnC;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N2qJS6UA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73F66606A31A;
-	Wed, 28 Oct 2026 18:35:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02E7F606A31D;
+	Wed, 28 Oct 2026 18:35:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pfGeKNnC
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 823F51F01825;
-	Wed, 28 Oct 2026 18:35:23 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N2qJS6UA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 573191F01825;
+	Wed, 28 Oct 2026 18:35:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793212524;
-	bh=UiNTKiC7Kv7H/Knr8D6Uyltjlo146IMFZPiyhKI7Fto=;
+	s=korg; t=1793212526;
+	bh=LFTgpGd4xCbSoKI67dIJQ86Xpucajwcd+BHElqAnzVA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pfGeKNnClxOK7yS7ai8NuLxZFBTOfPxcljkuIJCJQx4bkqot2w8Kgb32fSC8iYIXe
-	 z7LYz4kpdXsLQEVPz+N5Iz20OXWghIHebD+zk0iazEJUEHbuhoyi8ehNNlkHW9x+06
-	 jpyQhZ0sVlTrxSRHHY4Kej58BI9pA0LtNkdtpf/4=
+	b=N2qJS6UABAcZNWjlc6YoWJBIcDSHzXJHRSmokOWmqZFTmwFVkpGsawac0+4MbvXOJ
+	 stekYMnanWLvNay7ASqevJAsDReWl7sepmxqQGhBbf+1kHVgIkDRF+kPiwBG7SiIee
+	 zcSHP6oGk6mW6UkmsQ0hiQYtGAHclfbowIJIjUsI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dapeng Mi <dapeng1.mi@linux.intel.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Shay Drory <shayd@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Artem Dinaburg <artem@trailofbits.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0157/1887] perf/x86/intel: Update event constraints and cache_extra_regsfor ADL
-Date: Wed, 28 Oct 2026 17:37:33 +0100
-Message-ID: <20261028170502.806113084@linuxfoundation.org>
+Subject: [PATCH 6.1 0184/1887] net/mlx5e: Fix netif state handling
+Date: Wed, 28 Oct 2026 17:38:00 +0100
+Message-ID: <20261028170503.423499042@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,187 +71,158 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dapeng Mi <dapeng1.mi@linux.intel.com>
+From: Shay Drory <shayd@nvidia.com>
 
-[ Upstream commit 4ef863352bcde482d65722ed721c3fd3967a67d6 ]
+[ Upstream commit 3d5918477f94e4c2f064567875c475468e264644 ]
 
-Update perf hard-coded event constraints and cache_extra_regs[] for
-Alderlake according to the latest ADL perfmon events (V1.39).
+mlx5e_suspend cleans resources only if netif_device_present() returns
+true. However, mlx5e_resume changes the state of netif, via
+mlx5e_nic_enable, only if reg_state == NETREG_REGISTERED.
+In the below case, the above leads to NULL-ptr Oops[1] and memory
+leaks:
 
-One important note is that ADL has differences on the L3/node related
-OCR events although it shares same uarch with SPR server, e.g.,
-ADL has different extra MSR values and no node events. So some variants
-of structures and functions are introduced to reflect these
-differences, like adl_glc_hw_cache_event_ids[],
-adl_glc_hw_cache_extra_regs[] and intel_pmu_init_glc_hybrid(), etc.
+mlx5e_probe
+ _mlx5e_resume
+  mlx5e_attach_netdev
+   mlx5e_nic_enable  <-- netdev not reg, not calling netif_device_attach()
+  register_netdev <-- failed for some reason.
+ERROR_FLOW:
+ _mlx5e_suspend <-- netif_device_present return false, resources aren't freed :(
 
-Please note these changes would temporarily impact other platforms like
-MTL/ARL-U which shares hard-coded event structures, but it would be
-fixed soon in subsequent patches.
+Hence, clean resources in this case as well.
 
-ADL perfmon events:
-https://github.com/intel/perfmon/blob/main/ADL/events/alderlake_goldencove_core.json
-https://github.com/intel/perfmon/blob/main/ADL/events/alderlake_gracemont_core.json
+[1]
+BUG: kernel NULL pointer dereference, address: 0000000000000000
+PGD 0 P4D 0
+Oops: 0010 [#1] SMP
+CPU: 2 PID: 9345 Comm: test-ovs-ct-gen Not tainted 6.5.0_for_upstream_min_debug_2023_09_05_16_01 #1
+Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.13.0-0-gf21b5a4aeb02-prebuilt.qemu.org 04/01/2014
+RIP: 0010:0x0
+Code: Unable to access opcode bytes at0xffffffffffffffd6.
+RSP: 0018:ffff888178aaf758 EFLAGS: 00010246
+Call Trace:
+ <TASK>
+ ? __die+0x20/0x60
+ ? page_fault_oops+0x14c/0x3c0
+ ? exc_page_fault+0x75/0x140
+ ? asm_exc_page_fault+0x22/0x30
+ notifier_call_chain+0x35/0xb0
+ blocking_notifier_call_chain+0x3d/0x60
+ mlx5_blocking_notifier_call_chain+0x22/0x30 [mlx5_core]
+ mlx5_core_uplink_netdev_event_replay+0x3e/0x60 [mlx5_core]
+ mlx5_mdev_netdev_track+0x53/0x60 [mlx5_ib]
+ mlx5_ib_roce_init+0xc3/0x340 [mlx5_ib]
+ __mlx5_ib_add+0x34/0xd0 [mlx5_ib]
+ mlx5r_probe+0xe1/0x210 [mlx5_ib]
+ ? auxiliary_match_id+0x6a/0x90
+ auxiliary_bus_probe+0x38/0x80
+ ? driver_sysfs_add+0x51/0x80
+ really_probe+0xc9/0x3e0
+ ? driver_probe_device+0x90/0x90
+ __driver_probe_device+0x80/0x160
+ driver_probe_device+0x1e/0x90
+ __device_attach_driver+0x7d/0x100
+ bus_for_each_drv+0x80/0xd0
+ __device_attach+0xbc/0x1f0
+ bus_probe_device+0x86/0xa0
+ device_add+0x637/0x840
+ __auxiliary_device_add+0x3b/0xa0
+ add_adev+0xc9/0x140 [mlx5_core]
+ mlx5_rescan_drivers_locked+0x22a/0x310 [mlx5_core]
+ mlx5_register_device+0x53/0xa0 [mlx5_core]
+ mlx5_init_one_devl_locked+0x5c4/0x9c0 [mlx5_core]
+ mlx5_init_one+0x3b/0x60 [mlx5_core]
+ probe_one+0x44c/0x730 [mlx5_core]
+ local_pci_probe+0x3e/0x90
+ pci_device_probe+0xbf/0x210
+ ? kernfs_create_link+0x5d/0xa0
+ ? sysfs_do_create_link_sd+0x60/0xc0
+ really_probe+0xc9/0x3e0
+ ? driver_probe_device+0x90/0x90
+ __driver_probe_device+0x80/0x160
+ driver_probe_device+0x1e/0x90
+ __device_attach_driver+0x7d/0x100
+ bus_for_each_drv+0x80/0xd0
+ __device_attach+0xbc/0x1f0
+ pci_bus_add_device+0x54/0x80
+ pci_iov_add_virtfn+0x2e6/0x320
+ sriov_enable+0x208/0x420
+ mlx5_core_sriov_configure+0x9e/0x200 [mlx5_core]
+ sriov_numvfs_store+0xae/0x1a0
+ kernfs_fop_write_iter+0x10c/0x1a0
+ vfs_write+0x291/0x3c0
+ ksys_write+0x5f/0xe0
+ do_syscall_64+0x3d/0x90
+ entry_SYSCALL_64_after_hwframe+0x46/0xb0
+ CR2: 0000000000000000
+ ---[ end trace 0000000000000000  ]---
 
-Signed-off-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://patch.msgid.link/20260515061143.338553-5-dapeng1.mi@linux.intel.com
+[ Backport to 6.1.y: added an internal suspend helper so probe unwind
+  cleans resources without changing the registered-device suspend path. ]
 
-[Backport preparation for 89dc568e8c0b on Linux 6.1:
- Retain the Gracemont STORE_LATENCY counter-mask update to 0x3f.
- Drop the upstream cache/extra-register and fixed-counter changes: they
- depend on newer PMU initialization infrastructure and are not needed
- by the target's PEBS sample-classification fix.
-
- Prepare the target's existing-function context without adding functions.
- Rename and adapt adl_latency_data_small() as __grt_latency_data(), with
- its record fields supplied by the caller. Rename load_latency_data()
- as grt_latency_data() and reuse it for Gracemont dispatch as well as
- its existing non-Gracemont load-latency path. Preserve the original
- TLB/lock/block decoding and update the callback and prototype names.
- Guard the hybrid-only assertion for non-hybrid Gracemont systems.
-
- Provide the upstream INTEL_HYBRID_LDLAT/STLAT_CONSTRAINT macros so the
- unmodified target can set direction flags while retaining hybrid
- latency decoding. The target itself remains a separate backport.]
-
-Stable-dep-of: 89dc568e8c0b ("perf/x86/intel: Fix GRT PEBS load/store direction for latency events, to fix sample classification")
+Fixes: 2c3b5beec46a ("net/mlx5e: More generic netdev management API")
+Signed-off-by: Shay Drory <shayd@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/20240509112951.590184-2-tariqt@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Assisted-by: LLM
+Signed-off-by: Artem Dinaburg <artem@trailofbits.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/events/intel/core.c |  4 ++--
- arch/x86/events/intel/ds.c   | 34 ++++++++++++++++++----------------
- arch/x86/events/perf_event.h | 10 +++++++++-
- 3 files changed, 29 insertions(+), 19 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en_main.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/arch/x86/events/intel/core.c b/arch/x86/events/intel/core.c
-index 4615a21b9e852..6f5805ad723bf 100644
---- a/arch/x86/events/intel/core.c
-+++ b/arch/x86/events/intel/core.c
-@@ -6195,7 +6195,7 @@ __init int intel_pmu_init(void)
- 		x86_pmu.flags |= PMU_FL_INSTR_LATENCY;
- 
- 		intel_pmu_pebs_data_source_grt();
--		x86_pmu.pebs_latency_data = adl_latency_data_small;
-+		x86_pmu.pebs_latency_data = grt_latency_data;
- 		x86_pmu.get_event_constraints = tnt_get_event_constraints;
- 		x86_pmu.limit_period = spr_limit_period;
- 		td_attr = tnt_events_attrs;
-@@ -6578,7 +6578,7 @@ __init int intel_pmu_init(void)
- 		x86_pmu.flags |= PMU_FL_MEM_LOADS_AUX;
- 		x86_pmu.lbr_pt_coexist = true;
- 		intel_pmu_pebs_data_source_adl();
--		x86_pmu.pebs_latency_data = adl_latency_data_small;
-+		x86_pmu.pebs_latency_data = grt_latency_data;
- 		x86_pmu.num_topdown_events = 8;
- 		static_call_update(intel_pmu_update_topdown_event,
- 				   &adl_update_topdown_event);
-diff --git a/arch/x86/events/intel/ds.c b/arch/x86/events/intel/ds.c
-index 4b7faa3180e57..d1cf9876c931d 100644
---- a/arch/x86/events/intel/ds.c
-+++ b/arch/x86/events/intel/ds.c
-@@ -221,24 +221,19 @@ static inline void pebs_set_tlb_lock(u64 *val, bool tlb, bool lock)
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
+index 2d0b57583ea35..d26c36479ee91 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
+@@ -5896,13 +5896,14 @@ static int mlx5e_resume(struct auxiliary_device *adev)
+ 	return 0;
  }
  
- /* Retrieve the latency data for e-core of ADL */
--u64 adl_latency_data_small(struct perf_event *event, u64 status)
-+static u64 __grt_latency_data(struct perf_event *event, u64 status,
-+			       u8 dse, bool tlb, bool lock, bool blk)
+-static int mlx5e_suspend(struct auxiliary_device *adev, pm_message_t state)
++static int mlx5e_suspend_common(struct auxiliary_device *adev,
++				bool pre_netdev_reg)
  {
--	union intel_x86_pebs_dse dse;
- 	u64 val;
+ 	struct mlx5e_priv *priv = auxiliary_get_drvdata(adev);
+ 	struct net_device *netdev = priv->netdev;
+ 	struct mlx5_core_dev *mdev = priv->mdev;
  
--	WARN_ON_ONCE(hybrid_pmu(event->pmu)->cpu_type == hybrid_big);
-+	WARN_ON_ONCE(is_hybrid() &&
-+		     hybrid_pmu(event->pmu)->cpu_type == hybrid_big);
- 
--	dse.val = status;
-+	val = hybrid_var(event->pmu, pebs_data_source)[dse];
- 
--	val = hybrid_var(event->pmu, pebs_data_source)[dse.ld_dse];
-+	pebs_set_tlb_lock(&val, tlb, lock);
- 
--	/*
--	 * For the atom core on ADL,
--	 * bit 4: lock, bit 5: TLB access.
--	 */
--	pebs_set_tlb_lock(&val, dse.ld_locked, dse.ld_stlb_miss);
--
--	if (dse.ld_data_blk)
-+	if (blk)
- 		val |= P(BLK, DATA);
- 	else
- 		val |= P(BLK, NA);
-@@ -246,15 +241,22 @@ u64 adl_latency_data_small(struct perf_event *event, u64 status)
- 	return val;
+-	if (!netif_device_present(netdev)) {
++	if (!pre_netdev_reg && !netif_device_present(netdev)) {
+ 		if (test_bit(MLX5E_STATE_DESTROYING, &priv->state))
+ 			mlx5e_destroy_mdev_resources(mdev);
+ 		return -ENODEV;
+@@ -5913,6 +5914,11 @@ static int mlx5e_suspend(struct auxiliary_device *adev, pm_message_t state)
+ 	return 0;
  }
  
--static u64 load_latency_data(struct perf_event *event, u64 status)
-+u64 grt_latency_data(struct perf_event *event, u64 status)
++static int mlx5e_suspend(struct auxiliary_device *adev, pm_message_t state)
++{
++	return mlx5e_suspend_common(adev, false);
++}
++
+ static int mlx5e_probe(struct auxiliary_device *adev,
+ 		       const struct auxiliary_device_id *id)
  {
- 	union intel_x86_pebs_dse dse;
- 	u64 val;
+@@ -5920,7 +5926,6 @@ static int mlx5e_probe(struct auxiliary_device *adev,
+ 	const struct mlx5e_profile *profile = &mlx5e_nic_profile;
+ 	struct mlx5_core_dev *mdev = edev->mdev;
+ 	struct net_device *netdev;
+-	pm_message_t state = {};
+ 	struct mlx5e_priv *priv;
+ 	int err;
  
- 	dse.val = status;
+@@ -5969,7 +5974,7 @@ static int mlx5e_probe(struct auxiliary_device *adev,
+ 	return 0;
  
-+	/* Gracemont uses bit 4 for lock and bit 5 for TLB access. */
-+	if (event->hw.flags & PERF_X86_EVENT_PEBS_LAT_HYBRID)
-+		return __grt_latency_data(event, status, dse.ld_dse,
-+					  dse.ld_locked, dse.ld_stlb_miss,
-+					  dse.ld_data_blk);
-+
- 	/*
--	 * use the mapping table for bit 0-3
-+	 * For non-Gracemont load-latency events, use the mapping table
-+	 * for bit 0-3 and retain the legacy TLB, lock and block decoding.
- 	 */
- 	val = hybrid_var(event->pmu, pebs_data_source)[dse.ld_dse];
- 
-@@ -838,7 +840,7 @@ struct event_constraint intel_glm_pebs_event_constraints[] = {
- struct event_constraint intel_grt_pebs_event_constraints[] = {
- 	/* Allow all events as PEBS with no flags */
- 	INTEL_HYBRID_LAT_CONSTRAINT(0x5d0, 0x3),
--	INTEL_HYBRID_LAT_CONSTRAINT(0x6d0, 0xf),
-+	INTEL_HYBRID_LAT_CONSTRAINT(0x6d0, 0x3f),
- 	EVENT_CONSTRAINT_END
- };
- 
-@@ -1511,7 +1513,7 @@ static u64 get_data_src(struct perf_event *event, u64 aux)
- 	bool fst = fl & (PERF_X86_EVENT_PEBS_ST | PERF_X86_EVENT_PEBS_HSW_PREC);
- 
- 	if (fl & PERF_X86_EVENT_PEBS_LDLAT)
--		val = load_latency_data(event, aux);
-+		val = grt_latency_data(event, aux);
- 	else if (fl & PERF_X86_EVENT_PEBS_STLAT)
- 		val = store_latency_data(event, aux);
- 	else if (fl & PERF_X86_EVENT_PEBS_LAT_HYBRID)
-diff --git a/arch/x86/events/perf_event.h b/arch/x86/events/perf_event.h
-index 5f93316c60216..897d0abd94105 100644
---- a/arch/x86/events/perf_event.h
-+++ b/arch/x86/events/perf_event.h
-@@ -468,6 +468,14 @@ struct cpu_hw_events {
- 	__EVENT_CONSTRAINT(c, n, INTEL_ARCH_EVENT_MASK|X86_ALL_EVENT_FLAGS, \
- 			  HWEIGHT(n), 0, PERF_X86_EVENT_PEBS_LAT_HYBRID)
- 
-+#define INTEL_HYBRID_LDLAT_CONSTRAINT(c, n)	\
-+	__EVENT_CONSTRAINT(c, n, INTEL_ARCH_EVENT_MASK|X86_ALL_EVENT_FLAGS, \
-+			  HWEIGHT(n), 0, PERF_X86_EVENT_PEBS_LAT_HYBRID|PERF_X86_EVENT_PEBS_LD_HSW)
-+
-+#define INTEL_HYBRID_STLAT_CONSTRAINT(c, n)	\
-+	__EVENT_CONSTRAINT(c, n, INTEL_ARCH_EVENT_MASK|X86_ALL_EVENT_FLAGS, \
-+			  HWEIGHT(n), 0, PERF_X86_EVENT_PEBS_LAT_HYBRID|PERF_X86_EVENT_PEBS_ST_HSW)
-+
- /* Event constraint, but match on all event flags too. */
- #define INTEL_FLAGS_EVENT_CONSTRAINT(c, n) \
- 	EVENT_CONSTRAINT(c, n, ARCH_PERFMON_EVENTSEL_EVENT|X86_ALL_EVENT_FLAGS)
-@@ -1497,7 +1505,7 @@ void intel_pmu_disable_bts(void);
- 
- int intel_pmu_drain_bts_buffer(void);
- 
--u64 adl_latency_data_small(struct perf_event *event, u64 status);
-+u64 grt_latency_data(struct perf_event *event, u64 status);
- 
- extern struct event_constraint intel_core2_pebs_event_constraints[];
- 
+ err_resume:
+-	mlx5e_suspend(adev, state);
++	mlx5e_suspend_common(adev, true);
+ err_profile_cleanup:
+ 	profile->cleanup(priv);
+ err_devlink_cleanup:
 -- 
 2.53.0
 
