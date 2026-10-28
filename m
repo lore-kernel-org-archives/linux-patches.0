@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793209074;
-	b=SC+1XR0ioONVuWMkVKwQb75ljxsCm/8pkcMJ/Lffuo0myqBJVn+2oTRxnHG71dln0fp4
-	 lDt+uqZJCkO3cAkDD4rvtWe7njbRgG7H+1T+nM0s6jDqvK7bjfZ00OvhP2PrCNJi3rm+a
-	 CpNlWPCB732w/mKFwo6H556En+Ij8YdL4mrT1h6jiYHMOdmeyu/F1qLhEJycM5nRem25X
-	 sSEuPA9DndqMr/SoEGRnh8CpkI9AaHeanCECDRyPY8y/k0C40BX/CZhsIi5t5eOIl9TS1
-	 T6FFB58FmOzkhSLXQjpPLa33tvM9/rwYLKk/dGywiH11d552QNlDVa8B+a8sf519m3w==
+	t=1793209077;
+	b=U349Snj8gtlrzNpiIrnBScSS0e5No3YchR1XMq+Wx3KMHJ9B9/mmsQmJhzQ5C7oF+Q7u
+	 CGOugODb7wKvbwYhE7dGhGm4fg37KpNmWNigGEuGz4adsYbfWbxpbGb2AInOEBOLiRZCn
+	 xedtRKPKFT8AbZwV8ZbcqVmwzil5EzW3y5WgRcaDjp9OpoABcpcK/QrFUt2I/G+D8PMKN
+	 V54MVq9mTuKNFsmOMloR49SH6saCe2cVvB5TJoGuHxc5q8BO5oodO/FO3YEOIwGMJrEIK
+	 cbOdn5zJAJSilggpGhoPOv+MnUY9TA87XC1ozMp9W5AmIL75jaIAKiBLFmuhljo3lxg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793209074;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793209077;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=6TzNM/+i2JvMBx0g7LB+OXbliGl/2j0SpRL70rw9MZE=;
-	b=JyCN+UhgDfSjcPxQdhD+g3M6fw004i/4YYg2ZScTYyzM4GY1mHtsnujJiaqaR5nmHpT0
-	 4zJXv/TsXLVXiBjt5MzMhKgH9VLNYtcfAHD2wjOgcedcHk22OhvbChNS2VDJX1Woqp6Uz
-	 RNviukJi+YgbuRFCKu60J/Q9qxdpPbQcAtXsERG42KrObepDJm/SwH4Q0ypDHDjX6jkIA
-	 thuAkpAuAM/edZ0c2w+/oNC/So+zGOQfbEXzbvnhRnldLLorDtiPcOW+9+1iMKM3NcaTg
-	 MTSKQ7QF1Mr0UBW/gxNty4xSthHMIzDvcmIgk0N1KHxEwS6l0sCtvmq0W5qtOJrXIaQ==
+	bh=uIp++ceshqdUke8FEissGPIGLNKVQe5ViQwURPXo3cg=;
+	b=J++gMzyI/6oJ119oxgGHfq4HA4nEqCajXCFNdAguwDmYk34vS3Dv9dasLG9hg/ElbN98
+	 1v9LCpgv4o18M1omEAJas/fv7FHbvRtL8eN6D7RwhNXGoDuppKFruyj/Po8rYQrMXnBVy
+	 zPzjUPw6hcN1Y8oewSdS5WgjPlk1LJhypOxQLrsTKN/i9b283Pb/segugdObqpacCGAX0
+	 txW2ZlKFeL2dv1cRXJJT1h2JRCnqZlJ30Jj5MPPmbQ7zkRv8Ic1RW5B8ZRCSC2IbKnboF
+	 jkBI1QaSP0JdzGIL9CGzAY8Q9x15TTDtab+3M8vwGBsRJfxnaGMgqi4Y/2pbTlbg+0Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Z/fWrGHv";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="u5kva/OB";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5E0860A2635;
-	Wed, 28 Oct 2026 17:37:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B99AA606A335;
+	Wed, 28 Oct 2026 17:37:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Z/fWrGHv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 421CE1F01825;
-	Wed, 28 Oct 2026 17:37:53 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=u5kva/OB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 155B91F01825;
+	Wed, 28 Oct 2026 17:37:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793209073;
-	bh=6TzNM/+i2JvMBx0g7LB+OXbliGl/2j0SpRL70rw9MZE=;
+	s=korg; t=1793209076;
+	bh=uIp++ceshqdUke8FEissGPIGLNKVQe5ViQwURPXo3cg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Z/fWrGHv74vvNFa9FYollyFhirqSVptTg/CiHMww5Ov+OoUv2r2/Wa28BuMhMBphF
-	 Be8rDALEi3Z/D+yluwdOzqmz+Qlvuh/BZGqqiHj+r77h+X6BUdEZSPS/K/xNSdOViX
-	 NUC89LFtEssenTsyB6UJKK1PmS0h0tfBUwGEdGTo=
+	b=u5kva/OBzLuicuaFsyhqqb55zIeUr/0HBXlHyvcYUoUDZn6Lcy9SL6IxN8SBd3q0V
+	 Z9AOQ1MlcsaYJ/k1n4wsc1eY152iEGoltaZIYj7QMbXW0j68WlJ7hSXwJNAXNY81zs
+	 Jy2wLXUMBQJ5HXnSHDbJIo2IfQPce9bwkpTvW7K8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>,
-	Maxim Skokov <skokovmaksimevg@gmail.com>,
+	syzbot+4a807caf7680652d53b6@syzkaller.appspotmail.com,
+	Palla Raghunath <raghunathpalla.0209@gmail.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 5.10 344/516] Bluetooth: RFCOMM: free the skb when the DLC has no owner
-Date: Wed, 28 Oct 2026 17:58:16 +0100
-Message-ID: <20261028170011.636687075@linuxfoundation.org>
+Subject: [PATCH 5.10 345/516] Bluetooth: RFCOMM: Fix NULL tty_dev dereference in rfcomm_dev_shutdown
+Date: Wed, 28 Oct 2026 17:58:17 +0100
+Message-ID: <20261028170011.660295528@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -68,69 +68,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maxim Skokov <skokovmaksimevg@gmail.com>
+From: Palla Raghunath <raghunathpalla.0209@gmail.com>
 
-commit 9d1afbf60ed53c5b051cd124153e0ae3078c8b93 upstream.
+commit 08e90633377f1b2567ab5ad6810b74c552246a07 upstream.
 
-rfcomm_recv_data() hands the skb to d->data_ready() and returns 0
-without freeing it, so the callback owns the skb from that point on.
-The tty implementation frees it when the DLC has been detached from its
-device:
+syzbot hit a NULL pointer dereference in rfcomm_dev_shutdown() when an
+RFCOMM tty is closed.
 
-  static void rfcomm_dev_data_ready(struct rfcomm_dlc *dlc,
-                                    struct sk_buff *skb)
-  {
-          struct rfcomm_dev *dev = dlc->owner;
+rfcomm_dev_add() puts the new device on rfcomm_dev_list first and only
+then registers the tty device and saves it in dev->tty_dev. If that
+registration fails, dev->tty_dev is never set at all. The device can be
+looked up in the meantime, so an open() of /dev/rfcommN gets through
+rfcomm_tty_install() and attaches to it. When that tty is closed again,
+rfcomm_dev_shutdown() uses dev->tty_dev without checking it:
 
-          if (!dev) {
-                  kfree_skb(skb);
-                  return;
-          }
+  Oops: general protection fault, probably for non-canonical address
+  KASAN: null-ptr-deref in range [0x0000000000000040-0x0000000000000047]
+  RIP: 0010:rfcomm_dev_shutdown+0x48/0xb0 net/bluetooth/rfcomm/tty.c:131
+  Call Trace:
+   tty_port_shutdown+0x1bf/0x220 drivers/tty/tty_port.c:372
+   tty_port_close+0x4e/0x150 drivers/tty/tty_port.c:705
+   tty_release+0x359/0x1670 drivers/tty/tty_io.c:1718
+   __fput+0x418/0xa50 fs/file_table.c:512
 
-The socket implementation returns without freeing it, and the skb is
-leaked.
+rfcomm_dev_destruct() already copes with a NULL dev->tty_dev. Add the
+same check to rfcomm_dev_shutdown(), so the tty device is only moved
+when it was actually registered.
 
-A connected DLC can have no owner: rfcomm_sock_destruct() clears
-d->owner, while the DLC itself stays on the session until it is closed.
-Data frames that arrive in that window still find d->state ==
-BT_CONNECTED in rfcomm_recv_data() and are handed to the callback, one
-leaked skb each.
-
-The leak does not stop on its own either.  The remote runs out of
-credits only once RFCOMM_RX_THROTTLED is set, and for a socket the only
-place that sets it is rfcomm_sk_data_ready() itself, below the return.
-rfcomm_process_dlcs() keeps granting credits, so the remote keeps
-sending and the leak keeps growing.
-
-Free the skb, as the tty side does.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
-Closes: https://lore.kernel.org/linux-bluetooth/CABXGCsPe5wykd8Aj-hm+SJ7SGQyb8yoGNnx3XDpPmBathj+EGg@mail.gmail.com/
+Fixes: cad348a17e17 ("Bluetooth: Implement .activate, .shutdown and .carrier_raised methods")
+Reported-by: syzbot+4a807caf7680652d53b6@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=4a807caf7680652d53b6
 Cc: stable@vger.kernel.org
-Signed-off-by: Maxim Skokov <skokovmaksimevg@gmail.com>
-Assisted-by: Claude:claude-opus-5
-Reviewed-by: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
+Signed-off-by: Palla Raghunath <raghunathpalla.0209@gmail.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/rfcomm/sock.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ net/bluetooth/rfcomm/tty.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/bluetooth/rfcomm/sock.c
-+++ b/net/bluetooth/rfcomm/sock.c
-@@ -50,8 +50,11 @@ static void rfcomm_sock_kill(struct sock
- static void rfcomm_sk_data_ready(struct rfcomm_dlc *d, struct sk_buff *skb)
+--- a/net/bluetooth/rfcomm/tty.c
++++ b/net/bluetooth/rfcomm/tty.c
+@@ -132,7 +132,7 @@ static void rfcomm_dev_shutdown(struct t
  {
- 	struct sock *sk = d->owner;
--	if (!sk)
-+
-+	if (!sk) {
-+		kfree_skb(skb);
- 		return;
-+	}
+ 	struct rfcomm_dev *dev = container_of(port, struct rfcomm_dev, port);
  
- 	atomic_add(skb->len, &sk->sk_rmem_alloc);
- 	skb_queue_tail(&sk->sk_receive_queue, skb);
+-	if (dev->tty_dev->parent)
++	if (dev->tty_dev && dev->tty_dev->parent)
+ 		device_move(dev->tty_dev, NULL, DPM_ORDER_DEV_LAST);
+ 
+ 	/* close the dlc */
 
 
