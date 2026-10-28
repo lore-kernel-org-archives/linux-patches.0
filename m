@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793207352;
-	b=D0JQLsD8weFqiqfTiSXT37YuJgcG8TUHVTYhZRtTyUL8qBlYahPIb5RC6K2AINKU9feR
-	 Nznr1d69KED2K0awyhzp6WpimKCNa26MhWOfYrY786iWYgOkCiSwE5+lvcW41+Bm4Sk6J
-	 nnaLVEM3VwOEDHU2Rq5xgYFlq255YRYCNq+1EBXrLo9OuZuoj287mdRskKbCTKquiCrAk
-	 vuZQDR36JruC0K21Fr+/NCHdbwL7U9CyX+Vv0rv0WFgG1+i3yFrlMoqNv6RPyQ4ixXica
-	 PW83lcWCTFs+t1YtwWP4MRjcszTwqQEh2ueX4ojysWmmxKMuZ1SXUhUh/uwBBBwrDrw==
+	t=1793207355;
+	b=GwUiNoMcT2ZPDGZEo6s46edhVxfKHiXNlVMW+n1tJ2lPp/Do5hevJmi7HUnml5wQFn6S
+	 ZDWjVzbkDd9dhgeGo9bMpx9aQDH2mL8G3/VMp/fslHtuCEFCtlOJN9eBQCK1VAhqk/ZEt
+	 Zx4E1UHAQUTOn+iD0667VIu/9MHPKsP1bdbbCJa1Y6IrzCaxrEzW3iqQU61Xv8o8UCQzX
+	 6AWg1JN9BWSh0BGCbfSQgu+QjrQJjjcGFk6XrEijys8ZW6aOSOeJf2dP656uVaOE6nGvz
+	 KOU3ecaQpS9NMLGm7OB8ensopjPJ1jSv8/9kD0kh1Q1PYFy5hr1RVVR7qAwkRZWfHaQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793207352;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793207355;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=b2WBO+B7N3mmqjc0YYxs+dG1vMH05k63/O1+QJf0Hn0=;
-	b=mWjlRX6Lar3+uIbr1CFHunGFClbTs9DTGIsrLJwaoX25GXDC8XIk4TNA3YWG3ByDKOls
-	 7gQB98s+rcb5+IcP15kbyCX0t1TtjAwdBvb65jKDtogzt1XU+AAzaNQbruM8Yoyw2EsNF
-	 CdW3Nu6JoF1sBo1RZGbguvsIYT0JV2H3wZLf3pEyGNSwSME7gaRFGhgvJsZrUQZdAfalP
-	 UkJUSnWUiSPh3MF103beOIChJmfMLvmyImgpVdLVR8vwdBJJbHrT89830euam94sVEV24
-	 0BgWVdJB4k92Imb18/WwBDKylW3LaQrOoKHyJ3BSK1la3m97jrbmk3uV1OZ+xTcT9pA==
+	bh=wvb6Btui1/B24hFBc9fW+jHar4YfgNFbFTOWaAV8CEI=;
+	b=3pjPTtZNkgxq6MO7oKdZtTyVlB3J6646YlTTp+CLyg6iQcgjRHzdW4kt6m4tiM/QFKcA
+	 mxSNzA4JxkoTuzR7sP8KGSmqMjQyYjqRaXvJiHg3Veo0xxktmnFEzDsOOlP0jiiRVaLIR
+	 MzK9NjWzdVBhX3DjVv1/xLfcYMLzk9NR/LyYpQ7xg9BckP5vcwUTmXOzk6S2sqLHDsyvw
+	 gIYdqc31H2b01L1YlkczbG6WZt1p4DEzahvWdNn/ysIUgrpfP8jWLL7utStpUSHMh91Jc
+	 XVjdJ5Ww186WBq96TvRKt+SWpjSgRfjAnfvE5nSigG8GQZdgMPjFPV+ocD3moxLxudA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=r5iB8i1O;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dbXXLy72;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC598606A327;
-	Wed, 28 Oct 2026 17:09:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B171A606A31A;
+	Wed, 28 Oct 2026 17:09:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=r5iB8i1O
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A1D51F01829;
-	Wed, 28 Oct 2026 17:09:11 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dbXXLy72
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C5A61F031E4;
+	Wed, 28 Oct 2026 17:09:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793207351;
-	bh=b2WBO+B7N3mmqjc0YYxs+dG1vMH05k63/O1+QJf0Hn0=;
+	s=korg; t=1793207354;
+	bh=wvb6Btui1/B24hFBc9fW+jHar4YfgNFbFTOWaAV8CEI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=r5iB8i1OERdd5Cz051IjASgAKtIoaiyWPFVh36rZBx+r8yNeW9EXtl8DxOx2g1PgX
-	 iw4kqAdn2AV2bk2aAunCqt5+T0IgOZnDfiLsghU1HPWMOzC+Th8YnwOuknXp9YBlLf
-	 2+jDVyngYxqJCD3VzRapYAoxdC2oc47h+MqbtZEs=
+	b=dbXXLy72QSvqrWFbzHG2ywJ3w0OjEgttghCiURfm/CanzdIovCXmgcNbCm7ISexDR
+	 YKrg2UZr5SW/bFOped1OR/jyfrbVMXKGmfnv9PPERW077Mhgor1lmeFTxZOo5NNLdR
+	 u8tei6GzMMW8VSJio2L7y2dnE7H0AIhi4Wiz/f5I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefano Garzarella <sgarzare@redhat.com>,
+	Srish Srinivasan <ssrish@linux.ibm.com>,
 	Jarkko Sakkinen <jarkko@kernel.org>
-Subject: [PATCH 7.2 76/88] KEYS: trusted: Fix blob allocation size in tpm2_key_decode()
-Date: Wed, 28 Oct 2026 18:00:24 +0100
-Message-ID: <20261028165943.904109774@linuxfoundation.org>
+Subject: [PATCH 7.2 77/88] keys/trusted_keys: return immediately after TPM unseal failure
+Date: Wed, 28 Oct 2026 18:00:25 +0100
+Message-ID: <20261028165943.927383315@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165942.107695352@linuxfoundation.org>
 References: <20261028165942.107695352@linuxfoundation.org>
@@ -67,46 +67,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefano Garzarella <sgarzare@redhat.com>
+From: Srish Srinivasan <ssrish@linux.ibm.com>
 
-commit 11077cbcc2695f71c944a84a5f08c6672ab759f1 upstream.
+commit f92d0ccb05bf9089072cb067dda0dffd5394c4ef upstream.
 
-tpm2_key_decode() allocates 4 bytes more than needed. The ASN.1
-callbacks tpm2_key_priv() and tpm2_key_pub() provide the lengths
-of TPM2B_PRIVATE and TPM2B_PUBLIC, so ctx.priv_len and ctx.pub_len
-already account for the 2-byte `size` field each of those structures
-starts with.
+trusted_tpm_unseal() proceeds to pcrlock() when the TPM unseal operation
+fails. If pcrlock() succeeds, its return value overwrites the unseal error,
+causing key instantiation to succeed.
 
-I noticed this while reviewing commit 114f00d738f1 ("KEYS: trusted:
-Fix tpm2_load_cmd() boundary check"), which correctly reports
-ctx.priv_len + ctx.pub_len as the decoded blob size [1].
+Return immediately when unseal fails to preserve the original error.
 
-Let's allocate exactly that amount, matching the data copied into
-the blob.
-
-[1] https://lore.kernel.org/linux-integrity/apfoKo-BdwaLXtkT@sgarzare-redhat/
-
-Cc: stable@vger.kernel.org # v5.13+
-Fixes: f2219745250f ("security: keys: trusted: use ASN.1 TPM2 key format for the blobs")
-Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
-Link: https://lore.kernel.org/r/20260923173506.41519-1-sgarzare@redhat.com
+Cc: stable@vger.kernel.org # v5.15+
+Fixes: 5d0682be3189 ("KEYS: trusted: Add generic trusted keys framework")
+Signed-off-by: Srish Srinivasan <ssrish@linux.ibm.com>
 Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Link: https://lore.kernel.org/r/20260912062950.279104-2-ssrish@linux.ibm.com
 Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/keys/trusted-keys/trusted_tpm2.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ security/keys/trusted-keys/trusted_tpm1.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/security/keys/trusted-keys/trusted_tpm2.c
-+++ b/security/keys/trusted-keys/trusted_tpm2.c
-@@ -116,7 +116,7 @@ static int tpm2_key_decode(struct truste
- 	if (ctx.priv_len + ctx.pub_len > MAX_BLOB_SIZE)
- 		return -EINVAL;
+--- a/security/keys/trusted-keys/trusted_tpm1.c
++++ b/security/keys/trusted-keys/trusted_tpm1.c
+@@ -928,8 +928,10 @@ static int trusted_tpm_unseal(struct tru
+ 		ret = tpm2_unseal_trusted(chip, p, options);
+ 	else
+ 		ret = key_unseal(p, options);
+-	if (ret < 0)
++	if (ret < 0) {
+ 		pr_info("key_unseal failed (%d)\n", ret);
++		goto out;
++	}
  
--	blob = kmalloc(ctx.priv_len + ctx.pub_len + 4, GFP_KERNEL);
-+	blob = kmalloc(ctx.priv_len + ctx.pub_len, GFP_KERNEL);
- 	if (!blob)
- 		return -ENOMEM;
- 
+ 	if (options->pcrlock) {
+ 		ret = pcrlock(options->pcrlock);
 
 
