@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215913;
-	b=kQ7pblD74ck50MYcqkIEPHNuD87xA5ktJdQrnLM48TVeF4YdTArwKmHoAnIrQKjM7iDR
-	 LzsMo3CjeysA6OU4mZynG53ZJksE91+tJRFFeR6B/WsKAnfAJq64EFaFq1VUDDxbpz1F8
-	 7O+PAbaWVa/rb7B0Q7Yi+psMtql6NLwLQrVtkwmfw733G7gV2wQi0pUPk4c6CYBsdIVlV
-	 c4u2HE2Gu6CkjNSxpaPTBp3MS2AmpRr6UoxmKUSiLwl2Y7s1rgFC0MlEp+gtBst9qDBaN
-	 9GQhJOOnX+ECocE5fGQ+ylOyptquM1ByIOSXHjSkawpWN+2cNJel/a5Huc2Vee/Rc+A==
+	t=1793215916;
+	b=IOEAQe2xVHfVfrDjDX3HTkzK7sV4ELrQi6NH5FCK48SqyrCVJ0PewupppDi/UGleGzhc
+	 s+O+hN1c9q4pihlNK8iH7omB173wvjrLeYzMkZDvokQzrNRVSCmkU2ejKmwmgKCRQq4yb
+	 rW42JRZdFyvk6+z6iMOMp2N7BWITy1tYB2oAGMZCkZMYWlnwD/hBTQNVKLPBRZR0FtqL3
+	 5dwa0X6VeN/B3q4SDFDuFwaf3STkYh2uSbxZy1J7DpAYhzCkSXRQskG5YPuy7E43NGEl/
+	 XdKSmHqXGLyAS2v05uNcZgZjNCyu010inC0NLmskTAojkrc2l2/8xIrGA22us4b3l4Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215913;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215916;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=FJmOm8zm/jW2LYEsKZn8pRXFi0xCaXeFUwIpTp1eri4=;
-	b=iCfX9lBpTE68+Itz+BfnGBwzM8f+Q1zSTe8hK1GcsH1JDYjhLrcOLfMjV/f4YTiiGXQE
-	 49k9PQXt56YkXPU5WtkJuHLGnyn02xgnfOZRtS4A/gT+WhKmfVel0pJeOcenC9A1GRT2i
-	 GUVveRht4ps25EDV3OL9F/uVSprEr3UE0hKFvr+xi1Z8IuZJFxExBhY5jSJThrS2OgkhX
-	 RJfvz31EJgMCtgQp5ua/3zm6w699wwCuS7T2r8aVrLYdlVt881G1YZbZfdJIxy9vWXxqJ
-	 9lDjPXVuyMXPc3JO60GNeEcoGaRK/UUZU4ed1EqlTtImvDl+CzgKB4tfJ8HS8oyA8EQ==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=zND+P4XtiOlixZihv9rBaeiykwTxI2ve97Bq4QThNc8=;
+	b=honBDp2C1XtpCPPcJxjFuMs0z2vpRThHcrHy6o5EDrsGqqmvs/J56AIqeyPdtZ0rzc4+
+	 MchLx95V93zBiBOvw0CozZfsf1Y8HCGJO+w53i4tJq797KfmcHQ0w4cP3ELvxBWjWphq6
+	 KcPN7rKlULGdaIG8iFocF030u/MUJtNJMn/e5V/3YtnCAYGXQsUOvR8SPq9qptL8ArFEJ
+	 cILIvSGb0KKZl7aQu4nLRpbQ2hps+vFnmGximcK34Cd4mz4YfKP3LdX5oAgoKLOGhp+CZ
+	 lncbMR0xzuK79jTrCv7hN6/sQ6xCemk/ihKnn4KZc2IoJDJOy9MWXLOCPh3X9yJdeJA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vzsE8I+k;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eNS8v8pj;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91A8F606A31A;
-	Wed, 28 Oct 2026 19:31:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C5EE606A31E;
+	Wed, 28 Oct 2026 19:31:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vzsE8I+k
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E282E1F01825;
-	Wed, 28 Oct 2026 19:31:52 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eNS8v8pj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC8371F01825;
+	Wed, 28 Oct 2026 19:31:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215913;
-	bh=FJmOm8zm/jW2LYEsKZn8pRXFi0xCaXeFUwIpTp1eri4=;
+	s=korg; t=1793215916;
+	bh=zND+P4XtiOlixZihv9rBaeiykwTxI2ve97Bq4QThNc8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vzsE8I+ksQ/RS0wfeYBP61JZsM3eGFNqlvHjJcLgcZfl53nPtTOZNjobY9kuFPkq0
-	 gPKmk1Qpgbje9QAC1FGlgisc2ObhOnGRrOZ62BWzlE1Zzp8WZuvLYm6sZ93ddOntjE
-	 OXSHUZgm8tBxmhaNzuZ+ORSFqMxCEQJcg3T/eOQU=
+	b=eNS8v8pjKF1wwCLAyTi1cHT7Mtg7O/W/nwP51WYfQlJPN4m0fzVrhYQeVpu8eIuDO
+	 8RflBm8t5a2fJ0CWNZEFf2spn6nNtHT/n7HwRvTPH/x5EM+nL3fwkdHempJSc30HXT
+	 yGQ5VNMg+iadCEHVgKPJ2cz4b/7Am8wZquvVKM1A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Zihan Xi <zihanx@nebusec.ai>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Francis De Brabandere <francisdb@gmail.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1377/1887] net: l2tp: do not propagate multicast notification errors
-Date: Wed, 28 Oct 2026 17:57:53 +0100
-Message-ID: <20261028170530.783493881@linuxfoundation.org>
+Subject: [PATCH 6.1 1378/1887] platform/x86/amd/pmc: Propagate SMU errors and validate S2D address
+Date: Wed, 28 Oct 2026 17:57:54 +0100
+Message-ID: <20261028170530.806118689@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -64,89 +63,101 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zihan Xi <zihanx@nebusec.ai>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit af20e269f7459d2ce69887fdf2fad7caf986c865 ]
+[ Upstream commit 0225c1d637687b03726f00ac65b6def843d2c464 ]
 
-The tunnel create, tunnel modify, session create, and session modify
-netlink handlers send multicast notifications through helpers that can fail
-while allocating or encoding a message, or while multicasting it.
+amd_stb_s2d_init() discards the return value of several S2D SMU commands.
+When the SMU refuses a command (e.g. "SMU cmd failed. err: 0xff") the
+failure is only noticed indirectly - if at all - and reported as -EIO,
+masking the real error.
 
-For tunnel and session create/modify, a notification is sent after the live
-operation has completed. Returning a best-effort notification error as the
-command result can therefore report failure for an operation that already
-committed and can cause callers to retry and accumulate live objects.
+More seriously, the S2D_PHYS_ADDR_LOW/HIGH return values are ignored, so
+on failure phys_addr_low/hi are left uninitialised and the assembled
+address is passed straight to devm_ioremap().  When the SMU leaves them at
+zero this maps physical address 0 and trips the ioremap-on-RAM warning:
 
-Keep sending notifications for listener visibility, but do not propagate
-their best-effort status as the command result. This also keeps the tunnel
-modify command consistent with the other notification-only paths.
+  amd_pmc AMDI000B:00: SMU cmd failed. err: 0xff
+  ioremap on RAM at 0x0000000000000000 - 0x0000000000ffffff
+  WARNING: CPU: 13 PID: 4592 at arch/x86/mm/ioremap.c:...
 
-Fixes: 33f72e6f0c67 ("l2tp : multicast notification to the registered listeners")
+Check the return value of each SMU command and propagate it, and reject a
+zero physical address before calling devm_ioremap().
+
+Reported-by: Francis De Brabandere <francisdb@gmail.com>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=221759
+Tested-by: Francis De Brabandere <francisdb@gmail.com>
+Fixes: 3d7d407dfb05 ("platform/x86: amd-pmc: Add support for AMD Spill to DRAM STB feature")
 Cc: stable@vger.kernel.org
-Reported-by: Vega <vega@nebusec.ai>
-Signed-off-by: Zihan Xi <zihanx@nebusec.ai>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/54f48e812ca0424c47ffdb9a8182180921f7e6b2.1787247008.git.zihanx@nebusec.ai
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Link: https://patch.msgid.link/20260721181756.143084-4-mario.limonciello@amd.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/l2tp/l2tp_netlink.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ drivers/platform/x86/amd/pmc.c | 26 ++++++++++++++++++++------
+ 1 file changed, 20 insertions(+), 6 deletions(-)
 
-diff --git a/net/l2tp/l2tp_netlink.c b/net/l2tp/l2tp_netlink.c
-index 05314419c7bbb..25800de8b4825 100644
---- a/net/l2tp/l2tp_netlink.c
-+++ b/net/l2tp/l2tp_netlink.c
-@@ -247,8 +247,8 @@ static int l2tp_nl_cmd_tunnel_create(struct sk_buff *skb, struct genl_info *info
- 		kfree(tunnel);
- 		goto out;
+diff --git a/drivers/platform/x86/amd/pmc.c b/drivers/platform/x86/amd/pmc.c
+index 8eaeb1e8f9753..8eb5ddeca0d46 100644
+--- a/drivers/platform/x86/amd/pmc.c
++++ b/drivers/platform/x86/amd/pmc.c
+@@ -872,21 +872,31 @@ static int amd_pmc_s2d_init(struct amd_pmc_dev *dev)
+ 	u32 phys_addr_low, phys_addr_hi;
+ 	u64 stb_phys_addr;
+ 	u32 size = 0;
++	int ret;
+ 
+ 	/* Spill to DRAM feature uses separate SMU message port */
+ 	dev->msg_port = 1;
+ 
+-	amd_pmc_send_cmd(dev, S2D_TELEMETRY_SIZE, &size, STB_SPILL_TO_DRAM, 1);
+-	if (size != S2D_TELEMETRY_BYTES_MAX)
+-		return -EIO;
++	ret = amd_pmc_send_cmd(dev, S2D_TELEMETRY_SIZE, &size, STB_SPILL_TO_DRAM, 1);
++	if (ret)
++		goto out;
++	if (size != S2D_TELEMETRY_BYTES_MAX) {
++		ret = -EIO;
++		goto out;
++	}
+ 
+ 	/* Get STB DRAM address */
+-	amd_pmc_send_cmd(dev, S2D_PHYS_ADDR_LOW, &phys_addr_low, STB_SPILL_TO_DRAM, 1);
+-	amd_pmc_send_cmd(dev, S2D_PHYS_ADDR_HIGH, &phys_addr_hi, STB_SPILL_TO_DRAM, 1);
++	ret = amd_pmc_send_cmd(dev, S2D_PHYS_ADDR_LOW, &phys_addr_low, STB_SPILL_TO_DRAM, 1);
++	if (ret)
++		goto out;
++	ret = amd_pmc_send_cmd(dev, S2D_PHYS_ADDR_HIGH, &phys_addr_hi, STB_SPILL_TO_DRAM, 1);
++	if (ret)
++		goto out;
+ 
+ 	if (!phys_addr_hi && !phys_addr_low) {
+ 		dev_err(dev->dev, "STB is not enabled on the system; disable enable_stb or contact system vendor\n");
+-		return -EINVAL;
++		ret = -EINVAL;
++		goto out;
  	}
--	ret = l2tp_tunnel_notify(&l2tp_nl_family, info, tunnel,
--				 L2TP_CMD_TUNNEL_CREATE);
-+	l2tp_tunnel_notify(&l2tp_nl_family, info, tunnel,
-+			   L2TP_CMD_TUNNEL_CREATE);
- 	l2tp_tunnel_dec_refcount(tunnel);
  
- out:
-@@ -304,8 +304,8 @@ static int l2tp_nl_cmd_tunnel_modify(struct sk_buff *skb, struct genl_info *info
- 		goto out;
- 	}
+ 	stb_phys_addr = ((u64)phys_addr_hi << 32 | phys_addr_low);
+@@ -899,6 +909,10 @@ static int amd_pmc_s2d_init(struct amd_pmc_dev *dev)
+ 		return -ENOMEM;
  
--	ret = l2tp_tunnel_notify(&l2tp_nl_family, info,
--				 tunnel, L2TP_CMD_TUNNEL_MODIFY);
-+	l2tp_tunnel_notify(&l2tp_nl_family, info,
-+			   tunnel, L2TP_CMD_TUNNEL_MODIFY);
+ 	return 0;
++
++out:
++	dev->msg_port = 0;
++	return ret;
+ }
  
- 	l2tp_tunnel_dec_refcount(tunnel);
- 
-@@ -637,8 +637,8 @@ static int l2tp_nl_cmd_session_create(struct sk_buff *skb, struct genl_info *inf
- 	if (ret >= 0) {
- 		session = l2tp_tunnel_get_session(tunnel, session_id);
- 		if (session) {
--			ret = l2tp_session_notify(&l2tp_nl_family, info, session,
--						  L2TP_CMD_SESSION_CREATE);
-+			l2tp_session_notify(&l2tp_nl_family, info, session,
-+					    L2TP_CMD_SESSION_CREATE);
- 			l2tp_session_dec_refcount(session);
- 		}
- 	}
-@@ -702,8 +702,8 @@ static int l2tp_nl_cmd_session_modify(struct sk_buff *skb, struct genl_info *inf
- 	if (info->attrs[L2TP_ATTR_RECV_TIMEOUT])
- 		session->reorder_timeout = nla_get_msecs(info->attrs[L2TP_ATTR_RECV_TIMEOUT]);
- 
--	ret = l2tp_session_notify(&l2tp_nl_family, info,
--				  session, L2TP_CMD_SESSION_MODIFY);
-+	l2tp_session_notify(&l2tp_nl_family, info,
-+			    session, L2TP_CMD_SESSION_MODIFY);
- 
- 	l2tp_session_dec_refcount(session);
- 
+ #ifdef CONFIG_SUSPEND
 -- 
 2.53.0
 
