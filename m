@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213853;
-	b=0/r9N8mvCv3sxxwyQp/qRPAnHKX110fiQAbCV2CIGpox8BFdOfOBDzmwyuDe83GEbHEO
-	 9TYXfrMe+oTDBMJkHFN0kzEzNNF0ME9kGxY2FH5vJyBmuq/Hr9nLxO706s5rbpJz4zTbg
-	 crV53ySxULYMYlBDWnzUkkFdmPdyfeB/ss5IXG2joxID1oKEo/yOhbgbtgchtq9zHVyNg
-	 9eh0qxEcWzD4nDigVPigoeBsgffctV0+Kw/w5dl+7rQ8hRvVqwFMjHH9an3Wz0ImIyx5w
-	 SiLuFK/2qOX1I+dhtzRrDhibAkHWhweeDa0sskwYnefVyDC8XDcy7XAcWB8T2T/zRrQ==
+	t=1793213855;
+	b=uEQhmQR1pfj/pLARs06ubKC5255y7BmUSOU31eJz3JC2FOmkGgy65F5aJpQCbnrUnnbb
+	 g2ZFwOFXbYhT3I9FIXgRadZRqYgbgwQQ/zQjyeDFi90Ktyn9Xxzubg5F9vTYzRMIcXl/n
+	 svVAb/S8BMka902rxfLvFgVXwzAJtlFW1XkZWv8zXdx4mc2DVjmnrQKR0A9ZfQVhL5+XO
+	 T32/nCiltCBurkC3c91mgwT9vxf7ZofIqXqcxt9X1srEDDNasVqaI46Woktb/2SwceSdx
+	 C+aevcKrTAo2CkKHg6lJ6NIq+sphEF2BefrzehXJ04cY7C9qnBDp2Ai8OOUlfdxvgOQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213853;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213855;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=vfKqAUItxU7uo30NTR5u0Yz+fUhNMhr0Pm9M8TV/zVo=;
-	b=vLE7/reA/0N0ig4wXgmOzRWZMhn3SGBwAdkl/8mE0QQE4jcwvFtzBqa+JTIzs6SScAdd
-	 vNeuWy5wZ0zbUClktzgwaYmlkx4iQdnOL9NG9GB14cfXZyAfaiZGBBn0fEEIivaRgAbQs
-	 VsEPis2iTftsujjNu2xAP9IY+WbzIcet1cwLq1v6A26vAZhz38C8zplUsSLBZs1+GWuAF
-	 Zxs58EArjDv+rLCHuFphCw5dWbONa+2zXGDzXdsCqra6MtnDDF6B3zXgsY7piKWcPvyPz
-	 WJ4EYiFNyZLyJalOFS0hYy1L4L83rgIfp/5GvFcZEbKn94ck6yxaA+Byu5eZzBHHkOg==
+	bh=qdgt/TpVSAsuaUMqswGz0ArOLb4WPHQxfWEuJSbqPgw=;
+	b=HO+Hxzl7a90yMNFD1FL/kJdzFXlv9ABZYusUBL1kKkmeXUjxhrt5UBM82tuiCZ/ENltJ
+	 CK/mf0eoVXTarKTXs7H3JFlskFsOcPi5ftMRou9dwrG3iV0GhVFL5xK+2JBz6x8MCMOfY
+	 PMC+ReNu1Ls1dbu+q5aN/DtSSkYjSS0St1yDhaG3bHZUIJBzgwJGSM13QY+bdKy6s+9ck
+	 s9/9opDHdmix0ZrAm1kqfiFqQNB6nJGKgwbbKjPqWnk6SzQH5SJHANf+n5mbZiqpWMkoI
+	 QuChSo6oK4xrVq5nrNMvyQER/9bK9Ut/odfOTkeQ1pXuthoWXHckjih99amK0fcXfxg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NsmIylD8;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vx8T1gGI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC1C8606A336;
-	Wed, 28 Oct 2026 18:57:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A7D5606A31C;
+	Wed, 28 Oct 2026 18:57:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NsmIylD8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4EA81F01828;
-	Wed, 28 Oct 2026 18:57:31 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vx8T1gGI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99D371F01829;
+	Wed, 28 Oct 2026 18:57:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213852;
-	bh=vfKqAUItxU7uo30NTR5u0Yz+fUhNMhr0Pm9M8TV/zVo=;
+	s=korg; t=1793213855;
+	bh=qdgt/TpVSAsuaUMqswGz0ArOLb4WPHQxfWEuJSbqPgw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NsmIylD8ni4Hr89bl7FllRKuCZU8fxzzrHzuoeAZ3nNDoQmFztNL8skLO8H/7XIT9
-	 R5FOp9VaZL2vIlAt1fGy2NcWUkvBNEeX85SBIPTKv+ajok9UhDp2MW32kaSbMBAfxB
-	 AaG0RNM9a9nQfCXtlqXbPWnxJjNKJu/Lr6Fyym/A=
+	b=vx8T1gGIUk3UV9Wm28y8jkaRnW3fSY7ZfdNo4k67LsxmYx2PUO4WnEfeChU37mnb+
+	 bz/AnNuL4I68Oz68CnMa81RH1WpnByK1iF/kpT7/cJrHMeXDCU+2bVB5W9fGfJQ205
+	 srYvbX9ex7XNGkiKapV2+1A6KWr4g4z0z1eA572s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baokun Li <libaokun1@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
+	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
+	Lenko Donchev <lenko.donchev@gmail.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0625/1887] ext4: fix uninitialized ratelimit_state->lock access in __ext4_fill_super()
-Date: Wed, 28 Oct 2026 17:45:21 +0100
-Message-ID: <20261028170513.632746350@linuxfoundation.org>
+Subject: [PATCH 6.1 0652/1887] drm/amd/display: Use kcalloc() instead of kzalloc()
+Date: Wed, 28 Oct 2026 17:45:48 +0100
+Message-ID: <20261028170514.248329485@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,136 +69,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baokun Li <libaokun1@huawei.com>
+From: Lenko Donchev <lenko.donchev@gmail.com>
 
-[ Upstream commit b4b4fda34e535756f9e774fb2d09c4537b7dfd1c ]
+[ Upstream commit f634ee1737e7b856bd4c3f040af867007d1cb7b8 ]
 
-In the following concurrency we will access the uninitialized rs->lock:
+We are trying to get rid of all multiplications from allocation
+functions to prevent integer overflows. Here the multiplication is
+obviously safe, but using kcalloc() is more appropriate and improves
+readability. This patch has no effect on runtime behavior.
 
-ext4_fill_super
-  ext4_register_sysfs
-   // sysfs registered msg_ratelimit_interval_ms
-                             // Other processes modify rs->interval to
-                             // non-zero via msg_ratelimit_interval_ms
-  ext4_orphan_cleanup
-    ext4_msg(sb, KERN_INFO, "Errors on filesystem, "
-      __ext4_msg
-        ___ratelimit(&(EXT4_SB(sb)->s_msg_ratelimit_state)
-          if (!rs->interval)  // do nothing if interval is 0
-            return 1;
-          raw_spin_trylock_irqsave(&rs->lock, flags)
-            raw_spin_trylock(lock)
-              _raw_spin_trylock
-                __raw_spin_trylock
-                  spin_acquire(&lock->dep_map, 0, 1, _RET_IP_)
-                    lock_acquire
-                      __lock_acquire
-                        register_lock_class
-                          assign_lock_key
-                            dump_stack();
-  ratelimit_state_init(&sbi->s_msg_ratelimit_state, 5 * HZ, 10);
-    raw_spin_lock_init(&rs->lock);
-    // init rs->lock here
+Link: https://www.kernel.org/doc/html/next/process/deprecated.html#open-coded-arithmetic-in-allocator-arguments
+Link: https://github.com/KSPP/linux/issues/162
 
-and get the following dump_stack:
-
-=========================================================
-INFO: trying to register non-static key.
-The code is fine but needs lockdep annotation, or maybe
-you didn't initialize this object before use?
-turning off the locking correctness validator.
-CPU: 12 PID: 753 Comm: mount Tainted: G E 6.7.0-rc6-next-20231222 #504
-[...]
-Call Trace:
- dump_stack_lvl+0xc5/0x170
- dump_stack+0x18/0x30
- register_lock_class+0x740/0x7c0
- __lock_acquire+0x69/0x13a0
- lock_acquire+0x120/0x450
- _raw_spin_trylock+0x98/0xd0
- ___ratelimit+0xf6/0x220
- __ext4_msg+0x7f/0x160 [ext4]
- ext4_orphan_cleanup+0x665/0x740 [ext4]
- __ext4_fill_super+0x21ea/0x2b10 [ext4]
- ext4_fill_super+0x14d/0x360 [ext4]
-[...]
-=========================================================
-
-Normally interval is 0 until s_msg_ratelimit_state is initialized, so
-___ratelimit() does nothing. But registering sysfs precedes initializing
-rs->lock, so it is possible to change rs->interval to a non-zero value
-via the msg_ratelimit_interval_ms interface of sysfs while rs->lock is
-uninitialized, and then a call to ext4_msg triggers the problem by
-accessing an uninitialized rs->lock. Therefore register sysfs after all
-initializations are complete to avoid such problems.
-
-Signed-off-by: Baokun Li <libaokun1@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20240102133730.1098120-1-libaokun1@huawei.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Reviewed-by: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
+Signed-off-by: Lenko Donchev <lenko.donchev@gmail.com>
+Signed-off-by: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Stable-dep-of: 5524fa301ba6 ("drm/amd/display: Add missing NULL pointer check within dpcd_extend_address_range")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/super.c | 22 ++++++++++------------
- 1 file changed, 10 insertions(+), 12 deletions(-)
+ drivers/gpu/drm/amd/display/dc/core/dc_link_dpcd.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/ext4/super.c b/fs/ext4/super.c
-index 76c8c364c5dd1..828cbf2da05cb 100644
---- a/fs/ext4/super.c
-+++ b/fs/ext4/super.c
-@@ -5547,19 +5547,15 @@ static int __ext4_fill_super(struct fs_context *fc, struct super_block *sb)
- 	if (err)
- 		goto failed_mount6;
- 
--	err = ext4_register_sysfs(sb);
--	if (err)
--		goto failed_mount7;
--
- 	err = ext4_init_orphan_info(sb);
- 	if (err)
--		goto failed_mount8;
-+		goto failed_mount7;
- #ifdef CONFIG_QUOTA
- 	/* Enable quota usage during mount. */
- 	if (ext4_has_feature_quota(sb) && !sb_rdonly(sb)) {
- 		err = ext4_enable_quotas(sb);
- 		if (err)
--			goto failed_mount9;
-+			goto failed_mount8;
+diff --git a/drivers/gpu/drm/amd/display/dc/core/dc_link_dpcd.c b/drivers/gpu/drm/amd/display/dc/core/dc_link_dpcd.c
+index aefca9756dbe8..5ec6f079b08c4 100644
+--- a/drivers/gpu/drm/amd/display/dc/core/dc_link_dpcd.c
++++ b/drivers/gpu/drm/amd/display/dc/core/dc_link_dpcd.c
+@@ -161,7 +161,7 @@ static void dpcd_extend_address_range(
+ 	if (new_addr_range.start != in_address || new_addr_range.end != end_address) {
+ 		*out_address = new_addr_range.start;
+ 		*out_size = ADDRESS_RANGE_SIZE(new_addr_range.start, new_addr_range.end);
+-		*out_data = kzalloc(*out_size * sizeof(**out_data), GFP_KERNEL);
++		*out_data = kcalloc(*out_size, sizeof(**out_data), GFP_KERNEL);
  	}
- #endif  /* CONFIG_QUOTA */
+ }
  
-@@ -5585,7 +5581,7 @@ static int __ext4_fill_super(struct fs_context *fc, struct super_block *sb)
- 		ext4_msg(sb, KERN_INFO, "recovery complete");
- 		err = ext4_mark_recovery_complete(sb, es);
- 		if (err)
--			goto failed_mount10;
-+			goto failed_mount9;
- 	}
- 
- 	if (test_opt(sb, DISCARD) && !bdev_max_discard_sectors(sb->s_bdev))
-@@ -5602,15 +5598,17 @@ static int __ext4_fill_super(struct fs_context *fc, struct super_block *sb)
- 	atomic_set(&sbi->s_warning_count, 0);
- 	atomic_set(&sbi->s_msg_count, 0);
- 
-+	/* Register sysfs after all initializations are complete. */
-+	err = ext4_register_sysfs(sb);
-+	if (err)
-+		goto failed_mount9;
-+
- 	return 0;
- 
--failed_mount10:
-+failed_mount9:
- 	ext4_quotas_off(sb, EXT4_MAXQUOTAS);
--failed_mount9: __maybe_unused
-+failed_mount8: __maybe_unused
- 	ext4_release_orphan_info(sb);
--failed_mount8:
--	ext4_unregister_sysfs(sb);
--	kobject_put(&sbi->s_kobj);
- failed_mount7:
- 	ext4_unregister_li_request(sb);
- failed_mount6:
 -- 
 2.53.0
 
