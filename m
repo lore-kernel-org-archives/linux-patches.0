@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214929;
-	b=NyRpOfDvwUwDCnn4XHDQxp3UwW/Q+swEuGKfu6CNx4vlPR9b5gpG7FkaLpePZnWI7yNh
-	 tNqH2CkXC8WZXpNBSTGiEHlQXjJYBzg8oCAv18tR8mCqRZbmeplwX4kkIunT6hHukQ0fC
-	 C+DNaUbH9VSBWecS2TyXCaOh719IL4BegXvYNIxudbvJfJ7UQiNF6Pv3C5TaMfCbUAnrd
-	 BuFL7TlVUBYN/5rIp689VoZKuCYxxhsjvMWcdLYEbpvnsWuXwXbXlILqod64KGYXlA/d1
-	 pJXAPWZy55BkAMYantcGLm3HPzKiUQRs0CVPY+obVLNvtPb68RtQOsIQchZa2gy6QHw==
+	t=1793214932;
+	b=mDdhm8S5msrpamKc0XimigB9UXCmzBaIThkhd53NtcNr54GTuX8DU0vHNSX1SgXeEWHT
+	 IXUADD5Bd9TV3arjEyyKPaQnWNBALDbiO03K7wB0oi4kxJKHruNlVGM2YTSH9SmGJdPGW
+	 qqn4KjpBQgzVdlM3Toj23BdCFzK8oUBNzAQ5hQwzoasPAm8g6/eJr6jCYk7M9X4kDS4Zs
+	 qavWH1JqJYMaqdAJXflOnqzGR5H2QTHqxHsOs+mKXP6Pxlfpbyyy8TIhBnPD6+nyMEYY+
+	 2cw2HaJ8zURZVEeKrVfGLjjBibhNXgvyTY4bn/3FWL1san4wPw8Ta18OLpKCOT+BqKw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214929;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214932;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=BaTW+RHbiEyD0wtDYo7PG26s1Lj+M+8lkPimnWG2NYM=;
-	b=LcsxP2SdrZHefr6nRZNQACq+UYPp6rgPNysHV055gIjWfU7EGxd2oCqWHzq5Ph35aL1p
-	 4g8GxQgRdxV6VkapaL1J2JvGy9DyKLJfA1Rg4GSbQZnHdjNUf/elOHOmJMNKCWhGZZAsM
-	 cizUL/oVy/L2NLCNdfTef4datA1S3XJQkIjAM/nIUol+1AkD+wqOcLdJ5WSERPGKIlZgd
-	 bvv21PgYrSOzvfLA0hEch7DY/7Cwp8QaNXuRfAHSqH5sC0IxTKm8aYtZifN6vdREbDozC
-	 EUan/Ep63zZQMGARdZvMgMVEaG7r2oY22TZgHBnYC1ld62PmVp32Y4nqn8y/rTn+ROQ==
+	bh=t1nDhBT+EJHQk+z3vOEvRZ7pDmjg3cakou2e8tNuzks=;
+	b=SaTTmv1k4skn0YWFxSsmMTZ4OcHRQkyMNL0qwW03iP75eeBL2Uekl3Zn2K1oOVJLApzZ
+	 jrsid73vv4fEu+jDp5LMQ9+YyiLgs76LhgBeAC9UK3qP5ilM9fF9t7wHOcljEAZteOyVj
+	 Mdlnqcb9bqVD4NSSfjME4342wxuAcOjaMmGGVtwQCmJ3yU9OApksNhsxIcneLzSAQNoz8
+	 1HsUHQZ4rxMDwkAQIhNppJcFcOb3yfmu8WgraCjb7TPSg8hatxzlV49HRgzvBRbTKIQ37
+	 7ZlIQONOi7srjtISQuxL1lJZ61HiH+Gose+6quWaraJ/fwYTe7/L9Zm+tE9TIkoSaSg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kLenLwHI;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YesNGymi;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72E8D606A31F;
-	Wed, 28 Oct 2026 19:15:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58D93606A31F;
+	Wed, 28 Oct 2026 19:15:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kLenLwHI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C31171F01825;
-	Wed, 28 Oct 2026 19:15:28 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YesNGymi
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4AF61F031E1;
+	Wed, 28 Oct 2026 19:15:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214929;
-	bh=BaTW+RHbiEyD0wtDYo7PG26s1Lj+M+8lkPimnWG2NYM=;
+	s=korg; t=1793214932;
+	bh=t1nDhBT+EJHQk+z3vOEvRZ7pDmjg3cakou2e8tNuzks=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kLenLwHISPXdMY15zMYtk0HwgPfrMIHsqweWK0/4ur7q/e0dP2lElFjWar3LkEs8D
-	 l7QfwQX6iAWqEfxXE0znWnH+QuPU3aR3XIPdAomProeUCZmxdhKh+8EqrCB7Tvr+8I
-	 VCxYB7o2XXkE7fCfBUT403QnYRJS/cywA/eYgxnM=
+	b=YesNGymik5GTfwPVHNpNB3LH39czS1HGpuAwa5DDeBO83oN10/rZ19tBGI4Zh8Vdt
+	 lNcIXOg0sHH//x9ls8pjgTryQD/FEbGopP2lB2YdufT7bIp9w0+1BNhqRslg3k7ZT1
+	 hznsFoGjzOY89kQPX0STWk5jyC7AXIuR1jlwGgjg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Jie Zhang <jie.zhang@analog.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Kemeng Shi <shikemeng@huaweicloud.com>,
+	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1031/1887] net: stmmac: fix oops when split header is enabled
-Date: Wed, 28 Oct 2026 17:52:07 +0100
-Message-ID: <20261028170522.874341993@linuxfoundation.org>
+Subject: [PATCH 6.1 1032/1887] ext4: remove unnecessary e4b->bd_buddy_page check in ext4_mb_load_buddy_gfp
+Date: Wed, 28 Oct 2026 17:52:08 +0100
+Message-ID: <20261028170522.897467422@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,77 +69,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jie Zhang <jzhang918@gmail.com>
+From: Kemeng Shi <shikemeng@huaweicloud.com>
 
-[ Upstream commit babab1b42ed68877ef669a08384becf281ad2582 ]
+[ Upstream commit 285164b80175157c18a06425cf25591c9f942b1a ]
 
-For GMAC4, when split header is enabled, in some rare cases, the
-hardware does not fill buf2 of the first descriptor with payload.
-Thus we cannot assume buf2 is always fully filled if it is not
-the last descriptor. Otherwise, the length of buf2 of the second
-descriptor will be calculated wrong and cause an oops:
+e4b->bd_buddy_page is only set if we initialize ext4_buddy successfully. So
+e4b->bd_buddy_page is always NULL in error handle branch. Just remove the
+dead check.
 
-Unable to handle kernel paging request at virtual address ffff00019246bfc0
-...
-x2 : 0000000000000040 x1 : ffff00019246bfc0 x0 : ffff00009246c000
-Call trace:
- dcache_inval_poc+0x28/0x58 (P)
- dma_direct_sync_single_for_cpu+0x38/0x6c
- __dma_sync_single_for_cpu+0x34/0x6c
- stmmac_napi_poll_rx+0x8f0/0xb60
- __napi_poll.constprop.0+0x30/0x144
- net_rx_action+0x160/0x274
- handle_softirqs+0x1b8/0x1fc
-...
-
-To fix this, the PL bit-field in RDES3 register is used for all
-descriptors, whether it is the last descriptor or not.
-
-Fixes: ec222003bd94 ("net: stmmac: Prepare to add Split Header support")
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Signed-off-by: Jie Zhang <jie.zhang@analog.com>
-Link: https://patch.msgid.link/20260209225037.589130-1-jie.zhang@analog.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Kemeng Shi <shikemeng@huaweicloud.com>
+Reviewed-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
+Link: https://lore.kernel.org/r/20230303172120.3800725-11-shikemeng@huaweicloud.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Stable-dep-of: bdc56a9c46b2 ("ext4: fix e4b bitmap inconsistency reports")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/stmicro/stmmac/stmmac_main.c | 20 ++++++++++++++++---
- 1 file changed, 17 insertions(+), 3 deletions(-)
+ fs/ext4/mballoc.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-index e75a05bd5fd0d..4e427a2f0a7c6 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -4744,13 +4744,27 @@ static unsigned int stmmac_rx_buf2_len(struct stmmac_priv *priv,
- 	if (!priv->sph)
- 		return 0;
- 
--	/* Not last descriptor */
--	if (status & rx_not_ls)
-+	/* For GMAC4, when split header is enabled, in some rare cases, the
-+	 * hardware does not fill buf2 of the first descriptor with payload.
-+	 * Thus we cannot assume buf2 is always fully filled if it is not
-+	 * the last descriptor. Otherwise, the length of buf2 of the second
-+	 * descriptor will be calculated wrong and cause an oops.
-+	 *
-+	 * If this is the last descriptor, 'plen' is the length of the
-+	 * received packet that was transferred to system memory.
-+	 * Otherwise, it is the accumulated number of bytes that have been
-+	 * transferred for the current packet.
-+	 *
-+	 * Thus 'plen - len' always gives the correct length of buf2.
-+	 */
+diff --git a/fs/ext4/mballoc.c b/fs/ext4/mballoc.c
+index df6fa0a568559..4f35376134056 100644
+--- a/fs/ext4/mballoc.c
++++ b/fs/ext4/mballoc.c
+@@ -1614,8 +1614,7 @@ ext4_mb_load_buddy_gfp(struct super_block *sb, ext4_group_t group,
+ 		put_page(page);
+ 	if (e4b->bd_bitmap_page)
+ 		put_page(e4b->bd_bitmap_page);
+-	if (e4b->bd_buddy_page)
+-		put_page(e4b->bd_buddy_page);
 +
-+	/* Not GMAC4 and not last descriptor */
-+	if (!priv->plat->has_gmac4 && (status & rx_not_ls))
- 		return priv->dma_conf.dma_buf_sz;
- 
-+	/* GMAC4 or last descriptor */
- 	plen = stmmac_get_rx_frame_len(priv, p, coe);
- 
--	/* Last descriptor */
- 	return plen - len;
- }
- 
+ 	e4b->bd_buddy = NULL;
+ 	e4b->bd_bitmap = NULL;
+ 	return ret;
 -- 
 2.53.0
 
