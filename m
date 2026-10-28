@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216355;
-	b=CeN/D7qPSzCet/9ylw0YNoDNTgIU6GLhTUWBhfZagJfiedY0ZxWK9vXVdvGUSjd228w6
-	 a5tzFJkDxsbZspZFbZvfRCkOdTyi43ICT2MfTi3w81uBdXXFnU9t+GAGxXJjpvvoh6M6x
-	 3tDnks7CbTmPOhLiQTWRTZi2/P0kSlkpJtnNrvotcleqaWa8s11QgAG0XI13HP1JWrNa3
-	 KXA+KmcoLKTI3GLAYIHXcHM38eDN1EBjpYKVIUJKhFyaOHBMupiOVarqbIVEJxkNNY8B4
-	 CgImVM6LZkIogNHPlWE4fEx8dDq59HgWRMI3kS9NrHGBxENWrTqyEY3BmSl9ot0jApQ==
+	t=1793216358;
+	b=0mvqcsc96kYy0cXUwXJPj6zrdDq6hLVHBuUUllSY537cpHtvtbT8gEbEetKPP3KlgmS9
+	 x4jz/sQaQhWSz1G0gA5DXdCSrZn3L9720uSXikher4K9ABrwmNAJg4XkREMyrj29iPabY
+	 UIFlHnccYyai2vekCJI7tqlMTkfRmvRCqs7vsVUmIA9BK2wGGmMtelPWjSA/zfujKyGJm
+	 W3tlSzM5W4NfTrHbVmzRwg8yIcrTXs0iRV04SxXP8p8z168Nd0RBBR370p1zA5DFZBRjJ
+	 qWk8L106+2XuhSD4oQq3BHck2MOB2EgiCbLitgbqyNQIuXM/8e7ySTmy0GcbIBzMg5Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216355;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216358;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/4G//zZvZS3DedvKaBAUkIDtkEnrEqsm8nhwWo6OI6E=;
-	b=xRWYLbqX4eziTClYUwaJvHMS8/z0KRQZeZBtn6tN2OtIEdG69FuOK3Ij6KMNc2IBCh4m
-	 3xEeZVlqZqRelpCBkFW7hGJx3OXiO+P1YRZroeshW77xxoF3sTDkZkVXmzY8o0vtUdDLv
-	 Lu3nXE/ckngqgDyxi4GZsDlDeaUgdIhycicIiMTMGZKCofkc6xEFzfr2dUgQOnSGKvNM3
-	 RtdUdceKaaF1fFuDJrnGeJYGFaL9IVJrqoSCUCt/d2IpNeY/4cUjOJnJctncsVNtbHlOR
-	 yqRd11Jx6/6+tHnNNoVDf61aJ0cw9dwv3ORlhNciJKjiuMj9u3yuDgWIDde1YK+6lPQ==
+	bh=I7qUI1QfzJcV/rKyNQxiwk485vaBzPBqz7+kxjjkH6o=;
+	b=OV/J/s8lfACd+AP623ufkUc08rythqnejiqtNCGbsQFndUy8FX/cZpCXlwLKzDu7wRwa
+	 zN8DyM+Gs8GUQ10MJVhy+wF7JpM3ELk695T4+FXuu5rjYKnZSXITKV9OBSVU2VVEEup5T
+	 HqqVcQpeiIlNq/kU0FgLNAyN4KuomYCzL+NmZlLY5N454uG/POudL9JjNkeI4eKbm0XPN
+	 VyQukwKwtIZpNqbB0vuO/PV0aVvhUp6XXzsF7nOta8SX+HrqTP0ofTAU/jeFt2qycprRo
+	 Qs3Lv7s4tcZcIIzZql6y2N4SOz6Hy0a6lBBjku5a0YKrtc6nH/YyCL9CbSiy9yUi4nw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lev+rOLN;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hdR4AtUA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0F03606A31D;
-	Wed, 28 Oct 2026 19:39:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A5D8606A31A;
+	Wed, 28 Oct 2026 19:39:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lev+rOLN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C8861F01825;
-	Wed, 28 Oct 2026 19:39:13 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hdR4AtUA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78AAA1F01825;
+	Wed, 28 Oct 2026 19:39:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216354;
-	bh=/4G//zZvZS3DedvKaBAUkIDtkEnrEqsm8nhwWo6OI6E=;
+	s=korg; t=1793216358;
+	bh=I7qUI1QfzJcV/rKyNQxiwk485vaBzPBqz7+kxjjkH6o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lev+rOLNVG2OBvttkjVKNpsqRl9aOfjVpW1ldHju78pIMBbU7Qeas3zx/noYpCvXR
-	 s/aMsYQMQmqvRdCZKLdxD0JMmhrTc4GxbiXiOmwmm5gCykN0zQfiRaF8XmQ+tcFBpb
-	 m1jTMPyJyhHLEvVHdpwoq4TFERNiGFWcazw46Lb4=
+	b=hdR4AtUADIYhpMZx1XjWZXtIM/pFnc2aV+mXdq9ve3Ofgx1tTwhHtf2YJ9l6Dpu6e
+	 tMDXg7jmcFt+JPfO5D3gvF9E7RVFbAcrMTdhgwwTUoMZmM9td87Z+dqrNSLoSOuB3X
+	 XxzYdxIklsxdAGGtpOPjcXS6ywT7NQR39uGwdwQc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+1b2c9c4a0f8708082678@syzkaller.appspotmail.com,
-	Michal Luczaj <mhal@rbox.co>,
-	Nguyen Dinh Phi <phind.uet@gmail.com>,
-	Stefano Garzarella <sgarzare@redhat.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Baokun Li <libaokun@linux.alibaba.com>,
+	Jingbo Xu <jefflexu@linux.alibaba.com>,
+	Miklos Szeredi <mszeredi@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1529/1887] vsock: dont check the listeners sk_err in vsock_accept()
-Date: Wed, 28 Oct 2026 18:00:25 +0100
-Message-ID: <20261028170534.258460891@linuxfoundation.org>
+Subject: [PATCH 6.1 1530/1887] fuse: check for NULL root inode in fuse_fill_super_submount
+Date: Wed, 28 Oct 2026 18:00:26 +0100
+Message-ID: <20261028170534.281382815@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -71,84 +69,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nguyen Dinh Phi <phind.uet@gmail.com>
+From: Baokun Li <libaokun@linux.alibaba.com>
 
-[ Upstream commit b8c899cf5e7be29840a172c183dedd8d3e7a0287 ]
+[ Upstream commit 928f659a3e3650978a5b4829cc982324f72b474b ]
 
-Syzbot reported an issue which can be reproduced with these steps:
-	r0 = socket(AF_VSOCK, SOCK_STREAM, 0)
-	bind(r0, {VMADDR_CID_ANY, PORT})
-	connect(r0, {VMADDR_CID_LOCAL, PORT}) -> -1, EPROTO (self-connect)
-	listen(r0, backlog)                   -> 0
-	r1 = socket(AF_VSOCK, SOCK_STREAM, 0)
-	connect(r1, {VMADDR_CID_LOCAL, PORT}) -> 0
-	accept(r0)                            -> -1, EPROTO (stale sk_err)
+fuse_iget() can return NULL when its inode allocation fails, but
+fuse_fill_super_submount() passed the result straight to get_fuse_inode()
+and decremented fi->nlookup without checking it:
 
-Basically, it creates a socket (r0) and triggers a self-connect after
-binding it. This self-connect fails with EPROTO because it loops back
-to r0 while the socket is still in the TCP_SYN_SENT state, causing it
-to be incorrectly dispatched to the connecting-client path. The
-unexpected packet type encountered there sets sk_err to EPROTO.
+        root = fuse_iget(sb, parent_fi->nodeid, ...);
+        fi = get_fuse_inode(root);
+        fi->nlookup--;
 
-After that, it invokes a listen() call on the same socket. This
-listen() call succeeds because the kernel's listening path never
-inspects or clears sk_err. Then, a new socket (r1) is created as a
-normal client and connects to r0. However, vsock_accept() rejects this
-incoming connection because the listener's sk_err still holds the
-EPROTO error from the earlier failed self-connect.
+Inside fuse_iget() the inode allocation can fail and return NULL.  The
+submount root takes the iget5_locked() path, whose alloc_inode() can fail
+under memory pressure (the auto-submount branch can fail the same way in
+new_inode() or fuse_alloc_submount_lookup()):
 
-This rejection causes the child socket created for r1's connection to
-never be freed on virtio or hyperv transports; only the VMCI transport
-implements pending_work to revisit and clean up a rejected socket.
+        inode = iget5_locked(sb, nodeid, fuse_inode_eq, fuse_inode_set,
+                             &nodeid);
+        if (!inode)
+                return NULL;
 
-For a non-blocking connect(), vsock_connect() may return -EINPROGRESS
-immediately, and vsock_connect_timeout() can later set sk->sk_err
-asynchronously.
+A NULL root makes get_fuse_inode() a container_of() on NULL and the
+nlookup decrement a write to a bogus address, oopsing the mount.  With
+CONFIG_KASAN the following null pointer dereference is reported when the
+root inode allocation of an auto-submount fails (e.g. under memory
+pressure):
 
-Since no vsock transport ever sets sk_err on a socket while it is in
-TCP_LISTEN state, checking it in vsock_accept() serves no purpose and
-only carries forward errors left behind by earlier, unrelated
-connection attempts on the same socket. Remove the checks so accept()
-no longer rejects valid incoming connections because of a stale
-error, which also avoids the resource leak described above.
+==================================================================
+BUG: KASAN: null-ptr-deref in fuse_get_tree_submount+0x656/0x8b0
+Read of size 8 at addr 00000000000002b0 by task ls/942
+CPU: 0 PID: 942 Comm: ls Tainted: G W 6.6 #15
+Call Trace:
+ <TASK>
+ fuse_get_tree_submount+0x656/0x8b0
+ vfs_get_tree+0x48/0x140
+ fc_mount+0x13/0x50
+ fuse_dentry_automount+0x7a/0xb0
+ __traverse_mounts+0xca/0x330
+ step_into+0x339/0xac0
+ path_lookupat+0xc5/0x2f0
+ filename_lookup+0x163/0x2a0
+ vfs_statx+0xd5/0x200
+ do_statx+0x83/0xd0
+ __x64_sys_statx+0xa0/0xc0
+ do_syscall_64+0x37/0x90
+ entry_SYSCALL_64_after_hwframe+0x78/0xe2
+ </TASK>
+==================================================================
 
-Fixes: d021c344051a ("VSOCK: Introduce VM Sockets")
-Reported-by: syzbot+1b2c9c4a0f8708082678@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=1b2c9c4a0f8708082678
-Suggested-by: Michal Luczaj <mhal@rbox.co>
-Signed-off-by: Nguyen Dinh Phi <phind.uet@gmail.com>
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
-Link: https://patch.msgid.link/20260813173024.2362935-2-phind.uet@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Return -ENOMEM instead; the caller tears down the partially built
+superblock on error, matching the other error returns in this
+function.
+
+Fixes: 1866d779d5d2 ("fuse: Allow fuse_fill_super_common() for submounts")
+Signed-off-by: Baokun Li <libaokun@linux.alibaba.com>
+Reviewed-by: Jingbo Xu <jefflexu@linux.alibaba.com>
+Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/vmw_vsock/af_vsock.c | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ fs/fuse/inode.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/vmw_vsock/af_vsock.c b/net/vmw_vsock/af_vsock.c
-index 92685d6da9ad1..364a0d5ef9645 100644
---- a/net/vmw_vsock/af_vsock.c
-+++ b/net/vmw_vsock/af_vsock.c
-@@ -1586,8 +1586,7 @@ static int vsock_accept(struct socket *sock, struct socket *newsock, int flags,
- 	timeout = sock_rcvtimeo(listener, flags & O_NONBLOCK);
- 	prepare_to_wait(sk_sleep(listener), &wait, TASK_INTERRUPTIBLE);
+diff --git a/fs/fuse/inode.c b/fs/fuse/inode.c
+index 332cc885b815e..269699abdbfc7 100644
+--- a/fs/fuse/inode.c
++++ b/fs/fuse/inode.c
+@@ -1537,6 +1537,8 @@ static int fuse_fill_super_submount(struct super_block *sb,
  
--	while ((connected = vsock_dequeue_accept(listener)) == NULL &&
--	       listener->sk_err == 0) {
-+	while ((connected = vsock_dequeue_accept(listener)) == NULL) {
- 		release_sock(listener);
- 		timeout = schedule_timeout(timeout);
- 		finish_wait(sk_sleep(listener), &wait);
-@@ -1605,9 +1604,6 @@ static int vsock_accept(struct socket *sock, struct socket *newsock, int flags,
- 	}
- 	finish_wait(sk_sleep(listener), &wait);
- 
--	if (listener->sk_err)
--		err = -listener->sk_err;
--
- 	if (connected) {
- 		sk_acceptq_removed(listener);
- 
+ 	fuse_fill_attr_from_inode(&root_attr, parent_fi);
+ 	root = fuse_iget(sb, parent_fi->nodeid, 0, &root_attr, 0, 0);
++	if (!root)
++		return -ENOMEM;
+ 	/*
+ 	 * This inode is just a duplicate, so it is not looked up and
+ 	 * its nlookup should not be incremented.  fuse_iget() does
 -- 
 2.53.0
 
