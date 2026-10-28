@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214301;
-	b=D5IEVbjEoNTYaTA7GiIvT5LepqNIp+kHDJTCUQuN/6eZYSY/eXivZ/Lhd9PnzJII1hQl
-	 Hy3wwDaAV4NKqcjWPXbNwa6LORoUAQCqRJ/U1GdhQ2MP1tJrrEKnujo/cUuJPVcRtemiX
-	 3mgr0Aj18UnOpkZL3VR85UDEvofHoDcvVj8NRQ7TlG5QQoy7PFPDhZFM5Fk7ZjvRp4tOB
-	 LxXpj6RIalvHrmMTwgKDBJm6EiSctZSS+TJhFggr60e+cPX8X3vGEIRssaO566ve6OnMp
-	 1gvWwwE6BR+JXu/MoN63mfaIE5QZiyWj7mXuCVpt10IRJhNbqnVoVLjQlFzQkUs0Bhg==
+	t=1793214304;
+	b=zcLPzI99ZOVyCvDmKZMd3e6c1B7h+GwAKDFjvpdKOpMb6mOqIvqyNK7UuZW5wMzwaFSa
+	 aGKQL05NZ3Un2KqWkn+9WHe4mygPIo76/08VAnbbco7erS87a0a0fcGMpnnInCfHyO+dy
+	 L67LJhQiolkA9xnQZFcMQ4GojHSStEGJss6QInWhkMBstHKhUkyuAvtd8IfyrQP3inl9G
+	 zcX+n0NYn8JOp4te6p2Zb+D5zNUkXx1rvGP7AjzBESIiadze+pz4BPNHsiNVJ77aIa8ln
+	 wY6CpQJNl6cHDTTjUaLosuw0DYULdBYOwPPgZV215gusBGJfGUzDCJ+x3ydFyYaGkTw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214301;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214304;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=kv12QhfMnJ8NICfUOPLx2KTjwKLyqQrYa9ZJcLO2fPc=;
-	b=00w9i3wD1yXD1KVmZz3xee+CIcz6DQ7xrJjxugMnXPXMNrKf47zh8pgtSbzQITz0ahQP
-	 btATRlUCmGeHxGHXL68UyU17LfpnvXFst89/26oMakVlKmPQZ4NAgq1KzgvbSryBI/RgL
-	 J6wiuHRRdBVvFKxgbQTgdcvgzByA3Z5m8VbzmVMBYvb3wWHZHI4lrrARO5T2rA+kwFfVP
-	 qv1bwUwc/v1mmTs4sOhaxiJXNdIIcUV13q0mqxvXa2U/SOLUexwiCToeJTMU3KrBCSduD
-	 S8TS1v2i55sIN0K4OC0fYpJFlAJQ/+Y4ib/2Wv9p55UjmK82bz94c0Nc9/O49YmOSNQ==
+	bh=EmXqn1Mfvn3zQ6sjhalgGwYdeLUoR/FIslIXKwJl420=;
+	b=LdbwEfxMqZsLJ0tDRAGl0NUsc9zUocQvoLq0GvV4GOBGP7kWPsQdJOHtGcZDQ5ajnotu
+	 wc6vYA5iWOAiNpvlbouUP9b5G81gLiouLZ+M9sZeGUbeY2EJEoAiJfg65v7Bhqt1W/Er1
+	 YWdq1vwWtt9f6Y/Pd2j7GRQVXxFlDNi5I04qPXI1aRngAkMWdJpP6vS4pCAuk4uHQi/zf
+	 byVGTz3Es54pE1YMtxoXm3mZcLStxEgcG1795HiGVJpDwzRqwCQ6BmcKRxL+A/chPH9dd
+	 FnePH2jVPc2n6Uk+jOfWXMA0zeNzeSQ1ob86gxKBOasnx06LD/XYXim3Am/uIzDck4A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="qQR8io/X";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v6xOlKeq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C41C606A334;
-	Wed, 28 Oct 2026 19:05:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8F17606BF8E;
+	Wed, 28 Oct 2026 19:05:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qQR8io/X
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F1821F01825;
-	Wed, 28 Oct 2026 19:05:00 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v6xOlKeq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42E3A1F01828;
+	Wed, 28 Oct 2026 19:05:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214300;
-	bh=kv12QhfMnJ8NICfUOPLx2KTjwKLyqQrYa9ZJcLO2fPc=;
+	s=korg; t=1793214303;
+	bh=EmXqn1Mfvn3zQ6sjhalgGwYdeLUoR/FIslIXKwJl420=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qQR8io/XknAjXPJFxfytahJN9V4bvEVG6LZrMPLHrPAyUwpCu8phRHOIsauUKCwfm
-	 FBCiZn8HAkAXVRDM4d/OTG6IFrY41N+B6zzzg4atOeXY340uxudJtSwFSXLxiwuNUY
-	 V2JfsuQj6AfReDappPOrqTSeBCPQvh26FtLEncOE=
+	b=v6xOlKeqEGK8Ye3MLzTAp73Ubc0pcG/Aiu8R8MKBXok1zCc5DLSvBvRa1epG/48sU
+	 8mFqUXfq/vSIAROJXNaMas9XRUsYZ6U3QQs+WG50m+g43NWiwQ6z5AEAfSId7Y4Zp5
+	 6nZQ2rOxWYkvHqebkY3tIPlPyC5QF4EdrKbKNEmA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Prusakowski <jprusakowski@google.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	"Yi Lai" <yi1.lai@linux.intel.com>,
+	syzbot+3c4321e10eea460eb606@syzkaller.appspotmail.com,
+	Frederic Weisbecker <frederic@kernel.org>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0767/1887] f2fs: fix potential deadloop in prepare_compress_overwrite()
-Date: Wed, 28 Oct 2026 17:47:43 +0100
-Message-ID: <20261028170516.893972776@linuxfoundation.org>
+Subject: [PATCH 6.1 0768/1887] perf: Fix hang while freeing sigtrap event
+Date: Wed, 28 Oct 2026 17:47:44 +0100
+Message-ID: <20261028170516.916763653@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,94 +70,258 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Frederic Weisbecker <frederic@kernel.org>
 
-[ Upstream commit 3147ee567dd9004a49826ddeaf0a4b12865d4409 ]
+[ Upstream commit 56799bc035658738f362acec3e7647bb84e68933 ]
 
-Jan Prusakowski reported a kernel hang issue as below:
+Perf can hang while freeing a sigtrap event if a related deferred
+signal hadn't managed to be sent before the file got closed:
 
-When running xfstests on linux-next kernel (6.14.0-rc3, 6.12) I
-encountered a problem in generic/475 test where fsstress process
-gets blocked in __f2fs_write_data_pages() and the test hangs.
-The options I used are:
+perf_event_overflow()
+   task_work_add(perf_pending_task)
 
-MKFS_OPTIONS  -- -O compression -O extra_attr -O project_quota -O quota /dev/vdc
-MOUNT_OPTIONS -- -o acl,user_xattr -o discard,compress_extension=* /dev/vdc /vdc
+fput()
+   task_work_add(____fput())
 
-INFO: task kworker/u8:0:11 blocked for more than 122 seconds.
-      Not tainted 6.14.0-rc3-xfstests-lockdep #1
-"echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
-task:kworker/u8:0    state:D stack:0     pid:11    tgid:11    ppid:2      task_flags:0x4208160 flags:0x00004000
-Workqueue: writeback wb_workfn (flush-253:0)
-Call Trace:
- <TASK>
- __schedule+0x309/0x8e0
- schedule+0x3a/0x100
- schedule_preempt_disabled+0x15/0x30
- __mutex_lock+0x59a/0xdb0
- __f2fs_write_data_pages+0x3ac/0x400
- do_writepages+0xe8/0x290
- __writeback_single_inode+0x5c/0x360
- writeback_sb_inodes+0x22f/0x570
- wb_writeback+0xb0/0x410
- wb_do_writeback+0x47/0x2f0
- wb_workfn+0x5a/0x1c0
- process_one_work+0x223/0x5b0
- worker_thread+0x1d5/0x3c0
- kthread+0xfd/0x230
- ret_from_fork+0x31/0x50
- ret_from_fork_asm+0x1a/0x30
- </TASK>
+task_work_run()
+    ____fput()
+        perf_release()
+            perf_event_release_kernel()
+                _free_event()
+                    perf_pending_task_sync()
+                        task_work_cancel() -> FAILED
+                        rcuwait_wait_event()
 
-The root cause is: once generic/475 starts toload error table to dm
-device, f2fs_prepare_compress_overwrite() will loop reading compressed
-cluster pages due to IO error, meanwhile it has held .writepages lock,
-it can block all other writeback tasks.
+Once task_work_run() is running, the list of pending callbacks is
+removed from the task_struct and from this point on task_work_cancel()
+can't remove any pending and not yet started work items, hence the
+task_work_cancel() failure and the hang on rcuwait_wait_event().
 
-Let's fix this issue w/ below changes:
-- add f2fs_handle_page_eio() in prepare_compress_overwrite() to
-detect IO error.
-- detect cp_error earler in f2fs_read_multi_pages().
+Task work could be changed to remove one work at a time, so a work
+running on the current task can always cancel a pending one, however
+the wait / wake design is still subject to inverted dependencies when
+remote targets are involved, as pictured by Oleg:
 
-Fixes: 4c8ff7095bef ("f2fs: support data compression")
-Reported-by: Jan Prusakowski <jprusakowski@google.com>
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+T1                                                      T2
+
+fd = perf_event_open(pid => T2->pid);                  fd = perf_event_open(pid => T1->pid);
+close(fd)                                              close(fd)
+    <IRQ>                                                  <IRQ>
+    perf_event_overflow()                                  perf_event_overflow()
+       task_work_add(perf_pending_task)                        task_work_add(perf_pending_task)
+    </IRQ>                                                 </IRQ>
+    fput()                                                 fput()
+        task_work_add(____fput())                              task_work_add(____fput())
+
+    task_work_run()                                        task_work_run()
+        ____fput()                                             ____fput()
+            perf_release()                                         perf_release()
+                perf_event_release_kernel()                            perf_event_release_kernel()
+                    _free_event()                                          _free_event()
+                        perf_pending_task_sync()                               perf_pending_task_sync()
+                            rcuwait_wait_event()                                   rcuwait_wait_event()
+
+Therefore the only option left is to acquire the event reference count
+upon queueing the perf task work and release it from the task work, just
+like it was done before 3a5465418f5f ("perf: Fix event leak upon exec and file release")
+but without the leaks it fixed.
+
+Some adjustments are necessary to make it work:
+
+* A child event might dereference its parent upon freeing. Care must be
+  taken to release the parent last.
+
+* Some places assuming the event doesn't have any reference held and
+  therefore can be freed right away must instead put the reference and
+  let the reference counting to its job.
+
+Reported-by: "Yi Lai" <yi1.lai@linux.intel.com>
+Closes: https://lore.kernel.org/all/Zx9Losv4YcJowaP%2F@ly-workstation/
+Reported-by: syzbot+3c4321e10eea460eb606@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/673adf75.050a0220.87769.0024.GAE@google.com/
+Fixes: 3a5465418f5f ("perf: Fix event leak upon exec and file release")
+Signed-off-by: Frederic Weisbecker <frederic@kernel.org>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lkml.kernel.org/r/20250304135446.18905-1-frederic@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/compress.c | 1 +
- fs/f2fs/data.c     | 6 ++++++
- 2 files changed, 7 insertions(+)
+ include/linux/perf_event.h |  1 -
+ kernel/events/core.c       | 64 +++++++++++---------------------------
+ 2 files changed, 19 insertions(+), 46 deletions(-)
 
-diff --git a/fs/f2fs/compress.c b/fs/f2fs/compress.c
-index 5d0c41abb4050..de64a621c729b 100644
---- a/fs/f2fs/compress.c
-+++ b/fs/f2fs/compress.c
-@@ -1123,6 +1123,7 @@ static int prepare_compress_overwrite(struct compress_ctx *cc,
- 		f2fs_compress_ctx_add_page(cc, page);
+diff --git a/include/linux/perf_event.h b/include/linux/perf_event.h
+index 41ff70f315a92..1c32eec27b045 100644
+--- a/include/linux/perf_event.h
++++ b/include/linux/perf_event.h
+@@ -765,7 +765,6 @@ struct perf_event {
+ 	struct irq_work			pending_irq;
+ 	struct callback_head		pending_task;
+ 	unsigned int			pending_work;
+-	struct rcuwait			pending_work_wait;
  
- 		if (!PageUptodate(page)) {
-+			f2fs_handle_page_eio(sbi, page_folio(page), DATA);
- release_and_retry:
- 			f2fs_put_rpages(cc);
- 			f2fs_unlock_rpages(cc, i + 1);
-diff --git a/fs/f2fs/data.c b/fs/f2fs/data.c
-index 082e09be4e8a9..6384ac931bb7d 100644
---- a/fs/f2fs/data.c
-+++ b/fs/f2fs/data.c
-@@ -2241,6 +2241,12 @@ int f2fs_read_multi_pages(struct compress_ctx *cc, struct bio **bio_ret,
- 	int i;
- 	int ret = 0;
+ 	atomic_t			event_limit;
  
-+	if (unlikely(f2fs_cp_error(sbi))) {
-+		ret = -EIO;
-+		from_dnode = false;
-+		goto out_put_dnode;
-+	}
+diff --git a/kernel/events/core.c b/kernel/events/core.c
+index a64e0254e803c..49b79617723ab 100644
+--- a/kernel/events/core.c
++++ b/kernel/events/core.c
+@@ -2317,6 +2317,7 @@ event_sched_out(struct perf_event *event,
+ 		    !event->pending_work &&
+ 		    !task_work_add(current, &event->pending_task, TWA_RESUME)) {
+ 			event->pending_work = 1;
++			WARN_ON_ONCE(!atomic_long_inc_not_zero(&event->refcount));
+ 		} else {
+ 			local_dec(&event->ctx->nr_pending);
+ 		}
+@@ -5016,35 +5017,9 @@ static bool exclusive_event_installable(struct perf_event *event,
+ static void perf_addr_filters_splice(struct perf_event *event,
+ 				       struct list_head *head);
+ 
+-static void perf_pending_task_sync(struct perf_event *event)
+-{
+-	struct callback_head *head = &event->pending_task;
+-
+-	if (!event->pending_work)
+-		return;
+-	/*
+-	 * If the task is queued to the current task's queue, we
+-	 * obviously can't wait for it to complete. Simply cancel it.
+-	 */
+-	if (task_work_cancel(current, head)) {
+-		event->pending_work = 0;
+-		local_dec(&event->ctx->nr_pending);
+-		return;
+-	}
+-
+-	/*
+-	 * All accesses related to the event are within the same
+-	 * non-preemptible section in perf_pending_task(). The RCU
+-	 * grace period before the event is freed will make sure all
+-	 * those accesses are complete by then.
+-	 */
+-	rcuwait_wait_event(&event->pending_work_wait, !event->pending_work, TASK_UNINTERRUPTIBLE);
+-}
+-
+ static void _free_event(struct perf_event *event)
+ {
+ 	irq_work_sync(&event->pending_irq);
+-	perf_pending_task_sync(event);
+ 
+ 	unaccount_event(event);
+ 
+@@ -5166,10 +5141,17 @@ static void perf_remove_from_owner(struct perf_event *event)
+ 
+ static void put_event(struct perf_event *event)
+ {
++	struct perf_event *parent;
 +
- 	f2fs_bug_on(sbi, f2fs_cluster_is_empty(cc));
+ 	if (!atomic_long_dec_and_test(&event->refcount))
+ 		return;
  
- 	last_block_in_file = bytes_to_blks(inode,
++	parent = event->parent;
+ 	_free_event(event);
++
++	/* Matches the refcount bump in inherit_event() */
++	if (parent)
++		put_event(parent);
+ }
+ 
+ /*
+@@ -5253,11 +5235,6 @@ int perf_event_release_kernel(struct perf_event *event)
+ 		if (tmp == child) {
+ 			perf_remove_from_context(child, DETACH_GROUP);
+ 			list_move(&child->child_list, &free_list);
+-			/*
+-			 * This matches the refcount bump in inherit_event();
+-			 * this can't be the last reference.
+-			 */
+-			put_event(event);
+ 		} else {
+ 			var = &ctx->refcount;
+ 		}
+@@ -5283,7 +5260,8 @@ int perf_event_release_kernel(struct perf_event *event)
+ 		void *var = &child->ctx->refcount;
+ 
+ 		list_del(&child->child_list);
+-		free_event(child);
++		/* Last reference unless ->pending_task work is pending */
++		put_event(child);
+ 
+ 		/*
+ 		 * Wake any perf_event_free_task() waiting for this event to be
+@@ -5294,7 +5272,11 @@ int perf_event_release_kernel(struct perf_event *event)
+ 	}
+ 
+ no_ctx:
+-	put_event(event); /* Must be the 'last' reference */
++	/*
++	 * Last reference unless ->pending_task work is pending on this event
++	 * or any of its children.
++	 */
++	put_event(event);
+ 	return 0;
+ }
+ EXPORT_SYMBOL_GPL(perf_event_release_kernel);
+@@ -6699,11 +6681,6 @@ static void perf_pending_task(struct callback_head *head)
+ 	struct perf_event *event = container_of(head, struct perf_event, pending_task);
+ 	int rctx;
+ 
+-	/*
+-	 * All accesses to the event must belong to the same implicit RCU read-side
+-	 * critical section as the ->pending_work reset. See comment in
+-	 * perf_pending_task_sync().
+-	 */
+ 	preempt_disable_notrace();
+ 	/*
+ 	 * If we 'fail' here, that's OK, it means recursion is already disabled
+@@ -6715,12 +6692,13 @@ static void perf_pending_task(struct callback_head *head)
+ 		event->pending_work = 0;
+ 		perf_sigtrap(event);
+ 		local_dec(&event->ctx->nr_pending);
+-		rcuwait_wake_up(&event->pending_work_wait);
+ 	}
+ 
+ 	if (rctx >= 0)
+ 		perf_swevent_put_recursion_context(rctx);
+ 	preempt_enable_notrace();
++
++	put_event(event);
+ }
+ 
+ #ifdef CONFIG_GUEST_PERF_EVENTS
+@@ -11915,7 +11893,6 @@ perf_event_alloc(struct perf_event_attr *attr, int cpu,
+ 	init_waitqueue_head(&event->waitq);
+ 	init_irq_work(&event->pending_irq, perf_pending_irq);
+ 	init_task_work(&event->pending_task, perf_pending_task);
+-	rcuwait_init(&event->pending_work_wait);
+ 
+ 	mutex_init(&event->mmap_mutex);
+ 	raw_spin_lock_init(&event->addr_filters.lock);
+@@ -13100,8 +13077,7 @@ perf_event_exit_event(struct perf_event *event, struct perf_event_context *ctx)
+ 		 * Kick perf_poll() for is_event_hup();
+ 		 */
+ 		perf_event_wakeup(parent_event);
+-		free_event(event);
+-		put_event(parent_event);
++		put_event(event);
+ 		return;
+ 	}
+ 
+@@ -13221,13 +13197,11 @@ static void perf_free_event(struct perf_event *event,
+ 	list_del_init(&event->child_list);
+ 	mutex_unlock(&parent->child_mutex);
+ 
+-	put_event(parent);
+-
+ 	raw_spin_lock_irq(&ctx->lock);
+ 	perf_group_detach(event);
+ 	list_del_event(event, ctx);
+ 	raw_spin_unlock_irq(&ctx->lock);
+-	free_event(event);
++	put_event(event);
+ }
+ 
+ /*
 -- 
 2.53.0
 
