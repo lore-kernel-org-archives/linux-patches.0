@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216754;
-	b=zimJ6czNJKs91vSI4rarqH7YHLXv7qxX7NbhFrXcvpymLMifY/23zqgT//Jcn7jQVrV6
-	 3W3AxlaeJ7HeP46F9fvKmjJfNpO/xz+NyHzooUmzVLkyAPz9STKhSgysKCfUnLGG5onKJ
-	 BcEScps8TD2QRwxoqn4JnIL0czmchMWvgdpi7wHUn0r5OaPjX1zPyQ5wG2PH2eGbArdbv
-	 WUr4YsLtKthe1nTp+NBYVftGKXMxCytM0nSEc+3Zf9nSsZbMovDtBu5o0YCZQdObALbCq
-	 2dM0Ik1FBRoZL06may0M1bvgcuiTSs52bN6sw7tyzWynMb4hXmWIyBl3xD0mvu7F0lQ==
+	t=1793216757;
+	b=FPqgV9FztTQxwUE6ELfjFZD7YsIOxnmH4TjDMOSHH3ZF9Uk2mhPcBbffnZ9Q1t4kZu0P
+	 GO1DL1zqWEHH2Svw8/mWhIq3cAOzOlX6EFidE+6ye8v9ucMDBCsU/ia0I0A9Z7C7/8XUu
+	 8EPFmQKhxplzV3JttTlHNtj+TlYMKpnMsK5G9B5qY9mnjgpPqAmciDibLkozCfRmpFwiC
+	 FczwUZA98BbUCgOh59UiPmbX2MtXT6y+Wwlp/CsxuqDzr1l61c9Xaik4OUA/40XAZF4+o
+	 LrNP/vq/nWDcAyZ79fcHVGv61X/g/r4OKQK2/n5EZIFT2IkPUwaGqJeok3GVH7pBJ8A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216754;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216757;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=46gIwSjZ4jO4CrBP55mtNk4+2I61zXUpGGSF347y9RY=;
-	b=mS9WGB0wjlx1n3xvacnxXioWEAfP/+FVrNieSUerj4Vlf53sthPGDzJRkKf/5vwMLiK+
-	 sf9Ai0xrnmBwqjYkilAQSRP8f6fwT/DNSpYgFRg1lbE1261jIINI+5335B2ZqnRZeDCIy
-	 RkOM2DH0qsZBXW/UZOJpJCSGjMogpGkCFMeCDPLj+qAXTfve6miP5lgyNb8Rgh3aXPLLh
-	 Jgz70GKGhpEPT9gnSganA9jK/iVcUiG6Toig+gkcUL0ThG3vxK+Hr7YvmxErDQBRSEk0T
-	 Cq72/8CpJr33gFWclBG/GBYfXxaFZzvwAAjo9508XTgXrvAYv9ZZYA/FsuJBWtza5xg==
+	bh=oncArZlTzDPmsdtAhlAKjvGfh5Tsas3r2mzUt6BHPrU=;
+	b=HVf9AzxQiA/+aJE6A2H3da7QsNOJ8YSg3X+kP3GmTK67Tvvb3Tq+dka3mA1tvH8lMyDQ
+	 LGKpHKlzOIJoG5mjYM/H5U5qzFWvRxbAvRCN1EHoytrmHKdiuvG71OlrXxZpSoXx7bwTH
+	 HXoYoUFjD2VMviuVcHFZaM85rA15cqkLgXWIuapdplaW45dRoZB2nbITTz3jk9h5NVTHy
+	 YzVXPD3Pih3PgxVonGGHKQk7rOefWfG3ZDy4UZKLa2qjqC8s7yr5iK7rh8RpjjH+tBi4T
+	 ItsmjT4YYKHI44C80uZLlaL/TS2XCNCriTFQVKvOWOZaOGODpyBYAi1LydUpVwZL55A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RraP7hg9;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oSsIRGTT;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E5AB606A31A;
-	Wed, 28 Oct 2026 19:45:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3D5C606A31A;
+	Wed, 28 Oct 2026 19:45:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RraP7hg9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E4521F01825;
-	Wed, 28 Oct 2026 19:45:53 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oSsIRGTT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30CE21F01825;
+	Wed, 28 Oct 2026 19:45:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216753;
-	bh=46gIwSjZ4jO4CrBP55mtNk4+2I61zXUpGGSF347y9RY=;
+	s=korg; t=1793216756;
+	bh=oncArZlTzDPmsdtAhlAKjvGfh5Tsas3r2mzUt6BHPrU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RraP7hg9HBmF3y+GTDxMCvpfbO06P03zl9P5wshmNfTRntVOwl4gTsGrCrb6Ug9Rn
-	 8SoK/40Jrxx8Ilhz6/u9ObOWfPP6uT2hfESLa+n+FPSf7JJqqrf0xyxjuyfFCorM7D
-	 0meXDz2zIYvAmscjixsx+WD+lwZ0t9juZAqQnXMI=
+	b=oSsIRGTTcc2/r/UBkwlktPeDuDVAnPYdoNxTFbmxF4e1JOXr5jr74l3cqcOrSFCGf
+	 JTl5D/Lj+6UPncBgc2L4lm3ZfislHWfDWqoEo4QkdWmzJqDo7TWTkGz7TIO/ba0Lq3
+	 lNfXv5k4VDwcqHm+Rys99l3gOv9Xi+1ymubwExgU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paulo Alcantara (SUSE)" <pc@manguebit.com>,
+	Fredric Cover <fredric.cover.lkernel@gmail.com>,
 	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1667/1887] cifs: get rid of dns resolve worker
-Date: Wed, 28 Oct 2026 18:02:43 +0100
-Message-ID: <20261028170537.393740097@linuxfoundation.org>
+Subject: [PATCH 6.1 1668/1887] smb: client: fix races in cifsd thread creation
+Date: Wed, 28 Oct 2026 18:02:44 +0100
+Message-ID: <20261028170537.415321881@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,161 +68,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.com>
+From: Fredric Cover <fredric.cover.lkernel@gmail.com>
 
-[ Upstream commit 0e9bd27b2a635d54665fcc1d6398a5f6aeb6b0cb ]
+[ Upstream commit e8a5cf2ff5a13fefb228f2069e29dd7d8e37185d ]
 
-We already upcall to resolve hostnames during reconnect by calling
-reconn_set_ipaddr_from_hostname(), so there is no point in having a
-worker to periodically call it.
+The cifsd demultiplex thread can run and access tcp_ses before the parent
+thread has finished populating tcp_ses, which the worker thread accesses
+locklessly.
 
-Signed-off-by: Paulo Alcantara (SUSE) <pc@manguebit.com>
-Reviewed-by <lsahlber@redhat.com>
+Also, the kthread_run macro may start the thread before returning the
+thread pointer. Because the pointer is part of the structure that the
+thread can access, if the kernel is preempted after the thread is spawned,
+but before the thread pointer is populated and the thread attempts to exit,
+it will sleep, waiting for a SIGKILL signal.
+
+Fix this by moving creation of the thread to after all of tcp_ses'es
+fields are populated, and spawning the thread last, using a split
+kthread_create/wake_up_process logic.
+
+Signed-off-by: Fredric Cover <fredric.cover.lkernel@gmail.com>
 Signed-off-by: Steve French <stfrench@microsoft.com>
-Stable-dep-of: e8a5cf2ff5a1 ("smb: client: fix races in cifsd thread creation")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/cifsglob.h |  5 ----
- fs/smb/client/connect.c  | 50 ++--------------------------------------
- 2 files changed, 2 insertions(+), 53 deletions(-)
+ fs/smb/client/connect.c | 27 ++++++++++++++++-----------
+ 1 file changed, 16 insertions(+), 11 deletions(-)
 
-diff --git a/fs/smb/client/cifsglob.h b/fs/smb/client/cifsglob.h
-index 761dd1795fbf4..a9dce6fe2705f 100644
---- a/fs/smb/client/cifsglob.h
-+++ b/fs/smb/client/cifsglob.h
-@@ -80,10 +80,6 @@
- #define SMB_ECHO_INTERVAL_MAX 600
- #define SMB_ECHO_INTERVAL_DEFAULT 60
- 
--/* dns resolution intervals in seconds */
--#define SMB_DNS_RESOLVE_INTERVAL_MIN     120
--#define SMB_DNS_RESOLVE_INTERVAL_DEFAULT 600
--
- /* smb multichannel query server interfaces interval in seconds */
- #define SMB_INTERFACE_POLL_INTERVAL	600
- 
-@@ -672,7 +668,6 @@ struct TCP_Server_Info {
- 	/* point to the SMBD connection if RDMA is used instead of socket */
- 	struct smbd_connection *smbd_conn;
- 	struct delayed_work	echo; /* echo ping workqueue job */
--	struct delayed_work	resolve; /* dns resolution workqueue job */
- 	char	*smallbuf;	/* pointer to current "small" buffer */
- 	char	*bigbuf;	/* pointer to current "big" buffer */
- 	/* Total size of this PDU. Only valid from cifs_demultiplex_thread */
 diff --git a/fs/smb/client/connect.c b/fs/smb/client/connect.c
-index cb1bf349411d8..10f0009fc7a16 100644
+index 10f0009fc7a16..52cd09c25bdb4 100644
 --- a/fs/smb/client/connect.c
 +++ b/fs/smb/client/connect.c
-@@ -91,8 +91,6 @@ static int reconn_set_ipaddr_from_hostname(struct TCP_Server_Info *server)
- 	int rc;
- 	int len;
- 	char *unc, *ipaddr = NULL;
--	time64_t expiry, now;
--	unsigned long ttl = SMB_DNS_RESOLVE_INTERVAL_DEFAULT;
- 
- 	if (!server->hostname)
- 		return -EINVAL;
-@@ -110,13 +108,13 @@ static int reconn_set_ipaddr_from_hostname(struct TCP_Server_Info *server)
- 	}
- 	scnprintf(unc, len, "\\\\%s", server->hostname);
- 
--	rc = dns_resolve_server_name_to_ip(unc, &ipaddr, &expiry);
-+	rc = dns_resolve_server_name_to_ip(unc, &ipaddr, NULL);
- 	kfree(unc);
- 
- 	if (rc < 0) {
- 		cifs_dbg(FYI, "%s: failed to resolve server part of %s to IP: %d\n",
- 			 __func__, server->hostname, rc);
--		goto requeue_resolve;
-+		return rc;
- 	}
- 
- 	spin_lock(&server->srv_lock);
-@@ -125,23 +123,8 @@ static int reconn_set_ipaddr_from_hostname(struct TCP_Server_Info *server)
- 	spin_unlock(&server->srv_lock);
- 	kfree(ipaddr);
- 
--	/* rc == 1 means success here */
--	if (rc) {
--		now = ktime_get_real_seconds();
--		if (expiry && expiry > now)
--			/*
--			 * To make sure we don't use the cached entry, retry 1s
--			 * after expiry.
--			 */
--			ttl = max_t(unsigned long, expiry - now, SMB_DNS_RESOLVE_INTERVAL_MIN) + 1;
+@@ -1817,23 +1817,13 @@ cifs_get_tcp_session(struct smb3_fs_context *ctx,
+ 	 * this will succeed. No need for try_module_get().
+ 	 */
+ 	__module_get(THIS_MODULE);
+-	tcp_ses->tsk = kthread_run(cifs_demultiplex_thread,
+-				  tcp_ses, "cifsd");
+-	if (IS_ERR(tcp_ses->tsk)) {
+-		rc = PTR_ERR(tcp_ses->tsk);
+-		cifs_dbg(VFS, "error %d create cifsd thread\n", rc);
+-		module_put(THIS_MODULE);
+-		goto out_err_crypto_release;
 -	}
- 	rc = !rc ? -1 : 0;
+ 	tcp_ses->min_offload = ctx->min_offload;
+ 	/*
+ 	 * at this point we are the only ones with the pointer
+ 	 * to the struct since the kernel thread not created yet
+ 	 * no need to spinlock this update of tcpStatus
+ 	 */
+-	spin_lock(&tcp_ses->srv_lock);
+ 	tcp_ses->tcpStatus = CifsNeedNegotiate;
+-	spin_unlock(&tcp_ses->srv_lock);
  
--requeue_resolve:
--	cifs_dbg(FYI, "%s: next dns resolution scheduled for %lu seconds in the future\n",
--		 __func__, ttl);
--	mod_delayed_work(cifsiod_wq, &server->resolve, (ttl * HZ));
--
- 	return rc;
- }
+ 	if ((ctx->max_credits < 20) || (ctx->max_credits > 60000))
+ 		tcp_ses->max_credits = SMB2_MAX_CREDITS_AVAILABLE;
+@@ -1842,7 +1832,16 @@ cifs_get_tcp_session(struct smb3_fs_context *ctx,
  
-@@ -165,26 +148,6 @@ static void smb2_query_server_interfaces(struct work_struct *work)
- 			   (SMB_INTERFACE_POLL_INTERVAL * HZ));
- }
- 
--static void cifs_resolve_server(struct work_struct *work)
--{
--	int rc;
--	struct TCP_Server_Info *server = container_of(work,
--					struct TCP_Server_Info, resolve.work);
--
--	cifs_server_lock(server);
--
--	/*
--	 * Resolve the hostname again to make sure that IP address is up-to-date.
--	 */
--	rc = reconn_set_ipaddr_from_hostname(server);
--	if (rc) {
--		cifs_dbg(FYI, "%s: failed to resolve hostname: %d\n",
--				__func__, rc);
--	}
--
--	cifs_server_unlock(server);
--}
--
- #define set_need_reco(server) \
- do { \
- 	spin_lock(&server->srv_lock); \
-@@ -1026,7 +989,6 @@ static void clean_demultiplex_info(struct TCP_Server_Info *server)
- 	spin_unlock(&server->srv_lock);
- 
- 	cancel_delayed_work_sync(&server->echo);
--	cancel_delayed_work_sync(&server->resolve);
- 
- 	spin_lock(&server->srv_lock);
- 	server->tcpStatus = CifsExiting;
-@@ -1705,7 +1667,6 @@ cifs_put_tcp_session(struct TCP_Server_Info *server, int from_reconnect)
- 		cifs_put_tcp_session(server->primary_server, from_reconnect);
- 
- 	cancel_delayed_work_sync(&server->echo);
--	cancel_delayed_work_sync(&server->resolve);
- 
- 	if (from_reconnect)
- 		/*
-@@ -1801,7 +1762,6 @@ cifs_get_tcp_session(struct smb3_fs_context *ctx,
- 	INIT_LIST_HEAD(&tcp_ses->tcp_ses_list);
- 	INIT_LIST_HEAD(&tcp_ses->smb_ses_list);
- 	INIT_DELAYED_WORK(&tcp_ses->echo, cifs_echo_request);
--	INIT_DELAYED_WORK(&tcp_ses->resolve, cifs_resolve_server);
- 	INIT_DELAYED_WORK(&tcp_ses->reconnect, smb2_reconnect_server);
- 	mutex_init(&tcp_ses->reconnect_mutex);
- #ifdef CONFIG_CIFS_DFS_UPCALL
-@@ -1890,12 +1850,6 @@ cifs_get_tcp_session(struct smb3_fs_context *ctx,
+ 	tcp_ses->nr_targets = 1;
+ 	tcp_ses->ignore_signature = ctx->ignore_signature;
+-	/* thread spawned, put it on the list */
++
++	tcp_ses->tsk = kthread_create(cifs_demultiplex_thread,
++				  tcp_ses, "cifsd");
++	if (IS_ERR(tcp_ses->tsk)) {
++		rc = PTR_ERR(tcp_ses->tsk);
++		cifs_dbg(VFS, "error %d create cifsd thread\n", rc);
++		module_put(THIS_MODULE);
++		goto out_err_crypto_release;
++	}
++	/* thread created, put it on the list */
+ 	spin_lock(&cifs_tcp_ses_lock);
+ 	list_add(&tcp_ses->tcp_ses_list, &cifs_tcp_ses_list);
+ 	spin_unlock(&cifs_tcp_ses_lock);
+@@ -1850,6 +1849,12 @@ cifs_get_tcp_session(struct smb3_fs_context *ctx,
  	/* queue echo request delayed work */
  	queue_delayed_work(cifsiod_wq, &tcp_ses->echo, tcp_ses->echo_interval);
  
--	/* queue dns resolution delayed work */
--	cifs_dbg(FYI, "%s: next dns resolution scheduled for %d seconds in the future\n",
--		 __func__, SMB_DNS_RESOLVE_INTERVAL_DEFAULT);
--
--	queue_delayed_work(cifsiod_wq, &tcp_ses->resolve, (SMB_DNS_RESOLVE_INTERVAL_DEFAULT * HZ));
--
++	/*
++	 * Use split create/wake logic to ensure that tcp_ses is fully populated
++	 * and tcp_ses->tsk is valid
++	 */
++	wake_up_process(tcp_ses->tsk);
++
  	return tcp_ses;
  
  out_err_crypto_release:
