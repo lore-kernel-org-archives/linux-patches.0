@@ -1,68 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793217108;
-	b=Ks6JR2GxyTh5zpTrrJiUc3DTLug7xfwP7vdvamGhju/RJ2fu/8RfEwn5BhfXfWkuXsUt
-	 3nIA3HGwh9LCHDI/+bhBW5PHO797FfywXEPXiLzhWxqe2/qdU+mZph8SVJIsPkSnLVllM
-	 brmRb8Mv54zpbmStWeTDhRsPlT5YF1wp9fOa6/th+es3RPsSjxNyLBy+w0Y2HGPIymIli
-	 wjZGUkGiONIjC7/R6NUo8QM+dzPuQlsgyFj8BAKxrm4irjKnFg6rX3AUe823VUQKHCn8+
-	 gkEQviVjWpsCzro6Ikd293NaSA26RadCeWEBsZxag6kgjlQ2CmQ2Nu1KG1fk6/sPKIQ==
+	t=1793217111;
+	b=bcaM/YjaGcc6gHxIS7wh0Gz0eFdqaSciuYhqludEeywN/enqwxXnfCC/rXtUoTi2FG0p
+	 wtjjPG4E0vEsNy6LV+HH3W78EyWG0+fBi8/lZqqI/RsVBwY5G5xaNaEym+4fDjb186SRy
+	 X7aAUWJuYK39Iphhp6VURnEAzwpD7rKbGOMH6M49BS07boiFcgON1U3VnShC6IXbCjpfh
+	 uXwVIQmck6+az/pKiADi2I8nl0I90jp4KzsfmXvrK7X2blND2U9OUx71hgmkUAfUxKeGi
+	 rMyicGjOUuD0QZb/2MbK3v243/6v6sw3V0SKFBbMzUaPzvij9sRa2ZUpJqGb3R3yOqw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793217108;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793217111;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=M/WqyTcrckJ2Vv1FjKVDyGCnmuQqEp27lazby6zbzAQ=;
-	b=hhw4wXG+bwIkeEBjrtg/6t5UJHlyA16fDvx86oL2mq2kcwNTDGbCSJXdL9KaIDA8vVMm
-	 1tVAHxpKeC83g/Io5DgWkxcmKaR3JjqjFBfkwT3xJwJnLwqXDOhUn+eE0yvPJEQuhY3LI
-	 ZZor9F6RVf58XYi7FeCjSgsJ1FWu8nHR3MeXCcxyAshqkQ3SwDXtmV5g1hMIYHXc90DeY
-	 0E6w47QwEKP4jgU7Q/2+vY5O8TTEVRO52yuKKyY/XGM9VIZgQ9m3FEIsk4TJRWg51ikWt
-	 sulwt4t058hh6aqJ7/OXWWNvp4VY3GRPGdsTLNRT7W4YYv7Lc7k4lHGiYDmehhOV+dA==
+	bh=zWsblQ9LipAsLKXaXPUyB5qpFHNha/xBhJfi6xfHOT8=;
+	b=PCmxQZ1TekN4oenYxih9+Ou27dNemREBEelubn7p0/QNZphVkIosr2bCucu5onMA87FR
+	 Cjw9bSOCP4SDukHSrRWYWd0DAtmxXp89gGTZzNIKO/Ipve27ekgXW9DSOX61hUFlLLY2V
+	 TtU/nepGHNfBRpObbOo/ZdcKWYjDr8yP52N5ZWajvPZIb7Qoqhz3+3uZpgvpZ/AxqSPoo
+	 jWkGBtvGqIg9tYMvzPoxsKKZNEltnnczIEGYsGjL3SAqay66ryVZETQ3wQyLIEQL93cUg
+	 Jbb9rBFnr7v753S0De0X0Px6GmTdGzegQ6SAQb0rBG35+ontjq6DBtrzN2yd33Rkpbw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nNWG5rLj;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kzCc2raL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58F75606A31A;
-	Wed, 28 Oct 2026 19:51:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 318C9606A322;
+	Wed, 28 Oct 2026 19:51:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nNWG5rLj
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87B241F01825;
-	Wed, 28 Oct 2026 19:51:47 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kzCc2raL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8479F1F01825;
+	Wed, 28 Oct 2026 19:51:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793217108;
-	bh=M/WqyTcrckJ2Vv1FjKVDyGCnmuQqEp27lazby6zbzAQ=;
+	s=korg; t=1793217111;
+	bh=zWsblQ9LipAsLKXaXPUyB5qpFHNha/xBhJfi6xfHOT8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nNWG5rLjnO8RljD7VWqa3ogn4A73bg0qdklET1epr5sAUrbfkO8PXXBhaMgrPQDxh
-	 sktAGtKHtnVHeBunRMBG9zf+SkaaD6as0AGMm4ABfgP6CDT3k1o8+TBIhVYBwyLROg
-	 Nd0m1uAIl4OqZp4jCsHW1H7jzxVyJz4nBhOTBHd4=
+	b=kzCc2raL0Ee5Nv1tN7U/pJKEYdv6rBFNNwzXIAgRKr81qjjY0WU2p8ja/Iq2TKDkY
+	 MF4wJFEjyIIR/RpssAN8paSZvBxpYibCXZAnm6BHMsn3GTHckyG1Zas/z8DbefzreE
+	 T6vrxMwKKhoIyOo9RuzprobGrYufpUvaUVqD2lck=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Usama Arif <usama.arif@linux.dev>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Kiryl Shutsemau <kas@kernel.org>,
-	Hugh Dickins <hughd@google.com>,
-	Lance Yang <lance.yang@linux.dev>,
-	Zi Yan <ziy@nvidia.com>,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Barry Song <baohua@kernel.org>,
-	Dev Jain <dev.jain@arm.com>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Nhat Pham <nphamcs@gmail.com>,
-	Rik van Riel <riel@surriel.com>,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Ting-Han Hou <ue081723@gmail.com>,
+	syzbot+837bcd54843dd6262f2f@syzkaller.appspotmail.com,
+	Yun Zhou <yun.zhou@windriver.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Carlos Maiolino <cem@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1784/1887] mm/huge_memory: transfer the pmd dirty bit to the folio on zap
-Date: Wed, 28 Oct 2026 18:04:40 +0100
-Message-ID: <20261028170540.047851648@linuxfoundation.org>
+Subject: [PATCH 6.1 1793/1887] xfs: dont hold buffer locks across sync transaction commit in xfs_sync_sb_buf
+Date: Wed, 28 Oct 2026 18:04:49 +0100
+Message-ID: <20261028170540.248793849@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -84,100 +70,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Usama Arif <usama.arif@linux.dev>
+From: Yun Zhou <yun.zhou@windriver.com>
 
-[ Upstream commit fe6cf984939d8e12cb33a99673c8d026c5135e68 ]
+[ Upstream commit 41a28c865d1d5843f8cb9e0af17a8f4d9e2961ff ]
 
-zap_huge_pmd_folio() propagates the pmd young bit to the folio for the
-file case, but not the dirty bit.  The pte path does propagate it, in
-zap_present_folio_ptes() and so does the pmd split path, in
-__split_huge_pmd_locked().
+xfs_sync_sb_buf() holds sb/rtsb buffer locks across a synchronous
+xfs_trans_commit(), which flushes the CIL push workqueue internally.
+If shutdown occurs during the CIL push, xfs_buf_item_unpin() needs to
+lock these buffers to fail them, causing a deadlock:
 
-For most file mappings the omission is harmless, because writing to a
-shared file mapping goes through page_mkwrite(), which dirties the folio.
-tmpfs is different: it has no page_mkwrite(), and vma_wants_writenotify()
-is false for it, so a *read* fault on a MAP_SHARED tmpfs mapping installs
-a writable pmd via do_read_fault().  do_read_fault() does not call
-fault_dirty_shared_page(), so subsequent stores through that mapping set
-only the hardware dirty bit in the pmd and never call folio_mark_dirty().
-A shmem folio allocated by a fault is marked uptodate but not dirty (see
-the clear: block in shmem_get_folio_gfp()), so PG_dirty is never set at
-all.
+  setlabel:          holds buf lock -> flush_workqueue(xfs-cil)
+  CIL push worker:   xfs_buf_item_unpin -> xfs_buf_lock(same buf)
 
-Unmapping such a folio - munmap(), or exit_mmap() when the process dies -
-then loses the only record that it was written, because zap_huge_pmd()
-drops the pmd without transferring the dirty bit.  Reclaim afterwards sees
-a clean shmem folio: the whole swap-out block in shrink_folio_list() is
-inside "if (folio_test_dirty(folio))", so pageout() is skipped and the
-folio falls into __remove_mapping().  There, folio_is_file_lru() is false
-for a swapbacked folio, so no shadow entry is created and
-__filemap_remove_folio(folio, NULL) simply empties the i_pages slot.  The
-data is freed without ever being written to swap, and the next fault on
-that index returns a freshly zeroed folio.
+Remove the xfs_trans_bhold() calls so that commit releases the buffer
+locks normally.  After the sync commit, re-acquire the buffers via
+mp->m_sb_bp / mp->m_rtsb_bp for the on-disk writeback.
 
-This is silent data loss for any process that keeps state in a MAP_SHARED
-tmpfs segment across an unmap - for example a cache handed from one
-process generation to the next through /dev/shm.  It requires the folio to
-be PMD-mapped, so it only shows up once shmem THP is enabled (which is
-what we did in Meta fleet and started noticing crashes); with THP off the
-pte path transfers the dirty bit correctly.  It also only becomes visible
-when swap is enabled, because with no swap device shmem folios (which are
-on the anon LRU) are not scanned by reclaim at all, so the clean folio is
-never dropped.
-
-Reproduced on x86_64 with a tmpfs mounted huge=within_size: read-fault a
-2MB-backed region, write a known pattern through the resulting mapping,
-munmap, force reclaim of the cgroup, then re-map and read back.  Without
-this patch the region reads back as zeros and vmstat shows zswpout 0 - the
-data was discarded rather than swapped.  With this patch the region reads
-back correctly and the pages are swapped out as expected.  With
-huge=never, or when the first touch is a write, the test passes either
-way.
-
-Link: https://lore.kernel.org/20260819101222.3732660-1-usama.arif@linux.dev
-Fixes: b5072380eb61 ("thp: support file pages in zap_huge_pmd()")
-Signed-off-by: Usama Arif <usama.arif@linux.dev>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Reviewed-by: Kiryl Shutsemau <kas@kernel.org>
-Acked-by: Hugh Dickins <hughd@google.com>
-Tested-by: Lance Yang <lance.yang@linux.dev>
-Reviewed-by: Zi Yan <ziy@nvidia.com>
-Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Cc: Barry Song <baohua@kernel.org>
-Cc: Dev Jain <dev.jain@arm.com>
-Cc: Johannes Weiner <hannes@cmpxchg.org>
-Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Nhat Pham <nphamcs@gmail.com>
-Cc: Rik van Riel <riel@surriel.com>
-Cc: Ryan Roberts <ryan.roberts@arm.com>
-Cc: Shakeel Butt <shakeel.butt@linux.dev>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-[ Ting-Han: zap_huge_pmd_folio() does not exist in this tree; the file
-  branch is open-coded in zap_huge_pmd(), so transfer the dirty bit
-  there, as the 6.6.y backport does ]
-Assisted-by: LLM
-Signed-off-by: Ting-Han Hou <ue081723@gmail.com>
+Fixes: f7664b31975b ("xfs: implement online get/set fs label")
+Reported-by: syzbot+837bcd54843dd6262f2f@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=837bcd54843dd6262f2f
+Cc: stable@vger.kernel.org
+Signed-off-by: Yun Zhou <yun.zhou@windriver.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
+[ sashal: omitted realtime superblock changes because the target code lacks that support ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/huge_memory.c | 3 +++
- 1 file changed, 3 insertions(+)
+ fs/xfs/libxfs/xfs_sb.c | 17 +++++++----------
+ 1 file changed, 7 insertions(+), 10 deletions(-)
 
-diff --git a/mm/huge_memory.c b/mm/huge_memory.c
-index 339f2986f2c6a..5807f276fe228 100644
---- a/mm/huge_memory.c
-+++ b/mm/huge_memory.c
-@@ -1701,6 +1701,9 @@ int zap_huge_pmd(struct mmu_gather *tlb, struct vm_area_struct *vma,
- 			if (arch_needs_pgtable_deposit())
- 				zap_deposited_table(tlb->mm, pmd);
- 			add_mm_counter(tlb->mm, mm_counter_file(page), -HPAGE_PMD_NR);
-+
-+			if (pmd_present(orig_pmd) && pmd_dirty(orig_pmd))
-+				folio_mark_dirty(page_folio(page));
- 		}
+diff --git a/fs/xfs/libxfs/xfs_sb.c b/fs/xfs/libxfs/xfs_sb.c
+index b5f081993cd4f..6c5c2b40056d8 100644
+--- a/fs/xfs/libxfs/xfs_sb.c
++++ b/fs/xfs/libxfs/xfs_sb.c
+@@ -1148,26 +1148,23 @@ xfs_sync_sb_buf(
+ 	struct xfs_mount	*mp)
+ {
+ 	struct xfs_trans	*tp;
+-	struct xfs_buf		*bp;
+ 	int			error;
  
- 		spin_unlock(ptl);
+ 	error = xfs_trans_alloc(mp, &M_RES(mp)->tr_sb, 0, 0, 0, &tp);
+ 	if (error)
+ 		return error;
+ 
+-	bp = xfs_trans_getsb(tp);
+ 	xfs_log_sb(tp);
+-	xfs_trans_bhold(tp, bp);
+ 	xfs_trans_set_sync(tp);
+ 	error = xfs_trans_commit(tp);
+ 	if (error)
+-		goto out;
+-	/*
+-	 * write out the sb buffer to get the changes to disk
+-	 */
+-	error = xfs_bwrite(bp);
+-out:
+-	xfs_buf_relse(bp);
++		return error;
++
++	/* Re-acquire and write the sb to disk. */
++	xfs_buf_lock(mp->m_sb_bp);
++	error = xfs_bwrite(mp->m_sb_bp);
++	xfs_buf_unlock(mp->m_sb_bp);
++
+ 	return error;
+ }
+ 
 -- 
 2.53.0
 
