@@ -1,56 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793209660;
-	b=dkOVLVTfz9+34Mx8Iy+2Bdm/vUQ8ie3BELiHngiP+TsHZ8Dext/HCOGvThfzPTe5wZSa
-	 +5bgXRyVv6AshoJqTx/rW0hs/y6TxcKH7RrOcMzovV0Z/i6fD4H2n2JfQ4JyUDwUiWvjJ
-	 zZllRpHAjbTkIGlbQi44kBagl+/yrQiWsLbhbCm36CoBEV+04njHmA8NJF3zwYKVsLrty
-	 riWaT0vyKKm0FSEZGBNwDo52YT3AUe9YFAlRbKj1eTambqxALXAAnQF9/bTb4oBF0bHg2
-	 YWcrQGD7MNUEHAsx2jtU940CAch4Jy2GRJbIdwsBm50s9aO8FR2fG4f+Ue8qYR5jkJg==
+	t=1793209663;
+	b=DDVUwT/2ZKftx1tQ0NElwyqp2s/yimPbrggBi/484VKD3Hw0UMCSb2gtepn+4R0JvH9b
+	 rgfW/rw52uwO0KH7ewHrdQAZx7OHVJT20TM21IALPKTkONlFfw/MUsyz4vIiSJMlgfbgl
+	 hhYb5Dtq9c8DpEI6JEDDtvD3/9KWFTSTj2MqSMzzJmjUQdnyU3swiPhOaMVGMAwCZFqWq
+	 336xsnjCClkt2K+aKW3lOpKCjLnLZ/np/mw0vY9GOmByhJDQybmfMNKBEDdg17U73bOwz
+	 SBc2R7gsXvEdnIA1nfcsob03ADwLfB3dxK1fCjG3gzmFOh6DCZ2OeU//YT5WOXMe/tQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793209660;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793209663;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=NfzExC0j3mzSZLHjFTXsle5X19B7lIlkRfUZ+/GUnAU=;
-	b=MPJnTjkQbqerWeqtrhpde56ZAAWd/JUVeoIM2IGDCh+HizRezob73zouogQpd3N8M9Lx
-	 5ETubkb6Dj4RjE154z5WRNyK8kwtcRHl3gV69IgIveuS6MS+VOKNVPyE8JZ0y6ingElfG
-	 TBOyt8i353wYqDmAcZzByOQsLRMBQLDlXMVv7YX1c1uZTehEuddoG+UmkJegbOYZE2frp
-	 bj9Z8CeXohvbMIU6ILbDdsLMxsvdzRHyXdcD/iBNCoVfy1ohELO3vY+isiqoM+35DxQBf
-	 RCVKYhB1l2QobEnQO4/cvcMFFOZnEPsQvi3o86j2LSRPn3cQBOCyqxq/7LimaYi10zA==
+	bh=NXCe85Z7Z/Sjvu9cM52iHh7kiZ7f4jDBhKfUCwOG2k4=;
+	b=mjyO0RkZCaKlNH/qDRnd9wQ+YyzuKW1f4UG9yQ8jun3W4W3qgevy8fzagREgAfZuhXae
+	 2PDcwT91ciwzQ+RgJ7fIpxlt3Npfr/bLonRXJkzIfK1cI2AAsacQ26HzVlqHgrfpDSS4J
+	 hl+IHy4TSL+DH3xgI7a8dwrhbmOlxOpiMuklCWTybNbR379fXOeAKm0pF4I0SU4LSLoZ0
+	 dceAAMPSriTkhDDfUrT/AFcr0UYIyOefAMVjMFRclz3SO2N/ovWJZ3KcZ/3IAztBpEp6s
+	 TgzB207a5KdpZZDR52UZLFmz7A4eZ5qaAMvbCllrFjhYMV58BrRhNbK1dEtm89CMNXg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ISZV2lvc;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kxMSZ71w;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC12F606A31A;
-	Wed, 28 Oct 2026 17:47:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6DC6606A31A;
+	Wed, 28 Oct 2026 17:47:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ISZV2lvc
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D8391F01825;
-	Wed, 28 Oct 2026 17:47:39 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kxMSZ71w
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 223221F01825;
+	Wed, 28 Oct 2026 17:47:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793209659;
-	bh=NfzExC0j3mzSZLHjFTXsle5X19B7lIlkRfUZ+/GUnAU=;
+	s=korg; t=1793209662;
+	bh=NXCe85Z7Z/Sjvu9cM52iHh7kiZ7f4jDBhKfUCwOG2k4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ISZV2lvcOhsI85jb5+AFi5DOB590gdGa+RjN0UljCA6s2OiwJDCFAugGJpbik3t5C
-	 344KglVlqLM0zs87wU+CwHVxWeLkL2CeD00nRm6BfH8d/u/WXp9xkew6kZtO9ufH2w
-	 xtr+1lzamcHc4z2kHwc8gbIQJmkhKoggkR82BvoQ=
+	b=kxMSZ71wuc6TdtlF06b/EzSqUfG38VyrFjoD058HuUWuinwQHHwBkg4tee/ZQeOB1
+	 YtJ1ezv5kOroeYiejZIe3Ec7wrznFimgTVN2kwQNpDuIgTRJebCxSG6FA+EP9QF/uv
+	 93kJQGUfqevlKmBXgD6qZz9CtCirtcH0qmLPPu40=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@vger.kernek.org,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Hannes Reinecke <hare@kernel.org>,
-	Jens Axboe <axboe@kernel.dk>,
-	Stanley Jhu <stanleyjhu@google.com>,
+	SJ Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 031/109] block: avoid potential deadlock on zone revalidation failure
-Date: Wed, 28 Oct 2026 18:00:15 +0100
-Message-ID: <20261028165943.095378496@linuxfoundation.org>
+Subject: [PATCH 6.18 032/109] mm/damon/core: error damos_commit_quota_goal() for zero target_value
+Date: Wed, 28 Oct 2026 18:00:16 +0100
+Message-ID: <20261028165943.118940479@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165942.357251485@linuxfoundation.org>
 References: <20261028165942.357251485@linuxfoundation.org>
@@ -72,226 +68,169 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Damien Le Moal <dlemoal@kernel.org>
+From: SJ Park <sj@kernel.org>
 
-commit 3dd63dba8f9cb6990a40af7ed66ee0159f475819 upstream.
+[ Upstream commit 610c4438fb66e06d9e693c0ad3b2c1be54c0d61f ]
 
-If revalidating the zones of a zoned block device with
-blk_revalidate_disk_zones() fails during a SCSI disk rescan, the following
-lockdep splat is thrown:
+Patch series "mm/damon: move zero damos quota target_value handling to the
+core layer".
 
-[  347.251859] [  T11230] sda: failed to revalidate zones
+Having zero DAMOS quota target value can cause division by zero.  DAMON
+API callers are checking the target value parameters to avoid that.  It is
+easy to make mistakes in some of the multiple API callers.  Move that to
+the core layer.
 
-[  347.261380] [  T11230] ======================================================
-[  347.263882] [  T11230] WARNING: possible circular locking dependency detected
-[  347.266353] [  T11230] 7.1.0+ #1194 Not tainted
-[  347.268052] [  T11230] ------------------------------------------------------
-[  347.270537] [  T11230] tcsh/11230 is trying to acquire lock:
-[  347.272555] [  T11230] ffffffff8f91d400 (wq_pool_mutex){+.+.}-{4:4}, at: destroy_workqueue+0x15d/0x8d0
-[  347.275914] [  T11230]
-                          but task is already holding lock:
-[  347.278646] [  T11230] ffff88812fa1bcc0 (&q->q_usage_counter(io)#5){++++}-{0:0}, at: blk_mq_freeze_queue_nomemsave+0x16/0x30
-[  347.282503] [  T11230]
-                          which lock already depends on the new lock.
+Patch 1 adds the corner case handling into the core layer DAMON parameters
+validation logic.  Patches 2 and 3 remove no more needed DAMON API callers
+side handling of the corner case in DAMON_LRU_SORT and DMON_SAMPLIE_MTIER,
+respectively.
 
-[  347.286239] [  T11230]
-                          the existing dependency chain (in reverse order) is:
-[  347.289408] [  T11230]
-                          -> #2 (&q->q_usage_counter(io)#5){++++}-{0:0}:
-[  347.292437] [  T11230]        blk_alloc_queue+0x5ca/0x750
-[  347.294379] [  T11230]        blk_mq_alloc_queue+0x14c/0x240
-[  347.296375] [  T11230]        scsi_alloc_sdev+0x871/0xd10 [scsi_mod]
-[  347.298619] [  T11230]        scsi_probe_and_add_lun+0x600/0xc50 [scsi_mod]
-[  347.301056] [  T11230]        __scsi_scan_target+0x187/0x3b0 [scsi_mod]
-[  347.303385] [  T11230]        scsi_scan_channel+0xf2/0x180 [scsi_mod]
-[  347.305651] [  T11230]        scsi_scan_host_selected+0x20b/0x2d0 [scsi_mod]
-[  347.308119] [  T11230]        do_scan_async+0x42/0x420 [scsi_mod]
-[  347.310276] [  T11230]        async_run_entry_fn+0x94/0x5a0
-[  347.312284] [  T11230]        process_one_work+0x8da/0x1690
-[  347.314287] [  T11230]        worker_thread+0x5fe/0x1010
-[  347.316216] [  T11230]        kthread+0x358/0x450
-[  347.317675] [  T11230]        ret_from_fork+0x5b9/0x8e0
-[  347.319181] [  T11230]        ret_from_fork_asm+0x11/0x20
-[  347.320778] [  T11230]
-                          -> #1 (fs_reclaim){+.+.}-{0:0}:
-[  347.322890] [  T11230]        fs_reclaim_acquire+0xd5/0x120
-[  347.324464] [  T11230]        __kmalloc_cache_node_noprof+0x39/0x620
-[  347.326223] [  T11230]        init_rescuer+0x19b/0x560
-[  347.327697] [  T11230]        workqueue_init+0x33b/0x6a0
-[  347.329224] [  T11230]        kernel_init_freeable+0x2eb/0x600
-[  347.330881] [  T11230]        kernel_init+0x1c/0x140
-[  347.332334] [  T11230]        ret_from_fork+0x5b9/0x8e0
-[  347.333847] [  T11230]        ret_from_fork_asm+0x11/0x20
-[  347.335360] [  T11230]
-                          -> #0 (wq_pool_mutex){+.+.}-{4:4}:
-[  347.337510] [  T11230]        __lock_acquire+0xdea/0x2260
-[  347.339030] [  T11230]        lock_acquire+0x187/0x2f0
-[  347.340495] [  T11230]        __mutex_lock+0x1ab/0x2600
-[  347.341464] [  T11230]        destroy_workqueue+0x15d/0x8d0
-[  347.342485] [  T11230]        disk_free_zone_resources+0xd5/0x560
-[  347.343577] [  T11230]        blk_revalidate_disk_zones+0x620/0xac7
-[  347.344723] [  T11230]        sd_zbc_revalidate_zones+0x1dd/0x790 [sd_mod]
-[  347.345938] [  T11230]        sd_revalidate_disk+0xc66/0x8e60 [sd_mod]
-[  347.347112] [  T11230]        scsi_rescan_device+0x1f9/0x310 [scsi_mod]
-[  347.348318] [  T11230]        store_rescan_field+0x19/0x20 [scsi_mod]
-[  347.349507] [  T11230]        kernfs_fop_write_iter+0x3d2/0x5e0
-[  347.350565] [  T11230]        vfs_write+0x469/0x1000
-[  347.351484] [  T11230]        ksys_write+0x116/0x250
-[  347.352403] [  T11230]        do_syscall_64+0xf0/0x6e0
-[  347.353361] [  T11230]        entry_SYSCALL_64_after_hwframe+0x4b/0x53
-[  347.354533] [  T11230]
-                          other info that might help us debug this:
+This patch (of 3):
 
-[  347.356432] [  T11230] Chain exists of:
-                            wq_pool_mutex --> fs_reclaim --> &q->q_usage_counter(io)#5
+If a DAMOS scheme has a damos_quota_goal of zero target_value,
+damos_quota_goal() could trigger division-by-zero error.  Hence each DAMON
+API callers should do the zero target_value validation.  It is easy to
+make mistakes.  Actually such bugs in DAMON_LRU_SORT and
+DAMON_SAMPLE_MTIER were found and fixed [1].
 
-[  347.358919] [  T11230]  Possible unsafe locking scenario:
+It is better to handle the corner case only once in the core layer,
+instead of multiple places in all DAMON API callers.  One straightforward
+option is using an alternative denominator for the corner case in the
+damos_quota_goal().  However, the zero target_value is meaningless.  In
+this case, the quota goal is always evaluated as achieved or
+over-achieved.  The quota will only keep being reduced.
 
-[  347.360307] [  T11230]        CPU0                    CPU1
-[  347.361327] [  T11230]        ----                    ----
-[  347.362340] [  T11230]   lock(&q->q_usage_counter(io)#5);
-[  347.363344] [  T11230]                                lock(fs_reclaim);
-[  347.364526] [  T11230]                                lock(&q->q_usage_counter(io)#5);
-[  347.365968] [  T11230]   lock(wq_pool_mutex);
-[  347.366811] [  T11230]
-                           *** DEADLOCK ***
+Simply avoid using zero target_value by adding a check in the core layer
+DAMOS quota goal parameters validation/commit path,
+damos_commit_quota_goal().  Update it to return an error in the case.
+Also update its caller to propagate the error.
 
-This happens because SCSI disk rescan is executed from a work context
-and a failure of blk_revalidate_disk_zones() causes a call to
-disk_free_zone_resources() which will free the disk zone write plug
-workqueue.
+Notes for stable kernel porting.  The upstream commit doesn't have
+Fixes: and therefore not ported to stable kernels.  It turned out it
+fixes commit 8b549a4fd3c5 ("mm/damon/sysfs-schemes: commit damos quota
+goals user input to DAMOS") which was merged into v6.8.  The user impact
+is a race condition that can result in divide-by-zero.  Hence backport.
+Reproducing the issue requires sysfs write permission, certain DAMON ABI
+usages that are supposed to be uncommon, and a rare race timing, though.
+The issue was discovered [2] by Sashiko as a part [3] of its bug report.
 
-Avoid this by delaying the destruction of the disk zone write plug
-workqueue to disk_release(). Do this by introducing the function
-disk_release_zone_resources() and using this new function from
-disk_release(). This new function destroys the zone write plugs workqueue
-and calls disk_free_zone_resources(), thus allowing to remove the call to
-destroy_workqueue() from disk_free_zone_resources().
-disk_alloc_zone_resources() is modified to not create the disk zone
-write plug work queue if it already exists.
+Also, the upstream commit on this stable kernel can fix the issue for
+parameters commit paths but DAMON start path.  That's because DAMON
+start path does not invoke damon_commit_quota_goals().  To fix the path
+with minimum change, add a new small validation of quota goal target
+value before damon_start() call.
 
-Fixes: a8f59e5a5dea ("block: use a per disk workqueue for zone write plugging")
-Cc: stable@vger.kernek.org
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Hannes Reinecke <hare@kernel.org>
-Link: https://patch.msgid.link/20260701082155.1369996-1-dlemoal@kernel.org
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-[ stanleyjhu: 6.18.y has no zone write plug kthread worker and does not
-  use WQ_PERCPU, so only the workqueue part applies:
-  disk_alloc_zone_resources() reuses an existing workqueue,
-  disk_free_zone_resources() drains it instead of destroying it, and
-  the new disk_release_zone_resources() destroys it from
-  disk_release(). ]
-Signed-off-by: Stanley Jhu <stanleyjhu@google.com>
+[2] https://sashiko.dev/#/bug/linux-7f814c9a-986f-4103-a55a-ef9537dcf62b
+[3] https://lore.kernel.org/20261021005234.94107-1-sj@kernel.org
+
+Link: https://lore.kernel.org/20260903010722.94244-1-sj@kernel.org
+Link: https://lore.kernel.org/20260903010722.94244-2-sj@kernel.org
+Link: https://lore.kernel.org/20260803134034.15217-1-sj@kernel.org [1]
+Signed-off-by: SJ Park <sj@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: SJ Park <sj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-zoned.c | 37 +++++++++++++++++++++++++++----------
- block/blk.h       |  4 ++--
- block/genhd.c     |  2 +-
- 3 files changed, 30 insertions(+), 13 deletions(-)
+ mm/damon/core.c  | 22 ++++++++++++++++------
+ mm/damon/sysfs.c | 19 +++++++++++++++++++
+ 2 files changed, 35 insertions(+), 6 deletions(-)
 
-diff --git a/block/blk-zoned.c b/block/blk-zoned.c
-index 5c16cf96b97c1..a7d3d2e002da6 100644
---- a/block/blk-zoned.c
-+++ b/block/blk-zoned.c
-@@ -1413,11 +1413,20 @@ static int disk_alloc_zone_resources(struct gendisk *disk,
- 	if (!disk->zone_wplugs_pool)
- 		goto free_hash;
- 
--	disk->zone_wplugs_wq =
--		alloc_workqueue("%s_zwplugs", WQ_MEM_RECLAIM | WQ_HIGHPRI,
--				pool_size, disk->disk_name);
--	if (!disk->zone_wplugs_wq)
--		goto destroy_pool;
-+	/*
-+	 * We may already have a zone write plug workqueue as this function may
-+	 * be called after disk_free_zone_resources(), which does not destroy
-+	 * the workqueue (the zone write plugs workqueue is destroyed at
-+	 * disk_release() time).
-+	 */
-+	if (!disk->zone_wplugs_wq) {
-+		disk->zone_wplugs_wq =
-+			alloc_workqueue("%s_zwplugs",
-+					WQ_MEM_RECLAIM | WQ_HIGHPRI,
-+					pool_size, disk->disk_name);
-+		if (!disk->zone_wplugs_wq)
-+			goto destroy_pool;
-+	}
- 
- 	return 0;
- 
-@@ -1474,15 +1483,13 @@ static unsigned int disk_set_conv_zones_bitmap(struct gendisk *disk,
- 	return nr_conv_zones;
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index 4e6e3d7d0a5c0..8fa788b0d709c 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -807,15 +807,18 @@ static void damos_commit_quota_goal_union(
+ 	}
  }
  
--void disk_free_zone_resources(struct gendisk *disk)
-+static void disk_free_zone_resources(struct gendisk *disk)
+-static void damos_commit_quota_goal(
++static int damos_commit_quota_goal(
+ 		struct damos_quota_goal *dst, struct damos_quota_goal *src)
  {
- 	if (!disk->zone_wplugs_pool)
- 		return;
- 
--	if (disk->zone_wplugs_wq) {
--		destroy_workqueue(disk->zone_wplugs_wq);
--		disk->zone_wplugs_wq = NULL;
--	}
-+	if (disk->zone_wplugs_wq)
-+		drain_workqueue(disk->zone_wplugs_wq);
- 
- 	disk_destroy_zone_wplugs_hash_table(disk);
- 
-@@ -1501,6 +1508,16 @@ void disk_free_zone_resources(struct gendisk *disk)
- 	disk->nr_zones = 0;
++	if (!src->target_value)
++		return  -EINVAL;
+ 	dst->metric = src->metric;
+ 	dst->target_value = src->target_value;
+ 	if (dst->metric == DAMOS_QUOTA_USER_INPUT)
+ 		dst->current_value = src->current_value;
+ 	/* keep last_psi_total as is, since it will be updated in next cycle */
+ 	damos_commit_quota_goal_union(dst, src);
++	return 0;
  }
  
-+void disk_release_zone_resources(struct gendisk *disk)
+ /**
+@@ -833,14 +836,17 @@ static void damos_commit_quota_goal(
+ int damos_commit_quota_goals(struct damos_quota *dst, struct damos_quota *src)
+ {
+ 	struct damos_quota_goal *dst_goal, *next, *src_goal, *new_goal;
+-	int i = 0, j = 0;
++	int i = 0, j = 0, err;
+ 
+ 	damos_for_each_quota_goal_safe(dst_goal, next, dst) {
+ 		src_goal = damos_nth_quota_goal(i++, src);
+-		if (src_goal)
+-			damos_commit_quota_goal(dst_goal, src_goal);
+-		else
++		if (src_goal) {
++			err = damos_commit_quota_goal(dst_goal, src_goal);
++			if (err)
++				return err;
++		} else {
+ 			damos_destroy_quota_goal(dst_goal);
++		}
+ 	}
+ 	damos_for_each_quota_goal_safe(src_goal, next, src) {
+ 		if (j++ < i)
+@@ -849,7 +855,11 @@ int damos_commit_quota_goals(struct damos_quota *dst, struct damos_quota *src)
+ 				src_goal->metric, src_goal->target_value);
+ 		if (!new_goal)
+ 			return -ENOMEM;
+-		damos_commit_quota_goal(new_goal, src_goal);
++		err = damos_commit_quota_goal(new_goal, src_goal);
++		if (err) {
++			damos_free_quota_goal(new_goal);
++			return err;
++		}
+ 		damos_add_quota_goal(dst, new_goal);
+ 	}
+ 	return 0;
+diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
+index 7f52470be36e3..3a79d8c89b5bb 100644
+--- a/mm/damon/sysfs.c
++++ b/mm/damon/sysfs.c
+@@ -1592,6 +1592,20 @@ static int damon_sysfs_repeat_call_fn(void *data)
+ 	return 0;
+ }
+ 
++static bool damon_sysfs_valid_start_ctx(struct damon_ctx *ctx)
 +{
-+	if (disk->zone_wplugs_wq) {
-+		destroy_workqueue(disk->zone_wplugs_wq);
-+		disk->zone_wplugs_wq = NULL;
-+	}
++	struct damos *s;
++	struct damos_quota_goal *g;
 +
-+	disk_free_zone_resources(disk);
++	damon_for_each_scheme(s, ctx) {
++		damos_for_each_quota_goal(g, (&s->quota)) {
++			if (!g->target_value)
++				return false;
++		}
++	}
++	return true;
 +}
 +
- static inline bool disk_need_zone_resources(struct gendisk *disk)
+ static int damon_sysfs_turn_damon_on(struct damon_sysfs_kdamond *kdamond)
  {
- 	/*
-diff --git a/block/blk.h b/block/blk.h
-index 2810b4d086e6a..179662b868998 100644
---- a/block/blk.h
-+++ b/block/blk.h
-@@ -499,7 +499,7 @@ static inline void ioc_clear_queue(struct request_queue *q)
- 
- #ifdef CONFIG_BLK_DEV_ZONED
- void disk_init_zone_resources(struct gendisk *disk);
--void disk_free_zone_resources(struct gendisk *disk);
-+void disk_release_zone_resources(struct gendisk *disk);
- static inline bool bio_zone_write_plugging(struct bio *bio)
- {
- 	return bio_flagged(bio, BIO_ZONE_WRITE_PLUGGING);
-@@ -552,7 +552,7 @@ int blkdev_zone_mgmt_ioctl(struct block_device *bdev, blk_mode_t mode,
- static inline void disk_init_zone_resources(struct gendisk *disk)
- {
- }
--static inline void disk_free_zone_resources(struct gendisk *disk)
-+static inline void disk_release_zone_resources(struct gendisk *disk)
- {
- }
- static inline bool bio_zone_write_plugging(struct bio *bio)
-diff --git a/block/genhd.c b/block/genhd.c
-index bbcfbd1a363c5..6ba0e22ce9dff 100644
---- a/block/genhd.c
-+++ b/block/genhd.c
-@@ -1308,7 +1308,7 @@ static void disk_release(struct device *dev)
- 
- 	disk_release_events(disk);
- 	kfree(disk->random);
--	disk_free_zone_resources(disk);
-+	disk_release_zone_resources(disk);
- 	xa_destroy(&disk->part_tbl);
- 
- 	kobject_put(&disk->queue_kobj);
+ 	struct damon_ctx *ctx;
+@@ -1618,6 +1632,11 @@ static int damon_sysfs_turn_damon_on(struct damon_sysfs_kdamond *kdamond)
+ 		kfree(repeat_call_control);
+ 		return PTR_ERR(ctx);
+ 	}
++	if (!damon_sysfs_valid_start_ctx(ctx)) {
++		kfree(repeat_call_control);
++		damon_destroy_ctx(ctx);
++		return -EINVAL;
++	}
+ 	err = damon_start(&ctx, 1, false);
+ 	if (err) {
+ 		kfree(repeat_call_control);
 -- 
 2.53.0
 
