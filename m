@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793217245;
-	b=g1ossSm1L8FRnLuYSsITId/bQ+wAOVzow5/zQcX7UkGJYW1V1eJwKV5jbctS0w4h6dan
-	 MN1mwc8LaJJPFpRjWwZg3Y1m65NnVFGjWxP4gDXITEhXamEBLiv00BdqTrhtOTuWts1Uo
-	 4yK18frv7TZqNg0pTKlmAwEzob2KBtpv5ufQdaJAzn2xIC9uAaVFWugifeDRX0T7yUoxs
-	 LtDkGeUyoXpb6queL6PzJsGyq5Vb23UPTF99RkV6/yW+o5JtdZVFtwRFll+AoDxymIObi
-	 qPygUtTqU1kRPeELp/kUjfvWmlIWem5KnP01w0CsYZxOLica7xWe4/7B8FeOsR+lz0Q==
+	t=1793217248;
+	b=O4dB6XwAuu9aEbMt0iQ55Kz7j1Xmtd4Fk2I/hc1S7AEYVIbepNiT2vDj+m211FMXePb2
+	 dRsLHm9VkCKZ/pH+uA7zsNkTOEc9SQ0+G/psTnVSs686eoxlaxDpq9flEi24ezLkL/qk8
+	 6xkFv3gw2E+V3wDweH87jA6F2hnVKh7xaFbupyMtAkMBLXrwYnEq7gKle7xDlKkd5UvkU
+	 Am2Bx2hXkqKWWm1QZ226Tkv+qgc6SrmvETpFDP1I45at6hu3YePzTO0fCoHtCI8RH952V
+	 t21s9bqAyyMIlnxHjIYrVUb7dUhnJSXKAaZufcGaqYaotFiG2fwyaWcaKgJvKuABK/A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793217245;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793217248;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=nasb8Yb7LeNQcdQgOabCxQ5CpZ/H54nFmoG6fue0D68=;
-	b=ZPWje9sMohSgEnjLo1l11FmpVrytqiDcpsHX/AziMoh7FZb5Of9zH5FRsFqIwfyiSyYE
-	 ay8S7p53C9LWvoM2ORg9aQdtGtXAYE9jtl+FvuRsUHvdiYJlpToh/86UNdAo3BJ52sDbI
-	 EbY+WcKps4ddEFaDcEk20V10rmDXNj4bTWftcHleZlehPZPEQc1ZwoMqJDmOZp4UdI8/w
-	 +4oiSG4YHeggM/1/10jw9vJ1DEbuSX4iMUI1AVMK0DgaEnbho5X+6kknSbm0ooMBmsEDg
-	 1PyiyDMfBLgw7rI85WwuA5mtcCIxk22hm4i795Z0t+acEJ5axV97ykROJFO+faYpVfw==
+	bh=daS1aTTVKynhTipZmyB62w7P5cuy4q6Tr8Hf0H9a4RU=;
+	b=gNqF1LRmtxfzlzwzOd6ZIHyh+eqnzFuz0/AueNDX7xNINCIFANKWuhVMl6jh1PfUA+pC
+	 f/0PHPleet0DvFPs5hWPuIZOTXTg/OgrWwLbEaPvi07PTFopsK8xetFUzgsyj2EHSPG5V
+	 fJ2nVY4xG8tiUj0n+0RQcqINS903hltdPL4QAqdwb8S2f2ecsnzgsFc3xpHEalE3rCpdi
+	 54MWNoHYI6Z12lQyLvQiI4ri6i6bEJAW59eu+9fAqjpVBytVG0dxMq0Vvfqvg7m0WJNlE
+	 r7G/4WcE9ZyCn60twXWEIv/vBOH2PSRc5cE7hXFCUEoGfqlPYYmS5wVox5airI4jzhg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CQysrumL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pGyISh6A;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B8BD606A31E;
-	Wed, 28 Oct 2026 19:54:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68770606A31E;
+	Wed, 28 Oct 2026 19:54:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CQysrumL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA8321F031E1;
-	Wed, 28 Oct 2026 19:54:04 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pGyISh6A
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA2561F01825;
+	Wed, 28 Oct 2026 19:54:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793217245;
-	bh=nasb8Yb7LeNQcdQgOabCxQ5CpZ/H54nFmoG6fue0D68=;
+	s=korg; t=1793217248;
+	bh=daS1aTTVKynhTipZmyB62w7P5cuy4q6Tr8Hf0H9a4RU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CQysrumLYgyFfsC3CZBvx2pHQ143LNcZIq57qgCE+LISK/3dIVQgvGQJlbsZpQQeY
-	 u15/xP5ATgQBtSiKi5NsFlUh8MUinn0BWHrwMw+VlqpLViq0QSkc4YK6XyGZPlZRdx
-	 zsb0+IydZAf/i9xlkVSjTJZOAo6az/qiBY8y/zTs=
+	b=pGyISh6Ao7ZsB/Hz+WnxPrCq5SzDKOR5vLhUnqgDveANCiuTqGHBeMFJ/XlKSB+yQ
+	 0NRWArsdvkkSknGu+NzFDPGvx+E7GzSMcCGrAK2NdMtzGnWW5+/Bpe5ATFJ2AtAWkD
+	 mUhTotuZLrNCCRHhhYnIZn2szMBhKoNuP78576iI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Sorenson <sorenson@redhat.com>,
-	Paulo Alcantara <pc@manguebit.org>,
+	Oleg Nesterov <oleg@redhat.com>,
+	Aviv Vaknin <vaknins33@gmail.com>,
+	Bradley Morgan <brads@mainlining.org>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1792/1887] cifs: add revalidation on FSCTL failure in smb2_duplicate_extents()
-Date: Wed, 28 Oct 2026 18:04:48 +0100
-Message-ID: <20261028170540.227138395@linuxfoundation.org>
+Subject: [PATCH 6.1 1783/1887] pid_namespace: make zap_pid_ns_processes() freezable
+Date: Wed, 28 Oct 2026 18:04:39 +0100
+Message-ID: <20261028170540.024667421@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,53 +70,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Frank Sorenson <sorenson@redhat.com>
+From: Aviv Vaknin <vaknins33@gmail.com>
 
-[ Upstream commit 53676a5e28231186c9f56d87b7998b640699bc15 ]
+[ Upstream commit 81933038f5e273d17ed22792f906889393b204c5 ]
 
-smb2_duplicate_extents() has no handling for
-FSCTL_DUPLICATE_EXTENTS_TO_FILE failure: when the FSCTL fails, local
-inode metadata may be stale from the pre-extension or from concurrent
-remote writes, but is never refreshed.
+When the init of a pid namespace exits, zap_pid_ns_processes() waits
+until all other pids in the namespace are freed. A tracer outside the
+namespace that does not reap its traced zombies keeps those pids
+allocated, so this wait has no upper bound, and while it lasts every
+suspend attempt fails:
 
-Force revalidation on FSCTL failure and use i_size_read() for the
-pre-extension check.
+  Freezing user space processes failed after 20.006 seconds (2 tasks refusing to freeze, wq_busy=0):
 
-Fixes: cfc63fc8126a ("smb3: fix cached file size problems in duplicate extents (reflink)")
-Cc: stable@vger.kernel.org
-Signed-off-by: Frank Sorenson <sorenson@redhat.com>
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
-[ sashal: adapted the if/else block to a standalone failure check because the success-path metadata query is absent ]
+Neither wait is freezable. The first loop sleeps in do_wait(), which
+returns -ERESTARTSYS on the freezer's fake signal; the loop then clears
+TIF_SIGPENDING and waits again without ever freezing. The final loop
+sleeps in TASK_INTERRUPTIBLE, and since nothing clears TIF_SIGPENDING
+there, schedule() returns immediately after the first freeze attempt
+and the task spins until the wait ends.
+
+Sleep in TASK_INTERRUPTIBLE | TASK_FREEZABLE in do_wait(), so that the
+freezer can freeze tasks waiting there directly, and in TASK_IDLE |
+TASK_FREEZABLE in the final loop, like coredump_task_exit() does.
+
+This was hit with Chromium-based browsers: crashpad ptrace-attaches the
+threads of a crashed renderer, which is a pid namespace init, and does
+not reap those killed during the dump.
+
+Fixes: 3eb07c8c8adb ("pid namespaces: destroy pid namespace on init's death")
+Fixes: b9a985db9896 ("pid_ns: Sleep in TASK_INTERRUPTIBLE in zap_pid_ns_processes")
+Cc: stable@vger.kernel.org # 6.1+
+Suggested-by: Oleg Nesterov <oleg@redhat.com>
+Signed-off-by: Aviv Vaknin <vaknins33@gmail.com>
+Link: https://patch.msgid.link/20261002202820.3433318-1-vaknins33@gmail.com
+Acked-by: Oleg Nesterov <oleg@redhat.com>
+Reviewed-by: Bradley Morgan <brads@mainlining.org>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/smb2ops.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ kernel/exit.c          | 2 +-
+ kernel/pid_namespace.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/smb/client/smb2ops.c b/fs/smb/client/smb2ops.c
-index ecc5f27ff1413..5a07d411a00a6 100644
---- a/fs/smb/client/smb2ops.c
-+++ b/fs/smb/client/smb2ops.c
-@@ -2027,7 +2027,7 @@ smb2_duplicate_extents(const unsigned int xid,
- 		src_off, dest_off, len);
+diff --git a/kernel/exit.c b/kernel/exit.c
+index d4addbc7aff20..b3cfeba72dc02 100644
+--- a/kernel/exit.c
++++ b/kernel/exit.c
+@@ -1646,7 +1646,7 @@ static long do_wait(struct wait_opts *wo)
+ 	add_wait_queue(&current->signal->wait_chldexit, &wo->child_wait);
  
- 	inode = d_inode(trgtfile->dentry);
--	if (inode->i_size < dest_off + len) {
-+	if (i_size_read(inode) < dest_off + len) {
- 		rc = smb2_set_file_size(xid, tcon, trgtfile, dest_off + len, false);
- 		if (rc)
- 			goto duplicate_extents_out;
-@@ -2052,6 +2052,11 @@ smb2_duplicate_extents(const unsigned int xid,
- 	if (ret_data_len > 0)
- 		cifs_dbg(FYI, "Non-zero response length in duplicate extents\n");
- 
-+	if (rc) {
-+		CIFS_I(inode)->time = 0; /* force reval */
-+		cifs_invalidate_cache(inode, 0);
-+	}
-+
- duplicate_extents_out:
- 	return rc;
- }
+ 	do {
+-		set_current_state(TASK_INTERRUPTIBLE);
++		set_current_state(TASK_INTERRUPTIBLE | TASK_FREEZABLE);
+ 		retval = __do_wait(wo);
+ 		if (retval != -ERESTARTSYS)
+ 			break;
+diff --git a/kernel/pid_namespace.c b/kernel/pid_namespace.c
+index a575fabf697eb..cd3ee747649db 100644
+--- a/kernel/pid_namespace.c
++++ b/kernel/pid_namespace.c
+@@ -242,7 +242,7 @@ void zap_pid_ns_processes(struct pid_namespace *pid_ns)
+ 	 * free_pid() will awaken this task.
+ 	 */
+ 	for (;;) {
+-		set_current_state(TASK_INTERRUPTIBLE);
++		set_current_state(TASK_IDLE | TASK_FREEZABLE);
+ 		if (pid_ns->pid_allocated == init_pids)
+ 			break;
+ 		/*
 -- 
 2.53.0
 
