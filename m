@@ -1,56 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213592;
-	b=OPCE6jzrcOmJTl+DzuUv54ep70BZNHE3Sn4oGtknbOvaHDycl06ScRo0OTLArVC3QHm5
-	 MAdvUTLvfd3dyYQghnOGa+u+PyJllljbV7GyNPK2O0b0ugiFB+eQHcO5D+VrTz9Hkh3DE
-	 gw/MPL1VPJYgpAyob03rq845hIm2ooJizTYGEaHbtFWwgr4IU8qYQ6ZJqb3J//K1DMhDk
-	 N4vuf/zYOAUyXWaHgZqqQlgqrrMooIi7b9sVuvgsZPpR3nHOM7P/UDnQfh/2YGB7AIlR7
-	 N/nIt2DUATskKeGWc2xDTV/ztmEKfAxw/cMWaRpQ1k1M1t7RqWvDDAyZZQRN+qg+TUQ==
+	t=1793213594;
+	b=BwkJo1SainejMcZfXp90ral5klrNyXch6tcnutLTY9XK6UtBO3QAKbjKNPIHCOUAMNY7
+	 BRyg3/hFiMUf5R/M7uUvJ3EfpjIDHNC++1knoJjZhzSpwhQEFz05tk8Vt0k0FVwB7cqwu
+	 ejPGTzzBbwQFmQ7W85TLMiDFK3Cp/eZAPdlnZ8mXmPQpIz4hAsG5gcZvqv+73k2DHtLxW
+	 A3xi+Y4Yx2dy80WR65tzbteEoxazfQ3YA8BPqnM9jAJmnIbxBGChwtG+Z1iTM7olRx7bS
+	 6tZN90B2/02r0vWl3VJP37x0BBppRlgnfloKhwmYh8hjSIVaHF15D6itub8rW60H0qQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213592;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213594;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=KDfe2Yl/UOz7mFZWhHHuK0bRJ5Bzm3eY+m3Z5AzE6C4=;
-	b=xGvk8X+oRVIZ7ETy+Bufd8bOnj9JmxncOjRreGFnhov6sFZ0Y5rfPNpumHryoLwY/+8F
-	 98jkVmU7M6NR5RMk7ea7549BjpG1SiRfNXbq+GHKo8aOZU4booZnTvTYs3lsxPfNxzs1R
-	 0ejUsDBSwEFHN9vTuj0JmkRneSSxmsZH98Olqi8g0s7dkUDCtZmIzwi+PqABnddXKp6Ue
-	 wCBWmg0QlpJwVCuncRrjvnMqyvkc0r9wajx+y4/rLGus7+d+6FQ/m3phCHWaupRR44KhX
-	 zFykx575B7ViK49+qItf06lvxSnyoW3NAeW7jLGpPczqfas5MV3ydV9VDbKwNAcx49g==
+	bh=XNYZGJ/FJBr/kejGLJt8zxjYi+qxfQW8O+5KW/vEokA=;
+	b=rU+XBMaUuLnihWG/TMeoGYcuMuTkvyXeFvpUW384pHO7Qr5Jlnl52OHPSApvOy7ZkzIJ
+	 qUInK2dL8la4tJ7+sIzoOWftQnF08BYFAtuD/b/uuZ1hS2LO1yoEAxtvnYNx8ZcHT8/2f
+	 +WyVKBy3YN0OmCQcxlOL9of4yvbKv7aIExwZj/JMHY2eD02xlKzG/RsxITHFf8+dzmGYt
+	 7j/FgxUrwab/hORecaoJVZ22fnMrVpmNDcEGQtMXnfjKNR4GMf5EfasQzOjGfwRNX5u9x
+	 4zj+BvA8WMhVta65y39liFj/onHhwAnUblb7TC+sCg0nj2qu9VnQSyhmbW5hYIpI1pQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SnFDwaKs;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=m6z5pB50;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFC0B606A31A;
-	Wed, 28 Oct 2026 18:53:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0FC4606A31A;
+	Wed, 28 Oct 2026 18:53:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SnFDwaKs
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F3A21F01825;
-	Wed, 28 Oct 2026 18:53:11 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=m6z5pB50
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1D871F01825;
+	Wed, 28 Oct 2026 18:53:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213591;
-	bh=KDfe2Yl/UOz7mFZWhHHuK0bRJ5Bzm3eY+m3Z5AzE6C4=;
+	s=korg; t=1793213594;
+	bh=XNYZGJ/FJBr/kejGLJt8zxjYi+qxfQW8O+5KW/vEokA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SnFDwaKst67Hmg+ZyCMbAmygP3Krb0oGBf5pTKetI26lK49oOlMf3Erco465Jg8C1
-	 EtN5uFAANeuPcKZ3PdmnQ8RCGiK9t22J80HI6OERkJSOA43uDT4q0bN53Ba0UtFyi7
-	 BuMnJrNAVw35XVbO18LPXPpS44rWsn1Vjw8ppnUY=
+	b=m6z5pB507kB7mjCXgimkGgetAPYRLzELVPZ9O+FZ/YmWedui3VjMpZapHZ1LcB3KV
+	 b/1qf8hCydNdH3Ua2u58AhdULVlJk7cBzYq1zfrq3ThiLl6owdnhdfTSnz93EX6OEr
+	 AWH7JjPZahjDFIIif34Iafsu3sJxhZgZMzlU+CUY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guo Ren <guoren@kernel.org>,
-	Jisheng Zhang <jszhang@kernel.org>,
-	Deepak Gupta <debug@rivosinc.com>,
-	Sami Tolvanen <samitolvanen@google.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0559/1887] riscv: VMAP_STACK overflow detection thread-safe
-Date: Wed, 28 Oct 2026 17:44:15 +0100
-Message-ID: <20261028170512.105896735@linuxfoundation.org>
+	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	syzbot+d342e330a37b48c094b7@syzkaller.appspotmail.com
+Subject: [PATCH 6.1 0560/1887] f2fs: split initial and dynamic conditions for extent_cache
+Date: Wed, 28 Oct 2026 17:44:16 +0100
+Message-ID: <20261028170512.129327101@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -72,308 +68,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Deepak Gupta <debug@rivosinc.com>
+From: Jaegeuk Kim <jaegeuk@kernel.org>
 
-[ Upstream commit be97d0db5f44c0674480cb79ac6f5b0529b84c76 ]
+[ Upstream commit f803982190f0265fd36cf84670aa6daefc2b0768 ]
 
-commit 31da94c25aea ("riscv: add VMAP_STACK overflow detection") added
-support for CONFIG_VMAP_STACK. If overflow is detected, CPU switches to
-`shadow_stack` temporarily before switching finally to per-cpu
-`overflow_stack`.
+Let's allocate the extent_cache tree without dynamic conditions to avoid a
+missing condition causing a panic as below.
 
-If two CPUs/harts are racing and end up in over flowing kernel stack, one
-or both will end up corrupting each other state because `shadow_stack` is
-not per-cpu. This patch optimizes per-cpu overflow stack switch by
-directly picking per-cpu `overflow_stack` and gets rid of `shadow_stack`.
+ # create a file w/ a compressed flag
+ # disable the compression
+ # panic while updating extent_cache
 
-Following are the changes in this patch
+F2FS-fs (dm-64): Swapfile: last extent is not aligned to section
+F2FS-fs (dm-64): Swapfile (3) is not align to section: 1) creat(), 2) ioctl(F2FS_IOC_SET_PIN_FILE), 3) fallocate(2097152 * N)
+Adding 124996k swap on ./swap-file.  Priority:0 extents:2 across:17179494468k
+==================================================================
+BUG: KASAN: null-ptr-deref in instrument_atomic_read_write out/common/include/linux/instrumented.h:101 [inline]
+BUG: KASAN: null-ptr-deref in atomic_try_cmpxchg_acquire out/common/include/asm-generic/atomic-instrumented.h:705 [inline]
+BUG: KASAN: null-ptr-deref in queued_write_lock out/common/include/asm-generic/qrwlock.h:92 [inline]
+BUG: KASAN: null-ptr-deref in __raw_write_lock out/common/include/linux/rwlock_api_smp.h:211 [inline]
+BUG: KASAN: null-ptr-deref in _raw_write_lock+0x5a/0x110 out/common/kernel/locking/spinlock.c:295
+Write of size 4 at addr 0000000000000030 by task syz-executor154/3327
 
- - Defines an asm macro to obtain per-cpu symbols in destination
-   register.
- - In entry.S, when overflow is detected, per-cpu overflow stack is
-   located using per-cpu asm macro. Computing per-cpu symbol requires
-   a temporary register. x31 is saved away into CSR_SCRATCH
-   (CSR_SCRATCH is anyways zero since we're in kernel).
+CPU: 0 PID: 3327 Comm: syz-executor154 Tainted: G           O      5.10.185 #1
+Hardware name: emulation qemu-x86/qemu-x86, BIOS 2023.01-21885-gb3cc1cd24d 01/01/2023
+Call Trace:
+ __dump_stack out/common/lib/dump_stack.c:77 [inline]
+ dump_stack_lvl+0x17e/0x1c4 out/common/lib/dump_stack.c:118
+ __kasan_report+0x16c/0x260 out/common/mm/kasan/report.c:415
+ kasan_report+0x51/0x70 out/common/mm/kasan/report.c:428
+ kasan_check_range+0x2f3/0x340 out/common/mm/kasan/generic.c:186
+ __kasan_check_write+0x14/0x20 out/common/mm/kasan/shadow.c:37
+ instrument_atomic_read_write out/common/include/linux/instrumented.h:101 [inline]
+ atomic_try_cmpxchg_acquire out/common/include/asm-generic/atomic-instrumented.h:705 [inline]
+ queued_write_lock out/common/include/asm-generic/qrwlock.h:92 [inline]
+ __raw_write_lock out/common/include/linux/rwlock_api_smp.h:211 [inline]
+ _raw_write_lock+0x5a/0x110 out/common/kernel/locking/spinlock.c:295
+ __drop_extent_tree+0xdf/0x2f0 out/common/fs/f2fs/extent_cache.c:1155
+ f2fs_drop_extent_tree+0x17/0x30 out/common/fs/f2fs/extent_cache.c:1172
+ f2fs_insert_range out/common/fs/f2fs/file.c:1600 [inline]
+ f2fs_fallocate+0x19fd/0x1f40 out/common/fs/f2fs/file.c:1764
+ vfs_fallocate+0x514/0x9b0 out/common/fs/open.c:310
+ ksys_fallocate out/common/fs/open.c:333 [inline]
+ __do_sys_fallocate out/common/fs/open.c:341 [inline]
+ __se_sys_fallocate out/common/fs/open.c:339 [inline]
+ __x64_sys_fallocate+0xb8/0x100 out/common/fs/open.c:339
+ do_syscall_64+0x35/0x50 out/common/arch/x86/entry/common.c:46
 
-Please see Links for additional relevant disccussion and alternative
-solution.
-
-Tested by `echo EXHAUST_STACK > /sys/kernel/debug/provoke-crash/DIRECT`
-Kernel crash log below
-
- Insufficient stack space to handle exception!/debug/provoke-crash/DIRECT
- Task stack:     [0xff20000010a98000..0xff20000010a9c000]
- Overflow stack: [0xff600001f7d98370..0xff600001f7d99370]
- CPU: 1 PID: 205 Comm: bash Not tainted 6.1.0-rc2-00001-g328a1f96f7b9 #34
- Hardware name: riscv-virtio,qemu (DT)
- epc : __memset+0x60/0xfc
-  ra : recursive_loop+0x48/0xc6 [lkdtm]
- epc : ffffffff808de0e4 ra : ffffffff0163a752 sp : ff20000010a97e80
-  gp : ffffffff815c0330 tp : ff600000820ea280 t0 : ff20000010a97e88
-  t1 : 000000000000002e t2 : 3233206874706564 s0 : ff20000010a982b0
-  s1 : 0000000000000012 a0 : ff20000010a97e88 a1 : 0000000000000000
-  a2 : 0000000000000400 a3 : ff20000010a98288 a4 : 0000000000000000
-  a5 : 0000000000000000 a6 : fffffffffffe43f0 a7 : 00007fffffffffff
-  s2 : ff20000010a97e88 s3 : ffffffff01644680 s4 : ff20000010a9be90
-  s5 : ff600000842ba6c0 s6 : 00aaaaaac29e42b0 s7 : 00fffffff0aa3684
-  s8 : 00aaaaaac2978040 s9 : 0000000000000065 s10: 00ffffff8a7cad10
-  s11: 00ffffff8a76a4e0 t3 : ffffffff815dbaf4 t4 : ffffffff815dbaf4
-  t5 : ffffffff815dbab8 t6 : ff20000010a9bb48
- status: 0000000200000120 badaddr: ff20000010a97e88 cause: 000000000000000f
- Kernel panic - not syncing: Kernel stack overflow
- CPU: 1 PID: 205 Comm: bash Not tainted 6.1.0-rc2-00001-g328a1f96f7b9 #34
- Hardware name: riscv-virtio,qemu (DT)
- Call Trace:
- [<ffffffff80006754>] dump_backtrace+0x30/0x38
- [<ffffffff808de798>] show_stack+0x40/0x4c
- [<ffffffff808ea2a8>] dump_stack_lvl+0x44/0x5c
- [<ffffffff808ea2d8>] dump_stack+0x18/0x20
- [<ffffffff808dec06>] panic+0x126/0x2fe
- [<ffffffff800065ea>] walk_stackframe+0x0/0xf0
- [<ffffffff0163a752>] recursive_loop+0x48/0xc6 [lkdtm]
- SMP: stopping secondary CPUs
- ---[ end Kernel panic - not syncing: Kernel stack overflow ]---
-
-Cc: Guo Ren <guoren@kernel.org>
-Cc: Jisheng Zhang <jszhang@kernel.org>
-Link: https://lore.kernel.org/linux-riscv/Y347B0x4VUNOd6V7@xhacker/T/#t
-Link: https://lore.kernel.org/lkml/20221124094845.1907443-1-debug@rivosinc.com/
-Signed-off-by: Deepak Gupta <debug@rivosinc.com>
-Co-developed-by: Sami Tolvanen <samitolvanen@google.com>
-Signed-off-by: Sami Tolvanen <samitolvanen@google.com>
-Acked-by: Guo Ren <guoren@kernel.org>
-Tested-by: Nathan Chancellor <nathan@kernel.org>
-Link: https://lore.kernel.org/r/20230927224757.1154247-9-samitolvanen@google.com
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Cc: stable@vger.kernel.org
+Fixes: 72840cccc0a1 ("f2fs: allocate the extent_cache by default")
+Reported-and-tested-by: syzbot+d342e330a37b48c094b7@syzkaller.appspotmail.com
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/include/asm/asm-prototypes.h |  1 -
- arch/riscv/include/asm/asm.h            | 23 ++++++++
- arch/riscv/include/asm/thread_info.h    |  3 --
- arch/riscv/kernel/asm-offsets.c         |  1 +
- arch/riscv/kernel/entry.S               | 70 ++++---------------------
- arch/riscv/kernel/traps.c               | 30 +----------
- 6 files changed, 35 insertions(+), 93 deletions(-)
+ fs/f2fs/extent_cache.c | 29 +++++++++++++----------------
+ 1 file changed, 13 insertions(+), 16 deletions(-)
 
-diff --git a/arch/riscv/include/asm/asm-prototypes.h b/arch/riscv/include/asm/asm-prototypes.h
-index ef386fcf39394..4a06fa0f64932 100644
---- a/arch/riscv/include/asm/asm-prototypes.h
-+++ b/arch/riscv/include/asm/asm-prototypes.h
-@@ -25,7 +25,6 @@ DECLARE_DO_ERROR_INFO(do_trap_ecall_s);
- DECLARE_DO_ERROR_INFO(do_trap_ecall_m);
- DECLARE_DO_ERROR_INFO(do_trap_break);
+diff --git a/fs/f2fs/extent_cache.c b/fs/f2fs/extent_cache.c
+index a5c63c7da2994..e66c5d0a04dff 100644
+--- a/fs/f2fs/extent_cache.c
++++ b/fs/f2fs/extent_cache.c
+@@ -58,24 +58,11 @@ static void __set_extent_info(struct extent_info *ei,
+ 	}
+ }
  
--asmlinkage unsigned long get_overflow_stack(void);
- asmlinkage void handle_bad_stack(struct pt_regs *regs);
- 
- #endif /* _ASM_RISCV_PROTOTYPES_H */
-diff --git a/arch/riscv/include/asm/asm.h b/arch/riscv/include/asm/asm.h
-index 816e753de636d..9890a42c18103 100644
---- a/arch/riscv/include/asm/asm.h
-+++ b/arch/riscv/include/asm/asm.h
-@@ -69,6 +69,7 @@
- #endif
- 
- #ifdef __ASSEMBLY__
-+#include <asm/asm-offsets.h>
- 
- /* Common assembly source macros */
- 
-@@ -81,6 +82,28 @@
- 	.endr
- .endm
- 
-+#ifdef CONFIG_SMP
-+#ifdef CONFIG_32BIT
-+#define PER_CPU_OFFSET_SHIFT 2
-+#else
-+#define PER_CPU_OFFSET_SHIFT 3
-+#endif
-+
-+.macro asm_per_cpu dst sym tmp
-+	REG_L \tmp, TASK_TI_CPU_NUM(tp)
-+	slli  \tmp, \tmp, PER_CPU_OFFSET_SHIFT
-+	la    \dst, __per_cpu_offset
-+	add   \dst, \dst, \tmp
-+	REG_L \tmp, 0(\dst)
-+	la    \dst, \sym
-+	add   \dst, \dst, \tmp
-+.endm
-+#else /* CONFIG_SMP */
-+.macro asm_per_cpu dst sym tmp
-+	la    \dst, \sym
-+.endm
-+#endif /* CONFIG_SMP */
-+
- #endif /* __ASSEMBLY__ */
- 
- #endif /* _ASM_RISCV_ASM_H */
-diff --git a/arch/riscv/include/asm/thread_info.h b/arch/riscv/include/asm/thread_info.h
-index f704c8dd57e04..78933ac04995b 100644
---- a/arch/riscv/include/asm/thread_info.h
-+++ b/arch/riscv/include/asm/thread_info.h
-@@ -42,9 +42,6 @@
- 
- #ifndef __ASSEMBLY__
- 
--extern long shadow_stack[SHADOW_OVERFLOW_STACK_SIZE / sizeof(long)];
--extern unsigned long spin_shadow_stack;
--
- #include <asm/processor.h>
- #include <asm/csr.h>
- 
-diff --git a/arch/riscv/kernel/asm-offsets.c b/arch/riscv/kernel/asm-offsets.c
-index 21f034b3fdbeb..9e6e35da69ce4 100644
---- a/arch/riscv/kernel/asm-offsets.c
-+++ b/arch/riscv/kernel/asm-offsets.c
-@@ -37,6 +37,7 @@ void asm_offsets(void)
- 	OFFSET(TASK_TI_KERNEL_SP, task_struct, thread_info.kernel_sp);
- 	OFFSET(TASK_TI_USER_SP, task_struct, thread_info.user_sp);
- 
-+	OFFSET(TASK_TI_CPU_NUM, task_struct, thread_info.cpu);
- 	OFFSET(TASK_THREAD_F0,  task_struct, thread.fstate.f[0]);
- 	OFFSET(TASK_THREAD_F1,  task_struct, thread.fstate.f[1]);
- 	OFFSET(TASK_THREAD_F2,  task_struct, thread.fstate.f[2]);
-diff --git a/arch/riscv/kernel/entry.S b/arch/riscv/kernel/entry.S
-index 99d38fdf8b18f..f6c3841df2f5a 100644
---- a/arch/riscv/kernel/entry.S
-+++ b/arch/riscv/kernel/entry.S
-@@ -10,9 +10,11 @@
- #include <asm/asm.h>
- #include <asm/csr.h>
- #include <asm/unistd.h>
-+#include <asm/page.h>
- #include <asm/thread_info.h>
- #include <asm/asm-offsets.h>
- #include <asm/errata_list.h>
-+#include <linux/sizes.h>
- 
- #if !IS_ENABLED(CONFIG_PREEMPTION)
- .set resume_kernel, restore_all
-@@ -397,67 +399,15 @@ handle_syscall_trace_exit:
- 
- #ifdef CONFIG_VMAP_STACK
- handle_kernel_stack_overflow:
--	/*
--	 * Takes the psuedo-spinlock for the shadow stack, in case multiple
--	 * harts are concurrently overflowing their kernel stacks.  We could
--	 * store any value here, but since we're overflowing the kernel stack
--	 * already we only have SP to use as a scratch register.  So we just
--	 * swap in the address of the spinlock, as that's definately non-zero.
--	 *
--	 * Pairs with a store_release in handle_bad_stack().
--	 */
--1:	la sp, spin_shadow_stack
--	REG_AMOSWAP_AQ sp, sp, (sp)
--	bnez sp, 1b
--
--	la sp, shadow_stack
--	addi sp, sp, SHADOW_OVERFLOW_STACK_SIZE
--
--	//save caller register to shadow stack
--	addi sp, sp, -(PT_SIZE_ON_STACK)
--	REG_S x1,  PT_RA(sp)
--	REG_S x5,  PT_T0(sp)
--	REG_S x6,  PT_T1(sp)
--	REG_S x7,  PT_T2(sp)
--	REG_S x10, PT_A0(sp)
--	REG_S x11, PT_A1(sp)
--	REG_S x12, PT_A2(sp)
--	REG_S x13, PT_A3(sp)
--	REG_S x14, PT_A4(sp)
--	REG_S x15, PT_A5(sp)
--	REG_S x16, PT_A6(sp)
--	REG_S x17, PT_A7(sp)
--	REG_S x28, PT_T3(sp)
--	REG_S x29, PT_T4(sp)
--	REG_S x30, PT_T5(sp)
--	REG_S x31, PT_T6(sp)
--
--	la ra, restore_caller_reg
--	tail get_overflow_stack
--
--restore_caller_reg:
--	//save per-cpu overflow stack
--	REG_S a0, -8(sp)
--	//restore caller register from shadow_stack
--	REG_L x1,  PT_RA(sp)
--	REG_L x5,  PT_T0(sp)
--	REG_L x6,  PT_T1(sp)
--	REG_L x7,  PT_T2(sp)
--	REG_L x10, PT_A0(sp)
--	REG_L x11, PT_A1(sp)
--	REG_L x12, PT_A2(sp)
--	REG_L x13, PT_A3(sp)
--	REG_L x14, PT_A4(sp)
--	REG_L x15, PT_A5(sp)
--	REG_L x16, PT_A6(sp)
--	REG_L x17, PT_A7(sp)
--	REG_L x28, PT_T3(sp)
--	REG_L x29, PT_T4(sp)
--	REG_L x30, PT_T5(sp)
--	REG_L x31, PT_T6(sp)
-+	/* we reach here from kernel context, sscratch must be 0 */
-+	csrrw x31, CSR_SCRATCH, x31
-+	asm_per_cpu sp, overflow_stack, x31
-+	li x31, OVERFLOW_STACK_SIZE
-+	add sp, sp, x31
-+	/* zero out x31 again and restore x31 */
-+	xor x31, x31, x31
-+	csrrw x31, CSR_SCRATCH, x31
- 
--	//load per-cpu overflow stack
--	REG_L sp, -8(sp)
- 	addi sp, sp, -(PT_SIZE_ON_STACK)
- 
- 	//save context to overflow stack
-diff --git a/arch/riscv/kernel/traps.c b/arch/riscv/kernel/traps.c
-index 7a6c02e17f4f0..ffa37f4f6a107 100644
---- a/arch/riscv/kernel/traps.c
-+++ b/arch/riscv/kernel/traps.c
-@@ -209,42 +209,14 @@ int is_valid_bugaddr(unsigned long pc)
- #endif /* CONFIG_GENERIC_BUG */
- 
- #ifdef CONFIG_VMAP_STACK
--static DEFINE_PER_CPU(unsigned long [OVERFLOW_STACK_SIZE/sizeof(long)],
-+DEFINE_PER_CPU(unsigned long [OVERFLOW_STACK_SIZE/sizeof(long)],
- 		overflow_stack)__aligned(16);
--/*
-- * shadow stack, handled_ kernel_ stack_ overflow(in kernel/entry.S) is used
-- * to get per-cpu overflow stack(get_overflow_stack).
-- */
--long shadow_stack[SHADOW_OVERFLOW_STACK_SIZE/sizeof(long)] __aligned(16);
--asmlinkage unsigned long get_overflow_stack(void)
+-static bool __may_read_extent_tree(struct inode *inode)
 -{
--	return (unsigned long)this_cpu_ptr(overflow_stack) +
--		OVERFLOW_STACK_SIZE;
+-	struct f2fs_sb_info *sbi = F2FS_I_SB(inode);
+-
+-	if (!test_opt(sbi, READ_EXTENT_CACHE))
+-		return false;
+-	if (is_inode_flag_set(inode, FI_NO_EXTENT))
+-		return false;
+-	if (is_inode_flag_set(inode, FI_COMPRESSED_FILE) &&
+-			 !f2fs_sb_has_readonly(sbi))
+-		return false;
+-	return S_ISREG(inode->i_mode);
 -}
 -
--/*
-- * A pseudo spinlock to protect the shadow stack from being used by multiple
-- * harts concurrently.  This isn't a real spinlock because the lock side must
-- * be taken without a valid stack and only a single register, it's only taken
-- * while in the process of panicing anyway so the performance and error
-- * checking a proper spinlock gives us doesn't matter.
-- */
--unsigned long spin_shadow_stack;
- 
- asmlinkage void handle_bad_stack(struct pt_regs *regs)
+ static bool __init_may_extent_tree(struct inode *inode, enum extent_type type)
  {
- 	unsigned long tsk_stk = (unsigned long)current->stack;
- 	unsigned long ovf_stk = (unsigned long)this_cpu_ptr(overflow_stack);
+ 	if (type == EX_READ)
+-		return __may_read_extent_tree(inode);
++		return test_opt(F2FS_I_SB(inode), READ_EXTENT_CACHE) &&
++			S_ISREG(inode->i_mode);
+ 	return false;
+ }
  
--	/*
--	 * We're done with the shadow stack by this point, as we're on the
--	 * overflow stack.  Tell any other concurrent overflowing harts that
--	 * they can proceed with panicing by releasing the pseudo-spinlock.
--	 *
--	 * This pairs with an amoswap.aq in handle_kernel_stack_overflow.
--	 */
--	smp_store_release(&spin_shadow_stack, 0);
--
- 	console_verbose();
+@@ -88,7 +75,17 @@ static bool __may_extent_tree(struct inode *inode, enum extent_type type)
+ 	if (list_empty(&F2FS_I_SB(inode)->s_list))
+ 		return false;
  
- 	pr_emerg("Insufficient stack space to handle exception!\n");
+-	return __init_may_extent_tree(inode, type);
++	if (!__init_may_extent_tree(inode, type))
++		return false;
++
++	if (type == EX_READ) {
++		if (is_inode_flag_set(inode, FI_NO_EXTENT))
++			return false;
++		if (is_inode_flag_set(inode, FI_COMPRESSED_FILE) &&
++				 !f2fs_sb_has_readonly(F2FS_I_SB(inode)))
++			return false;
++	}
++	return true;
+ }
+ 
+ static void __try_update_largest_extent(struct extent_tree *et,
 -- 
 2.53.0
 
