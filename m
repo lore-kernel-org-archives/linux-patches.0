@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793207943;
-	b=4MBURyN455vUFWhPstiodjC9MraogXFNhxkS4BmR4LXm+x+JxlpxRUJu1zkrL5yeF+Uv
-	 ZuKAFFnMZ7kWqBnFgDZdP1w6QrrIPGveRFvtG87GOwU1UgbJrdS4nRI2VL52qMtaPf82T
-	 I3aQbtmaD8PFOpLCfwUA5JFoPpykRfmoQzzl94hXi/VKxfq/LyslL6Fg/sCTU9sF++GUI
-	 GSBq2dZegIuQE27mXaXQR5fFprKGrESnLG7yLoSulOwYpwO8AhW2S7pF/86st9mDpBKv/
-	 yiBfjxg2oBVxAsw0L82t98BQxFwdxSeEfuMGLLr9rN7dBO39yMEoWVacQ0eGINYpaoQ==
+	t=1793207946;
+	b=V2cKW5KaoKklGpuhRBRqlz3odEbuLSq3/PKmf2MMvymb4AjtjmdbJMp7AiFfo4pw7YPL
+	 DISqdzDhM1IZa7rKF/RsvwVSFA5YWuZ/LSWWEawu781B0V6VJ2i2Byr2wAMKdsxId5dU5
+	 tDfFOh/BcpqilEoP6hNMudwOIunrQ+KvxZ381dyugQFJrey8ocynMv6dbyQ0YI8p4mqbv
+	 sIfNjfKOu1lKWayV3ZTg7PjUdWkLjfW2j7QzyK0YzvgSn4VzaetaaxeKrjVo7nrKtGy7S
+	 7pYByqxAuROIpMwrrQvI8pwaF8OkfIXP7qT1av5U7nvC4QaqkhfXH0Krv7oWuQ7ntdA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793207943;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793207946;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=HulGuEwwGiRuezV+9q8NogfkdadbAMNUT4xV1ZeE3HU=;
-	b=qVSVn/kiM7BYKLnLvoaxsclkMg9Qln7xz40ZWmIaCse/+m1Jjyxyk5mcBnPxo0MPC9Jv
-	 gFzQbfZStW9CqcW3L/x9HC/BZebjECd2qjYzpzPk5PpCRv6c7o+tLtMj+S/zg/+3G100w
-	 ul1iiQPym9oXcyKP6KxuQEXeV/nuenjKZ1gSpqd5WTmONzN7jSkYWf9/FEPakmOg7IY3V
-	 DzKWph876GzmFnpkmIPwmYMPdBz9DptZ3LJ5h0v8SNCNXwz1Q4AxVYmk0D1IMiDeODfwD
-	 CrVUPf6Za18hVmBnfkanrCiMuCVCSxykqyl5sV0TykfOyivTM5OZe0slHbNdsPOwVWw==
+	bh=Jfo1Azg0nB3TyupyhDPVg+r1F9tr5tn0e31sJiDLdyA=;
+	b=Bofd+FL5H6DAKBBUJbsqvlHbfesqbVx4gGRiIg/TQyBHiMxOi+MRMwtvyP8NFvjZvz1z
+	 IQ9Brlv+fGnqOJFYsau+3JqzCkSzR1wzDrNrL567npw2igeNHWFBj4wYPC/Cu/mJEso+Y
+	 9AaTSVa1YeMiFk3pt3SvwDeC+fY4Qa7o7hFDsA/YilUJdPZTEviP6zlDAxDoOZ851/8z3
+	 I21bxWQnVpTehbO4nFh+LRatJFBk4pjtIDwua8DwnaLQE4KztzGuHT5/ryvcLAm8e5/Gv
+	 OMTonI6WrfGWFx07F/NIfr9P4R7xUJKemdnxbK93ry8BiveSIhgZXF01AWPuOHXreSg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mcGuFaBf;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hC2anByZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76E53606A31D;
-	Wed, 28 Oct 2026 17:19:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F303606A326;
+	Wed, 28 Oct 2026 17:19:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mcGuFaBf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C68971F01825;
-	Wed, 28 Oct 2026 17:19:02 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hC2anByZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A00261F01829;
+	Wed, 28 Oct 2026 17:19:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793207943;
-	bh=HulGuEwwGiRuezV+9q8NogfkdadbAMNUT4xV1ZeE3HU=;
+	s=korg; t=1793207946;
+	bh=Jfo1Azg0nB3TyupyhDPVg+r1F9tr5tn0e31sJiDLdyA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mcGuFaBf4uhC/g1jzUPMWb564jwvYiyfLizLr8IrNTfusqOEzCsI9agDBi6hQCK5t
-	 Y03SoBu7mS4m9t/NnOioE8l5YSbZA3WgVRUTf34pN33iUxU83v+yLDvRcD/iIYitsz
-	 JjKtYWeXZXkvN/7OSxCkTpCkf7TRI6cajqDZuTUI=
+	b=hC2anByZW1och8KUfGDxa1MBM+pmCgYlliAX29I8+OQJEiK8sp8d2dDQ82y5YlV4r
+	 j7aM1qmKqDVzXcOjgIjIv07+vUMML9dCCZF6vismYdKE5uYksOeIaadp7m6ffjojX5
+	 y4Hu+gpjB2L5s04nvBMUhFvNO0+oqp6B9qnsA/8E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Josef Bacik <josef@toxicpanda.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.12 194/247] io_uring/cmd: dont leave list poison in ->hash_node
-Date: Wed, 28 Oct 2026 17:59:57 +0100
-Message-ID: <20261028165952.012772377@linuxfoundation.org>
+	Jens Axboe <axboe@kernel.dk>,
+	"Claude Fable 5.1" <noreply@anthropic.com>
+Subject: [PATCH 6.12 195/247] io_uring/wait: dont spin on a stuck overflow list
+Date: Wed, 28 Oct 2026 17:59:58 +0100
+Message-ID: <20261028165952.035500050@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165947.349197979@linuxfoundation.org>
 References: <20261028165947.349197979@linuxfoundation.org>
@@ -69,53 +70,67 @@ Content-Transfer-Encoding: 8bit
 
 From: Josef Bacik <josef@toxicpanda.com>
 
-Commit 4c83e39f4d1944d7146fd06094f2c8053238d55c upstream.
+Commit 34f5a664c34d3cb62f6bec7f4156754594a7d25b upstream.
 
-io_uring_cmd_del_cancelable() uses hlist_del() to take a command off
-->cancelable_uring_cmd, which leaves LIST_POISON1/2 behind in
-->hash_node. Requests are recycled through the request cache without
-being reinitialised, and not every user of ->hash_node sets it up before
-it is used:
+As long as IO_CHECK_CQ_OVERFLOW_BIT is set, io_cqring_wait_schedule()
+returns right away, before it gets to look at signals or arms the timeout,
+for io_cqring_wait() to flush the overflow list. If that doesn't empty the
+list, and the CQ ring doesn't hold the number of events the caller wants,
+the loop starts over, with the same result. The task spins in the kernel,
+and can't be killed.
 
-If a vectored futex wait is woken while futex_wait_multiple_setup() is
-still queueing the futexes, io_futexv_wait() doesn't add the request to
-->futex_list, and leaves the completion to the task_work queued by the
-wake up. io_futexv_complete() ends in __io_futex_complete(), whose
-hlist_del_init() is fine for a request that is unhashed, which is how all
-other users of the node leave it. If the request was a cancelable
-uring_cmd in its previous life, e.g. a ublk FETCH_REQ, it writes through
-LIST_POISON2:
+The assumption is that this can't happen: if CQEs can't be flushed, the
+ring is full, and min_events is capped to the size of the ring. But:
 
-  Oops: general protection fault, probably for non-canonical address
-  KASAN: maybe wild-memory-access in range [0xdead000000000120-...]
-  RIP: 0010:io_futexv_complete+0x219/0x420
-  Call Trace:
-   tctx_task_work_run+0x804/0x950
-   tctx_task_work+0x71/0xa0
-   task_work_run+0x118/0x200
+- With IORING_SETUP_CQE_MIXED a 32b CQE needs two contiguous entries. It
+  is stuck on the list if a single one is free, and then the ring holds
+  less than cq_entries events. A single threaded application that asks
+  for as many events as the ring has entries never gets out of
+  io_uring_enter().
 
-Leave the node unhashed.
+- Whether the ring is full is up to the CQ head, which the application
+  can write to. While one thread waits for events on an empty ring,
+  another one can move the head back so that the ring looks full and
+  have a CQE overflow. The waiter can't be stopped any more, not even by
+  SIGKILL.
 
-Fixes: 93b8cc60c37b ("io_uring: cancelable uring_cmd")
+Only the application can make room in the CQ ring. Return to it if the
+list could not be flushed.
+
+[ 6.12: io_cqring_wait() is in io_uring.c ]
+Fixes: 3fcf19d592d5 ("io_uring: parse check_cq out of wq waiting")
 Assisted-by: LLM
 Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Link: https://patch.msgid.link/20261015-b4-io-uring-fixes-v1-2-c1556f5d7bf5@toxicpanda.com
+Link: https://patch.msgid.link/20261015-b4-io-uring-fixes-v1-3-c1556f5d7bf5@toxicpanda.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Co-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/uring_cmd.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ io_uring/io_uring.c |   13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
---- a/io_uring/uring_cmd.c
-+++ b/io_uring/uring_cmd.c
-@@ -85,7 +85,7 @@ static void io_uring_cmd_del_cancelable(
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -2608,9 +2608,18 @@ static int io_cqring_wait(struct io_ring
  
- 	cmd->flags &= ~IORING_URING_CMD_CANCELABLE;
- 	io_ring_submit_lock(ctx, issue_flags);
--	hlist_del(&req->hash_node);
-+	hlist_del_init(&req->hash_node);
- 	io_ring_submit_unlock(ctx, issue_flags);
- }
- 
+ 		check_cq = READ_ONCE(ctx->check_cq);
+ 		if (unlikely(check_cq)) {
+-			/* let the caller flush overflows, retry */
+-			if (check_cq & BIT(IO_CHECK_CQ_OVERFLOW_BIT))
++			if (check_cq & BIT(IO_CHECK_CQ_OVERFLOW_BIT)) {
+ 				io_cqring_do_overflow_flush(ctx);
++				/*
++				 * No room for what has overflown. It takes the
++				 * application to change that, so return to it.
++				 */
++				if (test_bit(IO_CHECK_CQ_OVERFLOW_BIT,
++					     &ctx->check_cq)) {
++					ret = 0;
++					break;
++				}
++			}
+ 			if (check_cq & BIT(IO_CHECK_CQ_DROPPED_BIT)) {
+ 				ret = -EBADR;
+ 				break;
 
 
