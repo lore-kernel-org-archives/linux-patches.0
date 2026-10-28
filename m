@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793210216;
-	b=MWR5pP5kLbiCs7yzAciR36mdTSosxTAzS7R+KxtpHO8i0jkxFC/4AumOBJ1Bvt1iTDsG
-	 3HNS4HZvJooWopKxREKkmKUX6RTMx1mH8fpHrPuXMFXJFyI3USc7SJYkB8BkFNpzTswvu
-	 4lxvgxuIkqpDHNFlg4CJ8Xx5Ex+O2YS82ScY9Qtg8h/38fOp7a8kEvTq79HpqaaGFRBwO
-	 OYKwKbbkk0PbS8F4zZHEVWy7dS651TE6Nf0KBzKTbD1xu3PDLRZcW8TU7hiCXVh6yWq/r
-	 cgbq5uSOijHeHsfh+EF3qdWhTCDfZbtYAWAzUb1c3hpBDoc+eWYl/OiR77Jv+Q1Gsvg==
+	t=1793210219;
+	b=uK0sa0cUfYtI3987JL/+SEutu7x5bb0PgcTlmhiNGP93OhkMiIbWBEMMqr+lAbdrp1HX
+	 MGVAQL1NLy26MWToII6pes+wmizdsPlNdYYWnSDEIpsn0IYP/yGBYpf4IjcT7BuepJ+pm
+	 /o6JYaz9jfrxBCmEzSex8cANU6Ou1tg5DtNvsPlLbGErmzM9TS2vkP2d2HbuLV/Y5Se+O
+	 CJi3z023rEyWfvcKjgKRB/gzqdDlE4csn7V/CFvXw0R6ywKVQN1fdvSg2xyRW2fUrpIyl
+	 xWpGv+FmRxSzKbR+sGwcbFVCIQJAz83v3i86cNJ0BHcFuEI5tou6feuRyVY1QGVGohA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793210216;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793210219;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=X4vrTPy2mE4eIJlzQXpbe9SJscsumlnInZUPWA8x+do=;
-	b=lWglvozVwS6lDpQBmHhzrpktGkSmA5sE0N9N67ihlcqs1kCeIsqRqaBqqXi+qexdAjaJ
-	 xTYE+QXsHost5URPGFn7biL+MGVd8EVS0JQK2LEGQfU/mMnMzXYDT2htXPpQzcYVV5z5L
-	 m76JPP00Ad7uRO1Z4Ok5QYiQKLXNiuKGb2hO0UzQucZ19OMuuO2q4j5cPzc9sWmUeBmVT
-	 0ChZvZb/aOi30ausePHkn2VJSr5nnwXjolFVNbuIEheHYso6vinzz86kA4gYGZ1cRa1XS
-	 ZD3r7l6NnnJO0Xi8wRJ30kb52LrWVmav/DGGfZ3Qto0PylPn/ckh/Z2GbyG2XJ79Mqw==
+	bh=VqPmwYcZzDl4XUWD6P+RLk6Fkh/xiXKqE7yDAqUmJRk=;
+	b=jq6f3i+LzZH6E2DbLp3pHIpR5fbyClCHJHrVKP8YG2fyU9PV7hkLaLngKhGLtzJOHulU
+	 Q6P2ltqX53e+AFMWGyMw0UwQPYhkxcSe4Fm3aNQrbKMpE3HbXkfbmUBHBseom8Bu4ObUl
+	 qBow7CMXq6DNcoPjITLBj+9AYDvAY4H9HTicIoUvd0u3jwkytQve+JL9gVbUNhKu1Z2KE
+	 zMubtQnHiWdhuUaMsGuPHoQx59xveJ3rsX5QMKeRLNi0jISmCLjxNs2m8iNOY6+HKhtZD
+	 faARpaBtDuydxFnLvu76+TwmbWFvHLgNeeaYx/xvjPdF564UJaVfoZ4/8IiLAOmZ9JA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uL++MHg3;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mzxih3F+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4E6B606A332;
-	Wed, 28 Oct 2026 17:56:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D081A606A31A;
+	Wed, 28 Oct 2026 17:56:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uL++MHg3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FDDA1F01825;
-	Wed, 28 Oct 2026 17:56:54 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mzxih3F+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6B641F01828;
+	Wed, 28 Oct 2026 17:56:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793210215;
-	bh=X4vrTPy2mE4eIJlzQXpbe9SJscsumlnInZUPWA8x+do=;
+	s=korg; t=1793210218;
+	bh=VqPmwYcZzDl4XUWD6P+RLk6Fkh/xiXKqE7yDAqUmJRk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uL++MHg31yLkgmDKw4vL785MTFfj4af1bykY/zjC3Hhk/shVRpFfBYGOgMjcDVQKL
-	 hu33N0I6ajj+11s2kcjG0D6alFkXBCZCFmcrDzRkj1NKjsJ2LPiMEZ4QoAtlA+9msp
-	 XD7F8YGtnM7tYu7MLA3cWiTXboZ13Tzln02x6VXE=
+	b=mzxih3F+xJ6c1ztF7sXir9QzAs/v/VIqc9DhA3QzG7BSwuvyZ5uEN4UHeyT9CeksX
+	 Epvh49B63ijvuaFK4Hp5YhamiDzY8YZVu1PrHG/TK/SeWhPLdajfBL+wB8kqdvFxUQ
+	 oyyKomgcgcAyBGinG0OsAnPq+y47fLvRQwhyOHgU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liang Li <liali@redhat.com>,
-	Hangbin Liu <liuhangbin@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 117/168] bonding: do not set usable_slaves for broadcast mode
-Date: Wed, 28 Oct 2026 18:00:53 +0100
-Message-ID: <20261028165945.857606116@linuxfoundation.org>
+Subject: [PATCH 6.6 118/168] Revert "srcu: Use irq_work to start GP in tiny SRCU"
+Date: Wed, 28 Oct 2026 18:00:54 +0100
+Message-ID: <20261028165945.881914469@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165943.089486480@linuxfoundation.org>
 References: <20261028165943.089486480@linuxfoundation.org>
@@ -69,63 +67,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hangbin Liu <liuhangbin@gmail.com>
+This reverts commit 20b98d9ffb09763048a7c84b47403eb0f177272c.
 
-[ Upstream commit 45fc134bcfadde456639c1b1e206e6918d69a553 ]
-
-After commit e0caeb24f538 ("net: bonding: update the slave array for broadcast mode"),
-broadcast mode will also set all_slaves and usable_slaves during
-bond_enslave(). But if we also set updelay, during enslave, the
-slave init state will be BOND_LINK_BACK. And later
-bond_update_slave_arr() will alloc usable_slaves but add nothing.
-This will cause bond_miimon_inspect() to have ignore_updelay
-always true. So the updelay will be always ignored. e.g.
-
-[    6.498368] bond0: (slave veth2): link status definitely down, disabling slave
-[    7.536371] bond0: (slave veth2): link status up, enabling it in 0 ms
-[    7.536402] bond0: (slave veth2): link status definitely up, 10000 Mbps full duplex
-
-To fix it, we can either always call bond_update_slave_arr() on every
-place when link changes. Or, let's just not set usable_slaves for
-broadcast mode.
-
-Fixes: e0caeb24f538 ("net: bonding: update the slave array for broadcast mode")
-Reported-by: Liang Li <liali@redhat.com>
-Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
-Link: https://patch.msgid.link/20260304-b4-bond_updelay-v1-1-f72eb2e454d0@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: Guenter Roeck <linux@roeck-us.net>
+Link: https://lore.kernel.org/r/49da816c-8082-46f1-bb12-f0d6187bb06a@roeck-us.net
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/bonding/bond_main.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ include/linux/srcutiny.h |  4 ----
+ kernel/rcu/srcutiny.c    | 19 +------------------
+ 2 files changed, 1 insertion(+), 22 deletions(-)
 
-diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
-index 69cf5b970a114..e480c692513f0 100644
---- a/drivers/net/bonding/bond_main.c
-+++ b/drivers/net/bonding/bond_main.c
-@@ -5112,13 +5112,18 @@ static void bond_set_slave_arr(struct bonding *bond,
- {
- 	struct bond_up_slave *usable, *all;
+diff --git a/include/linux/srcutiny.h b/include/linux/srcutiny.h
+index bad5fd0f1ddb6..447133171d95f 100644
+--- a/include/linux/srcutiny.h
++++ b/include/linux/srcutiny.h
+@@ -11,7 +11,6 @@
+ #ifndef _LINUX_SRCU_TINY_H
+ #define _LINUX_SRCU_TINY_H
  
--	usable = rtnl_dereference(bond->usable_slaves);
--	rcu_assign_pointer(bond->usable_slaves, usable_slaves);
--	kfree_rcu(usable, rcu);
--
- 	all = rtnl_dereference(bond->all_slaves);
- 	rcu_assign_pointer(bond->all_slaves, all_slaves);
- 	kfree_rcu(all, rcu);
-+
-+	if (BOND_MODE(bond) == BOND_MODE_BROADCAST) {
-+		kfree_rcu(usable_slaves, rcu);
-+		return;
-+	}
-+
-+	usable = rtnl_dereference(bond->usable_slaves);
-+	rcu_assign_pointer(bond->usable_slaves, usable_slaves);
-+	kfree_rcu(usable, rcu);
+-#include <linux/irq_work_types.h>
+ #include <linux/swait.h>
+ 
+ struct srcu_struct {
+@@ -25,21 +24,18 @@ struct srcu_struct {
+ 	struct rcu_head *srcu_cb_head;	/* Pending callbacks: Head. */
+ 	struct rcu_head **srcu_cb_tail;	/* Pending callbacks: Tail. */
+ 	struct work_struct srcu_work;	/* For driving grace periods. */
+-	struct irq_work srcu_irq_work;	/* Defer schedule_work() to irq work. */
+ #ifdef CONFIG_DEBUG_LOCK_ALLOC
+ 	struct lockdep_map dep_map;
+ #endif /* #ifdef CONFIG_DEBUG_LOCK_ALLOC */
+ };
+ 
+ void srcu_drive_gp(struct work_struct *wp);
+-void srcu_tiny_irq_work(struct irq_work *irq_work);
+ 
+ #define __SRCU_STRUCT_INIT(name, __ignored, ___ignored)			\
+ {									\
+ 	.srcu_wq = __SWAIT_QUEUE_HEAD_INITIALIZER(name.srcu_wq),	\
+ 	.srcu_cb_tail = &name.srcu_cb_head,				\
+ 	.srcu_work = __WORK_INITIALIZER(name.srcu_work, srcu_drive_gp),	\
+-	.srcu_irq_work = { .func = srcu_tiny_irq_work },		\
+ 	__SRCU_DEP_MAP_INIT(name)					\
  }
  
- static void bond_reset_slave_arr(struct bonding *bond)
+diff --git a/kernel/rcu/srcutiny.c b/kernel/rcu/srcutiny.c
+index 24aa302b3269a..c38e5933a5d69 100644
+--- a/kernel/rcu/srcutiny.c
++++ b/kernel/rcu/srcutiny.c
+@@ -9,7 +9,6 @@
+  */
+ 
+ #include <linux/export.h>
+-#include <linux/irq_work.h>
+ #include <linux/mutex.h>
+ #include <linux/preempt.h>
+ #include <linux/rcupdate_wait.h>
+@@ -38,7 +37,6 @@ static int init_srcu_struct_fields(struct srcu_struct *ssp)
+ 	ssp->srcu_idx_max = 0;
+ 	INIT_WORK(&ssp->srcu_work, srcu_drive_gp);
+ 	INIT_LIST_HEAD(&ssp->srcu_work.entry);
+-	init_irq_work(&ssp->srcu_irq_work, srcu_tiny_irq_work);
+ 	return 0;
+ }
+ 
+@@ -82,7 +80,6 @@ EXPORT_SYMBOL_GPL(init_srcu_struct);
+ void cleanup_srcu_struct(struct srcu_struct *ssp)
+ {
+ 	WARN_ON(ssp->srcu_lock_nesting[0] || ssp->srcu_lock_nesting[1]);
+-	irq_work_sync(&ssp->srcu_irq_work);
+ 	flush_work(&ssp->srcu_work);
+ 	WARN_ON(ssp->srcu_gp_running);
+ 	WARN_ON(ssp->srcu_gp_waiting);
+@@ -159,20 +156,6 @@ void srcu_drive_gp(struct work_struct *wp)
+ }
+ EXPORT_SYMBOL_GPL(srcu_drive_gp);
+ 
+-/*
+- * Use an irq_work to defer schedule_work() to avoid acquiring the workqueue
+- * pool->lock while the caller might hold scheduler locks, causing lockdep
+- * splats due to workqueue_init() doing a wakeup.
+- */
+-void srcu_tiny_irq_work(struct irq_work *irq_work)
+-{
+-	struct srcu_struct *ssp;
+-
+-	ssp = container_of(irq_work, struct srcu_struct, srcu_irq_work);
+-	schedule_work(&ssp->srcu_work);
+-}
+-EXPORT_SYMBOL_GPL(srcu_tiny_irq_work);
+-
+ static void srcu_gp_start_if_needed(struct srcu_struct *ssp)
+ {
+ 	unsigned long cookie;
+@@ -183,7 +166,7 @@ static void srcu_gp_start_if_needed(struct srcu_struct *ssp)
+ 	WRITE_ONCE(ssp->srcu_idx_max, cookie);
+ 	if (!READ_ONCE(ssp->srcu_gp_running)) {
+ 		if (likely(srcu_init_done))
+-			irq_work_queue(&ssp->srcu_irq_work);
++			schedule_work(&ssp->srcu_work);
+ 		else if (list_empty(&ssp->srcu_work.entry))
+ 			list_add(&ssp->srcu_work.entry, &srcu_boot_list);
+ 	}
 -- 
 2.53.0
 
