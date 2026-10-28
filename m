@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213507;
-	b=Z09hXX67n6dtZBIjuDw2U1e9zA6sveofTkyBF901LXj7lEbwF4kUrBhpkkJHzuHEu7Qd
-	 U6NBq6MxAA2VGjx5E4tS9ECq033jvCLbrGRfe9nmJ0TJWt4pqkVLYtjuSt8Xcb2pFbqGE
-	 5NQrxTS3LD7p+DbJcav1vJKU6QndIq9UrsDNfrqJEUr8ioyK/2or1zhY044z3m3OWgMHG
-	 NRsOWZpnQ2Mw25+6Eob8fcrarZjUYMKtK07wTbx5ZTdvRYMhvCy6P/4Y1yXp3cKsET6Dq
-	 8auHIPO0jVQHitIYCwFsM0bAz8lggMQAdYQ6enrAHu+xa+hyllEkU8wu43E/LLOZH/Q==
+	t=1793213510;
+	b=JmjrYbznDgpYDW/R2lDWUzm4+U2VZryZY8KWnijgBLIqlfDZf+kcXP4EwqNaXvnF3ZBF
+	 ajLUVaYHnYk1sGr0qja7lhdKE3wLQjtL64otZAGuA4b5GU1whnyaYs2skALV1AK9eX060
+	 IRQUrWySxby4mNtrQAVsH/mo0nWrlY0c1dL1WSMcv6IoYX0O5ZLeHKBXp/vuYDnG5oxK8
+	 scmGPTupyO0l29LbeI1dOfT/g7wDzfPQOcweoTx9pJWDaCKQ4k8NPkKJirImjW88xnHeJ
+	 IiQrmYtjwvFpHjROxPwbq1ziLIAAb/VEfsQAKeMHuz7MQGVMZhdIuMfL4iOrZlIFJSA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213507;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213510;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ImY3h+WL3IJPMJHyx++3B0WSWkTXr9vSNHBF2UUAXDU=;
-	b=iyasWnG1GtAkKf3+X/EnId/0tatsrvsHBAWAjH+baxydsNBj8T0/KK8bANDXScUdF6SL
-	 lP+BSPsVkcL+0OcpbYVFoCtQ15gVgh+ImUZ0/a4hEh7UjgOBy8OBNi+nVyqPlsC2LKLTG
-	 3h8ts7FQemKkuXUSk9BQHQexG2+qoerRPrfhdSTkyb0vHKMax/W9Q6Y/kvrtbFqPVRoC0
-	 t0mpSAi6Ko00FlfL7/SLDDMHwZrYHmpLLSeTz0Meb3dX7fHW0EgNnEuN5HZ4asjygeG2k
-	 50+EYZ7yQv32kSwYU/ezQyrzmvIv9EIPa9ea2hf+MHmNeopjA1aTyz7PyK/DeM9jBGg==
+	bh=muK+3fK3e/cotFgGJDFG/M6A7uFGk7BNBjG9bGIa0ws=;
+	b=cyuJPgFUV62JsiHGavkSobFDmr/d15O78lf6ZOlSkMy+j6M9zcYVaA6SPV903LfvE/J6
+	 HxRgBQQxgBVgvi1N4zxz6/MwRTicDdDJm80EB369YGuQRrOX8dbeCLHwyhtaLbvPazuwQ
+	 2vArDiutyrA9AdaZ5ICNcZgUxDSpCZ8AumjxvDUo7ehFD7aAbNt4aACXtnF6tcnI5j6CG
+	 26tNlnd5qHCZgZZBdHkgehd5Yp4gmLrKZ+VF3SO38C4SZpoWLiz5NAG30m7zP2c7oqdRY
+	 OW5qxOcNz/Ama3MkEl9uKUEuWJW0jKCCTBZqJZJ0W/HIXI/58kAvxuPxfI7uGpJw/MA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="cZ2FPkF/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RWnjV0et;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6704606A31C;
-	Wed, 28 Oct 2026 18:51:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2279606A31A;
+	Wed, 28 Oct 2026 18:51:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cZ2FPkF/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 345F41F01825;
-	Wed, 28 Oct 2026 18:51:46 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RWnjV0et
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03A7E1F01825;
+	Wed, 28 Oct 2026 18:51:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213506;
-	bh=ImY3h+WL3IJPMJHyx++3B0WSWkTXr9vSNHBF2UUAXDU=;
+	s=korg; t=1793213509;
+	bh=muK+3fK3e/cotFgGJDFG/M6A7uFGk7BNBjG9bGIa0ws=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cZ2FPkF/bom/Pj7KQyzMACKV9qtGEzj3ZXbWOaFjlm1u9uEsbqY2UQUklj9s9Faav
-	 LsdcLZUyLdSoJS4n+7kATgmtkxh2KcOted/CMycTlr3uQXJpajM64l6yyP7/WlQX0u
-	 fXHdKyxXMIO5BB76krrBUmkGK6zjP70o/0DEi3Oo=
+	b=RWnjV0etShL9mGFh8xk5jp7wvS6IfF5C16Dtq2hJGv1d+atFHCQ0llkBmPt0Ydjcp
+	 Gze0Tilt2R4slOqQNIasyM8WacqIB0F1GdnvN7gCfljELznGcl60qZ+A1AaM2zggOD
+	 E8iQ3dkOucJthTDYUtPsPw1vnqNKL5BnIOUEYs1Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Sashiko (gemini)" <sashiko-bot@kernel.org>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
+	AutonomousCodeSecurity@microsoft.com,
+	"Xiang Mei (Microsoft)" <xmei5@asu.edu>,
+	"Cen Zhang (Microsoft Security FORGE Labs)" <cenzhang@linux.microsoft.com>,
+	Omar Ramadan <omar@blockcast.net>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0487/1887] net/sched: em_text: reject unterminated algo before autoload
-Date: Wed, 28 Oct 2026 17:43:03 +0100
-Message-ID: <20261028170510.349094815@linuxfoundation.org>
+Subject: [PATCH 6.1 0488/1887] amt: send the relays General Query directly from the receive path
+Date: Wed, 28 Oct 2026 17:43:04 +0100
+Message-ID: <20261028170510.375712311@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,61 +71,189 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jamal Hadi Salim <jhs@mojatatu.com>
+From: Omar Ramadan <omar@blockcast.net>
 
-[ Upstream commit c9728fcf2e7fb4a7a8d08ebd9524c3b02ae1a021 ]
+[ Upstream commit afae89de73dd693cfa329580ba0fba63bd3f0a11 ]
 
-This is a follow-up to commit 9c572a83037a ("net/sched: fix potential
-stack infoleak in em_text_dump()"), which zero-initialised the dump-side
-struct. Sashiko pointed at a pre-existing bug that exposed the change-side
-input-validation gap open.
+An skb queued in a qdisc can outlive the tunnel it references
+through a raw pointer in skb->cb. For example, with igmp_qrv set
+to 1 on the relay a tunnel lives for 135s, so a netem delay of
+180s on the amt device outlives it; when the tunnel expires and is
+freed, the subsequent dequeue triggers a use-after-free in
+amt_dev_xmit().
 
-em_text_change() casts the raw netlink attribute payload to struct
-tcf_em_text and passes conf->algo, a 16-byte array with no enforced NUL
-terminator, to textsearch_prepare().  On the TS_AUTOLOAD retry
-textsearch_prepare() calls request_module("ts_%s", algo); vsnprintf()
-walks %s until it finds a NUL, so an algo[] with no NUL reads past the
-array into the adjacent struct fields and payload and feeds those bytes
-to the usermode helper command line.  This is an out-of-bounds read and
-a kernel memory disclosure.
+  BUG: KASAN: slab-use-after-free in amt_dev_xmit+0x2763/0x2e20
+  Call Trace:
+   amt_dev_xmit+0x2763/0x2e20 [drivers/net/amt.c:1262]
+   dev_hard_start_xmit+0x22f/0x620
+   sch_direct_xmit+0x12e/0xac0
+   netem_dequeue+0x333/0xc50
+   net_tx_action+0x35c/0xa60
 
-Reject the attribute when no NUL exists within TC_EM_TEXT_ALGOSIZ bytes,
-matching the check xt_string has had since 3ab720881b6e.
+amt_send_igmp_gq() and amt_send_mld_gq() are only called from
+amt_request_handler(), inside the rcu_read_lock_bh() section of
+amt_rcv(). amt_request_handler() already has the tunnel the query is
+for: it found or created it inside that section. Queuing the query with
+dev_queue_xmit() only leads back into amt_dev_xmit(), which strips the
+Ethernet header and calls amt_send_membership_query() for that tunnel.
 
-Conditions to recreate the bug:
-- CAP_NET_ADMIN on the target netns (namespace-local via unshare -Urn
-  is enough)
-- install clsact on an interface, then add a basic filter with one text
-  ematch whose algo[] is 16 bytes with no NUL (e.g. "A"*16) and
-  pattern_len at least 1
-- the add fails with -ENOENT and the kernel invokes modprobe with a
-  module name made of "ts_" plus the 16 bytes and the adjacent payload
+Make that call directly from the two senders instead, the same way
+amt_send_advertisement() transmits from the receive path. The query
+never waits in a qdisc, the tunnel is only dereferenced inside the
+RCU section that found or created it, and nothing is stored in
+skb->cb, so no lookup or refcount is needed. Remove the query branch
+of amt_dev_xmit(), amt_skb_cb() and struct amt_skb_cb, which have no
+users left.
 
-Fixes: d675c989ed2d4 ("[PKT_SCHED]: Packet classification based on textsearch (ematch)")
-Reported-by: Sashiko (gemini) <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20260918133953.12494-1-bernard.ladenthin%40gmail.com
-Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://patch.msgid.link/QDISC-2DIU.v1.20260929183844@mojatatu.com
+Behaviour changes:
+ - The relay's own General Queries no longer pass through the amt
+   device's egress path: its qdisc, tc egress (clsact/tcx), the
+   netfilter egress hook and packet taps. They are still visible as
+   UDP on the underlay.
+ - A query that is sent successfully is no longer counted as
+   tx_dropped. The old query branch left through the unlock label,
+   which counted every sent query as dropped.
+ - A query that reaches amt_dev_xmit() on a relay from elsewhere,
+   such as a userspace querier, is now dropped at the IGMP/MLD type
+   switch. Before, it trusted whatever skb->cb held, and a NULL
+   tunnel hit the WARN_ON(1).
+
+Fixes: cbc21dc1cfe9 ("amt: add data plane of amt interface")
+Reported-by: AutonomousCodeSecurity@microsoft.com
+Reported-by: Xiang Mei (Microsoft) <xmei5@asu.edu>
+Reported-by: Cen Zhang (Microsoft Security FORGE Labs) <cenzhang@linux.microsoft.com>
+Signed-off-by: Omar Ramadan <omar@blockcast.net>
+Link: https://patch.msgid.link/20260928202312.74574-2-omar@blockcast.net
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/em_text.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/amt.c | 48 +++++++++++++++--------------------------------
+ include/net/amt.h |  4 ----
+ 2 files changed, 15 insertions(+), 37 deletions(-)
 
-diff --git a/net/sched/em_text.c b/net/sched/em_text.c
-index 32aae8a9dedaa..d612ad4e5c123 100644
---- a/net/sched/em_text.c
-+++ b/net/sched/em_text.c
-@@ -58,6 +58,9 @@ static int em_text_change(struct net *net, void *data, int len,
- 	if (len < sizeof(*conf) || len < (sizeof(*conf) + conf->pattern_len))
- 		return -EINVAL;
+diff --git a/drivers/net/amt.c b/drivers/net/amt.c
+index 4799f8fd03c45..33614c802be1c 100644
+--- a/drivers/net/amt.c
++++ b/drivers/net/amt.c
+@@ -78,15 +78,6 @@ static struct in6_addr mld2_all_node = MLD2_ALL_NODE_INIT;
+ static struct mld2_grec mldv2_zero_grec;
+ #endif
  
-+	if (!memchr(conf->algo, '\0', sizeof(conf->algo)))
-+		return -EINVAL;
+-static struct amt_skb_cb *amt_skb_cb(struct sk_buff *skb)
+-{
+-	BUILD_BUG_ON(sizeof(struct amt_skb_cb) + sizeof(struct tc_skb_cb) >
+-		     sizeof_field(struct sk_buff, cb));
+-
+-	return (struct amt_skb_cb *)((void *)skb->cb +
+-		sizeof(struct tc_skb_cb));
+-}
+-
+ static void __amt_source_gc_work(void)
+ {
+ 	struct amt_source_node *snode;
+@@ -787,6 +778,11 @@ static void amt_send_request(struct amt_dev *amt, bool v6)
+ 	rcu_read_unlock();
+ }
+ 
++static bool amt_send_membership_query(struct amt_dev *amt,
++				      struct sk_buff *skb,
++				      struct amt_tunnel_list *tunnel,
++				      bool v6);
 +
- 	if (conf->from_layer > conf->to_layer)
- 		return -EINVAL;
+ static void amt_send_igmp_gq(struct amt_dev *amt,
+ 			     struct amt_tunnel_list *tunnel)
+ {
+@@ -796,8 +792,11 @@ static void amt_send_igmp_gq(struct amt_dev *amt,
+ 	if (!skb)
+ 		return;
  
+-	amt_skb_cb(skb)->tunnel = tunnel;
+-	dev_queue_xmit(skb);
++	skb_pull(skb, sizeof(struct ethhdr));
++	if (amt_send_membership_query(amt, skb, tunnel, false)) {
++		amt->dev->stats.tx_dropped++;
++		kfree_skb(skb);
++	}
+ }
+ 
+ #if IS_ENABLED(CONFIG_IPV6)
+@@ -881,8 +880,11 @@ static void amt_send_mld_gq(struct amt_dev *amt, struct amt_tunnel_list *tunnel)
+ 	if (!skb)
+ 		return;
+ 
+-	amt_skb_cb(skb)->tunnel = tunnel;
+-	dev_queue_xmit(skb);
++	skb_pull(skb, sizeof(struct ethhdr));
++	if (amt_send_membership_query(amt, skb, tunnel, true)) {
++		amt->dev->stats.tx_dropped++;
++		kfree_skb(skb);
++	}
+ }
+ #else
+ static void amt_send_mld_gq(struct amt_dev *amt, struct amt_tunnel_list *tunnel)
+@@ -1178,7 +1180,6 @@ static netdev_tx_t amt_dev_xmit(struct sk_buff *skb, struct net_device *dev)
+ #endif
+ 	bool report = false;
+ 	struct igmphdr *ih;
+-	bool query = false;
+ 	struct iphdr *iph;
+ 	bool data = false;
+ 	bool v6 = false;
+@@ -1196,9 +1197,6 @@ static netdev_tx_t amt_dev_xmit(struct sk_buff *skb, struct net_device *dev)
+ 			case IGMP_HOST_MEMBERSHIP_REPORT:
+ 				report = true;
+ 				break;
+-			case IGMP_HOST_MEMBERSHIP_QUERY:
+-				query = true;
+-				break;
+ 			default:
+ 				goto free;
+ 			}
+@@ -1220,9 +1218,6 @@ static netdev_tx_t amt_dev_xmit(struct sk_buff *skb, struct net_device *dev)
+ 			case ICMPV6_MLD2_REPORT:
+ 				report = true;
+ 				break;
+-			case ICMPV6_MGM_QUERY:
+-				query = true;
+-				break;
+ 			default:
+ 				goto free;
+ 			}
+@@ -1253,19 +1248,6 @@ static netdev_tx_t amt_dev_xmit(struct sk_buff *skb, struct net_device *dev)
+ 			goto free;
+ 		goto unlock;
+ 	} else if (amt->mode == AMT_MODE_RELAY) {
+-		if (query) {
+-			tunnel = amt_skb_cb(skb)->tunnel;
+-			if (!tunnel) {
+-				WARN_ON(1);
+-				goto free;
+-			}
+-
+-			/* Do not forward unexpected query */
+-			if (amt_send_membership_query(amt, skb, tunnel, v6))
+-				goto free;
+-			goto unlock;
+-		}
+-
+ 		if (!data)
+ 			goto free;
+ 		list_for_each_entry_rcu(tunnel, &amt->tunnel_list, list) {
+diff --git a/include/net/amt.h b/include/net/amt.h
+index c881bc8b673b3..ad844d65a64d4 100644
+--- a/include/net/amt.h
++++ b/include/net/amt.h
+@@ -231,10 +231,6 @@ struct amt_relay_headers {
+ 	};
+ } __packed;
+ 
+-struct amt_skb_cb {
+-	struct amt_tunnel_list *tunnel;
+-};
+-
+ struct amt_tunnel_list {
+ 	struct list_head	list;
+ 	/* Protect All resources under an amt_tunne_list */
 -- 
 2.53.0
 
