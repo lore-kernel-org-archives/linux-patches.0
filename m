@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213124;
-	b=ZGB64gaBfK10S48ODMmmVary4LNUtt3TTWStfGmxMn8trgiDcU6TeA3eFb91pxKabmlW
-	 UJAabJFjiNEoCJwFbrjhSLB5K+EzDWksPZF3DIY5ALhZ4WEGwznwmNVvb7UWQ6qq+EANg
-	 SNhME749ISCreoBo32qWfe9ZvTmXk4fW4ki9ZNiW/rjBSup/FTlDBRv/kcqqfzLIW7FGx
-	 KV+JPfihje0bVFlaDTRI0J6CFNKdXxhLOGeUxa0nozuBYPZqC+p8azaTzkqJGvBqHDQ47
-	 cXDij8e/bz8UafGzBtbICemS4w7+yUK5U1ncRV7774hP5seqAJxVoqcGorQ9EWWDJGA==
+	t=1793213127;
+	b=n5yinrchNEMfef4cHQsuT6cEM0Bn0x0b2eybnEIAG73knbpUMB8dF576yUS8rSvfBw7w
+	 Vn5TKE9w82oJ6QNFu64g3A1o9EDXHHVeJHxLfkhMgAvCYHsz1y7LsQwg+mtOTk2uifOq4
+	 d0hCviLD71frOanzcZDEL3aPimSh/tRMG0U02OirwaXYr1UM4mSPwm0gyuznStoiw789y
+	 j8W8klBS9H5+n50DYPc7VS63D4sVElFhIgRvV0gJBIda4LIk7622j6oyHC+351QXMLQVU
+	 Zd6yzZTSrY+B/Gi6adTBg1/FYbuRCq6WpKI6dDcO0kM84Pl5Env3ZArFMD2pBjYG+3g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213124;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213127;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=1PcfGOEaoNRiWMwjoBYFMYNRtQ1PoV+YDARDJXz4aF8=;
-	b=jVINnqhah2KzvZITmVPBJoCI3xXiawqwIjX8704lDKCNt32NueZXsR9tbL1IV1hDwPfi
-	 5OcXKILVU5mCrxLKhkwZoo9r3UfSphb/G3KpxzoTmJVg87L/3x1dACPcoIENIhKjSp+vC
-	 POjMOCsBKpScTQkY/61jO7as1Dmb+EE4pz4TqrP4Mn6y3mt+k8HrG6ezdZeLzkJeSL2yf
-	 vtqZV7hNQXUfqgA8guepIyZH8/0YYi9GbzqDd53dWUDMzagS702pMuxNfyC7SzrdUFqm8
-	 9j4akSImGGNlyRPbEMqaSOze+P9BhQCCfrA2iA0vbi1TYlxSLMpScY5E8xA4wxmJzUg==
+	bh=EBWk0jfS8AuMSFIHxYJSxuQlMoVwy7fRULOEOBKGiEg=;
+	b=JjTipxEwCv7UAMrANUpcYcYJdN5nMs0Zvjqc5PHtwQZQy1Du7PI9ZZJZNYcguWYu+9GL
+	 p3F0G9RPiDUzxGYx/EVieUfjFfYw81i+3SFEcsVSe4tDpFfw3y+A4wjv594dsKSCRcbJm
+	 ZPzVEeAKWkQCNQvbgWCfCpEE2UXluTrt6nx/3hjZublcVdlXBjBjRGBhGMeRo7FXe9doX
+	 HqGrnkLu7D9Fhy8e/9AuILaQ50/AXBuB1manhIvZJ0FkbU6sxLbAHrOzpy3p+fw2d6+lx
+	 +UjRgUPOdV+lpaJEo+K+P87abHKMrEJwo+hNY8jln+0osJHc+rONBjeAohXxOHKFA0g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=haGWjxWl;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="xTbyJ48/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16606606A31E;
-	Wed, 28 Oct 2026 18:45:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDED4606A31C;
+	Wed, 28 Oct 2026 18:45:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=haGWjxWl
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63B3D1F01825;
-	Wed, 28 Oct 2026 18:45:23 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xTbyJ48/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38C131F01825;
+	Wed, 28 Oct 2026 18:45:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213123;
-	bh=1PcfGOEaoNRiWMwjoBYFMYNRtQ1PoV+YDARDJXz4aF8=;
+	s=korg; t=1793213126;
+	bh=EBWk0jfS8AuMSFIHxYJSxuQlMoVwy7fRULOEOBKGiEg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=haGWjxWlLyD7pfKVVzBx/VGOBCoGE8qVQkmSjpwdXJCdxJoGhhQGjRifoZp9K7Bs4
-	 bnRCuY7vmWbTietRIy0eDqhJwglSty1U1U+9AGWjy8kaus1625UmbChctO+kG3vuaz
-	 PT21v40fTzPGUl9ByXI342HJoDxKeTCfj58uIXOY=
+	b=xTbyJ48/0Pz/2DIiJoBo6Fu9gyEfuPh2AY2oPytjeQFnmdQe3TdNrxCW0f/l7fQOd
+	 ugXwrVnPnfupssvaeM9MXS8VTzwpkezVMN6FXX0eVoABS0tCQIwJWiIAldRTaJnfxD
+	 lxU8KEAOMgdksr3iV1XcPkzXKoYw5rIXUd9F9g8g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arka Mondal <arkamondalofficial@gmail.com>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
-	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Subject: [PATCH 6.1 0341/1887] iio: imu: adis16480: fix unprotected debugfs reads
-Date: Wed, 28 Oct 2026 17:40:37 +0100
-Message-ID: <20261028170506.986644234@linuxfoundation.org>
+	Johan Hovold <johan@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	stable <stable@kernel.org>
+Subject: [PATCH 6.1 0389/1887] tty: tty_port: restore TTY_IO_ERROR on activation failure
+Date: Wed, 28 Oct 2026 17:41:25 +0100
+Message-ID: <20261028170508.086384378@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,40 +68,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arka Mondal <arkamondalofficial@gmail.com>
+From: Johan Hovold <johan@kernel.org>
 
-commit e1dea54496f90a62318cf4eeaa1e9ef8316e92b6 upstream.
+[ Upstream commit 56964f6a31238fb41d5830bb42520c5b10ff7d8f ]
 
-The firmware_revision and firmware_date file operations are open coded
-and never call debugfs_file_get(), which debugfs_create_file_unsafe()
-requires. debugfs_remove_recursive() therefore does not wait for a read
-in progress, and unbind frees the iio_dev underneath it.
+Make sure to restore the TTY_IO_ERROR flag if activation fails to
+prevent I/O attempts on a port that is gone or powered down.
 
-Use debugfs_create_file() instead.
+This specifically avoids issues like kernel panic due to unclocked
+accesses or NULL-pointer dereferences when accessing powered down or
+deregistered ports when a TTY ioctl races with hangup and open.
 
-Fixes: 9bf94f836e32 ("imu:adis16480: fix debugfs_simple_attr.cocci warnings")
-Signed-off-by: Arka Mondal <arkamondalofficial@gmail.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Note that the flag is set again in tty_port_close() but not restoring it
+on activation failure leaves a window where drivers fail to handle the
+ioctl-hangup race.
+
+Fixes: a9a37ec33a1b ("tty: tty_port: Move the IO_ERROR clear")
+Cc: stable <stable@kernel.org>  # 2.6.33
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://patch.msgid.link/20260908084000.218528-1-johan@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+[ sashal: Adapted to the existing braced error block with explicit mutex_unlock(). ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/imu/adis16480.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/tty/tty_port.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/iio/imu/adis16480.c
-+++ b/drivers/iio/imu/adis16480.c
-@@ -302,9 +302,9 @@ static int adis16480_debugfs_init(struct
- 	struct adis16480 *adis16480 = iio_priv(indio_dev);
- 	struct dentry *d = iio_get_debugfs_dentry(indio_dev);
+diff --git a/drivers/tty/tty_port.c b/drivers/tty/tty_port.c
+index 494500c453ccb..6f3b4eeb44b38 100644
+--- a/drivers/tty/tty_port.c
++++ b/drivers/tty/tty_port.c
+@@ -783,6 +783,7 @@ int tty_port_open(struct tty_port *port, struct tty_struct *tty,
+ 			int retval = port->ops->activate(port, tty);
  
--	debugfs_create_file_unsafe("firmware_revision", 0400,
-+	debugfs_create_file("firmware_revision", 0400,
- 		d, adis16480, &adis16480_firmware_revision_fops);
--	debugfs_create_file_unsafe("firmware_date", 0400,
-+	debugfs_create_file("firmware_date", 0400,
- 		d, adis16480, &adis16480_firmware_date_fops);
- 	debugfs_create_file_unsafe("serial_number", 0400,
- 		d, adis16480, &adis16480_serial_number_fops);
+ 			if (retval) {
++				set_bit(TTY_IO_ERROR, &tty->flags);
+ 				mutex_unlock(&port->mutex);
+ 				return retval;
+ 			}
+-- 
+2.53.0
+
 
 
