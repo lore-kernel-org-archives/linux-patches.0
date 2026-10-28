@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793208565;
-	b=LQPtQsHN+tNxCquCnNSkycGPy8Vda/LqI/p3Rik7cRcYi7mGj1SJMcMwsobPsdwlIPpf
-	 pN3ymG7zd9LXEVtDnHGDsWCIuC/KZx9WGDe65X2WQFWzt7/UcZg6IKX3lk1QDxBh21nd8
-	 vK7atOGv8dRBngWq4oGHx7R5PsSlpdu8Ms8xGLJlNxZlUD98xn/GP683ZHjmUey9etrHi
-	 BdzRmGIk6vhDGjxP2s9avYh8K78yA4lROIimNaukcV0UIu6umoXQB9kk/PFjI879O+0nT
-	 5IwxCGu6Bmizh4jADAEK4OCorzqzeoPaip7Q9BVZtm9EtAocYQs1giFkCAggKvpILgg==
+	t=1793208568;
+	b=CiBUp7APhR/+IRGZYnriC9XhLMYeQZNktPce1PLNVfwjViy4ojOEpq21QuTZrzFcMFYr
+	 4HIRTzMJwMlceRdXmTbufPE/K1EafwMSX7M+xm5Gw6gMQWVkPFL0nNn4PwVnv8VgJsnGA
+	 lj1l1f6UrpTdQHu6Rl1CK7tLUJrxGslGj+zEgiOUcJqOMWYmm3y7H31SdEbZmbsDhVq9L
+	 L4usNj8HG7FAo2lAY5D0dwD0QJGeGsSyO7PdQSJY0Ozd41bVmo2Nc9Kc8AfxY/81yNPdy
+	 feynBZiOMe3rMRVanXriR9Jcapwi3oroRpWwlPK4aKkefWkWs4EHRfGk1klfiOhIgDA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793208565;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793208568;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=aA/Ay5VrT62EYQFEd5ayl30FU3z3SqZNkqKGjcGx0io=;
-	b=A2IXPEzBRS2OkYnfuRp95APJzsyJ2C1kGwipVMGX4c6iqEGLdoG1imABcMxqNBvsRzmT
-	 j0BBGTUbCXuveBtUePEINZGcqQESx1g/xCMGYvIcC8moQPuyr5tCKIbcJF9PeoPkP+udN
-	 uufuXVm5hurR8N1OYGA+/IIqeBWiZA55/ZO4k099LEqB6XRMz3pH8bUe/HIo/BEotcgBr
-	 EuO4P40a8AyYdv6x47xW7Cpb+8pIVN5eWNHBLn5MHTIw2n8ja4SqzCk50LXCV2462jnqe
-	 1AFOltQ+qDDsSPXcQ7nWs8Kj+V8beLXqcS5cXJeKHjpD5679iQcfHzG9SjJVlN278Cg==
+	bh=l4SAo1du46UgtT4kjlmm8jlcaMBzoC3I8DOLX75mxvE=;
+	b=fKEpw7mIGRHIHk4moRitx/I6Gnn6A+OzWAY2yp3wja1BSDFqX++xtYp7uJCsYZaHnDPl
+	 2Y+dPeLMk8e9L53L/Sa3sfoklbbuuuaW/3PXCWejwGLl2MaX03IjzlR2mRp8Irl0MhH8B
+	 F0QfSJgGOGHW5coypkdt9Apxxyk0Y9INwBt+X0GhPBn6lUij4V/wuOwHiXXpEq0gbXNMi
+	 SfD/FnVg0mi8ThMtzQAdT20Tg5y6pV4rm1Ua6S+LrJo4iULDiRWjmaB+XEbonPyvOq8WS
+	 kUirUi8oDDyABZljVm63CiWu7yYEs0QzPqN6gs0wQO2GWNU1y91iZj1ITPnxPyf1X8g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y2U0W9pI;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=W8EODbLW;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19E11606A31A;
-	Wed, 28 Oct 2026 17:29:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2255606A322;
+	Wed, 28 Oct 2026 17:29:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y2U0W9pI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AAEA1F01825;
-	Wed, 28 Oct 2026 17:29:24 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=W8EODbLW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40D211F01825;
+	Wed, 28 Oct 2026 17:29:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793208565;
-	bh=aA/Ay5VrT62EYQFEd5ayl30FU3z3SqZNkqKGjcGx0io=;
+	s=korg; t=1793208567;
+	bh=l4SAo1du46UgtT4kjlmm8jlcaMBzoC3I8DOLX75mxvE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Y2U0W9pI/Z47NzNODADXAZvPEkjL8jWmnesk1niPVvHYpv0LW3JFoEDh959DAE18m
-	 4DY1lZR+fCN8/7AxqbdznXzc/EmoeGMjR8XoNu2RTBOp88+sQduzIQGAEVKPZj5sdm
-	 CQp1rSql3HdcxjoEFT50FoHWpbbamq3d1ss7vupM=
+	b=W8EODbLWnSPrluxPi+E0jrHYPnt6dzQp5xfWc89qcLyq/S+rXMJF9Cg1AJSZrumQa
+	 O+hoijuvXgjiGuf2MEodYDUJ4aoTMcObIkkNZ9AjKlpiH072k78FsCZPOBhg8L68CH
+	 yN42tjUdwLFHgyPYWdAucX214s97pdTmYKxSlh54=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Changyul Lee <lcy8047@gmail.com>,
-	Sang-Hoon Choi <csh0052@gmail.com>,
+	Sai Teja Aluvala <aluvala.sai.teja@intel.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 164/516] Bluetooth: hci_core: free the HCI ID if naming fails
-Date: Wed, 28 Oct 2026 17:55:16 +0100
-Message-ID: <20261028170007.391218455@linuxfoundation.org>
+Subject: [PATCH 5.10 165/516] Bluetooth: btintel: validate DDC record lengths
+Date: Wed, 28 Oct 2026 17:55:17 +0100
+Message-ID: <20261028170007.415031485@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -69,44 +68,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sang-Hoon Choi <csh0052@gmail.com>
+From: Sai Teja Aluvala <aluvala.sai.teja@intel.com>
 
-[ Upstream commit d1ac915fb4184faad1b62148be50f317de7c24b5 ]
+[ Upstream commit c9c15d4d8956df8c564f7c210e4dc5b9b820d97a ]
 
-hci_register_dev() allocates an ID before calling dev_set_name().
-If naming fails, it returns without releasing that ID. The device has
-not been registered and hdev->id has not been assigned, so the normal
-unregister path cannot release it.
+Parse DDC record lengths in unsigned storage so 0xFF does not wrap.
+Reject records smaller than the mandatory three-byte header, records
+exceeding U8_MAX, and records exceeding remaining firmware bytes before
+issuing Intel_Write_DDC.
 
-Free the allocated ID before returning the naming error.
+This issue was reported by Claude Mythos.
 
-Fixes: dcda165706b9 ("Bluetooth: hci_core: Fix build warnings")
-Reported-by: Changyul Lee <lcy8047@gmail.com>
-Assisted-by: LLM
-Signed-off-by: Sang-Hoon Choi <csh0052@gmail.com>
-Reported-by: Changyul Lee <lcy8047@gmail.com>
+Fixes: 145f2368c5fd ("Bluetooth: btintel: Add Device Configuration support")
+Signed-off-by: Sai Teja Aluvala <aluvala.sai.teja@intel.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_core.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/bluetooth/btintel.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
-index a718e38f3da31..81c6e292b6681 100644
---- a/net/bluetooth/hci_core.c
-+++ b/net/bluetooth/hci_core.c
-@@ -3759,8 +3759,10 @@ int hci_register_dev(struct hci_dev *hdev)
- 		return id;
+diff --git a/drivers/bluetooth/btintel.c b/drivers/bluetooth/btintel.c
+index 8312c55abcc24..b65339f8c28b2 100644
+--- a/drivers/bluetooth/btintel.c
++++ b/drivers/bluetooth/btintel.c
+@@ -284,8 +284,16 @@ int btintel_load_ddc_config(struct hci_dev *hdev, const char *ddc_name)
+ 	/* DDC file contains one or more DDC structure which has
+ 	 * Length (1 byte), DDC ID (2 bytes), and DDC value (Length - 2).
+ 	 */
+-	while (fw->size > fw_ptr - fw->data) {
+-		u8 cmd_plen = fw_ptr[0] + sizeof(u8);
++	while (fw->size > (size_t)(fw_ptr - fw->data)) {
++		size_t remaining = fw->size - (fw_ptr - fw->data);
++		unsigned int cmd_plen = fw_ptr[0] + 1U;
++
++		if (cmd_plen < 3 || cmd_plen > U8_MAX || cmd_plen > remaining) {
++			bt_dev_err(hdev, "Malformed DDC record (plen=%u, remaining=%zu)",
++				   cmd_plen, remaining);
++			release_firmware(fw);
++			return -EINVAL;
++		}
  
- 	error = dev_set_name(&hdev->dev, "hci%u", id);
--	if (error)
-+	if (error) {
-+		ida_free(&hci_index_ida, id);
- 		return error;
-+	}
- 
- 	hdev->name = dev_name(&hdev->dev);
- 	hdev->id = id;
+ 		skb = __hci_cmd_sync(hdev, 0xfc8b, cmd_plen, fw_ptr,
+ 				     HCI_INIT_TIMEOUT);
 -- 
 2.53.0
 
