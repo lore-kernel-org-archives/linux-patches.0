@@ -1,54 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793210275;
-	b=lC+s1wkThKxdeXpKUtRfXvqowLaO2s5FztcX+T1qp6sG2jVD/WLbFajT8E8hTmqUYvKX
-	 kq9hcdz9fcX4LLe/6l9+tWeNKZSRsPpe0edQJ8XhDTQn30Qpa4vMfV830UGI+HBNqcXIE
-	 yy0Qdj58iuGCuB4M+BiworKrL5G9HhXjzx/Qa/1TE8/Y1NjzRqKeWsDKEpvjFem2Nssx9
-	 d+/higQOswexw2ptLpOGlu2gPGuG7rthm3LIhH/upTA78++9plcCTKtAgzl4kFdLFdk7x
-	 Z0TW2u/Ppa619lSopy0rOCQCO1XIO+f1sHDNRieUygGUrfIMGwaPvvHLfDIx3S0RRsQ==
+	t=1793210278;
+	b=36HmRu1bGIe5cGhiHVK/Nqunw2mW6c2u4/uvHodMOh9VHunmCV3uiM53WNtMsTQtJ8wd
+	 3Z+1FCoHqV6rqhQKkiyv80QL3PchgEXgpt2v4U3Q4Wie424xAJ42a2jh6mL3mCKCogjsG
+	 RKQfNxr71YlF5ZcoOEeARbCdtN5znnQmeWeLQWu9UYfeHGaEVUjaZW7M2ZOD9/SlB1ygo
+	 MQhPjrzUa5wskbo9/TtKfPNV3YX1qQZHZW7edi9nSBJMUxHg4UW5OJNDvT2p+3/acWvOi
+	 18RTSMYUDlEyKap9RhHiuqgPg5Gu1RaM325RifVU1OpRnbYvyBIcmSL/7r33+HXvnpw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793210275;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793210278;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=9OmtLjPzcPuisTUM3NhMQuSXm0oE5unCQijxCCWZxjw=;
-	b=p36yjOkCD4hoGOd8GqpiakVLRMfMZ8W0w5R2ZopM4KqvpjzyTytmI+NiDeOxvBPvERXV
-	 Tk7gGk1XpqwZ1LFwyxNU2e/cbhgMkn7TNhPbVe+LG65k824OKIRyNh0A23uZ94MEXRWf8
-	 oGIV4mu+B2IoNQCRnegF3E/ydv1WdblG5KV8CJKkatlTxG6+wmEFC+S9+gEsxIVQPpG8l
-	 dw8nZOfG2/oKYKZjJAWQYFqi6rIwNawBezl0c/8J4y5sQLqTJ/83CJLwsLM0o6yWe/4AG
-	 Vjb1ssVZqmrNhj9IbplnV1el1ni31FB/rVYZBL1zyUZTPAe0qJAKiH29rNR9/QQdkzg==
+	bh=gaITtSIgz7ardkTgeG3hNJdrOK+qZwHP4RHyPFPpiGo=;
+	b=PCmhoRfi/escG99hX1+QwQbQFrEq3Rv6NrnFMFCXAYURo/ou33fIYUxyq5fNXaMXOD7x
+	 b+j11W3C6r+B86WRyA1436m4mJPKN3lzGKp0htFpE0CBySGLRkoY+TivxKOja8Uh0L5kL
+	 lQ9BRdq8EwBYL0mQgit60Zte2e2ZhhpbiTzGn7XdhCZvVoJiWB6Kstiakze4w2Lqi5flJ
+	 W+TxDG/IGM72RqDGAl79Pd8bd7QOUIxy681BsVpKHXOV33K3XKQ7KQpeJmG5K0ZOMCOaX
+	 AUmEkuuUzGZ2a01SMCvCcs8N3+0E2wR6k7SO86ZOTrVzB2zfQILAQkqX01TbZboMTpQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZyRfWHYV;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XypPLvDt;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80650606A31D;
-	Wed, 28 Oct 2026 17:57:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81928606A31C;
+	Wed, 28 Oct 2026 17:57:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZyRfWHYV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D18091F01825;
-	Wed, 28 Oct 2026 17:57:54 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XypPLvDt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FCAC1F01825;
+	Wed, 28 Oct 2026 17:57:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793210275;
-	bh=9OmtLjPzcPuisTUM3NhMQuSXm0oE5unCQijxCCWZxjw=;
+	s=korg; t=1793210278;
+	bh=gaITtSIgz7ardkTgeG3hNJdrOK+qZwHP4RHyPFPpiGo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZyRfWHYVxlehzqbklwk2JA1kJzF1Mt9XrryVzGOrjSEzwlfv1kSVIf1poEPG0BeI4
-	 DU1WWbuLn62xv/ZVIthVXKolUkjmfub9dxRZehswuBpXHgl+thYaAA3jEY9+66uijS
-	 R217li7Q16vPiPT9Qcrq0AV+5TzsXGo5LcTp8FbA=
+	b=XypPLvDtADvwVwy/JWEBLeN7B3HM6Hop+2VWCvIyYoTa1jwbAR8bEXUmfdjvFP0tI
+	 3v6voZGOpqrml0xxqGW8WRlZz+Rdw7u8DlcJhHC8Ox5FjOhB7tCYVtkst9t2pbwNbQ
+	 crjAy3c3K1RNTMwE0HG+I/J3XNCesXb7PRqfDyhU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oleg Nesterov <oleg@redhat.com>,
-	Aviv Vaknin <vaknins33@gmail.com>,
-	Bradley Morgan <brads@mainlining.org>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 101/168] pid_namespace: make zap_pid_ns_processes() freezable
-Date: Wed, 28 Oct 2026 18:00:37 +0100
-Message-ID: <20261028165945.478191829@linuxfoundation.org>
+	Jens Axboe <axboe@kernel.dk>,
+	"Claude Fable 5.1" <noreply@anthropic.com>
+Subject: [PATCH 6.6 137/168] io_uring/cancel: dont default to setting req->work.cancel_seq
+Date: Wed, 28 Oct 2026 18:01:13 +0100
+Message-ID: <20261028165946.326040387@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165943.089486480@linuxfoundation.org>
 References: <20261028165943.089486480@linuxfoundation.org>
@@ -70,76 +67,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aviv Vaknin <vaknins33@gmail.com>
+From: Jens Axboe <axboe@kernel.dk>
 
-[ Upstream commit 81933038f5e273d17ed22792f906889393b204c5 ]
+Commit 521223d7c229f83915619f888c99e952f24dc39f upstream.
 
-When the init of a pid namespace exits, zap_pid_ns_processes() waits
-until all other pids in the namespace are freed. A tracer outside the
-namespace that does not reap its traced zombies keeps those pids
-allocated, so this wait has no upper bound, and while it lasts every
-suspend attempt fails:
+Just leave it unset by default, avoiding dipping into the last
+cacheline (which is otherwise untouched) for the fast path of using
+poll to drive networked traffic. Add a flag that tells us if the
+sequence is valid or not, and then we can defer actually assigning
+the flag and sequence until someone runs cancelations.
 
-  Freezing user space processes failed after 20.006 seconds (2 tasks refusing to freeze, wq_busy=0):
-
-Neither wait is freezable. The first loop sleeps in do_wait(), which
-returns -ERESTARTSYS on the freezer's fake signal; the loop then clears
-TIF_SIGPENDING and waits again without ever freezing. The final loop
-sleeps in TASK_INTERRUPTIBLE, and since nothing clears TIF_SIGPENDING
-there, schedule() returns immediately after the first freeze attempt
-and the task spins until the wait ends.
-
-Sleep in TASK_INTERRUPTIBLE | TASK_FREEZABLE in do_wait(), so that the
-freezer can freeze tasks waiting there directly, and in TASK_IDLE |
-TASK_FREEZABLE in the final loop, like coredump_task_exit() does.
-
-This was hit with Chromium-based browsers: crashpad ptrace-attaches the
-threads of a crashed renderer, which is a pid namespace init, and does
-not reap those killed during the dump.
-
-Fixes: 3eb07c8c8adb ("pid namespaces: destroy pid namespace on init's death")
-Fixes: b9a985db9896 ("pid_ns: Sleep in TASK_INTERRUPTIBLE in zap_pid_ns_processes")
-Cc: stable@vger.kernel.org # 6.1+
-Suggested-by: Oleg Nesterov <oleg@redhat.com>
-Signed-off-by: Aviv Vaknin <vaknins33@gmail.com>
-Link: https://patch.msgid.link/20261002202820.3433318-1-vaknins33@gmail.com
-Acked-by: Oleg Nesterov <oleg@redhat.com>
-Reviewed-by: Bradley Morgan <brads@mainlining.org>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+[ 6.6: prerequisite for "io_uring/cancel: let CANCEL_ALL find parked requests". There is no free request flag bit here, so use the cancel_seq_set field that commit f4a1254f2a07 ("io_uring: fix cancellation overwriting req->flags") introduces upstream, which this also covers ]
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Co-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/exit.c          | 2 +-
- kernel/pid_namespace.c | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ include/linux/io_uring_types.h |    3 ++-
+ io_uring/cancel.c              |    3 +--
+ io_uring/cancel.h              |   10 ++++++++++
+ io_uring/io_uring.c            |    2 +-
+ io_uring/poll.c                |    6 +-----
+ 5 files changed, 15 insertions(+), 9 deletions(-)
 
-diff --git a/kernel/exit.c b/kernel/exit.c
-index 07a17f0916107..e2dae48578d96 100644
---- a/kernel/exit.c
-+++ b/kernel/exit.c
-@@ -1648,7 +1648,7 @@ static long do_wait(struct wait_opts *wo)
- 	add_wait_queue(&current->signal->wait_chldexit, &wo->child_wait);
+--- a/include/linux/io_uring_types.h
++++ b/include/linux/io_uring_types.h
+@@ -576,7 +576,7 @@ struct io_kiocb {
+ 		__poll_t apoll_events;
+ 	};
+ 	atomic_t			refs;
+-	atomic_t			poll_refs;
++	bool				cancel_seq_set;
+ 	struct io_task_work		io_task_work;
+ 	unsigned			nr_tw;
+ 	/* for polled requests, i.e. IORING_OP_POLL_ADD and async armed poll */
+@@ -586,6 +586,7 @@ struct io_kiocb {
+ 	/* opcode allocated if it needs to store data for async defer */
+ 	void				*async_data;
+ 	/* linked requests, IFF REQ_F_HARDLINK or REQ_F_LINK are set */
++	atomic_t			poll_refs;
+ 	struct io_kiocb			*link;
+ 	/* custom credentials, valid IFF REQ_F_CREDS is set */
+ 	const struct cred		*creds;
+--- a/io_uring/cancel.c
++++ b/io_uring/cancel.c
+@@ -56,9 +56,8 @@ bool io_cancel_req_match(struct io_kiocb
+ 		return false;
+ 	if (cd->flags & IORING_ASYNC_CANCEL_ALL) {
+ check_seq:
+-		if (cd->seq == req->work.cancel_seq)
++		if (io_cancel_match_sequence(req, cd->seq))
+ 			return false;
+-		req->work.cancel_seq = cd->seq;
+ 	}
  
- 	do {
--		set_current_state(TASK_INTERRUPTIBLE);
-+		set_current_state(TASK_INTERRUPTIBLE | TASK_FREEZABLE);
- 		retval = __do_wait(wo);
- 		if (retval != -ERESTARTSYS)
- 			break;
-diff --git a/kernel/pid_namespace.c b/kernel/pid_namespace.c
-index e9b2bb260ee6c..eea15232f6690 100644
---- a/kernel/pid_namespace.c
-+++ b/kernel/pid_namespace.c
-@@ -245,7 +245,7 @@ void zap_pid_ns_processes(struct pid_namespace *pid_ns)
- 	 * free_pid() will awaken this task.
- 	 */
- 	for (;;) {
--		set_current_state(TASK_INTERRUPTIBLE);
-+		set_current_state(TASK_IDLE | TASK_FREEZABLE);
- 		if (pid_ns->pid_allocated == init_pids)
- 			break;
- 		/*
--- 
-2.53.0
-
+ 	return true;
+--- a/io_uring/cancel.h
++++ b/io_uring/cancel.h
+@@ -22,3 +22,13 @@ void init_hash_table(struct io_hash_tabl
+ 
+ int io_sync_cancel(struct io_ring_ctx *ctx, void __user *arg);
+ bool io_cancel_req_match(struct io_kiocb *req, struct io_cancel_data *cd);
++
++static inline bool io_cancel_match_sequence(struct io_kiocb *req, int sequence)
++{
++	if (req->cancel_seq_set && sequence == req->work.cancel_seq)
++		return true;
++
++	req->cancel_seq_set = true;
++	req->work.cancel_seq = sequence;
++	return false;
++}
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -434,7 +434,6 @@ static void io_prep_async_work(struct io
+ 
+ 	req->work.list.next = NULL;
+ 	req->work.flags = 0;
+-	req->work.cancel_seq = atomic_read(&ctx->cancel_seq);
+ 	if (req->flags & REQ_F_FORCE_ASYNC)
+ 		req->work.flags |= IO_WQ_WORK_CONCURRENT;
+ 
+@@ -2164,6 +2163,7 @@ static int io_init_req(struct io_ring_ct
+ 	req->file = NULL;
+ 	req->rsrc_node = NULL;
+ 	req->task = current;
++	req->cancel_seq_set = false;
+ 
+ 	if (unlikely(opcode >= IORING_OP_LAST)) {
+ 		req->opcode = 0;
+--- a/io_uring/poll.c
++++ b/io_uring/poll.c
+@@ -585,10 +585,7 @@ static int __io_arm_poll_handler(struct
+ 				 struct io_poll_table *ipt, __poll_t mask,
+ 				 unsigned issue_flags)
+ {
+-	struct io_ring_ctx *ctx = req->ctx;
+-
+ 	INIT_HLIST_NODE(&req->hash_node);
+-	req->work.cancel_seq = atomic_read(&ctx->cancel_seq);
+ 	io_init_poll_iocb(poll, mask);
+ 	poll->file = req->file;
+ 	req->apoll_events = poll->events;
+@@ -826,9 +823,8 @@ static struct io_kiocb *io_poll_find(str
+ 		if (poll_only && req->opcode != IORING_OP_POLL_ADD)
+ 			continue;
+ 		if (cd->flags & IORING_ASYNC_CANCEL_ALL) {
+-			if (cd->seq == req->work.cancel_seq)
++			if (io_cancel_match_sequence(req, cd->seq))
+ 				continue;
+-			req->work.cancel_seq = cd->seq;
+ 		}
+ 		*out_bucket = hb;
+ 		return req;
 
 
