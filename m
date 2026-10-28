@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213977;
-	b=Is7bgdBOqJXxpOHUdbSRNFxMXoImgmyVYBF/ZNMutLsztgDy9Br1Zd59CGEkMwW9LBCv
-	 zc07EKd7rIgF0rZ29Stufa7WFBKN/prULoDr0KfWWtaOtifb3L/omnQlljMq1EBg4UKKE
-	 yVHQ2NPjhrH9snUlfP7s70C5lKvgG2h6EZGF8QTvLaWBFEYuA3e4y6CORJUaDvnfouapK
-	 HnktXWNMAxWXku9wBWS7GmaTAgKUvtJqZ3ZKDZR+kuTmphzL5oQnFMdHThOaXfjZb810s
-	 f6j/767oyYO1d6RaquwYGlBOgffJefHvXzAkZx8dzSfBOjSwP5kLIYMgnzpDi5dc4hQ==
+	t=1793213980;
+	b=3F94F0HQcvbUxfgm/cmg14sD87fX5Z49wec+BvCf6x38WaoFUqSZGWRKOgqSk5b0yTvL
+	 nMPw3MUl7ErYskvEC0D1/y5E8oNhKQDNj4Yv+DiIs7n+1qK1V8hJHtTFDMewF6CcRBH1B
+	 t7Eql2pSdaR90yovmRlUG1IO8ci4RlO7hwC/x4M6KT5IIoeGQWMM9Y56tu7XfqN0ezz5i
+	 RcqXOngMfXgbjyO3hN10DvaArQZdF55ci8Ar/HlwMJLpDdwrUIK5Q+z9GpC/xQCpZCB0d
+	 NZdpQzXDSLWa8zMyx5qb5AOdIR3iar3ph29/Ne01go+fpLIww1W46pOKsFqlTinKe2g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213977;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213980;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=c+6LNc2MzamyJSDAQZuwO64UwOLADb65Vpsy8ifWTqs=;
-	b=D+EJqvIi/UPfJxm3nAhJmh9woj0OeYj4FXiKUXev9v4TfWHwmRTGP/evX7Aq+y1LrFt5
-	 qaDgRHlU+iwvL83F44ZXAxfDF8q1BbfRIQktsCOTr/QmR7oTv04TmSnO5vBEwLm0KdWYg
-	 LgZFi9TbjTy/c5Wv3vGSl35kiSle2mE+rW6ExeSD9Q4b3mATG9PyS6wzTbJmD0gA7Fl+1
-	 9kFPBNETHc4XeIAG73ePP35K1Ewg9u87XEYWuSI5YZaCLtyJSCcRJm7CFISwD49LxSQZ7
-	 Z4Bvl/AmMhEjRsKmsnd1u7wGy+/GRse9xt+ygnEXS0LwLUqpVEESAZb+8eD+L7VXhSg==
+	bh=x6qBnWPdFyvlx5gQAtRRmP6Ajugtigai3f6n7VDFuQE=;
+	b=TN1UDoN5VKSAD2QKgd4ZhuNPYNE37ubxGqaF7cGowiJNrF/R1+oiASR5MZ+MrLWvnaqK
+	 UGIg6v3t2R5RASFIkmB6pk6pmp6/sxLu4fsJTGIozttAhlW+FlVT8NdBcwbyMEhmU/xun
+	 pp0ISDqf+JL+D1IueQdXFyXsbdHy0TjZCAF4WngsjSPdaJO62+ngoX+PS5W/CeQ0nxzyL
+	 ZamNHoDoAF8WVLeUkA0Mt8n6+OQhrjXG2NZ2l0okYwk1yDwy/zwUyjXR1kGUDEFJYls0/
+	 rz2x4DNhhCv5aQIVBAWt5DsF9GXtnNHJJSF162FyR0++mkQIU0MPQnGw8FjkgMZ+Z0w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vMOVvCVm;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="lhGY/hsm";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1D55606A31C;
-	Wed, 28 Oct 2026 18:59:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6D88606A31C;
+	Wed, 28 Oct 2026 18:59:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vMOVvCVm
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20C6F1F01825;
-	Wed, 28 Oct 2026 18:59:35 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lhGY/hsm
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAE261F01825;
+	Wed, 28 Oct 2026 18:59:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213976;
-	bh=c+6LNc2MzamyJSDAQZuwO64UwOLADb65Vpsy8ifWTqs=;
+	s=korg; t=1793213979;
+	bh=x6qBnWPdFyvlx5gQAtRRmP6Ajugtigai3f6n7VDFuQE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vMOVvCVmq6BrNZ01ceeyRpQFMGu4f8Jf9S7BEB0GsLDUGRDgIGxmALLNu+Ibf8fE2
-	 m4aO4nWC286EQBrQjawSUa+pNVYL7I0x5141pCcaRqWSgz/PLm6D4Nimz39P4Leom1
-	 g9fZNhiRtKYM5i3lZtPbCKuLOPQWt2Dwglu3t9WQ=
+	b=lhGY/hsmS4nqaeptNrLgUD62+6luaw8FbkEvnUaehVSWCKAuw1CLvQtToLl3mFP5a
+	 HnrIwpS1GsWkPVGlXPktvg/bnNtWyXGTbERH42z7mDQWCI4QHtSiCiNVS0aaLwrd36
+	 u8LzVQ6miZII0gf1V4lnjMRHK90CXi98PYu9JQTo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liu Jian <liujian56@huawei.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Paul Aurich <paul@darkrain42.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0696/1887] sunrpc: fix one UAF issue caused by sunrpc kernel tcp socket
-Date: Wed, 28 Oct 2026 17:46:32 +0100
-Message-ID: <20261028170515.249524481@linuxfoundation.org>
+Subject: [PATCH 6.1 0697/1887] smb: Dont leak cfid when reconnect races with open_cached_dir
+Date: Wed, 28 Oct 2026 17:46:33 +0100
+Message-ID: <20261028170515.273161487@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -70,161 +68,228 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Liu Jian <liujian56@huawei.com>
+From: Paul Aurich <paul@darkrain42.org>
 
-[ Upstream commit 3f23f96528e8fcf8619895c4c916c52653892ec1 ]
+[ Upstream commit 7afb86733685c64c604d32faf00fa4a1f22c2ab1 ]
 
-BUG: KASAN: slab-use-after-free in tcp_write_timer_handler+0x156/0x3e0
-Read of size 1 at addr ffff888111f322cd by task swapper/0/0
+open_cached_dir() may either race with the tcon reconnection even before
+compound_send_recv() or directly trigger a reconnection via
+SMB2_open_init() or SMB_query_info_init().
 
-CPU: 0 UID: 0 PID: 0 Comm: swapper/0 Not tainted 6.12.0-rc4-dirty #7
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1
+The reconnection process invokes invalidate_all_cached_dirs() via
+cifs_mark_open_files_invalid(), which removes all cfids from the
+cfids->entries list but doesn't drop a ref if has_lease isn't true. This
+results in the currently-being-constructed cfid not being on the list,
+but still having a refcount of 2. It leaks if returned from
+open_cached_dir().
+
+Fix this by setting cfid->has_lease when the ref is actually taken; the
+cfid will not be used by other threads until it has a valid time.
+
+Addresses these kmemleaks:
+
+unreferenced object 0xffff8881090c4000 (size 1024):
+  comm "bash", pid 1860, jiffies 4295126592
+  hex dump (first 32 bytes):
+    00 01 00 00 00 00 ad de 22 01 00 00 00 00 ad de  ........".......
+    00 ca 45 22 81 88 ff ff f8 dc 4f 04 81 88 ff ff  ..E"......O.....
+  backtrace (crc 6f58c20f):
+    [<ffffffff8b895a1e>] __kmalloc_cache_noprof+0x2be/0x350
+    [<ffffffff8bda06e3>] open_cached_dir+0x993/0x1fb0
+    [<ffffffff8bdaa750>] cifs_readdir+0x15a0/0x1d50
+    [<ffffffff8b9a853f>] iterate_dir+0x28f/0x4b0
+    [<ffffffff8b9a9aed>] __x64_sys_getdents64+0xfd/0x200
+    [<ffffffff8cf6da05>] do_syscall_64+0x95/0x1a0
+    [<ffffffff8d00012f>] entry_SYSCALL_64_after_hwframe+0x76/0x7e
+unreferenced object 0xffff8881044fdcf8 (size 8):
+  comm "bash", pid 1860, jiffies 4295126592
+  hex dump (first 8 bytes):
+    00 cc cc cc cc cc cc cc                          ........
+  backtrace (crc 10c106a9):
+    [<ffffffff8b89a3d3>] __kmalloc_node_track_caller_noprof+0x363/0x480
+    [<ffffffff8b7d7256>] kstrdup+0x36/0x60
+    [<ffffffff8bda0700>] open_cached_dir+0x9b0/0x1fb0
+    [<ffffffff8bdaa750>] cifs_readdir+0x15a0/0x1d50
+    [<ffffffff8b9a853f>] iterate_dir+0x28f/0x4b0
+    [<ffffffff8b9a9aed>] __x64_sys_getdents64+0xfd/0x200
+    [<ffffffff8cf6da05>] do_syscall_64+0x95/0x1a0
+    [<ffffffff8d00012f>] entry_SYSCALL_64_after_hwframe+0x76/0x7e
+
+And addresses these BUG splats when unmounting the SMB filesystem:
+
+BUG: Dentry ffff888140590ba0{i=1000000000080,n=/}  still in use (2) [unmount of cifs cifs]
+WARNING: CPU: 3 PID: 3433 at fs/dcache.c:1536 umount_check+0xd0/0x100
+Modules linked in:
+CPU: 3 UID: 0 PID: 3433 Comm: bash Not tainted 6.12.0-rc4-g850925a8133c-dirty #49
+Hardware name: VMware, Inc. VMware Virtual Platform/440BX Desktop Reference Platform, BIOS 6.00 11/12/2020
+RIP: 0010:umount_check+0xd0/0x100
+Code: 8d 7c 24 40 e8 31 5a f4 ff 49 8b 54 24 40 41 56 49 89 e9 45 89 e8 48 89 d9 41 57 48 89 de 48 c7 c7 80 e7 db ac e8 f0 72 9a ff <0f> 0b 58 31 c0 5a 5b 5d 41 5c 41 5d 41 5e 41 5f e9 2b e5 5d 01 41
+RSP: 0018:ffff88811cc27978 EFLAGS: 00010286
+RAX: 0000000000000000 RBX: ffff888140590ba0 RCX: ffffffffaaf20bae
+RDX: dffffc0000000000 RSI: 0000000000000008 RDI: ffff8881f6fb6f40
+RBP: ffff8881462ec000 R08: 0000000000000001 R09: ffffed1023984ee3
+R10: ffff88811cc2771f R11: 00000000016cfcc0 R12: ffff888134383e08
+R13: 0000000000000002 R14: ffff8881462ec668 R15: ffffffffaceab4c0
+FS:  00007f23bfa98740(0000) GS:ffff8881f6f80000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 0000556de4a6f808 CR3: 0000000123c80000 CR4: 0000000000350ef0
 Call Trace:
- <IRQ>
- dump_stack_lvl+0x68/0xa0
- print_address_description.constprop.0+0x2c/0x3d0
- print_report+0xb4/0x270
- kasan_report+0xbd/0xf0
- tcp_write_timer_handler+0x156/0x3e0
- tcp_write_timer+0x66/0x170
- call_timer_fn+0xfb/0x1d0
- __run_timers+0x3f8/0x480
- run_timer_softirq+0x9b/0x100
- handle_softirqs+0x153/0x390
- __irq_exit_rcu+0x103/0x120
- irq_exit_rcu+0xe/0x20
- sysvec_apic_timer_interrupt+0x76/0x90
- </IRQ>
  <TASK>
- asm_sysvec_apic_timer_interrupt+0x1a/0x20
-RIP: 0010:default_idle+0xf/0x20
-Code: 4c 01 c7 4c 29 c2 e9 72 ff ff ff 90 90 90 90 90 90 90 90 90 90 90 90
- 90 90 90 90 f3 0f 1e fa 66 90 0f 00 2d 33 f8 25 00 fb f4 <fa> c3 cc cc cc
- cc 66 66 2e 0f 1f 84 00 00 00 00 00 90 90 90 90 90
-RSP: 0018:ffffffffa2007e28 EFLAGS: 00000242
-RAX: 00000000000f3b31 RBX: 1ffffffff4400fc7 RCX: ffffffffa09c3196
-RDX: 0000000000000000 RSI: 0000000000000000 RDI: ffffffff9f00590f
-RBP: 0000000000000000 R08: 0000000000000001 R09: ffffed102360835d
-R10: ffff88811b041aeb R11: 0000000000000001 R12: 0000000000000000
-R13: ffffffffa202d7c0 R14: 0000000000000000 R15: 00000000000147d0
- default_idle_call+0x6b/0xa0
- cpuidle_idle_call+0x1af/0x1f0
- do_idle+0xbc/0x130
- cpu_startup_entry+0x33/0x40
- rest_init+0x11f/0x210
- start_kernel+0x39a/0x420
- x86_64_start_reservations+0x18/0x30
- x86_64_start_kernel+0x97/0xa0
- common_startup_64+0x13e/0x141
- </TASK>
-
-Allocated by task 595:
- kasan_save_stack+0x24/0x50
- kasan_save_track+0x14/0x30
- __kasan_slab_alloc+0x87/0x90
- kmem_cache_alloc_noprof+0x12b/0x3f0
- copy_net_ns+0x94/0x380
- create_new_namespaces+0x24c/0x500
- unshare_nsproxy_namespaces+0x75/0xf0
- ksys_unshare+0x24e/0x4f0
- __x64_sys_unshare+0x1f/0x30
- do_syscall_64+0x70/0x180
+ d_walk+0x6a/0x530
+ shrink_dcache_for_umount+0x6a/0x200
+ generic_shutdown_super+0x52/0x2a0
+ kill_anon_super+0x22/0x40
+ cifs_kill_sb+0x159/0x1e0
+ deactivate_locked_super+0x66/0xe0
+ cleanup_mnt+0x140/0x210
+ task_work_run+0xfb/0x170
+ syscall_exit_to_user_mode+0x29f/0x2b0
+ do_syscall_64+0xa1/0x1a0
  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+RIP: 0033:0x7f23bfb93ae7
+Code: ff ff ff ff c3 66 0f 1f 44 00 00 48 8b 0d 11 93 0d 00 f7 d8 64 89 01 b8 ff ff ff ff eb bf 0f 1f 44 00 00 b8 50 00 00 00 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 8b 0d e9 92 0d 00 f7 d8 64 89 01 48
+RSP: 002b:00007ffee9138598 EFLAGS: 00000246 ORIG_RAX: 0000000000000050
+RAX: 0000000000000000 RBX: 0000558f1803e9a0 RCX: 00007f23bfb93ae7
+RDX: 0000000000000000 RSI: 0000000000000004 RDI: 0000558f1803e9a0
+RBP: 0000558f1803e600 R08: 0000000000000007 R09: 0000558f17fab610
+R10: d91d5ec34ab757b0 R11: 0000000000000246 R12: 0000000000000001
+R13: 0000000000000000 R14: 0000000000000015 R15: 0000000000000000
+ </TASK>
+irq event stamp: 1163486
+hardirqs last  enabled at (1163485): [<ffffffffac98d344>] _raw_spin_unlock_irqrestore+0x34/0x60
+hardirqs last disabled at (1163486): [<ffffffffac97dcfc>] __schedule+0xc7c/0x19a0
+softirqs last  enabled at (1163482): [<ffffffffab79a3ee>] __smb_send_rqst+0x3de/0x990
+softirqs last disabled at (1163480): [<ffffffffac2314f1>] release_sock+0x21/0xf0
+---[ end trace 0000000000000000 ]---
 
-Freed by task 100:
- kasan_save_stack+0x24/0x50
- kasan_save_track+0x14/0x30
- kasan_save_free_info+0x3b/0x60
- __kasan_slab_free+0x54/0x70
- kmem_cache_free+0x156/0x5d0
- cleanup_net+0x5d3/0x670
- process_one_work+0x776/0xa90
- worker_thread+0x2e2/0x560
- kthread+0x1a8/0x1f0
- ret_from_fork+0x34/0x60
- ret_from_fork_asm+0x1a/0x30
+VFS: Busy inodes after unmount of cifs (cifs)
+------------[ cut here ]------------
+kernel BUG at fs/super.c:661!
+Oops: invalid opcode: 0000 [#1] PREEMPT SMP KASAN NOPTI
+CPU: 1 UID: 0 PID: 3433 Comm: bash Tainted: G        W          6.12.0-rc4-g850925a8133c-dirty #49
+Tainted: [W]=WARN
+Hardware name: VMware, Inc. VMware Virtual Platform/440BX Desktop Reference Platform, BIOS 6.00 11/12/2020
+RIP: 0010:generic_shutdown_super+0x290/0x2a0
+Code: e8 15 7c f7 ff 48 8b 5d 28 48 89 df e8 09 7c f7 ff 48 8b 0b 48 89 ee 48 8d 95 68 06 00 00 48 c7 c7 80 7f db ac e8 00 69 af ff <0f> 0b 66 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 00 90 90 90 90 90 90
+RSP: 0018:ffff88811cc27a50 EFLAGS: 00010246
+RAX: 000000000000003e RBX: ffffffffae994420 RCX: 0000000000000027
+RDX: 0000000000000000 RSI: ffffffffab06180e RDI: ffff8881f6eb18c8
+RBP: ffff8881462ec000 R08: 0000000000000001 R09: ffffed103edd6319
+R10: ffff8881f6eb18cb R11: 00000000016d3158 R12: ffff8881462ec9c0
+R13: ffff8881462ec050 R14: 0000000000000001 R15: 0000000000000000
+FS:  00007f23bfa98740(0000) GS:ffff8881f6e80000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007f8364005d68 CR3: 0000000123c80000 CR4: 0000000000350ef0
+Call Trace:
+ <TASK>
+ kill_anon_super+0x22/0x40
+ cifs_kill_sb+0x159/0x1e0
+ deactivate_locked_super+0x66/0xe0
+ cleanup_mnt+0x140/0x210
+ task_work_run+0xfb/0x170
+ syscall_exit_to_user_mode+0x29f/0x2b0
+ do_syscall_64+0xa1/0x1a0
+ entry_SYSCALL_64_after_hwframe+0x76/0x7e
+RIP: 0033:0x7f23bfb93ae7
+ </TASK>
+Modules linked in:
+---[ end trace 0000000000000000 ]---
+RIP: 0010:generic_shutdown_super+0x290/0x2a0
+Code: e8 15 7c f7 ff 48 8b 5d 28 48 89 df e8 09 7c f7 ff 48 8b 0b 48 89 ee 48 8d 95 68 06 00 00 48 c7 c7 80 7f db ac e8 00 69 af ff <0f> 0b 66 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 00 90 90 90 90 90 90
+RSP: 0018:ffff88811cc27a50 EFLAGS: 00010246
+RAX: 000000000000003e RBX: ffffffffae994420 RCX: 0000000000000027
+RDX: 0000000000000000 RSI: ffffffffab06180e RDI: ffff8881f6eb18c8
+RBP: ffff8881462ec000 R08: 0000000000000001 R09: ffffed103edd6319
+R10: ffff8881f6eb18cb R11: 00000000016d3158 R12: ffff8881462ec9c0
+R13: ffff8881462ec050 R14: 0000000000000001 R15: 0000000000000000
+FS:  00007f23bfa98740(0000) GS:ffff8881f6e80000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007f8364005d68 CR3: 0000000123c80000 CR4: 0000000000350ef0
 
-Reproduction script:
+This reproduces eventually with an SMB mount and two shells running
+these loops concurrently
 
-mkdir -p /mnt/nfsshare
-mkdir -p /mnt/nfs/netns_1
-mkfs.ext4 /dev/sdb
-mount /dev/sdb /mnt/nfsshare
-systemctl restart nfs-server
-chmod 777 /mnt/nfsshare
-exportfs -i -o rw,no_root_squash *:/mnt/nfsshare
+- while true; do
+      cd ~; sleep 1;
+      for i in {1..3}; do cd /mnt/test/subdir;
+          echo $PWD; sleep 1; cd ..; echo $PWD; sleep 1;
+      done;
+      echo ...;
+  done
+- while true; do
+      iptables -F OUTPUT; mount -t cifs -a;
+      for _ in {0..2}; do ls /mnt/test/subdir/ | wc -l; done;
+      iptables -I OUTPUT -p tcp --dport 445 -j DROP;
+      sleep 10
+      echo "unmounting"; umount -l -t cifs -a; echo "done unmounting";
+      sleep 20
+      echo "recovering"; iptables -F OUTPUT;
+      sleep 10;
+  done
 
-ip netns add netns_1
-ip link add name veth_1_peer type veth peer veth_1
-ifconfig veth_1_peer 11.11.0.254 up
-ip link set veth_1 netns netns_1
-ip netns exec netns_1 ifconfig veth_1 11.11.0.1
-
-ip netns exec netns_1 /root/iptables -A OUTPUT -d 11.11.0.254 -p tcp \
-	--tcp-flags FIN FIN  -j DROP
-
-(note: In my environment, a DESTROY_CLIENTID operation is always sent
- immediately, breaking the nfs tcp connection.)
-ip netns exec netns_1 timeout -s 9 300 mount -t nfs -o proto=tcp,vers=4.1 \
-	11.11.0.254:/mnt/nfsshare /mnt/nfs/netns_1
-
-ip netns del netns_1
-
-The reason here is that the tcp socket in netns_1 (nfs side) has been
-shutdown and closed (done in xs_destroy), but the FIN message (with ack)
-is discarded, and the nfsd side keeps sending retransmission messages.
-As a result, when the tcp sock in netns_1 processes the received message,
-it sends the message (FIN message) in the sending queue, and the tcp timer
-is re-established. When the network namespace is deleted, the net structure
-accessed by tcp's timer handler function causes problems.
-
-To fix this problem, let's hold netns refcnt for the tcp kernel socket as
-done in other modules. This is an ugly hack which can easily be backported
-to earlier kernels. A proper fix which cleans up the interfaces will
-follow, but may not be so easy to backport.
-
-Fixes: 26abe14379f8 ("net: Modify sk_alloc to not reference count the netns of kernel sockets.")
-Signed-off-by: Liu Jian <liujian56@huawei.com>
-Acked-by: Jeff Layton <jlayton@kernel.org>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Fixes: ebe98f1447bb ("cifs: enable caching of directories for which a lease is held")
+Fixes: 5c86919455c1 ("smb: client: fix use-after-free in smb2_query_info_compound()")
+Cc: stable@vger.kernel.org
+Signed-off-by: Paul Aurich <paul@darkrain42.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/svcsock.c  | 3 +++
- net/sunrpc/xprtsock.c | 6 ++++++
- 2 files changed, 9 insertions(+)
+ fs/smb/client/cached_dir.c | 27 ++++++++++++++-------------
+ 1 file changed, 14 insertions(+), 13 deletions(-)
 
-diff --git a/net/sunrpc/svcsock.c b/net/sunrpc/svcsock.c
-index 23b4c728de598..69d40d0980cf0 100644
---- a/net/sunrpc/svcsock.c
-+++ b/net/sunrpc/svcsock.c
-@@ -1457,6 +1457,9 @@ static struct svc_xprt *svc_create_socket(struct svc_serv *serv,
- 	newlen = error;
- 
- 	if (protocol == IPPROTO_TCP) {
-+		sock->sk->sk_net_refcnt = 1;
-+		get_net_track(net, &sock->sk->ns_tracker, GFP_KERNEL);
-+		sock_inuse_add(net, 1);
- 		if ((error = kernel_listen(sock, 64)) < 0)
- 			goto bummer;
- 	}
-diff --git a/net/sunrpc/xprtsock.c b/net/sunrpc/xprtsock.c
-index b9dc8e197dde8..74689050038a2 100644
---- a/net/sunrpc/xprtsock.c
-+++ b/net/sunrpc/xprtsock.c
-@@ -1855,6 +1855,12 @@ static struct socket *xs_create_sock(struct rpc_xprt *xprt,
- 		goto out;
- 	}
- 
-+	if (protocol == IPPROTO_TCP) {
-+		sock->sk->sk_net_refcnt = 1;
-+		get_net_track(xprt->xprt_net, &sock->sk->ns_tracker, GFP_KERNEL);
-+		sock_inuse_add(xprt->xprt_net, 1);
-+	}
+diff --git a/fs/smb/client/cached_dir.c b/fs/smb/client/cached_dir.c
+index bac6ceccaaa9c..194cf24f52df9 100644
+--- a/fs/smb/client/cached_dir.c
++++ b/fs/smb/client/cached_dir.c
+@@ -57,6 +57,16 @@ static struct cached_fid *find_or_create_cached_dir(struct cached_fids *cfids,
+ 	list_add(&cfid->entry, &cfids->entries);
+ 	cfid->on_list = true;
+ 	kref_get(&cfid->refcount);
++	/*
++	 * Set @cfid->has_lease to true during construction so that the lease
++	 * reference can be put in cached_dir_lease_break() due to a potential
++	 * lease break right after the request is sent or while @cfid is still
++	 * being cached, or if a reconnection is triggered during construction.
++	 * Concurrent processes won't be to use it yet due to @cfid->time being
++	 * zero.
++	 */
++	cfid->has_lease = true;
 +
- 	filp = sock_alloc_file(sock, O_NONBLOCK, NULL);
- 	if (IS_ERR(filp))
- 		return ERR_CAST(filp);
+ 	spin_unlock(&cfids->cfid_list_lock);
+ 	return cfid;
+ }
+@@ -168,11 +178,11 @@ int open_cached_dir(unsigned int xid, struct cifs_tcon *tcon,
+ 		return -ENOENT;
+ 	}
+ 	/*
+-	 * At this point we either have a lease already and we can just
+-	 * return it. If not we are guaranteed to be the only thread accessing
+-	 * this cfid.
++	 * Return cached fid if it is valid (has a lease and has a time).
++	 * Otherwise, it is either a new entry or laundromat worker removed it
++	 * from @cfids->entries.  Caller will put last reference if the latter.
+ 	 */
+-	if (cfid->has_lease) {
++	if (cfid->has_lease && cfid->time) {
+ 		*ret_cfid = cfid;
+ 		kfree(utf16_path);
+ 		return 0;
+@@ -263,15 +273,6 @@ int open_cached_dir(unsigned int xid, struct cifs_tcon *tcon,
+ 
+ 	smb2_set_related(&rqst[1]);
+ 
+-	/*
+-	 * Set @cfid->has_lease to true before sending out compounded request so
+-	 * its lease reference can be put in cached_dir_lease_break() due to a
+-	 * potential lease break right after the request is sent or while @cfid
+-	 * is still being cached.  Concurrent processes won't be to use it yet
+-	 * due to @cfid->time being zero.
+-	 */
+-	cfid->has_lease = true;
+-
+ 	rc = compound_send_recv(xid, ses, server,
+ 				flags, 2, rqst,
+ 				resp_buftype, rsp_iov);
 -- 
 2.53.0
 
