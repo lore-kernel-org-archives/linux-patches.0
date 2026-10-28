@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793208991;
-	b=bffadO5ih+bzXsaQ+n3qZ01IP3CxWxK9OjMSoak2sbK5ZhJAhJEujLx5SVS0ZnVBXmKH
-	 jPItioyZiUMvwE3Ix4mkjgv7L1EFdl0Deck+KlhS2AMzmilTh9xV7Dq5kzirYu9atzVM/
-	 GIxiwiSV/rkC3TWiwtvWaAD+JsOFzjmkPXFPBCdeBeQxGVfAmNX35Dc26By1sJYYq5pwd
-	 wEUK7Nz9iY/kIQhcZvF9cZvOhVyGa5lTXAH0UApM0u0UV4n7jG3PF+AQdbjP7Z1kRXPrP
-	 vWu7iSXsJIMSrqPpobqXhl3z4K6XVMip3cFZIlKhPzpMOu6EyVkVCu+nKbqSGVJYjHg==
+	t=1793208994;
+	b=e8aJzAwS77XjNSWU8b4YLUlpOokeTZTFtJPK9a2eQclXe43SIukxRYLLxKWpIdKXdUqC
+	 RTjH6ZE0KmkPvz7+sL9NuosZjAGtmu+J5ueSP+EXWdx08SCdIRcadtZJTHgENj0LCQc7d
+	 mSsk/m2HlZ9zax8H+8GdTdK2JZPUb/3nCDwQPn3zFZsVu/FH6oi5Fv4Gm/oqn20J8naBK
+	 gfLEhLvwfqDPp20wQXuAxJUHS7r4bmXNkHpJ1whDGlcPjpQaI74WfL+u6dCjci5Q2tR4a
+	 IemOvVNbeotXUj1NFpP/SSuwEQL5fz6fcSdpuanruYbqxeRtSc8foQEYiiWpi7KxRTg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793208991;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793208994;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=zpS5V9Z6PUzcKVRgow9O1zLY3ki7Acp9ef7ItMmaER0=;
-	b=K8R38Vtdb/Yyka4RKTev2FRulOiESsKXUPFmWWDb9wRK+0FExFeVirmuQWcrcESZeIzd
-	 /HbYnDLjKHgvGFzdoDGUBqHyW14qa77VdsrtKLBtFSuFqCv+0P6Ia8BXvNng6TLbnKVpU
-	 VfwhhjjKnW/oFrbUIUjCevo/9/F8SgxpbEK/yZYJT7PoTYXxvY4jwtK29k880NpSxnPIU
-	 p8uu2srhtjNq4UjKa5RvLPyAN4hz61rEZsSUz4mC0y9hy/A3pFuBWjjDAQHk7c2T8aHq0
-	 t//uvxI2fYM8VySmfkh59FGSQSqJke3Sdk53u55mVbQKxtsGyH+OwqBJDECPuzBzn7g==
+	bh=cKjz2RpFqbMSdRvdxrOZvNItHT0erc0acJOFLBrVVJQ=;
+	b=kEPpUTYQheQ6l7CVDT69FCxzhU+itrvRrpJQgn/c5HV6ngsSHIBfKUJEOaXVy9HO1WtR
+	 Ost9oVxsumq6So5LXjAC82c9pMQBJvHcFKPrkyl41jF6bUHx+gRReI7BN4Nt8s4XHPuEn
+	 Ux1Tr7/TevcolMFJbz9RaXvidt6X4UsAzCe0NWWdFC/O42ss55NSdxpRquJwImQpoaFkP
+	 H6MBKY+7AkTmqcmJYiOs9YGz2ZaTsdGEwEDtODd/CNcbUHRCW7Ew6KfJezwrif03FJbHQ
+	 8Xa9nsfqL9pUcb3fbqBTX/kOcl2cXqDVXKE1NFN7QKkJw+7Nf1Wwd5CHNKM+MU//XSw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RybssuC1;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cPJgUuwb;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3399E606A31E;
-	Wed, 28 Oct 2026 17:36:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C30B606A31C;
+	Wed, 28 Oct 2026 17:36:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RybssuC1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 823941F01825;
-	Wed, 28 Oct 2026 17:36:30 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cPJgUuwb
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AE931F01825;
+	Wed, 28 Oct 2026 17:36:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793208991;
-	bh=zpS5V9Z6PUzcKVRgow9O1zLY3ki7Acp9ef7ItMmaER0=;
+	s=korg; t=1793208993;
+	bh=cKjz2RpFqbMSdRvdxrOZvNItHT0erc0acJOFLBrVVJQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RybssuC17Ad163DP0RkQYkEHKx9uc7KYIGUHQUBfWxVUkRUVCpF3PKUGNk65Rs6Ry
-	 Rfy/ThKm4oi+Wsw5Mw/zwu5d4TY6VRqZpct7onRjuBlSNAKmvyCipykoB8O7vUri5e
-	 9Ph1OeklFw/7ajuVlMxv6ryUwZP7x5hDOK8BCzDg=
+	b=cPJgUuwbLqFitRu5eZZ6Wx4/Xp6/uzn7J5VmfHhmSZQMzPblUp32wIS9wIeyOvZ5V
+	 6fo7UXkOuai4++XvWwfdjrMqIpFFFVjZIuf6bmyEP43uAt0RlHoEcE57lu22PTOq63
+	 HCbShWCW4aZCHWJo2RjjJ6pln4HR3+Jluhm08SJQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Carlos Llamas <cmllamas@google.com>,
-	Lee Jones <lee@kernel.org>,
-	Jiri Kosina <jkosina@suse.com>,
+	Eric Biggers <ebiggers@kernel.org>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 313/516] HID: uhid: convert to hid_safe_input_report()
-Date: Wed, 28 Oct 2026 17:57:45 +0100
-Message-ID: <20261028170010.904856747@linuxfoundation.org>
+Subject: [PATCH 5.10 314/516] crypto: drbg - Fix ineffective sanity check
+Date: Wed, 28 Oct 2026 17:57:46 +0100
+Message-ID: <20261028170010.928308675@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -69,70 +68,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Carlos Llamas <cmllamas@google.com>
+From: Eric Biggers <ebiggers@kernel.org>
 
-[ Upstream commit 63a694c51bf120a37550890b8e7736b4888985e9 ]
+commit 040ad83b0e8aa065fd2fc641cacba8491a8b186d upstream.
 
-Commit 0a3fe972a7cb ("HID: core: Mitigate potential OOB by removing
-bogus memset()"), added a check in hid_report_raw_event() to reject
-reports if the received data size is smaller than expected. This was
-intended to prevent OOB errors by no longer allowing zeroing-out of
-shorter reports due to the lack of buffer size information.
+Fix drbg_healthcheck_sanity() to correctly check the return value of
+drbg_generate().  drbg_generate() returns 0 on success, or a negative
+errno value on failure.  drbg_healthcheck_sanity() incorrectly assumed
+that it returned a positive value on success.
 
-However, this leads to regressions in hid_report_raw_event(), where
-shorter than expected reports are rejected, even though their buffers
-are sufficiently large to be zero-padded.
+This didn't make the sanity check fail, but it made it ineffective.
 
-To solve this issue, Benjamin introduced a safer alternative in commit
-206342541fc8 ("HID: core: introduce hid_safe_input_report()"), which
-forwards the buffer size and allows hid_report_raw_event() to safely
-zero-pad the data.
-
-Convert uhid to use hid_safe_input_report() and pass UHID_DATA_MAX as
-the buffer size. This prevents the reported regressions [1], allowing
-hid core to zero-pad the shorter reports safely as expected.
-
+Fixes: cde001e4c3c3 ("crypto: rng - RNGs must return 0 in success case")
 Cc: stable@vger.kernel.org
-Fixes: 0a3fe972a7cb ("HID: core: Mitigate potential OOB by removing bogus memset()")
-Closes: https://lore.kernel.org/all/ahsh0UtTX6e0ZeHa@google.com/ [1]
-Signed-off-by: Carlos Llamas <cmllamas@google.com>
-Reviewed-by: Lee Jones <lee@kernel.org>
-Closes: https://lore.kernel.org/all/ahsh0UtTX6e0ZeHa@google.com/
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
-Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Eric Biggers <ebiggers@kernel.org>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/uhid.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ crypto/drbg.c |   11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/hid/uhid.c b/drivers/hid/uhid.c
-index ba0ca652b9dab..30d533ada00b3 100644
---- a/drivers/hid/uhid.c
-+++ b/drivers/hid/uhid.c
-@@ -597,8 +597,8 @@ static int uhid_dev_input(struct uhid_device *uhid, struct uhid_event *ev)
- 	if (!uhid->running)
- 		return -EINVAL;
+--- a/crypto/drbg.c
++++ b/crypto/drbg.c
+@@ -1975,7 +1975,6 @@ static int drbg_kcapi_seed(struct crypto
+  */
+ static inline int __init drbg_healthcheck_sanity(void)
+ {
+-	int len = 0;
+ #define OUTBUFLEN 16
+ 	unsigned char buf[OUTBUFLEN];
+ 	struct drbg_state *drbg = NULL;
+@@ -2017,12 +2016,12 @@ static inline int __init drbg_healthchec
+ 	max_addtllen = drbg_max_addtl(drbg);
+ 	max_request_bytes = drbg_max_request_bytes(drbg);
+ 	drbg_string_fill(&addtl, buf, max_addtllen + 1);
+-	/* overflow addtllen with additonal info string */
+-	len = drbg_generate(drbg, buf, OUTBUFLEN, &addtl);
+-	BUG_ON(0 < len);
++	/* overflow addtllen with additional info string */
++	ret = drbg_generate(drbg, buf, OUTBUFLEN, &addtl);
++	BUG_ON(ret == 0);
+ 	/* overflow max_bits */
+-	len = drbg_generate(drbg, buf, (max_request_bytes + 1), NULL);
+-	BUG_ON(0 < len);
++	ret = drbg_generate(drbg, buf, max_request_bytes + 1, NULL);
++	BUG_ON(ret == 0);
  
--	hid_input_report(uhid->hid, HID_INPUT_REPORT, ev->u.input.data,
--			 min_t(size_t, ev->u.input.size, UHID_DATA_MAX), 0);
-+	hid_safe_input_report(uhid->hid, HID_INPUT_REPORT, ev->u.input.data, UHID_DATA_MAX,
-+			      min_t(size_t, ev->u.input.size, UHID_DATA_MAX), 0);
- 
- 	return 0;
- }
-@@ -608,8 +608,8 @@ static int uhid_dev_input2(struct uhid_device *uhid, struct uhid_event *ev)
- 	if (!uhid->running)
- 		return -EINVAL;
- 
--	hid_input_report(uhid->hid, HID_INPUT_REPORT, ev->u.input2.data,
--			 min_t(size_t, ev->u.input2.size, UHID_DATA_MAX), 0);
-+	hid_safe_input_report(uhid->hid, HID_INPUT_REPORT, ev->u.input2.data, UHID_DATA_MAX,
-+			      min_t(size_t, ev->u.input2.size, UHID_DATA_MAX), 0);
- 
- 	return 0;
- }
--- 
-2.53.0
-
+ 	/* overflow max addtllen with personalization string */
+ 	ret = drbg_seed(drbg, &addtl, false);
 
 
