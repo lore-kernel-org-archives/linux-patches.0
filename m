@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213546;
-	b=a9dc5/HO4FkP+xdKz/Y+mcwvKh/RQd81kOi2+zlFlP8IVRMvmdqHRBR0P2PKjXaIOcTy
-	 Uvv+XiiPpZ37fLqYGLvZ7XQ4yZ6/Boo4izK5ux3U4xRs6i9R4thEBp0iJngdVXiX+yRNU
-	 5kJG/AAPJ43n4/lNGlTMiRXoSlQk+uEoPkNTGiOZEPuS6qDQZ/7WP78hyoO9EbC6LRJug
-	 Eaq2RO715ckRh9phfkeaVi8tpk8ek++PKjRWKyPTyyjLhsNLWi2wiEs7lYE+mCMuAFUeE
-	 vbvlWzs0BdoMhikSMOi/o+z+U87OM+YkTyCQOX5M/hCIZm3pHf5RtzVMBTCgaj+uqMg==
+	t=1793213549;
+	b=QBU7FyTWtxe4j836CVuetORoVklMXvI6T1+1nHpJLiY/3Qr4fjnmelSGtCHriaVtW1Db
+	 Rr5A17pAR47QiCNCukVgJ3Gd+WBLJJUKS8wEOO0aWLe3jbPgoAfDDgmm1EjrEAvC0ppUL
+	 D6PTZvLQ5ta603IcSDBJOJuGxZz0G8LzMgmNwIOsAfEhIQWTDFQBVvj0VxOwgvBHNjg6g
+	 1PqNHbuYpc1OltJ3rRVcLfgWY2OHJgS0xS7J2cdKUhVBO/hmi7CyYAorkt6B/0gqVUQfQ
+	 0MPRF7kGvcuGzMiQWZXibm9eryosjU56T6E/SZLfmBXYxvldbHK+v0zSSB7iN8tVtww==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213546;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213549;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=VCRl3pee+/lCM3xsbN4/zEVHaKFlrpyR1F1SpK3w+UQ=;
-	b=JlDCjzuuPmpT/NHwlr4NnLIp1qhwckSN8R9dj8ysuCMY5jFbmYAwHi0sE9zLfpDKNzto
-	 q4lEqgzJJru8uAdEyqAJNmc5dtZi6NUJqa3CACbHwqbaX5qMpXLTuxOa/A8LF1OnEDj7i
-	 drhmPFvxjA8WTOmexd70pA3NExgs9uh4fGl0vHcKwW98FVwW2lo+RES7MxfgtAXJ1aCKY
-	 PEvoVgMMN4pukscFTy/0k029lOAl1ErvHi6pmuuz0pIHSvUjlcqYsbtdB5E+qdyBdPRmA
-	 kfn7MLwN4BEQi8TQ51D/uW6gTU/ssfSU6IZHPnV6LzApD1xpWFDHn7+BUWGvDVTYNYQ==
+	bh=LGzGuARhVid6Y8P7Z2itqVaTtmtJz+qoOMfl57e+6Ps=;
+	b=B5ryM/q2ZOCNayUu4GxIQHqvn6Ia9GKkiA2p8qnEA5gY8gzxV0cyaqVUGFwuvc7rQFny
+	 qMgRGvetBF12MxvGWI5gKnxtmkQ/YMtZ2REppOribyZsqXjdK6CqTQSf0aBif8PAmosoh
+	 FmCxKDz2U/D1nv7RiMNUYXNLhMt1gxv3/o5v86tSV9Ui78Mb1/DZHSxCTbuBJR0X5XO4v
+	 LvtKNcbOtSw8Bh3634eRiTq05CmLD/qyny5y9nuM8oJmZFZ2qF7feLawW2aFZ5qK0z1Oy
+	 1UgcJozWMa/49y6EeX6ct6MEcsdBhnJd20HggUdksWsUeJ75GbuUthaui7sX2QdaZbw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x7FsO1hF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iA1wNin7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 864B3606A31A;
-	Wed, 28 Oct 2026 18:52:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A728606A31C;
+	Wed, 28 Oct 2026 18:52:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x7FsO1hF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D75E51F01825;
-	Wed, 28 Oct 2026 18:52:25 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iA1wNin7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0E011F01825;
+	Wed, 28 Oct 2026 18:52:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213546;
-	bh=VCRl3pee+/lCM3xsbN4/zEVHaKFlrpyR1F1SpK3w+UQ=;
+	s=korg; t=1793213549;
+	bh=LGzGuARhVid6Y8P7Z2itqVaTtmtJz+qoOMfl57e+6Ps=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=x7FsO1hFBaX8m/zmm3kEzBVV3u7cGCKrCBQ6ipPNkSzSPeV4xVQVwQ3NEZruNAJ/V
-	 wvbT+eWNI198oedTtjrDpPzUjrwOLWUPNN06mpCTEkvs9cLZaP8M+lQ9v7/f4Ypqo1
-	 1frZ7VCAHSfFLXv7qnTPBwnoE+KuYMUJa1Fza6Sk=
+	b=iA1wNin7NrvuwDYIhU84xs/fWtlkUkIuv1UIyq0e7ZwTsbMMI0RTnz5PD4Ksrqz9E
+	 EAS4B8puKc2sK0Pc7rMn6WC4rWx52aiEqDI+BjJBimyajeRa51V/8vpztyAy+9Vs5w
+	 Q/+A337loXD7Si3DRgu9/xRGS7kyNrOofVBUMkwo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Johan Hovold <johan@kernel.org>,
+	Dave Chinner <dchinner@redhat.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Carlos Maiolino <cmaiolino@redhat.com>,
+	Carlos Maiolino <cem@kernel.org>,
+	Siddh Raman Pant <siddh.raman.pant@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0545/1887] tty: add break_wait kernel-doc
-Date: Wed, 28 Oct 2026 17:44:01 +0100
-Message-ID: <20261028170511.763479649@linuxfoundation.org>
+Subject: [PATCH 6.1 0546/1887] xfs: xfs_ifree_cluster vs xfs_iflush_shutdown_abort deadlock
+Date: Wed, 28 Oct 2026 17:44:02 +0100
+Message-ID: <20261028170511.787687430@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,36 +71,158 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Dave Chinner <dchinner@redhat.com>
 
-[ Upstream commit 5dad87615c9861cfa366ca984b52f581e861df20 ]
+[ Upstream commit 09234a632be42573d9743ac5ff6773622d233ad0 ]
 
-Add the missing kernel-doc description for the new break_wait field in
-struct tty_struct.
+Lock order of xfs_ifree_cluster() is cluster buffer -> try ILOCK
+-> IFLUSHING, except for the last inode in the cluster that is
+triggering the free. In that case, the lock order is ILOCK ->
+cluster buffer -> IFLUSHING.
 
-Fixes: 845a2737e0f5 ("tty: abort break signalling on hangup")
-Reported-by: Randy Dunlap <rdunlap@infradead.org>
-Link: https://lore.kernel.org/20d75a7a-2e7a-484f-a267-c21db82dd922@infradead.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260925094222.18303-1-johan@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+xfs_iflush_cluster() uses cluster buffer -> try ILOCK -> IFLUSHING,
+so this can safely run concurrently with xfs_ifree_cluster().
+
+xfs_inode_item_precommit() uses ILOCK -> cluster buffer, but this
+cannot race with xfs_ifree_cluster() so being in a different order
+will not trigger a deadlock.
+
+xfs_reclaim_inode() during a filesystem shutdown uses ILOCK ->
+IFLUSHING -> cluster buffer via xfs_iflush_shutdown_abort(), and
+this deadlocks against xfs_ifree_cluster() like so:
+
+ sysrq: Show Blocked State
+ task:kworker/10:37   state:D stack:12560 pid:276182 tgid:276182 ppid:2      flags:0x00004000
+ Workqueue: xfs-inodegc/dm-3 xfs_inodegc_worker
+ Call Trace:
+  <TASK>
+  __schedule+0x650/0xb10
+  schedule+0x6d/0xf0
+  schedule_timeout+0x8b/0x180
+  schedule_timeout_uninterruptible+0x1e/0x30
+  xfs_ifree+0x326/0x730
+  xfs_inactive_ifree+0xcb/0x230
+  xfs_inactive+0x2c8/0x380
+  xfs_inodegc_worker+0xaa/0x180
+  process_scheduled_works+0x1d4/0x400
+  worker_thread+0x234/0x2e0
+  kthread+0x147/0x170
+  ret_from_fork+0x3e/0x50
+  ret_from_fork_asm+0x1a/0x30
+  </TASK>
+ task:fsync-tester    state:D stack:12160 pid:2255943 tgid:2255943 ppid:3988702 flags:0x00004006
+ Call Trace:
+  <TASK>
+  __schedule+0x650/0xb10
+  schedule+0x6d/0xf0
+  schedule_timeout+0x31/0x180
+  __down_common+0xbe/0x1f0
+  __down+0x1d/0x30
+  down+0x48/0x50
+  xfs_buf_lock+0x3d/0xe0
+  xfs_iflush_shutdown_abort+0x51/0x1e0
+  xfs_icwalk_ag+0x386/0x690
+  xfs_reclaim_inodes_nr+0x114/0x160
+  xfs_fs_free_cached_objects+0x19/0x20
+  super_cache_scan+0x17b/0x1a0
+  do_shrink_slab+0x180/0x350
+  shrink_slab+0xf8/0x430
+  drop_slab+0x97/0xf0
+  drop_caches_sysctl_handler+0x59/0xc0
+  proc_sys_call_handler+0x189/0x280
+  proc_sys_write+0x13/0x20
+  vfs_write+0x33d/0x3f0
+  ksys_write+0x7c/0xf0
+  __x64_sys_write+0x1b/0x30
+  x64_sys_call+0x271d/0x2ee0
+  do_syscall_64+0x68/0x130
+  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+
+We can't change the lock order of xfs_ifree_cluster() - XFS_ISTALE
+and XFS_IFLUSHING are serialised through to journal IO completion
+by the cluster buffer lock being held.
+
+There's quite a few asserts in the code that check that XFS_ISTALE
+does not occur out of sync with buffer locking (e.g. in
+xfs_iflush_cluster). There's also a dependency on the inode log item
+being removed from the buffer before XFS_IFLUSHING is cleared, also
+with asserts that trigger on this.
+
+Further, we don't have a requirement for the inode to be locked when
+completing or aborting inode flushing because all the inode state
+updates are serialised by holding the cluster buffer lock across the
+IO to completion.
+
+We can't check for XFS_IRECLAIM in xfs_ifree_mark_inode_stale() and
+skip the inode, because there is no guarantee that the inode will be
+reclaimed. Hence it *must* be marked XFS_ISTALE regardless of
+whether reclaim is preparing to free that inode. Similarly, we can't
+check for IFLUSHING before locking the inode because that would
+result in dirty inodes not being marked with ISTALE in the event of
+racing with XFS_IRECLAIM.
+
+Hence we have to address this issue from the xfs_reclaim_inode()
+side. It is clear that we cannot hold the inode locked here when
+calling xfs_iflush_shutdown_abort() because it is the inode->buffer
+lock order that causes the deadlock against xfs_ifree_cluster().
+
+Hence we need to drop the ILOCK before aborting the inode in the
+shutdown case. Once we've aborted the inode, we can grab the ILOCK
+again and then immediately reclaim it as it is now guaranteed to be
+clean.
+
+Note that dropping the ILOCK in xfs_reclaim_inode() means that it
+can now be locked by xfs_ifree_mark_inode_stale() and seen whilst in
+this state. This is safe because we have left the XFS_IFLUSHING flag
+on the inode and so xfs_ifree_mark_inode_stale() will simply set
+XFS_ISTALE and move to the next inode. An ASSERT check in this path
+needs to be tweaked to take into account this new shutdown
+interaction.
+
+Signed-off-by: Dave Chinner <dchinner@redhat.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Carlos Maiolino <cmaiolino@redhat.com>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
+Signed-off-by: Siddh Raman Pant <siddh.raman.pant@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/tty.h | 1 +
- 1 file changed, 1 insertion(+)
+ fs/xfs/xfs_icache.c | 8 ++++++++
+ fs/xfs/xfs_inode.c  | 2 +-
+ 2 files changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/include/linux/tty.h b/include/linux/tty.h
-index 37978b784312e..5bfdf02df9c75 100644
---- a/include/linux/tty.h
-+++ b/include/linux/tty.h
-@@ -173,6 +173,7 @@ struct tty_operations;
-  * @write_wait: concurrent writers are waiting in this queue until they are
-  *		allowed to write
-  * @read_wait: readers wait for data in this queue
-+ * @break_wait: wait queue for timed breaks
-  * @hangup_work: normally a work to perform a hangup (do_tty_hangup()); while
-  *		 freeing the tty, (re)used to release_one_tty()
-  * @disc_data: pointer to @ldisc's private data (e.g. to &struct n_tty_data)
+diff --git a/fs/xfs/xfs_icache.c b/fs/xfs/xfs_icache.c
+index 5f6c2a1f32993..d4eb83e7934d4 100644
+--- a/fs/xfs/xfs_icache.c
++++ b/fs/xfs/xfs_icache.c
+@@ -916,7 +916,15 @@ xfs_reclaim_inode(
+ 	 */
+ 	if (xlog_is_shutdown(ip->i_mount->m_log)) {
+ 		xfs_iunpin_wait(ip);
++		/*
++		 * Avoid a ABBA deadlock on the inode cluster buffer vs
++		 * concurrent xfs_ifree_cluster() trying to mark the inode
++		 * stale. We don't need the inode locked to run the flush abort
++		 * code, but the flush abort needs to lock the cluster buffer.
++		 */
++		xfs_iunlock(ip, XFS_ILOCK_EXCL);
+ 		xfs_iflush_shutdown_abort(ip);
++		xfs_ilock(ip, XFS_ILOCK_EXCL);
+ 		goto reclaim;
+ 	}
+ 	if (xfs_ipincount(ip))
+diff --git a/fs/xfs/xfs_inode.c b/fs/xfs/xfs_inode.c
+index 3ccbc31767b3c..3139363d892bf 100644
+--- a/fs/xfs/xfs_inode.c
++++ b/fs/xfs/xfs_inode.c
+@@ -2225,7 +2225,7 @@ xfs_ifree_mark_inode_stale(
+ 	iip = ip->i_itemp;
+ 	if (__xfs_iflags_test(ip, XFS_IFLUSHING)) {
+ 		ASSERT(!list_empty(&iip->ili_item.li_bio_list));
+-		ASSERT(iip->ili_last_fields);
++		ASSERT(iip->ili_last_fields || xlog_is_shutdown(mp->m_log));
+ 		goto out_iunlock;
+ 	}
+ 
 -- 
 2.53.0
 
