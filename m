@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214664;
-	b=FS3wKDNmyOo+jlS3DTAPGVKDGmJlKtpoNHEsu4s4sAP5ekH8Wf8Abv/nE45Q10ALT6q/
-	 bWHxKOfU3ctXERUqUH9fpM8FZm4V7vCDzJYfUKVJT/WPKLqnEevOddN2LuyV1xv+13N37
-	 iGxxGe2LJ4q80ug336nDQiLAxbtvxIMQCn+x8UNBDbVpuBCeycUDhnG/NCITS8yXaj1NB
-	 eFsV29pF3pHZX9HAH9K+STXIojivYxTv7UwUw9TkulJPvtOl/V4XiyF+uNcBxNXjEjCqi
-	 LhPKqD4taFsn0RCI85zEw9VAjC6mvoXBJUp5hwF8RG2NjQqZErwtUej2aLWE7ZzOQwg==
+	t=1793214666;
+	b=V4dDUCK2wzFDyw6mFgz4zdm8nwTlvFUlac+z12QkkOsMH1NOUADTnc42NuQMhh64mIaN
+	 9IXpSMNp7GF2o03tHNxCWhk6bl/aSY2ZbUWov7kc8Zy+S8m6i2jRXgvs51GJG6Hkt3YA/
+	 92iyeVfLqb2FkNR3CJQrbKLJMbApJsm35thsECY9ig60QNp7Ml8+WIWlInr186rOtyIf/
+	 PACRPTmAdGMQEjq86jT82Jph1+urbtKExgBQ1QvMUy7OPTxp/svnPVj6pCo4L7qx3ioMD
+	 WUC2UG6wmj5++VdkraJvuo4bn/hFQ8YXD+tQNztNFZdhLq8fbQ+Tc+AGvH4XP0/nBJg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214664;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214666;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=YmnLsest+gyq3hZGhiGMtbNo4BaXWdnC1TSWtmWTafs=;
-	b=dzaUbA/UdE/pgVY0qzAFp/qO6VlnVf8JqYytXIpYw5RBqKOwxpzcLHVtf3GHNUEgVG2r
-	 R0pb7e8U/ZLqe+Esag3jBd6mjzQn9R4KdK8hflxBqDtY76ME61aLvYq5T8SVxo/jm2cm2
-	 vSKyWxZLLIMWd6kbTNcWNEG2ujK6PUClN0KxXkKcn3Pj+EDK3DqF0IgeLi6JHMMBiTP2l
-	 QBf9uY/3chogf5UEz0AHou1Q29h8JZy+2g9qL942bW3aZRuUVq84TEtU7kYpfKtJk4uNM
-	 wwFzBoYBFsc0+iKqDGNCbkRqkmm8XBYhgwMIHFI/ZPohXndatPKyP7/5NlaIlVkwSgQ==
+	bh=75jBMXRtPg95vWWYfWshUujSI4OUeV/zNIK8arzUZBM=;
+	b=u/ar3PPwhp6HdiRko2WdItrIg+/4YFKAu49Vz8u/d4X+lwVgmQPgcNPWZSTkPZDPe76F
+	 aXKfmPb5OwunCLYo71zuDgakEBvCDLIt6CDz5mOorh0kqNxY+ABxI/XUdK72FvctCdSzO
+	 9jc0bSZ2BKtmFYM2FUY1ObWF/8Z6NvoJPlf3yrk5+PalLggKgj87lJSZhJ6GIcWpGcHTG
+	 uQ8QwnILPtdLU+09ePGtMHMqZIWI9ZifzFFt5HUXCPvSInNmQXGnCEIMmOUBio9SunB14
+	 9jY8Cie9PKj8Deh+2nIgfSbLNMnEHm1ZrcvfFV9FUcPtZWiWB44N93Y1tdr6EnIS0Ew==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=azsohrL+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YZst8Pq8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8C9C606B7CF;
-	Wed, 28 Oct 2026 19:11:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B83B606AB18;
+	Wed, 28 Oct 2026 19:11:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=azsohrL+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2FAF1F031E0;
-	Wed, 28 Oct 2026 19:11:02 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YZst8Pq8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACFEF1F01828;
+	Wed, 28 Oct 2026 19:11:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214663;
-	bh=YmnLsest+gyq3hZGhiGMtbNo4BaXWdnC1TSWtmWTafs=;
+	s=korg; t=1793214666;
+	bh=75jBMXRtPg95vWWYfWshUujSI4OUeV/zNIK8arzUZBM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=azsohrL+urCactZKVrCJc3XwCzHspS4HQ5WLyH+/NrNa6lhPcdBhBsU4SEH6gQT7q
-	 RUJoqo5zyknYxXqMMZ5m8NojmBsiGKMhpFOJBUHf8Rkzsq0kMvsw9pJGnB7BmH3XUg
-	 e/KtSpKS+XgyyBpiN2kUoCIDZ8cgS8I1g1Plvkvs=
+	b=YZst8Pq8qE5iTb6/ko+vf8xX4gcc7o8OjHayfzl1lxqD4SredvG8DyKSGSw3B3ZU0
+	 ZPSnadpvilDpDRo8qZZWiXLpZD3cykD02S/5B+09Ezpi3roGuxmeMy23L6RFOpIUzw
+	 mqZQ4eyUxplFIossbzoJ4V9m38TD5rJ3ye4/PRXI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joe Damato <joe@dama.to>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Niklas Cassel <cassel@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Frank Li <Frank.Li@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0937/1887] nfc: nci: complete pending data exchange on device close
-Date: Wed, 28 Oct 2026 17:50:33 +0100
-Message-ID: <20261028170520.735555481@linuxfoundation.org>
+Subject: [PATCH 6.1 0938/1887] PCI: dwc: ep: Flush MSI-X write before unmapping its ATU entry
+Date: Wed, 28 Oct 2026 17:50:34 +0100
+Message-ID: <20261028170520.757898827@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,69 +69,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Niklas Cassel <cassel@kernel.org>
 
-[ Upstream commit 66083581945bd5b8e99fe49b5aeb83d03f62d053 ]
+[ Upstream commit c22533c66ccae10511ad6a7afc34bb26c47577e3 ]
 
-In nci_close_device(), complete any pending data exchange before
-closing. The data exchange callback (e.g.
-rawsock_data_exchange_complete) holds a socket reference.
+Endpoint drivers use dw_pcie_ep_raise_msix_irq() to raise an MSI-X
+interrupt to the host using a writel(), which generates a PCI posted write
+transaction.  There's no completion for posted writes, so the writel() may
+return before the PCI write completes.  dw_pcie_ep_raise_msix_irq() also
+unmaps the outbound ATU entry used for the PCI write, so the write races
+with the unmap.
 
-NIPA occasionally hits this leak:
+If the PCI write loses the race with the ATU unmap, the write may corrupt
+host memory or cause IOMMU errors, e.g., these when running fio with a
+larger queue depth against nvmet-pci-epf:
 
-unreferenced object 0xff1100000f435000 (size 2048):
-  comm "nci_dev", pid 3954, jiffies 4295441245
-  hex dump (first 32 bytes):
-    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-    27 00 01 40 00 00 00 00 00 00 00 00 00 00 00 00  '..@............
-  backtrace (crc ec2b3c5):
-    __kmalloc_noprof+0x4db/0x730
-    sk_prot_alloc.isra.0+0xe4/0x1d0
-    sk_alloc+0x36/0x760
-    rawsock_create+0xd1/0x540
-    nfc_sock_create+0x11f/0x280
-    __sock_create+0x22d/0x630
-    __sys_socket+0x115/0x1d0
-    __x64_sys_socket+0x72/0xd0
-    do_syscall_64+0x117/0xfc0
-    entry_SYSCALL_64_after_hwframe+0x4b/0x53
+  arm-smmu-v3 fc900000.iommu:      0x0000010000000010
+  arm-smmu-v3 fc900000.iommu:      0x0000020000000000
+  arm-smmu-v3 fc900000.iommu:      0x000000090000f040
+  arm-smmu-v3 fc900000.iommu:      0x0000000000000000
+  arm-smmu-v3 fc900000.iommu: event: F_TRANSLATION client: 0000:01:00.0 sid: 0x100 ssid: 0x0 iova: 0x90000f040 ipa: 0x0
+  arm-smmu-v3 fc900000.iommu: unpriv data write s1 "Input address caused fault" stag: 0x0
 
-Fixes: 38f04c6b1b68 ("NFC: protect nci_data_exchange transactions")
-Reviewed-by: Joe Damato <joe@dama.to>
-Link: https://patch.msgid.link/20260303162346.2071888-4-kuba@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Flush the write by performing a readl() of the same address to ensure that
+the write has reached the destination before the ATU entry is unmapped.
+
+The same problem was solved for dw_pcie_ep_raise_msi_irq() in commit
+8719c64e76bf ("PCI: dwc: ep: Cache MSI outbound iATU mapping"), but there
+it was solved by dedicating an outbound iATU only for MSI. We can't do the
+same for MSI-X because each vector can have a different msg_addr and the
+msg_addr may be changed while the vector is masked.
+
+Fixes: beb4641a787d ("PCI: dwc: Add MSI-X callbacks handler")
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
+[bhelgaas: commit log]
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260211175540.105677-2-cassel@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/nfc/nci/core.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/pci/controller/dwc/pcie-designware-ep.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/nfc/nci/core.c b/net/nfc/nci/core.c
-index bc5f7068e6db1..bfbe405a474eb 100644
---- a/net/nfc/nci/core.c
-+++ b/net/nfc/nci/core.c
-@@ -566,6 +566,10 @@ static int nci_close_device(struct nci_dev *ndev)
- 		flush_workqueue(ndev->cmd_wq);
- 		del_timer_sync(&ndev->cmd_timer);
- 		del_timer_sync(&ndev->data_timer);
-+		if (test_bit(NCI_DATA_EXCHANGE, &ndev->flags))
-+			nci_data_exchange_complete(ndev, NULL,
-+						   ndev->cur_conn_id,
-+						   -ENODEV);
- 		mutex_unlock(&ndev->req_lock);
- 		return 0;
- 	}
-@@ -596,6 +600,11 @@ static int nci_close_device(struct nci_dev *ndev)
- 	flush_workqueue(ndev->cmd_wq);
+diff --git a/drivers/pci/controller/dwc/pcie-designware-ep.c b/drivers/pci/controller/dwc/pcie-designware-ep.c
+index 32a04ff86c5c5..7a68574b90d34 100644
+--- a/drivers/pci/controller/dwc/pcie-designware-ep.c
++++ b/drivers/pci/controller/dwc/pcie-designware-ep.c
+@@ -633,6 +633,9 @@ int dw_pcie_ep_raise_msix_irq(struct dw_pcie_ep *ep, u8 func_no,
  
- 	del_timer_sync(&ndev->cmd_timer);
-+	del_timer_sync(&ndev->data_timer);
+ 	writel(msg_data, ep->msi_mem + aligned_offset);
+ 
++	/* flush posted write before unmap */
++	readl(ep->msi_mem + aligned_offset);
 +
-+	if (test_bit(NCI_DATA_EXCHANGE, &ndev->flags))
-+		nci_data_exchange_complete(ndev, NULL, ndev->cur_conn_id,
-+					   -ENODEV);
+ 	dw_pcie_ep_unmap_addr(epc, func_no, 0, ep->msi_mem_phys);
  
- 	/* Clear flags except NCI_UNREG */
- 	ndev->flags &= BIT(NCI_UNREG);
+ 	return 0;
 -- 
 2.53.0
 
