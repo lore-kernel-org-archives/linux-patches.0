@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793209102;
-	b=IVoYSg1kS5Qg5YYzNeK4VrMDj4hBt7AfctD9B3NWNmaWDlI3rO6ydPB6o3mxdDA93kUm
-	 OdwXRTZ8qyrvsjO3baewcsY8i6SYy1UrXE1OCmG0IEHEk7e3tVuL9Is3F6yCAVaN3UjpS
-	 qyjkKdF5R2tllimaZbAjjWk9nyzksRdInRs7rDUZk2VHaf9RZhqd/nMsEGuwXaLN0QhaD
-	 kbwN4DrikdAnIjSJXfYWNeH9Ybb+I4fGa9pzVR3gWUThfIj5yIwI0aMpV5OK9+MLgGABx
-	 K7gYU+rA8KLLFsq1FVJU17dCD9woR7D7BGViHPKu204XpMidVdQCLGKtW91IIXuoO3Q==
+	t=1793209105;
+	b=3CjCntCgumNT8hHfP/C9SMrI8sgNbowi5/Cy9gBunAf5QtnXT19uFrx96AMSLTKmFxy2
+	 iX0/z3nUU04B045VJC2gNvrw+gEwIFPKSSeEa3oT4mGZRbQ6RciCA5+RiX19Buc9SkfAU
+	 OK9eSQHghMV6EabttdupH34VPae5Epg31Pde7XhTNLIfqFvyM8lNKWFylJe/lctIZiOQu
+	 DaLBdg17QH7zNE0AKs6N7QKB6+OMZ7Ui5vkvI1obgk4sFDPfY3oZH365FzahUoMVEEU1G
+	 6qMq1dk/Aq/aQNK1rdxktZgMW6znQd2fRvt2tMSkMcT/D2utSe5G5/j6dbifs7Wb/1Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793209102;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793209105;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=/gOWQKD+NAEoEjC1l21zwav78xysKMsDoxdb5vkTYik=;
-	b=xk6rxVHHbVDNFN/KvjeuN2dxg7f51QlYZAcE334P4md0HgwZCj1ntADEfPy8jrz++gUw
-	 taCfD/e72ejU1QG5QLLZ/wbhfszhhQM+tXsLEJpSUrHG6u94UeztUQW3/VVhmO3fTzAeF
-	 tALScB6J101sKSnFmKdeE1tfljFh1ZRwPGLzjNgHwLNQ1dYld4xmBfaYcUHz3DrNTIXIi
-	 MudIQMfpm+20SRDl2NnUdk1xyLgGRdB/44FT0+RZt+iKNKB4kdkNAV+rUKlNMwYzjWGd6
-	 8f4wTt2FUxhcfIiByJsWpKWjowD2/SHuwYIV5961774fzFGZ2JdWO+pXtVpkujxYP9g==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=TzRVvekFMcPnzLO3ttqGDmAtaYd/9rotZms5Bsk7868=;
+	b=yLGk4j68CSfrgxAvDR1Vvkj/hj0kJ9tLW7wtnaW/RETZxo78UI3Tqhh/HX8qDfBUfUHe
+	 jGqgA1nnxZVSpsNA3tqO/zhN4tjcDyV68pppE091j2N1Lw4IodIJT07+GI+TaXw8yaqp9
+	 QEkQpU5Zq/5tx3thmQkCuC5iGvVzHQfRzW3YZA366ZHEdkJNUREc1rcGHtmK7gGsJhZH8
+	 edsqG9FFIPBNJenebfbnTmGDpc4zZEr7l7Kw+4hGQXlKsl66ZI2ozMoxTcy3NDrZ9z8z0
+	 p52jeUTm7LFoakatShgYuVWINpHR+UFjIk/0HNpH+SholiRaR63QRyCZbjlB2AUKEZg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GEBuP+fA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="nB/ebnm8";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6530660A2612;
-	Wed, 28 Oct 2026 17:38:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F9DF606A325;
+	Wed, 28 Oct 2026 17:38:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GEBuP+fA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA0431F01825;
-	Wed, 28 Oct 2026 17:38:21 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nB/ebnm8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 866F21F01825;
+	Wed, 28 Oct 2026 17:38:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793209102;
-	bh=/gOWQKD+NAEoEjC1l21zwav78xysKMsDoxdb5vkTYik=;
+	s=korg; t=1793209105;
+	bh=TzRVvekFMcPnzLO3ttqGDmAtaYd/9rotZms5Bsk7868=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GEBuP+fAq/0BhaF1U5uu5VN4tyjQFksxh6oRYsgAJOEI5Hzf60FrKnMBOOWaUbv3o
-	 bWeOsAWqdpLcr8UMRXp+xe3X/hsf5QlLB6Ot8tMMLaG72RGV0u4aEdFM1ZQ+ZslySj
-	 ICNgfAGH8Z3KAbxqCzzK7AJKNs2a/6Cpz8hbOzac=
+	b=nB/ebnm8xQVR6O2bYby7xBX3AN0EnhRmzOVrPm2/AmuNDMnWZzVeng7kMHA44K5D9
+	 KS0aMCeB6P00CYY6SYjxkcVTst/3Kw86su2bQZxK3bdSAcV5cbHDqbNfcy0yiBNg+b
+	 rBApW4Ou1BdoExI9cBy+QBtohLgL8Vql2k7gyv1g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ijae Kim <ae878000@gmail.com>,
-	Myeonghun Pak <mhun512@gmail.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
+	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
+	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 353/516] drm/aspeed: Balance the display clock enable on teardown
-Date: Wed, 28 Oct 2026 17:58:25 +0100
-Message-ID: <20261028170011.851985856@linuxfoundation.org>
+Subject: [PATCH 5.10 354/516] drm/vc4: Free the BO cache size list on teardown
+Date: Wed, 28 Oct 2026 17:58:26 +0100
+Message-ID: <20261028170011.875296512@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -63,60 +62,42 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Maíra Canal <mcanal@igalia.com>
 
-[ Upstream commit ecce445c6489895463b7ddec2af66338287fee4c ]
+[ Upstream commit b41ff8b529278216cba22a5dcdc93fea2a3a9619 ]
 
-aspeed_gfx_load() enables the display clock without checking the return
-value and never disables it on probe failure or removal. devm_clk_get()
-only releases the clock reference, leaving the enable unbalanced.
+vc4_bo_cache_destroy() purges the cached BOs but never frees the size
+list, leaking it on every unbind.
 
-Use devm_clk_get_enabled() to handle enable failures and automatically
-disable and unprepare the clock on probe failure or removal.
-
-This issue was identified during our ongoing static-analysis research
-while reviewing kernel code.
-
-Fixes: 4f2a8f5898ec ("drm: Add ASPEED GFX driver")
-Co-developed-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Assisted-by: OpenAI:GPT-5.6
-Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Link: https://patch.msgid.link/20260913223019.89651-1-mhun512@gmail.com
-Link: https://patch.msgid.link/20260905080426.34224-1-kmehltretter@gmail.com
+Fixes: c826a6e10644 ("drm/vc4: Add a BO cache.")
+Assisted-by: LLM
+Reviewed-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+Link: https://patch.msgid.link/20260930190721.1897264-1-mcanal@igalia.com
+Signed-off-by: Maíra Canal <mcanal@igalia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/aspeed/aspeed_gfx_drv.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/vc4/vc4_bo.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/aspeed/aspeed_gfx_drv.c b/drivers/gpu/drm/aspeed/aspeed_gfx_drv.c
-index 2b424b2b85cc8..a8d05186b6817 100644
---- a/drivers/gpu/drm/aspeed/aspeed_gfx_drv.c
-+++ b/drivers/gpu/drm/aspeed/aspeed_gfx_drv.c
-@@ -138,13 +138,12 @@ static int aspeed_gfx_load(struct drm_device *drm)
- 	}
- 	reset_control_deassert(priv->rst);
+diff --git a/drivers/gpu/drm/vc4/vc4_bo.c b/drivers/gpu/drm/vc4/vc4_bo.c
+index 437084f7973c6..2ad422345f5bd 100644
+--- a/drivers/gpu/drm/vc4/vc4_bo.c
++++ b/drivers/gpu/drm/vc4/vc4_bo.c
+@@ -1049,6 +1049,7 @@ static void vc4_bo_cache_destroy(struct drm_device *dev, void *unused)
+ 	cancel_work_sync(&vc4->bo_cache.time_work);
  
--	priv->clk = devm_clk_get(drm->dev, NULL);
-+	priv->clk = devm_clk_get_enabled(drm->dev, NULL);
- 	if (IS_ERR(priv->clk)) {
- 		dev_err(&pdev->dev,
--			"missing or invalid clk device tree entry");
-+			"failed to get and enable clock\n");
- 		return PTR_ERR(priv->clk);
- 	}
--	clk_prepare_enable(priv->clk);
+ 	vc4_bo_cache_purge(dev);
++	kfree(vc4->bo_cache.size_list);
  
- 	/* Sanitize control registers */
- 	writel(0, priv->base + CRT_CTRL1);
+ 	for (i = 0; i < vc4->num_labels; i++) {
+ 		if (vc4->bo_labels[i].num_allocated) {
 -- 
 2.53.0
 
