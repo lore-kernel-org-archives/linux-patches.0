@@ -1,54 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215304;
-	b=ETIpOyjniypOWNKqmJonKi0Qhgf0x/rpTYE3cayiGSjjDyqeJHXTzKDBz0momadZDmhG
-	 mYDfWpaaIk+uyqn9YInSf8FZOoapUDESskw15sq1zNmQBBc0T41vLaWeeIBurtmlgDcz2
-	 t7qqKMVfZNhLjJ7ZkBMwQIuyWgfFretw0J9W3zp1YbvQZ3MHakh0YEcYHrkBJTjAtxSzz
-	 4Pj8yaGM3svzGGS1/sHrD8mQFUuMHtnkfT9nfTsO2+czMP42MpYRIVJlDC0D0d+2NNzD7
-	 RNgo2/bX4cbaEoow9QG7dRAgbifkCshPPqoH5PfC3M6BPRmqtLjqHKxG2WvmBk8n/sw==
+	t=1793215307;
+	b=xM1aIqep9C2IYjPT88nZROuQqUgwcoxWCK/WTPQFrnKChMkDELFtwEOCe06m5hGiP33S
+	 y7iKBdWptLr5jMXeIio6JR9rp4BUYxyRPYBh9NpKLUoesaf4CkNYmE8I+lL61AukPAvCv
+	 72ASRppjnnCmjWATv0NjIDBlYtF1zu/ZISkuw+EjjlUQTBOPpV1iLQOh6kCuIZGQAovUd
+	 ufZrt1OUikN+utUXu4otaJKrLR2Dwg1p5ZcQVaA3pFqheTczhGBNnsWee9ycSkAH6WNJf
+	 3997KH7V6QFQrD6KiHiznvbxohN+2xLXYNIWWjcQWM/Q9sxOF1JwbwbpoYYi0aiQk3A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215304;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215307;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=4cRuJyvTVQt/cFfO4rHwh48pka1Ey3QbY+sRJl34KSg=;
-	b=bkiDgDt8C/2pSGhE2Y0cx0hADyt8wLLsPCdJPE7tyqIDWwH/mNkGvKYrcbs8jdAhp3dJ
-	 E8efbI96s5gaX7Yaa3jpgeO7ol5tSWn2gQNIalNF7/RGvFzTLA+VHiyuDnYj7TbnxKR+k
-	 5syWwj8edYM4VkMnfKIkK+p9okM8IHmzFQruWuNHaQy+RI5/yfSUDNq8fdh+l43ouRenE
-	 FKBlpQbvOwPtiJmsrSd+MpLFin9KbHleVv8GGkqWgVwjxluRuoMlA2wRqJH3k1I1v59YQ
-	 2hP5BZq66mLvBWr+/W5hG8Ng/YqHsWKPfsbUONkJUjQu4MZcP5AqciFlaKBL4qRvhvA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=s7Q/T7UfUqAuUKnI/+EomQhFqAgyR+dazDjhISiUTQs=;
+	b=iM4dBHJm1tXQ0ef+jYCGFEwn65y5gFjfzCOAsivDfpcJz5qMf/yow8mIU3D7+0mgwoh1
+	 1YVsie2gpD8qzFVO+/WLywcViVSQJrRiQKlw7rOr/35y/FRaI6ZehBGnZOlp2WW5XBWeY
+	 Cdw7N9gdEpRBOdA/mPLhCTYq6byJIHTngPWEzSQNVMCJAzG23MZrmt4W7wBjCtd1zn0H1
+	 u4gbVnGEP8PTwYm1dL1xiiLjP75X7nXFnftW0ztJrDsTG+d8aMNUgdRPOIJb11eOtO+em
+	 uj9HAgDSfNsaunXwyjEe2vJyPxWxtBWC0DaJv9Kl2ikLuEFWx19JPX2t2rH+WJ0CrYg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RPfv2IQb;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lSFuhseM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56F24606A31A;
-	Wed, 28 Oct 2026 19:21:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA358606A31E;
+	Wed, 28 Oct 2026 19:21:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RPfv2IQb
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 686091F01825;
-	Wed, 28 Oct 2026 19:21:43 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lSFuhseM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D5621F01825;
+	Wed, 28 Oct 2026 19:21:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215303;
-	bh=4cRuJyvTVQt/cFfO4rHwh48pka1Ey3QbY+sRJl34KSg=;
+	s=korg; t=1793215306;
+	bh=s7Q/T7UfUqAuUKnI/+EomQhFqAgyR+dazDjhISiUTQs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RPfv2IQbYQNF9g+yTjB1JVhhRn+VBK3I/ywHlwMVgLihCNS/HzqHXc8EABpyareHY
-	 2gwthm57WlEiPIzKY+KmRKJXx0+LYaAhL4JMHxJ96dDorO9BOk1d4n5CEQBUbgzfAx
-	 YYhyH5ee683AqAje8QkRVnDArtC5loyxdmwDqH9E=
+	b=lSFuhseM3b5i6z+cUnmxFvM/zH/vq33mYTplAI/IKMU/rJjE0iWJRRGpUooq5i5H+
+	 XLtBngKdoa4KS/eqPVHPL7L9gyheEMEJsn1xsLxE5jp6gNvCVvNbn3zfQXWpKe5TxX
+	 cvF5RNYkhkhXqpmUhWSCEvqLW+uwioM1gqNmHbGw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Asad Kamal <asad.kamal@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Lijo Lazar <lijo.lazar@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>,
+	Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>,
+	Ao Wang <wangao@seu.edu.cn>,
+	Xuewei Feng <fengxw06@126.com>,
+	Qi Li <qli01@tsinghua.edu.cn>,
+	Ke Xu <xuke@tsinghua.edu.cn>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1163/1887] drm/amdgpu: fix aperture mapping leak
-Date: Wed, 28 Oct 2026 17:54:19 +0100
-Message-ID: <20261028170525.869685643@linuxfoundation.org>
+Subject: [PATCH 6.1 1164/1887] tcp: challenge ACK for non-exact RST in SYN-RECEIVED
+Date: Wed, 28 Oct 2026 17:54:20 +0100
+Message-ID: <20261028170525.892054517@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -64,129 +68,178 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Asad Kamal <asad.kamal@amd.com>
+From: Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>
 
-[ Upstream commit ea772a440d56b285f4d491affac50ecd41f6b402 ]
+[ Upstream commit a28c4fcbf774e23b4779cae468e3497a5ad1f4a1 ]
 
-amdgpu_pci_remove() calls drm_dev_unplug() before invoking the driver
-fini routines. This causes drm_dev_enter() in amdgpu_ttm_fini() to
-always return false, so iounmap(aper_base_kaddr) never runs on normal
-driver unload, leaving an orphaned entry in the x86 PAT interval tree.
+The SYN-RECEIVED request-socket path in tcp_check_req() accepts an
+in-window RST without requiring SEG.SEQ to exactly match RCV.NXT.  A
+non-exact RST therefore removes the request instead of eliciting a
+challenge ACK.
 
-On connected_to_cpu hardware, the aperture is mapped write-back (WB) via
-ioremap_cache(). On reload, IP discovery calls memremap(..., MEMREMAP_WC)
-over the same range. The WC vs WB conflict causes:
+RFC 9293 section 3.10.7.4 applies the RFC 5961 reset check in
+SYN-RECEIVED: an exact RST resets the connection, while a non-exact
+in-window RST must trigger a challenge ACK and be dropped.
 
-  ioremap error for 0x..., requested 0x1, got 0x0
-  amdgpu: discovery failed: -2
+Apply that check before the ACK-field validation, following the RFC
+sequence-number, RST, then ACK processing order.  Factor the per-netns
+challenge ACK quota out of tcp_send_challenge_ack() so request sockets
+can share it.  Use the request socket's send_ack() callback and its own
+out-of-window ACK timestamp to send and rate-limit the response.
 
-Fix by switching to devres-managed mappings so cleanup is guaranteed
-regardless of drm_dev_enter() state:
-
-- connected_to_cpu path: devm_memremap(MEMREMAP_WB). For
-  IORESOURCE_SYSTEM_RAM ranges this takes the try_ram_remap() shortcut,
-  returning __va(offset) from the existing kernel direct map. No new
-  ioremap VA or PAT entry is created, so there is nothing to orphan.
-
-- dGPU path: devm_ioremap_wc() registers iounmap() as a devres action,
-  guaranteeing cleanup at device_del() time.
-
-Also remove iounmap(aper_base_kaddr) from amdgpu_device_unmap_mmio()
-since the mapping is now devres-owned.
-
-v2: Remove redundant x86_64 guard (Lijo)
-
-Fixes: 9d0af8b4def0 ("drm/amdgpu: pre-map device buffer as cached for A+A config")
-Signed-off-by: Asad Kamal <asad.kamal@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit d871e99879cb5fd1fa798b006b4888887e63a17a)
+Reported-by: Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>
+Reported-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
+Reported-by: Ao Wang <wangao@seu.edu.cn>
+Reported-by: Xuewei Feng <fengxw06@126.com>
+Reported-by: Qi Li <qli01@tsinghua.edu.cn>
+Reported-by: Ke Xu <xuke@tsinghua.edu.cn>
+Fixes: 282f23c6ee34 ("tcp: implement RFC 5961 3.2")
 Cc: stable@vger.kernel.org
+Signed-off-by: Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260717081443.809393-2-yangyx22@mails.tsinghua.edu.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_device.c |  2 --
- drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c    | 33 ++++++++++------------
- 2 files changed, 15 insertions(+), 20 deletions(-)
+ include/net/tcp.h        |  2 ++
+ net/ipv4/tcp_input.c     | 56 ++++++++++++++++++++++++++++++----------
+ net/ipv4/tcp_minisocks.c | 12 ++++++++-
+ 3 files changed, 56 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-index d1f7ebfff9907..af0922eaa7908 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-@@ -4102,8 +4102,6 @@ static void amdgpu_device_unmap_mmio(struct amdgpu_device *adev)
+diff --git a/include/net/tcp.h b/include/net/tcp.h
+index 51a17dadb7556..4161bd71fb50f 100644
+--- a/include/net/tcp.h
++++ b/include/net/tcp.h
+@@ -1641,6 +1641,8 @@ static inline bool tcp_paws_reject(const struct tcp_options_received *rx_opt,
  
- 	iounmap(adev->rmmio);
- 	adev->rmmio = NULL;
--	if (adev->mman.aper_base_kaddr)
--		iounmap(adev->mman.aper_base_kaddr);
- 	adev->mman.aper_base_kaddr = NULL;
+ bool tcp_oow_rate_limited(struct net *net, const struct sk_buff *skb,
+ 			  int mib_idx, u32 *last_oow_ack_time);
++void tcp_reqsk_send_challenge_ack(struct sock *sk, struct sk_buff *skb,
++				  struct request_sock *req);
  
- 	/* Memory manager related */
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
-index 2c8ee880cefa4..2ea823fdcd9f5 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
-@@ -1777,15 +1777,20 @@ int amdgpu_ttm_init(struct amdgpu_device *adev)
- 	/* Change the size here instead of the init above so only lpfn is affected */
- 	amdgpu_ttm_set_buffer_funcs_status(adev, false);
- #ifdef CONFIG_64BIT
--#ifdef CONFIG_X86
--	if (adev->gmc.xgmi.connected_to_cpu)
--		adev->mman.aper_base_kaddr = ioremap_cache(adev->gmc.aper_base,
--				adev->gmc.visible_vram_size);
--
--	else
--#endif
--		adev->mman.aper_base_kaddr = ioremap_wc(adev->gmc.aper_base,
--				adev->gmc.visible_vram_size);
-+	if (adev->gmc.xgmi.connected_to_cpu) {
-+		void *kaddr = devm_memremap(adev->dev, adev->gmc.aper_base,
-+					    adev->gmc.visible_vram_size,
-+					    MEMREMAP_WB);
-+		if (IS_ERR(kaddr))
-+			return PTR_ERR(kaddr);
-+		adev->mman.aper_base_kaddr = (__force void __iomem *)kaddr;
-+	} else {
-+		adev->mman.aper_base_kaddr = devm_ioremap_wc(adev->dev,
-+							     adev->gmc.aper_base,
-+							     adev->gmc.visible_vram_size);
-+		if (!adev->mman.aper_base_kaddr)
-+			return -ENOMEM;
-+	}
- #endif
- 
- 	/*
-@@ -1923,7 +1928,6 @@ int amdgpu_ttm_init(struct amdgpu_device *adev)
-  */
- void amdgpu_ttm_fini(struct amdgpu_device *adev)
+ static inline void tcp_mib_init(struct net *net)
  {
--	int idx;
- 	if (!adev->mman.initialized)
- 		return;
+diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
+index 55e5325479c01..9074af9da52d8 100644
+--- a/net/ipv4/tcp_input.c
++++ b/net/ipv4/tcp_input.c
+@@ -3707,24 +3707,17 @@ bool tcp_oow_rate_limited(struct net *net, const struct sk_buff *skb,
+ 	return __tcp_oow_rate_limited(net, mib_idx, last_oow_ack_time);
+ }
  
-@@ -1942,14 +1946,7 @@ void amdgpu_ttm_fini(struct amdgpu_device *adev)
- 	amdgpu_ttm_fw_reserve_vram_fini(adev);
- 	amdgpu_ttm_drv_reserve_vram_fini(adev);
+-/* RFC 5961 7 [ACK Throttling] */
+-static void tcp_send_challenge_ack(struct sock *sk)
++/* Consume one slot from the per-netns RFC 5961 challenge ACK quota.
++ * Returns true if a challenge ACK may be sent.
++ */
++static bool tcp_challenge_ack_allowed(struct net *net)
+ {
+-	struct tcp_sock *tp = tcp_sk(sk);
+-	struct net *net = sock_net(sk);
+ 	u32 count, now, ack_limit;
  
--	if (drm_dev_enter(adev_to_drm(adev), &idx)) {
+-	/* First check our per-socket dupack rate limit. */
+-	if (__tcp_oow_rate_limited(net,
+-				   LINUX_MIB_TCPACKSKIPPEDCHALLENGE,
+-				   &tp->last_oow_ack_time))
+-		return;
 -
--		if (adev->mman.aper_base_kaddr)
--			iounmap(adev->mman.aper_base_kaddr);
--		adev->mman.aper_base_kaddr = NULL;
--
--		drm_dev_exit(idx);
--	}
-+	adev->mman.aper_base_kaddr = NULL;
+ 	ack_limit = READ_ONCE(net->ipv4.sysctl_tcp_challenge_ack_limit);
+ 	if (ack_limit == INT_MAX)
+-		goto send_ack;
++		return true;
  
- 	amdgpu_vram_mgr_fini(adev);
- 	amdgpu_gtt_mgr_fini(adev);
+-	/* Then check host-wide RFC 5961 rate limit. */
+ 	now = jiffies / HZ;
+ 	if (now != READ_ONCE(net->ipv4.tcp_challenge_timestamp)) {
+ 		u32 half = (ack_limit + 1) >> 1;
+@@ -3735,12 +3728,49 @@ static void tcp_send_challenge_ack(struct sock *sk)
+ 	count = READ_ONCE(net->ipv4.tcp_challenge_count);
+ 	if (count > 0) {
+ 		WRITE_ONCE(net->ipv4.tcp_challenge_count, count - 1);
+-send_ack:
++		return true;
++	}
++	return false;
++}
++
++/* RFC 5961 7 [ACK Throttling] */
++static void tcp_send_challenge_ack(struct sock *sk)
++{
++	struct tcp_sock *tp = tcp_sk(sk);
++	struct net *net = sock_net(sk);
++
++	/* First check our per-socket dupack rate limit. */
++	if (__tcp_oow_rate_limited(net,
++				   LINUX_MIB_TCPACKSKIPPEDCHALLENGE,
++				   &tp->last_oow_ack_time))
++		return;
++
++	/* Then check the per-netns RFC 5961 rate limit. */
++	if (tcp_challenge_ack_allowed(net)) {
+ 		NET_INC_STATS(net, LINUX_MIB_TCPCHALLENGEACK);
+ 		tcp_send_ack(sk);
+ 	}
+ }
+ 
++/* Send a challenge ACK from a SYN-RECEIVED request socket. Uses
++ * __tcp_oow_rate_limited() directly so that an RST carrying payload
++ * cannot bypass the per-request rate limit.
++ */
++void tcp_reqsk_send_challenge_ack(struct sock *sk, struct sk_buff *skb,
++				  struct request_sock *req)
++{
++	struct net *net = sock_net(sk);
++
++	if (__tcp_oow_rate_limited(net, LINUX_MIB_TCPACKSKIPPEDCHALLENGE,
++				   &tcp_rsk(req)->last_oow_ack_time))
++		return;
++
++	if (tcp_challenge_ack_allowed(net)) {
++		NET_INC_STATS(net, LINUX_MIB_TCPCHALLENGEACK);
++		req->rsk_ops->send_ack(sk, skb, req);
++	}
++}
++
+ static void tcp_store_ts_recent(struct tcp_sock *tp)
+ {
+ 	tp->rx_opt.ts_recent = tp->rx_opt.rcv_tsval;
+diff --git a/net/ipv4/tcp_minisocks.c b/net/ipv4/tcp_minisocks.c
+index 67735100f9acf..675f3c412c443 100644
+--- a/net/ipv4/tcp_minisocks.c
++++ b/net/ipv4/tcp_minisocks.c
+@@ -709,7 +709,7 @@ struct sock *tcp_check_req(struct sock *sk, struct sk_buff *skb,
+ 	 * elsewhere and is checked directly against the child socket rather
+ 	 * than req because user data may have been sent out.
+ 	 */
+-	if ((flg & TCP_FLAG_ACK) && !fastopen &&
++	if ((flg & TCP_FLAG_ACK) && !(flg & TCP_FLAG_RST) && !fastopen &&
+ 	    (TCP_SKB_CB(skb)->ack_seq !=
+ 	     tcp_rsk(req)->snt_isn + 1))
+ 		return sk;
+@@ -742,6 +742,16 @@ struct sock *tcp_check_req(struct sock *sk, struct sk_buff *skb,
+ 		flg &= ~TCP_FLAG_SYN;
+ 	}
+ 
++	/* RFC 5961 section 3.2, as clarified by RFC 9293 section
++	 * 3.10.7.4, requires a challenge ACK for a non-exact
++	 * in-window RST in SYN-RECEIVED.
++	 */
++	if ((flg & TCP_FLAG_RST) &&
++	    TCP_SKB_CB(skb)->seq != tcp_rsk(req)->rcv_nxt) {
++		tcp_reqsk_send_challenge_ack(sk, skb, req);
++		return NULL;
++	}
++
+ 	/* RFC793: "second check the RST bit" and
+ 	 *	   "fourth, check the SYN bit"
+ 	 */
 -- 
 2.53.0
 
