@@ -1,55 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215035;
-	b=upx0A0sXroO2hb/d5A6/oBRdt0oxAHSAwOTeMJuPytsrsaCjhEeqVGbniAlU5vizul8A
-	 w7aNPaIsRNg1KljOi3scf/qRmX1IDlo6j8/Sn6gWZdmO4hnnWf59lM1SUVUCzlfYeeD8j
-	 9V/4Iqs7zO7OACbZvEo+Pv10zHwTcDlVSRE/82bU6aNubMMIVD7yxbz0N535Ij/LFE4Pw
-	 7RvKZ2CiVrdauvXK1E6E2SMsmgQfAY4qCJPvdEoxGwANEEsj89XZCqAfHj1MuxRm/zEQ4
-	 1jxF9xvYBKB9AHgzp5iD93YsqwxPeS7KeT0W/4xvER6x2vNTh7KQxF9wrbBzx2yOoAA==
+	t=1793215038;
+	b=k0zxk8QW3peZ0+jcx3R3qVP75wTXL0PSarsozAQvA+G5PlpfTil/SkOKQZtUOfrq3nLv
+	 A/zYK60fWBQaU0WwLtu+1QAJKp11/ENipYvHJvn/CxPj80UHGL+RF/y1DLFdu68uG5+fG
+	 ima4nox6ti51ygFRnyrjB9lNs2SllyRnYZeetIVmiFD8wn0NvoX994fO4QIAyBPNnW6Vd
+	 WxvOskjyR8qdVzHFpLTBuyJ+h4soVIMJpjuiTjsSeHtCCjCKFnIurhN5Y0zoZIW6brrS1
+	 y8VU+P03Jw3gAfjWmbdtoLijuSW4a5PnOkVziQ4OOPJCzszrONkH+KbW3eELe/lKhSw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215035;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215038;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=2l1uB1uJGmdOnR6sASxgIYlyyUMdiXyktbn7CF+D/Y4=;
-	b=Z1UKx2vJIPLEeiRpWDUbu715+V3rgTJGlHTFODMdIOKx1skdWLHoCiQNgpUS2wbBav0n
-	 UUiieocysMtDSDYKym3H6Zx9siSBJt5+zOiSYzLy7eWTMxR2NmUVv5K5YsBU3VgBbpBNx
-	 CVhlvt6fchS+/qGimCxF1n+13OZGciObmWZfEpHQ3NDjtMljVfWCz3vdLD4tLE6Xeve6r
-	 DFf3gRLLMIunIT7vVCk8hZiQY/3js9AYUhhAyOTJBlNOwn0CDyKXMAKSXazpI3puBe+In
-	 idE49ognbID9XAxmwwWVmgE9n+T4e7fxdXqhwQfalpXkoj3hxc8kmgSLUVCKQKjXoIw==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=dHdFQA+0NUqnG7TWDGDb7+djzdv01J3xbcjwskbwwNY=;
+	b=4e+lpSYvjYtx6DBhUSVlSufOVCn8VQTmyxjBZthJSl51EQA75417Y9gOB6lQIDhhliIz
+	 ql9L3aHQCbhLgTGbEOyX+bTTJqUFO9OhQz4YXQTh1ao0Zxo7CEKXaNZr/0f+T2BZNiRbG
+	 wz1hB60LLucbPMQWH3A4fO24yw3HtotU6k2PuRIhzWqKBr9qkFYTzMgTnMivjU/U/fG5q
+	 ETmN1tukIXRzW8OesRmm/TqrrzQAoTR/KtzksPCtsnBxn0AnMUYe+lG+WszUiuOEyHBUI
+	 K3WyJxrnGcT1xVW/XCiDzqc/hDxL+hH3u2BckBwV4+ZDOAGVWqDketUkSd9jy2XC45Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mIFGEsoL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pIVZI0b2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5257606A31A;
-	Wed, 28 Oct 2026 19:17:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D55A606A31A;
+	Wed, 28 Oct 2026 19:17:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mIFGEsoL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09B5C1F01825;
-	Wed, 28 Oct 2026 19:17:13 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pIVZI0b2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCA751F01825;
+	Wed, 28 Oct 2026 19:17:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215034;
-	bh=2l1uB1uJGmdOnR6sASxgIYlyyUMdiXyktbn7CF+D/Y4=;
+	s=korg; t=1793215037;
+	bh=dHdFQA+0NUqnG7TWDGDb7+djzdv01J3xbcjwskbwwNY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mIFGEsoLPfenYTWUPz6MoXQwO9ckxstz3YsM1PTHCsHl/OuNlLawVnGRp7/3pLsrN
-	 bM13p+CM9xVpjkNy36OWQWQ+FA7PwZi5n0oktBvBgoJbREJP+nvC/AXzUOrUuN3B8k
-	 lNcA3WBH1oODXTVKAxFGAdsQMJJg33giFyDrvYWE=
+	b=pIVZI0b25on32v7RBZYWupsg7sxsfP6g9Cp3klLmE/Mh4j97+6paVIjjo9Dqfvy0k
+	 ssk1mCZTFl7gV7tVP667x0SPSp2OT0s/UCGYS23kEg6Y+WzxAfGqBsnKYWSnkzMOV0
+	 H2NagOByhlcZ3w1XT/OKGn4m4Z5c65DU0V2fbKAQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Yi <yi.zhang@huawei.com>,
-	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
-	Baokun Li <libaokun1@huawei.com>,
-	stable@kernel.org,
-	Theodore Tso <tytso@mit.edu>,
+	Stephan Mueller <smueller@chronox.de>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1042/1887] ext4: dont set EXT4_GET_BLOCKS_CONVERT when splitting before submitting I/O
-Date: Wed, 28 Oct 2026 17:52:18 +0100
-Message-ID: <20261028170523.123584455@linuxfoundation.org>
+Subject: [PATCH 6.1 1069/1887] crypto: jitter - replace LFSR with SHA3-256
+Date: Wed, 28 Oct 2026 17:52:45 +0100
+Message-ID: <20261028170523.734746721@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -65,101 +62,664 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhang Yi <yi.zhang@huawei.com>
+From: Stephan Müller <smueller@chronox.de>
 
-[ Upstream commit feaf2a80e78f89ee8a3464126077ba8683b62791 ]
+[ Upstream commit bb897c55042e9330bcf88b4b13cbdd6f9fabdd5e ]
 
-When allocating blocks during within-EOF DIO and writeback with
-dioread_nolock enabled, EXT4_GET_BLOCKS_PRE_IO was set to split an
-existing large unwritten extent. However, EXT4_GET_BLOCKS_CONVERT was
-set when calling ext4_split_convert_extents(), which may potentially
-result in stale data issues.
+Using the kernel crypto API, the SHA3-256 algorithm is used as
+conditioning element to replace the LFSR in the Jitter RNG. All other
+parts of the Jitter RNG are unchanged.
 
-Assume we have an unwritten extent, and then DIO writes the second half.
+The application and use of the SHA-3 conditioning operation is identical
+to the user space Jitter RNG 3.4.0 by applying the following concept:
 
-   [UUUUUUUUUUUUUUUU] on-disk extent        U: unwritten extent
-   [UUUUUUUUUUUUUUUU] extent status tree
-            |<-   ->| ----> dio write this range
+- the Jitter RNG initializes a SHA-3 state which acts as the "entropy
+  pool" when the Jitter RNG is allocated.
 
-First, ext4_iomap_alloc() call ext4_map_blocks() with
-EXT4_GET_BLOCKS_PRE_IO, EXT4_GET_BLOCKS_UNWRIT_EXT and
-EXT4_GET_BLOCKS_CREATE flags set. ext4_map_blocks() find this extent and
-call ext4_split_convert_extents() with EXT4_GET_BLOCKS_CONVERT and the
-above flags set.
+- When a new time delta is obtained, it is inserted into the "entropy
+  pool" with a SHA-3 update operation. Note, this operation in most of
+  the cases is a simple memcpy() onto the SHA-3 stack.
 
-Then, ext4_split_convert_extents() calls ext4_split_extent() with
-EXT4_EXT_MAY_ZEROOUT, EXT4_EXT_MARK_UNWRIT2 and EXT4_EXT_DATA_VALID2
-flags set, and it calls ext4_split_extent_at() to split the second half
-with EXT4_EXT_DATA_VALID2, EXT4_EXT_MARK_UNWRIT1, EXT4_EXT_MAY_ZEROOUT
-and EXT4_EXT_MARK_UNWRIT2 flags set. However, ext4_split_extent_at()
-failed to insert extent since a temporary lack -ENOSPC. It zeroes out
-the first half but convert the entire on-disk extent to written since
-the EXT4_EXT_DATA_VALID2 flag set, but left the second half as unwritten
-in the extent status tree.
+- To cause a true SHA-3 operation for each time delta operation, a
+  second SHA-3 operation is performed hashing Jitter RNG status
+  information. The final message digest is also inserted into the
+  "entropy pool" with a SHA-3 update operation. Yet, this data is not
+  considered to provide any entropy, but it shall stir the entropy pool.
 
-   [0000000000SSSSSS]  data                S: stale data, 0: zeroed
-   [WWWWWWWWWWWWWWWW]  on-disk extent      W: written extent
-   [WWWWWWWWWWUUUUUU]  extent status tree
+- To generate a random number, a SHA-3 final operation is performed to
+  calculate a message digest followed by an immediate SHA-3 init to
+  re-initialize the "entropy pool". The obtained message digest is one
+  block of the Jitter RNG that is returned to the caller.
 
-Finally, if the DIO failed to write data to the disk, the stale data in
-the second half will be exposed once the cached extent entry is gone.
+Mathematically speaking, the random number generated by the Jitter RNG
+is:
 
-Fix this issue by not passing EXT4_GET_BLOCKS_CONVERT when splitting
-an unwritten extent before submitting I/O, and make
-ext4_split_convert_extents() to zero out the entire extent range
-to zero for this case, and also mark the extent in the extent status
-tree for consistency.
+aux_t = SHA-3(Jitter RNG state data)
 
-Fixes: b8a8684502a0 ("ext4: Introduce FALLOC_FL_ZERO_RANGE flag for fallocate")
-Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
-Reviewed-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
-Reviewed-by: Baokun Li <libaokun1@huawei.com>
-Cc: stable@kernel.org
-Message-ID: <20251129103247.686136-4-yi.zhang@huaweicloud.com>
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Jitter RNG block = SHA-3(time_i || aux_i || time_(i-1) || aux_(i-1) ||
+                         ... || time_(i-255) || aux_(i-255))
+
+when assuming that the OSR = 1, i.e. the default value.
+
+This operation implies that the Jitter RNG has an output-blocksize of
+256 bits instead of the 64 bits of the LFSR-based Jitter RNG that is
+replaced with this patch.
+
+The patch also replaces the varying number of invocations of the
+conditioning function with one fixed number of invocations. The use
+of the conditioning function consistent with the userspace Jitter RNG
+library version 3.4.0.
+
+The code is tested with a system that exhibited the least amount of
+entropy generated by the Jitter RNG: the SiFive Unmatched RISC-V
+system. The measured entropy rate is well above the heuristically
+implied entropy value of 1 bit of entropy per time delta. On all other
+tested systems, the measured entropy rate is even higher by orders
+of magnitude. The measurement was performed using updated tooling
+provided with the user space Jitter RNG library test framework.
+
+The performance of the Jitter RNG with this patch is about en par
+with the performance of the Jitter RNG without the patch.
+
+Signed-off-by: Stephan Mueller <smueller@chronox.de>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Stable-dep-of: 01d798e9feb3 ("crypto: jitterentropy - replace long-held spinlock with mutex")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/extents.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ crypto/Kconfig               |   1 +
+ crypto/jitterentropy-kcapi.c | 183 +++++++++++++++++++++++++++++++----
+ crypto/jitterentropy.c       | 145 +++++++++------------------
+ crypto/jitterentropy.h       |  10 +-
+ 4 files changed, 219 insertions(+), 120 deletions(-)
 
-diff --git a/fs/ext4/extents.c b/fs/ext4/extents.c
-index 5f588728a27fb..ed62b52473580 100644
---- a/fs/ext4/extents.c
-+++ b/fs/ext4/extents.c
-@@ -3730,11 +3730,15 @@ static int ext4_split_convert_extents(handle_t *handle,
- 	/* Convert to unwritten */
- 	if (flags & EXT4_GET_BLOCKS_CONVERT_UNWRITTEN) {
- 		split_flag |= EXT4_EXT_DATA_VALID1;
--	/* Convert to initialized */
--	} else if (flags & EXT4_GET_BLOCKS_CONVERT) {
-+	/* Split the existing unwritten extent */
-+	} else if (flags & (EXT4_GET_BLOCKS_UNWRIT_EXT |
-+			    EXT4_GET_BLOCKS_CONVERT)) {
- 		split_flag |= ee_block + ee_len <= eof_block ?
- 			      EXT4_EXT_MAY_ZEROOUT : 0;
--		split_flag |= (EXT4_EXT_MARK_UNWRIT2 | EXT4_EXT_DATA_VALID2);
-+		split_flag |= EXT4_EXT_MARK_UNWRIT2;
-+		/* Convert to initialized */
-+		if (flags & EXT4_GET_BLOCKS_CONVERT)
-+			split_flag |= EXT4_EXT_DATA_VALID2;
+diff --git a/crypto/Kconfig b/crypto/Kconfig
+index 2e2978e2939f1..ea1585f307bcf 100644
+--- a/crypto/Kconfig
++++ b/crypto/Kconfig
+@@ -1279,6 +1279,7 @@ endif	# if CRYPTO_DRBG_MENU
+ config CRYPTO_JITTERENTROPY
+ 	tristate "CPU Jitter Non-Deterministic RNG (Random Number Generator)"
+ 	select CRYPTO_RNG
++	select CRYPTO_SHA3
+ 	help
+ 	  CPU Jitter RNG (Random Number Generator) from the Jitterentropy library
+ 
+diff --git a/crypto/jitterentropy-kcapi.c b/crypto/jitterentropy-kcapi.c
+index b9edfaa51b273..4b50cbc8a2faf 100644
+--- a/crypto/jitterentropy-kcapi.c
++++ b/crypto/jitterentropy-kcapi.c
+@@ -2,7 +2,7 @@
+  * Non-physical true random number generator based on timing jitter --
+  * Linux Kernel Crypto API specific code
+  *
+- * Copyright Stephan Mueller <smueller@chronox.de>, 2015
++ * Copyright Stephan Mueller <smueller@chronox.de>, 2015 - 2023
+  *
+  * Redistribution and use in source and binary forms, with or without
+  * modification, are permitted provided that the following conditions
+@@ -37,6 +37,8 @@
+  * DAMAGE.
+  */
+ 
++#include <crypto/hash.h>
++#include <crypto/sha3.h>
+ #include <linux/fips.h>
+ #include <linux/kernel.h>
+ #include <linux/module.h>
+@@ -46,6 +48,8 @@
+ 
+ #include "jitterentropy.h"
+ 
++#define JENT_CONDITIONING_HASH	"sha3-256-generic"
++
+ /***************************************************************************
+  * Helper function
+  ***************************************************************************/
+@@ -60,11 +64,6 @@ void jent_zfree(void *ptr)
+ 	kfree_sensitive(ptr);
+ }
+ 
+-void jent_memcpy(void *dest, const void *src, unsigned int n)
+-{
+-	memcpy(dest, src, n);
+-}
+-
+ /*
+  * Obtain a high-resolution time stamp value. The time stamp is used to measure
+  * the execution time of a given code path and its variations. Hence, the time
+@@ -91,6 +90,91 @@ void jent_get_nstime(__u64 *out)
+ 	*out = tmp;
+ }
+ 
++int jent_hash_time(void *hash_state, __u64 time, u8 *addtl,
++		   unsigned int addtl_len, __u64 hash_loop_cnt,
++		   unsigned int stuck)
++{
++	struct shash_desc *hash_state_desc = (struct shash_desc *)hash_state;
++	SHASH_DESC_ON_STACK(desc, hash_state_desc->tfm);
++	u8 intermediary[SHA3_256_DIGEST_SIZE];
++	__u64 j = 0;
++	int ret;
++
++	desc->tfm = hash_state_desc->tfm;
++
++	if (sizeof(intermediary) != crypto_shash_digestsize(desc->tfm)) {
++		pr_warn_ratelimited("Unexpected digest size\n");
++		return -EINVAL;
++	}
++
++	/*
++	 * This loop fills a buffer which is injected into the entropy pool.
++	 * The main reason for this loop is to execute something over which we
++	 * can perform a timing measurement. The injection of the resulting
++	 * data into the pool is performed to ensure the result is used and
++	 * the compiler cannot optimize the loop away in case the result is not
++	 * used at all. Yet that data is considered "additional information"
++	 * considering the terminology from SP800-90A without any entropy.
++	 *
++	 * Note, it does not matter which or how much data you inject, we are
++	 * interested in one Keccack1600 compression operation performed with
++	 * the crypto_shash_final.
++	 */
++	for (j = 0; j < hash_loop_cnt; j++) {
++		ret = crypto_shash_init(desc) ?:
++		      crypto_shash_update(desc, intermediary,
++					  sizeof(intermediary)) ?:
++		      crypto_shash_finup(desc, addtl, addtl_len, intermediary);
++		if (ret)
++			goto err;
++	}
++
++	/*
++	 * Inject the data from the previous loop into the pool. This data is
++	 * not considered to contain any entropy, but it stirs the pool a bit.
++	 */
++	ret = crypto_shash_update(desc, intermediary, sizeof(intermediary));
++	if (ret)
++		goto err;
++
++	/*
++	 * Insert the time stamp into the hash context representing the pool.
++	 *
++	 * If the time stamp is stuck, do not finally insert the value into the
++	 * entropy pool. Although this operation should not do any harm even
++	 * when the time stamp has no entropy, SP800-90B requires that any
++	 * conditioning operation to have an identical amount of input data
++	 * according to section 3.1.5.
++	 */
++	if (!stuck) {
++		ret = crypto_shash_update(hash_state_desc, (u8 *)&time,
++					  sizeof(__u64));
++	}
++
++err:
++	shash_desc_zero(desc);
++	memzero_explicit(intermediary, sizeof(intermediary));
++
++	return ret;
++}
++
++int jent_read_random_block(void *hash_state, char *dst, unsigned int dst_len)
++{
++	struct shash_desc *hash_state_desc = (struct shash_desc *)hash_state;
++	u8 jent_block[SHA3_256_DIGEST_SIZE];
++	/* Obtain data from entropy pool and re-initialize it */
++	int ret = crypto_shash_final(hash_state_desc, jent_block) ?:
++		  crypto_shash_init(hash_state_desc) ?:
++		  crypto_shash_update(hash_state_desc, jent_block,
++				      sizeof(jent_block));
++
++	if (!ret && dst_len)
++		memcpy(dst, jent_block, dst_len);
++
++	memzero_explicit(jent_block, sizeof(jent_block));
++	return ret;
++}
++
+ /***************************************************************************
+  * Kernel crypto API interface
+  ***************************************************************************/
+@@ -98,32 +182,82 @@ void jent_get_nstime(__u64 *out)
+ struct jitterentropy {
+ 	spinlock_t jent_lock;
+ 	struct rand_data *entropy_collector;
++	struct crypto_shash *tfm;
++	struct shash_desc *sdesc;
+ };
+ 
+-static int jent_kcapi_init(struct crypto_tfm *tfm)
++static void jent_kcapi_cleanup(struct crypto_tfm *tfm)
+ {
+ 	struct jitterentropy *rng = crypto_tfm_ctx(tfm);
+-	int ret = 0;
+ 
+-	rng->entropy_collector = jent_entropy_collector_alloc(1, 0);
+-	if (!rng->entropy_collector)
+-		ret = -ENOMEM;
++	spin_lock(&rng->jent_lock);
+ 
+-	spin_lock_init(&rng->jent_lock);
+-	return ret;
+-}
++	if (rng->sdesc) {
++		shash_desc_zero(rng->sdesc);
++		kfree(rng->sdesc);
++	}
++	rng->sdesc = NULL;
+ 
+-static void jent_kcapi_cleanup(struct crypto_tfm *tfm)
+-{
+-	struct jitterentropy *rng = crypto_tfm_ctx(tfm);
++	if (rng->tfm)
++		crypto_free_shash(rng->tfm);
++	rng->tfm = NULL;
+ 
+-	spin_lock(&rng->jent_lock);
+ 	if (rng->entropy_collector)
+ 		jent_entropy_collector_free(rng->entropy_collector);
+ 	rng->entropy_collector = NULL;
+ 	spin_unlock(&rng->jent_lock);
+ }
+ 
++static int jent_kcapi_init(struct crypto_tfm *tfm)
++{
++	struct jitterentropy *rng = crypto_tfm_ctx(tfm);
++	struct crypto_shash *hash;
++	struct shash_desc *sdesc;
++	int size, ret = 0;
++
++	spin_lock_init(&rng->jent_lock);
++
++	/*
++	 * Use SHA3-256 as conditioner. We allocate only the generic
++	 * implementation as we are not interested in high-performance. The
++	 * execution time of the SHA3 operation is measured and adds to the
++	 * Jitter RNG's unpredictable behavior. If we have a slower hash
++	 * implementation, the execution timing variations are larger. When
++	 * using a fast implementation, we would need to call it more often
++	 * as its variations are lower.
++	 */
++	hash = crypto_alloc_shash(JENT_CONDITIONING_HASH, 0, 0);
++	if (IS_ERR(hash)) {
++		pr_err("Cannot allocate conditioning digest\n");
++		return PTR_ERR(hash);
++	}
++	rng->tfm = hash;
++
++	size = sizeof(struct shash_desc) + crypto_shash_descsize(hash);
++	sdesc = kmalloc(size, GFP_KERNEL);
++	if (!sdesc) {
++		ret = -ENOMEM;
++		goto err;
++	}
++
++	sdesc->tfm = hash;
++	crypto_shash_init(sdesc);
++	rng->sdesc = sdesc;
++
++	rng->entropy_collector = jent_entropy_collector_alloc(1, 0, sdesc);
++	if (!rng->entropy_collector) {
++		ret = -ENOMEM;
++		goto err;
++	}
++
++	spin_lock_init(&rng->jent_lock);
++	return 0;
++
++err:
++	jent_kcapi_cleanup(tfm);
++	return ret;
++}
++
+ static int jent_kcapi_random(struct crypto_rng *tfm,
+ 			     const u8 *src, unsigned int slen,
+ 			     u8 *rdata, unsigned int dlen)
+@@ -180,15 +314,24 @@ static struct rng_alg jent_alg = {
+ 		.cra_module             = THIS_MODULE,
+ 		.cra_init               = jent_kcapi_init,
+ 		.cra_exit               = jent_kcapi_cleanup,
+-
  	}
- 	flags |= EXT4_GET_BLOCKS_PRE_IO;
- 	return ext4_split_extent(handle, inode, ppath, map, split_flag, flags);
-@@ -3899,7 +3903,7 @@ ext4_ext_handle_unwritten_extents(handle_t *handle, struct inode *inode,
- 	/* get_block() before submitting IO, split the extent */
- 	if (flags & EXT4_GET_BLOCKS_PRE_IO) {
- 		ret = ext4_split_convert_extents(handle, inode, map, ppath,
--					 flags | EXT4_GET_BLOCKS_CONVERT);
-+						 flags);
- 		if (ret < 0) {
- 			err = ret;
- 			goto out2;
+ };
+ 
+ static int __init jent_mod_init(void)
+ {
++	SHASH_DESC_ON_STACK(desc, tfm);
++	struct crypto_shash *tfm;
+ 	int ret = 0;
+ 
+-	ret = jent_entropy_init();
++	tfm = crypto_alloc_shash(JENT_CONDITIONING_HASH, 0, 0);
++	if (IS_ERR(tfm))
++		return PTR_ERR(tfm);
++
++	desc->tfm = tfm;
++	crypto_shash_init(desc);
++	ret = jent_entropy_init(desc);
++	shash_desc_zero(desc);
++	crypto_free_shash(tfm);
+ 	if (ret) {
+ 		/* Handle permanent health test error */
+ 		if (fips_enabled)
+diff --git a/crypto/jitterentropy.c b/crypto/jitterentropy.c
+index 227cedfa4f0ae..c7d7f2caa7793 100644
+--- a/crypto/jitterentropy.c
++++ b/crypto/jitterentropy.c
+@@ -2,7 +2,7 @@
+  * Non-physical true random number generator based on timing jitter --
+  * Jitter RNG standalone code.
+  *
+- * Copyright Stephan Mueller <smueller@chronox.de>, 2015 - 2020
++ * Copyright Stephan Mueller <smueller@chronox.de>, 2015 - 2023
+  *
+  * Design
+  * ======
+@@ -47,7 +47,7 @@
+ 
+ /*
+  * This Jitterentropy RNG is based on the jitterentropy library
+- * version 2.2.0 provided at https://www.chronox.de/jent.html
++ * version 3.4.0 provided at https://www.chronox.de/jent.html
+  */
+ 
+ #ifdef __OPTIMIZE__
+@@ -57,21 +57,22 @@
+ typedef	unsigned long long	__u64;
+ typedef	long long		__s64;
+ typedef	unsigned int		__u32;
++typedef unsigned char		u8;
+ #define NULL    ((void *) 0)
+ 
+ /* The entropy pool */
+ struct rand_data {
++	/* SHA3-256 is used as conditioner */
++#define DATA_SIZE_BITS 256
+ 	/* all data values that are vital to maintain the security
+ 	 * of the RNG are marked as SENSITIVE. A user must not
+ 	 * access that information while the RNG executes its loops to
+ 	 * calculate the next random value. */
+-	__u64 data;		/* SENSITIVE Actual random number */
+-	__u64 old_data;		/* SENSITIVE Previous random number */
+-	__u64 prev_time;	/* SENSITIVE Previous time stamp */
+-#define DATA_SIZE_BITS ((sizeof(__u64)) * 8)
+-	__u64 last_delta;	/* SENSITIVE stuck test */
+-	__s64 last_delta2;	/* SENSITIVE stuck test */
+-	unsigned int osr;	/* Oversample rate */
++	void *hash_state;		/* SENSITIVE hash state entropy pool */
++	__u64 prev_time;		/* SENSITIVE Previous time stamp */
++	__u64 last_delta;		/* SENSITIVE stuck test */
++	__s64 last_delta2;		/* SENSITIVE stuck test */
++	unsigned int osr;		/* Oversample rate */
+ #define JENT_MEMORY_BLOCKS 64
+ #define JENT_MEMORY_BLOCKSIZE 32
+ #define JENT_MEMORY_ACCESSLOOPS 128
+@@ -301,15 +302,13 @@ static int jent_permanent_health_failure(struct rand_data *ec)
+  * an entropy collection.
+  *
+  * Input:
+- * @ec entropy collector struct -- may be NULL
+  * @bits is the number of low bits of the timer to consider
+  * @min is the number of bits we shift the timer value to the right at
+  *	the end to make sure we have a guaranteed minimum value
+  *
+  * @return Newly calculated loop counter
+  */
+-static __u64 jent_loop_shuffle(struct rand_data *ec,
+-			       unsigned int bits, unsigned int min)
++static __u64 jent_loop_shuffle(unsigned int bits, unsigned int min)
+ {
+ 	__u64 time = 0;
+ 	__u64 shuffle = 0;
+@@ -317,12 +316,7 @@ static __u64 jent_loop_shuffle(struct rand_data *ec,
+ 	unsigned int mask = (1<<bits) - 1;
+ 
+ 	jent_get_nstime(&time);
+-	/*
+-	 * Mix the current state of the random number into the shuffle
+-	 * calculation to balance that shuffle a bit more.
+-	 */
+-	if (ec)
+-		time ^= ec->data;
++
+ 	/*
+ 	 * We fold the time value as much as possible to ensure that as many
+ 	 * bits of the time stamp are included as possible.
+@@ -344,81 +338,32 @@ static __u64 jent_loop_shuffle(struct rand_data *ec,
+  *			      execution time jitter
+  *
+  * This function injects the individual bits of the time value into the
+- * entropy pool using an LFSR.
++ * entropy pool using a hash.
+  *
+- * The code is deliberately inefficient with respect to the bit shifting
+- * and shall stay that way. This function is the root cause why the code
+- * shall be compiled without optimization. This function not only acts as
+- * folding operation, but this function's execution is used to measure
+- * the CPU execution time jitter. Any change to the loop in this function
+- * implies that careful retesting must be done.
+- *
+- * @ec [in] entropy collector struct
+- * @time [in] time stamp to be injected
+- * @loop_cnt [in] if a value not equal to 0 is set, use the given value as
+- *		  number of loops to perform the folding
+- * @stuck [in] Is the time stamp identified as stuck?
++ * ec [in] entropy collector
++ * time [in] time stamp to be injected
++ * stuck [in] Is the time stamp identified as stuck?
+  *
+  * Output:
+- * updated ec->data
+- *
+- * @return Number of loops the folding operation is performed
++ * updated hash context in the entropy collector or error code
+  */
+-static void jent_lfsr_time(struct rand_data *ec, __u64 time, __u64 loop_cnt,
+-			   int stuck)
++static int jent_condition_data(struct rand_data *ec, __u64 time, int stuck)
+ {
+-	unsigned int i;
+-	__u64 j = 0;
+-	__u64 new = 0;
+-#define MAX_FOLD_LOOP_BIT 4
+-#define MIN_FOLD_LOOP_BIT 0
+-	__u64 fold_loop_cnt =
+-		jent_loop_shuffle(ec, MAX_FOLD_LOOP_BIT, MIN_FOLD_LOOP_BIT);
+-
+-	/*
+-	 * testing purposes -- allow test app to set the counter, not
+-	 * needed during runtime
+-	 */
+-	if (loop_cnt)
+-		fold_loop_cnt = loop_cnt;
+-	for (j = 0; j < fold_loop_cnt; j++) {
+-		new = ec->data;
+-		for (i = 1; (DATA_SIZE_BITS) >= i; i++) {
+-			__u64 tmp = time << (DATA_SIZE_BITS - i);
+-
+-			tmp = tmp >> (DATA_SIZE_BITS - 1);
+-
+-			/*
+-			* Fibonacci LSFR with polynomial of
+-			*  x^64 + x^61 + x^56 + x^31 + x^28 + x^23 + 1 which is
+-			*  primitive according to
+-			*   http://poincare.matf.bg.ac.rs/~ezivkovm/publications/primpol1.pdf
+-			* (the shift values are the polynomial values minus one
+-			* due to counting bits from 0 to 63). As the current
+-			* position is always the LSB, the polynomial only needs
+-			* to shift data in from the left without wrap.
+-			*/
+-			tmp ^= ((new >> 63) & 1);
+-			tmp ^= ((new >> 60) & 1);
+-			tmp ^= ((new >> 55) & 1);
+-			tmp ^= ((new >> 30) & 1);
+-			tmp ^= ((new >> 27) & 1);
+-			tmp ^= ((new >> 22) & 1);
+-			new <<= 1;
+-			new ^= tmp;
+-		}
+-	}
+-
+-	/*
+-	 * If the time stamp is stuck, do not finally insert the value into
+-	 * the entropy pool. Although this operation should not do any harm
+-	 * even when the time stamp has no entropy, SP800-90B requires that
+-	 * any conditioning operation (SP800-90B considers the LFSR to be a
+-	 * conditioning operation) to have an identical amount of input
+-	 * data according to section 3.1.5.
+-	 */
+-	if (!stuck)
+-		ec->data = new;
++#define SHA3_HASH_LOOP (1<<3)
++	struct {
++		int rct_count;
++		unsigned int apt_observations;
++		unsigned int apt_count;
++		unsigned int apt_base;
++	} addtl = {
++		ec->rct_count,
++		ec->apt_observations,
++		ec->apt_count,
++		ec->apt_base
++	};
++
++	return jent_hash_time(ec->hash_state, time, (u8 *)&addtl, sizeof(addtl),
++			      SHA3_HASH_LOOP, stuck);
+ }
+ 
+ /*
+@@ -452,7 +397,7 @@ static void jent_memaccess(struct rand_data *ec, __u64 loop_cnt)
+ #define MAX_ACC_LOOP_BIT 7
+ #define MIN_ACC_LOOP_BIT 0
+ 	__u64 acc_loop_cnt =
+-		jent_loop_shuffle(ec, MAX_ACC_LOOP_BIT, MIN_ACC_LOOP_BIT);
++		jent_loop_shuffle(MAX_ACC_LOOP_BIT, MIN_ACC_LOOP_BIT);
+ 
+ 	if (NULL == ec || NULL == ec->mem)
+ 		return;
+@@ -520,14 +465,15 @@ static int jent_measure_jitter(struct rand_data *ec)
+ 	stuck = jent_stuck(ec, current_delta);
+ 
+ 	/* Now call the next noise sources which also injects the data */
+-	jent_lfsr_time(ec, current_delta, 0, stuck);
++	if (jent_condition_data(ec, current_delta, stuck))
++		stuck = 1;
+ 
+ 	return stuck;
+ }
+ 
+ /*
+  * Generator of one 64 bit random number
+- * Function fills rand_data->data
++ * Function fills rand_data->hash_state
+  *
+  * @ec [in] Reference to entropy collector
+  */
+@@ -574,7 +520,7 @@ static void jent_gen_entropy(struct rand_data *ec)
+  * @return 0 when request is fulfilled or an error
+  *
+  * The following error codes can occur:
+- *	-1	entropy_collector is NULL
++ *	-1	entropy_collector is NULL or the generation failed
+  *	-2	Intermittent health failure
+  *	-3	Permanent health failure
+  */
+@@ -604,7 +550,7 @@ int jent_read_entropy(struct rand_data *ec, unsigned char *data,
+ 			 * Perform startup health tests and return permanent
+ 			 * error if it fails.
+ 			 */
+-			if (jent_entropy_init())
++			if (jent_entropy_init(ec->hash_state))
+ 				return -3;
+ 
+ 			return -2;
+@@ -614,7 +560,8 @@ int jent_read_entropy(struct rand_data *ec, unsigned char *data,
+ 			tocopy = (DATA_SIZE_BITS / 8);
+ 		else
+ 			tocopy = len;
+-		jent_memcpy(p, &ec->data, tocopy);
++		if (jent_read_random_block(ec->hash_state, p, tocopy))
++			return -1;
+ 
+ 		len -= tocopy;
+ 		p += tocopy;
+@@ -628,7 +575,8 @@ int jent_read_entropy(struct rand_data *ec, unsigned char *data,
+  ***************************************************************************/
+ 
+ struct rand_data *jent_entropy_collector_alloc(unsigned int osr,
+-					       unsigned int flags)
++					       unsigned int flags,
++					       void *hash_state)
+ {
+ 	struct rand_data *entropy_collector;
+ 
+@@ -655,6 +603,8 @@ struct rand_data *jent_entropy_collector_alloc(unsigned int osr,
+ 		osr = 1; /* minimum sampling rate is 1 */
+ 	entropy_collector->osr = osr;
+ 
++	entropy_collector->hash_state = hash_state;
++
+ 	/* fill the data pad with non-zero values */
+ 	jent_gen_entropy(entropy_collector);
+ 
+@@ -668,7 +618,7 @@ void jent_entropy_collector_free(struct rand_data *entropy_collector)
+ 	jent_zfree(entropy_collector);
+ }
+ 
+-int jent_entropy_init(void)
++int jent_entropy_init(void *hash_state)
+ {
+ 	int i;
+ 	__u64 delta_sum = 0;
+@@ -681,6 +631,7 @@ int jent_entropy_init(void)
+ 
+ 	/* Required for RCT */
+ 	ec.osr = 1;
++	ec.hash_state = hash_state;
+ 
+ 	/* We could perform statistical tests here, but the problem is
+ 	 * that we only have a few loop counts to do testing. These
+@@ -718,7 +669,7 @@ int jent_entropy_init(void)
+ 		/* Invoke core entropy collection logic */
+ 		jent_get_nstime(&time);
+ 		ec.prev_time = time;
+-		jent_lfsr_time(&ec, time, 0, 0);
++		jent_condition_data(&ec, time, 0);
+ 		jent_get_nstime(&time2);
+ 
+ 		/* test whether timer works */
+diff --git a/crypto/jitterentropy.h b/crypto/jitterentropy.h
+index 5cc583f6bc6b8..b3890ff26a023 100644
+--- a/crypto/jitterentropy.h
++++ b/crypto/jitterentropy.h
+@@ -2,14 +2,18 @@
+ 
+ extern void *jent_zalloc(unsigned int len);
+ extern void jent_zfree(void *ptr);
+-extern void jent_memcpy(void *dest, const void *src, unsigned int n);
+ extern void jent_get_nstime(__u64 *out);
++extern int jent_hash_time(void *hash_state, __u64 time, u8 *addtl,
++			  unsigned int addtl_len, __u64 hash_loop_cnt,
++			  unsigned int stuck);
++int jent_read_random_block(void *hash_state, char *dst, unsigned int dst_len);
+ 
+ struct rand_data;
+-extern int jent_entropy_init(void);
++extern int jent_entropy_init(void *hash_state);
+ extern int jent_read_entropy(struct rand_data *ec, unsigned char *data,
+ 			     unsigned int len);
+ 
+ extern struct rand_data *jent_entropy_collector_alloc(unsigned int osr,
+-						      unsigned int flags);
++						      unsigned int flags,
++						      void *hash_state);
+ extern void jent_entropy_collector_free(struct rand_data *entropy_collector);
 -- 
 2.53.0
 
