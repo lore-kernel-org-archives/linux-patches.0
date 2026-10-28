@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793209831;
-	b=jZN3tAg8JzWut1AfJEAQWSmfoj1UCYvVb7vn6aTqeEHHHiIHB8/EA/PFKq5Eomu24ZIX
-	 e7Xw576pZF8vZYXBHYnKRHN2nien4owLUBlL/+95ghWhzmqlzzoBiWIQEB0JCdufWVVHo
-	 vzdSr4EVkL4Tl31a2/PYuhMAKchC8dnVw8mEnNzf7DEiJwCmZRN7+shHlw4xHHzBy1bmq
-	 SKztTTMp6u/Ujs3zl4J/HfNT7ix0XKwgapxoZ3iq1xBRwkMmmZT2yw+zH9XGSDnmaDXcA
-	 5RZDbK6n6RxPJzZutDbtL0MPOodC8OJ8cFEIJuIrSXW9FXh/sOikpFPImwA5YYCUQTw==
+	t=1793209834;
+	b=F/VZcxFPubx9pCoKx5nucA3shFBdlDGq7ZF251OsgsWu5E6tCVpJnZA4rjiXkKKHOa0j
+	 Y+nAROsfNg4BWUR1EaqKM1TnunijPX7FtnJi89J1nlrSCpKyD/qFljcxO3krJmm/AfeTT
+	 gmLoWRNwx7pmxEBsLQSHxmv/ulXaBySoNsqdQwX+vuTzrQHs/sCXdkTq16bixZYQtK/u9
+	 GOr61YLztpS8CFA1s7xlUMTEbT/YKPKYNice4F8bvwJQV9RRb+8dXPUVil2RMmujHOMh+
+	 TuFwfjqKKe58ShPFz91/+dl/KKL+RZq1s4yVdpQsGIR7RU3S0RhG3TZn7wMlAjbh46A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793209831;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793209834;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=j6vCGHl7XigYuL7F3qCxMhxbplg2YA7Xt8M3GCNFuB4=;
-	b=c58ecyK5Z66qszcJrjGoV84Lcd0DP4nDp+9Fimo5E8q5VCov8RXBm8g/VXwmtz2Ojaap
-	 PfR+8MLsTiPk4Ea1oqLbs9NKfxKJsTTAEGaSSX+tei3FzkvGJNELqlH6ViSHDcm4AIkT1
-	 zRnzvyaPu4oC/vhHsR7/mzNa1b1GGgkUURHCtaBg9yXEs65Zlhs7PCQJDLC+UqIRSxmRc
-	 FWnkWoW8sQ7ypO7G8avMBFMBc6AHf91pHhwyPP4qQ/IMVj6f4Na3LzjTmgElRxQ3SX9lE
-	 aLq5vYcCGpLwDeNdmMycknc/sk3H0bYTFt4yb/5l6ohEZNxN5MKvQRfBj/JQImHolhQ==
+	bh=K9yrakk7b/4T8d24quldRLpL+1H8dkfQ6bVluxAQioA=;
+	b=a4EJvEi2JxJvPdqQjgW/IoFEspQF2sdiFadzq89IF6iD/Ii8o9/QKzw9IHn11aOu7j1f
+	 /wesEvZeTVFOligwVAuiCdT4ANX8Lrz5RMBUy4gtkRnDzZv08beszT2vgYgch+5PMy8qS
+	 m/rqMbHDZOPF7vPUudC+zxnoB5fTr7pc/WHwyJ4Y0+g0lfT0IoDjJny7uK/eFF3CrPhQz
+	 HG4W3KekcycRvl1C1NI8Skex9Thj/mlaJIPmPIN4Njis0UYT+K2cCuX/goHh6Hzou/rSQ
+	 3SmJPD3zPJgZ2UTDgE6rul4LiodLIa/C7o6k8tL1dBFOmCMHyrU8zhxJptxrJdbVdOQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ky5itgmf;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MHEpoQ7i;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FF5B606A31C;
-	Wed, 28 Oct 2026 17:50:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16243606A31F;
+	Wed, 28 Oct 2026 17:50:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ky5itgmf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F86A1F01825;
-	Wed, 28 Oct 2026 17:50:30 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MHEpoQ7i
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 657C11F01828;
+	Wed, 28 Oct 2026 17:50:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793209831;
-	bh=j6vCGHl7XigYuL7F3qCxMhxbplg2YA7Xt8M3GCNFuB4=;
+	s=korg; t=1793209833;
+	bh=K9yrakk7b/4T8d24quldRLpL+1H8dkfQ6bVluxAQioA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ky5itgmfX6BnohuoxvAkg+Bwlnop7pDTQJOhSwega45AvGWeRXZoR6Wdj7mWa11NX
-	 Uuls8KWOLIWoBLOGj3XHl2Ee+6KnGah02fil7SQXtuLdHcaIjPCeTdSksFKT5M0Ubr
-	 QMwDtskfrmtwOwyvas7/d+Yk/Obe3K0Z0IJWW1GI=
+	b=MHEpoQ7iT3kLSLXKbLMv9U94Of1clWfMc9Kpoq9w3Z4NNBaOsZlsMe9+p9rkFmb6v
+	 /uJ9keEGY0ZP7/HKb5CbH+lIq8xFe79X/OFrZ6LoRTt/i70tXhyVRXY9d0Fzh9Q4HY
+	 fjNciv98TQiaR7sCUr/53Vki8IBssM17WKH0ZWIk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Josef Bacik <josef@toxicpanda.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	"Claude Fable 5.1" <noreply@anthropic.com>
-Subject: [PATCH 6.18 046/109] io_uring/wait: dont spin on a stuck overflow list
-Date: Wed, 28 Oct 2026 18:00:30 +0100
-Message-ID: <20261028165943.446357021@linuxfoundation.org>
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.18 047/109] io_uring/io-wq: dont lose the signal that ends work
+Date: Wed, 28 Oct 2026 18:00:31 +0100
+Message-ID: <20261028165943.469472825@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165942.357251485@linuxfoundation.org>
 References: <20261028165942.357251485@linuxfoundation.org>
@@ -70,68 +69,76 @@ Content-Transfer-Encoding: 8bit
 
 From: Josef Bacik <josef@toxicpanda.com>
 
-Commit 34f5a664c34d3cb62f6bec7f4156754594a7d25b upstream.
+Commit 63c103279a95e82280092f2f4232e91e8117a252 upstream.
 
-As long as IO_CHECK_CQ_OVERFLOW_BIT is set, io_cqring_wait_schedule()
-returns right away, before it gets to look at signals or arms the timeout,
-for io_cqring_wait() to flush the overflow list. If that doesn't empty the
-list, and the CQ ring doesn't hold the number of events the caller wants,
-the loop starts over, with the same result. The task spins in the kernel,
-and can't be killed.
+When a thread exits, only its tracked requests are cancelled. Then its
+io-wq is torn down. io_wq_exit_workers() signals every worker, to get it
+out of an interruptible sleep, and waits for all of them to exit. Before
+they do, they go through the work that is left. Unbounded work is
+cancelled. Bounded work is run, as it is expected to end by itself.
 
-The assumption is that this can't happen: if CQEs can't be flushed, the
-ring is full, and min_events is capped to the size of the ring. But:
+Not all of it does. An open has no file yet, so it counts as bounded, and
+the open of a FIFO waits for the other end. That is what the signal is for.
+But the workers are signalled once, and a worker that hasn't started the
+work by then loses the signal:
 
-- With IORING_SETUP_CQE_MIXED a 32b CQE needs two contiguous entries. It
-  is stuck on the list if a single one is free, and then the ring holds
-  less than cq_entries events. A single threaded application that asks
-  for as many events as the ring has entries never gets out of
-  io_uring_enter().
+  io_wq_exit_workers()               io_worker_handle_work()
+    io_wq_worker_wake()
+      set TIF_NOTIFY_SIGNAL
+                                       io_assign_current_work()
+                                         io_run_task_work()
+                                           clear TIF_NOTIFY_SIGNAL
+                                       io_wq_submit_work()
+                                         fifo_open()
+                                           wait_for_partner()
+    wait_for_completion_timeout()
 
-- Whether the ring is full is up to the CQ head, which the application
-  can write to. While one thread waits for events on an empty ring,
-  another one can move the head back so that the ring looks full and
-  have a CQE overflow. The waiter can't be stopped any more, not even by
-  SIGKILL.
+The thread never gets out of do_exit():
 
-Only the application can make room in the CQ ring. Return to it if the
-list could not be flushed.
+  IORING_OP_OPENAT of a FIFO without a writer, IOSQE_ASYNC
+  exit of the thread that has submitted it
 
-[ 6.18: io_cqring_wait() lives in io_uring.c, there is no wait.c yet ]
+hangs in more than 9 of 10 attempts (4 CPUs, KVM), until the process is
+killed.
 
-Fixes: 3fcf19d592d5 ("io_uring: parse check_cq out of wq waiting")
+Set TIF_NOTIFY_SIGNAL for bounded work that is started with IO_WQ_BIT_EXIT
+set. The bit is set before the workers are signalled, and it is tested
+after the flag has been cleared, with clear_notify_signal() providing the
+barrier. So either the flag stays, or the bit is seen.
+
+Work that is started while the io-wq exits is treated like work that is
+being run at that time: it isn't interrupted unless it waits
+interruptibly.
+
+Fixes: afcc4015d1bf ("io-wq: provide an io_wq_put_and_exit() helper")
 Assisted-by: LLM
 Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Link: https://patch.msgid.link/20261015-b4-io-uring-fixes-v1-3-c1556f5d7bf5@toxicpanda.com
+Link: https://patch.msgid.link/20261015-b4-io-uring-fixes-v1-4-c1556f5d7bf5@toxicpanda.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Co-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/io_uring.c |   13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ io_uring/io-wq.c |   10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -2749,9 +2749,18 @@ static int io_cqring_wait(struct io_ring
+--- a/io_uring/io-wq.c
++++ b/io_uring/io-wq.c
+@@ -648,9 +648,15 @@ static void io_worker_handle_work(struct
  
- 		check_cq = READ_ONCE(ctx->check_cq);
- 		if (unlikely(check_cq)) {
--			/* let the caller flush overflows, retry */
--			if (check_cq & BIT(IO_CHECK_CQ_OVERFLOW_BIT))
-+			if (check_cq & BIT(IO_CHECK_CQ_OVERFLOW_BIT)) {
- 				io_cqring_do_overflow_flush(ctx);
-+				/*
-+				 * No room for what has overflown. It takes the
-+				 * application to change that, so return to it.
-+				 */
-+				if (test_bit(IO_CHECK_CQ_OVERFLOW_BIT,
-+					     &ctx->check_cq)) {
-+					ret = 0;
-+					break;
-+				}
-+			}
- 			if (check_cq & BIT(IO_CHECK_CQ_DROPPED_BIT)) {
- 				ret = -EBADR;
- 				break;
+ 			next_hashed = wq_next_work(work);
+ 
+-			if (do_kill &&
+-			    (work_flags & IO_WQ_WORK_UNBOUND))
++			/*
++			 * io_wq_exit_workers() signals us once, so that we
++			 * don't sleep for ever. If that was before this work
++			 * became the current one, the signal is gone.
++			 */
++			if (do_kill && (work_flags & IO_WQ_WORK_UNBOUND))
+ 				atomic_or(IO_WQ_WORK_CANCEL, &work->flags);
++			else if (do_kill)
++				set_notify_signal(current);
+ 			io_wq_submit_work(work);
+ 			io_assign_current_work(worker, NULL);
+ 
 
 
