@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793209222;
-	b=YVpm2NGJ4TJnuu0nLGBbxQEWLXQqXsaBcgqf+AH63b1CRH+E3+BxbGli5/e22HpAfFfX
-	 I9cuXdMZ3FlxiugMkLJ7kMF0wZT8PBOAxiT6rHJy8c7DiIHvHcoDdpVW8yhFoWWT3eH6+
-	 AJAIX2LYh/NxmcMuFpY+TIj6SoJ+P1dQsp8Rtr2h4G1rfxY97X9eW4oXhw2WQVXbGKC8X
-	 uIj1bG5DQ8iSuC67gFAO3pLjHmHAHZ+SP4rRybMmyUrfrZX1AVmQfx6CUoDUK1H7i3VMX
-	 kiMumhAy0cClrMlz2vL6DpjfVzFNgajGi4s+U1I0yHbu65pd90YLSl4RYmgBALy37nQ==
+	t=1793209225;
+	b=4rkD+I3o5m6ipfPoES0hCv0eMCWApJ/9KMZG8I4r4bvBqrsfQBkfY67oeXQjba0HXSHT
+	 XrQDkkZyfCR3vz0zmfdEHIX2R5fvldUmKqiKhRQOBCh4VT9eJ9SYxq9cKvrLlVWqsN8Po
+	 k1TRlrLsqzL/mvHLr2b0PHEm2I7Sik2H2NV/BK1KPIlUPHD0HdYnJWI2N3FUbz9EC1BT+
+	 ahzi515279nInAEnW+8vwsNwQ4dJxAlC9G7ByxkPc2H9UK8gdPHi1Vi2Tb3ajibOIFGpr
+	 CSaZhGUfMKD+5uZT6kX41wN99nlHmhVm+dp7iN3wnKiblM5op968p/+OY+5ZRU7Y33Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793209222;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793209225;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=tWnIBwF5Y9plpHScH0dlyC1imm/4qWonmVkvXHWo8ow=;
-	b=ZdfHf07YGft5hPR5ROHaKY8DbX1LhKIU89bam19N3Ao1wlve85fwoSsKriNyckIbWlhq
-	 pp4yoYiqCvQmUqudJ2yb5HgTI9mC84J7RZcdnvn4YzWaRrNebL7uOHStqQR7FyaSHY6uD
-	 qjk6DPcH4vWgl/cQQRZEd+/lniki2hlKaXaxsUYid6n72GPJLGuDolFiOYN9lmRSkGakx
-	 KJKBZA4aOAoQgnHniy/S45k8EMzEMXUyE1RWhIk+Ffdz5ACPjMonYj5dg11jlN6AG4mUp
-	 Y7Dl6IoD6sD7dpFbx3eUIIL7JhbKDH0KeXvJlPSiDbrJoN9/RZHE420tSnfnzOSAfUg==
+	bh=FqgmdJyMHcNGExso8OFZx+Di0qlxek4tZbdSnWOCdP8=;
+	b=woKqauLa0C1Y2U9zEvYTP+CXlo+V9O7sF+2PQVc5xfJmmovLUkLJUWf1jWu0FoCI5APX
+	 ztCPx8uDukWEVzDlPSDdgTauAv3rC7sgR564USCfeyOkjanM0s+Rq8FQetrgU8l/q7BDH
+	 /Unep2nZO1SloMZojFI6XZ9XpZCmQJJNAlTJo9cCIKE/JHxEnVZ4yeAqLwirM4HAr4MT6
+	 vz4PPOsJW1guc1IaPtbWRbtpWmkrWNcjwzabon52lyeyb68d3Em5xQ6KlCjlHhroPOGUg
+	 sLTVnabLo97yljR9WscGIr3HJZlOGfR8rbY8Um4KWSksrUq9yFrbSjH12u6Tfu+7ZpQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FBCPLWJO;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D4v5260F;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA90D606A31A;
-	Wed, 28 Oct 2026 17:40:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD522606A31D;
+	Wed, 28 Oct 2026 17:40:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FBCPLWJO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B2F81F01825;
-	Wed, 28 Oct 2026 17:40:20 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D4v5260F
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D72E41F01825;
+	Wed, 28 Oct 2026 17:40:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793209221;
-	bh=tWnIBwF5Y9plpHScH0dlyC1imm/4qWonmVkvXHWo8ow=;
+	s=korg; t=1793209224;
+	bh=FqgmdJyMHcNGExso8OFZx+Di0qlxek4tZbdSnWOCdP8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FBCPLWJOlrHVmhlGeQX93vbClUPgXD6OU6oVcVWyGg2t1blQrMTa5DPYdhdZSd6uY
-	 u1hXKR4qTTd7AE6BWG7LfTW3V5SrRvSwA9JirjeB0E4KyOBhd0QLiivkjUAl3R2dcU
-	 a8T6fi6uBVoDrSV5o0fwm+FKo3R5hM6sx7z8D62A=
+	b=D4v5260FxEtDWJhZzeuCL9vp0iElI8z4MTvdVgMWt9vwJa4/Ubl47PIOCQsmDNAcn
+	 fcEYG2EO9kxhzc/tx2vKXD2rk4T5PuiHQpyzRHk4oAdSU1q7It/1zHJ0PjmLEngucS
+	 oZ7PSzKr3Nhz9QMwRegfnb4nLx7qHV0s2AM8/2C8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Karas <krzysztof.karas@intel.com>,
-	Andi Shyti <andi.shyti@linux.intel.com>,
-	Jani Nikula <jani.nikula@intel.com>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 395/516] drm/i915/gt: Unmask interrupts only when ACTIVE is true
-Date: Wed, 28 Oct 2026 17:59:07 +0100
-Message-ID: <20261028170012.837605806@linuxfoundation.org>
+Subject: [PATCH 5.10 396/516] namespace: unhash a dentry before detaching the mounts on it
+Date: Wed, 28 Oct 2026 17:59:08 +0100
+Message-ID: <20261028170012.861182191@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -69,121 +67,406 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Karas <krzysztof.karas@intel.com>
+From: Christian Brauner <brauner@kernel.org>
 
-[ Upstream commit 5346b1cec6afa4f9b4b49a9f84e3cfef95a3f7bb ]
+[ Upstream commit 528b383dc35d1e5caf64ddf5d35f983ae543b0d0 ]
 
-There is a small race window between intel_rps_boost() reading
-a stale ACTIVE state and queuing rps->work, where ACTIVE may be
-changed via asynchronous calls triggered by wakeref drop.
-This means that rps_work() could be triggered after the GT has
-been parked, so unmasking RPS PM interrupts would happen without
-holding PM wakelock. This sequence of events may be observed
-during live_rc6_ctx_wa() selftest:
+unlink(), rmdir() and rename() remove the entry from the filesystem,
+call detach_mounts() on the entry with the inode locked and then call
+d_delete() once the inode is unlocked.
 
-1) live_rc6_ctx_wa()
-   -> intel_engine_pm_put()
-      -> wakeref_put()
+The thing is that between detach_mounts() and d_delete() the dentry is
+still hashed and positive. But after detach_mounts() nothing covers the
+dentry anymore. A lookup that finds this dentry in the dcache can
+uncover what the mounts hid.
 
-ASYNC1) wakeref_put() callback
-          -> __engine_park()
-             -> intel_gt_pm_put_async()
-                -> intel_gt_pm_put_async_untracked()
-                   -> intel_wakeref_put_async()
+That's a problem when unlinking files or directories that are
+mountpoints in other mount namespaces. Everybody who had the underlying
+entry covered can race the detach_mount() call until d_delete() has run.
 
-ASYNC2) wakeref_put_async() callback
-          -> __gt_park()
-             -> intel_rps_park()
-                -> intel_rps_clear_active() [clear ACTIVE]
-                WITH INTERRUPTS:
-                -> rps_disable_interrupts()
-                   -> cancel_work_sync(rps->work)
-                   -> rps_reset_interrupts() [rps->pm_iir = 0]
-                WITHOUT INTERRUPTS (TIMER mode):
-                -> rps_stop_timer()
-                   -> cancel_work_sync(rps->work)
+The race window isn't all that small. It encompasses namespace_unlock()
+with a full synchronize_rcu_expedited() grace period and the
+inode_unlock() of the entry.
 
-2) live_rc6_ctx_wa()
-   -> intel_gt_wait_for_idle()
-      -> intel_gt_retire_requests_timeout()
-         -> dma_fence_wait_timeout()
-            -> ops->wait() [i915_fence_wait()]
-               -> i915_request_wait_timeout()
-                  -> intel_rps_boost()
-                     -> intel_rps_is_active() [check ACTIVE]
-                        [OPEN RACE WINDOW]
-                     -> queue_work(rps->work)
-         -> retire_requests()
-            -> i915_request_retire()
-               -> intel_rps_dec_waiters() [from 1 to 0]
+In my experiments three walkers that kept trying read an overmounted
+file in 11938 of the 16140 unlinks that removed its mountpoint from a
+bind mount of the filesystem within a minute.
 
-If ASYNC1 and ASYNC2 would execute during [OPEN RACE WINDOW],
-then:
+Fun fact, d_invalidate() has the same ordering problem but gets it
+right. It unhashes the dentry first and detaches the mounts afterwards.
+Let's do the same in __detach_mounts():
 
-3) rps_work() executes from the workqueue and may satisfy
-   "(!pm_iir && !client_boost)" test (in TIMER mode rps->pm_iir
-   is zeroed by an earlier rps_work() call or never gets a new
-   value after previous intel_rps_unpark() event), so it jumps
-   to "out" label, bypassing intel_rps_is_active() guard and
-   executes gen6_gt_pm_unmask_irq();
+- A lookup that hasn't found the dentry yet misses it in the dcache and
+  waits for the directory lock that the caller holds until the name is
+  gone for good.
 
-4) GT is parked and runtime PM wakelock is dropped, so only
-   a raw reference in __gt_park() ->
-   intel_display_power_put_async() remains for 100ms, then the
-   MMIO write in gen6_gt_pm_unmask_irq() detects missing
-   wakelock via assert_rpm_wakelock_held() and emits
-   "RPM wakelock ref not held during HW access" tainting kernel.
+- A lockless lookup that found it already fails the mount_lock check
+  while the dentry still counts as a mountpoint and the d_seq check once
+  it doesn't, and retries.
 
-Commit 3e7abf814193 ("drm/i915: Extract GT render power state management")
-dropped the "if (rps->interrupts_enabled)" guard that
-gen6_pm_rps_work() had around this unmask in i915_irq.c.
-INTEL_RPS_ACTIVE brackets the same window, since it is set in
-intel_rps_unpark() before rps_enable_interrupts() and
-rps_start_timer() and cleared in intel_rps_park() before
-rps_stop_timer() and rps_disable_interrupts().
+This fixes the lockless path. We still need to fix the reference count
+lookup in a follow-up patch.
 
-Skip unmasking when RPS is no longer active (reaching unmask
-operation is independent of INTERRUPT mode). This does not
-prevent RPS operation from resuming on the next unpark.
-In interrupt mode, intel_rps_unpark() calls
-rps_enable_interrupts(), which enables and unmasks the PM
-interrupts. In timer mode, it calls rps_start_timer(),
-restarting periodic engine-busyness evaluation. The timer
-generates software RPS events and queues rps_work() directly,
-independently of PM interrupt delivery. Neither mode requires
-the late worker to unmask interrupts while the GT is parked
+So d_drop() the dentry. The dentry stays positive and held but can't be
+found anymore. Then proceed with the detach and unlink.
 
-Fixes: 3e7abf814193 ("drm/i915: Extract GT render power state management")
-Closes: https://gitlab.freedesktop.org/drm/i915/kernel/-/issues/16562
-Cc: stable@vger.kernel.org # v5.5+
-Assisted-by: GitHub-Copilot:claude-opus-5
-Assisted-by: GitHub-Copilot:gpt-6-astra
-Signed-off-by: Krzysztof Karas <krzysztof.karas@intel.com>
-Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
-Signed-off-by: Andi Shyti <andi.shyti@linux.intel.com>
-Link: https://patch.msgid.link/20260910081329.3300417-1-krzysztof.karas@intel.com
-(cherry picked from commit ca4a6deadad15b91ee083afe445fa6bdbfb68206)
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
-[ sashal: adjusted locking context to use &gt->irq_lock instead of gt->irq_lock ]
+Reproducer:
+
+The reads were counted with the program below, three walkers for 60 s
+in a VM with 4 CPUs. The race window is stretched with the debug patch
+pasted here. fs.detach_race_walk_us sleeps in lookup_fast() once it
+found a mountpoint dentry and before its mounts are crossed.
+fs.detach_race_unlink_us sleeps in vfs_unlink() between detach_mounts()
+and d_delete().
+
+  // SPDX-License-Identifier: GPL-2.0
+  /*
+   * unlink_covered: unlink a file that is a mountpoint in a detached copy of
+   * its mount, against lookups that open it through that copy.
+   *
+   * A is a tmpfs with the file f1 (content SECRET_F) and the plain file
+   * MARK_A. A' is an open_tree(OPEN_TREE_CLONE) copy of A with MARK_A bound
+   * on A'/f1, held through an O_PATH fd on its root once the tree fd is
+   * closed. Walkers open f1 through that fd while the driver unlinks A/f1,
+   * where nothing is mounted on it. A walker may read MARK_A or get ENOENT.
+   * A read of SECRET_F is a hit: the name was found after its mount was
+   * gone. The lockless walks use openat2(RESOLVE_CACHED).
+   *
+   * usage: unlink_covered [-t seconds] [-w walkers]
+   */
+  #ifndef _GNU_SOURCE
+  #define _GNU_SOURCE
+  #endif
+  #include <errno.h>
+  #include <fcntl.h>
+  #include <pthread.h>
+  #include <stdatomic.h>
+  #include <stdio.h>
+  #include <stdlib.h>
+  #include <string.h>
+  #include <unistd.h>
+  #include <sys/mount.h>
+  #include <sys/stat.h>
+  #include <sys/syscall.h>
+  #include <linux/openat2.h>
+
+  #ifndef __NR_open_tree
+  #define __NR_open_tree 428
+  #endif
+  #ifndef __NR_move_mount
+  #define __NR_move_mount 429
+  #endif
+  #ifndef __NR_openat2
+  #define __NR_openat2 437
+  #endif
+  #ifndef OPEN_TREE_CLONE
+  #define OPEN_TREE_CLONE 1
+  #endif
+  #ifndef OPEN_TREE_CLOEXEC
+  #define OPEN_TREE_CLOEXEC O_CLOEXEC
+  #endif
+  #ifndef MOVE_MOUNT_F_EMPTY_PATH
+  #define MOVE_MOUNT_F_EMPTY_PATH 0x00000004
+  #endif
+
+  #define WORK "/tmp/uc"
+  #define ADIR WORK "/A"
+
+  static int duration = 60, nwalkers = 3;
+  static atomic_int stop, writer_waiting;
+  static pthread_rwlock_t cur_lock = PTHREAD_RWLOCK_INITIALIZER;
+  static int cur_fd = -1;		/* the root of A', -1 while there is none */
+  static atomic_long n_unlink, n_walk, n_mark, n_enoent, n_other, n_secret,
+  		   n_secret_cached;
+
+  static void die(const char *what)
+  {
+  	fprintf(stderr, "FATAL %s: %s\n", what, strerror(errno));
+  	exit(2);
+  }
+
+  static void put_file(int dfd, const char *name, const char *content)
+  {
+  	int fd = openat(dfd, name, O_CREAT | O_WRONLY | O_TRUNC | O_CLOEXEC,
+  			0644);
+
+  	if (fd < 0 || write(fd, content, strlen(content)) < 0)
+  		die(name);
+  	close(fd);
+  }
+
+  /* "plain/../" @n times, then f1: a longer walk that checks nothing on its way */
+  static char *longpath(int n)
+  {
+  	char *p = malloc(n * 9 + 3), *q = p;
+
+  	for (int i = 0; i < n; i++, q += 9)
+  		memcpy(q, "plain/../", 9);
+  	strcpy(q, "f1");
+  	return p;
+  }
+
+  static void try_read(int dfd, const char *path, int cached)
+  {
+  	struct open_how how = { .flags = O_RDONLY | O_CLOEXEC,
+  				.resolve = RESOLVE_CACHED };
+  	char buf[32] = "";
+  	long n;
+  	int fd;
+
+  	if (cached)
+  		fd = syscall(__NR_openat2, dfd, path, &how, sizeof(how));
+  	else
+  		fd = openat(dfd, path, O_RDONLY | O_CLOEXEC);
+  	atomic_fetch_add(&n_walk, 1);
+  	if (fd < 0) {
+  		if (errno == ENOENT)
+  			atomic_fetch_add(&n_enoent, 1);
+  		else if (!cached || errno != EAGAIN)
+  			atomic_fetch_add(&n_other, 1);
+  		return;
+  	}
+  	n = read(fd, buf, sizeof(buf) - 1);
+  	close(fd);
+  	if (n >= 6 && !strncmp(buf, "SECRET", 6)) {
+  		if (cached)
+  			atomic_fetch_add(&n_secret_cached, 1);
+  		if (!atomic_fetch_add(&n_secret, 1))
+  			printf("HIT: read \"%s\" through %s (%s walk)\n", buf,
+  			       path, cached ? "lockless" : "any");
+  	} else {
+  		atomic_fetch_add(&n_mark, 1);
+  	}
+  }
+
+  static void *walker(void *arg)
+  {
+  	unsigned int r = (long)arg * 2654435761u;
+
+  	while (!atomic_load(&stop)) {
+  		char *p_long, *p_short;
+  		int dfd;
+
+  		while (atomic_load(&writer_waiting) && !atomic_load(&stop))
+  			usleep(20);
+  		pthread_rwlock_rdlock(&cur_lock);
+  		dfd = cur_fd;
+  		if (dfd < 0) {
+  			pthread_rwlock_unlock(&cur_lock);
+  			usleep(100);
+  			continue;
+  		}
+  		r = r * 1103515245u + 12345u;
+  		p_long = longpath(1 + (r >> 8) % 400);
+  		p_short = longpath(0);
+  		try_read(dfd, p_long, 0);
+  		try_read(dfd, p_short, 0);
+  		try_read(dfd, p_long, 1);
+  		pthread_rwlock_unlock(&cur_lock);
+  		free(p_long);
+  		free(p_short);
+  	}
+  	return NULL;
+  }
+
+  /* hand the walkers a new A' (or none), close the old one */
+  static void publish(int fd)
+  {
+  	int old;
+
+  	atomic_fetch_add(&writer_waiting, 1);
+  	pthread_rwlock_wrlock(&cur_lock);
+  	old = cur_fd;
+  	cur_fd = fd;
+  	pthread_rwlock_unlock(&cur_lock);
+  	atomic_fetch_sub(&writer_waiting, 1);
+  	if (old >= 0)
+  		close(old);
+  }
+
+  static void *driver(void *arg __attribute__((unused)))
+  {
+  	int a;
+
+  	if (mkdir(ADIR, 0755) && errno != EEXIST)
+  		die("mkdir A");
+  	if (mount("A", ADIR, "tmpfs", 0, "size=4M"))
+  		die("mount A");
+  	a = open(ADIR, O_PATH | O_DIRECTORY | O_CLOEXEC);
+  	if (a < 0 || mkdirat(a, "plain", 0755))
+  		die("A/plain");
+  	put_file(a, "MARK_A", "MARK_A");
+  	while (!atomic_load(&stop)) {
+  		int t, m, fd_a;
+
+  		put_file(a, "f1", "SECRET_F");
+  		t = syscall(__NR_open_tree, a, "",
+  			    OPEN_TREE_CLONE | OPEN_TREE_CLOEXEC | AT_EMPTY_PATH);
+  		if (t < 0)
+  			die("open_tree A");
+  		m = syscall(__NR_open_tree, a, "MARK_A",
+  			    OPEN_TREE_CLONE | OPEN_TREE_CLOEXEC);
+  		if (m < 0)
+  			die("open_tree MARK_A");
+  		if (syscall(__NR_move_mount, m, "", t, "f1",
+  			    MOVE_MOUNT_F_EMPTY_PATH))
+  			die("move_mount");
+  		close(m);
+  		fd_a = openat(t, ".", O_PATH | O_DIRECTORY | O_CLOEXEC);
+  		if (fd_a < 0)
+  			die("open A'");
+  		publish(fd_a);
+  		usleep(200 + rand() % 1000);
+  		close(t);			/* A' is unmounted, fd_a holds it */
+  		usleep(200 + rand() % 1000);
+  		if (unlinkat(a, "f1", 0))	/* through A, a plain file there */
+  			die("unlink f1");
+  		atomic_fetch_add(&n_unlink, 1);
+  		usleep(rand() % 300);
+  		publish(-1);
+  	}
+  	close(a);
+  	umount2(ADIR, MNT_DETACH);
+  	return NULL;
+  }
+
+  int main(int argc, char **argv)
+  {
+  	pthread_t d, *w;
+  	int c, i;
+
+  	setvbuf(stdout, NULL, _IOLBF, 0);
+  	while ((c = getopt(argc, argv, "t:w:")) != -1) {
+  		switch (c) {
+  		case 't':
+  			duration = atoi(optarg);
+  			break;
+  		case 'w':
+  			nwalkers = atoi(optarg);
+  			break;
+  		default:
+  			fprintf(stderr, "usage: unlink_covered [-t seconds] [-w walkers]\n");
+  			return 2;
+  		}
+  	}
+  	if (unshare(CLONE_NEWNS) ||
+  	    mount(NULL, "/", NULL, MS_REC | MS_PRIVATE, NULL))
+  		die("unshare");
+  	if (mkdir(WORK, 0755) && errno != EEXIST)
+  		die("mkdir");
+  	w = calloc(nwalkers, sizeof(*w));
+  	for (i = 0; i < nwalkers; i++)
+  		if (pthread_create(&w[i], NULL, walker, (void *)(long)i))
+  			die("pthread_create");
+  	if (pthread_create(&d, NULL, driver, NULL))
+  		die("pthread_create");
+  	sleep(duration);
+  	atomic_store(&stop, 1);
+  	pthread_join(d, NULL);
+  	for (i = 0; i < nwalkers; i++)
+  		pthread_join(w[i], NULL);
+  	printf("unlink_covered: %d s, %d walkers: unlinks %ld walks %ld mark %ld enoent %ld other %ld SECRET %ld (lockless %ld)\n",
+  	       duration, nwalkers, atomic_load(&n_unlink), atomic_load(&n_walk),
+  	       atomic_load(&n_mark), atomic_load(&n_enoent),
+  	       atomic_load(&n_other), atomic_load(&n_secret),
+  	       atomic_load(&n_secret_cached));
+  	return atomic_load(&n_secret) ? 1 : 0;
+  }
+
+#  diff --git a/fs/namei.c b/fs/namei.c
+#  --- a/fs/namei.c
+#  +++ b/fs/namei.c
+#  @@ -35,6 +35,7 @@
+#   #include <linux/fcntl.h>
+#   #include <linux/device_cgroup.h>
+#   #include <linux/fs_struct.h>
+#  +#include <linux/delay.h>
+#   #include <linux/posix_acl.h>
+#   #include <linux/hash.h>
+#   #include <linux/bitops.h>
+#  @@ -1205,9 +1206,26 @@ static int sysctl_protected_symlinks __read_mostly;
+#   static int sysctl_protected_hardlinks __read_mostly;
+#   static int sysctl_protected_fifos __read_mostly;
+#   static int sysctl_protected_regular __read_mostly;
+#  +/* debug: widen the two windows of the detach_mounts() race */
+#  +static int sysctl_detach_race_walk_us __read_mostly;
+#  +static int sysctl_detach_race_unlink_us __read_mostly;
+#
+#   #ifdef CONFIG_SYSCTL
+#   static const struct ctl_table namei_sysctls[] = {
+#  +	{
+#  +		.procname	= "detach_race_walk_us",
+#  +		.data		= &sysctl_detach_race_walk_us,
+#  +		.maxlen		= sizeof(int),
+#  +		.mode		= 0644,
+#  +		.proc_handler	= proc_dointvec,
+#  +	},
+#  +	{
+#  +		.procname	= "detach_race_unlink_us",
+#  +		.data		= &sysctl_detach_race_unlink_us,
+#  +		.maxlen		= sizeof(int),
+#  +		.mode		= 0644,
+#  +		.proc_handler	= proc_dointvec,
+#  +	},
+#   	{
+#   		.procname	= "protected_symlinks",
+#   		.data		= &sysctl_protected_symlinks,
+#  @@ -1878,6 +1896,10 @@ static struct dentry *lookup_fast(struct nameidata *nd)
+#   		dentry = __d_lookup(parent, &nd->last);
+#   		if (unlikely(!dentry))
+#   			return NULL;
+#  +		/* debug: between finding a mountpoint and crossing its mounts */
+#  +		if (unlikely(sysctl_detach_race_walk_us) && d_mountpoint(dentry))
+#  +			usleep_range(sysctl_detach_race_walk_us,
+#  +				     sysctl_detach_race_walk_us + 10);
+#   		status = d_revalidate(nd->inode, &nd->last, dentry, nd->flags);
+#   	}
+#   	if (unlikely(status <= 0)) {
+#  @@ -5693,6 +5715,10 @@ int vfs_unlink(struct mnt_idmap *idmap, struct inode *dir,
+#   			if (!error) {
+#   				dont_mount(dentry);
+#   				detach_mounts(dentry);
+#  +				/* debug: the mounts are gone, d_delete() is still to come */
+#  +				if (unlikely(sysctl_detach_race_unlink_us))
+#  +					usleep_range(sysctl_detach_race_unlink_us,
+#  +						     sysctl_detach_race_unlink_us + 10);
+#   			}
+#   		}
+#   	}
+
+Fixes: 8ed936b5671b ("vfs: Lazily remove mounts on unlinked files and directories.")
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20261002-work-mount-fixes-4-v1-1-dd44b89d44ce@kernel.org
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+[ sashal: adjusted context for pointer-based mountpoint handling ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/gt/intel_rps.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/namespace.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/gpu/drm/i915/gt/intel_rps.c b/drivers/gpu/drm/i915/gt/intel_rps.c
-index c1c9cc0ad3b95..efb0e0d50a8ff 100644
---- a/drivers/gpu/drm/i915/gt/intel_rps.c
-+++ b/drivers/gpu/drm/i915/gt/intel_rps.c
-@@ -1702,7 +1702,8 @@ static void rps_work(struct work_struct *work)
+diff --git a/fs/namespace.c b/fs/namespace.c
+index 9d1d5aa94215e..c132729b4b1d1 100644
+--- a/fs/namespace.c
++++ b/fs/namespace.c
+@@ -1668,6 +1668,9 @@ static int do_umount(struct mount *mnt, int flags)
+  * detach_mounts allows lazily unmounting those mounts instead of
+  * leaking them.
+  *
++ * The dentry is unhashed before the mounts go so that no lookup finds
++ * what they covered. The caller removes it for good afterwards.
++ *
+  * The caller may hold dentry->d_inode->i_mutex.
+  */
+ void __detach_mounts(struct dentry *dentry)
+@@ -1681,6 +1684,8 @@ void __detach_mounts(struct dentry *dentry)
+ 	if (!mp)
+ 		goto out_unlock;
  
- out:
- 	spin_lock_irq(&gt->irq_lock);
--	gen6_gt_pm_unmask_irq(gt, rps->pm_events);
-+	if (intel_rps_is_active(rps))
-+		gen6_gt_pm_unmask_irq(gt, rps->pm_events);
- 	spin_unlock_irq(&gt->irq_lock);
- }
- 
++	/* the name goes first, what covered it goes second */
++	d_drop(dentry);
+ 	event++;
+ 	while (!hlist_empty(&mp->m_list)) {
+ 		mnt = hlist_entry(mp->m_list.first, struct mount, mnt_mp_list);
 -- 
 2.53.0
 
