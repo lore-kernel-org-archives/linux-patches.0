@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214119;
-	b=J6Ph9w7QscCzUGyTnujVfhw8qEZZWPf2qotp+mQ0NVtKZTco47hIB6zlmHPMTUu7Xr/L
-	 OjsNHFTS0j1k4l2WNTILmS0Ze4yrSmjA5OK4J7mmHEL6d0yLx1CQXEOVbsr4qXBA/Sf8n
-	 JDNlFEKJq6Xavkpkpd3FSlDyh098vITFMBak49zZMeyu4m7v8h9SoX7VpD61UWu/wj8fR
-	 Kd8HPZGI8cyLonmH1xsaaRVWbYR8slx16Dxw2INnjPrsMOjwjhUv+PuQd10FS7NUQPngR
-	 OSx1FHUa+nEy1H7cddPFDxhiVK6sAgVIy9HbTuBJslSa1NkMIM41+RIM7guNCFLbpMA==
+	t=1793214122;
+	b=P+J4egCgjugT3ST9c86BBz/eFae42M3whReS98dAfS18sE3l8ziIAIF1DkYkFUu8LxOK
+	 wZLWUVj0M6L5daT7SCFltd8TzKJv4KMS/mISQfT4whZH3E6rcpeUsKHjSrC8FTlmlTJnC
+	 uoVEl1wIfPckqns8oYVHC7K643nAG0P807iGxjNLWEESRs4hOmlVoNJFy8Ei63YlMe+7D
+	 8Pmie4lRwTVNj1lxsaNdB692fyZ++Q5sji6fnlu4mWaYbOVHiCDKoDgNqJl/FSGJPLHkM
+	 Z4xkl0dqiLNx8jx2kXBvTpKm/8sT8jRpVeDVhSp07bs/vUxwRNH+Nvoo7wXLMJsyi7g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214119;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214122;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=EHlT1J398PSlYzNyPTKhs6Jk97aYvdAlYbd876WZwPY=;
-	b=cx34WpTOVesvlA/hlUFTHgIkEWbKWGt10qXCuyY9QpmSEBoPCzh0zmrJETirNg1C8NAD
-	 wvnI38L2hJE6A852AZYIPbr5H+Bqu4kbHEJfplQSRGLrDoGW5b7fIfUlQbH4eH+VshIcl
-	 DjPHWubgk5Dnw5xo0/EEhkaHjmCAninC2NorNFg5gviXHE59dSl0SDJdAAXJ3O7r79o1X
-	 7N1f7OOcNN7+nm2BmICngXXEcuElM9wHXLK9LOIHOaCCWxFfndTcIn7e4x5ljJi/JRa4W
-	 6BE0wOx0q+lg6ZWdK2MrlLfjFWPwrlauZWqnWfGh+9w0wa4j9zKX0eSKRrgof9lmSlw==
+	bh=V1TAGXT1+cqnwqoQLNIpXzRDNXD217cX3R/c6QiyC4I=;
+	b=gx6eD0VQ9TPeXblgZkX7ytY8J6DkpvF0DvsPT2u/qZFpuUbXo58XGNP+D408J+FYSZR9
+	 HUnzMvxrm75d+6yWhzZigQAX5338pRVEWsuctxJ8LriycVm1QT/MeoVnvQqw6jzA6Xh/f
+	 DiVbRSsUvO9HrkcSizd06Ru2/ATMyV8Nterdi46IbzNAzOls8iVFgPyq2ZfzYzGP8BaPT
+	 iE6tjxyIvR+04qM42Xmn51jtIxgpxTbEbLdxe6TAB77QrlCyM1wrqIMVDV87LlVlA0xsj
+	 y4GdaPjc5cYIb5xzteIIkLZ1gAxmD/jMbUDKNy9vSWfAiQpXXIKxIagnMmUipj4cLPw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ty5UfBUn;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JA251R32;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E365606A32E;
-	Wed, 28 Oct 2026 19:01:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24035606A31A;
+	Wed, 28 Oct 2026 19:02:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ty5UfBUn
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EDF71F01828;
-	Wed, 28 Oct 2026 19:01:58 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JA251R32
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 409401F01828;
+	Wed, 28 Oct 2026 19:02:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214119;
-	bh=EHlT1J398PSlYzNyPTKhs6Jk97aYvdAlYbd876WZwPY=;
+	s=korg; t=1793214121;
+	bh=V1TAGXT1+cqnwqoQLNIpXzRDNXD217cX3R/c6QiyC4I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ty5UfBUnulnm7i2rI8b0fbsncyPczJGRzOGMDVvJYGClw9qN+phc7ovk/bljuj3KB
-	 AxkAxzOPuDN90vl8OUJTfyUkKX9HBm5uIaA+4JsDDJEqy0F96ywvH7QHTNXU4qLyrr
-	 E4ZmKMBwY/WEvsd7lZDfE376CRSjwEBanV8dcS3g=
+	b=JA251R32QP0Q/rVXR4ydDMJimL2MHALcz9hfKtstNHPFbIvd+wuocLT7DLml2o4Da
+	 p0xVt5AOnVk0qng3Y4k0KYphmwPwAzzjvu+riN824UfApqELVq+UB1PpEtkbKrHsj5
+	 sWr3PKwPFsw9OiFDmuyroQPziN9mWVTpoEDqxg3g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Aharon Landau <aharonl@nvidia.com>,
 	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0745/1887] RDMA/mlx5: Dont keep umrable page_shift in cache entries
-Date: Wed, 28 Oct 2026 17:47:21 +0100
-Message-ID: <20261028170516.401229491@linuxfoundation.org>
+Subject: [PATCH 6.1 0746/1887] RDMA/mlx5: Remove implicit ODP cache entry
+Date: Wed, 28 Oct 2026 17:47:22 +0100
+Message-ID: <20261028170516.422697004@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -70,79 +70,79 @@ Content-Transfer-Encoding: 8bit
 
 From: Aharon Landau <aharonl@nvidia.com>
 
-[ Upstream commit a2a88b8e22d1b202225d0e40b02ad068afab2ccb ]
+[ Upstream commit 18b1746bddf5e7f6b2618966596d9517172a5cd7 ]
 
-mkc.log_page_size can be changed using UMR. Therefore, don't treat it as a
-cache entry property.
+Implicit ODP mkey doesn't have unique properties. It shares the same
+properties as the order 18 cache entry. There is no need to devote a
+special entry for that.
 
-Removing it from struct mlx5_cache_ent.
-
-All cache mkeys will be created with default PAGE_SHIFT, and updated with
-the needed page_shift using UMR when passing them to a user.
-
-Link: https://lore.kernel.org/r/20230125222807.6921-2-michaelgur@nvidia.com
+Link: https://lore.kernel.org/r/20230125222807.6921-3-michaelgur@nvidia.com
 Signed-off-by: Aharon Landau <aharonl@nvidia.com>
 Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Stable-dep-of: d97505baea64 ("RDMA/mlx5: Fix the recovery flow of the UMR QP")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx5/mlx5_ib.h | 1 -
- drivers/infiniband/hw/mlx5/mr.c      | 3 +--
- drivers/infiniband/hw/mlx5/odp.c     | 2 --
- 3 files changed, 1 insertion(+), 5 deletions(-)
+ drivers/infiniband/hw/mlx5/odp.c | 20 +++++---------------
+ include/linux/mlx5/driver.h      |  1 -
+ 2 files changed, 5 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/infiniband/hw/mlx5/mlx5_ib.h b/drivers/infiniband/hw/mlx5/mlx5_ib.h
-index e8e285233b355..3f805e935943c 100644
---- a/drivers/infiniband/hw/mlx5/mlx5_ib.h
-+++ b/drivers/infiniband/hw/mlx5/mlx5_ib.h
-@@ -759,7 +759,6 @@ struct mlx5_cache_ent {
- 	char                    name[4];
- 	u32                     order;
- 	u32			access_mode;
--	u32			page;
- 	unsigned int		ndescs;
- 
- 	u8 disabled:1;
-diff --git a/drivers/infiniband/hw/mlx5/mr.c b/drivers/infiniband/hw/mlx5/mr.c
-index 6dfd425e28c1a..58f2d645404e6 100644
---- a/drivers/infiniband/hw/mlx5/mr.c
-+++ b/drivers/infiniband/hw/mlx5/mr.c
-@@ -297,7 +297,7 @@ static void set_cache_mkc(struct mlx5_cache_ent *ent, void *mkc)
- 
- 	MLX5_SET(mkc, mkc, translations_octword_size,
- 		 get_mkc_octo_size(ent->access_mode, ent->ndescs));
--	MLX5_SET(mkc, mkc, log_page_size, ent->page);
-+	MLX5_SET(mkc, mkc, log_page_size, PAGE_SHIFT);
- }
- 
- /* Asynchronously schedule new MRs to be populated in the cache. */
-@@ -765,7 +765,6 @@ int mlx5_mkey_cache_init(struct mlx5_ib_dev *dev)
- 		if (ent->order > mkey_cache_max_order(dev))
- 			continue;
- 
--		ent->page = PAGE_SHIFT;
- 		ent->ndescs = 1 << ent->order;
- 		ent->access_mode = MLX5_MKC_ACCESS_MODE_MTT;
- 		if ((dev->mdev->profile.mask & MLX5_PROF_MASK_MR_CACHE) &&
 diff --git a/drivers/infiniband/hw/mlx5/odp.c b/drivers/infiniband/hw/mlx5/odp.c
-index aa24d395a2dc8..6eb86a475ce91 100644
+index 6eb86a475ce91..27bde04ebc1df 100644
 --- a/drivers/infiniband/hw/mlx5/odp.c
 +++ b/drivers/infiniband/hw/mlx5/odp.c
-@@ -1616,14 +1616,12 @@ void mlx5_odp_init_mkey_cache_entry(struct mlx5_cache_ent *ent)
+@@ -424,6 +424,7 @@ static void mlx5_ib_page_fault_resume(struct mlx5_ib_dev *dev,
+ static struct mlx5_ib_mr *implicit_get_child_mr(struct mlx5_ib_mr *imr,
+ 						unsigned long idx)
+ {
++	int order = order_base_2(MLX5_IMR_MTT_ENTRIES);
+ 	struct mlx5_ib_dev *dev = mr_to_mdev(imr);
+ 	struct ib_umem_odp *odp;
+ 	struct mlx5_ib_mr *mr;
+@@ -436,7 +437,8 @@ static struct mlx5_ib_mr *implicit_get_child_mr(struct mlx5_ib_mr *imr,
+ 	if (IS_ERR(odp))
+ 		return ERR_CAST(odp);
  
- 	switch (ent->order - 2) {
- 	case MLX5_IMR_MTT_CACHE_ENTRY:
--		ent->page = PAGE_SHIFT;
- 		ent->ndescs = MLX5_IMR_MTT_ENTRIES;
- 		ent->access_mode = MLX5_MKC_ACCESS_MODE_MTT;
- 		ent->limit = 0;
- 		break;
+-	mr = mlx5_mr_cache_alloc(dev, &dev->cache.ent[MLX5_IMR_MTT_CACHE_ENTRY],
++	BUILD_BUG_ON(order > MKEY_CACHE_LAST_STD_ENTRY);
++	mr = mlx5_mr_cache_alloc(dev, &dev->cache.ent[order],
+ 				 imr->access_flags);
+ 	if (IS_ERR(mr)) {
+ 		ib_umem_odp_release(odp);
+@@ -1613,20 +1615,8 @@ void mlx5_odp_init_mkey_cache_entry(struct mlx5_cache_ent *ent)
+ {
+ 	if (!(ent->dev->odp_caps.general_caps & IB_ODP_SUPPORT_IMPLICIT))
+ 		return;
+-
+-	switch (ent->order - 2) {
+-	case MLX5_IMR_MTT_CACHE_ENTRY:
+-		ent->ndescs = MLX5_IMR_MTT_ENTRIES;
+-		ent->access_mode = MLX5_MKC_ACCESS_MODE_MTT;
+-		ent->limit = 0;
+-		break;
+-
+-	case MLX5_IMR_KSM_CACHE_ENTRY:
+-		ent->ndescs = mlx5_imr_ksm_entries;
+-		ent->access_mode = MLX5_MKC_ACCESS_MODE_KSM;
+-		ent->limit = 0;
+-		break;
+-	}
++	ent->ndescs = mlx5_imr_ksm_entries;
++	ent->access_mode = MLX5_MKC_ACCESS_MODE_KSM;
+ }
  
- 	case MLX5_IMR_KSM_CACHE_ENTRY:
--		ent->page = MLX5_KSM_PAGE_SHIFT;
- 		ent->ndescs = mlx5_imr_ksm_entries;
- 		ent->access_mode = MLX5_MKC_ACCESS_MODE_KSM;
- 		ent->limit = 0;
+ static const struct ib_device_ops mlx5_ib_dev_odp_ops = {
+diff --git a/include/linux/mlx5/driver.h b/include/linux/mlx5/driver.h
+index 0e8705c3a460d..6948767d52522 100644
+--- a/include/linux/mlx5/driver.h
++++ b/include/linux/mlx5/driver.h
+@@ -747,7 +747,6 @@ enum {
+ 
+ enum {
+ 	MKEY_CACHE_LAST_STD_ENTRY = 20,
+-	MLX5_IMR_MTT_CACHE_ENTRY,
+ 	MLX5_IMR_KSM_CACHE_ENTRY,
+ 	MAX_MKEY_CACHE_ENTRIES
+ };
 -- 
 2.53.0
 
