@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793212147;
-	b=CrVfElS728zI5QRjWq7nU3YWj/+oZzGZNdbDDlu75Mvrz78M7Ctmq95UaMe8tlIsjGaX
-	 t9TvHh/RNSNxPzayukCEW2qU4njwZ+VaMDs8Zy7ESjiCg4D+GklcyRopjv1731AQeKnks
-	 ffsWD+6lBEGJgilzbYz1GwODZIzftlImyhrb8Nyk3YVvOS0cs3Yw7PgtAeQv4ViSw2YcP
-	 khorXqcaUrXjURDp5KjQ89qggLkyAKGWpZ7AJEhJj8D+zSsUzdKEdWrqX2GvXFHW0gKG1
-	 lxNseey9nWTH71HAf2a0x7AFGtPsZ4oZgrmRMan/lpVByZOeMcVlm7m64Ir1CzmqPqA==
+	t=1793212150;
+	b=LX5HGzJ+LlDKZnSjuoMy2jGH7Q1dTRVbnOUsROr3IEHO5aScsp8JgeJMNV6vApyqQX2X
+	 k9Oew50qLB7WM9X2PhjNTWp/j8ld2bw2BK/LgNCYpxS1JNTJP8kjooQ3/2a4VAYJ85bxr
+	 CCxN+0t/EGZYdoMc1B2slcoSeQ+2Kvbh7h7g7eyauHzCa9yvcH42bZFkd3zIpTxdFZ9Mv
+	 TJg/z/2B5Ib8mCrbmtVJ3eYunrUj32Bx7yFeELMtMsXMwReZeeqepc53b8GL240t6EsSc
+	 jrsU7m75syEdm/NYw2T9sORNrhIJXF5VtzXMBrus2YYXEZhdpmaXiImgDX5XeR3s2uA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793212147;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793212150;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=EeX5+u1jhLgiRTX4ti7d9jEZWZ17InGx5CbVOObyaE4=;
-	b=UXB5mRRmRdphW2NnuDQSeyvRAGcliExBz7fctaQzm7U3bJ8iagibOpK8nf4VQMB0sgVr
-	 6BW0CrSAJ/L09RQzMczn6iS/AVWNramf03AzhuGPbW2KS6uOT/kDrarWlPPxkCeRpyF3c
-	 btUhRxbhiMonNUMaN05f8mTJ+pEXD4ApSxZnm1YeCNCyiW3u+2FH1groPpOYScsLG1o1a
-	 Sxb5P5kZIyjCLrnSXOgrIft9608e5Ac//3fi/dUXQZRCX5q08iToloneHsI2H9sdPNG03
-	 xNp+i2UNssbFfU1po5kHlIJPbCuJvWRIWM9dj92JgcZS4JHHHnp6tlESRibTLO6pLZA==
+	bh=8mh6V8N04NxKH1CMT68qmc9yy2lsiLWtvYYYaKgilaM=;
+	b=HJNss/EucObLLjEHSxBASQ+zs0VRktkiIDaMK2Dqpgf45Vb9vedsAeUlR4jaWuy920VG
+	 RPV4eqS9pVVq/bq+tZJbeBk1/3JS+oeCelh3R6kVNDmv/KCIovyn0PvPdPHYiPRbtvrLl
+	 bls6ph60iKCzEv8G0mbGtWAbwPU+nQLQzrCr8dKoxhHKR8jJAZlSw0GVVgOj/I0oOvqIG
+	 lY4tE2eWyP5Eo7va4jJT2UZpFebl3rKpqsCLVJleebLXJaShVhYJdy5Wf3tgUhwi6asM3
+	 BWR7U4kCe/RURrHFRk4T1sqaz6if0WWYHK16ycpW6soh+d5PcpIzktu2ZHqJHY2lbtw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Iy24rN8z;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GMamV8n1;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 103FD606A31E;
-	Wed, 28 Oct 2026 18:29:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5B1F606A31C;
+	Wed, 28 Oct 2026 18:29:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Iy24rN8z
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 241B81F031E2;
-	Wed, 28 Oct 2026 18:29:05 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GMamV8n1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0B121F01825;
+	Wed, 28 Oct 2026 18:29:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793212146;
-	bh=EeX5+u1jhLgiRTX4ti7d9jEZWZ17InGx5CbVOObyaE4=;
+	s=korg; t=1793212149;
+	bh=8mh6V8N04NxKH1CMT68qmc9yy2lsiLWtvYYYaKgilaM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Iy24rN8zkcyZ3GMkPoYr4uYILSGZHHzNpXJLBJLrLXvJuNRDF+T72J76pWuRsy3I4
-	 5sk0hiWkZ46GlLggKXUfJI2JXEMZqSet5NU74KprYKpxEuNWi7veNpw5bjMp4VmSGx
-	 5Q+sBjGtg1oqB/codsqZMOsvSWohfE//2Gm0kcmc=
+	b=GMamV8n17xpBN3mPs0LOuImo+BwW/KADhSDZ4ySVZy6SvXj8cc/I4ds4ILgg8u1vY
+	 n7eeHCv93AwqaCk3yk3lb41IHzaxXAnCWUnkf8IniJGPAGkRsp8MU4Bd+88vSUGZB0
+	 RBveAtx5vtz6pIpF53M5hGiDs/y99Hq0zKPXV2vo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daehyeon Ko <4ncienth@gmail.com>,
-	Johannes Berg <johannes.berg@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0053/1887] wifi: libipw: reject TKIP frames without a full MIC
-Date: Wed, 28 Oct 2026 17:35:49 +0100
-Message-ID: <20261028170500.434091174@linuxfoundation.org>
+	Juanlu Herrero <juanlu@fastmail.com>,
+	Anand Natarajan <anand@meta.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.1 0018/1887] io_uring/poll: avoid retry wakeup loss when dropping ownership
+Date: Wed, 28 Oct 2026 17:35:14 +0100
+Message-ID: <20261028170459.636886941@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,75 +68,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daehyeon Ko <4ncienth@gmail.com>
+From: Juanlu Herrero <juanlu@fastmail.com>
 
-[ Upstream commit 06f42accaf3c6aecab1dcc57f68dde6c06c8b380 ]
+Commit 937d38dcacd675dc0572d6c9b6743960df3128ed upstream.
 
-libipw_michael_mic_verify() assumes that an skb contains an eight-byte
-Michael MIC. A short TKIP frame makes the unsigned payload length wrap,
-causing michael_mic() to read past the skb.
+If a wakeup sets IO_POLL_RETRY_FLAG between the owning task consuming
+the existing instance of IO_POLL_RETRY_FLAG and the loop check
+of io_poll_check_events(), then we stall on processing the request
+until an unrelated wakeup comes along.
 
-Check that the MIC is present before verifying it, and use the existing
-MICHAEL_MIC_LEN constant for all MIC lengths in the verifier.
+Using atomic_cmpxchg instead of atomic_sub_return to guarantee both the
+count v and poll_refs are 0 and no wake-ups are missed.
 
-Fixes: b453872c35cf ("[NET] ieee80211 subsystem")
 Cc: stable@vger.kernel.org
+Fixes: a26a35e9019f ("io_uring: make poll refs more robust")
+Signed-off-by: Juanlu Herrero <juanlu@fastmail.com>
 Assisted-by: LLM
-Signed-off-by: Daehyeon Ko <4ncienth@gmail.com>
-Link: https://patch.msgid.link/20260909061124.3802517-1-4ncienth@gmail.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-[ adapted libipw changes to the older lib80211 implementation and Michael MIC helper interface. ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Suggested-by: Anand Natarajan <anand@meta.com>
+Link: https://patch.msgid.link/20261013-pu-cmpxchg-v1-1-4ddc10fd8a03@fastmail.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/wireless/lib80211_crypt_tkip.c | 13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ io_uring/poll.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/wireless/lib80211_crypt_tkip.c b/net/wireless/lib80211_crypt_tkip.c
-index 1b4d6c87a5c5d..823274728711a 100644
---- a/net/wireless/lib80211_crypt_tkip.c
-+++ b/net/wireless/lib80211_crypt_tkip.c
-@@ -38,6 +38,7 @@ MODULE_DESCRIPTION("lib80211 crypt: TKIP");
- MODULE_LICENSE("GPL");
+--- a/io_uring/poll.c
++++ b/io_uring/poll.c
+@@ -325,8 +325,8 @@ static int io_poll_check_events(struct i
+ 		 * Release all references, retry if someone tried to restart
+ 		 * task_work while we were executing it.
+ 		 */
+-	} while (atomic_sub_return(v & IO_POLL_REF_MASK, &req->poll_refs) &
+-					IO_POLL_REF_MASK);
++		v &= IO_POLL_REF_MASK;
++	} while (atomic_cmpxchg(&req->poll_refs, v, 0) != v);
  
- #define TKIP_HDR_LEN 8
-+#define MICHAEL_MIC_LEN 8
- 
- struct lib80211_tkip_data {
- #define TKIP_KEY_LEN 32
-@@ -585,16 +586,18 @@ static int lib80211_michael_mic_verify(struct sk_buff *skb, int keyidx,
- 					int hdr_len, void *priv)
- {
- 	struct lib80211_tkip_data *tkey = priv;
--	u8 mic[8];
-+	u8 mic[MICHAEL_MIC_LEN];
- 
--	if (!tkey->key_set)
-+	if (!tkey->key_set || skb->len < hdr_len + MICHAEL_MIC_LEN)
- 		return -1;
- 
- 	michael_mic_hdr(skb, tkey->rx_hdr);
- 	if (michael_mic(tkey->rx_tfm_michael, &tkey->key[24], tkey->rx_hdr,
--			skb->data + hdr_len, skb->len - 8 - hdr_len, mic))
-+			skb->data + hdr_len,
-+			skb->len - MICHAEL_MIC_LEN - hdr_len, mic))
- 		return -1;
--	if (memcmp(mic, skb->data + skb->len - 8, 8) != 0) {
-+	if (memcmp(mic, skb->data + skb->len - MICHAEL_MIC_LEN,
-+		   MICHAEL_MIC_LEN) != 0) {
- 		struct ieee80211_hdr *hdr;
- 		hdr = (struct ieee80211_hdr *)skb->data;
- 		printk(KERN_DEBUG "%s: Michael MIC verification failed for "
-@@ -612,7 +615,7 @@ static int lib80211_michael_mic_verify(struct sk_buff *skb, int keyidx,
- 	tkey->rx_iv32 = tkey->rx_iv32_new;
- 	tkey->rx_iv16 = tkey->rx_iv16_new;
- 
--	skb_trim(skb, skb->len - 8);
-+	skb_trim(skb, skb->len - MICHAEL_MIC_LEN);
- 
- 	return 0;
+ 	return IOU_POLL_NO_ACTION;
  }
--- 
-2.53.0
-
 
 
