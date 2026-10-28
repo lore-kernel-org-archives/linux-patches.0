@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793210641;
-	b=Beg2SSbNb/SRan+aYiiA1l1M2hC6UK60cxyKDzXP/+27bJRjxP0Vf8kBFvP3ChkeLd9n
-	 XgGSfjoZNTjYp9YhwQVC4rAYDHKISgJio4TCuOgBeE6prfVBaHh60cmrQrYn2HBOtJAbJ
-	 kYOvgaeGqXaKyPwN3cSsmjWjEwbkXbgL77HaK8hIziIr3n8YMIpo2hEg6iwp4tDT65Yb+
-	 rgTaSGCQMVljZnyYc+PD2TmrZAYEz87dFGdWVETd1LnXZPthKkC8JogvXlpkJqfUkp2Sd
-	 9QvxvJbXskB+BvmNWDjeITDnTUM82oxZUg5Rzlu83Rzx2DrENu6tJBxH9Y2mNgmvfUA==
+	t=1793210644;
+	b=Nl8VjI0xBIwBsmn0tEgXgYeeXWqd2RWb2JUPO+MzMxeZXRYc20wUmAL1038xHNXKoAbC
+	 a7a19Klz4xT5UDjSTru2UsjkSko6YNCsI/jAWb5AtU3jcn0wTKildqpZWjyxKevEpAG9+
+	 0tOc6Xz2I0P1uVIpM7aukMggNh7gV7Oh/EfvFxKEYb2MYEe5DRR8y+4dftXMBU5oUamDb
+	 5ZKae8AYhS+gZ5CZYmqbZMPhPzK6pCikhE2buJc3TvULshybu6/y4zdrTkpouuBDnDsGE
+	 ZA7XEmUGWghiPoLYxFBYjcYmk8DgFyy5duMB9WlbUb+DmFNyE4PABQ0osuo6DRS7KVw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793210641;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793210644;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=pI1qaWg0nDpyDmhqC9n4rrWxx3PyD0teCnhaDYzgPKU=;
-	b=UnbV3n+NYTifdM9lzbAu5vjJth/nk1PcHRUUeAIboN2G3A2z5zeLRav4vl5M3FWLW7aj
-	 wVN+QBki3BkkM3WVsemxgllQpjRIgnNBUiAc7KkUoC0XfE+aYXP2R1Nliu+ixBz7FISop
-	 jC9HYijq4/P+DGJwtuEMcBf69fugtsUHq0SEKG9ogvWk54LEzXAK8hCnnXvuLa6ZnA5XI
-	 HiTjtfPtVOp+kxtltfNUs14VQZm9tVnUugND0YxJsseqbdct5k7entaRuuOD5NFcBETSr
-	 K3Qz8LaT5x8hvnr8vs7iaWInXrAMVVc5ZDbDdVAfF6qc3iWyKHlCkxjnwWoSGwJkT2Q==
+	bh=LxUnQjKI/i2UF4CbTpzrrYUCkGQcB+Xn/cHadg2KQFs=;
+	b=zOSPJUZQglaV7z3LMvm2rgTOUN5vnKVldKI80iD3uyFnNDgzX8MJ6Gan6mkHJHs7YLgE
+	 jU9fLXX62MD9KKW/ltz1Ok2zCnpQ5QdbojBT4yOerUjjdHMGR55tEUqqAGKPwPdYBPIr/
+	 vvSzW7cZlLqnDU946Tdo8Kaag0npIJgTDi2/IDFLGugAmeNnfra5iYGwEQy6KPNki2ccV
+	 XnHtg0coSHSW4Mv0S8vrH7RbEMnoX/9LfyIovrjJ1wYLKITn9BO0Yhh67AYSuYhJ+RfQ/
+	 LwVCl8L1b5YsrkfkzrgFeFF3j6N1i8/yitwVulpL8L6/s/wsQp20czpDocHTggjMYbQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MuGjjdeH;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z1Pex3+P;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7BC5606A31C;
-	Wed, 28 Oct 2026 18:04:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFFEB606A31A;
+	Wed, 28 Oct 2026 18:04:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MuGjjdeH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34CB31F01825;
-	Wed, 28 Oct 2026 18:04:00 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z1Pex3+P
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C28D1F01825;
+	Wed, 28 Oct 2026 18:04:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793210640;
-	bh=pI1qaWg0nDpyDmhqC9n4rrWxx3PyD0teCnhaDYzgPKU=;
+	s=korg; t=1793210643;
+	bh=LxUnQjKI/i2UF4CbTpzrrYUCkGQcB+Xn/cHadg2KQFs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MuGjjdeH52l2XHRBPOUwmHxpQCt59DZu2n8rGPvkw7CZ7I0/mNiJExiDZfoVDiWlG
-	 C4vEc5XrP+iW4G34ysQnIDG/PnQwB1UM+z+cWxpU/qS372N4YaFnZFmdkmdg3yV79F
-	 XFojfxxffkAqLaatUwZoayia2q+yTHfvahvNLITg=
+	b=z1Pex3+PA4PaVXcYvoOE3XlHdZ5I+doy1ks9swOar8oI3q76E0xCECtpenIGfXW6y
+	 xnujj4YcGypoOmZg3WDyMF2xdzMjEnPla1ft93vVnmW8HN9aj44h5z5FPOjLVeil+k
+	 mdXJikB63EvZcOkZY4Pczvbef1AyhVZRgNlDL7u8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuho Choi <oss.patchbox@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Hongling Zeng <zenghongling@kylinos.cn>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 098/571] ALSA: virtio: reset device before deleting virtqueues
-Date: Wed, 28 Oct 2026 17:54:05 +0100
-Message-ID: <20261028170010.347911555@linuxfoundation.org>
+Subject: [PATCH 5.15 099/571] btrfs: take commit root semaphore when iterating in mark_block_group_to_copy()
+Date: Wed, 28 Oct 2026 17:54:06 +0100
+Message-ID: <20261028170010.371853328@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -68,55 +69,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuho Choi <oss.patchbox@gmail.com>
+From: Hongling Zeng <zenghongling@kylinos.cn>
 
-[ Upstream commit 6c05d00af307560e6a9f1631d6270d3df5aa2272 ]
+[ Upstream commit 0594e3423f4ba3137c734371169491f9a98e9af4 ]
 
-virtsnd_remove() and virtsnd_freeze() delete the virtqueues before
-resetting the device. del_vqs() frees the vring backing, but does not
-provide a generic device quiesce operation. In particular, modern
-virtio-pci keeps enabled queues active until the device is reset.
+mark_block_group_to_copy() iterates over the commit root with
+skip_locking=true. A concurrent transaction commit can swap and free
+the commit root during iteration, causing use-after-free when
+accessing extent buffers.
 
-Reset the device before deleting the virtqueues so it can no longer
-access the vring memory when that memory is released. This also covers
-probe failures after DRIVER_OK, which unwind through virtsnd_remove().
+Fix it by using path->need_commit_sem to protect the commit root search.
 
-Fixes: de3a9980d8c3 ("ALSA: virtio: add virtio sound driver")
-Fixes: 575483e90a32 ("ALSA: virtio: introduce device suspend/resume support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Yuho Choi <oss.patchbox@gmail.com>
-Link: https://patch.msgid.link/20260911031121.1542502-1-oss.patchbox@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-[ Replaced virtio_reset_device(vdev) calls with vdev->config->reset(vdev) for the older API. ]
+Fixes: 78ce9fc269af ("btrfs: zoned: mark block groups to copy for device-replace")
+CC: stable@vger.kernel.org
+Assisted-by: Codex:gpt-5.5
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Signed-off-by: Hongling Zeng <zenghongling@kylinos.cn>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+[ changed path->need_commit_sem assignment from true to 1 to match the older unsigned bitfield representation. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/virtio/virtio_card.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/btrfs/dev-replace.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/sound/virtio/virtio_card.c b/sound/virtio/virtio_card.c
-index 150ab3e37013e..1a4007c99c538 100644
---- a/sound/virtio/virtio_card.c
-+++ b/sound/virtio/virtio_card.c
-@@ -349,8 +349,8 @@ static void virtsnd_remove(struct virtio_device *vdev)
- 	if (snd->card)
- 		snd_card_free(snd->card);
+diff --git a/fs/btrfs/dev-replace.c b/fs/btrfs/dev-replace.c
+index aa03f2bbcc11c..d19260ccb1c34 100644
+--- a/fs/btrfs/dev-replace.c
++++ b/fs/btrfs/dev-replace.c
+@@ -516,6 +516,7 @@ static int mark_block_group_to_copy(struct btrfs_fs_info *fs_info,
+ 	path->reada = READA_FORWARD;
+ 	path->search_commit_root = 1;
+ 	path->skip_locking = 1;
++	path->need_commit_sem = 1;
  
--	vdev->config->del_vqs(vdev);
- 	vdev->config->reset(vdev);
-+	vdev->config->del_vqs(vdev);
- 
- 	for (i = 0; snd->substreams && i < snd->nsubstreams; ++i) {
- 		struct virtio_pcm_substream *vss = &snd->substreams[i];
-@@ -378,8 +378,8 @@ static int virtsnd_freeze(struct virtio_device *vdev)
- 	virtsnd_disable_event_vq(snd);
- 	virtsnd_ctl_msg_cancel_all(snd);
- 
--	vdev->config->del_vqs(vdev);
- 	vdev->config->reset(vdev);
-+	vdev->config->del_vqs(vdev);
- 
- 	for (i = 0; i < snd->nsubstreams; ++i)
- 		cancel_work_sync(&snd->substreams[i].elapsed_period);
+ 	key.objectid = src_dev->devid;
+ 	key.type = BTRFS_DEV_EXTENT_KEY;
 -- 
 2.53.0
 
