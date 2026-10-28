@@ -1,57 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214414;
-	b=gnsGDAOltzub5x0GS9n30gBkecIHq3KpD9v/VFvv/F7h58tvmNhCwvozza0mwU0OKENG
-	 PpE6roHOcCj3CTSUl8WgfdQZT1hkgmQZZhKQ3qSKEFRVWxz/Ue4b/jUCIIoK6pTAUtUx4
-	 GsRMr6EHbKzMJkaAsGZvqWA57nc7vFPpNjhq7DvY4FmBKnXkIUChBtAdO776b2TU2nTkT
-	 MvpQ+78KSBzH57TOK7cXf7ALorZCVCvWKxSGQ79/W2ruhQ8EsBA60o1Nt+JmSLX+/vO63
-	 hqq5hg5gV9HkY+Wpt3s5VwHStYcYAl1tL652RI2t9UwF83shLx+DaQmb6frvwFAA30Q==
+	t=1793214416;
+	b=DnyLhOef/WJCIlgPpg0sJ7eRSMfA31q1rXT9p5vJFvoOVp4UxO2r9MjOwtmjchtPYjLV
+	 JB2BIGuS4SwVEJk3RwJZtrIavuvPBsYLxbmiGjOGjI6rRznU7cNAhq/L7NuZfokIaF+6K
+	 VtE7MNjbHak8eUYUfD4ZyF6yse3r4C1uPZwNvoDXpNzR6U8+liMkZuTZeD5XA+vQ+04kV
+	 fJkf+Hike2kXBKbfciLmzgr6Kzu63/wtBiMdEr1p2bHJLOKNzbsZD0EsZySchGyz9Z/Qj
+	 ShitwsUCCdctZ/Gd67zeo5W3hbFtOkIAVfQ86U9cDoo5EiiI9syjCnlExUflqUUkJQg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214414;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214416;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=4SuUF347RMeyDJu4+ND5cOc3hNZ3owVgOjoODkqI22A=;
-	b=5drb0FvhtmTumSh+0HC6S0qrUBt6GRoA/85QbxMTgP7XIYZ/8bdC9FOBb0Oc/KwU0l1A
-	 Vkbwn3Fi8H/nPhBAAk6M0l4h9w8R9cpPnNB1EsyfqwcG5wFulDQUBcWcgroyzwwY0z9jA
-	 vhzPw73i+O75eLBP5g9KD1oiV9tOfMLXqDLYETsfl8FWrwVqLQ0w+5Gxg48GTY8e5qMN5
-	 e2mdKascxOAQyKCIL4RlT666EOgZNae5D7a48Rq2aVZaWryV0QB/x4+brnolfe0YOg0Uq
-	 JBm5KBXz1pSjUsoWkmUIQR0jh53sLWA0A06Bu8fFsxUgCcYPAK7buvHIEJbHzql0+dg==
+	bh=++3Q4NAQCIc3/637hA6VVVjKs/gzCPXc2eS+y8eshPw=;
+	b=eQ10Z9sHdMV4ILvwbhF3h0M2MfLleh0YDzP3rrLpTZh/i+/0bKhrjXZIsQfDOB4O7gPY
+	 ejLVUZn+ENzQHz3c9JMn23g0Q11WLKlc88NnQpDEnRebqoSKNFmI4KTk8Y8gRCBN+pCb9
+	 prDjhseKXoPLvIsEB7j5pQBDn9qg3zE3Mq3vo3fkMv/JBE6w0fSd7sqTJhq77shmCI0NK
+	 KxpB49HunpGdvCpNO+VLhbebyq+ToHaCRVA2FRmdfJ+g6QmBLOJqLJ86VPuFN4KMC0You
+	 uRJVnJDDLSyfOStsFPQ89E2FCnIzLydboaE5iZPCC7IkIu28mPpjJFeH6Wk8L0UwVKg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1O6TPbzR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=R38XIdY4;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C330D606A31F;
-	Wed, 28 Oct 2026 19:06:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E17E606A331;
+	Wed, 28 Oct 2026 19:06:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1O6TPbzR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E62FC1F01825;
-	Wed, 28 Oct 2026 19:06:52 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=R38XIdY4
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE7671F01825;
+	Wed, 28 Oct 2026 19:06:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214413;
-	bh=4SuUF347RMeyDJu4+ND5cOc3hNZ3owVgOjoODkqI22A=;
+	s=korg; t=1793214416;
+	bh=++3Q4NAQCIc3/637hA6VVVjKs/gzCPXc2eS+y8eshPw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1O6TPbzRxksiiGl2+5DQhyfoRZVVVH90JCMl0sq9PCkLGnAhwuO1X+tltS9hQdi/z
-	 Sfwftm82/63qBt1kQb85tTPJe9ic/oAO2btkgR8eqxcp1JMHGuAsxKwllgpjsyaEFI
-	 WxvxtlIgodm6iMmnYuKubhANkorJAh9L6hHA5/5Y=
+	b=R38XIdY4c05ahdv/Rs9hZm/14uoXBZ4pwJ0mA5Iw6H4GKGE9UL/URhWKBH82LJybX
+	 nQjBVmuEdJiau1n/3h9KREQaw1vt0mXf2mLIsPYoqYJ7qJFao6aUGg6D+x9cM4C7Ry
+	 UbopRCPfEcrx7DSU/NYy+J9zbuN3yEsP8oD+Kniw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tom Talpey <tom@talpey.com>,
-	Long Li <longli@microsoft.com>,
-	linux-cifs@vger.kernel.org,
-	samba-technical@lists.samba.org,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Stefan Metzmacher <metze@samba.org>,
-	Steve French <stfrench@microsoft.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Ajay Singh <ajay.kathat@microchip.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0848/1887] smb: client: let recv_done verify data_offset, data_length and remaining_data_length
-Date: Wed, 28 Oct 2026 17:49:04 +0100
-Message-ID: <20261028170518.723554286@linuxfoundation.org>
+Subject: [PATCH 6.1 0849/1887] wifi: wilc1000: avoid buffer overflow in WID string configuration
+Date: Wed, 28 Oct 2026 17:49:05 +0100
+Message-ID: <20261028170518.745949900@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -73,63 +69,153 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefan Metzmacher <metze@samba.org>
+From: Ajay.Kathat@microchip.com <Ajay.Kathat@microchip.com>
 
-[ Upstream commit f57e53ea252363234f86674db475839e5b87102e ]
+[ Upstream commit fe9e4d0c39311d0f97b024147a0d155333f388b5 ]
 
-This is inspired by the related server fixes.
+Fix the following copy overflow warning identified by Smatch checker.
 
-Cc: Tom Talpey <tom@talpey.com>
-Cc: Long Li <longli@microsoft.com>
-Cc: linux-cifs@vger.kernel.org
-Cc: samba-technical@lists.samba.org
-Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
-Fixes: f198186aa9bb ("CIFS: SMBD: Establish SMB Direct connection")
-Signed-off-by: Stefan Metzmacher <metze@samba.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+ drivers/net/wireless/microchip/wilc1000/wlan_cfg.c:184 wilc_wlan_parse_response_frame()
+        error: '__memcpy()' 'cfg->s[i]->str' copy overflow (512 vs 65537)
+
+This patch introduces size check before accessing the memory buffer.
+The checks are base on the WID type of received data from the firmware.
+For WID string configuration, the size limit is determined by individual
+element size in 'struct wilc_cfg_str_vals' that is maintained in 'len' field
+of 'struct wilc_cfg_str'.
+
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Closes: https://lore.kernel.org/linux-wireless/aLFbr9Yu9j_TQTey@stanley.mountain
+Suggested-by: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Ajay Singh <ajay.kathat@microchip.com>
+Link: https://patch.msgid.link/20250829225829.5423-1-ajay.kathat@microchip.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/smbdirect.c | 19 ++++++++++++++++++-
- 1 file changed, 18 insertions(+), 1 deletion(-)
+ .../wireless/microchip/wilc1000/wlan_cfg.c    | 37 ++++++++++++++-----
+ .../wireless/microchip/wilc1000/wlan_cfg.h    |  5 ++-
+ 2 files changed, 30 insertions(+), 12 deletions(-)
 
-diff --git a/fs/smb/client/smbdirect.c b/fs/smb/client/smbdirect.c
-index d2878973c1476..894f5ffca909f 100644
---- a/fs/smb/client/smbdirect.c
-+++ b/fs/smb/client/smbdirect.c
-@@ -461,7 +461,9 @@ static void recv_done(struct ib_cq *cq, struct ib_wc *wc)
- 	struct smbd_response *response =
- 		container_of(wc->wr_cqe, struct smbd_response, cqe);
- 	struct smbd_connection *info = response->info;
--	int data_length = 0;
-+	u32 data_offset = 0;
-+	u32 data_length = 0;
-+	u32 remaining_data_length = 0;
+diff --git a/drivers/net/wireless/microchip/wilc1000/wlan_cfg.c b/drivers/net/wireless/microchip/wilc1000/wlan_cfg.c
+index 131388886acbf..cfabd5aebb540 100644
+--- a/drivers/net/wireless/microchip/wilc1000/wlan_cfg.c
++++ b/drivers/net/wireless/microchip/wilc1000/wlan_cfg.c
+@@ -41,10 +41,10 @@ static const struct wilc_cfg_word g_cfg_word[] = {
+ };
  
- 	log_rdma_recv(INFO, "response=0x%p type=%d wc status=%d wc opcode %d byte_len=%d pkey_index=%u\n",
- 		      response, response->type, wc->status, wc->opcode,
-@@ -493,7 +495,22 @@ static void recv_done(struct ib_cq *cq, struct ib_wc *wc)
- 	/* SMBD data transfer packet */
- 	case SMBD_TRANSFER_DATA:
- 		data_transfer = smbd_response_payload(response);
-+
-+		if (wc->byte_len <
-+		    offsetof(struct smbd_data_transfer, padding))
-+			goto error;
-+
-+		remaining_data_length = le32_to_cpu(data_transfer->remaining_data_length);
-+		data_offset = le32_to_cpu(data_transfer->data_offset);
- 		data_length = le32_to_cpu(data_transfer->data_length);
-+		if (wc->byte_len < data_offset ||
-+		    (u64)wc->byte_len < (u64)data_offset + data_length)
-+			goto error;
-+
-+		if (remaining_data_length > info->max_fragmented_recv_size ||
-+		    data_length > info->max_fragmented_recv_size ||
-+		    (u64)remaining_data_length + (u64)data_length > (u64)info->max_fragmented_recv_size)
-+			goto error;
+ static const struct wilc_cfg_str g_cfg_str[] = {
+-	{WID_FIRMWARE_VERSION, NULL},
+-	{WID_MAC_ADDR, NULL},
+-	{WID_ASSOC_RES_INFO, NULL},
+-	{WID_NIL, NULL}
++	{WID_FIRMWARE_VERSION, 0, NULL},
++	{WID_MAC_ADDR, 0, NULL},
++	{WID_ASSOC_RES_INFO, 0, NULL},
++	{WID_NIL, 0, NULL}
+ };
  
- 		/*
- 		 * If this is a packet with data playload place the data in
+ #define WILC_RESP_MSG_TYPE_CONFIG_REPLY		'R'
+@@ -147,44 +147,58 @@ static void wilc_wlan_parse_response_frame(struct wilc *wl, u8 *info, int size)
+ 
+ 		switch (FIELD_GET(WILC_WID_TYPE, wid)) {
+ 		case WID_CHAR:
++			len = 3;
++			if (len + 2  > size)
++				return;
++
+ 			while (cfg->b[i].id != WID_NIL && cfg->b[i].id != wid)
+ 				i++;
+ 
+ 			if (cfg->b[i].id == wid)
+ 				cfg->b[i].val = info[4];
+ 
+-			len = 3;
+ 			break;
+ 
+ 		case WID_SHORT:
++			len = 4;
++			if (len + 2  > size)
++				return;
++
+ 			while (cfg->hw[i].id != WID_NIL && cfg->hw[i].id != wid)
+ 				i++;
+ 
+ 			if (cfg->hw[i].id == wid)
+ 				cfg->hw[i].val = get_unaligned_le16(&info[4]);
+ 
+-			len = 4;
+ 			break;
+ 
+ 		case WID_INT:
++			len = 6;
++			if (len + 2  > size)
++				return;
++
+ 			while (cfg->w[i].id != WID_NIL && cfg->w[i].id != wid)
+ 				i++;
+ 
+ 			if (cfg->w[i].id == wid)
+ 				cfg->w[i].val = get_unaligned_le32(&info[4]);
+ 
+-			len = 6;
+ 			break;
+ 
+ 		case WID_STR:
++			len = 2 + get_unaligned_le16(&info[2]);
++
+ 			while (cfg->s[i].id != WID_NIL && cfg->s[i].id != wid)
+ 				i++;
+ 
+-			if (cfg->s[i].id == wid)
++			if (cfg->s[i].id == wid) {
++				if (len > cfg->s[i].len || (len + 2  > size))
++					return;
++
+ 				memcpy(cfg->s[i].str, &info[2],
+-				       get_unaligned_le16(&info[2]) + 2);
++				       len);
++			}
+ 
+-			len = 2 + get_unaligned_le16(&info[2]);
+ 			break;
+ 
+ 		default:
+@@ -384,12 +398,15 @@ int wilc_wlan_cfg_init(struct wilc *wl)
+ 	/* store the string cfg parameters */
+ 	wl->cfg.s[i].id = WID_FIRMWARE_VERSION;
+ 	wl->cfg.s[i].str = str_vals->firmware_version;
++	wl->cfg.s[i].len = sizeof(str_vals->firmware_version);
+ 	i++;
+ 	wl->cfg.s[i].id = WID_MAC_ADDR;
+ 	wl->cfg.s[i].str = str_vals->mac_address;
++	wl->cfg.s[i].len = sizeof(str_vals->mac_address);
+ 	i++;
+ 	wl->cfg.s[i].id = WID_ASSOC_RES_INFO;
+ 	wl->cfg.s[i].str = str_vals->assoc_rsp;
++	wl->cfg.s[i].len = sizeof(str_vals->assoc_rsp);
+ 	i++;
+ 	wl->cfg.s[i].id = WID_NIL;
+ 	wl->cfg.s[i].str = NULL;
+diff --git a/drivers/net/wireless/microchip/wilc1000/wlan_cfg.h b/drivers/net/wireless/microchip/wilc1000/wlan_cfg.h
+index 614c5673f2328..b0987682892aa 100644
+--- a/drivers/net/wireless/microchip/wilc1000/wlan_cfg.h
++++ b/drivers/net/wireless/microchip/wilc1000/wlan_cfg.h
+@@ -24,12 +24,13 @@ struct wilc_cfg_word {
+ 
+ struct wilc_cfg_str {
+ 	u16 id;
++	u16 len;
+ 	u8 *str;
+ };
+ 
+ struct wilc_cfg_str_vals {
+-	u8 mac_address[7];
+-	u8 firmware_version[129];
++	u8 mac_address[8];
++	u8 firmware_version[130];
+ 	u8 assoc_rsp[256];
+ };
+ 
 -- 
 2.53.0
 
