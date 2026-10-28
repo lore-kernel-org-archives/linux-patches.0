@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793212288;
-	b=mQFaeBc78WjrUji1kpuFzWGP2neMyL2Gz9ejIA99YCHUlshMjOTBzDJExYrVRH3AzJjq
-	 ilIAkKByF1v0M3YRM+MgYw2UXXXOiy9eM7favZ0igtRVHwv/JfhH0wdmOjTxWoqtb4Tsy
-	 eDLtxzSsVuk4BlkopeRNzwFL8jB2sNPIhcChuNMPu6jP75eKTMZwzSzoGuLvThyxQLAFZ
-	 zO6OsCQcj9EPtypuCyUlccHe4UiiqO+Oz+idJ5GGa2FxIGOvCj3VMCnfwRAF8cacTmqwd
-	 qfTummaN51e+dKx4uqkT1q1Y1u+aJdB+cLBIyebuXQCavfZ1DVMdfR73OeVrF8X4HWQ==
+	t=1793212292;
+	b=pnwMfSBkSerKxrNviJAsib9Ud+5m0CF7xPQBD7tQxDI6aOGV7bOVW3L3K5NiySNhonfO
+	 ShWCrj02qU8f7ZZb73ft5zcuOhjRjlhSdowAUz6TXgZYL36QGhyZQvLkMZr5Z8kaHdI+O
+	 cAzhHoUAqYGCemCj943dhjuFyiWcKVEmhK+RUp4qhAVVPuHyAjw0zR6ROtfdnUWDaxNdi
+	 T03HIvFl0ggyFK56reFxvI7qRDbx1K4PzKsF4+HJxiIC3cqFl5xs7+O0XDKMjefibe2Ks
+	 TFTejqdGQ8h0ljK/D8xbCFPEajo7xyEnXAFa79VpUvwaE8lo69hfT9gAQVZK+fsPVmw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793212288;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793212292;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=MNgXIQ8mvW/zChUFJaVuBFc3KImdO1PuPEJHEFisnyI=;
-	b=wlJ21BtuZucKn9L4zYPbki9gRM8/ftv5QgGJQEVa6gft2NAMvJhTyiDvVIvEazc0D8a1
-	 s8OzHAmPWRlWijeZto0jPEjog3krW1dAW89DnbYEBB/lSUTTUQZUKmtooSp7JNWJQfZz0
-	 EhxVf0+tvauFAQUTKCoiFmEBrREaBqXTgPMG7kqHyCnfZhLwgzd11bJzHROyW4jqRQ14a
-	 X55UafiTjYBFw+E1rR3TbpIdzmSPDLSDtzF+ucwoPYzInJhVZUQasKVbbhcbPDFAQ2o8h
-	 7FwJ+2kmvDobPn86pvMVLVEDi2GFA41p10WRwuQ8XcQDHIPWRr73dzI0no7TG1HheMw==
+	bh=ssEVhbfKQP+WSBzcwW8ekL+CzNI6hUmtHdosAbRnoag=;
+	b=EVe7BS1CbQtzrAC3+ikm84WpAcMWP2W1JGzyBlttIw1/Vib18AsK2mNdDa5hY++5IbOY
+	 TT2D7O2Gw40Dq3KHp+ShbSrqwt0WjFN3wcNiIrWBrj/G04R+jCTX+1QvhrSVci25eaQi8
+	 u1hv8yD2k9k53XuKuG5CT4FNNWJfM5oyJYM+XZzxa6V6o2kDNBawmrlIq8jpVm3e56No9
+	 Q9kaylMurphrsa1Emk6ST25uqcZgOj2YwU/ayKr1mQf6bIeWXXHpCHvHAN3pIVU/0YL68
+	 N0ruTlNGKKu2++R7tb/JuXi/y7mLoWCcjaUH+rix9x3nSykAyMxcXF3ZTGQ2e7MrqTQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XNr0zdCw;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X85yEbEF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D81E606A31E;
-	Wed, 28 Oct 2026 18:31:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3B41606A31A;
+	Wed, 28 Oct 2026 18:31:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XNr0zdCw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E8291F031E0;
-	Wed, 28 Oct 2026 18:31:27 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X85yEbEF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D86341F031E0;
+	Wed, 28 Oct 2026 18:31:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793212288;
-	bh=MNgXIQ8mvW/zChUFJaVuBFc3KImdO1PuPEJHEFisnyI=;
+	s=korg; t=1793212291;
+	bh=ssEVhbfKQP+WSBzcwW8ekL+CzNI6hUmtHdosAbRnoag=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XNr0zdCw9PVWibihTaPCepbqcMUCA6/QXTA7soNWE/oyFJSmknkTjuEkzsQ0Pml2t
-	 qmPdRO/CQI8WR6Nzq8sfdaSw3wCZCu8N8IL/kdcbySLF82Kr5G2tGZdvajyFibi3J4
-	 jlcuZexpHhrpWrrS27O3UwCqOU2KAObqCCvJZcI0=
+	b=X85yEbEFjp8DJr9735WSNW0DZ/6ljkF82JQEX2AQuPxr7W2OPqcy/aafstPAygsve
+	 AtiN0BBqxfD0LG6hpOHTs4MfWP4x7qBjE0ZjRxuj8Un2oIjwpc7D2g+bbS0uWTTXAZ
+	 jbhiRMdf88JZAH6NBCCEWDRFC2qdW0IHigg09sa0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Will Deacon <will@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Xu Rao <raoxu@uniontech.com>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0101/1887] arm64: mm: Fix the lockless page-table walk in show_pte()
-Date: Wed, 28 Oct 2026 17:36:37 +0100
-Message-ID: <20261028170501.532672770@linuxfoundation.org>
+Subject: [PATCH 6.1 0102/1887] nvme-fabrics: fix DHCHAP secret leak on parse failure
+Date: Wed, 28 Oct 2026 17:36:38 +0100
+Message-ID: <20261028170501.555977388@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,90 +69,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Xu Rao <raoxu@uniontech.com>
 
-[ Upstream commit a77644d009dece1104b6fcc6e322b0e4503db0d6 ]
+[ Upstream commit afdee49a1b88ed9bb44e2b30e855297c169bcc53 ]
 
-show_pte() walks page tables locklessly and can run with interrupts
-enabled. A concurrent teardown can free a table page while it is being
-walked. It can also clear a parent entry after show_pte() checked it; the
-regular pXd_offset() helpers then reread the cleared entry and can derive a
-bogus lower-level pointer and fault again.
+nvmf_parse_options() duplicates dhchap_secret and dhchap_ctrl_secret
+with match_strdup() before validating the DHHC-1: representation.
 
-Use the lockless offset helpers with the saved parent entries, as
-gup_fast() does, and pass the saved PMD to pte_offset_map().
+If validation fails, the parser returns -EINVAL before the temporary
+string in p is assigned to opts->dhchap_secret or
+opts->dhchap_ctrl_secret. nvmf_create_ctrl() subsequently frees opts,
+but nvmf_free_options() cannot release the unassigned temporary string.
+Each rejected option therefore leaks one allocation.
 
-For task page tables, arm64 selects MMU_GATHER_RCU_TABLE_FREE. Disable
-local interrupts around the walk to hold off RCU-deferred table frees and
-block the tlb_remove_table_sync_one() IPI until the walk is finished.
+This is easy to miss because valid secrets transfer ownership to opts
+and are freed normally, while the malformed-secret path still returns
+the expected -EINVAL to userspace.
 
-Place the IRQ guard after the header print. This does not make the output a
-consistent snapshot, but prevents the task page-table walk from
-dereferencing a released table page or deriving a pointer from a different
-parent value.
+With CONFIG_NVME_HOST_AUTH enabled, the leak is reachable before the
+required-option checks and transport lookup. No NVMe-oF target or
+working transport connection is required; for example, repeatedly
+writing
 
-Fixes: 1d18c47c735e ("arm64: MMU fault handling and page table management")
+	dhchap_secret=BAD
+
+or
+
+	dhchap_ctrl_secret=BAD
+
+to /dev/nvme-fabrics deterministically takes the leaking parse path.
+
+Free the temporary string before leaving both validation error paths.
+Use kfree_sensitive() because the copied option may contain secret
+material even when its representation is rejected, matching the
+sensitive cleanup used for stored DHCHAP secrets.
+
+Fixes: f50fff73d620 ("nvme: implement In-Band authentication")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Signed-off-by: Will Deacon <will@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Xu Rao <raoxu@uniontech.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/mm/fault.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ drivers/nvme/host/fabrics.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/arm64/mm/fault.c b/arch/arm64/mm/fault.c
-index c4120bd80a9b4..5bd5e10c49f18 100644
---- a/arch/arm64/mm/fault.c
-+++ b/arch/arm64/mm/fault.c
-@@ -15,6 +15,7 @@
- #include <linux/mm.h>
- #include <linux/hardirq.h>
- #include <linux/init.h>
-+#include <linux/irqflags.h>
- #include <linux/kasan.h>
- #include <linux/kprobes.h>
- #include <linux/uaccess.h>
-@@ -145,6 +146,9 @@ static void show_pte(unsigned long addr)
- 	pr_alert("%s pgtable: %luk pages, %llu-bit VAs, pgdp=%016lx\n",
- 		 mm == &init_mm ? "swapper" : "user", PAGE_SIZE / SZ_1K,
- 		 vabits_actual, mm_to_pgd_phys(mm));
-+
-+	guard(irqsave)();
-+
- 	pgdp = pgd_offset(mm, addr);
- 	pgd = READ_ONCE(*pgdp);
- 	pr_alert("[%016lx] pgd=%016llx", addr, pgd_val(pgd));
-@@ -158,25 +162,25 @@ static void show_pte(unsigned long addr)
- 		if (pgd_none(pgd) || pgd_bad(pgd))
- 			break;
- 
--		p4dp = p4d_offset(pgdp, addr);
-+		p4dp = p4d_offset_lockless(pgdp, pgd, addr);
- 		p4d = READ_ONCE(*p4dp);
- 		pr_cont(", p4d=%016llx", p4d_val(p4d));
- 		if (p4d_none(p4d) || p4d_bad(p4d))
- 			break;
- 
--		pudp = pud_offset(p4dp, addr);
-+		pudp = pud_offset_lockless(p4dp, p4d, addr);
- 		pud = READ_ONCE(*pudp);
- 		pr_cont(", pud=%016llx", pud_val(pud));
- 		if (pud_none(pud) || pud_bad(pud))
- 			break;
- 
--		pmdp = pmd_offset(pudp, addr);
-+		pmdp = pmd_offset_lockless(pudp, pud, addr);
- 		pmd = READ_ONCE(*pmdp);
- 		pr_cont(", pmd=%016llx", pmd_val(pmd));
- 		if (pmd_none(pmd) || pmd_bad(pmd))
- 			break;
- 
--		ptep = pte_offset_map(pmdp, addr);
-+		ptep = pte_offset_map(&pmd, addr);
- 		if (!ptep)
- 			break;
- 
+diff --git a/drivers/nvme/host/fabrics.c b/drivers/nvme/host/fabrics.c
+index ffe433c470894..eed78e6f2cdf6 100644
+--- a/drivers/nvme/host/fabrics.c
++++ b/drivers/nvme/host/fabrics.c
+@@ -898,6 +898,7 @@ static int nvmf_parse_options(struct nvmf_ctrl_options *opts,
+ 			}
+ 			if (strlen(p) < 11 || strncmp(p, "DHHC-1:", 7)) {
+ 				pr_err("Invalid DH-CHAP secret %s\n", p);
++				kfree_sensitive(p);
+ 				ret = -EINVAL;
+ 				goto out;
+ 			}
+@@ -912,6 +913,7 @@ static int nvmf_parse_options(struct nvmf_ctrl_options *opts,
+ 			}
+ 			if (strlen(p) < 11 || strncmp(p, "DHHC-1:", 7)) {
+ 				pr_err("Invalid DH-CHAP secret %s\n", p);
++				kfree_sensitive(p);
+ 				ret = -EINVAL;
+ 				goto out;
+ 			}
 -- 
 2.53.0
 
