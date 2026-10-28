@@ -1,54 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793208844;
-	b=4YS4L9IlPjz35vGiFiGAPT59BNSPloJuylStnBIeraOv0TQ+WgnKvwPoJFlT49GUkL/A
-	 zf/r5P96vaDfw3x8IjDjJLHsRSzjHwe6nr+DK4OnUNISHt89ROYuiy4c4zIgvM4ODBUCs
-	 er9CUnLnt288k2TIVS0qUJ7LVDUA1U4VJeyuZNlsPDYkQSHRTRfa73sI+P6z4za+tcqtb
-	 BCqjw+q2klT19Ss/rRs+s37BDejZxNymghz73AegCa1DnYz2anqtbrYvnp75RQ1/d54kI
-	 RA7W7gAbz6gq9N1vOiEXSIIxEbYK+I7tvVmxFG3IRuRZRXoQ5K86oRbbpVal7/CIJRw==
+	t=1793208847;
+	b=qv2vIwFnZaX6fKQc3/wqJVU/V6jp82QIneUZiZFGaATn/7snGDEwBNjHmKbJy/mneZgU
+	 UkavrtmeDEfoyB+JOK7nv3syvJ8U/Kk/8t/I+68HhUI80+IR8tQtqtZZWP4YaHVYGXbPO
+	 Cs5rQAcd/76He737dlcZa95F1Wssh6UtzqeraV9TTHPmzMnhXq/JBTJusIWC0IbV1hN8d
+	 KTy7swueSWKEKjlBic6xTI4JHtlzFnGR0D4BKYgnCWZwUOmoH2F0ViBnwAW2wevsc7E1y
+	 oAHdrKfdYpJnMch3//CxR6veajSchWKldxbTM/5QUy4W5HywzwC4SnAYkqWZDM2YsjQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793208844;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793208847;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=DxOr/FaBMLWKer7RSA3oJjqRRp79iaWeDXfFMIx4fPI=;
-	b=2oN5xT8FFCv0rjwfG8M3qscEiLZUsWD0J3VJExB6saDR+iX/RXsIl5yXi1U3OgV9WaFE
-	 ZOqnsCP2IrxDWkvVzV2JpvP/+NevTEN3RK+m+NupRBNh7FCVMCyvGD73UAyKrPkMA0+vG
-	 jZNNmzQi6ABnW7B0UBA1AKkY6LxOGUkpNd4oKKmvDO7faZpvYRMv0TVhioM/CGRLYGK+K
-	 KU9bnGU3fLLwd89Dd99MAA75J0OJ6Z3l6Y/QhT7vgx9ymSSr7iYHbXxVOgJPQzOCWNdGH
-	 l9kzMZSIH5I/eUT9sQ2qaOY0e9Z9E1ZhliNXiBlXmEEriOoriYLzmRVHrxHaRrISBjw==
+	bh=ULBDcR+DEBwIn06UOxYJ+wiPVvz/TL19siaPS0eAfws=;
+	b=xrA0Un2Oo7YqGnrBJRx6dHnvS4wh6JiQJCBz9zIFrIUlWDxHXinEle5fL+ggkaSFX6f2
+	 TviAQ1AG1NDjoZO2atz8Qq1f+yDkDCWclOLrlKrNmnIXuCH4A4M2DvAoJWxUJhlsn+pi4
+	 CLK8+HdsvibTVJE6H7hJtAAUTbkt4OOCrXQKMGkhMKy9LT1vg2rmBhpJPipfAOhFmi2t+
+	 PA/FaQNRs/YIud3g26nGpJNZ2UcVYEbKGJ0/hOjBSuX9wq61hqHChfJqJ02FgvKVKYmYf
+	 Qx1fos7HvmxaiSE1sPxHINrS8pa4VzCmwXE34YVJv1CCNBVtCy1es3t1z9kBlsRLhOQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YzKKlhGE;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="uicgMKJ/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3FC8606A31C;
-	Wed, 28 Oct 2026 17:34:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C22A0606A31A;
+	Wed, 28 Oct 2026 17:34:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YzKKlhGE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42EA31F01825;
-	Wed, 28 Oct 2026 17:34:03 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uicgMKJ/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D2561F01825;
+	Wed, 28 Oct 2026 17:34:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793208843;
-	bh=DxOr/FaBMLWKer7RSA3oJjqRRp79iaWeDXfFMIx4fPI=;
+	s=korg; t=1793208846;
+	bh=ULBDcR+DEBwIn06UOxYJ+wiPVvz/TL19siaPS0eAfws=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YzKKlhGEGo5XE0ryGzytLb1gMqljF9jgL41JbWf6cdjhBPkQB4TDs9UWWEBwbCAQf
-	 zXqgm7WF8Zi11bw0li4DMmPHNeXnVZLIWoIF9RAZorWkiFBOUPGvtCmPmaFlo/UyJY
-	 FRIzZkBw09zr/Gpjs6IMZeoLVg64TxbkYItkwkFU=
+	b=uicgMKJ/fMgeFML44DHRcwwDUd9rk1bca/OUKFqlxAzAlv4mGG2SlQZ9pirE51l87
+	 /wocYrFKRQszudtPrmvZCTNUUrUcchq3vzVpQOoTl3+wG7gMvbRKeONE8uAL78Hr39
+	 0CNTEuc2zmwkfsvzObC1emYglIi+9RkGXRiZEEaQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tristan Madani <tristan@talencesecurity.com>,
-	Loic Poulain <loic.poulain@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Roman Demidov <roman.demidov.nn@gmail.com>
-Subject: [PATCH 5.10 262/516] wifi: wcn36xx: fix heap overflow from oversized firmware HAL response
-Date: Wed, 28 Oct 2026 17:56:54 +0100
-Message-ID: <20261028170009.699730897@linuxfoundation.org>
+	Gilberto Conde <gilbertorconde@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.10 263/516] net: usb: qmi_wwan: add Quectel EG120K-EA
+Date: Wed, 28 Oct 2026 17:56:55 +0100
+Message-ID: <20261028170009.722408424@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -70,41 +67,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tristan Madani <tristan@talencesecurity.com>
+From: Gilberto Conde <gilbertorconde@gmail.com>
 
-commit 88a240d86d3d64521f9194abe185ac71cc74d0bd upstream.
+commit 0f2fd31f63c65c409bd336af3a42d478a9207c1f upstream.
 
-The firmware response dispatcher copies all synchronous HAL responses
-into the 4096-byte hal_buf without validating the response length. A
-response exceeding WCN36XX_HAL_BUF_SIZE causes a heap buffer overflow
-with firmware-controlled content.
+Add support for the Quectel EG120K-EA LTE Cat.12 module (USB ID
+2c7c:030b). Its QMI interface (interface 4) uses class/subclass/protocol
+ff/ff/ff like the other recent Quectel modules, so match it the same way.
 
-Add a bounds check on the response length.
+The product ID is shared with the EM060K, which the option driver
+already knows and uses to claim the serial interfaces. Without a
+qmi_wwan entry the data interface is left unbound.
 
-Fixes: 8e84c2582169 ("wcn36xx: mac80211 driver for Qualcomm WCN3660/WCN3680 hardware")
-Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
-Reviewed-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260421135018.352774-2-tristmd@gmail.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Roman Demidov <roman.demidov.nn@gmail.com>
+Tested on a GL.iNet GL-X2000, where the module is soldered down and
+enumerates at SuperSpeed: cdc-wdm0 and wwan0 appear and ModemManager
+brings up a data session.
+
+T:  Bus=02 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  2 Spd=5000 MxCh= 0
+D:  Ver= 3.10 Cls=00(>ifc ) Sub=00 Prot=00 MxPS= 9 #Cfgs=  1
+P:  Vendor=2c7c ProdID=030b Rev= 5.04
+S:  Manufacturer=Quectel
+S:  Product=EG120K-EA
+S:  SerialNumber=45546267
+C:* #Ifs= 6 Cfg#= 1 Atr=a0 MxPwr=896mA
+I:* If#= 0 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+E:  Ad=01(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=81(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+I:* If#= 1 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=40 Driver=option
+E:  Ad=83(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=82(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+I:* If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=85(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=84(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=03(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+I:* If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=87(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=86(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=04(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+I:* If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=ff Driver=qmi_wwan
+E:  Ad=88(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
+E:  Ad=8e(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=0f(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+I:* If#=12 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=70 Driver=(none)
+E:  Ad=89(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+
+Signed-off-by: Gilberto Conde <gilbertorconde@gmail.com>
+Link: https://patch.msgid.link/20260921093426.2870266-1-gilbertorconde@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/ath/wcn36xx/smd.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/net/usb/qmi_wwan.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/net/wireless/ath/wcn36xx/smd.c
-+++ b/drivers/net/wireless/ath/wcn36xx/smd.c
-@@ -2835,6 +2835,10 @@ int wcn36xx_smd_rsp_process(struct rpmsg
- 	case WCN36XX_HAL_8023_MULTICAST_LIST_RSP:
- 	case WCN36XX_HAL_START_SCAN_OFFLOAD_RSP:
- 	case WCN36XX_HAL_STOP_SCAN_OFFLOAD_RSP:
-+		if (len > WCN36XX_HAL_BUF_SIZE) {
-+			wcn36xx_warn("HAL response too large: %d\n", len);
-+			break;
-+		}
- 		memcpy(wcn->hal_buf, buf, len);
- 		wcn->hal_rsp_len = len;
- 		complete(&wcn->hal_rsp_compl);
+--- a/drivers/net/usb/qmi_wwan.c
++++ b/drivers/net/usb/qmi_wwan.c
+@@ -1029,6 +1029,7 @@ static const struct usb_device_id produc
+ 	{QMI_MATCH_FF_FF_FF(0x2c7c, 0x0122)},	/* Quectel RG650V */
+ 	{QMI_MATCH_FF_FF_FF(0x2c7c, 0x0125)},	/* Quectel EC25, EC20 R2.0  Mini PCIe */
+ 	{QMI_MATCH_FF_FF_FF(0x2c7c, 0x0306)},	/* Quectel EP06/EG06/EM06 */
++	{QMI_MATCH_FF_FF_FF(0x2c7c, 0x030b)},	/* Quectel EM060K/EG120K-EA */
+ 	{QMI_MATCH_FF_FF_FF(0x2c7c, 0x0512)},	/* Quectel EG12/EM12 */
+ 	{QMI_MATCH_FF_FF_FF(0x2c7c, 0x0620)},	/* Quectel EM160R-GL */
+ 	{QMI_MATCH_FF_FF_FF(0x2c7c, 0x0800)},	/* Quectel RM500Q-GL */
 
 
