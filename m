@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793209068;
-	b=tcSWX1g73APRn5Nu/AkuDsmnvxxPZld9OWm9e0BirhPZhsU+Am2JelDX2gmBdLe8RpqB
-	 XtDTVTfzc/BVfNI/fuB2pFRcFhAlbFGjprbCofLGeInaYfBy3QtDxJJQYXYPFKmwAQ5yj
-	 LucYUaM8R8PiXHAWAHGjsQVQ5RcmB0biZM7eG0+w7VUqScT85hCyw1JanOHTvaUW5pl0/
-	 446xGG091VOxbMCKEtN4L5ZOZFZKuzqRgQcmCFfUhu0CCGT/5HPzqI6tVMPqLoFcl3qQh
-	 hPJIrqILzwkM2P2dBrVmHKlnW4b3fvY3Do4oIU9L7EXG/ILH5Xnm3YHXAiiPzUFnfqg==
+	t=1793209071;
+	b=NWIn/vEhgJC7/gsuheVlJmoqxqcMNwWpz/M97OaxtNOyjUF2q848U9w4baXEEgYcobjR
+	 QUH33vuZ2RTYXAOBffqj0mJzDFzblv65VGA9gNPa4JcXi0kY3WOcytR8p7JC51DkQwbjH
+	 RLPzV5i4/oHS6rucDRpcQc2Bkf7mqjOU6hN0cEOncmENVZrXbDRRj77CPA2NNErKZWHmu
+	 iBk1cm+88MXwsMWCHrKG/7g9t8K3WyOrDHHqETVxAv9yLJ7g9e2ECQVgmfCDVey2VRBAb
+	 IbEmMr3I0PFFYpCASRoU24bKkwOUcZG+Si8pfM9F+boLnZjAebpZJmZtnhvi/mOcUKg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793209068;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793209071;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=40fmYs2XtzWCLY/VZQp9/Oh4zJphjCCEzoQBmO+jxeo=;
-	b=SNf9R8RZxu83QXAv8aDukT+lr+iyEHl4VXSOh2GRmRcf7oGJ57n2hOdEUGon0gelKio6
-	 xwxm7kgacIQhuqE5oCtUYGX1h2SZxwuUhrEOv8DdZ5mtAplLy4YMoIFaeJ6rAMj+k0EqZ
-	 DcjxTue7bqP8krkvOjcjDBiE22OBX0XkClOMo3WpYjCXu8Gw4Knz4IwiXfJ5DcnyxSj0A
-	 yL/cvSmPCxRwQw13YtRXxe0NbmdKmElIWKZ6oXdqgMBbD2XMVVBHV75DyKbMPJlfZ3z4d
-	 0BiMQUAyO5R+GBgROYJxAs86TIxr+KV38bDle8VpiL0rR/pS40oold24uFf0AdYHXzA==
+	bh=1/LQfrIvUqTSFZIkpLXcc0WYGQpbJadm0FeUPQEqUao=;
+	b=TgcAKFVcxHFCODkG148rpQeZdml3JqPVGAknnmFAqZcsq0+5QuTVUkDaFvR4yysivH0F
+	 Qol+ZANjxwaGq8WNbA4erlvrJXJagzQX4xNFDFYSNRUHwDTFekTXAPfQyZ15FpAM0jdJz
+	 x9rYzTwJA06Enx5M986qDCMnQvdij3JHKPXoYMMzvz1Fn/ZKBb80VwdpeTwktX7TO12xN
+	 +O8x8a0DaLWqHK44sW6Jxm5tLjhPWOMvfi/Y9K2TGUsTECmFks65mKAsxG/MOwBoEfUYD
+	 LBeHapHYZ4OIF+iC41d1qx9EEIX4ck65ooDZgX6PYkYQ7QsYoFsMUHQ7OEfBs+h9tRg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0ayFWALV;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nh2FZd+R;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83584606A326;
-	Wed, 28 Oct 2026 17:37:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19553606A33E;
+	Wed, 28 Oct 2026 17:37:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0ayFWALV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9009F1F01825;
-	Wed, 28 Oct 2026 17:37:47 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nh2FZd+R
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 668C31F031E5;
+	Wed, 28 Oct 2026 17:37:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793209068;
-	bh=40fmYs2XtzWCLY/VZQp9/Oh4zJphjCCEzoQBmO+jxeo=;
+	s=korg; t=1793209071;
+	bh=1/LQfrIvUqTSFZIkpLXcc0WYGQpbJadm0FeUPQEqUao=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0ayFWALVOEnv4zjMItDr7oDl39PWZPoDS9KbivM8txeN4FAp9hRoiWLfnLKAiRoVF
-	 CYa54nUlDR0w7kDj2JHQUPy2ICWZRiYW8czUqK1SId6KsKGWACb+wz0Y+B/GJxdk92
-	 Z7iJ2T1LP01kedwBpIKT5lbkUMfZh/4OSssw1oiU=
+	b=nh2FZd+RJTL5hYwJfqJ+iYRqm3xVg0i0PLgNufOhYRZcAmNWJkhpKxz8sdF3/N2u+
+	 ky0jwitYYRAs35OtvhYdlEX07XrjaXRc0MCYEc0s+dS9/Dmzdb6iouSVScLCyWjCYu
+	 Cs4DT/rSfyaQpLOmmXwVZwZXfAbMQw7dDaLPy/Fg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>
-Subject: [PATCH 5.10 342/516] scsi: qedi: Initialize callback state before registration
-Date: Wed, 28 Oct 2026 17:58:14 +0100
-Message-ID: <20261028170011.589459353@linuxfoundation.org>
+	Chengfeng Ye <nicoyip.dev@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 5.10 343/516] Bluetooth: hci_sock: Serialize dead-device detachment
+Date: Wed, 28 Oct 2026 17:58:15 +0100
+Message-ID: <20261028170011.612722708@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -67,48 +67,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
+From: Chengfeng Ye <nicoyip.dev@gmail.com>
 
-commit 85de8b3a5eaa23d153aff4c7c83dddbc949064c9 upstream.
+commit 381a0925c556a8d91a80a9b9e3e86651d60ffee3 upstream.
 
-qedi_get_protocol_tlv_data() can be called asynchronously by QED after
-qedi_ops->register_ops(). It takes stats_lock and reads ll2_mtu, but
-__qedi_probe() currently registers the callback before initializing the
-mutex and assigning the default MTU on the normal probe path.
+Rebinding an HCI socket after its controller is unregistered can race
+monitor control replay and crash the kernel. hci_sock_bind() clears
+hci_pi(sk)->hdev and drops the device reference under only the socket
+lock, whereas send_monitor_control_replay() holds hci_sk_list.lock for
+reading.
 
-Initialize the callback-visible state before registering qedi_cb_ops. Keep
-the recovery path from reinitializing state because it reuses the existing
-qedi context.
+Replay can observe a non-NULL hdev, then bind can clear it and drop the
+last reference before create_monitor_ctrl_open() reads hdev->id. This
+can cause a NULL pointer dereference if the pointer is reloaded, or a
+use-after-free if the old pointer is retained.
 
-Fixes: 3cc5746e5ad7 ("scsi: qedi: Initialize the stats mutex lock")
+The kernel reported:
+
+  KASAN: null-ptr-deref in range [0x0000000000000068-0x000000000000006f]
+  RIP: 0010:create_monitor_ctrl_open+0x579/0x800
+  Call Trace:
+   hci_sock_bind+0xd96/0x1190
+   __sys_bind+0x166/0x200
+   __x64_sys_bind+0x6d/0xb0
+   do_syscall_64+0xdd/0x4a0
+   entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+The same missing serialization lets hci_send_to_sock() select a socket
+for the old device and queue its frame after bind has detached the socket
+or installed a new binding.
+
+Take hci_sk_list.lock for writing when clearing the device pointer and
+resetting the socket state. This waits for existing replay and delivery
+readers to finish before detachment and prevents later readers from
+using the old binding. Keep hci_dev_put() outside the critical section
+because the final device release can sleep.
+
+Fixes: e04480920d1e ("Bluetooth: defer cleanup of resources in hci_unregister_dev()")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM Codex
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
-Link: https://patch.msgid.link/20260910092405.1300129-1-runyu.xiao@seu.edu.cn
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+Assisted-by: GPT-6 Astra
+Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/qedi/qedi_main.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ net/bluetooth/hci_sock.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/scsi/qedi/qedi_main.c
-+++ b/drivers/scsi/qedi/qedi_main.c
-@@ -2671,8 +2671,6 @@ retry_probe:
- 	snprintf(host_buf, sizeof(host_buf), "host_%d", qedi->shost->host_no);
- 	qedi_ops->common->set_name(qedi->cdev, host_buf);
- 
--	qedi_ops->register_ops(qedi->cdev, &qedi_cb_ops, qedi);
--
- 	memset(&params, 0, sizeof(params));
- 	params.mtu = DEF_PATH_MTU + IPV6_HDR_LEN + TCP_HDR_LEN;
- 	qedi->ll2_mtu = DEF_PATH_MTU;
-@@ -2689,6 +2687,7 @@ retry_probe:
- 		spin_lock_init(&qedi->task_idx_lock);
- 		mutex_init(&qedi->stats_lock);
+--- a/net/bluetooth/hci_sock.c
++++ b/net/bluetooth/hci_sock.c
+@@ -1157,8 +1157,10 @@ static int hci_sock_bind(struct socket *
+ 	 */
+ 	hdev = hci_pi(sk)->hdev;
+ 	if (hdev && hci_dev_test_flag(hdev, HCI_UNREGISTER)) {
++		write_lock(&hci_sk_list.lock);
+ 		hci_pi(sk)->hdev = NULL;
+ 		sk->sk_state = BT_OPEN;
++		write_unlock(&hci_sk_list.lock);
+ 		hci_dev_put(hdev);
  	}
-+	qedi_ops->register_ops(qedi->cdev, &qedi_cb_ops, qedi);
- 	qedi_ops->ll2->register_cb_ops(qedi->cdev, &qedi_ll2_cb_ops, qedi);
- 	qedi_ops->ll2->start(qedi->cdev, &params);
- 
+ 	hdev = NULL;
 
 
