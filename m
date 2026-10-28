@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793207103;
-	b=ORsUdU/WvqEOhdd+tmYNHxk29C8UXvQlf3AFfTa7r/UoLtnk9b6zt3EwtuStMG1B7BmW
-	 Z5XGjj9I7nHL3871OZS/y8pzcs36EY78UhAsNMsVZIUFcUluQcoxf3JWOC73ggIRb+hTo
-	 YJcL1JQbdsfo98bhE7nkOtxITCCPeOiqOWnKB2lvVhKvLz/m0ezwuWp7mzH5JoLhhKaeC
-	 0GavEzSwQ2SBKnv9VjapKHaMAnGHxwCCHYF8jmjAoRBjn4ColJ91KtTRK6aXnJ0/j+SyB
-	 1sC1jUx1XMKhnRvDKIq6fQXeVpH07eXXjvYJCnwwEqUgB1cL8Lg1ggFtNd1AYhW/qFA==
+	t=1793207106;
+	b=U4I+/uh3ZVFRzAju6aL3e79Zx/BpojzE+xrtLeLpvRW3COyXi6HEQzQMWUiHqw1l7aRd
+	 k864vxJ9gzNFguv50jsrcVzrS4GizBlJpIjsj4S0jCgq+jWc5fQhAYDlzDgR1vAREYNYt
+	 +eyPFzR8QCsWjIoEO4gdgwhkz3E4qI5RLUtpAhY1pw8UQxl86yvVn9x+TZVCb8mwBgfqZ
+	 2HO4A0XwmTleErFc8/ierN2VqhcrS1+DaAGNTB+xKLEFkfawU3Ej9Yan26e9o0+l1fQmR
+	 0venyw1PlBBFEfyZ2j6HpkN2TVKRdwKxPZHr4rRK4/IucP4pMzbGImQpkqFeLoQwHqg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793207103;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793207106;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=jyP5LZrIQ75rEydjvK1Ba0uZsrq6aL8p0izVpiR6gss=;
-	b=Rb/qNgoDlBm7+0wpMZuHJtVGwFZQJLBdALfYmydS3kqtyeku0Cf3RYP5ySqMh0VfeF5L
-	 6uWct8q6vxvVglBPcxH0a1Dt6n+sKHHMsm+7wc+4qB/xLZZdEylq97bAZwKSb46oNKLLR
-	 VqRfYllD+4e4FBnHbeBU+zZNDbIQH4S+VQwjHw1N0G/Kx5dNwjYhkiVxjeuw7o4MX7gC4
-	 GNk3qNH1RyR6WVnWtz0MWRplh8MD9csUfcilxmdLZI5obJyNEu5+H9o6VtFG4+wy7HMd7
-	 0GmOeylXhzuuMqGnJjF8lXX5Ir0XK+g4KWYzTm+wwshTdMXCqXI+QYDIZ57Jpf33rgg==
+	bh=Gib71qVFBhWWq/iBztUG2DQdLtWKvV2OCsrz18nRnbE=;
+	b=4cifle18ZNZiUbCAcVFoHwAGrMgCh96Wmq0lNoYZtXSjm0OX17TOjxKVnMRQ52hhU8NK
+	 FgP83BjE/mYdZRGBboReU3gVV4np3CXnPMzi0kOwO5ep6kMnYUJu65LZZzmUxe1iJQ5L/
+	 vlkJsHexoF954K+iYtovYbY4eI0BQNI9M17DQRiCKfhSBIlxXDkpwxQY4xPj2uL7t9KYa
+	 F8FrdFe8BDMXX/IRe5GbWwUBlv3Va2EoWsp+/ckQH0Nf2xlvJFDaJNsEtZfOErZ/mkwTP
+	 kQOtPVxqRKY52w4Qxg21EZ2XTRSegvNmnh4CH66jn5n+I99z9WZzdVItbbIfEw0ou6g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h+5Y2oFS;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jSpDT1Jm;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E15F2606A330;
-	Wed, 28 Oct 2026 17:05:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B689760A260B;
+	Wed, 28 Oct 2026 17:05:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h+5Y2oFS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 423B21F01829;
-	Wed, 28 Oct 2026 17:05:02 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jSpDT1Jm
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDD101F01828;
+	Wed, 28 Oct 2026 17:05:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793207102;
-	bh=jyP5LZrIQ75rEydjvK1Ba0uZsrq6aL8p0izVpiR6gss=;
+	s=korg; t=1793207105;
+	bh=Gib71qVFBhWWq/iBztUG2DQdLtWKvV2OCsrz18nRnbE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=h+5Y2oFSJ8KgTA1gqcXIDfXHVa18kHfNNbyfSQnqKSyHJ0qMAbfz6S40C/24HX8pc
-	 84/r1X/tuOZgMZ2lPH1AtBjN1UcJj1bmPY3r521SIHaq2wmoNSORgk+ME2MtfXVEeB
-	 0IgGsY+epOi2sQCElZk9VWomUHdwk0euZp6xo18c=
+	b=jSpDT1JmNQnLQWumZAWTwBD9ypb6iHlXJ2Pw+m7JNQt7Ds1bt9GtcU/1jpOYej90+
+	 k7IQcwlvojgz1Wq56R/pzZrgiNs4ZDYjVr/LgLaTtE4saRQsdPb7gr2nGsRbC59YER
+	 dSj7NttozIeDWLSe+Y0rzl7fUwAAmj9AvOcWXEQs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srish Srinivasan <ssrish@linux.ibm.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>
-Subject: [PATCH 7.3 26/38] keys/trusted_keys: return immediately after TPM unseal failure
-Date: Wed, 28 Oct 2026 18:00:13 +0100
-Message-ID: <20261028165941.069218448@linuxfoundation.org>
+	Xiang Mei <xmei5@asu.edu>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 7.3 27/38] asymmetric_keys: reject trust keys without IDs
+Date: Wed, 28 Oct 2026 18:00:14 +0100
+Message-ID: <20261028165941.095572709@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165940.394092994@linuxfoundation.org>
 References: <20261028165940.394092994@linuxfoundation.org>
@@ -67,40 +68,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Srish Srinivasan <ssrish@linux.ibm.com>
+From: Weiming Shi <bestswngs@gmail.com>
 
-commit f92d0ccb05bf9089072cb067dda0dffd5394c4ef upstream.
+commit 9695df3b1db4ac4534274d38ee16e3b9b0bf910e upstream.
 
-trusted_tpm_unseal() proceeds to pcrlock() when the TPM unseal operation
-fails. If pcrlock() succeeds, its return value overwrites the unseal error,
-causing key instantiation to succeed.
+The PKCS#8 parser deliberately leaves the asym_key_ids payload slot
+empty. key_or_keyring_common() unconditionally dereferences that slot
+when a PKCS#8 key is supplied to a key_or_keyring restriction. Both the
+plain and :chain forms reach this branch, allowing an unprivileged caller
+to trigger a NULL pointer dereference through KEYCTL_RESTRICT_KEYRING
+followed by add_key().
 
-Return immediately when unseal fails to preserve the original error.
+ Oops: general protection fault, probably for non-canonical address 0xdffffc0000000000
+ KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
+ RIP: 0010:key_or_keyring_common (crypto/asymmetric_keys/restrict.c:205 crypto/asymmetric_keys/restrict.c:279)
+ Call Trace:
+  <TASK>
+  __key_create_or_update (security/keys/key.c:884)
+  key_create_or_update (security/keys/key.c:1021)
+  __do_sys_add_key (security/keys/keyctl.c:134)
+  do_syscall_64 (arch/x86/entry/common.c:52 arch/x86/entry/common.c:83)
+  entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:130)
+  </TASK>
+ Kernel panic - not syncing: Fatal exception
 
-Cc: stable@vger.kernel.org # v5.15+
-Fixes: 5d0682be3189 ("KEYS: trusted: Add generic trusted keys framework")
-Signed-off-by: Srish Srinivasan <ssrish@linux.ibm.com>
-Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Link: https://lore.kernel.org/r/20260912062950.279104-2-ssrish@linux.ibm.com
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+Reject an asymmetric restriction key without key IDs. A PKCS#8 private
+key cannot identify the signer of a candidate certificate and is not a
+valid trust anchor.
+
+Fixes: 3c58b2362ba8 ("KEYS: Implement PKCS#8 RSA Private Key parser [ver #2]")
+Cc: stable@vger.kernel.org
+Reported-by: Xiang Mei <xmei5@asu.edu>
+Link: https://lore.kernel.org/r/20260429181629.110802-2-bestswngs@gmail.com
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Weiming Shi <bestswngs@gmail.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/keys/trusted-keys/trusted_tpm1.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ crypto/asymmetric_keys/restrict.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/security/keys/trusted-keys/trusted_tpm1.c
-+++ b/security/keys/trusted-keys/trusted_tpm1.c
-@@ -923,8 +923,10 @@ static int trusted_tpm_unseal(struct tru
- 		ret = tpm2_unseal_trusted(chip, p, options);
- 	else
- 		ret = key_unseal(p, options);
--	if (ret < 0)
-+	if (ret < 0) {
- 		pr_info("key_unseal failed (%d)\n", ret);
-+		goto out;
-+	}
+--- a/crypto/asymmetric_keys/restrict.c
++++ b/crypto/asymmetric_keys/restrict.c
+@@ -243,10 +243,14 @@ static int key_or_keyring_common(struct
+ 			if (IS_ERR(key))
+ 				key = NULL;
+ 		} else if (trusted->type == &key_type_asymmetric) {
++			const struct asymmetric_key_ids *kids;
+ 			const struct asymmetric_key_id **signer_ids;
  
- 	if (options->pcrlock) {
- 		ret = pcrlock(options->pcrlock);
+-			signer_ids = (const struct asymmetric_key_id **)
+-				asymmetric_key_ids(trusted)->id;
++			kids = asymmetric_key_ids(trusted);
++			if (!kids)
++				return -ENOKEY;
++
++			signer_ids = (const struct asymmetric_key_id **)kids->id;
+ 
+ 			/*
+ 			 * The auth_ids come from the candidate key (the
 
 
