@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216780;
-	b=1+5EiTJeMoyOmqiZazE3YBZFZfZ5BOdizqsERvZZwCwoTzUUZbz6rwdfFtH+kPnILWGS
-	 UyCxh+quomUgfBGms4sOpBkmXRsF2sLS+8ElXMiCtoL5Ry9s9vOy1/Y/az03YP69AKYrC
-	 TFMlap15pYXeuYVzxtDOp6qYrhsucN5dIi6uW3/H9uvLNjY7pfNlALLHqZGCin72M6lZL
-	 PPr9a2+hBZ0o/BxQHQViNdMjWBp/Hn1TGzdI7htMLBiBeAIakNJXUgReK5kOo9QIlgTmB
-	 cpAeKNvnUdfPuj8ZP2iHiSKCp2uC0ln3Ch4K4H4A6FxGsSTsCkA55TSjMIw9I59VVPg==
+	t=1793216782;
+	b=seWHvedCwGqXPiTTxlvfcjRPyCP5bHMeQtsc27FOnKndx2Twa07VWdaASf5FF2cwtSPA
+	 trf7BMpNkrSFRII7WYCebz4IzjRYSQAUwukyrLwTM7ZMpNJ/p0W3Mtj67Gu2acl5WxltB
+	 c3/9wdChW/5H5acgzJ/hAYgB7DuXVENi0ZuUugKOOatdr1tFv0gDPWRJYactPMmRaJ+kR
+	 5DsAGV9+MgJX1LNa/EUHbjhGia4xRb+/Q/avOyhyiLFnKOKepN0vCfa4t102jefUtXf6K
+	 SW1Y4a1da54cKwUhTi9Ubbijt1E7TZTvRLvHpiysODjWnKRAkSjo05zqIHNYNsOZNSg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216780;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216782;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=cRSJZCpYlxb2uuzn8A/kLn/G/G40yXEKmBEdmp+yDZI=;
-	b=VGS8mOWMwf9ceTQWIl+1VbLFMqnJ4/VwQyC38KSgyT6rL88VoX7JkDfhcSH0oDtsS2i2
-	 n1hDY0oC18IFa81hUPJM/75kvQIsop1vLC4gqssQsv8RBPowCaU7C3+vC+jxsiBmDGDL2
-	 qgqsG0atAIlyU/eni+pF4F6PbWWd/buuFmRSXczUWMCzSd9lep34nOLJGoifQ9TsU4Ipo
-	 Ssh4N/8z5JuwA3f5TJvAOP8vU1+jqylsFQE55EKfHVil7fNmN5HGi4W5AwAJhGRNj9RjI
-	 OH5ilT/p+2Hi0rC6yTgtHnu6tzFgblCSSSPhls60kswTdPbmKcNRDWQgmo30uB5cdOg==
+	bh=zrriqi/HPUnkh3uXu5MdvejhUTJAA65t11Vq1+nY4xA=;
+	b=MH1xObfFPNWJrPLk9hlKmPt7dkX2vuKD+rfpCFGVtG734U2sQgN+KsOJQeodS7MkvhTA
+	 yNC5qgdSUFmNhGq4khfDcwlv7S+yNlKKN28mFiVEsoJMsGVsbYiW4Iry7n83pwXp7A1QQ
+	 01KRTOQyosIghYxq3ToLrUe+hGSnC8cDGRkQYurX6ptepa5dogeJoihH+LC4nCKPYY91r
+	 wpq0HEnxgbXROGNB2PT3T1Dk3KH6uJZLDjXx/BtNsT/CnIi5ZJ8oegx2NhYBmDrg2B2xS
+	 I8auX/aY0meT2xHbWaxJ8Zz21f/XKvP+iJoqO/JRrzNInSWtSncJpqfH4UIf/RMkhNQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LChpWGZh;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kktJKeb6;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD9A0606A31A;
-	Wed, 28 Oct 2026 19:46:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98276606A31A;
+	Wed, 28 Oct 2026 19:46:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LChpWGZh
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15CED1F01825;
-	Wed, 28 Oct 2026 19:46:18 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kktJKeb6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA6B91F01825;
+	Wed, 28 Oct 2026 19:46:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216779;
-	bh=cRSJZCpYlxb2uuzn8A/kLn/G/G40yXEKmBEdmp+yDZI=;
+	s=korg; t=1793216782;
+	bh=zrriqi/HPUnkh3uXu5MdvejhUTJAA65t11Vq1+nY4xA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LChpWGZhCpQ6uVjO9BUbSwjFOsXK8q3mwxUzQxUZTYYP97MDU4TNCsuuzX3KrVV19
-	 E2CF0PBe7xTJ+mIVglY5pQ9KSnkyVVL2z0QgGElkKHSe8at4c5nlEtqbPB25YLtc/g
-	 ZrI+Efp0WTlTUHt1TdUBR12UAsY88Wok02sY5ZR4=
+	b=kktJKeb6dn6WWVr+jzhaX4NK+cc6qm0awm74QbIvFLD1Dpj0RioCTMPhQnQtZEhPe
+	 JUBXUsuoR47FHQG6Qtc6E5BMN0LgSLSAfzhBNW/gczm3+wk1b08c8sYkBoMPrYONGA
+	 ZMDkoOOeRiBnOiYepCj1E/5/Q/kD3ROrRyeaebUE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sicong Huang <congei42@163.com>,
-	Fei Li <fei1.li@intel.com>,
+	Herve Codina <herve.codina@bootlin.com>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Saravana Kannan <saravanak@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1675/1887] virt: acrn: Fix irqfd use-after-free during eventfd shutdown
-Date: Wed, 28 Oct 2026 18:02:51 +0100
-Message-ID: <20261028170537.574873354@linuxfoundation.org>
+Subject: [PATCH 6.1 1676/1887] driver core: Avoid warning when removing a device while its supplier is unbinding
+Date: Wed, 28 Oct 2026 18:02:52 +0100
+Message-ID: <20261028170537.597750530@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,228 +69,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sicong Huang <congei42@163.com>
+From: Herve Codina <herve.codina@bootlin.com>
 
-[ Upstream commit 666c7f9e07925aa0863348f960e09bb89f8f05a3 ]
+[ Upstream commit 36d74f17e03f7e60e1b08fbe16cfad6e69cc3aa9 ]
 
-acrn_irqfd_deassign() and the eventfd EPOLLHUP wakeup can race and free
-the same struct hsm_irqfd:
+During driver removal, the following warning can appear:
+   WARNING: CPU: 1 PID: 139 at drivers/base/core.c:1497 __device_links_no_driver+0xcc/0xfc
+   ...
+   Call trace:
+     __device_links_no_driver+0xcc/0xfc (P)
+     device_links_driver_cleanup+0xa8/0xf0
+     device_release_driver_internal+0x208/0x23c
+     device_links_unbind_consumers+0xe0/0x108
+     device_release_driver_internal+0xec/0x23c
+     device_links_unbind_consumers+0xe0/0x108
+     device_release_driver_internal+0xec/0x23c
+     device_links_unbind_consumers+0xe0/0x108
+     device_release_driver_internal+0xec/0x23c
+     driver_detach+0xa0/0x12c
+     bus_remove_driver+0x6c/0xbc
+     driver_unregister+0x30/0x60
+     pci_unregister_driver+0x20/0x9c
+     lan966x_pci_driver_exit+0x18/0xa90 [lan966x_pci]
 
-  CPU0                                 CPU1
-  ----                                 ----
-  eventfd_release()
-    wake_up_poll(EPOLLHUP)
-      hsm_irqfd_wakeup()
-        queue_work(&irqfd->shutdown)
-                                       acrn_irqfd_deassign()
-                                         hsm_irqfd_shutdown()
-                                           list_del_init()
-                                           eventfd_ctx_remove_wait_queue()
-                                           eventfd_ctx_put()
-                                         kfree(irqfd)
-  hsm_irqfd_shutdown_work()
-    container_of(work, ..., shutdown)
-    irqfd->vm                  <-- use-after-free
+This warning is triggered when a consumer is removed because the links
+status of its supplier is not DL_DEV_DRIVER_BOUND and the link flag
+DL_FLAG_SYNC_STATE_ONLY is not set.
 
-The deassign path freed the irqfd while a shutdown work item was
-already queued by EPOLLHUP (or vice versa), so the work item could
-resurrect a dangling pointer through container_of().
+The topology in terms of consumers/suppliers used was the following
+(consumer ---> supplier):
 
-Switch to the lifetime model used by KVM irqfds:
+      i2c -----------> OIC ----> PCI device
+       |                ^
+       |                |
+       +---> pinctrl ---+
 
- - Deassign/deinit only deactivate the irqfd: remove it from vm->irqfds
-   under irqfds_lock and queue the cleanup work.
- - hsm_irqfd_shutdown_work() becomes the sole owner that unhooks the
-   eventfd waitqueue entry, drops the eventfd reference and frees the
-   irqfd.
- - A new HSM_IRQFD_FLAG_SHUTDOWN bit guarded by test_and_set_bit()
-   ensures the cleanup work is queued at most once, no matter how many
-   of {EPOLLHUP, deassign, deinit} fire concurrently.  This is safe to
-   call from the waitqueue callback, which runs with wqh->lock held and
-   IRQs disabled and therefore cannot take irqfds_lock.
- - acrn_irqfd_deassign() flushes vm->irqfd_wq before returning so the
-   eventfd is fully detached on return.  acrn_irqfd_deinit() deactivates
-   every irqfd, flushes the workqueue and only then destroys it, so no
-   path can queue_work() onto a torn-down workqueue.
- - acrn_irqfd_assign() now installs the eventfd waitqueue entry and
-   publishes the irqfd to vm->irqfds under irqfds_lock, so the irqfd is
-   never visible to deassign/deinit before its waitqueue entry is in
-   place, and any EPOLLHUP that fires in the assign window queues
-   cleanup work that blocks on irqfds_lock until publication is done.
+When the PCI device is removed, the OIC (interrupt controller) has to be
+removed. In order to remove the OIC, pinctrl and i2c need to be removed
+and to remove pinctrl, i2c need to be removed. The removal order is:
+  1) i2c
+  2) pinctrl
+  3) OIC
+  4) PCI device
 
-Signed-off-by: Sicong Huang <congei42@163.com>
-Reviewed-by: Fei Li <fei1.li@intel.com>
-Link: https://patch.msgid.link/20260519112018.2135000-2-congei42@163.com
+In details, the removal sequence is the following (with 0000:01:00.0 the
+PCI device):
+  driver_detach: call device_release_driver_internal(0000:01:00.0)...
+    device_links_busy(0000:01:00.0):
+      links->status = DL_DEV_UNBINDING
+    device_links_unbind_consumers(0000:01:00.0):
+      0000:01:00.0--oic link->status = DL_STATE_SUPPLIER_UNBIND
+      call device_release_driver_internal(oic)...
+        device_links_busy(oic):
+          links->status = DL_DEV_UNBINDING
+        device_links_unbind_consumers(oic):
+          oic--pinctrl link->status = DL_STATE_SUPPLIER_UNBIND
+          call device_release_driver_internal(pinctrl)...
+            device_links_busy(pinctrl):
+              links->status = DL_DEV_UNBINDING
+            device_links_unbind_consumers(pinctrl):
+              pinctrl--i2c link->status = DL_STATE_SUPPLIER_UNBIND
+              call device_release_driver_internal(i2c)...
+                device_links_busy(i2c): links->status = DL_DEV_UNBINDING
+                __device_links_no_driver(i2c)...
+                  pinctrl--i2c link->status is DL_STATE_SUPPLIER_UNBIND
+                  oic--i2c link->status is DL_STATE_ACTIVE
+                  oic--i2c link->supplier->links.status is DL_DEV_UNBINDING
+
+The warning is triggered by the i2c removal because the OIC (supplier)
+links status is not DL_DEV_DRIVER_BOUND. Its links status is indeed set
+to DL_DEV_UNBINDING.
+
+It is perfectly legit to have the links status set to DL_DEV_UNBINDING
+in that case. Indeed we had started to unbind the OIC which triggered
+the consumer unbinding and didn't finish yet when the i2c is unbound.
+
+Avoid the warning when the supplier links status is set to
+DL_DEV_UNBINDING and thus support this removal sequence without any
+warnings.
+
+Signed-off-by: Herve Codina <herve.codina@bootlin.com>
+Reviewed-by: Rafael J. Wysocki <rafael@kernel.org>
+Reviewed-by: Saravana Kannan <saravanak@google.com>
+Link: https://patch.msgid.link/20260511155755.34428-4-herve.codina@bootlin.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/virt/acrn/irqfd.c | 71 ++++++++++++++++++++++++---------------
- 1 file changed, 44 insertions(+), 27 deletions(-)
+ drivers/base/core.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/virt/acrn/irqfd.c b/drivers/virt/acrn/irqfd.c
-index d4ad211dce7a3..e6280a1005724 100644
---- a/drivers/virt/acrn/irqfd.c
-+++ b/drivers/virt/acrn/irqfd.c
-@@ -18,6 +18,9 @@
- 
- static LIST_HEAD(acrn_irqfd_clients);
- 
-+/* Cleanup work has been queued; set via test_and_set_bit(). */
-+#define HSM_IRQFD_FLAG_SHUTDOWN	0
-+
- /**
-  * struct hsm_irqfd - Properties of HSM irqfd
-  * @vm:		Associated VM pointer
-@@ -27,6 +30,7 @@ static LIST_HEAD(acrn_irqfd_clients);
-  * @list:	Entry within &acrn_vm.irqfds of irqfds of a VM
-  * @pt:		Structure for select/poll on the associated eventfd
-  * @msi:	MSI data
-+ * @flags:	Internal lifecycle flags (HSM_IRQFD_FLAG_*)
-  */
- struct hsm_irqfd {
- 	struct acrn_vm		*vm;
-@@ -36,6 +40,7 @@ struct hsm_irqfd {
- 	struct list_head	list;
- 	poll_table		pt;
- 	struct acrn_msi_entry	msi;
-+	unsigned long		flags;
- };
- 
- static void acrn_irqfd_inject(struct hsm_irqfd *irqfd)
-@@ -46,30 +51,29 @@ static void acrn_irqfd_inject(struct hsm_irqfd *irqfd)
- 			irqfd->msi.msi_data);
- }
- 
--static void hsm_irqfd_shutdown(struct hsm_irqfd *irqfd)
-+/* Queue the cleanup work at most once. Safe from atomic context. */
-+static void hsm_irqfd_queue_shutdown(struct hsm_irqfd *irqfd)
- {
--	u64 cnt;
--
--	lockdep_assert_held(&irqfd->vm->irqfds_lock);
--
--	/* remove from wait queue */
--	list_del_init(&irqfd->list);
--	eventfd_ctx_remove_wait_queue(irqfd->eventfd, &irqfd->wait, &cnt);
--	eventfd_ctx_put(irqfd->eventfd);
--	kfree(irqfd);
-+	if (!test_and_set_bit(HSM_IRQFD_FLAG_SHUTDOWN, &irqfd->flags))
-+		queue_work(irqfd->vm->irqfd_wq, &irqfd->shutdown);
- }
- 
-+/* Sole owner of @irqfd: unhook waitqueue, drop eventfd ref, free. */
- static void hsm_irqfd_shutdown_work(struct work_struct *work)
- {
--	struct hsm_irqfd *irqfd;
--	struct acrn_vm *vm;
-+	struct hsm_irqfd *irqfd = container_of(work, struct hsm_irqfd,
-+					       shutdown);
-+	struct acrn_vm *vm = irqfd->vm;
-+	u64 cnt;
- 
--	irqfd = container_of(work, struct hsm_irqfd, shutdown);
--	vm = irqfd->vm;
- 	mutex_lock(&vm->irqfds_lock);
- 	if (!list_empty(&irqfd->list))
--		hsm_irqfd_shutdown(irqfd);
-+		list_del_init(&irqfd->list);
- 	mutex_unlock(&vm->irqfds_lock);
-+
-+	eventfd_ctx_remove_wait_queue(irqfd->eventfd, &irqfd->wait, &cnt);
-+	eventfd_ctx_put(irqfd->eventfd);
-+	kfree(irqfd);
- }
- 
- /* Called with wqh->lock held and interrupts disabled */
-@@ -78,17 +82,16 @@ static int hsm_irqfd_wakeup(wait_queue_entry_t *wait, unsigned int mode,
- {
- 	unsigned long poll_bits = (unsigned long)key;
- 	struct hsm_irqfd *irqfd;
--	struct acrn_vm *vm;
- 
- 	irqfd = container_of(wait, struct hsm_irqfd, wait);
--	vm = irqfd->vm;
-+
- 	if (poll_bits & POLLIN)
- 		/* An event has been signaled, inject an interrupt */
- 		acrn_irqfd_inject(irqfd);
- 
- 	if (poll_bits & POLLHUP)
--		/* Do shutdown work in thread to hold wqh->lock */
--		queue_work(vm->irqfd_wq, &irqfd->shutdown);
-+		/* Defer teardown to the cleanup work; can't sleep here. */
-+		hsm_irqfd_queue_shutdown(irqfd);
- 
- 	return 0;
- }
-@@ -145,6 +148,12 @@ static int acrn_irqfd_assign(struct acrn_vm *vm, struct acrn_irqfd *args)
- 	init_waitqueue_func_entry(&irqfd->wait, hsm_irqfd_wakeup);
- 	init_poll_funcptr(&irqfd->pt, hsm_irqfd_poll_func);
- 
-+	/*
-+	 * Hold irqfds_lock across waitqueue install and list_add so the
-+	 * irqfd is not visible to deassign/deinit before its waitqueue
-+	 * entry is in place, and any racing EPOLLHUP cleanup work blocks
-+	 * on irqfds_lock until publication completes.
-+	 */
- 	mutex_lock(&vm->irqfds_lock);
- 	list_for_each_entry(tmp, &vm->irqfds, list) {
- 		if (irqfd->eventfd != tmp->eventfd)
-@@ -153,14 +162,12 @@ static int acrn_irqfd_assign(struct acrn_vm *vm, struct acrn_irqfd *args)
- 		mutex_unlock(&vm->irqfds_lock);
- 		goto fail;
- 	}
--	list_add_tail(&irqfd->list, &vm->irqfds);
--	mutex_unlock(&vm->irqfds_lock);
- 
--	/* Check the pending event in this stage */
- 	events = vfs_poll(f.file, &irqfd->pt);
--
-+	list_add_tail(&irqfd->list, &vm->irqfds);
- 	if (events & EPOLLIN)
- 		acrn_irqfd_inject(irqfd);
-+	mutex_unlock(&vm->irqfds_lock);
- 
- 	fdput(f);
- 	return 0;
-@@ -187,13 +194,17 @@ static int acrn_irqfd_deassign(struct acrn_vm *vm,
- 	mutex_lock(&vm->irqfds_lock);
- 	list_for_each_entry_safe(irqfd, tmp, &vm->irqfds, list) {
- 		if (irqfd->eventfd == eventfd) {
--			hsm_irqfd_shutdown(irqfd);
-+			list_del_init(&irqfd->list);
-+			hsm_irqfd_queue_shutdown(irqfd);
- 			break;
+diff --git a/drivers/base/core.c b/drivers/base/core.c
+index 6427d8e43347b..e39910e68d82d 100644
+--- a/drivers/base/core.c
++++ b/drivers/base/core.c
+@@ -1501,7 +1501,8 @@ static void __device_links_no_driver(struct device *dev)
+ 		if (link->supplier->links.status == DL_DEV_DRIVER_BOUND) {
+ 			WRITE_ONCE(link->status, DL_STATE_AVAILABLE);
+ 		} else {
+-			WARN_ON(!(link->flags & DL_FLAG_SYNC_STATE_ONLY));
++			WARN_ON(link->supplier->links.status != DL_DEV_UNBINDING &&
++				!(link->flags & DL_FLAG_SYNC_STATE_ONLY));
+ 			WRITE_ONCE(link->status, DL_STATE_DORMANT);
  		}
  	}
- 	mutex_unlock(&vm->irqfds_lock);
- 	eventfd_ctx_put(eventfd);
- 
-+	/* Wait for cleanup work to finish so the eventfd is fully detached. */
-+	flush_workqueue(vm->irqfd_wq);
-+
- 	return 0;
- }
- 
-@@ -226,9 +237,15 @@ void acrn_irqfd_deinit(struct acrn_vm *vm)
- 	struct hsm_irqfd *irqfd, *next;
- 
- 	dev_dbg(acrn_dev.this_device, "VM %u irqfd deinit.\n", vm->vmid);
--	destroy_workqueue(vm->irqfd_wq);
-+
- 	mutex_lock(&vm->irqfds_lock);
--	list_for_each_entry_safe(irqfd, next, &vm->irqfds, list)
--		hsm_irqfd_shutdown(irqfd);
-+	list_for_each_entry_safe(irqfd, next, &vm->irqfds, list) {
-+		list_del_init(&irqfd->list);
-+		hsm_irqfd_queue_shutdown(irqfd);
-+	}
- 	mutex_unlock(&vm->irqfds_lock);
-+
-+	/* Drain all cleanup work before tearing the workqueue down. */
-+	flush_workqueue(vm->irqfd_wq);
-+	destroy_workqueue(vm->irqfd_wq);
- }
 -- 
 2.53.0
 
