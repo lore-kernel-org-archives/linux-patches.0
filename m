@@ -1,53 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214363;
-	b=oV6I733bfoSI2JRQlELk91KqtQn9EAFEB2k9KOLfCjFZu5Gwq+MPkFlb8nvxg9bODIDI
-	 slcuuE/d5rPVO9oBwT+X1+U60bH7Z3j7cd9QrWYKMzIEg4iwGOGi9psHvCe6b+534+hvg
-	 odEct1FfmvcIEF/xLaSNv/lTuPi10YbqgFxdVDRmg7i45CyNzvN5HmXxibZL+7UfEMV7F
-	 RSC9xs7qwb9GWjOXIBTeOErwERsWs7ZBvnNwD4CiY+6pRJvLvov3DjO337FBV/KzwsmXW
-	 Rqd8g2oNDsJB0ckpcw7dv0BmRvTHrbYtfYNlW4o38NyuJaJ4xt4y22E+IdSJ4Gmp8ZA==
+	t=1793214366;
+	b=jV2xBDlCNzEagDXbDm/Uc02dupXdhwOD+Wp2VpOczFxGxeDR0WBhjnnUNUoIWmg+Ftby
+	 bltcb5TMHWwFkf3zJQnYZcLdLaSEhyJZoLWszlctYFINWBs4tgNftQ+cShsIcwxKPu9Kt
+	 vyyyBR3LXPbybWCy/YDuoDipB52M/hX2Jg/rmBDSvCMRKq8WlcudRIAOdPjAqRX4veqYO
+	 IRGQPQn13WMYdFRSRfOaJ/x7AmCbckA3aCJuXW/iUdkkrOfQ6W9YymOI/oKM5aAxB2rcB
+	 schZDUkO9xcfWlRgMu3v1e7i9n1M9rhk/R+73dFn/LAKquEQwNjYrveqpOr6xDt//2g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214363;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214366;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=3gNX73Cm+mIqLpsXdO/Jcs60duknM1NYlK80wl0NKPc=;
-	b=qeyNbAJLWgFR4MWyawV1jOhwvy6BvcEtSS+oPLLCSmAhupNLMksBiVlgskZYjy8+2IWX
-	 oCxxhc3B/iFcqKK11a62Edjp73Zsv5byS1hWTpu0XrQLEIIAqainLQx869DhTWEY/RjPR
-	 QPyt2ZHZdB40pfEN0LK3VMyH+iMG7oSEeojiupHpSWeRCE6siwM6vZrCPRi22rwDWQtdl
-	 9wX7iX94+Mt79wXNTmn6ZBOLETLU5hxM6KcrK1GbuOLle2pHpnnclkT4vogyaBincOCsF
-	 hhG99JwC8gqsJF+A+osINrq0u8DQL+CZIHB0JTnqpNYCynrgPPC0HBaH5dqUhDIJY4A==
+	bh=b04mQX3BKZGepUvwrsB5es36HbJXnKNlqKlyZCG2VD4=;
+	b=1537gmgxLCAfae2QSd1mB/po+6r9uWcECxx4fTtMhamSPe1rZaphKy8hVfkGIPHFnSaj
+	 +3dvW070cAthPv6NpoisvlFGfnYxnnQYqIbFJ5AelSR0/UZBIJp3vWhS4PApX+VqjSTGn
+	 8V7rN7KmLsIfdGk4v89gc087IcAXMLwSTD1tgmUX/dkwd4jZNZZJvo+cOFmhKOzgz/gaZ
+	 8ZBLWqXOnLfBSix/5PggFlQnWI8wlpkQJ8IaRzDwNeuklxWOsAlInho9RX8ueyMqVb8KU
+	 I/liOQbz48hzWrnzxhGp/XBDC89Xlb1j5w04R0yHwipKwaNLAXSKsEeX6fF3xpiLCCw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="l/FguRFn";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O7atEqPP;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3162760A2639;
-	Wed, 28 Oct 2026 19:06:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01A5860A2639;
+	Wed, 28 Oct 2026 19:06:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l/FguRFn
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53F131F01825;
-	Wed, 28 Oct 2026 19:06:02 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O7atEqPP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20EDE1F01825;
+	Wed, 28 Oct 2026 19:06:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214362;
-	bh=3gNX73Cm+mIqLpsXdO/Jcs60duknM1NYlK80wl0NKPc=;
+	s=korg; t=1793214365;
+	bh=b04mQX3BKZGepUvwrsB5es36HbJXnKNlqKlyZCG2VD4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=l/FguRFn4cPJR6zRGInJmt/cJ6GJDPsP44HCqgyywmSAuI1xpa5CCvVwopQfPlBUp
-	 FJ/8xE4KqixnSRNP9ggHVIX0b1QZ94lUeEtPnPQHNBENEVczIr887ZAnsHBA2c7d3L
-	 hFDfw/+FwU7WbVZn4HHuHvTLyEgpLGLhD1jd9/C4=
+	b=O7atEqPPpsqxV21x1FgWfKsv+XfDmj3Ws0RGiNyel1PZ4FkrjN8sFo4q6+b6XvYAx
+	 eLlX6IkisSXPhnbpJZ9xF4EW3501AHYSJplo0Kupt/ICtVWeTlAbooA/5YJJqIjbd4
+	 pN9n1yRs5vPzwFKPj6R4t+DUfE/eOdowePds3K3E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	William Liu <will@willsroot.io>,
-	Savino Dicanosa <savy@syst3mfailure.io>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Siyang Liu <Security@tencent.com>,
+	Roman Li <roman.li@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0832/1887] net/sched: Fix backlog accounting in qdisc_dequeue_internal
-Date: Wed, 28 Oct 2026 17:48:48 +0100
-Message-ID: <20261028170518.356838771@linuxfoundation.org>
+Subject: [PATCH 6.1 0833/1887] drm/amd/display: fix a Null pointer dereference vulnerability
+Date: Wed, 28 Oct 2026 17:48:49 +0100
+Message-ID: <20261028170518.381515466@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,315 +72,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: William Liu <will@willsroot.io>
+From: Siyang Liu <Security@tencent.com>
 
-[ Upstream commit 52bf272636bda69587952b35ae97690b8dc89941 ]
+[ Upstream commit 1bcf63a44381691d6192872801f830ce3250e367 ]
 
-This issue applies for the following qdiscs: hhf, fq, fq_codel, and
-fq_pie, and occurs in their change handlers when adjusting to the new
-limit. The problem is the following in the values passed to the
-subsequent qdisc_tree_reduce_backlog call given a tbf parent:
+[Why]
+A null pointer dereference vulnerability exists in the AMD display driver's
+(DC module) cleanup function dc_destruct().
+When display control context (dc->ctx) construction fails
+(due to memory allocation failure), this pointer remains NULL.
+During subsequent error handling when dc_destruct() is called,
+there's no NULL check before dereferencing the perf_trace member
+(dc->ctx->perf_trace), causing a kernel null pointer dereference crash.
 
-   When the tbf parent runs out of tokens, skbs of these qdiscs will
-   be placed in gso_skb. Their peek handlers are qdisc_peek_dequeued,
-   which accounts for both qlen and backlog. However, in the case of
-   qdisc_dequeue_internal, ONLY qlen is accounted for when pulling
-   from gso_skb. This means that these qdiscs are missing a
-   qdisc_qstats_backlog_dec when dropping packets to satisfy the
-   new limit in their change handlers.
+[How]
+Check if dc->ctx is non-NULL before dereferencing.
 
-   One can observe this issue with the following (with tc patched to
-   support a limit of 0):
-
-   export TARGET=fq
-   tc qdisc del dev lo root
-   tc qdisc add dev lo root handle 1: tbf rate 8bit burst 100b latency 1ms
-   tc qdisc replace dev lo handle 3: parent 1:1 $TARGET limit 1000
-   echo ''; echo 'add child'; tc -s -d qdisc show dev lo
-   ping -I lo -f -c2 -s32 -W0.001 127.0.0.1 2>&1 >/dev/null
-   echo ''; echo 'after ping'; tc -s -d qdisc show dev lo
-   tc qdisc change dev lo handle 3: parent 1:1 $TARGET limit 0
-   echo ''; echo 'after limit drop'; tc -s -d qdisc show dev lo
-   tc qdisc replace dev lo handle 2: parent 1:1 sfq
-   echo ''; echo 'post graft'; tc -s -d qdisc show dev lo
-
-   The second to last show command shows 0 packets but a positive
-   number (74) of backlog bytes. The problem becomes clearer in the
-   last show command, where qdisc_purge_queue triggers
-   qdisc_tree_reduce_backlog with the positive backlog and causes an
-   underflow in the tbf parent's backlog (4096 Mb instead of 0).
-
-To fix this issue, the codepath for all clients of qdisc_dequeue_internal
-has been simplified: codel, pie, hhf, fq, fq_pie, and fq_codel.
-qdisc_dequeue_internal handles the backlog adjustments for all cases that
-do not directly use the dequeue handler.
-
-The old fq_codel_change limit adjustment loop accumulated the arguments to
-the subsequent qdisc_tree_reduce_backlog call through the cstats field.
-However, this is confusing and error prone as fq_codel_dequeue could also
-potentially mutate this field (which qdisc_dequeue_internal calls in the
-non gso_skb case), so we have unified the code here with other qdiscs.
-
-Fixes: 2d3cbfd6d54a ("net_sched: Flush gso_skb list too during ->change()")
-Fixes: 4b549a2ef4be ("fq_codel: Fair Queue Codel AQM")
-Fixes: 10239edf86f1 ("net-qdisc-hhf: Heavy-Hitter Filter (HHF) qdisc")
-Signed-off-by: William Liu <will@willsroot.io>
-Reviewed-by: Savino Dicanosa <savy@syst3mfailure.io>
-Link: https://patch.msgid.link/20250812235725.45243-1-will@willsroot.io
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://lore.kernel.org/r/tencent_54FF4252EDFB6533090A491A25EEF3EDBF06@qq.com
+Co-developed-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+(Updated commit text and removed unnecessary error message)
+Signed-off-by: Siyang Liu <Security@tencent.com>
+Signed-off-by: Roman Li <roman.li@amd.com>
+Reviewed-by: Alex Hung <alex.hung@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 9dd8e2ba268c636c240a918e0a31e6feaee19404)
+Cc: stable@vger.kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/sch_generic.h | 11 ++++++++---
- net/sched/sch_codel.c     | 12 +++++++-----
- net/sched/sch_fq.c        | 12 +++++++-----
- net/sched/sch_fq_codel.c  | 12 +++++++-----
- net/sched/sch_fq_pie.c    | 12 +++++++-----
- net/sched/sch_hhf.c       | 12 +++++++-----
- net/sched/sch_pie.c       | 12 +++++++-----
- 7 files changed, 50 insertions(+), 33 deletions(-)
+ drivers/gpu/drm/amd/display/dc/core/dc.c | 16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
-diff --git a/include/net/sch_generic.h b/include/net/sch_generic.h
-index d932af97fa579..ae7b5535eeb13 100644
---- a/include/net/sch_generic.h
-+++ b/include/net/sch_generic.h
-@@ -1048,12 +1048,17 @@ static inline struct sk_buff *qdisc_dequeue_internal(struct Qdisc *sch, bool dir
- 	skb = __skb_dequeue(&sch->gso_skb);
- 	if (skb) {
- 		sch->q.qlen--;
-+		qdisc_qstats_backlog_dec(sch, skb);
- 		return skb;
- 	}
--	if (direct)
--		return __qdisc_dequeue_head(&sch->q);
--	else
-+	if (direct) {
-+		skb = __qdisc_dequeue_head(&sch->q);
-+		if (skb)
-+			qdisc_qstats_backlog_dec(sch, skb);
-+		return skb;
-+	} else {
- 		return sch->dequeue(sch);
+diff --git a/drivers/gpu/drm/amd/display/dc/core/dc.c b/drivers/gpu/drm/amd/display/dc/core/dc.c
+index 7594aaf79a101..cfcd4ed1666d0 100644
+--- a/drivers/gpu/drm/amd/display/dc/core/dc.c
++++ b/drivers/gpu/drm/amd/display/dc/core/dc.c
+@@ -831,16 +831,18 @@ static void dc_destruct(struct dc *dc)
+ 
+ 	dc_destroy_resource_pool(dc);
+ 
+-	if (dc->ctx->gpio_service)
+-		dal_gpio_service_destroy(&dc->ctx->gpio_service);
++	if (dc->ctx) {
++		if (dc->ctx->gpio_service)
++			dal_gpio_service_destroy(&dc->ctx->gpio_service);
+ 
+-	if (dc->ctx->created_bios)
+-		dal_bios_parser_destroy(&dc->ctx->dc_bios);
++		if (dc->ctx->created_bios)
++			dal_bios_parser_destroy(&dc->ctx->dc_bios);
+ 
+-	dc_perf_trace_destroy(&dc->ctx->perf_trace);
++		dc_perf_trace_destroy(&dc->ctx->perf_trace);
+ 
+-	kfree(dc->ctx);
+-	dc->ctx = NULL;
++		kfree(dc->ctx);
++		dc->ctx = NULL;
 +	}
- }
  
- static inline struct sk_buff *qdisc_dequeue_head(struct Qdisc *sch)
-diff --git a/net/sched/sch_codel.c b/net/sched/sch_codel.c
-index 1f30dc76d20c7..655eee9e629be 100644
---- a/net/sched/sch_codel.c
-+++ b/net/sched/sch_codel.c
-@@ -168,9 +168,9 @@ static const struct nla_policy codel_policy[TCA_CODEL_MAX + 1] = {
- static int codel_change(struct Qdisc *sch, struct nlattr *opt,
- 			struct netlink_ext_ack *extack)
- {
-+	unsigned int dropped_pkts = 0, dropped_bytes = 0;
- 	struct codel_sched_data *q = qdisc_priv(sch);
- 	struct nlattr *tb[TCA_CODEL_MAX + 1];
--	unsigned int qlen, dropped = 0;
- 	int err;
- 
- 	err = nla_parse_nested_deprecated(tb, TCA_CODEL_MAX, opt,
-@@ -204,15 +204,17 @@ static int codel_change(struct Qdisc *sch, struct nlattr *opt,
- 	if (tb[TCA_CODEL_ECN])
- 		q->params.ecn = !!nla_get_u32(tb[TCA_CODEL_ECN]);
- 
--	qlen = sch->q.qlen;
- 	while (sch->q.qlen > sch->limit) {
- 		struct sk_buff *skb = qdisc_dequeue_internal(sch, true);
- 
--		dropped += qdisc_pkt_len(skb);
--		qdisc_qstats_backlog_dec(sch, skb);
-+		if (!skb)
-+			break;
-+
-+		dropped_pkts++;
-+		dropped_bytes += qdisc_pkt_len(skb);
- 		rtnl_qdisc_drop(skb, sch);
- 	}
--	qdisc_tree_reduce_backlog(sch, qlen - sch->q.qlen, dropped);
-+	qdisc_tree_reduce_backlog(sch, dropped_pkts, dropped_bytes);
- 
- 	sch_tree_unlock(sch);
- 	return 0;
-diff --git a/net/sched/sch_fq.c b/net/sched/sch_fq.c
-index 91f5ef6be0f23..2223edfd7aa77 100644
---- a/net/sched/sch_fq.c
-+++ b/net/sched/sch_fq.c
-@@ -806,11 +806,11 @@ static const struct nla_policy fq_policy[TCA_FQ_MAX + 1] = {
- static int fq_change(struct Qdisc *sch, struct nlattr *opt,
- 		     struct netlink_ext_ack *extack)
- {
-+	unsigned int dropped_pkts = 0, dropped_bytes = 0;
- 	struct fq_sched_data *q = qdisc_priv(sch);
- 	struct nlattr *tb[TCA_FQ_MAX + 1];
--	int err, drop_count = 0;
--	unsigned drop_len = 0;
- 	u32 fq_log;
-+	int err;
- 
- 	err = nla_parse_nested_deprecated(tb, TCA_FQ_MAX, opt, fq_policy,
- 					  NULL);
-@@ -900,16 +900,18 @@ static int fq_change(struct Qdisc *sch, struct nlattr *opt,
- 		err = fq_resize(sch, fq_log);
- 		sch_tree_lock(sch);
- 	}
-+
- 	while (sch->q.qlen > sch->limit) {
- 		struct sk_buff *skb = qdisc_dequeue_internal(sch, false);
- 
- 		if (!skb)
- 			break;
--		drop_len += qdisc_pkt_len(skb);
-+
-+		dropped_pkts++;
-+		dropped_bytes += qdisc_pkt_len(skb);
- 		rtnl_kfree_skbs(skb, skb);
--		drop_count++;
- 	}
--	qdisc_tree_reduce_backlog(sch, drop_count, drop_len);
-+	qdisc_tree_reduce_backlog(sch, dropped_pkts, dropped_bytes);
- 
- 	sch_tree_unlock(sch);
- 	return err;
-diff --git a/net/sched/sch_fq_codel.c b/net/sched/sch_fq_codel.c
-index 08cb94bf5950b..f618ec382081b 100644
---- a/net/sched/sch_fq_codel.c
-+++ b/net/sched/sch_fq_codel.c
-@@ -402,6 +402,7 @@ static const struct nla_policy fq_codel_policy[TCA_FQ_CODEL_MAX + 1] = {
- static int fq_codel_change(struct Qdisc *sch, struct nlattr *opt,
- 			   struct netlink_ext_ack *extack)
- {
-+	unsigned int dropped_pkts = 0, dropped_bytes = 0;
- 	struct fq_codel_sched_data *q = qdisc_priv(sch);
- 	struct nlattr *tb[TCA_FQ_CODEL_MAX + 1];
- 	u32 quantum = 0;
-@@ -470,13 +471,14 @@ static int fq_codel_change(struct Qdisc *sch, struct nlattr *opt,
- 	       q->memory_usage > q->memory_limit) {
- 		struct sk_buff *skb = qdisc_dequeue_internal(sch, false);
- 
--		q->cstats.drop_len += qdisc_pkt_len(skb);
-+		if (!skb)
-+			break;
-+
-+		dropped_pkts++;
-+		dropped_bytes += qdisc_pkt_len(skb);
- 		rtnl_kfree_skbs(skb, skb);
--		q->cstats.drop_count++;
- 	}
--	qdisc_tree_reduce_backlog(sch, q->cstats.drop_count, q->cstats.drop_len);
--	q->cstats.drop_count = 0;
--	q->cstats.drop_len = 0;
-+	qdisc_tree_reduce_backlog(sch, dropped_pkts, dropped_bytes);
- 
- 	sch_tree_unlock(sch);
- 	return 0;
-diff --git a/net/sched/sch_fq_pie.c b/net/sched/sch_fq_pie.c
-index 75d6e7716ae8e..d7c144af98916 100644
---- a/net/sched/sch_fq_pie.c
-+++ b/net/sched/sch_fq_pie.c
-@@ -284,10 +284,9 @@ static struct sk_buff *fq_pie_qdisc_dequeue(struct Qdisc *sch)
- static int fq_pie_change(struct Qdisc *sch, struct nlattr *opt,
- 			 struct netlink_ext_ack *extack)
- {
-+	unsigned int dropped_pkts = 0, dropped_bytes = 0;
- 	struct fq_pie_sched_data *q = qdisc_priv(sch);
- 	struct nlattr *tb[TCA_FQ_PIE_MAX + 1];
--	unsigned int len_dropped = 0;
--	unsigned int num_dropped = 0;
- 	int err;
- 
- 	err = nla_parse_nested(tb, TCA_FQ_PIE_MAX, opt, fq_pie_policy, extack);
-@@ -366,11 +365,14 @@ static int fq_pie_change(struct Qdisc *sch, struct nlattr *opt,
- 	while (sch->q.qlen > sch->limit) {
- 		struct sk_buff *skb = qdisc_dequeue_internal(sch, false);
- 
--		len_dropped += qdisc_pkt_len(skb);
--		num_dropped += 1;
-+		if (!skb)
-+			break;
-+
-+		dropped_pkts++;
-+		dropped_bytes += qdisc_pkt_len(skb);
- 		rtnl_kfree_skbs(skb, skb);
- 	}
--	qdisc_tree_reduce_backlog(sch, num_dropped, len_dropped);
-+	qdisc_tree_reduce_backlog(sch, dropped_pkts, dropped_bytes);
- 
- 	sch_tree_unlock(sch);
- 	return 0;
-diff --git a/net/sched/sch_hhf.c b/net/sched/sch_hhf.c
-index e1e8527e45192..17027d1f4d11a 100644
---- a/net/sched/sch_hhf.c
-+++ b/net/sched/sch_hhf.c
-@@ -536,9 +536,9 @@ static const struct nla_policy hhf_policy[TCA_HHF_MAX + 1] = {
- static int hhf_change(struct Qdisc *sch, struct nlattr *opt,
- 		      struct netlink_ext_ack *extack)
- {
-+	unsigned int dropped_pkts = 0, dropped_bytes = 0;
- 	struct hhf_sched_data *q = qdisc_priv(sch);
- 	struct nlattr *tb[TCA_HHF_MAX + 1];
--	unsigned int qlen, prev_backlog;
- 	int err;
- 	u64 non_hh_quantum;
- 	u32 new_quantum = q->quantum;
-@@ -585,15 +585,17 @@ static int hhf_change(struct Qdisc *sch, struct nlattr *opt,
- 		q->hhf_evict_timeout = usecs_to_jiffies(us);
- 	}
- 
--	qlen = sch->q.qlen;
--	prev_backlog = sch->qstats.backlog;
- 	while (sch->q.qlen > sch->limit) {
- 		struct sk_buff *skb = qdisc_dequeue_internal(sch, false);
- 
-+		if (!skb)
-+			break;
-+
-+		dropped_pkts++;
-+		dropped_bytes += qdisc_pkt_len(skb);
- 		rtnl_kfree_skbs(skb, skb);
- 	}
--	qdisc_tree_reduce_backlog(sch, qlen - sch->q.qlen,
--				  prev_backlog - sch->qstats.backlog);
-+	qdisc_tree_reduce_backlog(sch, dropped_pkts, dropped_bytes);
- 
- 	sch_tree_unlock(sch);
- 	return 0;
-diff --git a/net/sched/sch_pie.c b/net/sched/sch_pie.c
-index 1ed6f43c93c4d..5dffe25457b87 100644
---- a/net/sched/sch_pie.c
-+++ b/net/sched/sch_pie.c
-@@ -138,9 +138,9 @@ static const struct nla_policy pie_policy[TCA_PIE_MAX + 1] = {
- static int pie_change(struct Qdisc *sch, struct nlattr *opt,
- 		      struct netlink_ext_ack *extack)
- {
-+	unsigned int dropped_pkts = 0, dropped_bytes = 0;
- 	struct pie_sched_data *q = qdisc_priv(sch);
- 	struct nlattr *tb[TCA_PIE_MAX + 1];
--	unsigned int qlen, dropped = 0;
- 	int err;
- 
- 	err = nla_parse_nested_deprecated(tb, TCA_PIE_MAX, opt, pie_policy,
-@@ -188,15 +188,17 @@ static int pie_change(struct Qdisc *sch, struct nlattr *opt,
- 				nla_get_u32(tb[TCA_PIE_DQ_RATE_ESTIMATOR]);
- 
- 	/* Drop excess packets if new limit is lower */
--	qlen = sch->q.qlen;
- 	while (sch->q.qlen > sch->limit) {
- 		struct sk_buff *skb = qdisc_dequeue_internal(sch, true);
- 
--		dropped += qdisc_pkt_len(skb);
--		qdisc_qstats_backlog_dec(sch, skb);
-+		if (!skb)
-+			break;
-+
-+		dropped_pkts++;
-+		dropped_bytes += qdisc_pkt_len(skb);
- 		rtnl_qdisc_drop(skb, sch);
- 	}
--	qdisc_tree_reduce_backlog(sch, qlen - sch->q.qlen, dropped);
-+	qdisc_tree_reduce_backlog(sch, dropped_pkts, dropped_bytes);
- 
- 	sch_tree_unlock(sch);
- 	return 0;
+ 	kfree(dc->bw_vbios);
+ 	dc->bw_vbios = NULL;
 -- 
 2.53.0
 
