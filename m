@@ -1,51 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793209657;
-	b=BJsQ8RWQXK2Wis4Q4f7w1pJ0ssI/4BH49wCVByMPfahQ8cG2gmMMkETPztpfYgibeM1s
-	 KByEN4XozgDJElzsBUvhPPnj4+2G+LhzN8c8F5fNoBcEJPwLb83y/9cupJtZ7hrvUaYUK
-	 O+Zq6GSrsQL36KQlQ0GTgmg1NkXnwV7IItcIUfgeSEUdPEkRwik09V9FAqU38Jts3aZY3
-	 t3CuuGdNCfd9Bag4dr0nsp3Vl3JBpUtk9g9ru6RtzqvG33+zZ1GsWsaCN2RMUXe7vOF/b
-	 +tEwFmSvCetkKuVOl2hZdu3LCgRE8eaHEMxZar4RHB0G7hngnbBogcKympPHIF10hmg==
+	t=1793209660;
+	b=dkOVLVTfz9+34Mx8Iy+2Bdm/vUQ8ie3BELiHngiP+TsHZ8Dext/HCOGvThfzPTe5wZSa
+	 +5bgXRyVv6AshoJqTx/rW0hs/y6TxcKH7RrOcMzovV0Z/i6fD4H2n2JfQ4JyUDwUiWvjJ
+	 zZllRpHAjbTkIGlbQi44kBagl+/yrQiWsLbhbCm36CoBEV+04njHmA8NJF3zwYKVsLrty
+	 riWaT0vyKKm0FSEZGBNwDo52YT3AUe9YFAlRbKj1eTambqxALXAAnQF9/bTb4oBF0bHg2
+	 YWcrQGD7MNUEHAsx2jtU940CAch4Jy2GRJbIdwsBm50s9aO8FR2fG4f+Ue8qYR5jkJg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793209657;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793209660;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=zzK6SQLXrBkQjcT6FWldb38jm3v2supWylM/S16F5Iw=;
-	b=WaY69YtPHUa1H0s7QsdzvFNRPqlgBC2IARmI4GmRczho/wYQR4zZaMhsJTLBdu55cu3s
-	 J3hxUQTePMadsiAIKM03zGPSp3N0Ltf+TeoDHZfYOdL9uG8MW9CDM6xD39MY7Aj635Cg7
-	 cMMr0vA345Q59MKFJ+d3M2kFsmjNQMKPxqNabPiS+8nSNiPojGaVOf/33gXvTrQWNZLP6
-	 L2XAQfTbh5WoiaQHD6R6c2g48NRJgcCbThx2Q4K+kp44XZTOQVBKNd2wGROxWVsN7KR3a
-	 w6j/o3BI2GbhliNl+suaaJ6KkqnCIGLFgPdRJlOoNv060bRMfIZtB2zkuFeoTEwepgQ==
+	bh=NfzExC0j3mzSZLHjFTXsle5X19B7lIlkRfUZ+/GUnAU=;
+	b=MPJnTjkQbqerWeqtrhpde56ZAAWd/JUVeoIM2IGDCh+HizRezob73zouogQpd3N8M9Lx
+	 5ETubkb6Dj4RjE154z5WRNyK8kwtcRHl3gV69IgIveuS6MS+VOKNVPyE8JZ0y6ingElfG
+	 TBOyt8i353wYqDmAcZzByOQsLRMBQLDlXMVv7YX1c1uZTehEuddoG+UmkJegbOYZE2frp
+	 bj9Z8CeXohvbMIU6ILbDdsLMxsvdzRHyXdcD/iBNCoVfy1ohELO3vY+isiqoM+35DxQBf
+	 RCVKYhB1l2QobEnQO4/cvcMFFOZnEPsQvi3o86j2LSRPn3cQBOCyqxq/7LimaYi10zA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="PLOTz3/c";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ISZV2lvc;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 532C3606A31C;
-	Wed, 28 Oct 2026 17:47:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC12F606A31A;
+	Wed, 28 Oct 2026 17:47:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PLOTz3/c
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 775211F01825;
-	Wed, 28 Oct 2026 17:47:36 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ISZV2lvc
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D8391F01825;
+	Wed, 28 Oct 2026 17:47:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793209657;
-	bh=zzK6SQLXrBkQjcT6FWldb38jm3v2supWylM/S16F5Iw=;
+	s=korg; t=1793209659;
+	bh=NfzExC0j3mzSZLHjFTXsle5X19B7lIlkRfUZ+/GUnAU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PLOTz3/cLGQ9JKJYXaAIjHqA1Qbs7Umhn7uRfDtUW4O0Qsnf2xbeqXb7JqqukYvAO
-	 cxLxrzTQ3+FX/jQWvW62NjLf07i6QFYYczl5cIcrP7m/ePPqhifp4qHWVubqPrx6jQ
-	 cB2x7Da9AphY+5xszwmqEHh+3JEmBdmeChIzEfXk=
+	b=ISZV2lvcOhsI85jb5+AFi5DOB590gdGa+RjN0UljCA6s2OiwJDCFAugGJpbik3t5C
+	 344KglVlqLM0zs87wU+CwHVxWeLkL2CeD00nRm6BfH8d/u/WXp9xkew6kZtO9ufH2w
+	 xtr+1lzamcHc4z2kHwc8gbIQJmkhKoggkR82BvoQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bernard Pidoux <bernard.f6bvp@gmail.com>,
+	stable@vger.kernek.org,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Hannes Reinecke <hare@kernel.org>,
+	Jens Axboe <axboe@kernel.dk>,
+	Stanley Jhu <stanleyjhu@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 030/109] ax25: dont free an incoming SABM skb left on the listeners queue
-Date: Wed, 28 Oct 2026 18:00:14 +0100
-Message-ID: <20261028165943.071796272@linuxfoundation.org>
+Subject: [PATCH 6.18 031/109] block: avoid potential deadlock on zone revalidation failure
+Date: Wed, 28 Oct 2026 18:00:15 +0100
+Message-ID: <20261028165943.095378496@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165942.357251485@linuxfoundation.org>
 References: <20261028165942.357251485@linuxfoundation.org>
@@ -67,80 +72,226 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bernard Pidoux <bernard.f6bvp@gmail.com>
+From: Damien Le Moal <dlemoal@kernel.org>
 
-When a SABM comes in for a listening socket, ax25_rcv() creates the new
-socket, puts the skb on the listener's receive queue and only then
-allocates the digipeater path. If that allocation fails, the skb is
-freed with kfree_skb() while it is still linked on the queue, and the
-accept backlog count taken by sk_acceptq_added() is never given back.
-The next accept() or the close of the listener then walks a queue that
-contains a freed skb.
+commit 3dd63dba8f9cb6990a40af7ed66ee0159f475819 upstream.
 
-Allocate the path before the skb is queued, so that the error path only
-has to free an skb nobody else knows about and to destroy the new
-socket. The later allocation remains for a connection that has no
-listening socket.
+If revalidating the zones of a zoned block device with
+blk_revalidate_disk_zones() fails during a SCSI disk rescan, the following
+lockdep splat is thrown:
 
-Only reachable when the atomic allocation fails for a call that comes
-through digipeaters. Regression tested in QEMU (6.12.94 with lockdep
-and KASAN): 14 incoming connections to a listening socket, each
-accepted, served and closed, before and after; no report.
+[  347.251859] [  T11230] sda: failed to revalidate zones
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Bernard Pidoux <bernard.f6bvp@gmail.com>
-(cherry picked from commit 2d67e8e9f3d627327114fb946c3a28ef72becb2d)
+[  347.261380] [  T11230] ======================================================
+[  347.263882] [  T11230] WARNING: possible circular locking dependency detected
+[  347.266353] [  T11230] 7.1.0+ #1194 Not tainted
+[  347.268052] [  T11230] ------------------------------------------------------
+[  347.270537] [  T11230] tcsh/11230 is trying to acquire lock:
+[  347.272555] [  T11230] ffffffff8f91d400 (wq_pool_mutex){+.+.}-{4:4}, at: destroy_workqueue+0x15d/0x8d0
+[  347.275914] [  T11230]
+                          but task is already holding lock:
+[  347.278646] [  T11230] ffff88812fa1bcc0 (&q->q_usage_counter(io)#5){++++}-{0:0}, at: blk_mq_freeze_queue_nomemsave+0x16/0x30
+[  347.282503] [  T11230]
+                          which lock already depends on the new lock.
+
+[  347.286239] [  T11230]
+                          the existing dependency chain (in reverse order) is:
+[  347.289408] [  T11230]
+                          -> #2 (&q->q_usage_counter(io)#5){++++}-{0:0}:
+[  347.292437] [  T11230]        blk_alloc_queue+0x5ca/0x750
+[  347.294379] [  T11230]        blk_mq_alloc_queue+0x14c/0x240
+[  347.296375] [  T11230]        scsi_alloc_sdev+0x871/0xd10 [scsi_mod]
+[  347.298619] [  T11230]        scsi_probe_and_add_lun+0x600/0xc50 [scsi_mod]
+[  347.301056] [  T11230]        __scsi_scan_target+0x187/0x3b0 [scsi_mod]
+[  347.303385] [  T11230]        scsi_scan_channel+0xf2/0x180 [scsi_mod]
+[  347.305651] [  T11230]        scsi_scan_host_selected+0x20b/0x2d0 [scsi_mod]
+[  347.308119] [  T11230]        do_scan_async+0x42/0x420 [scsi_mod]
+[  347.310276] [  T11230]        async_run_entry_fn+0x94/0x5a0
+[  347.312284] [  T11230]        process_one_work+0x8da/0x1690
+[  347.314287] [  T11230]        worker_thread+0x5fe/0x1010
+[  347.316216] [  T11230]        kthread+0x358/0x450
+[  347.317675] [  T11230]        ret_from_fork+0x5b9/0x8e0
+[  347.319181] [  T11230]        ret_from_fork_asm+0x11/0x20
+[  347.320778] [  T11230]
+                          -> #1 (fs_reclaim){+.+.}-{0:0}:
+[  347.322890] [  T11230]        fs_reclaim_acquire+0xd5/0x120
+[  347.324464] [  T11230]        __kmalloc_cache_node_noprof+0x39/0x620
+[  347.326223] [  T11230]        init_rescuer+0x19b/0x560
+[  347.327697] [  T11230]        workqueue_init+0x33b/0x6a0
+[  347.329224] [  T11230]        kernel_init_freeable+0x2eb/0x600
+[  347.330881] [  T11230]        kernel_init+0x1c/0x140
+[  347.332334] [  T11230]        ret_from_fork+0x5b9/0x8e0
+[  347.333847] [  T11230]        ret_from_fork_asm+0x11/0x20
+[  347.335360] [  T11230]
+                          -> #0 (wq_pool_mutex){+.+.}-{4:4}:
+[  347.337510] [  T11230]        __lock_acquire+0xdea/0x2260
+[  347.339030] [  T11230]        lock_acquire+0x187/0x2f0
+[  347.340495] [  T11230]        __mutex_lock+0x1ab/0x2600
+[  347.341464] [  T11230]        destroy_workqueue+0x15d/0x8d0
+[  347.342485] [  T11230]        disk_free_zone_resources+0xd5/0x560
+[  347.343577] [  T11230]        blk_revalidate_disk_zones+0x620/0xac7
+[  347.344723] [  T11230]        sd_zbc_revalidate_zones+0x1dd/0x790 [sd_mod]
+[  347.345938] [  T11230]        sd_revalidate_disk+0xc66/0x8e60 [sd_mod]
+[  347.347112] [  T11230]        scsi_rescan_device+0x1f9/0x310 [scsi_mod]
+[  347.348318] [  T11230]        store_rescan_field+0x19/0x20 [scsi_mod]
+[  347.349507] [  T11230]        kernfs_fop_write_iter+0x3d2/0x5e0
+[  347.350565] [  T11230]        vfs_write+0x469/0x1000
+[  347.351484] [  T11230]        ksys_write+0x116/0x250
+[  347.352403] [  T11230]        do_syscall_64+0xf0/0x6e0
+[  347.353361] [  T11230]        entry_SYSCALL_64_after_hwframe+0x4b/0x53
+[  347.354533] [  T11230]
+                          other info that might help us debug this:
+
+[  347.356432] [  T11230] Chain exists of:
+                            wq_pool_mutex --> fs_reclaim --> &q->q_usage_counter(io)#5
+
+[  347.358919] [  T11230]  Possible unsafe locking scenario:
+
+[  347.360307] [  T11230]        CPU0                    CPU1
+[  347.361327] [  T11230]        ----                    ----
+[  347.362340] [  T11230]   lock(&q->q_usage_counter(io)#5);
+[  347.363344] [  T11230]                                lock(fs_reclaim);
+[  347.364526] [  T11230]                                lock(&q->q_usage_counter(io)#5);
+[  347.365968] [  T11230]   lock(wq_pool_mutex);
+[  347.366811] [  T11230]
+                           *** DEADLOCK ***
+
+This happens because SCSI disk rescan is executed from a work context
+and a failure of blk_revalidate_disk_zones() causes a call to
+disk_free_zone_resources() which will free the disk zone write plug
+workqueue.
+
+Avoid this by delaying the destruction of the disk zone write plug
+workqueue to disk_release(). Do this by introducing the function
+disk_release_zone_resources() and using this new function from
+disk_release(). This new function destroys the zone write plugs workqueue
+and calls disk_free_zone_resources(), thus allowing to remove the call to
+destroy_workqueue() from disk_free_zone_resources().
+disk_alloc_zone_resources() is modified to not create the disk zone
+write plug work queue if it already exists.
+
+Fixes: a8f59e5a5dea ("block: use a per disk workqueue for zone write plugging")
+Cc: stable@vger.kernek.org
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Hannes Reinecke <hare@kernel.org>
+Link: https://patch.msgid.link/20260701082155.1369996-1-dlemoal@kernel.org
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+[ stanleyjhu: 6.18.y has no zone write plug kthread worker and does not
+  use WQ_PERCPU, so only the workqueue part applies:
+  disk_alloc_zone_resources() reuses an existing workqueue,
+  disk_free_zone_resources() drains it instead of destroying it, and
+  the new disk_release_zone_resources() destroys it from
+  disk_release(). ]
+Signed-off-by: Stanley Jhu <stanleyjhu@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ax25/ax25_in.c | 23 ++++++++++++++++++++---
- 1 file changed, 20 insertions(+), 3 deletions(-)
+ block/blk-zoned.c | 37 +++++++++++++++++++++++++++----------
+ block/blk.h       |  4 ++--
+ block/genhd.c     |  2 +-
+ 3 files changed, 30 insertions(+), 13 deletions(-)
 
-diff --git a/net/ax25/ax25_in.c b/net/ax25/ax25_in.c
-index c81bc8c4563b5..1bcb5e321467d 100644
---- a/net/ax25/ax25_in.c
-+++ b/net/ax25/ax25_in.c
-@@ -383,6 +383,24 @@ static int ax25_rcv(struct sk_buff *skb, struct net_device *dev,
- 		}
+diff --git a/block/blk-zoned.c b/block/blk-zoned.c
+index 5c16cf96b97c1..a7d3d2e002da6 100644
+--- a/block/blk-zoned.c
++++ b/block/blk-zoned.c
+@@ -1413,11 +1413,20 @@ static int disk_alloc_zone_resources(struct gendisk *disk,
+ 	if (!disk->zone_wplugs_pool)
+ 		goto free_hash;
  
- 		ax25 = sk_to_ax25(make);
-+
-+		/*
-+		 * Get the digipeater path before the skb goes on the
-+		 * listener's queue: once queued it belongs to that queue
-+		 * and cannot simply be freed if the allocation fails.
-+		 */
-+		if (dp.ndigi && !ax25->digipeat) {
-+			ax25->digipeat = kmalloc(sizeof(ax25_digi), GFP_ATOMIC);
-+			if (!ax25->digipeat) {
-+				kfree_skb(skb);
-+				ax25_destroy_socket(ax25);
-+				bh_unlock_sock(sk);
-+				sock_put(sk);
-+
-+				return 0;
-+			}
-+		}
-+
- 		skb_set_owner_r(skb, make);
- 		skb_queue_head(&sk->sk_receive_queue, skb);
+-	disk->zone_wplugs_wq =
+-		alloc_workqueue("%s_zwplugs", WQ_MEM_RECLAIM | WQ_HIGHPRI,
+-				pool_size, disk->disk_name);
+-	if (!disk->zone_wplugs_wq)
+-		goto destroy_pool;
++	/*
++	 * We may already have a zone write plug workqueue as this function may
++	 * be called after disk_free_zone_resources(), which does not destroy
++	 * the workqueue (the zone write plugs workqueue is destroyed at
++	 * disk_release() time).
++	 */
++	if (!disk->zone_wplugs_wq) {
++		disk->zone_wplugs_wq =
++			alloc_workqueue("%s_zwplugs",
++					WQ_MEM_RECLAIM | WQ_HIGHPRI,
++					pool_size, disk->disk_name);
++		if (!disk->zone_wplugs_wq)
++			goto destroy_pool;
++	}
  
-@@ -406,14 +424,13 @@ static int ax25_rcv(struct sk_buff *skb, struct net_device *dev,
- 	ax25->dest_addr   = src;
+ 	return 0;
  
+@@ -1474,15 +1483,13 @@ static unsigned int disk_set_conv_zones_bitmap(struct gendisk *disk,
+ 	return nr_conv_zones;
+ }
+ 
+-void disk_free_zone_resources(struct gendisk *disk)
++static void disk_free_zone_resources(struct gendisk *disk)
+ {
+ 	if (!disk->zone_wplugs_pool)
+ 		return;
+ 
+-	if (disk->zone_wplugs_wq) {
+-		destroy_workqueue(disk->zone_wplugs_wq);
+-		disk->zone_wplugs_wq = NULL;
+-	}
++	if (disk->zone_wplugs_wq)
++		drain_workqueue(disk->zone_wplugs_wq);
+ 
+ 	disk_destroy_zone_wplugs_hash_table(disk);
+ 
+@@ -1501,6 +1508,16 @@ void disk_free_zone_resources(struct gendisk *disk)
+ 	disk->nr_zones = 0;
+ }
+ 
++void disk_release_zone_resources(struct gendisk *disk)
++{
++	if (disk->zone_wplugs_wq) {
++		destroy_workqueue(disk->zone_wplugs_wq);
++		disk->zone_wplugs_wq = NULL;
++	}
++
++	disk_free_zone_resources(disk);
++}
++
+ static inline bool disk_need_zone_resources(struct gendisk *disk)
+ {
  	/*
--	 *	Sort out any digipeated paths.
-+	 *	Sort out any digipeated paths. A socket made from a listener
-+	 *	already has its path allocated, see above.
- 	 */
- 	if (dp.ndigi && !ax25->digipeat &&
- 	    (ax25->digipeat = kmalloc(sizeof(ax25_digi), GFP_ATOMIC)) == NULL) {
- 		kfree_skb(skb);
- 		ax25_destroy_socket(ax25);
--		if (sk)
--			sock_put(sk);
- 		return 0;
- 	}
+diff --git a/block/blk.h b/block/blk.h
+index 2810b4d086e6a..179662b868998 100644
+--- a/block/blk.h
++++ b/block/blk.h
+@@ -499,7 +499,7 @@ static inline void ioc_clear_queue(struct request_queue *q)
  
+ #ifdef CONFIG_BLK_DEV_ZONED
+ void disk_init_zone_resources(struct gendisk *disk);
+-void disk_free_zone_resources(struct gendisk *disk);
++void disk_release_zone_resources(struct gendisk *disk);
+ static inline bool bio_zone_write_plugging(struct bio *bio)
+ {
+ 	return bio_flagged(bio, BIO_ZONE_WRITE_PLUGGING);
+@@ -552,7 +552,7 @@ int blkdev_zone_mgmt_ioctl(struct block_device *bdev, blk_mode_t mode,
+ static inline void disk_init_zone_resources(struct gendisk *disk)
+ {
+ }
+-static inline void disk_free_zone_resources(struct gendisk *disk)
++static inline void disk_release_zone_resources(struct gendisk *disk)
+ {
+ }
+ static inline bool bio_zone_write_plugging(struct bio *bio)
+diff --git a/block/genhd.c b/block/genhd.c
+index bbcfbd1a363c5..6ba0e22ce9dff 100644
+--- a/block/genhd.c
++++ b/block/genhd.c
+@@ -1308,7 +1308,7 @@ static void disk_release(struct device *dev)
+ 
+ 	disk_release_events(disk);
+ 	kfree(disk->random);
+-	disk_free_zone_resources(disk);
++	disk_release_zone_resources(disk);
+ 	xa_destroy(&disk->part_tbl);
+ 
+ 	kobject_put(&disk->queue_kobj);
 -- 
 2.53.0
 
