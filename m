@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793207357;
-	b=ZkNP7bTXYLkgrdbHEmQBf5WGtpxKA9Gw7vA4vcqk/xgTsKD0z6M0gi509ZNqfVOP6m4g
-	 RyiazSzvfoRK4dh2RC6478izfRfwaWVL9VmKcc/AaqPCOV9A+h4MPamLWwXhHfM292Xh0
-	 Yi7M6iDRmLSbWmS2fb0MMkBPuvQ07bXb2h7l6imTJ44RlJdkre3e80VOW+ZGK290wUyKo
-	 AmcBa3N/VL+fK4XmvE+NCHBdxZ7YYEVLVRJVXpTDMgCZTRBpXKeIRdt6QKHZ6OToJtCzg
-	 QfasRv+M1QeJxecwGbu89IktwDngANYpysU0h2DCqQyqGqLq04M/gZ6A3rDWhxWx5xg==
+	t=1793207360;
+	b=TQVslN/MreAZ1bayzUgtolDjMUujyCpso7QUNNDfFSzVaUeQlxVuHb04yT8BApyQ/DU/
+	 uTs5tIYtaVASeLrxi8eq9NZMOZhyx4bUArX7Qfn1NwX6zvyip4fs4Lyt2WQ/uIWbKM/mi
+	 ucEgK/QasQn40pPpHwDHvdL2NTdLqCFQLTAweD+afvQwJVrw1JBDUDbywVA2iKtG4iYi3
+	 AKwYCpMSC89DEPyHXu2WnUVDqE4q1hFz4uXBFrUsAZLJ5mvbOglUOmADptbfW5Qobs1+R
+	 GC6/R7hOEdOPRQOus4xeq0BRjvGO43QfttosMqZBCRtR9gz+Dha7rjGNLXC3ulrGUQw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793207357;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793207360;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=RO1SeMmZPm/uK9jwyO8wWGKguci0W1WLDslbyJ/oxIY=;
-	b=acyGLFQoeqyLlnastAx4OrvVymSzdG7KCWI9oKGyTnak4dT30okOSpgSs7OrhGyX6zYz
-	 gH4PCTWbZbBgdSqZDyX621PsdpLoOHPi7lOk4xqbIax8YkOKvJOmj+6bbbKM4B3XTgw1M
-	 nf1MQNstn+9jhg9tducZ6P4BBoALuA97srpyqg/IcWhe4J8xR0eY7t/X9CbLHgsubxI4W
-	 +YThmsejj4R0IF4pDk2dzEF4TMmKZ7OwR/fcwekfiy3Sa4LGW1lcBdfGnXeZmt9Ci3+KZ
-	 qEII+WZ9grUicwKofTKa5YN7ao8KZyoGyTW+le4QuoBVr81JM5KjkQ7/4myBeA6tCqg==
+	bh=JFIXw6LlQNwuxAMh6POlhMhOS3MxLsowifG93f+/azk=;
+	b=Z6mfjYld6KXkMklmjsCVCp9R7WeBTEFT6LDIHUvZbFraOYejSaGJLv8YsXQZRI0uSWZA
+	 PQMr2gqKfh2lZfNw44Urwd0SWDyTMJA5b8aF6wEAFonkrp7LUATGbtCZ0ZxlHJuFHPtwk
+	 417+kzxxZ8ve62k1zj7vLO/Eth0iPOlMW09YPjuKDUQCfd+MUNH3V22Q8FgLaDVKs3ogG
+	 w23Mz1tB7z6vkSnKZ/0xySTgSzgUxnylH4CQeVtfFvihbbBOZPKIppyB8HHXIRq9Tv9WZ
+	 3lCLqFPOYqeQdnPPm+lN6UBbQtGjmYcEMRKxLP6o3c+StOXRnmSUVBx25lpoJfx0VUg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SMoWGezA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gHa3Cchw;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91C9A606A31A;
-	Wed, 28 Oct 2026 17:09:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BAD5606A31A;
+	Wed, 28 Oct 2026 17:09:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SMoWGezA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0A141F01825;
-	Wed, 28 Oct 2026 17:09:16 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gHa3Cchw
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBD841F01825;
+	Wed, 28 Oct 2026 17:09:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793207357;
-	bh=RO1SeMmZPm/uK9jwyO8wWGKguci0W1WLDslbyJ/oxIY=;
+	s=korg; t=1793207360;
+	bh=JFIXw6LlQNwuxAMh6POlhMhOS3MxLsowifG93f+/azk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SMoWGezAeynw3/qT/vqAoSzf0DFTVV73KyQ5imQhJFW6eYt4bAX+K3v9MoJ0wbT4G
-	 o3IxD8Z+KMZ+DDyN1gLTJcPNX//NsmIhz0UmUMaH9rFRCV66xlxYAyGvWCXkzmf4rD
-	 Wi/v8iShSS17q8GVoxwySi+Sb7IJRb+RYxFkaU/Y=
+	b=gHa3CchwLBGzn1TrGliOLXgwgFZUUj0hQvYOolQ7ywLnP+GcHX4wn0IWXrW0lHcVp
+	 7fRC7gsjAW8WZ2JJ9HaJDJMpLFegKJcoZle2Z++yC6V7YrNfeqxOKJ9cSlyyW6Apu2
+	 3bai4xHCRdwxbALWVPlJQgFw0HUebiXSm6HIb9ls=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Weiming Shi <bestswngs@gmail.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 7.2 78/88] asymmetric_keys: reject trust keys without IDs
-Date: Wed, 28 Oct 2026 18:00:26 +0100
-Message-ID: <20261028165943.950834603@linuxfoundation.org>
+	Gavin Inglis <giinglis@amazon.com>,
+	Aaron Ahmed <aarnahmd@amazon.com>,
+	Steven Rostedt <rostedt@goodmis.org>
+Subject: [PATCH 7.2 79/88] ftrace: Initialize modname and offset in print_rec()
+Date: Wed, 28 Oct 2026 18:00:27 +0100
+Message-ID: <20261028165943.974245710@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165942.107695352@linuxfoundation.org>
 References: <20261028165942.107695352@linuxfoundation.org>
@@ -68,64 +68,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Aaron Ahmed <aarnahmd@amazon.com>
 
-commit 9695df3b1db4ac4534274d38ee16e3b9b0bf910e upstream.
+commit e1f339ff3b83857b93baf8b88186275a413d445e upstream.
 
-The PKCS#8 parser deliberately leaves the asym_key_ids payload slot
-empty. key_or_keyring_common() unconditionally dereferences that slot
-when a PKCS#8 key is supplied to a key_or_keyring restriction. Both the
-plain and :chain forms reach this branch, allowing an unprivileged caller
-to trigger a NULL pointer dereference through KEYCTL_RESTRICT_KEYRING
-followed by add_key().
+print_rec() leaves 'modname' and 'offset' uninitialized and
+kallsyms_lookup() only sets them on success. When the lookup fails like
+when a module is being loaded or unloaded, 'modname' holds a garbage
+value, passes the 'if (modname)' check, and is dereferenced by
+seq_printf().
 
- Oops: general protection fault, probably for non-canonical address 0xdffffc0000000000
- KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
- RIP: 0010:key_or_keyring_common (crypto/asymmetric_keys/restrict.c:205 crypto/asymmetric_keys/restrict.c:279)
- Call Trace:
-  <TASK>
-  __key_create_or_update (security/keys/key.c:884)
-  key_create_or_update (security/keys/key.c:1021)
-  __do_sys_add_key (security/keys/keyctl.c:134)
-  do_syscall_64 (arch/x86/entry/common.c:52 arch/x86/entry/common.c:83)
-  entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:130)
-  </TASK>
- Kernel panic - not syncing: Fatal exception
+  Oops: general protection fault
+  RIP: 0010:string+0x48/0xe0
+  Call Trace:
+   vsnprintf+0x1f5/0x650
+   seq_printf+0x8e/0xb0
+   print_rec+0x6c/0xc0
+   t_show+0x4c/0x440
+   seq_read_iter+0x119/0x480
 
-Reject an asymmetric restriction key without key IDs. A PKCS#8 private
-key cannot identify the signer of a candidate certificate and is not a
-valid trust anchor.
+This can be triggered by reading available_filter_functions while a
+module is being loaded or unloaded.
 
-Fixes: 3c58b2362ba8 ("KEYS: Implement PKCS#8 RSA Private Key parser [ver #2]")
+Initialize both variables so a failed lookup skips the module name.
+
 Cc: stable@vger.kernel.org
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Link: https://lore.kernel.org/r/20260429181629.110802-2-bestswngs@gmail.com
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: b39181f7c690 ("ftrace: Add FTRACE_MCOUNT_MAX_OFFSET to avoid adding weak function")
+Link: https://patch.msgid.link/20261016230403.4916-1-aarnahmd@amazon.com
+Tested-by: Gavin Inglis <giinglis@amazon.com>
+Signed-off-by: Aaron Ahmed <aarnahmd@amazon.com>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- crypto/asymmetric_keys/restrict.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ kernel/trace/ftrace.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/crypto/asymmetric_keys/restrict.c
-+++ b/crypto/asymmetric_keys/restrict.c
-@@ -243,10 +243,14 @@ static int key_or_keyring_common(struct
- 			if (IS_ERR(key))
- 				key = NULL;
- 		} else if (trusted->type == &key_type_asymmetric) {
-+			const struct asymmetric_key_ids *kids;
- 			const struct asymmetric_key_id **signer_ids;
+--- a/kernel/trace/ftrace.c
++++ b/kernel/trace/ftrace.c
+@@ -4426,9 +4426,9 @@ subsys_initcall(ftrace_check_for_weak_fu
  
--			signer_ids = (const struct asymmetric_key_id **)
--				asymmetric_key_ids(trusted)->id;
-+			kids = asymmetric_key_ids(trusted);
-+			if (!kids)
-+				return -ENOKEY;
-+
-+			signer_ids = (const struct asymmetric_key_id **)kids->id;
+ static int print_rec(struct seq_file *m, unsigned long ip)
+ {
+-	unsigned long offset;
++	unsigned long offset = 0;
+ 	char str[KSYM_SYMBOL_LEN];
+-	char *modname;
++	char *modname = NULL;
+ 	const char *ret;
  
- 			/*
- 			 * The auth_ids come from the candidate key (the
+ 	ret = kallsyms_lookup(ip, NULL, &offset, &modname, str);
 
 
