@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214496;
-	b=kIcHMvsUgIsE71D+x+Y0LEsocOoTGWFfj4oI7+nD7xuIL/4PU7LIkCs1nn+zj07wLS+M
-	 ftKCqgT0n8ILxCIVqxdcFI1IDH3XSFm8eklB3Go7xE0BzvHjP0oZmVLs9OjXGsk2wHXyM
-	 +UF3+zaObg23ZGdlJxEo8myD4dMQ3SrV72PXIv1TYWFIMidYmkw3hbEkusmUIl0lh1ZGy
-	 rHMQ0AXTHEL77+9Ddr1hOIkvXn4bnoUm/E9C0niea3wlk79jnh5wH2Ne5d/A1jWBtrkr7
-	 bHJMFNMyQdKvCzXeRymFygs89gS6ZeAizGeCt7yApKZBRLUjX5EJmrPBS/I+7o/tgPQ==
+	t=1793214499;
+	b=eJ7h4Hz1zYz1dIrJqq5owLvrMrzgREiGiF9+BBA8nG3hjBJPy/l/gtT//kE9zMuhVMMa
+	 WygULwDMS+2/2jP+ybTNav00tswwiVogwuKup0NpXI3GTo4+eXVkzjO2jYiVQdi74+LJQ
+	 4hU5DhNLl22KVz7GT116dwCa8FRtCu4Lb/w6NJCwKw0WkhW6+meeh51yyWD73X8avMffK
+	 Wu2/EUkRPJsF3kRrJU5h2Izx/rCRFFskHX9S9RDTTv3W97Vv7eVU+fchaDuj4ftiitiKz
+	 zvBL8bfAWjINMuK5m+ny4+QRZrVmfA8SlQ5lZ2mnivCyZynVlb7dm5G7N2LKezkQX9g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214496;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214499;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=kpw+6fm0DF83l95XuUoDt/lCfzXD7WYlAPyhCqy16IY=;
-	b=ZE2Ptbk6Kf3jaWmyzIlbCUmSiYy/27Sif0puhW/nXRQvarGQO7a5th8ZgRRAH7lgi1mq
-	 1BCetBmEvpBKvWH52wCufkRauSO7SXuK+rlOdKe4uZ3N73obtex+be5RI7XYT91frK/T5
-	 GxYO8h45ZDJoxRxAqWAgddl85QWOagHFa6kLKh1BPESPhvW+9MP4FBi3lQX9SV1Lxq8E2
-	 Oh7V7n8kynVGBDrLcl1vFWOkg8Aw3OZLRUxyxQiG0sNwUZuR7sap6tbca7BSCHAFJPi+d
-	 30qcQe+MF7zTWo6fXBpOVzRVogDnGYjWpQ9jrmP2DEKNaet5mC2y7hrVd5s/ohish6g==
+	bh=Bj+cplsQfY0/Pw4LUxkkrYb2FIXMFiTt5AbjKtPZcvQ=;
+	b=0c3eUHC08fpJTQ5WXHSJm9BuyIQq1FbzzXAh0hdTxfPM/9hV8MBNSjpMRsVteX0S+wcH
+	 WjeIXly9CcaOWoXDdnX+Vl9J0trWLouqbGQhGdgNdnNqwH7gazm9cSIoZp/o66bOuYnvu
+	 eSnaxr+6OPcTD95nNc1Pw9J5Giih4bdBj6E4ApJUYENRfwWOYGpNizvuF8bft11XWo8zV
+	 iI5YObKh3v1pyeaWCdI0F+sfMrouhmckS+884UrIMIeLmpWuP9c54Wf5eeG1Cg3mizeFX
+	 TCbtjNK066EeSCxN6ml5Bg5HPOC4MEPlMpZM6kNtZrPBtu8yujXHNjChWyRYvc2W0Ww==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AguuxJ8I;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tM4qsFnl;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0EC5606B7FA;
-	Wed, 28 Oct 2026 19:08:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B137B606A338;
+	Wed, 28 Oct 2026 19:08:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AguuxJ8I
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F2211F031E0;
-	Wed, 28 Oct 2026 19:08:15 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tM4qsFnl
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FAD61F031E0;
+	Wed, 28 Oct 2026 19:08:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214495;
-	bh=kpw+6fm0DF83l95XuUoDt/lCfzXD7WYlAPyhCqy16IY=;
+	s=korg; t=1793214498;
+	bh=Bj+cplsQfY0/Pw4LUxkkrYb2FIXMFiTt5AbjKtPZcvQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AguuxJ8IzP8xNg4K7csHRE4Hr5bG63eKK8wllq4zl0/Y3mLRDEk2kXxUAr7zxA8v7
-	 YC6ZrPMPZX5bJlwlbe58gq0kBcRerfrI+BcWTJOGjE0NX6XsW+2HTBbNAev+6aVMr/
-	 s5xbjl12E0N1ba8anU5VoxfZ7hy/HoWmkYX8jops=
+	b=tM4qsFnl+qoWSAPUpgFUEdwBvy0Im+2WKtasIrNQT5kNMKU4ckMEWAoqA5rYSxhlc
+	 5Ur+W5TU+dygl5zv8ci1jHcKnhx3fU5R4VchtkuOP/SYOxayWdH63QitsWc51NKR+N
+	 4xnnheHeR268xsVz8/yKPtIsMLF7ii1dfO/qTuG0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+72afd4c236e6bc3f4bac@syzkaller.appspotmail.com,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
-	Edward Adam Davis <eadavis@qq.com>,
-	Steve French <stfrench@microsoft.com>,
+	Lijo Lazar <lijo.lazar@amd.com>,
+	Hawking Zhang <Hawking.Zhang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0879/1887] cifs: client: fix memory leak in smb3_fs_context_parse_param
-Date: Wed, 28 Oct 2026 17:49:35 +0100
-Message-ID: <20261028170519.420525981@linuxfoundation.org>
+Subject: [PATCH 6.1 0880/1887] drm/amdgpu: Show vram vendor only if available
+Date: Wed, 28 Oct 2026 17:49:36 +0100
+Message-ID: <20261028170519.442975195@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -70,60 +69,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Edward Adam Davis <eadavis@qq.com>
+From: Lijo Lazar <lijo.lazar@amd.com>
 
-[ Upstream commit e8c73eb7db0a498cd4b22d2819e6ab1a6f506bd6 ]
+[ Upstream commit 89a7c0bd74918f723c94c10452265e25063cba9b ]
 
-The user calls fsconfig twice, but when the program exits, free() only
-frees ctx->source for the second fsconfig, not the first.
-Regarding fc->source, there is no code in the fs context related to its
-memory reclamation.
+Ony if vram vendor info is available, show in sysfs.
 
-To fix this memory leak, release the source memory corresponding to ctx
-or fc before each parsing.
-
-syzbot reported:
-BUG: memory leak
-unreferenced object 0xffff888128afa360 (size 96):
-  backtrace (crc 79c9c7ba):
-    kstrdup+0x3c/0x80 mm/util.c:84
-    smb3_fs_context_parse_param+0x229b/0x36c0 fs/smb/client/fs_context.c:1444
-
-BUG: memory leak
-unreferenced object 0xffff888112c7d900 (size 96):
-  backtrace (crc 79c9c7ba):
-    smb3_fs_context_fullpath+0x70/0x1b0 fs/smb/client/fs_context.c:629
-    smb3_fs_context_parse_param+0x2266/0x36c0 fs/smb/client/fs_context.c:1438
-
-Reported-by: syzbot+72afd4c236e6bc3f4bac@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=72afd4c236e6bc3f4bac
-Cc: stable@vger.kernel.org
-Reviewed-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
-Signed-off-by: Edward Adam Davis <eadavis@qq.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Lijo Lazar <lijo.lazar@amd.com>
+Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org # 6.7.x
+Stable-dep-of: 33cc891b56b9 ("drm/amdgpu: hide VRAM sysfs attributes on GPUs without VRAM")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/fs_context.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_vram_mgr.c | 17 ++++++++++++++++-
+ 1 file changed, 16 insertions(+), 1 deletion(-)
 
-diff --git a/fs/smb/client/fs_context.c b/fs/smb/client/fs_context.c
-index 35f2c94aafd14..abd4f8587fd0f 100644
---- a/fs/smb/client/fs_context.c
-+++ b/fs/smb/client/fs_context.c
-@@ -1167,11 +1167,13 @@ static int smb3_fs_context_parse_param(struct fs_context *fc,
- 			cifs_errorf(fc, "Unknown error parsing devname\n");
- 			goto cifs_parse_mount_err;
- 		}
-+		kfree(ctx->source);
- 		ctx->source = kstrdup(param->string, GFP_KERNEL);
- 		if (ctx->source == NULL) {
- 			cifs_errorf(fc, "OOM when copying UNC string\n");
- 			goto cifs_parse_mount_err;
- 		}
-+		kfree(fc->source);
- 		fc->source = kstrdup(param->string, GFP_KERNEL);
- 		if (fc->source == NULL) {
- 			cifs_errorf(fc, "OOM when copying UNC string\n");
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_vram_mgr.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_vram_mgr.c
+index 24867e96b5209..aef76467c409f 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vram_mgr.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vram_mgr.c
+@@ -212,8 +212,23 @@ static struct attribute *amdgpu_vram_mgr_attributes[] = {
+ 	NULL
+ };
+ 
++static umode_t amdgpu_vram_attrs_is_visible(struct kobject *kobj,
++					    struct attribute *attr, int i)
++{
++	struct device *dev = kobj_to_dev(kobj);
++	struct drm_device *ddev = dev_get_drvdata(dev);
++	struct amdgpu_device *adev = drm_to_adev(ddev);
++
++	if (attr == &dev_attr_mem_info_vram_vendor.attr &&
++	    !adev->gmc.vram_vendor)
++		return 0;
++
++	return attr->mode;
++}
++
+ const struct attribute_group amdgpu_vram_mgr_attr_group = {
+-	.attrs = amdgpu_vram_mgr_attributes
++	.attrs = amdgpu_vram_mgr_attributes,
++	.is_visible = amdgpu_vram_attrs_is_visible
+ };
+ 
+ /**
 -- 
 2.53.0
 
