@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793210999;
-	b=G2Qr7O48rbh8ex7y6hIDjRd1ua6tUT9HdjSbyw9BkUuQpRlP87WzEoLfZfNB3cSsmCgQ
-	 4pbgslej/FRGdH7O5NsevxZFDD2pXYRg5t0VJ8b+wF8kWxtR4k9IoUdbYGGQVz3OTqIrs
-	 mTBPU9CFMGEsrDT4mt+dttKQJvbBBWkIGUdIxpa0BrR67fIrHm2v0RIuvFllqRZbfjIZF
-	 PUMnMkPLp4Qo4woWLus9eLfskLhYf8NNOS4daWM/GFm13uv9mLjYWqtw2SEMg5TeSBqIP
-	 kMD9VAFU3NRQepIY4EmdgZD39sZSwsALv2X665BYPWPzitOqLQBJdNSXTJvjTDfFE1A==
+	t=1793211002;
+	b=kZTo0sEL40E9XHwue/2bUJjV3ayRYMAj33EN4IzCwKmPBdHNTSNzmAzrv2s3z/QpbYb4
+	 58jSktOdtmAZvc1uoT8P3cADAntual+DCifoBwoRHoo4jHlfHMcSaeoHny74jYOgtob33
+	 B2OshHCvnlP5BYe7NwhXynzyRUMd3sf2aeWsVqWobHgjggzAiufqJzIIAZM6xUlBgJfCx
+	 4Y5n/UQUkhFlVyhmPRJiirxeN7PfI2Wxz2uac5X05XWcL8If6l971R387ZwuyyJ3Q1CwC
+	 kzZBXTo0oXbYTQ4Lgi2gcPrPW4WlSekZoZL9x0yvMhZdgGzudG5pvwj26nuyPGl/AgQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793210999;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793211002;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=MqPgYBLZJhxS9VefRbukaA1E9GC77vQicZD84/apdIA=;
-	b=pY+rKTwqGnioWbO9/CTzVjNwER+aTTPpM11mV6q7/kxbQ9+OfGgdy0ziOTq/6mIWTi6v
-	 N/S6JgKlL1VmiWJZx7tEUz4h6xjZzVvRcz/RCqnGOCgTLkuZeNs7F+bbE8wKf3shlGrEk
-	 6hORILYgjDmV2OK6NNhyEswEUaJWnQYRilB8kkyw9at5dnIO7kNjapht4RhpcGGx+gROy
-	 yaZZ2DyzO0O+54zdLhRbpN9fLn4fefvpQGBTD/2pZzLPKtNJLVMlA8w6a+0e0B1R36mva
-	 wMI9CxllT/CTlUwu1UHz4DGg/kKuzs6ws0q1Z2y9jNY1x2WMKrKspjN48waM0y4wReA==
+	bh=AelSTaqv4wET8EHSnGMSqPL2tyoYYBR474jAJsZgN6E=;
+	b=J4pXRRXKa6eAz3NYDqvmhbUjdJcMDXtzK6LMOpDbDC5NTkoKlbyACFbRRh+s5fUR4ow4
+	 J3PeP8La201HzX/kFb6v3czB5VMph4u+ZG6c/KCzTsAQqZpq8Jh1yaGrT7n18OjtWdH85
+	 yzsslDzGU6pgG/XfDbmpJoJv7vKvBwASsFwF1AaEKlFDytATbBazI97KZX0tEPdyexnt2
+	 zKu/Od4JfUUFaTuTAdAHnounWB9gBMqsNNXbBhpoUC4HjRgq3nnEHlEXMbQtS9NPyFPY8
+	 NmZCBNH5wEzLEMISlONw3zof9xfmZKxoCrFSPUQOYAbnTvjSvx/JgNoY1XtIllDpnzQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IUzMnNXs;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZhKeLQUq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC113606A31D;
-	Wed, 28 Oct 2026 18:09:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4EFA606A31D;
+	Wed, 28 Oct 2026 18:10:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IUzMnNXs
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A8E31F01825;
-	Wed, 28 Oct 2026 18:09:58 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZhKeLQUq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 117B91F01825;
+	Wed, 28 Oct 2026 18:10:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793210998;
-	bh=MqPgYBLZJhxS9VefRbukaA1E9GC77vQicZD84/apdIA=;
+	s=korg; t=1793211001;
+	bh=AelSTaqv4wET8EHSnGMSqPL2tyoYYBR474jAJsZgN6E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IUzMnNXsIOI/Yv6R6aoK3vF9QHjTqkIsJr8up7nxx6p4g5B5BtH+TJlPVhK19vmaS
-	 8DY80b9ZopdKrlhcEPK/UOrHwiIguN6XYpuOBUqaJMUTw3gM2138dPmawVBYkJVszW
-	 1p5iLcb5VyYESxkI4g4SM2AmLtrJ797bG9Izyp9Y=
+	b=ZhKeLQUqTrzuivriMj/1W7oJFxwXoFB8Kyq8EbWKBwRaKox8eDdwirhPcdFNYH8Ph
+	 l4xuzxdKo7X2IvnF0AVR+E4G8MUb/kcZD/xtiruWTahIuqysxt7dPV3Z/ehIGn3brm
+	 /HupTLhCek3BC9GUTYTaeFaXtmR7Amoo8psY9118=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Simon Gassner <simon.gassner@noxsystems.com>
-Subject: [PATCH 5.15 221/571] serial: tegra: dont clear the Tx FIFO on an Rx-only reset
-Date: Wed, 28 Oct 2026 17:56:08 +0100
-Message-ID: <20261028170013.244046672@linuxfoundation.org>
+	"Sashiko (nipa)" <sashiko-bot@kernel.org>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 179/571] net/sched: fq_codel: match the no-drop threshold to the packet size
+Date: Wed, 28 Oct 2026 17:55:26 +0100
+Message-ID: <20261028170012.261345559@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -67,85 +69,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Simon Gassner <simon.gassner@noxsystems.com>
+From: Jamal Hadi Salim <jhs@mojatatu.com>
 
-commit 8aebfde6e84dceb7d47fe8001e50b754eb45d5df upstream.
+[ Upstream commit d031465acc362866f27e4f8f79cfecf1037fe2e5 ]
 
-tegra_uart_fifo_reset() applies the Tegra30 workaround for
-"cannot clear the Tx FIFO while FIFO mode is enabled"
-unconditionally: it leaves FIFO mode, writes the requested FCR
-clear bits, and re-enters FIFO mode. Leaving FIFO mode empties
-both FIFOs, so an Rx-only reset discards queued Tx data as well.
+commit d9ebd8f9aa8b ("net/sched: fq_codel: clamp default quantum and mtu")
+clamped both q->quantum and q->cparams.mtu to [256, FQ_CODEL_QUANTUM_MAX].
+The two fields mean different things: quantum is a DRR credit that wants
+the 256 floor, but cparams.mtu is the CoDel no-drop threshold
+(codel_impl.h "*backlog <= params->mtu"). On a link whose maximum
+transmitted packet size is below 256, the floor extends CoDel's
+minimum-backlog exemption beyond one packet and delays drop or mark
+eligibility by several small packets.
 
-The break handler in tegra_uart_decode_rx_error() calls it with
-UART_FCR_CLEAR_RCVR only. On a half-duplex RS485 board whose Rx
-line is pulled low while the transceiver drives the bus, every
-transmission raises a spurious break, and all but the first
-character of the frame is lost.
+Split the clamp. quantum keeps [256, FQ_CODEL_QUANTUM_MAX]; cparams.mtu
+tracks psched_mtu() (the device MTU plus its hard-header length) with
+only the upper bound that guards the original overflow (psched_mtu()
+wrapping to ~2 GiB on a huge-MTU device).
 
-Only take the FIFO-mode path when the caller actually asked for
-CLEAR_XMIT. Likewise only wait for TEMT in that case: with the Tx
-FIFO deliberately left intact, that loop would otherwise spin for
-a full frame time in hard IRQ context with the port lock held.
+Conditions to recreate the bug: attach an fq_codel qdisc on a link
+whose MTU plus hard_header_len is below 256 (e.g. a CAN interface). At
+that MTU the no-drop threshold must equal the device MTU plus its
+hard-header length; before this patch it was forced to 256.
+Basic Testing done: with dev->mtu=100 and hard_header_len=14, a
+return probe on fq_codel_init() observed cparams.mtu change from 256 to 114
 
-Tested on a Colibri T30 (Tegra30) with Rx DMA:
-
- - Break during transmission: the reset still fires from
-   tegra_uart_decode_rx_error(), and the complete frame now
-   reaches the peer. Before this change only the character in
-   the shift register was sent.
- - Internal loopback with a generated break: the Rx FIFO is
-   correctly cleared by the plain FCR write, and subsequent
-   receive works with no frame, parity or overrun errors.
-
-Fixes: e9ea096dd225 ("serial: tegra: add serial driver")
-Cc: stable@kernel.org
-Signed-off-by: Simon Gassner <simon.gassner@noxsystems.com>
-Link: https://patch.msgid.link/20261001060539.32659-1-simon.gassner@noxsystems.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: d9ebd8f9aa8b ("net/sched: fq_codel: clamp default quantum and mtu")
+Reported-by: Sashiko (nipa) <sashiko-bot@kernel.org>
+Link: https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20260819143136.57350-1-jhs@mojatatu.com
+Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Link: https://patch.msgid.link/QDISC-34MS.v1.20260925165535@mojatatu.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/serial-tegra.c |   18 ++++++++++++++++--
- 1 file changed, 16 insertions(+), 2 deletions(-)
+ net/sched/sch_fq_codel.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/tty/serial/serial-tegra.c
-+++ b/drivers/tty/serial/serial-tegra.c
-@@ -307,11 +307,19 @@ static void tegra_uart_fifo_reset(struct
- {
- 	unsigned long fcr = tup->fcr_shadow;
- 	unsigned int lsr, tmout = 10000;
-+	bool clear_tx = !!(fcr_bits & UART_FCR_CLEAR_XMIT);
- 
- 	if (tup->rts_active)
- 		set_rts(tup, false);
- 
--	if (tup->cdata->allow_txfifo_reset_fifo_mode) {
-+	/*
-+	 * Leaving FIFO mode below is a workaround for a Tegra30
-+	 * restriction on clearing the Tx FIFO while FIFO mode is
-+	 * enabled. It empties both FIFOs, so applying it to an
-+	 * Rx-only reset would destroy an in-flight transmission.
-+	 * Only take that path when the caller asked for CLEAR_XMIT.
-+	 */
-+	if (tup->cdata->allow_txfifo_reset_fifo_mode || !clear_tx) {
- 		fcr |= fcr_bits & (UART_FCR_CLEAR_RCVR | UART_FCR_CLEAR_XMIT);
- 		tegra_uart_write(tup, fcr, UART_FCR);
- 	} else {
-@@ -336,9 +344,15 @@ static void tegra_uart_fifo_reset(struct
- 	 */
- 	tegra_uart_wait_cycle_time(tup, 32);
- 
-+	/*
-+	 * Only wait for the transmitter to drain when the Tx FIFO was
-+	 * part of the reset. For an Rx-only reset it is left intact,
-+	 * and waiting for TEMT here would spin for a full frame time.
-+	 */
- 	do {
- 		lsr = tegra_uart_read(tup, UART_LSR);
--		if ((lsr & UART_LSR_TEMT) && !(lsr & UART_LSR_DR))
-+		if ((!clear_tx || (lsr & UART_LSR_TEMT)) &&
-+		    !(lsr & UART_LSR_DR))
- 			break;
- 		udelay(1);
- 	} while (--tmout);
+diff --git a/net/sched/sch_fq_codel.c b/net/sched/sch_fq_codel.c
+index f801b6af33c0d..bfb7d77c294a9 100644
+--- a/net/sched/sch_fq_codel.c
++++ b/net/sched/sch_fq_codel.c
+@@ -499,8 +499,8 @@ static int fq_codel_init(struct Qdisc *sch, struct nlattr *opt,
+ 	q->flows_cnt = 1024;
+ 	q->memory_limit = 32 << 20; /* 32 MBytes */
+ 	q->drop_batch_size = 64;
+-	mtu = clamp_t(u32, psched_mtu(qdisc_dev(sch)), 256, FQ_CODEL_QUANTUM_MAX);
+-	q->quantum = mtu;
++	mtu = min_t(u32, psched_mtu(qdisc_dev(sch)), FQ_CODEL_QUANTUM_MAX);
++	q->quantum = clamp_t(u32, mtu, 256, FQ_CODEL_QUANTUM_MAX);
+ 	INIT_LIST_HEAD(&q->new_flows);
+ 	INIT_LIST_HEAD(&q->old_flows);
+ 	codel_params_init(&q->cparams);
+-- 
+2.53.0
+
 
 
