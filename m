@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793209427;
-	b=dj5/tzmlSQQxXXroMNrR+kel98GLe7Et03Iw/9rPDHdP8K8e+Jrn/k1cBx3j4ZzSfs5t
-	 VaB56QIb7nhnNJr4zlQJUkYvbVOHzCJZqS5Gdr2WIq+xMhmHzYXYDgJxKJ1b/xXTqcso4
-	 B4G0VKbFyvGKXmePmJzxs4zmn+3aeqI6Xf/jvtYAflAARs8zuIpAM/pLOb7Rc7ztzBmxt
-	 RhPOQVIO11MY5gqEpmAAo70B22m9SLiHjNICId8xNamKnGLvtcPsqHrDjYJx3jQSX1Gkd
-	 2PiBEIVFiCE6ZnHLKMlYtdsNkboFC+Wv12M9kUFQT2Q8qu5nGHClWMKixIkdCijDzbA==
+	t=1793209429;
+	b=XTnMAyArfqpuUldSaY2cLPwn9glQVcNF9P6/rw83UF5TxiO9zGsxqg4YYeL5qvRX88kf
+	 tQdFsvTUgYAI0V/4m+QbJiFkMICUQmPnWOkroR/vG0SpHtfXUkCAsWgb69n6GLq37AMKc
+	 8XShA8E6KmmZibwIVkxoonDWKECAPciWe1kaealf1QzMAs82cTIyURowB2WCMHeLo+8eA
+	 771f46rVXfIfKKnnHlcn3NN3Ju2/VbYppzn1vJydeqOEB/6+VxOzsy1Q9cGUog7De9mSA
+	 auZ/MlI/UCFsm/HUpJQ3hqvt7FX66ZNPA00gtDabp1yhwB1NorNyA3m/EDJ/NkB8stw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793209427;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793209429;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=MwqmCJ91uEf7XOfxP8CIM00NtOnNX8TSEgxJLedH18Q=;
-	b=yGcimXegV4foZm0iv/c/E/gGBi1/tgeW1JMrwnWgBka+kqm3fEVybLFzz046ZjCMPhRR
-	 OTv32IZV7gnetw7UaMm5b96mOFS6l07BxiLj7DPhnAMVabfx8QyXYPsAih1TTqL+XCLDL
-	 pOh/qZnEW9wb+hCOcBzhUq4S3TNUIv/nEY/+1xX42IA4FWLvTLFizBQhQbt6gd6BsNdpD
-	 6yjjsZHg/rJ9C9m/m9zYibRNGKexsDUTRPz9EBfK0GqvOF4Mr/o+qzrSbNXyUY9MLWmYp
-	 tDjC2fGekRQ/09xr+FIigTWZO9MyH05/xUr6ZNVhwnvNXKtISBw7bt5MkhJJ1t3G4yQ==
+	bh=kIHdnxLFlW+f8+snIQYseqld/pBzN5hcRulTcZT4E4Q=;
+	b=pq56Y9wM6vL7HAuAIa2GBql+IxIvaPHREUUmEABHrGcGlj5/ayMDuF4PvEcFhokSmVt+
+	 +JvSSoecOUowSPTfkQm50srafWKLratMWU8yZUztwRLSfS9d5FXhJKqUVuOKaoMGu0ECo
+	 WXHqxv35ZF/5zOP0PfbuLpgc5ooj3m01LgAaegLngHWTmt8fYG6YgD4BHDnkJNepMt5i5
+	 pGiHQvpVebPEZa6KEVXfSMh/5HVm1U9hOLdKNdZI3Jlp1xLy8RNloV1ibFtGcyyQ9ryr9
+	 Jk/mAOf8b9z2wPDbHQUVBGyMY8jU/6zWNM+Oa2ZcE0RjhWyh8JENa+WwR7nj01amcOA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="GBqrA/E9";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O8W6Ljg6;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF141606A31A;
-	Wed, 28 Oct 2026 17:43:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 716AD606A31C;
+	Wed, 28 Oct 2026 17:43:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GBqrA/E9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA7E61F01828;
-	Wed, 28 Oct 2026 17:43:45 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O8W6Ljg6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C03CE1F01825;
+	Wed, 28 Oct 2026 17:43:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793209426;
-	bh=MwqmCJ91uEf7XOfxP8CIM00NtOnNX8TSEgxJLedH18Q=;
+	s=korg; t=1793209429;
+	bh=kIHdnxLFlW+f8+snIQYseqld/pBzN5hcRulTcZT4E4Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GBqrA/E9uHa6H/WqXh1nDS2UtkzOq1PWZh9nOgSbcbmofNfshNWJYyukBkdwZx0uf
-	 scFb0TpRLgu8Zj/zfu6RrK6Ydf7tJiW19pyKX3RSVtg8MuTAhigUzNc0DVCxYda1aI
-	 9Qyy0NQvtze6Aht2BAz3ozbmPpfw+3gZbJtV81jw=
+	b=O8W6Ljg6FTvaRO++mSfZxPDpaEeYV0mm5JWYIqIqSp7OiC1iZHGu06XC3eJ7FgAZ2
+	 hMkRUbskxG/XHWPHqzo2znhUrMqt96s3YKtVOF850XhaNbbuivUDGCwQxupdyPR+cA
+	 ubb4JTwlf8weFenkuK4ELBkXMc3x5Rhq5XHRK4EM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Johnny Hao <johnny_haocn@sina.com>,
-	"Miguel Gazquez (Schneider Electric)" <miguel.gazquez@bootlin.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 423/516] bpf: Do mark_chain_precision for ARG_CONST_ALLOC_SIZE_OR_ZERO
-Date: Wed, 28 Oct 2026 17:59:35 +0100
-Message-ID: <20261028170013.508287416@linuxfoundation.org>
+	John Fastabend <john.fastabend@gmail.com>,
+	Geliang Tang <tanggeliang@kylinos.cn>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Sasha Levin <sashal@kernel.org>,
+	"Miguel Gazquez (Schneider Electric)" <miguel.gazquez@bootlin.com>
+Subject: [PATCH 5.10 424/516] skmsg: Skip zero length skb in sk_msg_recvmsg
+Date: Wed, 28 Oct 2026 17:59:36 +0100
+Message-ID: <20261028170013.531934247@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -70,106 +70,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+From: Geliang Tang <tanggeliang@kylinos.cn>
 
-[ Upstream commit 2fc31465c5373b5ca4edf2e5238558cb62902311 ]
+[ Upstream commit f0c18025693707ec344a70b6887f7450bf4c826b ]
 
-Precision markers need to be propagated whenever we have an ARG_CONST_*
-style argument, as the verifier cannot consider imprecise scalars to be
-equivalent for the purposes of states_equal check when such arguments
-refine the return value (in this case, set mem_size for PTR_TO_MEM). The
-resultant mem_size for the R0 is derived from the constant value, and if
-the verifier incorrectly prunes states considering them equivalent where
-such arguments exist (by seeing that both registers have reg->precise as
-false in regsafe), we can end up with invalid programs passing the
-verifier which can do access beyond what should have been the correct
-mem_size in that explored state.
+When running BPF selftests (./test_progs -t sockmap_basic) on a Loongarch
+platform, the following kernel panic occurs:
 
-To show a concrete example of the problem:
+  [...]
+  Oops[#1]:
+  CPU: 22 PID: 2824 Comm: test_progs Tainted: G           OE  6.10.0-rc2+ #18
+  Hardware name: LOONGSON Dabieshan/Loongson-TC542F0, BIOS Loongson-UDK2018
+     ... ...
+     ra: 90000000048bf6c0 sk_msg_recvmsg+0x120/0x560
+    ERA: 9000000004162774 copy_page_to_iter+0x74/0x1c0
+   CRMD: 000000b0 (PLV0 -IE -DA +PG DACF=CC DACM=CC -WE)
+   PRMD: 0000000c (PPLV0 +PIE +PWE)
+   EUEN: 00000007 (+FPE +SXE +ASXE -BTE)
+   ECFG: 00071c1d (LIE=0,2-4,10-12 VS=7)
+  ESTAT: 00010000 [PIL] (IS= ECode=1 EsubCode=0)
+   BADV: 0000000000000040
+   PRID: 0014c011 (Loongson-64bit, Loongson-3C5000)
+  Modules linked in: bpf_testmod(OE) xt_CHECKSUM xt_MASQUERADE xt_conntrack
+  Process test_progs (pid: 2824, threadinfo=0000000000863a31, task=...)
+  Stack : ...
+  Call Trace:
+  [<9000000004162774>] copy_page_to_iter+0x74/0x1c0
+  [<90000000048bf6c0>] sk_msg_recvmsg+0x120/0x560
+  [<90000000049f2b90>] tcp_bpf_recvmsg_parser+0x170/0x4e0
+  [<90000000049aae34>] inet_recvmsg+0x54/0x100
+  [<900000000481ad5c>] sock_recvmsg+0x7c/0xe0
+  [<900000000481e1a8>] __sys_recvfrom+0x108/0x1c0
+  [<900000000481e27c>] sys_recvfrom+0x1c/0x40
+  [<9000000004c076ec>] do_syscall+0x8c/0xc0
+  [<9000000003731da4>] handle_syscall+0xc4/0x160
+  Code: ...
+  ---[ end trace 0000000000000000 ]---
+  Kernel panic - not syncing: Fatal exception
+  Kernel relocated by 0x3510000
+   .text @ 0x9000000003710000
+   .data @ 0x9000000004d70000
+   .bss  @ 0x9000000006469400
+  ---[ end Kernel panic - not syncing: Fatal exception ]---
+  [...]
 
-0000000000000000 <prog>:
-       0:       r2 = *(u32 *)(r1 + 80)
-       1:       r1 = *(u32 *)(r1 + 76)
-       2:       r3 = r1
-       3:       r3 += 4
-       4:       if r3 > r2 goto +18 <LBB5_5>
-       5:       w2 = 0
-       6:       *(u32 *)(r1 + 0) = r2
-       7:       r1 = *(u32 *)(r1 + 0)
-       8:       r2 = 1
-       9:       if w1 == 0 goto +1 <LBB5_3>
-      10:       r2 = -1
+This crash happens every time when running sockmap_skb_verdict_shutdown
+subtest in sockmap_basic.
 
-0000000000000058 <LBB5_3>:
-      11:       r1 = 0 ll
-      13:       r3 = 0
-      14:       call bpf_ringbuf_reserve
-      15:       if r0 == 0 goto +7 <LBB5_5>
-      16:       r1 = r0
-      17:       r1 += 16777215
-      18:       w2 = 0
-      19:       *(u8 *)(r1 + 0) = r2
-      20:       r1 = r0
-      21:       r2 = 0
-      22:       call bpf_ringbuf_submit
+This crash is because a NULL pointer is passed to page_address() in the
+sk_msg_recvmsg(). Due to the different implementations depending on the
+architecture, page_address(NULL) will trigger a panic on Loongarch
+platform but not on x86 platform. So this bug was hidden on x86 platform
+for a while, but now it is exposed on Loongarch platform. The root cause
+is that a zero length skb (skb->len == 0) was put on the queue.
 
-00000000000000b8 <LBB5_5>:
-      23:       w0 = 0
-      24:       exit
+This zero length skb is a TCP FIN packet, which was sent by shutdown(),
+invoked in test_sockmap_skb_verdict_shutdown():
 
-For the first case, the single line execution's exploration will prune
-the search at insn 14 for the branch insn 9's second leg as it will be
-verified first using r2 = -1 (UINT_MAX), while as w1 at insn 9 will
-always be 0 so at runtime we don't get error for being greater than
-UINT_MAX/4 from bpf_ringbuf_reserve. The verifier during regsafe just
-sees reg->precise as false for both r2 registers in both states, hence
-considers them equal for purposes of states_equal.
+	shutdown(p1, SHUT_WR);
 
-If we propagated precise markers using the backtracking support, we
-would use the precise marking to then ensure that old r2 (UINT_MAX) was
-within the new r2 (1) and this would never be true, so the verification
-would rightfully fail.
+In this case, in sk_psock_skb_ingress_enqueue(), num_sge is zero, and no
+page is put to this sge (see sg_set_page in sg_set_page), but this empty
+sge is queued into ingress_msg list.
 
-The end result is that the out of bounds access at instruction 19 would
-be permitted without this fix.
+And in sk_msg_recvmsg(), this empty sge is used, and a NULL page is got by
+sg_page(sge). Pass this NULL page to copy_page_to_iter(), which passes it
+to kmap_local_page() and to page_address(), then kernel panics.
 
-Note that reg->precise is always set to true when user does not have
-CAP_BPF (or when subprog count is greater than 1 (i.e. use of any static
-or global functions)), hence this is only a problem when precision marks
-need to be explicitly propagated (i.e. privileged users with CAP_BPF).
+To solve this, we should skip this zero length skb. So in sk_msg_recvmsg(),
+if copy is zero, that means it's a zero length skb, skip invoking
+copy_page_to_iter(). We are using the EFAULT return triggered by
+copy_page_to_iter to check for is_fin in tcp_bpf.c.
 
-A simplified test case has been included in the next patch to prevent
-future regressions.
+[moved the change from sk_msg_recvmsg in net/core/skmsg.c to
+__tcp_bpf_recvmsg in net/ipv4/tcp_bpf.c, as we are before
+2bc793e3272a13e337416c057cb81c5396ad91d1 ("skmsg: Extract
+__tcp_bpf_recvmsg() and tcp_bpf_wait_data()")
 
-[ The context change is due to the commit 8ab4cdcf03d0
-("bpf: Tidy up verifier check_func_arg()") in v6.0
-which is irrelevant to the logic of this patch. ]
-
-Fixes: 457f44363a88 ("bpf: Implement BPF ring buffer and verifier support for it")
-Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
-Link: https://lore.kernel.org/r/20220823185300.406-2-memxor@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Signed-off-by: Johnny Hao <johnny_haocn@sina.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 604326b41a6f ("bpf, sockmap: convert to generic sk_msg interface")
+Suggested-by: John Fastabend <john.fastabend@gmail.com>
+Signed-off-by: Geliang Tang <tanggeliang@kylinos.cn>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Reviewed-by: John Fastabend <john.fastabend@gmail.com>
+Link: https://lore.kernel.org/bpf/e3a16eacdc6740658ee02a33489b1b9d4912f378.1719992715.git.tanggeliang@kylinos.cn
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Miguel Gazquez (Schneider Electric) <miguel.gazquez@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/ipv4/tcp_bpf.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index e1f571219d16b..50bcf15eaa171 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -4896,6 +4896,9 @@ static int check_func_arg(struct bpf_verifier_env *env, u32 arg,
- 			return -EACCES;
- 		}
- 		meta->mem_size = reg->var_off.value;
-+		err = mark_chain_precision(env, regno);
-+		if (err)
-+			return err;
- 	} else if (arg_type_is_int_ptr(arg_type)) {
- 		int size = int_ptr_type_to_size(arg_type);
+diff --git a/net/ipv4/tcp_bpf.c b/net/ipv4/tcp_bpf.c
+index 458b8a694b9d5..0897513572445 100644
+--- a/net/ipv4/tcp_bpf.c
++++ b/net/ipv4/tcp_bpf.c
+@@ -38,7 +38,8 @@ int __tcp_bpf_recvmsg(struct sock *sk, struct sk_psock *psock,
+ 			page = sg_page(sge);
+ 			if (copied + copy > len)
+ 				copy = len - copied;
+-			copy = copy_page_to_iter(page, sge->offset, copy, iter);
++			if (copy)
++				copy = copy_page_to_iter(page, sge->offset, copy, iter);
+ 			if (!copy)
+ 				return copied ? copied : -EFAULT;
  
 -- 
 2.53.0
