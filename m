@@ -1,68 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216176;
-	b=yrCuPuI37AgzVgrnm3I1T2CSaNmPncCfiKSzf180cUNK5Mfld8Oi+CSnBxFGfVpUzJWu
-	 rxWr74XrZc9y9XuGJuXskD4vUgnKO4OyYiW1tlYmfuPqWdtZ+f2l0jzRi/wi89OTO55Nv
-	 mW0a08JyNV5KaDhPG/o/0xFkl2OiVfQvxVSLozImDbIKlE8VgJZn57eZBybCQ3AwLiTGN
-	 6rxRifVkRxmFBPStY3N9utsBu2eEXfbpT0X1RMDEb0ttuU/F456Iajf26fJkk/G/cZ13w
-	 LD9+pfSxilDE+3ryKh4phwRI8WVIK454YLnK5Di6XNJEn7zV497Hd/S94+kvDMr1npQ==
+	t=1793216179;
+	b=0xoRjTIJ+YXZQRQ2EpvyY1jDjiYwM//2KzbYT0dkyw8eOhszedCcE5US0Rn9+XbnZKry
+	 4I5zcr+0zuS5qSuDa2Eh/qmwEjnyGX9kAG81ljMdzZSvC6G5Ne5SNg1xQZWGTYE+PMvve
+	 AGYIVi96dyyYwh73X0ZzK2c+X+b1CDpYw49v3irAW/lCEk3sk4kQPPGucXy8NTkf5vOT9
+	 V3x3rItosTnOEU7DYckMKhhiwecsRXwKC8G1F0s+io3ybV8L0IZ4xst4D69/zRn8riCeT
+	 4KMcMV28IadVNIx0xg+0rwJbanaNHrk6Bi7WUoJ/nYSNEwO+bkSmYyarV56c43SuoVA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216176;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216179;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=pkCB5IpeIbklKH+mrOUGRvR48Y4oGyAzEScoNBbHT3Q=;
-	b=gZh9P8dWNLFZr7wfIMmL2FJbIN2skRhGjU/FbX2/SOSSILmF5sLOcctd3IaPmFkftZLO
-	 to8eeYp2/vnJo5mwMIXHCDCr53Zarv8Ghjg86RzfIcVkA+WOhSiLzL0vUUiZbQTqcV8tD
-	 OKchZzzfGUY8t/fuRaQk3SmqaGgUFnzeUg0HTz1DW1lz6qrxCBqQ96D0+cAfx0NysQEwd
-	 W67wYgfTOfRERF09A0JZBZ8y96u72n05OEoxwZp4ElbCRXQC7PKgWsAkX4ITbyzGUPl3H
-	 zCClQkRORsZJlWtuatnSY8Au3EeBy35Q5TVMowXOu9M0G/hbgrmUXwsuWDSN1nLvG3w==
+	bh=PThgMjdZDmbEA7qo5iOgvErr9id7rM247onDVT4yVA4=;
+	b=FvUjHuoD9L8g+HAH4drYFtQv35xk+Ch3Swny8AbqZAd/kvph4GMC+75elw71KmkhDRWb
+	 YOiTOaslLz2vjnJ7gRuqYnrh4fJXqXYhjdOW2pyUMThOEV8nf6K+DPtUTtqeeByYgft36
+	 gRTYbwi3FYPaSaf5Je5cSltYSi3CR8Df5A/VspvfQm8+7MX2htBEYC9odhrXYJ+eZ7/FE
+	 +d8t3WJuhtIlA8PhpVsH1JQ2MUFUr0zsZzQMHYftUyBuwB7ue2VzJxYAxBQUaHBjknkAD
+	 g309bhL90nbT0qPCaAJ25hRKMa4pWOc+sQDIPMqFqGrjKhjT9qpFZVH1e0gEi89WQEw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AccF3sWz;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YMSxF3uo;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B1F1606A31A;
-	Wed, 28 Oct 2026 19:36:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30B62606A31A;
+	Wed, 28 Oct 2026 19:36:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AccF3sWz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7701D1F01825;
-	Wed, 28 Oct 2026 19:36:15 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YMSxF3uo
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 868111F01825;
+	Wed, 28 Oct 2026 19:36:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216176;
-	bh=pkCB5IpeIbklKH+mrOUGRvR48Y4oGyAzEScoNBbHT3Q=;
+	s=korg; t=1793216179;
+	bh=PThgMjdZDmbEA7qo5iOgvErr9id7rM247onDVT4yVA4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AccF3sWz6DZ9GAJoq1q/1V+WHED+GNMcpA73W0TTJqjEO9kML/uxC1WIzOBL0oHeN
-	 0HXu9BN3NiTMWtIAAZv5OLURyQVvvF0GxzoSr07qerG6rHstxcgfwRedCuBf9pT9Am
-	 iAnvP4nCVX9Qyg1AAPjbMFCxzYdkE9AQczt0PKFo=
+	b=YMSxF3uorzrCb0NgagmX8okRZVT21lfZPDiIH+ChAuf7xcRlkXg7e2pSBBbaI/dwg
+	 vYY8oiy2mO8AG5V/qR60AyFZwknL93H/ww/k623znf89ayVOKvOD5aK2nJSFEsqhqp
+	 etiOcHMKxBIjFnJdKJijkVDDotjgWKEx0SO/90Kk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kairui Song <kasong@tencent.com>,
-	Barry Song <baohua@kernel.org>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Axel Rasmussen <axelrasmussen@google.com>,
-	Brian Geffon <bgeffon@google.com>,
-	David Hildenbrand <david@kernel.org>,
-	"Jan Alexander Steffens (heftig)" <heftig@archlinux.org>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Michal Hocko <mhocko@kernel.org>,
-	Oleksandr Natalenko <oleksandr@natalenko.name>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	Steven Barrett <steven@liquorix.net>,
-	Suleiman Souhlal <suleiman@google.com>,
-	Wei Xu <weixugc@google.com>,
-	Yuanchu Xie <yuanchu@google.com>,
-	Yu Zhao <yuzhao@google.com>,
+	Zhaoyang Huang <zhaoyang.huang@unisoc.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	"ke.wang" <ke.wang@unisoc.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Zhaoyang Huang <huangzhaoyang@gmail.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1468/1887] mm/mglru: fix and remove redundant unevictable folio handling
-Date: Wed, 28 Oct 2026 17:59:24 +0100
-Message-ID: <20261028170532.862251494@linuxfoundation.org>
+Subject: [PATCH 6.1 1469/1887] mm: use stack_depot for recording kmemleaks backtrace
+Date: Wed, 28 Oct 2026 17:59:25 +0100
+Message-ID: <20261028170532.885047749@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -84,105 +73,172 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kairui Song <kasong@tencent.com>
+From: Zhaoyang Huang <zhaoyang.huang@unisoc.com>
 
-[ Upstream commit f7e698e326b239a91ea15844817551921209e826 ]
+[ Upstream commit 56a61617dd2276cbc56a6c868599716386d70041 ]
 
-sort_folio() has a shortcut for moving folios that are no longer evictable
-but are still sitting on a generation list.  However, this shortcut is
-buggy.  It does not follow the PG_lru usage convention, and it has a more
-serious issue.
+Using stack_depot to record kmemleak's backtrace which has been
+implemented on slub for reducing redundant information.
 
-Unevictable folios are not threaded on lists[LRU_UNEVICTABLE], so that
-folio->lru can be reused to hold folio->mlock_count (see the comment in
-lruvec_init()).  Hence lruvec_add_folio() skips the list_add() for them,
-and every other place that turns a folio unevictable initialises
-mlock_count explicitly: lru_add() sets it to 0, __mlock_folio() and
-__mlock_new_folio() set it to !!folio_test_mlocked(folio).  sort_folio()
-sets nothing, and the lru_gen_del_folio() right above it may have already
-poisoned folio->lru via list_del(), so mlock_count ends up aliasing
-LIST_POISON2, which reads as 0x122, i.e.  290.  The result is user
-visible.  On munlock, __munlock_folio() decrements that bogus count, finds
-it still non-zero and bails out before clearing PG_mlocked, so the folio
-remains unevictable and the Mlocked accounting stays inflated until the
-folio is freed.
-
-The shortcut also touches the LRU flags in the wrong order.  It calls
-lru_gen_del_folio() while PG_lru is still set, so a concurrent
-folio_test_clear_lru() (e.g.  compaction, folio_isolate_lru()) can succeed
-on a folio that has already been taken off the generation list, which may
-lead to unexpected behavior.
-
-So fix it by isolating them as common folios and letting the generic
-shrink path cull them.  This matches the classical LRU behavior, and there
-should be no visible effect on the generic eviction or isolation behavior.
-
-There is no performance concern either, such a folio goes through this
-once, and then it is off the generation lists for good.
-
-Link: https://lore.kernel.org/20260812-mglru-mlock-fix-v2-1-a3fec5853c08@tencent.com
-Fixes: ac35a4902374 ("mm: multi-gen LRU: minimal implementation")
-Signed-off-by: Kairui Song <kasong@tencent.com>
-Reviewed-by: Barry Song <baohua@kernel.org>
-Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Cc: Axel Rasmussen <axelrasmussen@google.com>
-Cc: Brian Geffon <bgeffon@google.com>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: Jan Alexander Steffens (heftig) <heftig@archlinux.org>
-Cc: Johannes Weiner <hannes@cmpxchg.org>
-Cc: Lorenzo Stoakes <ljs@kernel.org>
-Cc: Michal Hocko <mhocko@kernel.org>
-Cc: Oleksandr Natalenko <oleksandr@natalenko.name>
-Cc: Shakeel Butt <shakeel.butt@linux.dev>
-Cc: Steven Barrett <steven@liquorix.net>
-Cc: Suleiman Souhlal <suleiman@google.com>
-Cc: Wei Xu <weixugc@google.com>
-Cc: Yuanchu Xie <yuanchu@google.com>
-Cc: Yu Zhao <yuzhao@google.com>
-Cc: <stable@vger.kernel.org>
+[akpm@linux-foundation.org: fix build - remove now-unused __save_stack_trace()]
+[zhaoyang.huang@unisoc.com: v3]
+  Link: https://lkml.kernel.org/r/1667101354-4669-1-git-send-email-zhaoyang.huang@unisoc.com
+[akpm@linux-foundation.org: fix v3 layout oddities]
+[akpm@linux-foundation.org: coding-style cleanups]
+Link: https://lkml.kernel.org/r/1666864224-27541-1-git-send-email-zhaoyang.huang@unisoc.com
+Signed-off-by: Zhaoyang Huang <zhaoyang.huang@unisoc.com>
+Acked-by: Catalin Marinas <catalin.marinas@arm.com>
+Cc: ke.wang <ke.wang@unisoc.com>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: Vlastimil Babka <vbabka@suse.cz>
+Cc: Zhaoyang Huang <huangzhaoyang@gmail.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: 5d10d4e19e6d ("mm/kmemleak: avoid soft lockup when scanning task stacks")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/vmscan.c | 18 +++++-------------
- 1 file changed, 5 insertions(+), 13 deletions(-)
+ lib/Kconfig.debug |  1 +
+ mm/kmemleak.c     | 46 ++++++++++++++++++++++++++++------------------
+ 2 files changed, 29 insertions(+), 18 deletions(-)
 
-diff --git a/mm/vmscan.c b/mm/vmscan.c
-index d39d3f88e0d27..0b87b66913bc6 100644
---- a/mm/vmscan.c
-+++ b/mm/vmscan.c
-@@ -4758,15 +4758,9 @@ static bool sort_folio(struct lruvec *lruvec, struct folio *folio, struct scan_c
+diff --git a/lib/Kconfig.debug b/lib/Kconfig.debug
+index d00c695bf4921..cfff3f1e4713d 100644
+--- a/lib/Kconfig.debug
++++ b/lib/Kconfig.debug
+@@ -737,6 +737,7 @@ config DEBUG_KMEMLEAK
+ 	select STACKTRACE if STACKTRACE_SUPPORT
+ 	select KALLSYMS
+ 	select CRC32
++	select STACKDEPOT
+ 	help
+ 	  Say Y here if you want to enable the memory leak
+ 	  detector. The memory allocation/freeing is traced in a way
+diff --git a/mm/kmemleak.c b/mm/kmemleak.c
+index 3e41e669e2528..ca1a3855de07c 100644
+--- a/mm/kmemleak.c
++++ b/mm/kmemleak.c
+@@ -80,6 +80,7 @@
+ #include <linux/mutex.h>
+ #include <linux/rcupdate.h>
+ #include <linux/stacktrace.h>
++#include <linux/stackdepot.h>
+ #include <linux/cache.h>
+ #include <linux/percpu.h>
+ #include <linux/memblock.h>
+@@ -161,8 +162,7 @@ struct kmemleak_object {
+ 	u32 checksum;
+ 	/* memory ranges to be scanned inside an object (empty for all) */
+ 	struct hlist_head area_list;
+-	unsigned long trace[MAX_TRACE];
+-	unsigned int trace_len;
++	depot_stack_handle_t trace_handle;
+ 	unsigned long jiffies;		/* creation timestamp */
+ 	pid_t pid;			/* pid of the current task */
+ 	char comm[TASK_COMM_LEN];	/* executable name */
+@@ -353,18 +353,21 @@ static void print_unreferenced(struct seq_file *seq,
+ 			       struct kmemleak_object *object)
+ {
+ 	int i;
++	unsigned long *entries;
++	unsigned int nr_entries;
+ 	unsigned int msecs_age = jiffies_to_msecs(jiffies - object->jiffies);
  
- 	VM_WARN_ON_ONCE_FOLIO(gen >= MAX_NR_GENS, folio);
++	nr_entries = stack_depot_fetch(object->trace_handle, &entries);
+ 	warn_or_seq_printf(seq, "unreferenced object 0x%08lx (size %zu):\n",
+-		   object->pointer, object->size);
++			  object->pointer, object->size);
+ 	warn_or_seq_printf(seq, "  comm \"%s\", pid %d, jiffies %lu (age %d.%03ds)\n",
+-		   object->comm, object->pid, object->jiffies,
+-		   msecs_age / 1000, msecs_age % 1000);
++			   object->comm, object->pid, object->jiffies,
++			   msecs_age / 1000, msecs_age % 1000);
+ 	hex_dump_object(seq, object);
+ 	warn_or_seq_printf(seq, "  backtrace:\n");
  
--	/* unevictable */
--	if (!folio_evictable(folio)) {
--		success = lru_gen_del_folio(lruvec, folio, true);
--		VM_WARN_ON_ONCE_FOLIO(!success, folio);
--		folio_set_unevictable(folio);
--		lruvec_add_folio(lruvec, folio);
--		__count_vm_events(UNEVICTABLE_PGCULLED, delta);
--		return true;
--	}
-+	/* unevictable: let it through and the generic path will cull it */
-+	if (!folio_evictable(folio))
-+		return false;
+-	for (i = 0; i < object->trace_len; i++) {
+-		void *ptr = (void *)object->trace[i];
++	for (i = 0; i < nr_entries; i++) {
++		void *ptr = (void *)entries[i];
+ 		warn_or_seq_printf(seq, "    [<%p>] %pS\n", ptr, ptr);
+ 	}
+ }
+@@ -377,15 +380,16 @@ static void print_unreferenced(struct seq_file *seq,
+ static void dump_object_info(struct kmemleak_object *object)
+ {
+ 	pr_notice("Object 0x%08lx (size %zu):\n",
+-		  object->pointer, object->size);
++			object->pointer, object->size);
+ 	pr_notice("  comm \"%s\", pid %d, jiffies %lu\n",
+-		  object->comm, object->pid, object->jiffies);
++			object->comm, object->pid, object->jiffies);
+ 	pr_notice("  min_count = %d\n", object->min_count);
+ 	pr_notice("  count = %d\n", object->count);
+ 	pr_notice("  flags = 0x%x\n", object->flags);
+ 	pr_notice("  checksum = %u\n", object->checksum);
+ 	pr_notice("  backtrace:\n");
+-	stack_trace_print(object->trace, object->trace_len, 4);
++	if (object->trace_handle)
++		stack_depot_print(object->trace_handle);
+ }
  
- 	/* dirty lazyfree */
- 	if (type == LRU_GEN_FILE && folio_test_anon(folio) && folio_test_dirty(folio)) {
-@@ -5054,11 +5048,9 @@ static int evict_folios(struct lruvec *lruvec, struct scan_control *sc, int swap
- 	sc->nr_reclaimed += reclaimed;
+ /*
+@@ -603,12 +607,18 @@ static struct kmemleak_object *find_and_remove_object(unsigned long ptr, int ali
+ 	return object;
+ }
  
- 	list_for_each_entry_safe_reverse(folio, next, &list, lru) {
--		if (!folio_evictable(folio)) {
--			list_del(&folio->lru);
--			folio_putback_lru(folio);
-+		/* move_folios_to_lru() culls unevictable folios via folio_putback_lru() */
-+		if (!folio_evictable(folio))
- 			continue;
--		}
+-/*
+- * Save stack trace to the given array of MAX_TRACE size.
+- */
+-static int __save_stack_trace(unsigned long *trace)
++static noinline depot_stack_handle_t set_track_prepare(void)
+ {
+-	return stack_trace_save(trace, MAX_TRACE, 2);
++	depot_stack_handle_t trace_handle;
++	unsigned long entries[MAX_TRACE];
++	unsigned int nr_entries;
++
++	if (!kmemleak_initialized)
++		return 0;
++	nr_entries = stack_trace_save(entries, ARRAY_SIZE(entries), 3);
++	trace_handle = stack_depot_save(entries, nr_entries, GFP_NOWAIT);
++
++	return trace_handle;
+ }
  
- 		if (folio_test_reclaim(folio) &&
- 		    (folio_test_dirty(folio) || folio_test_writeback(folio))) {
+ /*
+@@ -666,7 +676,7 @@ static void __create_object(unsigned long ptr, size_t size,
+ 	}
+ 
+ 	/* kernel backtrace */
+-	object->trace_len = __save_stack_trace(object->trace);
++	object->trace_handle = set_track_prepare();
+ 
+ 	raw_spin_lock_irqsave(&kmemleak_lock, flags);
+ 
+@@ -705,7 +715,6 @@ static void __create_object(unsigned long ptr, size_t size,
+ 	rb_link_node(&object->rb_node, rb_parent, link);
+ 	rb_insert_color(&object->rb_node, is_phys ? &object_phys_tree_root :
+ 					  &object_tree_root);
+-
+ 	list_add_tail_rcu(&object->object_list, &object_list);
+ out:
+ 	raw_spin_unlock_irqrestore(&kmemleak_lock, flags);
+@@ -1104,7 +1113,7 @@ void __ref kmemleak_update_trace(const void *ptr)
+ 	}
+ 
+ 	raw_spin_lock_irqsave(&object->lock, flags);
+-	object->trace_len = __save_stack_trace(object->trace);
++	object->trace_handle = set_track_prepare();
+ 	raw_spin_unlock_irqrestore(&object->lock, flags);
+ 
+ 	put_object(object);
+@@ -2091,6 +2100,7 @@ void __init kmemleak_init(void)
+ 	if (kmemleak_error)
+ 		return;
+ 
++	stack_depot_init();
+ 	jiffies_min_age = msecs_to_jiffies(MSECS_MIN_AGE);
+ 	jiffies_scan_wait = msecs_to_jiffies(SECS_SCAN_WAIT * 1000);
+ 
 -- 
 2.53.0
 
