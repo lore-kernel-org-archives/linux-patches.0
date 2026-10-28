@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793209122;
-	b=yRM49VLtnx5S3zNCXYkDwu/G++ZQpWYo7LcNDrkqqG2dAaIDiZvQpdYku7mQg/xM9tFh
-	 tzzNhrptOsu9HKBb3EZA0Ru259H1gg2Ofri2ZdImBpoYNRsy4YLayPue6cI0l5EsE9BLG
-	 xn0WRpYWBobTnDwB4ZEQqJqN4sLDMJ86w6G12w72U3g/+SP9UddCFfjFkXtD3cBQx7cMG
-	 biJS01uV0FPCxE1vZjUagjDHjMVxmWAS65QlK0P2hpFUhHamd1/FbI/6wqUrBGgJBbDsg
-	 EWzZYp2R17mi+WRlJImCSz+iPfT9tdx0KFKPzWmMdXlVuTlC6342/KYxbLgwdOhKqGw==
+	t=1793209125;
+	b=4HOk7s1WYf3QiFzzOdK9OnnZCy0CqUhAFEZYSfxsOc73awIXJ4zHFcUWoN1H4FoUev1l
+	 CRUefArvK7HRALJuqOxAz8M1ZzzZAx1EsErpc0L6h5iruuueUpHaxVC74vjUNlRP2w0Xa
+	 0Fl6ED8ALMQOuLL2rBce1VpTh7poxi6YAWWU29dowhnkd1nt8dZD7J7gQFkWunOtLpPph
+	 djbkVFrkb4+LkHAOfYlq9fF7hKTRKh9dS9k6GaR0lTznBoYGsdTzaLUaNG8Gyam+1YyE7
+	 jKK90OmYMffzZfw2aRtUWhBw9B3Rvn2sgQV8SrXMHgjeezPCyrCvVJ3F1Lfh88OMb4Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793209122;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793209125;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=PjsRP9vTWzuEnExeZleIU2OjmpkdXmlnrmimKWxlFwk=;
-	b=BdTKqlzrYkFFn0KEq6PNaTmonghdGvCZpW5yG+HB5EQ0qXqClL0BK3rbDqbtBPilM+8/
-	 LlO45Iy32qmTHNjMIZgaBrwMAFQ8vIcBG2WkaWa+V9eey5YnqH6nvJ02mxn6Ss/vR5WK7
-	 cpJfw2E+Lk/tYeUZxnXEI6dhlr+TR9sk15i/V5dp7OMeYDV+QrdR+HEJazuj9HLmxBI6f
-	 3oZg+MEkm8XQUkveHC+xUcv6WTexEnpw3HHFtwsVq/2vXoNbiMLOjp/hV8qGuWDrIMdbx
-	 hQa5almhBfWFxn9nAL/KAZODnUgMkDjNTf64F7z4+ncaVAWH8Hf3GDJ25pX6f22Koqg==
+	bh=63KvAiyuqX7FY1BDGB4/wjqVn3bgUllgP7lt5l4p4p8=;
+	b=nehx6zVPsYPidVDFrN6PqSkiY2ofX76NMzcTqHAWVTUoe9n4paJShXi9g2BdbJYgjzC7
+	 DJmHh24P0BqFKxoDe7LhqnNcN6Me/cBtf5mhXeb4mwE1W/w8joV6PuuqcEqqHvTyW9ifF
+	 XfRZ7CrvimWrw0e/Vi5NdL+i0MsGEhYjVuVEsFcNIDW/MKJYviA1DUzOK+vG42RFroMTD
+	 er4L3ZCG5Xnn1c8q4/QM8BKxEIcmX437bMbj+MLtJ2nZMGjG3kNXhvfC/dBXVnTiQEa7r
+	 KhKg4PIN7GQMbVYyzfyw0p6ZVxcU0NPtBAaFXvXPIRQPxtLmoINQKxk7jqj2kgaNWpw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KHDo16G6;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CW7tKyIr;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D406606A31F;
-	Wed, 28 Oct 2026 17:38:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D1C1606A31F;
+	Wed, 28 Oct 2026 17:38:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KHDo16G6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAED81F01825;
-	Wed, 28 Oct 2026 17:38:41 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CW7tKyIr
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E6E11F01825;
+	Wed, 28 Oct 2026 17:38:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793209122;
-	bh=PjsRP9vTWzuEnExeZleIU2OjmpkdXmlnrmimKWxlFwk=;
+	s=korg; t=1793209125;
+	bh=63KvAiyuqX7FY1BDGB4/wjqVn3bgUllgP7lt5l4p4p8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KHDo16G6poW5NhYvo8R1MdBqE5iyGNue1MZSUC/dARBMO87x0DihD10StZdABcSdd
-	 s5zxXzueCYrNmxtkcr98ltzb3AQTLB9X5O2IePLQ0hLJVfgUZEsjyk5q5F8dnp/BQi
-	 DL8MCcHHUYRY09dLoLU91d6uQN5Zq713DlYzB9DY=
+	b=CW7tKyIrV8NjsbhGl/SDGK+K4sWVQGDs+wpIJXM9zsipLEmuhrOPXJLTnEoW5BxNG
+	 JEHGGA84/+s4P0QJi/+iWuxPbNuH0cf1xo1ne/YGGfwWWYd3g5ilvHXz9RinN3uHcD
+	 J+zmOKa4aL1ghzhQLFdUBA3bwvI0+irqNQ9CDzUg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Eric Dumazet <edumazet@kernel.org>,
-	Willem de Bruijn <willemb@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 359/516] flow_dissector: avoid u16 truncation of skb->len when computing thoff
-Date: Wed, 28 Oct 2026 17:58:31 +0100
-Message-ID: <20261028170011.991691508@linuxfoundation.org>
+Subject: [PATCH 5.10 360/516] flow_dissector: avoid u16 truncation of hlen in bpf_flow_dissect()
+Date: Wed, 28 Oct 2026 17:58:32 +0100
+Message-ID: <20261028170012.015367572@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -71,75 +70,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@kernel.org>
 
-[ Upstream commit 99bda1ecbd56905f8bd934b9cdccd3bd251192b1 ]
+[ Upstream commit f202578efc738b883cfa04889eb97328914265a7 ]
 
-__skb_flow_dissect() computes key_control->thoff using:
+bpf_flow_dissect() sanitizes the offsets returned by the BPF program
+with clamp_t(u16, ..., hlen).
 
-  key_control->thoff = min_t(u16, nhoff, skb ? skb->len : hlen);
+If hlen is bigger than 65535, the upper bound is truncated before
+the comparison. For instance, with hlen == 65536, both nhoff and
+thoff are forced to zero, even if the program returned sane values.
 
-min_t(u16, ...) casts both arguments to u16 before comparing them.
-Whenever skb->len (or hlen) modulo 65536 is smaller than nhoff, the
-truncated length wins and thoff is set to a bogus small value, even
-when the dissection succeeded. For example, an IPv4/TCP frame with
-skb->len == 65540 and nhoff == 34 gets thoff == 4, so callers such as
-skb_probe_transport_header() point the transport header inside the
-Ethernet header.
+This is the same class of bug as the one fixed in commit 99bda1ecbd56
+("flow_dissector: avoid u16 truncation of skb->len when computing
+thoff"). That fix does not cover the BPF path, because
+__skb_flow_dissect() returns early when a BPF flow dissector
+handles the packet.
 
-Such skbs are not exotic:
-- At the time of commit d0c081b49137 ("flow_dissector: properly cap
-  thoff field"), AF_PACKET with PACKET_VNET_HDR could already build GSO
-  skbs larger than 64KB (MTU checks are skipped for GSO, and
-  alloc_skb_with_frags() accepted up to MAX_SKB_FRAGS (17) order-0
-  pages on top of the linear part).
-- BIG TCP now makes skbs larger than 64KB common.
-- The following patch makes tun_get_user() dissect IFF_TAP frames
-  before eth_type_trans() pulls the Ethernet header, so a GSO frame
-  carrying a 65522..65535 byte L3 packet will be dissected with
-  skb->len in [65536, 65549].
+struct bpf_flow_keys stores nhoff and thoff as u16, so cap hlen
+to U16_MAX before clamping.
 
-Compare as u32 instead. If the resulting offset cannot be represented
-in the u16 key_control->thoff, cap it to U16_MAX and report the
-dissection as failed rather than silently returning a wrong transport
-offset. thoff is still set on failure, as some callers (such as
-eth_get_headlen()) use it regardless of the return value.
+Found by sashiko while reviewing the commit above.
 
-Fixes: d0c081b49137 ("flow_dissector: properly cap thoff field")
+Fixes: d58e468b1112 ("flow_dissector: implements flow dissector BPF hook")
 Signed-off-by: Eric Dumazet <edumazet@kernel.org>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20261001191140.2818991-2-edumazet@kernel.org
+Link: https://patch.msgid.link/20261007045616.445596-1-edumazet@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/flow_dissector.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ net/core/flow_dissector.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
 diff --git a/net/core/flow_dissector.c b/net/core/flow_dissector.c
-index 93810d894b1bb..e93b674d4afef 100644
+index e93b674d4afef..365d5d049c0d0 100644
 --- a/net/core/flow_dissector.c
 +++ b/net/core/flow_dissector.c
-@@ -933,6 +933,7 @@ bool __skb_flow_dissect(const struct net *net,
- 	int mpls_lse = 0;
- 	int num_hdrs = 0;
- 	u8 ip_proto = 0;
-+	u32 thoff;
- 	bool ret;
+@@ -884,6 +884,8 @@ bool bpf_flow_dissect(struct bpf_prog *prog, struct bpf_flow_dissector *ctx,
  
- 	if (!data) {
-@@ -1475,7 +1476,13 @@ bool __skb_flow_dissect(const struct net *net,
- 	ret = true;
+ 	result = bpf_prog_run_pin_on_cpu(prog, ctx);
  
- out:
--	key_control->thoff = min_t(u16, nhoff, skb ? skb->len : hlen);
-+	thoff = min_t(u32, nhoff, skb ? skb->len : hlen);
-+	if (unlikely(thoff > U16_MAX)) {
-+		/* Cannot be represented in key_control->thoff. */
-+		thoff = U16_MAX;
-+		ret = false;
-+	}
-+	key_control->thoff = thoff;
- 	key_basic->n_proto = proto;
- 	key_basic->ip_proto = ip_proto;
- 
++	/* bpf_flow_keys offsets are u16: do not let @hlen be truncated. */
++	hlen = min_t(int, hlen, U16_MAX);
+ 	flow_keys->nhoff = clamp_t(u16, flow_keys->nhoff, nhoff, hlen);
+ 	flow_keys->thoff = clamp_t(u16, flow_keys->thoff,
+ 				   flow_keys->nhoff, hlen);
 -- 
 2.53.0
 
