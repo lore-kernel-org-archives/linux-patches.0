@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213626;
-	b=TGPy5CZA3UdTjDbYDygnjjdMeA/yBFG+B6sZFFhFGgJ18M+6CVRRuVJSGSmV7HeLheuu
-	 0ug9XtxpsNjTFBRdyDNT6hQtB6eIv35nsM/RzNVMWEJfFB8392rR464LJSoybYtjuZHGB
-	 7NzPSWY2EIO3fScnRml7jbz+L+K3YV8dOpS9KErOOzHWZiywD2hIWPi062FgnaL7N+Uv6
-	 CyzhxYhkf5QtCEgeNJwUNv4CQIrruotEwDWZzpIZMI2q+op7aVSg0JrrkNIfwQ0HhAPSY
-	 lcxI9DiyJYImfHj+jZG5yAARWef1Gkt1DM7iSqr/DYOtpU8FuBbchvZSTG+Xg9pzesQ==
+	t=1793213629;
+	b=VNw69lirKYZZbE0TnsN7+Ta8neu+EGvxBGu6QmAza4JRHFn94t5t9+vz3/1AJpC0kbKm
+	 2OZrAEaHJCt0Tgg0axE7MEOM8nnpH6/roGCtKjbMj1zVrc860/o1DmWezTUyeyq1+NRqI
+	 /VRGcgThXbbpVbLrnGLcms6a6ftJAqeLa7xmQ1AaZsgcXRTssKGBc7xlo7/TLuuYh1ARW
+	 vaCEX3y75J57+tY30rca4yWZJ1op/32l2wz4A8sROJzR/yKRDbOunwWAW7yDyL05M6pK1
+	 Wc1IFp5tlcUPl2/yLKVxPro+mtlCzQdIdurTZ7il22k2DhALw7ox640ZPeXwxOLM+Hg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213626;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213629;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=f/D2HJUCBFrtfMDiJwV9N9o+Q+IrNV5ipOQ5MK0LNp8=;
-	b=RxyDNhIe0o9DspsgtqBOi8UPrKwemwu7r3QtX07lGBT46q4yRg3my4RyfatC4tXH2/j6
-	 4p9OJaGP12a9uqhK5JU8I1zThBCl1gi8Blq6MS0lBcUIBv9yrQ9XvwJ4pv31VX1xheQcW
-	 dFOl7m81MfpQ31JRWUaQYjjBBkpMQpLuIMiCqnil9t8Rcm7R+ANpIIUXAdSQDd8GO/MZL
-	 qBCLs4HygMxioNLegqc4SJzQs7tGP5wGu7oxhsPx0JPUheW83zet3AzqzRXiGR84RMDBd
-	 DVOsLMy9uH73MrFLcNutwp0PSTkAmZggHX9Bw2N5KSqhRPW/vqJSUsEbTX9fzZwjOCw==
+	bh=JKB9YC9IIh6capkp7MLFqMM1p0ygRL/mAmRxJ93wqCc=;
+	b=R7/6wgKmHGDNeNRPyUDh4yJFj7qG+rDQqQxSjBdNpziNJ/XpUWGsII1OBMDcfY8O1HfW
+	 Du9xBPMOjTyEBTF4hqKEqBHRVOYBKJeYhFehNOSohsUIAnZPuHKy6xUj0gd6V5Taq1rCj
+	 xv7y+TI3B4dkQV/KOjKsK12ZO3qc0zjx4cEaW1qavPYQiq3eK9/LDWssy0gxUIxp5oxHF
+	 /6xWmvlhhJb9mdFRAzxVD3SMXdoV5rAz9gzCanLxJrWj1L/dBx0C5KldAniPgbG8qAnMQ
+	 zXZ0Jf/J2hf7A5EuIr6K2aIC+1jj9+2yOiWH5tF5ieC8P8vLZAC4jEYn8+4H5Azwv7A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TFkqvmsC;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1u7WWdr7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8F54606A31A;
-	Wed, 28 Oct 2026 18:53:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A38B3606A31A;
+	Wed, 28 Oct 2026 18:53:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TFkqvmsC
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 252CE1F01825;
-	Wed, 28 Oct 2026 18:53:44 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1u7WWdr7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 005E01F01825;
+	Wed, 28 Oct 2026 18:53:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213625;
-	bh=f/D2HJUCBFrtfMDiJwV9N9o+Q+IrNV5ipOQ5MK0LNp8=;
+	s=korg; t=1793213628;
+	bh=JKB9YC9IIh6capkp7MLFqMM1p0ygRL/mAmRxJ93wqCc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TFkqvmsCWtZ6x2/+3jRkdj1O3f/bgnt4gOSCCOR4coiyBcr6nJITJlSj/qB7oeY1G
-	 zXKuvziIT169ts36iYTH6FzrPTk/x+XwV0CpkFjnT80jlQpAdCSRamxjT5afc4fHCt
-	 VBjyBlkSNilcfctIPpyocH+xl3QkjyeGzRXnoWF4=
+	b=1u7WWdr73Zvpf6jfqomLx4dm6LOE2hLhFzyPywPjtBnf1vxM4XGGS+m7hof2TH26E
+	 kfYvAb0NryF0qVsxG4PUntCHTWNOZQ/36CCnHYYgg7xtlgpQCjk6jOHyB4O10YIUTw
+	 61T+TmEM+QTvi68CNv62/QxrezL+xCIQyEoVCN0Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Kuai <yukuai3@huawei.com>,
-	Tejun Heo <tj@kernel.org>,
-	Jens Axboe <axboe@kernel.dk>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0570/1887] block/rq_qos: protect rq_qos apis with a new lock
-Date: Wed, 28 Oct 2026 17:44:26 +0100
-Message-ID: <20261028170512.373341103@linuxfoundation.org>
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	syzbot+12cb4425b22169b52036@syzkaller.appspotmail.com
+Subject: [PATCH 6.1 0571/1887] f2fs: fix to do sanity check on direct node in truncate_dnode()
+Date: Wed, 28 Oct 2026 17:44:27 +0100
+Message-ID: <20261028170512.397740943@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,256 +69,140 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yu Kuai <yukuai3@huawei.com>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit a13bd91be22318768d55470cbc0b0f4488ef9edf ]
+[ Upstream commit a6ec83786ab9f13f25fb18166dee908845713a95 ]
 
-commit 50e34d78815e ("block: disable the elevator int del_gendisk")
-move rq_qos_exit() from disk_release() to del_gendisk(), this will
-introduce some problems:
+syzbot reports below bug:
 
-1) If rq_qos_add() is triggered by enabling iocost/iolatency through
-   cgroupfs, then it can concurrent with del_gendisk(), it's not safe to
-   write 'q->rq_qos' concurrently.
+BUG: KASAN: slab-use-after-free in f2fs_truncate_data_blocks_range+0x122a/0x14c0 fs/f2fs/file.c:574
+Read of size 4 at addr ffff88802a25c000 by task syz-executor148/5000
 
-2) Activate cgroup policy that is relied on rq_qos will call
-   rq_qos_add() and blkcg_activate_policy(), and if rq_qos_exit() is
-   called in the middle, null-ptr-dereference will be triggered in
-   blkcg_activate_policy().
+CPU: 1 PID: 5000 Comm: syz-executor148 Not tainted 6.4.0-rc7-syzkaller-00041-ge660abd551f1 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 05/27/2023
+Call Trace:
+ <TASK>
+ __dump_stack lib/dump_stack.c:88 [inline]
+ dump_stack_lvl+0xd9/0x150 lib/dump_stack.c:106
+ print_address_description.constprop.0+0x2c/0x3c0 mm/kasan/report.c:351
+ print_report mm/kasan/report.c:462 [inline]
+ kasan_report+0x11c/0x130 mm/kasan/report.c:572
+ f2fs_truncate_data_blocks_range+0x122a/0x14c0 fs/f2fs/file.c:574
+ truncate_dnode+0x229/0x2e0 fs/f2fs/node.c:944
+ f2fs_truncate_inode_blocks+0x64b/0xde0 fs/f2fs/node.c:1154
+ f2fs_do_truncate_blocks+0x4ac/0xf30 fs/f2fs/file.c:721
+ f2fs_truncate_blocks+0x7b/0x300 fs/f2fs/file.c:749
+ f2fs_truncate.part.0+0x4a5/0x630 fs/f2fs/file.c:799
+ f2fs_truncate include/linux/fs.h:825 [inline]
+ f2fs_setattr+0x1738/0x2090 fs/f2fs/file.c:1006
+ notify_change+0xb2c/0x1180 fs/attr.c:483
+ do_truncate+0x143/0x200 fs/open.c:66
+ handle_truncate fs/namei.c:3295 [inline]
+ do_open fs/namei.c:3640 [inline]
+ path_openat+0x2083/0x2750 fs/namei.c:3791
+ do_filp_open+0x1ba/0x410 fs/namei.c:3818
+ do_sys_openat2+0x16d/0x4c0 fs/open.c:1356
+ do_sys_open fs/open.c:1372 [inline]
+ __do_sys_creat fs/open.c:1448 [inline]
+ __se_sys_creat fs/open.c:1442 [inline]
+ __x64_sys_creat+0xcd/0x120 fs/open.c:1442
+ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+ do_syscall_64+0x39/0xb0 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x63/0xcd
 
-3) blkg_conf_open_bdev() can call blkdev_get_no_open() first to find the
-   disk, then if rq_qos_exit() from del_gendisk() is done before
-   rq_qos_add(), then memory will be leaked.
+The root cause is, inodeA references inodeB via inodeB's ino, once inodeA
+is truncated, it calls truncate_dnode() to truncate data blocks in inodeB's
+node page, it traverse mapping data from node->i.i_addr[0] to
+node->i.i_addr[ADDRS_PER_BLOCK() - 1], result in out-of-boundary access.
 
-This patch add a new disk level mutex 'rq_qos_mutex':
+This patch fixes to add sanity check on dnode page in truncate_dnode(),
+so that, it can help to avoid triggering such issue, and once it encounters
+such issue, it will record newly introduced ERROR_INVALID_NODE_REFERENCE
+error into superblock, later fsck can detect such issue and try repairing.
 
-1) The lock will protect rq_qos_exit() directly.
+Also, it removes f2fs_truncate_data_blocks() for cleanup due to the
+function has only one caller, and uses f2fs_truncate_data_blocks_range()
+instead.
 
-2) For wbt that doesn't relied on blk-cgroup, rq_qos_add() can only be
-   called from disk initialization for now because wbt can't be
-   destructed until rq_qos_exit(), so it's safe not to protect wbt for
-   now. Hoever, in case that rq_qos dynamically destruction is supported
-   in the furture, this patch also protect rq_qos_add() from wbt_init()
-   directly, this is enough because blk-sysfs already synchronize
-   writers with disk removal.
-
-3) For iocost and iolatency, in order to synchronize disk removal and
-   cgroup configuration, the lock is held after blkdev_get_no_open()
-   from blkg_conf_open_bdev(), and is released in blkg_conf_exit().
-   In order to fix the above memory leak, disk_live() is checked after
-   holding the new lock.
-
-Fixes: 50e34d78815e ("block: disable the elevator int del_gendisk")
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Acked-by: Tejun Heo <tj@kernel.org>
-Link: https://lore.kernel.org/r/20230414084008.2085155-1-yukuai1@huaweicloud.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Reported-and-tested-by: syzbot+12cb4425b22169b52036@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/linux-f2fs-devel/000000000000f3038a05fef867f8@google.com
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-cgroup.c     | 12 ++++++++++++
- block/blk-core.c       |  1 +
- block/blk-iocost.c     |  4 ++++
- block/blk-rq-qos.c     |  2 ++
- block/blk-rq-qos.h     | 18 ++++--------------
- block/blk-wbt.c        |  2 ++
- include/linux/blkdev.h |  1 +
- 7 files changed, 26 insertions(+), 14 deletions(-)
+ fs/f2fs/f2fs.h |  1 -
+ fs/f2fs/file.c |  5 -----
+ fs/f2fs/node.c | 14 ++++++++++++--
+ 3 files changed, 12 insertions(+), 8 deletions(-)
 
-diff --git a/block/blk-cgroup.c b/block/blk-cgroup.c
-index 7d7c99d93bdb8..3a33ec0af8419 100644
---- a/block/blk-cgroup.c
-+++ b/block/blk-cgroup.c
-@@ -656,6 +656,13 @@ struct block_device *blkcg_conf_open_bdev(char **inputp)
- 		return ERR_PTR(-ENODEV);
- 	}
+diff --git a/fs/f2fs/f2fs.h b/fs/f2fs/f2fs.h
+index 3b1d99d03ab1b..971d45979ce40 100644
+--- a/fs/f2fs/f2fs.h
++++ b/fs/f2fs/f2fs.h
+@@ -3466,7 +3466,6 @@ static inline bool __is_valid_data_blkaddr(block_t blkaddr)
+  * file.c
+  */
+ int f2fs_sync_file(struct file *file, loff_t start, loff_t end, int datasync);
+-void f2fs_truncate_data_blocks(struct dnode_of_data *dn);
+ int f2fs_do_truncate_blocks(struct inode *inode, u64 from, bool lock);
+ int f2fs_truncate_blocks(struct inode *inode, u64 from, bool lock);
+ int f2fs_truncate(struct inode *inode);
+diff --git a/fs/f2fs/file.c b/fs/f2fs/file.c
+index 36c3103035c3d..6755d23a90512 100644
+--- a/fs/f2fs/file.c
++++ b/fs/f2fs/file.c
+@@ -666,11 +666,6 @@ void f2fs_truncate_data_blocks_range(struct dnode_of_data *dn, int count)
+ 					 dn->ofs_in_node, nr_free);
+ }
  
-+	mutex_lock(&bdev->bd_queue->rq_qos_mutex);
-+	if (!disk_live(bdev->bd_disk)) {
-+		mutex_unlock(&bdev->bd_queue->rq_qos_mutex);
-+		blkdev_put_no_open(bdev);
-+		return ERR_PTR(-ENODEV);
+-void f2fs_truncate_data_blocks(struct dnode_of_data *dn)
+-{
+-	f2fs_truncate_data_blocks_range(dn, ADDRS_PER_BLOCK(dn->inode));
+-}
+-
+ static int truncate_partial_data_page(struct inode *inode, u64 from,
+ 								bool cache_only)
+ {
+diff --git a/fs/f2fs/node.c b/fs/f2fs/node.c
+index 8d2e5d3910c59..9d4ec1a061bfb 100644
+--- a/fs/f2fs/node.c
++++ b/fs/f2fs/node.c
+@@ -946,6 +946,7 @@ static int truncate_node(struct dnode_of_data *dn)
+ 
+ static int truncate_dnode(struct dnode_of_data *dn)
+ {
++	struct f2fs_sb_info *sbi = F2FS_I_SB(dn->inode);
+ 	struct page *page;
+ 	int err;
+ 
+@@ -953,16 +954,25 @@ static int truncate_dnode(struct dnode_of_data *dn)
+ 		return 1;
+ 
+ 	/* get direct node */
+-	page = f2fs_get_node_page(F2FS_I_SB(dn->inode), dn->nid);
++	page = f2fs_get_node_page(sbi, dn->nid);
+ 	if (PTR_ERR(page) == -ENOENT)
+ 		return 1;
+ 	else if (IS_ERR(page))
+ 		return PTR_ERR(page);
+ 
++	if (IS_INODE(page) || ino_of_node(page) != dn->inode->i_ino) {
++		f2fs_err(sbi, "incorrect node reference, ino: %lu, nid: %u, ino_of_node: %u",
++				dn->inode->i_ino, dn->nid, ino_of_node(page));
++		set_sbi_flag(sbi, SBI_NEED_FSCK);
++		f2fs_handle_error(sbi, ERROR_INVALID_NODE_REFERENCE);
++		f2fs_put_page(page, 1);
++		return -EFSCORRUPTED;
 +	}
 +
- 	*inputp = input;
- 	return bdev;
- }
-@@ -779,6 +786,7 @@ int blkg_conf_prep(struct blkcg *blkcg, const struct blkcg_policy *pol,
- fail_exit_queue:
- 	blk_queue_exit(q);
- fail:
-+	mutex_unlock(&q->rq_qos_mutex);
- 	blkdev_put_no_open(bdev);
- 	/*
- 	 * If queue was bypassing, we should retry.  Do so after a
-@@ -803,9 +811,11 @@ EXPORT_SYMBOL_GPL(blkg_conf_prep);
-  */
- void blkg_conf_finish(struct blkg_conf_ctx *ctx)
- 	__releases(&ctx->bdev->bd_queue->queue_lock) __releases(rcu)
-+	__releases(&ctx->bdev->bd_queue->rq_qos_mutex)
- {
- 	spin_unlock_irq(&bdev_get_queue(ctx->bdev)->queue_lock);
- 	rcu_read_unlock();
-+	mutex_unlock(&ctx->bdev->bd_queue->rq_qos_mutex);
- 	blkdev_put_no_open(ctx->bdev);
- }
- EXPORT_SYMBOL_GPL(blkg_conf_finish);
-@@ -1297,7 +1307,9 @@ int blkcg_init_disk(struct gendisk *disk)
- 	if (ret)
- 		goto err_ioprio_exit;
- 
-+	mutex_lock(&q->rq_qos_mutex);
- 	ret = blk_iolatency_init(disk);
-+	mutex_unlock(&q->rq_qos_mutex);
- 	if (ret)
- 		goto err_throtl_exit;
- 
-diff --git a/block/blk-core.c b/block/blk-core.c
-index 1fcd80a1c54fd..641bc0fa8a4ad 100644
---- a/block/blk-core.c
-+++ b/block/blk-core.c
-@@ -412,6 +412,7 @@ struct request_queue *blk_alloc_queue(int node_id, bool alloc_srcu)
- 	mutex_init(&q->debugfs_mutex);
- 	mutex_init(&q->sysfs_lock);
- 	mutex_init(&q->sysfs_dir_lock);
-+	mutex_init(&q->rq_qos_mutex);
- 	spin_lock_init(&q->queue_lock);
- 
- 	init_waitqueue_head(&q->mq_freeze_wq);
-diff --git a/block/blk-iocost.c b/block/blk-iocost.c
-index 93482cc420c97..3989d8c796b0f 100644
---- a/block/blk-iocost.c
-+++ b/block/blk-iocost.c
-@@ -3309,11 +3309,13 @@ static ssize_t ioc_qos_write(struct kernfs_open_file *of, char *input,
- 	ioc_refresh_params(ioc, true);
- 	spin_unlock_irq(&ioc->lock);
- 
-+	mutex_unlock(&bdev->bd_queue->rq_qos_mutex);
- 	blkdev_put_no_open(bdev);
- 	return nbytes;
- einval:
- 	ret = -EINVAL;
- err:
-+	mutex_unlock(&bdev->bd_queue->rq_qos_mutex);
- 	blkdev_put_no_open(bdev);
- 	return ret;
- }
-@@ -3434,12 +3436,14 @@ static ssize_t ioc_cost_model_write(struct kernfs_open_file *of, char *input,
- 	ioc_refresh_params(ioc, true);
- 	spin_unlock_irq(&ioc->lock);
- 
-+	mutex_unlock(&bdev->bd_queue->rq_qos_mutex);
- 	blkdev_put_no_open(bdev);
- 	return nbytes;
- 
- einval:
- 	ret = -EINVAL;
- err:
-+	mutex_unlock(&bdev->bd_queue->rq_qos_mutex);
- 	blkdev_put_no_open(bdev);
- 	return ret;
- }
-diff --git a/block/blk-rq-qos.c b/block/blk-rq-qos.c
-index a319311d1ced1..aa45f073d51b0 100644
---- a/block/blk-rq-qos.c
-+++ b/block/blk-rq-qos.c
-@@ -288,9 +288,11 @@ void rq_qos_wait(struct rq_wait *rqw, void *private_data,
- 
- void rq_qos_exit(struct request_queue *q)
- {
-+	mutex_lock(&q->rq_qos_mutex);
- 	while (q->rq_qos) {
- 		struct rq_qos *rqos = q->rq_qos;
- 		q->rq_qos = rqos->next;
- 		rqos->ops->exit(rqos);
- 	}
-+	mutex_unlock(&q->rq_qos_mutex);
- }
-diff --git a/block/blk-rq-qos.h b/block/blk-rq-qos.h
-index 1ef1f7d4bc3cb..98be0e02a86c1 100644
---- a/block/blk-rq-qos.h
-+++ b/block/blk-rq-qos.h
-@@ -87,21 +87,18 @@ static inline void rq_wait_init(struct rq_wait *rq_wait)
- 
- static inline int rq_qos_add(struct request_queue *q, struct rq_qos *rqos)
- {
-+	lockdep_assert_held(&q->rq_qos_mutex);
-+
- 	/*
- 	 * No IO can be in-flight when adding rqos, so freeze queue, which
- 	 * is fine since we only support rq_qos for blk-mq queue.
--	 *
--	 * Reuse ->queue_lock for protecting against other concurrent
--	 * rq_qos adding/deleting
- 	 */
- 	blk_mq_freeze_queue(q);
- 
--	spin_lock_irq(&q->queue_lock);
- 	if (rq_qos_id(q, rqos->id))
- 		goto ebusy;
- 	rqos->next = q->rq_qos;
- 	q->rq_qos = rqos;
--	spin_unlock_irq(&q->queue_lock);
- 
- 	blk_mq_unfreeze_queue(q);
- 
-@@ -113,7 +110,6 @@ static inline int rq_qos_add(struct request_queue *q, struct rq_qos *rqos)
- 
- 	return 0;
- ebusy:
--	spin_unlock_irq(&q->queue_lock);
- 	blk_mq_unfreeze_queue(q);
- 	return -EBUSY;
- 
-@@ -123,21 +119,15 @@ static inline void rq_qos_del(struct request_queue *q, struct rq_qos *rqos)
- {
- 	struct rq_qos **cur;
- 
--	/*
--	 * See comment in rq_qos_add() about freezing queue & using
--	 * ->queue_lock.
--	 */
--	blk_mq_freeze_queue(q);
-+	lockdep_assert_held(&q->rq_qos_mutex);
- 
--	spin_lock_irq(&q->queue_lock);
-+	blk_mq_freeze_queue(q);
- 	for (cur = &q->rq_qos; *cur; cur = &(*cur)->next) {
- 		if (*cur == rqos) {
- 			*cur = rqos->next;
- 			break;
- 		}
- 	}
--	spin_unlock_irq(&q->queue_lock);
--
- 	blk_mq_unfreeze_queue(q);
- 
- 	mutex_lock(&q->debugfs_mutex);
-diff --git a/block/blk-wbt.c b/block/blk-wbt.c
-index c293e08b301ff..46534c877c12f 100644
---- a/block/blk-wbt.c
-+++ b/block/blk-wbt.c
-@@ -850,7 +850,9 @@ int wbt_init(struct request_queue *q)
- 	/*
- 	 * Assign rwb and add the stats callback.
- 	 */
-+	mutex_lock(&q->rq_qos_mutex);
- 	ret = rq_qos_add(q, &rwb->rqos);
-+	mutex_unlock(&q->rq_qos_mutex);
- 	if (ret)
- 		goto err_free;
- 
-diff --git a/include/linux/blkdev.h b/include/linux/blkdev.h
-index de013fc37ef83..c5d07c7609d4b 100644
---- a/include/linux/blkdev.h
-+++ b/include/linux/blkdev.h
-@@ -397,6 +397,7 @@ struct request_queue {
- 
- 	struct blk_queue_stats	*stats;
- 	struct rq_qos		*rq_qos;
-+	struct mutex		rq_qos_mutex;
- 
- 	const struct blk_mq_ops	*mq_ops;
- 
+ 	/* Make dnode_of_data for parameter */
+ 	dn->node_page = page;
+ 	dn->ofs_in_node = 0;
+-	f2fs_truncate_data_blocks(dn);
++	f2fs_truncate_data_blocks_range(dn, ADDRS_PER_BLOCK(dn->inode));
+ 	err = truncate_node(dn);
+ 	if (err) {
+ 		f2fs_put_page(page, 1);
 -- 
 2.53.0
 
