@@ -1,56 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214105;
-	b=v7Cot9iblzXrkH/VWDNLSvDfw8gnKDqT4AnD9CFifKtRfAu42QgJf3fUkYJ15WaoZ2sY
-	 l6IZaLynHlqmlGzmc2R1lE6kQ1Z4l9oynihID+IQIVFlgSL2fKddsUqjBHCIwOnePWHqh
-	 +rXh6CK6X1LV0Vfr2LhEEsn1fdHv269ZXHTNPgusmhb1Uoih7WnWUfYLjTERdTVTxvEyI
-	 Vw7/sELiUJ1Cm/UGTCJ5+Fl3opg7flMxJvGRl2BPJvXv6lIQ2IJKeP1nn8ZnpAd06bjss
-	 L6UMgd9mjmWdM18THJlcBaCCzCji8I+r73PEbAOSYpf1AO59Iva5agKNh7QfydUFB/w==
+	t=1793214108;
+	b=DIwzZ0FyrJ/UJUmvpARfFwBUIETtnpxwiogLAJ9WwrP+YeNaOqk0sB5rHRPmvqnwtBCC
+	 vppWRDm6jx8fZuQpKsS6f8GU1T2P4sS000dIkXPt95SxeaX0VTL4jR7G9ScTPg08R+kDV
+	 GDrbCxWKhEFuEEHP5SPxErhjxg0I0fWv9b+iA2qyBR/OEpbZs0ab9B7RGdzbCxQHSreq/
+	 rPkZ9DJayC1H16iJbTUWR7tc5fnx104bjmtIDC5vn/gSdTlcHDYLwTtTFw4O6aC+5RqIr
+	 0QGngDR+vacHyHjYXAtqpTJvXz/XzlsRzRHPTpfXPJXpz7i20y+efsdwARfnsLcGWGQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214105;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214108;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=UiVIC9YFgbD7v7QPuwulGBmjd/OhYAmLzcABVjX1Jfk=;
-	b=aBYwNhdfcUjA0Mis58EG6ciLRAgx4AGvNLr76G+Mv3x9oNbTqBiVw0nUomtoemu5a2W2
-	 6ytxVVeiz80VYXCDRJ68SOGdSKwd2P8GfW/uxEhFgAtK6KSet6d5x8Azh876AVpHt3iw4
-	 yxET94Wbgs+jQczdB9xjhNpyEb+mJyMoDz6/ZI9/TJNN4LLK4upTkV0hSZfzwuJPehwnK
-	 +YD2LfKObasIpkhIxbIyc38xXErNYKuztAou3Zl89dbMgOVUnJamPhzwityzAb32ZXn02
-	 AmlV4ygBnkZWzx9NZv74l1mobA8wIBsY9/3fBMeHPbkNWKjmJCvzgsCkslT78jy24lQ==
+	bh=fH9OdVqUFe3KXZIxBNsu47v4NdgRfZ2zZOIpQklkn2Y=;
+	b=nllqlMVmkUXJY+ZlazjMNoESn1ftcoxbE3qnoiZBbUOZUhfcb7CQ/jpL2x0tpoBJdQlr
+	 lwNXsFpf4sbks2DFwoAbdItV/VB5cJio6qT0Id2tpqL1/yTkZMg3bXv2qxgm+h6C/njlB
+	 rwcJzFaszCQ2OopYOTS8JVDg3f02ToagoaD5mH1hkxckLs5fYAfJ8HqqmiiGJxXYcJBD9
+	 Yyi9fS0jTU6qg20sAx6pSMKI7s+iGFzgfZ0NT2GjnBi9bhpx2jYdqJc2mCgEh4xa4hOgb
+	 QxLF72KiB9w4ML/N3JroSqsZUoTg6xpLDISpZk+jBn0Bx89Jz3ZAF63p8mW9Zl8G2ew==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L3pzy1RT;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QoTLw5Ai;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCE81606A31A;
-	Wed, 28 Oct 2026 19:01:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B627E606A31D;
+	Wed, 28 Oct 2026 19:01:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L3pzy1RT
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F2F41F01825;
-	Wed, 28 Oct 2026 19:01:44 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QoTLw5Ai
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11C151F01825;
+	Wed, 28 Oct 2026 19:01:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214104;
-	bh=UiVIC9YFgbD7v7QPuwulGBmjd/OhYAmLzcABVjX1Jfk=;
+	s=korg; t=1793214107;
+	bh=fH9OdVqUFe3KXZIxBNsu47v4NdgRfZ2zZOIpQklkn2Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=L3pzy1RThVb8bCsU4BB6zB3JJnovai55kw2JdpfOm2/s2Q3A0E7JtWbVkrqJblzNs
-	 XLuNk3x8BI56IZmRPL5aBKuuspSyoTy8S6Kz2b24JUqPjiCkEqtXok5ZxUY6J6nIQD
-	 3K8kAKD/zIZhOFKopFc4R/Lj8Do5QILQTzpAoag4=
+	b=QoTLw5AizFKhDRS3ILPK3cie+ixS5i/yXQi3opWlJktyF8DoZ9sEB4znndDD5aJhr
+	 Ur/YQ/DSxxjT7XB+otai6+uAg9urXvhQRKQLzOS7HUfgPalHdxb6Rzz2aeM4gQNZHb
+	 CPuB7cNxKsNxZcu6JzZnTfv4c7UPeZLi45zPgKe4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Seppo Ingalsuo <seppo.ingalsuo@linux.intel.com>,
-	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
-	Liam Girdwood <liam.r.girdwood@intel.com>,
-	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	Peter Jones <pjones@redhat.com>,
+	Ard Biesheuvel <ardb@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0741/1887] ASoC: SOF: ipc4-topology: Harden loops for looking up ALH copiers
-Date: Wed, 28 Oct 2026 17:47:17 +0100
-Message-ID: <20261028170516.308910320@linuxfoundation.org>
+Subject: [PATCH 6.1 0742/1887] efi: Dont map the entire mokvar table to determine its size
+Date: Wed, 28 Oct 2026 17:47:18 +0100
+Message-ID: <20261028170516.333007466@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -72,70 +68,130 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+From: Peter Jones <pjones@redhat.com>
 
-[ Upstream commit 6fd60136d256b3b948333ebdb3835f41a95ab7ef ]
+[ Upstream commit 2b90e7ace79774a3540ce569e000388f8d22c9e0 ]
 
-Other, non DAI copier widgets could have the same  stream name (sname) as
-the ALH copier and in that case the copier->data is NULL, no alh_data is
-attached, which could lead to NULL pointer dereference.
-We could check for this NULL pointer in sof_ipc4_prepare_copier_module()
-and avoid the crash, but a similar loop in sof_ipc4_widget_setup_comp_dai()
-will miscalculate the ALH device count, causing broken audio.
+Currently, when validating the mokvar table, we (re)map the entire table
+on each iteration of the loop, adding space as we discover new entries.
+If the table grows over a certain size, this fails due to limitations of
+early_memmap(), and we get a failure and traceback:
 
-The correct fix is to harden the matching logic by making sure that the
-1. widget is a DAI widget - so dai = w->private is valid
-2. the dai (and thus the copier) is ALH copier
+  ------------[ cut here ]------------
+  WARNING: CPU: 0 PID: 0 at mm/early_ioremap.c:139 __early_ioremap+0xef/0x220
+  ...
+  Call Trace:
+   <TASK>
+   ? __early_ioremap+0xef/0x220
+   ? __warn.cold+0x93/0xfa
+   ? __early_ioremap+0xef/0x220
+   ? report_bug+0xff/0x140
+   ? early_fixup_exception+0x5d/0xb0
+   ? early_idt_handler_common+0x2f/0x3a
+   ? __early_ioremap+0xef/0x220
+   ? efi_mokvar_table_init+0xce/0x1d0
+   ? setup_arch+0x864/0xc10
+   ? start_kernel+0x6b/0xa10
+   ? x86_64_start_reservations+0x24/0x30
+   ? x86_64_start_kernel+0xed/0xf0
+   ? common_startup_64+0x13e/0x141
+   </TASK>
+  ---[ end trace 0000000000000000 ]---
+  mokvar: Failed to map EFI MOKvar config table pa=0x7c4c3000, size=265187.
 
-Fixes: a150345aa758 ("ASoC: SOF: ipc4-topology: add SoundWire/ALH aggregation support")
-Reported-by: Seppo Ingalsuo <seppo.ingalsuo@linux.intel.com>
-Link: https://github.com/thesofproject/sof/pull/9652
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Reviewed-by: Liam Girdwood <liam.r.girdwood@intel.com>
-Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
-Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Link: https://patch.msgid.link/20250206084642.14988-1-peter.ujfalusi@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Mapping the entire structure isn't actually necessary, as we don't ever
+need more than one entry header mapped at once.
+
+Changes efi_mokvar_table_init() to only map each entry header, not the
+entire table, when determining the table size.  Since we're not mapping
+any data past the variable name, it also changes the code to enforce
+that each variable name is NUL terminated, rather than attempting to
+verify it in place.
+
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Peter Jones <pjones@redhat.com>
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sof/ipc4-topology.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/firmware/efi/mokvar-table.c | 42 +++++++++--------------------
+ 1 file changed, 13 insertions(+), 29 deletions(-)
 
-diff --git a/sound/soc/sof/ipc4-topology.c b/sound/soc/sof/ipc4-topology.c
-index ee6f6edec970c..413dc2d8afb65 100644
---- a/sound/soc/sof/ipc4-topology.c
-+++ b/sound/soc/sof/ipc4-topology.c
-@@ -515,7 +515,7 @@ static int sof_ipc4_widget_setup_comp_dai(struct snd_sof_widget *swidget)
+diff --git a/drivers/firmware/efi/mokvar-table.c b/drivers/firmware/efi/mokvar-table.c
+index 37e1fe7a2f2b3..bd84a22805b56 100644
+--- a/drivers/firmware/efi/mokvar-table.c
++++ b/drivers/firmware/efi/mokvar-table.c
+@@ -103,9 +103,7 @@ void __init efi_mokvar_table_init(void)
+ 	void *va = NULL;
+ 	unsigned long cur_offset = 0;
+ 	unsigned long offset_limit;
+-	unsigned long map_size = 0;
+ 	unsigned long map_size_needed = 0;
+-	unsigned long size;
+ 	struct efi_mokvar_table_entry *mokvar_entry;
+ 	int err;
+ 
+@@ -134,48 +132,34 @@ void __init efi_mokvar_table_init(void)
+ 	 */
+ 	err = -EINVAL;
+ 	while (cur_offset + sizeof(*mokvar_entry) <= offset_limit) {
+-		mokvar_entry = va + cur_offset;
+-		map_size_needed = cur_offset + sizeof(*mokvar_entry);
+-		if (map_size_needed > map_size) {
+-			if (va)
+-				early_memunmap(va, map_size);
+-			/*
+-			 * Map a little more than the fixed size entry
+-			 * header, anticipating some data. It's safe to
+-			 * do so as long as we stay within current memory
+-			 * descriptor.
+-			 */
+-			map_size = min(map_size_needed + 2*EFI_PAGE_SIZE,
+-				       offset_limit);
+-			va = early_memremap(efi.mokvar_table, map_size);
+-			if (!va) {
+-				pr_err("Failed to map EFI MOKvar config table pa=0x%lx, size=%lu.\n",
+-				       efi.mokvar_table, map_size);
+-				return;
+-			}
+-			mokvar_entry = va + cur_offset;
++		if (va)
++			early_memunmap(va, sizeof(*mokvar_entry));
++		va = early_memremap(efi.mokvar_table + cur_offset, sizeof(*mokvar_entry));
++		if (!va) {
++			pr_err("Failed to map EFI MOKvar config table pa=0x%lx, size=%zu.\n",
++			       efi.mokvar_table + cur_offset, sizeof(*mokvar_entry));
++			return;
+ 		}
++		mokvar_entry = va;
+ 
+ 		/* Check for last sentinel entry */
+ 		if (mokvar_entry->name[0] == '\0') {
+ 			if (mokvar_entry->data_size != 0)
+ 				break;
+ 			err = 0;
++			map_size_needed = cur_offset + sizeof(*mokvar_entry);
+ 			break;
  		}
  
- 		list_for_each_entry(w, &sdev->widget_list, list) {
--			if (w->widget->sname &&
-+			if (!WIDGET_IS_DAI(w->id) || !w->widget->sname ||
- 			    strcmp(w->widget->sname, swidget->widget->sname))
- 				continue;
+-		/* Sanity check that the name is null terminated */
+-		size = strnlen(mokvar_entry->name,
+-			       sizeof(mokvar_entry->name));
+-		if (size >= sizeof(mokvar_entry->name))
+-			break;
++		/* Enforce that the name is NUL terminated */
++		mokvar_entry->name[sizeof(mokvar_entry->name) - 1] = '\0';
  
-@@ -1237,17 +1237,20 @@ sof_ipc4_prepare_copier_module(struct snd_sof_widget *swidget,
- 			 */
- 			i = 0;
- 			list_for_each_entry(w, &sdev->widget_list, list) {
--				if (w->widget->sname &&
-+				if (!WIDGET_IS_DAI(w->id) || !w->widget->sname ||
- 				    strcmp(w->widget->sname, swidget->widget->sname))
- 					continue;
+ 		/* Advance to the next entry */
+-		cur_offset = map_size_needed + mokvar_entry->data_size;
++		cur_offset += sizeof(*mokvar_entry) + mokvar_entry->data_size;
+ 	}
  
- 				dai = w->private;
- 				alh_copier = (struct sof_ipc4_copier *)dai->private;
-+				if (alh_copier->dai_type != SOF_DAI_INTEL_ALH)
-+					continue;
- 				alh_data = &alh_copier->data;
- 				blob->alh_cfg.mapping[i].alh_id = alh_data->gtw_cfg.node_id;
- 				blob->alh_cfg.mapping[i].channel_mask = ch_mask;
- 				i++;
- 			}
-+			blob->alh_cfg.count = i;
- 			if (blob->alh_cfg.count > 1) {
- 				int group_id;
- 
+ 	if (va)
+-		early_memunmap(va, map_size);
++		early_memunmap(va, sizeof(*mokvar_entry));
+ 	if (err) {
+ 		pr_err("EFI MOKvar config table is not valid\n");
+ 		return;
 -- 
 2.53.0
 
