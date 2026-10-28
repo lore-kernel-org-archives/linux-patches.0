@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213637;
-	b=Mj+6Y/LsCiAqOOEKnhF6gVGYMQvUGa4uhdBgtWkIqG7S4Qgmbtxi9xMq/S/7Z2G+MosD
-	 FG27Lf3IaHVJjcrWfRek5PRbnNCu5JCFnO93BCAvyUDCrspv3NekxoPMRnGwquTlrvr5L
-	 cLLmfOZfXhZ8omYrTdMtv4BWecC4pyE+JOIFMl2Mpe0z24jDQG5sExHRtTlGUSA5wiWun
-	 7YWwxbI4fnwPKM4aVOqZbzMGLt81JjfRi6Iateb+LyyYTGG1Bi2mM1bEHfMgMlxDdsiHn
-	 3/LFgW3UspeDCdV1ip+fT/78AAUtV+h3NbKR+MlO1J+FX2c62TxAM4QBvA+XQNTbXkw==
+	t=1793213640;
+	b=f86w7XFmxXRL4y1a9BPpSS1cX0YAB87ZAWbzkHxAejCg9OMkvWAbM0xSs7LyflxJsmhB
+	 wUZLGABbrhWJ/8PpBBb4G6S7QTs/Qx8rAmCtDnlk12WcVgaApGDr0H4EnwmuxX+zUxvaA
+	 qMFEfM7qpcD7TQSPViTNd8R+9OpLgrDEHCIJ/UC7g5s6v/2vdRC9c7/Z3zgP8uv05ggBD
+	 KIBXzN/p8b7BucXeo+ALNyM70GihOiBRhAB6w5TnOTAUoM9EtzkatyJ5ad8bl3/s1KrC8
+	 4YeR3y6mx806fYDFFGTI0ORpsZu0hVnvv2gkhWAhTktA59dAm2auUCEmGPv1v+lmmJg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213637;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213640;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=SHi+9j+oJbAijy9fLpTR2/UCzETjHKfJbWrR+z8hkB8=;
-	b=RWCt/Ea6NV0xpVqh28tXTtn9k1gqrlN811txhtk1nWfP0LZwQhBJSnZCLYgq1RCb26bS
-	 wxTG1x9HCBqVkRBLTdYCnBXcLX/s7DB4l20JCFrbU8cDvu/9rWhAqwn1C/NNAD0C2pMx0
-	 +1V/pFUerrP9135EiSMaJ0ZlEOltM1g7PQpSlx6IicbVEdhb7F6JZPEqzbB7iF8EwsJP2
-	 JRvEKNvsWlYoAfZ023tJ++LfUqdr+zRVDQK67Mc92q/U5dJCj3CK91jG35BmKr45OO1d1
-	 gmQN5tl/W7A9wTeq4aQvuEPAfQe1K4rrKCqkHi9H8DE8cPjTWd+UuliX/62eQupQaKA==
+	bh=YHmV1zKOHL1PGjuClAQALmCe9zdM90DzEBN7wDbnuUY=;
+	b=A6IYs8hq/naplPVMWsXepQbAV0Oliwl+wLgZeGclR8ymbDH0vaXujqlRvtaMrvR3+WbX
+	 jMFMdUfh0QLNMvwW64FbZttEwO/lYKTfmqtS84wxfelRBJtyggWeH5CSYIPsQfFIZB5ny
+	 OQ/nJLMj/fQqr78o2v3qre0PMVCUs3lVaSogOWGl7h3cBVs9AIybDRaOshYzpBesARDTr
+	 x7z0Xk7NCszeiWsXg+JIrK+pWqSqw3g3kQ9aXQAEndvF81gOVGNTBsQZLDp50uaYRIlIj
+	 wl2WG3J/3bmPur7sx/VyfNmCRaeBm8A/pm+XHWttTyoJK3HBw8bvtsHeAPHPnOy+6ZA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NusLBCgf;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XQHs37+Y;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 296BB606A31C;
-	Wed, 28 Oct 2026 18:53:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 053EE606A31A;
+	Wed, 28 Oct 2026 18:54:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NusLBCgf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C0FE1F01825;
-	Wed, 28 Oct 2026 18:53:56 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XQHs37+Y
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 540441F01825;
+	Wed, 28 Oct 2026 18:53:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213637;
-	bh=SHi+9j+oJbAijy9fLpTR2/UCzETjHKfJbWrR+z8hkB8=;
+	s=korg; t=1793213639;
+	bh=YHmV1zKOHL1PGjuClAQALmCe9zdM90DzEBN7wDbnuUY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NusLBCgfgZBI7eaPZeYBNp8BjYOGo7wjD8vvMkZvsjaYEF0PpPWPHZT+wRWNj9LMQ
-	 GxAIcGJTc12uvV+caxwDXz+ho05soAC4qSKf+WSZqLSC/mZGTbC5SWXZjpqNwnx6Vn
-	 ym3dDYsknRO84tirGQ3tB/1iEq7F0Dp/aki2rpX0=
+	b=XQHs37+YXKArSa5qouO5KdhjCSFnl7gJtrcqja9lu3G2oAPyfPSayuB6CKwkmGyIe
+	 MF5Qmt3U6CLvspZW81bSIMl1zNwli0kdbXgEspYDNa9KLME3sNFU+BTInSx+q6msyM
+	 /joSHGCnpEhJbBZ1/kr2O3n4bgh+RmLs6dsAhT4A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ido Schimmel <idosch@nvidia.com>,
-	Benjamin Poirier <bpoirier@nvidia.com>,
-	David Ahern <dsahern@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Shawn Lin <shawn.lin@rock-chips.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Ulf Hansson <ulfh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0574/1887] nexthop: Factor out hash threshold fdb nexthop selection
-Date: Wed, 28 Oct 2026 17:44:30 +0100
-Message-ID: <20261028170512.470780773@linuxfoundation.org>
+Subject: [PATCH 6.1 0533/1887] pmdomain: rockchip: dont ignore clock lookup errors on attach
+Date: Wed, 28 Oct 2026 17:43:49 +0100
+Message-ID: <20261028170511.472389181@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -70,70 +69,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Poirier <bpoirier@nvidia.com>
+From: Shawn Lin <shawn.lin@rock-chips.com>
 
-[ Upstream commit eedd47a6ec9f683f0b8d931aacca81985be55eec ]
+[ Upstream commit 4c66c423593e26273ea0d644906ed007630c6f6d ]
 
-The loop in nexthop_select_path_hthr() includes code to check for neighbor
-validity. Since this does not apply to fdb nexthops, simplify the loop by
-moving the fdb nexthop selection to its own function.
+rockchip_pd_attach_dev() treated every of_clk_get() error as the end
+of the clock list, so a clock that exists but is not available yet
+(e.g. -EPROBE_DEFER) was silently skipped and the device ended up
+without pm_clk management.  Only -ENOENT means there are no more
+clocks.
 
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Signed-off-by: Benjamin Poirier <bpoirier@nvidia.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://lore.kernel.org/r/20230719-nh_select-v2-1-04383e89f868@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: b72a6a7ab957 ("net: nexthop: Increase weight to u16")
+Fixes: 7c696693a4f5 ("soc: rockchip: power-domain: Add power domain driver")
+Signed-off-by: Shawn Lin <shawn.lin@rock-chips.com>
+Reviewed-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/nexthop.c | 22 ++++++++++++++++++++--
- 1 file changed, 20 insertions(+), 2 deletions(-)
+ drivers/soc/rockchip/pm_domains.c | 14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
 
-diff --git a/net/ipv4/nexthop.c b/net/ipv4/nexthop.c
-index cd93dd74608ac..e3d9660bf0e5c 100644
---- a/net/ipv4/nexthop.c
-+++ b/net/ipv4/nexthop.c
-@@ -1153,11 +1153,31 @@ static bool ipv4_good_nh(const struct fib_nh *nh)
- 	return !!(state & NUD_VALID);
- }
+diff --git a/drivers/soc/rockchip/pm_domains.c b/drivers/soc/rockchip/pm_domains.c
+index 32ea21cd39133..1146fdf477aa8 100644
+--- a/drivers/soc/rockchip/pm_domains.c
++++ b/drivers/soc/rockchip/pm_domains.c
+@@ -507,7 +507,19 @@ static int rockchip_pd_attach_dev(struct generic_pm_domain *genpd,
+ 	}
  
-+static struct nexthop *nexthop_select_path_fdb(struct nh_group *nhg, int hash)
-+{
-+	int i;
+ 	i = 0;
+-	while ((clk = of_clk_get(dev->of_node, i++)) && !IS_ERR(clk)) {
++	while (1) {
++		clk = of_clk_get(dev->of_node, i++);
++		if (IS_ERR(clk)) {
++			error = PTR_ERR(clk);
++			if (error == -ENOENT)
++				break;
 +
-+	for (i = 0; i < nhg->num_nh; i++) {
-+		struct nh_grp_entry *nhge = &nhg->nh_entries[i];
++			dev_err(dev, "failed to get clock %d: %d\n", i - 1,
++				error);
++			pm_clk_destroy(dev);
++			return error;
++		}
 +
-+		if (hash > atomic_read(&nhge->hthr.upper_bound))
-+			continue;
-+
-+		return nhge->nh;
-+	}
-+
-+	WARN_ON_ONCE(1);
-+	return NULL;
-+}
-+
- static struct nexthop *nexthop_select_path_hthr(struct nh_group *nhg, int hash)
- {
- 	struct nexthop *rc = NULL;
- 	int i;
- 
-+	if (nhg->fdb_nh)
-+		return nexthop_select_path_fdb(nhg, hash);
-+
- 	for (i = 0; i < nhg->num_nh; ++i) {
- 		struct nh_grp_entry *nhge = &nhg->nh_entries[i];
- 		struct nh_info *nhi;
-@@ -1166,8 +1186,6 @@ static struct nexthop *nexthop_select_path_hthr(struct nh_group *nhg, int hash)
- 			continue;
- 
- 		nhi = rcu_dereference(nhge->nh->nh_info);
--		if (nhi->fdb_nh)
--			return nhge->nh;
- 
- 		/* nexthops always check if it is good and does
- 		 * not rely on a sysctl for this behavior
+ 		dev_dbg(dev, "adding clock '%pC' to list of PM clocks\n", clk);
+ 		error = pm_clk_add_clk(dev, clk);
+ 		if (error) {
 -- 
 2.53.0
 
