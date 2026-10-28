@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214873;
-	b=aMZMiKxpRO12ZFiDrOk30x3yRtE1EWP0SDYFKDWCpZ/szXaCjU6LfAutiZw1D3ndV2fJ
-	 tAgEs0729T26ugW/cAxb2J/8NPEdh6PpLhNv+kdtYYN2o+F5gCfZQCK1BTfokA810Thof
-	 VTVNz7880Zn99T5RByT2maXbbVAvVDq0PPixMgQsu4djfXkItGk0NEmmTjgsm/6pHCyWk
-	 tpZQWfOw9Y45tKa+n/WPRrOe4PSzOcZnSip/8WFcY3yzRhrN5WgGbnGBphoYqWIoTW5yp
-	 2CgmLY10b8Vbk5ypOi6VZPVzv4CHfROs3Y4H6RqZCAB7VL/oDZXjT7MdkyDxMq4N/VA==
+	t=1793214875;
+	b=FWfeu8YlE6wzR6P/4j246+yh4x0aEIMPt3s/6017QKuQvoV8l+ESqnFym54kraAgJLaw
+	 IKaU9ep1vMPwzANFmytU4NP07vB31YsemHtmTQUbG//S5yOVvVu7+vfRSWtF6bsCcKrdi
+	 CWA1H4c2zYsGNauz0tv0jibqeXtBRxGHGUAI1s49VvnG9xTFntNl4NlScd59PocluMwDA
+	 DDF/UmcX1qm3Smr+xHZeqE644k3GUsgU2Y2ejUSyZa8h+U0lhOtlbfx/un9TqhPugzyIv
+	 lci00q1lN5AZtkjY5n9Q+6fuU3hBZQeWFhV5tGzJ2/x82leHMkFsgT14j02ZGISpe6w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214873;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214875;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=K0NZt925vCsn43K2ha9rQMmx2VE3rovR5+r5FHlgldc=;
-	b=i4XEff4uJ12l2y2EQz9BzxKypdVvGqCH+ye8bBPcjP+h7s42wlygQ89vsHOs8WiZkWPI
-	 9UrM3iJt609Rzk0O0xNaxB+Hd5jYxCX1QtS+j0/VMezJtyjtDCTYisBInl8bZGPL1yP/B
-	 rpbrJRRNQQd8PXjs3N7ssuBkllGyQv7yqDZ0LorI2KmmP7SoksxCct0BA3nqziOBuE0Dy
-	 rE/ScNM8XGWCCKW716GVEoAcy3sHcXt+ULkxJqvwqlJCYbyD6cqb5sdB74ckQjY83Zkcn
-	 TPgqKizSuL4k1CA1AhOIwM1LI2WwEgEQLdIyfIHoCQNx1wcaYIB6mkc7jWV76cvkJbw==
+	bh=jzTtA3N9RpKVMOKuQ9BV50Pu8KCZP23KMterif+Gk9s=;
+	b=n2fGYxy+YQ7C2umgNYBzJunDwmRf7xEiN3ZAmQy/lw+PfeuY13dg+o0D571gaXR2ZYDm
+	 QrMTxrvCF29gIXIRuo51PusH5g/I4bOHS4T71fKsiwNhgj4lovep/UwfDaAzFw/1S1tLH
+	 YIfbUOeW+96Khj3fLRx1YCjyiftm3QgAueJX2uS+nk84ib1wwodym3PEJXWUcUWUNDaMQ
+	 8x4GkuOA3kiK5VDxF1+FLz9GvmFNW3MmPCnlMezQAqfLDg/caZcRXgl0bCXfGqRpQ4Kew
+	 c9sppA3FnCdR2rwAqhzrE0zT5i3ASoYZR4MIODz+NrCq7lV3XlL+pw2YECVtB41Q1cQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xJYqKPyT;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ueK6ykrp;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A23CD606A32A;
-	Wed, 28 Oct 2026 19:14:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72E24606A338;
+	Wed, 28 Oct 2026 19:14:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xJYqKPyT
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F240C1F01825;
-	Wed, 28 Oct 2026 19:14:31 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ueK6ykrp
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4E041F01825;
+	Wed, 28 Oct 2026 19:14:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214872;
-	bh=K0NZt925vCsn43K2ha9rQMmx2VE3rovR5+r5FHlgldc=;
+	s=korg; t=1793214875;
+	bh=jzTtA3N9RpKVMOKuQ9BV50Pu8KCZP23KMterif+Gk9s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xJYqKPyTT+BX9vmBuLW3G2cDVcqTWzXRVZQyC6UyVHn3Ui+UlXg59jOMtQvMYIJq6
-	 iYk6ZkNcnMHRUpatsZQauZKYsLeMiIGwrRO4G1h2NxTU1Em/TiHcCrclQBftZo3GIA
-	 hjAdwC7oYHdO5/dzC+mTILzAf4tvFpCzVYeP0YGg=
+	b=ueK6ykrpgoVMJRj6STljejvg9a3tnxdLnLRU6mNjyaX4Ore6iQyjCWcQI08GZCq6i
+	 FjNxle04VSdSYRrkQ8KNTNm84n6InHnzA2P++JzINrntgajs3B9MYg4R8We/DuKHC9
+	 RrxJgYQ+xQ+YusdpYNvGtnxoJ9DEOKTmCXuDXFxw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shyam Prasad N <sprasad@microsoft.com>,
-	Steve French <stfrench@microsoft.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0995/1887] cifs: Fix locking usage for tcon fields
-Date: Wed, 28 Oct 2026 17:51:31 +0100
-Message-ID: <20261028170522.056695225@linuxfoundation.org>
+Subject: [PATCH 6.1 1013/1887] i3c: mipi-i3c-hci: Correct RING_CTRL_ABORT handling in DMA dequeue
+Date: Wed, 28 Oct 2026 17:51:49 +0100
+Message-ID: <20261028170522.468941627@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,102 +69,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shyam Prasad N <sprasad@microsoft.com>
+From: Adrian Hunter <adrian.hunter@intel.com>
 
-[ Upstream commit 96c4af418586ee9a6aab61738644366426e05316 ]
+[ Upstream commit b795e68bf3073d67bebbb5a44d93f49efc5b8cc7 ]
 
-We used to use the cifs_tcp_ses_lock to protect a lot of objects
-that are not just the server, ses or tcon lists. We later introduced
-srv_lock, ses_lock and tc_lock to protect fields within the
-corresponding structs. This was done to provide a more granular
-protection and avoid unnecessary serialization.
+The logic used to abort the DMA ring contains several flaws:
 
-There were still a couple of uses of cifs_tcp_ses_lock to provide
-tcon fields. In this patch, I've replaced them with tc_lock.
+ 1. The driver unconditionally issues a ring abort even when the ring has
+    already stopped.
+ 2. The completion used to wait for abort completion is never
+    re-initialized, resulting in incorrect wait behavior.
+ 3. The abort sequence unintentionally clears RING_CTRL_ENABLE, which
+    resets hardware ring pointers and disrupts the controller state.
+ 4. If the ring is already stopped, the abort operation should be
+    considered successful without attempting further action.
 
+Fix the abort handling by checking whether the ring is running before
+issuing an abort, re-initializing the completion when needed, ensuring that
+RING_CTRL_ENABLE remains asserted during abort, and treating an already
+stopped ring as a successful condition.
+
+Fixes: 9ad9a52cce282 ("i3c/master: introduce the mipi-i3c-hci driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Shyam Prasad N <sprasad@microsoft.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260306072451.11131-9-adrian.hunter@intel.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/smb2misc.c |  6 +++---
- fs/smb/client/smb2ops.c  | 10 +++-------
- fs/smb/client/smb2pdu.c  |  2 ++
- 3 files changed, 8 insertions(+), 10 deletions(-)
+ drivers/i3c/master/mipi-i3c-hci/dma.c | 27 +++++++++++++++++----------
+ 1 file changed, 17 insertions(+), 10 deletions(-)
 
-diff --git a/fs/smb/client/smb2misc.c b/fs/smb/client/smb2misc.c
-index ecab56c00f627..27d0fc56cd825 100644
---- a/fs/smb/client/smb2misc.c
-+++ b/fs/smb/client/smb2misc.c
-@@ -847,14 +847,14 @@ smb2_handle_cancelled_close(struct cifs_tcon *tcon, __u64 persistent_fid,
- 	int rc;
- 
- 	cifs_dbg(FYI, "%s: tc_count=%d\n", __func__, tcon->tc_count);
--	spin_lock(&cifs_tcp_ses_lock);
-+	spin_lock(&tcon->tc_lock);
- 	if (tcon->tc_count <= 0) {
- 		struct TCP_Server_Info *server = NULL;
- 
- 		trace_smb3_tcon_ref(tcon->debug_id, tcon->tc_count,
- 				    netfs_trace_tcon_ref_see_cancelled_close);
- 		WARN_ONCE(tcon->tc_count < 0, "tcon refcount is negative");
--		spin_unlock(&cifs_tcp_ses_lock);
-+		spin_unlock(&tcon->tc_lock);
- 
- 		if (tcon->ses) {
- 			server = tcon->ses->server;
-@@ -868,7 +868,7 @@ smb2_handle_cancelled_close(struct cifs_tcon *tcon, __u64 persistent_fid,
- 	tcon->tc_count++;
- 	trace_smb3_tcon_ref(tcon->debug_id, tcon->tc_count,
- 			    netfs_trace_tcon_ref_get_cancelled_close);
--	spin_unlock(&cifs_tcp_ses_lock);
-+	spin_unlock(&tcon->tc_lock);
- 
- 	rc = __smb2_handle_cancelled_cmd(tcon, SMB2_CLOSE_HE, 0,
- 					 persistent_fid, volatile_fid, false);
-diff --git a/fs/smb/client/smb2ops.c b/fs/smb/client/smb2ops.c
-index ef61a60a082ef..a59df97b55282 100644
---- a/fs/smb/client/smb2ops.c
-+++ b/fs/smb/client/smb2ops.c
-@@ -2863,7 +2863,9 @@ smb2_get_dfs_refer(const unsigned int xid, struct cifs_ses *ses,
- 						struct cifs_tcon,
- 						tcon_list);
- 		if (tcon) {
-+			spin_lock(&tcon->tc_lock);
- 			tcon->tc_count++;
-+			spin_unlock(&tcon->tc_lock);
- 			trace_smb3_tcon_ref(tcon->debug_id, tcon->tc_count,
- 					    netfs_trace_tcon_ref_get_dfs_refer);
- 		}
-@@ -2928,13 +2930,7 @@ smb2_get_dfs_refer(const unsigned int xid, struct cifs_ses *ses,
-  out:
- 	if (tcon && !tcon->ipc) {
- 		/* ipc tcons are not refcounted */
--		spin_lock(&cifs_tcp_ses_lock);
--		tcon->tc_count--;
--		trace_smb3_tcon_ref(tcon->debug_id, tcon->tc_count,
--				    netfs_trace_tcon_ref_dec_dfs_refer);
--		/* tc_count can never go negative */
--		WARN_ON(tcon->tc_count < 0);
--		spin_unlock(&cifs_tcp_ses_lock);
-+		cifs_put_tcon(tcon, netfs_trace_tcon_ref_put_dfs_refer);
+diff --git a/drivers/i3c/master/mipi-i3c-hci/dma.c b/drivers/i3c/master/mipi-i3c-hci/dma.c
+index 2cf4974fffa75..7b13508ccca66 100644
+--- a/drivers/i3c/master/mipi-i3c-hci/dma.c
++++ b/drivers/i3c/master/mipi-i3c-hci/dma.c
+@@ -448,16 +448,23 @@ static bool hci_dma_dequeue_xfer(struct i3c_hci *hci,
+ 	struct hci_rh_data *rh = &rings->headers[xfer_list[0].ring_number];
+ 	unsigned int i;
+ 	bool did_unqueue = false;
+-
+-	/* stop the ring */
+-	rh_reg_write(RING_CONTROL, RING_CTRL_ABORT);
+-	if (wait_for_completion_timeout(&rh->op_done, HZ) == 0) {
+-		/*
+-		 * We're deep in it if ever this condition is ever met.
+-		 * Hardware might still be writing to memory, etc.
+-		 */
+-		dev_crit(&hci->master.dev, "unable to abort the ring\n");
+-		WARN_ON(1);
++	u32 ring_status;
++
++	ring_status = rh_reg_read(RING_STATUS);
++	if (ring_status & RING_STATUS_RUNNING) {
++		/* stop the ring */
++		reinit_completion(&rh->op_done);
++		rh_reg_write(RING_CONTROL, RING_CTRL_ENABLE | RING_CTRL_ABORT);
++		wait_for_completion_timeout(&rh->op_done, HZ);
++		ring_status = rh_reg_read(RING_STATUS);
++		if (ring_status & RING_STATUS_RUNNING) {
++			/*
++			 * We're deep in it if ever this condition is ever met.
++			 * Hardware might still be writing to memory, etc.
++			 */
++			dev_crit(&hci->master.dev, "unable to abort the ring\n");
++			WARN_ON(1);
++		}
  	}
- 	kfree(utf16_path);
- 	kfree(dfs_req);
-diff --git a/fs/smb/client/smb2pdu.c b/fs/smb/client/smb2pdu.c
-index c50881cf4c8d7..8f23b8968beb4 100644
---- a/fs/smb/client/smb2pdu.c
-+++ b/fs/smb/client/smb2pdu.c
-@@ -4025,7 +4025,9 @@ void smb2_reconnect_server(struct work_struct *work)
  
- 		list_for_each_entry(tcon, &ses->tcon_list, tcon_list) {
- 			if (tcon->need_reconnect || tcon->need_reopen_files) {
-+				spin_lock(&tcon->tc_lock);
- 				tcon->tc_count++;
-+				spin_unlock(&tcon->tc_lock);
- 				trace_smb3_tcon_ref(tcon->debug_id, tcon->tc_count,
- 						    netfs_trace_tcon_ref_get_reconnect_server);
- 				list_add_tail(&tcon->rlist, &tmp_list);
+ 	for (i = 0; i < n; i++) {
 -- 
 2.53.0
 
