@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793217000;
-	b=SrVrX1VWyymcojw22I/Tay72w0GBcOm9d1QY+4lppShEHP6FCXXto7D5sRssZX0qOZIw
-	 i5jkgZk4ZcIXmHCD5PuMGgkeqR8qdRxVYUmXwWHo+7/hu6tRzDq+mYwVKmOECwfMSPgAW
-	 qpffusoClS6sPWEKSeSmzFeVXBi/sZC1zM7AFCCcVhtPHkX+VoAiwW+setCg0NZ6CNWmM
-	 4SF8nQ0mb365ajVDUPRvUtRDyYWTLsC5zL8zGSlhQJ8NR7+GQmK5wWtMz2C90fl5NtXjr
-	 ckh2Dy8ou3SqmnxPBTEFPLGwwk7ZoXkXBBsrdNWJP/yQNPUqQJ3E9e3/Kavz180xvuQ==
+	t=1793217003;
+	b=bnXd/ooX7c64GYKBPRDujFu5pZfz8jtDJaZgcow8SGnuHcM8iIxPLuyaJ8i3J29h8VeB
+	 3VRsSCdjJ5/RlkkBtb1MnBqt7+y6/Ac6LPHLSai9phQMocVK6gGAQoeLy23ays/5yVnZ5
+	 IDhvOQg8go2y0D+So1G9OOoxIdy5UosQzgHIkKVBAlhW+IsK2pTukLm3WfAU+LIvZLxIR
+	 +8QSbUQBz13pabI2a/+9ULPw3TsFPPyaR65tdqYZG357w4EzbHmCvF+VgPL2RQjNCpjtw
+	 3Qn4gOCiGktIR35sMVX9HzXKRb2YhTst0EC+RzYW1254ToqHgAesAOsOiSqT3G8GVtA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793217000;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793217003;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=i0q7w1D2Gfj/7robNvJWI91XaaYpg1MPI5ENGPdVO7I=;
-	b=pLv9guD76NFBIq0j2qIPX9WeS1R6ZWum+rq2lpOYDxoJ+EY8IV+vEDksuvvisW2+5MwO
-	 F8tjRQl8xZCjSsvigLvoEP+fFRkgUvhpXwkc+GALPPkN1Rlv1vYTjBXOaI1Z9304sKyrM
-	 1/XpmJaG43WMC1De69DdsqyTSQhGC0XnyPjCAaD1RI3OgTVdG4SBI0lYcqq+YkzYnvTC7
-	 8omx7rtze5leVLZxpxg8zhLpJa58jExgn3hHUmuoI+ZmpKNhWPVJGUkJEeMI5RDzv94ya
-	 N53ylAHot2k5e9iKeXimXGmkj567oaU8rkO3Tt190z+lpDjm4kvS5hMsF8iAsToUM1w==
+	bh=Ro1bWSetlSDkjfajpbbQkJlSxIbPlC1c571LTLO3llU=;
+	b=tCtwbUhKHAJTv/iKezUPXJiRaBsg/0wG21pCEzMf0xrT6M1AvgqBGoTjjxUyuvQqPbX9
+	 gsXZEJfjqc1Wfd3CIExlFH3whfdr8Qa+BE7qz9G1t2I7PDB4N/xxEc7XHXoAbKh8/jZLk
+	 9r88a2bYNg0a7o/JL6G/KN+TdHZftzrwqilgO/vJh4XfGJYKHbYzTlUD0D/LvJ9wPcQmV
+	 VaK7M3TtGV4aNAm1loRdU3XaefGJMSrbJ/CvFFdhpbk9HZcmg8Raxa0quSk017yueaAUH
+	 +fLAynYsX0KPbzvB2lFy5kdc9h84HgdYY0pli/R42H9sOZPTpD0jkSgaJMP0suS3pUw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aq4pszJ+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XUyZ1LpA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E05E606A322;
-	Wed, 28 Oct 2026 19:50:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A3F2606A32D;
+	Wed, 28 Oct 2026 19:50:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aq4pszJ+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C94E1F01829;
-	Wed, 28 Oct 2026 19:49:59 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XUyZ1LpA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75FB11F01825;
+	Wed, 28 Oct 2026 19:50:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793217000;
-	bh=i0q7w1D2Gfj/7robNvJWI91XaaYpg1MPI5ENGPdVO7I=;
+	s=korg; t=1793217002;
+	bh=Ro1bWSetlSDkjfajpbbQkJlSxIbPlC1c571LTLO3llU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aq4pszJ+wN6ECPWjZJ0REBbOfg5g3tExOXrPMhxL2fTGwNqSOSD9vXHI6W5XIyHnD
-	 vOd3uN8FhSKBdHJStVOBIIzI3Hv0J0+cwygygDA6MK7z7TEYvsSrVM8lpMSvlxPwQr
-	 5oAtnClHCFPNzZIhlTUltsAeGjSZZTDyPF9ViPE4=
+	b=XUyZ1LpA/qbLqVr3lXeiuESW014aDdAX1uizjSRQJ2khuc4JbedVezjRFpqY807I9
+	 hHPzAlk+o1KCNB3/m22oHgd2S3tusemdsAnGaelfvi2uRQwNVCaFyX68gJKpo8G8M/
+	 33rdnuwiKjHuiooqSClfEOYd0qI3iJDTQK0Rpq4w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ben Marzinski <bmarzins@redhat.com>,
+	Benjamin Marzinski <bmarzins@redhat.com>,
+	Matthew Sakai <msakai@redhat.com>,
 	Ming-Hung Tsai <mtsai@redhat.com>,
 	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 6.1 1754/1887] dm cache: fix demotion stats in passthrough mode
-Date: Wed, 28 Oct 2026 18:04:10 +0100
-Message-ID: <20261028170539.374200654@linuxfoundation.org>
+Subject: [PATCH 6.1 1755/1887] dm cache: fix issue with background work locking
+Date: Wed, 28 Oct 2026 18:04:11 +0100
+Message-ID: <20261028170539.396411672@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,86 +69,158 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming-Hung Tsai <mtsai@redhat.com>
+From: Benjamin Marzinski <bmarzins@redhat.com>
 
-commit 2ccb8878c149443c6acf628b438c9c942c20abb2 upstream.
+commit bc9781c0247de107876f32929f1637db93a42b34 upstream.
 
-The demotion counter is incremented per incoming write bio before the
-invalidation begins, causing the demotion count to exceed the actual
-number of cached blocks when multiple bios target the same cached
-block. Additionally, the counter is incremented unconditionally
-regardless of invalidation failure.
+dm cache used a rw_semaphore for background_work_lock. Write locks on
+rw_semaphores have strict owner semantics, but there was no guarantee
+that the process that locked background_work_lock was the same process
+that unlocked it. This can be easily seen using a kernel compiled with
+CONFIG_DEBUG_RWSEMS. Given a dm cache device <cache>, run: 'dmsetup
+suspend <cache> && dmsetup resume <cache>'. This will trigger a kernel
+warning:
 
-Reproduce steps:
+DEBUG_RWSEMS_WARN_ON((rwsem_owner(sem) != current) && !rwsem_test_oflags(sem, RWSEM_NONSPINNABLE))
 
-1. Create a cache device consisting of 512 cache entries
+triggered by cache_resume(). To fix this, switch from a rw_semaphore to
+a spinlock and a wait queue. dm cache already has a wait queue and
+associated counter, migration_wait and nr_allocated_migrations, that was
+getting woken up when background work was getting completed, but wasn't
+actually used by anything. This is replaced by the background_work queue
+and counter.
 
-modprobe brd rd_size=262144
-dmsetup create cmeta --table "0 8192 linear /dev/ram0 0"
-dmsetup create cdata --table "0 65536 linear /dev/ram0 8192"
-dmsetup create corig --table "0 65536 linear /dev/ram0 262144"
-dd if=/dev/zero of=/dev/mapper/cmeta bs=4k count=1 oflag=direct
-dmsetup create cache --table "0 65536 cache /dev/mapper/cmeta \
-/dev/mapper/cdata /dev/mapper/corig 128 2 metadata2 writethrough smq 0"
-
-2. Populate the cache, and record the number of cached blocks
-
-fio --name=populate --filename=/dev/mapper/cache --rw=randwrite --bs=4k \
---direct=1 --ioengine=libaio --iodepth=32 --io_size=2048m
-nr_cached=$(dmsetup status cache | awk '{split($7, a, "/"); print a[1]}')
-
-3. Reload the cache into passthrough mode
-
-dmsetup suspend cache
-dmsetup reload cache --table "0 65536 cache /dev/mapper/cmeta \
-/dev/mapper/cdata /dev/mapper/corig 128 2 metadata2 passthrough smq 0"
-dmsetup resume cache
-
-4. Write to the passthrough cache with multiple jobs to trigger
-   multiple bios hitting the same cached block.
-
-fio --filename=/dev/mapper/cache --name=test --rw=write --bs=4k \
---direct=1 --ioengine=libaio --iodepth=32 --numjobs=4
-
-5. Check if demoted matches cached block count. These numbers should
-   match but may differ due to overcounting per bio.
-
-nr_demoted=$(dmsetup status cache | awk '{print $12}')
-echo "$nr_cached, $nr_demoted"
-
-Fix by moving the demotion counter increment into invalidate_complete(),
-gated on the success flag.
-
-Reported-by: Ben Marzinski <bmarzins@redhat.com>
 Fixes: b29d4986d0da ("dm cache: significant rework to leverage dm-bio-prison-v2")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ming-Hung Tsai <mtsai@redhat.com>
-Reviewed-by: Benjamin Marzinski <bmarzins@redhat.com>
+Signed-off-by: Benjamin Marzinski <bmarzins@redhat.com>
+Reviewed-by: Matthew Sakai <msakai@redhat.com>
+Reviewed-by: Ming-Hung Tsai <mtsai@redhat.com>
 Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-cache-target.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/md/dm-cache-target.c |   55 +++++++++++++++++++++----------------------
+ 1 file changed, 28 insertions(+), 27 deletions(-)
 
 --- a/drivers/md/dm-cache-target.c
 +++ b/drivers/md/dm-cache-target.c
-@@ -1461,6 +1461,9 @@ static void invalidate_complete(struct d
- 	struct bio_list bios;
- 	struct cache *cache = mg->cache;
+@@ -338,8 +338,6 @@ struct cache {
+ 	struct list_head invalidation_requests;
  
-+	if (success)
-+		atomic_inc(&cache->stats.demotion);
-+
- 	bio_list_init(&bios);
- 	if (mg->cell) {
- 		if (dm_cell_unlock_v2(cache->prison, mg->cell, &bios))
-@@ -1732,7 +1735,6 @@ static int map_bio(struct cache *cache,
- 		if (passthrough_mode(cache)) {
- 			if (bio_data_dir(bio) == WRITE) {
- 				bio_drop_shared_lock(cache, bio);
--				atomic_inc(&cache->stats.demotion);
- 				invalidate_start(cache, cblock, block, bio);
- 				return DM_MAPIO_SUBMITTED;
- 			} else
+ 	sector_t migration_threshold;
+-	wait_queue_head_t migration_wait;
+-	atomic_t nr_allocated_migrations;
+ 
+ 	/*
+ 	 * The number of in flight migrations that are performing
+@@ -395,7 +393,11 @@ struct cache {
+ 	bool loaded_mappings:1;
+ 	bool loaded_discards:1;
+ 
+-	struct rw_semaphore background_work_lock;
++	/* background work management */
++	bool background_work_allowed;
++	unsigned background_work_nr;
++	spinlock_t background_work_lock;
++	wait_queue_head_t background_work_wait;
+ 
+ 	struct batcher committer;
+ 	struct work_struct commit_ws;
+@@ -486,19 +488,13 @@ static struct dm_cache_migration *alloc_
+ 	memset(mg, 0, sizeof(*mg));
+ 
+ 	mg->cache = cache;
+-	atomic_inc(&cache->nr_allocated_migrations);
+ 
+ 	return mg;
+ }
+ 
+ static void free_migration(struct dm_cache_migration *mg)
+ {
+-	struct cache *cache = mg->cache;
+-
+-	if (atomic_dec_and_test(&cache->nr_allocated_migrations))
+-		wake_up(&cache->migration_wait);
+-
+-	mempool_free(mg, &cache->migration_pool);
++	mempool_free(mg, &mg->cache->migration_pool);
+ }
+ 
+ /*----------------------------------------------------------------*/
+@@ -1029,34 +1025,39 @@ static void calc_discard_block_range(str
+ 
+ static void prevent_background_work(struct cache *cache)
+ {
+-	lockdep_off();
+-	down_write(&cache->background_work_lock);
+-	lockdep_on();
++	spin_lock_irq(&cache->background_work_lock);
++	cache->background_work_allowed = false;
++	wait_event_lock_irq(cache->background_work_wait,
++			    cache->background_work_nr == 0,
++			    cache->background_work_lock);
++	spin_unlock_irq(&cache->background_work_lock);
+ }
+ 
+ static void allow_background_work(struct cache *cache)
+ {
+-	lockdep_off();
+-	up_write(&cache->background_work_lock);
+-	lockdep_on();
++	spin_lock_irq(&cache->background_work_lock);
++	cache->background_work_allowed = true;
++	spin_unlock_irq(&cache->background_work_lock);
+ }
+ 
+ static bool background_work_begin(struct cache *cache)
+ {
+ 	bool r;
+ 
+-	lockdep_off();
+-	r = down_read_trylock(&cache->background_work_lock);
+-	lockdep_on();
+-
++	spin_lock_irq(&cache->background_work_lock);
++	r = cache->background_work_allowed;
++	if (r)
++		cache->background_work_nr++;
++	spin_unlock_irq(&cache->background_work_lock);
+ 	return r;
+ }
+ 
+ static void background_work_end(struct cache *cache)
+ {
+-	lockdep_off();
+-	up_read(&cache->background_work_lock);
+-	lockdep_on();
++	spin_lock_irq(&cache->background_work_lock);
++	if (--cache->background_work_nr == 0)
++		wake_up(&cache->background_work_wait);
++	spin_unlock_irq(&cache->background_work_lock);
+ }
+ 
+ /*----------------------------------------------------------------*/
+@@ -2517,9 +2518,7 @@ static int cache_create(struct cache_arg
+ 
+ 	spin_lock_init(&cache->lock);
+ 	bio_list_init(&cache->deferred_bios);
+-	atomic_set(&cache->nr_allocated_migrations, 0);
+ 	atomic_set(&cache->nr_io_migrations, 0);
+-	init_waitqueue_head(&cache->migration_wait);
+ 
+ 	r = -ENOMEM;
+ 	atomic_set(&cache->nr_dirty, 0);
+@@ -2601,8 +2600,10 @@ static int cache_create(struct cache_arg
+ 		     issue_op, cache, cache->wq);
+ 	dm_iot_init(&cache->tracker);
+ 
+-	init_rwsem(&cache->background_work_lock);
+-	prevent_background_work(cache);
++	init_waitqueue_head(&cache->background_work_wait);
++	spin_lock_init(&cache->background_work_lock);
++	cache->background_work_allowed = false;
++	cache->background_work_nr = 0;
+ 
+ 	*result = cache;
+ 	return 0;
 
 
