@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793210449;
-	b=VQYoC0b/aUTpE7EIO2SNMZtH2yarXKXmbrRurGof+mfzBGdzIN7Yh47GiL08DHqKySih
-	 rX8CC0OiL/vFJEDsGYRsoFA2YmRThP4qe7UwUNFIj/Gig47raqlOgXqSQE8UtwoubUhy0
-	 CnOfI9w2+5GHsoh2ZaQRlwnEK5g1K0BGKY/b/VoTFJhWAoLpNTTJ4CzBZE0pLGK9BebNy
-	 7P2rMiJrayI+9NO07WxpQ8MNA27WUY+YtHnaINAHPm2MQ0T2kQj0WnJkdwFQk2C2q4W1t
-	 41ufjNF02jhvgVsm75wfj6hqF67Us+/qgPfHjeVkTnELuUiGq3P0BnAQoHI5gOGKLQA==
+	t=1793210452;
+	b=ZJLn9f1qQSt2c5p7wS+qiX1K2AS6ZEf8fEcx3DpZQA57GtZ881HHrx8pQimRth+jkXk+
+	 DccSqb7KPa4uhchzEY0HsrL/SyItesRvyq02OvTJPTPeKrAT7IPWkS8ge6T7oqxtHNlUG
+	 eHPYiefbTcwIekAXFv3xuAQoifeYa7+v2ysZ3YA3Bt6hbKIlIrfFH2A5HsWtzkhGhPXMo
+	 hdGTlkvqmWBGPwQhNh7qlkC9u5iZJoHCX1+Yk6Yv3Qh6DnuEFAoxgZR3+ZA6fcKjKLipI
+	 1IfrGPTj4EUWFj+RC7RRArs0+H9BtgJLbkqGmwijW0t883liSYcke18A57ihAobZreg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793210449;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793210452;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=IaO5cwY/19qEXR0rYkT5DYJIrD5uyq296t8XT8X3TaM=;
-	b=LkByCNXeYS1PktVhy15B/Br7fWtINJMkMviDN3RNn8r35DhDLEFD1Hke92cXS8E8zkaA
-	 /+p4XofSznnTlX8lttH6MRWbYQ7VMkR2WGQeQKYEIjQse4qTqSQ7K5/30EnDChep3Zzmt
-	 BnC7wLuot9cwLMsTzwl/KwNDiVQyElZDr/vfx4UrFjuZRB95txWngEoIfMQw0DiKgrQrY
-	 AGTtiY+MTHeHIB6aYOCCCZqqjJ0SqzVjgFS9DYNsKGAMA3EbBpndrCn2niPiDBzCRtg87
-	 M/mk7Te1ytyXeYG9L8DGnSG155RgAi0i2wZkFHY8xA7WapveqiyFCIaJI0FPupOrwFA==
+	bh=pWzXYWx1tKUXYaIVFpQS0ECvUe/IoEWouoQ0SxTUIKw=;
+	b=qioCIye++w5uP+25Qq9EyvqJpRdA+uusC/oRIz2aQpWB6vXZfH4+MXDmC6UwxfcvGoc2
+	 vLdyydn9aKB9ZFg5eHjSXZcgYXuhth81X4b5h2c7hirMQBzVAe7qWH2CEXnFxvnxWCYId
+	 v3D3pR0CjAqLKEUqFcveD5RSemhuG/7LT2tTkmVzFzvJHXJf+rr4fFxFPHzvUhtn+dNG7
+	 9oXfFiLoMvKogpSqmIAMzCz8MkD9zRSW+dgogoiQ+LSU0XJ8Z3FskU0TwWzoYlhP8GRV3
+	 JCMtYs993KoR2hm8SrUxQiNplZ30B7g14QZJ+EwHqmnuZAVTPLz/0+/OEvs7PPviwLg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZEMioHcW;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lJXrgLK3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B32D606A31C;
-	Wed, 28 Oct 2026 18:00:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 430FE606A31A;
+	Wed, 28 Oct 2026 18:00:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZEMioHcW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D117F1F01825;
-	Wed, 28 Oct 2026 18:00:48 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lJXrgLK3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FDA51F01825;
+	Wed, 28 Oct 2026 18:00:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793210449;
-	bh=IaO5cwY/19qEXR0rYkT5DYJIrD5uyq296t8XT8X3TaM=;
+	s=korg; t=1793210452;
+	bh=pWzXYWx1tKUXYaIVFpQS0ECvUe/IoEWouoQ0SxTUIKw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZEMioHcWGgi6AwJbOj5/6v4YEb3vV/VAkDueEzEUWteJlhKATwF9K6UJlmhn6j1LA
-	 lIJslRvyE0YD3dFbbneZCZuPdldJnxJ6vhL2Z+UGwR00S84D8Jyhb/a/FhqMn8NPjk
-	 PIzN1/PPU0qvcL1emRNlu5k+WksNu3pN7E79VWFY=
+	b=lJXrgLK3h5H8gUmHPvaIh58D+lLzVFNOJN3/267vmapyZ4QgyLbBbiugHVrMb10+l
+	 tUUGycKBVPYes/5MmGmofcJcHf32pKHCYVc+0gj39rPa53DTXp1WnsUGnUvS22eCJx
+	 wJ+acRaLgh6UHefjGR54wZOmodjK10+sHKd/RHoc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	XingWang Xiang <v3rdant.xiang@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 003/571] device property: Add cleanup.h based fwnode_handle_put() scope based cleanup.
-Date: Wed, 28 Oct 2026 17:52:30 +0100
-Message-ID: <20261028170008.097034283@linuxfoundation.org>
+Subject: [PATCH 5.15 030/571] genetlink: pin family module during policy dump
+Date: Wed, 28 Oct 2026 17:52:57 +0100
+Message-ID: <20261028170008.737531799@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -69,46 +68,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From: XingWang Xiang <v3rdant.xiang@gmail.com>
 
-[ Upstream commit 59ed5e2d505bf5f9b4af64d0021cd0c96aec1f7c ]
+[ Upstream commit 6a1094c34d176827b2b173e163dcc964a13af93f ]
 
-Useful where the fwnode_handle was obtained from a call such as
-fwnode_find_reference() as it will safely do nothing if IS_ERR() is true
-and will automatically release the reference on the variable leaving
-scope.
+The generic netlink controller's policy dump keeps pointers to the target
+family's operation and policy tables in its callback state.  A dump may be
+split across multiple skbs and remain pending after the initial request.
 
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Reviewed-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Link: https://lore.kernel.org/r/20240217164249.921878-3-jic23@kernel.org
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Stable-dep-of: 190069255582 ("device property: fix infinite loop in fwnode_for_each_child_node()")
+Netlink pins the module which owns the dump callback, but in this case
+that is the controller's owner rather than the target family's owner.  The
+target family can consequently be unregistered and its module unloaded
+while a policy dump is pending.  Advancing the dump then dereferences
+policy memory from the unloaded module.
+
+Take a reference to the target family's module when the dump starts.
+Drop it from the error and done paths.  This matches the lifetime for which
+the dump context retains the family and policy pointers.
+
+Fixes: d07dcf9aadd6 ("netlink: add infrastructure to expose policies to userspace")
+Cc: stable@vger.kernel.org
+Signed-off-by: XingWang Xiang <v3rdant.xiang@gmail.com>
+Link: https://patch.msgid.link/20260902084317.4092542-1-v3rdant.xiang@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ adapted split-operation iterator handling to the older genl_ops and opidx interfaces. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/property.h | 3 +++
- 1 file changed, 3 insertions(+)
+ net/netlink/genetlink.c | 28 +++++++++++++++++++++-------
+ 1 file changed, 21 insertions(+), 7 deletions(-)
 
-diff --git a/include/linux/property.h b/include/linux/property.h
-index 840f0545d4f9d..180d4a027ab38 100644
---- a/include/linux/property.h
-+++ b/include/linux/property.h
-@@ -11,6 +11,7 @@
- #define _LINUX_PROPERTY_H_
+diff --git a/net/netlink/genetlink.c b/net/netlink/genetlink.c
+index 7a568292e0d10..c0d6950e21651 100644
+--- a/net/netlink/genetlink.c
++++ b/net/netlink/genetlink.c
+@@ -1101,6 +1101,7 @@ static int genl_ctrl_event(int event, const struct genl_family *family,
+ struct ctrl_dump_policy_ctx {
+ 	struct netlink_policy_dump_state *state;
+ 	const struct genl_family *rt;
++	struct module *owner;
+ 	unsigned int opidx;
+ 	u32 op;
+ 	u16 fam_id;
+@@ -1144,6 +1145,9 @@ static int ctrl_dumppolicy_start(struct netlink_callback *cb)
+ 		return -ENOENT;
  
- #include <linux/bits.h>
-+#include <linux/cleanup.h>
- #include <linux/fwnode.h>
- #include <linux/types.h>
+ 	ctx->rt = rt;
++	ctx->owner = rt->module;
++	if (!try_module_get(ctx->owner))
++		return -ENOENT;
  
-@@ -124,6 +125,8 @@ struct fwnode_handle *device_get_named_child_node(struct device *dev,
- struct fwnode_handle *fwnode_handle_get(struct fwnode_handle *fwnode);
- void fwnode_handle_put(struct fwnode_handle *fwnode);
+ 	if (tb[CTRL_ATTR_OP]) {
+ 		ctx->single_op = true;
+@@ -1152,14 +1156,19 @@ static int ctrl_dumppolicy_start(struct netlink_callback *cb)
+ 		err = genl_get_cmd(ctx->op, rt, &op);
+ 		if (err) {
+ 			NL_SET_BAD_ATTR(cb->extack, tb[CTRL_ATTR_OP]);
+-			return err;
++			goto err_put_owner;
+ 		}
  
-+DEFINE_FREE(fwnode_handle, struct fwnode_handle *, fwnode_handle_put(_T))
-+
- int fwnode_irq_get(const struct fwnode_handle *fwnode, unsigned int index);
- int fwnode_irq_get_byname(const struct fwnode_handle *fwnode, const char *name);
+-		if (!op.policy)
+-			return -ENODATA;
++		if (!op.policy) {
++			err = -ENODATA;
++			goto err_put_owner;
++		}
+ 
+-		return netlink_policy_dump_add_policy(&ctx->state, op.policy,
+-						      op.maxattr);
++		err = netlink_policy_dump_add_policy(&ctx->state, op.policy,
++						     op.maxattr);
++		if (err)
++			goto err_free_state;
++		return 0;
+ 	}
+ 
+ 	for (i = 0; i < genl_get_cmd_cnt(rt); i++) {
+@@ -1174,12 +1183,16 @@ static int ctrl_dumppolicy_start(struct netlink_callback *cb)
+ 		}
+ 	}
+ 
+-	if (!ctx->state)
+-		return -ENODATA;
++	if (!ctx->state) {
++		err = -ENODATA;
++		goto err_put_owner;
++	}
+ 	return 0;
+ 
+ err_free_state:
+ 	netlink_policy_dump_free(ctx->state);
++err_put_owner:
++	module_put(ctx->owner);
+ 	return err;
+ }
+ 
+@@ -1314,6 +1327,7 @@ static int ctrl_dumppolicy_done(struct netlink_callback *cb)
+ 	struct ctrl_dump_policy_ctx *ctx = (void *)cb->ctx;
+ 
+ 	netlink_policy_dump_free(ctx->state);
++	module_put(ctx->owner);
+ 	return 0;
+ }
  
 -- 
 2.53.0
