@@ -1,54 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793208557;
-	b=mjsILOIVYTEW45dE1kFlcv9If++5Tp8o9/lVLSsKTM+nHLfoxc1n0Wn3oUlRHkIbo1Tz
-	 ejoFYduQR9uE+mQAlkHHq/5aLH4OqA294WUK+iThjTjlclmA9pWz4o5dPcgTYd3FZqib0
-	 yJAuar842ZpubaE9bhkwQ4SzLcXK27q+fG+Bns5nJD5neqKPgNiO7EEvCxfqbAyk2VedL
-	 +hSVSEmJQr7UQ/C6JO6wVpoPK5pgvYe99qTuiuSjBVXQIC74I91m4sa/6J6ukweCs4/2h
-	 JQ35sP9UfZ4S7BQYBtM0A7ZAQuWdnAsQ7cxl+N28hHb/II/sn4mbYrxHA/wnYuVlP1A==
+	t=1793208554;
+	b=wR5Kmgkj5aj37gIvyYayikhkiuRAUsqMwYOfxyfRz2QPblwrRS/TRZTzt2BRUxhORQn9
+	 uudnyHvne23mgniAsSs/HiqD0p/NwUy3vLlltghBW/hEe9OBZD0BdPVSLLmnxQhA4quAs
+	 sHt1z1iW5eVrPNSXSF4TV0lEBaZJs0xCE10BvkinSd6BSCRsnNOjO2fuoTkawMQPiRk42
+	 ea3lEwxTgyn2JAq3W9LcWFWfmM2ezFkFa0Ei9axE3aB12eV0xUubVPVw2kBqz4yBe1F8u
+	 lNWuyLlSXxS7WrRKyb92j32Qn6gWhz659rhfzp+D37Ix4VbxmO0QdDRAEFFhs5jYP2g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793208557;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793208554;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ruDnsJDz8Rv6kkDcP4ynYHRxnOlvqCDzVNjsuxokZUg=;
-	b=RWahOGedUkofnSScofQoARU7O8M+3WavrN1BHbCvWxpMvUXgeoDxCEC5ILjTv/8uLHIl
-	 xI9XTZveqs9LRVBqjggj7i5qvbY8fGEXt7jn8MgnQi8VVSBGanshkgdwBbVsi7nJ+lkBN
-	 lfYFAnwO241LAugEzWAn6IOq0CalGU7BbXvjLkx5UkEc40bNU3eFdQop7atJ0ZLjSk3re
-	 QYRFIKRG5Lc2WOExSBiLYGXyVZuHvTjXsfZr5Gm8qe1Rvq9D9mhKRA8dWkHKX+ALeuSeh
-	 B+opvEL7VG15bWkmwkG4q/wIt1ea5rYonVszFssrOKPdZ8qEu0NMHifPZsx87p11BBg==
+	bh=GRa9E6Do3CarecCSM4ZyMQS6jUnh08NFjrv6A1Qe5T4=;
+	b=JQyR1XUyyjOMOtaRgHGnT8QWnYIQw8X4GTHh9Uw85mYjqF1V9BhH7tv5NcWm1x6Visvv
+	 uwd82fwRfEUoebwr3y4kjOO3DaWxeOQfXmLaLsL7qJgLwZcXMhbWRSNUtcntMRWR5umRS
+	 wslduDN/dAJYqK/HQmaRiactDR9lJs6UUJE3UKOHxem5ZXASDPwwkahbUfFccgI7G7/Qk
+	 UMiMrMkkswu3uF/PLC2d65f8FLUgLdZ2Q1YlXhauEYIDhaA5IFOzwMdwyYx69Hne8zvHX
+	 UX+vunIsCSmBugCslMjFTdTQTqCibg1wPCMscOSE34SRMri2pjJmSPHy7uN9/6Zr/hA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="C/xCHm+n";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g2IDAC3M;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9AD7606A31C;
-	Wed, 28 Oct 2026 17:29:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3C60606A31A;
+	Wed, 28 Oct 2026 17:29:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C/xCHm+n
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2C021F01825;
-	Wed, 28 Oct 2026 17:29:15 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g2IDAC3M
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 155421F01825;
+	Wed, 28 Oct 2026 17:29:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793208556;
-	bh=ruDnsJDz8Rv6kkDcP4ynYHRxnOlvqCDzVNjsuxokZUg=;
+	s=korg; t=1793208553;
+	bh=GRa9E6Do3CarecCSM4ZyMQS6jUnh08NFjrv6A1Qe5T4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=C/xCHm+nguPL7JWvh4j7Hf+YsUdUN45+rzYvGRQj5sUZLlmgU4HNw+iwb8WSQyvcn
-	 rZceXHpqe3aju++P8+sKmr7Clou+yQsPY7zlmTBmUFgJiTSUHmO8BucmQH/Q3Dafd1
-	 4BvovXEQNrIRZHV0IBBJUWGsAJ70G+5QgiRLVjOM=
+	b=g2IDAC3McE6433s1lGHm+P/k5q7NxXkbw2jQvRG6RQikp7tNsmk7sU5+mcjLOknse
+	 LglCtxUUpMbJ7deHk/t8aRv+luLiSB0HtC2XELIRHVa9wzQefCPe2Scyjwf99E3pMP
+	 AfT0aeNkt5aGKCl9bjgsFZckzNnX3qmTjcoZ1Z9k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolas Escande <nico.escande@gmail.com>,
-	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 161/516] wifi: ath11k: reset ar->num_stations on hardware start
-Date: Wed, 28 Oct 2026 17:55:13 +0100
-Message-ID: <20261028170007.319825825@linuxfoundation.org>
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>
+Subject: [PATCH 5.10 143/516] rtc: spear: initialize IRQ state before requesting alarm IRQ
+Date: Wed, 28 Oct 2026 17:54:55 +0100
+Message-ID: <20261028170006.896555672@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -70,58 +67,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolas Escande <nico.escande@gmail.com>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-[ Upstream commit 7e0ad05ebc72fffba2bdf2400400902d94ed7272 ]
+commit 055ef5ce9f67a6a3a1363fa663007f8196cc0fb8 upstream.
 
-When (multiple) hw restart occurs, we end up in a situation where we
-cannot accept new stations / mesh peers. This seems to be the
-'num_stations' in 'struct ath11k' that did not get reset properly in
-this case. In ath11k_mac_op_start(), it was indeed the only accounting var
-that did not get reset so let's clear it too.
+devm_request_irq() enables the interrupt before it returns, so the handler
+may run while probe is still initializing the device. Initialize the MMIO
+address and spinlock before requesting the alarm IRQ.
 
-This avoids problems like those:
-
-	[1248828.088023] WARNING: CPU: 0 PID: 12281 at net/mac80211/util.c:1682 ieee80211_reconfig_stations+0x98/0xc0
-	[1248828.088115] Call trace:
-	[1248828.088116]  ieee80211_reconfig_stations+0x98/0xc0 (P)
-	[1248828.088119]  ieee80211_reconfig+0x774/0x1438
-	[1248828.088123]  ieee80211_restart_work+0x10c/0x178
-	[1248828.088127]  process_one_work+0x178/0x3c0
-	[1248828.088130]  worker_thread+0x280/0x440
-	[1248828.088133]  kthread+0xe0/0xf8
-	[1248828.088137]  ret_from_fork+0x10/0x20
-	[1248828.088141] ---[ end trace 0000000000000000 ]---
-	[1248836.686604] ath11k_pci 0000:04:00.0: refusing to associate station: too many connected already (128)
-	[1248836.686609] ath11k_pci 0000:04:00.0: Failed to add station: xx:xx:xx:xx:xx:xx for VDEV: 1
-
-Tested-on: QCN9074 hw1.0 PCI WLAN.HK.2.9.0.1-01977-QCAHKSWPL_SILICONZ-1
-
-Fixes: d5c65159f289 ("ath11k: driver for Qualcomm IEEE 802.11ax devices")
-Signed-off-by: Nicolas Escande <nico.escande@gmail.com>
-Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
-Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260812-num-station-v3-1-871d20e043f6@gmail.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 0942a71e435f ("rtc: add support for spear rtc")
+Cc: stable@vger.kernel.org
+Assisted-by: Codex:GPT-5
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Link: https://patch.msgid.link/20260902080318.3498434-1-runyu.xiao@seu.edu.cn
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/ath/ath11k/mac.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/rtc/rtc-spear.c |   11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath11k/mac.c b/drivers/net/wireless/ath/ath11k/mac.c
-index b66b6a7072d82..f09b926df9033 100644
---- a/drivers/net/wireless/ath/ath11k/mac.c
-+++ b/drivers/net/wireless/ath/ath11k/mac.c
-@@ -4242,6 +4242,7 @@ static int ath11k_mac_op_start(struct ieee80211_hw *hw)
- 	ar->num_started_vdevs = 0;
- 	ar->num_created_vdevs = 0;
- 	ar->num_peers = 0;
-+	ar->num_stations = 0;
- 	ar->allocated_vdev_map = 0;
+--- a/drivers/rtc/rtc-spear.c
++++ b/drivers/rtc/rtc-spear.c
+@@ -360,6 +360,12 @@ static int spear_rtc_probe(struct platfo
+ 	if (irq < 0)
+ 		return irq;
  
- 	/* Configure monitor status ring with default rx_filter to get rx status
--- 
-2.53.0
-
++	config->ioaddr = devm_platform_ioremap_resource(pdev, 0);
++	if (IS_ERR(config->ioaddr))
++		return PTR_ERR(config->ioaddr);
++
++	spin_lock_init(&config->lock);
++
+ 	status = devm_request_irq(&pdev->dev, irq, spear_rtc_irq, 0, pdev->name,
+ 			config);
+ 	if (status) {
+@@ -368,10 +374,6 @@ static int spear_rtc_probe(struct platfo
+ 		return status;
+ 	}
+ 
+-	config->ioaddr = devm_platform_ioremap_resource(pdev, 0);
+-	if (IS_ERR(config->ioaddr))
+-		return PTR_ERR(config->ioaddr);
+-
+ 	config->clk = devm_clk_get(&pdev->dev, NULL);
+ 	if (IS_ERR(config->clk))
+ 		return PTR_ERR(config->clk);
+@@ -380,7 +382,6 @@ static int spear_rtc_probe(struct platfo
+ 	if (status < 0)
+ 		return status;
+ 
+-	spin_lock_init(&config->lock);
+ 	platform_set_drvdata(pdev, config);
+ 
+ 	config->rtc = devm_rtc_device_register(&pdev->dev, pdev->name,
 
 
