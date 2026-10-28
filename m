@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793210238;
-	b=sRitqukjsXqjkZ7wke93QJIuOLUxAb8DYWqwhi2CAf6Wb9eEbW7hwLWPSnlDEYbC+rV9
-	 bCtpV+eNw8C9Gu9tD2B1PJpshveO4cCfRbvvHMyWt0mnmMpPMlUcZU1mqSKv8V564D9S7
-	 8uDrtR1BaRJTWlyFLQj6O991mCH5fBxDdF/c0V7euYH60V8FfKI2wSRNzxkfJaQmJtNgF
-	 ITtuxFULEot0MWnBdnJxc0y/t/A7qvkr6xSxnLLN1cVmz7PnbgNBP+Iro8mEXep0LXPAx
-	 mPC6N1eTbiCosd6rN9Q6lrRe+AFTVgtkHhtJPPfskSVvILA1YK7HFnRSUO4QjWLk8cA==
+	t=1793210241;
+	b=1Bucgo4PDsnjRRmD7aEwYiDxvEPDt3KnddzUOyL6893n1YYKM01GgOutXpVyyoGdWJHE
+	 F0amzq1mv3PwXAawJp35PTY0PdTXsJfTeQnYcpHubEUvbgRAPDVY1T9YLVtJ4MbfzZB4C
+	 9T1XP3LXlU8IcETkZ/bERXAlbryv1iDkuy4UJlFG4CmaXPYVHSNQHsWP33Pux8CK91JAn
+	 tA/GKTO4/l6KkscupZe4cjOyrpcfhxws3fYW9m0hq22xN8mQfHxIzjzp5YDn7t5DAPF7b
+	 a7xdg0c3wIUvnK2q/RyAYWoRvC/rI7eRt+3CJof96SR4mk4Q/yoWa3Rmw1hPKxKDX4Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793210238;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793210241;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=oQOrLtGcZuctPcVHg3Waqh5NHTDQ22hej/4FgnK827E=;
-	b=eqX8DrviuiBZJvcNscfPVcdJD4zb1SZdnEhORXsHDByrEKPAOpide2p1T/SGOiPJqq3z
-	 nG/2hSjTj1EI8wDp01UhHnFlY2xHIFHSN23rQML7A3ejMxsLmNRq4J4CNC4GvbI3L5dFW
-	 m3CUn7GH7eMguuGgIdgjbm4+wwDS/eBoLm49127eMhEdECDGOHq0FsR48JSAS++Dz6NUK
-	 JmFI5UJ/i0xu242txY9LEG/n9y/SanR0jqCCy8EOx5eZnkW299o/tNXMoqmk/eJSKCiyg
-	 apfjKNJC6z5E7sdjB3j0gFzaObzSDw6K61ShQl2HgDnwRYliN62/QmPJzuMI7bHo6Dg==
+	bh=ET/dm+aybO/Ym7BCqtNTSsdpsSRK2KmluDvAr5zhzz8=;
+	b=GfQ4QApBjMwdoCUA91BpThpfLfkoZwZIf0UN0KwhJu1yWY+pLPrxWFfFBz51J4AvaR09
+	 n6YjczzBlVFymKChlD/NKcyOVLx+ZBb1fvXttPdTotQSMP8UFRr7Mqn3mTzf6yKeLT20N
+	 BV53jHN+ugYs6eCUost5cGEVtXtQotA/TAAQYa1xz3LUhjmWh5qJKlvCu0kFsSePEzA6b
+	 zpTVlS6cRXzxV3fRChIOdFTNTzuTVHL6j/JzvM0R4n9PKnQLAApS+LTUK7nxx3dl0w++w
+	 /cXDt3wRQsapUkYkQjZOPu+qFVWSdsC5UmSWbiWxQDwiYlCkhjf5o/HwP+/edTav5Zg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="UdLs/Ww5";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Byv3dS4u;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8548B606A31C;
-	Wed, 28 Oct 2026 17:57:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60701606A31A;
+	Wed, 28 Oct 2026 17:57:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UdLs/Ww5
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D62A61F01828;
-	Wed, 28 Oct 2026 17:57:17 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Byv3dS4u
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B10D21F01825;
+	Wed, 28 Oct 2026 17:57:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793210238;
-	bh=oQOrLtGcZuctPcVHg3Waqh5NHTDQ22hej/4FgnK827E=;
+	s=korg; t=1793210241;
+	bh=ET/dm+aybO/Ym7BCqtNTSsdpsSRK2KmluDvAr5zhzz8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UdLs/Ww5iTaw92BCNjrbTjn7kPfUb5tuBZ/URP3UMXsUAclrnwREIamnr9X/qozQH
-	 AsLy/7lj15o54or7xJK1eNKuei3Bm+GlT3qqXiJJfA8yVHiTSofA7mHx2CDAdrwFj0
-	 /uuC+rG/JffcJyZV/58TRQQlynWt7J1odKp39VRM=
+	b=Byv3dS4uXOgQDePAcUMTHmoQJHNDGherbOtmU+f0usWIorB8sqwhOmcdAW+S9JkzZ
+	 VNIFcRywexcWb2P1y0vZ41HkhMeb8adXloXeUtBY0456X+8kxtUhoZYp2SReS6/JXN
+	 7Z7Lu7hCwpjga2plbhNGzLXVCbsK3g5yqUSnDUks=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lee Jones <lee@kernel.org>,
-	Steven Rostedt <rostedt@goodmis.org>
-Subject: [PATCH 6.6 125/168] tracing/histograms: Verify event_call identity when updating synth_event refcount
-Date: Wed, 28 Oct 2026 18:01:01 +0100
-Message-ID: <20261028165946.045200782@linuxfoundation.org>
+	Jens Axboe <axboe@kernel.dk>,
+	Oleg Nesterov <oleg@redhat.com>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>
+Subject: [PATCH 6.6 126/168] io-wq: order the exit bit against worker creation task work
+Date: Wed, 28 Oct 2026 18:01:02 +0100
+Message-ID: <20261028165946.068460752@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165943.089486480@linuxfoundation.org>
 References: <20261028165943.089486480@linuxfoundation.org>
@@ -67,114 +68,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lee Jones <lee@kernel.org>
+From: Christian Brauner <brauner@kernel.org>
 
-commit 3403d9bb27ebc3572bd048620746b4414e073bf9 upstream.
+Commit 0e5663856b69219ef2f02e04bac9f5c5be19718a upstream.
 
-In event_hist_trigger_parse() and hist_unreg_all(), the histogram
-registration and unregistration paths look up find_synth_event() using
-trace_event_name(file->event_call) and adjust se->ref if a match is
-found.
+io_wq_exit_workers() cancels task work for queued worker creation with
+task_work_cancel_match(). That has a plain load of task->task_works.
 
-Because find_synth_event() only compares the event basename, registering
-or removing a histogram on a non-synthetic trace event whose basename
-matches a synthetic event erroneously modifies the synthetic event's
-reference count.  If a histogram is registered on the non-synthetic
-event before the synthetic event is created and removed afterwards,
-se->ref is decremented without a matching increment, allowing the
-synthetic event to be freed while an active histogram action still holds
-a pointer to it.
+io_queue_worker_create() adds the new entry and tests IO_WQ_BIT_EXIT to
+cancel it if the workqueue is already on its way out.
 
-Introduce find_synth_event_call() to verify that &se->call matches
-file->event_call before adjusting se->ref.
+That must be ordered. task_work_add() has a full barrier via cmpxchg().
+But io_wq_exit_start() sets the bit with set_bit() which doesn't have
+any memory ordering.
 
-Fixes: 4b147936fa50 ("tracing: Add support for 'synthetic' events")
+So afaict, on weakly ordered architectures the exiting task may load
+task_works before the store of the bit is visible. The other side tests
+the bit before the store is visible as well. So the entry remains queued
+with worker_refs and the exiting task waits on worker_done indefinitely.
+
+If the task still has rings then io_uring_del_tctx_node() provides the
+barrier via test_and_set_bit() in io_wq_set_exit_on_idle(). When it
+has closed all rings though that barrier is gone.
+
+Add the barrier after the set_bit().
+
+Fixes: 71a85387546e ("io-wq: check for wq exit after adding new worker task_work")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20261019120730.2342739-1-lee@kernel.org
-Signed-off-by: Lee Jones <lee@kernel.org>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Reviewed-by: Jens Axboe <axboe@kernel.dk>
+Acked-by: Oleg Nesterov <oleg@redhat.com>
+Link: https://patch.msgid.link/20260921-work-coredump-fixes-v3-4-8e4adb1619e6@kernel.org
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_events_hist.c  |   11 +++--------
- kernel/trace/trace_events_synth.c |   10 ++++++++++
- kernel/trace/trace_synth.h        |    1 +
- 3 files changed, 14 insertions(+), 8 deletions(-)
+ io_uring/io-wq.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/kernel/trace/trace_events_hist.c
-+++ b/kernel/trace/trace_events_hist.c
-@@ -6729,7 +6729,6 @@ static void hist_unreg_all(struct trace_
- 	struct event_trigger_data *test, *n;
- 	struct hist_trigger_data *hist_data;
- 	struct synth_event *se;
--	const char *se_name;
- 
- 	lockdep_assert_held(&event_mutex);
- 
-@@ -6742,8 +6741,7 @@ static void hist_unreg_all(struct trace_
- 			list_del_rcu(&test->list);
- 			trace_event_trigger_enable_disable(file, 0);
- 
--			se_name = trace_event_name(file->event_call);
--			se = find_synth_event(se_name);
-+			se = find_synth_event_call(file->event_call);
- 			if (se)
- 				se->ref--;
- 
-@@ -6767,7 +6765,6 @@ static int event_hist_trigger_parse(stru
- 	struct hist_trigger_data *hist_data;
- 	char *param, *filter, *p, *start;
- 	struct synth_event *se;
--	const char *se_name;
- 	bool remove;
- 	int ret = 0;
- 
-@@ -6861,8 +6858,7 @@ static int event_hist_trigger_parse(stru
- 		}
- 
- 		event_trigger_unregister(cmd_ops, file, glob+1, trigger_data);
--		se_name = trace_event_name(file->event_call);
--		se = find_synth_event(se_name);
-+		se = find_synth_event_call(file->event_call);
- 		if (se)
- 			se->ref--;
- 		ret = 0;
-@@ -6897,8 +6893,7 @@ static int event_hist_trigger_parse(stru
- 	if (ret)
- 		goto out_unreg;
- 
--	se_name = trace_event_name(file->event_call);
--	se = find_synth_event(se_name);
-+	se = find_synth_event_call(file->event_call);
- 	if (se)
- 		se->ref++;
-  out:
---- a/kernel/trace/trace_events_synth.c
-+++ b/kernel/trace/trace_events_synth.c
-@@ -857,6 +857,16 @@ struct synth_event *find_synth_event(con
- 	return NULL;
+--- a/io_uring/io-wq.c
++++ b/io_uring/io-wq.c
+@@ -1236,6 +1236,8 @@ static bool io_task_work_match(struct ca
+ void io_wq_exit_start(struct io_wq *wq)
+ {
+ 	set_bit(IO_WQ_BIT_EXIT, &wq->state);
++	/* Pairs with task_work_add() in io_queue_worker_create(). */
++	smp_mb__after_atomic();
  }
  
-+struct synth_event *find_synth_event_call(struct trace_event_call *call)
-+{
-+	struct synth_event *se;
-+	const char *name;
-+
-+	name = trace_event_name(call);
-+	se = find_synth_event(name);
-+	return se && &se->call == call ? se : NULL;
-+}
-+
- static struct trace_event_fields synth_event_fields_array[] = {
- 	{ .type = TRACE_FUNCTION_TYPE,
- 	  .define_fields = synth_event_define_fields },
---- a/kernel/trace/trace_synth.h
-+++ b/kernel/trace/trace_synth.h
-@@ -37,5 +37,6 @@ struct synth_event {
- };
- 
- extern struct synth_event *find_synth_event(const char *name);
-+extern struct synth_event *find_synth_event_call(struct trace_event_call *call);
- 
- #endif /* __TRACE_SYNTH_H */
+ static void io_wq_cancel_tw_create(struct io_wq *wq)
 
 
