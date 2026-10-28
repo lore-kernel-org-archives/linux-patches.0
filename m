@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216098;
-	b=drGucO/XuSC3keIioeU5EHsrGJCCTJAwWxfmaIv7nd+zmM1KsTzXRI7Ki68NLvW9JMhZ
-	 /b6rtrA40yQJ3mS1eDDyZu3FpvRm/AwqM+HKICxg3hcqmL6idL5GuofV8jaRBpt+9vrn4
-	 /M/HqAGBIuYAxxuf/7zt7GVa8jh59wGlTuFTiALErTnKMoXKHtdr6DQmHmdLU3UjWXDee
-	 HExt3DK3jGmyPA+M8v21Em4or62iqeZmyohrilqrhTl1CrNjMbTQ/P53BzrbeLUIpw+vH
-	 SUr6HDUJceUf/jpfrSEwigHAeJ7cHHHIQ2HJvC4RYblUTszSvLVMFPdN54NsGrvZ6lw==
+	t=1793216101;
+	b=qiSi8DvEizA/IOIhIP0tCN92++cqfSX3JF/REnEqAyCqOoeS1HGEoVgOkPJ84KOhz7o+
+	 nd6XEocoG0eZwowttCAOeqBCQSNfJ2SNcabntmsqYUlo03vioxMO/dwmoV34Ia87CHrYd
+	 u5FDNlpLNM8kfccXMwWx+cZ/9p78ysSgB5CHkLVtRUrxoDtWVWTSrGNqIj5fed7oO5gM8
+	 Z/JDp9T6SWzY7I2WTe98Fh3kfAcK0MvpeQHNYHopW9vPn0rRPBfMTjKFCftF/sGtyM1JV
+	 YvUNsnlRAJ6enl0BgFP3YF+xeKDwLt0HdmKdrNpJSS5ChhEyrvMcQU/bPrZB0fFJkAg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216098;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216101;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=zGzhWuuQXHseVwpHkFOrni3wjqxBx3dk+lX3VkFbOAE=;
-	b=2eTYKEvx3iNtrz6tU8tf9LzSuMHAH389iNvG/34OmNJIJfD5eCNRATjuO2XmwdShAl0a
-	 kI+XeVXH9lvkMtfYOCZD2v1OnT9vJFPVavLbTouN8Ec0ICbKYuvgQLMqAu3XsiHOOhFjl
-	 VORU7v5bjURYwokL21BCzVSmTdxXzbWO6tmgUgvcojFPy8VLMcacd5bDEAAYQLRGqAbVh
-	 cm7YHGdtDwM+XRycpat5zkDzWIT+fSTpItzToe04A8CZBbsGI6xMIX8Dh0HNOS9PEU1WQ
-	 2hxBHTeM6JB4fb5+MY2qiNoeOp76rFR67vbb7zVm22KCrH+PrkcgxYAf6F6Sxtfp3Tg==
+	bh=srdxt2GJsREItjBJbPEGeDDMmy+9u4nt/yxUkisgPUo=;
+	b=fn4tMWd0bXg7pQ7SFpTy8zCG2SLaQj8zKrfmhQdUbpEzJ5PgNapQKXVsl16OXiuBXInF
+	 3cCz297jcL0smXZnjjHu2G8snw6QKW0mp/jafQ4JxZvFCr9Kzun5rB03YB09ErDRP83AD
+	 tMYl0TasYXLg4YV0oWQqV+wNu/hXzOzK3Hpv5cgicdNw3FXb5bHBNc4i/r4G70hin8AH4
+	 /P5CLVPhg+4iKQzZ9SQapGigmL2Qf+5LzRFLOAOu1Upm6iVy2gmrAJqucK/S4RR8s3gTm
+	 /pwB5ems3SM5GUclvaX3tqF8Kfh0atJxZ7CmxtIiIJ7InNB0CHVHxLhh7Un2VmdxskQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HOMTIe00;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=k3ZCb6ck;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48CB3606A31D;
-	Wed, 28 Oct 2026 19:34:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FB04606A31A;
+	Wed, 28 Oct 2026 19:35:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HOMTIe00
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 999F91F01825;
-	Wed, 28 Oct 2026 19:34:57 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=k3ZCb6ck
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8BCC1F01825;
+	Wed, 28 Oct 2026 19:35:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216098;
-	bh=zGzhWuuQXHseVwpHkFOrni3wjqxBx3dk+lX3VkFbOAE=;
+	s=korg; t=1793216101;
+	bh=srdxt2GJsREItjBJbPEGeDDMmy+9u4nt/yxUkisgPUo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HOMTIe00/4XJF802d3nx620BIJTPmsouaDngO+tJa3k3CyaefU0uHsSMysjX1ifeV
-	 VXJQH3ny0WajV4lLOfArDyLxahZYn7oxZHM0gaw5wbkeDupcMzX+lyI+KeZwKe5ZOn
-	 n6H/GJwVNwuIjL2piS3pVNgaQJaXj4YKXz5o9Vg0=
+	b=k3ZCb6ckEGpbNdbVx7oyGBMXqaz8koottHA8gYzVLpjPaHoZ94dDbeKe8Ifkwkbqp
+	 BmsmOmf0TUk+anZ8nEZBI60wwkGlBo+NDEZ7WJrGJQqdthMFUP851ACKigQCD/AZNH
+	 oFgIRjNyz4NN2Nb4m/sW9wwSX8MaWuFhWGI0DoJQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junxian Huang <huangjunxian6@hisilicon.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Hui Su <sh_def@163.com>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1440/1887] RDMA/hns: Fix soft lockup under heavy CEQE load
-Date: Wed, 28 Oct 2026 17:58:56 +0100
-Message-ID: <20261028170532.228830209@linuxfoundation.org>
+Subject: [PATCH 6.1 1414/1887] fbdev: ssd1307fb: defer I2C transfers from damage callbacks
+Date: Wed, 28 Oct 2026 17:58:30 +0100
+Message-ID: <20261028170531.634853425@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,194 +68,239 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junxian Huang <huangjunxian6@hisilicon.com>
+From: Hui Su <sh_def@163.com>
 
-[ Upstream commit 2fdf34038369c0a27811e7b4680662a14ada1d6b ]
+[ Upstream commit 9ad709afdfa32509ed64938a6d9cd00db3cd54c2 ]
 
-CEQEs are handled in interrupt handler currently. This may cause the
-CPU core staying in interrupt context too long and lead to soft lockup
-under heavy load.
+The fbdev damage callbacks may run from fbcon while printk has disabled
+preemption.  They currently update the display synchronously, which enters
+the sleeping I2C transfer path from atomic context.
 
-Handle CEQEs in BH workqueue and set an upper limit for the number of
-CEQE handled by a single call of work handler.
+A complete report from an RK3566 system follows:
 
-Fixes: a5073d6054f7 ("RDMA/hns: Add eq support of hip08")
-Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
-Link: https://lore.kernel.org/r/20240710133705.896445-3-huangjunxian6@hisilicon.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+  [  258.129004] watchdog: watchdog0: watchdog did not stop!
+  [  258.129067] BUG: scheduling while atomic: systemd/1/0x00000003
+  [  258.129076] Modules linked in: algif_hash algif_skcipher af_alg bnep
+  binfmt_misc lz4hc lz4 zram snd_soc_hdmi_codec brcmfmac_wcc hci_uart
+  fb_ssd1306(C) fbtft(C) btqca btrtl btintel btsdio snd_soc_simple_card
+  motorcomm pwm_fan snd_soc_simple_card_utils ssd130x_spi nls_iso8859_1
+  ssd130x btbcm drm_shmem_helper display_connector brcmfmac ssd1307fb
+  brcmutil bluetooth cfg80211 rfkill snd_soc_rockchip_i2s_tdm
+  snd_soc_rk817 hantro_vpu snd_soc_core snd_compress snd_pcm_dmaengine
+  v4l2_vp9 snd_pcm v4l2_h264 rockchip_rga snd_timer rk_crypto2
+  spi_rockchip_sfc videobuf2_dma_contig snd sm3_generic v4l2_mem2mem
+  videobuf2_dma_sg dwmac_rk sm3 soundcore videobuf2_memops videobuf2_v4l2
+  stmmac_platform dw_hdmi_cec videodev videobuf2_common dw_hdmi_i2s_audio
+  stmmac rk817_charger pcs_xpcs mc cpufreq_dt sch_fq_codel ip_tables
+  x_tables autofs4
+  [  258.129215] Preemption disabled at:
+  [  258.129216] [<ffff80008012f96c>] vprintk_emit+0x11c/0x340
+  [  258.129234] CPU: 0 PID: 1 Comm: systemd Tainted: G         C
+  6.6.0-rc5-rockchip-rk356x #4
+  [  258.129239] Hardware name: Rockchip RK3566 OPi 3B (DT)
+  [  258.129243] Call trace:
+  [  258.129245]  dump_backtrace+0xa0/0x128
+  [  258.129252]  show_stack+0x20/0x38
+  [  258.129256]  dump_stack_lvl+0x60/0xb0
+  [  258.129265]  dump_stack+0x18/0x28
+  [  258.129269]  __schedule_bug+0xa0/0xc8
+  [  258.129274]  __schedule+0x9ac/0xd30
+  [  258.129279]  schedule+0x60/0x100
+  [  258.129282]  schedule_timeout+0x194/0x338
+  [  258.129289]  rk3x_i2c_xfer_common.isra.0+0x384/0x498
+  [  258.129296]  rk3x_i2c_xfer+0x20/0x60
+  [  258.129300]  __i2c_transfer+0x194/0x648
+  [  258.129308]  i2c_transfer+0x9c/0x130
+  [  258.129313]  i2c_transfer_buffer_flags+0x64/0x98
+  [  258.129318]  ssd1307fb_update_rect+0x42c/0x560 [ssd1307fb]
+  [  258.129334]  ssd1307fb_defio_imageblit+0x34/0x50 [ssd1307fb]
+  [  258.129343]  soft_cursor+0x13c/0x210
+  [  258.129350]  bit_cursor+0x2dc/0x550
+  [  258.129354]  fbcon_cursor+0xec/0x108
+  [  258.129359]  hide_cursor+0x44/0xc8
+  [  258.129365]  vt_console_print+0x398/0x3b0
+  [  258.129370]  console_flush_all.isra.0+0x17c/0x410
+  [  258.129377]  console_unlock+0x4c/0x100
+  [  258.129382]  vprintk_emit+0x1c8/0x340
+  [  258.129386]  vprintk_default+0x40/0x58
+  [  258.129389]  vprintk+0xb8/0xd0
+  [  258.129392]  _printk+0x68/0x98
+  [  258.129398]  watchdog_release+0x170/0x230
+  [  258.129404]  __fput+0xbc/0x288
+  [  258.129409]  __fput_sync+0x58/0x70
+  [  258.129413]  __arm64_sys_close+0x40/0x90
+  [  258.129419]  invoke_syscall+0x4c/0x118
+  [  258.129426]  el0_svc_common.constprop.0+0x48/0xf0
+  [  258.129432]  do_el0_svc+0x24/0x38
+  [  258.129437]  el0_svc+0x48/0x100
+  [  258.129443]  el0t_64_sync_handler+0xc0/0xc8
+  [  258.129448]  el0t_64_sync+0x190/0x198
+  [  258.573087] ------------[ cut here ]------------
+  [  258.573098] DEBUG_LOCKS_WARN_ON(val > preempt_count())
+  [  258.573111] WARNING: CPU: 0 PID: 1 at kernel/sched/core.c:5871
+  preempt_count_sub+0x9c/0x148
+  [  258.573130] Modules linked in: algif_hash algif_skcipher af_alg bnep
+  binfmt_misc lz4hc lz4 zram snd_soc_hdmi_codec brcmfmac_wcc hci_uart
+  fb_ssd1306(C) fbtft(C) btqca btrtl btintel btsdio snd_soc_simple_card
+  motorcomm pwm_fan snd_soc_simple_card_utils ssd130x_spi nls_iso8859_1
+  ssd130x btbcm drm_shmem_helper display_connector brcmfmac ssd1307fb
+  brcmutil bluetooth cfg80211 rfkill snd_soc_rockchip_i2s_tdm
+  snd_soc_rk817 hantro_vpu snd_soc_core snd_compress snd_pcm_dmaengine
+  v4l2_vp9 snd_pcm v4l2_h264 rockchip_rga snd_timer rk_crypto2
+  spi_rockchip_sfc videobuf2_dma_contig snd sm3_generic v4l2_mem2mem
+  videobuf2_dma_sg dwmac_rk sm3 soundcore videobuf2_memops videobuf2_v4l2
+  stmmac_platform dw_hdmi_cec videodev videobuf2_common dw_hdmi_i2s_audio
+  stmmac rk817_charger pcs_xpcs mc cpufreq_dt sch_fq_codel ip_tables
+  x_tables autofs4
+  [  258.573268] CPU: 0 PID: 1 Comm: systemd Tainted: G        WC
+  6.6.0-rc5-rockchip-rk356x #4
+  [  258.573274] Hardware name: Rockchip RK3566 OPi 3B (DT)
+  ** 37 printk messages dropped **
+  [  258.574064] Preemption disabled at:
+  ** 42 printk messages dropped **
+  [  259.190237] Preemption disabled at:
+
+Track damage in the driver's private data under a spinlock and merge
+multiple updates into a bounding rectangle.  Queue the existing
+deferred-I/O work immediately for damage reported by fbdev drawing and
+write helpers, so allocation and I2C transfers run from process context
+without adding the configured mmap refresh delay.  Keep full-screen
+updates for dirty mmap pages, for which no precise rectangle is available.
+
+Tested on an RK3566 board with a 128x64 OLED by running five rounds of 250
+KERN_EMERG messages in total while issuing framebuffer writes every 15 ms.
+No atomic-sleep, preemption, or lockdep warning occurred.  Kprobe tracing
+also confirmed that cursor-only damage remained an 8x16 partial update.
+
+Fixes: a2ed00da5047 ("drivers/video: add support for the Solomon SSD1307 OLED Controller")
+Cc: stable@vger.kernel.org
+Signed-off-by: Hui Su <sh_def@163.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hns/hns_roce_device.h |  1 +
- drivers/infiniband/hw/hns/hns_roce_hw_v2.c  | 87 ++++++++++++---------
- 2 files changed, 53 insertions(+), 35 deletions(-)
+ drivers/video/fbdev/ssd1307fb.c | 72 ++++++++++++++++++++++++++++++---
+ 1 file changed, 67 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/infiniband/hw/hns/hns_roce_device.h b/drivers/infiniband/hw/hns/hns_roce_device.h
-index 0607970013536..fec4084e2dfff 100644
---- a/drivers/infiniband/hw/hns/hns_roce_device.h
-+++ b/drivers/infiniband/hw/hns/hns_roce_device.h
-@@ -718,6 +718,7 @@ struct hns_roce_eq {
- 	int				shift;
- 	int				event_type;
- 	int				sub_type;
-+	struct work_struct		work;
- };
+diff --git a/drivers/video/fbdev/ssd1307fb.c b/drivers/video/fbdev/ssd1307fb.c
+index a7b8be508f562..61f84abb5e0c9 100644
+--- a/drivers/video/fbdev/ssd1307fb.c
++++ b/drivers/video/fbdev/ssd1307fb.c
+@@ -14,6 +14,7 @@
+ #include <linux/module.h>
+ #include <linux/property.h>
+ #include <linux/pwm.h>
++#include <linux/spinlock.h>
+ #include <linux/uaccess.h>
+ #include <linux/regulator/consumer.h>
  
- struct hns_roce_eq_table {
-diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-index 1775120634745..538b3261614a1 100644
---- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-@@ -36,6 +36,7 @@
- #include <linux/iopoll.h>
- #include <linux/kernel.h>
- #include <linux/types.h>
-+#include <linux/workqueue.h>
- #include <net/addrconf.h>
- #include <rdma/ib_addr.h>
- #include <rdma/ib_cache.h>
-@@ -6217,32 +6218,11 @@ static struct hns_roce_ceqe *next_ceqe_sw_v2(struct hns_roce_eq *eq)
- 		!!(eq->cons_index & eq->entries)) ? ceqe : NULL;
+@@ -72,6 +73,13 @@ struct ssd1307fb_par {
+ 	struct i2c_client *client;
+ 	u32 height;
+ 	struct fb_info *info;
++	/* Pending damage, with exclusive x2/y2, protected by damage_lock. */
++	spinlock_t damage_lock;
++	bool damage_pending;
++	u32 damage_x1;
++	u32 damage_x2;
++	u32 damage_y1;
++	u32 damage_y2;
+ 	u8 lookup_table[4];
+ 	u32 page_offset;
+ 	u32 col_offset;
+@@ -302,19 +310,49 @@ static int ssd1307fb_blank(int blank_mode, struct fb_info *info)
+ 		return ssd1307fb_write_cmd(par->client, SSD1307FB_DISPLAY_ON);
  }
  
--static irqreturn_t hns_roce_v2_ceq_int(struct hns_roce_dev *hr_dev,
--				       struct hns_roce_eq *eq)
-+static irqreturn_t hns_roce_v2_ceq_int(struct hns_roce_eq *eq)
- {
--	struct hns_roce_ceqe *ceqe = next_ceqe_sw_v2(eq);
--	irqreturn_t ceqe_found = IRQ_NONE;
--	u32 cqn;
--
--	while (ceqe) {
--		/* Make sure we read CEQ entry after we have checked the
--		 * ownership bit
--		 */
--		dma_rmb();
--
--		cqn = hr_reg_read(ceqe, CEQE_CQN);
--
--		hns_roce_cq_completion(hr_dev, cqn);
--
--		++eq->cons_index;
--		ceqe_found = IRQ_HANDLED;
-+	queue_work(system_highpri_wq, &eq->work);
- 
--		ceqe = next_ceqe_sw_v2(eq);
--	}
--
--	update_eq_db(eq);
--
--	return IRQ_RETVAL(ceqe_found);
-+	return IRQ_HANDLED;
- }
- 
- static irqreturn_t hns_roce_v2_msix_interrupt_eq(int irq, void *eq_ptr)
-@@ -6253,7 +6233,7 @@ static irqreturn_t hns_roce_v2_msix_interrupt_eq(int irq, void *eq_ptr)
- 
- 	if (eq->type_flag == HNS_ROCE_CEQ)
- 		/* Completion event interrupt */
--		int_work = hns_roce_v2_ceq_int(hr_dev, eq);
-+		int_work = hns_roce_v2_ceq_int(eq);
- 	else
- 		/* Asynchronous event interrupt */
- 		int_work = hns_roce_v2_aeq_int(hr_dev, eq);
-@@ -6628,6 +6608,33 @@ static int hns_roce_v2_create_eq(struct hns_roce_dev *hr_dev,
- 	return ret;
- }
- 
-+static void hns_roce_ceq_work(struct work_struct *work)
++static void ssd1307fb_schedule_damage(struct fb_info *info, u32 x, u32 y,
++				      u32 width, u32 height)
 +{
-+	struct hns_roce_eq *eq = from_work(eq, work, work);
-+	struct hns_roce_ceqe *ceqe = next_ceqe_sw_v2(eq);
-+	struct hns_roce_dev *hr_dev = eq->hr_dev;
-+	int ceqe_num = 0;
-+	u32 cqn;
++	struct ssd1307fb_par *par = info->par;
++	unsigned long flags;
++	u32 x2, y2;
 +
-+	while (ceqe && ceqe_num < hr_dev->caps.ceqe_depth) {
-+		/* Make sure we read CEQ entry after we have checked the
-+		 * ownership bit
-+		 */
-+		dma_rmb();
++	if (!width || !height || x >= par->width || y >= par->height)
++		return;
 +
-+		cqn = hr_reg_read(ceqe, CEQE_CQN);
++	x2 = x + min(width, par->width - x);
++	y2 = y + min(height, par->height - y);
 +
-+		hns_roce_cq_completion(hr_dev, cqn);
-+
-+		++eq->cons_index;
-+		++ceqe_num;
-+
-+		ceqe = next_ceqe_sw_v2(eq);
++	spin_lock_irqsave(&par->damage_lock, flags);
++	if (par->damage_pending) {
++		par->damage_x1 = min(par->damage_x1, x);
++		par->damage_y1 = min(par->damage_y1, y);
++		par->damage_x2 = max(par->damage_x2, x2);
++		par->damage_y2 = max(par->damage_y2, y2);
++	} else {
++		par->damage_x1 = x;
++		par->damage_y1 = y;
++		par->damage_x2 = x2;
++		par->damage_y2 = y2;
++		par->damage_pending = true;
 +	}
++	spin_unlock_irqrestore(&par->damage_lock, flags);
 +
-+	update_eq_db(eq);
++	/* Advance an already-pending mmap update as well. */
++	mod_delayed_work(system_wq, &info->deferred_work, 0);
 +}
 +
- static int __hns_roce_request_irq(struct hns_roce_dev *hr_dev, int irq_num,
- 				  int comp_num, int aeq_num, int other_num)
+ static void ssd1307fb_defio_damage_range(struct fb_info *info, off_t off, size_t len)
  {
-@@ -6658,21 +6665,24 @@ static int __hns_roce_request_irq(struct hns_roce_dev *hr_dev, int irq_num,
- 			 "hns-ceq-%d", j - other_num - aeq_num);
+ 	struct ssd1307fb_par *par = info->par;
  
- 	for (j = 0; j < irq_num; j++) {
--		if (j < other_num)
-+		if (j < other_num) {
- 			ret = request_irq(hr_dev->irq[j],
- 					  hns_roce_v2_msix_interrupt_abn,
- 					  0, hr_dev->irq_names[j], hr_dev);
+-	ssd1307fb_update_display(par);
++	ssd1307fb_schedule_damage(info, 0, 0, par->width, par->height);
+ }
+ 
+ static void ssd1307fb_defio_damage_area(struct fb_info *info, u32 x, u32 y,
+ 					u32 width, u32 height)
+ {
+-	struct ssd1307fb_par *par = info->par;
 -
--		else if (j < (other_num + comp_num))
-+		} else if (j < (other_num + comp_num)) {
-+			INIT_WORK(&eq_table->eq[j - other_num].work,
-+				  hns_roce_ceq_work);
- 			ret = request_irq(eq_table->eq[j - other_num].irq,
- 					  hns_roce_v2_msix_interrupt_eq,
- 					  0, hr_dev->irq_names[j + aeq_num],
- 					  &eq_table->eq[j - other_num]);
--		else
-+		} else {
- 			ret = request_irq(eq_table->eq[j - other_num].irq,
- 					  hns_roce_v2_msix_interrupt_eq,
- 					  0, hr_dev->irq_names[j - comp_num],
- 					  &eq_table->eq[j - other_num]);
-+		}
+-	ssd1307fb_update_rect(par, x, y, width, height);
++	ssd1307fb_schedule_damage(info, x, y, width, height);
+ }
+ 
+ FB_GEN_DEFAULT_DEFERRED_SYS_OPS(ssd1307fb,
+@@ -329,7 +367,30 @@ static const struct fb_ops ssd1307fb_ops = {
+ 
+ static void ssd1307fb_deferred_io(struct fb_info *info, struct list_head *pagereflist)
+ {
+-	ssd1307fb_update_display(info->par);
++	struct ssd1307fb_par *par = info->par;
++	unsigned long flags;
++	u32 x, y, width, height;
 +
- 		if (ret) {
- 			dev_err(hr_dev->dev, "request irq error!\n");
- 			goto err_request_failed;
-@@ -6682,12 +6692,16 @@ static int __hns_roce_request_irq(struct hns_roce_dev *hr_dev, int irq_num,
- 	return 0;
- 
- err_request_failed:
--	for (j -= 1; j >= 0; j--)
--		if (j < other_num)
-+	for (j -= 1; j >= 0; j--) {
-+		if (j < other_num) {
- 			free_irq(hr_dev->irq[j], hr_dev);
--		else
--			free_irq(eq_table->eq[j - other_num].irq,
--				 &eq_table->eq[j - other_num]);
-+			continue;
-+		}
-+		free_irq(eq_table->eq[j - other_num].irq,
-+			 &eq_table->eq[j - other_num]);
-+		if (j < other_num + comp_num)
-+			cancel_work_sync(&eq_table->eq[j - other_num].work);
++	spin_lock_irqsave(&par->damage_lock, flags);
++	if (!list_empty(pagereflist)) {
++		x = 0;
++		y = 0;
++		width = par->width;
++		height = par->height;
++		par->damage_pending = false;
++	} else if (par->damage_pending) {
++		x = par->damage_x1;
++		y = par->damage_y1;
++		width = par->damage_x2 - par->damage_x1;
++		height = par->damage_y2 - par->damage_y1;
++		par->damage_pending = false;
++	} else {
++		spin_unlock_irqrestore(&par->damage_lock, flags);
++		return;
 +	}
++	spin_unlock_irqrestore(&par->damage_lock, flags);
++
++	ssd1307fb_update_rect(par, x, y, width, height);
+ }
  
- err_kzalloc_failed:
- 	for (i -= 1; i >= 0; i--)
-@@ -6708,8 +6722,11 @@ static void __hns_roce_free_irq(struct hns_roce_dev *hr_dev)
- 	for (i = 0; i < hr_dev->caps.num_other_vectors; i++)
- 		free_irq(hr_dev->irq[i], hr_dev);
+ static int ssd1307fb_init(struct ssd1307fb_par *par)
+@@ -609,6 +670,7 @@ static int ssd1307fb_probe(struct i2c_client *client)
+ 	par = info->par;
+ 	par->info = info;
+ 	par->client = client;
++	spin_lock_init(&par->damage_lock);
  
--	for (i = 0; i < eq_num; i++)
-+	for (i = 0; i < eq_num; i++) {
- 		free_irq(hr_dev->eq_table.eq[i].irq, &hr_dev->eq_table.eq[i]);
-+		if (i < hr_dev->caps.num_comp_vectors)
-+			cancel_work_sync(&hr_dev->eq_table.eq[i].work);
-+	}
+ 	par->device_info = device_get_match_data(dev);
  
- 	for (i = 0; i < irq_num; i++)
- 		kfree(hr_dev->irq_names[i]);
 -- 
 2.53.0
 
