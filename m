@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215862;
-	b=eEjfgSuyedw36Oc7WeclDLdJ9ldRK4fxijCRRGDDpdOEuI45KiHG6SxqMUUU7Y/py04C
-	 T/uObgjSoZop3cM4n2yBA7W9RQXDbgyAzzBDzCpDr/ikMAJVl0D1JIXixvaMlGAJ3ETrt
-	 jjHaJ72aAyL8YZ+bKAL0S4ZSjuYz3Xa2jD6//i3UKb4CSfCOc+riP8OI7bK2G0Z2siBPE
-	 0mOW5yH+/BQ8xffzDJkUxOHZuea6sOeAas2Z8qQt6Cz03Fptskpbe7uSJA98GlrPGLTmG
-	 PZI0++q3ax8//E9laCOEYgtjePeqytIfkV1xBdk1+TZUVkQj7N4a4IIpg9ycUrx4U5A==
+	t=1793215864;
+	b=tLzIV5SytOXYxKXQdVAInzoLz/RLlhjukYJChfVKXPoitXmSgwzdfV5GwjE0KoTbhWxs
+	 65/8NPyJjWk509ag3AfWno+h0sdaiVlzI5IEUiYnRYN9bKoLLXJnvKWcp42ZwuA1jvojI
+	 Pu/wv1N5GMzB1VWQsUIPqUya3gC0D+pzJZEVQkNBuwVcBEk6ILcz1m/p3s6745lA2NPrX
+	 A2XhDkzi46HYx7fNoKBXZnWteKjv4+uufkjLCkkTU/7Zu+l7nPBcYubcmloKgO6svIB4j
+	 qHPITSZrAGwkIeGjX+TYSN0EEV4v8hyv775oo0hWFD/8RfWXUhCuQ5fqBnpioHmEhkA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215862;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215864;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=0/ICduoDEjCf3M3Plc06LBP7iq/nKEx65QAZ07c3KTs=;
-	b=EKTVAAc1u9GJ3EdkPe2YWvTQeRB44EjqGbpJ5pwD7A8zMx7fByk6ATt+LSeLj7ctznPa
-	 5YpdnKmx/sz01jhezRlom4qMj59jlNbaz9xJWmUsSa3e7nKUE6RkHy1yD7fBhGri1Lza8
-	 ekvyRnOpZQgxZbtqHw0nvoeYZI6uo8hT1WwFOd9yEhZaZKm+HyvbsVKDOH5DCKvbfcTmW
-	 R8DR6UrJHRBP5VkQ3O/CDCZzygfhEk3ArCj21jD7u+4FLFJt8aXEuhOfxubs2gqNjI6Qa
-	 /QhB7Dp1SRxdKrVjO7YlKF0bUEMl6gu3ag2tbZvd+NWKZYp6QGOx0KKwxMR7sJGAOcA==
+	bh=xnIoo2LXuSocElOtx7ZsJHWIINtXWlOYzPDQQI4IVcc=;
+	b=5ReZXQedXK/q+WK2Zm5RkWT7CPjv5R5/K7xR61mvfBM5zUoZo/dwDhFj14gHkk08iqoJ
+	 xYqcsspDjtQGDXgA/VH6iVw3U60Hwnn8YbQqMM6wOgDv2fqqxKH+5zUWkGhtOiLwBtqvd
+	 15OzL46ShvdiCiGnvlUvO3tU/P2Y+OqEBpco8NhbyETG7RSNxEpa3ST9OGJ/c8fs1M5Fb
+	 keb6pRWDOfioBPVqJ3SRFQwBqem3IICkSGaDDMbO1bzBftIHieXeR8/+tBI83XUzchlCN
+	 p8iQkbcuS3XBT44rVqd9WNoyN24MUWiLGYUsBIDb17wXsgOwnd5BPu+JcKoIs1GfnUQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VNBDmQxe;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q8su1lwN;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1F76606A31A;
-	Wed, 28 Oct 2026 19:31:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92B50606A329;
+	Wed, 28 Oct 2026 19:31:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VNBDmQxe
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F42271F01825;
-	Wed, 28 Oct 2026 19:31:00 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q8su1lwN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF1231F031E7;
+	Wed, 28 Oct 2026 19:31:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215861;
-	bh=0/ICduoDEjCf3M3Plc06LBP7iq/nKEx65QAZ07c3KTs=;
+	s=korg; t=1793215864;
+	bh=xnIoo2LXuSocElOtx7ZsJHWIINtXWlOYzPDQQI4IVcc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VNBDmQxe0B7HSUASRo/3Q6hIJUdRHsNQtaJafzLFFSsROglPKBJJOxc9HmUol7XZY
-	 NnUVzy3pbfysVnIIC9tWhl6AT0CsLeJvkwvNVNR/Tj+XzHEGQHG4JvxJrkfstV4f1l
-	 AgPzWYDZr2LdNzTprAn2MTkecql+knQiHDxDsbMA=
+	b=Q8su1lwNWDu4FiFwxP5dTLJMTHOHzHzPPBvxVwLwEohqttgYCixHZSZzNBke5s0QJ
+	 IuHYUwmoBcphP+tqRPB38/+mICO8Hzcfc2WKhlaS/qHH33tdKO1MrgFrbMLNCV6sRf
+	 ctJgRM3IcaePN261q0cgBTKk1NV+FL3g+fUMcsLw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Subbaraya Sundeep <sbhatta@marvell.com>,
-	Ratheesh Kannoth <rkannoth@marvell.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Zhu Yanjun <yanjun.zhu@linux.dev>,
+	Ibrahim Hashimov <security@auditcode.ai>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1321/1887] octeontx2-af: npc: Fix size of entry2cntr_map
-Date: Wed, 28 Oct 2026 17:56:57 +0100
-Message-ID: <20261028170529.489752203@linuxfoundation.org>
+Subject: [PATCH 6.1 1357/1887] RDMA/rxe: Fix responder UAF on IB_QP_MAX_DEST_RD_ATOMIC modify_qp
+Date: Wed, 28 Oct 2026 17:57:33 +0100
+Message-ID: <20261028170530.322802541@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,146 +69,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ratheesh Kannoth <rkannoth@marvell.com>
+From: Ibrahim Hashimov <security@auditcode.ai>
 
-[ Upstream commit f9cd6fabe0e7c7f6fc30c6c192c7ed72aba37232 ]
+[ Upstream commit 6f7014237405e7f032b5c53a82d9eccf6161c291 ]
 
-KASAN prints below splat. This is caused by allocating counter for
-reserved mcam entry for cpt 2nd pass entry. But mcam->entry2cntr_map
-is not allocated for reserved entries.
+rxe_qp_from_attr() handles IB_QP_MAX_DEST_RD_ATOMIC outside the
+IB_QP_STATE path, so it holds no state_lock and runs while the responder
+task rxe_receiver() (recv_task on rxe_wq) is live. A modify_qp() setting
+only that attribute calls free_rd_atomic_resources() then
+alloc_rd_atomic_resources(), swapping qp->resp.resources[] while
+rxe_prepare_res()/find_resource() walk it; free_rd_atomic_resources()
+also leaves the cached pointer qp->resp.res dangling. A local
+unprivileged user can race the free/realloc into a use-after-free in
+rxe_receiver() (local DoS).
 
-BUG: KASAN: slab-out-of-bounds in npc_map_mcam_entry_and_cntr+0xb0/0x1a0
-Write of size 2 at addr ffff0001033e7ffe by task kworker/0:1/14
+Drain recv_task around the swap with rxe_disable_task()/rxe_enable_task(),
+as rxe_qp_reset() already does when tearing this array down, re-enabling
+only after alloc_rd_atomic_resources() succeeds so the responder never
+resumes against a NULL qp->resp.resources on the ENOMEM path. Also clear
+qp->resp.res in free_rd_atomic_resources(), like the rxe_resp.c
+completion paths.
 
-CPU: 0 PID: 14 Comm: kworker/0:1 Not tainted 6.1.67 #1
-Hardware name: Marvell CN106XX board (DT)
-Workqueue: events work_for_cpu_fn
-Call trace:
- dump_backtrace.part.0+0xe4/0xf0
- show_stack+0x18/0x30
- dump_stack_lvl+0x88/0xb4
- print_report+0x154/0x458
- kasan_report+0xb8/0x194
- __asan_store2+0x7c/0xa0
- npc_map_mcam_entry_and_cntr+0xb0/0x1a0
- rvu_mbox_handler_npc_mcam_write_entry+0x268/0x280
- npc_install_flow+0x840/0xfe0
- rvu_npc_install_cpt_pass2_entry+0x138/0x190
- rvu_nix_init+0x148c/0x2880
- rvu_probe+0x1800/0x30b0
- local_pci_probe+0x78/0xe0
- work_for_cpu_fn+0x30/0x50
- process_one_work+0x4cc/0x97c
- worker_thread+0x360/0x630
- kthread+0x1a0/0x1b0
- ret_from_fork+0x10/0x20
+Reproduced under KASAN; the slab-use-after-free in rxe_receiver() is gone.
 
-Fixes: 55307fcb9258 ("octeontx2-af: Add mbox messages to install and delete MCAM rules")
-Cc: Subbaraya Sundeep <sbhatta@marvell.com>
-Signed-off-by: Ratheesh Kannoth <rkannoth@marvell.com>
-Link: https://patch.msgid.link/20260610022344.969774-1-rkannoth@marvell.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 8700e3e7c485 ("Soft RoCE driver")
+Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
+Signed-off-by: Ibrahim Hashimov <security@auditcode.ai>
+Link: https://patch.msgid.link/20260712121720.78001-1-security@auditcode.ai
+Assisted-by: AuditCode-AI:2026.07
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ethernet/marvell/octeontx2/af/rvu_npc.c   | 40 +++++++------------
- 1 file changed, 15 insertions(+), 25 deletions(-)
+ drivers/infiniband/sw/rxe/rxe_qp.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc.c
-index ed1b66ea0aeff..c8146e3afb1b8 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc.c
-@@ -1934,7 +1934,7 @@ static int npc_mcam_rsrcs_init(struct rvu *rvu, int blkaddr)
- 	/* Alloc memory for MCAM entry to counter mapping and for tracking
- 	 * counter's reference count.
- 	 */
--	mcam->entry2cntr_map = devm_kcalloc(rvu->dev, mcam->bmap_entries,
-+	mcam->entry2cntr_map = devm_kcalloc(rvu->dev, mcam->total_entries,
- 					    sizeof(u16), GFP_KERNEL);
- 	if (!mcam->entry2cntr_map)
- 		goto free_mem;
-@@ -1950,10 +1950,11 @@ static int npc_mcam_rsrcs_init(struct rvu *rvu, int blkaddr)
- 	if (!mcam->entry2target_pffunc)
- 		goto free_mem;
- 
--	for (index = 0; index < mcam->bmap_entries; index++) {
-+	for (index = 0; index < mcam->bmap_entries; index++)
- 		mcam->entry2pfvf_map[index] = NPC_MCAM_INVALID_MAP;
-+
-+	for (index = 0; index < mcam->total_entries; index++)
- 		mcam->entry2cntr_map[index] = NPC_MCAM_INVALID_MAP;
--	}
- 
- 	for (cntr = 0; cntr < mcam->counters.max; cntr++)
- 		mcam->cntr2pfvf_map[cntr] = NPC_MCAM_INVALID_MAP;
-@@ -3040,7 +3041,7 @@ int rvu_mbox_handler_npc_mcam_free_counter(struct rvu *rvu,
- 		struct npc_mcam_oper_counter_req *req, struct msg_rsp *rsp)
- {
- 	struct npc_mcam *mcam = &rvu->hw->mcam;
--	u16 index, entry = 0;
-+	u16 index;
- 	int blkaddr, err;
- 
- 	blkaddr = rvu_get_blkaddr(rvu, BLKTYPE_NPC, 0);
-@@ -3058,20 +3059,16 @@ int rvu_mbox_handler_npc_mcam_free_counter(struct rvu *rvu,
- 	mcam->cntr2pfvf_map[req->cntr] = NPC_MCAM_INVALID_MAP;
- 	rvu_free_rsrc(&mcam->counters, req->cntr);
- 
--	/* Disable all MCAM entry's stats which are using this counter */
--	while (entry < mcam->bmap_entries) {
-+	/* Disable all MCAM entry's stats which are using this counter.
-+	 * Scan the full MCAM index range: AF-reserved rules (e.g. CPT pass-2)
-+	 */
-+	for (index = 0; index < mcam->total_entries; index++) {
- 		if (!mcam->cntr_refcnt[req->cntr])
- 			break;
--
--		index = find_next_bit(mcam->bmap, mcam->bmap_entries, entry);
--		if (index >= mcam->bmap_entries)
--			break;
--		entry = index + 1;
- 		if (mcam->entry2cntr_map[index] != req->cntr)
- 			continue;
--
--		npc_unmap_mcam_entry_and_cntr(rvu, mcam, blkaddr,
--					      index, req->cntr);
-+		npc_unmap_mcam_entry_and_cntr(rvu, mcam, blkaddr, index,
-+					      req->cntr);
+diff --git a/drivers/infiniband/sw/rxe/rxe_qp.c b/drivers/infiniband/sw/rxe/rxe_qp.c
+index ab42bfea92a60..a468e9bdc7364 100644
+--- a/drivers/infiniband/sw/rxe/rxe_qp.c
++++ b/drivers/infiniband/sw/rxe/rxe_qp.c
+@@ -124,6 +124,7 @@ static void free_rd_atomic_resources(struct rxe_qp *qp)
+ 		}
+ 		kfree(qp->resp.resources);
+ 		qp->resp.resources = NULL;
++		qp->resp.res = NULL;
  	}
+ }
  
- 	mutex_unlock(&mcam->lock);
-@@ -3082,7 +3079,7 @@ int rvu_mbox_handler_npc_mcam_unmap_counter(struct rvu *rvu,
- 		struct npc_mcam_unmap_counter_req *req, struct msg_rsp *rsp)
- {
- 	struct npc_mcam *mcam = &rvu->hw->mcam;
--	u16 index, entry = 0;
-+	u16 index;
- 	int blkaddr, rc;
+@@ -583,10 +584,18 @@ int rxe_qp_from_attr(struct rxe_qp *qp, struct ib_qp_attr *attr, int mask,
+ 		int max_dest_rd_atomic = attr->max_dest_rd_atomic ?
+ 			roundup_pow_of_two(attr->max_dest_rd_atomic) : 0;
  
- 	blkaddr = rvu_get_blkaddr(rvu, BLKTYPE_NPC, 0);
-@@ -3105,20 +3102,13 @@ int rvu_mbox_handler_npc_mcam_unmap_counter(struct rvu *rvu,
++		/*
++		 * Not gated by IB_QP_STATE, so the responder task is live.
++		 * Quiesce resp.task like rxe_qp_reset() before swapping the
++		 * rd_atomic array, so rxe_responder() cannot race the free/
++		 * realloc.
++		 */
++		rxe_disable_task(&qp->resp.task);
+ 		free_rd_atomic_resources(qp);
+ 
+ 		qp->attr.max_dest_rd_atomic = max_dest_rd_atomic;
+ 		err = alloc_rd_atomic_resources(qp, max_dest_rd_atomic);
++		rxe_enable_task(&qp->resp.task);
+ 		if (err)
+ 			return err;
  	}
- 
- 	/* Disable all MCAM entry's stats which are using this counter */
--	while (entry < mcam->bmap_entries) {
-+	for (index = 0; index < mcam->total_entries; index++) {
- 		if (!mcam->cntr_refcnt[req->cntr])
- 			break;
--
--		index = find_next_bit(mcam->bmap, mcam->bmap_entries, entry);
--		if (index >= mcam->bmap_entries)
--			break;
--		entry = index + 1;
--
- 		if (mcam->entry2cntr_map[index] != req->cntr)
- 			continue;
--
--		npc_unmap_mcam_entry_and_cntr(rvu, mcam, blkaddr,
--					      index, req->cntr);
-+		npc_unmap_mcam_entry_and_cntr(rvu, mcam, blkaddr, index,
-+					      req->cntr);
- 	}
- exit:
- 	mutex_unlock(&mcam->lock);
 -- 
 2.53.0
 
