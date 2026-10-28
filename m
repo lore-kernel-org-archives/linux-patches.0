@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213914;
-	b=bZFlVczoHhjyAV+pO7c1ygBU70sNEQ5XtAKnh+aCijqCfce7/l0FfzPfycQXUSARi8B/
-	 bDFNQyGHIZgNjEYdoGMAlxUaSTpj+4oiPSF0lqdX+XPwzBm+XMvZCapMiqLc08ZS9CD9k
-	 cfwqSlaDpB/MIyuUZtCS5HQFl10T7EWZDET7osOptGXeOhVt7mWAmnK0T3PqGKNPBjYku
-	 xG8cmEQgVciWJZoDP8cbqwAfj2s/6WKNaXfFCLUy9oKNcX+qdo9J5y6QwEGLnMCMtTrH/
-	 /Ev3FB+ABx/vEUbJMu0rfQwfUP3/Nn5OYIt+yWS+RQaRADV9KF1tR3JcIE11v6et0+A==
+	t=1793213917;
+	b=IhsO93iqZ8Ov1FIrK2fRxyMRkHriGQdMDqR+G+YjodiG3sJpm+egpLPkNuip2VE8e0ee
+	 Noht3VlVQekuJybqpbJXOlskd8b/VZkl/A+8t0wwqShKWDObBpH7CkA7C77IAznawGK0h
+	 Og2ObNXpui4D/z5xSVULCNg6idCNw+9pFmG7NbhsfXImeB49yESU97sM03FO7zV6+mvh+
+	 4p6ThdDW6cWGHCd9jPlAAjkTjmtNYbgiGi/FTAEpgBLISCesumWsTK6n8mXrD91Hu4lrO
+	 lfs25OVZ2/tk/+wND2a9TOH9D3gb+KGuIn070D3LgQDsxa1xTNepEk7gxAhogijXrug==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213914;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213917;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Fimjiz/r+BGydb68H/UONSXv6gY7tBOUftNaiaV4CEM=;
-	b=GIkc4a0cJSrVMInJ19kQCW3MIhw8tPynhMEpNdtP9njqoCHxWLeakHtuiOnJzXcWoUFl
-	 SgV7teL45pqnpcgBk6HktEv60/uZq1xKNBS+ZNnv1r/2qEyDtpaD9QjqXfLR6u4oEAAkN
-	 hSyP5cj0iUK/whIhz1XYmc6QBXiGhUdK68m6EoGLeJiUdi0refF2jrYUwa1BLVBCNIaCr
-	 gjyyqk5UpYrLO6GZ+i/JCKBAAjkdCHs4XePEzUIO8h9Uf8Rrf8tU26coHvO6l807TPIqL
-	 YLyMR0chhkNruFnDhxIAWkIhQjbaoEyiFxQNnwT9+EynlW2acmUnA6Kkd1KxvTsQVTA==
+	bh=02jdzQGFNoH1WwNJYv05tiyOki9L7DxGlRG+jkpMX+Q=;
+	b=bZ9pvdhGtF4EUYNV3jh8DLo5voe6PEh5lhwYV86u7zekdxV+mCVJtbE63Jmbrk6lwyZN
+	 ubatVT0Da9CaWQiilnTP3IdSk7laXJWP4wnV/2WN8K3gP1lAICU6tYMzVHSCT7jmQvDvf
+	 w5lSry/EqNlGGvUZi3xoU6Og+sNI00aSS82PTOYkVBMufRFrjOMEZjBnWAKoSSTfVsPQq
+	 FNz+Rk7VsqxoT/cj/nYXelxpczeguxxkYAqFwGdeM6oWWSdvBd54XFdR6UyHiQBjbdrZA
+	 4Qb1V1NSYUzgBGHUM0ObR8fXRZtWBMXfVWgO8ciL5Z+ghzngLGmupjxweHhJYIaap0Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uvZ863kw;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HYGGMO+B;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BBF4606A31A;
-	Wed, 28 Oct 2026 18:58:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71031606A31A;
+	Wed, 28 Oct 2026 18:58:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uvZ863kw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB6AE1F01825;
-	Wed, 28 Oct 2026 18:58:33 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HYGGMO+B
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C244E1F01825;
+	Wed, 28 Oct 2026 18:58:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213914;
-	bh=Fimjiz/r+BGydb68H/UONSXv6gY7tBOUftNaiaV4CEM=;
+	s=korg; t=1793213917;
+	bh=02jdzQGFNoH1WwNJYv05tiyOki9L7DxGlRG+jkpMX+Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uvZ863kwZggdRlHVDLoPwd4HEc+8p2lPdwQt83w32jHGFlNtpIzGKU+wF6c95GTNv
-	 ZpSG2Ek/SJzGwHYNhz1n1B1b3B37vBvH5IYVgDBTQeK4ZEsY9OVx8rzPefT7XIYyHV
-	 eeJ/U5tusNCHak8xBdbWQ4kzp1wdUGU91CjgQdTY=
+	b=HYGGMO+BSHP9bBgqfef0nDhPUkBur8XyQUQr2Jjq7pXw/br/8xeaBA3QISacVHCsH
+	 gDScG9Z2Uak29uG2gG6Ix/KcLO1dVdHxUMmKLmr4VUU+jfg9vQEgpOL1iP7LpvVXrE
+	 uYWew2ttKGfFjGU7ENOf7fxgBP91KToMlTXpWC8Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bob Zhou <bob.zhou@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0631/1887] drm/amdgpu: fix double free err_addr pointer warnings
-Date: Wed, 28 Oct 2026 17:45:27 +0100
-Message-ID: <20261028170513.766473066@linuxfoundation.org>
+Subject: [PATCH 6.1 0622/1887] fs/ntfs3: Check folio pointer for NULL
+Date: Wed, 28 Oct 2026 17:45:18 +0100
+Message-ID: <20261028170513.564829392@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,33 +67,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bob Zhou <bob.zhou@amd.com>
+From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 
-[ Upstream commit 506c245f3f1cd989cb89811a7f06e04ff8813a0d ]
+[ Upstream commit 1cd6c96219c429ebcfa8e79a865277376c563803 ]
 
-In amdgpu_umc_bad_page_polling_timeout, the amdgpu_umc_handle_bad_pages
-will be run many times so that double free err_addr in some special case.
-So set the err_addr to NULL to avoid the warnings.
+It can be NULL if bmap is called.
 
-Signed-off-by: Bob Zhou <bob.zhou@amd.com>
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: 82cae269cfa95 ("fs/ntfs3: Add initialization of super block")
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_umc.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/ntfs3/inode.c | 17 +++++++++++------
+ 1 file changed, 11 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_umc.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_umc.c
-index aad3c8b4c8102..da40be587f1e3 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_umc.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_umc.c
-@@ -109,6 +109,7 @@ static int amdgpu_umc_do_page_retirement(struct amdgpu_device *adev,
+diff --git a/fs/ntfs3/inode.c b/fs/ntfs3/inode.c
+index b8ac0943e9325..e38f8fac1130b 100644
+--- a/fs/ntfs3/inode.c
++++ b/fs/ntfs3/inode.c
+@@ -580,13 +580,18 @@ static noinline int ntfs_get_block_vbo(struct inode *inode, u64 vbo,
  	}
  
- 	kfree(err_data->err_addr);
-+	err_data->err_addr = NULL;
- 	return AMDGPU_RAS_SUCCESS;
- }
+ 	if (is_resident(ni)) {
+-		ni_lock(ni);
+-		err = attr_data_read_resident(ni, page);
+-		ni_unlock(ni);
+-
+-		if (!err)
+-			set_buffer_uptodate(bh);
++		bh->b_blocknr = RESIDENT_LCN;
+ 		bh->b_size = block_size;
++		if (!page) {
++			err = 0;
++		} else {
++			ni_lock(ni);
++			err = attr_data_read_resident(ni, page);
++			ni_unlock(ni);
++
++			if (!err)
++				set_buffer_uptodate(bh);
++		}
+ 		return err;
+ 	}
  
 -- 
 2.53.0
