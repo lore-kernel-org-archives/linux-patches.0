@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215962;
-	b=RHj2Ixo3c9+9zsxn2V7x0INr6x8ngJXI5jloGjATH/OK2FMBtK5+hWSjDd7vqIGXb9Qg
-	 nLJ2HW9v6lywzGi7tcrvjayFbm2z8AHec8zNZtKzjU3M2T2d59BKPBPqxQzhGnkTDg6YG
-	 K2aC5s08z0bwRhL/hRBwm9aYzcJL9UInImWpTJi/tvISpwj6yNDLISaUqDOM1Y8d0HNjN
-	 HKFLgjPpUgWbVRgTUllboPOpGDcVnWD12/4eD6kgPhIpBwQ/AhKfU43a4YsQEXKPgkA/+
-	 drIiEt/kqws5i9oMKkpdP5WhfqyFZs/Ez69d6vFbrf6/7Q0XAUt75rFcj6dftNhVb9Q==
+	t=1793215966;
+	b=TzMr+RtbMwb+bWUfKwlBcoUJRDs8pcGSHvbF4vWf85F6CDcEaq53gYlWmI2JXKgQKDfQ
+	 m2LUvi1U2tnlHFM9Ve1wDg+e+C6OJKvFVkJJLTPKorEXJev7LdA2SJ7ps7yw1/yKWM7rA
+	 aK1WbLgEQ+X1D6JSk2PlzwgbFEKGsCvCbsWyZM39HfCK8KnhgaqR/O22aD13ruv6MHSA6
+	 tsrnLwkHSYm0C8gdbM7m1Lk3cZKTV8b09WFd3F1vmVEQFZb888oP3Jjb71rnGcVBgoxLd
+	 7EzQD8b/ljZGpFgfAhPnjQrg+AsdRPXgkk8vexepCm0bK6Pzih0zQWHfttFetqQOgzQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215962;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215966;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ynXo3dcKDv+yi5o4Hmsgvp4fvU1SC2yokSpAV9Yz4oU=;
-	b=2zaofN/M+AMWKJLWhb+GzfwCdGuA85tDK+csWm1i5aWvIzK0GzJ4MKrMVHz6lerwbFq5
-	 7zgTg2/8VmoICKQUW1uwR5/NP17U5G5QlFzJkQJqDQ4pER0JIttAnKrD1cUL3Dp/LTgRh
-	 mN98zR5UQVjGVa86UkHESkKsmu9kOKSPqzf1zdiyKgg9f+phCEt6g/1j+QzTQB+H/Iarg
-	 97/c4YN6lUWkzuuzWZV4lJDNLY8Y4Pt4qDKD+TsABBwxFLRf5Y/H8Qi/lzkcvrx58BOD2
-	 6Vu8GwYs0VVGzxMb81+tKGRaquIGlIsUDPoK5oPaYwp2u8r0t2aiHKL//oKNWA/AweQ==
+	bh=G3qNTyYmB0FXCasYFr85nzAWZ5HseHwBFtYMx4TFdeQ=;
+	b=F0fVZGXPLQur36ff25x5HfWfJ3LLzwbGRTH1zpGMW22JPegsEZm9nBKl0Rh+qzHEZeje
+	 ORGpZxWpVErdCzMJTsevGbkTvqJ4jHmnSZ7NJlrHhVujydwQx8h1NojF19/p/2H1cTcgV
+	 +KC77RoI6vE3ouRhsllpY4cM5TjKHu6nzgkhBxHd03AGJMpffloAsLfaY9mm1/IOlp6NT
+	 nCMInlPhp30Bt3NCNZXyffgLQQ0W87CIU/eogF1R6SWK+kJWNgVlz3sHzldB4AoZht29P
+	 JCUXmU9Q97v0kDfK0uUV5zLLvVcNyS0ieIHSqUltogQ7l5IR6efbC7NlmI776U6LvHA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=H5d6+22L;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=w+UggAC5;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 878CE606A31A;
-	Wed, 28 Oct 2026 19:32:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3F2C606A320;
+	Wed, 28 Oct 2026 19:32:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=H5d6+22L
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFA6E1F01825;
-	Wed, 28 Oct 2026 19:32:41 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=w+UggAC5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9E151F01825;
+	Wed, 28 Oct 2026 19:32:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215962;
-	bh=ynXo3dcKDv+yi5o4Hmsgvp4fvU1SC2yokSpAV9Yz4oU=;
+	s=korg; t=1793215965;
+	bh=G3qNTyYmB0FXCasYFr85nzAWZ5HseHwBFtYMx4TFdeQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=H5d6+22LRW0mVY6awRREhOwqGzkM9mIyICSRCsalTLQ2okfKYTmWxiHglTZul2lsa
-	 uXMuetXwFtBmbrTAvagTkWXZ4Bidq7iQjiw2lXkQTRAdQDllU3rGVkZd9wZXwbOgm7
-	 vy+KXyBQj24Tf7Trqk1dnwE2YNMSoE1x1rAQ2a9Y=
+	b=w+UggAC5hzBtgMlT7iP+oGlJW/da/3JLXk3BJAEzxHta2BW8HnJL+rEM23u1oCBQE
+	 tiwcV84iS+Ihx6JGKUITgtJLhGNo/Jb0jWa1hCBYXZVUNSKyxmntur3A1haSzUGHDZ
+	 qWY8Tn0YYXLrvY7oaAsMPBowFc4+r9dPP0lxUJAo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	StanleyYP Wang <StanleyYP.Wang@mediatek.com>,
+	Shayne Chen <shayne.chen@mediatek.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1393/1887] svcrdma: Refactor the creation of listener CMA ID
-Date: Wed, 28 Oct 2026 17:58:09 +0100
-Message-ID: <20261028170531.152780170@linuxfoundation.org>
+Subject: [PATCH 6.1 1367/1887] wifi: mt76: mt7915: set correct background radar capability
+Date: Wed, 28 Oct 2026 17:57:43 +0100
+Message-ID: <20261028170530.556248535@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,131 +69,183 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: StanleyYP Wang <StanleyYP.Wang@mediatek.com>
 
-[ Upstream commit 283d28546234b1764a0a37cb3df30cc3321c75b4 ]
+[ Upstream commit 888208d1ccc41bebe97744445787183b17bb3ea4 ]
 
-In a moment, I will add a second consumer of CMA ID creation in
-svcrdma. Refactor so this code can be reused.
+Some of the variants do not support background radar, so add a
+helper to report background radar capability.
+For mt7916, only the variant of 5G 2T2R + 1R supports background
+radar.
 
-Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-Stable-dep-of: e346ef7bcb13 ("svcrdma: Use svc_xprt_put to free listener on create failure")
+Signed-off-by: StanleyYP Wang <StanleyYP.Wang@mediatek.com>
+Reviewed-by: Shayne Chen <shayne.chen@mediatek.com>
+Link: https://patch.msgid.link/20250320015909.3948612-1-StanleyYP.Wang@mediatek.com
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Stable-dep-of: 44b5adfe4949 ("wifi: mt76: mt7915: bound the device EEPROM address before the EFUSE copy")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/xprtrdma/svc_rdma_transport.c | 67 ++++++++++++++----------
- 1 file changed, 40 insertions(+), 27 deletions(-)
+ .../wireless/mediatek/mt76/mt7915/debugfs.c   |  5 +++
+ .../wireless/mediatek/mt76/mt7915/eeprom.c    | 33 ++++++++++++++++++-
+ .../wireless/mediatek/mt76/mt7915/eeprom.h    |  1 +
+ .../net/wireless/mediatek/mt76/mt7915/init.c  |  7 ++--
+ .../net/wireless/mediatek/mt76/mt7915/mcu.c   |  8 +++--
+ .../wireless/mediatek/mt76/mt7915/mt7915.h    |  3 +-
+ 6 files changed, 49 insertions(+), 8 deletions(-)
 
-diff --git a/net/sunrpc/xprtrdma/svc_rdma_transport.c b/net/sunrpc/xprtrdma/svc_rdma_transport.c
-index 9c4cd4caa0c1c..c84343fbf2d2f 100644
---- a/net/sunrpc/xprtrdma/svc_rdma_transport.c
-+++ b/net/sunrpc/xprtrdma/svc_rdma_transport.c
-@@ -65,6 +65,8 @@
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/debugfs.c b/drivers/net/wireless/mediatek/mt76/mt7915/debugfs.c
+index 80f0488871df7..b6fe6da68feb1 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7915/debugfs.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7915/debugfs.c
+@@ -452,6 +452,11 @@ mt7915_rdd_monitor(struct seq_file *s, void *data)
  
- static struct svcxprt_rdma *svc_rdma_create_xprt(struct svc_serv *serv,
- 						 struct net *net, int node);
-+static int svc_rdma_listen_handler(struct rdma_cm_id *cma_id,
-+				   struct rdma_cm_event *event);
- static struct svc_xprt *svc_rdma_create(struct svc_serv *serv,
- 					struct net *net,
- 					struct sockaddr *sa, int salen,
-@@ -124,6 +126,41 @@ static void qp_event_handler(struct ib_event *event, void *context)
- 	}
+ 	mutex_lock(&dev->mt76.mutex);
+ 
++	if (!mt7915_eeprom_has_background_radar(dev)) {
++		seq_puts(s, "no background radar capability\n");
++		goto out;
++	}
++
+ 	if (!cfg80211_chandef_valid(chandef)) {
+ 		ret = -EINVAL;
+ 		goto out;
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/eeprom.c b/drivers/net/wireless/mediatek/mt76/mt7915/eeprom.c
+index f0ec000d46cf7..8b43fb6418088 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7915/eeprom.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7915/eeprom.c
+@@ -123,7 +123,7 @@ static int mt7915_eeprom_load(struct mt7915_dev *dev)
+ 		/* read eeprom data from efuse */
+ 		block_num = DIV_ROUND_UP(eeprom_size, eeprom_blk_size);
+ 		for (i = 0; i < block_num; i++) {
+-			ret = mt7915_mcu_get_eeprom(dev, i * eeprom_blk_size);
++			ret = mt7915_mcu_get_eeprom(dev, i * eeprom_blk_size, NULL);
+ 			if (ret < 0)
+ 				return ret;
+ 		}
+@@ -326,6 +326,37 @@ s8 mt7915_eeprom_get_power_delta(struct mt7915_dev *dev, int band)
+ 	return val & MT_EE_RATE_DELTA_SIGN ? delta : -delta;
  }
  
-+static struct rdma_cm_id *
-+svc_rdma_create_listen_id(struct net *net, struct sockaddr *sap,
-+			  void *context)
++bool
++mt7915_eeprom_has_background_radar(struct mt7915_dev *dev)
 +{
-+	struct rdma_cm_id *listen_id;
-+	int ret;
++	u8 val, buf[MT7915_EEPROM_BLOCK_SIZE];
++	u8 band_sel, tx_path, rx_path;
++	int offs = MT_EE_WIFI_CONF + 1;
 +
-+	listen_id = rdma_create_id(net, svc_rdma_listen_handler, context,
-+				   RDMA_PS_TCP, IB_QPT_RC);
-+	if (IS_ERR(listen_id))
-+		return listen_id;
++	switch (mt76_chip(&dev->mt76)) {
++	case 0x7915:
++		return true;
++	case 0x7906:
++		/* read efuse to check background radar capability */
++		if (mt7915_mcu_get_eeprom(dev, offs, buf))
++			break;
 +
-+	/* Allow both IPv4 and IPv6 sockets to bind a single port
-+	 * at the same time.
-+	 */
-+#if IS_ENABLED(CONFIG_IPV6)
-+	ret = rdma_set_afonly(listen_id, 1);
-+	if (ret)
-+		goto out_destroy;
-+#endif
-+	ret = rdma_bind_addr(listen_id, sap);
-+	if (ret)
-+		goto out_destroy;
++		val = buf[offs % MT7915_EEPROM_BLOCK_SIZE];
++		band_sel = u8_get_bits(val, MT_EE_WIFI_CONF0_BAND_SEL);
++		tx_path = u8_get_bits(val, MT_EE_WIFI_CONF0_TX_PATH);
++		rx_path = u8_get_bits(val, MT_EE_WIFI_CONF0_RX_PATH);
 +
-+	ret = rdma_listen(listen_id, RPCRDMA_LISTEN_BACKLOG);
-+	if (ret)
-+		goto out_destroy;
++		return (band_sel == MT_EE_V2_BAND_SEL_5GHZ &&
++			tx_path == rx_path && rx_path == 2);
++	case 0x7981:
++	case 0x7986:
++	default:
++		break;
++	}
 +
-+	return listen_id;
-+
-+out_destroy:
-+	rdma_destroy_id(listen_id);
-+	return ERR_PTR(ret);
++	return false;
 +}
 +
- static struct svcxprt_rdma *svc_rdma_create_xprt(struct svc_serv *serv,
- 						 struct net *net, int node)
- {
-@@ -302,7 +339,6 @@ static struct svc_xprt *svc_rdma_create(struct svc_serv *serv,
- {
- 	struct rdma_cm_id *listen_id;
- 	struct svcxprt_rdma *cma_xprt;
--	int ret;
+ const u8 mt7915_sku_group_len[] = {
+ 	[SKU_CCK] = 4,
+ 	[SKU_OFDM] = 8,
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/eeprom.h b/drivers/net/wireless/mediatek/mt76/mt7915/eeprom.h
+index f3e56817d36e9..ddb771ba45d25 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7915/eeprom.h
++++ b/drivers/net/wireless/mediatek/mt76/mt7915/eeprom.h
+@@ -45,6 +45,7 @@ enum mt7915_eeprom_field {
+ #define MT_EE_CAL_DPD_SIZE			(54 * MT_EE_CAL_UNIT)
  
- 	if (sa->sa_family != AF_INET && sa->sa_family != AF_INET6)
- 		return ERR_PTR(-EAFNOSUPPORT);
-@@ -312,30 +348,13 @@ static struct svc_xprt *svc_rdma_create(struct svc_serv *serv,
- 	set_bit(XPT_LISTENER, &cma_xprt->sc_xprt.xpt_flags);
- 	strcpy(cma_xprt->sc_xprt.xpt_remotebuf, "listener");
+ #define MT_EE_WIFI_CONF0_TX_PATH		GENMASK(2, 0)
++#define MT_EE_WIFI_CONF0_RX_PATH		GENMASK(5, 3)
+ #define MT_EE_WIFI_CONF0_BAND_SEL		GENMASK(7, 6)
+ #define MT_EE_WIFI_CONF1_BAND_SEL		GENMASK(7, 6)
+ #define MT_EE_WIFI_CONF_STREAM_NUM		GENMASK(7, 5)
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/init.c b/drivers/net/wireless/mediatek/mt76/mt7915/init.c
+index 7d1e2aa732897..782ce83bdab96 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7915/init.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7915/init.c
+@@ -353,9 +353,10 @@ mt7915_init_wiphy(struct ieee80211_hw *hw)
+ 	wiphy_ext_feature_set(wiphy, NL80211_EXT_FEATURE_UNSOL_BCAST_PROBE_RESP);
+ 	wiphy_ext_feature_set(wiphy, NL80211_EXT_FEATURE_FILS_DISCOVERY);
  
--	listen_id = rdma_create_id(net, svc_rdma_listen_handler, cma_xprt,
--				   RDMA_PS_TCP, IB_QPT_RC);
-+	listen_id = svc_rdma_create_listen_id(net, sa, cma_xprt);
- 	if (IS_ERR(listen_id)) {
--		ret = PTR_ERR(listen_id);
--		goto err0;
-+		kfree(cma_xprt);
-+		return (struct svc_xprt *)listen_id;
- 	}
--
--	/* Allow both IPv4 and IPv6 sockets to bind a single port
--	 * at the same time.
--	 */
--#if IS_ENABLED(CONFIG_IPV6)
--	ret = rdma_set_afonly(listen_id, 1);
--	if (ret)
--		goto err1;
--#endif
--	ret = rdma_bind_addr(listen_id, sa);
--	if (ret)
--		goto err1;
- 	cma_xprt->sc_cm_id = listen_id;
+-	if (!mdev->dev->of_node ||
+-	    !of_property_read_bool(mdev->dev->of_node,
+-				   "mediatek,disable-radar-background"))
++	if (mt7915_eeprom_has_background_radar(phy->dev) &&
++	    (!mdev->dev->of_node ||
++	     !of_property_read_bool(mdev->dev->of_node,
++				    "mediatek,disable-radar-background")))
+ 		wiphy_ext_feature_set(wiphy,
+ 				      NL80211_EXT_FEATURE_RADAR_BACKGROUND);
  
--	ret = rdma_listen(listen_id, RPCRDMA_LISTEN_BACKLOG);
--	if (ret)
--		goto err1;
--
- 	/*
- 	 * We need to use the address from the cm_id in case the
- 	 * caller specified 0 for the port number.
-@@ -344,12 +363,6 @@ static struct svc_xprt *svc_rdma_create(struct svc_serv *serv,
- 	svc_xprt_set_local(&cma_xprt->sc_xprt, sa, salen);
- 
- 	return &cma_xprt->sc_xprt;
--
-- err1:
--	rdma_destroy_id(listen_id);
-- err0:
--	kfree(cma_xprt);
--	return ERR_PTR(ret);
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c
+index f1f6bcc499494..9074ebae752d5 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c
+@@ -2751,7 +2751,7 @@ int mt7915_mcu_set_eeprom(struct mt7915_dev *dev)
+ 				 &req, sizeof(req), true);
  }
  
- /*
+-int mt7915_mcu_get_eeprom(struct mt7915_dev *dev, u32 offset)
++int mt7915_mcu_get_eeprom(struct mt7915_dev *dev, u32 offset, u8 *read_buf)
+ {
+ 	struct mt7915_mcu_eeprom_info req = {
+ 		.addr = cpu_to_le32(round_down(offset,
+@@ -2759,8 +2759,8 @@ int mt7915_mcu_get_eeprom(struct mt7915_dev *dev, u32 offset)
+ 	};
+ 	struct mt7915_mcu_eeprom_info *res;
+ 	struct sk_buff *skb;
++	u8 *buf = read_buf;
+ 	int ret;
+-	u8 *buf;
+ 
+ 	ret = mt76_mcu_send_and_get_msg(&dev->mt76,
+ 					MCU_EXT_QUERY(EFUSE_ACCESS),
+@@ -2769,8 +2769,10 @@ int mt7915_mcu_get_eeprom(struct mt7915_dev *dev, u32 offset)
+ 		return ret;
+ 
+ 	res = (struct mt7915_mcu_eeprom_info *)skb->data;
+-	buf = dev->mt76.eeprom.data + le32_to_cpu(res->addr);
++	if (!buf)
++		buf = dev->mt76.eeprom.data + le32_to_cpu(res->addr);
+ 	memcpy(buf, res->data, MT7915_EEPROM_BLOCK_SIZE);
++
+ 	dev_kfree_skb(skb);
+ 
+ 	return 0;
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/mt7915.h b/drivers/net/wireless/mediatek/mt76/mt7915/mt7915.h
+index ebe1cb0429d01..c2b3a28d71691 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7915/mt7915.h
++++ b/drivers/net/wireless/mediatek/mt76/mt7915/mt7915.h
+@@ -465,6 +465,7 @@ int mt7915_eeprom_get_target_power(struct mt7915_dev *dev,
+ 				   struct ieee80211_channel *chan,
+ 				   u8 chain_idx);
+ s8 mt7915_eeprom_get_power_delta(struct mt7915_dev *dev, int band);
++bool mt7915_eeprom_has_background_radar(struct mt7915_dev *dev);
+ int mt7915_dma_init(struct mt7915_dev *dev, struct mt7915_phy *phy2);
+ void mt7915_dma_prefetch(struct mt7915_dev *dev);
+ void mt7915_dma_cleanup(struct mt7915_dev *dev);
+@@ -511,7 +512,7 @@ int mt7915_mcu_set_fixed_rate_ctrl(struct mt7915_dev *dev,
+ 				   struct ieee80211_sta *sta,
+ 				   void *data, u32 field);
+ int mt7915_mcu_set_eeprom(struct mt7915_dev *dev);
+-int mt7915_mcu_get_eeprom(struct mt7915_dev *dev, u32 offset);
++int mt7915_mcu_get_eeprom(struct mt7915_dev *dev, u32 offset, u8 *read_buf);
+ int mt7915_mcu_get_eeprom_free_block(struct mt7915_dev *dev, u8 *block_num);
+ int mt7915_mcu_set_mac(struct mt7915_dev *dev, int band, bool enable,
+ 		       bool hdr_trans);
 -- 
 2.53.0
 
