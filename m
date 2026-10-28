@@ -1,56 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214366;
-	b=jV2xBDlCNzEagDXbDm/Uc02dupXdhwOD+Wp2VpOczFxGxeDR0WBhjnnUNUoIWmg+Ftby
-	 bltcb5TMHWwFkf3zJQnYZcLdLaSEhyJZoLWszlctYFINWBs4tgNftQ+cShsIcwxKPu9Kt
-	 vyyyBR3LXPbybWCy/YDuoDipB52M/hX2Jg/rmBDSvCMRKq8WlcudRIAOdPjAqRX4veqYO
-	 IRGQPQn13WMYdFRSRfOaJ/x7AmCbckA3aCJuXW/iUdkkrOfQ6W9YymOI/oKM5aAxB2rcB
-	 schZDUkO9xcfWlRgMu3v1e7i9n1M9rhk/R+73dFn/LAKquEQwNjYrveqpOr6xDt//2g==
+	t=1793214368;
+	b=WZCQ5qr5e0giJxBLAQnFDpTLv7crHqck+zgC8cwNyUzESzErd4YcHDG6H+fxmBwHNp+G
+	 EHMPkEEBuadtHbo8Fo/Tf/uJBz44K6eetxd5Jh0YCO9cXp3I6g2jTw6PC4++P4EM2uNdU
+	 hFaTkjjj7fIUyiqRdzeYayxVvhhsSYdz/2qnxbcd7/EKgAgnrzxMsEhWzEJUzyMWORlwQ
+	 Zf4B9vv0j2Y7f3fX8kbDmXrCMJr2zadSM5QvemRDFaUMX/+n6elqM7anFRIpnxCo0sk95
+	 megSl76H24b1HOmyV2XYwfS9FpNUowqruaLNeyAxS78tXuJXWaBPp+MRq/oB03qeo3w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214366;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214368;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=b04mQX3BKZGepUvwrsB5es36HbJXnKNlqKlyZCG2VD4=;
-	b=1537gmgxLCAfae2QSd1mB/po+6r9uWcECxx4fTtMhamSPe1rZaphKy8hVfkGIPHFnSaj
-	 +3dvW070cAthPv6NpoisvlFGfnYxnnQYqIbFJ5AelSR0/UZBIJp3vWhS4PApX+VqjSTGn
-	 8V7rN7KmLsIfdGk4v89gc087IcAXMLwSTD1tgmUX/dkwd4jZNZZJvo+cOFmhKOzgz/gaZ
-	 8ZBLWqXOnLfBSix/5PggFlQnWI8wlpkQJ8IaRzDwNeuklxWOsAlInho9RX8ueyMqVb8KU
-	 I/liOQbz48hzWrnzxhGp/XBDC89Xlb1j5w04R0yHwipKwaNLAXSKsEeX6fF3xpiLCCw==
+	bh=KWDd3glB8N26VyySUuZ4nzARE7bAE64fHSF4j2t4dZI=;
+	b=4zpPllgbdnMneqobJo+8vHdNOzab5JeK28iffA7FNWU6N1JpKgQEErhfwQQ9IGKfnFTN
+	 +uY9Y/NqIw1dLEu/0jd6ENsHDikGoxp52Oc83yOeUwr7Y8MDAmKIyhs2SdkKnavcXQFC8
+	 Y2Ci388eHq5zf+Y0Dwqjyzu/9lmSOeI/Xi//aZ8rxDTGwrni/UX5OxkKpkQ67mK2PZokJ
+	 GQh1Bz6okEw6HZNm9Vy6S06tt8PwWAQX9JW9KzeN2f0I51TosSvyQjgd9/ZjHf/QmSBMd
+	 0ds6u3dTNEb7PO1UZJhMOl6nsvrbr3jUvrAWqQb9PrNdHaM8eF70zmkfknKDnQVSZSw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O7atEqPP;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="aJooxJy/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01A5860A2639;
-	Wed, 28 Oct 2026 19:06:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 923AB60A3816;
+	Wed, 28 Oct 2026 19:06:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O7atEqPP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20EDE1F01825;
-	Wed, 28 Oct 2026 19:06:04 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aJooxJy/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E13CC1F01829;
+	Wed, 28 Oct 2026 19:06:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214365;
-	bh=b04mQX3BKZGepUvwrsB5es36HbJXnKNlqKlyZCG2VD4=;
+	s=korg; t=1793214368;
+	bh=KWDd3glB8N26VyySUuZ4nzARE7bAE64fHSF4j2t4dZI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=O7atEqPPpsqxV21x1FgWfKsv+XfDmj3Ws0RGiNyel1PZ4FkrjN8sFo4q6+b6XvYAx
-	 eLlX6IkisSXPhnbpJZ9xF4EW3501AHYSJplo0Kupt/ICtVWeTlAbooA/5YJJqIjbd4
-	 pN9n1yRs5vPzwFKPj6R4t+DUfE/eOdowePds3K3E=
+	b=aJooxJy/oq1IKYVOUQVYq4hzo7e4Sts+QI4R4Ws0RXazPM0puQxQuklxyfrRspBbZ
+	 zSs4PEvarC/V90YDlEB/R5l6SBvMEtje0iLfCZenvCc3OkVOpUJIulyt6NzJpfq2al
+	 5kOJGbroaqeWx+2ffOi3MTRUeoaAELql1MKOWZPE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Siyang Liu <Security@tencent.com>,
-	Roman Li <roman.li@amd.com>,
-	Alex Hung <alex.hung@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Ziyan Xu <ziyan@securitygossip.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0833/1887] drm/amd/display: fix a Null pointer dereference vulnerability
-Date: Wed, 28 Oct 2026 17:48:49 +0100
-Message-ID: <20261028170518.381515466@linuxfoundation.org>
+Subject: [PATCH 6.1 0834/1887] ksmbd: fix refcount leak causing resource not released
+Date: Wed, 28 Oct 2026 17:48:50 +0100
+Message-ID: <20261028170518.405183269@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -72,68 +69,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Siyang Liu <Security@tencent.com>
+From: Ziyan Xu <ziyan@securitygossip.com>
 
-[ Upstream commit 1bcf63a44381691d6192872801f830ce3250e367 ]
+[ Upstream commit 89bb430f621124af39bb31763c4a8b504c9651e2 ]
 
-[Why]
-A null pointer dereference vulnerability exists in the AMD display driver's
-(DC module) cleanup function dc_destruct().
-When display control context (dc->ctx) construction fails
-(due to memory allocation failure), this pointer remains NULL.
-During subsequent error handling when dc_destruct() is called,
-there's no NULL check before dereferencing the perf_trace member
-(dc->ctx->perf_trace), causing a kernel null pointer dereference crash.
+When ksmbd_conn_releasing(opinfo->conn) returns true,the refcount was not
+decremented properly, causing a refcount leak that prevents the count from
+reaching zero and the memory from being released.
 
-[How]
-Check if dc->ctx is non-NULL before dereferencing.
-
-Link: https://lore.kernel.org/r/tencent_54FF4252EDFB6533090A491A25EEF3EDBF06@qq.com
-Co-developed-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-(Updated commit text and removed unnecessary error message)
-Signed-off-by: Siyang Liu <Security@tencent.com>
-Signed-off-by: Roman Li <roman.li@amd.com>
-Reviewed-by: Alex Hung <alex.hung@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 9dd8e2ba268c636c240a918e0a31e6feaee19404)
 Cc: stable@vger.kernel.org
+Signed-off-by: Ziyan Xu <ziyan@securitygossip.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/core/dc.c | 16 +++++++++-------
- 1 file changed, 9 insertions(+), 7 deletions(-)
+ fs/smb/server/oplock.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/core/dc.c b/drivers/gpu/drm/amd/display/dc/core/dc.c
-index 7594aaf79a101..cfcd4ed1666d0 100644
---- a/drivers/gpu/drm/amd/display/dc/core/dc.c
-+++ b/drivers/gpu/drm/amd/display/dc/core/dc.c
-@@ -831,16 +831,18 @@ static void dc_destruct(struct dc *dc)
+diff --git a/fs/smb/server/oplock.c b/fs/smb/server/oplock.c
+index 58f351be5d905..a81c56b3fe965 100644
+--- a/fs/smb/server/oplock.c
++++ b/fs/smb/server/oplock.c
+@@ -1142,6 +1142,7 @@ void smb_send_parent_lease_break_noti(struct ksmbd_file *fp,
+ 			atomic_inc(&opinfo->conn->r_count);
+ 			if (ksmbd_conn_releasing(opinfo->conn)) {
+ 				atomic_dec(&opinfo->conn->r_count);
++				opinfo_put(opinfo);
+ 				continue;
+ 			}
  
- 	dc_destroy_resource_pool(dc);
+@@ -1184,6 +1185,7 @@ void smb_lazy_parent_lease_break_close(struct ksmbd_file *fp)
+ 			atomic_inc(&opinfo->conn->r_count);
+ 			if (ksmbd_conn_releasing(opinfo->conn)) {
+ 				atomic_dec(&opinfo->conn->r_count);
++				opinfo_put(opinfo);
+ 				continue;
+ 			}
+ 			read_unlock(&p_ci->m_lock);
+@@ -1390,6 +1392,7 @@ void smb_break_all_levII_oplock(struct ksmbd_work *work, struct ksmbd_file *fp,
+ 		atomic_inc(&brk_op->conn->r_count);
+ 		if (ksmbd_conn_releasing(brk_op->conn)) {
+ 			atomic_dec(&brk_op->conn->r_count);
++			opinfo_put(brk_op);
+ 			continue;
+ 		}
  
--	if (dc->ctx->gpio_service)
--		dal_gpio_service_destroy(&dc->ctx->gpio_service);
-+	if (dc->ctx) {
-+		if (dc->ctx->gpio_service)
-+			dal_gpio_service_destroy(&dc->ctx->gpio_service);
- 
--	if (dc->ctx->created_bios)
--		dal_bios_parser_destroy(&dc->ctx->dc_bios);
-+		if (dc->ctx->created_bios)
-+			dal_bios_parser_destroy(&dc->ctx->dc_bios);
- 
--	dc_perf_trace_destroy(&dc->ctx->perf_trace);
-+		dc_perf_trace_destroy(&dc->ctx->perf_trace);
- 
--	kfree(dc->ctx);
--	dc->ctx = NULL;
-+		kfree(dc->ctx);
-+		dc->ctx = NULL;
-+	}
- 
- 	kfree(dc->bw_vbios);
- 	dc->bw_vbios = NULL;
 -- 
 2.53.0
 
