@@ -1,55 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213081;
-	b=SpFVysTxc6Ap6uygRk8MfSw6H2hwywIjmlQNlm9JhLvy0nCmRkeXlkSTDsuwn1MgY9a9
-	 4h2Z2HGa+T+/1S/anKu55zu78zODJZht5FlLEmQNfxHybOYMEYcQH0hQ/gKqO23VFKi+K
-	 vnRh6awpcgi2wsIAyDKcp0DEmPxlRnRf2c6HNrWktdXo/e4geM89gcOJzt0joNExMWFHT
-	 vpEcUwNj3IbZxPJ8HChjYlgZwSWBg2EqS+H8vmjEqur7qrsr6YcMBWvPJ27arKUq5jK/X
-	 YqySGjcqutRus/4hBb/MXe84s8tkoxnzOqhDGmljjrE5+KzyPykt5W++sTlQZvQjRsA==
+	t=1793213084;
+	b=lSkZXEVVpGPePLjIyWLs+cNxc9Yc3ndtkWMqNNhXc2ZHVlYF0tNvePRI2DKXHdHaHvF4
+	 fFB3wapFD+fauFqIfwqoxq6LGLbW7KhpK5lHFzgxo7iWs9pxyULN/RtPGEnOCmlopOS9b
+	 UHESYjpQGFAzkVsvyrTcu2prlO3kduHDqGafXSsDQ1PePGHzkjFq+7R23vMNo7QUDGuFC
+	 i2KBilYzJYOy8VFoeAcxX4XILK0jbd5vHQ2V/pfZCYFMe0a5GRbaMVaxobcwI3MSbQmpk
+	 kHraVXaqmhD/zeOkqNTetcw9DCW6RpzKYg/qBF/msf++YEQBLjm9/4Y8Qs+NIG4LG1A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213081;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213084;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=6gTOZbkz6g6vmx5tQJJtkB3IORj3ePqRmoT/VnPhgio=;
-	b=kikA4pooiQ67ViTA5EJmZ3O/J/fEUjI4NOQUbtOSu4yN63u4+9CCqgHRyf3ollaYDZAh
-	 YIf7BC5FtfFaJQ6D6kuAAUEJUL4QYi5+3hcV7LkdW9kwZ1HDln6kj6fveO0dIKp4kdjRL
-	 C0DakUHoMbeYQU5ynvWOd2oNDS1bKp+ir+EeveoPuxvVcpeM06inSJus3U2GhxwyKgzJu
-	 jYHZdWAppxrtSeJoEl0VKfsvlwMts/ek/nSatRfTg7bR8BrAd9tkRZX/Q8KYR80iF50Vw
-	 vYPnHqRgQZBEzmUIZTKEACLtGmvLLRrbapgFysZ3pfaDkCcjCV6EBjjPxFTyVQpddRg==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=XpiN9LYDSG1A0KErjAe8RkJ2TzdTB6+Qrl6kyR3K/Cw=;
+	b=T4rqfmiy0r9jL49+mmCUOdmocJ9gDu/dPNQ4IYaIzyr5WFIlJKqvQIAmrVGxIXy/u0b1
+	 D9i/wwtk+asgeP6s+6dXDeZ2v7lAW1Fz45aktALQxc++Zk+swg7kP5esHFPWmlo2Sx2Xs
+	 GsAUApoONMeQzgHXWlb3lIWs7qV9A01RmJA+nNU4BvpkPOzS4EPq1LDX5ubZro0/dKP6t
+	 ekwsvAdAwLrd6JkqdOuxcMujjOqU1A//252o9T3dK+sTTccruvdtUc0f2Bn1NuZVgnsVG
+	 QoZmZzXIIWfM8qu9M+81XwwxIM68pxEDdDMv78BE9K6+j6cG2JSryCnl4AmeNZEhdpA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gesfcYal;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cPBU5NLx;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6647F606A31D;
-	Wed, 28 Oct 2026 18:44:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68CD1606A325;
+	Wed, 28 Oct 2026 18:44:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gesfcYal
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD6AE1F01825;
-	Wed, 28 Oct 2026 18:44:40 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cPBU5NLx
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 846011F01825;
+	Wed, 28 Oct 2026 18:44:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213081;
-	bh=6gTOZbkz6g6vmx5tQJJtkB3IORj3ePqRmoT/VnPhgio=;
+	s=korg; t=1793213084;
+	bh=XpiN9LYDSG1A0KErjAe8RkJ2TzdTB6+Qrl6kyR3K/Cw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gesfcYalpK2OnFIG+Py79QvbN1UztT5XkPEz0R2WTNa+RCMing90r+AbmDYukPaIW
-	 4DaL3jJTkmoe0sowQPDKMpDODrse4sQDae/9w2k7WPYKhw1jW8gDPu684X9E8iF+pp
-	 b6OkQ8ZZVLSJwi6IuTrZZUUQi5X8ocV3V3qu0mys=
+	b=cPBU5NLxnV1VgH6sBJVB19rOLYiNj9LFWbi03WysiidmI/2Cr6PJDCkEO9tmqIfYj
+	 HdF8z5xxuxzQadFuGnV95s6190mlgQq4Ar8M8zVVL/61N7s6VBPllamKdSIdQueK01
+	 gw8ocr4Et+cDGkD9fdWdw0sGrhu3S+tgQm1DqGRI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonathan Cameron <jic23@kernel.org>,
-	Jinseob Kim <kimjinseob88@gmail.com>,
-	Joshua Crofts <joshua.crofts1@gmail.com>,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
-	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
+	Mostafa Saleh <smostafa@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0379/1887] iio: buffer: serialize buffer teardown with mode claims
-Date: Wed, 28 Oct 2026 17:41:15 +0100
-Message-ID: <20261028170507.856188528@linuxfoundation.org>
+Subject: [PATCH 6.1 0380/1887] KVM: arm64: Dont use the VMA to size stage-2 block mappings for VM_PFNMAP
+Date: Wed, 28 Oct 2026 17:41:16 +0100
+Message-ID: <20261028170507.879414337@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -65,59 +61,83 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jinseob Kim <kimjinseob88@gmail.com>
+From: Mostafa Saleh <smostafa@google.com>
 
-commit 84bb0fc46ccf6a545b8fdf57cda83770186ed8dd upstream.
+[ Upstream commit 71cc2c67fb8f8d5aa8154eb482e9846d2214f11b ]
 
-Buffer-mode claims hold mlock to guarantee that the device remains in
-buffer mode until the claim is released. Normal buffer updates take
-info_exist_lock followed by mlock in iio_update_buffers().
+get_vma_page_shift() derives the stage-2 block size for VM_PFNMAP VMAs
+from the VMA layout alone, which does not necessarily match what
+stage-1 maps for that VMA.
 
-However, iio_device_unregister() disables and deactivates all buffers
-without taking mlock. This can invalidate buffer state, including
-active_scan_mask, while a buffer-mode claim is held.
+Upstream commit 71cc2c67fb8f ("KVM: arm64: Use stage-1 leaf size for
+VM_PFNMAP") drops that calculation and lets transparent_hugepage_adjust()
+derive the mapping size from the stage-1 leaf instead. The second part
+is not applicable here: in this kernel transparent_hugepage_adjust()
+takes a reference on the backing struct page, which is not safe for
+MMIO, and stage-1 has no huge PFNMAP before v6.12 anyway. Only drop the
+VMA-based calculation, so VM_PFNMAP VMAs are mapped at PAGE_SIZE.
 
-Take mlock in iio_disable_all_buffers() so that unregister honors the
-mode-claim lifetime guarantee. The info_exist_lock -> mlock ordering
-matches iio_update_buffers().
-
-Fixes: 0a8565425afd ("iio: core: introduce iio_device_{claim|release}_buffer_mode() APIs")
-Suggested-by: Jonathan Cameron <jic23@kernel.org>
-Signed-off-by: Jinseob Kim <kimjinseob88@gmail.com>
-Reviewed-by: Joshua Crofts <joshua.crofts1@gmail.com>
-Reviewed-by: Nuno Sá <nuno.sa@analog.com>
+Fixes: 2aa53d68cee6 ("KVM: arm64: Try stage2 block mapping for host device MMIO")
 Cc: stable@vger.kernel.org
-Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-
-[ Backport by Jinseob Kim to 6.1.y: mlock is still in struct iio_dev,
-  so use indio_dev->mlock instead of iio_dev_opaque->mlock. ]
-
-Signed-off-by: Jinseob Kim <kimjinseob88@gmail.com>
+Signed-off-by: Mostafa Saleh <smostafa@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/industrialio-buffer.c | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/arm64/kvm/mmu.c | 25 ++-----------------------
+ 1 file changed, 2 insertions(+), 23 deletions(-)
 
-diff --git a/drivers/iio/industrialio-buffer.c b/drivers/iio/industrialio-buffer.c
-index af02e52183bec..37ea4a2d85f85 100644
---- a/drivers/iio/industrialio-buffer.c
-+++ b/drivers/iio/industrialio-buffer.c
-@@ -1291,6 +1291,8 @@ EXPORT_SYMBOL_GPL(iio_update_buffers);
- 
- void iio_disable_all_buffers(struct iio_dev *indio_dev)
- {
-+	guard(mutex)(&indio_dev->mlock);
-+
- 	iio_disable_buffers(indio_dev);
- 	iio_buffer_deactivate_all(indio_dev);
+diff --git a/arch/arm64/kvm/mmu.c b/arch/arm64/kvm/mmu.c
+index 54ccdcc2dbdf7..2ccc623796429 100644
+--- a/arch/arm64/kvm/mmu.c
++++ b/arch/arm64/kvm/mmu.c
+@@ -1077,32 +1077,11 @@ transparent_hugepage_adjust(struct kvm *kvm, struct kvm_memory_slot *memslot,
+ 	return PAGE_SIZE;
  }
+ 
+-static int get_vma_page_shift(struct vm_area_struct *vma, unsigned long hva)
++static int get_vma_page_shift(struct vm_area_struct *vma)
+ {
+-	unsigned long pa;
+-
+ 	if (is_vm_hugetlb_page(vma) && !(vma->vm_flags & VM_PFNMAP))
+ 		return huge_page_shift(hstate_vma(vma));
+ 
+-	if (!(vma->vm_flags & VM_PFNMAP))
+-		return PAGE_SHIFT;
+-
+-	VM_BUG_ON(is_vm_hugetlb_page(vma));
+-
+-	pa = (vma->vm_pgoff << PAGE_SHIFT) + (hva - vma->vm_start);
+-
+-#ifndef __PAGETABLE_PMD_FOLDED
+-	if ((hva & (PUD_SIZE - 1)) == (pa & (PUD_SIZE - 1)) &&
+-	    ALIGN_DOWN(hva, PUD_SIZE) >= vma->vm_start &&
+-	    ALIGN(hva, PUD_SIZE) <= vma->vm_end)
+-		return PUD_SHIFT;
+-#endif
+-
+-	if ((hva & (PMD_SIZE - 1)) == (pa & (PMD_SIZE - 1)) &&
+-	    ALIGN_DOWN(hva, PMD_SIZE) >= vma->vm_start &&
+-	    ALIGN(hva, PMD_SIZE) <= vma->vm_end)
+-		return PMD_SHIFT;
+-
+ 	return PAGE_SHIFT;
+ }
+ 
+@@ -1214,7 +1193,7 @@ static int user_mem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
+ 		use_read_lock = (fault_status == FSC_PERM && write_fault &&
+ 				 fault_granule == PAGE_SIZE);
+ 	} else {
+-		vma_shift = get_vma_page_shift(vma, hva);
++		vma_shift = get_vma_page_shift(vma);
+ 	}
+ 
+ 	shared = (vma->vm_flags & VM_SHARED);
 -- 
 2.53.0
 
