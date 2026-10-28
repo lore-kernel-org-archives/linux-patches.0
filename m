@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793217306;
-	b=j+EfIgIxhBRS8JPvobZkA9emguNHXjTyMmeJbk/FraUr65OX7rdNCXHATjoLwbQdLKAo
-	 hs/jgE8j+Y89JTa+Juv+47P1LBiuyTzO3150SJltvj7u94/X9AXhwxjoOnKqcMWwQCyWx
-	 45rBN4zYU79+HIzspLRsvvP0U69E6COQzZnW+eXS58uAbi9CtsHvULUcFFGK89TZKOKea
-	 8UukNjuj7br19tiRG5nsH5yTJgaToSLrMGG0MD3fyjkjaiapqtzc5Tfyzd/oDvSZISFbo
-	 9AfLuk57t720bK07LJpz75ZM+BYgKvMmJ6zHbxGooLkoFT/ZyDnC1GjYBh/IATNX7Zw==
+	t=1793217308;
+	b=2sQZ5pwtuS2ftDPyBQsqesvyMKhRMk3FnPFHREzCOIJNy2olF+Jw+X86dJU5FZBPANoG
+	 R2wbOsVPnc3FqecTb2azv4QpUCK1ykZCJ1Gzgc+qjBnDhjNUTdC4qHU1m0v8tn4uP00kn
+	 25YdovsatDRmEoYeWF4hjGoTi3FqlPWyqPFq2D/VtVW6YyWmTVTsi8wtb/kfckTSnUaVm
+	 XmiXclnxgG6Hu4dzJqF3W6D6g/IZGN0r3/6tJ8l4pVkjS57rJeO47JaPGQ7ltErG6JsK2
+	 Y/povscbMdhT8rBPf6/BBmh0ZKPmamHMlg5FAD9TrkqlqiiwMVcA4kETfF/3LwH4/IQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793217306;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793217308;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ivpofxjNWRvJ/9ApMBp8QzVMb6M8/L0UBE2a2WiK90o=;
-	b=dsP2Yq0ghCxmAeq09PKztgnc1rEyoMuJxcapPnAXEmbomJsRQpmqbVkVpbeWE/aQJB1x
-	 tfwfRNR/ByTqjTltTCJQ0owdLst89ep7It4QlwqsL4JoZ0zSSue1E5jkzi/EdS8yVxVzt
-	 RTJIxz/21/kCCAQj9avXFT+ksGXZNZsmbVia/7r9y50TSlFHX8X2Elo2MeNW2Yb7knxit
-	 x7GZH91m5Jda02a4WS2Opca9LFLTYlfPOb7iMUExTm1GJoLr26NrKa1F/6WouliVo1pPt
-	 h3JwR5mVIuduVo5ZyUKLWRB2rDo1DRQHu+QEVtkSZVtU3Y5jjm99wIDZyzSyvYjywpA==
+	bh=zwYjHKYc4WW5Q812Skul6aVD/L4zhd+IcFmZRtFxpdY=;
+	b=oONnfqdwsCWHxBXM8w4BhJrUh8OZMqoganiv3TiMXveRBb6sbd/ywR2C/acofCsABPcr
+	 z/gA3cTcuUYA3jTPl+7pXMiDXdk8AQlhIOJQ2M5t7RuVcnbsdT1NwkUsDS4JAcg0+87pu
+	 76YGW+z5NiSBIHJp/rRmeBzG00rQVxbGl90GW6+qsovT5OmbvgnbvVhJ6TkfG2XTa7qMI
+	 zOTai123qyaG84Wzl7yRqTVHAUlsVsaIbCzyGCXlrF9EY1vORj24yiG9k8mw2cuIx5Q++
+	 svJAr8bUseojvAAFu+wXZFrQNs1K+WmPXmCMfsPFnDyIFrN8xexNV1HV3WK2JCP9RRQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pef0boHs;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X4idPpXj;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04FAB606A31D;
-	Wed, 28 Oct 2026 19:55:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 937D9606A31A;
+	Wed, 28 Oct 2026 19:55:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pef0boHs
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14CBD1F01825;
-	Wed, 28 Oct 2026 19:55:04 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X4idPpXj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E471E1F01825;
+	Wed, 28 Oct 2026 19:55:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793217305;
-	bh=ivpofxjNWRvJ/9ApMBp8QzVMb6M8/L0UBE2a2WiK90o=;
+	s=korg; t=1793217308;
+	bh=zwYjHKYc4WW5Q812Skul6aVD/L4zhd+IcFmZRtFxpdY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pef0boHsyInmS3rCnXlHanTWNptJxQ8TDL0ae6hrwahLL+mk3CDIUumRmPtu0xcxw
-	 uy97W9PFRDWWGQtX+9r/pNZhP6890yGxirapzX536ip2d3eCFWn6xpN6UsWq3mXKtY
-	 GVv+qLu2SujubwfXdCYPoMtgquSuk2w8qn6rCOZg=
+	b=X4idPpXjA0vijD0wt4Hohq0zZVBWM+x0QH/Ywi0dUx9lQ7VJvxQVuvWkqj+fetbkQ
+	 g/Rs8xp8cL+FWHRIQjChpxcyW+GqNYEfy7G8ca2KExKkZjXlXmIcpMozpjSNxZqsfU
+	 zCNc9GJi61DqiDuoqyBLaYAUNwAK2q7MC9+96KRs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Juergen Gross <jgross@ssue.com>,
-	Juergen Gross <jgross@suse.com>,
+	Perry Yuan <perry.yuan@amd.com>,
+	Yifan Zhang <yifan1.zhang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1858/1887] xen/events: fix error code in xen_bind_pirq_msi_to_irq()
-Date: Wed, 28 Oct 2026 18:05:54 +0100
-Message-ID: <20261028170541.734218323@linuxfoundation.org>
+Subject: [PATCH 6.1 1859/1887] drm/amdgpu: ensure no_hw_access is visible before MMIO
+Date: Wed, 28 Oct 2026 18:05:55 +0100
+Message-ID: <20261028170541.756493877@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,39 +69,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Perry Yuan <perry.yuan@amd.com>
 
-[ Upstream commit 7f3da4b698bcc21a6df0e7f114af71d53a3e26ac ]
+[ Upstream commit 31b153315b8702d0249aa44d83d9fbf42c5c7a79 ]
 
-Return -ENOMEM if xen_irq_init() fails.  currently the code returns an
-uninitialized variable or zero.
+Add a full memory barrier after clearing no_hw_access in
+amdgpu_device_mode1_reset() so subsequent PCI state restore
+access cannot observe stale state on other CPUs.
 
-Fixes: 5dd9ad32d775 ("xen/events: drop xen_allocate_irqs_dynamic()")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Juergen Gross <jgross@ssue.com>
-Link: https://lore.kernel.org/r/3b9ab040-a92e-4e35-b687-3a95890a9ace@moroto.mountain
-Signed-off-by: Juergen Gross <jgross@suse.com>
+Fixes: 7edb503fe4b6 ("drm/amd/pm: Disable MMIO access during SMU Mode 1 reset")
+Signed-off-by: Perry Yuan <perry.yuan@amd.com>
+Reviewed-by: Yifan Zhang <yifan1.zhang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/xen/events/events_base.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_device.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/xen/events/events_base.c b/drivers/xen/events/events_base.c
-index bdfbe27591593..8fd9d173a9a9c 100644
---- a/drivers/xen/events/events_base.c
-+++ b/drivers/xen/events/events_base.c
-@@ -1101,8 +1101,10 @@ int xen_bind_pirq_msi_to_irq(struct pci_dev *dev, struct msi_desc *msidesc,
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+index f75937cba2953..e34e2cd8ac183 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+@@ -4920,6 +4920,9 @@ int amdgpu_device_mode1_reset(struct amdgpu_device *adev)
+ 	if (!ret)
+ 		adev->no_hw_access = false;
  
- 	for (i = 0; i < nvec; i++) {
- 		info = xen_irq_init(irq + i);
--		if (!info)
-+		if (!info) {
-+			ret = -ENOMEM;
- 			goto error_irq;
-+		}
++	/* ensure no_hw_access is updated before we access hw */
++	smp_mb();
++
+ 	amdgpu_device_load_pci_state(adev->pdev);
  
- 		irq_set_chip_and_handler_name(irq + i, &xen_pirq_chip, handle_edge_irq, name);
- 
+ 	/* wait for asic to come out of reset */
 -- 
 2.53.0
 
