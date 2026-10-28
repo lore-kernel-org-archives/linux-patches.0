@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793209099;
-	b=NTBVOQjegPkHfSBod8yTP/wzGHyGac48zzLYnmvxR2NYn8A82lvH+anVR28jfB0ZbUzG
-	 tybpz2ZB258UGHo31CQpnzU5wgpQOkSWtK9jSRCVqL/s4H+bfDJ4wYOF4p0wLEzL8ZNJq
-	 7Edcd1/U6hvZpNfNaEbdrxlm7h23QONPNMz7UyijHvBNRaWZt95q0l8TV62o4YsmQegk0
-	 Zsv1QeMLW++8t9aKW8MsLRVUwZu79BuUaK/ERILzHvS/hczce6so4BFkouE1qWvervVHb
-	 uOieflU+jBq4rVWxWClYmxADlxv/iv57uCetPkb6zaxBw48H5AoDSYaf+oC7xHBZBuQ==
+	t=1793209102;
+	b=IVoYSg1kS5Qg5YYzNeK4VrMDj4hBt7AfctD9B3NWNmaWDlI3rO6ydPB6o3mxdDA93kUm
+	 OdwXRTZ8qyrvsjO3baewcsY8i6SYy1UrXE1OCmG0IEHEk7e3tVuL9Is3F6yCAVaN3UjpS
+	 qyjkKdF5R2tllimaZbAjjWk9nyzksRdInRs7rDUZk2VHaf9RZhqd/nMsEGuwXaLN0QhaD
+	 kbwN4DrikdAnIjSJXfYWNeH9Ybb+I4fGa9pzVR3gWUThfIj5yIwI0aMpV5OK9+MLgGABx
+	 K7gYU+rA8KLLFsq1FVJU17dCD9woR7D7BGViHPKu204XpMidVdQCLGKtW91IIXuoO3Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793209099;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793209102;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=CXP19pMq7Vv3pYHZwLcyAOESmnHC754AQ4G3rdANkzc=;
-	b=e9ieFrAfaMV9NyFvE2FzMicjL5kv7lh8qHJlqjCW4mhnXA4TFTTtl54rtwms4NKgX5ED
-	 eRc+8DmWEvGlz5MF9rbD8BVUGPdy3UyRjJd9W4pVteY12ItxtMcn9I49FJMcNodyo6YL1
-	 QXQX4eULRkEBsbsRPA2rUrsvK5L2EHUidOf1jZekRmZNbzKaOXMglm6UhbN8m3Cgjz8v8
-	 fYTg1UszQDN1GUBQJkRwU1s0EBc5u2zL1n9K2aAVRrhWIcU/ZmDkdrSiPQSyxH7f+2q8X
-	 dtDnpAw09UEVleOaI7EPsvVH1aQpNjqaTx7x88B4SdtYHGxlALJsbnsZXDhr6rTh2hA==
+	bh=/gOWQKD+NAEoEjC1l21zwav78xysKMsDoxdb5vkTYik=;
+	b=xk6rxVHHbVDNFN/KvjeuN2dxg7f51QlYZAcE334P4md0HgwZCj1ntADEfPy8jrz++gUw
+	 taCfD/e72ejU1QG5QLLZ/wbhfszhhQM+tXsLEJpSUrHG6u94UeztUQW3/VVhmO3fTzAeF
+	 tALScB6J101sKSnFmKdeE1tfljFh1ZRwPGLzjNgHwLNQ1dYld4xmBfaYcUHz3DrNTIXIi
+	 MudIQMfpm+20SRDl2NnUdk1xyLgGRdB/44FT0+RZt+iKNKB4kdkNAV+rUKlNMwYzjWGd6
+	 8f4wTt2FUxhcfIiByJsWpKWjowD2/SHuwYIV5961774fzFGZ2JdWO+pXtVpkujxYP9g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HeBx0Rwa;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GEBuP+fA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80CCB60A260D;
-	Wed, 28 Oct 2026 17:38:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6530660A2612;
+	Wed, 28 Oct 2026 17:38:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HeBx0Rwa
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDF3B1F01825;
-	Wed, 28 Oct 2026 17:38:18 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GEBuP+fA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA0431F01825;
+	Wed, 28 Oct 2026 17:38:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793209099;
-	bh=CXP19pMq7Vv3pYHZwLcyAOESmnHC754AQ4G3rdANkzc=;
+	s=korg; t=1793209102;
+	bh=/gOWQKD+NAEoEjC1l21zwav78xysKMsDoxdb5vkTYik=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HeBx0Rwaa5Eyw1hZiQ47xyqn+MO5MtJKW+aTcwtXjaZfy/XN+Ih29otbfgU8nOsmq
-	 6aFWcM+aT2nVHvDTRC7Uq/L3YEIRrJ4XBtXN6McIqP8GbKIq9ml087xG7/A+y10ffr
-	 SOFy9IxkE76RV5wZDyOoFFR8Xr4KdnQRBh5YWBjY=
+	b=GEBuP+fAq/0BhaF1U5uu5VN4tyjQFksxh6oRYsgAJOEI5Hzf60FrKnMBOOWaUbv3o
+	 bWeOsAWqdpLcr8UMRXp+xe3X/hsf5QlLB6Ot8tMMLaG72RGV0u4aEdFM1ZQ+ZslySj
+	 ICNgfAGH8Z3KAbxqCzzK7AJKNs2a/6Cpz8hbOzac=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Alexandru Hossu <hossu.alexandru@gmail.com>,
-	Luka Gejak <luka.gejak@linux.dev>,
-	Mikhail Dmitrichenko <mdmitrichenko@astralinux.ru>
-Subject: [PATCH 5.10 352/516] staging: rtl8723bs: fix OOB read in OnAssocRsp() IE loop
-Date: Wed, 28 Oct 2026 17:58:24 +0100
-Message-ID: <20261028170011.828918244@linuxfoundation.org>
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 353/516] drm/aspeed: Balance the display clock enable on teardown
+Date: Wed, 28 Oct 2026 17:58:25 +0100
+Message-ID: <20261028170011.851985856@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -69,53 +69,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexandru Hossu <hossu.alexandru@gmail.com>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-commit f9654207e92283e0acac5d64fe5f8835383b5a23 upstream.
+[ Upstream commit ecce445c6489895463b7ddec2af66338287fee4c ]
 
-The IE parsing loop in OnAssocRsp() advances by (pIE->length + 2) each
-iteration but only guards on i < pkt_len. When a malicious AP sends an
-AssocResponse whose last IE has only one byte remaining in the frame
-(the element_id byte lands at pkt_len-1), the loop reads pIE->length
-from pframe[pkt_len], which is one byte past the allocated receive buffer.
+aspeed_gfx_load() enables the display clock without checking the return
+value and never disables it on probe failure or removal. devm_clk_get()
+only releases the clock reference, leaving the enable unbalanced.
 
-Additionally, even when the header bytes are in bounds, pIE->length
-itself can extend the data window beyond pkt_len, silently passing a
-truncated IE to the handler functions.
+Use devm_clk_get_enabled() to handle enable failures and automatically
+disable and unprepare the clock on probe failure or removal.
 
-Add two guards at the top of the loop body:
-  1. Break if fewer than sizeof(*pIE) bytes remain (can't read header).
-  2. Break if the IE's declared data extends past pkt_len.
+This issue was identified during our ongoing static-analysis research
+while reviewing kernel code.
 
-Fixes: 554c0a3abf21 ("staging: Add rtl8723bs sdio wifi driver")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Alexandru Hossu <hossu.alexandru@gmail.com>
-Reviewed-by: Luka Gejak <luka.gejak@linux.dev>
-Link: https://patch.msgid.link/20260522004531.1038924-6-hossu.alexandru@gmail.com
-[ mdmitrichenko: adapt to 5.10: struct ndis_80211_var_ie still has the
-  CamelCase Length field and a one-element data[1] array here, so
-  sizeof(*pIE) is 3 rather than the 2-byte IE header. Use the explicit
-  header size 2, as the existing i += (pIE->Length + 2) does, so that a
-  valid IE ending exactly at pkt_len is not dropped. ]
-Signed-off-by: Mikhail Dmitrichenko <mdmitrichenko@astralinux.ru>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 4f2a8f5898ec ("drm: Add ASPEED GFX driver")
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Assisted-by: OpenAI:GPT-5.6
+Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Link: https://patch.msgid.link/20260913223019.89651-1-mhun512@gmail.com
+Link: https://patch.msgid.link/20260905080426.34224-1-kmehltretter@gmail.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/rtl8723bs/core/rtw_mlme_ext.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/gpu/drm/aspeed/aspeed_gfx_drv.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
---- a/drivers/staging/rtl8723bs/core/rtw_mlme_ext.c
-+++ b/drivers/staging/rtl8723bs/core/rtw_mlme_ext.c
-@@ -1682,7 +1682,11 @@ unsigned int OnAssocRsp(struct adapter *
- 	/* to handle HT, WMM, rate adaptive, update MAC reg */
- 	/* for not to handle the synchronous IO in the tasklet */
- 	for (i = (6 + WLAN_HDR_A3_LEN); i < pkt_len;) {
-+		if (i + 2 > pkt_len)
-+			break;
- 		pIE = (struct ndis_80211_var_ie *)(pframe + i);
-+		if (i + 2 + pIE->Length > pkt_len)
-+			break;
+diff --git a/drivers/gpu/drm/aspeed/aspeed_gfx_drv.c b/drivers/gpu/drm/aspeed/aspeed_gfx_drv.c
+index 2b424b2b85cc8..a8d05186b6817 100644
+--- a/drivers/gpu/drm/aspeed/aspeed_gfx_drv.c
++++ b/drivers/gpu/drm/aspeed/aspeed_gfx_drv.c
+@@ -138,13 +138,12 @@ static int aspeed_gfx_load(struct drm_device *drm)
+ 	}
+ 	reset_control_deassert(priv->rst);
  
- 		switch (pIE->ElementID) {
- 		case _VENDOR_SPECIFIC_IE_:
+-	priv->clk = devm_clk_get(drm->dev, NULL);
++	priv->clk = devm_clk_get_enabled(drm->dev, NULL);
+ 	if (IS_ERR(priv->clk)) {
+ 		dev_err(&pdev->dev,
+-			"missing or invalid clk device tree entry");
++			"failed to get and enable clock\n");
+ 		return PTR_ERR(priv->clk);
+ 	}
+-	clk_prepare_enable(priv->clk);
+ 
+ 	/* Sanitize control registers */
+ 	writel(0, priv->base + CRT_CTRL1);
+-- 
+2.53.0
+
 
 
