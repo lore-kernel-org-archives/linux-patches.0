@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793207542;
-	b=KiL0rb1m1lZstktu1MehPcrsQEhaGTrGSQrHsESRWieG1LnhuD7JuLFVPtPERZ3ccVOv
-	 nqpeu0qEcEK17ZIaJSS2EJxfiaMbc9M69q+3eNsSQd4VSDkrzILfsnPpV82KVfqXGPmLx
-	 lMYq3JayTGdvURZwCfLOhFPyuEHt2Y2Xg85mAlOZMkd/tVwB3LH+KaqRylHngL6MgWLXs
-	 KyhovMCbRUEInQnQSM0Qxtz5MsNFJSqwvaMqkgbEufp+k9UhoLvYGfAxGoDOXBtSe9QWH
-	 nSbMxno+f69VdqCij5aHfUGL0IXdG5W2FkbywU0VWteq/Ev4d17XKC2OwABURlTaNXw==
+	t=1793207545;
+	b=L4GYHTQ/GnoqEIDg44rpoSjIv792ugrXdwQvXi++s1BvZzU6QkC5gnaAHnJqS6V5xLck
+	 FfaHNfIJiNqbxtq6Bcs8ewTkdcrxsBWAagsgeVODddlpowKNulPq3iZWLvyyQePKx3cU2
+	 dta9fMIgV+b0W4rjPglYF4xCh/kHLjMeoz7gItcMYsO18qw1waLfA+vyo/tRgzZYavqOE
+	 yPojT2mdSZPLbf9Mnt7mG3z8YnMlwo5JOw8yDJJdpSDAcArVEbnjciUQPY/zWpcGWoN/t
+	 LZ/KUFPbqmC6DVammpg1rbeg8b28ShPlYFeMeRr8IgmtQw0fwOkDzO+tOWmjD4xm/tQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793207542;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793207545;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=dH79CdqsXHB5ef+S2iHUEcadib0AR1haMoGiWcSlDBY=;
-	b=yQE5JnqpN99CZnOR07uCAcfXtSNwcZmHZS5hTRxz/M8LUQ12wBZ8RVoLHb+0Qayhvo8H
-	 1kPXmSpim9Gx6ETaN5Ydd3EW1wja+6kwms+eaMIOxfUAQ8+UFzMSl8OeW9mUuLoSPitXK
-	 wrT51ec/AmLiSKbMG6LztQ1IPLF3t1l+T3e0GtP6Td8iuMok8ukfUk0lOqCf1GmaOenLe
-	 KZULOt0QZ7GYQHJbgZd+F/jz70/bW7qQTNnFMg83kfwUSIfxHSqEXQrsIqqKAvGf/ysme
-	 LjXuRr7WCLv583YBdetMk6z+aVt+C+i+1KTu6Dd1mJYCWGBZOJzTrEdxIfZD0InnRaQ==
+	bh=/oD/UFztmMZ3rTf+m+5u66VZHhAt42uiqr9Cq4GYhGQ=;
+	b=vZi3jIN6R8jbkqO/mFroh2RqEJEDp9RfF2K9EGbBjfdm0Q8fOZ3lhZzkFt8Ql/qR4GRF
+	 oDtyqg+VCAW/l322xYrTp/rnEOggy+rqEaVgYPeUfd46kQv5cL//M/H0Z8nOIe48Pxras
+	 wqDqGbwtHygbtPSHXH5YJuE5kAN48vIp3w2Q5PQm2ZnIrLo1DRkT3nFE31K1gztnOJybY
+	 z7F2UzWRll73Rdk98MtmRn1eJB+jZs0VlcAQ/w862g/k4wPfgvJDmtD7Ssc+EGzLW91Eh
+	 BgGYgh9fO9Q4ivAiyknO3tfhu9m/BOhnNr36PgWByFoFPQFk8AFch8VWJSwHpuPx1xA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=M8OuLqOc;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=phzOicMK;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73864606A31A;
-	Wed, 28 Oct 2026 17:12:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CCEE606A31A;
+	Wed, 28 Oct 2026 17:12:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=M8OuLqOc
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C32781F01825;
-	Wed, 28 Oct 2026 17:12:21 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=phzOicMK
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA5031F01825;
+	Wed, 28 Oct 2026 17:12:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793207542;
-	bh=dH79CdqsXHB5ef+S2iHUEcadib0AR1haMoGiWcSlDBY=;
+	s=korg; t=1793207545;
+	bh=/oD/UFztmMZ3rTf+m+5u66VZHhAt42uiqr9Cq4GYhGQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=M8OuLqOcUBgtOdnUoobrpL7wvuWzL7zTjOj7nOOYm1xo1LHMrJA88sqKafpTZT3/Q
-	 96VYRAv23Cy0ZpJowjN8J5Z/QHQncRzbFU1kvGbE9mFBYNqQydgx+j9eYRhU+/+wtJ
-	 LLOZ4Du/2dx+Z/laYBYieP2MGySjcF8xqNciw9lY=
+	b=phzOicMKebpPnVZLgWX8YK/W//6EDwZ4ZzA3tmcLtLZ55SJsWxfy/6+EAZoUf6N+7
+	 4jhLL3ITgnFNdebMzvDn4dS+i9dNdu+6/wSTwEqiVZgIX+zQh9fujZjb2GnFG/PCsm
+	 0wfHszw07XtBHr7x16EcGlGXHXBLvjGU8+TGyo1w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	HyeongJun An <sammiee5311@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Kent Gibson <warthog618@gmail.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 036/247] ASoC: nau8822: Fix the 128x oversampling switch bits
-Date: Wed, 28 Oct 2026 17:57:19 +0100
-Message-ID: <20261028165948.222406647@linuxfoundation.org>
+Subject: [PATCH 6.12 054/247] gpiolib: fix memory leak in gpiod_set_array_value_complex() on error paths
+Date: Wed, 28 Oct 2026 17:57:37 +0100
+Message-ID: <20261028165948.657900962@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165947.349197979@linuxfoundation.org>
 References: <20261028165947.349197979@linuxfoundation.org>
@@ -68,47 +69,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: HyeongJun An <sammiee5311@gmail.com>
+From: Kent Gibson <warthog618@gmail.com>
 
-[ Upstream commit 4db45fc1da3d62d0fa6e8f1e457ae92e8741ed07 ]
+[ Upstream commit c28846ca1ac6134881114d272314623c8433e372 ]
 
-The DAC and ADC 128x Oversampling Switches use bit 5 of R10 and R14.
-The NAU8822 datasheet register map puts DACOS and ADCOS at bit 3 of
-those registers.
+A drive-by review by Sashiko reports that, after a failed call to
+gpiochip_set_multiple(), gpiod_set_array_value() returns abruptly,
+bypassing the freeing of possibly alloced bitmaps, potentially leaking
+memory. It is an unlikely error path, but is possible.
 
-In R14, bit 5 is inside HPF[6:4], which the High Pass Cut Off control
-owns. So turning on ADC oversampling changes the high pass cut-off, and
-the oversampling bit cannot be set. In R10, bit 5 is reserved, so the
-DAC switch has no effect.
+Defer the return code check until after the bitmap_free() block.
 
-Use bit 3 for both.
-
-Fixes: 1e3cb6c321be ("ASoC: nau8822: new codec driver")
-Assisted-by: Claude:claude-opus-5-5
-Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
-Link: https://patch.msgid.link/20261008130953.2446692-7-sammiee5311@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 9b407312755f ("gpiolib: rework the wrapper around gpio_chip::set_multiple()")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Link: https://lore.kernel.org/linux-gpio/sashiko-outbox-168233@kernel.org/
+Signed-off-by: Kent Gibson <warthog618@gmail.com>
+Link: https://patch.msgid.link/20261015025749.47039-1-warthog618@gmail.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/nau8822.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpio/gpiolib.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/sound/soc/codecs/nau8822.c b/sound/soc/codecs/nau8822.c
-index fd4a96a12060e..dcf317ec97512 100644
---- a/sound/soc/codecs/nau8822.c
-+++ b/sound/soc/codecs/nau8822.c
-@@ -380,9 +380,9 @@ static const struct snd_kcontrol_new nau8822_snd_controls[] = {
- 		NAU8822_REG_RIGHT_ADC_BOOST_CONTROL, 0, 7, 0, boost_tlv),
+diff --git a/drivers/gpio/gpiolib.c b/drivers/gpio/gpiolib.c
+index 144f1e174c545..bffdaa91d86c5 100644
+--- a/drivers/gpio/gpiolib.c
++++ b/drivers/gpio/gpiolib.c
+@@ -3578,16 +3578,17 @@ int gpiod_set_array_value_complex(bool raw, bool can_sleep,
+ 		} while ((i < array_size) &&
+ 			 gpio_device_chip_cmp(desc_array[i]->gdev, guard.gc));
+ 		/* push collected bits to outputs */
+-		if (count != 0) {
++		ret = 0;
++		if (count != 0)
+ 			ret = gpiochip_set_multiple(guard.gc, mask, bits);
+-			if (ret)
+-				return ret;
+-		}
  
- 	SOC_SINGLE("DAC 128x Oversampling Switch",
--		NAU8822_REG_DAC_CONTROL, 5, 1, 0),
-+		NAU8822_REG_DAC_CONTROL, 3, 1, 0),
- 	SOC_SINGLE("ADC 128x Oversampling Switch",
--		NAU8822_REG_ADC_CONTROL, 5, 1, 0),
-+		NAU8822_REG_ADC_CONTROL, 3, 1, 0),
- };
- 
- /* LMAIN and RMAIN Mixer */
+ 		if (mask != fastpath_mask)
+ 			bitmap_free(mask);
+ 		if (bits != fastpath_bits)
+ 			bitmap_free(bits);
++
++		if (ret)
++			return ret;
+ 	}
+ 	return 0;
+ }
 -- 
 2.53.0
 
