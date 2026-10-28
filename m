@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215945;
-	b=w5XjoHL6wQWWUOX3iySInzdl3TQtbrx9xaELB8e7+iY6CXRcvzRDLEv/0DB52lu9UU+W
-	 b/h47R9Bx3xCzJ/p1/+Az8ft3dbeMjmnW/zsv0OLTQ3MgQxFPPXsXyTUUffeSeHJIoHzf
-	 k7iUvJalSHq4vKY4hsvJCzHRhejfuC51VGZ4oqfUvK7jxnpBD5QRpeVrWUXaw5vRc7zYr
-	 enIFpauqWkj/3o6n9jqxFMIguNGLq7xxKgmQBj8UxDq2Yl/qyxFyq+As4rsc4rBcfim1l
-	 mg+phLmYTSFgvdc4sZKcpoFnowAN+TwaBPHOXEH/bYEuk2NPA3LbG8JWmBUfmlyWYGg==
+	t=1793215948;
+	b=ZsoCu30vE3cpxUdI5D+MeLyR3w+cFquWhj3hcmtUNA5r3LCq7aCEYJGKf14wrfUW6iX3
+	 3wGhmri6kDnhzqGnkjL7lUzBJs+RLFoq2sThQON/gKMg6akJ91Vr6PbJev7k7thxOv4hu
+	 Ca1ZhMBuzxT2QNTuFu6mc4MpLXdmJ3QGmBcD6Bozm4wCxaKId9GW0Qkg35gbjyOYCOjyS
+	 cVF9lcNF16pxtXJC5k+56ugEF8rBmU+H3u5KFJ2WwtLyeX/XDfI22VKkNAKq225hC/25m
+	 4NHIoadCOliYdvU7eAyJcevIomUEXK4qZtVDm4w1yfzgkyWxTq7MkBue6LdxfycxuLg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215945;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215948;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=ohHgZEt6Ham6I3HvGdRhr2I925yI2tkQImrGCax0nAc=;
-	b=kir8mo8A/+dgOGvdSrD1pE5ETNIZguVZIOiuqyVMaZpIcKjn+ibzwwUuajNtrGdNSDgf
-	 GUCWvOh/IOl4LY7+aGb56BD4hliHFhjD6eOeP9bPYSnBJDGgJ9ysaBNHb1296+jz1U+XO
-	 whO6BaCgktTEYsCuNpkCSKtwrqYpeHJP8g3JZT1Z4wjcPZgyTkyuBFWhknTTBCLp4sBbs
-	 kr/icoFma8IWX7vHtHYlxmoXAIV0376qEYxK1oHRtWXkGN5TXUy8e+u2ZdX4wBlxAuMW7
-	 eeRCD3+Uymq5CsG5lScJk6s0Kp/2mUeoPINLMJ28c1LgvA8GRhpDuuI0ztpFFwShPNQ==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=VqPrqLasl80d7sWI/r/cwIVBeas1uHx9b1a9uuAUFeQ=;
+	b=1DhB4eLttgqIjmdgja0BuTkfG8wc34GLK6ZIKFbeLio+VF09G8HRbx/V3VKRrezUIyqD
+	 9mY5YtN9Mhvc/tHMnnvt1by8SC4V/f9kYFwihzzHSrGQSoV7XJ5bbyNZC5gDEw4+d96k0
+	 zgyeZGD2WXDjBhAhFiotTCFfkr+OprmxtCKdbI/EVFHLTJf45AyXuaN8mNpG/MtixoWbJ
+	 VtvfEmi+kpYXVdJsrXz31K8wg4XpAnySwhnfrLdKdQ/mmnxAwe1t/sHFfN7rifDffpvWn
+	 fhA5eW3/C/tqdqT27rrEOKf7+XlI+DAPsfi3Xo4LFm7oVVzFxiG9lm6xjclOvUyDPMA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NplQfa53;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mKaCwgpo;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB44A606A31E;
-	Wed, 28 Oct 2026 19:32:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0696D606A31A;
+	Wed, 28 Oct 2026 19:32:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NplQfa53
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 494421F01825;
-	Wed, 28 Oct 2026 19:32:24 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mKaCwgpo
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 131591F01825;
+	Wed, 28 Oct 2026 19:32:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215944;
-	bh=ohHgZEt6Ham6I3HvGdRhr2I925yI2tkQImrGCax0nAc=;
+	s=korg; t=1793215947;
+	bh=VqPrqLasl80d7sWI/r/cwIVBeas1uHx9b1a9uuAUFeQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NplQfa53qBb0RNqVT56f7j9ROAZ0q4DjdtM+3K/pmfGS06wZ9VpHlRReD37P7zrSm
-	 OaA2453VIGInyHj5X+oR/GNIhD4R7dDZ5ivj9b9ol1m3c3KlXIiHAI9hjI2EQs8wXE
-	 zbAh1nWZdZ3d6w5dZeWCtAJaXAV2YdRVuN8nhgWo=
+	b=mKaCwgpox8BaRlFgE2QIzUBFySbaZZT+EDrVSY7CMlKhoVMhfFlGArNa5HusaqghJ
+	 NU2Jnq6fV/Prff4bxOzqhLo2Js8hss3KdwJpfJSFgA0T5u0sZP6mqkAXtvc0woQ3i1
+	 UvaQ5aQ8GzchvQDICQC1LXgXkQvv94dDKNchZ0W0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fan Wu <fanwu01@zju.edu.cn>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
 	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1387/1887] power: supply: lp8788-charger: fix use-after-free on remove
-Date: Wed, 28 Oct 2026 17:58:03 +0100
-Message-ID: <20261028170531.012089812@linuxfoundation.org>
+Subject: [PATCH 6.1 1388/1887] power: supply: charger-manager: Convert to platform remove callback returning void
+Date: Wed, 28 Oct 2026 17:58:04 +0100
+Message-ID: <20261028170531.036456582@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -62,53 +62,69 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit 831c29a12d560f8a3225f43050b3fbb5dfd79c66 ]
+[ Upstream commit 403eebf95c38302cacc48c127e575461f0e798be ]
 
-lp8788_charger_remove() flushes charger_work before unregistering the
-IRQs. An IRQ thread can queue charger_work after flush_work() has
-returned. The work can then run after devres frees pchg and dereference
-it in lp8788_charger_event().
+The .remove() callback for a platform driver returns an int which makes
+many driver authors wrongly assume it's possible to do error handling by
+returning an error code. However the value returned is ignored (apart
+from emitting a warning) and this typically results in resource leaks.
+To improve here there is a quest to make the remove callback return
+void. In the first step of this quest all drivers are converted to
+.remove_new() which already returns void. Eventually after all drivers
+are converted, .remove_new() is renamed to .remove().
 
-Unregister the IRQs first. free_irq() waits for any running threaded
-handler, so no handler can queue more work afterwards. Then use
-cancel_work_sync() to cancel pending work or wait for running work to
-finish.
+Trivially convert this driver from always returning zero in the remove
+callback to the void returning variant.
 
-This issue was found by an in-house static analysis tool.
-
-Fixes: 98a276649358 ("power_supply: Add new lp8788 charger driver")
-Cc: stable@vger.kernel.org
-Assisted-by: Codex:gpt-5.6
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
-Link: https://patch.msgid.link/20260802035442.421697-1-fanwu01@zju.edu.cn
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Link: https://lore.kernel.org/r/20230918133700.1254499-8-u.kleine-koenig@pengutronix.de
 Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Stable-dep-of: c57cb36f76eb ("power: supply: charger-manager: register regulators before exposing sysfs")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/lp8788-charger.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/power/supply/charger-manager.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/power/supply/lp8788-charger.c b/drivers/power/supply/lp8788-charger.c
-index 98c15b7abfb88..cf797bf7f6484 100644
---- a/drivers/power/supply/lp8788-charger.c
-+++ b/drivers/power/supply/lp8788-charger.c
-@@ -711,8 +711,8 @@ static void lp8788_charger_remove(struct platform_device *pdev)
- {
- 	struct lp8788_charger *pchg = platform_get_drvdata(pdev);
- 
--	flush_work(&pchg->charger_work);
- 	lp8788_irq_unregister(pdev, pchg);
-+	cancel_work_sync(&pchg->charger_work);
+diff --git a/drivers/power/supply/charger-manager.c b/drivers/power/supply/charger-manager.c
+index 75df8c15df05a..a20e7aaffbaa8 100644
+--- a/drivers/power/supply/charger-manager.c
++++ b/drivers/power/supply/charger-manager.c
+@@ -1630,7 +1630,7 @@ static int charger_manager_probe(struct platform_device *pdev)
+ 	return ret;
  }
  
- static struct platform_driver lp8788_charger_driver = {
+-static int charger_manager_remove(struct platform_device *pdev)
++static void charger_manager_remove(struct platform_device *pdev)
+ {
+ 	struct charger_manager *cm = platform_get_drvdata(pdev);
+ 	struct charger_desc *desc = cm->desc;
+@@ -1650,8 +1650,6 @@ static int charger_manager_remove(struct platform_device *pdev)
+ 	power_supply_unregister(cm->charger_psy);
+ 
+ 	try_charger_enable(cm, false);
+-
+-	return 0;
+ }
+ 
+ static const struct platform_device_id charger_manager_id[] = {
+@@ -1742,7 +1740,7 @@ static struct platform_driver charger_manager_driver = {
+ 		.of_match_table = charger_manager_match,
+ 	},
+ 	.probe = charger_manager_probe,
+-	.remove = charger_manager_remove,
++	.remove_new = charger_manager_remove,
+ 	.id_table = charger_manager_id,
+ };
+ 
 -- 
 2.53.0
 
