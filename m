@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793212584;
-	b=j86CY+l20ymBqeWwJtUbbc7P9+zUJrgLp1SqsFtw7P4YoHKpOenDGu2levTV1BzCoVBN
-	 cufCTZtbNCCH0GCHAsMYnmvqo+lsDtf1HxAFWdHzubrgW+pIe1QFQk1RcJkyRoMpCUEl9
-	 RjrgxT8+R13Lbwq2qYi2RPB8RPKU3qnHwlvL0rtnX+L8wTTnaphiGvisEdil5gufVQwG7
-	 1GbXRSYD0N+D8qXswZ1LEI2RkTaWf5Ghvpc5uS2mfudd+3FC3PFZeQXh4X9P64P6QET4P
-	 5ZZCd3y9RPy/3Tvl7kh/bKdvoCq3JvFV90u1ClJEfdfS/VqsZExNFAxYdRkgNTphdPQ==
+	t=1793212587;
+	b=wEvB9Bn6yjeauXN5etfVpeTGkuqHp3WH2Uj29ptmzjwJB1PYrS7GTfSOL/fgMUE6/TgO
+	 SUPJgudNR5DhssIbNXDv2HMx3VCJ857zBL9toLJzohWYvGNxIO0TI4F2UTeReRQ5qWadK
+	 kThQlT0q7RxawBDGKMvU1CeizrtxaGnDvI+gpz/zV5axutlMPVVuDwNushMF3asG1D50x
+	 BClZcvqyXyeiKp8DFXjVhNny+O/gM3ipZYyAJPSYSAre8rTAf3Y3iyJfhiBYRTUuyq+6g
+	 SjR0fIHD712IoQafeZh07Ef1iIjiD3StklHJXq0wN49iLdSGGSwEs06k8vKCTS6HOcA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793212584;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793212587;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=advfw/3GHcR5Ao89+g7jBdsDuH8Tg9DQHG1fBoWcyZo=;
-	b=T/rL6WcLfxnpcugo//2PUiBFBXyVobaCh6N3dQvZ+YVEGPoa7YiqqDPmffeFJCR8Puxd
-	 cq2fEkZWJtDSxZDV17hfEtPf+oDhJbLVO/vPH0rYV0mO8OmLR5IAF5WGnglZwnuWluor4
-	 KF9Xzt0YvNQQ/EfXIsu/vTz5yNTq3PqctV2ZLTOG1kxvO1PjUH332/JkGUDcaZsQwXTgg
-	 cRCi1AcW2PRQHV/hk4lc1iS92IHeI6lqWLhHtP35+HNAPdc8YFd6ObTRZCTLjsV2G/dnq
-	 K9U9ydSGkL97oxK56br/tv9X0Dfgu/pQ8m+Yd3llKb/EPsfbd17zfotBpExPLBY6yZA==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=SjruRc9dEuUkvcGpf4OggqhK6BKqAyq+bsPcVRx4uJE=;
+	b=FDzLOKMdgi1wzIYm2ksuObrdewJo2aCTgpjYiEZ5EljTGWUFV9Bh3vfoB3Ly42NYYm/C
+	 QbcYi5WxguAEcxDFSXAeT/Z+XM17iFOBzfkSX+GIMLIPOijikzEg54cyss/vV0W9hlbgg
+	 yXzrPB72u3FTZPiaMeUarHJhuZd8yc9LKRDVNf6RpCiO5XzAkDR+s7w4bRvglA4HCPrgz
+	 UfZiZE5iM4oGXE8G84dSg8bthhWGEiOvfdixjV5L5aAzhMHFwevLFn2e68nByoptlEIAv
+	 Z5me/vPwPQzrhT9b7iGD10JrHZSpcwnpFqdHTilCsLtR8Z10OPIJW+5h0vjd8MPGMmQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nNehoBg7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=d8ag1PN+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D458E606A31D;
-	Wed, 28 Oct 2026 18:36:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3BF4606A31A;
+	Wed, 28 Oct 2026 18:36:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nNehoBg7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30AFB1F01825;
-	Wed, 28 Oct 2026 18:36:23 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=d8ag1PN+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F3681F01825;
+	Wed, 28 Oct 2026 18:36:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793212583;
-	bh=advfw/3GHcR5Ao89+g7jBdsDuH8Tg9DQHG1fBoWcyZo=;
+	s=korg; t=1793212586;
+	bh=SjruRc9dEuUkvcGpf4OggqhK6BKqAyq+bsPcVRx4uJE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nNehoBg7GK9zjFMIMVEIaV+a93fn4+PUB9nP0MoIhzgHzednaYAOoIjxPNgSHJTix
-	 xMDT+yMWhpqezUxBOKjVPflMtz6s2p0ERjb+vh5h+HBOZt+WL9F1aTcuD0ClpU1r9y
-	 fEiOew31z1K6y7cePk9HmskH+7QDGah9IdrLNYtY=
+	b=d8ag1PN+FPT4/1zygKXHjSwf+FNNAV2d1+H7VZmdrXTZQAZKFbqil/QGW6x2PlSY1
+	 98EYadN5K9EociO9MPOftB0TYn3JYxz4Fhe9d34PjrVhaIMTaB0EdUAazbVFcx5zHX
+	 BlhHIJlatnE3CVk3tvsGU1eAlxN6G8aT1R9PS8Gs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tibor Harcsa <silurust@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
+	Benjamin Tissoires <bentiss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0161/1887] Bluetooth: btusb: Add IMC Networks QCA9377 to quirks table
-Date: Wed, 28 Oct 2026 17:37:37 +0100
-Message-ID: <20261028170502.898674579@linuxfoundation.org>
+Subject: [PATCH 6.1 0162/1887] HID: core: remove #ifdef CONFIG_PM from hid_driver
+Date: Wed, 28 Oct 2026 17:37:38 +0100
+Message-ID: <20261028170502.920946608@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -62,69 +62,54 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tibor Harcsa <silurust@gmail.com>
+From: Thomas Weißschuh <linux@weissschuh.net>
 
-[ Upstream commit dc16388d45ecbd3be0d8c9424dbbaa2c81806578 ]
+[ Upstream commit df8b030d82dd1224881acb4e778fa06c4824f72b ]
 
-Add the USB ID (13d3:3503) for the IMC Networks Qualcomm Atheros
-QCA9377 Bluetooth controller to the btusb quirks table. This device
-requires Qualcomm Rome firmware and wideband speech support to function
-properly; otherwise, BLE scanning fails with HCI unexpected event
-opcode 0x2005 errors.
+Allow HID drivers to pass ->suspend, ->resume and ->reset_resume via
+pm_ptr().
+Through the usage of pm_ptr() the CONFIG_PM-dependent code will always be
+compiled, protecting against bitrot.
+The linker will then garbage-collect the unused function avoiding any overhead.
 
-The device reports the following in /sys/kernel/debug/usb/devices:
+The only overhead in the final kernel image and at runtime are a few
+extra bytes in 'struct hid_driver'.
 
-P:  Vendor=13d3 ProdID=3503 Rev= 0.01
-C:* #Ifs= 2 Cfg#= 1 Atr=e0 MxPwr=100mA
-I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=1ms
-E:  Ad=82(I) Atr=02(Bulk) MxPS=  64 Ivl=0ms
-E:  Ad=02(O) Atr=02(Bulk) MxPS=  64 Ivl=0ms
-I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
-I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
-I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
-I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
-I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
-I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+The same approach is chosen by 'struct usb_driver' and other subsystems.
 
-Signed-off-by: Tibor Harcsa <silurust@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
+Link: https://lore.kernel.org/r/20231012-hid-pm_ptr-v1-1-0a71531ca93b@weissschuh.net
+Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btusb.c | 2 ++
- 1 file changed, 2 insertions(+)
+ include/linux/hid.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index 3c1d6a711338d..3ffe8e3bcac9a 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -304,6 +304,8 @@ static const struct usb_device_id blacklist_table[] = {
- 						     BTUSB_WIDEBAND_SPEECH },
- 	{ USB_DEVICE(0x13d3, 0x3501), .driver_info = BTUSB_QCA_ROME |
- 						     BTUSB_WIDEBAND_SPEECH },
-+	{ USB_DEVICE(0x13d3, 0x3503), .driver_info = BTUSB_QCA_ROME |
-+						     BTUSB_WIDEBAND_SPEECH },
- 
- 	/* QCA WCN6855 chipset */
- 	{ USB_DEVICE(0x0cf3, 0xe600), .driver_info = BTUSB_QCA_WCN6855 |
+diff --git a/include/linux/hid.h b/include/linux/hid.h
+index 536a4750b905b..9fde4e8839c91 100644
+--- a/include/linux/hid.h
++++ b/include/linux/hid.h
+@@ -837,11 +837,11 @@ struct hid_driver {
+ 	void (*feature_mapping)(struct hid_device *hdev,
+ 			struct hid_field *field,
+ 			struct hid_usage *usage);
+-#ifdef CONFIG_PM
++
+ 	int (*suspend)(struct hid_device *hdev, pm_message_t message);
+ 	int (*resume)(struct hid_device *hdev);
+ 	int (*reset_resume)(struct hid_device *hdev);
+-#endif
++
+ /* private: */
+ 	struct device_driver driver;
+ };
 -- 
 2.53.0
 
