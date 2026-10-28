@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793207167;
-	b=Y4Jg5HRlVjEc3VVmcjMoN1c3UHdMxjvyb8OZ2DKQVws9OqWWHR3Qd/XcfwGtx+r5cIV1
-	 hArLaw6cXbZ+isTtmcWboH1Zg1S3NwTSKjFkLL0n8x/47RXEFdn612jKLxOSimru3BiU8
-	 kQrr6KG0SlPQ2VvF2aFY4anrrvZcV1Qd1Cwi0rmti4FBN+CW2VN9r/0ufvFQsXo2rRShT
-	 IaTNjxb6ZKPKoVC5iKdcmqoyBlf2eWKZvqpDX2swLYiK1K/pssJIxssiKXDe+YqwI132U
-	 wlGeBt+bIaSb5dNLp+SIM4he+c0AEGJlNfptrovoEMm0i8qv8uKeJIfAVs0NA+ZFIgQ==
+	t=1793207171;
+	b=4UIRklWRheRlSiHQpW6ijr52Q5NzZ2YYYRCH7SnYTejdpuvzxkGJ5bGWLMZ84sx4Maeg
+	 29fXeQKmGoUA4gq5tvysk0G+kv1792kIHTVR/Jzu2ttjsRqPsM4yWczno5r4A1Lxw91O5
+	 hAOwZpbFTNznR9xlxYSz1q8qsmoNPAvAJ3Yl9hw+s1qNWn3tQl8kpihEw/UIHx+Zw9Rp6
+	 pHRKK+k4ChfCWU6w3jec+StloGeppIdXOyGZo3Ck5dqh0uTVECqb9H/gd9r4a9r/ER15Q
+	 5U9ijVBYCVvge6f1oe1aVFZTSmTih1bnhbfPdZnFkiEL8THgTuHFoe7iBNEkKzt6rJA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793207167;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793207171;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=yjqXTiuFiXS4VTL0sFsKkbaNGr55PF4wOlZMBnNal+c=;
-	b=uZx7bBM7fNfYQbuIFB2y28hnsGwhbrUdF1ztfHMavfjaRBsKFzT0L8xaDTzw6cjuc2Th
-	 HQNdQx5VvtjrcvYrW8oXUteSP0hobdpABmDBHfUdCqfF5yoxFO1AvClD+X2ntA27XNHqZ
-	 K6cmVRGDDn0E1Za2SmooxrGbNZiQfRJKmQw+ZlbCZpqXIK/lvmJIqvv6A0HNxTfJW4cJw
-	 68jAkFhjOPKOYU9WUisoWqKlc+tGJ7efFK5CHnp/fQw8HXV+W+qr6p8SKJH2KpKGip2Qp
-	 wr3vT2wEWKT7Sq46TAq6dCEBF7yS9ewGjUCmMGDNjT098LTi4umrJ88zc3nd7SwfxUg==
+	bh=WpQz9Wih48tgcXzqCPaiczv8b+3PAfA+CxALRVQnywE=;
+	b=Rgtn7itQaDioY6y0PImBqPlvSGGJhk9r+WbPX0j1AwUPC/rgibYLgV5klZNPjbZSyYv5
+	 nOq3G/OLb19AtV6pmc9DeSROYRMsaApZ9rQh0gJ5+QoBN7pajcUNK7WCF2ITh7v0k/8LG
+	 rZspVlG239hw86Rbx9LTBu6Twc05wLKjJ2gvbsYiXejXkn18/ljqb7YScnW9pB2ZHQWtS
+	 CQPQ+2zCJluQlKO8P8IFH81i+L5DoTICtGimnmL8WEeXG8cKM+Abj8KL3SZEeLuVkJoNB
+	 Qwtp23E6+aK624BwJc9LlUI4ybNaCtIrEqsP9z2R5gsecsqy1x1oVfGjlufifNZclxA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X2y4ntRQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="e/wxJ1GH";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A023F606A322;
-	Wed, 28 Oct 2026 17:06:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8067606A333;
+	Wed, 28 Oct 2026 17:06:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X2y4ntRQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1AC91F01829;
-	Wed, 28 Oct 2026 17:06:06 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e/wxJ1GH
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA0871F031E2;
+	Wed, 28 Oct 2026 17:06:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793207167;
-	bh=yjqXTiuFiXS4VTL0sFsKkbaNGr55PF4wOlZMBnNal+c=;
+	s=korg; t=1793207170;
+	bh=WpQz9Wih48tgcXzqCPaiczv8b+3PAfA+CxALRVQnywE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=X2y4ntRQVYozer2c0QTlfNRV8y0pVxW7tXLdHhmkfykerDaKn58hEQa/6tKPRPew1
-	 d6oBNXKzQrVCme9JCntInV3189S6LBDx6j4PFRZIhmqFvni3NPfuEtjvhJ9TAi+T9p
-	 gEniIrDJa47IgTBCat4rJ7hd6oO8eXXOv0igUeIM=
+	b=e/wxJ1GHpmHJv0s2E4KzgYNgUXc4TPyGdx6tRrmRnP+BDDvuedWBQI3TpkblkAM1X
+	 zPI2Mzh12NdC0HnMp20SxXw8+cclwKU04HFgVhn+69qCmz+U4BDWULJAOhDjtii7Hd
+	 WgtlMNzBmQlMQASkM0EtX5JRPriFoXF0VKT8vBDI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
+	sashiko-bot@kernel.org,
 	Donggeun Yoo <donggeunyoo.kernel@gmail.com>,
-	Tom Zanussi <zanussi@kernel.org>,
 	Steven Rostedt <rostedt@goodmis.org>
-Subject: [PATCH 7.2 11/88] tracing: Save the event file instead of the compatible histogram
-Date: Wed, 28 Oct 2026 17:59:19 +0100
-Message-ID: <20261028165942.381063964@linuxfoundation.org>
+Subject: [PATCH 7.2 12/88] tracing: Unregister field variable histograms when the command fails
+Date: Wed, 28 Oct 2026 17:59:20 +0100
+Message-ID: <20261028165942.404848631@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165942.107695352@linuxfoundation.org>
 References: <20261028165942.107695352@linuxfoundation.org>
@@ -71,84 +70,90 @@ Content-Transfer-Encoding: 8bit
 
 From: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
 
-commit d5c42664fc094899af9aae5300b27fe8fdb658ef upstream.
+commit 91c14d6c13096091c56304120aaa26e479130b8b upstream.
 
-create_field_var_hist() creates a histogram on the matched event to
-supply a field variable, and records it on the target so it can be torn
-down later:
+An action that names a field on another event needs that field as a
+variable, so create_field_var_hist() registers a second hist trigger on
+that event to provide it, and records it in
+target_hist_data->field_var_hists[].
 
-	hist_data = find_compatible_hist(target_hist_data, file);
-	...
-	/* Save the compatible histogram information */
-	var_hist->hist_data = hist_data;
+If a later part of the same command fails, create_actions() returns an
+error and event_hist_trigger_parse() jumps to out_free. The write fails
+with -EINVAL and sched_switch gets no trigger, but:
 
-hist_data is not the histogram it creates. It is one that was already
-there, whose keys the new one copies. The saved pointer has a single
-user, unregister_field_var_hists(), which runs when the target is
-removed:
+  # echo 'hist:keys=pid:ts0=common_timestamp.usecs' >> \
+      events/sched/sched_waking/trigger
+  # echo 'my_synth u64 lat; int a; int b' >> synthetic_events
+  # echo 'hist:keys=next_pid:wakeup_lat=common_timestamp.usecs-$ts0:\
+      onmatch(sched.sched_waking).my_synth($wakeup_lat,prio,nosuchfld)'\
+      >> events/sched/sched_switch/trigger
+  # cat events/sched/sched_waking/trigger
+  hist:keys=pid:vals=hitcount:ts0=common_timestamp.usecs:sort=hitcount:size=2048:clock=global [active]
+  hist:keys=pid:vals=hitcount:synthetic_prio=prio:sort=hitcount:size=2048 [active]
 
-	file = hist_data->field_var_hists[i]->hist_data->event_file;
+The second histogram is the one created for 'prio'. It is still active and
+still counting.
 
-find_compatible_hist() matches on keys alone, so it can pick one with no
-variables of its own. check_var_refs() then returns false and the user
-can remove it while the target still points at it:
+out_free reaches destroy_field_var_hists(), which frees the
+field_var_hists[] entries, but never unregister_field_var_hists(), which is
+what removes the triggers and runs only from event_hist_trigger_free(). The
+entry is freed and the trigger is left with nothing tracking it.
 
- BUG: KASAN: slab-use-after-free in event_hist_trigger_free+0x2b2/0x320
- Read of size 8 at addr ffff8880093b90e0 by task init/1
-
- Freed by task 1:
-  kfree+0x154/0x420
-  event_hist_trigger_free+0x1d5/0x320
-  event_hist_trigger_parse+0x35f3/0x69e0
-  trigger_process_regex+0x1a6/0x250
-
-Save the event file instead. It is all the dereference ever wanted, and
-it does not go away when the user removes a trigger.
+Unregister the field variable histograms in out_free as well, and record
+each one as soon as its trigger is registered rather than after the lookup
+that follows it, so no exit can leave a registered trigger untracked. The
+entry then belongs to field_var_hists[] and is released by
+destroy_field_var_hists(), so freeing it on that exit would be a double
+free.
 
 Cc: stable@vger.kernel.org
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Link: https://lore.kernel.org/all/20260914110753.221E61F000FF@smtp.kernel.org/
-Link: https://patch.msgid.link/20260914234754.3676905-1-donggeunyoo.kernel@gmail.com
+Link: https://patch.msgid.link/20260914104036.1768529-1-donggeunyoo.kernel@gmail.com
 Fixes: 02205a6752f2 ("tracing: Add support for 'field variables'")
+Reported-by: sashiko-bot@kernel.org
+Closes: https://lore.kernel.org/all/20260913204302.DB2551F000FF@smtp.kernel.org/
 Signed-off-by: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
 Assisted-by: Claude:claude-fable-5
-Acked-by: Tom Zanussi <zanussi@kernel.org>
 Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_events_hist.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ kernel/trace/trace_events_hist.c |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
 --- a/kernel/trace/trace_events_hist.c
 +++ b/kernel/trace/trace_events_hist.c
-@@ -550,7 +550,7 @@ struct field_var {
- };
+@@ -3115,20 +3115,18 @@ create_field_var_hist(struct hist_trigge
  
- struct field_var_hist {
--	struct hist_trigger_data	*hist_data;
-+	struct trace_event_file		*file;
- 	char				*cmd;
- };
+ 	kfree(cmd);
  
-@@ -3099,8 +3099,8 @@ create_field_var_hist(struct hist_trigge
- 		return ERR_PTR(-ENOMEM);
++	n = target_hist_data->n_field_var_hists;
++	target_hist_data->field_var_hists[n] = var_hist;
++	target_hist_data->n_field_var_hists++;
++
+ 	/* If we can't find the variable, something went wrong */
+ 	event_var = find_synthetic_field_var(target_hist_data, subsys_name,
+ 					     event_name, field_name);
+ 	if (IS_ERR_OR_NULL(event_var)) {
+-		kfree(var_hist->cmd);
+-		kfree(var_hist);
+ 		hist_err(tr, HIST_ERR_SYNTH_VAR_NOT_FOUND, errpos(field_name));
+ 		return ERR_PTR(-EINVAL);
  	}
  
--	/* Save the compatible histogram information */
--	var_hist->hist_data = hist_data;
-+	/* Needed to remove the histogram when the target goes away */
-+	var_hist->file = file;
+-	n = target_hist_data->n_field_var_hists;
+-	target_hist_data->field_var_hists[n] = var_hist;
+-	target_hist_data->n_field_var_hists++;
+-
+ 	return event_var;
+ }
  
- 	/* Create the new histogram with our variable */
- 	ret = event_hist_trigger_parse(&trigger_hist_cmd, file,
-@@ -6331,7 +6331,7 @@ static void unregister_field_var_hists(s
- 	int ret;
+@@ -6967,6 +6965,8 @@ static int event_hist_trigger_parse(stru
  
- 	for (i = 0; i < hist_data->n_field_var_hists; i++) {
--		file = hist_data->field_var_hists[i]->hist_data->event_file;
-+		file = hist_data->field_var_hists[i]->file;
- 		cmd = hist_data->field_var_hists[i]->cmd;
- 		ret = event_hist_trigger_parse(&trigger_hist_cmd, file,
- 					       "!hist", "hist", cmd);
+ 	trigger_data_free(trigger_data);
+ 
++	unregister_field_var_hists(hist_data);
++
+ 	destroy_hist_data(hist_data);
+ 	goto out;
+ }
 
 
