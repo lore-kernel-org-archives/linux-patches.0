@@ -1,55 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793217389;
-	b=ncCiY235HBEVkuKnO6KGjZ7YDik+7blYQFlHqzCVkCj6U8GvOaFFUlIHOJxSQSZjndAC
-	 x8iV8wu5f6jJL7ztBZOREsqQdHoXx6f3Ji1bGa47W6dl/99r1MmIF6KnqEUaW0l3VzAb0
-	 38wN59AJPfJ7gOUKuOdBTTN6pdEv5I61WylGbfFCwWabIj2NC4ZHmUnQlsNOYb1gvR+Vg
-	 YzVBYOUvgQDAKCSmZJwcLlznSeyJUWq91wkvQFDCHhij5gV19wo51dT7w+44gYe88GXLa
-	 9Oc2u3YkP1Gq3Uip22MJauU3iAKWtOuS/ICO73NsUysV3UI3OxvKj0zWdgHBYR1dFDw==
+	t=1793217392;
+	b=mJ68ulUvnr2h+4nQB7CdTwWEn4C5cqs9AKJreuG6zgnKO4jU1VVXYxvVwGhXEu61lSos
+	 tV4zEIbzrOPIeThuRoSopL0cvnDyE7/ICGqkdqzRjl3YQ+3lC+mRrKXrN8stm2rsOIIlO
+	 HpyBYYsCloaeWlxQrd3ATZHg9HOL28xy0BCM1m1bg2nKwdkhamYyk9qc2kWzS9d4Dzxsr
+	 2WhMMDoaHHpYcmWl9hQS0J7Ay3+5I2guH7yoxQQQgw3LaPsmcZY0EPOISofDDjnAHsZ1Y
+	 kZqXgcCOaYC9ANXq5lavIiHrvj127fuSbva07lumFRWmiTmtKjCz9MOSOAPFx2DKzug==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793217389;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793217392;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=vBxnJ4e1G2U9ZZnCo1Do88hEsXC/CVqKx2Cnq+Vlxlc=;
-	b=H/M8aethHn6EJ+bRhBwrY27x0WLt1mB728ODwlWW0hVG5fnwUDsvy3q4CzompGC2PMlL
-	 GEVig0d1rSDjSwNGcpDx2okNLp4EKNRJqbB+ym8ZnuFy551X4yNcYPYb7jsmS7rpSwTwp
-	 rshtkgL2pTgYCUm5CxDH4HzbQ+Ip8auyIUR0Xj8AEeTTQPDyTiBA6u+d3nYvWLuiJxRrF
-	 30bdzR8X7CHVYGDdiPoEjBAMGyXlOEoug/dO6YvoU4qFgA8e+Vd+YafUUvs2foo2x5OZ/
-	 XanPjKEMOO/OGzu4ivgP8XCvhnqTnqdW+vKDcTHduagLKaY6eOO0h/3dT1dd9zClUzQ==
+	bh=SMGduP0aRe0184wn7JQkqEiQD93v6yU8dFTp57siAbw=;
+	b=zd1negO44hcyHjqJEm8ymrYM2xvEUw02G1qB2CWIzqn8bsAKfLTqquzH+OSC9ALqdJ/A
+	 A8pEWza3/GrkhwoldbTEQJ1q4A/v1bO5L+rl81E5Q95T9qpXY6CF+4ar/uvSsqsjU2xKc
+	 gHtxGRt83xGAVwLLJATvt6HORajIOOvvh7MUWJI7j9xPxi8r0pj9G0r3CWBYKYQOIGE85
+	 gmJYhc4ozZWVHfhUaFD97T70VFTDcfDeeSA3dhRt4zWSzihgnBv0E7eTA6eKhD4ifSQno
+	 i7nhu8njHko+z0OWr8r+VgH8NLub5goOlLnsvZbhiuQxKSGZEaiCQbiyIh6n89HV4fw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IAlHtPOR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fkoiNmsM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C036606A31C;
-	Wed, 28 Oct 2026 19:56:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CC0E606A31A;
+	Wed, 28 Oct 2026 19:56:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IAlHtPOR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 782C21F01825;
-	Wed, 28 Oct 2026 19:56:28 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fkoiNmsM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DF101F01825;
+	Wed, 28 Oct 2026 19:56:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793217389;
-	bh=vBxnJ4e1G2U9ZZnCo1Do88hEsXC/CVqKx2Cnq+Vlxlc=;
+	s=korg; t=1793217391;
+	bh=SMGduP0aRe0184wn7JQkqEiQD93v6yU8dFTp57siAbw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IAlHtPOR3jXYcyvPLZTFIUOJr0+3t8CknCS2XBq8Jad8cM0+cO6N+sLLVB3RuioRO
-	 NH3PonWsn4I3NCW7sqLWrtpM58tpDSJIf8goBZvNvwbN1rzkhCN7c1zOU4IU4e46jz
-	 W47TnQVLyR1eiF26yrW3hWbUjJ1ZI4NQkEb78YwI=
+	b=fkoiNmsMGKUGoC3GJgtHD2OzC8ZgGh8XvwZ2b+R8NVOyRZrpFVuE+TRbh9HRbLvfP
+	 TW+FGZXuyj05j3/C78e9z+8A1axFuxFr/tb1yxvlG9mr/5hUjf4RbwtwN/wk5NWair
+	 U9eHuTt/SDNvIDTXwOwHnTWlDIGA1WC4rElxmS68=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Damien Le Moal <dlemoal@kernel.org>,
-	Hannes Reinecke <hare@suse.de>,
-	Christoph Hellwig <hch@lst.de>,
 	Niklas Cassel <niklas.cassel@wdc.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1880/1887] scsi: block: Introduce ioprio hints
-Date: Wed, 28 Oct 2026 18:06:16 +0100
-Message-ID: <20261028170542.240023536@linuxfoundation.org>
+Subject: [PATCH 6.1 1881/1887] scsi: block: Improve ioprio value validity checks
+Date: Wed, 28 Oct 2026 18:06:17 +0100
+Message-ID: <20261028170542.262157518@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -73,111 +72,136 @@ Content-Transfer-Encoding: 8bit
 
 From: Damien Le Moal <dlemoal@kernel.org>
 
-[ Upstream commit 6c913257226a25879bfd6226e0ee265e98904ce6 ]
+[ Upstream commit 01584c1e233740519d0e11aa20daa323d26bf598 ]
 
-I/O priorities currently only use 6-bits of the 16-bits ioprio value: the
-3-upper bits are used to define up to 8 priority classes (4 of which are
-valid) and the 3 lower bits of the value are used to define a priority
-level for the real-time and best-effort class.
+The introduction of the macro IOPRIO_PRIO_LEVEL() in commit eca2040972b4
+("scsi: block: ioprio: Clean up interface definition") results in an
+iopriority level to always be masked using the macro IOPRIO_LEVEL_MASK, and
+thus to the kernel always seeing an acceptable value for an I/O priority
+level when checked in ioprio_check_cap().  Before this patch, this function
+would return an error for some (but not all) invalid values for a level
+valid range of [0..7].
 
-The remaining 10-bits between the I/O priority class and level are unused,
-and in fact, cannot be used by the user as doing so would either result in
-the value being completely ignored, or in an error returned by
-ioprio_check_cap().
+Restore and improve the detection of invalid priority levels by introducing
+the inline function ioprio_value() to check an ioprio class, level and hint
+value before combining these fields into a single value to be used with
+ioprio_set() or AIOs. If an invalid value for the class, level or hint of
+an ioprio is detected, ioprio_value() returns an ioprio using the class
+IOPRIO_CLASS_INVALID, indicating an invalid value and causing
+ioprio_check_cap() to return -EINVAL.
 
-Use these 10-bits of an ioprio value to allow a user to specify I/O
-hints. An I/O hint is defined as a 10-bitsvalue, allowing up to 1023
-different hints to be specified, with the value 0 being reserved as the "no
-hint" case. An I/O hint can apply to any I/O that specifies a valid
-priority class other than NONE, regardless of the I/O priority level
-specified.
-
-To do so, the macros IOPRIO_PRIO_HINT() and IOPRIO_PRIO_VALUE_HINT() are
-introduced in include/uapi/linux/ioprio.h to respectively allow a user to
-get and set a hint in an ioprio value.
-
-To support the ATA and SCSI command duration limits feature, 7 hints are
-defined: IOPRIO_HINT_DEV_DURATION_LIMIT_1 to
-IOPRIO_HINT_DEV_DURATION_LIMIT_7, allowing a user to specify which command
-duration limit descriptor should be applied to the commands serving an
-I/O. Specifying these hints has for now no effect whatsoever if the target
-block devices do not support the command duration limits feature. However,
-in the future, block I/O schedulers can be modified to optimize I/O issuing
-order based on these hints, even for devices that do not support the
-command duration limits feature.
-
-Given that the 7 duration limits hints defined have no effect on any block
-layer component, the actual definition of the duration limits implied by
-these hints remains at the device level.
-
+Fixes: 6c913257226a ("scsi: block: Introduce ioprio hints")
+Fixes: eca2040972b4 ("scsi: block: ioprio: Clean up interface definition")
 Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
-Reviewed-by: Hannes Reinecke <hare@suse.de>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Niklas Cassel <niklas.cassel@wdc.com>
-Link: https://lore.kernel.org/r/20230511011356.227789-3-nks@flawful.org
+Link: https://lore.kernel.org/r/20230608095556.124001-1-dlemoal@kernel.org
+Reviewed-by: Niklas Cassel <niklas.cassel@wdc.com>
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Stable-dep-of: 01584c1e2337 ("scsi: block: Improve ioprio value validity checks")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/uapi/linux/ioprio.h | 49 +++++++++++++++++++++++++++++++++++++
- 1 file changed, 49 insertions(+)
+ block/ioprio.c              |  1 +
+ include/uapi/linux/ioprio.h | 50 ++++++++++++++++++++++++-------------
+ 2 files changed, 34 insertions(+), 17 deletions(-)
 
+diff --git a/block/ioprio.c b/block/ioprio.c
+index f0d9e818abc53..b5a942519a797 100644
+--- a/block/ioprio.c
++++ b/block/ioprio.c
+@@ -58,6 +58,7 @@ int ioprio_check_cap(int ioprio)
+ 			if (level)
+ 				return -EINVAL;
+ 			break;
++		case IOPRIO_CLASS_INVALID:
+ 		default:
+ 			return -EINVAL;
+ 	}
 diff --git a/include/uapi/linux/ioprio.h b/include/uapi/linux/ioprio.h
-index 4444b4e4fdad9..4c4806e8230bc 100644
+index 4c4806e8230bc..99440b2e8c352 100644
 --- a/include/uapi/linux/ioprio.h
 +++ b/include/uapi/linux/ioprio.h
-@@ -58,4 +58,53 @@ enum {
- #define IOPRIO_NORM	4
- #define IOPRIO_BE_NORM	IOPRIO_NORM
+@@ -2,19 +2,20 @@
+ #ifndef _UAPI_LINUX_IOPRIO_H
+ #define _UAPI_LINUX_IOPRIO_H
  
-+/*
-+ * The 10 bits between the priority class and the priority level are used to
-+ * optionally define I/O hints for any combination of I/O priority class and
-+ * level. Depending on the kernel configuration, I/O scheduler being used and
-+ * the target I/O device being used, hints can influence how I/Os are processed
-+ * without affecting the I/O scheduling ordering defined by the I/O priority
-+ * class and level.
-+ */
-+#define IOPRIO_HINT_SHIFT		IOPRIO_LEVEL_NR_BITS
-+#define IOPRIO_HINT_NR_BITS		10
-+#define IOPRIO_NR_HINTS			(1 << IOPRIO_HINT_NR_BITS)
-+#define IOPRIO_HINT_MASK		(IOPRIO_NR_HINTS - 1)
-+#define IOPRIO_PRIO_HINT(ioprio)	\
-+	(((ioprio) >> IOPRIO_HINT_SHIFT) & IOPRIO_HINT_MASK)
++#include <linux/stddef.h>
++#include <linux/types.h>
++
+ /*
+  * Gives us 8 prio classes with 13-bits of data for each class
+  */
+ #define IOPRIO_CLASS_SHIFT	13
+-#define IOPRIO_CLASS_MASK	0x07
++#define IOPRIO_NR_CLASSES	8
++#define IOPRIO_CLASS_MASK	(IOPRIO_NR_CLASSES - 1)
+ #define IOPRIO_PRIO_MASK	((1UL << IOPRIO_CLASS_SHIFT) - 1)
+ 
+ #define IOPRIO_PRIO_CLASS(ioprio)	\
+ 	(((ioprio) >> IOPRIO_CLASS_SHIFT) & IOPRIO_CLASS_MASK)
+ #define IOPRIO_PRIO_DATA(ioprio)	((ioprio) & IOPRIO_PRIO_MASK)
+-#define IOPRIO_PRIO_VALUE(class, data)	\
+-	((((class) & IOPRIO_CLASS_MASK) << IOPRIO_CLASS_SHIFT) | \
+-	 ((data) & IOPRIO_PRIO_MASK))
+ 
+ /*
+  * These are the io priority classes as implemented by the BFQ and mq-deadline
+@@ -25,10 +26,13 @@
+  * served when no one else is using the disk.
+  */
+ enum {
+-	IOPRIO_CLASS_NONE,
+-	IOPRIO_CLASS_RT,
+-	IOPRIO_CLASS_BE,
+-	IOPRIO_CLASS_IDLE,
++	IOPRIO_CLASS_NONE	= 0,
++	IOPRIO_CLASS_RT		= 1,
++	IOPRIO_CLASS_BE		= 2,
++	IOPRIO_CLASS_IDLE	= 3,
++
++	/* Special class to indicate an invalid ioprio value */
++	IOPRIO_CLASS_INVALID	= 7,
+ };
+ 
+ /*
+@@ -73,15 +77,6 @@ enum {
+ #define IOPRIO_PRIO_HINT(ioprio)	\
+ 	(((ioprio) >> IOPRIO_HINT_SHIFT) & IOPRIO_HINT_MASK)
+ 
+-/*
+- * Alternate macro for IOPRIO_PRIO_VALUE() to define an I/O priority with
+- * a class, level and hint.
+- */
+-#define IOPRIO_PRIO_VALUE_HINT(class, level, hint)		 \
+-	((((class) & IOPRIO_CLASS_MASK) << IOPRIO_CLASS_SHIFT) | \
+-	 (((hint) & IOPRIO_HINT_MASK) << IOPRIO_HINT_SHIFT) |	 \
+-	 ((level) & IOPRIO_LEVEL_MASK))
+-
+ /*
+  * I/O hints.
+  */
+@@ -107,4 +102,25 @@ enum {
+ 	IOPRIO_HINT_DEV_DURATION_LIMIT_7 = 7,
+ };
+ 
++#define IOPRIO_BAD_VALUE(val, max) ((val) < 0 || (val) >= (max))
 +
 +/*
-+ * Alternate macro for IOPRIO_PRIO_VALUE() to define an I/O priority with
-+ * a class, level and hint.
++ * Return an I/O priority value based on a class, a level and a hint.
 + */
-+#define IOPRIO_PRIO_VALUE_HINT(class, level, hint)		 \
-+	((((class) & IOPRIO_CLASS_MASK) << IOPRIO_CLASS_SHIFT) | \
-+	 (((hint) & IOPRIO_HINT_MASK) << IOPRIO_HINT_SHIFT) |	 \
-+	 ((level) & IOPRIO_LEVEL_MASK))
++static __always_inline __u16 ioprio_value(int class, int level, int hint)
++{
++	if (IOPRIO_BAD_VALUE(class, IOPRIO_NR_CLASSES) ||
++	    IOPRIO_BAD_VALUE(level, IOPRIO_NR_LEVELS) ||
++	    IOPRIO_BAD_VALUE(hint, IOPRIO_NR_HINTS))
++		return IOPRIO_CLASS_INVALID << IOPRIO_CLASS_SHIFT;
 +
-+/*
-+ * I/O hints.
-+ */
-+enum {
-+	/* No hint */
-+	IOPRIO_HINT_NONE = 0,
++	return (class << IOPRIO_CLASS_SHIFT) |
++		(hint << IOPRIO_HINT_SHIFT) | level;
++}
 +
-+	/*
-+	 * Device command duration limits: indicate to the device a desired
-+	 * duration limit for the commands that will be used to process an I/O.
-+	 * These will currently only be effective for SCSI and ATA devices that
-+	 * support the command duration limits feature. If this feature is
-+	 * enabled, then the commands issued to the device to process an I/O with
-+	 * one of these hints set will have the duration limit index (dld field)
-+	 * set to the value of the hint.
-+	 */
-+	IOPRIO_HINT_DEV_DURATION_LIMIT_1 = 1,
-+	IOPRIO_HINT_DEV_DURATION_LIMIT_2 = 2,
-+	IOPRIO_HINT_DEV_DURATION_LIMIT_3 = 3,
-+	IOPRIO_HINT_DEV_DURATION_LIMIT_4 = 4,
-+	IOPRIO_HINT_DEV_DURATION_LIMIT_5 = 5,
-+	IOPRIO_HINT_DEV_DURATION_LIMIT_6 = 6,
-+	IOPRIO_HINT_DEV_DURATION_LIMIT_7 = 7,
-+};
++#define IOPRIO_PRIO_VALUE(class, level)			\
++	ioprio_value(class, level, IOPRIO_HINT_NONE)
++#define IOPRIO_PRIO_VALUE_HINT(class, level, hint)	\
++	ioprio_value(class, level, hint)
 +
  #endif /* _UAPI_LINUX_IOPRIO_H */
 -- 
