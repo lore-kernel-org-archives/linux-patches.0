@@ -1,58 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793217352;
-	b=qGaT/Uuztrl6IcyeSgSNPfP2wd0WqAyq63KCaJN6Kch6r+BWG9bOyI0hzQj40yr44uIR
-	 GxIalDdlFrrNMeAkFELBxX9QRwXnmDoh3D5+nZltNt2ZV74+4gs+preaIw7BAAh+PqtI2
-	 ZLfBM1/zY7os4XtDGHih6SG2/mUhREt+WxtxhRbEJjUecBAYDIhic3r6bw7Gh2tLe3mcs
-	 TwWSiY/8jBG6al3Dkbc06YjnV/vFHtCt76oeHtuw1YIBvf8Gi/5qFAxdtD23KIxvD//Jw
-	 nSKjz4GlXHhaSmJGzzNmUDgyq9L+V3/m+hJ3l79sjsn71RNFSDCKTGBSJT4xOIviIzw==
+	t=1793217355;
+	b=MyzN2L4qOvMi5XW/Ac7s4Nk1xBVxPnfGY0rAEC9BDqRcYs+CyTDjOFX3k6Ukrx1NAnMU
+	 vUU4sVMt5JXXYr36I/Nhd9HR1aufW2P5KcCR8jW4UF1X8XhiHGYi0O+/ah677I5nh9TLm
+	 4VnwXmtzjK811pNjPO0FncsNiYJ1IKlLAP8FJN0DkbTiRzt0dANRXOCTWqzkgPOqpTtDk
+	 w27dQ7/vOQC7biIuk6t90Vy7jpBXkzLtDX47Hw2HPNwCHAIvtWCXXYSUalfM6Trvy0v7i
+	 w/5Ck9iAdcB8NFJTBGPTJpF+cqjx/ZIajOvYQd4d4zetDQxso/hzGFS4HHiBo2YIWRg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793217352;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793217355;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=hLJO/y7kY5Hae4ctSF0JBTDUbb2WugnNZVH5d8ZK1OU=;
-	b=h6D8SNkv2Z/ud9ung+SNT5mjYMcLio8jUgbNs1auqZ3tv6KAEUqsNWVPOVvSDEc158w+
-	 tiYbxpjIm2LWbiVP7QLWTU4eidWVHsjBQjjWsTBnVYhqDJ1g057V+enHIA4g9nCLgUWQY
-	 RqjhEtbHvVSwpzi1Ado9uX6mDPadyVp66CuoMDhEygDvRV84mlraKLanW6BT7VUr+w9cY
-	 cPtNW2dlkyMdeEmF3wIBrDZOjS5Hkjgy2RtQeqAIEvsKYgmN3/EIq2gvobywq9Zru0Y5S
-	 NIiV0zv/OncaS+W2NwTyxpZVb7pdypDGVqy5xIxwQ75NPkvC/NmNChvde0ome2wh8aA==
+	bh=9v6T1CpFvU3CIOUxZNeXebm7XBYUZ8PriC+RFspv/yM=;
+	b=npycCHmrc+mLggJuaMxPnQkypLesbC/y4R11SfWkNAr2eBRpJvbFjMotgvRFsntXsXda
+	 jzyzZfNHIFOBjibX2uzkNyj28IdDRxhY6Lq5/AC3P167n3Rr9/VOBpaIaMS+7gjxd8wx3
+	 h+D8tuD6SUIf2eYX9J9+WylzQ4TMH1OXwtIbRj5mUq0bg1Hs6avf+3MEGVXxTz8Jyue3S
+	 R+kPF7VuaZKedQNLjPYk2G+jQ6C4TKIWYIi9FGyGA++0pxnIdqtF8+O+wAg+OVlD3v9wx
+	 QIZkpaVnYP3toZ3xRqnKYPetX7h3Lc+HxTQGfsSqlptQEWbjaYNcljEGc1fC09vh3lQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Cr2pDfqa;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A3OTBWsN;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18830606A31A;
-	Wed, 28 Oct 2026 19:55:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36316606A31A;
+	Wed, 28 Oct 2026 19:55:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Cr2pDfqa
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E6231F01825;
-	Wed, 28 Oct 2026 19:55:51 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A3OTBWsN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 561531F01825;
+	Wed, 28 Oct 2026 19:55:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793217351;
-	bh=hLJO/y7kY5Hae4ctSF0JBTDUbb2WugnNZVH5d8ZK1OU=;
+	s=korg; t=1793217354;
+	bh=9v6T1CpFvU3CIOUxZNeXebm7XBYUZ8PriC+RFspv/yM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Cr2pDfqaBKGzPQWSeRYL4ONnUHSCdD1wfpfl9DPyjmKEY1gqNwjMyMm7DoJSGVi4n
-	 4xHjm1kJGPQb/e7AG8Gfy5jy4hvWzDYTlAh9FjNH/7y41x6uh5Lqj/vpXHyLMmSvUT
-	 u8w/qDOXI2vSaLBHGPd37Jn0pCumC6oitnsucfB4=
+	b=A3OTBWsNoYTjIyU19ORYlbPnWpfTfn9h94I+eb94miv+9OQ7QKzs676jDBj1uKySZ
+	 D/B76I56gWe7dQeVrieDuV7vBz+H0jC+T2uf+5UXztgpEwn//qwvjtQYapAO58laqI
+	 l8H8xI+r0utQ3jZI133KbqzPJKSkECaNcRHZ1+iI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Heming Zhao <heming.zhao@suse.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Jun Piao <piaojun@huawei.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	HyeongJun An <sammiee5311@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1872/1887] ocfs2: use correct endian in ocfs2_dinode_has_extents
-Date: Wed, 28 Oct 2026 18:06:08 +0100
-Message-ID: <20261028170542.055461948@linuxfoundation.org>
+Subject: [PATCH 6.1 1873/1887] ALSA: seq: Dont leak the extension cell pointer in the bounce payload
+Date: Wed, 28 Oct 2026 18:06:09 +0100
+Message-ID: <20261028170542.078132094@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -74,52 +68,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joseph Qi <joseph.qi@linux.alibaba.com>
+From: HyeongJun An <sammiee5311@gmail.com>
 
-[ Upstream commit c9dff86eb78a4b6b02b1e407993c946ccaf9bfb4 ]
+[ Upstream commit 59e1592d3c270ff4642d5d6dc55c545306eb0693 ]
 
-Fields in ocfs2_dinode is little endian, covert to host endian when
-checking those contents.
+The bounce_error_event() embeds the failed event in the bounce payload
+by pointing data.ext.ptr at it.  When that event is a queued
+variable-length event, its own data.ext.ptr holds the address of its
+first extension cell, put there by snd_seq_event_dup().  The payload
+goes out verbatim through snd_seq_expand_var_event(), so the address
+reaches userspace.
 
-Link: https://lkml.kernel.org/r/20251025123218.3997866-1-joseph.qi@linux.alibaba.com
-Fixes: fdbb6cd96ed5 ("ocfs2: correct l_next_free_rec in online check")
-Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Reviewed-by: Heming Zhao <heming.zhao@suse.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Jun Piao <piaojun@huawei.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+That is the same address commit 705dd6dcbc0e ("ALSA: seq: Clear
+variable event pointer on read") removed from the event header.  The
+read path still clears it there, just above the call that expands the
+payload.
+
+Embed a sanitised copy instead, treated exactly as snd_seq_read()
+treats the header.  A stack copy is enough because delivery is
+synchronous and snd_seq_event_dup() copies before returning.
+
+An unprivileged client reaches this by setting SNDRV_SEQ_FILTER_BOUNCE,
+queueing a variable-length event to a port that does not exist and
+reading the bounce back.  Eight bytes on 64-bit, from its own pool.
+
+Fixes: efc86691e4d8 ("ALSA: seq: Fix kernel heap address leak in bounce_error_event()")
+Assisted-by: Claude:claude-opus-5
+Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
+Link: https://patch.msgid.link/20260811131835.3837024-1-sammiee5311@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/inode.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ sound/core/seq/seq_clientmgr.c | 16 ++++++++++------
+ 1 file changed, 10 insertions(+), 6 deletions(-)
 
-diff --git a/fs/ocfs2/inode.c b/fs/ocfs2/inode.c
-index 10c2759e16e85..3d96cc7fc5070 100644
---- a/fs/ocfs2/inode.c
-+++ b/fs/ocfs2/inode.c
-@@ -236,13 +236,15 @@ struct inode *ocfs2_iget(struct ocfs2_super *osb, u64 blkno, unsigned flags,
- static int ocfs2_dinode_has_extents(struct ocfs2_dinode *di)
+diff --git a/sound/core/seq/seq_clientmgr.c b/sound/core/seq/seq_clientmgr.c
+index 140e1510b8de5..5763ad14f5638 100644
+--- a/sound/core/seq/seq_clientmgr.c
++++ b/sound/core/seq/seq_clientmgr.c
+@@ -554,7 +554,7 @@ static int bounce_error_event(struct snd_seq_client *client,
+ 			      struct snd_seq_event *event,
+ 			      int err, int atomic, int hop)
  {
- 	/* inodes flagged with other stuff in id2 */
--	if (di->i_flags & (OCFS2_SUPER_BLOCK_FL | OCFS2_LOCAL_ALLOC_FL |
--			   OCFS2_CHAIN_FL | OCFS2_DEALLOC_FL))
-+	if (le32_to_cpu(di->i_flags) &
-+	    (OCFS2_SUPER_BLOCK_FL | OCFS2_LOCAL_ALLOC_FL | OCFS2_CHAIN_FL |
-+	     OCFS2_DEALLOC_FL))
- 		return 0;
- 	/* i_flags doesn't indicate when id2 is a fast symlink */
--	if (S_ISLNK(di->i_mode) && di->i_size && di->i_clusters == 0)
-+	if (S_ISLNK(le16_to_cpu(di->i_mode)) && le64_to_cpu(di->i_size) &&
-+	    !le32_to_cpu(di->i_clusters))
- 		return 0;
--	if (di->i_dyn_features & OCFS2_INLINE_DATA_FL)
-+	if (le16_to_cpu(di->i_dyn_features) & OCFS2_INLINE_DATA_FL)
- 		return 0;
+-	struct snd_seq_event bounce_ev;
++	struct snd_seq_event bounce_ev, quoted;
+ 	int result;
  
- 	return 1;
+ 	if (client == NULL ||
+@@ -570,15 +570,19 @@ static int bounce_error_event(struct snd_seq_client *client,
+ 		 * For user clients, send SNDRV_SEQ_EVENT_BOUNCE with the
+ 		 * original event embedded as variable-length data.  This
+ 		 * avoids exposing data.quote.event (a kernel pointer) to
+-		 * userspace.  The variable-length path in snd_seq_event_dup()
+-		 * copies the event data from data.ext.ptr into chained cells,
+-		 * and snd_seq_expand_var_event() copies only the data content
+-		 * -- never the pointer -- to userspace.
++		 * userspace.  Sanitise the embedded copy too - a queued
++		 * variable-length event carries the address of its own
++		 * extension cell, and the payload goes out verbatim.
+ 		 */
++		quoted = *event;
++		if (snd_seq_ev_is_variable(&quoted)) {
++			quoted.data.ext.len &= ~SNDRV_SEQ_EXT_MASK;
++			quoted.data.ext.ptr = NULL;
++		}
+ 		bounce_ev.type = SNDRV_SEQ_EVENT_BOUNCE;
+ 		bounce_ev.flags = SNDRV_SEQ_EVENT_LENGTH_VARIABLE;
+ 		bounce_ev.data.ext.len = sizeof(struct snd_seq_event);
+-		bounce_ev.data.ext.ptr = (char *)event;
++		bounce_ev.data.ext.ptr = (char *)&quoted;
+ 	} else {
+ 		/*
+ 		 * For kernel clients, quote the event pointer directly.
 -- 
 2.53.0
 
