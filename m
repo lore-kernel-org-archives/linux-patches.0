@@ -1,55 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793210894;
-	b=fzdq7xqHOZbQWomSSvfIZ8oSWswm6/qfEluIuG+lmbVjDHa89uDchRsRWn//to08tAzP
-	 U8NhSbZFSc3fzXLgNHr14W3GmifRUNA8U3qGMaaXPRxDxG70ySjWtwafcUKoMIXzGhgzK
-	 mvSuERkpnOSqL2JyKwyomVmRtFcO+GpzD9cU0z6fC7HsY8f+/0dR9yVGfDaz2W7fhHMzy
-	 RdjUijoUv6HtzEhs7BARGq8uuKHcbsvT8HnQgt2VVfflTGTVMaSFAOJ4ZzssaKS73J6Y7
-	 AOVxsGbruG5nM7mrm+7u1KhuaC0fc2SOMm+/FQOYp2nv4e1rltyN2Ql3btkYCqIKzzA==
+	t=1793210896;
+	b=kRWmEi0Z53o9KyfFMNWx1piVXcE53pt+Xypwkr2gUfxebNBeH/bkBoGW4CCT3yaEPET5
+	 otWZq1cVGUQXgVIGEV3BTw+siQesHi0drVfrjmZIOPC26zK2zs18H/aYsf7o72EBvj6cf
+	 tbILDzY2G9cOLsJ5QPBJ36ksh2vZOLjU2m/8Oc2VtYf04WKwHWX34mh4zWaR/2XRGPC9F
+	 1908rYfl0A8ck3OZ0iye/UGhf67BaDN/sbJhAl2oK2xEAGYapoVtJ2c63S2pxdURaxZ/0
+	 fSe41elXF03p7umX/gizbYR7TaBiiHG77W132g8IT6/iCXdJiq4zZPYZfRXMVlwj4Tg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793210894;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793210896;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=paHC5iwUxc1y8ncr2Gkc62SCMub6Svxv8JqZOkONUL8=;
-	b=AHNPmQfmXgZPXXuZlUFlc4cafLjY4eUwtVDMeVqHAF7wG8uPesbXbCIJo1nq+3RkRwgM
-	 MXTg1fru0ZEme9ooGwwPiU3rdmZVLJ1kMVIo/dikcL4jMSHggrpcwCc+WJYapHxqrd/LE
-	 S12c1VPfsoHK0P4u1VlDGrRgorX93/BGKz+yF0n2T7XX2mAEPmEQbpstjVhqpEW7d43zP
-	 nkNITWoam+1GKqXazgDiz8PJ9FFRgWmUqDU1FgQeYg1EImpQGLLoG9zPtINJFZQgdl2nb
-	 XQuuOl79QQ9NqNdCqVTiGibrBpSUS9t0Cmv3iAdmm4P4+v4N6CAJxmEk4DzNaQFZwuQ==
+	bh=y/eOZEeMf7AMj39rlOPgdd12hzMzDZoV2mUhTXvwPhc=;
+	b=tzu533oadc4NTprDkTiKV8ORjTw22krXPVZcxZy/qAK4qYXu6pjVgRrSP9URghv1T1JT
+	 N1mGZ36GHZIU4RNV/46Rd/nN8+q3r60HZYijpJypvYH9KyfHyYJRsJFO4hDIj7Z1hQBka
+	 HHyNbixG+4y5kRP3TjpJajv5siZmnXnzIfyODBHADYS6tDCuz/b7vLIHWwljq3p7YrxIN
+	 xwJ8y0laAwWNtZCkIkcYQ6aA/9CAbQPLKq6Sw1Nhvf524FDbxaTOS1GDy0nxIAEJYjuTx
+	 VfzgwEes26OtAO8+DpWVA4PcaO105+H2D8fw82JycHS0UBInGwqgKn20AQwL7hWRvZQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nfb9w2Fq;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="U/+y1iJH";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4E3C606A31A;
-	Wed, 28 Oct 2026 18:08:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EA53606A31A;
+	Wed, 28 Oct 2026 18:08:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nfb9w2Fq
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2342E1F01825;
-	Wed, 28 Oct 2026 18:08:12 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=U/+y1iJH
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2BAB1F01825;
+	Wed, 28 Oct 2026 18:08:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793210893;
-	bh=paHC5iwUxc1y8ncr2Gkc62SCMub6Svxv8JqZOkONUL8=;
+	s=korg; t=1793210896;
+	bh=y/eOZEeMf7AMj39rlOPgdd12hzMzDZoV2mUhTXvwPhc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nfb9w2Fqv7oFjPDsonLd8Z96gK9Gt0YAb/ipPbUDWzY0PbVVokt/JYRby+K00s97X
-	 O6gRCYnCyiTSklPUvecaosmtZ6YlpueXbFFHLVezgM0oGKMpNvNiL+5td7C0++9x0l
-	 WYEJWBInwUmgQZlO8t+xyiIQLI02Ljl4onYcIT/s=
+	b=U/+y1iJHISn0iSAGfmvCx9z5EiDaNZuZq6uPgZgIxbjxFqL4g4KVTK4cu7IbtWG59
+	 5YF7RMoH+2hqQ9v5LXRlB+mEPX0JR6KehjKRrlgO81OxYt+ziZ+O6yONqEdJdxIbHA
+	 Nq5gzEhqZFUqaxswE0HO8f5wqhCQDC0Mn0zsFMWo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+9408fbe0e6452a12e9ab@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@kernel.org>,
-	Xuanqiang Luo <luoxuanqiang@kylinos.cn>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Hongjian Dai <daihongjian@kylinsec.com.cn>,
+	Andi Shyti <andi.shyti@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 187/571] ipv6: sr: use skb_get_hash_net() in seg6_make_flowlabel()
-Date: Wed, 28 Oct 2026 17:55:34 +0100
-Message-ID: <20261028170012.448332274@linuxfoundation.org>
+Subject: [PATCH 5.15 188/571] i2c: at91: release DMA channels when probe defers
+Date: Wed, 28 Oct 2026 17:55:35 +0100
+Message-ID: <20261028170012.471685945@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -71,71 +68,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@kernel.org>
+From: Hongjian Dai <daihongjian@kylinsec.com.cn>
 
-[ Upstream commit 8ec454dcd00ce3375119111c6394964455b36d0d ]
+[ Upstream commit c98bf3b86609a18ab16d067280257326e557c636 ]
 
-Since commit d58e468b1112 ("flow_dissector: implements flow dissector
-BPF hook") __skb_flow_dissect() needs a net pointer, either from
-skb->dev, skb->sk, or since commit 3cbf4ffba5ee ("net: plumb network
-namespace into __skb_flow_dissect") a caller provided pointer.
+at91_twi_probe_master() can return -EPROBE_DEFER from
+at91_init_twi_recovery_info() after at91_twi_configure_dma() has already
+claimed the tx/rx DMA channels. at91_twi_probe() then returns without
+releasing them, and since dma_request_chan() is not devres-managed the
+channels leak on every deferred probe attempt.
 
-syzbot was able to reach seg6_make_flowlabel() with an skb having
-neither skb->dev nor skb->sk set: a TIPC UDP bearer sends a discovery
-message through an IPv4 route using seg6 encap, while
-net.ipv6.seg6_flowlabel is set to 1.
+Release the channels before deferring the probe.
 
-seg6_make_flowlabel() already has a net pointer, use skb_get_hash_net().
-
-WARNING: net/core/flow_dissector.c:1131 at __skb_flow_dissect+0x910/0x5368 net/core/flow_dissector.c:1126, CPU#0: syz.0.17/4930
-Call trace:
-  __skb_flow_dissect+0x910/0x5368 net/core/flow_dissector.c:1126 (P)
-  __skb_get_hash_net+0xe0/0x29c net/core/flow_dissector.c:1903
-  skb_get_hash include/linux/skbuff.h:1663 [inline]
-  seg6_make_flowlabel+0xcc/0x1ec net/ipv6/seg6_iptunnel.c:132
-  __seg6_do_srh_encap+0x320/0xbf4 net/ipv6/seg6_iptunnel.c:161
-  seg6_do_srh+0x4b4/0xa44 net/ipv6/seg6_iptunnel.c:431
-  seg6_output_core+0x164/0x688 net/ipv6/seg6_iptunnel.c:681
-  seg6_output+0x44/0x1ac net/ipv6/seg6_iptunnel.c:744
-  lwtunnel_output+0x3d0/0x664 net/core/lwtunnel.c:356
-  dst_output include/net/dst.h:470 [inline]
-  ip_local_out+0x110/0x148 net/ipv4/ip_output.c:131
-  iptunnel_xmit+0x50c/0xd38 net/ipv4/ip_tunnel_core.c:97
-  udp_tunnel_xmit_skb+0x220/0x348 net/ipv4/udp_tunnel_core.c:187
-  tipc_udp_xmit+0x75c/0x9c0 net/tipc/udp_media.c:202
-  tipc_udp_send_msg+0x214/0x374 net/tipc/udp_media.c:274
-  tipc_bearer_xmit_skb+0x260/0x3b0 net/tipc/bearer.c:576
-  tipc_enable_bearer net/tipc/bearer.c:366 [inline]
-  __tipc_nl_bearer_enable+0xc90/0xfb0 net/tipc/bearer.c:1048
-  tipc_nl_bearer_enable+0x2c/0x48 net/tipc/bearer.c:1057
-  genl_family_rcv_msg_doit+0x1e4/0x2d4 net/netlink/genetlink.c:1114
-
-Fixes: d58e468b1112 ("flow_dissector: implements flow dissector BPF hook")
-Reported-by: syzbot+9408fbe0e6452a12e9ab@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/6abac2eb.3654fce1.1bec97.0000.GAE@google.com/
-Signed-off-by: Eric Dumazet <edumazet@kernel.org>
-Reviewed-by: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260928194524.3617299-1-edumazet@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: f7eeb1af8537 ("i2c: at91: release DMA channels on remove and probe error")
+Assisted-by: LLM
+Signed-off-by: Hongjian Dai <daihongjian@kylinsec.com.cn>
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Link: https://patch.msgid.link/7D85C6CB6BF0A82E+20260929164340.41628-1-daihongjian@kylinsec.com.cn
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/seg6_iptunnel.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/i2c/busses/i2c-at91-master.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/net/ipv6/seg6_iptunnel.c b/net/ipv6/seg6_iptunnel.c
-index 3e4dd21416136..2820e8a8dfee8 100644
---- a/net/ipv6/seg6_iptunnel.c
-+++ b/net/ipv6/seg6_iptunnel.c
-@@ -116,7 +116,7 @@ static __be32 seg6_make_flowlabel(struct net *net, struct sk_buff *skb,
- 	u32 hash;
+diff --git a/drivers/i2c/busses/i2c-at91-master.c b/drivers/i2c/busses/i2c-at91-master.c
+index 28ed1bde3d68a..593881902a0d9 100644
+--- a/drivers/i2c/busses/i2c-at91-master.c
++++ b/drivers/i2c/busses/i2c-at91-master.c
+@@ -919,8 +919,14 @@ int at91_twi_probe_master(struct platform_device *pdev,
+ 	at91_calc_twi_clock(dev);
  
- 	if (do_flowlabel > 0) {
--		hash = skb_get_hash(skb);
-+		hash = skb_get_hash_net(net, skb);
- 		hash = rol32(hash, 16);
- 		flowlabel = (__force __be32)hash & IPV6_FLOWLABEL_MASK;
- 	} else if (!do_flowlabel && skb->protocol == htons(ETH_P_IPV6)) {
+ 	rc = at91_init_twi_recovery_info(pdev, dev);
+-	if (rc == -EPROBE_DEFER)
++	if (rc == -EPROBE_DEFER) {
++		/*
++		 * The DMA channels were already set up above, release them
++		 * before deferring the probe so they are not leaked.
++		 */
++		at91_twi_dma_release(dev);
+ 		return rc;
++	}
+ 
+ 	dev->adapter.algo = &at91_twi_algorithm;
+ 	dev->adapter.quirks = &at91_twi_quirks;
 -- 
 2.53.0
 
