@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793208974;
-	b=I80PQp65qZEHZDzNRpBlQqlS8L3KzJG+JzjQle5keV0g6LbP4FeH0wCnnB1JBNzfEVJD
-	 Ra4O/Doa1qVgDcLNdJYKNfbXZfNFjVGQJfe+FWJrIpXKvo71MROJ2TNDIZYW0lhfntRgy
-	 FAFQ5gyLerwBaGB4FksSIgXMoAeAmfsWZ26S1AbelKTkQBuXmto9BC+pzWFhhylWtYMTS
-	 zQPF1f5IMlL+kARw+ip9y9iIBaL+7rlXGiSCzYdPAjyoEaqoR3dBQwIH01cWu3V/irF/k
-	 8ywphDibQdZ1/0T5u9YXcoXP0V85BlVwbDIcN+h5l8zCpqWaTeHpD/p9XdczYJLKhXA==
+	t=1793208977;
+	b=1V9auVHAfJbMSBtsaeJtBn0zmL6WHilLiOy/42nQSbHESd17GU7/FM9K3tx8m0rxsaWe
+	 RPIhnesprzkXMaNq92tFMI6Ibiq6LEa5f0cens6JsVWZI8GVVh4Kdcjr6yg+jc5UEflVZ
+	 wsXvj2dPXCcb8t2+VfWgeVXFeFra8t3Bz5hMK4f5wnLsfFpBKIMy9U+z5mxSFk0lGCnZ6
+	 orsB/J1mWOQtB6nKvMM3brRohPnDREEZ24Vl6vetqON1pMXBleuGwvw20gWTF7Afqsvex
+	 ax1QB6pjBXPTT4EE806GvkJMZU3yB3OGbK8EKSHr1af0VzlMiE07DA/bzMz2hPehgRQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793208974;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793208977;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Th20P/h6YAcPXArUNOxD47l6G3ZL6XPG2Qvpvu7U+Og=;
-	b=vwPRVCzersvVo94l4HeQMlIl8ZbdQd/RQ9ygaH0+xYCGDtSKEp5oE3GnGkpWjMuHj2cB
-	 qFiYxwwSpJ+t627yPvKJ4Rgn7I7o8KdsYvbp0r6JXxcYE0ewJZ4ka6k0IRrorifDiZJE6
-	 /FQplnW4FbqXT0YZPhdKhb6Cja0N4stCut9bL39u2XyjD7uZ2GEkaj0W7TtmXfqsnWdPI
-	 yxcKXqnW4/Q95kIDuVFS/jHndZbeO/g0cMDIftl4CFNiuxezPrtx3PSlV/rG5IscRlLuJ
-	 2wRraxs88gP4H7mvBQ2X2veRHDUnpLu7qbWoeXri2ZIXd7diKrwH/lzbt6oboApbkEA==
+	bh=FhiBphn4iMZMMUpfYC6mLTnIb1SQLxT2bTeD6CTxZtg=;
+	b=pqAFtbpBoMc+U5S2HSJv4FLCVtlM/Sf0uRznFxqyu8WAV79jPr2ilYENdnNe5XociSFR
+	 HGVkSqHVYI1eBR5RXhiaA+YL4yJzHEdC91U+x2EsUA9UKKI4IciT3s97xOcWjYOiC1wI9
+	 Sw94tG/zqauQV1iHp0kwSvYji8ZQ/26jMF3lAKMtC/3drgJsmmnjvtLsPcmzWBXnr4VyN
+	 w+l/0lF27g+VOX84pCdZb4ivNDKKwic/cO1FpHhhG0l+KIg59tFC9x6xfxI8191e8HUfN
+	 ZsHRB12dpE3WBtV0UkAA2RbIlbg+jXAGG1WPScBYez0PAZ9aa9oBAFjYZcgB3pnl6Gw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LtBafW8m;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J9HvLQve;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EEA2606A31A;
-	Wed, 28 Oct 2026 17:36:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5D27606A31A;
+	Wed, 28 Oct 2026 17:36:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LtBafW8m
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EFEE1F01825;
-	Wed, 28 Oct 2026 17:36:13 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J9HvLQve
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 352E51F01825;
+	Wed, 28 Oct 2026 17:36:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793208974;
-	bh=Th20P/h6YAcPXArUNOxD47l6G3ZL6XPG2Qvpvu7U+Og=;
+	s=korg; t=1793208976;
+	bh=FhiBphn4iMZMMUpfYC6mLTnIb1SQLxT2bTeD6CTxZtg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LtBafW8m/7H2TsCcjGABw0J8QIvUMmjiGlJ4RFGRm6q/nUnEdl8BRr5TBzvWeglU3
-	 ZdNwa+VjhzvZvaZJIC6HZq5uLcS+QQMOs15zwkbtn98ANfE/PNAQmuk2cAwmlvw8G6
-	 BSAdEtp3DG4+dF55BwUWxo8IB4nxWD+RCJZhOIIs=
+	b=J9HvLQverQGQSVBze8Ica+caivLn9vK9u39jwhnlq3wNjQSVFjma+tf9KlpDOCge0
+	 f8jHqrQw7RW8xzNhF6qk3M8U1bANC4BBDdJ8PslzQcKIwuu0LmGD9cpXBs+4FOMZdW
+	 L5vjC2IhoL0x8g7wcZZGeHr3H8z5NYLjXzIrhk2I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Teodorescu <fane@google.com>,
-	Sean Christopherson <seanjc@google.com>,
-	Paolo Bonzini <pbonzini@redhat.com>,
+	Andrea Pesaresi <andreapesaresi82@gmail.com>,
+	Felix Fietkau <nbd@nbd.name>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 308/516] KVM: SVM: Use the active VMCBs MSR bitmap when checking if MSR is intercepted
-Date: Wed, 28 Oct 2026 17:57:40 +0100
-Message-ID: <20261028170010.787384496@linuxfoundation.org>
+Subject: [PATCH 5.10 309/516] wifi: mac80211: set info->band for 802.3 encap offload frames
+Date: Wed, 28 Oct 2026 17:57:41 +0100
+Message-ID: <20261028170010.811143254@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -69,45 +69,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit 9e06bbb9ade7cdf28d4a3b5b14e5812881c8df85 ]
+[ Upstream commit 4febc02cd02f021f2b6d0768332be643ef14a12d ]
 
-Use the MSR permission bitmap of the active VMCB instead of assuming that
-KVM is always using vmcb02's bitmap when L2 is active, as KVM uses msrpm02
-if and only if L1 wants to intercept MSR accesses, i.e. if and only if KVM
-needs to merge msprm01 with msrpm12.
+Unlike the 802.11 TX paths, ieee80211_8023_xmit() does not set
+info->band from the channel context on non-MLD interfaces. It stays at
+0, so ieee80211_get_tx_rates() uses the wrong band for these frames.
 
-Don't bother tracking the virtual address of the bitmap that's being used,
-as __va() is cheap on x86, and caching the virtual address would introduce
-yet another source of potentially stale information.
+Set it the same way as ieee80211_build_hdr(): drop the frame if there is
+no channel context, and leave the band at 0 on MLD interfaces.
 
-Fixes: b2ac58f90540 ("KVM/SVM: Allow direct access to MSR_IA32_SPEC_CTRL")
+Reported-by: Andrea Pesaresi <andreapesaresi82@gmail.com>
+Fixes: 50ff477a8639 ("mac80211: add 802.11 encapsulation offloading support")
 Cc: stable@vger.kernel.org
-Reported-by: Stefan Teodorescu <fane@google.com>
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Message-ID: <20260826195833.844526-1-seanjc@google.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-[ sashal: adapted direct svm access to to_svm(vcpu) for the existing helper signature. ]
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Link: https://patch.msgid.link/20260926120216.4054712-1-nbd@nbd.name
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+[ sashal: adapted MLD-aware channel-context handling to unconditional vif.chanctx_conf access with out_free cleanup. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/svm/svm.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ net/mac80211/tx.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/arch/x86/kvm/svm/svm.c b/arch/x86/kvm/svm/svm.c
-index 97783bf50a3f3..41a4ee2aaa4c4 100644
---- a/arch/x86/kvm/svm/svm.c
-+++ b/arch/x86/kvm/svm/svm.c
-@@ -616,8 +616,7 @@ static bool msr_write_intercepted(struct kvm_vcpu *vcpu, u32 msr)
- 	u32 offset;
- 	u32 *msrpm;
+diff --git a/net/mac80211/tx.c b/net/mac80211/tx.c
+index 87fc109595959..73b79a9611011 100644
+--- a/net/mac80211/tx.c
++++ b/net/mac80211/tx.c
+@@ -4272,6 +4272,7 @@ static void ieee80211_8023_xmit(struct ieee80211_sub_if_data *sdata,
+ {
+ 	struct ieee80211_tx_info *info = IEEE80211_SKB_CB(skb);
+ 	struct ieee80211_local *local = sdata->local;
++	struct ieee80211_chanctx_conf *chanctx_conf;
+ 	struct tid_ampdu_tx *tid_tx;
+ 	u8 tid;
  
--	msrpm = is_guest_mode(vcpu) ? to_svm(vcpu)->nested.msrpm:
--				      to_svm(vcpu)->msrpm;
-+	msrpm = __va(__sme_clr(to_svm(vcpu)->vmcb->control.msrpm_base_pa));
+@@ -4317,6 +4318,11 @@ static void ieee80211_8023_xmit(struct ieee80211_sub_if_data *sdata,
+ 		sdata = container_of(sdata->bss,
+ 				     struct ieee80211_sub_if_data, u.ap);
  
- 	offset    = svm_msrpm_offset(msr);
- 	bit_write = 2 * (msr & 0x0f) + 1;
++	chanctx_conf = rcu_dereference(sdata->vif.chanctx_conf);
++	if (unlikely(!chanctx_conf))
++		goto out_free;
++	info->band = chanctx_conf->def.chan->band;
++
+ 	info->flags |= IEEE80211_TX_CTL_HW_80211_ENCAP;
+ 	info->control.vif = &sdata->vif;
+ 
 -- 
 2.53.0
 
