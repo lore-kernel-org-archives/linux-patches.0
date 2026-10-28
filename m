@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793209008;
-	b=Nd/12J6UNzPLzJz8TkATTp+P7ehIkpuaqHW8aHtqrvruAZOihpuPLsgXlmfu/1MoC0Yt
-	 XOkMhiUkNn7590XzGRUHhQNnEaLkxfbIH0T2JMyK3rgwGucumeywxF0s0DxXgMuYZUYWH
-	 pW0bDTBwleLcr4ONYYgs32HXre0amrFobtYYEjmGl+bvKBfM/u5U6cXpzaItIUgKrUsB3
-	 h/4oweTpnAyo6k3THjni+23/9iZMK6cPr0kEv2v7dLCclB55QfcwkiUbAkwKbS1DYmVO2
-	 7eIM5aVWre/qK/JotArHEdt8xYx7WZI8jZhG4sixBhIBSlqkiopdef79w2XsdUZggQg==
+	t=1793209011;
+	b=0K/17MpgYuh/VZNdalfcDAN9OU4Ze85BZ95VuEVvCHUoSPJsCuuamdLHm/JOCFbZYPdb
+	 0o8/8EHNFNMctoMyh7bTxsIGJunG/VNvXBtEMbyLiDAwOovye3NsN81N/S2HEpLxcs1kz
+	 RVvpzDi32Y6AlNv5wmbp2EOV2+U40G3NTXgEed6JAFcfWsoY39gDhU3j8fvdrBYxhQr7i
+	 YBZ/clKcTaXbwuLO5syBD89mRxtP9wvWeDkF/QYiKOc+83uyWrlgeY8z+NhPjAlfmShsn
+	 Hfz9DJ1cK0RlSTrxSX5TYQy9SyVuvPvva95xQoeYMuXX93gJRCEAvKzHJ3JLy7Kv+Xg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793209008;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793209011;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Jz/+YEGxww+tdhYzR48bf159V2vljcs6vnxrINU68wc=;
-	b=ivofWcomx2AsQbQ8uppEqHlFtX1OA/17c2xtQu6vHhKO1UNhMG2PaYxr3TWDQsS+wn7H
-	 EI4aZBjGfCUuaS6bt80/+r/iQFFACxq4lMMJv936Zb1yIrI2dpSbZ5twCiCgHgWLMIvan
-	 /ykkboZafpNW9oQGAOoL7VQqsgrXrXQgNi7HdA3qqL4l98N2LrwWjxkjJ5pkBhdvSgMGS
-	 sUR+CyUNsBR4sgq1pjV6P6v6PFHkwH6N6cvxtSCugW0gdxgSFBeee2t95ms02vlkKvoDZ
-	 JkC81cF70Ub5CUQSRRrSklVFiX8S6asABbsOReQEjJE1NtxgkBV9WHrqGqKw3rWT16A==
+	bh=oXfcEMnLStUlivGtbwHkGQQv1LEdeK6BsY5Ep5lESB4=;
+	b=w7pGRNfcY6ikVmcWL8NdgWQylk51SjHX+ZvDzgJIQ4s+a/l0uk+e3uItXP8LGjnHxbmN
+	 VFjPl0sw/fcW0o+BBCDyJR+hVyVi6HfvFZasP+Zh5QLWs8iSQavVjEhVodigUhXJDhIs9
+	 8rsgTDqGZhK1SY4NBf36DDZsUt1laX62/LZLY825jLEShe4oqmSDqYdbvl4xWfx2Q+fio
+	 nEnyD0mLVaB3uU8tczOK0i4H3jJdgGzCMdJWDBEEV6EWmknQK9tqGnO6ryzAAAyh9j4uc
+	 Vrdvdstg0sWPz+v36m+c+XNZRWekyEuqrASxh6eSYuQ50t3lP2r65O43eMfWGks7M8w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="WCH/AqO1";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZK7Ocyxj;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3780C606A31D;
-	Wed, 28 Oct 2026 17:36:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13BF2606A31A;
+	Wed, 28 Oct 2026 17:36:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WCH/AqO1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88F011F01825;
-	Wed, 28 Oct 2026 17:36:47 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZK7Ocyxj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 682981F01825;
+	Wed, 28 Oct 2026 17:36:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793209008;
-	bh=Jz/+YEGxww+tdhYzR48bf159V2vljcs6vnxrINU68wc=;
+	s=korg; t=1793209010;
+	bh=oXfcEMnLStUlivGtbwHkGQQv1LEdeK6BsY5Ep5lESB4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WCH/AqO1czrT+yZDPKUNBvraIUmy+hX5cvHxLjbuauDXP6kxGmZsbB5taMSYe9AJ5
-	 lVdNGuXjBKAHvwoi6prJmispXa/KShgK9a62uGYEk70kffsFyrBDOFgBY7gUg3wlxW
-	 pmXb64JBqrQnj+wo/AcdNp+EZGBnp6tC7M0QeQpw=
+	b=ZK7OcyxjzjAvmWyWPulz6N5pKNZM2WKbD+MOIoDrWrwGM8062BSwDpo7nGeoMfc8t
+	 al7ti6gh3ei6pGFFYdKqflPP2uhYNRflF6whZVRboNrwrOtWNlBTG7nTY8zL0RkuvG
+	 lGx0QMwow4j/Zkru1DMkv8Ryg2rc3TbUtkaZjgcI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	Juergen Gross <jgross@suse.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.10 319/516] xen/netfront: dont leak the skb when xennet_fill_frags() fails
-Date: Wed, 28 Oct 2026 17:57:51 +0100
-Message-ID: <20261028170011.047284711@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Sicong Huang <congei42@163.com>,
+	Song Li <songl@zju.edu.cn>,
+	Fan Wu <fanwu01@zju.edu.cn>,
+	Peter Chen <peter.chen@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 284/516] usb: cdns3: fix use-after-free in cdns3_gadget_exit()
+Date: Wed, 28 Oct 2026 17:57:16 +0100
+Message-ID: <20261028170010.218852369@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -68,44 +71,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-commit 93ccaf1c26e2133396173b76a071e59024daa622 upstream.
+[ Upstream commit ebe9b68c396792c15d0ac690d592e449e74ed804 ]
 
-When a response chain has more slots than fit in the skb's frags,
-xennet_fill_frags() returns an error and xennet_poll() jumps to its
-error path.  That path moves what's left on tmpq to errq to be freed,
-but the skb being filled was already dequeued from tmpq, so it's never
-freed.  Each chain that overflows leaks the skb and the pages attached
-to it as frags, and the backend decides how many slots it sends.
+cdns3_gadget_start() arms two works on system_freezable_wq:
+pending_status_wq for the deferred ep0 status stage and aligned_buf_wq
+for realigned request buffers. Both handlers use the cdns3_device the
+works are embedded in, and cdns3_pending_setup_status_handler() also
+calls the ep0 request completion.
 
-Put the skb back on tmpq before taking the error path, like the
-xennet_set_skb_gso() failure just above it does.
+cdns3_gadget_exit() does not wait for these works. It frees all
+endpoints and aligned buffers and drops the last reference to the
+gadget device, which frees priv_dev, so a work queued before the exit
+can run after the free.
 
-Fixes: ad4f15dc2c70 ("xen/netfront: don't bug in case of too many frags")
-Cc: stable@vger.kernel.org
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Reviewed-by: Juergen Gross <jgross@suse.com>
-Link: https://patch.msgid.link/20261007-b4-xen-netfront-fill-frags-leak-v1-1-a8a01ff9cd52@toxicpanda.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fix this by waiting for both works after the gadget driver is unbound
+and the IRQ is freed, when no new work can be queued, and before the
+endpoints and buffers are released.
+
+This issue was found by an in-house static analysis tool.
+
+Fixes: 7733f6c32e36 ("usb: cdns3: Add Cadence USB3 DRD Driver")
+Cc: stable <stable@kernel.org>
+Reported-by: Sicong Huang <congei42@163.com>
+Closes: https://lore.kernel.org/linux-usb/7f5719b.8700.18f67b324d3.Coremail.congei42@163.com/
+Suggested-by: Sicong Huang <congei42@163.com>
+Assisted-by: Codex:gpt-5.6
+Co-developed-by: Song Li <songl@zju.edu.cn>
+Signed-off-by: Song Li <songl@zju.edu.cn>
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Acked-by: Peter Chen <peter.chen@kernel.org>
+Link: https://patch.msgid.link/20260909095655.694527-1-fanwu01@zju.edu.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/xen-netfront.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/usb/cdns3/gadget.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/net/xen-netfront.c
-+++ b/drivers/net/xen-netfront.c
-@@ -1341,8 +1341,10 @@ err:
- 		skb->data_len = rx->status;
- 		skb->len += rx->status;
+diff --git a/drivers/usb/cdns3/gadget.c b/drivers/usb/cdns3/gadget.c
+index a64302acdfe6d..d0378ecd0c981 100644
+--- a/drivers/usb/cdns3/gadget.c
++++ b/drivers/usb/cdns3/gadget.c
+@@ -3254,6 +3254,10 @@ void cdns3_gadget_exit(struct cdns3 *cdns)
+ 	usb_del_gadget(&priv_dev->gadget);
+ 	devm_free_irq(cdns->dev, cdns->dev_irq, priv_dev);
  
--		if (unlikely(xennet_fill_frags(queue, skb, &tmpq)))
-+		if (unlikely(xennet_fill_frags(queue, skb, &tmpq))) {
-+			__skb_queue_head(&tmpq, skb);
- 			goto err;
-+		}
++	/* The works can still be queued until the IRQ is freed. */
++	cancel_work_sync(&priv_dev->pending_status_wq);
++	cancel_work_sync(&priv_dev->aligned_buf_wq);
++
+ 	cdns3_free_all_eps(priv_dev);
  
- 		if (rx->flags & XEN_NETRXF_csum_blank)
- 			skb->ip_summed = CHECKSUM_PARTIAL;
+ 	while (!list_empty(&priv_dev->aligned_buf_list)) {
+-- 
+2.53.0
+
 
 
