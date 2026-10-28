@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213399;
-	b=XombeCl0sTMPgNoD2AaKoFd8kHdk+9/icbnaMqGG9+YDvnfE5zWRz17j0B9vZ8KCnT+W
-	 vlhummVrmeYezelk8YI2ZB8dEOZhMNa8YoNrTWgKUnwFReRgT0dbvnZMqvEIpCZow64Ic
-	 2Jld291WrQVFfpYmtkud7P8mbP8YHTuoAfaXeExd5hbuuJCYqPRbrdKlkOUGkZI3UYcyt
-	 9IG1hGE6XeK+SJT4kZ6ByXjYW19I49kMNFrz+3vMxpOIrYjZldjalqR1RInt4+IZWr5hv
-	 +xfLR5oAd5ZuSPoIbLbBz3SPr40QwX5H19XYnhXegiOO6we4qKsSJGtPzJm/M1ZLCtQ==
+	t=1793213402;
+	b=A//n6KCrv0c0xxGzODQoRq2XwhGNNl4/ZWO/RPsm/1SWXdrZq3IbrQpGaVlyxuaPwKru
+	 KJqWs+mUohFdkh5x8DPRC1Kn8EZxZ6iGU6uuRYuH7z6OoS7W1UJ++ML7cKwlFYDtYVHRS
+	 k36+3VP76j2kBzC6x2KO7VCZ6FSmY0bE99DRjTTC+NJouROt+1hTiO22D7bKTtqpuJJ+C
+	 RQc2Cwaua54zy8Jta3K3sCkoz+nsvpTR+dM+WjfbuWhJ+7vcj18iZuVHy8dz082DLR6bb
+	 WGVc5nOBDeIK1JvN0M/ReAoX2DmgVr2pbmMfbqSl4uQELEQMauWYtXQglR7Z2fNtCyA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213399;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213402;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=PtK5y1D6NL1/67pzWK90Mc4KvTRr6L7WQ9pKETXEDJY=;
-	b=f5iZD8/usQbTLkm41MAz9yYDF2MmXjoLMQ/eBtKM/DgmlqIWOApYcIuj8tKk0Wufk5WV
-	 hw6nNczQXp3hkeoEBMVip2C3WMHcYJfiIIXy4Jc4JN9nKw8uD+aKTdiJ+3vioojuugfws
-	 Lt9y36Nn3f0sDdRHQRaC7gQ3DmhSaFUZH1NTFoMb+dRPNEW/Jm0whe9Bh2DX9znyo5CbG
-	 Znb3natas+oG6PcDwwnXcMwsdP4oCMOijbPfMXkZoVygAXlUjFM5bhPzBH8bwpL3GPq4K
-	 eJWlPs90ngHnJmAXU6YeMGYRqleE1bGx9wZj1x/DjbA1Yxtyfsb3WIWKgPfdVzhMSmw==
+	bh=3iCKK3Qli8Bep3NG3AR02tMKHhfKo7boh6r0VQqwqfc=;
+	b=08bsl4VdvZzei1xhF+raoXku7wkiAgotnNIYm7shY1fjbueID3g6nw+BCj8uuKrlZjRv
+	 IjusmF4NE8ho9V6OcP1QtSu9utAMsr3PffpW4tRxi5ia0setID68A3xTZkHc48xojWuir
+	 iIdDL5LK2vNJ3ESd19AwpjNZ7uDUv5iWZjr/lBlKeIdAp+MD59xez36cz4KUp6aPrB1kf
+	 6k8x5OX7utmzA67ZRbyEB/9OlA0EVwg6qgteYWsiq1NVIoME4lmkO4eaQbaqsVT6OowRw
+	 hIDUbDbo7sgMjdB2CAYGCYd/dCn3H7mPr2DXV7kPiksEMVdHSq8b94sUxCT4QJCQK0w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bg8TB3uK;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ukrbpmW5;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 913FB606A31C;
-	Wed, 28 Oct 2026 18:49:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E599606A325;
+	Wed, 28 Oct 2026 18:50:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bg8TB3uK
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E25221F01825;
-	Wed, 28 Oct 2026 18:49:58 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ukrbpmW5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFBD01F031E2;
+	Wed, 28 Oct 2026 18:50:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213399;
-	bh=PtK5y1D6NL1/67pzWK90Mc4KvTRr6L7WQ9pKETXEDJY=;
+	s=korg; t=1793213402;
+	bh=3iCKK3Qli8Bep3NG3AR02tMKHhfKo7boh6r0VQqwqfc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bg8TB3uKtwQZ8WuTJVbzKCaHb1qjUFbox2xgfjb4TSSbFLjSRckw6kN8gAeqlPXoE
-	 VABsW61HOF+dk5D5dCae+08qCaeCLnDc/Gt8YO0TvXYfDTPRyscRgYx9uVVMu6UpBI
-	 WkdZ4NtKOvz2pzyUPMH7icamh8ksBN/PIADUEJ9Y=
+	b=ukrbpmW5n1AXuPgK8ir1tbNobTqSPAD0n5IKeNYNDRJ+0dxJOfjsE5TSvBFtXmGmi
+	 lKOWh5U9pErygixqhppU2diifF43gSrOVh2ZDGfPLFtsVcWw7VqQMghHFtebIZdzkD
+	 Rq/0N4+enqWhWANwdhH7yzVAdjjiTp6INf1vct6w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	"Claude Opus 5.5" <noreply@anthropic.com>
-Subject: [PATCH 6.1 0493/1887] ASoC: samsung: i2s: enable op_clk in probe to balance runtime PM
-Date: Wed, 28 Oct 2026 17:43:09 +0100
-Message-ID: <20261028170510.495681686@linuxfoundation.org>
+	Eric Dumazet <edumazet@kernel.org>,
+	Willem de Bruijn <willemb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 0494/1887] flow_dissector: avoid u16 truncation of skb->len when computing thoff
+Date: Wed, 28 Oct 2026 17:43:10 +0100
+Message-ID: <20261028170510.521019913@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,76 +69,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Szyprowski <m.szyprowski@samsung.com>
+From: Eric Dumazet <edumazet@kernel.org>
 
-[ Upstream commit 7529254014764ae0b8c33d5c61a58f36c65b1a1c ]
+[ Upstream commit 99bda1ecbd56905f8bd934b9cdccd3bd251192b1 ]
 
-The probe function puts the device into the runtime PM active state with
-only the "iis" bus clock enabled, but it also sets priv->op_clk to the
-parent of the RCLK_SRC mux without enabling it. The runtime PM suspend
-callback disables both clocks, so the first runtime suspend after probe
-disables op_clk once more than it was enabled.
+__skb_flow_dissect() computes key_control->thoff using:
 
-On Exynos5250 Arndale both clocks resolve to the same EXYNOS_I2S_BUS gate,
-so this triggers the following warning during boot:
+  key_control->thoff = min_t(u16, nhoff, skb ? skb->len : hlen);
 
- WARNING: drivers/clk/clk.c:1270 at clk_core_disable+0xe4/0x23c, CPU#0: kworker/u8:3/45
- i2s_bus already disabled
- ...
- Workqueue: pm pm_runtime_work
- Call trace:
-  ...
-  clk_core_disable from clk_disable+0x28/0x34
-  clk_disable from i2s_runtime_suspend+0x58/0x68 [snd_soc_i2s]
-  i2s_runtime_suspend [snd_soc_i2s] from genpd_runtime_suspend+0xc4/0x298
-  genpd_runtime_suspend from __rpm_callback+0x48/0x18c
-  __rpm_callback from rpm_callback+0x4c/0x50
-  rpm_callback from rpm_suspend+0xf4/0x718
-  rpm_suspend from pm_runtime_work+0x9c/0xa0
-  ...
+min_t(u16, ...) casts both arguments to u16 before comparing them.
+Whenever skb->len (or hlen) modulo 65536 is smaller than nhoff, the
+truncated length wins and thoff is set to a bogus small value, even
+when the dissection succeeded. For example, an IPv4/TCP frame with
+skb->len == 65540 and nhoff == 34 gets thoff == 4, so callers such as
+skb_probe_transport_header() point the transport header inside the
+Ethernet header.
 
-Fix this by enabling op_clk in probe right after getting it, so the clock
-state matches the runtime PM active state, and by disabling it in remove.
+Such skbs are not exotic:
+- At the time of commit d0c081b49137 ("flow_dissector: properly cap
+  thoff field"), AF_PACKET with PACKET_VNET_HDR could already build GSO
+  skbs larger than 64KB (MTU checks are skipped for GSO, and
+  alloc_skb_with_frags() accepted up to MAX_SKB_FRAGS (17) order-0
+  pages on top of the linear part).
+- BIG TCP now makes skbs larger than 64KB common.
+- The following patch makes tun_get_user() dissect IFF_TAP frames
+  before eth_type_trans() pulls the Ethernet header, so a GSO frame
+  carrying a 65522..65535 byte L3 packet will be dissected with
+  skb->len in [65536, 65549].
 
-Fixes: 48279c53fd1d ("ASoC: samsung: i2s: Prevent external abort on exynos5433 I2S1 access")
-Assisted-by: Claude Opus 5.5 <noreply@anthropic.com>
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Link: https://patch.msgid.link/20261002092116.585466-1-m.szyprowski@samsung.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Compare as u32 instead. If the resulting offset cannot be represented
+in the u16 key_control->thoff, cap it to U16_MAX and report the
+dissection as failed rather than silently returning a wrong transport
+offset. thoff is still set on failure, as some callers (such as
+eth_get_headlen()) use it regardless of the return value.
+
+Fixes: d0c081b49137 ("flow_dissector: properly cap thoff field")
+Signed-off-by: Eric Dumazet <edumazet@kernel.org>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20261001191140.2818991-2-edumazet@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/samsung/i2s.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ net/core/flow_dissector.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/samsung/i2s.c b/sound/soc/samsung/i2s.c
-index 9505200f3d11b..be0d6984bb861 100644
---- a/sound/soc/samsung/i2s.c
-+++ b/sound/soc/samsung/i2s.c
-@@ -1531,9 +1531,16 @@ static int samsung_i2s_probe(struct platform_device *pdev)
- 		goto err_disable_pm;
+diff --git a/net/core/flow_dissector.c b/net/core/flow_dissector.c
+index 12216a5710a92..a51c8930f6d0d 100644
+--- a/net/core/flow_dissector.c
++++ b/net/core/flow_dissector.c
+@@ -969,6 +969,7 @@ bool __skb_flow_dissect(const struct net *net,
+ 	int mpls_lse = 0;
+ 	int num_hdrs = 0;
+ 	u8 ip_proto = 0;
++	u32 thoff;
+ 	bool ret;
  
- 	priv->op_clk = clk_get_parent(priv->clk_table[CLK_I2S_RCLK_SRC]);
-+	ret = clk_prepare_enable(priv->op_clk);
-+	if (ret < 0) {
-+		priv->op_clk = NULL;
-+		goto err_unregister_clk;
+ 	if (!data) {
+@@ -1575,7 +1576,13 @@ bool __skb_flow_dissect(const struct net *net,
+ 	ret = true;
+ 
+ out:
+-	key_control->thoff = min_t(u16, nhoff, skb ? skb->len : hlen);
++	thoff = min_t(u32, nhoff, skb ? skb->len : hlen);
++	if (unlikely(thoff > U16_MAX)) {
++		/* Cannot be represented in key_control->thoff. */
++		thoff = U16_MAX;
++		ret = false;
 +	}
++	key_control->thoff = thoff;
+ 	key_basic->n_proto = proto;
+ 	key_basic->ip_proto = ip_proto;
  
- 	return 0;
- 
-+err_unregister_clk:
-+	i2s_unregister_clock_provider(priv);
- err_disable_pm:
- 	pm_runtime_disable(&pdev->dev);
- err_del_sec:
-@@ -1556,6 +1563,7 @@ static int samsung_i2s_remove(struct platform_device *pdev)
- 
- 	i2s_unregister_clock_provider(priv);
- 	i2s_delete_secondary_device(priv);
-+	clk_disable_unprepare(priv->op_clk);
- 	clk_disable_unprepare(priv->clk);
- 
- 	pm_runtime_put_noidle(&pdev->dev);
 -- 
 2.53.0
 
