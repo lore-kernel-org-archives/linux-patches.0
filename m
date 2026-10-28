@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215948;
-	b=ZsoCu30vE3cpxUdI5D+MeLyR3w+cFquWhj3hcmtUNA5r3LCq7aCEYJGKf14wrfUW6iX3
-	 3wGhmri6kDnhzqGnkjL7lUzBJs+RLFoq2sThQON/gKMg6akJ91Vr6PbJev7k7thxOv4hu
-	 Ca1ZhMBuzxT2QNTuFu6mc4MpLXdmJ3QGmBcD6Bozm4wCxaKId9GW0Qkg35gbjyOYCOjyS
-	 cVF9lcNF16pxtXJC5k+56ugEF8rBmU+H3u5KFJ2WwtLyeX/XDfI22VKkNAKq225hC/25m
-	 4NHIoadCOliYdvU7eAyJcevIomUEXK4qZtVDm4w1yfzgkyWxTq7MkBue6LdxfycxuLg==
+	t=1793215950;
+	b=giiCoWLN0H9TJopCN/I1Z5GukTh+TOw6fP6FNmDgjO8cAjeSb9ybWmUbUT7nFuqN3ngH
+	 8pMXkEhJpX9hwBEMlIXEkTsVwCx2VrR6mcvH5ktkYcBdUWDBvsDJqjMgh8YSvBWLK/mR+
+	 8H21qv/Kng61MoOImOdDpGBoyGJ4QVmdio6Ju5PhmDLcsc31Jwl/gJn0+kTn2CtOzz2oB
+	 NQxohuyfeTBCBWGjmPiP8knG4ufx/ob4286zT7IaOw3J5QYdY3HhPsMoodC8YWGp9lTIL
+	 45ypK6U+gJraJ2jHRyleaqmyoUIRMf7KVFJ/ojWKhlUXjw+KC0bBCIhQcLO67o7wOwA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215948;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215950;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=VqPrqLasl80d7sWI/r/cwIVBeas1uHx9b1a9uuAUFeQ=;
-	b=1DhB4eLttgqIjmdgja0BuTkfG8wc34GLK6ZIKFbeLio+VF09G8HRbx/V3VKRrezUIyqD
-	 9mY5YtN9Mhvc/tHMnnvt1by8SC4V/f9kYFwihzzHSrGQSoV7XJ5bbyNZC5gDEw4+d96k0
-	 zgyeZGD2WXDjBhAhFiotTCFfkr+OprmxtCKdbI/EVFHLTJf45AyXuaN8mNpG/MtixoWbJ
-	 VtvfEmi+kpYXVdJsrXz31K8wg4XpAnySwhnfrLdKdQ/mmnxAwe1t/sHFfN7rifDffpvWn
-	 fhA5eW3/C/tqdqT27rrEOKf7+XlI+DAPsfi3Xo4LFm7oVVzFxiG9lm6xjclOvUyDPMA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=pT8o8j6qXc/afwRV2tWpHYNC4NLO4zHXHaH14hJ5KoI=;
+	b=tmtcHjY6QPAssPTNVCCo7xYz3r1HtmOWoQm+vIOViS6IOSxJCPvf/w6dC9/vZQAN/qj5
+	 zjCXrnJolormw3C+a6mM/7QxoeXCfF321KCB7peoTWtSAPl3R8GxPlBzvDsOjHi0llFC6
+	 ApkB4jJ/8wsPJWGWSWxhdNqDAAaMtAw3o4zVZXbfYAyMo5pJSnsL3dSoEy85gAI3xNK4P
+	 F7xL3yykqDql6zQSZo4CRk+PecaG8vnfKH5vkR7/RygP2hEUNyzweYsnXV1xrR9nlLTeO
+	 XxxAUq2CMZNjIivgS4i5rSxnaZQ27jjpBqlTxrtK+Cm6h0rLVUiosb4qtKyW/kIJGfA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mKaCwgpo;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pdpisgZA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0696D606A31A;
-	Wed, 28 Oct 2026 19:32:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D8FF606A31E;
+	Wed, 28 Oct 2026 19:32:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mKaCwgpo
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 131591F01825;
-	Wed, 28 Oct 2026 19:32:26 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pdpisgZA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE18E1F01825;
+	Wed, 28 Oct 2026 19:32:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215947;
-	bh=VqPrqLasl80d7sWI/r/cwIVBeas1uHx9b1a9uuAUFeQ=;
+	s=korg; t=1793215950;
+	bh=pT8o8j6qXc/afwRV2tWpHYNC4NLO4zHXHaH14hJ5KoI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mKaCwgpox8BaRlFgE2QIzUBFySbaZZT+EDrVSY7CMlKhoVMhfFlGArNa5HusaqghJ
-	 NU2Jnq6fV/Prff4bxOzqhLo2Js8hss3KdwJpfJSFgA0T5u0sZP6mqkAXtvc0woQ3i1
-	 UvaQ5aQ8GzchvQDICQC1LXgXkQvv94dDKNchZ0W0=
+	b=pdpisgZA8ZF+3PNj1sCi7JsETp4ozXwo6F37h62ATHYV80AQPlJSGRGMHRRj3/eTD
+	 bL8Z6o8IEEFKBck1q8qj8EkRwi4KiEuh9WqnQBC8PZRytacdqlp3iVliFl3ykYWqcu
+	 BNOnI1LnfS7dvWchhz4eRUPitgtM7PoTezJGnyBo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Fan Wu <fanwu01@zju.edu.cn>,
 	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1388/1887] power: supply: charger-manager: Convert to platform remove callback returning void
-Date: Wed, 28 Oct 2026 17:58:04 +0100
-Message-ID: <20261028170531.036456582@linuxfoundation.org>
+Subject: [PATCH 6.1 1389/1887] power: supply: charger-manager: register regulators before exposing sysfs
+Date: Wed, 28 Oct 2026 17:58:05 +0100
+Message-ID: <20261028170531.060357464@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -62,69 +62,166 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-[ Upstream commit 403eebf95c38302cacc48c127e575461f0e798be ]
+[ Upstream commit c57cb36f76eb7ced45f57af1a890d8f3a6d76342 ]
 
-The .remove() callback for a platform driver returns an int which makes
-many driver authors wrongly assume it's possible to do error handling by
-returning an error code. However the value returned is ignored (apart
-from emitting a warning) and this typically results in resource leaks.
-To improve here there is a quest to make the remove callback return
-void. In the first step of this quest all drivers are converted to
-.remove_new() which already returns void. Eventually after all drivers
-are converted, .remove_new() is renamed to .remove().
+charger_manager_remove() and the err_reg_extcon probe error path free each
+charger regulator with regulator_put() before tearing down the power_supply
+sysfs entries (power_supply_unregister()). charger_manager_remove() also
+calls try_charger_enable(cm, false) after the regulator_put() loop. A
+concurrent write to a charger's externally_control sysfs attribute that
+lands between regulator_put() and power_supply_unregister() can run
+charger_externally_control_store() and call try_charger_enable(), which,
+when charging is enabled, dereferences the already-freed consumer handle.
+When charging is enabled, try_charger_enable(cm, false) in .remove() also
+dereferences the freed handles directly. Both leave use-after-free windows.
+Symmetrically, probe registers the sysfs entries (power_supply_register)
+before acquiring the regulators (regulator_get, inside
+charger_manager_register_extcon), so userspace can reach externally_control
+before the regulators are available.
 
-Trivially convert this driver from always returning zero in the remove
-callback to the void returning variant.
+Split charger_manager_register_extcon() on the sync/async boundary:
+charger_manager_get_regulators() (regulator_get only, no async producer)
+now runs before power_supply_register() so sysfs is not live before
+regulators are available, and charger_manager_register_extcon() keeps only
+the extcon notifier/work setup, still after power_supply_register() so a
+power_supply_register() failure cannot reach extcon setup. This keeps the
+sysfs setup/teardown ordering symmetric without introducing an asynchronous
+producer on the earlier probe-error path.
 
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Link: https://lore.kernel.org/r/20230918133700.1254499-8-u.kleine-koenig@pengutronix.de
+Move power_supply_unregister() and try_charger_enable(cm, false) ahead of
+the regulator_put() loop on both teardown paths, and adjust err_reg_extcon
+(power_supply_unregister() then fall through err_regulator for
+regulator_put(); get_regulators self-rolls back on its own failure).
+
+This does not address the separate extcon-notifier-driven deref of the same
+handles, which needs its own synchronization design.
+
+Found by an in-house static analysis tool.
+
+Fixes: 3950c7865cd7 ("charger-manager: Add support sysfs entry for charger")
+Cc: stable@vger.kernel.org
+Assisted-by: Codex:gpt-5.6
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Link: https://patch.msgid.link/20260728030123.230202-1-fanwu01@zju.edu.cn
 Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
-Stable-dep-of: c57cb36f76eb ("power: supply: charger-manager: register regulators before exposing sysfs")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/charger-manager.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/power/supply/charger-manager.c | 54 +++++++++++++++++++-------
+ 1 file changed, 39 insertions(+), 15 deletions(-)
 
 diff --git a/drivers/power/supply/charger-manager.c b/drivers/power/supply/charger-manager.c
-index 75df8c15df05a..a20e7aaffbaa8 100644
+index a20e7aaffbaa8..7f7ddecf2250b 100644
 --- a/drivers/power/supply/charger-manager.c
 +++ b/drivers/power/supply/charger-manager.c
-@@ -1630,7 +1630,7 @@ static int charger_manager_probe(struct platform_device *pdev)
+@@ -1017,6 +1017,29 @@ static int charger_extcon_init(struct charger_manager *cm,
+ 	return 0;
+ }
+ 
++static int charger_manager_get_regulators(struct charger_manager *cm)
++{
++	struct charger_desc *desc = cm->desc;
++	struct charger_regulator *charger;
++	int i, ret;
++
++	for (i = 0; i < desc->num_charger_regulators; i++) {
++		charger = &desc->charger_regulators[i];
++		charger->consumer = regulator_get(cm->dev,
++						  charger->regulator_name);
++		if (IS_ERR(charger->consumer)) {
++			dev_err(cm->dev, "Cannot find charger(%s)\n",
++				charger->regulator_name);
++			ret = PTR_ERR(charger->consumer);
++			while (i-- > 0)
++				regulator_put(desc->charger_regulators[i].consumer);
++			return ret;
++		}
++		charger->cm = cm;
++	}
++	return 0;
++}
++
+ /**
+  * charger_manager_register_extcon - Register extcon device to receive state
+  *				     of charger cable.
+@@ -1039,15 +1062,6 @@ static int charger_manager_register_extcon(struct charger_manager *cm)
+ 	for (i = 0; i < desc->num_charger_regulators; i++) {
+ 		charger = &desc->charger_regulators[i];
+ 
+-		charger->consumer = regulator_get(cm->dev,
+-					charger->regulator_name);
+-		if (IS_ERR(charger->consumer)) {
+-			dev_err(cm->dev, "Cannot find charger(%s)\n",
+-				charger->regulator_name);
+-			return PTR_ERR(charger->consumer);
+-		}
+-		charger->cm = cm;
+-
+ 		for (j = 0; j < charger->num_cables; j++) {
+ 			struct charger_cable *cable = &charger->cables[j];
+ 
+@@ -1582,13 +1596,23 @@ static int charger_manager_probe(struct platform_device *pdev)
+ 	}
+ 	psy_cfg.attr_grp = desc->sysfs_groups;
+ 
++	/*
++	 * Acquire charger regulators before exposing the sysfs entries, so
++	 * userspace cannot reach externally_control before the regulators
++	 * (and charger->cm) are available.  Mirrors the order in remove().
++	 */
++	ret = charger_manager_get_regulators(cm);
++	if (ret < 0)
++		return ret;
++
+ 	cm->charger_psy = power_supply_register(&pdev->dev,
+ 						&cm->charger_psy_desc,
+ 						&psy_cfg);
+ 	if (IS_ERR(cm->charger_psy)) {
+ 		dev_err(&pdev->dev, "Cannot register charger-manager with name \"%s\"\n",
+ 			cm->charger_psy_desc.name);
+-		return PTR_ERR(cm->charger_psy);
++		ret = PTR_ERR(cm->charger_psy);
++		goto err_regulator;
+ 	}
+ 
+ 	/* Register extcon device for charger cable */
+@@ -1622,11 +1646,11 @@ static int charger_manager_probe(struct platform_device *pdev)
+ 	return 0;
+ 
+ err_reg_extcon:
++	power_supply_unregister(cm->charger_psy);
++err_regulator:
+ 	for (i = 0; i < desc->num_charger_regulators; i++)
+ 		regulator_put(desc->charger_regulators[i].consumer);
+ 
+-	power_supply_unregister(cm->charger_psy);
+-
  	return ret;
  }
  
--static int charger_manager_remove(struct platform_device *pdev)
-+static void charger_manager_remove(struct platform_device *pdev)
- {
- 	struct charger_manager *cm = platform_get_drvdata(pdev);
- 	struct charger_desc *desc = cm->desc;
-@@ -1650,8 +1650,6 @@ static int charger_manager_remove(struct platform_device *pdev)
+@@ -1644,12 +1668,12 @@ static void charger_manager_remove(struct platform_device *pdev)
+ 	cancel_work_sync(&setup_polling);
+ 	cancel_delayed_work_sync(&cm_monitor_work);
+ 
+-	for (i = 0 ; i < desc->num_charger_regulators ; i++)
+-		regulator_put(desc->charger_regulators[i].consumer);
++	try_charger_enable(cm, false);
+ 
  	power_supply_unregister(cm->charger_psy);
  
- 	try_charger_enable(cm, false);
--
--	return 0;
+-	try_charger_enable(cm, false);
++	for (i = 0 ; i < desc->num_charger_regulators ; i++)
++		regulator_put(desc->charger_regulators[i].consumer);
  }
  
  static const struct platform_device_id charger_manager_id[] = {
-@@ -1742,7 +1740,7 @@ static struct platform_driver charger_manager_driver = {
- 		.of_match_table = charger_manager_match,
- 	},
- 	.probe = charger_manager_probe,
--	.remove = charger_manager_remove,
-+	.remove_new = charger_manager_remove,
- 	.id_table = charger_manager_id,
- };
- 
 -- 
 2.53.0
 
