@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216116;
-	b=TQBYi1HOZ+7UfpUw8Xy0thTQ8d/ljU2zHhbxObLT3JJP36qrY44d3qUkNsisWqrIfFWM
-	 Exg5VeV3S7SY1HGyckqOlBM4aazjOIpz+ztGhpCjZenBpdr7WoZxqSdY39Q8oWowubzJd
-	 iuVYKpSH2HqyNXd6r3L1+tBx9KjrH0rm6HbWBsjMu5+9ZU4clN4XkJOcjLPuV1ftdXYLB
-	 hvxUsK3Q9MX0ovMP/2/RgMGNDGLc7fQlntTim2mkCUbHHv4JbcqbC/b96mnqacPkezep0
-	 pVbdJU55q47GrZpEHvw6YWztooD/UH8r+EUKM1AI1vM8GIy2ZpGtGTkg3HH6VIbw9ig==
+	t=1793216119;
+	b=mJgCZU+B6hE7/g0o3tbFZ6dPRRV/dH4JEXeMEuJtY+e3/raHTJNn9Hh+kbvikak8Yp19
+	 7P7X2F9dRBmoubtkCuHBJc13atONcV5wOZmlNCFQkfcAu2w0T1/zB2BfGuoyGDZuGVKUi
+	 S71qFH0Et2crd1DJ3YrW/Z6tYTaC7Is1Gd7uH/850m/eqekCqAEbRxyZMGJLK8Hubelr8
+	 U9xkeBi0HJogiu2NIizTWpXdwXHfR1zWY07gtWQ+lDOlUIgpKNuo13WLNZGWfXGqop7Pf
+	 qWw8PitILM0fYhWEmZO33bAJew7xOUyV5wwWhn97ZdeBKP+YbjTAb4+TJC9HVoC/+JA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216116;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216119;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=tmnGKM3Hdpw1dJZIDCzsKMJ5qjoWGAAEQS0ywhJrZa4=;
-	b=Lq0unidExyuj0VrKL1ONYCVfabzOaKqE9LPWcE7mBV8B0srFEhGtkWNlTVY4G2N0qabO
-	 9oExLg00pLd6ooMpOCT6VvzmsqWyuKIZ3GIjUt5g13AGshD783EBA49RPf2yv++BspMQN
-	 IAufoRjgmRhvNjz161FWC/urny0WGKuBYlGl4uFmWRpUyJsuYSR+KI8Cg0gsrfyroz2tz
-	 pdqizi8rUdkE9tV8QK2LuVCky5ht6xoeKeol1rbL+T+ETeD5wxWWqq9CJkTSHDrq480/R
-	 C19pW8r9Nhqla1faXG+O7bKKlPsgUj8rQnHSYFUM9Y78F7Y8XDvL+SKyOJTqgrc5LMA==
+	bh=WaujTV3bx8qk//TG1o3jAFppFSYOFud5XVGImV9sr5s=;
+	b=XlZY4FhCeushOemiaXf6GE4aN+RwSM94rnwP2En2bQnp9CKo08WsJDwJP2K0d+SJSD3r
+	 kJ7e5dqx2mHdTFMv/1UWuvt6IrRNn9yScUu7gJFbprCvyVNe6kW54OhSXNy2rbESS4Wxa
+	 +HF2VFkeK71JJjeaB+DRUCnlrzPtrf0jfJJH//GFuH6bM3+nmDeGEQnUEWNHLwXK4z6CO
+	 Iq8IUGMjVtXaO68LivtYC8SB9RSbHUBv2ffbUzhVsqVDT4Dpeyv1uLq3m19ZhzEc2c6Xn
+	 6LosOR6VKx6JkxJPd9whkVtSd7+KPnLr6Olrag4vNH3ue4ASZRAokJKkne0WTFfrEFA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QS2pmq4L;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Z60TWLhn;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09F8F606A31C;
-	Wed, 28 Oct 2026 19:35:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3142606A31A;
+	Wed, 28 Oct 2026 19:35:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QS2pmq4L
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 535981F01825;
-	Wed, 28 Oct 2026 19:35:15 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Z60TWLhn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47A4E1F01825;
+	Wed, 28 Oct 2026 19:35:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216115;
-	bh=tmnGKM3Hdpw1dJZIDCzsKMJ5qjoWGAAEQS0ywhJrZa4=;
+	s=korg; t=1793216118;
+	bh=WaujTV3bx8qk//TG1o3jAFppFSYOFud5XVGImV9sr5s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QS2pmq4LhANc5V5jID/Sg4bQprVGWlkGMTOapp2Wa4C2hRa1zAubUkxu3OTlvgv9n
-	 yvyvRFInKkKbYmAAAf8X9Txozgz33cTsH6eNGQEKWNMO10z90HZDV7ycnLYlxWX5mA
-	 yrWOIoBWuBFuAAti3hb4zEsn236QgwoJVfH5WLJI=
+	b=Z60TWLhnqUoGekehmecZHZWbLcKS3II6oVXVes4k1C2+rOQUflgWJlXWKAUhxAlor
+	 nroelsKDvnwmA8adxZfRvUWJM2gwC+7JWQds2M8UO8DENn6y0M2NVM8smss5DCX4xV
+	 boTGJ8yZ+oKp4ci6DcWYs+jWYTu/T+K7Hd4aovx8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Qu Wenruo <wqu@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	Peilin Ye <yepeilin@google.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1445/1887] btrfs: avoid NULL pointer dereference if no valid csum tree
-Date: Wed, 28 Oct 2026 17:59:01 +0100
-Message-ID: <20261028170532.339844094@linuxfoundation.org>
+Subject: [PATCH 6.1 1446/1887] bpf: Tell memcg to use allow_spinning=false path in bpf_timer_init()
+Date: Wed, 28 Oct 2026 17:59:02 +0100
+Message-ID: <20261028170532.364105847@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,76 +69,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qu Wenruo <wqu@suse.com>
+From: Peilin Ye <yepeilin@google.com>
 
-[ Upstream commit f95d186255b319c48a365d47b69bd997fecb674e ]
+[ Upstream commit 6d78b4473cdb08b74662355a9e8510bde09c511e ]
 
-[BUG]
-When trying read-only scrub on a btrfs with rescue=idatacsums mount
-option, it will crash with the following call trace:
+Currently, calling bpf_map_kmalloc_node() from __bpf_async_init() can
+cause various locking issues; see the following stack trace (edited for
+style) as one example:
 
-  BUG: kernel NULL pointer dereference, address: 0000000000000208
-  #PF: supervisor read access in kernel mode
-  #PF: error_code(0x0000) - not-present page
-  CPU: 1 UID: 0 PID: 835 Comm: btrfs Tainted: G           O        6.15.0-rc3-custom+ #236 PREEMPT(full)
-  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS unknown 02/02/2022
-  RIP: 0010:btrfs_lookup_csums_bitmap+0x49/0x480 [btrfs]
-  Call Trace:
-   <TASK>
-   scrub_find_fill_first_stripe+0x35b/0x3d0 [btrfs]
-   scrub_simple_mirror+0x175/0x290 [btrfs]
-   scrub_stripe+0x5f7/0x6f0 [btrfs]
-   scrub_chunk+0x9a/0x150 [btrfs]
-   scrub_enumerate_chunks+0x333/0x660 [btrfs]
-   btrfs_scrub_dev+0x23e/0x600 [btrfs]
-   btrfs_ioctl+0x1dcf/0x2f80 [btrfs]
-   __x64_sys_ioctl+0x97/0xc0
-   do_syscall_64+0x4f/0x120
-   entry_SYSCALL_64_after_hwframe+0x76/0x7e
+...
+ [10.011566]  do_raw_spin_lock.cold
+ [10.011570]  try_to_wake_up             (5) double-acquiring the same
+ [10.011575]  kick_pool                      rq_lock, causing a hardlockup
+ [10.011579]  __queue_work
+ [10.011582]  queue_work_on
+ [10.011585]  kernfs_notify
+ [10.011589]  cgroup_file_notify
+ [10.011593]  try_charge_memcg           (4) memcg accounting raises an
+ [10.011597]  obj_cgroup_charge_pages        MEMCG_MAX event
+ [10.011599]  obj_cgroup_charge_account
+ [10.011600]  __memcg_slab_post_alloc_hook
+ [10.011603]  __kmalloc_node_noprof
+...
+ [10.011611]  bpf_map_kmalloc_node
+ [10.011612]  __bpf_async_init
+ [10.011615]  bpf_timer_init             (3) BPF calls bpf_timer_init()
+ [10.011617]  bpf_prog_xxxxxxxxxxxxxxxx_fcg_runnable
+ [10.011619]  bpf__sched_ext_ops_runnable
+ [10.011620]  enqueue_task_scx           (2) BPF runs with rq_lock held
+ [10.011622]  enqueue_task
+ [10.011626]  ttwu_do_activate
+ [10.011629]  sched_ttwu_pending         (1) grabs rq_lock
+...
 
-[CAUSE]
-Mount option "rescue=idatacsums" will completely skip loading the csum
-tree, so that any data read will not find any data csum thus we will
-ignore data checksum verification.
+The above was reproduced on bpf-next (b338cf849ec8) by modifying
+./tools/sched_ext/scx_flatcg.bpf.c to call bpf_timer_init() during
+ops.runnable(), and hacking the memcg accounting code a bit to make
+a bpf_timer_init() call more likely to raise an MEMCG_MAX event.
 
-Normally call sites utilizing csum tree will check the fs state flag
-NO_DATA_CSUMS bit, but unfortunately scrub does not check that bit at all.
+We have also run into other similar variants (both internally and on
+bpf-next), including double-acquiring cgroup_file_kn_lock, the same
+worker_pool::lock, etc.
 
-This results in scrub to call btrfs_search_slot() on a NULL pointer
-and triggered above crash.
+As suggested by Shakeel, fix this by using __GFP_HIGH instead of
+GFP_ATOMIC in __bpf_async_init(), so that e.g. if try_charge_memcg()
+raises an MEMCG_MAX event, we call __memcg_memory_event() with
+@allow_spinning=false and avoid calling cgroup_file_notify() there.
 
-[FIX]
-Check both extent and csum tree root before doing any tree search.
+Depends on mm patch
+"memcg: skip cgroup_file_notify if spinning is not allowed":
+https://lore.kernel.org/bpf/20250905201606.66198-1-shakeel.butt@linux.dev/
 
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Signed-off-by: Qu Wenruo <wqu@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+v0 approach s/bpf_map_kmalloc_node/bpf_mem_alloc/
+https://lore.kernel.org/bpf/20250905061919.439648-1-yepeilin@google.com/
+v1 approach:
+https://lore.kernel.org/bpf/20250905234547.862249-1-yepeilin@google.com/
+
+Fixes: b00628b1c7d5 ("bpf: Introduce bpf timers.")
+Suggested-by: Shakeel Butt <shakeel.butt@linux.dev>
+Signed-off-by: Peilin Ye <yepeilin@google.com>
+Link: https://lore.kernel.org/r/20250909095222.2121438-1-yepeilin@google.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/scrub.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ kernel/bpf/helpers.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/fs/btrfs/scrub.c b/fs/btrfs/scrub.c
-index 98895adb99e33..d06b26e1dbea7 100644
---- a/fs/btrfs/scrub.c
-+++ b/fs/btrfs/scrub.c
-@@ -3631,12 +3631,12 @@ static noinline_for_stack int scrub_stripe(struct scrub_ctx *sctx,
- 	scrub_blocked_if_needed(fs_info);
- 
- 	root = btrfs_extent_root(fs_info, bg->start);
--	if (unlikely(!root)) {
--		btrfs_err(fs_info, "no valid extent root for scrub");
-+	csum_root = btrfs_csum_root(fs_info, bg->start);
-+	if (unlikely(!root || !csum_root)) {
-+		btrfs_err(fs_info, "no valid extent or csum root for scrub");
- 		btrfs_free_path(path);
- 		return -EUCLEAN;
+diff --git a/kernel/bpf/helpers.c b/kernel/bpf/helpers.c
+index a5ab200c48663..a89a88b5fb985 100644
+--- a/kernel/bpf/helpers.c
++++ b/kernel/bpf/helpers.c
+@@ -1214,8 +1214,11 @@ BPF_CALL_3(bpf_timer_init, struct bpf_timer_kern *, timer, struct bpf_map *, map
+ 		ret = -EBUSY;
+ 		goto out;
  	}
--	csum_root = btrfs_csum_root(fs_info, bg->start);
- 
- 	/*
- 	 * collect all data csums for the stripe to avoid seeking during
+-	/* allocate hrtimer via map_kmalloc to use memcg accounting */
+-	t = bpf_map_kmalloc_node(map, sizeof(*t), GFP_ATOMIC, map->numa_node);
++	/* Allocate via bpf_map_kmalloc_node() for memcg accounting. Until
++	 * kmalloc_nolock() is available, avoid locking issues by using
++	 * __GFP_HIGH (GFP_ATOMIC & ~__GFP_RECLAIM).
++	 */
++	t = bpf_map_kmalloc_node(map, sizeof(*t), __GFP_HIGH, map->numa_node);
+ 	if (!t) {
+ 		ret = -ENOMEM;
+ 		goto out;
 -- 
 2.53.0
 
