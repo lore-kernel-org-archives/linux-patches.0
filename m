@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214680;
-	b=Ux77DtPSBHGSiK83AQZwIViT0VFL9jdYX0/0WRGMVI+4PiLoQNYtieFmfmKI72aLy/8r
-	 0GayWeed0jEtIrR8daO2dJ6w8AVXaKfxsT6XlXcERobRzbbTL5/62cR7RrMwXWjVCpfE3
-	 n7q5XRYjJiLPoy7oVx+1pGrd0Vl58ItcNtp8L8OsMwbDSIQ2E1jlvh9PPPM4LTTaeXxCn
-	 y/7JJkg+m8q76ZzjPtCttcjnmQFOeIu0axOz/2IJvLw5dNqUl+BeFN+bOrMQuXD1U5d85
-	 lJ12zbav/G83Mu4dK5Z8B9DpJEoGfEA1yP/p7HcW00Q3/QQYH86e7cCcgeVuv8ZSS1w==
+	t=1793214683;
+	b=t5E56ItB3qHpkXLvLo0ulZo7bsU2o9Y+9/sPid93jakgFzvyNWPr7Hzn4wuFlLMbAono
+	 ocu5fRaAmlQJSuoH6R7rERhDJfuWa+mzG2yzwU+9DRuzArXPm0EtLimGJo9NgXidGi5u0
+	 AUIE+AXxm9c/UDpyn4irEeNGPhoR5nas0kUbw0FLtO38g6rGKWIg51Z/KVIDuTCQRmOKu
+	 /YFwzADFKKxIln2+fXWebWGf/bfZQjItKaNsV61RBkLnpUmJ8DggRmzLGfMcuZ7t49k71
+	 LszIxPdNlCP+v8esQ/1oSkKZyPQDmMaNNkequvlBbTREUV5bAT0qdwoqqtxgquq4Z6g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214680;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214683;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=F3FNMK0dojaU21ZQuQrd8yqov6EByVyN+tONzg+e6i0=;
-	b=znl32gs8y73fJHmj7XSveLL4WDFiSrqXN8VV+pZpmY8GGl9GKHI7kFQ9pf97CTOVOLUR
-	 B/Tesf1vFkR4Z7A6VnfUl0IVp7bvyP7xT4i8LzVMg7axwRyCWWOFC8FS0A9dP4SQO8G22
-	 YZ4MDLk/w/Hb1gNwxK47VCDH3duDdkfz5ecaXqT00lzSqJn4xBIu6dnOruwdcyA/T4l4L
-	 TjBhqeZ1r2NcfQqdBMr8bGnY4yS7/FpzlHTMHg32Ji9UdB3rKwOc6bLiHSHMy+6RFQvFu
-	 +VsbcOCe8oDzYidfzXFZ0t81TLDYeGqO5jj+6i8z47klPlURcRIQ2ZeZ3ZB9DE7Ml4g==
+	bh=vibJ4sXMlsm0k3DkAfCvuOEz9Eiys1xFT9xjG0nH9+o=;
+	b=42MXyLpV+TuF9vpJh8BBypQaYaW9aHW2S8uibIgo/SDDh054CrfwlYUVo1zm//b7/EUV
+	 BF7FBmeD4j7K/0WfUNBKlGrDMBsefE6xJMfFAyUaRwhmt2S4T6/J19IGxQP0tRObwgt0A
+	 ChJRfed2EVtyrU1s7BSrqHiLTOX9g+9HVut39VHgZIW2J8JaKfeIrpc6/eNV+hlmXnPYf
+	 3nXR/aedfFTCSfxPCqutomq+Q8wahxR9RbHi9B4GjBIrChdXqPdnZ0pxKsz5APoYbJhDC
+	 xYdh+HiSYOweRcg7rxZYJy4EmtFSDLYuecDR26zxSYk9tFARVjxYWxyN//9NAHX2LeA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x6yGHofi;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=R6pDvbjp;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F550606B7CF;
-	Wed, 28 Oct 2026 19:11:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AF89606B7CF;
+	Wed, 28 Oct 2026 19:11:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x6yGHofi
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C13481F01825;
-	Wed, 28 Oct 2026 19:11:19 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=R6pDvbjp
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B7541F01825;
+	Wed, 28 Oct 2026 19:11:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214680;
-	bh=F3FNMK0dojaU21ZQuQrd8yqov6EByVyN+tONzg+e6i0=;
+	s=korg; t=1793214683;
+	bh=vibJ4sXMlsm0k3DkAfCvuOEz9Eiys1xFT9xjG0nH9+o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=x6yGHofi5laHIhxlZKaQbrh1ATcHUrPGXvirN0WWSHC012xSFqsXyHPbjPJSMnyGt
-	 vd2iDDSj7B6p+TzfPtKWTQBPT8E0PpMzQlRbhIpI0GGrIwEmGsKs5x1OTMXZQyksS4
-	 PNUErq6+mKREOB+AcyjiATctiubc7Z28qiJJoXEg=
+	b=R6pDvbjpUVQl+OBae80SRr6B9cjg9OVfPYGyxeGP3SKpaD2wl0d6Krx2q2O7ms9Li
+	 xfyr99SbvYZvNZazsbJUTvssqtEtHLiCLgU4yk9hch9ba90dh5I/c5GbHOc75vscTj
+	 8IyMBbN5iE2GK8L+72cHuxgperZnTwPWuXKzCUhY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+2e2cf5331207053b8106@syzkaller.appspotmail.com,
-	Allison Henderson <achender@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Vyacheslav Kovalevsky <slava.kovalevskiy.2014@gmail.com>,
+	Boris Burkov <boris@bur.io>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0942/1887] net/rds: Fix circular locking dependency in rds_tcp_tune
-Date: Wed, 28 Oct 2026 17:50:38 +0100
-Message-ID: <20261028170520.847458590@linuxfoundation.org>
+Subject: [PATCH 6.1 0943/1887] btrfs: log new dentries when logging parent dir of a conflicting inode
+Date: Wed, 28 Oct 2026 17:50:39 +0100
+Message-ID: <20261028170520.870002177@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,83 +70,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Allison Henderson <achender@kernel.org>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit 6a877ececd6daa002a9a0002cd0fbca6592a9244 ]
+[ Upstream commit 9573a365ff9ff45da9222d3fe63695ce562beb24 ]
 
-syzbot reported a circular locking dependency in rds_tcp_tune() where
-sk_net_refcnt_upgrade() is called while holding the socket lock:
+If we log the parent directory of a conflicting inode, we are not logging
+the new dentries of the directory, so when we finish we have the parent
+directory's inode marked as logged but we did not log its new dentries.
+As a consequence if the parent directory is explicitly fsynced later and
+it does not have any new changes since we logged it, the fsync is a no-op
+and after a power failure the new dentries are missing.
 
-======================================================
-WARNING: possible circular locking dependency detected
-======================================================
-kworker/u10:8/15040 is trying to acquire lock:
-ffffffff8e9aaf80 (fs_reclaim){+.+.}-{0:0},
-at: __kmalloc_cache_noprof+0x4b/0x6f0
+Example scenario:
 
-but task is already holding lock:
-ffff88805a3c1ce0 (k-sk_lock-AF_INET6){+.+.}-{0:0},
-at: rds_tcp_tune+0xd7/0x930
+  $ mkdir foo
 
-The issue occurs because sk_net_refcnt_upgrade() performs memory
-allocation (via get_net_track() -> ref_tracker_alloc()) while the
-socket lock is held, creating a circular dependency with fs_reclaim.
+  $ sync
 
-Fix this by moving sk_net_refcnt_upgrade() outside the socket lock
-critical section. This is safe because the fields modified by the
-sk_net_refcnt_upgrade() call (sk_net_refcnt, ns_tracker) are not
-accessed by any concurrent code path at this point.
+  $rmdir foo
 
-v2:
-  - Corrected fixes tag
-  - check patch line wrap nits
-  - ai commentary nits
+  $ mkdir dir1
+  $ mkdir dir2
 
-Reported-by: syzbot+2e2cf5331207053b8106@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=2e2cf5331207053b8106
-Fixes: 3a58f13a881e ("net: rds: acquire refcount on TCP sockets")
-Signed-off-by: Allison Henderson <achender@kernel.org>
-Link: https://patch.msgid.link/20260227202336.167757-1-achender@kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+  # A file with the same name and parent as the directory we just deleted
+  # and was persisted in a past transaction. So the deleted directory's
+  # inode is a conflicting inode of this new file's inode.
+  $ touch foo
+
+  $ ln foo dir2/link
+
+  # The fsync on dir2 will log the parent directory (".") because the
+  # conflicting inode (deleted directory) does not exists anymore, but it
+  # it does not log its new dentries (dir1).
+  $ xfs_io -c "fsync" dir2
+
+  # This fsync on the parent directory is no-op, since the previous fsync
+  # logged it (but without logging its new dentries).
+  $ xfs_io -c "fsync" .
+
+  <power failure>
+
+  # After log replay dir1 is missing.
+
+Fix this by ensuring we log new dir dentries whenever we log the parent
+directory of a no longer existing conflicting inode.
+
+A test case for fstests will follow soon.
+
+Reported-by: Vyacheslav Kovalevsky <slava.kovalevskiy.2014@gmail.com>
+Link: https://lore.kernel.org/linux-btrfs/182055fa-e9ce-4089-9f5f-4b8a23e8dd91@gmail.com/
+Fixes: a3baaf0d786e ("Btrfs: fix fsync after succession of renames and unlink/rmdir")
+Reviewed-by: Boris Burkov <boris@bur.io>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rds/tcp.c | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ fs/btrfs/tree-log.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/net/rds/tcp.c b/net/rds/tcp.c
-index 020baff6ad514..5b4af800dcdc5 100644
---- a/net/rds/tcp.c
-+++ b/net/rds/tcp.c
-@@ -569,19 +569,25 @@ bool rds_tcp_tune(struct socket *sock)
- 	struct rds_tcp_net *rtn;
+diff --git a/fs/btrfs/tree-log.c b/fs/btrfs/tree-log.c
+index ceb2a9556fe7b..e361a608f3ae9 100644
+--- a/fs/btrfs/tree-log.c
++++ b/fs/btrfs/tree-log.c
+@@ -5793,6 +5793,7 @@ static int log_conflicting_inodes(struct btrfs_trans_handle *trans,
+ 				  struct btrfs_log_ctx *ctx)
+ {
+ 	struct btrfs_fs_info *fs_info = root->fs_info;
++	const bool orig_log_new_dentries = ctx->log_new_dentries;
+ 	int ret = 0;
  
- 	tcp_sock_set_nodelay(sock->sk);
--	lock_sock(sk);
- 	/* TCP timer functions might access net namespace even after
- 	 * a process which created this net namespace terminated.
- 	 */
- 	if (!sk->sk_net_refcnt) {
--		if (!maybe_get_net(net)) {
--			release_sock(sk);
-+		if (!maybe_get_net(net))
- 			return false;
--		}
-+		/*
-+		 * The sk_net_refcnt upgrade must be done before lock_sock()
-+		 * because netns_tracker_alloc() does a GFP_KERNEL allocation,
-+		 * which can trigger fs_reclaim and create a circular lock
-+		 * dependency with the socket lock.  The fields it modifies
-+		 * (sk_net_refcnt, ns_tracker) are not accessed by any
-+		 * concurrent code path at this point.
-+		 */
- 		sk->sk_net_refcnt = 1;
- 		netns_tracker_alloc(net, &sk->ns_tracker, GFP_KERNEL);
- 		sock_inuse_add(net, 1);
+ 	/*
+@@ -5854,8 +5855,12 @@ static int log_conflicting_inodes(struct btrfs_trans_handle *trans,
+ 			 * dir index key range logged for the directory. So we
+ 			 * must make sure the deletion is recorded.
+ 			 */
++			ctx->log_new_dentries = false;
+ 			ret = btrfs_log_inode(trans, BTRFS_I(inode),
+ 					      LOG_INODE_ALL, ctx);
++			if (!ret && ctx->log_new_dentries)
++				ret = log_new_dir_dentries(trans, BTRFS_I(inode), ctx);
++
+ 			btrfs_add_delayed_iput(inode);
+ 			if (ret)
+ 				break;
+@@ -5890,6 +5895,7 @@ static int log_conflicting_inodes(struct btrfs_trans_handle *trans,
+ 			break;
  	}
-+	lock_sock(sk);
- 	rtn = net_generic(net, rds_tcp_netid);
- 	if (rtn->sndbuf_size > 0) {
- 		sk->sk_sndbuf = rtn->sndbuf_size;
+ 
++	ctx->log_new_dentries = orig_log_new_dentries;
+ 	ctx->logging_conflict_inodes = false;
+ 	if (ret)
+ 		free_conflicting_inodes(ctx);
 -- 
 2.53.0
 
