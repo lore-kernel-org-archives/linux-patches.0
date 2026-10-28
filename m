@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793207457;
-	b=ET8xqg6IytGxMmg+plUOKP0yWeULzxPK+H+CsNvrJbC8zpUoNJToYtd+o4Hilh3ZQHOY
-	 4psPlbdmEhsy6IsgHzmhc1BWH9FTKeyKi4WHLl863ZtXeeh5X9JGJbkpEw6iPk5R+SmLj
-	 R87R7U0UL09u/LxnLtfFwctUvzYkJjOvuTLbqDdr6ID1PG8+rlt/A1FLkPwWPP98d3Ep4
-	 JaM6sJ1cbk7nFAPSmupxS8rGYdEo4l78QljE2Bgy3qBJ8+REm1VckeYdJi5LkovKOwouG
-	 xJ8ci/LMK72heJ+rRzJx+Wn7G0q8nLc7IwMPEFP5JJMt0JKRyzLdXL2FglB4Rlg8OSw==
+	t=1793207459;
+	b=oq097xc2407kkHyqj+Xazrc/SVmFLnptgQ5yGZ8o3e9nDFTgPXG7jStlCy1YUyqliQ9S
+	 PNTwDTdx7WtCwKYz0eze7KEmbrpTgOB8CgcXLcnc8PMcl4nO0xHW1z88RalJ3ZOOH97KB
+	 g8EVBYezlm1WZWj1a7FQ67VW3yZtPn3XFzr+oua5QDHXd6sRs004VDvGGCOMGf/7GucY6
+	 28PjaCxJwkmN7+qMB0hJYRLBVuLOGxM7vdrbIj8zN8UkVb5d3EUc2F9c/I2DvFDuH5Qmw
+	 IKNodOLm7V/Ku3nJPAxInFRMXdP2XRWH69M4esuy+kZAt9jgaVnXSqVZlNZE77EYSIA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793207457;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793207459;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=9YqC9vMKno2xZmdvnxuaqPtyRPfkG+3N/L3NY8UJTYA=;
-	b=wUeut3cFBEqRqBemX005XwrNzXym+pJ9KDBimRf6r9o3mFVz3rLODrJcIQ4pmMHKk8E2
-	 CmipSRktGqhzWdI/3tOvTq4iLX6DtXHElP61kX1BIJ2ckTzv1Zs+S7C+1VL95aT7V0dwT
-	 5eg6UjjIlQe7Q9M9IjDr5+rbOvAEmIRpGbqSb59yCb5iArJ/c7fZjLqKmmMe4U/a2CVSF
-	 R/GIvO5FZnRb1qmYJ/TWEE1oza1FW/PiTme99IaawP1xh90/8dT6iySmypvRnvql9NmYy
-	 gosIDKa7bU+6EG8QFiMhPgFQgNNo50KxxrHykhN2tH4baats7DaE6GISWJTDwDwrxvQ==
+	bh=u7zaThlMxq/EWt/UDKVSYfc5oyRVYJJUcNgTeV0Hku8=;
+	b=E3Pzl6bJdBqiVy5y8heqGo2jLu+1xqcafFFxbVaPtu/KXMaqgZhf1IKKtLAa5BG6LCmo
+	 SyvyLc34BTGjeivrZOvwgW5BTsDPaWCDxeOqMVIGUFVCY7wnb1vCezn11OltVS10L3uuZ
+	 ZSC5o34Xwmx/FkrThi9+g3GiLPZMNsmgrOoPLsmIZf64Qv78mhlKseGML5k+bG8U6oZCV
+	 kG2KimQ0xwncdVBJC6Fbo8LWE5JgSYw9qcNHPRvaYyhuRrX5nNXKj77h+FpfUl45jWwYJ
+	 a2FJeN4XQfDUMe3USX3jBYfMzRK5yT4KuLeovmiCRIsXX2p5/NoNlPcXa++fpMJz7eA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PMDVBMiF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YwfmuVdi;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B13D8606A31A;
-	Wed, 28 Oct 2026 17:10:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D407606A31C;
+	Wed, 28 Oct 2026 17:10:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PMDVBMiF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B1911F01825;
-	Wed, 28 Oct 2026 17:10:55 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YwfmuVdi
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EACB51F01828;
+	Wed, 28 Oct 2026 17:10:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793207456;
-	bh=9YqC9vMKno2xZmdvnxuaqPtyRPfkG+3N/L3NY8UJTYA=;
+	s=korg; t=1793207459;
+	bh=u7zaThlMxq/EWt/UDKVSYfc5oyRVYJJUcNgTeV0Hku8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PMDVBMiFdAskvHtC2Xvivm5EbJsCfS4Pl1lWTDYj0ggBeRdwx+bw+dzHZ5XsXoBf5
-	 yH5O/IWWbuA1/D+TyRi4h8gRyAUC/xkGtOx8sK3drR++xnsii33KbCuGmPxldvpGMD
-	 SU9F/zFl664q8v0zJKhB7BA6lrHSMk1MY8tFFYj8=
+	b=YwfmuVdi410Re6wAyAoe0Tt+2hem+k2IKTci0js3gqHSysr/r/psbE1AT6MGESoLJ
+	 0K5W+7m60AxJDBHYDtwZngASLnzwlyPI+T1qCxUsgLoi9eQ+DzzW/3rCKvSJWEJijR
+	 uWiiRMz2Y+51yWh7CfOpljAsaLy4ouWpIu+uOTbA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Len Brown <len.brown@intel.com>,
+	Svyatoslav Ryhel <clamor95@gmail.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 023/247] tools/power turbostat: Fix add_counter issue if > 24 counters.
-Date: Wed, 28 Oct 2026 17:57:06 +0100
-Message-ID: <20261028165947.914346632@linuxfoundation.org>
+Subject: [PATCH 6.12 024/247] power: supply: generic-adc-battery: Fix temperature IIO channel conversion
+Date: Wed, 28 Oct 2026 17:57:07 +0100
+Message-ID: <20261028165947.938509246@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165947.349197979@linuxfoundation.org>
 References: <20261028165947.349197979@linuxfoundation.org>
@@ -67,69 +68,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Len Brown <len.brown@intel.com>
+From: Svyatoslav Ryhel <clamor95@gmail.com>
 
-[ Upstream commit 154b96dab83fd953b9b82c8bcfa041cd6a9d74d3 ]
+[ Upstream commit 6bca94e64255053ab2aa56f2588fda73d399b790 ]
 
-We allocate space for added counters ahead of time,
-and we arbitrarily chose 24 added counters of each type.
-If a future code flow hits this limit and continues,
-and then removes counters, we do a phantom increment
-and lose track of the number of added counters.
+Temperature IIO channel data is provided in milli-degrees, while
+POWER_SUPPLY_PROP_TEMP is expected to be in deci-degrees. Adjust the
+existing logic to reflect this conversion properly.
 
-Increment the count only if there is no error.
-
-Fixes: 388e9c8134be ("tools/power turbostat: Make extensible via the --add parameter")
-Assisted-by: Claude: Claude Sonnet 4.6
-Signed-off-by: Len Brown <len.brown@intel.com>
+Fixes: 33088c0513818 ("power: supply: generic-adc-battery: add temperature support")
+Signed-off-by: Svyatoslav Ryhel <clamor95@gmail.com>
+Link: https://patch.msgid.link/20260926142905.206215-2-clamor95@gmail.com
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/power/x86/turbostat/turbostat.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/power/supply/generic-adc-battery.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/tools/power/x86/turbostat/turbostat.c b/tools/power/x86/turbostat/turbostat.c
-index 8b6180baa188d..4947c38fc4f3c 100644
---- a/tools/power/x86/turbostat/turbostat.c
-+++ b/tools/power/x86/turbostat/turbostat.c
-@@ -9330,10 +9330,11 @@ int add_counter(unsigned int msr_num, char *path, char *name,
- 				fprintf(stderr, "%s: %s FOUND\n", __func__, name);
- 			break;
- 		}
--		if (sys.added_thread_counters++ >= MAX_ADDED_THREAD_COUNTERS) {
-+		if (sys.added_thread_counters >= MAX_ADDED_THREAD_COUNTERS) {
- 			warnx("ignoring thread counter %s", name);
- 			return -1;
- 		}
-+		sys.added_thread_counters++;
- 		break;
- 	case SCOPE_CORE:
- 		msrp = find_msrp_by_name(sys.cp, name);
-@@ -9342,10 +9343,11 @@ int add_counter(unsigned int msr_num, char *path, char *name,
- 				fprintf(stderr, "%s: %s FOUND\n", __func__, name);
- 			break;
- 		}
--		if (sys.added_core_counters++ >= MAX_ADDED_CORE_COUNTERS) {
-+		if (sys.added_core_counters >= MAX_ADDED_CORE_COUNTERS) {
- 			warnx("ignoring core counter %s", name);
- 			return -1;
- 		}
-+		sys.added_core_counters++;
- 		break;
- 	case SCOPE_PACKAGE:
- 		msrp = find_msrp_by_name(sys.pp, name);
-@@ -9354,10 +9356,11 @@ int add_counter(unsigned int msr_num, char *path, char *name,
- 				fprintf(stderr, "%s: %s FOUND\n", __func__, name);
- 			break;
- 		}
--		if (sys.added_package_counters++ >= MAX_ADDED_PACKAGE_COUNTERS) {
-+		if (sys.added_package_counters >= MAX_ADDED_PACKAGE_COUNTERS) {
- 			warnx("ignoring package counter %s", name);
- 			return -1;
- 		}
-+		sys.added_package_counters++;
- 		break;
- 	default:
- 		warnx("ignoring counter %s with unknown scope", name);
+diff --git a/drivers/power/supply/generic-adc-battery.c b/drivers/power/supply/generic-adc-battery.c
+index 7bdc6b2636090..aebc824aa2ede 100644
+--- a/drivers/power/supply/generic-adc-battery.c
++++ b/drivers/power/supply/generic-adc-battery.c
+@@ -90,12 +90,17 @@ static int gab_read_channel(struct gab *adc_bat, enum gab_chan_type channel,
+ 	int ret;
+ 
+ 	ret = iio_read_channel_processed(adc_bat->channel[channel], result);
+-	if (ret < 0)
++	if (ret < 0) {
+ 		dev_err(&adc_bat->psy->dev, "read channel error: %d\n", ret);
++		return ret;
++	}
++
++	if (channel == GAB_TEMP)
++		*result /= 100; /* Convert from milli- to deci-degree */
+ 	else
+ 		*result *= 1000;
+ 
+-	return ret;
++	return 0;
+ }
+ 
+ static int gab_get_property(struct power_supply *psy,
 -- 
 2.53.0
 
