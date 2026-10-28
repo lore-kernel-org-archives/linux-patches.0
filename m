@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793208173;
-	b=x1bHU+6+VVLX1SoNOe923QZU84a+12cHyQG/ZrF8VoMosolip7RkDguya86jzBXBaoOV
-	 hxBDGA+ewI71Xe9odhKfv8VPubzsOCLK5hQ6RoloqiqRIjeLr9nfsZlRkk8bjklsv4SDs
-	 OaIsvJA8lcIPkI0I0uY/4Rv7l3d9+Z8nYJDq/JOUhWZ5PQiwrSmx76hoasS8B/AQTisrB
-	 LMmXQ2vfkEDYxlK85sqQlrC6StrnWkZB5JOiLzVMpUEyaFSxANKIZC0kxyFF4oIbUV1B5
-	 53yNNeis5givquTqdavtErL6RlkLwR9Q34Yr53S6iqUOiTWHROKoRB9NcddpNPrGsiQ==
+	t=1793208175;
+	b=Hp8iFY3AUZCkbZ8UlmcQadDXEzkgUrxRZw3NU1Pj2dhibyZLt+IUVOZLHmeihEZVY68/
+	 vcf47jEUB2h55DAKxQKI5g+lmP1+aJrn4T8+SylU71bqMbJgms6ffBEYwSW255VMNVYYs
+	 gDh6bUEDv6GqV5hxNgloRW3wJcdltDfYNVcdkKrRXDIXIjuHuK0Kohtl/uKVlWR8vGsS+
+	 sEmh4bN/HAKEnUSaEqNnezoCI4oS06HpM0VGONeJEyL1TWULzrr/MPu7Fl//Y/zA3HnLj
+	 kboQPqPUmFsG54y/gisCazAYiQeMMmtaBZBayNsUDLrwf0JKu/dl+UKupnpOO18owLA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793208173;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793208175;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=3Ofo80YkLAOKeBNGvV+U71v3nxQKWyHotpQL/+KXBFo=;
-	b=hfXz9d/YN7pizB8jpmWqJj5dwaO4KM2wCkDxeyJPFgRSZIWm+JAqbhNAlq/+6tLYOLp5
-	 ZFYo3hJKDQObyBruwxudpPvHAeYu3WVKfpfKh3i2dMz7Fvveu3qXEyU/KU3o23A5xfsW4
-	 XJvOz97e+JLtlgPn2J0/uGGuEtfVa2eZiB9j2Kbs+HD/l+whIfhrHH5BsviUHZ3VSu891
-	 7plHNrA+gvDoZLGfRPCSefwe45Xt+rxVKlKbrGb3XlqQK9ZHY2kUBnLB6+LPED1fYpcGa
-	 loXx++ap59BTXP7ecLUiifufEYD5NpNhJFQBgI9iFfg7MI1nSzLtAx8/OsAGMxlxXbg==
+	bh=N1thoqaDWiTRKC/JDp5xQPTQ9TF2CUHr+51i6P03GQA=;
+	b=en/kgwSa8afHFmnmPexu6RCbmC63RBok6XDnwhK0+n39ZX4TxUcecf+7oR7b6/G+WS9K
+	 LFOPz04xowiSTu2mol0/W6eugJbbgtcVCwo/6HLXq20iLdSSDAXsh3mc01F7HKoAhKUWK
+	 ifufo7DeDbzZrgezsVwBr3eBi61wSrbjIGzyRYUoBCR6Z9S2GavqqjufvKAxRcPjHHvFs
+	 ozC6Snbt0v+3H2aDy/TB0OYKej0dGX/+LT/JJODsqlJZTuN9IxOTpnAN++OhSBWC3+Q18
+	 zJNIh2bmRH/alPEYyepnwWvEdH7PR5T5uwNIikeczxJ/N+lMulKYwUUeGmYm5NpQm2g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="tnj8/XbU";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QDDDQpmi;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2ACC0606A31C;
-	Wed, 28 Oct 2026 17:22:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3BCF606A31C;
+	Wed, 28 Oct 2026 17:22:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tnj8/XbU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C77E1F01825;
-	Wed, 28 Oct 2026 17:22:51 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QDDDQpmi
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 517AF1F01828;
+	Wed, 28 Oct 2026 17:22:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793208172;
-	bh=3Ofo80YkLAOKeBNGvV+U71v3nxQKWyHotpQL/+KXBFo=;
+	s=korg; t=1793208174;
+	bh=N1thoqaDWiTRKC/JDp5xQPTQ9TF2CUHr+51i6P03GQA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tnj8/XbU6JDWJk6y8PE4IzBDr7Hel0VErc8eyfa51+ERKLVDoRa0GpQNlS3T0Epg/
-	 BtrXJdt52y5nZJ3O0M1t9SY1SeWh4IFqpdXdI0paGdk0ro/7r5CxTQ5vgaDlG8tuU4
-	 l1RGNwCOt4W/sMD9hCXX6f6dKMc5yi771Cr4znE0=
+	b=QDDDQpmiizZoAEZPf9QLA9IHwCJuF2pBqnnq8YvhcQzqTRCWkl+/kP8IesqoOcMSZ
+	 eyo0eWXhpZnnrxKcgA4EKkz88cDjZWQ2DFsEh8U0JqclQI63LREvU7fHiN90jCc4gE
+	 D0XV77Do9XZx5JFo88FWs0badq2xN7qGqtDIUdDA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-dev@google.com>,
-	Nilesh Javali <njavali@marvell.com>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
+	stable@kernel.org,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 026/516] scsi: qla2xxx: Validate BSG request_len before reading vendor_cmd[]
-Date: Wed, 28 Oct 2026 17:52:58 +0100
-Message-ID: <20261028170004.147120815@linuxfoundation.org>
+Subject: [PATCH 5.10 027/516] f2fs: embed f2fs_gc_kthread in f2fs_sb_info
+Date: Wed, 28 Oct 2026 17:52:59 +0100
+Message-ID: <20261028170004.171600545@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -69,142 +69,224 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nilesh Javali <njavali@marvell.com>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit 4cf38dd9465736141263ebb63375868311a0ec81 ]
+[ Upstream commit 3d7bca9d583793bb7d0bac0d95a24ddd2e129eed ]
 
-The FC BSG transport allocates job->request via memdup_user() using the
-exact user-supplied request_len. For FC_BSG_HST_VENDOR,
-fc_bsg_host_dispatch() only guarantees request_len covers msgcode and
-vendor_id; it does not account for the vendor_cmd[] flexible array.
+Instead of allocating f2fs_gc_kthread dynamically, embed it in
+f2fs_sb_info. This simplifies lifetime management and prepares for
+fixing race conditions during teardown.
 
-qla2xxx then reads the command selector vendor_cmd[0] and, in several
-sub-handlers, vendor_cmd[1]/[2] or structures overlaid on the vendor
-command area without verifying request_len. A caller holding
-CAP_SYS_RAWIO can submit a short request whose vendor_id matches the
-host, triggering out-of-bounds heap reads (KASAN-detectable, and able to
-mis-select a command or panic).
+- __sbi_store			- remount|shutdown
+				 - f2fs_stop_gc_thread
+ - access sbi->gc_thread
+				  - sbi->gc_thread = NULL
+ - access sbi->gc_thread->f2fs_gc_task
 
-Add a central guard in qla2x00_process_vendor_specific() so the selector
-is always in bounds, restrict the early vendor_cmd[0] read in
-qla24xx_bsg_request() to sufficiently long vendor messages, and add
-request_len checks to the sub-handlers that read further:
-qla24xx_proc_fcp_prio_cfg_cmd(), qla2x00_process_loopback(),
-qla84xx_reset(), qla84xx_updatefw(), qla2x00_read_optrom(),
-qla2x00_update_optrom(), qlafx00_mgmt_cmd() and
-qla28xx_validate_flash_image().
-
-Fixes: 01e0e15c8b3b ("scsi: don't use fc_bsg_job::request and fc_bsg_job::reply directly")
-Cc: stable@vger.kernel.org
-Reported-by: Sashiko <sashiko-dev@google.com>
-Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Link: https://patch.msgid.link/20260730155838.2119230-31-njavali@marvell.com
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
-[ adapted validation to the older qla2xxx handler layout. ]
+Fixes: 52190933c37a ("f2fs: sysfs: introduce critical_task_priority")
+Fixes: 7950e9ac638e ("f2fs: stop gc/discard thread after fs shutdown")
+Cc: stable@kernel.org
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+[ Omitted hunks for upstream GC features absent from Linux 5.10. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/qla2xxx/qla_bsg.c | 39 ++++++++++++++++++++++++++++++++++
- 1 file changed, 39 insertions(+)
+ fs/f2fs/debug.c |  4 ----
+ fs/f2fs/f2fs.h  | 16 +++++++++++++++-
+ fs/f2fs/gc.c    | 30 +++++++++++-------------------
+ fs/f2fs/gc.h    | 14 --------------
+ fs/f2fs/super.c |  4 ++--
+ fs/f2fs/sysfs.c |  8 ++++----
+ 6 files changed, 32 insertions(+), 44 deletions(-)
 
-diff --git a/drivers/scsi/qla2xxx/qla_bsg.c b/drivers/scsi/qla2xxx/qla_bsg.c
-index 19ed2d86ad2d2..5a00db769f308 100644
---- a/drivers/scsi/qla2xxx/qla_bsg.c
-+++ b/drivers/scsi/qla2xxx/qla_bsg.c
-@@ -140,6 +140,12 @@ qla24xx_proc_fcp_prio_cfg_cmd(struct bsg_job *bsg_job)
- 		goto exit_fcp_prio_cfg;
- 	}
+diff --git a/fs/f2fs/debug.c b/fs/f2fs/debug.c
+index 5f52d004105ae..4e2a350ca8457 100644
+--- a/fs/f2fs/debug.c
++++ b/fs/f2fs/debug.c
+@@ -261,10 +261,6 @@ static void update_mem_info(struct f2fs_sb_info *sbi)
+ get_cache:
+ 	si->cache_mem = 0;
  
-+	if (bsg_job->request_len <
-+	    sizeof(struct fc_bsg_request) + 2 * sizeof(uint32_t)) {
-+		ret = -EINVAL;
-+		goto exit_fcp_prio_cfg;
-+	}
+-	/* build gc */
+-	if (sbi->gc_thread)
+-		si->cache_mem += sizeof(struct f2fs_gc_kthread);
+-
+ 	/* build merge flush thread */
+ 	if (SM_I(sbi)->fcc_info)
+ 		si->cache_mem += sizeof(struct flush_cmd_control);
+diff --git a/fs/f2fs/f2fs.h b/fs/f2fs/f2fs.h
+index 948e3512f60ff..cead30cab94bc 100644
+--- a/fs/f2fs/f2fs.h
++++ b/fs/f2fs/f2fs.h
+@@ -1373,6 +1373,20 @@ struct decompress_io_ctx {
+ #define MAX_COMPRESS_LOG_SIZE		8
+ #define MAX_COMPRESS_WINDOW_SIZE(log_size)	((PAGE_SIZE) << (log_size))
+ 
++struct f2fs_gc_kthread {
++	struct task_struct *f2fs_gc_task;
++	wait_queue_head_t gc_wait_queue_head;
 +
- 	/* Get the sub command */
- 	oper = bsg_request->rqst_data.h_vendor.vendor_cmd[1];
- 
-@@ -733,6 +739,10 @@ qla2x00_process_loopback(struct bsg_job *bsg_job)
- 		return -EIO;
- 	}
- 
-+	if (bsg_job->request_len <
-+	    sizeof(struct fc_bsg_request) + 3 * sizeof(uint32_t))
-+		return -EINVAL;
++	/* for gc sleep time */
++	unsigned int urgent_sleep_time;
++	unsigned int min_sleep_time;
++	unsigned int max_sleep_time;
++	unsigned int no_gc_sleep_time;
 +
- 	memset(&elreq, 0, sizeof(elreq));
- 
- 	elreq.req_sg_cnt = dma_map_sg(&ha->pdev->dev,
-@@ -965,6 +975,10 @@ qla84xx_reset(struct bsg_job *bsg_job)
- 		return -EINVAL;
- 	}
- 
-+	if (bsg_job->request_len <
-+	    sizeof(struct fc_bsg_request) + 2 * sizeof(uint32_t))
-+		return -EINVAL;
++	/* for changing gc mode */
++	unsigned int gc_wake;
++};
 +
- 	flag = bsg_request->rqst_data.h_vendor.vendor_cmd[1];
- 
- 	rval = qla84xx_reset_chip(vha, flag == A84_ISSUE_RESET_DIAG_FW);
-@@ -1009,6 +1023,10 @@ qla84xx_updatefw(struct bsg_job *bsg_job)
- 		return -EINVAL;
- 	}
- 
-+	if (bsg_job->request_len <
-+	    sizeof(struct fc_bsg_request) + 2 * sizeof(uint32_t))
-+		return -EINVAL;
-+
- 	sg_cnt = dma_map_sg(&ha->pdev->dev, bsg_job->request_payload.sg_list,
- 		bsg_job->request_payload.sg_cnt, DMA_TO_DEVICE);
- 	if (!sg_cnt) {
-@@ -1459,6 +1477,10 @@ qla2x00_read_optrom(struct bsg_job *bsg_job)
- 	struct qla_hw_data *ha = vha->hw;
- 	int rval = 0;
- 
-+	if (bsg_job->request_len <
-+	    sizeof(struct fc_bsg_request) + 2 * sizeof(uint32_t))
-+		return -EINVAL;
-+
- 	if (ha->flags.nic_core_reset_hdlr_active)
- 		return -EBUSY;
- 
-@@ -1496,6 +1518,10 @@ qla2x00_update_optrom(struct bsg_job *bsg_job)
- 	struct qla_hw_data *ha = vha->hw;
- 	int rval = 0;
- 
-+	if (bsg_job->request_len <
-+	    sizeof(struct fc_bsg_request) + 2 * sizeof(uint32_t))
-+		return -EINVAL;
-+
- 	mutex_lock(&ha->optrom_mutex);
- 	rval = qla2x00_optrom_setup(bsg_job, vha, 1);
- 	if (rval) {
-@@ -1987,6 +2013,11 @@ qlafx00_mgmt_cmd(struct bsg_job *bsg_job)
- 	struct fc_port *fcport;
- 	char  *type = "FC_BSG_HST_FX_MGMT";
- 
-+	if (bsg_job->request_len <
-+	    sizeof(struct fc_bsg_request) + sizeof(uint32_t) +
-+	    sizeof(struct qla_mt_iocb_rqst_fx00))
-+		return -EINVAL;
-+
- 	/* Copy the IOCB specific information */
- 	piocb_rqst = (struct qla_mt_iocb_rqst_fx00 *)
- 	    &bsg_request->rqst_data.h_vendor.vendor_cmd[1];
-@@ -2463,6 +2494,14 @@ static int
- qla2x00_process_vendor_specific(struct bsg_job *bsg_job)
+ struct f2fs_sb_info {
+ 	struct super_block *sb;			/* pointer to VFS super block */
+ 	struct proc_dir_entry *s_proc;		/* proc entry */
+@@ -1488,7 +1502,7 @@ struct f2fs_sb_info {
+ 						 * semaphore for GC, avoid
+ 						 * race between GC and GC or CP
+ 						 */
+-	struct f2fs_gc_kthread	*gc_thread;	/* GC thread */
++	struct f2fs_gc_kthread gc_thread;	/* GC thread */
+ 	struct atgc_management am;		/* atgc management */
+ 	unsigned int cur_victim_sec;		/* current victim section num */
+ 	unsigned int gc_mode;			/* current GC state */
+diff --git a/fs/f2fs/gc.c b/fs/f2fs/gc.c
+index 379839f5b4b74..651dd392b5b93 100644
+--- a/fs/f2fs/gc.c
++++ b/fs/f2fs/gc.c
+@@ -30,8 +30,8 @@ static unsigned int count_bits(const unsigned long *addr,
+ static int gc_thread_func(void *data)
  {
- 	struct fc_bsg_request *bsg_request = bsg_job->request;
-+	scsi_qla_host_t *vha = shost_priv(fc_bsg_to_shost(bsg_job));
-+
-+	if (bsg_job->request_len <
-+	    sizeof(struct fc_bsg_request) + sizeof(uint32_t)) {
-+		ql_log(ql_log_warn, vha, 0x7000,
-+		       "BSG request too small for vendor cmd.\n");
-+		return -EINVAL;
-+	}
+ 	struct f2fs_sb_info *sbi = data;
+-	struct f2fs_gc_kthread *gc_th = sbi->gc_thread;
+-	wait_queue_head_t *wq = &sbi->gc_thread->gc_wait_queue_head;
++	struct f2fs_gc_kthread *gc_th = &sbi->gc_thread;
++	wait_queue_head_t *wq = &sbi->gc_thread.gc_wait_queue_head;
+ 	unsigned int wait_ms;
  
- 	switch (bsg_request->rqst_data.h_vendor.vendor_cmd[0]) {
- 	case QL_VND_LOOPBACK:
+ 	wait_ms = gc_th->min_sleep_time;
+@@ -130,16 +130,10 @@ static int gc_thread_func(void *data)
+ 
+ int f2fs_start_gc_thread(struct f2fs_sb_info *sbi)
+ {
+-	struct f2fs_gc_kthread *gc_th;
++	struct f2fs_gc_kthread *gc_th = &sbi->gc_thread;
+ 	dev_t dev = sbi->sb->s_bdev->bd_dev;
+ 	int err = 0;
+ 
+-	gc_th = f2fs_kmalloc(sbi, sizeof(struct f2fs_gc_kthread), GFP_KERNEL);
+-	if (!gc_th) {
+-		err = -ENOMEM;
+-		goto out;
+-	}
+-
+ 	gc_th->urgent_sleep_time = DEF_GC_THREAD_URGENT_SLEEP_TIME;
+ 	gc_th->min_sleep_time = DEF_GC_THREAD_MIN_SLEEP_TIME;
+ 	gc_th->max_sleep_time = DEF_GC_THREAD_MAX_SLEEP_TIME;
+@@ -147,27 +141,25 @@ int f2fs_start_gc_thread(struct f2fs_sb_info *sbi)
+ 
+ 	gc_th->gc_wake= 0;
+ 
+-	sbi->gc_thread = gc_th;
+-	init_waitqueue_head(&sbi->gc_thread->gc_wait_queue_head);
+-	sbi->gc_thread->f2fs_gc_task = kthread_run(gc_thread_func, sbi,
++	init_waitqueue_head(&gc_th->gc_wait_queue_head);
++	gc_th->f2fs_gc_task = kthread_run(gc_thread_func, sbi,
+ 			"f2fs_gc-%u:%u", MAJOR(dev), MINOR(dev));
+ 	if (IS_ERR(gc_th->f2fs_gc_task)) {
+ 		err = PTR_ERR(gc_th->f2fs_gc_task);
+-		kfree(gc_th);
+-		sbi->gc_thread = NULL;
++		gc_th->f2fs_gc_task = NULL;
+ 	}
+-out:
+ 	return err;
+ }
+ 
+ void f2fs_stop_gc_thread(struct f2fs_sb_info *sbi)
+ {
+-	struct f2fs_gc_kthread *gc_th = sbi->gc_thread;
+-	if (!gc_th)
++	struct f2fs_gc_kthread *gc_th = &sbi->gc_thread;
++
++	if (!gc_th->f2fs_gc_task)
+ 		return;
++
+ 	kthread_stop(gc_th->f2fs_gc_task);
+-	kfree(gc_th);
+-	sbi->gc_thread = NULL;
++	gc_th->f2fs_gc_task = NULL;
+ }
+ 
+ static int select_gc_type(struct f2fs_sb_info *sbi, int gc_type)
+diff --git a/fs/f2fs/gc.h b/fs/f2fs/gc.h
+index 0c8dae12dc512..f29c3ca07d70c 100644
+--- a/fs/f2fs/gc.h
++++ b/fs/f2fs/gc.h
+@@ -30,20 +30,6 @@
+ /* Search max. number of dirty segments to select a victim segment */
+ #define DEF_MAX_VICTIM_SEARCH 4096 /* covers 8GB */
+ 
+-struct f2fs_gc_kthread {
+-	struct task_struct *f2fs_gc_task;
+-	wait_queue_head_t gc_wait_queue_head;
+-
+-	/* for gc sleep time */
+-	unsigned int urgent_sleep_time;
+-	unsigned int min_sleep_time;
+-	unsigned int max_sleep_time;
+-	unsigned int no_gc_sleep_time;
+-
+-	/* for changing gc mode */
+-	unsigned int gc_wake;
+-};
+-
+ struct gc_inode_list {
+ 	struct list_head ilist;
+ 	struct radix_tree_root iroot;
+diff --git a/fs/f2fs/super.c b/fs/f2fs/super.c
+index 8ab7d3f9a764b..ad0f29f579463 100644
+--- a/fs/f2fs/super.c
++++ b/fs/f2fs/super.c
+@@ -1982,11 +1982,11 @@ static int f2fs_remount(struct super_block *sb, int *flags, char *data)
+ 	 */
+ 	if ((*flags & SB_RDONLY) ||
+ 			F2FS_OPTION(sbi).bggc_mode == BGGC_MODE_OFF) {
+-		if (sbi->gc_thread) {
++		if (sbi->gc_thread.f2fs_gc_task) {
+ 			f2fs_stop_gc_thread(sbi);
+ 			need_restart_gc = true;
+ 		}
+-	} else if (!sbi->gc_thread) {
++	} else if (!sbi->gc_thread.f2fs_gc_task) {
+ 		err = f2fs_start_gc_thread(sbi);
+ 		if (err)
+ 			goto restore_opts;
+diff --git a/fs/f2fs/sysfs.c b/fs/f2fs/sysfs.c
+index f57df76ee71cc..f777c3285fa14 100644
+--- a/fs/f2fs/sysfs.c
++++ b/fs/f2fs/sysfs.c
+@@ -53,7 +53,7 @@ static ssize_t f2fs_sbi_show(struct f2fs_attr *a,
+ static unsigned char *__struct_ptr(struct f2fs_sb_info *sbi, int struct_type)
+ {
+ 	if (struct_type == GC_THREAD)
+-		return (unsigned char *)sbi->gc_thread;
++		return (unsigned char *)&sbi->gc_thread;
+ 	else if (struct_type == SM_INFO)
+ 		return (unsigned char *)SM_I(sbi);
+ 	else if (struct_type == DCC_INFO)
+@@ -406,10 +406,10 @@ static ssize_t __sbi_store(struct f2fs_attr *a,
+ 			sbi->gc_mode = GC_NORMAL;
+ 		} else if (t == 1) {
+ 			sbi->gc_mode = GC_URGENT_HIGH;
+-			if (sbi->gc_thread) {
+-				sbi->gc_thread->gc_wake = 1;
++			if (sbi->gc_thread.f2fs_gc_task) {
++				sbi->gc_thread.gc_wake = 1;
+ 				wake_up_interruptible_all(
+-					&sbi->gc_thread->gc_wait_queue_head);
++					&sbi->gc_thread.gc_wait_queue_head);
+ 				wake_up_discard_thread(sbi, true);
+ 			}
+ 		} else if (t == 2) {
 -- 
 2.53.0
 
