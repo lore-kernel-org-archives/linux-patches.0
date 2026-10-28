@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214782;
-	b=fltfWH3AKTyCkALLUfKlLzbjAx365ze78rWLTDKHO8IUTxxqWqqO3ikeiRSXsaYLPa7A
-	 jIcQsZOrDSN4WVSiU2DVnjnfqHMervKj6WwdIzQMxH7cTbsswcj25tJqQAmnOXVxhkTNZ
-	 H8VNqHN/57WfvyqKtQzTnwsbkeOG0wjUg+Lj0v00DSZqzy8PX75LPsrvj+dyYVCr0gJQZ
-	 +ZiY6iF5WlqTSAYmeDoZ/7cFJMPHDTotNHwyGjPpdWeEdxtoh+GjLrzWWMALueoexklL1
-	 tYyi+2JDEKxesy1yYVpjzzbEEA7TbiEnJWNvdjRiSKsEbTaOq5/lR5BArMXhqdAmZBQ==
+	t=1793214785;
+	b=mCQT230ZeOneScvUyyl25gtQsXPuHdOMywlBKVosVuu7/ntaK+lt54Cld1CVRe0xTmsG
+	 6S+uzX7N54fcmAeNr6xtr/qvwznfxzEAjcOt0zhSkamh7TXEjUrZytqyneCf2kNSnTb0X
+	 AoQQ6qWzkgFiAx9vE/sFY4pOR2OoYE8jEc3DmftOsxuZuvPvLScDPjL0+3QifAN8ImaI3
+	 giMJ0B31Htu+61lRTiWevAJrMH/fHit+XarMv/MI8XEi/CF5reS5/gJhfYkmNZDd/Gi48
+	 R0rww6PRV/O+uBkQM3s4E+M/jIX257KKGNyhx7k78bzNFRZFvv3CvTdi4XXYvFxtY+A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214782;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214785;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=xI0heFA8g2SN0Swp/v19/MjTFiQKmiaSa6GZtI0GIdQ=;
-	b=zOh0R8MJmd6gzORrvvLnrKvatek2ZFkmOebgoED9EC8lNADN/4++AE/+BpMwVN1UNNes
-	 BC3KIdNoElFsuTtE+rQMxWYEJ9XIw+6Pzjt5e9sRp56sLtzwvAWb5BPmo1MwNZeCvO2Ty
-	 SyEg2Stc4Nl3k8oYofQYDOlBnze3eT3iCDboJd2SiY720QTTV4q8w3uvKQEmBB7LoPMap
-	 K+A9P9fEcKEC3TihoyuypNX9svQ88iinpfd2oQmUv0bcC8dyDlDiPhaYEbDKAyc1Dxq+x
-	 fEwLreuwbOL/k1LpL3P0LVrVwZSRkM0dOuQJwHX2gGvc7LMRDnOkP1C4DVjOfOlHN2w==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=Bzj0KSfUKPr0M6yyjZpVwSbYTkiAcRIt/q8h+Ke9ARU=;
+	b=YPC0iLaqz/fRjsdK0MkiZwYXLzBLZYpiECDGh3slp487lodt+z+erJc8EFewbOg2gp4s
+	 J34PPNMUHbH6d4QcvgN279Z6v6spyFhyqhE8RbDo5WK/zM8gmip1bihE+Nu+VWGZgjwuV
+	 /XgzCSPbJzzljWnJU4yxkOGcHnAo3oVcj8mWpOagATHAd8QtZ0DzEeGuGZLv7huVpDjdd
+	 rdJH0QTtUQUe+Dmm9LK4Yohan2uPFdmY0+FnV2hrRfB008Bt2fVAvm59YpglBsDXgcksJ
+	 NZSF0Flp71q+Xc+keoeJg38vDhVWLu3fVO+aGgH0tU1cHufHafALzMj4vjXpYjjdC8A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JvI5L7+m;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hqC8W9kw;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72AC0606A31D;
-	Wed, 28 Oct 2026 19:13:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5032A606B7CF;
+	Wed, 28 Oct 2026 19:13:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JvI5L7+m
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CBF81F01828;
-	Wed, 28 Oct 2026 19:13:01 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hqC8W9kw
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A38F1F01825;
+	Wed, 28 Oct 2026 19:13:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214782;
-	bh=xI0heFA8g2SN0Swp/v19/MjTFiQKmiaSa6GZtI0GIdQ=;
+	s=korg; t=1793214785;
+	bh=Bzj0KSfUKPr0M6yyjZpVwSbYTkiAcRIt/q8h+Ke9ARU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JvI5L7+mp/i47Lh6vd4378sWs2BAe7KoqgkCDILW5Irw8mZOVTkFsntPyUBxIpr7o
-	 /zwaiWFJEZFJmtsfzgC52hxlQWNxHmXkcEDj/iVQR0lNpW5SUjfdxAcCwwl6YPZ0e8
-	 2JB0L+M+BmHjxdzYgef5q4+NjgSJXw7Fl+WTK78w=
+	b=hqC8W9kw8pF9bSZ9eAeinaY0oLVkguDF7qInq387ADZvZNjDcyp4SDfEydoFzrNju
+	 znVnGxZpxlhl7b7FtPBt8TsuusBbAxznqWeGftlPTFE5x8IYIwclGyNrtYR8G0WaOH
+	 nFdLd4piWddq1twVX9YxxwZO/G85wv7Y5TBju4gQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lee Jones <lee@kernel.org>,
-	=?UTF-8?q?G=C3=BCnther=20Noack?= <gnoack@google.com>,
-	Benjamin Tissoires <bentiss@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Justin Iurman <justin.iurman@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0979/1887] HID: logitech-hidpp: Prevent use-after-free on force feedback initialisation failure
-Date: Wed, 28 Oct 2026 17:51:15 +0100
-Message-ID: <20261028170521.688598689@linuxfoundation.org>
+Subject: [PATCH 6.1 0980/1887] net: ioam6: fix OOB and missing lock
+Date: Wed, 28 Oct 2026 17:51:16 +0100
+Message-ID: <20261028170521.712244338@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -63,57 +62,69 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lee Jones <lee@kernel.org>
+From: Justin Iurman <justin.iurman@gmail.com>
 
-[ Upstream commit f7a4c78bfeb320299c1b641500fe7761eadbd101 ]
+[ Upstream commit b30b1675aa2bcf0491fd3830b051df4e08a7c8ca ]
 
-Presently, if the force feedback initialisation fails when probing the
-Logitech G920 Driving Force Racing Wheel for Xbox One, an error number
-will be returned and propagated before the userspace infrastructure
-(sysfs and /dev/input) has been torn down.  If userspace ignores the
-errors and continues to use its references to these dangling entities, a
-UAF will promptly follow.
+When trace->type.bit6 is set:
 
-We have 2 options; continue to return the error, but ensure that all of
-the infrastructure is torn down accordingly or continue to treat this
-condition as a warning by emitting the message but returning success.
-It is thought that the original author's intention was to emit the
-warning but keep the device functional, less the force feedback feature,
-so let's go with that.
+    if (trace->type.bit6) {
+        ...
+        queue = skb_get_tx_queue(dev, skb);
+        qdisc = rcu_dereference(queue->qdisc);
 
-Signed-off-by: Lee Jones <lee@kernel.org>
-Reviewed-by: Günther Noack <gnoack@google.com>
-Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
+This code can lead to an out-of-bounds access of the dev->_tx[] array
+when is_input is true. In such a case, the packet is on the RX path and
+skb->queue_mapping contains the RX queue index of the ingress device. If
+the ingress device has more RX queues than the egress device (dev) has
+TX queues, skb_get_queue_mapping(skb) will exceed dev->num_tx_queues.
+Add a check to avoid this situation since skb_get_tx_queue() does not
+clamp the index. This issue has also revealed that per queue visibility
+cannot be accurate and will be replaced later as a new feature.
+
+While at it, add missing lock around qdisc_qstats_qlen_backlog(). The
+function __ioam6_fill_trace_data() is called from both softirq and
+process contexts, hence the use of spin_lock_bh() here.
+
+Fixes: b63c5478e9cb ("ipv6: ioam: Support for Queue depth data field")
+Reported-by: Jakub Kicinski <kuba@kernel.org>
+Closes: https://lore.kernel.org/netdev/20260403214418.2233266-2-kuba@kernel.org/
+Signed-off-by: Justin Iurman <justin.iurman@gmail.com>
+Link: https://patch.msgid.link/20260404134137.24553-1-justin.iurman@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-logitech-hidpp.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/ipv6/ioam6.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/hid/hid-logitech-hidpp.c b/drivers/hid/hid-logitech-hidpp.c
-index 37fe852dd2da9..ebaca3588342f 100644
---- a/drivers/hid/hid-logitech-hidpp.c
-+++ b/drivers/hid/hid-logitech-hidpp.c
-@@ -4278,10 +4278,12 @@ static int hidpp_probe(struct hid_device *hdev, const struct hid_device_id *id)
+diff --git a/net/ipv6/ioam6.c b/net/ipv6/ioam6.c
+index a1953cf6131be..8db53f4da6604 100644
+--- a/net/ipv6/ioam6.c
++++ b/net/ipv6/ioam6.c
+@@ -737,12 +737,16 @@ static void __ioam6_fill_trace_data(struct sk_buff *skb,
+ 		struct Qdisc *qdisc;
+ 		__u32 qlen, backlog;
  
- 	if (hidpp->quirks & HIDPP_QUIRK_CLASS_G920) {
- 		ret = hidpp_ff_init(hidpp, &data);
--		if (ret)
-+		if (ret) {
- 			hid_warn(hidpp->hid_dev,
- 		     "Unable to initialize force feedback support, errno %d\n",
- 				 ret);
-+			ret = 0;
-+		}
- 	}
+-		if (skb_dst(skb)->dev->flags & IFF_LOOPBACK) {
++		if (skb_dst(skb)->dev->flags & IFF_LOOPBACK ||
++		    skb_get_queue_mapping(skb) >= skb_dst(skb)->dev->num_tx_queues) {
+ 			*(__be32 *)data = cpu_to_be32(IOAM6_U32_UNAVAILABLE);
+ 		} else {
+ 			queue = skb_get_tx_queue(skb_dst(skb)->dev, skb);
+ 			qdisc = rcu_dereference(queue->qdisc);
++
++			spin_lock_bh(qdisc_lock(qdisc));
+ 			qdisc_qstats_qlen_backlog(qdisc, &qlen, &backlog);
++			spin_unlock_bh(qdisc_lock(qdisc));
  
- 	/*
+ 			*(__be32 *)data = cpu_to_be32(backlog);
+ 		}
 -- 
 2.53.0
 
