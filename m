@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793209389;
-	b=HgC+baTcPTQDJiRNgp8QY3k+kVXoid4YE/aoyJxwqqKf8wWDvtrXd2rgU7rqr4lOGeFz
-	 fsopI6hy5o74RoVIHQCq4gOJPknePHGXei4f/NlEuxjRu2F8S712jLRs4utpMuMIO0so6
-	 B6a/wsXHWLAQlDBlsYi0mAg+8yNHfX+uqqbU8+32opTHRNwm4Q1uDAFxIP5jFqW07n+5Q
-	 Xuarkd++t61rDRWcwGJs/pTVNbS6aZsl/8K0G4046fp/PbVcJ7UShZrAtsWpS7F0jFXDB
-	 w2PBMRrfYcIzmhI3iswKjX6YdgfBgZgvyiby4oWTMbzeKGNdqJ6jxIBvSqZzaMEte7Q==
+	t=1793209393;
+	b=XE58c3NfGGvyURrowHYJWrGauZ0vyYZ7u2+yeDJkaPLoIl8ivYo0vRZwH2+Xr5jBdBo2
+	 4nHGGFqqkna1EwWD4tQ1EKI3pUzIUswFOcT4cgSXzxHxKZCHD2aoqfYomHlNCzzuQfVGK
+	 a+7ylIYsMMG8S3gR28Hani4g2bTg0xbLWo3Ed58Tgsvebm74vFarGkQ6qIBogWH66sISj
+	 jlc5r50/zM0JEl5WV3wtYgVkveqqpjeRJNoZqBOMRLAIkJEFEvaiMD0ESN1qaunQoPmHr
+	 0d9il6z8st0ps4BCQ4EdHNWoAsSZBbHCsZzN3SI8cbXNQFWyeor9ToVq+SnmrxmyvYQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793209389;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793209393;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=1Rz6WfHyNJTZIsSoUvSLmRX1uaevmF4BAuGi9snvpAo=;
-	b=dvszZFf4Urf8z4+WNlMwUIMUVMP9NMK4v/0wPcTkMWBCs+Q628RXpzhPn+4HemBFQnLh
-	 Ftg6PzN26owgIhXKljc9o4lBF814ayTNYL2wAm8bYUnxEb6pu+YA85KuqVxTVPdti8Icv
-	 Y7W9tmR2vm5nCeW+RlhD0POAb5sXUH554r96QeAz7fXFMFSLuDwepYa7Sr2kQcI+Mbgk2
-	 R3DT0lp7McYkVdy6mT5PKsDAy+87njnRShqnXjMrox7VBl6Qr+df0cvImi8IniT984TRe
-	 f6J92cDZ8BGX7PjHzpinNHkwmAgE1i506Mww9ou6g/4Rk7ycQoYyMy6TWCPQ/cldCpA==
+	bh=4LS5CnNU+KOqr+mwSdYwtjgxw+zBs/ZME3IERctpdwM=;
+	b=FEWe+e/FaMABBGtCMSqK1z5ADXfZnFWI3BFVn+ycUUG3eT/zdksk5uefJ89ql37F59E6
+	 rBnmCZGzwc9VmAgREPLRFGRYJl2tThOAgqe5eDsWNqs/Ok0rErQurthGm+Y5749AyZ4Ri
+	 KHw97XARzuZEJnaafjDPZjtSPPdhB5e6uBb8H1pcGHgZT3Rxn6NAxFyyBdZw209PqjKkE
+	 ZoQgb5Mlq0KyQ/RVgHeIpqMC6VIbM23lYopux/2K8T5Gv8iS1nncoHakSbZbfHtqVRF1b
+	 0B3BBoFnNVr8392lPGGSEiF6/ZAIHwPYHqk1FlI94H8rjO8wN5BM37/96niPvnu5EDg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KttQqR07;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YxB+JTM3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E194606A31A;
-	Wed, 28 Oct 2026 17:43:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBFEE606A31C;
+	Wed, 28 Oct 2026 17:43:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KttQqR07
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE2901F01825;
-	Wed, 28 Oct 2026 17:43:08 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YxB+JTM3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEC501F01825;
+	Wed, 28 Oct 2026 17:43:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793209389;
-	bh=1Rz6WfHyNJTZIsSoUvSLmRX1uaevmF4BAuGi9snvpAo=;
+	s=korg; t=1793209392;
+	bh=4LS5CnNU+KOqr+mwSdYwtjgxw+zBs/ZME3IERctpdwM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KttQqR07EeMeTpFetKwTTjxiyKho2wbHXbakZqhKTlqx5eu5JFBs0UQFZD4/jVTEs
-	 xdE+iOc+AULA64BezLSTkEZfg6JkzUVQLqKpmfRsBq1kCmCgVJ0W77BwM8alVWe3WU
-	 3VMbIEsVgJRGcc6Tl4nXVaVW3YMoFWonwfANPdxU=
+	b=YxB+JTM3USSEFSgc1mw9pu8LJYk2AMQe02NkFaDGW3k+bKKG5rQQeONrhAwnqAf6M
+	 vYFdeyX3qQTP4pUVzGDbMXTqjzFlh5vM02hkk5EPxrFaWz4rHIigdjJ9ejmxoWETvL
+	 3dEqtpGeSIlrm6m+eOo21zkJLILvkG/tVz8h5Ul4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	TencentOS Corvus AI <corvus@tencent.com>,
-	Aohan Mei <henrymei@tencent.com>,
-	Allison Henderson <achender@kernel.org>,
+	Daehyeon Ko <4ncienth@gmail.com>,
+	Xin Long <lucien.xin@gmail.com>,
 	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 5.10 453/516] net: rds: fix uninitialized trans dereference in CM event handler
-Date: Wed, 28 Oct 2026 18:00:05 +0100
-Message-ID: <20261028170014.212914731@linuxfoundation.org>
+Subject: [PATCH 5.10 454/516] sctp: revalidate output stream after association connect wait
+Date: Wed, 28 Oct 2026 18:00:06 +0100
+Message-ID: <20261028170014.235443145@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -69,121 +68,118 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aohan Mei <henrymei@tencent.com>
+From: Daehyeon Ko <4ncienth@gmail.com>
 
-commit 492ba6ac1b1ffb8a06ff52db0825c1af2cdb28c8 upstream.
+commit b7ad72414c673ce1fa1f463e807cd4f34f8be9bf upstream.
 
-rds_rdma_cm_event_handler_cmn() assigns trans only when the RDMA
-device is an InfiniBand CA (RDMA_NODE_IB_CA).  On any other device
-type, e.g. an iWARP RNIC such as siw, trans stays uninitialized, but
-the event switch dereferences it: unconditionally in the
-RDMA_CM_EVENT_CONNECT_REQUEST case via trans->cm_handle_connect(),
-and (with a connection context) in the ROUTE_RESOLVED and
-ESTABLISHED cases.
+When message interleaving is enabled, the first send waits for association
+establishment before building its data chunks.  The wait drops the socket
+lock, and handshake processing can reduce the output stream count to the
+peer-advertised inbound stream count.  sctp_stream_init() then frees the
+extension of every removed stream.
 
-An RDS listener on an iWARP device therefore crashes the kernel as
-soon as a connect request arrives: with CONFIG_INIT_STACK_ALL_ZERO
-the wild load becomes a NULL dereference at offset 0xa0
-(&trans->cm_handle_connect) in the iw_cm_wq workqueue.
+The sender resumes with the stream that it checked before the wait.  If the
+peer removed that stream, sctp_outq_tail() later dereferences its NULL
+extension.  Fatal-oops policies then panic the host.
 
-GCC masks the bug in default builds by folding the uninitialized
-load into &rds_ib_transport; Clang-built kernels take the real
-uninitialized path and oops.
+KASAN: null-ptr-deref in range [0x38-0x3f]
+RIP: sctp_outq_tail+0x49e/0xaa0
+Call Trace:
+ sctp_primitive_SEND
+ sctp_sendmsg_to_asoc
+ sctp_sendmsg
 
-The active side can land on a non-IB device too: the id that
-rds_ib_conn_path_connect() creates is not restricted to a node type,
-so rdma_resolve_addr() binds it to whichever device serves the local
-address, and an iWARP RNIC on the same netdev qualifies.  The crash
-there is different: resolving a route on an iWARP id never fills in
-cm_id->route.path_rec, and the ROUTE_RESOLVED case writes
-path_rec[0].sl before it calls into the transport.
+A range check alone is insufficient.  Stream reconfiguration can grow the
+output count again while the lock is released without recreating extensions
+freed by the earlier shrink.  The stream can then be in range while its
+extension remains NULL.  The send-buffer wait has the same issue.
 
-The iWARP transport was dropped long ago and IB is the only
-transport left, so make that explicit: initialize trans to
-&rds_ib_transport at declaration, drop the conditional assignment,
-reject a connect request that arrives on a non-IB device, and drop a
-connection whose address resolved to one instead of resolving a
-route on it.  The rejection is limited to RDMA_CM_EVENT_CONNECT_REQUEST
-on purpose: a non-zero return from the handler makes rdma_cm destroy
-the id the event was delivered on, which is right for the request's
-freshly created id but would free a connection id that RDS still owns
-for any other event.  On the active side the id stays ic->i_cm_id and
-the connection's shutdown destroys it, so that case returns 0.
+Factor the range and extension checks into a helper and repeat both after
+each send-path wait that drops the socket lock.  Once the lock is
+reacquired, the validation remains stable through data creation and
+queueing.
 
-Fixes: dcdede0406d3 ("RDS: Drop stale iWARP RDMA transport")
-Reported-by: TencentOS Corvus AI <corvus@tencent.com>
-Link: https://lore.kernel.org/netdev/20260824111701.2979194-1-ljp1205831794@gmail.com/
-Link: https://lore.kernel.org/netdev/20260825021223.3483044-1-ljp1205831794@gmail.com/
+If validation fails after the connect wait, the auto-created association is
+already established.  Return ESRCH so the existing caller path keeps it
+under state-machine ownership instead of freeing it directly, which would
+leave protocol, counter and socket state inconsistent.
+
+Fixes: 668c9beb9020 ("sctp: implement assign_number for sctp_stream_interleave")
 Cc: stable@vger.kernel.org
-Assisted-by: CodeBuddy:Kimi-K3
-Signed-off-by: Aohan Mei <henrymei@tencent.com>
-[achender: reject only on RDMA_CM_EVENT_CONNECT_REQUEST instead of
- bailing out for every event on a non-IB device, so that rdma_cm does
- not destroy connection ids RDS still tracks; drop a connection whose
- address resolved to a non-IB device before a route is resolved on it;
- changelog adjusted]
 Assisted-by: LLM
-Signed-off-by: Allison Henderson <achender@kernel.org>
-Link: https://patch.msgid.link/20261003163408.250568-2-achender@kernel.org
+Signed-off-by: Daehyeon Ko <4ncienth@gmail.com>
+Acked-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/20261007035739.3472432-1-4ncienth@gmail.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/rds/rdma_transport.c |   26 ++++++++++++++++++++++----
- 1 file changed, 22 insertions(+), 4 deletions(-)
+ net/sctp/socket.c |   33 +++++++++++++++++++++------------
+ 1 file changed, 21 insertions(+), 12 deletions(-)
 
---- a/net/rds/rdma_transport.c
-+++ b/net/rds/rdma_transport.c
-@@ -52,7 +52,7 @@ static int rds_rdma_cm_event_handler_cmn
- {
- 	/* this can be null in the listening path */
- 	struct rds_connection *conn = cm_id->context;
--	struct rds_transport *trans;
-+	struct rds_transport *trans = &rds_ib_transport;
- 	int ret = 0;
- 	int *err;
- 	u8 len;
-@@ -60,9 +60,6 @@ static int rds_rdma_cm_event_handler_cmn
- 	rdsdebug("conn %p id %p handling event %u (%s)\n", conn, cm_id,
- 		 event->event, rdma_event_msg(event->event));
+--- a/net/sctp/socket.c
++++ b/net/sctp/socket.c
+@@ -1785,6 +1785,18 @@ static int sctp_sendmsg_check_sflags(str
+ 	return 1;
+ }
  
--	if (cm_id->device->node_type == RDMA_NODE_IB_CA)
--		trans = &rds_ib_transport;
++static int sctp_sendmsg_check_stream(struct sctp_association *asoc,
++				     struct sctp_sndrcvinfo *sinfo)
++{
++	if (unlikely(sinfo->sinfo_stream >= asoc->stream.outcnt))
++		return -EINVAL;
++
++	if (unlikely(!SCTP_SO(&asoc->stream, sinfo->sinfo_stream)->ext))
++		return sctp_stream_init_ext(&asoc->stream, sinfo->sinfo_stream);
++
++	return 0;
++}
++
+ static int sctp_sendmsg_to_asoc(struct sctp_association *asoc,
+ 				struct msghdr *msg, size_t msg_len,
+ 				struct sctp_transport *transport,
+@@ -1799,16 +1811,9 @@ static int sctp_sendmsg_to_asoc(struct s
+ 	long timeo;
+ 	int err;
+ 
+-	if (sinfo->sinfo_stream >= asoc->stream.outcnt) {
+-		err = -EINVAL;
++	err = sctp_sendmsg_check_stream(asoc, sinfo);
++	if (err)
+ 		goto err;
+-	}
 -
- 	/* Prevent shutdown from tearing down the connection
- 	 * while we're executing. */
- 	if (conn) {
-@@ -82,11 +79,32 @@ static int rds_rdma_cm_event_handler_cmn
+-	if (unlikely(!SCTP_SO(&asoc->stream, sinfo->sinfo_stream)->ext)) {
+-		err = sctp_stream_init_ext(&asoc->stream, sinfo->sinfo_stream);
+-		if (err)
+-			goto err;
+-	}
  
- 	switch (event->event) {
- 	case RDMA_CM_EVENT_CONNECT_REQUEST:
-+		/* Only the IB transport is supported, but RDS listens on
-+		 * every RDMA device: reject a request that arrived on any
-+		 * other kind.  A non-zero return has rdma_cm destroy the
-+		 * request's id, which is what we want here and only here.
-+		 */
-+		if (cm_id->device->node_type != RDMA_NODE_IB_CA) {
-+			ret = 1;
-+			break;
-+		}
- 		ret = trans->cm_handle_connect(cm_id, event, isv6);
- 		break;
+ 	if (sp->disable_fragments && msg_len > asoc->frag_point) {
+ 		err = -EMSGSIZE;
+@@ -1832,10 +1837,9 @@ static int sctp_sendmsg_to_asoc(struct s
+ 		err = sctp_wait_for_sndbuf(asoc, transport, &timeo, msg_len);
+ 		if (err)
+ 			goto err;
+-		if (unlikely(sinfo->sinfo_stream >= asoc->stream.outcnt)) {
+-			err = -EINVAL;
++		err = sctp_sendmsg_check_stream(asoc, sinfo);
++		if (err)
+ 			goto err;
+-		}
+ 	}
  
- 	case RDMA_CM_EVENT_ADDR_RESOLVED:
- 		if (conn) {
-+			/* The address resolved to a device RDS has no
-+			 * transport for.  Do not go on to resolve a route:
-+			 * an iWARP route leaves cm_id->route.path_rec
-+			 * unset, which the ROUTE_RESOLVED case below
-+			 * dereferences.  Drop the connection instead; the
-+			 * id is still ic->i_cm_id, so return 0 and let the
-+			 * shutdown destroy it.
-+			 */
-+			if (cm_id->device->node_type != RDMA_NODE_IB_CA) {
-+				rds_conn_drop(conn);
-+				break;
+ 	if (sctp_state(asoc, CLOSED)) {
+@@ -1850,6 +1854,11 @@ static int sctp_sendmsg_to_asoc(struct s
+ 				err = -ESRCH;
+ 				goto err;
+ 			}
++			err = sctp_sendmsg_check_stream(asoc, sinfo);
++			if (err) {
++				err = -ESRCH;
++				goto err;
 +			}
- 			rdma_set_service_type(cm_id, conn->c_tos);
- 			/* XXX do we need to clean up if this fails? */
- 			ret = rdma_resolve_route(cm_id,
+ 		} else {
+ 			wait_connect = true;
+ 		}
 
 
