@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793212982;
-	b=FKEOr+1CCvBzEKmU5yQBVqfFYjjHpIWW7DVCTf6yLZMd4z4Oqzt3S8f4wShYN4LMX44o
-	 9EuVONVpsYW2J51662gBvUFvZB/6BTSmM2w6HVlBWqNkABXKIP9sCkVFWCoBmIPOkh1vI
-	 lbJzLc4cFlMPgzmPovGw0FYbG3EEs22b9b0a6r7yi5G6p+s4lzZLoUIcry5yTnOMdoYCz
-	 Caoujpav3D6itV7Oj4q27kv8OvFy9cjJuHkMhHyrkDfjylFVHXtB/Dxv1rBoMXUIMGJgY
-	 7C/FCtWF1ERAQlh3WYSowXCcOnhxuKJJuDLjzX1d6EOa6xEjeFPqE+fT28zHwrqdkCA==
+	t=1793212985;
+	b=l9hHs2L00i5IxovpwulA7LrfmZ4khbbftdQcHvaNg3Bx8i+/r6zcCzlRpkN+sjTHNize
+	 8lVcAlkSEbGzpUSb5j+JPzZ4+JflkYyax2MLx7/bHIuX9j/yAzV8RUJ6fOFkscC8QMgFV
+	 SXf5T3Lobgsgl2E6PNDV4yH0HnTWEFS7Z21a0J5wqyL9lx33lNAG4o45PisnLgqyv/7Rb
+	 EOYQU0Of+CovIMnmzQK37ifxOXUvhehwcvUOGkRDofImyyLGIK3jFdnNPePFQqSN+bRy6
+	 rDq8r4GwYYMUuL9+2ntbNqFIeRrPAkmVuMOy1lC6sSR1xZ2RoqV9aWGxJF5Ed5GTCww==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793212982;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793212985;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=lb9fruExjXOxaS8F2IZ8ntBs/Brakt2Q2HIYrH9Dixw=;
-	b=mwuFx3bh3yhtlNLlD+AjnEphLF5RIYiEqYddYCrfwY/i1+q42RwaiEboeKotYJLzS/dc
-	 b0wWDx9s6GpFov1wmFa+N9NYuwPlLRxrgXe27aTjLO+t8nzGKhctZx9ysg9Y0mWKqcJFm
-	 SjFePQ6vjI2wRonn6SpF9zCyce9Z2i7UXM4tz8B0MoLhvcyvGPYNJs7D0QxzZE9Ldlf5r
-	 BQOFFTOQ/kpQ0VuZLGtX7NYFsuNTjRtCD9V70FlVGrERrQxyOkrjLzkWbswShK/rlZ05a
-	 J4Dn5T8DWQvy9kNrYZeOrLMOo6sluuc7SIVejPM0Kl9ARjoGKYZeMXGsLBdYgH8l/kg==
+	bh=fWgdCGitUWdM+okniB57iRxfPN/mSLSdRjKJ5b30H/s=;
+	b=j1hZh1oQYQpoiUK2nfeZs6ZUmpawuGCIzpUwG9RRO/56FlreY9TSTpc5hjOHfFHFc1Jx
+	 OTBGg5Nt603tZswrsa6Wt9li97e4FJqlfEgYeeE6TK7wJiEGmzULnu38xxkcFlhW7YjeO
+	 d22xIuZObYLX9SC8wQ/nrGg4JPP6uelh+U2Zg+ecWF/AvmPM33jAou1zsjKFDgxUS9J9u
+	 HmBlpCl9Gg52Y4kOJtydbWyo2jcVyGRL+mTcadzGrpwdzV/ujxtU8N9H1AzjKtvjPlBd5
+	 k8ZwaPD/D1+LRXMGMREWjh08GwgunPosdF8s3jUjUSNirQXvXWdASIFw0z/2Z9qRGDQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zeMbsdNz;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SdzA3UFQ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26EAE606A31C;
-	Wed, 28 Oct 2026 18:43:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C0DB606A31C;
+	Wed, 28 Oct 2026 18:43:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zeMbsdNz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 787701F01829;
-	Wed, 28 Oct 2026 18:43:01 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SdzA3UFQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A65C1F01825;
+	Wed, 28 Oct 2026 18:43:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793212982;
-	bh=lb9fruExjXOxaS8F2IZ8ntBs/Brakt2Q2HIYrH9Dixw=;
+	s=korg; t=1793212984;
+	bh=fWgdCGitUWdM+okniB57iRxfPN/mSLSdRjKJ5b30H/s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zeMbsdNzRmwRbcdjEGgrbkIQsOsIa6R2WfLlsAj0afjH7J8xlGRioe1HDf/IfwHix
-	 V+CWRdf2LKfzImIBv9EH3AWWiYSJMHnmcI2vsqTiEZgfF/iwTemj4NEGASEMhimWIW
-	 7WisbD2Pyyl/E4Sd0qmCjJfGBB0cETAR9VWCTTiw=
+	b=SdzA3UFQ7nyMD8mG+hV7JnfJMA18WmClTCOHeOw1tDfQzseZeWdn1HkYpubjlE7iW
+	 EfM33QU52Ev4g8SXXDXeg3kzVRHFlFg9vRJfsUl/ulOuR5qrjxGaR84wwJ3Y9MYJ2d
+	 DQylfORupxCgTACMNe/3jE8TiWoNsIEcA+l1fR7c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Chengfeng Ye <nicoyip.dev@gmail.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.1 0301/1887] Bluetooth: RFCOMM: Fix initial port reference race
-Date: Wed, 28 Oct 2026 17:39:57 +0100
-Message-ID: <20261028170506.078260307@linuxfoundation.org>
+Subject: [PATCH 6.1 0302/1887] Bluetooth: hci_conn: Lock parent access during enhanced SCO setup
+Date: Wed, 28 Oct 2026 17:39:58 +0100
+Message-ID: <20261028170506.100584404@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,86 +69,146 @@ Content-Transfer-Encoding: 8bit
 
 From: Chengfeng Ye <nicoyip.dev@gmail.com>
 
-commit 2d696c1ed3468dcb62578a3911e687110d463520 upstream.
+commit 024e05f73a4c1263d031614bc36700ec135eecb4 upstream.
 
-For RFCOMM_RELEASE_ONHUP devices, rfcomm_tty_install() and
-__rfcomm_release_dev() both use RFCOMM_TTY_OWNED to decide who drops the
-initial tty_port reference. The release path tests the bit separately
-from the install path setting it, so both can drop that reference.
+Bluetooth: hci_conn: Lock parent access during enhanced SCO setup
 
-The synchronous hangup does not prevent this race: port->tty is not
-assigned until tty_port_open(), after installation. The following
-interleaving is possible:
+hci_enhanced_setup_sync() runs on the request workqueue without the
+hci_dev_lock held by its caller when setup was queued. Its CVSD
+capability check and find_next_esco_param() dereference conn->parent
+while the receive workqueue can unlink and release that parent.
 
-  1. Install and release each obtain a reference with rfcomm_dev_get().
-  2. Release observes RFCOMM_TTY_OWNED clear.
-  3. Install sets RFCOMM_TTY_OWNED and drops the initial reference.
-  4. Release drops the same initial reference again.
-  5. TTY cleanup drops its reference and frees the device.
-  6. Release performs its final tty_port_put() on the freed port.
+The following interleaving can cause a use-after-free:
 
-KASAN reported:
+  hci_enhanced_setup_sync()       hci_disconn_complete_evt()
+  load conn->parent
+                                 hci_dev_lock()
+                                 hci_conn_del(ACL parent)
+                                   unlink SCO child
+                                   drop link's parent reference
+                                   clear child->parent
+                                   release ACL parent
+                                     bt_link_release()
+                                       kfree(parent)
+                                 hci_dev_unlock()
+  read parent->features[0][3]
 
-  BUG: KASAN: slab-use-after-free in tty_port_put+0x22/0x190
-  Write of size 4 at addr ffff8881001d3d5c by task poc/92
+The reference held for the queued SCO child does not keep its ACL parent
+alive after unlinking. Commit 42de40abe25d ("Bluetooth: hci_conn: fix the
+SCO setup context lifetime") protects the child stored in the queued
+context, but leaves these parent accesses unprotected.
 
+With a 40 ms diagnostic delay after loading conn->parent, an instrumented
+kernel based on fd179f8a05be, which already contains 42de40abe25d,
+reported:
+
+  BUG: KASAN: slab-use-after-free in hci_enhanced_setup_sync+0xda5/0xdf0
+  Read of size 1 at addr ffff888102204047 by task kworker/u17:0/93
   Call Trace:
-   tty_port_put+0x22/0x190
-   rfcomm_dev_ioctl+0x1d4/0x1930
-   sock_do_ioctl+0x110/0x260
-   sock_ioctl+0x380/0x590
-   __x64_sys_ioctl+0x134/0x1c0
+   hci_enhanced_setup_sync+0xda5/0xdf0
+   hci_cmd_sync_work+0x13c/0x290
+   process_one_work+0x6b4/0x10e0
 
-  Allocated by task 88:
-   rfcomm_dev_ioctl+0x8f6/0x1930
-   sock_do_ioctl+0x110/0x260
-   sock_ioctl+0x380/0x590
-   __x64_sys_ioctl+0x134/0x1c0
+  Allocated by task 92:
+   __hci_conn_add+0x304/0x1df0
+   hci_connect_acl+0x349/0x3e0
+   hci_connect_sco+0x3b/0x9a0
+   sco_sock_connect+0x475/0xca0
 
-  Freed by task 65:
-   kfree+0x131/0x3c0
-   rfcomm_dev_destruct+0x23b/0x2f0
-   release_one_tty+0xc1/0x370
-   process_one_work+0x661/0x1090
+  Freed by task 94:
+   kfree+0x121/0x3c0
+   bt_link_release+0x79/0xa0
+   device_release+0xc8/0x240
+   kobject_put+0x14d/0x280
+   hci_conn_del+0x524/0xe30
+   hci_disconn_complete_evt+0x403/0x8c0
+   hci_event_packet+0x71b/0xb20
+   hci_rx_work+0x293/0x730
 
-Use test_and_set_bit() in both paths so that only the caller that changes
-RFCOMM_TTY_OWNED from clear to set drops the initial reference. Each path
-keeps its own lookup reference until release or TTY cleanup, preserving
-the existing callback ordering and error handling.
+The accessed address is 71 bytes into the freed ACL parent, at its
+features[0][3] byte; the queued SCO child is a different object. The
+diagnostic preserves the loaded parent across the delay, matching the
+unmodified compiled capability check, and does not change the parent
+references or teardown path.
 
-Fixes: 80ea73378af4 ("Bluetooth: Fix unreleased rfcomm_dev reference")
+Hold hci_dev_lock() across the codec switch, including every call to
+find_next_esco_param(), and release it on all selection errors. Keep
+configure_datapath_sync() outside the critical section because it waits
+for HCI events. Preserve parameter selection and existing return values.
+
+Fixes: e07a06b4eb41 ("Bluetooth: Convert SCO configure_datapath to hci_sync")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
+Assisted-by: GPT-6-Astra
 Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/rfcomm/tty.c |    7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ net/bluetooth/hci_conn.c |   18 +++++++++++++-----
+ 1 file changed, 13 insertions(+), 5 deletions(-)
 
---- a/net/bluetooth/rfcomm/tty.c
-+++ b/net/bluetooth/rfcomm/tty.c
-@@ -465,7 +465,7 @@ static int __rfcomm_release_dev(void __u
- 	/* Shut down TTY synchronously before freeing rfcomm_dev */
- 	tty_port_tty_vhangup(&dev->port);
+--- a/net/bluetooth/hci_conn.c
++++ b/net/bluetooth/hci_conn.c
+@@ -412,11 +412,13 @@ static int hci_enhanced_setup_sync(struc
+ 	cp.tx_bandwidth   = cpu_to_le32(0x00001f40);
+ 	cp.rx_bandwidth   = cpu_to_le32(0x00001f40);
  
--	if (!test_bit(RFCOMM_TTY_OWNED, &dev->status))
-+	if (!test_and_set_bit(RFCOMM_TTY_OWNED, &dev->status))
- 		tty_port_put(&dev->port);
++	hci_dev_lock(hdev);
++
+ 	switch (conn->codec.id) {
+ 	case BT_CODEC_MSBC:
+ 		if (!find_next_esco_param(conn, esco_param_msbc,
+ 					  ARRAY_SIZE(esco_param_msbc)))
+-			return -EINVAL;
++			goto unlock;
  
- 	tty_port_put(&dev->port);
-@@ -730,10 +730,9 @@ static int rfcomm_tty_install(struct tty
- 	 * when the last process closes the tty. The behaviour is expected by
- 	 * userspace.
- 	 */
--	if (test_bit(RFCOMM_RELEASE_ONHUP, &dev->flags)) {
--		set_bit(RFCOMM_TTY_OWNED, &dev->status);
-+	if (test_bit(RFCOMM_RELEASE_ONHUP, &dev->flags) &&
-+	    !test_and_set_bit(RFCOMM_TTY_OWNED, &dev->status))
- 		tty_port_put(&dev->port);
--	}
+ 		param = &esco_param_msbc[conn->attempt - 1];
+ 		cp.tx_coding_format.id = 0x05;
+@@ -442,7 +444,7 @@ static int hci_enhanced_setup_sync(struc
+ 	case BT_CODEC_TRANSPARENT:
+ 		if (!find_next_esco_param(conn, esco_param_msbc,
+ 					  ARRAY_SIZE(esco_param_msbc)))
+-			return -EINVAL;
++			goto unlock;
+ 
+ 		param = &esco_param_msbc[conn->attempt - 1];
+ 		cp.tx_coding_format.id = 0x03;
+@@ -469,11 +471,11 @@ static int hci_enhanced_setup_sync(struc
+ 		if (lmp_esco_capable(conn->link)) {
+ 			if (!find_next_esco_param(conn, esco_param_cvsd,
+ 						  ARRAY_SIZE(esco_param_cvsd)))
+-				return -EINVAL;
++				goto unlock;
+ 			param = &esco_param_cvsd[conn->attempt - 1];
+ 		} else {
+ 			if (conn->attempt > ARRAY_SIZE(sco_param_cvsd))
+-				return -EINVAL;
++				goto unlock;
+ 			param = &sco_param_cvsd[conn->attempt - 1];
+ 		}
+ 		cp.tx_coding_format.id = 2;
+@@ -496,9 +498,11 @@ static int hci_enhanced_setup_sync(struc
+ 		cp.out_transport_unit_size = 16;
+ 		break;
+ 	default:
+-		return -EINVAL;
++		goto unlock;
+ 	}
+ 
++	hci_dev_unlock(hdev);
++
+ 	cp.retrans_effort = param->retrans_effort;
+ 	cp.pkt_type = __cpu_to_le16(param->pkt_type);
+ 	cp.max_latency = __cpu_to_le16(param->max_latency);
+@@ -507,6 +511,10 @@ static int hci_enhanced_setup_sync(struc
+ 		return -EIO;
  
  	return 0;
++
++unlock:
++	hci_dev_unlock(hdev);
++	return -EINVAL;
  }
+ 
+ static bool hci_setup_sync_conn(struct hci_conn *conn, __u16 handle)
 
 
