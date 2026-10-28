@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793207054;
-	b=1xAWQKkmmAPNkF81gjjwcoF6TtBaF4b6TAR8B2vHBrGf9QgodkNFmE9DJVK/RVD0i2qA
-	 y/80JMmOO9CQI0H4yKs0I6FFf3FLZXUdM3UCJTi5tffqgRwosfZkyNlQs2cS+yY6V/TvI
-	 z6ftvH1b8rnyVULX+sdH1NeRIyVxA4RV7AfHdN/tN9al+UcWNa5zv9ivDtAwjYB+rjIyn
-	 xl009wXusUCX5fE6Ah59ueSCOlxtkc/80yeSWlYQcy8Gc9pN76Te4M94AKwP3UcTsKUEP
-	 Xj1IMA3ku+/zc3wusNDgNOEvomgdcYXlbuZPXM+bbN2lrwm7IUfjuh/Dz3He40dxgkQ==
+	t=1793207057;
+	b=XhdMLrrO95ZBQN49d4j27RaWWGFnJemKOf/J1Caxo/ZSancYworyBCS+QwABorA9USUt
+	 OrirNanuMvApxmIjOh7clG99/72NkgB92eIMeCKuwER1NXR7XLIj165lanM4kCXzSVffi
+	 xRXVZqwk+3izgwyS3MKseJyKeEh+Uf+I5p+d/8cmi2P8+dZqOnS/OQB6yYic7y7Go8ajT
+	 n/buSgqkRTVoJAXIdKMvY1IHHUBD63+EjaD0ZPbZVJBxUizCCBrdbW8gLeeiECrSFRk9P
+	 nH01gd6BEFd4Kx671YbfWuwLrTOtXiQrlsRwmadZp6xRc9aQYQ7dXlbcieDwhEq26Zg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793207054;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793207057;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Z3fBk51DmSnbw9Fa/kU6lKpF1eXaQSHzpdop3Bh2dCw=;
-	b=aWXDriBCV19ZA/Yvx/sWKRF6Pi+UWZMX8xiKpv6zGPNierT2jxzN5jV/rhFCQAIPMmZ4
-	 kk//XH2QgVFwuH7egFJdC7r/MohcthyoeU+iv5oIjUntvmuSbiOLBZmOfaXXcC8YnPJQd
-	 /h7oF3z9KVTsPEvobCGHrbzkxhzJofpAWp8L/ucL8h9+HJdA4y+34GB3WnjE/wRrKxnGT
-	 faKHrY3h+hTHE8D4AuDJVBw3s9ZCQ5cXdWMPu5HGYdmFZkf1NU1nQa7QQ4uTdvHV/9IYK
-	 EGpvvdEXxRf9cbS/M/P3Yglvy1szY7nucav6Ohu+fa9RQ6vHm6cWDLHqyOMwAjB6pvw==
+	bh=g83fBzB85dERcPoWxwDkcpRJKDujHvxIsVIXK3i1Zt8=;
+	b=FBLY8j6dt6ULIvOWROG6BcY9+k7wY+K4SbIIsNHy9o+FIQqVNxz6iQCfeO9IjNFWc5X+
+	 put4zLyNMHIHuABJuxE39kzEHKPhGHyrvXm6h54beCjVF/5IKdB4sRYk2LSkrehvGNrPI
+	 TAKKEyab0ORM9taxIYSyMTid9V7EN2Nc2H1fRvAhyDbX+G4Jh/289E37JHrmKeRL9BhSd
+	 eTRxeR+FZOeSL5B5DTutd08FWkCwJf79ve83HIEbH+j0ZXbAGcYyz6rV3e9/B1MZ2y/v2
+	 eswn78MSUkk2zSpea7TXMQoM8jVznTRyPmMJdE4wZDYILzNbi21RRd+yAc1YkiH8qPA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Xp3myMvM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G9VJx9Y0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E122606A31A;
-	Wed, 28 Oct 2026 17:04:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07B68606A31A;
+	Wed, 28 Oct 2026 17:04:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Xp3myMvM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A99D1F01825;
-	Wed, 28 Oct 2026 17:04:13 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G9VJx9Y0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DCC21F01825;
+	Wed, 28 Oct 2026 17:04:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793207053;
-	bh=Z3fBk51DmSnbw9Fa/kU6lKpF1eXaQSHzpdop3Bh2dCw=;
+	s=korg; t=1793207056;
+	bh=g83fBzB85dERcPoWxwDkcpRJKDujHvxIsVIXK3i1Zt8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Xp3myMvMwLFPupEsm58BFB/56o5Na6+1cUx9wejtU3RC9OGla0tY2C8xoPhqm/D4s
-	 Zs9Blc0WmL3ibsFVEp4ZK8kwbfzFyhiwKcTzUA+lvXJVBlwzEo5PDEm9qL4iMJVRmA
-	 jYgVdw365qL6URPHzDuQT3EbgxelXmUL7mMD0X9k=
+	b=G9VJx9Y0TycaJ3CYoxbPjKPxlalYRm1KEePlLHjNy6ZxEidznmuQPDu9wrOxceuqq
+	 G/52dtDGjNSoGIYdl1Csdl2IZ0xwQZXL5EnOMdL1DoEG02WapYwUkGa+4QHHAtQL+p
+	 ku9+zeTU9gffPz71Eq0d0dDxf+I9/MPicCY6NqZ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	sashiko-bot@kernel.org,
 	Donggeun Yoo <donggeunyoo.kernel@gmail.com>,
 	Steven Rostedt <rostedt@goodmis.org>
-Subject: [PATCH 7.3 10/38] tracing: Add the bucket size to expr_field_str()
-Date: Wed, 28 Oct 2026 17:59:57 +0100
-Message-ID: <20261028165940.663254266@linuxfoundation.org>
+Subject: [PATCH 7.3 11/38] tracing: Fix 64-bit and signed histogram fields on 32-bit kernels
+Date: Wed, 28 Oct 2026 17:59:58 +0100
+Message-ID: <20261028165940.685637142@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165940.394092994@linuxfoundation.org>
 References: <20261028165940.394092994@linuxfoundation.org>
@@ -69,42 +70,54 @@ Content-Transfer-Encoding: 8bit
 
 From: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
 
-commit c027ed03bc03a0e82fc368eaad657584a4480c7a upstream.
+commit 443d23176812803d0fa182b8d05ef066a7b8271f upstream.
 
-expr_field_str() renders a HIST_FIELD_FL_BUCKET field as "pid.buckets",
-dropping the count, and parse_field() rejects that spelling.
+DEFINE_HIST_FIELD_FN() reads a trace event field and widens it to the u64
+the histogram uses as a key or a value:
 
-get_hist_field_flags() returns the bare string "buckets" and keeps the
-count in hist_field->buckets. hist_field_print() appends it,
-expr_field_str() never did. Nothing reaches it today, since .buckets is
-refused on a value and no expression can carry one, but the next patch
-renders histogram keys with expr_field_str(), where a .buckets key is
-legal.
+	type *addr = (type *)(event + hist_field->field->offset);
 
-Append the count, as hist_field_print() does.
+	return (u64)(unsigned long)*addr;
+
+unsigned long is 32 bits on a 32-bit kernel, so the intermediate cast
+discards the upper half of a 64-bit field, and widens a signed field by
+zero extension from 32 bits rather than sign extension from its own
+width. Five of the eight instantiations are wrong there: s64, u64, s32,
+s16 and s8.
+
+The cast came in with commit 79e577cbce4c ("tracing: Support string type
+key properly"), which also added hist_field_dynstring() and
+hist_field_pstring(). Those convert a char * to u64 and do warn without
+an unsigned long in between on 32-bit. DEFINE_HIST_FIELD_FN() converts an
+integer and never a pointer, so it gains nothing from the cast and only
+loses information.
+
+Drop the intermediate cast and let the usual arithmetic conversions widen
+*addr according to its own type. unsigned long is 64 bits on LP64, so the
+two forms are identical there and 64-bit kernels are unaffected.
 
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260914053443.981201-3-donggeunyoo.kernel@gmail.com
-Fixes: de9a48a360b7 ("tracing: Add linear buckets to histogram logic")
+Link: https://patch.msgid.link/20260917015532.103081-1-donggeunyoo.kernel@gmail.com
+Fixes: 79e577cbce4c ("tracing: Support string type key properly")
+Reported-by: sashiko-bot@kernel.org
+Closes: https://lore.kernel.org/all/20260914054614.82A9B1F000FF@smtp.kernel.org/
 Signed-off-by: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
-Assisted-by: Claude:claude-fable-5
 Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_events_hist.c |    3 +++
- 1 file changed, 3 insertions(+)
+ kernel/trace/trace_events_hist.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 --- a/kernel/trace/trace_events_hist.c
 +++ b/kernel/trace/trace_events_hist.c
-@@ -1754,6 +1754,9 @@ static bool expr_field_str(struct hist_f
- 			seq_buf_printf(s, ".%s", flags_str);
- 	}
- 
-+	if (field->buckets)
-+		seq_buf_printf(s, "=%lu", field->buckets);
-+
- 	return !seq_buf_has_overflowed(s);
+@@ -466,7 +466,7 @@ static u64 hist_field_unary_minus(struct
+ {									\
+ 	type *addr = (type *)(event + hist_field->field->offset);	\
+ 									\
+-	return (u64)(unsigned long)*addr;				\
++	return (u64)*addr;						\
  }
  
+ DEFINE_HIST_FIELD_FN(s64);
 
 
