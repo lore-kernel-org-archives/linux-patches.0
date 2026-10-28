@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793208599;
-	b=Q/R+1BC6QWZzb4RcJajwy6eeFZT7iumPRdCeqGsZkNv/6HI9h/Re2JNk0d2RV6k60xAJ
-	 VhlTEMYdpofiyPxQPWwuX2G9Lms/CpQB37st/Y0aW3V6FM4ZRLHuhAXvrWJ2tsmpUR0XS
-	 VsqqKB4f8vflkbXFdvr6HvQ+cdHpmNRG8msQ+o1Rs9tGbVAIIHLRlfZAX0lMuMtnBM6uI
-	 P1Nwj78d6BHv3VUxpjQL0KciFsuQq7tid70v4WB6Qhr2+5vVTD8jv6DclFoAsz3bO7Qup
-	 eORu4vnmH4L9i6aDuMMilgzPW8QN35hS70tbES23GkJRISxjza+KWmWeaT89iF8w9vw==
+	t=1793208602;
+	b=P/WSh6qfNm9P8IXvzyIJ8bxKzELGEIpjAATUYhRs3F/RAzcx3nrw2Mcco5gVoamUEOAE
+	 JVb76O4Ta1ej5li5eCito7svJXsTKNM+FFMRPOT4M7ku2N02EerTQUOUxoGVOPPow1owh
+	 HIA8/Ah1I+VGEEAwbrI0u+14+YHhZz4VBeJjvEjGPhdcF+vgBeEzmXDOa5frYbAWAibkU
+	 VGwNYW8vyNPDysgnKJ73yLqPPhyxNS+rV28pf6UBzw+XQjeQPQnOZ8vRrLTkOJQoPkNwD
+	 1uJAuk07Zhr0IdnRbZiW7z/9fCndLWJ6oxmkR5zLAIr7IgLjQyoAVE7PAR63r3SECPA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793208599;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793208602;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=BPIT9HNVxl9xCq18DA4VognHezSVLZlh5jYiQ9tidWc=;
-	b=lSgr+H3DE87y82el7NWcso1oF1NxJ8q4hDzepI8/IPfQ/Xi2AcdjHwBooX6fpshp7oFv
-	 3oibW2BPP2KhWZDI9r/GS2ptDgDlzolUfcIxhoKL285OkWFSz7r3Bf6/u8dRZj43HF/i5
-	 PalPvCBvQCZ/qAj4Lsdo2pTWjOlJ4mZvS3fdviHlqKFGMmBJ1iNBGN6Iux4YILqXgAOGl
-	 T5htLUqOo1zGurIgC2bNxKqRiFotc1uf/70HiltPxPDfaJR0gJQC+UBKKm6SntufNQIxV
-	 YL3Qin+wo0Gn5oxhbljW7kCPNktSanXnF0qFXSMQWPew8R/TSr5xcqX0S/OaiQDTqpA==
+	bh=XD5hXrW3aMmfYlPT8drKuAssa4Z3Fu7eGyUcwtSoN9k=;
+	b=1tbLnS3ml93MHRuohyp2wpRGEcy/NCfTLuXSG0+HbuQzqqqI1hQf3dnz7z6X3uR9KcQ6
+	 xZ55xBo/uNi+p72/SQDYfDXNmMAAoGbF8Lr/k51uURpDXg8WTsMleyLm/UB/1oPXYX+8G
+	 4cSjThZBTWqqZD3K1yJ2KTvy1LmZmUK3ygOhPQ8RjGDej6hjSaKU5M3ZIph99KqblcZMB
+	 5t+DalHXydwCIiPdiJAiODi/wc0FLrBQjmj62SZvrB+8y89QkOFUcTkEtW/EJqf+N5O5z
+	 1N6PDJONRRjnXv/umPeTt2cfFnYHAwVAF127us7sgcikcfKowjc04/+XwJPH0bMU+uA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s8jGhMpx;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="xR+Fe/l3";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B2B8606A31E;
-	Wed, 28 Oct 2026 17:29:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68863606A31E;
+	Wed, 28 Oct 2026 17:30:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s8jGhMpx
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78A571F01825;
-	Wed, 28 Oct 2026 17:29:58 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xR+Fe/l3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 700601F01825;
+	Wed, 28 Oct 2026 17:30:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793208599;
-	bh=BPIT9HNVxl9xCq18DA4VognHezSVLZlh5jYiQ9tidWc=;
+	s=korg; t=1793208602;
+	bh=XD5hXrW3aMmfYlPT8drKuAssa4Z3Fu7eGyUcwtSoN9k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=s8jGhMpxTPIP3YSs3W703KHVEeSsGBXbb+9f986HXIxVnPBJLTlcK3eH4gdhM48xT
-	 j3v/BW04RSPlGZO/VUQw8583bxn2VSunc38On9cBb6XbNbe7je+MsgvJAeo72Znicw
-	 znt/Sqm8wtV4lOoMSQbhQF5gh6a34JNDUqS40u0g=
+	b=xR+Fe/l3P4IQ4+ig1c/n9IbYvMN7OHWJGV7YAjd1ncI8JmDDe9yk2rDsWHR4oPHGI
+	 iETbsYfp3hPVriSlNuPArcZEsPkZDNrCqrPZ2nmYQjl8CvcGdjyKDAqeRGOw5xQmAw
+	 dZGHSwEmeXV9qeKSREug3Pc4AkjZ3yOGNx6VbfX8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Christoph Paasch <cpaasch@apple.com>,
+	Willem de Bruijn <willemb@google.com>,
 	Florian Westphal <fw@strlen.de>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 175/516] netfilter: nf_tables: avoid skb access on nf_stolen
-Date: Wed, 28 Oct 2026 17:55:27 +0100
-Message-ID: <20261028170007.651997989@linuxfoundation.org>
+Subject: [PATCH 5.10 176/516] net: add and use skb_get_hash_net
+Date: Wed, 28 Oct 2026 17:55:28 +0100
+Message-ID: <20261028170007.675537999@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -70,246 +73,164 @@ Content-Transfer-Encoding: 8bit
 
 From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit e34b9ed96ce3b06c79bf884009b16961ca478f87 ]
+[ Upstream commit b975d3ee5962237c1e2f5d5aeeaaf0dc2173486c ]
 
-When verdict is NF_STOLEN, the skb might have been freed.
+Years ago flow dissector gained ability to delegate flow dissection
+to a bpf program, scoped per netns.
 
-When tracing is enabled, this can result in a use-after-free:
-1. access to skb->nf_trace
-2. access to skb->mark
-3. computation of trace id
-4. dump of packet payload
+Unfortunately, skb_get_hash() only gets an sk_buff argument instead
+of both net+skb.  This means the flow dissector needs to obtain the
+netns pointer from somewhere else.
 
-To avoid 1, keep a cached copy of skb->nf_trace in the
-trace state struct.
-Refresh this copy whenever verdict is != STOLEN.
+The netns is derived from skb->dev, and if that is not available, from
+skb->sk.  If neither is set, we hit a (benign) WARN_ON_ONCE().
 
-Avoid 2 by skipping skb->mark access if verdict is STOLEN.
+Trying both dev and sk covers most cases, but not all, as recently
+reported by Christoph Paasch.
 
-3 is avoided by precomputing the trace id.
+In case of nf-generated tcp reset, both sk and dev are NULL:
 
-Only dump the packet when verdict is not "STOLEN".
+WARNING: .. net/core/flow_dissector.c:1104
+ skb_flow_dissect_flow_keys include/linux/skbuff.h:1536 [inline]
+ skb_get_hash include/linux/skbuff.h:1578 [inline]
+ nft_trace_init+0x7d/0x120 net/netfilter/nf_tables_trace.c:320
+ nft_do_chain+0xb26/0xb90 net/netfilter/nf_tables_core.c:268
+ nft_do_chain_ipv4+0x7a/0xa0 net/netfilter/nft_chain_filter.c:23
+ nf_hook_slow+0x57/0x160 net/netfilter/core.c:626
+ __ip_local_out+0x21d/0x260 net/ipv4/ip_output.c:118
+ ip_local_out+0x26/0x1e0 net/ipv4/ip_output.c:127
+ nf_send_reset+0x58c/0x700 net/ipv4/netfilter/nf_reject_ipv4.c:308
+ nft_reject_ipv4_eval+0x53/0x90 net/ipv4/netfilter/nft_reject_ipv4.c:30
+ [..]
 
-Reported-by: Pablo Neira Ayuso <pablo@netfilter.org>
+syzkaller did something like this:
+table inet filter {
+  chain input {
+    type filter hook input priority filter; policy accept;
+    meta nftrace set 1
+    tcp dport 42 reject with tcp reset
+   }
+   chain output {
+    type filter hook output priority filter; policy accept;
+    # empty chain is enough
+   }
+}
+
+... then sends a tcp packet to port 42.
+
+Initial attempt to simply set skb->dev from nf_reject_ipv4 doesn't cover
+all cases: skbs generated via ipv4 igmp_send_report trigger similar splat.
+
+Moreover, Pablo Neira found that nft_hash.c uses __skb_get_hash_symmetric()
+which would trigger same warn splat for such skbs.
+
+Lets allow callers to pass the current netns explicitly.
+The nf_trace infrastructure is adjusted to use the new helper.
+
+__skb_get_hash_symmetric is handled in the next patch.
+
+Reported-by: Christoph Paasch <cpaasch@apple.com>
+Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/494
+Reviewed-by: Willem de Bruijn <willemb@google.com>
 Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://lore.kernel.org/r/20240608221057.16070-2-fw@strlen.de
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Stable-dep-of: 8ec454dcd00c ("ipv6: sr: use skb_get_hash_net() in seg6_make_flowlabel()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/netfilter/nf_tables.h | 16 ++++++-----
- net/netfilter/nf_tables_core.c    | 24 ++++++++++++++---
- net/netfilter/nf_tables_trace.c   | 44 +++++++++++++++++--------------
- 3 files changed, 55 insertions(+), 29 deletions(-)
+ include/linux/skbuff.h          | 12 ++++++++++--
+ net/core/flow_dissector.c       | 15 +++++++++++----
+ net/netfilter/nf_tables_trace.c |  2 +-
+ 3 files changed, 22 insertions(+), 7 deletions(-)
 
-diff --git a/include/net/netfilter/nf_tables.h b/include/net/netfilter/nf_tables.h
-index 9a582fe5b21f3..8d08346fd8dcf 100644
---- a/include/net/netfilter/nf_tables.h
-+++ b/include/net/netfilter/nf_tables.h
-@@ -1297,24 +1297,28 @@ void nft_unregister_flowtable_type(struct nf_flowtable_type *type);
- /**
-  *	struct nft_traceinfo - nft tracing information and state
-  *
-+ *	@trace: other struct members are initialised
-+ *	@nf_trace: copy of skb->nf_trace before rule evaluation
-+ *	@type: event type (enum nft_trace_types)
-+ *	@skbid: hash of skb to be used as trace id
-+ *	@packet_dumped: packet headers sent in a previous traceinfo message
-  *	@pkt: pktinfo currently processed
-  *	@basechain: base chain currently processed
-  *	@chain: chain currently processed
-  *	@rule:  rule that was evaluated
-  *	@verdict: verdict given by rule
-- *	@type: event type (enum nft_trace_types)
-- *	@packet_dumped: packet headers sent in a previous traceinfo message
-- *	@trace: other struct members are initialised
-  */
- struct nft_traceinfo {
-+	bool				trace;
-+	bool				nf_trace;
-+	bool				packet_dumped;
-+	enum nft_trace_types		type:8;
-+	u32				skbid;
- 	const struct nft_pktinfo	*pkt;
- 	const struct nft_base_chain	*basechain;
- 	const struct nft_chain		*chain;
- 	const struct nft_rule		*rule;
- 	const struct nft_verdict	*verdict;
--	enum nft_trace_types		type;
--	bool				packet_dumped;
--	bool				trace;
- };
- 
- void nft_trace_init(struct nft_traceinfo *info, const struct nft_pktinfo *pkt,
-diff --git a/net/netfilter/nf_tables_core.c b/net/netfilter/nf_tables_core.c
-index b0d711d498c66..cc6504628a759 100644
---- a/net/netfilter/nf_tables_core.c
-+++ b/net/netfilter/nf_tables_core.c
-@@ -25,9 +25,7 @@ static noinline void __nft_trace_packet(struct nft_traceinfo *info,
- 					const struct nft_chain *chain,
- 					enum nft_trace_types type)
- {
--	const struct nft_pktinfo *pkt = info->pkt;
--
--	if (!info->trace || !pkt->skb->nf_trace)
-+	if (!info->trace || !info->nf_trace)
- 		return;
- 
- 	info->chain = chain;
-@@ -42,11 +40,24 @@ static inline void nft_trace_packet(struct nft_traceinfo *info,
- 				    enum nft_trace_types type)
- {
- 	if (static_branch_unlikely(&nft_trace_enabled)) {
-+		const struct nft_pktinfo *pkt = info->pkt;
-+
-+		info->nf_trace = pkt->skb->nf_trace;
- 		info->rule = rule;
- 		__nft_trace_packet(info, chain, type);
- 	}
+diff --git a/include/linux/skbuff.h b/include/linux/skbuff.h
+index 0a7b1a7f1ae10..4f2413ce9d3b6 100644
+--- a/include/linux/skbuff.h
++++ b/include/linux/skbuff.h
+@@ -1282,7 +1282,7 @@ __skb_set_sw_hash(struct sk_buff *skb, __u32 hash, bool is_l4)
+ 	__skb_set_hash(skb, hash, true, is_l4);
  }
  
-+static inline void nft_trace_copy_nftrace(struct nft_traceinfo *info)
+-void __skb_get_hash(struct sk_buff *skb);
++void __skb_get_hash_net(const struct net *net, struct sk_buff *skb);
+ u32 __skb_get_hash_symmetric(const struct sk_buff *skb);
+ u32 skb_get_poff(const struct sk_buff *skb);
+ u32 __skb_get_poff(const struct sk_buff *skb, void *data,
+@@ -1363,10 +1363,18 @@ void skb_flow_dissect_hash(const struct sk_buff *skb,
+ 			   struct flow_dissector *flow_dissector,
+ 			   void *target_container);
+ 
++static inline __u32 skb_get_hash_net(const struct net *net, struct sk_buff *skb)
 +{
-+	if (static_branch_unlikely(&nft_trace_enabled)) {
-+		const struct nft_pktinfo *pkt = info->pkt;
++	if (!skb->l4_hash && !skb->sw_hash)
++		__skb_get_hash_net(net, skb);
 +
-+		if (info->trace)
-+			info->nf_trace = pkt->skb->nf_trace;
-+	}
++	return skb->hash;
 +}
 +
- static void nft_bitwise_fast_eval(const struct nft_expr *expr,
- 				  struct nft_regs *regs)
+ static inline __u32 skb_get_hash(struct sk_buff *skb)
  {
-@@ -85,6 +96,7 @@ static noinline void __nft_trace_verdict(struct nft_traceinfo *info,
- 					 const struct nft_chain *chain,
- 					 const struct nft_regs *regs)
+ 	if (!skb->l4_hash && !skb->sw_hash)
+-		__skb_get_hash(skb);
++		__skb_get_hash_net(NULL, skb);
+ 
+ 	return skb->hash;
+ }
+diff --git a/net/core/flow_dissector.c b/net/core/flow_dissector.c
+index 10e9d6e47e0a3..93810d894b1bb 100644
+--- a/net/core/flow_dissector.c
++++ b/net/core/flow_dissector.c
+@@ -1660,7 +1660,8 @@ u32 __skb_get_hash_symmetric(const struct sk_buff *skb)
+ EXPORT_SYMBOL_GPL(__skb_get_hash_symmetric);
+ 
+ /**
+- * __skb_get_hash: calculate a flow hash
++ * __skb_get_hash_net: calculate a flow hash
++ * @net: associated network namespace, derived from @skb if NULL
+  * @skb: sk_buff to calculate flow hash from
+  *
+  * This function calculates a flow hash based on src/dst addresses
+@@ -1668,18 +1669,24 @@ EXPORT_SYMBOL_GPL(__skb_get_hash_symmetric);
+  * on success, zero indicates no valid hash.  Also, sets l4_hash in skb
+  * if hash is a canonical 4-tuple hash over transport ports.
+  */
+-void __skb_get_hash(struct sk_buff *skb)
++void __skb_get_hash_net(const struct net *net, struct sk_buff *skb)
  {
-+	const struct nft_pktinfo *pkt = info->pkt;
- 	enum nft_trace_types type;
+ 	struct flow_keys keys;
+ 	u32 hash;
  
- 	switch (regs->verdict.code) {
-@@ -92,8 +104,13 @@ static noinline void __nft_trace_verdict(struct nft_traceinfo *info,
- 	case NFT_RETURN:
- 		type = NFT_TRACETYPE_RETURN;
- 		break;
-+	case NF_STOLEN:
-+		type = NFT_TRACETYPE_RULE;
-+		/* can't access skb->nf_trace; use copy */
-+		break;
- 	default:
- 		type = NFT_TRACETYPE_RULE;
-+		info->nf_trace = pkt->skb->nf_trace;
- 		break;
- 	}
++	memset(&keys, 0, sizeof(keys));
++
++	__skb_flow_dissect(net, skb, &flow_keys_dissector,
++			   &keys, NULL, 0, 0, 0,
++			   FLOW_DISSECTOR_F_STOP_AT_FLOW_LABEL);
++
+ 	__flow_hash_secret_init();
  
-@@ -244,6 +261,7 @@ nft_do_chain(struct nft_pktinfo *pkt, void *priv)
- 		switch (regs.verdict.code) {
- 		case NFT_BREAK:
- 			regs.verdict.code = NFT_CONTINUE;
-+			nft_trace_copy_nftrace(&info);
- 			continue;
- 		case NFT_CONTINUE:
- 			nft_trace_packet(&info, chain, rule,
+-	hash = ___skb_get_hash(skb, &keys, &hashrnd);
++	hash = __flow_hash_from_keys(&keys, &hashrnd);
+ 
+ 	__skb_set_sw_hash(skb, hash, flow_keys_have_l4(&keys));
+ }
+-EXPORT_SYMBOL(__skb_get_hash);
++EXPORT_SYMBOL(__skb_get_hash_net);
+ 
+ __u32 skb_get_hash_perturb(const struct sk_buff *skb,
+ 			   const siphash_key_t *perturb)
 diff --git a/net/netfilter/nf_tables_trace.c b/net/netfilter/nf_tables_trace.c
-index e4fe2f0780eb6..edf8cbb6757cb 100644
+index edf8cbb6757cb..2fc42dd1bbd43 100644
 --- a/net/netfilter/nf_tables_trace.c
 +++ b/net/netfilter/nf_tables_trace.c
-@@ -7,7 +7,7 @@
- #include <linux/module.h>
- #include <linux/static_key.h>
- #include <linux/hash.h>
--#include <linux/jhash.h>
-+#include <linux/siphash.h>
- #include <linux/if_vlan.h>
- #include <linux/init.h>
- #include <linux/skbuff.h>
-@@ -25,22 +25,6 @@
- DEFINE_STATIC_KEY_FALSE(nft_trace_enabled);
- EXPORT_SYMBOL_GPL(nft_trace_enabled);
+@@ -289,7 +289,7 @@ void nft_trace_init(struct nft_traceinfo *info, const struct nft_pktinfo *pkt,
+ 	net_get_random_once(&trace_key, sizeof(trace_key));
  
--static int trace_fill_id(struct sk_buff *nlskb, struct sk_buff *skb)
--{
--	__be32 id;
--
--	/* using skb address as ID results in a limited number of
--	 * values (and quick reuse).
--	 *
--	 * So we attempt to use as many skb members that will not
--	 * change while skb is with netfilter.
--	 */
--	id = (__be32)jhash_2words(hash32_ptr(skb), skb_get_hash(skb),
--				  skb->skb_iif);
--
--	return nla_put_be32(nlskb, NFTA_TRACE_ID, id);
--}
--
- static int trace_fill_header(struct sk_buff *nlskb, u16 type,
- 			     const struct sk_buff *skb,
- 			     int off, unsigned int len)
-@@ -186,6 +170,7 @@ void nft_trace_notify(struct nft_traceinfo *info)
- 	struct nlmsghdr *nlh;
- 	struct sk_buff *skb;
- 	unsigned int size;
-+	u32 mark = 0;
- 	u16 event;
- 
- 	if (!nfnetlink_has_listeners(nft_net(pkt), NFNLGRP_NFTRACE))
-@@ -229,7 +214,7 @@ void nft_trace_notify(struct nft_traceinfo *info)
- 	if (nla_put_be32(skb, NFTA_TRACE_TYPE, htonl(info->type)))
- 		goto nla_put_failure;
- 
--	if (trace_fill_id(skb, pkt->skb))
-+	if (nla_put_u32(skb, NFTA_TRACE_ID, info->skbid))
- 		goto nla_put_failure;
- 
- 	if (nla_put_string(skb, NFTA_TRACE_CHAIN, info->chain->name))
-@@ -249,16 +234,24 @@ void nft_trace_notify(struct nft_traceinfo *info)
- 	case NFT_TRACETYPE_RULE:
- 		if (nft_verdict_dump(skb, NFTA_TRACE_VERDICT, info->verdict))
- 			goto nla_put_failure;
-+
-+		/* pkt->skb undefined iff NF_STOLEN, disable dump */
-+		if (info->verdict->code == NF_STOLEN)
-+			info->packet_dumped = true;
-+		else
-+			mark = pkt->skb->mark;
-+
- 		break;
- 	case NFT_TRACETYPE_POLICY:
-+		mark = pkt->skb->mark;
-+
- 		if (nla_put_be32(skb, NFTA_TRACE_POLICY,
- 				 htonl(info->basechain->policy)))
- 			goto nla_put_failure;
- 		break;
- 	}
- 
--	if (pkt->skb->mark &&
--	    nla_put_be32(skb, NFTA_TRACE_MARK, htonl(pkt->skb->mark)))
-+	if (mark && nla_put_be32(skb, NFTA_TRACE_MARK, htonl(mark)))
- 		goto nla_put_failure;
- 
- 	if (!info->packet_dumped) {
-@@ -283,9 +276,20 @@ void nft_trace_init(struct nft_traceinfo *info, const struct nft_pktinfo *pkt,
- 		    const struct nft_verdict *verdict,
- 		    const struct nft_chain *chain)
- {
-+	static siphash_key_t trace_key __read_mostly;
-+	struct sk_buff *skb = pkt->skb;
-+
- 	info->basechain = nft_base_chain(chain);
- 	info->trace = true;
-+	info->nf_trace = pkt->skb->nf_trace;
- 	info->packet_dumped = false;
- 	info->pkt = pkt;
- 	info->verdict = verdict;
-+
-+	net_get_random_once(&trace_key, sizeof(trace_key));
-+
-+	info->skbid = (u32)siphash_3u32(hash32_ptr(skb),
-+					skb_get_hash(skb),
-+					skb->skb_iif,
-+					&trace_key);
+ 	info->skbid = (u32)siphash_3u32(hash32_ptr(skb),
+-					skb_get_hash(skb),
++					skb_get_hash_net(nft_net(pkt), skb),
+ 					skb->skb_iif,
+ 					&trace_key);
  }
 -- 
 2.53.0
