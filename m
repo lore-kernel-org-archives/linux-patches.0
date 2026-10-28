@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216239;
-	b=TJibyXCGmx6y+7Lmos5fE5dbDGLzmA6AomObM86rNGPYCxezLbVpOwJxxgtyluEKp805
-	 tpK7tOzSjzhcTp35pLK3ADjkIJdXUkTUiJIpWapo9efG0L/sX8J2Ru5kEYyaKBdf79LvO
-	 Qd7CMYFS61GradyDOh7WF+YQ5IngDnMC2Xaj/3yEmsai73RNdI4cwltBv7ZTnRObycqdg
-	 Ua1nPJQy/HmgsWyOQ5haKZpy0VDgyBys6QCL82pHgtLm9eqoz8Gpnp4A81YQkgffHuo3m
-	 bH9eN8fPVulWD0yvdQmApSDQJk6Is5mG9RUST7HJU6kscPVPD7wZW29thlWcI9bGp9Q==
+	t=1793216243;
+	b=h8y05we1UunfK/9aWuXnRLUS9l1K4FGGrbHtOt+PANDoRy01uP8kaVsbpnxrmweDCAE/
+	 gVlkBlSsNGWOBYHhbe0ITEqkPDV2kEtfXHV6pIqNFBqgpbF2/AREAfm0y5zgFRRElA8jO
+	 M1Ip8VPDcqSAFqPXYHAvg3aWNi+EJv8Mh76yGeBz5UTgvcK+qM1Y3T2zJryzToXGCICNt
+	 MdO5I0Jebhn1QfLHrXmyl2TqpamKFJ2+E3MbKR3L6gDMubx2iOGJnBYeszawiRT76slFS
+	 L+ljS7GCTPhMTxKg69R6tpwIBXZflbxuN21rVd+lDUjocBxaUfps3rFyqMjRGM8tRIw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216239;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216243;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Qn0sDG4lmKFDKWjd8qd0PT/lf1LIXGZ5+DWy5MA4HZc=;
-	b=qOmdxa9MYRa6mSvTgERJrq+i6fVJ39JNqB9257aDW4snInPgyHzwIGfdJgnFq331mzS3
-	 tXYJoULtuPQtkzHplEm2ii6LIu6F8IIYm8WvH9hJPqozKPt7Ev496WIl0yVS/7+kgpmqr
-	 AqS9WaBXS9VS3b2GVbPo8W+8JDMslLvMyymV2SvUJwSiWYlYZEoqjV7qsumsYZV6rLBHB
-	 GjHmbjV4NvEFvhuWV88hR8tVsJvffnQk7pzzGhLIkE5lVcxU6WO3QfJTCUEgOntXmsKEf
-	 h1kJppTM5fQibu+yY+dXllrUpLJjPBeG117zbpxoebbtDi3yuynk2PIxfpuxa03JwvA==
+	bh=J+84uEYLLF+/0gCsYVmpsNvOudHikJhL16xj/D610jM=;
+	b=0EB2aPvyE4yMcAlvZZlVpDeFsOUf/UhOwoJAIb/0n2P+Dwn08CRoWBuYFDmqI8uRqwAc
+	 RiTupbUYGzRAWO+PzzIIviu7ceqXxmkV339G5XSEJj530eDPdSRVI4DUbF15cexsqGMD/
+	 LmMGy9GG6Fqro0WQM4El0QuEGLjKShs+Hl3UaIOPxtxfDgQeFp8KcweSdwPu0a/DsFaBx
+	 1tN5HO+rBMsTQD2NfS/b305KtYhsFFuTI2d8q9HPElTXCfonpqp7DKcpBXcyHWSvBBy/B
+	 7u6x7GJ1iOmaS4jYaRRokQhWxNHz0F79OzVSk5RDRPOsVeJYg9NKLiNI7os5MnJe82Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MQvocNgo;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P4XutEJm;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 942AD606A325;
-	Wed, 28 Oct 2026 19:37:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7174606A31E;
+	Wed, 28 Oct 2026 19:37:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MQvocNgo
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5E811F01825;
-	Wed, 28 Oct 2026 19:37:18 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P4XutEJm
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C32021F01825;
+	Wed, 28 Oct 2026 19:37:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216239;
-	bh=Qn0sDG4lmKFDKWjd8qd0PT/lf1LIXGZ5+DWy5MA4HZc=;
+	s=korg; t=1793216242;
+	bh=J+84uEYLLF+/0gCsYVmpsNvOudHikJhL16xj/D610jM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MQvocNgohO5T83O6nmYxtaCRawkpxmBSOtW/PKXHZlwW4GAoLllKkstVTCvC/0+rJ
-	 AX5vE1kqC8kRbWp5BbvYtqxRq4dgDVOfaJQ+oIU1wcxZ8PbIumLz0549RzMO4I09CY
-	 kfEhrPbT7UD+g0MEYcnQGaG2ya3ZcZDrIpmp8uzw=
+	b=P4XutEJmXjTiyfvasDrWMZr/xSojkJh3Fr21MtmvyvMdAqB9DgPUHeluNUmOnAuIG
+	 lIyzvlU8zVlb+s9r9qq/7+lYa8NS1Osfam0bGak04QOlWx1pgAZtmEtAsTnpMO8dTZ
+	 f12IozWq7hR9KXh7GJzlf361pMiAXztm6BM+KLB8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Hannes Reinecke <hare@suse.de>,
-	Christoph Hellwig <hch@lst.de>,
-	Niklas Cassel <niklas.cassel@wdc.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Zhiguo Niu <zhiguo.niu@unisoc.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1488/1887] scsi: block: ioprio: Clean up interface definition
-Date: Wed, 28 Oct 2026 17:59:44 +0100
-Message-ID: <20261028170533.313894435@linuxfoundation.org>
+Subject: [PATCH 6.1 1489/1887] f2fs: use new ioprio Macro to get ckpt thread ioprio level
+Date: Wed, 28 Oct 2026 17:59:45 +0100
+Message-ID: <20261028170533.338237840@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -71,155 +69,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Damien Le Moal <dlemoal@kernel.org>
+From: Zhiguo Niu <zhiguo.niu@unisoc.com>
 
-[ Upstream commit eca2040972b411ec27483bf75dc8b84e730e88ff ]
+[ Upstream commit 270b09313b4e16cdfd01d8371023a1661dd1112e ]
 
-The I/O priority user interface defines the 16-bits ioprio values as the
-combination of the upper 3-bits for an I/O priority class and the lower
-13-bits as priority data. However, the kernel only uses the lower 3-bits of
-the priority data to define priority levels for the RT and BE priority
-classes. The data part of an ioprio value is completely ignored for the
-IDLE and NONE classes. This is enforced by checks done in
-ioprio_check_cap(), which is called for all paths that allow defining an
-I/O priority for I/Os: the per-context ioprio_set() system call, aio
-interface and io_uring interface.
+IOPRIO_PRIO_DATA in the new kernel version includes level and hint,
+So Macro IOPRIO_PRIO_LEVEL is more accurate to get ckpt thread
+ioprio data/level, and it is also consisten with the way setting
+ckpt thread ioprio by IOPRIO_PRIO_VALUE(class, data/level).
 
-Clarify this fact in the uapi ioprio.h header file and introduce the
-IOPRIO_PRIO_LEVEL_MASK and IOPRIO_PRIO_LEVEL() macros for users to define
-and get priority levels in an ioprio value. The coarser macro
-IOPRIO_PRIO_DATA() is retained for backward compatibility with old
-applications already using it. There is no functional change introduced
-with this.
+Besides, change variable name from "data" to "level" for more readable.
 
-In-kernel users of the IOPRIO_PRIO_DATA() macro which are explicitly
-handling I/O priority data as a priority level are modified to use the new
-IOPRIO_PRIO_LEVEL() macro without any functional change. Since f2fs is the
-only user of this macro not explicitly using that value as a priority
-level, it is left unchanged.
-
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
-Reviewed-by: Hannes Reinecke <hare@suse.de>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Niklas Cassel <niklas.cassel@wdc.com>
-Link: https://lore.kernel.org/r/20230511011356.227789-2-nks@flawful.org
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Zhiguo Niu <zhiguo.niu@unisoc.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Stable-dep-of: 5cb33b00c8fb ("f2fs: avoid NULL checkpoint thread access in sysfs")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/bfq-iosched.c         |  8 ++++----
- block/ioprio.c              |  6 +++---
- include/uapi/linux/ioprio.h | 19 ++++++++++++++-----
- 3 files changed, 21 insertions(+), 12 deletions(-)
+ fs/f2fs/sysfs.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
-index d1c62a4e8c357..e9fee4d9d08a8 100644
---- a/block/bfq-iosched.c
-+++ b/block/bfq-iosched.c
-@@ -5496,16 +5496,16 @@ bfq_set_next_ioprio_data(struct bfq_queue *bfqq, struct bfq_io_cq *bic)
- 		bfqq->new_ioprio_class = task_nice_ioclass(tsk);
- 		break;
- 	case IOPRIO_CLASS_RT:
--		bfqq->new_ioprio = IOPRIO_PRIO_DATA(bic->ioprio);
-+		bfqq->new_ioprio = IOPRIO_PRIO_LEVEL(bic->ioprio);
- 		bfqq->new_ioprio_class = IOPRIO_CLASS_RT;
- 		break;
- 	case IOPRIO_CLASS_BE:
--		bfqq->new_ioprio = IOPRIO_PRIO_DATA(bic->ioprio);
-+		bfqq->new_ioprio = IOPRIO_PRIO_LEVEL(bic->ioprio);
- 		bfqq->new_ioprio_class = IOPRIO_CLASS_BE;
- 		break;
- 	case IOPRIO_CLASS_IDLE:
- 		bfqq->new_ioprio_class = IOPRIO_CLASS_IDLE;
--		bfqq->new_ioprio = 7;
-+		bfqq->new_ioprio = IOPRIO_NR_LEVELS - 1;
- 		break;
+diff --git a/fs/f2fs/sysfs.c b/fs/f2fs/sysfs.c
+index 031dd0079dbd6..f6f5da3b2a376 100644
+--- a/fs/f2fs/sysfs.c
++++ b/fs/f2fs/sysfs.c
+@@ -327,13 +327,13 @@ static ssize_t f2fs_sbi_show(struct f2fs_attr *a,
+ 	if (!strcmp(a->attr.name, "ckpt_thread_ioprio")) {
+ 		struct ckpt_req_control *cprc = &sbi->cprc_info;
+ 		int class = IOPRIO_PRIO_CLASS(cprc->ckpt_thread_ioprio);
+-		int data = IOPRIO_PRIO_DATA(cprc->ckpt_thread_ioprio);
++		int level = IOPRIO_PRIO_LEVEL(cprc->ckpt_thread_ioprio);
+ 
+ 		if (class != IOPRIO_CLASS_RT && class != IOPRIO_CLASS_BE)
+ 			return -EINVAL;
+ 
+ 		return sysfs_emit(buf, "%s,%d\n",
+-			class == IOPRIO_CLASS_RT ? "rt" : "be", data);
++			class == IOPRIO_CLASS_RT ? "rt" : "be", level);
  	}
  
-@@ -5791,7 +5791,7 @@ static struct bfq_queue *bfq_get_queue(struct bfq_data *bfqd,
- 				       struct bfq_io_cq *bic,
- 				       bool respawn)
- {
--	const int ioprio = IOPRIO_PRIO_DATA(bic->ioprio);
-+	const int ioprio = IOPRIO_PRIO_LEVEL(bic->ioprio);
- 	const int ioprio_class = IOPRIO_PRIO_CLASS(bic->ioprio);
- 	struct bfq_queue **async_bfqq = NULL;
- 	struct bfq_queue *bfqq;
-diff --git a/block/ioprio.c b/block/ioprio.c
-index 32a456b458049..f0d9e818abc53 100644
---- a/block/ioprio.c
-+++ b/block/ioprio.c
-@@ -33,7 +33,7 @@
- int ioprio_check_cap(int ioprio)
- {
- 	int class = IOPRIO_PRIO_CLASS(ioprio);
--	int data = IOPRIO_PRIO_DATA(ioprio);
-+	int level = IOPRIO_PRIO_LEVEL(ioprio);
+ #ifdef CONFIG_F2FS_FS_COMPRESSION
+@@ -453,7 +453,7 @@ static ssize_t __sbi_store(struct f2fs_attr *a,
+ 		const char *name = strim((char *)buf);
+ 		struct ckpt_req_control *cprc = &sbi->cprc_info;
+ 		int class;
+-		long data;
++		long level;
+ 		int ret;
  
- 	switch (class) {
- 		case IOPRIO_CLASS_RT:
-@@ -49,13 +49,13 @@ int ioprio_check_cap(int ioprio)
- 			fallthrough;
- 			/* rt has prio field too */
- 		case IOPRIO_CLASS_BE:
--			if (data >= IOPRIO_NR_LEVELS || data < 0)
-+			if (level >= IOPRIO_NR_LEVELS)
- 				return -EINVAL;
- 			break;
- 		case IOPRIO_CLASS_IDLE:
- 			break;
- 		case IOPRIO_CLASS_NONE:
--			if (data)
-+			if (level)
- 				return -EINVAL;
- 			break;
- 		default:
-diff --git a/include/uapi/linux/ioprio.h b/include/uapi/linux/ioprio.h
-index f70f2596a6bf7..4444b4e4fdad9 100644
---- a/include/uapi/linux/ioprio.h
-+++ b/include/uapi/linux/ioprio.h
-@@ -17,7 +17,7 @@
- 	 ((data) & IOPRIO_PRIO_MASK))
+ 		if (!strncmp(name, "rt,", 3))
+@@ -464,13 +464,13 @@ static ssize_t __sbi_store(struct f2fs_attr *a,
+ 			return -EINVAL;
  
- /*
-- * These are the io priority groups as implemented by the BFQ and mq-deadline
-+ * These are the io priority classes as implemented by the BFQ and mq-deadline
-  * schedulers. RT is the realtime class, it always gets premium service. For
-  * ATA disks supporting NCQ IO priority, RT class IOs will be processed using
-  * high priority NCQ commands. BE is the best-effort scheduling class, the
-@@ -32,11 +32,20 @@ enum {
- };
+ 		name += 3;
+-		ret = kstrtol(name, 10, &data);
++		ret = kstrtol(name, 10, &level);
+ 		if (ret)
+ 			return ret;
+-		if (data >= IOPRIO_NR_LEVELS || data < 0)
++		if (level >= IOPRIO_NR_LEVELS || level < 0)
+ 			return -EINVAL;
  
- /*
-- * The RT and BE priority classes both support up to 8 priority levels.
-+ * The RT and BE priority classes both support up to 8 priority levels that
-+ * can be specified using the lower 3-bits of the priority data.
-  */
--#define IOPRIO_NR_LEVELS	8
--#define IOPRIO_BE_NR		IOPRIO_NR_LEVELS
-+#define IOPRIO_LEVEL_NR_BITS		3
-+#define IOPRIO_NR_LEVELS		(1 << IOPRIO_LEVEL_NR_BITS)
-+#define IOPRIO_LEVEL_MASK		(IOPRIO_NR_LEVELS - 1)
-+#define IOPRIO_PRIO_LEVEL(ioprio)	((ioprio) & IOPRIO_LEVEL_MASK)
- 
-+#define IOPRIO_BE_NR			IOPRIO_NR_LEVELS
-+
-+/*
-+ * Possible values for the "which" argument of the ioprio_get() and
-+ * ioprio_set() system calls (see "man ioprio_set").
-+ */
- enum {
- 	IOPRIO_WHO_PROCESS = 1,
- 	IOPRIO_WHO_PGRP,
-@@ -44,7 +53,7 @@ enum {
- };
- 
- /*
-- * Fallback BE priority level.
-+ * Fallback BE class priority level.
-  */
- #define IOPRIO_NORM	4
- #define IOPRIO_BE_NORM	IOPRIO_NORM
+-		cprc->ckpt_thread_ioprio = IOPRIO_PRIO_VALUE(class, data);
++		cprc->ckpt_thread_ioprio = IOPRIO_PRIO_VALUE(class, level);
+ 		if (test_opt(sbi, MERGE_CHECKPOINT)) {
+ 			ret = set_task_ioprio(cprc->f2fs_issue_ckpt,
+ 					cprc->ckpt_thread_ioprio);
 -- 
 2.53.0
 
