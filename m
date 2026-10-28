@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215609;
-	b=eV4dRwFbovGg+5fGGqSNi4A8VsSkjGQMTpcLWWNqv3Z7NuFhkzDnhgNcMvFg+4eFFK0d
-	 VFk8EPs7RVo+BC3coLT2SyvX8M9RPJoA00NmWbrH8jUYi62bLz/2CSQq+prJ6ZYqMCb9F
-	 W/BOkxQlJyExhBKn5KQQP6KdhIrXP7lpZOODpUGaMsa03/uFhzgf9bboFjnhTnwiFGv7j
-	 JfrW7Ylwxq9fFtKmb+6+bmzpqqt1yDP0IXlHh0T+nug5NmEztlalo+1BlEv3737QudZrr
-	 24heKjMD2lNzW821tFligumwv9nDj+h7d1SBn1igOxSkFZD4G0Sf+MmnfcZcy08sFSA==
+	t=1793215612;
+	b=wBa5kpUdouuaXMXYdUVtaWb/OH1DN8x0K33s6QjoggCmvKcW3SwQlwC42cASCf5lYGpj
+	 ya+uxIuUJGZdOzLUP+mK8kwGuXleywBFLOMJ/pUcmtr/DsQ5kwbyYfThu/5fgo+Ma1rPH
+	 u65ePAO/i+JerVjFe46c/DU8yZ6sMMPb3R6k17cEfhDDLL3AmgDnpe5nJLHa/HNHVUNE+
+	 m8ZRE+0pO2SAuwvfJzeIeYNn+wHUGDXYofYxm4hYv8ob4SRhEvxFggnRNnfCqPKdJFKtV
+	 rc6ueex8nsuc3Wbgxza6xU9zEZTowFg9U8WUL6o3HWO16LMlg9jxb+d+/K9OUgSiQvg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215609;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215612;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=QzaXSjBosrQSK4KwWDr0aYVi22H5SOIkZT27rT+xsZk=;
-	b=Evwk4wb+XodyhuOXB2cytrNgXMj4j83wZcXAIC/znWthmuBNXMtiMVC5vcTilgiqjkvX
-	 G5yAQ1wSq7nKsM8HtSs5Pjl2saIOaxqBUuvwEhtJtT9NnJHxWPryVm8WjYH6rjrVeL+aJ
-	 D5hTYT/KuWr9tQhw5adtrqE/bFr2yk54VjIJ+Pob1VA590Oy2iopl7FvE8ZQyuCHMuXQX
-	 4zOw9+1lzEiBOQj0w9Y3z2qoHrzNBjerf19yjnW7wGy4MCXfKukZAyRlhV1x69Zjb2rgq
-	 GGCYWhhaofgh41u2k+vvPSl5GPDGg1ur62NgoPChL/3MINGLIkDo8GsXmKB2uYcs+4Q==
+	bh=3VmFQAcrnBaCEzqjW5Fi38HOKsv0CgO5eYnTrKpEklg=;
+	b=HK5dmiVCCU6sA/b1Bztu9WG+uK1978mkmofrxS/jXUs1OqJJhNgXfOgRVMHjG7XW/yDj
+	 6mY1wrKHU+o6YVlnlRB7LCb28DJLYuQHV3nZRqrnAnaWIgmavoO++kX2qTM2ueCz1wAXT
+	 wGM3VanG/f7ULU6c+rpNjbc7Sdz1UtMWDnmoVggP5TbEBFYwIrubCYs7pdrj5weS1dpn2
+	 I/PHSJwr+FEz9U2My+Cjd8jMmPUqp0mZyjq7mn83EjBz9smlAlfhCRbc6fKH7PtLsezhh
+	 1xjFTH6KHTjwnP1EJN6AfzrQ4a9ujT4SU+6veYIHDbZxgav9TfS3K39Uy2F0U9qYD3A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zdemcDLA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KtcdDaCx;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 543CB606A31C;
-	Wed, 28 Oct 2026 19:26:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28225606A31F;
+	Wed, 28 Oct 2026 19:26:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zdemcDLA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A420A1F01825;
-	Wed, 28 Oct 2026 19:26:48 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KtcdDaCx
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D7F71F01828;
+	Wed, 28 Oct 2026 19:26:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215609;
-	bh=QzaXSjBosrQSK4KwWDr0aYVi22H5SOIkZT27rT+xsZk=;
+	s=korg; t=1793215612;
+	bh=3VmFQAcrnBaCEzqjW5Fi38HOKsv0CgO5eYnTrKpEklg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zdemcDLARbNDqjD7g4BYtnUL9RxpWlzjUwfoOPqp5SQ2DwIBohWlacdxOqaf+IQwF
-	 AzKh+rzWxAYipLNVHBjNzJayDhDdxiOb6+4p1gMeIjJGzFpR/EvAnkispP9f3NoK7k
-	 YIAIIC0c7+kLSNgtzfe38eXneHptSfreiA+kOcIk=
+	b=KtcdDaCxInkC6m0nVwq1bL/ub4XUSRVweUrACa1InzABVf5/VJrywbnUgZkzoAB57
+	 tgpqIjkvKMcGL9kQ7eQtKoGHKd660z3qRdSb9E5MH9NytYQobQODwOLbJr3Bd51xBC
+	 Ms7snKW27h2vomNph6UYJUOE+/G4M11gcqJc4BRo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lianfa Weng <wenglianfa@huawei.com>,
-	Junxian Huang <huangjunxian6@hisilicon.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
+	Petr Mladek <pmladek@suse.com>,
+	Yosry Ahmed <yosryahmed@google.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1268/1887] RDMA/hns: Fix log flood after cmd_mbox failure
-Date: Wed, 28 Oct 2026 17:56:04 +0100
-Message-ID: <20261028170528.276251124@linuxfoundation.org>
+Subject: [PATCH 6.1 1269/1887] seq_buf: Add seq_buf_do_printk() helper
+Date: Wed, 28 Oct 2026 17:56:05 +0100
+Message-ID: <20261028170528.299363964@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,136 +71,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lianfa Weng <wenglianfa@huawei.com>
+From: Sergey Senozhatsky <senozhatsky@chromium.org>
 
-[ Upstream commit bbd97d71e53e551890e4115ad9de46b5f2ac0858 ]
+[ Upstream commit 96928d9032a7c34f12a88df879665562bcebf59a ]
 
-hns_roce_cmd_mbox() is the command interface between driver and
-hardware. When hardware is abnormal, the unlimited error printings
-after hns_roce_cmd_mbox() failure will cause log flood and even
-system crash.
+Sometimes we use seq_buf to format a string buffer, which
+we then pass to printk(). However, in certain situations
+the seq_buf string buffer can get too big, exceeding the
+PRINTKRB_RECORD_MAX bytes limit, and causing printk() to
+truncate the string.
 
-Replace ibdev_err() and ibdev_warn() with their ratelimited versions
-in the error handling path after hns_roce_cmd_mbox() (and its wrappers
-hns_roce_create_hw_ctx/hns_roce_destroy_hw_ctx) fails.
+Add a new seq_buf helper. This helper prints the seq_buf
+string buffer line by line, using \n as a delimiter,
+rather than passing the whole string buffer to printk()
+at once.
 
-Fixes: 9a4435375cd1 ("IB/hns: Add driver files for hns RoCE driver")
-Link: https://patch.msgid.link/r/20260520055759.2354037-4-huangjunxian6@hisilicon.com
-Signed-off-by: Lianfa Weng <wenglianfa@huawei.com>
-Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Link: https://lkml.kernel.org/r/20230415100110.1419872-1-senozhatsky@chromium.org
+
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Sergey Senozhatsky <senozhatsky@chromium.org>
+Reviewed-by: Petr Mladek <pmladek@suse.com>
+Tested-by: Yosry Ahmed <yosryahmed@google.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Stable-dep-of: f07883450eb1 ("tracing: Bound synthetic-field strings with seq_buf")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hns/hns_roce_cq.c    |  6 +++---
- drivers/infiniband/hw/hns/hns_roce_hw_v2.c | 18 +++++++++---------
- drivers/infiniband/hw/hns/hns_roce_mr.c    |  6 +++---
- drivers/infiniband/hw/hns/hns_roce_srq.c   |  2 +-
- 4 files changed, 16 insertions(+), 16 deletions(-)
+ include/linux/seq_buf.h |  2 ++
+ lib/seq_buf.c           | 32 ++++++++++++++++++++++++++++++++
+ 2 files changed, 34 insertions(+)
 
-diff --git a/drivers/infiniband/hw/hns/hns_roce_cq.c b/drivers/infiniband/hw/hns/hns_roce_cq.c
-index 5e0d78f4e5454..c72bbf21f1aeb 100644
---- a/drivers/infiniband/hw/hns/hns_roce_cq.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_cq.c
-@@ -119,9 +119,9 @@ static int hns_roce_create_cqc(struct hns_roce_dev *hr_dev,
- 	ret = hns_roce_create_hw_ctx(hr_dev, mailbox, HNS_ROCE_CMD_CREATE_CQC,
- 				     hr_cq->cqn);
- 	if (ret)
--		ibdev_err(ibdev,
--			  "failed to send create cmd for CQ(0x%lx), ret = %d.\n",
--			  hr_cq->cqn, ret);
-+		ibdev_err_ratelimited(ibdev,
-+				      "failed to send create cmd for CQ(0x%lx), ret = %d.\n",
-+				      hr_cq->cqn, ret);
+diff --git a/include/linux/seq_buf.h b/include/linux/seq_buf.h
+index 5b31c51479694..515d7fcb9634b 100644
+--- a/include/linux/seq_buf.h
++++ b/include/linux/seq_buf.h
+@@ -159,4 +159,6 @@ extern int
+ seq_buf_bprintf(struct seq_buf *s, const char *fmt, const u32 *binary);
+ #endif
  
- 	hns_roce_free_cmd_mailbox(hr_dev, mailbox);
++void seq_buf_do_printk(struct seq_buf *s, const char *lvl);
++
+ #endif /* _LINUX_SEQ_BUF_H */
+diff --git a/lib/seq_buf.c b/lib/seq_buf.c
+index 0a68f7aa85d67..45c450f423fa8 100644
+--- a/lib/seq_buf.c
++++ b/lib/seq_buf.c
+@@ -93,6 +93,38 @@ int seq_buf_printf(struct seq_buf *s, const char *fmt, ...)
+ }
+ EXPORT_SYMBOL_GPL(seq_buf_printf);
  
-diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-index 122be4aae304d..1775120634745 100644
---- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-@@ -5852,9 +5852,9 @@ static int hns_roce_v2_modify_srq(struct ib_srq *ibsrq,
- 					HNS_ROCE_CMD_MODIFY_SRQC, srq->srqn);
- 		hns_roce_free_cmd_mailbox(hr_dev, mailbox);
- 		if (ret) {
--			ibdev_err(&hr_dev->ib_dev,
--				  "failed to handle cmd of modifying SRQ, ret = %d.\n",
--				  ret);
-+			ibdev_err_ratelimited(&hr_dev->ib_dev,
-+					      "failed to handle cmd of modifying SRQ, ret = %d.\n",
-+					      ret);
- 			return ret;
- 		}
- 	}
-@@ -5878,9 +5878,9 @@ static int hns_roce_v2_query_srq(struct ib_srq *ibsrq, struct ib_srq_attr *attr)
- 	ret = hns_roce_cmd_mbox(hr_dev, 0, mailbox->dma,
- 				HNS_ROCE_CMD_QUERY_SRQC, srq->srqn);
- 	if (ret) {
--		ibdev_err(&hr_dev->ib_dev,
--			  "failed to process cmd of querying SRQ, ret = %d.\n",
--			  ret);
-+		ibdev_err_ratelimited(&hr_dev->ib_dev,
-+				      "failed to process cmd of querying SRQ, ret = %d.\n",
-+				      ret);
- 		goto out;
- 	}
- 
-@@ -5981,9 +5981,9 @@ static int hns_roce_v2_query_mpt(struct hns_roce_dev *hr_dev, u32 key,
- 	ret = hns_roce_cmd_mbox(hr_dev, 0, mailbox->dma, HNS_ROCE_CMD_QUERY_MPT,
- 				key_to_hw_index(key));
- 	if (ret) {
--		ibdev_err(&hr_dev->ib_dev,
--			  "failed to process cmd when querying MPT, ret = %d.\n",
--			  ret);
-+		ibdev_err_ratelimited(&hr_dev->ib_dev,
-+				      "failed to process cmd when querying MPT, ret = %d.\n",
-+				      ret);
- 		goto err_mailbox;
- 	}
- 
-diff --git a/drivers/infiniband/hw/hns/hns_roce_mr.c b/drivers/infiniband/hw/hns/hns_roce_mr.c
-index 408ef2a961492..105ebe4c8b9bf 100644
---- a/drivers/infiniband/hw/hns/hns_roce_mr.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_mr.c
-@@ -163,7 +163,7 @@ static int hns_roce_mr_enable(struct hns_roce_dev *hr_dev,
- 	ret = hns_roce_create_hw_ctx(hr_dev, mailbox, HNS_ROCE_CMD_CREATE_MPT,
- 				     mtpt_idx & (hr_dev->caps.num_mtpts - 1));
- 	if (ret) {
--		dev_err(dev, "failed to create mpt, ret = %d.\n", ret);
-+		dev_err_ratelimited(dev, "failed to create mpt, ret = %d.\n", ret);
- 		goto err_page;
- 	}
- 
-@@ -291,7 +291,7 @@ struct ib_mr *hns_roce_rereg_user_mr(struct ib_mr *ibmr, int flags, u64 start,
- 	ret = hns_roce_destroy_hw_ctx(hr_dev, HNS_ROCE_CMD_DESTROY_MPT,
- 				      mtpt_idx);
- 	if (ret)
--		ibdev_warn(ib_dev, "failed to destroy MPT, ret = %d.\n", ret);
-+		ibdev_warn_ratelimited(ib_dev, "failed to destroy MPT, ret = %d.\n", ret);
- 
- 	mr->enabled = 0;
- 	mr->iova = virt_addr;
-@@ -322,7 +322,7 @@ struct ib_mr *hns_roce_rereg_user_mr(struct ib_mr *ibmr, int flags, u64 start,
- 	ret = hns_roce_create_hw_ctx(hr_dev, mailbox, HNS_ROCE_CMD_CREATE_MPT,
- 				     mtpt_idx);
- 	if (ret) {
--		ibdev_err(ib_dev, "failed to create MPT, ret = %d.\n", ret);
-+		ibdev_err_ratelimited(ib_dev, "failed to create MPT, ret = %d.\n", ret);
- 		goto free_cmd_mbox;
- 	}
- 
-diff --git a/drivers/infiniband/hw/hns/hns_roce_srq.c b/drivers/infiniband/hw/hns/hns_roce_srq.c
-index 80fcb1b0e8fdc..c699bf48adb47 100644
---- a/drivers/infiniband/hw/hns/hns_roce_srq.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_srq.c
-@@ -103,7 +103,7 @@ static int hns_roce_create_srqc(struct hns_roce_dev *hr_dev,
- 	ret = hns_roce_create_hw_ctx(hr_dev, mailbox, HNS_ROCE_CMD_CREATE_SRQ,
- 				     srq->srqn);
- 	if (ret)
--		ibdev_err(ibdev, "failed to config SRQC, ret = %d.\n", ret);
-+		ibdev_err_ratelimited(ibdev, "failed to config SRQC, ret = %d.\n", ret);
- 
- err_mbox:
- 	hns_roce_free_cmd_mailbox(hr_dev, mailbox);
++/**
++ * seq_buf_do_printk - printk seq_buf line by line
++ * @s: seq_buf descriptor
++ * @lvl: printk level
++ *
++ * printk()-s a multi-line sequential buffer line by line. The function
++ * makes sure that the buffer in @s is nul terminated and safe to read
++ * as a string.
++ */
++void seq_buf_do_printk(struct seq_buf *s, const char *lvl)
++{
++	const char *start, *lf;
++
++	if (s->size == 0 || s->len == 0)
++		return;
++
++	seq_buf_terminate(s);
++
++	start = s->buffer;
++	while ((lf = strchr(start, '\n'))) {
++		int len = lf - start + 1;
++
++		printk("%s%.*s", lvl, len, start);
++		start = ++lf;
++	}
++
++	/* No trailing LF */
++	if (start < s->buffer + s->len)
++		printk("%s%s\n", lvl, start);
++}
++EXPORT_SYMBOL_GPL(seq_buf_do_printk);
++
+ #ifdef CONFIG_BINARY_PRINTF
+ /**
+  * seq_buf_bprintf - Write the printf string from binary arguments
 -- 
 2.53.0
 
