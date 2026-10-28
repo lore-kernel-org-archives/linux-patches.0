@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793209535;
-	b=BRGkdixD/yKmIK/85gDY9Xlgz8+dUEWFs7k7dujPIXALWeL3v+4EYilJdawAP9H4AmQ9
-	 cw+OoJIzNACvno0NH/EQPpsGvN7gLDjgsGisvM2bTC9RWE3Cc0Tq4xx9A3dWJOhnHaZLU
-	 8jDNjqHcyzMyLLNcse97Sl5nfAn+8xgILbJMgh6REB1iUBwAOsY9JAw7DUhICDMthNXyN
-	 WBrV0obyppHP/vs36E4uu9YaUkmehXZFR99khbmwnJZ0wxmj+14TiQj9J8KwtYG5Ldpuy
-	 7UTgwJ6wEkdkfnGl5bNI1C2mM+wD9N4jtjvkJyIjNiSCm9UB4ckcLHlR1cGhQVIH2AQ==
+	t=1793209538;
+	b=3UG3scGqDvCc/oJ5uPsey6SPRSYTRMOtwqj3Hka2+hY/NurDM4d4w6KHcqHGfvraghBN
+	 nzu3KVn+cSdgAn0X9BkC/B7s7+0JQajPtA4OFA8bimRu6WtpLDbhGuuf2ROsg6Z/jk9Zv
+	 n6OTQZKa5a6MHlh8JfM5pzkuClbuQsveG1exi+7RQYxgMzCnT6cEVZHjS642R7taEpgaq
+	 iU/wlItqHHr8oMFM+WUQMT9uXGvyPpNgWdobnvTlojGk9QBGAld187DslbJpv0TpZ0SX8
+	 FeJV0f2YnLFjYqetZuOBrz51kZAF1m5Mx9fe6xN1JnIbxZNay/m6ohddO3WZh0m4/pA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793209535;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793209538;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=k7hu3gBAk27IfhhLyB5tt14MwOZaaB9LJfzbELU+FlQ=;
-	b=qbVYrwrcNnXS8rMY3S/dL9ArHNjZzrMVmglFtcPf00CLXoAUNhqLneV4DrLavjVXOhMY
-	 4gjLsSS3D6+6lb5U7py+1NBMaKPwEmSmVs2QP/mMsk4v48SK9xhXNKaYAhaYD3KkwOuBQ
-	 r2cse5xYKfcJ9LG7AETBNfRK0ZMsA4dQveOTZ67WrKNwZWDCznnKQVqScFxeJ8MGzQti0
-	 aZyw8EDzmxJgy6K/MDiEZoHorLfuF6hvXCnCn93YyovlRYeUsO1C71r+tmtE2vOjSRwIc
-	 tTtXwqL+CZk1ZMBXYP8mxzZoQQpFox4aK1m/ZmAxHIAlxqqaEzWcspWiI1+Ok34edkw==
+	bh=3A1Y+vf4kY6HjSlcZ/zcb0fRJYauHuIilMX0Br6uAHE=;
+	b=JK003DU7x9mOsE8CVSZeRM/Ds+W4y4rDViBTBgj5Zb4UX1H9lN4TqLYeU6fVaHK4mRdp
+	 mHJ2o4PWNwXDNy86902okKL1WMSDiNRGNpQupzNwTnjjBnwgOBdVda3N2P4DrPpR1e/ME
+	 n2w0J+FKbtYRenuUmr+o18790mRUae3xiLSu1bN6btgpdmoLhNBtbPMKph5aryVV6q0cc
+	 yAdo06tMm+YS2/j0IqcbfM3W+FeLryBKFKKVM3i7MieHvOS/58Rt/hSMWwEtTfCpG49j9
+	 qf8vPhr76gI6AZ8FowGqPU5m50BpaYgB5fj9g5ZQO1UJpPUyRFQJM4gJfzzvTN15ZTg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=13eounp9;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kQ2EtnRD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8039606A31D;
-	Wed, 28 Oct 2026 17:45:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4818606A322;
+	Wed, 28 Oct 2026 17:45:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=13eounp9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7E041F031E2;
-	Wed, 28 Oct 2026 17:45:33 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kQ2EtnRD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B67FF1F01828;
+	Wed, 28 Oct 2026 17:45:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793209534;
-	bh=k7hu3gBAk27IfhhLyB5tt14MwOZaaB9LJfzbELU+FlQ=;
+	s=korg; t=1793209537;
+	bh=3A1Y+vf4kY6HjSlcZ/zcb0fRJYauHuIilMX0Br6uAHE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=13eounp9p/SePC/abtQRr75bk82bA9pEXCQaDIAmUiGCp37ZkQMFbLaGRCbHAp8Wm
-	 9ymjQC2UqRDuckr8RGNrdeX8Oju+2uUK4ooXl+1yRZWfNTZavULmvC8NzL7ajCibhD
-	 W5spF7GOTxlMZ2AuUUVHDEUByLXfv3RgDUFohirY=
+	b=kQ2EtnRDrPlTYlSAZVC+iMFoqj4cbR4mlITZMbgHl/qfhlutPoFIqrumfeCMFqoCs
+	 hnRbq6LnP7lGOsJXMGczAxmIpv6YExayfyXQh5IksIy3g6/jg3iMro4e5veJfJfVa8
+	 EmcAiV2GtLxWo1q8Qq8HvHFJ1YsGsMOuGlL0FU7w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+b106284c2a0b7bc80cf9@syzkaller.appspotmail.com,
-	Pauli Virtanen <pav@iki.fi>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Lee Jones <lee@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 504/516] Bluetooth: L2CAP: access chan->conn safely in get/setsockopt
-Date: Wed, 28 Oct 2026 18:00:56 +0100
-Message-ID: <20261028170015.417486330@linuxfoundation.org>
+	Chengfeng Ye <nicoyip.dev@gmail.com>,
+	Tung Nguyen <tung.quang.nguyen@est.tech>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.10 469/516] tipc: protect node reset trace dump with node lock
+Date: Wed, 28 Oct 2026 18:00:21 +0100
+Message-ID: <20261028170014.593384762@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -70,216 +68,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pauli Virtanen <pav@iki.fi>
+From: Chengfeng Ye <nicoyip.dev@gmail.com>
 
-[ Upstream commit ca2c4c26498643f421d35ffe258fafbd3ed461c3 ]
+commit dddf197f29ba5e47a476dde82bf542ca2e0d5e5e upstream.
 
-Since commit b66774b48dd9 ("Bluetooth: L2CAP: Fix UAF in channel timeout by holding conn ref")
-l2cap_chan::conn has held reference and remains non-NULL also after the
-corresponding hci_conn is deleted.  In this state accessing various
-fields eg. hci_conn::hdev is invalid, which leads to KASAN crash in
-l2cap_sock_setsockopt() access of conn->hcon->hdev.
+The tipc_node_reset_links trace event asks tipc_node_dump() to walk the
+node's link entries. Unlike the other node events that request link data,
+this event runs without the node lock.
 
-Check l2cap_chan::conn.hcon corresponds to an alive hci_conn before
-trying to use it in l2cap_sock.c.  Hold l2cap_chan_lock() in
-getsockopt/setsockopt to ensure it stays alive, and to avoid data races
-in l2cap_chan fields.
+This permits bearer teardown to free a link while the trace callback is
+dumping it:
 
-Fixes: b66774b48dd9 ("Bluetooth: L2CAP: Fix UAF in channel timeout by holding conn ref")
-Reported-by: syzbot+b106284c2a0b7bc80cf9@syzkaller.appspotmail.com
-Link: https://syzkaller.appspot.com/bug?extid=b106284c2a0b7bc80cf9
-Signed-off-by: Pauli Virtanen <pav@iki.fi>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-[Lee: Omit sockopt_t conversion from commit bf01627cc04b ("Bluetooth: L2CAP: convert to getsockopt_iter")]
-Signed-off-by: Lee Jones <lee@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+  CPU 0                                CPU 1
+  trace_tipc_node_reset_links()
+    tipc_node_dump()
+      l = n->links[0].link
+                                       tipc_node_write_lock()
+                                       kfree(l)
+                                       n->links[0].link = NULL
+                                       tipc_node_write_unlock()
+      tipc_link_dump(l)
+
+tipc_link_dump() then dereferences the stale pointer. KASAN reported:
+
+  BUG: KASAN: slab-use-after-free in tipc_link_dump
+  Read of size 4 by task poc/115
+  Call Trace:
+   tipc_link_dump+0x10cb/0x16b0
+   tipc_node_dump+0x4bb/0x740
+   trace_event_raw_event_tipc_node_class+0x258/0x360
+   tipc_node_reset_links+0x14d/0x1a0
+   tipc_rcv+0x13f5/0x3030
+   tipc_udp_recv+0x4e3/0x670
+  Allocated by task 0:
+   tipc_link_create+0x1e1/0x1020
+   tipc_node_check_dest+0x7d2/0x11a0
+   tipc_disc_rcv+0xdbf/0x1430
+  Freed by task 89:
+   kfree+0x131/0x3c0
+   tipc_node_link_down+0x267/0x4b0
+   tipc_node_delete_links+0xec/0x160
+   bearer_disable+0x107/0x260
+
+Take the node write lock around the trace event. This serializes the
+dump against tipc_node_link_down(delete=true), which frees the link
+under the same write lock.
+
+Fixes: eb18a510b5cd ("tipc: add trace_events for tipc node")
+Cc: stable@vger.kernel.org
+Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
+Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
+Link: https://patch.msgid.link/20260825190141.242219-1-nicoyip.dev@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/l2cap_sock.c | 57 ++++++++++++++++++++++++++++++--------
- 1 file changed, 46 insertions(+), 11 deletions(-)
+ net/tipc/node.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/bluetooth/l2cap_sock.c b/net/bluetooth/l2cap_sock.c
-index 018b5a0c87ce9..81faa83128a53 100644
---- a/net/bluetooth/l2cap_sock.c
-+++ b/net/bluetooth/l2cap_sock.c
-@@ -435,11 +435,26 @@ static int l2cap_get_mode(struct l2cap_chan *chan)
- 	return -EINVAL;
- }
+--- a/net/tipc/node.c
++++ b/net/tipc/node.c
+@@ -1308,7 +1308,9 @@ static void tipc_node_reset_links(struct
  
-+static struct l2cap_conn *l2cap_chan_conn(struct l2cap_chan *chan)
-+{
-+	lockdep_assert_held(&chan->lock);
-+
-+	/* l2cap_conn_del() sets FLAG_DEL while holding chan->lock before
-+	 * conn->hcon is deleted. If not set and conn is non-NULL, conn->hcon
-+	 * remains alive during this chan->lock critical section.
-+	 */
-+	if (test_bit(FLAG_DEL, &chan->flags))
-+		return NULL;
-+
-+	return chan->conn;
-+}
-+
- static int l2cap_sock_getsockopt_old(struct socket *sock, int optname,
- 				     char __user *optval, int __user *optlen)
- {
- 	struct sock *sk = sock->sk;
- 	struct l2cap_chan *chan = l2cap_pi(sk)->chan;
-+	struct l2cap_conn *conn;
- 	struct l2cap_options opts;
- 	struct l2cap_conninfo cinfo;
- 	int err = 0;
-@@ -451,6 +466,7 @@ static int l2cap_sock_getsockopt_old(struct socket *sock, int optname,
- 	if (get_user(len, optlen))
- 		return -EFAULT;
+ 	pr_warn("Resetting all links to %x\n", n->addr);
  
-+	l2cap_chan_lock(chan);
- 	lock_sock(sk);
- 
- 	switch (optname) {
-@@ -536,9 +552,15 @@ static int l2cap_sock_getsockopt_old(struct socket *sock, int optname,
- 			break;
- 		}
- 
-+		conn = l2cap_chan_conn(chan);
-+		if (!conn) {
-+			err = -ENOTCONN;
-+			break;
-+		}
-+
- 		memset(&cinfo, 0, sizeof(cinfo));
--		cinfo.hci_handle = chan->conn->hcon->handle;
--		memcpy(cinfo.dev_class, chan->conn->hcon->dev_class, 3);
-+		cinfo.hci_handle = conn->hcon->handle;
-+		memcpy(cinfo.dev_class, conn->hcon->dev_class, 3);
- 
- 		len = min(len, sizeof(cinfo));
- 		if (copy_to_user(optval, (char *) &cinfo, len))
-@@ -552,6 +574,8 @@ static int l2cap_sock_getsockopt_old(struct socket *sock, int optname,
++	tipc_node_write_lock(n);
+ 	trace_tipc_node_reset_links(n, true, " ");
++	tipc_node_write_unlock_fast(n);
+ 	for (i = 0; i < MAX_BEARERS; i++) {
+ 		tipc_node_link_down(n, i, false);
  	}
- 
- 	release_sock(sk);
-+	l2cap_chan_unlock(chan);
-+
- 	return err;
- }
- 
-@@ -560,6 +584,7 @@ static int l2cap_sock_getsockopt(struct socket *sock, int level, int optname,
- {
- 	struct sock *sk = sock->sk;
- 	struct l2cap_chan *chan = l2cap_pi(sk)->chan;
-+	struct l2cap_conn *conn;
- 	struct bt_security sec;
- 	struct bt_power pwr;
- 	u32 phys;
-@@ -576,6 +601,7 @@ static int l2cap_sock_getsockopt(struct socket *sock, int level, int optname,
- 	if (get_user(len, optlen))
- 		return -EFAULT;
- 
-+	l2cap_chan_lock(chan);
- 	lock_sock(sk);
- 
- 	switch (optname) {
-@@ -587,12 +613,14 @@ static int l2cap_sock_getsockopt(struct socket *sock, int level, int optname,
- 			break;
- 		}
- 
-+		conn = l2cap_chan_conn(chan);
-+
- 		memset(&sec, 0, sizeof(sec));
--		if (chan->conn) {
--			sec.level = chan->conn->hcon->sec_level;
-+		if (conn) {
-+			sec.level = conn->hcon->sec_level;
- 
- 			if (sk->sk_state == BT_CONNECTED)
--				sec.key_size = chan->conn->hcon->enc_key_size;
-+				sec.key_size = conn->hcon->enc_key_size;
- 		} else {
- 			sec.level = chan->sec_level;
- 		}
-@@ -668,12 +696,14 @@ static int l2cap_sock_getsockopt(struct socket *sock, int level, int optname,
- 		break;
- 
- 	case BT_PHY:
--		if (sk->sk_state != BT_CONNECTED) {
-+		conn = l2cap_chan_conn(chan);
-+
-+		if (sk->sk_state != BT_CONNECTED || !conn) {
- 			err = -ENOTCONN;
- 			break;
- 		}
- 
--		phys = hci_conn_get_phy(chan->conn->hcon);
-+		phys = hci_conn_get_phy(conn->hcon);
- 
- 		if (put_user(phys, (u32 __user *) optval))
- 			err = -EFAULT;
-@@ -706,6 +736,7 @@ static int l2cap_sock_getsockopt(struct socket *sock, int level, int optname,
- 	}
- 
- 	release_sock(sk);
-+	l2cap_chan_unlock(chan);
- 	return err;
- }
- 
-@@ -736,6 +767,7 @@ static int l2cap_sock_setsockopt_old(struct socket *sock, int optname,
- 
- 	BT_DBG("sk %p", sk);
- 
-+	l2cap_chan_lock(chan);
- 	lock_sock(sk);
- 
- 	switch (optname) {
-@@ -836,6 +868,7 @@ static int l2cap_sock_setsockopt_old(struct socket *sock, int optname,
- 	}
- 
- 	release_sock(sk);
-+	l2cap_chan_unlock(chan);
- 	return err;
- }
- 
-@@ -899,6 +932,7 @@ static int l2cap_sock_setsockopt(struct socket *sock, int level, int optname,
- 	if (level != SOL_BLUETOOTH)
- 		return -ENOPROTOOPT;
- 
-+	l2cap_chan_lock(chan);
- 	lock_sock(sk);
- 
- 	switch (optname) {
-@@ -924,11 +958,10 @@ static int l2cap_sock_setsockopt(struct socket *sock, int level, int optname,
- 
- 		chan->sec_level = sec.level;
- 
--		if (!chan->conn)
-+		conn = l2cap_chan_conn(chan);
-+		if (!conn)
- 			break;
- 
--		conn = chan->conn;
--
- 		/* change security for LE channels */
- 		if (chan->scid == L2CAP_CID_ATT) {
- 			if (smp_conn_security(conn->hcon, sec.level)) {
-@@ -983,7 +1016,8 @@ static int l2cap_sock_setsockopt(struct socket *sock, int level, int optname,
- 		}
- 
- 		if (opt == BT_FLUSHABLE_OFF) {
--			conn = chan->conn;
-+			conn = l2cap_chan_conn(chan);
-+
- 			/* proceed further only when we have l2cap_conn and
- 			   No Flush support in the LM */
- 			if (!conn || !lmp_no_flush_capable(conn->hcon->hdev)) {
-@@ -1115,6 +1149,7 @@ static int l2cap_sock_setsockopt(struct socket *sock, int level, int optname,
- 	}
- 
- 	release_sock(sk);
-+	l2cap_chan_unlock(chan);
- 	return err;
- }
- 
--- 
-2.53.0
-
 
 
