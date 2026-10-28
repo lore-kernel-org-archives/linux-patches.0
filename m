@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216546;
-	b=3WTksjg7soLMm3hLT1viAi2mxlgOhLFUAHeW3BlSuhfEcSwAHP90ttrArwIBCQGznZiV
-	 XLoB0GdgswdvMda0OqWzk7X0X0d7vDBo8sPdSii306mxbL6/pqU/UlA2IPZBevwUKMsnm
-	 kr62gUrT4mu/vlCe6gfjNEqIGCyQ2gJRALu45fKLRtnw/JvLrnNi2rDnevK9cD+BLSdIn
-	 FdKDP08ROtd4r73b7DhqbWKVNg7novCt0lFUTW3TVPsxHCaUyILf6ZRRhrPiAOj4ziFZJ
-	 spCy6RF4AAgnjT/CQh7FHifWiarh7MXHx0sOWIPpM2oP3HfdKzLPdUzbKu7xhONew/w==
+	t=1793216549;
+	b=aijdqZFQGAmQo6JP0WN5OcDb12m0f1zcULUXzhTxC2UTepoToR/PCLXwgBIT1h4tsPMJ
+	 MTQ/7z/lvjDc2R8pFRpeUIyg1Q8ExAWZqKpxdpq9Aa4fDutrkYHi9ea3tXat0+q4FdcyS
+	 mmIoFDaOEu48USqg2+ukew6OU5Onymug7cF3om+iMd2Alid/9+AEpcQbxvl0swwa5jMSI
+	 aFVvdvFrPv2ravxuCj4f+gyBJz/eoAJ6W8k2odyYnwm6JxgosfC6Zx7AeJaXrwJIxJiFC
+	 Dy/vdVuG9BzXHQQ0+PCz9A0I8YXyDWutdLdl07ShANq+mADEePg0LO4R2QYt6RxlF1Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216546;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216549;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=jzySy0RfMoskprO8EVdcJU5yo5szUQh4ZDlUfxQjUZo=;
-	b=T4c4Rruz/7F407rSu8RcnSKkM9emDILklpQyVVbrCld6SitTk17997lCSNG78pHAHrQ6
-	 7iE0a5B2lJ3Qvc+e0j/qHUjr/9ogwVhl3Mu66+VwuXccOvf0R1XX0P3oTO21GRTBoMtIi
-	 myjF2HznBo03VYrQFdODvR1f2vxDSFewvm88MgumoKoAzs4ePnuQJteBhlZMcrnRW0bnG
-	 vN+Rdw+Q18+bGTP95hv8ozmticFBVwRqyo+z1f8lDmuIDGfkBfYZFvm5IDLDbmAm3weoM
-	 FXw2X+9YZzeToBnqT6thgTcA/+DocGABP4LhhY0XAGrX0hTYhTRYVLCrUlkIsMTxdZQ==
+	bh=gIZoAlYpOaCEJT2X2pFQuiemTkyKEPYOFZc5kRKJ0Kw=;
+	b=vVXVk18P2TynXgSvTWw4JQKE5DVlDHMmZqydWwU9lOfhSMyV0QoLd94QsMsd1jJ6qDAM
+	 Ck4Ub10HTuEBsHkvQ2z4kkJGWhHy77unCHaECacDliDevM71UC/RaXDkHR17XmBEcFifP
+	 a0M9m0VeQCt1eyMQEc4V04fUh44rj5Kyzeb5Usc/lIJO0fHogSo1O7gM+GCp+/nT7tyi7
+	 ewJkqxPcLX6CqoBDIxUBtfB4CSEOA9J3Bj0dKaoK4KurvicfGd2PcWhKwrGiC7IlVu8+C
+	 1PIxGwEVZOR2TvLNOFJ+VS1jKYPlpdpOkwD5XVQOxM0AwDWG50tzsaTImVTNwcEqOBw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zz5Igvlq;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jfpDBL5m;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1711C606A31C;
-	Wed, 28 Oct 2026 19:42:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02104606A31C;
+	Wed, 28 Oct 2026 19:42:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zz5Igvlq
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 664FD1F01829;
-	Wed, 28 Oct 2026 19:42:25 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jfpDBL5m
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 502331F01825;
+	Wed, 28 Oct 2026 19:42:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216545;
-	bh=jzySy0RfMoskprO8EVdcJU5yo5szUQh4ZDlUfxQjUZo=;
+	s=korg; t=1793216548;
+	bh=gIZoAlYpOaCEJT2X2pFQuiemTkyKEPYOFZc5kRKJ0Kw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zz5IgvlqvirlguEGN2kPVqbwhi6R+H/8+JhYilECnsS4eTFrbexr9Kp6cEpvYxoEy
-	 YYdRo5Vm7/WAZMv713NuO9Lxb3tomYAg4FtA3NyMB7GAMLFma5oOeMfy7nmPufrxBm
-	 DFa/wboMXJfVee09QjGw0mRoJ/wR/8+t/uFlxWhw=
+	b=jfpDBL5maBGQUAr4XSRJHPe9neWab99vH8O6PNpE9htdkFsBf4Yne1kqUfB8qzTpA
+	 vIwbYF6RlQqqthAt7NIyO6SA+SruvlD1+6gL7U6ZKueO7GNZnp5yXKHMX7tJD2JbAQ
+	 OB5Y4mXZXdMvAVTXiwDrRNmWa6jYwYtICp9K6cZM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1592/1887] wifi: mt76: cancel reset and rc work on device unregister
-Date: Wed, 28 Oct 2026 18:01:28 +0100
-Message-ID: <20261028170535.698808999@linuxfoundation.org>
+Subject: [PATCH 6.1 1593/1887] wifi: mt76: mt7915: allocate vif wcid in the same range as stations
+Date: Wed, 28 Oct 2026 18:01:29 +0100
+Message-ID: <20261028170535.722665594@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,37 +69,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit e995d3dccc9d980af13a60ad37409ed1561f9eeb ]
+[ Upstream commit f3049b88b2b32326df97461813ae73e8bbc296fc ]
 
-Both drivers cancelled dump_work on unregister but left reset_work and
-rc_work to be flushed only by destroy_workqueue() in mt76_free_device(),
-which runs after the hw is unregistered and the hardware stopped. A
-reset_work that fires in that window calls ieee80211_restart_hw() and
-re-arms mac_work on an unregistered hw, and rc_work touches station state
-being torn down. Cancel both up front, alongside dump_work.
+Reduces the amount of unnecessary WTBL bank switching, while still reserving
+WTBL entries for vifs.
 
-Fixes: e57b7901469f ("mt76: add mac80211 driver for MT7915 PCIe-based chipsets")
-Fixes: 98686cd21624 ("wifi: mt76: mt7996: add driver for MediaTek Wi-Fi 7 (802.11be) devices")
-Link: https://patch.msgid.link/20260724124813.3961474-10-nbd@nbd.name
+Link: https://patch.msgid.link/20240827093011.18621-8-nbd@nbd.name
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Stable-dep-of: 2fb6480c52f6 ("wifi: mt76: mt7915: unwind state on add_interface failure")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7915/init.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/wireless/mediatek/mt76/mt7915/main.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/init.c b/drivers/net/wireless/mediatek/mt76/mt7915/init.c
-index 782ce83bdab96..35a8052cf1e31 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7915/init.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7915/init.c
-@@ -1152,6 +1152,8 @@ int mt7915_register_device(struct mt7915_dev *dev)
- void mt7915_unregister_device(struct mt7915_dev *dev)
- {
- 	cancel_work_sync(&dev->dump_work);
-+	cancel_work_sync(&dev->reset_work);
-+	cancel_work_sync(&dev->rc_work);
- 	mt7915_unregister_ext_phy(dev);
- 	mt7915_coredump_unregister(dev);
- 	mt7915_unregister_thermal(&dev->phy);
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/main.c b/drivers/net/wireless/mediatek/mt76/mt7915/main.c
+index 0da672a86ae1f..cee7cd4ad26d7 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7915/main.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7915/main.c
+@@ -236,7 +236,9 @@ static int mt7915_add_interface(struct ieee80211_hw *hw,
+ 	dev->mt76.vif_mask |= BIT_ULL(mvif->mt76.idx);
+ 	phy->omac_mask |= BIT_ULL(mvif->mt76.omac_idx);
+ 
+-	idx = MT7915_WTBL_RESERVED - mvif->mt76.idx;
++	idx = mt76_wcid_alloc(dev->mt76.wcid_mask, mt7915_wtbl_size(dev));
++	if (idx < 0)
++		return -ENOSPC;
+ 
+ 	INIT_LIST_HEAD(&mvif->sta.rc_list);
+ 	INIT_LIST_HEAD(&mvif->sta.poll_list);
+@@ -283,6 +285,7 @@ static void mt7915_remove_interface(struct ieee80211_hw *hw,
+ 
+ 	mt7915_mcu_add_bss_info(phy, vif, false);
+ 	mt7915_mcu_add_sta(dev, vif, NULL, false);
++	mt76_wcid_mask_clear(dev->mt76.wcid_mask, mvif->sta.wcid.idx);
+ 
+ 	mutex_lock(&dev->mt76.mutex);
+ 	mt76_testmode_reset(phy->mt76, true);
 -- 
 2.53.0
 
