@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216905;
-	b=4IxKsq9Pl31Ekllrsh4yOnT3VscaYBGSDu4MTsaQtCMRcL1PKk1PW3aX+sYF//wz0vtA
-	 o0dMScLgENztaDHSopozmDgCdIfxxYdDMIAb+pQmr+Tq+cVJvdFZA4Nefv1jjUt4DNaHZ
-	 aTl7wUHZwHO1qxxCT+LDCS36OE1ZthqsGVmjyFZfFSJoPAQz6h2l5RKqnaZd9qzZBDR60
-	 IKFpvgO+btU8ydFh/vVQkG0t+a3fGMreUNfauCXA3DfcAOrdd4AWev7teNLvhZsPWRNn9
-	 gvO/4qxXtJhnKJTh2/A1SKiWYtnF+/87BROjqKM4jynbdFkfsUEOs32CFGvV0JgRCVw==
+	t=1793216908;
+	b=UkY4zczeq8X6aVnbW2pkEswGHtb8JAH9aQJctzc1JoUSxmyaz0D0mfT24DtUZzYHHRez
+	 fBQ9tolTWgUYEbbOZGqfL4tx3/l9iGPKZbAdU1FsKhkH76Y4ygtqLnmk89Oxc/LZzIFIz
+	 xen0LECRIEDjrrfxohyxUDgmyc2fiw3lqNRsIoIszOFYEB3ZJs+Buwy2dp0v2Fz4Eb7k+
+	 72PXS2GlAcau6bmpU4oRp7UxcLYXedrmoFxs3nOtT+Iw/FQLXYOj8jsAnmlppmeIBarpB
+	 b1u+sUxCQi4ZAjzc4y756Qa+t24CjHAQZSuwCzdlG2pnjIeGjKC5fQRXrxyyCJMrLug==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216905;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216908;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=fLw/i/xfIXITnxJRXoUTqSiBhGyBgBJZiXsDWcskrj8=;
-	b=JpA1/VuRPnqyv7DKPKcDhwzapNnGqVn9PjLnqPz/fgOnOg7DVTyV64nQ8RMxX6G6Gnrp
-	 bUqcXo/P5KAp2wFD2RSyvmKgagrDD4oZAE1R5siEewPompfMhI2+7NQh8bQN5aL2mtIt+
-	 wyMpQzICqjSFNOdcPISzHc2zPiEy9ofDGvGkTXmS0qZBMuOkBFPsbAaVbUO2PBPvcy5D9
-	 foWSpHDhCUoS0HGGBTVKiWwcpDYSSBd8JYPB/tII+I30zZ2bEctrwZ4Z+WA77BngX8kfg
-	 8G/qGghQML4h5UynteFvaNsjM+CoMUEOSPgjT65vL6aXe+PQLdM7D0Xod/Re/6MD2Wg==
+	bh=cwBvFRRsH+S5wNUpFIQyxhIQ7BdtymbQQ5mRPLguVDs=;
+	b=mTdH078WUc161YT/5ckLXWdNF7y1isvVdNeRcpElczNsv4+zWiDAkcK2oVHXd1eqHO6n
+	 jbthnIqwaeOYsz4sJcvafFUzWWJUg1+r8WvcXAmqHD5JCiZx+f8m4rxUT85PB0r1JESHQ
+	 4xcvEbVWpTziAUo2HUPiK+kPqo1ZkXj1G9UX4CjqOLFOlQwQ4wHIRMQOWOGvWX/UUZnUE
+	 YV7FwH6WT6XjapghjS5QJd8BHWOh+ntuYjvsA0+46QEzh550uFcdEIm61spMMCiRNhX7f
+	 9/uPPzyqn3VU2WkqUDbSMj4gscY8Sk2QT8yoqMAuIR9MhCuGtLDywjgZGwrXkRijfCQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=u7MCtALU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qpwpKRwb;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52B85606A31A;
-	Wed, 28 Oct 2026 19:48:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2901B606A31A;
+	Wed, 28 Oct 2026 19:48:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=u7MCtALU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7ECC1F01825;
-	Wed, 28 Oct 2026 19:48:24 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qpwpKRwb
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A3E91F01825;
+	Wed, 28 Oct 2026 19:48:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216905;
-	bh=fLw/i/xfIXITnxJRXoUTqSiBhGyBgBJZiXsDWcskrj8=;
+	s=korg; t=1793216908;
+	bh=cwBvFRRsH+S5wNUpFIQyxhIQ7BdtymbQQ5mRPLguVDs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=u7MCtALUHe1fVTM5UCxD+vG9RkaVssQGuT65WHd28dDlhtZS0g2MNmsyrXUMLfml2
-	 dwbPT6VEON8aWBt+rIcWC2w/14aoRh7dtUb0a+pq/GGs9QDySVEn+caLQkoPMbdcMU
-	 A+PlQohgqL8oKbBt5A1MTLMjY2ns6nwDAkYqrqBA=
+	b=qpwpKRwbaozpiATTyj1YheIec/2bl+phsL3B5agDNSTKRNg4+eio2SbriVQfIfxYh
+	 phify6yv49QMVUv66FwFMmN3VY+Upk0mDMPfkIGSG1IrwWC5D46wJydxj6t3gXy0R7
+	 2zhCQXwzT49372NDbSf8z/Biie3dsYuEfx9KOY/M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+55c2a5c871441261ed14@syzkaller.appspotmail.com,
-	Tao Cui <cuitao@kylinos.cn>,
-	Kalpan Jani <kalpan.jani@mpiricsoftware.com>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Cen Zhang <zzzccc427@gmail.com>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1693/1887] mptcp: pm: kernel: drop pending ADD_ADDR when removing ID0
-Date: Wed, 28 Oct 2026 18:03:09 +0100
-Message-ID: <20261028170537.981996303@linuxfoundation.org>
+Subject: [PATCH 6.1 1720/1887] ocfs2/dlm: Protect the recovery list during debugfs reads
+Date: Wed, 28 Oct 2026 18:03:36 +0100
+Message-ID: <20261028170538.599770223@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -71,75 +69,165 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kalpan Jani <kalpan.jani@mpiricsoftware.com>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit 2ac7d6e620764f1fc79eb4edd3610a7a661981ca ]
+[ Upstream commit 4c435828932bf46f29860e4a0375bcae101b778a ]
 
-The in-kernel MPTCP path manager can leave a stale ADD_ADDR announcement
-entry alive when removing the id 0 endpoint. This happens because the id 0
-removal path does not tear down pending announcements, unlike the non-zero
-id path.
+Recovery participant records must remain alive while debug_state_print()
+walks reco.node_data and formats their fields. The formatter holds
+dlm->spinlock, but the recovery participant list is protected by
+dlm_reco_state_lock. In particular, dlm_destroy_recovery_area() detaches
+the list under dlm_reco_state_lock and frees the detached records after
+releasing it. A concurrent debugfs open can therefore read freed memory.
 
-When the PM later reselects id 0 after adding another signal endpoint, it
-finds the stale anno_list entry and hits WARN_ON_ONCE(mptcp_pm_is_kernel())
-in mptcp_pm_announced_alloc().
+Protect the participant traversal and field reads in debug_state_print()
+with dlm_reco_state_lock, matching the existing list writers. This also
+serializes the traversal against list_add_tail() during recovery-area
+initialization. Make the existing lock available to the debug code
+through dlmcommon.h; the lock remains internal to the OCFS2 DLM module.
 
-Root cause: asymmetry between removal paths.
-- Non-zero id path: mptcp_nl_remove_subflow_and_signal_addr() calls
-  mptcp_pm_remove_announced() to clean up.
-- Id 0 path: mptcp_nl_remove_id_zero_address() skips cleanup entirely.
+Release dlm->spinlock after formatting the other domain state and before
+acquiring dlm_reco_state_lock, so the debug reader does not nest the two
+locks. Leave recovery list insertion, detachment and freeing unchanged.
 
-Fix by making the id 0 path symmetric: call mptcp_pm_announced_remove()
-and decrement add_addr_signaled before queuing the RM_ADDR.
+KASAN report as below:
 
-Subtle detail: signal endpoints are stored in anno_list with port 0, but
-msk_local carries the connection's local port. In other words, entries
-linked to ID0 paths should have port == 0. A follow-up patch will ensure
-that. mptcp_pm_announced_remove() uses use_port=true for comparison. So
-clear the port before the lookup.
+    BUG: KASAN: slab-use-after-free in debug_state_open+0x1169/0x12d0
+    Read of size 4 at addr ffff88810662ef80 by task dlm-state-stres/896
 
-Fixes: 740d798e8767 ("mptcp: remove id 0 address")
-Cc: stable@vger.kernel.org
-Reported-by: syzbot+55c2a5c871441261ed14@syzkaller.appspotmail.com
-Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/620
-Suggested-by: Tao Cui <cuitao@kylinos.cn>
-Signed-off-by: Kalpan Jani <kalpan.jani@mpiricsoftware.com>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260908-net-mptcp-misc-fixes-7-3-rc1-v2-4-df1de70348b6@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+    CPU: 1 UID: 0 PID: 896 Comm: dlm-state-stres Not tainted 7.3.0-rc4-next-20260921-pmb-ocfs2-functional-v1+ #1 PREEMPT(lazy)
+    Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+    Call Trace:
+     <TASK>
+     dump_stack_lvl+0x93/0xd0
+     print_report+0xce/0x630
+     ? debug_state_open+0x1169/0x12d0
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? __virt_addr_valid+0x20e/0x420
+     ? debug_state_open+0x1169/0x12d0
+     kasan_report+0xe0/0x110
+     ? debug_state_open+0x1169/0x12d0
+     debug_state_open+0x1169/0x12d0
+     ? __pfx_debug_state_open+0x10/0x10
+     full_proxy_open_regular+0x193/0x310
+     do_dentry_open+0x595/0x12d0
+     ? __pfx_full_proxy_open_regular+0x10/0x10
+     vfs_open_consume+0xd1/0x400
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     path_openat+0x18d0/0x2020
+     ? __pfx_path_openat+0x10/0x10
+     do_file_open+0x21e/0x470
+     ? __pfx_do_file_open+0x10/0x10
+     ? _raw_spin_unlock+0x23/0x40
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? alloc_fd+0x3a6/0x6b0
+     do_sys_openat2+0xf4/0x1b0
+     ? __pfx_do_sys_openat2+0x10/0x10
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? __fput+0x5b5/0xa60
+     __x64_sys_openat+0x136/0x1e0
+     ? __pfx___x64_sys_openat+0x10/0x10
+     do_syscall_64+0x114/0x620
+     entry_SYSCALL_64_after_hwframe+0x77/0x7f
+    [Register dump omitted.]
+     </TASK>
+
+    Allocated by task 880:
+     kasan_save_stack+0x33/0x60
+     kasan_save_track+0x14/0x30
+     __kasan_kmalloc+0xaa/0xb0
+     __kmalloc_cache_noprof+0x28d/0x610
+     dlm_remaster_locks+0x147/0x1d90
+     dlm_do_recovery+0xde1/0x1580
+     dlm_recovery_thread+0x109/0x300
+     kthread+0x351/0x460
+     ret_from_fork+0x659/0x940
+     ret_from_fork_asm+0x1a/0x30
+
+    Freed by task 880:
+     kasan_save_stack+0x33/0x60
+     kasan_save_track+0x14/0x30
+     kasan_save_free_info+0x3b/0x60
+     __kasan_slab_free+0x5f/0x80
+     kfree+0x308/0x580
+     dlm_destroy_recovery_area+0x285/0x460
+     dlm_remaster_locks+0x17c4/0x1d90
+     dlm_do_recovery+0xde1/0x1580
+     dlm_recovery_thread+0x109/0x300
+     kthread+0x351/0x460
+     ret_from_fork+0x659/0x940
+     ret_from_fork_asm+0x1a/0x30
+
+    The buggy address belongs to the object at ffff88810662ef80
+     which belongs to the cache kmalloc-32 of size 32
+    The buggy address is located 0 bytes inside of
+     freed 32-byte region [ffff88810662ef80, ffff88810662efa0)
+
+    [Page and memory-state dumps omitted.]
+
+Fixes: 007dce53a29c ("ocfs2/dlm: Dump the dlm state in a debugfs file")
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Link: https://patch.msgid.link/pm-ocfs2-objects-candidate-0049-v3-184e46c47f5283f06191@gmail.com
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mptcp/pm_netlink.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ fs/ocfs2/dlm/dlmcommon.h   | 2 ++
+ fs/ocfs2/dlm/dlmdebug.c    | 5 ++++-
+ fs/ocfs2/dlm/dlmrecovery.c | 2 +-
+ 3 files changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/net/mptcp/pm_netlink.c b/net/mptcp/pm_netlink.c
-index 532f75d29124d..05fb4d43187ad 100644
---- a/net/mptcp/pm_netlink.c
-+++ b/net/mptcp/pm_netlink.c
-@@ -1721,6 +1721,8 @@ static int mptcp_nl_remove_id_zero_address(struct net *net,
- 	while ((msk = mptcp_token_iter_next(net, &s_slot, &s_num)) != NULL) {
- 		struct sock *sk = (struct sock *)msk;
- 		struct mptcp_addr_info msk_local;
-+		struct mptcp_addr_info anno_addr;
-+		bool announced;
+diff --git a/fs/ocfs2/dlm/dlmcommon.h b/fs/ocfs2/dlm/dlmcommon.h
+index fd2022712167b..2ec4586f0bbdc 100644
+--- a/fs/ocfs2/dlm/dlmcommon.h
++++ b/fs/ocfs2/dlm/dlmcommon.h
+@@ -435,6 +435,8 @@ enum {
+ 	DLM_DEREF_LOCKRES_DONE		= 522,
+ };
  
- 		if (list_empty(&msk->conn_list) || mptcp_pm_is_userspace(msk))
- 			goto next;
-@@ -1730,7 +1732,13 @@ static int mptcp_nl_remove_id_zero_address(struct net *net,
- 			goto next;
++extern spinlock_t dlm_reco_state_lock;
++
+ struct dlm_reco_node_data
+ {
+ 	int state;
+diff --git a/fs/ocfs2/dlm/dlmdebug.c b/fs/ocfs2/dlm/dlmdebug.c
+index e62ed98df7de4..afaea6396b6f9 100644
+--- a/fs/ocfs2/dlm/dlmdebug.c
++++ b/fs/ocfs2/dlm/dlmdebug.c
+@@ -792,8 +792,11 @@ static int debug_state_print(struct dlm_ctxt *dlm, char *buf, int len)
+ 				 buf + out, len - out);
+ 	out += scnprintf(buf + out, len - out, "\n");
  
- 		lock_sock(sk);
-+		/* Drop a possibly pending ADD_ADDR for this address. */
-+		anno_addr = msk_local;
-+		anno_addr.port = 0;
-+		announced = remove_anno_list_by_saddr(msk, &anno_addr);
- 		spin_lock_bh(&msk->pm.lock);
-+		if (announced)
-+			msk->pm.add_addr_signaled--;
- 		mptcp_pm_remove_addr(msk, &list);
- 		mptcp_pm_nl_rm_subflow_received(msk, &list);
- 		__mark_subflow_endp_available(msk, 0);
++	spin_unlock(&dlm->spinlock);
++
+ 	/* Recovery Node State: */
+ 	out += scnprintf(buf + out, len - out, "Recovery Node State:\n");
++	spin_lock(&dlm_reco_state_lock);
+ 	list_for_each_entry(node, &dlm->reco.node_data, list) {
+ 		switch (node->state) {
+ 		case DLM_RECO_NODE_DATA_INIT:
+@@ -825,7 +828,7 @@ static int debug_state_print(struct dlm_ctxt *dlm, char *buf, int len)
+ 				node->node_num, state);
+ 	}
+ 
+-	spin_unlock(&dlm->spinlock);
++	spin_unlock(&dlm_reco_state_lock);
+ 
+ 	return out;
+ }
+diff --git a/fs/ocfs2/dlm/dlmrecovery.c b/fs/ocfs2/dlm/dlmrecovery.c
+index 8ae9b8d7b1def..a458ab62cd7af 100644
+--- a/fs/ocfs2/dlm/dlmrecovery.c
++++ b/fs/ocfs2/dlm/dlmrecovery.c
+@@ -80,7 +80,7 @@ static int dlm_lockres_master_requery(struct dlm_ctxt *dlm,
+ 
+ static u64 dlm_get_next_mig_cookie(void);
+ 
+-static DEFINE_SPINLOCK(dlm_reco_state_lock);
++DEFINE_SPINLOCK(dlm_reco_state_lock);
+ static DEFINE_SPINLOCK(dlm_mig_cookie_lock);
+ static u64 dlm_mig_cookie = 1;
+ 
 -- 
 2.53.0
 
