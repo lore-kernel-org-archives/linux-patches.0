@@ -1,54 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793207159;
-	b=lHxOWQhhH1BS4Boe50nZuKINQpr77v3togwDU8GBxT2VOif8HHAwL4CxH9CJhwatsSSv
-	 0999wFX3ZIaM6NboKgUmBF0rOvrgzY+1yfjgGNx5E5T1GyIryUHBiuWATeSxfGDkj7ncA
-	 mrYewUka6hMpamIZMxJibdIJZ8fS9dufYJmgh2X3QRmUKdoQqa2e2boKxoLu+DYIf8jdB
-	 H2pdtWx7r487nKqfK8U31mv7XXZ1Q1BriIg4BXFZ6OAiBdlhDe7+SyKCxTTLWurHMDybo
-	 7c+K5reLSYInS8fYwqxZEoL+LdZNDtr0/LS9FleWOepiPhqnveOBX34c/cRadjNU7dA==
+	t=1793207162;
+	b=rXIRA1/0+hm9LYFD27G2A9lGU3XgnmT66z+mjVWnk72S+oztpa/M1BwHXwW+gzRZ0c+1
+	 z69Ycyv90D5ZaIxMsnwzwJXe7+8qAux4o8hErpnXFdZFdmp9q7Hu/fQo5s7Yu6nSHwVCp
+	 EpuvrED6r0p6wPGiDfB9TzRyhUUmd+nJyduRoev4qw8omJEpArNQr6IGd2SREw5MYSX/Q
+	 XM/7CgB1COV6ptxXNC2+UkAdqmxoz6lPYzMAsfkX28X+NawBhiOTHapjft4wqo5NaPpv4
+	 Pc/9X20+AV1gzkFU7mwZZK2wSta2bR975xZd71g6lcD/q2o8ELwOvbE7ZIWWeHq+O+w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793207159;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793207162;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=jdznxU7g4kqW1IBbLMxQwY22NoQsIMHVfJjXDhvfRTQ=;
-	b=vRcOiAKgdBGfZzy6RquzvGJ3K9eErYvYT+oBgEvayjHuwREN24QBoRtRzK8larhAmsGL
-	 Ef1jDorKdUiWQtkVcXw0JqMTZVxAFdntKXaW5OMn4iG8JQxe0CL1gSqyP/JSFoOWXOKQm
-	 z+u3kEjjqkeAXFDJVtRkFlqekKfIu0MuVDMOuJtjGN4ipl71syW6K0jKPaBPixbHZ0EGo
-	 Nsy3Pq4l2iK1q6C/jPmqqpgu7o5GxYl5IQt295PDJU4ax1pWom3ZgAuuOYiJJ0AFS4aLV
-	 AUA8jqoq14RK5yJtMKIS9NaDbjcO5Lhtb12qkflOBbRIkoyexHrsqvAO6qakMV2+Ihg==
+	bh=5DSzloH2Yqil2PllG4BcS7fWixJtF9LGJWq9RePWD8U=;
+	b=Q8e/aUGNdQZnVSczpInzJ/9SgGujFjIbx/9zqDSpNGO+jtZsFXtfAkcPxx9kOjabiWYH
+	 ztlpodQ2ncwfBYPmUuzo+AuNfk2MCFtiLnoL1tJlcCmNHNM8dcKzW0sHrPB9MeMEzpzZn
+	 9zl7iDcgzhk7udMvP9vu0PbjKYQnmnGIr36doSYeHlBRc0QEVybeOGe9UpHOqVQMeiIPz
+	 UQvGf9wZ4NQTWOmzRY6HavOuwVPqKaxRH/DbN9bA9/3ala0p2SZ8wZhxgndGhEIkKqu4z
+	 ewACSYBd4xjsw5dHWtcAgucKtkYXLlwp/es2uttywepRs2LkL9aizzp0kXbIgtddAMA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TOAYYL+x;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yGXO0eEG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EF6B606A321;
-	Wed, 28 Oct 2026 17:05:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7C74606A31F;
+	Wed, 28 Oct 2026 17:06:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TOAYYL+x
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6ED9B1F01828;
-	Wed, 28 Oct 2026 17:05:58 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yGXO0eEG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 443471F01828;
+	Wed, 28 Oct 2026 17:06:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793207159;
-	bh=jdznxU7g4kqW1IBbLMxQwY22NoQsIMHVfJjXDhvfRTQ=;
+	s=korg; t=1793207161;
+	bh=5DSzloH2Yqil2PllG4BcS7fWixJtF9LGJWq9RePWD8U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TOAYYL+xu6nU4Id0jKiPcDrAAN/n2NZGJkuGVtsD3B5hW3MfLwdNjeumfoHjzfjNF
-	 Hs9gpOWC5CTtUxK6ah/3IKs6gmoRntKnfdIJVxCZKM/iWLZZ4Pod1hAVN6Xq63i/7L
-	 MdVt8Gos4s+x6xJMKvBPd20fSTd6PDfy/tgs9sFQ=
+	b=yGXO0eEGxzpHHtaoIbb3d3F5AJJqX9qrwb5iyh4sVWI2tl7Tk4PZxcyvHO7GQJYui
+	 3tuBlePtf4PeqghOfpl9dSoUDzoAVMy5OfGs0CA/eRq6w0w7JL4MZJGzaLFLPBbXpp
+	 PciHB8HJEjvxW0Kq9sZq/SlnHrw8/5uyIimBj17g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oleg Nesterov <oleg@redhat.com>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 7.3 36/38] coredump: prevent TIF_NOTIFY_SIGNAL from interrupting coredumps
-Date: Wed, 28 Oct 2026 18:00:23 +0100
-Message-ID: <20261028165941.310306412@linuxfoundation.org>
+	Andrea Righi <arighi@nvidia.com>,
+	Kuba Piecuch <jpiecuch@google.com>,
+	Tejun Heo <tj@kernel.org>,
+	Cheng-Yang Chou <yphbchou0911@gmail.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.2 01/88] sched_ext: Wait for SCX_OPSS_DISPATCHING before moving tasks off DSQs
+Date: Wed, 28 Oct 2026 17:59:09 +0100
+Message-ID: <20261028165942.145347695@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261028165940.394092994@linuxfoundation.org>
-References: <20261028165940.394092994@linuxfoundation.org>
+In-Reply-To: <20261028165942.107695352@linuxfoundation.org>
+References: <20261028165942.107695352@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -63,82 +66,83 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.3-stable review patch.  If anyone has any objections, please let me know.
+7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Kuba Piecuch <jpiecuch@google.com>
 
-commit a58d647acfdc62561f3570d114025b3bf38ae41b upstream.
+[ Upstream commit 2935062be77113c1c4565ca9d0c72180449aafee ]
 
-TIF_NOTIFY_SIGNAL is used to kick a task in uninterruptible sleep to
-return to userspace and run task work and then go back to sleep. This
-mechanism works well but breaks coredumps. dump_interrupted() only
-allows fatal signals to interrupt a coredump and the whole regular write
-path going to actual filesystems is impervious to TIF_NOTIFY_SIGNAL as
-well.
+A task can be found on a non-local DSQ while the CPU which dispatched it
+is still running ops.dequeue() and hasn't cleared SCX_OPSS_DISPATCHING.
+The DSQ consume and move paths don't wait for the dispatch to finish and
+can operate on the task concurrently with the dispatcher.
 
-However, both the usermodehelper pipe and the coredump socket will bail
-early on TIF_NOTIFY_SIGNAL. This affects the following codepaths:
+Call scx_wait_dispatching() in scx_move_local_task_to_local_dsq(),
+unlink_dsq_and_switch_rq_lock() and move_task_between_dsqs() before they
+operate on the task. In scx_move_local_task_to_local_dsq(), wait before
+scx_resolve_local_dsq() as it may update p->scx.flags.
 
-- coredump_sock_recv() -> unix_stream_read_generic()
-  The request/ack handshake is abandoned before any coredump data is
-  sent.
-
-- anon_pipe_write() returning -ERESTARTSYS
-  Once the pipe is full this truncates the coredump.
-
-- unix_stream_sendmsg() returning -ERESTARTSYS
-  Once the send buffer is full this truncates the coredump.
-
-- coredump_sock_wait() -> __kernel_read()
-  This reports a failure that didn't happen.
-
-- wait_for_dump_helpers() -> wait_event_interruptible()
-  This stops waiting for the coredump helpers.
-
-Such truncation is entirely invisible to userspace and all uapi bits
-still indicate that a successful coredump happened. A crashing process
-with a bunch of file backed mappings and io_uring thrown in loses most
-of the coredump data. If the NT_FILE note goes past PAGE_SIZE mappings
-it's gonzo.
-
-TIF_NOTIFY_SIGNAL is sent by io_uring for the common case. And it uses
-poll without sleeping so a completion callback runs task_work_add() from
-interrupt context against the task that submitted the request. This is
-the task that is running the coredump. Since that task hasn't set
-work_exited (it hasn't exited yet after all) TIF_NOTIFY_SIGNAL keeps
-reappearing.
-
-A coredumping task doesn't return to userspace. The task work is run at
-exit. So interrupting it doesn't buy anything and just loses the
-coredump which is quite valuable.
-
-Note that this isn't specific to io_uring. There's also
-klp_send_signals(), bpf_task_work_schedule_signal(), landlock's tsync
-and then  technically, kthread_stop() and the printk kunit test set the
-bit raw.
-
-Link: https://patch.msgid.link/20260824-work-tif_notify_signal-v2-2-6609e42b3157@kernel.org
-Fixes: 12db8b690010 ("entry: Add support for TIF_NOTIFY_SIGNAL")
-Reviewed-by: Oleg Nesterov <oleg@redhat.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: ebf1ccff79c4 ("sched_ext: Fix ops.dequeue() semantics")
+Fixes: cb86607ada73 ("sched_ext: Don't run ops.dequeue() with a DSQ lock held")
+Cc: stable@vger.kernel.org # v7.1+
+Reviewed-by: Andrea Righi <arighi@nvidia.com>
+Assisted-by: Claude:claude-opus-5.5
+Signed-off-by: Kuba Piecuch <jpiecuch@google.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
+[ Inlined scx_wait_dispatching(), which 7.2.y doesn't have, into
+  move_local_task_to_local_dsq(), unlink_dsq_and_lock_src_rq() and
+  move_task_between_dsqs(), as was done for the reenqueue paths in
+  7.2.y. 7.2.y has no scx_resolve_local_dsq(), so
+  move_local_task_to_local_dsq() waits before linking the task. ]
+Signed-off-by: Cheng-Yang Chou <yphbchou0911@gmail.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/coredump.c |    2 ++
- 1 file changed, 2 insertions(+)
+ kernel/sched/ext/ext.c | 14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
---- a/fs/coredump.c
-+++ b/fs/coredump.c
-@@ -1191,6 +1191,8 @@ void vfs_coredump(const kernel_siginfo_t
- 	if (coredump_wait(siginfo->si_signo, &core_state) < 0)
- 		return;
+diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
+index 3ee16f7f22cde..c117cf172dfca 100644
+--- a/kernel/sched/ext/ext.c
++++ b/kernel/sched/ext/ext.c
+@@ -2292,6 +2292,8 @@ static void move_local_task_to_local_dsq(struct scx_sched *sch,
+ 	lockdep_assert_rq_held(dst_rq);
  
-+	/* Task work must not cut the dump short, see signal_pending(). */
-+	guard(no_notify_signal)();
- 	scoped_with_creds(cred)
- 		do_coredump(&cn, &cprm, &argv, &argc, binfmt);
- 	coredump_cleanup(&cn, &cprm);
+ 	WARN_ON_ONCE(p->scx.holding_cpu >= 0);
++	if (unlikely(atomic_long_read_acquire(&p->scx.ops_state) == SCX_OPSS_DISPATCHING))
++		wait_ops_state(p, SCX_OPSS_DISPATCHING);
+ 
+ 	if (enq_flags & (SCX_ENQ_HEAD | SCX_ENQ_PREEMPT))
+ 		list_add(&p->scx.dsq_list.node, &dst_dsq->list);
+@@ -2462,8 +2464,13 @@ static bool unlink_dsq_and_lock_src_rq(struct task_struct *p,
+ 	raw_spin_rq_lock(src_rq);
+ 
+ 	/* task_rq couldn't have changed if we're still the holding cpu */
+-	return likely(p->scx.holding_cpu == cpu) &&
+-		!WARN_ON_ONCE(src_rq != task_rq(p));
++	if (likely(p->scx.holding_cpu == cpu) && !WARN_ON_ONCE(src_rq != task_rq(p))) {
++		if (unlikely(atomic_long_read_acquire(&p->scx.ops_state) == SCX_OPSS_DISPATCHING))
++			wait_ops_state(p, SCX_OPSS_DISPATCHING);
++		return true;
++	}
++
++	return false;
+ }
+ 
+ static bool consume_remote_task(struct rq *this_rq,
+@@ -2511,6 +2518,9 @@ static struct rq *move_task_between_dsqs(struct scx_sched *sch,
+ 	lockdep_assert_held(&src_dsq->lock);
+ 	lockdep_assert_rq_held(src_rq);
+ 
++	if (unlikely(atomic_long_read_acquire(&p->scx.ops_state) == SCX_OPSS_DISPATCHING))
++		wait_ops_state(p, SCX_OPSS_DISPATCHING);
++
+ 	if (dst_dsq->id == SCX_DSQ_LOCAL) {
+ 		dst_rq = container_of(dst_dsq, struct rq, scx.local_dsq);
+ 		if (src_rq != dst_rq &&
+-- 
+2.53.0
+
 
 
