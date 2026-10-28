@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793211895;
-	b=ZFrAIZZNeB7k3c2AcRAsLL4dBZ8O+N9zgyOlgfipbcZimfe494Wjl3/mryVVfn/+WmGK
-	 OCumcCK5EXr700CNbONFCiHo2462lfCXSu+MSGUveNeU+Ir5ptA9sIPoWAZRPup0NDe2D
-	 RzNoLl4+0zwReQo6YV0NeEX8Y8oUn1dfS1BqdRCMTxR5TV8xda1o/pWWeroNjEdxWyT8B
-	 ZHy4EPBwwpWUM3rvQllpsVbc7jEFoECh+puJUB4CRyWKHCL2sGtlnMHzkOZs4zmO4Hl8r
-	 NHaIz8uotc1BGVk0Vu/ayQ8AA3MkBjC9w6vBdNSdfMCnyacUyk89lot7KolrCGUz2tA==
+	t=1793211898;
+	b=VQHaDgh6KKW1RxCACncYEoOOWDXOAk1xEt/Z+x2sB0VCAc0r8L3IVLHxmHjZ7Dv4js6A
+	 6ybeMxslv78beCFRmsmjCHDLXdkgZTeBwbEMB1FXnY9xE93er/HBLIATaRa7RGouPhDfH
+	 xCvV1HDTi5GWH8LyTas9SH7KteQIiEWauwcuR/pcPyA48sCUX/esV4KXljYE8ypegn6qU
+	 Jqeac0wmJGnu6XsRzKFc1aUrsm/sfUIy6QKlSFqTrvGMblR5N/WTpcCHpwwgo+FqfWzuJ
+	 5cCuoctrk+E8PDTz52viDZBMIjSISoXoiekPFmetOjIoeSFUqXQbrUgWlrL/XlmSu/w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793211895;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793211898;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=HmUAUDPp1/CJKY2YhAlMeXaJRM23TQd/cMg5Jl/Rjb4=;
-	b=a8RaI9RVBzQQTbe5WkoXWoVKu9gi9I7tYf6FTn3ivQNItg/flaESGUv3xbNxaC0u0Ryr
-	 cqZb2FmVv58PxVugeXPpHLJMeu731HhSRoYa/BCZKZNbkKDC6i6oNHsq62gQ8mht3QwJX
-	 HSGrWA3LEdEFEnVvcMrHl22augFURob2AcgFS/U3SNOPi1yFIMXAt6w3+krpOemMXc4pa
-	 eIeSMvlQQFjEaf0FFeiE1yduIQt2Vdkobopdl9IqI0HVBaOONgoF0jpIWqb4mqdhZ2Zz9
-	 Zl0Zw/yHEfZ8cu+Gbd8U4FO4eG+IWciejDZDM6/w7Kpa8XNLZc5XaHbQO8RwqcAY9Ew==
+	bh=YR6NyAQF8GeOez4MP03pE7KlWAodWNFoLp59CIMRM98=;
+	b=axwRFf/kW8nuRim1C4j2k6sBaylXi5f2tJeWerAzi521tpvlBDVlIZF+jyvn+kGlms/7
+	 xrARz5NKtBHRs5n4+cFeUHZ6v7zkHu75vmKEvD6sHi+CHTdWwSAE+VHdpk31pd1p7qAxq
+	 NgchKCk9HpCdeB6EWPoS0IjuPSY7L8N4PfW1Kg83FmFORKsDkfKV9Fc76RVYGo3V7wFtW
+	 yryuizNsYIdPMJhGg364pF1uNN/JqdEaZ1f5KQQen//y+VmuT+YPoYJ+mTwWu5muASIqX
+	 7WNVFf4s3VhQp3r1CMNK+pvPnC80dx7cg/hr1PghiAbtjVnkk6xuIjVL5yCp946O9Ug==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rOmJjpPN;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="DD/7wnLN";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3CD6606A31C;
-	Wed, 28 Oct 2026 18:24:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3CA5606A31C;
+	Wed, 28 Oct 2026 18:24:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rOmJjpPN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EFB71F01825;
-	Wed, 28 Oct 2026 18:24:54 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DD/7wnLN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 301611F01825;
+	Wed, 28 Oct 2026 18:24:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793211894;
-	bh=HmUAUDPp1/CJKY2YhAlMeXaJRM23TQd/cMg5Jl/Rjb4=;
+	s=korg; t=1793211897;
+	bh=YR6NyAQF8GeOez4MP03pE7KlWAodWNFoLp59CIMRM98=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rOmJjpPNKOd34xfVLO2seGRKURiQ0eZgZc5mUIs0A9q/KYrcnlq93n+3ex0xlKi3x
-	 APw/mtr/JSve7HyMco3LklZfQ/Rx3GwHj5XmPzU+uAe2NUSP/xngTCV8ppH+EmBaoK
-	 ehF9yiewEX0dTUrnwzRcXjbUKDGhE/Mz5SwFL96Y=
+	b=DD/7wnLNSPrE2KK5yq9j/6sysN3S679K3nExUdleJlgJoeVDZgaqw5yD2MQQslEak
+	 W9Xq8MmgC8pk5Fy2cFqe0ckxdpI5JzMwVqqdbNmnp62MzWxvvZKuBGRKGaMRsk7PnP
+	 mDE6OKSWbGu8srCbBz+olVK90xNYcX7aEzmJ3Q70=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yiming Qian <yimingqian591@gmail.com>,
-	Florian Westphal <fw@strlen.de>,
-	Steffen Pfendtner <steffen.pfendtner@kernelscan.io>,
+	Sun Yangkai <sunyangkai@fygo.io>,
+	Chen Cheng <chencheng@fnnas.com>,
+	Mikulas Patocka <mpatocka@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 538/571] netfilter: nf_tables: always walk all pending catchall elements
-Date: Wed, 28 Oct 2026 18:01:25 +0100
-Message-ID: <20261028170020.801099054@linuxfoundation.org>
+Subject: [PATCH 5.15 539/571] dm-integrity: require stable writes for internal hash modes
+Date: Wed, 28 Oct 2026 18:01:26 +0100
+Message-ID: <20261028170020.824200727@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -69,60 +69,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Chen Cheng <chencheng@fnnas.com>
 
-[ Upstream commit 7cb9a23d7ae40a702577d3d8bacb7026f04ac2a9 ]
+[ Upstream commit b2fd92f016e9d692fd3c8c08d0ee014e9212279d ]
 
-During transaction processing we might have more than one catchall element:
-1 live catchall element and 1 pending element that is coming as part of the
-new batch.
+dm-integrity direct, bitmap and inline internal-hash modes compute
+integrity tags from the pages carried by the write bio.  The lower data
+write also uses those pages, so the tag and the data write depend on the
+same memory contents staying unchanged while writeback is in flight.
 
-If the map holding the catchall elements is also going away, its
-required to toggle all catchall elements and not just the first viable
-candidate.
+Without stable writes, a buffered writer can modify a writeback folio
+after dm-integrity has submitted the data bio and before the lower device
+has consumed the data.  After a crash, this can leave data from the later
+contents with a tag calculated from the earlier contents, causing
+permanent checksum failures on read.
 
-Otherwise, we get:
- WARNING: ./include/net/netfilter/nf_tables.h:1281 at nft_data_release+0xb7/0xe0 [nf_tables], CPU#2: nft/1404
- RIP: 0010:nft_data_release+0xb7/0xe0 [nf_tables]
- [..]
- __nft_set_elem_destroy+0x106/0x380 [nf_tables]
- nf_tables_abort_release+0x348/0x8d0 [nf_tables]
- nf_tables_abort+0xcf2/0x3ac0 [nf_tables]
- nfnetlink_rcv_batch+0x9c9/0x20e0 [..]
+Set BLK_FEAT_STABLE_WRITES for internal-hash D, B and I modes so
+filesystems wait for writeback folios to become stable before modifying
+them again.  Journal mode is left unchanged because it copies data into
+the journal before computing and persisting the tag.
 
-Fixes: 628bd3e49cba ("netfilter: nf_tables: drop map element references from preparation phase")
-Reported-by: Yiming Qian <yimingqian591@gmail.com>
-Signed-off-by: Florian Westphal <fw@strlen.de>
-[ Backport to 5.15.y: 5.15 still passes a struct nft_set_elem to
-  nft_setelem_data_{de,}activate(); only the break statements are
-  removed. ]
-Assisted-by: Claude:claude-opus-5-5
-Signed-off-by: Steffen Pfendtner <steffen.pfendtner@kernelscan.io>
+Tested using dm-delay over a virtio-blk test disk, dm-integrity
+internal_hash:crc32c and no-journal ext4.  The D and B reproducers both
+failed with checksum errors before this change and completed with
+READ_RC=0 and zero mismatches after it.
+
+Fixes: 7eada909bfd7 ("dm: add integrity target")
+Cc: stable@vger.kernel.org
+Reported-by: Sun Yangkai <sunyangkai@fygo.io>
+Link: https://github.com/chencheng-fnnas/reproducer/blob/main/dm-integrity-writeback-race.py
+Signed-off-by: Chen Cheng <chencheng@fnnas.com>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+[ sashal: Adapted BLK_FEAT_STABLE_WRITES to QUEUE_FLAG_STABLE_WRITES through a new target flag. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_tables_api.c | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/md/dm-integrity.c     | 3 +++
+ drivers/md/dm-table.c         | 2 +-
+ include/linux/device-mapper.h | 5 +++++
+ 3 files changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index b4c3615a2bf6a..6a6b42923f504 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -627,7 +627,6 @@ static void nft_map_catchall_deactivate(const struct nft_ctx *ctx,
- 		elem.priv = catchall->elem;
- 		nft_set_elem_change_active(ctx->net, set, ext);
- 		nft_setelem_data_deactivate(ctx->net, set, &elem);
--		break;
+diff --git a/drivers/md/dm-integrity.c b/drivers/md/dm-integrity.c
+index cebffb0b5a1af..7e8b5361c64c6 100644
+--- a/drivers/md/dm-integrity.c
++++ b/drivers/md/dm-integrity.c
+@@ -3360,6 +3360,9 @@ static void dm_integrity_io_hints(struct dm_target *ti, struct queue_limits *lim
+ 		limits->physical_block_size = ic->sectors_per_block << SECTOR_SHIFT;
+ 		blk_limits_io_min(limits, ic->sectors_per_block << SECTOR_SHIFT);
  	}
++
++	if (ic->internal_hash && (ic->mode == 'D' || ic->mode == 'B'))
++		ti->needs_stable_writes = true;
  }
  
-@@ -5172,7 +5171,6 @@ static void nft_map_catchall_activate(const struct nft_ctx *ctx,
- 		nft_clear(ctx->net, ext);
- 		elem.priv = catchall->elem;
- 		nft_setelem_data_activate(ctx->net, set, &elem);
--		break;
- 	}
+ static void calculate_journal_section_size(struct dm_integrity_c *ic)
+diff --git a/drivers/md/dm-table.c b/drivers/md/dm-table.c
+index 0f815bcf751f1..b9fe92337b36f 100644
+--- a/drivers/md/dm-table.c
++++ b/drivers/md/dm-table.c
+@@ -1974,7 +1974,7 @@ static int device_requires_stable_pages(struct dm_target *ti,
+ {
+ 	struct request_queue *q = bdev_get_queue(dev->bdev);
+ 
+-	return blk_queue_stable_writes(q);
++	return ti->needs_stable_writes || blk_queue_stable_writes(q);
  }
  
+ int dm_table_set_restrictions(struct dm_table *t, struct request_queue *q,
+diff --git a/include/linux/device-mapper.h b/include/linux/device-mapper.h
+index 114553b487ef4..3cd473e166a81 100644
+--- a/include/linux/device-mapper.h
++++ b/include/linux/device-mapper.h
+@@ -356,6 +356,11 @@ struct dm_target {
+ 	 */
+ 	bool discards_supported:1;
+ 
++	/*
++	 * Set if this target requires stable data during writeback.
++	 */
++	bool needs_stable_writes:1;
++
+ 	/*
+ 	 * Set if we need to limit the number of in-flight bios when swapping.
+ 	 */
 -- 
 2.53.0
 
