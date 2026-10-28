@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216820;
-	b=Tr+fL0Pyv96WNpHLfkyrcMFLs5LMAzuQMPBYpTrEkuVgrcRJOzVryAWRJLmWjzWcB8Fs
-	 EOuscfpSQHhxxY7CC0YwEyi4LtTblQFB1RTNZTegHO6u70DK9wlOIN1AfyNc0jWvZ9OBr
-	 7u4JICSmjd3ZmUQSw1W3qa37/fvRvFNOuk/rdWu3H4AvNnl4/eUz0d/79Y3urUwr8kbE0
-	 bp8mByBYO/DPFsur/LT+LviqHgeruQHjsH9p4QKO01C6AUxOOeDUGcdJtMwpQgKlDFIi8
-	 VgTJ8yVypJvvhwXybjJKzaK9svwQTwbf02X6pxWONo1zlxkYAwvqJ7fg2MPVPVGDf+A==
+	t=1793216823;
+	b=Zut5+vticlElFGkA7Mi1eBv7SUm6ZiPHxTsjHZsimoVxLleu1tz13u3fiR0q6dykDaza
+	 qogf0ee140r5IXk/M6B/OVpq9d8qycDNKMUfzqqUEZ5f75YBksxC96PzR6ZltGFQBapLN
+	 O4Xf7H6m8hPryigaANTwyHXbt7qmTC9/Q/wfDOxoNUUyrpDidZxT8fO4yTS4S7DySfpxo
+	 6+Lwikb06+zAcLDqyWaaocQ4LcAWIl9Fm+tIfSc3fTMD7wlN7SorIlGetIW3T3KDcboF+
+	 Wc3SSq3NXa0NVSZ9r3I7wnMPT6OdiLs+VX0mZpU36ufumMU/XbKXXh58Ot+TG1GlPYg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216820;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216823;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=aywRclQAibCiyoYViKoDus3TwAjuSyJAjbx7G6frjjM=;
-	b=t/g5t4lAcCHhRTH3gIQrS0nTEpl3mBHe/O8M9HVFVw2sH0Tw69VIsjlI2o0VJK7sONXm
-	 QIr7ZKPlLrISNYA8B7W/NHoGOge12XJpb89uMRrxjlvo7x8B32+u6o9hdi7SXkBJsulA3
-	 H7O+5LLIVdznBBG5Sj8gROX2vbMOBmWq1IwVnihl1NW9x9smreHc9iK763CFNtSg3Wp3x
-	 UR3kFoLGHaq23MIynTX+qbVwzcVyQa9suYu28rL2NAi6tCBV6g4xccStNs48CBLfHjcZb
-	 ylpny07jCS+x3FQP/ZT0WYAobd2vBwSxmMwZUgIvTCTE9j7bU5sX85HLjs5U+Q702dQ==
+	bh=gx1pbsQiRoKFehVWc79tKVvHIKIq78ybLkUyyyhIyzw=;
+	b=jPzwcuw+wzloRpTAdFYPV8KMYuLN+3F9g0Ng5knuSCKuOKZjjOeLkZMrWX1T7s+ZPjcT
+	 /4kDlPV6kLuaZTtTtT+Qvc22QeBk7ClsQtxYAuSmt9U5BTude5XW9ZbaVfF4jKb6fei1d
+	 ujn9SrX+lEQO7dbtmAiEENwQp+foGdlVi+9po8w/8Ouwiz2+sSfKRKQ5zuvY8h9v9NHUy
+	 6tJJgQnUzSv/vJ7C/UR0mau+RB222M1KeV4CYM7X40edaoGff0wXuRK2bbV+/nYaMpuAj
+	 D3M4ce5RoKxZEhY/f2BB6+frYzNfKzzOew5+62PJRA37ENbB0Jf/BN/zhEDKp2SbFyw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jedOdV7c;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=k1oU2ilk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CB3F606A31A;
-	Wed, 28 Oct 2026 19:46:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABF17606A31C;
+	Wed, 28 Oct 2026 19:47:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jedOdV7c
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2ED4E1F01825;
-	Wed, 28 Oct 2026 19:46:59 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=k1oU2ilk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 088A11F01825;
+	Wed, 28 Oct 2026 19:47:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216819;
-	bh=aywRclQAibCiyoYViKoDus3TwAjuSyJAjbx7G6frjjM=;
+	s=korg; t=1793216822;
+	bh=gx1pbsQiRoKFehVWc79tKVvHIKIq78ybLkUyyyhIyzw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jedOdV7c6ycbcxGdk6NyLUnhnui0o3MMXr0lu0DpVGFulCUrqe+0sCClBP+yZ/PRe
-	 E3yD2cjkUanJSRMPGSUEz+wcdgQZQzwPApGDqLWG7bFPeeX59gNfnwmTRDinkJohZI
-	 qtilGiuATAmME1estu8HLCAWFzQiHDmEL9cIj7So=
+	b=k1oU2ilkmtSe108TiO21/wcdggddMHTgjj2fE8BRdFw9orVZNaF3YkNbnUmPcUZ26
+	 Gh4TaLge7vIH+i2eWKG4J/MKeFmnXH3D26LIm2rs1Y9qXE4mVZwBggWSVWUf2uvfxA
+	 QqpobsxUeksAAncP+702omL4KKbQGHo9F7F0dGNM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daeho Jeong <daehojeong@google.com>,
-	Sunmin Jeong <s_min.jeong@samsung.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Nilesh Javali <njavali@marvell.com>,
+	Hannes Reinecke <hare@kernel.org>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1688/1887] f2fs: accurately adjust free_sections during free_segment_range
-Date: Wed, 28 Oct 2026 18:03:04 +0100
-Message-ID: <20261028170537.868762929@linuxfoundation.org>
+Subject: [PATCH 6.1 1689/1887] scsi: qla2xxx: Bound VP index against VP_CTRL IOCB bitmap size
+Date: Wed, 28 Oct 2026 18:03:05 +0100
+Message-ID: <20261028170537.890984452@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -70,86 +69,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daeho Jeong <daehojeong@google.com>
+From: Nilesh Javali <njavali@marvell.com>
 
-[ Upstream commit 8c963d1738fdca400082ff5f9d99e083de4f4e70 ]
+[ Upstream commit 878613ecb5a36db26859c4fd83daf9283a334fa2 ]
 
-In free_segment_range(), MAIN_SECS(sbi) is temporarily reduced by `secs`
-to restrict block allocation to the safe remaining main area while valid
-blocks in the truncated range are evacuated by GC.
+The VP control IOCB selects its target virtual port by setting one bit
+in vp_idx_map, a fixed 16-byte (128-bit) array in both
+vp_ctrl_entry_24xx and vp_ctrl_entry_24xx_ext. qla25xx_ctrlvp_iocb()
+computes map = (vp_index - 1) / 8 and writes vce->vp_idx_map[map]
+without checking that map stays within the array.
 
-However, FREE_I(sbi)->free_sections tracks the total number of free
-sections across the whole filesystem. If any sections within the
-truncated range were already free upon entering free_segment_range(),
-failing to deduct them from free_sections causes the filesystem to
-overestimate available free sections in the active, reduced main area.
-This leads to inconsistent free section accounting during GC data
-migration and can trigger unexpected allocation failures or assertion
-errors when space is tight.
+max_npiv_vports is taken from firmware and only sanitized to a
+MIN_MULTI_ID_FABRIC-aligned boundary, so it can legitimately be 191 or
+255, and qla24xx_control_vp() only rejects vp_index >= max_npiv_vports.
+A vp_index above 128 therefore yields map >= 16 and an out-of-bounds
+write of up to 16 bytes past vp_idx_map, corrupting the trailing IOCB
+fields (or the adjacent request-ring slot on the 64-byte layout).
 
-Fix this by calculating the number of already-free sections in the
-truncated range, deducting them from free_sections upon entering
-free_segment_range(), and restoring them on exit.
+Reject a vp_index that cannot be represented in the IOCB bitmap in
+qla24xx_control_vp(), and add a defensive ARRAY_SIZE() guard in
+qla25xx_ctrlvp_iocb() before the write. Adapters that report the usual
+63 or 127 NPIV vports are unaffected.
 
-Fixes: b4b10061ef98 ("f2fs: refactor resize_fs to avoid meta updates in progress")
+Fixes: 2853192e154b ("scsi: qla2xxx: Use IOCB path to submit Control VP MBX command")
 Cc: stable@vger.kernel.org
-Signed-off-by: Daeho Jeong <daehojeong@google.com>
-Signed-off-by: Sunmin Jeong <s_min.jeong@samsung.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Signed-off-by: Nilesh Javali <njavali@marvell.com>
+Reviewed-by: Hannes Reinecke <hare@kernel.org>
+Link: https://patch.msgid.link/20260723050413.3897522-49-njavali@marvell.com
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/gc.c | 15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+ drivers/scsi/qla2xxx/qla_iocb.c | 6 ++++++
+ drivers/scsi/qla2xxx/qla_mid.c  | 8 ++++++++
+ 2 files changed, 14 insertions(+)
 
-diff --git a/fs/f2fs/gc.c b/fs/f2fs/gc.c
-index 2df6a5b503508..851f55aa37f4e 100644
---- a/fs/f2fs/gc.c
-+++ b/fs/f2fs/gc.c
-@@ -1995,8 +1995,9 @@ void f2fs_build_gc_manager(struct f2fs_sb_info *sbi)
- static int free_segment_range(struct f2fs_sb_info *sbi,
- 				unsigned int secs, bool gc_only)
- {
--	unsigned int segno, next_inuse, start, end;
-+	unsigned int segno, secno, next_inuse, start, end, end_secno;
- 	struct cp_control cpc = { CP_RESIZE, 0, 0, 0 };
-+	unsigned int freed_secs = 0;
- 	int gc_mode, gc_type;
- 	int err = 0;
- 	int type;
-@@ -2005,6 +2006,7 @@ static int free_segment_range(struct f2fs_sb_info *sbi,
- 	MAIN_SECS(sbi) -= secs;
- 	start = MAIN_SECS(sbi) * sbi->segs_per_sec;
- 	end = MAIN_SEGS(sbi) - 1;
-+	end_secno = GET_SEC_FROM_SEG(sbi, end);
- 
- 	mutex_lock(&DIRTY_I(sbi)->seglist_lock);
- 	for (gc_mode = 0; gc_mode < MAX_GC_POLICY; gc_mode++)
-@@ -2016,6 +2018,14 @@ static int free_segment_range(struct f2fs_sb_info *sbi,
- 			sbi->next_victim_seg[gc_type] = NULL_SEGNO;
- 	mutex_unlock(&DIRTY_I(sbi)->seglist_lock);
- 
-+	spin_lock(&FREE_I(sbi)->segmap_lock);
-+	for (secno = MAIN_SECS(sbi); secno <= end_secno; secno++) {
-+		if (!test_bit(secno, FREE_I(sbi)->free_secmap))
-+			freed_secs++;
+diff --git a/drivers/scsi/qla2xxx/qla_iocb.c b/drivers/scsi/qla2xxx/qla_iocb.c
+index 3984b42fe0dd4..4dec45f192690 100644
+--- a/drivers/scsi/qla2xxx/qla_iocb.c
++++ b/drivers/scsi/qla2xxx/qla_iocb.c
+@@ -3826,6 +3826,12 @@ qla25xx_ctrlvp_iocb(srb_t *sp, struct vp_ctrl_entry_24xx *vce)
+ 	 */
+ 	map = (sp->u.iocb_cmd.u.ctrlvp.vp_index - 1) / 8;
+ 	pos = (sp->u.iocb_cmd.u.ctrlvp.vp_index - 1) & 7;
++	if (map >= ARRAY_SIZE(vce->vp_idx_map)) {
++		ql_log(ql_log_warn, sp->vha, 0x307c,
++		       "ctrlvp: vp_index %u exceeds vp_idx_map capacity\n",
++		       sp->u.iocb_cmd.u.ctrlvp.vp_index);
++		return;
 +	}
-+	FREE_I(sbi)->free_sections -= freed_secs;
-+	spin_unlock(&FREE_I(sbi)->segmap_lock);
-+
- 	/* Move out cursegs from the target range */
- 	for (type = CURSEG_HOT_DATA; type < NR_CURSEG_TYPE; type++)
- 		f2fs_allocate_segment_for_resize(sbi, type, start, end);
-@@ -2053,6 +2063,9 @@ static int free_segment_range(struct f2fs_sb_info *sbi,
- 		f2fs_bug_on(sbi, 1);
- 	}
- out:
-+	spin_lock(&FREE_I(sbi)->segmap_lock);
-+	FREE_I(sbi)->free_sections += freed_secs;
-+	spin_unlock(&FREE_I(sbi)->segmap_lock);
- 	MAIN_SECS(sbi) += secs;
- 	return err;
+ 	vce->vp_idx_map[map] |= 1 << pos;
  }
+ 
+diff --git a/drivers/scsi/qla2xxx/qla_mid.c b/drivers/scsi/qla2xxx/qla_mid.c
+index 11434b695b037..d8e0f969012d1 100644
+--- a/drivers/scsi/qla2xxx/qla_mid.c
++++ b/drivers/scsi/qla2xxx/qla_mid.c
+@@ -971,6 +971,14 @@ int qla24xx_control_vp(scsi_qla_host_t *vha, int cmd)
+ 	if (vp_index == 0 || vp_index >= ha->max_npiv_vports)
+ 		return QLA_PARAMETER_ERROR;
+ 
++	/*
++	 * The VP_CTRL IOCB selects the target VP through a fixed 128-bit
++	 * (16-byte) vp_idx_map bitmap, so vp_index must fit within it even
++	 * if firmware advertises more NPIV vports.
++	 */
++	if (vp_index > sizeof_field(struct vp_ctrl_entry_24xx, vp_idx_map) * 8)
++		return QLA_PARAMETER_ERROR;
++
+ 	/* ref: INIT */
+ 	sp = qla2x00_get_sp(base_vha, NULL, GFP_KERNEL);
+ 	if (!sp)
 -- 
 2.53.0
 
