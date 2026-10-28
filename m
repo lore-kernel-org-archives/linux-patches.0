@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793211904;
-	b=caIsfi4Gdc113qbQwcRnvHZxajwik5ggleiQrwwmfP4isgkNu+lezrvpcrUSr9dikGmF
-	 qGnioCKfQlW1Q4kP7colHBI1FrLnhxzY9MS3OjKNh2IcPbsaKhePikgW8wD+7uziKdoH6
-	 7AsqpG+KvaHaB0f6AvoZZ5cujG++14NHARa0w8/XCOAZ1Qjfu0PKI2JC6N+A0KpD+DJ5M
-	 cLDE9cLsrrVS/ayy8GtqX5EhQQxpYXDmY5W7TWhK2uolZM8OqEz4IfhC7yUMaTBD5yPOO
-	 YV+/QhcE3nocEu2wHCIhGsCPyNBjoF91qrAWrp3d4DPJwayMSRFrytOdn1FBjKnzLSg==
+	t=1793211906;
+	b=vArm1pq5OyQXMsAiXFBZs06CB5c1c/NDmtnJ1TF6qwySqNjfBnn4GIH+5QG87qXMLlG7
+	 jMwhWOS0Pd9WQSaJ6VvNuK8cdKFDREPG8JxCw/DlcLMZFX0IkkyceyRtghvk33KqTIqWo
+	 7DcJy6H/w1Eh1C1euVpsHTeRDrXYSNS+9Vou7MYlvuaJ9xesVRn9KpKu9NUgiwMKz7A9b
+	 K+LC0Izk3JVNuI1zsWOZDNvNkgcCopu9uIEK/ZQ6Bnk6Pwpy5u02DJOgvXr9hq62zOtPL
+	 8AAhPP+Pef/sc/8ICqZnbRt8or8CKibdTEIrU5/xnEeNOMuF9ELXjuXGCfbJHYayIAA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793211904;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793211906;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=JLKxtmphp6PoBUr9vb6xryN/umL0LI8Fuxbk34/X8mc=;
-	b=BBgFISyL8K/Ijxo5lDtld/peUMLAFS2Q1eO8u8dGLM0E9W6gpaAqN6zr2IBq97wLhgpr
-	 HTTctc0anxKg6tjeXWDQ0o0f0eze/RBGpS7VM19W4/V2PMjnVqgMSUwdW1/kIKBqDvco3
-	 hzMW19paMRW+2+usZWvsL0oZXtaPDYXSb3rdJIKL85Bv7u7NlPfcyuhvRqxidBSc3xkk7
-	 +1RWpk/xUiBWwkkI5v6O0ogjXgoX538T5834icSn52xBK/V/XVqSO33Yo9D4fv/dsOJVW
-	 OI3YIHymbgqTQj76n9xLzjNt5fdfAazlS3QIFsXFlXWu4c4JLQPgQnc2jREorIZKB3g==
+	bh=d9Knhropfm/aj1MhgKPn/ogrkodypbN8LNGdurOOBqQ=;
+	b=LqTE7e244LM7hWKFmgkfywUF/1ZxW2Z52EtTTJXHITzkfGf0szfwsl8ufdtLTQR9e5SA
+	 /f9dzWfqkgJySUCHpTZ4C1DyrCZiEBwT8UatboTewFq0bGYzhty2qNQ9reeYduFZRKqrt
+	 mJfK6JfspH18LMA6tpofRFXZglvpPT4i6akwQUk7+f6gxeUfuBny+PSKm+wsJCDpv/Peu
+	 PGJqkyImOrxN7hQnmi1yi7WMhkrnSiqooIaMyyWV1PzuTEVaLhfdjZmZUSAjbNa6obuwW
+	 B8sp6Jq/96b0B5RkbKyY1Pc6kZoen5q2EY15MY9y9bWba2BzSDkGPvZSSerqxvtAoJg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WlhsmOSr;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WFtwumF7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB60D606A31A;
-	Wed, 28 Oct 2026 18:25:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87694606A31A;
+	Wed, 28 Oct 2026 18:25:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WlhsmOSr
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06B7F1F01825;
-	Wed, 28 Oct 2026 18:25:02 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WFtwumF7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAA6C1F01825;
+	Wed, 28 Oct 2026 18:25:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793211903;
-	bh=JLKxtmphp6PoBUr9vb6xryN/umL0LI8Fuxbk34/X8mc=;
+	s=korg; t=1793211906;
+	bh=d9Knhropfm/aj1MhgKPn/ogrkodypbN8LNGdurOOBqQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WlhsmOSrhQCK5xQMuAZ7uYv8mpjPdzEWt0pU1/PIztFrPcG4mcsghGS50KrNQ2sIJ
-	 qAscEY0MDv5f5uN//qZwL7U+OD8HFf0XowP5f/90CQ4Wvy1ikW94bBl5mxest7l4LO
-	 t0cRQaeldIvZQYFmHYIY1V+UU9InaxAMY7c4a2sI=
+	b=WFtwumF72BvEb8G5I/tgmhScZ4Cij1FHjDvIY+RCr27ExzM4opY6ggQh16OAm+zVY
+	 7KiTfmAvKOGVVvLcDmjvJuZ2gVAhg1+x7MVV6wkm1lfMhMWuSJmQvHsmUL1K8yb4Av
+	 wEc+SoY0rp7lvLwP67Yl8iFm0rPan1gT8DVjRFeE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aswin Karuvally <aswin@linux.ibm.com>,
-	Bryam Vargas <hexlabsecurity@proton.me>,
-	Alexandra Winter <wintera@linux.ibm.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 514/571] net/iucv: fix the recvmsg window update
-Date: Wed, 28 Oct 2026 18:01:01 +0100
-Message-ID: <20261028170020.225607170@linuxfoundation.org>
+	Amit Klein <aksecurity@gmail.com>,
+	Noam Caspi <noam.caspi@mail.huji.ac.il>,
+	Ido Schimmel <idosch@nvidia.com>,
+	David Ahern <dsahern@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 541/571] ipv4: udp: Create exceptions before socket matching
+Date: Wed, 28 Oct 2026 18:01:28 +0100
+Message-ID: <20261028170020.873502830@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -69,118 +71,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryam Vargas <hexlabsecurity@proton.me>
+From: Ido Schimmel <idosch@nvidia.com>
 
-commit fa5acd038ea657ad5033713d6916214cbd349151 upstream.
+[ Upstream commit 4c3499f79f8c7e8561266bcc220a18538cec0458 ]
 
-iucv_sock_recvmsg() sends the HiperSockets-only AF_IUCV_FLAG_WIN without
-testing the transport, so on a classic z/VM socket iucv_send_ctrl() sizes
-the skb through a NULL iucv->hs_dev. SO_MSGLIMIT accepts 1, so msglimit / 2
-is zero and one recvmsg() on its own socket is enough for an unprivileged
-process to take a spurious disconnect.
+Currently, when ICMP Fragmentation Needed and Redirect Message packets
+are locally delivered and quote a UDP packet, a FIB nexthop exception
+(FNHE) is only created if the kernel can match the UDP packet to an
+existing socket.
 
-It also calls iucv_send_ctrl() under spin_lock_bh(&message_q.lock), which
-allocates GFP_KERNEL inside a section the code treats as atomic. Sending
-outside that lock lets two recvmsg() reach afiucv_hs_send() at once, where
-msg_recv is sampled for the advertised window and subtracted after
-dev_queue_xmit() -- and sendmsg reaches that counter under lock_sock()
-while recvmsg holds no socket lock, so both can subtract the same value,
-the counter goes negative and the credit reaches the peer twice.
+This behavior allows off-path attackers to conduct a side-channel attack
+on the FNHE cache in order to discover the ephemeral port used by a
+connected UDP socket.
 
-Test the transport, claim the credit with atomic_xchg() after the last
-error exit and hand it back if the transmit fails, and send once the lock
-is dropped.
+Commit 6457378fe796 ("ipv4: use siphash instead of Jenkins in
+fnhe_hashfun()") and commit 67d6d681e15b ("ipv4: make exception cache
+less predictible") tried to mitigate such attacks by making it harder
+for attackers to discover hash collisions in the FNHE cache and by
+randomizing the number of exceptions a hash bucket can hold,
+respectively. Unfortunately, both of the mitigations can be bypassed.
 
-Fixes: 3881ac441f64 ("af_iucv: add HiperSockets transport")
-Fixes: 238965b71b96 ("net/af_iucv: build proper skbs for HiperTransport")
+Instead, mitigate such attacks by always creating a FNHE, even before
+trying to find a matching socket. Do that by calling ipv4_update_pmtu()
+and ipv4_redirect(), the helpers used when the quoted packet did not
+originate from a socket.
+
+This means that guesses (right or wrong) from an off-path attacker will
+always result in a FNHE being created or updated in the cache that the
+attacker can observe.
+
+Pass an oif of 0, in a similar fashion to icmp_err(). This is also the
+oif used by the socket path for sockets that are not bound to a device.
+
+Note that this does not allow attackers to create FNHEs that they could
+not create before, as both helpers can already be reached with little to
+no validation. For example, by sending an ICMP error that quotes an ICMP
+Echo Reply or one that quotes a UDP source port that matches a wildcard
+socket.
+
+Also note that in the good case (matched socket) the above scheme comes
+at the cost of an extra route lookup, as the no socket helpers perform
+their own lookup before the one performed by ipv4_sk_update_pmtu() /
+ipv4_sk_redirect(). When the two resolve to different nexthops, it also
+results in two exceptions being created for the same destination IP. One
+in the FNHE cache of the nexthop resolved by the no socket helpers and
+another in the FNHE cache of the nexthop used by the socket.
+
+Fixes: 4895c771c7f0 ("ipv4: Add FIB nexthop exceptions.")
 Cc: stable@vger.kernel.org
-Tested-by: Aswin Karuvally <aswin@linux.ibm.com>
-Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
-Reviewed-by: Alexandra Winter <wintera@linux.ibm.com>
-Link: https://patch.msgid.link/20260828-b4-disp-33fac0ed-v3-1-e6d061880ee0@proton.me
+Reported-by: Amit Klein <aksecurity@gmail.com>
+Reported-by: Noam Caspi <noam.caspi@mail.huji.ac.il>
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://patch.msgid.link/20260828192344.2596928-3-idosch@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+[ sashal: inlined udp_err_update_exception() into the existing udp_err() wrapper ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/iucv/af_iucv.c |   42 +++++++++++++++++++++++++-----------------
- 1 file changed, 25 insertions(+), 17 deletions(-)
+ net/ipv4/udp.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/net/iucv/af_iucv.c
-+++ b/net/iucv/af_iucv.c
-@@ -206,12 +206,6 @@ static int afiucv_hs_send(struct iucv_me
- 	phs_hdr->flags = flags;
- 	if (flags == AF_IUCV_FLAG_SYN)
- 		phs_hdr->window = iucv->msglimit;
--	else if ((flags == AF_IUCV_FLAG_WIN) || !flags) {
--		confirm_recv = atomic_read(&iucv->msg_recv);
--		phs_hdr->window = confirm_recv;
--		if (confirm_recv)
--			phs_hdr->flags = phs_hdr->flags | AF_IUCV_FLAG_WIN;
--	}
- 	memcpy(phs_hdr->destUserID, iucv->dst_user_id, 8);
- 	memcpy(phs_hdr->destAppName, iucv->dst_name, 8);
- 	memcpy(phs_hdr->srcUserID, iucv->src_user_id, 8);
-@@ -246,13 +240,22 @@ static int afiucv_hs_send(struct iucv_me
- 	}
- 	skb->protocol = cpu_to_be16(ETH_P_AF_IUCV);
+diff --git a/net/ipv4/udp.c b/net/ipv4/udp.c
+index 3ebd5765fb9f3..65780cf993eac 100644
+--- a/net/ipv4/udp.c
++++ b/net/ipv4/udp.c
+@@ -821,6 +821,15 @@ int __udp4_lib_err(struct sk_buff *skb, u32 info, struct udp_table *udptable)
  
-+	/* Claim the receive credit here, not while building the header: every
-+	 * way this frame can be dropped has now been ruled out, so the window
-+	 * is zeroed only for as long as the transmit itself takes.
-+	 */
-+	if (flags == AF_IUCV_FLAG_WIN || !flags) {
-+		confirm_recv = atomic_xchg(&iucv->msg_recv, 0);
-+		phs_hdr->window = confirm_recv;
-+		if (confirm_recv)
-+			phs_hdr->flags = phs_hdr->flags | AF_IUCV_FLAG_WIN;
-+	}
+ int udp_err(struct sk_buff *skb, u32 info)
+ {
++	const int type = icmp_hdr(skb)->type;
++	const int code = icmp_hdr(skb)->code;
++	struct net *net = dev_net(skb->dev);
 +
- 	atomic_inc(&iucv->skbs_in_xmit);
- 	err = dev_queue_xmit(skb);
- 	if (net_xmit_eval(err)) {
- 		atomic_dec(&iucv->skbs_in_xmit);
--	} else {
--		atomic_sub(confirm_recv, &iucv->msg_recv);
--		WARN_ON(atomic_read(&iucv->msg_recv) < 0);
-+		atomic_add(confirm_recv, &iucv->msg_recv);
- 	}
- 	return net_xmit_eval(err);
- 
-@@ -1241,6 +1244,7 @@ static int iucv_sock_recvmsg(struct sock
- 	struct iucv_sock *iucv = iucv_sk(sk);
- 	unsigned int copied, rlen;
- 	struct sk_buff *skb, *rskb, *cskb;
-+	bool send_win = false;
- 	int err = 0;
- 	u32 offset;
- 
-@@ -1333,16 +1337,20 @@ static int iucv_sock_recvmsg(struct sock
- 		if (skb_queue_empty(&iucv->backlog_skb_q)) {
- 			if (!list_empty(&iucv->message_q.list))
- 				iucv_process_message_q(sk);
--			if (atomic_read(&iucv->msg_recv) >=
--							iucv->msglimit / 2) {
--				err = iucv_send_ctrl(sk, AF_IUCV_FLAG_WIN);
--				if (err) {
--					sk->sk_state = IUCV_DISCONN;
--					sk->sk_state_change(sk);
--				}
--			}
-+			if (iucv->transport == AF_IUCV_TRANS_HIPER &&
-+			    atomic_read(&iucv->msg_recv) >=
-+							iucv->msglimit / 2)
-+				send_win = true;
- 		}
- 		spin_unlock_bh(&iucv->message_q.lock);
++	if (type == ICMP_DEST_UNREACH && code == ICMP_FRAG_NEEDED)
++		ipv4_update_pmtu(skb, net, info, 0, IPPROTO_UDP);
++	else if (type == ICMP_REDIRECT)
++		ipv4_redirect(skb, net, 0, IPPROTO_UDP);
 +
-+		if (send_win) {
-+			err = iucv_send_ctrl(sk, AF_IUCV_FLAG_WIN);
-+			if (err) {
-+				sk->sk_state = IUCV_DISCONN;
-+				sk->sk_state_change(sk);
-+			}
-+		}
- 	}
+ 	return __udp4_lib_err(skb, info, &udp_table);
+ }
  
- done:
+-- 
+2.53.0
+
 
 
