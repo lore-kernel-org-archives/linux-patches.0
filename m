@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793211214;
-	b=viZJB0kvBWtCdNhedpTNaN/QMc0o81YL0aR3iDjEg8VkKhYhSg2FUt6777kcM5sqJyG3
-	 JxiFkQil3XuwvuNll4AWW+0BJTcxbT0iKPFbH23CLQBojjgytfu3hr7R6NKRnXWGKjFGc
-	 T309CZMm9aPNqJMXa8DTYFTRuQ/n6QH7RuOeOAWgKrJuUaEXV42FvtiAZtZa4HnAlShW7
-	 byc1/KXcb6BKelKUI5hEk4C9Ww82g/ZYXPZY8B0uHYWvJtDiY0PHd6kfZ3/BlxHblhJEQ
-	 VFqVwbsO+FQ+Zg9xhFVX27BQVKlhDQNNbkGrj/uS5o3srB5Vnb/2fobDYSqa+ab1p2A==
+	t=1793211217;
+	b=LktGoynCr53AJTfMFBY163/+KTfBwVHqZuYiiW/9lEnTLUQcba9buZsEqJ+kk6rEY4xo
+	 Y60Sse4oqDAOIdFZ2zh04k+Zf0R8CT3rr5+Q3Fo0y3LbUI9H3EeRiuodY8wy3NRNkwjYp
+	 MN9W9BtFVbRWv8Wv3p6sWxuX+mwpI75Q5XZGFBGEoz+7sa/fsMoOXbM6KBrGlJAQ6hELY
+	 vBNToWSX6kd6Fe4N7ktpDr5MQQoWOyTEwFhJdpka1c5wTYt1V07Ot8oEKXAZ2/2Nx41Pf
+	 pHsb6YVPPOJxq17OhPGx0fK4MoDxQU22T1+NOdTP1OkdE5fr0rMvyVaEUMQWjbw25iQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793211214;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793211217;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=29KHNdBFq+TEKblxXzwBndr66GlOzuNFAAbCxT3zFaw=;
-	b=REf6P+pREh8Tn7bvntPh9zCoDcrvR+d/IanXKgTGaIvFGeCI27K/Qro0pbFJnLQXX5OP
-	 ZcLa06b7k1Me5TIRwrDUwGqHkFaX0h/m5zSBcqF+FPuXITSunEEYwJxzJaZRijAjYkb71
-	 fqxBlVi1GwzUFWkvAYqhqCUBa+TBQQMU8LnLS2k+1Bp7x4wOHUozKcc+t7LcMFGgohl87
-	 08fGG2RpARLUuNFQ9ZuBPupvDXrixaVU8s5HKMtKg3qooN80Zb1KUs7tjcyyZDDXFhKNW
-	 v77zO+F05RTm5+s48kkPk+3qUt3EsMIX6D7CG1gjoXLgOSY0yHK1x/GiTxmqc38Jjag==
+	bh=nXIMFH3rPTlk/CRmbR/HkSAqHKDAq7Fgw0PCDUyTXq0=;
+	b=3zafWQlFrgUw/R9zivSbUlgNG3v1SxndyT3/zSI+eSUpAVmZUNAAIokIdIaHezfOX1Os
+	 EQNhnM3drpFEZeLjO493+aEEqNMpqmAAYh8hUif0p9IhuflAiOSB5v9i6pKGVJkRdPiiP
+	 JExj1d3AsXh7rVHrXv9o9lBwhU77Yz9fB4kNgADq4L2H17hm4BNWZsFHKiPt1QXNX4Etw
+	 17A2pgUk/A5RuXLQFQPrrCDURQxZmVrmlEI0imsG+R6/wVMMnGWqViDsa9cPGmfAiKSUW
+	 bOUTKaqH448clCsXthT+YDxOqChy8k4s7O0nYcGScXugAdRDZvXg1yzUuwmtnpgHISA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GlHTP4PS;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="wJ+a/3Xv";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62F04606A96C;
-	Wed, 28 Oct 2026 18:13:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40068606A96C;
+	Wed, 28 Oct 2026 18:13:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GlHTP4PS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B14E81F01825;
-	Wed, 28 Oct 2026 18:13:33 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wJ+a/3Xv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90B0D1F01825;
+	Wed, 28 Oct 2026 18:13:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793211214;
-	bh=29KHNdBFq+TEKblxXzwBndr66GlOzuNFAAbCxT3zFaw=;
+	s=korg; t=1793211217;
+	bh=nXIMFH3rPTlk/CRmbR/HkSAqHKDAq7Fgw0PCDUyTXq0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GlHTP4PSEExU5SnYppHoI4Ur3/+sq4u1DfffZoIalXYpQUnjx3oe/7JQ60Papag2W
-	 hH0YhmOs/Kn+oVzcYs28vM1T3sjqOHGnDc7YyeYTGHF/ByVrAyTc7cZDttTQGB5X+X
-	 hJqTvK0BppBGrWY96jfuFSqfx+Ee83hSrfEFUvKc=
+	b=wJ+a/3Xvg8w2DjSs7LHcKOyVfXePBNa33OKyR/VLhQ32xkfed4i5stnISIZzb8vTh
+	 m5m8n5q79okLjkVIbGpY86aGDbXcy38kYE0PHnU4CyojvDxSAWMwZm017aEjzsKD2J
+	 znAAVD6fZ+35KswD9XKYQsh6GGmVP9vDAlfoMOdM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Sorenson <sorenson@redhat.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Paulo Alcantara <pc@manguebit.org>,
+	George Zhang <george.zhang@amd.com>,
+	Jiangshan Yi <yijiangshan@kylinos.cn>,
+	Dan Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 272/571] smb: client: split cifsFileInfo bitfields to avoid shared-byte RMW races
-Date: Wed, 28 Oct 2026 17:56:59 +0100
-Message-ID: <20261028170014.455731428@linuxfoundation.org>
+Subject: [PATCH 5.15 299/571] drm/amd/display: check dc_state_create_copy() for NULL in dm_suspend
+Date: Wed, 28 Oct 2026 17:57:26 +0100
+Message-ID: <20261028170015.093868564@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -69,55 +70,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Frank Sorenson <sorenson@redhat.com>
+From: Jiangshan Yi <yijiangshan@kylinos.cn>
 
-[ Upstream commit 19465a9aeb664f1d710d0d22c07c31bfb7c85446 ]
+[ Upstream commit 015e72cde567d2450e282c2790773463156b2d0a ]
 
-The invalidHandle, swapfile, oplock_break_cancelled, offload,
-and status_file_deleted fields are stored in the same bitfield byte
-in struct cifsFileInfo, but are updated in different code paths that
-may run simultaneously, and are protected by different locks.  Since
-bitfield assignments generate byte-level read-modify-write operations,
-a modification to one flag can overwrite a concurrent modification to
-another flag.
+dc_state_create_copy() can return NULL on allocation failure.
+dm_suspend() only conditionally skips dm_gpureset_toggle_interrupts()
+and continues execution, returning success.  dm_resume() then
+dereferences the NULL cached_dc_state in link_enc_cfg_copy() and the
+following dc_state->stream_count loop, crashing during GPU reset
+recovery.
 
-To avoid these races, convert these flags from a bitfield to
-separate bool fields.
+Return -ENOMEM immediately if the copy fails, so the caller aborts
+suspend instead of leaving a NULL cached state for resume.
 
-Closes: https://lore.kernel.org/r/7689764e-c0f6-4016-9557-b54cf4a3de4e@redhat.com
-Fixes: 3bc303c254335 ("cifs: convert oplock breaks to use slow_work facility (try #4)")
-Fixes: 4e8aea30f7751 ("smb3: enable swap on SMB3 mounts")
-Fixes: ffceb7640cbfe ("smb: client: do not defer close open handles to deleted files")
-Fixes: 173217bd73365 ("smb3: retrying on failed server close")
-Signed-off-by: Frank Sorenson <sorenson@redhat.com>
+Fixes: 8092aa3ab8f7 ("drm/amd/display: Add null checker before passing variables")
+Reviewed-by: George Zhang <george.zhang@amd.com>
+Signed-off-by: Jiangshan Yi <yijiangshan@kylinos.cn>
+Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 84b6d7932fdd2857795a257f9f258562a3cddcab)
 Cc: stable@vger.kernel.org
-Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
-(cherry picked from commit 19465a9aeb664f1d710d0d22c07c31bfb7c85446)
-[ status_file_deleted and offload not present in kernel 5.15 ]
-Signed-off-by: Frank Sorenson <sorenson@redhat.com>
+[ sashal: Adapted dc_state_create_copy() usage to dc_copy_state(). ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/cifs/cifsglob.h | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/fs/cifs/cifsglob.h b/fs/cifs/cifsglob.h
-index 9b08020634f19..be53b788ea4ff 100644
---- a/fs/cifs/cifsglob.h
-+++ b/fs/cifs/cifsglob.h
-@@ -1265,9 +1265,9 @@ struct cifsFileInfo {
- 	struct dentry *dentry;
- 	struct tcon_link *tlink;
- 	unsigned int f_flags;
--	bool invalidHandle:1;	/* file closed via session abend */
--	bool swapfile:1;
--	bool oplock_break_cancelled:1;
-+	bool invalidHandle;	/* file closed via session abend */
-+	bool swapfile;
-+	bool oplock_break_cancelled;
- 	unsigned int oplock_epoch; /* epoch from the lease break */
- 	__u32 oplock_level; /* oplock/lease level from the lease break */
- 	int count;
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+index 4530d22139355..288ef18e70d05 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -2440,9 +2440,14 @@ static int dm_suspend(void *handle)
+ #endif
+ 
+ 		dm->cached_dc_state = dc_copy_state(dm->dc->current_state);
++		if (!dm->cached_dc_state) {
++			drm_err(adev_to_drm(adev),
++				"Failed to allocate cached DC state during suspend\n");
++			mutex_unlock(&dm->dc_lock);
++			return -ENOMEM;
++		}
+ 
+-		if (dm->cached_dc_state)
+-			dm_gpureset_toggle_interrupts(adev, dm->cached_dc_state, false);
++		dm_gpureset_toggle_interrupts(adev, dm->cached_dc_state, false);
+ 
+ 		amdgpu_dm_commit_zero_streams(dm->dc);
+ 
 -- 
 2.53.0
 
