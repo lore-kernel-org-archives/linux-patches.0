@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216066;
-	b=q07DWNuHawRusOhaGRhmxUC4kHJREDQS7bMNXwnYwJmCvceQewrEddvpasH79HK060HQ
-	 zOba1WiN1vex7tgSiIKhYYaMocVVk7YyfmeajM70xJPWalA258xoI8levYidqFepLUG1v
-	 PwGJxjBtNRerE5Wbu5ZmXc2bWDeT9yXxoK+bcPQ+ibD2of2jI4mh7AgK2poRhSg6XvpuR
-	 Ju0I77kb84260k4OSnGoa/zErSMj90PhwteJU9KtsRGCE8VPwI3i2OXE+02Tne8BFSz2L
-	 uqk635+PEGqdw4k3IEv6hRICh5Huw7iIrR8EFqeXA0FQJZuagmHMWURLYISgI4/tQAg==
+	t=1793216070;
+	b=dvH6HH6xPMnDOSXNXPPjZYs6c9bkEwEOf/Gpcru7W6AYVOAb4YC/NLhCCJZV9euZ7Djo
+	 zxA6NzqlgF9mobu4yoLdD9kFm5Tcyj7MMdFGhIK/u7PvVwo9Zn8NB7xaqeO/RN2dd1T7z
+	 hcQ5XFF/vvpfCPEjTKip6FmEd7o1+yXBEk/UXAX2daqMEYjXfDURSK9eJu294TxYzfWoT
+	 +CLtwEMOYOS6IRtYf6tdbnjpUaJF5laMK9bsge+vJaVU80WsXuyxUC2QQ0p+7U9Yc+5Mc
+	 DfSM3ze6K1JRngviRkjynepHs26Y8nfAaOniYLc5T5KwWoY/H9sgtNvz32kBoDAGR6w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216066;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216070;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=BPlD36hCGEKufyWkgM1GYGevahBR+/DA+yPwnqG1fD0=;
-	b=aVEjZVd95px0+GJS9aZingCNl9GBZ5gHzLe55+5nkn1rjXnHXDHG8XoCFOV3idjX2wFt
-	 e9HT9MVf5nifLdJzuUZiO+J0Ru1znt8DSIjEanLfgohjvZKQrHr8BkeUaXK5X7ZdlapE5
-	 ZLsCWym35PWprUdxpAyAjfE3svuHw5jttr9J7pcx61aIGjvqXP8NOjU6sTkVUtBH9T5LH
-	 8eI+2S6V4FwzDmmanLK4Xali9n4uzg6mLIW8IZ/iSet4HtWP8aHrYX0FJgZJO/pbeL45H
-	 NpPXdyPogTysnsm4h/sK/Y4L21hgll/4uaSEWrTP00f+DrE8HU0i4KS1UhnzwWvRkzg==
+	bh=Cr2tQ+yDWVxgHpl1cSsmkvncy8J+nfL2S/l2hDIznF4=;
+	b=ODNKUetNc705zew9clcAxI10BmdWijfhF9LDd3TQ3F9bHKPSK031c03kJEngeQEoyl3m
+	 gvtLNLqLQhWjtIrc8a1XKU3zQ/VtduLngEL3Tk1YuBvWVrPsQokIchIPD18nVDylbo9qE
+	 haCxlzqaaNVJTtMXwFjIJNx2msaynyPELh6Y9UUhG9d1qEgqHSNW+eKwrGpSxjVqajfYT
+	 aPAD0lDBKxPX9m1uSkwy0bfjWeVTdCc4Yh3wA+DYa7kUuALZOr/YVq/yAvunSgOuci6jm
+	 2YVPfbIKQ3citrswpOvViSfJm9OLXKWq3LbNIdeu22FVH/ARpcThI0UUxmQfFTzAJtA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0gcm1YhS;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cjg+YNrN;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E87F606A31C;
-	Wed, 28 Oct 2026 19:34:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF984606A31A;
+	Wed, 28 Oct 2026 19:34:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0gcm1YhS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0D921F01825;
-	Wed, 28 Oct 2026 19:34:25 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cjg+YNrN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA3EB1F01825;
+	Wed, 28 Oct 2026 19:34:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216066;
-	bh=BPlD36hCGEKufyWkgM1GYGevahBR+/DA+yPwnqG1fD0=;
+	s=korg; t=1793216069;
+	bh=Cr2tQ+yDWVxgHpl1cSsmkvncy8J+nfL2S/l2hDIznF4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0gcm1YhStbCsfWfaoWDBbySFWAcDPXI+gcVhUw8/MsWXbHuNI0B5wq++DXZ6Gm8AD
-	 Djee70B9PyTTWXp+OEe6IgewKLflKTcFHQk3whcHoCTUhHn++xLwkBnlptbAxgBwYR
-	 4dbddQoKkr7NYbrAtEbT3mpiih2cDM/0W/PQze/E=
+	b=cjg+YNrN2t9gr9YNMj5D8ZLUXHIQa3UOyPU+A75ufbTmMjhRt7I4qkVOadVDpIefg
+	 JjJ31QgSMPwtfYnPAj8brQjBd4WMnFY2knQJv4/46ijkcSY0pwY5KXr+b7I8bZdEwc
+	 +85n3udFGx92jCNxxSYkVyOGpb6ozfr4QlHRukxg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <clm@meta.com>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Sam Ravnborg <sam@ravnborg.org>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1430/1887] nfsd: gate nfs3 setacl by argp->mask
-Date: Wed, 28 Oct 2026 17:58:46 +0100
-Message-ID: <20261028170532.001271603@linuxfoundation.org>
+Subject: [PATCH 6.1 1413/1887] fbdev/ssd1307fb: Generate deferred I/O ops
+Date: Wed, 28 Oct 2026 17:58:29 +0100
+Message-ID: <20261028170531.612391471@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,80 +69,131 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Mason <clm@meta.com>
+From: Thomas Zimmermann <tzimmermann@suse.de>
 
-[ Upstream commit 453d7198a0ab07a12d46e0575861ac7b932da17e ]
+[ Upstream commit 417218ae730b4802419b36d3449eb7435fcec7c1 ]
 
-nfsd3_proc_setacl() calls set_posix_acl() unconditionally for both
-ACL_TYPE_ACCESS and ACL_TYPE_DEFAULT, passing argp->acl_access and
-argp->acl_default verbatim. The NFSv3 ACL decoder only populates
-those pointers when the corresponding mask bit is set:
+Use the existing generator macros to create deferred-I/O helpers
+for ssd1307fb and set them in the fb_ops structure. Functions
+for damage handling on memory ranges and areas are provided by
+the driver.
 
-    nfs3svc_decode_setaclargs()
-      if (args->mask & NFS_ACL)    decode into acl_access
-      if (args->mask & NFS_DFACL)  decode into acl_default
-      /* otherwise the pointer stays NULL (pc_argzero) */
+Ssd1307fb's implementation of fb_write writes to system memory,
+so the generated code can use the respective helper internally.
+This also fixes a long-standing bug where fb_write returned an
+errno code instead of the number of written bytes. See the commit
+message of commit 921b7383f348 ("fbdev: Return number of bytes
+read or written") for more details.
 
-    nfsd3_proc_setacl()
-      set_posix_acl(.., ACL_TYPE_ACCESS,  argp->acl_access)
-      set_posix_acl(.., ACL_TYPE_DEFAULT, argp->acl_default)
-
-set_posix_acl(idmap, dentry, type, NULL) is the VFS "remove this
-ACL type" operation. A NULL pointer that means "the client did not
-send this arm" is therefore indistinguishable from "the client
-asked to remove this ACL". A SETACL with mask=NFS_ACL silently
-drops the directory's default ACL; mask=0 drops both.
-
-The sibling nfsd3_proc_getacl() already consults argp->mask before
-touching each arm; mirror that in setacl.
-
-Fix by wrapping each set_posix_acl() call in the matching mask bit
-check and initializing error to 0 before inode_lock so that a
-request with neither bit set leaves the on-disk ACLs untouched and
-returns nfs_ok. The out_drop_lock path and the unconditional
-posix_acl_release() at out: are preserved; both NULL-tolerate the
-skipped arms.
-
-Fixes: a257cdd0e217 ("[PATCH] NFSD: Add server support for NFSv3 ACLs.")
-Cc: stable@vger.kernel.org
-Assisted-by: kres:claude-opus-4-7
-Reported-by: Chris Mason <clm@meta.com>
-Signed-off-by: Chris Mason <clm@meta.com>
-Link: https://patch.msgid.link/20260530-nfsd-fixes-v2-5-f27e8eb4d974@kernel.org
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Reviewed-by: Sam Ravnborg <sam@ravnborg.org>
+Acked-by: Helge Deller <deller@gmx.de>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230706151432.20674-9-tzimmermann@suse.de
+Stable-dep-of: 9ad709afdfa3 ("fbdev: ssd1307fb: defer I2C transfers from damage callbacks")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs3acl.c | 17 +++++++++++------
- 1 file changed, 11 insertions(+), 6 deletions(-)
+ drivers/video/fbdev/ssd1307fb.c | 69 ++++++---------------------------
+ 1 file changed, 11 insertions(+), 58 deletions(-)
 
-diff --git a/fs/nfsd/nfs3acl.c b/fs/nfsd/nfs3acl.c
-index d100a8a00e08e..62435b137b9cd 100644
---- a/fs/nfsd/nfs3acl.c
-+++ b/fs/nfsd/nfs3acl.c
-@@ -105,12 +105,17 @@ static __be32 nfsd3_proc_setacl(struct svc_rqst *rqstp)
+diff --git a/drivers/video/fbdev/ssd1307fb.c b/drivers/video/fbdev/ssd1307fb.c
+index 7620c6913520a..a7b8be508f562 100644
+--- a/drivers/video/fbdev/ssd1307fb.c
++++ b/drivers/video/fbdev/ssd1307fb.c
+@@ -292,43 +292,6 @@ static int ssd1307fb_update_display(struct ssd1307fb_par *par)
+ 	return ssd1307fb_update_rect(par, 0, 0, par->width, par->height);
+ }
  
- 	inode_lock(inode);
+-static ssize_t ssd1307fb_write(struct fb_info *info, const char __user *buf,
+-		size_t count, loff_t *ppos)
+-{
+-	struct ssd1307fb_par *par = info->par;
+-	unsigned long total_size;
+-	unsigned long p = *ppos;
+-	void *dst;
+-	int ret;
+-
+-	if (!info->screen_buffer)
+-		return -ENODEV;
+-
+-	total_size = info->fix.smem_len;
+-
+-	if (p > total_size)
+-		return -EINVAL;
+-
+-	if (count + p > total_size)
+-		count = total_size - p;
+-
+-	if (!count)
+-		return -EINVAL;
+-
+-	dst = info->screen_buffer + p;
+-
+-	if (copy_from_user(dst, buf, count))
+-		return -EFAULT;
+-
+-	ret = ssd1307fb_update_display(par);
+-	if (ret < 0)
+-		return ret;
+-
+-	*ppos += count;
+-
+-	return count;
+-}
+-
+ static int ssd1307fb_blank(int blank_mode, struct fb_info *info)
+ {
+ 	struct ssd1307fb_par *par = info->par;
+@@ -339,39 +302,29 @@ static int ssd1307fb_blank(int blank_mode, struct fb_info *info)
+ 		return ssd1307fb_write_cmd(par->client, SSD1307FB_DISPLAY_ON);
+ }
  
--	error = set_posix_acl(&init_user_ns, inode, ACL_TYPE_ACCESS,
--			      argp->acl_access);
--	if (error)
--		goto out_drop_lock;
--	error = set_posix_acl(&init_user_ns, inode, ACL_TYPE_DEFAULT,
--			      argp->acl_default);
-+	error = 0;
-+	if (argp->mask & NFS_ACL) {
-+		error = set_posix_acl(&init_user_ns, inode, ACL_TYPE_ACCESS,
-+				      argp->acl_access);
-+		if (error)
-+			goto out_drop_lock;
-+	}
-+	if (argp->mask & NFS_DFACL) {
-+		error = set_posix_acl(&init_user_ns, inode, ACL_TYPE_DEFAULT,
-+				      argp->acl_default);
-+	}
+-static void ssd1307fb_fillrect(struct fb_info *info, const struct fb_fillrect *rect)
++static void ssd1307fb_defio_damage_range(struct fb_info *info, off_t off, size_t len)
+ {
+ 	struct ssd1307fb_par *par = info->par;
+-	sys_fillrect(info, rect);
+-	ssd1307fb_update_rect(par, rect->dx, rect->dy, rect->width,
+-			      rect->height);
+-}
  
- out_drop_lock:
- 	inode_unlock(inode);
+-static void ssd1307fb_copyarea(struct fb_info *info, const struct fb_copyarea *area)
+-{
+-	struct ssd1307fb_par *par = info->par;
+-	sys_copyarea(info, area);
+-	ssd1307fb_update_rect(par, area->dx, area->dy, area->width,
+-			      area->height);
++	ssd1307fb_update_display(par);
+ }
+ 
+-static void ssd1307fb_imageblit(struct fb_info *info, const struct fb_image *image)
++static void ssd1307fb_defio_damage_area(struct fb_info *info, u32 x, u32 y,
++					u32 width, u32 height)
+ {
+ 	struct ssd1307fb_par *par = info->par;
+-	sys_imageblit(info, image);
+-	ssd1307fb_update_rect(par, image->dx, image->dy, image->width,
+-			      image->height);
++
++	ssd1307fb_update_rect(par, x, y, width, height);
+ }
+ 
++FB_GEN_DEFAULT_DEFERRED_SYS_OPS(ssd1307fb,
++				ssd1307fb_defio_damage_range,
++				ssd1307fb_defio_damage_area)
++
+ static const struct fb_ops ssd1307fb_ops = {
+ 	.owner		= THIS_MODULE,
+-	.fb_read	= fb_sys_read,
+-	.fb_write	= ssd1307fb_write,
++	FB_DEFAULT_DEFERRED_OPS(ssd1307fb),
+ 	.fb_blank	= ssd1307fb_blank,
+-	.fb_fillrect	= ssd1307fb_fillrect,
+-	.fb_copyarea	= ssd1307fb_copyarea,
+-	.fb_imageblit	= ssd1307fb_imageblit,
+-	.fb_mmap	= fb_deferred_io_mmap,
+ };
+ 
+ static void ssd1307fb_deferred_io(struct fb_info *info, struct list_head *pagereflist)
 -- 
 2.53.0
 
