@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214439;
-	b=WqINs/thn9TVSAeEImu8illGd5/H1S2fhyQP7rnfaqw6ozB4OLT8yRawna0j6Yq2z4MZ
-	 Bx4oKX0BOhAgfUbmZteqcU43xD4yuDfCUrc3QKkI7tmnuXys/OOoEDCPz1CjrY2MuQe3Z
-	 8dLHrZbjI73GM3Jh2Nd/idUkFSTB2yDPlXDodMrvzkF4PDExSU8NJ3vEN/zC1MQZCK2SB
-	 p7nWFFLs5x+jFiF9sFBgffcNNg3u/oFOOlBopOeoDQP7iMmUFtKe0kb0PwXxr/95gikHc
-	 NMygxeqdKMZ0Vb8wIpbnLcGe/HFTU4/hG7C5x8GTsZpdy87dgVMvCPjeLFSXbJuAR3Q==
+	t=1793214442;
+	b=NdIKEJ1sGJoCpun3qwh1OUYMkJ43hQT/J+jWmkBPUgionNs9GmI5ISB3ucsl2mxGQ6FJ
+	 9xOOsXUqhFWOM5r5CQFBaP5YHJuCwntFZ6Dq1dtj2oOEvEq+dv+JnnTrCZL+lOhWsLpJq
+	 0kGX7SQwkZ38dtYZwjMcTvuwd1eNBMtH52Yjf7w8XSq1Z6N1LbHhiIaIlCSlPfJ6EoS/Q
+	 OXtGZy2ts3afl09hr37ck0ReKq5LG39EdPulAGCCNf9HtsBGL9bSGF82Xnmrd858WnqJP
+	 AzEIomjv1mCbWhalty+tIxacrTxArgx3yb2BQWUJi0eVyauVZB30mznfO5f+77IOxjA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214439;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214442;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=c8ph5Luy/BlXSTA4dofc6ZL824UbkVUcM1+hvw8qPjw=;
-	b=3/ZqszK1o34oBRmYwwuhaXHFMUu584K8HbJ+6O1nf+FFJAOLqEykgImkxqSEPBXlEwDg
-	 waN/k6I9PGXYwddDRnuiiATxTErC96HdBHc5OIaR+az3GUo1AYiaSmn/GcPvukmKyTyfm
-	 /7b3O+Fqrt97E5fXPZ/mZqyDXw3q4+ApUAMIntlcSqDDUnad2tx6W09lCdVlo/uQ5cOXq
-	 xyMkBj4NBw8Bgu0bxP601h5odzFDYUSDQqZJFQdwvgqiro+WPBEEZg8KRTe1BfkQSwkh+
-	 7gUYbpS96tyMaBaIH5C44ORmAV7HA0I9yYzVqv1zO5GnQrshXhYdFVkcyQnbwlVkQNw==
+	bh=LBS9fDaEnAaViYjU0Ol9HwRS5D/wJVXU3uEj5X/9M9g=;
+	b=1JU4WMTaWKrcYoEs3oMZx0omt4fRmpWzZBq8kbM9I6q47cyQ/k2rMV4adn9dwdqK/hKi
+	 0fDJ9N3FJQYTJcaIA+77JCn8rq8XhJohTkDCOYbtxGgR8TmksYb02ykSMjTW2lrMBqHn2
+	 rC3q+A+WNcQuJ9vIGsKB9TdlNFUmeBT0Nny624jk4wV6y6YnuO8v1FsH3og3VfTw+7odx
+	 XuPZq68vM+1BMdWD+L3wMQjEUI8J+PIASmB2S7GIWXgDv4ZAwT1+FFGfDBovEWl11j1Zz
+	 dpFdxcpyrapNavm9jgCqVo1mqAcAGV0mkL2qeK8pIpwoOC8cpYQoA0Hs44Ho7BOBHtQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="o/HROjb9";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZyScV1W0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BE70606A31E;
-	Wed, 28 Oct 2026 19:07:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23B4B606A31E;
+	Wed, 28 Oct 2026 19:07:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=o/HROjb9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A9D11F01828;
-	Wed, 28 Oct 2026 19:07:18 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZyScV1W0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75B4E1F01825;
+	Wed, 28 Oct 2026 19:07:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214439;
-	bh=c8ph5Luy/BlXSTA4dofc6ZL824UbkVUcM1+hvw8qPjw=;
+	s=korg; t=1793214442;
+	bh=LBS9fDaEnAaViYjU0Ol9HwRS5D/wJVXU3uEj5X/9M9g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=o/HROjb9XWhJUyfQ/eLg5CX/xy8+lNjFi2zhxVRhIH4sw4uWnnVNXmgB/fbsUoGjC
-	 hXpyIgUYXbJw76h1k1horwEeCqJBGudewUIvDUuFiyo/6MdhQJjjtTeZq4B/rjftad
-	 qGG2VxnRmDXQOkIEe/6HPJRez59FnNvc25WJ+koo=
+	b=ZyScV1W07Zhr44oY5XJMKkZPqwB6DKdE/gsoN+91q9fGRGE5H1QJJvUQpx3ehgtWj
+	 b9thSfRSAizgbX61QrUQf0voKKbKqHZhsQY38d7K9J1+xFadk8J1gnWlzq55g0OSKW
+	 SU1KkQG5SXwShnZt1IM0Gg0K5a68QAN4Tqx+x1KQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	Juergen Gross <jgross@suse.com>,
+	"Daniel J. Ogorchock" <djogorchock@gmail.com>,
+	Silvan Jegen <s.jegen@gmail.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0816/1887] xen: fix UAF in dmabuf_exp_from_pages()
-Date: Wed, 28 Oct 2026 17:48:32 +0100
-Message-ID: <20261028170517.995274352@linuxfoundation.org>
+Subject: [PATCH 6.1 0807/1887] HID: nintendo: avoid bluetooth suspend/resume stalls
+Date: Wed, 28 Oct 2026 17:48:23 +0100
+Message-ID: <20261028170517.793340282@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,97 +69,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Al Viro <viro@zeniv.linux.org.uk>
+From: Daniel J. Ogorchock <djogorchock@gmail.com>
 
-[ Upstream commit 532c8b51b3a8676cbf533a291f8156774f30ea87 ]
+[ Upstream commit 4a0381080397e77792a5168069f174d3e56175ff ]
 
-[dma_buf_fd() fixes; no preferences regarding the tree it goes through -
-up to xen folks]
+Ensure we don't stall or panic the kernel when using bluetooth-connected
+controllers. This was reported as an issue on android devices using
+kernel 6.6 due to the resume hook which had been added for usb joycons.
 
-As soon as we'd inserted a file reference into descriptor table, another
-thread could close it.  That's fine for the case when all we are doing is
-returning that descriptor to userland (it's a race, but it's a userland
-race and there's nothing the kernel can do about it).  However, if we
-follow fd_install() with any kind of access to objects that would be
-destroyed on close (be it the struct file itself or anything destroyed
-by its ->release()), we have a UAF.
+First, set a new state value to JOYCON_CTLR_STATE_SUSPENDED in a
+newly-added nintendo_hid_suspend. This makes sure we will not stall out
+the kernel waiting for input reports during led classdev suspend. The
+stalls could happen if connectivity is unreliable or lost to the
+controller prior to suspend.
 
-dma_buf_fd() is a combination of reserving a descriptor and fd_install().
-gntdev dmabuf_exp_from_pages() calls it and then proceeds to access the
-objects destroyed on close - starting with gntdev_dmabuf itself.
+Second, since we lose connectivity during suspend, do not try
+joycon_init() for bluetooth controllers in the nintendo_hid_resume path.
 
-Fix that by doing reserving descriptor before anything else and do
-fd_install() only when everything had been set up.
+Tested via multiple suspend/resume flows when using the controller both
+in USB and bluetooth modes.
 
-Fixes: a240d6e42e28 ("xen/gntdev: Implement dma-buf export functionality")
-Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
-Acked-by: Juergen Gross <jgross@suse.com>
-Message-ID: <20250712050916.GY1880847@ZenIV>
-Signed-off-by: Juergen Gross <jgross@suse.com>
+Signed-off-by: Daniel J. Ogorchock <djogorchock@gmail.com>
+Reviewed-by: Silvan Jegen <s.jegen@gmail.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/xen/gntdev-dmabuf.c | 31 +++++++++++++------------------
- 1 file changed, 13 insertions(+), 18 deletions(-)
+ drivers/hid/hid-nintendo.c | 38 ++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 36 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/xen/gntdev-dmabuf.c b/drivers/xen/gntdev-dmabuf.c
-index 335451309566a..7df26330af424 100644
---- a/drivers/xen/gntdev-dmabuf.c
-+++ b/drivers/xen/gntdev-dmabuf.c
-@@ -357,8 +357,12 @@ struct gntdev_dmabuf_export_args {
- static int dmabuf_exp_from_pages(struct gntdev_dmabuf_export_args *args)
+diff --git a/drivers/hid/hid-nintendo.c b/drivers/hid/hid-nintendo.c
+index 44edc50be6e56..7a1bb4c876659 100644
+--- a/drivers/hid/hid-nintendo.c
++++ b/drivers/hid/hid-nintendo.c
+@@ -301,6 +301,7 @@ enum joycon_ctlr_state {
+ 	JOYCON_CTLR_STATE_INIT,
+ 	JOYCON_CTLR_STATE_READ,
+ 	JOYCON_CTLR_STATE_REMOVED,
++	JOYCON_CTLR_STATE_SUSPENDED,
+ };
+ 
+ /* Controller type received as part of device info */
+@@ -2341,14 +2342,46 @@ static void nintendo_hid_remove(struct hid_device *hdev)
+ 
+ static int nintendo_hid_resume(struct hid_device *hdev)
  {
- 	DEFINE_DMA_BUF_EXPORT_INFO(exp_info);
--	struct gntdev_dmabuf *gntdev_dmabuf;
--	int ret;
-+	struct gntdev_dmabuf *gntdev_dmabuf __free(kfree) = NULL;
-+	CLASS(get_unused_fd, ret)(O_CLOEXEC);
-+	int fd;
+-	int ret = joycon_init(hdev);
++	struct joycon_ctlr *ctlr = hid_get_drvdata(hdev);
++	int ret;
 +
-+	if (ret < 0)
-+		return ret;
++	hid_dbg(hdev, "resume\n");
++	if (hdev->bus != BUS_USB) {
++		hid_dbg(hdev, "no-op resume for bt ctlr\n");
++		ctlr->ctlr_state = JOYCON_CTLR_STATE_READ;
++		return 0;
++	}
  
- 	gntdev_dmabuf = kzalloc(sizeof(*gntdev_dmabuf), GFP_KERNEL);
- 	if (!gntdev_dmabuf)
-@@ -383,32 +387,23 @@ static int dmabuf_exp_from_pages(struct gntdev_dmabuf_export_args *args)
- 	exp_info.priv = gntdev_dmabuf;
++	ret = joycon_init(hdev);
+ 	if (ret)
+-		hid_err(hdev, "Failed to restore controller after resume");
++		hid_err(hdev,
++			"Failed to restore controller after resume: %d\n",
++			ret);
++	else
++		ctlr->ctlr_state = JOYCON_CTLR_STATE_READ;
  
- 	gntdev_dmabuf->dmabuf = dma_buf_export(&exp_info);
--	if (IS_ERR(gntdev_dmabuf->dmabuf)) {
--		ret = PTR_ERR(gntdev_dmabuf->dmabuf);
--		gntdev_dmabuf->dmabuf = NULL;
--		goto fail;
--	}
--
--	ret = dma_buf_fd(gntdev_dmabuf->dmabuf, O_CLOEXEC);
--	if (ret < 0)
--		goto fail;
-+	if (IS_ERR(gntdev_dmabuf->dmabuf))
-+		return PTR_ERR(gntdev_dmabuf->dmabuf);
- 
- 	gntdev_dmabuf->fd = ret;
- 	args->fd = ret;
- 
- 	pr_debug("Exporting DMA buffer with fd %d\n", ret);
- 
-+	get_file(gntdev_dmabuf->priv->filp);
- 	mutex_lock(&args->dmabuf_priv->lock);
- 	list_add(&gntdev_dmabuf->next, &args->dmabuf_priv->exp_list);
- 	mutex_unlock(&args->dmabuf_priv->lock);
--	get_file(gntdev_dmabuf->priv->filp);
--	return 0;
- 
--fail:
--	if (gntdev_dmabuf->dmabuf)
--		dma_buf_put(gntdev_dmabuf->dmabuf);
--	kfree(gntdev_dmabuf);
--	return ret;
-+	fd = ret;
-+	ret = -EBADF;
-+	fd_install(fd, no_free_ptr(gntdev_dmabuf)->dmabuf->file);
-+	return 0;
+ 	return ret;
  }
  
- static struct gntdev_grant_map *
++static int nintendo_hid_suspend(struct hid_device *hdev, pm_message_t message)
++{
++	struct joycon_ctlr *ctlr = hid_get_drvdata(hdev);
++
++	hid_dbg(hdev, "suspend: %d\n", message.event);
++	/*
++	 * Avoid any blocking loops in suspend/resume transitions.
++	 *
++	 * joycon_enforce_subcmd_rate() can result in repeated retries if for
++	 * whatever reason the controller stops providing input reports.
++	 *
++	 * This has been observed with bluetooth controllers which lose
++	 * connectivity prior to suspend (but not long enough to result in
++	 * complete disconnection).
++	 */
++	ctlr->ctlr_state = JOYCON_CTLR_STATE_SUSPENDED;
++	return 0;
++}
++
+ #endif
+ 
+ static const struct hid_device_id nintendo_hid_devices[] = {
+@@ -2375,6 +2408,7 @@ static struct hid_driver nintendo_hid_driver = {
+ 
+ #ifdef CONFIG_PM
+ 	.resume		= nintendo_hid_resume,
++	.suspend	= nintendo_hid_suspend,
+ #endif
+ };
+ module_hid_driver(nintendo_hid_driver);
 -- 
 2.53.0
 
