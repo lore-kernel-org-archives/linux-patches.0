@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215870;
-	b=FG2CBsxzhnwnttbxjSfU4gmeIq20smO47R61bc8bg+AhgkvLJ7s95Kuo2Ep6gMgahWZc
-	 5S+utOczS7T/sco1DBAZTeDvChwSD372n2mnui96XYzYOONlqwGC2mhfopKrUa1mdnyEU
-	 5SQ9cQbhvl2muSNFEaACRWnxsjBqnlA4x2Fzkfd4+2R5ZWmCV81qxrIhE4haNp8dIfSfz
-	 U8DaoDVUx/pyOf9T/LLARg42rMaRZkF4mG7NrchKCMwVvLpBG97h/YUu8CKHVQHfg7Zh5
-	 CKm1H9Trs7vrJICWgkPKkUbk2g9sXTgLxKpRiH1XixZJZHXfREhBtKdw6S81Sq72d8A==
+	t=1793215873;
+	b=lVsuhLmShDg3j8ClyijYS2YvWkiJ9nXVKCVtT3y6bLFEIhm7foHygz515Zjrz9ocDMlH
+	 Vm7YOiY28/zQuf0qsBve5d8VnABiSrjy4/v8L3KoPl6QPPxBHbPpgCuKw3Sbbr+SatYvG
+	 R9fFHMozMT6yFHYiEMgKi5ocLAhxt5/VLQiweR803eIwPJ7omgrd8J9o2uana5OUWSUPg
+	 oBUuXGYuLSF1PPG4KCSfJzXgqm1B7CCn3nf6BDhRszhT4Oe/ozSQcGrHrDIYStWkcF2Uj
+	 Mj+Ui/CeMhb2ilWLyK6al3mqNJGR4cKp6iJYJ1tE7MpCKtGdSPLSlanEiDJoH1Hmnlg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215870;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215873;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=DcbQirSaY0uPdo217HLZLNOw7Q1n7xv84EQFHrjRGI8=;
-	b=5cSqOkfLMPd2pwUe1agEQxAgm6oNlHV090/ySeHLU8vOY5AwLszdnEaI+WR/FiaRYHqd
-	 UXQG0c1C1fd3PvP6NCoiVDkq+7qcaAZJFnjBCSYzIdy8Fz8o8YLzleJCzSodwmd4eEQM1
-	 JBFxUWxqElVdxU95YFdetv/fL+GUcmXyGsA+JuDK7/44DnNVP2CeBWoE/u/4R+2KtSk86
-	 kOIxacTa2oQAYF3x9bgFeRAu6gSbYewPwgtmFfv7nGvH2Qfy+ob/0NLeeULTSxguUWdlE
-	 TAduBHrmYU3NoBYzSqixxAVTXvr//WphHIf/zjMiRIRZlihO6by8JzT4Bp421TE6Vog==
+	bh=R06OM5xcg6urDknaXThKgiqVcPYd8TXz4WV0+Hhrgh8=;
+	b=zknQSbgvLH/fvdXzVD6ZnJYlz4EHCv0NtocQ1IJSr4sL0aQALEtrN8nJUkitgMF/fKqR
+	 6kM1Gt5y5G3lFAegZph1qugQKK/ozviS/0mE9LdbF5NW8GOumqueEQE2BD7c4k5rFQhxn
+	 dzoZIzIUAJfwxZ1TmW5jvEfFy3tBjITjcn7Kk3eJoW7c7qXoJtuwtsj4Ca31yI7eZkBin
+	 M8xhLTdt0suLdc2Bo/V7BJLeWqWAtQA8oBJN3MRqL2mzWOMhoSG9zNXjYY2NGymoUyJ0y
+	 6jFlxYT4IiVsZuJHoEO7Wsgzmt/kyJmXmfOPlvYnU4W9+ifBCxYybOtojyKQNK51sIw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dKS8jv+3;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vpxAhAY5;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 568F2606A325;
-	Wed, 28 Oct 2026 19:31:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 332F5606A323;
+	Wed, 28 Oct 2026 19:31:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dKS8jv+3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB3861F01828;
-	Wed, 28 Oct 2026 19:31:09 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vpxAhAY5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83DF21F01828;
+	Wed, 28 Oct 2026 19:31:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215870;
-	bh=DcbQirSaY0uPdo217HLZLNOw7Q1n7xv84EQFHrjRGI8=;
+	s=korg; t=1793215873;
+	bh=R06OM5xcg6urDknaXThKgiqVcPYd8TXz4WV0+Hhrgh8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dKS8jv+3VsUS5Ht1xmmIK5ckHEb89I+glQFETBsI/6T8DTJQq4PJ27jxOY1oPY9Qk
-	 rRXYCanxxvdnETvHPv36hYTrR9BfbfOE5s/aTl9xjqgyjet4fdKvkAZaF9UEqG5itv
-	 sXcojIZcFiOuRZNi7hcbOcYDDF4TDrpEVh3DCznY=
+	b=vpxAhAY5FJkiK5g1//alrd9hNjS278G2s6f6/vC5w5FGgXLgOOTEEHj2A10sM1JBd
+	 W+4c0MTu397ch460sfJf31KEKbjvBHbdhlVGRiCnHN5+OknXOhEHTxvG9+0n51/IhU
+	 i9nBspDK41oS/jlIPApQ38lAqpiJUmcoKWADlEcM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -47,9 +47,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Bjorn Helgaas <bhelgaas@google.com>,
 	Dave Jiang <dave.jiang@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1359/1887] NTB: core: Add .get_dma_dev() callback to ntb_dev_ops
-Date: Wed, 28 Oct 2026 17:57:35 +0100
-Message-ID: <20261028170530.370043353@linuxfoundation.org>
+Subject: [PATCH 6.1 1360/1887] NTB: ntb_transport: Use ntb_get_dma_dev() for DMA buffers
+Date: Wed, 28 Oct 2026 17:57:36 +0100
+Message-ID: <20261028170530.392621751@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -73,89 +73,82 @@ Content-Transfer-Encoding: 8bit
 
 From: Koichiro Den <den@valinux.co.jp>
 
-[ Upstream commit 362a4549f2acfb03390ddfcd91041e65a11a739f ]
+[ Upstream commit 852b94ff92cbe26a0dbb15eed9474f5493767f3b ]
 
-Some NTB implementations are backed by a PCI function that is not the right
-struct device to use with DMA API helpers (e.g. due to IOMMU topology, or
-because the NTB device is virtual).
+ntb_transport currently uses ndev->pdev->dev for coherent allocations
+and frees.
 
-Add an optional .get_dma_dev() callback to struct ntb_dev_ops and provide a
-helper, ntb_get_dma_dev(), so NTB clients can use the appropriate struct
-device for DMA allocations and mappings.
-
-If the callback is not implemented, ntb_get_dma_dev() returns the current
-default (ntb->dev.parent). Drivers that implement .get_dma_dev() must
-return a non-NULL device.
+Switch the coherent buffer allocation/free paths to use
+ntb_get_dma_dev(), so ntb_transport can work with NTB implementations
+where the NTB PCI function is not the right device to use for DMA
+mappings.
 
 Suggested-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Koichiro Den <den@valinux.co.jp>
 Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-[bhelgaas: format doc]
 Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
 Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Link: https://patch.msgid.link/20260306031443.1911860-2-den@valinux.co.jp
+Link: https://patch.msgid.link/20260306031443.1911860-3-den@valinux.co.jp
 Stable-dep-of: da6d997ac556 ("ntb: Store original DMA address for future release")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/ntb.h | 24 ++++++++++++++++++++++++
- 1 file changed, 24 insertions(+)
+ drivers/ntb/ntb_transport.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/include/linux/ntb.h b/include/linux/ntb.h
-index 191b524e5c0dc..5c29e904a9c52 100644
---- a/include/linux/ntb.h
-+++ b/include/linux/ntb.h
-@@ -256,6 +256,7 @@ static inline int ntb_ctx_ops_is_valid(const struct ntb_ctx_ops *ops)
-  * @msg_clear_mask:	See ntb_msg_clear_mask().
-  * @msg_read:		See ntb_msg_read().
-  * @peer_msg_write:	See ntb_peer_msg_write().
-+ * @get_dma_dev:	See ntb_get_dma_dev().
-  */
- struct ntb_dev_ops {
- 	int (*port_number)(struct ntb_dev *ntb);
-@@ -329,6 +330,7 @@ struct ntb_dev_ops {
- 	int (*msg_clear_mask)(struct ntb_dev *ntb, u64 mask_bits);
- 	u32 (*msg_read)(struct ntb_dev *ntb, int *pidx, int midx);
- 	int (*peer_msg_write)(struct ntb_dev *ntb, int pidx, int midx, u32 msg);
-+	struct device *(*get_dma_dev)(struct ntb_dev *ntb);
- };
+diff --git a/drivers/ntb/ntb_transport.c b/drivers/ntb/ntb_transport.c
+index 6cd884d1d7eb9..8cb5439cf3b09 100644
+--- a/drivers/ntb/ntb_transport.c
++++ b/drivers/ntb/ntb_transport.c
+@@ -791,13 +791,13 @@ static void ntb_transport_msi_desc_changed(void *data)
+ static void ntb_free_mw(struct ntb_transport_ctx *nt, int num_mw)
+ {
+ 	struct ntb_transport_mw *mw = &nt->mw_vec[num_mw];
+-	struct pci_dev *pdev = nt->ndev->pdev;
++	struct device *dma_dev = ntb_get_dma_dev(nt->ndev);
  
- static inline int ntb_dev_ops_is_valid(const struct ntb_dev_ops *ops)
-@@ -391,6 +393,8 @@ static inline int ntb_dev_ops_is_valid(const struct ntb_dev_ops *ops)
- 		/* !ops->msg_clear_mask == !ops->msg_count	&& */
- 		!ops->msg_read == !ops->msg_count		&&
- 		!ops->peer_msg_write == !ops->msg_count		&&
-+
-+		/* ops->get_dma_dev is optional */
- 		1;
- }
+ 	if (!mw->virt_addr)
+ 		return;
  
-@@ -1563,6 +1567,26 @@ static inline int ntb_peer_msg_write(struct ntb_dev *ntb, int pidx, int midx,
- 	return ntb->ops->peer_msg_write(ntb, pidx, midx, msg);
- }
+ 	ntb_mw_clear_trans(nt->ndev, PIDX, num_mw);
+-	dma_free_coherent(&pdev->dev, mw->alloc_size,
++	dma_free_coherent(dma_dev, mw->alloc_size,
+ 			  mw->alloc_addr, mw->dma_addr);
+ 	mw->xlat_size = 0;
+ 	mw->buff_size = 0;
+@@ -867,7 +867,7 @@ static int ntb_set_mw(struct ntb_transport_ctx *nt, int num_mw,
+ 		      resource_size_t size)
+ {
+ 	struct ntb_transport_mw *mw = &nt->mw_vec[num_mw];
+-	struct pci_dev *pdev = nt->ndev->pdev;
++	struct device *dma_dev = ntb_get_dma_dev(nt->ndev);
+ 	size_t xlat_size, buff_size;
+ 	resource_size_t xlat_align;
+ 	resource_size_t xlat_align_size;
+@@ -896,12 +896,12 @@ static int ntb_set_mw(struct ntb_transport_ctx *nt, int num_mw,
+ 	mw->buff_size = buff_size;
+ 	mw->alloc_size = buff_size;
  
-+/**
-+ * ntb_get_dma_dev() - get the device to use for DMA allocations/mappings
-+ * @ntb:	NTB device context.
-+ *
-+ * Return a struct device suitable for DMA API allocations and mappings.
-+ * This is typically the parent of the NTB device, but may be overridden by a
-+ * driver by implementing .get_dma_dev().
-+ *
-+ * Drivers that implement .get_dma_dev() must return a non-NULL pointer.
-+ *
-+ * Return: device pointer to use for DMA operations.
-+ */
-+static inline struct device *ntb_get_dma_dev(struct ntb_dev *ntb)
-+{
-+	if (!ntb->ops->get_dma_dev)
-+		return ntb->dev.parent;
-+
-+	return ntb->ops->get_dma_dev(ntb);
-+}
-+
- /**
-  * ntb_peer_resource_idx() - get a resource index for a given peer idx
-  * @ntb:	NTB device context.
+-	rc = ntb_alloc_mw_buffer(mw, &pdev->dev, xlat_align);
++	rc = ntb_alloc_mw_buffer(mw, dma_dev, xlat_align);
+ 	if (rc) {
+ 		mw->alloc_size *= 2;
+-		rc = ntb_alloc_mw_buffer(mw, &pdev->dev, xlat_align);
++		rc = ntb_alloc_mw_buffer(mw, dma_dev, xlat_align);
+ 		if (rc) {
+-			dev_err(&pdev->dev,
++			dev_err(dma_dev,
+ 				"Unable to alloc aligned MW buff\n");
+ 			mw->xlat_size = 0;
+ 			mw->buff_size = 0;
+@@ -914,7 +914,7 @@ static int ntb_set_mw(struct ntb_transport_ctx *nt, int num_mw,
+ 	rc = ntb_mw_set_trans(nt->ndev, PIDX, num_mw, mw->dma_addr,
+ 			      mw->xlat_size);
+ 	if (rc) {
+-		dev_err(&pdev->dev, "Unable to set mw%d translation", num_mw);
++		dev_err(dma_dev, "Unable to set mw%d translation", num_mw);
+ 		ntb_free_mw(nt, num_mw);
+ 		return -EIO;
+ 	}
 -- 
 2.53.0
 
