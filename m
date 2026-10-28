@@ -1,54 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214085;
-	b=Qf/i3FsjUFvtnjYhgK41S63sNgmdkQqzB20O0wZXaUf0xGcJQgnl2MA38x8ltkPmG8Kd
-	 5XdGD9XShQr1NdWhxWe7h1EGB7PnnCbBLlH10NdyM8Q/Nm2fU71THZewnymvwU36i4gQS
-	 pNga6JYzmFZ3xFPTUL/kRee8PFqdF3Yy/BYDv8nwpuB0qJStwSq14XHhBJo6A817ugYO8
-	 S6e7txua5qb0CiyfKVkHDvZbYteB4pPbU8r3Mpf71jVkvTh4bnq35oc3YTX5YBRpJA2Hz
-	 b/wWMaiwtTzxErmOufCHJRTcYr7wWqU/LDk1QxTQfre6vwq5UqqJwXRkANGXJVzikNA==
+	t=1793214088;
+	b=Z38022iRdJWP5DZ3sNn9fhSYoGpbL9/u5ndVzcUixaeOMLuW5531vCKBvsTRsys0pDbF
+	 eXsbCdTZ7Y0r+Ftxf+xy5PzPXBZdBvx2fwCt83PzcnjhjlFaY+MLlGNPwWkvyMR0AbcJK
+	 /TnkT4G2mh4D0wNHuhzYEasWT6FtMSPcn5Q6n1pe5rA2mrN52M7rl7/sZcYq6NTrn4A1n
+	 /c1odBY2EZGcCr6bN+1SLADLJ2GavSLM4NkOyA3mAm+4lcfQ+jBQcQhCfIARFbdiYMQsJ
+	 yjYByzYhelWy/ahmyN0YBF4kglNw1WYfyDlfiYoJfh7uMqEzIAPQMtbQ4BmBC3gwd+g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214085;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214088;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=O7XQ9nAW0LQfC0GnURnaUnQhSpr+55TDLeWRH+ziiv8=;
-	b=IqWdTSvHqmHQl6QSbn+s29ts+/qmuI9yLADgYXieUuKbL+9DIAp+AjQ3fy+Sy8BB6tzq
-	 PU2ntVXem1G419KpQnbDK25apaZzsk3QDYTqfUi98NkeDg+RGFuwHDSHzC9LtcEqStTXk
-	 2MOVpuFdWKKMoy+lR3BiY7CxubKPs1apfL0rf2wDNO33IXXumoMVn4TlLABmBGlpdQEgo
-	 eyI3b9/B+AuXbY96GrKO4APrxFHI2+yXTMtJCfyWQ92BF3t039HL9jcjjI0eQ196/HXoL
-	 IkoVggc3pDqwlBpBBMXTBdNIk5LAaIvAbXulglxEtEZghc4NHKp6xuTm677uW7wCiHQ==
+	bh=Whs+Ef51SuVJzoJtowjipTv74h6wEsVMsTR5Dr1Oq4w=;
+	b=0/1K4NspfbLx26CBgDnNEkmYBVSnEleHTxmJYdESN/kjPAPZQip6S+cAXj44ZTpZGB2f
+	 ub/vsf4eh2d0g+Mek6VM7cCTU1Ym4qWhmsk0W5d1BZhwBlvEIHu4/sHTLk/z9vRe0Bx1e
+	 LHf4Or1i/Q/72EWOhN2z5Ajgz2RIFH6wY7OEFLzLAlE/OhfWrVWORQT6WxL0REKMnUGrg
+	 uNRZ+ePydeQ980TBh+OLcKQ7EgEJhFslkl1DGLexcXfBvdIGffYbWLH26uv7Ecej6EkWO
+	 OXoCyI0oY3jCXcB60ZmX0yBbr2zdTRBQt41f+txe7eaI+kAzeQ7GFIuxRCUo5KdVLfg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mhzaw9qs;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="x5e1/V0m";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3167D606A31D;
-	Wed, 28 Oct 2026 19:01:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A966606A31C;
+	Wed, 28 Oct 2026 19:01:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mhzaw9qs
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 848D11F01825;
-	Wed, 28 Oct 2026 19:01:24 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x5e1/V0m
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 599DC1F01825;
+	Wed, 28 Oct 2026 19:01:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214085;
-	bh=O7XQ9nAW0LQfC0GnURnaUnQhSpr+55TDLeWRH+ziiv8=;
+	s=korg; t=1793214087;
+	bh=Whs+Ef51SuVJzoJtowjipTv74h6wEsVMsTR5Dr1Oq4w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mhzaw9qsxFKi5loeU3mwUeQBctN0tybZcdKsyPUYt/xY5ukCmEUnjBLtSPIPyS7zQ
-	 zZC8ZUwC9k9Q9TFPA3k9g1OuNj6Blzo9o/hYUacb/lvwyw0/wKIKV6e4yzOAwF0Ue6
-	 soErHkIuUsW7OxKfeDR5gCv2cUId5xjkPucLQXQs=
+	b=x5e1/V0m6a/1KiRpOVHZuNP8CXw8dJS7EM7VeOcNa+XHF4XPquRYgVne3HLzjWs8r
+	 eGXDH37pTPO93FfWvaVXCgVR9Pdv8BcepMZFMONeb9kHXJ6OwyMSkDqMYLSIsIyqBd
+	 BWblBOMhkYwvSR6JWbg+riYZH3/rrKEjCZOXFxbo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wen Gu <guwen@linux.alibaba.com>,
-	Wenjia Zhang <wenjia@linux.ibm.com>,
-	Alexandra Winter <wintera@linux.ibm.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0717/1887] net/smc: initialize close_work early to avoid warning
-Date: Wed, 28 Oct 2026 17:46:53 +0100
-Message-ID: <20261028170515.751556315@linuxfoundation.org>
+Subject: [PATCH 6.1 0735/1887] wifi: rtw89: fix race between cancel_hw_scan and hw_scan completion
+Date: Wed, 28 Oct 2026 17:47:11 +0100
+Message-ID: <20261028170516.174127450@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -70,97 +67,127 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wen Gu <guwen@linux.alibaba.com>
+From: Ping-Ke Shih <pkshih@realtek.com>
 
-[ Upstream commit 0541db8ee32c09463a72d0987382b3a3336b0043 ]
+[ Upstream commit ba4bb0402c60e945c4c396c51f0acac3c3e3ea5c ]
 
-We encountered a warning that close_work was canceled before
-initialization.
+The rtwdev->scanning flag isn't protected by mutex originally, so
+cancel_hw_scan can pass the condition, but suddenly hw_scan completion
+unset the flag and calls ieee80211_scan_completed() that will free
+local->hw_scan_req. Then, cancel_hw_scan raises null-ptr-deref and
+use-after-free. Fix it by moving the check condition to where
+protected by mutex.
 
-  WARNING: CPU: 7 PID: 111103 at kernel/workqueue.c:3047 __flush_work+0x19e/0x1b0
-  Workqueue: events smc_lgr_terminate_work [smc]
-  RIP: 0010:__flush_work+0x19e/0x1b0
-  Call Trace:
-   ? __wake_up_common+0x7a/0x190
-   ? work_busy+0x80/0x80
-   __cancel_work_timer+0xe3/0x160
-   smc_close_cancel_work+0x1a/0x70 [smc]
-   smc_close_active_abort+0x207/0x360 [smc]
-   __smc_lgr_terminate.part.38+0xc8/0x180 [smc]
-   process_one_work+0x19e/0x340
-   worker_thread+0x30/0x370
-   ? process_one_work+0x340/0x340
-   kthread+0x117/0x130
-   ? __kthread_cancel_work+0x50/0x50
-   ret_from_fork+0x22/0x30
+ KASAN: null-ptr-deref in range [0x0000000000000088-0x000000000000008f]
+ CPU: 2 PID: 6922 Comm: kworker/2:2 Tainted: G           OE
+ Hardware name: LENOVO 2356AD1/2356AD1, BIOS G7ETB6WW (2.76 ) 09/10/2019
+ Workqueue: events cfg80211_conn_work [cfg80211]
+ RIP: 0010:rtw89_fw_h2c_scan_offload_be+0xc33/0x13c3 [rtw89_core]
+ Code: 00 45 89 6c 24 1c 0f 85 23 01 00 00 48 8b 85 20 ff ff ff 48 8d
+ RSP: 0018:ffff88811fd9f068 EFLAGS: 00010206
+ RAX: dffffc0000000000 RBX: ffff88811fd9f258 RCX: 0000000000000001
+ RDX: 0000000000000011 RSI: 0000000000000001 RDI: 0000000000000089
+ RBP: ffff88811fd9f170 R08: 0000000000000000 R09: 0000000000000000
+ R10: ffff88811fd9f108 R11: 0000000000000000 R12: ffff88810e47f960
+ R13: 0000000000000000 R14: 000000000000ffff R15: 0000000000000000
+ FS:  0000000000000000(0000) GS:ffff8881d6f00000(0000) knlGS:0000000000000000
+ CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+ CR2: 00007531dfca55b0 CR3: 00000001be296004 CR4: 00000000001706e0
+ Call Trace:
+  <TASK>
+  ? show_regs+0x61/0x73
+  ? __die_body+0x20/0x73
+  ? die_addr+0x4f/0x7b
+  ? exc_general_protection+0x191/0x1db
+  ? asm_exc_general_protection+0x27/0x30
+  ? rtw89_fw_h2c_scan_offload_be+0xc33/0x13c3 [rtw89_core]
+  ? rtw89_fw_h2c_scan_offload_be+0x458/0x13c3 [rtw89_core]
+  ? __pfx_rtw89_fw_h2c_scan_offload_be+0x10/0x10 [rtw89_core]
+  ? do_raw_spin_lock+0x75/0xdb
+  ? __pfx_do_raw_spin_lock+0x10/0x10
+  rtw89_hw_scan_offload+0xb5e/0xbf7 [rtw89_core]
+  ? _raw_spin_unlock+0xe/0x24
+  ? __mutex_lock.constprop.0+0x40c/0x471
+  ? __pfx_rtw89_hw_scan_offload+0x10/0x10 [rtw89_core]
+  ? __mutex_lock_slowpath+0x13/0x1f
+  ? mutex_lock+0xa2/0xdc
+  ? __pfx_mutex_lock+0x10/0x10
+  rtw89_hw_scan_abort+0x58/0xb7 [rtw89_core]
+  rtw89_ops_cancel_hw_scan+0x120/0x13b [rtw89_core]
+  ieee80211_scan_cancel+0x468/0x4d0 [mac80211]
+  ieee80211_prep_connection+0x858/0x899 [mac80211]
+  ieee80211_mgd_auth+0xbea/0xdde [mac80211]
+  ? __pfx_ieee80211_mgd_auth+0x10/0x10 [mac80211]
+  ? cfg80211_find_elem+0x15/0x29 [cfg80211]
+  ? is_bss+0x1b7/0x1d7 [cfg80211]
+  ieee80211_auth+0x18/0x27 [mac80211]
+  cfg80211_mlme_auth+0x3bb/0x3e7 [cfg80211]
+  cfg80211_conn_do_work+0x410/0xb81 [cfg80211]
+  ? __pfx_cfg80211_conn_do_work+0x10/0x10 [cfg80211]
+  ? __kasan_check_read+0x11/0x1f
+  ? psi_group_change+0x8bc/0x944
+  ? __kasan_check_write+0x14/0x22
+  ? mutex_lock+0x8e/0xdc
+  ? __pfx_mutex_lock+0x10/0x10
+  ? __pfx___radix_tree_lookup+0x10/0x10
+  cfg80211_conn_work+0x245/0x34d [cfg80211]
+  ? __pfx_cfg80211_conn_work+0x10/0x10 [cfg80211]
+  ? update_cfs_rq_load_avg+0x3bc/0x3d7
+  ? sched_clock_noinstr+0x9/0x1a
+  ? sched_clock+0x10/0x24
+  ? sched_clock_cpu+0x7e/0x42e
+  ? newidle_balance+0x796/0x937
+  ? __pfx_sched_clock_cpu+0x10/0x10
+  ? __pfx_newidle_balance+0x10/0x10
+  ? __kasan_check_read+0x11/0x1f
+  ? psi_group_change+0x8bc/0x944
+  ? _raw_spin_unlock+0xe/0x24
+  ? raw_spin_rq_unlock+0x47/0x54
+  ? raw_spin_rq_unlock_irq+0x9/0x1f
+  ? finish_task_switch.isra.0+0x347/0x586
+  ? __schedule+0x27bf/0x2892
+  ? mutex_unlock+0x80/0xd0
+  ? do_raw_spin_lock+0x75/0xdb
+  ? __pfx___schedule+0x10/0x10
+  process_scheduled_works+0x58c/0x821
+  worker_thread+0x4c7/0x586
+  ? __kasan_check_read+0x11/0x1f
+  kthread+0x285/0x294
+  ? __pfx_worker_thread+0x10/0x10
+  ? __pfx_kthread+0x10/0x10
+  ret_from_fork+0x29/0x6f
+  ? __pfx_kthread+0x10/0x10
+  ret_from_fork_asm+0x1b/0x30
+  </TASK>
 
-This is because when smc_close_cancel_work is triggered, e.g. the RDMA
-driver is rmmod and the LGR is terminated, the conn->close_work is
-flushed before initialization, resulting in WARN_ON(!work->func).
-
-__smc_lgr_terminate             | smc_connect_{rdma|ism}
--------------------------------------------------------------
-                                | smc_conn_create
-				| \- smc_lgr_register_conn
-for conn in lgr->conns_all      |
-\- smc_conn_kill                |
-   \- smc_close_active_abort    |
-      \- smc_close_cancel_work  |
-         \- cancel_work_sync    |
-            \- __flush_work     |
-	         (close_work)   |
-	                        | smc_close_init
-	                        | \- INIT_WORK(&close_work)
-
-So fix this by initializing close_work before establishing the
-connection.
-
-Fixes: 46c28dbd4c23 ("net/smc: no socket state changes in tasklet context")
-Fixes: 413498440e30 ("net/smc: add SMC-D support in af_smc")
-Signed-off-by: Wen Gu <guwen@linux.alibaba.com>
-Reviewed-by: Wenjia Zhang <wenjia@linux.ibm.com>
-Reviewed-by: Alexandra Winter <wintera@linux.ibm.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 895907779752 ("rtw89: 8852a: add ieee80211_ops::hw_scan")
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20250107114254.6769-1-pkshih@realtek.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/smc/af_smc.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/net/wireless/realtek/rtw89/mac80211.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/net/smc/af_smc.c b/net/smc/af_smc.c
-index 35cf30486916e..71ceaab9b6dd3 100644
---- a/net/smc/af_smc.c
-+++ b/net/smc/af_smc.c
-@@ -406,6 +406,7 @@ static struct sock *smc_sock_alloc(struct net *net, struct socket *sock,
- 	sk_refcnt_debug_inc(sk);
- 	mutex_init(&smc->clcsock_release_lock);
- 	smc_init_saved_callbacks(smc);
-+	smc_close_init(smc);
+diff --git a/drivers/net/wireless/realtek/rtw89/mac80211.c b/drivers/net/wireless/realtek/rtw89/mac80211.c
+index 2c3a72900b9fb..7827f90d5bdcf 100644
+--- a/drivers/net/wireless/realtek/rtw89/mac80211.c
++++ b/drivers/net/wireless/realtek/rtw89/mac80211.c
+@@ -808,11 +808,14 @@ static void rtw89_ops_cancel_hw_scan(struct ieee80211_hw *hw,
+ 	if (!RTW89_CHK_FW_FEATURE(SCAN_OFFLOAD, &rtwdev->fw))
+ 		return;
  
- 	return sk;
++	mutex_lock(&rtwdev->mutex);
++
+ 	if (!rtwdev->scanning)
+-		return;
++		goto out;
+ 
+-	mutex_lock(&rtwdev->mutex);
+ 	rtw89_hw_scan_abort(rtwdev, vif);
++
++out:
+ 	mutex_unlock(&rtwdev->mutex);
  }
-@@ -1277,7 +1278,6 @@ static int smc_connect_rdma(struct smc_sock *smc,
- 		goto connect_abort;
- 	}
- 
--	smc_close_init(smc);
- 	smc_rx_init(smc);
- 
- 	if (ini->first_contact_local) {
-@@ -1397,7 +1397,6 @@ static int smc_connect_ism(struct smc_sock *smc,
- 	}
- 
- 	smc_conn_save_peer_info(smc, aclc);
--	smc_close_init(smc);
- 	smc_rx_init(smc);
- 	smc_tx_init(smc);
- 
-@@ -2430,7 +2429,6 @@ static void smc_listen_work(struct work_struct *work)
- 		goto out_decl;
- 
- 	mutex_lock(&smc_server_lgr_pending);
--	smc_close_init(new_smc);
- 	smc_rx_init(new_smc);
- 	smc_tx_init(new_smc);
  
 -- 
 2.53.0
