@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793209834;
-	b=F/VZcxFPubx9pCoKx5nucA3shFBdlDGq7ZF251OsgsWu5E6tCVpJnZA4rjiXkKKHOa0j
-	 Y+nAROsfNg4BWUR1EaqKM1TnunijPX7FtnJi89J1nlrSCpKyD/qFljcxO3krJmm/AfeTT
-	 gmLoWRNwx7pmxEBsLQSHxmv/ulXaBySoNsqdQwX+vuTzrQHs/sCXdkTq16bixZYQtK/u9
-	 GOr61YLztpS8CFA1s7xlUMTEbT/YKPKYNice4F8bvwJQV9RRb+8dXPUVil2RMmujHOMh+
-	 TuFwfjqKKe58ShPFz91/+dl/KKL+RZq1s4yVdpQsGIR7RU3S0RhG3TZn7wMlAjbh46A==
+	t=1793209837;
+	b=2E1IzlSExhBsjAG/zJWU0sZbIZ48BJoibVpzHMjFwJhhU/dnVzbsLEVkqXZW7xAJsaoT
+	 Q67mW4m+/Knx7upkJYHH0BXNlhYLda8gmppD3ABS55WNLhxq47MJFjw0ISy79bHwiyJSz
+	 jmE5+l87v3Li+JA3ra3/s+NpPRZ6TERRcEh7WZnk/upa+FCokfsOZs5HHA1wjNSGo5SP6
+	 O2zVmmzA51CtimgXIX+nvM7oNzHg2+UPnQG/J44VbTDDrAVxypt+iGTG9IFzaYS8vcLsV
+	 GpaBVH8ohNt7e1tN91lK89LBdZGVPcpv4yp4+Jq17JRf+64QHseexx69q8OGTSMEBEQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793209834;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793209837;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=K9yrakk7b/4T8d24quldRLpL+1H8dkfQ6bVluxAQioA=;
-	b=a4EJvEi2JxJvPdqQjgW/IoFEspQF2sdiFadzq89IF6iD/Ii8o9/QKzw9IHn11aOu7j1f
-	 /wesEvZeTVFOligwVAuiCdT4ANX8Lrz5RMBUy4gtkRnDzZv08beszT2vgYgch+5PMy8qS
-	 m/rqMbHDZOPF7vPUudC+zxnoB5fTr7pc/WHwyJ4Y0+g0lfT0IoDjJny7uK/eFF3CrPhQz
-	 HG4W3KekcycRvl1C1NI8Skex9Thj/mlaJIPmPIN4Njis0UYT+K2cCuX/goHh6Hzou/rSQ
-	 3SmJPD3zPJgZ2UTDgE6rul4LiodLIa/C7o6k8tL1dBFOmCMHyrU8zhxJptxrJdbVdOQ==
+	bh=pVCXypWGC4nb1DX+VpQGupO1PD60rijpXAbjd2na/E0=;
+	b=pkxwKvAxzU/TcL92KLoKJyg5fsPBZD9zW/6m0P39bjjmApLTElWoU9oxGMTzoPRwkghL
+	 s4SwEW8OP2jpvjnWg2L8aiPbHA0aapxzQQ66gs/WWFjOBg8e706EsXmJoXjcPeKndqg5b
+	 a8qxwknLL9iItlw75ny/5gJAZS+BNs/+B3E5JgTn0DvvqXpbE+hZnjButHDHaF53zdkHV
+	 QpY6simCsLfgdjq8UC5PdQbp0Em/ckT5qKx0+k603XftQ+oJXRrwJ9vq8PFQUBpnuAzDo
+	 HmCtQU6aqbgB8+i6ZKaCYQX1PZV5DdkeLmuX5YOXTeHsFGQ04AiyoQhqhRCBN7LKZSQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MHEpoQ7i;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Mwm8vMv6;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16243606A31F;
-	Wed, 28 Oct 2026 17:50:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5EFA606A31A;
+	Wed, 28 Oct 2026 17:50:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MHEpoQ7i
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 657C11F01828;
-	Wed, 28 Oct 2026 17:50:33 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Mwm8vMv6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44E371F01825;
+	Wed, 28 Oct 2026 17:50:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793209833;
-	bh=K9yrakk7b/4T8d24quldRLpL+1H8dkfQ6bVluxAQioA=;
+	s=korg; t=1793209836;
+	bh=pVCXypWGC4nb1DX+VpQGupO1PD60rijpXAbjd2na/E0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MHEpoQ7iT3kLSLXKbLMv9U94Of1clWfMc9Kpoq9w3Z4NNBaOsZlsMe9+p9rkFmb6v
-	 /uJ9keEGY0ZP7/HKb5CbH+lIq8xFe79X/OFrZ6LoRTt/i70tXhyVRXY9d0Fzh9Q4HY
-	 fjNciv98TQiaR7sCUr/53Vki8IBssM17WKH0ZWIk=
+	b=Mwm8vMv65MU2PlNoNC0kCivbttzDxiooP7Qdrjf56tMflP91RSeQ/iIraAXt4Qc/y
+	 1w2hgWzKXM0Pb9QDXfh7jA+wCsGf5/InbslWZYPyOliNQIzfESrpS1hktutr5iXVwN
+	 ax7EmPH9BvuHmJnYJQFOzksC3g5Vrtra4H2lUXEg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.18 047/109] io_uring/io-wq: dont lose the signal that ends work
-Date: Wed, 28 Oct 2026 18:00:31 +0100
-Message-ID: <20261028165943.469472825@linuxfoundation.org>
+	Sashiko <sashiko-bot@kernel.org>,
+	Donggeun Yoo <donggeunyoo.kernel@gmail.com>,
+	Tom Zanussi <zanussi@kernel.org>,
+	Steven Rostedt <rostedt@goodmis.org>
+Subject: [PATCH 6.18 038/109] tracing: Save the event file instead of the compatible histogram
+Date: Wed, 28 Oct 2026 18:00:22 +0100
+Message-ID: <20261028165943.258096547@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165942.357251485@linuxfoundation.org>
 References: <20261028165942.357251485@linuxfoundation.org>
@@ -67,78 +69,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
 
-Commit 63c103279a95e82280092f2f4232e91e8117a252 upstream.
+commit d5c42664fc094899af9aae5300b27fe8fdb658ef upstream.
 
-When a thread exits, only its tracked requests are cancelled. Then its
-io-wq is torn down. io_wq_exit_workers() signals every worker, to get it
-out of an interruptible sleep, and waits for all of them to exit. Before
-they do, they go through the work that is left. Unbounded work is
-cancelled. Bounded work is run, as it is expected to end by itself.
+create_field_var_hist() creates a histogram on the matched event to
+supply a field variable, and records it on the target so it can be torn
+down later:
 
-Not all of it does. An open has no file yet, so it counts as bounded, and
-the open of a FIFO waits for the other end. That is what the signal is for.
-But the workers are signalled once, and a worker that hasn't started the
-work by then loses the signal:
+	hist_data = find_compatible_hist(target_hist_data, file);
+	...
+	/* Save the compatible histogram information */
+	var_hist->hist_data = hist_data;
 
-  io_wq_exit_workers()               io_worker_handle_work()
-    io_wq_worker_wake()
-      set TIF_NOTIFY_SIGNAL
-                                       io_assign_current_work()
-                                         io_run_task_work()
-                                           clear TIF_NOTIFY_SIGNAL
-                                       io_wq_submit_work()
-                                         fifo_open()
-                                           wait_for_partner()
-    wait_for_completion_timeout()
+hist_data is not the histogram it creates. It is one that was already
+there, whose keys the new one copies. The saved pointer has a single
+user, unregister_field_var_hists(), which runs when the target is
+removed:
 
-The thread never gets out of do_exit():
+	file = hist_data->field_var_hists[i]->hist_data->event_file;
 
-  IORING_OP_OPENAT of a FIFO without a writer, IOSQE_ASYNC
-  exit of the thread that has submitted it
+find_compatible_hist() matches on keys alone, so it can pick one with no
+variables of its own. check_var_refs() then returns false and the user
+can remove it while the target still points at it:
 
-hangs in more than 9 of 10 attempts (4 CPUs, KVM), until the process is
-killed.
+ BUG: KASAN: slab-use-after-free in event_hist_trigger_free+0x2b2/0x320
+ Read of size 8 at addr ffff8880093b90e0 by task init/1
 
-Set TIF_NOTIFY_SIGNAL for bounded work that is started with IO_WQ_BIT_EXIT
-set. The bit is set before the workers are signalled, and it is tested
-after the flag has been cleared, with clear_notify_signal() providing the
-barrier. So either the flag stays, or the bit is seen.
+ Freed by task 1:
+  kfree+0x154/0x420
+  event_hist_trigger_free+0x1d5/0x320
+  event_hist_trigger_parse+0x35f3/0x69e0
+  trigger_process_regex+0x1a6/0x250
 
-Work that is started while the io-wq exits is treated like work that is
-being run at that time: it isn't interrupted unless it waits
-interruptibly.
+Save the event file instead. It is all the dereference ever wanted, and
+it does not go away when the user removes a trigger.
 
-Fixes: afcc4015d1bf ("io-wq: provide an io_wq_put_and_exit() helper")
-Assisted-by: LLM
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Link: https://patch.msgid.link/20261015-b4-io-uring-fixes-v1-4-c1556f5d7bf5@toxicpanda.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Cc: stable@vger.kernel.org
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Link: https://lore.kernel.org/all/20260914110753.221E61F000FF@smtp.kernel.org/
+Link: https://patch.msgid.link/20260914234754.3676905-1-donggeunyoo.kernel@gmail.com
+Fixes: 02205a6752f2 ("tracing: Add support for 'field variables'")
+Signed-off-by: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
+Assisted-by: Claude:claude-fable-5
+Acked-by: Tom Zanussi <zanussi@kernel.org>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/io-wq.c |   10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ kernel/trace/trace_events_hist.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/io_uring/io-wq.c
-+++ b/io_uring/io-wq.c
-@@ -648,9 +648,15 @@ static void io_worker_handle_work(struct
+--- a/kernel/trace/trace_events_hist.c
++++ b/kernel/trace/trace_events_hist.c
+@@ -544,7 +544,7 @@ struct field_var {
+ };
  
- 			next_hashed = wq_next_work(work);
+ struct field_var_hist {
+-	struct hist_trigger_data	*hist_data;
++	struct trace_event_file		*file;
+ 	char				*cmd;
+ };
  
--			if (do_kill &&
--			    (work_flags & IO_WQ_WORK_UNBOUND))
-+			/*
-+			 * io_wq_exit_workers() signals us once, so that we
-+			 * don't sleep for ever. If that was before this work
-+			 * became the current one, the signal is gone.
-+			 */
-+			if (do_kill && (work_flags & IO_WQ_WORK_UNBOUND))
- 				atomic_or(IO_WQ_WORK_CANCEL, &work->flags);
-+			else if (do_kill)
-+				set_notify_signal(current);
- 			io_wq_submit_work(work);
- 			io_assign_current_work(worker, NULL);
+@@ -3098,8 +3098,8 @@ create_field_var_hist(struct hist_trigge
+ 		return ERR_PTR(-ENOMEM);
+ 	}
  
+-	/* Save the compatible histogram information */
+-	var_hist->hist_data = hist_data;
++	/* Needed to remove the histogram when the target goes away */
++	var_hist->file = file;
+ 
+ 	/* Create the new histogram with our variable */
+ 	ret = event_hist_trigger_parse(&trigger_hist_cmd, file,
+@@ -6327,7 +6327,7 @@ static void unregister_field_var_hists(s
+ 	int ret;
+ 
+ 	for (i = 0; i < hist_data->n_field_var_hists; i++) {
+-		file = hist_data->field_var_hists[i]->hist_data->event_file;
++		file = hist_data->field_var_hists[i]->file;
+ 		cmd = hist_data->field_var_hists[i]->cmd;
+ 		ret = event_hist_trigger_parse(&trigger_hist_cmd, file,
+ 					       "!hist", "hist", cmd);
 
 
