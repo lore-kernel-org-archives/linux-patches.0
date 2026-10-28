@@ -1,51 +1,61 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=99.33.87.210
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=185.128.210.58
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793228399;
-	b=lE7RIXkuTmAiHqdOSIcZleb049wPaa09xImFHM00JCtG+Tr+7QXLkfJYLQfAafxgot5V
-	 NkqXQFd4mCLJV9FbCx3d/i7tDaTeu4lN4Bt5X5WMh4HVfJRAZ3h5651lPutfrX0yGrIU/
-	 w+zHSPKTNxq3zZgaNAfCe3N+OZxf7GSnpr2K1cOyOFzbTPK+76UbzXl7UqnKyNYCl9Wjj
-	 pHAL9KZkcONZYIuFBV8UHheAPP+5mOYECiW4/W2Fw9dzENsaVB9znISkCQDlfnxD03iA0
-	 GLPDxLZL5g8495xLL+lq8SoUrHUn82YwWVoRtxIhDHd+RAXam+izTjH6QaKvrddeGrg==
+	t=1793228985;
+	b=t0mJE4gAiZyMa+k4iJX43YedL38aPD5VdUdkLavxgrDWforvOzcxFtoK8wtIiCsZJbVg
+	 7je7Bnvo3icGfWB0EtB9NOKA/kjJLM5Ezp4I7iz/PY/zgqGmeoE7HbxT2JkvpQGvOC+c5
+	 AzZKd96pI8hNEBN1Nc0W7N1APcf/3XIcphVqGytaBLGrm1L64VzhzYjdu31QmYxz2RpKu
+	 4oePI1qleVdBz9SMSa14MA9rURlSx4g7lUB4fCUA3bwX45WXhNu2cY/d5lEfQ8fHrWezZ
+	 8SU3Cgd45P1a2+u05Y/ykHOOx9kED0RZpNcSeu6rGsUo5LPG5iRX5sqY2piYp3DeI8g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793228399;
-	h=DMARC-Filter:Received:Date:From:X-X-Sender:To:cc:Subject:In-Reply-To:
-	 Message-ID:References:MIME-Version:Content-Type;
-	bh=ZnYCK34Xz7IZYtTASnBAQeSR2jtkJfs0D+rbso7dODE=;
-	b=zWMZMM7dCo2WCsR+8LOqKNm8bakJwggrOJCCnSeR28IVLSAafSDl5zCPlfE/WpI7IkX0
-	 ZeVMxIr+uF9cXRdDOXtsgn1w0WymykmYiWrEP8sVnmFtR0e7dMLeu6LnjmkhcAsqwpOYZ
-	 vspoRwDQ+DBx81jsnjlmKwXJWzJgCGYJhuR6l3Qc/8ggXTWZni+DTzXx7GZpv5U7/iipJ
-	 nj2DqAtiSy7d2isBIw3Ea11N2r3S/PpwN9wuUTp6VOWZ6cfUpQ3h+jRi3gOQ7YlLhDHDo
-	 El0ET2WPyN0ctANM10NeZEg6zQpHM/2fJGA+8RHtli8/yfYNDuHu7f5dusnGEOV/N6Q==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793228985;
+	h=DMARC-Filter:From:To:Cc:Subject:Date:Message-ID:X-Mailer:In-Reply-To:
+	 References:MIME-Version:Content-Transfer-Encoding;
+	bh=zgMKlO6hJ7BlOiBhlUKcx1eBr3Vryr4lwGePzp9S/W4=;
+	b=hI+xu11VWB4dwSPynsCatjj/j5Ro/o0uLS4f8KA1emFIgZSq/GmNBlzMVOAhlweXUqBC
+	 lSJUCOSbxz1HBlZ/Kxq/9O5emBdLzNl/eVoEkAwE6UeXvUqMYym9JHF6K66iVPTd4CxQ8
+	 ++4K/2/D6fdvhsG+arL0XT6ZrL/+7/UFIIpNJ1aAIT3xBQEreAD0ljmlMxv8Emu47VDRo
+	 6vtrD3mCl4dabkK0xfE+Auu2aNiE4ZTNMPO6rsj3fnvnjFYzt1y94+hBlW0qmgHkdmYBS
+	 6wXH44Q/C/nUx2l0pIGVd9kDKdy184xgJpVBFCKTSSJEVEcFhVREg6OUquEcY1KwSFw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=none header.from=aaazen.com;
-	spf=pass smtp.mailfrom=aaazen.com;
-	arc=none smtp.remote-ip=99.33.87.210
-Received: from mail.aaazen.com (99-33-87-210.lightspeed.sntcca.sbcglobal.net [99.33.87.210])
-	(using TLSv1.3 with cipher TLS_CHACHA20_POLY1305_SHA256 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dmarc=none header.from=librecast.net;
+	spf=pass smtp.mailfrom=librecast.net;
+	arc=none smtp.remote-ip=185.128.210.58
+Received: from bregans-0.gladserv.net (bregans-0.gladserv.net [185.128.210.58])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDCB2606A31C
-	for <patches@lists.linux.dev>; Wed, 28 Oct 2026 22:59:58 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org DDCB2606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=aaazen.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aaazen.com
-Received: from localhost (localhost [127.0.0.1])
-	by thursday.test (OpenSMTPD) with ESMTP id aba075cc;
-	Wed, 28 Oct 2026 15:59:47 -0700 (PDT)
-Date: Wed, 28 Oct 2026 15:59:47 -0700 (PDT)
-From: Richard Narron <richard@aaazen.com>
-X-X-Sender: richard@thursday.test
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-    linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-    akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-    patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@nabladev.com, 
-    jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-    rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org, 
-    achill@achill.org, sr@sladewatkins.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74611606A31A;
+	Wed, 28 Oct 2026 23:09:43 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 74611606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=librecast.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=librecast.net
+From: Brett A C Sheffield <bacs@librecast.net>
+To: gregkh@linuxfoundation.org
+Cc: stable@vger.kernel.org,
+	patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@nabladev.com,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	rwarsow@gmx.de,
+	conor@kernel.org,
+	hargar@microsoft.com,
+	broonie@kernel.org,
+	achill@achill.org,
+	sr@sladewatkins.com,
+	Brett A C Sheffield <bacs@librecast.net>
 Subject: Re: [PATCH 5.15 000/571] 5.15.224-rc1 review
+Date: Wed, 28 Oct 2026 23:09:27 +0000
+Message-ID: <20261028230930.128308-1-bacs@librecast.net>
+X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
-Message-ID: <6b5e22d-fe0-9171-9e70-8e1016cb82a0@aaazen.com>
 References: <20261028170008.009143722@linuxfoundation.org>
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -56,33 +66,14 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 8bit
 
-On Wed, 28 Oct 2026, Greg Kroah-Hartman wrote:
+# Librecast Test Results
 
-> This is the start of the stable review cycle for the 5.15.224 release.
-> There are 571 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Fri, 30 Oct 2026 16:59:22 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.224-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
->
-> -------------
+044/044 [ OK ] liblcrq
+010/010 [ OK ] libmld
+120/120 [ OK ] liblibrecast
 
-Tested on AMD   amd64 12-core and 4-core and x86 1-core systems
-and    on Intel x86-64 4-core and x86 1-core systems
+CPU/kernel: Linux auntie 5.15.224-rc1-00572-gb52fab5d514d #1 SMP Wed Oct 28 22:59:51 -00 2026 x86_64 AMD Ryzen 9 9950X 16-Core Processor AuthenticAMD GNU/Linux
 
-Tested-by: Richard Narron <richard@aaazen.com>
-
-
+Tested-by: Brett A C Sheffield <bacs@librecast.net>
