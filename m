@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793209597;
-	b=ngQvgCnXCvUip0kkU+q6cL+gLGcd3gL/8iPB1K7fKPIRK6W9bMDyjAwY8vcCUfkBVZwh
-	 MBcG+YOmohj0rglr/YHNIjsvdWKrxuMcv5tpHz124AGzzgST2PAqpyqYLJiV4OFpWqdA3
-	 qoYHBBNehMBDWcJcM9WqGTB/en+fUXBly9GGYQfCRxtzNX38cPNOk13nbvcltr8Uy4i93
-	 HxDd/ndH+wTbBwQsX5bCLlr2bGFxhza+mHYvw4mx6/O12z+4GtkM+MLN+y8njjk9bpHW+
-	 H6PimB1pZCv0Sbe8OwZ0AN7/QZtjBAPlb1ZFse3rWsv7Fvwhzi68R1kIT3cMbBBecug==
+	t=1793209600;
+	b=RaLI1S0n5rxErUiD2TFoeKo6mSg2RNnt7CULrVLDpV7AjZiqRhw0ymB2IwjltV4f5g62
+	 uF2rfi8LyiGYzT7AXdIOEO5jrvXyQry0KxdTGgyc+94/iSSJlkpS22EXHY6783yy6yzP/
+	 1XHOkTk6zAzwISReena3LGI/wnTNCjmPysnwmfbGbgcbwKALKx/RQBFscGKEVhrQ0X+of
+	 fVjIXUSyKApH03YzSm7Fnng/A/cEAuHp03ZQg8METH2aBxplHZrSlNLK7owSpT6zLPK3s
+	 jizsm5TLQqK6OcoGLHsvfrADFsGbNuaV0SJOA2xrk47bJJxISMOzvLf8LBUWIUKYbRQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793209597;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793209600;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=89w/Vszjw0bnYRmzDveceZ3mabGoXDoy6wbBG7jSr7w=;
-	b=qwgTNZalEqdKSwZqB+h4uKYbop3/qUdPSwl6U+HEActRJjvNhnx8CvYHnzpmtBmOMTbJ
-	 TCbUT6YgFg/KsJgEQvatform3mxZwfUB3UrkojA12W2XkFyzd03flB+u/h4CMdEmoG4np
-	 DBV7EXeJbl1oDOQ4ZTKS4xgRoCyAepvcv5d4Ck4iYXBhYdxMzdyU7HKeHyM+Zw+UVkm+H
-	 gxr5JQEUFuxOiNjnCpGrwJwoh0dh7QzdIpG8UYnAz5ltsODDZGVDNHL82Jx0QzSqhTIPT
-	 c8DVZX7WRiP63MzKt4fg8Yxz+QnEZ1PngsPvxGpjcshIwMif/7TLwClrh9F++uwfkLA==
+	bh=dMuyfrpxff7rbM/3F99YRFSX9EQcQxzY8a/aSEkGjc8=;
+	b=fBbfQCsrU2hPnRsWh6SFmviLjJIjq1Q2LH/WRp689ttUPBUhOqG8krRxOZU3rfXCQ5/c
+	 F3t/DRVBCFPxSkK2bHGTM1doNL+7icI8Idshy39tcESvdLpadwZVzuT7IB9JchjY+0rF6
+	 JhMrVP9Ksi3GVEhH3cJliULrruo/k6TeWqXHLfjveiF+ueuIXT2PAnh0y1u/7Cds9S6Zm
+	 MDhkJ9b1BrWzN4WkVbNv5NdWEVbbeQRzejO092sTqdN+llxEbnpwnqwqYmUlVEwaX/Hp6
+	 oZntxI6UfAmU46xGyeEi8VHyO/yCtkGS5b1xGOqIEHEWfrnkubRtliBI5iR/MmGpo7g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IMbZ1XoJ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QRMPKmmK;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13337606A321;
-	Wed, 28 Oct 2026 17:46:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DED8E606A322;
+	Wed, 28 Oct 2026 17:46:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IMbZ1XoJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 628941F01825;
-	Wed, 28 Oct 2026 17:46:36 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QRMPKmmK
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EA191F01825;
+	Wed, 28 Oct 2026 17:46:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793209596;
-	bh=89w/Vszjw0bnYRmzDveceZ3mabGoXDoy6wbBG7jSr7w=;
+	s=korg; t=1793209599;
+	bh=dMuyfrpxff7rbM/3F99YRFSX9EQcQxzY8a/aSEkGjc8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IMbZ1XoJCcI7fZzau3n2F5ail7awapfER5mqx7RaO05g99e337N1tm+Z3Tvq/l/Pv
-	 8W1fvfppwK4JqtVSD5CF1PUAESMPOM+OOZnBvR83PpMC3Uai16uyKj2iEiJYZKiUIn
-	 0WvjUEystknU5Pdi+g8X/9jUOfosliRFb35IPpas=
+	b=QRMPKmmKGC4dk/kcbSiLzgTbnlU+cEygY2Q7Rh4NoDPxZFCkiNJU71nVt2pg6NrzA
+	 Oa907ttMOllctyGN9ZHXju5tEnE3fOchqJz1tj65qdfbG8sxpKLrWqAr8jH+rklPsm
+	 DjspA9wsOWHD9W7nIVQ+cUd110rzQdnwHGqHD8LM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Mashiro Chen <mashiro.chen@mailbox.org>,
 	Bernard Pidoux <bernard.f6bvp@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 011/109] ax25: check frame length in ax25_decode() and ax25_rx_iframe()
-Date: Wed, 28 Oct 2026 17:59:55 +0100
-Message-ID: <20261028165942.629182451@linuxfoundation.org>
+Subject: [PATCH 6.18 012/109] net: ax25: fix integer overflow in ax25_rx_fragment()
+Date: Wed, 28 Oct 2026 17:59:56 +0100
+Message-ID: <20261028165942.651520108@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165942.357251485@linuxfoundation.org>
 References: <20261028165942.357251485@linuxfoundation.org>
@@ -67,74 +68,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bernard Pidoux <bernard.f6bvp@gmail.com>
+From: Mashiro Chen <mashiro.chen@mailbox.org>
 
-Two more reads on the receive path assume bytes that a short frame
-does not have:
+ax25_rx_fragment() accumulates fragment lengths into ax25_cb->fraglen,
+which is an unsigned short. When the total exceeds 65535, fraglen wraps
+around to a small value. The subsequent alloc_skb(fraglen) allocates a
+too-small buffer, and skb_put() in the copy loop triggers skb_over_panic().
 
-- On a connection set up with SABME (modulo 128), ax25_decode() reads
-  a two-byte control field for I and S frames (frame[1]) without
-  checking that the second byte is there.
-- ax25_rx_iframe() reads the PID byte of an I frame without checking
-  that anything is left after the control field, so an I frame made of
-  its control field alone is dispatched on a byte past its end. The
-  same function also receives reassembled segments.
+Add pskb_may_pull(skb, 1) at function entry to ensure the segmentation
+header byte is in the linear data area before dereferencing skb->data.
+This also rejects zero-length skbs, which the original code did not
+check for.
 
-Return AX25_ILLEGAL from ax25_decode() when the control field is
-incomplete, which the state machines already handle as a malformed
-frame, and drop an I frame that has no PID byte. The first check in
-ax25_decode() also covers an empty frame on its own, independently of
-the length check proposed for ax25_rcv().
+Two issues in the overflow error path are also fixed:
+First, the current skb, after skb_pull(skb, 1), is neither enqueued
+nor freed before returning 1, leaking it. Add kfree_skb(skb) before
+the return.
+Second, ax25->fraglen is not reset after skb_queue_purge(). Add
+ax25->fraglen = 0 to restore a consistent state.
 
 Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Mashiro Chen <mashiro.chen@mailbox.org>
+[F6BVP: v4 as posted on netdev; it was set aside only because the
+subsystem was being removed from the kernel. Applied unchanged.]
 Signed-off-by: Bernard Pidoux <bernard.f6bvp@gmail.com>
-(cherry picked from commit 5b010290c0e627fd09b92eb8d690f0726d7cfe7c)
+(cherry picked from commit 0674e0f082be20adb8e7eb03718d85e71d8b05de)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ax25/ax25_in.c   | 4 ++++
- net/ax25/ax25_subr.c | 7 +++++++
- 2 files changed, 11 insertions(+)
+ net/ax25/ax25_in.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
 diff --git a/net/ax25/ax25_in.c b/net/ax25/ax25_in.c
-index f105e638611fa..217f9a9b07631 100644
+index 217f9a9b07631..18e15c3c26e46 100644
 --- a/net/ax25/ax25_in.c
 +++ b/net/ax25/ax25_in.c
-@@ -104,6 +104,10 @@ int ax25_rx_iframe(ax25_cb *ax25, struct sk_buff *skb)
+@@ -35,12 +35,22 @@ static int ax25_rx_fragment(ax25_cb *ax25, struct sk_buff *skb)
+ {
+ 	struct sk_buff *skbn, *skbo;
  
- 	if (skb == NULL) return 0;
- 
-+	/* An I frame must at least carry its PID byte */
-+	if (skb->len < 1)
++	if (!pskb_may_pull(skb, 1))
 +		return 0;
 +
- 	ax25_start_idletimer(ax25);
+ 	if (ax25->fragno != 0) {
+ 		if (!(*skb->data & AX25_SEG_FIRST)) {
+ 			if ((ax25->fragno - 1) == (*skb->data & AX25_SEG_REM)) {
+ 				/* Enqueue fragment */
+ 				ax25->fragno = *skb->data & AX25_SEG_REM;
+ 				skb_pull(skb, 1);	/* skip fragno */
++				if (ax25->fraglen + skb->len > USHRT_MAX) {
++					kfree_skb(skb);
++					skb_queue_purge(&ax25->frag_queue);
++					ax25->fragno = 0;
++					ax25->fraglen = 0;
++					return 1;
++				}
+ 				ax25->fraglen += skb->len;
+ 				skb_queue_tail(&ax25->frag_queue, skb);
  
- 	pid = *skb->data;
-diff --git a/net/ax25/ax25_subr.c b/net/ax25/ax25_subr.c
-index bff4b203a893b..12c027beadb69 100644
---- a/net/ax25/ax25_subr.c
-+++ b/net/ax25/ax25_subr.c
-@@ -102,6 +102,9 @@ int ax25_decode(ax25_cb *ax25, struct sk_buff *skb, int *ns, int *nr, int *pf)
- 	frame = skb->data;
- 	*ns = *nr = *pf = 0;
- 
-+	if (skb->len < 1)
-+		return frametype;
-+
- 	if (ax25->modulus == AX25_MODULUS) {
- 		if ((frame[0] & AX25_S) == 0) {
- 			frametype = AX25_I;			/* I frame - carries NR/NS/PF */
-@@ -118,6 +121,10 @@ int ax25_decode(ax25_cb *ax25, struct sk_buff *skb, int *ns, int *nr, int *pf)
- 		}
- 		skb_pull(skb, 1);
- 	} else {
-+		/* I and S frames carry a two-byte control field here */
-+		if ((frame[0] & AX25_U) != 3 && skb->len < 2)
-+			return frametype;
-+
- 		if ((frame[0] & AX25_S) == 0) {
- 			frametype = AX25_I;			/* I frame - carries NR/NS/PF */
- 			*ns = (frame[0] >> 1) & 0x7F;
 -- 
 2.53.0
 
