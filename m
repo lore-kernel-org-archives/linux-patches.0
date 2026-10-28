@@ -1,53 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214281;
-	b=qYC23V9NkzvOvCnJA4cQCy/lcJr5s4F+SYu4RZ1NIj0N6sdqBfII+Qz9nRzuXovy2UfA
-	 liFo6mhA/x+6AHy2bbQXO3uP52/BWBecynYkIqdhMRwr5U1B5RDaXnJL34lLqI9t8QYzn
-	 hzVhdqhO05CEMNbASAyS+QfwOquPXBodP563efDoE90Ax0Eozgxoh8UC9+HuQCaQpOSz3
-	 OJZgfpDVjikOFHAxPvjbwcXT2Pc11KwRNeWalrrq2GjxWZbETEIN0lzk8Y2SJO2XfZran
-	 CIted2urknoCfMmPMa0sTaJgx+n9ryX+jhX8vVxBqpLmD4RmQwreHut9bITCh6s4+Xg==
+	t=1793214284;
+	b=Rk1QUSC0BP2BFHbzb9s4OEsAAOWaS6ohUoyikxVzbquH+ckqu1A79UFSAXEeQvx0huR/
+	 QnR45gIQArDWXNpI8nrhMBRWiJZrirMXv2p0bQpqUWfbG8aBftVN33c7zdQEj+obpwjd6
+	 1nDyoU56BCa+qIbcF2A0ThGYtRjUBQhd8hVo5rWRn/rgbsLoeMBpvi0Kv0xwAazU6qRIg
+	 RQ5e84+MHWIb5hb7rZYEa4zgdAy4+goRGKDwd0+B56E0KHAkZIZH/msW3GK0mu3AEqzLz
+	 CKR9NWhPhO10ashniqLCu+RP+Vw+9vEOJYGOCcOiyXQReamodUtk6dkUgo+7xjydyWQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214281;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214284;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=xDmBGkz14Os4GuiNBXrlUL26vNBGF4KODWRHDbR9O7I=;
-	b=UAsXrxF/jNlLCt69/5Apb2dgizrxaujRDIvA7zN1vy5wtp+KAWclMRpQ0HMuLFvOkB1r
-	 cPefdA7O7Mvs+5h8/kUFpEhQmfKIq/ym6iu6TSzhSoxqbUZUhjwr6O4wzzoRlRXQHOtaD
-	 RMymM0yHzaEz6AsWFAcxNVUzlW1xpnfOMHX3J24+u3u7u/pAx60rYM6XQrSotRF9+AajD
-	 cDAMuv+kfumHTkA8SgFUvq/n6LBKXFYyP8WzOIk1HLV0sVOO1/JvoUbsrKT0/NXBaMbCn
-	 kiM/j+JhZcaE+aD/Di0q/xA+zBn3yX6QTUsukEcHlxXA8nMbRpnkF/U07rdmFFeH1zA==
+	bh=sItRB8bz7JKzwbZQTI6G/gRO6RyVNhf7u5juxz5Y+uI=;
+	b=pSFBBa2vaXLlBnpOF0GviUktCQIcTnKFQ6vd8C6OeHho4zvM7qkXgUaVYRPfmp6016en
+	 Vg9W8zVCvUvyFnk0EgEYtqN+sTyhebYp7j+IH8sKPydh+zh8DjStdTPGfbzytXaC6b2PU
+	 smyQdwi3U6ug/vP92hAGjryiH8VnUIyaafaiINxMoDHIM1wkGbqM1ylFT7owmjT2cJjEn
+	 VbKMVszZ3ttjRkdLLiEHkOTz/HPML6cBPq2sh1Iw/Ow8u9K8cLhRTqAjskdV9XO2mw3O0
+	 1pjt/zAZeBRuPH2GoNRfJm5al64ywDbGEVdgxpOFrz8/eFHJ7zwo6qR/jOtrEztGWHQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="QeHUBN/L";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=o0tjmAAI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CD22606A33A;
-	Wed, 28 Oct 2026 19:04:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C836606A33A;
+	Wed, 28 Oct 2026 19:04:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QeHUBN/L
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D4091F01825;
-	Wed, 28 Oct 2026 19:04:40 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=o0tjmAAI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62B041F01825;
+	Wed, 28 Oct 2026 19:04:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214281;
-	bh=xDmBGkz14Os4GuiNBXrlUL26vNBGF4KODWRHDbR9O7I=;
+	s=korg; t=1793214283;
+	bh=sItRB8bz7JKzwbZQTI6G/gRO6RyVNhf7u5juxz5Y+uI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QeHUBN/Lpx+Kn2L91vP9ruWQoxeucr6k4xN0pbn0fzotNoVDS1cfc2tO2+d2gtMwv
-	 J6+kE+rlLW0sErDZOYDh+6YTFI4G0Q/Am3SQYsFIVMb1ezzBhijTmcP5dBFwvUmas+
-	 gL5bxekHqC3+px1D8utZrskJaLhhvJfD2fb0SZVY=
+	b=o0tjmAAIUvxrXG/OtsVorMMkZHEaaU4WdkNGOFey9IXoYQj9L7f9DT3vLW0EnATYu
+	 YtiobMetmhC4HvCcY8dvJ25OCU3fZ8fiZwkQi9gOaFU9EKPI0QTkx36b0q6ylnaFlG
+	 wobxrdanFLbrcfowUdTmcaS9tND6BjNWtSWXlvAs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+7bfa4b72c6a5da128d32@syzkaller.appspotmail.com,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	syzbot+e74b94fe601ab9552d69@syzkaller.appspotmail.com,
+	Ben Dooks <ben.dooks@codethink.co.uk>,
+	Cyril Bur <cyrilbur@tenstorrent.com>,
+	Alexandre Ghiti <alexghiti@rivosinc.com>,
+	Deepak Gupta <debug@rivosinc.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0801/1887] bridge: mcast: Fix use-after-free during router port configuration
-Date: Wed, 28 Oct 2026 17:48:17 +0100
-Message-ID: <20261028170517.657760868@linuxfoundation.org>
+Subject: [PATCH 6.1 0802/1887] riscv: save the SR_SUM status over switches
+Date: Wed, 28 Oct 2026 17:48:18 +0100
+Message-ID: <20261028170517.680138566@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,181 +72,149 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Ben Dooks <ben.dooks@codethink.co.uk>
 
-[ Upstream commit 7544f3f5b0b58c396f374d060898b5939da31709 ]
+[ Upstream commit 788aa64c01f1262310b4c1fb827a36df170d86ea ]
 
-The bridge maintains a global list of ports behind which a multicast
-router resides. The list is consulted during forwarding to ensure
-multicast packets are forwarded to these ports even if the ports are not
-member in the matching MDB entry.
+When threads/tasks are switched we need to ensure the old execution's
+SR_SUM state is saved and the new thread has the old SR_SUM state
+restored.
 
-When per-VLAN multicast snooping is enabled, the per-port multicast
-context is disabled on each port and the port is removed from the global
-router port list:
+The issue was seen under heavy load especially with the syz-stress tool
+running, with crashes as follows in schedule_tail:
 
- # ip link add name br1 up type bridge vlan_filtering 1 mcast_snooping 1
- # ip link add name dummy1 up master br1 type dummy
- # ip link set dev dummy1 type bridge_slave mcast_router 2
- $ bridge -d mdb show | grep router
- router ports on br1: dummy1
- # ip link set dev br1 type bridge mcast_vlan_snooping 1
- $ bridge -d mdb show | grep router
-
-However, the port can be re-added to the global list even when per-VLAN
-multicast snooping is enabled:
-
- # ip link set dev dummy1 type bridge_slave mcast_router 0
- # ip link set dev dummy1 type bridge_slave mcast_router 2
- $ bridge -d mdb show | grep router
- router ports on br1: dummy1
-
-Since commit 4b30ae9adb04 ("net: bridge: mcast: re-implement
-br_multicast_{enable, disable}_port functions"), when per-VLAN multicast
-snooping is enabled, multicast disablement on a port will disable the
-per-{port, VLAN} multicast contexts and not the per-port one. As a
-result, a port will remain in the global router port list even after it
-is deleted. This will lead to a use-after-free [1] when the list is
-traversed (when adding a new port to the list, for example):
-
- # ip link del dev dummy1
- # ip link add name dummy2 up master br1 type dummy
- # ip link set dev dummy2 type bridge_slave mcast_router 2
-
-Similarly, stale entries can also be found in the per-VLAN router port
-list. When per-VLAN multicast snooping is disabled, the per-{port, VLAN}
-contexts are disabled on each port and the port is removed from the
-per-VLAN router port list:
-
- # ip link add name br1 up type bridge vlan_filtering 1 mcast_snooping 1 mcast_vlan_snooping 1
- # ip link add name dummy1 up master br1 type dummy
- # bridge vlan add vid 2 dev dummy1
- # bridge vlan global set vid 2 dev br1 mcast_snooping 1
- # bridge vlan set vid 2 dev dummy1 mcast_router 2
- $ bridge vlan global show dev br1 vid 2 | grep router
-       router ports: dummy1
- # ip link set dev br1 type bridge mcast_vlan_snooping 0
- $ bridge vlan global show dev br1 vid 2 | grep router
-
-However, the port can be re-added to the per-VLAN list even when
-per-VLAN multicast snooping is disabled:
-
- # bridge vlan set vid 2 dev dummy1 mcast_router 0
- # bridge vlan set vid 2 dev dummy1 mcast_router 2
- $ bridge vlan global show dev br1 vid 2 | grep router
-       router ports: dummy1
-
-When the VLAN is deleted from the port, the per-{port, VLAN} multicast
-context will not be disabled since multicast snooping is not enabled
-on the VLAN. As a result, the port will remain in the per-VLAN router
-port list even after it is no longer member in the VLAN. This will lead
-to a use-after-free [2] when the list is traversed (when adding a new
-port to the list, for example):
-
- # ip link add name dummy2 up master br1 type dummy
- # bridge vlan add vid 2 dev dummy2
- # bridge vlan del vid 2 dev dummy1
- # bridge vlan set vid 2 dev dummy2 mcast_router 2
-
-Fix these issues by removing the port from the relevant (global or
-per-VLAN) router port list in br_multicast_port_ctx_deinit(). The
-function is invoked during port deletion with the per-port multicast
-context and during VLAN deletion with the per-{port, VLAN} multicast
-context.
-
-Note that deleting the multicast router timer is not enough as it only
-takes care of the temporary multicast router states (1 or 3) and not the
-permanent one (2).
-
-[1]
-BUG: KASAN: slab-out-of-bounds in br_multicast_add_router.part.0+0x3f1/0x560
-Write of size 8 at addr ffff888004a67328 by task ip/384
-[...]
+Unable to handle kernel access to user memory without uaccess routines
+at virtual address 000000002749f0d0
+Oops [#1]
+Modules linked in:
+CPU: 1 PID: 4875 Comm: syz-executor.0 Not tainted
+5.12.0-rc2-syzkaller-00467-g0d7588ab9ef9 #0
+Hardware name: riscv-virtio,qemu (DT)
+epc : schedule_tail+0x72/0xb2 kernel/sched/core.c:4264
+ ra : task_pid_vnr include/linux/sched.h:1421 [inline]
+ ra : schedule_tail+0x70/0xb2 kernel/sched/core.c:4264
+epc : ffffffe00008c8b0 ra : ffffffe00008c8ae sp : ffffffe025d17ec0
+ gp : ffffffe005d25378 tp : ffffffe00f0d0000 t0 : 0000000000000000
+ t1 : 0000000000000001 t2 : 00000000000f4240 s0 : ffffffe025d17ee0
+ s1 : 000000002749f0d0 a0 : 000000000000002a a1 : 0000000000000003
+ a2 : 1ffffffc0cfac500 a3 : ffffffe0000c80cc a4 : 5ae9db91c19bbe00
+ a5 : 0000000000000000 a6 : 0000000000f00000 a7 : ffffffe000082eba
+ s2 : 0000000000040000 s3 : ffffffe00eef96c0 s4 : ffffffe022c77fe0
+ s5 : 0000000000004000 s6 : ffffffe067d74e00 s7 : ffffffe067d74850
+ s8 : ffffffe067d73e18 s9 : ffffffe067d74e00 s10: ffffffe00eef96e8
+ s11: 000000ae6cdf8368 t3 : 5ae9db91c19bbe00 t4 : ffffffc4043cafb2
+ t5 : ffffffc4043cafba t6 : 0000000000040000
+status: 0000000000000120 badaddr: 000000002749f0d0 cause:
+000000000000000f
 Call Trace:
- <TASK>
- dump_stack_lvl+0x6f/0xa0
- print_address_description.constprop.0+0x6f/0x350
- print_report+0x108/0x205
- kasan_report+0xdf/0x110
- br_multicast_add_router.part.0+0x3f1/0x560
- br_multicast_set_port_router+0x74e/0xac0
- br_setport+0xa55/0x1870
- br_port_slave_changelink+0x95/0x120
- __rtnl_newlink+0x5e8/0xa40
- rtnl_newlink+0x627/0xb00
- rtnetlink_rcv_msg+0x6fb/0xb70
- netlink_rcv_skb+0x11f/0x350
- netlink_unicast+0x426/0x710
- netlink_sendmsg+0x75a/0xc20
- __sock_sendmsg+0xc1/0x150
- ____sys_sendmsg+0x5aa/0x7b0
- ___sys_sendmsg+0xfc/0x180
- __sys_sendmsg+0x124/0x1c0
- do_syscall_64+0xbb/0x360
- entry_SYSCALL_64_after_hwframe+0x4b/0x53
+[<ffffffe00008c8b0>] schedule_tail+0x72/0xb2 kernel/sched/core.c:4264
+[<ffffffe000005570>] ret_from_exception+0x0/0x14
+Dumping ftrace buffer:
+   (ftrace buffer empty)
+---[ end trace b5f8f9231dc87dda ]---
 
-[2]
-BUG: KASAN: slab-use-after-free in br_multicast_add_router.part.0+0x378/0x560
-Read of size 8 at addr ffff888009f00840 by task bridge/391
-[...]
-Call Trace:
- <TASK>
- dump_stack_lvl+0x6f/0xa0
- print_address_description.constprop.0+0x6f/0x350
- print_report+0x108/0x205
- kasan_report+0xdf/0x110
- br_multicast_add_router.part.0+0x378/0x560
- br_multicast_set_port_router+0x6f9/0xac0
- br_vlan_process_options+0x8b6/0x1430
- br_vlan_rtm_process_one+0x605/0xa30
- br_vlan_rtm_process+0x396/0x4c0
- rtnetlink_rcv_msg+0x2f7/0xb70
- netlink_rcv_skb+0x11f/0x350
- netlink_unicast+0x426/0x710
- netlink_sendmsg+0x75a/0xc20
- __sock_sendmsg+0xc1/0x150
- ____sys_sendmsg+0x5aa/0x7b0
- ___sys_sendmsg+0xfc/0x180
- __sys_sendmsg+0x124/0x1c0
- do_syscall_64+0xbb/0x360
- entry_SYSCALL_64_after_hwframe+0x4b/0x53
+The issue comes from the put_user() in schedule_tail
+(kernel/sched/core.c) doing the following:
 
-Fixes: 2796d846d74a ("net: bridge: vlan: convert mcast router global option to per-vlan entry")
-Fixes: 4b30ae9adb04 ("net: bridge: mcast: re-implement br_multicast_{enable, disable}_port functions")
-Reported-by: syzbot+7bfa4b72c6a5da128d32@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/684c18bd.a00a0220.279073.000b.GAE@google.com/T/
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20250619182228.1656906-1-idosch@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+asmlinkage __visible void schedule_tail(struct task_struct *prev)
+{
+...
+        if (current->set_child_tid)
+                put_user(task_pid_vnr(current), current->set_child_tid);
+...
+}
+
+the put_user() macro causes the code sequence to come out as follows:
+
+1:	__enable_user_access()
+2:	reg = task_pid_vnr(current);
+3:	*current->set_child_tid = reg;
+4:	__disable_user_access()
+
+The problem is that we may have a sleeping function as argument which
+could clear SR_SUM causing the panic above. This was fixed by
+evaluating the argument of the put_user() macro outside the user-enabled
+section in commit 285a76bb2cf5 ("riscv: evaluate put_user() arg before
+enabling user access")"
+
+In order for riscv to take advantage of unsafe_get/put_XXX() macros and
+to avoid the same issue we had with put_user() and sleeping functions we
+must ensure code flow can go through switch_to() from within a region of
+code with SR_SUM enabled and come back with SR_SUM still enabled. This
+patch addresses the problem allowing future work to enable full use of
+unsafe_get/put_XXX() macros without needing to take a CSR bit flip cost
+on every access. Make switch_to() save and restore SR_SUM.
+
+Reported-by: syzbot+e74b94fe601ab9552d69@syzkaller.appspotmail.com
+Signed-off-by: Ben Dooks <ben.dooks@codethink.co.uk>
+Signed-off-by: Cyril Bur <cyrilbur@tenstorrent.com>
+Reviewed-by: Alexandre Ghiti <alexghiti@rivosinc.com>
+Reviewed-by: Deepak Gupta <debug@rivosinc.com>
+Link: https://lore.kernel.org/r/20250410070526.3160847-2-cyrilbur@tenstorrent.com
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bridge/br_multicast.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ arch/riscv/include/asm/processor.h | 1 +
+ arch/riscv/kernel/asm-offsets.c    | 5 +++++
+ arch/riscv/kernel/entry.S          | 9 +++++++++
+ 3 files changed, 15 insertions(+)
 
-diff --git a/net/bridge/br_multicast.c b/net/bridge/br_multicast.c
-index c96a9c2a27780..c2fec582372c9 100644
---- a/net/bridge/br_multicast.c
-+++ b/net/bridge/br_multicast.c
-@@ -1872,10 +1872,19 @@ void br_multicast_port_ctx_init(struct net_bridge_port *port,
+diff --git a/arch/riscv/include/asm/processor.h b/arch/riscv/include/asm/processor.h
+index 94a0590c69710..2a22ee93c54c9 100644
+--- a/arch/riscv/include/asm/processor.h
++++ b/arch/riscv/include/asm/processor.h
+@@ -39,6 +39,7 @@ struct thread_struct {
+ 	unsigned long s[12];	/* s[0]: frame pointer */
+ 	struct __riscv_d_ext_state fstate;
+ 	unsigned long bad_cause;
++	unsigned long status;
+ };
  
- void br_multicast_port_ctx_deinit(struct net_bridge_mcast_port *pmctx)
- {
-+	struct net_bridge *br = pmctx->port->br;
-+	bool del = false;
-+
- #if IS_ENABLED(CONFIG_IPV6)
- 	del_timer_sync(&pmctx->ip6_mc_router_timer);
- #endif
- 	del_timer_sync(&pmctx->ip4_mc_router_timer);
-+
-+	spin_lock_bh(&br->multicast_lock);
-+	del |= br_ip6_multicast_rport_del(pmctx);
-+	del |= br_ip4_multicast_rport_del(pmctx);
-+	br_multicast_rport_del_notify(pmctx, del);
-+	spin_unlock_bh(&br->multicast_lock);
- }
+ /* Whitelist the fstate from the task_struct for hardened usercopy */
+diff --git a/arch/riscv/kernel/asm-offsets.c b/arch/riscv/kernel/asm-offsets.c
+index 9e6e35da69ce4..1c228973971f4 100644
+--- a/arch/riscv/kernel/asm-offsets.c
++++ b/arch/riscv/kernel/asm-offsets.c
+@@ -33,6 +33,7 @@ void asm_offsets(void)
+ 	OFFSET(TASK_THREAD_S10, task_struct, thread.s[10]);
+ 	OFFSET(TASK_THREAD_S11, task_struct, thread.s[11]);
+ 	OFFSET(TASK_TI_FLAGS, task_struct, thread_info.flags);
++	OFFSET(TASK_THREAD_STATUS, task_struct, thread.status);
+ 	OFFSET(TASK_TI_PREEMPT_COUNT, task_struct, thread_info.preempt_count);
+ 	OFFSET(TASK_TI_KERNEL_SP, task_struct, thread_info.kernel_sp);
+ 	OFFSET(TASK_TI_USER_SP, task_struct, thread_info.user_sp);
+@@ -331,6 +332,10 @@ void asm_offsets(void)
+ 		  offsetof(struct task_struct, thread.s[11])
+ 		- offsetof(struct task_struct, thread.ra)
+ 	);
++	DEFINE(TASK_THREAD_STATUS_RA,
++		  offsetof(struct task_struct, thread.status)
++		- offsetof(struct task_struct, thread.ra)
++	);
  
- int br_multicast_add_port(struct net_bridge_port *port)
+ 	DEFINE(TASK_THREAD_F0_F0,
+ 		  offsetof(struct task_struct, thread.fstate.f[0])
+diff --git a/arch/riscv/kernel/entry.S b/arch/riscv/kernel/entry.S
+index f6c3841df2f5a..2f8bc50c3b4ab 100644
+--- a/arch/riscv/kernel/entry.S
++++ b/arch/riscv/kernel/entry.S
+@@ -502,7 +502,16 @@ ENTRY(__switch_to)
+ 	REG_S s9,  TASK_THREAD_S9_RA(a3)
+ 	REG_S s10, TASK_THREAD_S10_RA(a3)
+ 	REG_S s11, TASK_THREAD_S11_RA(a3)
++
++	/* save the user space access flag */
++	csrr  s0, CSR_STATUS
++	REG_S s0, TASK_THREAD_STATUS_RA(a3)
++
+ 	/* Restore context from next->thread */
++	REG_L s0,  TASK_THREAD_STATUS_RA(a4)
++	li    s1,  SR_SUM
++	and   s0,  s0, s1
++	csrs  CSR_STATUS, s0
+ 	REG_L ra,  TASK_THREAD_RA_RA(a4)
+ 	REG_L sp,  TASK_THREAD_SP_RA(a4)
+ 	REG_L s0,  TASK_THREAD_S0_RA(a4)
 -- 
 2.53.0
 
