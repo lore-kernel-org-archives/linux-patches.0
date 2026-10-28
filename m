@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214235;
-	b=qijbChD1SuIlOBz15msrpaOo1iUkk5uFhYi2lHV/X1zbEhv/KhX7LH2JHoNFAKvyGb4B
-	 wzx2uJJw96Fa4v3nYz0dTcfKKP8ULUBf7/TaOxQdNoSbMrvj+UxPienKpJGGccVjLSTOU
-	 JuM1l8pU83oV8A+w455kva5bIDIDIUUee6iz/8H+1gXtI7FyR+CRMCnA2NHOcPB08XfQQ
-	 9b+cFTLpJ+31Bxo2kA0sAlXORuEJK+NX+HpfN09fmnGVmQL8LiOgl2LGNFy8DWlCugmHm
-	 HCwkJmTOhBuonUBHy7t0aeqlQZgKlE2F4NDDLzrBQ7/uWOwdH63Cz+yynVBuLvgBrtw==
+	t=1793214238;
+	b=veyB+WSNeYMywmZp9ybuAqpxfX6w8dushrGh+ynmITHM4OkMal4DWtJJg1Aa/yNZVrS3
+	 GGI7uuTNypRXXfH4+TTZMPsn1Vjg8+e2vb76YMQayGJqSWz041VF7HYrdVxRRQW9y7/aZ
+	 eZcQ19AzH9IWVXuMbdQUaKevBXZavPo7M5WRH5JsD1bn5wjimkobune4xjjpdG/XyEc8u
+	 0EPHa0ARwWj4jbzKScL4FvSonkfnTyohi5QAFoYTAB3pGZQJkZV0rkuGPzI58+zoxoKUo
+	 nmB93zNH4Z5C2bjO2/GuxE0viKL4k7hA4kwJnWnSSz4Nth2p87cdWg7+l8ncFg+4rDQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214235;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214238;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=1hl6XS0uW9A/1I5B2xLJjj0OBDPJ8QBhc/GWjeGZ1Zg=;
-	b=peK6Jg3u9BnFD3nRLmwyh7GXxPlY2iTjn9FNmYvhE591RFssN45uSZOQsgUfpOLyYv/K
-	 9vVYgj26XrplwmUgJwuQ+IBeTEVr+0jdodigFOgGfJY4kC/Jg6VGPlWi3ig+iTCrJyS38
-	 58tvlhI2iPTWefc0z5DFG0luijodGWezysOugostGUPyGaRQnkWLvwW5jYl6FPBa+32Zx
-	 xY8g7lJkuoKW3YlkaI9ynjfOXhPdV/Qem7AndyL+xdfFEwubq5GPIu5m6oXGoPNccbMMF
-	 5aDxahGI9+4qyWimSVtASYOZVKYfzqpxR+X+VBGkNpAyf7vUBQ3dsTy3TtGYJ5eU9BQ==
+	bh=Wo1qKQId9T19hDYZxDusSRTV5bLB1QYJwrEjefzrdOU=;
+	b=OP9Ao3t6nTUokIhznNm5XjVwn2whnTYihmvug93Sb8BBU9HghyVJ7SJaLscF3iI1iXvL
+	 ikW6RufD2wLfznAAyYTwoDn2eRkADi++zGnGstyaFdQKdqM0Xbz5Ph+32qu5q0oxAcf+U
+	 czoMlaY+AGNFOO3pKwYJuf6sOOCqc1om9HaAQHbcV2/v8ZGKO7T6JAr1xfiVJlZznm6BX
+	 vkz5NN0XPFy2E48GY1NF20Hc/aFsTqS1d0su7XIt+xtKt/w00E2as/gQ77Xhz7w8xDt7J
+	 1CUNsV9QRH1JU3GGI/jSG2tzMCAhAEmfjjxqKhE1q/2dj8GC5g1K7FH2t3JRi//X2tg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=w6gX6776;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ydS+gYIh;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CD54606A31D;
-	Wed, 28 Oct 2026 19:03:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3334E606A31D;
+	Wed, 28 Oct 2026 19:03:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=w6gX6776
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC3211F01825;
-	Wed, 28 Oct 2026 19:03:54 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ydS+gYIh
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84F631F01825;
+	Wed, 28 Oct 2026 19:03:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214235;
-	bh=1hl6XS0uW9A/1I5B2xLJjj0OBDPJ8QBhc/GWjeGZ1Zg=;
+	s=korg; t=1793214238;
+	bh=Wo1qKQId9T19hDYZxDusSRTV5bLB1QYJwrEjefzrdOU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=w6gX6776YJvALwkloG3M6/UBPPudGkSSL5QNSj5tHnn7zc+xMDOAoDt2IOWSVlRvv
-	 xiBX25bE9cWniE3zEtqJXdUyNYQ/zbYzNGoaKE+mJle6cvdCZgoFUP18jt6s9ImO+7
-	 G1nPT5EftlaX7C/PTN+CfK5a16z8i191Y9zQLwl8=
+	b=ydS+gYIhaIe1npL32sTtOV1H92iEDTrpLArtpCeqJ0ILJZ7nymGKBnF2vAuSS6ROe
+	 BZ5WvOFmKWXOo/UCGhUTpizslim2KmoMwTWgFZgA6lxgzlETPCNtD8gAOXOqQJw8sS
+	 xaTbSe7yfK0SVuT5bxhB244JeHYjITNqUN5qTD+E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roger Quadros <rogerq@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Peter Ujfalusi <peter.ujfalusi@gmail.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Gregory Greenman <gregory.greenman@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0787/1887] dmaengine: ti: k3-udma-glue: Drop skip_fdq argument from k3_udma_glue_reset_rx_chn
-Date: Wed, 28 Oct 2026 17:48:03 +0100
-Message-ID: <20261028170517.347011590@linuxfoundation.org>
+Subject: [PATCH 6.1 0788/1887] wifi: iwlwifi: dbg-tlv: fix DRAM data init
+Date: Wed, 28 Oct 2026 17:48:04 +0100
+Message-ID: <20261028170517.368755297@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -70,180 +68,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Roger Quadros <rogerq@kernel.org>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 0da30874729baeb01889b0eca16cfda122687503 ]
+[ Upstream commit c2a2f505e0bcb45052131d173504887041e1faae ]
 
-The user of k3_udma_glue_reset_rx_chn() e.g. ti_am65_cpsw_nuss can
-run on multiple platforms having different DMA architectures.
-On some platforms there can be one FDQ for all flows in the RX channel
-while for others there is a separate FDQ for each flow in the RX channel.
+Given the existing code in iwl_dbg_tlv_update_drams(), the
+following can happen and cause firmware asserts, and even
+the device to become unusable:
 
-So far we have been relying on the skip_fdq argument of
-k3_udma_glue_reset_rx_chn().
+ * We set the magic so the firmware will use the data;
+ * we try to fill multiple allocation IDs, with at least
+   one successful, but - crucially - one failing and thus
+   not touching the data;
+ * we don't clear the data since there was one success.
 
-Instead of relying on the user to provide this information, infer it
-based on DMA architecture during k3_udma_glue_request_rx_chn() and save it
-in an internal flag 'single_fdq'. Use that flag at
-k3_udma_glue_reset_rx_chn() to deicide if the FDQ needs
-to be cleared for every flow or just for flow 0.
+This doesn't seem like much of a problem just yet, however,
+what happens now is that the allocation ID(s) that failed
+are not initialized.
 
-Fixes the below issue on ti_am65_cpsw_nuss driver on AM62-SK.
+There are two additional things to know:
+ * we never free these allocations across FW restart or
+   interface down/up etc., in fact we never free them until
+   the driver is unbound from the device (e.g. unloaded)
+ * the firmware uses the DRAM info structure for real debug
+   data when it has used it completely
 
-> ip link set eth1 down
-> ip link set eth0 down
-> ethtool -L eth0 rx 8
-> ip link set eth0 up
-> modprobe -r ti_am65_cpsw_nuss
+Given that, and the fact that we never initialize the data
+on restart, we can be unlucky and end up with an allocation
+that looks for the most part valid (valid ID, valid number
+of buffers, etc.) but has bad sizes - causing the firmware
+to throw an assert we can never recover from.
 
-[  103.045726] ------------[ cut here ]------------
-[  103.050505] k3_knav_desc_pool size 512000 != avail 64000
-[  103.050703] WARNING: CPU: 1 PID: 450 at drivers/net/ethernet/ti/k3-cppi-desc-pool.c:33 k3_cppi_desc_pool_destroy+0xa0/0xa8 [k3_cppi_desc_pool]
-[  103.068810] Modules linked in: ti_am65_cpsw_nuss(-) k3_cppi_desc_pool snd_soc_hdmi_codec crct10dif_ce snd_soc_simple_card snd_soc_simple_card_utils display_connector rtc_ti_k3 k3_j72xx_bandgap tidss drm_client_lib snd_soc_davinci_mcas
-p drm_dma_helper tps6598x phylink snd_soc_ti_udma rti_wdt drm_display_helper snd_soc_tlv320aic3x_i2c typec at24 phy_gmii_sel snd_soc_ti_edma snd_soc_tlv320aic3x sii902x snd_soc_ti_sdma sa2ul omap_mailbox drm_kms_helper authenc cfg80211 r
-fkill fuse drm drm_panel_orientation_quirks backlight ip_tables x_tables ipv6 [last unloaded: k3_cppi_desc_pool]
-[  103.119950] CPU: 1 UID: 0 PID: 450 Comm: modprobe Not tainted 6.13.0-rc7-00001-g9c5e3435fa66 #1011
-[  103.119968] Hardware name: Texas Instruments AM625 SK (DT)
-[  103.119974] pstate: 80000005 (Nzcv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-[  103.119983] pc : k3_cppi_desc_pool_destroy+0xa0/0xa8 [k3_cppi_desc_pool]
-[  103.148007] lr : k3_cppi_desc_pool_destroy+0xa0/0xa8 [k3_cppi_desc_pool]
-[  103.154709] sp : ffff8000826ebbc0
-[  103.158015] x29: ffff8000826ebbc0 x28: ffff0000090b6300 x27: 0000000000000000
-[  103.165145] x26: 0000000000000000 x25: 0000000000000000 x24: ffff0000019df6b0
-[  103.172271] x23: ffff0000019df6b8 x22: ffff0000019df410 x21: ffff8000826ebc88
-[  103.179397] x20: 000000000007d000 x19: ffff00000a3b3000 x18: 0000000000000000
-[  103.186522] x17: 0000000000000000 x16: 0000000000000000 x15: 000001e8c35e1cde
-[  103.193647] x14: 0000000000000396 x13: 000000000000035c x12: 0000000000000000
-[  103.200772] x11: 000000000000003a x10: 00000000000009c0 x9 : ffff8000826eba20
-[  103.207897] x8 : ffff0000090b6d20 x7 : ffff00007728c180 x6 : ffff00007728c100
-[  103.215022] x5 : 0000000000000001 x4 : ffff000000508a50 x3 : ffff7ffff6146000
-[  103.222147] x2 : 0000000000000000 x1 : e300b4173ee6b200 x0 : 0000000000000000
-[  103.229274] Call trace:
-[  103.231714]  k3_cppi_desc_pool_destroy+0xa0/0xa8 [k3_cppi_desc_pool] (P)
-[  103.238408]  am65_cpsw_nuss_free_rx_chns+0x28/0x4c [ti_am65_cpsw_nuss]
-[  103.244942]  devm_action_release+0x14/0x20
-[  103.249040]  release_nodes+0x3c/0x68
-[  103.252610]  devres_release_all+0x8c/0xdc
-[  103.256614]  device_unbind_cleanup+0x18/0x60
-[  103.260876]  device_release_driver_internal+0xf8/0x178
-[  103.266004]  driver_detach+0x50/0x9c
-[  103.269571]  bus_remove_driver+0x6c/0xbc
-[  103.273485]  driver_unregister+0x30/0x60
-[  103.277401]  platform_driver_unregister+0x14/0x20
-[  103.282096]  am65_cpsw_nuss_driver_exit+0x18/0xff4 [ti_am65_cpsw_nuss]
-[  103.288620]  __arm64_sys_delete_module+0x17c/0x25c
-[  103.293404]  invoke_syscall+0x44/0x100
-[  103.297149]  el0_svc_common.constprop.0+0xc0/0xe0
-[  103.301845]  do_el0_svc+0x1c/0x28
-[  103.305155]  el0_svc+0x28/0x98
-[  103.308207]  el0t_64_sync_handler+0xc8/0xcc
-[  103.312384]  el0t_64_sync+0x198/0x19c
-[  103.316040] ---[ end trace 0000000000000000 ]---
+Fixing the code to have the entire buffers cleared (which
+we should do so old debug data isn't sticking around) is a
+bit more complex, so as a first step make the actual code
+that fills the information more robust by clearing the
+structure first, and filling the magic values only if it
+actually succeeded for one, rather than doing it the other
+way around.
 
-Signed-off-by: Roger Quadros <rogerq@kernel.org>
-Acked-by: Jakub Kicinski <kuba@kernel.org>
-Acked-by: Peter Ujfalusi <peter.ujfalusi@gmail.com>
-Link: https://lore.kernel.org/r/20250224-k3-udma-glue-single-fdq-v2-1-cbe7621f2507@kernel.org
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
+Link: https://lore.kernel.org/r/20230613155501.87cf5528f4bc.I26ac907a4162297808b33467fc7f5d8177474a34@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Stable-dep-of: eb29b4ffafb2 ("wifi: iwlwifi: fix debug actions order")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/ti/k3-udma-glue.c            | 15 +++++++++++----
- drivers/net/ethernet/ti/am65-cpsw-nuss.c |  4 ++--
- include/linux/dma/k3-udma-glue.h         |  3 +--
- 3 files changed, 14 insertions(+), 8 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/iwl-dbg-tlv.c | 14 ++++++--------
+ 1 file changed, 6 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/dma/ti/k3-udma-glue.c b/drivers/dma/ti/k3-udma-glue.c
-index a739e60b07648..2d18463a6a582 100644
---- a/drivers/dma/ti/k3-udma-glue.c
-+++ b/drivers/dma/ti/k3-udma-glue.c
-@@ -83,6 +83,7 @@ struct k3_udma_glue_rx_channel {
- 	struct k3_udma_glue_rx_flow *flows;
- 	u32 flow_num;
- 	u32 flows_ready;
-+	bool single_fdq;	/* one FDQ for all flows */
- };
+diff --git a/drivers/net/wireless/intel/iwlwifi/iwl-dbg-tlv.c b/drivers/net/wireless/intel/iwlwifi/iwl-dbg-tlv.c
+index 677c9e0b46f10..b7165082bdd80 100644
+--- a/drivers/net/wireless/intel/iwlwifi/iwl-dbg-tlv.c
++++ b/drivers/net/wireless/intel/iwlwifi/iwl-dbg-tlv.c
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: GPL-2.0 OR BSD-3-Clause
+ /*
+- * Copyright (C) 2018-2022 Intel Corporation
++ * Copyright (C) 2018-2023 Intel Corporation
+  */
+ #include <linux/firmware.h>
+ #include "iwl-drv.h"
+@@ -797,8 +797,7 @@ static void iwl_dbg_tlv_update_drams(struct iwl_fw_runtime *fwrt)
+ 			 IWL_UCODE_TLV_CAPA_DRAM_FRAG_SUPPORT))
+ 		return;
  
- static void k3_udma_chan_dev_release(struct device *dev)
-@@ -896,10 +897,13 @@ k3_udma_glue_request_rx_chn_priv(struct device *dev, const char *name,
+-	dram_info->first_word = cpu_to_le32(DRAM_INFO_FIRST_MAGIC_WORD);
+-	dram_info->second_word = cpu_to_le32(DRAM_INFO_SECOND_MAGIC_WORD);
++	memset(dram_info, 0, sizeof(*dram_info));
  
- 	ep_cfg = rx_chn->common.ep_config;
- 
--	if (xudma_is_pktdma(rx_chn->common.udmax))
-+	if (xudma_is_pktdma(rx_chn->common.udmax)) {
- 		rx_chn->udma_rchan_id = ep_cfg->mapped_channel_id;
--	else
-+		rx_chn->single_fdq = false;
-+	} else {
- 		rx_chn->udma_rchan_id = -1;
-+		rx_chn->single_fdq = true;
-+	}
- 
- 	/* request and cfg UDMAP RX channel */
- 	rx_chn->udma_rchanx = xudma_rchan_get(rx_chn->common.udmax,
-@@ -1060,6 +1064,9 @@ k3_udma_glue_request_remote_rx_chn(struct device *dev, const char *name,
- 		rx_chn->common.chan_dev.dma_coherent = true;
- 		dma_coerce_mask_and_coherent(&rx_chn->common.chan_dev,
- 					     DMA_BIT_MASK(48));
-+		rx_chn->single_fdq = false;
-+	} else {
-+		rx_chn->single_fdq = true;
+ 	for (i = IWL_FW_INI_ALLOCATION_ID_DBGC1;
+ 	     i <= IWL_FW_INI_ALLOCATION_ID_DBGC3; i++) {
+@@ -811,11 +810,10 @@ static void iwl_dbg_tlv_update_drams(struct iwl_fw_runtime *fwrt)
+ 				 i, ret);
  	}
  
- 	ret = k3_udma_glue_allocate_rx_flows(rx_chn, cfg);
-@@ -1321,7 +1328,7 @@ EXPORT_SYMBOL_GPL(k3_udma_glue_tdown_rx_chn);
+-	if (dram_alloc)
+-		IWL_DEBUG_FW(fwrt, "block data after  %08x\n",
+-			     dram_info->first_word);
+-	else
+-		memset(frags->block, 0, sizeof(*dram_info));
++	if (dram_alloc) {
++		dram_info->first_word = cpu_to_le32(DRAM_INFO_FIRST_MAGIC_WORD);
++		dram_info->second_word = cpu_to_le32(DRAM_INFO_SECOND_MAGIC_WORD);
++	}
+ }
  
- void k3_udma_glue_reset_rx_chn(struct k3_udma_glue_rx_channel *rx_chn,
- 		u32 flow_num, void *data,
--		void (*cleanup)(void *data, dma_addr_t desc_dma), bool skip_fdq)
-+		void (*cleanup)(void *data, dma_addr_t desc_dma))
- {
- 	struct k3_udma_glue_rx_flow *flow = &rx_chn->flows[flow_num];
- 	struct device *dev = rx_chn->common.dev;
-@@ -1333,7 +1340,7 @@ void k3_udma_glue_reset_rx_chn(struct k3_udma_glue_rx_channel *rx_chn,
- 	dev_dbg(dev, "RX reset flow %u occ_rx %u\n", flow_num, occ_rx);
- 
- 	/* Skip RX FDQ in case one FDQ is used for the set of flows */
--	if (skip_fdq)
-+	if (rx_chn->single_fdq && flow_num)
- 		goto do_reset;
- 
- 	/*
-diff --git a/drivers/net/ethernet/ti/am65-cpsw-nuss.c b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
-index 450fd4fb58d1a..a4184e9dddf15 100644
---- a/drivers/net/ethernet/ti/am65-cpsw-nuss.c
-+++ b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
-@@ -514,7 +514,7 @@ static int am65_cpsw_nuss_common_stop(struct am65_cpsw_common *common)
- 	for (i = 0; i < AM65_CPSW_MAX_RX_FLOWS; i++)
- 		k3_udma_glue_reset_rx_chn(common->rx_chns.rx_chn, i,
- 					  &common->rx_chns,
--					  am65_cpsw_nuss_rx_cleanup, !!i);
-+					  am65_cpsw_nuss_rx_cleanup);
- 
- 	k3_udma_glue_disable_rx_chn(common->rx_chns.rx_chn);
- 
-@@ -2583,7 +2583,7 @@ static int am65_cpsw_nuss_register_ndevs(struct am65_cpsw_common *common)
- 
- 	for (i = 0; i < AM65_CPSW_MAX_RX_FLOWS; i++)
- 		k3_udma_glue_reset_rx_chn(rx_chan->rx_chn, i, rx_chan,
--					  am65_cpsw_nuss_rx_cleanup, !!i);
-+					  am65_cpsw_nuss_rx_cleanup);
- 
- 	k3_udma_glue_disable_rx_chn(rx_chan->rx_chn);
- 
-diff --git a/include/linux/dma/k3-udma-glue.h b/include/linux/dma/k3-udma-glue.h
-index e443be4d3b4b7..a76f1c09a884a 100644
---- a/include/linux/dma/k3-udma-glue.h
-+++ b/include/linux/dma/k3-udma-glue.h
-@@ -130,8 +130,7 @@ void k3_udma_glue_rx_put_irq(struct k3_udma_glue_rx_channel *rx_chn,
- 			     u32 flow_num);
- void k3_udma_glue_reset_rx_chn(struct k3_udma_glue_rx_channel *rx_chn,
- 		u32 flow_num, void *data,
--		void (*cleanup)(void *data, dma_addr_t desc_dma),
--		bool skip_fdq);
-+		void (*cleanup)(void *data, dma_addr_t desc_dma));
- int k3_udma_glue_rx_flow_enable(struct k3_udma_glue_rx_channel *rx_chn,
- 				u32 flow_idx);
- int k3_udma_glue_rx_flow_disable(struct k3_udma_glue_rx_channel *rx_chn,
+ static void iwl_dbg_tlv_send_hcmds(struct iwl_fw_runtime *fwrt,
 -- 
 2.53.0
 
