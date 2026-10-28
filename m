@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216694;
-	b=O3QuVlN09EGBnq3HhWEYduG7bWCg0cP9m1Z0ca58b0Vu9kL5DUylymRjnV/Pv0GyH04p
-	 /Ss0j4h8kMNpnxIlgC5Hh5CpQ4WUbhleNl31tmRwM70/X1oYXBgKmQmWKTeFcrkP1Kpr8
-	 6KGNvE8cHa8xnUyfBzsf9/sYIgvsmPQRQp5Ee//UaR69+Ko+3BROc98T+ZeLW6zkc6TjA
-	 Uuwv7S8wEGEbpltfpW9HJmLJ9fpQErJgCyjMjQiB6/zKzRLNfGXAA+tagD1/84m/IXn73
-	 aYfGBI5mQbGGXfz0cD8ceYRcqOoH8n897eZz03cNQRUR/nYv3KczvLDl4EngVJROayw==
+	t=1793216697;
+	b=ALdfo3JzJ1l5zQEtG+UHJSjfWR5r7eN6NJihA6yZB7E3OMUQPnUqC1xqRFSNRKCzTruY
+	 5Avq4+/qCTQJiVVDdxXTXQAdwIMgIKsYJskzhYzO8FWwXNcsOQw4MpWGXvC7tI+bZp8D1
+	 kmRHIHcgWQLILk3DaaJ3tOl+/VfF1oJOD1+gE6/06bq3Hu4TuCoF7u8sg8U9xHg4X1AHn
+	 5luFQc3MlY7wfDpUIGCmrXZcFktX65nA2DQwPqs5aM55AL11pa0+34swpc5Iktw/bDTpv
+	 usri9lO+TyO4l9+aY8sCMbW0DyTJNXft1rNqxkXalw4ntC0OAMK3qDp8o9uGS1vPLPA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216694;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216697;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=4YAJevXQgYGEs9FU/0fDJjdU4mKiw2IAygqvacDgDHk=;
-	b=XVj88bVJq/XHv74IKp7CQ7ISUXd3E/bdwJv17+gJlcPSpv0SLsD0HUumAxez+XJrhWNy
-	 8IFYZRzvcOitHg3lBtw6GZ2fbz2li+Pk6TVtztgIix7nbQ7cXIyNDg9YlMSlydKNEYzqZ
-	 pNuKxvD2pL4uPBZ7daQnlLpWflflgqHuPEyrkEzlYXb/j5iZLbnDGnpBz6UM2uTZ5+Hn9
-	 gIIn7RpEbnAX9pDR5XQ7eGrQ02RxzIlwaGGIylyv14bvARLZc62XCaxbmB6P3QJebE8GY
-	 ZS0j/gRBwU/GE68Lx6aJo7U5/7zRYVxSE8UNnh3nZt+goU9gRb/0EeinsdFueoh/Wrg==
+	bh=NdoJqXHCXlLK0KiXed4eDSM5u/GlDQuvmr8Houpije0=;
+	b=tlCZ/mu5Vh7FzgJRN2IWFHATSAESE6kJrcPXARPgdBKReET7otxpTwrUK4RD869g5yWu
+	 SR+fBxS5U5WhxKP9a92hpN1TemOR1ADPE8DqwOfwEwxaUeYAV7iYo9ZU+sa0TCWUhlU6D
+	 ZaKvyQtCSY3CFvZyE1meMhS7goqi0TOzqDAq9HGVN9afLa6WaEmCnw2AAcRR8fLtgpTE+
+	 7TFlBrF+f01769XbB5iy5hjUim91Yvo1wiJ70SsJHWr8TkGNXrUrcvTC5UHgG+8rBRHEk
+	 JWKONclj/uG/dK7SenOrZOMEX+SI88DvvIGDZ0Q9lU24GLzpNMosIJuVWV46b6hfolw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Kv2d5Uot;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g7JKhUBO;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 037AD606A31A;
-	Wed, 28 Oct 2026 19:44:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D091D606A31A;
+	Wed, 28 Oct 2026 19:44:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Kv2d5Uot
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53D291F01825;
-	Wed, 28 Oct 2026 19:44:53 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g7JKhUBO
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CB751F01825;
+	Wed, 28 Oct 2026 19:44:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216693;
-	bh=4YAJevXQgYGEs9FU/0fDJjdU4mKiw2IAygqvacDgDHk=;
+	s=korg; t=1793216696;
+	bh=NdoJqXHCXlLK0KiXed4eDSM5u/GlDQuvmr8Houpije0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Kv2d5Uot/k8aLFRkwmasbMz3M6INouWw0BkavlV3FOAvN+QGPklTcwVHEbDkTeSlB
-	 1W3Px1oGDsvlwGMHYpTsWtv37huOust8q0Cj05b1M2wLGFEY/8Hq1H6VsRNHhDvt8x
-	 kxObaB0JhpQ7XTsq6vbE5H75sC7buB/mZ+iQqa04=
+	b=g7JKhUBOGClEcCmeFdOrFqbcbDPrF04xKK5P7jEGIOq9DhaVRYIK+dpXTw/LHdbYB
+	 UKMabJb+R9qvKKpmBC5u/bVN/NXK+iWdYfyAZCuhJHs7M5z7tJjR7uM8EzWmHvKgAV
+	 euIajcMyeR6aeosfroyjgpP5hp/sD2q9FxR6m7Xk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Fan Wu <fanwu01@zju.edu.cn>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1603/1887] wifi: ath11k: fix overreads in ath11k_wmi_process_csa_switch_count_event()
-Date: Wed, 28 Oct 2026 18:01:39 +0100
-Message-ID: <20261028170535.947639754@linuxfoundation.org>
+Subject: [PATCH 6.1 1604/1887] spi: davinci: switch to managed controller allocation
+Date: Wed, 28 Oct 2026 18:01:40 +0100
+Message-ID: <20261028170535.970163991@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,90 +68,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-[ Upstream commit 208d7fdb85976a737a715b81d54efaff6703880c ]
+[ Upstream commit ea408a05dc8f18b4a184b88d6e19d2fd1acc1527 ]
 
-There is no policy entry for WMI_TAG_PDEV_CSA_SWITCH_COUNT_STATUS_EVENT, so
-the parse infrastructure does not enforce a minimum length for the event
-struct. Additionally, the num_vdevs field is taken directly from firmware
-and used as a loop bound over the vdev_ids array without checking that it
-fits within the TLV payload. Either condition can cause an out-of-bounds
-read.
+The controller is allocated with the non-managed spi_alloc_host() while
+the interrupt is registered with devm_request_threaded_irq().  During
+removal, spi_bitbang_stop() only unregisters the controller; the
+subsequent spi_controller_put() then frees the controller together with
+its embedded davinci_spi devdata, which is the IRQ handler's dev_id.
+The devm_request_threaded_irq() release action (free_irq()), which
+drains the handler, does not run until after .remove() returns.  A late
+or latched interrupt can therefore reach davinci_spi_irq() and
+dereference already-freed memory.
 
-Add a TLV policy entry for WMI_TAG_PDEV_CSA_SWITCH_COUNT_STATUS_EVENT so
-the parse infrastructure enforces a minimum length for the fixed-size event
-struct. Add a helper ath11k_wmi_tlv_data_len() to recover the payload
-length of a parsed TLV from the header preceding its data pointer. Use it
-in ath11k_wmi_process_csa_switch_count_event() to bound num_vdevs before
-the loop.
+Switch to devm_spi_alloc_host() so that the devres LIFO order releases
+the controller only after free_irq() has drained the handler, and drop
+the now-redundant spi_controller_put() from .remove().  The probe error
+path is simplified to direct returns.
 
-Compile tested only.
+The clock is acquired with devm_clk_get_enabled(), which is registered
+after the IRQ and thus released before it by the devres LIFO order.
+Drain the interrupt explicitly with devm_free_irq() before disabling the
+controller so that a late interrupt cannot access the registers of a
+clock-gated controller.
 
-Fixes: d5c65159f289 ("ath11k: driver for Qualcomm IEEE 802.11ax devices")
-Assisted-by: Claude:claude-sonnet-4-6
-Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
-Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260724-ath12k_wmi_process_csa_switch_count_event-cleanup-v2-2-02a45d7246c0@oss.qualcomm.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+This issue was found by an in-house static analysis tool.
+
+Fixes: 5b3bb5963ff2 ("spi: davinci: Use devm_*() functions")
+Assisted-by: Codex:gpt-5.6
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Link: https://patch.msgid.link/20260719010014.3163356-2-fanwu01@zju.edu.cn
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath11k/wmi.c | 21 +++++++++++++++++++--
- 1 file changed, 19 insertions(+), 2 deletions(-)
+ drivers/spi/spi-davinci.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath11k/wmi.c b/drivers/net/wireless/ath/ath11k/wmi.c
-index b58c84c2f9dd3..579cd7a2d4279 100644
---- a/drivers/net/wireless/ath/ath11k/wmi.c
-+++ b/drivers/net/wireless/ath/ath11k/wmi.c
-@@ -145,6 +145,8 @@ static const struct wmi_tlv_policy wmi_tlv_policies[] = {
- 		.min_len = sizeof(struct wmi_per_chain_rssi_stats) },
- 	[WMI_TAG_TWT_ADD_DIALOG_COMPLETE_EVENT] = {
- 		.min_len = sizeof(struct wmi_twt_add_dialog_event) },
-+	[WMI_TAG_PDEV_CSA_SWITCH_COUNT_STATUS_EVENT] = {
-+		.min_len = sizeof(struct wmi_pdev_csa_switch_ev) },
- };
+diff --git a/drivers/spi/spi-davinci.c b/drivers/spi/spi-davinci.c
+index d112c2cac042b..ce4689e96bad6 100644
+--- a/drivers/spi/spi-davinci.c
++++ b/drivers/spi/spi-davinci.c
+@@ -863,7 +863,7 @@ static int davinci_spi_probe(struct platform_device *pdev)
+ 	int ret = 0;
+ 	u32 spipc0;
  
- #define PRIMAP(_hw_mode_) \
-@@ -249,6 +251,13 @@ ath11k_wmi_tlv_parse_alloc(struct ath11k_base *ab, const void *ptr,
- 	return tb;
+-	master = spi_alloc_master(&pdev->dev, sizeof(struct davinci_spi));
++	master = devm_spi_alloc_master(&pdev->dev, sizeof(struct davinci_spi));
+ 	if (master == NULL) {
+ 		ret = -ENOMEM;
+ 		goto err;
+@@ -1004,7 +1004,6 @@ static int davinci_spi_probe(struct platform_device *pdev)
+ free_clk:
+ 	clk_disable_unprepare(dspi->clk);
+ free_master:
+-	spi_master_put(master);
+ err:
+ 	return ret;
  }
+@@ -1028,6 +1027,8 @@ static int davinci_spi_remove(struct platform_device *pdev)
  
-+static u32 ath11k_wmi_tlv_data_len(const void *data)
-+{
-+	const struct wmi_tlv *tlv = (const struct wmi_tlv *)data - 1;
+ 	spi_bitbang_stop(&dspi->bitbang);
+ 
++	devm_free_irq(&pdev->dev, dspi->irq, dspi);
 +
-+	return FIELD_GET(WMI_TLV_LEN, tlv->header);
-+}
-+
- static int ath11k_wmi_cmd_send_nowait(struct ath11k_pdev_wmi *wmi, struct sk_buff *skb,
- 				      u32 cmd_id)
- {
-@@ -7656,15 +7665,23 @@ ath11k_wmi_process_csa_switch_count_event(struct ath11k_base *ab,
- 					  const struct wmi_pdev_csa_switch_ev *ev,
- 					  const u32 *vdev_ids)
- {
--	int i;
-+	u32 vdev_ids_len = ath11k_wmi_tlv_data_len(vdev_ids);
-+	u32 num_vdevs = ev->num_vdevs;
- 	struct ath11k_vif *arvif;
-+	int i;
+ 	clk_disable_unprepare(dspi->clk);
  
- 	/* Finish CSA once the switch count becomes NULL */
- 	if (ev->current_switch_count)
- 		return;
- 
-+	if (num_vdevs > vdev_ids_len / sizeof(*vdev_ids)) {
-+		ath11k_warn(ab, "csa switch count num_vdevs %u exceeds tlv array length %u\n",
-+			    num_vdevs, vdev_ids_len);
-+		return;
-+	}
-+
- 	rcu_read_lock();
--	for (i = 0; i < ev->num_vdevs; i++) {
-+	for (i = 0; i < num_vdevs; i++) {
- 		arvif = ath11k_mac_get_arvif_by_vdev_id(ab, vdev_ids[i]);
- 
- 		if (!arvif) {
+ 	if (dspi->dma_rx) {
 -- 
 2.53.0
 
