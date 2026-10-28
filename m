@@ -1,56 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793211949;
-	b=1Zge3dAjLBxLXjpdrVIW8DB0+O8NJY4vfqFkLjj5RZo4XdLP338KpcB0QbbS9x0p70dp
-	 AXIkWNPFncWe4vA9D2lLMJPUn1WfwczM26yh9ieQWRUOnbQVW7kLWlPPV1BixJD9wDPek
-	 5ltsJbE8XEm+gp1/s2JiMh4CqU5KmLISzmESIdsBq75oXgDL/0HOiR6F8l0mqEVzLIoiX
-	 J+7dO0Wderc82IndXMUMK/+iBBVBnJNIk+SmDvfHnEGwSYQadNXhgKFlrDQr2agU+6cZu
-	 ZT90g/dG+vrRGNvpyAAK4fccYvp2BxWkVbNkvPPwWLoUSG8pxYexPJyVwo3ybwqsV0Q==
+	t=1793211952;
+	b=qtzvFDXkHnII0nUZ/UshCctb/7hgL2sIXELfTHD8dBw4RrXVFle84byTD4QFUutDcwe+
+	 ZX5YvDvKkbtU9oo01KhLi3D/qS3te/OCBlev1TdoBWX5Ywkal4kntRR3WERAuhRsdsZiz
+	 hngj8cRhBKUgcqoqz9dcA9qtpWgE7GjtZ211bypPUvwJZodpPwTS/zeHDUspRG86yczo4
+	 yf6b1eCJVZ4taE6kO5iFOi78wGnR2I8IixsWz8bSg10043kbS7FLKZZLgxvTp1UURKywg
+	 dlfAu1qiz48aRuhP1pLpVzmhRmuyTFTG6yUbrpw3VcPKWckBgQxBE7v+O3lMlcrTlGw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793211949;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793211952;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=H7rvVu9M4jCvftj+gUnD5elP1z7NvaMkfhp6yRWaUQI=;
-	b=Ccc+s49sEVMtG7zAY2uAKI5hNIzavzkBxPqFJvobW947kzVbzAZcdlRxTw+LPadiF79x
-	 IC4YcUaaUoaX2DSw3wTRmGUk/fcDdOnUaXQZCUFpmem+HLmi83h88I/7xqEMo1aRfWC/w
-	 MKxRjHCW9Kgfi0COqm+59Jmcf+PuICjz3KZS7+2oUZdv7PXbNbtzedInKv1iFX7hMVHjj
-	 4hIgf+uoXLcuXniqbhkGUY9DOpgLwqg2MWAiO6bQzz1doz+zVeSpU6n7vsFSLkjJGNjO7
-	 iHgEX9iAL6HpCxlWA+UYOPQ27FEOWwjH4UoeSzd/VvbCEuTFHjP3uTMW3ES/WiKr3NA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=fbcy2gCRiXidh7mahhMz/Cpfukwu3wLE8ZNcc0YTh2Y=;
+	b=uqZTX7bP1JDCiaAA9JhWq0Kv/3+kMrqeUXcAwWT/KRqJJlchJ6v0ebV6mhuqdpjJ3kEx
+	 3SYjMTowicKsa7dR4XGv7zQlr3+b/J+WQtwU8HkUHexVWLE6mbW97z+Npqjo4pU9xggDI
+	 ZwqsAFphN5m5qKrPELgwAY5kzlgvAcJpmFy1hhwdFmGB27U77tRy/vTc3kca9pOyD9R81
+	 1WPIAksJW0f4Ez3W1CplUkCHC2Lahi7Zuv58mBxoBx/d/IP7aMIBHSSpJmje0JuAa2F38
+	 TjI+1Q3za4UO8rOGdnJwFnPSXBXTsIbAM50PyyBPy/FGXO3/D+hrVL3ABBNHNliwhxg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QJRbvc2P;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IZoLRvIv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52F62606A31C;
-	Wed, 28 Oct 2026 18:25:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F10C0606A31A;
+	Wed, 28 Oct 2026 18:25:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QJRbvc2P
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7259E1F01825;
-	Wed, 28 Oct 2026 18:25:48 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IZoLRvIv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D1AE1F01825;
+	Wed, 28 Oct 2026 18:25:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793211949;
-	bh=H7rvVu9M4jCvftj+gUnD5elP1z7NvaMkfhp6yRWaUQI=;
+	s=korg; t=1793211951;
+	bh=fbcy2gCRiXidh7mahhMz/Cpfukwu3wLE8ZNcc0YTh2Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QJRbvc2Pei2owOh8EVJij4+ohD5481gNcUXQ2Z0mj3aZBL6TxL3UYEcsdW4H1t0eK
-	 bxlacxIUUmj1hNRQdyX32SJnjT82TxJtmmcTqb4ImcShWUxN4oMaDhAVaak303bj3G
-	 9xJQtQu+G92Ehgrr5GHKvFgooknNW3BFSaxBYZCk=
+	b=IZoLRvIvuupZbBpX3pGSdXP4ERBPQEj9JNs92+vbigKkoTi3txFBR3i2Me9pbg5qn
+	 O3YfT7cREWWhEIXqiQU5tbN++9v2sVtBipxIKE2e9CsvHeoGDcycF2OuEEiWBcJ9uz
+	 VjoiSVv6QWW80FLDN/TwGdCMo67PXwg9pTcIeU2Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jesper Dangaard Brouer <hawk@kernel.org>,
-	=?UTF-8?q?Jonas=20K=C3=B6ppeler?= <j.koeppeler@tu-berlin.de>,
-	Chris Arges <carges@cloudflare.com>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	syzbot+b106284c2a0b7bc80cf9@syzkaller.appspotmail.com,
+	Pauli Virtanen <pav@iki.fi>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 555/571] net_sched: codel: fix stale state for empty flows in fq_codel
-Date: Wed, 28 Oct 2026 18:01:42 +0100
-Message-ID: <20261028170021.206204207@linuxfoundation.org>
+Subject: [PATCH 5.15 556/571] Bluetooth: L2CAP: access chan->conn safely in get/setsockopt
+Date: Wed, 28 Oct 2026 18:01:43 +0100
+Message-ID: <20261028170021.229781483@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -66,81 +64,220 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jonas Köppeler <j.koeppeler@tu-berlin.de>
+From: Pauli Virtanen <pav@iki.fi>
 
-[ Upstream commit 815980fe6dbb01ad4007e8b260a45617f598b76d ]
+[ Upstream commit ca2c4c26498643f421d35ffe258fafbd3ed461c3 ]
 
-When codel_dequeue() finds an empty queue, it resets vars->dropping
-but does not reset vars->first_above_time.  The reference CoDel
-algorithm (Nichols & Jacobson, ACM Queue 2012) resets both:
+Since commit b66774b48dd9 ("Bluetooth: L2CAP: Fix UAF in channel timeout by holding conn ref")
+l2cap_chan::conn has held reference and remains non-NULL also after the
+corresponding hci_conn is deleted.  In this state accessing various
+fields eg. hci_conn::hdev is invalid, which leads to KASAN crash in
+l2cap_sock_setsockopt() access of conn->hcon->hdev.
 
-  dodeque_result codel_queue_t::dodeque(time_t now) {
-      ...
-      if (r.p == NULL) {
-          first_above_time = 0;   // <-- Linux omits this
-      }
-      ...
-  }
+Check l2cap_chan::conn.hcon corresponds to an alive hci_conn before
+trying to use it in l2cap_sock.c.  Hold l2cap_chan_lock() in
+getsockopt/setsockopt to ensure it stays alive, and to avoid data races
+in l2cap_chan fields.
 
-Note that codel_should_drop() does reset first_above_time when called
-with a NULL skb, but codel_dequeue() returns early before ever calling
-codel_should_drop() in the empty-queue case.  The post-drop code paths
-do reach codel_should_drop(NULL) and correctly reset the timer, so a
-dropped packet breaks the cycle -- but the next delivered packet
-re-arms first_above_time and the cycle repeats.
-
-For sparse flows such as ICMP ping (one packet every 200ms-1s), the
-first packet arms first_above_time, the flow goes empty, and the
-second packet arrives after the interval has elapsed and gets dropped.
-The pattern repeats, producing sustained loss on flows that are not
-actually congested.
-
-Test: veth pair, fq_codel, BQL disabled, 30000 iptables rules in the
-consumer namespace (NAPI-64 cycle ~14ms, well above fq_codel's 5ms
-target), ping at 5 pps under UDP flood:
-
-  Before fix:  26% ping packet loss
-  After fix:    0% ping packet loss
-
-Fix by resetting first_above_time to zero in the empty-queue path
-of codel_dequeue(), matching the reference algorithm.
-
-Fixes: 76e3cc126bb2 ("codel: Controlled Delay AQM")
-Fixes: d068ca2ae2e6 ("codel: split into multiple files")
-Co-developed-by: Jesper Dangaard Brouer <hawk@kernel.org>
-Signed-off-by: Jesper Dangaard Brouer <hawk@kernel.org>
-Signed-off-by: Jonas Köppeler <j.koeppeler@tu-berlin.de>
-Reported-by: Chris Arges <carges@cloudflare.com>
-Tested-by: Jonas Köppeler <j.koeppeler@tu-berlin.de>
-Reviewed-by: Toke Høiland-Jørgensen <toke@redhat.com>
-Link: https://lore.kernel.org/all/20260318134826.1281205-7-hawk@kernel.org/
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260323174920.253526-1-hawk@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: b66774b48dd9 ("Bluetooth: L2CAP: Fix UAF in channel timeout by holding conn ref")
+Reported-by: syzbot+b106284c2a0b7bc80cf9@syzkaller.appspotmail.com
+Link: https://syzkaller.appspot.com/bug?extid=b106284c2a0b7bc80cf9
+Signed-off-by: Pauli Virtanen <pav@iki.fi>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+[Lee: Omit sockopt_t conversion from commit bf01627cc04b ("Bluetooth: L2CAP: convert to getsockopt_iter")]
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/codel_impl.h | 1 +
- 1 file changed, 1 insertion(+)
+ net/bluetooth/l2cap_sock.c | 57 ++++++++++++++++++++++++++++++--------
+ 1 file changed, 46 insertions(+), 11 deletions(-)
 
-diff --git a/include/net/codel_impl.h b/include/net/codel_impl.h
-index d289b91dcd65e..f7615981d39ef 100644
---- a/include/net/codel_impl.h
-+++ b/include/net/codel_impl.h
-@@ -154,6 +154,7 @@ static struct sk_buff *codel_dequeue(void *ctx,
- 	bool drop;
+diff --git a/net/bluetooth/l2cap_sock.c b/net/bluetooth/l2cap_sock.c
+index bef6a948d7d51..046f3e6555f00 100644
+--- a/net/bluetooth/l2cap_sock.c
++++ b/net/bluetooth/l2cap_sock.c
+@@ -435,11 +435,26 @@ static int l2cap_get_mode(struct l2cap_chan *chan)
+ 	return -EINVAL;
+ }
  
- 	if (!skb) {
-+		vars->first_above_time = 0;
- 		vars->dropping = false;
- 		return skb;
++static struct l2cap_conn *l2cap_chan_conn(struct l2cap_chan *chan)
++{
++	lockdep_assert_held(&chan->lock);
++
++	/* l2cap_conn_del() sets FLAG_DEL while holding chan->lock before
++	 * conn->hcon is deleted. If not set and conn is non-NULL, conn->hcon
++	 * remains alive during this chan->lock critical section.
++	 */
++	if (test_bit(FLAG_DEL, &chan->flags))
++		return NULL;
++
++	return chan->conn;
++}
++
+ static int l2cap_sock_getsockopt_old(struct socket *sock, int optname,
+ 				     char __user *optval, int __user *optlen)
+ {
+ 	struct sock *sk = sock->sk;
+ 	struct l2cap_chan *chan = l2cap_pi(sk)->chan;
++	struct l2cap_conn *conn;
+ 	struct l2cap_options opts;
+ 	struct l2cap_conninfo cinfo;
+ 	int err = 0;
+@@ -451,6 +466,7 @@ static int l2cap_sock_getsockopt_old(struct socket *sock, int optname,
+ 	if (get_user(len, optlen))
+ 		return -EFAULT;
+ 
++	l2cap_chan_lock(chan);
+ 	lock_sock(sk);
+ 
+ 	switch (optname) {
+@@ -536,9 +552,15 @@ static int l2cap_sock_getsockopt_old(struct socket *sock, int optname,
+ 			break;
+ 		}
+ 
++		conn = l2cap_chan_conn(chan);
++		if (!conn) {
++			err = -ENOTCONN;
++			break;
++		}
++
+ 		memset(&cinfo, 0, sizeof(cinfo));
+-		cinfo.hci_handle = chan->conn->hcon->handle;
+-		memcpy(cinfo.dev_class, chan->conn->hcon->dev_class, 3);
++		cinfo.hci_handle = conn->hcon->handle;
++		memcpy(cinfo.dev_class, conn->hcon->dev_class, 3);
+ 
+ 		len = min(len, sizeof(cinfo));
+ 		if (copy_to_user(optval, (char *) &cinfo, len))
+@@ -552,6 +574,8 @@ static int l2cap_sock_getsockopt_old(struct socket *sock, int optname,
  	}
+ 
+ 	release_sock(sk);
++	l2cap_chan_unlock(chan);
++
+ 	return err;
+ }
+ 
+@@ -560,6 +584,7 @@ static int l2cap_sock_getsockopt(struct socket *sock, int level, int optname,
+ {
+ 	struct sock *sk = sock->sk;
+ 	struct l2cap_chan *chan = l2cap_pi(sk)->chan;
++	struct l2cap_conn *conn;
+ 	struct bt_security sec;
+ 	struct bt_power pwr;
+ 	u32 phys;
+@@ -576,6 +601,7 @@ static int l2cap_sock_getsockopt(struct socket *sock, int level, int optname,
+ 	if (get_user(len, optlen))
+ 		return -EFAULT;
+ 
++	l2cap_chan_lock(chan);
+ 	lock_sock(sk);
+ 
+ 	switch (optname) {
+@@ -587,12 +613,14 @@ static int l2cap_sock_getsockopt(struct socket *sock, int level, int optname,
+ 			break;
+ 		}
+ 
++		conn = l2cap_chan_conn(chan);
++
+ 		memset(&sec, 0, sizeof(sec));
+-		if (chan->conn) {
+-			sec.level = chan->conn->hcon->sec_level;
++		if (conn) {
++			sec.level = conn->hcon->sec_level;
+ 
+ 			if (sk->sk_state == BT_CONNECTED)
+-				sec.key_size = chan->conn->hcon->enc_key_size;
++				sec.key_size = conn->hcon->enc_key_size;
+ 		} else {
+ 			sec.level = chan->sec_level;
+ 		}
+@@ -668,12 +696,14 @@ static int l2cap_sock_getsockopt(struct socket *sock, int level, int optname,
+ 		break;
+ 
+ 	case BT_PHY:
+-		if (sk->sk_state != BT_CONNECTED) {
++		conn = l2cap_chan_conn(chan);
++
++		if (sk->sk_state != BT_CONNECTED || !conn) {
+ 			err = -ENOTCONN;
+ 			break;
+ 		}
+ 
+-		phys = hci_conn_get_phy(chan->conn->hcon);
++		phys = hci_conn_get_phy(conn->hcon);
+ 
+ 		if (put_user(phys, (u32 __user *) optval))
+ 			err = -EFAULT;
+@@ -706,6 +736,7 @@ static int l2cap_sock_getsockopt(struct socket *sock, int level, int optname,
+ 	}
+ 
+ 	release_sock(sk);
++	l2cap_chan_unlock(chan);
+ 	return err;
+ }
+ 
+@@ -736,6 +767,7 @@ static int l2cap_sock_setsockopt_old(struct socket *sock, int optname,
+ 
+ 	BT_DBG("sk %p", sk);
+ 
++	l2cap_chan_lock(chan);
+ 	lock_sock(sk);
+ 
+ 	switch (optname) {
+@@ -839,6 +871,7 @@ static int l2cap_sock_setsockopt_old(struct socket *sock, int optname,
+ 	}
+ 
+ 	release_sock(sk);
++	l2cap_chan_unlock(chan);
+ 	return err;
+ }
+ 
+@@ -902,6 +935,7 @@ static int l2cap_sock_setsockopt(struct socket *sock, int level, int optname,
+ 	if (level != SOL_BLUETOOTH)
+ 		return -ENOPROTOOPT;
+ 
++	l2cap_chan_lock(chan);
+ 	lock_sock(sk);
+ 
+ 	switch (optname) {
+@@ -929,11 +963,10 @@ static int l2cap_sock_setsockopt(struct socket *sock, int level, int optname,
+ 
+ 		chan->sec_level = sec.level;
+ 
+-		if (!chan->conn)
++		conn = l2cap_chan_conn(chan);
++		if (!conn)
+ 			break;
+ 
+-		conn = chan->conn;
+-
+ 		/* change security for LE channels */
+ 		if (chan->scid == L2CAP_CID_ATT) {
+ 			if (smp_conn_security(conn->hcon, sec.level)) {
+@@ -990,7 +1023,8 @@ static int l2cap_sock_setsockopt(struct socket *sock, int level, int optname,
+ 		}
+ 
+ 		if (opt == BT_FLUSHABLE_OFF) {
+-			conn = chan->conn;
++			conn = l2cap_chan_conn(chan);
++
+ 			/* proceed further only when we have l2cap_conn and
+ 			   No Flush support in the LM */
+ 			if (!conn || !lmp_no_flush_capable(conn->hcon->hdev)) {
+@@ -1127,6 +1161,7 @@ static int l2cap_sock_setsockopt(struct socket *sock, int level, int optname,
+ 	}
+ 
+ 	release_sock(sk);
++	l2cap_chan_unlock(chan);
+ 	return err;
+ }
+ 
 -- 
 2.53.0
 
