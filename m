@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793212826;
-	b=N7sBQIYX1ROcZcV/xeSy+seWB+YaD6JdjzeKhJyFc34DaeNBn6SrT/xBGPNjk3LdoyDw
-	 pLDmF6lZxFU2J0kXcHmfNxOKM0EFQ+cPbjqzKc/a1i3l/eH6nlYDAS/FocKEdcBipyS7Q
-	 6bclEUo6q/FtXlzUiciX4mhQDMal5esukgHXRLOLPHOBSgpqIP5f7gHw7JzpBJ9nxb6cx
-	 kpWNSjIjcPTrERW7nkFxkCbm/XNJOfjF4WzmlhPAjG+Mp15AK5B+Wi/XOfyuwdGDJM5ap
-	 a6hxN8Zt8Wy0w3I5gSNe16R62VDa++KZqS3vUkMpC/oMl81IyJUm7NW2qDplEbFSK2w==
+	t=1793212829;
+	b=syV5vrATeepO5d2ETRjqVil6zzzJPZOOPfBqGLlKZaz2ATYJFouAexdhlgXhkCctIQdN
+	 ar0zF3UBCMufCmB2G3ofdw07vdexl/Wf15NJbG1yHlBPKRd4Vvb1OSrWreJcb02vHr66x
+	 uMycCXfu0i/sOHgmAgZDZ/655khXA9p2IV1l3tEQF0/cl5XlSfh75knTi98CY5X1v930K
+	 G+//XURDTY/z+76qhdUPOOdPd5oVubCi2OUjEc9BN74D475Qs/oJe0GB4+4v+z5z5SxdV
+	 AALTCbNT3jiZsCjFH3PVWtlfHyj+EVl5FsZAWu0LG74SZRUR9FkEykUZPdrdzPB2RlQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793212826;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793212829;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=tUkTFHPKXvyO6wwe1XUoXjx5dbOICkyVZYHT9Yb44Co=;
-	b=MRbZjKkKyEfe2DYx6CzjBojVSh+nXJKrqMiKrMFAvx0uw6DhUKgNZ/9RjdF6FFAzbhhK
-	 olBZGUSgXNKBKNwjFT54acy5BVybWHHaC7OvCTuaZWdE53DMv4RyD3nCT9JyEP44sFxnv
-	 8mXX/F9KQ3FB3/JAXN+bvmtzITLH4w00RCJqWwak7ftWTSm8GUxGcrZhTEVF4cplvmuze
-	 Fd/f+7w1T5XQ5kgW3UuXetvC9Oq316vvHK4zzLC8Nsrowhaj/5ZWI/IpxfX+Zmae67mAf
-	 L4MYWHNvMrxTY7MkVrfEVtZoZCQZJgtDbxFYbO+oaFYj3UjgjDMbTFd3D2c2caZCuPg==
+	bh=u+GpYtDx36P5jREV+OAl5gQUmglyOVbWWuHHAvL5V+E=;
+	b=01V/kmlDCLr4I5r18YvdbJgtmIDzL5KzFd7FJuzb1vTmBsmHJWao8c+lP0gSeYka9Rkx
+	 O5YGOR0YcjaHzxCiAVEzhn5FPwIb9fyDzjZCzOxrbiUsZs3qCUd5011UGSuko91ZK3Gwa
+	 d3Ust3P/M/lKX10V7YLigZQBFv1KEdPUrJBSI5Ro1lDMGX3lHFirwCvvVUEPSglc3UhMq
+	 kXZBLJ5R9ycCWfi2tt7uYyJ34nFj8SPqBSFwtBWcq9uF8QZgEfzCjxcRGYxqTsOgzdT1o
+	 xT6u5ai6AaGAA6wsRq19chh1WZnidvHJWpLC/oqyb8us1BBhfnD1TU3RMQUQrWUoUeA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rhx49JSG;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J6sin2b8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC3C2606A321;
-	Wed, 28 Oct 2026 18:40:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1747606A31D;
+	Wed, 28 Oct 2026 18:40:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rhx49JSG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 485C41F01825;
-	Wed, 28 Oct 2026 18:40:25 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J6sin2b8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EE6D1F031E0;
+	Wed, 28 Oct 2026 18:40:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793212825;
-	bh=tUkTFHPKXvyO6wwe1XUoXjx5dbOICkyVZYHT9Yb44Co=;
+	s=korg; t=1793212828;
+	bh=u+GpYtDx36P5jREV+OAl5gQUmglyOVbWWuHHAvL5V+E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rhx49JSGPHlbCCHYEp8DuM67tntNF3EH2a8u380z00cKKdn5ANhzHjfN3zn7d+zGX
-	 qoSY1XttlPvuM0tWzduletFG2fidhnyaOGGsAOvE65qt9MotHwr2xlJpZO3vBIu9tf
-	 DGixC6oSdr8fn2cb2btYpO2iDdHEX/kyg9Vlr6nY=
+	b=J6sin2b8dxzyiY/6xAPvOqRH5FTGPIyvNPIQ+ouXR9n3SIcSKlcnxuYsnhkLv9pZE
+	 HOuoQ1CZRILtEaI9Ec6IjnmMpu4szqSSE3Kotrk1CIsVITABMZiiBAxciW0ayV0P9B
+	 1x/p9dt0m8i3NDgllXRwOIbicOKfslTMUh/yt2Sc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Jie Deng <dengjie03@kylinos.cn>,
-	Peter Chen <peter.chen@kernel.org>
-Subject: [PATCH 6.1 0288/1887] usb: cdns3: Fix NULL pointer dereference in cdns3_pci_probe
-Date: Wed, 28 Oct 2026 17:39:44 +0100
-Message-ID: <20261028170505.783168409@linuxfoundation.org>
+	Mingyu Wang <25181214217@stu.xidian.edu.cn>
+Subject: [PATCH 6.1 0289/1887] tty: vt: fix memory leak in vc_allocate()
+Date: Wed, 28 Oct 2026 17:39:45 +0100
+Message-ID: <20261028170505.805231364@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,68 +67,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jie Deng <dengjie03@kylinos.cn>
+From: Mingyu Wang <25181214217@stu.xidian.edu.cn>
 
-commit e5052f2c5c73c1dcca42bafc0bc737af2b2af059 upstream.
+commit 5b114bfc1dfd88f9d50822d532f7f1fce0f7388a upstream.
 
-The Cadence USBSS controller is a two-function PCI device. The first
-probed function allocates the driver data and stores it with
-pci_set_drvdata(), while the second function reuses it via
-pci_get_drvdata() when pci_is_enabled() reports that the first
-function has already been probed.
+If the screen buffer allocation fails in vc_allocate(), the error handling
+path jumps to `err_free`. However, this path fails to release the unicode
+screen map attached to `vc->uni_pagedict_loc`.
 
-When the second function is probed while the first one has been
-enabled but has not yet set its driver data, pci_get_drvdata()
-returns NULL, and the subsequent wrap->devfn assignment dereferences
-a NULL pointer and crashes the kernel.
-logs:
-Call trace:
-  cdns3_pci_probe+0xa4/0x300
-  local_pci_probe+0x44/0xa8
-  pci_call_probe+0x54/0x158
-  pci_device_probe+0x84/0x100
-  really_probe+0x184/0x3d0
-  __driver_probe_device+0x80/0x178
-  driver_probe_device+0x44/0xe8
-  __driver_attach+0xec/0x1f8
-  bus_for_each_dev+0x7c/0xe0
-  driver_attach+0x28/0x38
-  bus_add_driver+0x110/0x238
-  driver_register+0x64/0x128
-  __pci_register_driver+0x50/0x60
-  cdns3_pci_driver_init+0x28/0x38
-  do_one_initcall+0x5c/0x280
-  do_initcalls+0x104/0x1d8
-  kernel_init_freeable+0x140/0x218
-  kernel_init+0x28/0x1f8
-  ret_from_fork+0x10/0x20
+During the early stages of vc_allocate(), the unicode screen map is either
+newly allocated via con_set_default_unimap() or shares the default unicode
+map from a previously initialized console (which increments its refcount).
+If the subsequent kzalloc() for the screen buffer fails, the err_free path
+frees the vc structure but leaves the attached uni_pagedict with an
+elevated refcount. This results in an unreferenced object memory leak, as
+the reference to the dictionary is lost and its refcount can never reach
+zero.
 
-Return -EPROBE_DEFER in this case so that probing is retried after
-the first function has completed its probe.
+This issue was discovered by DevGen (an automated virtual device modeling
+fuzzer based on Syzkaller). During fuzzing with kernel fault injection
+(failslab) enabled, the fuzzer forcefully failed the kzalloc() for the
+screen buffer, exposing this error-handling path leak.
 
-Fixes: 7733f6c32e36 ("usb: cdns3: Add Cadence USB3 DRD Driver")
+Fix this by checking *vc->uni_pagedict_loc and calling con_free_unimap(vc)
+in the err_free path before kfree(vc). This safely decrements the refcount
+and releases the dictionary memory if this was the last reference. The
+explicit check is added to maintain consistency with other callers.
+
+Fixes: 34902b7f2754 ("tty: vt, get rid of weird source code flow")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Jie Deng <dengjie03@kylinos.cn>
-Acked-by: Peter Chen <peter.chen@kernel.org>
-Link: https://patch.msgid.link/20260810023626.70669-1-dengjie03@kylinos.cn
+Signed-off-by: Mingyu Wang <25181214217@stu.xidian.edu.cn>
+Link: https://patch.msgid.link/20260803144556.163856-1-25181214217@stu.xidian.edu.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/cdns3/cdns3-pci-wrap.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/tty/vt/vt.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/usb/cdns3/cdns3-pci-wrap.c
-+++ b/drivers/usb/cdns3/cdns3-pci-wrap.c
-@@ -99,6 +99,11 @@ static int cdns3_pci_probe(struct pci_de
- 
- 	if (pci_is_enabled(func)) {
- 		wrap = pci_get_drvdata(func);
-+		if (!wrap) {
-+			dev_err(&pdev->dev,
-+				"second function not initialized, retrying\n");
-+			return -EPROBE_DEFER;
-+		}
- 	} else {
- 		wrap = kzalloc(sizeof(*wrap), GFP_KERNEL);
- 		if (!wrap)
+--- a/drivers/tty/vt/vt.c
++++ b/drivers/tty/vt/vt.c
+@@ -1160,6 +1160,8 @@ int vc_allocate(unsigned int currcons)	/
+ 	return 0;
+ err_free:
+ 	visual_deinit(vc);
++	if (*vc->uni_pagedict_loc)
++		con_free_unimap(vc);
+ 	kfree(vc);
+ 	vc_cons[currcons].d = NULL;
+ 	return err;
 
 
