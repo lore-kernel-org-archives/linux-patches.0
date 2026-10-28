@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793207272;
-	b=rwF74Dx0obF9bx0KilHzVEW0NhtplaQ9J97xevYZCN0efL/RcGmLg5oL7XK6p7GWCoR4
-	 5WiW56flm39onevMTCzx4rxV7gJVFwNvDKg4c9zNkyMph+Ef9pEkZDkOlc9ntwPPpQglh
-	 NTAq3u/wjAzzeTYa5QNrNl6EKimZkSXQ3YNs5xUO0Oa87+BcH4F8e2mi9LQcBm9GBHqS2
-	 fhcHehvDKb0jkQ/mzaHl9xNGrU3kWWHEP9DZ5OWXTMZbESph/7Q6dZAoGTffd5mXnP4oq
-	 q+XDsGEhH4ZQ1wxapRlaymrLxYUxZrM/57fsJ6vXbuH459aicJjkKvwwVpUjNEI3eJw==
+	t=1793207275;
+	b=DRTxg7yPaIIpbMXe5+dhvtHVA4sFBch6bFfbpDG1WqSmd9jLc26sgxqXt2EukgZJC1/V
+	 ewNtK0bzJeyk+XAWWyyoNK/QTWTafS5OuEIKSYJF5a0A1S3K0osIWX+aCPbhlbW2nmdQG
+	 bNjgnPZJruOgLlYVvnYJ35EehhHrLSKVVJOiRBjM0xI1XFPz3CpxL19cjzU49FrdBZDLt
+	 kfeGlpxdC/uWYH1XkRFpGo/6241o84pYyTL+4FnyEhzv2Ed17BnREuilyOUEutM4zQuNr
+	 zl5lAak+9uA2HLnAbhSW6H/1NZ6OHTWQrkrQlLwhVe76uDidiw9glqbeXq9e5WyfXWA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793207272;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793207275;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=IOBXUIFiPUpQfdj5X++3y5ITEIeHdFmJ984LwqZGg+o=;
-	b=MZHot6tpvY8wInos1Vmr5bg/JHii6kzQUL0oQN1vZGnZCq7kHCBvI7s8CJ8K1T5RALSl
-	 s1KF+Y7qoo6TzRsxMoAdyMjZDnp2WvkWJmTwEe51YqXj/+QOPpMK6Tk1f/XNUv2+FF/Gy
-	 Ju9sUWkTXW9rPMPWovc9hSF/g/963182Mgpi7F5OYBzevcNDU4UHYaBP0M9OQWJV64OOA
-	 XjT2nlLkXnQ5BBdVdx+UqR3FJfB54WOeOH0ETehiu3+8aSFzCXhbYWZDeIaQPPFPyviOH
-	 D2n7tVSvsBZmifPi8+jhYwYhVnxLWkPQQOc28c2CA03oTWdIe0kbx2ObeJ83ofNKQ9A==
+	bh=lP+TuUNYGfQlUnxBDThH+qZgbioVE+NcckHq1n44J6I=;
+	b=eOkni+I4FXHluWChGL48r8861UBWaCSy98hnZyzUOK+DpaE2kw1xELGuc2t7XyDU9wZ3
+	 lHDmzk0gYqwy2eQnJd0bmfjrkMERg07lCUEqXP6qbkSj+usP41zGXAFvEGeCoc70GRLfO
+	 7HAGUnr4jrFi3ftqq/qn8s71sm8j7CpYhxZqnU+JMyDOCZXWwoM+JNBoKP7puzOQbKA9k
+	 bNly1qxU8hCNqluFCx5x2T6TrjCLxk/kV2FJlBHnHt3evP0hwkIN61uR3JBqDPDTiZMYw
+	 qwlmVtIMv90zWwQqXCGmFwjTvwqGvyRemESyHOt4jY37IhQUOOpB9i3A9oeWcsZ5Glw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zRghagvQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="P0/hVcYX";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DC36606A31A;
-	Wed, 28 Oct 2026 17:07:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E354606A31C;
+	Wed, 28 Oct 2026 17:07:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zRghagvQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F3321F01825;
-	Wed, 28 Oct 2026 17:07:51 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P0/hVcYX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C87A1F01825;
+	Wed, 28 Oct 2026 17:07:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793207272;
-	bh=IOBXUIFiPUpQfdj5X++3y5ITEIeHdFmJ984LwqZGg+o=;
+	s=korg; t=1793207274;
+	bh=lP+TuUNYGfQlUnxBDThH+qZgbioVE+NcckHq1n44J6I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zRghagvQOkF8YpnY9Iq64xfua905r9J5QP/J57xAVKAtgzwaMTAhL1N/6Gfct3g4I
-	 UJBpJiD2AK6qaj/MrtlQX+actZu8J6ph2nFBkIB7Nb90sVd0toN8Rmof7jg9mQyl2B
-	 KNUja6oyPvE9JPxtzdcxB1ZBjlmKMO5cRIdQC/bQ=
+	b=P0/hVcYX9fEBaJtPmhKAYuVQZ9TyecD1/WFMsNxMAFTbdk4BW4xo18tvc8HI+txiU
+	 KpbMqH6HrGOnNBQh6n3J34SZ5/U2ZtR/IxngadZvkVi9FU3sKoJh/TmVRqGFwPGjsQ
+	 P/b/GmI1eHR77VZuBL1rOUdwrQk70bLthr57Nrug=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Josef Bacik <josef@toxicpanda.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 7.2 47/88] io_uring/timeout: use the right clock for ABS updates
-Date: Wed, 28 Oct 2026 17:59:55 +0100
-Message-ID: <20261028165943.221961609@linuxfoundation.org>
+	Jens Axboe <axboe@kernel.dk>,
+	"Claude Fable 5.1" <noreply@anthropic.com>
+Subject: [PATCH 7.2 21/88] io_uring/io-wq: dont hide a link from cancellations
+Date: Wed, 28 Oct 2026 17:59:29 +0100
+Message-ID: <20261028165942.615546032@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165942.107695352@linuxfoundation.org>
 References: <20261028165942.107695352@linuxfoundation.org>
@@ -69,67 +70,189 @@ Content-Transfer-Encoding: 8bit
 
 From: Josef Bacik <josef@toxicpanda.com>
 
-Commit dad82eb1805d76c555224e4030319e3844642b64 upstream.
+Commit 436d48a2ed13112d2d27085325838e5bce6b4507 upstream.
 
-io_parse_user_time() converts an absolute time from the time namespace of
-the caller to the host's view, for the clock given by the flags. The
-flags of IORING_TIMEOUT_UPDATE and IORING_LINK_TIMEOUT_UPDATE can't name
-a clock, the updated timer keeps running on the clock the timeout was
-set up with. So the time is always converted as if it was
-CLOCK_MONOTONIC.
+A task that exits cancels its tracked requests and waits until they are
+gone. io_uring_cancel_generic() looks everywhere a request can be, and
+goes to sleep if it found nothing to cancel. It is woken up each time
+one of the requests of the task is completed by task work or freed.
 
-In a time namespace with a monotonic offset, that moves the new expiry of
-a CLOCK_REALTIME timeout by that offset, although the clock isn't
-affected by time namespaces at all, and the one of a CLOCK_BOOTTIME
-timeout by the difference between the two offsets.
+When io-wq is done with a request that has a link, there is a time in which
+the next request of the link can't be found:
 
-Do the conversion when the timeout has been looked up and its clock is
-known. The update is run by the submitter, its SQPOLL thread or one of
-its io-wq workers, all of which share the time namespace.
+  io_worker_handle_work()
+    io_assign_current_work(worker, NULL)
+    io_wq_free_work(work)
+      io_req_find_next()           // takes the link off the request
+      io_free_req()                // task work for the task
+    io_assign_current_work(worker, linked)
+      io_run_task_work()
+      cond_resched()
+      worker->cur_work = linked
 
-Fixes: 9cc6bac1bebf ("io_uring/timeout: honour caller's time namespace for IORING_TIMEOUT_ABS")
+It is not pending, it is not the current work of a worker, and it is not
+yet on the list that it is about to be parked on. If the pass that the
+exiting task makes because of io_free_req() falls into that time, it finds
+nothing and the task goes to sleep. The worker then runs the link, which
+IO_WQ_BIT_EXIT doesn't prevent for bounded work. If that parks the request
+nothing is completed or freed, and nobody wakes up the task. If it is the
+process that exits it can't be killed any more either.
+
+  NOP, IOSQE_ASYNC | IOSQE_IO_LINK
+  FUTEX_WAIT, FUTEX2_PRIVATE
+  exit of the thread, or of the process, up to 63us later
+
+With four of these per round 5 to 8 of 10,000 rounds hang (4 CPUs, KVM):
+
+  io_uring_cancel_generic
+  do_exit
+
+Commit f8b632e89a10 ("io_uring: tighten task exit cancellations") is about
+the same gap, and makes the task look again for whatever happens before
+io_free_req().
+
+Free the request once the link is the current work of the worker, or
+pending. Whoever is woken up by that can find the link, until it is parked
+where cancellations look as well. To do so split io_wq_free_work() in two.
+
+[ 7.2: io_wq_put_work() keeps the link check of 7.2, without the REQ_F_CQE_SKIP
+  condition that commit 5530a5102e3c adds in 7.3 ]
+Fixes: 768134d4f481 ("io_uring: don't do flush cancel under inflight_lock")
 Assisted-by: LLM
 Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Link: https://patch.msgid.link/20261015-b4-io-uring-fixes-v1-31-c1556f5d7bf5@toxicpanda.com
+Link: https://patch.msgid.link/20261015-b4-io-uring-fixes-v1-5-c1556f5d7bf5@toxicpanda.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Co-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/timeout.c |   11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ io_uring/io-wq.c    |   18 +++++++++++++++---
+ io_uring/io_uring.c |   37 +++++++++++++++++++++++++------------
+ io_uring/io_uring.h |    3 ++-
+ 3 files changed, 42 insertions(+), 16 deletions(-)
 
---- a/io_uring/timeout.c
-+++ b/io_uring/timeout.c
-@@ -458,6 +458,8 @@ static int io_linked_timeout_update(stru
- 	io = req->async_data;
- 	if (hrtimer_try_to_cancel(&io->timer) == -1)
- 		return -EALREADY;
-+	if (mode == HRTIMER_MODE_ABS)
-+		ts = timens_ktime_to_host(io_timeout_get_clock(io), ts);
- 	hrtimer_setup(&io->timer, io_link_timeout_fn, io_timeout_get_clock(io), mode);
- 	hrtimer_start(&io->timer, ts, mode);
- 	return 0;
-@@ -479,6 +481,8 @@ static int io_timeout_update(struct io_r
- 	/* for a multishot request this isn't a sequence, keep the repeats */
- 	if (!(data->flags & IORING_TIMEOUT_MULTISHOT))
- 		timeout->off = 0; /* noseq */
-+	if (mode == HRTIMER_MODE_ABS)
-+		time = timens_ktime_to_host(io_timeout_get_clock(data), time);
- 	data->time = time;
+--- a/io_uring/io-wq.c
++++ b/io_uring/io-wq.c
+@@ -641,11 +641,12 @@ static void io_worker_handle_work(struct
+ 		/* handle a whole dependent link */
+ 		do {
+ 			bool do_kill = test_bit(IO_WQ_BIT_EXIT, &wq->state);
+-			struct io_wq_work *next_hashed, *linked;
++			struct io_wq_work *next_hashed, *linked, *done = work;
+ 			unsigned int work_flags = atomic_read(&work->flags);
+ 			unsigned int hash = __io_wq_is_hashed(work_flags)
+ 				? __io_get_work_hash(work_flags)
+ 				: -1U;
++			bool last;
  
- 	list_add_tail(&timeout->list, &ctx->timeout_list);
-@@ -511,7 +515,12 @@ int io_timeout_remove_prep(struct io_kio
- 				  IORING_TIMEOUT_ABS |
- 				  IORING_TIMEOUT_IMMEDIATE_ARG))
- 			return -EINVAL;
--		ret = io_parse_user_time(&tr->time, READ_ONCE(sqe->addr2), tr->flags);
-+		/*
-+		 * The clock is that of the timeout to update, an absolute time
-+		 * is converted to the host's view once that has been found.
-+		 */
-+		ret = io_parse_user_time(&tr->time, READ_ONCE(sqe->addr2),
-+					 tr->flags & ~IORING_TIMEOUT_ABS);
- 		if (ret)
- 			return ret;
- 	} else if (tr->flags) {
+ 			next_hashed = wq_next_work(work);
+ 
+@@ -661,7 +662,7 @@ static void io_worker_handle_work(struct
+ 			io_wq_submit_work(work);
+ 			io_assign_current_work(worker, NULL);
+ 
+-			linked = io_wq_free_work(work);
++			last = io_wq_put_work(work, &linked);
+ 			work = next_hashed;
+ 			if (!work && linked && !io_wq_is_hashed(linked)) {
+ 				work = linked;
+@@ -670,6 +671,13 @@ static void io_worker_handle_work(struct
+ 			io_assign_current_work(worker, work);
+ 			if (linked)
+ 				io_wq_enqueue(wq, linked);
++			/*
++			 * Not before the link is current or pending work again.
++			 * This may be the last time that a task is woken up
++			 * which exits and looks for requests to cancel.
++			 */
++			if (last)
++				io_wq_free_work(done);
+ 
+ 			if (hash != -1U && !next_hashed) {
+ 				/* serialize hash clear with wake_up() */
+@@ -999,9 +1007,13 @@ void io_wq_set_exit_on_idle(struct io_wq
+ static void io_run_cancel(struct io_wq_work *work, struct io_wq *wq)
+ {
+ 	do {
++		struct io_wq_work *linked;
++
+ 		atomic_or(IO_WQ_WORK_CANCEL, &work->flags);
+ 		io_wq_submit_work(work);
+-		work = io_wq_free_work(work);
++		if (io_wq_put_work(work, &linked))
++			io_wq_free_work(work);
++		work = linked;
+ 	} while (work);
+ }
+ 
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -1454,22 +1454,35 @@ int io_poll_issue(struct io_kiocb *req,
+ 	return ret;
+ }
+ 
+-struct io_wq_work *io_wq_free_work(struct io_wq_work *work)
++/*
++ * io-wq is done with @work. Returns true if it held the last reference, and
++ * hands out the next request of the link then. The caller has to make sure
++ * that cancellations can find the latter before it calls io_wq_free_work().
++ */
++bool io_wq_put_work(struct io_wq_work *work, struct io_wq_work **linked)
+ {
+ 	struct io_kiocb *req = container_of(work, struct io_kiocb, work);
+ 	struct io_kiocb *nxt = NULL;
+ 
+-	if (req_ref_put_and_test_atomic(req)) {
+-		if (req->flags & IO_REQ_LINK_FLAGS) {
+-			struct io_ring_ctx *ctx = req->ctx;
+-
+-			mutex_lock(&ctx->uring_lock);
+-			nxt = io_req_find_next(req);
+-			mutex_unlock(&ctx->uring_lock);
+-		}
+-		io_free_req(req);
++	*linked = NULL;
++	if (!req_ref_put_and_test_atomic(req))
++		return false;
++
++	if (req->flags & IO_REQ_LINK_FLAGS) {
++		struct io_ring_ctx *ctx = req->ctx;
++
++		mutex_lock(&ctx->uring_lock);
++		nxt = io_req_find_next(req);
++		mutex_unlock(&ctx->uring_lock);
+ 	}
+-	return nxt ? &nxt->work : NULL;
++	if (nxt)
++		*linked = &nxt->work;
++	return true;
++}
++
++void io_wq_free_work(struct io_wq_work *work)
++{
++	io_free_req(container_of(work, struct io_kiocb, work));
+ }
+ 
+ void io_wq_submit_work(struct io_wq_work *work)
+@@ -1480,7 +1493,7 @@ void io_wq_submit_work(struct io_wq_work
+ 	bool needs_poll = false;
+ 	int ret = 0, err = -ECANCELED;
+ 
+-	/* one will be dropped by io_wq_free_work() after returning to io-wq */
++	/* one will be dropped by io_wq_put_work() after returning to io-wq */
+ 	if (!(req->flags & REQ_F_REFCOUNT))
+ 		__io_req_set_refcount(req, 2);
+ 	else
+--- a/io_uring/io_uring.h
++++ b/io_uring/io_uring.h
+@@ -203,7 +203,8 @@ int io_do_iopoll(struct io_ring_ctx *ctx
+ __cold void io_iopoll_try_reap_events(struct io_ring_ctx *ctx);
+ void __io_submit_flush_completions(struct io_ring_ctx *ctx);
+ 
+-struct io_wq_work *io_wq_free_work(struct io_wq_work *work);
++bool io_wq_put_work(struct io_wq_work *work, struct io_wq_work **linked);
++void io_wq_free_work(struct io_wq_work *work);
+ void io_wq_submit_work(struct io_wq_work *work);
+ 
+ void io_free_req(struct io_kiocb *req);
 
 
