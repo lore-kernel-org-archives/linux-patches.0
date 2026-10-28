@@ -1,50 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793208744;
-	b=NE13RWnt+qySL0TI6/kzIlH2WyY54+uhxBjSljlit5wp1pm+YrDT+rRxuZ/nWN9D5U5A
-	 ziSRiTUVuSgfxl1BnVhUtskL9Fv4E1gP7BAcE/lJdUxD+zViZlvCws6CWM24/UzvVIILV
-	 +Z+si2JZn+7a9I7NwYtMUfFb1hUxjjUTMtAxFzhrLbvd+jHWbCtAxOARanM255IGmEtsQ
-	 BCwcfAK8ltcX634qBkNBmW2tBi1NZ1DHZNgSQOL7v+y6+ms9ILwvLoeK2pOtPu0TmT92a
-	 SQManqrZiW7hPmcAS7npUvwxLdalzMG6mREn9AV2GsN7no8Qq62NZHNpN810XlpeJOw==
+	t=1793208747;
+	b=c86Dv9HY0fHXBifi8UzmL4yw/np+kQCHmrU8YwAbU4Fbb7YoUO1SY9H0RwARaR1BhrV9
+	 RkGz+4xZ+e7/glawl6Xt45pUXVA4+WTtAcEgJVLUrc3LBSTBk3+SbxN8Ob2xA/ojmrWU6
+	 ZkFXVpwx6HC3qvXp1AaUXtXqEuybbsGPP5ORaHVbU5I1CCkYtazk2Pn1eoDEgOZQcNxfg
+	 ViXxmkdCdBOMQYS4IpcFB44GsDnRxXl+CMLcnDA00giFqC/hzwcyrXJd5AQBM9lJn3adT
+	 0amgHKEn9ZUrpwYQe2GTqtCLB+qv6IRdDcerAuh8TwyZujAk6HSVpXbRJ2z8qa8XIpw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793208744;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793208747;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5//NO8hDP4vTK5URRFFaYBcKG4v/NemBVUT5KfUKaF8=;
-	b=dPMWNGNIWsndWBJlgrsBCmKcstM8lAxcU/kpfY6ha7J1PM1mD32FJnts6ejjokY0cCnt
-	 mPDpA3ud3CBgaZJDXVHRWv/Tkf0/1NKS4iq3STlcfJA62nfQM9ZPWGZKxkPchZaPmx5mm
-	 lm/UEqE0TF23wfPK+My/YqJr0SA12Zhoetr2uZJCiDOz/bJht4h8fm1R76gdJIJJZ/AAW
-	 lZlMGsjxwjGmkAl7Kujpc33yohpYH6Fy7gS+3AxFFzMwXFrLimpG6dVBPofga48OBucst
-	 RJyjXuVhpE2ozaVYIHRqkP0Yx1uVUjJNCkTJvCvfvbkS4hgUt9E21gD53cvQ6NRapmQ==
+	bh=IEjvQ3zxMmzihCc3R+E9Ss1ZXXWXIyXSciI/L5UHNLI=;
+	b=439GEJyd1xC9n7KE0Skd5S6EPkjn3fzGVOPTN4QzVjfSoZ5OUw30D2sfVWxrRgUhAd2S
+	 L/K8kV2UyiBdhQ0h8lmOAlSdMg21ZEp5kHsJF9jRx3cfY06d4twwDM1JcsAC/wQ3GmVgd
+	 NJo+B0j+uh8FQyvfIoAlaRgDnnyXsh5WWby2012QQWLBSyCX9KtB/SU1SlXw50JxRnOAc
+	 1FhHg7ITh97VrS5f+JmAx7fyj4XXyaGUtTGkfQWGGutNl1OGmhP0bUgmseEiIzY2vJdHo
+	 ev2HO0bkf1UJE0kLCUEZQLBwDSFEZ/hTcb6O1sy9QdUN9lq8unWv4Fg0dSAiSrG6krA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2lek30y2;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lcDfwnC+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89E2B606A31C;
-	Wed, 28 Oct 2026 17:32:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A051D606A31A;
+	Wed, 28 Oct 2026 17:32:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2lek30y2
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9D211F01825;
-	Wed, 28 Oct 2026 17:32:23 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lcDfwnC+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0A771F01825;
+	Wed, 28 Oct 2026 17:32:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793208744;
-	bh=5//NO8hDP4vTK5URRFFaYBcKG4v/NemBVUT5KfUKaF8=;
+	s=korg; t=1793208747;
+	bh=IEjvQ3zxMmzihCc3R+E9Ss1ZXXWXIyXSciI/L5UHNLI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2lek30y2LbR0G6zvO/VrYrim3iE+RIvPSrFhUjTPCvpbkxakzy/LBZIPo/Ta4KC31
-	 Z2XZsFNaxg2goliXMyXACrOasjqYcq4ucKvTWK4ALIOR2fD+ycqdkTxuWzTA2rRSZj
-	 aKsGQqit7wRmiNDxT+cDMVP67X+VXQo02xCwRpWA=
+	b=lcDfwnC+cj8bzWHb8+MoaIDVgogD9QaldEL6XYEuTiqAc2VxDIbnJ481TtQ+GVttt
+	 fNI947j9sbH1W3GWD065aV24t4zPUOQJkdvcYbu6u4XHbVf1HswC+ubi1XbYEiu1oi
+	 eA3W1CKoWvEjNTp4zJ5qAbh20H1EmNxlKXHspJAI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 5.10 226/516] USB: serial: fix dynamic id driver deregistration race
-Date: Wed, 28 Oct 2026 17:56:18 +0100
-Message-ID: <20261028170008.860455855@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
+	Alan Stern <stern@rowland.harvard.edu>
+Subject: [PATCH 5.10 191/516] usb: ohci-da8xx: disable controller wakeup on cleanup
+Date: Wed, 28 Oct 2026 17:55:43 +0100
+Message-ID: <20261028170008.027510265@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -66,32 +69,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-commit 63594e8ffe097bc0b7639936f33799a7653dded2 upstream.
+commit 901197dd4c7dcffbf97426487d4c047555c98554 upstream.
 
-Only free the dynamic ids after having deregistered the driver and
-removed the "new_id" attribute to avoid leaking any id added by a racing
-write to the attribute.
+The OHCI core marks controllers with RemoteWakeupConnected as
+wakeup-capable. Probe enables wakeup, but neither removal nor a later
+notifier registration failure disables it, leaving the wakeup source
+attached.
 
-Fixes: 93bacefc4cc0 ("USB serial: add dynamic id support to usb-serial core")
-Cc: stable@vger.kernel.org	# 2.6.21
-Signed-off-by: Johan Hovold <johan@kernel.org>
+Disable controller wakeup after removing the HCD on both paths.
+
+This issue was identified during our ongoing static-analysis research
+while reviewing kernel code.
+
+Fixes: a6eeeb9f45b5 ("USB: Update USB default wakeup settings")
+Cc: stable <stable@kernel.org>
+Assisted-by: LLM
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Acked-by: Alan Stern <stern@rowland.harvard.edu>
+Link: https://patch.msgid.link/20260915012011.61874-2-mhun512@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/bus.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/host/ohci-da8xx.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/usb/serial/bus.c
-+++ b/drivers/usb/serial/bus.c
-@@ -184,7 +184,7 @@ int usb_serial_bus_register(struct usb_s
+--- a/drivers/usb/host/ohci-da8xx.c
++++ b/drivers/usb/host/ohci-da8xx.c
+@@ -464,6 +464,7 @@ static int ohci_da8xx_probe(struct platf
  
- void usb_serial_bus_deregister(struct usb_serial_driver *driver)
- {
--	free_dynids(driver);
- 	driver_unregister(&driver->driver);
-+	free_dynids(driver);
- }
+ err_remove_hcd:
+ 	usb_remove_hcd(hcd);
++	device_wakeup_disable(hcd->self.controller);
+ err:
+ 	usb_put_hcd(hcd);
+ 	return error;
+@@ -474,6 +475,7 @@ static int ohci_da8xx_remove(struct plat
+ 	struct usb_hcd	*hcd = platform_get_drvdata(pdev);
  
+ 	usb_remove_hcd(hcd);
++	device_wakeup_disable(hcd->self.controller);
+ 	usb_put_hcd(hcd);
+ 
+ 	return 0;
 
 
