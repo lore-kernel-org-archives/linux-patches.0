@@ -1,53 +1,61 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793211576;
-	b=46r4cKt6lufzkys2r/fs8g9+TTRf8U/DfNovZFe+WnI04QN3lyvbo2H9cy7LCFvK4I1n
-	 KGIvXL8cfwNfAeNvpUo5zpdStjS6V8KO+38F5VHfRuT3q54bVSvzun2LR6L7+8Kjuiv/B
-	 L2/p9XqbrNIoJ+q4NA3IEjvuQeMxmlwM3IZFf6yqMMeBRDAK/KM73eq8QcTP5R4SgqM3r
-	 ZieCXyseOP4WPtW4LEWl2SYKUH+xLBHaEx2RmdnTTvEAc4Eri2rhBX1UieUWe4Cogm7kI
-	 tySsNDmxRNvOmRaTkG1mlW1eRut9B1/TApgbw+2LutWX8g4XaGHQxNgsZcODCds/rTw==
+	t=1793211578;
+	b=O2F5skljhHkSHa2fjwsVLX2HuIkUMYXGd02GrcChG+SnoeBMl3g/jdidmX+IIx0u32Oc
+	 5VWhHlu5x5avi0wPD7BGGDE/mclNHGCOoDevGJv2rw+ZkjJWnVgXlAjXwIIkjxz84jRu+
+	 5Nwqps4JNxFf06FIBZydfsKtm8ONjRS3vZfnboYdNJetWov8Amawg8bfFhtvvcI2w94Yd
+	 2H7tQlCMInLueKU2Z3QTFuVepsAMROkfbZZ6OJFBYGwCaaRQ2Ox9SAJytL1Pdg7yMkSpc
+	 6Jncca5nsCN6vb8aNd0XIndevIpzGnv/B+7ka4CZxKQrzu756RD+6oAb0VtHkUbMXYQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793211576;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793211578;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=0LurOqfBsey/K7uL5eQaFK05l8amGrm/rvWDwiRD3Ok=;
-	b=XqCJmYzm9EB0sMhpyTLDKsxu0hJ71rATCiFpkbxuIwv4ylGt+OV2BObIxeZAkh5HM0Zi
-	 dSAhgIuv4l5C3JfYsL0Pay2ANYHNoNrnp9loY4kvvYI2gV2mPy5xMbwSH4+KPYYS2OxOv
-	 aisngSMf/fg9got67RnKAdBAiN+VK+8RWeuRFC6943sHUvjY+CpDQVQh92Sx0FQzfVNyu
-	 wi/D58Ou1emfUdvCZqKDgKh/LEBYyHLsMkj1gbktKx3R05PtFTNfbJrECwTik1FTQYeMF
-	 uwwbmWlVop0Jvdu5iAzEZARyDxKuv8seerDBfiVVAjady6NyKf3lDphULuSmg3cLcqg==
+	bh=eFTz/RV6IxDnHtTYuNBpN1DsUhaRtXcF7urEB5g7l6s=;
+	b=IbthMisz7KC44yj/KNAvRkUswidHx8RoVDqPUNz5++59NpciD8eUQgC0INt1K1nMlG90
+	 TIavOnJZGoc3ptSCOPfLuKaYdXqqNnNYYk2qJy0VdSAZdHtld9AOOciS/I/uzPKOpyFHs
+	 VnhgQ1qoXtDIa/lTajL1uZuIL/J85WwpdZ/LjoHx7n/VVoIyeUT36hldjhSx51Isst2bX
+	 ETHHX1+h4V2TXS7RFZ9v7UcDsQcNNy0lM33fhr9vo8NwwYrjTTTTAC+3Yuvk7HYX2SH8O
+	 9WjylRqdCEiRinJh209vJv29vYH1oV7u9oYVDcdCIIYBBb2aW1tctDyKBcn61on64Rg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dVvPJeUz;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cVT2llVS;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37D21606A31A;
-	Wed, 28 Oct 2026 18:19:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89437606A31D;
+	Wed, 28 Oct 2026 18:19:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dVvPJeUz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 458351F01825;
-	Wed, 28 Oct 2026 18:19:35 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cVT2llVS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E08771F01825;
+	Wed, 28 Oct 2026 18:19:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793211575;
-	bh=0LurOqfBsey/K7uL5eQaFK05l8amGrm/rvWDwiRD3Ok=;
+	s=korg; t=1793211578;
+	bh=eFTz/RV6IxDnHtTYuNBpN1DsUhaRtXcF7urEB5g7l6s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dVvPJeUzbvGzi8RyxJZwHN2U2/DinrsMr2she4wmKxaSG11VZIJVQ9vp/wL3csNWk
-	 PaAmo9TYw9wGyQRn+Gcqk1ADDoTNNltZ5w8uZU0cCxf7DHW+CuGbBQhBryfxb3VTKC
-	 HWvYpFSTsUUkoCC3wgQlf0iM6uk+ZGf7Gk6Tqd2Y=
+	b=cVT2llVSMTcHKLrSmW1qLBinTphH9aIwxDQOeO7PHmJJpJb91dulc8v4UGZ8yWnXN
+	 eGhi+NaSmLjVcb/rTKN7NS2hfPIHXvdW/EYxOBYsldKl7LSw1Zq89wAKiykRlDBiHJ
+	 LuHrcoYa3IUS0vl66PhmY0kT+gfBHwiPJA/npJSU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yazen Ghannam <yazen.ghannam@amd.com>,
-	Vishal Badole <Vishal.Badole@amd.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Pedro Falcato <pfalcato@suse.de>,
+	"Kiryl Shutsemau (Meta)" <kas@kernel.org>,
+	"Jose A. Perez de Azpillaga" <azpijr@gmail.com>,
+	Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Jann Horn <jannh@google.com>,
+	Brian Geffon <bgeffon@google.com>,
+	Minchan Kim <minchan@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 427/571] EDAC/amd64: Mask UMC chip select to the four implemented selects
-Date: Wed, 28 Oct 2026 17:59:34 +0100
-Message-ID: <20261028170018.149308775@linuxfoundation.org>
+Subject: [PATCH 5.15 428/571] mm/mremap: fix locked_vm leak by splitting VMA for MREMAP_DONTUNMAP
+Date: Wed, 28 Oct 2026 17:59:35 +0100
+Message-ID: <20261028170018.173307343@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -69,52 +77,132 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vishal Badole <Vishal.Badole@amd.com>
+From: Lorenzo Stoakes (ARM) <ljs@kernel.org>
 
-[ Upstream commit 7484bc43ba6b8e189b482db5b75e7842890a82b1 ]
+[ Upstream commit 597e4b9ab48a3f841080f627722064853d3f650e ]
 
-For DRAM ECC errors, the chip select value can be found in the
-MCA_SYND[ErrorInformation] field.
+The MREMAP_DONTUNMAP feature is highly unusual in that it permits mremap()
+operations that keep the original VMA in place.
 
-ErrorInformation[2:0] was first documented in Zen1. The 3 bit field
-implied that up to 8 chip selects may be used.
+Historically this has led to a lot of bugs where non-obvious interactions
+occur between existing mremap() operations and the original VMA.
 
-However, all Zen-based systems have only ever had up to 4 chip selects.
-So only bits [1:0] would contain a valid chip select value.
+Fix another of these - partial copies.
 
-Future systems are redefining the field to ErrorInformation[1:0]. This
-matches the existing 'up to 4 chip selects' implementations. And it
-frees up the extra bit for other decoding.
+The long-standing mremap() partial VMA logic has the baked-in assumption
+that the originating VMA is unmapped and thus moved.
 
-Change the current chip select mask from 0x7 to 0x3 to prepare for the
-decode change.
+However MREMAP_DONTUNMAP defeats this by performing a partial copy
+instead since it keeps the source VMA around.
 
-Fixes: 713ad54675fd ("EDAC, amd64: Define and register UMC error decode function")
-Suggested-by: Yazen Ghannam <yazen.ghannam@amd.com>
-Signed-off-by: Vishal Badole <Vishal.Badole@amd.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Yazen Ghannam <yazen.ghannam@amd.com>
+An mremap(..., MREMAP_DONTUNMAP) operation disallows resizing of the VMA,
+but the operation can be performed partially:
+
+                           |-----------------|
+                           |                 |
+                           |                 v
+                        <------>          <------>
+                        .new_sz.           new_sz
+                     |--.------.--|       |------|
+                     |  .source.  |       | dest |
+                     |--.------.--|       |------|
+                     <------------>
+                         old_sz
+
+The page tables in the specified range are moved, but the original VMA is
+kept intact.
+
+This interacts poorly with mlock()'d VMAs, as the VMA_LOCKED_BIT flag is
+cleared for the entire source VMA and set for the entire destination VMA.
+
+This results in an mm->locked_vm leak as the change is therefore not
+accounted correctly.
+
+The clear solution here is to make the portion of the source VMA which is
+mremap()'d distinct from the rest of it, a.k.a. split it.
+
+Therefore resolve this issue by splitting it ahead of the rest of the
+mremap() operation if the VMA is mlock()'d.
+
+This is valid, as the source VMA will lose its VMA_LOCKED_BIT flag, so if a
+partial remap it will become distinct from the rest of the VMA.
+
+In order to make this change re-expose split_vma() in vma.h for
+CONFIG_MMU (nommu doesn't compile mremap.c and uses a static helper
+instead).
+
+Finally, update the sys_map_count check to account for this case.
+
+Note that the early check does not use needs_pre_split() - this is because
+the VMA has not been looked up by this point, so be conservative and assume
+that the VMA is mlock()'d in this case for the purposes of the
+sys_map_count check.
+
+Link: https://lore.kernel.org/20260930-fix-dontunmap-partial-self-merge-v2-2-f388985a0f0a@kernel.org
+Fixes: e346b3813067 ("mm/mremap: add MREMAP_DONTUNMAP to mremap()")
+Signed-off-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reviewed-by: Pedro Falcato <pfalcato@suse.de>
+Acked-by: Kiryl Shutsemau (Meta) <kas@kernel.org>
+Reviewed-by: Jose A. Perez de Azpillaga <azpijr@gmail.com>
+Tested-by: Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>
+Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: Jann Horn <jannh@google.com>
+Cc: Brian Geffon <bgeffon@google.com>
+Cc: Minchan Kim <minchan@kernel.org>
 Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20261002113204.3358815-2-Vishal.Badole@amd.com
-[ sashal: adapted the change to decode_umc_error(), using err.csrow instead of err->csrow ]
+[ sashal: Inlined VMA preparation into move_vma() because the upstream preparation helpers are absent. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/edac/amd64_edac.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ mm/mremap.c | 19 +++++++++++++++++--
+ 1 file changed, 17 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/edac/amd64_edac.c b/drivers/edac/amd64_edac.c
-index 4fce75013674f..08cb7d68c160e 100644
---- a/drivers/edac/amd64_edac.c
-+++ b/drivers/edac/amd64_edac.c
-@@ -2940,7 +2940,7 @@ static void decode_umc_error(int node_id, struct mce *m)
- 			err.err_code = ERR_CHANNEL;
- 	}
+diff --git a/mm/mremap.c b/mm/mremap.c
+index 89f198933af4a..f7a5f1106699d 100644
+--- a/mm/mremap.c
++++ b/mm/mremap.c
+@@ -578,6 +578,8 @@ static unsigned long move_vma(struct vm_area_struct *vma,
+ 	int split = 0;
+ 	int err = 0;
+ 	bool need_rmap_locks;
++	const bool split_before = vma->vm_start != old_addr;
++	const bool split_after = vma->vm_end != old_addr + old_len;
  
--	err.csrow = m->synd & 0x7;
-+	err.csrow = m->synd & 0x3;
+ 	/*
+ 	 * We'd prefer to avoid failure later on in do_munmap:
+@@ -587,9 +589,9 @@ static unsigned long move_vma(struct vm_area_struct *vma,
+ 		return -ENOMEM;
  
- 	if (umc_normaddr_to_sysaddr(m->addr, pvt->mc_node_id, err.channel, &sys_addr)) {
- 		err.err_code = ERR_NORM_ADDR;
+ 	if (vma->vm_ops && vma->vm_ops->may_split) {
+-		if (vma->vm_start != old_addr)
++		if (split_before)
+ 			err = vma->vm_ops->may_split(vma, old_addr);
+-		if (!err && vma->vm_end != old_addr + old_len)
++		if (!err && split_after)
+ 			err = vma->vm_ops->may_split(vma, old_addr + old_len);
+ 		if (err)
+ 			return err;
+@@ -607,6 +609,19 @@ static unsigned long move_vma(struct vm_area_struct *vma,
+ 	if (err)
+ 		return err;
+ 
++	/*
++	 * To account mlock()'d pages correctly in the MREMAP_DONTUNMAP
++	 * case perform any split ahead of time for an mlock()'d VMA.
++	 */
++	if ((flags & MREMAP_DONTUNMAP) && (vma->vm_flags & VM_LOCKED)) {
++		if (split_before)
++			err = split_vma(mm, vma, old_addr, 1);
++		if (!err && split_after)
++			err = split_vma(mm, vma, old_addr + old_len, 0);
++		if (err)
++			return err;
++	}
++
+ 	if (unlikely(flags & MREMAP_DONTUNMAP && vm_flags & VM_ACCOUNT)) {
+ 		if (security_vm_enough_memory_mm(mm, new_len >> PAGE_SHIFT))
+ 			return -ENOMEM;
 -- 
 2.53.0
 
