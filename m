@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214811;
-	b=BHgUA+b5KS0Znc9ouuzYwgG2vreo1B4WQJB87Oq3KDn+Y9BH8D2e52DlrZYPR9HdPmH1
-	 oH8UmI+Wa169NnI6OVcrgg61hUgYZ9jzMQY8w3NvfjP7TYQGb4P6Il+px7cQqw4PWRUws
-	 MZ7TKCuWVnbRa1j+YKyGI/Dhoc12t36Kn5D0W4WBZibzl+H9QfVTWH9CcnzeyGC8ekuHk
-	 gIM3jbD6LLBwQxfgrQWvjdl9Wb0gKF6yKXd+bkerDkoUcutzkREDtZ2zcUmljr6Z0fOw3
-	 w6rwUZldpDPL7z6PcgVWiyMafLT51IhuVqBrmarLu0pU0LnCYINOaLQem5i17g/s5Cg==
+	t=1793214813;
+	b=0FEc23+TDK3vnurqxR54R7n0PM0fwGlAP8UrQ6VPDYp6SmVcwWRUZhDA/qMFwJ12584Z
+	 WTTcwcPV/GIKJws5wP9iXvg5QoMTWqhJSVj4AT6uGijAG08aaC6oyMmSbKV08LegMj/fL
+	 jzeqR8ZU5oJcFW59Jgk6WXyV/MisYRJaRcr8Si/pbJW66yg3N1pwhY8kqDuQb32JUwKaM
+	 jmrM6hGVsrXuHnVSJx4F+gSsoZddUiPDChhBzNKD5QUv5LKefTlusGLhGtI8k6fZZ9D6k
+	 jwQfM+lEDy/r0ZfzYwTs/JL/P9aYtBLCZydgHOM4HV1RyGSniZUO8h0Q+W4s1CK1daA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214811;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214813;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=w9Fd8XtFBfhItSooS3tvpJGHnF70Jrp4ArtwWCC/ybw=;
-	b=WPqbopOMuEhu2doeZwAPOtD3R8Dpin2FgTZrcpFZ0vSiDVhuIstJgSkH4cIgtsW8FCTv
-	 Aibcnv1pcz2Bjp4VGCNPo1V9dLpuOBqzBd7L4JvV91b2vN0wPjrYkXjvb5qV66g8gL4xg
-	 nmOTsNkDDrh7fSnL4BfzIGeHT0nML4C90qnTCVvNaYxo55oXbmP760PKw9LkDbUFC9O73
-	 cRD11Mv0Tajg9O/pplfE4EP3fcXcDRfwIcv/oTGG8cbvJv+VJN3Jh8tiPoeEblD7bP0RA
-	 ZFMvLGh7owsrRaGUZ4DeYX/pXgQlrgAfFBdAm/QTg2SGs0zHlvaD0gjjOb2gHRMXqEA==
+	bh=zi77ZeqeTXdGepzDqK9yZoruxnV5Ngw+hrVOZNBx0ZY=;
+	b=yHAkjfjWKk9PRDDsV0buW1MDYKwSKEQpvgF9qus7K30mW2R2ogK/xrG0NF533K0SkDay
+	 hzfZaWG3xNL8TdbqPZrgs3Imf8OcufhwT6+0lOo3EVOjhm2vU6HElBu2pkHL3CPq4c/LK
+	 RYeWuHrzn0hUN3E1/H6IL2Cflh0Izs/6+RG8AAU1VuvrTJTJVW2cfzrHhjHjIgb/CzFya
+	 wCelFCtyni1Fz58zGwXcnCLhoYqp5Yqmik2qQpbNZj+CKbaWSqBiMx2IZV8jbtAh4zKQy
+	 LbLL/qFNjjHU2VeoCUcgOLxRDZrHj+u1haqUK8YlqTV3RjJZ7MUqa/65Mh/Y/klgGpA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nGBxVf7V;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Tm6Pdo2G;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC945606A33B;
-	Wed, 28 Oct 2026 19:13:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 609CA606A31C;
+	Wed, 28 Oct 2026 19:13:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nGBxVf7V
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7AFD1F01825;
-	Wed, 28 Oct 2026 19:13:29 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Tm6Pdo2G
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B026A1F01825;
+	Wed, 28 Oct 2026 19:13:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214810;
-	bh=w9Fd8XtFBfhItSooS3tvpJGHnF70Jrp4ArtwWCC/ybw=;
+	s=korg; t=1793214813;
+	bh=zi77ZeqeTXdGepzDqK9yZoruxnV5Ngw+hrVOZNBx0ZY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nGBxVf7V2kcdvw4NMozwVWnWq5dqfeiWG4ia+KJ5X2VMq+ZddYdgwNOMz+//QQZPt
-	 MxycMmHXEhgdRhBcE4LoWwQF4x4oHBsHDF9y/kpOjMJ8lEBYVY1PGcs4/W9SR+TpMp
-	 crLY4Xw4AX48/Z+kAe/ZZRpQqrhb6Zo5kcMDPf1s=
+	b=Tm6Pdo2GhqzHTzwFgpOKeX01aV/KzTu9+tu00fjF/UKdnNHI2+HpGX468+hApFn9q
+	 KMel0OpetVwJZg5VF4fZtKuuMPh3e367JIKHThQqAEavvlzuGPt4wvwwZNhetPfb5c
+	 jRWwlVNtAEtj4szIndMkhoww7L/5B3lzeg3JntLU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Tinguely <mark.tinguely@oracle.com>,
-	Christoph Hellwig <hch@lst.de>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Carlos Maiolino <cem@kernel.org>,
+	syzbot+881d65229ca4f9ae8c84@syzkaller.appspotmail.com,
+	Sabrina Dubroca <sd@queasysnail.net>,
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0988/1887] xfs: remove xfs_attr_leaf_hasname
-Date: Wed, 28 Oct 2026 17:51:24 +0100
-Message-ID: <20261028170521.893884254@linuxfoundation.org>
+Subject: [PATCH 6.1 0989/1887] xfrm: always flush state and policy upon NETDEV_UNREGISTER event
+Date: Wed, 28 Oct 2026 17:51:25 +0100
+Message-ID: <20261028170521.917124155@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -70,155 +70,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christoph Hellwig <hch@lst.de>
+From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
 
-[ Upstream commit 3a65ea768b8094e4699e72f9ab420eb9e0f3f568 ]
+[ Upstream commit 4efa91a28576054aae0e6dad9cba8fed8293aef8 ]
 
-The calling convention of xfs_attr_leaf_hasname() is problematic, because
-it returns a NULL buffer when xfs_attr3_leaf_read fails, a valid buffer
-when xfs_attr3_leaf_lookup_int returns -ENOATTR or -EEXIST, and a
-non-NULL buffer pointer for an already released buffer when
-xfs_attr3_leaf_lookup_int fails with other error values.
+syzbot is reporting that "struct xfrm_state" refcount is leaking.
 
-Fix this by simply open coding xfs_attr_leaf_hasname in the callers, so
-that the buffer release code is done by each caller of
-xfs_attr3_leaf_read.
+  unregister_netdevice: waiting for netdevsim0 to become free. Usage count = 2
+  ref_tracker: netdev@ffff888052f24618 has 1/1 users at
+       __netdev_tracker_alloc include/linux/netdevice.h:4400 [inline]
+       netdev_tracker_alloc include/linux/netdevice.h:4412 [inline]
+       xfrm_dev_state_add+0x3a5/0x1080 net/xfrm/xfrm_device.c:316
+       xfrm_state_construct net/xfrm/xfrm_user.c:986 [inline]
+       xfrm_add_sa+0x34ff/0x5fa0 net/xfrm/xfrm_user.c:1022
+       xfrm_user_rcv_msg+0x58e/0xc00 net/xfrm/xfrm_user.c:3507
+       netlink_rcv_skb+0x158/0x420 net/netlink/af_netlink.c:2550
+       xfrm_netlink_rcv+0x71/0x90 net/xfrm/xfrm_user.c:3529
+       netlink_unicast_kernel net/netlink/af_netlink.c:1318 [inline]
+       netlink_unicast+0x5aa/0x870 net/netlink/af_netlink.c:1344
+       netlink_sendmsg+0x8c8/0xdd0 net/netlink/af_netlink.c:1894
+       sock_sendmsg_nosec net/socket.c:727 [inline]
+       __sock_sendmsg net/socket.c:742 [inline]
+       ____sys_sendmsg+0xa5d/0xc30 net/socket.c:2592
+       ___sys_sendmsg+0x134/0x1d0 net/socket.c:2646
+       __sys_sendmsg+0x16d/0x220 net/socket.c:2678
+       do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+       do_syscall_64+0xcd/0xf80 arch/x86/entry/syscall_64.c:94
+       entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-Cc: stable@vger.kernel.org # v5.19+
-Fixes: 07120f1abdff ("xfs: Add xfs_has_attr and subroutines")
-Reported-by: Mark Tinguely <mark.tinguely@oracle.com>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Darrick J. Wong <djwong@kernel.org>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
+This is because commit d77e38e612a0 ("xfrm: Add an IPsec hardware
+offloading API") implemented xfrm_dev_unregister() as no-op despite
+xfrm_dev_state_add() from xfrm_state_construct() acquires a reference
+to "struct net_device".
+I guess that that commit expected that NETDEV_DOWN event is fired before
+NETDEV_UNREGISTER event fires, and also assumed that xfrm_dev_state_add()
+is called only if (dev->features & NETIF_F_HW_ESP) != 0.
+
+Sabrina Dubroca identified steps to reproduce the same symptoms as below.
+
+  echo 0 > /sys/bus/netdevsim/new_device
+  dev=$(ls -1 /sys/bus/netdevsim/devices/netdevsim0/net/)
+  ip xfrm state add src 192.168.13.1 dst 192.168.13.2 proto esp \
+     spi 0x1000 mode tunnel aead 'rfc4106(gcm(aes))' $key 128   \
+     offload crypto dev $dev dir out
+  ethtool -K $dev esp-hw-offload off
+  echo 0 > /sys/bus/netdevsim/del_device
+
+Like these steps indicate, the NETIF_F_HW_ESP bit can be cleared after
+xfrm_dev_state_add() acquired a reference to "struct net_device".
+Also, xfrm_dev_state_add() does not check for the NETIF_F_HW_ESP bit
+when acquiring a reference to "struct net_device".
+
+Commit 03891f820c21 ("xfrm: handle NETDEV_UNREGISTER for xfrm device")
+re-introduced the NETDEV_UNREGISTER event to xfrm_dev_event(), but that
+commit for unknown reason chose to share xfrm_dev_down() between the
+NETDEV_DOWN event and the NETDEV_UNREGISTER event.
+I guess that that commit missed the behavior in the previous paragraph.
+
+Therefore, we need to re-introduce xfrm_dev_unregister() in order to
+release the reference to "struct net_device" by unconditionally flushing
+state and policy.
+
+Reported-by: syzbot+881d65229ca4f9ae8c84@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=881d65229ca4f9ae8c84
+Fixes: d77e38e612a0 ("xfrm: Add an IPsec hardware offloading API")
+Cc: Sabrina Dubroca <sd@queasysnail.net>
+Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/xfs/libxfs/xfs_attr.c | 74 +++++++++++++---------------------------
- 1 file changed, 23 insertions(+), 51 deletions(-)
+ net/xfrm/xfrm_device.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/fs/xfs/libxfs/xfs_attr.c b/fs/xfs/libxfs/xfs_attr.c
-index 32d350e97e0f6..236291dbb427f 100644
---- a/fs/xfs/libxfs/xfs_attr.c
-+++ b/fs/xfs/libxfs/xfs_attr.c
-@@ -49,7 +49,6 @@ STATIC int xfs_attr_shortform_addname(xfs_da_args_t *args);
-  */
- STATIC int xfs_attr_leaf_get(xfs_da_args_t *args);
- STATIC int xfs_attr_leaf_removename(xfs_da_args_t *args);
--STATIC int xfs_attr_leaf_hasname(struct xfs_da_args *args, struct xfs_buf **bp);
- STATIC int xfs_attr_leaf_try_add(struct xfs_da_args *args);
- 
- /*
-@@ -866,11 +865,11 @@ xfs_attr_lookup(
- 		return xfs_attr_sf_findname(args, NULL, NULL);
- 
- 	if (xfs_attr_is_leaf(dp)) {
--		error = xfs_attr_leaf_hasname(args, &bp);
--
--		if (bp)
--			xfs_trans_brelse(args->trans, bp);
--
-+		error = xfs_attr3_leaf_read(args->trans, args->dp, 0, &bp);
-+		if (error)
-+			return error;
-+		error = xfs_attr3_leaf_lookup_int(bp, args);
-+		xfs_trans_brelse(args->trans, bp);
- 		return error;
- 	}
- 
-@@ -1246,27 +1245,6 @@ xfs_attr_leaf_try_add(
- 	return error;
+diff --git a/net/xfrm/xfrm_device.c b/net/xfrm/xfrm_device.c
+index 313c0eb3381f3..c676ff2f21acc 100644
+--- a/net/xfrm/xfrm_device.c
++++ b/net/xfrm/xfrm_device.c
+@@ -424,6 +424,13 @@ static int xfrm_dev_down(struct net_device *dev)
+ 	return NOTIFY_DONE;
  }
  
--/*
-- * Return EEXIST if attr is found, or ENOATTR if not
-- */
--STATIC int
--xfs_attr_leaf_hasname(
--	struct xfs_da_args	*args,
--	struct xfs_buf		**bp)
--{
--	int                     error = 0;
--
--	error = xfs_attr3_leaf_read(args->trans, args->dp, 0, bp);
--	if (error)
--		return error;
--
--	error = xfs_attr3_leaf_lookup_int(*bp, args);
--	if (error != -ENOATTR && error != -EEXIST)
--		xfs_trans_brelse(args->trans, *bp);
--
--	return error;
--}
--
- /*
-  * Remove a name from the leaf attribute list structure
-  *
-@@ -1277,25 +1255,22 @@ STATIC int
- xfs_attr_leaf_removename(
- 	struct xfs_da_args	*args)
++static int xfrm_dev_unregister(struct net_device *dev)
++{
++	xfrm_dev_state_flush(dev_net(dev), dev, true);
++
++	return NOTIFY_DONE;
++}
++
+ static int xfrm_dev_event(struct notifier_block *this, unsigned long event, void *ptr)
  {
--	struct xfs_inode	*dp;
--	struct xfs_buf		*bp;
-+	struct xfs_inode	*dp = args->dp;
- 	int			error, forkoff;
-+	struct xfs_buf		*bp;
+ 	struct net_device *dev = netdev_notifier_info_to_dev(ptr);
+@@ -436,8 +443,10 @@ static int xfrm_dev_event(struct notifier_block *this, unsigned long event, void
+ 		return xfrm_api_check(dev);
  
- 	trace_xfs_attr_leaf_removename(args);
- 
--	/*
--	 * Remove the attribute.
--	 */
--	dp = args->dp;
--
--	error = xfs_attr_leaf_hasname(args, &bp);
--	if (error == -ENOATTR) {
-+	error = xfs_attr3_leaf_read(args->trans, args->dp, 0, &bp);
-+	if (error)
-+		return error;
-+	error = xfs_attr3_leaf_lookup_int(bp, args);
-+	if (error != -EEXIST) {
- 		xfs_trans_brelse(args->trans, bp);
--		if (args->op_flags & XFS_DA_OP_RECOVERY)
-+		if (error == -ENOATTR && (args->op_flags & XFS_DA_OP_RECOVERY))
- 			return 0;
- 		return error;
--	} else if (error != -EEXIST)
--		return error;
-+	}
- 
- 	xfs_attr3_leaf_remove(bp, args);
- 
-@@ -1319,23 +1294,20 @@ xfs_attr_leaf_removename(
-  * Returns 0 on successful retrieval, otherwise an error.
-  */
- STATIC int
--xfs_attr_leaf_get(xfs_da_args_t *args)
-+xfs_attr_leaf_get(
-+	struct xfs_da_args	*args)
- {
--	struct xfs_buf *bp;
--	int error;
-+	struct xfs_buf		*bp;
-+	int			error;
- 
- 	trace_xfs_attr_leaf_get(args);
- 
--	error = xfs_attr_leaf_hasname(args, &bp);
--
--	if (error == -ENOATTR)  {
--		xfs_trans_brelse(args->trans, bp);
--		return error;
--	} else if (error != -EEXIST)
-+	error = xfs_attr3_leaf_read(args->trans, args->dp, 0, &bp);
-+	if (error)
- 		return error;
--
--
--	error = xfs_attr3_leaf_getvalue(bp, args);
-+	error = xfs_attr3_leaf_lookup_int(bp, args);
-+	if (error == -EEXIST)
-+		error = xfs_attr3_leaf_getvalue(bp, args);
- 	xfs_trans_brelse(args->trans, bp);
- 	return error;
+ 	case NETDEV_DOWN:
+-	case NETDEV_UNREGISTER:
+ 		return xfrm_dev_down(dev);
++
++	case NETDEV_UNREGISTER:
++		return xfrm_dev_unregister(dev);
+ 	}
+ 	return NOTIFY_DONE;
  }
 -- 
 2.53.0
