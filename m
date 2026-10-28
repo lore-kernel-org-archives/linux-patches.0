@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793208112;
-	b=Ijdi9Nwh9nRdx+WHO+sB61mbjq42twex72DJNMqmhk8BscNXPuPoyYNvqfMWWYxQS0Uk
-	 +wCNgouU1XUYtHdQW2phBHCDIvfO0OeL6Odp3STgJzWNhMZW9lMWxnGFjvgN2HVr/jKZg
-	 fwMmps5lUGOYLUy7Mn75ZzJYAXqMjwuZtWhVQ7LMzWF/fIqCHj5JWrje2Vx5pJScnICPV
-	 XHYHv/fOFZ9ci27qV4R9iv1nz+cZrwdoxIxm4w9AdxnNf6T+Re2ieBvCIWuNcODe0DxfH
-	 OjcYv1PRBEYOMa94+RNdM91xKVCnrKvyWXz8feeqlULArQi0Y+yoHLdEH9rDh980v2A==
+	t=1793208115;
+	b=p7MtzLZdTMeg125UsQP5Gok+3IGXVBu1F1lcxU899FVLs15TpszwJdU+4qkF2EYZY7PT
+	 kAKMHy410yqi1PJsYdW3ejmdvrXs0OA1xO7ntphBIrSX/t7cfJXk2PjHdbSKe4g80/fZW
+	 6gDdr8cuSVKwuktC/jlLhzHdgMtPnyry6v0dp3+qAfuqeUpQeHVihmnUwkm41yo5HiKqy
+	 jjr+uT8v7tdx56ifJ9tMVKDh51gLR7tjNe2QghueC8kTdrsFsXZeL1wGleWqqH0Yngz17
+	 zhu/7vbFIMtGz6PQxEZXGPP+KIKifTUQPzIjkCmXU2McxJB/1B4ROi703XjMPRU9NeA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793208112;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793208115;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=h5Bm0RADF+XA0dCpafDmA71RMCSztMBLzXU24OB4RnA=;
-	b=y0Ac6qgwV6VE7FD0GeGcFB4Vj21B9argK5ViglyRjq9m2VJq5Ee1sutwmKpQh/oRFkcD
-	 VhptFuoFbF7FpUc0iKgFeBNPlSyHF0mx1QUxDSUsYUCkytnotg1EHk0V+4QNkif29wq/q
-	 hR62MkfAObvbXWWZUAAbE7EIMB5q4OInoAkUa4VqXeK5xMpKyHfIoib+nS/AH/lXjqP6u
-	 mEBAbQy5qTT1xAEytrahJzkDI9EMStgSpI4wZtN5iEV8f9Q4JDDviQSZkS+1SshTx9/RQ
-	 IC6L1iffqTMdScJtn1mf0uQLUr0QL9xW08QQq+snwG6TVviP2/OyXxvKQbcL9GYdEFw==
+	bh=Jq0PYz3Uisx3S/jBae3QMRb3Tg3CDR6dbUNz8TrBZV0=;
+	b=s02yJYg9dqKydxMawHOWyYigCZ2BO7LLczyIvxfG4lbVfzAPoUjaAm2IMM0fmQQFwmbp
+	 hMZ0Lhj4OB7sHhigvLFXMhx5JJSjK2PCUkzU/E7uCmR1q3EIwy6bdqdnefiZB6hfvWh7p
+	 V4ZyIi7wVeUHXZtNT2w79cYo7+YtkOLlGQSn27hcIxd8ABMtRg+P/HB7X/dxRIQtAmTiS
+	 6iA5d8/ewW/VDukjfdKNIfgezXMq8cfrHiyxQ2Ypgfo3ASQ914ZYSkCvzAFVAt1JDVIn6
+	 97PHFX7ns79ieBpDL6fR0tsirPe2ReU649Qe5Thd848mRE0q+mW27shFPaN/b8KLGZQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZOVKgUpu;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sDgJUiMd;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1627F606A31F;
-	Wed, 28 Oct 2026 17:21:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 296D6606A334;
+	Wed, 28 Oct 2026 17:21:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZOVKgUpu
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67D931F01828;
-	Wed, 28 Oct 2026 17:21:51 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sDgJUiMd
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F5831F01825;
+	Wed, 28 Oct 2026 17:21:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793208111;
-	bh=h5Bm0RADF+XA0dCpafDmA71RMCSztMBLzXU24OB4RnA=;
+	s=korg; t=1793208114;
+	bh=Jq0PYz3Uisx3S/jBae3QMRb3Tg3CDR6dbUNz8TrBZV0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZOVKgUpuO+EOK9CcsI5pqZ3RWgILutov6HhU8JXl4BenqLLWXJw5o+e6hRfDXjoKY
-	 sRUGF2TJ3LCO3piqc72DgNDqETo5rKQCbeTs1azBrSN4QGJ+LOXzxuY5xpqXL3OUEC
-	 AQLevu8KCH+n/8/0skZbud1JHf5IV+v0M3idPgNs=
+	b=sDgJUiMdPq6KbYsczyicWx7BegtG2eTIgZCwPhpQePzKg5osGTveDLznabPxL0gW1
+	 zAzAzkuqVH0ipZ3E2pFWYTuCM6mk6AZWoij9raC+p5+PemodWQagVUE2lNWwzZj1vX
+	 6p8vQnIZ13amnOFgwNkKy6xiwvaMLlYOHTA432YA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tamaki Yanagawa <ty@000ty.net>,
+	Austin Schuh <austin.linux@gmail.com>,
 	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.12 227/247] io_uring/net: keep recv buffer select length within MAX_RW_COUNT
-Date: Wed, 28 Oct 2026 18:00:30 +0100
-Message-ID: <20261028165952.796668884@linuxfoundation.org>
+Subject: [PATCH 6.12 228/247] io_uring/wait: wake real-time waiters from hard interrupt context
+Date: Wed, 28 Oct 2026 18:00:31 +0100
+Message-ID: <20261028165952.820099300@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165947.349197979@linuxfoundation.org>
 References: <20261028165947.349197979@linuxfoundation.org>
@@ -67,40 +67,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tamaki Yanagawa <ty@000ty.net>
+From: Austin Schuh <austin.linux@gmail.com>
 
-Commit 96262cfab554cf11412de7a6247f0e82c94e130f upstream.
+Commit 5b01d5955ac206e38097f777eff6ab2a8b948c41 upstream.
 
-Since commit dcbd1c054848 ("io_uring/net: let io_recv_buf_select return
-the length of the buffer region"), io_recv_buf_select() returns the
-selected length as an int. For a non-bundle recv with sqe->len == 0 the
-length comes from the ring provided buffer, which can be up to 4G, so a
-buffer of 2G or more makes io_recv() fail the request with a bogus
-negative result (e.g. -2147483648) instead of receiving into it. Clamp
-the length to MAX_RW_COUNT, which import_ubuf() limits the transfer to
-anyway.
+Since commit cebf123c634a ("io_uring: implement our own schedule timeout
+handling"), a CQ wait with a timeout sleeps on io_uring's own hrtimer
+instead of an hrtimer sleeper.  On PREEMPT_RT, an hrtimer that isn't
+marked for hard interrupt expiry expires in the per-CPU ktimers thread,
+which runs at SCHED_FIFO 1.  A real-time task waiting in io_uring_enter()
+is therefore not woken at its deadline while any other real-time task is
+runnable on its CPU: the wakeup waits until every one of them has blocked.
 
-Fixes: dcbd1c054848 ("io_uring/net: let io_recv_buf_select return the length of the buffer region")
+hrtimer sleepers, which schedule_hrtimeout_range_clock() used to give
+io_uring, don't have this problem: __hrtimer_setup_sleeper() marks the
+timer hard when the sleeping task is in a real-time or deadline class.
+Both of io_uring's callbacks are fine in hard interrupt context:
+io_cqring_timer_wakeup() sets a flag and calls wake_up_process(), and
+io_cqring_min_timer_wakeup() only reads ring state, under RCU, before
+doing the same or re-arming the timer.  Apply the sleeper rule to them.
+
+Measured on a Jetson Orin Nano running 6.18.39-rt with this change
+backported: a SCHED_FIFO 40 task waits in io_uring_enter() for 40,000
+deadlines 500us apart, while a SCHED_FIFO 20 task runs bursts of up to
+1ms on the same CPU.  Before, 6,647 wakeups were more than 100us late,
+the latest by 1,040us, and 2,758 deadlines passed without a wakeup at
+all.  After, none were more than 100us late and the latest was 18us.
+
+This mirrors epoll: epoll_pwait2() waits on an hrtimer sleeper, so its
+timeout is already hard for real-time tasks, and on the same setup it
+was never more than 17us late.
+
+[ 6.12: the wait code is still in io_uring.c, hrtimer_init_on_stack() API ]
+Fixes: cebf123c634a ("io_uring: implement our own schedule timeout handling")
 Cc: stable@vger.kernel.org
-Signed-off-by: Tamaki Yanagawa <ty@000ty.net>
-Assisted-by: Claude:claude-opus-5-5
-Link: https://patch.msgid.link/20261018042227.1105-1-ty@000ty.net
+Assisted-by: LLM
+Signed-off-by: Austin Schuh <austin.linux@gmail.com>
+Link: https://patch.msgid.link/20261017171726.601443-1-austin.linux@gmail.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/net.c |    2 ++
- 1 file changed, 2 insertions(+)
+ io_uring/io_uring.c |   14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
---- a/io_uring/net.c
-+++ b/io_uring/net.c
-@@ -1188,6 +1188,8 @@ static int io_recv_buf_select(struct io_
- 		*sel = io_buffer_select(req, &len, issue_flags);
- 		if (!sel->addr)
- 			return -ENOBUFS;
-+		/* ring provided buffers can be up to 4G, keep len an int */
-+		len = min_t(size_t, len, MAX_RW_COUNT);
- 		sr->buf = sel->addr;
- 		sr->len = len;
- map_ubuf:
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -48,6 +48,7 @@
+ #include <linux/uio.h>
+ #include <linux/bits.h>
+ 
++#include <linux/sched/rt.h>
+ #include <linux/sched/signal.h>
+ #include <linux/fs.h>
+ #include <linux/file.h>
+@@ -2495,12 +2496,21 @@ out_wake:
+ 	return io_cqring_timer_wakeup(timer);
+ }
+ 
++/* Same policy as for hrtimer sleepers, see __hrtimer_setup_sleeper(). */
++static enum hrtimer_mode io_cqring_timer_mode(void)
++{
++	if (IS_ENABLED(CONFIG_PREEMPT_RT) && rt_or_dl_task_policy(current))
++		return HRTIMER_MODE_ABS_HARD;
++	return HRTIMER_MODE_ABS;
++}
++
+ static int io_cqring_schedule_timeout(struct io_wait_queue *iowq,
+ 				      clockid_t clock_id, ktime_t start_time)
+ {
++	enum hrtimer_mode mode = io_cqring_timer_mode();
+ 	ktime_t timeout;
+ 
+-	hrtimer_init_on_stack(&iowq->t, clock_id, HRTIMER_MODE_ABS);
++	hrtimer_init_on_stack(&iowq->t, clock_id, mode);
+ 	if (iowq->min_timeout) {
+ 		timeout = ktime_add_ns(iowq->min_timeout, start_time);
+ 		iowq->t.function = io_cqring_min_timer_wakeup;
+@@ -2510,7 +2520,7 @@ static int io_cqring_schedule_timeout(st
+ 	}
+ 
+ 	hrtimer_set_expires_range_ns(&iowq->t, timeout, 0);
+-	hrtimer_start_expires(&iowq->t, HRTIMER_MODE_ABS);
++	hrtimer_start_expires(&iowq->t, mode);
+ 
+ 	if (!READ_ONCE(iowq->hit_timeout))
+ 		schedule();
 
 
