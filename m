@@ -1,49 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214385;
-	b=g18Kkc3cCs8pXE4ro0+3mgh3apTHTzPYG09q6Eq6qDJRH2/6LaTWOIcZn6x7dtKMzHyH
-	 y3dj6ltuwaGY1Aj9bNb4cnod9+x/6osS+U2N2Xt8H4yAzl0RoDe2bl8mykacHWoACRWSZ
-	 uke3ksWCE8E50lirUYx9iPUVwfJygyGIRPim9VH4Zt4A8cleFqqcvZ4cH4rRQuyG4o5ne
-	 PPLr6FJF944dziGpquBDG2ZeHnS8sK1aoLGH9JTvdonn6PhIza/GaIb6BB672LE9g4HI8
-	 Y1jrMwjpMQvKXc+GSkcFBJbGxeGY9BuOAUifDMXWuxFsDjFo3xfjKDo5CmrAaPTrk4g==
+	t=1793214388;
+	b=Z0ehza91YrVYJCOXGVYpsiDMcXp6mDMyr2vNf50oCoPtYPQjJI6H9GuDq2mvv+dPsjYM
+	 0p2Pz9yKw6YGWhmku5oar62fHw4Iynzvl9lmYzoEOUZuSpuHJopoSSiRaEeP7YwAY//cX
+	 89Z9b7DIJ0RRqTQqxtAu+zHKPjq75UVm7W24iPLssoQR0ZBkxjrSD+Nu5UyR+9Y7UljfU
+	 PnR6BfZtPy4UMjVey+dEKVBwA5XGmr9SPz8KvOQh0iCwAWPIfEZNj1U8u9qUkhEeaesAn
+	 GNKNSrwHcY1R0C18VauScaOUnCHgIq8R4Fy1UB3RethnHIwD5Ivn75m4lYCVqWNeoGQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214385;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214388;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=aF2m6HKpy5I/XrBGh/FEargoxj3s3vSGVNCM+tE8AA8=;
-	b=NAMXJ2+jsa29WsZva6l8EcDwVzw7Re0K5fbL9c36J6jiZvpX5+8CviRr0v497hQslkTa
-	 SB395zAmPTiOgdVGiLGiRjmMtsJWej6AIv7zRsoDSoJbldsvrRATlpNu/5cOnzePSVXvt
-	 8c2YUXGsZTBLoeHq39G52Gigtey3lSbPCT4GyF+0UNYcL1jSXMXqeKHQAz0EKvDcEFuns
-	 6A3oL8o6IsKUlz/GvxkU1Jjk9UmCmkRIk3jEw8GvGXSxI8qACjd3BDh1tpE9O3T0u4Yl8
-	 IVR5e+z7/8xri7xZgjzMx0gIzyjkN57N2VL9bxNNfrpTQb9oZoAxlkRj3TXzlZGc6+w==
+	bh=JtFZZ7BJ6IbfCY0guG/iTay/ZhVdeZ25dN5WrhA4eOY=;
+	b=Y/e/boMoFijNwO4T03Su0ut018PubNuwwHETWluoNKASJe3SvBcmWlSXVjO54kheaQJP
+	 mrod1PUNKFoyxo8aBZbYmOUGR+3hVpxeHEV4oYwL1kjaGPM9Mroam61ANKSZSBjOBh1VV
+	 W681BVJ5pnA/LhohOvcLkEdw2oEGCXMnG6se51TWMZTVq6SQs9q3AqtNzNnmWT5FMEOKh
+	 /jI0FcFrj3vRRx6qmLVJ9VorL4NkQzQ9kuzhokBmx2k9tVnLMt5RUaePUxfwUzYhqhs4L
+	 LGXbhv5bMQTx+OiSsMzLOvMgN/8uUd2De4rgsJGrhNx7pEDTScyI91johFjJy51bVFQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vdYvOGDI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CC6260A3826;
-	Wed, 28 Oct 2026 19:06:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0DD01F01828;
-	Wed, 28 Oct 2026 19:06:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 757F860A2603;
+	Wed, 28 Oct 2026 19:06:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vdYvOGDI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95FC41F01825;
+	Wed, 28 Oct 2026 19:06:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214385;
-	bh=aF2m6HKpy5I/XrBGh/FEargoxj3s3vSGVNCM+tE8AA8=;
+	s=korg; t=1793214388;
+	bh=JtFZZ7BJ6IbfCY0guG/iTay/ZhVdeZ25dN5WrhA4eOY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cN0kcrHt8AE/+HssPMcng4gLgQxa0skznpUrsa5L3CLhZeLRsRGRVTiAphP2jjA0s
-	 z1NDcqrAtZvlDENtyZFdsgzqoaY0kInf8Ue6WemsWmAdTvOM4uf5BAJyvuTHgiF/Vs
-	 Fgmk0IoVpRaL92R+TgLLJiPam4V1/+95FhE6cUYo=
+	b=vdYvOGDIon7FxnVFG8/knByFZdUyO3H195qzsEEcIyIvJmd2rGktKtaUOu53aGOkL
+	 vuZi8s8zYFxXsoHDRuv/35cpJfHZ1vKjDVGRESjQI2E+CbCCDrW+qMSwlUhHwTJbAG
+	 LZ/Zh5ZWS7LblKcmw5uhllkkhNu0qEtMYUx2xoEM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kanglong Wang <wangkanglong@loongson.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>,
+	Aakash Kumar S <saakashkumar@marvell.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0839/1887] LoongArch: Optimize module load time by optimizing PLT/GOT counting
-Date: Wed, 28 Oct 2026 17:48:55 +0100
-Message-ID: <20261028170518.519960608@linuxfoundation.org>
+Subject: [PATCH 6.1 0840/1887] xfrm: Duplicate SPI Handling
+Date: Wed, 28 Oct 2026 17:48:56 +0100
+Message-ID: <20261028170518.542755852@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -65,160 +69,153 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kanglong Wang <wangkanglong@loongson.cn>
+From: Aakash Kumar S <saakashkumar@marvell.com>
 
-[ Upstream commit 63dbd8fb2af3a89466538599a9acb2d11ef65c06 ]
+[ Upstream commit 94f39804d891cffe4ce17737d295f3b195bc7299 ]
 
-When enabling CONFIG_KASAN, CONFIG_PREEMPT_VOLUNTARY_BUILD and
-CONFIG_PREEMPT_VOLUNTARY at the same time, there will be soft deadlock,
-the relevant logs are as follows:
+The issue originates when Strongswan initiates an XFRM_MSG_ALLOCSPI
+Netlink message, which triggers the kernel function xfrm_alloc_spi().
+This function is expected to ensure uniqueness of the Security Parameter
+Index (SPI) for inbound Security Associations (SAs). However, it can
+return success even when the requested SPI is already in use, leading
+to duplicate SPIs assigned to multiple inbound SAs, differentiated
+only by their destination addresses.
 
-rcu: INFO: rcu_sched self-detected stall on CPU
-...
-Call Trace:
-[<900000000024f9e4>] show_stack+0x5c/0x180
-[<90000000002482f4>] dump_stack_lvl+0x94/0xbc
-[<9000000000224544>] rcu_dump_cpu_stacks+0x1fc/0x280
-[<900000000037ac80>] rcu_sched_clock_irq+0x720/0xf88
-[<9000000000396c34>] update_process_times+0xb4/0x150
-[<90000000003b2474>] tick_nohz_handler+0xf4/0x250
-[<9000000000397e28>] __hrtimer_run_queues+0x1d0/0x428
-[<9000000000399b2c>] hrtimer_interrupt+0x214/0x538
-[<9000000000253634>] constant_timer_interrupt+0x64/0x80
-[<9000000000349938>] __handle_irq_event_percpu+0x78/0x1a0
-[<9000000000349a78>] handle_irq_event_percpu+0x18/0x88
-[<9000000000354c00>] handle_percpu_irq+0x90/0xf0
-[<9000000000348c74>] handle_irq_desc+0x94/0xb8
-[<9000000001012b28>] handle_cpu_irq+0x68/0xa0
-[<9000000001def8c0>] handle_loongarch_irq+0x30/0x48
-[<9000000001def958>] do_vint+0x80/0xd0
-[<9000000000268a0c>] kasan_mem_to_shadow.part.0+0x2c/0x2a0
-[<90000000006344f4>] __asan_load8+0x4c/0x120
-[<900000000025c0d0>] module_frob_arch_sections+0x5c8/0x6b8
-[<90000000003895f0>] load_module+0x9e0/0x2958
-[<900000000038b770>] __do_sys_init_module+0x208/0x2d0
-[<9000000001df0c34>] do_syscall+0x94/0x190
-[<900000000024d6fc>] handle_syscall+0xbc/0x158
+This behavior causes inconsistencies during SPI lookups for inbound packets.
+Since the lookup may return an arbitrary SA among those with the same SPI,
+packet processing can fail, resulting in packet drops.
 
-After analysis, this is because the slow speed of loading the amdgpu
-module leads to the long time occupation of the cpu and then the soft
-deadlock.
+According to RFC 4301 section 4.4.2 , for inbound processing a unicast SA
+is uniquely identified by the SPI and optionally protocol.
 
-When loading a module, module_frob_arch_sections() tries to figure out
-the number of PLTs/GOTs that will be needed to handle all the RELAs. It
-will call the count_max_entries() to find in an out-of-order date which
-counting algorithm has O(n^2) complexity.
+Reproducing the Issue Reliably:
+To consistently reproduce the problem, restrict the available SPI range in
+charon.conf : spi_min = 0x10000000 spi_max = 0x10000002
+This limits the system to only 2 usable SPI values.
+Next, create more than 2 Child SA. each using unique pair of src/dst address.
+As soon as the 3rd Child SA is initiated, it will be assigned a duplicate
+SPI, since the SPI pool is already exhausted.
+With a narrow SPI range, the issue is consistently reproducible.
+With a broader/default range, it becomes rare and unpredictable.
 
-To make it faster, we sort the relocation list by info and addend. That
-way, to check for a duplicate relocation, it just needs to compare with
-the previous entry. This reduces the complexity of the algorithm to O(n
- log n), as done in commit d4e0340919fb ("arm64/module: Optimize module
-load time by optimizing PLT counting"). This gives sinificant reduction
-in module load time for modules with large number of relocations.
+Current implementation:
+xfrm_spi_hash() lookup function computes hash using daddr, proto, and family.
+So if two SAs have the same SPI but different destination addresses, then
+they will:
+a. Hash into different buckets
+b. Be stored in different linked lists (byspi + h)
+c. Not be seen in the same hlist_for_each_entry_rcu() iteration.
+As a result, the lookup will result in NULL and kernel allows that Duplicate SPI
 
-After applying this patch, the soft deadlock problem has been solved,
-and the kernel starts normally without "Call Trace".
+Proposed Change:
+xfrm_state_lookup_spi_proto() does a truly global search - across all states,
+regardless of hash bucket and matches SPI and proto.
 
-Using the default configuration to test some modules, the results are as
-follows:
-
-Module              Size
-ip_tables           36K
-fat                 143K
-radeon              2.5MB
-amdgpu              16MB
-
-Without this patch:
-Module              Module load time (ms)	Count(PLTs/GOTs)
-ip_tables           18				59/6
-fat                 0				162/14
-radeon              54				1221/84
-amdgpu              1411			4525/1098
-
-With this patch:
-Module              Module load time (ms)	Count(PLTs/GOTs)
-ip_tables           18				59/6
-fat                 0				162/14
-radeon              22				1221/84
-amdgpu              45				4525/1098
-
-Fixes: fcdfe9d22bed ("LoongArch: Add ELF and module support")
-Signed-off-by: Kanglong Wang <wangkanglong@loongson.cn>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Signed-off-by: Aakash Kumar S <saakashkumar@marvell.com>
+Acked-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/loongarch/kernel/module-sections.c | 36 ++++++++++++-------------
- 1 file changed, 18 insertions(+), 18 deletions(-)
+ net/xfrm/xfrm_state.c | 67 ++++++++++++++++++++++++++-----------------
+ 1 file changed, 41 insertions(+), 26 deletions(-)
 
-diff --git a/arch/loongarch/kernel/module-sections.c b/arch/loongarch/kernel/module-sections.c
-index d296a70b758fd..10969d242f44d 100644
---- a/arch/loongarch/kernel/module-sections.c
-+++ b/arch/loongarch/kernel/module-sections.c
-@@ -6,6 +6,7 @@
- #include <linux/elf.h>
- #include <linux/kernel.h>
- #include <linux/module.h>
-+#include <linux/sort.h>
- 
- Elf_Addr module_emit_got_entry(struct module *mod, Elf_Addr val)
- {
-@@ -59,39 +60,38 @@ Elf_Addr module_emit_plt_entry(struct module *mod, Elf_Addr val)
- 	return (Elf_Addr)&plt[nr];
+diff --git a/net/xfrm/xfrm_state.c b/net/xfrm/xfrm_state.c
+index ecafa6950139f..6b4fa60de6d89 100644
+--- a/net/xfrm/xfrm_state.c
++++ b/net/xfrm/xfrm_state.c
+@@ -1304,6 +1304,26 @@ struct xfrm_state *xfrm_state_lookup_byspi(struct net *net, __be32 spi,
  }
+ EXPORT_SYMBOL(xfrm_state_lookup_byspi);
  
--static int is_rela_equal(const Elf_Rela *x, const Elf_Rela *y)
--{
--	return x->r_info == y->r_info && x->r_addend == y->r_addend;
--}
-+#define cmp_3way(a, b)  ((a) < (b) ? -1 : (a) > (b))
- 
--static bool duplicate_rela(const Elf_Rela *rela, int idx)
-+static int compare_rela(const void *x, const void *y)
- {
--	int i;
-+	int ret;
-+	const Elf_Rela *rela_x = x, *rela_y = y;
- 
--	for (i = 0; i < idx; i++) {
--		if (is_rela_equal(&rela[i], &rela[idx]))
--			return true;
--	}
-+	ret = cmp_3way(rela_x->r_info, rela_y->r_info);
-+	if (ret == 0)
-+		ret = cmp_3way(rela_x->r_addend, rela_y->r_addend);
- 
--	return false;
-+	return ret;
- }
- 
- static void count_max_entries(Elf_Rela *relas, int num,
- 			      unsigned int *plts, unsigned int *gots)
- {
--	unsigned int i, type;
++static struct xfrm_state *xfrm_state_lookup_spi_proto(struct net *net, __be32 spi, u8 proto)
++{
++	struct xfrm_state *x;
 +	unsigned int i;
 +
-+	sort(relas, num, sizeof(Elf_Rela), compare_rela, NULL);
- 
- 	for (i = 0; i < num; i++) {
--		type = ELF_R_TYPE(relas[i].r_info);
--		switch (type) {
-+		if (i && !compare_rela(&relas[i-1], &relas[i]))
-+			continue;
++	rcu_read_lock();
++	for (i = 0; i <= net->xfrm.state_hmask; i++) {
++		hlist_for_each_entry_rcu(x, &net->xfrm.state_byspi[i], byspi) {
++			if (x->id.spi == spi && x->id.proto == proto) {
++				if (!xfrm_state_hold_rcu(x))
++					continue;
++				rcu_read_unlock();
++				return x;
++			}
++		}
++	}
++	rcu_read_unlock();
++	return NULL;
++}
 +
-+		switch (ELF_R_TYPE(relas[i].r_info)) {
- 		case R_LARCH_SOP_PUSH_PLT_PCREL:
- 		case R_LARCH_B26:
--			if (!duplicate_rela(relas, i))
--				(*plts)++;
-+			(*plts)++;
- 			break;
- 		case R_LARCH_GOT_PC_HI20:
--			if (!duplicate_rela(relas, i))
--				(*gots)++;
-+			(*gots)++;
- 			break;
- 		default:
- 			break; /* Do nothing. */
+ static void __xfrm_state_insert(struct xfrm_state *x)
+ {
+ 	struct net *net = xs_net(x);
+@@ -2091,10 +2111,8 @@ int xfrm_alloc_spi(struct xfrm_state *x, u32 low, u32 high)
+ 	unsigned int h;
+ 	struct xfrm_state *x0;
+ 	int err = -ENOENT;
+-	__be32 minspi = htonl(low);
+-	__be32 maxspi = htonl(high);
++	u32 range = high - low + 1;
+ 	__be32 newspi = 0;
+-	u32 mark = x->mark.v & x->mark.m;
+ 
+ 	spin_lock_bh(&x->lock);
+ 	if (x->km.state == XFRM_STATE_DEAD)
+@@ -2106,33 +2124,30 @@ int xfrm_alloc_spi(struct xfrm_state *x, u32 low, u32 high)
+ 
+ 	err = -ENOENT;
+ 
+-	if (minspi == maxspi) {
+-		x0 = xfrm_state_lookup(net, mark, &x->id.daddr, minspi, x->id.proto, x->props.family);
+-		if (x0) {
+-			xfrm_state_put(x0);
++	for (h = 0; h < range; h++) {
++		u32 spi = (low == high) ? low : low + prandom_u32_max(high - low + 1);
++		newspi = htonl(spi);
++
++		spin_lock_bh(&net->xfrm.xfrm_state_lock);
++		x0 = xfrm_state_lookup_spi_proto(net, newspi, x->id.proto);
++		if (!x0) {
++			x->id.spi = newspi;
++			h = xfrm_spi_hash(net, &x->id.daddr, newspi, x->id.proto, x->props.family);
++			hlist_add_head_rcu(&x->byspi, net->xfrm.state_byspi + h);
++			spin_unlock_bh(&net->xfrm.xfrm_state_lock);
++			err = 0;
+ 			goto unlock;
+ 		}
+-		newspi = minspi;
+-	} else {
+-		u32 spi = 0;
+-		for (h = 0; h < high-low+1; h++) {
+-			spi = low + prandom_u32_max(high - low + 1);
+-			x0 = xfrm_state_lookup(net, mark, &x->id.daddr, htonl(spi), x->id.proto, x->props.family);
+-			if (x0 == NULL) {
+-				newspi = htonl(spi);
+-				break;
+-			}
+-			xfrm_state_put(x0);
+-		}
+-	}
+-	if (newspi) {
+-		spin_lock_bh(&net->xfrm.xfrm_state_lock);
+-		x->id.spi = newspi;
+-		h = xfrm_spi_hash(net, &x->id.daddr, x->id.spi, x->id.proto, x->props.family);
+-		hlist_add_head_rcu(&x->byspi, net->xfrm.state_byspi + h);
++		xfrm_state_put(x0);
+ 		spin_unlock_bh(&net->xfrm.xfrm_state_lock);
+ 
+-		err = 0;
++		if (signal_pending(current)) {
++			err = -ERESTARTSYS;
++			goto unlock;
++		}
++
++		if (low == high)
++			break;
+ 	}
+ 
+ unlock:
 -- 
 2.53.0
 
