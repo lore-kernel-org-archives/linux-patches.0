@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216503;
-	b=l8JQWRfMQ3Wm46/cBrqaeT5uXIAxEd+m1TJUbJpoC0DEd/0uoIsFOxTFWr5gJmhJkToH
-	 +0EbrvLkjPZD1USPqv0GjmWCAxmW3g7vxCjCzAx5lIIYbgmpYflydXT1YYYWC/GKjqBPZ
-	 q1i9E7TQsa5501BhIuru76LQpOicugm9q72bb1j6N5kK0+SsItLnexj+ilG16qq3H4NB2
-	 16/nMa4MeLjMza4TkLqHkONjUFY6bLUBosqJLfmxcAHItL8yVjiHp5Frsznf6n0413/4g
-	 xLkOto4j8h1OIDfEiaX6pU0y0yJvtKWX1shUlQyCny8TzIKYOtpW1Y0uzA0GCwiisHg==
+	t=1793216506;
+	b=BlwXOpoQrHaDC+UyJ5R+XNSBzAKowaRWMGsmMLb5+mAKzWacwvMQgGw4smSFDwEmwKwW
+	 qz8U5GIhir2dUgNgV0EkLQc6oLvnEscCn4fnbCopTbcZAppfzZHugMI3Tp+oktKKwGVbx
+	 zjlKF9CnWwdrv7FDJ7cJgqh7OMRWi56fngq7Ew9TciFzz8sua0WthpERxAGc5U7qpZOhp
+	 eUzfZCOkbqNPEkd9cb+geKoEzRD8YSsBtumgy38vug3uD1IRVWqwscFtfbCEAFvUqFM1w
+	 hATpDd1zPJgPqAFx7zUBDuQk1CKPsdeTS1VQp//x9miaSjFiLmaf09BhfB5445iod1w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216503;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216506;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=J17bVirY4gMKt9aTxwGsphiMZpm6iJwro/YR8Msoqd0=;
-	b=htmxow+WiueURdLBWMz8CkHj/LEVpJg57J6CJFaLteu9TTPOC5OZun9zzaUMTJ4tGb2G
-	 PpPU/9UdjAQnocWZdRdPaZpvsdySKYmGQViq9kQmfs4kF/NPGKemZ4RM//rm1/QjfGxwT
-	 mdY0VJ1Vtp6dNnwV5mY7/TOFEkGDw2Tvkk2LZViyldzAUeEnchL4t2vfQ/8Wsu7j/p7LK
-	 mqZZmgv3C4a2kcV9MP5PAM8hM1RtK2tvmL85QbtBYuGgxQz1c/9jW+Owbrx10K85N0pza
-	 afaS/zuRkv1nMScbVKj21kh3QkYqWZc2GI4uZ9a1sd9ticnmmYF79tZDbcQ4aeVIZEQ==
+	bh=M4M1l2dJnbzPmqVfJHJy/yO8e5+gKIq8rD8RvjUdpEQ=;
+	b=ewKOH6H6+lKLO9MswPrwZXh1dPOyhAArp74HJs0+TihuLJyvd0EH9HdBmBfCac01kcpm
+	 caTj6kkItml3VnEizHUnR2l/T/lnVnLSPLsx9ZhBIg0z9PhNhlBcYuFQjvwts0qlauyI7
+	 farvjM8eOzGpxXHS+gzCgCp+XpQyr+QHf1w463XcgHQb/fBJHttioPl9dldOMaCTHdd6U
+	 IR1M/f/fCFyAkZgYHJP/JcJKzHBJRpVA7bkUG8xB5mQiNM7BQgUxzMq27Wv6qEwDMGKH3
+	 TefSVgPE3XmpGZFRdTwF4y89DSqEjaDeZWJHQaNhWxAoghv870d9jt9HSqpMvLG2kFA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eXjXFxNE;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C94B4LOY;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44D31606A31A;
-	Wed, 28 Oct 2026 19:41:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E841606A31E;
+	Wed, 28 Oct 2026 19:41:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eXjXFxNE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9424D1F01825;
-	Wed, 28 Oct 2026 19:41:42 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C94B4LOY
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F2E71F01825;
+	Wed, 28 Oct 2026 19:41:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216503;
-	bh=J17bVirY4gMKt9aTxwGsphiMZpm6iJwro/YR8Msoqd0=;
+	s=korg; t=1793216506;
+	bh=M4M1l2dJnbzPmqVfJHJy/yO8e5+gKIq8rD8RvjUdpEQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eXjXFxNE8sNYtnl3/fIr+QAOA4F88qD4K36c8mhe8lfRfBnlpGQUDDM+rcwF+yyxe
-	 0ccO0xPLvEVPzXSbprKUFqsNz64XBHLv7ZKQASGOqXzBEg9bVG8olFDZsA3q4ZzZSq
-	 bsHzpikMva3Yk38xoo69eaARKQ9bypnASLozDydc=
+	b=C94B4LOYFfK2lHIkG++FFpgxqh+vn5XzYj7w5YKCfZqqYJtjqrgRy5oZA3wlopxHs
+	 jCENMWSR27pMdvJKLvtu1ZScpcVE0slUraUEzRVYqwKsf/h4+WrLsdj9SQO+grjP2O
+	 AJtIILoLoYlDM8JeRElzhIAH4f7wMsxSJXUPhjc4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Lukasz Luba <lukasz.luba@arm.com>,
+	syzbot+2626e846cd2585c9aa67@syzkaller.appspotmail.com,
+	Maurizio Lombardi <mlombard@redhat.com>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1579/1887] thermal: hwmon: Remove hwmon class device along with its parent
-Date: Wed, 28 Oct 2026 18:01:15 +0100
-Message-ID: <20261028170535.400164042@linuxfoundation.org>
+Subject: [PATCH 6.1 1553/1887] nvmet: fix max_qid race between configfs and controller allocation
+Date: Wed, 28 Oct 2026 18:00:49 +0100
+Message-ID: <20261028170534.807951604@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,217 +69,196 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Maurizio Lombardi <mlombard@redhat.com>
 
-[ Upstream commit 2b57e24d34b2dfc43c81942bb359d6315bf302fb ]
+[ Upstream commit f1a8846e06388113dfdbb89dee005083fa9afdf9 ]
 
-The current code creates one hwmon device per thermal zone type and that
-device is registered under the first thermal zone of the given type.
+The function nvmet_subsys_attr_qid_max_store() can race against
+nvmet_alloc_ctrl() when a subsystem's max_qid limit is modified.
 
-That turns out to be problematic when the thermal zone holding the
-hwmon device is removed.
+Suppose max_qid is currently 64. If nvmet_alloc_ctrl() executes:
+ctrl->sqs = kzalloc_objs(struct nvmet_sq *, subsys->max_qid + 1);
+and at this exact point, a userspace process changes max_qid to 128,
+nvmet_subsys_attr_qid_max_store() will set the new max_qid value. It
+attempts to delete active controllers to force a reconnect, but the
+new controller won't be deleted because it hasn't been added to the
+subsys->ctrls list yet.
 
-For example, say that there are two ACPI thermal zones on a system
+nvmet_alloc_ctrl() then proceeds and adds the new controller to the
+subsys->ctrls list. Later, when nvmet_install_queue() is called, it
+will see max_qid set to 128, but the memory allocated for sqs is only
+sized for 64 entries. This results in a KASAN out-of-bounds warning
+and potential memory corruptions.
 
- /sys/devices/virtual/thermal/thermal_zone0/
- /sys/devices/virtual/thermal/thermal_zone1/
+Fix this by protecting the queue allocations and list insertion in
+nvmet_alloc_ctrl() with down_read(&nvmet_config_sem). Because
+nvmet_subsys_attr_qid_max_store() acquires down_write(&nvmet_config_sem)
+to modify the attribute, this safely prevents the configfs writer from
+modifying max_qid during controller creation.
 
-The current code registers a hwmon class device for thermal_zone0 only:
+Copy the max_qid from the subsystem to the controller's structure
+during the allocation; ctrl->max_qid never changes as long as the
+controller remains in LIVE state, so this will prevent similar race
+conditions.
 
- /sys/devices/virtual/thermal/thermal_zone0/hwmon0/
-
-because the type is "acpitz" for both of them, but it adds a sysfs
-attribute that belongs to thermal_zone1 under it:
-
- /sys/devices/virtual/thermal/thermal_zone0/hwmon0/temp2_input
-
-There is also
-
- /sys/devices/virtual/thermal/thermal_zone0/hwmon0/temp1_input
-
-which belongs to thermal_zone0.
-
-When thermal_zone0 is removed, say because the ACPI thermal driver is
-unbound from the underlying platform device, thermal_remove_hwmon_sysfs()
-skips the removal of hwmon0 because of the temp2_input attribute
-belonging to thermal_zone1 which effectively prevents thermal_zone0
-removal from making progress.
-
-Address this by making thermal_remove_hwmon_sysfs() remove the entire
-hwmon class device interface for the given thermal zone type when the
-thermal zone device holding it is removed.
-
-To prevent races with thermal_add_hwmon_sysfs() that may interfere
-with this, carry out the entire addition and removal of hwmon sysfs
-interfaces for thermal zones under thermal_hwmon_list_lock.
-
-Also adjust the layout of the labels in thermal_add_hwmon_sysfs() to
-the current kernel coding style to align with the new "unlock" label.
-
-Link: https://lore.kernel.org/linux-pm/20260402021828.16556-1-liujia6264@gmail.com/
-Fixes: f6b6b52ef7a5 ("thermal_hwmon: Pass the originating device down to hwmon_device_register_with_info")
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Reviewed-by: Lukasz Luba <lukasz.luba@arm.com>
-Link: https://patch.msgid.link/5094738.GXAFRqVoOG@rafael.j.wysocki
+Fixes: 3e980f5995e0 ("nvmet: expose max queues to configfs")
+Reported-by: syzbot+2626e846cd2585c9aa67@syzkaller.appspotmail.com
+Signed-off-by: Maurizio Lombardi <mlombard@redhat.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/thermal_hwmon.c | 87 +++++++++++++--------------------
- 1 file changed, 34 insertions(+), 53 deletions(-)
+ drivers/nvme/target/admin-cmd.c   |  8 +++---
+ drivers/nvme/target/core.c        | 41 ++++++++++++++++++-------------
+ drivers/nvme/target/fabrics-cmd.c |  2 +-
+ drivers/nvme/target/nvmet.h       |  6 +++++
+ 4 files changed, 35 insertions(+), 22 deletions(-)
 
-diff --git a/drivers/thermal/thermal_hwmon.c b/drivers/thermal/thermal_hwmon.c
-index 1013e0221e371..8edc59454d629 100644
---- a/drivers/thermal/thermal_hwmon.c
-+++ b/drivers/thermal/thermal_hwmon.c
-@@ -92,34 +92,12 @@ thermal_hwmon_lookup_by_type(const struct thermal_zone_device *tz)
- 	struct thermal_hwmon_device *hwmon;
- 	char type[THERMAL_NAME_LENGTH];
+diff --git a/drivers/nvme/target/admin-cmd.c b/drivers/nvme/target/admin-cmd.c
+index b28a31cbfeae4..9d4180ceceb23 100644
+--- a/drivers/nvme/target/admin-cmd.c
++++ b/drivers/nvme/target/admin-cmd.c
+@@ -831,7 +831,7 @@ u16 nvmet_set_feat_async_event(struct nvmet_req *req, u32 mask)
  
--	mutex_lock(&thermal_hwmon_list_lock);
- 	list_for_each_entry(hwmon, &thermal_hwmon_list, node) {
- 		strcpy(type, tz->type);
- 		strreplace(type, '-', '_');
--		if (!strcmp(hwmon->type, type)) {
--			mutex_unlock(&thermal_hwmon_list_lock);
-+		if (!strcmp(hwmon->type, type))
- 			return hwmon;
--		}
- 	}
--	mutex_unlock(&thermal_hwmon_list_lock);
--
--	return NULL;
--}
--
--/* Find the temperature input matching a given thermal zone */
--static struct thermal_hwmon_temp *
--thermal_hwmon_lookup_temp(const struct thermal_hwmon_device *hwmon,
--			  const struct thermal_zone_device *tz)
--{
--	struct thermal_hwmon_temp *temp;
--
--	mutex_lock(&thermal_hwmon_list_lock);
--	list_for_each_entry(temp, &hwmon->tz_list, hwmon_node)
--		if (temp->tz == tz) {
--			mutex_unlock(&thermal_hwmon_list_lock);
--			return temp;
--		}
--	mutex_unlock(&thermal_hwmon_list_lock);
- 
- 	return NULL;
- }
-@@ -135,7 +113,9 @@ int thermal_add_hwmon_sysfs(struct thermal_zone_device *tz)
- 	struct thermal_hwmon_device *hwmon;
- 	struct thermal_hwmon_temp *temp;
- 	int new_hwmon_device = 1;
--	int result;
-+	int result = 0;
-+
-+	mutex_lock(&thermal_hwmon_list_lock);
- 
- 	hwmon = thermal_hwmon_lookup_by_type(tz);
- 	if (hwmon) {
-@@ -144,8 +124,10 @@ int thermal_add_hwmon_sysfs(struct thermal_zone_device *tz)
- 	}
- 
- 	hwmon = kzalloc(sizeof(*hwmon), GFP_KERNEL);
--	if (!hwmon)
--		return -ENOMEM;
-+	if (!hwmon) {
-+		result = -ENOMEM;
-+		goto unlock;
-+	}
- 
- 	INIT_LIST_HEAD(&hwmon->tz_list);
- 	strscpy(hwmon->type, tz->type, THERMAL_NAME_LENGTH);
-@@ -193,24 +175,24 @@ int thermal_add_hwmon_sysfs(struct thermal_zone_device *tz)
- 		temp->temp_crit_present = true;
- 	}
- 
--	mutex_lock(&thermal_hwmon_list_lock);
- 	if (new_hwmon_device)
- 		list_add_tail(&hwmon->node, &thermal_hwmon_list);
- 	list_add_tail(&temp->hwmon_node, &hwmon->tz_list);
--	mutex_unlock(&thermal_hwmon_list_lock);
- 
--	return 0;
-+	goto unlock;
- 
-- unregister_input:
-+unregister_input:
- 	device_remove_file(hwmon->device, &temp->temp_input.attr);
-- free_temp_mem:
-+free_temp_mem:
- 	kfree(temp);
-- unregister_name:
-+unregister_name:
- 	if (new_hwmon_device)
- 		hwmon_device_unregister(hwmon->device);
-- free_mem:
-+free_mem:
- 	if (new_hwmon_device)
- 		kfree(hwmon);
-+unlock:
-+	mutex_unlock(&thermal_hwmon_list_lock);
- 
- 	return result;
- }
-@@ -218,8 +200,11 @@ EXPORT_SYMBOL_GPL(thermal_add_hwmon_sysfs);
- 
- void thermal_remove_hwmon_sysfs(struct thermal_zone_device *tz)
+ void nvmet_execute_set_features(struct nvmet_req *req)
  {
-+	struct thermal_hwmon_temp *temp, *entry;
- 	struct thermal_hwmon_device *hwmon;
--	struct thermal_hwmon_temp *temp;
-+	bool unregister;
-+
-+	guard(mutex)(&thermal_hwmon_list_lock);
+-	struct nvmet_subsys *subsys = nvmet_req_subsys(req);
++	struct nvmet_ctrl *ctrl = nvmet_req_ctrl(req);
+ 	u32 cdw10 = le32_to_cpu(req->cmd->common.cdw10);
+ 	u32 cdw11 = le32_to_cpu(req->cmd->common.cdw11);
+ 	u16 status = 0;
+@@ -850,7 +850,7 @@ void nvmet_execute_set_features(struct nvmet_req *req)
+ 			break;
+ 		}
+ 		nvmet_set_result(req,
+-			(subsys->max_qid - 1) | ((subsys->max_qid - 1) << 16));
++			(ctrl->max_qid - 1) | ((ctrl->max_qid - 1) << 16));
+ 		break;
+ 	case NVME_FEAT_KATO:
+ 		status = nvmet_set_feat_kato(req);
+@@ -905,7 +905,7 @@ void nvmet_get_feat_async_event(struct nvmet_req *req)
  
- 	hwmon = thermal_hwmon_lookup_by_type(tz);
- 	if (unlikely(!hwmon)) {
-@@ -228,29 +213,25 @@ void thermal_remove_hwmon_sysfs(struct thermal_zone_device *tz)
- 		return;
+ void nvmet_execute_get_features(struct nvmet_req *req)
+ {
+-	struct nvmet_subsys *subsys = nvmet_req_subsys(req);
++	struct nvmet_ctrl *ctrl = nvmet_req_ctrl(req);
+ 	u32 cdw10 = le32_to_cpu(req->cmd->common.cdw10);
+ 	u16 status = 0;
+ 
+@@ -942,7 +942,7 @@ void nvmet_execute_get_features(struct nvmet_req *req)
+ 		break;
+ 	case NVME_FEAT_NUM_QUEUES:
+ 		nvmet_set_result(req,
+-			(subsys->max_qid-1) | ((subsys->max_qid-1) << 16));
++			(ctrl->max_qid-1) | ((ctrl->max_qid-1) << 16));
+ 		break;
+ 	case NVME_FEAT_KATO:
+ 		nvmet_get_feat_kato(req);
+diff --git a/drivers/nvme/target/core.c b/drivers/nvme/target/core.c
+index ed0c3b451fd71..ed92999609c7f 100644
+--- a/drivers/nvme/target/core.c
++++ b/drivers/nvme/target/core.c
+@@ -1470,7 +1470,25 @@ u16 nvmet_alloc_ctrl(const char *subsysnqn, const char *hostnqn,
+ 	if (!ctrl->changed_ns_list)
+ 		goto out_free_ctrl;
+ 
+-	ctrl->sqs = kcalloc(subsys->max_qid + 1,
++	/*
++	 * Discovery controllers may use some arbitrary high value
++	 * in order to cleanup stale discovery sessions
++	 */
++	if (nvmet_is_disc_subsys(ctrl->subsys) && !kato)
++		kato = NVMET_DISC_KATO_MS;
++
++	/* keep-alive timeout in seconds */
++	ctrl->kato = DIV_ROUND_UP(kato, 1000);
++
++	ctrl->err_counter = 0;
++	spin_lock_init(&ctrl->error_lock);
++
++	down_read(&nvmet_config_sem);
++	mutex_lock(&subsys->lock);
++
++	ctrl->max_qid = subsys->max_qid;
++
++	ctrl->sqs = kcalloc(ctrl->max_qid + 1,
+ 			sizeof(struct nvmet_sq *),
+ 			GFP_KERNEL);
+ 	if (!ctrl->sqs)
+@@ -1488,25 +1506,12 @@ u16 nvmet_alloc_ctrl(const char *subsysnqn, const char *hostnqn,
+ 	}
+ 	ctrl->cntlid = ret;
+ 
+-	/*
+-	 * Discovery controllers may use some arbitrary high value
+-	 * in order to cleanup stale discovery sessions
+-	 */
+-	if (nvmet_is_disc_subsys(ctrl->subsys) && !kato)
+-		kato = NVMET_DISC_KATO_MS;
+-
+-	/* keep-alive timeout in seconds */
+-	ctrl->kato = DIV_ROUND_UP(kato, 1000);
+-
+-	ctrl->err_counter = 0;
+-	spin_lock_init(&ctrl->error_lock);
+-
+-	nvmet_start_keep_alive_timer(ctrl);
+-
+-	mutex_lock(&subsys->lock);
+ 	list_add_tail(&ctrl->subsys_entry, &subsys->ctrls);
+ 	nvmet_setup_p2p_ns_map(ctrl, req);
+ 	mutex_unlock(&subsys->lock);
++	up_read(&nvmet_config_sem);
++
++	nvmet_start_keep_alive_timer(ctrl);
+ 
+ 	*ctrlp = ctrl;
+ 	return 0;
+@@ -1514,6 +1519,8 @@ u16 nvmet_alloc_ctrl(const char *subsysnqn, const char *hostnqn,
+ out_free_sqs:
+ 	kfree(ctrl->sqs);
+ out_free_changed_ns_list:
++	mutex_unlock(&subsys->lock);
++	up_read(&nvmet_config_sem);
+ 	kfree(ctrl->changed_ns_list);
+ out_free_ctrl:
+ 	kfree(ctrl);
+diff --git a/drivers/nvme/target/fabrics-cmd.c b/drivers/nvme/target/fabrics-cmd.c
+index 6c882ca588bd9..7807cee08790b 100644
+--- a/drivers/nvme/target/fabrics-cmd.c
++++ b/drivers/nvme/target/fabrics-cmd.c
+@@ -351,7 +351,7 @@ static void nvmet_execute_io_connect(struct nvmet_req *req)
+ 		goto out;
  	}
  
--	temp = thermal_hwmon_lookup_temp(hwmon, tz);
--	if (unlikely(!temp)) {
--		/* Should never happen... */
--		dev_dbg(&tz->device, "temperature input lookup failed!\n");
--		return;
--	}
-+	unregister = hwmon->device->parent == &tz->device;
+-	if (unlikely(qid > ctrl->subsys->max_qid)) {
++	if (unlikely(qid > ctrl->max_qid)) {
+ 		pr_warn("invalid queue id (%d)\n", qid);
+ 		status = NVME_SC_CONNECT_INVALID_PARAM | NVME_STATUS_DNR;
+ 		req->cqe->result.u32 = IPO_IATTR_CONNECT_SQE(qid);
+diff --git a/drivers/nvme/target/nvmet.h b/drivers/nvme/target/nvmet.h
+index 5a8bdd51e30c9..09778c5d26791 100644
+--- a/drivers/nvme/target/nvmet.h
++++ b/drivers/nvme/target/nvmet.h
+@@ -190,6 +190,7 @@ struct nvmet_ctrl {
  
--	device_remove_file(hwmon->device, &temp->temp_input.attr);
--	if (temp->temp_crit_present)
--		device_remove_file(hwmon->device, &temp->temp_crit.attr);
-+	list_for_each_entry_safe_reverse(temp, entry, &hwmon->tz_list, hwmon_node) {
-+		if (!unregister && temp->tz != tz)
-+			continue;
+ 	uuid_t			hostid;
+ 	u16			cntlid;
++	u16			max_qid;
+ 	u32			kato;
  
--	mutex_lock(&thermal_hwmon_list_lock);
--	list_del(&temp->hwmon_node);
--	kfree(temp);
--	if (!list_empty(&hwmon->tz_list)) {
--		mutex_unlock(&thermal_hwmon_list_lock);
--		return;
-+		device_remove_file(hwmon->device, &temp->temp_input.attr);
-+		if (temp->temp_crit_present)
-+			device_remove_file(hwmon->device, &temp->temp_crit.attr);
-+
-+		list_del(&temp->hwmon_node);
-+		kfree(temp);
- 	}
--	list_del(&hwmon->node);
--	mutex_unlock(&thermal_hwmon_list_lock);
- 
--	hwmon_device_unregister(hwmon->device);
--	kfree(hwmon);
-+	if (unregister) {
-+		list_del(&hwmon->node);
-+		hwmon_device_unregister(hwmon->device);
-+		kfree(hwmon);
-+	}
+ 	struct nvmet_port	*port;
+@@ -617,6 +618,11 @@ static inline struct nvmet_subsys *nvmet_req_subsys(struct nvmet_req *req)
+ 	return req->sq->ctrl->subsys;
  }
- EXPORT_SYMBOL_GPL(thermal_remove_hwmon_sysfs);
  
++static inline struct nvmet_ctrl *nvmet_req_ctrl(struct nvmet_req *req)
++{
++	return req->sq->ctrl;
++}
++
+ static inline bool nvmet_is_disc_subsys(struct nvmet_subsys *subsys)
+ {
+     return subsys->type != NVME_NQN_NVME;
 -- 
 2.53.0
 
