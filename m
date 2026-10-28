@@ -1,53 +1,60 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793217291;
-	b=s4l2ISMajlNEsS2Rt8pmuwAWZV0JTAThp6TMOQEZEAcNW2ISkISnkNiW1ylyIUIL08sY
-	 s4FqLy8DQ3OUIxNhqauHv65L6fSTup9W0Tf0Ao3lMjzyd8hmiKCCASwjcJL5zwNMxyiVv
-	 kKYCSANn8zysjvjsTWTdXVHRlFd9IIeyZKKNO0BwWv1i2KF6W0hgrX1E9tLL3G2IB8TZs
-	 NK21yBnknMdQEOXhMaiWwwlGWG2tDXraAhvjtI2s4Vh6hoBQ2M6CQyZvfjmacPRpbLHEO
-	 4EBRa2VMctnEkayIx5JwB2nUMP4jJONx3HRBACXu8y+6lWwcEwaxFpAedXYicqA2KaA==
+	t=1793217294;
+	b=ry1xrMWubrZgvOKuBxXxdVjFGTaPiMAuvd2z/3EUJgTuKgZzjp5Pp0uCrkMNPi1c+z0P
+	 tpFoP0+Rp156gYp0WqXehLfgNqUzTvBkc3pVwxciHBz9roMpCsqb7XLimJX7eZYLE9sjn
+	 n2ErM0eh3HY/ixd+PKRdsYtltQvBcAqe9xA6YX34FAbdSSqm1VcbzWRcJrnrz4EfFJfCp
+	 0aNDw2mFHMTj8Meb7sHw/+mDlB1xg3z0ikpPCiC6f+ZCOotpvhxWJiT+1nUlkQ4tgu4uu
+	 ySRlqlNHi6JLJ3qCZ58OeTMWjrnx/70mQR723Jt9CY4shNQVgIKPn/6seLA/hvhcjtw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793217291;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793217294;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=25TjeARqxAVdi50j/20hXY/80m89FCKmFT8iEYVQI0k=;
-	b=v/ZoF/lJI6l+u+7IbGkdrebioEeAEthQVHCwFJT+B/qrd7BS9Z6J7hl5rlt0/e9VHFoa
-	 0jQyqqcFz+23wIIabXE/5nBlxJ0Hi8SLN21LmFr9GG74Slb8SwjHCymI3lQyCczYUIoqW
-	 4gM8lLFyrFwvKhGqtFtPFzroAGHm7hWdoc3SjL9r9j1mMKfW2uP8fRZKsJlhNrgiREbGA
-	 zpzaGPP8wgDdXX+GWVYgAjOXdK4dL6o5QyEqj2kfauDb3pQ+UQXl7d0KIXE1rYLZqNJCh
-	 v2TChkJoqOiz8FqLZaKXujOwLPVYDsx/36ua7G+B23GwLrRG0ikCGpr+SAk+hSd9QkQ==
+	bh=cV7zuCXanhO4QbWaX5wDlomYwH8VYX9fWMysn1CwfQY=;
+	b=cHNkDd2kXlciK8MTIFwKI7ukc8faqR9Wrq48bt1ucdiCf6gJ3qHB96Kzu+qlkSGvT8+k
+	 dNZQ//cFb0aHeZ67xoo3d+r7U4nFXMb7pT5d9Wo1wMeg2HNf8ynNlJTR2jm0XmdY5+6ar
+	 FFcRIvnzovXq8QwUHJeL9u3fw5rpg+WnEK4N2kxJcYrFFrTkgovrpUotqVrcUDfaopGpi
+	 cJCbaHXLCb6O31sSo67d0yN3AZoT7gYwbsJ1fD+mzn8FdLVzgLYMA4tNNRUX5yLhw9LPq
+	 2TU2+IPUuzUClqcYeOYF6nYNHzgb22WMcyGZIZ4xQv4ipp7GsNEq7e1FLu253xQHwrA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dNyreymh;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I770NgGX;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 890D0606A31A;
-	Wed, 28 Oct 2026 19:54:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31F09606A31A;
+	Wed, 28 Oct 2026 19:54:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dNyreymh
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8FAC1F01829;
-	Wed, 28 Oct 2026 19:54:50 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I770NgGX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8809E1F031E0;
+	Wed, 28 Oct 2026 19:54:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793217291;
-	bh=25TjeARqxAVdi50j/20hXY/80m89FCKmFT8iEYVQI0k=;
+	s=korg; t=1793217294;
+	bh=cV7zuCXanhO4QbWaX5wDlomYwH8VYX9fWMysn1CwfQY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dNyreymhWsF6wn1IHaAFG3gkD83sYBdyDjlADngF2UjuJOtPfk/LC+74i6TO2ssuq
-	 TLaBDDTfWI8YFcWiciLbAK9qPe7EQ0nfHvMJiwKkqhQW0nGJUfKYvn0i0rBrlbpAdq
-	 98SG5eYXlEo28IrW3QQ1CtN5f+iVJ/ufSnzlICQ0=
+	b=I770NgGXkm7xiYk0rDawKvPsdXE0ZNRXH1fiVi09JfMpxqPmQAJr0N1i4qvWPJ6c6
+	 zLsn5QClE6enjlwLQR7DyjZ00OzZGOt3FmjEzGKy/6IVM1mgHYTs2GDff+r5tybYXl
+	 CNI3wjR3DtXDSFU6YYcOv316fnZUDqhvgp/u3OvY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+b0373017f711c06ada64@syzkaller.appspotmail.com,
-	Moon Hee Lee <moonhee.lee.ca@gmail.com>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Su Hui <suhui@nfschina.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Ira Weiny <ira.weiny@intel.com>,
+	Jiaqi Yan <jiaqiyan@google.com>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Peter Collingbourne <pcc@google.com>,
+	Tom Rix <trix@redhat.com>,
+	Tony Luck <tony.luck@intel.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1853/1887] fs/ntfs3: reject index allocation if $BITMAP is empty but blocks exist
-Date: Wed, 28 Oct 2026 18:05:49 +0100
-Message-ID: <20261028170541.617940784@linuxfoundation.org>
+Subject: [PATCH 6.1 1854/1887] highmem: fix a memory copy problem in memcpy_from_folio
+Date: Wed, 28 Oct 2026 18:05:50 +0100
+Message-ID: <20261028170541.640458281@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,55 +76,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Moon Hee Lee <moonhee.lee.ca@gmail.com>
+From: Su Hui <suhui@nfschina.com>
 
-[ Upstream commit 0dc7117da8f92dd5fe077d712a756eccbe377d40 ]
+[ Upstream commit 73424d00dc63ba681856e06cfb0a5abbdb62e2b5 ]
 
-Index allocation requires at least one bit in the $BITMAP attribute to
-track usage of index entries. If the bitmap is empty while index blocks
-are already present, this reflects on-disk corruption.
+Clang static checker complains that value stored to 'from' is never read.
+And memcpy_from_folio() only copy the last chunk memory from folio to
+destination.  Use 'to += chunk' to replace 'from += chunk' to fix this
+typo problem.
 
-syzbot triggered this condition using a malformed NTFS image. During a
-rename() operation involving a long filename (which spans multiple
-index entries), the empty bitmap allowed the name to be added without
-valid tracking. Subsequent deletion of the original entry failed with
--ENOENT, due to unexpected index state.
-
-Reject such cases by verifying that the bitmap is not empty when index
-blocks exist.
-
-Reported-by: syzbot+b0373017f711c06ada64@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=b0373017f711c06ada64
-Fixes: d99208b91933 ("fs/ntfs3: cancle set bad inode after removing name fails")
-Tested-by: syzbot+b0373017f711c06ada64@syzkaller.appspotmail.com
-Signed-off-by: Moon Hee Lee <moonhee.lee.ca@gmail.com>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Link: https://lkml.kernel.org/r/20231130034017.1210429-1-suhui@nfschina.com
+Fixes: b23d03ef7af5 ("highmem: add memcpy_to_folio() and memcpy_from_folio()")
+Signed-off-by: Su Hui <suhui@nfschina.com>
+Reviewed-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: Ira Weiny <ira.weiny@intel.com>
+Cc: Jiaqi Yan <jiaqiyan@google.com>
+Cc: Nathan Chancellor <nathan@kernel.org>
+Cc: Nick Desaulniers <ndesaulniers@google.com>
+Cc: Peter Collingbourne <pcc@google.com>
+Cc: Tom Rix <trix@redhat.com>
+Cc: Tony Luck <tony.luck@intel.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/index.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ include/linux/highmem.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/ntfs3/index.c b/fs/ntfs3/index.c
-index 82feda419c0aa..8572453693898 100644
---- a/fs/ntfs3/index.c
-+++ b/fs/ntfs3/index.c
-@@ -1552,6 +1552,16 @@ static int indx_add_allocate(struct ntfs_index *indx, struct ntfs_inode *ni,
- 			bmp_size = bmp_size_v = le32_to_cpu(bmp->res.data_size);
- 		}
+diff --git a/include/linux/highmem.h b/include/linux/highmem.h
+index c4d6ae968dfc3..1761b6d0c2c76 100644
+--- a/include/linux/highmem.h
++++ b/include/linux/highmem.h
+@@ -430,7 +430,7 @@ static inline void memcpy_from_folio(char *to, struct folio *folio,
+ 		memcpy(to, from, chunk);
+ 		kunmap_local(from);
  
-+		/*
-+		 * Index blocks exist, but $BITMAP has zero valid bits.
-+		 * This implies an on-disk corruption and must be rejected.
-+		 */
-+		if (in->name == I30_NAME &&
-+		    unlikely(bmp_size_v == 0 && indx->alloc_run.count)) {
-+			err = -EINVAL;
-+			goto out1;
-+		}
-+
- 		bit = bmp_size << 3;
- 	}
- 
+-		from += chunk;
++		to += chunk;
+ 		offset += chunk;
+ 		len -= chunk;
+ 	} while (len > 0);
 -- 
 2.53.0
 
