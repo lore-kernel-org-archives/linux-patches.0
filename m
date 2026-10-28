@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215888;
-	b=fdSQgfz9jz88i11j7g59Ku1b5Pd3v9VPOZb9e15PMwVKCm/vYpOSxm7UUwtbgPIGAMth
-	 qvgMm9ai+OuM9kzB4ZLSSA2zXjtcIUfQLfbcsvgV+lMn/0pGCxVUihyI/pCfn6htumxcE
-	 KJ5dRUYLNyBvmuAS6kNmUY5islbZ9JqtBDUvG4S6B7xDrUmwQ8QwJO2Wh18myHKOyDtkw
-	 3YVW0C7ksK8CKybUAWx1jz+bagA/85CcfhYTcJzWNc+w+i4lyiLXE7e4mptjbvslJTqzm
-	 1d5u2WBtimTfG0/N+wwIy9ps9HDNiSchbx8Yc4xpjX+UVoidj2r4fNMZQTUF7TTP8YA==
+	t=1793215891;
+	b=dwO9oODz8AN98xyqw8RYZaO7i39N8K4U5fpY4ljoA6Css6+8qrfTwJQXXc3oCwbiicfI
+	 j1LZiBxpoeW++OmQAQIeFCmC+o1/oh7XhJzjZNM1kQH8Vq/bTq4yX1KtE0sUrNqxpGnxV
+	 oJEuSrF4bprZzXMmx1kO+FeRV8ClmCRTyi6ubc33Zk7+d+0OJqMbY1TE4RZSQjUurXeI4
+	 pWAI5BB9ClvRniGXI5IskhGKhMF0NGBKJT2ZZJiAqt6mWtz+qpi34gemkvPVZ5XSNNXv7
+	 mKkxXwMDXDgSNGsqAn+4mqk/fksAC6/SwDpMMiw1vGFcBm0GPk+8NjAJAbLW4QsUopg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215888;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215891;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=6kJufbXryyaPkeEJ9aSTkwlqChtsvSi1GZjFhTaIMCI=;
-	b=fYknNbN1ykzZdUZPhhgUZttQY6D06OCPxs9YfoGE57snbOehCA7/gQ3ZZz05ej9/rcl9
-	 qitm3Tyh01GU0EnifRIxSOFTDLhhe8hV0Nf9MsGv7+Qe/YKdQ0fJbO7EX3eGB/mBPFqAr
-	 OkOol+hY2n+BsjNrxkuPhPvfIfFCJFheYbvShu5H+7sc3qX4yHAIGqLkIBKLyTBh1pVCm
-	 NMc+7FKeXIcoAL44xzGyHM/R2qPg/EAevyiUREJ4DPS4w8BMWbjOPGxGWZnkasUHhYckG
-	 2HXc5xHobp5LvM8o44sJvtJbZRNHyW85imEvycsFwDQ5NMGIZYSeACb4LF7Aw0cR4qw==
+	bh=73j21H4gkguHw0UqWwsRvImjPEx0iIXT7DJQhMF9rWQ=;
+	b=GfIyMpQjCH+w1LlBvBPdziOlO5vdrJyQEmip2ifsHx4ZSZOP815dru+jU7ImnyFl1rg3
+	 OmdbHUH/w071cG4T6EqOjzqPl33g79GdTaQWpETDxgc1NeePxsvjVMxE3LdgiBgk8khcY
+	 muzRS8s+slL0uefGJI27MHz3ooC5DDPRQ9U2OQE9ClgRzCjgUf9xXjJjWi7fSSHtRDbo5
+	 jmzTP5WCWahcBZ1TrrOGd3qUSnDnBBlnuglpS7fetAvW7EOTCvw72uJMD4o0jh0MO9Rwk
+	 NAeXfKT3Uz2cqLPdgvhKTv6yPYiCyghonJrsXwuvF0Yu8bv+c5sB5HUOSw8DuxzSr8w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CQqQV5Zj;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="c9x/jh4U";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2514606A31A;
-	Wed, 28 Oct 2026 19:31:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2E8A606A31E;
+	Wed, 28 Oct 2026 19:31:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CQqQV5Zj
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F4A11F01825;
-	Wed, 28 Oct 2026 19:31:26 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c9x/jh4U
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F33951F01825;
+	Wed, 28 Oct 2026 19:31:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215887;
-	bh=6kJufbXryyaPkeEJ9aSTkwlqChtsvSi1GZjFhTaIMCI=;
+	s=korg; t=1793215890;
+	bh=73j21H4gkguHw0UqWwsRvImjPEx0iIXT7DJQhMF9rWQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CQqQV5ZjC+dFbRSHoPDDIIj2+NdWX7QZ2otfW8VJRQyQtnDQmUcdYnVYnjkxNgSFB
-	 Gj/PjxKS4BuSe7HL5sA/DQ6/QsCux583nMMaEsKlYfOcKDdflxVdj7Dry5D3rgxZgc
-	 Ck/Ipq2kDtCHSsNjIunX33t1glHVw71cKwjknqe0=
+	b=c9x/jh4Ut+WBbNzL6AvJ2JujEuERh8DuciCrApCckrUYZvXCNK3ztLz3wDhFQBRl3
+	 Z8Avz5nM9nsTrTuLs3zGmUc14YrEHt9bkDuBajM6WcJqynRPiALyOQabop4AB4S0wl
+	 aJKwHL5X5msnvVFx79+UTOFej8IyrIVRfhfmbcUo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Carlier <devnexen@gmail.com>,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1323/1887] netfilter: flowtable: avoid num_encaps underflow on bridge VLAN untag
-Date: Wed, 28 Oct 2026 17:56:59 +0100
-Message-ID: <20261028170529.535210883@linuxfoundation.org>
+Subject: [PATCH 6.1 1324/1887] netfilter: make nftables drops visible in net dropmonitor
+Date: Wed, 28 Oct 2026 17:57:00 +0100
+Message-ID: <20261028170529.557915050@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,52 +67,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Carlier <devnexen@gmail.com>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit e052f920773b73be49eb4d8702a9f85de7464363 ]
+[ Upstream commit e0d4593140b01b8da513a0c88c26da28b4906413 ]
 
-The DEV_PATH_BR_VLAN_UNTAG case post-decrements info->num_encaps
-inside WARN_ON_ONCE(). num_encaps is u8, so if it's already 0 the
-decrement still happens and wraps it to 255. The break only leaves
-the inner switch -- a later path entry can set info->indev back to
-a real device, and we end up returning with num_encaps == 255.
+net_dropmonitor blames core.c:nf_hook_slow.
+Add NF_DROP_REASON() helper and use it in nft_do_chain().
 
-nft_dev_forward_path() then walks info.encap[] (size 2) up to
-num_encaps, which means an OOB stack read and a bogus count copied
-into the route descriptor.
+The helper releases the skb, so exact drop location becomes
+available. Calling code will observe the NF_STOLEN verdict
+instead.
 
-Should only happen on a malformed bridge path stack, hence the WARN,
-but worth handling sanely. Move the decrement out of the WARN.
+Adjust nf_hook_slow so we can embed an erro value wih
+NF_STOLEN verdicts, just like we do for NF_DROP.
 
-[ While at this, remove the WARN_ON_ONCE since this can only happen
-  with a buggy bridge path stack --pablo ].
+After this, drop in nftables can be pinpointed to a drop due
+to a rule or the chain policy.
 
-Fixes: e990cef6516d ("netfilter: flowtable: add bridge vlan filtering support")
-Signed-off-by: David Carlier <devnexen@gmail.com>
-Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Stable-dep-of: 992c20bc8a4a ("netfilter: synproxy: fix unaligned memory access in timestamp adjustment")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_flow_offload.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ include/linux/netfilter.h      | 10 ++++++++++
+ net/netfilter/core.c           |  6 +++---
+ net/netfilter/nf_tables_core.c |  6 +++++-
+ 3 files changed, 18 insertions(+), 4 deletions(-)
 
-diff --git a/net/netfilter/nft_flow_offload.c b/net/netfilter/nft_flow_offload.c
-index 7cffa4be67b2a..449d4b4725d2d 100644
---- a/net/netfilter/nft_flow_offload.c
-+++ b/net/netfilter/nft_flow_offload.c
-@@ -149,10 +149,11 @@ static void nft_dev_path_info(const struct net_device_path_stack *stack,
- 				info->num_encaps++;
- 				break;
- 			case DEV_PATH_BR_VLAN_UNTAG:
--				if (WARN_ON_ONCE(info->num_encaps-- == 0)) {
-+				if (info->num_encaps == 0) {
- 					info->indev = NULL;
- 					break;
- 				}
-+				info->num_encaps--;
- 				break;
- 			case DEV_PATH_BR_VLAN_KEEP:
- 				break;
+diff --git a/include/linux/netfilter.h b/include/linux/netfilter.h
+index caa775ec9ac94..031718f764caf 100644
+--- a/include/linux/netfilter.h
++++ b/include/linux/netfilter.h
+@@ -21,6 +21,16 @@ static inline int NF_DROP_GETERR(int verdict)
+ 	return -(verdict >> NF_VERDICT_QBITS);
+ }
+ 
++static __always_inline int
++NF_DROP_REASON(struct sk_buff *skb, enum skb_drop_reason reason, u32 err)
++{
++	BUILD_BUG_ON(err > 0xffff);
++
++	kfree_skb_reason(skb, reason);
++
++	return ((err << 16) | NF_STOLEN);
++}
++
+ static inline int nf_inet_addr_cmp(const union nf_inet_addr *a1,
+ 				   const union nf_inet_addr *a2)
+ {
+diff --git a/net/netfilter/core.c b/net/netfilter/core.c
+index edf92074221e2..50490bae3623e 100644
+--- a/net/netfilter/core.c
++++ b/net/netfilter/core.c
+@@ -627,10 +627,10 @@ int nf_hook_slow(struct sk_buff *skb, struct nf_hook_state *state,
+ 			if (ret == 1)
+ 				continue;
+ 			return ret;
++		case NF_STOLEN:
++			return NF_DROP_GETERR(verdict);
+ 		default:
+-			/* Implicit handling for NF_STOLEN, as well as any other
+-			 * non conventional verdicts.
+-			 */
++			WARN_ON_ONCE(1);
+ 			return 0;
+ 		}
+ 	}
+diff --git a/net/netfilter/nf_tables_core.c b/net/netfilter/nf_tables_core.c
+index e0c117229ee9d..1df0908cc886c 100644
+--- a/net/netfilter/nf_tables_core.c
++++ b/net/netfilter/nf_tables_core.c
+@@ -284,10 +284,11 @@ nft_do_chain(struct nft_pktinfo *pkt, void *priv)
+ 
+ 	switch (regs.verdict.code & NF_VERDICT_MASK) {
+ 	case NF_ACCEPT:
+-	case NF_DROP:
+ 	case NF_QUEUE:
+ 	case NF_STOLEN:
+ 		return regs.verdict.code;
++	case NF_DROP:
++		return NF_DROP_REASON(pkt->skb, SKB_DROP_REASON_NETFILTER_DROP, EPERM);
+ 	}
+ 
+ 	switch (regs.verdict.code) {
+@@ -322,6 +323,9 @@ nft_do_chain(struct nft_pktinfo *pkt, void *priv)
+ 	if (static_branch_unlikely(&nft_counters_enabled))
+ 		nft_update_chain_stats(basechain, pkt);
+ 
++	if (nft_base_chain(basechain)->policy == NF_DROP)
++		return NF_DROP_REASON(pkt->skb, SKB_DROP_REASON_NETFILTER_DROP, EPERM);
++
+ 	return nft_base_chain(basechain)->policy;
+ }
+ EXPORT_SYMBOL_GPL(nft_do_chain);
 -- 
 2.53.0
 
