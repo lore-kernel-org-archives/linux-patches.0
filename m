@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214538;
-	b=vOSCoJRt9DJFZMosFk5ETWV71i9yrG2CxB0UzQBAKhyZ/jgt6wKjHN0AIKumJUQBGS9Y
-	 L0disK0ZcRaAl51R3bCJD5smi7tURTMx/oYlcdTxccRV84YTJzHO3BBl6ZE4XueWCyLYH
-	 8E3Hy2HhqVST/QPanZMNmDuwYLpGUgGAbOGmlgVo7m+UOziMN11THXiROKw5oAxIk7sFN
-	 h9CDjF51KzHPmkw0X+1YllCs7E/5L6nI+/RBjNC8O5JvaFxFipVKqDAdlrlm5H708zcEY
-	 QaFleohTKuxfBejGiPlZCVnShlDlBq7SF+nurJGo1PgKON9+RpAw7epnq1XBxJxzIDA==
+	t=1793214542;
+	b=m63xH7tli6JkENiW9D4jbIMoQ2GvwBqa6d2ThdfP85S859UNAy3wmzqN6d7tJEPPZY7r
+	 +mwU0/1z34sip6OROP/lHNTjznc1hbTAQduRO5Xzx4dWYwo2b6wsZ+PtuQ+sOTHRApVp6
+	 dKpwR9BCrxMEIY4IrVFpFB651MI/r8qjmA1prjtI6d81oLjkrRuW9lYaxQlgkdO1ItLiQ
+	 O/xhR/PYvVjb0eNMg4z2Ja5XMstQi31Fs2+1L753/Xsa8rGBxTWAwrgYEw5da/vRiuLGJ
+	 1uVRNEGemgeycWSCeWzq3GvMkhy18RhVcSayGrFHaIkkTxEalYMJ6yISMUR6oDnxlYQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214538;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214542;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=AXVxra/Ldazn0B6eP9u2Jcr4IMdRthCeuUArCOPxex0=;
-	b=ZSR5gj4MR7owSDxavVsjzfTWscd/JWCD1JqnX7g93AMDreXIX2+zBtbQFXaTq2GLFqv5
-	 Nbz8P8aJ2X2o7yxmd78XI8zmTHBdbkYhmpLAEIF26kXZNMdoVQJdvMIm1ep3s+IeURD1Y
-	 5iFuhLRCVFtmFGzXizb5WuKTtluTzZN2MtKu7J3ByvAfck6BvIPcsT7SpQrFNbL7VBZdp
-	 Sg/c9r720SQziY+fdcBPkZGI7FN/BZWptbbYwKD+Wob/gE/lfEv4vnkpn24s/83jkgSQV
-	 xCK/bS/CXZaGvldkc6BpY+BsSBafbjjPf3uwlKkUJxt+yPHIhiVwLGhSmLau+nGQfRA==
+	bh=dVltU4hgDWHYmWrfsMnAc4frWZ1cXUlfT3dszolZp7U=;
+	b=gY4I5QkHDNCvi38to2lPPYKpULNM23t8sZ27ojN/gU9DkMeZUPpw1cNaFhLc35Uxr2Qw
+	 pofOGehaoAse/hlejR7UxKMxdcf1fkBDquuVwxRRgGMGBj9VDv3czb7bUkrS+EW6t5rep
+	 EUIzQDPdGBgdf4evFz8wY+I8YxnM3VSzs/OY6QuR6Yod3OsKN6a+wPNUeOX7udx4IXbwg
+	 KqH6Wy8bqGOCwr3JbW4QAMz+tUsxvfIMOJwVfTuEwqcyYQIWZYghxDNFGaKauY6UhqyT7
+	 +0enDOVLV77XEExWMUf880APrQ3yjfUPJohjPcGiFFnbAGlALa89bvrBpwrnnsXhLPg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kTPnE2Zm;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OXWjULu0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 735AF60A260C;
-	Wed, 28 Oct 2026 19:08:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53B7860A2607;
+	Wed, 28 Oct 2026 19:09:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kTPnE2Zm
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5AFF1F01825;
-	Wed, 28 Oct 2026 19:08:57 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OXWjULu0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A32811F01825;
+	Wed, 28 Oct 2026 19:09:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214538;
-	bh=AXVxra/Ldazn0B6eP9u2Jcr4IMdRthCeuUArCOPxex0=;
+	s=korg; t=1793214541;
+	bh=dVltU4hgDWHYmWrfsMnAc4frWZ1cXUlfT3dszolZp7U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kTPnE2ZmHiD6BAGXRyl2lKfbTuZD3GDHW4ongRKewHHYYFm8WKIB4uiW8bZ39vE5A
-	 eO4hWnWNRuzzRL71zXX+TjALMJfeZbYyh98tDz/DYWTr7bPa5kRURbmoNwqvAve0Fk
-	 nrtRf11suuHUdHzfP4RikjqhNzpBe+YOuU2SwGGU=
+	b=OXWjULu0hvtXy0t2xCzLWaJy5iEhXD9rVWXyrj1dXhn2NNEc90OqFXCHF4qGTgnE4
+	 60Xz6YZJyNdeknaFQ/PGinUjePwA9LYR86R30NRX3jjrRWGe1hh0qKiw4OQJ06NfZX
+	 nmJzRCFHIohpsZo/HubnGNg0cD5tRzZDjAsg7ttM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Starke <daniel.starke@siemens.com>,
+	Horatiu Vultur <horatiu.vultur@microchip.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0857/1887] tty: n_gsm: add parameters used with parameter negotiation
-Date: Wed, 28 Oct 2026 17:49:13 +0100
-Message-ID: <20261028170518.925385050@linuxfoundation.org>
+Subject: [PATCH 6.1 0893/1887] lan966x: Fix sleeping in atomic context
+Date: Wed, 28 Oct 2026 17:49:49 +0100
+Message-ID: <20261028170519.739400984@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -67,230 +69,175 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Starke <daniel.starke@siemens.com>
+From: Horatiu Vultur <horatiu.vultur@microchip.com>
 
-[ Upstream commit 2ec7a802a04c545ceea96bf67ee818d8bb0349e2 ]
+[ Upstream commit 0216721ce71252f60d89af49c8dff613358058d3 ]
 
-n_gsm is based on the 3GPP 07.010 and its newer version is the 3GPP 27.010.
-See https://portal.3gpp.org/desktopmodules/Specifications/SpecificationDetails.aspx?specificationId=1516
-The changes from 07.010 to 27.010 are non-functional. Therefore, I refer to
-the newer 27.010 here. Chapter 5.4.6.3.1 describes the encoding of the
-parameter negotiation messages.
+The following warning was seen when we try to connect using ssh to the device.
 
-Add the parameters used there to 'gsm_mux' and 'gsm_dlci' and initialize both
-according to the value ranges and recommended defaults defined in chapter 5.7.
+BUG: sleeping function called from invalid context at kernel/locking/mutex.c:575
+in_atomic(): 1, irqs_disabled(): 0, non_block: 0, pid: 104, name: dropbear
+preempt_count: 1, expected: 0
+INFO: lockdep is turned off.
+CPU: 0 UID: 0 PID: 104 Comm: dropbear Tainted: G        W           6.18.0-rc2-00399-g6f1ab1b109b9-dirty #530 NONE
+Tainted: [W]=WARN
+Hardware name: Generic DT based system
+Call trace:
+ unwind_backtrace from show_stack+0x10/0x14
+ show_stack from dump_stack_lvl+0x7c/0xac
+ dump_stack_lvl from __might_resched+0x16c/0x2b0
+ __might_resched from __mutex_lock+0x64/0xd34
+ __mutex_lock from mutex_lock_nested+0x1c/0x24
+ mutex_lock_nested from lan966x_stats_get+0x5c/0x558
+ lan966x_stats_get from dev_get_stats+0x40/0x43c
+ dev_get_stats from dev_seq_printf_stats+0x3c/0x184
+ dev_seq_printf_stats from dev_seq_show+0x10/0x30
+ dev_seq_show from seq_read_iter+0x350/0x4ec
+ seq_read_iter from seq_read+0xfc/0x194
+ seq_read from proc_reg_read+0xac/0x100
+ proc_reg_read from vfs_read+0xb0/0x2b0
+ vfs_read from ksys_read+0x6c/0xec
+ ksys_read from ret_fast_syscall+0x0/0x1c
+Exception stack(0xf0b11fa8 to 0xf0b11ff0)
+1fa0:                   00000001 00001000 00000008 be9048d8 00001000 00000001
+1fc0: 00000001 00001000 00000008 00000003 be905920 0000001e 00000000 00000001
+1fe0: 0005404c be9048c0 00018684 b6ec2cd8
 
-Replace the use of the DLC default values from the 'gsm_mux' fields with the DLC
-specific values from the 'gsm_dlci' fields where applicable.
+It seems that we are using a mutex in a atomic context which is wrong.
+Change the mutex with a spinlock.
 
-Signed-off-by: Daniel Starke <daniel.starke@siemens.com>
-Link: https://lore.kernel.org/r/20221103091743.2119-2-daniel.starke@siemens.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: 3cf0b3c243e5 ("tty: n_gsm: Don't block input queue by waiting MSC")
+Fixes: 12c2d0a5b8e2 ("net: lan966x: add ethtool configuration and statistics")
+Signed-off-by: Horatiu Vultur <horatiu.vultur@microchip.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Link: https://patch.msgid.link/20251105074955.1766792-1-horatiu.vultur@microchip.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/n_gsm.c | 58 +++++++++++++++++++++++++++++++++++----------
- 1 file changed, 45 insertions(+), 13 deletions(-)
+ .../microchip/lan966x/lan966x_ethtool.c        | 18 +++++++++---------
+ .../ethernet/microchip/lan966x/lan966x_main.c  |  2 --
+ .../ethernet/microchip/lan966x/lan966x_main.h  |  4 ++--
+ 3 files changed, 11 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/tty/n_gsm.c b/drivers/tty/n_gsm.c
-index 165a70ab1f004..374d013eada6e 100644
---- a/drivers/tty/n_gsm.c
-+++ b/drivers/tty/n_gsm.c
-@@ -40,6 +40,7 @@
- #include <linux/tty.h>
- #include <linux/ctype.h>
- #include <linux/mm.h>
-+#include <linux/math.h>
- #include <linux/string.h>
- #include <linux/slab.h>
- #include <linux/poll.h>
-@@ -75,7 +76,12 @@ module_param(debug, int, 0600);
+diff --git a/drivers/net/ethernet/microchip/lan966x/lan966x_ethtool.c b/drivers/net/ethernet/microchip/lan966x/lan966x_ethtool.c
+index 06811c60d598e..df10a0b68a08e 100644
+--- a/drivers/net/ethernet/microchip/lan966x/lan966x_ethtool.c
++++ b/drivers/net/ethernet/microchip/lan966x/lan966x_ethtool.c
+@@ -294,7 +294,7 @@ static void lan966x_stats_update(struct lan966x *lan966x)
+ {
+ 	int i, j;
  
- #define T1	10		/* 100mS */
- #define T2	34		/* 333mS */
-+#define T3	10		/* 10s */
- #define N2	3		/* Retry 3 times */
-+#define K	2		/* outstanding I frames */
-+
-+#define MAX_T3 255		/* In seconds. */
-+#define MAX_WINDOW_SIZE 7	/* Limit of K in error recovery mode. */
+-	mutex_lock(&lan966x->stats_lock);
++	spin_lock(&lan966x->stats_lock);
  
- /* Use long timers for testing at low speed with debug on */
- #ifdef DEBUG_TIMING
-@@ -160,7 +166,12 @@ struct gsm_dlci {
- 	int prev_adaption;
- 	u32 modem_rx;		/* Our incoming virtual modem lines */
- 	u32 modem_tx;		/* Our outgoing modem lines */
-+	unsigned int mtu;
- 	bool dead;		/* Refuse re-open */
-+	/* Configuration */
-+	u8 prio;		/* Priority */
-+	u8 ftype;		/* Frame type */
-+	u8 k;			/* Window size */
- 	/* Flow control */
- 	bool throttled;		/* Private copy of throttle state */
- 	bool constipated;	/* Throttle status for outgoing */
-@@ -285,7 +296,9 @@ struct gsm_mux {
- 	int adaption;		/* 1 or 2 supported */
- 	u8 ftype;		/* UI or UIH */
- 	int t1, t2;		/* Timers in 1/100th of a sec */
-+	unsigned int t3;	/* Power wake-up timer in seconds. */
- 	int n2;			/* Retry count */
-+	u8 k;			/* Window size */
- 
- 	/* Statistics (not currently exposed) */
- 	unsigned long bad_fcs;
-@@ -1079,12 +1092,12 @@ static int gsm_dlci_data_output(struct gsm_mux *gsm, struct gsm_dlci *dlci)
- 		return 0;
- 
- 	/* MTU/MRU count only the data bits but watch adaption mode */
--	if ((len + h) > gsm->mtu)
--		len = gsm->mtu - h;
-+	if ((len + h) > dlci->mtu)
-+		len = dlci->mtu - h;
- 
- 	size = len + h;
- 
--	msg = gsm_data_alloc(gsm, dlci->addr, size, gsm->ftype);
-+	msg = gsm_data_alloc(gsm, dlci->addr, size, dlci->ftype);
- 	if (!msg)
- 		return -ENOMEM;
- 	dp = msg->data;
-@@ -1148,19 +1161,19 @@ static int gsm_dlci_data_output_framed(struct gsm_mux *gsm,
- 	len = dlci->skb->len + overhead;
- 
- 	/* MTU/MRU count only the data bits */
--	if (len > gsm->mtu) {
-+	if (len > dlci->mtu) {
- 		if (dlci->adaption == 3) {
- 			/* Over long frame, bin it */
- 			dev_kfree_skb_any(dlci->skb);
- 			dlci->skb = NULL;
- 			return 0;
+ 	for (i = 0; i < lan966x->num_phys_ports; i++) {
+ 		uint idx = i * lan966x->num_stats;
+@@ -310,7 +310,7 @@ static void lan966x_stats_update(struct lan966x *lan966x)
  		}
--		len = gsm->mtu;
-+		len = dlci->mtu;
- 	} else
- 		last = 1;
- 
- 	size = len + overhead;
--	msg = gsm_data_alloc(gsm, dlci->addr, size, gsm->ftype);
-+	msg = gsm_data_alloc(gsm, dlci->addr, size, dlci->ftype);
- 	if (msg == NULL) {
- 		skb_queue_tail(&dlci->skb_list, dlci->skb);
- 		dlci->skb = NULL;
-@@ -1217,7 +1230,7 @@ static int gsm_dlci_modem_output(struct gsm_mux *gsm, struct gsm_dlci *dlci,
- 		return -EINVAL;
  	}
  
--	msg = gsm_data_alloc(gsm, dlci->addr, size, gsm->ftype);
-+	msg = gsm_data_alloc(gsm, dlci->addr, size, dlci->ftype);
- 	if (!msg) {
- 		pr_err("%s: gsm_data_alloc error", __func__);
- 		return -ENOMEM;
-@@ -1343,8 +1356,9 @@ static void gsm_dlci_data_kick(struct gsm_dlci *dlci)
- static int gsm_control_command(struct gsm_mux *gsm, int cmd, const u8 *data,
- 			       int dlen)
- {
--	struct gsm_msg *msg = gsm_data_alloc(gsm, 0, dlen + 2, gsm->ftype);
-+	struct gsm_msg *msg;
- 
-+	msg = gsm_data_alloc(gsm, 0, dlen + 2, gsm->dlci[0]->ftype);
- 	if (msg == NULL)
- 		return -ENOMEM;
- 
-@@ -1370,7 +1384,8 @@ static void gsm_control_reply(struct gsm_mux *gsm, int cmd, const u8 *data,
- 					int dlen)
- {
- 	struct gsm_msg *msg;
--	msg = gsm_data_alloc(gsm, 0, dlen + 2, gsm->ftype);
-+
-+	msg = gsm_data_alloc(gsm, 0, dlen + 2, gsm->dlci[0]->ftype);
- 	if (msg == NULL)
- 		return;
- 	msg->data[0] = (cmd & 0xFE) << 1 | EA;	/* Clear C/R */
-@@ -2081,6 +2096,13 @@ static struct gsm_dlci *gsm_dlci_alloc(struct gsm_mux *gsm, int addr)
- 	dlci->gsm = gsm;
- 	dlci->addr = addr;
- 	dlci->adaption = gsm->adaption;
-+	dlci->mtu = gsm->mtu;
-+	if (addr == 0)
-+		dlci->prio = 0;
-+	else
-+		dlci->prio = roundup(addr + 1, 8) - 1;
-+	dlci->ftype = gsm->ftype;
-+	dlci->k = gsm->k;
- 	dlci->state = DLCI_CLOSED;
- 	if (addr) {
- 		dlci->data = gsm_dlci_data;
-@@ -2710,7 +2732,9 @@ static struct gsm_mux *gsm_alloc_mux(void)
- 
- 	gsm->t1 = T1;
- 	gsm->t2 = T2;
-+	gsm->t3 = T3;
- 	gsm->n2 = N2;
-+	gsm->k = K;
- 	gsm->ftype = UIH;
- 	gsm->adaption = 1;
- 	gsm->encoding = GSM_ADV_OPT;
-@@ -2750,7 +2774,7 @@ static void gsm_copy_config_values(struct gsm_mux *gsm,
- 	c->initiator = gsm->initiator;
- 	c->t1 = gsm->t1;
- 	c->t2 = gsm->t2;
--	c->t3 = 0;	/* Not supported */
-+	c->t3 = gsm->t3;
- 	c->n2 = gsm->n2;
- 	if (gsm->ftype == UIH)
- 		c->i = 1;
-@@ -2759,7 +2783,7 @@ static void gsm_copy_config_values(struct gsm_mux *gsm,
- 	pr_debug("Ftype %d i %d\n", gsm->ftype, c->i);
- 	c->mru = gsm->mru;
- 	c->mtu = gsm->mtu;
--	c->k = 0;
-+	c->k = gsm->k;
+-	mutex_unlock(&lan966x->stats_lock);
++	spin_unlock(&lan966x->stats_lock);
  }
  
- static int gsm_config(struct gsm_mux *gsm, struct gsm_config *c)
-@@ -2776,12 +2800,16 @@ static int gsm_config(struct gsm_mux *gsm, struct gsm_config *c)
- 		return -EINVAL;
- 	if (c->mru > MAX_MRU || c->mtu > MAX_MTU)
- 		return -EINVAL;
-+	if (c->t3 > MAX_T3)
-+		return -EINVAL;
- 	if (c->n2 > 255)
- 		return -EINVAL;
- 	if (c->encapsulation > 1)	/* Basic, advanced, no I */
- 		return -EINVAL;
- 	if (c->initiator > 1)
- 		return -EINVAL;
-+	if (c->k > MAX_WINDOW_SIZE)
-+		return -EINVAL;
- 	if (c->i == 0 || c->i > 2)	/* UIH and UI only */
- 		return -EINVAL;
- 	/*
-@@ -2829,6 +2857,10 @@ static int gsm_config(struct gsm_mux *gsm, struct gsm_config *c)
- 		gsm->t1 = c->t1;
- 	if (c->t2)
- 		gsm->t2 = c->t2;
-+	if (c->t3)
-+		gsm->t3 = c->t3;
-+	if (c->k)
-+		gsm->k = c->k;
+ static int lan966x_get_sset_count(struct net_device *dev, int sset)
+@@ -365,7 +365,7 @@ static void lan966x_get_eth_mac_stats(struct net_device *dev,
  
- 	/*
- 	 * FIXME: We need to separate activation/deactivation from adding
-@@ -3362,9 +3394,9 @@ static int gsm_create_network(struct gsm_dlci *dlci, struct gsm_netconfig *nc)
- 		pr_err("alloc_netdev failed\n");
+ 	idx = port->chip_port * lan966x->num_stats;
+ 
+-	mutex_lock(&lan966x->stats_lock);
++	spin_lock(&lan966x->stats_lock);
+ 
+ 	mac_stats->FramesTransmittedOK =
+ 		lan966x->stats[idx + SYS_COUNT_TX_UC] +
+@@ -424,7 +424,7 @@ static void lan966x_get_eth_mac_stats(struct net_device *dev,
+ 		lan966x->stats[idx + SYS_COUNT_RX_LONG] +
+ 		lan966x->stats[idx + SYS_COUNT_RX_PMAC_LONG];
+ 
+-	mutex_unlock(&lan966x->stats_lock);
++	spin_unlock(&lan966x->stats_lock);
+ }
+ 
+ static const struct ethtool_rmon_hist_range lan966x_rmon_ranges[] = {
+@@ -450,7 +450,7 @@ static void lan966x_get_eth_rmon_stats(struct net_device *dev,
+ 
+ 	idx = port->chip_port * lan966x->num_stats;
+ 
+-	mutex_lock(&lan966x->stats_lock);
++	spin_lock(&lan966x->stats_lock);
+ 
+ 	rmon_stats->undersize_pkts =
+ 		lan966x->stats[idx + SYS_COUNT_RX_SHORT] +
+@@ -508,7 +508,7 @@ static void lan966x_get_eth_rmon_stats(struct net_device *dev,
+ 		lan966x->stats[idx + SYS_COUNT_TX_SZ_1024_1526] +
+ 		lan966x->stats[idx + SYS_COUNT_TX_PMAC_SZ_1024_1526];
+ 
+-	mutex_unlock(&lan966x->stats_lock);
++	spin_unlock(&lan966x->stats_lock);
+ 
+ 	*ranges = lan966x_rmon_ranges;
+ }
+@@ -614,7 +614,7 @@ void lan966x_stats_get(struct net_device *dev,
+ 
+ 	idx = port->chip_port * lan966x->num_stats;
+ 
+-	mutex_lock(&lan966x->stats_lock);
++	spin_lock(&lan966x->stats_lock);
+ 
+ 	stats->rx_bytes = lan966x->stats[idx + SYS_COUNT_RX_OCT] +
+ 		lan966x->stats[idx + SYS_COUNT_RX_PMAC_OCT];
+@@ -696,7 +696,7 @@ void lan966x_stats_get(struct net_device *dev,
+ 
+ 	stats->collisions = lan966x->stats[idx + SYS_COUNT_TX_COL];
+ 
+-	mutex_unlock(&lan966x->stats_lock);
++	spin_unlock(&lan966x->stats_lock);
+ }
+ 
+ int lan966x_stats_init(struct lan966x *lan966x)
+@@ -712,7 +712,7 @@ int lan966x_stats_init(struct lan966x *lan966x)
  		return -ENOMEM;
- 	}
--	net->mtu = dlci->gsm->mtu;
-+	net->mtu = dlci->mtu;
- 	net->min_mtu = MIN_MTU;
--	net->max_mtu = dlci->gsm->mtu;
-+	net->max_mtu = dlci->mtu;
- 	mux_net = netdev_priv(net);
- 	mux_net->dlci = dlci;
- 	kref_init(&mux_net->ref);
+ 
+ 	/* Init stats worker */
+-	mutex_init(&lan966x->stats_lock);
++	spin_lock_init(&lan966x->stats_lock);
+ 	snprintf(queue_name, sizeof(queue_name), "%s-stats",
+ 		 dev_name(lan966x->dev));
+ 	lan966x->stats_queue = create_singlethread_workqueue(queue_name);
+diff --git a/drivers/net/ethernet/microchip/lan966x/lan966x_main.c b/drivers/net/ethernet/microchip/lan966x/lan966x_main.c
+index 8347def40f9d4..4a85cd5ebcce0 100644
+--- a/drivers/net/ethernet/microchip/lan966x/lan966x_main.c
++++ b/drivers/net/ethernet/microchip/lan966x/lan966x_main.c
+@@ -1182,7 +1182,6 @@ static int lan966x_probe(struct platform_device *pdev)
+ 
+ 	cancel_delayed_work_sync(&lan966x->stats_work);
+ 	destroy_workqueue(lan966x->stats_queue);
+-	mutex_destroy(&lan966x->stats_lock);
+ 
+ 	return err;
+ }
+@@ -1197,7 +1196,6 @@ static int lan966x_remove(struct platform_device *pdev)
+ 
+ 	cancel_delayed_work_sync(&lan966x->stats_work);
+ 	destroy_workqueue(lan966x->stats_queue);
+-	mutex_destroy(&lan966x->stats_lock);
+ 
+ 	lan966x_mac_purge_entries(lan966x);
+ 	lan966x_mdb_deinit(lan966x);
+diff --git a/drivers/net/ethernet/microchip/lan966x/lan966x_main.h b/drivers/net/ethernet/microchip/lan966x/lan966x_main.h
+index ff5736d2c7a6b..3f8b724eac47e 100644
+--- a/drivers/net/ethernet/microchip/lan966x/lan966x_main.h
++++ b/drivers/net/ethernet/microchip/lan966x/lan966x_main.h
+@@ -231,8 +231,8 @@ struct lan966x {
+ 	const struct lan966x_stat_layout *stats_layout;
+ 	u32 num_stats;
+ 
+-	/* workqueue for reading stats */
+-	struct mutex stats_lock;
++	/* lock for reading stats */
++	spinlock_t stats_lock;
+ 	u64 *stats;
+ 	struct delayed_work stats_work;
+ 	struct workqueue_struct *stats_queue;
 -- 
 2.53.0
 
