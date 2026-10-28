@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793212504;
-	b=xsM/AlmEI96/rbmDXjSP7Qw7ioNH2brQafTL9zMihxFKtFAnIWPD6zA1rgnC3HrNKqU+
-	 jcuEBXuLsFmCGcrDl35NFWi4Re2m6qfJb2Xga17MV17d21swPCxiTEkLD/GRLuFx0f/ml
-	 d782TB409gN1z/L07wYL4KNtJRk46B//O4iz/Dilp+iy5aU98eLxKwYnVes3KVtWVYOvz
-	 3Hls0x2sohDQiuBmvQj1ZwiU6r3cxelN/kjnqq1lvxm1zNyfaicWb7up9nvrM6GSEKjo4
-	 Khb1/GXsnAdtQFr+NufDfnhQ97kyeJ8TDnQsvqLEaKvPxA+7smIcXiiOzw4tszpTz7Q==
+	t=1793212507;
+	b=YalSi/fD07rFQNT9UY6lrPy/9gFWjxztjpkevQNZAG316Q07FsvEssoa5hXDGPW92qw5
+	 akdVYoay0y8dzDgltNCSr3WLGlC96lJkTvdgkQtBrO1lo2OzZYkHRGhgtRA1X0Zpw5vlC
+	 IU9o3fcLQpAGV/gWNzkOfzaBNCYfUGdtyu45G1mBea0pB0K6q5Z/NSRC5y+c439UaaNOB
+	 ft72vtqxBPkJ0KTjTirjOiU/GJQUvmvvcZxUyikGEfNsVocWWq3117Tix4jQZUgNKXTLw
+	 Eo83zsk6f3NR3FxXCoFhXx9yi5IlDuWWR+e1E5EQaVsMai4n1qmKWp/7qgFpHB+iyKQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793212504;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793212507;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=tncit59fb0zzlNzpTTarPYRgUL04EISetxaDSoHT1BM=;
-	b=rcvj0u4WC0YmYTzJr6/uRRqLZT5JWL+MUiFKxhDxgA8Bcl0hCT1YVcaO7VzBG81xNOyJ
-	 MB8ZLC3l/2GrnqCqOFlcFhulFLw9eT9U1yv7chhmY5OgvCHg5859gfG+Gxi+uxW+hHYfg
-	 m16bbXCcxf/86/GIyYllfRB7VfuYZHr0RaLXoMvGOY8HoLNSz85FGBLZmW1ywWCAcj184
-	 IIv+gutv0wH0mCo31jxGqHXIhT4DfHJf0NkXh16PRCge9+c8yM2CDWuxgTnPAdZSLGoR9
-	 uOIwGRVw+4HA09t4lYOceuRt9h4Jmys/wFOI49uSsYqxNLezHcB8bCEMzUFqg2HmanA==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=PDBEgrDCcci0QL1uSmlYOsMX01PI5qxrM6wgLLaCwAw=;
+	b=Nu3GaTxydtS3PZEqEqWGFqE84SJbBuuRMPyoAvOl6ZZswZBmOMQjOZsSBEHNMJa13Ayj
+	 Eazfb/d48AqVRB9g1eLDaQEfjEBOnYy7+r/U7DvOnFLOirPXbIsidcu4CtN7+dtWjOQ5k
+	 41fZtcjHfyuBOFXBKzpPgY7Me/OoJSNNdSL12vGD0TvrP+LTLHSW9y2aWMp9g50CEixiu
+	 5O0FeJvtmQ1DhoAsKgfCcTH+EQl7qmn+Fjzu1u99aNWTOGXT4enuSRIoI0XuXcC8s9GI+
+	 98wmqB6X33oYX2WNMpYsM/tcut0lNYv5QimvNf0r7QFIJmfwmwMNzmCR4Uaiz3tXB2Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e2wJQt9V;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FyWpGrFZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F3D5606A31D;
-	Wed, 28 Oct 2026 18:35:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F880606A320;
+	Wed, 28 Oct 2026 18:35:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e2wJQt9V
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DB681F01825;
-	Wed, 28 Oct 2026 18:35:03 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FyWpGrFZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 714A31F01825;
+	Wed, 28 Oct 2026 18:35:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793212504;
-	bh=tncit59fb0zzlNzpTTarPYRgUL04EISetxaDSoHT1BM=;
+	s=korg; t=1793212507;
+	bh=PDBEgrDCcci0QL1uSmlYOsMX01PI5qxrM6wgLLaCwAw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=e2wJQt9V8729Xk5KfBO9qdrWH+u49/tGtyBtt8guBEJ4p7NsEedCn26OtwHamCAQD
-	 HBhEF7ruYTL7Der6A12k1vn7Zocq7BDYJwI+tjyOFDcq4CKxiZmXvcnnO5/PRYHUpj
-	 QsT9qWqVdm14dqPlzODCSMp74QLJdX6m59vJKupc=
+	b=FyWpGrFZWueJllwtQamvTJBdc51bF6w/WeIiurTvN/67zlBzayUXTwM5YkE+M/vw3
+	 kt7nCOdVOyLzVnmrgZc1p6Fjhq7EJiEye5YUbvcmaXtyMXDa9+6Vz/pqdo3h8Vnuj4
+	 YWFRakT1rT4sd8m6KcNhk7anYZkGmNc5jLXXXfeo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	TencentOS Corvus AI <corvus@tencent.com>,
-	Aohan Mei <henrymei@tencent.com>,
-	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 6.1 0177/1887] netfilter: nft_flow_offload: drop flowtable reference on init error path
-Date: Wed, 28 Oct 2026 17:37:53 +0100
-Message-ID: <20261028170503.263570935@linuxfoundation.org>
+	=?UTF-8?q?Ilkka=20Lappetel=C3=A4inen?= <ilkka.lappetelainen@gmail.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 0178/1887] net/packet: prevent TX_RING byte count overflow
+Date: Wed, 28 Oct 2026 17:37:54 +0100
+Message-ID: <20261028170503.285728102@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -62,68 +62,58 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Aohan Mei <henrymei@tencent.com>
+From: Ilkka Lappeteläinen <ilkka.lappetelainen@gmail.com>
 
-commit 747928b5d4ff8c8de55138a54c13980e4bb88578 upstream.
+commit 2cf81fc9505b148b1b70068303ea6ea4b1212403 upstream.
 
-nft_flow_offload_init() bumps the flowtable use count with
-nft_use_inc() before calling nf_ct_netns_get().  When the latter
-fails, the error is returned as-is and the reference is leaked.
+tpacket_snd() drains every SEND_REQUEST frame in a TX ring and adds
+each valid packet length to the signed int len_sum. Userspace can
+recycle completed frames concurrently, so a single blocking send call
+is not bounded by the ring size.
 
-The upper layers do not balance it either: nf_tables_newexpr()
-clears expr->ops when the expression init callback fails, so the
-nft_expr_more() iteration in nft_rule_expr_deactivate() and
-nf_tables_rule_destroy() stops right before the failed expression
-and its ->destroy callback, which would drop the reference, never
-runs.
+After enough successful transmissions len_sum wraps into the negative
+range. In particular, 65536 65535-byte frames followed by a 65007-byte
+frame produce 0xfffffdef, or -EIOCBQUEUED. sock_sendmsg_nosec() treats
+that as an impossible return and triggers a BUG. On systems configured
+to panic on oops, a CAP_NET_RAW holder can panic the host kernel.
 
-Each failed rule addition therefore leaks one flowtable reference
-and the flowtable can no longer be removed: NFT_MSG_DELFLOWTABLE
-keeps reporting -EBUSY even though no rule references it.
+Stop before the next frame would make the byte count exceed INT_MAX.
+The positive short count leaves that frame pending for a later send
+call.
 
-Save the nf_ct_netns_get() return value and undo the nft_use_inc()
-when it fails, restoring the inc/dec pairing within
-nft_flow_offload_init() itself.
+A two-thread TPACKET_V2 reproducer triggered the BUG on an arm64 build
+of Linux 7.3-rc4. With this change, the same reproducer returned the
+expected positive short count without an oops.
 
-Fixes: a3c90f7a2323 ("netfilter: nf_tables: flow offload expression")
-Reported-by: TencentOS Corvus AI <corvus@tencent.com>
+Fixes: 69e3c75f4d54 ("net: TX_RING and packet mmap")
 Cc: stable@vger.kernel.org
-Assisted-by: CodeBuddy:Kimi-K3
-Signed-off-by: Aohan Mei <henrymei@tencent.com>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Ilkka Lappeteläinen <ilkka.lappetelainen@gmail.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20260925124829.6595-1-ilkka.lappetelainen@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nft_flow_offload.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ net/packet/af_packet.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/net/netfilter/nft_flow_offload.c
-+++ b/net/netfilter/nft_flow_offload.c
-@@ -416,6 +416,7 @@ static int nft_flow_offload_init(const s
- 	struct nft_flow_offload *priv = nft_expr_priv(expr);
- 	u8 genmask = nft_genmask_next(ctx->net);
- 	struct nft_flowtable *flowtable;
-+	int err;
- 
- 	if (!tb[NFTA_FLOW_TABLE_NAME])
- 		return -EINVAL;
-@@ -430,7 +431,11 @@ static int nft_flow_offload_init(const s
- 
- 	priv->flowtable = flowtable;
- 
--	return nf_ct_netns_get(ctx->net, ctx->family);
-+	err = nf_ct_netns_get(ctx->net, ctx->family);
-+	if (err < 0)
-+		nft_use_dec(&flowtable->use);
-+
-+	return err;
- }
- 
- static void nft_flow_offload_deactivate(const struct nft_ctx *ctx,
+--- a/net/packet/af_packet.c
++++ b/net/packet/af_packet.c
+@@ -2912,6 +2912,9 @@ static int tpacket_snd(struct packet_soc
+ 						    vnet_hdr.hdr_len);
+ 			has_vnet_hdr = true;
+ 		}
++		/* Prevent the byte count from wrapping into a negative errno */
++		if (unlikely(tp_len > INT_MAX - len_sum))
++			break;
+ 		copylen = max_t(int, copylen, hard_header_len);
+ 		skb = sock_alloc_send_skb(&po->sk,
+ 				hlen + tlen + sizeof(struct sockaddr_ll) +
 
 
