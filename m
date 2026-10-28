@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215818;
-	b=bLfHjy/w+tjyw4PDHXPscp3akqF4detv/sbIobxicWjfJF9l98Jg03dws0OqyKCfbe+R
-	 h1Wr7t/BL/rHL3jKmBL6TO9a3ZukWu6MBL6//irgUPMBbY7z5myVti3LFT6ys4LyvyMQJ
-	 xSF8iRqaiNuDYxmZE4/+/UQgEYfAsC6HH6J07tK+qvFMU2Q7DeMxfe1IvM0INsElhZIUd
-	 Kus66GbMWzalxOCbeaEzXbqonQHIOMGXJsDNv0yCYEqes6iUSihuuxABp0TSdp2IrWEDP
-	 8VHq0hNIn+XRy8F99jEJhsmKAX0u1Dx3dtPqA/CKxx3XqRMqxuyHURWCnMxqUAhn+Vg==
+	t=1793215821;
+	b=3K37M9ONCNQR1zEVEUvO6W4ToC5QJdSIGsxvwSGLCjMd9Ar9zMQ2tdPT/dsYZFgF0aue
+	 Un/yGwfeMuq6uRQEEAMqkbfn+9nVkKtCGVj7gVAwtlntJB+IBhf7cT9Rw+G/d0dhE2N5e
+	 R0MJMxur++zJ0hQj4pK0qASgB5HntYrwsUEpUuyIAJaHRAa5/TGsI+GAi7vznQ8no8MhA
+	 HLyfPeWmNp0v5Yswt+mF/cqyqlKGOZflN0ujTe5e92pJHirV7vPXv9jbFYEy4GrECzqEF
+	 YbWMIGXz1Qj/BQtKYbWkWVuUctsMpyx/AkHr8wd66/oOFFT0U6XbxhJ2kL9zkpDa3ww==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215818;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215821;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=bUvi1iS9RihZEZKxBUrfAWH4EbnQv09vStgc6lA46AI=;
-	b=LPI+kquid8VS/XJPieP0EFz2soNWK7MMnZcxB77mrPMIh29E9EwcOC8nY9t2nmy024LX
-	 j6fZpZ/XNjkCi4iMaDoFSHt3u6qbEpBZsDDPf7WmGSSW+lLnPRJc79Qh6jmYf4ZGSw54O
-	 QZNLx9stMBLFhFJfl7qZtNIF9z+fwBb31qc4fQx6VcvyMavRKKzQtpOepy+YLeZwwOzFe
-	 UYGBhhynZs37CkHb6Gzp80N6+SlSPH3BZdAAYElYCcMptDealHyHx8NR/Iy/00mAGm9C/
-	 EiszSlnMDtUGtB2xz/m+uMRtg1ZFnlFOyEj8iXdXq+JTa/+ugn107/YbBOhCTq6tU5g==
+	bh=QZQlokM2JHRRzIdxIPSjAeTUlVbnXVCfLheJBPrCDc0=;
+	b=H+LOdusA4UvpSLyn94JFA5paPwl9TB8h/95c6h+PyEL96H6rNSUbuMN1+a65p9tRdxWj
+	 VpBLqPj9FXpYDkgiGWbRFB5EABh2yq49BeLDzL9s/L73pPVlhC7sMNuC2cTDL/+Y+cV3g
+	 dunvp18nTSRlaYV/5eqwiUVzS8zzkiK/z8sX40eabTKjx4OUm2yKyIHTlcLEnuC+yxusr
+	 4RXn7Yr9bSeRhtl/DaMOnoSFmxiFu09IzDwsSOR2VuWE9ijFOQZVdTWPFJvDnEiYCmFPR
+	 hqLCPWWGUcqDWCYRCBp/wFOoEyO1QC+CaU+j5Lb/INTWDl9xnu5blxKkwyHwtHRb0vg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pDMlWp0N;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="RQ5I/cGi";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 147C1606A320;
-	Wed, 28 Oct 2026 19:30:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F133D606A31A;
+	Wed, 28 Oct 2026 19:30:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pDMlWp0N
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 641671F01825;
-	Wed, 28 Oct 2026 19:30:17 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RQ5I/cGi
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 466B11F01825;
+	Wed, 28 Oct 2026 19:30:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215817;
-	bh=bUvi1iS9RihZEZKxBUrfAWH4EbnQv09vStgc6lA46AI=;
+	s=korg; t=1793215820;
+	bh=QZQlokM2JHRRzIdxIPSjAeTUlVbnXVCfLheJBPrCDc0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pDMlWp0NxnZjSdpzvzoPAdeZ02pVr9fPCF9OGtGgFoMExGekFqiRDIWm4xMLOHuiZ
-	 f+jodHlzefAlGYnb+orDYn62AxiGXgq+7hH/WsqKNKbds41kXA99hYxZ8jjy0V4DfL
-	 fD+qA2fIrg2geo7t6XVt8st5joqhT5dn7WKb1MDc=
+	b=RQ5I/cGiDP13GqUDLovyEa0l9I/dtCSHGHV8qWynvqUDSKsjjvsxQk0XgVFexAQp5
+	 d2ERVcML419siz2uNl5cC5C5J3O7u4x7i7ie0IVgMtzuguFOjx/UqtQeyn8ps8mZ3N
+	 8Xl2/ZdwJq8/dJM+mPoLgIR87BWFGudKt6JjHJoo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shay Drory <shayd@nvidia.com>,
-	Cosmin Ratiu <cratiu@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Yongqiang Sun <Yongqiang.Sun@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1343/1887] net/mlx5e: TC, Check if flow is PEER before acquiring devcom lock
-Date: Wed, 28 Oct 2026 17:57:19 +0100
-Message-ID: <20261028170530.003666406@linuxfoundation.org>
+Subject: [PATCH 6.1 1344/1887] drm/amdkfd: Fix infinite loop parsing CRAT with zero subtype length
+Date: Wed, 28 Oct 2026 17:57:20 +0100
+Message-ID: <20261028170530.025162141@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -70,98 +68,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shay Drory <shayd@nvidia.com>
+From: Yongqiang Sun <Yongqiang.Sun@amd.com>
 
-[ Upstream commit 6ddfba2ea98db21b001e0e5c472499156224650c ]
+[ Upstream commit 961323c26ad4c895e3b0ea1711fc41dfd6368c12 ]
 
-In case __mlx5e_add_fdb_flow() fails in lower levels, the flow is
-deleted via mlx5e_tc_del_flow(), and mlx5e_tc_del_flow() is acquiring
-ESW devcom lock without condition. In addition, in case of peer_flow,
-__mlx5e_add_fdb_flow() is called while holding ESW devcom comp lock.
-This results in an AA deadlock.
+Malformed ACPI CRAT tables can advertise a zero or undersized subtype
+length. The parser then fails to advance the cursor and loops forever
+while the remaining image still looks large enough for a generic header.
 
-To fix this, introduce a new PEER flag that is set on flows created as
-peer flows (the duplicate flows on peer devices), and check it in
-mlx5e_tc_del_flow() before acquiring ESW devcom lock.
+Validate sub_type_hdr->length on each iteration before parsing or
+advancing. Return -EINVAL and warn when length is zero or smaller than
+the generic subtype header.
 
-Lockdep splat:
-============================================
-WARNING: possible recursive locking detected
-============================================
- Possible unsafe locking scenario:
-       CPU0
-       ----
-  lock(&comp->lock_key#2);
-  lock(&comp->lock_key#2);
- *** DEADLOCK ***
-Call Trace:
- <TASK>
- dump_stack_lvl+0x69/0xa0
- print_deadlock_bug.cold+0xbd/0xca
- __lock_acquire+0x1671/0x2ec0
- lock_acquire+0x10e/0x2e0
- down_read+0x95/0x430
- mlx5_devcom_for_each_peer_begin+0x4e/0xe0 [mlx5_core]
- mlx5e_tc_del_flow+0x11d/0xa70 [mlx5_core]
- mlx5e_flow_put+0x99/0x100 [mlx5_core]
- __mlx5e_add_fdb_flow+0x409/0xf00 [mlx5_core]
- mlx5e_configure_flower+0x2a86/0x4100 [mlx5_core]
- mlx5e_rep_setup_tc_cls_flower+0x12f/0x1b0 [mlx5_core]
- mlx5e_rep_setup_tc_cb+0x153/0x750 [mlx5_core]
- tc_setup_cb_add+0x1dc/0x470
- fl_change+0x2f4d/0x626d [cls_flower]
- tc_new_tfilter+0x79b/0x2310
- rtnetlink_rcv_msg+0x778/0xad0
- do_syscall_64+0x70/0x960
- entry_SYSCALL_64_after_hwframe+0x4b/0x53
- </TASK>
-
-Fixes: 04de7dda7394 ("net/mlx5e: Infrastructure for duplicated offloading of TC flows")
-Signed-off-by: Shay Drory <shayd@nvidia.com>
-Reviewed-by: Cosmin Ratiu <cratiu@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20260728044338.2271143-1-tariqt@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Yongqiang Sun <Yongqiang.Sun@amd.com>
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Stable-dep-of: 6e7566ba4739 ("drm/amdkfd: Add bounds check for CRAT subtype length")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en/tc_priv.h | 1 +
- drivers/net/ethernet/mellanox/mlx5/core/en_tc.c      | 4 +++-
- 2 files changed, 4 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdkfd/kfd_crat.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/tc_priv.h b/drivers/net/ethernet/mellanox/mlx5/core/en/tc_priv.h
-index 2e42d7c5451e9..b474fdbd6eb5d 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en/tc_priv.h
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en/tc_priv.h
-@@ -30,6 +30,7 @@ enum {
- 	MLX5E_TC_FLOW_FLAG_TUN_RX                = MLX5E_TC_FLOW_BASE + 9,
- 	MLX5E_TC_FLOW_FLAG_FAILED                = MLX5E_TC_FLOW_BASE + 10,
- 	MLX5E_TC_FLOW_FLAG_SAMPLE                = MLX5E_TC_FLOW_BASE + 11,
-+	MLX5E_TC_FLOW_FLAG_PEER                  = MLX5E_TC_FLOW_BASE + 12,
- };
- 
- struct mlx5e_tc_flow_parse_attr {
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_tc.c b/drivers/net/ethernet/mellanox/mlx5/core/en_tc.c
-index d2f226a09a0c7..11df2761c1393 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_tc.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_tc.c
-@@ -2005,7 +2005,8 @@ static void mlx5e_tc_del_flow(struct mlx5e_priv *priv,
- 			      struct mlx5e_tc_flow *flow)
- {
- 	if (mlx5e_is_eswitch_flow(flow)) {
--		mlx5e_tc_del_fdb_peer_flow(flow);
-+		if (!flow_flag_test(flow, PEER))
-+			mlx5e_tc_del_fdb_peer_flow(flow);
- 		mlx5e_tc_del_fdb_flow(priv, flow);
- 	} else {
- 		mlx5e_tc_del_nic_flow(priv, flow);
-@@ -4389,6 +4390,7 @@ static int mlx5e_tc_add_fdb_peer_flow(struct flow_cls_offload *f,
- 	else
- 		in_mdev = priv->mdev;
- 
-+	flow_flags |= BIT(MLX5E_TC_FLOW_FLAG_PEER);
- 	parse_attr = flow->attr->parse_attr;
- 	peer_flow = __mlx5e_add_fdb_flow(peer_priv, f, flow_flags,
- 					 parse_attr->filter_dev,
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_crat.c b/drivers/gpu/drm/amd/amdkfd/kfd_crat.c
+index e45c6bc8d10bb..9c0ab7f41278c 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_crat.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_crat.c
+@@ -1316,6 +1316,14 @@ int kfd_parse_crat_table(void *crat_image, struct list_head *device_list,
+ 	sub_type_hdr = (struct crat_subtype_generic *)(crat_table+1);
+ 	while ((char *)sub_type_hdr + sizeof(struct crat_subtype_generic) <
+ 			((char *)crat_image) + image_len) {
++		if (!sub_type_hdr->length ||
++		    sub_type_hdr->length < sizeof(struct crat_subtype_generic)) {
++			pr_warn("Invalid CRAT subtype length %u\n",
++				sub_type_hdr->length);
++			ret = -EINVAL;
++			break;
++		}
++
+ 		if (sub_type_hdr->flags & CRAT_SUBTYPE_FLAGS_ENABLED) {
+ 			ret = kfd_parse_subtype(sub_type_hdr, device_list);
+ 			if (ret)
 -- 
 2.53.0
 
