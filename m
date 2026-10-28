@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793207685;
-	b=aH9tEqv/Ki/UJC43xp2Quy+4BCOky9qGVXQw+XC3VaMkLIOs27sV9E3qJBHVNWNZm07J
-	 ZNOYB5mIpXSTD+PFCo7qGWUws5pJtiYMmi4iPi3yey8rWYNS8LkO2zqqefMwVNNY1Exho
-	 ACPC7abA9qj+iHt8Q6hNBxffmPBq4hcYCsW5BBIcrQaU9Y2x+fArHglgQcMXtUB3PZwWV
-	 C4m/4ecjSNQDKSwMAUZH8v4u7mS1LTWokNzjTNdzStu/Jf1atoI5GPanJg89ziOWSj4/R
-	 g4+LABgb5Qc7iqR65Mas+Fr6x/EHT0n5QVTD4b/tE2y2T0QsQcG73Hgezr2hJZuRtkQ==
+	t=1793207687;
+	b=SNMQGtaP9j8crvunD/vrGDgk/McPCY3ju/By8l21Ii66pj2WLqqvRaYZI+GVuaKyl0p5
+	 XjZa1wpNNgroCoZxzPX0rELSrARqGxwhts6szyLND7GOCDrfWhLKP93+KXFnNTpY70+Yr
+	 Ae9V2GMWXf4BFGU0smy1KuNW5vz3gYurwjt5jTRGtadtvAndlz1qGVsXm8ErIKLSKLGTW
+	 LVEG7L7S/xvz5YWAmv2BizBHM4AKnUimX9ARyeHlvL8CRNxvlfJRgjSEPriE+RtkJKbsY
+	 p1BFhr/RDPoggNk9Odt9l3AgIng/97ui5aXQjhriELMCE6jo4lg7YmQhYWoMaYgd74g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793207685;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793207687;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=0dQN4obddbRGA3XUkBq63V1pk0kkAe8uKoQ1QI76VeI=;
-	b=YJyOnMEXkr8h3l7yXC1yabS8bKmAv2k24ncouHX6kAd2wVV/HrMcQlvzZgDZrTBd8zB+
-	 Akdk9O6hfmWk9Mcv3yuhTo4JVO6T1A32qojcqV7JVaGnhTxzLcubm7kKwfNghYv9VCUbB
-	 +R++PiZ8N031E43x3Rxo1DwymtoWCrJxUj5WVvjBiDKMpwtONmzvSaSdv2+lUPwoP0+zs
-	 5Vvp38+Dax4j2AqByoS6g+pVM6uxDJAG+YnA4KsiaciRUBrvaO/4g6mP8uiJRCVDCdtgU
-	 ZOWlEV8ibn2ogc0rmKTRlnQ7+fQOchxcpMmnSDvJs/NGKAFclLAC0Y4wKKChkdISyEA==
+	bh=GaABEl7OKkVDV/QQsqA1AaZGlIlg9IqQCf1pkSHLhDI=;
+	b=h/svdqY+vdGIyTUeObnRHMTBAxTZu1RQVWzpbdlOrZ6o0q14hfuT2lNb1JF36E1bHoGi
+	 503t16aehS9mbDv2ycY5IWyuAm32jNSE2NJF20m53G0Y4+qnNOjjK2HApQZP1gsZ0yotk
+	 9RPD3DQNozbS5246CiTi9XfULaGJRuWDXHJ4KO4p5u7nJAx9FRQ7PojeXRTKQq1F20Xyu
+	 oj8l2ZYHkoZS5mhy2ZQuOJqFfoGjSoNKClaYn6MNl68KKDrnirP9BMrU3VH/2PBBeG02s
+	 GuNmsRqRh0SG4jccb7fmhkhD6VfPrA5QPoaqd8MOHKIjytLreCEIw+Ozp+MyK8+TUuQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aiZ7pQmf;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AqGNSjT+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4D73606A31A;
-	Wed, 28 Oct 2026 17:14:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9950F606A332;
+	Wed, 28 Oct 2026 17:14:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aiZ7pQmf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E3671F01825;
-	Wed, 28 Oct 2026 17:14:43 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AqGNSjT+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB1991F031E7;
+	Wed, 28 Oct 2026 17:14:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793207684;
-	bh=0dQN4obddbRGA3XUkBq63V1pk0kkAe8uKoQ1QI76VeI=;
+	s=korg; t=1793207687;
+	bh=GaABEl7OKkVDV/QQsqA1AaZGlIlg9IqQCf1pkSHLhDI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aiZ7pQmfwuD6GYnnCobcyTPBS5mP8Ir/nQ/WTRo/9gDrUXd0lmYdK2X+pZ4IRXlQq
-	 CJI6dMY+lab8E/g4o6MG9kUsx0+RTLAUlET/DOW79CPNXnK/W1nA0PooZiNJFeAdHP
-	 MLYuDUyc2OWbdz6YO68G+erMXKL7XX9R/xULygAM=
+	b=AqGNSjT+0nNKtTSYwy2CqPrPPMEM+HljAHuN44rZc2QS25uxp8XgiMpcS+SuoSN6H
+	 5MnTlzsfyWZvchM/q5r99Z0Q/VPL96Mn53HKM0h7QIi6YFIis5KJps/Kw1Yp2B4TOQ
+	 GfXjAXoPFtsx4+HYoeEsWg3jZeP0Ht6kw/XC126E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Jose Fernandez (Anthropic)" <jose.fernandez@linux.dev>,
-	Ben Cressey <ben@cressey.dev>,
+	Sun Yangkai <sunyangkai@fygo.io>,
+	Chen Cheng <chencheng@fnnas.com>,
 	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 6.12 103/247] dm-integrity: fix infinite loop on discard with large tag size
-Date: Wed, 28 Oct 2026 17:58:26 +0100
-Message-ID: <20261028165949.836002877@linuxfoundation.org>
+Subject: [PATCH 6.12 104/247] dm-integrity: require stable writes for internal hash modes
+Date: Wed, 28 Oct 2026 17:58:27 +0100
+Message-ID: <20261028165949.860116497@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165947.349197979@linuxfoundation.org>
 References: <20261028165947.349197979@linuxfoundation.org>
@@ -68,42 +68,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ben Cressey <ben@cressey.dev>
+From: Chen Cheng <chencheng@fnnas.com>
 
-commit 18d80c77b4c7dd20699e81cedfbbff4e9d198f28 upstream.
+commit b2fd92f016e9d692fd3c8c08d0ee014e9212279d upstream.
 
-When integrity_metadata handles a discard, it fills a buffer with
-DISCARD_FILLER and writes it over the tags, max_blocks blocks at a
-time. If the kmalloc fails, the buffer is the on-stack array
-checksums_onstack and max_size is set to HASH_MAX_DIGESTSIZE. So if the
-tag size is larger than HASH_MAX_DIGESTSIZE, max_blocks is zero, bi_size
-is never decremented and the loop never terminates.
+dm-integrity direct, bitmap and inline internal-hash modes compute
+integrity tags from the pages carried by the write bio.  The lower data
+write also uses those pages, so the tag and the data write depend on the
+same memory contents staying unchanged while writeback is in flight.
 
-Fix this by using sizeof(checksums_onstack) as max_size. The array has
-MAX_TAG_SIZE bytes since commit b93b6643e9b5 ("dm integrity: fix a
-crash with unusually large tag size"), so max_blocks is at least 1.
+Without stable writes, a buffered writer can modify a writeback folio
+after dm-integrity has submitted the data bio and before the lower device
+has consumed the data.  After a crash, this can leave data from the later
+contents with a tag calculated from the earlier contents, causing
+permanent checksum failures on read.
 
-Fixes: 84597a44a9d8 ("dm integrity: add optional discard support")
+Set BLK_FEAT_STABLE_WRITES for internal-hash D, B and I modes so
+filesystems wait for writeback folios to become stable before modifying
+them again.  Journal mode is left unchanged because it copies data into
+the journal before computing and persisting the tag.
+
+Tested using dm-delay over a virtio-blk test disk, dm-integrity
+internal_hash:crc32c and no-journal ext4.  The D and B reproducers both
+failed with checksum errors before this change and completed with
+READ_RC=0 and zero mismatches after it.
+
+Fixes: 7eada909bfd7 ("dm: add integrity target")
 Cc: stable@vger.kernel.org
-Reviewed-by: Jose Fernandez (Anthropic) <jose.fernandez@linux.dev>
-Signed-off-by: Ben Cressey <ben@cressey.dev>
-Assisted-by: Claude:unspecified
+Reported-by: Sun Yangkai <sunyangkai@fygo.io>
+Link: https://github.com/chencheng-fnnas/reproducer/blob/main/dm-integrity-writeback-race.py
+Signed-off-by: Chen Cheng <chencheng@fnnas.com>
 Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-integrity.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/md/dm-integrity.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
 --- a/drivers/md/dm-integrity.c
 +++ b/drivers/md/dm-integrity.c
-@@ -1856,7 +1856,7 @@ static void integrity_metadata(struct wo
+@@ -3979,6 +3979,10 @@ static void dm_integrity_io_hints(struct
+ 		limits->discard_granularity = ic->sectors_per_block << SECTOR_SHIFT;
+ 	}
  
- 		if (unlikely(dio->op == REQ_OP_DISCARD)) {
- 			unsigned int bi_size = dio->bio_details.bi_iter.bi_size;
--			unsigned int max_size = likely(checksums != checksums_onstack) ? PAGE_SIZE : HASH_MAX_DIGESTSIZE;
-+			unsigned int max_size = likely(checksums != checksums_onstack) ? PAGE_SIZE : sizeof(checksums_onstack);
- 			unsigned int max_blocks = (max_size - extra_space) / ic->tag_size;
- 			sector_t sector = dio->range.logical_sector;
++	if (ic->internal_hash &&
++	    (ic->mode == 'D' || ic->mode == 'B' || ic->mode == 'I'))
++		limits->features |= BLK_FEAT_STABLE_WRITES;
++
+ 	if (!ic->internal_hash) {
+ 		struct blk_integrity *bi = &limits->integrity;
  
 
 
