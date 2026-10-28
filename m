@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213243;
-	b=oQOM6zRlpxUCyRUimGdmzoyDjIga/yvIQvih9CeHv8x+Iw6ZZzEqhyLaGS0vyCwvqkuz
-	 xWmJ95M81jTBFJ+9RWAYrV5qddjHYcz+YulfhQphh6n8B1+/uLgDlitf1hfbT7Lj/BiKJ
-	 dD2cGKXrpWmR6cvxlTB44Qasq2H0RJC/4+hTsWuEcqbke0IRnrkA/pqIPyRsBVJcjco13
-	 ZHKJj+Ob5askjqmV7payHSqYIFWh9AabqfdKivcbIlrH2T4N7j4UmY2wkBuHIFgwWeGhc
-	 KbFLJhmlwjU+2f81oJDkKnMwOPxeUYctkop6Jp8Qt47fMgmLZMREBHRHYDNtsjY2m6Q==
+	t=1793213246;
+	b=HHNSlPe2p2g9IUL9Jh6t4gra486DmhtmIHaQXKgvivJilOJdqSZZFeRP+xCll+e+PFL0
+	 PIsbeXXJBT4ZYjyVPmyl1eq9Rb4mFVnI9QWfC7CtvrHd+Ov/PgE13g2r4U3HKbxeegZkP
+	 +Khjv5MOvyb3Y73yM7PUl1Nwe0+/ZBxxM0sb9zX3k3k0zSZ0M/hbd8vOX1mO+SlVyInDW
+	 ai3/+IuPYCQU32rDppadVkAuB7HyBVwwhxew6aBn0LAaNcemXPtm7f8A3EQ1Ge39kIeiU
+	 jJVvnQ4NrgXZQEtPT3Z9leS8ffrzcxaJI5sM/L8mFxapXWmcD7EBPxvPuuA9ri/1i7g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213243;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213246;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=BI6ydF/DOVCjYkIBO63YCm12Pu8wzA09IOKPb8qkmew=;
-	b=FWW42L4sYIs1bea7//hto6xiiYONlVLyf2KnDri1hoV6r5fJ1azilzr+2NMfZT32SK8L
-	 kyioF4I0BOQIt9DA1T0I0NvpWhvHEobnpG1dtXjly9GLOYih613EvqrLZBaicUvf0qqmf
-	 mukeoBwvQr++DUYo503362YOd6AatYahdpLdFii0IgSqZYkQXwE+5KLF3OJwN8UvTDF6n
-	 UBSmJbkkzDRMoAJHxQK+3oCD3ocyeEhzn4YGaolXFPN49mujjOW+kKfVhjEwRXMSRycTX
-	 MSTZMiHt9vCOhOypGa3G1zzsVG/If03X/pIszj6X86K4Z9BRhUkcOkamYXWlXFCMiYw==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=swfGptWG5z7AgOzFbe5UZPtwcl+CaclDS7vaXTdqe9w=;
+	b=VKJKUBOIyEpk0l5JwbcjjUYKCusXA2M/XonJPu1vX+HOvwzanmGaVreS4x9k+DnsnEZA
+	 iLDEObbUOcUj+4EFYXrAdr3s5Fhj6djpr0p/PP3KZxBt29LzwwauKS4CF3ET0fYVPYHWQ
+	 qhMPJX8GjAwFrm9pPtNa6r2bU8KhlZHefvrTqWidKy5+FgBZ2FLHeX8l/dYfrv0gEXYPj
+	 Ju3awM7m9Ndk6bCEercGFuk4IYukSJI992wMzZn0g34AeRmR9L82kykVmbPbS5M2D3w2W
+	 z/xbRs9HynYaOQUWlHqapsXiI+FfN5fK9sE33y9KgXqUY6IcGirEUqgbNlmB71ASYSA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AG5xLl3p;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Jm5uqTnq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87D64606A31A;
-	Wed, 28 Oct 2026 18:47:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59CE1606A31C;
+	Wed, 28 Oct 2026 18:47:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AG5xLl3p
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B3441F01825;
-	Wed, 28 Oct 2026 18:47:22 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Jm5uqTnq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F3C31F01825;
+	Wed, 28 Oct 2026 18:47:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213243;
-	bh=BI6ydF/DOVCjYkIBO63YCm12Pu8wzA09IOKPb8qkmew=;
+	s=korg; t=1793213245;
+	bh=swfGptWG5z7AgOzFbe5UZPtwcl+CaclDS7vaXTdqe9w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AG5xLl3p7DJqOak7ZrAKpUBPidE5gSQuen1K166o/kFSwXvL60g18LbQe4Q35tZ6Q
-	 GRCo2aGWf/FaRL0nCIb4+Ai93bVKH2ujoKazBilLQJc2WXEEQ9BzokZ+9y5dec1eRH
-	 cCohWmldVq4OzmQ/6/FHRlcKjg5om0FVZykyJ2Ug=
+	b=Jm5uqTnq5TAbjKtKQxlZ/nUCIxZx4+LQdgS4etOf4t78W25BBQXSsMeuM3qn/eETY
+	 ECv6FiGA6zC3EKQ6vaVk5xr5xapxItUcuo6UujySfyDk+nDwP5OaWdh4bGmxJ9anNz
+	 3Suq16BOQhbcQMP/rW7HfNEoDjUbGpxxQsnuVVB0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0393/1887] mtd: spinand: fix NULL pointer dereference with no ECC engine
-Date: Wed, 28 Oct 2026 17:41:29 +0100
-Message-ID: <20261028170508.177717340@linuxfoundation.org>
+	Zhao Li <enderaoelyther@gmail.com>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	stable@kernel.org
+Subject: [PATCH 6.1 0394/1887] wifi: mac80211: shut down RX BA session timer on teardown
+Date: Wed, 28 Oct 2026 17:41:30 +0100
+Message-ID: <20261028170508.200653585@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -62,52 +63,56 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nuno Sá <nuno.sa@analog.com>
+From: Zhao Li <enderaoelyther@gmail.com>
 
-[ Upstream commit b890e6163761ddb580cc74f43e15f8bbde15647e ]
+[ Upstream commit e588e83e5c7a0f6d7a77dbbb58927c8c8cfd598e ]
 
-When "nand-no-ecc-engine" is set in DT, nanddev_get_ecc_engine() takes
-the NAND_ECC_ENGINE_TYPE_NONE path and returns success while leaving
-nand->ecc.engine NULL. The SPI-NAND code nevertheless dereferences it
-unconditionally to test for a pipelined engine, so probing such a
-device oopses immediately.
+Tearing down an RX BA session can leave the session timer queued on a
+freed tid_rx. Later timer-wheel processing and the timer callback itself
+then run against freed memory.
 
-Rather than open-coding the test three times, add a
-nand_ecc_is_pipelined() helper to the NAND core that folds the NULL
-check into the integration comparison, and use it everywhere. Future
-callers then cannot reintroduce the problem.
+An RX BAR handler can dereference tid_rx under RCU before teardown
+unpublishes it and stay in its read-side critical section while teardown
+deletes the session timer. The stale handler can then rearm the timer
+after timer_delete_sync() returns and before the RCU callback frees
+tid_rx.
 
-Fixes: f9d7c7265bcf ("mtd: spinand: Create direct mapping descriptors for ECC operations")
-Cc: stable@vger.kernel.org
-Signed-off-by: Nuno Sá <nuno.sa@analog.com>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-[ sashal: replaced the new nand_ecc_is_pipelined() helper with an inline NULL check in spinand_create_dirmap() ]
+Use timer_shutdown_sync() so rearm attempts become ineffective once
+teardown starts. Keep reorder_timer unchanged: teardown marks the session
+removed under reorder_lock and its release path checks that state before
+rearming. session_timer has no equivalent guard because
+ieee80211_rx_h_ctrl() rearms it before taking reorder_lock.
+
+Fixes: a87f736d942c ("mac80211: use RCU for RX aggregation")
+Cc: stable@kernel.org # 5.15+
+Assisted-by: LLM sparse kasan
+Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+[ sashal: Adapted the timer_delete_sync() replacement to the existing del_timer_sync() call. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/nand/spi/core.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/mac80211/agg-rx.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/mtd/nand/spi/core.c b/drivers/mtd/nand/spi/core.c
-index 39f9826342966..15c54d61cedbd 100644
---- a/drivers/mtd/nand/spi/core.c
-+++ b/drivers/mtd/nand/spi/core.c
-@@ -884,7 +884,8 @@ static int spinand_create_dirmap(struct spinand_device *spinand,
+diff --git a/net/mac80211/agg-rx.c b/net/mac80211/agg-rx.c
+index 9414d3bbd65f6..acb295bdb71cb 100644
+--- a/net/mac80211/agg-rx.c
++++ b/net/mac80211/agg-rx.c
+@@ -103,7 +103,7 @@ void ___ieee80211_stop_rx_ba_session(struct sta_info *sta, u16 tid,
+ 	if (!tid_rx)
+ 		return;
  
- 	spinand->dirmaps[plane].rdesc = desc;
+-	del_timer_sync(&tid_rx->session_timer);
++	timer_shutdown_sync(&tid_rx->session_timer);
  
--	if (nand->ecc.engine->integration != NAND_ECC_ENGINE_INTEGRATION_PIPELINED) {
-+	if (!nand->ecc.engine ||
-+	    nand->ecc.engine->integration != NAND_ECC_ENGINE_INTEGRATION_PIPELINED) {
- 		spinand->dirmaps[plane].wdesc_ecc = spinand->dirmaps[plane].wdesc;
- 		spinand->dirmaps[plane].rdesc_ecc = spinand->dirmaps[plane].rdesc;
- 
+ 	/* make sure ieee80211_sta_reorder_release() doesn't re-arm the timer */
+ 	spin_lock_bh(&tid_rx->reorder_lock);
 -- 
 2.53.0
 
