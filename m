@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214692;
-	b=5a5qRBo911XCo9VWBbz5MhMmLexQfxcU+w9fyAt1B64YPaWMP43TJDXKxG0y1F9RiM/C
-	 cbkgULNzFCprIPeZ2MUgZQ9j2Hp3EmIRH7SLZ5Xda/MrBlhltqhL9aY8vr77UGSqrKqoH
-	 WXyTvHqQ+95X10/AWw5LdDN1J0JOMpYBIWnBiPLIYMIS1iTlxDRPNi2u+K5ptfZ6waqem
-	 tAbtZ/7yn5vZIZa3iHtqyRm7w5CGBle5lG3Qypo8le7sBkW6tDOJyxB9N9CWwPCrXiVAH
-	 UZXi2EiGBwuZ7mDBfH1cc9Lkbr31/OV5jTGXAsp+DtYsCoLDZf1Uhw52DovnaUVqtHg==
+	t=1793214694;
+	b=Gc48oHXWU3xdz0775fdVL4Xt5Ge+poXByONnyOcLFW1ZSwzliDtH9CmzysWAesZGRH+M
+	 ZqlIAnuCkoNcyy98Chj9Mo2yknLVgWW80Fc6WOELAVRt2DJdiwZPCUiPLQ5Zjz9QB7EpH
+	 BzG4Ha9CsUmrgx2wkQmD+/EFen5MXSZCIuFu6cio7MEsm23yza4rMrCNTHAzock5t9ER9
+	 47J7djyUud8xv2Ucuo6VHIR+Kyf/Uv+wT5ajnn2BQy26kJ+3SeOiFNRUuyybHAjO+PQY9
+	 9TMGl1jyaIDNEA3cOb0qUgoaQyupZGYO/lwxBaDJ372XgqlIZ4dtyy0kRmV/Av/Tg0A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214692;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214694;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=sHVv5YCS5ZPhkeOVPjCpBeTtKW50tD7ISKSkmm2Zs3s=;
-	b=VvOSKbCnvgOEJaVII048O/dNPkS7Ca7cOv9dz3mlQYD5EM5md8T1Fzqt2Ma6sHr4ZCcR
-	 EerGRfm9zGQkTjE8J6UAG7l+3F4SidVFiRVLl9NBASvwIaKlxxEoNmgenPcQVPe7ilYJ4
-	 4wx+8PBF0ZYr2d7r6iboU+ZqQa8SSY/SDo5TaQHKAcO8DBuiUZNId4pcvvdKQYZ++QuYA
-	 lynOIUYbJ0NBmjX0GYvAX2HZQHiLY4UrmacUtppWwbKkRUus2CJL7Zj6foc4WEprrNC6L
-	 AnFO0qhNX9ayg8n3L36h9wXUx0yDsNGfxhbl6kGzBk4PlUbWqlpxSAjVW9G/n+fsiJA==
+	bh=ri+RMlGgGsHoUy25MKXnK9GWHg6k41Rm/PShfFv+bRo=;
+	b=n3PCknTh/TUzX6S0ws6SO8XccOH6o6iuM/d2/HBrQoDW2f2f0okR0s7h89VO5L6lwyq3
+	 F4RVmTMrDGflwrZoaUufoIAFgci+5+U/700+Mc1CjfQu5FNPijvVh4eugQ7q7dbpqcKsH
+	 41aJVa6QkOGgKWsaUOUzjmC5AAvrTt3aD0dlqPrg33qSSuSAiIP3K6AGD0zJuiEdSlH0T
+	 oK4ANA6lYIhw4AazzFs6XOFYZBo8FFF5A/WR2Zgv0kEsR8NaJFC1pBaST1GTn1Eb68Vo1
+	 v1a8niwfoa3w+H2HxR+8sfeZJU7ZTSBEfMZwgutV2NDfOlZ3VVD3VSjE4jw4Ot8AAfA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ucrXPiN3;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AaG+GaTC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA8BD606BF8A;
-	Wed, 28 Oct 2026 19:11:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A754606A337;
+	Wed, 28 Oct 2026 19:11:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ucrXPiN3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15AF31F01825;
-	Wed, 28 Oct 2026 19:11:30 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AaG+GaTC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB31E1F01825;
+	Wed, 28 Oct 2026 19:11:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214691;
-	bh=sHVv5YCS5ZPhkeOVPjCpBeTtKW50tD7ISKSkmm2Zs3s=;
+	s=korg; t=1793214694;
+	bh=ri+RMlGgGsHoUy25MKXnK9GWHg6k41Rm/PShfFv+bRo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ucrXPiN35eGIzPqcKuKaLjj1T/WTf7CdXKWKwgNqEBBU6DpGTnLOj6iyxdbvVbgs1
-	 sTV2jnp6ZjPubsYs2jS50xEXn2jmBRAfmNIMkiz82fSlKMzn7LkGBkCkjK1tTEQCyL
-	 qihwvp5JxyUbH6dJ/H85IAcum+YFBbHuffnLe3ro=
+	b=AaG+GaTCDqQ2ajY/3Tn3Bkrj+Z6Q+Wima2QTvvPnWrXHNrhF8cvszKDKV6FuNz3Mx
+	 vC8hdiz9HEXGDJirUyUgkcsfjTezL4b+bXQLJZDjAYodLNygHnH+WwmeLnNKiaU/u5
+	 uiKuakUElbf9RMb4+xHbuWwciWqdVwROY1DsUOWc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linyu Yuan <quic_linyyuan@quicinc.com>,
+	Paul Cercueil <paul@crapouillou.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0904/1887] usb: gadget: ffs: remove ENTER() macro
-Date: Wed, 28 Oct 2026 17:50:00 +0100
-Message-ID: <20261028170519.988455314@linuxfoundation.org>
+Subject: [PATCH 6.1 0905/1887] usb: gadget: Support already-mapped DMA SGs
+Date: Wed, 28 Oct 2026 17:50:01 +0100
+Message-ID: <20261028170520.010748645@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -67,529 +67,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linyu Yuan <quic_linyyuan@quicinc.com>
+From: Paul Cercueil <paul@crapouillou.net>
 
-[ Upstream commit f54134b3fc7954dbaa4da42198286e49bcb48ed7 ]
+[ Upstream commit 99f638dd49ca80538addec6b3733ddb5784c9373 ]
 
-ENTER() used to show function name which called during runtime, ftrace can
-be used to get same information, let's remove it.
+Add a new 'sg_was_mapped' field to the struct usb_request. This field
+can be used to indicate that the scatterlist associated to the USB
+transfer has already been mapped into the DMA space, and it does not
+have to be done internally.
 
-Signed-off-by: Linyu Yuan <quic_linyyuan@quicinc.com>
-Link: https://lore.kernel.org/r/1679911940-4727-1-git-send-email-quic_linyyuan@quicinc.com
+Signed-off-by: Paul Cercueil <paul@crapouillou.net>
+Link: https://lore.kernel.org/r/20240130122340.54813-2-paul@crapouillou.net
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Stable-dep-of: e5bf5ee26663 ("functionfs: fix the open/removal races")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/function/f_fs.c | 94 ------------------------------
- drivers/usb/gadget/function/u_fs.h |  2 -
- drivers/usb/gadget/legacy/g_ffs.c  |  9 ---
- 3 files changed, 105 deletions(-)
+ drivers/usb/gadget/udc/core.c | 7 ++++++-
+ include/linux/usb/gadget.h    | 2 ++
+ 2 files changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/usb/gadget/function/f_fs.c b/drivers/usb/gadget/function/f_fs.c
-index bbc15211611ac..3a1f823d71acf 100644
---- a/drivers/usb/gadget/function/f_fs.c
-+++ b/drivers/usb/gadget/function/f_fs.c
-@@ -336,8 +336,6 @@ static ssize_t ffs_ep0_write(struct file *file, const char __user *buf,
- 	ssize_t ret;
- 	char *data;
+diff --git a/drivers/usb/gadget/udc/core.c b/drivers/usb/gadget/udc/core.c
+index addcff2f77110..bc9c060c9e27d 100644
+--- a/drivers/usb/gadget/udc/core.c
++++ b/drivers/usb/gadget/udc/core.c
+@@ -913,6 +913,11 @@ int usb_gadget_map_request_by_dev(struct device *dev,
+ 	if (req->length == 0)
+ 		return 0;
  
--	ENTER();
--
- 	/* Fast check if setup was canceled */
- 	if (ffs_setup_state_clear_cancelled(ffs) == FFS_SETUP_CANCELLED)
- 		return -EIDRM;
-@@ -513,8 +511,6 @@ static ssize_t ffs_ep0_read(struct file *file, char __user *buf,
- 	size_t n;
- 	int ret;
++	if (req->sg_was_mapped) {
++		req->num_mapped_sgs = req->num_sgs;
++		return 0;
++	}
++
+ 	if (req->num_sgs) {
+ 		int     mapped;
  
--	ENTER();
--
- 	/* Fast check if setup was canceled */
- 	if (ffs_setup_state_clear_cancelled(ffs) == FFS_SETUP_CANCELLED)
- 		return -EIDRM;
-@@ -619,8 +615,6 @@ static int ffs_ep0_open(struct inode *inode, struct file *file)
+@@ -958,7 +963,7 @@ EXPORT_SYMBOL_GPL(usb_gadget_map_request);
+ void usb_gadget_unmap_request_by_dev(struct device *dev,
+ 		struct usb_request *req, int is_in)
  {
- 	struct ffs_data *ffs = inode->i_private;
- 
--	ENTER();
--
- 	if (ffs->state == FFS_CLOSING)
- 		return -EBUSY;
- 
-@@ -634,8 +628,6 @@ static int ffs_ep0_release(struct inode *inode, struct file *file)
- {
- 	struct ffs_data *ffs = file->private_data;
- 
--	ENTER();
--
- 	ffs_data_closed(ffs);
- 
- 	return 0;
-@@ -647,8 +639,6 @@ static long ffs_ep0_ioctl(struct file *file, unsigned code, unsigned long value)
- 	struct usb_gadget *gadget = ffs->gadget;
- 	long ret;
- 
--	ENTER();
--
- 	if (code == FUNCTIONFS_INTERFACE_REVMAP) {
- 		struct ffs_function *func = ffs->func;
- 		ret = func ? ffs_func_revmap_intf(func, value) : -ENODEV;
-@@ -722,7 +712,6 @@ static void ffs_epfile_io_complete(struct usb_ep *_ep, struct usb_request *req)
- {
- 	struct ffs_io_data *io_data = req->context;
- 
--	ENTER();
- 	if (req->status)
- 		io_data->status = req->status;
- 	else
-@@ -875,8 +864,6 @@ static void ffs_epfile_async_io_complete(struct usb_ep *_ep,
- 	struct ffs_io_data *io_data = req->context;
- 	struct ffs_data *ffs = io_data->ffs;
- 
--	ENTER();
--
- 	io_data->status = req->status ? req->status : req->actual;
- 
- 	INIT_WORK(&io_data->work, ffs_user_copy_worker);
-@@ -1179,8 +1166,6 @@ ffs_epfile_open(struct inode *inode, struct file *file)
- {
- 	struct ffs_epfile *epfile = inode->i_private;
- 
--	ENTER();
--
- 	if (WARN_ON(epfile->ffs->state != FFS_ACTIVE))
- 		return -ENODEV;
- 
-@@ -1197,8 +1182,6 @@ static int ffs_aio_cancel(struct kiocb *kiocb)
- 	unsigned long flags;
- 	int value;
- 
--	ENTER();
--
- 	spin_lock_irqsave(&epfile->ffs->eps_lock, flags);
- 
- 	if (io_data && io_data->ep && io_data->req)
-@@ -1216,8 +1199,6 @@ static ssize_t ffs_epfile_write_iter(struct kiocb *kiocb, struct iov_iter *from)
- 	struct ffs_io_data io_data, *p = &io_data;
- 	ssize_t res;
- 
--	ENTER();
--
- 	if (!is_sync_kiocb(kiocb)) {
- 		p = kzalloc(sizeof(io_data), GFP_KERNEL);
- 		if (!p)
-@@ -1259,8 +1240,6 @@ static ssize_t ffs_epfile_read_iter(struct kiocb *kiocb, struct iov_iter *to)
- 	struct ffs_io_data io_data, *p = &io_data;
- 	ssize_t res;
- 
--	ENTER();
--
- 	if (!is_sync_kiocb(kiocb)) {
- 		p = kzalloc(sizeof(io_data), GFP_KERNEL);
- 		if (!p)
-@@ -1313,8 +1292,6 @@ ffs_epfile_release(struct inode *inode, struct file *file)
- {
- 	struct ffs_epfile *epfile = inode->i_private;
- 
--	ENTER();
--
- 	ffs_data_closed(epfile->ffs);
- 
- 	return 0;
-@@ -1327,8 +1304,6 @@ static long ffs_epfile_ioctl(struct file *file, unsigned code,
- 	struct ffs_ep *ep;
- 	int ret;
- 
--	ENTER();
--
- 	if (WARN_ON(epfile->ffs->state != FFS_ACTIVE))
- 		return -ENODEV;
- 
-@@ -1438,8 +1413,6 @@ ffs_sb_make_inode(struct super_block *sb, void *data,
- {
- 	struct inode *inode;
- 
--	ENTER();
--
- 	inode = new_inode(sb);
- 
- 	if (inode) {
-@@ -1471,8 +1444,6 @@ static struct dentry *ffs_sb_create_file(struct super_block *sb,
- 	struct dentry	*dentry;
- 	struct inode	*inode;
- 
--	ENTER();
--
- 	dentry = d_alloc_name(sb->s_root, name);
- 	if (!dentry)
- 		return NULL;
-@@ -1507,8 +1478,6 @@ static int ffs_sb_fill(struct super_block *sb, struct fs_context *fc)
- 	struct inode	*inode;
- 	struct ffs_data	*ffs = data->ffs_data;
- 
--	ENTER();
--
- 	ffs->sb              = sb;
- 	data->ffs_data       = NULL;
- 	sb->s_fs_info        = ffs;
-@@ -1560,8 +1529,6 @@ static int ffs_fs_parse_param(struct fs_context *fc, struct fs_parameter *param)
- 	struct fs_parse_result result;
- 	int opt;
- 
--	ENTER();
--
- 	opt = fs_parse(fc, ffs_fs_fs_parameters, param, &result);
- 	if (opt < 0)
- 		return opt;
-@@ -1611,8 +1578,6 @@ static int ffs_fs_get_tree(struct fs_context *fc)
- 	struct ffs_data	*ffs;
- 	int ret;
- 
--	ENTER();
--
- 	if (!fc->source)
- 		return invalf(fc, "No source specified");
- 
-@@ -1679,8 +1644,6 @@ static int ffs_fs_init_fs_context(struct fs_context *fc)
- static void
- ffs_fs_kill_sb(struct super_block *sb)
- {
--	ENTER();
--
- 	kill_litter_super(sb);
- 	if (sb->s_fs_info)
- 		ffs_data_closed(sb->s_fs_info);
-@@ -1702,8 +1665,6 @@ static int functionfs_init(void)
- {
- 	int ret;
- 
--	ENTER();
--
- 	ret = register_filesystem(&ffs_fs_type);
- 	if (!ret)
- 		pr_info("file system registered\n");
-@@ -1715,8 +1676,6 @@ static int functionfs_init(void)
- 
- static void functionfs_cleanup(void)
- {
--	ENTER();
--
- 	pr_info("unloading\n");
- 	unregister_filesystem(&ffs_fs_type);
- }
-@@ -1729,15 +1688,11 @@ static void ffs_data_reset(struct ffs_data *ffs);
- 
- static void ffs_data_get(struct ffs_data *ffs)
- {
--	ENTER();
--
- 	refcount_inc(&ffs->ref);
- }
- 
- static void ffs_data_opened(struct ffs_data *ffs)
- {
--	ENTER();
--
- 	refcount_inc(&ffs->ref);
- 	if (atomic_add_return(1, &ffs->opened) == 1 &&
- 			ffs->state == FFS_DEACTIVATED) {
-@@ -1748,8 +1703,6 @@ static void ffs_data_opened(struct ffs_data *ffs)
- 
- static void ffs_data_put(struct ffs_data *ffs)
- {
--	ENTER();
--
- 	if (refcount_dec_and_test(&ffs->ref)) {
- 		pr_info("%s(): freeing\n", __func__);
- 		ffs_data_clear(ffs);
-@@ -1768,8 +1721,6 @@ static void ffs_data_closed(struct ffs_data *ffs)
- 	struct ffs_epfile *epfiles;
- 	unsigned long flags;
- 
--	ENTER();
--
- 	if (atomic_dec_and_test(&ffs->opened)) {
- 		if (ffs->no_disconnect) {
- 			ffs->state = FFS_DEACTIVATED;
-@@ -1804,8 +1755,6 @@ static struct ffs_data *ffs_data_new(const char *dev_name)
- 	if (!ffs)
- 		return NULL;
- 
--	ENTER();
--
- 	ffs->io_completion_wq = alloc_ordered_workqueue("%s", 0, dev_name);
- 	if (!ffs->io_completion_wq) {
- 		kfree(ffs);
-@@ -1833,8 +1782,6 @@ static void ffs_data_clear(struct ffs_data *ffs)
- 	struct ffs_epfile *epfiles;
- 	unsigned long flags;
- 
--	ENTER();
--
- 	ffs_closed(ffs);
- 
- 	BUG_ON(ffs->gadget);
-@@ -1866,8 +1813,6 @@ static void ffs_data_clear(struct ffs_data *ffs)
- 
- static void ffs_data_reset(struct ffs_data *ffs)
- {
--	ENTER();
--
- 	ffs_data_clear(ffs);
- 
- 	ffs->raw_descs_data = NULL;
-@@ -1901,8 +1846,6 @@ static int functionfs_bind(struct ffs_data *ffs, struct usb_composite_dev *cdev)
- 	struct usb_gadget_strings **lang;
- 	int first_id;
- 
--	ENTER();
--
- 	if ((ffs->state != FFS_ACTIVE
- 		 || test_and_set_bit(FFS_FL_BOUND, &ffs->flags)))
- 		return -EBADFD;
-@@ -1934,8 +1877,6 @@ static int functionfs_bind(struct ffs_data *ffs, struct usb_composite_dev *cdev)
- 
- static void functionfs_unbind(struct ffs_data *ffs)
- {
--	ENTER();
--
- 	if (!WARN_ON(!ffs->gadget)) {
- 		/* dequeue before freeing ep0req */
- 		usb_ep_dequeue(ffs->gadget->ep0, ffs->ep0req);
-@@ -1954,8 +1895,6 @@ static int ffs_epfiles_create(struct ffs_data *ffs)
- 	struct ffs_epfile *epfile, *epfiles;
- 	unsigned i, count;
- 
--	ENTER();
--
- 	count = ffs->eps_count;
- 	epfiles = kcalloc(count, sizeof(*epfiles), GFP_KERNEL);
- 	if (!epfiles)
-@@ -1986,8 +1925,6 @@ static void ffs_epfiles_destroy(struct ffs_epfile *epfiles, unsigned count)
- {
- 	struct ffs_epfile *epfile = epfiles;
- 
--	ENTER();
--
- 	for (; count; --count, ++epfile) {
- 		BUG_ON(mutex_is_locked(&epfile->mutex));
- 		__ffs_epfile_read_buffer_free(epfile);
-@@ -2111,8 +2048,6 @@ static int __must_check ffs_do_single_desc(char *data, unsigned len,
- 	u8 length;
- 	int ret;
- 
--	ENTER();
--
- 	/* At least two bytes are required: length and type */
- 	if (len < 2) {
- 		pr_vdebug("descriptor too short\n");
-@@ -2251,8 +2186,6 @@ static int __must_check ffs_do_descs(unsigned count, char *data, unsigned len,
- 	unsigned long num = 0;
- 	int current_class = -1;
- 
--	ENTER();
--
- 	for (;;) {
- 		int ret;
- 
-@@ -2290,8 +2223,6 @@ static int __ffs_data_do_entity(enum ffs_entity_type type,
- 	struct ffs_desc_helper *helper = priv;
- 	struct usb_endpoint_descriptor *d;
- 
--	ENTER();
--
- 	switch (type) {
- 	case FFS_DESCRIPTOR:
- 		break;
-@@ -2373,8 +2304,6 @@ static int __must_check ffs_do_single_os_desc(char *data, unsigned len,
- 	int ret;
- 	const unsigned _len = len;
- 
--	ENTER();
--
- 	/* loop over all ext compat/ext prop descriptors */
- 	while (feature_count--) {
- 		ret = entity(type, h, data, len, priv);
-@@ -2396,8 +2325,6 @@ static int __must_check ffs_do_os_descs(unsigned count,
- 	const unsigned _len = len;
- 	unsigned long num = 0;
- 
--	ENTER();
--
- 	for (num = 0; num < count; ++num) {
- 		int ret;
- 		enum ffs_os_desc_type type;
-@@ -2460,8 +2387,6 @@ static int __ffs_data_do_os_desc(enum ffs_os_desc_type type,
- 	struct ffs_data *ffs = priv;
- 	u8 length;
- 
--	ENTER();
--
- 	switch (type) {
- 	case FFS_OS_DESC_EXT_COMPAT: {
- 		struct usb_ext_compat_desc *d = data;
-@@ -2537,8 +2462,6 @@ static int __ffs_data_got_descs(struct ffs_data *ffs,
- 	int ret = -EINVAL, i;
- 	struct ffs_desc_helper helper;
- 
--	ENTER();
--
- 	if (get_unaligned_le32(data + 4) != len)
- 		goto error;
- 
-@@ -2669,8 +2592,6 @@ static int __ffs_data_got_strings(struct ffs_data *ffs,
- 	const char *data = _data;
- 	struct usb_string *s;
- 
--	ENTER();
--
- 	if (len < 16 ||
- 	    get_unaligned_le32(data) != FUNCTIONFS_STRINGS_MAGIC ||
- 	    get_unaligned_le32(data + 4) != len)
-@@ -3129,8 +3050,6 @@ static inline struct f_fs_opts *ffs_do_functionfs_bind(struct usb_function *f,
- 	struct ffs_data *ffs_data;
- 	int ret;
- 
--	ENTER();
--
- 	/*
- 	 * Legacy gadget triggers binding in functionfs_ready_callback,
- 	 * which already uses locking; taking the same lock here would
-@@ -3207,8 +3126,6 @@ static int _ffs_func_bind(struct usb_configuration *c,
- 	vla_item_with_sz(d, char, raw_descs, ffs->raw_descs_length);
- 	char *vlabuf;
- 
--	ENTER();
--
- 	/* Has descriptors only for speeds gadget does not support */
- 	if (!(full | high | super))
- 		return -ENOTSUPP;
-@@ -3411,8 +3328,6 @@ static int ffs_func_setup(struct usb_function *f,
- 	unsigned long flags;
- 	int ret;
- 
--	ENTER();
--
- 	pr_vdebug("creq->bRequestType = %02x\n", creq->bRequestType);
- 	pr_vdebug("creq->bRequest     = %02x\n", creq->bRequest);
- 	pr_vdebug("creq->wValue       = %04x\n", le16_to_cpu(creq->wValue));
-@@ -3487,13 +3402,11 @@ static bool ffs_func_req_match(struct usb_function *f,
- 
- static void ffs_func_suspend(struct usb_function *f)
- {
--	ENTER();
- 	ffs_event_add(ffs_func_from_usb(f)->ffs, FUNCTIONFS_SUSPEND);
- }
- 
- static void ffs_func_resume(struct usb_function *f)
- {
--	ENTER();
- 	ffs_event_add(ffs_func_from_usb(f)->ffs, FUNCTIONFS_RESUME);
- }
- 
-@@ -3657,7 +3570,6 @@ static void ffs_func_unbind(struct usb_configuration *c,
- 	unsigned count = ffs->eps_count;
- 	unsigned long flags;
- 
--	ENTER();
- 	if (ffs->func == func) {
- 		ffs_func_eps_disable(func);
- 		ffs->func = NULL;
-@@ -3697,8 +3609,6 @@ static struct usb_function *ffs_alloc(struct usb_function_instance *fi)
- {
- 	struct ffs_function *func;
- 
--	ENTER();
--
- 	func = kzalloc(sizeof(*func), GFP_KERNEL);
- 	if (!func)
- 		return ERR_PTR(-ENOMEM);
-@@ -3799,7 +3709,6 @@ static int ffs_acquire_dev(const char *dev_name, struct ffs_data *ffs_data)
- 	int ret = 0;
- 	struct ffs_dev *ffs_dev;
- 
--	ENTER();
- 	ffs_dev_lock();
- 
- 	ffs_dev = _ffs_find_dev(dev_name);
-@@ -3822,7 +3731,6 @@ static int ffs_acquire_dev(const char *dev_name, struct ffs_data *ffs_data)
- 
- static void ffs_release_dev(struct ffs_dev *ffs_dev)
- {
--	ENTER();
- 	ffs_dev_lock();
- 
- 	if (ffs_dev && ffs_dev->mounted) {
-@@ -3844,7 +3752,6 @@ static int ffs_ready(struct ffs_data *ffs)
- 	struct ffs_dev *ffs_obj;
- 	int ret = 0;
- 
--	ENTER();
- 	ffs_dev_lock();
- 
- 	ffs_obj = ffs->private_data;
-@@ -3877,7 +3784,6 @@ static void ffs_closed(struct ffs_data *ffs)
- 	struct f_fs_opts *opts;
- 	struct config_item *ci;
- 
--	ENTER();
- 	ffs_dev_lock();
- 
- 	ffs_obj = ffs->private_data;
-diff --git a/drivers/usb/gadget/function/u_fs.h b/drivers/usb/gadget/function/u_fs.h
-index f102ec23f3afd..4b3365f23fd75 100644
---- a/drivers/usb/gadget/function/u_fs.h
-+++ b/drivers/usb/gadget/function/u_fs.h
-@@ -32,8 +32,6 @@
- #  define ffs_dump_mem(prefix, ptr, len) do { } while (0)
- #endif /* VERBOSE_DEBUG */
- 
--#define ENTER()    pr_vdebug("%s()\n", __func__)
--
- struct f_fs_opts;
- 
- struct ffs_dev {
-diff --git a/drivers/usb/gadget/legacy/g_ffs.c b/drivers/usb/gadget/legacy/g_ffs.c
-index ae6d8f7092b8e..097854683e5b3 100644
---- a/drivers/usb/gadget/legacy/g_ffs.c
-+++ b/drivers/usb/gadget/legacy/g_ffs.c
-@@ -180,8 +180,6 @@ static int __init gfs_init(void)
- 	int i;
- 	int ret = 0;
- 
--	ENTER();
--
- 	if (func_num < 2) {
- 		gfs_single_func = true;
- 		func_num = 1;
-@@ -242,8 +240,6 @@ static void __exit gfs_exit(void)
- {
- 	int i;
- 
--	ENTER();
--
- 	if (gfs_registered)
- 		usb_composite_unregister(&gfs_driver);
- 	gfs_registered = false;
-@@ -316,8 +312,6 @@ static int gfs_bind(struct usb_composite_dev *cdev)
- #endif
- 	int ret, i;
- 
--	ENTER();
--
- 	if (missing_funcs)
- 		return -ENODEV;
- #if defined CONFIG_USB_FUNCTIONFS_ETH
-@@ -445,9 +439,6 @@ static int gfs_unbind(struct usb_composite_dev *cdev)
- {
- 	int i;
- 
--	ENTER();
--
--
- #ifdef CONFIG_USB_FUNCTIONFS_RNDIS
- 	usb_put_function(f_rndis);
- 	usb_put_function_instance(fi_rndis);
+-	if (req->length == 0)
++	if (req->length == 0 || req->sg_was_mapped)
+ 		return;
+ 
+ 	if (req->num_mapped_sgs) {
+diff --git a/include/linux/usb/gadget.h b/include/linux/usb/gadget.h
+index 14090bafe5ac7..ea15f30198570 100644
+--- a/include/linux/usb/gadget.h
++++ b/include/linux/usb/gadget.h
+@@ -53,6 +53,7 @@ struct usb_ep;
+  * @short_not_ok: When reading data, makes short packets be
+  *     treated as errors (queue stops advancing till cleanup).
+  * @dma_mapped: Indicates if request has been mapped to DMA (internal)
++ * @sg_was_mapped: Set if the scatterlist has been mapped before the request
+  * @complete: Function called when request completes, so this request and
+  *	its buffer may be re-used.  The function will always be called with
+  *	interrupts disabled, and it must not sleep.
+@@ -113,6 +114,7 @@ struct usb_request {
+ 	unsigned		zero:1;
+ 	unsigned		short_not_ok:1;
+ 	unsigned		dma_mapped:1;
++	unsigned		sg_was_mapped:1;
+ 
+ 	void			(*complete)(struct usb_ep *ep,
+ 					struct usb_request *req);
 -- 
 2.53.0
 
