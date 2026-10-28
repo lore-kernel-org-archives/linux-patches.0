@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793211644;
-	b=C2mVmFhsOacDKGMQ9Ek31g5gAQomjjAq71BsBqoOZPzui+mlbr2rcpxXmSw8QjX1Qd6i
-	 qfDsaBtEyfp3vMYg/x6dRwJcfevMp4qeYvZnWbHXPaR3LechhnWpee810kf4nZ5M38Jxc
-	 eyxgyJXFUuJrh5VMmVM7zQaJSGHYjf0IEvnKr/+N4m0HcyHvbGjIoUm4S4840RxKMsok/
-	 Y+J9+U1WHIfVsVPDrrHvQ0x6+MRYc0Q28kkoYK3s4YQlHupX+WVULAw9QiKrxfrZgea8A
-	 RlglOOVovk8vzmmRJBI60erV2Vc+vOVnAsZ6T15CbW/6B0JNTZibcbEIOq99Bw2Fqzg==
+	t=1793211647;
+	b=34dP10k1NRAwwVIUtnE3EyEcsgrPyrDavEQPLqI3fvo5/gIg0UGYxe7S1Tn60xtQoBmz
+	 g03CtKafZuftDlQmBDfWwBHMkl95qZ9FWcSt/QBWiNFH4+OEve2x+wbLhrMbtd7GcZMk5
+	 tm+P5nPRvlxmX8Kd288v5ZNKu/SMMImff2lV3RTu/1/MngTrZB3/fdjXjIk+GvxX4ver1
+	 gNqA0m3jNzwjhqQzj9Tn19KT2LswDzKr9H1HI2EgQjiWe+2+YRrLynMOCVZcRQA49ADj2
+	 VBPi9FAVW7rA2N5ydIEnb5UDFjjiNeTz4ro/yeH3hWRhAZyyiARilMqj6lzKv9nTR2Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793211644;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793211647;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ukaqb/S6dW/WXm79BXzT7RFZxd3Oz1753Vw2UZUyS08=;
-	b=EVXX6CJtBtES/SodLxMHRYyX6d1J4YVBo8lQ2mag8fJIGSIsOPCzxg3pEX2zTLrjT/dr
-	 Fb3iQDxCKgOL9tPt6qeV+jm0WnpZy36Xh/hnsCMjqWU2WXdiXHyizkVtDVgK5LnhQd2is
-	 agiIcER0CAyjyAJYrZb7l0bqQSatrL8jlwaNHioZ+18tLsAn63a+WILH2XVFmp4PkqnV1
-	 /9Gq21yFuzyzaAtVDmyZ5zXI3+1pKxjXMLX2yHUvSILyKSBraxdIk/arhHt5tv5rSoUUi
-	 RSmcDAS2gxhhZir0mPbEO8MQ72f9CO7G3u7vSGasRArse6h8yVOIHJmCbm/SMhAN1Cw==
+	bh=xua8xv1u7tOdiBYSWNbjWp/TzJ0E8uN2bIfHDz40s8E=;
+	b=DT9ZdAhb3ETE52RaB56IoF24NyaQJA2jXU68ozfcuY6z4bMhqm22K5CqCRBuvRGBSgPO
+	 k5AMIAbt0fGd7ZErTXKbH3ihaja91u9DZ3OxzCRhbdKftgI0+ik+F5GBu/Z0PDJ9hkkfJ
+	 RZFX3PSnMkVgHeKED7lkqbfLtlQyiuqrneg23dlXLFf+qUPPNDHFljlH1zj4WSWrorcId
+	 h+7O2Fmqnx/LYSgR/EIGgxA7TZBfQlin2LOcZk7Ni1onYuhJyGwp426cvasKRq0s1Gpw1
+	 s0sASrKuXXWlYxq8VcAjRg05wxWAONKX7FyFJo6gyeY3zBRPj0D2aS0UrB0Flvir2tA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UrWlwD58;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eGL7jeEq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10B09606A322;
-	Wed, 28 Oct 2026 18:20:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E066B606A31A;
+	Wed, 28 Oct 2026 18:20:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UrWlwD58
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60ECF1F01825;
-	Wed, 28 Oct 2026 18:20:43 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eGL7jeEq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B00A1F01825;
+	Wed, 28 Oct 2026 18:20:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793211643;
-	bh=ukaqb/S6dW/WXm79BXzT7RFZxd3Oz1753Vw2UZUyS08=;
+	s=korg; t=1793211646;
+	bh=xua8xv1u7tOdiBYSWNbjWp/TzJ0E8uN2bIfHDz40s8E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UrWlwD58uHoN3rBl0PynGJ/4FH6IX75L9ICKW/kD4vw/jpblNlvFmMsLb3GGRpDYo
-	 iFla78dur7XPAZNKGZaelY/3qawZEvY6Xyv9DaBXFk9Cu500MvwsXHurEup7VETksF
-	 QzcQR8krBgHorvsttOkBIspKM/amtvDfCL4Kot7U=
+	b=eGL7jeEqqlpp4ookUW0Vf5sUgkdi2gRiE/M4nHpbWJHGCIOOnKZdVBXZvsgJ/u5vN
+	 UvmxZA3G5uHy0U1FM1Z6XWMKsP5jnzfw0OyP9mRzuKHb0VoQ7Rv4ulpyuLdmQvdVDU
+	 wgIXi8fx3oTbnuCLyk7SIcHUwTbt7itS7pzCs8RA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 449/571] namespace: dont copy an unmounted mount tree
-Date: Wed, 28 Oct 2026 17:59:56 +0100
-Message-ID: <20261028170018.682402459@linuxfoundation.org>
+Subject: [PATCH 5.15 450/571] namespace: check the target before walking it in do_mount_setattr()
+Date: Wed, 28 Oct 2026 17:59:57 +0100
+Message-ID: <20261028170018.705928929@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -69,61 +69,64 @@ Content-Transfer-Encoding: 8bit
 
 From: Christian Brauner <brauner@kernel.org>
 
-[ Upstream commit 8bacbf6be959973b28b691713a872c12eae69eec ]
+[ Upstream commit 08f4288a37ef4b3d19b4a9599ec3048219cac828 ]
 
-may_copy_tree() accepts a mount whose root is an nsfs or pidfs file
-before it checks whether that mount is mounted. This exception exists
-for nsfs and pidfs mounts. They are part of no mount namespace so
-neither check_mnt() nor is_mounted() would let them through and
-bind-mounting a nsfsfd or a pidfd wouldn't work.
+When mount_setattr() changes the propagation type to MS_SHARED
+do_mount_setattr() takes namespace_sem and calls invent_group_ids()
+which walks the whole target tree with next_mnt() and allocates a peer
+group id for every mount that doesn't have one.
 
-Problem is that exception also admits a bind mount of such a file when
-it was lazily unmounted and is only kept alive by a file descriptor:
+Whether the caller may touch the target at all is only checked
+afterwards under mount_lock. If it may not, cleanup_group_ids() walks
+the tree a second time on the way out to free the ids again.
 
-  mount --bind /proc/self/ns/net /tmp/x
-  exec 3< /tmp/x
-  umount -l /tmp/x
-  mount --rbind /proc/self/fd/3 /tmp/y
+A detached tree that a file descriptor keeps alive, a mount in another
+mount namespace or a mount below the root of an anonymous mount
+namespace does a bunch of allocation work that is completely useless
+because it will fail and revert right after.
 
-With MS_REC or AT_RECURSIVE copy_tree() doesn't stop at the unmounted
-mount. It copies every mount that stayed attached to it as well. So if
-you have a bunch of overmounts over the nsfsfd or the pidfd the whole
-unmounted stack is copied. That's a bug.
+Do the right thing and check the target right after taking namespace_sem
+instead. A mount leaves its namespace only under namespace_sem so the
+mount stays stable. The check under mount_lock stays for the case where
+no propagation change is requested and namespace_sem isn't taken.
+Callers get the same EINVAL as before.
 
-So refuse to walk an unmounted tree. Copying its root alone stays
-possible. So a bind mount of a namespace that is gone can still be
-recreated from a file descriptor on the old one. The file descriptor
-pins that mount and its root and __has_locked_children() only reads the
-direct children which don't leave the parent's list without
-namespace_sem. The internal mounts carry MNT_NS_INTERNAL instead of NULL
-and are still walked. Copying an unmounted tree recursively fails with
-EINVAL.
-
-Fixes: e149ed2b805f ("take the targets of /proc/*/ns/* symlinks to separate fs")
-Fixes: ef4144ac2dec ("pidfs: allow bind-mounts")
+Fixes: 2a1867219c7b ("fs: add mount_setattr()")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260926-work-mount-fixes-2-v1-4-f357abf3d17b@kernel.org
+Link: https://patch.msgid.link/20260926-work-mount-fixes-2-v1-5-f357abf3d17b@kernel.org
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
-[ sashal: adjusted context for inline mount validation in __do_loopback() ]
+[ sashal: Replaced anon_ns_root() with existing mount eligibility checks guarded by is_mounted(). ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/namespace.c | 3 +++
- 1 file changed, 3 insertions(+)
+ fs/namespace.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
 diff --git a/fs/namespace.c b/fs/namespace.c
-index d7f157e2a7bb8..3c20771eabfff 100644
+index 3c20771eabfff..1b79364c27bf5 100644
 --- a/fs/namespace.c
 +++ b/fs/namespace.c
-@@ -2391,6 +2391,9 @@ static struct mount *__do_loopback(struct path *old_path, int recurse)
- 	if (!check_mnt(old) && old_path->dentry->d_op != &ns_dentry_operations)
- 		return mnt;
+@@ -4074,6 +4074,7 @@ static struct mount *mount_setattr_prepare(struct mount_kattr *kattr,
+ {
+ 	struct mount *m = mnt, *last = NULL;
  
-+	if (recurse && !old->mnt_ns)
-+		return ERR_PTR(-EINVAL);
-+
- 	if (!recurse && has_locked_children(old, old_path->dentry))
- 		return mnt;
- 
++	/* Checked under namespace_sem already if the propagation changes. */
+ 	if (!is_mounted(&m->mnt)) {
+ 		*err = -EINVAL;
+ 		goto out;
+@@ -4183,6 +4184,13 @@ static int do_mount_setattr(struct path *path, struct mount_kattr *kattr)
+ 		 * propagation.
+ 		 */
+ 		namespace_lock();
++		/* invent_group_ids() walks the tree, only walk a mounted one */
++		if (!is_mounted(&mnt->mnt) ||
++		    !(mnt_has_parent(mnt) ? check_mnt(mnt) :
++		      is_anon_ns(mnt->mnt_ns))) {
++			namespace_unlock();
++			return -EINVAL;
++		}
+ 		if (kattr->propagation == MS_SHARED) {
+ 			err = invent_group_ids(mnt, kattr->recurse);
+ 			if (err) {
 -- 
 2.53.0
 
