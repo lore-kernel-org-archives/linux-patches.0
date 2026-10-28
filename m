@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793208691;
-	b=k7/no51vGHszjYXbrfKQY6JcIeeg8a+wgRh40jXrTnwhHM/zRG+n0gGOH6XA5ccGxZPP
-	 KKgYm3GNPJU6Ux2doapzVKYkA8tKOB+tkocBbcEXjdVoDjGyPjbUCBsKRlgEI5+eYq1j3
-	 rYMzbgpBulZB1pbVXplccOBUqdjf20u5vnpHUlJ8dDIpJcUArlKEWFmL3HfTnVVwAVKBv
-	 eioTJBwcOWQtVBgACS/x8zArsBgCbkrhZQoPzX6je6NK/bvjTpymqCNjhpL1XQtoOJevy
-	 K/eOtuSLHbdyY41uMDcoxKrCa/c/1DKSkt798i+0xkcpxil/NQIbNzCQ7wgU18bKDuA==
+	t=1793208693;
+	b=zZ5kw5IfF/Mr/cUeh8hHD8/RRnfYiekTpfNvX2aU28e63vXGnll9P12fHvJHavUEFgwH
+	 xBzvE4vZyJTVwKidMnuH0GWZoLN71WSrqKx1cN9bqqQkzzmw/1sKi364gRsirkF/vH0O9
+	 ih7c3BluOKAIThkUlDZm79BnFqNJfCQ9BMpKEngsMKLm9OTyuYufdWs1ycQDdmNS4yZDP
+	 PADizmTXDBxK7Umgy5iAE6SXf3QKImswNRAKpY15Djv1vh37iCJd83UYGAju+PPEhgtqo
+	 PmwAp/YQfreTKox5mtjQt+cxFBazCoGlDHGf9OV17rw6k+y4JIpvraklMSKkZ/wCG2Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793208691;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793208693;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=2nltz5v+TO8ORuLCs2RfEIJklXZ3X1opo+ks1rZ2VHc=;
-	b=R4Zv/0hexdWRQCDS25NoZumXbB06LwYe2N80SQ7RIDdmULshaorz2ijdLN6Q5Nlg0T1G
-	 OPHJmMKoLBjW9Z7wl1ItdmAOKzNnrWBwhxpGeVkLkIJ+VkX75PsCigTLBxUQA40II8duu
-	 yshV8pskpHa7mHO104lhEYZjJSokmki+RA63UpKRaOOpydfL43FtoYH6X29yegmb07FPW
-	 one4gIuwQnH5BdlWeUT/JXYwrOf+eHJ+gEMrc5D6OGdXzJLT0VF3/ly+XFRp4tYLcWCjX
-	 GZFjRAQDjysuhmSkSyXrIe45nZc/Q5liUSISglI5BrgarsEfBY6iKKJt33YDcWe8Q0A==
+	bh=5uWaFkeslzXCH6YypNYTQ25j3VdMuSLFJ+hKFMofNwQ=;
+	b=3VJetQRFggsith9Z2kmePLyLf2YlmFR8izylQmknp5he80kY9T30uZTtthSJrHZfCweC
+	 WjHFwgZQyFjmmwE7wyUM+cQASoriD8tOz4zvmsrFeQ6kT0JJS7k04YwrUyO5bJimHJn6C
+	 nbmm4haUZx0dDHNvLejdX1uf6Tatvf2qjLjFKq23kEVjJMVsXCSmGvGk9IHe+5bjRuh4H
+	 CY1JdUBmUA/c7nKv424z7TVaF1JWWQaERAF4kkt9rmbWASj0+GT9yH5YfCsIxMYkg2ybW
+	 5wVm4VfdlgP0hMdh6ixfmm+pXcNy8sIg7VJdCc0Yd9G8R4cL7x/0tjEDDkY7iwuQonA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lDskgKxk;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="bD/kbjQv";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B411E606A31A;
-	Wed, 28 Oct 2026 17:31:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68047606A31A;
+	Wed, 28 Oct 2026 17:31:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lDskgKxk
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEECE1F01825;
-	Wed, 28 Oct 2026 17:31:29 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bD/kbjQv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B76AE1F01829;
+	Wed, 28 Oct 2026 17:31:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793208690;
-	bh=2nltz5v+TO8ORuLCs2RfEIJklXZ3X1opo+ks1rZ2VHc=;
+	s=korg; t=1793208693;
+	bh=5uWaFkeslzXCH6YypNYTQ25j3VdMuSLFJ+hKFMofNwQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lDskgKxkiFnvQoPf00to5bp5NdH4jLObL9oQHnZ57DREspLJ1bv3o51im2gfxmCpW
-	 f5qWUO1Sb5eyHhfX+GslFj3Ck0+pLumsqqnGBDnTj7aSLQWwhYzY7kYL3lzr98n9lv
-	 LVINAsNX0Q8o0URrqJB+zzgtCtceYV1cbXWsp4YU=
+	b=bD/kbjQvctt9Uq+q5dtyJERPxoNhNe0O3d+6W0HbHwN/o8hU27nAAvFv6opYjTpov
+	 jlshXErdTQvJhJIthbU/hQCMXC9/YRkvqS9RrZo+6ygshWjYMfcE4unhSbd2aeeKIx
+	 +awIYT3h22DrhsdngC9sMsq3Ugq30KHp3vB0itG4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	co+24304d323d28f156@bugs.sh,
-	Xiang Mei <xmei5@asu.edu>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.10 208/516] ALSA: ua101: reject mismatched capture/playback packet sizes
-Date: Wed, 28 Oct 2026 17:56:00 +0100
-Message-ID: <20261028170008.428524313@linuxfoundation.org>
+	Chengfeng Ye <nicoyip.dev@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 5.10 209/516] Bluetooth: RFCOMM: Fix initial port reference race
+Date: Wed, 28 Oct 2026 17:56:01 +0100
+Message-ID: <20261028170008.451551394@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -68,83 +67,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Chengfeng Ye <nicoyip.dev@gmail.com>
 
-commit 86f86e6fdedc33c5b8d38b9208b350f8accf57ee upstream.
+commit 2d696c1ed3468dcb62578a3911e687110d463520 upstream.
 
-detect_usb_format() cross-checks bSubframeSize, bBitResolution and
-tSamFreq between the capture and playback interfaces, but never relates
-the two endpoints' wMaxPacketSize and bNrChannels.  Each playback URB
-gets a buffer of ua->playback.max_packet_bytes, while the number of
-bytes written into it is derived from the capture stream:
-capture_urb_complete() computes frames from the received capture packet
-and capture.frame_bytes, and start_usb_playback() and playback_work()
-multiply that by playback.frame_bytes.
+For RFCOMM_RELEASE_ONHUP devices, rfcomm_tty_install() and
+__rfcomm_release_dev() both use RFCOMM_TTY_OWNED to decide who drops the
+initial tty_port reference. The release path tests the bit separately
+from the install path setting it, so both can drop that reference.
 
-A device declaring a large capture wMaxPacketSize with few capture
-channels and a small playback wMaxPacketSize with many playback channels
-therefore memset()s and memcpy()s past the end of the playback buffer,
-in open() of the PCM node the driver registers during probe.
-usb_submit_urb() rejects the over-long iso_frame_desc[0].length with
--EMSGSIZE, but only after the write.
+The synchronous hangup does not prevent this race: port->tty is not
+assigned until tty_port_open(), after installation. The following
+interleaving is possible:
 
-Reject such descriptors at probe time.  Genuine UA-101/UA-1000 hardware
-declares proportional packet sizes and is unaffected.
+  1. Install and release each obtain a reference with rfcomm_dev_get().
+  2. Release observes RFCOMM_TTY_OWNED clear.
+  3. Install sets RFCOMM_TTY_OWNED and drops the initial reference.
+  4. Release drops the same initial reference again.
+  5. TTY cleanup drops its reference and frees the device.
+  6. Release performs its final tty_port_put() on the freed port.
 
-  BUG: KASAN: slab-out-of-bounds in start_usb_playback (sound/usb/misc/ua101.c:586)
-  Write of size 2048 at addr ffff8881098f3c00 by task exploit/5021
+KASAN reported:
+
+  BUG: KASAN: slab-use-after-free in tty_port_put+0x22/0x190
+  Write of size 4 at addr ffff8881001d3d5c by task poc/92
+
   Call Trace:
-   __asan_memset (mm/kasan/shadow.c:84)
-   start_usb_playback (sound/usb/misc/ua101.c:586)
-   playback_pcm_open (sound/usb/misc/ua101.c:679)
-   snd_pcm_open_substream (sound/core/pcm_native.c:2829)
-   snd_pcm_open (sound/core/pcm_native.c:2865 sound/core/pcm_native.c:2932)
-   snd_pcm_playback_open (sound/core/pcm_native.c:2891)
-   snd_open (sound/core/sound.c:166)
-   chrdev_open (fs/char_dev.c:411)
-   do_dentry_open (fs/open.c:996)
-   vfs_open (fs/open.c:1101)
-   path_openat (fs/namei.c:4837 fs/namei.c:5000)
-   do_file_open (fs/namei.c:5029)
-   do_sys_openat2 (fs/open.c:1417)
-   __x64_sys_openat (fs/open.c:1423 fs/open.c:1439 fs/open.c:1434)
-   do_syscall_64 (arch/x86/entry/syscall_64.c:61 arch/x86/entry/syscall_64.c:84)
-   entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
+   tty_port_put+0x22/0x190
+   rfcomm_dev_ioctl+0x1d4/0x1930
+   sock_do_ioctl+0x110/0x260
+   sock_ioctl+0x380/0x590
+   __x64_sys_ioctl+0x134/0x1c0
 
-  The buggy address belongs to the object at ffff8881098f3c00
-   which belongs to the cache kmalloc-192 of size 192
-  The buggy address is located 0 bytes inside of
-   allocated 168-byte region [ffff8881098f3c00, ffff8881098f3ca8)
+  Allocated by task 88:
+   rfcomm_dev_ioctl+0x8f6/0x1930
+   sock_do_ioctl+0x110/0x260
+   sock_ioctl+0x380/0x590
+   __x64_sys_ioctl+0x134/0x1c0
 
+  Freed by task 65:
+   kfree+0x131/0x3c0
+   rfcomm_dev_destruct+0x23b/0x2f0
+   release_one_tty+0xc1/0x370
+   process_one_work+0x661/0x1090
+
+Use test_and_set_bit() in both paths so that only the caller that changes
+RFCOMM_TTY_OWNED from clear to set drops the initial reference. Each path
+keeps its own lookup reference until release or TTY cleanup, preserving
+the existing callback ordering and error handling.
+
+Fixes: 80ea73378af4 ("Bluetooth: Fix unreleased rfcomm_dev reference")
 Cc: stable@vger.kernel.org
-Fixes: 63978ab3e3e9 ("sound: add Edirol UA-101 support")
-Reported-by: <co+24304d323d28f156@bugs.sh>
 Assisted-by: LLM
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-Link: https://patch.msgid.link/20260918225753.1278505-1-xmei5@asu.edu
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/misc/ua101.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ net/bluetooth/rfcomm/tty.c |    7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
---- a/sound/usb/misc/ua101.c
-+++ b/sound/usb/misc/ua101.c
-@@ -1023,6 +1023,15 @@ static int detect_usb_format(struct ua10
+--- a/net/bluetooth/rfcomm/tty.c
++++ b/net/bluetooth/rfcomm/tty.c
+@@ -469,7 +469,7 @@ static int __rfcomm_release_dev(void __u
+ 		tty_kref_put(tty);
  	}
- 	ua->playback.usb_pipe = usb_sndisocpipe(ua->dev, usb_endpoint_num(epd));
- 	ua->playback.max_packet_bytes = usb_endpoint_maxp(epd);
-+
-+	if (ua->capture.max_packet_bytes / ua->capture.frame_bytes *
-+	    ua->playback.frame_bytes > ua->playback.max_packet_bytes) {
-+		dev_err(&ua->dev->dev,
-+			"playback packet size %u too small for %u capture frames\n",
-+			ua->playback.max_packet_bytes,
-+			ua->capture.max_packet_bytes / ua->capture.frame_bytes);
-+		return -ENXIO;
-+	}
+ 
+-	if (!test_bit(RFCOMM_TTY_OWNED, &dev->status))
++	if (!test_and_set_bit(RFCOMM_TTY_OWNED, &dev->status))
+ 		tty_port_put(&dev->port);
+ 
+ 	tty_port_put(&dev->port);
+@@ -734,10 +734,9 @@ static int rfcomm_tty_install(struct tty
+ 	 * when the last process closes the tty. The behaviour is expected by
+ 	 * userspace.
+ 	 */
+-	if (test_bit(RFCOMM_RELEASE_ONHUP, &dev->flags)) {
+-		set_bit(RFCOMM_TTY_OWNED, &dev->status);
++	if (test_bit(RFCOMM_RELEASE_ONHUP, &dev->flags) &&
++	    !test_and_set_bit(RFCOMM_TTY_OWNED, &dev->status))
+ 		tty_port_put(&dev->port);
+-	}
+ 
  	return 0;
  }
- 
 
 
