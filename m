@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793212476;
-	b=tpR1W8Lek9ig7/hEInMlJGKfg1dMpgQHbexv1f3OvsND4ey8cSWFtyVNigv91FhS6srj
-	 gCxZM8Z9Ec9peJA7BdrGz2hIyKGSAaZIDaFw+oSrAEdnl2XrWCWkuHExOZf0MojLZt9HS
-	 nFaCgQxYB+cYCTznlC1GcJJs4Oq6YmnXKY4BY/2MjsD9aLZrhxSA6mQpycKlPUAY3xzxD
-	 dgsYTw/yRyBTEYXIVJBejlyCd5KEX9W0KZpj/2mcxwHnw3FDhTxSrMVg7zA+68LXIZgLV
-	 kyLkvtfj346Quyjw32t4DzeLM3DhxVdUNNjOLjQvXQib8LSVJ8jeN+feORoJYd0pzzw==
+	t=1793212479;
+	b=W/AaIawHpONLHCAkTATF/qpdOPf1yCOpmX+OUxIEuWf8RI2Aj+j1ELe0oZZ8TVPhKJDp
+	 UMtTqRhC2s3Dilz/N90OZEcrH+w6kzugcaoCLepH6atpmSiLjtM01GKEGgvt13QiNsx2P
+	 RNOP0vEC0a6QUG52HtGnLtXn2f5wYARTTWzNWtEh8b1a8y4EgqmL8zoXwutcP4KKdWGQ3
+	 RTE2e6Wbs0IKwiBPXzG5B4GK5rzLWhALSSJRo9w85nqTNCUS8ZJjOdw11MiUswskOqc7E
+	 evUs5fGk8ufY//3jC6EekFnTy82DYuuwxW4qK7rbrqbXw8X7Ywo5LS9H8XGlR85LmCA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793212476;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793212479;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=crP8Xibn81/QENx7e7gbvqrxuNeIIJGE9rbtErn5ko8=;
-	b=1FWokW1i85v+38c7pp4WNWWolJgQz6Q5CTNiwdNTGGgQVp3UR9MmDLHdGyc5RDGg3aG4
-	 t7TksQoAwQE4NAmsU1ybIugYOUAAxxnfttm9pVw+fNMJ7YvAwVGhOcRjn4mF/MNBFSBpE
-	 7VYePdmwtot8AlVO+eBMfpl1UT2f3XCc6QIUfudSt4AmRRYPnPCd8TpBOcX/N9SMw5l8Y
-	 IjjalzCNad7dlQGoWYwk60fFTP/GkLFAF8ZjlKAL26e/6RHDW8zuYD+C06V7n738L/Yav
-	 eW9g/TLnM/Im4kCxrrUEU0B3tW3tSUOqv+zsZanDP0iPTcK4QY9+IEqVMRQ8bvoOLoQ==
+	bh=olYe4iL561R1RkzJOSYdh2XAiQ1E48x5IUag+LY3LfU=;
+	b=P4LVubd/NJrRmkbPKzTdXfT045Trp0jhMXD/e/hMv1Ze36Ou6tLNbvytQzIHXbx8fjF7
+	 IYgvBV7cZqcbKCraU3iI0eMeoBfPHHTsxBqFbEymlSRLHA8z8CCQjbIrLmvBHefguREkj
+	 ZcSsqda04bLBYMj4XC7Eo3prYdchoXDZtPEyNfW/iaJHiGVXfVBbsFAaO36Cvkq3rd5LH
+	 w+/0iNaflt0mobRn4mJ1TuLY/mZEw9WFUmRY4kNm0I0m6dqByn3r0ojP8ZBCC2sadIRse
+	 +2faPHCxQAFfco+Fboho7V+eLfyoQTFhpAWTPJdi78HTA7oW/PnLLptfqD+aWIMsDrg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Yuko3fdz;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dVjgtk5V;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D79EF606A31D;
-	Wed, 28 Oct 2026 18:34:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1D5B606A31A;
+	Wed, 28 Oct 2026 18:34:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Yuko3fdz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C51E1F01825;
-	Wed, 28 Oct 2026 18:34:35 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dVjgtk5V
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 122C31F01825;
+	Wed, 28 Oct 2026 18:34:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793212475;
-	bh=crP8Xibn81/QENx7e7gbvqrxuNeIIJGE9rbtErn5ko8=;
+	s=korg; t=1793212478;
+	bh=olYe4iL561R1RkzJOSYdh2XAiQ1E48x5IUag+LY3LfU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Yuko3fdzK0JoN9AS8pF574UTB6MM9Fboae3zXCEKCy8/PBMnXI+OrDSGocIU9xzKc
-	 GDgDVQYNu/LcmBlF0mz/nZI4JiJCePe+nyS2Biz1UDP/EULoeiAw1LP4GSNpanVqmP
-	 uoNjIfIY3ivlT5/NMbxfUJ3Wo6wMdEg9/kbg9st8=
+	b=dVjgtk5VCIXbSxdu61cF/XDDc0vnyXIx4BXbNJKchfRNyThjLppgsmAQ/YsNWpm7h
+	 53TxocrjXMnRXq7oxYSFt07ZOhgv/2Fx0YggsjoUXjwfZqZScjJ6Y7TjnB4PLGiLsX
+	 vcqJpxXaTMEc0hDi5QWNmt20BOPNJbsPOgyQUOmE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -47,9 +47,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Frank Sorenson <sorenson@redhat.com>,
 	Paulo Alcantara <pc@manguebit.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0168/1887] smb: client: close handle after create-context parsing failure
-Date: Wed, 28 Oct 2026 17:37:44 +0100
-Message-ID: <20261028170503.059529566@linuxfoundation.org>
+Subject: [PATCH 6.1 0169/1887] smb: client: close completed creates on compound wait errors
+Date: Wed, 28 Oct 2026 17:37:45 +0100
+Message-ID: <20261028170503.082544990@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -73,17 +73,26 @@ Content-Transfer-Encoding: 8bit
 
 From: Zihan Xi <zihanx@nebusec.ai>
 
-[ Upstream commit 566820af017e81497fb5e9d3ad6e7ffe2828bc8b ]
+[ Upstream commit 6c5c547f037bc18f0b8d0b5db5a648f8f630ce85 ]
 
-SMB2_open() accounts a successful CREATE response as a remote open before
-parsing its create contexts.  If smb2_parse_contexts() rejects malformed
-context data, SMB2_open() returns without closing the handle, leaving the
-server-side handle open and num_remote_opens elevated.
+compound_send_recv() waits for responses in order. If a later wait is
+interrupted, or if a later MID fails during response synchronization, an
+earlier CREATE may already have opened a remote handle. The earlier mid
+is then released without invoking handle_cancelled_mid(), leaving the
+remote handle open because no FID was copied to the caller.
 
-Close the handle after a post-CREATE context parsing failure so the error
-path releases the remote resource and balances the open count.
+Mark completed earlier mids as cancelled when a compound wait or MID
+synchronization aborts. Keep their response buffers attached while the
+MIDs are synchronized, and transfer them only after synchronization of
+the processed responses, so the release path can inspect successful
+CREATE responses and queue SMB2_close() after a later failure. Account for
+a remote open only after the close work is allocated and before it is
+queued, since the caller has not yet updated num_remote_opens. Mark the
+create+close compound used by smb2_unlink() so it is not closed again.
+Non-CREATE responses and compounds that already include a close keep their
+existing behavior.
 
-Fixes: af1689a9b770 ("smb: client: fix potential OOBs in smb2_parse_contexts()")
+Fixes: e0bba0b85481 ("cifs: add compound_send_recv()")
 Cc: stable@vger.kernel.org
 Reported-by: Vega <vega@nebusec.ai>
 Assisted-by: LLM
@@ -92,25 +101,176 @@ Signed-off-by: Luxing Yin <root@tr0jan.top>
 Signed-off-by: Zihan Xi <zihanx@nebusec.ai>
 Tested-by: Frank Sorenson <sorenson@redhat.com>
 Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+[ replaced the upstream cancellation helper with inline loops using midQ and MID_WAIT_CANCELLED under server->mid_lock. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/smb2pdu.c | 3 +++
- 1 file changed, 3 insertions(+)
+ fs/smb/client/smb2misc.c  |  9 +++--
+ fs/smb/client/transport.c | 69 ++++++++++++++++++++++++++++++---------
+ 2 files changed, 59 insertions(+), 19 deletions(-)
 
-diff --git a/fs/smb/client/smb2pdu.c b/fs/smb/client/smb2pdu.c
-index 6a75d36bc5402..c50881cf4c8d7 100644
---- a/fs/smb/client/smb2pdu.c
-+++ b/fs/smb/client/smb2pdu.c
-@@ -3204,6 +3204,9 @@ SMB2_open(const unsigned int xid, struct cifs_open_parms *oparms, __le16 *path,
+diff --git a/fs/smb/client/smb2misc.c b/fs/smb/client/smb2misc.c
+index cd00bf48c9a56..ecab56c00f627 100644
+--- a/fs/smb/client/smb2misc.c
++++ b/fs/smb/client/smb2misc.c
+@@ -818,7 +818,8 @@ smb2_cancelled_close_fid(struct work_struct *work)
+  */
+ static int
+ __smb2_handle_cancelled_cmd(struct cifs_tcon *tcon, __u16 cmd, __u64 mid,
+-			    __u64 persistent_fid, __u64 volatile_fid)
++			    __u64 persistent_fid, __u64 volatile_fid,
++			    bool account_remote_open)
+ {
+ 	struct close_cancelled_open *cancelled;
  
- 	rc = smb2_parse_contexts(server, &rsp_iov, &oparms->fid->epoch,
- 				 oparms->fid->lease_key, oplock, file_info, posix);
-+	if (rc)
-+		SMB2_close(xid, tcon, oparms->fid->persistent_fid,
-+			   oparms->fid->volatile_fid);
+@@ -832,6 +833,8 @@ __smb2_handle_cancelled_cmd(struct cifs_tcon *tcon, __u16 cmd, __u64 mid,
+ 	cancelled->cmd = cmd;
+ 	cancelled->mid = mid;
+ 	INIT_WORK(&cancelled->work, smb2_cancelled_close_fid);
++	if (account_remote_open)
++		atomic_inc(&tcon->num_remote_opens);
+ 	WARN_ON(queue_work(cifsiod_wq, &cancelled->work) == false);
  
- 	trace_smb3_open_done(xid, rsp->PersistentFileId, tcon->tid, ses->Suid,
- 			     oparms->create_options, oparms->desired_access);
+ 	return 0;
+@@ -868,7 +871,7 @@ smb2_handle_cancelled_close(struct cifs_tcon *tcon, __u64 persistent_fid,
+ 	spin_unlock(&cifs_tcp_ses_lock);
+ 
+ 	rc = __smb2_handle_cancelled_cmd(tcon, SMB2_CLOSE_HE, 0,
+-					 persistent_fid, volatile_fid);
++					 persistent_fid, volatile_fid, false);
+ 	if (rc)
+ 		cifs_put_tcon(tcon, netfs_trace_tcon_ref_put_cancelled_close);
+ 
+@@ -896,7 +899,7 @@ smb2_handle_cancelled_mid(struct mid_q_entry *mid, struct TCP_Server_Info *serve
+ 					 le16_to_cpu(hdr->Command),
+ 					 le64_to_cpu(hdr->MessageId),
+ 					 rsp->PersistentFileId,
+-					 rsp->VolatileFileId);
++					 rsp->VolatileFileId, true);
+ 	if (rc)
+ 		cifs_put_tcon(tcon, netfs_trace_tcon_ref_put_cancelled_mid);
+ 
+diff --git a/fs/smb/client/transport.c b/fs/smb/client/transport.c
+index 59063b26afe43..c5c81b4261985 100644
+--- a/fs/smb/client/transport.c
++++ b/fs/smb/client/transport.c
+@@ -1100,6 +1100,7 @@ compound_send_recv(const unsigned int xid, struct cifs_ses *ses,
+ 		   int *resp_buf_type, struct kvec *resp_iov)
+ {
+ 	int i, j, optype, rc = 0;
++	int num_processed = 0;
+ 	struct mid_q_entry *midQ[MAX_COMPOUND];
+ 	bool cancelled_mid[MAX_COMPOUND] = {false};
+ 	struct cifs_credits credits[MAX_COMPOUND] = {
+@@ -1242,6 +1243,17 @@ compound_send_recv(const unsigned int xid, struct cifs_ses *ses,
+ 			break;
+ 	}
+ 	if (rc != 0) {
++		/*
++		 * A completed CREATE earlier in the compound chain may have
++		 * opened a remote handle even though a later wait was
++		 * interrupted. Mark it cancelled so __release_mid() invokes
++		 * the existing unmatched-open cleanup.
++		 */
++		spin_lock(&server->mid_lock);
++		for (j = 0; j < i; j++)
++			midQ[j]->mid_flags |= MID_WAIT_CANCELLED;
++		spin_unlock(&server->mid_lock);
++
+ 		for (; i < num_rqst; i++) {
+ 			cifs_server_dbg(FYI, "Cancelling wait for mid %llu cmd: %d\n",
+ 				 midQ[i]->mid, le16_to_cpu(midQ[i]->command));
+@@ -1264,6 +1276,17 @@ compound_send_recv(const unsigned int xid, struct cifs_ses *ses,
+ 
+ 		rc = cifs_sync_mid_result(midQ[i], server);
+ 		if (rc != 0) {
++			/*
++			 * A previous CREATE may have completed before this
++			 * response failed. Mark it cancelled so its remote
++			 * handle is closed when the mid is released.
++			 */
++			spin_lock(&server->mid_lock);
++			for (j = 0; j < i; j++)
++				midQ[j]->mid_flags |= MID_WAIT_CANCELLED;
++			spin_unlock(&server->mid_lock);
++			/* Keep their response buffers for cancelled-mid cleanup. */
++			num_processed = 0;
+ 			/* mark this mid as cancelled to not free it below */
+ 			cancelled_mid[i] = true;
+ 			goto out;
+@@ -1273,9 +1296,26 @@ compound_send_recv(const unsigned int xid, struct cifs_ses *ses,
+ 		    midQ[i]->mid_state != MID_RESPONSE_READY) {
+ 			rc = -EIO;
+ 			cifs_dbg(FYI, "Bad MID state?\n");
++			spin_lock(&server->mid_lock);
++			for (j = 0; j < i; j++)
++				midQ[j]->mid_flags |= MID_WAIT_CANCELLED;
++			spin_unlock(&server->mid_lock);
++			num_processed = 0;
+ 			goto out;
+ 		}
+ 
++		rc = server->ops->check_receive(midQ[i], server,
++						     flags & CIFS_LOG_ERROR);
++		num_processed = i + 1;
++	}
++
++out:
++	/*
++	 * Delay moving response buffers out of their mids until response
++	 * synchronization completes. This lets cancelled-mid cleanup inspect
++	 * an earlier CREATE response if a later MID fails.
++	 */
++	for (i = 0; i < num_processed; i++) {
+ 		buf = (char *)midQ[i]->resp_buf;
+ 		resp_iov[i].iov_base = buf;
+ 		resp_iov[i].iov_len = midQ[i]->resp_buf_size +
+@@ -1286,33 +1326,30 @@ compound_send_recv(const unsigned int xid, struct cifs_ses *ses,
+ 		else
+ 			resp_buf_type[i] = CIFS_SMALL_BUFFER;
+ 
+-		rc = server->ops->check_receive(midQ[i], server,
+-						     flags & CIFS_LOG_ERROR);
+-
+ 		/* mark it so buf will not be freed by delete_mid */
+ 		if ((flags & CIFS_NO_RSP_BUF) == 0)
+ 			midQ[i]->resp_buf = NULL;
+-
+ 	}
+ 
+ 	/*
+ 	 * Compounding is never used during session establish.
+ 	 */
+-	spin_lock(&ses->ses_lock);
+-	if ((ses->ses_status == SES_NEW) || (optype & CIFS_NEG_OP) || (optype & CIFS_SESS_OP)) {
+-		struct kvec iov = {
+-			.iov_base = resp_iov[0].iov_base,
+-			.iov_len = resp_iov[0].iov_len
+-		};
+-		spin_unlock(&ses->ses_lock);
+-		cifs_server_lock(server);
+-		smb311_update_preauth_hash(ses, server, &iov, 1);
+-		cifs_server_unlock(server);
++	if (num_processed == num_rqst) {
+ 		spin_lock(&ses->ses_lock);
++		if ((ses->ses_status == SES_NEW) || (optype & CIFS_NEG_OP) || (optype & CIFS_SESS_OP)) {
++			struct kvec iov = {
++				.iov_base = resp_iov[0].iov_base,
++				.iov_len = resp_iov[0].iov_len
++			};
++			spin_unlock(&ses->ses_lock);
++			cifs_server_lock(server);
++			smb311_update_preauth_hash(ses, server, &iov, 1);
++			cifs_server_unlock(server);
++			spin_lock(&ses->ses_lock);
++		}
++		spin_unlock(&ses->ses_lock);
+ 	}
+-	spin_unlock(&ses->ses_lock);
+ 
+-out:
+ 	/*
+ 	 * This will dequeue all mids. After this it is important that the
+ 	 * demultiplex_thread will not process any of these mids any futher.
 -- 
 2.53.0
 
