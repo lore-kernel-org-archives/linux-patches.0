@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213954;
-	b=BuiuHoiqfmZM/12FRn/VHLpxj0ugNTowhTR+DCTfTKYUg5tUkZ+X10NLU5E55Nzr7/ar
-	 0CA8gJC+oKKyRRGKs7UJbG5NRsYXV4QvNxKReoCHOf33x6vI9DwgS+jkRMfvnYlagROqp
-	 OvBaIZUG5nSJrlsrywy33a3v8lu1hFnEbH/gdU1sgbXspbqZ6cr03gP3hpFWilD0Y7Wqz
-	 gqnH1QdrkwtaBbkJ5OewQInaoRkeLG4ZiOdSz6jo60oS7KvV3fafnwyKh7M4D65BOgsjc
-	 PCWR5M6YPADMCLivS5CdSdNG0ksDlbcitMWgQVNtsNJEYMByCD60gl3sCq97uLMVAlA==
+	t=1793213957;
+	b=c8SkJzBIyN3zbXzoTgcogjfPn4qB1L7ZQ3yf9AU+vtf7ILNMxVYHRjj6gLi2RYcQlC0J
+	 4QxPgSzRJIpCJkcujxGEUTMQKHs9IpShpUnECMDVFQNgwhcd4A+FKLwBRZVFTl43DSWPo
+	 fRvpXkfkvA5E0hjassg/6XcxFrTYWl3vBINkkt46F5EihWQLGMNpIDKgZ2FNQ9Ea/lO4U
+	 xiUsZmJR8bqQuKg0Uo9j9lrWCYiJsIUAW2R2SkRUDArM6ROgyrYqTh68Qww04V3WaHL+p
+	 +K1UDH2Gg87S/xHlR3IPrlnF9E+T9sofxrqwgLP27vur1sk7p1vjk0b2ZkWsnR6Sw3g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213954;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213957;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=3e70iHbuKIWAiivadBlwRP56mrDV8MuCSCCwRbzLHWQ=;
-	b=LCmlQ8+WAbYqN74ZI2qAOT5rcZZgnTWP0Dwb0lhjdPkoEOQv+IACoqxx5438BPp6UAeZ
-	 AiKB8PqSWHNHw+rzx7GenVo5ZNYkKpk53uAGaqm3yP7H3HZUdUqoDeqGz4Ti2BU4oUZau
-	 SDDhalUqMOlFLg5OM0k7l227hoxnema5eyS3SmdvmWV+qBwBcyKZLI05KPTt7mER4TP1K
-	 MZivKxRUH84mQ0J+NZxhSABjSugiJLJm3bc+AR+YQf2gOGMRRoDkFTe8QJ7mI0kMq17bO
-	 m7Z+z68YX+WPX4PijOaiHgzeK1c991hrJax7HktMl13DjETrMQmqp8Rpzs/TzAGdsYQ==
+	bh=sKizPVP3B0g0LgH1dWxTxq6WYwAKh8CbCWTp6OwoGDI=;
+	b=RrymdNwYHbrrh+eT0gHXthiMhMoVjq0pvg4J0t2iW6vXR0csE4stebiT3o1lg2WSgPR6
+	 1vm/oK4uvkVZOz305Vcm6gGscuwzSfD5eqze5GJVJAFriYR8t9JeX5i+UoIeQKKjAiyoo
+	 PNRX5eHLPujNL6tl5ravP0SexRZMESaKnSj5+fkkZrzPbeaaGe9CctFyjSzqcxqdq+xla
+	 9tbxqARbWhiK8Ai/FjbM2HXluTksVRvcWxmwEx3nFKS2bnhc9jigIPxZMht62lLwe3KWc
+	 guKyJJ4LbH3BRJcDnNeNYNTqL4aC7a3Ge6mx8z9S3fIKIcExWSR2ozJFEjiK6BFxNBw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dCSMZgrA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=loYEERUV;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AE76606A31A;
-	Wed, 28 Oct 2026 18:59:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A3CC606A31C;
+	Wed, 28 Oct 2026 18:59:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dCSMZgrA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59AA51F01825;
-	Wed, 28 Oct 2026 18:59:13 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=loYEERUV
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 338C51F01825;
+	Wed, 28 Oct 2026 18:59:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213953;
-	bh=3e70iHbuKIWAiivadBlwRP56mrDV8MuCSCCwRbzLHWQ=;
+	s=korg; t=1793213956;
+	bh=sKizPVP3B0g0LgH1dWxTxq6WYwAKh8CbCWTp6OwoGDI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dCSMZgrAqByC9FFuCp4ROsFHEPM/ifIviN9cpXcPEvxh2oU+TFk//HxKHtUvxqVeG
-	 c2zaBlyWsV0s5kJRlnX1WOJ1a4DtmdlI1GV4UQM28Q2uApMX9SjCFEBDDoJ/hMSkVN
-	 B3fcJSnb4euanpB3lmwzxexVxStLcH4g/6iuW9Dg=
+	b=loYEERUV2JwOlHC44wpd4VGhz3zeJgqo+kdEQpfZ40pW+D2tCNCoc2VIwuuxVfwcr
+	 nW4FDOP+dv0r16jpNEi3Mv/igk4bPZn0CT/aGDuA+VgBe9n5wjrlE5N5BlQU7LLtEK
+	 ZKZ1MHgZHr1QFlW8L+iMrAdw7OMo2wvYYzzpb8y4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Xinqi Zhang <quic_xinqzhan@quicinc.com>,
 	Cristian Marussi <cristian.marussi@arm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sudeep Holla <sudeep.holla@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0688/1887] firmware: arm_scmi: Refactor device create/destroy helpers
-Date: Wed, 28 Oct 2026 17:46:24 +0100
-Message-ID: <20261028170515.069513107@linuxfoundation.org>
+Subject: [PATCH 6.1 0689/1887] firmware: arm_scmi: Fix slab-use-after-free in scmi_bus_notifier()
+Date: Wed, 28 Oct 2026 17:46:25 +0100
+Message-ID: <20261028170515.092451105@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,322 +70,153 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cristian Marussi <cristian.marussi@arm.com>
+From: Xinqi Zhang <quic_xinqzhan@quicinc.com>
 
-[ Upstream commit 2c3e674465e73e2f7eb52c39dc5c5e97e78e68ea ]
+[ Upstream commit 295416091e44806760ccf753aeafdafc0ae268f3 ]
 
-Refactor SCMI device create/destroy helpers: it is now possible to ask
-for the creation of all the currently requested devices for a whole
-protocol, not only for the creation of a single well-defined device.
+The scmi_dev->name is released prematurely in __scmi_device_destroy(),
+which causes slab-use-after-free when accessing scmi_dev->name in
+scmi_bus_notifier(). So move the release of scmi_dev->name to
+scmi_device_release() to avoid slab-use-after-free.
 
-While at that, re-instate uniqueness checks on the creation of SCMI
-SystemPower devices.
+  |  BUG: KASAN: slab-use-after-free in strncmp+0xe4/0xec
+  |  Read of size 1 at addr ffffff80a482bcc0 by task swapper/0/1
+  |
+  |  CPU: 1 PID: 1 Comm: swapper/0 Not tainted 6.6.38-debug #1
+  |  Hardware name: Qualcomm Technologies, Inc. SA8775P Ride (DT)
+  |  Call trace:
+  |   dump_backtrace+0x94/0x114
+  |   show_stack+0x18/0x24
+  |   dump_stack_lvl+0x48/0x60
+  |   print_report+0xf4/0x5b0
+  |   kasan_report+0xa4/0xec
+  |   __asan_report_load1_noabort+0x20/0x2c
+  |   strncmp+0xe4/0xec
+  |   scmi_bus_notifier+0x5c/0x54c
+  |   notifier_call_chain+0xb4/0x31c
+  |   blocking_notifier_call_chain+0x68/0x9c
+  |   bus_notify+0x54/0x78
+  |   device_del+0x1bc/0x840
+  |   device_unregister+0x20/0xb4
+  |   __scmi_device_destroy+0xac/0x280
+  |   scmi_device_destroy+0x94/0xd0
+  |   scmi_chan_setup+0x524/0x750
+  |   scmi_probe+0x7fc/0x1508
+  |   platform_probe+0xc4/0x19c
+  |   really_probe+0x32c/0x99c
+  |   __driver_probe_device+0x15c/0x3c4
+  |   driver_probe_device+0x5c/0x170
+  |   __driver_attach+0x1c8/0x440
+  |   bus_for_each_dev+0xf4/0x178
+  |   driver_attach+0x3c/0x58
+  |   bus_add_driver+0x234/0x4d4
+  |   driver_register+0xf4/0x3c0
+  |   __platform_driver_register+0x60/0x88
+  |   scmi_driver_init+0xb0/0x104
+  |   do_one_initcall+0xb4/0x664
+  |   kernel_init_freeable+0x3c8/0x894
+  |   kernel_init+0x24/0x1e8
+  |   ret_from_fork+0x10/0x20
+  |
+  |  Allocated by task 1:
+  |   kasan_save_stack+0x2c/0x54
+  |   kasan_set_track+0x2c/0x40
+  |   kasan_save_alloc_info+0x24/0x34
+  |   __kasan_kmalloc+0xa0/0xb8
+  |   __kmalloc_node_track_caller+0x6c/0x104
+  |   kstrdup+0x48/0x84
+  |   kstrdup_const+0x34/0x40
+  |   __scmi_device_create.part.0+0x8c/0x408
+  |   scmi_device_create+0x104/0x370
+  |   scmi_chan_setup+0x2a0/0x750
+  |   scmi_probe+0x7fc/0x1508
+  |   platform_probe+0xc4/0x19c
+  |   really_probe+0x32c/0x99c
+  |   __driver_probe_device+0x15c/0x3c4
+  |   driver_probe_device+0x5c/0x170
+  |   __driver_attach+0x1c8/0x440
+  |   bus_for_each_dev+0xf4/0x178
+  |   driver_attach+0x3c/0x58
+  |   bus_add_driver+0x234/0x4d4
+  |   driver_register+0xf4/0x3c0
+  |   __platform_driver_register+0x60/0x88
+  |   scmi_driver_init+0xb0/0x104
+  |   do_one_initcall+0xb4/0x664
+  |   kernel_init_freeable+0x3c8/0x894
+  |   kernel_init+0x24/0x1e8
+  |   ret_from_fork+0x10/0x20
+  |
+  |  Freed by task 1:
+  |   kasan_save_stack+0x2c/0x54
+  |   kasan_set_track+0x2c/0x40
+  |   kasan_save_free_info+0x38/0x5c
+  |   __kasan_slab_free+0xe8/0x164
+  |   __kmem_cache_free+0x11c/0x230
+  |   kfree+0x70/0x130
+  |   kfree_const+0x20/0x40
+  |   __scmi_device_destroy+0x70/0x280
+  |   scmi_device_destroy+0x94/0xd0
+  |   scmi_chan_setup+0x524/0x750
+  |   scmi_probe+0x7fc/0x1508
+  |   platform_probe+0xc4/0x19c
+  |   really_probe+0x32c/0x99c
+  |   __driver_probe_device+0x15c/0x3c4
+  |   driver_probe_device+0x5c/0x170
+  |   __driver_attach+0x1c8/0x440
+  |   bus_for_each_dev+0xf4/0x178
+  |   driver_attach+0x3c/0x58
+  |   bus_add_driver+0x234/0x4d4
+  |   driver_register+0xf4/0x3c0
+  |   __platform_driver_register+0x60/0x88
+  |   scmi_driver_init+0xb0/0x104
+  |   do_one_initcall+0xb4/0x664
+  |   kernel_init_freeable+0x3c8/0x894
+  |   kernel_init+0x24/0x1e8
+  |   ret_from_fork+0x10/0x20
 
-Signed-off-by: Cristian Marussi <cristian.marussi@arm.com>
-Link: https://lore.kernel.org/r/20221222185049.737625-8-cristian.marussi@arm.com
+Fixes: ee7a9c9f67c5 ("firmware: arm_scmi: Add support for multiple device per protocol")
+Signed-off-by: Xinqi Zhang <quic_xinqzhan@quicinc.com>
+Reviewed-by: Cristian Marussi <cristian.marussi@arm.com>
+Reviewed-by: Bjorn Andersson <andersson@kernel.org>
+Message-Id: <20241016-fix-arm-scmi-slab-use-after-free-v2-1-1783685ef90d@quicinc.com>
 Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
-Stable-dep-of: 295416091e44 ("firmware: arm_scmi: Fix slab-use-after-free in scmi_bus_notifier()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/arm_scmi/bus.c    | 141 ++++++++++++++++++++++++++---
- drivers/firmware/arm_scmi/common.h |   8 +-
- drivers/firmware/arm_scmi/driver.c |   9 +-
- include/linux/scmi_protocol.h      |   5 -
- 4 files changed, 141 insertions(+), 22 deletions(-)
+ drivers/firmware/arm_scmi/bus.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/firmware/arm_scmi/bus.c b/drivers/firmware/arm_scmi/bus.c
-index 14f96583b6e0d..36f75b6629db0 100644
+index 36f75b6629db0..323e1e48cabde 100644
 --- a/drivers/firmware/arm_scmi/bus.c
 +++ b/drivers/firmware/arm_scmi/bus.c
-@@ -7,6 +7,7 @@
+@@ -301,7 +301,10 @@ EXPORT_SYMBOL_GPL(scmi_driver_unregister);
  
- #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
- 
-+#include <linux/atomic.h>
- #include <linux/types.h>
- #include <linux/module.h>
- #include <linux/of.h>
-@@ -30,6 +31,9 @@ struct scmi_requested_dev {
- 	struct list_head node;
- };
- 
-+/* Track globally the creation of SCMI SystemPower related devices */
-+static atomic_t scmi_syspower_registered = ATOMIC_INIT(0);
-+
- /**
-  * scmi_protocol_device_request  - Helper to request a device
-  *
-@@ -213,11 +217,11 @@ static int scmi_match_by_id_table(struct device *dev, void *data)
- 	struct scmi_device_id *id_table = data;
- 
- 	return sdev->protocol_id == id_table->protocol_id &&
--		!strcmp(sdev->name, id_table->name);
-+		(id_table->name && !strcmp(sdev->name, id_table->name));
- }
- 
--struct scmi_device *scmi_child_dev_find(struct device *parent,
--					int prot_id, const char *name)
-+static struct scmi_device *scmi_child_dev_find(struct device *parent,
-+					       int prot_id, const char *name)
+ static void scmi_device_release(struct device *dev)
  {
- 	struct scmi_device_id id_table;
- 	struct device *dev;
-@@ -300,13 +304,53 @@ static void scmi_device_release(struct device *dev)
- 	kfree(to_scmi_dev(dev));
- }
- 
--struct scmi_device *
--scmi_device_create(struct device_node *np, struct device *parent, int protocol,
--		   const char *name)
-+static void __scmi_device_destroy(struct scmi_device *scmi_dev)
-+{
-+	pr_debug("(%s) Destroying SCMI device '%s' for protocol 0x%x (%s)\n",
-+		 of_node_full_name(scmi_dev->dev.parent->of_node),
-+		 dev_name(&scmi_dev->dev), scmi_dev->protocol_id,
-+		 scmi_dev->name);
-+
-+	if (scmi_dev->protocol_id == SCMI_PROTOCOL_SYSTEM)
-+		atomic_set(&scmi_syspower_registered, 0);
+-	kfree(to_scmi_dev(dev));
++	struct scmi_device *scmi_dev = to_scmi_dev(dev);
 +
 +	kfree_const(scmi_dev->name);
-+	ida_free(&scmi_bus_id, scmi_dev->id);
-+	device_unregister(&scmi_dev->dev);
-+}
-+
-+static struct scmi_device *
-+__scmi_device_create(struct device_node *np, struct device *parent,
-+		     int protocol, const char *name)
- {
- 	int id, retval;
- 	struct scmi_device *scmi_dev;
++	kfree(scmi_dev);
+ }
  
-+	/*
-+	 * If the same protocol/name device already exist under the same parent
-+	 * (i.e. SCMI instance) just return the existent device.
-+	 * This avoids any race between the SCMI driver, creating devices for
-+	 * each DT defined protocol at probe time, and the concurrent
-+	 * registration of SCMI drivers.
-+	 */
-+	scmi_dev = scmi_child_dev_find(parent, protocol, name);
-+	if (scmi_dev)
-+		return scmi_dev;
-+
-+	/*
-+	 * Ignore any possible subsequent failures while creating the device
-+	 * since we are doomed anyway at that point; not using a mutex which
-+	 * spans across this whole function to keep things simple and to avoid
-+	 * to serialize all the __scmi_device_create calls across possibly
-+	 * different SCMI server instances (parent)
-+	 */
-+	if (protocol == SCMI_PROTOCOL_SYSTEM &&
-+	    atomic_cmpxchg(&scmi_syspower_registered, 0, 1)) {
-+		dev_warn(parent,
-+			 "SCMI SystemPower protocol device must be unique !\n");
-+		return NULL;
-+	}
-+
- 	scmi_dev = kzalloc(sizeof(*scmi_dev), GFP_KERNEL);
- 	if (!scmi_dev)
- 		return NULL;
-@@ -336,6 +380,10 @@ scmi_device_create(struct device_node *np, struct device *parent, int protocol,
- 	if (retval)
- 		goto put_dev;
+ static void __scmi_device_destroy(struct scmi_device *scmi_dev)
+@@ -314,7 +317,6 @@ static void __scmi_device_destroy(struct scmi_device *scmi_dev)
+ 	if (scmi_dev->protocol_id == SCMI_PROTOCOL_SYSTEM)
+ 		atomic_set(&scmi_syspower_registered, 0);
  
-+	pr_debug("(%s) Created SCMI device '%s' for protocol 0x%x (%s)\n",
-+		 of_node_full_name(parent->of_node),
-+		 dev_name(&scmi_dev->dev), protocol, name);
-+
+-	kfree_const(scmi_dev->name);
+ 	ida_free(&scmi_bus_id, scmi_dev->id);
+ 	device_unregister(&scmi_dev->dev);
+ }
+@@ -386,7 +388,6 @@ __scmi_device_create(struct device_node *np, struct device *parent,
+ 
  	return scmi_dev;
  put_dev:
- 	kfree_const(scmi_dev->name);
-@@ -344,18 +392,85 @@ scmi_device_create(struct device_node *np, struct device *parent, int protocol,
- 	return NULL;
- }
- 
--void scmi_device_destroy(struct scmi_device *scmi_dev)
-+/**
-+ * scmi_device_create  - A method to create one or more SCMI devices
-+ *
-+ * @np: A reference to the device node to use for the new device(s)
-+ * @parent: The parent device to use identifying a specific SCMI instance
-+ * @protocol: The SCMI protocol to be associated with this device
-+ * @name: The requested-name of the device to be created; this is optional
-+ *	  and if no @name is provided, all the devices currently known to
-+ *	  be requested on the SCMI bus for @protocol will be created.
-+ *
-+ * This method can be invoked to create a single well-defined device (like
-+ * a transport device or a device requested by an SCMI driver loaded after
-+ * the core SCMI stack has been probed), or to create all the devices currently
-+ * known to have been requested by the loaded SCMI drivers for a specific
-+ * protocol (typically during SCMI core protocol enumeration at probe time).
-+ *
-+ * Return: The created device (or one of them if @name was NOT provided and
-+ *	   multiple devices were created) or NULL if no device was created;
-+ *	   note that NULL indicates an error ONLY in case a specific @name
-+ *	   was provided: when @name param was not provided, a number of devices
-+ *	   could have been potentially created for a whole protocol, unless no
-+ *	   device was found to have been requested for that specific protocol.
-+ */
-+struct scmi_device *scmi_device_create(struct device_node *np,
-+				       struct device *parent, int protocol,
-+				       const char *name)
- {
 -	kfree_const(scmi_dev->name);
--	ida_free(&scmi_bus_id, scmi_dev->id);
--	device_unregister(&scmi_dev->dev);
-+	struct list_head *phead;
-+	struct scmi_requested_dev *rdev;
-+	struct scmi_device *scmi_dev = NULL;
-+
-+	if (name)
-+		return __scmi_device_create(np, parent, protocol, name);
-+
-+	mutex_lock(&scmi_requested_devices_mtx);
-+	phead = idr_find(&scmi_requested_devices, protocol);
-+	/* Nothing to do. */
-+	if (!phead) {
-+		mutex_unlock(&scmi_requested_devices_mtx);
-+		return scmi_dev;
-+	}
-+
-+	/* Walk the list of requested devices for protocol and create them */
-+	list_for_each_entry(rdev, phead, node) {
-+		struct scmi_device *sdev;
-+
-+		sdev = __scmi_device_create(np, parent,
-+					    rdev->id_table->protocol_id,
-+					    rdev->id_table->name);
-+		/* Report errors and carry on... */
-+		if (sdev)
-+			scmi_dev = sdev;
-+		else
-+			pr_err("(%s) Failed to create device for protocol 0x%x (%s)\n",
-+			       of_node_full_name(parent->of_node),
-+			       rdev->id_table->protocol_id,
-+			       rdev->id_table->name);
-+	}
-+	mutex_unlock(&scmi_requested_devices_mtx);
-+
-+	return scmi_dev;
- }
-+EXPORT_SYMBOL_GPL(scmi_device_create);
-+
-+void scmi_device_destroy(struct device *parent, int protocol, const char *name)
-+{
-+	struct scmi_device *scmi_dev;
-+
-+	scmi_dev = scmi_child_dev_find(parent, protocol, name);
-+	if (scmi_dev)
-+		__scmi_device_destroy(scmi_dev);
-+}
-+EXPORT_SYMBOL_GPL(scmi_device_destroy);
- 
- static int __scmi_devices_unregister(struct device *dev, void *data)
- {
- 	struct scmi_device *scmi_dev = to_scmi_dev(dev);
- 
--	scmi_device_destroy(scmi_dev);
-+	__scmi_device_destroy(scmi_dev);
- 	return 0;
- }
- 
-@@ -377,6 +492,10 @@ int __init scmi_bus_init(void)
- 
- void __exit scmi_bus_exit(void)
- {
-+	/*
-+	 * Destroy all remaining devices: just in case the drivers were
-+	 * manually unbound and at first and then the modules unloaded.
-+	 */
- 	scmi_devices_unregister();
- 	bus_unregister(&scmi_bus_type);
- 	ida_destroy(&scmi_bus_id);
-diff --git a/drivers/firmware/arm_scmi/common.h b/drivers/firmware/arm_scmi/common.h
-index 23f0ab3f2ed7f..a08d8da198be1 100644
---- a/drivers/firmware/arm_scmi/common.h
-+++ b/drivers/firmware/arm_scmi/common.h
-@@ -107,6 +107,11 @@ extern struct bus_type scmi_bus_type;
- #define SCMI_BUS_NOTIFY_DEVICE_UNREQUEST	1
- extern struct blocking_notifier_head scmi_requested_devices_nh;
- 
-+struct scmi_device *scmi_device_create(struct device_node *np,
-+				       struct device *parent, int protocol,
-+				       const char *name);
-+void scmi_device_destroy(struct device *parent, int protocol, const char *name);
-+
- int scmi_protocol_acquire(const struct scmi_handle *handle, u8 protocol_id);
- void scmi_protocol_release(const struct scmi_handle *handle, u8 protocol_id);
- 
-@@ -168,9 +173,6 @@ struct scmi_transport_ops {
- 	bool (*poll_done)(struct scmi_chan_info *cinfo, struct scmi_xfer *xfer);
- };
- 
--struct scmi_device *scmi_child_dev_find(struct device *parent,
--					int prot_id, const char *name);
--
- /**
-  * struct scmi_desc - Description of SoC integration
-  *
-diff --git a/drivers/firmware/arm_scmi/driver.c b/drivers/firmware/arm_scmi/driver.c
-index f01097b9e953a..4c3677a205a8f 100644
---- a/drivers/firmware/arm_scmi/driver.c
-+++ b/drivers/firmware/arm_scmi/driver.c
-@@ -2135,6 +2135,8 @@ static int scmi_chan_setup(struct scmi_info *info, struct device_node *of_node,
- 	/* Create a uniquely named, dedicated transport device for this chan */
- 	tdev = scmi_device_create(of_node, info->dev, prot_id, name);
- 	if (!tdev) {
-+		dev_err(info->dev,
-+			"failed to create transport device (%s)\n", name);
- 		devm_kfree(info->dev, cinfo);
- 		return -EINVAL;
- 	}
-@@ -2144,7 +2146,7 @@ static int scmi_chan_setup(struct scmi_info *info, struct device_node *of_node,
- 	ret = info->desc->ops->chan_setup(cinfo, info->dev, tx);
- 	if (ret) {
- 		of_node_put(of_node);
--		scmi_device_destroy(tdev);
-+		scmi_device_destroy(info->dev, prot_id, name);
- 		devm_kfree(info->dev, cinfo);
- 		return ret;
- 	}
-@@ -2167,7 +2169,7 @@ static int scmi_chan_setup(struct scmi_info *info, struct device_node *of_node,
- 		/* Destroy channel and device only if created by this call. */
- 		if (tdev) {
- 			of_node_put(of_node);
--			scmi_device_destroy(tdev);
-+			scmi_device_destroy(info->dev, prot_id, name);
- 			devm_kfree(info->dev, cinfo);
- 		}
- 		return ret;
-@@ -2246,10 +2248,11 @@ static int scmi_chan_destroy(int id, void *p, void *idr)
- 	struct scmi_chan_info *cinfo = p;
- 
- 	if (cinfo->dev) {
-+		struct scmi_info *info = handle_to_scmi_info(cinfo->handle);
- 		struct scmi_device *sdev = to_scmi_dev(cinfo->dev);
- 
- 		of_node_put(cinfo->dev->of_node);
--		scmi_device_destroy(sdev);
-+		scmi_device_destroy(info->dev, id, sdev->name);
- 		cinfo->dev = NULL;
- 	}
- 
-diff --git a/include/linux/scmi_protocol.h b/include/linux/scmi_protocol.h
-index 4f765bc788ffb..0ce5746a4470a 100644
---- a/include/linux/scmi_protocol.h
-+++ b/include/linux/scmi_protocol.h
-@@ -804,11 +804,6 @@ struct scmi_device {
- 
- #define to_scmi_dev(d) container_of(d, struct scmi_device, dev)
- 
--struct scmi_device *
--scmi_device_create(struct device_node *np, struct device *parent, int protocol,
--		   const char *name);
--void scmi_device_destroy(struct scmi_device *scmi_dev);
--
- struct scmi_device_id {
- 	u8 protocol_id;
- 	const char *name;
+ 	put_device(&scmi_dev->dev);
+ 	ida_free(&scmi_bus_id, id);
+ 	return NULL;
 -- 
 2.53.0
 
