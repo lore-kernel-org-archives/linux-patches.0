@@ -1,54 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793209282;
-	b=KX0K3B0CFFn00NY68QRSAuIJuFFtkCZq1oP5u5Pqj1cD0jBRrT676HdmtsyBVVhBhhPU
-	 QNq2YyzLfAPqh1Op05++IAl8XcBCKYGORnkiUh4vPu+wVgnW/OabBQNtMwjsiw5uq8IVz
-	 srhtIyICG1sl7WuoCYx3sgDhUN+uDHPxWkv5Q1TS60AmxaK6HLpnsIzkWjVGyzICoglze
-	 RlsN5k5Gob8gLlHeGkzBgliX5EuK1tj2TDoId0TrE8Y73DeHAkvhOo0sw4cJvWfXm0wAe
-	 gzL3xBm5bIyY+UMjoVFSfmF6zfeaursh4ty5w6tPx0q4SjE1WjjmN7DJLt7csV9ZN+g==
+	t=1793209284;
+	b=2Tw6idMf/aJtxWSZgN8Fm/ex6/FO8goVfwXsb5jz8mvujEwN6YjIjAYbcXV4NSG66oxS
+	 VTxFXdLE6ZHymxTTPb3s3e7eRtouu975n2FcWlxtEgftx6qJdCP4Z2FSb0bwvXIp353os
+	 lvSVdZXbxnYr6jI5d+pERxsJieJAQyJLfuqR3Ztyi7Xqk9CSPa8CCEO5payeW4Bp9h12/
+	 9B+A8I/7/FawDutyDykE7/ame3ZfzF/SHa1FM7F+mnOHQLpKUEcBwC9MR0MypYlgI1MeY
+	 xHgD5OEUx9QO50FZ0/y5I3JAw+RfjFqJ4AIlUH4qTci+n96dUBbS/k3t0ILYln1n7pg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793209282;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793209284;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=SjXFuY2oK5De4n5P3pBYmohv7gl+CjiiDLXILE1ML1U=;
-	b=BqUFzW0CkmoRz/TAHyQDB5LTzVJzxiRz9C0hLbxZx3rqLU0WI01D+hW8B1id7tQEc0xb
-	 EvbqgUXEBBTw58YY/lrCK4s9Patj0Y/NA39A6gnzHn5hB0JFVgeYU1z+BqT2cxoIoNBXq
-	 jo6klFmo+BvAEyERnJtObWTnj3iSTB+YJ+1ZiQZU36/cG/QjyqCK9Q7GjJBAe3XUn0XzT
-	 tuQDtXjzVK1sD2sVYoqoJIYjGA0eldGK/MfY6jUzqN78Qq3vEFjXpic52SZ7BmRuqjL8D
-	 szNZy88oIy5mJd2f38iENCgpXFCKHCGTS3pBWeiIbxDh4H3DDlA+Dw0/aSZZF7FPgMg==
+	bh=Px4TcFbhBGoFjjq37vSqpjFS52qypP0eHo4hoRFCXu8=;
+	b=XK6camahVUiXv717oyYUy9DbG1u0lfkggoSxB5brAFFvS9qF9Y/uMWNXhGJ3KyOds3Rv
+	 P6p6Tvc/Fcop3S7g5F7zSFeUf3Q8oB9YSNtJxLNJXXJQEmWbUB/XdVXjd4uqASxYujfbs
+	 8VjN0Wg6zVRve6QUkXlMVnkmXdZYi5hozasWS/HozmaWdxJbyJtfT+2uzzYqwzWc58P+o
+	 sLapmcy8SnX1AAI9fVyW9OzScmJoItXY4iaWyLUMoy1Be3s7i5a1cEZNQ66Mo1R9UPw0s
+	 qu0J4yW03UnUU6nZ9ra8bi4dYVWMB4v8qEu+pjqoU32tDyfixcmlroiK1c7yjBHIV9w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oFsL5XJ+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qYwSIcA8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB9F6606A31D;
-	Wed, 28 Oct 2026 17:41:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68BE4606A31D;
+	Wed, 28 Oct 2026 17:41:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oFsL5XJ+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDABF1F01825;
-	Wed, 28 Oct 2026 17:41:20 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qYwSIcA8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF8711F01825;
+	Wed, 28 Oct 2026 17:41:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793209281;
-	bh=SjXFuY2oK5De4n5P3pBYmohv7gl+CjiiDLXILE1ML1U=;
+	s=korg; t=1793209284;
+	bh=Px4TcFbhBGoFjjq37vSqpjFS52qypP0eHo4hoRFCXu8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oFsL5XJ+MispcTbCZIx/ZwnpC669fihpqfaZNISQ+5MSUrVCpPg+3GE8i1NITsOPI
-	 mdR8kdyy3o0+Wtt1CtEu33Dkb7ge7y9hO+w+cvO3aJ4BSmNC+NA27//ARELagUjAKV
-	 NXdFIyLjaT4+gK1sUgsRnlP+WWEHEcy7ABtA6dBE=
+	b=qYwSIcA8g7MwMZocxpySWq5qvsMm7KVH+tF4n1gFl5f86eL5t3b3CzsgXJHSP/YFw
+	 ZdJqinxvfQ779GW4+kxF85744NZYzdzBL3dtX5ZekWrd0zY6HD2khFQaykzBASbftC
+	 BH4arjxskGeRBPZw2eyGAln5w+YzjBQ2LkoGzEPY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guo Xuenan <guoxuenan@huawei.com>,
 	"Darrick J. Wong" <djwong@kernel.org>,
+	Dave Chinner <dchinner@redhat.com>,
 	Leah Rumancik <leah.rumancik@gmail.com>,
-	Siddh Raman Pant <siddh.raman.pant@oracle.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 414/516] xfs: fix super block buf log item UAF during force shutdown
-Date: Wed, 28 Oct 2026 17:59:26 +0100
-Message-ID: <20261028170013.293344128@linuxfoundation.org>
+	Chandan Babu R <chandanbabu@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Siddh Raman Pant <siddh.raman.pant@oracle.com>
+Subject: [PATCH 5.10 415/516] xfs: fix intermittent hang during quotacheck
+Date: Wed, 28 Oct 2026 17:59:27 +0100
+Message-ID: <20261028170013.318114163@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -70,151 +71,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guo Xuenan <guoxuenan@huawei.com>
+From: Darrick J. Wong <djwong@kernel.org>
 
-[ Upstream commit 575689fc0ffa6c4bb4e72fd18e31a6525a6124e0 ]
+[ Upstream commit f0c2d7d2abca24d19831c99edea458704fac8087 ]
 
-xfs log io error will trigger xlog shut down, and end_io worker call
-xlog_state_shutdown_callbacks to unpin and release the buf log item.
-The race condition is that when there are some thread doing transaction
-commit and happened not to be intercepted by xlog_is_shutdown, then,
-these log item will be insert into CIL, when unpin and release these
-buf log item, UAF will occur. BTW, add delay before `xlog_cil_commit`
-can increase recurrence probability.
+Every now and then, I see the following hang during mount time
+quotacheck when running fstests.  Turning on KASAN seems to make it
+happen somewhat more frequently.  I've edited the backtrace for brevity.
 
-The following call graph actually encountered this bad situation.
-fsstress                    io end worker kworker/0:1H-216
-                            xlog_ioend_work
-                              ->xlog_force_shutdown
-                                ->xlog_state_shutdown_callbacks
-                                  ->xlog_cil_process_committed
-                                    ->xlog_cil_committed
-                                      ->xfs_trans_committed_bulk
-->xfs_trans_apply_sb_deltas             ->li_ops->iop_unpin(lip, 1);
-  ->xfs_trans_getsb
-    ->_xfs_trans_bjoin
-      ->xfs_buf_item_init
-        ->if (bip) { return 0;} //relog
-->xlog_cil_commit
-  ->xlog_cil_insert_items //insert into CIL
-                                           ->xfs_buf_ioend_fail(bp);
-                                             ->xfs_buf_ioend
-                                               ->xfs_buf_item_done
-                                                 ->xfs_buf_item_relse
-                                                   ->xfs_buf_item_free
-
-when cil push worker gather percpu cil and insert super block buf log item
-into ctx->log_items then uaf occurs.
-
-==================================================================
-BUG: KASAN: use-after-free in xlog_cil_push_work+0x1c8f/0x22f0
-Write of size 8 at addr ffff88801800f3f0 by task kworker/u4:4/105
-
-CPU: 0 PID: 105 Comm: kworker/u4:4 Tainted: G W
-6.1.0-rc1-00001-g274115149b42 #136
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS
-1.13.0-1ubuntu1.1 04/01/2014
-Workqueue: xfs-cil/sda xlog_cil_push_work
+XFS (sdd): Quotacheck needed: Please wait.
+XFS: Assertion failed: bp->b_flags & _XBF_DELWRI_Q, file: fs/xfs/xfs_buf.c, line: 2411
+------------[ cut here ]------------
+WARNING: CPU: 0 PID: 1831409 at fs/xfs/xfs_message.c:104 assfail+0x46/0x4a [xfs]
+CPU: 0 PID: 1831409 Comm: mount Tainted: G        W         5.19.0-rc6-xfsx #rc6 09911566947b9f737b036b4af85e399e4b9aef64
+Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.15.0-1 04/01/2014
+RIP: 0010:assfail+0x46/0x4a [xfs]
+Code: a0 8f 41 a0 e8 45 fe ff ff 8a 1d 2c 36 10 00 80 fb 01 76 0f 0f b6 f3 48 c7 c7 c0 f0 4f a0 e8 10 f0 02 e1 80 e3 01 74 02 0f 0b <0f> 0b 5b c3 48 8d 45 10 48 89 e2 4c 89 e6 48 89 1c 24 48 89 44 24
+RSP: 0018:ffffc900078c7b30 EFLAGS: 00010246
+RAX: 0000000000000000 RBX: ffff8880099ac000 RCX: 000000007fffffff
+RDX: 0000000000000000 RSI: 0000000000000000 RDI: ffffffffa0418fa0
+RBP: ffff8880197bc1c0 R08: 0000000000000000 R09: 000000000000000a
+R10: 000000000000000a R11: f000000000000000 R12: ffffc900078c7d20
+R13: 00000000fffffff5 R14: ffffc900078c7d20 R15: 0000000000000000
+FS:  00007f0449903800(0000) GS:ffff88803ec00000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00005610ada631f0 CR3: 0000000014dd8002 CR4: 00000000001706f0
 Call Trace:
  <TASK>
- dump_stack_lvl+0x4d/0x66
- print_report+0x171/0x4a6
- kasan_report+0xb3/0x130
- xlog_cil_push_work+0x1c8f/0x22f0
- process_one_work+0x6f9/0xf70
- worker_thread+0x578/0xf30
- kthread+0x28c/0x330
- ret_from_fork+0x1f/0x30
- </TASK>
+ xfs_buf_delwri_pushbuf+0x150/0x160 [xfs 4561f5b32c9bfb874ec98d58d0719464e1f87368]
+ xfs_qm_flush_one+0xd6/0x130 [xfs 4561f5b32c9bfb874ec98d58d0719464e1f87368]
+ xfs_qm_dquot_walk.isra.0+0x109/0x1e0 [xfs 4561f5b32c9bfb874ec98d58d0719464e1f87368]
+ xfs_qm_quotacheck+0x319/0x490 [xfs 4561f5b32c9bfb874ec98d58d0719464e1f87368]
+ xfs_qm_mount_quotas+0x65/0x2c0 [xfs 4561f5b32c9bfb874ec98d58d0719464e1f87368]
+ xfs_mountfs+0x6b5/0xab0 [xfs 4561f5b32c9bfb874ec98d58d0719464e1f87368]
+ xfs_fs_fill_super+0x781/0x990 [xfs 4561f5b32c9bfb874ec98d58d0719464e1f87368]
+ get_tree_bdev+0x175/0x280
+ vfs_get_tree+0x1a/0x80
+ path_mount+0x6f5/0xaa0
+ __x64_sys_mount+0x103/0x140
+ do_syscall_64+0x2b/0x80
+ entry_SYSCALL_64_after_hwframe+0x46/0xb0
 
-Allocated by task 2145:
- kasan_save_stack+0x1e/0x40
- kasan_set_track+0x21/0x30
- __kasan_slab_alloc+0x54/0x60
- kmem_cache_alloc+0x14a/0x510
- xfs_buf_item_init+0x160/0x6d0
- _xfs_trans_bjoin+0x7f/0x2e0
- xfs_trans_getsb+0xb6/0x3f0
- xfs_trans_apply_sb_deltas+0x1f/0x8c0
- __xfs_trans_commit+0xa25/0xe10
- xfs_symlink+0xe23/0x1660
- xfs_vn_symlink+0x157/0x280
- vfs_symlink+0x491/0x790
- do_symlinkat+0x128/0x220
- __x64_sys_symlink+0x7a/0x90
- do_syscall_64+0x35/0x80
- entry_SYSCALL_64_after_hwframe+0x63/0xcd
+I /think/ this can happen if xfs_qm_flush_one is racing with
+xfs_qm_dquot_isolate (i.e. dquot reclaim) when the second function has
+taken the dquot flush lock but xfs_qm_dqflush hasn't yet locked the
+dquot buffer, let alone queued it to the delwri list.  In this case,
+flush_one will fail to get the dquot flush lock, but it can lock the
+incore buffer, but xfs_buf_delwri_pushbuf will then trip over this
+ASSERT, which checks that the buffer isn't on a delwri list.  The hang
+results because the _delwri_submit_buffers ignores non DELWRI_Q buffers,
+which means that xfs_buf_iowait waits forever for an IO that has not yet
+been scheduled.
 
-Freed by task 216:
- kasan_save_stack+0x1e/0x40
- kasan_set_track+0x21/0x30
- kasan_save_free_info+0x2a/0x40
- __kasan_slab_free+0x105/0x1a0
- kmem_cache_free+0xb6/0x460
- xfs_buf_ioend+0x1e9/0x11f0
- xfs_buf_item_unpin+0x3d6/0x840
- xfs_trans_committed_bulk+0x4c2/0x7c0
- xlog_cil_committed+0xab6/0xfb0
- xlog_cil_process_committed+0x117/0x1e0
- xlog_state_shutdown_callbacks+0x208/0x440
- xlog_force_shutdown+0x1b3/0x3a0
- xlog_ioend_work+0xef/0x1d0
- process_one_work+0x6f9/0xf70
- worker_thread+0x578/0xf30
- kthread+0x28c/0x330
- ret_from_fork+0x1f/0x30
+AFAICT, a reasonable solution here is to detect a dquot buffer that is
+not on a DELWRI list, drop it, and return -EAGAIN to try the flush
+again.  It's not /that/ big of a deal if quotacheck writes the dquot
+buffer repeatedly before we even set QUOTA_CHKD.
 
-The buggy address belongs to the object at ffff88801800f388
- which belongs to the cache xfs_buf_item of size 272
-The buggy address is located 104 bytes inside of
- 272-byte region [ffff88801800f388, ffff88801800f498)
-
-The buggy address belongs to the physical page:
-page:ffffea0000600380 refcount:1 mapcount:0 mapping:0000000000000000
-index:0xffff88801800f208 pfn:0x1800e
-head:ffffea0000600380 order:1 compound_mapcount:0 compound_pincount:0
-flags: 0x1fffff80010200(slab|head|node=0|zone=1|lastcpupid=0x1fffff)
-raw: 001fffff80010200 ffffea0000699788 ffff88801319db50 ffff88800fb50640
-raw: ffff88801800f208 000000000015000a 00000001ffffffff 0000000000000000
-page dumped because: kasan: bad access detected
-
-Memory state around the buggy address:
- ffff88801800f280: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
- ffff88801800f300: fb fb fb fc fc fc fc fc fc fc fc fc fc fc fc fc
->ffff88801800f380: fc fa fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-                                                             ^
- ffff88801800f400: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
- ffff88801800f480: fb fb fb fc fc fc fc fc fc fc fc fc fc fc fc fc
-==================================================================
-Disabling lock debugging due to kernel taint
-
-Signed-off-by: Guo Xuenan <guoxuenan@huawei.com>
-Reviewed-by: Darrick J. Wong <djwong@kernel.org>
 Signed-off-by: Darrick J. Wong <djwong@kernel.org>
+Reviewed-by: Dave Chinner <dchinner@redhat.com>
 Signed-off-by: Leah Rumancik <leah.rumancik@gmail.com>
-Acked-by: Darrick J. Wong <djwong@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-(cherry picked from commit 0d889ae85fcf0cf9bc6e998fca2ec760e08e0b46)
-Stable-dep-of: d2fe5c4c8d25 ("xfs: rearrange code in xfs_buf_item.c")
+Acked-by: Chandan Babu R <chandanbabu@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+(cherry picked from commit 8d0baec78e8a7abe03b449820507c9777dae7f7b)
+Stable-dep-of: d62016b1a2df ("xfs: avoid dquot buffer pin deadlock")
 Signed-off-by: Siddh Raman Pant <siddh.raman.pant@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/xfs/xfs_buf_item.c | 2 ++
- 1 file changed, 2 insertions(+)
+ fs/xfs/xfs_qm.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/fs/xfs/xfs_buf_item.c b/fs/xfs/xfs_buf_item.c
-index 7794bd9568611..73c548d5b593d 100644
---- a/fs/xfs/xfs_buf_item.c
-+++ b/fs/xfs/xfs_buf_item.c
-@@ -938,6 +938,8 @@ xfs_buf_item_relse(
- 	trace_xfs_buf_item_relse(bp, _RET_IP_);
- 	ASSERT(!test_bit(XFS_LI_IN_AIL, &bip->bli_item.li_flags));
+diff --git a/fs/xfs/xfs_qm.c b/fs/xfs/xfs_qm.c
+index 3c17e0c0f8169..907819e7873eb 100644
+--- a/fs/xfs/xfs_qm.c
++++ b/fs/xfs/xfs_qm.c
+@@ -1245,6 +1245,13 @@ xfs_qm_flush_one(
+ 			error = -EINVAL;
+ 			goto out_unlock;
+ 		}
++
++		if (!(bp->b_flags & _XBF_DELWRI_Q)) {
++			error = -EAGAIN;
++			xfs_buf_relse(bp);
++			goto out_unlock;
++		}
++
+ 		xfs_buf_unlock(bp);
  
-+	if (atomic_read(&bip->bli_refcount))
-+		return;
- 	bp->b_log_item = NULL;
- 	xfs_buf_rele(bp);
- 	xfs_buf_item_free(bip);
+ 		xfs_buf_delwri_pushbuf(bp, buffer_list);
 -- 
 2.53.0
 
