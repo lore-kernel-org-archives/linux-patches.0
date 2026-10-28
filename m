@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793209640;
-	b=oFeTK7YT5Om/Xagpv1XoqI8gdUXoPe4QR0CWbZ2ggunwHyl/DRT1kz6cCJ19B9NshUW7
-	 4cf0G6ZXFXGdgNBcRQj6Lh99U2NjrxgEQghPaYGZQhhV1k1xlxXSGhb/SsyJ3NmdLwofq
-	 ehbhRe0aj2tuZ4d//DcOIPhUNR+96/dM5klJvJVMKB4fW4L6zK+CDNX8wBsbIOeexKVfk
-	 32CC/qVpUmfOXfeS0h8EGywZa0PnPUrvBTxpK6+O8GZa8rEe6lpya+5gWeXATSdk3xgyM
-	 Qp2swtHQuCq4F5mSWnA6/Q0O216zV1Gy4bjuPceZIzkzGiPM3wUm3yJqPUAJmFBC5QQ==
+	t=1793209643;
+	b=XHNmFcqyuYIwojPNMzz9/4lsrTPCBEj7w/DT8HE3vWudkwLYrqWrlsRlspMdZlOAAz4p
+	 NF+0HVcmgyz880n1z9ETFDpYLTQBofAdx6GsLlw3dOedc8xarfP17DMOjSnYhH1yPAw7o
+	 fD0g/0bYhCvGxPwhZr5DkIpz6LXJmpjAXrB3JQGm7IB+yob4BVr3aRZ9MUCjL5gOsi+HG
+	 9q1vC0C50uhvrKykoiK18lE3E6jBgsCkxI4SJBED7wk68Lwrb0q0n/Um6mju9yqnauag2
+	 6jXEZRv6xLp64mB6zA0O3vM9JDFoTWpPhgO6tCRABywCMqgllkmxej5e4fBXb6HEn+w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793209640;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793209643;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=UpTWLarE1QMQO4game4YfJJBmAYQdDzsD0yGYWLP+mU=;
-	b=pdLgtRk0S0NNHltUtKQw8KThPWYKcn759zLx1GN9tD5ZacV+vtEkUWePV8Qqbmv4mMCk
-	 GgzUDUy0h1t0ESZEwjhoP1Fb7LcC02fSWIGfs7oA33KailuSscnf1zJDA93IF2Bj66gYr
-	 6zHw8cZ/J/qf+NDpuTOhwUVpXoLkf0KSd27NOthB2PoVuJW3z8761QOybnMroUnEDbRsh
-	 Gf8QMF+u80VIEcVtV6th22mrFvZVqNXD71j+dINaQXFE5NItgRc2s+m8CwcHEjLVpoOHr
-	 toJgF1rfZMI+VE+b/m94hsRvWL2jqajQEovT7IjCZQOtlWBMd3TTp57LT9ME3RkT19A==
+	bh=b/NRO1QHM9q78DXT7vOOszY4SRXFe8Fq5Y7hYhpfGYI=;
+	b=IkDIwLUKoL6lVxzB4UEWyN6gBrdk5b6JxkQn5nWHZd9GTYltwebDfu5CN5XVpTvnJCyG
+	 LxhdjhNWXdwpoFBJAWPFYpvCYpotrfpUF70TLsLyaUq1ZZtFqmWTJ9A/lj2e8QCchdvEB
+	 Db516UXzT5fvW0QPmzn4NUoP/DR8JCMOP5FZDAJCjZ/MoJnUIWMNIu4Lry2UU1maG3r7N
+	 Yxa1GhRv6oLUkk2zHMfUhXD9sNjg5jXzpZrl22AR3lx25z+8QFw4TD4YWE7nur4dve7OI
+	 7uPtWmV3Yfj/eD62dXDnZHjt2bmPwQ+StqGRt+yq1WgmwC9nFl3GnBOERI2KhM2oquQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=go8SOjbi;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A9hfX5ma;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06818606A326;
-	Wed, 28 Oct 2026 17:47:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D50E8606A321;
+	Wed, 28 Oct 2026 17:47:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=go8SOjbi
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5910E1F01828;
-	Wed, 28 Oct 2026 17:47:19 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A9hfX5ma
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 316681F01829;
+	Wed, 28 Oct 2026 17:47:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793209639;
-	bh=UpTWLarE1QMQO4game4YfJJBmAYQdDzsD0yGYWLP+mU=;
+	s=korg; t=1793209642;
+	bh=b/NRO1QHM9q78DXT7vOOszY4SRXFe8Fq5Y7hYhpfGYI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=go8SOjbiodM37xUGCggmdpu0WpchRUm/76FZAlLaPURH5HQJ69gWAVSbz4XbKWY1X
-	 FLdqLrrYWZiKxdLTJyjeHw8Ash7Gu72LcIAIlLsseeo/5MQraIy3LrdL/SbLPb9IPq
-	 yAtvAjCwUx1rUef6ZTHmiMgDssrUfM9bZZF9hlcE=
+	b=A9hfX5maFhfOjHrk8KSKD9zHcxPOqVyN/H1pAjeKBeRceXbjaJ3O+AUc/S1OPZB3L
+	 2H7/BBzW/MA3aypYqABupVz0wfQy7OAjSGayRFG5VLz22/qaXe9OlEjss0h15N7KN9
+	 veyMhNDAx0zKy4fOq4KANcFqH9kTVnvuWj2L1ReM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Bernard Pidoux <bernard.f6bvp@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 025/109] ax25: dont accept frames on a device that is going down
-Date: Wed, 28 Oct 2026 18:00:09 +0100
-Message-ID: <20261028165942.956690971@linuxfoundation.org>
+Subject: [PATCH 6.18 026/109] ax25: send a private copy of each I frame
+Date: Wed, 28 Oct 2026 18:00:10 +0100
+Message-ID: <20261028165942.979501067@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165942.357251485@linuxfoundation.org>
 References: <20261028165942.357251485@linuxfoundation.org>
@@ -69,79 +69,78 @@ Content-Transfer-Encoding: 8bit
 
 From: Bernard Pidoux <bernard.f6bvp@gmail.com>
 
-ax25_rcv() creates a connection on an incoming SABM, for a listening
-socket or for a callsign registered by ROSE or NET/ROM. Like the ones
-made by ax25_send_frame(), it holds no reference on the ax25_dev and
-relies on ax25_kill_by_device() to detach it before the ax25_dev is
-freed. If it is added to ax25_list after ax25_kill_by_device() has
-walked the list, it is left pointing to a freed ax25_dev.
+ax25_kick() keeps every I frame on the ack queue until it is
+acknowledged and hands a clone of it to the device. After a REJ or a T1
+timeout the frame goes back to the write queue and ax25_kick() clones it
+again. A clone shares its data with the original, so ax25_send_iframe()
+and ax25_transmit_buffer() write the control field and the address
+header of the new clone in the very bytes used by the previous one. If
+the previous clone is still waiting in the device queue, its control
+field is rewritten there: it leaves with the N(R) current at the time
+of the retransmission, not the one it was sent with.
 
-ax25_rcv() is called from the packet type handler, under
-rcu_read_lock(), and ax25_kill_by_device() now clears device_up and
-waits for the RCU readers before its walk. Drop the frame when
-device_up is clear: a frame that gets past the test is fully processed
-before the walk starts, and none is processed behind it.
+Frames queued behind it, an RR for instance, were built in between with
+a lower N(R). The peer then receives an N(R) lower than one it has
+already been given. ax25_validate_nr() rejects it and
+ax25_std_nr_error_recovery() resets the link with a SABM, in the middle
+of a transfer. The layers above pay for it: on a ROSE circuit, the
+frames replayed after the reset carry stale sequence numbers and the
+circuit is reset as well, with loss of data.
 
-The window is much smaller than for ax25_send_frame(): the core already
-drops what is received on a device that is no longer running, so only a
-frame that was queued before the device was stopped and is processed
-late can hit it. I could not exercise it. The change was checked for
-regressions only: incoming connections still work in the ROSE tests of
-the previous patch, where every AX.25 link is opened by an incoming
-SABM on one side.
+Hand a private copy to the device instead. The frames are small (256
+bytes of data by default) and the link is slow, the extra copy is not
+measurable.
+
+Found on a test bench: two virtual machines with four CPUs each, a
+6.12.94 kernel with KASAN and lockdep, one ROSE circuit over an AX.25
+link on a serial line (mkiss), 192 messages each way in bursts of 24,
+and three REJ frames injected by one side. Instrumentation showed that
+frames reached the driver in the order they were given to
+dev_queue_xmit(), that V(R) never went backwards on the sender, and
+that the driver nevertheless saw frames whose N(R) was lower than the
+one before.
+
+Counting, on the receiver, the frames whose N(R) is lower than the
+previous one:
+
+ - this code plus the two pending AX.25 fixes used on the bench (REJ
+   guard, requeue on re-establishment): 4 runs, 13 such frames, 4 link
+   resets; with this patch: 6 runs, none, no link reset;
+ - the same with the transmit serialisation patches for AX.25 and ROSE
+   on top: link resets in most runs before; with this patch: 6 runs,
+   none, no link reset, no ROSE reset, 192/192 messages both ways in
+   every run.
 
 Signed-off-by: Bernard Pidoux <bernard.f6bvp@gmail.com>
 Assisted-by: Claude:claude-opus-5-5
-(cherry picked from commit 748551f72b27325043eafe969311b15ae1eb0c7c)
+(cherry picked from commit 1b464137f3173fadf81a7a1bf4a9584ebaf72c7b)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ax25/af_ax25.c | 12 ++++++------
- net/ax25/ax25_in.c |  9 +++++++++
- 2 files changed, 15 insertions(+), 6 deletions(-)
+ net/ax25/ax25_out.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/net/ax25/af_ax25.c b/net/ax25/af_ax25.c
-index 81c9631e4c41e..32114f659b8d9 100644
---- a/net/ax25/af_ax25.c
-+++ b/net/ax25/af_ax25.c
-@@ -84,12 +84,12 @@ static void ax25_kill_by_device(struct net_device *dev)
- 	WRITE_ONCE(ax25_dev->device_up, false);
+diff --git a/net/ax25/ax25_out.c b/net/ax25/ax25_out.c
+index f082b69126623..7c4ebef5ae6c2 100644
+--- a/net/ax25/ax25_out.c
++++ b/net/ax25/ax25_out.c
+@@ -341,7 +341,16 @@ void ax25_kick(ax25_cb *ax25)
+ 	ax25->vs = start;
  
- 	/*
--	 * ax25_send_frame() creates connections that hold no reference on
--	 * the ax25_dev: they rely on the walk below to detach them before the
--	 * ax25_dev is freed. It runs under rcu_read_lock() and gives up when
--	 * device_up is clear, so once this returns every connection it was
--	 * setting up is complete and on the list, and no new one can appear
--	 * behind the walk.
-+	 * ax25_send_frame() and ax25_rcv() create connections that hold no
-+	 * reference on the ax25_dev: they rely on the walk below to detach
-+	 * them before the ax25_dev is freed. Both run under rcu_read_lock()
-+	 * and give up when device_up is clear, so once this returns every
-+	 * connection they were setting up is complete and on the list, and
-+	 * no new one can appear behind the walk.
- 	 */
- 	synchronize_rcu();
- 
-diff --git a/net/ax25/ax25_in.c b/net/ax25/ax25_in.c
-index 18e15c3c26e46..c81bc8c4563b5 100644
---- a/net/ax25/ax25_in.c
-+++ b/net/ax25/ax25_in.c
-@@ -216,6 +216,15 @@ static int ax25_rcv(struct sk_buff *skb, struct net_device *dev,
- 	if (skb_linearize(skb))
- 		goto free;
- 
-+	/*
-+	 * A connection made below on an incoming SABM holds no reference on
-+	 * the ax25_dev either. We are called under rcu_read_lock(), which
-+	 * ax25_kill_by_device() waits for after it has cleared device_up:
-+	 * leave a device that is going down alone.
-+	 */
-+	if (!READ_ONCE(ax25_dev->device_up))
-+		goto free;
-+
- 	/*
- 	 *	Parse the address header.
- 	 */
+ 	do {
+-		if ((skbn = skb_clone(skb, GFP_ATOMIC)) == NULL) {
++		/*
++		 * Send a private copy, not a clone. The frame stays on the
++		 * ack queue and is sent again after a REJ or a T1 timeout,
++		 * while the previous copy may still be waiting in the device
++		 * queue. A clone shares its data with the original: building
++		 * the frame again would rewrite the control field, and so
++		 * the N(R), of the copy already queued.
++		 */
++		skbn = skb_copy(skb, GFP_ATOMIC);
++		if (!skbn) {
+ 			skb_queue_head(&ax25->write_queue, skb);
+ 			break;
+ 		}
 -- 
 2.53.0
 
