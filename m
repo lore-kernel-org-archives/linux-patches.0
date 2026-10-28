@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215393;
-	b=m9QmayQQ4WoJCMGjRiF9rgHE5sU1nTKHlGohSJNCyhmRvu71Zl9JCCu5PFnL7BIHD4Oe
-	 fIRimTb7WVIEbUz19SS73gzK7WO3Ws/IUz2s39D7xK3GvMaApjXBoYdDTUdo8b58Tj9hx
-	 NOM1p6wvDbqJyISrmbOfWqDcjDCoosuVVofhycLRFm+UYSdF06XS5THZmUpzi5rSG33Wk
-	 PXLl6fLOD9afaL5BEt8olu4gwoIDA/2m6vcQZ8j+T7bUyenRbcN3tuvo72mmJE+5wdlvY
-	 fun6f+fd9WFQx0xDDVoyF0HW99F2qorvyXeXL0n6Npuf4zkhbmj7S9EOZGL5NXk+DMw==
+	t=1793215396;
+	b=wVAyn/jUG+5v0ZEdey7hJswUhHbKQdnO+PavmLjBnORN3/shQamQIlscTH7VvSaD/qE8
+	 GxSsMgcokvKyuonBFiBfc3JXPS10L9aTX/eNCmQfJjTOlH6FfSKnoTsYH2UM8eciGKcAW
+	 Y6oDwt0hmCoO96iyePm6LQ2nwq0HqT/1+MTn/kdkfzWfNhvpw0hf2u26FSZ9AjRZLEYVq
+	 pmXsYyzT+XTKeqF3mYAYetEg+yszRdioe9k3D8DTGYxqd5HdL1nwGWKTP7DFsPY0Tv2id
+	 pxjLP3aLAhFrCOK7JGe9gf9z9ov2rY0cb/MhrVZauFmrW3nJ/DK7N4L3OFUAOliie5g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215393;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215396;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=QIcJ7JMOucwlmisZIp1k0mSnuqnaMFDYH+OxchgLOVQ=;
-	b=TsVQriKwsz85JBDPJi+76JdvTvo/JUFs7Ip6qZkeI9K6Kuh74OT5ZCA1UxWpQwihVTpD
-	 7ohRgIZf2E+Q357j4sqeL5iw3oImJ128W+kBOV5iGOWrDpBXZyDgRLeDPXjtjmCVDsTmG
-	 +aqxjc1GRDs4aJPE2TtTrDCnwJAqhd6saQMWDEp7AS5+oPR41I3u4B3eEiBXEqgiShiNr
-	 N2CkaiQ4ISkMmUcjDX8gH3PvwUMjjnbKpEmq0H7qgKqRI+gwuOOclKOXrQjJPbXnrroM6
-	 e9mdni315ahaO5O3aGJ9JWM2TiLGW8RW6kbSNgdfudjVl+dw5B6nSP2xHjJCGqA1cWQ==
+	bh=WcA3y2RhRDY+ynWaQjbXSgq+07wiuEOKefqZgxJKnGk=;
+	b=Fp5LuHHjZAiXddRwMlE34A0K2rDYmKHKNeHPwcGlTnMvXzwX8q0uxoWTmUlYnLU7ZSh6
+	 M0msvnvpssiO7yk4DaROH/Q+txZ6CfMK/kIv2W2OUCJ9uDq0WYAetaF/pUmyPvh0jXY2K
+	 CmLww+gazmeeqpabRS5tV8eYg7ZRS0P6GlwnxEg2fHQ5qGvS9Ev43DIOcPtDZR1zKAKsP
+	 vsYJboQDCtBB17R0Gc0A4+AEbV7ZSjaXM1U1jYXG6xD9+l6fCpY4zcBpsxsuQTzFuk0sj
+	 0GKCfO7fR/w0GrX0mcm9DtgWuNdH9hsWxE9ew5Yo+o/f++yiuNRD7FbIzKN6tLDSBrA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yNiZ43iQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bbdYix4e;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 181CD606A31A;
-	Wed, 28 Oct 2026 19:23:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09381606A31E;
+	Wed, 28 Oct 2026 19:23:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yNiZ43iQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 620E11F01828;
-	Wed, 28 Oct 2026 19:23:12 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bbdYix4e
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5485F1F01825;
+	Wed, 28 Oct 2026 19:23:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215392;
-	bh=QIcJ7JMOucwlmisZIp1k0mSnuqnaMFDYH+OxchgLOVQ=;
+	s=korg; t=1793215395;
+	bh=WcA3y2RhRDY+ynWaQjbXSgq+07wiuEOKefqZgxJKnGk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yNiZ43iQ5RfcQo5YdrCxrLEjhhzb+3bifVTOKl30Y8Ehpw+sIgLnyqo7KCW12Rd/z
-	 Rlc+Q5yLO2FQ6ttx6jg2eVhJfB6sThoqMFyPsj8amlu51lqyt59hvXLcADMHSAimAE
-	 AN1d6WDdUnxZCq5Q+wiJquxJCg7TRwZHqrFlJlHk=
+	b=bbdYix4ertm1wLxM0bT5yeT72gzN8T3qNrux2gK6slaHYGSDK/W/KIpOr3NbHV8sE
+	 F/Occ+9k+OFCe7WE+I8h1aBzRc8hF8NbglWqLzGXxGsp73v12LaBB8d10QYH5sbqns
+	 jJQOwLB+0LEfnFRW0gLulLWfF0LAAhZkJKuO5edo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amir Goldstein <amir73il@gmail.com>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Rosen Penev <rosenp@gmail.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1196/1887] ovl: check access to copy_file_range source with src mounter creds
-Date: Wed, 28 Oct 2026 17:54:52 +0100
-Message-ID: <20261028170526.622617885@linuxfoundation.org>
+Subject: [PATCH 6.1 1197/1887] ata: sata_dwc_460ex: fix infinite loop in NCQ tag completion bit-scanning
+Date: Wed, 28 Oct 2026 17:54:53 +0100
+Message-ID: <20261028170526.645030656@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,83 +68,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Amir Goldstein <amir73il@gmail.com>
+From: Rosen Penev <rosenp@gmail.com>
 
-[ Upstream commit a1e0eb8f55cfe09bb31a202a388babc411292656 ]
+[ Upstream commit c2130f6553f4a5cbdc259de069600117a995f197 ]
 
-Commit 5dae222a5ff0c ("vfs: allow copy_file_range to copy across devices")
-allowed filesystems that implement the copy_file_range() f_op to decide
-if they want to access cross-sb copy from/to the same fs type.
+The hand-rolled bit-scanning loop in the NCQ completion path has an
+infinite loop bug.  When tag_mask has only high bits set (e.g.
+0x80000000), the inner while loop left-shifts tag_mask until it
+overflows to 0.  At that point !(0 & 1) is always true and 0 <<= 1
+stays 0, causing an infinite loop in hardirq context with a spinlock
+held.
 
-The same commit added checks to verify same sb copy for filesystems that
-implement ->copy_file_range() and do not support cross-sb copy at the
-time, namely, to ceph, fuse and nfs.
+Replace the open-coded bit-scanning with __ffs() which correctly
+finds the least significant set bit and is bounded by the width of
+the argument.
 
-The two remaining fs which implement ->copy_file_range(), cifs and
-overlayfs started to support cross-sb copy from this time.
-
-While overlayfs does support cross-sb copy when the two underlying files
-are on the same base fs, the copy operation on the two real files from
-two different overalyfs filesystems is performed with the mounter
-creds of the destination overlayfs and the read permission access hook
-for the source file was called with the wrong creds.
-
-This could cause either deny of access to copy which would otherwise be
-allowed (e.g. with splice) or allow read access to file which would
-otherwise be denied.
-
-Fix the latter case by explicitly verifying read access to source file
-with the source overlayfs mounter creds.
-
-The former case remains a quirk of cross-sb overlayfs copy, but
-userspace could fall back to regular copy so no harm done.
-
-Fixes: 5dae222a5ff0c ("vfs: allow copy_file_range to copy across devices")
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
-Link: https://patch.msgid.link/20260712122421.203113-1-amir73il@gmail.com
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Fixes: 62936009f35a ("[libata] Add 460EX on-chip SATA driver, sata_dwc_460ex")
+Assisted-by: opencode:big-pickle
+Signed-off-by: Rosen Penev <rosenp@gmail.com>
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/overlayfs/file.c | 19 ++++++++++++++++++-
- 1 file changed, 18 insertions(+), 1 deletion(-)
+ drivers/ata/sata_dwc_460ex.c | 9 ++-------
+ 1 file changed, 2 insertions(+), 7 deletions(-)
 
-diff --git a/fs/overlayfs/file.c b/fs/overlayfs/file.c
-index cc0c077165bde..3eec30bb6406e 100644
---- a/fs/overlayfs/file.c
-+++ b/fs/overlayfs/file.c
-@@ -570,6 +570,7 @@ static loff_t ovl_copyfile(struct file *file_in, loff_t pos_in,
- 			    struct file *file_out, loff_t pos_out,
- 			    loff_t len, unsigned int flags, enum ovl_copyop op)
- {
-+	struct inode *inode_in = file_inode(file_in);
- 	struct inode *inode_out = file_inode(file_out);
- 	struct fd real_in, real_out;
- 	const struct cred *old_cred;
-@@ -594,7 +595,23 @@ static loff_t ovl_copyfile(struct file *file_in, loff_t pos_in,
- 		goto out_unlock;
- 	}
+diff --git a/drivers/ata/sata_dwc_460ex.c b/drivers/ata/sata_dwc_460ex.c
+index 24bc1b755dc74..d3b8bbeef363e 100644
+--- a/drivers/ata/sata_dwc_460ex.c
++++ b/drivers/ata/sata_dwc_460ex.c
+@@ -616,16 +616,11 @@ static irqreturn_t sata_dwc_isr(int irq, void *dev_instance)
+ 	status = ap->ops->sff_check_status(ap);
+ 	dev_dbg(ap->dev, "%s ATA status register=0x%x\n", __func__, status);
  
--	old_cred = ovl_override_creds(file_inode(file_out)->i_sb);
-+	/*
-+	 * For cross-sb copy, vfs_copy_file_range() will verify read access with
-+	 * the mounter creds of the dest fs mounter, so we need to explicitly
-+	 * verify read access with the source mounter creds.
-+	 */
-+	if (unlikely(inode_in->i_sb != inode_out->i_sb)) {
-+		old_cred = ovl_override_creds(inode_in->i_sb);
-+		ret = rw_verify_area(READ, real_in.file, &pos_in, len);
-+		revert_creds(old_cred);
-+		if (unlikely(ret)) {
-+			fdput(real_in);
-+			fdput(real_out);
-+			goto out_unlock;
-+		}
-+	}
-+
-+	old_cred = ovl_override_creds(inode_out->i_sb);
- 	switch (op) {
- 	case OVL_COPY:
- 		ret = vfs_copy_file_range(real_in.file, pos_in,
+-	tag = 0;
+ 	num_processed = 0;
+ 	while (tag_mask) {
+ 		num_processed++;
+-		while (!(tag_mask & 0x00000001)) {
+-			tag++;
+-			tag_mask <<= 1;
+-		}
+-
+-		tag_mask &= (~0x00000001);
++		tag = __ffs(tag_mask);
++		tag_mask &= ~(1U << tag);
+ 		qc = ata_qc_from_tag(ap, tag);
+ 		if (unlikely(!qc)) {
+ 			dev_err(ap->dev, "failed to get qc");
 -- 
 2.53.0
 
