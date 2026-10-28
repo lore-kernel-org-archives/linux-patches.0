@@ -1,56 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213702;
-	b=K3wC/wPQ4r0g6LO7umlCUCwnZonxa95yC9Jh5u0UhWtCNgcKkCmhIzsmyQ4qw7yYK8bL
-	 hxyZyHT62tGENFPxCGdn5TpDo15HQ5zotAz4sURUZ0nYi0/Vb0TwmnFn+wSOnmRhLUI5p
-	 mGJXcLt56PoHQXs0tRwUmietG1xPEM9sltDDLrik+K9xrLpjVwLzdGXIh34quey9ksEDr
-	 hCi6WgMacmWfLMoixo5Z0wduEKsNa+myecYuEkM84Ro67f5Nw7fFFNVV5FS75L1kEdLWq
-	 ft/J5KQWgfqa2NJ3Go+slvxPPTC8S0m5xrKCvYM+G7Z0Q/7KPttI0DbcPT/zOGl9kkA==
+	t=1793213705;
+	b=RQBQf+3yazPk1yyShCX6VYRsDDWz/MYT77KpXKOAKQFg5OYMdQ7kdI9cGatTLhx5t8lH
+	 RqA4VlNjn68B+2ISscMg6Vf0poYV/hoIRRnV/p9o8fTqtF3aGBlWOMOhpmKwTgezxxC5k
+	 lSokhmYOKe0T7ga9iABOJ2PVg5SwcjnCyxTsuiOaIj7WbAKF7fI1sZdq7aE9k/550QzTi
+	 /H7oMQ8vfJDWV/LLPUvaP34dgGVagLvhXOhyh75BEggzPdFt8zXkL9VmgTWeGl531uHSL
+	 SRf00aoq2PNx6ETO2hBS9TR984BLk0lWgbHIoMR2h0Vgvb2NWAlXD+kS3542QpJRQHA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213702;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213705;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=GE6fhT2SiSY7kEuCElb+Beh2gthPN9G0rx105EU+R/I=;
-	b=PClZ9xJ5NQzSrKAqkGct++V3Zn90Z1nnjb3BoDL+ZM2QIanhY7CjzmR5YBHBT1FL6Ld2
-	 kCNHLU0fyYznInMQmQQsLeg+C90zTFSmJAumNmUPGgC277STvEbw7yKZUJ//59nZAlaOU
-	 kZK6ZoBQlQntVexhR9EzqcKjQBpZIkRJwyioLolSDuYNWCMWfFeQs/p5eGvuo/J2SQ2RP
-	 yh6dzMMSjPBvRsvuihnE9M9MOF27Q2J/y3xJMfrhVAaPIEgSmV6JZoAHfzpLwc+Pd9Xo3
-	 PzpzOT9+PFFzc4q3PHchRJXVmTWHcF8F3ZSw5qNJYOa6xqPvlGbhBnlnpYt+9wQ0hxQ==
+	bh=Dn2M9E2nVn96e3qa8XQBBQr3XHjLVp/vHo1AKPfKfdY=;
+	b=W5EUBJ5XFzLi1ZaGONkFwhujGh9jHxLR/bYil9R8wbvSE3KVEsh3mWa8/GQ5pKz6OoCV
+	 2KO3RWutrAv75grxMONMpjWpXKKCYk5k/3MUm+4cqq8dRJq55OI81KpBUVWKUPX4c0jmr
+	 IZQCCGF+MQYtyLZ/Ie7sBzSnHJ5gYoZWaCOWXX0z1Us59GNXUS++yivOs5ToXGbNooR36
+	 Yka8ItdskoPOEOt79X6T+L1dxLVh2I2ruXib+qSMgckzHta69e5nhkXFaExyL1vzIsXbS
+	 6AWtv53V8Cy+mznhYlyawYbuqG5cbXVKmI2y5Vrh18mWaoBJewCBj+P5l4HElOPxtoA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=smK+5Sj2;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xasp5dC4;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B0D2606A31A;
-	Wed, 28 Oct 2026 18:55:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDF0C606A31A;
+	Wed, 28 Oct 2026 18:55:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=smK+5Sj2
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E27D1F01825;
-	Wed, 28 Oct 2026 18:55:01 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xasp5dC4
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C5DC1F01825;
+	Wed, 28 Oct 2026 18:55:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213702;
-	bh=GE6fhT2SiSY7kEuCElb+Beh2gthPN9G0rx105EU+R/I=;
+	s=korg; t=1793213704;
+	bh=Dn2M9E2nVn96e3qa8XQBBQr3XHjLVp/vHo1AKPfKfdY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=smK+5Sj2nlfR7XJcvTPW/l+hj2MX6ZY2O+b6rUupEqt+JfBbD1KXXrt6Im1pMNB6T
-	 YvUEsT9fg2hDQca1pu1K0l5+RtgGYgjvmEt6stWyd0fw/A5ek0mL3lamoWtz4JglUh
-	 e7CGKbGg9LoP90qd/0/V0ISnw/s3nsRwB9Gto7YQ=
+	b=xasp5dC4bzmHfosDP0LVacVVsUU1haK6Xi1IvwqquCsMNxPdscYUBiJeMXUrDi48b
+	 I4qsAoGuUuyfLzX7eE53fg6RuK8Hi0bSLhiJvQN76+GLphvBc1BFtEOVmqC3NIwFu6
+	 NaZTB/vNXi9Y9vE4hxIqbcKrlacWbKsDGuQ0YH00=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mingshuai Ren <renmingshuai@huawei.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Victor Nogueira <victor@mojatatu.com>,
-	Pedro Tammela <pctammela@mojatatu.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0599/1887] net/sched: Fix mirred deadlock on device recursion
-Date: Wed, 28 Oct 2026 17:44:55 +0100
-Message-ID: <20261028170513.047165436@linuxfoundation.org>
+Subject: [PATCH 6.1 0600/1887] netfilter: nf_tables: fix memleak in map from abort path
+Date: Wed, 28 Oct 2026 17:44:56 +0100
+Message-ID: <20261028170513.069221552@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -72,124 +67,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit 0f022d32c3eca477fbf79a205243a6123ed0fe11 ]
+[ Upstream commit 86a1471d7cde792941109b93b558b5dc078b9ee9 ]
 
-When the mirred action is used on a classful egress qdisc and a packet is
-mirrored or redirected to self we hit a qdisc lock deadlock.
-See trace below.
+The delete set command does not rely on the transaction object for
+element removal, therefore, a combination of delete element + delete set
+from the abort path could result in restoring twice the refcount of the
+mapping.
 
-[..... other info removed for brevity....]
-[   82.890906]
-[   82.890906] ============================================
-[   82.890906] WARNING: possible recursive locking detected
-[   82.890906] 6.8.0-05205-g77fadd89fe2d-dirty #213 Tainted: G        W
-[   82.890906] --------------------------------------------
-[   82.890906] ping/418 is trying to acquire lock:
-[   82.890906] ffff888006994110 (&sch->q.lock){+.-.}-{3:3}, at:
-__dev_queue_xmit+0x1778/0x3550
-[   82.890906]
-[   82.890906] but task is already holding lock:
-[   82.890906] ffff888006994110 (&sch->q.lock){+.-.}-{3:3}, at:
-__dev_queue_xmit+0x1778/0x3550
-[   82.890906]
-[   82.890906] other info that might help us debug this:
-[   82.890906]  Possible unsafe locking scenario:
-[   82.890906]
-[   82.890906]        CPU0
-[   82.890906]        ----
-[   82.890906]   lock(&sch->q.lock);
-[   82.890906]   lock(&sch->q.lock);
-[   82.890906]
-[   82.890906]  *** DEADLOCK ***
-[   82.890906]
-[..... other info removed for brevity....]
+Check for inactive element in the next generation for the delete element
+command in the abort path, skip restoring state if next generation bit
+has been already cleared. This is similar to the activate logic using
+the set walk iterator.
 
-Example setup (eth0->eth0) to recreate
-tc qdisc add dev eth0 root handle 1: htb default 30
-tc filter add dev eth0 handle 1: protocol ip prio 2 matchall \
-     action mirred egress redirect dev eth0
+[ 6170.286929] ------------[ cut here ]------------
+[ 6170.286939] WARNING: CPU: 6 PID: 790302 at net/netfilter/nf_tables_api.c:2086 nf_tables_chain_destroy+0x1f7/0x220 [nf_tables]
+[ 6170.287071] Modules linked in: [...]
+[ 6170.287633] CPU: 6 PID: 790302 Comm: kworker/6:2 Not tainted 6.9.0-rc3+ #365
+[ 6170.287768] RIP: 0010:nf_tables_chain_destroy+0x1f7/0x220 [nf_tables]
+[ 6170.287886] Code: df 48 8d 7d 58 e8 69 2e 3b df 48 8b 7d 58 e8 80 1b 37 df 48 8d 7d 68 e8 57 2e 3b df 48 8b 7d 68 e8 6e 1b 37 df 48 89 ef eb c4 <0f> 0b 48 83 c4 08 5b 5d 41 5c 41 5d 41 5e 41 5f c3 cc cc cc cc 0f
+[ 6170.287895] RSP: 0018:ffff888134b8fd08 EFLAGS: 00010202
+[ 6170.287904] RAX: 0000000000000001 RBX: ffff888125bffb28 RCX: dffffc0000000000
+[ 6170.287912] RDX: 0000000000000003 RSI: ffffffffa20298ab RDI: ffff88811ebe4750
+[ 6170.287919] RBP: ffff88811ebe4700 R08: ffff88838e812650 R09: fffffbfff0623a55
+[ 6170.287926] R10: ffffffff8311d2af R11: 0000000000000001 R12: ffff888125bffb10
+[ 6170.287933] R13: ffff888125bffb10 R14: dead000000000122 R15: dead000000000100
+[ 6170.287940] FS:  0000000000000000(0000) GS:ffff888390b00000(0000) knlGS:0000000000000000
+[ 6170.287948] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[ 6170.287955] CR2: 00007fd31fc00710 CR3: 0000000133f60004 CR4: 00000000001706f0
+[ 6170.287962] Call Trace:
+[ 6170.287967]  <TASK>
+[ 6170.287973]  ? __warn+0x9f/0x1a0
+[ 6170.287986]  ? nf_tables_chain_destroy+0x1f7/0x220 [nf_tables]
+[ 6170.288092]  ? report_bug+0x1b1/0x1e0
+[ 6170.287986]  ? nf_tables_chain_destroy+0x1f7/0x220 [nf_tables]
+[ 6170.288092]  ? report_bug+0x1b1/0x1e0
+[ 6170.288104]  ? handle_bug+0x3c/0x70
+[ 6170.288112]  ? exc_invalid_op+0x17/0x40
+[ 6170.288120]  ? asm_exc_invalid_op+0x1a/0x20
+[ 6170.288132]  ? nf_tables_chain_destroy+0x2b/0x220 [nf_tables]
+[ 6170.288243]  ? nf_tables_chain_destroy+0x1f7/0x220 [nf_tables]
+[ 6170.288366]  ? nf_tables_chain_destroy+0x2b/0x220 [nf_tables]
+[ 6170.288483]  nf_tables_trans_destroy_work+0x588/0x590 [nf_tables]
 
-Another example(eth0->eth1->eth0) to recreate
-tc qdisc add dev eth0 root handle 1: htb default 30
-tc filter add dev eth0 handle 1: protocol ip prio 2 matchall \
-     action mirred egress redirect dev eth1
-
-tc qdisc add dev eth1 root handle 1: htb default 30
-tc filter add dev eth1 handle 1: protocol ip prio 2 matchall \
-     action mirred egress redirect dev eth0
-
-We fix this by adding an owner field (CPU id) to struct Qdisc set after
-root qdisc is entered. When the softirq enters it a second time, if the
-qdisc owner is the same CPU, the packet is dropped to break the loop.
-
-Reported-by: Mingshuai Ren <renmingshuai@huawei.com>
-Closes: https://lore.kernel.org/netdev/20240314111713.5979-1-renmingshuai@huawei.com/
-Fixes: 3bcb846ca4cf ("net: get rid of spin_trylock() in net_tx_action()")
-Fixes: e578d9c02587 ("net: sched: use counter to break reclassify loops")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Victor Nogueira <victor@mojatatu.com>
-Reviewed-by: Pedro Tammela <pctammela@mojatatu.com>
-Tested-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://lore.kernel.org/r/20240415210728.36949-1-victor@mojatatu.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 591054469b3e ("netfilter: nf_tables: revisit chain/object refcounting from elements")
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/sch_generic.h | 1 +
- net/core/dev.c            | 6 ++++++
- net/sched/sch_generic.c   | 1 +
- 3 files changed, 8 insertions(+)
+ net/netfilter/nf_tables_api.c | 16 ++++++++++++++--
+ 1 file changed, 14 insertions(+), 2 deletions(-)
 
-diff --git a/include/net/sch_generic.h b/include/net/sch_generic.h
-index b694d27f41714..d932af97fa579 100644
---- a/include/net/sch_generic.h
-+++ b/include/net/sch_generic.h
-@@ -117,6 +117,7 @@ struct Qdisc {
- 	struct qdisc_skb_head	q;
- 	struct gnet_stats_basic_sync bstats;
- 	struct gnet_stats_queue	qstats;
-+	int                     owner;
- 	unsigned long		state;
- 	unsigned long		state2; /* must be written under qdisc spinlock */
- 	struct Qdisc            *next_sched;
-diff --git a/net/core/dev.c b/net/core/dev.c
-index f9597dbfd4225..e467e81226396 100644
---- a/net/core/dev.c
-+++ b/net/core/dev.c
-@@ -3948,6 +3948,10 @@ static inline int __dev_xmit_skb(struct sk_buff *skb, struct Qdisc *q,
- 		return rc;
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index 9f71ad2669c7e..226fedc7477b1 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -6869,6 +6869,16 @@ void nft_data_hold(const struct nft_data *data, enum nft_data_types type)
  	}
+ }
  
-+	if (unlikely(READ_ONCE(q->owner) == smp_processor_id())) {
-+		kfree_skb_reason(skb, SKB_DROP_REASON_TC_EGRESS);
-+		return NET_XMIT_DROP;
-+	}
- 	/*
- 	 * Heuristic to force contended enqueues to serialize on a
- 	 * separate lock before trying to get qdisc main lock.
-@@ -3987,7 +3991,9 @@ static inline int __dev_xmit_skb(struct sk_buff *skb, struct Qdisc *q,
- 		qdisc_run_end(q);
- 		rc = NET_XMIT_SUCCESS;
- 	} else {
-+		WRITE_ONCE(q->owner, smp_processor_id());
- 		rc = dev_qdisc_enqueue(skb, q, &to_free, txq);
-+		WRITE_ONCE(q->owner, -1);
- 		if (qdisc_run_begin(q)) {
- 			if (unlikely(contended)) {
- 				spin_unlock(&q->busylock);
-diff --git a/net/sched/sch_generic.c b/net/sched/sch_generic.c
-index f58ec57e31f46..b9cc8e90d6554 100644
---- a/net/sched/sch_generic.c
-+++ b/net/sched/sch_generic.c
-@@ -986,6 +986,7 @@ struct Qdisc *qdisc_alloc(struct netdev_queue *dev_queue,
- 	sch->enqueue = ops->enqueue;
- 	sch->dequeue = ops->dequeue;
- 	sch->dev_queue = dev_queue;
-+	sch->owner = -1;
- 	netdev_hold(dev, &sch->dev_tracker, GFP_KERNEL);
- 	refcount_set(&sch->refcnt, 1);
++static int nft_setelem_active_next(const struct net *net,
++				   const struct nft_set *set,
++				   struct nft_set_elem *elem)
++{
++	const struct nft_set_ext *ext = nft_set_elem_ext(set, elem->priv);
++	u8 genmask = nft_genmask_next(net);
++
++	return nft_set_elem_active(ext, genmask);
++}
++
+ static void nft_setelem_data_activate(const struct net *net,
+ 				      const struct nft_set *set,
+ 				      struct nft_set_elem *elem)
+@@ -10233,8 +10243,10 @@ static int __nf_tables_abort(struct net *net, enum nfnl_abort_action action)
+ 		case NFT_MSG_DELSETELEM:
+ 			te = (struct nft_trans_elem *)trans->data;
+ 
+-			nft_setelem_data_activate(net, te->set, &te->elem);
+-			nft_setelem_activate(net, te->set, &te->elem);
++			if (!nft_setelem_active_next(net, te->set, &te->elem)) {
++				nft_setelem_data_activate(net, te->set, &te->elem);
++				nft_setelem_activate(net, te->set, &te->elem);
++			}
+ 			if (!nft_setelem_is_catchall(te->set, &te->elem))
+ 				te->set->ndeact--;
  
 -- 
 2.53.0
