@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793212761;
-	b=3zSgxPw+/rxnu0LRzngSCRfZj+qAj4sWUqK89/Cc3kL6yhm6bRgqJ9C3trWc2jgV78Zb
-	 g4p+0PdBKYFvCmz8u+DHj5//2vLTXBGyRLzukC2v3M6BziUwODciQfPD+XE2HOLFn+QhF
-	 ZY9HANuHGf62wa+7kOhFwRv/pJ6wL8lgBnAOIR8qCdwQJDSQ7c0i1SrIfAPTGfdpGDK7i
-	 cASxvRuj/Xl2i/uosD5z5whDUD0Jj2bo5s9X6bmxk3yDVHL+10Msn/YOVNNoCHK1dyv8F
-	 h5I8WIYpj9II9UNFE17oE1o9QqSGvcMZw6ALCT+vmqRm6fdonBx6//085JOyp/gqE+g==
+	t=1793212763;
+	b=W4ndnQWyZNBT/86RAv5m5Z8XRcRF5BU4Pn6l+Sh/LC/UAs28D3qi6ojutUI7kKneJQ3u
+	 GohtOJcfsvKCRo+VxIq/lTYLE/a+qZTTCBIuIn2a8ZFcSg3z2NKoU5pF4a/Ml6eddRKCq
+	 Q63aV+up73ntpAMgIBUPbtP+Jj1e8M/odT/P3ffsbZxj+bYO5aE3spNfSpRXNCp/OEQgF
+	 yEk50CsGCVOObF+uS5gUnmNRt2Bdmj5528iaTR3t/KMa59hkBCVfPwZ/D7oAOPghgxktI
+	 Epx052RDrsdsV5I9NJ5aDrsR+KS8uQCwEBt7JijdIQ4VQ5nCoQpAU7AqLSZKJo/YRgQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793212761;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793212763;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=yUbZ8C8t5+As7OOcT9AMVPJvf9dBXZiWRtoWcQ6M8Hk=;
-	b=sjlxyNmkaHmNl5eJoYNvbv7iPrPo6AeX5YSQjpJu7Mz2RppdX7y1q6E4A+CSiFv5TXIo
-	 6sFgimC8hDy4IbS6T3OU4Zpr0NDedrW+Nq1MZqRb9Yz6ENjdprz8vYznNqwpZMN/oBody
-	 3gnJzjUHimIcD1vjDr1/hUulohOQQuaBT3CJoMSf100EGoAc86SIzhsuMnrRuCtdoUlW+
-	 9NFOXmXRzjMLPIV1mJc99wWwDX5GXyLaoRw+GfqLjtP2R2PhpbB2D3mv5Icq/Gunno829
-	 p+lTnnDnvbg7F+8wkKDR5SvGBPBrdjTdwhjrQehka2C4VmQm3fxykT9vaTfq7KhrGZg==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=dNENxy8kF/LFCUDyHFGygK6zahjVAGy9e8d2xczEH0E=;
+	b=v/HLGQZ/RhZoqyGhqKK0gxjHjE1WQicDwwcCOiS7qr+spn7iNoiPcXA1W81KJfZ9zXWG
+	 2zd1BBmGmdXlyPv5rcrCCe18Jn5PsQ58JPl3/m04VJnjKQ44LQUOLrUvTWoGJGbdpClb1
+	 6mT4sphpzA7pmheTmOMYudaCNiygVHGBcaIkHEl04Rm1S52S6zr2PFWj83zqCYXjVeod+
+	 +tp9I8cppL0qZRNuJn49Usr4BoP+5nuNm9fzp6JG8P0sR0O/7pH1Bf4rqOa5quTiPX62U
+	 X9rxcS+N7OiosL6ms0FE5MpxxZlk0nGzug3CfUPeCSZQvm0sU5T+ZzaDCBJSQYf53sg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RAQmclCE;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ppvxurHp;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B85CA606A31C;
-	Wed, 28 Oct 2026 18:39:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9507E606A31C;
+	Wed, 28 Oct 2026 18:39:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RAQmclCE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 157181F01825;
-	Wed, 28 Oct 2026 18:39:19 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ppvxurHp
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E421B1F01825;
+	Wed, 28 Oct 2026 18:39:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793212760;
-	bh=yUbZ8C8t5+As7OOcT9AMVPJvf9dBXZiWRtoWcQ6M8Hk=;
+	s=korg; t=1793212763;
+	bh=dNENxy8kF/LFCUDyHFGygK6zahjVAGy9e8d2xczEH0E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RAQmclCEPybbf2kFXxo9Z+vVypCWIUsMcextisxNTiKFf0dlLXhXOn5LVmPdXna/O
-	 oxgg6Fp+3E64BGxqlSIBrgVSMPTy4Hush5ijYtqVWkVShu6bXhLd7JSfJbiH61SUQ4
-	 6qw1EsgpavbnVt62QkDc2SapDT2ixW4ihuqzd8gI=
+	b=ppvxurHp/Zb7WfFeyspyHsUCVMTX7kOg4Ops3yxcL8AwhF3iLfFbBt5oftmKpq6w5
+	 kGO5Bkz1E+0fvv9GG8vJ4iULzbK9RJEAszFZe8pR7fMwU51flnhqj63hXkg4Tx+By2
+	 L0x5W6hAQUMuqTgGNqXjnbSAN4ZNOuf9yJ5bWzhs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikola Prica <nikola.prica@amd.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Gerd Bayer <gbayer@linux.ibm.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0250/1887] PCI: Accept AtomicOps already enabled by the hypervisor
-Date: Wed, 28 Oct 2026 17:39:06 +0100
-Message-ID: <20261028170504.920665495@linuxfoundation.org>
+	syzbot+e5e28c3e953b2eebb16e@syzkaller.appspotmail.com,
+	Alan Stern <stern@rowland.harvard.edu>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.1 0268/1887] USB: serial: fix port tear down use-after-free
+Date: Wed, 28 Oct 2026 17:39:24 +0100
+Message-ID: <20261028170505.328561443@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -64,76 +62,61 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nikola Prica <nikola.prica@amd.com>
+From: Johan Hovold <johan@kernel.org>
 
-[ Upstream commit 40cce45b921f7930886bcba43069edc579725457 ]
+commit 33c920f7c5952dfc42d1b8ea6efe16b1f0bb0c5b upstream.
 
-pci_enable_atomic_ops_to_root() currently fails when no Root Port is
-visible. That is common in passthrough guests (ESXi, Hyper-V): the Endpoint
-is assigned to the VM, but the Root Port above it is not visible in the
-guest topology.
+Some drivers for multiport devices access port driver data from
+completion handlers of shared URBs submitted at attach() or first open()
+and stopped at disconnect() or last close(), respectively.
 
-In those setups the hypervisor may already have enabled AtomicOp Requester
-Enable on the device. If PCI_EXP_DEVCTL2_ATOMIC_REQ is set, treat AtomicOps
-as already enabled and return success instead of failing the Root Port
-walk.
+A simple NULL check before accessing the driver data makes sure that a
+port state container has at least been allocated, but a completion
+handler can still race with port tear down.
 
-After 1ae8c4ce1570 ("PCI: Enable AtomicOps only if Root Port supports
-them"), pci_enable_atomic_ops_to_root() always returns failure if the Root
-Port is not visible, so drivers don't use atomics when they could.  On
-systems where the Root Port is not visible but *does* support AtomicOps,
-this is a regression: prior to 1ae8c4ce1570, it enabled AtomicOps in the
-endpoint and returned success.
+Reorder the disconnect handling so that ports are not deregistered (and
+their driver data freed) until after all ports have been hung up and the
+driver disconnect() callback has run so that all I/O has been stopped.
 
-Fixes: 1ae8c4ce1570 ("PCI: Enable AtomicOps only if Root Port supports them")
-Signed-off-by: Nikola Prica <nikola.prica@amd.com>
-[bhelgaas: commit log, code comment]
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Tested-by: Gerd Bayer <gbayer@linux.ibm.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Reviewed-by: Gerd Bayer <gbayer@linux.ibm.com>
-Link: https://patch.msgid.link/20260921111903.978687-1-nikprica@amd.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 2d93148ab698 ("USB: serial: fix lifetime and locking problems")
+Reported-by: syzbot+e5e28c3e953b2eebb16e@syzkaller.appspotmail.com
+Link: https://lore.kernel.org/all/6a7e6fb9.ec5dc6cc.21cb3f.00c0.GAE@google.com/
+Cc: stable@vger.kernel.org	# 2.6.30
+Cc: Alan Stern <stern@rowland.harvard.edu>
+Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/pci.c | 15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+ drivers/usb/serial/usb-serial.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pci/pci.c b/drivers/pci/pci.c
-index b0d4c3bc205bf..6e861dd4020cb 100644
---- a/drivers/pci/pci.c
-+++ b/drivers/pci/pci.c
-@@ -3822,8 +3822,21 @@ int pci_enable_atomic_ops_to_root(struct pci_dev *dev, u32 cap_mask)
+--- a/drivers/usb/serial/usb-serial.c
++++ b/drivers/usb/serial/usb-serial.c
+@@ -1194,12 +1194,17 @@ static void usb_serial_disconnect(struct
+ 		usb_serial_port_poison_urbs(port);
+ 		wake_up_interruptible(&port->port.delta_msr_wait);
+ 		cancel_work_sync(&port->work);
+-		if (device_is_registered(&port->dev))
+-			device_del(&port->dev);
  	}
++
+ 	if (serial->type->disconnect)
+ 		serial->type->disconnect(serial);
  
- 	root = pcie_find_root_port(dev);
--	if (!root)
-+	if (!root) {
-+
-+		/*
-+		 * A hypervisor may expose a topology with the root port
-+		 * not visible to the guest.  If the hypervisor has already
-+		 * set AtomicOp Requester Enable in the endpoint, we assume
-+		 * it has verified support in the root port, so it is safe
-+		 * for the driver to use AtomicOps.
-+		 */
-+		pcie_capability_read_dword(dev, PCI_EXP_DEVCTL2, &ctl2);
-+		if (ctl2 & PCI_EXP_DEVCTL2_ATOMIC_REQ)
-+			return 0;
-+
- 		return -EINVAL;
++	for (i = 0; i < serial->num_ports; ++i) {
++		port = serial->port[i];
++		if (device_is_registered(&port->dev))
++			device_del(&port->dev);
 +	}
++
+ 	release_sibling(serial, interface);
  
- 	pcie_capability_read_dword(root, PCI_EXP_DEVCAP2, &cap);
- 	if ((cap & cap_mask) != cap_mask)
--- 
-2.53.0
-
+ 	/* let the last holder of this object cause it to be cleaned up */
 
 
