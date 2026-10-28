@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793211630;
-	b=ZhO1XyblRmKxSVlTgPbpNXSXnn3DlgwgPBjjlwEN+ycLs7rMQQigvkXnZ6tjqVNCnEsg
-	 HLxkbFx4GuAa8hEIBJyNEe8jDAc4kVy5EuKTz5tGuOlo1WxFH+rq67AYZOkz/dDEArzc4
-	 DkejaIgKyN2yLkrLzQs3dQSWkxxPgrU7v9PJCVkDybW7JnqZiPKxE6prahQZKkiSj0u0W
-	 YChccaJvMc1k78w8lupD8NRbEree9gaGBPsx+o52dO1KJgaAZ1gpD7fuJFib2LjnfuLEw
-	 5ohgPZ7v+HSX3mUU8ZLetiRT7aJBViIOHYQ60AWdeWnEDKRtft2Z5Blvf1lnVFuvIBw==
+	t=1793211633;
+	b=Z3bmQv8InVV5k4SvyMCw5Spbz3XPSpbShetUcv0LGx8U66axHF/YZ++WKb60+sQpcHEw
+	 8B9vTarcxk6ErosyuMLp+JZ7LNTHgZfG56c50tPsa8HPXnv+q1RhSaHfS5y9Wb2FlW2Jg
+	 ipIsFNE1TduBO3wHjcTQwQ0lTWmUlaBOqnKExfjFa/j3UXCve4FLjKwU9Ig/hKd6ylYek
+	 jbG/u50kzgKu1du7fZTTDrYG1h+DQ85FToZ8xVHckMMShbTB1NfJVyF3YGCI/KFS0HW+o
+	 pEiZnSa8pjWav6IJMXmWMhLxxKW3819zKp2GGUQ5dJonBlMahIpyQjJrVxb9GPARFNA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793211630;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793211633;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=j/IUFtU3p8cKthyxzb0/zO5j9ciB4Fg9MN2y6i2MTCo=;
-	b=GCeYFpXNKQhVVjFkVbaCspulC2XOUEF6JyGHAtI695rjyeFZlV3cKjbGRCDH6Sn9UkDF
-	 cuYwcok3PnglNlBop0vaqV9KJddtKiSc2hzW2OFmyt2dlcGA/6S2m1NrstKsPYGramMB2
-	 YM1kogsCzOYnkv7AMSaQD6HEC+uUGfAGJQphawfMWwB/KkB9NPZ7CkhCfbWlmZB0BFj5u
-	 vqDVLlMxHuwJRAAYXjGctoxXfuc1G29nFHk/tNX1yIsTQN6nb6A13hdZMOfgO0dsxq/mf
-	 5HsLHWBO0Y0yoM4ZkdE+W3l0NDAK0q7jy8pe12rzGaOvlykRUQwpiiqKwTQn5k0nHlA==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=4pc852fczPqjKml7tfjnzOk4Z1QpaWq4OrgQ8VTM3f4=;
+	b=GQGFfsHkMdP4xRkGjif6nIp0ZHCj8GQJ8yon7AHlGwycqV/z2gFXP+Xe5qOUaEor0Gc3
+	 doMhF4yqBNKagJnTo6ieyACqbBbor0rOeXImHlN/MM5GklxkTUB5w1PlBxRbqF4k7INPH
+	 z1nRKeZm4shZDeqcpPZ024hSl3rPCis8BuIwbU6ijEncR4FJt+F3DO7yO7EbVzXaFyqp2
+	 38EoYROKXjh7eS0JUG6TM6k9SzAaIcNcg/fkd907aAE0YEwOy9siMK7MJeiAUdL/oP0PL
+	 4mygQJYlmSNZwCGOAl5AvLPu52OC2gPmHMVtnxNuMY45OucBNFNFiL7dnpG8aerUNYg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yYJSmYTn;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OvQ0rA8l;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D01BE606A31A;
-	Wed, 28 Oct 2026 18:20:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2FC3606A31A;
+	Wed, 28 Oct 2026 18:20:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yYJSmYTn
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D0B31F01825;
-	Wed, 28 Oct 2026 18:20:29 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OvQ0rA8l
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 077931F01825;
+	Wed, 28 Oct 2026 18:20:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793211629;
-	bh=j/IUFtU3p8cKthyxzb0/zO5j9ciB4Fg9MN2y6i2MTCo=;
+	s=korg; t=1793211632;
+	bh=4pc852fczPqjKml7tfjnzOk4Z1QpaWq4OrgQ8VTM3f4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yYJSmYTnY/iCNLkHQ3zroHgN/scuAWo6c+b+pq/RyeUsz8MAL50xs3NiEvJo22hfm
-	 Fwxh9prrAaQWi/gKBIoFSlF8jGUAagsn3I+5GpbkgsFHEoLrM6GJgsSUbfw2TSaIvD
-	 DMNt+NOD6ECBK9ikHYZwlUX+B7gd3msctWUiUh9Q=
+	b=OvQ0rA8lqvPgtTL5/saBN0UVqxqYyVdDB6VyBN6hek9oRJHfVDubfxIU9kDHE/6k7
+	 mp2d3G3gu2Ruv1u5zv1RCweicHuX59IfA2csXM7/P96cNblxuInBoHcyjR2OPPH/pP
+	 aLYM4mPaQTev6TmH2C1nxqPaGnfHBq/IMBeqvqww=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ahmed Abdelhaleem Ahmed <ahmedhal@gmail.com>,
-	Laurence Oberman <loberman@redhat.com>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Tom St Denis <tom.stdenis@amd.com>,
+	Vitaly Prosyak <vitaly.prosyak@amd.com>,
+	Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 444/571] scsi: ch: Do not keep references to data transfer element devices
-Date: Wed, 28 Oct 2026 17:59:51 +0100
-Message-ID: <20261028170018.561404781@linuxfoundation.org>
+Subject: [PATCH 5.15 445/571] drm/amdgpu: copy debugfs register data outside the GRBM/SRBM locks
+Date: Wed, 28 Oct 2026 17:59:52 +0100
+Message-ID: <20261028170018.584897721@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -63,129 +65,150 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ahmed Abdelhaleem Ahmed <ahmedhal@gmail.com>
+From: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
 
-[ Upstream commit 27c0f718d3b3c99e6d315308e95d987d0382a8a8 ]
+[ Upstream commit 16c64495859f13f75602f439588883f2a4a4d6a6 ]
 
-ch_readconfig() looks up the scsi_device of every data transfer element
-whose SCSI id the changer reports in READ ELEMENT STATUS, and stores it in
-ch->dt[]. scsi_device_lookup() takes a reference, and nothing ever drops
-it: ch_destroy() frees the array with kfree(). ch->dt[] is read nowhere
-else - it only supplies the vendor, model and revision printed in the same
-loop.
+Reading or writing a register through the amdgpu_regs2 debugfs file
+with GRBM bank selection, which umr does for every banked access (a
+single "umr -b x x x -r <reg>" is enough, as is the wave dump with
+"-O halt_waves"), makes lockdep report a circular locking dependency,
+after which lockdep stays off until reboot:
 
-Once such a drive is removed, its scsi_device can never be released. It
-stays on the host's device list at its address, so a new device there is
-refused by anything that walks the list - target_core_pscsi reports
-"scsi_device_get() failed for H:C:T:L" - and the low-level driver's module
-can no longer be unloaded. Only a reboot recovers.
+  WARNING: possible circular locking dependency detected
+  umr/63306 is trying to acquire lock:
+  ffff8882cf4b8350 (&mm->mmap_lock){++++}-{4:4}, at: __might_fault+0x9b/0x140
+  but task is already holding lock:
+  ffff8881aec010d0 (&amdgpu_grbm_lock_key){+.+.}-{4:4}, at: amdgpu_debugfs_regs2_op.isra.0+0x20d/0xd00 [amdgpu]
+  ...
+  Chain exists of:
+    &mm->mmap_lock --> &amdgpu_srbm_lock_key --> &amdgpu_grbm_lock_key
+  ...
+   __might_fault+0xc5/0x140
+   amdgpu_debugfs_regs2_op.isra.0+0x441/0xd00 [amdgpu]
+   full_proxy_write+0x10e/0x1d0
+   vfs_write+0x1d0/0xf50
+   ksys_write+0x116/0x250
 
-It shows with any changer that reports its drives' ids; with the mhvtl
-virtual library (IBM 3573-TL personality), each create and remove of a
-library with four drives leaves four references behind, counted by the
-module's use count in lsmod. With ch not bound the count is unchanged, and
-with this patch applied it is unchanged too.
+amdgpu_debugfs_regs2_op() and amdgpu_debugfs_process_reg_op() call
+get_user()/put_user() for every dword while holding grbm_idx_mutex or
+srbm_mutex, and pm.mutex if requested, so a fault there takes mmap_lock
+inside those locks. The lock hierarchy in amdgpu_lockdep.c puts
+srbm_mutex and grbm_idx_mutex below notifier_lock, which
+amdgpu_cs_submit() takes with the BO reservations held, and
+dma_resv_lockdep() orders the reservations inside mmap_lock. So
+mmap_lock is outside grbm_idx_mutex and srbm_mutex, and these two
+debugfs paths nest it the other way round. The copies under the locks
+are as old as the bank selection in both files; commit 1d0f5838b126
+("drm/amdgpu: Add lockdep annotations for lock ordering validation")
+only made them visible to lockdep.
 
-Drop the reference as soon as the name has been printed, and remove the now
-unused dt[] array. That also removes the array leaked when ch_probe() fails
-after ch_readconfig().
+Copy the user buffer in before any of the locks is taken and the result
+out after all of them are dropped, as amdgpu_debugfs_wave_read(),
+amdgpu_debugfs_gpr_read() and amdgpu_debugfs_gprwave_read() already do.
+The buffer is sized by the count passed to read() or write(), so an
+access larger than PAGE_SIZE is now rejected with -EINVAL; umr reads and
+writes one register at a time. A fault on the user buffer of a write now
+fails with -EFAULT before any register is written, instead of after a
+partial write.
 
-The same leak was reported with an RFC patch in 2022, which was not merged.
-
-Fixes: daa6eda65a53 ("[SCSI] add scsi changer driver")
+Fixes: 566281595037 ("drm/amd/amdgpu: Add bank selection for MMIO debugfs (v3)")
+Fixes: 37df9560cd3e ("drm/amd/amdgpu: New debugfs interface for MMIO registers (v5)")
+Acked-by: Christian König <christian.koenig@amd.com>
+Acked-by: Tom St Denis <tom.stdenis@amd.com>
+Reviewed-by: Vitaly Prosyak <vitaly.prosyak@amd.com>
+Signed-off-by: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit ccf9e35ed6811f2c25ba6368e7dc6481da17159d)
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/linux-scsi/20220719075442.6215-1-yanghao_ht@163.com/
-Signed-off-by: Ahmed Abdelhaleem Ahmed <ahmedhal@gmail.com>
-Reviewed-by: Laurence Oberman <loberman@redhat.com>
-Fixes: daa6eda65a53 ("[SCSI] add scsi changer driver")
-Link: https://patch.msgid.link/20260929-ch-dt-leak-v2-1-ddda8d635dca@gmail.com
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
-[ sashal: Adapted the allocation-removal hunk for kcalloc() instead of kzalloc_objs(). ]
+[ sashal: omitted changes to the absent amdgpu_debugfs_regs2_op() function. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/ch.c | 30 +++++++++---------------------
- 1 file changed, 9 insertions(+), 21 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c | 39 ++++++++++++---------
+ 1 file changed, 23 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/scsi/ch.c b/drivers/scsi/ch.c
-index 27012908b5861..c1f714664bfc5 100644
---- a/drivers/scsi/ch.c
-+++ b/drivers/scsi/ch.c
-@@ -110,7 +110,6 @@ typedef struct {
- 	int                 minor;
- 	char                name[8];
- 	struct scsi_device  *device;
--	struct scsi_device  **dt;        /* ptrs to data transfer elements */
- 	u_int               firsts[CH_TYPES];
- 	u_int               counts[CH_TYPES];
- 	u_int               unit_attention;
-@@ -357,16 +356,10 @@ ch_readconfig(scsi_changer *ch)
- 			vendor_labels[i]);
- 	}
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c
+index 944ecf780781e..01320252e5e04 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c
+@@ -73,6 +73,7 @@ static int  amdgpu_debugfs_process_reg_op(bool read, struct file *f,
+ 	int r;
+ 	bool pm_pg_lock, use_bank, use_ring;
+ 	unsigned instance_bank, sh_bank, se_bank, me, pipe, queue, vmid;
++	u32 *data __free(kfree) = NULL;
  
--	/* look up the devices of the data transfer elements */
--	ch->dt = kcalloc(ch->counts[CHET_DT], sizeof(*ch->dt),
--			 GFP_KERNEL);
--
--	if (!ch->dt) {
--		kfree(buffer);
--		return -ENOMEM;
--	}
--
-+	/* report the devices of the data transfer elements */
- 	for (elem = 0; elem < ch->counts[CHET_DT]; elem++) {
-+		struct scsi_device *sdev;
+ 	pm_pg_lock = use_bank = use_ring = false;
+ 	instance_bank = sh_bank = se_bank = me = pipe = queue = vmid = 0;
+@@ -110,6 +111,20 @@ static int  amdgpu_debugfs_process_reg_op(bool read, struct file *f,
+ 
+ 	*pos &= (1UL << 22) - 1;
+ 
++	if (size > PAGE_SIZE)
++		return -EINVAL;
 +
- 		id  = -1;
- 		lun = 0;
- 		if (elem < CH_DT_MAX  &&  -1 != dt_id[elem]) {
-@@ -382,10 +375,8 @@ ch_readconfig(scsi_changer *ch)
- 			VPRINTK(KERN_INFO, "dt 0x%x: ",elem+ch->firsts[CHET_DT]);
- 			if (data[6] & 0x80) {
- 				VPRINTK(KERN_CONT, "not this SCSI bus\n");
--				ch->dt[elem] = NULL;
- 			} else if (0 == (data[6] & 0x30)) {
- 				VPRINTK(KERN_CONT, "ID/LUN unknown\n");
--				ch->dt[elem] = NULL;
- 			} else {
- 				id  = ch->device->id;
- 				lun = 0;
-@@ -395,18 +386,16 @@ ch_readconfig(scsi_changer *ch)
- 		}
- 		if (-1 != id) {
- 			VPRINTK(KERN_CONT, "ID %i, LUN %i, ",id,lun);
--			ch->dt[elem] =
--				scsi_device_lookup(ch->device->host,
--						   ch->device->channel,
--						   id,lun);
--			if (!ch->dt[elem]) {
-+			sdev = scsi_device_lookup(ch->device->host,
-+						  ch->device->channel,
-+						  id, lun);
-+			if (!sdev) {
- 				/* should not happen */
- 				VPRINTK(KERN_CONT, "Huh? device not found!\n");
- 			} else {
- 				VPRINTK(KERN_CONT, "name: %8.8s %16.16s %4.4s\n",
--					ch->dt[elem]->vendor,
--					ch->dt[elem]->model,
--					ch->dt[elem]->rev);
-+					sdev->vendor, sdev->model, sdev->rev);
-+				scsi_device_put(sdev);
- 			}
- 		}
- 	}
-@@ -570,7 +559,6 @@ static void ch_destroy(struct kref *ref)
- 	scsi_changer *ch = container_of(ref, scsi_changer, ref);
++	/*
++	 * Access the user buffer only while none of the locks below are held:
++	 * a fault takes mmap_lock, and grbm_idx_mutex and srbm_mutex nest
++	 * inside it.
++	 */
++	data = kmalloc(size, GFP_KERNEL);
++	if (!data)
++		return -ENOMEM;
++	if (!read && copy_from_user(data, buf, size))
++		return -EFAULT;
++
+ 	r = pm_runtime_get_sync(adev_to_drm(adev)->dev);
+ 	if (r < 0) {
+ 		pm_runtime_put_autosuspend(adev_to_drm(adev)->dev);
+@@ -142,28 +157,16 @@ static int  amdgpu_debugfs_process_reg_op(bool read, struct file *f,
+ 		mutex_lock(&adev->pm.mutex);
  
- 	ch->device = NULL;
--	kfree(ch->dt);
- 	kfree(ch);
+ 	while (size) {
+-		uint32_t value;
+-
+-		if (read) {
+-			value = RREG32(*pos >> 2);
+-			r = put_user(value, (uint32_t *)buf);
+-		} else {
+-			r = get_user(value, (uint32_t *)buf);
+-			if (!r)
+-				amdgpu_mm_wreg_mmio_rlc(adev, *pos >> 2, value);
+-		}
+-		if (r) {
+-			result = r;
+-			goto end;
+-		}
++		if (read)
++			data[result >> 2] = RREG32(*pos >> 2);
++		else
++			amdgpu_mm_wreg_mmio_rlc(adev, *pos >> 2, data[result >> 2]);
+ 
+ 		result += 4;
+-		buf += 4;
+ 		*pos += 4;
+ 		size -= 4;
+ 	}
+ 
+-end:
+ 	if (use_bank) {
+ 		amdgpu_gfx_select_se_sh(adev, 0xffffffff, 0xffffffff, 0xffffffff);
+ 		mutex_unlock(&adev->grbm_idx_mutex);
+@@ -179,6 +182,10 @@ static int  amdgpu_debugfs_process_reg_op(bool read, struct file *f,
+ 	pm_runtime_put_autosuspend(adev_to_drm(adev)->dev);
+ 
+ 	amdgpu_virt_disable_access_debugfs(adev);
++
++	if (read && copy_to_user(buf, data, result))
++		return -EFAULT;
++
+ 	return result;
  }
  
 -- 
