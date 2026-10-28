@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793212044;
-	b=x8PUJtZBu1a/aneExDVz4Y9d8gAzGha7v6v8r2l9/xsbE7+Gk8VKm5m0dgk1JjtDUzwR
-	 d9iEfwPJb1NLmranpTIE7S7jwYskReSsQnh0XXRrcwMz/sM9NMBBQ/Oxpodd9kcU7nKsv
-	 ztuD/9eMwtJG5t2gx50vWkDXWVWYW0Q/kLqGt0ThhNpG8jWFX7lB9M9TACB9bOs+AnF2/
-	 vL8kv1H+xLqfBZLroHk4B1gGK1xJu6LJQWDK7l2G/IYA+i9thunllqPON2Tf54DVwaMX/
-	 347w5EgTwfjHZeeFue/pybugSbqH5SQw6Us1chQEBpPLZwf1ZYpEj9lVEM3xK1hTViA==
+	t=1793212047;
+	b=FfUFJQwyQGrMwTKamhydkJhmwSAQSh+r5Db6cFHdsCGWNUd8ZhleLWxd68KUn6lSSq8e
+	 QcsjkhCxfEF4+Z4cfU+lCmi7GPAoCKmfyRrB+zlk3xs9lb8pb1+T3i1tXvo2pw67pZbId
+	 SFw8dhtoJlPui7VHc0gIY6B7T+pipZTNbz2puCFd2YRzdchzjFgEbtyvSc7MJVTLHj74r
+	 qhzDMAhZKtg1YFUUAXDhG0zWbF4bX6my2SEDI9SdS4I5BYYIXBgweud/LTW3GUe1ovbcq
+	 kfkL6x3zBf5rgBKncgMLz4E3uK5osS6SICGlLJsVJCey8tDIgu6frQEZJM0x/UspCIg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793212044;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793212047;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ov9fv6CrzHrGZpnS7rUX9LngmYXt8l/poN1xSn72T8w=;
-	b=UxXb/avLWmOFySKVW7xcgCQYX+TUVyJotMjereKpn3SOxAWxpUdu9trQ6OKWp1yEj+IS
-	 y1mzQQziDyeXQ/3StGk3eR5f1QRSm/x7iInlSmmXLBTk3pUSdv3YHeHy4NvRuo6+aRY1x
-	 J+gtN8Qooi1y8pwqrp3I6zHusVQrKORoyY7Wj4mVPOJMyHKOTGoNDTuwUraYZ9knySDGH
-	 0cSmJZXw5O1ttvrl2hx8/7b1QdFJg4G6TQQuy9z4TQY4OUleRWfdcSluReORZoXXJco44
-	 y/YERNITNSTGOBeIosFkxHpqhwrxF47FpnuMNsNU111YHNq4vqMEckmRYeVhcx2i+MA==
+	bh=Dp1YqBiT7bkXqFfqfTKg7JoU/gKU2YoB30HQ4hSSQo4=;
+	b=3TECXgmplOcPMzKzBulv879+qdbqnGe2ZIXa10nHpXYHJ6/1cJvkFtiCuHNhnQEWz99+
+	 hAqhY4HB2MedpvuYvSY89bl4GKYd9CRxITfIaWKTygiSDcnrrQ3cVLyx2eEGNEvQmXS4/
+	 VjuLTxpQwBgO1T81ihbjjWeOKOX6jqKX1z4jwpqI16Qhonbh1OW8cJhL2VcGy4tTYgP0o
+	 yjx3JWzEU44czT+QuKUG7JXy45BeUsJU2e9jtmioq6Xgm2wczdNzP+EQKdXW8YiymqYnK
+	 8jHaOECw10qlKzdOrfpGbcyl7KPphtNW3nYzwQISRS0eROppiTGwZq21BOvKSatVuZw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ONYL1bWJ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KkFG4pv2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A533606A31A;
-	Wed, 28 Oct 2026 18:27:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4E0C606A31A;
+	Wed, 28 Oct 2026 18:27:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ONYL1bWJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 683ED1F01825;
-	Wed, 28 Oct 2026 18:27:23 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KkFG4pv2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 402381F01828;
+	Wed, 28 Oct 2026 18:27:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793212044;
-	bh=ov9fv6CrzHrGZpnS7rUX9LngmYXt8l/poN1xSn72T8w=;
+	s=korg; t=1793212046;
+	bh=Dp1YqBiT7bkXqFfqfTKg7JoU/gKU2YoB30HQ4hSSQo4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ONYL1bWJXkFXVY7XaegOerBTp4Rjs1uaLWn4nkfboWEMGn4/IV4J6VFfJrGJrPqFl
-	 wsBIhYch91XzdMhwK7Jia92Nw8oj/M4nMvrjEzna0mYhb+Z2+0qK4pD6iAEI8UEP2q
-	 jMoqVY76LX3sdUivcWHKHmUAZuauH+0pkydODN8s=
+	b=KkFG4pv2xppYZbCqFFp9QlN7HzcMvzv8V6EhfO0M6i+p1dWdtDecyBe6F6VBcflK9
+	 hZVCJQQvOmtCJ+2xGNAztU4pUQwVJCy6jg7MCPpt7jNQ5pB0zMkY57szpCyGbbU1WJ
+	 BO31qKYaBGCAOWzkSx824wtidzR2UrugnoJAHIF0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Josef Bacik <josef@toxicpanda.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	"Claude Fable 5.1" <noreply@anthropic.com>
-Subject: [PATCH 6.1 0007/1887] io_uring/io-wq: let cancel find picked up hashed work
-Date: Wed, 28 Oct 2026 17:35:03 +0100
-Message-ID: <20261028170459.387159752@linuxfoundation.org>
+Subject: [PATCH 6.1 0008/1887] io_uring/poll: dont lose a cancel as io-wq arms poll
+Date: Wed, 28 Oct 2026 17:35:04 +0100
+Message-ID: <20261028170459.409196408@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -70,99 +70,104 @@ Content-Transfer-Encoding: 8bit
 
 From: Josef Bacik <josef@toxicpanda.com>
 
-Commit e9efeb4fc97b0879512a3c3b995ed448f2487e12 upstream.
+Commit 6d2d4c2530e95ff6ddeb98195d49d99dbca14369 upstream.
 
-io_get_next_work() takes all the work items that share a hash off the
-work list in one go, and the worker runs them one after the other. Only
-the one it is working on is visible as ->cur_work. The others are neither
-on the list nor current, so io_wq_cancel_cb() can't find them.
+A request on a pollable file that was forced to io-wq is issued without
+blocking there. If that ends in -EAGAIN, io_wq_submit_work() arms poll
+for it and returns. It looks at IO_WQ_WORK_CANCEL once, before it issues
+the request.
 
-IORING_OP_ASYNC_CANCEL and IORING_REGISTER_SYNC_CANCEL return -ENOENT for
-a request that has not even been started, e.g. a buffered write queued
-behind another write to the same file that is blocked, and the request is
-carried out. The cancellation done for a task or ring that goes away gets
-there in the end, as it keeps trying, but it has to wait for each item to
-become current.
+Somebody who wants to cancel the request in between finds it running:
 
-Keep a pointer to the remainder of the chain next to ->cur_work, and have
-io_wq_worker_cancel() look at it. The items on it belong to the worker,
-which needs ->lock to move on to the next one. Matching work is flagged
-with IO_WQ_WORK_CANCEL and fails with -ECANCELED when its turn comes. The
-worker isn't signalled for it, that would interrupt the unrelated work it
-is busy with. As the request isn't gone yet, it is reported like running
-work, with -EALREADY.
+  io-wq worker                          io_try_cancel()
+  io_wq_submit_work()
+    IO_WQ_WORK_CANCEL isn't set
+    io_issue_sqe() = -EAGAIN
+                                        io_async_cancel_one()
+                                          sets IO_WQ_WORK_CANCEL
+                                          signals the worker
+                                          = -EALREADY
+                                        io_poll_cancel() = -ENOENT
+                                        ...
+                                        = -ENOENT
+    io_arm_poll_handler() = IO_APOLL_OK
+    return
 
-[ 6.1: ->next_work is the item being picked up here, which
-  io_wq_worker_cancel() checks next to ->cur_work, so the chain
-  remainder is a new ->chain_work, set when the item is picked up as
-  well. work->flags is not atomic here ]
-Fixes: 86f3cd1b589a ("io-wq: handle hashed writes in chains")
+Nobody looks at the flag again, and the signal doesn't matter to a
+worker that doesn't sleep. The request is armed as if nothing had
+happened:
+
+ - a linked timeout completes with -ENOENT, and the request it was
+   meant to limit waits for as long as it takes.
+ - IORING_OP_ASYNC_CANCEL returns -EALREADY, and the request stays.
+ - IORING_REGISTER_SYNC_CANCEL waits for the request to complete if it
+   gets -EALREADY. Since commit 5623eb1ed035 ("io_uring/tctx: add
+   separate lock for list of tctx's in ctx") it doesn't sleep but spins,
+   so its next attempt finds the armed poll.
+
+The same goes for a multishot poll, recv or accept that is armed from
+io-wq.
+
+With a read of an empty pipe, IOSQE_ASYNC, and a linked timeout of 5ms
+or a cancel in the same submission, in a guest that is slow enough (TCG,
+KASAN), the request is lost in 21 of 24 rounds of 40 or 100 attempts.
+
+While it arms poll from io-wq, __io_arm_poll_handler() owns the request.
+Look at the flag once the request is in the hash table. The table is
+searched and the request is added with ->uring_lock held, and the flag is
+set before the search. So either the search finds the request, or it
+came first and the flag is seen. With the request marked as cancelled, the
+task work that is queued, right away or because ownership can't be
+released, fails it with -ECANCELED.
+
+What the canceller is told doesn't change. In this window a linked timeout
+still completes with -ENOENT rather than -ETIME, a cancel request with
+-EALREADY, and one with IORING_ASYNC_CANCEL_ALL or _ANY with a count that
+doesn't include the request. But the request is cancelled, so what is new
+is a request that completes with -ECANCELED after such a result.
+
+This doesn't help in two cases:
+
+ - IORING_ASYNC_CANCEL_ALL and _ANY, if the work is flagged after the
+   test added here, while io-wq still has it as the current work of the
+   worker. io_cancel_cb() stamps it with the sequence of the cancel, so the
+   search of the hash table on behalf of the same cancel takes it for
+   done and skips it.
+ - requests that are parked elsewhere by io-wq, like IORING_OP_FUTEX_WAIT
+   and IORING_OP_WAITID. They have the same problem.
+
+[ 6.1: work->flags is not atomic here, the hash table has its own locks
+  ]
+Fixes: 90fa02883f06 ("io_uring: implement async hybrid mode for pollable requests")
 Assisted-by: LLM
 Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Link: https://patch.msgid.link/20261015-b4-io-uring-fixes-v1-13-c1556f5d7bf5@toxicpanda.com
+Link: https://patch.msgid.link/20261015-b4-io-uring-fixes-v1-14-c1556f5d7bf5@toxicpanda.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Co-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/io-wq.c |   20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
+ io_uring/poll.c |   11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
---- a/io_uring/io-wq.c
-+++ b/io_uring/io-wq.c
-@@ -53,6 +53,8 @@ struct io_worker {
+--- a/io_uring/poll.c
++++ b/io_uring/poll.c
+@@ -652,6 +652,17 @@ static int __io_arm_poll_handler(struct
  
- 	struct io_wq_work *cur_work;
- 	struct io_wq_work *next_work;
-+	/* rest of the hashed chain ->next_work or ->cur_work came with */
-+	struct io_wq_work *chain_work;
- 	raw_spinlock_t lock;
+ 	io_poll_add_hash(req);
  
- 	struct completion ref_done;
-@@ -548,6 +550,9 @@ static void io_assign_current_work(struc
- 	raw_spin_lock(&worker->lock);
- 	worker->cur_work = work;
- 	worker->next_work = NULL;
-+	/* stays valid while in between two items of a chain */
-+	if (work)
-+		worker->chain_work = wq_next_work(work);
- 	raw_spin_unlock(&worker->lock);
- }
- 
-@@ -584,6 +589,7 @@ static void io_worker_handle_work(struct
- 			 */
- 			raw_spin_lock(&worker->lock);
- 			worker->next_work = work;
-+			worker->chain_work = wq_next_work(work);
- 			raw_spin_unlock(&worker->lock);
- 		} else {
- 			break;
-@@ -1073,6 +1079,7 @@ static bool __io_wq_worker_cancel(struct
- static bool io_wq_worker_cancel(struct io_worker *worker, void *data)
- {
- 	struct io_cb_cancel_data *match = data;
-+	struct io_wq_work *work;
- 
- 	/*
- 	 * Hold the lock to avoid ->cur_work going out of scope, caller
-@@ -1082,6 +1089,19 @@ static bool io_wq_worker_cancel(struct i
- 	if (__io_wq_worker_cancel(worker, match, worker->cur_work) ||
- 	    __io_wq_worker_cancel(worker, match, worker->next_work))
- 		match->nr_running++;
 +	/*
-+	 * Hashed work is taken off the work list a chain at a time, what the
-+	 * worker hasn't started yet can only be found here. It doesn't move on
-+	 * without the lock. Just mark the work, it fails once it is its turn.
++	 * Whoever tried to cancel the request while io-wq was running it has
++	 * flagged the work item. If it searched the hash table before the
++	 * request got there it found nothing, and it won't come back. Both
++	 * the search and the insertion are done with the hash bucket lock
++	 * held, and the flag is set before the search. If the search came
++	 * first, the flag is visible by now.
 +	 */
-+	for (work = worker->chain_work; work; work = wq_next_work(work)) {
-+		if (match->nr_running && !match->cancel_all)
-+			break;
-+		if (match->fn(work, match->data)) {
-+			work->flags |= IO_WQ_WORK_CANCEL;
-+			match->nr_running++;
-+		}
-+	}
- 	raw_spin_unlock(&worker->lock);
- 
- 	return match->nr_running && !match->cancel_all;
++	if (ipt->owning && (req->work.flags & IO_WQ_WORK_CANCEL))
++		io_poll_mark_cancelled(req);
++
+ 	if (mask && (poll->events & EPOLLET) &&
+ 	    io_poll_can_finish_inline(req, ipt)) {
+ 		__io_poll_execute(req, mask);
 
 
