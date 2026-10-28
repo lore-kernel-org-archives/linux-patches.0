@@ -1,54 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214621;
-	b=EUsN7Ml+tKjWjbGyqnWyyJqzqEm5cqU/+HDav8JoKs09KK76h8OaZcP5QnjsbnBT20Cm
-	 EgB8leWgZdSddmOc1HDAcxLYxKMOqyd2t+l5cHu61QhRNVNv1ZJPHU4rHuiCmSQ0+YY6w
-	 bH0i2S8yOCyqAK2wXtuT4ucLjkgjG/XFN6X3rbOJy4Bv6M7VygKc1eFlrQ1LUE0szveVs
-	 3yOEBRD0J2M+yL4Nr1v1EYHC87CFWtN/Ro45TEopXDdI31Bc0GomTN05J+ZY9cCJLlGGJ
-	 eEfjR8Nh667+lhrZCvQgWJC15EebvKabd6F06wQe+LPdw9IQeUoj7JIdSS+xo4utFBQ==
+	t=1793214624;
+	b=Vgs8kHeZyGcaERYyPrlO1oDRBlPySgV+syTWx+jYKFUoBJa01FFiRCCsctxrdzeQcXmT
+	 PukVQeDI9AiGTwNvPuP/stOr56clD1yQ1wh/GbGUWxcXHvj6GOtjS3RXPvKrZULkx0eR4
+	 jqpyotxMWS7zG4b0x7V5icn3nWJDx3932bRcWYJAmP65rJNF9VIt3sPRfKKJbSpK5zYYX
+	 3ddlbd+oL4ZZROrnMED8klwngYA22/ZUEPKTTIza0V3J192xBrlBHMfxBzbgUVDQN6HM9
+	 N0Cr/fFBeB9czcOj87/NBraa86oFUCV+HLwTPa0sqfitBUcrKbAZHiUUei3yBe01YoQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214621;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214624;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=4mUZUhRObitl6a8Ox24eo0f83bM3aHK7ZB+nqtL4N6o=;
-	b=jUB4x8eINC0a7dvyCnOr5g6dwsLa5t0xO42NnWDhNi4RmO8TuFZF3v8Eqsn6Nm4NCafv
-	 dSOeh47JdJBhYCPiaRyG2QuTCEoliY3jdUP67iWbOW7dzdnHpXcTw9+ECHmSqwlbmbNE7
-	 JYMwo+Diz02YGBzwSIURQZ4ySEkSdpUbgKsHRfmuHsAMv5ctNtHbM3FH74W+3EqCJBG+A
-	 MueqhSsssUnf9gZgm2zutfSKs94gU4fu+KPnKXcVZ+WcX5xKLJne+khJktsw24td+39nQ
-	 tNUvgfDIxEZzSz4D/moeBD/6f5N/i/DJHMqe55E29+0qcgqz+FntKS7Uu7lgaQaF7pw==
+	bh=YKAP8jfGrEVha2Sxib+EmlW7GQUi0Vn1cn2BlTl7efw=;
+	b=UElgxKtoFoO7yBP9AerQHApRF629dFx+ZtdXl5BGqUONj9f57kdj89p6Q26IriwUTsOB
+	 CiFb/LTD6uy7gLwpn80wC9Exn9xocpvgcEXvhi2S9wc8H97Jw34X9LclPv0hUp4QrhLLg
+	 Z1Gw8y6BhIeZPpB3x/A7qjuMxhnb+ZsAOdxeDSeyoeww2z0FFmcXRGRkXqLkc5fqHpnjW
+	 ++xmIIEB6IOp4Ts2nkN2azZVV6PrA3HgmIRmEiAoXgSTjqz+7YLvi/3EgfF5kmlblzjfc
+	 Pmn5wJqBrRg6XiG/uO+B0QweiT3M6oVZK0moCAvFBjGJyvVdp/tbUPM/6qky21j3gCg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MxF7rpbh;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Wi5ubBX3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3051260A2605;
-	Wed, 28 Oct 2026 19:10:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11716606AB28;
+	Wed, 28 Oct 2026 19:10:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MxF7rpbh
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8535F1F01825;
-	Wed, 28 Oct 2026 19:10:20 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Wi5ubBX3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55F931F01825;
+	Wed, 28 Oct 2026 19:10:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214621;
-	bh=4mUZUhRObitl6a8Ox24eo0f83bM3aHK7ZB+nqtL4N6o=;
+	s=korg; t=1793214623;
+	bh=YKAP8jfGrEVha2Sxib+EmlW7GQUi0Vn1cn2BlTl7efw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MxF7rpbhdMmXCQiz7IIO04UXnHzGKCYmHJbZbMgcgks7jlT+guEQ7YpEbsUGq1LYj
-	 EiImaKA3gecg4a5bQOFFQuPXHu+jYqFmezwf5K3W4F7lFEZzcif3jE5OEkCgeugkCr
-	 /CbnladFJEprXkx93q6nvmtz4t1i8cQgB8MMPN9U=
+	b=Wi5ubBX38yBCIC79LzJdZe6GV77pR5FoV8rDhIxukPriw/DERW1hTm3HmU0gV78yo
+	 oxG6dmGyuJ7T+CZDs3wq3+hM/Nb8eTN8bFn9XXrcsiyhhgy9G1J9xanPlrV4Acrk5a
+	 ZfsSLShYeGaR1UPj5ut5Lc4OjRr1xPhYLGKHdsHI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jie Zhang <jie.zhang@oss.qualcomm.com>,
-	Akhil P Oommen <akhilpo@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Rob Clark <robin.clark@oss.qualcomm.com>,
+	syzbot+179fc225724092b8b2b2@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
+	David Ahern <dsahern@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0923/1887] drm/msm: Recover HW before retire hung submit
-Date: Wed, 28 Oct 2026 17:50:19 +0100
-Message-ID: <20261028170520.419476912@linuxfoundation.org>
+Subject: [PATCH 6.1 0924/1887] dst: fix races in rt6_uncached_list_del() and rt_del_uncached_list()
+Date: Wed, 28 Oct 2026 17:50:20 +0100
+Message-ID: <20261028170520.443735289@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -70,48 +71,277 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jie Zhang <jie.zhang@oss.qualcomm.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit b303e1d52811de7d1bcf793560754d4df68d4a1c ]
+[ Upstream commit 9a6f0c4d5796ab89b5a28a890ce542344d58bd69 ]
 
-During recovery, it is not safe to retire the hung submit before we
-recover the GPU. Retiring the submit triggers BO free and that can
-result in GPU pagefaults since the GPU may be actively accessing those
-BOs.
+syzbot was able to crash the kernel in rt6_uncached_list_flush_dev()
+in an interesting way [1]
 
-To fix this, retire the submits after gpu recovery is complete in
-recover_worker().
+Crash happens in list_del_init()/INIT_LIST_HEAD() while writing
+list->prev, while the prior write on list->next went well.
 
-Fixes: 1a370be9ac51 ("drm/msm: restart queued submits after hang")
-Signed-off-by: Jie Zhang <jie.zhang@oss.qualcomm.com>
-Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
-Acked-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/730655/
-Message-ID: <20260605-assorted-fixes-june-v1-2-2caa04f7287c@oss.qualcomm.com>
-Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
+static inline void INIT_LIST_HEAD(struct list_head *list)
+{
+	WRITE_ONCE(list->next, list); // This went well
+	WRITE_ONCE(list->prev, list); // Crash, @list has been freed.
+}
+
+Issue here is that rt6_uncached_list_del() did not attempt to lock
+ul->lock, as list_empty(&rt->dst.rt_uncached) returned
+true because the WRITE_ONCE(list->next, list) happened on the other CPU.
+
+We might use list_del_init_careful() and list_empty_careful(),
+or make sure rt6_uncached_list_del() always grabs the spinlock
+whenever rt->dst.rt_uncached_list has been set.
+
+A similar fix is neeed for IPv4.
+
+[1]
+
+ BUG: KASAN: slab-use-after-free in INIT_LIST_HEAD include/linux/list.h:46 [inline]
+ BUG: KASAN: slab-use-after-free in list_del_init include/linux/list.h:296 [inline]
+ BUG: KASAN: slab-use-after-free in rt6_uncached_list_flush_dev net/ipv6/route.c:191 [inline]
+ BUG: KASAN: slab-use-after-free in rt6_disable_ip+0x633/0x730 net/ipv6/route.c:5020
+Write of size 8 at addr ffff8880294cfa78 by task kworker/u8:14/3450
+
+CPU: 0 UID: 0 PID: 3450 Comm: kworker/u8:14 Tainted: G             L      syzkaller #0 PREEMPT_{RT,(full)}
+Tainted: [L]=SOFTLOCKUP
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/25/2025
+Workqueue: netns cleanup_net
+Call Trace:
+ <TASK>
+  dump_stack_lvl+0xe8/0x150 lib/dump_stack.c:120
+  print_address_description mm/kasan/report.c:378 [inline]
+  print_report+0xca/0x240 mm/kasan/report.c:482
+  kasan_report+0x118/0x150 mm/kasan/report.c:595
+  INIT_LIST_HEAD include/linux/list.h:46 [inline]
+  list_del_init include/linux/list.h:296 [inline]
+  rt6_uncached_list_flush_dev net/ipv6/route.c:191 [inline]
+  rt6_disable_ip+0x633/0x730 net/ipv6/route.c:5020
+  addrconf_ifdown+0x143/0x18a0 net/ipv6/addrconf.c:3853
+ addrconf_notify+0x1bc/0x1050 net/ipv6/addrconf.c:-1
+  notifier_call_chain+0x19d/0x3a0 kernel/notifier.c:85
+  call_netdevice_notifiers_extack net/core/dev.c:2268 [inline]
+  call_netdevice_notifiers net/core/dev.c:2282 [inline]
+  netif_close_many+0x29c/0x410 net/core/dev.c:1785
+  unregister_netdevice_many_notify+0xb50/0x2330 net/core/dev.c:12353
+  ops_exit_rtnl_list net/core/net_namespace.c:187 [inline]
+  ops_undo_list+0x3dc/0x990 net/core/net_namespace.c:248
+  cleanup_net+0x4de/0x7b0 net/core/net_namespace.c:696
+  process_one_work kernel/workqueue.c:3257 [inline]
+  process_scheduled_works+0xad1/0x1770 kernel/workqueue.c:3340
+  worker_thread+0x8a0/0xda0 kernel/workqueue.c:3421
+  kthread+0x711/0x8a0 kernel/kthread.c:463
+  ret_from_fork+0x510/0xa50 arch/x86/kernel/process.c:158
+  ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:246
+ </TASK>
+
+Allocated by task 803:
+  kasan_save_stack mm/kasan/common.c:57 [inline]
+  kasan_save_track+0x3e/0x80 mm/kasan/common.c:78
+  unpoison_slab_object mm/kasan/common.c:340 [inline]
+  __kasan_slab_alloc+0x6c/0x80 mm/kasan/common.c:366
+  kasan_slab_alloc include/linux/kasan.h:253 [inline]
+  slab_post_alloc_hook mm/slub.c:4953 [inline]
+  slab_alloc_node mm/slub.c:5263 [inline]
+  kmem_cache_alloc_noprof+0x18d/0x6c0 mm/slub.c:5270
+  dst_alloc+0x105/0x170 net/core/dst.c:89
+  ip6_dst_alloc net/ipv6/route.c:342 [inline]
+  icmp6_dst_alloc+0x75/0x460 net/ipv6/route.c:3333
+  mld_sendpack+0x683/0xe60 net/ipv6/mcast.c:1844
+  mld_send_cr net/ipv6/mcast.c:2154 [inline]
+  mld_ifc_work+0x83e/0xd60 net/ipv6/mcast.c:2693
+  process_one_work kernel/workqueue.c:3257 [inline]
+  process_scheduled_works+0xad1/0x1770 kernel/workqueue.c:3340
+  worker_thread+0x8a0/0xda0 kernel/workqueue.c:3421
+  kthread+0x711/0x8a0 kernel/kthread.c:463
+  ret_from_fork+0x510/0xa50 arch/x86/kernel/process.c:158
+  ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:246
+
+Freed by task 20:
+  kasan_save_stack mm/kasan/common.c:57 [inline]
+  kasan_save_track+0x3e/0x80 mm/kasan/common.c:78
+  kasan_save_free_info+0x46/0x50 mm/kasan/generic.c:584
+  poison_slab_object mm/kasan/common.c:253 [inline]
+  __kasan_slab_free+0x5c/0x80 mm/kasan/common.c:285
+  kasan_slab_free include/linux/kasan.h:235 [inline]
+  slab_free_hook mm/slub.c:2540 [inline]
+  slab_free mm/slub.c:6670 [inline]
+  kmem_cache_free+0x18f/0x8d0 mm/slub.c:6781
+  dst_destroy+0x235/0x350 net/core/dst.c:121
+  rcu_do_batch kernel/rcu/tree.c:2605 [inline]
+  rcu_core kernel/rcu/tree.c:2857 [inline]
+  rcu_cpu_kthread+0xba5/0x1af0 kernel/rcu/tree.c:2945
+  smpboot_thread_fn+0x542/0xa60 kernel/smpboot.c:160
+  kthread+0x711/0x8a0 kernel/kthread.c:463
+  ret_from_fork+0x510/0xa50 arch/x86/kernel/process.c:158
+  ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:246
+
+Last potentially related work creation:
+  kasan_save_stack+0x3e/0x60 mm/kasan/common.c:57
+  kasan_record_aux_stack+0xbd/0xd0 mm/kasan/generic.c:556
+  __call_rcu_common kernel/rcu/tree.c:3119 [inline]
+  call_rcu+0xee/0x890 kernel/rcu/tree.c:3239
+  refdst_drop include/net/dst.h:266 [inline]
+  skb_dst_drop include/net/dst.h:278 [inline]
+  skb_release_head_state+0x71/0x360 net/core/skbuff.c:1156
+  skb_release_all net/core/skbuff.c:1180 [inline]
+  __kfree_skb net/core/skbuff.c:1196 [inline]
+  sk_skb_reason_drop+0xe9/0x170 net/core/skbuff.c:1234
+  kfree_skb_reason include/linux/skbuff.h:1322 [inline]
+  tcf_kfree_skb_list include/net/sch_generic.h:1127 [inline]
+  __dev_xmit_skb net/core/dev.c:4260 [inline]
+  __dev_queue_xmit+0x26aa/0x3210 net/core/dev.c:4785
+  NF_HOOK_COND include/linux/netfilter.h:307 [inline]
+  ip6_output+0x340/0x550 net/ipv6/ip6_output.c:247
+  NF_HOOK+0x9e/0x380 include/linux/netfilter.h:318
+  mld_sendpack+0x8d4/0xe60 net/ipv6/mcast.c:1855
+  mld_send_cr net/ipv6/mcast.c:2154 [inline]
+  mld_ifc_work+0x83e/0xd60 net/ipv6/mcast.c:2693
+  process_one_work kernel/workqueue.c:3257 [inline]
+  process_scheduled_works+0xad1/0x1770 kernel/workqueue.c:3340
+  worker_thread+0x8a0/0xda0 kernel/workqueue.c:3421
+  kthread+0x711/0x8a0 kernel/kthread.c:463
+  ret_from_fork+0x510/0xa50 arch/x86/kernel/process.c:158
+  ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:246
+
+The buggy address belongs to the object at ffff8880294cfa00
+ which belongs to the cache ip6_dst_cache of size 232
+The buggy address is located 120 bytes inside of
+ freed 232-byte region [ffff8880294cfa00, ffff8880294cfae8)
+
+The buggy address belongs to the physical page:
+page: refcount:0 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x294cf
+memcg:ffff88803536b781
+flags: 0x80000000000000(node=0|zone=1)
+page_type: f5(slab)
+raw: 0080000000000000 ffff88802ff1c8c0 ffffea0000bf2bc0 dead000000000006
+raw: 0000000000000000 00000000800c000c 00000000f5000000 ffff88803536b781
+page dumped because: kasan: bad access detected
+page_owner tracks the page as allocated
+page last allocated via order 0, migratetype Unmovable, gfp_mask 0x52820(GFP_ATOMIC|__GFP_NOWARN|__GFP_NORETRY|__GFP_COMP), pid 9, tgid 9 (kworker/0:0), ts 91119585830, free_ts 91088628818
+  set_page_owner include/linux/page_owner.h:32 [inline]
+  post_alloc_hook+0x234/0x290 mm/page_alloc.c:1857
+  prep_new_page mm/page_alloc.c:1865 [inline]
+  get_page_from_freelist+0x28c0/0x2960 mm/page_alloc.c:3915
+  __alloc_frozen_pages_noprof+0x181/0x370 mm/page_alloc.c:5210
+  alloc_pages_mpol+0xd1/0x380 mm/mempolicy.c:2486
+  alloc_slab_page mm/slub.c:3075 [inline]
+  allocate_slab+0x86/0x3b0 mm/slub.c:3248
+  new_slab mm/slub.c:3302 [inline]
+  ___slab_alloc+0xb10/0x13e0 mm/slub.c:4656
+  __slab_alloc+0xc6/0x1f0 mm/slub.c:4779
+  __slab_alloc_node mm/slub.c:4855 [inline]
+  slab_alloc_node mm/slub.c:5251 [inline]
+  kmem_cache_alloc_noprof+0x101/0x6c0 mm/slub.c:5270
+  dst_alloc+0x105/0x170 net/core/dst.c:89
+  ip6_dst_alloc net/ipv6/route.c:342 [inline]
+  icmp6_dst_alloc+0x75/0x460 net/ipv6/route.c:3333
+  mld_sendpack+0x683/0xe60 net/ipv6/mcast.c:1844
+  mld_send_cr net/ipv6/mcast.c:2154 [inline]
+  mld_ifc_work+0x83e/0xd60 net/ipv6/mcast.c:2693
+  process_one_work kernel/workqueue.c:3257 [inline]
+  process_scheduled_works+0xad1/0x1770 kernel/workqueue.c:3340
+  worker_thread+0x8a0/0xda0 kernel/workqueue.c:3421
+  kthread+0x711/0x8a0 kernel/kthread.c:463
+  ret_from_fork+0x510/0xa50 arch/x86/kernel/process.c:158
+page last free pid 5859 tgid 5859 stack trace:
+  reset_page_owner include/linux/page_owner.h:25 [inline]
+  free_pages_prepare mm/page_alloc.c:1406 [inline]
+  __free_frozen_pages+0xfe1/0x1170 mm/page_alloc.c:2943
+  discard_slab mm/slub.c:3346 [inline]
+  __put_partials+0x149/0x170 mm/slub.c:3886
+  __slab_free+0x2af/0x330 mm/slub.c:5952
+  qlink_free mm/kasan/quarantine.c:163 [inline]
+  qlist_free_all+0x97/0x100 mm/kasan/quarantine.c:179
+  kasan_quarantine_reduce+0x148/0x160 mm/kasan/quarantine.c:286
+  __kasan_slab_alloc+0x22/0x80 mm/kasan/common.c:350
+  kasan_slab_alloc include/linux/kasan.h:253 [inline]
+  slab_post_alloc_hook mm/slub.c:4953 [inline]
+  slab_alloc_node mm/slub.c:5263 [inline]
+  kmem_cache_alloc_noprof+0x18d/0x6c0 mm/slub.c:5270
+  getname_flags+0xb8/0x540 fs/namei.c:146
+  getname include/linux/fs.h:2498 [inline]
+  do_sys_openat2+0xbc/0x200 fs/open.c:1426
+  do_sys_open fs/open.c:1436 [inline]
+  __do_sys_openat fs/open.c:1452 [inline]
+  __se_sys_openat fs/open.c:1447 [inline]
+  __x64_sys_openat+0x138/0x170 fs/open.c:1447
+  do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+  do_syscall_64+0xec/0xf80 arch/x86/entry/syscall_64.c:94
+
+Fixes: 8d0b94afdca8 ("ipv6: Keep track of DST_NOCACHE routes in case of iface down/unregister")
+Fixes: 78df76a065ae ("ipv4: take rt_uncached_lock only if needed")
+Reported-by: syzbot+179fc225724092b8b2b2@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/6964cdf2.050a0220.eaf7.009d.GAE@google.com/T/#u
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Martin KaFai Lau <martin.lau@kernel.org>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://patch.msgid.link/20260112103825.3810713-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/msm_gpu.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/ipv4/route.c | 7 +++++--
+ net/ipv6/route.c | 4 ++--
+ 2 files changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
-index 9385419a78dbf..f280c8f13dd49 100644
---- a/drivers/gpu/drm/msm/msm_gpu.c
-+++ b/drivers/gpu/drm/msm/msm_gpu.c
-@@ -422,11 +422,11 @@ static void recover_worker(struct kthread_work *work)
+diff --git a/net/ipv4/route.c b/net/ipv4/route.c
+index bd0b29f3ff1d3..bd8ea5b8fa583 100644
+--- a/net/ipv4/route.c
++++ b/net/ipv4/route.c
+@@ -1575,9 +1575,9 @@ void rt_add_uncached_list(struct rtable *rt)
+ 
+ void rt_del_uncached_list(struct rtable *rt)
+ {
+-	if (!list_empty(&rt->rt_uncached)) {
+-		struct uncached_list *ul = rt->rt_uncached_list;
++	struct uncached_list *ul = rt->rt_uncached_list;
+ 
++	if (ul) {
+ 		spin_lock_bh(&ul->lock);
+ 		list_del_init(&rt->rt_uncached);
+ 		spin_unlock_bh(&ul->lock);
+@@ -1703,6 +1703,7 @@ struct rtable *rt_dst_alloc(struct net_device *dev,
+ 		rt->rt_gw_family = 0;
+ 		rt->rt_gw4 = 0;
+ 		INIT_LIST_HEAD(&rt->rt_uncached);
++		rt->rt_uncached_list = NULL;
+ 
+ 		rt->dst.output = ip_output;
+ 		if (flags & RTCF_LOCAL)
+@@ -1734,6 +1735,7 @@ struct rtable *rt_dst_clone(struct net_device *dev, struct rtable *rt)
+ 		else if (rt->rt_gw_family == AF_INET6)
+ 			new_rt->rt_gw6 = rt->rt_gw6;
+ 		INIT_LIST_HEAD(&new_rt->rt_uncached);
++		new_rt->rt_uncached_list = NULL;
+ 
+ 		new_rt->dst.input = rt->dst.input;
+ 		new_rt->dst.output = rt->dst.output;
+@@ -2925,6 +2927,7 @@ struct dst_entry *ipv4_blackhole_route(struct net *net, struct dst_entry *dst_or
+ 			rt->rt_gw6 = ort->rt_gw6;
+ 
+ 		INIT_LIST_HEAD(&rt->rt_uncached);
++		rt->rt_uncached_list = NULL;
  	}
  
- 	if (msm_gpu_active(gpu)) {
-+		gpu->funcs->recover(gpu);
-+
- 		/* retire completed submits, plus the one that hung: */
- 		retire_submits(gpu);
+ 	dst_release(dst_orig);
+diff --git a/net/ipv6/route.c b/net/ipv6/route.c
+index 23d7a66eb0af5..1c61081a857ce 100644
+--- a/net/ipv6/route.c
++++ b/net/ipv6/route.c
+@@ -149,9 +149,9 @@ void rt6_uncached_list_add(struct rt6_info *rt)
  
--		gpu->funcs->recover(gpu);
--
- 		/*
- 		 * Replay all remaining submits starting with highest priority
- 		 * ring
+ void rt6_uncached_list_del(struct rt6_info *rt)
+ {
+-	if (!list_empty(&rt->rt6i_uncached)) {
+-		struct uncached_list *ul = rt->rt6i_uncached_list;
++	struct uncached_list *ul = rt->rt6i_uncached_list;
+ 
++	if (ul) {
+ 		spin_lock_bh(&ul->lock);
+ 		list_del_init(&rt->rt6i_uncached);
+ 		spin_unlock_bh(&ul->lock);
 -- 
 2.53.0
 
