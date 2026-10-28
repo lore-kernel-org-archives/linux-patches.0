@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213306;
-	b=i/Nv4/dCDVpJWGgJBBiIGXN1Y+rQGJnkKwgWlEZ/pahFyNzhZ2EB7N+3T+5rRmH6X82N
-	 qlQspQc24nQPRH2lL4Jp8JDBc0veA7qr848hEOhK7nd38ciWyRV70RNMy7dZ/cwfL2+Hv
-	 gMvgV09r82yal10Bj74ZKObtr4Zd8fAPTPR6mBTZLq8sHZKabTuZ/Pu2d4HLhA+GM0EQ9
-	 zy6CSyBsDN/SQpntuqOCda3Ki61BuWIV8Y71QprpGUH9VN+CwDBIS2UXGj+LCSiH12VsF
-	 HRmB/Kx1xfc/cNk8r/m+F83qGNIwgVp4stIoS2SVeqcj4J2keAjEyTNf9TZoa/Hl2wg==
+	t=1793213309;
+	b=mgNj4YCLphbAbbcGcJZNpWrLO2+Bwv7PTjOOkJxe6T8OO3zbJdSl2a0oSnMEFtnnZkco
+	 RjwheXHqGJvnfA/OJLKn2//iUu9oczx6Rv0T6VLgldMnsUz/1Pl/1BPL6l9s9lURLlPTV
+	 sZl+RuHhAulZBxW/6QwJsHQEwGU3WAFvu14HEoJCd8tWKoE5oxcTeiZtZiBcMwqi5b2Q8
+	 Sth1TVGrLg9USG5QSLR1gQuJW9eSJaJk5U3khnVG4nVsBLbkJwMquqiHVBuL5CCDXAecg
+	 mcNmydy8XJoyX4XQyCo/SAzWiKWMXoiJ4sxu5VTffyKAPh53W/RdQzo2KB34nIdg2ZA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213306;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213309;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=uFjOLExKwsiX++eWz8WqlWlhrkhBrMcCOnuhdZraPRA=;
-	b=qaoxU6UfrBU7jzq9LMXytpwGcUwMjC6A8r7Nc9ezJfqbeFwBebFMW/AKwzCPzxWSEJxp
-	 FxGq9B+FArFPzna/Kz5UqD+TEPcKvmf4bCY/DMcfNa1GTEldSGFriabSnyOE9UmWrqVlp
-	 XE1VZfZ69Nmk2PIDEFdPucR0SXYhV997q3iMpG2pp72dNJf+xdEFH/MDMi03U5i2HUv4D
-	 UKJP33bDr6h5LxakfJ+8jvlIHdxD1H3NCTKUH2NK+O6MQfQuDAF1zkEN6XUzXWAA2BZmH
-	 rDSN0dbALzAbu1urAvGnsn6kekphlHVUeHlYdShbSDHuTfsjq2ARC/3U60JJwD6DhKg==
+	bh=+/dZG6aNQah1jsoTqTacENa/mkH/enOl7fs2X0fNAyg=;
+	b=jwAyKlVDUwA2j9ZZub44pNkxJN2P0sYD4zy5CQsClY+vX3tPGghFywmnTdkFxxjIJbEB
+	 2K43q4pvs9HknwnSCcnK6tUfeYK2HTp0fTarhGEDv32hB6Hq4d2e4O0rAtPxEGbLxh7Nx
+	 1NeqKl0pAiK6/UB1FNpVgTciUinUEanyjDOkuSQajPqlPZG6u9D8gmHrUUZkmWKfpUiI9
+	 Ab3IF5MzzQJbdwgv8BNh74cfgue6EyxmWMyTdwHZj44LG5Uy7o+Pb+fqGucx/0pViQyCt
+	 omkvx3lrY0qTSLqStk4WijvZfR17/rioYbHrZ5sJj6AaW+FiwhAjIp2dhkCQgm1DCYg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yMYaQAoE;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="A/P/xyER";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD1BE606A31C;
-	Wed, 28 Oct 2026 18:48:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A96E8606A31C;
+	Wed, 28 Oct 2026 18:48:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yMYaQAoE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B58E1F01825;
-	Wed, 28 Oct 2026 18:48:24 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A/P/xyER
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 001DB1F01825;
+	Wed, 28 Oct 2026 18:48:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213305;
-	bh=uFjOLExKwsiX++eWz8WqlWlhrkhBrMcCOnuhdZraPRA=;
+	s=korg; t=1793213308;
+	bh=+/dZG6aNQah1jsoTqTacENa/mkH/enOl7fs2X0fNAyg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yMYaQAoERPv6g7aBkyY/UDxFPTVqxk8IqRkkK3s4GchqBneg5rFlrmayuBH+047yz
-	 8FqLwbVR+J+aW5jCHXj+dPhOxMkOt+aA2Qdoj2J4iWjXQGRYfO/EyCrfBDI9vs17AS
-	 JhwtU1n90LaOdbbrGq/fV9qHACHSkK7Z5PgmKjyE=
+	b=A/P/xyERedOg2vedvUBFfI04bT7V1dH0upCubbYPLFp+rPZsjZ0SIOvWC3fzKuxD6
+	 N67CNs7CMsheOpxy5Zqp6c8rmBUustsXgn72y0DLJmEJ26WgRqMRNLuOC3k+oZIvZh
+	 YA09PNWs0GSU9o4WACBFBCeEE7Xw3tNK4UL/Ramo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yibo Tan <lhfff@tju.edu.cn>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
 	Ulf Hansson <ulfh@kernel.org>
-Subject: [PATCH 6.1 0459/1887] mmc: mtk-sd: Cancel request timeout work on remove
-Date: Wed, 28 Oct 2026 17:42:35 +0100
-Message-ID: <20261028170509.678390351@linuxfoundation.org>
+Subject: [PATCH 6.1 0460/1887] mmc: sdhci-sprd: disable runtime PM on remove
+Date: Wed, 28 Oct 2026 17:42:36 +0100
+Message-ID: <20261028170509.700918434@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -67,45 +69,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yibo Tan <lhfff@tju.edu.cn>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-commit b38af5386a74416e898955443f2e26547b358cb2 upstream.
+commit e1c6c10a6a70a69e29b04fcc1ebe4b9bcbc7a49a upstream.
 
-The driver queues req_timeout while a request is active.
-msdc_request_done() uses cancel_delayed_work(), which does not wait for
-a timeout callback that has already started.
+sdhci_sprd_probe() enables runtime PM, while sdhci_sprd_remove() does
+not perform the corresponding runtime PM cleanup.
 
-The timeout callback calls mmc_request_done(), which wakes the request
-waiter, and then continues to use host->dev_comp and check the SDIO IRQ.
-During unbind, msdc_drv_remove() can return and the managed mmc_host can
-be freed before the callback finishes.
+The probe failure path disables runtime PM before disabling the clocks,
+but the normal remove path directly disables clocks that are also
+managed by the runtime PM callbacks. If the device is runtime
+suspended, those clocks may already be disabled.
 
-KASAN reported use-after-free accesses in msdc_request_done() and
-msdc_recheck_sdio_irq() in each of three unbind tests.  The same tests
-completed without a kernel diagnostic after this change.
+Resume the device before removal, disable runtime PM and drop the
+temporary runtime PM reference before disabling the clocks.
 
-Call cancel_delayed_work_sync() after mmc_remove_host() has stopped new
-requests and before the driver releases the host resources.
+This issue was found by manual code inspection.
 
-Fixes: 208489032bdd ("mmc: mediatek: Add Mediatek MMC driver")
+Fixes: fb8bd90f83c4 ("mmc: sdhci-sprd: Add Spreadtrum's initial host controller")
 Cc: stable@vger.kernel.org
-Assisted-by: Codex:GPT-5
-Signed-off-by: Yibo Tan <lhfff@tju.edu.cn>
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
 Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/mtk-sd.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/mmc/host/sdhci-sprd.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/mmc/host/mtk-sd.c
-+++ b/drivers/mmc/host/mtk-sd.c
-@@ -2854,6 +2854,7 @@ static int msdc_drv_remove(struct platfo
+--- a/drivers/mmc/host/sdhci-sprd.c
++++ b/drivers/mmc/host/sdhci-sprd.c
+@@ -756,6 +756,10 @@ static int sdhci_sprd_remove(struct plat
+ 	struct sdhci_host *host = platform_get_drvdata(pdev);
+ 	struct sdhci_sprd_host *sprd_host = TO_SPRD_HOST(host);
  
- 	platform_set_drvdata(pdev, NULL);
- 	mmc_remove_host(mmc);
-+	cancel_delayed_work_sync(&host->req_timeout);
- 	msdc_deinit_hw(host);
- 	msdc_gate_clock(host);
++	pm_runtime_get_sync(&pdev->dev);
++	pm_runtime_disable(&pdev->dev);
++	pm_runtime_put_noidle(&pdev->dev);
++
+ 	sdhci_remove_host(host, 0);
  
+ 	clk_disable_unprepare(sprd_host->clk_sdio);
 
 
