@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213634;
-	b=Qx1d78XTCb9FRP0dOCAYVaJ0LnsyFQ8Y8XBRvO+Pyw0oNalZF1apanKa9VSSjv+hUxCG
-	 5lUawJs64xvGyC/5Q5Xzd6v50J/8A5lw756mW8wfmiUK3/23O5vwjm4VE2xtNE2bBxbyK
-	 A4rP2DvLbozhyfCwY6RMu4yP/SmFsUcUl0zKwS/JbBo48eVE2UP8wWn1FCPYEScyt9wGZ
-	 Zvf44geW0B9FTtcccaACdoCYICnFzRM9DDDZP9USnj//VD9A+hsUlqN8q350YejPtLCqc
-	 UEdkQUIe5ogTrxaAZG4sewkQkUkS9WCjAWzYVObb2b1Na0XNzjpUew6mtveEChj4Ihg==
+	t=1793213637;
+	b=Mj+6Y/LsCiAqOOEKnhF6gVGYMQvUGa4uhdBgtWkIqG7S4Qgmbtxi9xMq/S/7Z2G+MosD
+	 FG27Lf3IaHVJjcrWfRek5PRbnNCu5JCFnO93BCAvyUDCrspv3NekxoPMRnGwquTlrvr5L
+	 cLLmfOZfXhZ8omYrTdMtv4BWecC4pyE+JOIFMl2Mpe0z24jDQG5sExHRtTlGUSA5wiWun
+	 7YWwxbI4fnwPKM4aVOqZbzMGLt81JjfRi6Iateb+LyyYTGG1Bi2mM1bEHfMgMlxDdsiHn
+	 3/LFgW3UspeDCdV1ip+fT/78AAUtV+h3NbKR+MlO1J+FX2c62TxAM4QBvA+XQNTbXkw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213634;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213637;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=8Nsdkrfskann/rttalQ7W23i9k92h4o28mSSzFthI5c=;
-	b=ZddhqBSdZ9ZOow9cejOtZ9JhqXFBsa6+j4gI7MAl1n1u2IC172uuO6PSZwrDJ5/1cGlt
-	 0xK7KJPl45vyXsGDVQ+GPzilp8LD5XYruPJPR/aF4L4EVswiLlBUIavnUUFSMegw/KlCC
-	 7rKuEETwMRmjb+ibuuMR3EUj6yT4iv2P7wiKeeNMypA4Cq4erP6JhYUa4DR7qI+nFjG4v
-	 AmKMMZADuSibTTyKKdYqJNiEdfVu5xuenQCFo+HzuPKcRUS/w5elfjyWRQ2GaBcoDgDUR
-	 GpOJnm1fWiJ+XHUjuy1RW4QVi58TkTUp7klxZX9fRv026ne6qrQ5vZPsMQyQtXulSzg==
+	bh=SHi+9j+oJbAijy9fLpTR2/UCzETjHKfJbWrR+z8hkB8=;
+	b=RWCt/Ea6NV0xpVqh28tXTtn9k1gqrlN811txhtk1nWfP0LZwQhBJSnZCLYgq1RCb26bS
+	 wxTG1x9HCBqVkRBLTdYCnBXcLX/s7DB4l20JCFrbU8cDvu/9rWhAqwn1C/NNAD0C2pMx0
+	 +1V/pFUerrP9135EiSMaJ0ZlEOltM1g7PQpSlx6IicbVEdhb7F6JZPEqzbB7iF8EwsJP2
+	 JRvEKNvsWlYoAfZ023tJ++LfUqdr+zRVDQK67Mc92q/U5dJCj3CK91jG35BmKr45OO1d1
+	 gmQN5tl/W7A9wTeq4aQvuEPAfQe1K4rrKCqkHi9H8DE8cPjTWd+UuliX/62eQupQaKA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LqVY3icF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NusLBCgf;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58FCB606A31A;
-	Wed, 28 Oct 2026 18:53:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 296BB606A31C;
+	Wed, 28 Oct 2026 18:53:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LqVY3icF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA1BA1F01825;
-	Wed, 28 Oct 2026 18:53:53 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NusLBCgf
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C0FE1F01825;
+	Wed, 28 Oct 2026 18:53:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213634;
-	bh=8Nsdkrfskann/rttalQ7W23i9k92h4o28mSSzFthI5c=;
+	s=korg; t=1793213637;
+	bh=SHi+9j+oJbAijy9fLpTR2/UCzETjHKfJbWrR+z8hkB8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LqVY3icFMBMJXWQ+6rmmm9HKhrhZUK/SC8vIUh11Cd41EoIjM+NsDLtorKgubDDzX
-	 G+j4U6s+oy1Q7SL4/sTh7G6DMszCgoysCwZtSaOyyUOH8SoDPbH3HLX7dnLhmWAunc
-	 Y3WPNzFJ4iwaxkkFemw3YlU4gF8xN04+69d4isUg=
+	b=NusLBCgfgZBI7eaPZeYBNp8BjYOGo7wjD8vvMkZvsjaYEF0PpPWPHZT+wRWNj9LMQ
+	 GxAIcGJTc12uvV+caxwDXz+ho05soAC4qSKf+WSZqLSC/mZGTbC5SWXZjpqNwnx6Vn
+	 ym3dDYsknRO84tirGQ3tB/1iEq7F0Dp/aki2rpX0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Kuai <yukuai3@huawei.com>,
-	Tejun Heo <tj@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Jens Axboe <axboe@kernel.dk>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Benjamin Poirier <bpoirier@nvidia.com>,
+	David Ahern <dsahern@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0573/1887] blk-cgroup: dropping parent refcount after pd_free_fn() is done
-Date: Wed, 28 Oct 2026 17:44:29 +0100
-Message-ID: <20261028170512.446859922@linuxfoundation.org>
+Subject: [PATCH 6.1 0574/1887] nexthop: Factor out hash threshold fdb nexthop selection
+Date: Wed, 28 Oct 2026 17:44:30 +0100
+Message-ID: <20261028170512.470780773@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -70,58 +70,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yu Kuai <yukuai3@huawei.com>
+From: Benjamin Poirier <bpoirier@nvidia.com>
 
-[ Upstream commit c7241babf0855d8a6180cd1743ff0ec34de40b4e ]
+[ Upstream commit eedd47a6ec9f683f0b8d931aacca81985be55eec ]
 
-Some cgroup policies will access parent pd through child pd even
-after pd_offline_fn() is done. If pd_free_fn() for parent is called
-before child, then UAF can be triggered. Hence it's better to guarantee
-the order of pd_free_fn().
+The loop in nexthop_select_path_hthr() includes code to check for neighbor
+validity. Since this does not apply to fdb nexthops, simplify the loop by
+moving the fdb nexthop selection to its own function.
 
-Currently refcount of parent blkg is dropped in __blkg_release(), which
-is before pd_free_fn() is called in blkg_free_work_fn() while
-blkg_free_work_fn() is called asynchronously.
-
-This patch make sure pd_free_fn() called from removing cgroup is ordered
-by delaying dropping parent refcount after calling pd_free_fn() for
-child.
-
-BTW, pd_free_fn() will also be called from blkcg_deactivate_policy()
-from deleting device, and following patches will guarantee the order.
-
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Acked-by: Tejun Heo <tj@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://lore.kernel.org/r/20230119110350.2287325-2-yukuai1@huaweicloud.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Signed-off-by: Benjamin Poirier <bpoirier@nvidia.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://lore.kernel.org/r/20230719-nh_select-v2-1-04383e89f868@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: b72a6a7ab957 ("net: nexthop: Increase weight to u16")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-cgroup.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/ipv4/nexthop.c | 22 ++++++++++++++++++++--
+ 1 file changed, 20 insertions(+), 2 deletions(-)
 
-diff --git a/block/blk-cgroup.c b/block/blk-cgroup.c
-index 3a33ec0af8419..34b89029ba434 100644
---- a/block/blk-cgroup.c
-+++ b/block/blk-cgroup.c
-@@ -94,6 +94,8 @@ static void blkg_free_workfn(struct work_struct *work)
- 		if (blkg->pd[i])
- 			blkcg_policy[i]->pd_free_fn(blkg->pd[i]);
- 
-+	if (blkg->parent)
-+		blkg_put(blkg->parent);
- 	if (blkg->q)
- 		blk_put_queue(blkg->q);
- 	free_percpu(blkg->iostat_cpu);
-@@ -128,8 +130,6 @@ static void __blkg_release(struct rcu_head *rcu)
- 
- 	/* release the blkcg and parent blkg refs this blkg has been holding */
- 	css_put(&blkg->blkcg->css);
--	if (blkg->parent)
--		blkg_put(blkg->parent);
- 	blkg_free(blkg);
+diff --git a/net/ipv4/nexthop.c b/net/ipv4/nexthop.c
+index cd93dd74608ac..e3d9660bf0e5c 100644
+--- a/net/ipv4/nexthop.c
++++ b/net/ipv4/nexthop.c
+@@ -1153,11 +1153,31 @@ static bool ipv4_good_nh(const struct fib_nh *nh)
+ 	return !!(state & NUD_VALID);
  }
  
++static struct nexthop *nexthop_select_path_fdb(struct nh_group *nhg, int hash)
++{
++	int i;
++
++	for (i = 0; i < nhg->num_nh; i++) {
++		struct nh_grp_entry *nhge = &nhg->nh_entries[i];
++
++		if (hash > atomic_read(&nhge->hthr.upper_bound))
++			continue;
++
++		return nhge->nh;
++	}
++
++	WARN_ON_ONCE(1);
++	return NULL;
++}
++
+ static struct nexthop *nexthop_select_path_hthr(struct nh_group *nhg, int hash)
+ {
+ 	struct nexthop *rc = NULL;
+ 	int i;
+ 
++	if (nhg->fdb_nh)
++		return nexthop_select_path_fdb(nhg, hash);
++
+ 	for (i = 0; i < nhg->num_nh; ++i) {
+ 		struct nh_grp_entry *nhge = &nhg->nh_entries[i];
+ 		struct nh_info *nhi;
+@@ -1166,8 +1186,6 @@ static struct nexthop *nexthop_select_path_hthr(struct nh_group *nhg, int hash)
+ 			continue;
+ 
+ 		nhi = rcu_dereference(nhge->nh->nh_info);
+-		if (nhi->fdb_nh)
+-			return nhge->nh;
+ 
+ 		/* nexthops always check if it is good and does
+ 		 * not rely on a sysctl for this behavior
 -- 
 2.53.0
 
