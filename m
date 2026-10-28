@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215769;
-	b=tR9KKZNppLXyDaQpl7GyKb8+0QwsHYldi+EAO+AUenXXcI2ubwXwQYLfLrJgxd1SBDc3
-	 eZ/K4nXN+TbaEbo4sC33DkZx/Bg5PZn4xAHxX0CODZo6pBJaAAFPaXQqWAOiqfCbnRUxv
-	 1TowmdgPyc+055bCtAG+LzMLIrB4aWHhSB8ZXgptspSbIBWs/siF7pnEkmyrD4DPwtRQ2
-	 2PlKmg44xJ78JQIMioCcvZA13IEKycRDREeHThElmXepSMdoZrLaEKTLjdCCNiXhYQpxW
-	 CHi9nEMFOi2k0HI/n1JIwKbaj9z4AugrUMuCe1Hsv6QNCmh8S35GmQ9J95Wxtk7RZbg==
+	t=1793215772;
+	b=ngRJ6XISpilSnwp72hOL8X+GQUQusmaXcSR41YCZWVYhhdiAfVnha/RqTVnO6gsmawX7
+	 xoZyayGrsKWfy6GBRrs00BdbYOHqCT0+TejrcG3xtB5URQDsnSncbrSfEQJhlNbQ98+F7
+	 XexTiPjQOG26ycJNXn2BYL2NjHXaGNM5WhzCpodWrs2yYetmDY1iuIjwZsJUfU+pu1m8H
+	 RVPW8fCbo/6yoUWE9AU7END4yfCdxrDm71lmte3gx/EgqDje+69ubhaMNTIV5RWCrQpPw
+	 FLEG1l7o+LVGxI+lbgmHYZyTAFMc+beW+sg1pwtLBYrNyWbhJu7SyDCrW/jJ8AAs/TQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215769;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215772;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=1j5PXWSY/2K8bVB5ub9RUjFCkkPQoSs6IlB6ii3HGI0=;
-	b=QHWvfPGwF5wKt3xBAuJYvl0DvzXL83787mICA5MKF+7nFCqD7hrNlWasZaQTv64jtbN1
-	 /fpRKZPIuv/x05o7FkScqwlIGJih2FB3/WRrZK+fAVBiplGmcsCRhVFptTqIrQ1hHy86R
-	 m9Oku8kbdQuiuHAVXB//Bq7WiMOPm2s9zVN4O5rjdPrjqZSP/VVGob+hAfrWNTK7Zr3Rc
-	 sEap6qc7boxdxeY21Ur3DMe0b2xyacYlyRx71rY18xTIPMS8LQGmwchOLyLn6mMyQ8Ezl
-	 omkUCDbec5nZ6xfK+Hu0zKDgzXHbTFC6UrEj6s0+oAY3BzFm0o9b4Rda9HfoEdk5EdA==
+	bh=PqJRuVQWsmcB7QE4qVBUzkQnFGEDeRbIORBcbIPAV6c=;
+	b=VDyNxK0JWRbD9z0QrSB94zDXqEvQv1Nxs8RgIh30fh0JSKon3Kne5zJDXHDOogcz7q2S
+	 PkWE7tX5PUOF+NBQo+cjsoDSiT5kuKjMtBXhQV1vj2zrRQ2yh7yd0Os3ehSzeyKzECcDI
+	 zu9nBsHMt0GJYjCd6aljRlmVqHFKQ3UgLCo+/lFwe0Kgzdkvj0Ph6OmcEuSIBYFK+Zc+X
+	 MVL0XzSKyYUlTMdPDDZ6l/wJD2PG8k7zdiX1v+vrmJn0k71URABn78TOuKcy+SKAuYqq3
+	 gz7Tx4Oxw2ue8osLg7WAxuvm3MG3OCFco1rMpXjYR0MEhJH3vScr493UdaaGvdS8O5w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nD5meZIt;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2ONUtJsG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C42E0606A31E;
-	Wed, 28 Oct 2026 19:29:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF2E5606A323;
+	Wed, 28 Oct 2026 19:29:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nD5meZIt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 207C31F01825;
-	Wed, 28 Oct 2026 19:29:27 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2ONUtJsG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0FA61F01825;
+	Wed, 28 Oct 2026 19:29:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215768;
-	bh=1j5PXWSY/2K8bVB5ub9RUjFCkkPQoSs6IlB6ii3HGI0=;
+	s=korg; t=1793215771;
+	bh=PqJRuVQWsmcB7QE4qVBUzkQnFGEDeRbIORBcbIPAV6c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nD5meZItZ2Krjq0NBi4FqBwNcXomPixpTYuUKmT+/CBGjGGqupPURqOTzu4bokbAF
-	 shUiFqTMKAnfhjfCxWtfscW30EW2a9RvN+7jENohv9jk/o5yYmkkxZ1NGk/S56MLOL
-	 i9YepL1GQfIovjsYS7ju0PGXjJOtFIQy/D/ZcQn0=
+	b=2ONUtJsGVsaVKNxBjGiv+EspVlqWAc1jXUmekGxXzxRlufz7EUWPM2Q4mBskTmk0t
+	 EUFhLPklnC2G8r/YbNuQDBUCXbL5cNi1rmiCJfHO/KWHUBqbqdxL27C0u6soDrjTIh
+	 3uX263di5JGpEJT8DG8gs+665adPNcWqwFa/RMcQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Qiuxu Zhuo <qiuxu.zhuo@intel.com>,
+	Tony Luck <tony.luck@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1327/1887] netfilter: synproxy: fix unaligned memory access in timestamp adjustment
-Date: Wed, 28 Oct 2026 17:57:03 +0100
-Message-ID: <20261028170529.628225657@linuxfoundation.org>
+Subject: [PATCH 6.1 1328/1887] EDAC/igen6: Fix call trace due to missing release()
+Date: Wed, 28 Oct 2026 17:57:04 +0100
+Message-ID: <20261028170529.650448533@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,66 +68,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fernando Fernandez Mancera <fmancera@suse.de>
+From: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
 
-[ Upstream commit 992c20bc8a4aba220c8b95b467d049289778dad6 ]
+[ Upstream commit ab1f9d466c7d83ab0d2a529e07984e53b5960dcd ]
 
-Use get_unaligned_be32() and put_unaligned_be32() to safely read and
-write the timestamp fields. This prevents performance degradation due to
-unaligned memory access or even a crash on strict alignment
-architectures.
+When unloading the igen6_edac driver, there is a call trace:
 
-This follows the implementation of timestamp parsing in the networking
-stack at tcp_parse_options() and synproxy_parse_options().
+  Device '(null)' does not have a release() function, it is broken and must be fixed.
+  See Documentation/core-api/kobject.rst.
+  WARNING: drivers/base/core.c:2567 at device_release+0x84/0x90, CPU#5: rmmod/127209
+  ...
+  RIP: 0010:device_release+0x84/0x90
+  Call Trace:
+   <TASK>
+   kobject_put+0x8c/0x220
+   put_device+0x17/0x30
+   igen6_unregister_mcis+0xa2/0xe0 [igen6_edac]
+   igen6_remove+0x82/0xb0 [igen6_edac]
+   ...
 
-Fixes: 48b1de4c110a ("netfilter: add SYNPROXY core/target")
-Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fix the call trace by providing empty release() functions for the
+memory controller devices.
+
+Fixes: 10590a9d4f23 ("EDAC/igen6: Add EDAC driver for Intel client SoCs using IBECC")
+Signed-off-by: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
+Signed-off-by: Tony Luck <tony.luck@intel.com>
+Link: https://patch.msgid.link/20260403054029.3950383-2-qiuxu.zhuo@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_synproxy_core.c | 19 +++++++++----------
- 1 file changed, 9 insertions(+), 10 deletions(-)
+ drivers/edac/igen6_edac.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/net/netfilter/nf_synproxy_core.c b/net/netfilter/nf_synproxy_core.c
-index 52f1f30f95add..35c38c3268a6a 100644
---- a/net/netfilter/nf_synproxy_core.c
-+++ b/net/netfilter/nf_synproxy_core.c
-@@ -190,7 +190,7 @@ synproxy_tstamp_adjust(struct sk_buff *skb, unsigned int protoff,
- 		       const struct nf_conn_synproxy *synproxy)
- {
- 	unsigned int optoff, optend;
--	__be32 *ptr, old;
-+	u32 new, old;
+diff --git a/drivers/edac/igen6_edac.c b/drivers/edac/igen6_edac.c
+index 97468fbf17b74..98c56254d79b5 100644
+--- a/drivers/edac/igen6_edac.c
++++ b/drivers/edac/igen6_edac.c
+@@ -1007,6 +1007,11 @@ static int igen6_pci_setup(struct pci_dev *pdev, u64 *mchbar)
+ 	return -ENODEV;
+ }
  
- 	if (synproxy->tsoff == 0)
- 		return true;
-@@ -220,18 +220,17 @@ synproxy_tstamp_adjust(struct sk_buff *skb, unsigned int protoff,
- 			if (op[0] == TCPOPT_TIMESTAMP &&
- 			    op[1] == TCPOLEN_TIMESTAMP) {
- 				if (CTINFO2DIR(ctinfo) == IP_CT_DIR_REPLY) {
--					ptr = (__be32 *)&op[2];
--					old = *ptr;
--					*ptr = htonl(ntohl(*ptr) -
--						     synproxy->tsoff);
-+					old = get_unaligned_be32(&op[2]);
-+					new = old - synproxy->tsoff;
-+					put_unaligned_be32(new, &op[2]);
- 				} else {
--					ptr = (__be32 *)&op[6];
--					old = *ptr;
--					*ptr = htonl(ntohl(*ptr) +
--						     synproxy->tsoff);
-+					old = get_unaligned_be32(&op[6]);
-+					new = old + synproxy->tsoff;
-+					put_unaligned_be32(new, &op[6]);
- 				}
- 				inet_proto_csum_replace4(&th->check, skb,
--							 old, *ptr, false);
-+							 cpu_to_be32(old),
-+							 cpu_to_be32(new), false);
- 			}
- 			optoff += op[1];
- 		}
++static void imc_release(struct device *dev)
++{
++	/* Nothing to do, the 'imc' owns the 'dev' and will also release it. */
++}
++
+ static int igen6_register_mci(int mc, u64 mchbar, struct pci_dev *pdev)
+ {
+ 	struct edac_mc_layer layers[2];
+@@ -1051,6 +1056,7 @@ static int igen6_register_mci(int mc, u64 mchbar, struct pci_dev *pdev)
+ 	mci->pvt_info = &igen6_pvt->imc[mc];
+ 
+ 	imc = mci->pvt_info;
++	imc->dev.release = imc_release;
+ 	device_initialize(&imc->dev);
+ 	/*
+ 	 * EDAC core uses mci->pdev(pointer of structure device) as
 -- 
 2.53.0
 
