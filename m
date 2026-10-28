@@ -1,55 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793207798;
-	b=yQbCDi99D0i1uvslaZ1xD8hg5ufSmfjp5a3LO6c9gDtQi2JBlGq/A3qpUAi6zmTN6We4
-	 UtZhHuIjBvyLd07iMV1VeBFs2TBTfwm7Le5TGYzK1RP0sPYfqYKaI5y1yqWK/DRIZYAHL
-	 TdIgOY6O6Q3qqqNPVAZOj7TtfhNrql1PM73cYv6vcRf+FrsYl/QTEYWPzSxmG6m9MOiLX
-	 SwNIf/i4yPgTNUkfKOAov7rVn5N6kkbS+3K6Vxly2Eo1RmyTILKMxYZGv2aIgAFEPNFrw
-	 GJZS6/0cYcExn+ipQNQRxW0+RT02z+d32qziAP3jbjjB5gOn66Z5MDvyCgKKNS43uVA==
+	t=1793207801;
+	b=ov4lhTnmhyiMTmRIyBRC37vvlsfpPV9cweN5zh6zSAoZwI0M2gh7WasWtz5tri2MYWx3
+	 YG9c7DG2sU2PxnLdoQhHj0gi+QONNCLiLr7jV9yw/FBpo2HbIknheEaw2D9t7eJOq6izu
+	 JhjxiT/j8Y5JZMcfpj4iR5Jhv+aX3PvG3PNdnmIHNeK/dd3bH5FcozbgSLPCvTmVLIQ6e
+	 8oPg/S5ypRNutofT1mdOtwobl0FUmHvV8nT02MSGT4EaFbNRKVNO7wyGcKUE5wYAWFPEP
+	 c9llu0kBbJ76UG3al4sPYNH+ts3xs9+Kz4tC2Nfd9aYATjtLY6DVeeVvgs/lcTSbA7w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793207798;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793207801;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ibOA6NbuxMJW06q5crfPupbsw9XqcJJ283QuSNrfB54=;
-	b=mkb3qrAoGfIw1Tpw+9K5gC4SOSyRcvU7KHNS2vQFBX6JwtUtNfK/7wilvvSL2nUf+Ih1
-	 qPYa32UTPtpO8HbrRYCJItvNAxNeRQUtzwcWB3hfRabmYQ6jMrrgYZSFJNXDunLApAmzb
-	 5jqD6TO5iCZsdORveryu/891KCqqNjlDYvrOizwIfaXd+JgjF0IFRMyg1vGPRYrkG1gcU
-	 a8csmb6CbW4iPZGECuadm1Qw0XyjJb02TxfdAQp8/lGptXvnGURZywChUGj+FaCL/5Wrk
-	 gZt2N9JbcLgL97NpBu/UYPWLG9+GEfJD+2jJ5dBu9RbYFhvQjTXwIDn5vcUyTiBiUBg==
+	bh=jn6jpUYsRe4Qd0r4jvKZUKs8PJMf031fmD6Sd3ix4xM=;
+	b=ZC9FCdnbaw7iV1T6DHz0Qan29mErV4ocp6ZBeRkZEy5mdQCHnWx2ymTfilIiTsB76orn
+	 wP5liPuXyfWNVLD6AhZFeu0hIDyIiSHgSqUixKHUnnQY268GdYVwODoXYPepJ9naYjftr
+	 q0umYNXfsKaUIHpr2MxTGBLUNEx3eyx8SLLxUC1WAREUco5jwTz83/TPjVPL/+lKsnPoK
+	 gCY59fUTt0bpjPnB53iq2CFPGJwzmVGw+FRq5I7mQloAVAkudcZcI/S22QoW3EOdhdsiG
+	 mGPVtr7Gr6LUciXeme3FQMKA9b+deyAIBa5BFQXqqOOfMryX2bBDtzyplm9J41W5Mug==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ORAvmmJ6;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZLIykqyb;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C3C8606A31E;
-	Wed, 28 Oct 2026 17:16:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3ECBA606A31A;
+	Wed, 28 Oct 2026 17:16:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ORAvmmJ6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE7081F031E1;
-	Wed, 28 Oct 2026 17:16:37 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZLIykqyb
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DB1F1F01828;
+	Wed, 28 Oct 2026 17:16:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793207798;
-	bh=ibOA6NbuxMJW06q5crfPupbsw9XqcJJ283QuSNrfB54=;
+	s=korg; t=1793207801;
+	bh=jn6jpUYsRe4Qd0r4jvKZUKs8PJMf031fmD6Sd3ix4xM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ORAvmmJ6zxCSldg3oJj7WX7fLd9Bom9rRAJ37J3Y9ugYZYyhrdAt/1gYmf8JO+rvE
-	 NcGjbzWm5nZU8lWWGbvV+TCh+ti1VtYGAUs/2QWCrehwl+m93HOEbbEhrVXaFpZGni
-	 5wKqnuw3zrz21zZ6dVCO9Nl0DLXwCSpbWNXTRvB4=
+	b=ZLIykqybztPWGILEzQXTohTSWgHgYbEx4RcMToH3wK4kDngnZiKuW4FIcl3EmeXh7
+	 0Ec7PxAdINoAnVGj/7ksDk3NHLtoqydfp2nKIgEgW0mdHyIvpC/IndFIddGjbWF5qe
+	 OYt0UNtFBIMRCz0vY8oNeni+tJu5SekHyk+JE2sA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amit Klein <aksecurity@gmail.com>,
-	Noam Caspi <noam.caspi@mail.huji.ac.il>,
-	Ido Schimmel <idosch@nvidia.com>,
-	David Ahern <dsahern@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Breno Leitao <leitao@debian.org>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 144/247] ipv4: udp: Create exceptions before socket matching
-Date: Wed, 28 Oct 2026 17:59:07 +0100
-Message-ID: <20261028165950.819898531@linuxfoundation.org>
+Subject: [PATCH 6.12 145/247] workqueue: release pwq pools by pool type
+Date: Wed, 28 Oct 2026 17:59:08 +0100
+Message-ID: <20261028165950.843617039@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165947.349197979@linuxfoundation.org>
 References: <20261028165947.349197979@linuxfoundation.org>
@@ -71,88 +68,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit 4c3499f79f8c7e8561266bcc220a18538cec0458 ]
+[ Upstream commit 3180ee71b676845603274c66f6bb5528939cf470 ]
 
-Currently, when ICMP Fragmentation Needed and Redirect Message packets
-are locally delivered and quote a UDP packet, a FIB nexthop exception
-(FNHE) is only created if the kernel can match the UDP packet to an
-existing socket.
+Add is_percpu_pool() and test the pool directly for per cpu. Convert the
+other open-coded pool->cpu checks -- in put_unbound_pool(),
+pool_allowed_cpus() and the workqueue watchdog -- to the same helper.
 
-This behavior allows off-path attackers to conduct a side-channel attack
-on the FNHE cache in order to discover the ephemeral port used by a
-connected UDP socket.
+No functional change.
 
-Commit 6457378fe796 ("ipv4: use siphash instead of Jenkins in
-fnhe_hashfun()") and commit 67d6d681e15b ("ipv4: make exception cache
-less predictible") tried to mitigate such attacks by making it harder
-for attackers to discover hash collisions in the FNHE cache and by
-randomizing the number of exceptions a hash bucket can hold,
-respectively. Unfortunately, both of the mitigations can be bypassed.
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 
-Instead, mitigate such attacks by always creating a FNHE, even before
-trying to find a matching socket. Do that by calling ipv4_update_pmtu()
-and ipv4_redirect(), the helpers used when the quoted packet did not
-originate from a socket.
+Use a single-evaluation macro for is_percpu_pool() so the predicate
+conversion does not add a function. Keep the existing watchdog stall
+accounting; only its pool-type check needs to change. This preserves
+the release-path context needed by the pending-pwq lifetime fix.
 
-This means that guesses (right or wrong) from an off-path attacker will
-always result in a FNHE being created or updated in the cache that the
-attacker can observe.
-
-Pass an oif of 0, in a similar fashion to icmp_err(). This is also the
-oif used by the socket path for sockets that are not bound to a device.
-
-Note that this does not allow attackers to create FNHEs that they could
-not create before, as both helpers can already be reached with little to
-no validation. For example, by sending an ICMP error that quotes an ICMP
-Echo Reply or one that quotes a UDP source port that matches a wildcard
-socket.
-
-Also note that in the good case (matched socket) the above scheme comes
-at the cost of an extra route lookup, as the no socket helpers perform
-their own lookup before the one performed by ipv4_sk_update_pmtu() /
-ipv4_sk_redirect(). When the two resolve to different nexthops, it also
-results in two exceptions being created for the same destination IP. One
-in the FNHE cache of the nexthop resolved by the no socket helpers and
-another in the FNHE cache of the nexthop used by the socket.
-
-Fixes: 4895c771c7f0 ("ipv4: Add FIB nexthop exceptions.")
-Cc: stable@vger.kernel.org
-Reported-by: Amit Klein <aksecurity@gmail.com>
-Reported-by: Noam Caspi <noam.caspi@mail.huji.ac.il>
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://patch.msgid.link/20260828192344.2596928-3-idosch@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ sashal: inlined udp_err_update_exception() in the udp_err() wrapper. ]
+Stable-dep-of: cf9c8aaea0d4 ("workqueue: Fix unbound pool lifetime for pending pwqs")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/udp.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ kernel/workqueue.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/net/ipv4/udp.c b/net/ipv4/udp.c
-index 69e6897337417..22eee4fdd5d8d 100644
---- a/net/ipv4/udp.c
-+++ b/net/ipv4/udp.c
-@@ -869,7 +869,16 @@ int __udp4_lib_err(struct sk_buff *skb, u32 info, struct udp_table *udptable)
- 
- int udp_err(struct sk_buff *skb, u32 info)
- {
--	return __udp4_lib_err(skb, info, dev_net(skb->dev)->ipv4.udp_table);
-+	const int type = icmp_hdr(skb)->type;
-+	const int code = icmp_hdr(skb)->code;
-+	struct net *net = dev_net(skb->dev);
-+
-+	if (type == ICMP_DEST_UNREACH && code == ICMP_FRAG_NEEDED)
-+		ipv4_update_pmtu(skb, net, info, 0, IPPROTO_UDP);
-+	else if (type == ICMP_REDIRECT)
-+		ipv4_redirect(skb, net, 0, IPPROTO_UDP);
-+
-+	return __udp4_lib_err(skb, info, net->ipv4.udp_table);
+diff --git a/kernel/workqueue.c b/kernel/workqueue.c
+index 329394830c40f..14a3d1775c2ff 100644
+--- a/kernel/workqueue.c
++++ b/kernel/workqueue.c
+@@ -1559,6 +1559,8 @@ work_func_t wq_worker_last_func(struct task_struct *task)
+ 	return worker->last_func;
  }
  
- /*
++#define is_percpu_pool(pool) ((pool)->cpu >= 0)
++
+ /**
+  * wq_node_nr_active - Determine wq_node_nr_active to use
+  * @wq: workqueue of interest
+@@ -2683,7 +2685,7 @@ static struct worker *alloc_worker(int node)
+ 
+ static cpumask_t *pool_allowed_cpus(struct worker_pool *pool)
+ {
+-	if (pool->cpu < 0 && pool->attrs->affn_strict)
++	if (!is_percpu_pool(pool) && pool->attrs->affn_strict)
+ 		return pool->attrs->__pod_cpumask;
+ 	else
+ 		return pool->attrs->cpumask;
+@@ -4969,7 +4971,7 @@ static void put_unbound_pool(struct worker_pool *pool)
+ 		return;
+ 
+ 	/* sanity checks */
+-	if (WARN_ON(!(pool->cpu < 0)) ||
++	if (WARN_ON(is_percpu_pool(pool)) ||
+ 	    WARN_ON(!list_empty(&pool->worklist)))
+ 		return;
+ 
+@@ -5121,7 +5123,7 @@ static void pwq_release_workfn(struct kthread_work *work)
+ 		mutex_unlock(&wq->mutex);
+ 	}
+ 
+-	if (wq->flags & WQ_UNBOUND) {
++	if (!is_percpu_pool(pool)) {
+ 		mutex_lock(&wq_pool_mutex);
+ 		put_unbound_pool(pool);
+ 		mutex_unlock(&wq_pool_mutex);
+@@ -7639,7 +7641,7 @@ static void wq_watchdog_timer_fn(struct timer_list *unused)
+ 		/* did we stall? */
+ 		if (time_after(now, ts + thresh)) {
+ 			lockup_detected = true;
+-			if (pool->cpu >= 0 && !(pool->flags & POOL_BH)) {
++			if (is_percpu_pool(pool) && !(pool->flags & POOL_BH)) {
+ 				pool->cpu_stall = true;
+ 				cpu_pool_stall = true;
+ 			}
 -- 
 2.53.0
 
