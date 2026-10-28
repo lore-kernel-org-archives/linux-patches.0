@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793209677;
-	b=abziyzXLTDWykqPvteSGp5CAFacpKkef1W30YUTrt0Eu+hkb416nhMvHfGg1nQTM2HjM
-	 9bDkNHtwfoPfH+Dsn9/HGb+MHBY/V4EP1Cno1YT7ctsqLjvobfd+IBPWnjSaVygBqz8N8
-	 FU6o7zr8Oa8RWtEfFJ13eYeN30VvI7eGTc1HBSSWPxyuVDARg5qW/G9I+Z5DUsaCd6te5
-	 HlWAXqDpo5yQGl0kED5VhMYiyLqEXPWTcmlx/gce/7idOYETKOYAYuCz+9xUtTPbOIr7o
-	 9OJs1fRx2PfnlhhWmIrCxLCWeLHznbsvyJsTI2Ih2ujDRUp2uXZCWQSzl4i6zc4WDoA==
+	t=1793209680;
+	b=WJi7Z4UJBULfz6WorDDr5iX7626xQF9795wJXHWWSEdaVCU1lXJVVF+FOUKHqlcYmiaw
+	 ZmavP/wyOWB9s5evlJyTyAQ30TPRz80b3SDeUsDzT+akeDRoH5JFAkGWb/0JIMwlRSUB3
+	 Xv9xo/D2vxLSb1Klcyn6hQElmtgF3US0rhkAN1vRxjjDbPaWHXV+kLng0LRF4SEiGZTUO
+	 LWVusWo89BKcXNlKCwcTg86P0sBBnrp291xjZtQedhKRyf7eqRmO3/PqaNB90d/MpctCK
+	 uCh2EMv0a4X0A3LCTg+NRlPMjxwVFv0MEGHMNbz5NLcsX2JDDz6sOnIlhTqb+3V+dDA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793209677;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793209680;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=GpWFtEkl+KPNeyaIoQ8Xf1RQHo2K/03tuQFxbPcWlBU=;
-	b=INSoSwsVIhkVFHsy3MWoXfUCr9v31L/pgloBrKGMBXDu/SdwRIojpYk6oDT5rC+Hu5sK
-	 1jieeVGY5vsNI3Yt7NU24EiU1Y0ow/2HIUOoq0icxL1jAN2fK+PGAtZap190KQDaYoLsr
-	 RsdZR8K6cVFZM3j8ettwSyMUK236eXSE/C7LA8sV/lFyb7N+OO6kekCuTVkuHCAM3zLxx
-	 dn0Ypg7jdOA5dlQJOVT9PUGMm4GgMG99LzT5mJx/X+WWQUxId6DvivVbVblBjF9K1fMJ4
-	 z6CrkfB4QQILjY8QHY0h6s8cQXABVjPJmKLMlWgBIhUxMoB9emTGhrDw5ZMY7azA9wA==
+	bh=Dl+g1ctmNm/J1QWgZ0avd6aMN65GlnOD52dx+w+WHJ4=;
+	b=TLuIDt+vtdBUEkbvHoWI2BP76FOeyz7gFNQUbPO+EVaPwxRL0rRToFPJfCT5HDvshonB
+	 rhzuzV0xYqYBaLwSBEsc5dmyziRitzopciVdqfA2f68RorVBXBxwjguGxJjwnEVGn0xb+
+	 CIiigthsVqv2eJLfxvNVJwBb9Pzt9qWtVg8fs2Ee7By9AXS/tBLmnAUsIlHjmeCk7d4yj
+	 xgoH4eEoZLqlccgEccBu0AskD3OKVsv01ChTqtMcoUfe/9hVxTL67pCGd1F788DffvYU5
+	 2xgMAIIYv43E66HdObjGno6LMLFZQ/QLFZlumjUw8UMjJzd0Vk4pt/ZSVKujhkFVbPQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=blVqQtd9;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lxgwCj3Z;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46ACC606A31A;
-	Wed, 28 Oct 2026 17:47:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04EFA606A31D;
+	Wed, 28 Oct 2026 17:47:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=blVqQtd9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 547011F01825;
-	Wed, 28 Oct 2026 17:47:56 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lxgwCj3Z
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32E081F01825;
+	Wed, 28 Oct 2026 17:47:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793209676;
-	bh=GpWFtEkl+KPNeyaIoQ8Xf1RQHo2K/03tuQFxbPcWlBU=;
+	s=korg; t=1793209679;
+	bh=Dl+g1ctmNm/J1QWgZ0avd6aMN65GlnOD52dx+w+WHJ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=blVqQtd9Cq9V7oDN/ORBMoot6kUEccliqborgaEjc3DSCNanV56GwQBBFbsJuGnrJ
-	 thXaLvM53Q7IDDdgLYLazNCy9RNauVucweZrwZ7jLsyLXlJGKVKlPgC4/vzkQSmvAm
-	 ulwQj2UV8p9tSmnfEDKVPqaIxttdV3dsaGOTm5Fg=
+	b=lxgwCj3ZnYKO8x7AVPG6uFNAR5pSzH1aQppWslDNwOe+onrWzmTL1J/jcQ35GL4qb
+	 s5X2xoqv7Kx2uHtLQIFvwH9dflJxG86ueZi1VZuvvEuIUr3NLNWrjr0C1obGb5qgif
+	 Q5A+/s/oTZbMxqyopc0CIqGpLaqrTvF7NABy+z7o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	"JongHyuk Kim(MalHyuk)" <malhyuk97@gmail.com>,
-	Kyle Zeng <kylebot@openai.com>,
-	Steven Rostedt <rostedt@goodmis.org>
-Subject: [PATCH 6.18 037/109] tracing: Reject incomplete event filter expressions
-Date: Wed, 28 Oct 2026 18:00:21 +0100
-Message-ID: <20261028165943.233777478@linuxfoundation.org>
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Larysa Zaremba <larysa.zaremba@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 004/109] ice: change XDP RxQ frag_size from DMA write length to xdp.frame_sz
+Date: Wed, 28 Oct 2026 17:59:48 +0100
+Message-ID: <20261028165942.463368397@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165942.357251485@linuxfoundation.org>
 References: <20261028165942.357251485@linuxfoundation.org>
@@ -69,85 +69,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kyle Zeng <kylebot@openai.com>
+From: Larysa Zaremba <larysa.zaremba@intel.com>
 
-commit 1fdc4164e488916402badddbb1f51e9380dabb91 upstream.
+[ Upstream commit e142dc4ef0f451b7ef99d09aaa84e9389af629d7 ]
 
-A non-empty expression normally finishes in predicate_parse()'s inner
-loop, which resolves the pending logical operators before jumping to
-finalization. If the input ends after an operator, possibly followed by
-unary '!' tokens, the outer loop instead falls through with unresolved
-operator state.
+The only user of frag_size field in XDP RxQ info is
+bpf_xdp_frags_increase_tail(). It clearly expects whole buff size instead
+of DMA write size. Different assumptions in ice driver configuration lead
+to negative tailroom.
 
-For example, "common_pid == 1 || common_pid == 2 &&" leaves
-prog[0].target equal to -1. The second pass then reads prog[-1] before
-the forward-jump check can reject it. Depending on adjacent slab
-contents, it can also copy an out-of-bounds word into a branch target
-that passes the forward-only check. A self-targeted perf tracepoint
-counting event can reach this path through PERF_EVENT_IOC_SET_FILTER.
+This allows to trigger kernel panic, when using
+XDP_ADJUST_TAIL_GROW_MULTI_BUFF xskxceiver test and changing packet size to
+6912 and the requested offset to a huge value, e.g.
+XSK_UMEM__MAX_FRAME_SIZE * 100.
 
-Reject the outer-loop fallthrough when a predicate has already been
-parsed. This ensures that non-empty expressions only reach finalization
-after the inner loop has resolved their operators. Keep the existing
-no-filter error for input that has no predicates. Add a regression test
-for trailing logical operators and unary negations.
+Due to other quirks of the ZC configuration in ice, panic is not observed
+in ZC mode, but tailroom growing still fails when it should not.
 
-Fixes: 80765597bc587 ("tracing: Rewrite filter logic to be simpler and faster")
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20261023174620.91969-1-kylebot@openai.com
-Assisted-by: Codex:gpt-6-astra
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Tested-by: JongHyuk Kim(MalHyuk) <malhyuk97@gmail.com>
-Signed-off-by: Kyle Zeng <kylebot@openai.com>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Use fill queue buffer truesize instead of DMA write size in XDP RxQ info.
+Fix ZC mode too by using the new helper.
+
+Fixes: 2fba7dc5157b ("ice: Add support for XDP multi-buffer on Rx side")
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Signed-off-by: Larysa Zaremba <larysa.zaremba@intel.com>
+Link: https://patch.msgid.link/20260305111253.2317394-5-larysa.zaremba@intel.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace_events_filter.c                                      |    6 ++
- tools/testing/selftests/ftrace/test.d/filter/event-filter-incomplete.tc |   24 ++++++++++
- 2 files changed, 30 insertions(+)
- create mode 100644 tools/testing/selftests/ftrace/test.d/filter/event-filter-incomplete.tc
+ drivers/net/ethernet/intel/ice/ice_base.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
---- a/kernel/trace/trace_events_filter.c
-+++ b/kernel/trace/trace_events_filter.c
-@@ -595,6 +595,12 @@ predicate_parse(const char *str, int nr_
- 			top--;					/* #12 */
- 		}
- 	}
-+	/* Only the inner loop can complete a non-empty expression. */
-+	if (N) {
-+		ret = -EINVAL;
-+		parse_error(pe, FILT_ERR_INVALID_FILTER, ptr - str);
-+		goto out_free;
-+	}
-  out:
- 	if (top != op_stack) {
- 		/* Too many '(' */
---- /dev/null
-+++ b/tools/testing/selftests/ftrace/test.d/filter/event-filter-incomplete.tc
-@@ -0,0 +1,24 @@
-+#!/bin/sh
-+# SPDX-License-Identifier: GPL-2.0
-+# description: event filter - reject incomplete logical expressions
-+# requires: events/sched/sched_switch/filter
-+# flags: instance
-+
-+filter=events/sched/sched_switch/filter
-+
-+for base in \
-+    'common_pid == 1' \
-+    'common_pid == 1 || common_pid == 2' \
-+    'common_pid == 1 && common_pid == 2' \
-+    '!(common_pid == 1 || common_pid == 2)'
-+do
-+    printf '%s' "$base" > "$filter"
-+    for tail in '&&' '||' '&& !' '|| !' '&& !! ' '|| !! '; do
-+        if printf '%s' "$base $tail" > "$filter" 2>/dev/null; then
-+            echo "Accepted incomplete filter: $base $tail"
-+            exit_fail
-+        fi
-+    done
-+done
-+
-+echo 0 > "$filter"
+diff --git a/drivers/net/ethernet/intel/ice/ice_base.c b/drivers/net/ethernet/intel/ice/ice_base.c
+index cefd0a18c4c04..2e31199546a82 100644
+--- a/drivers/net/ethernet/intel/ice/ice_base.c
++++ b/drivers/net/ethernet/intel/ice/ice_base.c
+@@ -599,7 +599,6 @@ static int ice_vsi_cfg_rxq(struct ice_rx_ring *ring)
+ 	};
+ 	struct device *dev = ice_pf_to_dev(ring->vsi->back);
+ 	u32 num_bufs = ICE_DESC_UNUSED(ring);
+-	u32 rx_buf_len;
+ 	int err;
+ 
+ 	if (ring->vsi->type == ICE_VSI_PF || ring->vsi->type == ICE_VSI_SF ||
+@@ -610,12 +609,12 @@ static int ice_vsi_cfg_rxq(struct ice_rx_ring *ring)
+ 			return err;
+ 
+ 		if (ring->xsk_pool) {
+-			rx_buf_len =
+-				xsk_pool_get_rx_frame_size(ring->xsk_pool);
++			u32 frag_size =
++				xsk_pool_get_rx_frag_step(ring->xsk_pool);
+ 			err = __xdp_rxq_info_reg(&ring->xdp_rxq, ring->netdev,
+ 						 ring->q_index,
+ 						 ring->q_vector->napi.napi_id,
+-						 rx_buf_len);
++						 frag_size);
+ 			if (err)
+ 				return err;
+ 			err = xdp_rxq_info_reg_mem_model(&ring->xdp_rxq,
+@@ -640,7 +639,7 @@ static int ice_vsi_cfg_rxq(struct ice_rx_ring *ring)
+ 			err = __xdp_rxq_info_reg(&ring->xdp_rxq, ring->netdev,
+ 						 ring->q_index,
+ 						 ring->q_vector->napi.napi_id,
+-						 ring->rx_buf_len);
++						 ring->truesize);
+ 			if (err)
+ 				goto err_destroy_fq;
+ 
+-- 
+2.53.0
+
 
 
