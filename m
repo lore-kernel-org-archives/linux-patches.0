@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215281;
-	b=KDZqqTHfS+x8yo+zLG18pLNAudcLKT+wJU/XsH698+mUoI3g2xSMRuFUdon//pGf4IJB
-	 fjCRWLztbFbOR5wnXNZwg1pgwr+1aAm0fo5HrSgN5zOtmmxgCqAK49ritAkd64Er29Aut
-	 wfDQTzRFJhVtZ/9DTE+17xgt1s1B0DDlpm8FakVVoEirPr4S/KNnzZevKFCe/uZSBSugH
-	 raOvbJtCWXP9ZtS/8M/mEy3kuLn/WeFoH75EZzu8m0TPXVEAyLUL7EMHfwzSq9aPSIO7/
-	 nctkgzrBR2Mm8o6pTIWFuUoth6LjiQMVVD6GlQoRDM5PlratbM55GfXd8whKHpNYQ8A==
+	t=1793215284;
+	b=UcXPlIXspOy8S22WWYsD9MSFWk1CC31GaJ9YB3nixLvQqDF//il0nA1R12oD/EA035B4
+	 Sur46su7CHAEFu2slML6zKa4oNJeLH47HN6IV8pvXFEGD3YriGQAkqPdRm4lvcpwBFUpq
+	 Ztr2mk2M3uPWW139M8uluBCvSCU8aEiddMz5UZUh0bbrnmAk24QUixSbyC7gXD0ip0EEC
+	 dw6YJ4/AWX643wyDD03ArEtbgOpTkYyVptDOu90JS66jF8LPW6+zyKFakDX5nYVm7sZYK
+	 XzLzN8EEXz1LbY2sqiT/4qNiHB5lnt9Cn1s51wbuzFT5taHQK6tb316U7uaHg+wlyKg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215281;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215284;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=79LhWZq9+whOi9Bcje2Pu+WxKNSMpAuRbwZaEQB6Rp0=;
-	b=NojG6tm63JN++zUqfRNn2oQVcDVILact2CLrK/3ct82GExZIqZxWff63dCTpbMrW4LUu
-	 WeBwBRCfqAWFeBhAoHatbgPG/hhry/ncPwNoHTkNFIp++liRGK+75E+rOih9s8fypwuEm
-	 btThi2XTLDHcrR/NWMQ8JfMvUAxRSz/Xn9gDT1UwJZTKyW7Ng0TrjHMFz/7yHG+8YYzMi
-	 yVBLdXxLhoMPVg4PjsBKqeEfLWypcOkuCfx8tRzYsbuTWKluHH8JYbs8pmVfIV7DwrvSI
-	 Swp9SV76xAlTFEfervMeJOObDoa2dcMcE5wT0aZSgLhZNGpYApLKrYsKU6zp4tgChzg==
+	bh=NzmbXl/F2F1MUFc+Ca1LnBbRdKZNBU/60Uq6zPxAJoo=;
+	b=ZQmdXI+TqkuZH5zpIq9J5FS3lauQTWnqrMtoXXnIRd5PArCTHKAwraf/yUhxVSRNLrpz
+	 c088bf0XYuZ95leUCHdgTV5fsYfKFVBjlUUcz1KYhxlUnVOFWZoL1cvE8qenE1BK+q07W
+	 6vbWg8VISaxkKZNJl68i3cs8uZsSl2WnWPkmt58fu+spZusDSwU+xN54w5p2j7UB75kBx
+	 i+xQYiyBu2aQUmAK9aPHbwEc8+8ueRbxhFdke2Rf7a3iPi+KvEQmlD2E+OvlKRmQQgkH4
+	 zHghVKOHObX8FtqejqLDgpa9PFGL9CvobGf0WfnBPYRQ/2RJTXcAn83Dp7NG+tWLuhw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bD9f9ep2;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xQkwlUbm;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56517606A31A;
-	Wed, 28 Oct 2026 19:21:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B644606A31A;
+	Wed, 28 Oct 2026 19:21:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bD9f9ep2
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3B2F1F01825;
-	Wed, 28 Oct 2026 19:21:20 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xQkwlUbm
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82AA31F01825;
+	Wed, 28 Oct 2026 19:21:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215281;
-	bh=79LhWZq9+whOi9Bcje2Pu+WxKNSMpAuRbwZaEQB6Rp0=;
+	s=korg; t=1793215284;
+	bh=NzmbXl/F2F1MUFc+Ca1LnBbRdKZNBU/60Uq6zPxAJoo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bD9f9ep2KpNhAnmsvd55uUkyOVAMkvalMmRMhLiywWle+mvEjc62ndhTDh3QPnURc
-	 eIwgeMn544b51IwWzlikXYGAk3NBDhXx0V4JybCOeITBteo+81JIjJSAOp5AYD+Od3
-	 5EMNZ0/j8VZ541X5URfbUcYz0efP/xE97Ug3oVJE=
+	b=xQkwlUbmdH77rlVD39jAVIAN3GKMJywOrcuMfobF54SOn/Pi4X0tP9pkyRmmQyawB
+	 SdhkMoJTrG2A03wNddwNUU0w4fh7cSwjqM+D5DoPIvMpSXAjenRgwZgRD1pXpIQcPF
+	 iGfg/k3ys51hpCoG6KDrIrHm4lJrgsieQ2Mx1StU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavan Chebbi <pavan.chebbi@broadcom.com>,
-	Breno Leitao <leitao@debian.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	stable <stable@kernel.org>,
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1156/1887] netpoll: fix a use-after-free on shutdown path
-Date: Wed, 28 Oct 2026 17:54:12 +0100
-Message-ID: <20261028170525.712931044@linuxfoundation.org>
+Subject: [PATCH 6.1 1157/1887] usb: typec: tcpci_rt1711h: unregister TCPCI port with devres
+Date: Wed, 28 Oct 2026 17:54:13 +0100
+Message-ID: <20261028170525.735004195@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,95 +69,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-[ Upstream commit 45f1458a85017a023f138b22ac5c76abd477db42 ]
+[ Upstream commit e8da46d99d3710106e7c44db14566bf9b57386b5 ]
 
-There is a use-after-free error on netpoll, which is clearly detected by
-KASAN.
+rt1711h_probe() registers the TCPCI port before requesting the interrupt
+and enabling alert interrupts. If either of those later steps fails, the
+probe function returns without unregistering the TCPCI port. The explicit
+unregister currently only happens from the remove callback.
 
-      BUG: KASAN: slab-use-after-free in _raw_spin_lock_irqsave+0x3b/0x80
-      Read of size 1 at addr ... by task kworker/9:1
-      Workqueue: events queue_process
-      Call Trace:
-       skb_dequeue+0x1e/0xb0
-       queue_process+0x2c/0x600
-       process_scheduled_works+0x4b6/0x850
-       worker_thread+0x414/0x5a0
-      Allocated by task 242:
-       __netpoll_setup+0x201/0x4a0
-       netpoll_setup+0x249/0x550
-       enabled_store+0x32f/0x380
-      Freed by task 0:
-       kfree+0x1b7/0x540
-       rcu_core+0x3f8/0x7a0
+Register a devres action immediately after tcpci_register_port() succeeds,
+so tcpci_unregister_port() runs on later probe failures and on driver
+detach. Drop the remove callback to avoid unregistering the same port
+twice.
 
-The problem happens when there is a pending TX worker running in
-parallel with the cleanup path.
+This issue was identified during our ongoing static-analysis research while
+reviewing kernel code.
 
-This is what happens on netpoll shutdown path:
-
-1) __netpoll_cleanup() is called
-2) set dev->npinfo to NULL
-3) call_rcu() with rcu_cleanup_netpoll_info()
-  3.1) rcu_cleanup_netpoll_info() tries to cancel all workers with
-       cancel_delayed_work(), but doesn't wait for the worker to finish
-4) and kfree(npinfo);
-
-Because 3.1) doesn't really cancel the work, as the comment says "we
-can't call cancel_delayed_work_sync here, as we are in softirq", the TX
-worker can run after 4).
-
-Tl;DR: queue_process() is not an RCU reader, it reaches npinfo through
-the work item via container_of().
-
-Use disable_delayed_work_sync() to ensure the worker is completely
-stopped and prevent any future re-arming attempts. Once npinfo is set
-to NULL, senders will bail out and not queue new work. The disable flag
-ensures any in-flight re-arming attempts also fail silently.
-
-In the future, we can do the cleanup inline here without needing the
-npinfo->rcu rcu_head, but that is net-next material.
-
-Cc: stable@vger.kernel.org
-Fixes: 38e6bc185d95 ("netpoll: make __netpoll_cleanup non-block")
-Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Link: https://patch.msgid.link/20260625-netpoll_rcu_fix-v2-1-0748ffac1e98@debian.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 302c570bf36e ("usb: typec: tcpci_rt1711h: avoid screaming irq causing boot hangs")
+Cc: stable <stable@kernel.org>
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Link: https://patch.msgid.link/20260706145312.37260-1-mhun512@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/netpoll.c | 10 ++--------
- 1 file changed, 2 insertions(+), 8 deletions(-)
+ drivers/usb/typec/tcpm/tcpci_rt1711h.c | 13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/net/core/netpoll.c b/net/core/netpoll.c
-index a8957be288039..84ce00940bc85 100644
---- a/net/core/netpoll.c
-+++ b/net/core/netpoll.c
-@@ -830,14 +830,6 @@ static void rcu_cleanup_netpoll_info(struct rcu_head *rcu_head)
- 			container_of(rcu_head, struct netpoll_info, rcu);
- 
- 	skb_queue_purge(&npinfo->txq);
--
--	/* we can't call cancel_delayed_work_sync here, as we are in softirq */
--	cancel_delayed_work(&npinfo->tx_work);
--
--	/* clean after last, unfinished work */
--	__skb_queue_purge(&npinfo->txq);
--	/* now cancel it again */
--	cancel_delayed_work(&npinfo->tx_work);
- 	kfree(npinfo);
+diff --git a/drivers/usb/typec/tcpm/tcpci_rt1711h.c b/drivers/usb/typec/tcpm/tcpci_rt1711h.c
+index d608fefd4f30e..8fdffec401e08 100644
+--- a/drivers/usb/typec/tcpm/tcpci_rt1711h.c
++++ b/drivers/usb/typec/tcpm/tcpci_rt1711h.c
+@@ -327,6 +327,8 @@ static int rt1711h_check_revision(struct i2c_client *i2c, struct rt1711h_chip *c
+ 	return ret;
  }
  
-@@ -863,6 +855,8 @@ void __netpoll_cleanup(struct netpoll *np)
- 			ops->ndo_netpoll_cleanup(np->dev);
++static void rt1711h_unregister_tcpci_port(void *tcpci);
++
+ static int rt1711h_probe(struct i2c_client *client,
+ 			 const struct i2c_device_id *i2c_id)
+ {
+@@ -379,6 +381,10 @@ static int rt1711h_probe(struct i2c_client *client,
+ 	if (IS_ERR_OR_NULL(chip->tcpci))
+ 		return PTR_ERR(chip->tcpci);
  
- 		RCU_INIT_POINTER(np->dev->npinfo, NULL);
-+		synchronize_rcu();
-+		cancel_delayed_work_sync(&npinfo->tx_work);
- 		call_rcu(&npinfo->rcu, rcu_cleanup_netpoll_info);
- 	}
++	ret = devm_add_action_or_reset(chip->dev, rt1711h_unregister_tcpci_port, chip->tcpci);
++	if (ret)
++		return ret;
++
+ 	ret = devm_request_threaded_irq(chip->dev, client->irq, NULL,
+ 					rt1711h_irq,
+ 					IRQF_ONESHOT | IRQF_TRIGGER_LOW,
+@@ -396,11 +402,9 @@ static int rt1711h_probe(struct i2c_client *client,
+ 	return 0;
  }
+ 
+-static void rt1711h_remove(struct i2c_client *client)
++static void rt1711h_unregister_tcpci_port(void *tcpci)
+ {
+-	struct rt1711h_chip *chip = i2c_get_clientdata(client);
+-
+-	tcpci_unregister_port(chip->tcpci);
++	tcpci_unregister_port(tcpci);
+ }
+ 
+ static const struct i2c_device_id rt1711h_id[] = {
+@@ -425,7 +429,6 @@ static struct i2c_driver rt1711h_i2c_driver = {
+ 		.of_match_table = of_match_ptr(rt1711h_of_match),
+ 	},
+ 	.probe = rt1711h_probe,
+-	.remove = rt1711h_remove,
+ 	.id_table = rt1711h_id,
+ };
+ module_i2c_driver(rt1711h_i2c_driver);
 -- 
 2.53.0
 
