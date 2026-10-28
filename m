@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214510;
-	b=cwAW0VxEhPcJS0ubi7U7lfaITgHu3AR0Z/5UrSnQJwaoE/jU8P5reedKLlw6VC78zBwU
-	 3YLzoY+wLqOg0I66oyZtcskfZp6JrBOe7IhAdTfImYDvWB5W3XgM4Gc46XUgvjYYA26eH
-	 Enx3sEpRattbg2FqsDCNS9VTeFezFNRnrYGTERDEpMPlo5A82ANjWu/53mo+tJEFNm2v+
-	 qoliF6i2/OhDpaQhkFIVZijdhVmRrGsZHDh/xvnFJ/P5gbDk5Uiv0FldtUkjU20/NXXvt
-	 gdeEbiTlbuDWu1mpzFn3YsLiVvTZhd+EYXLb+Q//l+GsI5c3+rZRl1LW2eG20scw5tA==
+	t=1793214513;
+	b=s4gfj5bVWPbjsXC6V+tsjqgWgc8pPd5uBLnhg1HGAj2VAgUOKdspD4pnH3Wyu+FUNGwV
+	 Ouu92OttWVM4gBy8jsavpfR82VeuRr2QrPMfU2zeFw4xcIJBOlRIp88uS2OjdDw9tz9Bm
+	 uRk5iO4QLbEugiKBf2bY2c/L5cY74TNVM+CJEIScs2x9JNo1g4zOHEKiXE+5fQ3J0TdFg
+	 O8/92TS+oj+7tlkmBhKsBxWY3O1aMIKJCgbwXrV2wAbbJ5fox4G9B+oW1KM4yru923ZeV
+	 vB12xjz4RzfPGSxG1k5ulhZGa0iqEgOPsemxu/M5g1+2tCgVtUQ+F/y/8qoRyiZBi4w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214510;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214513;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=H1Be75+ilEYyMy9Bn7uo/lPDkY+sMDnuN3zfxmoiixY=;
-	b=SfhSTXzUso/U95OD/e4cwhI4i/WbUEc/1zhU4Db2583UCHAAFhguLD5Cz4xhW2ACWZc8
-	 G8vRFJkIt9OL7y8XefFQCh+ltQLdcKfWtgDqyNctJ/FZkNzHGidXHgveaFRHlXVM/O1jY
-	 F7Jd4cqxqDmU4ApeGIG0IriIdkpeFDSKq3P8ONewbId8JdlYmc1U+/fnfcD3p2fZwGzVl
-	 nG1tyH5gbhP9wEwpl8LAUMRCp8KF93yxmuWPWyt4Xl0oi4+BH32Kppf87n0M0E3nn+1ku
-	 Eyp5lG4zS1wbhcCXTfyAmzPdGGGAvC02cOgPgG0F3Ea66mXzXJb9LmMgEFWCIhvjsxA==
+	bh=EjQ9vXECIlMTEhlZswhkpXWAytNgF9nps1E+dL7koz8=;
+	b=IpUAlnryQEEhbMSwkKPuIlfUllaWjN/LKVZz/O/E74VwC7n2NlJ4d0tS9u3GskPRigUH
+	 qLaO5zbADBDW6m6eeiXTOljeBXdBzTb5HQC3BeEwWg3nvK926T18Ow7nSZuud3WhOsLYh
+	 cH0CuRGsmjnbUitnNaGsuaoerhZp5jrMshooBb5wO8uSF13mpo6vA7mjGBYSHsdMadcN9
+	 2pcDkUj48hlmKtHyEKZ6+evrAEQNy7lO0qUWZn5gKm7PXEq94j4Xi0PanWAWOBhLSL+Lo
+	 tlOc+FCef1WntPC0DCdIRaq+5b9qcktmX8+DrCA4v9KESgjUfFs5OqLREyyJNc9zyYw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rAjz8Rvk;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="L522/AIO";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DF72606BFBD;
-	Wed, 28 Oct 2026 19:08:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21C0A606BF8F;
+	Wed, 28 Oct 2026 19:08:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rAjz8Rvk
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EF001F031E6;
-	Wed, 28 Oct 2026 19:08:29 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L522/AIO
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 394381F01828;
+	Wed, 28 Oct 2026 19:08:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214509;
-	bh=H1Be75+ilEYyMy9Bn7uo/lPDkY+sMDnuN3zfxmoiixY=;
+	s=korg; t=1793214512;
+	bh=EjQ9vXECIlMTEhlZswhkpXWAytNgF9nps1E+dL7koz8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rAjz8RvkaLQHQpg/k4VDmIMO0EnPnkxPRPF7XFt4R9qf++BFjZs3Gp+EeKqvYBDbA
-	 5kMG9erd40ta9WRKopL5344pH67atxmCxeeJxkwo6zkpYeEKCudycx8VNfaDYotzPQ
-	 5PeY6Eecu7vHzvxa3F5GRfOuGhLrM+82Cb3to92I=
+	b=L522/AIOpCP4AaWJTll+3Pufz+3ACJ4AWP2vn/MKNC52/N4VQAe8nsBiUEbY+GG33
+	 kem0pu1VAfU92uk7eYUWuLDa2JDQbqB98ooEEcTxeKBfEYATp4fVqjVi3ro6cfEYs3
+	 AH98UFdMcUPzIfanbYFL7Irc3ugFUJrr+kRC8qDw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiao Ni <xni@redhat.com>,
-	Coly Li <colyli@kernel.org>,
-	Yu Kuai <yukuai3@huawei.com>,
+	Jay Shin <jaeshin@redhat.com>,
+	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
+	Henrique Carvalho <henrique.carvalho@suse.com>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0883/1887] md/raid10: wait barrier before returning discard request with REQ_NOWAIT
-Date: Wed, 28 Oct 2026 17:49:39 +0100
-Message-ID: <20261028170519.514929217@linuxfoundation.org>
+Subject: [PATCH 6.1 0884/1887] smb: client: fix potential UAF in smb2_close_cached_fid()
+Date: Wed, 28 Oct 2026 17:49:40 +0100
+Message-ID: <20261028170519.538619343@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,42 +70,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiao Ni <xni@redhat.com>
+From: Henrique Carvalho <henrique.carvalho@suse.com>
 
-[ Upstream commit 3db4404435397a345431b45f57876a3df133f3b4 ]
+[ Upstream commit 734e99623c5b65bf2c03e35978a0b980ebc3c2f8 ]
 
-raid10_handle_discard should wait barrier before returning a discard bio
-which has REQ_NOWAIT. And there is no need to print warning calltrace
-if a discard bio has REQ_NOWAIT flag. Quality engineer usually checks
-dmesg and reports error if dmesg has warning/error calltrace.
+find_or_create_cached_dir() could grab a new reference after kref_put()
+had seen the refcount drop to zero but before cfid_list_lock is acquired
+in smb2_close_cached_fid(), leading to use-after-free.
 
-Fixes: c9aa889b035f ("md: raid10 add nowait support")
-Signed-off-by: Xiao Ni <xni@redhat.com>
-Acked-by: Coly Li <colyli@kernel.org>
-Link: https://lore.kernel.org/linux-raid/20250306094938.48952-1-xni@redhat.com
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Switch to kref_put_lock() so cfid_release() is called with
+cfid_list_lock held, closing that gap.
+
+Fixes: ebe98f1447bb ("cifs: enable caching of directories for which a lease is held")
+Cc: stable@vger.kernel.org
+Reported-by: Jay Shin <jaeshin@redhat.com>
+Reviewed-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
+Signed-off-by: Henrique Carvalho <henrique.carvalho@suse.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid10.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ fs/smb/client/cached_dir.c | 16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/md/raid10.c b/drivers/md/raid10.c
-index 508b461eabe88..82562c49a14e2 100644
---- a/drivers/md/raid10.c
-+++ b/drivers/md/raid10.c
-@@ -1676,11 +1676,10 @@ static int raid10_handle_discard(struct mddev *mddev, struct bio *bio)
- 	if (test_bit(MD_RECOVERY_RESHAPE, &mddev->recovery))
- 		return -EAGAIN;
+diff --git a/fs/smb/client/cached_dir.c b/fs/smb/client/cached_dir.c
+index baca533953fd1..3ff56321b7a1e 100644
+--- a/fs/smb/client/cached_dir.c
++++ b/fs/smb/client/cached_dir.c
+@@ -354,7 +354,7 @@ int open_cached_dir(unsigned int xid, struct cifs_tcon *tcon,
+ 			 */
+ 			cfid->has_lease = false;
+ 			spin_unlock(&cfids->cfid_list_lock);
+-			kref_put(&cfid->refcount, smb2_close_cached_fid);
++			close_cached_dir(cfid);
+ 			goto out;
+ 		}
+ 		spin_unlock(&cfids->cfid_list_lock);
+@@ -399,12 +399,14 @@ int open_cached_dir_by_dentry(struct cifs_tcon *tcon,
  
--	if (WARN_ON_ONCE(bio->bi_opf & REQ_NOWAIT)) {
-+	if (!wait_barrier(conf, bio->bi_opf & REQ_NOWAIT)) {
- 		bio_wouldblock_error(bio);
- 		return 0;
+ static void
+ smb2_close_cached_fid(struct kref *ref)
++__releases(&cfid->cfids->cfid_list_lock)
+ {
+ 	struct cached_fid *cfid = container_of(ref, struct cached_fid,
+ 					       refcount);
+ 	int rc;
+ 
+-	spin_lock(&cfid->cfids->cfid_list_lock);
++	lockdep_assert_held(&cfid->cfids->cfid_list_lock);
++
+ 	if (cfid->on_list) {
+ 		list_del(&cfid->entry);
+ 		cfid->on_list = false;
+@@ -439,7 +441,7 @@ void drop_cached_dir_by_name(const unsigned int xid, struct cifs_tcon *tcon,
+ 	spin_lock(&cfid->cfids->cfid_list_lock);
+ 	if (cfid->has_lease) {
+ 		cfid->has_lease = false;
+-		kref_put(&cfid->refcount, smb2_close_cached_fid);
++		close_cached_dir(cfid);
  	}
--	wait_barrier(conf, false);
+ 	spin_unlock(&cfid->cfids->cfid_list_lock);
+ 	close_cached_dir(cfid);
+@@ -448,7 +450,7 @@ void drop_cached_dir_by_name(const unsigned int xid, struct cifs_tcon *tcon,
  
- 	/*
- 	 * Check reshape again to avoid reshape happens after checking
+ void close_cached_dir(struct cached_fid *cfid)
+ {
+-	kref_put(&cfid->refcount, smb2_close_cached_fid);
++	kref_put_lock(&cfid->refcount, smb2_close_cached_fid, &cfid->cfids->cfid_list_lock);
+ }
+ 
+ /*
+@@ -510,10 +512,10 @@ void invalidate_all_cached_dirs(struct cifs_tcon *tcon)
+ 			spin_lock(&cfids->cfid_list_lock);
+ 			cfid->has_lease = false;
+ 			spin_unlock(&cfids->cfid_list_lock);
+-			kref_put(&cfid->refcount, smb2_close_cached_fid);
++			close_cached_dir(cfid);
+ 		}
+ 		/* Drop the extra reference opened above*/
+-		kref_put(&cfid->refcount, smb2_close_cached_fid);
++		close_cached_dir(cfid);
+ 	}
+ }
+ 
+@@ -526,7 +528,7 @@ smb2_cached_lease_break(struct work_struct *work)
+ 	spin_lock(&cfid->cfids->cfid_list_lock);
+ 	cfid->has_lease = false;
+ 	spin_unlock(&cfid->cfids->cfid_list_lock);
+-	kref_put(&cfid->refcount, smb2_close_cached_fid);
++	close_cached_dir(cfid);
+ }
+ 
+ int cached_dir_lease_break(struct cifs_tcon *tcon, __u8 lease_key[16])
 -- 
 2.53.0
 
