@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793211280;
-	b=nAvyUCkrcfwZGcCh0bqQKZtS8UucRj5sDBJM0s8eQ8AyU+7uT4d5zEgfbU2S1DOqnSa6
-	 3g6LaWSl00fkGOfuTXbW4oJFH0xz2l6KZhZH/83VTyPo1pmZzarHd1EnprkyEbjs4uttq
-	 0ffpQiwbEVZCZQHnbAjUFCMfAxtUbP0YI1N5MuVEACb1zLUvKCaZI1quiv1NjMMvT1+Bw
-	 SKFu760JlWPBNVsHgBmaLRtJ7CDm7hmFNazRAf4mDGGQw6knxcjwBDwEEn77C2Ac6n7nD
-	 73Uh/H5YlFuDLArhlx2RBq7z9qg59oMd4pxjNUZJWhG35NpCv6s9zSSlJGUOthPoW3A==
+	t=1793211283;
+	b=VlEt+E34RGGffyIs9s2taCAViLX5nnc1z792aULAP/KpMJNNaMjIxmf+XXtn+dHdnaAT
+	 p3hFAIcfe0oz9JQ1omZ4IUaXJprmJShxqYKKtqtdfV1Vql72dl51Ay+65+VBB3coOeFRd
+	 IbR+mRBQ1eTNahvVaLzSa+RQEYtNFPUiR8xxo1Qo6WsAUDfGG501tTZY/rB1ixVFuhjqE
+	 US/5kMIeF63UwfgGH+bU6VZ7R5e5y9tPSnTGUtYZGfxZa9Shn0JFljGZJV+Vwwqjx0WDU
+	 cS9cxqfkUP3mLmL5EMFagw50tmFsGpBFhBVVqtVVXNufKorfiUpt7M98aGTATikyFNA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793211280;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793211283;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=yi5XPZ4jwZQaGoUoUTWkamGMMMkkmZHISPnZbVqJoaw=;
-	b=DspK8VlaNhjzEcpFIyE53CU0qeEE4vZeUTp1/u1ItEM5smEvH8rRn2wiTROKfumFwkL0
-	 pQV1KCUIDUqSEjCIez0mnwSYUHjaUieTMpJMlma67U3VSXEYulD1Trg/i43NiOb+9Q4Fu
-	 ll/ioCJakvosVBeBlXjFzjrfIe5xzmJTdP1KA1Za3/NsEIFw4z0nChFapyYnqd98gl5Mz
-	 Fhzhx3eV6MCMDWVLkoogxFEibOOnJWwO4Ru2fiUDNbKCsEKRLodsEGMfyYYv832+N8jP6
-	 O39chIGWT/SZupLfnhecIxchdAUHZuKjrCsFzhFuoroQv/krdikJjLTbtuqEJMUhyHg==
+	bh=P+NJaNTUVieKGlh0Zjmr/QGhqszBIHQK9FLgs/jljjo=;
+	b=WwSbppt2IBLopnKWy+pZhPM9gXJw6p0lB+Sr2ykgmluhtLx0+lIFYXOeLWRr7tdz9+pQ
+	 lfUrC5GE6MTm/kd6NTjc9k74+Y0xp/Dr5yumdXo3n7bmNzn/hYHz+qULS3V0pCpqTU/Cf
+	 49e8Hv2HxBW1Q62F680tdHyCIRDELo50uO2yzHSoR6aoLki5nKun4GWLotrhtnLoQbSq7
+	 ql6jgTenVJqkJidJNIZ3JimMPSZDsjQMvU18QflxKyeP3Em5081E0QzmUQjzPlEiQ4sw+
+	 F3ncJHXFtjMSdYA9QLS3SbyQom4uc19fmT1EvJX6qsnLfU4nSETsJXFSeckHI5qX/7w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xKTYDe8N;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="IXipnn/H";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3284E60A381E;
-	Wed, 28 Oct 2026 18:14:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06B4160A383B;
+	Wed, 28 Oct 2026 18:14:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xKTYDe8N
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 842E81F01825;
-	Wed, 28 Oct 2026 18:14:39 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IXipnn/H
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 588851F01828;
+	Wed, 28 Oct 2026 18:14:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793211280;
-	bh=yi5XPZ4jwZQaGoUoUTWkamGMMMkkmZHISPnZbVqJoaw=;
+	s=korg; t=1793211282;
+	bh=P+NJaNTUVieKGlh0Zjmr/QGhqszBIHQK9FLgs/jljjo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xKTYDe8NLQLiC30X7cTCSsf9g8RNmlo8CmgKinBxu58FWZr3X5Aw3Zh9pye4AyZbV
-	 JXgyMM1F09o7XFzMqmGmKoE+hnzUnzu3AmTJ0jql6D60VLjxLekzkzXNu4HAUKG1yn
-	 YQ4Tv2Sarn4lF83AxL/kcvzD15LLj/KC31Kw1OY4=
+	b=IXipnn/HZKmFdgfLXCa52KVrCyvohDKQzaC7zyPTjalI5A63vA8tQrX37QEjXh5y1
+	 O/FMwBTO2HF7gieD6E3x8CyilkcY3Cg/nbOVFeWq7IUlb1KrshfEdJmBs/Efgjeiqt
+	 TMFXzRjkZ6N4eGEsQP728Ly+PA89ZciMrtm0xUiM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tristan Madani <tristan@talencesecurity.com>,
-	Loic Poulain <loic.poulain@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Roman Demidov <roman.demidov.nn@gmail.com>
-Subject: [PATCH 5.15 278/571] wifi: wcn36xx: fix heap overflow from oversized firmware HAL response
-Date: Wed, 28 Oct 2026 17:57:05 +0100
-Message-ID: <20261028170014.600491739@linuxfoundation.org>
+	Chris Mason <clm@meta.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 269/571] SUNRPC: reject duplicate CREDS_VALUE options
+Date: Wed, 28 Oct 2026 17:56:56 +0100
+Message-ID: <20261028170014.385904496@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -70,41 +69,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tristan Madani <tristan@talencesecurity.com>
+From: Chris Mason <clm@meta.com>
 
-commit 88a240d86d3d64521f9194abe185ac71cc74d0bd upstream.
+[ Upstream commit 2e4ce62385c1b8a887c5370af058ac7b52a8eaf9 ]
 
-The firmware response dispatcher copies all synchronous HAL responses
-into the 4096-byte hal_buf without validating the response length. A
-response exceeding WCN36XX_HAL_BUF_SIZE causes a heap buffer overflow
-with firmware-controlled content.
+gssx_dec_option_array() walks the wire-supplied option array and, for
+every entry whose name matches CREDS_VALUE, calls
+gssx_dec_linux_creds() on the same struct svc_cred. That helper
+unconditionally installs a fresh groups_alloc() result into
+creds->cr_group_info without releasing whatever pointer was already
+there:
 
-Add a bounds check on the response length.
+    for (i = 0; i < count; i++) {
+        ... decode name ...
+        if (length == sizeof(CREDS_VALUE) &&
+            memcmp(p, CREDS_VALUE, sizeof(CREDS_VALUE)) == 0) {
+            err = gssx_dec_linux_creds(xdr, creds);
+            ...
+        }
+    }
 
-Fixes: 8e84c2582169 ("wcn36xx: mac80211 driver for Qualcomm WCN3660/WCN3680 hardware")
-Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
-Reviewed-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260421135018.352774-2-tristmd@gmail.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+A reply that carries two CREDS_VALUE entries therefore overwrites
+cr_group_info on the second iteration and orphans the group_info
+allocated by the first call. The earlier free_creds path only
+releases the last cr_group_info via free_svc_cred(), so the first
+allocation's refcount stays at one and its kvmalloc-backed storage
+is leaked. No in-tree caller of gssp_accept_sec_context_upcall()
+expects more than one CREDS_VALUE per reply.
+
+Fix by tracking whether a CREDS_VALUE option has already been
+decoded and returning -EINVAL on any subsequent match, so the
+free_creds path releases the single group_info that was installed.
+
+Fixes: 1d658336b05f ("SUNRPC: Add RPC based upcall mechanism for RPCGSS auth")
+Cc: stable@vger.kernel.org
+Assisted-by: kres (claude-opus-4-7)
+Signed-off-by: Chris Mason <clm@meta.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Link: https://patch.msgid.link/20260528-tier2-v1-3-d026a1415e0b@oracle.com
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Roman Demidov <roman.demidov.nn@gmail.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/ath/wcn36xx/smd.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ net/sunrpc/auth_gss/gss_rpc_xdr.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/net/wireless/ath/wcn36xx/smd.c
-+++ b/drivers/net/wireless/ath/wcn36xx/smd.c
-@@ -3174,6 +3174,10 @@ int wcn36xx_smd_rsp_process(struct rpmsg
- 	case WCN36XX_HAL_GTK_OFFLOAD_GETINFO_RSP:
- 	case WCN36XX_HAL_HOST_RESUME_RSP:
- 	case WCN36XX_HAL_UPDATE_CHANNEL_LIST_RSP:
-+		if (len > WCN36XX_HAL_BUF_SIZE) {
-+			wcn36xx_warn("HAL response too large: %d\n", len);
-+			break;
-+		}
- 		memcpy(wcn->hal_buf, buf, len);
- 		wcn->hal_rsp_len = len;
- 		complete(&wcn->hal_rsp_compl);
+diff --git a/net/sunrpc/auth_gss/gss_rpc_xdr.c b/net/sunrpc/auth_gss/gss_rpc_xdr.c
+index ac9ae42a69762..967943ae61c62 100644
+--- a/net/sunrpc/auth_gss/gss_rpc_xdr.c
++++ b/net/sunrpc/auth_gss/gss_rpc_xdr.c
+@@ -231,6 +231,7 @@ static int gssx_dec_option_array(struct xdr_stream *xdr,
+ 				 struct gssx_option_array *oa)
+ {
+ 	struct svc_cred *creds;
++	bool creds_decoded = false;
+ 	u32 count, i;
+ 	__be32 *p;
+ 	int err;
+@@ -281,9 +282,14 @@ static int gssx_dec_option_array(struct xdr_stream *xdr,
+ 		if (length == sizeof(CREDS_VALUE) &&
+ 		    memcmp(p, CREDS_VALUE, sizeof(CREDS_VALUE)) == 0) {
+ 			/* We have creds here. parse them */
++			if (creds_decoded) {
++				err = -EINVAL;
++				goto free_creds;
++			}
+ 			err = gssx_dec_linux_creds(xdr, creds);
+ 			if (err)
+ 				goto free_creds;
++			creds_decoded = true;
+ 			oa->data[0].value.len = 1; /* presence */
+ 		} else {
+ 			/* consume uninteresting buffer */
+-- 
+2.53.0
+
 
 
