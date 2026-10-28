@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793210521;
-	b=uwV8KEnG5dDebpPs3j5Y8eqFC27c/pzjZOxn8fNhafXGzITTItkulIoU6MMpbW361pXz
-	 BQeYloIWXAKnmi2arUwdzMi1BotN1hz9F+pbhcD3Jh7yk0ahjj6VBp1tL+cwVq/lPtotx
-	 v1J0U6xlTtJaVzA8FViAcYldBLGPY8SmIsUyWlrbCKUTKpFQPc6x+kQCiLu0EkcIO05xE
-	 LlXEjGsywEImzQDBTKnsPiLpwZ2eba30URbtAwE1QV//VGEPiSAScc2df54NvtaoR3yp9
-	 oeVJcdmFj2FDFf3JL1RJGbfsjTCE8dfVl6RxGCnwx4ZW51R5WcJhW4sh6aCbopGaTSw==
+	t=1793210524;
+	b=x/qV6Y6r4CjsxKDj5kdYqCQ8QmFw6K6vK2u3LgerB2hhXGdU5ANRUIZRMa+59t/s8H49
+	 MNdxpkp6oRNTdf6HA6ue7+36PTgBlSUyVYC0Rcta8OuVflU4jMSVOPQGISlbPfagEsMLt
+	 WvpCXVdKFWj1UAr2OVNMD5NcFNBk5QIxwxRSj7dKWscj7dIG6ho7dhtPw7w1oa38FRaOc
+	 uLkLnKZgCnkI0vxKRR6npruvH2el/AJCNRkXflAlQvvXpMnfRdr7GtxgGdWGRrE7MGTN0
+	 57Fbd1cLukf04TE6DKiW5YorSZ3i/LPVayyIQNzGCytW0YNe0SFHUtdMFaaRiIftF9w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793210521;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793210524;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=MHdHYTKw9lT8F5Xg8Ra+kuYzELjwVUeUCP4FV2igIF4=;
-	b=HVahshyQiBGNFYzCfrul5xxmCGtd4oPKmulBE+TbtCyry4DXDxq7oDvrJcSzbN1TlBKO
-	 ibXzQHmLlu9JQosfcYUyCxFLekrAkmZc6w/TaIyCfig+foSBBh9+79lPJPWs7qZEdb4ai
-	 4FPczHK5bsvM0zTnh94aUDOZZHlG4oSYd44S51dTP+jugJJJMyZ4CcCq8feQpxiFJUyPs
-	 VL1AiAOZyK9p8GTDeZyBQyLumLJ3SufHYGK3WC3OSFhhRfUVctOgkP/BPx8W9zzkLLTCc
-	 ppCoZDLyMgU8FQLRClOt/IefKbpbG64B2cq+HIROMYeQ04vmb4uxsrZkckd+xBzqraw==
+	bh=u5+kA/9WTRey4pFnpcqhFmD6lkM/R8QE0btA/5DjZVY=;
+	b=DX6iHj6sc+lqZlEDvEsdiZLzyQj7JeVY/Hg7toBTlKpa14WNHoCpiq03CGMULuCRGvF1
+	 +XUx07zzsFxR6lv0MnuKcqdALG8H34nYDh6oFvS8uXqGO9eZhfeq2YVb7TVtelk+MrX1B
+	 zPeQfSpqEPiRfz0MYPE7VRXPcW4zuvqKWt+3baIQ1Q3MvRPFV/nblTON3vpPpVjnukW+e
+	 h+QcOh9tz5SBAzXp+zsgCa4LhyC50oJ6VWq1HFcDiTChjvszmwL3jUK8TtVNIu7xjMiBF
+	 2gVXnqHED3iXwEXzEmLYDjd+pULZKBYwpZMw/8/Znc/IoqGnWCx1VG2Tpbs6NFAPTIQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vndBTqTL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iFq4Rex7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17C8A606A31D;
-	Wed, 28 Oct 2026 18:02:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A93DD606A336;
+	Wed, 28 Oct 2026 18:02:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vndBTqTL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 332C41F01829;
-	Wed, 28 Oct 2026 18:02:00 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iFq4Rex7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 069D21F031E0;
+	Wed, 28 Oct 2026 18:02:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793210520;
-	bh=MHdHYTKw9lT8F5Xg8Ra+kuYzELjwVUeUCP4FV2igIF4=;
+	s=korg; t=1793210523;
+	bh=u5+kA/9WTRey4pFnpcqhFmD6lkM/R8QE0btA/5DjZVY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vndBTqTLf//AbRwlx2sKaITYQJPwihzgyu6KgvhsfloQn1EROk4w9VYywGUWGBEET
-	 rrV4cFzgdA/Q/Z5fnFWs9eKSd0aD8dhdF4ANmTm+aQI7nPo0TkDVSmmH3OkBF6Qq11
-	 43IZAct77S3Yb8uA7qBVUiPgSgQC6Ab51jtuV3Ig=
+	b=iFq4Rex7b3cr1QFZVv0yk9hWISyeyKrMX5QDsk+0DqeUweG7xZ3PALTwZF7MO0XNZ
+	 YWY+jqLpU4S8RqmvBkIOlCd2vVOauTcSLlyp6UWVmP27F7i9wPPax192LRbYQzkyG8
+	 +yJ/wayBQRZiKfh7nUuHgLp2I50MsJydESQZ9W6s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Sorenson <sorenson@redhat.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Paulo Alcantara <pc@manguebit.org>,
+	Kuan-Wei Chiu <visitorckw@gmail.com>,
+	James Clark <james.clark@linaro.org>,
+	Suzuki K Poulose <suzuki.poulose@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 055/571] cifs: fix loff_t underflow in cifs_remap_file_range() when len == 0
-Date: Wed, 28 Oct 2026 17:53:22 +0100
-Message-ID: <20261028170009.333986258@linuxfoundation.org>
+Subject: [PATCH 5.15 056/571] coresight: etm3x: Fix cntr_val_show() to match cntr_val_store() behavior
+Date: Wed, 28 Oct 2026 17:53:23 +0100
+Message-ID: <20261028170009.356850305@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -69,69 +69,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Frank Sorenson <sorenson@redhat.com>
+From: Kuan-Wei Chiu <visitorckw@gmail.com>
 
-[ Upstream commit 6c322f5cf7476ded7a9a20f7be72462065a03c68 ]
+[ Upstream commit 41fb4e925528aefa4b7a5f76c7f81db99c0d0f38 ]
 
-With len == 0 (clone to EOF), the effective length is computed as:
+The cntr_val_show() function was intended to print the values of all
+counters using a loop. However, due to a buffer overwrite issue with
+sprintf(), it effectively only displayed the value of the last counter.
 
-    len = src_inode->i_size - off;
+The companion function, cntr_val_store(), allows users to modify a
+specific counter selected by 'cntr_idx'. To maintain consistency
+between read and write operations and to align with the ETM4x driver
+behavior, modify cntr_val_show() to report only the value of the
+currently selected counter.
 
-If off > i_size, this is a negative loff_t, corrupting the ByteCount
-in the FSCTL_DUPLICATE_EXTENTS_TO_FILE request and inverting the range
-in filemap_write_and_wait_range().  The existing off >= i_size check
-fires only after the ioctl has already been sent.
+This change removes the loop and the "counter %d:" prefix, printing
+only the hexadecimal value. It also adopts sysfs_emit() for standard
+sysfs output formatting.
 
-Snapshot i_size_read() once for both the bounds check and the length
-calculation, eliminating the TOCTOU and 32-bit torn-read risk.  Reject
-off > src_size with -EINVAL.  Treat off == src_size as a no-op,
-consistent with __generic_remap_file_range_prep().
-
-Fixes: 04b38d601239 ("vfs: pull btrfs clone API to vfs layer")
+Fixes: a939fc5a71ad ("coresight-etm: add CoreSight ETM/PTM driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Frank Sorenson <sorenson@redhat.com>
-Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
-[ added the missing unlock label at the existing common unlock path ]
+Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
+Reviewed-by: James Clark <james.clark@linaro.org>
+Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+Link: https://lore.kernel.org/r/20251202082613.3265761-1-visitorckw@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/cifs/cifsfs.c | 16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+ .../hwtracing/coresight/coresight-etm3x-sysfs.c   | 15 ++++-----------
+ 1 file changed, 4 insertions(+), 11 deletions(-)
 
-diff --git a/fs/cifs/cifsfs.c b/fs/cifs/cifsfs.c
-index 7bdeaecc6c508..e3572c30be4f9 100644
---- a/fs/cifs/cifsfs.c
-+++ b/fs/cifs/cifsfs.c
-@@ -1171,8 +1171,19 @@ static loff_t cifs_remap_file_range(struct file *src_file, loff_t off,
- 	 */
- 	lock_two_nondirectories(target_inode, src_inode);
+diff --git a/drivers/hwtracing/coresight/coresight-etm3x-sysfs.c b/drivers/hwtracing/coresight/coresight-etm3x-sysfs.c
+index e8c7649f123e7..30fae661090fe 100644
+--- a/drivers/hwtracing/coresight/coresight-etm3x-sysfs.c
++++ b/drivers/hwtracing/coresight/coresight-etm3x-sysfs.c
+@@ -716,26 +716,19 @@ static DEVICE_ATTR_RW(cntr_rld_event);
+ static ssize_t cntr_val_show(struct device *dev,
+ 			     struct device_attribute *attr, char *buf)
+ {
+-	int i, ret = 0;
+ 	u32 val;
+ 	struct etm_drvdata *drvdata = dev_get_drvdata(dev->parent);
+ 	struct etm_config *config = &drvdata->config;
  
--	if (len == 0)
--		len = src_inode->i_size - off;
-+	if (len == 0) {
-+		loff_t src_size = i_size_read(src_inode);
-+
-+		if (off > src_size) {
-+			rc = -EINVAL;
-+			goto unlock;
-+		}
-+		len = src_size - off;
-+		if (!len) {
-+			rc = 0;
-+			goto unlock;
-+		}
-+	}
+ 	if (!local_read(&drvdata->mode)) {
+ 		spin_lock(&drvdata->spinlock);
+-		for (i = 0; i < drvdata->nr_cntr; i++)
+-			ret += sprintf(buf, "counter %d: %x\n",
+-				       i, config->cntr_val[i]);
++		val = config->cntr_val[config->cntr_idx];
+ 		spin_unlock(&drvdata->spinlock);
+-		return ret;
+-	}
+-
+-	for (i = 0; i < drvdata->nr_cntr; i++) {
+-		val = etm_readl(drvdata, ETMCNTVRn(i));
+-		ret += sprintf(buf, "counter %d: %x\n", i, val);
++	} else {
++		val = etm_readl(drvdata, ETMCNTVRn(config->cntr_idx));
+ 	}
  
- 	cifs_dbg(FYI, "about to flush pages\n");
- 	/* should we flush first and last page first */
-@@ -1188,6 +1199,7 @@ static loff_t cifs_remap_file_range(struct file *src_file, loff_t off,
- 	/* force revalidate of size and timestamps of target file now
- 	   that target is updated on the server */
- 	CIFS_I(target_inode)->time = 0;
-+unlock:
- 	/* although unlocking in the reverse order from locking is not
- 	   strictly necessary here it is a little cleaner to be consistent */
- 	unlock_two_nondirectories(src_inode, target_inode);
+-	return ret;
++	return sysfs_emit(buf, "%#x\n", val);
+ }
+ 
+ static ssize_t cntr_val_store(struct device *dev,
 -- 
 2.53.0
 
