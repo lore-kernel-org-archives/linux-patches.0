@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793208633;
-	b=Lct0TjOiGNxFP9ohImM6rnxIPukYb0gZM7NqXT4iVEtTpk10mzCz5hAY2rwllIITCgLS
-	 kIbdavuPOglmT3pTQLlPwaCX/v6prhCJHQmasybW0UqaYgPNxo6Fu+3nGLMhmNBAfskv+
-	 POgjGKwNNZyQ5l0+ARNzmSx7rgBYcL/7vJVRGNZda2zyJLtxQdRamznVLmGK+BaKf18zn
-	 E/xPOBigq0mXiHxbH5mYUiYM9yR2PINqdHmSSJiWHHBDYwUpKHJYh4HdEW5HRTHe021e7
-	 g22cfFRSb6Lx9YAt5/vaN04OpaYqB0vBFj/eiHs9vujD3Rzp17c6auuN6bWl+fJ4fHQ==
+	t=1793208636;
+	b=aTSiRe8hgkHzrCN6Eldo8Is7I3qPpMLu8DswX4eAzIwUCmYpQbqnYUJglMO/C48NOgPT
+	 KUzgC6/HVD5DujrJ86qATKYz4/HZaOxHquFcof6DujnJXtEATMPcaAj8rS268yjSZ93cm
+	 bIqd4TCeTTFeObigsxdWT683BGtONbN/4Q5p4dg1VJpA/x3kPV8bZRIu09y4EmBzsC0pd
+	 A2yKicr7T3UR8qp8gylqEP4L+v7i74d3Ah3GPVFG1+Jusp5ggG3Ir6KFuYc2o7YML/R0d
+	 hEwtUGZx211pIKcrbEa9jFDGRdnC3R0RMy/Afp+a+csVivjCiWmapUffCXqu711cJWQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793208633;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793208636;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=qs/bHPsjRMVQc+k67odA38ZlrFz9MztVx1DcRT/tji8=;
-	b=S56hjvh6FwKXU5/NDa2XkObbQcMFAMxccZu3GuieMXRXsKnTgQU6pu5NbxW7SlYFU97i
-	 hfOqz8I+0w9XFgTFjnQkc1QGJLxgeGUjq3VGBTeDTpbeM/YAMUdxFTdUjN8Pcts5u9gSX
-	 kYEd2Xhoh8Io1vqXSGXUlYTrJ/fbyHH6mcw615LRMtbxrmGMepqpvgK7mgxBHX9xELSE/
-	 A73voRJxahhnokeCX8vHJzVMh09Kh6rq68K8yGX10Q0PCje4F0IjcoNajQGzSGqcio5ZN
-	 SRvJCSCF7dwgRnYD8Ehl8FRJwZcFPIWwlok2IsfEpzc58qg99rWmnJKqmxauGG5OCow==
+	bh=Xam+ebvFAbQZ2UPa9ff404fYhWj+bt1lHf9fHftgQM8=;
+	b=Col+TBAGQH8u/s5Cgut646ONA9PJjGDMHrVjol9OAeb1v5q6Iwsxgm7tSLv7lwUaJkIe
+	 d+LD0zrVrrKD02bzorenc4d5yn1cQ+RAtKq+bLD8yeXxd+tx5z0iJiRug8ojCFm8/zVnY
+	 4FbmYqsMYnC2dLtrE2LvvDoYozrvpcRDBWk05Xk6oLEHKCO22pTuNTAWClMAMmMuuCtgU
+	 ezuNJHglwVgTHYuR5tzc8uVWSLuX0wqGpkit7YLJr6paAvTmstrVEVQ9uj3LdKj+ui8wG
+	 qXV0il5Q4BgACvgO6yIhGlA76nOgzPW3eOPJ+rMg27XsX26p4RffQ4drVuYiRZ1I33Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mMd+jKMW;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B2fTGlJg;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93721606A31A;
-	Wed, 28 Oct 2026 17:30:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64C80606A31E;
+	Wed, 28 Oct 2026 17:30:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mMd+jKMW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2E0F1F01828;
-	Wed, 28 Oct 2026 17:30:32 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B2fTGlJg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9A791F01825;
+	Wed, 28 Oct 2026 17:30:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793208633;
-	bh=qs/bHPsjRMVQc+k67odA38ZlrFz9MztVx1DcRT/tji8=;
+	s=korg; t=1793208636;
+	bh=Xam+ebvFAbQZ2UPa9ff404fYhWj+bt1lHf9fHftgQM8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mMd+jKMWvz3dk8wAbuCzBsIFRm1ta+8GBBqoKHCFZY7VJXmUh5EXRxjL8kimMNsp8
-	 YLBDm8EB4sGtsjZY/1fM302C3NYNXUZRbkIyysLYeo9uiiJ0/q/YxgOrW1nzoD+3FM
-	 f/m7FsF+X7dbJZ4cawnxW5T/J1csMc5sz1oQvlvM=
+	b=B2fTGlJgVbDgdFOc0gDDPIyVyoIIIMsrKF/3nzciHhmacmXkMjvQXxewIwCO5zA7I
+	 xhG84bAKkuPt8YlGwAwri40UKvs0PVHM3jkrNJkbEDxYOr6oKSzZ/07rwWpi2l1Iut
+	 XLh0/wXGeuDIW5vbw+LMOVuZKdoy7+yDhHYO+DJk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhaofeng Chen <zhaofeng.chen@certik.com>,
-	Yuxiao Wang <yuxiao.wang@certik.com>,
-	Alexander Graf <graf@amazon.com>
-Subject: [PATCH 5.10 186/516] nitro_enclaves: fix use-after-free on SLOT_ALLOC failure
-Date: Wed, 28 Oct 2026 17:55:38 +0100
-Message-ID: <20261028170007.909870032@linuxfoundation.org>
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Rob Clark <robdclark@chromium.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 146/516] drm/msm/adreno: Assign msm_gpu->pdev earlier to avoid nullptrs
+Date: Wed, 28 Oct 2026 17:54:58 +0100
+Message-ID: <20261028170006.967946279@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -68,56 +68,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuxiao Wang <yuxiao.wang@certik.com>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-commit 9bc184a2eda8b773c88ecbff934001ad649b9cc1 upstream.
+[ Upstream commit 16007768551d5bfe53426645401435ca8d2ef54f ]
 
-When ne_create_vm_ioctl() fails the SLOT_ALLOC request after
-anon_inode_getfile() has succeeded, the error path calls
-fput(enclave_file) and then frees ne_enclave.
+There are some cases, such as the one uncovered by Commit 46d4efcccc68
+("drm/msm/a6xx: Avoid a nullptr dereference when speedbin setting fails")
+where
 
-In normal userspace context, fput() defers the final __fput() via
-task_work. ne_enclave_release() therefore runs after ne_enclave has
-already been freed and dereferences ne_enclave->slot_uid, causing a
-use-after-free: KASAN: slab-use-after-free in ne_enclave_release.
+msm_gpu_cleanup() : platform_set_drvdata(gpu->pdev, NULL);
 
-The enclave has no slot allocated and is not yet linked into the
-enclaves list on this error path, so ne_enclave_release() is expected
-to return early when slot_uid is zero. However, reading slot_uid
-already accesses the freed object.
+is called on gpu->pdev == NULL, as the GPU device has not been fully
+initialized yet.
 
-Clear enclave_file->private_data before fput() on the error path.
-ne_enclave_release() then returns immediately when private_data is
-NULL, leaving the ioctl error path as the sole owner of ne_enclave.
-This is safe because the file has not been fd_install()'d yet.
+Turns out that there's more than just the aforementioned path that
+causes this to happen (e.g. the case when there's speedbin data in the
+catalog, but opp-supported-hw is missing in DT).
 
-Tested on an AWS EC2 m5.2xlarge with CONFIG_KASAN=y. Without the
-patch, the reproducer triggers a KASAN slab-use-after-free on every
-SLOT_ALLOC failure. With the patch, no KASAN report is produced and
-the SLOT_ALLOC error is still returned. Normal enclave creation and
-teardown are unaffected.
+Assigning msm_gpu->pdev earlier seems like the least painful solution
+to this, therefore do so.
 
-Fixes: 9c8eb50fe9e2 ("nitro_enclaves: Add logic for terminating an enclave")
-Cc: stable@vger.kernel.org
-Co-developed-by: Zhaofeng Chen <zhaofeng.chen@certik.com>
-Signed-off-by: Zhaofeng Chen <zhaofeng.chen@certik.com>
-Signed-off-by: Yuxiao Wang <yuxiao.wang@certik.com>
-Reviewed-by: Alexander Graf <graf@amazon.com>
-Link: https://patch.msgid.link/20260909124400.27857-1-graf@amazon.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Patchwork: https://patchwork.freedesktop.org/patch/602742/
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/virt/nitro_enclaves/ne_misc_dev.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/msm/adreno/adreno_gpu.c | 2 ++
+ drivers/gpu/drm/msm/msm_gpu.c           | 1 -
+ 2 files changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/virt/nitro_enclaves/ne_misc_dev.c
-+++ b/drivers/virt/nitro_enclaves/ne_misc_dev.c
-@@ -1653,6 +1653,7 @@ static int ne_create_vm_ioctl(struct ne_
- 	return enclave_fd;
+diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+index 83d5917180e1a..68523f8a8bfbd 100644
+--- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+@@ -907,6 +907,8 @@ int adreno_gpu_init(struct drm_device *drm, struct platform_device *pdev,
+ 	adreno_gpu->revn = adreno_gpu->info->revn;
+ 	adreno_gpu->rev = config->rev;
  
- put_file:
-+	enclave_file->private_data = NULL;
- 	fput(enclave_file);
- put_fd:
- 	put_unused_fd(enclave_fd);
++	gpu->pdev = pdev;
++
+ 	adreno_gpu_config.ioname = "kgsl_3d0_reg_memory";
+ 
+ 	adreno_gpu_config.nr_rings = nr_rings;
+diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
+index c5f3c561ecc6a..7124f4fb1fc80 100644
+--- a/drivers/gpu/drm/msm/msm_gpu.c
++++ b/drivers/gpu/drm/msm/msm_gpu.c
+@@ -921,7 +921,6 @@ int msm_gpu_init(struct drm_device *drm, struct platform_device *pdev,
+ 	if (IS_ERR(gpu->gpu_cx))
+ 		gpu->gpu_cx = NULL;
+ 
+-	gpu->pdev = pdev;
+ 	platform_set_drvdata(pdev, &gpu->adreno_smmu);
+ 
+ 	msm_devfreq_init(gpu);
+-- 
+2.53.0
+
 
 
