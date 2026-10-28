@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216196;
-	b=v4WIb1JEha/J/vQRA7eJJAXRz9xIalQA78krYVJLCaETlV4D11alMgyrF6oSFpgsZJrc
-	 3Y6Q45Zefk2vcfectsD4aUx/jYqCdSOENGxI1wNvt+F/QmYG88vw6Iy50yR12XIaXQelK
-	 RQ3AZTaFXpT12oXDz0CyldwAYgxnncxMb9Ns6z8nbvWF0+I9ASRZG8pPVDhv5oSIuLE/5
-	 VVb1fOrB3z46vFsisREi0pvQ1XrjkLmlB0OIj5eAptArDtlqDhT9WemSZgSxIXst7m5+C
-	 fScDy4yKDB9gh2Xe5tMuHtHGM0hO8XuxwmoMzbVZNeu+yEwYM2NRLVRCS7CXiCRAFtw==
+	t=1793216199;
+	b=MhvX/W/mQiQehxvbe56SZhv2DmJYEnyzkPuyprSxuGeMBwpz9flesPHmw1o4gNquOdXZ
+	 jH+2oO804hmAfaQIywZ1i+iUk54nw+Fulgpsis/gh/147QnJaOLKQQdQQ4I3gCfiYbiix
+	 4qgJsDLdQi2cjRzyCrjWZ2kfVr1Ul745CKHjp16ZnGGo/J5+fWVsKaQ5LU+eahvvqg6y3
+	 +mTqFyetnt4AUHYkWSZplfpf3HoEO6nJJwvY5mRzB0JxhmWTW6MjgVb29gxMozYZBRCVO
+	 OEeeMsNB+mzQw7tC4yUGWnKGcGmFEpN4Bk4vJ7AlRX/RNHxWEvag3vnc9bxl+mrDkow==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216196;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216199;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=URmBfxLR3TENreINK1wMfuDlhkrA20Vg+esWz1VHmHs=;
-	b=L6lRLMHI+6NU2Fy+dS0+XDAUba+rvuowwV8Tv1Qvmr+w9jft+tG/Ap0FyC/1+gdrA36X
-	 qRfJipNcbKxZV83PFwUKs3+603KT3IkAO1cPqN6NNbDKuwteQyoSQRtszPuWyfGGWoHrb
-	 /mBgOWyNC2KWezaJGhrFWmn1lJ8LO/8IYd/yYlcOQ2XEuhJ++cZvZxY77mnOwEh9zoEeH
-	 O/KFWEXwt8nvbI+ps2UG5ArAdOEta+wrCtw7YZKy+ioi5Y4B0mmWr4WvzDD+1dY60dav+
-	 j9/b59n4aLa+VKpTdivK64JQWJnrqjWemmgvqKMb0SZGXOYcUkj3YPvO3cmLEc5aAqQ==
+	bh=nywHVFCWiezvzrXSafvvsktaW68auTd1HSLFOhpMvxg=;
+	b=ZZ6p0tkLff4cOMwb7Np91q3nfNreD3lqEwjAPyTuPh+B+osLF+igrRyjUEUWjvvvC1yM
+	 Vk53GkD56SzylWgREiWK6cybOmWc6O7/cSfLMEQ16lXiGuqaK5B5DXBoHytj2k0KMsy0Z
+	 MYXRczbxTWkG662V333v0rPtsbnHR9R4qsMZxhQnIUoQA24Xp9fsLotMa/q7XuiQiyM36
+	 4tM43av95rEXRxV8nIU2/Ouxg3QbEzmyo7giNhzF0fMilkONfBpHcJzuYMPpxtdXJdbUr
+	 hmm3gUa6nmwplrbkn4E8quU7lm7Bt54Nh4QNbUSYpW8WyKzoj0BXYVsL6Rd980zF9oQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=m9zhgqyN;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xvUBOqHv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3915606A31A;
-	Wed, 28 Oct 2026 19:36:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 450BC606A31F;
+	Wed, 28 Oct 2026 19:36:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=m9zhgqyN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9A3A1F01828;
-	Wed, 28 Oct 2026 19:36:35 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xvUBOqHv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9703A1F01825;
+	Wed, 28 Oct 2026 19:36:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216196;
-	bh=URmBfxLR3TENreINK1wMfuDlhkrA20Vg+esWz1VHmHs=;
+	s=korg; t=1793216199;
+	bh=nywHVFCWiezvzrXSafvvsktaW68auTd1HSLFOhpMvxg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=m9zhgqyNPXKbSjBum25G7KlHjkA8JK0rpiPxGoq6TjsFAYbcNFghMRQjawsdUqw3d
-	 j75cfnAfzsgDLDyyExH8uLLjv409GXaW6cNbJuCc9qZDI4XmWdAl32dmWUXeV36PZN
-	 l44QmRLd4HoWXF1gIxOj4oQ0v2OksjDTcoNwJEFE=
+	b=xvUBOqHvEC/R+DkplwxODPoDYVtwaSKwT6OCr2EgqJ16k0UbvctY74du8ur3NXxD/
+	 jeetALzhg+9uLsyLKNMaQWZF0J5AEm9F60thlHq/Y4BWYBfQkBSmZoQGLp39QDOxOB
+	 c/du7mM4NHQ/RWQDSQ/dZ5+UOATUHXGgjR2eQ3yQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cheryl Babcock <cheryl@renat.io>,
-	Namjae Jeon <linkinjeon@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Farhan Ali <alifm@linux.ibm.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Tyrel Datwyler <tyreld@linux.ibm.com>,
+	linuxppc-dev@lists.ozlabs.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1475/1887] ksmbd: zero pipe read compound padding
-Date: Wed, 28 Oct 2026 17:59:31 +0100
-Message-ID: <20261028170533.020311620@linuxfoundation.org>
+Subject: [PATCH 6.1 1476/1887] PCI: Introduce PCI_SLOT_PLACEHOLDER constant for slot_nr placeholder value
+Date: Wed, 28 Oct 2026 17:59:32 +0100
+Message-ID: <20261028170533.041972923@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,51 +71,125 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Farhan Ali <alifm@linux.ibm.com>
 
-[ Upstream commit 73f860489e3be2245598d1819226304fc5b87291 ]
+[ Upstream commit c243e6c470c4695965cc8287767925bc1d9a7867 ]
 
-Compound response handling extends the last response iov to an eight-byte
-boundary.
+Introduce a constant for placeholder value and update the kerneldoc for
+pci_create_slot() to reference PCI_SLOT_PLACEHOLDER instead of -1
+throughout. No functional change.
 
-smb2_read_pipe() allocates only the payload size, so the alignment padding
-can expose up to seven bytes of uninitialized kernel heap memory.
-
-Allocate the aligned size and clear the unused tail before pinning the
-response buffer.
-
-Fixes: e2b76ab8b5c9 ("ksmbd: add support for read compound")
-Reported-by: Cheryl Babcock <cheryl@renat.io>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Suggested-by: Bjorn Helgaas <bhelgaas@google.com>
+Signed-off-by: Farhan Ali <alifm@linux.ibm.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
+Cc: Tyrel Datwyler <tyreld@linux.ibm.com>
+Cc: linuxppc-dev@lists.ozlabs.org
+Link: https://patch.msgid.link/20260805165518.794-2-alifm@linux.ibm.com
+Stable-dep-of: dcc5bec09e23 ("PCI: Allow per function PCI slots to fix slot reset on s390")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb2pdu.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/pci/hotplug/pnv_php.c     |  2 +-
+ drivers/pci/hotplug/rpaphp_slot.c |  2 +-
+ drivers/pci/slot.c                | 21 +++++++++++----------
+ include/linux/pci.h               |  3 +++
+ 4 files changed, 16 insertions(+), 12 deletions(-)
 
-diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index 7112d013b3529..24506691be74e 100644
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -6371,13 +6371,18 @@ static noinline int smb2_read_pipe(struct ksmbd_work *work)
- 		}
+diff --git a/drivers/pci/hotplug/pnv_php.c b/drivers/pci/hotplug/pnv_php.c
+index ec7828ad66617..2bd2b7599d1c4 100644
+--- a/drivers/pci/hotplug/pnv_php.c
++++ b/drivers/pci/hotplug/pnv_php.c
+@@ -799,7 +799,7 @@ static struct pnv_php_slot *pnv_php_alloc_slot(struct device_node *dn)
+ 	if (dn->child && PCI_DN(dn->child))
+ 		php_slot->slot_no = PCI_SLOT(PCI_DN(dn->child)->devfn);
+ 	else
+-		php_slot->slot_no = -1;   /* Placeholder slot */
++		php_slot->slot_no = PCI_SLOT_PLACEHOLDER;   /* Placeholder slot */
  
- 		aux_payload_buf =
--			kvmalloc(rpc_resp->payload_sz, GFP_KERNEL);
-+			kvmalloc(ALIGN(rpc_resp->payload_sz, 8),
-+				 GFP_KERNEL);
- 		if (!aux_payload_buf) {
- 			err = -ENOMEM;
- 			goto out;
- 		}
+ 	kref_init(&php_slot->kref);
+ 	php_slot->state	                = PNV_PHP_STATE_INITIALIZED;
+diff --git a/drivers/pci/hotplug/rpaphp_slot.c b/drivers/pci/hotplug/rpaphp_slot.c
+index 779eab12e9810..ac8c512190df4 100644
+--- a/drivers/pci/hotplug/rpaphp_slot.c
++++ b/drivers/pci/hotplug/rpaphp_slot.c
+@@ -85,7 +85,7 @@ int rpaphp_register_slot(struct slot *slot)
+ 	struct device_node *child;
+ 	u32 my_index;
+ 	int retval;
+-	int slotno = -1;
++	int slotno = PCI_SLOT_PLACEHOLDER;
  
- 		memcpy(aux_payload_buf, rpc_resp->payload, rpc_resp->payload_sz);
-+		if (rpc_resp->payload_sz & 7)
-+			memset(aux_payload_buf + rpc_resp->payload_sz, 0,
-+			       ALIGN(rpc_resp->payload_sz, 8) -
-+			       rpc_resp->payload_sz);
+ 	dbg("%s registering slot:path[%pOF] index[%x], name[%s] pdomain[%x] type[%d]\n",
+ 		__func__, slot->dn, slot->index, slot->name,
+diff --git a/drivers/pci/slot.c b/drivers/pci/slot.c
+index 7f4bcf359b917..a3551f12780e7 100644
+--- a/drivers/pci/slot.c
++++ b/drivers/pci/slot.c
+@@ -38,7 +38,7 @@ static const struct sysfs_ops pci_slot_sysfs_ops = {
  
- 		nbytes = rpc_resp->payload_sz;
- 		err = ksmbd_iov_pin_rsp_read(work, (void *)rsp,
+ static ssize_t address_read_file(struct pci_slot *slot, char *buf)
+ {
+-	if (slot->number == 0xff)
++	if (slot->number == PCI_SLOT_PLACEHOLDER)
+ 		return sysfs_emit(buf, "%04x:%02x\n",
+ 				  pci_domain_nr(slot->bus),
+ 				  slot->bus->number);
+@@ -189,7 +189,7 @@ static struct pci_slot *get_slot(struct pci_bus *parent, int slot_nr)
+ /**
+  * pci_create_slot - create or increment refcount for physical PCI slot
+  * @parent: struct pci_bus of parent bridge
+- * @slot_nr: PCI_SLOT(pci_dev->devfn) or -1 for placeholder
++ * @slot_nr: PCI_SLOT(pci_dev->devfn) or PCI_SLOT_PLACEHOLDER for placeholder
+  * @name: user visible string presented in /sys/bus/pci/slots/<name>
+  * @hotplug: set if caller is hotplug driver, NULL otherwise
+  *
+@@ -214,15 +214,16 @@ static struct pci_slot *get_slot(struct pci_bus *parent, int slot_nr)
+  * In most cases, @pci_bus, @slot_nr will be sufficient to uniquely identify
+  * a slot. There is one notable exception - pSeries (rpaphp), where the
+  * @slot_nr cannot be determined until a device is actually inserted into
+- * the slot. In this scenario, the caller may pass -1 for @slot_nr.
++ * the slot. In this scenario, the caller may pass PCI_SLOT_PLACEHOLDER for @slot_nr.
+  *
+  * The following semantics are imposed when the caller passes @slot_nr ==
+- * -1. First, we no longer check for an existing %struct pci_slot, as there
+- * may be many slots with @slot_nr of -1.  The other change in semantics is
+- * user-visible, which is the 'address' parameter presented in sysfs will
+- * consist solely of a dddd:bb tuple, where dddd is the PCI domain of the
+- * %struct pci_bus and bb is the bus number. In other words, the devfn of
+- * the 'placeholder' slot will not be displayed.
++ * PCI_SLOT_PLACEHOLDER. First, we no longer check for an existing %struct
++ * pci_slot, as there may be many slots with @slot_nr of
++ * PCI_SLOT_PLACEHOLDER. The other change in semantics is user-visible,
++ * which is the 'address' parameter presented in sysfs will consist solely
++ * of a dddd:bb tuple, where dddd is the PCI domain of the %struct pci_bus
++ * and bb is the bus number. In other words, the devfn of the 'placeholder'
++ * slot will not be displayed.
+  */
+ struct pci_slot *pci_create_slot(struct pci_bus *parent, int slot_nr,
+ 				 const char *name,
+@@ -235,7 +236,7 @@ struct pci_slot *pci_create_slot(struct pci_bus *parent, int slot_nr,
+ 
+ 	mutex_lock(&pci_slot_mutex);
+ 
+-	if (slot_nr == -1)
++	if (slot_nr == PCI_SLOT_PLACEHOLDER)
+ 		goto placeholder;
+ 
+ 	/*
+diff --git a/include/linux/pci.h b/include/linux/pci.h
+index 282e86b9a35fe..440e0ef0a134c 100644
+--- a/include/linux/pci.h
++++ b/include/linux/pci.h
+@@ -71,6 +71,9 @@
+ /* return bus from PCI devid = ((u16)bus_number) << 8) | devfn */
+ #define PCI_BUS_NUM(x) (((x) >> 8) & 0xff)
+ 
++/* Used to identify a slot as a placeholder */
++#define PCI_SLOT_PLACEHOLDER	0xff
++
+ /* pci_slot represents a physical slot */
+ struct pci_slot {
+ 	struct pci_bus		*bus;		/* Bus this slot is on */
 -- 
 2.53.0
 
