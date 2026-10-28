@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793217125;
-	b=FUIG0fZ91IzYFrPKP8McqZnQVmyG/ITFPrjU6ax0kAedCPWHbKSfRXv1JxuzrHb4XVNN
-	 Ax8KAN/iEVfw2jJsrZkkaIlg/WzL1b5ClixW5n3kAwYI1G63TmLRdMJZByZ+5LQtilNs4
-	 57KU64r4k3Rd1FT9QuNAx/Ha94IxDmeIK+o2jmQTI11sX+HRGynldaKfazYR2ofNlasRF
-	 OccjFIAG5MW+zRjhEqziptS8z8ODxSgZZzRPD4mlPJVzNvj4mckVKEaBZ8GlpwRxI2drv
-	 AciQNFdh57V8EiVc9cogDFr2HNTnx0W3XJOX3TZ9jNyh+HBCEVvkBGLBdBJ1OHtwe6w==
+	t=1793217128;
+	b=Swe1B70CWqZ6hRoGkwh1KAXyLGVk0Ypzf+6eAO386BNokgnjVKSKMxFQ3Ygrz+Tw1eE6
+	 9CY4r5/MZq/d5GramCn4Qmpay8JhivREIsk/0gHxUrdqkF+yNwgDWst69W1/gDZWlTrnx
+	 d891LNqxRZFK7SRdvTTq1k2vfErEVZCZ2MbZuRAmcMMgYEPRN3KLFqztM21d7F7gBpy3V
+	 W2lcytHp0Q9pFjLF44dgrhi6s4rPBI5DRP2UTrpURT/8NH+NldiPJl/Gypbymg5Wup1SH
+	 p2UgZh2br5NBtB+eBgBKhQtHYYcbxMtj+XF79PQsNaIWRElliL+lDGXHbj/wHGdxHkQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793217125;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793217128;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=I+u30XajTKXgMz70Ufgv+KDlIBvXvH1PplvAW2tWru0=;
-	b=WtX1C+8rF2Ndwv08Y2GU2q9LCJ/ug0CNGiTXVoYLetBX07OeWQErmIAGWf15LmxOHYRD
-	 BiAognlN0w5EmONjDpPGH7zmO7b8HRlq85Hu9+qJSHoCK1BkO72s0gnoiFwGWvL1NBAl7
-	 JmpnQFYyjjtlshoH3PGOLhgD1g68+SoRDqrIpC/WCYR3C/DkOZ8oHxfNdU6ob22rK4KYz
-	 sUARv7pCye7pFr7K4/Vjg4B9FNMDzs9aNx87tsnVhsPE+JFtwHLDM9yQz0XCgh5k8ck5i
-	 4NYaaTvQNGuQznlLI/W1VeUyD1Q4QwYZrT6EvVNNwpb4uwpICDB8NVjk1OsQu6HoHgQ==
+	bh=WScSO/C1TiilABNKLZR4C23Wq0WCrLy18MZlvqs6wgo=;
+	b=PKoPeDFtZTPvKYI8zEElMk7ep67Op5sfNhKX2vtVGDAWVsEliKZmjSOC4hVnZ5erJ0zA
+	 c+cNu0o8v9ENtGtuWLc0R6Sw2i1aoiAffT7nu5sSDM6lW+l3WwSQWtidklrQVFm4QjL6l
+	 R/k39oi1sx1UDcTxYZapjULT2Q7RmP6xVahxfR3pzPW1kZ+1lL0a337SiRGToxPsUZsrl
+	 BCPpbXkLuyVIclF9FCG5PbPRm2oFGEjShVRAm+LF9zNGmKgsuk9RTPuOo8mUh5h4mEdyz
+	 2byiz3SlmjgGP6e13bOh4jm7wNDwZy4NuVodmzetqHuBKLszAoFv1agfvLp2cgUK6kQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LZel5rQW;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uRT9Pgwb;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45FB0606A31A;
-	Wed, 28 Oct 2026 19:52:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26742606A31A;
+	Wed, 28 Oct 2026 19:52:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LZel5rQW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 937A51F01825;
-	Wed, 28 Oct 2026 19:52:04 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uRT9Pgwb
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 777FC1F01825;
+	Wed, 28 Oct 2026 19:52:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793217125;
-	bh=I+u30XajTKXgMz70Ufgv+KDlIBvXvH1PplvAW2tWru0=;
+	s=korg; t=1793217128;
+	bh=WScSO/C1TiilABNKLZR4C23Wq0WCrLy18MZlvqs6wgo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LZel5rQW2Dxi77uo91nGPn7aPpmaBQFj5tTy7loT/iqzRtzCPX39bBgkqXSMifk7i
-	 LNlmZY578gah4z3/5vyM7ZZiYFR9Ks5yr5k2CI8VHA1wlFrxtNALVCBXXk43f5ngFD
-	 OaKia4CPp1LMWXhhZpeVDfexMJBQt0CF/C/9NSVI=
+	b=uRT9Pgwbvh7glPQvvxlyKEA9rDJdBj6cxjLw4WjFvctVeMKE8tL4jqNsAenLpqYDn
+	 BP9ka9rvtKzn5YCPPuFDvbpJa1uLRf5tNwvFlk8N+WwMFx7Gwi/T+Yq2H5BiGU4p0B
+	 if9uk+mKaEXTg466v+i+M2KBK9hJo1RJ/7viCcfE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pauli Virtanen <pav@iki.fi>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Lee Jones <lee@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1798/1887] Bluetooth: L2CAP: refuse __l2cap_chan_add if chan already has conn
-Date: Wed, 28 Oct 2026 18:04:54 +0100
-Message-ID: <20261028170540.362709987@linuxfoundation.org>
+	Miguel Ojeda <ojeda@kernel.org>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Kees Cook <keescook@chromium.org>
+Subject: [PATCH 6.1 1799/1887] Compiler Attributes: counted_by: Adjust name and identifier expansion
+Date: Wed, 28 Oct 2026 18:04:55 +0100
+Message-ID: <20261028170540.384927725@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,96 +69,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pauli Virtanen <pav@iki.fi>
+From: Kees Cook <keescook@chromium.org>
 
-[ Upstream commit 86b55991d3cd690e73c5ef8d20b75ae4905b357a ]
+commit c8248faf3ca276ebdf60f003b3e04bf764daba91 upstream.
 
-l2cap_chan may be linked to l2cap_conn at most once. This is assumed in
-several places, eg l2cap_chan_del cleanup.
+GCC and Clang's current RFCs name this attribute "counted_by", and have
+moved away from using a string for the member name. Update the kernel's
+macros to match. Additionally provide a UAPI no-op macro for UAPI structs
+that will gain annotations.
 
-There is a TOCTOU race where the invariant is violated:
-
-    [Task 1]                          [Task 2]
-    l2cap_chan_connect                l2cap_sock_bind
-      l2cap_chan_lock                   lock_sock
-      l2cap_state_change                if (sk->sk_state != BT_OPEN)
-        chan->state = BT_CONNECT
-        l2cap_sock_state_change_cb      chan->state = BT_BOUND
-                                        sk->sk_state = BT_BOUND
-          lock_sock <------------------ release_sock
-          sk->sk_state = BT_CONNECT
-
-l2cap_sock_connect() does not check sk->sk_state, so since chan->state
-is now BT_BOUND, subsequent connect() ends up with second
-__l2cap_chan_add.
-
-Explicitly document and check the invariant in __l2cap_chan_add with
-WARN_ON_ONCE. The only callsite where it could be hit is
-l2cap_chan_connect, so add pre-check there to avoid relying on
-chan->state. chan->state read/write is not properly guarded currently so
-there can be other TOCTOUC problems.
-
-Add l2cap_lock_chan in l2cap_sock_bind() to guard chan->state write.
-
-Fixes: b66774b48dd9 ("Bluetooth: L2CAP: Fix UAF in channel timeout by holding conn ref")
-Assisted-by: deepseek-4-flash # finding the race condition
-Signed-off-by: Pauli Virtanen <pav@iki.fi>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-[Lee: Resolve context conflict around mutex_lock(&conn->chan_lock) prior to commit 56c2b5831d39 ("Bluetooth: L2CAP: fix out-of-bounds write in l2cap_ecred_connect")]
-Signed-off-by: Lee Jones <lee@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: Miguel Ojeda <ojeda@kernel.org>
+Cc: Nick Desaulniers <ndesaulniers@google.com>
+Fixes: dd06e72e68bc ("Compiler Attributes: Add __counted_by macro")
+Acked-by: Miguel Ojeda <ojeda@kernel.org>
+Reviewed-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://lore.kernel.org/r/20230817200558.never.077-kees@kernel.org
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/l2cap_core.c | 7 ++++++-
- net/bluetooth/l2cap_sock.c | 2 ++
- 2 files changed, 8 insertions(+), 1 deletion(-)
+ include/linux/compiler_attributes.h |   26 +++++++++++++-------------
+ include/uapi/linux/stddef.h         |    4 ++++
+ 2 files changed, 17 insertions(+), 13 deletions(-)
 
-diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
-index 15bb4ca915134..ea41bf1efc6da 100644
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -630,6 +630,10 @@ void __l2cap_chan_add(struct l2cap_conn *conn, struct l2cap_chan *chan)
- 	BT_DBG("conn %p, psm 0x%2.2x, dcid 0x%4.4x", conn,
- 	       __le16_to_cpu(chan->psm), chan->dcid);
+--- a/include/linux/compiler_attributes.h
++++ b/include/linux/compiler_attributes.h
+@@ -108,6 +108,19 @@
+ #endif
  
-+	/* Caller must ensure l2cap_chan is linked to l2cap_conn only once */
-+	if (WARN_ON_ONCE(chan->conn || test_bit(FLAG_DEL, &chan->flags)))
-+		return;
+ /*
++ * Optional: only supported since gcc >= 14
++ * Optional: only supported since clang >= 18
++ *
++ *   gcc: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=108896
++ * clang: https://reviews.llvm.org/D148381
++ */
++#if __has_attribute(__counted_by__)
++# define __counted_by(member)		__attribute__((__counted_by__(member)))
++#else
++# define __counted_by(member)
++#endif
 +
- 	conn->disc_reason = HCI_ERROR_REMOTE_USER_TERM;
++/*
+  * Optional: not supported by gcc
+  * Optional: only supported since clang >= 14.0
+  * Optional: not supported by icc
+@@ -145,19 +158,6 @@
+ #endif
  
- 	chan->conn = l2cap_conn_get(conn);
-@@ -7428,7 +7432,8 @@ int l2cap_chan_connect(struct l2cap_chan *chan, __le16 psm, u16 cid,
- 	mutex_lock(&conn->chan_lock);
- 	l2cap_chan_lock(chan);
- 
--	if (cid && __l2cap_get_chan_by_dcid(conn, cid)) {
-+	if ((cid && __l2cap_get_chan_by_dcid(conn, cid)) || chan->conn ||
-+	    test_bit(FLAG_DEL, &chan->flags)) {
- 		hci_conn_drop(hcon);
- 		err = -EBUSY;
- 		goto chan_unlock;
-diff --git a/net/bluetooth/l2cap_sock.c b/net/bluetooth/l2cap_sock.c
-index b11558b0dfec5..655922aa82f1f 100644
---- a/net/bluetooth/l2cap_sock.c
-+++ b/net/bluetooth/l2cap_sock.c
-@@ -111,6 +111,7 @@ static int l2cap_sock_bind(struct socket *sock, struct sockaddr *addr, int alen)
- 			return -EINVAL;
+ /*
+- * Optional: only supported since gcc >= 14
+- * Optional: only supported since clang >= 17
+- *
+- *   gcc: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=108896
+- * clang: https://reviews.llvm.org/D148381
+- */
+-#if __has_attribute(__element_count__)
+-# define __counted_by(member)		__attribute__((__element_count__(#member)))
+-#else
+-# define __counted_by(member)
+-#endif
+-
+-/*
+  * Optional: only supported since clang >= 14.0
+  *
+  *   gcc: https://gcc.gnu.org/onlinedocs/gcc/Common-Function-Attributes.html#index-error-function-attribute
+--- a/include/uapi/linux/stddef.h
++++ b/include/uapi/linux/stddef.h
+@@ -52,3 +52,7 @@
+ 		TYPE NAME[]; \
  	}
- 
-+	l2cap_chan_lock(chan);
- 	lock_sock(sk);
- 
- 	if (sk->sk_state != BT_OPEN) {
-@@ -176,6 +177,7 @@ static int l2cap_sock_bind(struct socket *sock, struct sockaddr *addr, int alen)
- 
- done:
- 	release_sock(sk);
-+	l2cap_chan_unlock(chan);
- 	return err;
- }
- 
--- 
-2.53.0
-
+ #endif
++
++#ifndef __counted_by
++#define __counted_by(m)
++#endif
 
 
