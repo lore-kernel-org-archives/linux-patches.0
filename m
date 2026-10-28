@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793212099;
-	b=XyR+5HIkuXE/+XR/pTP2btRsaq3mF0nxIosrpc5L7JPS0/ObE3YiItJ2kozSnR5KP6He
-	 BhWc9NsUJ0o55x9krQjMJ6cBR9UDKpB+6MRlf4pYZBU2f8QY6XVEdq3Skla148ovk+NFu
-	 oKIKM/dvm1uNOfIgNmpKMT+eiAWC4+q5wwkzuqOv9IsrFqPCnpyQfhnqc5g0JWc+wToGi
-	 +KSFaCEvNSPNWr2uR48OV3eIAevunhFGgs4QAPLrvCf40n/AwsDneHBKjow4J7u60+9tq
-	 aoQbDPeEzK9106WD4QvxLzMUjoDQlkozWW3xg+xxT6pCqDUI99100AC3m9YFZPLBZxw==
+	t=1793212101;
+	b=4JF4PTIYd17PZOi6Bwl8wLFv5EmeFD+1wtibE9TwErdAI0Xv0ROrVKu3JdQqXaqZG+JL
+	 Mw9kFaMF5KoH2J0aIIeomL6HEETYtdz1wvIbHb/neFaTdBsGyyX/DjVwL1q5Qn8YhvZTO
+	 ExbroI8BA5jB6H7GKV3JRK7i5n7QV7tOKDu80uL+WVc/5V0wn/cu9HNwtDdUe8keLqmyJ
+	 arhZrBq/4u//Dbmb6EBj4X/JD06PHO0NEsbIRfmgrdBBSEVZzbFXGCPy3Z/46HOZQDzKH
+	 Tb3I0MaU7Lria0+/lNyHIMBRJ0SGjdC5ZU9SP4enk+4VY2xu95WXX8mTtOsPe4jKexA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793212099;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793212101;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=30Oe9zNb9LXG9nRUZhk4gFY08bkyE25nnluT2HCvZoE=;
-	b=eI+7f7GfOf/iWwLExeE9QP1BmBxJjsaSGgzzFSVQgnz/4id9BSKZBA1frqyRDoU53qdw
-	 yAi4KI43BmS+dpM915wUyX2Nr8cehYt1DBlAZiuhRRRljNlUZTwDxv5lVDcnw7UYdQN5S
-	 dV5drWKu9XIG6RTfivME+782avgE8TDhyDI5c+rdbCzIzpf04EFDygCDd7dwZ5LIaQOqc
-	 NFW7qJ6vdqFrKTiZPmkDs8JbKpK3nYEwP/m6czrxDpZKfLx7N8Pe52Sfjw//dCfW4jhey
-	 zZntg7zE/6YLb1zBGjSzr2gfqTfYBJLzmoFembch3dOyS8B7RKgD8ASJIae+5OiBsQQ==
+	bh=kXpiX08ZsOsbwQGo8AVUP6KvvqwwW4qfCyqmhNHPwng=;
+	b=IyNSPmhdfVIeIqVvDwOplVnYnZeoYk0PPcUb0YgtM7Gr7BuzWmJ3uDAHBKParel1NrKz
+	 +Rffrefbcf04C+ern9CRwBx583hyreuFR7C/3qLiw+wrQW9iie+J9R54i4SCfMiCRaml7
+	 1auhoywi7cmwL3baqip8QeOYRyM9Tz6pQRno/mfcxINk3mVmgaUewMaLlhrwtVQKLxzad
+	 Nh/H3TinjD+ch3Ohrxes3iwlzT/Wm2A//grCp0WDlGB0b6VeQ8+5DBK33c07vHS8uBN0D
+	 Ug3eeT1goJ36mwfkiV1lPCHa3ZcYon2/hyANsFiVVFu9SyZ1rV4YdS3xv7G2nGQjl5A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hgZPQF+7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xIqJXzYR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8C14606A31A;
-	Wed, 28 Oct 2026 18:28:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47D2D606A31A;
+	Wed, 28 Oct 2026 18:28:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hgZPQF+7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2BE71F01825;
-	Wed, 28 Oct 2026 18:28:17 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xIqJXzYR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97B2A1F01825;
+	Wed, 28 Oct 2026 18:28:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793212098;
-	bh=30Oe9zNb9LXG9nRUZhk4gFY08bkyE25nnluT2HCvZoE=;
+	s=korg; t=1793212101;
+	bh=kXpiX08ZsOsbwQGo8AVUP6KvvqwwW4qfCyqmhNHPwng=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hgZPQF+7Yc6JtH8Dv8AmxdpXnhMEoem2HGcf1/q/QnqCmDEPqKDF0CPy2mJZIqNGw
-	 dliXA7yxVrad2194LuI6uC/8alY1lQAw2lTpG4oNLMXNLyK1HspMDHCJ3T1dkeMZW5
-	 Z//SeE09lJteoNDpk/Udofcgu8s8gNxB7y4bHHAQ=
+	b=xIqJXzYRvNztsDIde+mYuHakpodoIpkQyxZ/vi3aXrngJf2DwB5cwnkB+SzDexTU0
+	 9g0UyEVIWxpXk6Htma/nNl+/DQVxTQJNHj/XAxyEavYaBCesuLuXpptQ+d91zWsXBS
+	 vH1vvzcEI0fYgsgIGP4IzJSZBip+0Q/Db6yWkFCQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tristan Madani <tristan@talencesecurity.com>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	John Garry <john.g.garry@oracle.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Keith Busch <kbusch@kernel.org>,
+	Christian Borntraeger <borntraeger@linux.ibm.com>,
+	Matthew Rosato <mjrosato@linux.ibm.com>,
+	Claudio Imbrenda <imbrenda@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0037/1887] nvme: add missing SRCU grace period in error path
-Date: Wed, 28 Oct 2026 17:35:33 +0100
-Message-ID: <20261028170500.069870090@linuxfoundation.org>
+Subject: [PATCH 6.1 0038/1887] KVM: s390: Zero initialize data structures for inject_pfault_token
+Date: Wed, 28 Oct 2026 17:35:34 +0100
+Message-ID: <20261028170500.091628819@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -71,48 +69,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tristan Madani <tristan@talencesecurity.com>
+From: Christian Borntraeger <borntraeger@linux.ibm.com>
 
-[ Upstream commit ef248d5de4469fb6bbaf8dbe0c4c47800080d648 ]
+[ Upstream commit 4e2c7f7cbc27418f9a290399b986c1b85ff93b90 ]
 
-nvme_alloc_ns() error path at out_unlink_ns removes ns from the
-namespace head siblings list with list_del_rcu(&ns->siblings) but
-does not wait for SRCU readers before freeing the namespace struct.
-Multipath code iterates the head->list under srcu_read_lock() in
-nvme_find_path() and nvme_mpath_revalidate_paths(), so a concurrent
-reader can still hold a reference to ns when kfree(ns) runs.
+__kvm_inject_pfault_token() only sets .type and .u.ext.ext_params2 of
+the on-stack struct kvm_s390_irq but the full ext substructure is copied
+into the cpu local variable on inject. ext_params and pad contain stale
+stack values.
 
-The normal removal path in nvme_ns_remove() correctly calls
-synchronize_srcu(&ns->head->srcu) after list_del_rcu() to wait for
-in-progress readers. Add the same grace period in the error path.
+Interrupt delivery only uses ext_params2, so nothing leaks to the guest,
+but a host user can use the migration ioctls to get to the data.
 
-Fixes: ed754e5deeb1 ("nvme: track shared namespaces")
+Fix by zero-initializing the irq struct.
+Do the same for the inti data structure.
+
+Fixes: 383d0b050106 ("KVM: s390: handle pending local interrupts via bitmap")
 Cc: stable@vger.kernel.org
-Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
-Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
-Reviewed-by: John Garry <john.g.garry@oracle.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
-[ Adjusted patch context to account for missing last_path reference-counting code. ]
+Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
+Reviewed-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
+Signed-off-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
+Message-ID: <20260805110455.7200-3-borntraeger@linux.ibm.com>
+[ Adjusted context for missing inti_mem and ret declarations in __kvm_inject_pfault_token(). ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/core.c | 3 +++
- 1 file changed, 3 insertions(+)
+ arch/s390/kvm/kvm-s390.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
-index 66600341bd6aa..1faef93ce4ba6 100644
---- a/drivers/nvme/host/core.c
-+++ b/drivers/nvme/host/core.c
-@@ -4437,6 +4437,9 @@ static void nvme_alloc_ns(struct nvme_ctrl *ctrl, struct nvme_ns_info *info)
- 	if (list_empty(&ns->head->list))
- 		list_del_init(&ns->head->entry);
- 	mutex_unlock(&ctrl->subsys->lock);
-+
-+	/* guarantee not available in head->list */
-+	synchronize_srcu(&ns->head->srcu);
- 	nvme_put_ns_head(ns->head);
-  out_cleanup_disk:
- 	put_disk(disk);
+diff --git a/arch/s390/kvm/kvm-s390.c b/arch/s390/kvm/kvm-s390.c
+index c7b4c0d37c87b..9b9d8d37bcc41 100644
+--- a/arch/s390/kvm/kvm-s390.c
++++ b/arch/s390/kvm/kvm-s390.c
+@@ -4430,8 +4430,8 @@ long kvm_arch_fault_in_page(struct kvm_vcpu *vcpu, gpa_t gpa, int writable)
+ static void __kvm_inject_pfault_token(struct kvm_vcpu *vcpu, bool start_token,
+ 				      unsigned long token)
+ {
+-	struct kvm_s390_interrupt inti;
+-	struct kvm_s390_irq irq;
++	struct kvm_s390_interrupt inti = {};
++	struct kvm_s390_irq irq = {};
+ 
+ 	if (start_token) {
+ 		irq.u.ext.ext_params2 = token;
 -- 
 2.53.0
 
