@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793207639;
-	b=2uupeMCB/BN/f1J0u2CEG1TvhKVCeKG/YAPbBTl3dx828d35AAGjT8dyqxBEXclh6fjR
-	 4n0BYQoAgfsHBcwX+o+MUVq/BX/Gv7cfeWTF6t6I/C1b2ahyzsH6sno4w+Z20SZ4IRM4b
-	 uLWsH12pN76WZpgIVm9gHPyBO22ty0Gh79e0Zt30wmieXpdMUiUOWmJUM04TzgwYQwpVT
-	 mfS5N4vOg6Ymz2Lexvlhh9DGgFBx9wLLFElIXKZOGaY2/+g2nHqaaXSYiY2OF4B76jHjR
-	 M47Rz4t3l9YHZrYNS0ByrmOidyEIgLFORE3u6YNjM1sdHb1XaOAdnxsUWsjdAMrrajQ==
+	t=1793207642;
+	b=ufnf9GiT5o4O588MG+g22eMUUgUd/D+iUnbx01grsE8HQiJwMm+5XJT6qIJhTWcSpbj8
+	 +cnf/PuvPnqgkeeMefPs1dmZ9kDFLp5BNtT7Gx/CghB0DqlohNFHV+QcgwYR5VUnArUkd
+	 cl4UryFhK1WHWzwolFnk81G9idlRY8e/XfT3s3HPGmUhsfib9VsflH24zyr1zgk9/9Q34
+	 GwaKHkTBewhomVU7XvUB0ubBZ40AUWdvFUjxNRm26sGrvg7K/2Tw6eQhLUFYSQfQHOyx0
+	 n1p4nDQ+uGJ/GzYL43lrpPyn7MCv0SJTD5NFrSQtMLVC8bTYjBJ++jjsDoQcOuTlgyA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793207639;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793207642;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=PLa9f6QpQGyhbfxpPvmOc0DE7PpjYnEaBmyCigN+5a0=;
-	b=xU7hneuuwG/qTzNFjkTTylVnvJ7Mx2NJkfpwSYhFV2pex6nNxD/UA0jnp5zSESmjxqom
-	 pRmmX7al8uTW2aamAc0ypj3EKA5mNIUh/i9UZdeYxLu5YopXovjg9DXdmoYIqmPUH7kOV
-	 VQw9nlQvs3dOxYJaf49eYJJtLWl4x1yTlEoUUHpqhpUDxIm5mHWCZIfrtqRLKwJtNoiQR
-	 zNzt6kVQCLLthmdoTx/H3U/mbXLGqGQw+D/O1oiMBDXcDJioH5o5Jf9Ehb8bGkrgRRUuX
-	 cZGER1+4CnnxCNWznXB7laq7zYpdlVq/k5eSzCcbUSogziBD1qkeny9AazcvqthcW+Q==
+	bh=vAfKd2TpMykmsqDbd7bCSenbQzSszUVcWDbHGNmQx+E=;
+	b=OU+I16emjTHYdaMp6FlLauXeDNrdOUAH04eAfp0Y48dEuICQjmURzl1QjMCwnCRrgjPa
+	 XMgA7BOOXuFbg/Df2myAuov63MphlvfwKorgpwfuJ7BDesfi4fFV63Nmf08MpTmJPhW6E
+	 ziPr8QDCkV0shNfZz+eV/ya092VGQxszkS1FHASr2qcL58s2SJ9RKK6t8WyRJ352ccNMJ
+	 fmhsVgbEwSGo6khLiLmyRsQXjI5bSa/np459zGmASHhmvvOf3N4qrAmbIfz6QV8M85G/x
+	 m2/3+uRpf95lKeNG6HqOpivhQ+MztdNAqKYaHk+VApTvNx7i81o3+8Bq+1xagAKo1dg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vhevNHhq;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zMsJIj+U;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A7CE606A31A;
-	Wed, 28 Oct 2026 17:13:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 271FF606A31A;
+	Wed, 28 Oct 2026 17:14:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vhevNHhq
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B0E71F01825;
-	Wed, 28 Oct 2026 17:13:58 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zMsJIj+U
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79AF01F01825;
+	Wed, 28 Oct 2026 17:14:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793207639;
-	bh=PLa9f6QpQGyhbfxpPvmOc0DE7PpjYnEaBmyCigN+5a0=;
+	s=korg; t=1793207642;
+	bh=vAfKd2TpMykmsqDbd7bCSenbQzSszUVcWDbHGNmQx+E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vhevNHhqswuzJ8pmIYN6uY5EF5nNKAPG22WDvCF3PBB2ZlxwDGDWNSAIPz6Lw8Jlc
-	 pnSrpGddGxlfXHYghrIiHVMynsviXXfnWjK+gzLXq2+Glxje+1bckERyD2qBRF/p2z
-	 kVf7MZOKAVD21LgEaMX3Oy9H1K23ElbB95ty0uok=
+	b=zMsJIj+U9+w2+tlj5bS/wGmpmZ48GHZbza9paS7ki3fXF/Wwy+dk+sNS1t+T3JgHf
+	 opP55A5R+3tZJ2Cg11J2KmaQx0tjZwPS8OVCZkQXrZQ9QJhgsxDIkk+uWQAk53Teh0
+	 FwbaIgq5f1xHE/6XPrJSOMLtnZUH4SDlAZ52i0Z4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	HyeongJun An <sammiee5311@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 034/247] ASoC: max98371: Fix the Speaker DHT Min Volume bits
-Date: Wed, 28 Oct 2026 17:57:17 +0100
-Message-ID: <20261028165948.174454809@linuxfoundation.org>
+	syzbot+de3d7f9bcc9212f3fae1@syzkaller.appspotmail.com,
+	Krystian Kaniewski <krystianmkaniewski@gmail.com>,
+	Vincent Donnefort <vdonnefort@google.com>,
+	Steven Rostedt <rostedt@goodmis.org>
+Subject: [PATCH 6.12 081/247] ring-buffer: Fix false warning in ring_buffer_map_get_reader()
+Date: Wed, 28 Oct 2026 17:58:04 +0100
+Message-ID: <20261028165949.310769740@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165947.349197979@linuxfoundation.org>
 References: <20261028165947.349197979@linuxfoundation.org>
@@ -68,44 +69,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: HyeongJun An <sammiee5311@gmail.com>
+From: Krystian Kaniewski <krystianmkaniewski@gmail.com>
 
-[ Upstream commit f7934340c56a84fc1b246ebf6b2e806d775f3b54 ]
+commit 89bab1dba8a0167ef0d819e0f55b6bafa038e87f upstream.
 
-Register 0x31 holds two 4-bit fields. The datasheet puts SPK_GAIN_MIN
-at bits 7:4 and DHT_VROT_PNT at bits 3:0. The Speaker DHT Min Volume
-and Speaker DHT Rotation Volume controls both use bits 3:0.
+The mmap reader can warn when it catches up with a writer that is still
+committing events. rb_get_reader_page() returns NULL in this case, but
+ring_buffer_map_get_reader() treats that result as an error.
 
-So setting the minimum speaker gain changes the DHT rotation point, and
-SPK_GAIN_MIN cannot be set.
+The initial rb_per_cpu_empty() check filters out an empty buffer, but it
+does not guarantee that the next reader page has committed data. Writers
+do not take reader_lock and can advance commit_page before publishing the
+committed length on the new page. rb_get_reader_page() can swap to that
+page, catch up with the writer and return NULL.
 
-Move Speaker DHT Min Volume to bits 7:4.
+Handle NULL through the existing no-data exit without warning. Remove the
+caller's reader_page == commit_page check as well, since the reader-page
+helper already handles that case. The existing metadata update and return
+path remain in place.
 
-Fixes: ca2cd6bc6663 ("ASoC: Add max98371 codec driver")
-Assisted-by: Claude:claude-opus-5-5
-Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
-Link: https://patch.msgid.link/20261008130953.2446692-5-sammiee5311@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260924084946.20104-1-krystianmkaniewski@gmail.com
+Fixes: 117c39200d9d ("ring-buffer: Introducing ring-buffer mapping functions")
+Assisted-by: Gemini:gemini-3.8-flash syzbot
+Reported-by: syzbot+de3d7f9bcc9212f3fae1@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=de3d7f9bcc9212f3fae1
+Link: https://syzkaller.appspot.com/ai_job?id=488adc18-a10e-42d2-a205-25327c38837f
+Signed-off-by: Krystian Kaniewski <krystianmkaniewski@gmail.com>
+Reviewed-by: Vincent Donnefort <vdonnefort@google.com>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/codecs/max98371.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/trace/ring_buffer.c |    6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
-diff --git a/sound/soc/codecs/max98371.c b/sound/soc/codecs/max98371.c
-index 852db211ba1e7..c53f76f0ade76 100644
---- a/sound/soc/codecs/max98371.c
-+++ b/sound/soc/codecs/max98371.c
-@@ -166,7 +166,7 @@ static const struct snd_kcontrol_new max98371_snd_controls[] = {
- 			0, (1<<MAX98371_DHT_MAX_WIDTH)-1, 0,
- 			max98371_dht_max_gain),
- 	SOC_SINGLE_TLV("Speaker DHT Min Volume", MAX98371_DHT_GAIN,
--			0, (1<<MAX98371_DHT_GAIN_WIDTH)-1, 0,
-+			4, (1<<MAX98371_DHT_GAIN_WIDTH)-1, 0,
- 			max98371_dht_min_gain),
- 	SOC_SINGLE_TLV("Speaker DHT Rotation Volume", MAX98371_DHT_GAIN,
- 			0, (1<<MAX98371_DHT_ROT_WIDTH)-1, 0,
--- 
-2.53.0
-
+--- a/kernel/trace/ring_buffer.c
++++ b/kernel/trace/ring_buffer.c
+@@ -7358,12 +7358,8 @@ consume:
+ 		goto out;
+ 	}
+ 
+-	/* Did the reader catch up with the writer? */
+-	if (cpu_buffer->reader_page == cpu_buffer->commit_page)
+-		goto out;
+-
+ 	reader = rb_get_reader_page(cpu_buffer);
+-	if (WARN_ON(!reader))
++	if (!reader)
+ 		goto out;
+ 
+ 	/* Check if any events were dropped */
 
 
