@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215195;
-	b=uY9S2v8sBEM/mfPKWrHoMuNvuu66rQCPv+evtRIq3KUaYh6dvXTsDVx1wxBCQ3Gjjtu1
-	 F4a6BHdEiWXI5YLiSyopwovD9SzlsK9rw7l5ZKCVl6kYiEkjR5D6mxWtQOPcT379OWn4x
-	 T50BLwb1VijtoiSdBEqI4BQGlDCtThWb2IqRmkQVgtagu81vIyLnvjq0xnYJ3gjZNp0KC
-	 BgnKoQxRvjVhzbs5jQhk98CaiJmYIN9OJAEcTefVphAUC1GFHi4DYH/vm2VFLZMHt1GOk
-	 ccfjFXuMNttSX/yDTCkKUqN8QQNGFpdZsOc9HH+ie6iQ+frsw7CGuwfND8erHkWF6kQ==
+	t=1793215198;
+	b=UqjNfI//hsdAqGWMBl8TbZ2ehWZciuvb3bXvusa4lrNpvp8H0CfwRTu/2JuoC5VxE6b4
+	 b3cCqENxHIUWTtnKyk6G+2xoAoSWeDRf8PJ13n46fe3YpoZtNcTgTUq74OGmEVOLAQnxj
+	 GBJ1MbaOTIbQ5jCxU49EIzT7zg8/+BjVm1gco1zmU5sIQVXbK82I7P9OnSBdUxgceMcOx
+	 VWG0vsvuYXQoYRx6LdcIqkyI3aA+5aQu84y97cfT0ovxy7b8JNs5RRYzxuNbDnseC+h2p
+	 X7NcByCcaV1NhsKSkT7wS0z9xWKbGhOUjno9XGU33aq5ToThfI+yj/HXn4YE+N+Gpnw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215195;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215198;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=vUw4Dm7/q9TFyPdMPJykTKvdPAAC270TaTOohUMi3LI=;
-	b=H2/5UHIBFJjXowzD5+/0iZuKirGSrRXdpVu7L0dBkTg5kvqWqTf10WqflOvqtutI3EBN
-	 HIxQohGtiBoiJHnKPUaD6IV1Iw30GKg15xYfMe4nTmkZLgM2VDRDMKPiINOe49BBcbr7U
-	 zyh1Rvg/oILL+QtKa/f7KlWxilUmO0cVYWkrTgrV1ExOo21RW2FYWjtwbqvaA07iFsrXl
-	 n8HIAc5mmsAFn2faHAIDFHN53SbKNNacrrkatkjCNFkzjPSE62qo2qPSmTpby2tGXX/Qk
-	 dIeepuk8UoXMEqodiBfSBdKO4ooUiLqQIon2lD6sGPQYz4SXSn7oJimphfmww5bKd1Q==
+	bh=dUyN+pkxGw3dxM3r0wDwOtdSp3QC+/sbSsCb0hofIW8=;
+	b=xHNK/1XQU9yGGWy8W3J7IgcDnO4a3oY5B9/pzn2/99Av/FZgbodPwwbtMoRWjcfUtVs9
+	 bdzZOe7Iw6PHh2HGZGgZL8tPTVzWxJYGKPExAY4YXGTO3tgAjg+fvBJ8oYsjhUlQnzVvw
+	 zMKEkYlVRNX7rKqlBwLbliq/cCDZkjEY+uxrk7TBEJs0jcbPU0aqAEPcaXepM4cXZpaJG
+	 P3Y7tTJ3aS0ob9FgWrqfb0F+UosDQlrYaccj9B7d5IhkkFomtrAJoRa++NhaSHWW0/GZs
+	 PSbS04VaAZ2h8p2kbKRG0qfPLbNePsZS2hCQ+MmnbSy4+Oku+SlXXOuP+KYsShpRKgA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=enL+REKG;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=W7JM9Kxh;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94E1E606A31A;
-	Wed, 28 Oct 2026 19:19:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74A35606A31A;
+	Wed, 28 Oct 2026 19:19:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=enL+REKG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E98461F01825;
-	Wed, 28 Oct 2026 19:19:54 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=W7JM9Kxh
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C37881F01825;
+	Wed, 28 Oct 2026 19:19:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215195;
-	bh=vUw4Dm7/q9TFyPdMPJykTKvdPAAC270TaTOohUMi3LI=;
+	s=korg; t=1793215198;
+	bh=dUyN+pkxGw3dxM3r0wDwOtdSp3QC+/sbSsCb0hofIW8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=enL+REKGntikzp7MUaeaA88UiAfay9QOeL48oLLwtuwasbKmHO+hXSegfUPI5QPJE
-	 wVqrtucd+1HX6qoYtCHQX1dQ+fQspTbSjmFdMs8yLY4YEwDCX26DzsaLV1S5Dqsk3P
-	 +yMJs/yDKY+gfM1thyjbBB9iRJd2QjvpTJahIDkA=
+	b=W7JM9Kxh3OWxwC9Wcj6SDh/eCYEjN0KRjSpMqp8LaRIoeMEtQYiU4c2Hr3W4YFsss
+	 qqu2TmfcPLNOygkNfr+k6E5s9rwyfIPo6YbCEtUR71zxHJDoah/CQo/7PuXXNja15N
+	 BPWQT5zmNywbNQmHwG90H6GcKW4wkJKHhOT/nIOA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SeungJu Cheon <suunj1331@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Hyungjung Joo <jhj140711@gmail.com>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1125/1887] Bluetooth: ISO: Fix data-race on iso_pi fields in hci_get_route calls
-Date: Wed, 28 Oct 2026 17:53:41 +0100
-Message-ID: <20261028170525.000550993@linuxfoundation.org>
+Subject: [PATCH 6.1 1090/1887] fs/mbcache: cancel shrink work before destroying the cache
+Date: Wed, 28 Oct 2026 17:53:06 +0100
+Message-ID: <20261028170524.210306878@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,93 +68,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: SeungJu Cheon <suunj1331@gmail.com>
+From: HyungJung Joo <jhj140711@gmail.com>
 
-[ Upstream commit 9ca7053d6215d89c33f28893bfd1625a32919d3f ]
+[ Upstream commit d227786ab1119669df4dc333a61510c52047cce4 ]
 
-iso_connect_bis(), iso_connect_cis(), iso_listen_bis(), and
-iso_conn_big_sync() call hci_get_route() using iso_pi(sk)->dst,
-iso_pi(sk)->src, and iso_pi(sk)->src_type without holding lock_sock().
+mb_cache_destroy() calls shrinker_free() and then frees all cache
+entries and the cache itself, but it does not cancel the pending
+c_shrink_work work item first.
 
-These fields may be modified concurrently by connect() or setsockopt()
-on the same socket, resulting in data-races reported by KCSAN.
+If mb_cache_entry_create() schedules c_shrink_work via schedule_work()
+and the work item is still pending or running when mb_cache_destroy()
+runs, mb_cache_shrink_worker() will access the cache after its memory
+has been freed, causing a use-after-free.
 
-Fix this by snapshotting the required fields under lock_sock() before
-calling hci_get_route().
+This is only reachable by a privileged user (root or CAP_SYS_ADMIN)
+who can trigger the last put of a mounted ext2/ext4/ocfs2 filesystem.
 
-BUG: KCSAN: data-race in memcmp+0x45/0xb0
+Cancel the work item with cancel_work_sync() before calling
+shrinker_free(), ensuring the worker has finished and will not be
+rescheduled before the cache is torn down.
 
-race at unknown origin, with read to 0xffff8880122135cf of 1 bytes
-by task 333 on cpu 1:
- memcmp+0x45/0xb0
- hci_get_route+0x27e/0x490
- iso_connect_cis+0x4c/0xa10
- iso_sock_connect+0x60e/0xb30
- __sys_connect_file+0xbd/0xe0
- __sys_connect+0xe0/0x110
- __x64_sys_connect+0x40/0x50
- x64_sys_call+0xcad/0x1c60
- do_syscall_64+0x133/0x590
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-Fixes: 241f51931c35 ("Bluetooth: ISO: Avoid circular locking dependency")
-Signed-off-by: SeungJu Cheon <suunj1331@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: c2f3140fe2ec ("mbcache2: limit cache size")
+Signed-off-by: Hyungjung Joo <jhj140711@gmail.com>
+Link: https://patch.msgid.link/20260317054556.1821600-1-jhj140711@gmail.com
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/iso.c | 26 ++++++++++++++++++++------
- 1 file changed, 20 insertions(+), 6 deletions(-)
+ fs/mbcache.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/bluetooth/iso.c b/net/bluetooth/iso.c
-index bb6e02f7e32e6..2281a915c6533 100644
---- a/net/bluetooth/iso.c
-+++ b/net/bluetooth/iso.c
-@@ -267,12 +267,19 @@ static int iso_connect_bis(struct sock *sk)
- 	struct iso_conn *conn;
- 	struct hci_conn *hcon;
- 	struct hci_dev  *hdev;
-+	bdaddr_t src, dst;
-+	u8 src_type;
- 	int err;
+diff --git a/fs/mbcache.c b/fs/mbcache.c
+index 2a4b8b549e934..637e307446135 100644
+--- a/fs/mbcache.c
++++ b/fs/mbcache.c
+@@ -406,6 +406,7 @@ void mb_cache_destroy(struct mb_cache *cache)
+ {
+ 	struct mb_cache_entry *entry, *next;
  
--	BT_DBG("%pMR", &iso_pi(sk)->src);
-+	lock_sock(sk);
-+	bacpy(&src, &iso_pi(sk)->src);
-+	bacpy(&dst, &iso_pi(sk)->dst);
-+	src_type = iso_pi(sk)->src_type;
-+	release_sock(sk);
++	cancel_work_sync(&cache->c_shrink_work);
+ 	unregister_shrinker(&cache->c_shrink);
  
--	hdev = hci_get_route(&iso_pi(sk)->dst, &iso_pi(sk)->src,
--			     iso_pi(sk)->src_type);
-+	BT_DBG("%pMR", &src);
-+
-+	hdev = hci_get_route(&dst, &src, src_type);
- 	if (!hdev)
- 		return -EHOSTUNREACH;
- 
-@@ -337,12 +344,19 @@ static int iso_connect_cis(struct sock *sk)
- 	struct iso_conn *conn;
- 	struct hci_conn *hcon;
- 	struct hci_dev  *hdev;
-+	bdaddr_t src, dst;
-+	u8 src_type;
- 	int err;
- 
--	BT_DBG("%pMR -> %pMR", &iso_pi(sk)->src, &iso_pi(sk)->dst);
-+	lock_sock(sk);
-+	bacpy(&src, &iso_pi(sk)->src);
-+	bacpy(&dst, &iso_pi(sk)->dst);
-+	src_type = iso_pi(sk)->src_type;
-+	release_sock(sk);
- 
--	hdev = hci_get_route(&iso_pi(sk)->dst, &iso_pi(sk)->src,
--			     iso_pi(sk)->src_type);
-+	BT_DBG("%pMR -> %pMR", &src, &dst);
-+
-+	hdev = hci_get_route(&dst, &src, src_type);
- 	if (!hdev)
- 		return -EHOSTUNREACH;
- 
+ 	/*
 -- 
 2.53.0
 
