@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216148;
-	b=yAW5LloWJMUZTkSV2BH9jWe9WM88m1liGMe2Ew3u3pwgzOMPakrrfJWbb3jiTybbZ393
-	 0kssEAspAlQPZk/BrGo2NaOvxudKteBHuFYUn8b5C6cgS8nvs2/s42csmre20kjM87DtM
-	 u+TKyzWIKecDFtgc2/StH4vUWDKRPmOyI6Yaqu8GpIIRvvMSk/j7we1QO/iL/vPdIfJUP
-	 9MrrZ1iU8Uy1VDF0vetYFHRiLT2GQaELoA5D9V4vNX41iW6pfhXMR8RLLubxV4b17VNrU
-	 EHIH+eqDu93+xRcwVm3BpeXWCijd4vfvH71fmjPq2NAKkCpNtRiCtKpyUHGM/JZiGWg==
+	t=1793216151;
+	b=uPcynJM1a5xiX7jybPl/NCaKa4LO98v4QsiPAGt5uRNG+1FZpqBC0xvLXHvyPI+tOsTD
+	 1AwTYloKB6qhKk0tOLxoytiMRfWD3irXfzJWk7hp5xn4R1Y+a/OdP7W7Uzft2kLYfxvhe
+	 nO8XQWOaVHEbZ4IqaufG7mxwAT3OewCGC34V5e6gJfUhnmjtQQJgmfIQWQn4TVf1aMuK4
+	 mtUiRHOJW1bijhaTyCkM1bd7nFw+NaQxTweURGIdp+uwXijJML/8/VTuj7xQqyCAYchAn
+	 XFq089bKSa5yYIx0rsMWOMNcbK6knY0FfFdgpvnrIWQXEsUJ7FXpGe9/MNz7HZv6HGw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216148;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216151;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=cwhts6q4KeT0YzOliphRSCo9HnAcPSA+6KQNam5FSXw=;
-	b=EZYUTfzHp+gbAm32y2b8n22awqMa6NN6sTYoVtOznV7bugDJHmXdqyiykbshk3OJqBVp
-	 /9qfUQsLmFkydv94Y7Oj0bdPeDf3oVogzcUa/8zWoUsBW5Di1T/icTfBlTYsxT7iauFxK
-	 +b+E5KcFezvzGZwQ7qdT1Bb1Sz7oK0M9SBNrkRwYT6YcOA7FcyZT6MgDmgRA7nQZP+ySf
-	 vCWxHTK2dCZNgDElvZIikzSrBrTbpquspODLJqEeMImXz0yquTSuPGzdT01E4/kqUyLiJ
-	 waTSkhQKIm0KSG9QUPj6kgi4Jdlja7NE+DoCPBvyIuakNwdolUQd18KErC4Pq8TU/4A==
+	bh=9LPQ0jY+DVvfEiKJmLBmNuKWAF8PCKNqy6oyytzE2JI=;
+	b=O+Z+hwTbZNATJ8aC3HFZGbwSGzGsI7zaFqxd8WUe2gul85VLNDrlrQSBH8ueuV0kRYdV
+	 8Jz8WMg6paI7fO+68/ogBOVmjdmZVfph+qHbi3aU9OvUclcbw+Awx4As04aVxp7kHBEKq
+	 pIEtV0MSyAiKEektSULIba5Cubxaapnq5TCLLh0sGNi0ONr1yZ8A5XPDpjLzpvl16fB8O
+	 XkEIBpxBPd2HWFqwdX7a5ibdTK8L/JkCAeolIr0vtZV1I1q0FDfUm4RWx1f6J++C646nw
+	 1QJA1CVWKNP5ve01h7fUY0ok73/s+MquG23xrGF8162KQ3OJJHEwUtTPEhYO+KsVY6Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sMtWwTGh;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Jxh1VV1T;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5D66606A31A;
-	Wed, 28 Oct 2026 19:35:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC265606A31D;
+	Wed, 28 Oct 2026 19:35:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sMtWwTGh
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 414D81F01825;
-	Wed, 28 Oct 2026 19:35:47 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Jxh1VV1T
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2614D1F01825;
+	Wed, 28 Oct 2026 19:35:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216147;
-	bh=cwhts6q4KeT0YzOliphRSCo9HnAcPSA+6KQNam5FSXw=;
+	s=korg; t=1793216150;
+	bh=9LPQ0jY+DVvfEiKJmLBmNuKWAF8PCKNqy6oyytzE2JI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sMtWwTGhd3+iBY98XQRMLfQ5bpz9rQYR5QP3SuN8P+uCne8gROvm/NJbkWK1MffXL
-	 0mGXIs040lLyaWnA3Fr70L6DTGwsfjWoGZn4ow3NEKvCl2guR3qb1SG6NPuOuFfZeZ
-	 xxeVVb82NeqBWeCHCb1IE/WYdCdcm00OvXqZVuEk=
+	b=Jxh1VV1T5jJO5R4K9IHNxKCP4LHZmGsG7QlBdA+hoFaYIlAPzrruXejqMv5swGdFW
+	 TG26UiUO5xbJlDTxXRbS5rs9aS8xSRiZZFsOtInraI1kaG+SDg3XbGj0ZOCMnKpGtv
+	 kGnZE3CIZD+PMI00M85MAuU5LshPIQdKbRuvg4VA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qing Ming <a0yami@mailbox.org>,
-	Tejun Heo <tj@kernel.org>,
+	Kanglong Wang <wangkanglong@loongson.cn>,
+	Huacai Chen <chenhuacai@loongson.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1455/1887] cgroup/rstat: validate cpu before css_rstat_cpu() access
-Date: Wed, 28 Oct 2026 17:59:11 +0100
-Message-ID: <20261028170532.569786204@linuxfoundation.org>
+Subject: [PATCH 6.1 1456/1887] LoongArch: Move jump_label_init() before parse_early_param()
+Date: Wed, 28 Oct 2026 17:59:12 +0100
+Message-ID: <20261028170532.593784622@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,137 +68,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qing Ming <a0yami@mailbox.org>
+From: Kanglong Wang <wangkanglong@loongson.cn>
 
-[ Upstream commit 8817005efbdfdf5d4e4814cb5dc52b53d12917d7 ]
+[ Upstream commit ea68d444a658783234a06f05414e41cf93a18fb2 ]
 
-css_rstat_updated() is exposed as a BPF kfunc and accepts a
-caller-provided cpu argument. The function uses cpu for per-cpu rstat
-lookups without checking whether it refers to a valid possible CPU.
+When enabling both CONFIG_MEM_ALLOC_PROFILING=y and
+CONFIG_MEM_ALLOC_PROFILING_ENABLED_BY_DEFAULT=y, then diabling memory
+profiling by adding the boot parameter 'sysctl.vm.mem_profiling=0' will
+cause the kernel failed to boot.
 
-A BPF iter/cgroup program with CAP_BPF and CAP_PERFMON can pass an
-invalid cpu value. On an unfixed UBSCAN_BOUNDS test kernel, cpu ==
-0x7fffffff triggers:
+After analysis, this is because jump_label_init() must be called before
+parse_early_param(), the early param handlers may modify static keys by
+static_branch_enable/disable().
 
-  UBSAN: array-index-out-of-bounds in kernel/cgroup/rstat.c:31:9
-  index 2147483647 is out of range for type 'long unsigned int [64]'
-  Call Trace:
-    css_rstat_updated
-    bpf_iter_run_prog
-    cgroup_iter_seq_show
-    bpf_seq_read
+Fix this by moving jump_label_init() to before parse_early_param(). The
+solution is similar to other architectures.
 
-Add cpu validation to the BPF-facing css_rstat_updated() kfunc and
-move the common implementation to __css_rstat_updated() for in-kernel
-callers.
-
-Fixes: a319185be9f5 ("cgroup: bpf: enable bpf programs to integrate with rstat")
-Signed-off-by: Qing Ming <a0yami@mailbox.org>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Kanglong Wang <wangkanglong@loongson.cn>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-cgroup.c     |  2 +-
- include/linux/cgroup.h |  1 +
- kernel/cgroup/rstat.c  | 19 ++++++++++++++++---
- mm/memcontrol.c        |  2 +-
- 4 files changed, 19 insertions(+), 5 deletions(-)
+ arch/loongarch/kernel/setup.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/block/blk-cgroup.c b/block/blk-cgroup.c
-index 34b89029ba434..4c86003bf4445 100644
---- a/block/blk-cgroup.c
-+++ b/block/blk-cgroup.c
-@@ -2034,7 +2034,7 @@ void blk_cgroup_bio_start(struct bio *bio)
+diff --git a/arch/loongarch/kernel/setup.c b/arch/loongarch/kernel/setup.c
+index ed47cf6714dfe..439658695f7b3 100644
+--- a/arch/loongarch/kernel/setup.c
++++ b/arch/loongarch/kernel/setup.c
+@@ -428,6 +428,7 @@ void __init setup_arch(char **cmdline_p)
+ 	efi_init();
+ 	memblock_init();
+ 	pagetable_init();
++	jump_label_init(); /* Initialise the static keys for early params */
+ 	parse_early_param();
+ 	reserve_initrd_mem();
  
- 	u64_stats_update_end_irqrestore(&bis->sync, flags);
- 	if (cgroup_subsys_on_dfl(io_cgrp_subsys))
--		cgroup_rstat_updated(bio->bi_blkg->blkcg->css.cgroup, cpu);
-+		__cgroup_rstat_updated(bio->bi_blkg->blkcg->css.cgroup, cpu);
- 	put_cpu();
- }
- 
-diff --git a/include/linux/cgroup.h b/include/linux/cgroup.h
-index 2b7d077de7ef6..255b05e18cab4 100644
---- a/include/linux/cgroup.h
-+++ b/include/linux/cgroup.h
-@@ -762,6 +762,7 @@ static inline void cgroup_path_from_kernfs_id(u64 id, char *buf, size_t buflen)
- /*
-  * cgroup scalable recursive statistics.
-  */
-+void __cgroup_rstat_updated(struct cgroup *cgrp, int cpu);
- void cgroup_rstat_updated(struct cgroup *cgrp, int cpu);
- void cgroup_rstat_flush(struct cgroup *cgrp);
- void cgroup_rstat_flush_irqsafe(struct cgroup *cgrp);
-diff --git a/kernel/cgroup/rstat.c b/kernel/cgroup/rstat.c
-index 0ae90c15cad85..0660e860afa29 100644
---- a/kernel/cgroup/rstat.c
-+++ b/kernel/cgroup/rstat.c
-@@ -1,6 +1,7 @@
- // SPDX-License-Identifier: GPL-2.0-only
- #include "cgroup-internal.h"
- 
-+#include <linux/cpumask.h>
- #include <linux/sched/cputime.h>
- 
- #include <linux/bpf.h>
-@@ -18,7 +19,7 @@ static struct cgroup_rstat_cpu *cgroup_rstat_cpu(struct cgroup *cgrp, int cpu)
- }
- 
- /**
-- * cgroup_rstat_updated - keep track of updated rstat_cpu
-+ * __cgroup_rstat_updated - keep track of updated rstat_cpu
-  * @cgrp: target cgroup
-  * @cpu: cpu on which rstat_cpu was updated
-  *
-@@ -26,7 +27,7 @@ static struct cgroup_rstat_cpu *cgroup_rstat_cpu(struct cgroup *cgrp, int cpu)
-  * rstat_cpu->updated_children list.  See the comment on top of
-  * cgroup_rstat_cpu definition for details.
-  */
--void cgroup_rstat_updated(struct cgroup *cgrp, int cpu)
-+void __cgroup_rstat_updated(struct cgroup *cgrp, int cpu)
- {
- 	raw_spinlock_t *cpu_lock = per_cpu_ptr(&cgroup_rstat_cpu_lock, cpu);
- 	unsigned long flags;
-@@ -73,6 +74,18 @@ void cgroup_rstat_updated(struct cgroup *cgrp, int cpu)
- 	raw_spin_unlock_irqrestore(cpu_lock, flags);
- }
- 
-+/*
-+ * BPF-facing wrapper for __cgroup_rstat_updated(). Validate the caller-provided
-+ * CPU before passing it to the internal rstat updater.
-+ */
-+void cgroup_rstat_updated(struct cgroup *cgrp, int cpu)
-+{
-+	if (unlikely(cpu < 0 || cpu >= nr_cpu_ids || !cpu_possible(cpu)))
-+		return;
-+
-+	__cgroup_rstat_updated(cgrp, cpu);
-+}
-+
- /**
-  * cgroup_rstat_cpu_pop_updated - iterate and dismantle rstat_cpu updated tree
-  * @pos: current position
-@@ -402,7 +415,7 @@ static void cgroup_base_stat_cputime_account_end(struct cgroup *cgrp,
- 						 unsigned long flags)
- {
- 	u64_stats_update_end_irqrestore(&rstatc->bsync, flags);
--	cgroup_rstat_updated(cgrp, smp_processor_id());
-+	__cgroup_rstat_updated(cgrp, smp_processor_id());
- 	put_cpu_ptr(rstatc);
- }
- 
-diff --git a/mm/memcontrol.c b/mm/memcontrol.c
-index 7b64dee7f3862..e270dae84941a 100644
---- a/mm/memcontrol.c
-+++ b/mm/memcontrol.c
-@@ -608,7 +608,7 @@ static inline void memcg_rstat_updated(struct mem_cgroup *memcg, int val)
- {
- 	unsigned int x;
- 
--	cgroup_rstat_updated(memcg->css.cgroup, smp_processor_id());
-+	__cgroup_rstat_updated(memcg->css.cgroup, smp_processor_id());
- 
- 	x = __this_cpu_add_return(stats_updates, abs(val));
- 	if (x > MEMCG_CHARGE_BATCH) {
 -- 
 2.53.0
 
