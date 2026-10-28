@@ -1,55 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214918;
-	b=seGuI12Kieq8McPFNQWPLeVlQzInFv2KkfKXxlusRx8+qJ/vyPZAYS3ywQfHcyBzq/9E
-	 jVxRBHni3ZHX5MyT67eBWTWyJ3QQfHu6NQZiP3r0SkUliQWBgy5DY//Ee5gW2oX9o9tQe
-	 RgPFgaojV+Fh3crZIoOYJHMo4yiEN+qu+pQ+d81keV0pyI4d1O0EH32g5LdZ1gEs6rSUJ
-	 BW7q0loe9wK3EoVrcu23pxfA7mZORl2HB0r1O+MyyUdtMFXKyPIVQdz81NIWYDvzvC5XD
-	 elMvEndz99Znwx/Xd4f3sz7ogZlZSfef+GrwCzAp2OLlLgr8etAEw1IBMiJj+Tu2iGg==
+	t=1793214921;
+	b=Hfh78a72vg5PUcBLhgpbYdJVuCfHB0Rslje0b36Gxg5qJ77IHp1p1THc6jx9cvhh23Ol
+	 CYYtRAz+tLiiZcG2q1/6HggN/yktlLlVlbBOKHy2q90NRaYFhL9WHPDVN1W3GyxJODK1T
+	 9GKwTziTStpmMdMZUor/h/tP3w+BE4kIAEsZXmePgOLSan9oEdmNmb2fAxijd5PRfmUN7
+	 WIWaoem7oH2wA577ksvB6XxTYWqBfYpl2Abq++9kn6Ff9tnUzFv0U3Z7aHAWlC7F3+SGd
+	 ZEYIafLPLW4mPLWrJXTM3wuonP4XboiawOPPmFYFYDfY0rsjfAAqA1NM0bEkGdyPYuA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214918;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214921;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=hPEOdps2AWdteLnO5JZBuUUzr3RPGYppnH3mRbZa4II=;
-	b=p3oc4RMBMzUKQpruosxz0+VfS1go1TDh880YRPakNmB/CZwE6eKObkmUtF42lDXnX43h
-	 awuB7m4Xq3C+9aYfSxcLRuVYRRAJpT+yZ/X/kMn78LL1+YrC+IJw9qkeQF+F/jNmWjIuR
-	 ETYLMIUlt1zHzgZ/HCxa+5Z7bEBKCSfbsZvRbADHoIKmby7EeDuttvZWsxsEeVgwTIpg7
-	 8+EfBnCsaZr3RHuuZuyv1MKgoHJxfm+BV7WjyG+c+lZoCMb9eV824AzwB8AS1Mf66giay
-	 BXpctCfR6eO/MY3pSdA99JgZblXkSYgDMFEETBUf7aPLl2KoVr0Xa0DffH8TEXC39zg==
+	bh=l8OlWvg1v/kVuAvJkvt5jezwi4Sr5Mye70X9xDHAwo0=;
+	b=xmvvRRyBgvxFSa8xH2xIpvRuXcARKIwy9FFi0C2jJZ7MMjg1XHkzTHGEw0IqKIg4SDF3
+	 4ZSjwvT3k4vwA81plRNYypySIgQNLyEdUTAYmzinzGNqoSqNpBmnRAnF82skhMn88GSHA
+	 FRDGXN1/A/wS1z8OOEaUEOTQUZgRrzWwl68hRgsEw/I8V8jZl1KAQUBdwJrtn3eZPwNtK
+	 ZVIrnNS1bEfeJMAh0aFXzC+932Dslaw0p2vvvUx8TifChIq6XSstbcDZU7zF/gzuggFHp
+	 07sDguP3U8ZmLpj7Qfl8xxuCnqCovPGKQ1ai1h5y+3hDLBe51cHeB+Vn36jDI9reGNw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ywEUfVHs;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kppVElw2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E22A8606A31A;
-	Wed, 28 Oct 2026 19:15:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3A90606A321;
+	Wed, 28 Oct 2026 19:15:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ywEUfVHs
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45C551F01825;
-	Wed, 28 Oct 2026 19:15:17 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kppVElw2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 160CF1F01825;
+	Wed, 28 Oct 2026 19:15:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214917;
-	bh=hPEOdps2AWdteLnO5JZBuUUzr3RPGYppnH3mRbZa4II=;
+	s=korg; t=1793214920;
+	bh=l8OlWvg1v/kVuAvJkvt5jezwi4Sr5Mye70X9xDHAwo0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ywEUfVHsZfQqppucoO3ihcavHGLNevCCkzVQRn/odJVO+zYcuKJKQUW+N1mwzhwyJ
-	 0eDc3Gp2gnd34kyhV7H6zFDwtrHyBqkWMoUrzBevAoU+yxSa3CTYqVAgT0Sg92hd89
-	 gKLP0x3TT8hDRQ+NDUkHqMOm0dp5LNRDSu4t67FI=
+	b=kppVElw2O2y6+goGijsI7AzqRZEKswbIe2Bmo5PL0W2+5HCeqfjyrpBApyBMFGHhX
+	 wQFfaNIiADnyPQRs9NtDlc/9ZOtmgx6vtirDqiaSfb3/P6xnaYa9tkz4lvA0Y/WvDS
+	 ZX8j8Vp1d2VQRmWrdulBS8uFh1RXcnTKJHnvoht4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lu Baolu <baolu.lu@linux.intel.com>,
-	Dmytro Maluka <dmaluka@chromium.org>,
-	Samiullah Khawaja <skhawaja@google.com>,
-	Kevin Tian <kevin.tian@intel.com>,
-	Joerg Roedel <joerg.roedel@amd.com>,
+	Zhang Yi <yi.zhang@huawei.com>,
+	Baokun Li <libaokun1@huawei.com>,
+	stable@kernel.org,
+	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1027/1887] iommu/vt-d: Clear Present bit before tearing down PASID entry
-Date: Wed, 28 Oct 2026 17:52:03 +0100
-Message-ID: <20261028170522.786683310@linuxfoundation.org>
+Subject: [PATCH 6.1 1028/1887] ext4: drop extent cache when splitting extent fails
+Date: Wed, 28 Oct 2026 17:52:04 +0100
+Message-ID: <20261028170522.808671964@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -71,106 +71,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lu Baolu <baolu.lu@linux.intel.com>
+From: Zhang Yi <yi.zhang@huawei.com>
 
-[ Upstream commit 75ed00055c059dedc47b5daaaa2f8a7a019138ff ]
+[ Upstream commit 79b592e8f1b435796cbc2722190368e3e8ffd7a1 ]
 
-The Intel VT-d Scalable Mode PASID table entry consists of 512 bits (64
-bytes). When tearing down an entry, the current implementation zeros the
-entire 64-byte structure immediately using multiple 64-bit writes.
+When the split extent fails, we might leave some extents still being
+processed and return an error directly, which will result in stale
+extent entries remaining in the extent status tree. So drop all of the
+remaining potentially stale extents if the splitting fails.
 
-Since the IOMMU hardware may fetch these 64 bytes using multiple
-internal transactions (e.g., four 128-bit bursts), updating or zeroing
-the entire entry while it is active (P=1) risks a "torn" read. If a
-hardware fetch occurs simultaneously with the CPU zeroing the entry, the
-hardware could observe an inconsistent state, leading to unpredictable
-behavior or spurious faults.
-
-Follow the "Guidance to Software for Invalidations" in the VT-d spec
-(Section 6.5.3.3) by implementing the recommended ownership handshake:
-
-1. Clear only the 'Present' (P) bit of the PASID entry.
-2. Use a dma_wmb() to ensure the cleared bit is visible to hardware
-   before proceeding.
-3. Execute the required invalidation sequence (PASID cache, IOTLB, and
-   Device-TLB flush) to ensure the hardware has released all cached
-   references.
-4. Only after the flushes are complete, zero out the remaining fields
-   of the PASID entry.
-
-Also, add a dma_wmb() in pasid_set_present() to ensure that all other
-fields of the PASID entry are visible to the hardware before the Present
-bit is set.
-
-Fixes: 0bbeb01a4faf ("iommu/vt-d: Manage scalalble mode PASID tables")
-Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
-Reviewed-by: Dmytro Maluka <dmaluka@chromium.org>
-Reviewed-by: Samiullah Khawaja <skhawaja@google.com>
-Reviewed-by: Kevin Tian <kevin.tian@intel.com>
-Link: https://lore.kernel.org/r/20260120061816.2132558-2-baolu.lu@linux.intel.com
-Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
+Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
+Reviewed-by: Baokun Li <libaokun1@huawei.com>
+Cc: stable@kernel.org
+Reviewed-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
+Message-ID: <20251129103247.686136-8-yi.zhang@huaweicloud.com>
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/intel/pasid.c | 22 ++++++++++++++++++++--
- 1 file changed, 20 insertions(+), 2 deletions(-)
+ fs/ext4/extents.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/iommu/intel/pasid.c b/drivers/iommu/intel/pasid.c
-index 178ca6fadb736..e0647142c6af1 100644
---- a/drivers/iommu/intel/pasid.c
-+++ b/drivers/iommu/intel/pasid.c
-@@ -262,7 +262,7 @@ intel_pasid_clear_entry(struct device *dev, u32 pasid, bool fault_ignore)
- 	if (WARN_ON(!pe))
- 		return;
- 
--	if (fault_ignore && pasid_pte_is_present(pe))
-+	if (fault_ignore)
- 		pasid_clear_entry_with_fpd(pe);
- 	else
- 		pasid_clear_entry(pe);
-@@ -358,9 +358,23 @@ static inline void pasid_set_wpe(struct pasid_entry *pe)
-  */
- static inline void pasid_set_present(struct pasid_entry *pe)
- {
-+	dma_wmb();
- 	pasid_set_bits(&pe->val[0], 1 << 0, 1);
+diff --git a/fs/ext4/extents.c b/fs/ext4/extents.c
+index 6d95dab538475..5f588728a27fb 100644
+--- a/fs/ext4/extents.c
++++ b/fs/ext4/extents.c
+@@ -3268,7 +3268,8 @@ static int ext4_split_extent_at(handle_t *handle,
+ 	if (IS_ERR(path)) {
+ 		EXT4_ERROR_INODE(inode, "Failed split extent on %u, err %ld",
+ 				 split, PTR_ERR(path));
+-		return PTR_ERR(path);
++		err = PTR_ERR(path);
++		goto out_err;
+ 	}
+ 	depth = ext_depth(inode);
+ 	ex = path[depth].p_ext;
+@@ -3323,9 +3324,12 @@ static int ext4_split_extent_at(handle_t *handle,
+ 	 * and err is a non-zero error code.
+ 	 */
+ 	ext4_ext_dirty(handle, inode, path + path->p_depth);
+-	return err;
+ out:
+ 	ext4_ext_show_leaf(inode, *ppath);
++out_err:
++	if (err)
++		/* Remove all remaining potentially stale extents. */
++		ext4_es_remove_extent(inode, ee_block, ee_len);
+ 	return err;
  }
  
-+/*
-+ * Clear the Present (P) bit (bit 0) of a scalable-mode PASID table entry.
-+ * This initiates the transition of the entry's ownership from hardware
-+ * to software. The caller is responsible for fulfilling the invalidation
-+ * handshake recommended by the VT-d spec, Section 6.5.3.3 (Guidance to
-+ * Software for Invalidations).
-+ */
-+static inline void pasid_clear_present(struct pasid_entry *pe)
-+{
-+	pasid_set_bits(&pe->val[0], 1 << 0, 0);
-+	dma_wmb();
-+}
-+
- /*
-  * Setup Page Walk Snoop bit (Bit 87) of a scalable mode PASID
-  * entry.
-@@ -470,7 +484,7 @@ void intel_pasid_tear_down_entry(struct intel_iommu *iommu, struct device *dev,
- 
- 	did = pasid_get_domain_id(pte);
- 	pgtt = pasid_pte_get_pgtt(pte);
--	intel_pasid_clear_entry(dev, pasid, fault_ignore);
-+	pasid_clear_present(pte);
- 	spin_unlock(&iommu->lock);
- 
- 	if (!ecap_coherent(iommu->ecap))
-@@ -486,6 +500,10 @@ void intel_pasid_tear_down_entry(struct intel_iommu *iommu, struct device *dev,
- 	/* Device IOTLB doesn't need to be flushed in caching mode. */
- 	if (!cap_caching_mode(iommu->cap))
- 		devtlb_invalidation_with_pasid(iommu, dev, pasid);
-+
-+	intel_pasid_clear_entry(dev, pasid, fault_ignore);
-+	if (!ecap_coherent(iommu->ecap))
-+		clflush_cache_range(pte, sizeof(*pte));
- }
- 
- /*
 -- 
 2.53.0
 
