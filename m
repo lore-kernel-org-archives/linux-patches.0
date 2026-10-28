@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213606;
-	b=iXXUhUxKUT/vymnci/2ozKRXD03NfSewQtvXFE0Nk5rCpekLiljoDi5+z6yWpKSE78D5
-	 nL/lK1FEMw2fegv0e4m5YnePpJ1si0xeTC991asHmzZcquyV+ZaTklGw+6ClMiM9LHQ1M
-	 f3HfU+jgxAGZ1C0loD1+jA4MTR/j+dRFsrPhm6lv9P6rLRbfs6boa55DQyq1imJDMKLSH
-	 dbwEnoy/iCAKoV8JHT+9UFfdoRjUnaiTrPw8LP5AEoKtiG9lPcVaO7qQkWGY4jWx47LTx
-	 1RB1jrNkJuET/5SOS8p3VCHjhWV1M/5lqouW095+ZveqU7NETvAqv8b+zTHioGZhhfA==
+	t=1793213609;
+	b=HzHEKbCDKzAAZuDcZJi9HnLKKVGXtD0Yll/bMW+4ziFg28UWoYEDoJg8oJcvE0FkTtQA
+	 f975Neqfzf4EyRfr8jcHY98Ng1uTJLbmjEP3W+shoCbQKv1ygJx6+jIHWUTEqahLmJWKj
+	 x3eOv155KBcMZNTgqRukUdniNBRrlPHRBybgY0Or0VCf/hbRojpVcxOMvo/6eri0uwDEK
+	 bsZC7irBYWEHT9QjJhsBIiK9lWzcsgOsxvlXrYsnEbF0RCiCsC7r8z3qIDc7kDbemP+yJ
+	 voXoNjupf5qxfQMgA0rvaysXWsQjhg+EfrzPyYOgdtmKslVmkLK201PECVnU8eeySjQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213606;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213609;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Qo1LTaiDX1AiC2GQIo+6LltU+ztWALeL9WufDhjl1sU=;
-	b=49lvgkbV4KRSFUL2EjGbUN/EjFw63aqUyTNHfVZfdqbM/ir5f1jKkcFlE1Agd/9QV8SK
-	 w3H8/yTTLdG97i/bUfnrziQZq8GjBYsg8EGchgF7jJQ8oKHUfotRn2E6xehpi6VxG0izU
-	 PEJu18lYEII5CxDdfLEI7L1wwod+PhI4bTTUK929MJSaWUJMiPNKkZnoXQkUhc1sAFen9
-	 cfkwv86P1Fgi9g6EeREwtUCrl4VG/6Yf9nVXfCtL5WA8iKUMKwLyNYvZuTGoarU4qRaUZ
-	 xCyOs0R3gRmN8bcfTDa1P7dHfDxqw+CA/Y3HWrSeZu5zzwnWuBUJwNGHqoNC1VLqVuA==
+	bh=ADGgYIB35CcNHrqC7KyfyhEcKDIIbgyGYpnNy4TTjos=;
+	b=dH40RdV9rTWZNEbteoarO7EBKfQASAy0AYZLNHU+GSeIyuKBv3wIwCd/ye0dctJZ7z4x
+	 lf+mG+cAJIviH6UTyywtlm8pj7qdu2GBTBCtbdEMK8wOhQFnESxrRZ4+yonVu1FsdN84+
+	 5/7ywTF25WkqCjrrF7123xKDs8HfytGOqI9JhwnIIRZ6gHYtGdOGKqilyaYwsSsVM0Le2
+	 K9cWz8MZ91d0yxvobKwzxS8+Y22sINYsB3hMWcroG7q24gIvDkxFFZDMc620987gQB9l+
+	 oBBTenCN46EbZRDYs02SNiFEKwB8MWDrsgFum2pCMjfM5zieeSbYrg9mn4o+52RkxGQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gfycmkLT;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OHZ3fodK;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4480E606A31A;
-	Wed, 28 Oct 2026 18:53:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EECBB606A31D;
+	Wed, 28 Oct 2026 18:53:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gfycmkLT
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E45F1F01825;
-	Wed, 28 Oct 2026 18:53:25 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OHZ3fodK
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AAFB1F01825;
+	Wed, 28 Oct 2026 18:53:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213605;
-	bh=Qo1LTaiDX1AiC2GQIo+6LltU+ztWALeL9WufDhjl1sU=;
+	s=korg; t=1793213608;
+	bh=ADGgYIB35CcNHrqC7KyfyhEcKDIIbgyGYpnNy4TTjos=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gfycmkLTxvbpy0kIz7LxVrD87MhZ16HJ2M6AMEQWAn6KkYCEGy9sfJkesRc48rrxK
-	 d9SwPOLgc2zSR64JPieUx0P7SLG+FNbVj8k/MqzJcXdXov+6nbRkR3Y87/kwNjMsk2
-	 mJzxQhXysQ2TPSbvjddQeNKPUFt+ern1O8VfKa1g=
+	b=OHZ3fodKBAgkdjVKTSGY/q+RPXOBggkiSxzlj2+93w52NwtLn9uyGee3Qba8DvAJ0
+	 HXuOKrp9bldneSe8AJOFm6o7akX+mcaB7CdwTGRMbV0PqP4CPnhLfmz6V7316m/f3c
+	 ZBiwebPBenmRoJ1hhsBq97b9W4P/VOJiaNzOqduo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junhao He <hejunhao3@huawei.com>,
-	James Clark <james.clark@arm.com>,
-	Suzuki K Poulose <suzuki.poulose@arm.com>,
+	Kal Cutter Conley <kal.conley@dectris.com>,
+	Dragos Tatulea <dtatulea@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Saeed Mahameed <saeedm@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0564/1887] coresight: Fix memory leak in acpi_buffer->pointer
-Date: Wed, 28 Oct 2026 17:44:20 +0100
-Message-ID: <20261028170512.227106160@linuxfoundation.org>
+Subject: [PATCH 6.1 0565/1887] net/mlx5e: xsk: Fix crash on regular rq reactivation
+Date: Wed, 28 Oct 2026 17:44:21 +0100
+Message-ID: <20261028170512.252034693@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,162 +70,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junhao He <hejunhao3@huawei.com>
+From: Dragos Tatulea <dtatulea@nvidia.com>
 
-[ Upstream commit 1a9e02673e2550f5612099e64e8761f0c8fc0f50 ]
+[ Upstream commit 39646d9bcd1a65d2396328026626859a1dab59d7 ]
 
-There are memory leaks reported by kmemleak:
-...
-unreferenced object 0xffff00213c141000 (size 1024):
-  comm "systemd-udevd", pid 2123, jiffies 4294909467 (age 6062.160s)
-  hex dump (first 32 bytes):
-    04 00 00 00 02 00 00 00 18 10 14 3c 21 00 ff ff  ...........<!...
-    00 00 00 00 00 00 00 00 03 00 00 00 10 00 00 00  ................
-  backtrace:
-    [<000000004b7c9001>] __kmem_cache_alloc_node+0x2f8/0x348
-    [<00000000b0fc7ceb>] __kmalloc+0x58/0x108
-    [<0000000064ff4695>] acpi_os_allocate+0x2c/0x68
-    [<000000007d57d116>] acpi_ut_initialize_buffer+0x54/0xe0
-    [<0000000024583908>] acpi_evaluate_object+0x388/0x438
-    [<0000000017b2e72b>] acpi_evaluate_object_typed+0xe8/0x240
-    [<000000005df0eac2>] coresight_get_platform_data+0x1b4/0x988 [coresight]
-...
+When the regular rq is reactivated after the XSK socket is closed
+it could be reading stale cqes which eventually corrupts the rq.
+This leads to no more traffic being received on the regular rq and a
+crash on the next close or deactivation of the rq.
 
-The ACPI buffer memory (buf.pointer) should be freed. But the buffer
-is also used after returning from acpi_get_dsd_graph().
-Move the temporary variables buf to acpi_coresight_parse_graph(),
-and free it before the function return to prevent memory leak.
+Kal Cuttler Conely reported this issue as a crash on the release
+path when the xdpsock sample program is stopped (killed) and restarted
+in sequence while traffic is running.
 
-Fixes: 76ffa5ab5b79 ("coresight: Support for ACPI bindings")
-Signed-off-by: Junhao He <hejunhao3@huawei.com>
-Reviewed-by: James Clark <james.clark@arm.com>
-Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-Link: https://lore.kernel.org/r/20230817085937.55590-2-hejunhao3@huawei.com
+This patch flushes all cqes when during the rq flush. The cqe flushing
+is done in the reset state of the rq. mlx5e_rq_to_ready code is moved
+into the flush function to allow for this.
+
+Fixes: 082a9edf12fe ("net/mlx5e: xsk: Flush RQ on XSK activation to save memory")
+Reported-by: Kal Cutter Conley <kal.conley@dectris.com>
+Closes: https://lore.kernel.org/xdp-newbies/CAHApi-nUAs4TeFWUDV915CZJo07XVg2Vp63-no7UDfj6wur9nQ@mail.gmail.com
+Signed-off-by: Dragos Tatulea <dtatulea@nvidia.com>
+Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
+Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../hwtracing/coresight/coresight-platform.c  | 48 ++++++++++++-------
- 1 file changed, 31 insertions(+), 17 deletions(-)
+ .../net/ethernet/mellanox/mlx5/core/en_main.c | 19 +++++++++++--------
+ 1 file changed, 11 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/hwtracing/coresight/coresight-platform.c b/drivers/hwtracing/coresight/coresight-platform.c
-index 3f82ae07a18e5..f19e6758ce599 100644
---- a/drivers/hwtracing/coresight/coresight-platform.c
-+++ b/drivers/hwtracing/coresight/coresight-platform.c
-@@ -520,19 +520,18 @@ static inline bool acpi_validate_dsd_graph(const union acpi_object *graph)
- 
- /* acpi_get_dsd_graph	- Find the _DSD Graph property for the given device. */
- static const union acpi_object *
--acpi_get_dsd_graph(struct acpi_device *adev)
-+acpi_get_dsd_graph(struct acpi_device *adev, struct acpi_buffer *buf)
- {
- 	int i;
--	struct acpi_buffer buf = { ACPI_ALLOCATE_BUFFER };
- 	acpi_status status;
- 	const union acpi_object *dsd;
- 
- 	status = acpi_evaluate_object_typed(adev->handle, "_DSD", NULL,
--					    &buf, ACPI_TYPE_PACKAGE);
-+					    buf, ACPI_TYPE_PACKAGE);
- 	if (ACPI_FAILURE(status))
- 		return NULL;
- 
--	dsd = buf.pointer;
-+	dsd = buf->pointer;
- 
- 	/*
- 	 * _DSD property consists tuples { Prop_UUID, Package() }
-@@ -583,12 +582,12 @@ acpi_validate_coresight_graph(const union acpi_object *cs_graph)
-  * returns NULL.
-  */
- static const union acpi_object *
--acpi_get_coresight_graph(struct acpi_device *adev)
-+acpi_get_coresight_graph(struct acpi_device *adev, struct acpi_buffer *buf)
- {
- 	const union acpi_object *graph_list, *graph;
- 	int i, nr_graphs;
- 
--	graph_list = acpi_get_dsd_graph(adev);
-+	graph_list = acpi_get_dsd_graph(adev, buf);
- 	if (!graph_list)
- 		return graph_list;
- 
-@@ -688,18 +687,22 @@ static int acpi_coresight_parse_link(struct acpi_device *adev,
- static int acpi_coresight_parse_graph(struct acpi_device *adev,
- 				      struct coresight_platform_data *pdata)
- {
--	int rc, i, nlinks;
-+	int rc = 0;
-+	int i, nlinks;
- 	const union acpi_object *graph;
- 	struct coresight_connection *conns, *ptr;
-+	struct acpi_buffer buf = { ACPI_ALLOCATE_BUFFER, NULL };
- 
- 	pdata->nr_inport = pdata->nr_outport = 0;
--	graph = acpi_get_coresight_graph(adev);
--	if (!graph)
--		return -ENOENT;
-+	graph = acpi_get_coresight_graph(adev, &buf);
-+	if (!graph) {
-+		rc = -ENOENT;
-+		goto free;
-+	}
- 
- 	nlinks = graph->package.elements[2].integer.value;
- 	if (!nlinks)
--		return 0;
-+		goto free;
- 
- 	/*
- 	 * To avoid scanning the table twice (once for finding the number of
-@@ -708,16 +711,20 @@ static int acpi_coresight_parse_graph(struct acpi_device *adev,
- 	 * it to the pdata.
- 	 */
- 	conns = devm_kcalloc(&adev->dev, nlinks, sizeof(*conns), GFP_KERNEL);
--	if (!conns)
--		return -ENOMEM;
-+	if (!conns) {
-+		rc = -ENOMEM;
-+		goto free;
-+	}
- 	ptr = conns;
- 	for (i = 0; i < nlinks; i++) {
- 		const union acpi_object *link = &graph->package.elements[3 + i];
- 		int dir;
- 
- 		dir = acpi_coresight_parse_link(adev, link, ptr);
--		if (dir < 0)
--			return dir;
-+		if (dir < 0) {
-+			rc = dir;
-+			goto free;
-+		}
- 
- 		if (dir == ACPI_CORESIGHT_LINK_MASTER) {
- 			if (ptr->outport >= pdata->nr_outport)
-@@ -739,7 +746,7 @@ static int acpi_coresight_parse_graph(struct acpi_device *adev,
- 
- 	rc = coresight_alloc_conns(&adev->dev, pdata);
- 	if (rc)
--		return rc;
-+		goto free;
- 
- 	/* Copy the connection information to the final location */
- 	for (i = 0; conns + i < ptr; i++) {
-@@ -751,7 +758,14 @@ static int acpi_coresight_parse_graph(struct acpi_device *adev,
- 	}
- 
- 	devm_kfree(&adev->dev, conns);
--	return 0;
-+free:
-+	/*
-+	 * When ACPI fails to alloc a buffer, it will free the buffer
-+	 * created via ACPI_ALLOCATE_BUFFER and set to NULL.
-+	 * ACPI_FREE can handle NULL pointers, so free it directly.
-+	 */
-+	ACPI_FREE(buf.pointer);
-+	return rc;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
+index d26c36479ee91..f05fe8074b755 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
+@@ -989,9 +989,11 @@ static int mlx5e_modify_rq_state(struct mlx5e_rq *rq, int curr_state, int next_s
+ 	return err;
  }
  
- /*
+-static int mlx5e_rq_to_ready(struct mlx5e_rq *rq, int curr_state)
++int mlx5e_flush_rq(struct mlx5e_rq *rq, int curr_state)
+ {
++	struct mlx5_cqwq *cqwq = &rq->cq.wq;
+ 	struct net_device *dev = rq->netdev;
++	struct mlx5_cqe64 *cqe;
+ 	int err;
+ 
+ 	err = mlx5e_modify_rq_state(rq, curr_state, MLX5_RQC_STATE_RST);
+@@ -999,6 +1001,14 @@ static int mlx5e_rq_to_ready(struct mlx5e_rq *rq, int curr_state)
+ 		netdev_err(dev, "Failed to move rq 0x%x to reset\n", rq->rqn);
+ 		return err;
+ 	}
++
++	mlx5e_free_rx_descs(rq);
++
++	while ((cqe = mlx5_cqwq_get_cqe(cqwq)))
++		mlx5_cqwq_pop(cqwq);
++
++	mlx5_cqwq_update_db_record(cqwq);
++
+ 	err = mlx5e_modify_rq_state(rq, MLX5_RQC_STATE_RST, MLX5_RQC_STATE_RDY);
+ 	if (err) {
+ 		netdev_err(dev, "Failed to move rq 0x%x to ready\n", rq->rqn);
+@@ -1008,13 +1018,6 @@ static int mlx5e_rq_to_ready(struct mlx5e_rq *rq, int curr_state)
+ 	return 0;
+ }
+ 
+-int mlx5e_flush_rq(struct mlx5e_rq *rq, int curr_state)
+-{
+-	mlx5e_free_rx_descs(rq);
+-
+-	return mlx5e_rq_to_ready(rq, curr_state);
+-}
+-
+ static int mlx5e_modify_rq_vsd(struct mlx5e_rq *rq, bool vsd)
+ {
+ 	struct mlx5_core_dev *mdev = rq->mdev;
 -- 
 2.53.0
 
