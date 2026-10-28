@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793209418;
-	b=VN4drJfApwIt3vBLX1dvQxL5R0q8bOXBbbjUQM5RKsneQKLovqGT4CrESh3Txsr+p7RX
-	 5hYqNxF9rCBYvHg754kNGll+trNPLBauhF3jIlBqd45LsoFjQ4edQ9cQ64o4AcCQMCvxL
-	 sMNYFwL6tu7/klBlNxTCIJ0wh5J5rH8rACM9kPtCOv/OxP6hsh0Rk1SKG12MY/3zunQLE
-	 ZTqs6gJWcc6mxeCmN9PjFJ7JcHUHgKRLm48St/7nB7jfMFRxtvTnswq2fOuv62SjC5VwY
-	 DzTZ/hPJFVaJqkn+BOIRN1nB01o2R3X1VA0ec+ggZ4UBKjlpdMRUM1d21e31LlwdQ9Q==
+	t=1793209421;
+	b=TAntFTuRNpXZzBbMJQv4/MM/Apkf8/qfdxqW6wegDszIr2dOcfKG+hirVvAI83NL5GrI
+	 6wUTDeHOaftpkPOJMtIZ34Y9ci5YOyc9uXySeUu+1rSQ8YyXhQIAus4yhCk5ZcSYB93ZR
+	 0y5eMVMa3FLDOLIBPneJnTu09hIGl+SH0A8/YPV6v+tMTv6Xx6TJuQU+tkwrtQ942MWqf
+	 /Hjpt+Qn3uspvIortZ9vJqiPp/7CrawOwWnvzNfamq9ndYAf2uUTV7101TKNnLqu8bAc/
+	 Rd5gzrMVSc1HnsMJoyYACyuKssuFBAV8oHvxKvSEzR6NnYo9sgVZnFEafXRsK0zR7lQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793209418;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793209421;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=bO1VT/qmiaXGHTMk0G9uiylISXRGeO0Q4g9d8rs8PJk=;
-	b=ZOW0GQYIcpvUu9L8NVfN/zU72jv6rQPiNDaUNaUYAehucnFPIJ9OxmkKpKadZpXQMkcI
-	 RkDAMJwTGWFDvUvWYe3IwfFI3fJNjwWoB+2ZLXQjhNkKgBnEkflE9VtU5fi1XkGboyKx2
-	 wa/EVyRzuL7HrKKyjQDUone0ww20GYvsmUTehSr2h1421zUJxYRkqyIuVjTuI2i9yQZXg
-	 y3WXl092hUnauTZaWeYjWNZxC7Kt2LZ4b8XiqsfYyznQAXC6KC9P0VdseY6Enr3wPLwc7
-	 W0EpXLEvN8rzxp23UUAoeu5ApCI17AT2UaxZCfU/sCVWJBAXX7IzIcj0149l9kqJp8w==
+	bh=dQA+UAetP3vy48JNHbmk076wJs6ke34nEyleUja3z00=;
+	b=KwgovMGtbF37Uc4sz9dgtdiwO8wFp3n0hbg/ZJmCJGvVlAEiz42vmedBWnlFxedRxhkN
+	 W9gpmgezBcKI9cUTkBjUDUMRwkSk8hpwxbwzBbW21jQTUrJx0MnWLu5V6LIrpuS7hqQOO
+	 s41NB9UdtwUNjJg1x6JKiq8lyAw4OLNtlNiXv5b7zXABfHMrr9eZFihP2fFF+eIvU8mgd
+	 ml3v3494p9o1LU+a+xWaO6yPA+atUMKttF6omcPZA9zxkAv7v81dWsQ9s+NNmlmK4hnxS
+	 YKni3lwjmMbvwpbepbthU6qub+s7t+fYppw62ETa7Pb/U2++0O25KzVGHIBaQJHMtHA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MAWnb8pL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oPBku9bX;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F34A606A31D;
-	Wed, 28 Oct 2026 17:43:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA4F2606A31D;
+	Wed, 28 Oct 2026 17:43:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MAWnb8pL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7053F1F01825;
-	Wed, 28 Oct 2026 17:43:37 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oPBku9bX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AF3C1F01825;
+	Wed, 28 Oct 2026 17:43:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793209418;
-	bh=bO1VT/qmiaXGHTMk0G9uiylISXRGeO0Q4g9d8rs8PJk=;
+	s=korg; t=1793209420;
+	bh=dQA+UAetP3vy48JNHbmk076wJs6ke34nEyleUja3z00=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MAWnb8pLRSbl3SyzChKz1NO+SQpiG1J8pvjKWxr+1lvcs3ANHxu8LyI34E+FB02gJ
-	 gskbHYF0Wl1SPeKf85bSWrY7i8aQbdEKZ8fU+gHI9Q7m9x9GJpxQiUZ7xzAfGTtQOI
-	 4rDzv6e8HxMMiyo6mMe0v4CteyeMIusVZorF4098=
+	b=oPBku9bX1vzlmXMPS0WYZO/WCjkokGLuFVwELykelhuYf/cDooYdwf5UOyfkf5E7m
+	 B1sHgbVuJ2hFZNj+qCTmBVUAjrKoSh8JZbgF43zPeAaDlBt0hGFFOS1Hf+NlVlRt2K
+	 ku8Zc6/7arsWeXGqTsZGuFEyb3aieOF1tmrqR+pM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Donggeun Yoo <donggeunyoo.kernel@gmail.com>,
-	Steven Rostedt <rostedt@goodmis.org>
-Subject: [PATCH 5.10 462/516] tracing: Fix the shift out of bounds in the log2 histogram modifier
-Date: Wed, 28 Oct 2026 18:00:14 +0100
-Message-ID: <20261028170014.423944941@linuxfoundation.org>
+	Heyang Tan <thy15333007817@163.com>,
+	Christian Lamparter <chunkeey@gmail.com>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 5.10 463/516] wifi: p54: validate firmware record lengths
+Date: Wed, 28 Oct 2026 18:00:15 +0100
+Message-ID: <20261028170014.447769879@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -67,70 +68,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
+From: Heyang Tan <thy15333007817@163.com>
 
-commit 647c2f97fcb94bc642cefe6db004999974563f06 upstream.
+commit db7b86bd97b380ece8fa39cfdd7502a9fd35e56f upstream.
 
-The .log2 key modifier files a value under its base-2 order:
+The p54 firmware parser accesses component ID and component version
+records without checking that their lengths cover the fields being read.
+A malformed record can therefore make the parser read past the record.
 
-  # echo 'hist:keys=bytes_req.log2' > events/kmem/kmalloc/trigger
+Validate the component ID and component version record lengths before
+accessing their data. The descriptor record is also checked against the
+shortest descriptor length found in the supported firmware images.
 
-hist_field_log2() computes that as ilog2(roundup_pow_of_two(val)). The
-out-of-line form of roundup_pow_of_two() is
+Reject descriptor values that underflow the RX offset or produce an empty
+RX range before updating the driver state.
 
-	return 1UL << fls_long(n - 1);
-
-which shifts by 64 on a 64-bit kernel both when n is 0, where n - 1
-wraps to ULONG_MAX, and when n is above 2^63. Both are ordinary keys,
-because the field fetch hands every value over as a u64: a syscall
-argument of 0 reaches the first, and one above 2^63 reaches the second.
-
-Keying sys_enter_lseek on offset.log2 and passing 0, 1, 2, 3, 1000,
-2^63+1 and U64_MAX gives
-
-  { offset: ~ 2^1  } hitcount:          1
-  { offset: ~ 2^10 } hitcount:          1
-  { offset: ~ 2^2  } hitcount:          1
-  { offset: ~ 2^0  } hitcount:          4
-
-Keys above 2^63 land in the lowest bucket. With CONFIG_UBSAN_SHIFT=y
-the shift is also reported:
-
-  UBSAN: shift-out-of-bounds in include/linux/log2.h:57:13
-  shift exponent 64 is too large for 64-bit type 'long unsigned int'
-   __ubsan_handle_shift_out_of_bounds.cold+0xdd/0x1cb
-   hist_fn_call.cold+0x8b/0xd9
-   event_hist_trigger+0x1cc/0x790
-   ftrace_syscall_enter+0x197/0x360
-   do_syscall_64+0x402/0x4b0
-
-Use order_base_2(), which is ilog2(n - 1) + 1 for n > 1 and 0 below
-that. It returns what the old expression returned on every input the
-old one was defined for. Where it was not, 0 stays in bucket 0, which
-is where x86_64 had been putting it, and the keys above 2^63 move into
-bucket 64.
-
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260916002735.808520-1-donggeunyoo.kernel@gmail.com
-Fixes: 4b94f5b7b4a5 ("tracing: Add hist trigger 'log2' modifier")
-Signed-off-by: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
-Assisted-by: Claude:claude-fable-5
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Assisted-by: LLM Codex
+Signed-off-by: Heyang Tan <thy15333007817@163.com>
+Tested-by: Christian Lamparter <chunkeey@gmail.com>
+Link: https://patch.msgid.link/20260918083349.891-1-thy15333007817@163.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_events_hist.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/intersil/p54/fwio.c |   42 +++++++++++++++++++++++++++----
+ 1 file changed, 37 insertions(+), 5 deletions(-)
 
---- a/kernel/trace/trace_events_hist.c
-+++ b/kernel/trace/trace_events_hist.c
-@@ -209,7 +209,7 @@ static u64 hist_field_log2(struct hist_f
- 
- 	u64 val = operand->fn(operand, elt, rbe, event);
- 
--	return (u64) ilog2(roundup_pow_of_two(val));
-+	return order_base_2(val);
- }
- 
- static u64 hist_field_plus(struct hist_field *hist_field,
+--- a/drivers/net/wireless/intersil/p54/fwio.c
++++ b/drivers/net/wireless/intersil/p54/fwio.c
+@@ -52,6 +52,13 @@ int p54_parse_firmware(struct ieee80211_
+ 		u32 code = le32_to_cpu(bootrec->code);
+ 		switch (code) {
+ 		case BR_CODE_COMPONENT_ID:
++			if (len < sizeof(struct bootrec_comp_id) /
++				sizeof(*bootrec->data)) {
++				wiphy_err(priv->hw->wiphy,
++					  "firmware component ID is too short\n");
++				return -EINVAL;
++			}
++
+ 			priv->fw_interface = be32_to_cpup((__be32 *)
+ 					     bootrec->data);
+ 			switch (priv->fw_interface) {
+@@ -72,16 +79,41 @@ int p54_parse_firmware(struct ieee80211_
+ 			}
+ 			break;
+ 		case BR_CODE_COMPONENT_VERSION:
++			if (len < DIV_ROUND_UP(sizeof(struct bootrec_comp_ver),
++					       sizeof(*bootrec->data))) {
++				wiphy_err(priv->hw->wiphy,
++					  "firmware component version is too short\n");
++				return -EINVAL;
++			}
++
+ 			/* 24 bytes should be enough for all firmwares */
+-			if (strnlen((unsigned char *) bootrec->data, 24) < 24)
+-				fw_version = (unsigned char *) bootrec->data;
++			if (strnlen((unsigned char *)bootrec->data,
++				    sizeof(struct bootrec_comp_ver)) <
++				    sizeof(struct bootrec_comp_ver))
++				fw_version = (unsigned char *)bootrec->data;
+ 			break;
+ 		case BR_CODE_DESCR: {
+ 			struct bootrec_desc *desc =
+ 				(struct bootrec_desc *)bootrec->data;
+-			priv->rx_start = le32_to_cpu(desc->rx_start);
+-			/* FIXME add sanity checking */
+-			priv->rx_end = le32_to_cpu(desc->rx_end) - 0x3500;
++			u32 rx_start, rx_end;
++
++			/* 0xa is the shortest descriptor in supported firmware. */
++			if (len < 0xa) {
++				wiphy_err(priv->hw->wiphy,
++					  "firmware descriptor is too short\n");
++				return -EINVAL;
++			}
++
++			rx_start = le32_to_cpu(desc->rx_start);
++			rx_end = le32_to_cpu(desc->rx_end);
++			if (rx_end < 0x3500 || rx_end - 0x3500 <= rx_start) {
++				wiphy_err(priv->hw->wiphy,
++					  "firmware descriptor has invalid RX range\n");
++				return -EINVAL;
++			}
++
++			priv->rx_start = rx_start;
++			priv->rx_end = rx_end - 0x3500;
+ 			priv->headroom = desc->headroom;
+ 			priv->tailroom = desc->tailroom;
+ 			priv->privacy_caps = desc->privacy_caps;
 
 
