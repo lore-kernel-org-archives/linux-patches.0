@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215352;
-	b=Jzorz3UJn1psaTMeKcy82L+aou26kdQkGEawtNbBxJsOCCjFhkVWUR5YlWUR4EJFtMWN
-	 rxwYZcR/eV86PFBZqGBmzRIGgZwIlg6XBY17tqdIe5lb+pRyaF54Cu4vyoiP8y//ztMxi
-	 PSoxYat/cLcUfVNQ5obv415C6eBHHlI2HZSEPFb4cMlUaW0LEtXczeBAPW/m26/Vj0esX
-	 QSH48c89bjLkzA5xFKIJAgZkjXxJHo5bvQfxYnLhKGyKGvgrxmoI5P9u2ML7gUy62yapo
-	 Kt1W7IlkISfyLwgCEnCkcOjEwWLbIN6wbbgopax/4kJePglVR75YyAC4yEoKeHm3vWQ==
+	t=1793215355;
+	b=WspkvES67XjG4eI95WAwfIYQAziv8inxaJr6UxOhy4kq4wEJhcDnGGPiOYgrmCaBjMX9
+	 1zVYd017bSClPILgp5nyrDyNYwIW68v1e/1SOoXLyrLp/BDTChwM9DxVcqZLASdFqobj1
+	 8n4AIhvJBHd0qSv8zlAoAl6m0xMsQbhpYKKqR4EX5Z1FqLGa+yJUEiVV3TGRDGalIGxzp
+	 ZLLqNJKymLANLqMwROeRm6YPwI0/RRulcFYV9q0nHU0VytR/zRHFgbmuWyf5UqtaqDG5a
+	 mX5zpMhFZ9hYjDekFwQ5FkaMByTKrPu3aaqLg8M9AyFhp0pOfjeNabEXeupRIRw8Ifg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215352;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215355;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=nSSzKtaxmHQ0gO6ezJuHhAxcd6fqZoDNhOzXqa7VC7A=;
-	b=S67dHhPigDsM/2cMeUJI8DIrPSrD+hp5/yZ0qVOhpRWUeVnlPrrVBcyeEZfEoFBqdew0
-	 YF41ACKM4HG6WfgZAf+YloFJJxO4o/MVxcYiTh2OLbJp1VH2sWTnGH4Zqxw9hhkheeVIB
-	 T+vCdPG65ARlomEw/Vy6ojz1MZnixAwdtgVIKUbUiVSdjl4OaTc2+NWSM4yvSSEB5UrCv
-	 JRO04tcf0hEVSWavmtzofCl8BgiHpjWhuPyCAeR+Kwu2krECk13SQ42MVQQCzFfL3Hv9R
-	 lh4De2pG3tNAXTCj/O609ogvjuPquW1NsfOmq1jI6EMiSoc/QgfG6R8inS6rk0BP3lw==
+	bh=YvXkYvzUTPYrkjmRRA+j1N7yM5ed4QacFMjDQhv29FM=;
+	b=p2qUh1vNYqN0t+yOg4MORMcrF1w1+3/xYVmIxEWFNEz17xzzJskclOguGyB8QDb948W7
+	 qv5xP7wvxd1UbEdR/EnIefkJs0Mk9nUsBKV1wHbWSnBR1aIwAyC9ezbp4ijpAs3fH3r1/
+	 Z5JC73tBot+/8vmNHgmYuenrDhgH88WZLBB0+LlDXh2mBLLGimMrkbefp3YXM6gefpbBa
+	 63EvgNTrfq3j6nIZcobWiMf5ckR1zgKhCQ6KpPq3KVyLJnlBAYDIu1aFtM7LdxMSuQcEV
+	 zTcIp1pviOA3vt5Mw+WrMha5L7f+j6z+a/mVH/XhEFSHwg6Y8c6KKIJisOgIkrMd/Bg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=feeHz3wp;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=itti0Tv3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C700606A31C;
-	Wed, 28 Oct 2026 19:22:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 323F5606A31A;
+	Wed, 28 Oct 2026 19:22:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=feeHz3wp
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADBE31F01825;
-	Wed, 28 Oct 2026 19:22:31 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=itti0Tv3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82F881F01825;
+	Wed, 28 Oct 2026 19:22:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215352;
-	bh=nSSzKtaxmHQ0gO6ezJuHhAxcd6fqZoDNhOzXqa7VC7A=;
+	s=korg; t=1793215355;
+	bh=YvXkYvzUTPYrkjmRRA+j1N7yM5ed4QacFMjDQhv29FM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=feeHz3wpnalvpivosYClpRmNLVJ38n2hNNdZ7bzF7zNTULG5yFo/nU2ZrsuAR5Wr4
-	 cfy+9GICa/VOWbumOOLbaxTWslzNhQZJIl/RJquDLhe+m6maMxTWXl2zWdjPJmveor
-	 f7cr3HQYrJCvE82yodIiGiXmo5+ZAH8KiyCvhFXw=
+	b=itti0Tv3pNUTdosZZECNczJ/L5iw4S9y0v309aG07Bf3oN0ssQNuK9RBHZgNWSu+h
+	 nvAYmzTr4HZmu5g7vzvh7wAD1/C1wS8XByPinEk4d0ImbehS3p8Oo8iPgImQyc32YF
+	 gsGw3iLjRRri28EqFGCsHyyfet7gvK5A6mdd2RM0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junyi Liu <moss80199@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Jiajia Liu <liujiajia@kylinos.cn>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1138/1887] ksmbd: validate SID in parent security descriptor during ACL inheritance
-Date: Wed, 28 Oct 2026 17:53:54 +0100
-Message-ID: <20261028170525.303624871@linuxfoundation.org>
+Subject: [PATCH 6.1 1139/1887] Bluetooth: btmtk: fix urb->setup_packet leak in error paths
+Date: Wed, 28 Oct 2026 17:53:55 +0100
+Message-ID: <20261028170525.326896349@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,132 +68,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junyi Liu <moss80199@gmail.com>
+From: Jiajia Liu <liujiajia@kylinos.cn>
 
-[ Upstream commit 69f030cf95488ae1186c72ac8c66fd279664ea7f ]
+[ Upstream commit dd1dda6b8d6e1f4376a5b3055a04f0ecbdb4d6bd ]
 
-Introduce smb_validate_ntsd_sid() helper to safely validate Owner SID
-and Group SID inside the NT Security Descriptor (smb_ntsd) retrieved
-from the parent directory.
+The setup_packet of control urb is not freed if usb_submit_urb fails or
+the submitted urb is killed. Add free in these two paths.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Junyi Liu <moss80199@gmail.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: a1c49c434e150 ("Bluetooth: btusb: Add protocol support for MediaTek MT7668U USB devices")
+Signed-off-by: Jiajia Liu <liujiajia@kylinos.cn>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smbacl.c | 66 ++++++++++++++++++++++++++++++++----------
- 1 file changed, 50 insertions(+), 16 deletions(-)
+ drivers/bluetooth/btusb.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/smb/server/smbacl.c b/fs/smb/server/smbacl.c
-index a338884d2115f..c8f50de252042 100644
---- a/fs/smb/server/smbacl.c
-+++ b/fs/smb/server/smbacl.c
-@@ -1127,6 +1127,40 @@ static int smb_append_inherited_ace(struct smb_ace **ace, int *nt_size,
- 	return 0;
- }
- 
-+static int smb_validate_ntsd_sid(struct smb_ntsd *pntsd, size_t pntsd_size,
-+				  unsigned int sid_offset, struct smb_sid **sid,
-+				  size_t *sid_size)
-+{
-+	size_t sid_end;
-+
-+	*sid = NULL;
-+	*sid_size = 0;
-+
-+	if (!sid_offset)
-+		return 0;
-+
-+	if (sid_offset < sizeof(struct smb_ntsd) ||
-+	    check_add_overflow(sid_offset, (size_t)CIFS_SID_BASE_SIZE,
-+			       &sid_end) ||
-+	    sid_end > pntsd_size)
-+		return -EINVAL;
-+
-+	*sid = (struct smb_sid *)((char *)pntsd + sid_offset);
-+	if ((*sid)->num_subauth > SID_MAX_SUB_AUTHORITIES)
-+		return -EINVAL;
-+
-+	if (check_add_overflow((size_t)CIFS_SID_BASE_SIZE,
-+			       sizeof(__le32) * (size_t)(*sid)->num_subauth,
-+			       &sid_end))
-+		return -EINVAL;
-+
-+	if (sid_offset > pntsd_size || sid_end > pntsd_size - sid_offset)
-+		return -EINVAL;
-+
-+	*sid_size = sid_end;
-+	return 0;
-+}
-+
- int smb_inherit_dacl(struct ksmbd_conn *conn,
- 		     const struct path *path,
- 		     unsigned int uid, unsigned int gid)
-@@ -1139,27 +1173,27 @@ int smb_inherit_dacl(struct ksmbd_conn *conn,
- 	struct dentry *parent = path->dentry->d_parent;
- 	struct user_namespace *user_ns = mnt_user_ns(path->mnt);
- 	int inherited_flags = 0, flags = 0, i, ace_cnt = 0, nt_size = 0, pdacl_size;
--	int rc = 0, num_aces, pntsd_type, pntsd_size, acl_len, aces_size;
-+	int rc = 0, num_aces, pntsd_type, ppntsd_size, acl_len, aces_size;
- 	unsigned int dacloffset;
- 	size_t dacl_struct_end;
- 	char *aces_base;
- 	bool is_dir = S_ISDIR(d_inode(path->dentry)->i_mode);
- 
--	pntsd_size = ksmbd_vfs_get_sd_xattr(conn, user_ns,
-+	ppntsd_size = ksmbd_vfs_get_sd_xattr(conn, user_ns,
- 					    parent, &parent_pntsd);
--	if (pntsd_size <= 0)
-+	if (ppntsd_size <= 0)
- 		return -ENOENT;
- 
- 	dacloffset = le32_to_cpu(parent_pntsd->dacloffset);
- 	if (!dacloffset ||
- 	    check_add_overflow(dacloffset, sizeof(struct smb_acl), &dacl_struct_end) ||
--	    dacl_struct_end > (size_t)pntsd_size) {
-+	    dacl_struct_end > (size_t)ppntsd_size) {
- 		rc = -EINVAL;
- 		goto free_parent_pntsd;
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index 3ffe8e3bcac9a..5196731ce892e 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -2562,6 +2562,7 @@ static void btusb_mtk_wmt_recv(struct urb *urb)
+ 		return;
+ 	} else if (urb->status == -ENOENT) {
+ 		/* Avoid suspend failed when usb_kill_urb */
++		kfree(urb->setup_packet);
+ 		return;
  	}
  
- 	parent_pdacl = (struct smb_acl *)((char *)parent_pntsd + dacloffset);
--	acl_len = pntsd_size - dacloffset;
-+	acl_len = ppntsd_size - dacloffset;
- 	num_aces = le32_to_cpu(parent_pdacl->num_aces);
- 	pntsd_type = le16_to_cpu(parent_pntsd->type);
- 	pdacl_size = le16_to_cpu(parent_pdacl->size);
-@@ -1273,19 +1307,19 @@ int smb_inherit_dacl(struct ksmbd_conn *conn,
- 		struct smb_ntsd *pntsd;
- 		struct smb_acl *pdacl;
- 		struct smb_sid *powner_sid = NULL, *pgroup_sid = NULL;
--		int powner_sid_size = 0, pgroup_sid_size = 0, pntsd_size;
-+		size_t powner_sid_size = 0, pgroup_sid_size = 0, pntsd_size;
- 		size_t pntsd_alloc_size;
+@@ -2635,6 +2636,7 @@ static int btusb_mtk_submit_wmt_recv_urb(struct hci_dev *hdev)
+ 		if (err != -EPERM && err != -ENODEV)
+ 			bt_dev_err(hdev, "urb %p submission failed (%d)",
+ 				   urb, -err);
++		kfree(dr);
+ 		usb_unanchor_urb(urb);
+ 	}
  
--		if (parent_pntsd->osidoffset) {
--			powner_sid = (struct smb_sid *)((char *)parent_pntsd +
--					le32_to_cpu(parent_pntsd->osidoffset));
--			powner_sid_size = 1 + 1 + 6 + (powner_sid->num_subauth * 4);
--		}
--		if (parent_pntsd->gsidoffset) {
--			pgroup_sid = (struct smb_sid *)((char *)parent_pntsd +
--					le32_to_cpu(parent_pntsd->gsidoffset));
--			pgroup_sid_size = 1 + 1 + 6 + (pgroup_sid->num_subauth * 4);
--		}
-+		rc = smb_validate_ntsd_sid(parent_pntsd, ppntsd_size,
-+					   le32_to_cpu(parent_pntsd->osidoffset),
-+					   &powner_sid, &powner_sid_size);
-+		if (rc)
-+			goto free_aces_base;
-+		rc = smb_validate_ntsd_sid(parent_pntsd, ppntsd_size,
-+					   le32_to_cpu(parent_pntsd->gsidoffset),
-+					   &pgroup_sid, &pgroup_sid_size);
-+		if (rc)
-+			goto free_aces_base;
- 
- 		if (check_add_overflow(sizeof(struct smb_ntsd),
- 				       (size_t)powner_sid_size,
 -- 
 2.53.0
 
