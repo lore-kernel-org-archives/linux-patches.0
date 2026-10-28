@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793209190;
-	b=nT2ndoj8qsuwfA6r+2kTqrVy3n+SSQcEywurXBKvUKoxLaVrMVDcbik8H9sVWQ4kq0GW
-	 +UK+IMZpvnwOFk12R4H6aReQjLS1TH6dFmCt4yJ/d8QB6FurXiAsqKFsL1FMnaNxuNVGo
-	 AXJnPLpyU5PhPXgZWzNB9gIBE7HCEk+a67wpvh2eG2ElrR9JsShG3jrUCyzwAqKcaHFOA
-	 gRJxq+75gI7uaB3x9WBC1lqp64Y4Lbr0VB8GZYT5XVBISxsdzDinJdzG9U5rPxyFHIWrn
-	 zG2eqTxMv+M+de3/MdG3ZFxS9l7YgKsAry6NJiuGnRh6BIH2fKufj4ewK7m80dCJIAA==
+	t=1793209193;
+	b=jOSnAUpkIVmZI/cSU743uct8HGvFDwrgqHUgOtDNwLbAJjSXy7DwmVYjKvfUgDl+gbCV
+	 U8Rq7FdbgwNEQfk3FkEZZrNPQxPh+TtVzQc6izWI/9uHxjSRIPTrUwI/GCScGls1Udjrr
+	 PWzlcWplZ3Tm31VOCk9t8r3cA372hTSrhv7RHI0vuKpRQGfq3qVeGTfOLoqm80CClk7tn
+	 4H9BZR07DT3aBUTPMfJ5O9s6wzSWoHqDW58eOARurXkvIvxMj2IufYqDV5oRdrOrl5rfV
+	 Ta+0cwe0EC4RXV2RPcH+e0pggD60TDKmhKObQ8MVWqE2HfdjXeJKDUzwu1fBbYYRBlQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793209190;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793209193;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=LytmBH6G+t0LMx/rNUWzB1jjFgV/4Rcx8zfFrXASfow=;
-	b=Kljl9DFbqzjk1X2XckR7d1VKk2olpE6uL53UxM2PBBjggROdnCIQzb2pgiqTevF0NqkR
-	 4QbUEb6TLoBLWAaUaNC/+O+52f8HLZBaewU4p/OMreiXqxnegKnXOURk8IqY/rT7gsiTX
-	 X/wqSbOSLHEuxA1+WoI5nJcxHbOmTzsUzccx9otASrOt5YkevKUz0EA7fV/XDDTJtxJCA
-	 uN2VIcP2PMJlFsPcZpM6S5QxxKP5RuSop5kcGpqAnKkzIVQ78Q7OZWairNUiTsmTeZqwa
-	 kttZ+oI7rUGD2fVRxDsUMkyJ6vtedonyIVuHOy177Bzj6pzT/QovQEElV1r/mGxz+LA==
+	bh=ZPfEeHZ7nVbOoWXHasRGG3oZW0dyZFN0BXxOcbgACTc=;
+	b=05d4dUy2dsnDkNqEJ4+87NE+KDBFARmUg9c3D1hP0q2jYplhCET+a3phPq/HzKV4SlpE
+	 BOGGw+s/Imz/EKZUbOFsofs6dyvClQcnRV70YOXB8LCWHUN5VupkEj/huM61mNSuNU4rN
+	 4n8orTqJW+iYY6e6Yfl+u6nbizAvBcbiwN/jRTC7nb3W5ghfWM2zgo9PiB14optcXRzJY
+	 +HR8gCLGymkOwaCpIXXk47azUykahXOIkyynCoFkK0lXCtSj+QDtPeJQlYafwXtGOe8/P
+	 4NuIcTDkSfVdMBrOEB11hXsOtNoV943+FqUK308o8W/9CGdAWme2ID1g7H8RTCnk0YQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gmkprsNF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mTopKI9H;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DBBB606A33D;
-	Wed, 28 Oct 2026 17:39:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C32C606A325;
+	Wed, 28 Oct 2026 17:39:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gmkprsNF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBC631F031E5;
-	Wed, 28 Oct 2026 17:39:49 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mTopKI9H
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD45F1F031E0;
+	Wed, 28 Oct 2026 17:39:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793209190;
-	bh=LytmBH6G+t0LMx/rNUWzB1jjFgV/4Rcx8zfFrXASfow=;
+	s=korg; t=1793209193;
+	bh=ZPfEeHZ7nVbOoWXHasRGG3oZW0dyZFN0BXxOcbgACTc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gmkprsNFiSuOxZl8i6XtaglFTuCu44F6Dls6wdgR2eB9PBHc+PFwE34LKrVnF4+r6
-	 TzC2QAjvECqR5cRFrDCEj7SzI2M9DpnVHIZQGy4enIfbpuewJuUlEZkF/F3To/DY+V
-	 yhTKgkgqAXjbtYnAB1DkB9ujOZa6Q8sa2EQrywQU=
+	b=mTopKI9H1Tcj4mHM47sMbu5rHECRnzE5C8s9t/Kl+QnLgEeyMG6n0bSiEsJe+2X5L
+	 5HmJt/WRStmveegjDEiAIpurQcs5yaxXpRVV4d8nUFvlO2W8IcwOAeVUA3fz/0Yrho
+	 sUIbfYzUMxMvbaMTblhM4DP27ueTw78ht9sd8Dy8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 385/516] namespace: dont inherit MNT_UMOUNT in clone_mnt()
-Date: Wed, 28 Oct 2026 17:58:57 +0100
-Message-ID: <20261028170012.602590598@linuxfoundation.org>
+Subject: [PATCH 5.10 386/516] namespace: check the mounts before reading their parents in pivot_root()
+Date: Wed, 28 Oct 2026 17:58:58 +0100
+Message-ID: <20261028170012.627317779@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -69,109 +69,73 @@ Content-Transfer-Encoding: 8bit
 
 From: Christian Brauner <brauner@kernel.org>
 
-[ Upstream commit e2c6d326216642011da318b9edfd5d57ebd5a56f ]
+[ Upstream commit 6b7c001eb5857fa09041f47673666060a2e5fc1c ]
 
-MNT_UMOUNT gets raised on a mount that umount_tree() or umount_one() has
-taken out of its namespace. It's never cleared. __detach_mounts()
-unhooks a mount that carries it instead of unmounting it.
+path_pivot_root() reads the parents of new_root and of the caller's root
+and checks whether they are shared before it checks that either mount is
+in the caller's mount namespace. Only namespace_sem is held. That's fine
+for a mount that is in the caller's mount namespace.
 
-disconnect_mount() lets an unmounted child stay attached only if its
-parent carries it. propagate_umount() takes it as the sign that a mount
-is going to be unmounted when it decides what else can be unmounted,
-where a chain of locked mounts ends and where a for reparenting an
-overmount.
+But new_root can be a file descriptor to a mount that has been unmounted
+and that only the file descriptor keeps alive. If that mount stayed
+attached to its parent when it was unmounted nothing pins the parent for
+it. The final mntput() of the parent unhooks the children under
+mount_lock alone and frees the parent afterwards:
 
-clone_mnt() copies the flags of the source and only masks
-MNT_INTERNAL_FLAGS which doesn't include MNT_UMOUNT. A mount that was
-lazily unmounted but is kept alive by a file descriptor can still be
-copied when its root is an nsfs or pidfs file because may_copy_tree()
-accepts those before checking whether the source is mounted at all:
+  pivot_root()                     close(fd), last ref on the parent
+  ------------                     ---------------------------------
+  ex_parent = new_mnt->mnt_parent
+                                   mntput_no_expire_slowpath()
+                                     __umount_mnt(new_mnt)
+                                   cleanup_mnt()
+                                     call_rcu()
+  IS_MNT_SHARED(ex_parent)
 
-  mount --bind /proc/self/ns/net /tmp/x
-  exec 3< /tmp/x
-  umount -l /tmp/x
-  mount --bind /proc/self/fd/3 /tmp/y
+  BUG: KASAN: slab-use-after-free in path_pivot_root+0xf1a/0x1840
+  Read of size 4 at addr ffff8881047382f8 by task pivot_widen/157
+   path_pivot_root+0xf1a/0x1840
+   __x64_sys_pivot_root+0x165/0x190
 
-The mount on /tmp/y is attached to the caller's namespace with
-MNT_UMOUNT already set and every copy of it inherits the flag again.
+The same goes for the caller's root via chroot(). Both outcomes of the
+check end in EINVAL so nothing but the read itself goes wrong. It's the
+same thing commit bb4609405752 ("statmount: read the parent of an
+unmounted mount under mount_lock") fixed for statmount().
 
-That causes a number of bugs:
+Check that both mounts are in the caller's namespace before their
+parents are read. Every path returns EINVAL either way.
 
-- Unlink its mountpoint from a mount namespace where it isn't one.
-  __detach_mounts() takes it for a mount that was unmounted earlier,
-  unhooks it from its parent and drops the reference the namespace
-  holds on it. It stays in the namespace with one reference too few
-  and as its own parent, so it can't be unmounted through the file
-  descriptor anymore and the namespace never finds it again. When the
-  namespace goes away it's leaked and points to a freed struct
-  mnt_namespace that may_change_propagation() and anon_ns_root() read
-  on the next propagation change or mount_setattr() through the file
-  descriptor.
-
-- Make it shared and unmount a peer. trace_transfers() follows the
-  flag from the peer into it and strips it from its peer group.
-
-- Let a propagated umount reach it. gather_candidates() marks it with
-  T_UMOUNT_CANDIDATE but never puts it on the candidate list, so the
-  mark is never cleared and every later propagated umount skips it. If
-  it's the parent of a locked mount handle_locked() takes it as the
-  cutoff and commits the locked child that should have stayed and
-  disconnect_mount() leaves that child attached to it, unmounted under
-  a mounted parent, which is what disconnect_mount() exists to
-  prevent. When the namespace goes away umount_tree() visits the child
-  a second time. And once __detach_mounts() has made it its own parent
-  reparent() never finds the end of the chain of unmounted parents.
-
-A clone is a new mount that has never been unmounted. Add MNT_UMOUNT
-to MNT_INTERNAL_FLAGS so clone_mnt() never copies it. And warn when
-umount_tree() reaches a mount that already has it set.
-
-Fixes: 590ce4bcbfb4 ("mnt: Add MNT_UMOUNT flag")
+Fixes: e0c9c0afd2fc ("mnt: Update detach_mounts to leave mounts connected")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260926-work-mount-fixes-2-v1-3-f357abf3d17b@kernel.org
+Link: https://patch.msgid.link/20260930-work-mount-fixes-3-v1-10-be34c83956ae@kernel.org
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
-[ sashal: adapted MNT_UMOUNT filtering to the explicit flag mask in clone_mnt() ]
+[ sashal: Adapted the checks to the pivot_root syscall implementation using goto out4 instead of return -EINVAL. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/namespace.c        | 4 +++-
- include/linux/mount.h | 2 +-
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ fs/namespace.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
 diff --git a/fs/namespace.c b/fs/namespace.c
-index 769f22c0bc66d..a87eb7fdc9838 100644
+index a87eb7fdc9838..9d1d5aa94215e 100644
 --- a/fs/namespace.c
 +++ b/fs/namespace.c
-@@ -1057,7 +1057,7 @@ static struct mount *clone_mnt(struct mount *old, struct dentry *root,
- 	}
- 
- 	mnt->mnt.mnt_flags = old->mnt.mnt_flags;
--	mnt->mnt.mnt_flags &= ~(MNT_WRITE_HOLD|MNT_MARKED|MNT_INTERNAL);
-+	mnt->mnt.mnt_flags &= ~(MNT_WRITE_HOLD|MNT_MARKED|MNT_INTERNAL|MNT_UMOUNT);
- 
- 	atomic_inc(&sb->s_active);
- 	mnt->mnt.mnt_sb = sb;
-@@ -1492,6 +1492,8 @@ static void umount_tree(struct mount *mnt, enum umount_tree_flags how)
- 
- 	/* Gather the mounts to umount */
- 	for (p = mnt; p; p = next_mnt(p, mnt)) {
-+		/* A mount is unmounted once. */
-+		WARN_ON_ONCE(p->mnt.mnt_flags & MNT_UMOUNT);
- 		p->mnt.mnt_flags |= MNT_UMOUNT;
- 		list_move(&p->mnt_list, &tmp_list);
- 	}
-diff --git a/include/linux/mount.h b/include/linux/mount.h
-index aaf343b38671c..c03773e480193 100644
---- a/include/linux/mount.h
-+++ b/include/linux/mount.h
-@@ -52,7 +52,7 @@ struct fs_context;
- 
- #define MNT_INTERNAL_FLAGS (MNT_SHARED | MNT_WRITE_HOLD | MNT_INTERNAL | \
- 			    MNT_DOOMED | MNT_SYNC_UMOUNT | MNT_MARKED | \
--			    MNT_CURSOR)
-+			    MNT_CURSOR | MNT_UMOUNT)
- 
- #define MNT_INTERNAL	0x4000
- 
+@@ -3886,14 +3886,15 @@ SYSCALL_DEFINE2(pivot_root, const char __user *, new_root,
+ 	new_mnt = real_mount(new.mnt);
+ 	root_mnt = real_mount(root.mnt);
+ 	old_mnt = real_mount(old.mnt);
++	/* only a mounted mount has a parent that namespace_sem pins */
++	if (!check_mnt(root_mnt) || !check_mnt(new_mnt))
++		goto out4;
+ 	ex_parent = new_mnt->mnt_parent;
+ 	root_parent = root_mnt->mnt_parent;
+ 	if (IS_MNT_SHARED(old_mnt) ||
+ 		IS_MNT_SHARED(ex_parent) ||
+ 		IS_MNT_SHARED(root_parent))
+ 		goto out4;
+-	if (!check_mnt(root_mnt) || !check_mnt(new_mnt))
+-		goto out4;
+ 	if (new_mnt->mnt.mnt_flags & MNT_LOCKED)
+ 		goto out4;
+ 	error = -ENOENT;
 -- 
 2.53.0
 
