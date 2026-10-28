@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793211775;
-	b=oYuJ8dODRx+ggd0rawnJ+MgQSszzYsMzNgHrHu6Qih8cPOvkr9qp27b7UHmF6ckr/eut
-	 mj0SxMRz/MBLxhZguDtkc6JwvzV6DPhCtDK4B8kXFQeI8XgXBt6WGdcorP/AxKWC2pBgC
-	 6CD/cUOa0bwPEmhx44ix3zk7BtxYiViyllMo29NbyctYYaaNZuObGs+0xoXNrVTMegjDA
-	 9WrlVZn0gCvaml4dmFWbMtTvJ96/RIdPESfeC3n2SOEROht42YryKSvdAJFwnc9iBC/oT
-	 +Q+HBiwm6+qoZDtkIBS4NexHiZkz3GExDz37pLi27CHK5dElzTvupLXMf1oy5noZ0BA==
+	t=1793211778;
+	b=3zreGZWW2DIq4Bix95q+DG8EbybECTEHFwCF3evC9aj/xDqgmomWJZSDetQNbJrxJgI9
+	 TJ/or4FHkg7gUTaFxpplHKvG0+tFcmmyVKre13RrIFS9uQdYz+Z38hClz2nEQTaiYL2fz
+	 OOdasQzYt6PzDbAa7Wmm2UmXWiHzcNXpBVopJIVNDszuC9wnUa5Ez79JdM3B3WmVTI1OK
+	 /g3dNR/z0BNYt5q0AjQDZiFrV//uPBG6TToQVzfD0/3+uNG5TPltRKTIWoddFOf1hockZ
+	 shFalh0XKAPf6rbAaEe/WWnfXkd+Y7YKsh/qrj8PMMbimmdWMML6H9pZbgybGSXAdOw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793211775;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793211778;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=CmJAh1oG28klg+w9tmugjsgo5xGjN/n2v64eq1H8DaA=;
-	b=PfDCNoE00kPFA0AheFQsqnNEa8pLSgawKd77k5JiXcmjmjnWaNyl97o8tOSu1eAHnliW
-	 3T1cTIUheTg8d5C+g7QDI1V/Hs4lctrCj4Jjs+U4MEcewtPbVOkxtqwMXuOqj8ACeGLxG
-	 9CI7k0Qez54FRYzyLc+U9MfRDDDUMDQRk8mGKMKDifDiswzPoGb4+8xUGSM/5J9+4ndCo
-	 wUEo0T1+hbzza7PeBKxjSdgJMBGdECfxxhb+fGt6mkG5K2cvT5ioD07QjXt7IBL7KyUKY
-	 yK/lNhymrZ8EUFggMW20iBCe8numYJx/YzN9KhwzxneRfKTl7/1PBfLLaPdYYTE4nvA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=SE1tFtGP3tJyTjOlGs7tuATWUDoCZ4W13ttmEC4IGJk=;
+	b=X8WoNifMkeQCiSHEm20QLfUxephxt56oxbpihUBw6kDiMMfjZktPlDvdxr71IsLDX/yI
+	 DCRR5ccLHcmqSiD7Ebr17k6N1s6BET+JE1nTSgzMY2MSbZoy9MhTdsZSq6+ni6m548WT2
+	 f6hT7nqGLlfdHFV6QcnJoUZdB+QhIVGN4s1LG8EpgSiGbl+HJzAar1WnWavYHiz6ZYqxO
+	 HcjpLtnenDhulrxqkmDUxh9KuEzHvpY+0Vk8OSIJxnQ3+1NFUd+bf9TbG0oawodE6nI4T
+	 z5XlhesuTaBw2V1D47wQLMdpjfzFAvkoiMS1hZbqSzguWiI2V2DWAgAUCGwE4fXwcUQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QWbqs2IU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mlVd2IJj;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4405060A263E;
-	Wed, 28 Oct 2026 18:22:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46B6360A3806;
+	Wed, 28 Oct 2026 18:22:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QWbqs2IU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 961991F031E5;
-	Wed, 28 Oct 2026 18:22:54 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mlVd2IJj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7002F1F031E5;
+	Wed, 28 Oct 2026 18:22:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793211775;
-	bh=CmJAh1oG28klg+w9tmugjsgo5xGjN/n2v64eq1H8DaA=;
+	s=korg; t=1793211778;
+	bh=SE1tFtGP3tJyTjOlGs7tuATWUDoCZ4W13ttmEC4IGJk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QWbqs2IUhsS6A0qH99kHgaFNhFtJkN8gfHwnmyiia7pQRmu/SWQs3JfTOSgRiFZBk
-	 558FQ9ZnUJaiAciuE7GG78/HhY6ddw1c/dDHJqxa3zW6zA8fvvOkGFeOM2qKakuTDj
-	 +8Lz2Kj1IEiLpNV0UuhiBiN0t/ZEaqGqUiuHaqSc=
+	b=mlVd2IJjqosG4UzZNSFiVIrxrPhB53JGHvVrSIyX1ATBD4DkXFzSrrdnKjxwn4WUO
+	 8d73lMu2L2trYgOBXU/ufNLUicv1ZhlYNJIUHfy6Y9ULdLBjc9rcmf7TEFQJ3UGVjr
+	 ON9v7F8EHgFUQEqYhULy8A3GzxBty4i620BOTs+U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
-	Simon Horman <horms@kernel.org>,
+	TencentOS Corvus AI <corvus@tencent.com>,
+	Aohan Mei <henrymei@tencent.com>,
+	Allison Henderson <achender@kernel.org>,
 	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 5.15 495/571] net/sched: fix use-after-free in __tcf_action_put()
-Date: Wed, 28 Oct 2026 18:00:42 +0100
-Message-ID: <20261028170019.772827574@linuxfoundation.org>
+Subject: [PATCH 5.15 496/571] net: rds: fix uninitialized trans dereference in CM event handler
+Date: Wed, 28 Oct 2026 18:00:43 +0100
+Message-ID: <20261028170019.797593513@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -62,66 +63,127 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+From: Aohan Mei <henrymei@tencent.com>
 
-commit 7b16eb911091aae237a8673da94e4dfb9cd21d54 upstream.
+commit 492ba6ac1b1ffb8a06ff52db0825c1af2cdb28c8 upstream.
 
-__tcf_action_put() decrements the reference count before decrementing the
-binding count. Another thread can free the action between these operations,
-causing the binding-count update to access freed memory. KASAN reports it
-as:
+rds_rdma_cm_event_handler_cmn() assigns trans only when the RDMA
+device is an InfiniBand CA (RDMA_NODE_IB_CA).  On any other device
+type, e.g. an iWARP RNIC such as siw, trans stays uninitialized, but
+the event switch dereferences it: unconditionally in the
+RDMA_CM_EVENT_CONNECT_REQUEST case via trans->cm_handle_connect(),
+and (with a connection context) in the ROUTE_RESOLVED and
+ESTABLISHED cases.
 
-  BUG: KASAN: slab-use-after-free in __tcf_action_put+0x327/0x340
-  Write of size 4 at addr ff11000000d46420 by task tc-put-pause/64
+An RDS listener on an iWARP device therefore crashes the kernel as
+soon as a connect request arrives: with CONFIG_INIT_STACK_ALL_ZERO
+the wild load becomes a NULL dereference at offset 0xa0
+(&trans->cm_handle_connect) in the iw_cm_wq workqueue.
 
-Hold the action IDR mutex across both counter updates and IDR removal,
-keeping cleanup outside the lock.
+GCC masks the bug in default builds by folding the uninitialized
+load into &rds_ib_transport; Clang-built kernels take the real
+uninitialized path and oops.
 
-Fixes: 16af6067392c ("net: sched: implement reference counted action release")
+The active side can land on a non-IB device too: the id that
+rds_ib_conn_path_connect() creates is not restricted to a node type,
+so rdma_resolve_addr() binds it to whichever device serves the local
+address, and an iWARP RNIC on the same netdev qualifies.  The crash
+there is different: resolving a route on an iWARP id never fills in
+cm_id->route.path_rec, and the ROUTE_RESOLVED case writes
+path_rec[0].sl before it calls into the transport.
+
+The iWARP transport was dropped long ago and IB is the only
+transport left, so make that explicit: initialize trans to
+&rds_ib_transport at declaration, drop the conditional assignment,
+reject a connect request that arrives on a non-IB device, and drop a
+connection whose address resolved to one instead of resolving a
+route on it.  The rejection is limited to RDMA_CM_EVENT_CONNECT_REQUEST
+on purpose: a non-zero return from the handler makes rdma_cm destroy
+the id the event was delivered on, which is right for the request's
+freshly created id but would free a connection id that RDS still owns
+for any other event.  On the active side the id stays ic->i_cm_id and
+the connection's shutdown destroys it, so that case returns 0.
+
+Fixes: dcdede0406d3 ("RDS: Drop stale iWARP RDMA transport")
+Reported-by: TencentOS Corvus AI <corvus@tencent.com>
+Link: https://lore.kernel.org/netdev/20260824111701.2979194-1-ljp1205831794@gmail.com/
+Link: https://lore.kernel.org/netdev/20260825021223.3483044-1-ljp1205831794@gmail.com/
 Cc: stable@vger.kernel.org
+Assisted-by: CodeBuddy:Kimi-K3
+Signed-off-by: Aohan Mei <henrymei@tencent.com>
+[achender: reject only on RDMA_CM_EVENT_CONNECT_REQUEST instead of
+ bailing out for every event on a non-IB device, so that rdma_cm does
+ not destroy connection ids RDS still tracks; drop a connection whose
+ address resolved to a non-IB device before a route is resolved on it;
+ changelog adjusted]
 Assisted-by: LLM
-Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20261008181348.527035-2-Jeremy.Jean@oss.cyber.gouv.fr
+Signed-off-by: Allison Henderson <achender@kernel.org>
+Link: https://patch.msgid.link/20261003163408.250568-2-achender@kernel.org
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/act_api.c |   11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ net/rds/rdma_transport.c |   26 ++++++++++++++++++++++----
+ 1 file changed, 22 insertions(+), 4 deletions(-)
 
---- a/net/sched/act_api.c
-+++ b/net/sched/act_api.c
-@@ -137,9 +137,10 @@ static int __tcf_action_put(struct tc_ac
+--- a/net/rds/rdma_transport.c
++++ b/net/rds/rdma_transport.c
+@@ -52,7 +52,7 @@ static int rds_rdma_cm_event_handler_cmn
  {
- 	struct tcf_idrinfo *idrinfo = p->idrinfo;
+ 	/* this can be null in the listening path */
+ 	struct rds_connection *conn = cm_id->context;
+-	struct rds_transport *trans;
++	struct rds_transport *trans = &rds_ib_transport;
+ 	int ret = 0;
+ 	int *err;
+ 	u8 len;
+@@ -60,9 +60,6 @@ static int rds_rdma_cm_event_handler_cmn
+ 	rdsdebug("conn %p id %p handling event %u (%s)\n", conn, cm_id,
+ 		 event->event, rdma_event_msg(event->event));
  
--	if (refcount_dec_and_mutex_lock(&p->tcfa_refcnt, &idrinfo->lock)) {
--		if (bind)
--			atomic_dec(&p->tcfa_bindcnt);
-+	mutex_lock(&idrinfo->lock);
-+	if (bind)
-+		atomic_dec(&p->tcfa_bindcnt);
-+	if (refcount_dec_and_test(&p->tcfa_refcnt)) {
- 		idr_remove(&idrinfo->action_idr, p->tcfa_index);
- 		mutex_unlock(&idrinfo->lock);
- 
-@@ -147,9 +148,7 @@ static int __tcf_action_put(struct tc_ac
- 		return 1;
- 	}
- 
--	if (bind)
--		atomic_dec(&p->tcfa_bindcnt);
+-	if (cm_id->device->node_type == RDMA_NODE_IB_CA)
+-		trans = &rds_ib_transport;
 -
-+	mutex_unlock(&idrinfo->lock);
- 	return 0;
- }
+ 	/* Prevent shutdown from tearing down the connection
+ 	 * while we're executing. */
+ 	if (conn) {
+@@ -82,11 +79,32 @@ static int rds_rdma_cm_event_handler_cmn
  
+ 	switch (event->event) {
+ 	case RDMA_CM_EVENT_CONNECT_REQUEST:
++		/* Only the IB transport is supported, but RDS listens on
++		 * every RDMA device: reject a request that arrived on any
++		 * other kind.  A non-zero return has rdma_cm destroy the
++		 * request's id, which is what we want here and only here.
++		 */
++		if (cm_id->device->node_type != RDMA_NODE_IB_CA) {
++			ret = 1;
++			break;
++		}
+ 		ret = trans->cm_handle_connect(cm_id, event, isv6);
+ 		break;
+ 
+ 	case RDMA_CM_EVENT_ADDR_RESOLVED:
+ 		if (conn) {
++			/* The address resolved to a device RDS has no
++			 * transport for.  Do not go on to resolve a route:
++			 * an iWARP route leaves cm_id->route.path_rec
++			 * unset, which the ROUTE_RESOLVED case below
++			 * dereferences.  Drop the connection instead; the
++			 * id is still ic->i_cm_id, so return 0 and let the
++			 * shutdown destroy it.
++			 */
++			if (cm_id->device->node_type != RDMA_NODE_IB_CA) {
++				rds_conn_drop(conn);
++				break;
++			}
+ 			rdma_set_service_type(cm_id, conn->c_tos);
+ 			rdma_set_min_rnr_timer(cm_id, IB_RNR_TIMER_000_32);
+ 			ret = rdma_resolve_route(cm_id,
 
 
