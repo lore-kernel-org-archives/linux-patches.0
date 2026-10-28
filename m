@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793207261;
-	b=1vdCh33iRHXJrn2xbLimTcDXYJI5bDs7SWAo1DnSSHpRFtjqUK+CkuoGuFEQJ6O08rko
-	 G0/2CEe9NRLZI6B786YwNYX8tvHp3AfvKys73dUpyQw2VhrNfnNbLpRFLq8KIU/QYG6Jj
-	 vAIFyzRrUCVUr7zVfTNd9V3kTQluxJaPZjX9uk9ZsOpuQAXvgQu2EtrvpMDSq36EA5DwR
-	 LTR+suqmwmY0RilTFcCxc/DdK6lDZk9tW0mgPkcgrjhbeCPdvHC1n6N997bqQlShYiDOD
-	 ohU02+Vhxv24XYeGuAKOLzZ7SCJ1p9I3cBmlEVp14RlkIzOExHXPedC+VjHIRIEDf9w==
+	t=1793207264;
+	b=Z2ZNNWSVvr1pDjTMjJRmkSJ6++/ExhmzAZ7pVMhXpUPjLs/D6x74HI4vgvgqKTMiVz3i
+	 ErXv+JC6plghuQ4/gx64dskncXAfZ4Q/93YRs4l+ReWbyQPbp8KzFz9qpzgzcB2igO0vR
+	 tduMAx7ziNDGtiAb2Qle9ABq4UBsvZpWrZZ4kxiY3jDVulSwF/vTRhuSQRM982rvTw9KK
+	 Iz+ph+huzOJEb//zgWg0Vjp+ZXwuv5rQ1zgFYfncE+bzjqCkMI14NkEozckoL3BCopkOI
+	 Ik9YLLx3QGZYMyL+VOf/oyEGz7uEnGP09iI9xxjIQz4g7TbeX4PSZ/+KztxeK/JBYZQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793207261;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793207264;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=U4pUlcwx0lJVwY7CtbDgKum549/sYFcAhMlEYjzr+TE=;
-	b=w0oMiFFr54zOcwgwtqehsXEVFweDrXkx+n2oDkdX23CAS97H7v1imsXUz+BzzzgY4hCQ
-	 uEkTpRDXHzBd1W0EvAd5t1rwurPQSrf4gNsE+s+5dYdQDrQLzDY93+uYBHRGhP5Ajyd3H
-	 XG4uQ6BSmCVXJpiDS3RjfzvB+Ekw983KljVxyF353vRT/jO6UsewGBsctjwlaaTlGyjoS
-	 VKaUJRRMP6uunsMjpD1cIid5XuvQuMbAhaNbdqzQOCqBNSWUJ/WprRBdVuqYnwULmUpSh
-	 bRfCL8jaiHQJRnphQBAamYuDPkrzmYJ7czShModR4wNkR5T10hHnbQRczlHdEPvzXkA==
+	bh=o+la5x/lZqo3SKNJ5o8hRGJhdzvlJ8m/jojQ6s1jl9A=;
+	b=q9ez/kIki+OjtS5mUDwt/AUDQU4aKgZx0r7r8gLeg+p3i0sKY7+yG4uduTRVJNxmhLDH
+	 CDpA+Ww/fObqgz1YAvQqbSxyEkrhxBYn3s0MhBzT4r0nx6zbd+Hev/8140f+t+hGPdelp
+	 7NfBhEspvSeEcRUymnom5nThGRYtjjGs7ddzXVH7i2Stmz8kYFCuIpbnYYcA5m26BZXBo
+	 qqlLGwHDYNSXppiOdKqcEP2lQV85Bga/w+6ix86keKsSy9nZh32Ev/MKiSmxkFyvJYoO0
+	 R9tApSaPyfI4ybXQ/Q3vKO8pwwgaosESVKo9YtpITCz3PMYrQXlIbn9pc5qFS/KbWNg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DKeOt9Kq;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wFbvrADI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7D9A606A321;
-	Wed, 28 Oct 2026 17:07:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A5F0606A31D;
+	Wed, 28 Oct 2026 17:07:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DKeOt9Kq
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42B8C1F01825;
-	Wed, 28 Oct 2026 17:07:40 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wFbvrADI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E3A41F01825;
+	Wed, 28 Oct 2026 17:07:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793207260;
-	bh=U4pUlcwx0lJVwY7CtbDgKum549/sYFcAhMlEYjzr+TE=;
+	s=korg; t=1793207263;
+	bh=o+la5x/lZqo3SKNJ5o8hRGJhdzvlJ8m/jojQ6s1jl9A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DKeOt9KqFiCSxQeThkyZbXmEBLX4ym5z3GoeKUk3XW4z9aD6YycJrS448LGt4swGu
-	 BIAEmPsM+CWeAwSdWhvq3EryceUsq5vMpvVurk9UB3IdDqgeenkYm4PJwjK28WAjqz
-	 5lLV2T1KgEz72+0oeEr/lhwQcNcI0BETBy/tfvy0=
+	b=wFbvrADI3Bqp/yR9y2afdovnDWmezRy/+uwz416oKIHOybVBwjlg+/6gyu6/uYKDt
+	 L/qpb+Gv+AWqMr7YmDpim/N0w1Vo85XjA58d5OKS9zLiFrzCK1MRYJ8Vi2OToUxzQ7
+	 ZJwVkA4QVHAni38SoYTW6kTKtKhEWmbwcaPKRZ7c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Josef Bacik <josef@toxicpanda.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 7.2 43/88] io_uring/register: keep 128b SQEs intact on resize
-Date: Wed, 28 Oct 2026 17:59:51 +0100
-Message-ID: <20261028165943.127590170@linuxfoundation.org>
+	Jens Axboe <axboe@kernel.dk>,
+	"Claude Fable 5.1" <noreply@anthropic.com>
+Subject: [PATCH 7.2 44/88] io_uring/fdinfo: fix CQE dump of CQE32 rings
+Date: Wed, 28 Oct 2026 17:59:52 +0100
+Message-ID: <20261028165943.152189509@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165942.107695352@linuxfoundation.org>
 References: <20261028165942.107695352@linuxfoundation.org>
@@ -69,103 +70,63 @@ Content-Transfer-Encoding: 8bit
 
 From: Josef Bacik <josef@toxicpanda.com>
 
-Commit 0feb5bcd2d4261d656729892aef4d643461ea5ac upstream.
+Commit e4507a62c247081fffe299622c04c6f7c3d98e92 upstream.
 
-On a ring with IORING_SETUP_SQE_MIXED a 128b SQE takes two entries that
-have to be contiguous in memory, io_init_req() fails it with -EINVAL if
-it starts on the last entry of the SQ ring. The entry a pending SQE ends
-up in after IORING_REGISTER_RESIZE_RINGS depends on the size of the new
-ring, and nothing takes care of that. With four entries instead of eight,
-a 128b SQE which was fine in entries 3 and 4 is split up between entry 3
-and entry 0. The resize succeeds, and the request fails later on.
+Since the CQ ring dump was changed to deal with IORING_SETUP_CQE_MIXED, a
+32b CQE is taken to occupy two entries of the ring. That is how it works
+for mixed rings. With IORING_SETUP_CQE32 each entry has twice the size:
+head and tail count 32b CQEs, and entry n is found at cqes[n << 1].
 
-If the ring has an SQ array, the second half is also taken from the
-wrong place unless the array happens to map the following index to the
-following entry. The submission side doesn't look at the array for the
-second half.
+For such rings the dump reads cqes[n], and skips every other entry. It
+shows half of the pending CQEs at best, and what it shows is taken from
+the wrong place unless the head happens to be at the start of the ring.
+The extra data of the last entry isn't shown at all, as the check that
+keeps the dump of a mixed ring from reading beyond the array is applied to
+these rings as well.
 
-Do what is done for 32b CQEs on IORING_SETUP_CQE_MIXED rings: fail the
-resize with -EOVERFLOW if a 128b SQE would wrap. And copy the second half
-from where it is.
-
-Fixes: 1cba30bf9fdd ("io_uring: add support for IORING_SETUP_SQE_MIXED")
+[ 7.2: without the last-slot check, which 7.2 does not have ]
+Fixes: 82ceb7fcc5ff ("io_uring/fdinfo: handle mixed sized CQEs")
 Assisted-by: LLM
 Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Link: https://patch.msgid.link/20261015-b4-io-uring-fixes-v1-27-c1556f5d7bf5@toxicpanda.com
+Link: https://patch.msgid.link/20261015-b4-io-uring-fixes-v1-28-c1556f5d7bf5@toxicpanda.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Co-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/register.c |   34 +++++++++++++++++++++++++++++++++-
- 1 file changed, 33 insertions(+), 1 deletion(-)
+ io_uring/fdinfo.c |   14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
---- a/io_uring/register.c
-+++ b/io_uring/register.c
-@@ -496,6 +496,17 @@ static void io_register_free_rings(struc
- 			 IORING_SETUP_CQE32 | IORING_SETUP_NO_MMAP | \
- 			 IORING_SETUP_CQE_MIXED | IORING_SETUP_SQE_MIXED)
+--- a/io_uring/fdinfo.c
++++ b/io_uring/fdinfo.c
+@@ -154,11 +154,17 @@ static void __io_uring_show_fdinfo(struc
+ 	cq_entries = min(cq_tail - cq_head, ctx->cq_entries);
+ 	for (i = 0; i < cq_entries; i++) {
+ 		struct io_uring_cqe *cqe;
+-		bool cqe32 = false;
++		bool cqe32 = false, two_entries = false;
  
-+static bool io_sqe_is_128(struct io_ring_ctx *ctx,
-+			  const struct io_uring_sqe *sqe)
-+{
-+	u8 opcode = READ_ONCE(sqe->opcode);
-+
-+	if (!(ctx->flags & IORING_SETUP_SQE_MIXED) || opcode >= IORING_OP_LAST)
-+		return false;
-+	opcode = array_index_nospec(opcode, IORING_OP_LAST);
-+	return io_issue_defs[opcode].is_128;
-+}
-+
- static int io_register_resize_rings(struct io_ring_ctx *ctx, void __user *arg)
- {
- 	struct io_ctx_config config;
-@@ -506,6 +517,7 @@ static int io_register_resize_rings(stru
- 	struct io_rings_layout *rl = &config.layout;
- 	u32 *o_sq_array, *n_sq_array = NULL;
- 	bool cqe32_tail = false;
-+	unsigned int sqe128_src = 0;
- 	int ret;
- 
- 	memset(&config, 0, sizeof(config));
-@@ -605,12 +617,19 @@ static int io_register_resize_rings(stru
- 	if (tail - old_head > p->sq_entries)
- 		goto overflow;
- 	for (i = old_head; i != tail; i++) {
-+		bool sqe128_tail = sqe128_src;
- 		unsigned int dst, src;
- 		size_t sq_size;
- 
- 		dst = i & (p->sq_entries - 1);
- 		src = i & (ctx->sq_entries - 1);
--		if (n_sq_array) {
-+		if (sqe128_tail) {
-+			/* it follows the first half, whatever the array says */
-+			src = sqe128_src;
-+			sqe128_src = 0;
-+			if (n_sq_array)
-+				WRITE_ONCE(n_sq_array[dst], dst);
-+		} else if (n_sq_array) {
- 			src = READ_ONCE(o_sq_array[src]);
- 			if (unlikely(src >= ctx->sq_entries)) {
- 				WRITE_ONCE(n_sq_array[dst], UINT_MAX);
-@@ -619,6 +638,19 @@ static int io_register_resize_rings(stru
- 			WRITE_ONCE(n_sq_array[dst], dst);
- 		}
- 
-+		/*
-+		 * A 128b SQE on a SQE_MIXED ring takes two contiguous entries
-+		 * and must not wrap. A smaller ring may place it on the last
-+		 * entry, fail the resize if that happens.
-+		 */
-+		if (!sqe128_tail && i + 1 != tail &&
-+		    src < ctx->sq_entries - 1 &&
-+		    io_sqe_is_128(ctx, &o.sq_sqes[src])) {
-+			if (dst == p->sq_entries - 1)
-+				goto overflow;
-+			sqe128_src = src + 1;
+-		cqe = &r->cqes[(cq_head & cq_mask)];
+-		if (cqe->flags & IORING_CQE_F_32 || ctx->flags & IORING_SETUP_CQE32)
++		if (ctx->flags & IORING_SETUP_CQE32) {
++			/* all entries have twice the size */
++			cqe = &r->cqes[(cq_head & cq_mask) << 1];
+ 			cqe32 = true;
++		} else {
++			cqe = &r->cqes[(cq_head & cq_mask)];
++			two_entries = cqe->flags & IORING_CQE_F_32;
++			cqe32 = two_entries;
 +		}
-+
- 		sq_size = sizeof(struct io_uring_sqe);
- 		if (ctx->flags & IORING_SETUP_SQE128) {
- 			dst <<= 1;
+ 		seq_printf(m, "%5u: user_data:%llu, res:%d, flags:%x",
+ 			   cq_head & cq_mask, cqe->user_data, cqe->res,
+ 			   cqe->flags);
+@@ -167,7 +173,7 @@ static void __io_uring_show_fdinfo(struc
+ 					cqe->big_cqe[0], cqe->big_cqe[1]);
+ 		seq_printf(m, "\n");
+ 		cq_head++;
+-		if (cqe32) {
++		if (two_entries) {
+ 			cq_head++;
+ 			i++;
+ 		}
 
 
