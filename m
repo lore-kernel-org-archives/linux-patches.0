@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215404;
-	b=0cQE+DiCaFNTkMGoJy7H47zlWNOpChslNHiRQfDEFCxrofS0JrSm0NOYaq8h0UaYftcI
-	 VQxzf3t010VrePFtpbCkX5OiGeZmjRJBWxyfIo/zFjc/Uv0TJkjegfgDSUe2bUxztiJSm
-	 64NJZ53fV9YB0uXGG/7x5AiGn1n8nX2cJbdMPY2/SBW+RNgjlDag96Zixs2JXw5K9NGSV
-	 jbYjEgTsPZHgo6WJ5AWlX0PQx6T+K0gkd4ZoBOzaBO1qazkOo1lD2gcGa1YeRN+0Mm168
-	 MxAwuX1uITXV+mRM/IxXeAZkLkRxe2xqjRKesKLuqPEP9FWAdGOrPAiKPRmdPJMb6Bw==
+	t=1793215407;
+	b=k3Q98+UoZFHRUR4RaPGTLQ2JgCzAxv0Jxqsfh6fhZE78nib7lI71+FEe215BTKUYAFMY
+	 0FofKp9XqMGUQLG6+23VeLHT+aqiemYjStXrX6IpE26mwlPInetU/zH0SnTrXPHpR2Vff
+	 4VCfQzz90wfnx+zniL/vbsmm3b0JKhAJiU9CSIVwkltpJB26okSsJphBrh7lS/UGIZsc0
+	 ncGmq5JXLhlQvb3wjlVxjkL46fhR/ezeq19ZLvPF2quVxwcKEOM3G1/PlTT5uJUZo2Jgl
+	 JypNBAs+YVgBYZ3u+4Yry5jfjKkWnwIpW06cB5IcpYm2yBe1NQ/Rdxj/4Ikm6B+z2YQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215404;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215407;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=M0t0ctyBBE74jO2A78YpioEoj+8U3RWPeLsrpvWS5Eo=;
-	b=H8UdPLbOeKbhsKbjwE2B9TYYSoHNis6ISzKUNZLnnmVkb/UoJVhNLHiUutOJ2zsLf7Ah
-	 94uAOotJ1Tz4tdFie0kp7+5skCcedrIHq+2WIm2OaSTEmz8wVZ+o33rfSZ/D5GMi5+zsI
-	 0o4vaBbNd6JxfqivTMnQD2iuq+XF0HUNmrBOpsHIDO92iPCnYdVwU68wyw9/I6Rgnte/b
-	 l9//5stZe+/RCZ1rvJNWcRtpAAgM/353UC2+cTJJk2EWYjhObWGYtZalt/EZ90jqcmV2x
-	 U9XqWDobC/xncSDTQ2RFSjHE4Quiszn8DDoCcD6GIKIZkZBNnEDUBb0xbNl4uZ5Lebg==
+	bh=hLU2peaqD3Ly65CvaA4E9z+YPmYfKDc2zfTAxalxgXg=;
+	b=Jw4JU3O01PHl2KFPA26nPFy9Me1OdOgp4FXz77sx0DndR2AVcJ1V+LrICc1srA5PcIua
+	 JkHObp7+0OIq3U+iL+Vz8SaTfQ/3/k9euuuAd6+7QYVybbOnuCTcInA8yZ/P+4K9ErZjF
+	 OqAOWBxBa9Zw4HmoRZTxO4u8opp3FC5i4bJeH7dFhhlNol8PH0jSNWTE3fSYmMmZYnowx
+	 YMpqMjkD3ewdHvQwR6MTDwD/JfADk14+JjDepoufNTyxVxg3a9Oy1+E/s2sZTlBoNWfLf
+	 1BApL7ZjQ5k0WqXfx39CBahcmSsJ5CcehGSEnQG/YGTSGSeyn3Ko+IKJJ8Mg4qiXvTg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1KX2F0al;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sQTfKPuV;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FE78606A32C;
-	Wed, 28 Oct 2026 19:23:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82158606A31A;
+	Wed, 28 Oct 2026 19:23:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1KX2F0al
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC8CC1F01828;
-	Wed, 28 Oct 2026 19:23:23 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sQTfKPuV
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCA4F1F01828;
+	Wed, 28 Oct 2026 19:23:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215404;
-	bh=M0t0ctyBBE74jO2A78YpioEoj+8U3RWPeLsrpvWS5Eo=;
+	s=korg; t=1793215407;
+	bh=hLU2peaqD3Ly65CvaA4E9z+YPmYfKDc2zfTAxalxgXg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1KX2F0ali6C/GYhwRkUtd2YAjSysXNXTpOMKEMOxP3ZKncO64JHZYbfI1wSrbC1Cy
-	 x/S68xTP9Jbdme1CNwFZtGBzFuKrOYQ918buOSjauvR6Z+uza5RSjRPXtRuIIF+h/H
-	 PjpSqLQ7m4sPq2rnIHR+XEIbcpHP3GiSo0S+vmzA=
+	b=sQTfKPuV8nkt2r0A0iFOJPj5dVEBI/ScjG/Ca2hL92islNntayrBv2Fmiu1zCJjEf
+	 WjWA+PqeO2p8bdtermp/ujHZD7wFZkO1Zagf5aj5UUNDH1wMrtQJlyBcZGR59eII5l
+	 L3RQ/RL8fKnnpYN8HPRmdUhQZu/bkY3jCxy2jjiI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhao Li <enderaoelyther@gmail.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Peng Fan <peng.fan@nxp.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Ulf Hansson <ulfh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1199/1887] wifi: ieee80211: validate MLE common info length
-Date: Wed, 28 Oct 2026 17:54:55 +0100
-Message-ID: <20261028170526.689910116@linuxfoundation.org>
+Subject: [PATCH 6.1 1200/1887] pmdomain: imx: Fix i.MX8MP VC8000E power up sequence
+Date: Wed, 28 Oct 2026 17:54:56 +0100
+Message-ID: <20261028170526.711699031@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,86 +69,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhao Li <enderaoelyther@gmail.com>
+From: Peng Fan <peng.fan@nxp.com>
 
-[ Upstream commit 293baeae9b2434a3e432629d7720b5603db2d77e ]
+[ Upstream commit 25e252bcf1593b420b12a7231d9dd64b885a2ae2 ]
 
-ieee80211_mle_common_size() uses the first common-info octet as the
-common information length for all known MLE types. However,
-ieee80211_mle_size_ok() only validates that octet for Basic, Probe
-Request, and TDLS MLEs.
+Per errata[1]:
+ERR050531: VPU_NOC power down handshake may hang during VC8000E/VPUMIX
+power up/down cycling.
+Description: VC8000E reset de-assertion edge and AXI clock may have a
+timing issue.
+Workaround: Set bit2 (vc8000e_clk_en) of BLK_CLK_EN_CSR to 0 to gate off
+both AXI clock and VC8000E clock sent to VC8000E and AXI clock sent to
+VPU_NOC m_v_2 interface during VC8000E power up(VC8000E reset is
+de-asserted by HW)
 
-Reconfiguration MLEs also skipped the length octet when calculating the
-minimum common size, and Priority Access MLEs skipped validation of the
-advertised common information length.
+Add a bool variable is_errata_err050531 in
+'struct imx8m_blk_ctrl_domain_data' to represent whether the workaround
+is needed. If is_errata_err050531 is true, first clear the clk before
+powering up gpc, then enable the clk after powering up gpc.
 
-Account for the Reconfiguration common-info length octet and validate
-the advertised common information length for all known MLE types. Keep
-unknown-type handling unchanged.
+[1] https://www.nxp.com/webapp/Download?colCode=IMX8MP_1P33A
 
-Fixes: 0f48b8b88aa9 ("wifi: ieee80211: add definitions for multi-link element")
+Fixes: a1a5f15f7f6cb ("soc: imx: imx8m-blk-ctrl: add i.MX8MP VPU blk ctrl")
 Cc: stable@vger.kernel.org
-Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
-Link: https://patch.msgid.link/20260611173506.36838-2-enderaoelyther@gmail.com
-[remove now misleading comment]
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Peng Fan <peng.fan@nxp.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/ieee80211.h | 12 ++++--------
- 1 file changed, 4 insertions(+), 8 deletions(-)
+ drivers/soc/imx/imx8m-blk-ctrl.c | 19 ++++++++++++++++++-
+ 1 file changed, 18 insertions(+), 1 deletion(-)
 
-diff --git a/include/linux/ieee80211.h b/include/linux/ieee80211.h
-index c16e90c5588ee..d7ad2e9b0baa2 100644
---- a/include/linux/ieee80211.h
-+++ b/include/linux/ieee80211.h
-@@ -4601,7 +4601,7 @@ static inline bool ieee80211_mle_size_ok(const u8 *data, u8 len)
- 	const struct ieee80211_multi_link_elem *mle = (const void *)data;
- 	u8 fixed = sizeof(*mle);
- 	u8 common = 0;
--	bool check_common_len = false;
-+	u8 common_len;
- 	u16 control;
+diff --git a/drivers/soc/imx/imx8m-blk-ctrl.c b/drivers/soc/imx/imx8m-blk-ctrl.c
+index 65315bf908b36..8a80b2d1035b2 100644
+--- a/drivers/soc/imx/imx8m-blk-ctrl.c
++++ b/drivers/soc/imx/imx8m-blk-ctrl.c
+@@ -59,6 +59,15 @@ struct imx8m_blk_ctrl_domain_data {
+ 	 * register.
+ 	 */
+ 	u32 mipi_phy_rst_mask;
++
++	/*
++	 * VC8000E reset de-assertion edge and AXI clock may have a timing issue.
++	 * Workaround: Set bit2 (vc8000e_clk_en) of BLK_CLK_EN_CSR to 0 to gate off
++	 * both AXI clock and VC8000E clock sent to VC8000E and AXI clock sent to
++	 * VPU_NOC m_v_2 interface during VC8000E power up(VC8000E reset is
++	 * de-asserted by HW)
++	 */
++	bool is_errata_err050531;
+ };
  
- 	if (!data || len < fixed)
-@@ -4612,7 +4612,6 @@ static inline bool ieee80211_mle_size_ok(const u8 *data, u8 len)
- 	switch (u16_get_bits(control, IEEE80211_ML_CONTROL_TYPE)) {
- 	case IEEE80211_ML_CONTROL_TYPE_BASIC:
- 		common += sizeof(struct ieee80211_mle_basic_common_info);
--		check_common_len = true;
- 		if (control & IEEE80211_MLC_BASIC_PRES_LINK_ID)
- 			common += 1;
- 		if (control & IEEE80211_MLC_BASIC_PRES_BSS_PARAM_CH_CNT)
-@@ -4630,15 +4629,14 @@ static inline bool ieee80211_mle_size_ok(const u8 *data, u8 len)
- 		common += sizeof(struct ieee80211_mle_preq_common_info);
- 		if (control & IEEE80211_MLC_PREQ_PRES_MLD_ID)
- 			common += 1;
--		check_common_len = true;
- 		break;
- 	case IEEE80211_ML_CONTROL_TYPE_RECONF:
-+		common += 1;
- 		if (control & IEEE80211_MLC_RECONF_PRES_MLD_MAC_ADDR)
- 			common += ETH_ALEN;
- 		break;
- 	case IEEE80211_ML_CONTROL_TYPE_TDLS:
- 		common += sizeof(struct ieee80211_mle_tdls_common_info);
--		check_common_len = true;
- 		break;
- 	case IEEE80211_ML_CONTROL_TYPE_PRIO_ACCESS:
- 		common = ETH_ALEN + 1;
-@@ -4651,11 +4649,9 @@ static inline bool ieee80211_mle_size_ok(const u8 *data, u8 len)
- 	if (len < fixed + common)
- 		return false;
+ #define DOMAIN_MAX_CLKS 4
+@@ -115,7 +124,11 @@ static int imx8m_blk_ctrl_power_on(struct generic_pm_domain *genpd)
+ 		dev_err(bc->dev, "failed to enable clocks\n");
+ 		goto bus_put;
+ 	}
+-	regmap_set_bits(bc->regmap, BLK_CLK_EN, data->clk_mask);
++
++	if (data->is_errata_err050531)
++		regmap_clear_bits(bc->regmap, BLK_CLK_EN, data->clk_mask);
++	else
++		regmap_set_bits(bc->regmap, BLK_CLK_EN, data->clk_mask);
  
--	if (!check_common_len)
--		return true;
-+	common_len = mle->variable[0];
+ 	/* power up upstream GPC domain */
+ 	ret = pm_runtime_get_sync(domain->power_dev);
+@@ -124,6 +137,9 @@ static int imx8m_blk_ctrl_power_on(struct generic_pm_domain *genpd)
+ 		goto clk_disable;
+ 	}
  
--	/* if present, common length is the first octet there */
--	return mle->variable[0] >= common;
-+	return common_len >= common && common_len <= len - fixed;
- }
++	if (data->is_errata_err050531)
++		regmap_set_bits(bc->regmap, BLK_CLK_EN, data->clk_mask);
++
+ 	/* wait for reset to propagate */
+ 	udelay(5);
  
- enum ieee80211_mle_subelems {
+@@ -514,6 +530,7 @@ static const struct imx8m_blk_ctrl_domain_data imx8mp_vpu_blk_ctl_domain_data[]
+ 		.clk_mask = BIT(2),
+ 		.path_names = (const char *[]){"vc8000e"},
+ 		.num_paths = 1,
++		.is_errata_err050531 = true,
+ 	},
+ };
+ 
 -- 
 2.53.0
 
