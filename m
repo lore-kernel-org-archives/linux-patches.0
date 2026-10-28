@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793210538;
-	b=4eguDRrkqVpkZN5OtfiVQlDHhdweENp/QuC4SG3pYa6oYlD3nUJTjucTTlyDxoQ1hA1v
-	 mkG0OQtJ9iEdOZpnL1wp8gg64WmMJjBHRr/LYiIAnLslH9TxPXOH9RB5DKqa8EUVuYgVp
-	 Nl+KMDLEZWAGtE45bNwgiKkhm459mCCOqrgs91QimFQqGjrWaLE1nl+30nJLSqK+cBkUm
-	 XRzjJcmlinxIkPIn41iGpUwVjOEXpY0z2XYPFGuscFj8PwQU4wL8d+rr5wpbpmQtpTTcu
-	 y2vOUKfLL74kLPWcTk6JOoEr6+6PTImSe4PQdnEhldYWtjVFLte0FiK7gVC9YiGBPIQ==
+	t=1793210541;
+	b=Fy+MVgNMWIIYelB1qaJ4zO2yWtpbJggdn1iImLlVzk2qcknfk28PoX5zDqcttgzB6+i+
+	 kQTV5EMIulAwVFvh/guYm8e8aIOoWK0tFlEicDfe/YkW0hBpgJ+oMFiFsfRFOKFZVl9aB
+	 +P4/7/nl1KBtMotPkQDlXt3IeynQ1otwuxHFZHsmzAA6d6XcaWB9sFBMx0I1BqsqrDWMC
+	 ddJkGOykOblfK1/23R7vV/27Z5XoEybqoq0Pp730lFD/9JtkRnSdmVya44wF+FRVzDguf
+	 EEfWOnSKLpBR9QI9OyH7cZy3Ylrd3W2IdmQRVBWmmsbNJiCHZUh89IX4qY9nPyiocGg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793210538;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793210541;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=XSCSQBQe/uRUUl3Z2BwKwfuu1l2NnDrEC84so8NqORE=;
-	b=EjKK/9yUBu5BWv+2iVih2eFZhzy4+z0BkR2pG8EPYSCIcLAKM2ZbUgZJ8w/rNTTMlyMj
-	 CipaG2KOb7PdhFE9E4SymWMHkRV6zTduygZw0SZPXyLRiGYCsX3jJ1DRE8xaNUmC7ZSYK
-	 W39VwZd2zQ2F+rkSneXJKWpkWQAa1jh7nfC/6w6zdZY2TmvSSx0K9FCcwS6A8tGeenfPQ
-	 PjTL6okC9zgNkScOWVY+fS68Pyrck5l/fS4tf/WbApewwCtn7S46JzIsJCgzGXplW0u8N
-	 SieIAAU97K3a86QnuIyM9sZ/tT4iQNNVil99qPqXOGU7FJfWWYhvbK1UfEZgAocmkxQ==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=FVWxFK0UTLhowLfw55QXG0gzfmqPu0C74/4qaSWxJYA=;
+	b=l+mflrcNSlRrZ59fIpK4NmwmEUXqWoc8UQbC+mSi8qI09SfWOjWk1rTM696z3/M5J+5l
+	 pQoqbfb2XVXDgKDdQeUPaa6/MedfX8vRk4HbN8XyLbG5iqVA49Y+vLeGurKUZV+4WRKMs
+	 ors+pvIeJfhSMx0ku85zH7CLFyhT9/034ZHwaEwbGZxYmGcYckq4gSg+JuVnjsASGdkdb
+	 v0Gzo0O+8CflDMIgLQk+CcD6T6sts/R2DbxqjfOOM9UzZl8J9KQZRLNVGXTJ/FQYa4A9l
+	 q4DA1G/apFnw7I4xRYM8fnVaCGg3MGyuN4M51+9AeCOW6j+nHxz4WpzYueP2EDpn4rg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Jw7Zg8WC;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="a5hU/MPw";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 084E8606A31A;
-	Wed, 28 Oct 2026 18:02:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E11C7606A31E;
+	Wed, 28 Oct 2026 18:02:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Jw7Zg8WC
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59A0C1F01825;
-	Wed, 28 Oct 2026 18:02:17 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a5hU/MPw
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A3071F01825;
+	Wed, 28 Oct 2026 18:02:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793210537;
-	bh=XSCSQBQe/uRUUl3Z2BwKwfuu1l2NnDrEC84so8NqORE=;
+	s=korg; t=1793210540;
+	bh=FVWxFK0UTLhowLfw55QXG0gzfmqPu0C74/4qaSWxJYA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Jw7Zg8WCQ1hlWP5jeqxqJRA/bBB/Y9YnuVr5+Zhn/qToi35EUE7g1g7pmIb24p7u1
-	 vEx9k7jUJAVxGIRnhleGfMasfNGLhHzV4DG0mLrjChzlw3TVZlA68FQ7544F0OG8F7
-	 CDgpqlJC5VhXykfqwjbTGqX2uAIB9W0OkL44cnlM=
+	b=a5hU/MPwEnupZeP+2wMMtczNKhSIYXkFwTWJMQDSxi07KA7H+mX29CNZLzeLSpuRV
+	 IlxspDV+xR1fH1e5dFNti7hi56w7xYQNfyGfj188CPv6CT3/0uVTc3dpSxNS1CHTAs
+	 yi6aHpg/2x8yi0V1B699fxpo9veEaVMrlliLSd9I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luis Chamberlain <mcgrof@kernel.org>,
-	Kees Cook <keescook@chromium.org>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Bjoern Doebel <doebel@amazon.de>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Paulo Alcantara <pc@manguebit.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 061/571] params: Fix multi-line comment style
-Date: Wed, 28 Oct 2026 17:53:28 +0100
-Message-ID: <20261028170009.474583577@linuxfoundation.org>
+Subject: [PATCH 5.15 035/571] smb: client: fix heap overflow in DACL owner/group rewrite
+Date: Wed, 28 Oct 2026 17:53:02 +0100
+Message-ID: <20261028170008.859034834@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -63,73 +63,79 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Bjoern Doebel <doebel@amazon.de>
 
-[ Upstream commit b5e3f86a47d34f7b8af899f8cc70520f6daf8b53 ]
+[ Upstream commit 0ee150794c75bcd0be0e24ff3394f433cbae18cc ]
 
-The multi-line comment style in the file is rather arbitrary.
-Make it follow the standard one.
+When id_mode_to_cifs_acl rewrites an existing DACL, it allocates a
+buffer sized according to the on-disk DACL length reported by
+dacl_ptr->size. However, replace_sids_and_copy_aces may rewrite each
+ACE with a new owner/group SID obtained from the cifs.idmap upcall.
+Those SIDs can have up to SID_MAX_SUB_AUTHORITIES (15) sub-authorities,
+making each ACE up to 76 bytes (sizeof(struct smb_ace)).
 
-Reviewed-by: Luis Chamberlain <mcgrof@kernel.org>
-Reviewed-by: Kees Cook <keescook@chromium.org>
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/20231120151419.1661807-6-andriy.shevchenko@linux.intel.com
-Signed-off-by: Kees Cook <keescook@chromium.org>
-Stable-dep-of: 3dfaae04243c ("params: fix charp corruption on allocation failure")
+If the original DACL contains short SIDs (e.g., 1 sub-authority) while
+the replacement SIDs are long, the rewritten ACEs overflow the
+allocation.
+
+Fix this by always budgeting for worst-case SID expansion: allocate
+sizeof(struct smb_acl) plus num_aces * sizeof(struct smb_ace), which
+covers the smb_acl header and room for every ACE at maximum SID size.
+This replaces the previous split logic that used dacl_ptr->size for
+cifsacl mounts but num_aces * sizeof(struct smb_ace) for mode_from_sid
+mounts: both paths can trigger the same rewrite and need the same
+headroom.
+
+KASAN reports this as:
+  BUG: KASAN: slab-out-of-bounds in build_sec_desc+0x1e8a/0x2680 [cifs]
+  Write of size 4 at addr ffff8881a5e25374 by task chown/5298
+  ...
+  The buggy address is located 0 bytes to the right of
+   allocated 884-byte region [ffff8881a5e25000, ffff8881a5e25374)
+
+Cc: stable@vger.kernel.org
+Fixes: bc3e9dd9d104 ("cifs: Change SIDs in ACEs while transferring file ownership.")
+Assisted-by: Kiro:claude-opus-4.6
+Signed-off-by: Bjoern Doebel <doebel@amazon.de>
+Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
+Fixes: 5c3564852c58 ("cifs: Minimize the number of cifs_acl memory allocations")
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+[ changed smb_acl/smb_ace to cifs_acl/cifs_ace and le16_to_cpu() to le32_to_cpu() for the branch’s 32-bit num_aces field. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/params.c | 20 ++++++++++++--------
- 1 file changed, 12 insertions(+), 8 deletions(-)
+ fs/cifs/cifsacl.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/kernel/params.c b/kernel/params.c
-index dc714a1c67cc4..e1eba5b8230c1 100644
---- a/kernel/params.c
-+++ b/kernel/params.c
-@@ -1,8 +1,8 @@
- // SPDX-License-Identifier: GPL-2.0-or-later
--/* Helpers for initial module or kernel cmdline parsing
--   Copyright (C) 2001 Rusty Russell.
--
--*/
-+/*
-+ * Helpers for initial module or kernel cmdline parsing
-+ * Copyright (C) 2001 Rusty Russell.
-+ */
- #include <linux/ctype.h>
- #include <linux/device.h>
- #include <linux/err.h>
-@@ -275,8 +275,10 @@ int param_set_charp(const char *val, const struct kernel_param *kp)
- 
- 	maybe_kfree_parameter(*(char **)kp->arg);
- 
--	/* This is a hack.  We can't kmalloc in early boot, and we
--	 * don't need to; this mangled commandline is preserved. */
-+	/*
-+	 * This is a hack. We can't kmalloc() in early boot, and we
-+	 * don't need to; this mangled commandline is preserved.
-+	 */
- 	if (slab_is_available()) {
- 		*(char **)kp->arg = kmalloc_parameter(len + 1);
- 		if (!*(char **)kp->arg)
-@@ -741,8 +743,10 @@ void module_param_sysfs_remove(struct module *mod)
- {
- 	if (mod->mkobj.mp) {
- 		sysfs_remove_group(&mod->mkobj.kobj, &mod->mkobj.mp->grp);
--		/* We are positive that no one is using any param
--		 * attrs at this point.  Deallocate immediately. */
-+		/*
-+		 * We are positive that no one is using any param
-+		 * attrs at this point. Deallocate immediately.
-+		 */
- 		free_module_param_attrs(&mod->mkobj);
+diff --git a/fs/cifs/cifsacl.c b/fs/cifs/cifsacl.c
+index 19d2d68706ad0..3baafbc12f1a1 100644
+--- a/fs/cifs/cifsacl.c
++++ b/fs/cifs/cifsacl.c
+@@ -1747,11 +1747,13 @@ id_mode_to_cifs_acl(struct inode *inode, const char *path, __u64 *pnmode,
+ 				cifs_put_tlink(tlink);
+ 				return rc;
+ 			}
+-			if (mode_from_sid)
+-				nsecdesclen +=
+-					le32_to_cpu(dacl_ptr->num_aces) * sizeof(struct cifs_ace);
+-			else /* cifsacl */
+-				nsecdesclen += le16_to_cpu(dacl_ptr->size);
++			/*
++			 * Worst case: every ACE is rewritten with a new SID of
++			 * SID_MAX_SUB_AUTHORITIES sub-auths -> sizeof(cifs_ace) each,
++			 * plus the cifs_acl header replace_sids_and_copy_aces() emits.
++			 */
++			nsecdesclen += sizeof(struct cifs_acl) +
++				le32_to_cpu(dacl_ptr->num_aces) * sizeof(struct cifs_ace);
+ 		}
  	}
- }
+ 
 -- 
 2.53.0
 
