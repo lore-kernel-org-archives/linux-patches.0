@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793207693;
-	b=b9aS5CtXPxG5k2V4dKgbDB3Bc2NliAxOvC5IsPKpslNZJFc4w0TcUFhLricGcRPZSez+
-	 ulJgAmjOaptsFSp+CJQ8FWcTs719z5ayy3RpUZvbFrY3taRKQsYjYFQLdAETJR44paJYM
-	 7LWDxrOKhY7rNXV9DRJtypYaXm3CrGuvtWB6bXCw4oUI8JPbHdXOINOci5ctF3JE+dqRb
-	 cvdRJNhBdY1YRmjk9JVRIpwFXOcxHVs4mNrG1QomA+3fGs7e/3oO7ubGTd2n5cHUPUHlm
-	 ViYMB7HrbMUel0Vv7ch8ZP/u4CrWtOSRE4TodteYypNwauf+WZWWPEsP6tRm0alpksQ==
+	t=1793207696;
+	b=EMw5biVa7c6Yal8l3iIT/fceoLbU2EJYL6SC40WCznBpb/P/LzVXJUcUFXAXBBVi3H5f
+	 0irP17vRjC1QojYfyP8u/jZ6KAC44oWXhUKB8PPs63IjmjLknjZ0Dja+B3w0YY5mVxzuB
+	 d9iNYTRqcuaHDkBYkl6qvzpkIM5jsJyyVTDhs4+CQ8vebhgrgPQEnfFBe+9vnZBGMp3bb
+	 QVtECOBSzb/41OzchQcbfjuP+o7wcwjXVnSKWnzsQmqYycZd7urHkIrNpQY4sG6m2ypBn
+	 FDZPlF0dBrMiohL/QpGmbiiW1fkJs/9QGkFJr6mGfEWrLSuHT735ptqc7Lo4t6ZvCAQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793207693;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793207696;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=yrdVzTFes7MdIOu5TKHdp13E5rhiHIrrVtkvHFsydIw=;
-	b=NEqLhIiWfKALrGne20DPwAhFD41AL23nqn7C3GEhl0iCz6FH0Wk+oz8YXwsaH2iWlhiq
-	 B2Zoov9p++b1G0kY6A33PXZkI6V3rj3+8jDqCT0N8LcDm4NFlcrCeFkTNipBak/GchrXz
-	 1vGrpBkH1s4ZnObh4xZ5CrQIi05bM0WijhrVx9M2gSLmboXd4oaXhpOUuE2jxZUzH3h2k
-	 4220u+gKCIfwXNDYY+otUPqg/lJ5AID2OpnvtB7N0DoC1r9qa+brt14LKqA89rdxD4h7G
-	 o1NfaaTBeBMaDkwTt58GvSe4iDawWYRkFJ9lkw7dnAT5kQ0Kvr5wk+V7EJcVblIp53w==
+	bh=2AlXbWqa559+3TTkxyns8FfYTUa2tyImqZb72i7YwFI=;
+	b=X3Kc+OrUZcmgJYNdRIcvtBQjoU2LVP2GZP208+6RWTbDf7re9GLvHuRijWvhljrGoQN5
+	 J2HZgI/ok9AR/6V/1UM8dfGHNTbJ/pIx8CGJ3bliWsHesAFjtRWqBf3XPOrxFuq8cvnG5
+	 2nsW7kNNyKs6P+AZikDKDVOcD3VsC+F69fJENa4UNRuPoB2aavIYME/Q3vD54ryGVCoPg
+	 aibVZ5VyqbXhU1ZCdwuRGextveZjeA5+aDWNDpnn+7nYoc6vkafwrR4R16QGWyNRNgAi5
+	 0nvILqdYHmmPfn4IhOJDO+9aLmCLDq4FzMP57ZBKYohIgtZTBO9D03/rJvvqiLKHR8A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JVqyas3K;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="HPca/XrZ";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54112606A31C;
-	Wed, 28 Oct 2026 17:14:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BAB9606A320;
+	Wed, 28 Oct 2026 17:14:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JVqyas3K
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1B851F01825;
-	Wed, 28 Oct 2026 17:14:52 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HPca/XrZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 801D21F01828;
+	Wed, 28 Oct 2026 17:14:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793207693;
-	bh=yrdVzTFes7MdIOu5TKHdp13E5rhiHIrrVtkvHFsydIw=;
+	s=korg; t=1793207696;
+	bh=2AlXbWqa559+3TTkxyns8FfYTUa2tyImqZb72i7YwFI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JVqyas3KIK+eduen0SiyFTjsI5l6s34JILSnaShEiVFTuWG7bwsS0QAp1VIM9s9W6
-	 l4jhpqxOx/QsBjvSsn8LWxDYJveJj9rqapyCubdk8iRVvXyapkpxQVT2/oxUX27XmG
-	 MRdcmI8BYD1dQ9B6gI/y89PfAxrJQsgNKEt64fIc=
+	b=HPca/XrZeIWT1yvClOT13tvIHTxvmjcicoXrEIqyAAUVaBdTWa7C17ExdHybU5bNm
+	 CZjDquH+1QdL2FGCCilcat8UfNsmMW47GmPi8+itYKLYaNUaEfjyImtdLEiIGYLKwT
+	 r6+7snVUW8vBhBy9rBo00L8FyBJ36c0zI5LLAxSM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aswin Karuvally <aswin@linux.ibm.com>,
-	Bryam Vargas <hexlabsecurity@proton.me>,
-	Alexandra Winter <wintera@linux.ibm.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 106/247] net/iucv: fix the recvmsg window update
-Date: Wed, 28 Oct 2026 17:58:29 +0100
-Message-ID: <20261028165949.907161466@linuxfoundation.org>
+	"Dr. Thomas Orgis" <thomas.orgis@uni-hamburg.de>,
+	Carlos Maiolino <cmaiolino@redhat.com>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Serge Hallyn <sergeh@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Carlos Maiolino <cem@kernel.org>
+Subject: [PATCH 6.12 107/247] xfs: fix capability check in xfs
+Date: Wed, 28 Oct 2026 17:58:30 +0100
+Message-ID: <20261028165949.931076979@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165947.349197979@linuxfoundation.org>
 References: <20261028165947.349197979@linuxfoundation.org>
@@ -69,118 +71,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryam Vargas <hexlabsecurity@proton.me>
+From: Carlos Maiolino <cem@kernel.org>
 
-commit fa5acd038ea657ad5033713d6916214cbd349151 upstream.
+commit e2f62a9744ebad3bcb6347a648e615026e9efeff upstream.
 
-iucv_sock_recvmsg() sends the HiperSockets-only AF_IUCV_FLAG_WIN without
-testing the transport, so on a classic z/VM socket iucv_send_ctrl() sizes
-the skb through a NULL iucv->hs_dev. SO_MSGLIMIT accepts 1, so msglimit / 2
-is zero and one recvmsg() on its own socket is enough for an unprivileged
-process to take a spurious disconnect.
+An user reported a bug where he managed to evade group's quota
+by changing a file's gid to a different group id the same user
+belonged to, even though quotas were enforced on both gids and the
+file's size was big enough to exceed the quota's hardlimit.
 
-It also calls iucv_send_ctrl() under spin_lock_bh(&message_q.lock), which
-allocates GFP_KERNEL inside a section the code treats as atomic. Sending
-outside that lock lets two recvmsg() reach afiucv_hs_send() at once, where
-msg_recv is sampled for the advertised window and subtracted after
-dev_queue_xmit() -- and sendmsg reaches that counter under lock_sock()
-while recvmsg holds no socket lock, so both can subtract the same value,
-the counter goes negative and the credit reaches the peer twice.
+Commit eba0549bc7d1 replaced a capable() call by a
+has_capability_noaudit() to prevent unnecessary selinux audit messages.
+Turns out that both calls have slightly different semantics even though
+their documentation seems similar. Where in a nutshell:
 
-Test the transport, claim the credit with atomic_xchg() after the last
-error exit and hand it back if the transmit fails, and send once the lock
-is dropped.
+capable() - Tests the task's effective credentials
+has_ns_capability_noaudit() - Tests the task's real credentials
 
-Fixes: 3881ac441f64 ("af_iucv: add HiperSockets transport")
-Fixes: 238965b71b96 ("net/af_iucv: build proper skbs for HiperTransport")
-Cc: stable@vger.kernel.org
-Tested-by: Aswin Karuvally <aswin@linux.ibm.com>
-Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
-Reviewed-by: Alexandra Winter <wintera@linux.ibm.com>
-Link: https://patch.msgid.link/20260828-b4-disp-33fac0ed-v3-1-e6d061880ee0@proton.me
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+This most of the time has no practical difference but in some cases like
+changing attrs (specifically group id in this case) through a NFS client
+this will allow the quota code to use XFS_QMOPT_FORCE_RES, effectively
+bypassing quota accounting checks.
+
+Using instead ns_capable_noaudit() should fix this issue and prevent
+selinux audit messages.
+
+This also fix the remaining calls to has_capability_noaudit()
+
+Fixes: eba0549bc7d1 ("xfs: don't generate selinux audit messages for capability testing")
+Cc: stable@vger.kernel.org # v5.18
+Reported-by: Dr. Thomas Orgis <thomas.orgis@uni-hamburg.de>
+Signed-off-by: Carlos Maiolino <cmaiolino@redhat.com>
+Reviewed-by: Darrick J. Wong <djwong@kernel.org>
+Reviewed-by: Serge Hallyn <sergeh@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/iucv/af_iucv.c |   42 +++++++++++++++++++++++++-----------------
- 1 file changed, 25 insertions(+), 17 deletions(-)
+ fs/xfs/xfs_fsmap.c |    2 +-
+ fs/xfs/xfs_ioctl.c |    2 +-
+ fs/xfs/xfs_iops.c  |    2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
---- a/net/iucv/af_iucv.c
-+++ b/net/iucv/af_iucv.c
-@@ -207,12 +207,6 @@ static int afiucv_hs_send(struct iucv_me
- 	phs_hdr->flags = flags;
- 	if (flags == AF_IUCV_FLAG_SYN)
- 		phs_hdr->window = iucv->msglimit;
--	else if ((flags == AF_IUCV_FLAG_WIN) || !flags) {
--		confirm_recv = atomic_read(&iucv->msg_recv);
--		phs_hdr->window = confirm_recv;
--		if (confirm_recv)
--			phs_hdr->flags = phs_hdr->flags | AF_IUCV_FLAG_WIN;
--	}
- 	memcpy(phs_hdr->destUserID, iucv->dst_user_id, 8);
- 	memcpy(phs_hdr->destAppName, iucv->dst_name, 8);
- 	memcpy(phs_hdr->srcUserID, iucv->src_user_id, 8);
-@@ -247,13 +241,22 @@ static int afiucv_hs_send(struct iucv_me
- 	}
- 	skb->protocol = cpu_to_be16(ETH_P_AF_IUCV);
+--- a/fs/xfs/xfs_fsmap.c
++++ b/fs/xfs/xfs_fsmap.c
+@@ -916,7 +916,7 @@ xfs_getfsmap(
+ 		return -EINVAL;
  
-+	/* Claim the receive credit here, not while building the header: every
-+	 * way this frame can be dropped has now been ruled out, so the window
-+	 * is zeroed only for as long as the transmit itself takes.
-+	 */
-+	if (flags == AF_IUCV_FLAG_WIN || !flags) {
-+		confirm_recv = atomic_xchg(&iucv->msg_recv, 0);
-+		phs_hdr->window = confirm_recv;
-+		if (confirm_recv)
-+			phs_hdr->flags = phs_hdr->flags | AF_IUCV_FLAG_WIN;
-+	}
-+
- 	atomic_inc(&iucv->skbs_in_xmit);
- 	err = dev_queue_xmit(skb);
- 	if (net_xmit_eval(err)) {
- 		atomic_dec(&iucv->skbs_in_xmit);
--	} else {
--		atomic_sub(confirm_recv, &iucv->msg_recv);
--		WARN_ON(atomic_read(&iucv->msg_recv) < 0);
-+		atomic_add(confirm_recv, &iucv->msg_recv);
- 	}
- 	return net_xmit_eval(err);
+ 	use_rmap = xfs_has_rmapbt(mp) &&
+-		   has_capability_noaudit(current, CAP_SYS_ADMIN);
++		   ns_capable_noaudit(&init_user_ns, CAP_SYS_ADMIN);
+ 	head->fmh_entries = 0;
  
-@@ -1237,6 +1240,7 @@ static int iucv_sock_recvmsg(struct sock
- 	struct iucv_sock *iucv = iucv_sk(sk);
- 	unsigned int copied, rlen;
- 	struct sk_buff *skb, *rskb, *cskb;
-+	bool send_win = false;
- 	int err = 0;
- 	u32 offset;
+ 	/* Set up our device handlers. */
+--- a/fs/xfs/xfs_ioctl.c
++++ b/fs/xfs/xfs_ioctl.c
+@@ -573,7 +573,7 @@ xfs_ioctl_setattr_get_trans(
+ 		goto out_error;
  
-@@ -1327,16 +1331,20 @@ static int iucv_sock_recvmsg(struct sock
- 		if (skb_queue_empty(&iucv->backlog_skb_q)) {
- 			if (!list_empty(&iucv->message_q.list))
- 				iucv_process_message_q(sk);
--			if (atomic_read(&iucv->msg_recv) >=
--							iucv->msglimit / 2) {
--				err = iucv_send_ctrl(sk, AF_IUCV_FLAG_WIN);
--				if (err) {
--					sk->sk_state = IUCV_DISCONN;
--					sk->sk_state_change(sk);
--				}
--			}
-+			if (iucv->transport == AF_IUCV_TRANS_HIPER &&
-+			    atomic_read(&iucv->msg_recv) >=
-+							iucv->msglimit / 2)
-+				send_win = true;
- 		}
- 		spin_unlock_bh(&iucv->message_q.lock);
-+
-+		if (send_win) {
-+			err = iucv_send_ctrl(sk, AF_IUCV_FLAG_WIN);
-+			if (err) {
-+				sk->sk_state = IUCV_DISCONN;
-+				sk->sk_state_change(sk);
-+			}
-+		}
+ 	error = xfs_trans_alloc_ichange(ip, NULL, NULL, pdqp,
+-			has_capability_noaudit(current, CAP_FOWNER), &tp);
++			ns_capable_noaudit(&init_user_ns, CAP_FOWNER), &tp);
+ 	if (error)
+ 		goto out_error;
+ 
+--- a/fs/xfs/xfs_iops.c
++++ b/fs/xfs/xfs_iops.c
+@@ -735,7 +735,7 @@ xfs_setattr_nonsize(
  	}
  
- done:
+ 	error = xfs_trans_alloc_ichange(ip, udqp, gdqp, NULL,
+-			has_capability_noaudit(current, CAP_FOWNER), &tp);
++			ns_capable_noaudit(&init_user_ns, CAP_FOWNER), &tp);
+ 	if (error)
+ 		goto out_dqrele;
+ 
 
 
