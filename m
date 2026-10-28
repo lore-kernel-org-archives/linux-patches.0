@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793210053;
-	b=hlteHCY9tvavAQawonduHYVjZxO4KdhZrtVGIisxcsKPhcQrf8DuDcK7WjXbulVEEjei
-	 M+p0X1VuGKprN9DJ1Rvkbg5KYzvtEuLBvwWx2W0EaCdKv3f5J5J+1x2wUCeEfmPeSUvEY
-	 u8rJAQ40Q28gFeqzJuzYfVFM8oi/cmSf5nnWcEPI6AEnvFBE+n1uBrVrjctgiMC7U6fd4
-	 kmUsJdIDCDBu4JqfnmlHVClA2t6nv92GG7zdej9FHGqbNXrPJNTAett4ivB0En6/Zeor0
-	 33EYAuE6fxi5UlGRVMyUsPExcbQzJu+Jz8oMASpOinKN58OvRibGBg+RBHz/PXKyDBw==
+	t=1793210056;
+	b=ZCZMc0PGVgmh9ApFCfz1kqXN/a8oQw9E+iu8yGadjjBy+VhXxV3XpK9b9waGsAQiUL4I
+	 zhJ0AYySyi360HTQqHZSO0T1+H2D8Vxowa1gUmWOW1gQZMGQaknH2zpwnYoTx7hytfV4g
+	 bPWvlxoHf6Gu0zSLttI5/7Ckfh8LlfXeKWzvwfqpUhtEkUt6GTreBnB8iYVQF00LPyxr4
+	 /BTN8evh4OP76IaW8T7RzTctv+XhrUCgw7o1k6n7w6DnmtBkotToQODSqXmxz1YzE1m+A
+	 Lfx1PnkGi1Wyw6TPbkozrAIl9y6r2WOoBK6i0ovB7ituE0+mkiAuFBnth0s8YpBLTJQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793210053;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793210056;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=jqQegcmtSYkIQtrcKgk6gz+PIFYJ2/2FmCrVjk98aUA=;
-	b=B2EdGXMogUFBKU9KBgD7t9LFZ5HJnw+cb+YQV+ZeeYYfVujrVKt+V9djw9dSGhczi0vz
-	 SZCBUL3MzEwRNocU+kAH/yH8BUWVr3eroxNist+r76fO0OvNF/oY2nSKFIwbs/IY/mx4k
-	 qDDUjHOGOD+5uHsZAhIYMHDDgywNM8Hr21ibRTXR3LbbnsFjALMM6AwdFw+yQ2Y4Z+hRy
-	 wjfDbHHjf7OyQ0Ep8UlXqUBZGIfN/JPYHeouNF8rIdZmFiRa/O7wChOTRolleCAzUe8ef
-	 UmTyPFWiudDWmepa6wyvxktK6bGNae0d72zo9RpRCJM/2cdfEQ9NJtxCcolpNXa3dMA==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=3N5fxn2oXEclWOdPXfOKDnQPR/TTe87P2E74Y7ng+Q0=;
+	b=yxsQNrkoWj/U1pkmoaq3U+ek74/x/cq2LBMNuYdhhaqWicjYw9vLfqsk8Doqev7xqrYt
+	 H+VVbZOzOCxbSWmFFAmapYj8eldDGIAXYzWJfIIos4yO0abUvafXhD0nwXdBl/7qk86A+
+	 wE+zfaJWrnTJowMQ3+kC6oflEEAD8X0VfouOU9O7gHvZfX/QFqygNdeuXHaCZvmcfVT+q
+	 CJFDp8aj+Kh0sB1NTdaXWiiHqbOAg+AZCOifAvYl7pBhtUhDC7TzGxORXviqEWmF5UoYp
+	 bhMhMGZpz7sdui8vLTAbAmmO+Ln8dDeAOnBhQm14nJaNCJYqVeIayf+DAnoVamvkgvw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QtBO3Yhi;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L+Ftr+iO;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D960606A31A;
-	Wed, 28 Oct 2026 17:54:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78A6C606A31A;
+	Wed, 28 Oct 2026 17:54:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QtBO3Yhi
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBC5E1F01828;
-	Wed, 28 Oct 2026 17:54:12 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L+Ftr+iO
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8E631F01825;
+	Wed, 28 Oct 2026 17:54:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793210053;
-	bh=jqQegcmtSYkIQtrcKgk6gz+PIFYJ2/2FmCrVjk98aUA=;
+	s=korg; t=1793210056;
+	bh=3N5fxn2oXEclWOdPXfOKDnQPR/TTe87P2E74Y7ng+Q0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QtBO3Yhi67N4JrCfjpbEqz06nRBGUX3zaEcCItAdzZczH+yTSCxMUdOuY4DoGKTIa
-	 Fa3ZqrdRC4DJZajruGNYVLp3G5p/38YsYizYlPJ/mNfUOy9DRxqvJVQINZQJyLDSJH
-	 tAYdj5YiG51brbxtimAc0SJTLggUPmrNJI397fcE=
+	b=L+Ftr+iORSPWc2lXu+/09WGARU1/JuV6CrLEjwg0NBROJYdVfG8f9quSfmKMnNFLz
+	 Z142HRnG7zUIf7fJdJiU5Id1A/MU+tbSqvYoEUlIFgCL3jIdmMtPqsKgL0L4xEHXmV
+	 T/yeZ6eRupD9xszlYrPSO4J3V+Y6fFbQup+ru5gM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Taeyang Lee <0wn@theori.io>,
+	=?UTF-8?q?Michal=20Such=C3=A1nek?= <msuchanek@suse.de>,
+	Amit Machhiwal <amachhiw@linux.ibm.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
 	Steven Rostedt <rostedt@goodmis.org>
-Subject: [PATCH 6.6 061/168] tracing: Check operator stack capacity before pushing
-Date: Wed, 28 Oct 2026 17:59:57 +0100
-Message-ID: <20261028165944.527819015@linuxfoundation.org>
+Subject: [PATCH 6.6 062/168] tracing: Do not initialize tracefs work if tracing is disabled
+Date: Wed, 28 Oct 2026 17:59:58 +0100
+Message-ID: <20261028165944.551308249@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165943.089486480@linuxfoundation.org>
 References: <20261028165943.089486480@linuxfoundation.org>
@@ -61,43 +63,76 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Taeyang Lee <0wn@theori.io>
+From: Amit Machhiwal <amachhiw@linux.ibm.com>
 
-commit c47a7b11bcb3d45e29723afcf6336866476b1d08 upstream.
+commit b3b974008388ab59e44d764ba7a63c988fec2524 upstream.
 
-predicate_parse() uses the first operator stack entry before processing
-any opening parentheses. A push then increments top before writing.
-The existing check still permits that write when top already points to
-the last allocated entry, which can access beyond the operator stack.
+If trace buffer allocation fails during early boot (e.g.  in
+early_trace_init() -> allocate_trace_buffers()), tracing_disabled is
+left set to 1 and the global trace array events list remains
+uninitialized.
 
-Reject the push when top reaches the last allocated entry.
+Later during boot, tracer_init_tracefs() (invoked via fs_initcall)
+queues tracerfs_init_work asynchronously without checking if tracing was
+disabled.  When tracer_init_tracefs_work_func() runs, it calls
+event_trace_init() and init_tracer_tracefs(&global_trace, NULL)
+unconditionally.  This leads to __find_event_file() dereferencing an
+uninitialized tr->events list, causing an early boot NULL pointer
+dereference Oops:
+
+  BUG: Kernel NULL pointer dereference on read at 0x00000010
+  Faulting instruction address: 0xc000000000485be0
+  Oops: Kernel access of bad area, sig: 7 [#1]
+  ...
+  NIP [c000000000485be0] __find_event_file+0x70/0x3c0
+  LR  [c000000000448874] init_tracer_tracefs+0x274/0xc80
+  Call Trace:
+   init_tracer_tracefs+0x274/0xc80
+   tracer_init_tracefs_work_func+0x50/0x320
+   process_one_work+0x1e8/0x5c0
+   worker_thread+0x1dc/0x3d0
+   kthread+0x194/0x1b0
+   start_kernel_thread+0x14/0x18
+
+Check tracing_disabled at the beginning of tracer_init_tracefs_work_func()
+and return immediately if tracing is disabled or failed to initialize,
+preventing the crash.
 
 Cc: stable@vger.kernel.org
-Fixes: 39f7c41c908b ("tracing/filters: Enable filtering a cpumask field by another cpumask")
-Link: https://patch.msgid.link/atELO9L0I9kg5CpC@Taeyangs-MacBook-Pro.local
-Signed-off-by: Taeyang Lee <0wn@theori.io>
+Fixes: 6621a7004684 ("tracing: make tracer_init_tracefs initcall asynchronous")
+Link: https://patch.msgid.link/20261009163557.88467-2-amachhiw@linux.ibm.com
+Reported-by: Michal Suchánek <msuchanek@suse.de>
+Closes: https://lore.kernel.org/all/arYskzbiaNzBR9MD@kunlun.suse.cz/
+Signed-off-by: Amit Machhiwal <amachhiw@linux.ibm.com>
+Tested-by: Michal Suchánek <msuchanek@suse.de>
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_events_filter.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/trace/trace.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/kernel/trace/trace_events_filter.c
-+++ b/kernel/trace/trace_events_filter.c
-@@ -512,7 +512,7 @@ predicate_parse(const char *str, int nr_
+--- a/kernel/trace/trace.c
++++ b/kernel/trace/trace.c
+@@ -10040,6 +10040,12 @@ static struct notifier_block trace_modul
  
- 		switch (*next) {
- 		case '(':					/* #2 */
--			if (top - op_stack > nr_parens) {
-+			if (top - op_stack >= nr_parens - 1) {
- 				ret = -EINVAL;
- 				goto out_free;
- 			}
+ static __init void tracer_init_tracefs_work_func(struct work_struct *work)
+ {
++	/*
++	 * Do not attempt to initialize tracefs if tracing was disabled or
++	 * failed to allocate
++	 */
++	if (tracing_disabled)
++		return;
+ 
+ 	event_trace_init();
+ 
 
 
