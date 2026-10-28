@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793212005;
-	b=hJ9zXGuncM9CgntcuaJtOMIu31ayOcTTqbQPWKJoEzaIvAmFhd+9kYG2UOGcpuqQRY0f
-	 Lyk9Z9Xvt0jshHQm65JlEQmuVdA9enX8K1P7CztRedUGfy310xYqTmnxVXI2qQdBMlZN1
-	 4BHphH3pdWkj3dVo4B60S+SIUsTypTKb2AAAAeFtc9SHGDbOWfskzVqzOddKFFGeULyHa
-	 na4E3Aji0QF2ynbfOQsSWVL/5S1ROcRMHTsVQYiw0fqp9/Tj5nDJLCfvy8Mp5Y5RQIfBa
-	 UDIOZnj1qsUIJFY49Vwvf38qRs9i0G6YRJiT9EODrLBM7hv+KCEyIq64rcGIWL+PogQ==
+	t=1793212007;
+	b=ejgPj1ggURFd3W+outFkjv7yPsTqPyxNt0rKtO5/cCp69ZkfdeKgN79hXM0tRt4sHKK7
+	 KqS/2E1Sn5rteKa2EzScs8iALgwOsxeLQO4Xy/JG32kvKxrr2cwyyA35cEjoh9+u+gTqh
+	 GDCglYStnbDQ0p0jTDleZXhOovUT2KyzqHxeZ9P0WJehaU5Wa8auriELWcxOVbGLhj+tS
+	 swrtijGEanqLKif6iZ7DOQMZiO3qhGaVLDysLFsUWx4ecQ0y2CHBAkarC1ypJZL5tFPzk
+	 KXqpBrfevVv/1bs3xe5aYioyxLBEPonaTILQhqvnhF49Jx+IiekBUgONZuKvh5T+9yA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793212005;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793212007;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=1+0mQqZzjr991ARcDMi3LhQ8e7r7EY69vJzDCCnRpUk=;
-	b=xYjeWUCJ+QwLM0DkN8dAVBE7mlwHj8CwClz2BjKV1aRd6Pz03bXgmhZNVkgwk1Qdb/Ts
-	 8UQoTplfAmqNpyrlDmGmkhgd18XJ32SgukC3JjScTdL0yJLm21Sf2l5WxLPF5ADRrspdc
-	 xF/7oYOu92OwUxnfv3HuW8j3RlzMAr4o/fHEvgCOPKD6VQMdnukv9VVHddQ7JkbG3A+9A
-	 Wb3p3E+Q4bitIv6N4f/rwbDlhK+/URZaENINvOiXOqOOIiAliU7GEZPzjFMzPqfE79Tvw
-	 XsVlQh+VdA2FcoyqYEPK0RJsgHTRiEKqlelAW8pgKaT8NbMPDL5wLa2TO3t+OJb1gxg==
+	bh=WjAqw5V9ITy5vxAalGeJDlWWbZRZNFOLbH7qxFbX9jE=;
+	b=G6X07GqOWk+T8kFI8+EyEobhB8kLXiSvFV9F/1Zha1LRdGcc3bQOtqSHaRLIpMtLFzoU
+	 eXmLAsLX5/KOV8W/L8n4ZLqLlHQGrzzwhVPhQJ7gTnvuwvGJ9KFYoHoGXF3fpK4vhQCWM
+	 XHyk6ZZIQTNcx3ZBEJOPXTfsHavlgGuHphe/UwRmalFCUN6kyn0/GOi+xX+JzOawOnkwH
+	 h7AusjeFQQK1Mar/NuRVNA7nKr9MPvukszfzD3n5sGGH1SowkV+YyBUmPBUEBYGeYJLFl
+	 387I8QzdAX4786w+qn0GYD3cU58AzTgMXGg39tSWYWfh5riOEX2Ce6Uphslwt3PIwJg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VGgMxtkG;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t8nokXAs;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25BAB606A31D;
-	Wed, 28 Oct 2026 18:26:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3120E606A31E;
+	Wed, 28 Oct 2026 18:26:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VGgMxtkG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 776191F01825;
-	Wed, 28 Oct 2026 18:26:43 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t8nokXAs
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C4CC1F01825;
+	Wed, 28 Oct 2026 18:26:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793212004;
-	bh=1+0mQqZzjr991ARcDMi3LhQ8e7r7EY69vJzDCCnRpUk=;
+	s=korg; t=1793212006;
+	bh=WjAqw5V9ITy5vxAalGeJDlWWbZRZNFOLbH7qxFbX9jE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VGgMxtkGBThad5VwdGNXjy/l//HbQqRMGqOQIcXg6OcVhwuaASxChNo21z1I6VLYc
-	 RRGnqq7XtWf1wRgqik4FEeej5L6BJJI9oZYCDRSnE81RRcg58ZveLxpaHzaejbQgm0
-	 FGahYzHbn5i+LzSoPWzBMUm7xzmLVwoiwjIIId4k=
+	b=t8nokXAshMF7v2mbJ71vVY9uJ26VRL+hU3ALC8fBaInMgZWO3bavYreoERhrcm4y+
+	 ZlE4ZwbgajSRzdaUr10D0NZNOwKaWjZVI5EI7WMB6tAe8YufXKfCtQqnKLXfWaqx3g
+	 1SBo54olpnlnlcGDXZ14EcMx6y3V8ifkLF06wk1o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Jarkko Sakkinen <jarkko@kernel.org>,
-	Cen Zhang <zzzccc427@gmail.com>,
-	David Howells <dhowells@redhat.com>
-Subject: [PATCH 5.15 566/571] keys: Protect the read method check against type removal
-Date: Wed, 28 Oct 2026 18:01:53 +0100
-Message-ID: <20261028170021.465744873@linuxfoundation.org>
+	Adrian Martinez <adrimg3196@gmail.com>
+Subject: [PATCH 5.15 567/571] KEYS: Fix key_reject_and_link() race with keyring restriction
+Date: Wed, 28 Oct 2026 18:01:54 +0100
+Message-ID: <20261028170021.490797922@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -68,85 +67,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang <zzzccc427@gmail.com>
+From: Adrian Martinez <adrimg3196@gmail.com>
 
-commit 925c84e3cc21caf09de92d9bcafab0147790debf upstream.
+commit 0b157166e612b70f98a332b6c7be7eac6f8e9593 upstream.
 
-keyctl_read_key() checks key->type->read without holding key->sem.
-A reference keeps the key alive, but does not pin the module containing
-its type. A surviving RxRPC key can therefore be read while AF_RXRPC
-is being unloaded:
+The restrict_link check in key_reject_and_link() is done before taking
+the keyring semaphore, racing with a concurrent keyring_restrict()
+that installs the restriction while holding the semaphore in write
+mode.
 
-  KEYCTL_READ task                    Module unload and key GC
-  ----------------                   ------------------------
-  lookup_user_key()
-  permission / possession checks
-  load key->type
-                                     af_rxrpc_exit()
-                                       unregister_key_type()
-                                         GC: down_write(key->sem)
-                                         GC: retype to key_type_dead
-                                         GC: up_write(key->sem)
-                                       unregister_key_type() returns
-                                     free_module()
-  read saved type's read member
+Move the check to after __key_link_lock(), so it is done under the
+semaphore, matching the pattern used in __key_create_or_update().
 
-The final access can read freed module storage. The read invocation in
-__keyctl_read_key() is already protected by key->sem, but the earlier
-method check is outside that critical section.
-
-Move the method check into __keyctl_read_key(), after key_validate() and
-under its existing read hold on key->sem. The check and invocation then
-use the same protected type for length queries and every read retry.
-The GC cannot retype the key until the semaphore is released, and type
-unregistration waits for that GC pass before the module can be freed.
-
-Return -EOPNOTSUPP when validation succeeds and the type has no read
-method. A temporary buffer may now be allocated before this result;
-allocation and copying to userspace remain outside the semaphore.
-
-Assisted-by: LLM
-Cc: stable@vger.kernel.org # v5.10+
-Fixes: d3ec10aa9581 ("KEYS: Don't write out to userspace while holding key semaphore")
-Suggested-by: Jarkko Sakkinen <jarkko@kernel.org>
-Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Cc: stable@vger.kernel.org
+Fixes: 5ac7eace2d00 ("KEYS: Add a facility to restrict new links into a keyring")
 Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Reviewed-by: David Howells <dhowells@redhat.com>
-Link: https://lore.kernel.org/r/pm-key-management-objects-candidate-0010-v7-fc85721ff5cfb9e33ac6@gmail.com
+Signed-off-by: Adrian Martinez <adrimg3196@gmail.com>
+Link: https://lore.kernel.org/r/CACO1+RT+m==BY+ZPkE+fo536D0qu3wog4xE1dfuXQ56g+=Qv=A@mail.gmail.com
 Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/keys/keyctl.c |   13 ++++++-------
- 1 file changed, 6 insertions(+), 7 deletions(-)
+ security/keys/key.c |   13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
---- a/security/keys/keyctl.c
-+++ b/security/keys/keyctl.c
-@@ -808,8 +808,12 @@ static long __keyctl_read_key(struct key
+--- a/security/keys/key.c
++++ b/security/keys/key.c
+@@ -586,11 +586,18 @@ int key_reject_and_link(struct key *key,
+ 	ret = -EBUSY;
  
- 	down_read(&key->sem);
- 	ret = key_validate(key);
--	if (ret == 0)
--		ret = key->type->read(key, buffer, buflen);
-+	if (ret == 0) {
-+		if (key->type->read)
-+			ret = key->type->read(key, buffer, buflen);
-+		else
-+			ret = -EOPNOTSUPP;
-+	}
- 	up_read(&key->sem);
- 	return ret;
- }
-@@ -863,11 +867,6 @@ long keyctl_read_key(key_serial_t keyid,
- 
- 	/* the key is probably readable - now try to read it */
- can_read_key:
--	if (!key->type->read) {
--		ret = -EOPNOTSUPP;
--		goto key_put_out;
--	}
+ 	if (keyring) {
+-		if (keyring->restrict_link)
+-			return -EPERM;
 -
- 	if (!buffer || !buflen) {
- 		/* Get the key length from the read method */
- 		ret = __keyctl_read_key(key, NULL, 0);
+ 		link_ret = __key_link_lock(keyring, &key->index_key);
+ 		if (link_ret == 0) {
++			/*
++			 * Check the restriction under the keyring semaphore.
++			 * keyring_restrict() installs it while holding the
++			 * semaphore, so testing it beforehand races with a
++			 * concurrent restriction install.
++			 */
++			if (keyring->restrict_link) {
++				__key_link_end(keyring, &key->index_key, edit);
++				return -EPERM;
++			}
+ 			link_ret = __key_link_begin(keyring, &key->index_key, &edit);
+ 			if (link_ret < 0)
+ 				__key_link_end(keyring, &key->index_key, edit);
 
 
