@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215988;
-	b=rKWX/gRB9pHx2uLqQQfjPrXsUwIFdHPc8c0SSXgjIvdEWqPpDyV++rm8cwXuezX9PTHW
-	 ib7YLo46dr3XeH5fxQzXPWqnALL1xESoEniItRe8Oc6drwPDcHBnzcg4Y8BQaiLaaIv4g
-	 6gbROYbyxShonZsoXp8pu5eTvzFYJAC3qtEBAm9p/Jp9Xu9hgbr6xgyrqvXMGHIlSqHku
-	 jvo0IzckDumJ/AXJ6mWG68VbNc7TmBFW6rnplegR3ueo8EsmRws2Q47xJxI9myx8iH+5o
-	 Lo7jb1pDqJgZuNn/SStrYi8MTWQIO/cJlKGUp8wCt1GRcC9DYtlvgpIzRfNHIBJr5aw==
+	t=1793215991;
+	b=2Bzl3CZ8kRMju4bWd2ukAQNBg1IsZy36isW19j245pflk01BDILL/hJ2+tOue9WZuM0H
+	 jR4oRPv7BPxZw7kwFU/W4x8HkEc1mO3SomUKSfQDw116ouDqE8/0B29suEkBoJpkc3Wpt
+	 oyH0jYunIUXA/JnZRCDHzn5X/yXNMsXcNLdLKksstU2N3bpa62bZPuK534+OTiNrZICWf
+	 OOVRuCI+O+nivnEmR1oLKaqN4qbIn/M9scN9zcCiOazdLAyXea9zfA+2mr1h1lsEsWx2N
+	 EcONWbafHUqfxF6M3BwoAfzLvLcOiaJg+BjJBaFFeDiVB+ftBGtWmE3PBOdOPyGcLtQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215988;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215991;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=zC8MHL9HM8n1hvnL7spU7dwkP97jNMJoTsbVF2G/Css=;
-	b=lVxKKqvsdKEfWjxEqTBwHpyCrhvtXMUpuZzO1RIXtmAehvsFnDOKNdkH7bYKofcO1OYO
-	 oNLpWhzply26UhQ8VM7RJ+UTxiaPaJo3zRyssk8jEZzNTF3WTaxvrtqK8mWl0dvjvHbDp
-	 NbDCJysKpFIzKbFfsfcNBu9uMkrEVX/X4xqsERHptIvrtgeYbvIeQ5xgdhpKvL0WqPFgV
-	 B+43DcDms5FGfE3Ixqyj84gDR54wifWy1XdPSMetsWMLQvcBLQ//ZgTikjDybnvz1hcfm
-	 NZisg0Ifgwzw7UtAqEAuetZ0WVbUoHoUZMv2jqKpSuy4Dw4dA129aTzD1euaEfEyEtA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=0/ZyX6c6DkYC9op6t8z43QGMvhFw3C54NVgY03zHcgA=;
+	b=fAYxBsgFTMu59AM6ygQXXqt6mcNN9XqKCHa+95caq0n9quE/gFzKt/ir2yUYLDYb1xVo
+	 V113VdSw/86HBBNa+170LZRfnPRpSvdVHP07Q3r8TYVXPB8vdPgjhnzMMyMNTMdQ7T81C
+	 8wyoV1nWe0ovkyLAlGktVke21hdyx9lNRBRiJMPJSByeg7GRpfuzbWrrgnVwXIsNqpLd4
+	 r9HWzwcG/jrr1E1ZYJo+hZn/8mwbKPIWwUtFoSdi7owfKPwFNRUH3XgUPi3tuDDri9xQo
+	 g0Qh4LMfKUaoR36iethH0i9DvLN9WKjH2mQ+fhwlH8NE72x6/46CP5+RyrfqeEg5UjA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="eZa//mQe";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uufb1nT3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A5A1606A31A;
-	Wed, 28 Oct 2026 19:33:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3331B606A31A;
+	Wed, 28 Oct 2026 19:33:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eZa//mQe
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0F1C1F01825;
-	Wed, 28 Oct 2026 19:33:07 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uufb1nT3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8705A1F01825;
+	Wed, 28 Oct 2026 19:33:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215988;
-	bh=zC8MHL9HM8n1hvnL7spU7dwkP97jNMJoTsbVF2G/Css=;
+	s=korg; t=1793215991;
+	bh=0/ZyX6c6DkYC9op6t8z43QGMvhFw3C54NVgY03zHcgA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eZa//mQetMUjmFTiwOvJMefuCzYPRkLsW0+o7P02WNeQwFr/2sUEl+oGc0sSWK3LF
-	 u6ZE8il5HPoC+XSmWlR5i2gqjQpU5yPH1QbS/AKDW6SZBgitB1cihZBrLOPgcghhfq
-	 689RW4pT2rq9JhPBdxbJfDGvBkR/Mwa+IDXfMdq4=
+	b=uufb1nT3HUK6cirKggIcvBCmC3brBqopBMo8zJSI4G9aB2AmTZvZga01rlwtDkN5U
+	 J8uvrTWLIsdq5aF90XuAkXkZqXMUc0Pe9/kh9k0voW5Mxa4QqcRBeLc30DAZizLzqT
+	 wURfWhV5LSRquRkqKcn/YZIYZXRe8Z/iKQGOqet4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <cel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1401/1887] sunrpc: defer rq_argp and rq_resp free until after RCU grace period
-Date: Wed, 28 Oct 2026 17:58:17 +0100
-Message-ID: <20261028170531.331835000@linuxfoundation.org>
+Subject: [PATCH 6.1 1402/1887] SUNRPC: Fix crasher in unwrap_integ_data()
+Date: Wed, 28 Oct 2026 17:58:18 +0100
+Message-ID: <20261028170531.354453629@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -62,73 +62,143 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jeff Layton <jlayton@kernel.org>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit c479bde671cbe2f9e152834a8b0eb7c3c295bbaf ]
+[ Upstream commit 4dd9daa9124aad3c3d4ceca4f1d417cc62d59156 ]
 
-svc_rqst_free() frees rqstp->rq_argp and rqstp->rq_resp synchronously
-via kfree(), but defers the rqstp struct free via kfree_rcu().  After
-svc_exit_thread() calls list_del_rcu() and svc_rqst_free(), there is
-a window where RCU readers that started before list_del_rcu() can still
-traverse the thread list and find the rqstp.  These readers (e.g.
-nfsd_nl_rpc_status_get_dumpit()) dereference rqstp->rq_argp, which has
-already been freed — a use-after-free.
+If a zero length is passed to kmalloc() it returns 0x10, which is
+not a valid address. gss_verify_mic() subsequently crashes when it
+attempts to dereference that pointer.
 
-Fix this by moving the kfree of rq_argp and rq_resp into an explicit
-call_rcu() callback alongside the struct free.  Resources not accessed
-by RCU readers (bvec, buffer pages, scratch folio, auth_data) remain
-synchronously freed.
+Instead of allocating this memory on every call based on an
+untrusted size value, use a piece of dynamically-allocated scratch
+memory that is always available.
 
-Fixes: 812443865c5f ("sunrpc: add a rcu_head to svc_rqst and use kfree_rcu to free it")
-Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260611-nfsd-testing-v2-4-5b90e276f2d9@kernel.org
-Signed-off-by: Chuck Lever <cel@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Stable-dep-of: a919c5c88769 ("SUNRPC: svcauth_gss: enforce krb5 token minimum length")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/svc.c | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ net/sunrpc/auth_gss/svcauth_gss.c | 55 ++++++++++++++++++-------------
+ 1 file changed, 32 insertions(+), 23 deletions(-)
 
-diff --git a/net/sunrpc/svc.c b/net/sunrpc/svc.c
-index 112dc001459d0..ec977c5c43327 100644
---- a/net/sunrpc/svc.c
-+++ b/net/sunrpc/svc.c
-@@ -874,6 +874,15 @@ void svc_rqst_replace_page(struct svc_rqst *rqstp, struct page *page)
- }
- EXPORT_SYMBOL_GPL(svc_rqst_replace_page);
+diff --git a/net/sunrpc/auth_gss/svcauth_gss.c b/net/sunrpc/auth_gss/svcauth_gss.c
+index 36549f6d5e01e..ccb38a5406067 100644
+--- a/net/sunrpc/auth_gss/svcauth_gss.c
++++ b/net/sunrpc/auth_gss/svcauth_gss.c
+@@ -49,11 +49,36 @@
+ #include <linux/sunrpc/svcauth.h>
+ #include <linux/sunrpc/svcauth_gss.h>
+ #include <linux/sunrpc/cache.h>
++#include <linux/sunrpc/gss_krb5.h>
  
-+static void svc_rqst_free_rcu(struct rcu_head *head)
-+{
-+	struct svc_rqst *rqstp = container_of(head, struct svc_rqst, rq_rcu_head);
-+
-+	kfree(rqstp->rq_resp);
-+	kfree(rqstp->rq_argp);
-+	kfree(rqstp);
-+}
-+
- /*
-  * Called from a server thread as it's exiting. Caller must hold the "service
-  * mutex" for the service.
-@@ -884,10 +893,8 @@ svc_rqst_free(struct svc_rqst *rqstp)
- 	svc_release_buffer(rqstp);
- 	if (rqstp->rq_scratch_page)
- 		put_page(rqstp->rq_scratch_page);
--	kfree(rqstp->rq_resp);
--	kfree(rqstp->rq_argp);
- 	kfree(rqstp->rq_auth_data);
--	kfree_rcu(rqstp, rq_rcu_head);
-+	call_rcu(&rqstp->rq_rcu_head, svc_rqst_free_rcu);
- }
- EXPORT_SYMBOL_GPL(svc_rqst_free);
+ #include <trace/events/rpcgss.h>
  
+ #include "gss_rpc_upcall.h"
+ 
++/*
++ * Unfortunately there isn't a maximum checksum size exported via the
++ * GSS API. Manufacture one based on GSS mechanisms supported by this
++ * implementation.
++ */
++#define GSS_MAX_CKSUMSIZE (GSS_KRB5_TOK_HDR_LEN + GSS_KRB5_MAX_CKSUM_LEN)
++
++/*
++ * This value may be increased in the future to accommodate other
++ * usage of the scratch buffer.
++ */
++#define GSS_SCRATCH_SIZE GSS_MAX_CKSUMSIZE
++
++struct gss_svc_data {
++	/* decoded gss client cred: */
++	struct rpc_gss_wire_cred	clcred;
++	/* save a pointer to the beginning of the encoded verifier,
++	 * for use in encryption/checksumming in svcauth_gss_release: */
++	__be32				*verf_start;
++	struct rsc			*rsci;
++
++	/* for temporary results */
++	u8				gsd_scratch[GSS_SCRATCH_SIZE];
++};
+ 
+ /* The rpcsec_init cache is used for mapping RPCSEC_GSS_{,CONT_}INIT requests
+  * into replies.
+@@ -887,13 +912,11 @@ read_u32_from_xdr_buf(struct xdr_buf *buf, int base, u32 *obj)
+ static int
+ unwrap_integ_data(struct svc_rqst *rqstp, struct xdr_buf *buf, u32 seq, struct gss_ctx *ctx)
+ {
++	struct gss_svc_data *gsd = rqstp->rq_auth_data;
+ 	u32 integ_len, rseqno, maj_stat;
+-	int stat = -EINVAL;
+ 	struct xdr_netobj mic;
+ 	struct xdr_buf integ_buf;
+ 
+-	mic.data = NULL;
+-
+ 	/* NFS READ normally uses splice to send data in-place. However
+ 	 * the data in cache can change after the reply's MIC is computed
+ 	 * but before the RPC reply is sent. To prevent the client from
+@@ -917,11 +940,9 @@ unwrap_integ_data(struct svc_rqst *rqstp, struct xdr_buf *buf, u32 seq, struct g
+ 	/* copy out mic... */
+ 	if (read_u32_from_xdr_buf(buf, integ_len, &mic.len))
+ 		goto unwrap_failed;
+-	if (mic.len > RPC_MAX_AUTH_SIZE)
+-		goto unwrap_failed;
+-	mic.data = kmalloc(mic.len, GFP_KERNEL);
+-	if (!mic.data)
++	if (mic.len > sizeof(gsd->gsd_scratch))
+ 		goto unwrap_failed;
++	mic.data = gsd->gsd_scratch;
+ 	if (read_bytes_from_xdr_buf(buf, integ_len + 4, mic.data, mic.len))
+ 		goto unwrap_failed;
+ 	maj_stat = gss_verify_mic(ctx, &integ_buf, &mic);
+@@ -932,20 +953,17 @@ unwrap_integ_data(struct svc_rqst *rqstp, struct xdr_buf *buf, u32 seq, struct g
+ 		goto bad_seqno;
+ 	/* trim off the mic and padding at the end before returning */
+ 	xdr_buf_trim(buf, round_up_to_quad(mic.len) + 4);
+-	stat = 0;
+-out:
+-	kfree(mic.data);
+-	return stat;
++	return 0;
+ 
+ unwrap_failed:
+ 	trace_rpcgss_svc_unwrap_failed(rqstp);
+-	goto out;
++	return -EINVAL;
+ bad_seqno:
+ 	trace_rpcgss_svc_seqno_bad(rqstp, seq, rseqno);
+-	goto out;
++	return -EINVAL;
+ bad_mic:
+ 	trace_rpcgss_svc_mic(rqstp, maj_stat);
+-	goto out;
++	return -EINVAL;
+ }
+ 
+ static inline int
+@@ -1023,15 +1041,6 @@ unwrap_priv_data(struct svc_rqst *rqstp, struct xdr_buf *buf, u32 seq, struct gs
+ 	return -EINVAL;
+ }
+ 
+-struct gss_svc_data {
+-	/* decoded gss client cred: */
+-	struct rpc_gss_wire_cred	clcred;
+-	/* save a pointer to the beginning of the encoded verifier,
+-	 * for use in encryption/checksumming in svcauth_gss_release: */
+-	__be32				*verf_start;
+-	struct rsc			*rsci;
+-};
+-
+ static int
+ svcauth_gss_set_client(struct svc_rqst *rqstp)
+ {
 -- 
 2.53.0
 
