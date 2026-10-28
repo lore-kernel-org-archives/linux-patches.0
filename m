@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793210344;
-	b=ZTiawddjccyiAnXQdAOti2iG8xBJWriDvwIDS/Zdg4V5NnoCeCTOrYDVvjn7iVU6s9p5
-	 CczDIYvcoIBeGGBUhs9KqavbsDBbUPWF69/oCzwtBYCDbsFWpsf6WE7OWyLYoaO1kt3s3
-	 bvK2a7O+Wnb3KVVA9xRgolvJgRxRLyP47xIjZswYJe51r4brOadQHaBDX4rue1DLAsU9I
-	 B/WczcZLA1EhFXv9T69JNHdyrYtBYynybxkr5cDSbuIOa37bvsr6oZt0/jokCfhWzVi5W
-	 ro6lROD4cnap2CL+h9l6UHNvJnHq+5fUPGGm5Htchwxyi6ZVEo+kfSv29scbzEld5NQ==
+	t=1793210346;
+	b=CIi0clUgXuYKv+VWq4H5sF967EJJ3+DwXJHZkLyuAfiVieoOZrA8zryBJQ+19BT8EOFN
+	 LxG3pDF+9ZlPmRfFIgqAsDtgMhVoxhJmgqpjDH8hO/7BV8V0viU9P70M13XUg60nMMrcX
+	 8fnlxtfZeLPyN8jC7/YBM0VBIUZAIIE0/ce18bXK5ithft0xuXIdkzORApgAC7R2dnfEE
+	 mH3GO++I/+to7dJ2apwgb/JU0tOjKQW7DJ1Ywa1A5rpSEkUiVqcwjK7w+aLdhCOs27ij2
+	 mTa+kbngDdxgDLcJDlx8iIIXcG+I0q16kVOEpRBcVaJPQ79e4y1PWd6ZsVKAtOcfm4A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793210344;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793210346;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=61NXN8GvYKK3A6wGB8B0tuYFlvVxKx4EgjeNy2tLnXI=;
-	b=YDAobLF1TuBCSvH/kEeISLpJ6k23/uy9fEej/7RdI/rcP59AUMD6jIzZpdBQb4DbowoG
-	 4f+ON5pWd8HRxZ7iGr25pNeOOiDtapDwBwK2daP6yCTCqM7hwnRW3nWNwIrf6/MB5yT57
-	 k5OWHsTRkCVHIC8GnGyTV6B3zsPv1y2PCXdcmVQAC+QcqoPCEl+MZhWpnfkMqkIyOXVZt
-	 c7Zk3D+2l4zdEeGWLCf8rI34MJNjMjQWAuM6P4/3xxFpdIB7fyRYQS9RgxD+PLSxXlwfJ
-	 hqLxpLOTgiudQPJTxxM6QxmcM0eXR/PZ8VZvTvNoP5nhsCYXmiZbZiVF1qAIUDj7QwA==
+	bh=v4eVjPMztWjitYxEISFGx/Na7UZAowYBc1JvyL+XsEQ=;
+	b=SjjSX3CY0m2Ahz6xZ+y1fcESlwC58QBUR8ryetFq0q0vz/zQncJWEnjgMr9bVaDEF77v
+	 WpsVATWNGRWdKex+aVDltpwqfeVZuhck1Y4AXYWYY0wg0ieoNx3sgp+uAJ6QSBPMHUmOr
+	 eakjcZm9W3odS/nNeg9CRsufPYG+awzBWytPQFGY+dRSC8DFybPOgqDWlt+CuOmS2GZDH
+	 8/Ydkxpog1leeAm4uMLpfuhzBs+AHP8pVlAT3vL6T5xxdIAUYJSGRMQXasRiD5odV735I
+	 1xZPZA0sgt7G5SzQ//5BYy/WcxLAK4FIB4pXvrXZr6qFGDyocL4IG/U/dPn5xijV8OA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ui4WEaYp;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VrzOO5Rb;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3865606A327;
-	Wed, 28 Oct 2026 17:59:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 912D7606A31A;
+	Wed, 28 Oct 2026 17:59:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ui4WEaYp
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1199C1F031E1;
-	Wed, 28 Oct 2026 17:59:02 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VrzOO5Rb
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E17271F01829;
+	Wed, 28 Oct 2026 17:59:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793210343;
-	bh=61NXN8GvYKK3A6wGB8B0tuYFlvVxKx4EgjeNy2tLnXI=;
+	s=korg; t=1793210346;
+	bh=v4eVjPMztWjitYxEISFGx/Na7UZAowYBc1JvyL+XsEQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ui4WEaYp2QMIwgBheHsas0G8B+zomOym1chVpX7LU6Wr7qEuvzgD/PTBhstgZzCXl
-	 fXTIZv6D04aoaJuMxgCWVJlHmfraR7eopmK5J1vBr+y5zl3SLW3ElD6Cx+Ug2C9R9r
-	 LLMGG6MHDWSxuLFYISWvbNqWcrMSMSNX+723Tz8M=
+	b=VrzOO5Rbx0BamK1FtZJaNoSRCJYTW1jFXIjMmdMTzIX8+KhkFLJmu/bGhXtgGEAq4
+	 75x7VxpkPR3qvEW+BGODr59gAbsMtKM8YKPa/bLVigvkfmYhSrTLrBcIHbwKtmA3lV
+	 42SrPOOhUUptMjRofMH94wu4UbKc7oeprIlIo1fQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Oleg Nesterov <oleg@redhat.com>,
 	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 6.6 163/168] coredump: hold RCU while releasing parked threads
-Date: Wed, 28 Oct 2026 18:01:39 +0100
-Message-ID: <20261028165946.947239354@linuxfoundation.org>
+Subject: [PATCH 6.6 164/168] signal: only SIGKILL and the freezers interrupt a coredumping task
+Date: Wed, 28 Oct 2026 18:01:40 +0100
+Message-ID: <20261028165946.970437982@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165943.089486480@linuxfoundation.org>
 References: <20261028165943.089486480@linuxfoundation.org>
@@ -69,51 +69,90 @@ Content-Transfer-Encoding: 8bit
 
 From: Christian Brauner <brauner@kernel.org>
 
-commit 61d58591aa0188bf2463e263962256316ff8b576 upstream.
+commit 563d606b93d7a1d23512832fc252d32c68860d87 upstream.
 
-coredump_finish() releases the parked threads by clearing ->task in
-their core_thread entry and calling wake_up_process() on each of them.
-It does that without holding a reference on the task and without being
-inside rcu.
+For quite a while now coredump has allowed either SIGKILL or freezing to
+interrupt an ongoing coredump. Since we seem to like it complicated
+"freezing" can mean a lot of things:
 
-But calling wake_up_process(task) without rcu here isn't safe. A parked
-thread doesn't need that wakeup to leave. A spurious wakeup or a
-preemption after the store is enough for the task to go away.
+(1) Power Management induced freezing
+(2) cgroup v1 freezer controller induced freezing
+(3) cgroup v2 freezer controller induced freezing
 
-So if the coredump client is preempted between the store and
-wake_up_process() the thread can exit and be freed in the meantime and
-try_to_wake_up() takes pi_lock in freed memory.
+So (1) and (2) are handled by checking freezing() but (3) isn't.
+(3) uses cgroup_freeze_task() which sets JOBCTL_TRAP_FREEZE and calls
+signal_wake_up() on every task in the cgroup. The trap isn't handled by
+the coredump code.
 
-Hold rcu across the loop.
+Which means the current logic is inconsistent. Power and cgroup v1
+freeze and abort the coredump. With cgroup v2 it depends on where the
+core goes. A dump to a file completes and the cgroup v2 freeze has to
+wait for it to finish. When dumping to a pipe or socket the dump is
+interrupted at the next write because of trap's TIF_SIGPENDING. Which is
+it? Let's be consistent and align (1)-(3): freezing interrupts an
+ongoing coredump and doesn't make it wait until the dump is done.
 
-Fixes: a94e2d408eae ("coredump: kill mm->core_done")
+All three freezers go through signal_wake_up() and so set
+TIF_SIGPENDING on the dumper. And once zap_threads() has set core_state
+that flag can't mean anything else anymore. prepare_signal() drops every
+signal but SIGKILL for the group, the dying threads don't retarget
+shared signals to the dumper, and zap_process() cleared the pending job
+control traps. So the flag is the thing to check. Let dump_interrupted()
+test task_sigpending() and nothing else. That is also what the pipe and
+socket writes already fail on. TIF_NOTIFY_SIGNAL is left out on
+purpose, task work must not cut a dump short.
+
+A seized tracee that gets PTRACE_INTERRUPT during the dump is cut short
+the same way. It already was for pipes and sockets.
+
+The one freeze that check can miss is one requested before the dump
+started. zap_threads() clears TIF_SIGPENDING and the cgroup v2 freezer
+only wakes a task once while its JOBCTL_TRAP_FREEZE isn't part of
+JOBCTL_PENDING_MASK and survives zap_process(). So refuse to start the
+dump when freezing() is true or the trap is pending. The task then exits
+without dumping, which is what happens today when the freeze interrupts
+the dump at the first write.
+
+Fixes: 403bad72b67d ("coredump: only SIGKILL should interrupt the coredumping task")
+Fixes: 76f969e8948d ("cgroup: cgroup v2 freezer")
 Cc: stable@vger.kernel.org
-Acked-by: Oleg Nesterov <oleg@redhat.com>
-Link: https://patch.msgid.link/20260921-work-coredump-fixes-v3-1-8e4adb1619e6@kernel.org
+Suggested-by: Oleg Nesterov <oleg@redhat.com>
+Link: https://lore.kernel.org/r/arJ6zZuI59BJnXpl@redhat.com
+Link: https://patch.msgid.link/20260921-work-coredump-fixes-v3-2-8e4adb1619e6@kernel.org
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/coredump.c |    3 +++
- 1 file changed, 3 insertions(+)
+ fs/coredump.c |   13 +++++--------
+ 1 file changed, 5 insertions(+), 8 deletions(-)
 
 --- a/fs/coredump.c
 +++ b/fs/coredump.c
-@@ -469,6 +469,8 @@ static void coredump_finish(bool core_du
- 	current->signal->core_state = NULL;
- 	spin_unlock_irq(&current->sighand->siglock);
+@@ -416,7 +416,9 @@ static int zap_threads(struct task_struc
+ 	int nr = -EAGAIN;
  
-+	/* A released thread may exit and be freed before it is woken. */
-+	guard(rcu)();
- 	while ((curr = next) != NULL) {
- 		next = curr->next;
- 		task = curr->task;
-@@ -477,6 +479,7 @@ static void coredump_finish(bool core_du
- 		 * ->task == NULL before we read ->next.
- 		 */
- 		smp_mb();
-+		/* Any wakeup now lets the thread exit, rcu keeps it alive. */
- 		curr->task = NULL;
- 		wake_up_process(task);
- 	}
+ 	spin_lock_irq(&tsk->sighand->siglock);
+-	if (!(signal->flags & SIGNAL_GROUP_EXIT) && !signal->group_exec_task) {
++	/* A freeze requested before the dump would be lost with TIF_SIGPENDING. */
++	if (!(signal->flags & SIGNAL_GROUP_EXIT) && !signal->group_exec_task &&
++	    !freezing(tsk) && !(tsk->jobctl & JOBCTL_TRAP_FREEZE)) {
+ 		signal->core_state = core_state;
+ 		nr = zap_process(tsk, exit_code);
+ 		clear_tsk_thread_flag(tsk, TIF_SIGPENDING);
+@@ -487,13 +489,8 @@ static void coredump_finish(bool core_du
+ 
+ static bool dump_interrupted(void)
+ {
+-	/*
+-	 * SIGKILL or freezing() interrupt the coredumping. Perhaps we
+-	 * can do try_to_freeze() and check __fatal_signal_pending(),
+-	 * but then we need to teach dump_write() to restart and clear
+-	 * TIF_SIGPENDING.
+-	 */
+-	return fatal_signal_pending(current) || freezing(current);
++	/* Only SIGKILL and the freezers set it after zap_threads(). */
++	return task_sigpending(current);
+ }
+ 
+ static void wait_for_dump_helpers(struct file *file)
 
 
