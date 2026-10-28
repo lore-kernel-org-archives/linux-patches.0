@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213615;
-	b=dxwCKQSXTpHBYE6ii4fHkkwrVzx3FIYdA2xT1fn3A5A7v+L2EsqL75yn0s5ilPlTKLkB
-	 ADRZpwvW+BGc3+apnqXOil8pEt7ylzIpF/q9KId5EckoSX0xNpDEVcgC1dad6b7xug1OC
-	 M0Z9r5/JdPCg9UMtKNcDuBqY0+R+i3Md5YITE6OSg0f9iczfOAJMNpUFkDXUDrtD2aPcN
-	 lfL82CWNYGMft1Y7LHh5UXaoZ03xXw/DO4i9oHSEGBsqM5Lgsg5PvmUq2AwBPbKnOPvfR
-	 lW2WUbs29Ux3kITSIweNVtLmeosZqqeayXg3orVIZkNE+shOz8MrXUIkA3VLCyDuwdA==
+	t=1793213617;
+	b=zUO19bg9PktawZOHg3zQSS+t7ovP1q4zdIhFzwVq5ht7Caz1nRCA/HvQiQzGIyqYL8yl
+	 cx28xp9/elCYW5BBj+pKHK4ZglYX0mo+EsPh4w46TmMnjrBdXuKCRkLjxPJAZNWILWwLN
+	 FePhCMAEuPVDrL1nuZ6IjWpt2gq0BZ6/PegvQyM43tfmhHWjOEZevVQnb9nxXIv8bxj4T
+	 3v8gtCgc6vsagHkZI3e7mT6vMENv7v53zoDclc8Os5sh/vK5yhtaC7geQL29MGVBiTSgG
+	 bwEMms4irf79CQ+eiNyGPn4DfrPhRWy/v/m26JVqQ3T0IELbzHNhLuofZWm0kzRY4UA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213615;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213617;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ocLTIfhTJB1cUz9RmZndxKSUseFLUJsi0Bei3Hrb5P0=;
-	b=CfXNl2ur8oZNMtKYHnjKF0zbhk8uVLl9igJMKmnWr2mPN3DCAC171rUbvsHXNshi+1Gz
-	 H/nvVqYobljv9pWwa3lqe9nH5YQsgUQfvTlj40DwCJbTWAUuRDx67S8CwLtkMzcvR3Y2T
-	 howybdQmbUJuIKPqpNCSIErG54nFSj5Kqu504Lg3GVfBpex+biahX3iUxgTJM6X/STn4j
-	 patrQ7V0c11qOWvfeuNTeYwUIt4aUIHm9TwvO0iYJ1Hv9Y+H4B0WFHdQD3vDuHPPxT+MN
-	 U96NYKNxfA/p0uhNraYDHQ+SxH5hFQW11JGNa8N4KDVgppwVaHvwYmbEfDkIU0pD2dA==
+	bh=J6L7Bm0pbM2bdoeVJUE/TV5uwhCC6bR28K69qo56a6M=;
+	b=toDkXyC/UrAHd+AfhOkLOyUPT9JkfUi5bPWrB0sthY0TIXcvf4qsZEd3y60MkVlcbhO3
+	 nQu4jPUO5eCa96bKs9g3AchvBBt4F35gZH7jRbj/nFml7O5h0Au+qvHytsraLDFwQKzgM
+	 wnKPwj3xDqmSIGSCDxlbz3GhNu1E6yfd7r5tCtIVJ9QHA6pb6HerH7V3oPNGmL/yPhppM
+	 szHiprCs32F4ff1V4+VzW9z5mLTF0L5IXdPB44G+mKcphBAeeaIQYQc4zpvr/hZUPUzAd
+	 mpWbnpBeP7kj1GYEJ/eKcgbJdfocdnPk57+G3WZqItIqkQ0GWxMpqUdcKwJxARyT77A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fxCHplPr;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Eji0TuOm;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B01D3606A321;
-	Wed, 28 Oct 2026 18:53:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C354606A31E;
+	Wed, 28 Oct 2026 18:53:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fxCHplPr
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B930D1F01825;
-	Wed, 28 Oct 2026 18:53:33 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Eji0TuOm
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AD1E1F01825;
+	Wed, 28 Oct 2026 18:53:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213614;
-	bh=ocLTIfhTJB1cUz9RmZndxKSUseFLUJsi0Bei3Hrb5P0=;
+	s=korg; t=1793213617;
+	bh=J6L7Bm0pbM2bdoeVJUE/TV5uwhCC6bR28K69qo56a6M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fxCHplPrm2E36XkLjmffeilNbHPnUvIH8LjM1T+pAQD7v5T+XkjRb3YDNgzh58Sui
-	 HaCz0a745+WLsE0IpUiMi7sj+i07UfHuAj6QMAeplLzGQPJzBm4KsalPDKP2wsx/g6
-	 biBP7IMHzQ7lj0Pw7LJnigmqGIkYELnw2choWQ/o=
+	b=Eji0TuOmSn/p4bCAc0s//V1Xala5NTZ3enzEjO7yMr91QPRtieXD2u2yTj8d4JvMC
+	 K7Ncj5H9hywQazJTOm0LiHtOS0idZFK/ImMWkmJpzkrRRZWuQ+ayJMGzdX5FdQKf3R
+	 dh2bu0JISUk0jCqTzacBpVlkAGzIwlXEcYeGGImg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+d015b6c2fbb5c383bf08@syzkaller.appspotmail.com,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Ming Qian <ming.qian@oss.nxp.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Ulf Hansson <ulfh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0567/1887] f2fs: dont reset unchangable mount option in f2fs_remount()
-Date: Wed, 28 Oct 2026 17:44:23 +0100
-Message-ID: <20261028170512.300220412@linuxfoundation.org>
+Subject: [PATCH 6.1 0532/1887] pmdomain: imx8m-blk-ctrl: Serialize power on/off across sibling domains
+Date: Wed, 28 Oct 2026 17:43:48 +0100
+Message-ID: <20261028170511.447871775@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,139 +69,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Ming Qian <ming.qian@oss.nxp.com>
 
-[ Upstream commit 458c15dfbce62c35fefd9ca637b20a051309c9f1 ]
+[ Upstream commit 51c2db3ef0cb89a49ab7f47a40efd5d5b074ce8d ]
 
-syzbot reports a bug as below:
+On i.MX8MP the VPU blk-ctrl exposes G1, G2 and VC8000E as three separate
+genpds, each serialized only by its own genpd lock, so their power_on and
+power_off callbacks can run concurrently on SMP.
 
-general protection fault, probably for non-canonical address 0xdffffc0000000009: 0000 [#1] PREEMPT SMP KASAN
-RIP: 0010:__lock_acquire+0x69/0x2000 kernel/locking/lockdep.c:4942
-Call Trace:
- lock_acquire+0x1e3/0x520 kernel/locking/lockdep.c:5691
- __raw_write_lock include/linux/rwlock_api_smp.h:209 [inline]
- _raw_write_lock+0x2e/0x40 kernel/locking/spinlock.c:300
- __drop_extent_tree+0x3ac/0x660 fs/f2fs/extent_cache.c:1100
- f2fs_drop_extent_tree+0x17/0x30 fs/f2fs/extent_cache.c:1116
- f2fs_insert_range+0x2d5/0x3c0 fs/f2fs/file.c:1664
- f2fs_fallocate+0x4e4/0x6d0 fs/f2fs/file.c:1838
- vfs_fallocate+0x54b/0x6b0 fs/open.c:324
- ksys_fallocate fs/open.c:347 [inline]
- __do_sys_fallocate fs/open.c:355 [inline]
- __se_sys_fallocate fs/open.c:353 [inline]
- __x64_sys_fallocate+0xbd/0x100 fs/open.c:353
- do_syscall_x64 arch/x86/entry/common.c:50 [inline]
- do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
- entry_SYSCALL_64_after_hwframe+0x63/0xcd
+The sequences are not independent: they share the VPUMIX bus domain, the
+VPU_NOC and the ADB400 handshake. On power up the GPC cannot ack-verify
+the ADB400 handshake - the ack only completes once blk-ctrl sets the bus
+clk-en bit - so it just waits a fixed delay instead of polling hskack. A
+sibling transition landing inside another domain's reset window disturbs
+that shared clock and handshake timing, the victim's reset does not take
+effect, and its block registers read back all zeros: the decoder times
+out or the encoder fails its format check.
 
-The root cause is race condition as below:
-- since it tries to remount rw filesystem, so that do_remount won't
-call sb_prepare_remount_readonly to block fallocate, there may be race
-condition in between remount and fallocate.
-- in f2fs_remount(), default_options() will reset mount option to default
-one, and then update it based on result of parse_options(), so there is
-a hole which race condition can happen.
+Serialize the blk-ctrl reset sequence with a per-blk-ctrl mutex; the
+driver deliberately avoids a genpd hierarchy, so the genpd core gives no
+cross-sibling serialization.
 
-Thread A			Thread B
-- f2fs_fill_super
- - parse_options
-  - clear_opt(READ_EXTENT_CACHE)
-
-- f2fs_remount
- - default_options
-  - set_opt(READ_EXTENT_CACHE)
-				- f2fs_fallocate
-				 - f2fs_insert_range
-				  - f2fs_drop_extent_tree
-				   - __drop_extent_tree
-				    - __may_extent_tree
-				     - test_opt(READ_EXTENT_CACHE) return true
-				    - write_lock(&et->lock) access NULL pointer
- - parse_options
-  - clear_opt(READ_EXTENT_CACHE)
-
-Cc: <stable@vger.kernel.org>
-Reported-by: syzbot+d015b6c2fbb5c383bf08@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/linux-f2fs-devel/20230522124203.3838360-1-chao@kernel.org
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Fixes: a1a5f15f7f6c ("soc: imx: imx8m-blk-ctrl: add i.MX8MP VPU blk ctrl")
+Signed-off-by: Ming Qian <ming.qian@oss.nxp.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/super.c | 30 ++++++++++++++++++------------
- 1 file changed, 18 insertions(+), 12 deletions(-)
+ drivers/soc/imx/imx8m-blk-ctrl.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-diff --git a/fs/f2fs/super.c b/fs/f2fs/super.c
-index 83b376afcd420..a86200f7d9101 100644
---- a/fs/f2fs/super.c
-+++ b/fs/f2fs/super.c
-@@ -2104,9 +2104,22 @@ static int f2fs_show_options(struct seq_file *seq, struct dentry *root)
- 	return 0;
- }
+diff --git a/drivers/soc/imx/imx8m-blk-ctrl.c b/drivers/soc/imx/imx8m-blk-ctrl.c
+index 1b87823d835d3..65315bf908b36 100644
+--- a/drivers/soc/imx/imx8m-blk-ctrl.c
++++ b/drivers/soc/imx/imx8m-blk-ctrl.c
+@@ -13,6 +13,7 @@
+ #include <linux/pm_runtime.h>
+ #include <linux/regmap.h>
+ #include <linux/clk.h>
++#include <linux/mutex.h>
  
--static void default_options(struct f2fs_sb_info *sbi)
-+static void default_options(struct f2fs_sb_info *sbi, bool remount)
- {
- 	/* init some FS parameters */
-+	if (!remount) {
-+		set_opt(sbi, READ_EXTENT_CACHE);
-+		clear_opt(sbi, DISABLE_CHECKPOINT);
+ #include <dt-bindings/power/imx8mm-power.h>
+ #include <dt-bindings/power/imx8mn-power.h>
+@@ -32,6 +33,12 @@ struct imx8m_blk_ctrl {
+ 	struct regmap *regmap;
+ 	struct imx8m_blk_ctrl_domain *domains;
+ 	struct genpd_onecell_data onecell_data;
++	/*
++	 * Serializes the blk-ctrl reset/clock sequence across sibling domains;
++	 * their transitions interact through the shared VPUMIX bus domain,
++	 * VPU_NOC and the not-ack-verified ADB400 handshake (ERR050531).
++	 */
++	struct mutex power_lock;
+ };
+ 
+ struct imx8m_blk_ctrl_domain_data {
+@@ -87,6 +94,8 @@ static int imx8m_blk_ctrl_power_on(struct generic_pm_domain *genpd)
+ 	struct imx8m_blk_ctrl *bc = domain->bc;
+ 	int ret;
+ 
++	guard(mutex)(&bc->power_lock);
 +
-+		if (f2fs_hw_support_discard(sbi) || f2fs_hw_should_discard(sbi))
-+			set_opt(sbi, DISCARD);
+ 	/* make sure bus domain is awake */
+ 	ret = pm_runtime_get_sync(bc->bus_power_dev);
+ 	if (ret < 0) {
+@@ -146,6 +155,8 @@ static int imx8m_blk_ctrl_power_off(struct generic_pm_domain *genpd)
+ 	const struct imx8m_blk_ctrl_domain_data *data = domain->data;
+ 	struct imx8m_blk_ctrl *bc = domain->bc;
+ 
++	guard(mutex)(&bc->power_lock);
 +
-+		if (f2fs_sb_has_blkzoned(sbi))
-+			F2FS_OPTION(sbi).discard_unit = DISCARD_UNIT_SECTION;
-+		else
-+			F2FS_OPTION(sbi).discard_unit = DISCARD_UNIT_BLOCK;
-+	}
+ 	/* put devices into reset and disable clocks */
+ 	if (data->mipi_phy_rst_mask)
+ 		regmap_clear_bits(bc->regmap, BLK_MIPI_RESET_DIV, data->mipi_phy_rst_mask);
+@@ -184,6 +195,10 @@ static int imx8m_blk_ctrl_probe(struct platform_device *pdev)
+ 
+ 	bc->dev = dev;
+ 
++	ret = devm_mutex_init(dev, &bc->power_lock);
++	if (ret)
++		return ret;
 +
- 	if (f2fs_sb_has_readonly(sbi))
- 		F2FS_OPTION(sbi).active_logs = NR_CURSEG_RO_TYPE;
- 	else
-@@ -2127,23 +2140,16 @@ static void default_options(struct f2fs_sb_info *sbi)
- 	set_opt(sbi, INLINE_XATTR);
- 	set_opt(sbi, INLINE_DATA);
- 	set_opt(sbi, INLINE_DENTRY);
--	set_opt(sbi, READ_EXTENT_CACHE);
- 	set_opt(sbi, NOHEAP);
--	clear_opt(sbi, DISABLE_CHECKPOINT);
- 	set_opt(sbi, MERGE_CHECKPOINT);
- 	F2FS_OPTION(sbi).unusable_cap = 0;
- 	sbi->sb->s_flags |= SB_LAZYTIME;
- 	if (!f2fs_sb_has_readonly(sbi) && !f2fs_readonly(sbi->sb))
- 		set_opt(sbi, FLUSH_MERGE);
--	if (f2fs_hw_support_discard(sbi) || f2fs_hw_should_discard(sbi))
--		set_opt(sbi, DISCARD);
--	if (f2fs_sb_has_blkzoned(sbi)) {
-+	if (f2fs_sb_has_blkzoned(sbi))
- 		F2FS_OPTION(sbi).fs_mode = FS_MODE_LFS;
--		F2FS_OPTION(sbi).discard_unit = DISCARD_UNIT_SECTION;
--	} else {
-+	else
- 		F2FS_OPTION(sbi).fs_mode = FS_MODE_ADAPTIVE;
--		F2FS_OPTION(sbi).discard_unit = DISCARD_UNIT_BLOCK;
--	}
+ 	bc_data = of_device_get_match_data(dev);
  
- #ifdef CONFIG_F2FS_FS_XATTR
- 	set_opt(sbi, XATTR_USER);
-@@ -2320,7 +2326,7 @@ static int f2fs_remount(struct super_block *sb, int *flags, char *data)
- 			clear_sbi_flag(sbi, SBI_NEED_SB_WRITE);
- 	}
- 
--	default_options(sbi);
-+	default_options(sbi, true);
- 
- 	/* parse mount options */
- 	err = parse_options(sb, data, true);
-@@ -4252,7 +4258,7 @@ static int f2fs_fill_super(struct super_block *sb, void *data, int silent)
- 		sbi->s_chksum_seed = f2fs_chksum(sbi, ~0, raw_super->uuid,
- 						sizeof(raw_super->uuid));
- 
--	default_options(sbi);
-+	default_options(sbi, false);
- 	/* parse mount options */
- 	options = kstrdup((const char *)data, GFP_KERNEL);
- 	if (data && !options) {
+ 	base = devm_platform_ioremap_resource(pdev, 0);
 -- 
 2.53.0
 
