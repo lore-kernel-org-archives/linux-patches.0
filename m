@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214564;
-	b=4i0UnufATE3U6Kmc/oO5OgL1SjcagZwfmjuoA9r4UOllWAJ7+UC+LT/cViDrR5G1kiYV
-	 zwn3RdKfAYcd/nbf0OlwfoePy0iSrkhNC0EYqk3LerHd/oEFeMVNVkRsdZL13hNcuUQ7Y
-	 zuB8JRJ5QGSxeBtp/rQVI5w40P+tdq5DSuLSG5ThNeuuJmOFQlgfxhPVE0B03+YCC1Wy6
-	 LzTYTLj/uF29BCCbjHaLeEQUHhe97DCbsrqxg87OpWQy4FwBXmZNZZHlETI61Ga0egUap
-	 zFwUHQVk8HKK05SXVH61c+/n6YxI0QlkRPb6ocDGdKumGXwwjev+9gWcTBNFMnF7VOQ==
+	t=1793214567;
+	b=ZwBOAZ1we21gebUPporj/2/Z17Xb+M5oVAq3V7gIok0sfS+q3pEK2CmA/WU2mBQKYDqE
+	 nB+Zn0wApPJWnDsb0YnKihyBi2FgCfSKyPe0IChHhmJsz4isk578mS7uXLvFLsvc0rBms
+	 0KYNFXWE/xU8Q9br1X77+z0P8m9afZ2HOrj9ynRqNaftGzVp4kB7zVHYojS5kkhel2NZh
+	 8g6zv3QtRarGnM0Dd/bXpBbLo8dssMwmNZBntwNjJP6jrL3je5E9TTqC4+nnIePeqv2WH
+	 GIOHxONTBJRzXnTOXKNZtxhtGxq+V30omFVVHTt9aOvZy70P07vYNk29cMUhLM19COw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214564;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214567;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=UfvL+vnGQlS25XREQMkdzMNDRHYdeLUFk0HPeshArAw=;
-	b=rDzx0HbCw/0CONfhihpMkqc6GA9jRrG7taZb5LWCXzO74G6xlQdZP+w6cJH2sxJ/uA7E
-	 OGF7KBb8FOS31+x5fbCza7VpZFGaGL4bKxHqCzSyKNUFOr0GnridHdZkj3WHa/Jctdb0r
-	 JgX7PkK7tbhF0FU1wDgbW/314RAq5N3oiiyFuHAJfJrgDRHihq2NdlzfSX4dy0+4NU8RP
-	 ou4JLI+fhpInWlvfnUc+UILpaZeRrl4/dA4V27pUAfLU+OKPqs/ue7bXxs7v7TQBOsHDG
-	 NQK+0b3UMf+suImrRIiDmhbd92lS+6cdDB8dhjXCPTPN2ni8mjYxCZlrgBd58vLudtA==
+	bh=187Fo/9GAFIYbhPISGeIstW/ayLG5VzLG2j7h0U2cHg=;
+	b=LSzSyHo1+SIucTHVy3D575QDhebOrOpKdJdVc2fJ+NcCUoHvfGfiAmNWGITJ59y5u0WT
+	 C6VzPi42WnpOtGYgPaj5V96RC3WjPywpM5PHQGEmQ6PTXtVqxvdhIIGKF8goptA6ezsl2
+	 J9Z2hgOiegF/NunKu43WKhAmbjZ0BJn8MFny3jGyKdaboOVRLFwENIty18f8lTN3SKdOt
+	 o+RcgwrOz95/013ef2JrH7loyK3vnmRssTNnIXT9U0RrLID1nnU3wgN0/caATJdbrEJXn
+	 Mt5YY6JVveQZpkYbpat/axuRP74DNtaSaV21FockMEJHW+OaFRCrRWfTD6+vtZMamMw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=H349CmHa;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="rpd/duoW";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 416CA606A31C;
-	Wed, 28 Oct 2026 19:09:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0193B606A31C;
+	Wed, 28 Oct 2026 19:09:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=H349CmHa
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 759B91F01825;
-	Wed, 28 Oct 2026 19:09:23 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rpd/duoW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 521641F01828;
+	Wed, 28 Oct 2026 19:09:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214564;
-	bh=UfvL+vnGQlS25XREQMkdzMNDRHYdeLUFk0HPeshArAw=;
+	s=korg; t=1793214566;
+	bh=187Fo/9GAFIYbhPISGeIstW/ayLG5VzLG2j7h0U2cHg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=H349CmHaajKWsSu1IK58E+uOKco1Hv+cI9ExBcsis1v8unyw77hDYkTmWN3+w2Tq+
-	 uU+zPdsFh8V7GOsoXNUCDl7vkNQAVljxicM8GUQkymYdGgPf8xXsWPZZSjpG0BC18v
-	 TnmqrTggUNDl4JogF9J4fH6r/F9V1cKujhFjIGgk=
+	b=rpd/duoWiez3zZnTDv7jKhBOpQ0gHpEMF13bVTP+ZxgFYSk7RLvSC4eEksESVaQBW
+	 +hJgjJEc3WYSGKNsl7Ye+x2nJae8fVK+bqhbSnDYEvcpMJv5ZTMyL9S2fYvcnZsxok
+	 hHgJzFi5k7aAwoINScsZBrD/GTxOKiF0TKoiVVPs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
 	Chao Yu <chao@kernel.org>,
 	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0860/1887] f2fs: Use a folio in f2fs_truncate_partial_cluster()
-Date: Wed, 28 Oct 2026 17:49:16 +0100
-Message-ID: <20261028170518.990798193@linuxfoundation.org>
+Subject: [PATCH 6.1 0861/1887] f2fs: fix to avoid overflow while left shift operation
+Date: Wed, 28 Oct 2026 17:49:17 +0100
+Message-ID: <20261028170519.013765345@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,45 +68,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthew Wilcox (Oracle) <willy@infradead.org>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit 1cda5bc0b2fe93cdcb5f05a02f814a282d32742c ]
+[ Upstream commit 0fe1c6bec54ea68ed8c987b3890f2296364e77bb ]
 
-Convert the incoming page to a folio and use it throughout.
-Removes an access to page->index.
+Should cast type of folio->index from pgoff_t to loff_t to avoid overflow
+while left shift operation.
 
-Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
-Reviewed-by: Chao Yu <chao@kernel.org>
+Fixes: 3265d3db1f16 ("f2fs: support partial truncation on compressed inode")
+Signed-off-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
-Stable-dep-of: 0fe1c6bec54e ("f2fs: fix to avoid overflow while left shift operation")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/compress.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ fs/f2fs/compress.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/fs/f2fs/compress.c b/fs/f2fs/compress.c
-index de64a621c729b..b882891fbf28d 100644
+index b882891fbf28d..37a684c682c7b 100644
 --- a/fs/f2fs/compress.c
 +++ b/fs/f2fs/compress.c
-@@ -1215,13 +1215,14 @@ int f2fs_truncate_partial_cluster(struct inode *inode, u64 from, bool lock)
- 		int i;
+@@ -1216,7 +1216,7 @@ int f2fs_truncate_partial_cluster(struct inode *inode, u64 from, bool lock)
  
  		for (i = cluster_size - 1; i >= 0; i--) {
--			loff_t start = rpages[i]->index << PAGE_SHIFT;
-+			struct folio *folio = page_folio(rpages[i]);
-+			loff_t start = folio->index << PAGE_SHIFT;
+ 			struct folio *folio = page_folio(rpages[i]);
+-			loff_t start = folio->index << PAGE_SHIFT;
++			loff_t start = (loff_t)folio->index << PAGE_SHIFT;
  
  			if (from <= start) {
--				zero_user_segment(rpages[i], 0, PAGE_SIZE);
-+				folio_zero_segment(folio, 0, folio_size(folio));
- 			} else {
--				zero_user_segment(rpages[i], from - start,
--								PAGE_SIZE);
-+				folio_zero_segment(folio, from - start,
-+						folio_size(folio));
- 				break;
- 			}
- 		}
+ 				folio_zero_segment(folio, 0, folio_size(folio));
 -- 
 2.53.0
 
