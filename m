@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214071;
-	b=CmMAmPqS34rcRv8rAP/HQgdah+dvDUVuCU/x2jLnyOWcl7RRhzWvqpho4muOR4/7Wegx
-	 0hwI4YCxd81UJc1ZKU1e3wdL3PJIV6U8J5WXe2D/a3bxYDFGFbuz8ti46biPtc3H6mtfH
-	 bEW15+bOgC+NVsBqYOUvd1QALsf5KwBRsLF3LPckSiU8LaiJFW7Lu3MNnTj5BUVFQqOxR
-	 iVwT1gjI1jHxW9fx9uWtOj0l8TUYuBnXAdhtu2+O7TVl6g7JBeIBnSFP7pNKqHcuS/eYv
-	 6JfUYxYQtBfVxeJh9ru9v9aZrHnhD5AQIpZDmOQ4tlgV4NdHnfEqDhxhAsOW/haPKsQ==
+	t=1793214074;
+	b=0/neqsiG8J2JjeDqVEilBI4h1NE95Bo6gMpgfkt7Zce+xWtTxuZu4QWWqRiO7U6O8x5a
+	 c46CvJBMThFAORiBNO6bCGQPeDxTVJseUEy35AnxiMN3XLRZ2OXd6KN3icIvC5/565e4m
+	 XP27l/xmgtm7KJZOLknpgpzqzESbq2YOUS/71yYwcrY/+Etpmpt6XxdkQS1S1ZkGmcWni
+	 6aIGrKngbF0rlI2oBQWmcMXYjmkJGEkDwQdisGp7RjfH9v15eL0Uybrqnph2NyHmQ37hn
+	 R/5hvzPdYukfqGqQt+jqT7grFcxYSTaXoShn9uzQYiqQzXOdaZZiV0L0EWWkGk7+MRA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214071;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214074;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=wcalqMTmjZpx1dWIqIGipcN6tPih7fb0Yowp1MkndH8=;
-	b=BgU5Ovpo6Ai/3zib4KzKMo7dSYjHLFuD2ed1IYOPwOmgfW+/FW87rmsAHBANOD4jGIOm
-	 PIM/ELC30WkkR2ETwszE5gD/1j4uF8hTbCA8I4aNYORXGGG7X0lBHfibwJznQm+020EMT
-	 YZmKRg0CEd/4P7rO9fCwh+G41ZKKhPDsFMd3qiOG3IzPoaZzSI06exEXwFJZ56kOpewy/
-	 ze3eD+qVLnUNLZKMerD8c8ADhtphLlOxx6OQTF93CQBjriBz8xxbbHic3NPERIUjdDqfv
-	 8dVlZ/pNOovakl6D8px8X+4zlAnAX8k2n60+XYZv7V8j7MRZvdEuJAB/sco2XQNPFCg==
+	bh=0F7JBM0u7CatxOEnBO6qcNI0ggYkrb3k1bw7X9QXN1g=;
+	b=cvqMnzsftQ4CxkvWY8kiBNxykbu63tx6xMB2xqIv9MFWI/GaURBbOquY1aA0Clb+DP1m
+	 QD/5T4V2xgZDgh9e/vUP1Zs+ss/LtNPJ0R8bUIWTWbmrKUNNa6/2UO8uV0YohE257+46I
+	 2ID++SrJJCjzNkQIKpap5TMUtbMndamGujWYZQtfX3tc5Lh/t4gY99FO+e+v3iNnX67aJ
+	 cXv0rxbDVMas9XKH16rPHJnE9vGRaCTKjzKa1D/g1Iaz/8pk1isEynkDHycaaJhdHMxzO
+	 fxPDRNmmYhH9knjTFp2uXG8cqzwlUs1SGgA6DPjUtKSml/deZmUpdjzhj1iAjJ2I83w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="bdeqTSQ/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hsvy5+U1;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19A1F606A334;
-	Wed, 28 Oct 2026 19:01:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFB18606A31D;
+	Wed, 28 Oct 2026 19:01:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bdeqTSQ/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B1431F01825;
-	Wed, 28 Oct 2026 19:01:10 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hsvy5+U1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C0201F01825;
+	Wed, 28 Oct 2026 19:01:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214071;
-	bh=wcalqMTmjZpx1dWIqIGipcN6tPih7fb0Yowp1MkndH8=;
+	s=korg; t=1793214073;
+	bh=0F7JBM0u7CatxOEnBO6qcNI0ggYkrb3k1bw7X9QXN1g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bdeqTSQ/GXWpDd1OKa4P3JsC8FQipRUAAPkrBn+QKgeBIL832fjO5Wo1CpD4IhCgk
-	 t32+Tt6dc9eGbXcTeHuE7pKg16M4uCv6U1p830KV5G/Cr3aCneIKJCYRsiQpolObqV
-	 yZa07k4qvBHpR2klem3eSFxJMNAkOKb48j6uuM3o=
+	b=hsvy5+U1TH889geHu5hF9Q6nGZON8gqxVBWlbk/DTv4yeYZYH10qrhqLK1k0HPrKI
+	 vcZ6uAIrmkucha+yEUStcew5ZE/22Egby4HhGRsnjZKrx3DFXAa5GR5iw1eC88ma5L
+	 Rebm5SmVyq3Kf9RkYBxMUG2qHJTTJijZ3qqktlu0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Jay Shin <jaeshin@redhat.com>,
+	"Paulo Alcantara (Red Hat)" <pc@manguebit.com>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0730/1887] rds: sysctl: rds_tcp_{rcv,snd}buf: avoid using current->nsproxy
-Date: Wed, 28 Oct 2026 17:47:06 +0100
-Message-ID: <20261028170516.062130220@linuxfoundation.org>
+Subject: [PATCH 6.1 0731/1887] smb: client: fix double free of TCP_Server_Info::hostname
+Date: Wed, 28 Oct 2026 17:47:07 +0100
+Message-ID: <20261028170516.084331142@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,120 +69,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+From: Paulo Alcantara <pc@manguebit.com>
 
-[ Upstream commit 7f5611cbc4871c7fb1ad36c2e5a9edad63dca95c ]
+[ Upstream commit fa2f9906a7b333ba757a7dbae0713d8a5396186e ]
 
-As mentioned in a previous commit of this series, using the 'net'
-structure via 'current' is not recommended for different reasons:
+When shutting down the server in cifs_put_tcp_session(), cifsd thread
+might be reconnecting to multiple DFS targets before it realizes it
+should exit the loop, so @server->hostname can't be freed as long as
+cifsd thread isn't done.  Otherwise the following can happen:
 
-- Inconsistency: getting info from the reader's/writer's netns vs only
-  from the opener's netns.
+  RIP: 0010:__slab_free+0x223/0x3c0
+  Code: 5e 41 5f c3 cc cc cc cc 4c 89 de 4c 89 cf 44 89 44 24 08 4c 89
+  1c 24 e8 fb cf 8e 00 44 8b 44 24 08 4c 8b 1c 24 e9 5f fe ff ff <0f>
+  0b 41 f7 45 08 00 0d 21 00 0f 85 2d ff ff ff e9 1f ff ff ff 80
+  RSP: 0018:ffffb26180dbfd08 EFLAGS: 00010246
+  RAX: ffff8ea34728e510 RBX: ffff8ea34728e500 RCX: 0000000000800068
+  RDX: 0000000000800068 RSI: 0000000000000000 RDI: ffff8ea340042400
+  RBP: ffffe112041ca380 R08: 0000000000000001 R09: 0000000000000000
+  R10: 6170732e31303000 R11: 70726f632e786563 R12: ffff8ea34728e500
+  R13: ffff8ea340042400 R14: ffff8ea34728e500 R15: 0000000000800068
+  FS: 0000000000000000(0000) GS:ffff8ea66fd80000(0000)
+  000000
+  CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+  CR2: 00007ffc25376080 CR3: 000000012a2ba001 CR4:
+  PKRU: 55555554
+  Call Trace:
+   <TASK>
+   ? show_trace_log_lvl+0x1c4/0x2df
+   ? show_trace_log_lvl+0x1c4/0x2df
+   ? __reconnect_target_unlocked+0x3e/0x160 [cifs]
+   ? __die_body.cold+0x8/0xd
+   ? die+0x2b/0x50
+   ? do_trap+0xce/0x120
+   ? __slab_free+0x223/0x3c0
+   ? do_error_trap+0x65/0x80
+   ? __slab_free+0x223/0x3c0
+   ? exc_invalid_op+0x4e/0x70
+   ? __slab_free+0x223/0x3c0
+   ? asm_exc_invalid_op+0x16/0x20
+   ? __slab_free+0x223/0x3c0
+   ? extract_hostname+0x5c/0xa0 [cifs]
+   ? extract_hostname+0x5c/0xa0 [cifs]
+   ? __kmalloc+0x4b/0x140
+   __reconnect_target_unlocked+0x3e/0x160 [cifs]
+   reconnect_dfs_server+0x145/0x430 [cifs]
+   cifs_handle_standard+0x1ad/0x1d0 [cifs]
+   cifs_demultiplex_thread+0x592/0x730 [cifs]
+   ? __pfx_cifs_demultiplex_thread+0x10/0x10 [cifs]
+   kthread+0xdd/0x100
+   ? __pfx_kthread+0x10/0x10
+   ret_from_fork+0x29/0x50
+   </TASK>
 
-- current->nsproxy can be NULL in some cases, resulting in an 'Oops'
-  (null-ptr-deref), e.g. when the current task is exiting, as spotted by
-  syzbot [1] using acct(2).
-
-The per-netns structure can be obtained from the table->data using
-container_of(), then the 'net' one can be retrieved from the listen
-socket (if available).
-
-Fixes: c6a58ffed536 ("RDS: TCP: Add sysctl tunables for sndbuf/rcvbuf on rds-tcp socket")
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/67769ecb.050a0220.3a8527.003f.GAE@google.com [1]
-Suggested-by: Al Viro <viro@zeniv.linux.org.uk>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20250108-net-sysctl-current-nsproxy-v1-9-5df34b2083e8@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 7be3248f3139 ("cifs: To match file servers, make sure the server hostname matches")
+Reported-by: Jay Shin <jaeshin@redhat.com>
+Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rds/tcp.c | 39 ++++++++++++++++++++++++++++++++-------
- 1 file changed, 32 insertions(+), 7 deletions(-)
+ fs/smb/client/connect.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/net/rds/tcp.c b/net/rds/tcp.c
-index ef7cf0a6cb134..020baff6ad514 100644
---- a/net/rds/tcp.c
-+++ b/net/rds/tcp.c
-@@ -53,8 +53,10 @@ static atomic_t rds_tcp_unloading = ATOMIC_INIT(0);
+diff --git a/fs/smb/client/connect.c b/fs/smb/client/connect.c
+index 1661f6135e417..9172b4136a925 100644
+--- a/fs/smb/client/connect.c
++++ b/fs/smb/client/connect.c
+@@ -1088,6 +1088,7 @@ static void clean_demultiplex_info(struct TCP_Server_Info *server)
+ 	kfree(server->origin_fullpath);
+ 	kfree(server->leaf_fullpath);
+ #endif
++	kfree(server->hostname);
+ 	kfree(server);
  
- static struct kmem_cache *rds_tcp_conn_slab;
+ 	length = atomic_dec_return(&tcpSesAllocCount);
+@@ -1708,8 +1709,6 @@ cifs_put_tcp_session(struct TCP_Server_Info *server, int from_reconnect)
+ 	kfree_sensitive(server->session_key.response);
+ 	server->session_key.response = NULL;
+ 	server->session_key.len = 0;
+-	kfree(server->hostname);
+-	server->hostname = NULL;
  
--static int rds_tcp_skbuf_handler(struct ctl_table *ctl, int write,
--				 void *buffer, size_t *lenp, loff_t *fpos);
-+static int rds_tcp_sndbuf_handler(struct ctl_table *ctl, int write,
-+				  void *buffer, size_t *lenp, loff_t *fpos);
-+static int rds_tcp_rcvbuf_handler(struct ctl_table *ctl, int write,
-+				  void *buffer, size_t *lenp, loff_t *fpos);
- 
- static int rds_tcp_min_sndbuf = SOCK_MIN_SNDBUF;
- static int rds_tcp_min_rcvbuf = SOCK_MIN_RCVBUF;
-@@ -66,7 +68,7 @@ static struct ctl_table rds_tcp_sysctl_table[] = {
- 		/* data is per-net pointer */
- 		.maxlen         = sizeof(int),
- 		.mode           = 0644,
--		.proc_handler   = rds_tcp_skbuf_handler,
-+		.proc_handler   = rds_tcp_sndbuf_handler,
- 		.extra1		= &rds_tcp_min_sndbuf,
- 	},
- #define	RDS_TCP_RCVBUF	1
-@@ -75,7 +77,7 @@ static struct ctl_table rds_tcp_sysctl_table[] = {
- 		/* data is per-net pointer */
- 		.maxlen         = sizeof(int),
- 		.mode           = 0644,
--		.proc_handler   = rds_tcp_skbuf_handler,
-+		.proc_handler   = rds_tcp_rcvbuf_handler,
- 		.extra1		= &rds_tcp_min_rcvbuf,
- 	},
- 	{ }
-@@ -752,10 +754,10 @@ static void rds_tcp_sysctl_reset(struct net *net)
- 	spin_unlock_irq(&rds_tcp_conn_lock);
- }
- 
--static int rds_tcp_skbuf_handler(struct ctl_table *ctl, int write,
-+static int rds_tcp_skbuf_handler(struct rds_tcp_net *rtn,
-+				 struct ctl_table *ctl, int write,
- 				 void *buffer, size_t *lenp, loff_t *fpos)
- {
--	struct net *net = current->nsproxy->net_ns;
- 	int err;
- 
- 	err = proc_dointvec_minmax(ctl, write, buffer, lenp, fpos);
-@@ -764,11 +766,34 @@ static int rds_tcp_skbuf_handler(struct ctl_table *ctl, int write,
- 			*(int *)(ctl->extra1));
- 		return err;
- 	}
--	if (write)
-+
-+	if (write && rtn->rds_tcp_listen_sock && rtn->rds_tcp_listen_sock->sk) {
-+		struct net *net = sock_net(rtn->rds_tcp_listen_sock->sk);
-+
- 		rds_tcp_sysctl_reset(net);
-+	}
-+
- 	return 0;
- }
- 
-+static int rds_tcp_sndbuf_handler(struct ctl_table *ctl, int write,
-+				  void *buffer, size_t *lenp, loff_t *fpos)
-+{
-+	struct rds_tcp_net *rtn = container_of(ctl->data, struct rds_tcp_net,
-+					       sndbuf_size);
-+
-+	return rds_tcp_skbuf_handler(rtn, ctl, write, buffer, lenp, fpos);
-+}
-+
-+static int rds_tcp_rcvbuf_handler(struct ctl_table *ctl, int write,
-+				  void *buffer, size_t *lenp, loff_t *fpos)
-+{
-+	struct rds_tcp_net *rtn = container_of(ctl->data, struct rds_tcp_net,
-+					       rcvbuf_size);
-+
-+	return rds_tcp_skbuf_handler(rtn, ctl, write, buffer, lenp, fpos);
-+}
-+
- static void rds_tcp_exit(void)
- {
- 	rds_tcp_set_unloading();
+ 	task = xchg(&server->tsk, NULL);
+ 	if (task)
 -- 
 2.53.0
 
