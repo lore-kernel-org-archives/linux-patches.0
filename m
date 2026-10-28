@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793212880;
-	b=nriFSR8cQzz6cOaqErvD9pTr8Cu+jG9f93eSbArWWNO7WS/lD6ds5W/9ONhezx62YPrJ
-	 bs8pzonvBwLHJI5OAVbb0yJCDuclClSaJ40pSGJDGmDYevaejbta6r0SH7/HGJ9l+9MkG
-	 eroJSCkHJjDt8I9CitctMPZyHM79570O0HrSrc14obfu9TtUO7l1cM1yhQTr1m6kdur7Y
-	 I6P/h43sY30gbrqs02B96x6q8bveemJtZapQvEdcgYeG+mjJxihLC56o8g4DiOxO4jn30
-	 RCGZnqQwqgMbJ2yFj+HwsRXOMEVUJjlLLniSm7s/XzByYm1q3CnGqKkFVhdO/cReTbA==
+	t=1793212882;
+	b=30aeu2Jn0wAW/EubaDiWyHTOacEIWaNVtiDyztNyVdb6Jdr6V/O/ZQDvyT+CcECAEAaM
+	 wlHByE6A8Nnc1U/YK9hRT7zNPkXdl5yAdfz4PHuSQhT8F0FQRPFUv1bMrJlNyzaylG7g6
+	 tpItExB8VFSBcZTP6yJRkuRI5LhPk91CkXC5Ryu/Xt8p3u7g/EUIPhDRfztOCSqhERNE7
+	 xmRPzOYdzkDAb9zNGh8OsbDFnJLGEONE0UnzaSWPdNbwpZY0RiH0nBHid+AOQjEpqLnaL
+	 Wu2U+712sthbzzj5OzXA7uCatZz2hMQuImRxgVTytW2qQucMaT17KQA1SdAE0wDGBSQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793212880;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793212882;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=BqOooK3pvqHqYbsY/vxAuHpjQ1qxYS4u4Zo7nKYudaY=;
-	b=GjCpEEMxFeCHmM+zJsserrOlKXkcr5ZxFYcXbRREbw6z6z8ArfqOT8ydJIB7/BHQA6A8
-	 s8DA69yTvK9cAcW5vRcHrS1RO+4IB/KVOQMxK3Gs2OYAFtu4NmzWwjW4pfCjrXE3/8cc5
-	 ngMa69TjyCoVjRx+MDTKZk4KQPFr7bSYjOY6UH1kT40xPdSTOk28TMxuE+SP/p1byLExc
-	 Ru8UASYa7gLEb+QHJhBi6yE0HWkehfckIQOZVhk7e1goLiHDxE7AFf+CyRJgjK0r//CX2
-	 fZ0Sva7An/GreNW+6+448rFKeZgkQ3gjBxk+cQhDFqIUkuuUFTI1sVV7h3b9mYuw0QQ==
+	bh=dVuM2dEL26qcB8YmaKzxf42OlEjaRQ6yS8WYjx+gF+k=;
+	b=tBVqE0NdudOYbI20U6pYXsUV2cjNe0PGNt+rJJEu38hO9ONvv+AFF9O9xXZuLQmdEoAz
+	 yHLup85RoRvTG4F5UA4I6F9N3OgHyCtCU/cHLJsjpuvA3v+1Ejm7ONL3C9HYbtobGQcU0
+	 bHCpubC+pxZm2v1ef0LCxKS0IcrP/zITmdLHP9F7bEQ4TuceLDayB2sdEMZFaWg/Wg+0x
+	 eUi54SmMXr+rHIwdrmtnp2dZQbYEVs4tCUjTNHbT71reJu+Cu1y+paDeqX5dIlXPcGW7C
+	 EWPLWS8/uOD38pM6QjPXwSTA6Z3xgwyPlW+qXfnAAISs0iDDzgidkZb/kLVh2sCruig==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jn513JqJ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YxNQDI5K;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE507606A31D;
-	Wed, 28 Oct 2026 18:41:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 998C3606A329;
+	Wed, 28 Oct 2026 18:41:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jn513JqJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A49C1F01828;
-	Wed, 28 Oct 2026 18:41:18 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YxNQDI5K
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8AC21F031E0;
+	Wed, 28 Oct 2026 18:41:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793212879;
-	bh=BqOooK3pvqHqYbsY/vxAuHpjQ1qxYS4u4Zo7nKYudaY=;
+	s=korg; t=1793212882;
+	bh=dVuM2dEL26qcB8YmaKzxf42OlEjaRQ6yS8WYjx+gF+k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jn513JqJq1O+75zUx7STKMXJif4d6h3/rlSbWX+cmK6ORCtbSUD5N5uwfYTxOHBMW
-	 B60Np3D6QtpOVgIHbtINwNOcx1ZNmaVs2BSqqEDsD/mt9NnFryhujjui8ZQ7m+2EUP
-	 gMJ1BwaXQ0ph3D7iq7gLFuQgOEIHW2Ab8oBUwzyw=
+	b=YxNQDI5KJQiujEoLh/mYH+MFU+PaPwv+4vQAKM5lE8J9x59BJOo8mAGpy/Snang2g
+	 8CgXeJhTFS+TLMgVX86yXGBjFM7upalEjUcrSnQR1BbzDgDFt6T2tcKcgirqq2uo8r
+	 VzjHeyPYlSutUoHRukwhlj3DoiDP7vRcgpDby554=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
-	Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 6.1 0310/1887] mtd: rawnand: cadence: Initialize IRQ state before requesting IRQ
-Date: Wed, 28 Oct 2026 17:40:06 +0100
-Message-ID: <20261028170506.283562267@linuxfoundation.org>
+	Edward Karpicz <webmaster@toradex.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Mehmet Fide <mehmet.fide@screeningeagle.com>
+Subject: [PATCH 6.1 0311/1887] mtd: rawnand: vf610_nfc: fix reads on chips with more than 64 bytes of OOB
+Date: Wed, 28 Oct 2026 17:40:07 +0100
+Message-ID: <20261028170506.305674756@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -67,47 +68,189 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
+From: Mehmet Fide <mehmet.fide@screeningeagle.com>
 
-commit 21f027016b1290d13c30b198ae7a00e6b3d1d5a5 upstream.
+commit 37adc9c5789c76db3b1ee7aeec3999b8503020d0 upstream.
 
-The Cadence NAND interrupt handler uses both the IRQ lock and completion
-object. Registering the IRQ before initializing them leaves a window in
-which a pending interrupt can access uninitialized synchronization state.
+The controller transfers 64 spare bytes per page and the driver only
+implements the matching 64-byte ECC layout, so attach_chip() shrinks
+mtd->oobsize when the chip provides more. That clamp does not survive:
+nand_scan_tail() runs nanddev_init() after ->attach_chip(), and it
+restores mtd->oobsize from the memory organization, which still holds
+the value detected from the chip. The driver then transfers writesize
+plus the chip's full OOB size, the hardware ECC parity ends up at a
+different offset than the layout the controller was set up for, and
+every ECC-protected read fails with -EBADMSG.
 
-Initialize them before registering the handler.
+Measured on a Colibri VF61 (MX30LF4G28AC, 2048-byte pages, 112 bytes of
+OOB): with the clamp lost, UBI cannot read the erase counter headers of
+the pages U-Boot has just written, and the on-flash bad block table
+written by an older kernel reads back with ECC errors, so the board
+does not boot. Kernels before commit a7ab085d7c16 ("mtd: rawnand:
+Initialize the nand_device object") are not affected because nothing
+overwrote the clamp there, which is why the same chip works with a v4.4
+kernel and with U-Boot, whose copy of this driver has no memory
+organization to restore the value from. Edward Karpicz reported that
+the clamp no longer takes effect on this chip; see the link below.
 
-Fixes: ec4ba01e894d ("mtd: rawnand: Add new Cadence NAND driver to MTD subsystem")
+Instead of modifying the memory organization, keep the detected OOB
+size and give the driver its own mtd_ooblayout_ops: the same layout the
+NAND core uses for large pages, but computed on the first 64 OOB bytes
+instead of the whole OOB, so the ECC bytes stay where U-Boot and the
+old kernels put them. The data paths transfer writesize plus those 64
+bytes, as the controller always has.
+
+Since mtd->oobsize now reports the chip's real spare size, fill the
+tail of oob_poi with 0xff after the 64 transferred bytes on ECC page
+reads: the core may copy the full mtd->oobsize from it, which would
+otherwise expose whatever the buffer held before. 0xff also matches
+what a raw read returns from flash, since the write path only ever
+programs the first 64 spare bytes.
+
+Reported-by: Edward Karpicz <webmaster@toradex.com>
+Link: https://community.toradex.com/t/colibri-vf50-vf61-on-the-current-bsp-mainline-u-boot-v2026-07-and-linux-6-18-lts/30735
+Suggested-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Fixes: a7ab085d7c16 ("mtd: rawnand: Initialize the nand_device object")
 Cc: stable@vger.kernel.org
-Assisted-by: Codex:GPT-5
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Signed-off-by: Mehmet Fide <mehmet.fide@screeningeagle.com>
 Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/nand/raw/cadence-nand-controller.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/mtd/nand/raw/vf610_nfc.c |   72 ++++++++++++++++++++++++++++++++-------
+ 1 file changed, 60 insertions(+), 12 deletions(-)
 
---- a/drivers/mtd/nand/raw/cadence-nand-controller.c
-+++ b/drivers/mtd/nand/raw/cadence-nand-controller.c
-@@ -2847,6 +2847,9 @@ static int cadence_nand_init(struct cdns
- 		goto free_buf_desc;
- 	}
+--- a/drivers/mtd/nand/raw/vf610_nfc.c
++++ b/drivers/mtd/nand/raw/vf610_nfc.c
+@@ -504,6 +504,11 @@ static int vf610_nfc_exec_op(struct nand
+ 				      check_only);
+ }
  
-+	spin_lock_init(&cdns_ctrl->irq_lock);
-+	init_completion(&cdns_ctrl->complete);
++static unsigned int vf610_nfc_spare_size(struct mtd_info *mtd)
++{
++	return min_t(unsigned int, mtd->oobsize, 64);
++}
 +
- 	if (devm_request_irq(cdns_ctrl->dev, cdns_ctrl->irq, cadence_nand_isr,
- 			     IRQF_SHARED, "cadence-nand-controller",
- 			     cdns_ctrl)) {
-@@ -2855,9 +2858,6 @@ static int cadence_nand_init(struct cdns
- 		goto free_buf;
+ static inline int vf610_nfc_correct_data(struct nand_chip *chip, uint8_t *dat,
+ 					 uint8_t *oob, int page)
+ {
+@@ -521,7 +526,7 @@ static inline int vf610_nfc_correct_data
+ 		return ecc_count;
+ 
+ 	nfc->data_access = true;
+-	nand_read_oob_op(&nfc->chip, page, 0, oob, mtd->oobsize);
++	nand_read_oob_op(&nfc->chip, page, 0, oob, vf610_nfc_spare_size(mtd));
+ 	nfc->data_access = false;
+ 
+ 	/*
+@@ -529,7 +534,7 @@ static inline int vf610_nfc_correct_data
+ 	 * at least less then half of the ECC strength.
+ 	 */
+ 	return nand_check_erased_ecc_chunk(dat, nfc->chip.ecc.size, oob,
+-					   mtd->oobsize, NULL, 0,
++					   vf610_nfc_spare_size(mtd), NULL, 0,
+ 					   flips_threshold);
+ }
+ 
+@@ -550,7 +555,7 @@ static int vf610_nfc_read_page(struct na
+ {
+ 	struct vf610_nfc *nfc = chip_to_nfc(chip);
+ 	struct mtd_info *mtd = nand_to_mtd(chip);
+-	int trfr_sz = mtd->writesize + mtd->oobsize;
++	int trfr_sz = mtd->writesize + vf610_nfc_spare_size(mtd);
+ 	u32 row = 0, cmd1 = 0, cmd2 = 0, code = 0;
+ 	int stat;
+ 
+@@ -576,11 +581,16 @@ static int vf610_nfc_read_page(struct na
+ 	 */
+ 	vf610_nfc_rd_from_sram(buf, nfc->regs + NFC_MAIN_AREA(0),
+ 			       mtd->writesize, false);
+-	if (oob_required)
++	if (oob_required) {
++		unsigned int spare = vf610_nfc_spare_size(mtd);
++
+ 		vf610_nfc_rd_from_sram(chip->oob_poi,
+ 				       nfc->regs + NFC_MAIN_AREA(0) +
+ 						   mtd->writesize,
+-				       mtd->oobsize, false);
++				       spare, false);
++		/* Not transferred, and never written: reads back erased */
++		memset(chip->oob_poi + spare, 0xff, mtd->oobsize - spare);
++	}
+ 
+ 	stat = vf610_nfc_correct_data(chip, buf, chip->oob_poi, page);
+ 
+@@ -598,7 +608,7 @@ static int vf610_nfc_write_page(struct n
+ {
+ 	struct vf610_nfc *nfc = chip_to_nfc(chip);
+ 	struct mtd_info *mtd = nand_to_mtd(chip);
+-	int trfr_sz = mtd->writesize + mtd->oobsize;
++	int trfr_sz = mtd->writesize + vf610_nfc_spare_size(mtd);
+ 	u32 row = 0, cmd1 = 0, cmd2 = 0, code = 0;
+ 	u8 status;
+ 	int ret;
+@@ -739,6 +749,49 @@ static void vf610_nfc_init_controller(st
+ 	}
+ }
+ 
++/*
++ * With 64 byte OOB chips the core's large page layout matches what
++ * U-Boot uses, and on chips with more, U-Boot and older kernels clamped
++ * mtd->oobsize to 64. Modifying the OOB size is no longer possible, the
++ * actual chip geometry must be respected, so to avoid breaking those
++ * existing setups use our own layout: the core's large page one,
++ * computed over the first 64 spare bytes only.
++ */
++static int vf610_nfc_ooblayout_ecc(struct mtd_info *mtd, int section,
++				   struct mtd_oob_region *oobregion)
++{
++	struct nand_device *nand = mtd_to_nanddev(mtd);
++	unsigned int total_ecc_bytes = nand->ecc.ctx.total;
++
++	if (section || !total_ecc_bytes)
++		return -ERANGE;
++
++	oobregion->length = total_ecc_bytes;
++	oobregion->offset = vf610_nfc_spare_size(mtd) - oobregion->length;
++
++	return 0;
++}
++
++static int vf610_nfc_ooblayout_free(struct mtd_info *mtd, int section,
++				    struct mtd_oob_region *oobregion)
++{
++	struct nand_device *nand = mtd_to_nanddev(mtd);
++	unsigned int total_ecc_bytes = nand->ecc.ctx.total;
++
++	if (section)
++		return -ERANGE;
++
++	oobregion->length = vf610_nfc_spare_size(mtd) - total_ecc_bytes - 2;
++	oobregion->offset = 2;
++
++	return 0;
++}
++
++static const struct mtd_ooblayout_ops vf610_nfc_ooblayout_ops = {
++	.ecc = vf610_nfc_ooblayout_ecc,
++	.free = vf610_nfc_ooblayout_free,
++};
++
+ static int vf610_nfc_attach_chip(struct nand_chip *chip)
+ {
+ 	struct mtd_info *mtd = nand_to_mtd(chip);
+@@ -769,12 +822,7 @@ static int vf610_nfc_attach_chip(struct
+ 		return -ENXIO;
  	}
  
--	spin_lock_init(&cdns_ctrl->irq_lock);
--	init_completion(&cdns_ctrl->complete);
+-	/* Only 64 byte ECC layouts known */
+-	if (mtd->oobsize > 64)
+-		mtd->oobsize = 64;
 -
- 	ret = cadence_nand_hw_init(cdns_ctrl);
- 	if (ret)
- 		goto disable_irq;
+-	/* Use default large page ECC layout defined in NAND core */
+-	mtd_set_ooblayout(mtd, nand_get_large_page_ooblayout());
++	mtd_set_ooblayout(mtd, &vf610_nfc_ooblayout_ops);
+ 	if (chip->ecc.strength == 32) {
+ 		nfc->ecc_mode = ECC_60_BYTE;
+ 		chip->ecc.bytes = 60;
 
 
