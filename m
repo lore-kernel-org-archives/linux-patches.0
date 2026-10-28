@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793217228;
-	b=eV1rnRRSJmQKt61DxbGqVysHYn6WvfKP64snQsmrThsVmsFfalXFgnl62X8FWzlW7jrO
-	 4KU1A7LUaU3RIUzneB0MEiHpiGM4DfQSJafIAYAPb9mFeYuvItuYTAbc0LMPJnX9d5700
-	 dtsK9NLCK6d1FjShC7Q/BgkMydeRyW9iaj0hva8nuO2KSeQB2z6UWABFIjW3OgbO9SHd4
-	 gk57Y24L5cDjhlaQg6iNdZnnQg5Uj/EQRJafJwqpWgZpehx7KsJ4lINr8BbzkQ0B5/OgC
-	 Lq4WVKiRYbqszxTu4AOOTCsnl+sHJ38BN2fL0p9TjdrpVxUdbiybtPKM8YI7sWz64zA==
+	t=1793217231;
+	b=W57rjVRUCHLPDbhgzQ+CfvVxdAbn7GK3jIHbF50HYUJyIO5bIxHcuAwfLjsNJzjhVOnf
+	 2zUMVd6eqPajgj1UaYVY4Bz0mP2UeQ79dakxYMN4Gi6f2tPkgmqijdiycUqup548wWVLG
+	 HMoljT8avLnqvlsjL62bT7F+etgu3AOU1tT0whXv+FaA9xegnpaBrGUAo/glwd6kaHfjA
+	 FEgcX0aGVDU/hlwCGRAdH9WqVy2XwoF4eF3ptVgZBwTKd+L19yccuMcdemjjvZ+FRBnBI
+	 QzHeOFELrZNCljux5oK5W662U84X4qhFkpSeM6z/xTtSkVksp7dcoKkMpQGGjYMZn8A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793217228;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793217231;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=qT7YWxhL044NhsaD6trFwFov/sB8214SLTXcHx3cmYY=;
-	b=LLfvTNMd5UMYVhB0U8l1ClToPW1tujpl6DKDn0Y4dIYrx6wxcu7AlyEuCfFgvSUpmzTV
-	 seiGmvI4y9KrJ1DtTqPyFL8LO9jHIU6c4TOfwniQRzzKYb8VEXkHarwaGJXzPqN6/ijku
-	 rYGL+UlWPUJCXow0vD6llIS3FAgcymumFfl66hKpSNc06E2ZQH04EULs/IxXRpSGiJpBI
-	 WyA/lDZnKPbmyGgI5a+MqxikA9fQYixTnh5DGDZ1mWYXtGWHUUrb5UjPvkR3plO41bXCS
-	 pSvUfx2tYRsZXkiVYmDd3OvyKnW/9wWmzPOP4eRz5S/xj6kw59Ko0lGrfLJ9EfHHhaQ==
+	bh=fcXTT4gQmK2C6G0ZTBVOx/wUjyJvSkaSfi4fqw8p2hg=;
+	b=ofVIOKjDkJuc/cbMcZuw80Qhe/HmhyB5URxWcMinyBu4sysK66on5GeBe3b5mGXtgnI2
+	 ZIyiZ3CIdEQr8tXqCdaECK5Qbmi9yJcIkiB1IyCWilfgfEwq5M4HON+A/I20f/pGzT5fN
+	 MJ0wA8hWItMNiVTB9q3aRhHG74pVXQ7GhUuYy332Ce5h6hXybQV7lU+H4ozwYWWOVYIKP
+	 tMe4zh0cTufV+eXenrrjM1rwelNw3l55GGus7vaFkbgCeQGB294zovokXPrbKqfZwTBNb
+	 gfQSAvdQawtfP0V8RexALiF2WaeqIsauvrmoV0USwlp2ZZ8gZp+KPHnCu3WBBeds+CQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UABCJahD;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MI+7VGOO;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BCED606A31A;
-	Wed, 28 Oct 2026 19:53:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13163606A31A;
+	Wed, 28 Oct 2026 19:53:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UABCJahD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 541F21F01825;
-	Wed, 28 Oct 2026 19:53:47 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MI+7VGOO
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B5461F01825;
+	Wed, 28 Oct 2026 19:53:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793217227;
-	bh=qT7YWxhL044NhsaD6trFwFov/sB8214SLTXcHx3cmYY=;
+	s=korg; t=1793217230;
+	bh=fcXTT4gQmK2C6G0ZTBVOx/wUjyJvSkaSfi4fqw8p2hg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UABCJahDxAHd6Bd77nGVQ74RUMW/hEuO388bLDBbH0AAuxH4zEK9jUJId9Ps8VjCF
-	 ggREUYXX8pznIxR4S42O22uWPoXtdBnFdl+2tBCatfDDP5UmOzdmsywls10tBm5AKd
-	 +Os5Ns5B4tJ3OyOEPAvGv9fJddlO6e84c0oCfTQQ=
+	b=MI+7VGOOAbZZuUsi9M8JNJgKZqMcxDvFqMvZGMk2pdylod0QBcdHNWkBLsZwl7I9t
+	 imgnIk85etM6PnwOy+wk0iPPnfKmnPYPnWFYiLs2qMu+7qtECoS4/tciBh6DZqEp7+
+	 fDNmBGSTdY2lIWl9GelL+1qGUqzVq0sM9JzSuS5M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Tom Rix <trix@redhat.com>,
-	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
-	Hamza Mahfooz <hamza.mahfooz@amd.com>,
+	Tom Chung <chiahsuan.chung@amd.com>,
+	Zicheng Qu <quzicheng@huawei.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1829/1887] drm/amd/display: drop unused function set_abm_event()
-Date: Wed, 28 Oct 2026 18:05:25 +0100
-Message-ID: <20261028170541.068320997@linuxfoundation.org>
+Subject: [PATCH 6.1 1830/1887] drm/amd/display: Fix null check for pipe_ctx->plane_state in dcn20_program_pipe
+Date: Wed, 28 Oct 2026 18:05:26 +0100
+Message-ID: <20261028170541.090158264@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -71,67 +69,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hamza Mahfooz <hamza.mahfooz@amd.com>
+From: Zicheng Qu <quzicheng@huawei.com>
 
-[ Upstream commit fd73c8507675f6bccc039cf319f183e41e447cb7 ]
+[ Upstream commit 6a057072ddd127255350357dd880903e8fa23f36 ]
 
-set_abm_event() is never actually used. So, drop it.
+This commit addresses a null pointer dereference issue in
+dcn20_program_pipe(). Previously, commit 8e4ed3cf1642 ("drm/amd/display:
+Add null check for pipe_ctx->plane_state in dcn20_program_pipe")
+partially fixed the null pointer dereference issue. However, in
+dcn20_update_dchubp_dpp(), the variable pipe_ctx is passed in, and
+plane_state is accessed again through pipe_ctx. Multiple if statements
+directly call attributes of plane_state, leading to potential null
+pointer dereference issues. This patch adds necessary null checks to
+ensure stability.
 
-Fixes: b8fe56375f78 ("drm/amd/display: Refactor ABM feature")
-Reported-by: kernel test robot <lkp@intel.com>
-Reported-by: Tom Rix <trix@redhat.com>
-Reviewed-by: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
-Signed-off-by: Hamza Mahfooz <hamza.mahfooz@amd.com>
+Fixes: 8e4ed3cf1642 ("drm/amd/display: Add null check for pipe_ctx->plane_state in dcn20_program_pipe")
+Reviewed-by: Tom Chung <chiahsuan.chung@amd.com>
+Signed-off-by: Zicheng Qu <quzicheng@huawei.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dce/dmub_abm.c | 12 ------------
- drivers/gpu/drm/amd/display/dc/inc/hw/abm.h   |  2 --
- 2 files changed, 14 deletions(-)
+ drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dce/dmub_abm.c b/drivers/gpu/drm/amd/display/dc/dce/dmub_abm.c
-index 30bc598811875..3b85fc665f41e 100644
---- a/drivers/gpu/drm/amd/display/dc/dce/dmub_abm.c
-+++ b/drivers/gpu/drm/amd/display/dc/dce/dmub_abm.c
-@@ -131,17 +131,6 @@ static bool dmub_abm_set_pipe_ex(struct abm *abm, uint32_t otg_inst, uint32_t op
- 	return ret;
- }
+diff --git a/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c b/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c
+index a554867ee1a93..8a32b86c34d37 100644
+--- a/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c
+@@ -1693,9 +1693,9 @@ static void dcn20_program_pipe(
+ 		dc->res_pool->hubbub->funcs->program_det_size(
+ 			dc->res_pool->hubbub, pipe_ctx->plane_res.hubp->inst, pipe_ctx->det_buffer_size_kb);
  
--static bool dmub_abm_set_event_ex(struct abm *abm, unsigned int full_screen, unsigned int video_mode,
--		unsigned int hdr_mode, unsigned int panel_inst)
--{
--	bool ret = false;
--	unsigned int feature_support;
--
--	feature_support = abm_feature_support(abm, panel_inst);
--
--	return ret;
--}
--
- static bool dmub_abm_set_backlight_level_pwm_ex(struct abm *abm,
- 		unsigned int backlight_pwm_u16_16,
- 		unsigned int frame_ramp,
-@@ -167,7 +156,6 @@ static const struct abm_funcs abm_funcs = {
- 	.init_abm_config = dmub_abm_init_config_ex,
- 	.set_abm_pause = dmub_abm_set_pause_ex,
- 	.set_pipe_ex = dmub_abm_set_pipe_ex,
--	.set_abm_event = dmub_abm_set_event_ex,
- 	.set_backlight_level_pwm = dmub_abm_set_backlight_level_pwm_ex,
- };
+-	if (pipe_ctx->update_flags.raw ||
+-	    (pipe_ctx->plane_state && pipe_ctx->plane_state->update_flags.raw) ||
+-	    pipe_ctx->stream->update_flags.raw)
++	if (pipe_ctx->plane_state && (pipe_ctx->update_flags.raw ||
++	    pipe_ctx->plane_state->update_flags.raw ||
++	    pipe_ctx->stream->update_flags.raw))
+ 		dcn20_update_dchubp_dpp(dc, pipe_ctx, context);
  
-diff --git a/drivers/gpu/drm/amd/display/dc/inc/hw/abm.h b/drivers/gpu/drm/amd/display/dc/inc/hw/abm.h
-index db5cf9acafe6d..d2190a3320f64 100644
---- a/drivers/gpu/drm/amd/display/dc/inc/hw/abm.h
-+++ b/drivers/gpu/drm/amd/display/dc/inc/hw/abm.h
-@@ -59,8 +59,6 @@ struct abm_funcs {
- 			unsigned int otg_inst,
- 			unsigned int option,
- 			unsigned int panel_inst);
--	bool (*set_abm_event)(struct abm *abm, unsigned int full_screen, unsigned int video_mode,
--			unsigned int hdr_mode, unsigned int panel_inst);
- };
- 
- #endif
+ 	if ((pipe_ctx->plane_state && pipe_ctx->plane_state->update_flags.bits.hdr_mult) ||
 -- 
 2.53.0
 
