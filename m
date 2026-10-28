@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793210002;
-	b=EeqjbmqV5Jo3xn4lZIwSuJ/2JMvf5wtkL76RG+Hgr/2G7MtinpQeVCWM97GX+t4qM3Oi
-	 K0G+gTvY+JNTa/n3bMHewqbxLkQBTliGGPk5wsoQ5TCjJrTaht5rRqbaA9sLV+G3DNzte
-	 hhMFb1aSM4fRDn+mqCT5enVZrn5n9HGuMZehFNNGLXdAnkZChfF/cBQUh9dyfNo1KCuna
-	 ClH7Uu17jTh55uC7WYj92x8kj2bAIHTwMe85SQrY5N803iNJ+N04y+MLWHe/S/SxMlT4H
-	 FXht9ta6GTkv1f8R5z2DS54kJwGrFJ/gQaw+GfAvCLraDG5qtNhBv13nXY69O4BLkEg==
+	t=1793210006;
+	b=kLlkqIsnYalKz5nGozrqkU72c8rhSuCVraP2dkIYc9BxvqBkfuB7B7huxXrozDuH4ukv
+	 jrTvJ+2/q3AyGgCFXJ8inlNgD/8bxKFh3qxaugBJ4MxY7wxbLBAbyBMIjSA4ufTIShrgj
+	 4TUU/UlxRexsR4b/vn0MnM6mLS/PZ4oCJaYBAQpOO68Un80KJuFsEEAbVi00rmSwSeKKa
+	 1Tv3BwXzVnoFSySsPhDO8M4BUb3Nv0yZEIyVaR/2/6ku68NxAybj8mqIbBWnHn9PqjAYS
+	 0UR8sXuz4LNytgwOMxNtrHIAuY5k1HilJDTLBgmdurWLF4o7I8TEIGIXYjJhf0mJWcg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793210002;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793210006;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=k9Uktwkcb4dDrqo3CqUhZ5hpGEU7JqSJb5symXMdx6A=;
-	b=kFHHAy/l148kXmB/RpQaAQegG7Rdfo44CrYJ7SFE7RFi59R5RDB4zYp++ouGc/0kWEI+
-	 OLkWG1zPfgBrj7URI/bJs4dZMoHakVXPgL/D+CY2E+21Nj4ZTbjTe0lotI2jzJA3Nb4lu
-	 IY/Og+5wwt4dJN0tVkpi/g7PIphQQtAUgZgZihPnsmaYmGygsyltDcWlgN2KLC/NGkKqh
-	 qf0A7ukbsDVZb1OYVUG/ugdSBzy1FehBqjw9XiLcxauRj0H3IA7CRk9NASXZ/fGsJiw89
-	 OIBJYatqiuqkmPsFNJ0KxWj1BJpXcljPNTQnYhF9XOnMDH99KKst8qssBA2YRF8y3UA==
+	bh=2ou7kq+ZTwHvGnSFJ/Efmiioi1aE2F2Yg0uLLBkKONc=;
+	b=q8TbSUEBuUWqw4LtlfaD4U7oSbffyXIzEFhlghgqyMk3ddn0JDFegq25PaY7vAH8WENc
+	 c4L4C0yCjcXmtWflY8eTHLhr7ekkscDghXgvAjlmO2bLggJSVURJK1t480J7G0rtoY2Xv
+	 7yV5QpeFshoc7XGwsBp3q7fZh9Yeb1MOzgrRw9yuXEyTQhquKKShXj/m1IXlx2KdIxxxm
+	 1RPxtiaYm8FhlKSPV3X4qD9PgRPLbjnBov80XUQ890+05f/91V0cstoCSyYrEE1P6u1y3
+	 /Sfd1XVnCxNj5MgOKbY8bxBOmNDYF06stahzy9jMfgH5k7X5aHh3K0akOGy9voYtIuQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=y3ftLiEx;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UcM7vFpe;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FA98606A31D;
-	Wed, 28 Oct 2026 17:53:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE441606A31A;
+	Wed, 28 Oct 2026 17:53:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=y3ftLiEx
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD81E1F01825;
-	Wed, 28 Oct 2026 17:53:21 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UcM7vFpe
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6FB51F01825;
+	Wed, 28 Oct 2026 17:53:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793210002;
-	bh=k9Uktwkcb4dDrqo3CqUhZ5hpGEU7JqSJb5symXMdx6A=;
+	s=korg; t=1793210005;
+	bh=2ou7kq+ZTwHvGnSFJ/Efmiioi1aE2F2Yg0uLLBkKONc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=y3ftLiExXYXmzYK7xf8vVpYhoaQy6lqDjDPXQb+3RLDCK3EVB13DPY6eWnXo7xisM
-	 bzNF2qhQFBirWSZy7S8T072KmGSJ/R813K4Tlc1UnYnioiYUFNOP4/l4xpB/93YaEU
-	 ijNmNqDINEy63g84iSMSTuayQlZp0737jZ0xQ018=
+	b=UcM7vFpeB43vrrTLDEZ1NH+Gxh63nzssQvso3Gm+g9ecGqoQg0u/sc04909qKYYdL
+	 jaL5hh2OCEmT56hOIjQnsehPWRreul9Ns0/pcGQkxYFF0jC/UsJShmjvFyLjPUhn/W
+	 xFNl3BxqaRpmKTCTOtLGY0Y/5GdeuQJ4zoAxWAXg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haris Okanovic <harisokn@amazon.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 040/168] perf: Fix perf_pmu_migrate_context() leaving events behind
-Date: Wed, 28 Oct 2026 17:59:36 +0100
-Message-ID: <20261028165944.040799664@linuxfoundation.org>
+	Sung Byeongchan <tjdqudcks0424@naver.com>,
+	Ian Kent <raven@themaw.net>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>
+Subject: [PATCH 6.6 041/168] autofs: ignore notification errors from a replaced pipe
+Date: Wed, 28 Oct 2026 17:59:37 +0100
+Message-ID: <20261028165944.063823570@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165943.089486480@linuxfoundation.org>
 References: <20261028165943.089486480@linuxfoundation.org>
@@ -68,78 +68,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haris Okanovic <harisokn@amazon.com>
+From: Sung Byeongchan <tjdqudcks0424@naver.com>
 
-[ Upstream commit e76b36b4be7160eaa14b416681e548b125702395 ]
+commit 65676cd4203c0e41a94caf54080a7f0a95434bda upstream.
 
-__perf_pmu_remove() walks the group leaders of a CPU and PMU with
-perf_event_groups_for_cpu_pmu(), removing each one as it goes.
-perf_remove_from_context() takes the leader out of the groups rbtree,
-after which rb_next() on that node returns NULL, prematurely ending the
-walk. Other groups stay behind in the source context.
+autofs_notify_daemon() takes a reference to the current notification
+pipe under wq_mutex, then drops the mutex before writing the request. The
+write can block while the daemon enters catatonic mode and installs a
+replacement pipe.
 
-On CPU hotplug, they are then torn down with the dying CPU. They keep
-running until teardown, while the PMU's interrupt and migrated events
-are on a new CPU, which drivers rely on never happening.
+If the old pipe's reader is then closed, the delayed write returns -EPIPE
+and the generic error path enters catatonic mode again. That transition
+acts on the current superblock state, closes the replacement pipe, and
+releases the new daemon generation's wait queues.
 
-Walk ctx->event_list instead and pick out the PMU's events by their
-pmu_ctx.
+Only enter catatonic mode when the pipe which failed is still the current
+pipe. Factor the already-locked transition so the identity check and state
+change are atomic with respect to another replacement.
 
-Fixes: bd2756811766 ("perf: Rewrite core context handling")
-Signed-off-by: Haris Okanovic <harisokn@amazon.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://patch.msgid.link/20261013185603.1347265-2-harisokn@amazon.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This was reproduced on v7.3-rc5-337-gff47652a4b66c in a local QEMU guest.
+An unprivileged UID 65534 lookup filled the old packet pipe before a
+normal CATATONIC/SETPIPEFD restart. On the unmodified kernel, the new pipe
+received HUP and both a pending victim lookup and a later lookup failed
+with ENOENT in two out of two fresh-mount runs.
+
+With this change, the new pipe remained active, received an intact
+304-byte request, and both victim lookups completed in two out of two
+runs. Normal lookup and restart-without-a-blocked-writer controls passed.
+No KASAN, oops, refcount, or lock diagnostic was observed. A source
+reproducer and complete local logs are available privately on request.
+
+The demonstrated impact is limited to denial of a shared autofs service
+during a legitimate daemon restart. No memory corruption, information leak,
+privilege escalation, or code execution primitive was observed.
+
+Fixes: 8d7b48e0bc5fa ("autofs4: add miscellaneous device for ioctls")
+Cc: stable@vger.kernel.org
+Signed-off-by: Sung Byeongchan <tjdqudcks0424@naver.com>
+Link: https://patch.msgid.link/20261007173542.593624-1-tjdqudcks0424@naver.com
+Acked-by: Ian Kent <raven@themaw.net>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/events/core.c | 20 +++++++-------------
- 1 file changed, 7 insertions(+), 13 deletions(-)
+ fs/autofs/waitq.c |   25 +++++++++++++++++++------
+ 1 file changed, 19 insertions(+), 6 deletions(-)
 
-diff --git a/kernel/events/core.c b/kernel/events/core.c
-index a226f908490f0..c891243ddef9b 100644
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -13099,23 +13099,18 @@ perf_event_create_kernel_counter(struct perf_event_attr *attr, int cpu,
- }
- EXPORT_SYMBOL_GPL(perf_event_create_kernel_counter);
+--- a/fs/autofs/waitq.c
++++ b/fs/autofs/waitq.c
+@@ -12,15 +12,13 @@
+  */
+ static autofs_wqt_t autofs_next_wait_queue = 1;
  
--static void __perf_pmu_remove(struct perf_event_context *ctx,
--			      int cpu, struct pmu *pmu,
--			      struct perf_event_groups *groups,
-+static void __perf_pmu_remove(struct perf_event_context *ctx, struct pmu *pmu,
- 			      struct list_head *events)
+-void autofs_catatonic_mode(struct autofs_sb_info *sbi)
++static void autofs_catatonic_mode_locked(struct autofs_sb_info *sbi)
  {
--	struct perf_event *event, *sibling;
-+	struct perf_event *event, *tmp;
-+
-+	list_for_each_entry_safe(event, tmp, &ctx->event_list, event_entry) {
-+		if (event->pmu_ctx->pmu != pmu)
-+			continue;
+ 	struct autofs_wait_queue *wq, *nwq;
  
--	perf_event_groups_for_cpu_pmu(event, groups, cpu, pmu) {
- 		perf_remove_from_context(event, 0);
- 		put_pmu_ctx(event->pmu_ctx);
- 		list_add(&event->migrate_entry, events);
--
--		for_each_sibling_event(sibling, event) {
--			perf_remove_from_context(sibling, 0);
--			put_pmu_ctx(sibling->pmu_ctx);
--			list_add(&sibling->migrate_entry, events);
--		}
- 	}
+-	mutex_lock(&sbi->wq_mutex);
+-	if (sbi->flags & AUTOFS_SBI_CATATONIC) {
+-		mutex_unlock(&sbi->wq_mutex);
++	lockdep_assert_held(&sbi->wq_mutex);
++	if (sbi->flags & AUTOFS_SBI_CATATONIC)
+ 		return;
+-	}
+ 
+ 	pr_debug("entering catatonic mode\n");
+ 
+@@ -40,6 +38,21 @@ void autofs_catatonic_mode(struct autofs
+ 	fput(sbi->pipe);	/* Close the pipe */
+ 	sbi->pipe = NULL;
+ 	sbi->pipefd = -1;
++}
++
++void autofs_catatonic_mode(struct autofs_sb_info *sbi)
++{
++	mutex_lock(&sbi->wq_mutex);
++	autofs_catatonic_mode_locked(sbi);
++	mutex_unlock(&sbi->wq_mutex);
++}
++
++static void autofs_catatonic_mode_for_pipe(struct autofs_sb_info *sbi,
++					   struct file *pipe)
++{
++	mutex_lock(&sbi->wq_mutex);
++	if (sbi->pipe == pipe)
++		autofs_catatonic_mode_locked(sbi);
+ 	mutex_unlock(&sbi->wq_mutex);
  }
  
-@@ -13191,8 +13186,7 @@ void perf_pmu_migrate_context(struct pmu *pmu, int src_cpu, int dst_cpu)
- 	 */
- 	mutex_lock_double(&src_ctx->mutex, &dst_ctx->mutex);
- 
--	__perf_pmu_remove(src_ctx, src_cpu, pmu, &src_ctx->pinned_groups, &events);
--	__perf_pmu_remove(src_ctx, src_cpu, pmu, &src_ctx->flexible_groups, &events);
-+	__perf_pmu_remove(src_ctx, pmu, &events);
- 
- 	if (!list_empty(&events)) {
- 		/*
--- 
-2.53.0
-
+@@ -170,7 +183,7 @@ static void autofs_notify_daemon(struct
+ 		autofs_wait_release(sbi, wq->wait_queue_token, ret);
+ 		break;
+ 	default:
+-		autofs_catatonic_mode(sbi);
++		autofs_catatonic_mode_for_pipe(sbi, pipe);
+ 		break;
+ 	}
+ 	fput(pipe);
 
 
