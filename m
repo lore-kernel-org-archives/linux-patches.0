@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214190;
-	b=rmktsFnsraiezOfroBsgboeMp9DwVm/1TogMmHiFBEAdZMTx+9LwiyX8JgwHX+Jyeu/f
-	 LnbZR0w2tIc0L6qibQz/rP/NykngDtHcNzsvGbrAmwJADwqnrctMqQO1IdkE5OoGlimBv
-	 3pqGgz4XewGqCLqWOu7Pmp9jOWhI+70Q+IhqUmpeO4AxX8q4j/ctVGFWpqvat6XmoLhx0
-	 FDoNA8nmkbRxlk5nlKrQEiZ05etgWt8l2bpEUx9FojxUUssgeg4Ei+p6HT+SpnwaDJ6rK
-	 4CR/K2V8xYJjWnGzTyF+BSd0TCMSovWgKeNhRCGjRmcfERqbBIZ4Z3/U2jQup2H56zg==
+	t=1793214193;
+	b=NcN6NuMYq4llot80B62lHxws11+TRGi6jhCW5jg7bq5TFrupdPhRw6CgRxbL6c63eWId
+	 2PToKrrImb8QIMNddlbBjytj0tlDEZZL2+d3eJx/vRQhnulWIGs6qFvhv/tAffSOuZEE8
+	 1NG+9c69o8yxvIXr77LTGdjNZxBHOj0BDLRiiL4kgcGGYl9GNVDbrEf0yIb77fArMnXvJ
+	 Y2TF4kkAxN5K3jvkIpfBJLrh63rPtHz+ewcMJx/Iwz2kQRtJHQUnv8hRbkVNIwMq0HvGC
+	 rxxocWUWPjuL2RbebRxVptyhpLAbBlHi+shje0BQpTvPv9MNxPZnwIjyNhFaPxm/yJw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214190;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214193;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=MUEJotimO2SpwfGHvghMBhsU/NR/hwaOP+21Z/nBrl8=;
-	b=kbTo1DM5wGLpIYczwgKgA9Wkn0CjP8FCv2xzeQAeMbB+ULOjs2ix9j2WzSkTWRHgfuO1
-	 ljLDecaS7tDFalqxmhhXacMeaW/xF1pKDZEbdeYcvJD57BhUMcjktZGH5ysn9DUDGHjsK
-	 cMCmZl+V6bWYhoslAM3H7vniCU5VklkVeVyOhRCl/YdIWSTrHPT5eVo7rvX2+6CKlNqTJ
-	 fsaM3kSOH31b9xWZPcZMIiw9Nqw0xRpICPE3QxtvRyRZUa07OW8FCYeQptkcfTWmAo9ry
-	 Yun1CLEHEe9n1L52v61K7N3B/IFmHdJbwbAMP+MJOA7Prh5m0OZigUzLNj9Q70rqKYQ==
+	bh=gMuiS0UiYKpy5ZCPD9VL0Gs3XyLpXwqA96/Fgqzaxt4=;
+	b=yoNEVfhc0dj+ZvMi6+tXwQY0BwCXepxQgdhXhO8W3oGGLtgxg+tey9ISobUbIJoq4JB9
+	 z7ojG5BVZgNsz6+FgBdk6DKiInzLjV7OdSqyg7H1r6jkFSzqnXbDBlgv9b1yeSUGyGbLA
+	 L2rN3rYw4Hf8WllEXLejD/997DbjP/FlCYL9sPxFyjyl/YyJKmMqkLSzmL8gK12IX2Dpc
+	 FBH2QDufa6PJuioLvei/OtYmgrcu2D9y2stWsUH0d2+fjdN0YvFhBXhScAZe51bDFU2fT
+	 j4LeBfKbrrzvOKMFmXLjf2MkYbUiVgh05kpdFK4IE8zJkumP+TRTucbkhgn08LMC5BA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FkZ7xcG6;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BU0VmyMM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D68960A5BC5;
-	Wed, 28 Oct 2026 19:03:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E729360A6F6F;
+	Wed, 28 Oct 2026 19:03:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FkZ7xcG6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B9BB1F031F1;
-	Wed, 28 Oct 2026 19:03:09 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BU0VmyMM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 399311F013CF;
+	Wed, 28 Oct 2026 19:03:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214189;
-	bh=MUEJotimO2SpwfGHvghMBhsU/NR/hwaOP+21Z/nBrl8=;
+	s=korg; t=1793214192;
+	bh=gMuiS0UiYKpy5ZCPD9VL0Gs3XyLpXwqA96/Fgqzaxt4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FkZ7xcG6MkCymyV/bcj3j+rfH3WhtswTfBoqO2jjUdaxg4u4x+s4nkvUKA3iDi44P
-	 UsBPZRjGH33Tn/HordSc2GrmPkehn7kmW1CkTpBUxAPZ/Ii0Gzv02SR2Zd4dv7a48/
-	 //r4Oe7mxJGpPM5oHlSFC+nVIXebJb2FXKLvthTk=
+	b=BU0VmyMMHR/o3GTYgHUo8s0LvXQnHvC0HFZCqkjgiD9r7AadtI18T0w4gF1kdvsQR
+	 GWuwQkSWClYc5IS63MoBBeIydiptSnTw4sSR1529dvIAx7ZzQwtS3JtsWP+FVUn6Yv
+	 4GxbRnhEU86rI1wA/jG93pCoQ555MLh4l6G6BjIM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kevin Hao <haokexin@gmail.com>,
-	Han Xu <han.xu@nxp.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Mark Brown <broonie@kernel.org>,
+	Philip Yang <Philip.Yang@amd.com>,
+	Kent Russell <kent.russell@amd.com>,
+	Felix Kuehling <felix.kuehling@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0772/1887] spi: fsl-qspi: use devm function instead of driver remove
-Date: Wed, 28 Oct 2026 17:47:48 +0100
-Message-ID: <20261028170517.008143496@linuxfoundation.org>
+Subject: [PATCH 6.1 0773/1887] drm/amdkfd: debugfs hang_hws skip GPU with MES
+Date: Wed, 28 Oct 2026 17:47:49 +0100
+Message-ID: <20261028170517.030065951@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -70,117 +70,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Han Xu <han.xu@nxp.com>
+From: Philip Yang <Philip.Yang@amd.com>
 
-[ Upstream commit 40369bfe717e96e26650eeecfa5a6363563df6e4 ]
+[ Upstream commit fe9d0061c413f8fb8c529b18b592b04170850ded ]
 
-Driver use devm APIs to manage clk/irq/resources and register the spi
-controller, but the legacy remove function will be called first during
-device detach and trigger kernel panic. Drop the remove function and use
-devm_add_action_or_reset() for driver cleanup to ensure the release
-sequence.
+debugfs hang_hws is used by GPU reset test with HWS, for MES this crash
+the kernel with NULL pointer access because dqm->packet_mgr is not setup
+for MES path.
 
-Trigger kernel panic on i.MX8MQ by
-echo 30bb0000.spi >/sys/bus/platform/drivers/fsl-quadspi/unbind
+Skip GPU with MES for now, MES hang_hws debugfs interface will be
+supported later.
 
-Cc: stable@vger.kernel.org
-Fixes: 8fcb830a00f0 ("spi: spi-fsl-qspi: use devm_spi_register_controller")
-Reported-by: Kevin Hao <haokexin@gmail.com>
-Signed-off-by: Han Xu <han.xu@nxp.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20250326224152.2147099-1-han.xu@nxp.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Philip Yang <Philip.Yang@amd.com>
+Reviewed-by: Kent Russell <kent.russell@amd.com>
+Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-fsl-qspi.c | 42 +++++++++++++++++---------------------
- 1 file changed, 19 insertions(+), 23 deletions(-)
+ drivers/gpu/drm/amd/amdkfd/kfd_device.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/spi/spi-fsl-qspi.c b/drivers/spi/spi-fsl-qspi.c
-index aee9993fe09db..665ce836c72f6 100644
---- a/drivers/spi/spi-fsl-qspi.c
-+++ b/drivers/spi/spi-fsl-qspi.c
-@@ -840,6 +840,19 @@ static const struct spi_controller_mem_ops fsl_qspi_mem_ops = {
- 	.get_name = fsl_qspi_get_name,
- };
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_device.c b/drivers/gpu/drm/amd/amdkfd/kfd_device.c
+index e2c055abfea97..a4eadd6416f86 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_device.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_device.c
+@@ -1177,6 +1177,11 @@ int kfd_debugfs_hang_hws(struct kfd_dev *dev)
+ 		return -EINVAL;
+ 	}
  
-+static void fsl_qspi_cleanup(void *data)
-+{
-+	struct fsl_qspi *q = data;
++	if (dev->shared_resources.enable_mes) {
++		dev_err(dev->adev->dev, "Inducing MES hang is not supported\n");
++		return -EINVAL;
++	}
 +
-+	/* disable the hardware */
-+	qspi_writel(q, QUADSPI_MCR_MDIS_MASK, q->iobase + QUADSPI_MCR);
-+	qspi_writel(q, 0x0, q->iobase + QUADSPI_RSER);
-+
-+	fsl_qspi_clk_disable_unprep(q);
-+
-+	mutex_destroy(&q->lock);
-+}
-+
- static int fsl_qspi_probe(struct platform_device *pdev)
- {
- 	struct spi_controller *ctlr;
-@@ -849,7 +862,7 @@ static int fsl_qspi_probe(struct platform_device *pdev)
- 	struct fsl_qspi *q;
- 	int ret;
- 
--	ctlr = spi_alloc_master(&pdev->dev, sizeof(*q));
-+	ctlr = devm_spi_alloc_master(&pdev->dev, sizeof(*q));
- 	if (!ctlr)
- 		return -ENOMEM;
- 
-@@ -930,40 +943,24 @@ static int fsl_qspi_probe(struct platform_device *pdev)
- 
- 	ctlr->dev.of_node = np;
- 
-+	ret = devm_add_action_or_reset(dev, fsl_qspi_cleanup, q);
-+	if (ret)
-+		goto err_put_ctrl;
-+
- 	ret = devm_spi_register_controller(dev, ctlr);
- 	if (ret)
--		goto err_destroy_mutex;
-+		goto err_put_ctrl;
- 
- 	return 0;
- 
--err_destroy_mutex:
--	mutex_destroy(&q->lock);
--
- err_disable_clk:
- 	fsl_qspi_clk_disable_unprep(q);
- 
- err_put_ctrl:
--	spi_controller_put(ctlr);
--
- 	dev_err(dev, "Freescale QuadSPI probe failed\n");
- 	return ret;
+ 	return dqm_debugfs_hang_hws(dev->dqm);
  }
- 
--static int fsl_qspi_remove(struct platform_device *pdev)
--{
--	struct fsl_qspi *q = platform_get_drvdata(pdev);
--
--	/* disable the hardware */
--	qspi_writel(q, QUADSPI_MCR_MDIS_MASK, q->iobase + QUADSPI_MCR);
--	qspi_writel(q, 0x0, q->iobase + QUADSPI_RSER);
--
--	fsl_qspi_clk_disable_unprep(q);
--
--	mutex_destroy(&q->lock);
--
--	return 0;
--}
--
- static int fsl_qspi_suspend(struct device *dev)
- {
- 	return 0;
-@@ -1001,7 +998,6 @@ static struct platform_driver fsl_qspi_driver = {
- 		.pm =   &fsl_qspi_pm_ops,
- 	},
- 	.probe          = fsl_qspi_probe,
--	.remove		= fsl_qspi_remove,
- };
- module_platform_driver(fsl_qspi_driver);
  
 -- 
 2.53.0
