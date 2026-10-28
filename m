@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216283;
-	b=o7r5TXAguNKbx8mfEwUMSzNDNbsnyYQ8xAcjWD6QOeQT9VTjTQh/xRYN59sjjkevbkzR
-	 1JGR9wmpNA2fskAwtkEPGVw4FJ//NhK6DdyqXYJ3WPL2mKsXPNKGdJu0HApatEFpbBAXg
-	 Fgyv8k02Hi3AbVRUAABdamPhHMOvBaDuCwXzw3eqUCQNYA9gf6hoZHoliHjMF8qml8qVM
-	 dNaBY9AjyemvCmbrWMy3/4gcvExp5NykMJgbsQA38s8MIF9D8yy9C5pFHSYPekUxkLn7H
-	 Gkdyi758KsOSWxS/TWezhO4EQAk7p6Ur6CLiQG/uKhGDXg4l0eZiVXkwGrAt3epRFgQ==
+	t=1793216285;
+	b=ejT/c7urE9Yjz1Zxq1TrW8VgPqPg/nHCtiGmLYqZCENiz/Rl+Dz9pmvcohEnexLDphIh
+	 WIv9LfpUYAlyrVGANksQdATM6Gimh2aHuP3K8ZAFs1zDply/wwbM+dmyKD+NpxLRT0uOT
+	 S90G6+FfUbgZwD2kFi97XG5qLBXpgwu6RxNs9vwV+LifWW1y/SnSfo0HFvvfQhMCXvByW
+	 8IIZrfhIT+xeMKE30mDiGtrSn3sgl27pI3VIM5m6cnYMLdQeakTggriphZlWT62FIqL6S
+	 FRKjExOD93/RHScBp20mZ1AWty+kK9tXfK0xktV142B5y+z678/y2geMhoI9HJXW0Cw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216283;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216285;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=XPWN9KptCdgTar7b/i/6R8wvff6YcIRr0hi6YKF1CVU=;
-	b=1M38ZEVObyxf0uAb4EHm4ARcYV0ZQhgwJ2bpcLldeZRGgqI2GIWYC1ang/6dFByyoHSP
-	 HgVz+HWSfXU1JeO6ruF2RSIa9+qtUQlKCkJQkuwRVrT9NA+yv+uLvjoXUYsDYQbahbxwf
-	 mSYPqlMT6Nt2TWdfAKufhPfIzTwxov7/VHaCH8XvsNE0qosGeqh1tsfVGw5KpGEZdmTeq
-	 iGdeUvS40qFSQwspewWdwPxwLJdyumqJUVlBCFrAqNUXL1y7Z+WPi5YCQM/T/Hrp8LMiu
-	 CrUyqW1wRqC1S1QOBoFy0MZLVZ25bHMQd29+s92oqB9QFARfbwMC+XYy33wYXPBLWKg==
+	bh=PFMv89eS1L14IyYAI0NFy/3CmSe6F8yWnPktEITgNBw=;
+	b=3zyLlTne8ZnWcOoI3iV6/Jyd0KDT1xr+kVgQzHxQxY5Uhb8oN3j1nrjKVtUd569gnKWh
+	 Df27HyY0hU/2xOXhq/QKF+pQp/Jjj7wmPRMLVGkWx4ptSbPvFAa+Ygo6ervJMszmlx+kk
+	 ygOp39yxLpPi2T9mrpe50dw/olL8Syq70ETDTjOEZ55vqUg5HmW/ynEgBNBPg/JvPpeOU
+	 qfPsVv3raFIKzLV5IM0RKh3nqKQUfQ1/VTKc6fs72CTYUeaO+T7r1E2qf8hA7ZD2ZkqZ8
+	 Jr624zPYK034kCjesiwgoFRv8hsz6lIri4vN7cBHCo1cs5F4ab2vHE6449uehHYkQIA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2HEVkWgy;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tRCSBklu;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C92AA606A31A;
-	Wed, 28 Oct 2026 19:38:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5472D606A31F;
+	Wed, 28 Oct 2026 19:38:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2HEVkWgy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D66A01F01825;
-	Wed, 28 Oct 2026 19:38:01 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tRCSBklu
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB2721F01828;
+	Wed, 28 Oct 2026 19:38:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216282;
-	bh=XPWN9KptCdgTar7b/i/6R8wvff6YcIRr0hi6YKF1CVU=;
+	s=korg; t=1793216285;
+	bh=PFMv89eS1L14IyYAI0NFy/3CmSe6F8yWnPktEITgNBw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2HEVkWgyaU86AnmY/KLfp6rwxdnYvDP4ZYV6WEJhv0UaN3dosPm82SN9ZwgoFdBbu
-	 cdzSxT0qFnkuHzk+DxB27h8m68346TzVOs7F/pHQ95vsxw4i9mMsoyd13fPuah5swu
-	 C+3wDlRevDch0J0qU4mhSPG6rvVuRJxQDfEuKXcI=
+	b=tRCSBkluf5MqoEVO6wdeyCknP39lIm9TkccbbBV77t+lrwXML5LtenJHRnmDdiiwT
+	 OZdcBjhw5ehtfIZ7sg+JrQe2F1KhRzYlYUIPy7lScsePG/mH8e0A/YDsqZ1WAapEoE
+	 pZkbL0c4sGGEbJ7T/Z3MBNm+KF3d17tu11O4t/a8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Robin Murphy <robin.murphy@arm.com>,
-	Greg Ungerer <gerg@linux-m68k.org>,
+	Michael Kelley <mhklinux@outlook.com>,
+	Mostafa Saleh <smostafa@google.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	"Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1502/1887] dma-direct: simplify the use atomic pool logic in dma_direct_alloc
-Date: Wed, 28 Oct 2026 17:59:58 +0100
-Message-ID: <20261028170533.639823286@linuxfoundation.org>
+Subject: [PATCH 6.1 1503/1887] dma-direct: return struct page from dma_direct_alloc_from_pool()
+Date: Wed, 28 Oct 2026 17:59:59 +0100
+Message-ID: <20261028170533.662527583@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,66 +71,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christoph Hellwig <hch@lst.de>
+From: Aneesh Kumar K.V (Arm) <aneesh.kumar@kernel.org>
 
-[ Upstream commit b1da46d70e5427a9ba5eae28bcca29a20e68a442 ]
+[ Upstream commit 94a04ad732c9f8b9554270fc4038a06737de5c22 ]
 
-The logic in dma_direct_alloc when to use the atomic pool vs remapping
-grew a bit unreadable.  Consolidate it into a single check, and clean
-up the set_uncached vs remap logic a bit as well.
+Commit 5b138c534fda ("dma-direct: factor out a dma_direct_alloc_from_pool
+helper") changed dma_direct_alloc_from_pool() to return the CPU address
+from dma_alloc_from_pool(). That fits dma_direct_alloc(), but
+dma_direct_alloc_pages() also uses the helper and expects a struct page *.
 
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Robin Murphy <robin.murphy@arm.com>
-Reviewed-by: Greg Ungerer <gerg@linux-m68k.org>
-Tested-by: Greg Ungerer <gerg@linux-m68k.org>
-Stable-dep-of: 94a04ad732c9 ("dma-direct: return struct page from dma_direct_alloc_from_pool()")
+Fix this by making dma_direct_alloc_from_pool() return the struct page *
+again, and pass the CPU address back through an out-parameter for the
+dma_direct_alloc() caller.
+
+Fixes: 5b138c534fda ("dma-direct: factor out a dma_direct_alloc_from_pool helper")
+Cc: stable@vger.kernel.org
+Tested-by: Michael Kelley <mhklinux@outlook.com>
+Tested-by: Mostafa Saleh <smostafa@google.com>
+Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
+Signed-off-by: Aneesh Kumar K.V (Arm) <aneesh.kumar@kernel.org>
+Reviewed-by: Mostafa Saleh <smostafa@google.com>
+Link: https://lore.kernel.org/r/20260717180442.110954-2-aneesh.kumar@kernel.org
+Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/dma/direct.c | 25 ++++++++++---------------
- 1 file changed, 10 insertions(+), 15 deletions(-)
+ kernel/dma/direct.c | 18 ++++++++++--------
+ 1 file changed, 10 insertions(+), 8 deletions(-)
 
 diff --git a/kernel/dma/direct.c b/kernel/dma/direct.c
-index d6871a3fe5f6a..621a711224574 100644
+index 621a711224574..88ec1b5cb5060 100644
 --- a/kernel/dma/direct.c
 +++ b/kernel/dma/direct.c
-@@ -240,27 +240,22 @@ void *dma_direct_alloc(struct device *dev, size_t size,
- 					dma_handle);
+@@ -168,22 +168,21 @@ static bool dma_direct_use_pool(struct device *dev, gfp_t gfp)
+ 	return !gfpflags_allow_blocking(gfp) && !is_swiotlb_for_alloc(dev);
+ }
  
- 		/*
--		 * Otherwise remap if the architecture is asking for it.  But
--		 * given that remapping memory is a blocking operation we'll
--		 * instead have to dip into the atomic pools.
-+		 * Otherwise we require the architecture to either be able to
-+		 * mark arbitrary parts of the kernel direct mapping uncached,
-+		 * or remapped it uncached.
- 		 */
-+		set_uncached = IS_ENABLED(CONFIG_ARCH_HAS_DMA_SET_UNCACHED);
- 		remap = IS_ENABLED(CONFIG_DMA_DIRECT_REMAP);
--		if (remap) {
--			if (dma_direct_use_pool(dev, gfp))
--				return dma_direct_alloc_from_pool(dev, size,
--						dma_handle, gfp);
--		} else {
--			if (!IS_ENABLED(CONFIG_ARCH_HAS_DMA_SET_UNCACHED))
--				return NULL;
--			set_uncached = true;
--		}
-+		if (!set_uncached && !remap)
-+			return NULL;
- 	}
+-static void *dma_direct_alloc_from_pool(struct device *dev, size_t size,
+-		dma_addr_t *dma_handle, gfp_t gfp)
++static struct page *dma_direct_alloc_from_pool(struct device *dev, size_t size,
++		dma_addr_t *dma_handle, void **cpu_addr, gfp_t gfp)
+ {
+ 	struct page *page;
+ 	u64 phys_limit;
+-	void *ret;
  
- 	/*
--	 * Decrypting memory may block, so allocate the memory from the atomic
--	 * pools if we can't block.
-+	 * Remapping or decrypting memory may block, allocate the memory from
-+	 * the atomic pools instead if we aren't allowed block.
+ 	if (WARN_ON_ONCE(!IS_ENABLED(CONFIG_DMA_COHERENT_POOL)))
+ 		return NULL;
+ 
+ 	gfp |= dma_direct_optimal_gfp_mask(dev, &phys_limit);
+-	page = dma_alloc_from_pool(dev, size, &ret, gfp, dma_coherent_ok);
++	page = dma_alloc_from_pool(dev, size, cpu_addr, gfp, dma_coherent_ok);
+ 	if (!page)
+ 		return NULL;
+ 	*dma_handle = phys_to_dma_direct(dev, page_to_phys(page));
+-	return ret;
++	return page;
+ }
+ 
+ static void *dma_direct_alloc_no_mapping(struct device *dev, size_t size,
+@@ -255,8 +254,11 @@ void *dma_direct_alloc(struct device *dev, size_t size,
+ 	 * the atomic pools instead if we aren't allowed block.
  	 */
--	if (force_dma_unencrypted(dev) && dma_direct_use_pool(dev, gfp))
-+	if ((remap || force_dma_unencrypted(dev)) &&
-+	    dma_direct_use_pool(dev, gfp))
- 		return dma_direct_alloc_from_pool(dev, size, dma_handle, gfp);
+ 	if ((remap || force_dma_unencrypted(dev)) &&
+-	    dma_direct_use_pool(dev, gfp))
+-		return dma_direct_alloc_from_pool(dev, size, dma_handle, gfp);
++	    dma_direct_use_pool(dev, gfp)) {
++		page = dma_direct_alloc_from_pool(dev, size, dma_handle,
++						  &ret, gfp);
++		return page ? ret : NULL;
++	}
  
  	/* we always manually zero the memory once we are done */
+ 	page = __dma_direct_alloc_pages(dev, size, gfp & ~__GFP_ZERO, true);
+@@ -367,7 +369,7 @@ struct page *dma_direct_alloc_pages(struct device *dev, size_t size,
+ 	void *ret;
+ 
+ 	if (force_dma_unencrypted(dev) && dma_direct_use_pool(dev, gfp))
+-		return dma_direct_alloc_from_pool(dev, size, dma_handle, gfp);
++		return dma_direct_alloc_from_pool(dev, size, dma_handle, &ret, gfp);
+ 
+ 	page = __dma_direct_alloc_pages(dev, size, gfp, false);
+ 	if (!page)
 -- 
 2.53.0
 
