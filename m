@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793211419;
-	b=onQ30xlbhAoDAqA4ELzbbANrjrYNlyIG40l8sPoMCdTV1PdaamAm2M0SPGwxPbiqsNdA
-	 dWY1AcemdKgZesM1faMg/VZnXPKXK15HkHxUnjp72OOd7mZuHANRtCEqC6Q9TTY5Iopwb
-	 zD01GyYvJKtNLer8XfJetnuJ/ijfXAMMNT9usHIo5cs0ypriKtH8IAYaDUNeKDNNxb6cV
-	 5OwvQCg/oDvHV8DFCVKYbdV8aJ9rHLZBpX3SfujUs8RsDSSH9HvWCKFpgd9t9LjcJeJqA
-	 FpCQc3g+7J7Bh1oFzPhRwMGSNsReRqJxb1MjNqteBwBVo3plU7hHuqqsXydNPfi3BiA==
+	t=1793211422;
+	b=b4VrX0tQOtcwqTtgbLnIk/5Z2wp4D0QGf6DRovIMvMqOVAvAnPTzIk1czGwYMK9aWVNV
+	 n2WX7Aehe/U25eQnV6KhRm0S2faxpvJX5nhoLu/aSXIaJ0YptWf6tuifHEb5axruEuK+1
+	 t2sP8nb2lb5pidRYZPPpFQj92yrJnljAPU2stBrur3mGM9uN6o/ioPkAKaVS4LZzRpubB
+	 7yhLIjAoF3znM3RVnaA2DamiRaL5VJxE9e7OzsqAH0vJzoD26WK+m/XMtTiW8Nb0xwLyF
+	 EOH+nG35RmrHcM51fIDyYZMan+kZllALKhVdT54mQBtQ0ni40j0BC51YSVXHSaXWAzA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793211419;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793211422;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=PZlet4hY4UuAM6biN6t4+d2TG661zWnPR0afrul9MuM=;
-	b=ZriIerAG3myJ2b5gQ4yozNqGfOMXo5SROGoojszPsUThbqaACpzvznxSGG134gmdgYIT
-	 hytbrNCSLD1rOcj8u0Ljx6xnm5JuDNROJk3mjO+kPqEZB0JxcGg5LpknRz7Ms3ENDNkJX
-	 wxWzq471bTQitUwPkhsv6CWtnB65jXQQldA7jsHHKgVvbToX7MDaIqNbRNz5u+cyWL7o+
-	 o9xyn4TR9Ju6Sr6Oi6SLzocoQLNOcuh/g12J9LojgjET+/w/VRfvDhhhn34K6wgWEgLvl
-	 0jItvGN7kKLIxtZH21NHgpAskSwPpGh7DBHNa1JS51Sx+E7NLwXQIbsa8069zIKr7Iw==
+	bh=YAnHw6IuYDLnBKz4VVD7jzV/qnVk559VjPSr5zts98s=;
+	b=cd/O1MT0qMuOW8M0/ZwQxSsCuEI0m2IJb8/KOPYTXPbn37FdA3SP2cS9lD9O8RMDBHgZ
+	 cshtcRpWpqLlSwXzWmAMVen8RYy27US9cj0fbUGrYS4Wz9kqV7gWadIGTouvXPz5b+feG
+	 qoTrbnUokVCodG66OVjmUBdzsa4YHkGZI0akSLRlkmeZrWpiTbW8wqh2IFDWGBJp/M/9R
+	 YJFvkKndGBJRgBWPidmllq6sdD8iS4zjoKQkbzl5wXaE0ocKy0CYo6zk3VehaYrF14waE
+	 Q0vUBlo1reXRKFJRoA0JbNQD+Cs3i7Tais+bna9QH4aWvDXlD77TSaV2bA+Ra7qThSQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XwbsV624;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mROm1Cnx;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 079E0606A31D;
-	Wed, 28 Oct 2026 18:16:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0420D606A31F;
+	Wed, 28 Oct 2026 18:17:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XwbsV624
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 577AE1F01828;
-	Wed, 28 Oct 2026 18:16:58 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mROm1Cnx
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37DB71F01825;
+	Wed, 28 Oct 2026 18:17:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793211418;
-	bh=PZlet4hY4UuAM6biN6t4+d2TG661zWnPR0afrul9MuM=;
+	s=korg; t=1793211421;
+	bh=YAnHw6IuYDLnBKz4VVD7jzV/qnVk559VjPSr5zts98s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XwbsV6242/N+vgo4ddPJ5HVJ5vrT42gKJNERItbEftl7/JD+LyiykbsTEG1jW93Kq
-	 WrdgULNJPMrr8DaDA47WXtxZJOiEAtLIJLSC9V1pdBfNRjcp6EI2sYUJGvYxxWtsAz
-	 MseV/RdE+291di2gtJltGGvYbNg3A75BM/lrXDVw=
+	b=mROm1Cnxm65b/OpSVL3ewN2SVhghJsnl+gEUBKZImnVNpse876po+ZmnxYNLsOk/2
+	 4rvKvA1kpJIqTPvGhvy8DZcsJLc8FuC/w1WTw+lAC3XXQhlxL5XGSlFeNzoouRPS2H
+	 FJf858w1lDpf3E9LCMMXmy7x2pMDB2sLgLdp/Vfg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhao Li <enderaoelyther@gmail.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	stable <stable@kernel.org>,
+	Mingyu Wang <25181214217@stu.xidian.edu.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 325/571] wifi: mac80211: account proxy paths against the mesh path limit
-Date: Wed, 28 Oct 2026 17:57:52 +0100
-Message-ID: <20261028170015.716375903@linuxfoundation.org>
+Subject: [PATCH 5.15 316/571] tty: vt: fix memory leak in vc_allocate()
+Date: Wed, 28 Oct 2026 17:57:43 +0100
+Message-ID: <20261028170015.499258294@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -68,70 +68,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhao Li <enderaoelyther@gmail.com>
+From: Mingyu Wang <25181214217@stu.xidian.edu.cn>
 
-[ Upstream commit a5f35d4b112af1415ff06bd501c8cc26cc08aa8b ]
+[ Upstream commit 5b114bfc1dfd88f9d50822d532f7f1fce0f7388a ]
 
-Proxy-path churn can drive the interface path counter negative and let
-later mesh path additions exceed MESH_MAX_MPATHS.
+If the screen buffer allocation fails in vc_allocate(), the error handling
+path jumps to `err_free`. However, this path fails to release the unicode
+screen map attached to `vc->uni_pagedict_loc`.
 
-mesh_path_free_rcu() decrements the interface mpaths counter for entries
-from both the mesh and proxy path tables, but mpp_path_add() never
-reserves a slot in that counter. Removing or expiring a proxy path
-therefore returns a slot that was never charged.
+During the early stages of vc_allocate(), the unicode screen map is either
+newly allocated via con_set_default_unimap() or shares the default unicode
+map from a previously initialized console (which increments its refcount).
+If the subsequent kzalloc() for the screen buffer fails, the err_free path
+frees the vc structure but leaves the attached uni_pagedict with an
+elevated refcount. This results in an unreferenced object memory leak, as
+the reference to the dictionary is lost and its refcount can never reach
+zero.
 
-mesh_path_add() uses the same counter to enforce MESH_MAX_MPATHS, so once
-it falls below the number of installed paths the limit no longer holds.
+This issue was discovered by DevGen (an automated virtual device modeling
+fuzzer based on Syzkaller). During fuzzing with kernel fault injection
+(failslab) enabled, the fuzzer forcefully failed the kzalloc() for the
+screen buffer, exposing this error-handling path leak.
 
-Reserve the shared quota before allocating a proxy path and release it on
-every unsuccessful addition. Mesh and proxy paths now share one
-1024-entry budget, so mpp_path_add() can return -ENOSPC at that limit.
+Fix this by checking *vc->uni_pagedict_loc and calling con_free_unimap(vc)
+in the err_free path before kfree(vc). This safely decrements the refcount
+and releases the dictionary memory if this was the last reference. The
+explicit check is added to maintain consistency with other callers.
 
-Fixes: ece1a2e7e860 ("mac80211: Remove mesh paths when an interface is removed")
-Cc: stable@vger.kernel.org
-Assisted-by: LLM sparse kasan
-Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
-Link: https://patch.msgid.link/20260916113649.28315-3-enderaoelyther@gmail.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-[ sashal: Adjusted error-handling braces to accommodate the missing mesh_fast_tx_flush_addr() call. ]
+Fixes: 34902b7f2754 ("tty: vt, get rid of weird source code flow")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Mingyu Wang <25181214217@stu.xidian.edu.cn>
+Link: https://patch.msgid.link/20260803144556.163856-1-25181214217@stu.xidian.edu.cn
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+[ sashal: Replaced the upstream uni_pagedict_loc field with the existing vc_uni_pagedir_loc field. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/mesh_pathtbl.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/tty/vt/vt.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/mac80211/mesh_pathtbl.c b/net/mac80211/mesh_pathtbl.c
-index a0ef296e3e4f3..f2970f33f96c5 100644
---- a/net/mac80211/mesh_pathtbl.c
-+++ b/net/mac80211/mesh_pathtbl.c
-@@ -449,10 +449,15 @@ int mpp_path_add(struct ieee80211_sub_if_data *sdata,
- 	if (is_multicast_ether_addr(dst))
- 		return -ENOTSUPP;
- 
-+	if (!atomic_add_unless(&sdata->u.mesh.mpaths, 1, MESH_MAX_MPATHS))
-+		return -ENOSPC;
-+
- 	new_mpath = mesh_path_new(sdata, dst, GFP_ATOMIC);
- 
--	if (!new_mpath)
-+	if (!new_mpath) {
-+		atomic_dec(&sdata->u.mesh.mpaths);
- 		return -ENOMEM;
-+	}
- 
- 	memcpy(new_mpath->mpp, mpp, ETH_ALEN);
- 	tbl = &sdata->u.mesh.mpp_paths;
-@@ -465,8 +470,10 @@ int mpp_path_add(struct ieee80211_sub_if_data *sdata,
- 		hlist_add_head_rcu(&new_mpath->walk_list, &tbl->walk_head);
- 	spin_unlock_bh(&tbl->walk_lock);
- 
--	if (ret)
-+	if (ret) {
- 		kfree(new_mpath);
-+		atomic_dec(&sdata->u.mesh.mpaths);
-+	}
- 
- 	sdata->u.mesh.mpp_paths_generation++;
- 	return ret;
+diff --git a/drivers/tty/vt/vt.c b/drivers/tty/vt/vt.c
+index 124c1e5875629..187d42f61426e 100644
+--- a/drivers/tty/vt/vt.c
++++ b/drivers/tty/vt/vt.c
+@@ -1160,6 +1160,8 @@ int vc_allocate(unsigned int currcons)	/* return 0 on success */
+ 	return 0;
+ err_free:
+ 	visual_deinit(vc);
++	if (*vc->vc_uni_pagedir_loc)
++		con_free_unimap(vc);
+ 	kfree(vc);
+ 	vc_cons[currcons].d = NULL;
+ 	return err;
 -- 
 2.53.0
 
