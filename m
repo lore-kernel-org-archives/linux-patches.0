@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213024;
-	b=VRxrK5UMtkmuE/BsjxzsVNV9AgtFCTl+OKgFNPiywrUZIWlzDrLNjD0z3M8Cx3pRRRMU
-	 ZXGXvcGum5OnCjisLcbcE/CxfSBIfoSJN4a6eg9z+1V4cBYAijzmGz8E3aVcDRX6+thCP
-	 SW4VJJ6jjoB0beGIruWAqbWBon0m5OU85A4jqjKD5GOtAcHPVVSfIWivCtg6Zz7TVdGHL
-	 qQ/YBcZjPx7/Hl+8Pt6gnmNug8eJRmvPyFQWpRyARpxUgZePSdkuN5wpPekY6Lhp+AyCa
-	 mw/dL8M621Y9ce8oJfWWF4eU5hDlwi389OSipS5PXynJ9x80R9edc9vdP6MawFpdSmg==
+	t=1793213027;
+	b=eRyjHZ5ZLC+U5kxl2egSnfQWdkoRRCFiYyw/pPqDcPeCJDWMBjUnDzNsQNJp9aimC9ZR
+	 z8l16TH0w+xGDP2ralExDgOJnxU+sfwPIFL/8Xw3px5aol0e5C9Cjrj48V+ioNvY9B0Vj
+	 2YADX3JGTgxJC3Im0JO6shNT8U7jmnIkfC0jEu84dM76LOyGyv9xSdcB6Ec2s+to8WUEL
+	 LlAu21GMJY/1sKWjRXAtsfHbjht3MKIYfLGR3xN4c+l9OKBBLwv4itqRqoX5lCZaO3GqI
+	 j7qQKXV9oyi8Ru4pHOcViUjjRzzORspbbp6rY6htJorJlD0yVvzlTpg/Vp8i2MloGNg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213024;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213027;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=8NHgZRYJcmTGs1rWW8F2GWxRk6wKxrMtw/Sw8hUhmp8=;
-	b=WOwr1ej5tpChE1JCWR6Hf23tGOefw9G++bdbZ2Ml9jXtxZtm9t99pZSbbkNK+wP8efQI
-	 plU4FIAsrfZiEhDgtA5Hor5GVuvnjnZrfA5Kn2YAPpcnh5dx+J+TubsT799TgvNHZAy7u
-	 FWh4O4yYLk4mneMIOZJT/il8A0vHjfbm3ezoIvautUNdO/tYbp7qMIv16IN0rBA3vt5nM
-	 jpamQiG7ao+x4/2UiBAeEaUKV8J+6oGBWX/45YsYIdAgPuav4y8YFuuFDABvSq46IRqqy
-	 Ga5gHqpjGX6sMfKo3VO61DTSNDsFcI/m+CjhWtDRGWzTrPUKfn4iu9tKoiEtAL85Vaw==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=3/MMwuEe2MdTPEVb3qr9jRbi15Sn1iPdMM6O6ouCFFY=;
+	b=3oYFp1xotgKzDMAdE/tVSyTpXpfxiwkrjFK29twn64O6pTuESVgAVAgEywaZ8+KZZKpA
+	 q3pr/HeGuvaa9UrnOZDa6FYbblqSxHhaL7r2NRBEiCZw/QqVwNoYgaqr+i1IneciR/FLF
+	 sETk57m8WpfgPIzlLU8tIBHKmcixoU4Gib7Ib60OSv2RygCGwgQxozXrdPaoLYPRaR687
+	 xXkf5zy1ZYNv0/RrGeh2J0hy+VTK4MOMJjqzh8Chuk8WK1MZv3VBW/SLnOfttY8+WU+1W
+	 kUfYuEj3n+P3QH8b39/UHTHLbQasC/TI6jlzJ9skxkrVE6dK7jfdA0W9/M0A5165rLA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NYDGmz9e;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SKxzDlbt;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90C23606A320;
-	Wed, 28 Oct 2026 18:43:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6358E606A320;
+	Wed, 28 Oct 2026 18:43:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NYDGmz9e
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFCEA1F01825;
-	Wed, 28 Oct 2026 18:43:43 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SKxzDlbt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B672F1F01829;
+	Wed, 28 Oct 2026 18:43:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213024;
-	bh=8NHgZRYJcmTGs1rWW8F2GWxRk6wKxrMtw/Sw8hUhmp8=;
+	s=korg; t=1793213027;
+	bh=3/MMwuEe2MdTPEVb3qr9jRbi15Sn1iPdMM6O6ouCFFY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NYDGmz9eyGy5+pi48uyUhFeWjhQMZwO8H/R6SpVl8+zgg5aZiyRy/16f4Hi0xF6XZ
-	 cCpWkV5yFc2LiZM2XDfeixUidAbuRZtVJ1smhefGzSN6OGHym1ddgUjSd9dIGLRbml
-	 OsJLxBqAKjPP6qjzudMZJDKWyf5fxllIrEpW7wqY=
+	b=SKxzDlbtrzMWj+yD/Ro1iGvH3MPogq4RIK6QDMCZhEu2cuL2uuLXs3ZsQb5UGslM+
+	 90q92Bdbs1pce6F1Tdj0PLBAPLXBfCD1tP5cGEv6H7cHXTS6yVhlK2J4DFX1ONI49v
+	 aoNgVtXyPOzNEfByKLNEaVU+sdxNQG0g9sd/WJb8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hui Su <sh_def@163.com>,
-	Joshua Crofts <joshua.crofts1@gmail.com>,
-	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Subject: [PATCH 6.1 0343/1887] iio: pressure: bmp280: fix out-of-bounds access in sampling frequency lookup
-Date: Wed, 28 Oct 2026 17:40:39 +0100
-Message-ID: <20261028170507.032274231@linuxfoundation.org>
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 0361/1887] serial: imx: Convert to platform remove callback returning void
+Date: Wed, 28 Oct 2026 17:40:57 +0100
+Message-ID: <20261028170507.447551518@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -62,46 +61,65 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hui Su <sh_def@163.com>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-commit 56c423b233b214182c58c99861899327b45b0d6c upstream.
+[ Upstream commit c066f87314b7fbbf4d72d38957436a98e7b7e503 ]
 
-The sampling frequency tables store each frequency as an integer part and
-a fractional part in micro units. num_sampling_freq_avail is initialized
-to the number of flattened integer elements because read_avail() returns
-the table as a flat array.
+The .remove() callback for a platform driver returns an int which makes
+many driver authors wrongly assume it's possible to do error handling by
+returning an error code. However the value returned is ignored (apart
+from emitting a warning) and this typically results in resource leaks.
 
-bmp280_write_sampling_frequency(), however, indexes the same table as a
-two-dimensional array and uses num_sampling_freq_avail as the number of
-rows. Convert the flattened element count back to the number of rows
-before iterating over the table.
+To improve here there is a quest to make the remove callback return
+void. In the first step of this quest all drivers are converted to
+.remove_new(), which already returns void. Eventually after all drivers
+are converted, .remove_new() will be renamed to .remove().
 
-Fixes: 10b40ffba2f9 ("iio: pressure: bmp280: Add more tunable config parameters for BMP380")
-Cc: stable@vger.kernel.org
-Signed-off-by: Hui Su <sh_def@163.com>
-Reviewed-by: Joshua Crofts <joshua.crofts1@gmail.com>
-Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Trivially convert this driver from always returning zero in the remove
+callback to the void returning variant.
+
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Link: https://lore.kernel.org/r/20231110152927.70601-18-u.kleine-koenig@pengutronix.de
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 8b0b29fdcb47 ("serial: imx: serialize imx_uart_ports[] lifetime")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/pressure/bmp280-core.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/tty/serial/imx.c |    6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
---- a/drivers/iio/pressure/bmp280-core.c
-+++ b/drivers/iio/pressure/bmp280-core.c
-@@ -725,7 +725,7 @@ static int bmp280_write_sampling_frequen
- 					   int val, int val2)
- {
- 	const int (*avail)[2] = data->chip_info->sampling_freq_avail;
--	const int n = data->chip_info->num_sampling_freq_avail;
-+	const int n = data->chip_info->num_sampling_freq_avail / 2;
- 	int ret, prev;
- 	int i;
+--- a/drivers/tty/serial/imx.c
++++ b/drivers/tty/serial/imx.c
+@@ -2534,13 +2534,11 @@ err_clk:
+ 	return ret;
+ }
  
+-static int imx_uart_remove(struct platform_device *pdev)
++static void imx_uart_remove(struct platform_device *pdev)
+ {
+ 	struct imx_port *sport = platform_get_drvdata(pdev);
+ 
+ 	uart_remove_one_port(&imx_uart_uart_driver, &sport->port);
+-
+-	return 0;
+ }
+ 
+ static void imx_uart_restore_context(struct imx_port *sport)
+@@ -2709,7 +2707,7 @@ static const struct dev_pm_ops imx_uart_
+ 
+ static struct platform_driver imx_uart_platform_driver = {
+ 	.probe = imx_uart_probe,
+-	.remove = imx_uart_remove,
++	.remove_new = imx_uart_remove,
+ 
+ 	.driver = {
+ 		.name = "imx-uart",
 
 
