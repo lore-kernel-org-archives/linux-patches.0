@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793209495;
-	b=hNuL/njuOF9z1J0Gknzxu9JYpj+qZHYkQiqjkRQBHMh7T5Eg+zR8evNPNv2l7Hq0No80
-	 XrK0BAwllpENAHmbvb6Wi0I0xbBlsyo8WbE9ChjjAq3HCGCVs+U/NwI9RoOWcxv4qqE3V
-	 cwuGfU8LX9yrda6apYRJHgkesFqc2D8OXWhV9w0sRYlyBeolhQ4s28tXvy4QeukDaebGZ
-	 /QqgTh3C0xVBigJCJiYikA4QH54LH53fQbLNguc0c1OBsehBiZImDc8NAPjjWZA+TxAQw
-	 8U6UDpc4oDT1fKhuZ9ULGato9pB2ipaYZYH1Dnd8yFMBs0J2wP9mhykrPNRt89q1iZQ==
+	t=1793209498;
+	b=0abAN0buqeuC1LMbPYRFv9x9786NHpAZV38fbQK5AqgfNChDgRwD1XMqFXQXp9Q6ibNF
+	 TKV/k2HEr3I44T7NbR2cMhJ+xN4L8Oap4IJrOx3NSa/5/8gXTXvfUqupFV4Vky1bFhc1+
+	 MGHjoKIIF3eFNQl8CpMSqatjBoy0YSToypMsbKqF8ma8I8N2LSZVGCxcrvN3JFnW2Y9jq
+	 lSkr5toETwUNKkLu+l7DnkI1EIPXS7sBS+6aJR4Y8B/CFKsQrGGlqCgi8QDaYn2/YxYXF
+	 LP1GOE15TRm9t3DWEegcsi+/Ae9OZSa1doiZCi0eGu7jCshZxbJToQm4EVJiFmcGhAw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793209495;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793209498;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Ky2pJdqgXFg+N0RJlmjy6ehXGBrDdbr8pqvv4xcf83I=;
-	b=e2rISrgfpwZ2vl8Bh9fk1tkx/W5vVWpJEcUJfJ8ZELvrL94mu235dwz2pZfeK5yM2BSy
-	 6bVUIx3gXzCXnpiJCYXNsC/oL2oEdgU/XWwPp28CK3IlR6C7qq+omGGEcX+1h5+JVqgL+
-	 okQ5XCGOfh+4azHkkPJPZpzhNpyd2Y3AstgiVWRjss7VPXyB0L4ZltFHhQGwr7WMSyy7i
-	 k9UNkunK9s63fIfIBM5zXXiy5/oNgaGofTUacuyzhK9+MLyLnGiDR55eRukRwctMFcm8A
-	 UaxrWj0iZ3/CTNvFtQbtM6D7P+kX8QsZ8NpGCMlVPa4pQ4+XVX/qyiD0K8wGL2rvPJg==
+	bh=jdG1yN7jaWrzcn1+Ku4Bznrsf1c7EKo4izLG173/y9w=;
+	b=LhqM4Mw+SBzCExZftZ/yroWFVNWHwIt8jly/WJ/ntASacPaaEQLTReSe1iO1IpuE7N2i
+	 zQ0J7ve5REAMUGw/RRefZ6V+CRbMcoHsXiqSGQD+Sdngybtm3y+MfAXnQe76iGqYQx4IE
+	 PqCTNn5bIUnASp4ost1Se9N5pMHPvgz+Tx4XgioPTE89W82CSCuHREbaHFa2HMw9Qq8rK
+	 9hQLFsKqGXuw+FVWW93qWoeTDLPsLIQmGCWBiW0PTNSTqqV6RNG6ph0987MBXmNZhARnW
+	 hrM3GEheb0UvoO6sUnt1eTS5Rlk7/fHRQ9qLsUZjapEMSTA3yUAJhaC5MsV6dH52A4w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hehDY0ik;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hcRh0i3Y;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D72F1606A31A;
-	Wed, 28 Oct 2026 17:44:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8754606A31A;
+	Wed, 28 Oct 2026 17:44:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hehDY0ik
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3190D1F01825;
-	Wed, 28 Oct 2026 17:44:54 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hcRh0i3Y
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1060F1F01825;
+	Wed, 28 Oct 2026 17:44:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793209494;
-	bh=Ky2pJdqgXFg+N0RJlmjy6ehXGBrDdbr8pqvv4xcf83I=;
+	s=korg; t=1793209497;
+	bh=jdG1yN7jaWrzcn1+Ku4Bznrsf1c7EKo4izLG173/y9w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hehDY0ikb6VlIzNzJrVhS+0DhsoQXk77hCKx0wK/wXU17zNRUIFIveYhhFKcQ0I7n
-	 euxV4yiMqpFntBUZDcaLylLjWb/W4pqLH1naX7/mQx4/3Mrukm9vhuWUohLT0mwoc1
-	 w8l3ZMtHHppmqp+Qtw9JJWBpzY7vc2Z10QLPilQ4=
+	b=hcRh0i3YR5nKP6YT/vD9gTkNQMN4V5abOmh5myazDFTAes7KVDc91RP0rx4A9OxEK
+	 thfpfXKml4qj7GQzZLydPOFzacTZlQJ4Z0KAccbQmLB9iwoaiaEpnmn/bm9kmpkg/Z
+	 IcCpxY+i2NXgSIq8pv3CPd16JbQgSIWrdumoUnSU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sun Yangkai <sunyangkai@fygo.io>,
-	Chen Cheng <chencheng@fnnas.com>,
-	Mikulas Patocka <mpatocka@redhat.com>,
+	Amit Klein <aksecurity@gmail.com>,
+	Noam Caspi <noam.caspi@mail.huji.ac.il>,
+	Ido Schimmel <idosch@nvidia.com>,
+	David Ahern <dsahern@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 491/516] dm-integrity: require stable writes for internal hash modes
-Date: Wed, 28 Oct 2026 18:00:43 +0100
-Message-ID: <20261028170015.108648889@linuxfoundation.org>
+Subject: [PATCH 5.10 492/516] ipv4: udp: Create exceptions before socket matching
+Date: Wed, 28 Oct 2026 18:00:44 +0100
+Message-ID: <20261028170015.132845604@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -69,88 +71,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen Cheng <chencheng@fnnas.com>
+From: Ido Schimmel <idosch@nvidia.com>
 
-[ Upstream commit b2fd92f016e9d692fd3c8c08d0ee014e9212279d ]
+[ Upstream commit 4c3499f79f8c7e8561266bcc220a18538cec0458 ]
 
-dm-integrity direct, bitmap and inline internal-hash modes compute
-integrity tags from the pages carried by the write bio.  The lower data
-write also uses those pages, so the tag and the data write depend on the
-same memory contents staying unchanged while writeback is in flight.
+Currently, when ICMP Fragmentation Needed and Redirect Message packets
+are locally delivered and quote a UDP packet, a FIB nexthop exception
+(FNHE) is only created if the kernel can match the UDP packet to an
+existing socket.
 
-Without stable writes, a buffered writer can modify a writeback folio
-after dm-integrity has submitted the data bio and before the lower device
-has consumed the data.  After a crash, this can leave data from the later
-contents with a tag calculated from the earlier contents, causing
-permanent checksum failures on read.
+This behavior allows off-path attackers to conduct a side-channel attack
+on the FNHE cache in order to discover the ephemeral port used by a
+connected UDP socket.
 
-Set BLK_FEAT_STABLE_WRITES for internal-hash D, B and I modes so
-filesystems wait for writeback folios to become stable before modifying
-them again.  Journal mode is left unchanged because it copies data into
-the journal before computing and persisting the tag.
+Commit 6457378fe796 ("ipv4: use siphash instead of Jenkins in
+fnhe_hashfun()") and commit 67d6d681e15b ("ipv4: make exception cache
+less predictible") tried to mitigate such attacks by making it harder
+for attackers to discover hash collisions in the FNHE cache and by
+randomizing the number of exceptions a hash bucket can hold,
+respectively. Unfortunately, both of the mitigations can be bypassed.
 
-Tested using dm-delay over a virtio-blk test disk, dm-integrity
-internal_hash:crc32c and no-journal ext4.  The D and B reproducers both
-failed with checksum errors before this change and completed with
-READ_RC=0 and zero mismatches after it.
+Instead, mitigate such attacks by always creating a FNHE, even before
+trying to find a matching socket. Do that by calling ipv4_update_pmtu()
+and ipv4_redirect(), the helpers used when the quoted packet did not
+originate from a socket.
 
-Fixes: 7eada909bfd7 ("dm: add integrity target")
+This means that guesses (right or wrong) from an off-path attacker will
+always result in a FNHE being created or updated in the cache that the
+attacker can observe.
+
+Pass an oif of 0, in a similar fashion to icmp_err(). This is also the
+oif used by the socket path for sockets that are not bound to a device.
+
+Note that this does not allow attackers to create FNHEs that they could
+not create before, as both helpers can already be reached with little to
+no validation. For example, by sending an ICMP error that quotes an ICMP
+Echo Reply or one that quotes a UDP source port that matches a wildcard
+socket.
+
+Also note that in the good case (matched socket) the above scheme comes
+at the cost of an extra route lookup, as the no socket helpers perform
+their own lookup before the one performed by ipv4_sk_update_pmtu() /
+ipv4_sk_redirect(). When the two resolve to different nexthops, it also
+results in two exceptions being created for the same destination IP. One
+in the FNHE cache of the nexthop resolved by the no socket helpers and
+another in the FNHE cache of the nexthop used by the socket.
+
+Fixes: 4895c771c7f0 ("ipv4: Add FIB nexthop exceptions.")
 Cc: stable@vger.kernel.org
-Reported-by: Sun Yangkai <sunyangkai@fygo.io>
-Link: https://github.com/chencheng-fnnas/reproducer/blob/main/dm-integrity-writeback-race.py
-Signed-off-by: Chen Cheng <chencheng@fnnas.com>
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-[ sashal: Replaced BLK_FEAT_STABLE_WRITES with a per-target needs_stable_writes bit propagated through the existing queue-flag machinery. ]
+Reported-by: Amit Klein <aksecurity@gmail.com>
+Reported-by: Noam Caspi <noam.caspi@mail.huji.ac.il>
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://patch.msgid.link/20260828192344.2596928-3-idosch@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ sashal: inlined udp_err_update_exception() logic in the existing udp_err() wrapper. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm-integrity.c     | 3 +++
- drivers/md/dm-table.c         | 2 +-
- include/linux/device-mapper.h | 5 +++++
- 3 files changed, 9 insertions(+), 1 deletion(-)
+ net/ipv4/udp.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/md/dm-integrity.c b/drivers/md/dm-integrity.c
-index eb13b98ba0a9c..c889457c3b330 100644
---- a/drivers/md/dm-integrity.c
-+++ b/drivers/md/dm-integrity.c
-@@ -3219,6 +3219,9 @@ static void dm_integrity_io_hints(struct dm_target *ti, struct queue_limits *lim
- 		limits->physical_block_size = ic->sectors_per_block << SECTOR_SHIFT;
- 		blk_limits_io_min(limits, ic->sectors_per_block << SECTOR_SHIFT);
- 	}
-+
-+	if (ic->internal_hash && (ic->mode == 'D' || ic->mode == 'B'))
-+		ti->needs_stable_writes = true;
- }
+diff --git a/net/ipv4/udp.c b/net/ipv4/udp.c
+index 7277bd9df482c..095daae41c457 100644
+--- a/net/ipv4/udp.c
++++ b/net/ipv4/udp.c
+@@ -807,6 +807,15 @@ int __udp4_lib_err(struct sk_buff *skb, u32 info, struct udp_table *udptable)
  
- static void calculate_journal_section_size(struct dm_integrity_c *ic)
-diff --git a/drivers/md/dm-table.c b/drivers/md/dm-table.c
-index 4351de47fa775..f78979cc5baec 100644
---- a/drivers/md/dm-table.c
-+++ b/drivers/md/dm-table.c
-@@ -1799,7 +1799,7 @@ static int device_requires_stable_pages(struct dm_target *ti,
+ int udp_err(struct sk_buff *skb, u32 info)
  {
- 	struct request_queue *q = bdev_get_queue(dev->bdev);
- 
--	return q && blk_queue_stable_writes(q);
-+	return ti->needs_stable_writes || (q && blk_queue_stable_writes(q));
++	const int type = icmp_hdr(skb)->type;
++	const int code = icmp_hdr(skb)->code;
++	struct net *net = dev_net(skb->dev);
++
++	if (type == ICMP_DEST_UNREACH && code == ICMP_FRAG_NEEDED)
++		ipv4_update_pmtu(skb, net, info, 0, IPPROTO_UDP);
++	else if (type == ICMP_REDIRECT)
++		ipv4_redirect(skb, net, 0, IPPROTO_UDP);
++
+ 	return __udp4_lib_err(skb, info, &udp_table);
  }
  
- void dm_table_set_restrictions(struct dm_table *t, struct request_queue *q,
-diff --git a/include/linux/device-mapper.h b/include/linux/device-mapper.h
-index 50cc070cb1f7c..bb50f631b0e91 100644
---- a/include/linux/device-mapper.h
-+++ b/include/linux/device-mapper.h
-@@ -339,6 +339,11 @@ struct dm_target {
- 	 */
- 	bool discards_supported:1;
- 
-+	/*
-+	 * Set if this target requires stable data during writeback.
-+	 */
-+	bool needs_stable_writes:1;
-+
- 	/*
- 	 * Set if we need to limit the number of in-flight bios when swapping.
- 	 */
 -- 
 2.53.0
 
