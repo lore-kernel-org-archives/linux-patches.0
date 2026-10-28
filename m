@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793209111;
-	b=bwlUb6k1WUe2jMOmkXQLiDIHZm5rDjIIJRaoMOYytbYO6eS2zbcQ5ExCv0xJ1w7uSamX
-	 ZNWtNSpJEjNCVkMZV+SgdQLVyRzA2/wGboQvAjsnrsFuTMzrF4+Yv3YbVcB1rp7sR98ef
-	 bRNncE0gXbBUCrIxa7+8mpSatsFHT4XQRhsu7uEqWNtLOs8iDEpolQv/yTtWeOzdQPCIt
-	 w/cBZMuKXlgIbizlMqEC6rntSkpCeyCXPWcDinZBWM35GwVFZL5gjclfdFTOfXDj8ZBql
-	 XSEimHhUbStR+Thwfhh5cJ0m9/B+HTOvCpDio0lqYktyvJLP3D+oabwGTObs4nCWtuw==
+	t=1793209114;
+	b=4clHv+MMBsdWdxCg0BaPyUxGDyfq3mdC8zC0YyXvtTYxfWWotnDPq0/RRCw7wKlpmrVT
+	 yyX6I2323ulygInQmNL9p/3sCfVpgc6SP9hgJQrdhAXgS+RtV2XDlzKY1Vyz8G8POdUB8
+	 NkScRa8S0DGzhfvMckGjeXHV+xOaIrYCPd2e6Mpf+Z6BGQio92amnlcYUjzg+XboFXjGq
+	 9bC6fIf0hoUpxfh3eUrOS/lger8fq/obgZgMcN9WD86b4sKOqpULFYAEmZG0yCj3TyWbo
+	 eePsvD+gGuRtR2NQLiMuT7loLP05didhzUB5OT9x2lb9cZGU9zl09m7jX7i7eOgk4mA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793209111;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793209114;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=j28edNERyGku7Sxo7txDaJz+RmMlshTAEq6uWLX1pis=;
-	b=3V1tTnEWEEENtIdfSqWK8b4FbNxpTDxxvPJIM1gvhRQaQ+v4gvr/TFkt8bypqaTu05xp
-	 hMmYoRigSvXTv0G3BT/vVZ9v3r1w0S3uLJFfJnN+4UUar8RBWAWdAFhf0acmeE4XbxIIT
-	 6Z/Y4wm02dMly1nhRyja2TjEfqoJjbtNo4URSel1sRXcPWHR87C+uROvGiuMAYxf7zdm2
-	 bs5I/+Hlk2yLPzAdG/b+lBwXbg/7EV7UHPY8UrnScZGCqFOBgR8S0BVxG1oyMgXivAEaZ
-	 qGnfJuSBh3SUikUNrSofOaAPUs3nbO+eFuUf93day8LemRAFCkjLG7e3ojfY7+yXk+w==
+	bh=xOr9zD+I5CAdub9i4LiY/t4p9cQshUvGM2P90+Yp3hg=;
+	b=3+xbfYgTRMZVWZzKmhoMYsfg1nyFuZRJKIN7jH64X1Q0UoaJVk3vSuE0LTK4HLs3QNAd
+	 7azmHBaCDVY/282daKjZFBllSUlDGuXbnzpyDqvw0IGk8KsFXAkqq/sMngmqC5gMQJTcA
+	 Sc148urQIbGKWRwfdlU17K/UH0lfIQJyeF+UvqbQjpmRU9UWjklnC0Qe+j2WkCp8XYQ3S
+	 CwGUJM4wDEMtAJYK7yzJ+cYEhO5m2nrNNrPI5qjYs175vvZRGu3T4oTMizmOB+qFs/HEa
+	 dw3ZrgblVQAnDIHcZriMPtjnCPWWIBtK54XPc1W7lnlJyHy184cFa9RswgroTsCOyZg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aaIAWAxN;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Wb1skH0U;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0884606A32F;
-	Wed, 28 Oct 2026 17:38:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1ED5606A31C;
+	Wed, 28 Oct 2026 17:38:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aaIAWAxN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39A6A1F01825;
-	Wed, 28 Oct 2026 17:38:30 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Wb1skH0U
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DDB41F01825;
+	Wed, 28 Oct 2026 17:38:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793209110;
-	bh=j28edNERyGku7Sxo7txDaJz+RmMlshTAEq6uWLX1pis=;
+	s=korg; t=1793209113;
+	bh=xOr9zD+I5CAdub9i4LiY/t4p9cQshUvGM2P90+Yp3hg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aaIAWAxN88tnc1+CrYKPDPHdE2PBoIfF/PjGHuqifi1hwGtdLOGbDhz9njnypiEvx
-	 jt83m7ppQAg+Cqv0/HAEvSlYbTl8mSWO9XFllN8AFMySdDYtlP4lZVDp/S03GrY2gz
-	 HjiZ8/m+7psGEiv+NNJmL4eaoqvu7zOl3Nw7QW7w=
+	b=Wb1skH0URxvYhQIcyEPIAAQwe8glmhAfqQEq7M5DztKWgpL4ltcLTciW1ZZtDRm7z
+	 F3OJtOl4ckmT3HjQ/VXn8vt5EDoCdxExdBgW6UvAJwxqdPCU+zGLTe8vPUgspe5Q2E
+	 TwbGUEDt55GTpUZX+ZNa3I+4la0oD5qCDrfpTF58=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+ccffdf05833ebdaeae70@syzkaller.appspotmail.com,
-	Raj Ojha <rajojha047@gmail.com>,
-	Ulf Hansson <ulfh@kernel.org>
-Subject: [PATCH 5.10 329/516] memstick: core: wait for request completion before freeing card
-Date: Wed, 28 Oct 2026 17:58:01 +0100
-Message-ID: <20261028170011.282443443@linuxfoundation.org>
+	Changyul Lee <lcy8047@gmail.com>,
+	Sang-Hoon Choi <csh0052@gmail.com>,
+	Ayush Sawal <ayush.sawal@chelsio.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 356/516] cxgb4/ch_ktls: disable softirqs around tid_list erases
+Date: Wed, 28 Oct 2026 17:58:28 +0100
+Message-ID: <20261028170011.921486929@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -68,91 +70,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Raj Ojha <rajojha047@gmail.com>
+From: Sang-Hoon Choi <csh0052@gmail.com>
 
-commit aa0a37b5024d921e96ac4f8f487c8bfbf1f1a582 upstream.
+[ Upstream commit 4c9dc0faca98084922caeb689579d338cf3e1c29 ]
 
-In memstick_alloc_card() and memstick_set_rw_addr(),
-wait_for_completion_timeout() is used to wait for device identification
-and address configuration requests to complete.
+chcr_ktls_cpl_act_open_rpl() inserts into tid_list from the receive path
+using xa_insert_bh().  The array is shared by the adapter's connections
+and initialized with XA_FLAGS_LOCK_BH.  However, chcr_ktls_dev_del() and
+the chcr_ktls_dev_add() error path use xa_erase(), which takes the XArray
+lock without disabling softirqs.
 
-The memstick subsystem does not provide an abort or cancellation
-callback in struct memstick_host for in-flight requests. If
-wait_for_completion_timeout() expires (for instance, when a USB transfer
-or command retry is delayed), memstick_alloc_card() returns an error and
-frees the memstick_dev structure via kfree(card).
+When cleanup runs with softirqs enabled, a receive softirq for another
+connection on the same CPU can interrupt the erase and spin on the lock
+held by the interrupted task.  Use xa_erase_bh() at both sites to match
+the insertion path.
 
-However, the host controller driver (such as rtsx_usb_ms) is still
-running the request asynchronously in worker context. When the transfer
-eventually finishes, the driver writes into host->req->data, which
-points to memory inside the already freed card structure. This leads to
-a KASAN slab-use-after-free write:
-
-  BUG: KASAN: slab-use-after-free in ms_read_bytes+0x8fe/0x990
-  Write of size 1 at addr ffff88813c188079 by task kworker/1:5/5239
-  Workqueue: events rtsx_usb_ms_handle_req
-  Call Trace:
-   ms_read_bytes+0x8fe/0x990 drivers/memstick/host/rtsx_usb_ms.c:450
-   rtsx_usb_ms_issue_cmd drivers/memstick/host/rtsx_usb_ms.c:477 [inline]
-   rtsx_usb_ms_handle_req+0x557/0x1a00 drivers/memstick/host/rtsx_usb_ms.c:531
-   process_one_work+0xac7/0x1b10 kernel/workqueue.c:3396
-   worker_thread+0x5ef/0xe50 kernel/workqueue.c:3560
-   kthread+0x373/0x450 kernel/kthread.c:436
-
-  Allocated by task 1662:
-   memstick_alloc_card drivers/memstick/core/memstick.c:383 [inline]
-   memstick_check+0x2c1/0x10d0 drivers/memstick/core/memstick.c:452
-   process_one_work+0xac7/0x1b10 kernel/workqueue.c:3396
-
-  Freed by task 1662:
-   kfree+0x20c/0x650 mm/slub.c:6792
-   memstick_alloc_card drivers/memstick/core/memstick.c:420 [inline]
-   memstick_check+0x72b/0x10d0 drivers/memstick/core/memstick.c:452
-   process_one_work+0xac7/0x1b10 kernel/workqueue.c:3396
-
-Host controller drivers (rtsx_usb_ms, jmb38x_ms, tifm_ms, r592) already
-implement their own hardware and bus timeouts, and callers in
-mspro_block and ms_block already rely on wait_for_completion()
-unconditionally.
-
-Replace wait_for_completion_timeout() with wait_for_completion() in
-memstick_set_rw_addr() and memstick_alloc_card() so that the card
-structure is never freed while an asynchronous request is in flight.
-
-Fixes: baf8532a147d ("memstick: initial commit for Sony MemoryStick support")
-Reported-by: syzbot+ccffdf05833ebdaeae70@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=ccffdf05833ebdaeae70
-Cc: stable@vger.kernel.org
-Signed-off-by: Raj Ojha <rajojha047@gmail.com>
-Signed-off-by: Ulf Hansson <ulfh@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 65e302a9bd57 ("cxgb4/ch_ktls: Clear resources when pf4 device is removed")
+Reported-by: Changyul Lee <lcy8047@gmail.com>
+Assisted-by: LLM
+Signed-off-by: Sang-Hoon Choi <csh0052@gmail.com>
+Reviewed-by: Ayush Sawal <ayush.sawal@chelsio.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/memstick/core/memstick.c |    8 ++------
- 1 file changed, 2 insertions(+), 6 deletions(-)
+ .../net/ethernet/chelsio/inline_crypto/ch_ktls/chcr_ktls.c    | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/memstick/core/memstick.c
-+++ b/drivers/memstick/core/memstick.c
-@@ -369,9 +369,7 @@ int memstick_set_rw_addr(struct memstick
- {
- 	card->next_request = h_memstick_set_rw_addr;
- 	memstick_new_req(card->host);
--	if (!wait_for_completion_timeout(&card->mrq_complete,
--			msecs_to_jiffies(500)))
--		card->current_mrq.error = -ETIMEDOUT;
-+	wait_for_completion(&card->mrq_complete);
+diff --git a/drivers/net/ethernet/chelsio/inline_crypto/ch_ktls/chcr_ktls.c b/drivers/net/ethernet/chelsio/inline_crypto/ch_ktls/chcr_ktls.c
+index f9353826b2455..bc98388ed28ea 100644
+--- a/drivers/net/ethernet/chelsio/inline_crypto/ch_ktls/chcr_ktls.c
++++ b/drivers/net/ethernet/chelsio/inline_crypto/ch_ktls/chcr_ktls.c
+@@ -396,7 +396,7 @@ static void chcr_ktls_dev_del(struct net_device *netdev,
+ 		cxgb4_remove_tid(&tx_info->adap->tids, tx_info->tx_chan,
+ 				 tx_info->tid, tx_info->ip_family);
  
- 	return card->current_mrq.error;
- }
-@@ -405,9 +403,7 @@ static struct memstick_dev *memstick_all
+-		xa_erase(&u_ctx->tid_list, tx_info->tid);
++		xa_erase_bh(&u_ctx->tid_list, tx_info->tid);
+ 	}
  
- 		card->next_request = h_memstick_read_dev_id;
- 		memstick_new_req(host);
--		if (!wait_for_completion_timeout(&card->mrq_complete,
--				msecs_to_jiffies(500)))
--			card->current_mrq.error = -ETIMEDOUT;
-+		wait_for_completion(&card->mrq_complete);
+ 	port_stats = &tx_info->adap->ch_ktls_stats.ktls_port[tx_info->port_id];
+@@ -587,7 +587,7 @@ static int chcr_ktls_dev_add(struct net_device *netdev, struct sock *sk,
+ 	cxgb4_remove_tid(&tx_info->adap->tids, tx_info->tx_chan,
+ 			 tx_info->tid, tx_info->ip_family);
  
- 		if (card->current_mrq.error)
- 			goto err_out;
+-	xa_erase(&u_ctx->tid_list, tx_info->tid);
++	xa_erase_bh(&u_ctx->tid_list, tx_info->tid);
+ 
+ put_module:
+ 	/* release module refcount */
+-- 
+2.53.0
+
 
 
