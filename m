@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793210187;
-	b=YOdneKml6me9MsrEK9SkNbnDMZSQdV22h4JyqSVY5HMZ7yVXyj1Wc1Eb8wXaHPbf26ap
-	 XdrKDVPGkPJOnC5Cx0ETv65gchL3qAb/qMo0UGa92Gq0/gFN8X5P33E1qdJM8JjoXatqq
-	 2DcbzQq//kfNCKWxbzYwoE/V5zQ4YtjnE0dvogV94IXmkqfb5veqNX4A2DxAmR5+MJ2jF
-	 mNt05tRNIqGvQQ/Q1loT82oqy6Myg4olqxyuvikYhWcp0ZTlzQhs3VusGAFcVQdhS3apb
-	 HecBRzQ1y8KteVPQF5gXko28tBLGShfF0cVuC5nocEmYhCfql1Ad5+Tm7WePI0a2IZw==
+	t=1793210190;
+	b=pfhEOLBOQu6zbc6sB12VtY4xkBteSlmsk0e5fTj4rUOwc515/VYvV2e+eyqt1in2IDHw
+	 G0LxM3Uf9QredS9iqBYu0NYZIdFgEy15zNQPGo91xL/2+3Ccw4JpYDh2K1+LQydqR3PF5
+	 x2MteDiclawRgaKl0ILLVOLgE1PN3UdEX96KJPJV7U+G2KdKt5zeXw80gjHbwvM5aZsJE
+	 3PhapznMbz0+oSyF1QlJRfpX0eoLXlmf1fUnbMvURb6B47vwz+VNafXgPabZGIUzt0ai+
+	 JeXft05HJ9GUZOrL+B7zmgmRI4VgyVYecTXp6hhof0vxzqym8yPQ0AZotJ2M3b35gCg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793210187;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793210190;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=9n/5/N3wzVShK0/ISRXpX6uSSJ5plj6f5rTOhZPmp0Q=;
-	b=nNn9DQIxJnmVthHKvHVrbe7k3FHYmmYG6C67IitUy4RkL16XY3RpqQEKVPqR6IiRuPLO
-	 iuc+KC1xwVgLG3GuvHdMD9VsVbDHsPm4Cwfq+9aQIKFhmcppKQxgrfSfT08U+GYB8q9pn
-	 9v4fmeCkFx3zmhATVoz9xTQ1A4BujAY9eZhPWJnT2DtxONE+2PIZse7qFZU5tkuP+udwd
-	 o7r0BYAdkEcKgwufpltSPPVlxkbGcuO2O7nhn2TDZYP4/H13vYZHxeKpRUWnn7bl1x+Kz
-	 /Mh2kts5YQ/f1tLOTOMjSl/Bxnyu6b6tdcZvXEqBAHuyjeawiIXe7T+u2+QaoolRaXQ==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=hFX5NXz79IN0ioEJ+zd4CONYUOkXQ/0zFPrc5CgUMoI=;
+	b=4tRcSxcn93Oj/QXomuCgVfxuXi61i4Kji0QC/IMosA2FXHnTj5cXDVxVMVnZ1OfHVkbC
+	 ogk5reuQbwCEt9Iam+Q7yJ82lj1ONClY+u2aCsfvnzJgFRCFmwER6fMt5p4wfnxi2rXdg
+	 kJBflhkCp0AHa9rnU1Ys9hS83htkVgEPNEPP2wJOaFJP4tGVWWTWjUTJY9DNOj+g7NH8y
+	 cf8zezDvwf8ocR6QjzjnBIeBszaTcR2KMmyZXU6fmqQf+3kM8hvcE9HG2oHeAjkAG9lRm
+	 vijRvZFgWD3Kq6TOOh7TmkH++LimPOrYKjdKeVS/h4WQWIuQ3NrUTX2nznR6VrYTOuA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ihoNsxnL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SIeN2q2Z;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FE1060A3811;
-	Wed, 28 Oct 2026 17:56:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F93F606A31C;
+	Wed, 28 Oct 2026 17:56:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ihoNsxnL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CE681F01825;
-	Wed, 28 Oct 2026 17:56:26 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SIeN2q2Z
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F1F01F01825;
+	Wed, 28 Oct 2026 17:56:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793210187;
-	bh=9n/5/N3wzVShK0/ISRXpX6uSSJ5plj6f5rTOhZPmp0Q=;
+	s=korg; t=1793210190;
+	bh=hFX5NXz79IN0ioEJ+zd4CONYUOkXQ/0zFPrc5CgUMoI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ihoNsxnLySxUdVibp0a3aGVKTVsTRdLR2WuaJXeA1OEvitx3UutwhJpyiDi2qbB4n
-	 cm5IcNdqP02h9DMrDxm3U6afbHmuP+alA5tEUOWHVp5HNdQBofP7HegJUEQw/GCexK
-	 gSVCpo/J5BNPE3X9U8XbkS23z0BckWAWBnGLeSK4=
+	b=SIeN2q2ZtJ3qib+4Nx50kthlgl3f/KcijLZeftYW3lMyw6H5cZbfQ/j1Uc0Ff8aKO
+	 ryOxO6wmB4Hvuz7xUs7C23F1eat7gLmJXhM6nkrk+6Q+/7S37ynY7bZ9qKRnLpjauJ
+	 I1DlLl0tDSTYCVIjPq1cav3AyziMXZ7eynk5r8KU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Carlier <devnexen@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Ting-Han Hou <ue081723@gmail.com>,
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Andi Shyti <andi.shyti@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 108/168] gtp: disable BH before calling udp_tunnel_xmit_skb()
-Date: Wed, 28 Oct 2026 18:00:44 +0100
-Message-ID: <20261028165945.645543028@linuxfoundation.org>
+Subject: [PATCH 6.6 109/168] i2c: viai2c-wmt: Fix clock leak in wmt_i2c_probe()
+Date: Wed, 28 Oct 2026 18:00:45 +0100
+Message-ID: <20261028165945.668256458@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165943.089486480@linuxfoundation.org>
 References: <20261028165943.089486480@linuxfoundation.org>
@@ -63,72 +62,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: David Carlier <devnexen@gmail.com>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit 5638504a2aa9e1b9d72af9060df1a160cce2d379 ]
+[ Upstream commit aaabefc79b0ff0018e8e3832169bbe359d0551fc ]
 
-gtp_genl_send_echo_req() runs as a generic netlink doit handler in
-process context with BH not disabled. It calls udp_tunnel_xmit_skb(),
-which eventually invokes iptunnel_xmit() — that uses __this_cpu_inc/dec
-on softnet_data.xmit.recursion to track the tunnel xmit recursion level.
+In wmt_i2c_probe(), i2c->clk is acquired using of_clk_get(). If any
+subsequent operation fails or when the module is unloaded, the clock
+reference count is never decremented via clk_put(), leading to a
+resource leak.
 
-Without local_bh_disable(), the task may migrate between
-dev_xmit_recursion_inc() and dev_xmit_recursion_dec(), breaking the
-per-CPU counter pairing. The result is stale or negative recursion
-levels that can later produce false-positive
-SKB_DROP_REASON_RECURSION_LIMIT drops on either CPU.
+Switch to devm_clk_get() so that the clock is automatically managed
+and released.
 
-The other udp_tunnel_xmit_skb() call sites in gtp.c are unaffected:
-the data path runs under ndo_start_xmit and the echo response handlers
-run from the UDP encap rx softirq, both with BH already disabled.
-
-Fix it by disabling BH around the udp_tunnel_xmit_skb() call, mirroring
-commit 2cd7e6971fc2 ("sctp: disable BH before calling
-udp_tunnel_xmit_skb()").
-
-Fixes: 6f1a9140ecda ("net: add xmit recursion limit to tunnel xmit functions")
+Fixes: 560746eb79d3 ("i2c: vt8500: Add support for I2C bus on Wondermedia SoCs")
 Cc: stable@vger.kernel.org
-Signed-off-by: David Carlier <devnexen@gmail.com>
-Link: https://patch.msgid.link/20260417055408.4667-1-devnexen@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ Ting-Han: this tree does not have commit e3411e326fa4 ("net: ipv4: Add a
-  flags argument to iptunnel_xmit(), udp_tunnel_xmit_skb()") or commit
-  1bec9d0c0046 ("ipv4: Convert ->flowi4_tos to dscp_t."), so the
-  udp_tunnel_xmit_skb() call differs in context; the change is the same ]
-Assisted-by: LLM
-Signed-off-by: Ting-Han Hou <ue081723@gmail.com>
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Link: https://patch.msgid.link/20260916070631.1965713-1-vulab@iscas.ac.cn
+[ sashal: adapted the change to the unrefactored driver using i2c_dev instead of i2c. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/gtp.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/i2c/busses/i2c-wmt.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/gtp.c b/drivers/net/gtp.c
-index f0ee46d3c873e..39515aba86e68 100644
---- a/drivers/net/gtp.c
-+++ b/drivers/net/gtp.c
-@@ -1827,6 +1827,7 @@ static int gtp_genl_send_echo_req(struct sk_buff *skb, struct genl_info *info)
- 		return -ENODEV;
+diff --git a/drivers/i2c/busses/i2c-wmt.c b/drivers/i2c/busses/i2c-wmt.c
+index 76118abc6e104..8682143e15acc 100644
+--- a/drivers/i2c/busses/i2c-wmt.c
++++ b/drivers/i2c/busses/i2c-wmt.c
+@@ -389,7 +389,7 @@ static int wmt_i2c_probe(struct platform_device *pdev)
+ 		return -EINVAL;
  	}
  
-+	local_bh_disable();
- 	udp_tunnel_xmit_skb(rt, sk, skb_to_send,
- 			    fl4.saddr, fl4.daddr,
- 			    fl4.flowi4_tos,
-@@ -1836,6 +1837,7 @@ static int gtp_genl_send_echo_req(struct sk_buff *skb, struct genl_info *info)
- 			    !net_eq(sock_net(sk),
- 				    dev_net(gtp->dev)),
- 			    false);
-+	local_bh_enable();
- 	return 0;
- }
- 
+-	i2c_dev->clk = of_clk_get(np, 0);
++	i2c_dev->clk = devm_clk_get(&pdev->dev, NULL);
+ 	if (IS_ERR(i2c_dev->clk)) {
+ 		dev_err(&pdev->dev, "unable to request clock\n");
+ 		return PTR_ERR(i2c_dev->clk);
 -- 
 2.53.0
 
