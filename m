@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214335;
-	b=kls9NUUYs8Bj3WJHzjxOUzectdl8qrohl2X6IN/eLnhTyBtJyj8ieDIMLTl+HYfebHH+
-	 7dynEM46ENWAlIKv+eF8MReeq5E0zfxTYIPSliJfBXWL2BsLepZ21pqDFxJTPFUjVMoAU
-	 fV94OzVCi+nJlwmjrbtkGD82Zg+/hK+zwAuwOId5LJ5IsUea9Re1c8OznmnHVKsM3NeHi
-	 rhU4rPOs4YLpvULMzvVE+M+Emxaw4jBS3WAavY+1zODmGXq26YBQGKk66fx3Z6aWmqyxR
-	 s9XOBgTcuQ6xOSyPiae4sqBmr5rHzDE5nfujgcTBwcQZhYKi6ZZIo8LxkI+zq6P3NTA==
+	t=1793214338;
+	b=VF4LWbg8APzLlcxCMNPl2h8Y5LGKwekLaXID6yi4U2RpBt964+27t8GioPuPbREDstSd
+	 koE3Mp56lf2WPznpc1Y+7fSWgSc0FgM0EUTo60fA85hAMcvZiNSHsQ9yse66+jnUrn26L
+	 Sjps6utEqdcbnPEBb6d/chf5n2kDLdBJlROFEA34d67SSvZ2kUsVNS5Hr/+49GmF6yaKn
+	 iFRk3SedMePxG/oNOkD4fMmMFESzfzKzUfQUwV/t90XNnI6kFbihQFdNkCF5ky0MAv2nz
+	 Mep7k+Jdvr2DspSmooMxc9qKDfPoyTst4HxXPqGvlEGkhjyr+M53UtWmrrrNw6OTp3g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214335;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214338;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5AzTsMJbyAAyx3Beg+hVfPkR0kYOv6e/tPmsunDnSeI=;
-	b=M8w7Dgplf3YhfInr9DYrkfP5CS/3tRgeNCdfrC8drtGF/cn9GhXVL9EeetRYM0BacwRx
-	 tAsFK3PDypvpW+6o6wilBcEtaBWbMT+3RDn3YtcCz0DNS4V5H5zW/KpLTVy/DGIko/xwv
-	 cw3TRDNKWgzRBMwlw33PhXqQ9smjrHYBsXLYiMlWF79zMOXEUDjRGtsv4Ixdowy1i5j4X
-	 Jx0KUwobKYJEngN8TZpaO/XvndUiT5Xl51EHbKKeqlcyinSQ7pj1K25cam4JNl1KMUojs
-	 go+Rr7y1WIeJNkpMXGD3fbDygDJ9ZoBqXTv17OgF2BP/CQ4cIjgWvPP0aOp+rVUHiJw==
+	bh=0gwhFuv36a/Bzn3Pmd+wHY3T2Tf+FOx804WA3O99DHA=;
+	b=cDZ6k8aG2pCdL2f5LniPpe8CMBCq8NI9ahokqvEWxv3d/JcGFDucs9XlG3sk3qENja33
+	 8Na9Lr5bqb2DyDpR1irBxme9lVpZK3EgZTFuKBDC8D+/nkIBih38R0+chit9057VpECh2
+	 G3jIQAogwFPDvBzOpB3UWu9fdSiMBL1IIa1+x28paE2KtsnElc8JwKBReu8uayQc6vzXf
+	 c2R7WCcT+S+8sphaqFYW+fPp1QUwN20uivj50507Ozu2fXk3Fn8CBWoSOX/uXTTgC0J9U
+	 i8fm7zXVepStiExC/Sq3BYDfUu9igCeuxKbNrQ7m6FGhMMkl+xTtCpAb2qW1D93f5Fg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LTa2QAjZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zz5J5CBH;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE6D6606BFA8;
-	Wed, 28 Oct 2026 19:05:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFAC8606A326;
+	Wed, 28 Oct 2026 19:05:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LTa2QAjZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B65A1F01825;
-	Wed, 28 Oct 2026 19:05:33 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zz5J5CBH
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6AA61F01825;
+	Wed, 28 Oct 2026 19:05:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214334;
-	bh=5AzTsMJbyAAyx3Beg+hVfPkR0kYOv6e/tPmsunDnSeI=;
+	s=korg; t=1793214337;
+	bh=0gwhFuv36a/Bzn3Pmd+wHY3T2Tf+FOx804WA3O99DHA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LTa2QAjZW4ATDweyIA7CzhQbakYX7a1Zc9ZtSPKO/bch6s5dtSqPQhEYKrRNuQJA8
-	 D+jVpCzgEm3KFHKCys0DqyZFcnfrN6xNQmv/7R6fbG0SMRaJisH/WjiJDmhdTQFcE6
-	 Er1IIDie09hH6XnhOpwJkwAzq/8QhjZgbVoqUIl8=
+	b=zz5J5CBHH12ltL689BpRvQEbP7O+Oqw/m7L/jEsBcVHNZwJDRS/kxIbll78m8QooA
+	 Gut5vZFEbykJBHkHvqW85CUqiPy7uBWA+ME4vyTQsiF5W7piy//5q+6rLA4fMyqJ0w
+	 Gtx8vpVrf9s1Y1GVn44TxzqrjEz3btBLepiKyZ7o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+01ef7a8da81a975e1ccd@syzkaller.appspotmail.com,
-	Jan Kara <jack@suse.cz>,
-	Jens Axboe <axboe@kernel.dk>,
+	"Vishal Moola (Oracle)" <vishal.moola@gmail.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0823/1887] loop: Avoid updating block size under exclusive owner
-Date: Wed, 28 Oct 2026 17:48:39 +0100
-Message-ID: <20261028170518.153625935@linuxfoundation.org>
+Subject: [PATCH 6.1 0824/1887] pagemap: add filemap_grab_folio()
+Date: Wed, 28 Oct 2026 17:48:40 +0100
+Message-ID: <20261028170518.174859546@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,114 +69,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jan Kara <jack@suse.cz>
+From: Vishal Moola (Oracle) <vishal.moola@gmail.com>
 
-[ Upstream commit 7e49538288e523427beedd26993d446afef1a6fb ]
+[ Upstream commit ee7a5906ff08e435ed95ec9fe7c7eed2c11015d2 ]
 
-Syzbot came up with a reproducer where a loop device block size is
-changed underneath a mounted filesystem. This causes a mismatch between
-the block device block size and the block size stored in the superblock
-causing confusion in various places such as fs/buffer.c. The particular
-issue triggered by syzbot was a warning in __getblk_slow() due to
-requested buffer size not matching block device block size.
+Patch series "Convert to filemap_get_folios_tag()", v5.
 
-Fix the problem by getting exclusive hold of the loop device to change
-its block size. This fails if somebody (such as filesystem) has already
-an exclusive ownership of the block device and thus prevents modifying
-the loop device under some exclusive owner which doesn't expect it.
+This patch series replaces find_get_pages_range_tag() with
+filemap_get_folios_tag().  This also allows the removal of multiple calls
+to compound_head() throughout.
 
-Reported-by: syzbot+01ef7a8da81a975e1ccd@syzkaller.appspotmail.com
-Signed-off-by: Jan Kara <jack@suse.cz>
-Tested-by: syzbot+01ef7a8da81a975e1ccd@syzkaller.appspotmail.com
-Link: https://lore.kernel.org/r/20250711163202.19623-2-jack@suse.cz
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+It also makes a good chunk of the straightforward conversions to folios,
+and takes the opportunity to introduce a function that grabs a folio from
+the pagecache.
+
+This patch (of 23):
+
+Add function filemap_grab_folio() to grab a folio from the page cache.
+This function is meant to serve as a folio replacement for
+grab_cache_page, and is used to facilitate the removal of
+find_get_pages_range_tag().
+
+Link: https://lkml.kernel.org/r/20230104211448.4804-1-vishal.moola@gmail.com
+Link: https://lkml.kernel.org/r/20230104211448.4804-2-vishal.moola@gmail.com
+Signed-off-by: Vishal Moola (Oracle) <vishal.moola@gmail.com>
+Reviewed-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: 736a0516a162 ("hfs: fix general protection fault in hfs_find_init()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/loop.c | 40 +++++++++++++++++++++++++++++++---------
- 1 file changed, 31 insertions(+), 9 deletions(-)
+ include/linux/pagemap.h | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
-diff --git a/drivers/block/loop.c b/drivers/block/loop.c
-index e3e5d533a7eca..20ecd689c2e63 100644
---- a/drivers/block/loop.c
-+++ b/drivers/block/loop.c
-@@ -1472,19 +1472,36 @@ static int loop_set_dio(struct loop_device *lo, unsigned long arg)
- 	return error;
+diff --git a/include/linux/pagemap.h b/include/linux/pagemap.h
+index a40afc0aea3e2..a1f481f51afdb 100644
+--- a/include/linux/pagemap.h
++++ b/include/linux/pagemap.h
+@@ -610,6 +610,26 @@ static inline struct folio *filemap_lock_folio(struct address_space *mapping,
+ 	return __filemap_get_folio(mapping, index, FGP_LOCK, 0);
  }
  
--static int loop_set_block_size(struct loop_device *lo, unsigned long arg)
-+static int loop_set_block_size(struct loop_device *lo, fmode_t mode,
-+			       struct block_device *bdev, unsigned long arg)
- {
- 	int err = 0;
- 
--	if (lo->lo_state != Lo_bound)
--		return -ENXIO;
-+	/*
-+	 * If we don't hold exclusive handle for the device, upgrade to it
-+	 * here to avoid changing device under exclusive owner.
-+	 */
-+	if (!(mode & FMODE_EXCL)) {
-+		err = bd_prepare_to_claim(bdev, loop_set_block_size);
-+		if (err)
-+			return err;
-+	}
++/**
++ * filemap_grab_folio - grab a folio from the page cache
++ * @mapping: The address space to search
++ * @index: The page index
++ *
++ * Looks up the page cache entry at @mapping & @index. If no folio is found,
++ * a new folio is created. The folio is locked, marked as accessed, and
++ * returned.
++ *
++ * Return: A found or created folio. NULL if no folio is found and failed to
++ * create a folio.
++ */
++static inline struct folio *filemap_grab_folio(struct address_space *mapping,
++					pgoff_t index)
++{
++	return __filemap_get_folio(mapping, index,
++			FGP_LOCK | FGP_ACCESSED | FGP_CREAT,
++			mapping_gfp_mask(mapping));
++}
 +
-+	err = mutex_lock_killable(&lo->lo_mutex);
-+	if (err)
-+		goto abort_claim;
-+
-+	if (lo->lo_state != Lo_bound) {
-+		err = -ENXIO;
-+		goto unlock;
-+	}
- 
- 	err = blk_validate_block_size(arg);
- 	if (err)
--		return err;
-+		goto unlock;
- 
- 	if (lo->lo_queue->limits.logical_block_size == arg)
--		return 0;
-+		goto unlock;
- 
- 	sync_blockdev(lo->lo_device);
- 	invalidate_bdev(lo->lo_device);
-@@ -1496,6 +1513,11 @@ static int loop_set_block_size(struct loop_device *lo, unsigned long arg)
- 	loop_update_dio(lo);
- 	blk_mq_unfreeze_queue(lo->lo_queue);
- 
-+unlock:
-+	mutex_unlock(&lo->lo_mutex);
-+abort_claim:
-+	if (!(mode & FMODE_EXCL))
-+		bd_abort_claiming(bdev, loop_set_block_size);
- 	return err;
- }
- 
-@@ -1514,9 +1536,6 @@ static int lo_simple_ioctl(struct loop_device *lo, unsigned int cmd,
- 	case LOOP_SET_DIRECT_IO:
- 		err = loop_set_dio(lo, arg);
- 		break;
--	case LOOP_SET_BLOCK_SIZE:
--		err = loop_set_block_size(lo, arg);
--		break;
- 	default:
- 		err = -EINVAL;
- 	}
-@@ -1573,9 +1592,12 @@ static int lo_ioctl(struct block_device *bdev, fmode_t mode,
- 		break;
- 	case LOOP_GET_STATUS64:
- 		return loop_get_status64(lo, argp);
-+	case LOOP_SET_BLOCK_SIZE:
-+		if (!(mode & FMODE_WRITE) && !capable(CAP_SYS_ADMIN))
-+			return -EPERM;
-+		return loop_set_block_size(lo, mode, bdev, arg);
- 	case LOOP_SET_CAPACITY:
- 	case LOOP_SET_DIRECT_IO:
--	case LOOP_SET_BLOCK_SIZE:
- 		if (!(mode & FMODE_WRITE) && !capable(CAP_SYS_ADMIN))
- 			return -EPERM;
- 		fallthrough;
+ /**
+  * find_get_page - find and get a page reference
+  * @mapping: the address_space to search
 -- 
 2.53.0
 
