@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793211128;
-	b=Rrz9VVfmWDUhv0LAsxe93pGMtMYoKcjKm/E/0P+1Gdt9d3gi6/p7IZPf2rOfXnYGJ9uI
-	 3e5hwTiEbX31N7XEUW4TjTU00s7BXdkj/UHPWYsg0hyTniJN0vZ/itM+P3kIjoBMTOu7V
-	 0n7Y7yKQ9ChHW3+PzVZ2nuCorsFLzlDsCBtQwoetlC3sq8CoCDpvjMx755Rcwj4GC2rBt
-	 iVJCrZKDCIJpngQpj3qPswKZsljopQLiUsxd3ytEalK5QqVy4btfeoz4ncb+UuGRUqES0
-	 hBdvZ2TxrRt9mGf8nXgTUXWw6+0ZvnV05i8POBl+g14sLBf0tWVDQ0/lfZmXfah8rGQ==
+	t=1793211129;
+	b=1zkRb9DHRFBqryzBwiUtbq6UAtEAV/WlK8C7rovBYyCMGXR+IIbOlpB4tmwcsmHWVQlr
+	 VdODH9xyGhf+yqtzN4VQTq/XSXNzg2BOKhqDt5jMlR/fkTkulW3x9zTXZCHopWKtCrrVK
+	 1pAkDIB9aSDKwaSen/KCIr9Q8m6b0rhqyRQXsiaC1qQhFxg3ZjDRw2mP4PniiRWPQuDqB
+	 4MgR2lQw51sxh6vwWQGkdl/96N4VRm1rn3q1XBbbTRD/U1oiC66Y9bZU40EJz6EC3ouJM
+	 +Yalmd/UgdkdKXOAnbdt/esC4iO5sa/jxpC2wAlIyBUa+10h8PlN9snCcWEol+jt2uA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793211128;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793211129;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/HqnJ/uS3HQHN0TAYNEVwfpQj2W5QRLjK2xIcCopSGg=;
-	b=j005KAwhfy+SEnYg7IG6axO3HNfJAQeGG/xJTRi9wW8UJx8vygofiKg4UDkRrIyt6VUE
-	 O5/tWFMoVx3hhxXM4ueuBucO7YJUwhLKYSs8dBnIW1R8UV3OUWvXCVRXA4MmGjlpoB1Bu
-	 CdRk6h9VuPuNPefuN1RMil/R+4Hu8IpG5wjwBPdtGr6vv2MUOpq1Sz9VyOKSlFj05/RsH
-	 1Q+PZCa4P83lhXBEsInASF6MITKkl1c1wrxB1pGO9mp5SjUfj8yYubcJPKv6Bn2hl4jJo
-	 TuenifbtrthYJ4CKRW7qqIOFUXPPg5v19Jrm9LSQHQDG7fxIwfrwusUHCRapV9h/c9g==
+	bh=sSDQSIz4KIc4b7XA8WkttAD2UNgCT7Syi3SPrR4GegY=;
+	b=FQZ6CcejRLc40YjWd3wjGsgYAzFlwaOEHslhi27KMbUmxW8cpQSTiA1MZ1ud6IL3xriv
+	 WLC47Bm4IRpC1ZBDIaOxFvdwt1s1b/ONeG9dW0b58s0A1j/AmCNUUucH8/FvEHoYEOxYw
+	 SQtF6o2PL1teDVc2tWa3xar9nXTPypx7FUvpFVO7N85rnlTFj9WTvY89khxqT9cS5aiMW
+	 BG/MlDDnGR8FnUHYt675SlFYgHK8PhafuAeqWTeVcB46IObPgjEPQNgoUZ9eyaYq1fFBw
+	 L1HWCggxcqGzww//2dpAEuPBhTjpiZ8uBgOW0HrzvX/Cc0meEhtasdwXGVV5ZPrHr8g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uN5HbhH3;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jioT50aU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A8DB60A6F5E;
-	Wed, 28 Oct 2026 18:12:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6B43606B44D;
+	Wed, 28 Oct 2026 18:12:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uN5HbhH3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D9211F01825;
-	Wed, 28 Oct 2026 18:12:02 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jioT50aU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EE621F01828;
+	Wed, 28 Oct 2026 18:12:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793211123;
-	bh=/HqnJ/uS3HQHN0TAYNEVwfpQj2W5QRLjK2xIcCopSGg=;
+	s=korg; t=1793211128;
+	bh=sSDQSIz4KIc4b7XA8WkttAD2UNgCT7Syi3SPrR4GegY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uN5HbhH3vSCKdZkt4X5QfN2MLHgCOATVpim1vQCkPXsqY0SPs/xi+U3JZ+d8sk+5R
-	 AH/thMNIFMPZYGzYCYs3C097r3xQRCmdd6UYq6SRj5tZ+hERkfa1uSabeUOSjzO0Ge
-	 vc6FzyErCVcuL+7TReqr24wJA9TsoT6HcPYVG7AA=
+	b=jioT50aU6sJwJaCNSS+sEnGAtp7xjfTlMpdtSt9UakdlcwpN93uaEd8i3LelU9DWT
+	 Hs5+a3MwEQ6+/PnfFDN7gdSQDYiD9lC852sPVDWPoGrNTRS5WeiH3/VBMnbPaLHXeq
+	 bXr+H0UJ7Bjq1mCwhwjsvtxqPfchkfCJiAXmq2nY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Stahl, Michael" <mstahl@moba.de>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Asad Kamal <asad.kamal@amd.com>,
+	Lijo Lazar <lijo.lazar@amd.com>,
+	Yang Wang <kevinyang.wang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 265/571] Input: exc3000 - properly stop timer on shutdown
-Date: Wed, 28 Oct 2026 17:56:52 +0100
-Message-ID: <20261028170014.291046167@linuxfoundation.org>
+Subject: [PATCH 5.15 267/571] drm/amd/powerplay: fix VoltageObjectInfo zero-stride loop and OOB read
+Date: Wed, 28 Oct 2026 17:56:54 +0100
+Message-ID: <20261028170014.339857844@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -68,51 +70,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+From: Asad Kamal <asad.kamal@amd.com>
 
-[ Upstream commit 79c81d137d36f9635bbcbc3916c0cccb418a61dd ]
+[ Upstream commit 5d3cc8e388464f485d0944b87b8f9426e637d082 ]
 
-We need to stop the timer on driver unbind or probe failures, otherwise
-we get UAF/Oops.
+Reject voltage objects whose usSize is smaller than the header or would
+advance the cursor past the table end, preventing an infinite loop or
+heap OOB read when the VBIOS supplies a malformed VoltageObjectInfo table.
 
-Fixes: 7e577a17f2ee ("Input: add I2C attached EETI EXC3000 multi touch driver")
-Reported-by: "Stahl, Michael" <mstahl@moba.de>
-Link: https://lore.kernel.org/r/Y9dK57BFqtlf8NmN@google.com
-Cc: stable@vger.kernel.org
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Fixes: c82baa281843 ("drm/amd/powerplay: add Tonga dpm support (v3)")
+Fixes: 0d2c7569e196 ("drm/amdgpu: add new atomfirmware based helpers for powerplay")
+Signed-off-by: Asad Kamal <asad.kamal@amd.com>
+Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
+Reviewed-by: Yang Wang <kevinyang.wang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/touchscreen/exc3000.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppatomctrl.c   | 10 ++++++++--
+ drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppatomfwctrl.c | 11 ++++++++---
+ 2 files changed, 16 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/input/touchscreen/exc3000.c b/drivers/input/touchscreen/exc3000.c
-index 4b7eee01c6aad..69eae79e2087c 100644
---- a/drivers/input/touchscreen/exc3000.c
-+++ b/drivers/input/touchscreen/exc3000.c
-@@ -109,6 +109,11 @@ static inline void exc3000_schedule_timer(struct exc3000_data *data)
- 	mod_timer(&data->timer, jiffies + msecs_to_jiffies(EXC3000_TIMEOUT_MS));
- }
+diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppatomctrl.c b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppatomctrl.c
+index 7e37354a03411..640350bbd9085 100644
+--- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppatomctrl.c
++++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppatomctrl.c
+@@ -269,15 +269,21 @@ static const ATOM_VOLTAGE_OBJECT_V3 *atomctrl_lookup_voltage_type_v3(
+ 	unsigned int offset = offsetof(ATOM_VOLTAGE_OBJECT_INFO_V3_1, asVoltageObj[0]);
+ 	uint8_t *start = (uint8_t *)voltage_object_info_table;
  
-+static void exc3000_shutdown_timer(void *timer)
-+{
-+	timer_shutdown_sync(timer);
-+}
+-	while (offset < size) {
++	while (offset + sizeof(ATOM_VOLTAGE_OBJECT_HEADER_V3) <= size) {
+ 		const ATOM_VOLTAGE_OBJECT_V3 *voltage_object =
+ 			(const ATOM_VOLTAGE_OBJECT_V3 *)(start + offset);
++		u16 obj_size;
 +
- static int exc3000_read_frame(struct exc3000_data *data, u8 *buf)
- {
- 	struct i2c_client *client = data->client;
-@@ -386,6 +391,11 @@ static int exc3000_probe(struct i2c_client *client)
- 	if (error)
- 		return error;
++		obj_size = le16_to_cpu(voltage_object->asGpioVoltageObj.sHeader.usSize);
++		if (obj_size < sizeof(voltage_object->asGpioVoltageObj.sHeader) ||
++		    offset + obj_size > size)
++			break;
  
-+	error = devm_add_action_or_reset(&client->dev, exc3000_shutdown_timer,
-+					 &data->timer);
-+	if (error)
-+		return error;
+ 		if (voltage_type == voltage_object->asGpioVoltageObj.sHeader.ucVoltageType &&
+ 			voltage_mode == voltage_object->asGpioVoltageObj.sHeader.ucVoltageMode)
+ 			return voltage_object;
+ 
+-		offset += le16_to_cpu(voltage_object->asGpioVoltageObj.sHeader.usSize);
++		offset += obj_size;
+ 	}
+ 
+ 	return NULL;
+diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppatomfwctrl.c b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppatomfwctrl.c
+index a47a47238e2b9..e5aa787182025 100644
+--- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppatomfwctrl.c
++++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppatomfwctrl.c
+@@ -36,16 +36,21 @@ static const union atom_voltage_object_v4 *pp_atomfwctrl_lookup_voltage_type_v4(
+ 			offsetof(struct atom_voltage_objects_info_v4_1, voltage_object[0]);
+ 	unsigned long start = (unsigned long)voltage_object_info_table;
+ 
+-	while (offset < size) {
++	while (offset + sizeof(struct atom_voltage_object_header_v4) <= size) {
+ 		const union atom_voltage_object_v4 *voltage_object =
+ 			(const union atom_voltage_object_v4 *)(start + offset);
++		u16 obj_size;
 +
- 	error = devm_request_threaded_irq(&client->dev, client->irq,
- 					  NULL, exc3000_interrupt, IRQF_ONESHOT,
- 					  client->name, data);
++		obj_size = le16_to_cpu(voltage_object->gpio_voltage_obj.header.object_size);
++		if (obj_size < sizeof(voltage_object->gpio_voltage_obj.header) ||
++		    offset + obj_size > size)
++			break;
+ 
+ 		if (voltage_type == voltage_object->gpio_voltage_obj.header.voltage_type &&
+ 		    voltage_mode == voltage_object->gpio_voltage_obj.header.voltage_mode)
+ 			return voltage_object;
+ 
+-		offset += le16_to_cpu(voltage_object->gpio_voltage_obj.header.object_size);
+-
++		offset += obj_size;
+ 	}
+ 
+ 	return NULL;
 -- 
 2.53.0
 
