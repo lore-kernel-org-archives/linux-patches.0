@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793207114;
-	b=GP+qE8aEXrSLhcgcTxuJXKCtnGnqF33unNHhFRmn0MKNnlBm8U3YD3C76k3AtX+Y1/c2
-	 XQ1j/3bJ81icjKYGjY+TkPZ3lKnIEkmIe1oOyiC+bqbzlDluDmMH6JrFVPDPC5/zozPRe
-	 qUdo+NY2MQxAMi0SpKPu0wZ+iD49DXDpshca4XZHzna5Rshp0jqEmzI5x0gp7OHyykhwN
-	 2jTvsSs7f9Z+osnfYkXUT7RN3XItOgvMwgPSXUz3K2YFifqzKItXjyy+A+V2QRBJ7HJig
-	 1PDoTZJLWhWTLyYkHi+Buse+RX+tdjZA5VVslM6dvnFhDB48qfVH861KMrhH0zUZqhA==
+	t=1793207117;
+	b=wXhGBaiyPaPpftHHqJEa+StaUe+h3OnJ1RR8oWdqv2omZX93vN5jRnuws/NNoWIoYFuD
+	 MM4WS5Mwo6bctrDjS/VbFy0UhbyXAaEatlOpPMZp+WufMvsMW/Mw7kU0PZAD7R8vBUlPQ
+	 3CAFurDwuJ4ETZPCpE4HP7gv+01ddMSFyoAUPb0sT1rna9WrZgWGqB5IzgDVWHUE6UXVc
+	 6Ia4RFt89o+3L6cnO4Fi96gSsWiguco+sS3fWVE1RWRpAvY0nxdb0UTbnd0pfHE8Lw42d
+	 JAGZ+/ZwwfQgCkSXO90selbdPMhdQ1DacAkkkG/0RgOkMcFSvCtkSHkBdEqPPecGm7A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793207114;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793207117;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=MySPz28JgO5mWCukaJsT+w5VSLIsF8YjvWicSIDtLMI=;
-	b=j8ocgN5mhduXF8Bq4fX5NGw5CmVLYm8+eQbapXCoyiloUO9FSVsN82Ar2Swbef26BzdM
-	 J0oW3g6SNZPfEGHnC3d+doeAd39Q7odLCKoMAX9ItPE+ycb3/voKzYBnm/1c8J/Nq/3T6
-	 HIPiDAC7naDnVfp8ZFuscDCYwaax1iXVNOUwWkz8vo1AK6Wcsf9CxvdyF1/urpJpNnkOD
-	 UMP+SfjxyT1b7CqsduSKLG7511amswYjRQrBS/Zj+BxdgtiscFTS87spWI4J/B/wCGXC7
-	 mTcmaDBaRMH8VmW+NPHsfBAnqMFuTVhz1GWvdMuE/M98bFtKXehMzcWQ0RZiJUXWSYw==
+	bh=JnXzmGN0k0lZO31nqYVPBk+fVGm5dkTJU/Ped/lR93k=;
+	b=Vmcn2NyvhwVnynHF8gzewitSOgMyKyrCYf9RbaBvD48f8rW5IrO7eQDwtqlXpmPpsrpn
+	 YnemXl1hzr69uwqqADSbjTXUMVvztYkrpdHbkFgQrWs5k0B1Qps/vDObZsndeqVIs2m+O
+	 lOHTFNeAdziGeaeVgoeo5DkY2dACHPtU1dqexNaUZN0169+O8xw3fQA8lGXj4iUgioYKF
+	 kUBQVUTE5ZL3K/gIS2eYbRk421v+SKnbDYuyK4xaV4VsdReAWcZfPPQ+2ERc+dHEEKrqd
+	 ZsoDTAZEp+v9+4X7IxvoFlX5A4PosLp4YUs9UHlaY1OAwM1OMFHm5ATLeezoRffuyHQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q3dIA4Yi;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XQQhl69H;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18208606A31C;
-	Wed, 28 Oct 2026 17:05:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 237B9606A31C;
+	Wed, 28 Oct 2026 17:05:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q3dIA4Yi
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67DE31F01828;
-	Wed, 28 Oct 2026 17:05:13 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XQQhl69H
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A49F1F01825;
+	Wed, 28 Oct 2026 17:05:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793207114;
-	bh=MySPz28JgO5mWCukaJsT+w5VSLIsF8YjvWicSIDtLMI=;
+	s=korg; t=1793207116;
+	bh=JnXzmGN0k0lZO31nqYVPBk+fVGm5dkTJU/Ped/lR93k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Q3dIA4Yio9G6cTK/0Gvp32yJzuor8QSZPWzBqxOAG2e0W0aX6xhS/0z5FZ8j0tR8U
-	 DCnMJoOgR7V6IXGoouIcucgaR9W3H1h/cvruF92TdibO3leD94S/GYiebYY4Oqp0wi
-	 7k6SCAH4GA0Ac/41r0WCiP18nRPUuz1P/8avkicQ=
+	b=XQQhl69Hkw+N7io16QjmUMtnqsujlUlDpjbvKe/AjVUpbQnsgWE94TqZQ82qq2uAk
+	 FAakKT/THts8rf/I/uZCsrel4YhIFW5FyI6bYaEYXtXfYJY/HiLccBXprf1je2DOIZ
+	 3eZsfe5Rk0w5MnyS8Oh96UjU/kj5pkG1p70nDqY0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pauli Virtanen <pav@iki.fi>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 03/38] Bluetooth: L2CAP: refuse __l2cap_chan_add if chan already has conn
-Date: Wed, 28 Oct 2026 17:59:50 +0100
-Message-ID: <20261028165940.491894366@linuxfoundation.org>
+	Oleg Nesterov <oleg@redhat.com>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>
+Subject: [PATCH 7.3 30/38] signal: only SIGKILL and the freezers interrupt a coredumping task
+Date: Wed, 28 Oct 2026 18:00:17 +0100
+Message-ID: <20261028165941.167725969@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165940.394092994@linuxfoundation.org>
 References: <20261028165940.394092994@linuxfoundation.org>
@@ -68,94 +67,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pauli Virtanen <pav@iki.fi>
+From: Christian Brauner <brauner@kernel.org>
 
-[ Upstream commit 86b55991d3cd690e73c5ef8d20b75ae4905b357a ]
+commit 563d606b93d7a1d23512832fc252d32c68860d87 upstream.
 
-l2cap_chan may be linked to l2cap_conn at most once. This is assumed in
-several places, eg l2cap_chan_del cleanup.
+For quite a while now coredump has allowed either SIGKILL or freezing to
+interrupt an ongoing coredump. Since we seem to like it complicated
+"freezing" can mean a lot of things:
 
-There is a TOCTOU race where the invariant is violated:
+(1) Power Management induced freezing
+(2) cgroup v1 freezer controller induced freezing
+(3) cgroup v2 freezer controller induced freezing
 
-    [Task 1]                          [Task 2]
-    l2cap_chan_connect                l2cap_sock_bind
-      l2cap_chan_lock                   lock_sock
-      l2cap_state_change                if (sk->sk_state != BT_OPEN)
-        chan->state = BT_CONNECT
-        l2cap_sock_state_change_cb      chan->state = BT_BOUND
-                                        sk->sk_state = BT_BOUND
-          lock_sock <------------------ release_sock
-          sk->sk_state = BT_CONNECT
+So (1) and (2) are handled by checking freezing() but (3) isn't.
+(3) uses cgroup_freeze_task() which sets JOBCTL_TRAP_FREEZE and calls
+signal_wake_up() on every task in the cgroup. The trap isn't handled by
+the coredump code.
 
-l2cap_sock_connect() does not check sk->sk_state, so since chan->state
-is now BT_BOUND, subsequent connect() ends up with second
-__l2cap_chan_add.
+Which means the current logic is inconsistent. Power and cgroup v1
+freeze and abort the coredump. With cgroup v2 it depends on where the
+core goes. A dump to a file completes and the cgroup v2 freeze has to
+wait for it to finish. When dumping to a pipe or socket the dump is
+interrupted at the next write because of trap's TIF_SIGPENDING. Which is
+it? Let's be consistent and align (1)-(3): freezing interrupts an
+ongoing coredump and doesn't make it wait until the dump is done.
 
-Explicitly document and check the invariant in __l2cap_chan_add with
-WARN_ON_ONCE. The only callsite where it could be hit is
-l2cap_chan_connect, so add pre-check there to avoid relying on
-chan->state. chan->state read/write is not properly guarded currently so
-there can be other TOCTOUC problems.
+All three freezers go through signal_wake_up() and so set
+TIF_SIGPENDING on the dumper. And once zap_threads() has set core_state
+that flag can't mean anything else anymore. prepare_signal() drops every
+signal but SIGKILL for the group, the dying threads don't retarget
+shared signals to the dumper, and zap_process() cleared the pending job
+control traps. So the flag is the thing to check. Let dump_interrupted()
+test task_sigpending() and nothing else. That is also what the pipe and
+socket writes already fail on. TIF_NOTIFY_SIGNAL is left out on
+purpose, task work must not cut a dump short.
 
-Add l2cap_lock_chan in l2cap_sock_bind() to guard chan->state write.
+A seized tracee that gets PTRACE_INTERRUPT during the dump is cut short
+the same way. It already was for pipes and sockets.
 
-Fixes: b66774b48dd9 ("Bluetooth: L2CAP: Fix UAF in channel timeout by holding conn ref")
-Assisted-by: deepseek-4-flash # finding the race condition
-Signed-off-by: Pauli Virtanen <pav@iki.fi>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The one freeze that check can miss is one requested before the dump
+started. zap_threads() clears TIF_SIGPENDING and the cgroup v2 freezer
+only wakes a task once while its JOBCTL_TRAP_FREEZE isn't part of
+JOBCTL_PENDING_MASK and survives zap_process(). So refuse to start the
+dump when freezing() is true or the trap is pending. The task then exits
+without dumping, which is what happens today when the freeze interrupts
+the dump at the first write.
+
+Fixes: 403bad72b67d ("coredump: only SIGKILL should interrupt the coredumping task")
+Fixes: 76f969e8948d ("cgroup: cgroup v2 freezer")
+Cc: stable@vger.kernel.org
+Suggested-by: Oleg Nesterov <oleg@redhat.com>
+Link: https://lore.kernel.org/r/arJ6zZuI59BJnXpl@redhat.com
+Link: https://patch.msgid.link/20260921-work-coredump-fixes-v3-2-8e4adb1619e6@kernel.org
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/l2cap_core.c | 7 ++++++-
- net/bluetooth/l2cap_sock.c | 2 ++
- 2 files changed, 8 insertions(+), 1 deletion(-)
+ fs/coredump.c |   13 +++++--------
+ 1 file changed, 5 insertions(+), 8 deletions(-)
 
-diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
-index aaa2a1cd489a5..d87d2dfbce684 100644
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -622,6 +622,10 @@ void __l2cap_chan_add(struct l2cap_conn *conn, struct l2cap_chan *chan)
- 	BT_DBG("conn %p, psm 0x%2.2x, dcid 0x%4.4x", conn,
- 	       __le16_to_cpu(chan->psm), chan->dcid);
+--- a/fs/coredump.c
++++ b/fs/coredump.c
+@@ -508,7 +508,9 @@ static int zap_threads(struct task_struc
+ 	int nr = -EAGAIN;
  
-+	/* Caller must ensure l2cap_chan is linked to l2cap_conn only once */
-+	if (WARN_ON_ONCE(chan->conn || test_bit(FLAG_DEL, &chan->flags)))
-+		return;
-+
- 	conn->disc_reason = HCI_ERROR_REMOTE_USER_TERM;
+ 	spin_lock_irq(&tsk->sighand->siglock);
+-	if (!(signal->flags & SIGNAL_GROUP_EXIT) && !signal->group_exec_task) {
++	/* A freeze requested before the dump would be lost with TIF_SIGPENDING. */
++	if (!(signal->flags & SIGNAL_GROUP_EXIT) && !signal->group_exec_task &&
++	    !freezing(tsk) && !(tsk->jobctl & JOBCTL_TRAP_FREEZE)) {
+ 		/* Allow SIGKILL, see prepare_signal() */
+ 		signal->core_state = core_state;
+ 		nr = zap_process(signal, exit_code);
+@@ -580,13 +582,8 @@ static void coredump_finish(bool core_du
  
- 	chan->conn = l2cap_conn_get(conn);
-@@ -7416,7 +7420,8 @@ int l2cap_chan_connect(struct l2cap_chan *chan, __le16 psm, u16 cid,
- 		}
- 	}
- 
--	if (cid && __l2cap_get_chan_by_dcid(conn, cid)) {
-+	if ((cid && __l2cap_get_chan_by_dcid(conn, cid)) || chan->conn ||
-+	    test_bit(FLAG_DEL, &chan->flags)) {
- 		hci_conn_drop(hcon);
- 		err = -EBUSY;
- 		goto chan_unlock;
-diff --git a/net/bluetooth/l2cap_sock.c b/net/bluetooth/l2cap_sock.c
-index 1194c37e466f1..38aedd7b00d33 100644
---- a/net/bluetooth/l2cap_sock.c
-+++ b/net/bluetooth/l2cap_sock.c
-@@ -109,6 +109,7 @@ static int l2cap_sock_bind(struct socket *sock, struct sockaddr_unsized *addr, i
- 			return -EINVAL;
- 	}
- 
-+	l2cap_chan_lock(chan);
- 	lock_sock(sk);
- 
- 	if (sk->sk_state != BT_OPEN) {
-@@ -174,6 +175,7 @@ static int l2cap_sock_bind(struct socket *sock, struct sockaddr_unsized *addr, i
- 
- done:
- 	release_sock(sk);
-+	l2cap_chan_unlock(chan);
- 	return err;
+ static bool dump_interrupted(void)
+ {
+-	/*
+-	 * SIGKILL or freezing() interrupt the coredumping. Perhaps we
+-	 * can do try_to_freeze() and check __fatal_signal_pending(),
+-	 * but then we need to teach dump_write() to restart and clear
+-	 * TIF_SIGPENDING.
+-	 */
+-	return fatal_signal_pending(current) || freezing(current);
++	/* Only SIGKILL and the freezers set it after zap_threads(). */
++	return task_sigpending(current);
  }
  
--- 
-2.53.0
-
+ static void wait_for_dump_helpers(struct file *file)
 
 
