@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793211078;
-	b=30zf97BS3jfm0d20z6VfczAUIyVdt/OpTq/7gMAP9PYETloh58kh630z3oUeBCEe3BXK
-	 9hRtYBfxFt2QRsSJoe1KbHeAK8NM3B5yTJflStYIp4ld/OHzl4KY19Nl1O1S8K7otQn4H
-	 A5QQtJ5PVaDBhSuEXv4SCWqnTYCK6rn5Jvf0v1gfUJLNWxsotJ7kxNQXX+U8ckdRZUaqt
-	 ILstKNje0W03oVnkCBciaXWBR3hi6txo/0ofhggTmbXQt+kjOlBaCidjnMzs/gqi6Lu4N
-	 d/dRHWtcJYl2s5pej+s66oKsXLPKqF0gKyDMtqkdlYs2PISnOOKau4cXHI5X5W/rHrQ==
+	t=1793211081;
+	b=xwNCW1Lyp6pYkt9P7s7NB9HMUX+3/B9DT9sisMYro/rV+223XAVp0FuPUrRvx9k6i/5M
+	 iUOaIvbauVZBwKqBfzSs2V6sX/OqitKE3wx/G0HO22JgqdN48QMhgNlfNWJzsG2CXGPnK
+	 VyQb94dRZTIdOX7rRfnGcdI1GpQbQbz/5VV39RDUbICXGzB2vKTLv+icJ7+CAbHQwMToV
+	 lVKylnE5urZJMeh7rR4FZj+Rne1F4I2nb2HeleOqhJmMjWgbP8Xl31Bb0lppQS9K5Q9eW
+	 s+WXw5SBgNnR4AgPlPnlUtvG2wbrr0GE9IoDrIr6/WySSM5wWP9IAjll6es8dsMmTvg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793211078;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793211081;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=tlH3QaRIAdGFz0VrGKodlW95/utR7qyVg4PDH0Q1xpQ=;
-	b=YcL7Fokz8iY+EGdodl9641NNZlhei0zr8oWEtZv0l9N/meuEbAnehjwirzKA66Ut//gB
-	 7c3LxYNjDAWaoi5xtOWAVcagqBBfKLD37EmJEwM+eWWU3U7XhELH4/XLymNhDok/83q52
-	 EdaSUFDDJzgBEWza1qSrETxl/+nBkfw12pPat0fjtD6ES9q/I9gpkijviRhuGwgHFUYJF
-	 Sjh+0SU0t7nIjw2Gn+/cT32i5285Yyw59sVbPtNVrH5uqeSRThQNj+HJXfd7nbcEZCT2r
-	 z+0x6HIMPfYGWzWVks9bOUoum37XO0jM7eS4w9vDl4PA48Q1FTeutBg0QuH6CpRJ8sQ==
+	bh=lS/yp9L3FpyhcBlpSI1I5zcUDiiZHgF5opJZkyOCLvc=;
+	b=GbonIko2dQ2xWqIiZYq85+nIesQzxmgAHjAEM7BVH2YiZ3/yvRCEwVoZBPIZ5g7je/E0
+	 fndTq+/5wXq39Xns3nMCCZd+sINFHpQQhpz9+3O+tqQuB7PkJvVTT99SVTCj21pGcuR/2
+	 nzz2cOqg55MvQwiLRlkMUiP2xbuzg+cl1jJZA5W59Mw4/hoYwclnTJH6KFQ6o+AD6Lnsw
+	 uzzZdYcexV92FwuZvcds8zkl2VjqlzNSfVj6Fbe20c4GXl5ccmo11C6QuJ06A6FvkO4N1
+	 N6+sPo+QU1wKjohcUjjz40VAc1kBCdQ5bJzl0SJUjsKuAUKrNInju2TpfF5uxCa96vw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=psEbUY8y;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1REm5Mr8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C72460A3803;
-	Wed, 28 Oct 2026 18:11:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E01C260A380A;
+	Wed, 28 Oct 2026 18:11:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=psEbUY8y
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60CBC1F01828;
-	Wed, 28 Oct 2026 18:11:17 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1REm5Mr8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C6F81F01825;
+	Wed, 28 Oct 2026 18:11:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793211077;
-	bh=tlH3QaRIAdGFz0VrGKodlW95/utR7qyVg4PDH0Q1xpQ=;
+	s=korg; t=1793211080;
+	bh=lS/yp9L3FpyhcBlpSI1I5zcUDiiZHgF5opJZkyOCLvc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=psEbUY8yVwxTSbI9ttdAQe4M6ofzVYo2K4NqKwFd6snjwUBW+SYtAvVXiqHOcUE2t
-	 SrH1CdAZVa+DOl0NWRhlBSJh/skBhQnWwRRtNO161fsQsjaIwYgPjY1LFnZ6BR5++g
-	 PoC+c6fnykWkC66XfmfwafuUUhAKoy9HCAlsLa48=
+	b=1REm5Mr8JHPjH1gQ/DTUZs7cnEZBPbkPlEJvNF2XzxGuMOTLZv+tse+xMWRalBvGZ
+	 mN3Odf4HvOdsEhJ0BUpFM5ptIKVFkxPDUxYMzI/Yxfd+0+egKfv7QFwMaFwPRr3XAe
+	 G+RN2Aoip5A1IKmXN+42BwJOAFFLgfkD2R2FCtoc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiale Yao <yaojiale02@163.com>,
-	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Subject: [PATCH 5.15 251/571] iio: accel: kxcjk-1013: reject duplicate event disable
-Date: Wed, 28 Oct 2026 17:56:38 +0100
-Message-ID: <20261028170013.960044508@linuxfoundation.org>
+	Chengfeng Ye <nicoyip.dev@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 5.15 225/571] Bluetooth: RFCOMM: Fix initial port reference race
+Date: Wed, 28 Oct 2026 17:56:12 +0100
+Message-ID: <20261028170013.340568866@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -67,38 +67,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiale Yao <yaojiale02@163.com>
+From: Chengfeng Ye <nicoyip.dev@gmail.com>
 
-commit dd30c10ff60d2b30386c23bb7c61cc97f2385c97 upstream.
+commit 2d696c1ed3468dcb62578a3911e687110d463520 upstream.
 
-The IIO core does not filter duplicate writes to the event enable
-attribute. kxcjk1013_write_event_config() already ignores repeated
-enable requests, but a repeated disable request still calls
-kxcjk1013_set_power_state(data, false), dropping a runtime PM reference
-that was not acquired for this request. This can underflow the runtime
-PM usage count and trigger a "Runtime PM usage count underflow" warning.
+For RFCOMM_RELEASE_ONHUP devices, rfcomm_tty_install() and
+__rfcomm_release_dev() both use RFCOMM_TTY_OWNED to decide who drops the
+initial tty_port reference. The release path tests the bit separately
+from the install path setting it, so both can drop that reference.
 
-Return early when the requested state already matches ev_enable_state.
+The synchronous hangup does not prevent this race: port->tty is not
+assigned until tty_port_open(), after installation. The following
+interleaving is possible:
 
-Fixes: b4b491c0832e ("iio: accel: kxcjk-1013: Support thresholds")
-Signed-off-by: Jiale Yao <yaojiale02@163.com>
+  1. Install and release each obtain a reference with rfcomm_dev_get().
+  2. Release observes RFCOMM_TTY_OWNED clear.
+  3. Install sets RFCOMM_TTY_OWNED and drops the initial reference.
+  4. Release drops the same initial reference again.
+  5. TTY cleanup drops its reference and frees the device.
+  6. Release performs its final tty_port_put() on the freed port.
+
+KASAN reported:
+
+  BUG: KASAN: slab-use-after-free in tty_port_put+0x22/0x190
+  Write of size 4 at addr ffff8881001d3d5c by task poc/92
+
+  Call Trace:
+   tty_port_put+0x22/0x190
+   rfcomm_dev_ioctl+0x1d4/0x1930
+   sock_do_ioctl+0x110/0x260
+   sock_ioctl+0x380/0x590
+   __x64_sys_ioctl+0x134/0x1c0
+
+  Allocated by task 88:
+   rfcomm_dev_ioctl+0x8f6/0x1930
+   sock_do_ioctl+0x110/0x260
+   sock_ioctl+0x380/0x590
+   __x64_sys_ioctl+0x134/0x1c0
+
+  Freed by task 65:
+   kfree+0x131/0x3c0
+   rfcomm_dev_destruct+0x23b/0x2f0
+   release_one_tty+0xc1/0x370
+   process_one_work+0x661/0x1090
+
+Use test_and_set_bit() in both paths so that only the caller that changes
+RFCOMM_TTY_OWNED from clear to set drops the initial reference. Each path
+keeps its own lookup reference until release or TTY cleanup, preserving
+the existing callback ordering and error handling.
+
+Fixes: 80ea73378af4 ("Bluetooth: Fix unreleased rfcomm_dev reference")
 Cc: stable@vger.kernel.org
-Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Assisted-by: LLM
+Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/accel/kxcjk-1013.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/bluetooth/rfcomm/tty.c |    7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
---- a/drivers/iio/accel/kxcjk-1013.c
-+++ b/drivers/iio/accel/kxcjk-1013.c
-@@ -1050,7 +1050,7 @@ static int kxcjk1013_write_event_config(
- 	struct kxcjk1013_data *data = iio_priv(indio_dev);
- 	int ret;
+--- a/net/bluetooth/rfcomm/tty.c
++++ b/net/bluetooth/rfcomm/tty.c
+@@ -471,7 +471,7 @@ static int __rfcomm_release_dev(void __u
+ 		tty_kref_put(tty);
+ 	}
  
--	if (state && data->ev_enable_state)
-+	if (state == data->ev_enable_state)
- 		return 0;
+-	if (!test_bit(RFCOMM_TTY_OWNED, &dev->status))
++	if (!test_and_set_bit(RFCOMM_TTY_OWNED, &dev->status))
+ 		tty_port_put(&dev->port);
  
- 	mutex_lock(&data->mutex);
+ 	tty_port_put(&dev->port);
+@@ -736,10 +736,9 @@ static int rfcomm_tty_install(struct tty
+ 	 * when the last process closes the tty. The behaviour is expected by
+ 	 * userspace.
+ 	 */
+-	if (test_bit(RFCOMM_RELEASE_ONHUP, &dev->flags)) {
+-		set_bit(RFCOMM_TTY_OWNED, &dev->status);
++	if (test_bit(RFCOMM_RELEASE_ONHUP, &dev->flags) &&
++	    !test_and_set_bit(RFCOMM_TTY_OWNED, &dev->status))
+ 		tty_port_put(&dev->port);
+-	}
+ 
+ 	return 0;
+ }
 
 
