@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216076;
-	b=A+/3sbegQ5O9aB6WESYF0NyWK4HphF7cx7DaAb8rkEY5/nsJabjPj1tWtD74nNPdSCLz
-	 WrjQEKaGtnXbHEUARRX0JYGh6e0XHA+35vHLrm/0Wz7ujFl1lBPKggHCOpbSzDyT6uUys
-	 oo8NLxnPkstzBwoNpEcuwLqt5BRvNhcAcr3JTySoyj3CONasx0DYG3YEZ1WujEJy5LzoG
-	 y834PaapO4ENcIHw9Qluxui9e9tvW+w2tRJPPTBS0oE+6kk53yXP6vrntGWL6p9e7bfNS
-	 fLS70GKlP81bTAGN0hnF+531PnSYt4660v2MqFvxUFOOEKIesj58IkZwAwDKgOWAO1Q==
+	t=1793216078;
+	b=bLCzegrIYYbRlJZaq8xUTqW/HzG0KUAUFlkovftkP6Xgt9g1xsVsrG1gPB9Z/plhpLe+
+	 yQufQQ52vLwDiL+bqZwYArJK3Zrc/HmAEwb1lCptUmtT+JO34A50nNXIX3NGvPj5xMUdO
+	 oGMxzetmUKbiwQ4Mdn8mO/3PofNNVmHVcw+fH4op27DCBfbU9dCtEhb8rnZAsKI/YqyDC
+	 QB6E9EP8gErBM6EqgXg0xGWAZ9DJxOunRH9IgOaTDNnTic4NV9zWOrahaDSVFVRKFQo/G
+	 PVislyYznmfOCg0+C5vySgqX+7thKYsuuKRodcSQpTifEil4wyx42H4nGeAg3fpa7yQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216076;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216078;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=wyc1Qlk556BSdycGpXfzfBHx/WITmrTDOf/+BSpXvHM=;
-	b=sOey39EUchV/4nPPy9Wa5TNhVOFzTk0qvv/Oeow/QwyZBxzzAB/DKKGesTCYSByJsU5G
-	 hOkMQ4kizqJu9639T5QUI2IA8jEfTGKmqb6p/JtNw57DCGbl/FDi1aX0YCJ9nexKvnG3C
-	 DfanykMDzbTHkJbU9S8l/16YYcggq6Cp5V968/Q+7Yk+yY1IZycgnDrJtMGgiaUFFAOAR
-	 tkOvBTrwXvl1Rx1KbxMl++RgXxdSS5iFY0XD0OEsg7mgm/nLl4Z8VPbTtuOetaKVz3kfi
-	 T4NdBkricHb1WDnl8RA5LcZ9kjvNosqML1S9fxpSTiNtT5HFo+wmh/2JYnXtpKGCLeQ==
+	bh=Jv3f0jMdSb647+ACPnhzDtkhLV800MisPtrMQnwhYbo=;
+	b=Vutjdukq9LKy7btxrcUorXVdORkOJCRXdXSmJGcloZIhHatmh+s5w3YWH1UbR8PL4sZ8
+	 VVkFFROa+tDsJz8DsR4hr4PTX5uNk0/2Jehu9z5wuUuX1tIPkVSQ+7jb5JRgjawp7Jo3j
+	 pJDdjLItV1kSmR/KzU7WVDHFhK16pQ2KYBqxj2ghaurtMoLEuU0x+02y9WrI04Kw2gT66
+	 9TDmzvOZWyzIZXm2ajkh+Jk3WzFNFBsynSGFYOHINtGtxyladaThzeVQr6kEVYdFfmmk2
+	 3iupO2vi0qH6frCwlyyvVcCLC7Xl6uWAkefVkhl9unwLfUNzMonyek03CBJ9UPt+48g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qrjhuMhT;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=opy8FWGD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C220A606A31C;
-	Wed, 28 Oct 2026 19:34:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 749C1606A31A;
+	Wed, 28 Oct 2026 19:34:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qrjhuMhT
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB9AF1F01825;
-	Wed, 28 Oct 2026 19:34:34 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=opy8FWGD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C24F71F01825;
+	Wed, 28 Oct 2026 19:34:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216075;
-	bh=wyc1Qlk556BSdycGpXfzfBHx/WITmrTDOf/+BSpXvHM=;
+	s=korg; t=1793216078;
+	bh=Jv3f0jMdSb647+ACPnhzDtkhLV800MisPtrMQnwhYbo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qrjhuMhTs28Vemvd9k+aW5pmtmFr+SESxg6Tgc63zlj8NZxbcF9u5qrRFhqZC6SDA
-	 qgg+fI6eRG1E7rNvwfaVy6xARFa5uCB1uE7BhmWOplab0TGtgYHpfCHKN2SUbw+XNC
-	 qULIZi+7ZSaiWE9kTEmZ7KxR3/eQau62hUzFt4rg=
+	b=opy8FWGDyle/LlWsUqhe6vcRgBCbwHRzFuocB6WukHueBHxRoWRpWymGW8s9YZmZm
+	 fRn568RJRrduc+cbC1acd+YmDLO515xPEAGBadeYqMu1SR9r7NjVa3z5iM8UbKpLFS
+	 GT/Up3XS6KiCVzXLJzr00oAjX3/0mMDDVaXV/6Ok=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Chris Mason <clm@meta.com>,
 	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1432/1887] nfsd: fix fcache_disposal UAF by inlining dispose state into nfsd_net
-Date: Wed, 28 Oct 2026 17:58:48 +0100
-Message-ID: <20261028170532.047231484@linuxfoundation.org>
+Subject: [PATCH 6.1 1433/1887] nfsd: fix BUG_ON in nfsd4_alloc_layout_stateid on racing delegation revoke
+Date: Wed, 28 Oct 2026 17:58:49 +0100
+Message-ID: <20261028170532.070065516@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -70,169 +71,77 @@ Content-Transfer-Encoding: 8bit
 
 From: Jeff Layton <jlayton@kernel.org>
 
-[ Upstream commit bbf13732f74351d21c5e0e8dd9bd8e1c48dc35d4 ]
+[ Upstream commit ca94ba36172046be6a694a7986f6931e47ed4d51 ]
 
-nfsd_file_dispose_list_delayed() defers fput() to nfsd service threads
-via a per-net freeme queue, preventing the shrinker and GC worker from
-bearing the cost of closing files (see ffb402596147).  However, the
-queue lives in a separately-allocated struct nfsd_fcache_disposal that
-is freed by nfsd_free_fcache_disposal_net() during per-net teardown.
-The global shrinker, laundrette, and fsnotify callbacks can still be
-inside nfsd_file_dispose_list_delayed() dereferencing that pointer,
-causing a use-after-free.
+nfsd4_alloc_layout_stateid reads fp->fi_deleg_file without holding
+fi_lock when the parent stateid is a delegation. A concurrent delegation
+revoke via the laundromat can clear fi_deleg_file under fi_lock, causing
+nfsd_file_get() to return NULL and triggering the BUG_ON.
 
-Inline the spinlock and freeme list directly into struct nfsd_net (as
-fcache_dispose_lock and fcache_dispose_list), eliminating the separately
-allocated struct nfsd_fcache_disposal entirely.  These fields now have
-the same lifetime as the net namespace itself, so there is no dangling
-pointer to chase.
+This race is client-reachable: two NFS clients can trigger it by having
+one hold a delegation while another opens the same file to force a
+recall. When the first client doesn't respond to the recall, the
+laundromat revokes it. A concurrent LAYOUTGET from any client using the
+delegation stateid hits the race window.
 
-nfsd_file_cache_start_net() now just initializes the inline fields and
-cannot fail due to allocation.  nfsd_file_cache_shutdown_net() drains
-the inline list directly instead of freeing a separate struct.  The
-alloc/free helpers are removed.
+Fix this by taking fi_lock around the fi_deleg_file read in the
+SC_TYPE_DELEG path, matching the locking discipline of the
+find_any_file() arm, and replacing the BUG_ON with a graceful error
+return that cleans up the partially-initialized layout stateid.
 
-Fixes: 1463b38e7cf3 ("NFSD: simplify per-net file cache management")
+Fixes: c5c707f96fc9 ("nfsd: implement pNFS layout recalls")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-6
+Assisted-by: kres:claude-opus-4-7
+Reported-by: Chris Mason <clm@meta.com>
 Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260602-nfsd-testing-v2-7-e4ea62e3cd5c@kernel.org
+Link: https://patch.msgid.link/20260530-nfsd-fixes-v2-1-f27e8eb4d974@kernel.org
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/filecache.c | 67 ++++++++++++---------------------------------
- fs/nfsd/netns.h     |  4 ++-
- 2 files changed, 20 insertions(+), 51 deletions(-)
+ fs/nfsd/nfs4layouts.c | 21 +++++++++++++++------
+ 1 file changed, 15 insertions(+), 6 deletions(-)
 
-diff --git a/fs/nfsd/filecache.c b/fs/nfsd/filecache.c
-index 46eb06e32f0cd..ae8343bdc0450 100644
---- a/fs/nfsd/filecache.c
-+++ b/fs/nfsd/filecache.c
-@@ -60,12 +60,6 @@ static DEFINE_PER_CPU(unsigned long, nfsd_file_releases);
- static DEFINE_PER_CPU(unsigned long, nfsd_file_total_age);
- static DEFINE_PER_CPU(unsigned long, nfsd_file_evictions);
+diff --git a/fs/nfsd/nfs4layouts.c b/fs/nfsd/nfs4layouts.c
+index 84bb200e24ade..03c8e71d1974a 100644
+--- a/fs/nfsd/nfs4layouts.c
++++ b/fs/nfsd/nfs4layouts.c
+@@ -168,9 +168,12 @@ nfsd4_free_layout_stateid(struct nfs4_stid *stid)
+ 	list_del_init(&ls->ls_perfile);
+ 	spin_unlock(&fp->fi_lock);
  
--struct nfsd_fcache_disposal {
--	struct work_struct work;
--	spinlock_t lock;
--	struct list_head freeme;
--};
--
- static struct workqueue_struct *nfsd_filecache_wq __read_mostly;
+-	if (!nfsd4_layout_ops[ls->ls_layout_type]->disable_recalls)
+-		vfs_setlease(ls->ls_file->nf_file, F_UNLCK, NULL, (void **)&ls);
+-	nfsd_file_put(ls->ls_file);
++	if (ls->ls_file) {
++		if (!nfsd4_layout_ops[ls->ls_layout_type]->disable_recalls)
++			vfs_setlease(ls->ls_file->nf_file, F_UNLCK, NULL,
++				     (void **)&ls);
++		nfsd_file_put(ls->ls_file);
++	}
  
- static struct kmem_cache		*nfsd_file_slab;
-@@ -417,12 +411,11 @@ nfsd_file_dispose_list_delayed(struct list_head *dispose)
- 		struct nfsd_file *nf = list_first_entry(dispose,
- 						struct nfsd_file, nf_gc);
- 		struct nfsd_net *nn = net_generic(nf->nf_net, nfsd_net_id);
--		struct nfsd_fcache_disposal *l = nn->fcache_disposal;
+ 	if (ls->ls_recalled)
+ 		atomic_dec(&ls->ls_stid.sc_file->fi_lo_recalls);
+@@ -235,11 +238,17 @@ nfsd4_alloc_layout_stateid(struct nfsd4_compound_state *cstate,
+ 	nfsd4_init_cb(&ls->ls_recall, clp, &nfsd4_cb_layout_ops,
+ 			NFSPROC4_CLNT_CB_LAYOUT);
  
--		spin_lock(&l->lock);
--		list_move_tail(&nf->nf_gc, &l->freeme);
--		spin_unlock(&l->lock);
--		queue_work(nfsd_filecache_wq, &l->work);
-+		spin_lock(&nn->fcache_dispose_lock);
-+		list_move_tail(&nf->nf_gc, &nn->fcache_dispose_list);
-+		spin_unlock(&nn->fcache_dispose_lock);
-+		queue_work(nfsd_filecache_wq, &nn->fcache_dispose_work);
- 	}
- }
+-	if (parent->sc_type == NFS4_DELEG_STID)
++	if (parent->sc_type == NFS4_DELEG_STID) {
++		spin_lock(&fp->fi_lock);
+ 		ls->ls_file = nfsd_file_get(fp->fi_deleg_file);
+-	else
++		spin_unlock(&fp->fi_lock);
++	} else {
+ 		ls->ls_file = find_any_file(fp);
+-	BUG_ON(!ls->ls_file);
++	}
++	if (!ls->ls_file) {
++		nfs4_put_stid(stp);
++		return NULL;
++	}
  
-@@ -651,12 +644,12 @@ static void
- nfsd_file_delayed_close(struct work_struct *work)
- {
- 	LIST_HEAD(head);
--	struct nfsd_fcache_disposal *l = container_of(work,
--			struct nfsd_fcache_disposal, work);
-+	struct nfsd_net *nn = container_of(work, struct nfsd_net,
-+					   fcache_dispose_work);
- 
--	spin_lock(&l->lock);
--	list_splice_init(&l->freeme, &head);
--	spin_unlock(&l->lock);
-+	spin_lock(&nn->fcache_dispose_lock);
-+	list_splice_init(&nn->fcache_dispose_list, &head);
-+	spin_unlock(&nn->fcache_dispose_lock);
- 
- 	nfsd_file_dispose_list(&head);
- }
-@@ -825,44 +818,15 @@ __nfsd_file_cache_purge(struct net *net)
- 	nfsd_file_dispose_list(&dispose);
- }
- 
--static struct nfsd_fcache_disposal *
--nfsd_alloc_fcache_disposal(void)
--{
--	struct nfsd_fcache_disposal *l;
--
--	l = kmalloc(sizeof(*l), GFP_KERNEL);
--	if (!l)
--		return NULL;
--	INIT_WORK(&l->work, nfsd_file_delayed_close);
--	spin_lock_init(&l->lock);
--	INIT_LIST_HEAD(&l->freeme);
--	return l;
--}
--
--static void
--nfsd_free_fcache_disposal(struct nfsd_fcache_disposal *l)
--{
--	cancel_work_sync(&l->work);
--	nfsd_file_dispose_list(&l->freeme);
--	kfree(l);
--}
--
--static void
--nfsd_free_fcache_disposal_net(struct net *net)
--{
--	struct nfsd_net *nn = net_generic(net, nfsd_net_id);
--	struct nfsd_fcache_disposal *l = nn->fcache_disposal;
--
--	nfsd_free_fcache_disposal(l);
--}
--
- int
- nfsd_file_cache_start_net(struct net *net)
- {
- 	struct nfsd_net *nn = net_generic(net, nfsd_net_id);
- 
--	nn->fcache_disposal = nfsd_alloc_fcache_disposal();
--	return nn->fcache_disposal ? 0 : -ENOMEM;
-+	spin_lock_init(&nn->fcache_dispose_lock);
-+	INIT_LIST_HEAD(&nn->fcache_dispose_list);
-+	INIT_WORK(&nn->fcache_dispose_work, nfsd_file_delayed_close);
-+	return 0;
- }
- 
- /**
-@@ -881,8 +845,11 @@ nfsd_file_cache_purge(struct net *net)
- void
- nfsd_file_cache_shutdown_net(struct net *net)
- {
-+	struct nfsd_net *nn = net_generic(net, nfsd_net_id);
-+
- 	nfsd_file_cache_purge(net);
--	nfsd_free_fcache_disposal_net(net);
-+	cancel_work_sync(&nn->fcache_dispose_work);
-+	nfsd_file_dispose_list(&nn->fcache_dispose_list);
- }
- 
- void
-diff --git a/fs/nfsd/netns.h b/fs/nfsd/netns.h
-index b95ad49800533..6291cd57f38eb 100644
---- a/fs/nfsd/netns.h
-+++ b/fs/nfsd/netns.h
-@@ -207,7 +207,9 @@ struct nfsd_net {
- 	/* utsname taken from the process that starts the server */
- 	char			nfsd_name[UNX_MAXNODENAME+1];
- 
--	struct nfsd_fcache_disposal *fcache_disposal;
-+	spinlock_t		fcache_dispose_lock;
-+	struct list_head	fcache_dispose_list;
-+	struct work_struct	fcache_dispose_work;
- 
- 	siphash_key_t		siphash_key;
- 
+ 	if (nfsd4_layout_setlease(ls)) {
+ 		nfs4_put_stid(stp);
 -- 
 2.53.0
 
