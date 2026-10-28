@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793211516;
-	b=k+P3Sh/gNQr1dnM+VQ3RAd/HyYSFcI9c+zUG0ywbKP/5sdyWTpZxMlq7VQ8Iz3/iLzUo
-	 T5RPeb/ezNXcufIfo1Qlx6OhZwYbvtoguwfXeeADFFJUAl0uUoRrwWK2ySjCpntvSLF2I
-	 G+9Z5+mpd1xEa6iFZeoeE0eTkOTjmZCrI3Xwx83/nk83mU+JAuplO8N5m8qipTDy0vzBu
-	 aXaMEHbTqAKMQL8GzWuc+XMBe9GIgLBmRIG45kClgPlEuR0jrC4Spg068/D8J64pkVid1
-	 O+BX29BKdTlRhm5e1cFVybAOL34MMrRqo3ShfWINEZoIUnjMEWgqrqQXeuQzYuppu1A==
+	t=1793211519;
+	b=I42w5LUqJl5FAVDYDPJSp+LCwlT9h34fFZynwpQTk5j5frTOuZFykGzaOe9HUFE9Ew/k
+	 J2udlopXUm7fUKpZCwDWcZmU/4bumkuWOpquxjEYyHRd+7HlXFwjBoeMAFL9GVHk1OvtB
+	 KyEQwckHuLf+If5HaTbdBgwav+ZKTUMMoHk8RPgwTtJQGDMotZ2TBDs7g/RwGJxrsW0cy
+	 OdhYdcJJKX6R29elPsqe4h6Z0lAn7NcL0X5NYoPFDulAIukWL1L0LTZ8Ex6nRqLJffN/d
+	 3f7jyOJX8N5/PoSzcOJ1jtljQTOs4VceN8f330xV8GzhUqI4ome1gPGc24pQsKQyzYA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793211516;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793211519;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=It6+mrTasha3AW3ae+rHjqdZ41qnrFIyihuzwSvh424=;
-	b=4X3xAHPwmeMclnMZRpuy15jsqPckh0Xjx2Tdbb4OSnUu3SSkKSfPOphAGBQSrggcFRGz
-	 4HCpoR8HsQTynilehnsq6sPLxfr4CQZ6MPe4BDe0EAYzJp3jGrxgjBQfqWsSjdzNb54+r
-	 GD2abB4srjbAj3ljLCfNag4RbBAw09xfyy7mEcB6ao8l5g/QJisXeLM9faJx0GOvVu130
-	 MWWpDeZfweR/h5tBFoZVXoJnzL2OoIiAc/4lAeyMIWevZFZaSR/R5xKCrE0C035Uoseb+
-	 /DNGnS2tPgfJhzIMDvmMD4wuGXH9STQvH27IYoJWOcRIjWbvRGoHr9eDql7oDdNIAGw==
+	bh=Vtyb+Q/siPV1DUTutUyUkyA2nrZ0cPwjHEyORHLynl4=;
+	b=bt0FX0FVqJ8QS74h95qm6atAI4+PU6JXbOwC6aiThr2ODM6pozkCyJL0oTJfdp591JjT
+	 xSPX+P/CKoaBct78nSJ0R5kb50Nc2znVvLQE/gDwi3TajUStm7RHt50uN71MtOSRkDofJ
+	 gjF3wqPVhhhSZ6Uz2Cie2IomK+nuZJj05kk5/5cQxtWgFfQpTJQpJHQ4BzgEoJwnGoL9v
+	 z7aMuriGBgPVeSrC54GOCEGg/Ndpk70E/oZpwqqZhDDEd7vqwDN028sUOiY1L4FYlsm8u
+	 3eTMldgvZaZXIsJLs9aqQYFq3d4Do/bG6PzfvSGyMYIstSj7rKyO49S4ZZaVEGI4jLg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cDkkjZOv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=R8I9oGwD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC50B606A31A;
-	Wed, 28 Oct 2026 18:18:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 183F8606A31C;
+	Wed, 28 Oct 2026 18:18:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cDkkjZOv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45EFE1F01825;
-	Wed, 28 Oct 2026 18:18:35 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=R8I9oGwD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29C071F01825;
+	Wed, 28 Oct 2026 18:18:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793211515;
-	bh=It6+mrTasha3AW3ae+rHjqdZ41qnrFIyihuzwSvh424=;
+	s=korg; t=1793211518;
+	bh=Vtyb+Q/siPV1DUTutUyUkyA2nrZ0cPwjHEyORHLynl4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cDkkjZOvd7RoM0f6yxnLqGENp7AZhiFopicJFtstWHsP1uY9HhxGy9BMIUcexsrvj
-	 NB5c4Vj0p+qw0qU/ZkQaI6KBtJkyaEL0+QyZVh9aDLgpPZQHbESkfuy56GOPv4tTeW
-	 8Kned7px6UF3co/2yCMebnE/Dg0/SqdAiC8V2N4w=
+	b=R8I9oGwDsXsQjGKG5wY/LsnO24nL6nZc2VaLzIuPALGJrmJ+UbrsF6wjKP7JdaaJl
+	 3YVOp/6hr8sCVprW2HqvJINhZi18XJlc1o1aLj1EnVgKsnUcX4l4uzuMR4G8i960wS
+	 pmNDxtIRzHUhq1XIc+LgRA0UqOFu6aFafhfHmbio=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Zhang Xiaoxu <zhangxiaoxu5@huawei.com>,
-	Tomas Winkler <tomas.winkler@intel.com>,
-	Alexander Usyskin <alexander.usyskin@intel.com>
-Subject: [PATCH 5.15 404/571] mtd: fix use-after-free in mtd release
-Date: Wed, 28 Oct 2026 17:59:11 +0100
-Message-ID: <20261028170017.597745443@linuxfoundation.org>
+	Yibo Tan <lhfff@tju.edu.cn>,
+	Ulf Hansson <ulfh@kernel.org>
+Subject: [PATCH 5.15 369/571] mmc: mtk-sd: Cancel request timeout work on remove
+Date: Wed, 28 Oct 2026 17:58:36 +0100
+Message-ID: <20261028170016.769653782@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -69,70 +67,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Usyskin <alexander.usyskin@intel.com>
+From: Yibo Tan <lhfff@tju.edu.cn>
 
-commit e9714c22c1a8238a85d069b1517941fc723312f7 upstream.
+commit b38af5386a74416e898955443f2e26547b358cb2 upstream.
 
-I case of partition device_unregister() in mtd_device_release()
-calls mtd_release() which frees mtd_info structure for partition.
-All code after device_unregister in mtd_device_release thus
-uses already freed memory.
+The driver queues req_timeout while a request is active.
+msdc_request_done() uses cancel_delayed_work(), which does not wait for
+a timeout callback that has already started.
 
-Move part of code to mtd_release() and restict mtd->dev cleanup
-to non-partion object.
-For partition object such cleanup have no sense as partition
-mtd_info is removed.
+The timeout callback calls mmc_request_done(), which wakes the request
+waiter, and then continues to use host->dev_comp and check the SDIO IRQ.
+During unbind, msdc_drv_remove() can return and the managed mmc_host can
+be freed before the callback finishes.
 
-Cc: Miquel Raynal <miquel.raynal@bootlin.com>
-Cc: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
-Fixes: 19bfa9ebebb5 ("mtd: use refcount to prevent corruption")
-Reviewed-by: Tomas Winkler <tomas.winkler@intel.com>
-Signed-off-by: Alexander Usyskin <alexander.usyskin@intel.com>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://lore.kernel.org/linux-mtd/20230731115836.542747-1-alexander.usyskin@intel.com
+KASAN reported use-after-free accesses in msdc_request_done() and
+msdc_recheck_sdio_irq() in each of three unbind tests.  The same tests
+completed without a kernel diagnostic after this change.
+
+Call cancel_delayed_work_sync() after mmc_remove_host() has stopped new
+requests and before the driver releases the host resources.
+
+Fixes: 208489032bdd ("mmc: mediatek: Add Mediatek MMC driver")
+Cc: stable@vger.kernel.org
+Assisted-by: Codex:GPT-5
+Signed-off-by: Yibo Tan <lhfff@tju.edu.cn>
+Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/mtdcore.c |   16 +++++++++++-----
- 1 file changed, 11 insertions(+), 5 deletions(-)
+ drivers/mmc/host/mtk-sd.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/mtd/mtdcore.c
-+++ b/drivers/mtd/mtdcore.c
-@@ -92,6 +92,9 @@ static void mtd_release(struct device *d
- 	struct mtd_info *mtd = dev_get_drvdata(dev);
- 	dev_t index = MTD_DEVT(mtd->index);
+--- a/drivers/mmc/host/mtk-sd.c
++++ b/drivers/mmc/host/mtk-sd.c
+@@ -2702,6 +2702,7 @@ static int msdc_drv_remove(struct platfo
  
-+	idr_remove(&mtd_idr, mtd->index);
-+	of_node_put(mtd_get_of_node(mtd));
-+
- 	if (mtd_is_partition(mtd))
- 		release_mtd_partition(mtd);
+ 	platform_set_drvdata(pdev, NULL);
+ 	mmc_remove_host(mmc);
++	cancel_delayed_work_sync(&host->req_timeout);
+ 	msdc_deinit_hw(host);
+ 	msdc_gate_clock(host);
  
-@@ -102,6 +105,7 @@ static void mtd_release(struct device *d
- static void mtd_device_release(struct kref *kref)
- {
- 	struct mtd_info *mtd = container_of(kref, struct mtd_info, refcnt);
-+	bool is_partition = mtd_is_partition(mtd);
- 
- 	debugfs_remove_recursive(mtd->dbg.dfs_dir);
- 
-@@ -110,11 +114,13 @@ static void mtd_device_release(struct kr
- 
- 	device_unregister(&mtd->dev);
- 
--	/* Clear dev so mtd can be safely re-registered later if desired */
--	memset(&mtd->dev, 0, sizeof(mtd->dev));
--
--	idr_remove(&mtd_idr, mtd->index);
--	of_node_put(mtd_get_of_node(mtd));
-+	/*
-+	 *  Clear dev so mtd can be safely re-registered later if desired.
-+	 *  Should not be done for partition,
-+	 *  as it was already destroyed in device_unregister().
-+	 */
-+	if (!is_partition)
-+		memset(&mtd->dev, 0, sizeof(mtd->dev));
- 
- 	module_put(THIS_MODULE);
- }
 
 
