@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793209543;
-	b=u2m5XLyV/Oh+t8aD6ob5xwQLG6AyKbi6KOGhc8zXkHiNLAxqlJ0CP6JRgOLyEXN14Upy
-	 JQRSkP/Mq4TL+KQuTGuulHM7BbCUeR1RRBaPKQER8q7SYfY7tMqzih+Lng5I2hehLm3+v
-	 oqtuiC339cIyAv1O9L8u/2IIDmF9L+b51SE3qkb9Kt/NQGH9TiyCYoo3Tx0x0PgTBa0Wh
-	 Lj0V0LPJR1qFQGru8rJkylhnetQtAOULhNjLFnVWT4pJux0dfRz15VP7EKVgCy1tkcBGE
-	 eDk8QaCSPHkO6Bdy0+Ep/gKbzEILZi8MQKKbHClHMajAScqlGbiTMQ31/LmfcRnT1eA==
+	t=1793209546;
+	b=r1BXPfMhU/J/dQLRo4voFcSM1M987+4VLdY6VsmA6X2EV6kFwbneFXCpK6JrYB/Yu41O
+	 XqiRQvnZARMzh1BgmtZygd0qaoiHwztYzIdT0dXtrnixYxh8q+QrU7ltM9+4GhC1xa1PG
+	 RShqe9M7bilwa2i+/L3FGideKpJv3F+3ZcjfgHKJ3hQT6MYFK2WMhMH1/oIoaxAPRdMAq
+	 Tp8YtSg6OGFN1fJyPk7PzHB78klC6pWp0LDM0ty+W6NEioiCuL3/N9xwXGNE8wI6BVFkw
+	 4agloud8o5OibeZicDRRKWSyoYiyuDobvSSZH8H+e29YAFc4SKUkS3AToVcJQmpM8VQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793209543;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793209546;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=DMWKHOQ0CCANivrSQw3WAc8FpcdcN+/ADd/j0F/rJr8=;
-	b=4jp7ot5+OFoBije13IryzYwINxaoQYZqHe5ZVAsQMs90UniFypBH2c2s5FQfxoPUc2e8
-	 KXKgckhgNPo6dsqvgNkZGOjKlZSRxRzS9cx+1hI0RxCl76iJ7HwXoVd3G9Tv7wXFa1BMk
-	 /SW4EJzmAJj5+5ZUPEOMLYRWTK2F594KmjOZGPgZZANvoQNe7M25E0eQfyygU4a17+Ki0
-	 EHSbpY6iB2aHcwG6fDl+PQ0GKODGEtgwDQR4K2MdrkjwRXMtN5hWhliAIDnD+MTS8s+eY
-	 fEymRC895Ah7lj9jjHg141V8vfw2go1DYCaA7tOlo8nZ7TwpTDO4bGEMOyM+StNpcFA==
+	bh=h5EqvADY1r7UDoj/6k3k3VDKtC8fGgmR5FrdvLMqOQM=;
+	b=FeVu5Zp6iPAET/gajldLF41NI9S79Z5CQ80P34LU2B+5fAzzQrEhVKFbCHhezium73ds
+	 DYtBq7MB7K5/99HvlhrLfyBLz0NQId3atO15nFo9iD2+37g89I32KvovC2vgpdTyKRFPn
+	 87UYlodFWEowmUwBsHlpuP3PIKoxAT7JCABOVau5JhJCweJLaDQeN5w1FkS8i7AEaZtr8
+	 AVW7Zqmx5BIoJAlL23xhzdCZN0FD75LTUSqRjnAtfCzuMw+2KMWJJTL+cF+/dsMr0VRRA
+	 7egxD47tMNC7LPChqRAElh0aEOFG/Zevy07LZtqGmhbYtz8iH4OCflkjla59wJ59l8A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fHN2ajr6;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a1089YY0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 191B3606A31C;
-	Wed, 28 Oct 2026 17:45:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD2EA606A31C;
+	Wed, 28 Oct 2026 17:45:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fHN2ajr6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6732E1F031E0;
-	Wed, 28 Oct 2026 17:45:42 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a1089YY0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C4391F031E0;
+	Wed, 28 Oct 2026 17:45:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793209543;
-	bh=DMWKHOQ0CCANivrSQw3WAc8FpcdcN+/ADd/j0F/rJr8=;
+	s=korg; t=1793209545;
+	bh=h5EqvADY1r7UDoj/6k3k3VDKtC8fGgmR5FrdvLMqOQM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fHN2ajr6TtTN9xsniz289HUcxX2ixSr+Cr2f4zESstb8yYZhnfPz3YfGueT7OuJcK
-	 fyCcyyJzIGIy4trmYuamRLi8+pzK4DMtXV/ZFRPxrm/G85h8LViggJ98g9r/hrvzam
-	 cXJiVVVM50bgsoTblqb/M+3BPvmUUSCH5HsfJ89A=
+	b=a1089YY0TmsR4mFps47OVqXc1puG58y2JI5kdz2Cp1danLIWJkG/72ep9PApQ9+VE
+	 s5AHCRjcM0wgqiteMt9YCqSldPa1UJNSNY8GYw20n4pivp9ccmQAmyHgBdUzM41dS5
+	 8CE+y16sLvL3p1AKbxi7JeFAmaNajlubgCy2fRck=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	"JongHyuk Kim(MalHyuk)" <malhyuk97@gmail.com>,
-	Kyle Zeng <kylebot@openai.com>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Donggeun Yoo <donggeunyoo.kernel@gmail.com>,
+	Tom Zanussi <zanussi@kernel.org>,
 	Steven Rostedt <rostedt@goodmis.org>
-Subject: [PATCH 5.10 506/516] tracing: Reject incomplete event filter expressions
-Date: Wed, 28 Oct 2026 18:00:58 +0100
-Message-ID: <20261028170015.463960272@linuxfoundation.org>
+Subject: [PATCH 5.10 507/516] tracing: Save the event file instead of the compatible histogram
+Date: Wed, 28 Oct 2026 18:00:59 +0100
+Message-ID: <20261028170015.487498509@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -69,85 +69,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kyle Zeng <kylebot@openai.com>
+From: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
 
-commit 1fdc4164e488916402badddbb1f51e9380dabb91 upstream.
+commit d5c42664fc094899af9aae5300b27fe8fdb658ef upstream.
 
-A non-empty expression normally finishes in predicate_parse()'s inner
-loop, which resolves the pending logical operators before jumping to
-finalization. If the input ends after an operator, possibly followed by
-unary '!' tokens, the outer loop instead falls through with unresolved
-operator state.
+create_field_var_hist() creates a histogram on the matched event to
+supply a field variable, and records it on the target so it can be torn
+down later:
 
-For example, "common_pid == 1 || common_pid == 2 &&" leaves
-prog[0].target equal to -1. The second pass then reads prog[-1] before
-the forward-jump check can reject it. Depending on adjacent slab
-contents, it can also copy an out-of-bounds word into a branch target
-that passes the forward-only check. A self-targeted perf tracepoint
-counting event can reach this path through PERF_EVENT_IOC_SET_FILTER.
+	hist_data = find_compatible_hist(target_hist_data, file);
+	...
+	/* Save the compatible histogram information */
+	var_hist->hist_data = hist_data;
 
-Reject the outer-loop fallthrough when a predicate has already been
-parsed. This ensures that non-empty expressions only reach finalization
-after the inner loop has resolved their operators. Keep the existing
-no-filter error for input that has no predicates. Add a regression test
-for trailing logical operators and unary negations.
+hist_data is not the histogram it creates. It is one that was already
+there, whose keys the new one copies. The saved pointer has a single
+user, unregister_field_var_hists(), which runs when the target is
+removed:
 
-Fixes: 80765597bc587 ("tracing: Rewrite filter logic to be simpler and faster")
+	file = hist_data->field_var_hists[i]->hist_data->event_file;
+
+find_compatible_hist() matches on keys alone, so it can pick one with no
+variables of its own. check_var_refs() then returns false and the user
+can remove it while the target still points at it:
+
+ BUG: KASAN: slab-use-after-free in event_hist_trigger_free+0x2b2/0x320
+ Read of size 8 at addr ffff8880093b90e0 by task init/1
+
+ Freed by task 1:
+  kfree+0x154/0x420
+  event_hist_trigger_free+0x1d5/0x320
+  event_hist_trigger_parse+0x35f3/0x69e0
+  trigger_process_regex+0x1a6/0x250
+
+Save the event file instead. It is all the dereference ever wanted, and
+it does not go away when the user removes a trigger.
+
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20261023174620.91969-1-kylebot@openai.com
-Assisted-by: Codex:gpt-6-astra
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Tested-by: JongHyuk Kim(MalHyuk) <malhyuk97@gmail.com>
-Signed-off-by: Kyle Zeng <kylebot@openai.com>
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Link: https://lore.kernel.org/all/20260914110753.221E61F000FF@smtp.kernel.org/
+Link: https://patch.msgid.link/20260914234754.3676905-1-donggeunyoo.kernel@gmail.com
+Fixes: 02205a6752f2 ("tracing: Add support for 'field variables'")
+Signed-off-by: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
+Assisted-by: Claude:claude-fable-5
+Acked-by: Tom Zanussi <zanussi@kernel.org>
 Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_events_filter.c                                      |    6 ++
- tools/testing/selftests/ftrace/test.d/filter/event-filter-incomplete.tc |   24 ++++++++++
- 2 files changed, 30 insertions(+)
- create mode 100644 tools/testing/selftests/ftrace/test.d/filter/event-filter-incomplete.tc
+ kernel/trace/trace_events_hist.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/kernel/trace/trace_events_filter.c
-+++ b/kernel/trace/trace_events_filter.c
-@@ -537,6 +537,12 @@ predicate_parse(const char *str, int nr_
- 			top--;					/* #12 */
- 		}
+--- a/kernel/trace/trace_events_hist.c
++++ b/kernel/trace/trace_events_hist.c
+@@ -338,7 +338,7 @@ struct field_var {
+ };
+ 
+ struct field_var_hist {
+-	struct hist_trigger_data	*hist_data;
++	struct trace_event_file		*file;
+ 	char				*cmd;
+ };
+ 
+@@ -2552,8 +2552,8 @@ create_field_var_hist(struct hist_trigge
+ 		return ERR_PTR(-ENOMEM);
  	}
-+	/* Only the inner loop can complete a non-empty expression. */
-+	if (N) {
-+		ret = -EINVAL;
-+		parse_error(pe, FILT_ERR_INVALID_FILTER, ptr - str);
-+		goto out_free;
-+	}
-  out:
- 	if (top != op_stack) {
- 		/* Too many '(' */
---- /dev/null
-+++ b/tools/testing/selftests/ftrace/test.d/filter/event-filter-incomplete.tc
-@@ -0,0 +1,24 @@
-+#!/bin/sh
-+# SPDX-License-Identifier: GPL-2.0
-+# description: event filter - reject incomplete logical expressions
-+# requires: events/sched/sched_switch/filter
-+# flags: instance
-+
-+filter=events/sched/sched_switch/filter
-+
-+for base in \
-+    'common_pid == 1' \
-+    'common_pid == 1 || common_pid == 2' \
-+    'common_pid == 1 && common_pid == 2' \
-+    '!(common_pid == 1 || common_pid == 2)'
-+do
-+    printf '%s' "$base" > "$filter"
-+    for tail in '&&' '||' '&& !' '|| !' '&& !! ' '|| !! '; do
-+        if printf '%s' "$base $tail" > "$filter" 2>/dev/null; then
-+            echo "Accepted incomplete filter: $base $tail"
-+            exit_fail
-+        fi
-+    done
-+done
-+
-+echo 0 > "$filter"
+ 
+-	/* Save the compatible histogram information */
+-	var_hist->hist_data = hist_data;
++	/* Needed to remove the histogram when the target goes away */
++	var_hist->file = file;
+ 
+ 	/* Create the new histogram with our variable */
+ 	ret = event_hist_trigger_func(&trigger_hist_cmd, file,
+@@ -5274,7 +5274,7 @@ static void unregister_field_var_hists(s
+ 	int ret;
+ 
+ 	for (i = 0; i < hist_data->n_field_var_hists; i++) {
+-		file = hist_data->field_var_hists[i]->hist_data->event_file;
++		file = hist_data->field_var_hists[i]->file;
+ 		cmd = hist_data->field_var_hists[i]->cmd;
+ 		ret = event_hist_trigger_func(&trigger_hist_cmd, file,
+ 					      "!hist", "hist", cmd);
 
 
