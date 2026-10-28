@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793212643;
-	b=FL9sjO+HSjez01EHU/RJ49WCsYM0AcOUo+qfGijbFm3Xz9e3d2rPChPMZnKAJ8tQsZ51
-	 rgIhjyRtyXlUf3Bc9elt4VnPPltXmTf51my4AJYV/mzb/lcfod1YEwOBnOmgBEfCO9ENE
-	 nEifWlaxNTlWIry759sQlolU6VHTeosxBW7rVqzuv56sdXMttKEFNQYUhnokj7V47T0Bw
-	 lSfLZ7RRv6STE3mj6fG68TsSCsMyE6YPg9VuM00XCmn2xVnZk5YjNhCpZkpMA6QjHm/g6
-	 JcWxReWM6s8fdyVsaanIlMHG5h44pjPisc415YgWDeWshVRjjrDL9p6dZVdkM6kXuKw==
+	t=1793212647;
+	b=Ix1oTtLGFk+WTELh8SyrCaOX6Xgsf+kX2PeEfxI9DKcde7lFPVYoMO9f7XTiFn7o5j1Q
+	 GtdnYkm4n6N9kdW8KFXQO3ooo/LbKs+k/aUWWq9fdWd9u+1Kts3OJtZn9hUFnG0+3779U
+	 +aFlTposXR35LeelPFcURJdlwx4gvlcqQu0HCtNj/+00o2OorZ0SETuEnBBtZVAf1CObS
+	 u/Gp5fYXoV24XKhrE+en70WVXVCOVBKN9XDoGiaVIExITw4g3ZPBIQULRR4CVRqtZ5vzh
+	 IdEweukXjF29NvlS689vkMg86rAyweA5a9VCYXyHBDnd1El8cBBoVKq85wQW2yBH2pg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793212643;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793212647;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=KrkUZ9Yb7/7Gm7qo0eC8VJqYT/ZQEcciS3ExfIblMfg=;
-	b=GVKSTSt5vcVpHnB1/lMd1/LZKK9OrohvECPCAVEF3+pKYGRFmypOXzQxVbZGnraqkUpa
-	 JVFvSFlX6OsLz85UoDnbOeruaZimLYbLpesSqbuhsGsxfmUMVPHRsRAobFLcX7xuZzFub
-	 1JVDMAopcPLXHo8NAosfENfMxSDVflKzoqM9wueWMWCyUdMeYCjat6W4O5UUoYvwm1d28
-	 dNWN8fQjerxhMPthLk0d0AWzrRB7l5/uNhWYYUklxc4rMzgIz6x3NLU77pmnfwqSqhcSN
-	 62WGmZkG3nkVZx8K9PqZDi10TJd6uxXB6KkfRq+zl8wpbYA8U+iGVbwQ3TzXsywyyFQ==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=smul9c2fCvhiYcZx5t/8N4yJqC7E4WdtdD1gQHgtEtk=;
+	b=YmHVyIXylguw3xCx4vzMQ5WE21/pOuq9zP8nlp95VouBXRba11AKd6rqXSwkHR8nU0qx
+	 sjUXiHyC3cDAzwwU6oXTaDNo3eCCkv2DWRWGFx4VJ+l93y7WUQ6+LlZLnP0MUddHoIX65
+	 JoRFsOmjFmwY/0mAJBCKfzkT213b+EFvEugv37lgumkCbA8CmD4HXVn9yTqFaBjhi2Qr+
+	 M12Z57vn+/R73qj2VFDoT7njtzd5ZDhh/GKLQlOpQDFqXk+1zdVEkWldSq4FlkcIhnynq
+	 5xApoyoub7zllG8ItNcti6JcvPjYKTuLT1tVHU9wlitGFByiivX+5W0MhVk0kDTSEjw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vVXO1wEP;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cscKP+xy;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FA51606A31C;
-	Wed, 28 Oct 2026 18:37:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C86DE606A31A;
+	Wed, 28 Oct 2026 18:37:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vVXO1wEP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F15C31F01825;
-	Wed, 28 Oct 2026 18:37:22 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cscKP+xy
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D218B1F01825;
+	Wed, 28 Oct 2026 18:37:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793212643;
-	bh=KrkUZ9Yb7/7Gm7qo0eC8VJqYT/ZQEcciS3ExfIblMfg=;
+	s=korg; t=1793212646;
+	bh=smul9c2fCvhiYcZx5t/8N4yJqC7E4WdtdD1gQHgtEtk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vVXO1wEP3Gwx19gHz6C+C/435cOyITx9qMvvBjefdXDGhJDvTPKDwaufuZp1ec7z5
-	 2VlwYVQeb1LiWOhYEz6JOncQ3HX7+t7hCuiIS4KN1PwFw8XZORMAF+e5jaTDT12gpJ
-	 DfVOqrWCNB1XgkqxsL7e+kvJz60i4vnn2U2ZdfZM=
+	b=cscKP+xytPPiGw5cCODCLLmQvMVdITuC055P9LaH+vSyHGTZE9KV9PSpwaeIw3mxL
+	 8UkWK3fhJTjon5l4bi0HGNJS66wd3gFZx00jZjD60xBE3rEZ0QkIEK0nJaz5Q8bXEw
+	 EzmR5STnqZqC0taON5t3qDSyfADceGFKHx9KxZXg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	=?UTF-8?q?Amadeusz=20S=C5=82awi=C5=84ski?= <amade@asmblr.net>,
 	Cezary Rojewski <cezary.rojewski@intel.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0226/1887] ASoC: codecs: rt286: Revert delay value for jack setup
-Date: Wed, 28 Oct 2026 17:38:42 +0100
-Message-ID: <20261028170504.377315380@linuxfoundation.org>
+Subject: [PATCH 6.1 0227/1887] ASoC: codecs: rt274: Fix format setting for 44100 rate
+Date: Wed, 28 Oct 2026 17:38:43 +0100
+Message-ID: <20261028170504.400282010@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -62,6 +63,7 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
@@ -70,41 +72,38 @@ Content-Transfer-Encoding: 8bit
 
 From: Cezary Rojewski <cezary.rojewski@intel.com>
 
-[ Upstream commit d30fba93ebfc11e4604a7fcc73fdf28684191dde ]
+[ Upstream commit 6eda8938a790f65bd24fcfaae7b40ad4613fb7a2 ]
 
-Fat fingered the change when reorganizing the jack-detect
-initialization. Equivalent changes for rt274 and rt298:
+As per specification, Sample Base Rate (bit 14)
+shall be set to 1 for 44.1 kHz.
 
-Commit a43b4394bb35 ("ASoC: codecs: rt274: Always init jack_detect_work")
-Commit 1eb73102da28 ("ASoC: codecs: rt298: Reorganize jack detect handling")
-
-carry no update to the delay value.
-
->From user perspective, no difference has been observed between 1250 and
-50 values on Intel's SkyLake, KabyLake and AmberLake configurations.
-
-Fixes: 3082afe097cc ("ASoC: codecs: rt286: Reorganize jack detect handling")
+Fixes: c7e79b2b2d2d ("ASoC: rt274: add rt274 codec driver")
+Signed-off-by: Amadeusz Sławiński <amade@asmblr.net>
 Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
-Link: https://patch.msgid.link/20260918111745.3589393-1-cezary.rojewski@intel.com
+Link: https://patch.msgid.link/20260918111745.3589393-2-cezary.rojewski@intel.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/rt286.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/codecs/rt274.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/codecs/rt286.c b/sound/soc/codecs/rt286.c
-index ceb56647e369e..42ed864c062f9 100644
---- a/sound/soc/codecs/rt286.c
-+++ b/sound/soc/codecs/rt286.c
-@@ -951,7 +951,7 @@ static int rt286_probe(struct snd_soc_component *component)
+diff --git a/sound/soc/codecs/rt274.c b/sound/soc/codecs/rt274.c
+index 4667bf7561b13..f664a6e139239 100644
+--- a/sound/soc/codecs/rt274.c
++++ b/sound/soc/codecs/rt274.c
+@@ -619,9 +619,11 @@ static int rt274_hw_params(struct snd_pcm_substream *substream,
+ 	unsigned int val = 0;
+ 	int d_len_code = 0, c_len_code = 0;
  
- 	if (rt286->i2c->irq)
- 		schedule_delayed_work(&rt286->jack_detect_work,
--				      msecs_to_jiffies(50));
-+				      msecs_to_jiffies(1250));
- 	return 0;
- }
- 
++	/* bit 14 Sample Rate Base, 0: 48kHz 1: 44.1kHz */
+ 	switch (params_rate(params)) {
+-	/* bit 14 0:48K 1:44.1K */
+ 	case 44100:
++		val |= BIT(14);
++		break;
+ 	case 48000:
+ 		break;
+ 	default:
 -- 
 2.53.0
 
