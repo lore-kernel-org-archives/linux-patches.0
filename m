@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793212342;
-	b=jlP2adDTly3StigggRJ/IP//EkwXQh1wBBvILS55ApJ1X8BcQyEYBVtR3/YIVa0bRp73
-	 gnYfY3HZBTEIhKa+B8e6u+8Y3ZfGf3C2BBUnGGd79eCM23sluOVXffKmXIOyztE95P/wV
-	 17zDNyFlKROHaoq69IrRrGceaIUvl0nUO5SX3ZaZBAb8GxIQuDnFKn6XvBAwZTqesF5eZ
-	 gP5F2gvOEZkQr7qTGcYKqHUdLMbZ0h5Pd5lqguR5M+hZoXy8WkSYa3LFgnWFJQVSxg7KD
-	 86c/AsoEpPT4LqHET0W9hEKSDu5YopVyGUjowCfcvRY8wmCf/+uzEr/bUd8n0MpzjHA==
+	t=1793212345;
+	b=cWEJxNe4Ynu2IkgfjPUDq8ND4Oe2dsP1cHhGDe0OEzljHDDFnqOlQyuQJsRii0xv6irA
+	 NSVPemZDsNv8hsHs1FygxaPbrLOgzzYe2zlaghG8Bdcd0NyKWRccn/yvyfZfrXv9KJzZh
+	 gqPVL+lb+bzI3ayvq+cSOYPMmsmI8mI9supR7qbit0QCNwyXmIFOHP5tacGBGv8HR2/Zf
+	 5skm+pFt3ADdNd/3idV8Kf1JQ0oagjHFFii17ce4LDM38RQ8o+qLDtv6zRWqnSJVujq0t
+	 Jybs7dah4WJW4fh8sOfDQhlpW3IpUf4p/YWZoIo1oCy5uETL8z5j1aonm0Danb7NkMw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793212342;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793212345;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ClNAdFa5FGspOuxz4XBr9o3kcwf9GLCke6jJavHPj3s=;
-	b=QPn9Gr82EYp/h9F5izj/T2fuJiH0mXCDWiNea4nihbQp7i8y+kE18inwVC93zVsFYNul
-	 /u0KhhXaIadqL5vr1j1Tz5KMivrQfn13AedzBkmreVpRsmp1Tz0z9QtDVdDgpSNAU92nZ
-	 ThFE8UmISYv29hauQVbZorCx2+DbHsztgTERKrx+M3+wF7KI+xmbb3yjzrfhQEjVNvI0H
-	 JOzHEUW27F/0YF8MseR1HEKtpAI37UEJl45eigH/vi/fqt+dMyGj4mvKqVnzmA8fxB1nH
-	 IncTG/qB6G8UOJVr3r/6H+7vwkMtfWXDeQF91qXint01UXv24jL+7DvVPFYE0hLo+zw==
+	bh=Qd9rzhzkR8dqIor4LeKJEw8E/BFOTyQkO27J52rw3Iw=;
+	b=pi6tK8axwTM3Tx5nA1azdBHE51GxA8nlzN6RaO8m3PphDX+YcREWV4GqleBk2e/H7oUU
+	 0RKQoYMoSGS9qvXdpNwuT7YKTNLwk6Y9sCjVrshYszOlh7D+5QYaqbI1zpbwi3rt/rZxa
+	 mpyGtBdPsFi9XH9jKo8FuJZbZXz+174vOKhsJAGzp+vtgT2Ij2AECWzNx9JVPsRYrelY/
+	 pDunEoJ52PJSEYZxfnqVN3EGmpd25Lo7/HYngcI2X/Fl73JNLPcHOzP5vV8aV/NeqW5T6
+	 SaYqhe8reRPB2motu4p8+2+ps4ZucLlYE2HdFWiHn89FZeE07AzWkCDGxzAWtQytQ/g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tY8dIiNU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZNDaG8T6;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50B78606A31C;
-	Wed, 28 Oct 2026 18:32:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CB2C606A31A;
+	Wed, 28 Oct 2026 18:32:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tY8dIiNU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FF9C1F01825;
-	Wed, 28 Oct 2026 18:32:21 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZNDaG8T6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 573651F01825;
+	Wed, 28 Oct 2026 18:32:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793212342;
-	bh=ClNAdFa5FGspOuxz4XBr9o3kcwf9GLCke6jJavHPj3s=;
+	s=korg; t=1793212344;
+	bh=Qd9rzhzkR8dqIor4LeKJEw8E/BFOTyQkO27J52rw3Iw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tY8dIiNUgaFVD1MqbTgbNjybnsaFqo9uSMNFhJcNsUu4bQ92sUAcfsArALJMH9VnW
-	 2nribLX6jOzBO5XoDMoA+ixNseCswdmd4AcTC2cpxDLE5hRryd/N/0xKGAbqXNBUGE
-	 v/DqqIgyqH71ZdSAFIK4Sccnx8vJyV0fvtZJ0jjI=
+	b=ZNDaG8T6QTnkCGINgJG4POL481nMzDPD8Etg5BxbRs/DS//ZstnkfP1Boi0U+PCUx
+	 4WT2gAtkfCPgH+2UgcoYy0BIL2B/MzsxkJnLqW6nzm+YN38OysZLPT4gq4mMhE+mDX
+	 uOxRLGU4axewC6s/1rt7Jld0ipqB3awcy9rUPOTE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikhil Gurudasani <nikhilgurudasani314@gmail.com>,
-	Gao Xiang <xiang@kernel.org>,
+	Mat Martineau <mathew.j.martineau@linux.intel.com>,
+	Matthieu Baerts <matthieu.baerts@tessares.net>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0121/1887] erofs: preserve LZMA decoders on resize failure
-Date: Wed, 28 Oct 2026 17:36:57 +0100
-Message-ID: <20261028170501.992817841@linuxfoundation.org>
+Subject: [PATCH 6.1 0122/1887] mptcp: userspace pm: use a single point of exit
+Date: Wed, 28 Oct 2026 17:36:58 +0100
+Message-ID: <20261028170502.014134117@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,84 +69,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikhil Gurudasani <nikhilgurudasani314@gmail.com>
+From: Matthieu Baerts <matthieu.baerts@tessares.net>
 
-[ Upstream commit 617d0d8d199ba1790c94310fd75a22d01c97a8d6 ]
+[ Upstream commit 40c71f763f87b68fe43199c1702220c91afed288 ]
 
-The pool-resize path frees each stream's old decoder before allocating
-its replacement. If an allocation fails after some streams have already
-been replaced, the failed stream is put back on the list with state ==
-NULL. z_erofs_lzma_max_dictsize is still advanced as if the whole
-pool had been resized.
+Like in all other functions in this file, a single point of exit is used
+when extra operations are needed: unlock, decrement refcount, etc.
 
-An existing LZMA mount can select the broken stream and pass
-NULL to xz_dec_microlzma_reset(). A retry at the same size also
-skip another resize attempt. Since the global maximum was advanced,
-thus, the invalid state is left unrepaired.
+There is no functional change for the moment but it is better to do the
+same here to make sure all cleanups are done in case of intermediate
+errors.
 
-Allocate each replacement before freeing the old decoder, temporarily
-retaining one old decoder during allocation. Stop at the first failure
-and advance z_erofs_lzma_max_dictsize only after all streams satisfy
-the request.
-
-Record each stream's dictionary capacity so retries can skip streams
-already enlarged before a partial failure.
-
-Fixes: 622ceaddb764 ("erofs: lzma compression support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Nikhil Gurudasani <nikhilgurudasani314@gmail.com>
-Reviewed-by: Gao Xiang <xiang@kernel.org>
-Signed-off-by: Gao Xiang <xiang@kernel.org>
-[ Retained the existing `struct xz_buf buf` member alongside the new `dict_size` field. ]
+Reviewed-by: Mat Martineau <mathew.j.martineau@linux.intel.com>
+Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Stable-dep-of: f9f0068e8813 ("mptcp: pm: userspace: fix address ID overflow")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/erofs/decompressor_lzma.c | 18 ++++++++++++++----
- 1 file changed, 14 insertions(+), 4 deletions(-)
+ net/mptcp/pm_userspace.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/fs/erofs/decompressor_lzma.c b/fs/erofs/decompressor_lzma.c
-index b1ac88a820f2d..c6e6ceae48a3b 100644
---- a/fs/erofs/decompressor_lzma.c
-+++ b/fs/erofs/decompressor_lzma.c
-@@ -6,6 +6,7 @@
- struct z_erofs_lzma {
- 	struct z_erofs_lzma *next;
- 	struct xz_dec_microlzma *state;
-+	unsigned int dict_size;
- 	struct xz_buf buf;
- 	u8 bounce[PAGE_SIZE];
- };
-@@ -132,11 +133,19 @@ int z_erofs_load_lzma_config(struct super_block *sb,
- 	err = 0;
- 	/* 2. walk each isolated stream and grow max dict_size if needed */
- 	for (strm = head; strm; strm = strm->next) {
-+		struct xz_dec_microlzma *state;
-+
-+		if (strm->dict_size >= dict_size)
-+			continue;
-+		state = xz_dec_microlzma_alloc(XZ_PREALLOC, dict_size);
-+		if (!state) {
-+			err = -ENOMEM;
-+			break;
-+		}
- 		if (strm->state)
- 			xz_dec_microlzma_end(strm->state);
--		strm->state = xz_dec_microlzma_alloc(XZ_PREALLOC, dict_size);
--		if (!strm->state)
--			err = -ENOMEM;
-+		strm->state = state;
-+		strm->dict_size = dict_size;
+diff --git a/net/mptcp/pm_userspace.c b/net/mptcp/pm_userspace.c
+index 52ab9a3f070a8..129ae1fef054e 100644
+--- a/net/mptcp/pm_userspace.c
++++ b/net/mptcp/pm_userspace.c
+@@ -77,8 +77,8 @@ static int mptcp_userspace_pm_append_new_local_addr(struct mptcp_sock *msk,
+ 		 */
+ 		e = sock_kmalloc(sk, sizeof(*e), GFP_ATOMIC);
+ 		if (!e) {
+-			spin_unlock_bh(&msk->pm.lock);
+-			return -ENOMEM;
++			ret = -ENOMEM;
++			goto append_err;
+ 		}
+ 
+ 		*e = *entry;
+@@ -93,6 +93,7 @@ static int mptcp_userspace_pm_append_new_local_addr(struct mptcp_sock *msk,
+ 		ret = entry->addr.id;
  	}
  
- 	/* 3. push back all to the global list and update max dict_size */
-@@ -146,7 +155,8 @@ int z_erofs_load_lzma_config(struct super_block *sb,
- 	spin_unlock(&z_erofs_lzma_lock);
- 	wake_up_all(&z_erofs_lzma_wq);
- 
--	z_erofs_lzma_max_dictsize = dict_size;
-+	if (!err)
-+		z_erofs_lzma_max_dictsize = dict_size;
- 	mutex_unlock(&lzma_resize_mutex);
- 	return err;
++append_err:
+ 	spin_unlock_bh(&msk->pm.lock);
+ 	return ret;
  }
 -- 
 2.53.0
