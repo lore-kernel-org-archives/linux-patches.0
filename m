@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793208776;
-	b=ccOoaiNNZ6116FWaTh0SwW6IqnzyHY/H1+ur2cNvoPYqqtad8pcd+mpreeCpBNRaVORn
-	 Jxv6YVnIs0anH/4C/Ocq0X3wMLPwLH5i9r4CvNRFR+PiP+BSrMgEDeavKMQ0g50Y89qSi
-	 BSYsmwkZU8++swv6zKGKbHUeekUJbZVRMKg2JSKXxBGemHaXJbswttVZ0V6Vf6kb/cmAc
-	 DQhZenU/FPL4EuGuMIyMiKBwPCdT6iR2GKzsIFnkF6eeWxPhcEetBSISnvFMSqYXFmOG6
-	 NZJTv3bVpF3O0RmEev+duap8wtuSMckmHJCV/U9t6ZlBKLJxN9KEHih82a6+baBeTMA==
+	t=1793208779;
+	b=Xi/ry3gvGL5Z5PQzJ8Ak3wRanyfR/l3LsTxNlyCnwj/Y4sYN6ARflbdudwRRTPzImaLN
+	 ILvdYRMYX0F1c4dFsvoG82iJz/G1eBwK19BJaM68nNm2ZudUI+QyOwaa9LhGiJT/pvfCu
+	 rmuzx0q2EN8+O+pA9ZLbJ3sfbFumMG6ogUf3ro/g8NoUZ9p3bNJeoHWmGN/Obu2ki0XUY
+	 ST0mwDbvjhE95hhXUMwizueYarUqKmSFIQygrBaz0iB2bk4yn10+lmPmAnEB7UP8dYVXs
+	 JOdoponGmtc/Wypnu1BPllJ4ZjBgSjzz1J7gUzvL66+1ECMokwTRU0mwFhymmpj9bFQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793208776;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793208779;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=P4fCHV5yXn+3QrW/APZ+JpmL7UD23BhefS/nvPOyiKo=;
-	b=cy2roBHl8EohZduuFA801zeIVeRRLp/aBD9CMIq6gK0y0/4Xmqgf/fkaO2Rl2Z6EhHDZ
-	 9cWnESehckxWVE/J3IEm3QEmVQqsDYyY+DScRi0gR4SqIB4D6bblDpu8SPg+fSdGJTE8x
-	 ggXZWDhkkKZHyyANCuDWnN9aOtKBLPHt2btcevF/5dKewWsw3kgwPR0uOVnriDNuaSjNA
-	 WHs64e/Sd2iA6z2VvG+GSKWD0aiirW390D7h6nVXmSqdDVzFGQDL0RJvp4O+iPcjy5nDF
-	 yUfSR4DvLoIBaJkYEG6D6IJhfL/gycsjjc11p3hs/OABEoLnFvjcbLiQFjJoUbhiAMg==
+	bh=tR3CmW3V/eM95ZyD8G4/DHChUGWJ+D6v+eEbOBwus6w=;
+	b=n7cyHFv8ZaeR1GgXWqK9A0vQ17GfqBnnfzHH8hUM6jXXXUiCpTDRUjFbgh7Dm4S2W//4
+	 k7qB6RXGoiY20d9fT2ErkmZwzryhcx6b8IM16xe8BuyS6vkEyjNy366f/B1ybFJvP7MQm
+	 bwPusUdwT8Rmn7A/LzLuccEC7kV34//ICHAsp7kf7eiVjSs98qi0FHCNPLPtB/FyUi4hM
+	 z8jBRW0IgEEpch0W+0vKUx9qIpRTY0DkyjdVRUWYSFSKBXc7Evl81lJtRgxdgr2t/Y58y
+	 p6dheemo8M70Fl6QOLVfZxCCqgLxkVVWdx+1dKldjqQEbCmF7MYw+eG459BG2ZuLKXg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eCQiLCzY;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vGVBUUFI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00C3B606A31A;
-	Wed, 28 Oct 2026 17:32:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6616606A31A;
+	Wed, 28 Oct 2026 17:32:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eCQiLCzY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 539881F01825;
-	Wed, 28 Oct 2026 17:32:55 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vGVBUUFI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 322801F01825;
+	Wed, 28 Oct 2026 17:32:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793208775;
-	bh=P4fCHV5yXn+3QrW/APZ+JpmL7UD23BhefS/nvPOyiKo=;
+	s=korg; t=1793208778;
+	bh=tR3CmW3V/eM95ZyD8G4/DHChUGWJ+D6v+eEbOBwus6w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eCQiLCzYxloq95iklHLdmc9LNrOgViKcsxzpAOjtrjwRdB4qB3nez7HP65wp8H1qi
-	 X/3lgu110dVNuv8PoXTsE/+fJQI3OeVtCDv7NtJBX8yLRXhM6fvyydyhcx94PWppoi
-	 SEEJzzQEoWV+ztoPpUitP2+2CU+FYXP+QMKyL4y0=
+	b=vGVBUUFIUt7nWYFqofHqUCZvdc2uftD+zpq38yolQubpTFQWzojicvaze+MdzDaC2
+	 s4cimJjiRoheM56ReRaoqcuaoumOag3k6GIEUYP9lyiJD4bxG8+HfklwlWVcrNvCQn
+	 EsCM9Ci5C4yLjTGYZmUvRqSeqAXOdnKfldmKZohI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Weibin Liu <liuwb@xiaopeng.com>,
-	Liu Chao <liuc63@xiaopeng.com>,
-	Ivy Lopez <skunkolee@gmail.com>
-Subject: [PATCH 5.10 194/516] usb: gadget: f_uac1_legacy: validate bRequest index in generic_{set,get}_cmd
-Date: Wed, 28 Oct 2026 17:55:46 +0100
-Message-ID: <20261028170008.098511448@linuxfoundation.org>
+	stable@kernel.org,
+	Song Li <songl@zju.edu.cn>,
+	Fan Wu <fanwu01@zju.edu.cn>,
+	Benjamin Herrenschmidt <benh@kernel.crashing.org>
+Subject: [PATCH 5.10 195/516] usb: gadget: aspeed-vhub: cancel wake work on device removal
+Date: Wed, 28 Oct 2026 17:55:47 +0100
+Message-ID: <20261028170008.121424127@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -69,59 +69,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Liu Chao <liuc63@xiaopeng.com>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-commit 9062d50e75c24dc7911be05c9b1719b3b256af15 upstream.
+commit 20388c8d1d74c203fec8194c45cd31afdfab934e upstream.
 
-generic_set_cmd() and generic_get_cmd() use the low nibble of
-ctrl->bRequest as an index into con->data[]:
+wake_work is armed from the gadget .wakeup callback to resume suspended
+downstream ports, and it is never cancelled in ast_vhub_remove(), so a
+work item queued before or during removal can run after devm has freed
+vhub and its ports, a use-after-free.
 
-    u8 cmd = (ctrl->bRequest & 0x0F);  /* 0 .. 15 */
-    ...
-    con->data[cmd] = value;            /* OOB when cmd >= 5 */
+Cancelling the work alone is not sufficient: usb_gadget_wakeup() takes
+no lock and the unbind path never clears wakeup_en, so a remote-wakeup
+request in flight on another CPU can re-arm the work after the cancel
+and before vhub is freed.
 
-struct usb_audio_control (include/linux/usb/audio.h) declares data as
-a 5-element array, so indices 5 through 15 write (or read) up to 44
-bytes past the end of the array on the heap.
+ast_vhub_del_dev() already clears d->registered under vhub->lock before
+unregistering the gadget. Refuse the wakeup in ast_vhub_udc_wakeup()
+once d->registered is clear: the check and the schedule_work() are then
+atomic against the unbind, so a wakeup that passed before the flag was
+cleared is drained by the cancel_work_sync() after the del_dev loop,
+and one that arrives later returns without arming. Also move INIT_WORK()
+to the top of ast_vhub_probe(), since the probe error path reuses
+ast_vhub_remove() and would otherwise cancel a never-initialized work
+item.
 
-A malicious USB host can craft a class-specific SET_CUR / GET_CUR
-request with an arbitrary bRequest value, triggering the out-of-bounds
-access from an IRQ completion handler with no further preconditions.
+This issue was found by an in-house static analysis tool.
 
-Add an ARRAY_SIZE() guard to both functions.
-
-Fixes: c47d7b09891a ("USB: audio: add USB audio class definitions")
-Cc: stable <stable@kernel.org>
-Reviewed-by: Weibin Liu <liuwb@xiaopeng.com>
-Signed-off-by: Liu Chao <liuc63@xiaopeng.com>
-Reviewed-by: Ivy Lopez <skunkolee@gmail.com>
-Link: https://patch.msgid.link/20260921072551.3708191-1-liuc63@xiaopeng.com
+Fixes: 7ecca2a4080c ("usb/gadget: Add driver for Aspeed SoC virtual hub")
+Cc: stable@kernel.org
+Assisted-by: Codex:gpt-5.6
+Co-developed-by: Song Li <songl@zju.edu.cn>
+Signed-off-by: Song Li <songl@zju.edu.cn>
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Reviewed-by: Benjamin Herrenschmidt <benh@kernel.crashing.org>
+Link: https://patch.msgid.link/20260908041740.613713-1-fanwu01@zju.edu.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/f_uac1_legacy.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/usb/gadget/udc/aspeed-vhub/core.c |    4 ++++
+ drivers/usb/gadget/udc/aspeed-vhub/dev.c  |    2 +-
+ drivers/usb/gadget/udc/aspeed-vhub/hub.c  |    5 +++--
+ drivers/usb/gadget/udc/aspeed-vhub/vhub.h |    1 +
+ 4 files changed, 9 insertions(+), 3 deletions(-)
 
---- a/drivers/usb/gadget/function/f_uac1_legacy.c
-+++ b/drivers/usb/gadget/function/f_uac1_legacy.c
-@@ -797,6 +797,9 @@ fail:
+--- a/drivers/usb/gadget/udc/aspeed-vhub/core.c
++++ b/drivers/usb/gadget/udc/aspeed-vhub/core.c
+@@ -272,6 +272,9 @@ static int ast_vhub_remove(struct platfo
+ 	for (i = 0; i < vhub->max_ports; i++)
+ 		ast_vhub_del_dev(&vhub->ports[i].dev);
  
- static int generic_set_cmd(struct usb_audio_control *con, u8 cmd, int value)
- {
-+	if (cmd >= ARRAY_SIZE(con->data))
-+		return -EINVAL;
++	/* Final drain; the worker takes vhub->lock, so stay outside of it */
++	cancel_work_sync(&vhub->wake_work);
 +
- 	con->data[cmd] = value;
+ 	spin_lock_irqsave(&vhub->lock, flags);
  
- 	return 0;
-@@ -804,6 +807,9 @@ static int generic_set_cmd(struct usb_au
+ 	/* Mask & ack all interrupts  */
+@@ -332,6 +335,7 @@ static int ast_vhub_probe(struct platfor
+ 		return -ENOMEM;
  
- static int generic_get_cmd(struct usb_audio_control *con, u8 cmd)
- {
-+	if (cmd >= ARRAY_SIZE(con->data))
-+		return -EINVAL;
-+
- 	return con->data[cmd];
+ 	spin_lock_init(&vhub->lock);
++	INIT_WORK(&vhub->wake_work, ast_vhub_wake_work);
+ 	vhub->pdev = pdev;
+ 	vhub->port_irq_mask = GENMASK(VHUB_IRQ_DEV1_BIT + vhub->max_ports - 1,
+ 				      VHUB_IRQ_DEV1_BIT);
+--- a/drivers/usb/gadget/udc/aspeed-vhub/dev.c
++++ b/drivers/usb/gadget/udc/aspeed-vhub/dev.c
+@@ -275,7 +275,7 @@ static int ast_vhub_udc_wakeup(struct us
+ 	int rc = -EINVAL;
+ 
+ 	spin_lock_irqsave(&d->vhub->lock, flags);
+-	if (!d->wakeup_en)
++	if (!d->wakeup_en || !d->registered)
+ 		goto err;
+ 
+ 	DDBG(d, "Device initiated wakeup\n");
+--- a/drivers/usb/gadget/udc/aspeed-vhub/hub.c
++++ b/drivers/usb/gadget/udc/aspeed-vhub/hub.c
+@@ -532,7 +532,7 @@ void ast_vhub_device_connect(struct ast_
+ 		ast_vhub_send_host_wakeup(vhub);
  }
  
+-static void ast_vhub_wake_work(struct work_struct *work)
++void ast_vhub_wake_work(struct work_struct *work)
+ {
+ 	struct ast_vhub *vhub = container_of(work,
+ 					     struct ast_vhub,
+@@ -562,6 +562,8 @@ static void ast_vhub_wake_work(struct wo
+ 
+ void ast_vhub_hub_wake_all(struct ast_vhub *vhub)
+ {
++	lockdep_assert_held(&vhub->lock);
++
+ 	/*
+ 	 * A device is trying to wake the world, because this
+ 	 * can recurse into the device, we break the call chain
+@@ -1046,7 +1048,6 @@ static int ast_vhub_init_desc(struct ast
+ int ast_vhub_init_hub(struct ast_vhub *vhub)
+ {
+ 	vhub->speed = USB_SPEED_UNKNOWN;
+-	INIT_WORK(&vhub->wake_work, ast_vhub_wake_work);
+ 
+ 	return ast_vhub_init_desc(vhub);
+ }
+--- a/drivers/usb/gadget/udc/aspeed-vhub/vhub.h
++++ b/drivers/usb/gadget/udc/aspeed-vhub/vhub.h
+@@ -545,6 +545,7 @@ void ast_vhub_hub_suspend(struct ast_vhu
+ void ast_vhub_hub_resume(struct ast_vhub *vhub);
+ void ast_vhub_hub_reset(struct ast_vhub *vhub);
+ void ast_vhub_hub_wake_all(struct ast_vhub *vhub);
++void ast_vhub_wake_work(struct work_struct *work);
+ 
+ /* dev.c */
+ int ast_vhub_init_dev(struct ast_vhub *vhub, unsigned int idx);
 
 
