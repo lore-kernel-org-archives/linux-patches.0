@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793207244;
-	b=lkrFOf53CeNkU6Mdf5lsMhlbkMsezKGzseJ64TbqAjFAS0lji/6rBrjIX1Z5IKNsRYrU
-	 N6pMTTwTR5gwYoAWz46srV8N9BrgbBCRIU0xuAHI3uFiM4T/6ELtuHhkHQxkY8R6JxvmD
-	 sZVlRjlGyaYv2tcefXyWGkTwhCbqWINj9qbJzQGBKc5jGPFdmkrx/tUEbuwVL9xYOsKUF
-	 WaH9mAxIKxaxmDADAzit4G1jKRrK2iGH79POsoHqhgmoJDBWXnNJzWHQDJMihETSSV/XE
-	 x5HAsbTwjiCYajpGhGN0boMyq4QPKyYstCyYbhh5Z7JuEbQVIvyOozcfrHJ3nu/E9mg==
+	t=1793207247;
+	b=gucZCp3rkLmsIi8SBqSONhhA84uZDjMuWVtY/rKMIhA+dVyWSfXvUp3Zicq+aj5q5CpQ
+	 BIpxDUD1utPmnaMTGYt2N6Pc3lp98mkh9i2le/5OiAmct3qbC9vsmIfAQxHUHjE6w0ayK
+	 W5qozEypZPH4KgKrnmlgLQOGGGI6DrzgJnYoJ1yHAuSaQolHGOuR2HbWdgC5EDx7U6C/j
+	 Y1kZXAtjZ05hnuUmtz1Xrms0/WH8Gep42wcAAyfnroO/Y8aHV8wg2Oi5gpKN+j7JHxwNu
+	 EQlWFx/N16jN6k9nwjCP8MwMcoAJNd9dq85ySQbR9NoCNEbv2Pf2lizJIzVSMkzChKA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793207244;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793207247;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=OiLa9dG4HuKLOg8itPvM8DgX88LKvVtWiJO7FnvJNQc=;
-	b=104hFHXkPSnqYNNtif4Tk1AWBTUjVNSw14/dOGck5HRZvLH8uB49B5WPIJPM9nATcz/L
-	 d1u1SrOSC+cMpeHcgIHya1F1+8XNN3+PfEaMfbTH9o2M42WSxXJMQE5ciDTFNXiYbCMQn
-	 7FR/4rb8VIjxEvJp9UEZ8cRdfl4sUlfWiWC2hsNN3bYh8UhOaBy0sP7BXPKrE8R69jkdQ
-	 E13z84zVhXgZNjGr+SvM6L9jND1/fn1an/vkmNduDFlWUYvnP20cPdJinmPZNcKy6Q/GV
-	 ItoNost4AqwghJTSoOj7p838eJVCrdbIQsMTqokDa9/AynqpjtDRFR9zyITTWuWzUBA==
+	bh=dtYtnhO50B5KXTCKyhtIHu1FUCoESCCwsDVK4kZhhkM=;
+	b=tXia/NyJkZGDeZ91Qswz1Lz6zyeTn7WQxm0hh9tGNDqTKorG9ZZFEJ8gJnOlX5VBUO8k
+	 2WMMIPQQevjT9GroGGzbZ6wUJwfPirVAtfwJkjHP0Zp1xlwu5J2Tumxe8/XhSQUYUJSPm
+	 bcYIPpSR2JWbi3pgmV7d7lRTzb93iF2kGnmu6ffY2iLvK71yuZuIuOSmhpGAWUeKOZ+vK
+	 BIguIRML2NSIa0UHsuDSJzD3fvw00/GktKh4e7ooQSMSXn5twJTZRaUGXb85dINw3AJwv
+	 tgl63/IgCjO6f2zkRQEyLVBs7vRuBj416q11SjRauJSosas17XSAO49/vqot8ofMAAw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SzOEbU0H;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i5Qbdcmy;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB780606A323;
-	Wed, 28 Oct 2026 17:07:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A612B606A31C;
+	Wed, 28 Oct 2026 17:07:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SzOEbU0H
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A1251F01825;
-	Wed, 28 Oct 2026 17:07:22 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i5Qbdcmy
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3BF51F01825;
+	Wed, 28 Oct 2026 17:07:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793207243;
-	bh=OiLa9dG4HuKLOg8itPvM8DgX88LKvVtWiJO7FnvJNQc=;
+	s=korg; t=1793207246;
+	bh=dtYtnhO50B5KXTCKyhtIHu1FUCoESCCwsDVK4kZhhkM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SzOEbU0HHHGY8lwIj/CCvlABg4rhJ/0wGnEIhdsKEVuBjvp0E255/khOkNJeeZbeS
-	 mhmhMcBlCJQQ/mtBwGy5fIwcbw/FfVUmkBedGMhYGtZe+cr9CAahYrsq7TPJE67Xb3
-	 eiuE1/Q9XGshNyoPRZMQ6KkVB3KDh1jFWq0pH0Xw=
+	b=i5QbdcmyaiVToieK/uk6gsqkLMp9S1atmhUQU2IhktDtMFEbG8VR6H9VZJSO/CgcD
+	 kOMtXVyyk0kreHDjkO62lgPFSfK+BoW70jzxLptuI3CD+F6XcXNoVrK5zUOnNdfFdD
+	 l1x+4ry50WYUYZ06RMYo0TII6zplLAi6lLA5zBI0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Josef Bacik <josef@toxicpanda.com>,
 	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 7.2 20/88] io_uring/io-wq: dont lose the signal that ends work
-Date: Wed, 28 Oct 2026 17:59:28 +0100
-Message-ID: <20261028165942.592215826@linuxfoundation.org>
+Subject: [PATCH 7.2 38/88] io_uring/futex: allocate private hash before waiting
+Date: Wed, 28 Oct 2026 17:59:46 +0100
+Message-ID: <20261028165943.009164720@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165942.107695352@linuxfoundation.org>
 References: <20261028165942.107695352@linuxfoundation.org>
@@ -69,76 +69,100 @@ Content-Transfer-Encoding: 8bit
 
 From: Josef Bacik <josef@toxicpanda.com>
 
-Commit 63c103279a95e82280092f2f4232e91e8117a252 upstream.
+Commit 3eff68bce25584cded3fb6ec033ff9a1c9913d04 upstream.
 
-When a thread exits, only its tracked requests are cancelled. Then its
-io-wq is torn down. io_wq_exit_workers() signals every worker, to get it
-out of an interruptible sleep, and waits for all of them to exit. Before
-they do, they go through the work that is left. Unbounded work is
-cancelled. Bounded work is run, as it is expected to end by itself.
+The futex code relies on there being no private futex waiters by the time
+the first private hash of a mm is installed: __futex_pivot_hash() moves
+the waiters from the previous private hash to the new one, but it does not
+look for them in the global hash which is used as long as there is no
+private hash. That is why every clone(CLONE_VM) allocates it up front: a
+task which is alone in its mm cannot block in futex_wait() and create a
+thread or invoke prctl(PR_FUTEX_HASH) at the same time.
 
-Not all of it does. An open has no file yet, so it counts as bounded, and
-the open of a FIFO waits for the other end. That is what the signal is for.
-But the workers are signalled once, and a worker that hasn't started the
-work by then loses the signal:
+IORING_OP_FUTEX_WAIT and IORING_OP_FUTEX_WAITV do not block the submitter
+though:
 
-  io_wq_exit_workers()               io_worker_handle_work()
-    io_wq_worker_wake()
-      set TIF_NOTIFY_SIGNAL
-                                       io_assign_current_work()
-                                         io_run_task_work()
-                                           clear TIF_NOTIFY_SIGNAL
-                                       io_wq_submit_work()
-                                         fifo_open()
-                                           wait_for_partner()
-    wait_for_completion_timeout()
+  io_uring_enter()
+    io_futex_wait()
+      futex_wait_setup()	// no private hash: queued in the global hash
+  pthread_create()
+    futex_hash_allocate_default()
+      __futex_pivot_hash()	// first private hash, nothing is moved
+				futex(FUTEX_WAKE_PRIVATE)
+				  futex_hash()	// private hash: no waiter
 
-The thread never gets out of do_exit():
+The wakeup is lost and the request only completes when it is cancelled.
+prctl(PR_FUTEX_HASH, PR_FUTEX_HASH_SET_SLOTS, n) instead of
+pthread_create() has the same effect.
 
-  IORING_OP_OPENAT of a FIFO without a writer, IOSQE_ASYNC
-  exit of the thread that has submitted it
+Allocate the default private hash when a wait request on a private futex
+is prepared, which happens in the context of the submitter. This is a RCU
+protected pointer check once the hash exists. A failure to allocate it
+fails the request with -ENOMEM.
 
-hangs in more than 9 of 10 attempts (4 CPUs, KVM), until the process is
-killed.
-
-Set TIF_NOTIFY_SIGNAL for bounded work that is started with IO_WQ_BIT_EXIT
-set. The bit is set before the workers are signalled, and it is tested
-after the flag has been cleared, with clear_notify_signal() providing the
-barrier. So either the flag stays, or the bit is seen.
-
-Work that is started while the io-wq exits is treated like work that is
-being run at that time: it isn't interrupted unless it waits
-interruptibly.
-
-Fixes: afcc4015d1bf ("io-wq: provide an io_wq_put_and_exit() helper")
+Fixes: 80367ad01d93 ("futex: Add basic infrastructure for local task local hash")
 Assisted-by: LLM
 Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Link: https://patch.msgid.link/20261015-b4-io-uring-fixes-v1-4-c1556f5d7bf5@toxicpanda.com
+Link: https://patch.msgid.link/20261015-b4-io-uring-fixes-v1-22-c1556f5d7bf5@toxicpanda.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/io-wq.c |   10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ io_uring/futex.c |   28 ++++++++++++++++++++++++----
+ 1 file changed, 24 insertions(+), 4 deletions(-)
 
---- a/io_uring/io-wq.c
-+++ b/io_uring/io-wq.c
-@@ -649,9 +649,15 @@ static void io_worker_handle_work(struct
+--- a/io_uring/futex.c
++++ b/io_uring/futex.c
+@@ -152,6 +152,24 @@ int io_futex_prep(struct io_kiocb *req,
+ 	return 0;
+ }
  
- 			next_hashed = wq_next_work(work);
++/*
++ * A wait on a private futex does not block the submitter. Even a single
++ * threaded task can go on and have the mm private hash installed by clone()
++ * or prctl(), which does not pick up waiters from the global hash. Make
++ * sure the private hash exists before the first waiter is queued.
++ */
++static int io_futex_prep_private(struct io_kiocb *req)
++{
++	int ret = futex_hash_allocate_default();
++
++	if (unlikely(ret))
++		return ret;
++
++	/* inflight tracking only needed for mm private hash */
++	io_req_track_inflight(req);
++	return 0;
++}
++
+ int io_futex_wait_prep(struct io_kiocb *req, const struct io_uring_sqe *sqe)
+ {
+ 	struct io_futex *iof = io_kiocb_to_cmd(req, struct io_futex);
+@@ -161,9 +179,8 @@ int io_futex_wait_prep(struct io_kiocb *
+ 	if (unlikely(ret))
+ 		return ret;
  
--			if (do_kill &&
--			    (work_flags & IO_WQ_WORK_UNBOUND))
-+			/*
-+			 * io_wq_exit_workers() signals us once, so that we
-+			 * don't sleep for ever. If that was before this work
-+			 * became the current one, the signal is gone.
-+			 */
-+			if (do_kill && (work_flags & IO_WQ_WORK_UNBOUND))
- 				atomic_or(IO_WQ_WORK_CANCEL, &work->flags);
-+			else if (do_kill)
-+				set_notify_signal(current);
- 			io_wq_submit_work(work);
- 			io_assign_current_work(worker, NULL);
+-	/* inflight tracking only needed for mm private hash */
+ 	if (!(iof->futex_flags & FLAGS_SHARED))
+-		io_req_track_inflight(req);
++		return io_futex_prep_private(req);
+ 	return 0;
+ }
  
+@@ -213,10 +230,13 @@ int io_futexv_prep(struct io_kiocb *req,
+ 		return ret;
+ 	}
+ 
+-	/* inflight tracking only needed for mm private hash */
+ 	for (i = 0; i < iof->futex_nr; i++) {
+ 		if (!(ifd->futexv[i].w.flags & FLAGS_SHARED)) {
+-			io_req_track_inflight(req);
++			ret = io_futex_prep_private(req);
++			if (ret) {
++				kfree(ifd);
++				return ret;
++			}
+ 			break;
+ 		}
+ 	}
 
 
