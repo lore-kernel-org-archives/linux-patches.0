@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793208352;
-	b=vNJLc1BzQmRVASa27+xvzY6dC6Chv2h0AldVOJoSTvpFDmYML1MRL5gW7MSnZ013pqtc
-	 2Kzgt8RQMy9GC0yG/qDqdjacGtKq27+x8RLZtEcqFVJixGRt/rMFZZrWSoOf8cQ+QNVEa
-	 yY8MOt6Ya+IbcicL+KwVVTXcCsyK9vBr4EbsussFdRKIfzOWAHFGcxb4bZZo716uGllES
-	 zG/YmPpgC0lTQVIBLrCkGNVU91MOL7vVxWnaFtOl+eUxPs/BgsyEsOMM6FoCtFVCtZxoO
-	 hN9bSroYyWR+ac4M20x/TdI+zPLqpi/V9FSGjodHrJ1e3BHqSSAsYk0GfZ5XSF196Hw==
+	t=1793208354;
+	b=MLRRLTiwhqcbY9MXu4jMvbYfHetO/ziOrp/YjBKQrW/wkGxUcBHULuF54mpcru4iVOWe
+	 5AYkT0x0oHo0ha0609riCO9GeYmTRaatquCeZ4aEIiwfceZOvJhl+k8RVk+wa6xFCEQSx
+	 O0qyokogYXQNnIXxNiHbwZmLE1NVYH3y1DB4kn0mVo8x9kz9G0+PhB8wbWdIl0wDXMqY4
+	 z8FcwQ+uqE70BrMkpOKbM2bCmvf7ZaHAexAMUkgz28fU66sjNLd4O+uw7NEdzIJK1JdIc
+	 47a7dPpIwgxdWtRysYJ1NAbHimzjOfY2iEQiQ5+yybnkeGFK7ldsDTNdz/QTAp/a1sw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793208352;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793208354;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=GdoNkKf43zNqH+U1/zSIMUDIOG7KarFpShrafMmFAFE=;
-	b=1w9jkiv0veMP3prUyhmDM5UzUCdoWPar5SfQoRVoqy5vyCNVWa2FZchtGVmn/cM+n1xg
-	 NPASzndqfFJzVo8Y/a8N2rMnP3aimgxcQ3qXnwMz1gLT8ItppKyemC9TMkqD6lTkQI7Bw
-	 sHLjukR9+frU0NSIFJhOUROrtG+t0Frcajipx/3NLI2/oOT+NuWpBdlsYYSs8kbgcjA2J
-	 yqdHvsFG82cPNQ/yfu6FPM9T90HuITjmuHblWSVLlEoigNo/d8tJ1YPFrT9UfKyb833yQ
-	 4aKyvRWtEbofF8xyRYaVkIgIlcqVy/Vq5avv/l0HBvWOJWqVBL0m8W511qWU57fm0KA==
+	bh=4VZiOAh8E25BwYdkmD4oOMVTLYqQfb/GuX66oQCFx8M=;
+	b=1K6koXnTdTENUUSgO0JFj3y7vSDec/87wsgfqyfy9dwDEnPW/DOhcxHlYh/v8xjcVMCw
+	 hQpsxfVxdvYUwMaSsg8hmPSIimRNOVEioxXaBEQB8g6dlYf7ikWWUiZDd9rcUntGXjFru
+	 C4zWmvPgCt+lRXc7Zrv4sW9E9WUiS1zgmIpDcqLIwgA4j9emWY6EgfbiU61MtckLxatew
+	 O107aYU2eySKdwEknV9dfFBPvW20Cbqyxn6HPdWH/wad0nPNiGK4sWFgyGLLKQeJOj/03
+	 50q3wNuaaxqELc/SAkSiF1W0Gc3ViL+ltPYsJtgqsi2Vvnc2cL1VxA+smQmS05n9Owg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kjuXmtui;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=whfBoXa3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B96DB606A31E;
-	Wed, 28 Oct 2026 17:25:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AB63606A32C;
+	Wed, 28 Oct 2026 17:25:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kjuXmtui
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 155C21F01828;
-	Wed, 28 Oct 2026 17:25:50 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=whfBoXa3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAF581F01829;
+	Wed, 28 Oct 2026 17:25:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793208351;
-	bh=GdoNkKf43zNqH+U1/zSIMUDIOG7KarFpShrafMmFAFE=;
+	s=korg; t=1793208354;
+	bh=4VZiOAh8E25BwYdkmD4oOMVTLYqQfb/GuX66oQCFx8M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kjuXmtuiuqNZrm/IqP8S4QQpEzcELUi/icz/0lIaPfRUrSQJ9k2hW8iSAVhSIHIcl
-	 ju5LPlK5zuTG3f8vLuFed4DfOaRENlBznJmNSW8KR6c6WHm8aXpRIHISKkhKu5xX9m
-	 nk9+JRADEQCPOIi7hIhvS6slRZtNqsp+T1H8ca7s=
+	b=whfBoXa3B4pu/W6eEc1g3J5SmzFG4gH3+UTljlMw1xPpqAyY1wYvw0TkOzHZqrq9x
+	 GIRRd/8JNI8tWgJGD1o9mmoDWllRKWrziBNDrv04GRjtkgCbBTfyIslGPs5EuTb56N
+	 94pxu9n+CBynJzN7G43xwCQpw2mOKiQe3iHqO9sg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ruoyu Wang <ruoyuw560@gmail.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Miroslav Benes <mbenes@suse.cz>,
+	Luis Chamberlain <mcgrof@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 088/516] media: zoran: Avoid freeing a registered video_device twice
-Date: Wed, 28 Oct 2026 17:54:00 +0100
-Message-ID: <20261028170005.603741215@linuxfoundation.org>
+Subject: [PATCH 5.10 053/516] kernel/params.c: Use kstrtobool() instead of strtobool()
+Date: Wed, 28 Oct 2026 17:53:25 +0100
+Message-ID: <20261028170004.787021877@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -68,49 +69,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ruoyu Wang <ruoyuw560@gmail.com>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit 0735e0b5a96761a9ce277a238e834008ad92a0a5 ]
+[ Upstream commit def7b92efd868a6c78da86770704c1a03506016e ]
 
-zoran_init_video_device() installs zoran_vdev_release() as the
-video_device release callback through zoran_template. After
-video_register_device() succeeds, video_unregister_device() drops the
-registered video_device reference and the V4L2 core eventually invokes
-that release callback, which kfree()s the video_device.
+strtobool() is the same as kstrtobool().
+However, the latter is more used within the kernel.
 
-zoran_exit_video_devices() called video_unregister_device() and then
-kfree(zr->video_dev), so device teardown could free the same
-video_device twice.
+In order to remove strtobool() and slightly simplify kstrtox.h, switch to
+the other function name.
 
-Remove the direct kfree() and clear the cached pointer after
-unregistering. The pre-registration failure path keeps its manual free
-because the video_device was not registered there.
+While at it, include the corresponding header file (<linux/kstrtox.h>)
 
-This issue was found by a static analysis checker and confirmed by
-manual source review.
-
-Fixes: 82e3a496eb56 ("media: staging: media: zoran: move videodev alloc")
-Cc: stable@vger.kernel.org
-Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Reviewed-by: Miroslav Benes <mbenes@suse.cz>
+Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
+Stable-dep-of: 3dfaae04243c ("params: fix charp corruption on allocation failure")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/media/zoran/zoran_card.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/params.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/staging/media/zoran/zoran_card.c b/drivers/staging/media/zoran/zoran_card.c
-index fe0cca12119c7..9ee30b70b9d9b 100644
---- a/drivers/staging/media/zoran/zoran_card.c
-+++ b/drivers/staging/media/zoran/zoran_card.c
-@@ -831,7 +831,7 @@ static int zoran_init_video_device(struct zoran *zr, struct video_device *video_
- static void zoran_exit_video_devices(struct zoran *zr)
- {
- 	video_unregister_device(zr->video_dev);
--	kfree(zr->video_dev);
-+	zr->video_dev = NULL;
- }
+diff --git a/kernel/params.c b/kernel/params.c
+index 0df4a315760d5..9f0f059571a0a 100644
+--- a/kernel/params.c
++++ b/kernel/params.c
+@@ -4,6 +4,7 @@
  
- static int zoran_init_video_devices(struct zoran *zr)
+ */
+ #include <linux/kernel.h>
++#include <linux/kstrtox.h>
+ #include <linux/string.h>
+ #include <linux/errno.h>
+ #include <linux/module.h>
+@@ -310,7 +311,7 @@ int param_set_bool(const char *val, const struct kernel_param *kp)
+ 	if (!val) val = "1";
+ 
+ 	/* One of =[yYnN01] */
+-	return strtobool(val, kp->arg);
++	return kstrtobool(val, kp->arg);
+ }
+ EXPORT_SYMBOL(param_set_bool);
+ 
 -- 
 2.53.0
 
