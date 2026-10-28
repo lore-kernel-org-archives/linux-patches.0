@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793217139;
-	b=5jbM+w+Ho43kkLOLGIl0vUg5bjn0ZZq5174JKNBs0PzDZ3/m8T/8qWYjs0IxLpr2+efn
-	 ERCqSEL/EMZiquBY+kN/anwMurg6gYlLsSHJvfnkU4DUJnDAGFF/Nv9c3pV6x+2wE3Bz2
-	 V6Qn77Qb4ZTfay1I8acVTBoBiDcwmpf44Clgmlw15DAQs9ceo3gczWPzPr2HTiEbiNWaP
-	 AS6LQrbB0rP70Qn/eaEQqjEMZJvBa9LAnxEDFiMoY/0HGMMtb75m8puSAXfGmDPFnCU43
-	 w62cUDtwk/0GpEG7KhB86Jb8IxjVU6MGDF++xVocQCrJdetZJuebB+bD1nibJ4fgGyw==
+	t=1793217142;
+	b=oDGEeMypKkhjgg0xSxpTJu64AcHnzMYUt0OoAIMgFplL1vstmy58fD15oTV30JXKQTxu
+	 RGlCJY1/PcMmQZLobtpxiR9C6TsQrEQK7qz0OuppFwyeXAbkLqSM2RgjR8+CvDwwVQPxu
+	 tQDxHcqwumdDhV9kWvL2t0495wqtQETHSXrTGTgyVlInI1lUVv/ta2dnnEFJxQ0xjIbHb
+	 u4cCdTnThLiqh/uA77vl2VaqyPBKkzxM593FBrMdakmeKOiaEaoqEscOrNNErxq/l+TG6
+	 6LG2xDr+6W5qybt18miqa++D1p15CcinWkx8hovPbMA9u9vvrpoJwQvzttBoD399ZjQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793217139;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793217142;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=uFeZrFuEO+zlRVg45j9S9x7fS1gX1lqFR1IUbcB9AzI=;
-	b=D5q8tRxDwAcaT1C5wSwMYpFaqgdoAI1s+28H61DkICfIA4EjQgvR5b1FI/g490+dKdYg
-	 8Q2v2MRhEkLGZEb0ef8iPD7qd9e7EjyF/eNJSvYggA7XBEOd50XSE1VF8kRfb4Q0uHXjl
-	 e1acOBXxJ0BStHpD/SD9qxz2H/uhp4Oiw1vjSzvVcJz+E/CA9YLiRIbhtWl1y/VXKqaVt
-	 0zNWYwnP7ZafoQaDpgr1U7s3/xB2/aUck/3aqLfSwM/FKa8jO6QQtLr3RNKK7IBjYp4li
-	 T3RtRgi4U2BIP4VJ4gxDHG2exP9vMr8qdFHJDHwtunWBGQdKLdr3I/ox4jxROJDTaAg==
+	bh=eJnNw1uL+JdGQ8tvO1szXpsMq9arQPPZI8qKHMk1UnQ=;
+	b=l6z//Fv1sch473NDgQe7GviS8EkCA/qTunauEfXSbVHOp1PRChSWaoPkiRnJsUwZC9Ub
+	 9lRjHqqGVm9n2kHaibjxSy5DRkUMKCAOkOLKW9RtPIMF5bKfuRTcXAtTOpsxtQ2JFkxfz
+	 AwHOvZkqpYPffoV35sypsA4J00kkI7Z2He1PVtlS+TN1dFx2kwWGTZol1vHFOrY/UgCMM
+	 /l4Dcy8pc8PJ8bPexzlTYlq5IGJLzDmOmBYppRCPo/cLXGhiQxmhsR5GpkUj26D5YlZqJ
+	 p9T4L/Y8a2LC8aHabJ8OcftUetTgPxAhCfiSRUPWxi1bkPH2u4Ny1J1MvttNKSh32OA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OBrHPiCg;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lwXje5UA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C2B9606A31A;
-	Wed, 28 Oct 2026 19:52:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D436606A31D;
+	Wed, 28 Oct 2026 19:52:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OBrHPiCg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC0C31F01825;
-	Wed, 28 Oct 2026 19:52:18 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lwXje5UA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE1A01F01829;
+	Wed, 28 Oct 2026 19:52:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793217139;
-	bh=uFeZrFuEO+zlRVg45j9S9x7fS1gX1lqFR1IUbcB9AzI=;
+	s=korg; t=1793217142;
+	bh=eJnNw1uL+JdGQ8tvO1szXpsMq9arQPPZI8qKHMk1UnQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OBrHPiCgCXKK6Teq5dfw3Nm9cztU6LUJpKv2ugLtcKVMOLYJi2QdTGq/W8qS2bb/A
-	 7ybPFLsXY9+ars26D3ZNfmPvIfZDBL+cIAXq2hk6yTQEHS1DD7+S3avu2KloY+wCTi
-	 o2Tcm57TtdTK7yHHWvDsU6V1ux0qBwQmM7Qp2Up4=
+	b=lwXje5UAVgFDEZsV2//LsbJcK9J316X97oJaiJKJhMZBAg12KFvwSRMWt+NOlfhvM
+	 wLjSNZaaNxzdJx2f+fsrREkwtIGf5zx9NCkDs8XrE5OrWGepmRleFEgiHMyDhzZ2bU
+	 iRju+E2Bbh5+NBXBICEJQru/0mt2V4TaccoamUgI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sun Yangkai <sunyangkai@fygo.io>,
-	Chen Cheng <chencheng@fnnas.com>,
-	Mikulas Patocka <mpatocka@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1785/1887] dm-integrity: require stable writes for internal hash modes
-Date: Wed, 28 Oct 2026 18:04:41 +0100
-Message-ID: <20261028170540.071097917@linuxfoundation.org>
+	sashiko-bot@kernel.org,
+	Donggeun Yoo <donggeunyoo.kernel@gmail.com>,
+	Steven Rostedt <rostedt@goodmis.org>
+Subject: [PATCH 6.1 1803/1887] tracing: Fix 64-bit and signed histogram fields on 32-bit kernels
+Date: Wed, 28 Oct 2026 18:04:59 +0100
+Message-ID: <20261028170540.477787968@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,90 +68,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen Cheng <chencheng@fnnas.com>
+From: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
 
-[ Upstream commit b2fd92f016e9d692fd3c8c08d0ee014e9212279d ]
+commit 443d23176812803d0fa182b8d05ef066a7b8271f upstream.
 
-dm-integrity direct, bitmap and inline internal-hash modes compute
-integrity tags from the pages carried by the write bio.  The lower data
-write also uses those pages, so the tag and the data write depend on the
-same memory contents staying unchanged while writeback is in flight.
+DEFINE_HIST_FIELD_FN() reads a trace event field and widens it to the u64
+the histogram uses as a key or a value:
 
-Without stable writes, a buffered writer can modify a writeback folio
-after dm-integrity has submitted the data bio and before the lower device
-has consumed the data.  After a crash, this can leave data from the later
-contents with a tag calculated from the earlier contents, causing
-permanent checksum failures on read.
+	type *addr = (type *)(event + hist_field->field->offset);
 
-Set BLK_FEAT_STABLE_WRITES for internal-hash D, B and I modes so
-filesystems wait for writeback folios to become stable before modifying
-them again.  Journal mode is left unchanged because it copies data into
-the journal before computing and persisting the tag.
+	return (u64)(unsigned long)*addr;
 
-Tested using dm-delay over a virtio-blk test disk, dm-integrity
-internal_hash:crc32c and no-journal ext4.  The D and B reproducers both
-failed with checksum errors before this change and completed with
-READ_RC=0 and zero mismatches after it.
+unsigned long is 32 bits on a 32-bit kernel, so the intermediate cast
+discards the upper half of a 64-bit field, and widens a signed field by
+zero extension from 32 bits rather than sign extension from its own
+width. Five of the eight instantiations are wrong there: s64, u64, s32,
+s16 and s8.
 
-Fixes: 7eada909bfd7 ("dm: add integrity target")
+The cast came in with commit 79e577cbce4c ("tracing: Support string type
+key properly"), which also added hist_field_dynstring() and
+hist_field_pstring(). Those convert a char * to u64 and do warn without
+an unsigned long in between on 32-bit. DEFINE_HIST_FIELD_FN() converts an
+integer and never a pointer, so it gains nothing from the cast and only
+loses information.
+
+Drop the intermediate cast and let the usual arithmetic conversions widen
+*addr according to its own type. unsigned long is 64 bits on LP64, so the
+two forms are identical there and 64-bit kernels are unaffected.
+
 Cc: stable@vger.kernel.org
-Reported-by: Sun Yangkai <sunyangkai@fygo.io>
-Link: https://github.com/chencheng-fnnas/reproducer/blob/main/dm-integrity-writeback-race.py
-Signed-off-by: Chen Cheng <chencheng@fnnas.com>
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-[ sashal: Replaced BLK_FEAT_STABLE_WRITES with a needs_stable_writes target bit propagated to QUEUE_FLAG_STABLE_WRITES. ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://patch.msgid.link/20260917015532.103081-1-donggeunyoo.kernel@gmail.com
+Fixes: 79e577cbce4c ("tracing: Support string type key properly")
+Reported-by: sashiko-bot@kernel.org
+Closes: https://lore.kernel.org/all/20260914054614.82A9B1F000FF@smtp.kernel.org/
+Signed-off-by: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-integrity.c     | 3 +++
- drivers/md/dm-table.c         | 2 +-
- include/linux/device-mapper.h | 5 +++++
- 3 files changed, 9 insertions(+), 1 deletion(-)
+ kernel/trace/trace_events_hist.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/md/dm-integrity.c b/drivers/md/dm-integrity.c
-index f552c402b3c17..4fcd7d821568f 100644
---- a/drivers/md/dm-integrity.c
-+++ b/drivers/md/dm-integrity.c
-@@ -3503,6 +3503,9 @@ static void dm_integrity_io_hints(struct dm_target *ti, struct queue_limits *lim
- 		blk_limits_io_min(limits, ic->sectors_per_block << SECTOR_SHIFT);
- 		limits->dma_alignment = limits->logical_block_size - 1;
- 	}
-+
-+	if (ic->internal_hash && (ic->mode == 'D' || ic->mode == 'B'))
-+		ti->needs_stable_writes = true;
+--- a/kernel/trace/trace_events_hist.c
++++ b/kernel/trace/trace_events_hist.c
+@@ -458,7 +458,7 @@ static u64 hist_field_unary_minus(struct
+ {									\
+ 	type *addr = (type *)(event + hist_field->field->offset);	\
+ 									\
+-	return (u64)(unsigned long)*addr;				\
++	return (u64)*addr;						\
  }
  
- static void calculate_journal_section_size(struct dm_integrity_c *ic)
-diff --git a/drivers/md/dm-table.c b/drivers/md/dm-table.c
-index 8e0b9783f3da3..214a7af330f89 100644
---- a/drivers/md/dm-table.c
-+++ b/drivers/md/dm-table.c
-@@ -1941,7 +1941,7 @@ static int device_requires_stable_pages(struct dm_target *ti,
- 					struct dm_dev *dev, sector_t start,
- 					sector_t len, void *data)
- {
--	return bdev_stable_writes(dev->bdev);
-+	return ti->needs_stable_writes || bdev_stable_writes(dev->bdev);
- }
- 
- int dm_table_set_restrictions(struct dm_table *t, struct request_queue *q,
-diff --git a/include/linux/device-mapper.h b/include/linux/device-mapper.h
-index 9505674dc883d..bda8f373c91b6 100644
---- a/include/linux/device-mapper.h
-+++ b/include/linux/device-mapper.h
-@@ -357,6 +357,11 @@ struct dm_target {
- 	 */
- 	bool discards_supported:1;
- 
-+	/*
-+	 * Set if this target requires stable data during writeback.
-+	 */
-+	bool needs_stable_writes:1;
-+
- 	/*
- 	 * Set if we need to limit the number of in-flight bios when swapping.
- 	 */
--- 
-2.53.0
-
+ DEFINE_HIST_FIELD_FN(s64);
 
 
