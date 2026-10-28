@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793208949;
-	b=Z1o+4X/YxwzvtKW/GTJlq0Sx53Zs8Dd8N5YkS3hTCDiv+ogL/aaIJ0bomowhqYXz0LDX
-	 v3z/cW0ixZWk56ZmJHNOZ0N+5TRUTkPeFuh21JwVCg7cX33tmgt3vpRXOKk2DkFdutttJ
-	 1yP/f1M8cEDsbGux5fz82qIr1d3lyHAq95oUC/OGZAbbuwtWcpumJgCr7HrPCt/Eu7/x2
-	 6MyMu6mpMf9oP6oVlDDRvpnPL1IvI12q0fTOc7+1/6otospwjXSQ3C8hEDLSZgrJBIGvD
-	 K7dnn+WXt4n5mxRVmLC/oCI9o8SwNKMWIuMP8wodxADrlnx092Zmquvh45/caSlw0uQ==
+	t=1793208952;
+	b=vwsX4qPSBdAQZJzbNeIMW+/AGppuLdne77LnTpD31XflTqsxuAlGC1Bma6GrNmRcgr4t
+	 NpmSbKUJ9XzFEabCAdaUF87Gf2p34tOPe9Gw4zsxfYLHy6ATRq+eHhVeOxI43BSzDlPv2
+	 XGvpj+BEiOCvEzgVPovvx4EwRNQgiW01i3XTT1E8v09v8U6GBFOnAqDSokrRrIpNd6olj
+	 T4nGRJgKa0mNlmCpswQXKO3v7Y+oGSLAKUtOu0Ai0jQWR8vhRh5R/6WuByJ7gzP0LzEPq
+	 vIqheGa+gUgD6/E/DWqN0EgghgBO2PoEJcuBSHlyoKFpsDhaZGzZ1khKB/pOPrlUxRQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793208949;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793208952;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=bVwlHc/cEAu4rcq05XRlOBbLtS/qN5a+eJ8hnRhO/Bw=;
-	b=o5/pBElpSM3t6b3rLLaYJjqwAho/nAMF1nC3RwVRDSeg/hZ2QKw86C/EpCrNz8l/YizH
-	 rHvmdXrWJ5G4stqDKgQbx7ZvFxqhN6AquEwTVbUiEsqZFCgw74UtSRMgBeUVQNu2f/Rya
-	 u+h/cBrxKvBnSJ12FRVkrRji7/82wrH7iLyfVYEYObsVlXiJxgnwbcRLqSc3bpW7GXLxc
-	 vSY8qMfEYOOpGAF0tW4L41jmN+NnxXUgel10k1sTF+vhwi4VRdGYJuztQMQsyvXIUEC1Z
-	 LhhhtSrYXQLnqbL9jARyql/abzl6qfzgEQ1Z1/5ZOyUuePLdCZNpgd6FrbSeQhViYwQ==
+	bh=V9hQemiiUv+0rg7nQmvmfGmvAD/A3CRUyL/kdNVJ4Mw=;
+	b=mftUEZ3jOSuw+35/JEcclx2BxMo6XLICPB4iixe42AezFmyxVnhOFYX82aakj56h6uH3
+	 +WHNDd8r3UdxkVa3aaJxIrj6hQzYBN7hDo8Dqs5l5bAHrAfOv1BVsZYV1lakU3czDgPjB
+	 dcU7jctWbZxgTFaMsR63PnXlrzDZRraQ0+58oQKf1IAPnmO1N43dtP6LhWA5nD3QI4xt2
+	 PNNszMVhQtuXFG2uHZf9Npgwjn4V4v18t3Pp8h8Sermn5y5KSvKzGrP8vskCdXhz33x5p
+	 YpfjmOff9fXLWdWBzso7QLeErkkoOlDRe5e4d7+6PdmW44zDm+hpXfFiszKQKe8x3MA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Mh2IqA0w;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ofG1H1vk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBA59606A32D;
-	Wed, 28 Oct 2026 17:35:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5E79606A323;
+	Wed, 28 Oct 2026 17:35:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Mh2IqA0w
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 416931F01825;
-	Wed, 28 Oct 2026 17:35:48 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ofG1H1vk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2132C1F01829;
+	Wed, 28 Oct 2026 17:35:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793208948;
-	bh=bVwlHc/cEAu4rcq05XRlOBbLtS/qN5a+eJ8hnRhO/Bw=;
+	s=korg; t=1793208951;
+	bh=V9hQemiiUv+0rg7nQmvmfGmvAD/A3CRUyL/kdNVJ4Mw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Mh2IqA0wyh9pIsp4TUS16O6ix7EzFX7XXVemTTlF049zDtI3TOYdSzfIkiZApnRbf
-	 mwcOFN4dWHdVo17BJoXmXK6amwHikIgGkWYRfOi04G4rV7k+/XYb7blnJu/+cP98qP
-	 1R1LDtKljXWPBegkGD0ArtwgfLM0yt8L8XhgjDzE=
+	b=ofG1H1vknDe3E56e55vwvv7Waw1lsh4JGLZsVTpb9EazzlWrhB+OqWWSdYJj/Pbd7
+	 DoPZCGJtDI/TbCye8+lBusycz9S/04turmKU/AZSQM1S5y7yfUgI0iIgN69XsyIKsB
+	 lLJ3KUeKFdWmwMBsiQJbUDnkVJ7LqfLvDidf9dTY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Ni <nichen@iscas.ac.cn>,
 	Alan Stern <stern@rowland.harvard.edu>,
+	Johan Hovold <johan@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 282/516] usb: ohci-spear: Remove unnecessary NULL check before clk_disable_unprepare()
-Date: Wed, 28 Oct 2026 17:57:14 +0100
-Message-ID: <20261028170010.172742753@linuxfoundation.org>
+Subject: [PATCH 5.10 300/516] USB: serial: fix driver deregistration order
+Date: Wed, 28 Oct 2026 17:57:32 +0100
+Message-ID: <20261028170010.597988228@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -68,37 +68,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen Ni <nichen@iscas.ac.cn>
+From: Johan Hovold <johan@kernel.org>
 
-[ Upstream commit a891b9aebcc7406fe2f439d184bac3948fb08645 ]
+[ Upstream commit 646e5b28b4fdbc1b828a2398d6ced2c1dd308a46 ]
 
-clk_disable_unprepare() already checks NULL by using IS_ERR_OR_NULL.
-Remove unneeded NULL check for clk here.
+USB serial driver modules register one driver for the USB bus and one or
+more drivers for the ports on the USB serial bus.
 
-Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
-Acked-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://lore.kernel.org/r/20250617042050.1930940-1-nichen@iscas.ac.cn
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: b1b0f8bdbbc8 ("usb: ohci-spear: disable controller wakeup on removal")
+When unloading a driver module, the USB driver must be deregistered
+before the USB serial bus drivers so that I/O is stopped before
+unbinding the ports to avoid use-after-free in completion handlers
+accessing port data.
+
+Note that the "new_id" attributes must first be removed to prevent new
+ids from being added and triggering a probe of the USB driver after it
+has been deregistered.
+
+Fixes: 765e0ba62613 ("usb-serial: new API for driver registration")
+Cc: stable@vger.kernel.org	# 3.4
+Cc: Alan Stern <stern@rowland.harvard.edu>
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/host/ohci-spear.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/usb/serial/bus.c        |  4 ++++
+ drivers/usb/serial/usb-serial.c | 21 ++++++++++++++++++---
+ include/linux/usb/serial.h      |  1 +
+ 3 files changed, 23 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/usb/host/ohci-spear.c b/drivers/usb/host/ohci-spear.c
-index 5cc05449281c8..ed019c459ea0d 100644
---- a/drivers/usb/host/ohci-spear.c
-+++ b/drivers/usb/host/ohci-spear.c
-@@ -105,8 +105,7 @@ static int spear_ohci_hcd_drv_remove(struct platform_device *pdev)
- 	struct spear_ohci *sohci_p = to_spear_ohci(hcd);
+diff --git a/drivers/usb/serial/bus.c b/drivers/usb/serial/bus.c
+index bbb981041c10e..de6d9f9ecd3a5 100644
+--- a/drivers/usb/serial/bus.c
++++ b/drivers/usb/serial/bus.c
+@@ -188,3 +188,7 @@ void usb_serial_bus_deregister(struct usb_serial_driver *driver)
+ 	free_dynids(driver);
+ }
  
- 	usb_remove_hcd(hcd);
--	if (sohci_p->clk)
--		clk_disable_unprepare(sohci_p->clk);
-+	clk_disable_unprepare(sohci_p->clk);
++void usb_serial_bus_remove_new_id(struct usb_serial_driver *driver)
++{
++	driver_remove_file(&driver->driver, &driver_attr_new_id);
++}
+diff --git a/drivers/usb/serial/usb-serial.c b/drivers/usb/serial/usb-serial.c
+index 338fd0d5e65e1..bc3ec34f9f913 100644
+--- a/drivers/usb/serial/usb-serial.c
++++ b/drivers/usb/serial/usb-serial.c
+@@ -1432,7 +1432,7 @@ int usb_serial_register_drivers(struct usb_serial_driver *const serial_drivers[]
+ {
+ 	int rc;
+ 	struct usb_driver *udriver;
+-	struct usb_serial_driver * const *sd;
++	struct usb_serial_driver * const *sd, * const *s;
  
- 	usb_put_hcd(hcd);
+ 	/*
+ 	 * udriver must be registered before any of the serial drivers,
+@@ -1484,9 +1484,11 @@ int usb_serial_register_drivers(struct usb_serial_driver *const serial_drivers[]
  	return 0;
+ 
+ err_deregister_drivers:
++	for (s = serial_drivers; s < sd; ++s)
++		usb_serial_bus_remove_new_id(*s);
++	usb_deregister(udriver);
+ 	while (sd-- > serial_drivers)
+ 		usb_serial_deregister(*sd);
+-	usb_deregister(udriver);
+ err_free_driver:
+ 	kfree(udriver);
+ 	return rc;
+@@ -1504,10 +1506,23 @@ EXPORT_SYMBOL_GPL(usb_serial_register_drivers);
+ void usb_serial_deregister_drivers(struct usb_serial_driver *const serial_drivers[])
+ {
+ 	struct usb_driver *udriver = (*serial_drivers)->usb_driver;
++	struct usb_serial_driver * const *sd;
++
++	/*
++	 * udriver must be deregistered before the serial drivers so that
++	 * I/O is stopped before unbinding the ports.
++	 *
++	 * Remove the new_id attributes to prevent ids from being added and
++	 * triggering a probe of udriver after it has been deregistered.
++	 */
++	for (sd = serial_drivers; *sd; ++sd)
++		usb_serial_bus_remove_new_id(*sd);
++
++	usb_deregister(udriver);
+ 
+ 	for (; *serial_drivers; ++serial_drivers)
+ 		usb_serial_deregister(*serial_drivers);
+-	usb_deregister(udriver);
++
+ 	kfree(udriver);
+ }
+ EXPORT_SYMBOL_GPL(usb_serial_deregister_drivers);
+diff --git a/include/linux/usb/serial.h b/include/linux/usb/serial.h
+index 8e67eff9039fa..d98521605f8d6 100644
+--- a/include/linux/usb/serial.h
++++ b/include/linux/usb/serial.h
+@@ -378,6 +378,7 @@ void usb_serial_handle_dcd_change(struct usb_serial_port *usb_port,
+ 
+ int usb_serial_bus_register(struct usb_serial_driver *device);
+ void usb_serial_bus_deregister(struct usb_serial_driver *device);
++void usb_serial_bus_remove_new_id(struct usb_serial_driver *driver);
+ 
+ extern struct bus_type usb_serial_bus_type;
+ extern struct tty_driver *usb_serial_tty_driver;
 -- 
 2.53.0
 
