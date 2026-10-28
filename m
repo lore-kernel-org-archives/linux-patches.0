@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793210618;
-	b=h1GZxnPN71rxZINYzh6Fu5n4he70z+aNC9b2BrsaEvhzcDu1mG4uj6o2qhwkouX9flZ+
-	 C8BG8jvxa7U66blB+0LrMjccf1Yt8EVLvyQ0AWsd4Rskh/nZPB0sGp9e0M30gtWpCINpe
-	 BA/OTual64xbYHdhiq20cLSAubynwhTC37C3jCH04HeHSJBnQhKk5itvycPOF/dX9+zFC
-	 52NwCrmYNKOZvL5iaIvBCHxbEWTvmaVivU98RhD4t7j/znfrrQ/DJZc0qDdEmCKL1BUrV
-	 QeSl3rkaY+XoneWDWrWQnA+nw9qp642QKB7bzFB5VVyPusgyDY0vgmjwR2xsYtXx5ow==
+	t=1793210621;
+	b=2nAa/VOsK2uXUF4FeLVZR8WPM8vggcetUwKeS5aWtj2lEmkzJZbrRvxSL1/CANj1vmwB
+	 nsAxNAJ0zfliVBUVhVEYRvkE7AGhDg6zkbAETZISu4m5Lo3iBqrOomfieBHvlsemWLJtv
+	 HIE89jyhFG6we3VWxqdIz1BQxamo+XtDuqSU7KvcgTgrwPuqW/ANqKVemGeFaDVg8xDG7
+	 27NuzpJpePxTaCLufr7O/3d4IsmgSLg4BlZuMZ4FrVkGHTkCBCgdkmolW9eSl2wTpie2H
+	 ZawRfzg74RrQI6uwQPwpJzBLbL0uUcJTOpvc8lypnk4Qv5eMbkHdQUkRvZG0xLfxhww==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793210618;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793210621;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=mZ5q4VDeseGqSCz880O1Vj+/TAaaV9vCE6x0d7RAa14=;
-	b=QrySos77afN00bv/HRPYC2IJd0UeGnbuPToPgbG9D4GtvhRC/NbJYO4rLpsYwrmmARKX
-	 oWhCnNI/kuPL6gHbvZHn/XPeq6yRIdC2kPWlWf1+YimMjLaO8tNyqwDcgGnqe3QyrchIj
-	 oCjF6bUYqYiAJpTXjm1T/LnDrsaR7uodOLPlJnmiopSujUYNKTYzhCNsbksIZo7/ixzJK
-	 DRbp1t0LOaEDudDBNQHoJl7FPM59hXyc8+OGn2bXP0LDitaDLefZXOZWMUhAronGwmCw4
-	 196oQal6q7FydcnuVyhvYaNluqRHBxuVYZ6OEI2sjWlSXk330+rnQAf7Ef0Cr6WzMMA==
+	bh=yEPh39SURMtKzoUHb4QJ0mrUmn0+J96NCS7KnnUnetw=;
+	b=X12ID0jxYj8RVOw56jOQYF5UFScVaYGBTr2WyvgYUsO7gbh/pZtpF/JbOStPztubvy2O
+	 x3Y/HwrNUkdyGqXMYKElHkKAXeB/SHrONwW9CKIzjSSnY1Mka9kgBfj9NOyhqYTfw3tAE
+	 5w+kaFnWEPLd0EecZryeeD5fkFpXGJG9ilDCEKNAHIWIX1MwAN8QnKlnx6uDNzJrDBe6e
+	 QtXRbyXku9/DMSiFXIFSn/N8xzTbAOpp58m99iHK+8TYW0PupEPZ69Cdw+S1KSd2VNhWr
+	 Q/aMDbMrgMjwLXHvqIXT+xg4ZDsRVx6sHHsZJJCiCntSBjCq7E6UhoP4RPK89Ng4WoQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LIf1wc7X;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hU2LFW8X;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A760606A31D;
-	Wed, 28 Oct 2026 18:03:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7B0B606A31A;
+	Wed, 28 Oct 2026 18:03:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LIf1wc7X
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B0691F01825;
-	Wed, 28 Oct 2026 18:03:37 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hU2LFW8X
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31D141F01825;
+	Wed, 28 Oct 2026 18:03:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793210617;
-	bh=mZ5q4VDeseGqSCz880O1Vj+/TAaaV9vCE6x0d7RAa14=;
+	s=korg; t=1793210620;
+	bh=yEPh39SURMtKzoUHb4QJ0mrUmn0+J96NCS7KnnUnetw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LIf1wc7XNXtdyNLM/5yOr7ON4aMJWHwoL8bJMe4aaWzMwARCqWU2NwUFgMUrT00j2
-	 n7Tx5W1R1AcHeVnNiuEHmvwKh5UimJJhHsbFDrC1KnpXS9RNKWQ5LPjBNK8tEjNZy8
-	 guz8ezmVH4sfX80YRjNqrwyv6AhWZoJSF0Bh0TuQ=
+	b=hU2LFW8XHRv+BxY8OBMV6v5G2Hjn98tx3YPgZb3XBfAwCDPS8rmIYsxd38ArSf3fG
+	 zWt+vEtuCf8hJaZ3rnFN7fiQSzIAD3/cQerUf7j17d+CI8f90NkxZpn6O8/FvVtM9R
+	 mHy6zGCT5ZessJp0kGXDcPkedr0n66rDuSJ9H6s4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Wenjie Qi <qiwenjie@xiaomi.com>,
 	Chao Yu <chao@kernel.org>,
+	Guanghui Yang <3497809730@qq.com>,
 	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 090/571] f2fs: limit recovery filename logging to stored length
-Date: Wed, 28 Oct 2026 17:53:57 +0100
-Message-ID: <20261028170010.161413944@linuxfoundation.org>
+Subject: [PATCH 5.15 091/571] f2fs: fix dentry folio leak in find_in_level
+Date: Wed, 28 Oct 2026 17:53:58 +0100
+Message-ID: <20261028170010.183801146@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -70,100 +69,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wenjie Qi <qwjhust@gmail.com>
+From: Guanghui Yang <3497809730@qq.com>
 
-[ Upstream commit 01027b2fcb74dade59fb833b51023f6593b6a9a2 ]
+[ Upstream commit cca7d3e30bf30333314e31bc70b9a739f1342167 ]
 
-F2FS stores recovery filenames as a length plus a fixed-size i_name
-buffer.  The buffer is not NUL-terminated, but recover_inode() and
-recover_dentry() print it with %s.
+find_in_level() gets a dentry folio with f2fs_find_data_folio() before
+calling find_in_block().  If find_in_block() returns an error, the
+function stores the error in res_folio and breaks out of the loop without
+dropping the dentry folio.
 
-For a 255-byte filename, recovery logging can read past i_name into the
-following raw inode fields.
+This leaks the folio reference on the find_in_block() error path.  Drop
+the dentry folio before returning the error to the caller.
 
-Print the name with a precision bounded by i_namelen and F2FS_NAME_LEN.
-
-Fixes: f356fe0cba0e ("f2fs: add debug msgs in the recovery routine")
-Cc: stable@kernel.org
-Assisted-by: Codex:gpt-5.5
-Signed-off-by: Wenjie Qi <qiwenjie@xiaomi.com>
+Fixes: 7ad08a58bf67 ("f2fs: Handle casefolding with Encryption")
+Cc: stable@vger.kernel.org
 Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Guanghui Yang <3497809730@qq.com>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
-[ inlined recover_printable_name() logic into the existing page-based recovery functions. ]
+[ Replaced f2fs_folio_put(dentry_folio, false) with f2fs_put_page(dentry_page, 0) for the page-based API. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/recovery.c | 33 ++++++++++++++++++++++-----------
- 1 file changed, 22 insertions(+), 11 deletions(-)
+ fs/f2fs/dir.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/f2fs/recovery.c b/fs/f2fs/recovery.c
-index 339239bb7f63c..fd17ed279f282 100644
---- a/fs/f2fs/recovery.c
-+++ b/fs/f2fs/recovery.c
-@@ -171,7 +171,8 @@ static int recover_dentry(struct inode *inode, struct page *ipage,
- 	struct inode *dir, *einode;
- 	struct fsync_inode_entry *entry;
- 	int err = 0;
--	char *name;
-+	const char *name;
-+	int name_len;
+diff --git a/fs/f2fs/dir.c b/fs/f2fs/dir.c
+index da717e4d6aee7..8ec23b8af64e1 100644
+--- a/fs/f2fs/dir.c
++++ b/fs/f2fs/dir.c
+@@ -372,6 +372,7 @@ static struct f2fs_dir_entry *find_in_level(struct inode *dir,
  
- 	entry = get_fsync_inode(dir_list, pino);
- 	if (!entry) {
-@@ -230,12 +231,16 @@ static int recover_dentry(struct inode *inode, struct page *ipage,
- out_put:
- 	f2fs_put_page(page, 0);
- out:
--	if (file_enc_name(inode))
-+	if (file_enc_name(inode)) {
- 		name = "<encrypted>";
--	else
-+		name_len = sizeof("<encrypted>") - 1;
-+	} else {
- 		name = raw_inode->i_name;
--	f2fs_notice(F2FS_I_SB(inode), "%s: ino = %x, name = %s, dir = %lx, err = %d",
--		    __func__, ino_of_node(ipage), name,
-+		name_len = min_t(unsigned int, le32_to_cpu(raw_inode->i_namelen),
-+				 F2FS_NAME_LEN);
-+	}
-+	f2fs_notice(F2FS_I_SB(inode), "%s: ino = %x, name = %.*s, dir = %lx, err = %d",
-+		    __func__, ino_of_node(ipage), name_len, name,
- 		    IS_ERR(dir) ? 0 : dir->i_ino, err);
- 	return err;
- }
-@@ -282,7 +287,8 @@ static void recover_inline_flags(struct inode *inode, struct f2fs_inode *ri)
- static int recover_inode(struct inode *inode, struct page *page)
- {
- 	struct f2fs_inode *raw = F2FS_INODE(page);
--	char *name;
-+	const char *name;
-+	int name_len;
- 	int err;
- 
- 	inode->i_mode = le16_to_cpu(raw->i_mode);
-@@ -332,13 +338,18 @@ static int recover_inode(struct inode *inode, struct page *page)
- 
- 	f2fs_mark_inode_dirty_sync(inode, true);
- 
--	if (file_enc_name(inode))
-+	if (file_enc_name(inode)) {
- 		name = "<encrypted>";
--	else
--		name = F2FS_INODE(page)->i_name;
-+		name_len = sizeof("<encrypted>") - 1;
-+	} else {
-+		name = raw->i_name;
-+		name_len = min_t(unsigned int, le32_to_cpu(raw->i_namelen),
-+				 F2FS_NAME_LEN);
-+	}
- 
--	f2fs_notice(F2FS_I_SB(inode), "recover_inode: ino = %x, name = %s, inline = %x",
--		    ino_of_node(page), name, raw->i_inline);
-+	f2fs_notice(F2FS_I_SB(inode), "%s: ino = %x, name = %.*s, inline = %x",
-+		    __func__, ino_of_node(page), name_len, name,
-+		    raw->i_inline);
- 	return 0;
- }
- 
+ 		de = find_in_block(dir, dentry_page, fname, &max_slots, use_hash);
+ 		if (IS_ERR(de)) {
++			f2fs_put_page(dentry_page, 0);
+ 			*res_page = ERR_CAST(de);
+ 			de = NULL;
+ 			break;
 -- 
 2.53.0
 
