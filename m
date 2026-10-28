@@ -1,56 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793217066;
-	b=SX+SSAKcvAlSBH6Amm+fwLd/lfRe9hy56nNwUglybp5Thh2t++Agz93c5NY7m0u2BtOa
-	 dhKkBtEoeFZjFct4DMpCk4nyt0PUqLyjhhVWDayXNgcTZxHMHPciwAtZiK8itoqC7vrEG
-	 yb7VkInVLXwlgz4sPeEL/T7nL/zReUOYrdJ781kDinatawsAhScGmalfQXzUFCM7ZrH7k
-	 7OcLIfLyNFqpjbBD3PbY5RbYhK3sBDfqbdrw426vGWtgNz5t2oQv/e9AapJvWH8Dbmh2X
-	 8/m5yVtEVeX1RYXs7zm3hvGdeGL4rTza8XJ98HFtqnpnNPfAwm2yQ/nfYr0TUJ1zlTA==
+	t=1793217069;
+	b=h9HOakewFCo4WvUF4t4/1HtAhc4LCQilutGnxl0ZhlzgNNSX2fjqi6euRXdsDEJ6/WGv
+	 tj+7Rp+Mt4o3XSwsP0ddqRl+ZF/y7FzYviswdkdhDQ8+W26rCnIyvxv6fjvJKfejGKkFC
+	 dqAvOD0rPxViZn85fRFUigTBAi/QSB1+S9omu/yUQmF2QGukjZ/mfSuX0dODmOAdmrINS
+	 iQzwo9GF2SXr5IhgJqwgunArGC4dDD+FtpTbloL1X7+1KfO6Kd8xyZCgg124GzQ57hlVp
+	 tmjzO4YcZyZvtojPfPu0joUpCaHwJUr486qTr2KKU8zSprcIDYhclVPWXEkIFk7Rkfg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793217066;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793217069;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=QBdmWyZ6sTXb7cblZACdlmorOwxmWWVtIwbd/TnxerI=;
-	b=PL94uSQ+xI8Rj0CP5NV94tLpQ/dNSPnX9LhWM5aUjPPMtU4jdQROEV8CphuCGOkjX6s4
-	 V+zcr9Igi4iDlzgDfgjUJLDYZERfNZNNGWWBBUpqc07OcCw3oSCOCsc3KaRDw8JcepTqm
-	 qk0+yaw/57NildZWl2UW3yE0wcatDSPMKXaSm19EIiciQgbcRbBlKJKDgoBC4xByUV4T2
-	 d4UMeCNE765jkD+RyMbz9RanczuBOu7eGU3XYLx0flMA7y8iBxzubQ8GzBCVyYm9mMO29
-	 4J0ZfjqYUwD8OmZ10y8W1r63fazhm2eDBUlWHtkEVQ6QDjkKFr/zNLEnXqcBkiYN5Ww==
+	bh=KkQOSjKQpIRisD8phUZlFsVztsrXYywTm1MyZ7USxUQ=;
+	b=1//QysQuY9yWkQS/iKXkuOQ1SYJuUnbnlKWzQ0OQ380c+gCheu3nRyl3MUlwYLkigH1v
+	 HRS9ImVx7UT5l52KgwCsPghQT/Lvq5eb+EZ5JMWkBlEcNRidZaF57M1KjQ1DdZKAEp/+R
+	 sUTLHMra9/ZHb1RqNlpKPxzcJObkMBqmvQqvDW2tehklwtr2JFi8+3ZC0XIGrs722xhb9
+	 CFG4/YKQOn9hHIhUhEJ88m8mzuaVyyVdsC4SVtTPKpI6vzGS6ARTfbsO9Ek/ibnTweKOc
+	 mHoqo9S6KfzcfDeyNtaKXJTa4Qzy69uT23+nmbi3AJsc5+ZnczvA+p+qvvNG041uM2Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zB+YvfCk;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="c06t2tz/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AF0F606A31A;
-	Wed, 28 Oct 2026 19:51:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73A11606A31C;
+	Wed, 28 Oct 2026 19:51:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zB+YvfCk
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEF671F01825;
-	Wed, 28 Oct 2026 19:51:04 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c06t2tz/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C20091F01825;
+	Wed, 28 Oct 2026 19:51:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793217065;
-	bh=QBdmWyZ6sTXb7cblZACdlmorOwxmWWVtIwbd/TnxerI=;
+	s=korg; t=1793217068;
+	bh=KkQOSjKQpIRisD8phUZlFsVztsrXYywTm1MyZ7USxUQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zB+YvfCkC0sEzO2B+DwjriD9FHSx+FdxLSzu6gwnofQSDE3DeHlCA8nzUm+vO6E/2
-	 DWivH1tKMD07546NCQwLpkRoCXVppg/7301IRYtofgdhMR45frzspVfrY60iDZhemk
-	 rp/7Ici31PdKEyIi6vb4uPNWwc2WkNzMLnrtu29I=
+	b=c06t2tz/aAMvfnqOqxiaB/GrpOXzW/xEvm8b4EYwUYI60O/aKHMjNOwxnKHdN55jw
+	 bAtyZ4z4UzQyzqumtrhfaEaKR9hs2keJoGjA50uBgAK5J2Y1t10lRKUz37jUNw7AyC
+	 CrwAFhBTY1o9ba6P40jP80qNdI07Ql2rZYLfDX9U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jacob Shivers <jshivers@redhat.com>,
-	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
-	Shyam Prasad N <sprasad@microsoft.com>,
-	Tom Talpey <tom@talpey.com>,
-	Bharath SM <bharathsm@microsoft.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Paulo Alcantara <pc@manguebit.org>
-Subject: [PATCH 6.1 1775/1887] smb: client: fix multiuser mount with krb5
-Date: Wed, 28 Oct 2026 18:04:31 +0100
-Message-ID: <20261028170539.843005411@linuxfoundation.org>
+	Lee Jones <lee@kernel.org>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Steven Rostedt <rostedt@goodmis.org>
+Subject: [PATCH 6.1 1776/1887] tracing/histograms: Reject non-stacktrace fields for synthetic stacktrace fields
+Date: Wed, 28 Oct 2026 18:04:32 +0100
+Message-ID: <20261028170539.866565662@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -72,94 +68,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.org>
+From: Lee Jones <lee@kernel.org>
 
-commit 69499395867332364ed4ac8b546537eb3bab6ebb upstream.
+commit a244c241593b5b38a08f0df2cb43c26574efbdcb upstream.
 
-Customer reported that they could no longer mount their SMB shares
-with multiuser mount option and krb5.  Turned out that the client
-wasn't duplicating username option when creating multiuser
-connections, therefore failing to retrieve credentials as
-cifs.upcall(8) couldn't find them in keytab.
+In check_synth_field(), when a synthetic event field is a stacktrace
+(field->is_stack) and the histogram field is not a "long[" stacktrace
+array, validation falls through to the generic size and signedness
+comparison.
 
-Fix this by duplicating username option (if set) from original fs
-context before creating multiuser connections with krb5.
+Because parse_synth_field() sets a stacktrace field's type to
+"__data_loc unsigned long[]", its size is sizeof(u64) and
+synth_field_signed() marks it as signed.  Consequently, any 8-byte
+signed scalar histogram field passes the fallback check, and its scalar
+value is subsequently dereferenced as a kernel stacktrace pointer in
+get_field_size() and trace_stack().
 
-Reproducer:
+Furthermore, checking strstr(hist_field->type, "long[") is insufficient
+because tracepoint fields defined with __bitmask() or __rel_bitmask()
+also have type "__data_loc unsigned long[]" or "__rel_loc unsigned
+long[]", whilst create_hist_field() treats them as 4-byte scalar values
+without HIST_FIELD_FL_STACKTRACE.
 
-  ```
-  $ ktutil
-  ktutil:  add_entry -password -p testuser -k 1 -e aes256-cts
-  Password for testuser@ZELDA.TEST:
-  ktutil:  write_kt /etc/krb5.keytab
-  ktutil:  quit
-  $ klist -ke
-  Keytab name: FILE:/etc/krb5.keytab
-  KVNO Principal
-   ---- ----------------------------------------------------------------
-     1 testuser@ZELDA.TEST (aes256-cts-hmac-sha1-96)
-  $ mount.cifs //w22-root2/scratch /mnt/1 -o \
-      	uid=1000,sec=krb5,username=testuser@ZELDA.TEST,multiuser
-  mount error(13): Permission denied
-  Refer to the mount.cifs(8) manual page (e.g. man mount.cifs) and
-  kernel log messages (dmesg)
-  ```
+Propagate HIST_FIELD_FL_STACKTRACE to variable references and field
+variables (whilst excluding variable aliases from per-element
+stacktrace capture), and reject any mismatch between
+HIST_FIELD_FL_STACKTRACE and field->is_stack in check_synth_field().
 
-Reported-by: Jacob Shivers <jshivers@redhat.com>
-Fixes: 12b4c5d98cd7 ("smb: client: fix krb5 mount with username option")
-Cc: Ronnie Sahlberg <ronniesahlberg@gmail.com>
-Cc: Shyam Prasad N <sprasad@microsoft.com>
-Cc: Tom Talpey <tom@talpey.com>
-Cc: Bharath SM <bharathsm@microsoft.com>
-Cc: Namjae Jeon <linkinjeon@kernel.org>
 Cc: stable@vger.kernel.org
-Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+Fixes: 00cf3d672a9d ("tracing: Allow synthetic events to pass around stacktraces")
+Link: https://patch.msgid.link/20261013112449.1006088-1-lee@kernel.org
+Signed-off-by: Lee Jones <lee@kernel.org>
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+[Lee: Omit create_var_field() and hist_trigger_elt_update() hunks as
+      288709c9f3b0 ("tracing: Allow stacktraces to be saved as histogram
+      variables") is not present]
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/connect.c |   21 ++++++++++++++++-----
- 1 file changed, 16 insertions(+), 5 deletions(-)
+ kernel/trace/trace_events_hist.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
---- a/fs/smb/client/connect.c
-+++ b/fs/smb/client/connect.c
-@@ -4357,14 +4357,25 @@ cifs_setup_session(const unsigned int xi
- 	return rc;
- }
+--- a/kernel/trace/trace_events_hist.c
++++ b/kernel/trace/trace_events_hist.c
+@@ -2067,7 +2067,8 @@ static int init_var_ref(struct hist_fiel
+ 	ref_field->size = var_field->size;
+ 	ref_field->is_signed = var_field->is_signed;
+ 	ref_field->flags |= var_field->flags &
+-		(HIST_FIELD_FL_TIMESTAMP | HIST_FIELD_FL_TIMESTAMP_USECS);
++		(HIST_FIELD_FL_TIMESTAMP | HIST_FIELD_FL_TIMESTAMP_USECS |
++		 HIST_FIELD_FL_STACKTRACE);
  
--static int
--cifs_set_vol_auth(struct smb3_fs_context *ctx, struct cifs_ses *ses)
-+static int set_fs_context_auth(struct smb3_fs_context *ctx,
-+			       struct cifs_ses *ses)
- {
- 	ctx->sectype = ses->sectype;
+ 	if (system) {
+ 		ref_field->system = kstrdup(system, GFP_KERNEL);
+@@ -3220,6 +3221,7 @@ static struct field_var *create_field_va
+ 		ret =  -ENOMEM;
+ 		goto err;
+ 	}
++	var->flags |= val->flags & HIST_FIELD_FL_STACKTRACE;
  
--	/* krb5 is special, since we don't need username or pw */
--	if (ctx->sectype == Kerberos)
-+	/*
-+	 * krb5 is special as we might need to pass username (passwordless) down
-+	 * to cifs.upcall(8) for keytab.
-+	 */
-+	if (ctx->sectype == Kerberos) {
-+		if (ses->user_name && ses->user_name[0]) {
-+			ctx->username = kstrndup(ses->user_name,
-+						 CIFS_MAX_USERNAME_LEN,
-+						 GFP_KERNEL);
-+			if (!ctx->username)
-+				return -ENOMEM;
-+		}
+ 	field_var->var = var;
+ 	field_var->val = val;
+@@ -3837,7 +3839,10 @@ static int check_synth_field(struct synt
+ 	    && field->is_dynamic)
  		return 0;
-+	}
  
- 	return cifs_set_cifscreds(ctx, ses);
- }
-@@ -4401,7 +4412,7 @@ cifs_construct_tcon(struct cifs_sb_info
- 	ctx->seal = master_tcon->seal;
- 	ctx->witness = master_tcon->use_witness;
+-	if (strstr(hist_field->type, "long[") && field->is_stack)
++	if (!!(hist_field->flags & HIST_FIELD_FL_STACKTRACE) != field->is_stack)
++		return -EINVAL;
++
++	if (field->is_stack)
+ 		return 0;
  
--	rc = cifs_set_vol_auth(ctx, master_tcon->ses);
-+	rc = set_fs_context_auth(ctx, master_tcon->ses);
- 	if (rc) {
- 		tcon = ERR_PTR(rc);
- 		goto out;
+ 	if (strcmp(field->type, hist_field->type) != 0) {
 
 
