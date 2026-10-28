@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793210845;
-	b=c9ggZKGRAAb+vX/puEXRtMOUUVCtgebotnfVBo0Zqv/fMjEh3+W0g2tUc1skYJDbGqMF
-	 rpyAAnSZzos/ljP1MMtLicziNprUfOxWqk84qK8DS8Xc+MdsUf0Ulf/G+EcmqyRK0XyE/
-	 8I/RSHSUcrVL+aEpnSNtWV2eIfa4PD3SsKdAynYe85ivYFJCzI6VOw0auXzkEEQqVi5kH
-	 xfBEyO6QRYngW2An0r0imueZXw/ODb+QpiEgceTvXJg5fYbjRb0N/KY2cNzYc8ZfCRmLh
-	 j9swSu/HPPR1pS0+z2gAdXlxW1vpUsMUK+IM2gnOOYFDA4q2IS6QHo9JopD/0py93YQ==
+	t=1793210848;
+	b=XXr1u0DYyMj8W4GcuWmQmUWhy+h/Zzj1uHQFw8Ph/G5e8xoNw4opifwiglG4QQOuV4M0
+	 S+6UVKRrBlrfwo+t+drF5eX3mtUtoj0Ca/DFTR6nZ9y6UqxgjFcUc/J8wrjnVL0xwEJaS
+	 XpCqOD5tvtbpplyBnAc+HIx3jUHSG++mtILB3Okssz31/Hd4FYRV7gnCYXRVeLSJi+mDW
+	 zc10mVq3hrR2ku4ZkD2ywZzgIcy13Z/K1YHrx7Nexa/XcQX3wm4yUdmEXncNVsDTw4798
+	 ooqvBhgCGASimhmJh2O5DYrnw9zFPWwXC9KDlWTuJxcturYUrxujUeJ2gS0V+BtKs2A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793210845;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793210848;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=4wZCV2LYE9ZUy2FGCnrMnIlkLkK8sEyvhO/ERAcPnI4=;
-	b=u/fAO0wrObnPTnwdF/BM+K0mduLV+x9iLgl5zuCGAQL+n7Ho4CIdpWiJTdgH7NWBY+fC
-	 pXL3faP1jlGuLgmGTkAFySIYZG5kPdqtdTnQJ9wrnOYAqfiHX9TzXPRCXVn23SYO9A1ua
-	 4EoaNlFS0mgefugeDwTAD1rH6V72Axfnl+M64S5Vm0q4nPHljOReGIp0JfjtIU1lGz6Qb
-	 qqcO0nyLMQAzfsNCFf8a/8LfpajvRV+qTnXKyzxItrV6QC8oDsx0JVqnNfxpSbkYoqf6n
-	 syktL87jaljH+XEXJgfZxuIO9qCBLFpDXky8+8OL3/suiq+yL9gjYT7urxIE97xJ/oQ==
+	bh=Ezbr2I8ee8663XIS1SUEk1O+46m0w6mCYZDn12J4Gnc=;
+	b=QbcAEPN/f3c50Ye1TyyWX2hNw8XgtqTbfw980pIPOQNRLsZTEzoFcHX/B0ybQ+S6thE0
+	 upFF0S3VTKoYLYM9Dv/MINxDBjZ2IRl/vE0y3VUH0nzy/A31aMAWWX0Fq7zh+4bIeYQvI
+	 FR4P6kRQYVfY0aHKhTbnDUqZ1BHDIz4Av3rPHcQCSCZKXllAbiVuGCwmN3iMmL1hOyd5/
+	 EzIxkUh85LUGCkDdfHzbYfAnQY2MBk0h+y6maJCYGNa0W69d3Q2Crwezsy+mLdbxXgqHp
+	 Hdak4hUNC8GByibk0iOZsZuY3sAQbk6w3ttDNRSmnQcR86el8UKGZxobKisdjPoL38Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Tkj2+ep0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ma7oMG9d;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 946B0606A32D;
-	Wed, 28 Oct 2026 18:07:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AB0C606A324;
+	Wed, 28 Oct 2026 18:07:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Tkj2+ep0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E46991F01829;
-	Wed, 28 Oct 2026 18:07:24 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ma7oMG9d
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC51F1F01829;
+	Wed, 28 Oct 2026 18:07:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793210845;
-	bh=4wZCV2LYE9ZUy2FGCnrMnIlkLkK8sEyvhO/ERAcPnI4=;
+	s=korg; t=1793210848;
+	bh=Ezbr2I8ee8663XIS1SUEk1O+46m0w6mCYZDn12J4Gnc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Tkj2+ep0BjJKaxupNKT4VVq8CdZfmgaawGy0vNFGsEy6YXch6raQpZHEKF7hQ2zhW
-	 2SSOrD9ke1JJ2gJ39XGkUkGtdZqhMo9rCTHz1luJZC9wlQlRlLxpe48o9WXoTD1tP3
-	 eOhDDmMwIczHpnVGSlQ0IdOxt+JxxCK1sdm2ZPm0=
+	b=Ma7oMG9dqhnTy2rV0R7UhHjVf9Mbpl18ZuzvffAOmCNmchyDvkSQg/z4DGzi2qGWZ
+	 nmL090abIWqDLWqypylyNJlY32S3DWWB4JIWu/txRIT19quHGRYYdkfuU2Cca49Wge
+	 CtUk6EAJ10601zTP6UDoAjPArmbnYJktnrsci7OY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	HyeongJun An <sammiee5311@gmail.com>,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Mark Brown <broonie@kernel.org>,
+	Nicolas Escande <nico.escande@gmail.com>,
+	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 167/571] ASoC: wm8903: Move the DRC QR threshold to the register that holds it
-Date: Wed, 28 Oct 2026 17:55:14 +0100
-Message-ID: <20261028170011.977933076@linuxfoundation.org>
+Subject: [PATCH 5.15 168/571] wifi: ath11k: reset ar->num_stations on hardware start
+Date: Wed, 28 Oct 2026 17:55:15 +0100
+Message-ID: <20261028170012.001256211@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -69,50 +70,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: HyeongJun An <sammiee5311@gmail.com>
+From: Nicolas Escande <nico.escande@gmail.com>
 
-[ Upstream commit e31ae4aeb049983fe3be0cf1e12c8074811a7685 ]
+[ Upstream commit 7e0ad05ebc72fffba2bdf2400400902d94ed7272 ]
 
-The DRC_THRESH_QR field is bits 7 and 6 of DRC_1, but the control sits on
-DRC_0. Its shift and max are right for the field, only the register is
-wrong.
+When (multiple) hw restart occurs, we end up in a situation where we
+cannot accept new stations / mesh peers. This seems to be the
+'num_stations' in 'struct ath11k' that did not get reset properly in
+this case. In ath11k_mac_op_start(), it was indeed the only accounting var
+that did not get reset so let's clear it too.
 
-Those bits of DRC_0 belong to DRC_STARTUP_GAIN, which "DRC Startup
-Volume" claims as bits 10 to 6. So the two controls share bits 7 and 6.
-Writing either one moves the other, and the quick release threshold is
-never reached at all.
+This avoids problems like those:
 
-The six fields of DRC_1 tile it exactly, so there is nowhere else the
-threshold could live. Point the control at DRC_1.
+	[1248828.088023] WARNING: CPU: 0 PID: 12281 at net/mac80211/util.c:1682 ieee80211_reconfig_stations+0x98/0xc0
+	[1248828.088115] Call trace:
+	[1248828.088116]  ieee80211_reconfig_stations+0x98/0xc0 (P)
+	[1248828.088119]  ieee80211_reconfig+0x774/0x1438
+	[1248828.088123]  ieee80211_restart_work+0x10c/0x178
+	[1248828.088127]  process_one_work+0x178/0x3c0
+	[1248828.088130]  worker_thread+0x280/0x440
+	[1248828.088133]  kthread+0xe0/0xf8
+	[1248828.088137]  ret_from_fork+0x10/0x20
+	[1248828.088141] ---[ end trace 0000000000000000 ]---
+	[1248836.686604] ath11k_pci 0000:04:00.0: refusing to associate station: too many connected already (128)
+	[1248836.686609] ath11k_pci 0000:04:00.0: Failed to add station: xx:xx:xx:xx:xx:xx for VDEV: 1
 
-Found by a sweep for two controls claiming the same bits of one
-register. No board with this codec was to hand, the register map is
-the driver's own wm8903.h.
+Tested-on: QCN9074 hw1.0 PCI WLAN.HK.2.9.0.1-01977-QCAHKSWPL_SILICONZ-1
 
-Fixes: f1c0a02f32f8 ("ALSA: ASoC: Add WM8903 CODEC driver")
-Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
-Assisted-by: Claude:claude-opus-5
-Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Link: https://patch.msgid.link/20260920135327.3628704-1-sammiee5311@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: d5c65159f289 ("ath11k: driver for Qualcomm IEEE 802.11ax devices")
+Signed-off-by: Nicolas Escande <nico.escande@gmail.com>
+Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
+Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260812-num-station-v3-1-871d20e043f6@gmail.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/wm8903.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/ath/ath11k/mac.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/sound/soc/codecs/wm8903.c b/sound/soc/codecs/wm8903.c
-index 75f30154c809f..168d4f680a654 100644
---- a/sound/soc/codecs/wm8903.c
-+++ b/sound/soc/codecs/wm8903.c
-@@ -678,7 +678,7 @@ SOC_ENUM("DRC Decay Rate", drc_decay),
- SOC_ENUM("DRC FF Delay", drc_ff_delay),
- SOC_SINGLE("DRC Anticlip Switch", WM8903_DRC_0, 1, 1, 0),
- SOC_SINGLE("DRC QR Switch", WM8903_DRC_0, 2, 1, 0),
--SOC_SINGLE_TLV("DRC QR Threshold Volume", WM8903_DRC_0, 6, 3, 0, drc_tlv_max),
-+SOC_SINGLE_TLV("DRC QR Threshold Volume", WM8903_DRC_1, 6, 3, 0, drc_tlv_max),
- SOC_ENUM("DRC QR Decay Rate", drc_qr_decay),
- SOC_SINGLE("DRC Smoothing Switch", WM8903_DRC_0, 3, 1, 0),
- SOC_SINGLE("DRC Smoothing Hysteresis Switch", WM8903_DRC_0, 0, 1, 0),
+diff --git a/drivers/net/wireless/ath/ath11k/mac.c b/drivers/net/wireless/ath/ath11k/mac.c
+index 81a8e1102d72b..a13252fd16b86 100644
+--- a/drivers/net/wireless/ath/ath11k/mac.c
++++ b/drivers/net/wireless/ath/ath11k/mac.c
+@@ -4500,6 +4500,7 @@ static int ath11k_mac_op_start(struct ieee80211_hw *hw)
+ 	ar->num_started_vdevs = 0;
+ 	ar->num_created_vdevs = 0;
+ 	ar->num_peers = 0;
++	ar->num_stations = 0;
+ 	ar->allocated_vdev_map = 0;
+ 
+ 	/* Configure monitor status ring with default rx_filter to get rx status
 -- 
 2.53.0
 
