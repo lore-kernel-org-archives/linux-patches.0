@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216911;
-	b=TMV3IkIhk0RX+zKrgl407p67ahxhNoUqDXNIambN4XXNxdOh49Rjt2uRvWdzvRd4/je5
-	 j1lfAIjxcVVCaHKvYwBx58W6SZGO3UZXl8pIEA7euGvlzuWA+eeJd8JXw5BBsR/o4NA3j
-	 v5GHs3WHcocPdYUiRRnj29PovVWUpeltKfelxZwNjLaalp/BSXDpvr4yYL46EYVxggpzS
-	 ZysIvptmqTiFb41tb78G6LMrqIM/AvtD7H4lKQpEkKqSeihFMuirehWR3/2SbHmbBZ9SB
-	 gm+RC9H36QZpT/XV6izRDzRXEp2ynL+gjYihqk5Yzy3QnV5HnyM6E0mWVMqBmnEf4xw==
+	t=1793216914;
+	b=fHbOGcSQEAigDcnYwrNkKQPJ+W49BzZ3bgQNxcK12q+b9B++QEhPsMos602Nx092gXeq
+	 1PVu/K4frO/fHVN3moLW7jVlRpgySuka7oO0nWtZhhEMvgv4FDLqXtzNdR9Rv9c2qlyrw
+	 wv04C5FtuybcVZw/hH9GQ61s7rORy3msqRoJiBa4UWvUf68NUQNCE43UDB9inIUEzXasw
+	 n8Og0zpTE+Y5jbbPtFi/fQxEicM0P3/oLf0gLPxiAcBFiHB465mYmMCIUsbnv87Q2dV9B
+	 Qijc8icvRlQq1iPHs9m9eWyPpFi0NGCU74wkuq+MavU4cFI0TgvrtCKV83EVdQFUg1Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216911;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216914;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=v7iPdFXvUvooUUVufE/zJAexTDHO7oqJn2POOpg05fs=;
-	b=kZr55rQhvgz5+1P10u0NcuOtnXQJRwCEMhjg20JCxSbVvioiJuVNGFch5Jx+BmoOhsEn
-	 qwvSZlFRHM59cVgWeTeoDvfKn5EC7luETJ40I1oaMITqYvCY+75XlmJnDSwj7X449sWpl
-	 gBEXVCR4NT6ntA4q/JRB4gYzdu9pIyxu+Gvqh2SxAX5dLxP75orW4N0cSXY1vIJrcA3kT
-	 OE/4ROITUTovUJOXfsrmbO1Xqwu26XQN3N5/aHT3ETYKGopYbmtwJE3kNAkRfLUn9pW9R
-	 WOuvY15s8LU+R5+RoUrMlDwJoAJb1t/eiSxFmbILYHVagNXPaisrxOvIm0SuJfHspaQ==
+	bh=uSdQTPmJGIqC7tPQbsAMD+JrrEA+zOMdVk1pxCXO7P4=;
+	b=tFSyDzarUTFzM+Xmf3Gw9FRTnvC9XY69fDl2gnGruO5KMOVTkEa19awC3ubhpUSoY+9R
+	 qwVbXl8VpdDtSPn/0bE6WcdV7iNkWT5ZNnbfRECeHhSdKDlusChb/AKVOq/Do33uc4Mkt
+	 pV3WYfoAY1a52aTXUMipFTYkcZHfFwtd/guVhtLkEe9C54N9VDtPRf4+jN8xxcOPDsTvL
+	 zmh3r86adD+hLn1c2blo/p6n8BLhWrWS8Qtpt/efsGFtAgdXh62i/OZQlVrTsWg6hPSXE
+	 vi8PQgUnsNkOR2VsJp7oQR0v8HcfhPTzUAPfwc9F08wS/9TrufEkxZ7DHNWanFaDCgQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wjuV2UWj;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nclzne7u;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05646606A31A;
-	Wed, 28 Oct 2026 19:48:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D578B606A31A;
+	Wed, 28 Oct 2026 19:48:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wjuV2UWj
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 556101F01825;
-	Wed, 28 Oct 2026 19:48:30 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nclzne7u
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B3DF1F01825;
+	Wed, 28 Oct 2026 19:48:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216910;
-	bh=v7iPdFXvUvooUUVufE/zJAexTDHO7oqJn2POOpg05fs=;
+	s=korg; t=1793216913;
+	bh=uSdQTPmJGIqC7tPQbsAMD+JrrEA+zOMdVk1pxCXO7P4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wjuV2UWjl2IfH1tStK6VP1ntvTty73XhOwpDF7txxCygjIG9DxnZyFT9F/1J91GFI
-	 CEPkI5ZiF9/NQwXJ9zqqGS26FJaKMe+tHxYDSmUwuCqS22Ku6SUqOFUcLSTHYZp1tL
-	 Dsh0j5tEqicHbmshjqugfrxB+cRX/lg6jV8kKK/k=
+	b=nclzne7uiNO+4khBmIlNYIyJahqP43CdT3Oso50ou+9WRc6ehu+dZ2d4IuyKKqnwD
+	 p5tKF3uhOw+RBmqdRWxPirTYkLoDpfZWxcepOe+c3QXI0tVmPO3S5WjA2D9tHpdX4j
+	 Nbap8BSMD5uxrSXw01UGTQr65Yy3mfo0x59o2vQU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sasha Levin <sashal@kernel.org>,
-	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 6.1 1721/1887] samples: pidfd: fix userprogs typo
-Date: Wed, 28 Oct 2026 18:03:37 +0100
-Message-ID: <20261028170538.623246218@linuxfoundation.org>
+	Kyle Zeng <kylebot@openai.com>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 1722/1887] pipe: preserve existing fasync readers on writer setup failure
+Date: Wed, 28 Oct 2026 18:03:38 +0100
+Message-ID: <20261028170538.645646409@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -67,35 +68,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-[ Upstream commit f1365f97fb7498d805981102eee22d362ae643f2 ]
+From: Kyle Zeng <kylebot@openai.com>
 
-The Makefile adds pidfd-metadata to "usertprogs-always-y", which kbuild
-does not know, so the sample has not been built since the conversion to
-userprogs, even with CONFIG_SAMPLE_PIDFD=y.
+[ Upstream commit 40bb03d3ea6f6a915218508819ecc4d7a7fa260d ]
 
-Fix the variable name. pidfd-metadata.c builds without warnings with
-gcc and clang for x86_64 and arm64.
+F_SETFL and FIOASYNC decide whether to invoke ->fasync() before
+pipe_fasync() takes pipe->mutex. Two enables of one O_RDWR FIFO can
+therefore both enter the callback.
 
-Fixes: 60fb0b1239719 ("samples: pidfd: build sample program for target architecture")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
-Link: https://patch.msgid.link/20261011223358.2327625-14-sashal@kernel.org
-Reviewed-by: Christian Brauner <brauner@kernel.org>
+fasync_helper() allocates before checking for an existing entry. If the
+first enable installs both entries, a second enable can update the
+reader entry and then fail the allocation for the writer entry. The
+error path removes the pre-existing reader entry, clearing FASYNC while
+the writer entry remains registered. __fput() then skips ->fasync(), so a
+later pipe notification can dereference the freed file or its f_owner.
+An unprivileged memory-pressure reproducer triggers a KASAN
+slab-use-after-free in send_sigio() through this path.
+
+Keep the reader helper's result and undo the registration only if this
+call added it. The pipe mutex serializes changes to both lists, so a
+failed new registration still removes its reader, while a failed
+duplicate preserves the existing registrations and FASYNC. Successful
+duplicate enables continue to update fa_fd as before.
+
+Fixes: 76398425bb06 ("Move FASYNC bit handling to f_op->fasync()")
+Signed-off-by: Kyle Zeng <kylebot@openai.com>
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- samples/pidfd/Makefile | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/pipe.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/samples/pidfd/Makefile b/samples/pidfd/Makefile
-index 9754e2d81f70d..d82409f7061f3 100644
---- a/samples/pidfd/Makefile
-+++ b/samples/pidfd/Makefile
-@@ -1,4 +1,4 @@
- # SPDX-License-Identifier: GPL-2.0
--usertprogs-always-y += pidfd-metadata
-+userprogs-always-y += pidfd-metadata
- 
- userccflags += -I usr/include
+diff --git a/fs/pipe.c b/fs/pipe.c
+index aa8e6ffe1cb58..2c49e74afeca0 100644
+--- a/fs/pipe.c
++++ b/fs/pipe.c
+@@ -750,9 +750,11 @@ pipe_fasync(int fd, struct file *filp, int on)
+ 	if (filp->f_mode & FMODE_READ)
+ 		retval = fasync_helper(fd, filp, on, &pipe->fasync_readers);
+ 	if ((filp->f_mode & FMODE_WRITE) && retval >= 0) {
++		int read_ret = retval;
++
+ 		retval = fasync_helper(fd, filp, on, &pipe->fasync_writers);
+-		if (retval < 0 && (filp->f_mode & FMODE_READ))
+-			/* this can happen only if on == T */
++		/* Undo only a reader entry added by this call. */
++		if (retval < 0 && read_ret > 0)
+ 			fasync_helper(-1, filp, 0, &pipe->fasync_readers);
+ 	}
+ 	__pipe_unlock(pipe);
 -- 
 2.53.0
 
