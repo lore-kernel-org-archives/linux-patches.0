@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793212846;
-	b=yvkOSdkUxr2tlgE0MNfB+bw+T7XumUQkqyh/r6bpBbgcIkPayugFIRJERiWpysGUpgIx
-	 zka1aN3SsJZPD4B01mVh3L0mvVO/HRnoF7bXcx9k9oFlH/D1/a7H7JHuhDBmsc8R1Cufk
-	 SNyzsVQiLHpTr6B3EDv0JxWjEgSCMyZVeFoBPKJJIFoVNS/lTNyjfOrWnlflGEteDZViC
-	 24X+O7BBTXraoh5nui7n/+XC3jvu9Nsq3sPOjxjonriYd/O6Rx8yk4lgERY5U20Ykwp1T
-	 9DYIyYeMmy7lNelFFxFrVBlJ6o5KAbDpf2Jc9FbViYW6euYAr8WNPUYXnsN6mXUDs+g==
+	t=1793212848;
+	b=RrAL5BVq0u/Iy6hAY2TtzsNYf1FpmORg416t/g163ZYpxSkCA87Y9crfJsiSx9zCA/jk
+	 7y6GilblXk5mpR0suRF5gviHg7L4mcQIp+9+pmrHsyYKCSJa7FT09x9BQFu1X4EtEubLK
+	 36rYJwtvLaAusbUauOnyNuEb5MmI0s3gOZ9xi9+N8mBrcnL3a+Fufvag8vy/ZmhGhKCPJ
+	 r5M+Dim6q+QxSX6wYeuh+8QYkv67+CuniDRWngXf4xjeSHQQRbGUHKXyvCdcQU6sHpMBO
+	 oT3BYrJ7SRNi2Fu5UvTI+xz6ws45yNJ/No1z5pwBvdDCxnOj7R3gQ/4e0gmMciAFMWQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793212846;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793212848;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/Y5v4mEzT1bJLa56xSbAZ39wKaiItmo2gdmEdH2s2Jk=;
-	b=VIWX8mri0KDaT0Rqe4CV/sKR1I5OiAyfYfgmVPSTDxCbsjbwwjWo67P/TjL8z+HGHsFm
-	 bvepvM9Jx6TxKFq0eGaWjbWmIOX5VhZsnk/TJRPgI6WAEYUqbvfXUwl3pAwzIrH09fL/7
-	 40LqOPiipiXYBbOHCy/k89aPP2ghuLvuxloFCu22nYGNenFHk1JDQ0YmY4WjW9QKIs5yS
-	 HYsDW9kBNPYis2ThjruQiM//d8sY1egKLy5i6FDwaJBIVrPd4x/nc3+sjPcaO6XkCo1Dy
-	 e/zgG7KgPV/hKRBWbfQwy1WeM2si/+Cg90nbgm7Pw5iQMP4235mwftyaYNDaZWBtZEg==
+	bh=o0vWPb8f/IQqfhYg8qkQ99ez1zBKY3ztW86FzQYa3pk=;
+	b=4cZU/RPLRSG7umQZlR1NzorH7v3sX5Pboi2hKcZykbQAlYLf4ZgTfLs3ohMc5tMks3SP
+	 P1uL9C1/ibA9Q2KpTM5P251MxYU2WVCh9Q1zgqh1E9+pSJ1kjv1EJhRmIm+P6oq3z1acx
+	 Xe7GC+YfXUXIE3cl+XTY39V9cN2aHw9MVO4CRPbfe23tvZ/eQs1TIZJnebri/3Y+WNS5y
+	 4GylgdcP61oYeq0nXplYfMxkT1j3jAvNAIoJ9AQ0XlACsYNd/COhQO8/2kW1yPrJLo2zC
+	 b840xBA5TwvQiFfI5xLc1vQmY1n0yNAAHwHuj33Y++LIvdBDBcOL4qeTy8GKFTXf/ZQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EcdNbzwY;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eSqIv8oJ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6A4C606A31A;
-	Wed, 28 Oct 2026 18:40:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B6C1606A31D;
+	Wed, 28 Oct 2026 18:40:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EcdNbzwY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11BC61F01825;
-	Wed, 28 Oct 2026 18:40:44 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eSqIv8oJ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9FF51F01825;
+	Wed, 28 Oct 2026 18:40:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793212845;
-	bh=/Y5v4mEzT1bJLa56xSbAZ39wKaiItmo2gdmEdH2s2Jk=;
+	s=korg; t=1793212848;
+	bh=o0vWPb8f/IQqfhYg8qkQ99ez1zBKY3ztW86FzQYa3pk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EcdNbzwYryyOC0Y+Tl1KjPG8a0f/R+uPQD57Vmx2ypFWPziJj7DLYWDcVXtKh8OXV
-	 GvRWlcnWM0g2dnBYfR8lrxMEWEUv+qnCG5VkhzSZ9RKLDXw3u8FJSp/azhyvFaMIaX
-	 L4U8bYRFVlFz9ebPbNmPjwAqjGRS17uWW+BWXmLY=
+	b=eSqIv8oJ7H153nP6yhHfxFAirGG+wQAcDh3Ek+LPKFtqWaGM3AmLzDWy+QI5nVRt0
+	 74096i1sLwJnbBlImmEI4qlB2/lciRQCFkgPVtGwV/sDHwQeRk2Z5aNw5I94QGi4KN
+	 vt+sSP14Ppqp6hUA1GQ1n1Ozfy/+J5RvhqptY+a4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Imre Kaloz <kaloz@kernel.org>,
+	Lijo Lazar <lijo.lazar@amd.com>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.1 0254/1887] drm/radeon: Read the VRAM VBIOS signature with readb()
-Date: Wed, 28 Oct 2026 17:39:10 +0100
-Message-ID: <20261028170505.011005898@linuxfoundation.org>
+Subject: [PATCH 6.1 0255/1887] drm/amdgpu: fix IP instance memory leak on kobject add failure
+Date: Wed, 28 Oct 2026 17:39:11 +0100
+Message-ID: <20261028170505.033628063@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -67,47 +68,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Imre Kaloz <kaloz@kernel.org>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-commit de1eab13efef83fd2b76f4688de5bf672644596f upstream.
+commit f5a5add3605935163dd0f75749b6a7869e9765af upstream.
 
-igp_read_bios_from_vram() checked bios[0]/bios[1] with a plain
-__iomem load, which faults on sparc64 before the copy runs at all.
-radeon_read_bios() already reads its two signature bytes with
-readb() ahead of its own copy; use the same accessor here, keeping
-the check before the allocation.
+amdgpu_discovery_sysfs_ips() allocates ip_hw_instance with
+kzalloc_flex() and initializes its embedded kobject before calling
+kobject_add().
 
-Fixes: b442962a9e82 ("drm/radeon/kms: add support for "Surround View"")
-Signed-off-by: Imre Kaloz <kaloz@kernel.org>
+If kobject_add() fails, the return value is ignored and execution
+continues without dropping the initial kobject reference. The failed
+kobject is not retained in the kset list, so the normal sysfs teardown
+path cannot find it. As a result, ip_hw_instance_release() is never
+called and the ip_hw_instance allocation is leaked.
+
+Call kobject_put() when kobject_add() fails so the initial reference is
+dropped and ip_hw_instance_release() can free the allocation. Keep the
+existing best-effort sysfs behavior by continuing with the remaining IP
+entries after the failed registration.
+
+The issue was identified by a static analysis tool I developed and
+confirmed by manual review.
+
+Fixes: a6c40b178092 ("drm/amdgpu: Show IP discovery in sysfs")
+Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 09155b8932e5013dbce0f5cdff7d75264a279ee5)
+(cherry picked from commit 5c75fbcca8af1096d8d9415b91d8ea6212c22ee1)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/radeon/radeon_bios.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/gpu/drm/radeon/radeon_bios.c
-+++ b/drivers/gpu/drm/radeon/radeon_bios.c
-@@ -49,6 +49,7 @@
- static bool igp_read_bios_from_vram(struct radeon_device *rdev)
- {
- 	uint8_t __iomem *bios;
-+	uint8_t val1, val2;
- 	resource_size_t vram_base;
- 	resource_size_t size = 256 * 1024; /* ??? */
- 
-@@ -63,7 +64,10 @@ static bool igp_read_bios_from_vram(stru
- 		return false;
- 	}
- 
--	if (size == 0 || bios[0] != 0x55 || bios[1] != 0xaa) {
-+	val1 = readb(&bios[0]);
-+	val2 = readb(&bios[1]);
-+
-+	if (size == 0 || val1 != 0x55 || val2 != 0xaa) {
- 		iounmap(bios);
- 		return false;
- 	}
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c
+@@ -903,6 +903,8 @@ static int amdgpu_discovery_sysfs_ips(st
+ 			ip_hw_instance->kobj.kset = &ip_hw_id->hw_id_kset;
+ 			res = kobject_add(&ip_hw_instance->kobj, NULL,
+ 					  "%d", ip_hw_instance->num_instance);
++			if (res)
++				kobject_put(&ip_hw_instance->kobj);
+ next_ip:
+ 			ip_offset += struct_size(ip, base_address, ip->num_base_address);
+ 		}
 
 
