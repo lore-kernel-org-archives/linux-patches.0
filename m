@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793209571;
-	b=H9Xad5yRFYxrOHBf4MG6+nXbLlLjeNLMNVz5LipqU69EZ3yQYHQ2XPLEj2h21Zj44ZoX
-	 SQfnEhTEShBK+LH5sv4pvUEcE9GeqXe6Tn8nqg7kUd0JAbVYNKuT/vwQItjhyTmuNXgG+
-	 nf5YSpbIjgOgFmM3MSxl0GqqOUtxYH7V/CSv7ShiPT4JAT1yURZ/dSImT9sNRZHwDIfJb
-	 8/iJ9Hd0a9IHqgyZL26xHo2eVFO4o4B78ogsMzbKcF0NrIUgShUzEXQmsNtwUTzLMwtbA
-	 WtDSTBEimVoDOI/6iHPAeP7gxPkkpoUvcNwdt5bBbSuQlNPqsh3wZI7SOPIAqzdAwSw==
+	t=1793209574;
+	b=YOBs3Um1SICT9xfJkX9B5p8vSeSJCXO+2XGRVuuOPl87RMOk4uG/oUyTpYXdKqTM89tT
+	 rBtEI22D4r4mZBEL9ZQbUr4lfvgj3v4jBibeQUlEmEnmdUZP9sHJKg74/7TwHoLE2oqiM
+	 x/rtODlW2k+eNSf7s7nzeumhYSXkFJeSOjqbn19W4ZTeHO3nKpA7s5gQuAXdbCjC7Fp4j
+	 NCzuTriLdHoSpErzvA92ooZxgnewJ73vbgve8zF9y3dawmaoh4+8m7pTx8XP970QXRTOL
+	 GvNZplIj2hXIYny7OFK7CNN8G2vVrgUKcVwdijWG2HJ9OA7wWWu7bSv9Ho6eZESxrDA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793209571;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793209574;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=mdPw+whp3c3yvRVb6eoI5lkWJnWBMQA15Baf6ijd+DU=;
-	b=1//IyUlzPxVWR2SbAYLGfcQhYP5idCVHcCWS5+MQqb9fyGCFhIK7aldVhWQDPuyVCKen
-	 a+LHhwPKWKRy6eeEwmXCgKDslcm5s//aSiiblWC7oBHC1I5gOPBuNrWrmlPGcr0NB8fTy
-	 u1qdipf0oUZISZFqZ/vnre/cbukb+FGdZg0TA3vVlvbY8aPWT09mk8S73/PPiWGAJ/ULI
-	 uvaVZ/HauGCFR9BJGxg1rBQHgv1rK0Jx/xlOoJOtm3dcL/UX/AtVIZ6HaY4INiehfvVdN
-	 jOrvL9xerr9ay05/4iAHTPZFaJHscmMYeHOR6OjWe0oG5OnpPCxkLEIiu26fllkjwCQ==
+	bh=YRI6t1cYptV5JdugfRXG8UEKtq6ZDsPIvhDDoxbPZ7k=;
+	b=dh8MtGStK7ZoLxr9Ca6Ma9SNu1YE5Efqru8rXJzMSGjWoCrKsOpRMB/0xDrPmDyBZxqs
+	 GsnsJmBILSbWEMy4J0wBu0ASD7znIHNvkZfx2I8Oy6+8NEDgGdtsCzzFZByVBCtvUxabt
+	 F2orS1gISP/vVgaMJ3dvoh2uaxYu0f/vXfrUDfttljcnY9UtGBmK6DC0OLLO58PpsD3Fs
+	 SsV36FcLdxKAhpPScKYW+x6m+WC8AtTDdaIKBBFBkF3s9PujTxpRRs3gB+qOGJbbTKxKR
+	 rKPRCeXgAZ/bc7BXzm1SJmCeYpJXUD6uIRKm5FuHZn02mRnyU25vjsyUVf/Y7Np8bvQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=R0A2O9LL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="yhLl/FVO";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 372BC606A31A;
-	Wed, 28 Oct 2026 17:46:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4968A606A31A;
+	Wed, 28 Oct 2026 17:46:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=R0A2O9LL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A5D21F01825;
-	Wed, 28 Oct 2026 17:46:10 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yhLl/FVO
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 652B71F01825;
+	Wed, 28 Oct 2026 17:46:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793209571;
-	bh=mdPw+whp3c3yvRVb6eoI5lkWJnWBMQA15Baf6ijd+DU=;
+	s=korg; t=1793209573;
+	bh=YRI6t1cYptV5JdugfRXG8UEKtq6ZDsPIvhDDoxbPZ7k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=R0A2O9LL/GruZJUZzTKFsuHu2CpBYHHJmNmdbH0xi0h6Nxxb/LVqEgqNnRt/YwIBp
-	 J5B4vXdcPTqsAwXCDPrhpn8VuA2IR/fpq2c9TPs55ArnXlNV+XPwHgtvMNN4drV/7a
-	 +SEdCAahfN+IZEXZW3QH6GEZ3nzLlyz6xkX6SWrg=
+	b=yhLl/FVOsRRmizNOiI8HzgMte6VIVIrKDMA0zMSIkkjn7ZwmbHKQK7g0WwJ8BnVjJ
+	 Coy4YaRcGrnKe85CGwRQDzYQHVCFcphU9xKqKCVAJk8Tds8yr0vaWdHy8uJtz/tJeB
+	 ED4QLisCkiZeEdzcepfSGUBwtJu9m6vg1FL8uo00=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ben Marzinski <bmarzins@redhat.com>,
-	Ming-Hung Tsai <mtsai@redhat.com>,
-	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 5.10 465/516] dm cache: fix demotion stats in passthrough mode
-Date: Wed, 28 Oct 2026 18:00:17 +0100
-Message-ID: <20261028170014.495787586@linuxfoundation.org>
+	Cen Zhang <zzzccc427@gmail.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>
+Subject: [PATCH 5.10 512/516] keys: Protect the type name while describing a key
+Date: Wed, 28 Oct 2026 18:01:04 +0100
+Message-ID: <20261028170015.605337650@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -68,86 +67,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming-Hung Tsai <mtsai@redhat.com>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-commit 2ccb8878c149443c6acf628b438c9c942c20abb2 upstream.
+commit fced7238b7e80cf8aa688d5af976e4aa6e33c329 upstream.
 
-The demotion counter is incremented per incoming write bio before the
-invalidation begins, causing the demotion count to exceed the actual
-number of cached blocks when multiple bios target the same cached
-block. Additionally, the counter is incremented unconditionally
-regardless of invalidation failure.
+keyctl_describe_key() must keep the key type's name alive until
+kasprintf() has consumed it. The retained key reference keeps the key
+and its description alive, but does not pin the module providing its
+type. The name is passed to kasprintf() without holding key->sem.
 
-Reproduce steps:
+kvasprintf() uses the saved name pointer in two formatting passes, with
+a GFP_KERNEL allocation between them. With AF_RXRPC=m, a task that
+passes View permission before type retirement can overlap a privileged
+module unload in this order:
 
-1. Create a cache device consisting of 512 cache entries
+1. KEYCTL_DESCRIBE looks up the key, saves key->type->name in the
+   kasprintf() arguments and completes the first formatting pass.
+2. While the formatter is delayed before its second pass,
+   af_rxrpc_exit() calls unregister_key_type(), which removes the type
+   from the registry and waits for key_gc_keytype().
+3. The collector takes key->sem for writing, retypes the retained key
+   to key_type_dead and completes retirement. Unregistration and module
+   exit return, allowing free_module() to release the type and name.
+4. The formatter resumes its second pass and reads the saved name from
+   released module storage, which can fault in string().
 
-modprobe brd rd_size=262144
-dmsetup create cmeta --table "0 8192 linear /dev/ram0 0"
-dmsetup create cdata --table "0 65536 linear /dev/ram0 8192"
-dmsetup create corig --table "0 65536 linear /dev/ram0 262144"
-dd if=/dev/zero of=/dev/mapper/cmeta bs=4k count=1 oflag=direct
-dmsetup create cache --table "0 65536 cache /dev/mapper/cmeta \
-/dev/mapper/cdata /dev/mapper/corig 128 2 metadata2 writethrough smq 0"
+Hold key->sem for reading across kasprintf(). The collector then cannot
+retype the key or complete retirement until both formatting passes have
+finished. If retirement wins the lock first, formatting uses the core
+key_type_dead name instead. Release the semaphore immediately after
+kasprintf(), including on allocation failure, before copying to
+userspace.
 
-2. Populate the cache, and record the number of cached blocks
+Oops report as below:
 
-fio --name=populate --filename=/dev/mapper/cache --rw=randwrite --bs=4k \
---direct=1 --ioengine=libaio --iodepth=32 --io_size=2048m
-nr_cached=$(dmsetup status cache | awk '{split($7, a, "/"); print a[1]}')
+    BUG: unable to handle page fault for address: fffffbfff8054794
+    #PF: supervisor read access in kernel mode
+    #PF: error_code(0x0000) - not-present page
+    RIP: 0010:string+0x23f/0x470
+    Call Trace:
+     vsnprintf+0x330/0x1110
 
-3. Reload the cache into passthrough mode
-
-dmsetup suspend cache
-dmsetup reload cache --table "0 65536 cache /dev/mapper/cmeta \
-/dev/mapper/cdata /dev/mapper/corig 128 2 metadata2 passthrough smq 0"
-dmsetup resume cache
-
-4. Write to the passthrough cache with multiple jobs to trigger
-   multiple bios hitting the same cached block.
-
-fio --filename=/dev/mapper/cache --name=test --rw=write --bs=4k \
---direct=1 --ioengine=libaio --iodepth=32 --numjobs=4
-
-5. Check if demoted matches cached block count. These numbers should
-   match but may differ due to overcounting per bio.
-
-nr_demoted=$(dmsetup status cache | awk '{print $12}')
-echo "$nr_cached, $nr_demoted"
-
-Fix by moving the demotion counter increment into invalidate_complete(),
-gated on the success flag.
-
-Reported-by: Ben Marzinski <bmarzins@redhat.com>
-Fixes: b29d4986d0da ("dm cache: significant rework to leverage dm-bio-prison-v2")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ming-Hung Tsai <mtsai@redhat.com>
-Reviewed-by: Benjamin Marzinski <bmarzins@redhat.com>
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Fixes: aa9d4437893f ("KEYS: Fix the size of the key description passed to/from userspace")
+Assisted-by: LLM
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Link: https://lore.kernel.org/r/pm-key-management-objects-candidate-0009-v4-6b537c5732fd957c33fa@gmail.com
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-cache-target.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ security/keys/keyctl.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/md/dm-cache-target.c
-+++ b/drivers/md/dm-cache-target.c
-@@ -1523,6 +1523,9 @@ static void invalidate_complete(struct d
- 	struct bio_list bios;
- 	struct cache *cache = mg->cache;
+--- a/security/keys/keyctl.c
++++ b/security/keys/keyctl.c
+@@ -677,12 +677,14 @@ okay:
  
-+	if (success)
-+		atomic_inc(&cache->stats.demotion);
-+
- 	bio_list_init(&bios);
- 	if (mg->cell) {
- 		if (dm_cell_unlock_v2(cache->prison, mg->cell, &bios))
-@@ -1767,7 +1770,6 @@ static int map_bio(struct cache *cache,
- 		if (passthrough_mode(cache)) {
- 			if (bio_data_dir(bio) == WRITE) {
- 				bio_drop_shared_lock(cache, bio);
--				atomic_inc(&cache->stats.demotion);
- 				invalidate_start(cache, cblock, block, bio);
- 				return DM_MAPIO_SUBMITTED;
- 			} else
+ 	/* calculate how much information we're going to return */
+ 	ret = -ENOMEM;
++	down_read(&key->sem);
+ 	infobuf = kasprintf(GFP_KERNEL,
+ 			    "%s;%d;%d;%08x;",
+ 			    key->type->name,
+ 			    from_kuid_munged(current_user_ns(), key->uid),
+ 			    from_kgid_munged(current_user_ns(), key->gid),
+ 			    key->perm);
++	up_read(&key->sem);
+ 	if (!infobuf)
+ 		goto error2;
+ 	infolen = strlen(infobuf);
 
 
