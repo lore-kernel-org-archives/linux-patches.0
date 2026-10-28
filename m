@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793208819;
-	b=CgerFUQS7t6BqyfoKA3vTDwX5mTRj7FpOIYAyQSqG56u8qXIhPGmfDgSIYY/4JxJQ9Lc
-	 Gql3s79aL28qlRFVQBZG9f9PuxOxHcyVLr3v9jPmYsjpLcYw04aMk6a2Q6a13kkolKYyA
-	 VtLxSj/TYnyojx7DC0SoKWaeBvndsICmgNfkP9GJilIfZi4eF7v/fAoWsaufa1F2eoJiK
-	 nw+pGIWAai5pYiNRLkhyoLYPQgRkKmxBzsydkqp56lCusHMAgR40bHbiGsSEho6tdNVtc
-	 M10lf71ymQMDjYxXqHw6JJgf5FiEbBzEZ2Vneez5qvrUFpMfMt/Dg97iFFTDqmm2F8A==
+	t=1793208822;
+	b=UvdDLKq2FKkCUbgRJK6H499zgs8TBfWp5NFVGS06oW4glWJuy/LWfJTUIZDnt2DK5ilv
+	 RL3Jv+p8wKYSSJ7/4h+guq8ho+RacXv5QvROuk9oyd+nBZ/qx74zdQNYjUGsaAtRM+v/Y
+	 F0gT54VRyFvIr9ZWaqD5ordTywOYHNj6Hrm1raLXSdZK4fuoLWQeDKr8VKuPrVsfFfw0V
+	 6xvPsO2mF8ZuNwGzYov+Ifl2I3tRW5PY03axAjhnIMGLfSyoCWHo70BLit717haFyknqC
+	 Mqnmz0lICOzMGtH+RodvzInVNQdDQNg0Tn7QPxH6p7s+Ei2WHE6wxBO7qbZ1dqJLbWA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793208819;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793208822;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=EioETapF1pb1TB7GKh8p/1SojglXq7gRU9tW9C8jqKw=;
-	b=AVtpyzNCAvH7aBY7aa0j3dlx8vJZ3w8kesCbvOcmTRZU53fgTRvgW5+A9zhAi6CgxYx/
-	 c6Q0V+e0ylEVdS4b4GgyMV8JqJcdoOeRRElWZcNZEpxDcbfjnQ9D5NDlWSYeZ/oB74kwd
-	 4RYU9pUmK1k5Dl02K/dv76mKlHsfVyBYnNw/AxkCCqUxk43caVA89APqQwQ0aDhpwgRkD
-	 IRwIES4agqtgBZbZBrLvoTEu/S0awRo6PyXkcYVgNRRoUnbbIf2byog0TmsxaoOOHDNsB
-	 H9diB8C/5IVnXegPuTc5oTQFIc9pQ5eb6DFqQ17d82SL7yxj2wDF1gj2ABjxn3eX3Xg==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=B7EuYuIO5y8p6eoObM7FKt5YbSYhlAchsunuyfMQ5jo=;
+	b=pNdzB5MqwhE5jdQOYAMEwDSVHYOt1Gq0LOsoyEs4rboctFznwd5oIpl5bku9wbbzQKFk
+	 TTIvqJfzABiVJ1BMW4OggIiWn4dntymYj609oEqwxo/slSVOgmrr8ooFK0SAWZtNSJq2x
+	 ZkYqOuHWobf4AepFrQjyQMYpES5tAvuyCh8OPaDkn2O4WvAw+HafiAt3w2j39CpPCEuvz
+	 I9wAnZEGDiDw6ECImEBH3ClriczbyuGzppw9KH/zfkVAirvH4blZUvdTtTpnDgRH8heZb
+	 g3oTNbh25XiyE3XTfCUy/XmHIJoSCbhAHq6sdwpX+S0vIJEpBjm5i+tke6Hg+Jf3Xmw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=o3pjthkC;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QkUNVk7S;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA93F606A32D;
-	Wed, 28 Oct 2026 17:33:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC86C60A2600;
+	Wed, 28 Oct 2026 17:33:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=o3pjthkC
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCFAA1F031EA;
-	Wed, 28 Oct 2026 17:33:37 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QkUNVk7S
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6F8D1F01828;
+	Wed, 28 Oct 2026 17:33:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793208818;
-	bh=EioETapF1pb1TB7GKh8p/1SojglXq7gRU9tW9C8jqKw=;
+	s=korg; t=1793208821;
+	bh=B7EuYuIO5y8p6eoObM7FKt5YbSYhlAchsunuyfMQ5jo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=o3pjthkCDejXtQzShtczcSy0xvRoCMVYmNj/7wdxiSliGlWB9hq43sJ2BiOUvYUQk
-	 +OioqJdZfetxss0igvGPv7dzS7J8aOcK+BkJcgWW0VmBqIButKwavIhHLwQhPPxQHR
-	 IhCfQBBm9AtbJJWvvB+K/1HlKs5Qems2PLImTi1w=
+	b=QkUNVk7SuWfzdonP4FjSsKhPhGXMjtVquS/H9c/qM3PUxef0XY+4amCKAhN7Ump9I
+	 X5+c0yPA8LC+s/pn+mNbzvYk6mVJGjoAYuqIQS/2hC72NBwTrBS/fI941Fw2snC3dA
+	 KQ0BHonskxfIyBIemh2DyHBYKISCFEqbdNmwQRfE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Gu <ustc.gu@gmail.com>,
-	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Subject: [PATCH 5.10 236/516] iio: adc: sun4i-gpadc-iio: drop underflowing pm_runtime_put() calls
-Date: Wed, 28 Oct 2026 17:56:28 +0100
-Message-ID: <20261028170009.094863011@linuxfoundation.org>
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Kalle Valo <kvalo@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 254/516] wifi: wl12xx: Drop if with an always false condition
+Date: Wed, 28 Oct 2026 17:56:46 +0100
+Message-ID: <20261028170009.511974869@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -61,49 +62,52 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Felix Gu <ustc.gu@gmail.com>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-commit 8b958dd214ad0c003f56549e9e039cb8067dc1a2 upstream.
+[ Upstream commit 69ddcea564437ce4b0d5143f37a9154fcef8d3d2 ]
 
-Neither the error path in sun4i_gpadc_probe() nor sun4i_gpadc_remove()
-ever holds a runtime PM usage count. So the pm_runtime_put() in both
-places always triggers the "Runtime PM usage count underflow!" warning
-on every failed probe and every unbind.
+The remove callback is only called after probe completed successfully.
+In this case platform_set_drvdata() was called with a non-NULL argument
+(in wlcore_probe()) and so wl is never NULL.
 
-Drop both calls.
+This is a preparation for making platform remove callbacks return void.
 
-Fixes: d1caa9905538 ("iio: adc: add support for Allwinner SoCs ADC")
-Signed-off-by: Felix Gu <ustc.gu@gmail.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20220715224619.ht7bbzzrmysielm7@pengutronix.de
+Stable-dep-of: a8b8881d0c1a ("wifi: wlcore: Fix runtime PM leak in wlcore_remove()")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/adc/sun4i-gpadc-iio.c |    2 --
- 1 file changed, 2 deletions(-)
+ drivers/net/wireless/ti/wl12xx/main.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
---- a/drivers/iio/adc/sun4i-gpadc-iio.c
-+++ b/drivers/iio/adc/sun4i-gpadc-iio.c
-@@ -664,7 +664,6 @@ err_map:
- 	if (!info->no_irq && IS_ENABLED(CONFIG_THERMAL_OF))
- 		iio_map_array_unregister(indio_dev);
+diff --git a/drivers/net/wireless/ti/wl12xx/main.c b/drivers/net/wireless/ti/wl12xx/main.c
+index c6da0cfb4afbe..d06a2c4194479 100644
+--- a/drivers/net/wireless/ti/wl12xx/main.c
++++ b/drivers/net/wireless/ti/wl12xx/main.c
+@@ -1924,13 +1924,10 @@ static int wl12xx_remove(struct platform_device *pdev)
+ 	struct wl1271 *wl = platform_get_drvdata(pdev);
+ 	struct wl12xx_priv *priv;
  
--	pm_runtime_put(&pdev->dev);
- 	pm_runtime_disable(&pdev->dev);
+-	if (!wl)
+-		goto out;
+ 	priv = wl->priv;
  
- 	return ret;
-@@ -675,7 +674,6 @@ static int sun4i_gpadc_remove(struct pla
- 	struct iio_dev *indio_dev = platform_get_drvdata(pdev);
- 	struct sun4i_gpadc_iio *info = iio_priv(indio_dev);
+ 	kfree(priv->rx_mem_addr);
  
--	pm_runtime_put(&pdev->dev);
- 	pm_runtime_disable(&pdev->dev);
+-out:
+ 	return wlcore_remove(pdev);
+ }
  
- 	if (!IS_ENABLED(CONFIG_THERMAL_OF))
+-- 
+2.53.0
+
 
 
