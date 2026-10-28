@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213646;
-	b=CWr4aun+Wm4rHQi2Bro+RPhLnoD7jpTQuVnNJzrzWGvJ3qn4xTtw9fQRJJOOUHQQADD8
-	 OwAMJSqNrXzNHKryz9k9/bF2EwpnkX0+wucQu/TS+fDSgtpCG6v02Qf5mE04CqPXcrUXe
-	 RUJM8Jze56n0G2zU3j5YmON7F4Ku5HPDXyN/fNYd9UEe6ue2NAQ890/S7YHsnszFewpwI
-	 sWAjCkwLlUbfBIGpHAiqmTo0bArnL/4F0xOtkSOMAMCSOiYu4UadQgK6f0RRrfnh35KD8
-	 8BrVhq/pniYdY+BaxkIChit5WY+6ZwZc3gLsK5X8WMo/4so5zYuoj5tu2NAw5UJFSNQ==
+	t=1793213648;
+	b=ZVwZaM163SJLPAn2CPUaNvcu3G/TgjvTFaIVh0LrrgTY/sJTJoEj+G+S/6Kmxd5m/z/D
+	 fNIv89DotY/ssgtIrLxBg5V0EmHbOWfckUST1YbjfTj4dhCCiRYz33cZJYpg2OFuOCG/5
+	 tEJ762NM+Lssau/aP7brxyex4GYD/ZoNtRpukdzEQzHmv6t+NO4FH4G4Mw0VzVACnHrW4
+	 OlGjM8fyLAOmb7acx0q9o6higzIOEKlmWs+UCWqP9/JkuLNZmPAdpEnkXB3YSt3UXfcLm
+	 Kp2ZrkuyEkRdB8izIUk8il1RyadaXF/e2mY4rOIFxOk72x9xJLZZnYCYYZgNr+aRXVA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213646;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213648;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=tHpEWA/eMbB0oIDw710vJ5bMIfsgcYqp7UPtFHvN2EE=;
-	b=Ohtq9ai02J71TBIUIPHT+C+RqPWuQbo6ocrSglmFSeVt9YllDSAZ+QidjaKcAyv/z6PF
-	 edGNBPzimg1B+FzHw69GrbhRJMNISAOita0f+7/zctN766Dg6q3X+fwPnT2Byqlx6JaO/
-	 X+KKwA4UT658EboW+y5g5nqUcLeXU4eZlKesuA3GJuydSTW7z3uxE3MFUw+++Wyc9hrit
-	 2LpNabFFNBcF88w/FDK2OrzZ4q/33Kqw8oxaoJ/Y+a+joD35+8lce9bouNhOLa7kYz7Vp
-	 YgLBWz02xI0awlR6ZASktrvrX6UFMJctyhn8dw26NfIaj684Qt2hFMu3E8ETHj/zhVg==
+	bh=cfx4qJTP6WttR8wvhqPgR7W23YlqSvsXrlJoi0l2fKw=;
+	b=ilj5TwrcV9q7wkrnAmpKmgw5YmMN48cc8ggpAaC8jeSa9TiPLNydAxLyQseAydV6ceMJ
+	 GMQAMJTIxkDpwu3KArYRo/aO6Z5HwF15BC1NYDKis+cAC+g2eHZ1Gk+ysje5BidDOGrit
+	 JdFmwDw833BuahoRaP5Dktip/7pCCbPX5uniocJlVnoduW0mElwMOgRkCWIahtaPrmwEk
+	 /jPK6wlJJw8TVLr0G3mQYprPVUo5+0/Wxqxz76C+B1rWu+MPLXN//kNhW6aNdDbYDQKtm
+	 RJBHqO0zuDguWzXj7DlTJFKk3zlCXi5hxKJxX8nh6Turu4PDLB22yyz5fDrN20eL77w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ht2uyruD;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XnjsWF5e;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFFEF606A31D;
-	Wed, 28 Oct 2026 18:54:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AB52606A31D;
+	Wed, 28 Oct 2026 18:54:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ht2uyruD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8CA31F01825;
-	Wed, 28 Oct 2026 18:54:04 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XnjsWF5e
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC47F1F01828;
+	Wed, 28 Oct 2026 18:54:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213645;
-	bh=tHpEWA/eMbB0oIDw710vJ5bMIfsgcYqp7UPtFHvN2EE=;
+	s=korg; t=1793213648;
+	bh=cfx4qJTP6WttR8wvhqPgR7W23YlqSvsXrlJoi0l2fKw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ht2uyruDWUAiCVFX16xjLz8JzJ+aZRvuc1KTRDwattDs2l9Kq0iyHFBu1d4FfIBjF
-	 1Jdf121zKflHYvxw+R10wsn8Lbs3TstepSW7aZMfuiuYVq/bD/doBVB2IOaAr56xBL
-	 CyG6cWzYN85khuozg1EdCbLK2RJWX8rtt3RDc9jk=
+	b=XnjsWF5eP/8t/87Pw89ksU1NHhSwzVTWFQ+d4PzbPqePOMcNwF5r/HgfgTbfHpEQD
+	 C0UJr/X7txQ5m4K1V63wb6lrBYL9dUhs8/E0jqhrEcn/Keuz/nE4tjk8K55B/LGTgL
+	 sJCl59SjB0unnTwrppuNYo3oCJrtlWDhzEcLMrX4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shao-Fu Chen <shf.chen@mediatek.com>,
-	Jens Wiklander <jens.wiklander@oss.qualcomm.com>,
+	Ahmed Abdelhaleem Ahmed <ahmedhal@gmail.com>,
+	Laurence Oberman <loberman@redhat.com>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0535/1887] optee: register TEE devices only once fully initialized
-Date: Wed, 28 Oct 2026 17:43:51 +0100
-Message-ID: <20261028170511.520448160@linuxfoundation.org>
+Subject: [PATCH 6.1 0536/1887] scsi: ch: Do not keep references to data transfer element devices
+Date: Wed, 28 Oct 2026 17:43:52 +0100
+Message-ID: <20261028170511.545312747@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,126 +69,125 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shao-Fu Chen <shf.chen@mediatek.com>
+From: Ahmed Abdelhaleem Ahmed <ahmedhal@gmail.com>
 
-[ Upstream commit c108feca0a096f8db25d1b69130035025e9e936d ]
+[ Upstream commit 27c0f718d3b3c99e6d315308e95d987d0382a8a8 ]
 
-optee_probe() called tee_device_register() on both the client and the
-supplicant device before the rest of struct optee had been initialized.
+ch_readconfig() looks up the scsi_device of every data transfer element
+whose SCSI id the changer reports in READ ELEMENT STATUS, and stores it in
+ch->dt[]. scsi_device_lookup() takes a reference, and nothing ever drops
+it: ch_destroy() frees the array with kfree(). ch->dt[] is read nowhere
+else - it only supplies the vendor, model and revision printed in the same
+loop.
 
-tee_device_register() calls cdev_device_add(), which does two things at
-once: it creates /dev/tee0 and /dev/teepriv0, and it links the device
-into the tee class so that class_find_device() can find it. From that
-moment on the device is reachable both from user space via tee_open()
-and from kernel space via tee_client_open_context(). The only gate in
-teedev_open() is tee_device_get(), which merely checks that
-teedev->desc is non-NULL, which was already set by tee_device_alloc().
-Therefore, there is effectively no gate at all.
+Once such a drive is removed, its scsi_device can never be released. It
+stays on the host's device list at its address, so a new device there is
+refused by anything that walks the list - target_core_pscsi reports
+"scsi_device_get() failed for H:C:T:L" - and the low-level driver's module
+can no longer be unloaded. Only a reboot recovers.
 
-A context opened in that window can run against a struct optee where
+It shows with any changer that reports its drives' ids; with the mhvtl
+virtual library (IBM 3573-TL personality), each create and remove of a
+library with four drives leaves four references behind, counted by the
+module's use count in lsmod. With ch not bound the count is unchanged, and
+with this patch applied it is unchanged too.
 
-  - optee->call_queue.mutex is not initialized by optee_cq_init()
-  - optee->supp mutex and completions is not initialized by
-    optee_supp_init()
-  - optee->rpmb_dev_mutex is not initialized yet,
-  - the message argument cache is not initialized by
-    optee_shm_arg_cache_init()
-  - optee->ctx is still NULL
+Drop the reference as soon as the name has been printed, and remove the now
+unused dt[] array. That also removes the array leaked when ch_probe() fails
+after ch_readconfig().
 
-Any open session or invoke during this window takes uninitialized
-mutexes and dereferences a NULL pointer.
+The same leak was reported with an RFC patch in 2022, which was not merged.
 
-Fix it by moving both tee_device_register() calls down to the point
-where all of struct optee is set up.
-
-Fixes: 4fb0a5eb364d ("tee: add OP-TEE driver")
+Fixes: daa6eda65a53 ("[SCSI] add scsi changer driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Shao-Fu Chen <shf.chen@mediatek.com>
-[JW: adding fixes and cc]
-Signed-off-by: Jens Wiklander <jens.wiklander@oss.qualcomm.com>
-[ sashal: Adjusted context to match the older OP-TEE probe initialization sequence. ]
+Link: https://lore.kernel.org/linux-scsi/20220719075442.6215-1-yanghao_ht@163.com/
+Signed-off-by: Ahmed Abdelhaleem Ahmed <ahmedhal@gmail.com>
+Reviewed-by: Laurence Oberman <loberman@redhat.com>
+Fixes: daa6eda65a53 ("[SCSI] add scsi changer driver")
+Link: https://patch.msgid.link/20260929-ch-dt-leak-v2-1-ddda8d635dca@gmail.com
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+[ sashal: Adjusted allocation removal for kcalloc() instead of kzalloc_objs(). ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tee/optee/ffa_abi.c | 16 ++++++++--------
- drivers/tee/optee/smc_abi.c | 17 ++++++++---------
- 2 files changed, 16 insertions(+), 17 deletions(-)
+ drivers/scsi/ch.c | 30 +++++++++---------------------
+ 1 file changed, 9 insertions(+), 21 deletions(-)
 
-diff --git a/drivers/tee/optee/ffa_abi.c b/drivers/tee/optee/ffa_abi.c
-index 927c3d7947f9c..f0ecd931035e3 100644
---- a/drivers/tee/optee/ffa_abi.c
-+++ b/drivers/tee/optee/ffa_abi.c
-@@ -844,14 +844,6 @@ static int optee_ffa_probe(struct ffa_device *ffa_dev)
+diff --git a/drivers/scsi/ch.c b/drivers/scsi/ch.c
+index 7ab29eaec6f38..fa0317402ba4e 100644
+--- a/drivers/scsi/ch.c
++++ b/drivers/scsi/ch.c
+@@ -110,7 +110,6 @@ typedef struct {
+ 	int                 minor;
+ 	char                name[8];
+ 	struct scsi_device  *device;
+-	struct scsi_device  **dt;        /* ptrs to data transfer elements */
+ 	u_int               firsts[CH_TYPES];
+ 	u_int               counts[CH_TYPES];
+ 	u_int               unit_attention;
+@@ -357,16 +356,10 @@ ch_readconfig(scsi_changer *ch)
+ 			vendor_labels[i]);
  	}
- 	optee->supp_teedev = teedev;
  
--	rc = tee_device_register(optee->teedev);
--	if (rc)
--		goto err_unreg_supp_teedev;
+-	/* look up the devices of the data transfer elements */
+-	ch->dt = kcalloc(ch->counts[CHET_DT], sizeof(*ch->dt),
+-			 GFP_KERNEL);
 -
--	rc = tee_device_register(optee->supp_teedev);
--	if (rc)
--		goto err_unreg_supp_teedev;
+-	if (!ch->dt) {
+-		kfree(buffer);
+-		return -ENOMEM;
+-	}
 -
- 	rc = rhashtable_init(&optee->ffa.global_ids, &shm_rhash_params);
- 	if (rc)
- 		goto err_unreg_supp_teedev;
-@@ -871,6 +863,14 @@ static int optee_ffa_probe(struct ffa_device *ffa_dev)
- 	if (rc)
- 		goto err_close_ctx;
- 
-+	rc = tee_device_register(optee->teedev);
-+	if (rc)
-+		goto err_unregister_devices;
++	/* report the devices of the data transfer elements */
+ 	for (elem = 0; elem < ch->counts[CHET_DT]; elem++) {
++		struct scsi_device *sdev;
 +
-+	rc = tee_device_register(optee->supp_teedev);
-+	if (rc)
-+		goto err_unregister_devices;
-+
- 	rc = optee_enumerate_devices(PTA_CMD_GET_DEVICES);
- 	if (rc)
- 		goto err_unregister_devices;
-diff --git a/drivers/tee/optee/smc_abi.c b/drivers/tee/optee/smc_abi.c
-index e6e0428f8e7be..89ab5323f9fe7 100644
---- a/drivers/tee/optee/smc_abi.c
-+++ b/drivers/tee/optee/smc_abi.c
-@@ -1467,14 +1467,6 @@ static int optee_probe(struct platform_device *pdev)
+ 		id  = -1;
+ 		lun = 0;
+ 		if (elem < CH_DT_MAX  &&  -1 != dt_id[elem]) {
+@@ -382,10 +375,8 @@ ch_readconfig(scsi_changer *ch)
+ 			VPRINTK(KERN_INFO, "dt 0x%x: ",elem+ch->firsts[CHET_DT]);
+ 			if (data[6] & 0x80) {
+ 				VPRINTK(KERN_CONT, "not this SCSI bus\n");
+-				ch->dt[elem] = NULL;
+ 			} else if (0 == (data[6] & 0x30)) {
+ 				VPRINTK(KERN_CONT, "ID/LUN unknown\n");
+-				ch->dt[elem] = NULL;
+ 			} else {
+ 				id  = ch->device->id;
+ 				lun = 0;
+@@ -395,18 +386,16 @@ ch_readconfig(scsi_changer *ch)
+ 		}
+ 		if (-1 != id) {
+ 			VPRINTK(KERN_CONT, "ID %i, LUN %i, ",id,lun);
+-			ch->dt[elem] =
+-				scsi_device_lookup(ch->device->host,
+-						   ch->device->channel,
+-						   id,lun);
+-			if (!ch->dt[elem]) {
++			sdev = scsi_device_lookup(ch->device->host,
++						  ch->device->channel,
++						  id, lun);
++			if (!sdev) {
+ 				/* should not happen */
+ 				VPRINTK(KERN_CONT, "Huh? device not found!\n");
+ 			} else {
+ 				VPRINTK(KERN_CONT, "name: %8.8s %16.16s %4.4s\n",
+-					ch->dt[elem]->vendor,
+-					ch->dt[elem]->model,
+-					ch->dt[elem]->rev);
++					sdev->vendor, sdev->model, sdev->rev);
++				scsi_device_put(sdev);
+ 			}
+ 		}
  	}
- 	optee->supp_teedev = teedev;
+@@ -570,7 +559,6 @@ static void ch_destroy(struct kref *ref)
+ 	scsi_changer *ch = container_of(ref, scsi_changer, ref);
  
--	rc = tee_device_register(optee->teedev);
--	if (rc)
--		goto err_unreg_supp_teedev;
--
--	rc = tee_device_register(optee->supp_teedev);
--	if (rc)
--		goto err_unreg_supp_teedev;
--
- 	mutex_init(&optee->call_queue.mutex);
- 	INIT_LIST_HEAD(&optee->call_queue.waiters);
- 	optee_supp_init(&optee->supp);
-@@ -1531,6 +1523,14 @@ static int optee_probe(struct platform_device *pdev)
- 	if (optee->smc.sec_caps & OPTEE_SMC_SEC_CAP_DYNAMIC_SHM)
- 		pr_info("dynamic shared memory is enabled\n");
+ 	ch->device = NULL;
+-	kfree(ch->dt);
+ 	kfree(ch);
+ }
  
-+	rc = tee_device_register(optee->teedev);
-+	if (rc)
-+		goto err_disable_shm_cache;
-+
-+	rc = tee_device_register(optee->supp_teedev);
-+	if (rc)
-+		goto err_disable_shm_cache;
-+
- 	rc = optee_enumerate_devices(PTA_CMD_GET_DEVICES);
- 	if (rc)
- 		goto err_disable_shm_cache;
-@@ -1551,7 +1551,6 @@ static int optee_probe(struct platform_device *pdev)
- 	optee_shm_arg_cache_uninit(optee);
- 	optee_supp_uninit(&optee->supp);
- 	mutex_destroy(&optee->call_queue.mutex);
--err_unreg_supp_teedev:
- 	tee_device_unregister(optee->supp_teedev);
- err_unreg_teedev:
- 	tee_device_unregister(optee->teedev);
 -- 
 2.53.0
 
