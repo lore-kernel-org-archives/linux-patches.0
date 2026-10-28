@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216937;
-	b=ZEDuOVwsG0woXdUNRF9NOMWP+UGGmBDnCo9xPNiKaiX1Km6To94JHSZRDyhleGifEgSe
-	 rs9FH2i74rNW+LL44PkDwq4GGQ6UZ/uZ9g3+O0wljyKHScKhxPQQG53IxWgrFxiR8x+pO
-	 +AYj0EfUEl6DiPCA5J8mSQEfl0BY1sMzl9nN3rvptB8S37x49GjugY7qVfoCDeisB37NR
-	 Fh9TvU/TEzXtqjc+kvaDMNHxt91gZOIIfE57p3RHU+26vAWaMnjThrJlFRJCwywBnVuyD
-	 aeTz1sLAczOg82NJXGFWU3E86zQ1rCpW/aFLqEy7lMBattzTqIY88Jh921RsvsYTaCw==
+	t=1793216940;
+	b=agCdAj3d/0aX0XjfbB7X/1ruNGEF/+SFOuJB+yUlu1riedUe06bxUsFs8rZAA0dx9UJ9
+	 iEpEY7vqgrqOdpTbPjl5uB07jDyjKv2ppGJNjpzQbENd0JXoZOOyoDPuAH5SSeGWgtRU3
+	 oPRuMCIwgrUEx/7pPTJ9TX8BovsE2/K2P9QHKsJ/oG5TXTe4BB/WNk0jFYXWAN5eus6oK
+	 QSE5WdVBcom0C13lbGtkabxY25PYsw3qMc+B6Psw7OVYl651vx51/JFhaYb7YPgV0miJe
+	 rAu7NliD1bWasPwmXtxS5JLET3/tLuHJcUeUhq76s1UnmVr6OTd8Os4NXxJkxj+x17w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216937;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216940;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ms8+FETB0QsELv3FfsLieCtBZoG/Gj1sDULuwejuAmM=;
-	b=2aB7oCN4SJrnMX08TEANKd4RhkC6sDxWJtVRjyvJNJ1CwDlYI8a8qRQpe6jR+RKsB4fW
-	 eO9+JbL7HuVepo+fhaPPd9xGnSfrnA9eB3yFtvv9i3NAuxyYGLg/Nc2CHIPdqgZrvY7LQ
-	 ksfzak3M9o0rMPsAh0LoDMJyjYLwfBHD/c39LOjrpJWq1XKPhRMPPKi5F2cMSSqNw6yIa
-	 wTRpGGVjBMJKUs7BKDn5ELe0yopHhayj4kvYokht7uh8CEATnXvbBpHyRq8SY/Zrlwz1l
-	 2NsZqEP1c4G7tCAh9JMr3N/j+3sRlwBRLEYFoTKBwLgvq1bGMAKCqaObPjIcRVqnOlA==
+	bh=MbIqIUPRwu2vCOyRM1Nx6lw0d2oVUMP/EFDNEe8CIEY=;
+	b=uNH2po4/BVLSU+sfc0IKUL1Pr81blFNWYhipACrqIRaysTAxAhxttUsg2nws1NUVgZJE
+	 mO+mv/IzCmqOjxeIMgJhoy1B/jHRe1ZgRZ/ZxGJ9zGZ/xypBHm37HOelnXzUviPnsb0sV
+	 +4CtW0pLSK+hlT9VnLEG5x5+fvbb32rBH7JsmmLBKxKkkUj38hyHaCkHrXktciGYcpiiG
+	 CRZ6t8xdU+3IPDlmsXtC6RqcxIW+oXMrGSAZuXwPTUuGSfFrlnL6WX/nn2erHF8qero4Y
+	 zmja1RPYdcmR/24qCzm2RM4c322hXiOhSKWztcLDX14y5rDxMI5Vsklu4/TPM3pzzlQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tISypS2X;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vQm7RCJa;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7C6E606A31E;
-	Wed, 28 Oct 2026 19:48:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B71C3606A324;
+	Wed, 28 Oct 2026 19:48:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tISypS2X
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 337851F01825;
-	Wed, 28 Oct 2026 19:48:56 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vQm7RCJa
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12A901F01825;
+	Wed, 28 Oct 2026 19:48:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216936;
-	bh=ms8+FETB0QsELv3FfsLieCtBZoG/Gj1sDULuwejuAmM=;
+	s=korg; t=1793216939;
+	bh=MbIqIUPRwu2vCOyRM1Nx6lw0d2oVUMP/EFDNEe8CIEY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tISypS2XWwftXDR3Bg4MbKt0MKNdFl6qYbUoMOhHg7ci0EJzr7ycZ7s81CdmoU6H8
-	 B+uK2OC7+FWgVgR+ZU7W+3Oku2tacFvhZu6MulE7l5rnS63NqivMYpNe7Eij6PoJz+
-	 hXFhy7FkUu2YZOjCcXXMUrT4doCU8UZ0xfmGPKcg=
+	b=vQm7RCJacR6tVO9z+856V4wRnze1bQ7oO+x2ZPDNSA+mWyeSavi4xTL/wPHdYupXv
+	 ee6RLBTShtUH9pQftR/mGX98yNZcyYQFpqun2cqazOdj/8hLhaJvNFPCzX4roxavkp
+	 488A2SRa3VdX3a3P6ZJu25xFORgfqhxs8d0uNXWU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xixin Liu <liuxixin@kylinos.cn>,
-	stable@kernel.org,
-	Paul Walmsley <pjw@kernel.org>,
+	Frank Li <Frank.Li@nxp.com>,
+	Peng Fan <peng.fan@nxp.com>,
+	Andy Shevchenko <andy@kernel.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1694/1887] perf: RISC-V: store available counter mask as bitmap
-Date: Wed, 28 Oct 2026 18:03:10 +0100
-Message-ID: <20261028170538.004150696@linuxfoundation.org>
+Subject: [PATCH 6.1 1730/1887] gpio: mxc: fix wakeup_pads bit operations
+Date: Wed, 28 Oct 2026 18:03:46 +0100
+Message-ID: <20261028170538.823529571@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,212 +70,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xixin Liu <liuxixin@kylinos.cn>
+From: Peng Fan <peng.fan@nxp.com>
 
-[ Upstream commit 6809da6e9c08ccc9a09cb0a48c61471679274aaa ]
+[ Upstream commit 170aeff46fb54f41545c85a72aec525aebc79d44 ]
 
-The available-counter mask was a single unsigned long, but iteration
-uses RISCV_MAX_COUNTERS, which is 64. On RV32 that reads past the object.
-Filling with an unsigned-long bit at index 32 and above is also wrong.
+gpio_set_wake_irq() can be called concurrently for different pins on
+the same port. The writer-vs-writer race is the concern: two concurrent
+gpio_set_wake_irq() calls for different pins on the same port both do
+a non-atomic read-modify-write on the same wakeup_pads word. The old
+|= and &= compile to separate load/modify/store instructions that can
+interleave, losing one CPU's update.
 
-Use DECLARE_BITMAP and set_bit/bitmap helpers. Walk each bitmap word
-into CFG_MATCH when checking events, when allocating an index, and when
-stopping all counters. Set the counter base to i times BITS_PER_LONG.
-Share the CFG_MATCH ecall through a small helper so the 32-bit argument
-split is not duplicated. On qemu-system-riscv32 the probe bitmap has bits
-above XLEN set, so the first word alone is not enough.
+assign_bit() uses an atomic RMW instruction, so concurrent writers to
+different bits in the same word are safe.
 
-Fixes: e9991434596f ("RISC-V: Add perf platform driver based on SBI PMU extension")
-Assisted-by: DeepSeek:deepseek-v3
-Signed-off-by: Xixin Liu <liuxixin@kylinos.cn>
-Link: https://patch.msgid.link/prpmask02cmap.v2.1786434000.git.liuxixin@kylinos.cn
-Cc: stable@kernel.org
-[pjw@kernel.org: updated to apply; fixed checkpatch.pl issues]
-Signed-off-by: Paul Walmsley <pjw@kernel.org>
+The reader side (for_each_set_bit in noirq_suspend, wakeup_pads > 0)
+runs in noirq context where no concurrent writer can execute, so
+reader atomicity is not needed.
+
+wakeup_pads is a u32, while assign_bit() operates on unsigned long
+pointers. On 64-bit platforms, this causes an 8-byte read-modify-write
+on a 4-byte field, corrupting the adjacent is_pad_wakeup. So change
+wakeup_pads to unsigned long and reorder to avoid wasting words.
+
+And fix the enable/disable path unconditionally sets/clears the
+wakeup_pads bit even when enable_irq_wake()/disable_irq_wake() fails.
+Only update the bit on success.
+
+Fixes: f60c9eac54af ("gpio: mxc: enable pad wakeup on i.MX8x platforms")
+Assisted-by: LLM
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Peng Fan <peng.fan@nxp.com>
+Reviewed-by: Andy Shevchenko <andy@kernel.org>
+Link: https://patch.msgid.link/20261013-gpio-mxc-cleanup-v7-3-c4d769587d3e@nxp.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/perf/riscv_pmu_legacy.c |  5 ++-
- drivers/perf/riscv_pmu_sbi.c    | 68 ++++++++++++++++++++++++---------
- include/linux/perf/riscv_pmu.h  |  2 +-
- 3 files changed, 53 insertions(+), 22 deletions(-)
+ drivers/gpio/gpio-mxc.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/perf/riscv_pmu_legacy.c b/drivers/perf/riscv_pmu_legacy.c
-index ca9e20bfc7aca..c70ada8178de6 100644
---- a/drivers/perf/riscv_pmu_legacy.c
-+++ b/drivers/perf/riscv_pmu_legacy.c
-@@ -82,8 +82,9 @@ static void pmu_legacy_init(struct riscv_pmu *pmu)
- {
- 	pr_info("Legacy PMU implementation is available\n");
- 
--	pmu->cmask = BIT(RISCV_PMU_LEGACY_CYCLE) |
--		BIT(RISCV_PMU_LEGACY_INSTRET);
-+	bitmap_zero(pmu->cmask, RISCV_MAX_COUNTERS);
-+	set_bit(RISCV_PMU_LEGACY_CYCLE, pmu->cmask);
-+	set_bit(RISCV_PMU_LEGACY_INSTRET, pmu->cmask);
- 	pmu->ctr_start = pmu_legacy_ctr_start;
- 	pmu->ctr_stop = NULL;
- 	pmu->event_map = pmu_legacy_event_map;
-diff --git a/drivers/perf/riscv_pmu_sbi.c b/drivers/perf/riscv_pmu_sbi.c
-index 9dbbcdbb97ce0..ed7b958549280 100644
---- a/drivers/perf/riscv_pmu_sbi.c
-+++ b/drivers/perf/riscv_pmu_sbi.c
-@@ -50,7 +50,7 @@ static union sbi_pmu_ctr_info *pmu_ctr_list;
- static unsigned int riscv_pmu_irq;
- 
- /* Cache the available counters in a bitmask */
--static unsigned long cmask;
-+static DECLARE_BITMAP(cmask, RISCV_MAX_COUNTERS);
- 
- struct sbi_pmu_event_data {
- 	union {
-@@ -278,10 +278,10 @@ int riscv_pmu_get_hpm_info(u32 *hw_ctr_width, u32 *num_hw_ctr)
- 	union sbi_pmu_ctr_info *info;
- 	u32 hpm_width = 0, hpm_count = 0;
- 
--	if (!cmask)
-+	if (bitmap_empty(cmask, RISCV_MAX_COUNTERS))
- 		return -EINVAL;
- 
--	for_each_set_bit(i, &cmask, RISCV_MAX_COUNTERS) {
-+	for_each_set_bit(i, cmask, RISCV_MAX_COUNTERS) {
- 		info = &pmu_ctr_list[i];
- 		if (!info)
- 			continue;
-@@ -298,14 +298,29 @@ int riscv_pmu_get_hpm_info(u32 *hw_ctr_width, u32 *num_hw_ctr)
- }
- EXPORT_SYMBOL_GPL(riscv_pmu_get_hpm_info);
- 
-+static struct sbiret pmu_sbi_ctr_cfg_match(unsigned long cbase,
-+					   unsigned long ctr_mask,
-+					   unsigned long cflags,
-+					   unsigned long event_idx,
-+					   u64 config)
-+{
-+#if defined(CONFIG_32BIT)
-+	return sbi_ecall(SBI_EXT_PMU, SBI_EXT_PMU_COUNTER_CFG_MATCH, cbase,
-+			 ctr_mask, cflags, event_idx, config, config >> 32);
-+#else
-+	return sbi_ecall(SBI_EXT_PMU, SBI_EXT_PMU_COUNTER_CFG_MATCH, cbase,
-+			 ctr_mask, cflags, event_idx, config, 0);
-+#endif
-+}
-+
- static int pmu_sbi_ctr_get_idx(struct perf_event *event)
- {
- 	struct hw_perf_event *hwc = &event->hw;
- 	struct riscv_pmu *rvpmu = to_riscv_pmu(event->pmu);
- 	struct cpu_hw_events *cpuc = this_cpu_ptr(rvpmu->hw_events);
- 	struct sbiret ret;
--	int idx;
--	uint64_t cbase = 0;
-+	int idx, i;
-+	u64 cbase = 0;
- 	unsigned long cflags = 0;
- 
- 	if (event->attr.exclude_kernel)
-@@ -314,14 +329,16 @@ static int pmu_sbi_ctr_get_idx(struct perf_event *event)
- 		cflags |= SBI_PMU_CFG_FLAG_SET_UINH;
- 
- 	/* retrieve the available counter index */
--#if defined(CONFIG_32BIT)
--	ret = sbi_ecall(SBI_EXT_PMU, SBI_EXT_PMU_COUNTER_CFG_MATCH, cbase,
--			rvpmu->cmask, cflags, hwc->event_base, hwc->config,
--			hwc->config >> 32);
--#else
--	ret = sbi_ecall(SBI_EXT_PMU, SBI_EXT_PMU_COUNTER_CFG_MATCH, cbase,
--			rvpmu->cmask, cflags, hwc->event_base, hwc->config, 0);
--#endif
-+	ret.error = SBI_ERR_NOT_SUPPORTED;
-+	for (i = 0; i < BITS_TO_LONGS(RISCV_MAX_COUNTERS); i++) {
-+		if (!rvpmu->cmask[i])
-+			continue;
-+		cbase = i * BITS_PER_LONG;
-+		ret = pmu_sbi_ctr_cfg_match(cbase, rvpmu->cmask[i], cflags,
-+					    hwc->event_base, hwc->config);
-+		if (!ret.error)
-+			break;
-+	}
- 	if (ret.error) {
- 		pr_debug("Not able to find a counter for event %lx config %llx\n",
- 			hwc->event_base, hwc->config);
-@@ -329,7 +346,7 @@ static int pmu_sbi_ctr_get_idx(struct perf_event *event)
+diff --git a/drivers/gpio/gpio-mxc.c b/drivers/gpio/gpio-mxc.c
+index c6e8c0d35723e..36dcd082ef893 100644
+--- a/drivers/gpio/gpio-mxc.c
++++ b/drivers/gpio/gpio-mxc.c
+@@ -70,8 +70,8 @@ struct mxc_gpio_port {
+ 	unsigned long both_edges;
+ 	struct mxc_gpio_reg_saved gpio_saved_reg;
+ 	bool power_off;
+-	u32 wakeup_pads;
+ 	bool is_pad_wakeup;
++	unsigned long wakeup_pads;
+ 	u32 pad_type[32];
+ 	const struct mxc_gpio_hwdata *hwdata;
+ };
+@@ -329,16 +329,18 @@ static int gpio_set_wake_irq(struct irq_data *d, u32 enable)
+ 			ret = enable_irq_wake(port->irq_high);
+ 		else
+ 			ret = enable_irq_wake(port->irq);
+-		port->wakeup_pads |= BIT(gpio_idx);
+ 	} else {
+ 		if (port->irq_high && (gpio_idx >= 16))
+ 			ret = disable_irq_wake(port->irq_high);
+ 		else
+ 			ret = disable_irq_wake(port->irq);
+-		port->wakeup_pads &= ~BIT(gpio_idx);
  	}
++	if (ret)
++		return ret;
  
- 	idx = ret.value;
--	if (!test_bit(idx, &rvpmu->cmask) || !pmu_ctr_list[idx].value)
-+	if (!test_bit(idx, rvpmu->cmask) || !pmu_ctr_list[idx].value)
- 		return -ENOENT;
- 
- 	/* Additional sanity check for the counter id */
-@@ -514,7 +531,7 @@ static int pmu_sbi_get_ctrinfo(int nctr, unsigned long *mask)
- 			/* The logical counter ids are not expected to be contiguous */
- 			continue;
- 
--		*mask |= BIT(i);
-+		set_bit(i, mask);
- 
- 		cinfo.value = ret.value;
- 		if (cinfo.type == SBI_PMU_CTR_TYPE_FW)
-@@ -531,12 +548,19 @@ static int pmu_sbi_get_ctrinfo(int nctr, unsigned long *mask)
- 
- static inline void pmu_sbi_stop_all(struct riscv_pmu *pmu)
- {
-+	int i;
+-	return ret;
++	assign_bit(gpio_idx, &port->wakeup_pads, enable);
 +
- 	/*
- 	 * No need to check the error because we are disabling all the counters
- 	 * which may include counters that are not enabled yet.
- 	 */
--	sbi_ecall(SBI_EXT_PMU, SBI_EXT_PMU_COUNTER_STOP,
--		  0, pmu->cmask, SBI_PMU_STOP_FLAG_RESET, 0, 0, 0);
-+	for (i = 0; i < BITS_TO_LONGS(RISCV_MAX_COUNTERS); i++) {
-+		if (!pmu->cmask[i])
-+			continue;
-+		sbi_ecall(SBI_EXT_PMU, SBI_EXT_PMU_COUNTER_STOP,
-+			  i * BITS_PER_LONG, pmu->cmask[i],
-+			  SBI_PMU_STOP_FLAG_RESET, 0, 0, 0);
-+	}
++	return 0;
  }
  
- static inline void pmu_sbi_stop_hw_ctrs(struct riscv_pmu *pmu)
-@@ -846,8 +870,14 @@ static int pmu_sbi_device_probe(struct platform_device *pdev)
- 		goto out_free;
- 	}
- 
-+	/* It is possible to get from SBI more than max number of counters */
-+	if (num_counters > RISCV_MAX_COUNTERS) {
-+		num_counters = RISCV_MAX_COUNTERS;
-+		pr_info("SBI returned more than maximum number of counters. Limiting the number of counters to %d\n", num_counters);
-+	}
-+
- 	/* cache all the information about counters now */
--	if (pmu_sbi_get_ctrinfo(num_counters, &cmask))
-+	if (pmu_sbi_get_ctrinfo(num_counters, cmask))
- 		goto out_free;
- 
- 	ret = pmu_sbi_setup_irqs(pmu, pdev);
-@@ -858,7 +888,7 @@ static int pmu_sbi_device_probe(struct platform_device *pdev)
- 	}
- 
- 	pmu->pmu.attr_groups = riscv_pmu_attr_groups;
--	pmu->cmask = cmask;
-+	bitmap_copy(pmu->cmask, cmask, RISCV_MAX_COUNTERS);
- 	pmu->ctr_start = pmu_sbi_ctr_start;
- 	pmu->ctr_stop = pmu_sbi_ctr_stop;
- 	pmu->event_map = pmu_sbi_event_map;
-diff --git a/include/linux/perf/riscv_pmu.h b/include/linux/perf/riscv_pmu.h
-index a1c3f77714810..8d48d7fed11b1 100644
---- a/include/linux/perf/riscv_pmu.h
-+++ b/include/linux/perf/riscv_pmu.h
-@@ -45,7 +45,7 @@ struct riscv_pmu {
- 
- 	irqreturn_t	(*handle_irq)(int irq_num, void *dev);
- 
--	unsigned long	cmask;
-+	DECLARE_BITMAP(cmask, RISCV_MAX_COUNTERS);
- 	u64		(*ctr_read)(struct perf_event *event);
- 	int		(*ctr_get_idx)(struct perf_event *event);
- 	int		(*ctr_get_width)(int idx);
+ static int mxc_gpio_init_gc(struct mxc_gpio_port *port, int irq_base)
 -- 
 2.53.0
 
