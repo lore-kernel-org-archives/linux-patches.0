@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214978;
-	b=sbRTkXVyitLjB6E/FVRIjqMH5CknQWbC0/YIimhgn2kSORPifoQi1cDC6tXhLe60VD5a
-	 wnsFrCNPtjL7gA1rX+nt6jJvRlV0IBI3EvQNXmjhTTj/7uBiYI0LeNImZf/v0U0NgfPm/
-	 BR3JxrcX3cNJuuB5OkAF4sbVbMJ0wsyftSWDocSbMB+bKjsPEkKenUz45fICaA3GQc3S9
-	 vjHApGy8Voyy8mXClfwfYKkF1HCb4XTrFKEXUzt6t87m67jHpfAkmWZBFrrkxqxJ8UlXM
-	 VVhp8dOikWLiVgXDEV16b7hx7t26hBPI2YDCw1kkAH83NuNd5D/Z8Q9W2yunTFABkxA==
+	t=1793214981;
+	b=ISCGk8N70ljR43AlW3+kcQny+5MUmUeDWDUTFrveTzscB/TzSvitJyvsQeldoMjH9SNl
+	 Qmm0K6JewsgjTPtMZSIV2PR9WsvriLNc+u9dnNoiPRLDqP5CJJBjH1F3Pq4h+mm7NJjSq
+	 4fO4zP45kWScTpsBOcgBDcaDBZuWXT37md9Mi6dPxqX4VkavqQ7ZR3noKd3vm9r1n8Rp0
+	 vn80y+potTYA8FYXfXjcXFFA0whLbBAHrxpxrSlr2ld2OLAXpZm3hFTBzIG80N/NcOhzc
+	 ZhAsz1CtN5tYu/gGssnWPFaV9B7/E/ksl1Nnav6d2K7CXwmRt9dY6KAXC2GXXMyCD7Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214978;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214981;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=Cke3bMKKHtqC34qH0WDCIB09R0+ktt+6p09ZqN6WtK4=;
-	b=3rORse9f3J6n0tpb/pDJOqCtUP/v+bbd8YpIeXVYb05/YcC58R+p2sRzIwyEvTPjboTx
-	 6P4xVyrGyH7I0OB+YocxyXXpEzr8LW256ML9MiXDSPpFtcGZGqAygP7Ip0JsJyGVIDYIJ
-	 DaGWxzivCSp7t3KpUc3xX0zq0iHv3ogoiK5kKQ8X5itLJnyxsLNKEdD+SgDCWIePR5YZq
-	 9Z+90BWn+Zjds1A2fUELXeTE0sQyTjJbBz7Ra6mfMezM77Ut2XXqYy+SEO0TGqTxXJeha
-	 5Xp66npgeXT5sK155ciBO6JtznQQMUGx2a7EzLocIdR+7supDZUaNVSK11o1W05hYoA==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=kdKnEa9ACA7jQsSiVUgFdhO8oyp733whKNBzjLtdz94=;
+	b=1JHF9YrAsn2lsSCWpJyMwkckV5GYbk/IErL9/z5ju+NqOuiUSHWDLMaLPINHMXsVwx1e
+	 tH6OwGIkPoAJxGjjqQFzsLGe9oD4xLgH1YHU0T9fO8EsmAD405c77h8oKsLoa0Id8Oudw
+	 pFZ6amrthakWgZdYMFyMfukvxBjPe3/jeleim1C97bjFh2RmE1BjEC5K1J7iCgjU6fZwa
+	 kxHou69Ey7acvOZH2rIJ0j183FBQrDGrqP+ED5HEeDmzVeXsTmMF4M9TS5RtTXxxWs6y2
+	 xL2e78lWaimL+PvgxEw4Hhj4iC13zsV5U+1C8UYtgOmAuWTBKyreCS+tBCSFx3O9RQg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OdQm8n0G;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1sOG72n4;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F8BC606A31C;
-	Wed, 28 Oct 2026 19:16:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D020D606A31C;
+	Wed, 28 Oct 2026 19:16:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OdQm8n0G
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 544841F01825;
-	Wed, 28 Oct 2026 19:16:17 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1sOG72n4
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D19A1F01825;
+	Wed, 28 Oct 2026 19:16:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214977;
-	bh=Cke3bMKKHtqC34qH0WDCIB09R0+ktt+6p09ZqN6WtK4=;
+	s=korg; t=1793214980;
+	bh=kdKnEa9ACA7jQsSiVUgFdhO8oyp733whKNBzjLtdz94=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OdQm8n0Gl5Ek2lQDlqkS9SmzHiLm20baiEX7OYNTeS6WxT/YNlUq+J5bzY1gwtK/l
-	 t17xQHuysOfC3I5uBw8dzOzbrtoBEYmtbg0q69ulFl4NBA68IYMsPjB0CI2ryv4cMj
-	 tzMR2vVwX7IFJ2geJl0qo3njWxxY9onmsKHC3cdI=
+	b=1sOG72n4b9H51fKUFcGMAuhW8Hv2gGWzXZlWikT9jWR5YekCkLsF0wOh+sIa7daVe
+	 qLNpgpOhk0MvFVaExu8sW7H8ff7eCCT6eMWHiXQJy6+jfMVAFoNwoYruDW2uorcNIP
+	 tCeICNvkJ2sjw9anpZcfOJp68hj1HdIRmXy7Jy2U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1050/1887] RDMA/mlx4: Fix mis-use of RCU in mlx4_srq_event()
-Date: Wed, 28 Oct 2026 17:52:26 +0100
-Message-ID: <20261028170523.303235249@linuxfoundation.org>
+Subject: [PATCH 6.1 1051/1887] spi: mpc52xx: Convert to platform remove callback returning void
+Date: Wed, 28 Oct 2026 17:52:27 +0100
+Message-ID: <20261028170523.325174449@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -61,70 +62,67 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jason Gunthorpe <jgg@nvidia.com>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit c9341307ea16b9395c2e4c9c94d8499d91fe31d0 ]
+[ Upstream commit 3fa689a85df4664a62ea931be31e5276cde1e8fe ]
 
-Sashiko points out the radix_tree itself is RCU safe, but nothing ever
-frees the mlx4_srq struct with RCU, and it isn't even accessed within the
-RCU critical section. It also will crash if an event is delivered before
-the srq object is finished initializing.
+The .remove() callback for a platform driver returns an int which makes
+many driver authors wrongly assume it's possible to do error handling by
+returning an error code. However the value returned is (mostly) ignored
+and this typically results in resource leaks. To improve here there is a
+quest to make the remove callback return void. In the first step of this
+quest all drivers are converted to .remove_new() which already returns
+void.
 
-Use the spinlock since it isn't easy to make RCU work, use
-refcount_inc_not_zero() to protect against partially initialized objects,
-and order the refcount_set() to be after the srq is fully initialized.
+Trivially convert this driver from always returning zero in the remove
+callback to the void returning variant.
 
-Cc: stable@vger.kernel.org
-Fixes: 30353bfc43a1 ("net/mlx4_core: Use RCU to perform radix tree lookup for SRQ")
-Link: https://sashiko.dev/#/patchset/0-v2-1c49eeb88c48%2B91-rdma_udata_rep_jgg%40nvidia.com?part=5
-Link: https://patch.msgid.link/r/12-v1-41f3135e5565+9d2-rdma_ai_fixes1_jgg@nvidia.com
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Link: https://lore.kernel.org/r/20230303172041.2103336-41-u.kleine-koenig@pengutronix.de
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: 0f997fdae819 ("spi: mpc52xx: fix controller deregistration")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx4/srq.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ drivers/spi/spi-mpc52xx.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx4/srq.c b/drivers/net/ethernet/mellanox/mlx4/srq.c
-index dd890f5d7b725..39a01aee3bef3 100644
---- a/drivers/net/ethernet/mellanox/mlx4/srq.c
-+++ b/drivers/net/ethernet/mellanox/mlx4/srq.c
-@@ -44,13 +44,14 @@ void mlx4_srq_event(struct mlx4_dev *dev, u32 srqn, int event_type)
+diff --git a/drivers/spi/spi-mpc52xx.c b/drivers/spi/spi-mpc52xx.c
+index c4d005c3363e9..f49859632d663 100644
+--- a/drivers/spi/spi-mpc52xx.c
++++ b/drivers/spi/spi-mpc52xx.c
+@@ -513,7 +513,7 @@ static int mpc52xx_spi_probe(struct platform_device *op)
+ 	return rc;
+ }
+ 
+-static int mpc52xx_spi_remove(struct platform_device *op)
++static void mpc52xx_spi_remove(struct platform_device *op)
  {
- 	struct mlx4_srq_table *srq_table = &mlx4_priv(dev)->srq_table;
- 	struct mlx4_srq *srq;
-+	unsigned long flags;
+ 	struct spi_master *master = spi_master_get(platform_get_drvdata(op));
+ 	struct mpc52xx_spi *ms = spi_master_get_devdata(master);
+@@ -531,8 +531,6 @@ static int mpc52xx_spi_remove(struct platform_device *op)
+ 	spi_unregister_master(master);
+ 	iounmap(ms->regs);
+ 	spi_master_put(master);
+-
+-	return 0;
+ }
  
--	rcu_read_lock();
-+	spin_lock_irqsave(&srq_table->lock, flags);
- 	srq = radix_tree_lookup(&srq_table->tree, srqn & (dev->caps.num_srqs - 1));
--	rcu_read_unlock();
--	if (srq)
--		refcount_inc(&srq->refcount);
--	else {
-+	if (!srq || !refcount_inc_not_zero(&srq->refcount))
-+		srq = NULL;
-+	spin_unlock_irqrestore(&srq_table->lock, flags);
-+	if (!srq) {
- 		mlx4_warn(dev, "Async event for bogus SRQ %08x\n", srqn);
- 		return;
- 	}
-@@ -203,8 +204,9 @@ int mlx4_srq_alloc(struct mlx4_dev *dev, u32 pdn, u32 cqn, u16 xrcd,
- 	if (err)
- 		goto err_radix;
- 
--	refcount_set(&srq->refcount, 1);
- 	init_completion(&srq->free);
-+	smp_wmb();
-+	refcount_set(&srq->refcount, 1);
- 
- 	return 0;
- 
+ static const struct of_device_id mpc52xx_spi_match[] = {
+@@ -547,6 +545,6 @@ static struct platform_driver mpc52xx_spi_of_driver = {
+ 		.of_match_table = mpc52xx_spi_match,
+ 	},
+ 	.probe = mpc52xx_spi_probe,
+-	.remove = mpc52xx_spi_remove,
++	.remove_new = mpc52xx_spi_remove,
+ };
+ module_platform_driver(mpc52xx_spi_of_driver);
 -- 
 2.53.0
 
