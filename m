@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793212561;
-	b=4SO5hZcD6Cx46TzALogXd3qAaLfNMm4aWH+UsHCO8+IpvoeHDxmg63ehD2guaZ2U3XA/
-	 fiCjqCdFH4rGezEuqotfIHz6A9dCiVn7sc+AanteLoDflerf4iUImy0wmNITN2GSgcR3m
-	 D3Pw3owNmiMq4Vzm2rN6eP6skxOn7bLfbvb2Gc7LRdc5zcw72sy+Wy9qlpRlS9Oo1sO+r
-	 N3tdsLoHTbyAut/GCeohidgqQRem90jA3k4A3ch92btGlE8YS5Nk7boOW+mHhDfWlLuND
-	 Fq70rj/xUDbpdk2l/nUpkFgSERZHxSCSkc2i1FvswjpEpbJc63dvDGUmRnBSEyCpttQ==
+	t=1793212564;
+	b=qnhpqL+8cmbcTgR/qfj0aEpgTC25URwxRWZENL+GDWgFI+MhfSXBJ5Tpr99W3RrJGb8s
+	 oc3AFqwC42v0eV7+33xSQ2jKxSwywI3f+4VADvbJ6Jf630s+Z8p7eNzQFTYG0vxr0BsTE
+	 7Xmi8LYTIk1GP6EN49C3iQw+T1A8mID2DYzN4AS85PnA2uTe3o8jBitKiC0TC+/cJDmJ6
+	 wU7cWtbxyV23U0OF098N3GtlupEFn1XR3bjhzITuWlywwsoVtP/VtQmPYIashzl70Hyo0
+	 vmONXgmvVZlYwM1jKJKsWY8WrD7q8deGna2T9ESGzMuiUnQp/sEdlNHC0xqAPcThvjw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793212561;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793212564;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=h31nhHppWxMkGNM4yIuPbcoC5TpkpYdoei6Ci6Y+Fbc=;
-	b=5tUY2MFL2TUf3e/q6scruvtS8r3Pkrf7AVf1Z9SjNEXUd370nGIIhxCqBm505+sitJDb
-	 d+rQyPBq2ehAQ2hRn7XaAVJTXL5WS89T7wLVq8lYjL+aLIpe0w0BWazt2CQ9aeeeCkY0L
-	 v44hLA5RLwLwporlbQbtgCwg0Zg4OwQF4Nxu+Pb8s/c34ZIPxanvhjRUQZRf1ayLWxXTX
-	 Tk2kJs2YnMHsuJPWixWRI1Oqm7P9JW/f0L2apbJs3IAGlDxa4Zcp0lylgegBLswMhOq0H
-	 heJOXdsq4n+Q2LMUFzJk2z4wWWPd+MRRXtGuUGgG3KwIgWCOE+CB34uEZcEMpZCh+NQ==
+	bh=KBHrJJLwjNh1eHyjydDFovQw5Zc0v/nMi1Vm1PzYZmA=;
+	b=1pzCMAaa7Y5KrjIJGxkwQpmHM/6nlFa20MCFnWkkaPKws0z0QQzlDi3/LRGG8ih85Fq2
+	 h9FDkL3v1A0sFBjmH65odTHgHohWae6lgesvpw/7ounVki5wyua0xeZ+OmWVAUhMzAbIC
+	 Tijy7aM0ei0yZnpp97/ku7MTCsxmPTpJnzszj5HMN8/ThK9RB8x2h4DwJHVC2vgON7/tT
+	 nIF+W7lBU2Vs6t5l+6DndroVEwZna+dpEYrxnKhSkzlzS9XyhU7rMxk0FIuvf0M2Vvupm
+	 QTkC7Rz8VGLaK5Pwyw9hFveNJ07dVEvrbzN/YMxuoxK9yxGdEMnj8MPb+8LL70+/PmA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gpKijs1C;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=POPiR0aX;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12DAC606A31C;
-	Wed, 28 Oct 2026 18:36:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8A38606A31C;
+	Wed, 28 Oct 2026 18:36:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gpKijs1C
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D5991F01825;
-	Wed, 28 Oct 2026 18:36:00 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=POPiR0aX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4484D1F01825;
+	Wed, 28 Oct 2026 18:36:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793212560;
-	bh=h31nhHppWxMkGNM4yIuPbcoC5TpkpYdoei6Ci6Y+Fbc=;
+	s=korg; t=1793212563;
+	bh=KBHrJJLwjNh1eHyjydDFovQw5Zc0v/nMi1Vm1PzYZmA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gpKijs1CEhm8b0UiRiOckYVxx0NSBdAFGczOyKFKbm9UJEfos25wkh4u0GZ/fLSkF
-	 fdyU3puFy7CfYEsd3lUka0b51kvsok5O+zRmgExtqeSZ9rwKbosUwqDFUzAUFiYCj9
-	 fbOg3nzMM4e2dmJ+pp2APh2A06Z/NAt73J5IXecU=
+	b=POPiR0aXRnIPz+OKxmrGY/Ch8X0Nvv9dQoZzPT5eK0am4gYCssH4WavsDxz4UBQvK
+	 b7zLGZ/lU0Z3FevSztf6/st6WqdMe1q5L/+28nonMoEw9JbkhJQSYuq5klBuvCWUum
+	 i2E/p+EVNdfi1Wps1JW5QcLd/xknGe9lfuAUiAOM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Schlameuss <schlameuss@linux.ibm.com>,
-	Claudio Imbrenda <imbrenda@linux.ibm.com>,
-	Janosch Frank <frankja@linux.ibm.com>,
+	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
 	Artem Dinaburg <artem@trailofbits.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0195/1887] kvm: s390: Reject memory region operations for ucontrol VMs
-Date: Wed, 28 Oct 2026 17:38:11 +0100
-Message-ID: <20261028170503.673434735@linuxfoundation.org>
+Subject: [PATCH 6.1 0196/1887] media: av7110: fix a spectre vulnerability
+Date: Wed, 28 Oct 2026 17:38:12 +0100
+Message-ID: <20261028170503.696008656@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -70,69 +68,120 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christoph Schlameuss <schlameuss@linux.ibm.com>
+From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 
-[ Upstream commit 7816e58967d0e6cadce05c8540b47ed027dc2499 ]
+[ Upstream commit 458ea1c0be991573ec436aa0afa23baacfae101a ]
 
-This change rejects the KVM_SET_USER_MEMORY_REGION and
-KVM_SET_USER_MEMORY_REGION2 ioctls when called on a ucontrol VM.
-This is necessary since ucontrol VMs have kvm->arch.gmap set to 0 and
-would thus result in a null pointer dereference further in.
-Memory management needs to be performed in userspace and using the
-ioctls KVM_S390_UCAS_MAP and KVM_S390_UCAS_UNMAP.
+As warned by smatch:
+	drivers/staging/media/av7110/av7110_ca.c:270 dvb_ca_ioctl() warn: potential spectre issue 'av7110->ci_slot' [w] (local cap)
 
-Also improve s390 specific documentation for KVM_SET_USER_MEMORY_REGION
-and KVM_SET_USER_MEMORY_REGION2.
+There is a spectre-related vulnerability at the code. Fix it.
 
-[ Backport to 6.1.y: omitted KVM_SET_USER_MEMORY_REGION2 documentation
-  because that ioctl is absent from 6.1. ]
+[ Backport to 6.1.y: added the explicit linux/nospec.h include required
+  by the older source. ]
 
-Signed-off-by: Christoph Schlameuss <schlameuss@linux.ibm.com>
-Fixes: 27e0393f15fc ("KVM: s390: ucontrol: per vcpu address spaces")
-Reviewed-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
-Link: https://lore.kernel.org/r/20240624095902.29375-1-schlameuss@linux.ibm.com
-Signed-off-by: Janosch Frank <frankja@linux.ibm.com>
-[frankja@linux.ibm.com: commit message spelling fix, subject prefix fix]
-Message-ID: <20240624095902.29375-1-schlameuss@linux.ibm.com>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@vger.kernel.org
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Assisted-by: LLM
 Signed-off-by: Artem Dinaburg <artem@trailofbits.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/virt/kvm/api.rst | 6 ++++++
- arch/s390/kvm/kvm-s390.c       | 3 +++
- 2 files changed, 9 insertions(+)
+ .../media/deprecated/saa7146/av7110/av7110.h  |  4 ++-
+ .../deprecated/saa7146/av7110/av7110_ca.c     | 26 +++++++++++++------
+ 2 files changed, 21 insertions(+), 9 deletions(-)
 
-diff --git a/Documentation/virt/kvm/api.rst b/Documentation/virt/kvm/api.rst
-index 1bc61bf804f1f..1f0f84501e59c 100644
---- a/Documentation/virt/kvm/api.rst
-+++ b/Documentation/virt/kvm/api.rst
-@@ -1382,6 +1382,12 @@ The KVM_SET_MEMORY_REGION does not allow fine grained control over memory
- allocation and is deprecated.
+diff --git a/drivers/staging/media/deprecated/saa7146/av7110/av7110.h b/drivers/staging/media/deprecated/saa7146/av7110/av7110.h
+index 9fde69b38f1ce..c2956c23d9c1e 100644
+--- a/drivers/staging/media/deprecated/saa7146/av7110/av7110.h
++++ b/drivers/staging/media/deprecated/saa7146/av7110/av7110.h
+@@ -86,6 +86,8 @@ struct infrared {
+ 	u32			ir_config;
+ };
  
- 
-+S390:
-+^^^^^
++#define MAX_CI_SLOTS	2
 +
-+Returns -EINVAL if the VM has the KVM_VM_S390_UCONTROL flag set.
-+Returns -EINVAL if called on a protected VM.
-+
- 4.36 KVM_SET_TSS_ADDR
- ---------------------
+ /* place to store all the necessary device information */
+ struct av7110 {
  
-diff --git a/arch/s390/kvm/kvm-s390.c b/arch/s390/kvm/kvm-s390.c
-index 9b9d8d37bcc41..0d4a05f3cdd93 100644
---- a/arch/s390/kvm/kvm-s390.c
-+++ b/arch/s390/kvm/kvm-s390.c
-@@ -5587,6 +5587,9 @@ int kvm_arch_prepare_memory_region(struct kvm *kvm,
+@@ -166,7 +168,7 @@ struct av7110 {
+ 
+ 	/* CA */
+ 
+-	struct ca_slot_info	ci_slot[2];
++	struct ca_slot_info	ci_slot[MAX_CI_SLOTS];
+ 
+ 	enum av7110_video_mode	vidmode;
+ 	struct dmxdev		dmxdev;
+diff --git a/drivers/staging/media/deprecated/saa7146/av7110/av7110_ca.c b/drivers/staging/media/deprecated/saa7146/av7110/av7110_ca.c
+index c1338e074a3dc..642af03fbac81 100644
+--- a/drivers/staging/media/deprecated/saa7146/av7110/av7110_ca.c
++++ b/drivers/staging/media/deprecated/saa7146/av7110/av7110_ca.c
+@@ -12,6 +12,7 @@
+  */
+ 
+ #include <linux/kernel.h>
++#include <linux/nospec.h>
+ #include <linux/types.h>
+ #include <linux/delay.h>
+ #include <linux/fs.h>
+@@ -26,23 +27,28 @@
+ 
+ void CI_handle(struct av7110 *av7110, u8 *data, u16 len)
  {
- 	gpa_t size;
- 
-+	if (kvm_is_ucontrol(kvm))
-+		return -EINVAL;
++	unsigned slot_num;
 +
- 	/* When we are protected, we should not change the memory slots */
- 	if (kvm_s390_pv_get_handle(kvm))
- 		return -EINVAL;
+ 	dprintk(8, "av7110:%p\n",av7110);
+ 
+ 	if (len < 3)
+ 		return;
+ 	switch (data[0]) {
+ 	case CI_MSG_CI_INFO:
+-		if (data[2] != 1 && data[2] != 2)
++		if (data[2] != 1 && data[2] != MAX_CI_SLOTS)
+ 			break;
++
++		slot_num = array_index_nospec(data[2] - 1, MAX_CI_SLOTS);
++
+ 		switch (data[1]) {
+ 		case 0:
+-			av7110->ci_slot[data[2] - 1].flags = 0;
++			av7110->ci_slot[slot_num].flags = 0;
+ 			break;
+ 		case 1:
+-			av7110->ci_slot[data[2] - 1].flags |= CA_CI_MODULE_PRESENT;
++			av7110->ci_slot[slot_num].flags |= CA_CI_MODULE_PRESENT;
+ 			break;
+ 		case 2:
+-			av7110->ci_slot[data[2] - 1].flags |= CA_CI_MODULE_READY;
++			av7110->ci_slot[slot_num].flags |= CA_CI_MODULE_READY;
+ 			break;
+ 		}
+ 		break;
+@@ -264,15 +270,19 @@ static int dvb_ca_ioctl(struct file *file, unsigned int cmd, void *parg)
+ 	case CA_GET_SLOT_INFO:
+ 	{
+ 		struct ca_slot_info *info=(struct ca_slot_info *)parg;
++		unsigned int slot_num;
+ 
+ 		if (info->num < 0 || info->num > 1) {
+ 			mutex_unlock(&av7110->ioctl_mutex);
+ 			return -EINVAL;
+ 		}
+-		av7110->ci_slot[info->num].num = info->num;
+-		av7110->ci_slot[info->num].type = FW_CI_LL_SUPPORT(av7110->arm_app) ?
+-							CA_CI_LINK : CA_CI;
+-		memcpy(info, &av7110->ci_slot[info->num], sizeof(struct ca_slot_info));
++		slot_num = array_index_nospec(info->num, MAX_CI_SLOTS);
++
++		av7110->ci_slot[slot_num].num = info->num;
++		av7110->ci_slot[slot_num].type = FW_CI_LL_SUPPORT(av7110->arm_app) ?
++						 CA_CI_LINK : CA_CI;
++		memcpy(info, &av7110->ci_slot[slot_num],
++		       sizeof(struct ca_slot_info));
+ 		break;
+ 	}
+ 
 -- 
 2.53.0
 
