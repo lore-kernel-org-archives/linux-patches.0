@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215142;
-	b=CuLQlS7KcmQtpYRXrtXdErdGi5NjFjRcye8HtaSETcq98mEABS8T+HTJHK12ckvjUyzf
-	 ejxEEBkM9VyiAAvuYj2C5eUbJVfbrOYC9OwU6VPBhsFWyriNyNpVFFtziWwEckYj8IVJy
-	 S/neB3cF/rxAWOFOc0W4z1vFq1yATgeng2BXVV12HLvqVkFspbvkipLB/jVmADmRJtn/p
-	 /noz+Z5Wf2PPuQjWvrgfEicya+9Kumwq6kA6KwgcEbtIeyNGvLcJ7aqZseDTHtsxcIDd4
-	 u/6xhM6EHHKCkljvC8kKpE/7Z0oq84kkE6mllTYTqIxh+2xV3pLlZGAiBS4hXtNYMNw==
+	t=1793215145;
+	b=Yt2ANE0mYU8tZTUcQMjbYtT394iJnOuSVCX2vU9c00xGwKU6WGPXGZkC6XBaxANzRXm0
+	 B8dT+aQGBZkSij4YYDvNcTcsXJET7Qb9qEnVfxBZrShvIjBl27QE1ns2z7AOcsghCZXjQ
+	 bdnE+MWIeCxHsos6Ol/a5/ch7BR3d/rmga+4VFrzGxNNMw+QNX1y2fSCVRCpNk6iNIWsb
+	 Kqh4gke3BSm33IRYhS8atmNRed/b3MCN5vuf4jnR+x+x6Q/EVkweEmJ8oHO5a90Vl6xh4
+	 a4K3GBl399OgEI0ODZrOiQjGkRJycvg9f6RG1n696fH2ybAG6uXPbwHtAoszP+m9Q1A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215142;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215145;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=UA4Y1iXdygKn085a4+ItUejfSlOIl2l0MB2IlXhwUOQ=;
-	b=J4H3Q5+bPxVcTt8T30qrAOoz9dmkB41LzO8VDOSdQ6I8B7UjiKk405PRqFbW5gom93pm
-	 jMDEBExFfyNb5LdGXHYdge9ZzW9BAMHraDtSemCy8QexmFQycIp8fpJxtoNhYcXre/uOW
-	 bTZaposeOhMJFbs3uUZfdI8wQpAWLoi0r5yzanDSalhvatyvIcaKvIzPH8WlCwoJIbtlY
-	 LqB08FEowI06v4o/OocDTla9IZ+lzFLbSV94eNYKysPNNU+C+n8ct40akRQgLCT254Xan
-	 X4WRj2rGDNd3dmZMEkW2e+hNSlLzJRf/0K6XYM0RHfilVRwgMfXI1kqvcu6jULm0Cww==
+	bh=RK/usSm1omVIa+0ztDI1I89dEkmItwFHQtuQgZsb8xE=;
+	b=yovMHO9z5+r2ZfJjFPiO43+PeL/mCOBYxW8dTCAioFqNOay+jo7x9YE4jfzzrUhTM87v
+	 pk51ogqrh5X5OYrKhQgnCeyEiXi4qYMLh33yxCFm9goIO0IiRWBDSzAcbNZVnb91bR7Ji
+	 INH7C1pXkhiD11zvOzcRWqiMJfQigX8x+Jo8VGbUxyiyBzmESPOIXVnhjALFkw6AmmFxi
+	 Ydy0EebDxkXf3OZ+CA6XHIFJM/eEV1SX+DT4naHA3QgkiMcaazFP0EWv0DVKVfs2nBkuX
+	 xl0TGGy+q8eTrg6RVq1xbg2oDtypQqjo1HvBveziMokQI9uNcRvHT0ylo7bvikoGsXw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OebQc11i;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=po5O8Klz;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ACFB606A32E;
-	Wed, 28 Oct 2026 19:19:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D16EE606A322;
+	Wed, 28 Oct 2026 19:19:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OebQc11i
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B8671F031E8;
-	Wed, 28 Oct 2026 19:19:01 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=po5O8Klz
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2ED0F1F01828;
+	Wed, 28 Oct 2026 19:19:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215141;
-	bh=UA4Y1iXdygKn085a4+ItUejfSlOIl2l0MB2IlXhwUOQ=;
+	s=korg; t=1793215144;
+	bh=RK/usSm1omVIa+0ztDI1I89dEkmItwFHQtuQgZsb8xE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OebQc11ivKD/xWiYtPqyuQXqgPwl/xsaAi8L88IwxG69XCKGg+hrNyyPiPeJo+2a3
-	 eMQcoraUKWOi80vWer5eqlEJinhhw3bzX7QlwlCOZXUgusi72B07GYVeXDRnxJ5hWC
-	 vJHEj9s6bOcYw5x9XIU53ZqkZgrHKo6R1uL3Agqs=
+	b=po5O8KlzHM3yHAptYvX3t+TNlvQKODtapqSt7tEeDs5yFHw+FJ6RFD+wybQ/XMzxO
+	 9g4APiq35bIkum6kiZBE5KyR/7TboTIl4hkrOfGJbVMK2IHVc7J8Pe4XP63PZUsRGb
+	 VyK9eU13CN6XXZubYsRv/dmudAzBoFWJcpGWV6ps=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rory Little <rory@candelatech.com>,
-	Felix Fietkau <nbd@nbd.name>,
+	Harry Wentland <harry.wentland@amd.com>,
+	Ray Wu <ray.wu@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1107/1887] wifi: mt76: mt7921: Place upper limit on station AID
-Date: Wed, 28 Oct 2026 17:53:23 +0100
-Message-ID: <20261028170524.595601123@linuxfoundation.org>
+Subject: [PATCH 6.1 1108/1887] drm/amd/display: Fix out-of-bounds read in dp_get_eq_aux_rd_interval()
+Date: Wed, 28 Oct 2026 17:53:24 +0100
+Message-ID: <20261028170524.618462305@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,71 +70,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rory Little <rory@candelatech.com>
+From: Harry Wentland <harry.wentland@amd.com>
 
-[ Upstream commit 4d0bf21e3e20619d51d06c0c36207aabab8b712c ]
+[ Upstream commit e8b4d37eba05141ee01794fc6b7f2da808cee83b ]
 
-Any station configured with an AID over 20 causes a firmware crash.
-This situation occurred in our testing using an AP interface on 7922
-hardware, with a modified hostapd, sourced from Mediatek's OpenWRT
-feeds.
+[Why & How]
+The aux_rd_interval array in struct dc_lttpr_caps is declared with
+MAX_REPEATER_CNT - 1 (7) elements, indexed 0..6. However, the offset
+parameter passed to dp_get_eq_aux_rd_interval() can be as large as
+MAX_REPEATER_CNT (8) when a sink reports 8 LTTPR repeaters via DPCD.
+This leads to an out-of-bounds read of aux_rd_interval[7] when offset
+is 8.
 
-In stock hostapd, station AIDs begin counting at 1, and this
-configuration is prevented with an upper limit on associated stations.
-However, the modified hostapd began allocation at 65, which caused the
-firmware to crash. This fix does not allow these AIDs to work, but will
-prevent the firmware crash.
+Fix this by growing aux_rd_interval to MAX_REPEATER_CNT elements to
+accommodate the full range of valid repeater counts defined by the DP
+spec.
 
-This crash was only seen on IFTYPE_AP interfaces, and the fix does not
-appear to have an effect on IFTYPE_STATION behavior.
-
-Fixes: 5c14a5f944b9 ("mt76: mt7921: introduce mt7921e support")
-Signed-off-by: Rory Little <rory@candelatech.com>
-Link: https://patch.msgid.link/20250904000711.3033860-1-rory@candelatech.com
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Assisted-by: GitHub Copilot:Claude claude-4-opus
+Signed-off-by: Harry Wentland <harry.wentland@amd.com>
+Signed-off-by: Ray Wu <ray.wu@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit a55a458a8df37a65ffda5cf721d554a8f74f6b04)
+Cc: stable@vger.kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7921/main.c   | 6 ++++++
- drivers/net/wireless/mediatek/mt76/mt7921/mt7921.h | 2 ++
- 2 files changed, 8 insertions(+)
+ drivers/gpu/drm/amd/display/dc/dc_types.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7921/main.c b/drivers/net/wireless/mediatek/mt76/mt7921/main.c
-index 6c59ad33d3205..2283682aec65c 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7921/main.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7921/main.c
-@@ -716,6 +716,9 @@ int mt7921_mac_sta_add(struct mt76_dev *mdev, struct ieee80211_vif *vif,
- 	struct mt7921_vif *mvif = (struct mt7921_vif *)vif->drv_priv;
- 	int ret, idx;
+diff --git a/drivers/gpu/drm/amd/display/dc/dc_types.h b/drivers/gpu/drm/amd/display/dc/dc_types.h
+index 6050a3469a57c..579a38478d0f8 100644
+--- a/drivers/gpu/drm/amd/display/dc/dc_types.h
++++ b/drivers/gpu/drm/amd/display/dc/dc_types.h
+@@ -403,7 +403,7 @@ struct dc_lttpr_caps {
+ 	uint8_t max_ext_timeout;
+ 	union dp_main_link_channel_coding_lttpr_cap main_link_channel_coding;
+ 	union dp_128b_132b_supported_lttpr_link_rates supported_128b_132b_rates;
+-	uint8_t aux_rd_interval[MAX_REPEATER_CNT - 1];
++	uint8_t aux_rd_interval[MAX_REPEATER_CNT];
+ };
  
-+	if (sta->aid > MT7921_MAX_AID)
-+		return -ENOENT;
-+
- 	idx = mt76_wcid_alloc(dev->mt76.wcid_mask, MT7921_WTBL_STA - 1);
- 	if (idx < 0)
- 		return -ENOSPC;
-@@ -756,6 +759,9 @@ void mt7921_mac_sta_assoc(struct mt76_dev *mdev, struct ieee80211_vif *vif,
- 	struct mt7921_sta *msta = (struct mt7921_sta *)sta->drv_priv;
- 	struct mt7921_vif *mvif = (struct mt7921_vif *)vif->drv_priv;
- 
-+	if (sta->aid > MT7921_MAX_AID)
-+		return;
-+
- 	mt7921_mutex_acquire(dev);
- 
- 	if (vif->type == NL80211_IFTYPE_STATION && !sta->tdls)
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7921/mt7921.h b/drivers/net/wireless/mediatek/mt76/mt7921/mt7921.h
-index d36b940c0a07a..1e2f914558a2e 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7921/mt7921.h
-+++ b/drivers/net/wireless/mediatek/mt76/mt7921/mt7921.h
-@@ -21,6 +21,8 @@
- #define MT7921_WATCHDOG_TIME		(HZ / 4)
- #define MT7921_RESET_TIMEOUT		(30 * HZ)
- 
-+#define MT7921_MAX_AID                  20
-+
- #define MT7921_TX_RING_SIZE		2048
- #define MT7921_TX_MCU_RING_SIZE		256
- #define MT7921_TX_FWDL_RING_SIZE	128
+ struct dc_dongle_dfp_cap_ext {
 -- 
 2.53.0
 
