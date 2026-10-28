@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213260;
-	b=Wtk14f0s5npLQxyAuoPzZJzu2U2m4rr8JdtxUtnp3sEvOR8pGowEgbzALfwj/3Sx6pii
-	 hm0fB48nWKKV7JSawGr9CIUFAOesf9GZf2yGo850pTYTJpoH5WPoE7GajDLJJStvCNUYN
-	 wMNI5ojkRZUzlk/mJF1rjx6HQibBdVsn1dL3+NOJL4UTzTfiWhxS8eBGKtbTgWSzT8eDN
-	 D7gdEFgHFJa56ksRanEsVf+sK7cWpvplq/phECVr2bn2t79aKzIjkT4gX0V5Nnv06RcsP
-	 Ta+CyyIzw7FXVzXDnKJBIW+Q/HLmdlS+KJ4K9eBv528QCoiR9Z83GJ+2dc1XHgQfLYw==
+	t=1793213263;
+	b=o1VXKyPiXGeNpd/CgqC8OOPGkC2rvbDYDXACrelilF6IUOIVN9Sjk1ith2PsMqtR5RFD
+	 +qPU153+lUZw8JczxQfRVPsBAJvVxQcsBM3i4/Vkj5f+uSdZ/T0Wq3HAsR/ka10jNMYby
+	 7rQePqIOs8Tvq1gjsT41zW8bh5wu8lO8/RWTcRwJhXTQ6BegbktMor202X2fHgqiE6sxE
+	 26OHnRWpWSS2D72rgireLKPyUZddcYL2Y6xKy9HZuqByfnwApssppSA4SeEnHtTxpYisS
+	 9bgJv6YVGZ2XJoVuda0jf0FWaQJTyKxGYQRTyiJCeCwvJMYPfLOX9qHiDUP7TBIvltg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213260;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213263;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=FQDM7/Yn06xnIpBald1Z+eBpS3QBVjOViunvIuzNygg=;
-	b=Y9SbHUzFSoKdQbTbm9XhdPdfUi5dEB2sWeRvlBiJ+fB/LEDJUgOt6KQqoNixpmpJbXsA
-	 JISp7W//JY/QTNLx+4yCGB3EWk12vEDE81bSzPdGWu8h17OhkTGCgDhZSMqhSygS7B1EY
-	 mBzycYT4k3/YybnR5orcJRYgKvoSFbOhMegzEDf7cTBgalcSMZ6weun08GA7y51czNaXg
-	 l2CFkB4f4VcuDUGKripQYSK0SjgYEXE2bHT4l9nvgxz2mZUt2vBn/pPZ2FvBTkiLdvim8
-	 +ycNwTgp3ew6fFAZbNxqC7owWc2m8sj3IHz5N2TJp+b/VBlvgXpqa7dcFsy61fINaVQ==
+	bh=/l/fj9oSdXe3V9TwS2VpNxnJ4g3z0+TQDQoaxmIJxWQ=;
+	b=j+r3coUJEgqYp1ULgFybk+7HXQPXzftmQ2wWj/iOXYIGhJwb8mxNBzMKUuO+2OO9Q1bW
+	 CoQkHOZQju6ELjpsUyk/noYhd0EmNq82E54/3ly6t4qMM2AyNJrMt+reRvJBHYC3H8ZUP
+	 HRXiD0on3wM+iFnzhHFnYxjNe5fgcgZ7aG6hOOpuJh4iouUtNse6Q0bhyXlT3GnVcG7be
+	 8TlfcKGcjxdEcB5lEFZM+T2mAYBTtGWilVmJCsT/PDbfT2GK0yWAWEMH83a11Jk2em1Ve
+	 XcrSOsLYedeK5DdE3zYea8vMY5bpWXMgz4m9KHmtpvLV1saeMQTaaTZ/5VRBfhgxjiQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=COUSWcgF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=o5zxKQEF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7192E606A31A;
-	Wed, 28 Oct 2026 18:47:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D313606A31A;
+	Wed, 28 Oct 2026 18:47:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=COUSWcgF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C30A91F01825;
-	Wed, 28 Oct 2026 18:47:39 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=o5zxKQEF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D6DB1F01825;
+	Wed, 28 Oct 2026 18:47:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213260;
-	bh=FQDM7/Yn06xnIpBald1Z+eBpS3QBVjOViunvIuzNygg=;
+	s=korg; t=1793213263;
+	bh=/l/fj9oSdXe3V9TwS2VpNxnJ4g3z0+TQDQoaxmIJxWQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=COUSWcgFxcGQfVHw+gV1xGQMiEzRnCJ01Jeyw0b7zLeLG0cUKaUZCc2t/MclbNl3C
-	 1kdSp8QjOsOuA9HST9tBDe53xa3nd86q/GSj10kA7FCh8rUkNwr5jIS6RipzzlAbKw
-	 QwbKO1dZYmAxDgrGCHv55gqrfndPV4OHIsDXmzX0=
+	b=o5zxKQEF8csIithNLp5ffrP5cc3JmgDPrd28MHTtd+ALlus5kUDiq8lLtsuS+jCLG
+	 oAlGMx3B079EJbCpJX5jaYRRDN5kYWGUiK04ZQNS4TXnikvItvEa7+AHGb08uHXVIe
+	 FxkBIjK2FiR5Xu65WLzcU+A3CdJvf2oi1/I5DL9c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.1 0436/1887] btrfs: scrub: fix local_root reference leak in scrub_print_warning_inode()
-Date: Wed, 28 Oct 2026 17:42:12 +0100
-Message-ID: <20261028170509.152505157@linuxfoundation.org>
+	Takashi Iwai <tiwai@suse.de>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 6.1 0445/1887] Revert "wifi: libertas: reject short monitor TX frames"
+Date: Wed, 28 Oct 2026 17:42:21 +0100
+Message-ID: <20261028170509.358218423@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,42 +67,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Johannes Berg <johannes.berg@intel.com>
 
-commit 1fd742c7479961da6d0bb794ef8ac6b7b9442847 upstream.
+commit 9727d1c4e1c971fc42b049b645fdda6852758835 upstream.
 
-When paths_from_inode() fails, scrub_print_warning_inode() jumps to err
-without dropping the reference taken by btrfs_get_fs_root(), leaking a
-reference to the root every time path resolution fails while printing
-scrub warnings.  Every other error and success path of the function
-drops the reference.
+This reverts commit 13ff543e0b2c713aedeaadadde686686e949dc78.
 
-Drop the reference on the paths_from_inode() failure path too.
+The 'goto free' just made things worse, causing a spinlock
+to be handled incorrectly. Revert this for now.
 
-Fixes: 558540c17771 ("btrfs scrub: print paths of corrupted files")
-CC: stable@vger.kernel.org
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Reported-by: Takashi Iwai <tiwai@suse.de>
+Cc: stable@vger.kernel.org
+Fixes: 13ff543e0b2c ("wifi: libertas: reject short monitor TX frames")
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/scrub.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/wireless/marvell/libertas/tx.c |    7 -------
+ 1 file changed, 7 deletions(-)
 
---- a/fs/btrfs/scrub.c
-+++ b/fs/btrfs/scrub.c
-@@ -851,8 +851,10 @@ static int scrub_print_warning_inode(u64
- 	}
- 	ret = paths_from_inode(inum, ipath);
+--- a/drivers/net/wireless/marvell/libertas/tx.c
++++ b/drivers/net/wireless/marvell/libertas/tx.c
+@@ -117,13 +117,6 @@ netdev_tx_t lbs_hard_start_xmit(struct s
+ 	if (priv->wdev->iftype == NL80211_IFTYPE_MONITOR) {
+ 		struct tx_radiotap_hdr *rtap_hdr = (void *)skb->data;
  
--	if (ret < 0)
-+	if (ret < 0) {
-+		btrfs_put_root(local_root);
- 		goto err;
-+	}
+-		if (skb->len < sizeof(*rtap_hdr) + 4 + ETH_ALEN) {
+-			lbs_deb_tx("tx err: short monitor frame %u\n", skb->len);
+-			dev->stats.tx_dropped++;
+-			dev->stats.tx_errors++;
+-			goto free;
+-		}
+-
+ 		/* set txpd fields from the radiotap header */
+ 		txpd->tx_control = cpu_to_le32(convert_radiotap_rate_to_mv(rtap_hdr->rate));
  
- 	/*
- 	 * we deliberately ignore the bit ipath might have been too small to
 
 
