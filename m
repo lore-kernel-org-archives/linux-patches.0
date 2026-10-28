@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214743;
-	b=18EZ1dSM+Ra/n30O4C90VeehoixSBTlmrrN4f8mVTuDmiTDgubgfSBiYRtxARGU8LlNA
-	 RUzXJUA1p/WRJJR14q1mPzuQJ+DhKf/Mj9qpS+/vD39d5vUba242IfAYxaAAmo3KxCojZ
-	 Jon5pT0H6TY1YCacTWu5enWFQ028ZkEmejrIGYB4bw7FWEFxIdGC7vk6nzBRmzr8XkMVl
-	 yhSz6jpNj2n85EhffQPjGQUi51Yfaic1U7SC0tQZ34YaYo5FwskHzdj0TeyZdWPaD9nyL
-	 yjd7PDJ7g3TN1Z1soaawy9g92LJ6g6wv8spXAE6PeHZcXRzSadHracZDqd75RV6W2lA==
+	t=1793214746;
+	b=sZg2XZbexv1zUn6FMSXMfw4Q1RwnTU9o+p9Ga4RJeD2+WrQG5qtNT2MrZLp4DQMM6bTi
+	 BfZkApetrhjRS26m95/K0IXP5fyLY4hdXDzntcYdjejMqHDUtQqi1B1F5ddXJBwtdo4Rk
+	 KcGRgjHAKO11vIDx328mHmSPi83jM0iyq7paeNXVfj8iOPyaw2I4tBpvWOELV3hUuuXMe
+	 McxNB+wIQX8Trrlta6c3fL9iuWDV0R1oAekMkKIrhrgOLC9n2gVbw4meu855IOyO9myOh
+	 9//SxXiBelHakMDiPokU7HAYNgV6JKgsQICxNa75qQ/8eLxv/HeDuUEmx2hevqguB0g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214743;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214746;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=vUGquj54HQAvhX4ZuEy1Vomx8F7U3Zm8jukraEtnIVk=;
-	b=JSByuy1Fm3p0+CujbmaTDjIe9IcRXu5k85ZCk6nugmA09JO7SbqiKOE8TMQvfB7eulUR
-	 gqTz8WCifoclqYbhnkNOtPBGWN0f925gi2nOVSE0IeCy68IHrpD6ZKt1tt4bIXye9eKgZ
-	 IltzQQgtt55jmiSkRjTeoYT+vOePJQ0DnvdpFcP6sEpiVVF/BCjt+HTDsZfirmsu4mBOL
-	 hziEY9LdJLy8GUihLrz0949tUaQ+vY6HAyPpbvB9nFYOknAFrnWLpEdhcDHsdbAzgTEVj
-	 a316YpFMKhTGce5Fe9eSTBoaUG0lOs77ArowyPLZGvnyuMZG5iT9JHVhQiIgpBveCIA==
+	bh=MpIA9dj78fyGSOx47QLbC7t/AmgDmOhFLWhgCtQ+i1A=;
+	b=cOoMxDO/TA/3F+X+FjNJ1nwzN4MecagZPN3Ar2dKa6lZ3wmR2gEr8sOrVzF+jSir1j/5
+	 Gc/ffZYVNz93NIJUExHksfJAG4ihavMnGIctyS5cNmQE6VbekDpiLT1FYwhhlT78OoWZU
+	 /ueH1Ljr8JetGkdC9vmYp+S9j/MYsif62gSEAT7Vya11vvPAIqmFwi0g1niiibs28Hhar
+	 nVCpwjf6hArfiGqSogObypuFs3+g/bVwFOv9dHIb8ZSqtfd0J/9r55in1gHE1SPr2IXhI
+	 7msF4Y/kRsluCkh0CFJ93/mE9EYhQs6VnkBVYq3NRdNSmDqQGG7T67VYXMtMbup5n5A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AUXA5hPW;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NZUAwY22;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19E4360A261B;
-	Wed, 28 Oct 2026 19:12:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A802960A262A;
+	Wed, 28 Oct 2026 19:12:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AUXA5hPW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 332561F01825;
-	Wed, 28 Oct 2026 19:12:22 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NZUAwY22
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 064F81F01825;
+	Wed, 28 Oct 2026 19:12:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214742;
-	bh=vUGquj54HQAvhX4ZuEy1Vomx8F7U3Zm8jukraEtnIVk=;
+	s=korg; t=1793214745;
+	bh=MpIA9dj78fyGSOx47QLbC7t/AmgDmOhFLWhgCtQ+i1A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AUXA5hPWdE3MTJ0M/ou9KxCUO5F1WoxSNc2KYDztd0uUOGgtRtJcVWlbqy+thUY+6
-	 xmR8wmwMKYp0wA+Yr5Ur2/KYRjVqolVS3yUCVw4Wvu1OIOCwik2N+SqkqEv50jxSgd
-	 wwCA0P8DY3U8Pm00vpSKshi5Ym9BLn12r9nHApMk=
+	b=NZUAwY22EhJPSxFVX0GFw1DQDnERaulath2/xQK6kHEm0VSUz1nwVSI+0FInwlbhc
+	 eN1jYEtbvVCPMZB7OJBQEsM8m2sehAhDvLByHwH6nAoujsjgVTDxEohheIaWsQPHpR
+	 XLMv1PdD16xQbdHnEUF9R8bCypS7lfZj12vUIMok=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Kuen-Han Tsai <khtsai@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0966/1887] usb: gadget: f_eem: Fix net_device lifecycle with device_move
-Date: Wed, 28 Oct 2026 17:51:02 +0100
-Message-ID: <20261028170521.389834955@linuxfoundation.org>
+Subject: [PATCH 6.1 0967/1887] usb: gadget: f_ecm: Fix net_device lifecycle with device_move
+Date: Wed, 28 Oct 2026 17:51:03 +0100
+Message-ID: <20261028170521.414093112@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,18 +69,18 @@ Content-Transfer-Encoding: 8bit
 
 From: Kuen-Han Tsai <khtsai@google.com>
 
-[ Upstream commit d9270c9a8118c1535409db926ac1e2545dc97b81 ]
+[ Upstream commit b2cc4fae67a51f60d81d6af2678696accb07c656 ]
 
 The net_device is allocated during function instance creation and
 registered during the bind phase with the gadget device as its sysfs
 parent. When the function unbinds, the parent device is destroyed, but
 the net_device survives, resulting in dangling sysfs symlinks:
 
-console:/ # ls -l /sys/class/net/usb0
-lrwxrwxrwx ... /sys/class/net/usb0 ->
-/sys/devices/platform/.../gadget.0/net/usb0
-console:/ # ls -l /sys/devices/platform/.../gadget.0/net/usb0
-ls: .../gadget.0/net/usb0: No such file or directory
+  console:/ # ls -l /sys/class/net/usb0
+  lrwxrwxrwx ... /sys/class/net/usb0 ->
+  /sys/devices/platform/.../gadget.0/net/usb0
+  console:/ # ls -l /sys/devices/platform/.../gadget.0/net/usb0
+  ls: .../gadget.0/net/usb0: No such file or directory
 
 Use device_move() to reparent the net_device between the gadget device
 tree and /sys/devices/virtual across bind and unbind cycles. During the
@@ -93,166 +93,130 @@ To maintain compatibility with legacy composite drivers (e.g., multi.c),
 the bound flag is used to indicate whether the network device is shared
 and pre-registered during the legacy driver's bind phase.
 
-Fixes: b29002a15794 ("usb: gadget: f_eem: convert to new function interface with backward compatibility")
+Fixes: fee562a6450b ("usb: gadget: f_ecm: convert to new function interface with backward compatibility")
 Cc: stable@vger.kernel.org
 Signed-off-by: Kuen-Han Tsai <khtsai@google.com>
-Link: https://patch.msgid.link/20260320-usb-net-lifecycle-v1-5-4886b578161b@google.com
+Link: https://patch.msgid.link/20260320-usb-net-lifecycle-v1-4-4886b578161b@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/function/f_eem.c | 59 +++++++++++++++--------------
- drivers/usb/gadget/function/u_eem.h | 21 +++++++---
- 2 files changed, 46 insertions(+), 34 deletions(-)
+ drivers/usb/gadget/function/f_ecm.c | 41 +++++++++++++++++------------
+ drivers/usb/gadget/function/u_ecm.h | 21 ++++++++++-----
+ 2 files changed, 39 insertions(+), 23 deletions(-)
 
-diff --git a/drivers/usb/gadget/function/f_eem.c b/drivers/usb/gadget/function/f_eem.c
-index a308163fc8bcc..803fe047c512c 100644
---- a/drivers/usb/gadget/function/f_eem.c
-+++ b/drivers/usb/gadget/function/f_eem.c
-@@ -7,6 +7,7 @@
-  * Copyright (C) 2009 EF Johnson Technologies
-  */
- 
-+#include <linux/cleanup.h>
- #include <linux/kernel.h>
- #include <linux/module.h>
- #include <linux/device.h>
-@@ -251,24 +252,22 @@ static int eem_bind(struct usb_configuration *c, struct usb_function *f)
+diff --git a/drivers/usb/gadget/function/f_ecm.c b/drivers/usb/gadget/function/f_ecm.c
+index 35ec50685b499..4ea8787734f97 100644
+--- a/drivers/usb/gadget/function/f_ecm.c
++++ b/drivers/usb/gadget/function/f_ecm.c
+@@ -692,6 +692,7 @@ ecm_bind(struct usb_configuration *c, struct usb_function *f)
  	struct usb_ep		*ep;
  
- 	struct f_eem_opts	*eem_opts;
+ 	struct f_ecm_opts	*ecm_opts;
 +	struct net_device	*net __free(detach_gadget) = NULL;
+ 	struct usb_request	*request __free(free_usb_request) = NULL;
  
- 	eem_opts = container_of(f->fi, struct f_eem_opts, func_inst);
+ 	if (!can_support_ecm(cdev->gadget))
+@@ -699,22 +700,18 @@ ecm_bind(struct usb_configuration *c, struct usb_function *f)
+ 
+ 	ecm_opts = container_of(f->fi, struct f_ecm_opts, func_inst);
+ 
 -	/*
 -	 * in drivers/usb/gadget/configfs.c:configfs_composite_bind()
 -	 * configurations are bound in sequence with list_for_each_entry,
 -	 * in each configuration its functions are bound in sequence
 -	 * with list_for_each_entry, so we assume no race condition
--	 * with regard to eem_opts->bound access
+-	 * with regard to ecm_opts->bound access
 -	 */
--	if (!eem_opts->bound) {
--		mutex_lock(&eem_opts->lock);
--		gether_set_gadget(eem_opts->net, cdev->gadget);
--		status = gether_register_netdev(eem_opts->net);
--		mutex_unlock(&eem_opts->lock);
+-	if (!ecm_opts->bound) {
+-		mutex_lock(&ecm_opts->lock);
+-		gether_set_gadget(ecm_opts->net, cdev->gadget);
+-		status = gether_register_netdev(ecm_opts->net);
+-		mutex_unlock(&ecm_opts->lock);
 -		if (status)
 -			return status;
--		eem_opts->bound = true;
+-		ecm_opts->bound = true;
 -	}
-+
-+	scoped_guard(mutex, &eem_opts->lock)
-+		if (eem_opts->bind_count == 0 && !eem_opts->bound) {
-+			if (!device_is_registered(&eem_opts->net->dev)) {
-+				gether_set_gadget(eem_opts->net, cdev->gadget);
-+				status = gether_register_netdev(eem_opts->net);
++	scoped_guard(mutex, &ecm_opts->lock)
++		if (ecm_opts->bind_count == 0 && !ecm_opts->bound) {
++			if (!device_is_registered(&ecm_opts->net->dev)) {
++				gether_set_gadget(ecm_opts->net, cdev->gadget);
++				status = gether_register_netdev(ecm_opts->net);
 +			} else
-+				status = gether_attach_gadget(eem_opts->net, cdev->gadget);
++				status = gether_attach_gadget(ecm_opts->net, cdev->gadget);
 +
 +			if (status)
 +				return status;
-+			net = eem_opts->net;
++			net = ecm_opts->net;
 +		}
  
- 	us = usb_gstrings_attach(cdev, eem_strings,
- 				 ARRAY_SIZE(eem_string_defs));
-@@ -279,21 +278,19 @@ static int eem_bind(struct usb_configuration *c, struct usb_function *f)
- 	/* allocate instance-specific interface IDs */
- 	status = usb_interface_id(c, f);
- 	if (status < 0)
--		goto fail;
-+		return status;
- 	eem->ctrl_id = status;
- 	eem_intf.bInterfaceNumber = status;
+ 	ecm_string_defs[1].s = ecm->ethaddr;
  
--	status = -ENODEV;
--
- 	/* allocate instance-specific endpoints */
- 	ep = usb_ep_autoconfig(cdev->gadget, &eem_fs_in_desc);
- 	if (!ep)
--		goto fail;
-+		return -ENODEV;
- 	eem->port.in_ep = ep;
+@@ -805,6 +802,9 @@ ecm_bind(struct usb_configuration *c, struct usb_function *f)
  
- 	ep = usb_ep_autoconfig(cdev->gadget, &eem_fs_out_desc);
- 	if (!ep)
--		goto fail;
-+		return -ENODEV;
- 	eem->port.out_ep = ep;
+ 	ecm->notify_req = no_free_ptr(request);
  
- 	/* support all relevant hardware speeds... we expect that when
-@@ -309,18 +306,16 @@ static int eem_bind(struct usb_configuration *c, struct usb_function *f)
- 	status = usb_assign_descriptors(f, eem_fs_function, eem_hs_function,
- 			eem_ss_function, eem_ss_function);
- 	if (status)
--		goto fail;
-+		return status;
-+
-+	eem_opts->bind_count++;
++	ecm_opts->bind_count++;
 +	no_free_ptr(net);
- 
- 	DBG(cdev, "CDC Ethernet (EEM): %s speed IN/%s OUT/%s\n",
++
+ 	DBG(cdev, "CDC Ethernet: %s speed IN/%s OUT/%s NOTIFY/%s\n",
  			gadget_is_superspeed(c->cdev->gadget) ? "super" :
  			gadget_is_dualspeed(c->cdev->gadget) ? "dual" : "full",
- 			eem->port.in_ep->name, eem->port.out_ep->name);
- 	return 0;
--
--fail:
--	ERROR(cdev, "%s: can't bind, err %d\n", f->name, status);
--
--	return status;
- }
+@@ -853,7 +853,7 @@ static void ecm_free_inst(struct usb_function_instance *f)
+ 	struct f_ecm_opts *opts;
  
- static void eem_cmd_complete(struct usb_ep *ep, struct usb_request *req)
-@@ -599,7 +594,7 @@ static void eem_free_inst(struct usb_function_instance *f)
- 	struct f_eem_opts *opts;
- 
- 	opts = container_of(f, struct f_eem_opts, func_inst);
+ 	opts = container_of(f, struct f_ecm_opts, func_inst);
 -	if (opts->bound)
 +	if (device_is_registered(&opts->net->dev))
  		gether_cleanup(netdev_priv(opts->net));
  	else
  		free_netdev(opts->net);
-@@ -642,9 +637,17 @@ static void eem_free(struct usb_function *f)
- 
- static void eem_unbind(struct usb_configuration *c, struct usb_function *f)
+@@ -897,9 +897,12 @@ static void ecm_free(struct usb_function *f)
+ static void ecm_unbind(struct usb_configuration *c, struct usb_function *f)
  {
-+	struct f_eem_opts *opts;
-+
- 	DBG(c->cdev, "eem unbind\n");
+ 	struct f_ecm		*ecm = func_to_ecm(f);
++	struct f_ecm_opts	*ecm_opts;
  
-+	opts = container_of(f->fi, struct f_eem_opts, func_inst);
+ 	DBG(c->cdev, "ecm unbind\n");
+ 
++	ecm_opts = container_of(f->fi, struct f_ecm_opts, func_inst);
 +
  	usb_free_all_descriptors(f);
+ 
+ 	if (atomic_read(&ecm->notify_count)) {
+@@ -909,6 +912,10 @@ static void ecm_unbind(struct usb_configuration *c, struct usb_function *f)
+ 
+ 	kfree(ecm->notify_req->buf);
+ 	usb_ep_free_request(ecm->notify, ecm->notify_req);
 +
-+	opts->bind_count--;
-+	if (opts->bind_count == 0 && !opts->bound)
-+		gether_detach_gadget(opts->net);
++	ecm_opts->bind_count--;
++	if (ecm_opts->bind_count == 0 && !ecm_opts->bound)
++		gether_detach_gadget(ecm_opts->net);
  }
  
- static struct usb_function *eem_alloc(struct usb_function_instance *fi)
-diff --git a/drivers/usb/gadget/function/u_eem.h b/drivers/usb/gadget/function/u_eem.h
-index 3bd85dfcd71c8..78ef558152197 100644
---- a/drivers/usb/gadget/function/u_eem.h
-+++ b/drivers/usb/gadget/function/u_eem.h
+ static struct usb_function *ecm_alloc(struct usb_function_instance *fi)
+diff --git a/drivers/usb/gadget/function/u_ecm.h b/drivers/usb/gadget/function/u_ecm.h
+index 77cfb89932bea..7f666b9dea026 100644
+--- a/drivers/usb/gadget/function/u_ecm.h
++++ b/drivers/usb/gadget/function/u_ecm.h
 @@ -15,17 +15,26 @@
  
  #include <linux/usb/composite.h>
  
 +/**
-+ * struct f_eem_opts - EEM function options
++ * struct f_ecm_opts - ECM function options
 + * @func_inst: USB function instance.
-+ * @net: The net_device associated with the EEM function.
++ * @net: The net_device associated with the ECM function.
 + * @bound: True if the net_device is shared and pre-registered during the
 + *         legacy composite driver's bind phase (e.g., multi.c). If false,
-+ *         the EEM function will register the net_device during its own
++ *         the ECM function will register the net_device during its own
 + *         bind phase.
-+ * @bind_count: Tracks the number of configurations the EEM function is
++ * @bind_count: Tracks the number of configurations the ECM function is
 + *              bound to, preventing double-registration of the @net device.
 + * @lock: Protects the data from concurrent access by configfs read/write
 + *        and create symlink/remove symlink operations.
 + * @refcnt: Reference counter for the function instance.
 + */
- struct f_eem_opts {
+ struct f_ecm_opts {
  	struct usb_function_instance	func_inst;
  	struct net_device		*net;
  	bool				bound;
