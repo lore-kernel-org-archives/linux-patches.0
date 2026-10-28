@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793217054;
-	b=eQNZzxNvaMPvakbByFjegkhiFM/onRpxgT8JsOtw71X4cJ7wblV234/oeG6Xyd8ANEkc
-	 l8OoSdxAJ4tbXntsuq36d20PCYqszYfKl1lhhZKkFgGK3Ky3wQPYwUewbgh56JDivpxQJ
-	 boah61+9OJ2PCgEcrr1nnOMIMq5kFEZT+gZNTn1KI4oFesyBaKa6f050tC8DGTmeHf9Lf
-	 VDhpVhpdan6LFi6MNMkTLZotDPEBpWTXHzzC1JBMRl69VgrrLPQ8E8JB4xmq+elBFSN1+
-	 3KhLTOYzkg2IzFmCMpHP+Jn16HvzbF5r3wiZwa69HvBAJSFh/7vKGYftei08w64+4cA==
+	t=1793217057;
+	b=QNVWL4ztNh3gtvFJ1YdH5juCkqbLllu1try9VHpn/6HwOgPFvsQILw0y/b3nlbGhX1BW
+	 MCVWdAVmQvgcYkmGoF00KP1+sYcPSECjtnTX7ZpDfMj7VFgfw81a/fyRemIeU7wOGs9Sk
+	 q/S8N0J1KxrfvSEHd+UZfRO2kIZV+yx5k3LVe+RJ8enqb61FqSPg7DVpYGdhtX/I3KcSf
+	 WxlH0kErc6yRL5PMEXo0sHWpv3roDSv+cGHTkEYO/WgcdMuWlZi9PBGUY1Q7GVxONO0HR
+	 nA/lGxWyu3ZeLg7RktfsminX91VkYU1bhQMAg6saWnsAJPlji6TiHUeKUfmNHyy/DQQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793217054;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793217057;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=3SEYIrxCJ+s8uRjAQet3royIRN7gXTH/W3RK6c6JeVU=;
-	b=JpSV/Zc60OWXyOjJIxX87NyywfHumxvat+gYXhyLQCuxq8S1a2XgAf1VTPBy282+aYEq
-	 NGmYcHm/XuCCPuAxtlsnlP4UQ0ninS/CJTLyKtYTyxS47xLxXXTVwY8v63H02zP3Zl8wm
-	 f+f3zU72y3iQghYF8nF7EzDlmiA67T4B92Qk7zOxfKgev3qRShd0MzR9Em6y6B/B6/sbc
-	 cI5k3petffn404Dnb9ZCGkzCAp1yHxqulyHrl+OFQpr9NA+OhNEC9ghTk0MwlyqMI8Kir
-	 xHsgrBgLItc5pHHFuuyRVxZDyF5VAD1x5na3h5JXRtPF2/wf6CZsp690hS6BvuSzZaQ==
+	bh=rFXZk3+WcHaMrfHVhkjVYTlFMeTpX9hgiLb1hLVH+JQ=;
+	b=iWefb3Pa0Uo3Rh7N9lpRGpQVQQb2yWktMFnN7zm5+DHJElU30QXybzJXBKTC69IWS/ZR
+	 nskdc9Y/4ZTcapRpAa4VcFfxS/uCer5EQfQLSbnfCPy4btpThYkqGSVtvyPYkbddLyUiy
+	 g4lWljEKdqAkaxG8+5+rYlcWNQFik/1xsll4e8yKv7KQSc6OzuvHitVoMGgxZL/p0L20d
+	 q5t6NxIDmzkIaVHrefsE68jx9nOdlIzCpHT6lAK5FbhXnuIBLLlk/EIokG3orVte2YK6k
+	 EQnD58DcssrGTwL++5/0PwBOuNtfxBgUJPDaiB+Zh2uNSWzqXcwuLtKsQlqxUN/AzpA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qbPwuIKo;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MQCNmmQB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3218C606A322;
-	Wed, 28 Oct 2026 19:50:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 136A2606A321;
+	Wed, 28 Oct 2026 19:50:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qbPwuIKo
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 819211F01825;
-	Wed, 28 Oct 2026 19:50:53 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MQCNmmQB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61C7B1F01825;
+	Wed, 28 Oct 2026 19:50:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793217054;
-	bh=3SEYIrxCJ+s8uRjAQet3royIRN7gXTH/W3RK6c6JeVU=;
+	s=korg; t=1793217056;
+	bh=rFXZk3+WcHaMrfHVhkjVYTlFMeTpX9hgiLb1hLVH+JQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qbPwuIKo5Lh6RcqsIY47mmWrmtDxSbu5TCWoaqjYV9HM2TC6drUIGBn9etmZZYkd+
-	 PP1mqEpCebv5+cKTpAEU8RgZ93YrN43NVux8m0Ea0q1Q+mRhkapEpG+OpQ8qgNZOdK
-	 syoxPFfdhZRgjWdQzq2ntlY46r21DX15Nmw7RTuY=
+	b=MQCNmmQB1dRlZTn+eNylPBndunVKwu2oE937IEoxkthG16mfWDMwF7C6C0yqRD64b
+	 1QRSB9Xu64Hd+gHqLOwVGubutGx3YDsiLYI8Tr8Np7/Lzw/Tj2aXNZYGQu0TiC4GJI
+	 Tbo0ZwAeP1Wrr6j9mu1SO7AzxAnko11ERXWy2kXQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Aleksandr Khromov <haa@amicon.ru>,
 	Namjae Jeon <linkinjeon@kernel.org>
-Subject: [PATCH 6.1 1771/1887] ksmbd: fill in FileSysIdentifier in FS_POSIX_INFORMATION
-Date: Wed, 28 Oct 2026 18:04:27 +0100
-Message-ID: <20261028170539.755952888@linuxfoundation.org>
+Subject: [PATCH 6.1 1772/1887] ksmbd: initialize FileSystemControlFlags in FS_CONTROL_INFORMATION
+Date: Wed, 28 Oct 2026 18:04:28 +0100
+Message-ID: <20261028170539.777113100@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,12 +69,12 @@ Content-Transfer-Encoding: 8bit
 
 From: Aleksandr Khromov <haa@amicon.ru>
 
-commit db2267b27c054a6c2151ff7fbb67927e784f31d6 upstream.
+commit c0cd3fc6824122014da2b3b0cb7ddeaa2946ec8e upstream.
 
-smb2_get_info_filesystem() reports 56 bytes for FS_POSIX_INFORMATION,
-that is the whole of FILE_SYSTEM_POSIX_INFO, but never assigns
-FileSysIdentifier.  Those eight bytes go to the client as they are found
-in the response buffer.
+smb2_get_info_filesystem() reports 48 bytes for FS_CONTROL_INFORMATION,
+that is the whole of struct smb2_fs_control_info, but never assigns
+FileSystemControlFlags.  Those four bytes go to the client as they are
+found in the response buffer.
 
 The buffer is zeroed on allocation, so a standalone request leaks
 nothing.  A compound request can leak: the offset of the next response
@@ -83,10 +83,7 @@ was written into the buffer and then dropped in favour of the short
 error response of smb2_set_err_rsp() stays there, and the next reply is
 laid over it with only the header cleared.
 
-Report the file system id statfs() returned, which is what the field is
-for.  FileSysIdentifier is __le64 and f_fsid is a pair of ints, so
-assemble the value first, val[0] as the low half, and convert it on the
-way out.
+ksmbd does not implement quota tracking, so report no control flags.
 
 Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
 Cc: stable@vger.kernel.org
@@ -94,20 +91,18 @@ Signed-off-by: Aleksandr Khromov <haa@amicon.ru>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/smb2pdu.c |    3 +++
- 1 file changed, 3 insertions(+)
+ fs/smb/server/smb2pdu.c |    1 +
+ 1 file changed, 1 insertion(+)
 
 --- a/fs/smb/server/smb2pdu.c
 +++ b/fs/smb/server/smb2pdu.c
-@@ -5342,6 +5342,9 @@ static int smb2_get_info_filesystem(stru
- 			info->UserBlocksAvail = cpu_to_le64(stfs.f_bavail);
- 			info->TotalFileNodes = cpu_to_le64(stfs.f_files);
- 			info->FreeFileNodes = cpu_to_le64(stfs.f_ffree);
-+			info->FileSysIdentifier =
-+				cpu_to_le64((u64)(u32)stfs.f_fsid.val[1] << 32 |
-+					    (u32)stfs.f_fsid.val[0]);
- 			rsp->OutputBufferLength = cpu_to_le32(56);
- 		}
+@@ -5321,6 +5321,7 @@ static int smb2_get_info_filesystem(stru
+ 		info->FreeSpaceStopFiltering = 0;
+ 		info->DefaultQuotaThreshold = cpu_to_le64(SMB2_NO_FID);
+ 		info->DefaultQuotaLimit = cpu_to_le64(SMB2_NO_FID);
++		info->FileSystemControlFlags = 0;
+ 		info->Padding = 0;
+ 		rsp->OutputBufferLength = cpu_to_le32(48);
  		break;
 
 
