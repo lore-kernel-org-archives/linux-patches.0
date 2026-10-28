@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215097;
-	b=2TFiOzlMWvs3VBZB77d1CLEgjihd7HPqryqMeSySJotpUoXStzFSX3u2kZPCBAAAISzH
-	 zswhGFpctvpU7bIkNrBulM/kDJKV4dbFJbgzuopQ2MbwgWaVWNTXUTclvAFBQEWMte7PM
-	 b2gHSn29iZj5NRGGnL4EDA9fkI3aAhaZg36spIFpXRuzn9aE4nN6k5El7yW6JoNxhXPYa
-	 rbLpLGJiYSTQ1eNEMz32zptg/rvAaM5Qr3VO34kiF9rLXx+HfzPtucNRtk7HEJdMzEwvC
-	 qfqI9KITYUx2wIhQhhn9dd1hegL8DblKbcQVb+6c36Y2/e9+hJw0XFbQdWUCtX4iMdw==
+	t=1793215099;
+	b=GLVqxIQuYcEYP0R4jkv7ByuopzZtr9Ov3azmME4b68CZF1BQg458h+cIbKAbfW74bfuP
+	 +/daPudgF6t+XMRoik8XeZgym8uGmvorpPE2CqKOZt8e/f4zhR7rIYmPJdlqL58cvq8ea
+	 Z8DEBIHHo4/UFzvl6QJhkq3EEvORWrM89ne0nn5jPDjDf4vyDHim2DqkjtaPOoyf1hftC
+	 wHAtbQh0eOCkSBIU5ix8m4s5Uy0s/rJc692UshF5mFilZ4M7NIlnRjRn5V4eUOGJCPDS3
+	 wiZJcRqMzLusFQu0LfaWZ5Zbn6OxlZQxXFjzdHKol99m5rmLc/xGT1Y/S1ZS0fHXoRg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215097;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215099;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=cl2etKhJYzbMxjeTWc7vbyi05rBbXOMBomK+mMHCab4=;
-	b=y/wVjhk/7I6ekmKarRVavpc8q88x+ivqKODCMoK/M/aWdw+mR8lCIq9DxfFsyjfGzGLi
-	 Wmpeiwu5Viw0qWuJ2ktr98eu+vmO+S1JOrkNL+Ez8fzUy9x4PSoKxuVlaOIBKO3nVZlPT
-	 ENSiGEEZLhAVPFsCx6bnhbOIfmohx04ILdCQsw44qoJzOaIZjB341mjj508966+72QFaT
-	 EwxWGyVU6HBDM5KHwa52l+f3hjxdCh6zFAF36ZUGpNZqKdfEv5fvAF+aUGvI3YmnLBSQE
-	 PBi38VG3aMbgTMuftBEKc6fwPs0hMsTrmQXjCBDwWtklEeb+u7UaPPzCH0so9ZrVCbQ==
+	bh=gEyKD1gyFdhWU9Na4UiQIxRG6uQX0SGov9/naKzApUI=;
+	b=kdrCVqWHLd0UAJjCl3/0Uc9T2AT4P8hPvymKp04ygPEior1fyNvqTbTaELv7fg+I3daN
+	 6OD96YwJq6JorRLOcGoQL7y73YwfKWxzU0bm6RZw6Bjo3XiBgaBtUxWdf3pf+tJAlc1nX
+	 TgEeikwfIxn4dZ7YFXDZrPDkc+qfTaTSguE3F0BSAKFGrYECLjZ3hX4PodoqHBmV4KBga
+	 vX8//dsae7d6pOIV9/Cae5VaI3gfuG8eKca198dTfkri95aVGVCz1+PlZJwbJWziCAmXE
+	 YzJJ2uAGftQPoZY8C3xR1Gn3b/3a9f6+3idqxUWKx2Kv41dDdEyeuE8qhgZbM1sEjUQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N0OwNAhd;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BmDnj0sx;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C707F606A31C;
-	Wed, 28 Oct 2026 19:18:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C7F2606A31A;
+	Wed, 28 Oct 2026 19:18:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N0OwNAhd
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 240821F01825;
-	Wed, 28 Oct 2026 19:18:15 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BmDnj0sx
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDEF21F01825;
+	Wed, 28 Oct 2026 19:18:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215096;
-	bh=cl2etKhJYzbMxjeTWc7vbyi05rBbXOMBomK+mMHCab4=;
+	s=korg; t=1793215099;
+	bh=gEyKD1gyFdhWU9Na4UiQIxRG6uQX0SGov9/naKzApUI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=N0OwNAhdFMFQoRdJM4ejfcSt1mtZtFR0DOB7ptWYYWcuhcnkmtqvCLJu5ILduzSwJ
-	 j0Q7wZ7GQ3YXFpL5C0T6W6axKSd9gS+wH3Tk6+6fE7RSajgg2RG/wnAoXif25v4hCT
-	 63GoybTMLDzejUX6G1tX3LxUxyC7wuddAuGb/I2c=
+	b=BmDnj0sxI6mqnw1CiJw/49Fuz7O+9RpDXTXjI9C43nirFYltXb0kIOtjRP4pQ8WQg
+	 JSvEDZSqESXBSZJ27jcPtW63PqT07sqtRWaw2PY+k0zCohrmtBDp0cyxjqr3NKQ5ec
+	 6RQ8dpKoRSl0/xR9pQ3LX6LqkePC2MHJbIclvF5w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yosry Ahmed <yosry@kernel.org>,
-	Sean Christopherson <seanjc@google.com>,
+	Conor Dooley <conor.dooley@microchip.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1047/1887] KVM: nSVM: Avoid clearing VMCB_LBR in vmcb12
-Date: Wed, 28 Oct 2026 17:52:23 +0100
-Message-ID: <20261028170523.236793042@linuxfoundation.org>
+Subject: [PATCH 6.1 1048/1887] spi: microchip-core-qspi: control built-in cs manually
+Date: Wed, 28 Oct 2026 17:52:24 +0100
+Message-ID: <20261028170523.258442938@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,92 +68,189 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yosry Ahmed <yosry@kernel.org>
+From: Conor Dooley <conor.dooley@microchip.com>
 
-[ Upstream commit b53ab5167a81537777ac780bbd93d32613aa3bda ]
+[ Upstream commit 7672749e1496215e8683ce57cf323119033954cf ]
 
-svm_copy_lbrs() always marks VMCB_LBR dirty in the destination VMCB.
-However, nested_svm_vmexit() uses it to copy LBRs to vmcb12, and
-clearing clean bits in vmcb12 is not architecturally defined.
+The coreQSPI IP supports only a single chip select, which is
+automagically operated by the hardware - set low when the transmit
+buffer first gets written to and set high when the number of bytes
+written to the TOTALBYTES field of the FRAMES register have been sent on
+the bus. Additional devices must use GPIOs for their chip selects.
+It was reported to me that if there are two devices attached to this
+QSPI controller that the in-built chip select is set low while linux
+tries to access the device attached to the GPIO.
 
-Move vmcb_mark_dirty() to callers and drop it for vmcb12.
+This went undetected as the boards that connected multiple devices to
+the SPI controller all exclusively used GPIOs for chip selects, not
+relying on the built-in chip select at all. It turns out that this was
+because the built-in chip select, when controlled automagically, is set
+low when active and high when inactive, thereby ruling out its use for
+active-high devices or devices that need to transmit with the chip
+select disabled.
 
-This also facilitates incoming refactoring that does not pass the entire
-VMCB to svm_copy_lbrs().
+Modify the driver so that it controls chip select directly, retaining
+the behaviour for mem_ops of setting the chip select active for the
+entire duration of the transfer in the exec_op callback. For regular
+transfers, implement the set_cs callback for the core to use.
 
-Fixes: d20c796ca370 ("KVM: x86: nSVM: implement nested LBR virtualization")
-Cc: stable@vger.kernel.org
-Signed-off-by: Yosry Ahmed <yosry@kernel.org>
-Link: https://patch.msgid.link/20260303003421.2185681-2-yosry@kernel.org
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+As part of this, the existing setup callback, mchp_coreqspi_setup_op(),
+is removed. Modifying the CLKIDLE field is not safe to do during
+operation when there are multiple devices, so this code is removed
+entirely. Setting the MASTER and ENABLE fields is something that can be
+done once at probe, it doesn't need to be re-run for each device.
+Instead the new setup callback sets the built-in chip select to its
+inactive state for active-low devices, as the reset value of the chip
+select in software controlled mode is low.
+
+Fixes: 8f9cf02c88528 ("spi: microchip-core-qspi: Add regular transfers")
+Fixes: 8596124c4c1bc ("spi: microchip-core-qspi: Add support for microchip fpga qspi controllers")
+CC: stable@vger.kernel.org
+Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
+Link: https://patch.msgid.link/20260430-hamstring-busload-f941d0347b5e@spud
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/svm/nested.c |  3 +++
- arch/x86/kvm/svm/svm.c    | 10 ++++++----
- 2 files changed, 9 insertions(+), 4 deletions(-)
+ drivers/spi/spi-microchip-core-qspi.c | 79 ++++++++++++++++++++++-----
+ 1 file changed, 65 insertions(+), 14 deletions(-)
 
-diff --git a/arch/x86/kvm/svm/nested.c b/arch/x86/kvm/svm/nested.c
-index 313f9e952d6a8..a35fc16ba3841 100644
---- a/arch/x86/kvm/svm/nested.c
-+++ b/arch/x86/kvm/svm/nested.c
-@@ -589,10 +589,12 @@ static void nested_vmcb02_prepare_save(struct vcpu_svm *svm, struct vmcb *vmcb12
- 		 */
- 		svm_copy_lbrs(vmcb02, vmcb12);
- 		vmcb02->save.dbgctl &= ~DEBUGCTL_RESERVED_BITS;
-+		vmcb_mark_dirty(vmcb02, VMCB_LBR);
- 		svm_update_lbrv(&svm->vcpu);
+diff --git a/drivers/spi/spi-microchip-core-qspi.c b/drivers/spi/spi-microchip-core-qspi.c
+index 160861891b460..f8cee68a93479 100644
+--- a/drivers/spi/spi-microchip-core-qspi.c
++++ b/drivers/spi/spi-microchip-core-qspi.c
+@@ -74,6 +74,13 @@
+ #define STATUS_FLAGSX4		BIT(8)
+ #define STATUS_MASK		GENMASK(8, 0)
  
- 	} else if (unlikely(vmcb01->control.virt_ext & LBR_CTL_ENABLE_MASK)) {
- 		svm_copy_lbrs(vmcb02, vmcb01);
-+		vmcb_mark_dirty(vmcb02, VMCB_LBR);
- 	}
++/*
++ * QSPI Direct Access register defines
++ */
++#define DIRECT_ACCESS_EN_SSEL		BIT(0)
++#define DIRECT_ACCESS_OP_SSEL		BIT(1)
++#define DIRECT_ACCESS_OP_SSEL_SHIFT	1
++
+ #define BYTESUPPER_MASK		GENMASK(31, 16)
+ #define BYTESLOWER_MASK		GENMASK(15, 0)
+ 
+@@ -158,6 +165,38 @@ static int mchp_coreqspi_set_mode(struct mchp_coreqspi *qspi, const struct spi_m
+ 	return 0;
  }
  
-@@ -1012,6 +1014,7 @@ int nested_svm_vmexit(struct vcpu_svm *svm)
- 		svm_update_lbrv(vcpu);
- 	} else if (unlikely(vmcb01->control.virt_ext & LBR_CTL_ENABLE_MASK)) {
- 		svm_copy_lbrs(vmcb01, vmcb02);
-+		vmcb_mark_dirty(vmcb01, VMCB_LBR);
- 		svm_update_lbrv(vcpu);
- 	}
++static void mchp_coreqspi_set_cs(struct spi_device *spi, bool enable)
++{
++	struct mchp_coreqspi *qspi = spi_controller_get_devdata(spi->controller);
++	u32 val;
++
++	val = readl(qspi->regs + REG_DIRECT_ACCESS);
++
++	val &= ~DIRECT_ACCESS_OP_SSEL;
++	val |= !enable << DIRECT_ACCESS_OP_SSEL_SHIFT;
++
++	writel(val, qspi->regs + REG_DIRECT_ACCESS);
++}
++
++static int mchp_coreqspi_setup(struct spi_device *spi)
++{
++	struct mchp_coreqspi *qspi = spi_controller_get_devdata(spi->controller);
++	u32 val;
++
++	/*
++	 * Active low devices need to be specifically set to their inactive
++	 * states during probe.
++	 */
++	if (spi->mode & SPI_CS_HIGH)
++		return 0;
++
++	val = readl(qspi->regs + REG_DIRECT_ACCESS);
++	val |= DIRECT_ACCESS_OP_SSEL;
++	writel(val, qspi->regs + REG_DIRECT_ACCESS);
++
++	return 0;
++}
++
+ static inline void mchp_coreqspi_read_op(struct mchp_coreqspi *qspi)
+ {
+ 	u32 control, data;
+@@ -298,19 +337,6 @@ static int mchp_coreqspi_setup_clock(struct mchp_coreqspi *qspi, struct spi_devi
+ 	return 0;
+ }
  
-diff --git a/arch/x86/kvm/svm/svm.c b/arch/x86/kvm/svm/svm.c
-index d2a84597711ed..7b6110ca9f681 100644
---- a/arch/x86/kvm/svm/svm.c
-+++ b/arch/x86/kvm/svm/svm.c
-@@ -910,8 +910,6 @@ void svm_copy_lbrs(struct vmcb *to_vmcb, struct vmcb *from_vmcb)
- 	to_vmcb->save.br_to		= from_vmcb->save.br_to;
- 	to_vmcb->save.last_excp_from	= from_vmcb->save.last_excp_from;
- 	to_vmcb->save.last_excp_to	= from_vmcb->save.last_excp_to;
+-static int mchp_coreqspi_setup_op(struct spi_device *spi_dev)
+-{
+-	struct spi_controller *ctlr = spi_dev->master;
+-	struct mchp_coreqspi *qspi = spi_controller_get_devdata(ctlr);
+-	u32 control = readl_relaxed(qspi->regs + REG_CONTROL);
 -
--	vmcb_mark_dirty(to_vmcb, VMCB_LBR);
- }
+-	control |= (CONTROL_MASTER | CONTROL_ENABLE);
+-	control &= ~CONTROL_CLKIDLE;
+-	writel_relaxed(control, qspi->regs + REG_CONTROL);
+-
+-	return 0;
+-}
+-
+ static inline void mchp_coreqspi_config_op(struct mchp_coreqspi *qspi, const struct spi_mem_op *op)
+ {
+ 	u32 idle_cycles = 0;
+@@ -409,6 +435,7 @@ static int mchp_coreqspi_exec_op(struct spi_mem *mem, const struct spi_mem_op *o
  
- static void svm_enable_lbrv(struct kvm_vcpu *vcpu)
-@@ -925,8 +923,10 @@ static void svm_enable_lbrv(struct kvm_vcpu *vcpu)
- 	set_msr_interception(vcpu, svm->msrpm, MSR_IA32_LASTINTTOIP, 1, 1);
+ 	reinit_completion(&qspi->data_completion);
+ 	mchp_coreqspi_config_op(qspi, op);
++	mchp_coreqspi_set_cs(mem->spi, true);
+ 	if (op->cmd.opcode) {
+ 		qspi->txbuf = &opcode;
+ 		qspi->rxbuf = NULL;
+@@ -449,6 +476,7 @@ static int mchp_coreqspi_exec_op(struct spi_mem *mem, const struct spi_mem_op *o
+ 		err = -ETIMEDOUT;
  
- 	/* Move the LBR msrs to the vmcb02 so that the guest can see them. */
--	if (is_guest_mode(vcpu))
-+	if (is_guest_mode(vcpu)) {
- 		svm_copy_lbrs(svm->vmcb, svm->vmcb01.ptr);
-+		vmcb_mark_dirty(svm->vmcb, VMCB_LBR);
-+	}
- }
+ error:
++	mchp_coreqspi_set_cs(mem->spi, false);
+ 	mutex_unlock(&qspi->op_lock);
+ 	mchp_coreqspi_disable_ints(qspi);
  
- static void svm_disable_lbrv(struct kvm_vcpu *vcpu)
-@@ -943,8 +943,10 @@ static void svm_disable_lbrv(struct kvm_vcpu *vcpu)
- 	 * Move the LBR msrs back to the vmcb01 to avoid copying them
- 	 * on nested guest entries.
- 	 */
--	if (is_guest_mode(vcpu))
-+	if (is_guest_mode(vcpu)) {
- 		svm_copy_lbrs(svm->vmcb01.ptr, svm->vmcb);
-+		vmcb_mark_dirty(svm->vmcb01.ptr, VMCB_LBR);
-+	}
- }
+@@ -505,6 +533,7 @@ static int mchp_coreqspi_probe(struct platform_device *pdev)
+ 	struct device *dev = &pdev->dev;
+ 	struct device_node *np = dev->of_node;
+ 	int ret;
++	u32 num_cs, val;
  
- static int svm_get_lbr_msr(struct vcpu_svm *svm, u32 index)
+ 	ctlr = devm_spi_alloc_master(&pdev->dev, sizeof(*qspi));
+ 	if (!ctlr)
+@@ -538,12 +567,34 @@ static int mchp_coreqspi_probe(struct platform_device *pdev)
+ 		return ret;
+ 	}
+ 
++	/*
++	 * The IP core only has a single CS, any more have to be provided via
++	 * gpios
++	 */
++	if (of_property_read_u32(pdev->dev.of_node, "num-cs", &num_cs))
++		num_cs = 1;
++
++	ctlr->num_chipselect = num_cs;
++
+ 	ctlr->bits_per_word_mask = SPI_BPW_MASK(8);
+ 	ctlr->mem_ops = &mchp_coreqspi_mem_ops;
+-	ctlr->setup = mchp_coreqspi_setup_op;
+ 	ctlr->mode_bits = SPI_CPOL | SPI_CPHA | SPI_RX_DUAL | SPI_RX_QUAD |
+ 			  SPI_TX_DUAL | SPI_TX_QUAD;
+ 	ctlr->dev.of_node = np;
++	ctlr->setup = mchp_coreqspi_setup;
++	ctlr->set_cs = mchp_coreqspi_set_cs;
++	ctlr->use_gpio_descriptors = true;
++
++	val = readl_relaxed(qspi->regs + REG_CONTROL);
++	val |= (CONTROL_MASTER | CONTROL_ENABLE);
++	writel_relaxed(val, qspi->regs + REG_CONTROL);
++
++	/*
++	 * Put cs into software controlled mode
++	 */
++	val = readl_relaxed(qspi->regs + REG_DIRECT_ACCESS);
++	val |= DIRECT_ACCESS_EN_SSEL;
++	writel(val, qspi->regs + REG_DIRECT_ACCESS);
+ 
+ 	ret = spi_register_controller(ctlr);
+ 	if (ret)
 -- 
 2.53.0
 
