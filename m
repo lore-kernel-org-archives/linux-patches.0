@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213360;
-	b=qm56CuDcymOmRsUoi4KgO12wYS9OBHBairbEBADsNRuZ1E6ehkGr5+e7N4yE4tCtenkW
-	 x5VDVNiQ/+Dqe2hZvw0rUwcslFAcK94eAx6RaKanMcHCdr6CNUKYkiqo0WgsyYPts9hO/
-	 FkMJPjF5Enef8C+jK4sJ/uE9mm8P4cjtEkCAoRjxKiIODIp5/DtaoeeZU1eWPsrnn6oze
-	 jdvt5KKRK71hgDQU0pc2ucAGKIKLdX5S4IIMpjETId2efn6Eh/FPVpRpdwS8LQjB1KuCq
-	 kjwffhEp3Vg75+WuYeBEaYthIsCaPMW/5Ibfr+iROMShLRbB1GAPV9Z4MVj1cXbuzRA==
+	t=1793213363;
+	b=HqSShWZMWFdYuFS0Q5A9S2PORkQkD1zdO0Ao3PW3gY+aISWDGwQDDGUpifHhH49uNe6Q
+	 MNu3cmMf+gr3AFFswMYUmgT+TwgX49Z+M36M9/oxMonq9M3xIO9sd+bS1JISppM75heMC
+	 oqP3VA/sGuBMOHaKXJvcalutBIXLwSTnYv1hrhViVdBGe5KSGLgeA2drZUjrZO0H0MgAL
+	 X8RoRvHKXE1rRkW2pVi9WRwA6xVzy3ZFbgxwtivQ2TOir3BDq9vDn5VIPNxE0xDd0fjyT
+	 PYLNCiitMT4tH0jxj0+oonDmAYG/JQJbuODxuIzU/lYXTVuz6lMns/4yNaBYCHzvfAA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213360;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213363;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=10plC5uq4kVlepBHl5oaq/Fmi4jMt1a98K+6OyMKtC4=;
-	b=2PwbZEHFg3UnxQsrj8SnNzNPH5jBhKxzPh+eFeLgpzjOrqz6q0XCeT2M+Id+UwTWH1x3
-	 WLvDI9fDzR/divh5XRv8NU/ejh4a0wXpSk4Fs2a40mrQ6ZMwvXd8QjDl6Spe5M5iQTb1c
-	 tIHcX1+FE+NASCL+Mnr7TPWj4NuXPie6GxHYLi14mW+as2rcdgHfaML0i8O6IEftwcbdv
-	 8sJaZy51X7GTZJDnfnhX7KvFCQDwGNry3Ppp01FNxGOzUr6naxePnfQtPutuj/3EipgUC
-	 CCbVKBNIxRZxmGC3RPBkMz8Nw9o2t2AjZLXHWhaanYyQcoK21P3sLizBb3eocTwNF9w==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=EwaWyxzAcMip938tYPQSTdjtGuyW8xEbLpEwEiXGtnw=;
+	b=3NS8CRKrXWP6N79FMMWLTt1KuCNoW5ka0IukKAsaYH0NIw3rPkWac3sIXzovc7E4zLms
+	 p+1cWvYMj2F3KLfX8RHlbXwkqbkpfOwdjHvixIyDEamkj8RNFBB9BIvyPSmsTmLRY5TL3
+	 ViRKM3z+IlPifMyR8MeaGNb7m0j8o8fipY5PNzmUz1BnaHsvacu2v0IUPF/2xTN0s3UXl
+	 nWTCHoC1FjTCZedATMud2MG98P67dII9bL4z/NVMWltmedaDYi9drh9VBX+fXG29rwLd6
+	 WiqVoFimBjGW11nok6QD9gjiRT6aZfgEyZHVvFyFrxBUE0ssr+XmcMpG9tB9p9zGlvg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fwGuALgX;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oLIKcdr8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE67D606A31A;
-	Wed, 28 Oct 2026 18:49:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD787606A31C;
+	Wed, 28 Oct 2026 18:49:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fwGuALgX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B1BD1F01825;
-	Wed, 28 Oct 2026 18:49:18 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oLIKcdr8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE2DE1F01825;
+	Wed, 28 Oct 2026 18:49:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213359;
-	bh=10plC5uq4kVlepBHl5oaq/Fmi4jMt1a98K+6OyMKtC4=;
+	s=korg; t=1793213362;
+	bh=EwaWyxzAcMip938tYPQSTdjtGuyW8xEbLpEwEiXGtnw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fwGuALgXtzcN5uLSjPsttIsLDxbSC73C5eIA9j/14iuZ8+dh3m4StpQSPJbUvJBRY
-	 /p6jkRW+YEHF83WRBzxOd8mbvHkN0ToarOb806/ip7YQCw5xoPncWYVpcKOlSK7teg
-	 SU2KZlBZVushl0KQMu705M0fxTa4KXWl/AKe0nh4=
+	b=oLIKcdr8ve7Yp7AIxyatDTGytthclVxqmCUcMCJXZKAAOI2Y4MH3Uf8g5IHdVhkHg
+	 RoSQRZiYic/uSEREQnEGXUug3nE0f2ciFu8VBYiWU0w3X5HJYCY0Wp9s1zHsQTL5iA
+	 AfquA3hbHWTIL0cGZ+2JyzgK2cHFOSHiIbB/uwE8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Karas <krzysztof.karas@intel.com>,
-	Andi Shyti <andi.shyti@linux.intel.com>,
-	Jani Nikula <jani.nikula@intel.com>
-Subject: [PATCH 6.1 0476/1887] drm/i915/gt: Unmask interrupts only when ACTIVE is true
-Date: Wed, 28 Oct 2026 17:42:52 +0100
-Message-ID: <20261028170510.078593904@linuxfoundation.org>
+	Song Li <songl@zju.edu.cn>,
+	Fan Wu <fanwu01@zju.edu.cn>,
+	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>
+Subject: [PATCH 6.1 0477/1887] drm/vc4: drain the hangcheck timer and works on V3D unbind
+Date: Wed, 28 Oct 2026 17:42:53 +0100
+Message-ID: <20261028170510.103940093@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -62,123 +62,72 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Krzysztof Karas <krzysztof.karas@intel.com>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-commit 5346b1cec6afa4f9b4b49a9f84e3cfef95a3f7bb upstream.
+commit 94cf5971b1d04c6382437387c4dc3836cc7a1437 upstream.
 
-There is a small race window between intel_rps_boost() reading
-a stale ACTIVE state and queuing rps->work, where ACTIVE may be
-changed via asynchronous calls triggered by wakeref drop.
-This means that rps_work() could be triggered after the GT has
-been parked, so unmasking RPS PM interrupts would happen without
-holding PM wakelock. This sequence of events may be observed
-during live_rc6_ctx_wa() selftest:
+Nothing stops the hangcheck timer that submitted jobs arm, or the
+job_done_work that the render-done interrupt queues, at teardown:
+vc4_irq_disable() cancels only overflow_mem_work, and vc4_gem_destroy()
+runs from the drm-managed release, after vc4_v3d_unbind() has already
+uninstalled the V3D interrupt and cleared vc4->v3d. A timer still armed
+by then reads V3D registers through the NULL vc4->v3d pointer, and the
+late callbacks run on the vc4_dev embedding them after it has been
+freed.
 
-1) live_rc6_ctx_wa()
-   -> intel_engine_pm_put()
-      -> wakeref_put()
+Drain them in vc4_v3d_unbind(): shut the timer down and cancel
+reset_work before the interrupt is taken down, because its
+vc4_irq_reset() re-enables it, then flush job_done_work so that
+completions queued at teardown still release their jobs.
 
-ASYNC1) wakeref_put() callback
-          -> __engine_park()
-             -> intel_gt_pm_put_async()
-                -> intel_gt_pm_put_async_untracked()
-                   -> intel_wakeref_put_async()
+This issue was found by an in-house static analysis tool.
 
-ASYNC2) wakeref_put_async() callback
-          -> __gt_park()
-             -> intel_rps_park()
-                -> intel_rps_clear_active() [clear ACTIVE]
-                WITH INTERRUPTS:
-                -> rps_disable_interrupts()
-                   -> cancel_work_sync(rps->work)
-                   -> rps_reset_interrupts() [rps->pm_iir = 0]
-                WITHOUT INTERRUPTS (TIMER mode):
-                -> rps_stop_timer()
-                   -> cancel_work_sync(rps->work)
-
-2) live_rc6_ctx_wa()
-   -> intel_gt_wait_for_idle()
-      -> intel_gt_retire_requests_timeout()
-         -> dma_fence_wait_timeout()
-            -> ops->wait() [i915_fence_wait()]
-               -> i915_request_wait_timeout()
-                  -> intel_rps_boost()
-                     -> intel_rps_is_active() [check ACTIVE]
-                        [OPEN RACE WINDOW]
-                     -> queue_work(rps->work)
-         -> retire_requests()
-            -> i915_request_retire()
-               -> intel_rps_dec_waiters() [from 1 to 0]
-
-If ASYNC1 and ASYNC2 would execute during [OPEN RACE WINDOW],
-then:
-
-3) rps_work() executes from the workqueue and may satisfy
-   "(!pm_iir && !client_boost)" test (in TIMER mode rps->pm_iir
-   is zeroed by an earlier rps_work() call or never gets a new
-   value after previous intel_rps_unpark() event), so it jumps
-   to "out" label, bypassing intel_rps_is_active() guard and
-   executes gen6_gt_pm_unmask_irq();
-
-4) GT is parked and runtime PM wakelock is dropped, so only
-   a raw reference in __gt_park() ->
-   intel_display_power_put_async() remains for 100ms, then the
-   MMIO write in gen6_gt_pm_unmask_irq() detects missing
-   wakelock via assert_rpm_wakelock_held() and emits
-   "RPM wakelock ref not held during HW access" tainting kernel.
-
-Commit 3e7abf814193 ("drm/i915: Extract GT render power state management")
-dropped the "if (rps->interrupts_enabled)" guard that
-gen6_pm_rps_work() had around this unmask in i915_irq.c.
-INTEL_RPS_ACTIVE brackets the same window, since it is set in
-intel_rps_unpark() before rps_enable_interrupts() and
-rps_start_timer() and cleared in intel_rps_park() before
-rps_stop_timer() and rps_disable_interrupts().
-
-Skip unmasking when RPS is no longer active (reaching unmask
-operation is independent of INTERRUPT mode). This does not
-prevent RPS operation from resuming on the next unpark.
-In interrupt mode, intel_rps_unpark() calls
-rps_enable_interrupts(), which enables and unmasks the PM
-interrupts. In timer mode, it calls rps_start_timer(),
-restarting periodic engine-busyness evaluation. The timer
-generates software RPS events and queues rps_work() directly,
-independently of PM interrupt delivery. Neither mode requires
-the late worker to unmask interrupts while the GT is parked
-
-Fixes: 3e7abf814193 ("drm/i915: Extract GT render power state management")
-Closes: https://gitlab.freedesktop.org/drm/i915/kernel/-/issues/16562
-Cc: stable@vger.kernel.org # v5.5+
-Assisted-by: GitHub-Copilot:claude-opus-5
-Assisted-by: GitHub-Copilot:gpt-6-astra
-Signed-off-by: Krzysztof Karas <krzysztof.karas@intel.com>
-Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
-Signed-off-by: Andi Shyti <andi.shyti@linux.intel.com>
-Link: https://patch.msgid.link/20260910081329.3300417-1-krzysztof.karas@intel.com
-(cherry picked from commit ca4a6deadad15b91ee083afe445fa6bdbfb68206)
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+Fixes: d5b1a78a772f ("drm/vc4: Add support for drawing 3D frames.")
+Cc: stable@vger.kernel.org # 6.2+
+Assisted-by: Codex:gpt-5.6
+Co-developed-by: Song Li <songl@zju.edu.cn>
+Signed-off-by: Song Li <songl@zju.edu.cn>
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Link: https://patch.msgid.link/20260915095103.156007-1-fanwu01@zju.edu.cn
+Reviewed-by: Maíra Canal <mcanal@igalia.com>
+Signed-off-by: Maíra Canal <mcanal@igalia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/gt/intel_rps.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/vc4/vc4_v3d.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/drivers/gpu/drm/i915/gt/intel_rps.c
-+++ b/drivers/gpu/drm/i915/gt/intel_rps.c
-@@ -1874,7 +1874,8 @@ static void rps_work(struct work_struct
+--- a/drivers/gpu/drm/vc4/vc4_v3d.c
++++ b/drivers/gpu/drm/vc4/vc4_v3d.c
+@@ -9,6 +9,7 @@
+ #include <linux/component.h>
+ #include <linux/platform_device.h>
+ #include <linux/pm_runtime.h>
++#include <linux/timer.h>
  
- out:
- 	spin_lock_irq(gt->irq_lock);
--	gen6_gt_pm_unmask_irq(gt, rps->pm_events);
-+	if (intel_rps_is_active(rps))
-+		gen6_gt_pm_unmask_irq(gt, rps->pm_events);
- 	spin_unlock_irq(gt->irq_lock);
- }
+ #include "vc4_drv.h"
+ #include "vc4_regs.h"
+@@ -513,8 +514,15 @@ static void vc4_v3d_unbind(struct device
+ 	struct drm_device *drm = dev_get_drvdata(master);
+ 	struct vc4_dev *vc4 = to_vc4_dev(drm);
  
++	/* A straggler vc4_reset() re-enables the interrupt. */
++	timer_shutdown_sync(&vc4->hangcheck.timer);
++	cancel_work_sync(&vc4->hangcheck.reset_work);
++
+ 	vc4_irq_uninstall(drm);
+ 
++	/* Flush rather than cancel, so queued completions release their jobs. */
++	flush_work(&vc4->job_done_work);
++
+ 	/* Disable the binner's overflow memory address, so the next
+ 	 * driver probe (if any) doesn't try to reuse our old
+ 	 * allocation.
 
 
