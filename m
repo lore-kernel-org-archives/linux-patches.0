@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793208665;
-	b=XP1r8oZg7DfcI8MyrnRqYCRqvBVsrS26hRWSYD37iH+MCM0S7QdzPjCD0qp5mdjslM/X
-	 WfXff/ZF18jOIPhG51Ve3ITx+fiD/lrNeA6JDAkZG98zMTMuwD3o6wo8170RA2ytqTFN5
-	 vrYvOTWTREdJi9T/tDOeL2fBcieOCThQ+ACzfc97zFLeI1f/qKp+xNqBdO6ImSVx0HRUR
-	 U6LBOpomZpO7HAoWlgrS9b/85F3HKrT4zcBHpaG2PXvzdLLqWlFz5OrJuq3UHIUKOxvzE
-	 bWjlUspnN5E06gHX4vXh49kaOLCFtayVf3pscBgFOoVGLz1WHh8mWfKWkHrA7tF/nmQ==
+	t=1793208668;
+	b=ZCURkE3LHmSEh9mHA3QhUVz/MDNuHs0F6cbg1i4oeEioZ5linZEGPzVXx06qf85YuhnH
+	 KnH+2wzFstQZrHgZb/TUibrF3iYqxIXdTj9bjYVhOUs+UaUCfCnl2oOUCdiic8FYGTfTN
+	 0djPtSB9LULYV/7u7Z2E2BZ/FB4fhk1dUbpdQ7u+/z2OMDMmM/dr4ZETsJ++YQKEJ+tqX
+	 xKQQxjnf3eDKhrL9NoQKoTIxZtCZXPYtR23kGOnuhm5MLYVAIvzCEFbC46KtptPMKfPtT
+	 XUKNWDmdcdJWizuCTGcScnWUGlZFrZH1vqSNyQAbFO9ZeDsBp9pZt8dRpN29is1DYfA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793208665;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793208668;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=57Wyvd8KQywKurBlMudLXA/bYAGcQ0x1+dSadsvCJIM=;
-	b=h2U02OrhPTm4xGVS9MP6ELEX270exAGdCD+EVcSce1Un9F44b7YRUdJIQ3qB+5kKoa7O
-	 4jTum2hxjF2Vp1gO927NI3jOzJmKQG0XYvSo8UQMqmT+IpDh0PRuU1bnYOyU9PmAebnDu
-	 MDl02kksTSZnk7qlp8twmT07GKiFKuHaxujnkYBQQnRDWf66vUKhaa0KOIH1CQRCePsGI
-	 h8hzSVY8BWmomHCEsMghvSEaXJ8nmc3OQ7rplaMsBgnE/MAjo7rhHg02yAyZcrvNyzdch
-	 nG8IpNQfBvND3jaiJbA7soAdxdkQOj62ajxjgE8B3XxWjD6f7vqGyYcvWVtWB8vukyw==
+	bh=ZFg9eX/wwEsgSUKyWTvPfchP54AcI/l4a8xdAnxCfyc=;
+	b=NojWgK+beAUAbU9f2QN+0LOxMdNEJWi6zPDRG4PPeIyTMNoJaQq9oA99lP27LLcVabYZ
+	 tgOxQX/zQkyMpB7+pXvMPH02KUvEwbhje2GYfYzTr23aX6UdylilpPSalRmZvSObop9Ee
+	 vv8YQ2vJ7G60TXkX8QUcMw+aXmjv88XH+DxyWACOFPkfpGEJa119t0p9HH0tXYgGyf53D
+	 eWXeFecCnu3e5u5/cFK13q48oYBrxxMlNS0DBqrlGvMFZsq3DkZ17P8KUzi0NQZcX674R
+	 sjCk2T2G1/V45LKVgTg3XduEbdjLs4i4wEjNUr6aeLsfC2CHZxnUZCIPrHpq1c7GV4w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qXIHPUA+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gqlV8KMv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6860606A31A;
-	Wed, 28 Oct 2026 17:31:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB7D7606A31A;
+	Wed, 28 Oct 2026 17:31:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qXIHPUA+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4261D1F01825;
-	Wed, 28 Oct 2026 17:31:04 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gqlV8KMv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 248A21F01825;
+	Wed, 28 Oct 2026 17:31:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793208664;
-	bh=57Wyvd8KQywKurBlMudLXA/bYAGcQ0x1+dSadsvCJIM=;
+	s=korg; t=1793208667;
+	bh=ZFg9eX/wwEsgSUKyWTvPfchP54AcI/l4a8xdAnxCfyc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qXIHPUA+IxmpbXsqszFdQwXV7joJBXT3UiFvg79MdgZDgVFp1yLGT/GCJ1JK0AyGA
-	 CD8xfeP0jiiOtiHJn5tnEllVGJrURb0UEcHx9UnsF672hP/T48WNmuJDSPDEaBG77h
-	 q3IB5ZDZm/hjJNxZPGX1F6XcghBdI/ITbyW2YZz0=
+	b=gqlV8KMvtnQ97ZlG9XalUbJW3Y2qI+KGl2t8txDCzuTelHKoknVQrWgbjZPFMHa+T
+	 Bw6ztjGGzprDQDvPmL/Qd5m/YjGRwqmzYY8CrQztGf0o/2kBqLfRD9EOOM6D/xhoE8
+	 012zVG0EXrFCfvknqda6jFuVS79F/e3/yWEZtFNo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Benson Leung <bleung@chromium.org>,
-	Jameson Thies <jthies@google.com>
-Subject: [PATCH 5.10 200/516] usb: typec: ucsi: displayport: Current CAM OOB index fixup
-Date: Wed, 28 Oct 2026 17:55:52 +0100
-Message-ID: <20261028170008.240371761@linuxfoundation.org>
+	Jie Deng <dengjie03@kylinos.cn>,
+	Peter Chen <peter.chen@kernel.org>
+Subject: [PATCH 5.10 201/516] usb: cdns3: Fix NULL pointer dereference in cdns3_pci_probe
+Date: Wed, 28 Oct 2026 17:55:53 +0100
+Message-ID: <20261028170008.264476037@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -69,45 +68,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jameson Thies <jthies@google.com>
+From: Jie Deng <dengjie03@kylinos.cn>
 
-commit ea31c6498c61307dc0d8ce338a7f268cb8cbdd57 upstream.
+commit e5052f2c5c73c1dcca42bafc0bc737af2b2af059 upstream.
 
-Update ucsi_displayport_enter() to return invalid error when the PPM
-reports an current alternate mode greater than or equal to
-UCSI_MAX_ALTMODES. While here, remove 0xff current cam assignment on
-failed GET_CURRENT_CAM response.
+The Cadence USBSS controller is a two-function PCI device. The first
+probed function allocates the driver data and stores it with
+pci_set_drvdata(), while the second function reuses it via
+pci_get_drvdata() when pci_is_enabled() reports that the first
+function has already been probed.
 
-Fixes: 04cec690b1fd ("usb: typec: ucsi: displayport: Fix OOB altmode array index")
+When the second function is probed while the first one has been
+enabled but has not yet set its driver data, pci_get_drvdata()
+returns NULL, and the subsequent wrap->devfn assignment dereferences
+a NULL pointer and crashes the kernel.
+logs:
+Call trace:
+  cdns3_pci_probe+0xa4/0x300
+  local_pci_probe+0x44/0xa8
+  pci_call_probe+0x54/0x158
+  pci_device_probe+0x84/0x100
+  really_probe+0x184/0x3d0
+  __driver_probe_device+0x80/0x178
+  driver_probe_device+0x44/0xe8
+  __driver_attach+0xec/0x1f8
+  bus_for_each_dev+0x7c/0xe0
+  driver_attach+0x28/0x38
+  bus_add_driver+0x110/0x238
+  driver_register+0x64/0x128
+  __pci_register_driver+0x50/0x60
+  cdns3_pci_driver_init+0x28/0x38
+  do_one_initcall+0x5c/0x280
+  do_initcalls+0x104/0x1d8
+  kernel_init_freeable+0x140/0x218
+  kernel_init+0x28/0x1f8
+  ret_from_fork+0x10/0x20
+
+Return -EPROBE_DEFER in this case so that probing is retried after
+the first function has completed its probe.
+
+Fixes: 7733f6c32e36 ("usb: cdns3: Add Cadence USB3 DRD Driver")
 Cc: stable <stable@kernel.org>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Reviewed-by: Benson Leung <bleung@chromium.org>
-Signed-off-by: Jameson Thies <jthies@google.com>
-Link: https://patch.msgid.link/20260917032008.1701888-1-jthies@google.com
+Signed-off-by: Jie Deng <dengjie03@kylinos.cn>
+Acked-by: Peter Chen <peter.chen@kernel.org>
+Link: https://patch.msgid.link/20260810023626.70669-1-dengjie03@kylinos.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/ucsi/displayport.c |    9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/usb/cdns3/cdns3-pci-wrap.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/usb/typec/ucsi/displayport.c
-+++ b/drivers/usb/typec/ucsi/displayport.c
-@@ -69,11 +69,14 @@ static int ucsi_displayport_enter(struct
- 	if (ret < 0) {
- 		if (ucsi->version > 0x0100)
- 			goto err_unlock;
--		cur = 0xff;
- 	}
+--- a/drivers/usb/cdns3/cdns3-pci-wrap.c
++++ b/drivers/usb/cdns3/cdns3-pci-wrap.c
+@@ -99,6 +99,11 @@ static int cdns3_pci_probe(struct pci_de
  
--	if (cur < UCSI_MAX_ALTMODES) {
--		ret = dp->con->port_altmode[cur] == alt ? 0 : -EBUSY;
-+	if (cur != 0xff) {
-+		if (cur < UCSI_MAX_ALTMODES)
-+			ret = dp->con->port_altmode[cur] == alt ? 0 : -EBUSY;
-+		else
-+			ret = -EINVAL;
-+
- 		goto err_unlock;
- 	}
- 
+ 	if (pci_is_enabled(func)) {
+ 		wrap = pci_get_drvdata(func);
++		if (!wrap) {
++			dev_err(&pdev->dev,
++				"second function not initialized, retrying\n");
++			return -EPROBE_DEFER;
++		}
+ 	} else {
+ 		wrap = kzalloc(sizeof(*wrap), GFP_KERNEL);
+ 		if (!wrap)
 
 
