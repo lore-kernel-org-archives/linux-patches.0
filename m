@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793211839;
-	b=E651w/N7loy1VOMMDqlIKnSCWeLJpMImLiz6066YIkdYyV04+/p+h8p5IT9saJGIcGD9
-	 STy8fEINLkyw1tHJREyAzKtHfhBQFTqzARNQpiETgUHJxDeXwWh8/CrBgN4c0779cmDdg
-	 UcDt5VUNReizumtrMLDu3oWEUnEwWHn0sWrJRjTvypxw02q3rmRmz+ap4G46YArqQJEdi
-	 VfrQxtn9wBq3okNjrzd2LT8tPm6hJ1kF2zY7KBELa1oXdQ6vsN8rN34Xm24Q1Rjftcww3
-	 tcWCyqXLFIzx2YyeGzMzGNZQF6X9HK1BnIOQmBQm8D+ccaICcmcGNOfdFlw9QgQd+dQ==
+	t=1793211841;
+	b=NJ5uqO4Pn77mcekb8iKvt5vGAhG+cw1HH3zhELt0b2yPGFOESzbCBibgjSVn7WDVYmDa
+	 aoS6+liDSLGnXKBiVtnq514HdLSVnJTQ6czWvEf3sePz+ApeGkd3U3JL2/Vl8sl5+hcJF
+	 wXsGVoRXdZPIx/2qm3qb2cXfAJ4L/KLSVJBnYXZ4oT9ZVnNhGI+du4nzIv03rnXVayyO8
+	 wcgfqicP20IXlHbbwMI5lbqdvtvTP748iiEJdKlW/QsdUCoAiKjxcx65mgZSrvUl8ui9h
+	 u7x6iPyptEr2yh3OuHB4PRkwu7lW0PTx+fvP9fRRT5QvPhSp43qIWBNqST12VOA/gDw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793211839;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793211841;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=y15SfRdtruCrc69enmhexVktsKbUJzFkPTQk7H75v7o=;
-	b=pzPgjcALBzyZzoOsOH5XuQr3RO05yxfTX4ZwqUxX6BtCGpHfLfnF56JyDKTfgNM+DHNC
-	 IlERTL94/dA8f5NpnhYtKP4sTkqO3/GkNsA5iHZ8M9f+yE92DHOoWqP2OjHzW53BhFwKk
-	 uDxaXyPfQjPWCcDJ/VX4jxJN4QW8duFd0y6pO3ibtM2WheQsa5CuoxUUeF6yLugjIrqmW
-	 gM5OOpbD7kCtKSQ96ofDgiFFlaAOvzcDL11ZS8tCk6sYWK6X/7LkmJkqU4g0c9K+b341/
-	 AGlxRECWIKaSGFouqVCvOEJchcFZBNkq/BHRHTSDHPmxXmyyZnjBEQ7OgXfIJaupZ9g==
+	bh=t9pNGdW6TjfHMTFVMNNSGeHkcxDYQ79vXnt9mex71Ik=;
+	b=gL3XIa7YtK+Z6sc8BmmrBDogSQ8DEYbqlRAgvjQcr7yJjturT4MwkiZR2OouzUiKqo38
+	 O80Fhd2DZoRi/C2rUTq91CZeyfgq5Wza+QdDWCRPaAIA0qVAf6VwG5QhCQJYo6Bd5Amxe
+	 PEiPP2AHdXQfIEw6baczTuh6Q9htAmYgty/xobi4ixVJaY4f6lgCJxOcFKXjgrD7SlPB1
+	 x6bw6ZZVd1LXDkg5KaVbSaVcWrx32dqrKPejuiPVRuXPb4ngTDarxHOrxRM5W8RNs4G2X
+	 fjxCyf4TLJWC2jlqy2ZftQ3g/zU2gWSrAUWvAIaULXjvWd+VvMztNP1O0vFtnv+aR6Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ebmXs8CI;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YVc3UuLT;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F171606A334;
-	Wed, 28 Oct 2026 18:23:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B253606A329;
+	Wed, 28 Oct 2026 18:24:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ebmXs8CI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB3001F01825;
-	Wed, 28 Oct 2026 18:23:57 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YVc3UuLT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 975861F01828;
+	Wed, 28 Oct 2026 18:24:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793211838;
-	bh=y15SfRdtruCrc69enmhexVktsKbUJzFkPTQk7H75v7o=;
+	s=korg; t=1793211841;
+	bh=t9pNGdW6TjfHMTFVMNNSGeHkcxDYQ79vXnt9mex71Ik=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ebmXs8CI52SERVphd97sReMYs9Go9ZtE1yHX9iqEaXqRMD3AUQkRy20/euzWPZUpI
-	 zsCpUvyqhP/6WP13AK5szRpClygTwMzU3nHlGFc6uLjMK24rDktGOlRIeK66x7K3xu
-	 8VbHtFLgcqR1r0zcqtMyd/hguKPyy+mmhNE76vlY=
+	b=YVc3UuLTBMrEII0uGicV/SmADI7INtElRdX8Aybe4/8dXuofnpjAB8NVGdOvn9MOR
+	 pOQqokMgUSNYHJIn+EqVEBvPaatK8+mnf/2RawxVaZqsbh/io3xDeMDhyO8IhtaNuK
+	 sE+GiiLOTsjgQKvPaXZSH5muY+sNqXfX06wQw4uE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Chinner <dchinner@redhat.com>,
-	Carlos Maiolino <cmaiolino@redhat.com>,
-	Carlos Maiolino <cem@kernel.org>,
-	Siddh Raman Pant <siddh.raman.pant@oracle.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 462/571] xfs: catch stale AGF/AGF metadata
-Date: Wed, 28 Oct 2026 18:00:09 +0100
-Message-ID: <20261028170018.986384388@linuxfoundation.org>
+	"Jose Fernandez (Anthropic)" <jose.fernandez@linux.dev>,
+	Ben Cressey <ben@cressey.dev>,
+	Mikulas Patocka <mpatocka@redhat.com>
+Subject: [PATCH 5.15 512/571] dm-crypt: fix a tiny race condition in crypt_dec_pending
+Date: Wed, 28 Oct 2026 18:00:59 +0100
+Message-ID: <20261028170020.178951174@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -70,268 +68,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dave Chinner <dchinner@redhat.com>
+From: Ben Cressey <ben@cressey.dev>
 
-[ Upstream commit db6a2274162de615ff74b927d38942fe3134d298 ]
+commit 148845aa1921d95ef5dc851c76e6a284f6657df6 upstream.
 
-There is a race condition that can trigger in dmflakey fstests that
-can result in asserts in xfs_ialloc_read_agi() and
-xfs_alloc_read_agf() firing. The asserts look like this:
+crypt_dec_pending reads io->error before calling atomic_dec_and_test.
+Another context, for example crypt_endio called from an interrupt, may
+set io->error and drop its reference between the read and the
+decrement. crypt_dec_pending then drops the last reference and completes
+the bio with the stale status - so a read that failed and was never
+decrypted, or a write that failed, is reported as successful.
 
- XFS: Assertion failed: pag->pagf_freeblks == be32_to_cpu(agf->agf_freeblks), file: fs/xfs/libxfs/xfs_alloc.c, line: 3440
-.....
- Call Trace:
-  <TASK>
-  xfs_alloc_read_agf+0x2ad/0x3a0
-  xfs_alloc_fix_freelist+0x280/0x720
-  xfs_alloc_vextent_prepare_ag+0x42/0x120
-  xfs_alloc_vextent_iterate_ags+0x67/0x260
-  xfs_alloc_vextent_start_ag+0xe4/0x1c0
-  xfs_bmapi_allocate+0x6fe/0xc90
-  xfs_bmapi_convert_delalloc+0x338/0x560
-  xfs_map_blocks+0x354/0x580
-  iomap_writepages+0x52b/0xa70
-  xfs_vm_writepages+0xd7/0x100
-  do_writepages+0xe1/0x2c0
-  __writeback_single_inode+0x44/0x340
-  writeback_sb_inodes+0x2d0/0x570
-  __writeback_inodes_wb+0x9c/0xf0
-  wb_writeback+0x139/0x2d0
-  wb_workfn+0x23e/0x4c0
-  process_scheduled_works+0x1d4/0x400
-  worker_thread+0x234/0x2e0
-  kthread+0x147/0x170
-  ret_from_fork+0x3e/0x50
-  ret_from_fork_asm+0x1a/0x30
+The read was placed before the decrement by commit b35f8caa0890 ("dm
+crypt: wait for endio to complete before destruction"), because that
+commit freed dm_crypt_io before calling bio_endio. This is no longer the
+case, dm_crypt_io lives in the per-bio data now.
 
-I've seen the AGI variant from scrub running on the filesysetm
-after unmount failed due to systemd interference:
+Read io->error after atomic_dec_and_test instead. atomic_dec_and_test is
+fully ordered, so no additional barrier is needed.
 
- XFS: Assertion failed: pag->pagi_freecount == be32_to_cpu(agi->agi_freecount) || xfs_is_shutdown(pag->pag_mount), file: fs/xfs/libxfs/xfs_ialloc.c, line: 2804
-.....
- Call Trace:
-  <TASK>
-  xfs_ialloc_read_agi+0xee/0x150
-  xchk_perag_drain_and_lock+0x7d/0x240
-  xchk_ag_init+0x34/0x90
-  xchk_inode_xref+0x7b/0x220
-  xchk_inode+0x14d/0x180
-  xfs_scrub_metadata+0x2e2/0x510
-  xfs_ioc_scrub_metadata+0x62/0xb0
-  xfs_file_ioctl+0x446/0xbf0
-  __se_sys_ioctl+0x6f/0xc0
-  __x64_sys_ioctl+0x1d/0x30
-  x64_sys_call+0x1879/0x2ee0
-  do_syscall_64+0x68/0x130
-  ? exc_page_fault+0x62/0xc0
-  entry_SYSCALL_64_after_hwframe+0x76/0x7e
-
-Essentially, it is the same problem. When _flakey_drop_and_remount()
-loads the drop-writes table, it makes all writes silently fail. Writes
-are reported to the fs as completed successfully, but they are not
-issued to the backing store. The filesystem sees the successful
-write completion and marks the metadata buffer clean and removes it
-from the AIL.
-
-If this happens at the same time as memory pressure is occuring,
-the now-clean AGF and/or AGI buffers can be reclaimed from memory.
-
-Shortly afterwards, but before _flakey_drop_and_remount() runs
-unmount, background writeback is kicked and it tries to allocate
-blocks for the dirty pages in memory. This then tries to access the
-AGF buffer we just turfed out of memory. It's not found, so it gets
-read in from disk.
-
-This is all fine, except for the fact that the last writeback of the
-AGF did not actually reach disk. The AGF on disk is stale compared
-to the in-memory state held by the perag, and so they don't match
-and the assert fires.
-
-Then other operations on that inode hang because the task was killed
-whilst holding inode locks. e.g:
-
- Workqueue: xfs-conv/dm-12 xfs_end_io
- Call Trace:
-  <TASK>
-  __schedule+0x650/0xb10
-  schedule+0x6d/0xf0
-  schedule_preempt_disabled+0x15/0x30
-  rwsem_down_write_slowpath+0x31a/0x5f0
-  down_write+0x43/0x60
-  xfs_ilock+0x1a8/0x210
-  xfs_trans_alloc_inode+0x9c/0x240
-  xfs_iomap_write_unwritten+0xe3/0x300
-  xfs_end_ioend+0x90/0x130
-  xfs_end_io+0xce/0x100
-  process_scheduled_works+0x1d4/0x400
-  worker_thread+0x234/0x2e0
-  kthread+0x147/0x170
-  ret_from_fork+0x3e/0x50
-  ret_from_fork_asm+0x1a/0x30
-  </TASK>
-
-and it's all down hill from there.
-
-Memory pressure is one way to trigger this, another is to run "echo
-3 > /proc/sys/vm/drop_caches" randomly while tests are running.
-
-Regardless of how it is triggered, this effectively takes down the
-system once umount hangs because it's holding a sb->s_umount lock
-exclusive and now every sync(1) call gets stuck on it.
-
-Fix this by replacing the asserts with a corruption detection check
-and a shutdown.
-
-Signed-off-by: Dave Chinner <dchinner@redhat.com>
-Reviewed-by: Carlos Maiolino <cmaiolino@redhat.com>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
-
-6.12:
-
-Fixed conflict due to the following missing commit:
-	e9c4d8bfb26c ("xfs: factor out a generic xfs_group structure")
-
-6.6:
-
-Fixed conflict due to the following missing commit:
-	e45ea3645178 ("xfs: split the agf_roots and agf_levels arrays")
-
-5.15:
-
-Fixed conflict due to the following missing commits:
-	6f643c57d57c ("xfs: implement ->notify_failure() for XFS")
-	[Continuous range: a95fee40e3d4^..08d3e84feeb8]
-	08d3e84feeb8 ("xfs: pass perag to xfs_alloc_read_agf()")
-	76b47e528e3a ("xfs: kill xfs_alloc_pagf_init()")
-	99b13c7f0bd3 ("xfs: pass perag to xfs_ialloc_read_agi()")
-	a95fee40e3d4 ("xfs: kill xfs_ialloc_pagi_init()")
-
-Signed-off-by: Siddh Raman Pant <siddh.raman.pant@oracle.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: b35f8caa0890 ("dm crypt: wait for endio to complete before destruction")
+Cc: stable@vger.kernel.org
+Reviewed-by: Jose Fernandez (Anthropic) <jose.fernandez@linux.dev>
+Signed-off-by: Ben Cressey <ben@cressey.dev>
+Assisted-by: Claude:unspecified
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/libxfs/xfs_alloc.c  | 45 +++++++++++++++++++++++++++++---------
- fs/xfs/libxfs/xfs_ialloc.c | 32 +++++++++++++++++++++++----
- 2 files changed, 63 insertions(+), 14 deletions(-)
+ drivers/md/dm-crypt.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/fs/xfs/libxfs/xfs_alloc.c b/fs/xfs/libxfs/xfs_alloc.c
-index 95157f5a5a6c0..c4d1c7d436efb 100644
---- a/fs/xfs/libxfs/xfs_alloc.c
-+++ b/fs/xfs/libxfs/xfs_alloc.c
-@@ -26,6 +26,7 @@
- #include "xfs_ag.h"
- #include "xfs_ag_resv.h"
- #include "xfs_bmap.h"
-+#include "xfs_health.h"
+--- a/drivers/md/dm-crypt.c
++++ b/drivers/md/dm-crypt.c
+@@ -1740,7 +1740,6 @@ static void crypt_dec_pending(struct dm_
+ {
+ 	struct crypt_config *cc = io->cc;
+ 	struct bio *base_bio = io->base_bio;
+-	blk_status_t error = io->error;
  
- extern kmem_zone_t	*xfs_bmap_free_item_zone;
+ 	if (!atomic_dec_and_test(&io->io_pending))
+ 		return;
+@@ -1753,7 +1752,7 @@ static void crypt_dec_pending(struct dm_
+ 	else
+ 		kfree(io->integrity_metadata);
  
-@@ -3078,18 +3079,42 @@ xfs_alloc_read_agf(
- 		if (allocbt_blks > 0)
- 			atomic64_add(allocbt_blks, &mp->m_allocbt_blks);
- 	}
-+
- #ifdef DEBUG
--	else if (!xfs_is_shutdown(mp)) {
--		ASSERT(pag->pagf_freeblks == be32_to_cpu(agf->agf_freeblks));
--		ASSERT(pag->pagf_btreeblks == be32_to_cpu(agf->agf_btreeblks));
--		ASSERT(pag->pagf_flcount == be32_to_cpu(agf->agf_flcount));
--		ASSERT(pag->pagf_longest == be32_to_cpu(agf->agf_longest));
--		ASSERT(pag->pagf_levels[XFS_BTNUM_BNOi] ==
--		       be32_to_cpu(agf->agf_levels[XFS_BTNUM_BNOi]));
--		ASSERT(pag->pagf_levels[XFS_BTNUM_CNTi] ==
--		       be32_to_cpu(agf->agf_levels[XFS_BTNUM_CNTi]));
-+	/*
-+	 * It's possible for the AGF to be out of sync if the block device is
-+	 * silently dropping writes. This can happen in fstests with dmflakey
-+	 * enabled, which allows the buffer to be cleaned and reclaimed by
-+	 * memory pressure and then re-read from disk here. We will get a
-+	 * stale version of the AGF from disk, and nothing good can happen from
-+	 * here. Hence if we detect this situation, immediately shut down the
-+	 * filesystem.
-+	 *
-+	 * This can also happen if we are already in the middle of a forced
-+	 * shutdown, so don't bother checking if we are already shut down.
-+	 */
-+	if (!xfs_is_shutdown(mp)) {
-+		bool	ok = true;
-+
-+		ok &= pag->pagf_freeblks == be32_to_cpu(agf->agf_freeblks);
-+		ok &= pag->pagf_freeblks == be32_to_cpu(agf->agf_freeblks);
-+		ok &= pag->pagf_btreeblks == be32_to_cpu(agf->agf_btreeblks);
-+		ok &= pag->pagf_flcount == be32_to_cpu(agf->agf_flcount);
-+		ok &= pag->pagf_longest == be32_to_cpu(agf->agf_longest);
-+		ok &= pag->pagf_levels[XFS_BTNUM_BNOi] ==
-+		       be32_to_cpu(agf->agf_levels[XFS_BTNUM_BNOi]);
-+		ok &= pag->pagf_levels[XFS_BTNUM_CNTi] ==
-+		       be32_to_cpu(agf->agf_levels[XFS_BTNUM_CNTi]);
-+
-+		if (XFS_IS_CORRUPT(mp, !ok)) {
-+			xfs_ag_mark_sick(pag, XFS_SICK_AG_AGF);
-+			xfs_trans_brelse(tp, *bpp);
-+			*bpp = NULL;
-+			xfs_force_shutdown(mp, SHUTDOWN_CORRUPT_INCORE);
-+			return -EFSCORRUPTED;
-+		}
- 	}
--#endif
-+#endif /* DEBUG */
- 	return 0;
+-	base_bio->bi_status = error;
++	base_bio->bi_status = io->error;
+ 
+ 	bio_endio(base_bio);
  }
- 
-diff --git a/fs/xfs/libxfs/xfs_ialloc.c b/fs/xfs/libxfs/xfs_ialloc.c
-index 31dc8e5d87258..9b14a6e4e48c4 100644
---- a/fs/xfs/libxfs/xfs_ialloc.c
-+++ b/fs/xfs/libxfs/xfs_ialloc.c
-@@ -27,6 +27,7 @@
- #include "xfs_log.h"
- #include "xfs_rmap.h"
- #include "xfs_ag.h"
-+#include "xfs_health.h"
- 
- /*
-  * Lookup a record by ino in the btree given by cur.
-@@ -2619,12 +2620,35 @@ xfs_ialloc_read_agi(
- 		pag->pagi_init = 1;
- 	}
- 
-+#ifdef DEBUG
- 	/*
--	 * It's possible for these to be out of sync if
--	 * we are in the middle of a forced shutdown.
-+	 * It's possible for the AGF to be out of sync if the block device is
-+	 * silently dropping writes. This can happen in fstests with dmflakey
-+	 * enabled, which allows the buffer to be cleaned and reclaimed by
-+	 * memory pressure and then re-read from disk here. We will get a
-+	 * stale version of the AGF from disk, and nothing good can happen from
-+	 * here. Hence if we detect this situation, immediately shut down the
-+	 * filesystem.
-+	 *
-+	 * This can also happen if we are already in the middle of a forced
-+	 * shutdown, so don't bother checking if we are already shut down.
- 	 */
--	ASSERT(pag->pagi_freecount == be32_to_cpu(agi->agi_freecount) ||
--		xfs_is_shutdown(mp));
-+	if (!xfs_is_shutdown(mp)) {
-+		bool	ok = true;
-+
-+		ok &= pag->pagi_freecount == be32_to_cpu(agi->agi_freecount);
-+		ok &= pag->pagi_count == be32_to_cpu(agi->agi_count);
-+
-+		if (XFS_IS_CORRUPT(mp, !ok)) {
-+			xfs_ag_mark_sick(pag, XFS_SICK_AG_AGI);
-+			xfs_trans_brelse(tp, *bpp);
-+			*bpp = NULL;
-+			xfs_force_shutdown(mp, SHUTDOWN_CORRUPT_INCORE);
-+			return -EFSCORRUPTED;
-+		}
-+	}
-+#endif /* DEBUG */
-+
- 	return 0;
- }
- 
--- 
-2.53.0
-
 
 
