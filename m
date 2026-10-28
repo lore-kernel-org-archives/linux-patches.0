@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214006;
-	b=ACkfJ2Dxg4gJkexS4fos9XgOIrb+GhUCc9Wibkex6hsl4oyDjkxx1yEV2v879/6q7LA5
-	 0t1pYItK6VGMySU8iugq8v8m04r7v/dVuTGkpmHsk8M1ipLSUDX7w2hOq6KXS7zTjTsNo
-	 bk1qeHM7heN3TFbUxTRbUthP+QcsAtOsqlM4lV5zGZNNu5bdqnKkbhGlJcxQa314i/52t
-	 kU//B8Tpl8j4/jRgitJM0/0ZvjRzANCuYP9+QH4jy6cDb3lUZU/tTtQhqj1ONXI5GjWpo
-	 7VgtqzVCC76xBl0/hJK5BZqJZX28k0YEmUJfcrCSy4cSEhIvjAzh3Cz0h1F7Owf8j2A==
+	t=1793214009;
+	b=gl2sy9J+lazfpRSkSGp46oxD61Cly+vSGY29wfo2VfD91c833OWPAcohgcsFdekyGTP+
+	 HGWeVmJdRYygkI8No6GuFCggYiGnFTEOJAB5TyTaBsUpagwbMi9DngusxSLT+A/aQLM2o
+	 u7L+RGI/wE6mTmyDnI3rWoEeK9DB0mehdologttovZvQi/Knq9rMMLGOKgGnKcag3sZMw
+	 bV9r4SEz1OI1LLsWbtry8f6Tv0OCvzkKCEct1F3GLlqTGDpljGVgUWLDD8JuVeoOW6vU0
+	 k82njamMu4z0fiPS3eCbQhNBTitsDOjtw2nqiBMgHZ+ENYmU0C8UhIDESGmYxPDkfgQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214006;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214009;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=wQqVgTXSXYUWTiRjW1lZEcIjOsDGYrN6t0lIvs2z9yU=;
-	b=gfxSw5r2kGgQT00CbT2JThCjXK2iUFUTGONHjpu1aOGbbvsjsd3mEHM0UuBNdPdJ/Zoh
-	 zU1mydYGuURhHgRYgmaV/NzdTJvPAx4PvsT5cylezxPrMzSyASCM38gR2HIxD+mhpeIux
-	 vUks7dIWKNBFu0Vng+oi7kFct587OXk5z+QdZcz2Qti3VT7jAvxzvseJNVaToPeApZHpj
-	 G5qxmMNGIJqJycsbccAxHDQmkMDZmBgaWzbooXu7SqHVvDqQICs1VGOVuc547JW5Y8v0j
-	 KrnjUQtQjkdvPijCLhmM3qxk7mAfAkz88Qj+ZVi/+vZ3BoukWmurET7h+XaCwffhkNA==
+	bh=oV9vkqMNl4MXejlHw4Flw6rz6O+7sxbdCZ1NhihJV8E=;
+	b=1syjoZxaUAAsgW6dfGxJ5piiL+9cm6RCc7q5dxYXB5RNAxRTKUEsGOWzmx94XiKoI8kQ
+	 WiCaDakL1aWiuv0gLfbLZPIYCPd5NqKk1wm+Kv2Y1GqVlOdAD3iN5DAW/6EgUzX81okVn
+	 23C3z6Cjlw6sTehhZKhbQ7IOdyM8BC4eby2v8g5K10ltj/VttGStbiYAEDR0Fl/83P68U
+	 bP5ZQrDKp7lRWTf+A0IReExv4Jcw8n+o7T0a+SO9lSkkzxxBXQEvk/iOKaztrqmyFT2LA
+	 +6rrtunv3V0Wicvhegg3XuCeQHfSFG8sl3mmcKGfBV9d8T7ZfYFYKsYYpeAYBwsBpbA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=o8k361ic;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zkK8swGO;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37C16606A31C;
-	Wed, 28 Oct 2026 19:00:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13EC160A263B;
+	Wed, 28 Oct 2026 19:00:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=o8k361ic
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 875771F031E1;
-	Wed, 28 Oct 2026 19:00:05 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zkK8swGO
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62DF71F031E4;
+	Wed, 28 Oct 2026 19:00:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214006;
-	bh=wQqVgTXSXYUWTiRjW1lZEcIjOsDGYrN6t0lIvs2z9yU=;
+	s=korg; t=1793214008;
+	bh=oV9vkqMNl4MXejlHw4Flw6rz6O+7sxbdCZ1NhihJV8E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=o8k361icL3bVBTyoncbGsNRBTPYTIL5/Eubdqkq90e22kzTGDumxg/lmCzMcqvS47
-	 1WSV+uMVOLiah8+N8GjZHMBtkwvYSawMAj65I8UOlu6CsQsQsczIb2ojXx9YAdabKf
-	 dknMgp3WYs7vyMBkCdMYjK/HhJEe2RpWP8a+W58k=
+	b=zkK8swGOI/s1VgUifCdUFdSA9KA3KMAzgmdr3aZWO8Z3eLjtFs04nZjWycWNEZL0d
+	 8J70CMhHnGdzrNl3EWG2aSj+AiSMElIX+iO4NWs5EwsUcEICi0Uv418hjw0SVGEKhH
+	 mrnKwoJXCvZFBNsmfy3wD1JPzB8YsqEoDeQ+Llcg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Anderson <sean.anderson@linux.dev>,
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
+	Piergiorgio Sartor <piergiorgio.sartor@nexgo.de>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0705/1887] drm: zynqmp_kms: Unplug DRM device before removal
-Date: Wed, 28 Oct 2026 17:46:41 +0100
-Message-ID: <20261028170515.454128744@linuxfoundation.org>
+Subject: [PATCH 6.1 0706/1887] f2fs: fix to drop all discards after creating snapshot on lvm device
+Date: Wed, 28 Oct 2026 17:46:42 +0100
+Message-ID: <20261028170515.476885430@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,38 +69,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Anderson <sean.anderson@linux.dev>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit 2e07c88914fc5289c21820b1aa94f058feb38197 ]
+[ Upstream commit bc8aeb04fd80cb8cfae3058445c84410fd0beb5e ]
 
-Prevent userspace accesses to the DRM device from causing
-use-after-frees by unplugging the device before we remove it. This
-causes any further userspace accesses to result in an error without
-further calls into this driver's internals.
+Piergiorgio reported a bug in bugzilla as below:
 
-Fixes: d76271d22694 ("drm: xlnx: DRM/KMS driver for Xilinx ZynqMP DisplayPort Subsystem")
-Closes: https://lore.kernel.org/dri-devel/4d8f4c9b-2efb-4774-9a37-2f257f79b2c9@linux.dev/
-Signed-off-by: Sean Anderson <sean.anderson@linux.dev>
-Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240809193600.3360015-2-sean.anderson@linux.dev
+------------[ cut here ]------------
+WARNING: CPU: 2 PID: 969 at fs/f2fs/segment.c:1330
+RIP: 0010:__submit_discard_cmd+0x27d/0x400 [f2fs]
+Call Trace:
+ __issue_discard_cmd+0x1ca/0x350 [f2fs]
+ issue_discard_thread+0x191/0x480 [f2fs]
+ kthread+0xcf/0x100
+ ret_from_fork+0x31/0x50
+ ret_from_fork_asm+0x1a/0x30
+
+w/ below testcase, it can reproduce this bug quickly:
+- pvcreate /dev/vdb
+- vgcreate myvg1 /dev/vdb
+- lvcreate -L 1024m -n mylv1 myvg1
+- mount /dev/myvg1/mylv1 /mnt/f2fs
+- dd if=/dev/zero of=/mnt/f2fs/file bs=1M count=20
+- sync
+- rm /mnt/f2fs/file
+- sync
+- lvcreate -L 1024m -s -n mylv1-snapshot /dev/myvg1/mylv1
+- umount /mnt/f2fs
+
+The root cause is: it will update discard_max_bytes of mounted lvm
+device to zero after creating snapshot on this lvm device, then,
+__submit_discard_cmd() will pass parameter @nr_sects w/ zero value
+to __blkdev_issue_discard(), it returns a NULL bio pointer, result
+in panic.
+
+This patch changes as below for fixing:
+1. Let's drop all remained discards in f2fs_unfreeze() if snapshot
+of lvm device is created.
+2. Checking discard_max_bytes before submitting discard during
+__submit_discard_cmd().
+
+Cc: stable@vger.kernel.org
+Fixes: 35ec7d574884 ("f2fs: split discard command in prior to block layer")
+Reported-by: Piergiorgio Sartor <piergiorgio.sartor@nexgo.de>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=219484
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xlnx/zynqmp_dpsub.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/f2fs/segment.c |  9 +++++++++
+ fs/f2fs/super.c   | 12 ++++++++++++
+ 2 files changed, 21 insertions(+)
 
-diff --git a/drivers/gpu/drm/xlnx/zynqmp_dpsub.c b/drivers/gpu/drm/xlnx/zynqmp_dpsub.c
-index f34d4ec1d92f3..463407d5f6600 100644
---- a/drivers/gpu/drm/xlnx/zynqmp_dpsub.c
-+++ b/drivers/gpu/drm/xlnx/zynqmp_dpsub.c
-@@ -253,7 +253,7 @@ static int zynqmp_dpsub_remove(struct platform_device *pdev)
- 	struct zynqmp_dpsub *dpsub = platform_get_drvdata(pdev);
- 	struct drm_device *drm = &dpsub->drm;
+diff --git a/fs/f2fs/segment.c b/fs/f2fs/segment.c
+index 4b13e04c6e608..bf52ba8a32c04 100644
+--- a/fs/f2fs/segment.c
++++ b/fs/f2fs/segment.c
+@@ -1125,6 +1125,15 @@ static int __submit_discard_cmd(struct f2fs_sb_info *sbi,
+ 	if (is_sbi_flag_set(sbi, SBI_NEED_FSCK))
+ 		return 0;
  
--	drm_dev_unregister(drm);
-+	drm_dev_unplug(drm);
- 	drm_atomic_helper_shutdown(drm);
- 	drm_kms_helper_poll_fini(drm);
++	/*
++	 * stop issuing discard for any of below cases:
++	 * 1. device is conventional zone, but it doesn't support discard.
++	 * 2. device is regulare device, after snapshot it doesn't support
++	 * discard.
++	 */
++	if (!bdev_max_discard_sectors(bdev))
++		return -EOPNOTSUPP;
++
+ 	trace_f2fs_issue_discard(bdev, dc->start, dc->len);
  
+ 	lstart = dc->lstart;
+diff --git a/fs/f2fs/super.c b/fs/f2fs/super.c
+index 375daa37b3795..a1c33931d175e 100644
+--- a/fs/f2fs/super.c
++++ b/fs/f2fs/super.c
+@@ -1742,6 +1742,18 @@ static int f2fs_freeze(struct super_block *sb)
+ 
+ static int f2fs_unfreeze(struct super_block *sb)
+ {
++	struct f2fs_sb_info *sbi = F2FS_SB(sb);
++
++	/*
++	 * It will update discard_max_bytes of mounted lvm device to zero
++	 * after creating snapshot on this lvm device, let's drop all
++	 * remained discards.
++	 * We don't need to disable real-time discard because discard_max_bytes
++	 * will recover after removal of snapshot.
++	 */
++	if (test_opt(sbi, DISCARD) && !f2fs_hw_support_discard(sbi))
++		f2fs_issue_discard_timeout(sbi, false);
++
+ 	clear_sbi_flag(F2FS_SB(sb), SBI_IS_FREEZING);
+ 	return 0;
+ }
 -- 
 2.53.0
 
