@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215991;
-	b=2Bzl3CZ8kRMju4bWd2ukAQNBg1IsZy36isW19j245pflk01BDILL/hJ2+tOue9WZuM0H
-	 jR4oRPv7BPxZw7kwFU/W4x8HkEc1mO3SomUKSfQDw116ouDqE8/0B29suEkBoJpkc3Wpt
-	 oyH0jYunIUXA/JnZRCDHzn5X/yXNMsXcNLdLKksstU2N3bpa62bZPuK534+OTiNrZICWf
-	 OOVRuCI+O+nivnEmR1oLKaqN4qbIn/M9scN9zcCiOazdLAyXea9zfA+2mr1h1lsEsWx2N
-	 EcONWbafHUqfxF6M3BwoAfzLvLcOiaJg+BjJBaFFeDiVB+ftBGtWmE3PBOdOPyGcLtQ==
+	t=1793215994;
+	b=spSrbUzTyNF/fyODSd+QMHTXx4+71QiC92jIzfOR1PgA+wvUBBK0J1eLzr5BLEJbpBJH
+	 pJAk8W4YfkTLyQcUpPHbcuVmHQYItN/EFcCi7GjDec8PhiUZ1Q8IXaoqLEB4RFbuB62fw
+	 6cDvJIbQ1aK4AsWFj8+DUE8T52LG5UmBb+u0XL/9mmZxNDOV7bvHBSgDZ3XeGjm1myy2m
+	 qVC0UQ211rjd44v8uJfZqTocmK6bIlGXg6sZeQf3E6FgrA4Lm6PiE9fA+nxS068/vRUxi
+	 JW7gwK9UK02by3OiAhLZybQvS7IhLUKEtIklsff+aV+zIq3kEHdkmVpWJcyDp0EcVbw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215991;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215994;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=0/ZyX6c6DkYC9op6t8z43QGMvhFw3C54NVgY03zHcgA=;
-	b=fAYxBsgFTMu59AM6ygQXXqt6mcNN9XqKCHa+95caq0n9quE/gFzKt/ir2yUYLDYb1xVo
-	 V113VdSw/86HBBNa+170LZRfnPRpSvdVHP07Q3r8TYVXPB8vdPgjhnzMMyMNTMdQ7T81C
-	 8wyoV1nWe0ovkyLAlGktVke21hdyx9lNRBRiJMPJSByeg7GRpfuzbWrrgnVwXIsNqpLd4
-	 r9HWzwcG/jrr1E1ZYJo+hZn/8mwbKPIWwUtFoSdi7owfKPwFNRUH3XgUPi3tuDDri9xQo
-	 g0Qh4LMfKUaoR36iethH0i9DvLN9WKjH2mQ+fhwlH8NE72x6/46CP5+RyrfqeEg5UjA==
+	bh=CuDQfdJCLwaSUdAJRlFXvDcl37HO2K7c9mhLyVg7vPg=;
+	b=0ECdLL/pBiZ/y2yxISdYzliNuUTHYcexJpRx909uejN0xgMVH/NOhqlKxytXQQ9CXSe9
+	 4JmIcWHocJXl+KWx/JC/RkrL8ziRFzWWrhezMd4TFFjE0QpGBkkChWw948jlzffq4mbdp
+	 hVMOJ/B6VqFKJ/cm5ulUFyRE7dLSEUEDAvARJTDZ9DfFV3nJrbUC960hLB5UEM7vWcBAN
+	 Oz9cGyccFNe6/he785ZJQiyv14HXwZuGEAUtXaI+76bsMldFzR9Oz4WE+lhjG44QgnasX
+	 Oz2+aumLpt6oYdONSlIxxOPKZQrZ1Hwn4191QFkiciIJEbUjP4tjFYeA1JbFz7DR71A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uufb1nT3;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GB6PD9KE;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3331B606A31A;
-	Wed, 28 Oct 2026 19:33:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10A5F606A31A;
+	Wed, 28 Oct 2026 19:33:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uufb1nT3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8705A1F01825;
-	Wed, 28 Oct 2026 19:33:10 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GB6PD9KE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60CEF1F01825;
+	Wed, 28 Oct 2026 19:33:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215991;
-	bh=0/ZyX6c6DkYC9op6t8z43QGMvhFw3C54NVgY03zHcgA=;
+	s=korg; t=1793215993;
+	bh=CuDQfdJCLwaSUdAJRlFXvDcl37HO2K7c9mhLyVg7vPg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uufb1nT3HUK6cirKggIcvBCmC3brBqopBMo8zJSI4G9aB2AmTZvZga01rlwtDkN5U
-	 J8uvrTWLIsdq5aF90XuAkXkZqXMUc0Pe9/kh9k0voW5Mxa4QqcRBeLc30DAZizLzqT
-	 wURfWhV5LSRquRkqKcn/YZIYZXRe8Z/iKQGOqet4=
+	b=GB6PD9KEzMAoyKGsdekUnYC0WdbRU2rglckLNjYh4n8wQ7xJNB3ryT5DMHzDY+Azn
+	 eWdef8UhYDPJky4PvWtNvFDWRI6tswS5Vc/DOR5UZZ8zXDy8s9R9bPGN3u2RaGTmTC
+	 ViZd21O11cqXK3A97wt6srYlWUYI4Q+A6CS7OJl4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chuck Lever <chuck.lever@oracle.com>,
 	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1402/1887] SUNRPC: Fix crasher in unwrap_integ_data()
-Date: Wed, 28 Oct 2026 17:58:18 +0100
-Message-ID: <20261028170531.354453629@linuxfoundation.org>
+Subject: [PATCH 6.1 1403/1887] SUNRPC: Rename automatic variables in unwrap_priv_data()
+Date: Wed, 28 Oct 2026 17:58:19 +0100
+Message-ID: <20261028170531.377637525@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -70,135 +70,106 @@ Content-Transfer-Encoding: 8bit
 
 From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 4dd9daa9124aad3c3d4ceca4f1d417cc62d59156 ]
+[ Upstream commit f4a59e822f8116baf51a9fc86590e4391bd542d2 ]
 
-If a zero length is passed to kmalloc() it returns 0x10, which is
-not a valid address. gss_verify_mic() subsequently crashes when it
-attempts to dereference that pointer.
+Clean up: To help orient readers, name the stack variables to match
+the XDR field names.
 
-Instead of allocating this memory on every call based on an
-untrusted size value, use a piece of dynamically-allocated scratch
-memory that is always available.
-
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Stable-dep-of: a919c5c88769 ("SUNRPC: svcauth_gss: enforce krb5 token minimum length")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/auth_gss/svcauth_gss.c | 55 ++++++++++++++++++-------------
- 1 file changed, 32 insertions(+), 23 deletions(-)
+ net/sunrpc/auth_gss/svcauth_gss.c | 38 ++++++++++++++++++++-----------
+ 1 file changed, 25 insertions(+), 13 deletions(-)
 
 diff --git a/net/sunrpc/auth_gss/svcauth_gss.c b/net/sunrpc/auth_gss/svcauth_gss.c
-index 36549f6d5e01e..ccb38a5406067 100644
+index ccb38a5406067..07e6b8c5dbe1a 100644
 --- a/net/sunrpc/auth_gss/svcauth_gss.c
 +++ b/net/sunrpc/auth_gss/svcauth_gss.c
-@@ -49,11 +49,36 @@
- #include <linux/sunrpc/svcauth.h>
- #include <linux/sunrpc/svcauth_gss.h>
- #include <linux/sunrpc/cache.h>
-+#include <linux/sunrpc/gss_krb5.h>
- 
- #include <trace/events/rpcgss.h>
- 
- #include "gss_rpc_upcall.h"
+@@ -983,16 +983,28 @@ fix_priv_head(struct xdr_buf *buf, int pad)
+ 	}
+ }
  
 +/*
-+ * Unfortunately there isn't a maximum checksum size exported via the
-+ * GSS API. Manufacture one based on GSS mechanisms supported by this
-+ * implementation.
++ * RFC 2203, Section 5.3.2.3
++ *
++ *	struct rpc_gss_priv_data {
++ *		opaque databody_priv<>
++ *	};
++ *
++ *	struct rpc_gss_data_t {
++ *		unsigned int seq_num;
++ *		proc_req_arg_t arg;
++ *	};
 + */
-+#define GSS_MAX_CKSUMSIZE (GSS_KRB5_TOK_HDR_LEN + GSS_KRB5_MAX_CKSUM_LEN)
-+
-+/*
-+ * This value may be increased in the future to accommodate other
-+ * usage of the scratch buffer.
-+ */
-+#define GSS_SCRATCH_SIZE GSS_MAX_CKSUMSIZE
-+
-+struct gss_svc_data {
-+	/* decoded gss client cred: */
-+	struct rpc_gss_wire_cred	clcred;
-+	/* save a pointer to the beginning of the encoded verifier,
-+	 * for use in encryption/checksumming in svcauth_gss_release: */
-+	__be32				*verf_start;
-+	struct rsc			*rsci;
-+
-+	/* for temporary results */
-+	u8				gsd_scratch[GSS_SCRATCH_SIZE];
-+};
- 
- /* The rpcsec_init cache is used for mapping RPCSEC_GSS_{,CONT_}INIT requests
-  * into replies.
-@@ -887,13 +912,11 @@ read_u32_from_xdr_buf(struct xdr_buf *buf, int base, u32 *obj)
  static int
- unwrap_integ_data(struct svc_rqst *rqstp, struct xdr_buf *buf, u32 seq, struct gss_ctx *ctx)
+-unwrap_priv_data(struct svc_rqst *rqstp, struct xdr_buf *buf, u32 seq, struct gss_ctx *ctx)
++svcauth_gss_unwrap_priv(struct svc_rqst *rqstp, struct xdr_buf *buf, u32 seq,
++			struct gss_ctx *ctx)
  {
-+	struct gss_svc_data *gsd = rqstp->rq_auth_data;
- 	u32 integ_len, rseqno, maj_stat;
--	int stat = -EINVAL;
- 	struct xdr_netobj mic;
- 	struct xdr_buf integ_buf;
+-	u32 priv_len, maj_stat;
++	u32 len, seq_num, maj_stat;
+ 	int pad, remaining_len, offset;
+-	u32 rseqno;
  
--	mic.data = NULL;
--
- 	/* NFS READ normally uses splice to send data in-place. However
- 	 * the data in cache can change after the reply's MIC is computed
- 	 * but before the RPC reply is sent. To prevent the client from
-@@ -917,11 +940,9 @@ unwrap_integ_data(struct svc_rqst *rqstp, struct xdr_buf *buf, u32 seq, struct g
- 	/* copy out mic... */
- 	if (read_u32_from_xdr_buf(buf, integ_len, &mic.len))
+ 	clear_bit(RQ_SPLICE_OK, &rqstp->rq_flags);
+ 
+-	priv_len = svc_getnl(&buf->head[0]);
++	len = svc_getnl(&buf->head[0]);
+ 	if (rqstp->rq_deferred) {
+ 		/* Already decrypted last time through! The sequence number
+ 		 * check at out_seq is unnecessary but harmless: */
+@@ -1002,14 +1014,14 @@ unwrap_priv_data(struct svc_rqst *rqstp, struct xdr_buf *buf, u32 seq, struct gs
+ 	 * request to the end, where head[0].iov_len is just the bytes
+ 	 * not yet read from the head, so these two values are different: */
+ 	remaining_len = total_buf_len(buf);
+-	if (priv_len > remaining_len)
++	if (len > remaining_len)
  		goto unwrap_failed;
--	if (mic.len > RPC_MAX_AUTH_SIZE)
--		goto unwrap_failed;
--	mic.data = kmalloc(mic.len, GFP_KERNEL);
--	if (!mic.data)
-+	if (mic.len > sizeof(gsd->gsd_scratch))
- 		goto unwrap_failed;
-+	mic.data = gsd->gsd_scratch;
- 	if (read_bytes_from_xdr_buf(buf, integ_len + 4, mic.data, mic.len))
- 		goto unwrap_failed;
- 	maj_stat = gss_verify_mic(ctx, &integ_buf, &mic);
-@@ -932,20 +953,17 @@ unwrap_integ_data(struct svc_rqst *rqstp, struct xdr_buf *buf, u32 seq, struct g
+-	pad = remaining_len - priv_len;
++	pad = remaining_len - len;
+ 	buf->len -= pad;
+ 	fix_priv_head(buf, pad);
+ 
+-	maj_stat = gss_unwrap(ctx, 0, priv_len, buf);
+-	pad = priv_len - buf->len;
++	maj_stat = gss_unwrap(ctx, 0, len, buf);
++	pad = len - buf->len;
+ 	/* The upper layers assume the buffer is aligned on 4-byte boundaries.
+ 	 * In the krb5p case, at least, the data ends up offset, so we need to
+ 	 * move it around. */
+@@ -1025,8 +1037,8 @@ unwrap_priv_data(struct svc_rqst *rqstp, struct xdr_buf *buf, u32 seq, struct gs
+ 	if (maj_stat != GSS_S_COMPLETE)
+ 		goto bad_unwrap;
+ out_seq:
+-	rseqno = svc_getnl(&buf->head[0]);
+-	if (rseqno != seq)
++	seq_num = svc_getnl(&buf->head[0]);
++	if (seq_num != seq)
  		goto bad_seqno;
- 	/* trim off the mic and padding at the end before returning */
- 	xdr_buf_trim(buf, round_up_to_quad(mic.len) + 4);
--	stat = 0;
--out:
--	kfree(mic.data);
--	return stat;
-+	return 0;
+ 	return 0;
  
- unwrap_failed:
+@@ -1034,7 +1046,7 @@ unwrap_priv_data(struct svc_rqst *rqstp, struct xdr_buf *buf, u32 seq, struct gs
  	trace_rpcgss_svc_unwrap_failed(rqstp);
--	goto out;
-+	return -EINVAL;
- bad_seqno:
- 	trace_rpcgss_svc_seqno_bad(rqstp, seq, rseqno);
--	goto out;
-+	return -EINVAL;
- bad_mic:
- 	trace_rpcgss_svc_mic(rqstp, maj_stat);
--	goto out;
-+	return -EINVAL;
- }
- 
- static inline int
-@@ -1023,15 +1041,6 @@ unwrap_priv_data(struct svc_rqst *rqstp, struct xdr_buf *buf, u32 seq, struct gs
  	return -EINVAL;
- }
- 
--struct gss_svc_data {
--	/* decoded gss client cred: */
--	struct rpc_gss_wire_cred	clcred;
--	/* save a pointer to the beginning of the encoded verifier,
--	 * for use in encryption/checksumming in svcauth_gss_release: */
--	__be32				*verf_start;
--	struct rsc			*rsci;
--};
--
- static int
- svcauth_gss_set_client(struct svc_rqst *rqstp)
- {
+ bad_seqno:
+-	trace_rpcgss_svc_seqno_bad(rqstp, seq, rseqno);
++	trace_rpcgss_svc_seqno_bad(rqstp, seq, seq_num);
+ 	return -EINVAL;
+ bad_unwrap:
+ 	trace_rpcgss_svc_unwrap(rqstp, maj_stat);
+@@ -1652,8 +1664,8 @@ svcauth_gss_accept(struct svc_rqst *rqstp)
+ 			/* placeholders for length and seq. number: */
+ 			svc_putnl(resv, 0);
+ 			svc_putnl(resv, 0);
+-			if (unwrap_priv_data(rqstp, &rqstp->rq_arg,
+-					gc->gc_seq, rsci->mechctx))
++			if (svcauth_gss_unwrap_priv(rqstp, &rqstp->rq_arg,
++						    gc->gc_seq, rsci->mechctx))
+ 				goto garbage_args;
+ 			rqstp->rq_auth_slack = RPC_MAX_AUTH_SIZE * 2;
+ 			break;
 -- 
 2.53.0
 
