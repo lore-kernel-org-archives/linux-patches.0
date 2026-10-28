@@ -1,60 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793210484;
-	b=IUWWErnWu6bsQ4Av//a5Xe9JQBcpumgEX5nFHP7rKNGBpTbsXhD3OFxe2k4nvw6bATbp
-	 Fjs4JjWtvAWfrF8yWctiPjRxY0L3XrwgsOeamwdPyAsnpFlC8Wzvcbg8EgRnwO+GquiQf
-	 CFKZMI3RPz4n4kDusGj0jzp8dljAgc/AGKQyTQVsmd4xuW9sNVoP69phLAtOLS86KVoC6
-	 SlF5tfLX3MGucwrI/kucZbOlAGHNtW0E/0CUqvcuOhvO+RcZJesDiEI6tsdlvKX3mq+Qk
-	 Ly+jOdJqnC/vNiyOUTQsIPYzlr+tXqzP5wtsvDDRz+0yVkDG0tLZXYiq2A7HjHdW51Q==
+	t=1793210487;
+	b=1brWKcLuiKNZe5u430WhGxqONG6fRQaxZ4/o0K5PIbzVfeEFMB7ZK2wgn4rEURIgbVxc
+	 GKuStVKH+GUPOJQlKzo0fbG+Nysj4nwkSzvS39iboC+DfvZ5Z398CEMjT1ZzPq4PXJdh5
+	 DpUp7s6IVvOLPBBJM1DGecjmfEdaHXy/afyFszfI6REIj9T+EwC/3ft5uFInRgMRbI5Tj
+	 EPYA2N9Ow0lQTUvgS0M/eCD5MIT2HlpRDotAbF6rYIn8ohZJdSOrI/XjgSId4JhkqnXmU
+	 JuTO1v8KenUu5RnvV3ey5QTAMwf8jQW7ineb2R1GXYRDVnyNUOfbLNUoPMYx1GPzV0w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793210484;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793210487;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=WKfDgVhn0IOtxe6nQCit1YKQX/7ffyM3KvgnNbVkX+E=;
-	b=gKa95Rg3evFTUXcimDUKj/2OzDXFrQZcrDk+ifFihew+1H3eWe7rLcehMwwozjTMt3PJ
-	 JBvot0T+jrrCpSZC6qeNVE0+jrOKb6UFPG6Pkc1Mokyq7mFqbTmS+0G2+sxHHEcH2u7e5
-	 wuT5K1gwnt+ursug40zJdJe+z6RHjWSCCTt7R92nj37gUb8c/4QGCYcTDSdHQaxz4IQNR
-	 ABz6FXMLFRsQ5ETreSn9H1cU5qj8FcDqRrjZODQ9vXy6Tn92OFy2S3Laade/zcAuHIj0s
-	 Ww2kSzvyOS4xbXKBBJdAnJ1/uE6HcHvCzM8LhjMKUM6SfbcmqkYXPeYnCA/PnE4u51g==
+	bh=HseXowtUJk7+J7+DLswiiFQSYflX6Hw8iC0/Ny25Izo=;
+	b=T/NXFK9xMtykVSfVUYWsSqSphEfBJkhyc4FFDwnWEv3ljVMrJzz+I5jOwV2Bv+0dtPQ6
+	 DOBuFprNvl8o14R+dJcN2GXoXIj9rsvBX2YiAPB76K0vO0d3p441qOj/6WGq0GfSLd/+b
+	 SeclCu8WJ71gDB0phkdzK0dltMGv6QEwYqLggtbqzSARexCKXh6NnlSQEAB/uQPhP8un6
+	 WxOAxjpVfgA3JtYVAKnXObhIfJrmGX+cPHPqFYIvmhD6e//emHbILchE2yS507MYrV49h
+	 Ubk9xFfAGDkgwN21tEgb6BsuTukh6/laIR10gia3cGb48MVOJVhaFdoT20iyB7KBoGQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Uzl2myLv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Im8VPxHb;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2DC2606A332;
-	Wed, 28 Oct 2026 18:01:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1F9E606A31D;
+	Wed, 28 Oct 2026 18:01:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Uzl2myLv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15F861F01825;
-	Wed, 28 Oct 2026 18:01:23 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Im8VPxHb
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1CED1F01825;
+	Wed, 28 Oct 2026 18:01:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793210483;
-	bh=WKfDgVhn0IOtxe6nQCit1YKQX/7ffyM3KvgnNbVkX+E=;
+	s=korg; t=1793210486;
+	bh=HseXowtUJk7+J7+DLswiiFQSYflX6Hw8iC0/Ny25Izo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Uzl2myLvUwH+9AlMN3u7UMWoL+jq6IGAbjL3BRQGaAZc58TYdZlgdnYPt/u3Eo973
-	 gzOAmdNvbk2gu1Ykodc/tx4dJgAvIG60vxpStsK1siYGmRkSFKU20A1oFifAAtrZ8t
-	 /2V3hQhqd3HchAzrO0bDUks18/Zq2dwgrL/mMWZM=
+	b=Im8VPxHbB8LC8TePvhcvb2CAhaQR0GPweJvXuLbhKYRT0BmR08T18+EuuZ4ljDTtX
+	 x6kxWDeA3sfz6gAFI8R8wUeV+6JIFT47bUhZ1i8GLgoyl5ZXcUXlH3qtum/61Ktu69
+	 Di/CMXRq5ki0Eeyn0A7NeDSEYxZiRj6HjWhsQjxQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namhyung Kim <namhyung@kernel.org>,
-	Ian Rogers <irogers@google.com>,
 	Adrian Hunter <adrian.hunter@intel.com>,
-	Ingo Molnar <mingo@kernel.org>,
+	Ian Rogers <irogers@google.com>,
 	Jiri Olsa <jolsa@kernel.org>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Leo Yan <leo.yan@linaro.org>,
-	Peter Zijlstra <peterz@infradead.org>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Florian Fainelli <florian.fainelli@broadcom.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 043/571] perf tools: Fix a asan issue in parse_events_multi_pmu_add()
-Date: Wed, 28 Oct 2026 17:53:10 +0100
-Message-ID: <20261028170009.047769800@linuxfoundation.org>
+Subject: [PATCH 5.15 044/571] perf test bpf: Address error about non-null argument for epoll_pwait 2nd arg
+Date: Wed, 28 Oct 2026 17:53:11 +0100
+Message-ID: <20261028170009.072643831@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -77,58 +73,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namhyung Kim <namhyung@kernel.org>
+From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-commit 66c9598bd8916c6c1319d0100ac916cac89d4b0e upstream
+commit ed847e30f001b207013b6136c264454d7560557f upstream
 
-In the parse_events_multi_pmu_add() it passes the 'config' variable
-twice to parse_events_term__num() - one for config and another for
-loc_term.  I'm not sure about the second one as it's converted to
-YYLTYPE variable.  Asan reports it like below:
+First noticed on Fedora Rawhide:
 
-  In function ‘parse_events_term__num’,
-      inlined from ‘parse_events_multi_pmu_add’ at util/parse-events.c:1602:6:
-  util/parse-events.c:2653:64: error: array subscript ‘YYLTYPE[0]’ is partly outside
-                                      array bounds of ‘char[8]’ [-Werror=array-bounds]
-   2653 |                 .err_term  = loc_term ? loc_term->first_column : 0,
-        |                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~
-  util/parse-events.c: In function ‘parse_events_multi_pmu_add’:
-  util/parse-events.c:1587:15: note: object ‘config’ of size 8
-   1587 |         char *config;
-        |               ^~~~~~
-  cc1: all warnings being treated as errors
+  tests/bpf.c: In function ‘epoll_pwait_loop’:
+  tests/bpf.c:36:17: error: argument 2 null where non-null expected [-Werror=nonnull]
+     36 |                 epoll_pwait(-(i + 1), NULL, 0, 0, NULL);
+        |                 ^~~~~~~~~~~
+  In file included from tests/bpf.c:5:
+  /usr/include/sys/epoll.h:134:12: note: in a call to function ‘epoll_pwait’ declared ‘nonnull’
+    134 | extern int epoll_pwait (int __epfd, struct epoll_event *__events,
+        |            ^~~~~~~~~~~
 
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
-Acked-by: Ian Rogers <irogers@google.com>
+  [perfbuilder@27cfe44d67ed perf-6.5.0-rc2]$ gcc -v
+  Using built-in specs.
+  COLLECT_GCC=gcc
+  COLLECT_LTO_WRAPPER=/usr/libexec/gcc/x86_64-redhat-linux/13/lto-wrapper
+  OFFLOAD_TARGET_NAMES=nvptx-none
+  OFFLOAD_TARGET_DEFAULT=1
+  Target: x86_64-redhat-linux
+  Configured with: ../configure --enable-bootstrap --enable-languages=c,c++,fortran,objc,obj-c++,ada,go,d,m2,lto --prefix=/usr --mandir=/usr/share/man --infodir=/usr/share/info --with-bugurl=http://bugzilla.redhat.com/bugzilla --enable-shared --enable-threads=posix --enable-checking=release --enable-multilib --with-system-zlib --enable-__cxa_atexit --disable-libunwind-exceptions --enable-gnu-unique-object --enable-linker-build-id --with-gcc-major-version-only --enable-libstdcxx-backtrace --with-libstdcxx-zoneinfo=/usr/share/zoneinfo --with-linker-hash-style=gnu --enable-plugin --enable-initfini-array --with-isl=/builddir/build/BUILD/gcc-13.2.1-20230728/obj-x86_64-redhat-linux/isl-install --enable-offload-targets=nvptx-none --without-cuda-driver --enable-offload-defaulted --enable-gnu-indirect-function --enable-cet --with-tune=generic --with-arch_32=i686 --build=x86_64-redhat-linux --with-build-config=bootstrap-lto --enable-link-serialization=1
+  Thread model: posix
+  Supported LTO compression algorithms: zlib zstd
+  gcc version 13.2.1 20230728 (Red Hat 13.2.1-1) (GCC)
+  [perfbuilder@27cfe44d67ed perf-6.5.0-rc2]$
+
+Just add that argument to address this compiler warning.
+
 Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Ingo Molnar <mingo@kernel.org>
+Cc: Ian Rogers <irogers@google.com>
 Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Kan Liang <kan.liang@linux.intel.com>
-Cc: Leo Yan <leo.yan@linaro.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20230331202949.810326-2-namhyung@kernel.org
+Cc: Namhyung Kim <namhyung@kernel.org>
+Link: https://lore.kernel.org/lkml/ZMj8+bvN86D0ZKiB@kernel.org
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-[florian: Resolve conflict in parse_events_multi_pmu_add() where term
- initialization is located inside the PMU scan loop in 5.15.y]
 Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/parse-events.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/perf/tests/bpf.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/tools/perf/util/parse-events.c b/tools/perf/util/parse-events.c
-index 7e4939640196b..f0750b8bf66c8 100644
---- a/tools/perf/util/parse-events.c
-+++ b/tools/perf/util/parse-events.c
-@@ -1686,7 +1686,7 @@ int parse_events_multi_pmu_add(struct parse_events_state *parse_state,
- 					return -1;
- 				if (parse_events_term__num(&term,
- 						   PARSE_EVENTS__TERM_TYPE_USER,
--						   config, 1, false, &config,
-+						   config, 1, false, NULL,
- 						   NULL) < 0) {
- 					free(list);
- 					free(config);
+diff --git a/tools/perf/tests/bpf.c b/tools/perf/tests/bpf.c
+index fa03ff0dc0831..4486de74eca9d 100644
+--- a/tools/perf/tests/bpf.c
++++ b/tools/perf/tests/bpf.c
+@@ -29,11 +29,12 @@
+ 
+ static int epoll_pwait_loop(void)
+ {
++	struct epoll_event events;
+ 	int i;
+ 
+ 	/* Should fail NR_ITERS times */
+ 	for (i = 0; i < NR_ITERS; i++)
+-		epoll_pwait(-(i + 1), NULL, 0, 0, NULL);
++		epoll_pwait(-(i + 1), &events, 0, 0, NULL);
+ 	return 0;
+ }
+ 
 -- 
 2.53.0
 
