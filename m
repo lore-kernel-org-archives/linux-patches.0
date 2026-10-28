@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213110;
-	b=jlKEEDCUdAXqBMJJLb6z0cSeK6cVHywl61E/TvMBEUKTtsX+iQHByMJznRtJqWY6ttUF
-	 0OqrBp3kBKoZ5AJqATaX7mFYHuE5X6KVXVMlXWCEkO1NZ2nklBB6a8u2x6PUumCJ6Q+fB
-	 CWRhW5/42A5H7dext0hGJ4u9oIor7mw1UMynLLazSHv6Z9jF6FfTqtcwb3+X76e5iDBec
-	 NdwAyINYn5dL3gAtRnurVZfUvjFGH54OL+kvrPQkvIL0Y+SfcZB4zKRXY/6+qL8Gsqjs+
-	 azoT69mXm6WnApTqevGar5irD+vRdy4t+DusBlUnRvY4RZQyx9XTFScMBHdbnLhFhiw==
+	t=1793213113;
+	b=Htm+rK0wX75jm7Wvtnzu5X8N91NxfR4nbWMwcK3Gt00cVNGKJzA5rtqjQSftztZJjqzO
+	 N1oONhE1QlRnTV3XjUMBcXX+vCA0XBZ0sTCPbpir5GtBQFjDQ4qjw3Oi89l0J2y5Jreay
+	 iaxkM6DipCen0tJvtR9yMgvst8RKWQrVGz5EQFr2QaLaUNwVbzfJJ3mApykjE//Y+BDzp
+	 C8f9AGdpb35wcDAav+e42IV0zpyFlh87ah8Td0hjBYyPQwFKIzyKhMoXlo8lUzQPA75dE
+	 ls5FhYtoyUUFeJhR6mGhC01fg8LHfqqCdue+/ZAmjvcv9LGozSOsG4gt4e6YSu56T7Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213110;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213113;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Pprp56bhJMoTYB2PdLUOG9LoopIpfQTRl4BKay0ziCQ=;
-	b=URXLIHhz8BBZyHn9JUnYSuvF3cSHLypAt054mcl6P4QeRJho8p/LpkG2h6aJUZknFJGE
-	 hMiJvujyX59TN7WZjZ/Vde6diE00esebmoE3Ws2JIenpFeW+wlepHY9776BbnAHE3JvK7
-	 ujXwLbiLWVNwjCY+KfuILEo5wDHGHAUxw5HLa5iXugr2hSCz7LQNZr4nbdtJCYDL/dt52
-	 IKmCWfc5nug7oIkKV1+xE/MZ0KtNF0JA/lQVAIgTI+T8hSF2GvmuKXqmrpKycekzXQald
-	 /ces2ZtMBVhFKGKY2nRG2FybpZq8n3OrSPWAbUOMTXB3PirSaEBxUhbEIXWy4ciFaUA==
+	bh=Rbx75PnjkoT6iNsyB/bgHp2oe/p8Tr9eANGsjSfBz8c=;
+	b=eWBGzYPdndq42F11CuDdhzPRpXe3Y5Vf/5P1FsUDn7GcxWuGfWkcPD7L6+v+Ks6VjO6E
+	 RVfs4p773jpljUgdykFsZp+MD6GnxQHc7Qi2BAlnZi5LRpixJt96NdPT/gm9a3RsiKDWi
+	 IYzT0xLkK4Xg0WKmYQYtMKI0wfpUdMGRya2+h5XCufBUWihaQObZ/y4J2OZcMiq2ERxS5
+	 VTmQfDaGk4dyHjz5dc78c1LShtIP2VkiHqc2hPCN0FQe988L7xJd9c0pXuKyJdZSFZ90k
+	 vJ2El+f7ezAlNEOu6zqcpVL0UcmhGuwOPU4ucxVlCeAsWpH71BsA8rjuY5JCF5itG4A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2BQMqyO1;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="P/HLQ5m9";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE6EC606A321;
-	Wed, 28 Oct 2026 18:45:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1CEC606A320;
+	Wed, 28 Oct 2026 18:45:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2BQMqyO1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25F281F01825;
-	Wed, 28 Oct 2026 18:45:08 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P/HLQ5m9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C6961F01825;
+	Wed, 28 Oct 2026 18:45:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213109;
-	bh=Pprp56bhJMoTYB2PdLUOG9LoopIpfQTRl4BKay0ziCQ=;
+	s=korg; t=1793213112;
+	bh=Rbx75PnjkoT6iNsyB/bgHp2oe/p8Tr9eANGsjSfBz8c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2BQMqyO16pH6x4P/j9TtZoD3pyCeH0MLQs/dAZ2rLs+8Q5w38q0EE5c3KOLxRTLJp
-	 SRYd3olYMEAHnMQVw/OnDRQ/aC/DrWdLjmuGGxUIFnJbZCj8D3iV8JLhECRCgiKb+a
-	 0vO4aCBKm5RxyetApKCLuKmeWuaiC+Tfh3fpxNiM=
+	b=P/HLQ5m9F0RhvwUFsY4wGqBROUhr+Umw3muloPeosUvlmI6oG7EC4OQXqSfnF8H6N
+	 GJ3tUhPqvnR3xB12JanHiyW2DG7iiE2idvS8yTvhiEx0BkRN6oFNDz4ewz2jIOmAYC
+	 0uvR3KQLkS26lo2WjRqUPWE3CjE88btRpzVhSJlI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Jie <zhangjie14@huaqin.corp-partner.google.com>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Salah Triki <salah.triki@gmail.com>,
+	Ivan Mikhaylov <fr0st61te@gmail.com>,
 	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Subject: [PATCH 6.1 0346/1887] iio: proximity: sx9324: Correct proximity channel resolution
-Date: Wed, 28 Oct 2026 17:40:42 +0100
-Message-ID: <20261028170507.102376446@linuxfoundation.org>
+Subject: [PATCH 6.1 0347/1887] iio: proximity: vcnl3020: fix ISR bitmask check in IRQ handler
+Date: Wed, 28 Oct 2026 17:40:43 +0100
+Message-ID: <20261028170507.126461063@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,47 +68,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Jie <zhangjie14@huaqin.corp-partner.google.com>
+From: Salah Triki <salah.triki@gmail.com>
 
-commit fbf33cb18334e7cab1ed4ad2e9a98a1299ad874c upstream.
+commit 7d38af8f20239a66e90de7632a79c9425256c574 upstream.
 
-The proximity channels were previously defined with 12 realbits.
-However, PROXDIFF is read from RegDiffMsb (0x65) and RegDiffLsb
-(0x66). The SX9324 datasheet assigns bits 7:0 of each register to
-PROXDIFF and documents it as a signed two's-complement value
-(Revision 3, Section 8, Table 8, page 43). In contrast, RegOffsetMsb
-explicitly marks bits 7:6 as reserved. Thus, PROXDIFF is a 16-bit
-signed value.
+The threaded IRQ handler contained multiple issues in handling interrupt
+events and clearing status flags:
 
-With realbits = 12, sx_common_read_proximity() uses bit 11 as the
-sign bit in sign_extend32(), causing samples outside the 12-bit
-signed range to wrap into the [-2048, 2047] range.
+1. ISR bit check: The handler incorrectly checked the Interrupt Status
+   Register (VCNL_ISR) against VCNL_ICR_THRES_EN (BIT(1)), which is a
+   bitmask meant for the Control Register (VCNL_PS_ICR). In VCNL_ISR,
+   BIT(1) corresponds only to low-threshold interrupts. A high-threshold
+   interrupt (VCNL_INT_TH_HI, BIT(0)) on its own was completely ignored and
+   returned IRQ_NONE.
 
-Correct the realbits value to 16 to accurately reflect the hardware.
+2. Event direction & channel index: The handler unconditionally pushed a
+   RISING event code on channel index 1. The driver only registers a single
+   proximity channel (index 0), and low-threshold interrupts should be
+   reported with IIO_EV_DIR_FALLING.
 
-Tested on an SX9324-based device: a phase 0 DIFF readback of 0x7fff
-was reported as -1 before this change and as 32767 afterward.
+3. ISR clearing: The write-back to acknowledge the interrupt only preserved
+   BIT(1) instead of masking against both valid status bits.
 
-Fixes: 4c18a890dff8 ("iio:proximity:sx9324: Add SX9324 support")
+Fix this by checking both VCNL_INT_TH_HI and VCNL_INT_TH_LOW bits in
+VCNL_ISR, pushing separate IIO events with the correct direction and
+channel index (0), and properly clearing handled status bits.
+
+Fixes: 3363fbbe19e5 ("iio: proximity: vcnl3020: add periodic mode")
+Signed-off-by: Salah Triki <salah.triki@gmail.com>
+Reviewed-by: Ivan Mikhaylov <fr0st61te@gmail.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Zhang Jie <zhangjie14@huaqin.corp-partner.google.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
 Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/proximity/sx9324.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iio/proximity/vcnl3020.c |   24 +++++++++++++++++-------
+ 1 file changed, 17 insertions(+), 7 deletions(-)
 
---- a/drivers/iio/proximity/sx9324.c
-+++ b/drivers/iio/proximity/sx9324.c
-@@ -223,7 +223,7 @@ static const struct iio_chan_spec_ext_in
- 	.scan_index = idx,					 \
- 	.scan_type = {						 \
- 		.sign = 's',					 \
--		.realbits = 12,					 \
-+		.realbits = 16,					 \
- 		.storagebits = 16,				 \
- 		.endianness = IIO_BE,				 \
- 	},							 \
+--- a/drivers/iio/proximity/vcnl3020.c
++++ b/drivers/iio/proximity/vcnl3020.c
+@@ -584,16 +584,26 @@ static irqreturn_t vcnl3020_handle_irq_t
+ 		return IRQ_HANDLED;
+ 	}
+ 
+-	if (!(isr & VCNL_ICR_THRES_EN))
++	if (!(isr & (VCNL_INT_TH_HI | VCNL_INT_TH_LOW)))
+ 		return IRQ_NONE;
+ 
+-	iio_push_event(indio_dev,
+-		       IIO_UNMOD_EVENT_CODE(IIO_PROXIMITY, 1,
+-				            IIO_EV_TYPE_THRESH,
+-				            IIO_EV_DIR_RISING),
+-		       iio_get_time_ns(indio_dev));
++	if (isr & VCNL_INT_TH_HI) {
++		iio_push_event(indio_dev,
++			       IIO_UNMOD_EVENT_CODE(IIO_PROXIMITY, 0,
++						    IIO_EV_TYPE_THRESH,
++						    IIO_EV_DIR_RISING),
++			       iio_get_time_ns(indio_dev));
++	}
++
++	if (isr & VCNL_INT_TH_LOW) {
++		iio_push_event(indio_dev,
++			       IIO_UNMOD_EVENT_CODE(IIO_PROXIMITY, 0,
++						    IIO_EV_TYPE_THRESH,
++						    IIO_EV_DIR_FALLING),
++			       iio_get_time_ns(indio_dev));
++	}
+ 
+-	rc = regmap_write(data->regmap, VCNL_ISR, isr & VCNL_ICR_THRES_EN);
++	rc = regmap_write(data->regmap, VCNL_ISR, isr & (VCNL_INT_TH_HI | VCNL_INT_TH_LOW));
+ 	if (rc)
+ 		dev_err(data->dev, "Error (%d) writing in reg (0x%x)\n",
+ 			rc, VCNL_ISR);
 
 
