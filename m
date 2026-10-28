@@ -1,51 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216104;
-	b=fHOJYoza/dAXoPAsSh+yZJYSd2Rk4MkBZkHRm+eioEmmU+hryPp2Xsy8Q5GSn1bS1x0w
-	 zO6M9BmW2p/IFBxzstTEeyKJEgN93Ay2iP4BngV42A6oupx862ZRn4/HN1Wg1pjo6AlLY
-	 fvn4Rey41NjUmAxVhC+V/gYlIG6uysBC9rd2ccAXIBQMT9j7VT9FLEuvwjyOfqyaWpUwN
-	 97SZhu/D2hYFo1HGLbznvvQV0B5POGwhLot4geAfWgkeWSecjFiI1AVRjfi7GVcbflY9I
-	 6aBLl0vwc12bk/LR9AsnFboCplmhYhDumtlG1TJGZKclNxOS23zCtrpe398M58twIZw==
+	t=1793216107;
+	b=Wgtw8/F4AD+oZcGlTKCipzu07jMPOtUm5P2pLZ3RBIsq01O79zmC43coFQ7qGlanQVdg
+	 h6vfoqU1EMZ5To2X/dveM04iyJWjwVQbVpTr+RlnBj0H2PQb7DeVOsCtdFqftL3g2658k
+	 PnpAS1REtLhRmFJa01esP4nlvNWa8c7XtaIGxh3pe6OCnxsovUCm7nsfTzjt7F17hZNLR
+	 e2J0iWXUdmrWvnOn9N1JJIWSvPU3FqIoHYFe4vR/dM+4d7E6oF05jD+MTzzQ0vup6Uli3
+	 lRxcQy//l6IgI4jXCSx6/v2s1sjATFRt4dYqVP4QBnKvVJnMJ9JZ0yieVupV2rA1qQg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216104;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216107;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=vMeJaZuqvsJTQUXNFHwOGWAIBxm7PEeoZthZgnS/Auc=;
-	b=jtcIGeFeJ6gK+XVWTR8HTADODWlUw35CKJtmDzQxW/xzrD/PRNPOn//vnXOv04t+nfhA
-	 rYI7WgzJRfk1OLivwgCOoWcHAOwSODj9IiAYaVxwG3lVQ44Bo6N6QmKCOa28rXHxar+eD
-	 2wPzYG3fJfusR9F1GY1Hm6UvtW6Km8o5hu5R8+6D6L59luT4Myo6FcVXEsZSVoP4VRHh/
-	 nXBIICYs9k+XptuarU9p+yXCNUAX3GaQW5RmwKDHzsCdV2shG99iKey66Z4LMoMTGuqUo
-	 xCKI5kTOYEPOBoW6PXJppr3hK+CzzFWg8F/TWPDPagn+HjCHBHUHp9gsT4SZWmVux3w==
+	bh=kQi1NweYI97abcrLBeYZqvUcNosgXDCQWSS+4KzHTaw=;
+	b=40PTafRpCyMS+nOTvmbk6A5+TqZBjTqx7BZ4v/d16IM2hVfmLOZfkjorRdq9/zPsNqXK
+	 6tTuGA2t/ZVT0YMIh5QLx5mLoiI3QwWCNRxwVtDU+sXBMYs36EmJXR2tHEF45yhnrO3sm
+	 CcweK7zCbCaVaRXWH++0SUrR48TRDr3rDvNu/VcEH9XaiCT+pGcNAles1TjLS3FyX3Pbh
+	 sKkFl6YCSZyUcYKtP/N9X3XEJOZ+ooFDuzDsD8idM9IBu0pA51EE4HMecU8IZgZ5L2Y88
+	 UU4+XdChDNdeqBfkXY/K0jUC9bZNvVy4fcjqBpbXJfiX6wEcoBXrJwuGxlgPh8cgpKg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jUEylZUu;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Irvi4BC9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70CF5606A31A;
-	Wed, 28 Oct 2026 19:35:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0FF2606A31A;
+	Wed, 28 Oct 2026 19:35:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jUEylZUu
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69BD61F01825;
-	Wed, 28 Oct 2026 19:35:03 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Irvi4BC9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 518DA1F01825;
+	Wed, 28 Oct 2026 19:35:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216104;
-	bh=vMeJaZuqvsJTQUXNFHwOGWAIBxm7PEeoZthZgnS/Auc=;
+	s=korg; t=1793216106;
+	bh=kQi1NweYI97abcrLBeYZqvUcNosgXDCQWSS+4KzHTaw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jUEylZUuIw1SiT4JYB6HmO2oFExBBVycWhNxAVXaEHezWuVPDytmPn9jn5B/1FG1O
-	 ZSH4m7vFh6l9wVnP5PybAzu78anVVpgj0Dihn7xNCxEklIodRaig1gcAUeu0FU00hb
-	 N5/jHPM/SwuXFZMGBdvCj4Kgzys9WyK9FHPqSMlY=
+	b=Irvi4BC9Ew4K3qF8L/qICipr4kWj7NA2nMUzT2RX/5+rek/UVFLxgIaCtCLcLTj+5
+	 1m05eQsPru4/LFljLzxss15FMsnuTaIjShtQICsdQzt5L7NyVyvZ47EYmuHX1cOLc1
+	 WJrfM2KLO7KH+wp9AyppV5ebxAdc00BZa6m9hL7Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hugo Villeneuve <hvilleneuve@dimonoff.com>,
+	Harry Wentland <harry.wentland@amd.com>,
+	Tom Chung <chiahsuan.chung@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1441/1887] serial: sc16is7xx: fix TX fifo corruption
-Date: Wed, 28 Oct 2026 17:58:57 +0100
-Message-ID: <20261028170532.250871011@linuxfoundation.org>
+Subject: [PATCH 6.1 1442/1887] drm/amd/display: Check link_index before accessing dc->links[]
+Date: Wed, 28 Oct 2026 17:58:58 +0100
+Message-ID: <20261028170532.273645453@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -67,143 +71,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hugo Villeneuve <hvilleneuve@dimonoff.com>
+From: Alex Hung <alex.hung@amd.com>
 
-[ Upstream commit 133f4c00b8b2bfcacead9b81e7e8edfceb4b06c4 ]
+[ Upstream commit 8aa2864044b9d13e95fe224f32e808afbf79ecdf ]
 
-Sometimes, when a packet is received on channel A at almost the same time
-as a packet is about to be transmitted on channel B, we observe with a
-logic analyzer that the received packet on channel A is transmitted on
-channel B. In other words, the Tx buffer data on channel B is corrupted
-with data from channel A.
+[WHY & HOW]
+dc->links[] has max size of MAX_LINKS and NULL is return when trying to
+access with out-of-bound index.
 
-The problem appeared since commit 4409df5866b7 ("serial: sc16is7xx: change
-EFR lock to operate on each channels"), which changed the EFR locking to
-operate on each channel instead of chip-wise.
+This fixes 3 OVERRUN and 1 RESOURCE_LEAK issues reported by Coverity.
 
-This commit has introduced a regression, because the EFR lock is used not
-only to protect the EFR registers access, but also, in a very obscure and
-undocumented way, to protect access to the data buffer, which is shared by
-the Tx and Rx handlers, but also by each channel of the IC.
-
-Fix this regression first by switching to kfifo_out_linear_ptr() in
-sc16is7xx_handle_tx() to eliminate the need for a shared Rx/Tx buffer.
-
-Secondly, replace the chip-wise Rx buffer with a separate Rx buffer for
-each channel.
-
-Fixes: 4409df5866b7 ("serial: sc16is7xx: change EFR lock to operate on each channels")
-Cc: stable@vger.kernel.org
-Signed-off-by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
-Link: https://lore.kernel.org/r/20240723125302.1305372-2-hugo@hugovil.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Harry Wentland <harry.wentland@amd.com>
+Acked-by: Tom Chung <chiahsuan.chung@amd.com>
+Signed-off-by: Alex Hung <alex.hung@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/sc16is7xx.c | 22 ++++++++++------------
- 1 file changed, 10 insertions(+), 12 deletions(-)
+ drivers/gpu/drm/amd/display/dc/dc_link.h | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/tty/serial/sc16is7xx.c b/drivers/tty/serial/sc16is7xx.c
-index f0ba5a930b2c3..7e2f48ea0f331 100644
---- a/drivers/tty/serial/sc16is7xx.c
-+++ b/drivers/tty/serial/sc16is7xx.c
-@@ -336,6 +336,7 @@ struct sc16is7xx_one {
- 	struct kthread_work		reg_work;
- 	struct kthread_delayed_work	ms_work;
- 	struct sc16is7xx_one_config	config;
-+	unsigned char			buf[SC16IS7XX_FIFO_SIZE]; /* Rx buffer. */
- 	unsigned int			old_mctrl;
- 	u8				old_lcr; /* Value before EFR access. */
- 	bool				irda_mode;
-@@ -349,7 +350,6 @@ struct sc16is7xx_port {
- 	unsigned long			gpio_valid_mask;
- #endif
- 	u8				mctrl_mask;
--	unsigned char			buf[SC16IS7XX_FIFO_SIZE];
- 	struct kthread_worker		kworker;
- 	struct task_struct		*kworker_task;
- 	struct sc16is7xx_one		p[];
-@@ -384,15 +384,13 @@ static void sc16is7xx_port_write(struct uart_port *port, u8 reg, u8 val)
- 
- static void sc16is7xx_fifo_read(struct uart_port *port, unsigned int rxlen)
+diff --git a/drivers/gpu/drm/amd/display/dc/dc_link.h b/drivers/gpu/drm/amd/display/dc/dc_link.h
+index 17f080f8af6cd..7a9e8e63b1da2 100644
+--- a/drivers/gpu/drm/amd/display/dc/dc_link.h
++++ b/drivers/gpu/drm/amd/display/dc/dc_link.h
+@@ -285,6 +285,9 @@ const struct dc_link_status *dc_link_get_status(const struct dc_link *dc_link);
+  */
+ static inline struct dc_link *dc_get_link_at_index(struct dc *dc, uint32_t link_index)
  {
--	struct sc16is7xx_port *s = dev_get_drvdata(port->dev);
- 	struct sc16is7xx_one *one = to_sc16is7xx_one(port, port);
- 
--	regmap_noinc_read(one->regmap, SC16IS7XX_RHR_REG, s->buf, rxlen);
-+	regmap_noinc_read(one->regmap, SC16IS7XX_RHR_REG, one->buf, rxlen);
++	if (link_index >= ARRAY_SIZE(dc->links))
++		return NULL;
++
+ 	return dc->links[link_index];
  }
- 
- static void sc16is7xx_fifo_write(struct uart_port *port, u8 to_send)
- {
--	struct sc16is7xx_port *s = dev_get_drvdata(port->dev);
- 	struct sc16is7xx_one *one = to_sc16is7xx_one(port, port);
- 
- 	/*
-@@ -402,7 +400,7 @@ static void sc16is7xx_fifo_write(struct uart_port *port, u8 to_send)
- 	if (unlikely(!to_send))
- 		return;
- 
--	regmap_noinc_write(one->regmap, SC16IS7XX_THR_REG, s->buf, to_send);
-+	regmap_noinc_write(one->regmap, SC16IS7XX_THR_REG, one->buf, to_send);
- }
- 
- static void sc16is7xx_port_update(struct uart_port *port, u8 reg,
-@@ -619,17 +617,17 @@ static int sc16is7xx_set_baud(struct uart_port *port, int baud)
- static void sc16is7xx_handle_rx(struct uart_port *port, unsigned int rxlen,
- 				unsigned int iir)
- {
--	struct sc16is7xx_port *s = dev_get_drvdata(port->dev);
-+	struct sc16is7xx_one *one = to_sc16is7xx_one(port, port);
- 	unsigned int lsr = 0, ch, flag, bytes_read, i;
- 	bool read_lsr = (iir == SC16IS7XX_IIR_RLSE_SRC) ? true : false;
- 
--	if (unlikely(rxlen >= sizeof(s->buf))) {
-+	if (unlikely(rxlen >= sizeof(one->buf))) {
- 		dev_warn_ratelimited(port->dev,
- 				     "ttySC%i: Possible RX FIFO overrun: %d\n",
- 				     port->line, rxlen);
- 		port->icount.buf_overrun++;
- 		/* Ensure sanity of RX level */
--		rxlen = sizeof(s->buf);
-+		rxlen = sizeof(one->buf);
- 	}
- 
- 	while (rxlen) {
-@@ -642,7 +640,7 @@ static void sc16is7xx_handle_rx(struct uart_port *port, unsigned int rxlen,
- 			lsr = 0;
- 
- 		if (read_lsr) {
--			s->buf[0] = sc16is7xx_port_read(port, SC16IS7XX_RHR_REG);
-+			one->buf[0] = sc16is7xx_port_read(port, SC16IS7XX_RHR_REG);
- 			bytes_read = 1;
- 		} else {
- 			sc16is7xx_fifo_read(port, rxlen);
-@@ -678,7 +676,7 @@ static void sc16is7xx_handle_rx(struct uart_port *port, unsigned int rxlen,
- 		}
- 
- 		for (i = 0; i < bytes_read; ++i) {
--			ch = s->buf[i];
-+			ch = one->buf[i];
- 			if (uart_handle_sysrq_char(port, ch))
- 				continue;
- 
-@@ -696,7 +694,7 @@ static void sc16is7xx_handle_rx(struct uart_port *port, unsigned int rxlen,
- 
- static void sc16is7xx_handle_tx(struct uart_port *port)
- {
--	struct sc16is7xx_port *s = dev_get_drvdata(port->dev);
-+	struct sc16is7xx_one *one = to_sc16is7xx_one(port, port);
- 	struct circ_buf *xmit = &port->state->xmit;
- 	unsigned int txlen, to_send, i;
- 	unsigned long flags;
-@@ -733,7 +731,7 @@ static void sc16is7xx_handle_tx(struct uart_port *port)
- 
- 		/* Convert to linear buffer */
- 		for (i = 0; i < to_send; ++i) {
--			s->buf[i] = xmit->buf[xmit->tail];
-+			one->buf[i] = xmit->buf[xmit->tail];
- 			xmit->tail = (xmit->tail + 1) & (UART_XMIT_SIZE - 1);
- 		}
  
 -- 
 2.53.0
