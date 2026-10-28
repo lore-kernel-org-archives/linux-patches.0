@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793212498;
-	b=ODtYshgCSfRET5gLzjhv2weUqzpZdD5aGtr3xB1Chfm1PV/Cn/gIwa2aWpYSW8PL1Iey
-	 d7iQPLU+O15JepTxlKRXRQMtMudIpqyL9pTY/5/1cXIu+jGy+BFlXCSXfEWZfiUpTi3ng
-	 sfxgwB9lvm7UvVEzss1G82994MbdZ5WQON4mv9b1FAhw6eyXujjPLC7MylLlfL1QIX8Lg
-	 1Ov/Khujceeq1xcjzU5kp3+ycaYgaBn4Z2jMXQlIQpHlNDdXMfdNprmUTVZYozk06rN5q
-	 UtMF+gXhrCzvYqZ3zi/w/ApSQ0czE6crzc9Uau9P0NwbpB37vi4s9v3mWqKpJ+6ywbg==
+	t=1793212501;
+	b=Gyq6MYx5MC+K+vKCjScLOO4pgCQQb4X7RcVyxcLe9UyWiQgu15mnhGh3KTjAc8kwkRMs
+	 07Yqd+fzTq7y/NhVa1brPQT9cBEWJs2sxPHi03RT4LD4UaxMKXkehuACHdwSgsQnKNis2
+	 mIthZ1gd4UFEHZLzPnoOHCzEf8XSOf055Yas1NyhyxVRIbCKjnjTdp3rbfwTCpBszMSek
+	 AKyl+l9fRubEDsKf7AkrtPN0HwQ1z4G8UV9Ce9S4Gn8d8j2Zr4mQwLJdJ4tJtsNsQjcZ1
+	 QhnJ030oDIZAGgI3ml+knOkbpMgve0bbtJ4pIEXbpveHnnoptquDyNUVjmBYcTAIuKA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793212498;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793212501;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=MZFIWhWdM3MWXfM1bGx213LOLEn4r65kXt18iL+AWiw=;
-	b=nnwBd4DkXWoILR+PkAW1EKsiA8bHCo2ftpT9gRXg0czrVPEhgNw4Sy2zWCIwAMKmgbyj
-	 yRshngaNBX2ux7SBfA3k1QHSeWSVHcWvaSe3AmADoVi2J8XHyA1jmyA+dxerO/2T+yvkc
-	 jPoDKWiEsj2EpJXv4ETELyilH2aaw2Ck/VtwWTHG+gUL4CMJV68NKIcdzV89M/RCxnAJw
-	 85WGI28v6kMtUW5gBo+qJWr+8DFPzCsK4r0ZFlT8I0E8tpJBuVXnwwm6xNMNmRxmpbSoH
-	 ONGm3oYTiW0GA335VTFDywckg6VOoVDMvQoucPmWNpq2xF9kC3l2Ey8h81dzVcaPPpA==
+	bh=mYdUH2TFDv55bM/XOu89tpQ3PcoaUdPKRfMBPKwh+Jg=;
+	b=DN4JaXiY0kP/50phnpUFeFxBenpy4Pw6lUGoab8tlDnG2IJzyyIzwn76ClH21DQHZDq+
+	 CJqd8epScDoxMiC5P8/jOzBO6Yr9aea7m1NvITZFmhSntbeKZTs3X6D/yDlQGz5Hmo4J8
+	 Xo1NUx/Xdn7rIgzPTovu7M/EVtNsAX/XNJsau1WihnsOK8VqZsQZuPf11XLXbO6tJP7gr
+	 Qhr6G/NDwYf/e5xHTNNvjkWT6u3UYzE+yXR4NRZYYU+biD5VyMq7DYlW/1xPMpVxklsy+
+	 /OeTfjuVgAPtnHhcztbFHaI0qjMjDhwWx+OQkH1amw/ffgdLveKuQcwt18fVOGAUyBw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=j8zZow1B;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=d6Pz4Ti9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87989606A31A;
-	Wed, 28 Oct 2026 18:34:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A29C606A31A;
+	Wed, 28 Oct 2026 18:35:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=j8zZow1B
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D95881F01825;
-	Wed, 28 Oct 2026 18:34:57 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=d6Pz4Ti9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9E2B1F01825;
+	Wed, 28 Oct 2026 18:35:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793212498;
-	bh=MZFIWhWdM3MWXfM1bGx213LOLEn4r65kXt18iL+AWiw=;
+	s=korg; t=1793212501;
+	bh=mYdUH2TFDv55bM/XOu89tpQ3PcoaUdPKRfMBPKwh+Jg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=j8zZow1BBHKqMsNrjLmaL132HhFHWoDxnKJGk5ryYjR2uB4/YQAyn3m30bfM09SWC
-	 k6SJlM5iErWsDfgmgc9S4KQi6t1n1AO7GlMexPulz4OsbcB9QL8IOSPTNDZL2aML0V
-	 AFiTh1yjOPdwFp8JJDn2Y5Qu89SMcUdH3zQ+VOVg=
+	b=d6Pz4Ti9/0GRd1yeVDykFHO0IUgkRouWGTu9CWm+0mFEq2bmFG7dTZBijuNy/jlxR
+	 wmfvIWx2Rroc9bgDke4NAisnqGNTKg3kBg3vhNJ6yGveVQv6wmipwALV53Cqs/BAO4
+	 VFNRNzN48flAUNxFDbdrOZgPFMEdOUJkiz8Xyx1Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Abdurrahman Hussain <abdurrahman@nexthop.ai>,
 	"Rob Herring (Arm)" <robh@kernel.org>
-Subject: [PATCH 6.1 0175/1887] of/overlay: put property on deadprops only after changeset add succeeds
-Date: Wed, 28 Oct 2026 17:37:51 +0100
-Message-ID: <20261028170503.220273667@linuxfoundation.org>
+Subject: [PATCH 6.1 0176/1887] of/overlay: only treat a positive changeset id as registered
+Date: Wed, 28 Oct 2026 17:37:52 +0100
+Message-ID: <20261028170503.241733157@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,50 +71,44 @@ Content-Transfer-Encoding: 8bit
 
 From: Abdurrahman Hussain <abdurrahman@nexthop.ai>
 
-commit 814f2da6995772c07a7c9c2cc6028b6e3f3ecc9c upstream.
+commit 44081d708b5b885487bac792db78324b7b4c267d upstream.
 
-add_changeset_property() links a new property of a not-yet-live
-target node into the node's deadprops list before handing it to
-of_changeset_add_property(). If that fails, the error path frees the
-property but leaves the freed pointer linked in deadprops, and
-of_node_release() frees it a second time when the aborted overlay's
-node is released.
+of_overlay_fdt_apply() stores the idr_alloc() return value in
+ovcs->id before checking it. On failure the stored id is negative,
+free_overlay_changeset()'s "if (ovcs->id)" check passes, idr_remove()
+is called with a negative id and list_del() runs on ovcs->ovcs_list,
+which is not initialized until after the id allocation. An allocation
+failure at that point dereferences NULL.
 
-Record the changeset entry first and link the property into deadprops
-only on success. of_changeset_add_property() never looks at the
-node's property lists, so the order of the two steps is otherwise
-immaterial, and the error path frees a property that nothing
-references.
+Make free_overlay_changeset() treat only a strict-positive id as
+registered. The rest of the function already copes with a
+partially-initialized ovcs, so the error path stays a plain
+goto err_free_ovcs.
 
-Fixes: f96278810150 ("of: overlay: set node fields from properties when add new overlay node")
+Fixes: 61b4de4e0b38 ("of: overlay: minor restructuring")
 Cc: stable@vger.kernel.org
+Suggested-by: Geert Uytterhoeven <geert@linux-m68k.org>
 Assisted-by: Claude:claude-fable-5 [Claude Code]
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
 Signed-off-by: Abdurrahman Hussain <abdurrahman@nexthop.ai>
-Link: https://patch.msgid.link/20260831-nh-of-alias-overlay-v7-4-02754604805a@nexthop.ai
+Link: https://patch.msgid.link/20260831-nh-of-alias-overlay-v7-5-02754604805a@nexthop.ai
 Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/of/overlay.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/of/overlay.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 --- a/drivers/of/overlay.c
 +++ b/drivers/of/overlay.c
-@@ -346,12 +346,13 @@ static int add_changeset_property(struct
- 		return -ENOMEM;
+@@ -840,7 +840,8 @@ static void free_overlay_changeset(struc
+ 	if (ovcs->cset.entries.next)
+ 		of_changeset_destroy(&ovcs->cset);
  
- 	if (!prop) {
--		if (!target->in_livetree) {
-+		ret = of_changeset_add_property(&ovcs->cset, target->np,
-+						new_prop);
-+		/* the detached node owns the property until the apply */
-+		if (!ret && !target->in_livetree) {
- 			new_prop->next = target->np->deadprops;
- 			target->np->deadprops = new_prop;
- 		}
--		ret = of_changeset_add_property(&ovcs->cset, target->np,
--						new_prop);
- 	} else {
- 		ret = of_changeset_update_property(&ovcs->cset, target->np,
- 						   new_prop);
+-	if (ovcs->id) {
++	/* a failed idr_alloc() leaves its negative error in ovcs->id */
++	if (ovcs->id > 0) {
+ 		idr_remove(&ovcs_idr, ovcs->id);
+ 		list_del(&ovcs->ovcs_list);
+ 		ovcs->id = 0;
 
 
