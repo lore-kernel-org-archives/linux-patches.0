@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793207468;
-	b=nBbsPM6/r49xJwz2LmnXX03oHZ0L8mLEh5mUKn8E4GmA5vFQzwRYxF433hV3DFNf5NRu
-	 HvLNED198FtYIDK4KLADVtmzKmiD0KYttukptysqFfs11m00LIk3RgFgJ9T0iKXKaJayJ
-	 ABNC93zQks+5jKKPISW5+9+FnnQ1tY4g+H0u76EMp9AiQ7bCGD8mUrBD4g+URMaCmzImz
-	 +fQrW7QPSqx1moLb/OMuVxFToI4HRFJmvzzfrw5bav07qgKF4He97nlFvOuvB2pz1UYaK
-	 feE/v1hsBI6TXBb6Jkh2N5hSOZ0N6D7R4LSWOeG8qWfFO/XYALjh8FyjZ3VwTieoybA==
+	t=1793207471;
+	b=nmcTiBl6k0j3zOengy4N7YcJtzWJUsVzS4lGKHlPsXtJDOYbxLSpp99hOxr5TJD+SSCa
+	 PjlXyAQipDqMNvOmW8CkdYWM7Z48MpcO3DpsoHs9uieSTnq9Z9IuYkuHfDO+FfSpFT4hz
+	 +o8aIzvONuLJjKJB6YFMHiQrYJu27xt1/SUc66Um3n7sRVwADUIRZlYZNRMsv/gQ1jd0t
+	 D+rldEnEdlaEh3s8qUVVgHTSb8/cPmY1sQlhQnU4I+ABhQMIz4u/2uJn3aaxoCYzy+5Bd
+	 +In/47nk1Zqild5rbhTxA7t4wG51k4Hb1DDJFVg0mKEx/Ux0rfK+j+BkqUWIp0kHufA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793207468;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793207471;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=EgRHyO7UfRpgtIzAaAMzgZaVhiRqDhwbiSJz5GelBz4=;
-	b=rFKO6aE5pLexp9i4bp3JRusxrTurLEl5CjcyqIlS5hrGPEoK2rPrFn+HfvmJNrHq7+Uh
-	 dYC+zvK48R0VuSj2TMlgBxE8OQdS2iRgGmhzIj8bgFuG0WvGJNRZji8VRLAiMM1Rn9V8W
-	 5F1VXjPbpK3uvj6ThzvJD2Eh6N1wcNiB7+FD99TWZLRBtDO6g/CU9bPLObq/DszCxaPRo
-	 SwVCluRFjaGPRwxSnt4thzskZlYegkzWNg22mSZIjgtc92Rzl4FqFAzXSL/Ta+uqpCRx4
-	 bqBbyfVVPiWAqLo9zHTSh0+G1nfbIdCi8KPpZTz44v/DA+0X6jCBHnPbhyxI9DBRAMg==
+	bh=odKI7aA5rwSOIn+nU3bh41oqAwU3hssUWuer8i25Lmw=;
+	b=nzYo7qluCxvHtNsLuXoh/rtdQcrh4WLbfRQSa1SaSPWI+xwxQ22RZpfmsytv8eP6QGma
+	 ocAZlBEdo3peN9eIa5npeMi1Rl5K+WAwyNIzhvQ4oZJtuHs7ojS7nB8qyU9GZVYnpgSGh
+	 7Pw7//8Ow3cKmog+Wwvs4HbdWsk6j0FJuOJ79x6WXMzf3RNyz7YR4bIsVa3xI4s8Jn+TL
+	 RaUueVhVM/SQlN+jVBFKk+7U4LcDeliaq3ZUx5wmClP79HIdp5jVqC34xYXssbZKVK/2r
+	 W7UtcOELgHq5tyvqTjJWgQfBtkXQZXF8kqv0xWdoJslwIzRM4jhbVHP9Zv6vd8D/6EQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sPB0pO1P;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0LDTgy6m;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FD42606A31E;
-	Wed, 28 Oct 2026 17:11:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DC77606A31E;
+	Wed, 28 Oct 2026 17:11:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sPB0pO1P
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80E371F01828;
-	Wed, 28 Oct 2026 17:11:07 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0LDTgy6m
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A1611F01828;
+	Wed, 28 Oct 2026 17:11:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793207468;
-	bh=EgRHyO7UfRpgtIzAaAMzgZaVhiRqDhwbiSJz5GelBz4=;
+	s=korg; t=1793207470;
+	bh=odKI7aA5rwSOIn+nU3bh41oqAwU3hssUWuer8i25Lmw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sPB0pO1PmTeZxAB++IESXzOb4x0ioSkQvbSh5TOd6jcnS/hMq0hp9omfQp6NPdqAX
-	 DcMZL8RTTXP4oV8+6PQlCPSowy9JCS8l8WSOYrkTV2DIgL/NIk4YJGgoabPS2dmoOV
-	 hz6TNaLJY7mr2l3jhzUliQSs3cHyq+7zK5iwtpd8=
+	b=0LDTgy6muTMxgPA3GG0xBsGGSyaIKd1uK/itweBjz1KI8iHxZs9mvbCNyYB0SOfaJ
+	 pA8CxNvmPRlv1mr4dLvJfEYEXkHws6LoV1uYIwQNFbSXLPTyc3hF08+yeJfpGPjvyv
+	 fMnSFZ+f11q0SttvsMOmFGRwSS7bQmK4YxSL24Ww=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hyunwoo Kim <imv4bel@gmail.com>,
-	Michal Luczaj <mhal@rbox.co>,
-	Stefano Garzarella <sgarzare@redhat.com>,
+	Allison Henderson <achender@kernel.org>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 027/247] vsock: treat TCP_CLOSING as once-established
-Date: Wed, 28 Oct 2026 17:57:10 +0100
-Message-ID: <20261028165948.010771340@linuxfoundation.org>
+Subject: [PATCH 6.12 028/247] net/rds: dont let the rdma_cm destroy an id RDS still owns on route failure
+Date: Wed, 28 Oct 2026 17:57:11 +0100
+Message-ID: <20261028165948.033930079@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165947.349197979@linuxfoundation.org>
 References: <20261028165947.349197979@linuxfoundation.org>
@@ -70,88 +68,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Luczaj <mhal@rbox.co>
+From: Allison Henderson <achender@kernel.org>
 
-[ Upstream commit 4f6ac74fa594a918d41255c941256e1d51592d3b ]
+[ Upstream commit 98d446b7c013254a8a7b49720557676a3a851fde ]
 
-Handle the TCP_ESTABLISHED -> TCP_CLOSING transition on OP_RST, which can
-race with the connect loop. Immediately break and return 0 on
-ESTABLISHED/CLOSING. The return value of connect() should reflect what
-happened up to the point the connection was established or failed. Events
-that occur afterwards must not affect it. E.g. even if OP_RW has already
-set sk_err, connect() should still return 0, not ENOBUFS because of it.
-Adapt the inaccurate comment above signal_pending().
+rds_rdma_cm_event_handler_cmn() hands the return value of
+rdma_resolve_route() straight back to the rdma_cm on
+RDMA_CM_EVENT_ADDR_RESOLVED.  A synchronous failure there - -ENOMEM
+from the route work allocation, an SA query that cannot be set up, a
+RoCE route with no usable device - makes addr_handler() destroy the
+id the event was delivered on.  That id is ic->i_cm_id, and nothing
+clears the pointer: the connection sits in RDS_CONN_CONNECTING with a
+freed id until its shutdown calls rdma_disconnect() and
+rdma_destroy_id() on it.
 
-Resetting a socket that is still present in connected_table can lead to
-memory corruption. The reporter noted lost transports for in-flight skbs,
-and I have reproduced crashes caused by re-insertion into connected_table.
+The ROUTE_RESOLVED case already avoids this: rds_ib_cm_initiate_connect()
+forces a zero return while ic->i_cm_id == cm_id, as the comment there
+explains.  Do the same here - drop the connection and return 0 - so
+the id stays RDS's to destroy from the shutdown, and the reconnect
+gets a fresh one.
 
-  list_add double add: new=, prev=, next=.
-  kernel BUG at lib/list_debug.c:35!
-  Oops: invalid opcode: 0000 [#1] SMP KASAN NOPTI
-  Workqueue: vsock-loopback vsock_loopback_work
-  RIP: 0010:__list_add_valid_or_report+0x11f/0x130
-  Call Trace:
-   vsock_insert_connected.cold+0xe/0x13
-   virtio_transport_recv_pkt+0x10e9/0x1460
-   vsock_loopback_work+0x305/0x480
-   process_one_work+0xe4c/0x1560
-   worker_thread+0x4f1/0xd60
-   kthread+0x36e/0x470
-   ret_from_fork+0x47b/0x6b0
-   ret_from_fork_asm+0x1a/0x30
-
-This fix is supplementary to commit 002541ef650b ("vsock: Ignore
-signal/timeout on connect() if already established"). Details under Link.
-
-Fixes: d021c344051a ("VSOCK: Introduce VM Sockets")
-Reported-by: Hyunwoo Kim <imv4bel@gmail.com>
-Link: https://lore.kernel.org/netdev/anzT1fREOSyHT99k@v4bel/
-Signed-off-by: Michal Luczaj <mhal@rbox.co>
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
-Link: https://patch.msgid.link/20261005-vsock-connect-reset-closing-v4-1-15d41cfda3ed@rbox.co
+Fixes: 55b7ed0b582f ("RDS: Common RDMA transport code")
+Assisted-by: LLM
+Signed-off-by: Allison Henderson <achender@kernel.org>
+Link: https://patch.msgid.link/20261003163408.250568-3-achender@kernel.org
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/vmw_vsock/af_vsock.c | 17 ++++++++---------
- 1 file changed, 8 insertions(+), 9 deletions(-)
+ net/rds/rdma_transport.c | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
-diff --git a/net/vmw_vsock/af_vsock.c b/net/vmw_vsock/af_vsock.c
-index 1fa4dd2ca405b..228e45bf2d769 100644
---- a/net/vmw_vsock/af_vsock.c
-+++ b/net/vmw_vsock/af_vsock.c
-@@ -1633,23 +1633,22 @@ static int vsock_connect(struct socket *sock, struct sockaddr *addr,
- 		timeout = schedule_timeout(timeout);
- 		lock_sock(sk);
+diff --git a/net/rds/rdma_transport.c b/net/rds/rdma_transport.c
+index b15cf316b23a2..21738a5690917 100644
+--- a/net/rds/rdma_transport.c
++++ b/net/rds/rdma_transport.c
+@@ -89,9 +89,19 @@ static int rds_rdma_cm_event_handler_cmn(struct rdma_cm_id *cm_id,
+ 		if (conn) {
+ 			rdma_set_service_type(cm_id, conn->c_tos);
+ 			rdma_set_min_rnr_timer(cm_id, IB_RNR_TIMER_000_32);
+-			/* XXX do we need to clean up if this fails? */
+ 			ret = rdma_resolve_route(cm_id,
+ 						 RDS_RDMA_RESOLVE_TIMEOUT_MS);
++			if (ret) {
++				/* A non-zero return has the rdma_cm destroy
++				 * the id, but it is still ic->i_cm_id, which
++				 * the connection's shutdown would then
++				 * disconnect and destroy again.  Drop the
++				 * connection and keep the id for that
++				 * shutdown.
++				 */
++				rds_conn_drop(conn);
++				ret = 0;
++			}
+ 		}
+ 		break;
  
--		/* Connection established. Whatever happens to socket once we
--		 * release it, that's not connect()'s concern. No need to go
-+		/* Connection was established. Whatever happens to socket once
-+		 * we release it, that's not connect()'s concern. No need to go
- 		 * into signal and timeout handling. Call it a day.
- 		 *
- 		 * Note that allowing to "reset" an already established socket
- 		 * here is racy and insecure.
- 		 */
--		if (sk->sk_state == TCP_ESTABLISHED)
--			break;
-+		if (sk->sk_state == TCP_ESTABLISHED ||
-+		    sk->sk_state == TCP_CLOSING) {
-+			err = 0;
-+			goto out_wait;
-+		}
- 
- 		/* If connection was _not_ established and a signal/timeout came
- 		 * to be, we want the socket's state reset. User space may want
--		 * to retry.
--		 *
--		 * sk_state != TCP_ESTABLISHED implies that socket is not on
--		 * vsock_connected_table. We keep the binding and the transport
--		 * assigned.
-+		 * to retry, so we keep the binding and the transport assigned.
- 		 */
- 		if (signal_pending(current) || timeout == 0) {
- 			err = timeout == 0 ? -ETIMEDOUT : sock_intr_errno(timeout);
 -- 
 2.53.0
 
