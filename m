@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793211698;
-	b=GnwJcHrE4Cf62zRZZ/KVwEZgmAv+NR0gyIVG3w9GFgTdiC5tVWlrCPMe92ecng6Cgx07
-	 ZghQdzx6tKJCZJjWgelI5LpDQu6qGQ3UKFcFkz04jidv0aiW/64+oCDcA/pBTCbIn8ivE
-	 /qhO2bMEs9c30pqN59daQ03N+oi18Qbnq1bUm3BbK/WaW6vKewjHpwirv/rL4HgG92KJF
-	 5JD0rSfaf/jyvxXGDSxuXx2FALx1vRx9MCUD85snzv8iGiIoq32Gci/PRULQ4I2LOZ7b0
-	 rBELa6AxoxJQxa2BDdepSvnzcnhbz94jY1LSnQ0yoOt7JMFoCHtPl9bbGpcxmiIjToA==
+	t=1793211701;
+	b=Js05mwopfea++YE4cEdgkTZFlziAaeOmbkEdo1KaHwHCY0YJvfb3bKvedEimoiveS5uh
+	 biE/AfLt3zDCPvijC0G7mzTlPW8cy1giJjM0jmbAM+DhdDCDrv9FpeGdPRQ8NWonI4RxO
+	 sdUnaG/Qx+/azaaXoL0fQ55qweNbD8WEN6Zg89fFjGbeek4P2mgATS1XmZtfc2HEyFftE
+	 AUYjphaG0uxTocdeHJGuZJhOCQz9Rxt7r/VTc8STQsMACryiC92Qi73bp5bqg9kMdCOzc
+	 61tSSb0H1zrj8KsBzlzKGnKambWBucpyRfQxRtxtoLDg1UfD8RVvue4zhkW1pMkYCwg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793211698;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793211701;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=G8ra3ylsEmqvrt/6zSCz3CqJkR372VK9MzAcN/vf8z8=;
-	b=YKpAjjR6HzWTFPKlNPJxWBYUWeOsglP67Suxyogdvyq09Br0/UFkgjGH/h5YhnJ3bziT
-	 lni34Ckm1GnCToTRV/I8+kp+EHb7MQw0vJAHEY6x66zHFO9uk6zB8svIyfPT34U42tTaP
-	 GCUuJFoZXHPyTN5+MHi4nYU+ixoecjdlpyBnTmfCYpjfwUElg6oLLOkPAPmCpF9+O2pRB
-	 +00GSPmftTMZ/qXSdJRFCnz7SUrSsYmoCGOMTQFnJ7+ce5vC+VoH/9Dys+Lq4bPUjLsIT
-	 Cvw5vxs80BHPr/oGHe9ux1D97QCzXqtEPRY+erBsbhw4qIwUvMmi4P8H1CKg35nkdOg==
+	bh=jwIhR5LD48T+4yjRFKiW1ojSIvNDuHx7DuQVQQfEw+o=;
+	b=Ez2ZFQSkQi3ImiMyBsdPQq40SC/wK9viVkeMV/C0OFWOldCBn/ywmkWZvEul0q3cjSD1
+	 W+sYtUISPm1U0UQtNUwugvaclfakCmdaMRNihUgRo1mGr+3730KpJjYb6FTZe223vNkAo
+	 h5trQuZLNRbY1zl+Tp8X+xmac3WvMk0bInxCH4IL9eTtXBaNiaVjgJW1Uc2GQJQFzx2me
+	 6/0Ix2J73Ye64aYnZtqHnuy7biph7T3Zn7fKhFia0Ewxss1iWHyMO9apEhaBTp46n/aeb
+	 WC0uKDasiOMGUoEiUZqO06KnWAJltGpRt7FBpf6fHULrhwxPkBrZB/fZqz0MP+xCLXg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nR3p+Jmu;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P5HF2GOK;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C53D9606A321;
-	Wed, 28 Oct 2026 18:21:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1F35606A322;
+	Wed, 28 Oct 2026 18:21:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nR3p+Jmu
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 228551F01829;
-	Wed, 28 Oct 2026 18:21:36 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P5HF2GOK
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F29311F01828;
+	Wed, 28 Oct 2026 18:21:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793211697;
-	bh=G8ra3ylsEmqvrt/6zSCz3CqJkR372VK9MzAcN/vf8z8=;
+	s=korg; t=1793211700;
+	bh=jwIhR5LD48T+4yjRFKiW1ojSIvNDuHx7DuQVQQfEw+o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nR3p+JmuAAGY4etd/GjvW5+ufYBjXdU0D1De4qgdHzVH8w0m3BFsyzVaibTHcbyeN
-	 X9wLbLmPWk6SrSLXDc3voYOtWh3KJb2FdB5Q8BlGkjpdXUaHkeshM7CqFvwpGZ+7t9
-	 e6LmP2PzXsENZJe/H8FpMHx+ATQF2+QuS/CQdZqU=
+	b=P5HF2GOKYSt/hpUjnJuwWK1A4rDE8RZQPVJTwDlCQKymXOQX6QmK/Mqvj47vJ29Dh
+	 cEbUkZlOBkjsdfnJSICv8suNKIa+3VuSfHQCvs4kWrEqZ0sigTfMZTb9AphmoU8KU7
+	 8+lUssjAzOx+TsrCv45IhoPPwkI3bCZZ2+7bycsg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
-	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
+	Dave Chinner <dchinner@redhat.com>,
+	Carlos Maiolino <cmaiolino@redhat.com>,
+	Carlos Maiolino <cem@kernel.org>,
+	Siddh Raman Pant <siddh.raman.pant@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 413/571] smb3: fix for slab out of bounds on mount to ksmbd
-Date: Wed, 28 Oct 2026 17:59:20 +0100
-Message-ID: <20261028170017.811746829@linuxfoundation.org>
+Subject: [PATCH 5.15 463/571] xfs: rearrange code in xfs_buf_item.c
+Date: Wed, 28 Oct 2026 18:00:10 +0100
+Message-ID: <20261028170019.008924219@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -69,100 +70,222 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steve French <stfrench@microsoft.com>
+From: Dave Chinner <dchinner@redhat.com>
 
-[ Upstream commit 7d34ec36abb84fdfb6632a0f2cbda90379ae21fc ]
+[ Upstream commit d2fe5c4c8d25999862d615f616aea7befdd62799 ]
 
-With KASAN enabled, it is possible to get a slab out of bounds
-during mount to ksmbd due to missing check in parse_server_interfaces()
-(see below):
+The code to initialise, release and free items is all the way down
+the bottom of the file. Upcoming fixes need to these functions
+earlier in the file, so move them to the top.
 
- BUG: KASAN: slab-out-of-bounds in
- parse_server_interfaces+0x14ee/0x1880 [cifs]
- Read of size 4 at addr ffff8881433dba98 by task mount/9827
+There is one code change in this move - the parameter to
+xfs_buf_item_relse() is changed from the xfs_buf to the
+xfs_buf_log_item - the thing that the function is releasing.
 
- CPU: 5 UID: 0 PID: 9827 Comm: mount Tainted: G
- OE       6.16.0-rc2-kasan #2 PREEMPT(voluntary)
- Tainted: [O]=OOT_MODULE, [E]=UNSIGNED_MODULE
- Hardware name: Dell Inc. Precision Tower 3620/0MWYPT,
- BIOS 2.13.1 06/14/2019
- Call Trace:
-  <TASK>
- dump_stack_lvl+0x9f/0xf0
- print_report+0xd1/0x670
- __virt_addr_valid+0x22c/0x430
- ? parse_server_interfaces+0x14ee/0x1880 [cifs]
- ? kasan_complete_mode_report_info+0x2a/0x1f0
- ? parse_server_interfaces+0x14ee/0x1880 [cifs]
-   kasan_report+0xd6/0x110
-   parse_server_interfaces+0x14ee/0x1880 [cifs]
-   __asan_report_load_n_noabort+0x13/0x20
-   parse_server_interfaces+0x14ee/0x1880 [cifs]
- ? __pfx_parse_server_interfaces+0x10/0x10 [cifs]
- ? trace_hardirqs_on+0x51/0x60
- SMB3_request_interfaces+0x1ad/0x3f0 [cifs]
- ? __pfx_SMB3_request_interfaces+0x10/0x10 [cifs]
- ? SMB2_tcon+0x23c/0x15d0 [cifs]
- smb3_qfs_tcon+0x173/0x2b0 [cifs]
- ? __pfx_smb3_qfs_tcon+0x10/0x10 [cifs]
- ? cifs_get_tcon+0x105d/0x2120 [cifs]
- ? do_raw_spin_unlock+0x5d/0x200
- ? cifs_get_tcon+0x105d/0x2120 [cifs]
- ? __pfx_smb3_qfs_tcon+0x10/0x10 [cifs]
- cifs_mount_get_tcon+0x369/0xb90 [cifs]
- ? dfs_cache_find+0xe7/0x150 [cifs]
- dfs_mount_share+0x985/0x2970 [cifs]
- ? check_path.constprop.0+0x28/0x50
- ? save_trace+0x54/0x370
- ? __pfx_dfs_mount_share+0x10/0x10 [cifs]
- ? __lock_acquire+0xb82/0x2ba0
- ? __kasan_check_write+0x18/0x20
- cifs_mount+0xbc/0x9e0 [cifs]
- ? __pfx_cifs_mount+0x10/0x10 [cifs]
- ? do_raw_spin_unlock+0x5d/0x200
- ? cifs_setup_cifs_sb+0x29d/0x810 [cifs]
- cifs_smb3_do_mount+0x263/0x1990 [cifs]
+Signed-off-by: Dave Chinner <dchinner@redhat.com>
+Reviewed-by: Carlos Maiolino <cmaiolino@redhat.com>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
 
-Reported-by: Namjae Jeon <linkinjeon@kernel.org>
-Tested-by: Namjae Jeon <linkinjeon@kernel.org>
-Cc: stable@vger.kernel.org
-Signed-off-by: Steve French <stfrench@microsoft.com>
-(cherry picked from commit 7d34ec36abb84fdfb6632a0f2cbda90379ae21fc)
-Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+6.6:
+
+Fixed conflict due to the following missing commits:
+	[Continuous range: 10634530f7ba^..d4c75a1b40cd]
+	d4c75a1b40cd ("xfs: convert remaining kmem_free() to kfree()")
+	49292576136f ("xfs: convert kmem_free() for kvmalloc users to kvfree()")
+	afdc115559c5 ("xfs: move kmem_to_page()")
+	f078d4ea8276 ("xfs: convert kmem_alloc() to kmalloc()")
+	10634530f7ba ("xfs: convert kmem_zalloc() to kzalloc()")
+
+Removed ASSERT in favour of existing atomic_read-and-return in
+xfs_buf_item_relse() due to the following missing commit:
+	3762113b597f ("xfs: don't lose solo superblock counter update transactions")
+
+5.15:
+
+Fixed conflict due to the following missing commit:
+	182696fb021f ("xfs: rename _zone variables to _cache")
+
+Signed-off-by: Siddh Raman Pant <siddh.raman.pant@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/cifs/smb2ops.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ fs/xfs/xfs_buf_item.c | 118 +++++++++++++++++++++---------------------
+ fs/xfs/xfs_buf_item.h |   1 -
+ 2 files changed, 60 insertions(+), 59 deletions(-)
 
-diff --git a/fs/cifs/smb2ops.c b/fs/cifs/smb2ops.c
-index 88ae29c66becb..46f40bc3ef7ac 100644
---- a/fs/cifs/smb2ops.c
-+++ b/fs/cifs/smb2ops.c
-@@ -528,6 +528,13 @@ parse_server_interfaces(struct network_interface_info_ioctl_rsp *buf,
- 			bytes_left -= sizeof(*p);
- 			break;
+diff --git a/fs/xfs/xfs_buf_item.c b/fs/xfs/xfs_buf_item.c
+index e0c75aa3cca8a..ebcaccc4ad66b 100644
+--- a/fs/xfs/xfs_buf_item.c
++++ b/fs/xfs/xfs_buf_item.c
+@@ -31,6 +31,63 @@ static inline struct xfs_buf_log_item *BUF_ITEM(struct xfs_log_item *lip)
+ 	return container_of(lip, struct xfs_buf_log_item, bli_item);
+ }
+ 
++static void
++xfs_buf_item_get_format(
++	struct xfs_buf_log_item	*bip,
++	int			count)
++{
++	ASSERT(bip->bli_formats == NULL);
++	bip->bli_format_count = count;
++
++	if (count == 1) {
++		bip->bli_formats = &bip->__bli_format;
++		return;
++	}
++
++	bip->bli_formats = kmem_zalloc(count * sizeof(struct xfs_buf_log_format),
++				0);
++}
++
++static void
++xfs_buf_item_free_format(
++	struct xfs_buf_log_item	*bip)
++{
++	if (bip->bli_formats != &bip->__bli_format) {
++		kmem_free(bip->bli_formats);
++		bip->bli_formats = NULL;
++	}
++}
++
++static void
++xfs_buf_item_free(
++	struct xfs_buf_log_item	*bip)
++{
++	xfs_buf_item_free_format(bip);
++	kmem_free(bip->bli_item.li_lv_shadow);
++	kmem_cache_free(xfs_buf_item_zone, bip);
++}
++
++/*
++ * xfs_buf_item_relse() is called when the buf log item is no longer needed.
++ */
++static void
++xfs_buf_item_relse(
++	struct xfs_buf_log_item	*bip)
++{
++	struct xfs_buf		*bp = bip->bli_buf;
++
++	trace_xfs_buf_item_relse(bp, _RET_IP_);
++
++	ASSERT(!test_bit(XFS_LI_IN_AIL, &bip->bli_item.li_flags));
++
++	if (atomic_read(&bip->bli_refcount))
++		return;
++
++	bp->b_log_item = NULL;
++	xfs_buf_rele(bp);
++	xfs_buf_item_free(bip);
++}
++
+ /* Is this log iovec plausibly large enough to contain the buffer log format? */
+ bool
+ xfs_buf_log_check_iovec(
+@@ -562,7 +619,7 @@ xfs_buf_item_unpin(
+ 			ASSERT(list_empty(&bp->b_li_list));
+ 		} else {
+ 			xfs_trans_ail_delete(lip, SHUTDOWN_LOG_IO_ERROR);
+-			xfs_buf_item_relse(bp);
++			xfs_buf_item_relse(bip);
+ 			ASSERT(bp->b_log_item == NULL);
  		}
-+		/* Validate that Next doesn't point beyond the buffer */
-+		if (next > bytes_left) {
-+			cifs_dbg(VFS, "%s: invalid Next pointer %zu > %zd\n",
-+				 __func__, next, bytes_left);
-+			rc = -EINVAL;
-+			goto out;
-+		}
- 		p = (struct network_interface_info_ioctl_rsp *)((u8 *)p+next);
- 		bytes_left -= next;
- 	}
-@@ -539,7 +546,9 @@ parse_server_interfaces(struct network_interface_info_ioctl_rsp *buf,
- 	}
+ 		xfs_buf_relse(bp);
+@@ -672,7 +729,7 @@ xfs_buf_item_put(
+ 	 */
+ 	if (aborted)
+ 		xfs_trans_ail_delete(lip, 0);
+-	xfs_buf_item_relse(bip->bli_buf);
++	xfs_buf_item_relse(bip);
+ 	return true;
+ }
  
- 	/* Azure rounds the buffer size up 8, to a 16 byte boundary */
--	if ((bytes_left > 8) || p->Next)
-+	if ((bytes_left > 8) ||
-+	    (bytes_left >= offsetof(struct network_interface_info_ioctl_rsp, Next)
-+	     + sizeof(p->Next) && p->Next))
- 		cifs_dbg(VFS, "%s: incomplete interface info\n", __func__);
+@@ -792,33 +849,6 @@ static const struct xfs_item_ops xfs_buf_item_ops = {
+ 	.iop_push	= xfs_buf_item_push,
+ };
  
+-STATIC void
+-xfs_buf_item_get_format(
+-	struct xfs_buf_log_item	*bip,
+-	int			count)
+-{
+-	ASSERT(bip->bli_formats == NULL);
+-	bip->bli_format_count = count;
+-
+-	if (count == 1) {
+-		bip->bli_formats = &bip->__bli_format;
+-		return;
+-	}
+-
+-	bip->bli_formats = kmem_zalloc(count * sizeof(struct xfs_buf_log_format),
+-				0);
+-}
+-
+-STATIC void
+-xfs_buf_item_free_format(
+-	struct xfs_buf_log_item	*bip)
+-{
+-	if (bip->bli_formats != &bip->__bli_format) {
+-		kmem_free(bip->bli_formats);
+-		bip->bli_formats = NULL;
+-	}
+-}
+-
+ /*
+  * Allocate a new buf log item to go with the given buffer.
+  * Set the buffer's b_log_item field to point to the new
+@@ -1040,34 +1070,6 @@ xfs_buf_item_dirty_format(
+ 	return false;
+ }
  
+-STATIC void
+-xfs_buf_item_free(
+-	struct xfs_buf_log_item	*bip)
+-{
+-	xfs_buf_item_free_format(bip);
+-	kmem_free(bip->bli_item.li_lv_shadow);
+-	kmem_cache_free(xfs_buf_item_zone, bip);
+-}
+-
+-/*
+- * xfs_buf_item_relse() is called when the buf log item is no longer needed.
+- */
+-void
+-xfs_buf_item_relse(
+-	struct xfs_buf	*bp)
+-{
+-	struct xfs_buf_log_item	*bip = bp->b_log_item;
+-
+-	trace_xfs_buf_item_relse(bp, _RET_IP_);
+-	ASSERT(!test_bit(XFS_LI_IN_AIL, &bip->bli_item.li_flags));
+-
+-	if (atomic_read(&bip->bli_refcount))
+-		return;
+-	bp->b_log_item = NULL;
+-	xfs_buf_rele(bp);
+-	xfs_buf_item_free(bip);
+-}
+-
+ void
+ xfs_buf_item_done(
+ 	struct xfs_buf		*bp)
+@@ -1087,5 +1089,5 @@ xfs_buf_item_done(
+ 	xfs_trans_ail_delete(&bp->b_log_item->bli_item,
+ 			     (bp->b_flags & _XBF_LOGRECOVERY) ? 0 :
+ 			     SHUTDOWN_CORRUPT_INCORE);
+-	xfs_buf_item_relse(bp);
++	xfs_buf_item_relse(bp->b_log_item);
+ }
+diff --git a/fs/xfs/xfs_buf_item.h b/fs/xfs/xfs_buf_item.h
+index 50aa0f5ef9590..e3ccbf3ca8014 100644
+--- a/fs/xfs/xfs_buf_item.h
++++ b/fs/xfs/xfs_buf_item.h
+@@ -51,7 +51,6 @@ struct xfs_buf_log_item {
+ 
+ int	xfs_buf_item_init(struct xfs_buf *, struct xfs_mount *);
+ void	xfs_buf_item_done(struct xfs_buf *bp);
+-void	xfs_buf_item_relse(struct xfs_buf *);
+ bool	xfs_buf_item_put(struct xfs_buf_log_item *);
+ void	xfs_buf_item_log(struct xfs_buf_log_item *, uint, uint);
+ bool	xfs_buf_item_dirty_format(struct xfs_buf_log_item *);
 -- 
 2.53.0
 
