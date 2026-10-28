@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793212692;
-	b=oOKT0we6z966040DYu8m+lPsckpsCO7ZRlKCGU8l/XDPWWyjVrVpBX9UZh8HIrsbzIF5
-	 SbKeDRE1i6x+skf+3HuF/mAueC1HwFeH4hYcHiT7C4YnpJkhxjm0PIzSfmegn/nC3lLRd
-	 K52yD+YlAKeTzaoKezY9HnlzTIAtceDtHRBRJAk4sv3T9Gse/jIaMP83VYr1/1kziB9an
-	 XZSQQulD9+7S/90ahjrWuTUd9JnC/uCl0iQ3nkyOMYpGZTcMdIHQ4MqDhkipoD1J2HClQ
-	 mpLMn2mrO7anm39tDALBeYHx8/OHD+KB8qMJF21xbfupTqIYIGNrQa4WMYxYbt9DEIQ==
+	t=1793212695;
+	b=qSrUPx5fgeRUTJgYGEWQqYovr1sZrXH80FLIG6Lod1NNGob44kZXjRQZs1TFEBH1im3m
+	 hMppbnqlllvFVxTeF6vbKHmJ1P4lWuVnsd3ZRRFo0carmmeVjOV9bRRpg7IRgvlrZobRC
+	 AhflDXmOY47YvBHhmZzuED53+W0aKTMVzRCXUtPt5aV+Dpvg33GNDAtaUQ9W/+3lgoyfw
+	 lZm1MXs4sXEoyS6fjkG2fiS21uw8l2MSJb0+SQ54s/SjeITjhWEQnOzdU4PzAJuX1PM2h
+	 G1gNWwOHnKACU8LVjdL6a5ik+1EG7xyxgU877GI/bRLFh4z59c52m7aAPJ1PRdLmaEQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793212692;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793212695;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=YN3YhPJKu6uHkzDrLuBB1VRLnynFVUJ7bjJR+eRgsFM=;
-	b=RuQ0CsP1xJAPX3YeNkgmrPIzQExmO7AvhfAaDBPtTEZ3tw7hKCZplSGIySEKDDtPJgjG
-	 7WI2Jcj6S3NiqbhmaNQr3hlQ190QHLc1OrCVOSJXA3puBKnUfVW3rxGLshbjIiAmh5a0M
-	 2fCaplBEBwabnodneteoV8XUzMO9VakrN2uuMSU/LxWmkS6kJmJHBZpGKa7QYcUIvfBTB
-	 CelaBFdHGWr7tw4JG93tKIbIFYPF4NLtOzLS1NTWMbCBMzXmLrSaGX1HClKL/EJWEyYRh
-	 b5Pm4G2wP+kGRsYzzBw/36yMpHXmKA29q2dmmxC26eyLWVVHqLSXjrOKyobNQmftm7Q==
+	bh=cf3RNdhAIG0t9hVy5AsI0w5nvAp5Kq5WGFeO7lxPfkw=;
+	b=uhciOAUnrWi5Xeu3wFimXEQJrnkVd2P3+FTQjBVp85F09UaR66DxnCaf3JIuS8VUISub
+	 2OvSwZBr0tOlH8TfDaa1O2ZcHwWh+OtBFLv2OQGDs6PoijYYg/PMTdaau0ld36bPxlhgp
+	 QMufRcBuXXMSVdo0bitKc+sRTBWmkAGc4IiWwdoxZ9LHYloMU1gz8C2PYPufP6RRymAPb
+	 G2opxe/AphqOs8mdAK6hP/cBmuPF9qS0PoJmQc1edl84//fvEs/xvRq0LA2ppDvacWyG0
+	 UqokRgRX5s5JZBfd6y8VEocqwqwTyT56OtmAuFsuwygoSuD9qwuo5aEj9/rU1wenFlA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g+9GHZ4Z;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q9W3RXnL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 415B8606A31C;
-	Wed, 28 Oct 2026 18:38:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23C92606A31A;
+	Wed, 28 Oct 2026 18:38:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g+9GHZ4Z
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EF2D1F01825;
-	Wed, 28 Oct 2026 18:38:11 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q9W3RXnL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71BD91F01825;
+	Wed, 28 Oct 2026 18:38:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793212692;
-	bh=YN3YhPJKu6uHkzDrLuBB1VRLnynFVUJ7bjJR+eRgsFM=;
+	s=korg; t=1793212695;
+	bh=cf3RNdhAIG0t9hVy5AsI0w5nvAp5Kq5WGFeO7lxPfkw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=g+9GHZ4ZEIV2skPOKTuGl4qHrHzMkzWo6XkVZAn0uVjSw09I9whE1nBJpYJHoUKvN
-	 EmfE2EkKei11hkfaAEgBSiWPTnRom2vTNI7gK2rRk96nM2+jB6uaZGhsDrJx79Vmjs
-	 Yw49CKJXTaXbPWmO2TdRCai0rU1RK1JEBJcqzipQ=
+	b=Q9W3RXnLuJ4JAdXwx18H8LXmhJ05qmFO5ynLxH2Bom8+AVYS7ylkuo8uSyLWec19M
+	 BKtHyIZwT5cpkacp40eygA5ArLVN+JTBYGSNmOJVqzir27m0cyP+6kkkUv6V50ZYI+
+	 yCf7kJ3Ybh9tiqUwSEIZjbRlXPbnzoI6Fc77xaE0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Julian Anastasov <ja@ssi.bg>,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0241/1887] ipvs: fix missing counter decrement in lblc
-Date: Wed, 28 Oct 2026 17:38:57 +0100
-Message-ID: <20261028170504.715901111@linuxfoundation.org>
+Subject: [PATCH 6.1 0242/1887] ipvs: do not create invisible templates
+Date: Wed, 28 Oct 2026 17:38:58 +0100
+Message-ID: <20261028170504.739052519@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -70,36 +70,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Julian Anastasov <ja@ssi.bg>
 
-[ Upstream commit bdac17779f46817f60103baf09f0370546c3f023 ]
+[ Upstream commit 616cf5c06934364ab1002b420ebe975850b4b208 ]
 
-LBLC may delete cache entries for destinations that are
-removed or overloaded and replace them with available ones.
-But ip_vs_lblc_new() forgets to decrement the tbl->entries
-counter after calling ip_vs_lblc_del(). This can lead to
-increased shrinking of the cache with every new garbage
-collection.
+The IP_VS_CONN_F_ONE_PACKET flag was implemented for normal
+connections. When conn template inherits this flag from
+dest->conn_flags it will not be hashed. As result, we will
+create new template for every new normal connection.
 
-Fixes: 2f3d771a35fe ("ipvs: do not use dest after ip_vs_dest_put in LBLC")
-Link: https://sashiko.dev/#/patchset/0bdd5abe9968ded7ca2b9cb6844ba83d94cc8d53.1787318053.git.zhilinz%40nebusec.ai
+Fix it to allow one template to be used by many normal
+connections.
+
+Fixes: 26ec037f9841 ("IPVS: one-packet scheduling")
+Link: https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20260916231652.127456-1-pablo%40netfilter.org
 Signed-off-by: Julian Anastasov <ja@ssi.bg>
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/ipvs/ip_vs_lblc.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/netfilter/ipvs/ip_vs_conn.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/netfilter/ipvs/ip_vs_lblc.c b/net/netfilter/ipvs/ip_vs_lblc.c
-index e2480f33a1963..9b0832f56f14e 100644
---- a/net/netfilter/ipvs/ip_vs_lblc.c
-+++ b/net/netfilter/ipvs/ip_vs_lblc.c
-@@ -205,6 +205,7 @@ ip_vs_lblc_new(struct ip_vs_lblc_table *tbl, const union nf_inet_addr *daddr,
- 		if (en->dest == dest)
- 			return en;
- 		ip_vs_lblc_del(en);
-+		atomic_dec(&tbl->entries);
- 	}
- 	en = kmalloc(sizeof(*en), GFP_ATOMIC);
- 	if (!en)
+diff --git a/net/netfilter/ipvs/ip_vs_conn.c b/net/netfilter/ipvs/ip_vs_conn.c
+index 44ebc7b1c8134..50a768bf83bc2 100644
+--- a/net/netfilter/ipvs/ip_vs_conn.c
++++ b/net/netfilter/ipvs/ip_vs_conn.c
+@@ -591,6 +591,9 @@ ip_vs_bind_dest(struct ip_vs_conn *cp, struct ip_vs_dest *dest)
+ 	if (cp->protocol != IPPROTO_UDP)
+ 		conn_flags &= ~IP_VS_CONN_F_ONE_PACKET;
+ 	flags = cp->flags;
++	/* Only visible templates can control multiple connections */
++	if (flags & IP_VS_CONN_F_TEMPLATE)
++		conn_flags &= ~IP_VS_CONN_F_ONE_PACKET;
+ 	/* Bind with the destination and its corresponding transmitter */
+ 	if (flags & IP_VS_CONN_F_SYNC) {
+ 		/* Synced conns are hashed, so they can not get this flag */
 -- 
 2.53.0
 
