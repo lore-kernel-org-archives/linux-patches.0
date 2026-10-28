@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213320;
-	b=elj2xYNv099/stKSnnE0Gyz0MS8/g8lGLaZgqsYAJ3Yxj/yZnspes3bnSlkHn0fB/y3f
-	 flr12lLquXIwoGjgkHvw+l1nnozee0JXZNUFbe92U5NuWOebh6tMYLTpnQukgRbEYeK56
-	 CRv+DRwbs03lE6KBZruZQ/slot53/CGcFGJblSTlqSLTzqeMKrppFmFjusBptJ7zv4U5j
-	 LdCh9fQufvsBuptuMND5SKcNeflSAbOMK8LV2+SUKpo4INHxAsZVi3R1VJ1Xs1nXBYZg1
-	 BlGVHAzkKkhZawOpkZIrzP4PmkUBtetfg3+4HdjerKXLYkNv0D4sSq/1PD2O5LYLJ5w==
+	t=1793213323;
+	b=zKi2XtQgkBQExGjYlvvmLDHL18mBGQqsVmWuISQ00TjBtS7LlfcvJ9UkVOG/6DAu8S8+
+	 CgtCoiz90F3ABPa/S/k/iWfQzIPKGX9H7foM5GDKpn5pCmJAwJvEazAyEUj1pbvpSqe95
+	 3fSINIYwT4tIFLNFmVFAuTdku3ZBJ2HIco9PZUxKCyK5GtlQD6SzS0clZe1FY2wi23XGC
+	 PvR50UtdPAD9amqjax1QnfxlUsZg5U7NsCT3YDasZGbF/caHmxHOcGaKt3IIQ0gfRZeQ5
+	 E8FPsQL88+cfLQt7FBbOj784xTRjk/IyNQr6IKw9vRThl/XfzlRzsv1alLf8C2OUwcA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213320;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213323;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=1LiKUp+b0IDgFVPdkYjqLZtNPmK0KJfSnl5Rje7s+tA=;
-	b=pquW15r4na3/oHR4wxIhkUMe/aZVAbCe6PwO8Kkme8u/0LhgM2H4JlBk1M8Vmlsgif9l
-	 Jtc25cwZujVysaCAlGWkVst5rVBlxgEE1cKUhycNRNLURwHBqKuT1TD4B88Xs4Y1X1reE
-	 eOLCNKX3RsPmZG/PANSWvFlBRd1nyp49sYStrzN/ovwHUwyJg7v6pmAAaUnR5Hkd6gbw+
-	 sgEIUQ1MnSvalnYfuzpU7BLmB50Gt/eA+ywcqS32CWfTBatmRRZ+Jm9jwn1a2NkblNFQr
-	 qLV8fcunN2YfBXQjTsya6CRGKdZe6aQVXZbnAa1KkAeCPUts9TdlJ0VMwUHxBgqRRsw==
+	bh=UVSOlpiU/i0UvruRX/kOGtZnII/r/ZAO8GN0I+B/YXM=;
+	b=FSJftYEkdGZhkwFUcCBiZxgKB+/LpBv6ZJtFWRhoI+Jwz4p+/K87BXzHQhQQH5VQcYi3
+	 9mPIZe6bn2fbN8Y0CmTlstGgTdbc8eslRNRSurqMn02huSzNmB4FSuoF/pbwyPD72FLba
+	 kHyVVLMsbd6nF/KtTbJlW4DXxnPMuGVLRMMLAWSmaNHlSgmKJqfLu0OBsWlmBv1pvDMff
+	 xofPrXcKwe+Mt/XBmDzOU34rgM6zjLBwcpIULea76tbPhH29uIYxJrq7xFymjqN63UL88
+	 2ir7sGCRSKv+l3TKuPhLAfyEFI4rywtW/QFcDF/q4cAsyDzSRbk/CaLdy4ciFaccutA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mAN8gqra;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=K2p+7F3H;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 572A7606A31C;
-	Wed, 28 Oct 2026 18:48:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EACC8606A31A;
+	Wed, 28 Oct 2026 18:48:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mAN8gqra
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A1DC1F01825;
-	Wed, 28 Oct 2026 18:48:39 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=K2p+7F3H
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45A001F01825;
+	Wed, 28 Oct 2026 18:48:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213320;
-	bh=1LiKUp+b0IDgFVPdkYjqLZtNPmK0KJfSnl5Rje7s+tA=;
+	s=korg; t=1793213322;
+	bh=UVSOlpiU/i0UvruRX/kOGtZnII/r/ZAO8GN0I+B/YXM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mAN8gqraMzmnHvU91A8w5rxbIiLegYTM2W0Jk3unbzyAahVaTSiF3cSV2LgAxLinC
-	 gnVLfSNFubDWnMfQRqA/cYEYUI730/Isvr47mX8VpsZ3HH5o6Tuvzsa+4fMvc1k/bX
-	 duou152uBYYrp/+WQ4iYj8YA1Z6226FwXqkHyft4=
+	b=K2p+7F3HAM0TUq3P6hS9X4zbEvhT5FgOPmP1Oy03boBUKJGGABpXSQbye9wM36QRR
+	 0/tmmA2odFaXxCDB7FnHJAPRuA2ZaoKeeZqKJmlsI7WjEbjoI4VOjM05nEY+jmPPqA
+	 iUdCfBzq+3PnSTFTZcOjgfdxZQkhJ/xjHNex9bc4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolai Buchwitz <nb@tipi-net.de>,
-	Sebastien Royen <sebastien.royen@armadeus.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 0464/1887] net: dsa: microchip: fix KSZ8765 fiber detection
-Date: Wed, 28 Oct 2026 17:42:40 +0100
-Message-ID: <20261028170509.792796884@linuxfoundation.org>
+	Michele Dionisio <michele.dionisio@gmail.com>,
+	Arend van Spriel <arend.vanspriel@broadcom.com>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 6.1 0438/1887] wifi: brcmfmac: fix P2P device removal race in brcmf_detach()
+Date: Wed, 28 Oct 2026 17:42:14 +0100
+Message-ID: <20261028170509.199284737@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,48 +68,134 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sebastien Royen <sebastien.royen@armadeus.com>
+From: Michele Dionisio <michele.dionisio@gmail.com>
 
-commit fc13ba44da197a186f2f4d77c5b7d73d0f99f053 upstream.
+commit 08a3f02fea636e97a7422d1512f76dacdb5b0887 upstream.
 
-The KSZ8765 is similar to the KSZ8795 but has two fiber ports.
+When the driver is removed while the user space process that created
+the P2P device (e.g. wpa_supplicant) is still exiting, the P2P device
+interface is removed twice and the kernel crashes.
 
-KSZ8_PORT_STATUS_0 is used to detect fiber mode. It is currently
-defined as 0x08, which is the Global Control 6 MIB Control register
-and has bit 7 defined as Flush Counter.
+The two paths are:
 
-Set KSZ8_PORT_STATUS_0 to 0x18, which is the Port 1 Status 0 register
-where bit 7 is the Fiber Mode bit.
+ - wpa_supplicant, on exit, sends NL80211_CMD_DEL_INTERFACE for the P2P
+   device. nl80211_del_interface() holds RTNL and the wiphy mutex and
+   calls brcmf_p2p_del_vif(), which disables discovery and waits up to
+   1.5 s for BRCMF_E_IF_DEL. Then it calls brcmf_remove_interface(),
+   which unregisters the wdev and frees the vif and the ifp.
 
-This issue was discovered when upgrading an embedded device from kernel
-5.10 to 6.16. The device was using a KSZ8765 device tree configuration
-and the corresponding hardware, but during boot the kernel incorrectly
-detected it as a KSZ8795. The relevant boot messages were:
+ - brcmf_detach() sets the bus down, so BRCMF_E_IF_DEL never arrives,
+   and calls brcmf_remove_interface(ifp, false) for the same ifp.
+   brcmf_p2p_ifp_removed() reads ifp->vif and then blocks on
+   rtnl_lock(). When brcmf_p2p_del_vif() releases RTNL, it calls
+   cfg80211_unregister_wdev() on the wdev that was already unregistered
+   and freed.
 
-  ksz-switch spi0.0: found switch: KSZ8795, rev 0
-  ksz-switch spi0.0: Device tree specifies chip KSZ8765 but found KSZ8795, please fix it!
+The second list_del_rcu() of wdev->list faults on LIST_POISON2:
 
+  brcmfmac: brcmf_p2p_del_vif delete P2P vif
+  brcmfmac: brcmf_p2p_deinit_discovery enter
+  brcmfmac: brcmf_p2p_del_vif P2P: GO_NEG_PHASE status cleared
+  brcmfmac: brcmf_detach Enter
+  brcmfmac: brcmf_bus_change_state 1 -> 0
+  brcmfmac: brcmf_remove_interface Enter, bsscfgidx=1, ifidx=0
+  brcmfmac: brcmf_del_if Enter, bsscfgidx=1, ifidx=0
+  brcmfmac: brcmf_p2p_ifp_removed P2P: device interface removed
+  [1.5 s later, brcmf_p2p_del_vif() timed out]
+  brcmfmac: brcmf_remove_interface Enter, bsscfgidx=1, ifidx=0
+  brcmfmac: brcmf_del_if Enter, bsscfgidx=1, ifidx=0
+  brcmfmac: brcmf_p2p_ifp_removed P2P: device interface removed
+  Unable to handle kernel paging request at virtual address dead000000000122
+  Internal error: Oops: 96000044 [#1] PREEMPT_RT SMP
+  pc : _cfg80211_unregister_wdev+0x6c/0x264 [cfg80211]
+  Call trace:
+   _cfg80211_unregister_wdev+0x6c/0x264 [cfg80211]
+   cfg80211_unregister_wdev+0x10/0x1c [cfg80211]
+   brcmf_p2p_ifp_removed+0x84/0xb0 [brcmfmac]
+   brcmf_remove_interface+0x1f4/0x254 [brcmfmac]
+   brcmf_detach+0x88/0x180 [brcmfmac]
+   brcmf_sdio_remove+0x90/0x7b0 [brcmfmac]
+   brcmf_sdiod_remove+0x20/0xa0 [brcmfmac]
+   brcmf_ops_sdio_remove+0xbc/0x12c [brcmfmac]
+   sdio_bus_remove+0x38/0x144
+   device_release_driver_internal+0x1e8/0x2c0
+   device_release_driver+0x14/0x20
+   brcmf_sdio_bus_remove+0x2c/0x40 [brcmfmac]
+   brcmf_fwvid_unregister_vendor+0xd8/0x170 [brcmfmac]
+   __exit_compat+0x18/0x418 [brcmfmac_cyw]
+   __arm64_sys_delete_module+0x1ac/0x244
+
+The log was taken with debug=0x406 on an i.MX 8M Plus board with a
+CYW55513 (Sona IF513) on SDIO. The driver is the Ezurio backport of
+brcmfmac from v6.18.22 on a 5.4-rt kernel. The code involved is the same
+in mainline.
+
+To reproduce:
+
+  1. Start wpa_supplicant on wlan0 and let it associate. It creates the
+     P2P device (iw dev shows "type P2P-device").
+  2. Stop wpa_supplicant and remove the driver without waiting for
+     wpa_supplicant to exit:
+
+       kill $(pidof wpa_supplicant)
+       rmmod brcmfmac_cyw brcmfmac
+
+The crash is reproducible on that board.
+
+For the interface without a netdev (the P2P device), take RTNL and the
+wiphy mutex in brcmf_detach() before reading iflist, and remove it with
+locked=true. If brcmf_p2p_del_vif() runs first, brcmf_detach() finds the
+slot empty. If brcmf_detach() runs first, nl80211 does not find the wdev
+any more. The interfaces with a netdev are removed as before, because
+brcmf_del_if() takes RTNL on its own for the primary interface.
+
+Fixes: 9831bcb987df ("brcmfmac: Deleting of p2p device is leaking memory.")
 Cc: stable@vger.kernel.org
-Fixes: 91a98917a883 ("net: dsa: microchip: move switch chip_id detection to ksz_common")
-Reviewed-by: Nicolai Buchwitz <nb@tipi-net.de>
-Signed-off-by: Sebastien Royen <sebastien.royen@armadeus.com>
-Link: https://patch.msgid.link/20261007080557.15719-1-sebastien.royen@armadeus.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Assisted-by: claude-opus-5-5
+Signed-off-by: Michele Dionisio <michele.dionisio@gmail.com>
+Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
+Link: https://patch.msgid.link/20260924123027.4122909-2-michele.dionisio@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/dsa/microchip/ksz_common.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c |   27 ++++++++++++++--
+ 1 file changed, 25 insertions(+), 2 deletions(-)
 
---- a/drivers/net/dsa/microchip/ksz_common.h
-+++ b/drivers/net/dsa/microchip/ksz_common.h
-@@ -552,7 +552,7 @@ static inline int is_lan937x(struct ksz_
- #define KSZ87_FAMILY_ID			0x87
- #define KSZ88_FAMILY_ID			0x88
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c
+@@ -1471,8 +1471,31 @@ void brcmf_detach(struct device *dev)
+ 	brcmf_bus_change_state(bus_if, BRCMF_BUS_DOWN);
+ 	/* make sure primary interface removed last */
+ 	for (i = BRCMF_MAX_IFS - 1; i > -1; i--) {
+-		if (drvr->iflist[i])
+-			brcmf_remove_interface(drvr->iflist[i], false);
++		struct brcmf_if *ifp = drvr->iflist[i];
++
++		if (!ifp)
++			continue;
++
++		if (ifp->ndev) {
++			brcmf_remove_interface(ifp, false);
++			continue;
++		}
++
++		/* The P2P device interface has no netdev. Its removal can
++		 * race with NL80211_CMD_DEL_INTERFACE issued by a user space
++		 * process that is exiting (e.g. wpa_supplicant), which ends
++		 * in brcmf_p2p_del_vif() under RTNL and the wiphy mutex. If
++		 * both paths remove the interface, the wdev is unregistered
++		 * twice and the vif is used after being freed. Take the same
++		 * locks and re-read iflist, so only one path removes it.
++		 */
++		rtnl_lock();
++		wiphy_lock(drvr->wiphy);
++		ifp = drvr->iflist[i];
++		if (ifp)
++			brcmf_remove_interface(ifp, true);
++		wiphy_unlock(drvr->wiphy);
++		rtnl_unlock();
+ 	}
+ 	brcmf_bus_stop(drvr->bus_if);
  
--#define KSZ8_PORT_STATUS_0		0x08
-+#define KSZ8_PORT_STATUS_0		0x18
- #define KSZ8_PORT_FIBER_MODE		BIT(7)
- 
- #define SW_CHIP_ID_M			GENMASK(7, 4)
 
 
