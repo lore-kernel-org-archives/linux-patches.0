@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793211593;
-	b=EiXyKG6Ia+91L/ls5p9vZ1VLcOQvuxaNMdZ0QYvHxX79xvnE9hvtWjBtWfwBkBjO/zj8
-	 49hqHahzE3s8GZwgYf23/rc6G+fC1oKH/ZmcvGoWVeV/ocK7d3rmu52Q/Dj0BprgTJvmP
-	 V6R5AbBsNTxmR6PzllFOZSSoH7l6/S680KmFET8a0WDd3E5yLTgHHc0alNL6bgBlBqNo1
-	 /zcL4mx/WY3wE5Gpj/CzCKqK1UNEXdalYK0eGazapQNfwG27cNokAtuB1M60IPZPKwG2d
-	 +t1nkPHnldS8T8AhwWtkOOmZCjwQskBxFnHJLlVXa7WWAvnZcHaC5gFiCHJXXjlDE0g==
+	t=1793211596;
+	b=4SQGt6b1Xlg5cY1pIbuXYZismnOmqyJ0L6mK+dzLtXzO32ogvUcwS+Ny/ZF2Up8QGDJS
+	 hss6Z2DPnHR1reiRh0i0Z6bp6zoK35g1Qkw6luQx4CD2u37Ecwy2meQksdObSXU1I6P5s
+	 ++SmkVeWmDbQb/oS9dSGiuhlci9kpU2QyrQFF2+2HIcbXl3Yj7Uo2K4iXj4/IajE0m++x
+	 mRd0IZffMRbPCqn/ksw26oKarmvnzsNco4b6+Y1UVl9OkIMJ5jxBH0KZmQbv6383JER76
+	 Ss9M2Mr1jTqmAB6+NtCKp1fsJB42iQuy02qRLJMm93gXOrl+4skXZyd/hi4sHr82Osw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793211593;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793211596;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=fJoZiBXFXBymd9huq2t1yPESzY+2h3aTHHbCWmTjpyU=;
-	b=F4mNzODG2btk+wCWnZbzhBx9fuBaMDgdNMnpeGxekUClWULWgWDe3whIB9vx46oBoukk
-	 O8zP3BGQHScPHSNWtOdu0WEX60lvwcnVP4cJ2Y2l6zlCwLTZpm4tDe0d9DeAD8uNB0vlp
-	 qcYtpzaKa0Zhczwtyl8l1k+nZi1MC033GmwanJK5WexsMxMvIf52KJCNV2XDvdHgpvZlK
-	 w3kmT8bTdJN6XK+TYdGY6x6+HC3LWZrD973X+4HI9Y5ZO0sXfeYMlBDoKB7mddK4kRsEE
-	 RSahExga0g4nSRKTYOR9ayV0lAISOgZJ3Eyiar7/lR47Bnq7KdL9VBOueyxBLxoq8IQ==
+	bh=V7tubR7BIFzyRH6TOfQdiUJbiA/F1y2WpmMkJ07KmVY=;
+	b=TnjCUn0mxwsvN2GvMuuFWXgTYfMROTP1ftqXnsEA5SFkMlG+8y9lRSM4t9Y7l8gOV7NN
+	 ErqsyGhn6dZGnpy1FCDRjBXS+6FaqZ6IrJ5AR07bvo1P4B8qIQ5yY6fz+E7+F79OSN4nh
+	 W6Vp37ZTtEFbn4WE2F5U8LToM+4cp1sooSGqiobg31tCHWlF9E8wt8awL1ytvUiPOBn6Z
+	 iXeoT+4IY3Z1DIPHFAiUeprZGW/XstZjzdoJT+cktxdzjK4rxS+9Fw0zRKldQNWxWLeL8
+	 5SLyx6LOgVh8w9EbWaUwt3uObzEgkkZmbc1B6IuqEchXvieLVw2m9xDZTd/U2zC+VEQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t2KTXC8X;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="RjUycs/Y";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBEDB606A31D;
-	Wed, 28 Oct 2026 18:19:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF9D8606A31D;
+	Wed, 28 Oct 2026 18:19:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t2KTXC8X
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17C6C1F01825;
-	Wed, 28 Oct 2026 18:19:51 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RjUycs/Y
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4E381F01825;
+	Wed, 28 Oct 2026 18:19:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793211592;
-	bh=fJoZiBXFXBymd9huq2t1yPESzY+2h3aTHHbCWmTjpyU=;
+	s=korg; t=1793211595;
+	bh=V7tubR7BIFzyRH6TOfQdiUJbiA/F1y2WpmMkJ07KmVY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=t2KTXC8X1dxopUkWVjH4qc5kEAUMLe3s4tJsaPJbsuOOEYNRIPBZoNfed3qmCkPmb
-	 ywv+FsXZ8u8V3SDDnaHEKrd1k1cHiIS/h8TkszJ2YUywNtQMm0qhkPTae3W+F8NH6N
-	 gZuK9imhYXByi+9Ptyf69mt2y6MxHuW0NGpvUCwE=
+	b=RjUycs/YLFMHcapvjNkrSKZcVSeWiG8MrdgzH7ZN4sANc6tCeSgd6z+COrUNOjtTS
+	 EjAV1pwMdVx9euOJoggdCu4iliuBgZb70fqT8rTGPYA6Ny++CGwmG4F3PNLZqNHU2H
+	 LHB0EMImTlTbHRD7JkJpAW+sZHV6FXLgdhwIuzec=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	David Ahern <dsahern@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
+	Xiang Mei <xmei5@asu.edu>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 415/571] ipv6: use RCU in ip6_xmit()
-Date: Wed, 28 Oct 2026 17:59:22 +0100
-Message-ID: <20261028170017.858422473@linuxfoundation.org>
+Subject: [PATCH 5.15 433/571] net: team: fix NULL pointer dereference in team_xmit during mode change
+Date: Wed, 28 Oct 2026 17:59:40 +0100
+Message-ID: <20261028170018.294173072@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -70,110 +70,146 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Weiming Shi <bestswngs@gmail.com>
 
-[ Upstream commit 9085e56501d93af9f2d7bd16f7fcfacdde47b99c ]
+[ Upstream commit 25fe708bbc59289d3d1ea4b126fbc1b460a072a5 ]
 
-Use RCU in ip6_xmit() in order to use dst_dev_rcu() to prevent
-possible UAF.
+__team_change_mode() clears team->ops with memset() before restoring
+safe dummy handlers via team_adjust_ops(). A concurrent team_xmit()
+running under RCU on another CPU can read team->ops.transmit during
+this window and call a NULL function pointer, crashing the kernel.
 
-Fixes: 4a6ce2b6f2ec ("net: introduce a new function dst_dev_put()")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://patch.msgid.link/20250828195823.3958522-4-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-(cherry picked from commit 9085e56501d93af9f2d7bd16f7fcfacdde47b99c)
-[Harshit: Resolve conflict for missing BIG TCP hop-jumbo context]
-Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+The race requires a mode change (CAP_NET_ADMIN) concurrent with
+transmit on the team device.
+
+ BUG: kernel NULL pointer dereference, address: 0000000000000000
+ Oops: 0010 [#1] SMP KASAN NOPTI
+ RIP: 0010:0x0
+ Call Trace:
+  team_xmit (drivers/net/team/team_core.c:1853)
+  dev_hard_start_xmit (net/core/dev.c:3904)
+  __dev_queue_xmit (net/core/dev.c:4871)
+  packet_sendmsg (net/packet/af_packet.c:3109)
+  __sys_sendto (net/socket.c:2265)
+
+The original code assumed that no ports means no traffic, so mode
+changes could freely memset()/memcpy() the ops.  AF_PACKET with
+forced carrier breaks that assumption.
+
+Prevent the race instead of making it safe: replace memset()/memcpy()
+with per-field updates that never touch transmit or receive.  Those
+two handlers are managed solely by team_adjust_ops(), which already
+installs dummies when tx_en_port_count == 0 (always true during mode
+change since no ports are present).  WRITE_ONCE/READ_ONCE prevent
+store/load tearing on the handler pointers.
+
+synchronize_net() before exit_op() drains in-flight readers that may
+still reference old mode state from before port removal switched the
+handlers to dummies.
+
+Fixes: 3d249d4ca7d0 ("net: introduce ethernet teaming device")
+Reported-by: Xiang Mei <xmei5@asu.edu>
+Signed-off-by: Weiming Shi <bestswngs@gmail.com>
+Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Link: https://patch.msgid.link/20260521081159.1491563-3-bestswngs@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Stable-dep-of: b7454f1940c5 ("net: team: stop reusing skb after queue override")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/ip6_output.c | 35 +++++++++++++++++++++--------------
- 1 file changed, 21 insertions(+), 14 deletions(-)
+ drivers/net/team/team.c | 45 +++++++++++++++++++++++++++++------------
+ 1 file changed, 32 insertions(+), 13 deletions(-)
 
-diff --git a/net/ipv6/ip6_output.c b/net/ipv6/ip6_output.c
-index ab745cda1179b..6db5f25017363 100644
---- a/net/ipv6/ip6_output.c
-+++ b/net/ipv6/ip6_output.c
-@@ -257,33 +257,34 @@ bool ip6_autoflowlabel(struct net *net, const struct ipv6_pinfo *np)
- int ip6_xmit(const struct sock *sk, struct sk_buff *skb, struct flowi6 *fl6,
- 	     __u32 mark, struct ipv6_txoptions *opt, int tclass, u32 priority)
- {
--	struct net *net = sock_net(sk);
- 	const struct ipv6_pinfo *np = inet6_sk(sk);
- 	struct in6_addr *first_hop = &fl6->daddr;
- 	struct dst_entry *dst = skb_dst(skb);
--	struct net_device *dev = dst->dev;
- 	struct inet6_dev *idev = ip6_dst_idev(dst);
-+	struct net *net = sock_net(sk);
- 	unsigned int head_room;
-+	struct net_device *dev;
- 	struct ipv6hdr *hdr;
- 	u8  proto = fl6->flowi6_proto;
- 	int seg_len = skb->len;
--	int hlimit = -1;
-+	int ret, hlimit = -1;
- 	u32 mtu;
+diff --git a/drivers/net/team/team.c b/drivers/net/team/team.c
+index 0d2fd43fd00a4..367ef5dd6205a 100644
+--- a/drivers/net/team/team.c
++++ b/drivers/net/team/team.c
+@@ -535,21 +535,23 @@ static void team_adjust_ops(struct team *team)
  
-+	rcu_read_lock();
-+
-+	dev = dst_dev_rcu(dst);
- 	head_room = sizeof(struct ipv6hdr) + LL_RESERVED_SPACE(dev);
- 	if (opt)
- 		head_room += opt->opt_nflen + opt->opt_flen;
+ 	if (!team->en_port_count || !team_is_mode_set(team) ||
+ 	    !team->mode->ops->transmit)
+-		team->ops.transmit = team_dummy_transmit;
++		WRITE_ONCE(team->ops.transmit, team_dummy_transmit);
+ 	else
+-		team->ops.transmit = team->mode->ops->transmit;
++		WRITE_ONCE(team->ops.transmit, team->mode->ops->transmit);
  
- 	if (unlikely(head_room > skb_headroom(skb))) {
--		/* Make sure idev stays alive */
--		rcu_read_lock();
-+		/* idev stays alive while we hold rcu_read_lock(). */
- 		skb = skb_expand_head(skb, head_room);
- 		if (!skb) {
- 			IP6_INC_STATS(net, idev, IPSTATS_MIB_OUTDISCARDS);
--			rcu_read_unlock();
--			return -ENOBUFS;
-+			ret = -ENOBUFS;
-+			goto unlock;
- 		}
--		rcu_read_unlock();
- 	}
- 
- 	if (opt) {
-@@ -331,17 +332,21 @@ int ip6_xmit(const struct sock *sk, struct sk_buff *skb, struct flowi6 *fl6,
- 		 * skb to its handler for processing
- 		 */
- 		skb = l3mdev_ip6_out((struct sock *)sk, skb);
--		if (unlikely(!skb))
--			return 0;
-+		if (unlikely(!skb)) {
-+			ret = 0;
-+			goto unlock;
-+		}
- 
- 		/* hooks should never assume socket lock is held.
- 		 * we promote our socket to non const
- 		 */
--		return NF_HOOK(NFPROTO_IPV6, NF_INET_LOCAL_OUT,
--			       net, (struct sock *)sk, skb, NULL, dev,
--			       dst_output);
-+		ret = NF_HOOK(NFPROTO_IPV6, NF_INET_LOCAL_OUT,
-+			      net, (struct sock *)sk, skb, NULL, dev,
-+			      dst_output);
-+		goto unlock;
- 	}
- 
-+	ret = -EMSGSIZE;
- 	skb->dev = dev;
- 	/* ipv6_local_error() does not require socket lock,
- 	 * we promote our socket to non const
-@@ -350,7 +355,9 @@ int ip6_xmit(const struct sock *sk, struct sk_buff *skb, struct flowi6 *fl6,
- 
- 	IP6_INC_STATS(net, idev, IPSTATS_MIB_FRAGFAILS);
- 	kfree_skb(skb);
--	return -EMSGSIZE;
-+unlock:
-+	rcu_read_unlock();
-+	return ret;
+ 	if (!team->en_port_count || !team_is_mode_set(team) ||
+ 	    !team->mode->ops->receive)
+-		team->ops.receive = team_dummy_receive;
++		WRITE_ONCE(team->ops.receive, team_dummy_receive);
+ 	else
+-		team->ops.receive = team->mode->ops->receive;
++		WRITE_ONCE(team->ops.receive, team->mode->ops->receive);
  }
- EXPORT_SYMBOL(ip6_xmit);
+ 
+ /*
+- * We can benefit from the fact that it's ensured no port is present
+- * at the time of mode change. Therefore no packets are in fly so there's no
+- * need to set mode operations in any special way.
++ * team_change_mode() ensures no ports are present during mode change,
++ * but lockless readers can still reach team_xmit().  Avoid touching
++ * transmit/receive -- they are already set to dummies by
++ * team_adjust_ops() since no ports are enabled.  synchronize_net()
++ * drains in-flight readers before destroying old mode state.
+  */
+ static int __team_change_mode(struct team *team,
+ 			      const struct team_mode *new_mode)
+@@ -558,9 +560,21 @@ static int __team_change_mode(struct team *team,
+ 	if (team_is_mode_set(team)) {
+ 		void (*exit_op)(struct team *team) = team->ops.exit;
+ 
+-		/* Clear ops area so no callback is called any longer */
+-		memset(&team->ops, 0, sizeof(struct team_mode_ops));
+-		team_adjust_ops(team);
++		/* Clear cold-path ops used only under RTNL.  transmit and
++		 * receive are already dummies (no ports) so leave them
++		 * alone -- overwriting them is the source of the race.
++		 */
++		team->ops.init = NULL;
++		team->ops.exit = NULL;
++		team->ops.port_enter = NULL;
++		team->ops.port_leave = NULL;
++		team->ops.port_change_dev_addr = NULL;
++		team->ops.port_tx_disabled = NULL;
++
++		/* Wait for in-flight readers before tearing down mode
++		 * state they may reference.
++		 */
++		synchronize_net();
+ 
+ 		if (exit_op)
+ 			exit_op(team);
+@@ -583,7 +597,12 @@ static int __team_change_mode(struct team *team,
+ 	}
+ 
+ 	team->mode = new_mode;
+-	memcpy(&team->ops, new_mode->ops, sizeof(struct team_mode_ops));
++	team->ops.init = new_mode->ops->init;
++	team->ops.exit = new_mode->ops->exit;
++	team->ops.port_enter = new_mode->ops->port_enter;
++	team->ops.port_leave = new_mode->ops->port_leave;
++	team->ops.port_change_dev_addr = new_mode->ops->port_change_dev_addr;
++	team->ops.port_tx_disabled = new_mode->ops->port_tx_disabled;
+ 	team_adjust_ops(team);
+ 
+ 	return 0;
+@@ -739,7 +758,7 @@ static rx_handler_result_t team_handle_frame(struct sk_buff **pskb)
+ 		/* allow exact match delivery for disabled ports */
+ 		res = RX_HANDLER_EXACT;
+ 	} else {
+-		res = team->ops.receive(team, port, skb);
++		res = READ_ONCE(team->ops.receive)(team, port, skb);
+ 	}
+ 	if (res == RX_HANDLER_ANOTHER) {
+ 		struct team_pcpu_stats *pcpu_stats;
+@@ -1737,7 +1756,7 @@ static netdev_tx_t team_xmit(struct sk_buff *skb, struct net_device *dev)
+ 
+ 	tx_success = team_queue_override_transmit(team, skb);
+ 	if (!tx_success)
+-		tx_success = team->ops.transmit(team, skb);
++		tx_success = READ_ONCE(team->ops.transmit)(team, skb);
+ 	if (tx_success) {
+ 		struct team_pcpu_stats *pcpu_stats;
  
 -- 
 2.53.0
