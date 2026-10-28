@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215370;
-	b=slLg8obaUoNQF91gBYRBSn5v/+qCm1rLuGWtKUsLt4PROl3kdh85UMwoihhWw0nmpmw1
-	 5jc9SNArwwzIFv6YKRxvaQsS2z4EFDgEMoRJJ2sN5VQgbUyqt0kWMm1/yHxmGFsUDDEXJ
-	 hAmCRY+bcdsfxYZzM1Plrzh++GHUYFXK39bDzrhcCJbhLoWqq4Z43uAMhCNuyLQKs56Vd
-	 TMDLJh+g3ZwY+iwsjCFpMwOEZeIvjJZNWxRABK+pgHc76w7wDkuSGa+e6o+sjjS3lcJk7
-	 PdcMYGnxDnOrNjp+6dQgOlg6wPhJi/cedHZbl7SVmR34k1DavGqVH4treG/FLrkjlDw==
+	t=1793215373;
+	b=jc/C+/amVd32YjUIVD11cXOptbiOfbjeKnZR1vGWziyq5k8xkEagxCL+Vhn7SsXlckz6
+	 mldmIV5Gl4ILmWfWNDwUEsp1mZBi8CAJkRReWDdPq+27JG2UpcD6cf5FgECNYAYSCPAh6
+	 9WixJjXDLGRaSQPehO7BCkdIZWJiwGox0rJxJuFamoi1fvIT8loXBTMGy96g1wbUsHYrY
+	 X2LYBjqCAZcRJArzTXHZaS1e7b+L0+3K/6/RGTYDDTvjno5fq03yRTRrbY6Lo6KPNe49Q
+	 q3XR/CwZSzuOEY9g7l/AlQYnF9i4kRJ15NowZ0cngqn6H5q1CraR7ToUsnX20yXfm6w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215370;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215373;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=txZaihOmiwU5P/pN5RLMwlWu3yU3xZpPICRouy/evPI=;
-	b=CyvHyqjR51BHZndCVY/ZYM4vkfKbLhPSVpuT96hPOoFEn2c473G1L2J64YTpRf28eE88
-	 7wiCMyz/EzessC6WwErCm7LSaTtaw2K52CmLSpM7FBSa1P9SGcIrgtEm4KPZmzNU2I1HQ
-	 GLmMyHmEVcY+5mmqaa9zGhZYjfveQPVEy9RwR68FOmGrsNLYAI5DilO2yXti7t2VQTXHC
-	 ubtX0wDjDFp9Krn7QwEoIN5qfsoJJzL4q3ZgJWxAMYW2iHSLo44aAlnpVrjpMZTAz03qO
-	 f6AXTWyrakcHmD+b6UhsIC/ijOvCXOLDiY6eeKu4N/r7rGuuFTOpvCoDCx7/hxD+XfA==
+	bh=FQADxRhPoEKrIz6XrBuQJ9C/kTmLEtzqqvakSqChlFI=;
+	b=IcdtQbo4lcTmtfDQ/0aIrwhgUR6lFUEhqqTAo4GnMchLC5mYgMgThocq9D5GIS9FLBS6
+	 fdoHtpB3MMITnbjLKRfpvXOwGubHQAZKalRYufM4aE9ZRdBl56JHGScT1LTEwAq19klsM
+	 WoFqNT8K6d/ypADI4YTT+HRN/dgZ0EeOs0VXLiNEQVcTqBGe3zTzMCJeQfp8WYXjUZZNG
+	 PD42lD+sEb8Emx9AbV9fVye1BRqlwof5yJaTDkuke+A/1GdR/GtyprJ3EAMZns4381nUo
+	 GEDlqx/V5Ms74U1oCZyHqWMthf7rFMAGVuFsJn6syI1IFWlzMx5Q8Jf7jMg5eh8z+4A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iqvOe1OT;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jqKT0h0y;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1132606A31A;
-	Wed, 28 Oct 2026 19:22:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC41E606A31A;
+	Wed, 28 Oct 2026 19:22:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iqvOe1OT
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F17781F01825;
-	Wed, 28 Oct 2026 19:22:48 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jqKT0h0y
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E82C41F01825;
+	Wed, 28 Oct 2026 19:22:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215369;
-	bh=txZaihOmiwU5P/pN5RLMwlWu3yU3xZpPICRouy/evPI=;
+	s=korg; t=1793215372;
+	bh=FQADxRhPoEKrIz6XrBuQJ9C/kTmLEtzqqvakSqChlFI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iqvOe1OThEOngzGcWOjfJIflrFzjbiL9SamPmB0IyikThK2PjUkSJpxnwUr9FxiFa
-	 td5bb4kYP0U3AEWXjIG5gwYUsSL2vf/bXrUQwbj7EO7/J3DYkYgmE29pUPmGBLLSIy
-	 bao3QTc3H+p2SltY8Vby3oPk7vbWCHyo86gOSevA=
+	b=jqKT0h0y/u7Ybz1k5cT5aX/f4CWcdCUIGczXfO5JSTRvfkzJo/gmYj1/+JstpOYBd
+	 /bMTi0SKi0z8QdW7GXYSIx+Lbp3nxVoeJd+hbhd2NWmOzF2klkOEuYHFI1bZViCT/G
+	 Ahohme+2yTF0YltceK3Uy0KXDCJ1VrXDmyLlds0g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Sorenson <sorenson@redhat.com>,
-	Steve French <stfrench@microsoft.com>,
+	Sarika Sharma <quic_sarishar@quicinc.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1180/1887] cifs: fix cifsFileInfo leak on kmalloc failure in deferred close drain paths
-Date: Wed, 28 Oct 2026 17:54:36 +0100
-Message-ID: <20261028170526.258704223@linuxfoundation.org>
+Subject: [PATCH 6.1 1189/1887] wifi: cfg80211: add link_station_info structure to support MLO statistics
+Date: Wed, 28 Oct 2026 17:54:45 +0100
+Message-ID: <20261028170526.461909158@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,147 +68,156 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Frank Sorenson <sorenson@redhat.com>
+From: Sarika Sharma <quic_sarishar@quicinc.com>
 
-[ Upstream commit c2f2e83e3bbc5483730fd4ee903182761f1ae50f ]
+[ Upstream commit d2329fff7e527e8b350086be2e7cbf0d190177a3 ]
 
-In cifs_close_deferred_file(), cifs_close_all_deferred_files(), and
-cifs_close_deferred_file_under_dentry(), when a pending deferred close
-is cancelled via cancel_delayed_work(), the subsequent kmalloc_obj() to
-add the file to the local processing list may fail under memory pressure.
-The loop breaks immediately, but the cancelled work is no longer pending
-(it would have called _cifsFileInfo_put()), and the cfile is never added
-to file_head for processing.  The cifsFileInfo reference and the open
-server handle both leak.
+Current implementation of NL80211_GET_STATION does not work for
+multi-link operation(MLO) since in case of MLO only deflink (or one
+of the links) is considered and not all links.
 
-Fix by saving the cfile that failed allocation in a local variable,
-breaking as before, and calling _cifsFileInfo_put() on it after
-releasing the lock.  Any files later in the iteration are unaffected
-since their deferred work is still pending and will fire normally.
+Therefore to support for MLO, add link_station_info structure
+to account link level statistics for station.
 
-Fixes: e3fc065682eb ("cifs: Deferred close performance improvements")
-Signed-off-by: Frank Sorenson <sorenson@redhat.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Additionally, add valid_links in station_info structure to indicate
+bitmap of valid links for MLO. This will be helpful to check the link
+related statistics during MLO.
+
+Signed-off-by: Sarika Sharma <quic_sarishar@quicinc.com>
+Link: https://patch.msgid.link/20250528054420.3050133-3-quic_sarishar@quicinc.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Stable-dep-of: aa2eb6252518 ("wifi: mac80211: defer link RX stats percpu free to RCU")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/misc.c | 45 ++++++++++++++++++++++++++++++++++++++------
- 1 file changed, 39 insertions(+), 6 deletions(-)
+ include/net/cfg80211.h | 101 +++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 101 insertions(+)
 
-diff --git a/fs/smb/client/misc.c b/fs/smb/client/misc.c
-index 6942253def3b0..fb841235617c1 100644
---- a/fs/smb/client/misc.c
-+++ b/fs/smb/client/misc.c
-@@ -757,7 +757,7 @@ cifs_del_deferred_close(struct cifsFileInfo *cfile)
- void
- cifs_close_deferred_file(struct cifsInodeInfo *cifs_inode)
- {
--	struct cifsFileInfo *cfile = NULL;
-+	struct cifsFileInfo *cfile = NULL, *failed_cfile = NULL;
- 	struct file_list *tmp_list, *tmp_next_list;
- 	struct list_head file_head;
+diff --git a/include/net/cfg80211.h b/include/net/cfg80211.h
+index b04d249550fe4..691d328e0507f 100644
+--- a/include/net/cfg80211.h
++++ b/include/net/cfg80211.h
+@@ -1858,6 +1858,99 @@ struct cfg80211_tid_stats {
  
-@@ -774,8 +774,10 @@ cifs_close_deferred_file(struct cifsInodeInfo *cifs_inode)
- 				spin_unlock(&cifs_inode->deferred_lock);
+ #define IEEE80211_MAX_CHAINS	4
  
- 				tmp_list = kmalloc(sizeof(struct file_list), GFP_ATOMIC);
--				if (tmp_list == NULL)
-+				if (tmp_list == NULL) {
-+					failed_cfile = cfile;
- 					break;
-+				}
- 				tmp_list->cfile = cfile;
- 				list_add_tail(&tmp_list->list, &file_head);
- 			}
-@@ -783,6 +785,15 @@ cifs_close_deferred_file(struct cifsInodeInfo *cifs_inode)
- 	}
- 	spin_unlock(&cifs_inode->open_file_lock);
- 
-+	if (failed_cfile) {
-+		if (OPEN_FMODE(failed_cfile->f_flags) & FMODE_WRITE) {
-+			/* Pairs with smp_load_acquire() in is_size_safe_to_change(). */
-+			smp_store_release(&CIFS_I(d_inode(failed_cfile->dentry))->time_last_write,
-+					  jiffies);
-+		}
-+		_cifsFileInfo_put(failed_cfile, false, false);
-+	}
++/**
++ * struct link_station_info - link station information
++ *
++ * Link station information filled by driver for get_station() and
++ *	dump_station().
++ * @filled: bit flag of flags using the bits of &enum nl80211_sta_info to
++ *	indicate the relevant values in this struct for them
++ * @connected_time: time(in secs) since a link of station is last connected
++ * @inactive_time: time since last activity for link station(tx/rx)
++ *	in milliseconds
++ * @assoc_at: bootime (ns) of the last association of link of station
++ * @rx_bytes: bytes (size of MPDUs) received from this link of station
++ * @tx_bytes: bytes (size of MPDUs) transmitted to this link of station
++ * @signal: The signal strength, type depends on the wiphy's signal_type.
++ *	For CFG80211_SIGNAL_TYPE_MBM, value is expressed in _dBm_.
++ * @signal_avg: Average signal strength, type depends on the wiphy's
++ *	signal_type. For CFG80211_SIGNAL_TYPE_MBM, value is expressed in _dBm_
++ * @chains: bitmask for filled values in @chain_signal, @chain_signal_avg
++ * @chain_signal: per-chain signal strength of last received packet in dBm
++ * @chain_signal_avg: per-chain signal strength average in dBm
++ * @txrate: current unicast bitrate from this link of station
++ * @rxrate: current unicast bitrate to this link of station
++ * @rx_packets: packets (MSDUs & MMPDUs) received from this link of station
++ * @tx_packets: packets (MSDUs & MMPDUs) transmitted to this link of station
++ * @tx_retries: cumulative retry counts (MPDUs) for this link of station
++ * @tx_failed: number of failed transmissions (MPDUs) (retries exceeded, no ACK)
++ * @rx_dropped_misc:  Dropped for un-specified reason.
++ * @bss_param: current BSS parameters
++ * @beacon_loss_count: Number of times beacon loss event has triggered.
++ * @expected_throughput: expected throughput in kbps (including 802.11 headers)
++ *	towards this station.
++ * @rx_beacon: number of beacons received from this peer
++ * @rx_beacon_signal_avg: signal strength average (in dBm) for beacons received
++ *	from this peer
++ * @rx_duration: aggregate PPDU duration(usecs) for all the frames from a peer
++ * @tx_duration: aggregate PPDU duration(usecs) for all the frames to a peer
++ * @airtime_weight: current airtime scheduling weight
++ * @pertid: per-TID statistics, see &struct cfg80211_tid_stats, using the last
++ *	(IEEE80211_NUM_TIDS) index for MSDUs not encapsulated in QoS-MPDUs.
++ *	Note that this doesn't use the @filled bit, but is used if non-NULL.
++ * @ack_signal: signal strength (in dBm) of the last ACK frame.
++ * @avg_ack_signal: average rssi value of ack packet for the no of msdu's has
++ *	been sent.
++ * @rx_mpdu_count: number of MPDUs received from this station
++ * @fcs_err_count: number of packets (MPDUs) received from this station with
++ *	an FCS error. This counter should be incremented only when TA of the
++ *	received packet with an FCS error matches the peer MAC address.
++ * @addr: For MLO STA connection, filled with address of the link of station.
++ */
++struct link_station_info {
++	u64 filled;
++	u32 connected_time;
++	u32 inactive_time;
++	u64 assoc_at;
++	u64 rx_bytes;
++	u64 tx_bytes;
++	s8 signal;
++	s8 signal_avg;
 +
- 	list_for_each_entry_safe(tmp_list, tmp_next_list, &file_head, list) {
- 		struct cifsFileInfo *cfile = tmp_list->cfile;
- 
-@@ -800,7 +811,7 @@ cifs_close_deferred_file(struct cifsInodeInfo *cifs_inode)
- void
- cifs_close_all_deferred_files(struct cifs_tcon *tcon)
- {
--	struct cifsFileInfo *cfile;
-+	struct cifsFileInfo *cfile, *failed_cfile = NULL;
- 	struct file_list *tmp_list, *tmp_next_list;
- 	struct list_head file_head;
- 
-@@ -814,8 +825,10 @@ cifs_close_all_deferred_files(struct cifs_tcon *tcon)
- 				spin_unlock(&CIFS_I(d_inode(cfile->dentry))->deferred_lock);
- 
- 				tmp_list = kmalloc(sizeof(struct file_list), GFP_ATOMIC);
--				if (tmp_list == NULL)
-+				if (tmp_list == NULL) {
-+					failed_cfile = cfile;
- 					break;
-+				}
- 				tmp_list->cfile = cfile;
- 				list_add_tail(&tmp_list->list, &file_head);
- 			}
-@@ -823,6 +836,15 @@ cifs_close_all_deferred_files(struct cifs_tcon *tcon)
- 	}
- 	spin_unlock(&tcon->open_file_lock);
- 
-+	if (failed_cfile) {
-+		if (OPEN_FMODE(failed_cfile->f_flags) & FMODE_WRITE) {
-+			/* Pairs with smp_load_acquire() in is_size_safe_to_change(). */
-+			smp_store_release(&CIFS_I(d_inode(failed_cfile->dentry))->time_last_write,
-+					  jiffies);
-+		}
-+		_cifsFileInfo_put(failed_cfile, true, false);
-+	}
++	u8 chains;
++	s8 chain_signal[IEEE80211_MAX_CHAINS];
++	s8 chain_signal_avg[IEEE80211_MAX_CHAINS];
 +
- 	list_for_each_entry_safe(tmp_list, tmp_next_list, &file_head, list) {
- 		struct cifsFileInfo *cfile = tmp_list->cfile;
- 
-@@ -875,7 +897,7 @@ void cifs_close_all_deferred_files_sb(struct cifs_sb_info *cifs_sb)
- void
- cifs_close_deferred_file_under_dentry(struct cifs_tcon *tcon, const char *path)
- {
--	struct cifsFileInfo *cfile;
-+	struct cifsFileInfo *cfile, *failed_cfile = NULL;
- 	struct file_list *tmp_list, *tmp_next_list;
- 	struct list_head file_head;
- 	void *page;
-@@ -894,8 +916,10 @@ cifs_close_deferred_file_under_dentry(struct cifs_tcon *tcon, const char *path)
- 					spin_unlock(&CIFS_I(d_inode(cfile->dentry))->deferred_lock);
- 
- 					tmp_list = kmalloc(sizeof(struct file_list), GFP_ATOMIC);
--					if (tmp_list == NULL)
-+					if (tmp_list == NULL) {
-+						failed_cfile = cfile;
- 						break;
-+					}
- 					tmp_list->cfile = cfile;
- 					list_add_tail(&tmp_list->list, &file_head);
- 				}
-@@ -904,6 +928,15 @@ cifs_close_deferred_file_under_dentry(struct cifs_tcon *tcon, const char *path)
- 	}
- 	spin_unlock(&tcon->open_file_lock);
- 
-+	if (failed_cfile) {
-+		if (OPEN_FMODE(failed_cfile->f_flags) & FMODE_WRITE) {
-+			/* Pairs with smp_load_acquire() in is_size_safe_to_change(). */
-+			smp_store_release(&CIFS_I(d_inode(failed_cfile->dentry))->time_last_write,
-+					  jiffies);
-+		}
-+		_cifsFileInfo_put(failed_cfile, true, false);
-+	}
++	struct rate_info txrate;
++	struct rate_info rxrate;
++	u32 rx_packets;
++	u32 tx_packets;
++	u32 tx_retries;
++	u32 tx_failed;
++	u32 rx_dropped_misc;
++	struct sta_bss_parameters bss_param;
 +
- 	list_for_each_entry_safe(tmp_list, tmp_next_list, &file_head, list) {
- 		struct cifsFileInfo *cfile = tmp_list->cfile;
++	u32 beacon_loss_count;
++
++	u32 expected_throughput;
++
++	u64 tx_duration;
++	u64 rx_duration;
++	u64 rx_beacon;
++	u8 rx_beacon_signal_avg;
++
++	u16 airtime_weight;
++
++	s8 ack_signal;
++	s8 avg_ack_signal;
++	struct cfg80211_tid_stats *pertid;
++
++	u32 rx_mpdu_count;
++	u32 fcs_err_count;
++
++	u8 addr[ETH_ALEN] __aligned(2);
++};
++
+ /**
+  * struct station_info - station information
+  *
+@@ -1924,6 +2017,11 @@ struct cfg80211_tid_stats {
+  *	received packet with an FCS error matches the peer MAC address.
+  * @airtime_link_metric: mesh airtime link metric.
+  * @connected_to_as: true if mesh STA has a path to authentication server
++ * @valid_links: bitmap of valid links, or 0 for non-MLO. Drivers fill this
++ *	information in cfg80211_new_sta(), cfg80211_del_sta_sinfo(),
++ *	get_station() and dump_station() callbacks.
++ * @links: reference to Link sta entries for MLO STA, all link specific
++ *	information is accessed through links[link_id].
+  */
+ struct station_info {
+ 	u64 filled;
+@@ -1983,6 +2081,9 @@ struct station_info {
+ 	u32 airtime_link_metric;
  
+ 	u8 connected_to_as;
++
++	u16 valid_links;
++	struct link_station_info *links[IEEE80211_MLD_MAX_NUM_LINKS];
+ };
+ 
+ /**
 -- 
 2.53.0
 
