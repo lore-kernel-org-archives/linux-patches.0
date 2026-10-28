@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793209492;
-	b=Ul2MxwXSlbxOQ1owoI8zfXRMgVP5an+O5iZvVeDgfX6KU+AzwfPFVE7hS8CLG9NyIUs4
-	 ITlGBCCL2xZU5ZlD7CNE3loNqIPw4wQnWGTQCCxMSGw9HScU9yZR/wsGYsOWaxFI3VCt7
-	 Gdcr+HiJg25xemSAgKpIbh8gM8nqQZYlZ3yIRKeJQgZjywpg86s68DAw9hoAwdPk5GWUC
-	 RgRAvzOnQnmbfqG42Rqt3tSzlCJRNVMkEY8T7vP68Gaad2OKfx0WWEoPggq3S3rz5z/rg
-	 x5riJmT2speojfp0AJJ+wTIIbthTlFZmnK6exAyGtu3IPVoXCZGZa6J37rkRFM9qtWQ==
+	t=1793209495;
+	b=hNuL/njuOF9z1J0Gknzxu9JYpj+qZHYkQiqjkRQBHMh7T5Eg+zR8evNPNv2l7Hq0No80
+	 XrK0BAwllpENAHmbvb6Wi0I0xbBlsyo8WbE9ChjjAq3HCGCVs+U/NwI9RoOWcxv4qqE3V
+	 cwuGfU8LX9yrda6apYRJHgkesFqc2D8OXWhV9w0sRYlyBeolhQ4s28tXvy4QeukDaebGZ
+	 /QqgTh3C0xVBigJCJiYikA4QH54LH53fQbLNguc0c1OBsehBiZImDc8NAPjjWZA+TxAQw
+	 8U6UDpc4oDT1fKhuZ9ULGato9pB2ipaYZYH1Dnd8yFMBs0J2wP9mhykrPNRt89q1iZQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793209492;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793209495;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ldkYVP2XG1NakVzQIRqOixi928oBwuJts4fGmfjHFj4=;
-	b=TpR+xEHqsCBmNpdfli/HKvDqkJ8nFbDjtw6j7c0n5NUNGEBvMAcle3iolep7dVLehRDM
-	 j5aPAyLc8J7WBrSgxUsmnGz2/0Zyz7vUuiUnSVjyYA3lfQQJQaGeyDqWvoBDizf0oQP5I
-	 jPWTt9k6FG7NXhwiVF36jqFJIxAl/CNMst+u+kFVattXKvVO0p9aqJuFt9Fj+l6oJ0TLt
-	 KmDKl+C1PI/ZIxgXhLlFpgn2hmSXVNwwBm/HAdv/YWolx4JoBKwa69p76T4xkE+gelKF4
-	 nQo4nfV4os8OWJkehBLBvpFcGXUUL1zjs1VW1q9ESKphCmY5TRMHsvYlLv5V2cjgUhg==
+	bh=Ky2pJdqgXFg+N0RJlmjy6ehXGBrDdbr8pqvv4xcf83I=;
+	b=e2rISrgfpwZ2vl8Bh9fk1tkx/W5vVWpJEcUJfJ8ZELvrL94mu235dwz2pZfeK5yM2BSy
+	 6bVUIx3gXzCXnpiJCYXNsC/oL2oEdgU/XWwPp28CK3IlR6C7qq+omGGEcX+1h5+JVqgL+
+	 okQ5XCGOfh+4azHkkPJPZpzhNpyd2Y3AstgiVWRjss7VPXyB0L4ZltFHhQGwr7WMSyy7i
+	 k9UNkunK9s63fIfIBM5zXXiy5/oNgaGofTUacuyzhK9+MLyLnGiDR55eRukRwctMFcm8A
+	 UaxrWj0iZ3/CTNvFtQbtM6D7P+kX8QsZ8NpGCMlVPa4pQ4+XVX/qyiD0K8wGL2rvPJg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s7VmZ6Km;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hehDY0ik;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0996606A31C;
-	Wed, 28 Oct 2026 17:44:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D72F1606A31A;
+	Wed, 28 Oct 2026 17:44:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s7VmZ6Km
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D9471F01829;
-	Wed, 28 Oct 2026 17:44:51 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hehDY0ik
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3190D1F01825;
+	Wed, 28 Oct 2026 17:44:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793209491;
-	bh=ldkYVP2XG1NakVzQIRqOixi928oBwuJts4fGmfjHFj4=;
+	s=korg; t=1793209494;
+	bh=Ky2pJdqgXFg+N0RJlmjy6ehXGBrDdbr8pqvv4xcf83I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=s7VmZ6Kmg5fuLHFjmBGYoU8vmyPCUNzRbtlq3O6M0c92lJfbgTirAvtZpFp7PGR1C
-	 SN+1/W0fuf0s+tqS2L2mWWJkFD0a7DoJ/yEpgcy5yrynpmowaHAip+Mtb1uqoQz/7T
-	 /OTXsrXcgyf+m8ayhHxaStyaSmjFlPBESTKomLdA=
+	b=hehDY0ikb6VlIzNzJrVhS+0DhsoQXk77hCKx0wK/wXU17zNRUIFIveYhhFKcQ0I7n
+	 euxV4yiMqpFntBUZDcaLylLjWb/W4pqLH1naX7/mQx4/3Mrukm9vhuWUohLT0mwoc1
+	 w8l3ZMtHHppmqp+Qtw9JJWBpzY7vc2Z10QLPilQ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yiming Qian <yimingqian591@gmail.com>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Florian Westphal <fw@strlen.de>,
-	Steffen Pfendtner <steffen.pfendtner@kernelscan.io>,
+	Sun Yangkai <sunyangkai@fygo.io>,
+	Chen Cheng <chencheng@fnnas.com>,
+	Mikulas Patocka <mpatocka@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 490/516] netfilter: nf_tables: release flowtable after rcu grace period on error
-Date: Wed, 28 Oct 2026 18:00:42 +0100
-Message-ID: <20261028170015.084763961@linuxfoundation.org>
+Subject: [PATCH 5.10 491/516] dm-integrity: require stable writes for internal hash modes
+Date: Wed, 28 Oct 2026 18:00:43 +0100
+Message-ID: <20261028170015.108648889@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -70,55 +69,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Chen Cheng <chencheng@fnnas.com>
 
-[ Upstream commit d73f4b53aaaea4c95f245e491aa5eeb8a21874ce ]
+[ Upstream commit b2fd92f016e9d692fd3c8c08d0ee014e9212279d ]
 
-Call synchronize_rcu() after unregistering the hooks from error path,
-since a hook that already refers to this flowtable can be already
-registered, exposing this flowtable to packet path and nfnetlink_hook
-control plane.
+dm-integrity direct, bitmap and inline internal-hash modes compute
+integrity tags from the pages carried by the write bio.  The lower data
+write also uses those pages, so the tag and the data write depend on the
+same memory contents staying unchanged while writeback is in flight.
 
-This error path is rare, it should only happen by reaching the maximum
-number hooks or by failing to set up to hardware offload, just call
-synchronize_rcu().
+Without stable writes, a buffered writer can modify a writeback folio
+after dm-integrity has submitted the data bio and before the lower device
+has consumed the data.  After a crash, this can leave data from the later
+contents with a tag calculated from the earlier contents, causing
+permanent checksum failures on read.
 
-There is a check for already used device hooks by different flowtable
-that could result in EEXIST at this late stage. The hook parser can be
-updated to perform this check earlier to this error path really becomes
-rarely exercised.
+Set BLK_FEAT_STABLE_WRITES for internal-hash D, B and I modes so
+filesystems wait for writeback folios to become stable before modifying
+them again.  Journal mode is left unchanged because it copies data into
+the journal before computing and persisting the tag.
 
-Uncovered by KASAN reported as use-after-free from nfnetlink_hook path
-when dumping hooks.
+Tested using dm-delay over a virtio-blk test disk, dm-integrity
+internal_hash:crc32c and no-journal ext4.  The D and B reproducers both
+failed with checksum errors before this change and completed with
+READ_RC=0 and zero mismatches after it.
 
-Fixes: 3b49e2e94e6e ("netfilter: nf_tables: add flow table netlink frontend")
-Reported-by: Yiming Qian <yimingqian591@gmail.com>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Florian Westphal <fw@strlen.de>
-[ Backport to 5.10.y: 5.10 registers the flowtable hooks before the
-  transaction is allocated and has no err_flowtable_hooks label. As in
-  the 5.15.y backport of this fix, call synchronize_rcu() in the
-  nft_register_flowtable_net_hooks() failure branch, before the hooks
-  and the flowtable are released. ]
-Assisted-by: Claude:claude-opus-5-5
-Signed-off-by: Steffen Pfendtner <steffen.pfendtner@kernelscan.io>
+Fixes: 7eada909bfd7 ("dm: add integrity target")
+Cc: stable@vger.kernel.org
+Reported-by: Sun Yangkai <sunyangkai@fygo.io>
+Link: https://github.com/chencheng-fnnas/reproducer/blob/main/dm-integrity-writeback-race.py
+Signed-off-by: Chen Cheng <chencheng@fnnas.com>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+[ sashal: Replaced BLK_FEAT_STABLE_WRITES with a per-target needs_stable_writes bit propagated through the existing queue-flag machinery. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_tables_api.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/md/dm-integrity.c     | 3 +++
+ drivers/md/dm-table.c         | 2 +-
+ include/linux/device-mapper.h | 5 +++++
+ 3 files changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index 63592c73a7a17..95a03b01014e7 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -7296,6 +7296,7 @@ static int nf_tables_newflowtable(struct net *net, struct sock *nlsk,
- 					       &flowtable->hook_list,
- 					       flowtable);
- 	if (err < 0) {
-+		synchronize_rcu();
- 		nft_flowtable_hooks_destroy(&flowtable->hook_list);
- 		goto err4;
+diff --git a/drivers/md/dm-integrity.c b/drivers/md/dm-integrity.c
+index eb13b98ba0a9c..c889457c3b330 100644
+--- a/drivers/md/dm-integrity.c
++++ b/drivers/md/dm-integrity.c
+@@ -3219,6 +3219,9 @@ static void dm_integrity_io_hints(struct dm_target *ti, struct queue_limits *lim
+ 		limits->physical_block_size = ic->sectors_per_block << SECTOR_SHIFT;
+ 		blk_limits_io_min(limits, ic->sectors_per_block << SECTOR_SHIFT);
  	}
++
++	if (ic->internal_hash && (ic->mode == 'D' || ic->mode == 'B'))
++		ti->needs_stable_writes = true;
+ }
+ 
+ static void calculate_journal_section_size(struct dm_integrity_c *ic)
+diff --git a/drivers/md/dm-table.c b/drivers/md/dm-table.c
+index 4351de47fa775..f78979cc5baec 100644
+--- a/drivers/md/dm-table.c
++++ b/drivers/md/dm-table.c
+@@ -1799,7 +1799,7 @@ static int device_requires_stable_pages(struct dm_target *ti,
+ {
+ 	struct request_queue *q = bdev_get_queue(dev->bdev);
+ 
+-	return q && blk_queue_stable_writes(q);
++	return ti->needs_stable_writes || (q && blk_queue_stable_writes(q));
+ }
+ 
+ void dm_table_set_restrictions(struct dm_table *t, struct request_queue *q,
+diff --git a/include/linux/device-mapper.h b/include/linux/device-mapper.h
+index 50cc070cb1f7c..bb50f631b0e91 100644
+--- a/include/linux/device-mapper.h
++++ b/include/linux/device-mapper.h
+@@ -339,6 +339,11 @@ struct dm_target {
+ 	 */
+ 	bool discards_supported:1;
+ 
++	/*
++	 * Set if this target requires stable data during writeback.
++	 */
++	bool needs_stable_writes:1;
++
+ 	/*
+ 	 * Set if we need to limit the number of in-flight bios when swapping.
+ 	 */
 -- 
 2.53.0
 
