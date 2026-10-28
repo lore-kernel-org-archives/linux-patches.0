@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215442;
-	b=2KAHseqBbJrArsdwoHFQ/HtCYiyFCvKawuk4odu9IVXHARqzfhuUOoEoOKGCuU7HnIal
-	 W3ESrBWsRs8FcJfYbDFT/yBvT5Os7Mx/NFjz496wIpt4gwZj1bQB4xZc5w8r3FOOnxNSu
-	 Nv2w3QG4b1QHPaAeeTw7XPfNjk86kBCErSTxAihjR41uECggTLWawNavEgC2ZTOT8XwE/
-	 coC/GTaHUiWIydvjo/cr/aHupMAxePHJlObKwOhJ4tp1u4hkMzC8vEbL0giuOvdKgI6VT
-	 BcLvZBaZ0lc4NnlUE+OCeK7rMEOXCUu0x0gJgfZ9EHJMZS8WvovYds9ssTcgAKyW+8g==
+	t=1793215445;
+	b=mwuxLZt8r9FzMtEBpasR4mehFTCq41dzze/2AEdtB/AXxkvGhH7Ghh3acoD1or5ElV3v
+	 nRtvM7BVxL1XRSE057bqttC6MOUT6Npz3q6C6lW3rwampK3ln9Vh88Bx78hCQYm8K4g0y
+	 IcWQh2rpBN3j8v2996gOCTmhcTtIMXzU8xXgKWezjqGxPhZp5DlsYezXf3m8fwTCBUcMF
+	 LLsL9B3S6cDnagb1GcCpyIdPCldQAG8Imo8YegZvqHGaf5W2HDk8d6c2Uwt+DC6SooghQ
+	 n8UywQfHA8BhxAk3qUzmBVM/CvKM3bmxKIt79buIZyALkrV4Y/aaJmfPQQQXF/Apn5w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215442;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215445;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=UaS44F3wh5Va78m/q7aeFu27Xn7ipbVwGGlvWFS3JWE=;
-	b=PBbR3Rk6Qw4Gi/+khlS9tkj0n1Y+cqfJQX3xSxR7/ZlRFKF5jL5hZTeOHdttALBNJQAR
-	 FpFyn+hhU3gumNsLKhud4ls9nRlyqlAJLrsImSI2NtONCLOfN3tbApLSGrL8z9F0yU/1w
-	 sPUsmGa+Vnmc8DbXvXwwbgubNV1AOoNNSF4BbUSwTBlWhhKn8WyWc9rq6CLfBl48dpApg
-	 kuE2CRnJJSbAzPlaTLd08ZJghnsMb+NRiDhI0GHRoA4Lm0gaH9ZIgnCLc+e3cpKdf+9tD
-	 1tB9rPGHREBhNDv5w0YwkYM3cXbdNX4H+sjmfBqhP/e6OFgccyiQ5CsPaOJMjyw7XTw==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=pePZbi/EKytw+C0UGOS82yvUMO0gsoK/M3T48zTBZfs=;
+	b=QuYH9ZeOjGjRPWHyM1sz3RR5CtFAJViMd68RgSltDg5Vpxj2o1UzGSWq8Wfh2MZzZP5a
+	 TGEytU4E1MNzxsJRiq1+gK+EeCVOHM1/z9Dfmbg2Ujvjbt2A46Jc5XKwVJ993psRs7Rth
+	 WiawWmrLUaryvg1VTsCWVxqi7H98clwpTvwnrx3EJJWVfqUkgYTWeoETxLJHqxoiDLmnV
+	 rdbxtSrxROFUCycwwMrBUyvCH3G/1qwFN8xWNVFVWleFn6ke3iEoNIhaQCjHESbJcnaIW
+	 01WaPjfKVMM/0wqzv13VlBSIsYPf2LlCPBtuasXKyWqmZFZxXXUV91LdwWQ7YREIE9g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MesvlOWZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=K68EA+Fb;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44AB4606A31A;
-	Wed, 28 Oct 2026 19:24:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22CAB606A31C;
+	Wed, 28 Oct 2026 19:24:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MesvlOWZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA6991F01825;
-	Wed, 28 Oct 2026 19:24:01 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=K68EA+Fb
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71CB71F01825;
+	Wed, 28 Oct 2026 19:24:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215442;
-	bh=UaS44F3wh5Va78m/q7aeFu27Xn7ipbVwGGlvWFS3JWE=;
+	s=korg; t=1793215445;
+	bh=pePZbi/EKytw+C0UGOS82yvUMO0gsoK/M3T48zTBZfs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MesvlOWZhQOhuVMw8r7MRrsn+pVK8Wj4Rh8cmOQMLfz0mnNlLGszn4NrvrsnKvKnq
-	 pqASFX2aiwr0Ot/I12I7IOmDIzei6q1Mvy8O62RCOmzHb1GmXKYQMVWlw2qqhbb877
-	 1wjtBCePj2gKXJnIY84x+Kk7p8my0gTx0/PbqVyg=
+	b=K68EA+Fb67rJTk1zpn+XfzHNjxoTocSvcw2gJTKA0oqpE+jcWJNnBCNE2B+5qQMWK
+	 J4QRn462LcLSR8XLfQ2b3l1nwvyX/OuViGSVWiEeKIiE61wqwC2kttrr5e84tK2Fvd
+	 uG6OBCzJLLLZT4xJ1YK7t9nOxqOy9y4nd7i6RkFY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Koichiro Den <den@valinux.co.jp>,
+	Frank Li <Frank.Li@nxp.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1211/1887] platform/x86: dell-laptop: fix missing cleanups in init error path
-Date: Wed, 28 Oct 2026 17:55:07 +0100
-Message-ID: <20261028170526.967367560@linuxfoundation.org>
+Subject: [PATCH 6.1 1212/1887] dmaengine: dw-edma-pcie: Reject devices without driver data
+Date: Wed, 28 Oct 2026 17:55:08 +0100
+Message-ID: <20261028170526.991401221@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -62,58 +63,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
+From: Koichiro Den <den@valinux.co.jp>
 
-[ Upstream commit 6e9cab2247e5b243ae2d907ce7c948a8a9c8d61a ]
+[ Upstream commit 11d7cfe0c119691b2dafbb699bbca90258c678aa ]
 
-dell_init() initializes several resources after dell_setup_rfkill(),
-including the optional touchpad LED, keyboard backlight LED, battery
-hook, debugfs directory and dell-laptop notifier.
+dw_edma_pcie_probe() treats the PCI device ID driver_data as the
+template for the controller layout and copies it unconditionally. A
+device bound dynamically via sysfs can match the driver without that
+data, which leads to a NULL pointer dereference.
 
-If a later LED or backlight registration fails, the error path only
-tears down the battery hook and rfkill resources. This leaves the
-notifier, debugfs directory, keyboard backlight LED and optional
-touchpad LED registered after dell_init() returns an error.
+Reject such matches before enabling the device.
 
-Add the missing cleanup calls before tearing down rfkill.
-
-Fixes: 9c656b07997f ("platform/x86: dell-*: Call new led hw_changed API on kbd brightness change")
-Fixes: 037accfa14b2 ("dell-laptop: Add debugfs support")
-Fixes: 2d8b90be4f1c ("dell-laptop: support Synaptics/Alps touchpad led")
-Fixes: 6cff8d60aa0a ("platform: x86: dell-laptop: Add support for keyboard backlight")
+Fixes: 41aaff2a2ac0 ("dmaengine: Add Synopsys eDMA IP PCIe glue-logic")
 Cc: stable@vger.kernel.org
-Signed-off-by: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
-Link: https://patch.msgid.link/20260609081419.1995169-1-lihaoxiang@isrc.iscas.ac.cn
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Koichiro Den <den@valinux.co.jp>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260521142153.2957432-3-den@valinux.co.jp
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/dell/dell-laptop.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/dma/dw-edma/dw-edma-pcie.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/platform/x86/dell/dell-laptop.c b/drivers/platform/x86/dell/dell-laptop.c
-index 14772ba16f75f..5288f080dd144 100644
---- a/drivers/platform/x86/dell/dell-laptop.c
-+++ b/drivers/platform/x86/dell/dell-laptop.c
-@@ -2264,6 +2264,11 @@ static int __init dell_init(void)
- 	if (micmute_led_registered)
- 		led_classdev_unregister(&micmute_led_cdev);
- fail_led:
-+	dell_laptop_unregister_notifier(&dell_laptop_notifier);
-+	debugfs_remove_recursive(dell_laptop_dir);
-+	kbd_led_exit();
-+	if (quirks && quirks->touchpad_led)
-+		touchpad_led_exit();
- 	dell_cleanup_rfkill();
- fail_rfkill:
- 	platform_device_del(platform_device);
+diff --git a/drivers/dma/dw-edma/dw-edma-pcie.c b/drivers/dma/dw-edma/dw-edma-pcie.c
+index d6b5e24638847..e149575a6127b 100644
+--- a/drivers/dma/dw-edma/dw-edma-pcie.c
++++ b/drivers/dma/dw-edma/dw-edma-pcie.c
+@@ -151,6 +151,9 @@ static int dw_edma_pcie_probe(struct pci_dev *pdev,
+ 	int err, nr_irqs;
+ 	int i, mask;
+ 
++	if (!pdata)
++		return -ENODEV;
++
+ 	/* Enable PCI device */
+ 	err = pcim_enable_device(pdev);
+ 	if (err) {
 -- 
 2.53.0
 
