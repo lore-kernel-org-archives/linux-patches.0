@@ -1,51 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213654;
-	b=Mxwle6Vign6ylfDJVQUqJW9Zq1bTUNdFc8izopwQU1OVjWE/q/otgt1gVHIKxzW9OyP7
-	 hv80hgC/kQaUKDQidhTE44+pOn9pEZLt64QAhixe3+twI3vSisXMcmKgTqbOGDAqCPdw+
-	 et+SfkTtfoHpivNTAPTVEQzqjUJtKW9xev80eHszO4BQ++J93JcHFbLhvQxMDs1RAg/AY
-	 fJIfaDsC0nXVAoIGTdl9yGKy4BKWcrn8fHsBUg1VnU9dMPQ0kBYAWi+uzneOozHznk6OB
-	 /N1XC4kCTTwjyuE1D8Eq1gQffH7kr20kJjhK+HVGuk+YPvynbiJhM3u8WaAZoKhqOeQ==
+	t=1793213657;
+	b=ye4vF2nilahfRbXPElZxgbhXVHiZAqp4jDkop6pW/84WcLIZ7EShjPi9ireA8w7V3EJQ
+	 t6JBzYssU4hUAF755A2+ZrnwMqmLm5xKYC37Kz/lo+eoc3Xr9xerLWqXpT3LsxG/8WsIo
+	 LEKCNwkZtKnmNWXcXX2Oc7VmwQNmP4lCsZcg0Kbwz9MH78abrspPaMcw2HFOmAC/faNW9
+	 WXZD4FEiE8eJuaBKljIB2wJsiqwJFyl08q8EUMdAWUEUjkBLM1eyHtk1T1oo3vu6oVxz6
+	 CbtIafTEo/dRdXTcSNC59ZDyCNWPcXqxiDQp5dLhtq24q3rtmxgbTIDgWV2RHrb4PsQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213654;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213657;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=L/ix8tCXcBYDSkQKjkfg13FI8vfzbgcHVDatID4t884=;
-	b=zEABQrPmgHedWl8gBFarQ3sMKcre8SzjGTrX/+jVAKWLu09uRa+KVJKVMwTKyIhpASN8
-	 QtpmwD2osuJYC8p8l3iDhw7l6ztOR2+xeBvdrzKOOTLxjbjfRajsXX+vE2SgYncpq5oTH
-	 7fdOXJNrlulCXuGHQo4/Wxr/j7zWIRYirPBDCQhzZcTXaqS9qzfa0lH/osYvknQ3l6JKj
-	 AhZZwYOJOeSpzF5gdShCA4nWa/OfkcZEgECU/5qhzw5brnT/WdT3XQMmKHxQaYUzy7F1W
-	 VXUl91Gk4LqGMOVzPg7mATkMgjX3vBtrVXVny1O3MU9hTKo5QnxbpoCQQ3KBXb3qY6w==
+	bh=e3K6f1ue6+QPMDY/lZIO2UodXiBlE3mVXGSPNbIT+wo=;
+	b=JmpMnh/DQzp4FwHemkt3ukWxnW2YKJhoXwTgeDymmof3/3ev/XWvc6NlxEUa0hCmlkX/
+	 LPwYwQAX0a1EqsYVJl5XM4ncg2iF5X3nYGjZ45C/dx5L/gue4c+sZ+fA952z8las1rY+d
+	 X2c/AO8A7rLIQwwUqglsZIiGALFgE7BKtYvHK/2xi/gD7BM4p6LBxLEgFHR51jePtmt7Y
+	 NP/ryHgRimswdd7amkZJ6D15Tn85gVm1tm6983L/Ym5oCVc3i6QW/t3QeJITsBtk7WcCX
+	 ObYGdmBXCvNeukaiAv5lyZPYX/PCzOB8Jo5n5FM3Y3jnWPgsy2V3+YCLIqf0sVJ0ioQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=atjUsH64;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kaAFIzvG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1818D606A31C;
-	Wed, 28 Oct 2026 18:54:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20090606A32A;
+	Wed, 28 Oct 2026 18:54:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=atjUsH64
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 656281F01825;
-	Wed, 28 Oct 2026 18:54:13 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kaAFIzvG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 337821F01829;
+	Wed, 28 Oct 2026 18:54:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213653;
-	bh=L/ix8tCXcBYDSkQKjkfg13FI8vfzbgcHVDatID4t884=;
+	s=korg; t=1793213656;
+	bh=e3K6f1ue6+QPMDY/lZIO2UodXiBlE3mVXGSPNbIT+wo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=atjUsH64bC4E/ugMcXrgHYdEyKfLV1hbQXudzEEih+c7GuZ+Ag/UFhyn8QuwJMMX2
-	 5mAoHzwY8+IXzqpR6K4wLoQh/mAVjOJOCnTn/sOyVq2Pj6PbJ90EKG/CA3hRPNVW7z
-	 DQSi8CL015bAQoQzxaRYfKEPOY1hBpJ0qpBwHVZA=
+	b=kaAFIzvGLsrLAWOQuuadfZUOBiZYqrRrZwOY694gj6hiLZ/8eEtqC1L3WQXYuVajs
+	 vrRY6B0ZV5UpLtakegyIueHyCfh+loymu5rzm2Rp1vGb9NiTUxP2bpdcX1Du4e2RJq
+	 ytq7q5rFu2wMYyugWY/MyziPVaTGRsunU4mkakeM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Benjamin Poirier <bpoirier@nvidia.com>,
+	David Ahern <dsahern@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0528/1887] namespace: dont inherit MNT_UMOUNT in clone_mnt()
-Date: Wed, 28 Oct 2026 17:43:44 +0100
-Message-ID: <20261028170511.353287577@linuxfoundation.org>
+Subject: [PATCH 6.1 0576/1887] nexthop: Do not return invalid nexthop object during multipath selection
+Date: Wed, 28 Oct 2026 17:44:32 +0100
+Message-ID: <20261028170512.520049366@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -67,111 +70,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Benjamin Poirier <bpoirier@nvidia.com>
 
-[ Upstream commit e2c6d326216642011da318b9edfd5d57ebd5a56f ]
+[ Upstream commit 75f5f04c7bd2163044f80d5f7bea6b79edc288fa ]
 
-MNT_UMOUNT gets raised on a mount that umount_tree() or umount_one() has
-taken out of its namespace. It's never cleared. __detach_mounts()
-unhooks a mount that carries it instead of unmounting it.
+With legacy nexthops, when net.ipv4.fib_multipath_use_neigh is set,
+fib_select_multipath() will never set res->nhc to a nexthop that is not
+good (as per fib_good_nh()). OTOH, with nexthop objects,
+nexthop_select_path_hthr() may return a nexthop that failed the
+nexthop_is_good_nh() test even if there was one that passed. Refactor
+nexthop_select_path_hthr() to follow a selection logic more similar to
+fib_select_multipath().
 
-disconnect_mount() lets an unmounted child stay attached only if its
-parent carries it. propagate_umount() takes it as the sign that a mount
-is going to be unmounted when it decides what else can be unmounted,
-where a chain of locked mounts ends and where a for reparenting an
-overmount.
+The issue can be demonstrated with the following sequence of commands. The
+first block shows that things work as expected with legacy nexthops. The
+last sequence of `ip rou get` in the second block shows the problem case -
+some routes still use the .2 nexthop.
 
-clone_mnt() copies the flags of the source and only masks
-MNT_INTERNAL_FLAGS which doesn't include MNT_UMOUNT. A mount that was
-lazily unmounted but is kept alive by a file descriptor can still be
-copied when its root is an nsfs or pidfs file because may_copy_tree()
-accepts those before checking whether the source is mounted at all:
+sysctl net.ipv4.fib_multipath_use_neigh=1
+ip link add dummy1 up type dummy
+ip rou add 198.51.100.0/24 nexthop via 192.0.2.1 dev dummy1 onlink nexthop via 192.0.2.2 dev dummy1 onlink
+for i in {10..19}; do ip -o rou get 198.51.100.$i; done
+ip neigh add 192.0.2.1 dev dummy1 nud failed
+echo ".1 failed:"  # results should not use .1
+for i in {10..19}; do ip -o rou get 198.51.100.$i; done
+ip neigh del 192.0.2.1 dev dummy1
+ip neigh add 192.0.2.2 dev dummy1 nud failed
+echo ".2 failed:"  # results should not use .2
+for i in {10..19}; do ip -o rou get 198.51.100.$i; done
+ip link del dummy1
 
-  mount --bind /proc/self/ns/net /tmp/x
-  exec 3< /tmp/x
-  umount -l /tmp/x
-  mount --bind /proc/self/fd/3 /tmp/y
+ip link add dummy1 up type dummy
+ip nexthop add id 1 via 192.0.2.1 dev dummy1 onlink
+ip nexthop add id 2 via 192.0.2.2 dev dummy1 onlink
+ip nexthop add id 1001 group 1/2
+ip rou add 198.51.100.0/24 nhid 1001
+for i in {10..19}; do ip -o rou get 198.51.100.$i; done
+ip neigh add 192.0.2.1 dev dummy1 nud failed
+echo ".1 failed:"  # results should not use .1
+for i in {10..19}; do ip -o rou get 198.51.100.$i; done
+ip neigh del 192.0.2.1 dev dummy1
+ip neigh add 192.0.2.2 dev dummy1 nud failed
+echo ".2 failed:"  # results should not use .2
+for i in {10..19}; do ip -o rou get 198.51.100.$i; done
+ip link del dummy1
 
-The mount on /tmp/y is attached to the caller's namespace with
-MNT_UMOUNT already set and every copy of it inherits the flag again.
-
-That causes a number of bugs:
-
-- Unlink its mountpoint from a mount namespace where it isn't one.
-  __detach_mounts() takes it for a mount that was unmounted earlier,
-  unhooks it from its parent and drops the reference the namespace
-  holds on it. It stays in the namespace with one reference too few
-  and as its own parent, so it can't be unmounted through the file
-  descriptor anymore and the namespace never finds it again. When the
-  namespace goes away it's leaked and points to a freed struct
-  mnt_namespace that may_change_propagation() and anon_ns_root() read
-  on the next propagation change or mount_setattr() through the file
-  descriptor.
-
-- Make it shared and unmount a peer. trace_transfers() follows the
-  flag from the peer into it and strips it from its peer group.
-
-- Let a propagated umount reach it. gather_candidates() marks it with
-  T_UMOUNT_CANDIDATE but never puts it on the candidate list, so the
-  mark is never cleared and every later propagated umount skips it. If
-  it's the parent of a locked mount handle_locked() takes it as the
-  cutoff and commits the locked child that should have stayed and
-  disconnect_mount() leaves that child attached to it, unmounted under
-  a mounted parent, which is what disconnect_mount() exists to
-  prevent. When the namespace goes away umount_tree() visits the child
-  a second time. And once __detach_mounts() has made it its own parent
-  reparent() never finds the end of the chain of unmounted parents.
-
-A clone is a new mount that has never been unmounted. Add MNT_UMOUNT
-to MNT_INTERNAL_FLAGS so clone_mnt() never copies it. And warn when
-umount_tree() reaches a mount that already has it set.
-
-Fixes: 590ce4bcbfb4 ("mnt: Add MNT_UMOUNT flag")
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260926-work-mount-fixes-2-v1-3-f357abf3d17b@kernel.org
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
-[ sashal: adapted mount-flag handling to the explicit flag-clearing mask in clone_mnt() ]
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Signed-off-by: Benjamin Poirier <bpoirier@nvidia.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://lore.kernel.org/r/20230719-nh_select-v2-3-04383e89f868@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: b72a6a7ab957 ("net: nexthop: Increase weight to u16")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/namespace.c        | 4 +++-
- include/linux/mount.h | 2 +-
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ net/ipv4/nexthop.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/fs/namespace.c b/fs/namespace.c
-index 42ecf070b6f76..2492d5286cef6 100644
---- a/fs/namespace.c
-+++ b/fs/namespace.c
-@@ -1122,7 +1122,7 @@ static struct mount *clone_mnt(struct mount *old, struct dentry *root,
+diff --git a/net/ipv4/nexthop.c b/net/ipv4/nexthop.c
+index 005465e61ae3d..5dc50bbdd2d07 100644
+--- a/net/ipv4/nexthop.c
++++ b/net/ipv4/nexthop.c
+@@ -1195,20 +1195,22 @@ static struct nexthop *nexthop_select_path_hthr(struct nh_group *nhg, int hash)
+ 	for (i = 0; i < nhg->num_nh; ++i) {
+ 		struct nh_grp_entry *nhge = &nhg->nh_entries[i];
+ 
+-		if (hash > atomic_read(&nhge->hthr.upper_bound))
+-			continue;
+-
+ 		/* nexthops always check if it is good and does
+ 		 * not rely on a sysctl for this behavior
+ 		 */
+-		if (nexthop_is_good_nh(nhge->nh))
+-			return nhge->nh;
++		if (!nexthop_is_good_nh(nhge->nh))
++			continue;
+ 
+ 		if (!rc)
+ 			rc = nhge->nh;
++
++		if (hash > atomic_read(&nhge->hthr.upper_bound))
++			continue;
++
++		return nhge->nh;
  	}
  
- 	mnt->mnt.mnt_flags = old->mnt.mnt_flags;
--	mnt->mnt.mnt_flags &= ~(MNT_WRITE_HOLD|MNT_MARKED|MNT_INTERNAL);
-+	mnt->mnt.mnt_flags &= ~(MNT_WRITE_HOLD|MNT_MARKED|MNT_INTERNAL|MNT_UMOUNT);
+-	return rc;
++	return rc ? : nhg->nh_entries[0].nh;
+ }
  
- 	atomic_inc(&sb->s_active);
- 	mnt->mnt.mnt_userns = mnt_user_ns(&old->mnt);
-@@ -1561,6 +1561,8 @@ static void umount_tree(struct mount *mnt, enum umount_tree_flags how)
- 
- 	/* Gather the mounts to umount */
- 	for (p = mnt; p; p = next_mnt(p, mnt)) {
-+		/* A mount is unmounted once. */
-+		WARN_ON_ONCE(p->mnt.mnt_flags & MNT_UMOUNT);
- 		p->mnt.mnt_flags |= MNT_UMOUNT;
- 		list_move(&p->mnt_list, &tmp_list);
- 	}
-diff --git a/include/linux/mount.h b/include/linux/mount.h
-index 55a4abaf67155..76c21958e8426 100644
---- a/include/linux/mount.h
-+++ b/include/linux/mount.h
-@@ -50,7 +50,7 @@ struct path;
- 
- #define MNT_INTERNAL_FLAGS (MNT_SHARED | MNT_WRITE_HOLD | MNT_INTERNAL | \
- 			    MNT_DOOMED | MNT_SYNC_UMOUNT | MNT_MARKED | \
--			    MNT_CURSOR)
-+			    MNT_CURSOR | MNT_UMOUNT)
- 
- #define MNT_INTERNAL	0x4000
- 
+ static struct nexthop *nexthop_select_path_res(struct nh_group *nhg, int hash)
 -- 
 2.53.0
 
