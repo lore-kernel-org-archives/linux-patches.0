@@ -1,52 +1,69 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214420;
-	b=ifUlUii+FBrW20ovV/I+zz9RSWbJfdP8pi5IWAL8skaePIMTOe3WKJAkQrABGZMbKZkg
-	 Y0HrLJ4RWMEsS45DguubplQBhOwgH6h6xf+rOJdf7hzLimQF3GAS0gMosly2Q0tmGl4JQ
-	 Ikx8QLXozXJvoFdj9ImXe3SnsFCSs9DffQeujsLCHVSjbgXPnBabeRGI8Bkad/vDxGuHK
-	 QNCNTy0DIKF5ZY6jvmugTV+8hdpDWaPjUPp1VMBaoAFGl4VZG35+XcimrEkpjH5O5mlbE
-	 hTrAVdsm3WhsJc0deho1pNNdTyAVFCcTVUThGaCPDzDaPNBqgYovyrAdZxr8LsQwchw==
+	t=1793214422;
+	b=MA/dMgdaEzkkEcUGa2EMiOK3nspQqyeotCbGGqY3C1M2aH2GtufWfTZEzcQ4iR+IdU1/
+	 udMKhKjB9Ia4Rb0DQX81fcljsoHiJ9EEOFjm4uiodhJXGeztb+rkmDONuQdx2NhgvwREz
+	 w1e+z6+O5EDhXRY4ybFSb2PxSV+6EkQUxTL/O5WA4XQtxusQltP7wKOQoyBAfoah7Cmdq
+	 zPrSk54CPVoSu8iRqWvqRaH93l4gTnEBBfY3Zj1jcf08Ry/izVFqs3eFOO2Zn2YUXIZHx
+	 lo6erRBRcmQdXP+fKNm4Ym4Xm/7IA5bZBnCpxHuemOIX2jTbviQtYtMS5VhlZk+tjuQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214420;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214422;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=QuaAN2GHqbYKIVEQJYDPFXDJfbUHYoN1Uj13xcFhW4o=;
-	b=e/Yzz5YYu0cdb3rdWaoQQ+UVXzFO3QxxyEBeanjHxs38cTPeR9sB2CEJQqHNXw9HzTdp
-	 CeYp4SEnxYrbhXT6pOlVLheU5Lc5P38ujt2c9yFCRTNOeS7p6Ti18ckhK+/3kcCyG9eSB
-	 OGwchSRRehpKswjQ1V6JYXBlut292QDjPQurXUHH1FYUA3hBC5e3gb7L5SXmKK8VksbAM
-	 /b/TYqhHiSipJB/F+qGhmbYpPqxpGdx8xPX9wNuThKyoZslvEUyXBPY9ij696LTH8GvQS
-	 +GDkZeP4v2X56YAJXz15M7IdRGXbixtixxqfsM6dpRzUXzFolFY4UItmnmqYKgWLYJA==
+	bh=l1cs+OotscWNO6XuGxMHygf0HUxw0pf66UthBUHH1SU=;
+	b=AE8PVmGDw4iF13ehS/RDlPqcQMi5zg8kmyiEOBJAR5VEJZqkgyC/knobnojMZIYKeaiP
+	 TRwF9RxcV0gw/7gJuhE1oK2l30b+T1eb03LJj6JrNVQDNHRTMfs+tzE7KkTaKQHJvd6at
+	 m5PdWLLm3WgNcSD72lEU10FgWBNwzAqBNzzI5Gu7O2aITuxmvew2Sa9fwiJEvX0vc+Z64
+	 qfgY+c+yBTWzViLCuElu/cXkTy4DBHgHOyXyjHi+LfM1aC9Nb4yh7qlo59jJdM8B2RmrE
+	 TPTgqFXlvcXgx4GaHT8wR8zXjJubz2qnuv/wMw3Aa8NnHS4o7Bciw33tiwCyURlbACA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AGNDnggs;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zA5raul1;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E22B606A31F;
-	Wed, 28 Oct 2026 19:06:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F522606BF97;
+	Wed, 28 Oct 2026 19:07:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AGNDnggs
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0B2B1F01825;
-	Wed, 28 Oct 2026 19:06:58 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zA5raul1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 837CC1F01825;
+	Wed, 28 Oct 2026 19:07:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214419;
-	bh=QuaAN2GHqbYKIVEQJYDPFXDJfbUHYoN1Uj13xcFhW4o=;
+	s=korg; t=1793214422;
+	bh=l1cs+OotscWNO6XuGxMHygf0HUxw0pf66UthBUHH1SU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AGNDnggsseGvm9zAPUniokoERmrjoV0EEIrTTdIV0jtgwaYJ30xAQi0xIwR6iDHKP
-	 eczUI2iTLHHxkYzuFuLCna9YUEi6e3XgctVztbWhBHQOoPmXUI3qV/c2skNi6LWIql
-	 kE2TAhrxqZRHGQZS77xqWfIuc33PPyXlYR00bXtQ=
+	b=zA5raul11hmU80iLuyjNuNl/RKWOSF2sSQxCFeLMC3A/KCSPJfT4ejX+OdHIMdqcI
+	 Xq+6drff2BE+fR5jABzGzTCpztOm8E8hv+u5GczzeXtkWTi2uFFHijpV+NbyNTFJQL
+	 K54OaIBjexiU1n+TMAYeozg0WVqCQ4U+h2wggo1w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	cen zhang <zzzccc427@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Shuai Xue <xueshuai@linux.alibaba.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Tony Luck <tony.luck@intel.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
+	Miaohe Lin <linmiaohe@huawei.com>,
+	Naoya Horiguchi <nao.horiguchi@gmail.com>,
+	Ruidong Tian <tianruidong@linux.alibaba.com>,
+	Thomas Gleinxer <tglx@linutronix.de>,
+	Yazen Ghannam <yazen.ghannam@amd.com>,
+	Jane Chu <jane.chu@oracle.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0850/1887] Bluetooth: MGMT: Fix possible UAFs
-Date: Wed, 28 Oct 2026 17:49:06 +0100
-Message-ID: <20261028170518.768822380@linuxfoundation.org>
+Subject: [PATCH 6.1 0851/1887] x86/mce: use is_copy_from_user() to determine copy-from-user context
+Date: Wed, 28 Oct 2026 17:49:07 +0100
+Message-ID: <20261028170518.790766837@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,774 +85,214 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Shuai Xue <xueshuai@linux.alibaba.com>
 
-[ Upstream commit 302a1f674c00dd5581ab8e493ef44767c5101aab ]
+[ Upstream commit 1a15bb8303b6b104e78028b6c68f76a0d4562134 ]
 
-This attemps to fix possible UAFs caused by struct mgmt_pending being
-freed while still being processed like in the following trace, in order
-to fix mgmt_pending_valid is introduce and use to check if the
-mgmt_pending hasn't been removed from the pending list, on the complete
-callbacks it is used to check and in addtion remove the cmd from the list
-while holding mgmt_pending_lock to avoid TOCTOU problems since if the cmd
-is left on the list it can still be accessed and freed.
+Patch series "mm/hwpoison: Fix regressions in memory failure handling",
+v4.
 
-BUG: KASAN: slab-use-after-free in mgmt_add_adv_patterns_monitor_sync+0x35/0x50 net/bluetooth/mgmt.c:5223
-Read of size 8 at addr ffff8880709d4dc0 by task kworker/u11:0/55
+## 1. What am I trying to do:
 
-CPU: 0 UID: 0 PID: 55 Comm: kworker/u11:0 Not tainted 6.16.4 #2 PREEMPT(full)
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
-Workqueue: hci0 hci_cmd_sync_work
-Call Trace:
- <TASK>
- dump_stack_lvl+0x189/0x250 lib/dump_stack.c:120
- print_address_description mm/kasan/report.c:378 [inline]
- print_report+0xca/0x240 mm/kasan/report.c:482
- kasan_report+0x118/0x150 mm/kasan/report.c:595
- mgmt_add_adv_patterns_monitor_sync+0x35/0x50 net/bluetooth/mgmt.c:5223
- hci_cmd_sync_work+0x210/0x3a0 net/bluetooth/hci_sync.c:332
- process_one_work kernel/workqueue.c:3238 [inline]
- process_scheduled_works+0xade/0x17b0 kernel/workqueue.c:3321
- worker_thread+0x8a0/0xda0 kernel/workqueue.c:3402
- kthread+0x711/0x8a0 kernel/kthread.c:464
- ret_from_fork+0x3fc/0x770 arch/x86/kernel/process.c:148
- ret_from_fork_asm+0x1a/0x30 home/kwqcheii/source/fuzzing/kernel/kasan/linux-6.16.4/arch/x86/entry/entry_64.S:245
- </TASK>
+This patchset resolves two critical regressions related to memory failure
+handling that have appeared in the upstream kernel since version 5.17, as
+compared to 5.10 LTS.
 
-Allocated by task 12210:
- kasan_save_stack mm/kasan/common.c:47 [inline]
- kasan_save_track+0x3e/0x80 mm/kasan/common.c:68
- poison_kmalloc_redzone mm/kasan/common.c:377 [inline]
- __kasan_kmalloc+0x93/0xb0 mm/kasan/common.c:394
- kasan_kmalloc include/linux/kasan.h:260 [inline]
- __kmalloc_cache_noprof+0x230/0x3d0 mm/slub.c:4364
- kmalloc_noprof include/linux/slab.h:905 [inline]
- kzalloc_noprof include/linux/slab.h:1039 [inline]
- mgmt_pending_new+0x65/0x1e0 net/bluetooth/mgmt_util.c:269
- mgmt_pending_add+0x35/0x140 net/bluetooth/mgmt_util.c:296
- __add_adv_patterns_monitor+0x130/0x200 net/bluetooth/mgmt.c:5247
- add_adv_patterns_monitor+0x214/0x360 net/bluetooth/mgmt.c:5364
- hci_mgmt_cmd+0x9c9/0xef0 net/bluetooth/hci_sock.c:1719
- hci_sock_sendmsg+0x6ca/0xef0 net/bluetooth/hci_sock.c:1839
- sock_sendmsg_nosec net/socket.c:714 [inline]
- __sock_sendmsg+0x219/0x270 net/socket.c:729
- sock_write_iter+0x258/0x330 net/socket.c:1133
- new_sync_write fs/read_write.c:593 [inline]
- vfs_write+0x5c9/0xb30 fs/read_write.c:686
- ksys_write+0x145/0x250 fs/read_write.c:738
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0xfa/0x3b0 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
+    - copyin case: poison found in user page while kernel copying from user space
+    - instr case: poison found while instruction fetching in user space
 
-Freed by task 12221:
- kasan_save_stack mm/kasan/common.c:47 [inline]
- kasan_save_track+0x3e/0x80 mm/kasan/common.c:68
- kasan_save_free_info+0x46/0x50 mm/kasan/generic.c:576
- poison_slab_object mm/kasan/common.c:247 [inline]
- __kasan_slab_free+0x62/0x70 mm/kasan/common.c:264
- kasan_slab_free include/linux/kasan.h:233 [inline]
- slab_free_hook mm/slub.c:2381 [inline]
- slab_free mm/slub.c:4648 [inline]
- kfree+0x18e/0x440 mm/slub.c:4847
- mgmt_pending_free net/bluetooth/mgmt_util.c:311 [inline]
- mgmt_pending_foreach+0x30d/0x380 net/bluetooth/mgmt_util.c:257
- __mgmt_power_off+0x169/0x350 net/bluetooth/mgmt.c:9444
- hci_dev_close_sync+0x754/0x1330 net/bluetooth/hci_sync.c:5290
- hci_dev_do_close net/bluetooth/hci_core.c:501 [inline]
- hci_dev_close+0x108/0x200 net/bluetooth/hci_core.c:526
- sock_do_ioctl+0xd9/0x300 net/socket.c:1192
- sock_ioctl+0x576/0x790 net/socket.c:1313
- vfs_ioctl fs/ioctl.c:51 [inline]
- __do_sys_ioctl fs/ioctl.c:907 [inline]
- __se_sys_ioctl+0xf9/0x170 fs/ioctl.c:893
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0xfa/0x3b0 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
+## 2. What is the expected outcome and why
 
-Fixes: cf75ad8b41d2 ("Bluetooth: hci_sync: Convert MGMT_SET_POWERED")
-Fixes: 2bd1b237616b ("Bluetooth: hci_sync: Convert MGMT_OP_SET_DISCOVERABLE to use cmd_sync")
-Fixes: f056a65783cc ("Bluetooth: hci_sync: Convert MGMT_OP_SET_CONNECTABLE to use cmd_sync")
-Fixes: 3244845c6307 ("Bluetooth: hci_sync: Convert MGMT_OP_SSP")
-Fixes: d81a494c43df ("Bluetooth: hci_sync: Convert MGMT_OP_SET_LE")
-Fixes: b338d91703fa ("Bluetooth: Implement support for Mesh")
-Fixes: 6f6ff38a1e14 ("Bluetooth: hci_sync: Convert MGMT_OP_SET_LOCAL_NAME")
-Fixes: 71efbb08b538 ("Bluetooth: hci_sync: Convert MGMT_OP_SET_PHY_CONFIGURATION")
-Fixes: b747a83690c8 ("Bluetooth: hci_sync: Refactor add Adv Monitor")
-Fixes: abfeea476c68 ("Bluetooth: hci_sync: Convert MGMT_OP_START_DISCOVERY")
-Fixes: 26ac4c56f03f ("Bluetooth: hci_sync: Convert MGMT_OP_SET_ADVERTISING")
-Reported-by: cen zhang <zzzccc427@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+- For copyin case:
+
+Kernel can recover from poison found where kernel is doing get_user() or
+copy_from_user() if those places get an error return and the kernel return
+-EFAULT to the process instead of crashing.  More specifily, MCE handler
+checks the fixup handler type to decide whether an in kernel #MC can be
+recovered.  When EX_TYPE_UACCESS is found, the PC jumps to recovery code
+specified in _ASM_EXTABLE_FAULT() and return a -EFAULT to user space.
+
+- For instr case:
+
+If a poison found while instruction fetching in user space, full recovery
+is possible.  User process takes #PF, Linux allocates a new page and fills
+by reading from storage.
+
+## 3. What actually happens and why
+
+- For copyin case: kernel panic since v5.17
+
+Commit 4c132d1d844a ("x86/futex: Remove .fixup usage") introduced a new
+extable fixup type, EX_TYPE_EFAULT_REG, and later patches updated the
+extable fixup type for copy-from-user operations, changing it from
+EX_TYPE_UACCESS to EX_TYPE_EFAULT_REG.  It breaks previous EX_TYPE_UACCESS
+handling when posion found in get_user() or copy_from_user().
+
+- For instr case: user process is killed by a SIGBUS signal due to #CMCI
+  and #MCE race
+
+When an uncorrected memory error is consumed there is a race between the
+CMCI from the memory controller reporting an uncorrected error with a UCNA
+signature, and the core reporting and SRAR signature machine check when
+the data is about to be consumed.
+
+### Background: why *UN*corrected errors tied to *C*MCI in Intel platform [1]
+
+Prior to Icelake memory controllers reported patrol scrub events that
+detected a previously unseen uncorrected error in memory by signaling a
+broadcast machine check with an SRAO (Software Recoverable Action
+Optional) signature in the machine check bank.  This was overkill because
+it's not an urgent problem that no core is on the verge of consuming that
+bad data.  It's also found that multi SRAO UCE may cause nested MCE
+interrupts and finally become an IERR.
+
+Hence, Intel downgrades the machine check bank signature of patrol scrub
+from SRAO to UCNA (Uncorrected, No Action required), and signal changed to
+#CMCI.  Just to add to the confusion, Linux does take an action (in
+uc_decode_notifier()) to try to offline the page despite the UC*NA*
+signature name.
+
+### Background: why #CMCI and #MCE race when poison is consuming in
+    Intel platform [1]
+
+Having decided that CMCI/UCNA is the best action for patrol scrub errors,
+the memory controller uses it for reads too.  But the memory controller is
+executing asynchronously from the core, and can't tell the difference
+between a "real" read and a speculative read.  So it will do CMCI/UCNA if
+an error is found in any read.
+
+Thus:
+
+1) Core is clever and thinks address A is needed soon, issues a
+   speculative read.
+
+2) Core finds it is going to use address A soon after sending the read
+   request
+
+3) The CMCI from the memory controller is in a race with MCE from the
+   core that will soon try to retire the load from address A.
+
+Quite often (because speculation has got better) the CMCI from the memory
+controller is delivered before the core is committed to the instruction
+reading address A, so the interrupt is taken, and Linux offlines the page
+(marking it as poison).
+
+## Why user process is killed for instr case
+
+Commit 046545a661af ("mm/hwpoison: fix error page recovered but reported
+"not recovered"") tries to fix noise message "Memory error not recovered"
+and skips duplicate SIGBUSs due to the race.  But it also introduced a bug
+that kill_accessing_process() return -EHWPOISON for instr case, as result,
+kill_me_maybe() send a SIGBUS to user process.
+
+# 4. The fix, in my opinion, should be:
+
+- For copyin case:
+
+The key point is whether the error context is in a read from user memory.
+We do not care about the ex-type if we know its a MOV reading from
+userspace.
+
+is_copy_from_user() return true when both of the following two checks are
+true:
+
+    - the current instruction is copy
+    - source address is user memory
+
+If copy_user is true, we set
+
+m->kflags |= MCE_IN_KERNEL_COPYIN | MCE_IN_KERNEL_RECOV;
+
+Then do_machine_check() will try fixup_exception() first.
+
+- For instr case: let kill_accessing_process() return 0 to prevent a SIGBUS.
+
+- For patch 3:
+
+The return value of memory_failure() is quite important while discussed
+instr case regression with Tony and Miaohe for patch 2, so add comment
+about the return value.
+
+This patch (of 3):
+
+Commit 4c132d1d844a ("x86/futex: Remove .fixup usage") introduced a new
+extable fixup type, EX_TYPE_EFAULT_REG, and commit 4c132d1d844a
+("x86/futex: Remove .fixup usage") updated the extable fixup type for
+copy-from-user operations, changing it from EX_TYPE_UACCESS to
+EX_TYPE_EFAULT_REG.  The error context for copy-from-user operations no
+longer functions as an in-kernel recovery context.  Consequently, the
+error context for copy-from-user operations no longer functions as an
+in-kernel recovery context, resulting in kernel panics with the message:
+"Machine check: Data load in unrecoverable area of kernel."
+
+To address this, it is crucial to identify if an error context involves a
+read operation from user memory.  The function is_copy_from_user() can be
+utilized to determine:
+
+    - the current operation is copy
+    - when reading user memory
+
+When these conditions are met, is_copy_from_user() will return true,
+confirming that it is indeed a direct copy from user memory.  This check
+is essential for correctly handling the context of errors in these
+operations without relying on the extable fixup types that previously
+allowed for in-kernel recovery.
+
+So, use is_copy_from_user() to determine if a context is copy user directly.
+
+Link: https://lkml.kernel.org/r/20250312112852.82415-1-xueshuai@linux.alibaba.com
+Link: https://lkml.kernel.org/r/20250312112852.82415-2-xueshuai@linux.alibaba.com
+Fixes: 4c132d1d844a ("x86/futex: Remove .fixup usage")
+Signed-off-by: Shuai Xue <xueshuai@linux.alibaba.com>
+Suggested-by: Peter Zijlstra <peterz@infradead.org>
+Acked-by: Borislav Petkov (AMD) <bp@alien8.de>
+Tested-by: Tony Luck <tony.luck@intel.com>
+Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
+Cc: Borislav Betkov <bp@alien8.de>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Cc: Dave Hansen <dave.hansen@linux.intel.com>
+Cc: "H. Peter Anvin" <hpa@zytor.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Josh Poimboeuf <jpoimboe@kernel.org>
+Cc: Miaohe Lin <linmiaohe@huawei.com>
+Cc: Naoya Horiguchi <nao.horiguchi@gmail.com>
+Cc: Ruidong Tian <tianruidong@linux.alibaba.com>
+Cc: Thomas Gleinxer <tglx@linutronix.de>
+Cc: Yazen Ghannam <yazen.ghannam@amd.com>
+Cc: Jane Chu <jane.chu@oracle.com>
+Cc: Jarkko Sakkinen <jarkko@kernel.org>
+Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/mgmt.c      | 260 ++++++++++++++++++++++++++------------
- net/bluetooth/mgmt_util.c |  46 +++++++
- net/bluetooth/mgmt_util.h |   3 +
- 3 files changed, 231 insertions(+), 78 deletions(-)
+ arch/x86/kernel/cpu/mce/severity.c | 12 +++++-------
+ 1 file changed, 5 insertions(+), 7 deletions(-)
 
-diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
-index b09a8aaf03623..e1c045d1c7887 100644
---- a/net/bluetooth/mgmt.c
-+++ b/net/bluetooth/mgmt.c
-@@ -1311,8 +1311,7 @@ static void mgmt_set_powered_complete(struct hci_dev *hdev, void *data, int err)
- 	struct mgmt_mode *cp;
+diff --git a/arch/x86/kernel/cpu/mce/severity.c b/arch/x86/kernel/cpu/mce/severity.c
+index 00483d1c27e4f..7793dfd300525 100644
+--- a/arch/x86/kernel/cpu/mce/severity.c
++++ b/arch/x86/kernel/cpu/mce/severity.c
+@@ -283,14 +283,12 @@ static noinstr int error_context(struct mce *m, struct pt_regs *regs)
+ 	copy_user  = is_copy_from_user(regs);
+ 	instrumentation_end();
  
- 	/* Make sure cmd still outstanding. */
--	if (err == -ECANCELED ||
--	    cmd != pending_find(MGMT_OP_SET_POWERED, hdev))
-+	if (err == -ECANCELED || !mgmt_pending_valid(hdev, cmd))
- 		return;
- 
- 	cp = cmd->param;
-@@ -1339,23 +1338,29 @@ static void mgmt_set_powered_complete(struct hci_dev *hdev, void *data, int err)
- 				mgmt_status(err));
- 	}
- 
--	mgmt_pending_remove(cmd);
-+	mgmt_pending_free(cmd);
- }
- 
- static int set_powered_sync(struct hci_dev *hdev, void *data)
- {
- 	struct mgmt_pending_cmd *cmd = data;
--	struct mgmt_mode *cp;
-+	struct mgmt_mode cp;
-+
-+	mutex_lock(&hdev->mgmt_pending_lock);
- 
- 	/* Make sure cmd still outstanding. */
--	if (cmd != pending_find(MGMT_OP_SET_POWERED, hdev))
-+	if (!__mgmt_pending_listed(hdev, cmd)) {
-+		mutex_unlock(&hdev->mgmt_pending_lock);
- 		return -ECANCELED;
+-	switch (fixup_type) {
+-	case EX_TYPE_UACCESS:
+-	case EX_TYPE_COPY:
+-		if (!copy_user)
+-			return IN_KERNEL;
+-		m->kflags |= MCE_IN_KERNEL_COPYIN;
+-		fallthrough;
++	if (copy_user) {
++		m->kflags |= MCE_IN_KERNEL_COPYIN | MCE_IN_KERNEL_RECOV;
++		return IN_KERNEL_RECOV;
 +	}
  
--	cp = cmd->param;
-+	memcpy(&cp, cmd->param, sizeof(cp));
-+
-+	mutex_unlock(&hdev->mgmt_pending_lock);
- 
- 	BT_DBG("%s", hdev->name);
- 
--	return hci_set_powered_sync(hdev, cp->val);
-+	return hci_set_powered_sync(hdev, cp.val);
- }
- 
- static int set_powered(struct sock *sk, struct hci_dev *hdev, void *data,
-@@ -1496,8 +1501,7 @@ static void mgmt_set_discoverable_complete(struct hci_dev *hdev, void *data,
- 	bt_dev_dbg(hdev, "err %d", err);
- 
- 	/* Make sure cmd still outstanding. */
--	if (err == -ECANCELED ||
--	    cmd != pending_find(MGMT_OP_SET_DISCOVERABLE, hdev))
-+	if (err == -ECANCELED || !mgmt_pending_valid(hdev, cmd))
- 		return;
- 
- 	hci_dev_lock(hdev);
-@@ -1519,12 +1523,15 @@ static void mgmt_set_discoverable_complete(struct hci_dev *hdev, void *data,
- 	new_settings(hdev, cmd->sk);
- 
- done:
--	mgmt_pending_remove(cmd);
-+	mgmt_pending_free(cmd);
- 	hci_dev_unlock(hdev);
- }
- 
- static int set_discoverable_sync(struct hci_dev *hdev, void *data)
- {
-+	if (!mgmt_pending_listed(hdev, data))
-+		return -ECANCELED;
-+
- 	BT_DBG("%s", hdev->name);
- 
- 	return hci_update_discoverable_sync(hdev);
-@@ -1671,8 +1678,7 @@ static void mgmt_set_connectable_complete(struct hci_dev *hdev, void *data,
- 	bt_dev_dbg(hdev, "err %d", err);
- 
- 	/* Make sure cmd still outstanding. */
--	if (err == -ECANCELED ||
--	    cmd != pending_find(MGMT_OP_SET_CONNECTABLE, hdev))
-+	if (err == -ECANCELED || !mgmt_pending_valid(hdev, cmd))
- 		return;
- 
- 	hci_dev_lock(hdev);
-@@ -1687,8 +1693,7 @@ static void mgmt_set_connectable_complete(struct hci_dev *hdev, void *data,
- 	new_settings(hdev, cmd->sk);
- 
- done:
--	if (cmd)
--		mgmt_pending_remove(cmd);
-+	mgmt_pending_free(cmd);
- 
- 	hci_dev_unlock(hdev);
- }
-@@ -1724,6 +1729,9 @@ static int set_connectable_update_settings(struct hci_dev *hdev,
- 
- static int set_connectable_sync(struct hci_dev *hdev, void *data)
- {
-+	if (!mgmt_pending_listed(hdev, data))
-+		return -ECANCELED;
-+
- 	BT_DBG("%s", hdev->name);
- 
- 	return hci_update_connectable_sync(hdev);
-@@ -1900,14 +1908,17 @@ static void set_ssp_complete(struct hci_dev *hdev, void *data, int err)
- {
- 	struct cmd_lookup match = { NULL, hdev };
- 	struct mgmt_pending_cmd *cmd = data;
--	struct mgmt_mode *cp = cmd->param;
--	u8 enable = cp->val;
-+	struct mgmt_mode *cp;
-+	u8 enable;
- 	bool changed;
- 
- 	/* Make sure cmd still outstanding. */
--	if (err == -ECANCELED || cmd != pending_find(MGMT_OP_SET_SSP, hdev))
-+	if (err == -ECANCELED || !mgmt_pending_valid(hdev, cmd))
- 		return;
- 
-+	cp = cmd->param;
-+	enable = cp->val;
-+
- 	if (err) {
- 		u8 mgmt_err = mgmt_status(err);
- 
-@@ -1916,8 +1927,7 @@ static void set_ssp_complete(struct hci_dev *hdev, void *data, int err)
- 			new_settings(hdev, NULL);
- 		}
- 
--		mgmt_pending_foreach(MGMT_OP_SET_SSP, hdev, true,
--				     cmd_status_rsp, &mgmt_err);
-+		mgmt_cmd_status(cmd->sk, cmd->hdev->id, cmd->opcode, mgmt_err);
- 		return;
- 	}
- 
-@@ -1927,7 +1937,7 @@ static void set_ssp_complete(struct hci_dev *hdev, void *data, int err)
- 		changed = hci_dev_test_and_clear_flag(hdev, HCI_SSP_ENABLED);
- 	}
- 
--	mgmt_pending_foreach(MGMT_OP_SET_SSP, hdev, true, settings_rsp, &match);
-+	settings_rsp(cmd, &match);
- 
- 	if (changed)
- 		new_settings(hdev, match.sk);
-@@ -1941,14 +1951,25 @@ static void set_ssp_complete(struct hci_dev *hdev, void *data, int err)
- static int set_ssp_sync(struct hci_dev *hdev, void *data)
- {
- 	struct mgmt_pending_cmd *cmd = data;
--	struct mgmt_mode *cp = cmd->param;
-+	struct mgmt_mode cp;
- 	bool changed = false;
- 	int err;
- 
--	if (cp->val)
-+	mutex_lock(&hdev->mgmt_pending_lock);
-+
-+	if (!__mgmt_pending_listed(hdev, cmd)) {
-+		mutex_unlock(&hdev->mgmt_pending_lock);
-+		return -ECANCELED;
-+	}
-+
-+	memcpy(&cp, cmd->param, sizeof(cp));
-+
-+	mutex_unlock(&hdev->mgmt_pending_lock);
-+
-+	if (cp.val)
- 		changed = !hci_dev_test_and_set_flag(hdev, HCI_SSP_ENABLED);
- 
--	err = hci_write_ssp_mode_sync(hdev, cp->val);
-+	err = hci_write_ssp_mode_sync(hdev, cp.val);
- 
- 	if (!err && changed)
- 		hci_dev_clear_flag(hdev, HCI_SSP_ENABLED);
-@@ -2041,32 +2062,50 @@ static int set_hs(struct sock *sk, struct hci_dev *hdev, void *data, u16 len)
- 
- static void set_le_complete(struct hci_dev *hdev, void *data, int err)
- {
-+	struct mgmt_pending_cmd *cmd = data;
- 	struct cmd_lookup match = { NULL, hdev };
- 	u8 status = mgmt_status(err);
- 
- 	bt_dev_dbg(hdev, "err %d", err);
- 
--	if (status) {
--		mgmt_pending_foreach(MGMT_OP_SET_LE, hdev, true, cmd_status_rsp,
--				     &status);
-+	if (err == -ECANCELED || !mgmt_pending_valid(hdev, data))
- 		return;
-+
-+	if (status) {
-+		mgmt_cmd_status(cmd->sk, cmd->hdev->id, cmd->opcode, status);
-+		goto done;
- 	}
- 
--	mgmt_pending_foreach(MGMT_OP_SET_LE, hdev, true, settings_rsp, &match);
-+	settings_rsp(cmd, &match);
- 
- 	new_settings(hdev, match.sk);
- 
- 	if (match.sk)
- 		sock_put(match.sk);
-+
-+done:
-+	mgmt_pending_free(cmd);
- }
- 
- static int set_le_sync(struct hci_dev *hdev, void *data)
- {
- 	struct mgmt_pending_cmd *cmd = data;
--	struct mgmt_mode *cp = cmd->param;
--	u8 val = !!cp->val;
-+	struct mgmt_mode cp;
-+	u8 val;
- 	int err;
- 
-+	mutex_lock(&hdev->mgmt_pending_lock);
-+
-+	if (!__mgmt_pending_listed(hdev, cmd)) {
-+		mutex_unlock(&hdev->mgmt_pending_lock);
-+		return -ECANCELED;
-+	}
-+
-+	memcpy(&cp, cmd->param, sizeof(cp));
-+	val = !!cp.val;
-+
-+	mutex_unlock(&hdev->mgmt_pending_lock);
-+
- 	if (!val) {
- 		hci_clear_adv_instance_sync(hdev, NULL, 0x00, true);
- 
-@@ -2108,7 +2147,12 @@ static void set_mesh_complete(struct hci_dev *hdev, void *data, int err)
- {
- 	struct mgmt_pending_cmd *cmd = data;
- 	u8 status = mgmt_status(err);
--	struct sock *sk = cmd->sk;
-+	struct sock *sk;
-+
-+	if (err == -ECANCELED || !mgmt_pending_valid(hdev, cmd))
-+		return;
-+
-+	sk = cmd->sk;
- 
- 	if (status) {
- 		mgmt_pending_foreach(MGMT_OP_SET_MESH_RECEIVER, hdev, true,
-@@ -2123,24 +2167,37 @@ static void set_mesh_complete(struct hci_dev *hdev, void *data, int err)
- static int set_mesh_sync(struct hci_dev *hdev, void *data)
- {
- 	struct mgmt_pending_cmd *cmd = data;
--	struct mgmt_cp_set_mesh *cp = cmd->param;
--	size_t len = cmd->param_len;
-+	struct mgmt_cp_set_mesh cp;
-+	size_t len;
-+
-+	mutex_lock(&hdev->mgmt_pending_lock);
-+
-+	if (!__mgmt_pending_listed(hdev, cmd)) {
-+		mutex_unlock(&hdev->mgmt_pending_lock);
-+		return -ECANCELED;
-+	}
-+
-+	memcpy(&cp, cmd->param, sizeof(cp));
-+
-+	mutex_unlock(&hdev->mgmt_pending_lock);
-+
-+	len = cmd->param_len;
- 
- 	memset(hdev->mesh_ad_types, 0, sizeof(hdev->mesh_ad_types));
- 
--	if (cp->enable)
-+	if (cp.enable)
- 		hci_dev_set_flag(hdev, HCI_MESH);
- 	else
- 		hci_dev_clear_flag(hdev, HCI_MESH);
- 
--	hdev->le_scan_interval = __le16_to_cpu(cp->period);
--	hdev->le_scan_window = __le16_to_cpu(cp->window);
-+	hdev->le_scan_interval = __le16_to_cpu(cp.period);
-+	hdev->le_scan_window = __le16_to_cpu(cp.window);
- 
--	len -= sizeof(*cp);
-+	len -= sizeof(cp);
- 
- 	/* If filters don't fit, forward all adv pkts */
- 	if (len <= sizeof(hdev->mesh_ad_types))
--		memcpy(hdev->mesh_ad_types, cp->ad_types, len);
-+		memcpy(hdev->mesh_ad_types, cp.ad_types, len);
- 
- 	hci_update_passive_scan_sync(hdev);
- 	return 0;
-@@ -3876,15 +3933,16 @@ static int name_changed_sync(struct hci_dev *hdev, void *data)
- static void set_name_complete(struct hci_dev *hdev, void *data, int err)
- {
- 	struct mgmt_pending_cmd *cmd = data;
--	struct mgmt_cp_set_local_name *cp = cmd->param;
-+	struct mgmt_cp_set_local_name *cp;
- 	u8 status = mgmt_status(err);
- 
- 	bt_dev_dbg(hdev, "err %d", err);
- 
--	if (err == -ECANCELED ||
--	    cmd != pending_find(MGMT_OP_SET_LOCAL_NAME, hdev))
-+	if (err == -ECANCELED || !mgmt_pending_valid(hdev, cmd))
- 		return;
- 
-+	cp = cmd->param;
-+
- 	if (status) {
- 		mgmt_cmd_status(cmd->sk, hdev->id, MGMT_OP_SET_LOCAL_NAME,
- 				status);
-@@ -3896,16 +3954,27 @@ static void set_name_complete(struct hci_dev *hdev, void *data, int err)
- 			hci_cmd_sync_queue(hdev, name_changed_sync, NULL, NULL);
- 	}
- 
--	mgmt_pending_remove(cmd);
-+	mgmt_pending_free(cmd);
- }
- 
- static int set_name_sync(struct hci_dev *hdev, void *data)
- {
- 	struct mgmt_pending_cmd *cmd = data;
--	struct mgmt_cp_set_local_name *cp = cmd->param;
-+	struct mgmt_cp_set_local_name cp;
-+
-+	mutex_lock(&hdev->mgmt_pending_lock);
-+
-+	if (!__mgmt_pending_listed(hdev, cmd)) {
-+		mutex_unlock(&hdev->mgmt_pending_lock);
-+		return -ECANCELED;
-+	}
-+
-+	memcpy(&cp, cmd->param, sizeof(cp));
-+
-+	mutex_unlock(&hdev->mgmt_pending_lock);
- 
- 	if (lmp_bredr_capable(hdev)) {
--		hci_update_name_sync(hdev, cp->name);
-+		hci_update_name_sync(hdev, cp.name);
- 		hci_update_eir_sync(hdev);
- 	}
- 
-@@ -4063,12 +4132,10 @@ int mgmt_phy_configuration_changed(struct hci_dev *hdev, struct sock *skip)
- static void set_default_phy_complete(struct hci_dev *hdev, void *data, int err)
- {
- 	struct mgmt_pending_cmd *cmd = data;
--	struct sk_buff *skb = cmd->skb;
-+	struct sk_buff *skb;
- 	u8 status = mgmt_status(err);
- 
--	if (err == -ECANCELED ||
--	    cmd != pending_find(MGMT_OP_SET_PHY_CONFIGURATION, hdev))
--		return;
-+	skb = cmd->skb;
- 
- 	if (!status) {
- 		if (!skb)
-@@ -4095,7 +4162,7 @@ static void set_default_phy_complete(struct hci_dev *hdev, void *data, int err)
- 	if (skb && !IS_ERR(skb))
- 		kfree_skb(skb);
- 
--	mgmt_pending_remove(cmd);
-+	mgmt_pending_free(cmd);
- }
- 
- static int set_default_phy_sync(struct hci_dev *hdev, void *data)
-@@ -4103,7 +4170,9 @@ static int set_default_phy_sync(struct hci_dev *hdev, void *data)
- 	struct mgmt_pending_cmd *cmd = data;
- 	struct mgmt_cp_set_phy_configuration *cp = cmd->param;
- 	struct hci_cp_le_set_default_phy cp_phy;
--	u32 selected_phys = __le32_to_cpu(cp->selected_phys);
-+	u32 selected_phys;
-+
-+	selected_phys = __le32_to_cpu(cp->selected_phys);
- 
- 	memset(&cp_phy, 0, sizeof(cp_phy));
- 
-@@ -4243,7 +4312,7 @@ static int set_phy_configuration(struct sock *sk, struct hci_dev *hdev,
- 		goto unlock;
- 	}
- 
--	cmd = mgmt_pending_add(sk, MGMT_OP_SET_PHY_CONFIGURATION, hdev, data,
-+	cmd = mgmt_pending_new(sk, MGMT_OP_SET_PHY_CONFIGURATION, hdev, data,
- 			       len);
- 	if (!cmd)
- 		err = -ENOMEM;
-@@ -5333,7 +5402,17 @@ static void mgmt_add_adv_patterns_monitor_complete(struct hci_dev *hdev,
- {
- 	struct mgmt_rp_add_adv_patterns_monitor rp;
- 	struct mgmt_pending_cmd *cmd = data;
--	struct adv_monitor *monitor = cmd->user_data;
-+	struct adv_monitor *monitor;
-+
-+	/* This is likely the result of hdev being closed and mgmt_index_removed
-+	 * is attempting to clean up any pending command so
-+	 * hci_adv_monitors_clear is about to be called which will take care of
-+	 * freeing the adv_monitor instances.
-+	 */
-+	if (status == -ECANCELED && !mgmt_pending_valid(hdev, cmd))
-+		return;
-+
-+	monitor = cmd->user_data;
- 
- 	hci_dev_lock(hdev);
- 
-@@ -5361,9 +5440,20 @@ static void mgmt_add_adv_patterns_monitor_complete(struct hci_dev *hdev,
- static int mgmt_add_adv_patterns_monitor_sync(struct hci_dev *hdev, void *data)
- {
- 	struct mgmt_pending_cmd *cmd = data;
--	struct adv_monitor *monitor = cmd->user_data;
-+	struct adv_monitor *mon;
-+
-+	mutex_lock(&hdev->mgmt_pending_lock);
- 
--	return hci_add_adv_monitor(hdev, monitor);
-+	if (!__mgmt_pending_listed(hdev, cmd)) {
-+		mutex_unlock(&hdev->mgmt_pending_lock);
-+		return -ECANCELED;
-+	}
-+
-+	mon = cmd->user_data;
-+
-+	mutex_unlock(&hdev->mgmt_pending_lock);
-+
-+	return hci_add_adv_monitor(hdev, mon);
- }
- 
- static int __add_adv_patterns_monitor(struct sock *sk, struct hci_dev *hdev,
-@@ -5630,7 +5720,8 @@ static int remove_adv_monitor(struct sock *sk, struct hci_dev *hdev,
- 			       status);
- }
- 
--static void read_local_oob_data_complete(struct hci_dev *hdev, void *data, int err)
-+static void read_local_oob_data_complete(struct hci_dev *hdev, void *data,
-+					 int err)
- {
- 	struct mgmt_rp_read_local_oob_data mgmt_rp;
- 	size_t rp_size = sizeof(mgmt_rp);
-@@ -5650,7 +5741,8 @@ static void read_local_oob_data_complete(struct hci_dev *hdev, void *data, int e
- 	bt_dev_dbg(hdev, "status %d", status);
- 
- 	if (status) {
--		mgmt_cmd_status(cmd->sk, hdev->id, MGMT_OP_READ_LOCAL_OOB_DATA, status);
-+		mgmt_cmd_status(cmd->sk, hdev->id, MGMT_OP_READ_LOCAL_OOB_DATA,
-+				status);
- 		goto remove;
- 	}
- 
-@@ -5955,17 +6047,12 @@ static void start_discovery_complete(struct hci_dev *hdev, void *data, int err)
- 
- 	bt_dev_dbg(hdev, "err %d", err);
- 
--	if (err == -ECANCELED)
--		return;
--
--	if (cmd != pending_find(MGMT_OP_START_DISCOVERY, hdev) &&
--	    cmd != pending_find(MGMT_OP_START_LIMITED_DISCOVERY, hdev) &&
--	    cmd != pending_find(MGMT_OP_START_SERVICE_DISCOVERY, hdev))
-+	if (err == -ECANCELED || !mgmt_pending_valid(hdev, cmd))
- 		return;
- 
- 	mgmt_cmd_complete(cmd->sk, cmd->hdev->id, cmd->opcode, mgmt_status(err),
- 			  cmd->param, 1);
--	mgmt_pending_remove(cmd);
-+	mgmt_pending_free(cmd);
- 
- 	hci_discovery_set_state(hdev, err ? DISCOVERY_STOPPED:
- 				DISCOVERY_FINDING);
-@@ -5973,6 +6060,9 @@ static void start_discovery_complete(struct hci_dev *hdev, void *data, int err)
- 
- static int start_discovery_sync(struct hci_dev *hdev, void *data)
- {
-+	if (!mgmt_pending_listed(hdev, data))
-+		return -ECANCELED;
-+
- 	return hci_start_discovery_sync(hdev);
- }
- 
-@@ -6199,15 +6289,14 @@ static void stop_discovery_complete(struct hci_dev *hdev, void *data, int err)
- {
- 	struct mgmt_pending_cmd *cmd = data;
- 
--	if (err == -ECANCELED ||
--	    cmd != pending_find(MGMT_OP_STOP_DISCOVERY, hdev))
-+	if (err == -ECANCELED || !mgmt_pending_valid(hdev, cmd))
- 		return;
- 
- 	bt_dev_dbg(hdev, "err %d", err);
- 
- 	mgmt_cmd_complete(cmd->sk, cmd->hdev->id, cmd->opcode, mgmt_status(err),
- 			  cmd->param, 1);
--	mgmt_pending_remove(cmd);
-+	mgmt_pending_free(cmd);
- 
- 	if (!err)
- 		hci_discovery_set_state(hdev, DISCOVERY_STOPPED);
-@@ -6215,6 +6304,9 @@ static void stop_discovery_complete(struct hci_dev *hdev, void *data, int err)
- 
- static int stop_discovery_sync(struct hci_dev *hdev, void *data)
- {
-+	if (!mgmt_pending_listed(hdev, data))
-+		return -ECANCELED;
-+
- 	return hci_stop_discovery_sync(hdev);
- }
- 
-@@ -6424,14 +6516,18 @@ static void enable_advertising_instance(struct hci_dev *hdev, int err)
- 
- static void set_advertising_complete(struct hci_dev *hdev, void *data, int err)
- {
-+	struct mgmt_pending_cmd *cmd = data;
- 	struct cmd_lookup match = { NULL, hdev };
- 	u8 instance;
- 	struct adv_info *adv_instance;
- 	u8 status = mgmt_status(err);
- 
-+	if (err == -ECANCELED || !mgmt_pending_valid(hdev, data))
-+		return;
-+
- 	if (status) {
--		mgmt_pending_foreach(MGMT_OP_SET_ADVERTISING, hdev, true,
--				     cmd_status_rsp, &status);
-+		mgmt_cmd_status(cmd->sk, cmd->hdev->id, cmd->opcode, status);
-+		mgmt_pending_free(cmd);
- 		return;
- 	}
- 
-@@ -6440,8 +6536,7 @@ static void set_advertising_complete(struct hci_dev *hdev, void *data, int err)
- 	else
- 		hci_dev_clear_flag(hdev, HCI_ADVERTISING);
- 
--	mgmt_pending_foreach(MGMT_OP_SET_ADVERTISING, hdev, true, settings_rsp,
--			     &match);
-+	settings_rsp(cmd, &match);
- 
- 	new_settings(hdev, match.sk);
- 
-@@ -6473,10 +6568,23 @@ static void set_advertising_complete(struct hci_dev *hdev, void *data, int err)
- static int set_adv_sync(struct hci_dev *hdev, void *data)
- {
- 	struct mgmt_pending_cmd *cmd = data;
--	struct mgmt_mode *cp = cmd->param;
--	u8 val = !!cp->val;
-+	struct mgmt_mode cp;
-+	u8 val;
- 
--	if (cp->val == 0x02)
-+	mutex_lock(&hdev->mgmt_pending_lock);
-+
-+	if (!__mgmt_pending_listed(hdev, cmd)) {
-+		mutex_unlock(&hdev->mgmt_pending_lock);
-+		return -ECANCELED;
-+	}
-+
-+	memcpy(&cp, cmd->param, sizeof(cp));
-+
-+	mutex_unlock(&hdev->mgmt_pending_lock);
-+
-+	val = !!cp.val;
-+
-+	if (cp.val == 0x02)
- 		hci_dev_set_flag(hdev, HCI_ADVERTISING_CONNECTABLE);
- 	else
- 		hci_dev_clear_flag(hdev, HCI_ADVERTISING_CONNECTABLE);
-@@ -8168,10 +8276,6 @@ static void read_local_oob_ext_data_complete(struct hci_dev *hdev, void *data,
- 	u8 status = mgmt_status(err);
- 	u16 eir_len;
- 
--	if (err == -ECANCELED ||
--	    cmd != pending_find(MGMT_OP_READ_LOCAL_OOB_EXT_DATA, hdev))
--		return;
--
- 	if (!status) {
- 		if (!skb)
- 			status = MGMT_STATUS_FAILED;
-@@ -8278,7 +8382,7 @@ static void read_local_oob_ext_data_complete(struct hci_dev *hdev, void *data,
- 		kfree_skb(skb);
- 
- 	kfree(mgmt_rp);
--	mgmt_pending_remove(cmd);
-+	mgmt_pending_free(cmd);
- }
- 
- static int read_local_ssp_oob_req(struct hci_dev *hdev, struct sock *sk,
-@@ -8287,7 +8391,7 @@ static int read_local_ssp_oob_req(struct hci_dev *hdev, struct sock *sk,
- 	struct mgmt_pending_cmd *cmd;
- 	int err;
- 
--	cmd = mgmt_pending_add(sk, MGMT_OP_READ_LOCAL_OOB_EXT_DATA, hdev,
-+	cmd = mgmt_pending_new(sk, MGMT_OP_READ_LOCAL_OOB_EXT_DATA, hdev,
- 			       cp, sizeof(*cp));
- 	if (!cmd)
- 		return -ENOMEM;
-diff --git a/net/bluetooth/mgmt_util.c b/net/bluetooth/mgmt_util.c
-index 4ba500c377a4c..e612121b96d0c 100644
---- a/net/bluetooth/mgmt_util.c
-+++ b/net/bluetooth/mgmt_util.c
-@@ -320,6 +320,52 @@ void mgmt_pending_remove(struct mgmt_pending_cmd *cmd)
- 	mgmt_pending_free(cmd);
- }
- 
-+bool __mgmt_pending_listed(struct hci_dev *hdev, struct mgmt_pending_cmd *cmd)
-+{
-+	struct mgmt_pending_cmd *tmp;
-+
-+	lockdep_assert_held(&hdev->mgmt_pending_lock);
-+
-+	if (!cmd)
-+		return false;
-+
-+	list_for_each_entry(tmp, &hdev->mgmt_pending, list) {
-+		if (cmd == tmp)
-+			return true;
-+	}
-+
-+	return false;
-+}
-+
-+bool mgmt_pending_listed(struct hci_dev *hdev, struct mgmt_pending_cmd *cmd)
-+{
-+	bool listed;
-+
-+	mutex_lock(&hdev->mgmt_pending_lock);
-+	listed = __mgmt_pending_listed(hdev, cmd);
-+	mutex_unlock(&hdev->mgmt_pending_lock);
-+
-+	return listed;
-+}
-+
-+bool mgmt_pending_valid(struct hci_dev *hdev, struct mgmt_pending_cmd *cmd)
-+{
-+	bool listed;
-+
-+	if (!cmd)
-+		return false;
-+
-+	mutex_lock(&hdev->mgmt_pending_lock);
-+
-+	listed = __mgmt_pending_listed(hdev, cmd);
-+	if (listed)
-+		list_del(&cmd->list);
-+
-+	mutex_unlock(&hdev->mgmt_pending_lock);
-+
-+	return listed;
-+}
-+
- void mgmt_mesh_foreach(struct hci_dev *hdev,
- 		       void (*cb)(struct mgmt_mesh_tx *mesh_tx, void *data),
- 		       void *data, struct sock *sk)
-diff --git a/net/bluetooth/mgmt_util.h b/net/bluetooth/mgmt_util.h
-index 024e51dd69375..bcba8c9d89528 100644
---- a/net/bluetooth/mgmt_util.h
-+++ b/net/bluetooth/mgmt_util.h
-@@ -65,6 +65,9 @@ struct mgmt_pending_cmd *mgmt_pending_new(struct sock *sk, u16 opcode,
- 					  void *data, u16 len);
- void mgmt_pending_free(struct mgmt_pending_cmd *cmd);
- void mgmt_pending_remove(struct mgmt_pending_cmd *cmd);
-+bool __mgmt_pending_listed(struct hci_dev *hdev, struct mgmt_pending_cmd *cmd);
-+bool mgmt_pending_listed(struct hci_dev *hdev, struct mgmt_pending_cmd *cmd);
-+bool mgmt_pending_valid(struct hci_dev *hdev, struct mgmt_pending_cmd *cmd);
- void mgmt_mesh_foreach(struct hci_dev *hdev,
- 		       void (*cb)(struct mgmt_mesh_tx *mesh_tx, void *data),
- 		       void *data, struct sock *sk);
++	switch (fixup_type) {
+ 	case EX_TYPE_FAULT_MCE_SAFE:
+ 	case EX_TYPE_DEFAULT_MCE_SAFE:
+ 		m->kflags |= MCE_IN_KERNEL_RECOV;
 -- 
 2.53.0
 
