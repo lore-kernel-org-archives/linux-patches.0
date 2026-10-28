@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793207821;
-	b=OOcPbbt15ddpFldgbHi/kcwBsTKoMh0O+8Jk49ItqzwoyyVJzVLAQ2KFPdfhK50HtzO5
-	 LmkXc67U59N4qlL5dZxccfuoWCJI2JW/o8/PwDRzdU/vTfnjbwu1sA7WzRAXOWomgv2Ok
-	 UCWJNTyJbD6mBvYRet5ePl0mvu2IiNcbFKbE8TVx1SYJpxcyhGkVjeh1el4HFVVNwnFP5
-	 qdv6qwlT7bqpDQ0+YrTpNaiuG9kZ1CKv3BwWv/KlvfALLcFWON1Or7A6nVHzi62I278vm
-	 SvRrbp5JB96/1+VjP4K7op+rIm/2DKN3R0Ky3S/RY8wxdvuG2Rbv6Zk+93YAI0cfM+g==
+	t=1793207824;
+	b=KSi+Idb39g0Y5im+UxyNda4aJA3h9sNHAIUNgTkdsUE74taqhuO7foNIQd2+XK+V/gUP
+	 uwaS2f0K3zmv6zgIJ+evw9bqc9q18Q+SBA6xGLF/lWv++nSMzXI8gENF3TRyutILS/OqH
+	 XOnHVsYHi07XMrgt+dkgMtWzdwCLcIZBlBTz/JTB/of74SZJXQc06qIcLQcJjjDf/6EKg
+	 /eE3DISl0ISUwCPbHcut9cfmyGJS5AU0ix7MsWR4ubSl56n1Bh2fxZ1H40L9d1GXR/Q8T
+	 0p3Ysq47Uu8QG2ML03LOtKqoB2UNUHzJBATz1orBqj5LeDpn9HqbfGaXqN2wN1uN5xw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793207821;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793207824;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=4M7PxFuU8qSz2RavNqay6nF75y2gZI7kCtSjuqmpMw8=;
-	b=okKQJ6E+RxjsZpAUybwHzv2mda4igPhf8SoIkNb4E15kRjcQzIOfHrvxO8rluCKX1bdI
-	 RfUnDX0Mt0JZE9XO94sTHf9NBfcIFa5VmzzUbAAcca66KsjGcSDAhvjlMtfq3rTMcEbZy
-	 QPwWcbhSjduAQySVG5QPd0xDm8n79s0pw8hYdd8s9rYb5rQxNSqLJRfMFjvwEl7ojrePB
-	 7RISjbSUUE5Uys20fyBi+4CkGWQNwy4iEqY7lggodanKcS0bSxkrWp6Kf4NvdvmAsv9jr
-	 8jufLPUDrtnvx8fWYW1ifUDncQjhiVUewNEeexSOHvovWkJqs6tqr/tQgIPsQQkRhoQ==
+	bh=UfHObstQtcurB/1NZByElXfhiYSYaO7TOLg+fDmEFxE=;
+	b=W/oSEsb3QwWa6RdT++s+g7BUHA4lshluIlwWA3NHAeING1fTypttFJ5lNtGLOSV4eW2H
+	 qqqjOGwADNkM6SJHmtHB+aJ0zhNlE3TnOBtHaOGiWJ2WT1cAj3a6UXE378NgB0NKFBIo0
+	 DeOF18QQBMQHLP5Ist5dWXi2nZyW5gvPdsaa/5dVk4vJDO7urLYVgSAhlIncBMH1DLXRl
+	 1o4OONs4MH+IFHWkfpSusdxdVgF7AMpUuO0j8dSzeOZXXVOeufAQPZi6fvXIHxz3qQ+6t
+	 0T6809xWppWLCCxfaMv4AQ9dK4jzFT37rkssv9rF11mmvrNVEDkK5wOmqu05VnKQ18w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zj0GQ7bR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SI+3c1b0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D6A0606A31D;
-	Wed, 28 Oct 2026 17:17:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEE11606A31C;
+	Wed, 28 Oct 2026 17:17:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zj0GQ7bR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D5381F01828;
-	Wed, 28 Oct 2026 17:17:00 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SI+3c1b0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BEF31F01825;
+	Wed, 28 Oct 2026 17:17:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793207821;
-	bh=4M7PxFuU8qSz2RavNqay6nF75y2gZI7kCtSjuqmpMw8=;
+	s=korg; t=1793207823;
+	bh=UfHObstQtcurB/1NZByElXfhiYSYaO7TOLg+fDmEFxE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zj0GQ7bRSZWxijoqO8vxlaKuwTCZI8ax9rHGjVdBVxgrAPEpyA/xUT9IPC6BAHQ9f
-	 6tRFQSGtANrqixgO/lmUSMOrf8BJYwNGSmSR+7LU+9qP+iyV7YzenV/5pxGzjxDzwo
-	 ze3w3JQjZFeJZFdKuIPgYnDT/JNeKYYAfQ3pSDmA=
+	b=SI+3c1b017/jgMmeIYzKEtkIU2pX56tY81pm3dWNqomwIvZga1Tf0qiFN03vhnmxN
+	 Nq+qu2XuBT8JmDssvr8kGZOnu20BDtnuTEy6ijQaAIjcQ40V0bOprUjvQWmZBSXq9G
+	 HLwVkk0eJMpKdncL8v/agc9+YmKu1RcKzQBPi1h4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Kandybka <d.kandybka@gmail.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Jesse Zhang <Jesse.Zhang@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 151/247] tracing: Fix ignored return value of resize_buffer_duplicate_size()
-Date: Wed, 28 Oct 2026 17:59:14 +0100
-Message-ID: <20261028165950.988158943@linuxfoundation.org>
+Subject: [PATCH 6.12 152/247] drm/amdgpu: free the userptr ranges when a CS fails after parser_bos
+Date: Wed, 28 Oct 2026 17:59:15 +0100
+Message-ID: <20261028165951.011655819@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165947.349197979@linuxfoundation.org>
 References: <20261028165947.349197979@linuxfoundation.org>
@@ -68,51 +68,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Kandybka <d.kandybka@gmail.com>
+From: Jesse Zhang <Jesse.Zhang@amd.com>
 
-[ Upstream commit 3110d09bb98e3ac66482a7b257548a1683ec6c1a ]
+[ Upstream commit 1b4da805a0ba354a549ce07459c871c17dd94fe0 ]
 
-When tr->allocated_snapshot is true, resize_buffer_duplicate_size() is
-called to update the snapshot buffer size. However, its return value was
-not checked. In case of a failed resize this could lead next snapshot
-being incomplete.
+amdgpu_cs_parser_bos() allocates an HMM range for every userptr entry of
+the BO list and looks up the user pages. Those ranges are only freed when
+amdgpu_cs_parser_bos() itself fails or when amdgpu_cs_submit() checks
+them under the notifier lock. If amdgpu_cs_patch_jobs(),
+amdgpu_cs_vm_handling(), amdgpu_cs_sync_rings() or the early part of
+amdgpu_cs_submit() fails, nothing frees them: neither
+amdgpu_cs_parser_fini() nor amdgpu_bo_list_free() touch e->range.
 
-Add resize_buffer_duplicate_size() result check and return error if
-resize fails.
+Each such CS then leaks the range, its hmm_pfns array (8 bytes per page
+of the userptr BO) and the BO reference the range holds. An IB on a ring
+that patches the CS in place (e.g. VCN) with an unmapped va_start fails
+in amdgpu_cs_patch_ibs() and takes this path.
 
-Compile tested only.
+Free the ranges on those error paths. Ranges amdgpu_cs_submit() already
+dropped are NULL, so freeing them again is a no-op.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
+Fixes: fec8fdb54e8f ("drm/amdgpu: fix userptr HMM range handling v2")
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Jesse Zhang <Jesse.Zhang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit c52a9542ed7cfd527feb938bd0accada2ac8d267)
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260928152634.4354-1-d.kandybka@gmail.com
-Fixes: 180e4e390978 ("tracing: Add snapshot refcount")
-Signed-off-by: Dmitry Kandybka <d.kandybka@gmail.com>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
-[ sashal: Adapted the resize call to use max_buffer instead of snapshot_buffer. ]
+[ sashal: Adapted cleanup to use amdgpu_ttm_tt_get_user_pages_done() in the existing error_backoff path. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/kernel/trace/trace.c b/kernel/trace/trace.c
-index 7936e8cd7811e..2816708932d6a 100644
---- a/kernel/trace/trace.c
-+++ b/kernel/trace/trace.c
-@@ -7275,9 +7275,12 @@ tracing_snapshot_write(struct file *filp, const char __user *ubuf, size_t cnt,
- 		if (iter->cpu_file != RING_BUFFER_ALL_CPUS)
- 			return -EINVAL;
- #endif
--		if (tr->allocated_snapshot)
-+		if (tr->allocated_snapshot) {
- 			ret = resize_buffer_duplicate_size(&tr->max_buffer,
- 					&tr->array_buffer, iter->cpu_file);
-+			if (ret < 0)
-+				return ret;
-+		}
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
+index eb5f528459ecd..528f0aeac36c6 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
+@@ -1449,6 +1449,7 @@ static void amdgpu_cs_parser_fini(struct amdgpu_cs_parser *parser)
+ int amdgpu_cs_ioctl(struct drm_device *dev, void *data, struct drm_file *filp)
+ {
+ 	struct amdgpu_device *adev = drm_to_adev(dev);
++	struct amdgpu_bo_list_entry *e;
+ 	struct amdgpu_cs_parser parser;
+ 	int r;
  
- 		ret = tracing_arm_snapshot_locked(tr);
- 		if (ret)
+@@ -1503,6 +1504,11 @@ int amdgpu_cs_ioctl(struct drm_device *dev, void *data, struct drm_file *filp)
+ 	return 0;
+ 
+ error_backoff:
++	/* amdgpu_cs_submit() only drops the ranges once it got that far. */
++	amdgpu_bo_list_for_each_userptr_entry(e, parser.bo_list) {
++		amdgpu_ttm_tt_get_user_pages_done(e->bo->tbo.ttm, e->range);
++		e->range = NULL;
++	}
+ 	mutex_unlock(&parser.bo_list->bo_list_mutex);
+ 
+ error_fini:
 -- 
 2.53.0
 
