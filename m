@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793212962;
-	b=3DMQVhtMxLeKc7mYKVyrmZEC8yF5LGRY3UcphY4exOmuwfwlvDiLKGXYFsYzigV/kdSX
-	 qyfEwkWF7/tEcEK4whAkJy/NHWwKke0oNoeVQ1AN1F7Je0paxE0TXsJ4pGhLdrwwrJV6U
-	 MgvbULa6diha1wFX8/9YX/2STDG7XHcHwDQlom/9OA0uKJhQK0koRMIk/1wtFl6bxCa8J
-	 vIlBIFOdVUUSW0awihVotP+kMDSxIoiKCxrpHJeXQvxM6d4rVyByk6l9yEqMclH/SSWfX
-	 W/70PGqR7L81KMtp5ilodO54a8hsrmD2Q89qdCwytv3a5qPRRxXXByBMz0092xKQBag==
+	t=1793212965;
+	b=OjiZzhSK2SFTB0SNTXZCwGt90+GVJzn438OA4hZ3I2rQ34YajypLQslKUcWVRmG0Q+QN
+	 ivo/8cFhQY0tvXziHulkKMwssy3DVyeld/Vq6CAlD5/mueVAV59Z65BQlYputeYU+tXzy
+	 rspfmPnJh9iQA+8clS1ILvakmytXn5y6+Tt58mWmHnVVfWqWQyvalcoICYf8NzuOmMK3l
+	 ZgsaPkoaAbjLM8p56BZkEJpTPHtKtPM6UwFfpvhJvFm8p0MtpdM6bcAtRrlADwgtpINsm
+	 bpE5+g4iTyoFZBXTzAGj6OSDao5Gva4Cuo/+EPJtDcWoZp/pCWFHWIHsffu9WIYwiPA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793212962;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793212965;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=ar6VOtduIbMS/WduYQ131MsySdC59ySu/8OQQjbrr+g=;
-	b=uW5/B9R7a08F0VbrouK23WXQLOWaHw+bpNVvJfmFjl/E+ENMV/A0lPjXRR5edF0x8q5p
-	 4zjQWSUehlELYyDjOvEDR9acQsB43aO/pF6hKRRFjDcFW3TC6JMcddRZNPs5QjwstWZ0y
-	 HZF3wG0Vu09tZQzCtS43f/IM3yAGBJAyxL8RzhtUg37PjKlFHBkErefLVlFe5m/XJH2Sr
-	 W2BBZQjYXjvvP+P69VNefNKkf33Ege/LWREnT0V5ZJg1yY7Atfab5zoFeLZz9T5Kk6e3m
-	 fh4kiRM5bLtTy00onoabVJDbeT+jm9DpKnaVenQCdODjaIwR1gFn/Ok+Ah6s8kZcAWg==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=GQjzgTiEOibl7vHBiMNHW/z5AY9k7Uf1EYY21AyDgFY=;
+	b=kXiKXpqHBo/0EIlJVog76WlkH5C5roUcWC0EMpvibagl1V3pHsFYFlcOk8Y9cwuPAPj0
+	 xZLOlYtgKXN7sPTEVEYigRGzBXWFPOqB20yXTO8mV8LjtLF4+nt8dEuYxxhwTWINjQ8Jx
+	 THcGAQhaP77sVzY8h4RLLbBRkWZB7lMcm6DV7J/zBgwf7PyiblUpZXPURkp4vqLNKZmgN
+	 W0fWtc9a+VJ2H8olOZ8DE4bJ3h8CyOpxoC2AKqrPIrryiedvZ+bXn02IP9RblV84PAFq+
+	 kWRuofx8XHOKBma6JC0l6ZGyF9NkRdWS2qgt/01zJROojIJkoMFZ5WzTjVyfMaoA8/Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tYkHWbX6;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fnn2fJ0c;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B33E606A31A;
-	Wed, 28 Oct 2026 18:42:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31184606A31A;
+	Wed, 28 Oct 2026 18:42:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tYkHWbX6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BEAD1F01825;
-	Wed, 28 Oct 2026 18:42:41 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fnn2fJ0c
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60D051F01825;
+	Wed, 28 Oct 2026 18:42:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793212962;
-	bh=ar6VOtduIbMS/WduYQ131MsySdC59ySu/8OQQjbrr+g=;
+	s=korg; t=1793212964;
+	bh=GQjzgTiEOibl7vHBiMNHW/z5AY9k7Uf1EYY21AyDgFY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tYkHWbX6V/DpuAwdTHCxkgJOu9kp2TLevHOU7/xMtKacbiKQZ0AzxGaJgYYQJk7Ao
-	 X0h4KQm+yMK8wu5aq221ra+hC4zer98qwTnxHthAc5cLOvVQb8M4paESoCpAhCFkvW
-	 kMKDDOJ8KuKTMpvF8Ycff/n0pXLxaWul/gwTNypk=
+	b=fnn2fJ0cPT5YEiIFqZ5zHiLZoV25XhAj5FHzXpXjZU4xzg2d5HRDhzeJaY6NRsvy0
+	 1PR8zxaGTbJ+iQAw9JHjzsPpKZXtKPFGyuTZvvhFU0dkUvQ+SkYs3R3Dy6aah+Ta0M
+	 yTTDwQCoCTZ7XiFuzMzvegwAwPZ16GzzEtKYWiqM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Lechner <dlechner@baylibre.com>,
-	Fan Wu <fanwu01@zju.edu.cn>,
-	Sai Krishna Potthuri <sai.krishna.potthuri@amd.com>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Joshua Crofts <joshua.crofts1@gmail.com>,
+	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+	Stable@vger.kernel.org,
 	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Subject: [PATCH 6.1 0336/1887] iio: adc: xilinx-xadc: free IRQ before cancelling the unmask worker on unbind
-Date: Wed, 28 Oct 2026 17:40:32 +0100
-Message-ID: <20261028170506.874502587@linuxfoundation.org>
+Subject: [PATCH 6.1 0337/1887] iio: buffer: Ensure bounce buffer used for unaligned case is zeroed.
+Date: Wed, 28 Oct 2026 17:40:33 +0100
+Message-ID: <20261028170506.897338372@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -63,57 +65,46 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 
-commit 0f3f427076240e75ff265e61645627a71ca4918c upstream.
+commit 5330036bc68d23672bfcc16c60c54701ae123083 upstream.
 
-The ZYNQ XADC alarm IRQ handler queues zynq_unmask_work via
-schedule_delayed_work(); that work is cleared by a devm callback.
-Register the devm callback before devm_request_irq() so the devres LIFO
-teardown frees the IRQ first, ensuring the handler can no longer queue
-work by the time the workqueue is cleared. Otherwise the handler could
-re-arm the work and run it after the xadc structure has been freed.
+iio_push_to_buffers_with_ts_unaligned() leaks uninitialized heap memory
+to userspace if the data passed in is not a multiple of 8 bytes and the
+timestamp is enabled. Specify __GFP_ZERO for the devm_krealloc()
+to ensure any extra space is cleared.
 
-This issue was found by an in-house static analysis tool.
-
-Fixes: 2a9685d1a3b7 ("iio: adc: xilinx: use more devres helpers and remove remove()")
-Cc: stable@vger.kernel.org
-Assisted-by: Codex:gpt-5.6
-Reviewed-by: David Lechner <dlechner@baylibre.com>
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
-Reviewed-by: Sai Krishna Potthuri <sai.krishna.potthuri@amd.com>
+Fixes: 95ec3fdf2b79 ("iio: core: Introduce iio_push_to_buffers_with_ts_unaligned()")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/patchset/20260529121005.1470-1-kimjinseob88%40gmail.com
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Reviewed-by: Joshua Crofts <joshua.crofts1@gmail.com>
+Reviewed-by: Nuno Sá <nuno.sa@analog.com>
+Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/adc/xilinx-xadc-core.c |    9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ drivers/iio/industrialio-buffer.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/iio/adc/xilinx-xadc-core.c
-+++ b/drivers/iio/adc/xilinx-xadc-core.c
-@@ -1406,13 +1406,14 @@ static int xadc_probe(struct platform_de
- 	}
+--- a/drivers/iio/industrialio-buffer.c
++++ b/drivers/iio/industrialio-buffer.c
+@@ -1905,7 +1905,8 @@ int iio_push_to_buffers_with_ts_unaligne
  
- 	if (irq > 0) {
--		ret = devm_request_irq(dev, irq, xadc->ops->interrupt_handler,
--				       0, dev_name(dev), indio_dev);
-+		/* Clear out any work queued by the interrupt */
-+		ret = devm_add_action_or_reset(dev, xadc_cancel_delayed_work,
-+					       &xadc->zynq_unmask_work);
- 		if (ret)
- 			return ret;
- 
--		ret = devm_add_action_or_reset(dev, xadc_cancel_delayed_work,
--					       &xadc->zynq_unmask_work);
-+		ret = devm_request_irq(dev, irq, xadc->ops->interrupt_handler,
-+				       0, dev_name(dev), indio_dev);
- 		if (ret)
- 			return ret;
- 	}
+ 		bb = devm_krealloc(&indio_dev->dev,
+ 				   iio_dev_opaque->bounce_buffer,
+-				   indio_dev->scan_bytes, GFP_KERNEL);
++				   indio_dev->scan_bytes,
++				   GFP_KERNEL | __GFP_ZERO);
+ 		if (!bb)
+ 			return -ENOMEM;
+ 		iio_dev_opaque->bounce_buffer = bb;
 
 
