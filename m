@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793208827;
-	b=uXSoNcPB+Uzb8dcBsguB2TOUcg5engo4zr6DHIvBncpSKykjuf3JCP6+6Nuwn4aLjaG3
-	 V48z7DlkOMqNc6mpRRqVTT8loOavckM76tGZ1USs2rs3NfaFj/VP2Z0p/1U4MEk5uJx/y
-	 l71DlOwaU4i2DRBJp3O1kdCBtMevxSNHH7xSeoJqySJUFurRW5TOG1BJ81jU21hpcg/co
-	 DE4IGZsWSQOtQjzEVVq+rR6Ph4Vgsyjfq0O76RyGjkrfQhj0i401aLYF1OKdbJqOD59HM
-	 Hj3ivzy5z3xiyKsSmCkuqb8Dzw02cvhqyXClXNKkVwH0QahqYyVjXJ8LV6tbSWG8zKw==
+	t=1793208833;
+	b=lfzR0m98fAuCoroNVK64GjNJ5LYWDjVx27dK5mgBaU5Nq5LeG37FZveFYJeQAnGWx/pD
+	 o6t/nYIgLltYqrdIku98cX6tlE43drrPAIl8EdjdaoSF/tZp8WCdL17TGk1b04lM2BA4o
+	 8eiejbjdVSrae98tEb25zzOle9ORbieUL27XrGaj+rjvh1zza5NXPKDMyJ56ldGDzrshO
+	 zeRYCtgIU6F7tkl983vefVi5PTagB6fSgnBfou/vBAaLVsKrxZvbIYIH+dfHDHDEuUHvN
+	 eIrKl6vPRa2NhvfJ1AdakhmWbYMoMeCrJbgOub5EsS+igqficph4JA0tFzLAAemtDuQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793208827;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793208833;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Mf7Mx1FbuGSKGhNSqrNIsZRyxjZJgKM24I6SrDIQR8I=;
-	b=15m8h5eUa5zUdM0EpiM3LvTFsI5WA5zn0g7ZqyXZfDGWr6dcaJrp1DK+K9E7qYdl5lez
-	 XgzDm+kxNGZOCVwe8YoGutxtm7nGiDipUKkfzy5fTOmSO0vH9mu1XBvDofLtVTxNItvHZ
-	 oyHwoFOnqtt0Es2ySEQu9erdO7ALOsOMUvvlp3TdjTU3414eJ5fT8yLtB2RyKcydhHfFg
-	 w/9htPYmGmEiTEI7Ds7LJ9N+UWOF9FnKGiCyLNmIbOIMmBcux+Ff37sokc5kJWYXlihB8
-	 wv003cH5Kwd3TuQJNxAp3E277Ny9fo872I8BTQ2AbkxmyhXX3am4kARD6nujbJ7xvTQ==
+	bh=8Ew1wPi9TOqiOOOkc0r6DGHu/ZruQ2RWZ0CEBpUBIp8=;
+	b=Xzi+SpHFt0I62Xx20R9pjyO4ZRcP6x2mQNSBDSOAYOmcaJiU6aURUR3FStg1RNSx2snQ
+	 L+0CVuQJs7wG8CdYRA6zInSAd6wPwp+jYtBag5SB282oUVz2wQyU49AVN9zeriXKp8LVB
+	 z3F9gYqSJNE/jMFA3oHrt0fddrcF8LUXuKxPXS2Apb3EVFhmtOGU1cangaOPRrmXFezFZ
+	 bJsbDf2FNXlebu16zRcwVgBO0261DGW4pXJo/L+J38d7f4pcgH7pMMWyCuy60OCJyYy4P
+	 ZUCfxNkvcxRoj/j90YRWa/CMHah1zOb05RbYm/A0PbSZVdD2KSC36IRTC5KkxKiBfNQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=llGXhOes;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yVy3OBVz;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CE1A606A31C;
-	Wed, 28 Oct 2026 17:33:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1852C606A32E;
+	Wed, 28 Oct 2026 17:33:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=llGXhOes
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CE061F01825;
-	Wed, 28 Oct 2026 17:33:46 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yVy3OBVz
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 247941F031E0;
+	Wed, 28 Oct 2026 17:33:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793208827;
-	bh=Mf7Mx1FbuGSKGhNSqrNIsZRyxjZJgKM24I6SrDIQR8I=;
+	s=korg; t=1793208832;
+	bh=8Ew1wPi9TOqiOOOkc0r6DGHu/ZruQ2RWZ0CEBpUBIp8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=llGXhOeshyQOhNWEOCShKJYL8dKazGqdezhfOMhG76sjFBKAG3VNC+OG/im+bBVfu
-	 wX+yXYTED7SX1UiufQ2Qeb/Wr1msEkom92Yp5Jc7PxoTchHn6n4z6KqAiYDt7DgoA5
-	 vgTY74OVbvWDnbnbLbXewQqq8eMq4Ofl8bDnjXEk=
+	b=yVy3OBVzT58hTidl8QcQGyRnLcuVt83fGWXMQ8bDet+kI15f7JEB0hNb99Du/XMOP
+	 qtVhdvWbWnnk6oQKaHTZSfcsVU+VVonniNnAkN8KzaHj0kVUx2coQ2qHsfxlqikCbv
+	 XA2QeCmoBgLo7F+X0p8S0HCgAfjszbIk4cWpzSD0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Johannes Berg <johannes.berg@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 256/516] wifi: wlcore: Fix runtime PM leak in wlcore_remove()
-Date: Wed, 28 Oct 2026 17:56:48 +0100
-Message-ID: <20261028170009.558575010@linuxfoundation.org>
+	Nicolas Saenz Julienne <nsaenz@kernel.org>,
+	Stefan Wahren <stefan.wahren@i2se.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Roman Demidov <roman.demidov.nn@gmail.com>
+Subject: [PATCH 5.10 258/516] staging: vchiq_arm: Avoid NULL ptr deref in vchiq_dump_platform_instances
+Date: Wed, 28 Oct 2026 17:56:50 +0100
+Message-ID: <20261028170009.603801872@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -68,47 +69,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Stefan Wahren <stefan.wahren@i2se.com>
 
-[ Upstream commit a8b8881d0c1aff544fae190469d86db7b07f43a9 ]
+commit aa899e686d442c63d50f4d369cc02dbbf0941cb0 upstream.
 
-pm_runtime_get_sync() keeps the runtime PM usage counter elevated even
-when it returns an error, so the reference taken at the beginning of
-wlcore_remove() has to be dropped on every exit path. When the device
-was not initialized the function returned early without doing so,
-leaking the reference.
+vchiq_get_state() can return a NULL pointer. So handle this cases and
+avoid a NULL pointer derefence in vchiq_dump_platform_instances.
 
-Release it with pm_runtime_put_noidle() as done on the other early error
-paths of this driver.
-
-Fixes: fa2648a34e73f ("wlcore: Add support for runtime PM")
-Cc: stable@vger.kernel.org
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Link: https://patch.msgid.link/20260917122325.2150910-1-vulab@iscas.ac.cn
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Reviewed-by: Nicolas Saenz Julienne <nsaenz@kernel.org>
+Signed-off-by: Stefan Wahren <stefan.wahren@i2se.com>
+Link: https://lore.kernel.org/r/1642968143-19281-17-git-send-email-stefan.wahren@i2se.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Roman Demidov <roman.demidov.nn@gmail.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/ti/wlcore/main.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/staging/vc04_services/interface/vchiq_arm/vchiq_arm.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/wireless/ti/wlcore/main.c b/drivers/net/wireless/ti/wlcore/main.c
-index eb8b75252c36f..73a694ecc7db8 100644
---- a/drivers/net/wireless/ti/wlcore/main.c
-+++ b/drivers/net/wireless/ti/wlcore/main.c
-@@ -6817,8 +6817,10 @@ void wlcore_remove(struct platform_device *pdev)
+--- a/drivers/staging/vc04_services/interface/vchiq_arm/vchiq_arm.c
++++ b/drivers/staging/vc04_services/interface/vchiq_arm/vchiq_arm.c
+@@ -2063,6 +2063,9 @@ int vchiq_dump_platform_instances(void *
+ 	int len;
+ 	int i;
  
- 	if (pdev_data->family && pdev_data->family->nvs_name)
- 		wait_for_completion(&wl->nvs_loading_complete);
--	if (!wl->initialized)
-+	if (!wl->initialized) {
-+		pm_runtime_put_noidle(wl->dev);
- 		return;
-+	}
++	if (!state)
++		return -ENOTCONN;
++
+ 	/* There is no list of instances, so instead scan all services,
+ 		marking those that have been dumped. */
  
- 	if (wl->wakeirq >= 0) {
- 		dev_pm_clear_wake_irq(wl->dev);
--- 
-2.53.0
-
 
 
