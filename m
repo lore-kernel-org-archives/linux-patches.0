@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793212544;
-	b=xUN/hckCE8oXFZCohh8FvYoFSgtTTo27gogTmwqO4RzsFHToMHRHinsmR9dPUh+brDYK
-	 Q5pfeGCyI6RpcdV3vS/62HiWPFY4a52stiSAg9FAfvjzM7zCqqxHF4GxNUzvMg446YFk5
-	 PI1HrCkLjXkJzrRQpoLRCozGqvsRr2ZPz8ZLZY5cugHh1WI7CofE87z8BWUP6b+0dtYIP
-	 hRzTHbG4hyF6Uxq3BKMhfcwR7iy89ZJKOsiZtrJzDvicPopjGDpDku5Crr9TL0lssrDcW
-	 npps325QtWS7/NubegD8HGIxUhS6fkQVKOg2jAAW1g/YL+a8p8WrBWVKXH0fKC3gr3w==
+	t=1793212547;
+	b=gdbLe/Dw5GcAUMJ8+m7kV5MjNd1BBwoUwtxtaden8vK0AJ+hXpXYexrGHv41xm80M9RK
+	 YYO6mjUGU9TrJMlk07oQiymdHGbKPX6y8/hadIrEBMg/MFAihuaJoxH/6Aa5DrGYNhNs7
+	 hUb+q9qcmWi3N2rX1nquDyWQXSUS3l4Nij3CXq23NZZj6Fqy1pBUQ1z7Ma7zs66X9bkxb
+	 64IgjRd+LI6hhjspqsE3YGKJbxpZnVQKZuw+y0PCW0YrVPbKlQGRhq5meYU4cKuKBPcZy
+	 F001VFCU5V1K8OXlR71fOuTeE7+e4os+SESAL9Odl2/wiZQ69RJM/f+8BCjTkQa3gzQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793212544;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793212547;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=GMMNIY8IBHPT2eXiiC8+6v1No7SymMRufaZlSzEJ4y0=;
-	b=jmbvF3tZwNb01Tqf6jhXi8luLmFXZkdDJ4e+oMX62pMHUjSWy8QAbmnixYU8gBVpVajY
-	 V1nnMVHqEVe4PHV+Hr4b07J/gyJAvKKUkW5AV8lo43TJZiKunT9GiQ+oInw38UMEe6j9Y
-	 Qx61DXRy8CtvZ7mUOPj/JzD0MRy1+l0+EphhhFNuszfduSETonCUc4szRAGPJIcF2+Vyb
-	 tjwN5/WJWa2vUbrAM+sHjWgMLPScie1ClCJZu40GT9cEm2Rvv6YFys/SLXPx1xWO7SLdN
-	 78dPZVEWt2LaEC6kRLT+P/Qy2S2ZjJgtwOE7Y+RKFNOeT5RLxFE5PZlalJlaNwZQ3dA==
+	bh=RWAH0iyoQyuntGRo8oQsETUK6ijVqrIF+sD8gDdS2M4=;
+	b=YLFIyYpVIxg06pqAMHWN9Oy9i4VbYPWw72KvIP5rZRF1TP1lf1i97NZwZ8vr0kDBqz5e
+	 TKHdI4W4ho22mdN2JfwQwf3nvq/Jsz/g2TLJjYzTfgfUSXPJR7x7uhSis6GYP59h1O2PY
+	 CBSuYjLOoDRQeDu8KpfS5moUv2+sqRFj+5rXroiIWC28UXQ7zh2hflH9x+/xZohB0rT5q
+	 tumDQZIXN7zTtpY5Yryyx50DNhvViHs3CRdgiUv9Hh3C6Jm2AzdvnAxVByTGIdlqhHI/V
+	 3okk1zo668wSvZcK0Pa9kkwsuC2sKWIWHMKqfLOityzph77HutxiuGPaOObR/iTR+9w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zwFfAJtQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OXSEHLfg;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14981606A337;
-	Wed, 28 Oct 2026 18:35:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3D76606A31C;
+	Wed, 28 Oct 2026 18:35:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zwFfAJtQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 656E81F01828;
-	Wed, 28 Oct 2026 18:35:43 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OXSEHLfg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45B021F031E0;
+	Wed, 28 Oct 2026 18:35:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793212543;
-	bh=GMMNIY8IBHPT2eXiiC8+6v1No7SymMRufaZlSzEJ4y0=;
+	s=korg; t=1793212546;
+	bh=RWAH0iyoQyuntGRo8oQsETUK6ijVqrIF+sD8gDdS2M4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zwFfAJtQCLyFWwB7pen2XZa/ijhe6vmLXJRRguZfjv/XfehDhdBgdeuDimia9Jf4c
-	 roQY4szOBSQAoa3gFbuy2S7waUYRnXe1CxF20SRaIVspidv2g0LessWwe8IRNC5RKB
-	 4xNgE67shbFcnI5UAV8PV0jnKJJqf3YBe2H9vK/U=
+	b=OXSEHLfgCqPClnRASPuRXZ5kgOMNFdQ1Y10bddvMqkz9LcCxsfJjZaXZiUYzFFRVR
+	 IbRGvqqY8ThLCAzEI5rOZ+LlRkIsZDsYwS+V5b7eF98StQsEz94Fl4yb5ZUTnE1r9m
+	 5p8/4camts0BgFlcJRRMkizg/bKxOFBiygC8pkeY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sanghyun Park <sanghyun.park.cnu@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Harry Wentland <harry.wentland@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Artem Dinaburg <artem@trailofbits.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0190/1887] vxlan: use one headroom snapshot for neighbour replies
-Date: Wed, 28 Oct 2026 17:38:06 +0100
-Message-ID: <20261028170503.559689493@linuxfoundation.org>
+Subject: [PATCH 6.1 0191/1887] drm/amd/display: Validate function returns
+Date: Wed, 28 Oct 2026 17:38:07 +0100
+Message-ID: <20261028170503.582928342@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,63 +71,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sanghyun Park <sanghyun.park.cnu@gmail.com>
+From: Alex Hung <alex.hung@amd.com>
 
-[ Upstream commit 481506a756dcd828ef42391cb08f38d8d96d38fc ]
+[ Upstream commit 673f816b9e1e92d1f70e1bf5f21b531e0ff9ad6c ]
 
-vxlan_na_create() samples LL_RESERVED_SPACE() to size the reply skb and then
-samples it again to reserve headroom. A concurrent vxlan_changelink() can
-update needed_headroom between the two reads, creating a TOCTOU race. The
-second value can exceed the allocation and make the Ethernet header write out
-of bounds.
+[WHAT & HOW]
+Function return values must be checked before data can be used
+in subsequent functions.
 
-The race is reproducible on the unpatched kernel. It occurred when
-vxlan_na_create() generated a neighbour reply while vxlan_changelink() changed
-the link headroom. KASAN caught a four-byte write two bytes beyond a 704-byte
-skbuff_small_head allocation.
+This fixes 4 CHECKED_RETURN issues reported by Coverity.
 
-Snapshot the headroom once and use that value for both allocation and
-reservation.
+[ Backport to 6.1.y: adapted the visual-panel, watermark, and
+  link-detection checks to their older locations. The upstream DMUB
+  run-list/D3 path is absent; the older dc_dmub_srv_cmd_queue() already
+  checks and logs idle-wait failures but, unlike upstream, still retries
+  the queue once afterwards. No DMUB queue change is included. ]
 
-Fixes: 4b29dba9c085 ("vxlan: fix nonfunctional neigh_reduce()")
-Signed-off-by: Sanghyun Park <sanghyun.park.cnu@gmail.com>
-Link: https://patch.msgid.link/20260918032842.502409-2-sanghyun.park.cnu@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Harry Wentland <harry.wentland@amd.com>
+Signed-off-by: Alex Hung <alex.hung@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Assisted-by: LLM
+Signed-off-by: Artem Dinaburg <artem@trailofbits.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/vxlan/vxlan_core.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/display/dc/core/dc_link_dp.c    | 3 +--
+ drivers/gpu/drm/amd/display/dc/dc_dmub_srv.c        | 3 ++-
+ drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hubbub.c | 3 ++-
+ 3 files changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/vxlan/vxlan_core.c b/drivers/net/vxlan/vxlan_core.c
-index 591a2875dfe2f..c9f02da4c8af8 100644
---- a/drivers/net/vxlan/vxlan_core.c
-+++ b/drivers/net/vxlan/vxlan_core.c
-@@ -2000,13 +2000,15 @@ static struct sk_buff *vxlan_na_create(struct sk_buff *request,
- 	struct ipv6hdr *pip6;
- 	u8 *daddr;
- 	int na_olen = 8; /* opt hdr + ETH_ALEN for target */
-+	int headroom;
- 	int ns_olen;
- 	int i, len;
+diff --git a/drivers/gpu/drm/amd/display/dc/core/dc_link_dp.c b/drivers/gpu/drm/amd/display/dc/core/dc_link_dp.c
+index 82b747c0ed693..1d3d9a82c4637 100644
+--- a/drivers/gpu/drm/amd/display/dc/core/dc_link_dp.c
++++ b/drivers/gpu/drm/amd/display/dc/core/dc_link_dp.c
+@@ -2808,8 +2808,7 @@ bool perform_link_training_with_retries(
+ 		if (status == LINK_TRAINING_ABORT) {
+ 			enum dc_connection_type type = dc_connection_none;
  
- 	if (dev == NULL || !pskb_may_pull(request, request->len))
- 		return NULL;
+-			dc_link_detect_sink(link, &type);
+-			if (type == dc_connection_none) {
++			if (dc_link_detect_sink(link, &type) && type == dc_connection_none) {
+ 				DC_LOG_HW_LINK_TRAINING("%s: Aborting training because sink unplugged\n", __func__);
+ 				break;
+ 			}
+diff --git a/drivers/gpu/drm/amd/display/dc/dc_dmub_srv.c b/drivers/gpu/drm/amd/display/dc/dc_dmub_srv.c
+index 31bb7e782c6b1..35e8f22d30204 100644
+--- a/drivers/gpu/drm/amd/display/dc/dc_dmub_srv.c
++++ b/drivers/gpu/drm/amd/display/dc/dc_dmub_srv.c
+@@ -396,7 +396,8 @@ void dc_dmub_srv_get_visual_confirm_color_cmd(struct dc *dc, struct pipe_ctx *pi
+ 	enum dmub_status status;
+ 	unsigned int panel_inst = 0;
  
--	len = LL_RESERVED_SPACE(dev) + sizeof(struct ipv6hdr) +
-+	headroom = LL_RESERVED_SPACE(dev);
-+	len = headroom + sizeof(struct ipv6hdr) +
- 		sizeof(*na) + na_olen + dev->needed_tailroom;
- 	reply = alloc_skb(len, GFP_ATOMIC);
- 	if (reply == NULL)
-@@ -2014,7 +2016,7 @@ static struct sk_buff *vxlan_na_create(struct sk_buff *request,
+-	dc_get_edp_link_panel_inst(dc, pipe_ctx->stream->link, &panel_inst);
++	if (!dc_get_edp_link_panel_inst(dc, pipe_ctx->stream->link, &panel_inst))
++		return;
  
- 	reply->protocol = htons(ETH_P_IPV6);
- 	reply->dev = dev;
--	skb_reserve(reply, LL_RESERVED_SPACE(request->dev));
-+	skb_reserve(reply, headroom);
- 	skb_push(reply, sizeof(struct ethhdr));
- 	skb_reset_mac_header(reply);
+ 	memset(&cmd, 0, sizeof(cmd));
  
+diff --git a/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hubbub.c b/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hubbub.c
+index aacb1fb5c73eb..d2eebe39a55e3 100644
+--- a/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hubbub.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hubbub.c
+@@ -595,7 +595,8 @@ static bool hubbub2_program_watermarks(
+ 		hubbub1->base.ctx->dc->clk_mgr->clks.p_state_change_support == false)
+ 		safe_to_lower = true;
+ 
+-	hubbub1_program_pstate_watermarks(hubbub, watermarks, refclk_mhz, safe_to_lower);
++	if (hubbub1_program_pstate_watermarks(hubbub, watermarks, refclk_mhz, safe_to_lower))
++		wm_pending = true;
+ 
+ 	REG_SET(DCHUBBUB_ARB_SAT_LEVEL, 0,
+ 			DCHUBBUB_ARB_SAT_LEVEL, 60 * refclk_mhz);
 -- 
 2.53.0
 
