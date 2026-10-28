@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213912;
-	b=pAlwZwG+cgj5Yv38DAMYUnEVzCByym0ElTyC7LZlQ4pz4dYoygr6oenNJj4Nz5jXZmSG
-	 HDVjJ64Os1P5HfRf0QS6XpFdahPIctqbIL0B+iZrkviFhJjWMFCN/Z10orC7lzE+scXvl
-	 XV40tGYi2DxyjysQhzqUiktu+tVJK96fu2WdhCNwBJHen2Wo9ZFo7cLW0+Acg5NtCt1Id
-	 Zyw3pTHJPhUIpsiTvVsy12y/kIyGfGfwaWj/piArN7YCW/Qk+TFmg4JymyoCtkmo7bpcP
-	 LQVVLsUog7NCV1W4QVqy5Ti8b10Y1agxnmdDT+MFkt9RnYz6qBue7p8RoTjOFkdV/uQ==
+	t=1793213914;
+	b=bZFlVczoHhjyAV+pO7c1ygBU70sNEQ5XtAKnh+aCijqCfce7/l0FfzPfycQXUSARi8B/
+	 bDFNQyGHIZgNjEYdoGMAlxUaSTpj+4oiPSF0lqdX+XPwzBm+XMvZCapMiqLc08ZS9CD9k
+	 cfwqSlaDpB/MIyuUZtCS5HQFl10T7EWZDET7osOptGXeOhVt7mWAmnK0T3PqGKNPBjYku
+	 xG8cmEQgVciWJZoDP8cbqwAfj2s/6WKNaXfFCLUy9oKNcX+qdo9J5y6QwEGLnMCMtTrH/
+	 /Ev3FB+ABx/vEUbJMu0rfQwfUP3/Nn5OYIt+yWS+RQaRADV9KF1tR3JcIE11v6et0+A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213912;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213914;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+5EBxOwmaVl64b6dORe66XlLNMAozYvRLnouaIZBZ7o=;
-	b=rCXDqZL0MFXBhNwBHUPWo2tB5eiQ3rPl7yqZilqU0jZan+OmT+8VJqJYm76cp81oI1ic
-	 xXEvOpFgs6qNRItC8F7324IjIhWAEonkT5h3H+EzlO9fWnJlc22qzI1AjnnRaCjbpKEt7
-	 RNqoJ0uldYdkqG8kc2+W9cgeWFF5EaGFLc+FYQsDe8ZWoBpRa9vi0YVNKIeLLolByKtds
-	 Q8fA4wrTTO+QglpF7w4YsnjuD6e0NqL0vdfe4HCrzat/Jzd0j6xaZzC1WEbNfvqPzfwgA
-	 WoSEbnRPg5SyJ6swsqOUAEw6SFUuJs4Gqwer9HW5yShPBzqGxfCEyfkP65Vd9WrIvSQ==
+	bh=Fimjiz/r+BGydb68H/UONSXv6gY7tBOUftNaiaV4CEM=;
+	b=GIkc4a0cJSrVMInJ19kQCW3MIhw8tPynhMEpNdtP9njqoCHxWLeakHtuiOnJzXcWoUFl
+	 SgV7teL45pqnpcgBk6HktEv60/uZq1xKNBS+ZNnv1r/2qEyDtpaD9QjqXfLR6u4oEAAkN
+	 hSyP5cj0iUK/whIhz1XYmc6QBXiGhUdK68m6EoGLeJiUdi0refF2jrYUwa1BLVBCNIaCr
+	 gjyyqk5UpYrLO6GZ+i/JCKBAAjkdCHs4XePEzUIO8h9Uf8Rrf8tU26coHvO6l807TPIqL
+	 YLyMR0chhkNruFnDhxIAWkIhQjbaoEyiFxQNnwT9+EynlW2acmUnA6Kkd1KxvTsQVTA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GdY4Z8hq;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uvZ863kw;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7704606A31A;
-	Wed, 28 Oct 2026 18:58:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BBF4606A31A;
+	Wed, 28 Oct 2026 18:58:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GdY4Z8hq
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22E1B1F01825;
-	Wed, 28 Oct 2026 18:58:30 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uvZ863kw
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB6AE1F01825;
+	Wed, 28 Oct 2026 18:58:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213911;
-	bh=+5EBxOwmaVl64b6dORe66XlLNMAozYvRLnouaIZBZ7o=;
+	s=korg; t=1793213914;
+	bh=Fimjiz/r+BGydb68H/UONSXv6gY7tBOUftNaiaV4CEM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GdY4Z8hqdiPFSncbpHZly4fXqccsxC7tK6+emt9D3s7cGZ7iKGsg3TyI6pEO6Rb/g
-	 yjVVZaB9ljaDhysLXMT6UkDVOLo94GO7umuut5NZhZDKPTED0rycoLaX5a46mC3SuR
-	 FUJ4bgQgdr3UFnrlugXduSLhYuRFLMIiiQA1Pmpc=
+	b=uvZ863kwZggdRlHVDLoPwd4HEc+8p2lPdwQt83w32jHGFlNtpIzGKU+wF6c95GTNv
+	 ZpSG2Ek/SJzGwHYNhz1n1B1b3B37vBvH5IYVgDBTQeK4ZEsY9OVx8rzPefT7XIYyHV
+	 eeJ/U5tusNCHak8xBdbWQ4kzp1wdUGU91CjgQdTY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiuhong Wang <xiuhong.wang@unisoc.com>,
-	Zhiguo Niu <zhiguo.niu@unisoc.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Bob Zhou <bob.zhou@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0630/1887] f2fs: fix to shrink read extent node in batches
-Date: Wed, 28 Oct 2026 17:45:26 +0100
-Message-ID: <20261028170513.744269800@linuxfoundation.org>
+Subject: [PATCH 6.1 0631/1887] drm/amdgpu: fix double free err_addr pointer warnings
+Date: Wed, 28 Oct 2026 17:45:27 +0100
+Message-ID: <20261028170513.766473066@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -70,177 +68,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Bob Zhou <bob.zhou@amd.com>
 
-[ Upstream commit 3fc5d5a182f6a1f8bd4dc775feb54c369dd2c343 ]
+[ Upstream commit 506c245f3f1cd989cb89811a7f06e04ff8813a0d ]
 
-We use rwlock to protect core structure data of extent tree during
-its shrink, however, if there is a huge number of extent nodes in
-extent tree, during shrink of extent tree, it may hold rwlock for
-a very long time, which may trigger kernel hang issue.
+In amdgpu_umc_bad_page_polling_timeout, the amdgpu_umc_handle_bad_pages
+will be run many times so that double free err_addr in some special case.
+So set the err_addr to NULL to avoid the warnings.
 
-This patch fixes to shrink read extent node in batches, so that,
-critical region of the rwlock can be shrunk to avoid its extreme
-long time hold.
-
-Reported-by: Xiuhong Wang <xiuhong.wang@unisoc.com>
-Closes: https://lore.kernel.org/linux-f2fs-devel/20241112110627.1314632-1-xiuhong.wang@unisoc.com/
-Signed-off-by: Xiuhong Wang <xiuhong.wang@unisoc.com>
-Signed-off-by: Zhiguo Niu <zhiguo.niu@unisoc.com>
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Signed-off-by: Bob Zhou <bob.zhou@amd.com>
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/extent_cache.c | 67 ++++++++++++++++++++++++------------------
- 1 file changed, 39 insertions(+), 28 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_umc.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/f2fs/extent_cache.c b/fs/f2fs/extent_cache.c
-index e66c5d0a04dff..0b35892e9eb6c 100644
---- a/fs/f2fs/extent_cache.c
-+++ b/fs/f2fs/extent_cache.c
-@@ -403,21 +403,22 @@ static struct extent_tree *__grab_extent_tree(struct inode *inode,
- }
- 
- static unsigned int __free_extent_tree(struct f2fs_sb_info *sbi,
--					struct extent_tree *et)
-+				struct extent_tree *et, unsigned int nr_shrink)
- {
- 	struct rb_node *node, *next;
- 	struct extent_node *en;
--	unsigned int count = atomic_read(&et->node_cnt);
-+	unsigned int count;
- 
- 	node = rb_first_cached(&et->root);
--	while (node) {
-+
-+	for (count = 0; node && count < nr_shrink; count++) {
- 		next = rb_next(node);
- 		en = rb_entry(node, struct extent_node, rb_node);
- 		__release_extent_node(sbi, et, en);
- 		node = next;
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_umc.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_umc.c
+index aad3c8b4c8102..da40be587f1e3 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_umc.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_umc.c
+@@ -109,6 +109,7 @@ static int amdgpu_umc_do_page_retirement(struct amdgpu_device *adev,
  	}
  
--	return count - atomic_read(&et->node_cnt);
-+	return count;
+ 	kfree(err_data->err_addr);
++	err_data->err_addr = NULL;
+ 	return AMDGPU_RAS_SUCCESS;
  }
  
- static void __drop_largest_extent(struct extent_tree *et,
-@@ -611,6 +612,28 @@ static struct extent_node *__insert_extent_tree(struct f2fs_sb_info *sbi,
- 	return en;
- }
- 
-+static unsigned int __destroy_extent_node(struct inode *inode,
-+					enum extent_type type)
-+{
-+	struct f2fs_sb_info *sbi = F2FS_I_SB(inode);
-+	struct extent_tree *et = F2FS_I(inode)->extent_tree[type];
-+	unsigned int nr_shrink = READ_EXTENT_CACHE_SHRINK_NUMBER;
-+	unsigned int node_cnt = 0;
-+
-+	if (!et || !atomic_read(&et->node_cnt))
-+		return 0;
-+
-+	while (atomic_read(&et->node_cnt)) {
-+		write_lock(&et->lock);
-+		node_cnt += __free_extent_tree(sbi, et, nr_shrink);
-+		write_unlock(&et->lock);
-+	}
-+
-+	f2fs_bug_on(sbi, atomic_read(&et->node_cnt));
-+
-+	return node_cnt;
-+}
-+
- static void __update_extent_tree_range(struct inode *inode,
- 			struct extent_info *tei, enum extent_type type)
- {
-@@ -740,9 +763,6 @@ static void __update_extent_tree_range(struct inode *inode,
- 		}
- 	}
- 
--	if (is_inode_flag_set(inode, FI_NO_EXTENT))
--		__free_extent_tree(sbi, et);
--
- 	if (et->largest_updated) {
- 		et->largest_updated = false;
- 		updated = true;
-@@ -750,6 +770,9 @@ static void __update_extent_tree_range(struct inode *inode,
- 
- 	write_unlock(&et->lock);
- 
-+	if (is_inode_flag_set(inode, FI_NO_EXTENT))
-+		__destroy_extent_node(inode, EX_READ);
-+
- 	if (updated)
- 		f2fs_mark_inode_dirty_sync(inode, true);
- }
-@@ -835,10 +858,14 @@ static unsigned int __shrink_extent_tree(struct f2fs_sb_info *sbi, int nr_shrink
- 	list_for_each_entry_safe(et, next, &eti->zombie_list, list) {
- 		if (atomic_read(&et->node_cnt)) {
- 			write_lock(&et->lock);
--			node_cnt += __free_extent_tree(sbi, et);
-+			node_cnt += __free_extent_tree(sbi, et,
-+					nr_shrink - node_cnt - tree_cnt);
- 			write_unlock(&et->lock);
- 		}
--		f2fs_bug_on(sbi, atomic_read(&et->node_cnt));
-+
-+		if (atomic_read(&et->node_cnt))
-+			goto unlock_out;
-+
- 		list_del_init(&et->list);
- 		radix_tree_delete(&eti->extent_tree_root, et->ino);
- 		kmem_cache_free(extent_tree_slab, et);
-@@ -929,23 +956,6 @@ unsigned int f2fs_shrink_read_extent_tree(struct f2fs_sb_info *sbi, int nr_shrin
- 	return __shrink_extent_tree(sbi, nr_shrink, EX_READ);
- }
- 
--static unsigned int __destroy_extent_node(struct inode *inode,
--					enum extent_type type)
--{
--	struct f2fs_sb_info *sbi = F2FS_I_SB(inode);
--	struct extent_tree *et = F2FS_I(inode)->extent_tree[type];
--	unsigned int node_cnt = 0;
--
--	if (!et || !atomic_read(&et->node_cnt))
--		return 0;
--
--	write_lock(&et->lock);
--	node_cnt = __free_extent_tree(sbi, et);
--	write_unlock(&et->lock);
--
--	return node_cnt;
--}
--
- void f2fs_destroy_extent_node(struct inode *inode)
- {
- 	__destroy_extent_node(inode, EX_READ);
-@@ -953,7 +963,6 @@ void f2fs_destroy_extent_node(struct inode *inode)
- 
- static void __drop_extent_tree(struct inode *inode, enum extent_type type)
- {
--	struct f2fs_sb_info *sbi = F2FS_I_SB(inode);
- 	struct extent_tree *et = F2FS_I(inode)->extent_tree[type];
- 	bool updated = false;
- 
-@@ -961,7 +970,6 @@ static void __drop_extent_tree(struct inode *inode, enum extent_type type)
- 		return;
- 
- 	write_lock(&et->lock);
--	__free_extent_tree(sbi, et);
- 	if (type == EX_READ) {
- 		set_inode_flag(inode, FI_NO_EXTENT);
- 		if (et->largest.len) {
-@@ -970,6 +978,9 @@ static void __drop_extent_tree(struct inode *inode, enum extent_type type)
- 		}
- 	}
- 	write_unlock(&et->lock);
-+
-+	__destroy_extent_node(inode, type);
-+
- 	if (updated)
- 		f2fs_mark_inode_dirty_sync(inode, true);
- }
 -- 
 2.53.0
 
