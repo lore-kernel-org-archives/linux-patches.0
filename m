@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793210033;
-	b=15Z/1X3gRqmkLO6kCJ/WsqNX1XYjTAsXpt7TT3kLN+I418hRu5fgDf7oA5SmX3PMQfzv
-	 JVQFO5Lk9r1BV6AVRmnSQ5+AcdMk1Zo2xOTrXAeIGJeONf5Xp3H5r4pwvZ0GPaFwLKioe
-	 MKdync1tqoHpa1kaOOk7PcXwOxgOJwkiZ9nkF+9dv7+z0VDlHqLq+1TqZ+Hn8faAyEESZ
-	 lncyXJcSoOJ+y9KAYzlWioMtgRvj9K56aV5i+2tq7gOSmvJAYIwISwESyVPRyUlwA8iej
-	 u1bmhEzYCISIFXh8LHlTj4jT3xxR8cspBIe6KZaeAD9GhTqoB/s1Ddmlix88SWYTCjA==
+	t=1793210036;
+	b=rifC2lpSUKa7J5bHKnZJ9QrPe6LlFHCY85a983HGUl9LPJI1F6qxQYDor5SXQ8AVbo8k
+	 msZO/recBJeytzfLyRCpQ0bdC6vUvpoKBVr0hGt/VBhdPsUFdIvNyGIT7jtoHHcfbj2z6
+	 snY/hyRn5kaEDDUvfij+tzl15BqUWT7DANcmJx0BhyyAGtO2zNWFAvGtCy+qHFslJp8Bu
+	 HZ+TA7bGtFIQK2qfL+GAy1V22YBsgZqDjolcsbrdb9pA0MYohC/3xI/eBtQ+NHgkjsiJ3
+	 nhQWQ6vc3vXwwwhfVQxHgc0Z1jA3kKPNQ4O/hjMPcF2qTtBbUkeKqsx6eKJQd+5EGwA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793210033;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793210036;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=gQ5uf54w/wx5skAWpaki5bVUpEnH8VBrAf+EqV1xLU0=;
-	b=OT29LmYxbu/z0Z+bhWMyguFkZu/J+Qy53Uo1EILVigHE5GWyn/OzxA3nSNwNfZnjQ+oi
-	 iMYAgrgAXz+HQ8s2tRiWhpDFFxUxD4UNZkTZf0navR5JChyCsFrFjfR0cZNhvdsMeoPLM
-	 srMb2NyQ4L3XKWEotvcqMO7ZdDkLv0ZPd73GXAuiWYYRrEJmyEVxH/8VC82i+xCcU0WDK
-	 ZG8RTKlgWu3o7D/87oaLfvgOjvHVITqDVFKnaxmPttl8tCRdtjTyt/ssU0zKx/3zC/XR3
-	 hWeyer2sfyeJaqei1ZLvQJWO8IsQ+EhubAhnqaBa6HCaq0Cw4r3AjA3Iv9pV2GTDtPQ==
+	bh=B5okx7yM96MkxTUe6VVGgK0tGT9y9fmIKf5cnSSi3Ig=;
+	b=4bTG/1PXJs/AA3HYjhX7mJQ9asi4vCllT/RYRsSw2c2/5IbqlDZBD2lv8hR6/Jen9ojz
+	 SEyI/IAaPg+nIXGXIdzgqJxN//rlgjX2CjoFm5xjmAxmz0ttBcfmPWiBblifVHRoWKoYX
+	 p/x5wDXpc4WgcwsUaUMy/EdUHawTmHUlUHj0IcIrGWYIDT5dbMYQ3gopuayAjucBctsXc
+	 wbvPU6bxbUcPBps5JFWXTrr0KpBWroZZTGFgcRc/Osg4uysx0kxPUjqTADgoy9MsKttbP
+	 k525riimQXWV/afPjhilNQj1VcqIidztx6+XJ0uCTaQKbuTCf34kFYNEDrIPL3yHk/A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ahGUegDl;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Rn3zeZ0L;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 935C8606A31A;
-	Wed, 28 Oct 2026 17:53:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71C8F606A31C;
+	Wed, 28 Oct 2026 17:53:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ahGUegDl
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2FA81F01825;
-	Wed, 28 Oct 2026 17:53:52 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Rn3zeZ0L
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C175A1F01825;
+	Wed, 28 Oct 2026 17:53:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793210033;
-	bh=gQ5uf54w/wx5skAWpaki5bVUpEnH8VBrAf+EqV1xLU0=;
+	s=korg; t=1793210036;
+	bh=B5okx7yM96MkxTUe6VVGgK0tGT9y9fmIKf5cnSSi3Ig=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ahGUegDllT8R2PZOXHpzQzvEOuDh+gR8o+GTT5RWzAlenlJ6ev9tjUl3ZIgXjR8fX
-	 dqspCUMLH1PbFer6KPqQIAvHOwXMf9VW4CNudftGOVOVi0Dw6KRI3CwkphpuiCkSHj
-	 6wMNsgdMqSGdusk9eHB2w+ajxqpc9ltCrbhR0OF4=
+	b=Rn3zeZ0LXaVFr/xqEvo5gTUGd7Z17DSPIVIUpOYqfLulQms3vjdPyQruXpboITjSj
+	 pr5P1KYOmzUDzwtGHBKHjjcjFlY+74QJyzdS96jqU7/x6NFawLq6pN1igH5wkPbZUf
+	 JfvDt9/5mUZHohHS7HTnIT95Yf0zWGVVlVO2scnk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Michael Kelley <mhklinux@outlook.com>,
-	Wei Liu <wei.liu@kernel.org>,
+	Gilberto Conde <gilbertorconde@gmail.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 008/168] Drivers: hv: Dont reset VMBus connection state on error/exit paths
-Date: Wed, 28 Oct 2026 17:59:04 +0100
-Message-ID: <20261028165943.292665256@linuxfoundation.org>
+Subject: [PATCH 6.6 009/168] pinctrl: qcom: ipq5018: add missing pwm3 function on gpio13
+Date: Wed, 28 Oct 2026 17:59:05 +0100
+Message-ID: <20261028165943.319045045@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165943.089486480@linuxfoundation.org>
 References: <20261028165943.089486480@linuxfoundation.org>
@@ -69,65 +69,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Kelley <mhkelley58@gmail.com>
+From: Gilberto Conde <gilbertorconde@gmail.com>
 
-[ Upstream commit ec31dc39e835ccde0930daccece8c492d28282fc ]
+[ Upstream commit c6c159fcdb4e9a678eda0831f971e4a3a488ec47 ]
 
-In two places, current code forces vmbus_connection.conn_state to
-DISCONNECTED prior to calling vmbus_disconnect(). But vmbus_disconnect()
-calls vmbus_initiate_unload(), which unloads the VMBus connection
-only if the conn_state is CONNECTED. Consequently, the connection
-remains and the Hyper-V host might continue to send messages or post
-VMBus interrupts.
+GPIO13 supports the PWM3 function at mux select value 4, but the
+pingroup table leaves that slot empty and gpio13 is not listed in
+pwm3_groups. Selecting pwm3 on gpio13 is therefore rejected by the
+pinmux core:
 
-The problem was introduced in commit 74347a99e73ae ("x86/Hyper-V:
-Unload vmbus channel in hv panic callback"), in that
-vmbus_initiate_unload() started checking the current connection
-state before doing the unload. This commit removed some occurrences
-where conn_state was forced to DISCONNECTED, but these two remained,
-apparently due to an oversight at the time.
+  ipq5018-tlmm: invalid group "gpio13" for function "pwm3"
 
-Fix this by not forcing conn_state to DISCONNECTED during VMBus exit,
-or if a failure occurs when establishing the connection in the first
-place. Whatever value conn_state has at the time is then read by
-vmbus_initiate_unload() to determine if there is a connection to
-be unloaded.
+The GL.iNet GL-X2000 drives its fan from PWM3 on this pin, and the
+vendor firmware muxes it with select value 4:
 
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/linux-hyperv/20260805205806.B5AC31F000E9@smtp.kernel.org/
-Fixes: 74347a99e73ae ("x86/Hyper-V: Unload vmbus channel in hv panic callback")
-Signed-off-by: Michael Kelley <mhklinux@outlook.com>
-Signed-off-by: Wei Liu <wei.liu@kernel.org>
+  gpio13 : out low  func4 8mA no pull
+
+Add pwm3 to the fourth function slot of gpio13 and list gpio13 in
+pwm3_groups. With this the pin muxes as expected:
+
+  pin 13 (GPIO_13): device 1941010.pwm function pwm3 group gpio13
+
+Fixes: 725d1c891658 ("pinctrl: qcom: Add IPQ5018 pinctrl driver")
+Signed-off-by: Gilberto Conde <gilbertorconde@gmail.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260921093419.2870168-1-gilbertorconde@gmail.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hv/connection.c | 1 -
- drivers/hv/vmbus_drv.c  | 1 -
- 2 files changed, 2 deletions(-)
+ drivers/pinctrl/qcom/pinctrl-ipq5018.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/hv/connection.c b/drivers/hv/connection.c
-index 3cdba13b132f0..722c07ec05be4 100644
---- a/drivers/hv/connection.c
-+++ b/drivers/hv/connection.c
-@@ -340,7 +340,6 @@ int vmbus_connect(void)
- cleanup:
- 	pr_err("Unable to connect to host\n");
+diff --git a/drivers/pinctrl/qcom/pinctrl-ipq5018.c b/drivers/pinctrl/qcom/pinctrl-ipq5018.c
+index 68f65b57003e9..18e68f7185bd5 100644
+--- a/drivers/pinctrl/qcom/pinctrl-ipq5018.c
++++ b/drivers/pinctrl/qcom/pinctrl-ipq5018.c
+@@ -565,7 +565,7 @@ static const char * const qdss_cti_trig_out_b1_groups[] = {
+ };
  
--	vmbus_connection.conn_state = DISCONNECTED;
- 	vmbus_disconnect();
+ static const char * const pwm3_groups[] = {
+-	"gpio45",
++	"gpio45", "gpio13",
+ };
  
- 	kfree(msginfo);
-diff --git a/drivers/hv/vmbus_drv.c b/drivers/hv/vmbus_drv.c
-index 9df19a69feb69..44af1c455bbf9 100644
---- a/drivers/hv/vmbus_drv.c
-+++ b/drivers/hv/vmbus_drv.c
-@@ -2707,7 +2707,6 @@ static void __exit vmbus_exit(void)
- 
- 	hv_remove_kexec_handler();
- 	hv_remove_crash_handler();
--	vmbus_connection.conn_state = DISCONNECTED;
- 	hv_stimer_global_cleanup();
- 	vmbus_disconnect();
- 	if (vmbus_irq == -1) {
+ static const char * const qdss_cti_trig_in_b1_groups[] = {
+@@ -691,7 +691,7 @@ static const struct msm_pingroup ipq5018_groups[] = {
+ 	PINGROUP(10, blsp0_spi, blsp1_uart0, led0, gcc_plltest, qdss_tracedata_a, _, _, _, _),
+ 	PINGROUP(11, blsp0_spi, blsp1_uart0, _, gcc_tlmm, qdss_tracedata_a, _, _, _, _),
+ 	PINGROUP(12, blsp0_spi, blsp0_i2c, blsp1_uart0, _, gcc_plltest, qdss_tracedata_a, _, _, _),
+-	PINGROUP(13, blsp0_spi, blsp0_i2c, blsp1_uart0, _, qdss_tracedata_a, _, _, _, _),
++	PINGROUP(13, blsp0_spi, blsp0_i2c, blsp1_uart0, pwm3, qdss_tracedata_a, _, _, _, _),
+ 	PINGROUP(14, pcie0_clk, _, _, cri_trng0, qdss_tracedata_a, _, _, _, _),
+ 	PINGROUP(15, _, _, cri_trng1, qdss_tracedata_a, _, _, _, _, _),
+ 	PINGROUP(16, pcie0_wake, _, _, cri_trng, qdss_tracedata_a, _, _, _, _),
 -- 
 2.53.0
 
