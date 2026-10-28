@@ -1,58 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214270;
-	b=pvKy4krm3ImBvf1LoPRmIw84zO9fvv2e0GO864RWfFhBnYmhdC4Y3Aj6mN1iw9BOPlY/
-	 Ts+5o6NGTafLsd+JjM/umml3NYMplIngr22FHo4L3eG8Z+vSUgZ09NYUTx7estCGayWmZ
-	 kWRjvjXOfjf42I3E17s/NAZhUVxfPFeoPywBFtp3CBcsNaXAGjQR1nXsQ5/mV8xV4v03y
-	 O3QiL3vEDq0EYQWxhAvNaP/Jx3/K5WCSniVypMgw42mRfZXEjreNFuF76JRqzH7l/6gnc
-	 iw3ZuQG2MTdqVvSJbNt7lBrClV3QoWYWSZQD79Lr3W9aNHxFscVznMpcXK54giGlefg==
+	t=1793214273;
+	b=FBkT5yEQp8oZqwJhWPBwJw0JkWkycpmxpzOO96U3thqEpaPi28gym3OH5RRES9EOeXt1
+	 YFFBb7FQ9jw+q1XLSlVWUpwVmYc6Gv01Ao1OJgxCpC9qmjSDh6rs5Bg+eu+Db/EQagcWP
+	 c4r1QFX2mxR9yN6+epqckp/kXTqSp8dM3tOybrPGYS6OTrgwkLL91a7KXX9whTt6vR8iS
+	 HSM0XiV9KNMoVUB9xOZABUZrFln0Ga4Q6o4vGoBabORizbSggvDkP+2zjt0IfC46h7AT2
+	 A9hunLCsxkddk8fagA97EMXU8UG6BZf/081m1iHw2O8w5QueKht3zpZkJOr+GOJ1XGw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214270;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214273;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=pa02kPtjEV6fCef/f74/a+h6CUietFtn/x/oPl6RV/s=;
-	b=kowEian9YAGFmi7hnl9yLoA3+3+QjxMoutEPsATdsxw1TpgjCwE0NIWWcXXpf2+v146Z
-	 gLx+LeHRbji0vGE2zMQbYAtVTZfBBCcYD1ThJWPORBhi/wmceYk01Ya9QN9woACOwAtCe
-	 8nxeuq68Qw9DiiBZywbc1LwQW3S5ai9ZqpfMJGdyVoMX1bZEDYzc4i7o0/FPyIHmyPSjc
-	 wxGW5Ko6+HWaDIrEGsrPdXkyJkHyoZffI4E+kf0gDnXjXaTiKr7KL4HZMsGkJh1PraLMW
-	 w0c3hSlDhGf6zS5zkISE6YmPFTv807JcVjiL0XASA7qfo0sqCIVy6z6JsIJ/qPYRHnA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=03OPWAPfRAeawCvWNuFYm8tQ7NQsXyTuf4FaquQwQ50=;
+	b=Rfk0j/etIhmw+/O80tzQK9axi9SqYeTVeK6+2nWNvKM7L9Rxv7ybPyArEYcjJHiehbwU
+	 PemmAvucinF9GXAbMLuJnxVko45Hy5QQycOVVoXtLVqk4I+I8+3EzVAVDi2C9YD1EX8a1
+	 kBngEcaDZrww7cuYpXK9j/+mPb4PqeVEGypWaVvYwwyBHqitYuuH6+vvYtRACAqj5rAzn
+	 p32Av6241fk22O1FfaSNWUejiPxcrsH5Kceu1gfNHn4xUnsJVqVhkPLSoOEe17cMlT7dU
+	 yFCo2oVZsrlsEm2IuJIQo6Wnr9i3QIRTeZIVPo8qaJu+Nwo6K3hgrtrDok6HEj1S2Wg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rYhYGX1i;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DflmmeC5;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 996DA606A33D;
-	Wed, 28 Oct 2026 19:04:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F16260A2634;
+	Wed, 28 Oct 2026 19:04:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rYhYGX1i
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB0EE1F01828;
-	Wed, 28 Oct 2026 19:04:28 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DflmmeC5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4DDD1F01829;
+	Wed, 28 Oct 2026 19:04:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214269;
-	bh=pa02kPtjEV6fCef/f74/a+h6CUietFtn/x/oPl6RV/s=;
+	s=korg; t=1793214272;
+	bh=03OPWAPfRAeawCvWNuFYm8tQ7NQsXyTuf4FaquQwQ50=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rYhYGX1iw1fhffDMfsEgmO7YR+MgJ9qAARBnVtNsKeStKkhG0wyRbz/2um2IK9fpu
-	 VhD3JDdoY6jwDYhU0OUux0s2odNhihUFMyyQOxKNXr1iURXg/8xnG7B652TdVM6iVo
-	 uWThFBoMhtqbreSI72+q/dUesphvKYJ+rCMZ3NRA=
+	b=DflmmeC5DSUbbVRnJxTM+nupas5RbtcpcyRCH/wwREJddj/zs/GRv2iG/jRfn5ail
+	 5ZbKBwpWL5mEMnx1f9YzqYeaAXe9H2YXzhvqc5mBWHF1srMF9Gc/Y8p/HHmI0TaOWp
+	 rK5X2Pp2KN5OAHYVqgOzPObGxfao5yKLw78V3Q8A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jon Kohler <jon@nutanix.com>,
-	Gauri Patwardhan <gauri.patwardhan@nutanix.com>,
-	Rahul Chunduru <rahul.chunduru@nutanix.com>,
-	Harshit Agarwal <harshit@nutanix.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	Phil Auld <pauld@redhat.com>,
-	Will Ton <william.ton@nutanix.com>,
+	linux-cifs@vger.kernel.org,
+	David Howells <dhowells@redhat.com>,
+	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0798/1887] sched/rt: Fix race in push_rt_task
-Date: Wed, 28 Oct 2026 17:48:14 +0100
-Message-ID: <20261028170517.588726885@linuxfoundation.org>
+Subject: [PATCH 6.1 0799/1887] smb: client: fix potential deadlock when reconnecting channels
+Date: Wed, 28 Oct 2026 17:48:15 +0100
+Message-ID: <20261028170517.612235809@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,298 +64,215 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Harshit Agarwal <harshit@nutanix.com>
+From: Paulo Alcantara <pc@manguebit.org>
 
-[ Upstream commit 690e47d1403e90b7f2366f03b52ed3304194c793 ]
+[ Upstream commit 711741f94ac3cf9f4e3aa73aa171e76d188c0819 ]
 
-Overview
-========
-When a CPU chooses to call push_rt_task and picks a task to push to
-another CPU's runqueue then it will call find_lock_lowest_rq method
-which would take a double lock on both CPUs' runqueues. If one of the
-locks aren't readily available, it may lead to dropping the current
-runqueue lock and reacquiring both the locks at once. During this window
-it is possible that the task is already migrated and is running on some
-other CPU. These cases are already handled. However, if the task is
-migrated and has already been executed and another CPU is now trying to
-wake it up (ttwu) such that it is queued again on the runqeue
-(on_rq is 1) and also if the task was run by the same CPU, then the
-current checks will pass even though the task was migrated out and is no
-longer in the pushable tasks list.
+Fix cifs_signal_cifsd_for_reconnect() to take the correct lock order
+and prevent the following deadlock from happening
 
-Crashes
-=======
-This bug resulted in quite a few flavors of crashes triggering kernel
-panics with various crash signatures such as assert failures, page
-faults, null pointer dereferences, and queue corruption errors all
-coming from scheduler itself.
+======================================================
+WARNING: possible circular locking dependency detected
+6.16.0-rc3-build2+ #1301 Tainted: G S      W
+------------------------------------------------------
+cifsd/6055 is trying to acquire lock:
+ffff88810ad56038 (&tcp_ses->srv_lock){+.+.}-{3:3}, at: cifs_signal_cifsd_for_reconnect+0x134/0x200
 
-Some of the crashes:
--> kernel BUG at kernel/sched/rt.c:1616! BUG_ON(idx >= MAX_RT_PRIO)
-   Call Trace:
-   ? __die_body+0x1a/0x60
-   ? die+0x2a/0x50
-   ? do_trap+0x85/0x100
-   ? pick_next_task_rt+0x6e/0x1d0
-   ? do_error_trap+0x64/0xa0
-   ? pick_next_task_rt+0x6e/0x1d0
-   ? exc_invalid_op+0x4c/0x60
-   ? pick_next_task_rt+0x6e/0x1d0
-   ? asm_exc_invalid_op+0x12/0x20
-   ? pick_next_task_rt+0x6e/0x1d0
-   __schedule+0x5cb/0x790
-   ? update_ts_time_stats+0x55/0x70
-   schedule_idle+0x1e/0x40
-   do_idle+0x15e/0x200
-   cpu_startup_entry+0x19/0x20
-   start_secondary+0x117/0x160
-   secondary_startup_64_no_verify+0xb0/0xbb
+but task is already holding lock:
+ffff888119c64330 (&ret_buf->chan_lock){+.+.}-{3:3}, at: cifs_signal_cifsd_for_reconnect+0xcf/0x200
 
--> BUG: kernel NULL pointer dereference, address: 00000000000000c0
-   Call Trace:
-   ? __die_body+0x1a/0x60
-   ? no_context+0x183/0x350
-   ? __warn+0x8a/0xe0
-   ? exc_page_fault+0x3d6/0x520
-   ? asm_exc_page_fault+0x1e/0x30
-   ? pick_next_task_rt+0xb5/0x1d0
-   ? pick_next_task_rt+0x8c/0x1d0
-   __schedule+0x583/0x7e0
-   ? update_ts_time_stats+0x55/0x70
-   schedule_idle+0x1e/0x40
-   do_idle+0x15e/0x200
-   cpu_startup_entry+0x19/0x20
-   start_secondary+0x117/0x160
-   secondary_startup_64_no_verify+0xb0/0xbb
+which lock already depends on the new lock.
 
--> BUG: unable to handle page fault for address: ffff9464daea5900
-   kernel BUG at kernel/sched/rt.c:1861! BUG_ON(rq->cpu != task_cpu(p))
+the existing dependency chain (in reverse order) is:
 
--> kernel BUG at kernel/sched/rt.c:1055! BUG_ON(!rq->nr_running)
-   Call Trace:
-   ? __die_body+0x1a/0x60
-   ? die+0x2a/0x50
-   ? do_trap+0x85/0x100
-   ? dequeue_top_rt_rq+0xa2/0xb0
-   ? do_error_trap+0x64/0xa0
-   ? dequeue_top_rt_rq+0xa2/0xb0
-   ? exc_invalid_op+0x4c/0x60
-   ? dequeue_top_rt_rq+0xa2/0xb0
-   ? asm_exc_invalid_op+0x12/0x20
-   ? dequeue_top_rt_rq+0xa2/0xb0
-   dequeue_rt_entity+0x1f/0x70
-   dequeue_task_rt+0x2d/0x70
-   __schedule+0x1a8/0x7e0
-   ? blk_finish_plug+0x25/0x40
-   schedule+0x3c/0xb0
-   futex_wait_queue_me+0xb6/0x120
-   futex_wait+0xd9/0x240
-   do_futex+0x344/0xa90
-   ? get_mm_exe_file+0x30/0x60
-   ? audit_exe_compare+0x58/0x70
-   ? audit_filter_rules.constprop.26+0x65e/0x1220
-   __x64_sys_futex+0x148/0x1f0
-   do_syscall_64+0x30/0x80
-   entry_SYSCALL_64_after_hwframe+0x62/0xc7
+-> #2 (&ret_buf->chan_lock){+.+.}-{3:3}:
+       validate_chain+0x1cf/0x270
+       __lock_acquire+0x60e/0x780
+       lock_acquire.part.0+0xb4/0x1f0
+       _raw_spin_lock+0x2f/0x40
+       cifs_setup_session+0x81/0x4b0
+       cifs_get_smb_ses+0x771/0x900
+       cifs_mount_get_session+0x7e/0x170
+       cifs_mount+0x92/0x2d0
+       cifs_smb3_do_mount+0x161/0x460
+       smb3_get_tree+0x55/0x90
+       vfs_get_tree+0x46/0x180
+       do_new_mount+0x1b0/0x2e0
+       path_mount+0x6ee/0x740
+       do_mount+0x98/0xe0
+       __do_sys_mount+0x148/0x180
+       do_syscall_64+0xa4/0x260
+       entry_SYSCALL_64_after_hwframe+0x76/0x7e
 
--> BUG: unable to handle page fault for address: ffff8cf3608bc2c0
-   Call Trace:
-   ? __die_body+0x1a/0x60
-   ? no_context+0x183/0x350
-   ? spurious_kernel_fault+0x171/0x1c0
-   ? exc_page_fault+0x3b6/0x520
-   ? plist_check_list+0x15/0x40
-   ? plist_check_list+0x2e/0x40
-   ? asm_exc_page_fault+0x1e/0x30
-   ? _cond_resched+0x15/0x30
-   ? futex_wait_queue_me+0xc8/0x120
-   ? futex_wait+0xd9/0x240
-   ? try_to_wake_up+0x1b8/0x490
-   ? futex_wake+0x78/0x160
-   ? do_futex+0xcd/0xa90
-   ? plist_check_list+0x15/0x40
-   ? plist_check_list+0x2e/0x40
-   ? plist_del+0x6a/0xd0
-   ? plist_check_list+0x15/0x40
-   ? plist_check_list+0x2e/0x40
-   ? dequeue_pushable_task+0x20/0x70
-   ? __schedule+0x382/0x7e0
-   ? asm_sysvec_reschedule_ipi+0xa/0x20
-   ? schedule+0x3c/0xb0
-   ? exit_to_user_mode_prepare+0x9e/0x150
-   ? irqentry_exit_to_user_mode+0x5/0x30
-   ? asm_sysvec_reschedule_ipi+0x12/0x20
+-> #1 (&ret_buf->ses_lock){+.+.}-{3:3}:
+       validate_chain+0x1cf/0x270
+       __lock_acquire+0x60e/0x780
+       lock_acquire.part.0+0xb4/0x1f0
+       _raw_spin_lock+0x2f/0x40
+       cifs_match_super+0x101/0x320
+       sget+0xab/0x270
+       cifs_smb3_do_mount+0x1e0/0x460
+       smb3_get_tree+0x55/0x90
+       vfs_get_tree+0x46/0x180
+       do_new_mount+0x1b0/0x2e0
+       path_mount+0x6ee/0x740
+       do_mount+0x98/0xe0
+       __do_sys_mount+0x148/0x180
+       do_syscall_64+0xa4/0x260
+       entry_SYSCALL_64_after_hwframe+0x76/0x7e
 
-Above are some of the common examples of the crashes that were observed
-due to this issue.
+-> #0 (&tcp_ses->srv_lock){+.+.}-{3:3}:
+       check_noncircular+0x95/0xc0
+       check_prev_add+0x115/0x2f0
+       validate_chain+0x1cf/0x270
+       __lock_acquire+0x60e/0x780
+       lock_acquire.part.0+0xb4/0x1f0
+       _raw_spin_lock+0x2f/0x40
+       cifs_signal_cifsd_for_reconnect+0x134/0x200
+       __cifs_reconnect+0x8f/0x500
+       cifs_handle_standard+0x112/0x280
+       cifs_demultiplex_thread+0x64d/0xbc0
+       kthread+0x2f7/0x310
+       ret_from_fork+0x2a/0x230
+       ret_from_fork_asm+0x1a/0x30
 
-Details
-=======
-Let's look at the following scenario to understand this race.
+other info that might help us debug this:
 
-1) CPU A enters push_rt_task
-  a) CPU A has chosen next_task = task p.
-  b) CPU A calls find_lock_lowest_rq(Task p, CPU Z’s rq).
-  c) CPU A identifies CPU X as a destination CPU (X < Z).
-  d) CPU A enters double_lock_balance(CPU Z’s rq, CPU X’s rq).
-  e) Since X is lower than Z, CPU A unlocks CPU Z’s rq. Someone else has
-     locked CPU X’s rq, and thus, CPU A must wait.
+Chain exists of:
+  &tcp_ses->srv_lock --> &ret_buf->ses_lock --> &ret_buf->chan_lock
 
-2) At CPU Z
-  a) Previous task has completed execution and thus, CPU Z enters
-     schedule, locks its own rq after CPU A releases it.
-  b) CPU Z dequeues previous task and begins executing task p.
-  c) CPU Z unlocks its rq.
-  d) Task p yields the CPU (ex. by doing IO or waiting to acquire a
-     lock) which triggers the schedule function on CPU Z.
-  e) CPU Z enters schedule again, locks its own rq, and dequeues task p.
-  f) As part of dequeue, it sets p.on_rq = 0 and unlocks its rq.
+ Possible unsafe locking scenario:
 
-3) At CPU B
-  a) CPU B enters try_to_wake_up with input task p.
-  b) Since CPU Z dequeued task p, p.on_rq = 0, and CPU B updates
-     B.state = WAKING.
-  c) CPU B via select_task_rq determines CPU Y as the target CPU.
+       CPU0                    CPU1
+       ----                    ----
+  lock(&ret_buf->chan_lock);
+                               lock(&ret_buf->ses_lock);
+                               lock(&ret_buf->chan_lock);
+  lock(&tcp_ses->srv_lock);
 
-4) The race
-  a) CPU A acquires CPU X’s lock and relocks CPU Z.
-  b) CPU A reads task p.cpu = Z and incorrectly concludes task p is
-     still on CPU Z.
-  c) CPU A failed to notice task p had been dequeued from CPU Z while
-     CPU A was waiting for locks in double_lock_balance. If CPU A knew
-     that task p had been dequeued, it would return NULL forcing
-     push_rt_task to give up the task p's migration.
-  d) CPU B updates task p.cpu = Y and calls ttwu_queue.
-  e) CPU B locks Ys rq. CPU B enqueues task p onto Y and sets task
-     p.on_rq = 1.
-  f) CPU B unlocks CPU Y, triggering memory synchronization.
-  g) CPU A reads task p.on_rq = 1, cementing its assumption that task p
-     has not migrated.
-  h) CPU A decides to migrate p to CPU X.
+ *** DEADLOCK ***
 
-This leads to A dequeuing p from Y's queue and various crashes down the
-line.
+3 locks held by cifsd/6055:
+ #0: ffffffff857de398 (&cifs_tcp_ses_lock){+.+.}-{3:3}, at: cifs_signal_cifsd_for_reconnect+0x7b/0x200
+ #1: ffff888119c64060 (&ret_buf->ses_lock){+.+.}-{3:3}, at: cifs_signal_cifsd_for_reconnect+0x9c/0x200
+ #2: ffff888119c64330 (&ret_buf->chan_lock){+.+.}-{3:3}, at: cifs_signal_cifsd_for_reconnect+0xcf/0x200
 
-Solution
-========
-The solution here is fairly simple. After obtaining the lock (at 4a),
-the check is enhanced to make sure that the task is still at the head of
-the pushable tasks list. If not, then it is anyway not suitable for
-being pushed out.
-
-Testing
-=======
-The fix is tested on a cluster of 3 nodes, where the panics due to this
-are hit every couple of days. A fix similar to this was deployed on such
-cluster and was stable for more than 30 days.
-
-Co-developed-by: Jon Kohler <jon@nutanix.com>
-Signed-off-by: Jon Kohler <jon@nutanix.com>
-Co-developed-by: Gauri Patwardhan <gauri.patwardhan@nutanix.com>
-Signed-off-by: Gauri Patwardhan <gauri.patwardhan@nutanix.com>
-Co-developed-by: Rahul Chunduru <rahul.chunduru@nutanix.com>
-Signed-off-by: Rahul Chunduru <rahul.chunduru@nutanix.com>
-Signed-off-by: Harshit Agarwal <harshit@nutanix.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: "Steven Rostedt (Google)" <rostedt@goodmis.org>
-Reviewed-by: Phil Auld <pauld@redhat.com>
-Tested-by: Will Ton <william.ton@nutanix.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20250225180553.167995-1-harshit@nutanix.com
+Cc: linux-cifs@vger.kernel.org
+Reported-by: David Howells <dhowells@redhat.com>
+Fixes: d7d7a66aacd6 ("cifs: avoid use of global locks for high contention data")
+Reviewed-by: David Howells <dhowells@redhat.com>
+Tested-by: David Howells <dhowells@redhat.com>
+Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
+Signed-off-by: David Howells <dhowells@redhat.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/rt.c | 52 +++++++++++++++++++++++------------------------
- 1 file changed, 25 insertions(+), 27 deletions(-)
+ fs/smb/client/cifsglob.h |  1 +
+ fs/smb/client/connect.c  | 56 ++++++++++++++++++++++++++--------------
+ 2 files changed, 38 insertions(+), 19 deletions(-)
 
-diff --git a/kernel/sched/rt.c b/kernel/sched/rt.c
-index 49e19ed896f8c..2eddf5653f6a0 100644
---- a/kernel/sched/rt.c
-+++ b/kernel/sched/rt.c
-@@ -1972,6 +1972,26 @@ static int find_lowest_rq(struct task_struct *task)
- 	return -1;
+diff --git a/fs/smb/client/cifsglob.h b/fs/smb/client/cifsglob.h
+index c37f10eedddf2..4e463ee8e40bb 100644
+--- a/fs/smb/client/cifsglob.h
++++ b/fs/smb/client/cifsglob.h
+@@ -589,6 +589,7 @@ get_rfc1002_length(void *buf)
+ struct TCP_Server_Info {
+ 	struct list_head tcp_ses_list;
+ 	struct list_head smb_ses_list;
++	struct list_head rlist; /* reconnect list */
+ 	spinlock_t srv_lock;  /* protect anything here that is not protected */
+ 	__u64 conn_id; /* connection identifier (useful for debugging) */
+ 	int srv_count; /* reference counter */
+diff --git a/fs/smb/client/connect.c b/fs/smb/client/connect.c
+index 9172b4136a925..abc03adb692b5 100644
+--- a/fs/smb/client/connect.c
++++ b/fs/smb/client/connect.c
+@@ -185,6 +185,14 @@ static void cifs_resolve_server(struct work_struct *work)
+ 	cifs_server_unlock(server);
  }
  
-+static struct task_struct *pick_next_pushable_task(struct rq *rq)
-+{
-+	struct task_struct *p;
++#define set_need_reco(server) \
++do { \
++	spin_lock(&server->srv_lock); \
++	if (server->tcpStatus != CifsExiting) \
++		server->tcpStatus = CifsNeedReconnect; \
++	spin_unlock(&server->srv_lock); \
++} while (0)
 +
-+	if (!has_pushable_tasks(rq))
-+		return NULL;
-+
-+	p = plist_first_entry(&rq->rt.pushable_tasks,
-+			      struct task_struct, pushable_tasks);
-+
-+	BUG_ON(rq->cpu != task_cpu(p));
-+	BUG_ON(task_current(rq, p));
-+	BUG_ON(p->nr_cpus_allowed <= 1);
-+
-+	BUG_ON(!task_on_rq_queued(p));
-+	BUG_ON(!rt_task(p));
-+
-+	return p;
-+}
-+
- /* Will lock the rq it finds */
- static struct rq *find_lock_lowest_rq(struct task_struct *task, struct rq *rq)
- {
-@@ -2002,18 +2022,16 @@ static struct rq *find_lock_lowest_rq(struct task_struct *task, struct rq *rq)
- 			/*
- 			 * We had to unlock the run queue. In
- 			 * the mean time, task could have
--			 * migrated already or had its affinity changed.
--			 * Also make sure that it wasn't scheduled on its rq.
-+			 * migrated already or had its affinity changed,
-+			 * therefore check if the task is still at the
-+			 * head of the pushable tasks list.
- 			 * It is possible the task was scheduled, set
- 			 * "migrate_disabled" and then got preempted, so we must
- 			 * check the task migration disable flag here too.
- 			 */
--			if (unlikely(task_rq(task) != rq ||
-+			if (unlikely(is_migration_disabled(task) ||
- 				     !cpumask_test_cpu(lowest_rq->cpu, &task->cpus_mask) ||
--				     task_on_cpu(rq, task) ||
--				     !rt_task(task) ||
--				     is_migration_disabled(task) ||
--				     !task_on_rq_queued(task))) {
-+				     task != pick_next_pushable_task(rq))) {
- 
- 				double_unlock_balance(rq, lowest_rq);
- 				lowest_rq = NULL;
-@@ -2033,26 +2051,6 @@ static struct rq *find_lock_lowest_rq(struct task_struct *task, struct rq *rq)
- 	return lowest_rq;
- }
- 
--static struct task_struct *pick_next_pushable_task(struct rq *rq)
--{
--	struct task_struct *p;
--
--	if (!has_pushable_tasks(rq))
--		return NULL;
--
--	p = plist_first_entry(&rq->rt.pushable_tasks,
--			      struct task_struct, pushable_tasks);
--
--	BUG_ON(rq->cpu != task_cpu(p));
--	BUG_ON(task_current(rq, p));
--	BUG_ON(p->nr_cpus_allowed <= 1);
--
--	BUG_ON(!task_on_rq_queued(p));
--	BUG_ON(!rt_task(p));
--
--	return p;
--}
--
  /*
-  * If the current CPU has more than one RT task, see if the non
-  * running task can migrate over to a CPU that is running a task
+  * Update the tcpStatus for the server.
+  * This is used to signal the cifsd thread to call cifs_reconnect
+@@ -198,35 +206,45 @@ void
+ cifs_signal_cifsd_for_reconnect(struct TCP_Server_Info *server,
+ 				bool all_channels)
+ {
+-	struct TCP_Server_Info *pserver;
++	struct TCP_Server_Info *nserver;
+ 	struct cifs_ses *ses;
++	LIST_HEAD(reco);
+ 	int i;
+ 
+-	/* If server is a channel, select the primary channel */
+-	pserver = CIFS_SERVER_IS_CHAN(server) ? server->primary_server : server;
+-
+ 	/* if we need to signal just this channel */
+ 	if (!all_channels) {
+-		spin_lock(&server->srv_lock);
+-		if (server->tcpStatus != CifsExiting)
+-			server->tcpStatus = CifsNeedReconnect;
+-		spin_unlock(&server->srv_lock);
++		set_need_reco(server);
+ 		return;
+ 	}
+ 
+-	spin_lock(&cifs_tcp_ses_lock);
+-	list_for_each_entry(ses, &pserver->smb_ses_list, smb_ses_list) {
+-		if (cifs_ses_exiting(ses))
+-			continue;
+-		spin_lock(&ses->chan_lock);
+-		for (i = 0; i < ses->chan_count; i++) {
+-			spin_lock(&ses->chans[i].server->srv_lock);
+-			ses->chans[i].server->tcpStatus = CifsNeedReconnect;
+-			spin_unlock(&ses->chans[i].server->srv_lock);
++	if (CIFS_SERVER_IS_CHAN(server))
++		server = server->primary_server;
++	scoped_guard(spinlock, &cifs_tcp_ses_lock) {
++		set_need_reco(server);
++		list_for_each_entry(ses, &server->smb_ses_list, smb_ses_list) {
++			spin_lock(&ses->ses_lock);
++			if (ses->ses_status == SES_EXITING) {
++				spin_unlock(&ses->ses_lock);
++				continue;
++			}
++			spin_lock(&ses->chan_lock);
++			for (i = 1; i < ses->chan_count; i++) {
++				nserver = ses->chans[i].server;
++				if (!nserver)
++					continue;
++				nserver->srv_count++;
++				list_add(&nserver->rlist, &reco);
++			}
++			spin_unlock(&ses->chan_lock);
++			spin_unlock(&ses->ses_lock);
+ 		}
+-		spin_unlock(&ses->chan_lock);
+ 	}
+-	spin_unlock(&cifs_tcp_ses_lock);
++
++	list_for_each_entry_safe(server, nserver, &reco, rlist) {
++		list_del_init(&server->rlist);
++		set_need_reco(server);
++		cifs_put_tcp_session(server, 0);
++	}
+ }
+ 
+ /*
 -- 
 2.53.0
 
