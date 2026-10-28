@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793207810;
-	b=IqU7oTYIW1InToVIE11jQW89+xRFDfueQf5q7mSpfIoZpL6bh6TuN5ARyfNBHc3uer32
-	 VHGa7Z7Ry+manDBGmA9FABJlNPh8AI4OybVu8fgafuB3CmKcU62s6w4WU9bmf+nGcNNZz
-	 1NKUwxzrw7hBm41Glnzs1Udrc0keKaUQjoJ1hNUttsEjmfThe6A82DdI+qRmw9noMu55R
-	 at5r5fgyRxC/wus+GXiWQ0iCqULyJXivJzEZQ01BuQHHT79YMJDOuVCc2eOHB+5J2uGzm
-	 udpBGOnjmpipjBFcJtx6oThPPhmSdfTMRx6XhbGND5WyPIIC6Nw1OH3aSk9PHZxDOMQ==
+	t=1793207812;
+	b=Gyc42I6DULmzWDdwfbAEW8fERB5G8ChfCn1ddkt7CZnqjCpES2wbQOkLP6xW2i5TqsSC
+	 z2gu/0+28o/4vIqbkKg6wzQKrmKx0kXx3+Yqd9KEnZqlN5IG6+vUvZIH6c3+3vMh15wWg
+	 lEY1kFiDrzb9t/TBVZcqmTXCCFzKkQsq9Nm9BtTxyLIpu/o9ePLbJFqcPdKq+2qnn8U56
+	 ZytT7ECb/rZ/AybequzMV9w/J/9uiEBccVb7yb+k4bOJBfyh5otSJ99D/+VFYeBVqvdbw
+	 dW15Syc2hNmqnHYRlOAQ37E9ztnWRr7K+WH8/hhSWj4W/9XyKbUBpjkkqaOqgMn1dig==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793207810;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793207812;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=BVgCw1SmogznHiRiFS9hxyzGtKfUSi0YdXA9wsqcp+Q=;
-	b=gXbocAPphswEyr0z00O+TYYAPnemBnIK2n8G9YiMprtP2PQm1cBjdBjI4A7aXJGE7ssn
-	 Kfwiw1L8fG0EIYFwHGKdXNqjqX29DGcnEPnDN8j2Sop+Y5OUfRsPejh2xzoswBBz9xSPh
-	 Zgl1gK29a+cACyrEt3pOwl+ArmxzZcFN0+lN+hYnlBpdV0rt2AFmTEkdEItQJ7m603q4p
-	 ygj0RTol9s7ELxUCpRLbXGAfkQYWEAYpM0HvCy/eDN//uj8qhEOWrJPJHsFD3q4YcQOlI
-	 w8EnfCv6Xp27b6+WSeRnIlX3a/UTKyyo419439gO9QRVZLLBaBrHt0VQmk2GBqNW1dw==
+	bh=rOoj91GAyrRVVKIE1VTTpVMSCBtq5nY/7AX2fiSkHBc=;
+	b=y6dO5qSrPfyy2kozVWd898VLB02CzAy364FRAPrueTTMQ8/PJqiHE299xCkMdCiJ6eKY
+	 kToLYjR65M38iMDmRIUBhqTVf2IYLJ0SxD3KGFDSoESdzLhGiOUSLhPa2gacqM8M/nFqR
+	 +GAaXh5OWJQKI08RNsRJdv1ell3sq3FXCD9/aUBtW9/npnjbQACd1/GKwKLCkvvz7f3ZS
+	 rChzYBf0jIHO2PxqHqAv/7sTB9w7jpdxaoXFmcPpHdWi130b6rSnXgRhjI/VTt2QcqpQ6
+	 uxuB9AtYF21ntYoa60+3R+ti6cTQu061R1Kwj1imYwr4+tJz8atd2dqv5gFuH5g8EmQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=V+EkRw74;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CzBlbSQi;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCE6A606A31A;
-	Wed, 28 Oct 2026 17:16:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F93E606A31A;
+	Wed, 28 Oct 2026 17:16:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=V+EkRw74
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 199701F01825;
-	Wed, 28 Oct 2026 17:16:48 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CzBlbSQi
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0B9E1F01825;
+	Wed, 28 Oct 2026 17:16:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793207809;
-	bh=BVgCw1SmogznHiRiFS9hxyzGtKfUSi0YdXA9wsqcp+Q=;
+	s=korg; t=1793207812;
+	bh=rOoj91GAyrRVVKIE1VTTpVMSCBtq5nY/7AX2fiSkHBc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=V+EkRw74sDc8/Cb7Nyl9ZW3DclLpPD1axAg8Zf88F6ahR+zn4yaI1W+zWykpKipHp
-	 ly5231Ct5nkBO+EUko6SKQB8Q33BEfTAqKpBKcVJDHApueShKhRM8ORslnKaG7oDEQ
-	 BaouOYrqLuuDBlQ7khaUvAEXgbuIyFp3f5T/S5OI=
+	b=CzBlbSQi//UFvENYNFdb5+gRkwWCLH7b7AYnp0qgC8nCmknwC6L94NJrLDDZy7y2Z
+	 U/lhxaYfhUIOJtgKTFqeyjgMStpMQ7jTLFEYfwAGb79SLPbLdwLItbxG2wEUEXf2bz
+	 kRIncm2X7iScvM+M6ZNJVNcTw8n/lAt0Jg8oFFGQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Enrico Zanda <e.zanda1@gmail.com>,
-	Andi Shyti <andi@smida.it>,
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Andi Shyti <andi.shyti@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 147/247] i2c: viai2c-wmt: Replace dev_err() with dev_err_probe() in probe function
-Date: Wed, 28 Oct 2026 17:59:10 +0100
-Message-ID: <20261028165950.892608887@linuxfoundation.org>
+Subject: [PATCH 6.12 148/247] i2c: viai2c-wmt: Fix clock leak in wmt_i2c_probe()
+Date: Wed, 28 Oct 2026 17:59:11 +0100
+Message-ID: <20261028165950.916125612@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165947.349197979@linuxfoundation.org>
 References: <20261028165947.349197979@linuxfoundation.org>
@@ -68,71 +68,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Enrico Zanda <e.zanda1@gmail.com>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit 3b7d8d151a7ebebc5257766110c102ab173b5844 ]
+[ Upstream commit aaabefc79b0ff0018e8e3832169bbe359d0551fc ]
 
-This simplifies the code while improving log.
+In wmt_i2c_probe(), i2c->clk is acquired using of_clk_get(). If any
+subsequent operation fails or when the module is unloaded, the clock
+reference count is never decremented via clk_put(), leading to a
+resource leak.
 
-Signed-off-by: Enrico Zanda <e.zanda1@gmail.com>
-Link: https://lore.kernel.org/r/20250513210246.528370-2-e.zanda1@gmail.com
-Signed-off-by: Andi Shyti <andi@smida.it>
-Stable-dep-of: aaabefc79b0f ("i2c: viai2c-wmt: Fix clock leak in wmt_i2c_probe()")
+Switch to devm_clk_get() so that the clock is automatically managed
+and released.
+
+Fixes: 560746eb79d3 ("i2c: vt8500: Add support for I2C bus on Wondermedia SoCs")
+Cc: stable@vger.kernel.org
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Link: https://patch.msgid.link/20260916070631.1965713-1-vulab@iscas.ac.cn
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-viai2c-wmt.c | 20 +++++++-------------
- 1 file changed, 7 insertions(+), 13 deletions(-)
+ drivers/i2c/busses/i2c-viai2c-wmt.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/i2c/busses/i2c-viai2c-wmt.c b/drivers/i2c/busses/i2c-viai2c-wmt.c
-index 3415683dab91c..133dc41fe387b 100644
+index 133dc41fe387b..029473ef3fc50 100644
 --- a/drivers/i2c/busses/i2c-viai2c-wmt.c
 +++ b/drivers/i2c/busses/i2c-viai2c-wmt.c
-@@ -44,16 +44,13 @@ static int wmt_i2c_reset_hardware(struct viai2c *i2c)
- 	int err;
- 
- 	err = clk_prepare_enable(i2c->clk);
--	if (err) {
--		dev_err(i2c->dev, "failed to enable clock\n");
--		return err;
--	}
-+	if (err)
-+		return dev_err_probe(i2c->dev, err, "failed to enable clock\n");
- 
- 	err = clk_set_rate(i2c->clk, 20000000);
- 	if (err) {
--		dev_err(i2c->dev, "failed to set clock = 20Mhz\n");
- 		clk_disable_unprepare(i2c->clk);
--		return err;
-+		return dev_err_probe(i2c->dev, err, "failed to set clock = 20Mhz\n");
- 	}
- 
- 	writew(0, i2c->base + VIAI2C_REG_CR);
-@@ -121,10 +118,9 @@ static int wmt_i2c_probe(struct platform_device *pdev)
+@@ -117,7 +117,7 @@ static int wmt_i2c_probe(struct platform_device *pdev)
+ 		return dev_err_probe(&pdev->dev, err,
  				"failed to request irq %i\n", i2c->irq);
  
- 	i2c->clk = of_clk_get(np, 0);
--	if (IS_ERR(i2c->clk)) {
--		dev_err(&pdev->dev, "unable to request clock\n");
--		return PTR_ERR(i2c->clk);
--	}
-+	if (IS_ERR(i2c->clk))
-+		return dev_err_probe(&pdev->dev, PTR_ERR(i2c->clk),
-+				     "unable to request clock\n");
- 
- 	err = of_property_read_u32(np, "clock-frequency", &clk_rate);
- 	if (!err && clk_rate == I2C_MAX_FAST_MODE_FREQ)
-@@ -139,10 +135,8 @@ static int wmt_i2c_probe(struct platform_device *pdev)
- 	adap->dev.of_node = pdev->dev.of_node;
- 
- 	err = wmt_i2c_reset_hardware(i2c);
--	if (err) {
--		dev_err(&pdev->dev, "error initializing hardware\n");
-+	if (err)
- 		return err;
--	}
- 
- 	err = i2c_add_adapter(adap);
- 	if (err)
+-	i2c->clk = of_clk_get(np, 0);
++	i2c->clk = devm_clk_get(&pdev->dev, NULL);
+ 	if (IS_ERR(i2c->clk))
+ 		return dev_err_probe(&pdev->dev, PTR_ERR(i2c->clk),
+ 				     "unable to request clock\n");
 -- 
 2.53.0
 
