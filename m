@@ -1,66 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793217120;
-	b=PHtwMI/cQDUzQYZMiWyTo6m39WWJ5kY/c9YSErqu6QPYaMWLX/l9HPR5nLBwAGbuTPLz
-	 CDezPo43cVPpW0Exi+h02pZiHcPif3teBB0CxaGOw63tX+XxDbNsbAhiznLDN+Vga5ThD
-	 49KdifWw890ZUAfagT20gexBUMDgzX2BcdTqWC+SKaJlj7M+4mI9io1GiiKjQ5abEACwV
-	 l5zhZQKYayH3RMFQeCPoGf6t79z4M/GXhXl/ypDwkPJ4Ag8r2zg9yR9nmUA34Pqqgegya
-	 im85wRYfw40KfmC1QedmJENvUSZ6rCn/nFCy289m01iwM+c1HolTWcu0zlNHWC2eIQA==
+	t=1793217122;
+	b=r0HkaoZ8YFw0xQwFgZbKVjEyC8yP8jk/BML37GqER3NsmUZv4MUHAhF2t/YvcedWZg50
+	 v9wU6b9HOmPRD05MSVmA317GXHQhApTXTWUJp5GZsl+n5C84rY/6eTYlnPAaxsioNQWXK
+	 IXd8y3ehoXrrzGu/dlxEAvQdjRhx8Im5qNxO5Yx2GxJx7rTuKvEMIy6lw2HN5ADXWCGe3
+	 3UTL+u88mqPW+M092iiEPy5a6xTuiB33dgTq/+l35rvuTz1/ncPAYSJdpkABSLqjTTcaS
+	 Q8tV5apmTeW0M1LWEOfazvm6NhJwhuZbyWnGck9I/6dvg3NjlhmC/vRZVLBdMePwVbw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793217120;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793217122;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=fSZUM1AlX2eGZDHubEwIK2lD+RgTjsRKzBVho3Z76Yw=;
-	b=W5siVHDzXx+9I+IlQnEOThFPXhh42i+MhWGjHanp5cluWNP8afiIYLeJR/1xib6myfFa
-	 4mntJGvRMdUxG1UWbl8RxmBF8udMEkoYZeGA3zsBN+CUTzxIr8fHh91u+mrr1SbFHvNet
-	 zOe+ycKMrkOr/GSGm1hExbJg+31aXG/DR53rbQxFJXQzABrRVxcvXkbGtV4kznV4bVw+s
-	 7eg9yIF0tKHRTTnzQ/s8vpbG/AHlfQ8fEzg8BiKSRK8YvXTjLM4oaHG5EwAKnt8vDhLAg
-	 lU6YUPtowU7cDaKm2YKNZ6VCwQiL0eDYGVYoBxRK9KRKbemAyc0Bf3YPyNmejoR9kYw==
+	bh=CrP2hqwluY9d9Yf7QJa4NNAeJakPKPgJV82xD50e1tg=;
+	b=FrvZKf6aye8oAROnfwU8zz9WZbffwAbD+4wuqR9/q3/lwJatJCdipXYkUI+PPSIUXDph
+	 Fk4UJpqYzfTFSrWeJ8pL9kZBsUsL3ZCjGAMYl/U5uAfmzymoKbhD69GwSAo2+48nXVEMp
+	 KhhB6FQ2zQLvsLSrhhnZi+VZ3k13u2VfcLVgR0s9mZlrAdFxdxLpvKJqDd4X8A6IzOJ1P
+	 YwI+GrWTQdg5vnIMQhtCCDoh81vTnGnbNg5QXM39hJbUkgtVsij5AnQ+x4G2k3wDMzUL9
+	 JvFAtsBSyO22yRQoTsoeAz29PUqSf3H5Iy1/EWZUM8Br0JlAEqMtf0DmLpjicCLMYig==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yn59RL81;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bPkT2PF5;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC08A606A31F;
-	Wed, 28 Oct 2026 19:51:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 623CD606A321;
+	Wed, 28 Oct 2026 19:52:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yn59RL81
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6D851F01825;
-	Wed, 28 Oct 2026 19:51:58 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bPkT2PF5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFE6C1F01825;
+	Wed, 28 Oct 2026 19:52:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793217119;
-	bh=fSZUM1AlX2eGZDHubEwIK2lD+RgTjsRKzBVho3Z76Yw=;
+	s=korg; t=1793217122;
+	bh=CrP2hqwluY9d9Yf7QJa4NNAeJakPKPgJV82xD50e1tg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yn59RL81lMnynltVbZwnzjk1aCI8Mpsyoi2Yt/DiYF4hF09RilcvPVE2hiVvkAQil
-	 dkpRPOPEdGBrsqzC2Dic00WkVJo8drZJT3W43FTPe8vcBRG68i+NyKlSFPt1RSNLH8
-	 aXnQdkluVHuKH+CQbD0AP74C9FVWuKunb2RDrZF8=
+	b=bPkT2PF56mS9ia4JlgyFJexoXzoy81AZU6WuCc4On+x5NIkKNzBzA8EfemeO3dwY/
+	 ZE5FwXE5GKfbXytHQBfFL8VN6j7rMPYT+ndSWQbQb+zGE/Oeak28ua8dmk7dXjOg5m
+	 /aNbto1WENucHwLZ3NYHAqaJKPpmvEHXMFJmgryI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
-	Roberto Sassu <roberto.sassu@huawei.com>,
-	syzbot+1cd571a672400ef3a930@syzkaller.appspotmail.com,
-	Jann Horn <jannh@google.com>,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
-	"Liam R. Howlett" <Liam.Howlett@Oracle.com>,
-	Paul Moore <paul@paul-moore.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
-	Dmitry Kasatkin <dmitry.kasatkin@gmail.com>,
-	Eric Snowberg <eric.snowberg@oracle.com>,
-	James Morris <jmorris@namei.org>,
-	Mimi Zohar <zohar@linux.ibm.com>,
-	"Serge E. Hallyn" <serge@hallyn.com>,
-	Shu Han <ebpqwerty472123@gmail.com>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	syzbot+b106284c2a0b7bc80cf9@syzkaller.appspotmail.com,
+	Pauli Virtanen <pav@iki.fi>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1796/1887] mm: split critical region in remap_file_pages() and invoke LSMs in between
-Date: Wed, 28 Oct 2026 18:04:52 +0100
-Message-ID: <20261028170540.316531849@linuxfoundation.org>
+Subject: [PATCH 6.1 1797/1887] Bluetooth: L2CAP: access chan->conn safely in get/setsockopt
+Date: Wed, 28 Oct 2026 18:04:53 +0100
+Message-ID: <20261028170540.339259161@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -82,164 +70,214 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
+From: Pauli Virtanen <pav@iki.fi>
 
-[ Upstream commit 58a039e679fe72bd0efa8b2abe669a7914bb4429 ]
+[ Upstream commit ca2c4c26498643f421d35ffe258fafbd3ed461c3 ]
 
-Commit ea7e2d5e49c0 ("mm: call the security_mmap_file() LSM hook in
-remap_file_pages()") fixed a security issue, it added an LSM check when
-trying to remap file pages, so that LSMs have the opportunity to evaluate
-such action like for other memory operations such as mmap() and
-mprotect().
+Since commit b66774b48dd9 ("Bluetooth: L2CAP: Fix UAF in channel timeout by holding conn ref")
+l2cap_chan::conn has held reference and remains non-NULL also after the
+corresponding hci_conn is deleted.  In this state accessing various
+fields eg. hci_conn::hdev is invalid, which leads to KASAN crash in
+l2cap_sock_setsockopt() access of conn->hcon->hdev.
 
-However, that commit called security_mmap_file() inside the mmap_lock
-lock, while the other calls do it before taking the lock, after commit
-8b3ec6814c83 ("take security_mmap_file() outside of ->mmap_sem").
+Check l2cap_chan::conn.hcon corresponds to an alive hci_conn before
+trying to use it in l2cap_sock.c.  Hold l2cap_chan_lock() in
+getsockopt/setsockopt to ensure it stays alive, and to avoid data races
+in l2cap_chan fields.
 
-This caused lock inversion issue with IMA which was taking the mmap_lock
-and i_mutex lock in the opposite way when the remap_file_pages() system
-call was called.
-
-Solve the issue by splitting the critical region in remap_file_pages() in
-two regions: the first takes a read lock of mmap_lock, retrieves the VMA
-and the file descriptor associated, and calculates the 'prot' and 'flags'
-variables; the second takes a write lock on mmap_lock, checks that the VMA
-flags and the VMA file descriptor are the same as the ones obtained in the
-first critical region (otherwise the system call fails), and calls
-do_mmap().
-
-In between, after releasing the read lock and before taking the write
-lock, call security_mmap_file(), and solve the lock inversion issue.
-
-Link: https://lkml.kernel.org/r/20241018161415.3845146-1-roberto.sassu@huaweicloud.com
-Fixes: ea7e2d5e49c0 ("mm: call the security_mmap_file() LSM hook in remap_file_pages()")
-Signed-off-by: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
-Signed-off-by: Roberto Sassu <roberto.sassu@huawei.com>
-Reported-by: syzbot+1cd571a672400ef3a930@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/linux-security-module/66f7b10e.050a0220.46d20.0036.GAE@google.com/
-Tested-by: Roberto Sassu <roberto.sassu@huawei.com>
-Reviewed-by: Roberto Sassu <roberto.sassu@huawei.com>
-Reviewed-by: Jann Horn <jannh@google.com>
-Reviewed-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Reviewed-by: Liam R. Howlett <Liam.Howlett@Oracle.com>
-Reviewed-by: Paul Moore <paul@paul-moore.com>
-Tested-by: syzbot+1cd571a672400ef3a930@syzkaller.appspotmail.com
-Cc: Jarkko Sakkinen <jarkko@kernel.org>
-Cc: Dmitry Kasatkin <dmitry.kasatkin@gmail.com>
-Cc: Eric Snowberg <eric.snowberg@oracle.com>
-Cc: James Morris <jmorris@namei.org>
-Cc: Mimi Zohar <zohar@linux.ibm.com>
-Cc: "Serge E. Hallyn" <serge@hallyn.com>
-Cc: Shu Han <ebpqwerty472123@gmail.com>
-Cc: Vlastimil Babka <vbabka@suse.cz>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: b66774b48dd9 ("Bluetooth: L2CAP: Fix UAF in channel timeout by holding conn ref")
+Reported-by: syzbot+b106284c2a0b7bc80cf9@syzkaller.appspotmail.com
+Link: https://syzkaller.appspot.com/bug?extid=b106284c2a0b7bc80cf9
+Signed-off-by: Pauli Virtanen <pav@iki.fi>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+[Lee: Omit sockopt_t conversion from commit bf01627cc04b ("Bluetooth: L2CAP: convert to getsockopt_iter")]
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/mmap.c | 69 +++++++++++++++++++++++++++++++++++++++++--------------
- 1 file changed, 52 insertions(+), 17 deletions(-)
+ net/bluetooth/l2cap_sock.c | 57 ++++++++++++++++++++++++++++++--------
+ 1 file changed, 46 insertions(+), 11 deletions(-)
 
-diff --git a/mm/mmap.c b/mm/mmap.c
-index 54c73823fba33..1eb86aba7de56 100644
---- a/mm/mmap.c
-+++ b/mm/mmap.c
-@@ -2982,6 +2982,7 @@ SYSCALL_DEFINE5(remap_file_pages, unsigned long, start, unsigned long, size,
- 	unsigned long populate = 0;
- 	unsigned long ret = -EINVAL;
- 	struct file *file;
-+	vm_flags_t vm_flags;
+diff --git a/net/bluetooth/l2cap_sock.c b/net/bluetooth/l2cap_sock.c
+index 9b8bddefeb84c..b11558b0dfec5 100644
+--- a/net/bluetooth/l2cap_sock.c
++++ b/net/bluetooth/l2cap_sock.c
+@@ -437,11 +437,26 @@ static int l2cap_get_mode(struct l2cap_chan *chan)
+ 	return -EINVAL;
+ }
  
- 	pr_warn_once("%s (%d) uses deprecated remap_file_pages() syscall. See Documentation/mm/remap_file_pages.rst.\n",
- 		     current->comm, current->pid);
-@@ -2998,12 +2999,60 @@ SYSCALL_DEFINE5(remap_file_pages, unsigned long, start, unsigned long, size,
- 	if (pgoff + (size >> PAGE_SHIFT) < pgoff)
- 		return ret;
- 
--	if (mmap_write_lock_killable(mm))
-+	if (mmap_read_lock_killable(mm))
- 		return -EINTR;
- 
-+	/*
-+	 * Look up VMA under read lock first so we can perform the security
-+	 * without holding locks (which can be problematic). We reacquire a
-+	 * write lock later and check nothing changed underneath us.
++static struct l2cap_conn *l2cap_chan_conn(struct l2cap_chan *chan)
++{
++	lockdep_assert_held(&chan->lock);
++
++	/* l2cap_conn_del() sets FLAG_DEL while holding chan->lock before
++	 * conn->hcon is deleted. If not set and conn is non-NULL, conn->hcon
++	 * remains alive during this chan->lock critical section.
 +	 */
- 	vma = vma_lookup(mm, start);
++	if (test_bit(FLAG_DEL, &chan->flags))
++		return NULL;
++
++	return chan->conn;
++}
++
+ static int l2cap_sock_getsockopt_old(struct socket *sock, int optname,
+ 				     char __user *optval, int __user *optlen)
+ {
+ 	struct sock *sk = sock->sk;
+ 	struct l2cap_chan *chan = l2cap_pi(sk)->chan;
++	struct l2cap_conn *conn;
+ 	struct l2cap_options opts;
+ 	struct l2cap_conninfo cinfo;
+ 	int err = 0;
+@@ -453,6 +468,7 @@ static int l2cap_sock_getsockopt_old(struct socket *sock, int optname,
+ 	if (get_user(len, optlen))
+ 		return -EFAULT;
  
--	if (!vma || !(vma->vm_flags & VM_SHARED))
-+	if (!vma || !(vma->vm_flags & VM_SHARED)) {
-+		mmap_read_unlock(mm);
-+		return -EINVAL;
-+	}
-+
-+	prot |= vma->vm_flags & VM_READ ? PROT_READ : 0;
-+	prot |= vma->vm_flags & VM_WRITE ? PROT_WRITE : 0;
-+	prot |= vma->vm_flags & VM_EXEC ? PROT_EXEC : 0;
-+
-+	flags &= MAP_NONBLOCK;
-+	flags |= MAP_SHARED | MAP_FIXED | MAP_POPULATE;
-+	if (vma->vm_flags & VM_LOCKED)
-+		flags |= MAP_LOCKED;
-+
-+	/* Save vm_flags used to calculate prot and flags, and recheck later. */
-+	vm_flags = vma->vm_flags;
-+	file = get_file(vma->vm_file);
-+
-+	mmap_read_unlock(mm);
-+
-+	/* Call outside mmap_lock to be consistent with other callers. */
-+	ret = security_mmap_file(file, prot, flags);
-+	if (ret) {
-+		fput(file);
-+		return ret;
-+	}
-+
-+	ret = -EINVAL;
-+
-+	/* OK security check passed, take write lock + let it rip. */
-+	if (mmap_write_lock_killable(mm)) {
-+		fput(file);
-+		return -EINTR;
-+	}
-+
-+	vma = vma_lookup(mm, start);
-+
-+	if (!vma)
-+		goto out;
-+
-+	/* Make sure things didn't change under us. */
-+	if (vma->vm_flags != vm_flags)
-+		goto out;
-+	if (vma->vm_file != file)
- 		goto out;
++	l2cap_chan_lock(chan);
+ 	lock_sock(sk);
  
- 	if (start + size > vma->vm_end) {
-@@ -3031,25 +3080,11 @@ SYSCALL_DEFINE5(remap_file_pages, unsigned long, start, unsigned long, size,
- 			goto out;
+ 	switch (optname) {
+@@ -538,9 +554,15 @@ static int l2cap_sock_getsockopt_old(struct socket *sock, int optname,
+ 			break;
+ 		}
+ 
++		conn = l2cap_chan_conn(chan);
++		if (!conn) {
++			err = -ENOTCONN;
++			break;
++		}
++
+ 		memset(&cinfo, 0, sizeof(cinfo));
+-		cinfo.hci_handle = chan->conn->hcon->handle;
+-		memcpy(cinfo.dev_class, chan->conn->hcon->dev_class, 3);
++		cinfo.hci_handle = conn->hcon->handle;
++		memcpy(cinfo.dev_class, conn->hcon->dev_class, 3);
+ 
+ 		len = min(len, sizeof(cinfo));
+ 		if (copy_to_user(optval, (char *) &cinfo, len))
+@@ -554,6 +576,8 @@ static int l2cap_sock_getsockopt_old(struct socket *sock, int optname,
  	}
  
--	prot |= vma->vm_flags & VM_READ ? PROT_READ : 0;
--	prot |= vma->vm_flags & VM_WRITE ? PROT_WRITE : 0;
--	prot |= vma->vm_flags & VM_EXEC ? PROT_EXEC : 0;
+ 	release_sock(sk);
++	l2cap_chan_unlock(chan);
++
+ 	return err;
+ }
+ 
+@@ -562,6 +586,7 @@ static int l2cap_sock_getsockopt(struct socket *sock, int level, int optname,
+ {
+ 	struct sock *sk = sock->sk;
+ 	struct l2cap_chan *chan = l2cap_pi(sk)->chan;
++	struct l2cap_conn *conn;
+ 	struct bt_security sec;
+ 	struct bt_power pwr;
+ 	u32 phys;
+@@ -578,6 +603,7 @@ static int l2cap_sock_getsockopt(struct socket *sock, int level, int optname,
+ 	if (get_user(len, optlen))
+ 		return -EFAULT;
+ 
++	l2cap_chan_lock(chan);
+ 	lock_sock(sk);
+ 
+ 	switch (optname) {
+@@ -589,12 +615,14 @@ static int l2cap_sock_getsockopt(struct socket *sock, int level, int optname,
+ 			break;
+ 		}
+ 
++		conn = l2cap_chan_conn(chan);
++
+ 		memset(&sec, 0, sizeof(sec));
+-		if (chan->conn) {
+-			sec.level = chan->conn->hcon->sec_level;
++		if (conn) {
++			sec.level = conn->hcon->sec_level;
+ 
+ 			if (sk->sk_state == BT_CONNECTED)
+-				sec.key_size = chan->conn->hcon->enc_key_size;
++				sec.key_size = conn->hcon->enc_key_size;
+ 		} else {
+ 			sec.level = chan->sec_level;
+ 		}
+@@ -670,12 +698,14 @@ static int l2cap_sock_getsockopt(struct socket *sock, int level, int optname,
+ 		break;
+ 
+ 	case BT_PHY:
+-		if (sk->sk_state != BT_CONNECTED) {
++		conn = l2cap_chan_conn(chan);
++
++		if (sk->sk_state != BT_CONNECTED || !conn) {
+ 			err = -ENOTCONN;
+ 			break;
+ 		}
+ 
+-		phys = hci_conn_get_phy(chan->conn->hcon);
++		phys = hci_conn_get_phy(conn->hcon);
+ 
+ 		if (put_user(phys, (u32 __user *) optval))
+ 			err = -EFAULT;
+@@ -708,6 +738,7 @@ static int l2cap_sock_getsockopt(struct socket *sock, int level, int optname,
+ 	}
+ 
+ 	release_sock(sk);
++	l2cap_chan_unlock(chan);
+ 	return err;
+ }
+ 
+@@ -738,6 +769,7 @@ static int l2cap_sock_setsockopt_old(struct socket *sock, int optname,
+ 
+ 	BT_DBG("sk %p", sk);
+ 
++	l2cap_chan_lock(chan);
+ 	lock_sock(sk);
+ 
+ 	switch (optname) {
+@@ -838,6 +870,7 @@ static int l2cap_sock_setsockopt_old(struct socket *sock, int optname,
+ 	}
+ 
+ 	release_sock(sk);
++	l2cap_chan_unlock(chan);
+ 	return err;
+ }
+ 
+@@ -901,6 +934,7 @@ static int l2cap_sock_setsockopt(struct socket *sock, int level, int optname,
+ 	if (level != SOL_BLUETOOTH)
+ 		return -ENOPROTOOPT;
+ 
++	l2cap_chan_lock(chan);
+ 	lock_sock(sk);
+ 
+ 	switch (optname) {
+@@ -926,11 +960,10 @@ static int l2cap_sock_setsockopt(struct socket *sock, int level, int optname,
+ 
+ 		chan->sec_level = sec.level;
+ 
+-		if (!chan->conn)
++		conn = l2cap_chan_conn(chan);
++		if (!conn)
+ 			break;
+ 
+-		conn = chan->conn;
 -
--	flags &= MAP_NONBLOCK;
--	flags |= MAP_SHARED | MAP_FIXED | MAP_POPULATE;
--	if (vma->vm_flags & VM_LOCKED)
--		flags |= MAP_LOCKED;
--
--	file = get_file(vma->vm_file);
--	ret = security_mmap_file(vma->vm_file, prot, flags);
--	if (ret)
--		goto out_fput;
- 	ret = do_mmap(vma->vm_file, start, size,
- 			prot, flags, pgoff, &populate, NULL);
--out_fput:
--	fput(file);
- out:
- 	mmap_write_unlock(mm);
-+	fput(file);
- 	if (populate)
- 		mm_populate(ret, populate);
- 	if (!IS_ERR_VALUE(ret))
+ 		/* change security for LE channels */
+ 		if (chan->scid == L2CAP_CID_ATT) {
+ 			if (smp_conn_security(conn->hcon, sec.level)) {
+@@ -985,7 +1018,8 @@ static int l2cap_sock_setsockopt(struct socket *sock, int level, int optname,
+ 		}
+ 
+ 		if (opt == BT_FLUSHABLE_OFF) {
+-			conn = chan->conn;
++			conn = l2cap_chan_conn(chan);
++
+ 			/* proceed further only when we have l2cap_conn and
+ 			   No Flush support in the LM */
+ 			if (!conn || !lmp_no_flush_capable(conn->hcon->hdev)) {
+@@ -1108,6 +1142,7 @@ static int l2cap_sock_setsockopt(struct socket *sock, int level, int optname,
+ 	}
+ 
+ 	release_sock(sk);
++	l2cap_chan_unlock(chan);
+ 	return err;
+ }
+ 
 -- 
 2.53.0
 
