@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213776;
-	b=KL+4DWkCpUCitVgxAhGsdiqvDMVMv86d/8EITeemmengYcaHpGIGNDvArr62lliGF8+f
-	 4cmd3aklVgp/davR7OKajH6hQoLBF6flLnCjP/umDW+F2Ar8IBHiUlEImJiObOqLNmx/M
-	 pTMEM0bElXbnrzqGLIgzsQCyDNqO3eUxNOkHQOJSpc3m8myAe/4SjBQJOk2oyZt7Y1yWV
-	 qLIm4DPSZx1fATebg92HhrcbGRrFCyd+DY04XAPQiiuo3WAH1ESVyP+Pdde74etM7P2eT
-	 6aDd0vJCpBCDxa6jPBYUYXWbxPz/9yDx8s0Utc3bmPhd0xrZ4zVHoD9BYcEvx2biutw==
+	t=1793213779;
+	b=4eM+Yxan9ZehEb7KjzXsQ4VmG/oTkBq0TboLC71mBqamRzSq8weOXYcTb+0LzVs/wQiK
+	 v1DgSe9S6KKVEascaG3plg+ucrNKjCN00WvSI2kwo+hEReInrqxXL3Y803SEu+lAAhgwo
+	 SpHNChetAEXVvlLMT0qvpjQZd32tEj3LFKLlroJRsRqC//fCWWvigrlBSkUOYl1DS0x9Z
+	 nNHj1TKkRe9Ui3iVoor53ooRYgWPxGR5+mIwqpVALSlTpjJ+lxjGqWKaguJsY1gPe2eve
+	 0U5J+SMTl3omzqW2ZQAxeW5UrztsihRhyju0cIFg2s9q1rxPXkNocJDaF/5nntwWtoA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213776;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213779;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=mY6pRYvp88KSrCsZ9w1Jz7UpSJ8eWd+pJRjd+l+CFIw=;
-	b=PRsc1vrCpRlt5i6YYDEdR1tAVewgjFssz+655ag24VM/ghHRyP3xs3kmy66+6gqQe43U
-	 QBha1yC63bOenbKokqOMbELxfAJNVULUhZMWQ0uHTJSrdxGpQ9iOVVtDNMxF8D/gGnxC6
-	 JF0JDdmJouGcaacZO0k4oCNnuwx4DoHuBZgMtWbVa+hZp1EmFcXwttjro+ysMNam7PNEq
-	 B4gCvaWOV4SlTGeseqCJUGbG0xjkKKlIgEbUBTjTPObSauhpsT7wEpy5DAdCVjy9Obrsj
-	 DRTkD790729FLuHmGjwfrICY4mcIXGIc8KyZ9nbc4xKqR96v/EN48cnnyijVE/1RJEw==
+	bh=EEKZxXaLnaruzHs9HLv+sLPw4+lb512ZkOsi7djTnhI=;
+	b=wtBNDcPXKVouZr2040QtZqnmoQqP7ph+X6tAS+KP9Wfw/bUsMbRW5CRX5akQPIVHIcWS
+	 hc/c8HAxVcdvRQGDykxdbNZmA04CWItVZag9qXj2RfiD0DpdX0Y+JFSiU5zdi0MB0/HTN
+	 RT0mVZWD9XVjYNmfpEOrZsG/xw97wZhr6nJXc3E64sl3QeR9LVjbmtFI5UVFEOs5wYwl3
+	 jIPJ2aWXsBPApZPj1YBkrFTh45x3RZQDCqupI/6C1Hv64K4tvNhGl6DvUGUUTU9SwshrB
+	 WYK1xRDFsSqpGZQr46Snm8veLTh8uhuxoztuE0+UNeNZtR7HkAloVYuAD6ccHUXNM2Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BYAvDeEu;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sGqM+5Za;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B807606A330;
-	Wed, 28 Oct 2026 18:56:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F8BE606A325;
+	Wed, 28 Oct 2026 18:56:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BYAvDeEu
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65A461F01825;
-	Wed, 28 Oct 2026 18:56:15 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sGqM+5Za
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 329001F01828;
+	Wed, 28 Oct 2026 18:56:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213775;
-	bh=mY6pRYvp88KSrCsZ9w1Jz7UpSJ8eWd+pJRjd+l+CFIw=;
+	s=korg; t=1793213778;
+	bh=EEKZxXaLnaruzHs9HLv+sLPw4+lb512ZkOsi7djTnhI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BYAvDeEuvtaCZnWnhacPNesNeE6RzalavFdaM0aTptEheBeibv7J6xjxSC+9j6PH7
-	 GIRPmVwJ1hmkgsfnw9ePIRLbPvC6zUbbGTlZIcOXqk8GiDmLKFLOLlM3bn998gdg1I
-	 nAw6dpre1k4D0DLNb7nvnl0qaSZch/oQvjwxnDjg=
+	b=sGqM+5ZaG2yfa1LZN/guhLR7ufcvRb5N4FJe+3pKJXM85WL3l3bT8/qJ8kcnY2dEp
+	 YRnZKDhrXwJ0KsiHIlTIn92ffzwcAXNuNT7+Pt6IyhuxA5d+5DqvxImdTMncyruCht
+	 ui8lkQyYK1HlFJY3MfRXMYtRvpV01oHzZgKXYmZM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ido Schimmel <idosch@nvidia.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	James Morse <james.morse@arm.com>,
+	Rob Herring <robh@kernel.org>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0581/1887] net/sched: flower: Fix chain template offload
-Date: Wed, 28 Oct 2026 17:44:37 +0100
-Message-ID: <20261028170512.640518902@linuxfoundation.org>
+Subject: [PATCH 6.1 0582/1887] arm64: entry: fix ARM64_WORKAROUND_SPECULATIVE_UNPRIV_LOAD
+Date: Wed, 28 Oct 2026 17:44:38 +0100
+Message-ID: <20261028170512.665383939@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,188 +71,137 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Mark Rutland <mark.rutland@arm.com>
 
-[ Upstream commit 32f2a0afa95fae0d1ceec2ff06e0e816939964b8 ]
+[ Upstream commit 832dd634bd1b4e3bbe9f10b9c9ba5db6f6f2b97f ]
 
-When a qdisc is deleted from a net device the stack instructs the
-underlying driver to remove its flow offload callback from the
-associated filter block using the 'FLOW_BLOCK_UNBIND' command. The stack
-then continues to replay the removal of the filters in the block for
-this driver by iterating over the chains in the block and invoking the
-'reoffload' operation of the classifier being used. In turn, the
-classifier in its 'reoffload' operation prepares and emits a
-'FLOW_CLS_DESTROY' command for each filter.
+Currently the ARM64_WORKAROUND_SPECULATIVE_UNPRIV_LOAD workaround isn't
+quite right, as it is supposed to be applied after the last explicit
+memory access, but is immediately followed by an LDR.
 
-However, the stack does not do the same for chain templates and the
-underlying driver never receives a 'FLOW_CLS_TMPLT_DESTROY' command when
-a qdisc is deleted. This results in a memory leak [1] which can be
-reproduced using [2].
+The ARM64_WORKAROUND_SPECULATIVE_UNPRIV_LOAD workaround is used to
+handle Cortex-A520 erratum 2966298 and Cortex-A510 erratum 3117295,
+which are described in:
 
-Fix by introducing a 'tmplt_reoffload' operation and have the stack
-invoke it with the appropriate arguments as part of the replay.
-Implement the operation in the sole classifier that supports chain
-templates (flower) by emitting the 'FLOW_CLS_TMPLT_{CREATE,DESTROY}'
-command based on whether a flow offload callback is being bound to a
-filter block or being unbound from one.
+* https://developer.arm.com/documentation/SDEN2444153/0600/?lang=en
+* https://developer.arm.com/documentation/SDEN1873361/1600/?lang=en
 
-As far as I can tell, the issue happens since cited commit which
-reordered tcf_block_offload_unbind() before tcf_block_flush_all_chains()
-in __tcf_block_put(). The order cannot be reversed as the filter block
-is expected to be freed after flushing all the chains.
+In both cases the workaround is described as:
 
-[1]
-unreferenced object 0xffff888107e28800 (size 2048):
-  comm "tc", pid 1079, jiffies 4294958525 (age 3074.287s)
-  hex dump (first 32 bytes):
-    b1 a6 7c 11 81 88 ff ff e0 5b b3 10 81 88 ff ff  ..|......[......
-    01 00 00 00 00 00 00 00 e0 aa b0 84 ff ff ff ff  ................
-  backtrace:
-    [<ffffffff81c06a68>] __kmem_cache_alloc_node+0x1e8/0x320
-    [<ffffffff81ab374e>] __kmalloc+0x4e/0x90
-    [<ffffffff832aec6d>] mlxsw_sp_acl_ruleset_get+0x34d/0x7a0
-    [<ffffffff832bc195>] mlxsw_sp_flower_tmplt_create+0x145/0x180
-    [<ffffffff832b2e1a>] mlxsw_sp_flow_block_cb+0x1ea/0x280
-    [<ffffffff83a10613>] tc_setup_cb_call+0x183/0x340
-    [<ffffffff83a9f85a>] fl_tmplt_create+0x3da/0x4c0
-    [<ffffffff83a22435>] tc_ctl_chain+0xa15/0x1170
-    [<ffffffff838a863c>] rtnetlink_rcv_msg+0x3cc/0xed0
-    [<ffffffff83ac87f0>] netlink_rcv_skb+0x170/0x440
-    [<ffffffff83ac6270>] netlink_unicast+0x540/0x820
-    [<ffffffff83ac6e28>] netlink_sendmsg+0x8d8/0xda0
-    [<ffffffff83793def>] ____sys_sendmsg+0x30f/0xa80
-    [<ffffffff8379d29a>] ___sys_sendmsg+0x13a/0x1e0
-    [<ffffffff8379d50c>] __sys_sendmsg+0x11c/0x1f0
-    [<ffffffff843b9ce0>] do_syscall_64+0x40/0xe0
-unreferenced object 0xffff88816d2c0400 (size 1024):
-  comm "tc", pid 1079, jiffies 4294958525 (age 3074.287s)
-  hex dump (first 32 bytes):
-    40 00 00 00 00 00 00 00 57 f6 38 be 00 00 00 00  @.......W.8.....
-    10 04 2c 6d 81 88 ff ff 10 04 2c 6d 81 88 ff ff  ..,m......,m....
-  backtrace:
-    [<ffffffff81c06a68>] __kmem_cache_alloc_node+0x1e8/0x320
-    [<ffffffff81ab36c1>] __kmalloc_node+0x51/0x90
-    [<ffffffff81a8ed96>] kvmalloc_node+0xa6/0x1f0
-    [<ffffffff82827d03>] bucket_table_alloc.isra.0+0x83/0x460
-    [<ffffffff82828d2b>] rhashtable_init+0x43b/0x7c0
-    [<ffffffff832aed48>] mlxsw_sp_acl_ruleset_get+0x428/0x7a0
-    [<ffffffff832bc195>] mlxsw_sp_flower_tmplt_create+0x145/0x180
-    [<ffffffff832b2e1a>] mlxsw_sp_flow_block_cb+0x1ea/0x280
-    [<ffffffff83a10613>] tc_setup_cb_call+0x183/0x340
-    [<ffffffff83a9f85a>] fl_tmplt_create+0x3da/0x4c0
-    [<ffffffff83a22435>] tc_ctl_chain+0xa15/0x1170
-    [<ffffffff838a863c>] rtnetlink_rcv_msg+0x3cc/0xed0
-    [<ffffffff83ac87f0>] netlink_rcv_skb+0x170/0x440
-    [<ffffffff83ac6270>] netlink_unicast+0x540/0x820
-    [<ffffffff83ac6e28>] netlink_sendmsg+0x8d8/0xda0
-    [<ffffffff83793def>] ____sys_sendmsg+0x30f/0xa80
+| If pagetable isolation is disabled, the context switch logic in the
+| kernel can be updated to execute the following sequence on affected
+| cores before exiting to EL0, and after all explicit memory accesses:
+|
+| 1. A non-shareable TLBI to any context and/or address, including
+|    unused contexts or addresses, such as a `TLBI VALE1 Xzr`.
+|
+| 2. A DSB NSH to guarantee completion of the TLBI.
 
-[2]
- # tc qdisc add dev swp1 clsact
- # tc chain add dev swp1 ingress proto ip chain 1 flower dst_ip 0.0.0.0/32
- # tc qdisc del dev swp1 clsact
- # devlink dev reload pci/0000:06:00.0
+The important part being that the TLBI+DSB must be placed "after all
+explicit memory accesses".
 
-Fixes: bbf73830cd48 ("net: sched: traverse chains in block with tcf_get_next_chain()")
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Unfortunately, as-implemented, the TLBI+DSB is immediately followed by
+an LDR, as we have:
+
+| alternative_if ARM64_WORKAROUND_SPECULATIVE_UNPRIV_LOAD
+| 	tlbi	vale1, xzr
+| 	dsb	nsh
+| alternative_else_nop_endif
+| alternative_if_not ARM64_UNMAP_KERNEL_AT_EL0
+| 	ldr	lr, [sp, #S_LR]
+| 	add	sp, sp, #PT_REGS_SIZE		// restore sp
+| 	eret
+| alternative_else_nop_endif
+|
+| [ ... KPTI exception return path ... ]
+
+This patch fixes this by reworking the logic to place the TLBI+DSB
+immediately before the ERET, after all explicit memory accesses.
+
+The ERET is currently in a separate alternative block, and alternatives
+cannot be nested. To account for this, the alternative block for
+ARM64_UNMAP_KERNEL_AT_EL0 is replaced with a single alternative branch
+to skip the KPTI logic, with the new shape of the logic being:
+
+| alternative_insn "b .L_skip_tramp_exit_\@", nop, ARM64_UNMAP_KERNEL_AT_EL0
+| 	[ ... KPTI exception return path ... ]
+| .L_skip_tramp_exit_\@:
+|
+| 	ldr	lr, [sp, #S_LR]
+| 	add	sp, sp, #PT_REGS_SIZE		// restore sp
+|
+| alternative_if ARM64_WORKAROUND_SPECULATIVE_UNPRIV_LOAD
+| 	tlbi	vale1, xzr
+| 	dsb	nsh
+| alternative_else_nop_endif
+| 	eret
+
+The new structure means that the workaround is only applied when KPTI is
+not in use; this is fine as noted in the documented implications of the
+erratum:
+
+| Pagetable isolation between EL0 and higher level ELs prevents the
+| issue from occurring.
+
+... and as per the workaround description quoted above, the workaround
+is only necessary "If pagetable isolation is disabled".
+
+Fixes: 471470bc7052 ("arm64: errata: Add Cortex-A520 speculative unprivileged load workaround")
+Signed-off-by: Mark Rutland <mark.rutland@arm.com>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Cc: James Morse <james.morse@arm.com>
+Cc: Rob Herring <robh@kernel.org>
+Cc: Will Deacon <will@kernel.org>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20240116110221.420467-2-mark.rutland@arm.com
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/sch_generic.h |  4 ++++
- net/sched/cls_api.c       |  9 ++++++++-
- net/sched/cls_flower.c    | 23 +++++++++++++++++++++++
- 3 files changed, 35 insertions(+), 1 deletion(-)
+ arch/arm64/kernel/entry.S | 22 +++++++++++++---------
+ 1 file changed, 13 insertions(+), 9 deletions(-)
 
-diff --git a/include/net/sch_generic.h b/include/net/sch_generic.h
-index 7ec1f5aa6adaf..b694d27f41714 100644
---- a/include/net/sch_generic.h
-+++ b/include/net/sch_generic.h
-@@ -378,6 +378,10 @@ struct tcf_proto_ops {
- 						struct nlattr **tca,
- 						struct netlink_ext_ack *extack);
- 	void			(*tmplt_destroy)(void *tmplt_priv);
-+	void			(*tmplt_reoffload)(struct tcf_chain *chain,
-+						   bool add,
-+						   flow_setup_cb_t *cb,
-+						   void *cb_priv);
+diff --git a/arch/arm64/kernel/entry.S b/arch/arm64/kernel/entry.S
+index 4b4a9aa76e1a3..6df98546605d4 100644
+--- a/arch/arm64/kernel/entry.S
++++ b/arch/arm64/kernel/entry.S
+@@ -419,16 +419,9 @@ alternative_else_nop_endif
+ 	ldp	x28, x29, [sp, #16 * 14]
  
- 	/* rtnetlink specific */
- 	int			(*dump)(struct net*, struct tcf_proto*, void *,
-diff --git a/net/sched/cls_api.c b/net/sched/cls_api.c
-index dbaf6e72aa2da..9ee545b0364ad 100644
---- a/net/sched/cls_api.c
-+++ b/net/sched/cls_api.c
-@@ -1431,6 +1431,9 @@ tcf_block_playback_offloads(struct tcf_block *block, flow_setup_cb_t *cb,
- 	     chain_prev = chain,
- 		     chain = __tcf_get_next_chain(block, chain),
- 		     tcf_chain_put(chain_prev)) {
-+		if (chain->tmplt_ops && add)
-+			chain->tmplt_ops->tmplt_reoffload(chain, true, cb,
-+							  cb_priv);
- 		for (tp = __tcf_get_next_proto(chain, NULL); tp;
- 		     tp_prev = tp,
- 			     tp = __tcf_get_next_proto(chain, tp),
-@@ -1446,6 +1449,9 @@ tcf_block_playback_offloads(struct tcf_block *block, flow_setup_cb_t *cb,
- 				goto err_playback_remove;
- 			}
- 		}
-+		if (chain->tmplt_ops && !add)
-+			chain->tmplt_ops->tmplt_reoffload(chain, false, cb,
-+							  cb_priv);
- 	}
- 
- 	return 0;
-@@ -2861,7 +2867,8 @@ static int tc_chain_tmplt_add(struct tcf_chain *chain, struct net *net,
- 	ops = tcf_proto_lookup_ops(name, true, extack);
- 	if (IS_ERR(ops))
- 		return PTR_ERR(ops);
--	if (!ops->tmplt_create || !ops->tmplt_destroy || !ops->tmplt_dump) {
-+	if (!ops->tmplt_create || !ops->tmplt_destroy || !ops->tmplt_dump ||
-+	    !ops->tmplt_reoffload) {
- 		NL_SET_ERR_MSG(extack, "Chain templates are not supported with specified classifier");
- 		module_put(ops->owner);
- 		return -EOPNOTSUPP;
-diff --git a/net/sched/cls_flower.c b/net/sched/cls_flower.c
-index a40a9e84c75f4..42234a0101e78 100644
---- a/net/sched/cls_flower.c
-+++ b/net/sched/cls_flower.c
-@@ -2596,6 +2596,28 @@ static void fl_tmplt_destroy(void *tmplt_priv)
- 	kfree(tmplt);
- }
- 
-+static void fl_tmplt_reoffload(struct tcf_chain *chain, bool add,
-+			       flow_setup_cb_t *cb, void *cb_priv)
-+{
-+	struct fl_flow_tmplt *tmplt = chain->tmplt_priv;
-+	struct flow_cls_offload cls_flower = {};
+ 	.if	\el == 0
+-alternative_if ARM64_WORKAROUND_SPECULATIVE_UNPRIV_LOAD
+-	tlbi	vale1, xzr
+-	dsb	nsh
+-alternative_else_nop_endif
+-alternative_if_not ARM64_UNMAP_KERNEL_AT_EL0
+-	ldr	lr, [sp, #S_LR]
+-	add	sp, sp, #PT_REGS_SIZE		// restore sp
+-	eret
+-alternative_else_nop_endif
+ #ifdef CONFIG_UNMAP_KERNEL_AT_EL0
++	alternative_insn "b .L_skip_tramp_exit_\@", nop, ARM64_UNMAP_KERNEL_AT_EL0
 +
-+	cls_flower.rule = flow_rule_alloc(0);
-+	if (!cls_flower.rule)
-+		return;
+ 	bne	4f
+ 	msr	far_el1, x29
+ 	tramp_alias	x30, tramp_exit_native, x29
+@@ -436,7 +429,18 @@ alternative_else_nop_endif
+ 4:
+ 	tramp_alias	x30, tramp_exit_compat, x29
+ 	br	x30
 +
-+	cls_flower.common.chain_index = chain->index;
-+	cls_flower.command = add ? FLOW_CLS_TMPLT_CREATE :
-+				   FLOW_CLS_TMPLT_DESTROY;
-+	cls_flower.cookie = (unsigned long) tmplt;
-+	cls_flower.rule->match.dissector = &tmplt->dissector;
-+	cls_flower.rule->match.mask = &tmplt->mask;
-+	cls_flower.rule->match.key = &tmplt->dummy_key;
++.L_skip_tramp_exit_\@:
+ #endif
++	ldr	lr, [sp, #S_LR]
++	add	sp, sp, #PT_REGS_SIZE		// restore sp
 +
-+	cb(TC_SETUP_CLSFLOWER, &cls_flower, cb_priv);
-+	kfree(cls_flower.rule);
-+}
-+
- static int fl_dump_key_val(struct sk_buff *skb,
- 			   void *val, int val_type,
- 			   void *mask, int mask_type, int len)
-@@ -3452,6 +3474,7 @@ static struct tcf_proto_ops cls_fl_ops __read_mostly = {
- 	.bind_class	= fl_bind_class,
- 	.tmplt_create	= fl_tmplt_create,
- 	.tmplt_destroy	= fl_tmplt_destroy,
-+	.tmplt_reoffload = fl_tmplt_reoffload,
- 	.tmplt_dump	= fl_tmplt_dump,
- 	.owner		= THIS_MODULE,
- 	.flags		= TCF_PROTO_OPS_DOIT_UNLOCKED,
++	/* This must be after the last explicit memory access */
++alternative_if ARM64_WORKAROUND_SPECULATIVE_UNPRIV_LOAD
++	tlbi	vale1, xzr
++	dsb	nsh
++alternative_else_nop_endif
++	eret
+ 	.else
+ 	ldr	lr, [sp, #S_LR]
+ 	add	sp, sp, #PT_REGS_SIZE		// restore sp
 -- 
 2.53.0
 
