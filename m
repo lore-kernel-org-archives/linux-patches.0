@@ -1,84 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793212282;
-	b=e6uvIa84mhK8DrWlftowjipHpzKbqixp0C/tcyBDsPQBEGrzAsK80ViT30JFEWW9IHYW
-	 WcjRgmbPZbHMf53xZjkC8rI/9ahhRdUfATJz79nuhZGn5kHWjHIjbQiKxin1/1wd1pciV
-	 c3xraAdKnFAYOhez7iOWkPpltcAkdU7TPciPK4WaqUYvuTPJeFPbJpc/lrzm8wF9qPBY1
-	 VUZd7nEx5bOILLkKjhJe/vqDDlgFBIe+OiEnPRl20rILo7iv9gFLoQpHV21D+mJInK+rw
-	 wD+PsIllbsXnl+X47oStQQWbjvg+kBTqjLrlQJQv0r2brSjavBdyFanlxc3EhWoBmJg==
+	t=1793212285;
+	b=reNh7JsfSU/AhS1igHvUfbQ3Zg+fCS16dbe/Oy0JHxmqMBYMoaAKGG6H16ndOuxf9iSX
+	 Dx7IH0ZBBxgURjiLqM20QrtQtoNs45sMTdBuRpQMDr5qDSWvyYXuLwEQubdtgo8/ROoin
+	 ZaTEDwXb0NdSa263EGobGD4yB9OkbcRObiXRmU0dNIuKYviPmJQUDdM6lEwlQj4n/fzqU
+	 p+96rkHJcON59pW6vKfXftfUsa1UPPGcbZSwReL6yW03mGd3rIZ1sO3/loUFj82dWC9j7
+	 Zl8t46okHi3hto9RvJT4NLNkQLIXz/tc/NxpSJ9wzqiiAoVuaPKGpkxV4J/saEw7aCw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793212282;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793212285;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=zUaZ0zA+ZB0J07dtrDGYpXBD3vCRGeZlpxsINbtQjIU=;
-	b=ftMiWR/t+7bd7WKtfYhsjqS+b3X7JXZ4g+UvTnKYpVoJVTP1OUM7CzEQ2B/iH4PWV6wz
-	 Exsed0TBF8VXzHS0xCGQ0f79gOD70U9qSKHNg+3kWopSaJhGojMY4KFo8xmtQcfST4veM
-	 722Vjoj2py2KK5gAeYWnVAhShJamx/pf3PzbZ1ycPdfPR8xBhG50g2XvrkmKkiFlSqZVM
-	 12alYWYgNfAuiQvKDTpw2AvhpjjWrBBCFabMIV3a4x6cwUhTPf/1h6hJtulBYFxmD3BP9
-	 nE9OjBwOSOv3gcmOQjZsO0gDw3teb5byi4blGgt31gu8LqktAyxCpEPA/kzEvHa6gIg==
+	bh=AQUzwAKYnWQjh9JgGvWYMeW6TxQla6wgq3L8vP/guW0=;
+	b=EkmrylQkIX9hcuf3+qBsTCT6zV9ffniWr6CarXic8QR5S7GvGwdoCTHn5sWQ0X3ENRx1
+	 azxdwHoG+AEs4jEI4nzN+LySOVCWTWV6J1xyYoDThZVrNWiDpk231SCQbx+rh1FCnQjW4
+	 F77TfzNUce+P71Q7rQaCpGbQwlYTBA21XNwlKNmDiYgIRD3SU05geMRXUy1vDxyYZrBLG
+	 1IcvTcH18kTx/YcW/dvSY5RcrCOufSh8PfHYX+w+evBH/QtMU7+DYf+2af34aefb/1YHR
+	 iENGQH+tBB3nxpADf0E+xVpZUAz+sw18EWBfYual+Nkk04qo4LqgSm/VjMgMUPARqoA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WBBwb0p6;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wM9d5RwW;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5158606A31C;
-	Wed, 28 Oct 2026 18:31:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3895F606A31C;
+	Wed, 28 Oct 2026 18:31:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WBBwb0p6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF2931F01825;
-	Wed, 28 Oct 2026 18:31:20 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wM9d5RwW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 341831F01825;
+	Wed, 28 Oct 2026 18:31:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793212281;
-	bh=zUaZ0zA+ZB0J07dtrDGYpXBD3vCRGeZlpxsINbtQjIU=;
+	s=korg; t=1793212284;
+	bh=AQUzwAKYnWQjh9JgGvWYMeW6TxQla6wgq3L8vP/guW0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WBBwb0p6tJFD/ue+7rCBTnAjZOmV9FePI1rbgnR/pfWlSxIDsp4SYOKriYrQv8X5r
-	 eFCxFn4LYJ5roBNPq6JgrC72rYIqCtZO3tlyisqoKMVmMW2D4jW2OIynU6F26SPc5Z
-	 kr6cBE1KPvk5WeyfduUQk0reMudZ8ZxhqG+t7WIs=
+	b=wM9d5RwW1GSnGq30d0lDWyaT9KHxDZMaT7Or7rtc5zPtvz04Ylf+LiDdqvhdNlbIC
+	 T7Bb6mqx1bS1qF1wpW9bRaUwO2ba/BPSWm9azuFZm3P1UfVPpim5eutWztHtWUQzDF
+	 mg63RVHmLiqmr8Sucsn5k6YlPatOaTuAY4MwTzzA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hugh Dickins <hughd@google.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
-	Alexandre Ghiti <alexghiti@rivosinc.com>,
-	"Aneesh Kumar K.V" <aneesh.kumar@linux.ibm.com>,
-	Christian Borntraeger <borntraeger@linux.ibm.com>,
-	Chris Zankel <chris@zankel.net>,
-	Claudio Imbrenda <imbrenda@linux.ibm.com>,
-	David Hildenbrand <david@redhat.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
-	Greg Ungerer <gerg@linux-m68k.org>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Helge Deller <deller@gmx.de>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	John David Anglin <dave.anglin@bell.net>,
-	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
-	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Max Filippov <jcmvbkbc@gmail.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Michal Simek <monstr@monstr.eu>,
-	Mike Kravetz <mike.kravetz@oracle.com>,
-	"Mike Rapoport (IBM)" <rppt@kernel.org>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Qi Zheng <zhengqi.arch@bytedance.com>,
-	Russell King <linux@armlinux.org.uk>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Will Deacon <will@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Chris Mason <clm@meta.com>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0100/1887] arm64: allow pte_offset_map() to fail
-Date: Wed, 28 Oct 2026 17:36:36 +0100
-Message-ID: <20261028170501.509169345@linuxfoundation.org>
+Subject: [PATCH 6.1 0065/1887] nfsd: release path refs on follow_down() error
+Date: Wed, 28 Oct 2026 17:36:01 +0100
+Message-ID: <20261028170500.710768287@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -100,68 +68,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hugh Dickins <hughd@google.com>
+From: Chris Mason <clm@meta.com>
 
-[ Upstream commit 52924726f4c06b3f77de75fb665e6efd8e777d07 ]
+[ Upstream commit 6cba08dc1922140d260cfeb30bbda4ee1bf869d8 ]
 
-In rare transient cases, not yet made possible, pte_offset_map() and
-pte_offset_map_lock() may not find a page table: handle appropriately.
+nfsd_cross_mnt() initializes a local struct path with mntget() and
+dget() before calling follow_down(). On a negative return the error
+arm jumps to out without releasing those references:
 
-Link: https://lkml.kernel.org/r/35e46485-8499-4337-c51f-b8fa495a1a93@google.com
-Signed-off-by: Hugh Dickins <hughd@google.com>
-Acked-by: Catalin Marinas <catalin.marinas@arm.com>
-Cc: Alexander Gordeev <agordeev@linux.ibm.com>
-Cc: Alexandre Ghiti <alexghiti@rivosinc.com>
-Cc: Aneesh Kumar K.V <aneesh.kumar@linux.ibm.com>
-Cc: Christian Borntraeger <borntraeger@linux.ibm.com>
-Cc: Chris Zankel <chris@zankel.net>
-Cc: Claudio Imbrenda <imbrenda@linux.ibm.com>
-Cc: David Hildenbrand <david@redhat.com>
-Cc: "David S. Miller" <davem@davemloft.net>
-Cc: Geert Uytterhoeven <geert@linux-m68k.org>
-Cc: Greg Ungerer <gerg@linux-m68k.org>
-Cc: Heiko Carstens <hca@linux.ibm.com>
-Cc: Helge Deller <deller@gmx.de>
-Cc: "H. Peter Anvin" <hpa@zytor.com>
-Cc: Ingo Molnar <mingo@kernel.org>
-Cc: John David Anglin <dave.anglin@bell.net>
-Cc: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-Cc: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: Max Filippov <jcmvbkbc@gmail.com>
-Cc: Michael Ellerman <mpe@ellerman.id.au>
-Cc: Michal Simek <monstr@monstr.eu>
-Cc: Mike Kravetz <mike.kravetz@oracle.com>
-Cc: Mike Rapoport (IBM) <rppt@kernel.org>
-Cc: Palmer Dabbelt <palmer@dabbelt.com>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Qi Zheng <zhengqi.arch@bytedance.com>
-Cc: Russell King <linux@armlinux.org.uk>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Cc: Thomas Gleixner <tglx@linutronix.de>
-Cc: Will Deacon <will@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Stable-dep-of: a77644d009de ("arm64: mm: Fix the lockless page-table walk in show_pte()")
+    err = follow_down(&path, follow_flags);
+    if (err < 0)
+            goto out;
+
+follow_down() never drops the caller's entry-time refs on any error
+sub-case; for example a pre-cross d_manage() failure leaves path
+untouched, so the mntget()/dget() taken on entry survive the call.
+
+Every other early-exit arm in nfsd_cross_mnt() (other-namespace
+return, IS_ERR(exp2), and the success tail after the swap) already
+calls path_put(&path); the err < 0 arm is the lone omission. The
+leak inflates mnt_count and d_count on each failed cross-mount,
+blocking umount and pinning dentries against the shrinker, and is
+reachable by any authenticated NFS client through nfsd_lookup_dentry
+or the NFSv4 READDIR encode path.
+
+Fix by calling path_put(&path) before the goto out in the err < 0
+arm so the entry-time refs are released on all follow_down() error
+returns.
+
+Fixes: cc53ce53c869 ("Add a dentry op to allow processes to be held during pathwalk transit")
+Cc: stable@vger.kernel.org
+Assisted-by: kres:claude-opus-4-7
+Signed-off-by: Chris Mason <clm@meta.com>
+Link: https://patch.msgid.link/20260531-nfsd-testing-v1-2-7bfa481b0540@kernel.org
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+[ retained the older single-argument follow_down(&path) API ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/mm/fault.c | 3 +++
- 1 file changed, 3 insertions(+)
+ fs/nfsd/vfs.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/mm/fault.c b/arch/arm64/mm/fault.c
-index 0776c98ad27f1..c4120bd80a9b4 100644
---- a/arch/arm64/mm/fault.c
-+++ b/arch/arm64/mm/fault.c
-@@ -177,6 +177,9 @@ static void show_pte(unsigned long addr)
- 			break;
+diff --git a/fs/nfsd/vfs.c b/fs/nfsd/vfs.c
+index a69287613479b..ec28429c29462 100644
+--- a/fs/nfsd/vfs.c
++++ b/fs/nfsd/vfs.c
+@@ -130,8 +130,10 @@ nfsd_cross_mnt(struct svc_rqst *rqstp, struct dentry **dpp,
+ 	int err = 0;
  
- 		ptep = pte_offset_map(pmdp, addr);
-+		if (!ptep)
-+			break;
-+
- 		pte = READ_ONCE(*ptep);
- 		pr_cont(", pte=%016llx", pte_val(pte));
- 		pte_unmap(ptep);
+ 	err = follow_down(&path);
+-	if (err < 0)
++	if (err < 0) {
++		path_put(&path);
+ 		goto out;
++	}
+ 	if (path.mnt == exp->ex_path.mnt && path.dentry == dentry &&
+ 	    nfsd_mountpoint(dentry, exp) == 2) {
+ 		/* This is only a mountpoint in some other namespace */
 -- 
 2.53.0
 
