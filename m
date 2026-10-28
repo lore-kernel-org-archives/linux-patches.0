@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215399;
-	b=ihxSRczFSY88UZaDPu2lk94SC7nFRkpLf0WNEblDJBBjfNTdvog1Wy9Op+8AcfDbkxTL
-	 g3bP3GvpDXAnTCqSCCLvl72Smo7qZS93ma9GH/OxMloQTKxP/XXI0xwVi9LyNVaLPzKvQ
-	 xf8EtzxCxdFCFboXNcUy8gIOK04TEBAv4mlN3A2QRegCeRs3LF/sucYTBmGRPOTKZkmqk
-	 S+P4Qqm67hUEZnDWtU1RQvut5KcwKQleFJ0icJ6XbaqFgvoY4owo0g0QWJp7mfPtdxjnu
-	 HGLEBWlnhGinLngEM2hTAn2idrY0XRi9oyzIwJoy70UAt18xxT5reuwlU726F9+SPWw==
+	t=1793215402;
+	b=oo370tYKwqtmIBgVFH7f910ncKrC9ly4P/rv7zTkHVi88XEOjMWxFq8dnIOA1Q6WWwuS
+	 B1pnB7rthxtohPzrmz3YRHHmbML+gf5cLxvbS3dZ2LaZEgSVul1MJhXPylfqHREPCEuR2
+	 JADp4iJTsUcsieMsGzAJZM5o6FZfezMZNtyDZf+P/Y1GQG69GswYnrd2avY5qfFCE/NVK
+	 gkpkmt5QhqYoMSv4+WlBMXkfZPN+F7Y50cWK+Lc8Npfytd+vP8trAxYXW8WdssR5bNOJL
+	 rx9mDrOlDjavl9kC999uye9IJv+1kM8X2bAfD2QxZpK/NnOr5Qpy9ZztuCjiGWKkceA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215399;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215402;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/ZzA1so/5hBV8W02cWuO83YO13ZDfRw1GAMPJ0tLcOQ=;
-	b=v0AQ2iMDjidWzKGbEo4Mv4YVchyHjEjl+VfBbFsgy78Ep8JsXMzEngkWHDCwsvlpQWo8
-	 pSjMxLHnJEbitIDx+qUzxjeKSO2Yu01VnvdXBwNecckok6HGYeV86jO97k2z3k8zbztbl
-	 bKbgyDVU3STJKU3XveNckSCjMphAN9b5xdBqjaAqSU6Ki8VjZeCuqX50f4lZNSozKAdFp
-	 9K88xHdKhDvzcwQrYWCfYkwnokNEebCo/Q0WS+5eAXU7XQ7cpjKVjsg7ZdaWqqF8oYByw
-	 qUKFtctYmq+YEwzxrfeqU4gmt7m2pINxFFkBb154kDIFjdATIjygywbEP8ON9sEguew==
+	bh=mWqMJ0P7JKendBSuSSuAVCxm+fEH63DNCt1xfKZFgGI=;
+	b=XFaHW/Fn6lug9Lv0xP0vs/dppgGyAmK2lIjR5W7Ouf7nd84fs+egoV8WWugEg7zxitJ5
+	 epafHFzFa6yXQiWuWChX3a9y/OSntYt/QGXQ+fMODANghE4+gXDLg8+uYhN5GQgVtdO+C
+	 HBoURaPLlT3YxvICPZMCzoP45SFOy+9/MDzXF066sXUL8mIuSzh0CldU/NKmlebQdpHnE
+	 DVc5ODa2utXYO5GJ176yeglbZKotXYCAixlEnunhvwDEK4YzYeO0Bt3JQ68xRoYc73K/J
+	 5DYdzqNnoIi9xzjepYcQFMY7EOg37Mz0LE7iOOIbvozO4IlagZ8d3fbMSwwa/OisL/w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zydyXKhI;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YKSgCfRP;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9025606A31F;
-	Wed, 28 Oct 2026 19:23:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5E92606A334;
+	Wed, 28 Oct 2026 19:23:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zydyXKhI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36E2E1F01825;
-	Wed, 28 Oct 2026 19:23:18 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YKSgCfRP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A3FE1F031E0;
+	Wed, 28 Oct 2026 19:23:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215398;
-	bh=/ZzA1so/5hBV8W02cWuO83YO13ZDfRw1GAMPJ0tLcOQ=;
+	s=korg; t=1793215401;
+	bh=mWqMJ0P7JKendBSuSSuAVCxm+fEH63DNCt1xfKZFgGI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zydyXKhI41pA2j+ltFPaXWW2yyszaUoum4bN0XIaa1GAD3szPI1lClbmg93AlMGC+
-	 OuIxnu4z74aZuoZ+TBYvty7QMJ5Ob5Qv9UqkB3ZElXQIxYAoU+3Myw1m9n5ubtJjqW
-	 LVuA32JHvzRjNcsW62uJETZFcovGJUAU5qA0bmEM=
+	b=YKSgCfRP3+2vMxkR1J1nvHMTrU+ECTzpnfhs5itjkYCo0Apq2i7GOUvuwiC/OgUt8
+	 3kM5U3wCEAPm6aViw/wY2VJyZK/1FSdbR5QDdHHvMXDRUMB5aPkOZ+MAIBqanE5uSE
+	 MCMDcWm5jCCFcbLjH340phTZtIscrVYMaBCv3CMw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ingo Franzki <ifranzki@linux.ibm.com>,
-	Harald Freudenberger <freude@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>,
+	Xiang Mei <xmei5@asu.edu>,
+	Tung Nguyen <tung.quang.nguyen@est.tech>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1198/1887] s390/zcrypt: Fix buffer over-read in cca_cipher2protkey
-Date: Wed, 28 Oct 2026 17:54:54 +0100
-Message-ID: <20261028170526.668169444@linuxfoundation.org>
+Subject: [PATCH 6.1 1181/1887] tipc: serialize udp bearer replicast list updates
+Date: Wed, 28 Oct 2026 17:54:37 +0100
+Message-ID: <20261028170526.281983262@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,282 +70,192 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harald Freudenberger <freude@linux.ibm.com>
+From: Weiming Shi <bestswngs@gmail.com>
 
-[ Upstream commit 36b230835b8a008266aad22168ca52afacc8a58d ]
+[ Upstream commit 350e592ff4e30e48ffb55e142d11a73e63f4869c ]
 
-Add validation of both the actual key buffer size and token length
-fields in all the cca_check_sec*token() functions. Additionally check
-in cca_gencipherkey() for possible underflow with returned key size.
+tipc_udp_rcast_add() and cleanup_bearer() both update ub->rcast.list with
+list_add_rcu() / list_del_rcu(), but nothing serializes them. The add runs
+from the encap receive softirq (via tipc_udp_rcast_disc()) without
+rtnl_lock(), so it can race the cleanup delete and corrupt the list:
 
-The CCA token structures contain user-controlled len fields that
-were used in operations without proper validation against both the
-actual buffer size and minimum token structure size. An attacker
-could set this field larger than the actual buffer size, leading to
-reading beyond buffer boundaries. This may result in a kernel crash or
-exposure of memory via sending this as part of a request down to the
-crypto card. Also an attacker could have used a very small len value
-and thus enforce a buffer under-run which may produce similar effects
-as a over-read.
+  list_del corruption. prev->next should be ffff8880298d7ab8,
+    but was ffff88802449ad38. (prev=ffff888027e3ec98)
+  kernel BUG at lib/list_debug.c:62!
+  RIP: __list_del_entry_valid_or_report+0x17a/0x200
+  Workqueue: events cleanup_bearer
+  Call Trace:
+   cleanup_bearer (net/tipc/udp_media.c:811)
+   process_one_work (kernel/workqueue.c:3302)
+   worker_thread (kernel/workqueue.c:3466)
 
-So now a key must
-- key buf length must be at least sizeof the token struct
-- the key len field inside the token must fit into the range of
-  sizeof key token struct ... key buf length
+The bearer can be enabled from an unprivileged user namespace, as the
+TIPCv2 generic-netlink ops carry no GENL_ADMIN_PERM.
 
-Fixes: 4bc123b18ce6 ("s390/zcrypt: Add low level functions for CCA AES cipher keys")
-Cc: stable@vger.kernel.org
-Reviewed-by: Ingo Franzki <ifranzki@linux.ibm.com>
-Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+Add a spinlock to struct udp_bearer and take it around the list_add_rcu()
+in tipc_udp_rcast_add() and the list_del_rcu() loop in cleanup_bearer() so
+the two writers can no longer corrupt the list.
+
+Reject a duplicate peer under the same lock before allocating, and remove
+tipc_udp_is_known_peer(). The old lockless pre-check in
+tipc_udp_rcast_disc() was racy: two softirqs discovering the same peer
+could both find it absent and add it twice.
+
+cleanup_bearer() runs from a workqueue after tipc_udp_disable() clears the
+bearer's up bit, so an encap softirq can still reach tipc_udp_rcast_add()
+and add a peer after cleanup_bearer() has already emptied the list, leaking
+that entry when the bearer is freed. Mark the bearer disabled under
+rcast_lock once the list is emptied and refuse further additions.
+
+Fixes: ef20cd4dd163 ("tipc: introduce UDP replicast")
+Reported-by: Xiang Mei <xmei5@asu.edu>
+Suggested-by: Tung Nguyen <tung.quang.nguyen@est.tech>
+Signed-off-by: Weiming Shi <bestswngs@gmail.com>
+Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
+Link: https://patch.msgid.link/20260716025203.9332-2-bestswngs@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/s390/crypto/pkey_api.c       | 15 ++++---
- drivers/s390/crypto/zcrypt_ccamisc.c | 64 +++++++++++++++++++++++-----
- drivers/s390/crypto/zcrypt_ccamisc.h |  6 +--
- 3 files changed, 65 insertions(+), 20 deletions(-)
+ net/tipc/udp_media.c | 56 +++++++++++++++++++++-----------------------
+ 1 file changed, 27 insertions(+), 29 deletions(-)
 
-diff --git a/drivers/s390/crypto/pkey_api.c b/drivers/s390/crypto/pkey_api.c
-index 2e7a56073cc00..78c7ab04c7cb8 100644
---- a/drivers/s390/crypto/pkey_api.c
-+++ b/drivers/s390/crypto/pkey_api.c
-@@ -273,7 +273,8 @@ static int pkey_verifykey(const struct pkey_seckey *seckey,
- 	int rc;
- 
- 	/* check the secure key for valid AES secure key */
--	rc = cca_check_secaeskeytoken(debug_info, 3, (u8 *)seckey, 0);
-+	rc = cca_check_secaeskeytoken(debug_info, 3, (u8 *)seckey,
-+				      sizeof(*seckey), 0);
- 	if (rc)
- 		goto out;
- 	if (pattributes)
-@@ -688,7 +689,7 @@ static int pkey_verifykey2(const u8 *key, size_t keylen,
- 	    hdr->version == TOKVER_CCA_AES) {
- 		struct secaeskeytoken *t = (struct secaeskeytoken *)key;
- 
--		rc = cca_check_secaeskeytoken(debug_info, 3, key, 0);
-+		rc = cca_check_secaeskeytoken(debug_info, 3, key, keylen, 0);
- 		if (rc)
- 			goto out;
- 		if (ktype)
-@@ -718,7 +719,7 @@ static int pkey_verifykey2(const u8 *key, size_t keylen,
- 		   hdr->version == TOKVER_CCA_VLSC) {
- 		struct cipherkeytoken *t = (struct cipherkeytoken *)key;
- 
--		rc = cca_check_secaescipherkey(debug_info, 3, key, 0, 1);
-+		rc = cca_check_secaescipherkey(debug_info, 3, key, keylen, 0, 1);
- 		if (rc)
- 			goto out;
- 		if (ktype)
-@@ -801,12 +802,12 @@ static int pkey_keyblob2pkey2(const struct pkey_apqn *apqns, size_t nr_apqns,
- 		if (hdr->version == TOKVER_CCA_AES) {
- 			if (keylen != sizeof(struct secaeskeytoken))
- 				return -EINVAL;
--			if (cca_check_secaeskeytoken(debug_info, 3, key, 0))
-+			if (cca_check_secaeskeytoken(debug_info, 3, key, keylen, 0))
- 				return -EINVAL;
- 		} else if (hdr->version == TOKVER_CCA_VLSC) {
- 			if (keylen < hdr->len || keylen > MAXCCAVLSCTOKENSIZE)
- 				return -EINVAL;
--			if (cca_check_secaescipherkey(debug_info, 3, key, 0, 1))
-+			if (cca_check_secaescipherkey(debug_info, 3, key, keylen, 0, 1))
- 				return -EINVAL;
- 		} else {
- 			DEBUG_ERR("%s unknown CCA internal token version %d\n",
-@@ -1070,13 +1071,13 @@ static int pkey_keyblob2pkey3(const struct pkey_apqn *apqns, size_t nr_apqns,
- 			/* CCA AES data key */
- 			if (keylen != sizeof(struct secaeskeytoken))
- 				return -EINVAL;
--			if (cca_check_secaeskeytoken(debug_info, 3, key, 0))
-+			if (cca_check_secaeskeytoken(debug_info, 3, key, keylen, 0))
- 				return -EINVAL;
- 		} else if (hdr->version == TOKVER_CCA_VLSC) {
- 			/* CCA AES cipher key */
- 			if (keylen < hdr->len || keylen > MAXCCAVLSCTOKENSIZE)
- 				return -EINVAL;
--			if (cca_check_secaescipherkey(debug_info, 3, key, 0, 1))
-+			if (cca_check_secaescipherkey(debug_info, 3, key, keylen, 0, 1))
- 				return -EINVAL;
- 		} else {
- 			DEBUG_ERR("%s unknown CCA internal token version %d\n",
-diff --git a/drivers/s390/crypto/zcrypt_ccamisc.c b/drivers/s390/crypto/zcrypt_ccamisc.c
-index 622d960098ad3..bb2b51169d921 100644
---- a/drivers/s390/crypto/zcrypt_ccamisc.c
-+++ b/drivers/s390/crypto/zcrypt_ccamisc.c
-@@ -51,12 +51,18 @@ static DEFINE_SPINLOCK(cca_info_list_lock);
-  * also checked. Returns 0 on success or errno value on failure.
+diff --git a/net/tipc/udp_media.c b/net/tipc/udp_media.c
+index e1305d159834b..9c4f75a93e637 100644
+--- a/net/tipc/udp_media.c
++++ b/net/tipc/udp_media.c
+@@ -94,6 +94,8 @@ struct udp_replicast {
+  * @ifindex:	local address scope
+  * @work:	used to schedule deferred work on a bearer
+  * @rcast:	associated udp_replicast container
++ * @rcast_lock:	serialize updates to @rcast.list against concurrent updaters
++ * @disabled:	bearer is being torn down; reject further @rcast.list additions
   */
- int cca_check_secaeskeytoken(debug_info_t *dbg, int dbflvl,
--			     const u8 *token, int keybitsize)
-+			     const u8 *token, u32 keysize, int keybitsize)
+ struct udp_bearer {
+ 	struct tipc_bearer __rcu *bearer;
+@@ -101,6 +103,8 @@ struct udp_bearer {
+ 	u32 ifindex;
+ 	struct work_struct work;
+ 	struct udp_replicast rcast;
++	spinlock_t rcast_lock;
++	bool disabled;
+ };
+ 
+ static int tipc_udp_is_mcast_addr(struct udp_media_addr *addr)
+@@ -279,26 +283,6 @@ static int tipc_udp_send_msg(struct net *net, struct sk_buff *skb,
+ 	return err;
+ }
+ 
+-static bool tipc_udp_is_known_peer(struct tipc_bearer *b,
+-				   struct udp_media_addr *addr)
+-{
+-	struct udp_replicast *rcast, *tmp;
+-	struct udp_bearer *ub;
+-
+-	ub = rcu_dereference_rtnl(b->media_ptr);
+-	if (!ub) {
+-		pr_err_ratelimited("UDP bearer instance not found\n");
+-		return false;
+-	}
+-
+-	list_for_each_entry_safe(rcast, tmp, &ub->rcast.list, list) {
+-		if (!memcmp(&rcast->addr, addr, sizeof(struct udp_media_addr)))
+-			return true;
+-	}
+-
+-	return false;
+-}
+-
+ static int tipc_udp_rcast_add(struct tipc_bearer *b,
+ 			      struct udp_media_addr *addr)
  {
- 	struct secaeskeytoken *t = (struct secaeskeytoken *)token;
+@@ -309,16 +293,34 @@ static int tipc_udp_rcast_add(struct tipc_bearer *b,
+ 	if (!ub)
+ 		return -ENODEV;
  
- #define DBF(...) debug_sprintf_event(dbg, dbflvl, ##__VA_ARGS__)
- 
-+	if (keysize < sizeof(*t)) {
-+		if (dbg)
-+			DBF("%s keysize %u < min token size %zu\n",
-+			    __func__, keysize, sizeof(*t));
-+		return -EINVAL;
++	spin_lock_bh(&ub->rcast_lock);
++	if (ub->disabled) {
++		spin_unlock_bh(&ub->rcast_lock);
++		return 0;
 +	}
- 	if (t->type != TOKTYPE_CCA_INTERNAL) {
- 		if (dbg)
- 			DBF("%s token check failed, type 0x%02x != 0x%02x\n",
-@@ -90,14 +96,20 @@ EXPORT_SYMBOL(cca_check_secaeskeytoken);
-  * Returns 0 on success or errno value on failure.
-  */
- int cca_check_secaescipherkey(debug_info_t *dbg, int dbflvl,
--			      const u8 *token, int keybitsize,
--			      int checkcpacfexport)
-+			      const u8 *token, u32 keysize,
-+			      int keybitsize, int checkcpacfexport)
- {
- 	struct cipherkeytoken *t = (struct cipherkeytoken *)token;
- 	bool keybitsizeok = true;
- 
- #define DBF(...) debug_sprintf_event(dbg, dbflvl, ##__VA_ARGS__)
- 
-+	if (keysize < sizeof(*t)) {
-+		if (dbg)
-+			DBF("%s keysize %u < min token size %zu\n",
-+			    __func__, keysize, sizeof(*t));
-+		return -EINVAL;
++	list_for_each_entry(rcast, &ub->rcast.list, list) {
++		if (!memcmp(&rcast->addr, addr, sizeof(*addr))) {
++			spin_unlock_bh(&ub->rcast_lock);
++			return 0;
++		}
 +	}
- 	if (t->type != TOKTYPE_CCA_INTERNAL) {
- 		if (dbg)
- 			DBF("%s token check failed, type 0x%02x != 0x%02x\n",
-@@ -110,6 +122,18 @@ int cca_check_secaescipherkey(debug_info_t *dbg, int dbflvl,
- 			    __func__, (int)t->version, TOKVER_CCA_VLSC);
++
+ 	rcast = kmalloc(sizeof(*rcast), GFP_ATOMIC);
+-	if (!rcast)
++	if (!rcast) {
++		spin_unlock_bh(&ub->rcast_lock);
+ 		return -ENOMEM;
++	}
+ 
+ 	if (dst_cache_init(&rcast->dst_cache, GFP_ATOMIC)) {
++		spin_unlock_bh(&ub->rcast_lock);
+ 		kfree(rcast);
+ 		return -ENOMEM;
+ 	}
+ 
+ 	memcpy(&rcast->addr, addr, sizeof(struct udp_media_addr));
++	list_add_rcu(&rcast->list, &ub->rcast.list);
++	b->bcast_addr.broadcast = TIPC_REPLICAST_SUPPORT;
++	spin_unlock_bh(&ub->rcast_lock);
+ 
+ 	if (ntohs(addr->proto) == ETH_P_IP)
+ 		pr_info("New replicast peer: %pI4\n", &rcast->addr.ipv4);
+@@ -326,8 +328,6 @@ static int tipc_udp_rcast_add(struct tipc_bearer *b,
+ 	else if (ntohs(addr->proto) == ETH_P_IPV6)
+ 		pr_info("New replicast peer: %pI6\n", &rcast->addr.ipv6);
+ #endif
+-	b->bcast_addr.broadcast = TIPC_REPLICAST_SUPPORT;
+-	list_add_rcu(&rcast->list, &ub->rcast.list);
+ 	return 0;
+ }
+ 
+@@ -362,9 +362,6 @@ static int tipc_udp_rcast_disc(struct tipc_bearer *b, struct sk_buff *skb)
+ 		return 0;
+ 	}
+ 
+-	if (likely(tipc_udp_is_known_peer(b, &src)))
+-		return 0;
+-
+ 	return tipc_udp_rcast_add(b, &src);
+ }
+ 
+@@ -646,9 +643,6 @@ int tipc_udp_nl_bearer_add(struct tipc_bearer *b, struct nlattr *attr)
  		return -EINVAL;
  	}
-+	if (t->len > keysize) {
-+		if (dbg)
-+			DBF("%s token check failed, len %d > keysize %u\n",
-+			    __func__, (int)t->len, keysize);
-+		return -EINVAL;
-+	}
-+	if (t->len < sizeof(*t)) {
-+		if (dbg)
-+			DBF("%s token check failed, len %d < min token size %zu\n",
-+			    __func__, (int)t->len, sizeof(*t));
-+		return -EINVAL;
-+	}
- 	if (t->algtype != 0x02) {
- 		if (dbg)
- 			DBF("%s token check failed, algtype 0x%02x != 0x02\n",
-@@ -184,6 +208,12 @@ int cca_check_sececckeytoken(debug_info_t *dbg, int dbflvl,
  
- #define DBF(...) debug_sprintf_event(dbg, dbflvl, ##__VA_ARGS__)
+-	if (tipc_udp_is_known_peer(b, &addr))
+-		return 0;
+-
+ 	return tipc_udp_rcast_add(b, &addr);
+ }
  
-+	if (keysize < sizeof(*t)) {
-+		if (dbg)
-+			DBF("%s keysize %zu < min token size %zu\n",
-+			    __func__, keysize, sizeof(*t));
-+		return -EINVAL;
-+	}
- 	if (t->type != TOKTYPE_CCA_INTERNAL_PKA) {
- 		if (dbg)
- 			DBF("%s token check failed, type 0x%02x != 0x%02x\n",
-@@ -196,6 +226,12 @@ int cca_check_sececckeytoken(debug_info_t *dbg, int dbflvl,
- 			    __func__, (int)t->len, keysize);
- 		return -EINVAL;
+@@ -680,6 +674,7 @@ static int tipc_udp_enable(struct net *net, struct tipc_bearer *b,
+ 		return -ENOMEM;
+ 
+ 	INIT_LIST_HEAD(&ub->rcast.list);
++	spin_lock_init(&ub->rcast_lock);
+ 
+ 	if (!attrs[TIPC_NLA_BEARER_UDP_OPTS])
+ 		goto err;
+@@ -813,11 +808,14 @@ static void cleanup_bearer(struct work_struct *work)
+ 	struct udp_replicast *rcast, *tmp;
+ 	struct tipc_net *tn;
+ 
++	spin_lock_bh(&ub->rcast_lock);
+ 	list_for_each_entry_safe(rcast, tmp, &ub->rcast.list, list) {
+ 		dst_cache_destroy(&rcast->dst_cache);
+ 		list_del_rcu(&rcast->list);
+ 		kfree_rcu(rcast, rcu);
  	}
-+	if (t->len < sizeof(*t)) {
-+		if (dbg)
-+			DBF("%s token check failed, len %d < min token size %zu\n",
-+			    __func__, (int)t->len, sizeof(*t));
-+		return -EINVAL;
-+	}
- 	if (t->secid != 0x20) {
- 		if (dbg)
- 			DBF("%s token check failed, secid 0x%02x != 0x20\n",
-@@ -419,7 +455,8 @@ int cca_genseckey(u16 cardnr, u16 domain,
++	ub->disabled = true;
++	spin_unlock_bh(&ub->rcast_lock);
  
- 	/* check secure key token */
- 	rc = cca_check_secaeskeytoken(zcrypt_dbf_info, DBF_ERR,
--				      prepparm->lv3.keyblock.tok, 8 * keysize);
-+				      prepparm->lv3.keyblock.tok,
-+				      seckeysize, 8 * keysize);
- 	if (rc) {
- 		rc = -EIO;
- 		goto out;
-@@ -557,7 +594,8 @@ int cca_clr2seckey(u16 cardnr, u16 domain, u32 keybitsize,
+ 	tn = tipc_net(sock_net(ub->ubsock->sk));
  
- 	/* check secure key token */
- 	rc = cca_check_secaeskeytoken(zcrypt_dbf_info, DBF_ERR,
--				      prepparm->lv3.keyblock.tok, 8 * keysize);
-+				      prepparm->lv3.keyblock.tok,
-+				      seckeysize, 8 * keysize);
- 	if (rc) {
- 		rc = -EIO;
- 		goto out;
-@@ -816,6 +854,7 @@ int cca_gencipherkey(u16 cardnr, u16 domain, u32 keybitsize, u32 keygenflags,
- 		} kb;
- 	} __packed * prepparm;
- 	struct cipherkeytoken *t;
-+	u32 keybuflen;
- 
- 	/* get already prepared memory for 2 cprbs with param block each */
- 	rc = alloc_and_prep_cprbmem(PARMBSIZE, &mem, &preqcblk, &prepcblk);
-@@ -912,23 +951,28 @@ int cca_gencipherkey(u16 cardnr, u16 domain, u32 keybitsize, u32 keygenflags,
- 	}
- 
- 	/* and some checks on the generated key */
-+	t = (struct cipherkeytoken *)prepparm->kb.tlv1.gen_key;
-+	if (prepparm->kb.tlv1.len < 2 * sizeof(uint16_t) + sizeof(*t)) {
-+		rc = -EIO;
-+		goto out;
-+	}
-+	keybuflen = prepparm->kb.tlv1.len - 2 * sizeof(uint16_t);
- 	rc = cca_check_secaescipherkey(zcrypt_dbf_info, DBF_ERR,
- 				       prepparm->kb.tlv1.gen_key,
--				       keybitsize, 1);
-+				       keybuflen, keybitsize, 1);
- 	if (rc) {
- 		rc = -EIO;
- 		goto out;
- 	}
- 
- 	/* copy the generated vlsc key token */
--	t = (struct cipherkeytoken *)prepparm->kb.tlv1.gen_key;
- 	if (keybuf) {
--		if (*keybufsize >= t->len)
--			memcpy(keybuf, t, t->len);
-+		if (*keybufsize >= keybuflen)
-+			memcpy(keybuf, t, keybuflen);
- 		else
- 			rc = -EINVAL;
- 	}
--	*keybufsize = t->len;
-+	*keybufsize = keybuflen;
- 
- out:
- 	free_cprbmem(mem, PARMBSIZE, 0);
-diff --git a/drivers/s390/crypto/zcrypt_ccamisc.h b/drivers/s390/crypto/zcrypt_ccamisc.h
-index 78bf5631848e1..0b151bcd4b55e 100644
---- a/drivers/s390/crypto/zcrypt_ccamisc.h
-+++ b/drivers/s390/crypto/zcrypt_ccamisc.h
-@@ -135,7 +135,7 @@ struct eccprivkeytoken {
-  * also checked. Returns 0 on success or errno value on failure.
-  */
- int cca_check_secaeskeytoken(debug_info_t *dbg, int dbflvl,
--			     const u8 *token, int keybitsize);
-+			     const u8 *token, u32 keysize, int keybitsize);
- 
- /*
-  * Simple check if the token is a valid CCA secure AES cipher key
-@@ -145,8 +145,8 @@ int cca_check_secaeskeytoken(debug_info_t *dbg, int dbflvl,
-  * Returns 0 on success or errno value on failure.
-  */
- int cca_check_secaescipherkey(debug_info_t *dbg, int dbflvl,
--			      const u8 *token, int keybitsize,
--			      int checkcpacfexport);
-+			      const u8 *token, u32 keysize,
-+			      int keybitsize, int checkcpacfexport);
- 
- /*
-  * Simple check if the token is a valid CCA secure ECC private
 -- 
 2.53.0
 
