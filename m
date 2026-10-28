@@ -1,58 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214315;
-	b=a8Y5sTQ5Olz/3DutfZubzF4fVDPgwUU/v4+/qxdwjyMNmiN6x2mhwoI9YBLeZym/T9aa
-	 Dksvs61CgPkK4UpSkzEvOpzxxDPr3fGowBXUtud4eWxv0DISiAJcQbukGK8NLIpMftPmP
-	 8nQlWJMB56N6qZAnjR0jcLRU3Sw4AgduiyHF3EW/ZKhx4GGbEffais9kZvIA5QX47dyDS
-	 z/xKnC36mCL2QBkME1PC9YpRALqVdeLF9fCobgLqOJlrBmMFbJvWFvf40vlA2awppwrY6
-	 x6qcXdup/qpsNtmhQr5tgwvNp44ZDkDOHWWSKgOfxeiBES6WnoTdJzFWK+xdSj5cHtQ==
+	t=1793214318;
+	b=xArneaOvoscdPFPtT6wrZ1MSROc90VKGllLsxl3h2bUye+caBxjCpKIEWHuMRYf3T2fc
+	 rmKdr/Md20Pucfl0yfhYpBLX+Gt45bAvE5VCKEuGs26m5+YCybuXQnLSq/R/nJjXY0GdU
+	 ZjrEytPoTYQ+KoeowqKdx8QK/lpd1kn+oglS/g6/air4UbJIi7+7DTFGXJyKJNu4VJw8j
+	 RF+v2Eyj3el1MwQb5cwfdYiJaKdNpwD8KBDEKFOjpNGNlSnE58OmMUkgPy4Kq0lXImqpT
+	 mTZR0eC6eBtyOWJWdSvn/zQvHF4XA7vIgLvxJqksQvjuDxib7JZrNaJj9rDT3TwYELw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214315;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214318;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=e9PuSgkhqjkRwxvKhoUF8iyZzjmZhkjrOzLEgmnugnI=;
-	b=GANH4pNb7yqXE0Vf8HbA9TDXH0gaHtWPZXwr0cd0WeFamARb9N4xNrayfbNBBYznaBll
-	 eKSpS9llqRleTcWEhiL5mHTa14O7UGXxVfdi2EqC5xmkuVK2X8/O5O988CHHSg7KCQoLd
-	 7nPS42712jsZ41yykO+EIc2h/4Kn3Mxv+xOROtSHrLu8cFYVqNwd/IGWs77Q5VQz5Zj+3
-	 bZ7op9TCAYyDDqlvYz25BcJjh89ZUrjV5yi47XKFdssG1Jl8ouax+SncNaqkVhlVN2bbX
-	 zARmgCos+6e53QGPjSsqAOwbS4Nnw/SCwjgKvLDe6Hf4chfa3c2iaGzg7kJTF0OIQgA==
+	bh=W9RVADkafR2p56spVf94lP0PBIiL+kcnM/YyLtenLKA=;
+	b=uGqWbC+ppIDVc6Eea7nTPX18959eprOphA7OTOg4hFg0ucdbYh4RmAnNchos2cFlkMAq
+	 1TU5s1N5h7SuFw40SHTRTbaWNChzCuz/2HO5Ad+B0NajRHmBW7DR3igKWKuIyHOy4vSzZ
+	 vnKNBMvZjQNdiHI2DB4NjfmpU3pbmXnqlm0APubN4qhie6JVGRnqJyKpCGw/I8F8NaagM
+	 p1JGY3YjgIj2xfwhigHp19h5fHxaEt/iC+E3QC2sStPCqkMkmAg3X1IJSxMDWF1tgTirP
+	 MxPtDQZ3qnBDR0FXyiZLrQIAUI1d/6pLBNrCJWtH5klZ+MhKb96b/SCETCJa+Rq9Yvg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nVUMwy+3;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HLIYkODi;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 278F2606BF9E;
-	Wed, 28 Oct 2026 19:05:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 353C9606A322;
+	Wed, 28 Oct 2026 19:05:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nVUMwy+3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 806971F01825;
-	Wed, 28 Oct 2026 19:05:14 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HLIYkODi
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4921D1F01825;
+	Wed, 28 Oct 2026 19:05:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214315;
-	bh=e9PuSgkhqjkRwxvKhoUF8iyZzjmZhkjrOzLEgmnugnI=;
+	s=korg; t=1793214317;
+	bh=W9RVADkafR2p56spVf94lP0PBIiL+kcnM/YyLtenLKA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nVUMwy+3yTrA28QjPGBe1djKQkhhu6/JsA05s89Vbr/h7dggN3Lo9cb1eWI1PDNja
-	 wUCpUDbZ5SifIF39ClNYUqAyfxv3IcxzgVNax8obvhBklaOq9PDzDs8M2qmvP9hZME
-	 xidDrekDcugio9xGLgwpkvinCNp+j5YWgXwgEQQw=
+	b=HLIYkODiFeSaos2qIg6gqrpCR7Br+im6AwJRZfNln6oiE27x2JX/oB4G+unww0YQT
+	 J8cgHWCaZDHXhONl7PMXeYFHgo/9etI/GSFGE/WhhUSRy4oAjrq0nBwkmBK3aFqGx6
+	 33nkMQGMHm5TzZ/be88K9hhgwSCKm9W324eHkp+o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Junvyyang, Tencent Zhuque Lab" <zhuque@tencent.com>,
-	David Howells <dhowells@redhat.com>,
-	Jeffrey Altman <jaltman@auristor.com>,
-	LePremierHomme <kwqcheii@proton.me>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	Simon Horman <horms@kernel.org>,
-	linux-afs@lists.infradead.org,
-	Jakub Kicinski <kuba@kernel.org>,
+	Andy Yan <andy.yan@rock-chips.com>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0808/1887] rxrpc: Fix recv-recv race of completed call
-Date: Wed, 28 Oct 2026 17:48:24 +0100
-Message-ID: <20261028170517.816372892@linuxfoundation.org>
+Subject: [PATCH 6.1 0817/1887] drm/rockchip: vop2: fail cleanly if missing a primary plane for a video-port
+Date: Wed, 28 Oct 2026 17:48:33 +0100
+Message-ID: <20261028170518.018077447@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -74,85 +68,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Heiko Stuebner <heiko@sntech.de>
 
-[ Upstream commit 962fb1f651c2cf2083e0c3ef53ba69e3b96d3fbc ]
+[ Upstream commit f9f68bf1d0efeadb6c427c9dbb30f307a7def19b ]
 
-If a call receives an event (such as incoming data), the call gets placed
-on the socket's queue and a thread in recvmsg can be awakened to go and
-process it.  Once the thread has picked up the call off of the queue,
-further events will cause it to be requeued, and once the socket lock is
-dropped (recvmsg uses call->user_mutex to allow the socket to be used in
-parallel), a second thread can come in and its recvmsg can pop the call off
-the socket queue again.
+Each window of a vop2 is usable by a specific set of video ports, so while
+binding the vop2, we look through the list of available windows trying to
+find one designated as primary-plane and usable by that specific port.
 
-In such a case, the first thread will be receiving stuff from the call and
-the second thread will be blocked on call->user_mutex.  The first thread
-can, at this point, process both the event that it picked call for and the
-event that the second thread picked the call for and may see the call
-terminate - in which case the call will be "released", decoupling the call
-from the user call ID assigned to it (RXRPC_USER_CALL_ID in the control
-message).
+The code later wants to use drm_crtc_init_with_planes with that found
+primary plane, but nothing has checked so far if a primary plane was
+actually found.
 
-The first thread will return okay, but then the second thread will wake up
-holding the user_mutex and, if it sees that the call has been released by
-the first thread, it will BUG thusly:
+For whatever reason, the rk3576 vp2 does not have a usable primary window
+(if vp0 is also in use) which brought the issue to light and ended in a
+null-pointer dereference further down.
 
-	kernel BUG at net/rxrpc/recvmsg.c:474!
+As we expect a primary-plane to exist for a video-port, add a check at
+the end of the window-iteration and fail probing if none was found.
 
-Fix this by just dequeuing the call and ignoring it if it is seen to be
-already released.  We can't tell userspace about it anyway as the user call
-ID has become stale.
-
-Fixes: 248f219cb8bc ("rxrpc: Rewrite the data and ack handling code")
-Reported-by: Junvyyang, Tencent Zhuque Lab <zhuque@tencent.com>
-Signed-off-by: David Howells <dhowells@redhat.com>
-Reviewed-by: Jeffrey Altman <jaltman@auristor.com>
-cc: LePremierHomme <kwqcheii@proton.me>
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: Simon Horman <horms@kernel.org>
-cc: linux-afs@lists.infradead.org
-Link: https://patch.msgid.link/20250717074350.3767366-3-dhowells@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 604be85547ce ("drm/rockchip: Add VOP2 driver")
+Reviewed-by: Andy Yan <andy.yan@rock-chips.com>
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Link: https://lore.kernel.org/r/20250610212748.1062375-1-heiko@sntech.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rxrpc/recvmsg.c | 16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/rockchip/rockchip_drm_vop2.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/net/rxrpc/recvmsg.c b/net/rxrpc/recvmsg.c
-index 99c679f40e7b6..870fab693653f 100644
---- a/net/rxrpc/recvmsg.c
-+++ b/net/rxrpc/recvmsg.c
-@@ -546,6 +546,15 @@ int rxrpc_recvmsg(struct socket *sock, struct msghdr *msg, size_t len,
- 	write_lock_bh(&rx->recvmsg_lock);
- 	l = rx->recvmsg_q.next;
- 	call = list_entry(l, struct rxrpc_call, recvmsg_link);
+diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
+index 1a17e9c1e8335..608b0d681b217 100644
+--- a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
++++ b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
+@@ -2409,6 +2409,10 @@ static int vop2_create_crtc(struct vop2 *vop2)
+ 		if (!vp->crtc.port)
+ 			continue;
+ 
++		if (!vp->primary_plane)
++			return dev_err_probe(drm->dev, -ENOENT,
++					     "no primary plane for vp %d\n", i);
 +
-+	if (test_bit(RXRPC_CALL_RELEASED, &call->flags)) {
-+		list_del_init(&call->recvmsg_link);
-+		write_unlock_bh(&rx->recvmsg_lock);
-+		release_sock(&rx->sk);
-+		rxrpc_put_call(call, rxrpc_call_put);
-+		goto try_again;
-+	}
-+
- 	if (!(flags & MSG_PEEK))
- 		list_del_init(&call->recvmsg_link);
- 	else
-@@ -568,8 +577,11 @@ int rxrpc_recvmsg(struct socket *sock, struct msghdr *msg, size_t len,
+ 		plane = &vp->primary_plane->base;
  
- 	release_sock(&rx->sk);
- 
--	if (test_bit(RXRPC_CALL_RELEASED, &call->flags))
--		BUG();
-+	if (test_bit(RXRPC_CALL_RELEASED, &call->flags)) {
-+		mutex_unlock(&call->user_mutex);
-+		rxrpc_put_call(call, rxrpc_call_put);
-+		goto try_again;
-+	}
- 
- 	if (test_bit(RXRPC_CALL_HAS_USERID, &call->flags)) {
- 		if (flags & MSG_CMSG_COMPAT) {
+ 		ret = drm_crtc_init_with_planes(drm, &vp->crtc, plane, NULL,
 -- 
 2.53.0
 
