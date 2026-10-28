@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215333;
-	b=mjL+1hA5K2YWoHhTbxIS7+dCZV7FMvnlzGzlhTq9JGclOK+ItRNCrvAxo689unOsLhaA
-	 TAeXHY2sS7lKoFX2TOFxmrA8VzJlhkMT/SzPgF6MBXOdPf09tQuca0WyeQnxwQq4hNnga
-	 2PG3zsePJHexlqdWX2aLKfo/dBi6A+6MFVtvtRg9Mm1Y09UZCw6vXS4qV8SXD+7YyQYbN
-	 2MW09k6qZNuaHCWL/tenMa4YvIBwf1XSAg+MFTWU1hgXtrPFUafGo8RfJ2GkRTx0nSlVc
-	 QGEgZnWjpMq9sTbo66rqS3JT+DyxLrFz2K1SX97erVq8Jo8GBqC8xhn66nrY2l1YG+Q==
+	t=1793215341;
+	b=SacUcu/AC68cG9jyuKwgZi+RYAbKb4W1ZMPZpUjhbEWku3LgoRb3MqFsqNBwFnadeCoL
+	 W0D5By3phsARmvJnG+0o/j2sWFKlSYdyugnOketC0ggDOt8Y8KKw2aWGsdnhd208vZveL
+	 I7h+TOkyalC8MRDCNtA5UDB8HjV6XZFWcCJw6mQS94Gk1BacIwE2yxHae/6OxJiEBb5tE
+	 GzRVGzdW3oCehqSSsVHQ/z9LXkvIAyolY9bwuRbwWBtDk4PtAscfIO/cFKyVLYM9+HZO2
+	 sNjiLOokyVKQKssZD4/kWWEtzzZP6jTtRxitKbzGF3V55AKfBb9YlIyZWFKHg4Vjz2g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215333;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215341;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=BpbmvjQI37CYNQaGvbvGY4lb0P7e3Pa5vD+hddDaKqw=;
-	b=kP71rtBCybIZUWvphu9HSA0iopKmUna7h1RtD7xxTDNRuhJP+BcQnxabT+0sYs80DWrl
-	 6oIOZyK07bUUtGAJllMnlUB5onix5B9foCZxLUxOtU6xGyywTNcQ/VDUWH6nINY8Jh8Sg
-	 yFl8Hr6HR9GzZOMMbYAZ7JneDN7JE3QnvtT/re/wXdaanGXaCmj5b394x7SuKNDAQxBDb
-	 kUG9egF8y/fG4Ug6OtykXwcTdspNj7AO0mPkYo0pN0ZPGE9pLHx7MTOVbgDNzTTC06+GG
-	 wGAWjnVD0C1x4AXta52WzqMx8XKsHUCXZyPNwsevPyPETaVpfymCvxjggAy3EX6jYMQ==
+	bh=WUlGrOZO4ewah58wcp3InYyDsZXzXGpyRwgIVqciZFA=;
+	b=0yKgM2stUBIeKgGTL9RT8j+z7DGhf2pcdDft+Z++AWimJwqMOzWGUXmkkodIdb3BGpF9
+	 rusl9Bm6EPnzJT9uyfbOJwwSLDKYBDwCx9rYu1FQcAS/g9vL3bawVqmcxV7p22QfRZ0NO
+	 9Hl7cvrLAh7WQI6sAYIBLgOaY/SahEoaldy5InOLFcZCGQCSuA6bMsi8AnsOjjP+G2KCF
+	 WR2Ct/7h5uGx6RE++Zj/Nyomp0iu9BvvBEmttdtmr0UCh9NBr5gKc2FzNugsrtZumpywb
+	 3Q62X9wuDjukI2W6NvmQFWyOzUSo+Cy76SfHi/1gS/um1TQl4w4JnYh/cXcn34M5vNw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l3BpZRJ8;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Fua7HIuu;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3213606A31D;
-	Wed, 28 Oct 2026 19:22:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0A25606A31A;
+	Wed, 28 Oct 2026 19:22:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l3BpZRJ8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC1151F01825;
-	Wed, 28 Oct 2026 19:22:11 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Fua7HIuu
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CFAC1F01825;
+	Wed, 28 Oct 2026 19:22:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215332;
-	bh=BpbmvjQI37CYNQaGvbvGY4lb0P7e3Pa5vD+hddDaKqw=;
+	s=korg; t=1793215340;
+	bh=WUlGrOZO4ewah58wcp3InYyDsZXzXGpyRwgIVqciZFA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=l3BpZRJ8Lxq6W+G8lHvP1BMuT2XXUm35XFF2k1Yjr2iz8t1heIhmbcmNNOxThJx3o
-	 a8Y3RyMIyFXbzJSP6+dS3kQUknaJEOFhLQMStrWPrN0KCwaJr3noJnAF+W7zZ2BrLx
-	 WGGU17rE4cMcSHoDRM3LFrRogAHImrGotamsA7ws=
+	b=Fua7HIuuiFZxO9jXfDjSg5GWvYEzOzrcYZ6IuJvJk5U4lngKGgGclceo+lqUa4cCr
+	 obKntP+XHLiDM7oHyoAQY+r9q+OzZH9nfKe2qIF/DH+r2JRuc1Gs+xFrlqm3+KCN0H
+	 loilLrH3qj8x4DUYxXVI1PRqutuROj4yDpWOLsWc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tristan Madani <tristan@talencesecurity.com>,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	James Zhu <James.Zhu@amd.com>,
+	Lijo Lazar <lijo.lazar@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1137/1887] netfilter: ebtables: move to two-stage removal scheme
-Date: Wed, 28 Oct 2026 17:53:53 +0100
-Message-ID: <20261028170525.278757991@linuxfoundation.org>
+Subject: [PATCH 6.1 1175/1887] drm/amdgpu: keep amdgpu_ctx_mgr in ctx structure
+Date: Wed, 28 Oct 2026 17:54:31 +0100
+Message-ID: <20261028170526.145437639@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,195 +69,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: James Zhu <James.Zhu@amd.com>
 
-[ Upstream commit b7f0544d86d439cb946515d2ef6a0a75e8626710 ]
+[ Upstream commit c30e326e488ec43f6b0931f16ddba16a3370ed4a ]
 
-Like previous patches for x_tables, follow same pattern in ebtables.
-We can't reuse xt helpers: ebt_table struct layout is incompatible.
+Keep amdgpu_ctx_mgr in ctx structure to track fpriv.
 
-table->ops assignment is now done while still holding the ebt mutex
-to make sure we never expose partially-filled table struct.
+v2: add missing fpriv declaration lost in rebase
 
-Fixes: 87663c39f898 ("netfilter: ebtables: do not hook tables by default")
-Reviewed-by: Tristan Madani <tristan@talencesecurity.com>
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: James Zhu <James.Zhu@amd.com>
+Acked-by: Lijo Lazar <lijo.lazar@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Stable-dep-of: c1dc4ccb82c9 ("drm/amdgpu: Fix context pstate override handling")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bridge/netfilter/ebtable_broute.c |  2 +-
- net/bridge/netfilter/ebtable_filter.c |  2 +-
- net/bridge/netfilter/ebtable_nat.c    |  2 +-
- net/bridge/netfilter/ebtables.c       | 60 +++++++++++++++++----------
- 4 files changed, 40 insertions(+), 26 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_ctx.c | 2 ++
+ drivers/gpu/drm/amd/amdgpu/amdgpu_ctx.h | 1 +
+ 2 files changed, 3 insertions(+)
 
-diff --git a/net/bridge/netfilter/ebtable_broute.c b/net/bridge/netfilter/ebtable_broute.c
-index 8f19253024b0a..33d8640d21ac1 100644
---- a/net/bridge/netfilter/ebtable_broute.c
-+++ b/net/bridge/netfilter/ebtable_broute.c
-@@ -128,8 +128,8 @@ static int __init ebtable_broute_init(void)
- 
- static void __exit ebtable_broute_fini(void)
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_ctx.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_ctx.c
+index 3898b67c35bc3..c88dbba8b312b 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ctx.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ctx.c
+@@ -304,6 +304,7 @@ static int amdgpu_ctx_get_stable_pstate(struct amdgpu_ctx *ctx,
+ static int amdgpu_ctx_init(struct amdgpu_ctx_mgr *mgr, int32_t priority,
+ 			   struct drm_file *filp, struct amdgpu_ctx *ctx)
  {
--	unregister_pernet_subsys(&broute_net_ops);
- 	ebt_unregister_template(&broute_table);
-+	unregister_pernet_subsys(&broute_net_ops);
- }
++	struct amdgpu_fpriv *fpriv = filp->driver_priv;
+ 	u32 current_stable_pstate;
+ 	int r;
  
- module_init(ebtable_broute_init);
-diff --git a/net/bridge/netfilter/ebtable_filter.c b/net/bridge/netfilter/ebtable_filter.c
-index 278f324e67524..fdb988c24916a 100644
---- a/net/bridge/netfilter/ebtable_filter.c
-+++ b/net/bridge/netfilter/ebtable_filter.c
-@@ -109,8 +109,8 @@ static int __init ebtable_filter_init(void)
+@@ -332,6 +333,7 @@ static int amdgpu_ctx_init(struct amdgpu_ctx_mgr *mgr, int32_t priority,
+ 	else
+ 		ctx->stable_pstate = current_stable_pstate;
  
- static void __exit ebtable_filter_fini(void)
- {
--	unregister_pernet_subsys(&frame_filter_net_ops);
- 	ebt_unregister_template(&frame_filter);
-+	unregister_pernet_subsys(&frame_filter_net_ops);
- }
- 
- module_init(ebtable_filter_init);
-diff --git a/net/bridge/netfilter/ebtable_nat.c b/net/bridge/netfilter/ebtable_nat.c
-index 9066f7f376d57..8b981b2041b5d 100644
---- a/net/bridge/netfilter/ebtable_nat.c
-+++ b/net/bridge/netfilter/ebtable_nat.c
-@@ -109,8 +109,8 @@ static int __init ebtable_nat_init(void)
- 
- static void __exit ebtable_nat_fini(void)
- {
--	unregister_pernet_subsys(&frame_nat_net_ops);
- 	ebt_unregister_template(&frame_nat);
-+	unregister_pernet_subsys(&frame_nat_net_ops);
- }
- 
- module_init(ebtable_nat_init);
-diff --git a/net/bridge/netfilter/ebtables.c b/net/bridge/netfilter/ebtables.c
-index ca6f0b7710823..b1846d5c879a5 100644
---- a/net/bridge/netfilter/ebtables.c
-+++ b/net/bridge/netfilter/ebtables.c
-@@ -42,6 +42,7 @@
- 
- struct ebt_pernet {
- 	struct list_head tables;
-+	struct list_head dead_tables;
- };
- 
- struct ebt_template {
-@@ -1164,11 +1165,6 @@ static int do_replace(struct net *net, sockptr_t arg, unsigned int len)
- 
- static void __ebt_unregister_table(struct net *net, struct ebt_table *table)
- {
--	mutex_lock(&ebt_mutex);
--	list_del(&table->list);
--	mutex_unlock(&ebt_mutex);
--	audit_log_nfcfg(table->name, AF_BRIDGE, table->private->nentries,
--			AUDIT_XT_OP_UNREGISTER, GFP_KERNEL);
- 	EBT_ENTRY_ITERATE(table->private->entries, table->private->entries_size,
- 			  ebt_cleanup_entry, net, NULL);
- 	if (table->private->nentries)
-@@ -1269,13 +1265,15 @@ int ebt_register_table(struct net *net, const struct ebt_table *input_table,
- 	for (i = 0; i < num_ops; i++)
- 		ops[i].priv = table;
- 
--	list_add(&table->list, &ebt_net->tables);
--	mutex_unlock(&ebt_mutex);
--
- 	table->ops = ops;
- 	ret = nf_register_net_hooks(net, ops, num_ops);
--	if (ret)
-+	if (ret) {
-+		synchronize_rcu();
- 		__ebt_unregister_table(net, table);
-+	} else {
-+		list_add(&table->list, &ebt_net->tables);
-+	}
-+	mutex_unlock(&ebt_mutex);
- 
- 	audit_log_nfcfg(repl->name, AF_BRIDGE, repl->nentries,
- 			AUDIT_XT_OP_REGISTER, GFP_KERNEL);
-@@ -1341,7 +1339,7 @@ void ebt_unregister_template(const struct ebt_table *t)
- }
- EXPORT_SYMBOL(ebt_unregister_template);
- 
--static struct ebt_table *__ebt_find_table(struct net *net, const char *name)
-+void ebt_unregister_table_pre_exit(struct net *net, const char *name)
- {
- 	struct ebt_pernet *ebt_net = net_generic(net, ebt_pernet_id);
- 	struct ebt_table *t;
-@@ -1350,30 +1348,36 @@ static struct ebt_table *__ebt_find_table(struct net *net, const char *name)
- 
- 	list_for_each_entry(t, &ebt_net->tables, list) {
- 		if (strcmp(t->name, name) == 0) {
-+			list_move(&t->list, &ebt_net->dead_tables);
- 			mutex_unlock(&ebt_mutex);
--			return t;
-+			nf_unregister_net_hooks(net, t->ops, hweight32(t->valid_hooks));
-+			return;
- 		}
- 	}
- 
- 	mutex_unlock(&ebt_mutex);
--	return NULL;
--}
--
--void ebt_unregister_table_pre_exit(struct net *net, const char *name)
--{
--	struct ebt_table *table = __ebt_find_table(net, name);
--
--	if (table)
--		nf_unregister_net_hooks(net, table->ops, hweight32(table->valid_hooks));
- }
- EXPORT_SYMBOL(ebt_unregister_table_pre_exit);
- 
- void ebt_unregister_table(struct net *net, const char *name)
- {
--	struct ebt_table *table = __ebt_find_table(net, name);
-+	struct ebt_pernet *ebt_net = net_generic(net, ebt_pernet_id);
-+	struct ebt_table *t;
- 
--	if (table)
--		__ebt_unregister_table(net, table);
-+	mutex_lock(&ebt_mutex);
-+
-+	list_for_each_entry(t, &ebt_net->dead_tables, list) {
-+		if (strcmp(t->name, name) == 0) {
-+			list_del(&t->list);
-+			audit_log_nfcfg(t->name, AF_BRIDGE, t->private->nentries,
-+					AUDIT_XT_OP_UNREGISTER, GFP_KERNEL);
-+			__ebt_unregister_table(net, t);
-+			mutex_unlock(&ebt_mutex);
-+			return;
-+		}
-+	}
-+
-+	mutex_unlock(&ebt_mutex);
- }
- 
- /* userspace just supplied us with counters */
-@@ -2594,11 +2598,21 @@ static int __net_init ebt_pernet_init(struct net *net)
- 	struct ebt_pernet *ebt_net = net_generic(net, ebt_pernet_id);
- 
- 	INIT_LIST_HEAD(&ebt_net->tables);
-+	INIT_LIST_HEAD(&ebt_net->dead_tables);
++	ctx->ctx_mgr = &(fpriv->ctx_mgr);
  	return 0;
  }
  
-+static void __net_exit ebt_pernet_exit(struct net *net)
-+{
-+	struct ebt_pernet *ebt_net = net_generic(net, ebt_pernet_id);
-+
-+	WARN_ON_ONCE(!list_empty(&ebt_net->tables));
-+	WARN_ON_ONCE(!list_empty(&ebt_net->dead_tables));
-+}
-+
- static struct pernet_operations ebt_net_ops = {
- 	.init = ebt_pernet_init,
-+	.exit = ebt_pernet_exit,
- 	.id   = &ebt_pernet_id,
- 	.size = sizeof(struct ebt_pernet),
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_ctx.h b/drivers/gpu/drm/amd/amdgpu/amdgpu_ctx.h
+index 0fa0e56daf67e..f1e27b6e16f48 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ctx.h
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ctx.h
+@@ -57,6 +57,7 @@ struct amdgpu_ctx {
+ 	unsigned long			ras_counter_ce;
+ 	unsigned long			ras_counter_ue;
+ 	uint32_t			stable_pstate;
++	struct amdgpu_ctx_mgr		*ctx_mgr;
  };
+ 
+ struct amdgpu_ctx_mgr {
 -- 
 2.53.0
 
