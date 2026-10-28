@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213971;
-	b=VaEOHR+2BxiYgZbHtP5I1klIsOk/iCT/gAleF8bN1ECZyFlET89+ZUbzd/m5YphKalt3
-	 mVardgJ6r086vc77OOp3E1eaFMnixKr5P2BW1YfdRbTUlRzdB+lOikKWqJubqdt8sHNaX
-	 Xus8m9OoLojeM7mv8O2K00pI+3srQmiA6NG+Q26cdd8dnE7/7rZ0Z9yZI4j0RuOgfhjui
-	 fKrDNkUoBB5nPsrNrYzCm4rS49NOVrpqDXgnI0YR8UouH0CXVhy81cpKFL46JLMjhPLrr
-	 OPVSQEmTDttNYIKeQ7A9uky2Tdrh9ocSjqIPK3CBuuAB4nKo2WyYYWZoJRz0S6oX+GA==
+	t=1793213974;
+	b=1mTp1H0CkLaiL/YKU58o6WunaPhQukd6XzD3PfRswAiaDz0jox7vynlFxaZ7S8jrP6K1
+	 4IsSNx7fb9Wocw0019d1bRjvX+znRm1zZqr7aAwSFHKER6N6JNDuCCS5SfYwt+GTYBEnB
+	 zeLjBORJcatdZV+ginP2/jGVjicD1yf0CnCdLYyQIh1IoOuODSRgk6Mmh3HCWjM/CxgAy
+	 lqodgPYufnTwcYNk/zTZVxHfhcIZUpRwY+cjDW+f7lL8+bEiBsH5uECSqkDna4DB2bJ1v
+	 ZWJpb8UKiYf0G+ttGVIn/gPhqU6yn28gqmHVhZ3r2upGlsj3cwePq7+XckZd5HutQ5Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213971;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213974;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=AaTXfEaiqm7wJKczEdPgdREjD0VzCWZ+/jMb/sk9+lY=;
-	b=yCBEjGTdN9TV3+WWa5G++OwkV7K+ql7UMyKEldoniiyhQctudpdz1TatXPOSNoBV+nbz
-	 +v6wJsDlFSWs+BqcYEpg41kn43MkEw4KkNamhyGGpxLWX2jVKJr0KJE8+6ysJrbyJJyMH
-	 5WXFkRaUDe3yjeLTJGNY1J3bnl1A6iI+Q7Msf+sfP+bX7GPa6tfLQhoOxwcXeLDgG8Eb4
-	 ApdSBuNC+wOKLCnyLK0iCHUWLie8NbW+PHkHOULXIWfJiTY4m9z+yqNJ/vcTIgt0z2okA
-	 rmAmdRPvPHMwTLRy11fBh3CvoDncVwmIITrozhv0n8EQXvoO8/py2DUI4jxBoYWEgZg==
+	bh=RLzwGyba4lqmrGKWPigc8hYC8Mb6ryUT7M8A1jv3ZXs=;
+	b=4qYq8XpM2WZnbsHGGU/dxGFyWRGIFmBH6jn7tMN+I6tcgVGvTM3cLEilC5z7r6RtAD+h
+	 atVs9LwI6KrpwEWV0HEOKPW3xZUpwOynnRNuiMRr2fijt4OuYmsclyWqxqGkU7zGVuRe7
+	 q+v7j4RwHdJV4bXZtqWblGaBaHUNvNZ08M0kv8wGD9y/FAvYKBu3foFwknQKFKxxWq+0U
+	 m6d21PV9ntm6nyIN1VeSjXZM1Sb/qzT7xdv6L8NZ1SKRroa8XnvPPXMZ2sq8ySSDbnf2/
+	 1lID36Y36Lu2YB42DAhzAbvNLhhr8gUSovhCGU9NeujtSl1dlh/pjyBj61+Ps7uo+zQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yhRUbKdD;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ahVxiyws;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AB5A606A31A;
-	Wed, 28 Oct 2026 18:59:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC8E1606A31D;
+	Wed, 28 Oct 2026 18:59:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yhRUbKdD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 692211F01825;
-	Wed, 28 Oct 2026 18:59:30 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ahVxiyws
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 465081F01829;
+	Wed, 28 Oct 2026 18:59:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213971;
-	bh=AaTXfEaiqm7wJKczEdPgdREjD0VzCWZ+/jMb/sk9+lY=;
+	s=korg; t=1793213973;
+	bh=RLzwGyba4lqmrGKWPigc8hYC8Mb6ryUT7M8A1jv3ZXs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yhRUbKdDW3eEwmdrty/OkKIgv0azObfTsxX32JMELadjFssCKrrcFuRAJ7p2kKv3H
-	 /9IG3zdGQsYqWEz+/1XDA3UwGBnJ4gR4cwWUpF/ZIbMc0SmFDWJlS8arRsEh7S4OZy
-	 o2iSANDN4LpwiMs/ZEQX5iLd3bzVAX27W4/L6kog=
+	b=ahVxiywsMvjnYj9ZUcUtdvUp+Biqz6802UPpThkk+hHr0sz3+30Xlite/OL3i/pbg
+	 zhgFP24qob87PApUesYaF1q5JHQC7pXP0Wwkr7JSn2yY/SWeK2Y8QiapqprXlD82u6
+	 2EZaM2k1RT3KOvu2MO6sxBgOeV91aX+BXoLg2Pt4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peng Fan <peng.fan@nxp.com>,
-	Stefan Wahren <wahrenst@gmx.net>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	Yuezhang Mo <Yuezhang.Mo@sony.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0694/1887] pmdomain: imx93-blk-ctrl: correct remove path
-Date: Wed, 28 Oct 2026 17:46:30 +0100
-Message-ID: <20261028170515.205617729@linuxfoundation.org>
+Subject: [PATCH 6.1 0695/1887] exfat: fix out-of-bounds access of directory entries
+Date: Wed, 28 Oct 2026 17:46:31 +0100
+Message-ID: <20261028170515.227880955@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,43 +68,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peng Fan <peng.fan@nxp.com>
+From: Yuezhang Mo <Yuezhang.Mo@sony.com>
 
-[ Upstream commit f7c7c5aa556378a2c8da72c1f7f238b6648f95fb ]
+[ Upstream commit 184fa506e392eb78364d9283c961217ff2c0617b ]
 
-The check condition should be 'i < bc->onecell_data.num_domains', not
-'bc->onecell_data.num_domains' which will make the look never finish
-and cause kernel panic.
+In the case of the directory size is greater than or equal to
+the cluster size, if start_clu becomes an EOF cluster(an invalid
+cluster) due to file system corruption, then the directory entry
+where ei->hint_femp.eidx hint is outside the directory, resulting
+in an out-of-bounds access, which may cause further file system
+corruption.
 
-Also disable runtime to address
-"imx93-blk-ctrl 4ac10000.system-controller: Unbalanced pm_runtime_enable!"
+This commit adds a check for start_clu, if it is an invalid cluster,
+the file or directory will be treated as empty.
 
-Fixes: e9aa77d413c9 ("soc: imx: add i.MX93 media blk ctrl driver")
-Signed-off-by: Peng Fan <peng.fan@nxp.com>
-Reviewed-by: Stefan Wahren <wahrenst@gmx.net>
 Cc: stable@vger.kernel.org
-Message-ID: <20241101101252.1448466-1-peng.fan@oss.nxp.com>
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Yuezhang Mo <Yuezhang.Mo@sony.com>
+Co-developed-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/imx/imx93-blk-ctrl.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/exfat/namei.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/soc/imx/imx93-blk-ctrl.c b/drivers/soc/imx/imx93-blk-ctrl.c
-index 2c600329436cf..955e084c9d11b 100644
---- a/drivers/soc/imx/imx93-blk-ctrl.c
-+++ b/drivers/soc/imx/imx93-blk-ctrl.c
-@@ -298,7 +298,9 @@ static int imx93_blk_ctrl_remove(struct platform_device *pdev)
- 
- 	of_genpd_del_provider(pdev->dev.of_node);
- 
--	for (i = 0; bc->onecell_data.num_domains; i++) {
-+	pm_runtime_disable(&pdev->dev);
+diff --git a/fs/exfat/namei.c b/fs/exfat/namei.c
+index 51743ea617333..ae36930408e6b 100644
+--- a/fs/exfat/namei.c
++++ b/fs/exfat/namei.c
+@@ -656,14 +656,19 @@ static int exfat_find(struct inode *dir, struct qstr *qname,
+ 	info->type = exfat_get_entry_type(ep);
+ 	info->attr = le16_to_cpu(ep->dentry.file.attr);
+ 	info->size = le64_to_cpu(ep2->dentry.stream.valid_size);
 +
-+	for (i = 0; i < bc->onecell_data.num_domains; i++) {
- 		struct imx93_blk_ctrl_domain *domain = &bc->domains[i];
++	info->start_clu = le32_to_cpu(ep2->dentry.stream.start_clu);
++	if (!is_valid_cluster(sbi, info->start_clu) && info->size) {
++		exfat_warn(sb, "start_clu is invalid cluster(0x%x)",
++				info->start_clu);
++		info->size = 0;
++	}
++
+ 	if (info->size == 0) {
+ 		info->flags = ALLOC_NO_FAT_CHAIN;
+ 		info->start_clu = EXFAT_EOF_CLUSTER;
+-	} else {
++	} else
+ 		info->flags = ep2->dentry.stream.flags;
+-		info->start_clu =
+-			le32_to_cpu(ep2->dentry.stream.start_clu);
+-	}
  
- 		pm_genpd_remove(&domain->genpd);
+ 	exfat_get_entry_time(sbi, &info->crtime,
+ 			     ep->dentry.file.create_tz,
 -- 
 2.53.0
 
