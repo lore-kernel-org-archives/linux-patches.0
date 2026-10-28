@@ -1,56 +1,61 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213807;
-	b=vYFvnQ23GBjZcdtEm4ujgJBJZZvHoxYbmjNsoL07jQDOpyZ5QbZ6+Odnj4sq0ZAa2ykR
-	 rUFY5cPgst0x2TF0ZvYBUTdYj6baEVCy9SoyyjoBN86btcUQQ3YhnQeASmotkXXd6C8rv
-	 FgqEQND9K5f2U82aydssAB7Dj2sV9RFt/29Xd3RDQ3fFgymXUts5eKG0wObS45jQmCtBN
-	 K0E+MuP94hGELJQrHrEhXnGHKsap5ZfhLOAwQxQIXEOrhgfm68FKHrxUh+vLNtdUnBZMD
-	 m+wO2exJhXIip5/QdZMPz+EhVyUJ72UKbGAlkBBuj/yZd1k5TLqj+gK4ktZEkqLi3XA==
+	t=1793213811;
+	b=sShiInhGw92v0H5QOMBaIv/ORdgER1GV+KnT4+rQaS5n4rZQF/fmzJMtaWfnthJTB3eQ
+	 iBPeEMOVIZuZxuccxHa+KLqT4LgHKiGrUVLKH0KkXNO4KwiryUbh1ivk1q9Ez3jwMW+hp
+	 AaFuIJrM+4Lhw7QJc+AbNMLFykvYSkPgPBQL/SYHmvUN6LauyU9+Vo54X83AUUtUz02qn
+	 fpoTkLQA8vL6uCjUB+8/sxc8D211P7g3l0mm8uP8EXfVp7c46yjErsUB58uPcNdr6Ud4/
+	 BulfKjACcFdpbVBUXvvGnWqFz2BRb1UW26SF3goFHfrdufTiqScAUzI3XEi+0mBQSZg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213807;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213811;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=7U/+plyWe9wtKYLZrW7wcExZBZu5N3bFDKuqeOtXOGg=;
-	b=P6iW4+es4ULMz7UU0EHbY9hBs/vejv7+UFGLALUBS2zRrJRz9gL8nAB1qfWAhDSnD6+g
-	 eGHNXSUgLg2p+p72paq2A/jTkps44C6soSNZ2wrMpqd6Wd54tJ2WUamv5LkvpzXrXmls9
-	 z9F6ZQp+ntMfHcD7wW0Ob0qUEQZarVILPLUBRImSEeKW1lzBIC8mYlhBKlXdxGFQlmIUl
-	 ftNdU0nUdp4jLooVvTfyDw/M0XLMVm/3J6VdEqPi3rdpVZV+U6eEXp/20vxAAuoUvK6XA
-	 krw7BqxUvsD5euUyM3And6Uro6tn4D5Wd2YHZJ2wVlSU0U8XaC+7A9JgvRmCAWOBwSQ==
+	bh=lHycLSnCMRDxfikZbAiZs7AlOX/oy+Aoru9ehxYWSn8=;
+	b=RqXKTr3kR1iBhi3uKDmMLRV7MEu3IoRC7EvEeotj+yLAbpggAe6IFTO05PLaaNIM00k3
+	 jv4cSDyNX53cLy5z/UdHLxon2PY8b9mp9THOSa3GoebRnZQVfptCPVppjTyOjQObrTlcE
+	 BRyUAhKT1jkeeY3JPyw+daTnh9D5zMtHrEWp8Z3mYvgD9uWAXm8UpFZhZzBlhrGL21pUS
+	 TReqAMu34i093aOpjFRZ7eGBuX6PExxEocyOf1exHOpD4irt6dZJ52C5+SIS/WD6S6nYL
+	 tDktXNg4OF6C5d+hCiqyjgaIAU6Pohb2Sy0cCNjg4fyp//6m9nA3Ic1SRt/r2IhHsPg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FLeTX6O7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=im+fCJ9X;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 525D4606A31A;
-	Wed, 28 Oct 2026 18:56:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15327606A31A;
+	Wed, 28 Oct 2026 18:56:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FLeTX6O7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8B511F01825;
-	Wed, 28 Oct 2026 18:56:46 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=im+fCJ9X
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52C131F01825;
+	Wed, 28 Oct 2026 18:56:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213807;
-	bh=7U/+plyWe9wtKYLZrW7wcExZBZu5N3bFDKuqeOtXOGg=;
+	s=korg; t=1793213809;
+	bh=lHycLSnCMRDxfikZbAiZs7AlOX/oy+Aoru9ehxYWSn8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FLeTX6O7cKq57QtyWzUhvkykIQwFoDFteb/zh8r54zZRTNg4OCP0V2WNf33V+7wq8
-	 xKd2ijZIAtMG9Bw2rOKj9lD4Ica90LN5YNFEc7+ImFtdNTh870ijlXvAQp6SUP2+W5
-	 cK8T92tlaeuDOicwEEhqUOp5V2767JbHW+VQSDKQ=
+	b=im+fCJ9X/tJiaLbKAw3V9s5ki3oLcLyPeG6wlEGc2bjsR0SRAkKP5ywU5PottCA0B
+	 T8qQYI8zdxDbHQ6F+PmzgmVz1oiLt+LLUlPGe0BXYxIDEyi/4xF+L7ZqdDPocJBL0T
+	 v70/Fbbuq/H+37abwX+IAlTEhlHbvGNAHSHJg8ms=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Gavin Shan <gshan@redhat.com>,
+	David Hildenbrand <david@redhat.com>,
 	"Darrick J. Wong" <djwong@kernel.org>,
-	Xu Yang <xu.yang_2@nxp.com>,
-	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
-	Christoph Hellwig <hch@lst.de>,
+	Don Dutile <ddutile@redhat.com>,
+	Hugh Dickins <hughd@google.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Christian Brauner <brauner@kernel.org>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	William Kucharski <william.kucharski@oracle.com>,
+	Zhenyu Zhang <zhenyzha@redhat.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0637/1887] filemap: add helper mapping_max_folio_size()
-Date: Wed, 28 Oct 2026 17:45:33 +0100
-Message-ID: <20261028170513.906087952@linuxfoundation.org>
+Subject: [PATCH 6.1 0638/1887] mm/filemap: make MAX_PAGECACHE_ORDER acceptable to xarray
+Date: Wed, 28 Oct 2026 17:45:34 +0100
+Message-ID: <20261028170513.929169735@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -72,67 +77,288 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xu Yang <xu.yang_2@nxp.com>
+From: Gavin Shan <gshan@redhat.com>
 
-[ Upstream commit 79c137454815ba5554caa8eeb4ad5c94e96e45ce ]
+[ Upstream commit 099d90642a711caae377f53309abfe27e8724a8b ]
 
-Add mapping_max_folio_size() to get the maximum folio size for this
-pagecache mapping.
+Patch series "mm/filemap: Limit page cache size to that supported by
+xarray", v2.
 
-Fixes: 5d8edfb900d5 ("iomap: Copy larger chunks from userspace")
-Cc: stable@vger.kernel.org
-Reviewed-by: Darrick J. Wong <djwong@kernel.org>
-Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
-Link: https://lore.kernel.org/r/20240521114939.2541461-1-xu.yang_2@nxp.com
-Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Matthew Wilcox (Oracle) <willy@infradead.org>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
-Stable-dep-of: 099d90642a71 ("mm/filemap: make MAX_PAGECACHE_ORDER acceptable to xarray")
+Currently, xarray can't support arbitrary page cache size.  More details
+can be found from the WARN_ON() statement in xas_split_alloc().  In our
+test whose code is attached below, we hit the WARN_ON() on ARM64 system
+where the base page size is 64KB and huge page size is 512MB.  The issue
+was reported long time ago and some discussions on it can be found here
+[1].
+
+[1] https://www.spinics.net/lists/linux-xfs/msg75404.html
+
+In order to fix the issue, we need to adjust MAX_PAGECACHE_ORDER to one
+supported by xarray and avoid PMD-sized page cache if needed.  The code
+changes are suggested by David Hildenbrand.
+
+PATCH[1] adjusts MAX_PAGECACHE_ORDER to that supported by xarray
+PATCH[2-3] avoids PMD-sized page cache in the synchronous readahead path
+PATCH[4] avoids PMD-sized page cache for shmem files if needed
+
+Test program
+============
+# cat test.c
+#define _GNU_SOURCE
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <string.h>
+#include <fcntl.h>
+#include <errno.h>
+#include <sys/syscall.h>
+#include <sys/mman.h>
+
+#define TEST_XFS_FILENAME	"/tmp/data"
+#define TEST_SHMEM_FILENAME	"/dev/shm/data"
+#define TEST_MEM_SIZE		0x20000000
+
+int main(int argc, char **argv)
+{
+	const char *filename;
+	int fd = 0;
+	void *buf = (void *)-1, *p;
+	int pgsize = getpagesize();
+	int ret;
+
+	if (pgsize != 0x10000) {
+		fprintf(stderr, "64KB base page size is required\n");
+		return -EPERM;
+	}
+
+	system("echo force > /sys/kernel/mm/transparent_hugepage/shmem_enabled");
+	system("rm -fr /tmp/data");
+	system("rm -fr /dev/shm/data");
+	system("echo 1 > /proc/sys/vm/drop_caches");
+
+	/* Open xfs or shmem file */
+	filename = TEST_XFS_FILENAME;
+	if (argc > 1 && !strcmp(argv[1], "shmem"))
+		filename = TEST_SHMEM_FILENAME;
+
+	fd = open(filename, O_CREAT | O_RDWR | O_TRUNC);
+	if (fd < 0) {
+		fprintf(stderr, "Unable to open <%s>\n", filename);
+		return -EIO;
+	}
+
+	/* Extend file size */
+	ret = ftruncate(fd, TEST_MEM_SIZE);
+	if (ret) {
+		fprintf(stderr, "Error %d to ftruncate()\n", ret);
+		goto cleanup;
+	}
+
+	/* Create VMA */
+	buf = mmap(NULL, TEST_MEM_SIZE,
+		   PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
+	if (buf == (void *)-1) {
+		fprintf(stderr, "Unable to mmap <%s>\n", filename);
+		goto cleanup;
+	}
+
+	fprintf(stdout, "mapped buffer at 0x%p\n", buf);
+	ret = madvise(buf, TEST_MEM_SIZE, MADV_HUGEPAGE);
+        if (ret) {
+		fprintf(stderr, "Unable to madvise(MADV_HUGEPAGE)\n");
+		goto cleanup;
+	}
+
+	/* Populate VMA */
+	ret = madvise(buf, TEST_MEM_SIZE, MADV_POPULATE_WRITE);
+	if (ret) {
+		fprintf(stderr, "Error %d to madvise(MADV_POPULATE_WRITE)\n", ret);
+		goto cleanup;
+	}
+
+	/* Punch the file to enforce xarray split */
+	ret = fallocate(fd, FALLOC_FL_KEEP_SIZE | FALLOC_FL_PUNCH_HOLE,
+        		TEST_MEM_SIZE - pgsize, pgsize);
+	if (ret)
+		fprintf(stderr, "Error %d to fallocate()\n", ret);
+
+cleanup:
+	if (buf != (void *)-1)
+		munmap(buf, TEST_MEM_SIZE);
+	if (fd > 0)
+		close(fd);
+
+	return 0;
+}
+
+# gcc test.c -o test
+# cat /proc/1/smaps | grep KernelPageSize | head -n 1
+KernelPageSize:       64 kB
+# ./test shmem
+   :
+------------[ cut here ]------------
+WARNING: CPU: 17 PID: 5253 at lib/xarray.c:1025 xas_split_alloc+0xf8/0x128
+Modules linked in: nft_fib_inet nft_fib_ipv4 nft_fib_ipv6 nft_fib  \
+nft_reject_inet nf_reject_ipv4 nf_reject_ipv6 nft_reject nft_ct    \
+nft_chain_nat nf_nat nf_conntrack nf_defrag_ipv6 nf_defrag_ipv4    \
+ip_set nf_tables rfkill nfnetlink vfat fat virtio_balloon          \
+drm fuse xfs libcrc32c crct10dif_ce ghash_ce sha2_ce sha256_arm64  \
+virtio_net sha1_ce net_failover failover virtio_console virtio_blk \
+dimlib virtio_mmio
+CPU: 17 PID: 5253 Comm: test Kdump: loaded Tainted: G W 6.10.0-rc5-gavin+ #12
+Hardware name: QEMU KVM Virtual Machine, BIOS edk2-20240524-1.el9 05/24/2024
+pstate: 83400005 (Nzcv daif +PAN -UAO +TCO +DIT -SSBS BTYPE=--)
+pc : xas_split_alloc+0xf8/0x128
+lr : split_huge_page_to_list_to_order+0x1c4/0x720
+sp : ffff80008a92f5b0
+x29: ffff80008a92f5b0 x28: ffff80008a92f610 x27: ffff80008a92f728
+x26: 0000000000000cc0 x25: 000000000000000d x24: ffff0000cf00c858
+x23: ffff80008a92f610 x22: ffffffdfc0600000 x21: 0000000000000000
+x20: 0000000000000000 x19: ffffffdfc0600000 x18: 0000000000000000
+x17: 0000000000000000 x16: 0000018000000000 x15: 3374004000000000
+x14: 0000e00000000000 x13: 0000000000002000 x12: 0000000000000020
+x11: 3374000000000000 x10: 3374e1c0ffff6000 x9 : ffffb463a84c681c
+x8 : 0000000000000003 x7 : 0000000000000000 x6 : ffff00011c976ce0
+x5 : ffffb463aa47e378 x4 : 0000000000000000 x3 : 0000000000000cc0
+x2 : 000000000000000d x1 : 000000000000000c x0 : 0000000000000000
+Call trace:
+ xas_split_alloc+0xf8/0x128
+ split_huge_page_to_list_to_order+0x1c4/0x720
+ truncate_inode_partial_folio+0xdc/0x160
+ shmem_undo_range+0x2bc/0x6a8
+ shmem_fallocate+0x134/0x430
+ vfs_fallocate+0x124/0x2e8
+ ksys_fallocate+0x4c/0xa0
+ __arm64_sys_fallocate+0x24/0x38
+ invoke_syscall.constprop.0+0x7c/0xd8
+ do_el0_svc+0xb4/0xd0
+ el0_svc+0x44/0x1d8
+ el0t_64_sync_handler+0x134/0x150
+ el0t_64_sync+0x17c/0x180
+
+This patch (of 4):
+
+The largest page cache order can be HPAGE_PMD_ORDER (13) on ARM64 with
+64KB base page size.  The xarray entry with this order can't be split as
+the following error messages indicate.
+
+------------[ cut here ]------------
+WARNING: CPU: 35 PID: 7484 at lib/xarray.c:1025 xas_split_alloc+0xf8/0x128
+Modules linked in: nft_fib_inet nft_fib_ipv4 nft_fib_ipv6 nft_fib  \
+nft_reject_inet nf_reject_ipv4 nf_reject_ipv6 nft_reject nft_ct    \
+nft_chain_nat nf_nat nf_conntrack nf_defrag_ipv6 nf_defrag_ipv4    \
+ip_set rfkill nf_tables nfnetlink vfat fat virtio_balloon drm      \
+fuse xfs libcrc32c crct10dif_ce ghash_ce sha2_ce sha256_arm64      \
+sha1_ce virtio_net net_failover virtio_console virtio_blk failover \
+dimlib virtio_mmio
+CPU: 35 PID: 7484 Comm: test Kdump: loaded Tainted: G W 6.10.0-rc5-gavin+ #9
+Hardware name: QEMU KVM Virtual Machine, BIOS edk2-20240524-1.el9 05/24/2024
+pstate: 83400005 (Nzcv daif +PAN -UAO +TCO +DIT -SSBS BTYPE=--)
+pc : xas_split_alloc+0xf8/0x128
+lr : split_huge_page_to_list_to_order+0x1c4/0x720
+sp : ffff800087a4f6c0
+x29: ffff800087a4f6c0 x28: ffff800087a4f720 x27: 000000001fffffff
+x26: 0000000000000c40 x25: 000000000000000d x24: ffff00010625b858
+x23: ffff800087a4f720 x22: ffffffdfc0780000 x21: 0000000000000000
+x20: 0000000000000000 x19: ffffffdfc0780000 x18: 000000001ff40000
+x17: 00000000ffffffff x16: 0000018000000000 x15: 51ec004000000000
+x14: 0000e00000000000 x13: 0000000000002000 x12: 0000000000000020
+x11: 51ec000000000000 x10: 51ece1c0ffff8000 x9 : ffffbeb961a44d28
+x8 : 0000000000000003 x7 : ffffffdfc0456420 x6 : ffff0000e1aa6eb8
+x5 : 20bf08b4fe778fca x4 : ffffffdfc0456420 x3 : 0000000000000c40
+x2 : 000000000000000d x1 : 000000000000000c x0 : 0000000000000000
+Call trace:
+ xas_split_alloc+0xf8/0x128
+ split_huge_page_to_list_to_order+0x1c4/0x720
+ truncate_inode_partial_folio+0xdc/0x160
+ truncate_inode_pages_range+0x1b4/0x4a8
+ truncate_pagecache_range+0x84/0xa0
+ xfs_flush_unmap_range+0x70/0x90 [xfs]
+ xfs_file_fallocate+0xfc/0x4d8 [xfs]
+ vfs_fallocate+0x124/0x2e8
+ ksys_fallocate+0x4c/0xa0
+ __arm64_sys_fallocate+0x24/0x38
+ invoke_syscall.constprop.0+0x7c/0xd8
+ do_el0_svc+0xb4/0xd0
+ el0_svc+0x44/0x1d8
+ el0t_64_sync_handler+0x134/0x150
+ el0t_64_sync+0x17c/0x180
+
+Fix it by decreasing MAX_PAGECACHE_ORDER to the largest supported order
+by xarray. For this specific case, MAX_PAGECACHE_ORDER is dropped from
+13 to 11 when CONFIG_BASE_SMALL is disabled.
+
+Link: https://lkml.kernel.org/r/20240627003953.1262512-1-gshan@redhat.com
+Link: https://lkml.kernel.org/r/20240627003953.1262512-2-gshan@redhat.com
+Fixes: 793917d997df ("mm/readahead: Add large folio readahead")
+Signed-off-by: Gavin Shan <gshan@redhat.com>
+Suggested-by: David Hildenbrand <david@redhat.com>
+Acked-by: David Hildenbrand <david@redhat.com>
+Cc: Darrick J. Wong <djwong@kernel.org>
+Cc: Don Dutile <ddutile@redhat.com>
+Cc: Hugh Dickins <hughd@google.com>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: Ryan Roberts <ryan.roberts@arm.com>
+Cc: William Kucharski <william.kucharski@oracle.com>
+Cc: Zhenyu Zhang <zhenyzha@redhat.com>
+Cc: <stable@vger.kernel.org>	[5.18+]
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/pagemap.h | 21 +++++++++++++++++++++
- 1 file changed, 21 insertions(+)
+ include/linux/pagemap.h | 11 +++++++++--
+ mm/readahead.c          | 13 -------------
+ 2 files changed, 9 insertions(+), 15 deletions(-)
 
 diff --git a/include/linux/pagemap.h b/include/linux/pagemap.h
-index dfaa099018671..a307e63cdf737 100644
+index a307e63cdf737..a40afc0aea3e2 100644
 --- a/include/linux/pagemap.h
 +++ b/include/linux/pagemap.h
-@@ -325,6 +325,19 @@ static inline void mapping_set_gfp_mask(struct address_space *m, gfp_t mask)
- 	m->gfp_mask = mask;
- }
+@@ -333,11 +333,18 @@ static inline void mapping_set_gfp_mask(struct address_space *m, gfp_t mask)
+  * a good order (that's 1MB if you're using 4kB pages)
+  */
+ #ifdef CONFIG_TRANSPARENT_HUGEPAGE
+-#define MAX_PAGECACHE_ORDER	HPAGE_PMD_ORDER
++#define PREFERRED_MAX_PAGECACHE_ORDER	HPAGE_PMD_ORDER
+ #else
+-#define MAX_PAGECACHE_ORDER	8
++#define PREFERRED_MAX_PAGECACHE_ORDER	8
+ #endif
  
 +/*
-+ * There are some parts of the kernel which assume that PMD entries
-+ * are exactly HPAGE_PMD_ORDER.  Those should be fixed, but until then,
-+ * limit the maximum allocation order to PMD size.  I'm not aware of any
-+ * assumptions about maximum order if THP are disabled, but 8 seems like
-+ * a good order (that's 1MB if you're using 4kB pages)
++ * xas_split_alloc() does not support arbitrary orders. This implies no
++ * 512MB THP on ARM64 with 64KB base page size.
 + */
-+#ifdef CONFIG_TRANSPARENT_HUGEPAGE
-+#define MAX_PAGECACHE_ORDER	HPAGE_PMD_ORDER
-+#else
-+#define MAX_PAGECACHE_ORDER	8
-+#endif
++#define MAX_XAS_ORDER		(XA_CHUNK_SHIFT * 2 - 1)
++#define MAX_PAGECACHE_ORDER	min(MAX_XAS_ORDER, PREFERRED_MAX_PAGECACHE_ORDER)
 +
  /**
   * mapping_set_large_folios() - Indicate the file supports large folios.
   * @mapping: The file.
-@@ -351,6 +364,14 @@ static inline bool mapping_large_folio_support(struct address_space *mapping)
- 		test_bit(AS_LARGE_FOLIO_SUPPORT, &mapping->flags);
+diff --git a/mm/readahead.c b/mm/readahead.c
+index e0bef7c0d7afe..2ad297cfae7d9 100644
+--- a/mm/readahead.c
++++ b/mm/readahead.c
+@@ -462,19 +462,6 @@ static int try_context_readahead(struct address_space *mapping,
+ 	return 1;
  }
  
-+/* Return the maximum folio size for this pagecache mapping, in bytes. */
-+static inline size_t mapping_max_folio_size(struct address_space *mapping)
-+{
-+	if (mapping_large_folio_support(mapping))
-+		return PAGE_SIZE << MAX_PAGECACHE_ORDER;
-+	return PAGE_SIZE;
-+}
-+
- static inline int filemap_nr_thps(struct address_space *mapping)
+-/*
+- * There are some parts of the kernel which assume that PMD entries
+- * are exactly HPAGE_PMD_ORDER.  Those should be fixed, but until then,
+- * limit the maximum allocation order to PMD size.  I'm not aware of any
+- * assumptions about maximum order if THP are disabled, but 8 seems like
+- * a good order (that's 1MB if you're using 4kB pages)
+- */
+-#ifdef CONFIG_TRANSPARENT_HUGEPAGE
+-#define MAX_PAGECACHE_ORDER	HPAGE_PMD_ORDER
+-#else
+-#define MAX_PAGECACHE_ORDER	8
+-#endif
+-
+ static inline int ra_alloc_folio(struct readahead_control *ractl, pgoff_t index,
+ 		pgoff_t mark, unsigned int order, gfp_t gfp)
  {
- #ifdef CONFIG_READ_ONLY_THP_FOR_FS
 -- 
 2.53.0
 
