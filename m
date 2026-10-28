@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215381;
-	b=3WnkfgIxNDKsEummndsAchUFIbqCAZ6Hfqwfs6ZBcrNYvpY5qTalcpfSJpXimiWqeMee
-	 neZfidpG0BQWjcUdGePbrODzxPoBSsYw7C4bxe0a8n9QObavpHPe1Ai+WbnBha2SR2DTG
-	 2xOU/Gqf0sfJdqva2bJUXPDiri29q8sJMRxucQytdNb8eYpo3zEOjEgW3s7+k7Vt+/1Re
-	 E0UV1RphPRxl76TCEXg2k+b0WUJ9880RuNeVZJRy5XhL5XUPhWuRn0QSrYSVdLjDv1pCx
-	 Ghpqd8dyeNIvrNBQQyX+Thjw2nJ5HJKFiBd9hVlouo3VE3d9hQ+Kf8Hbdq2fGduHxVQ==
+	t=1793215384;
+	b=UEXXPMefmBJTm1jVzJC4YrCGnjNEfzBqr2hwCwpvQkPzuKUzHmamU7nswnE1NGG8RS/8
+	 HCgR9WETfh7fqpYxzbGk3OuKa2bpvZVs577d8GlhEQwcL+r2YLcCRv2yF8Js1t7ZIa280
+	 5TAj7LT6YyYNhat4t0jnfznoqcDxuy9YVtpfOStGiNS2XH4RP5adCIuzs78A1902+0sP/
+	 Jg9bzLiahGxdM34xPDnf4Ee8okycuKTkIj7nHrjaXsIUOfawBhB7p47DpzWCbz8RV5CWx
+	 LyiM1O+NiTT0XGh/KgqeJxdxPeSedyVKV++ubjT0NbW4a+MSi9nwc937dtURSCl+QIQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215381;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215384;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ukASllKf1TcKG8mxvAky2npVvLCWIjfFu8E7VMNxtXM=;
-	b=xhBEVTBMixN2UQC1Jjvi4YBvolNmSSI0y5CJneJOoEedFY4OaGw8EZmxFKbMoi+pL/yV
-	 /7DjqP/rCBvWwVz19EhSfpkALau9CuDtr3BVMEwULNFxDVyHCld1zwQ1fu1Qy6TgI/OcX
-	 Y+41j+8uT6pGjUp0dJECwbPbNW/grdQBWep5EHBLsGsYKAo5Ayjboq79MtITkH+HQaHVQ
-	 oXHx3CG/S5QThMWnq/Bj4B35VYVDaB/Op7EVLmfRf3XPBvl0jeMD3+7u0zzHIerVimF5+
-	 DZh8YAXdkTVtO+S7js0a+LF+y8sYmSMbm6by99EDz/apZYPUYiOSNRj+kcQpaxpbkqg==
+	bh=2PLO5NukAz5JxNHb2R9KRAIziz9SkVOZ1qbfBcvc1Js=;
+	b=QU9LUIt0pgTroqD5iXb6zlYyT9PAh4bF9e0IsfD4NGCn2honu7EKHsQ7BYGAKNT5Vzjh
+	 qK8OhVwcgtcZrK8lW1IN7uftBLsBtX99Bf5Osh1MPpo5zhRD0a7xScnW0Orq/QkZgpOMJ
+	 fUdywKp/Dtbcc/uKAk1lxG+FGEyNqesddDiYebQpwoxxdnf7IZ8nZVFAsj+3ZUKJ1E1B6
+	 y/2oJUj5M+HnBHMn79yemEm8fwFzrqoqUsl2c3JdmABZF4Yd8IlrgkUQ+0o5RqPHIm73m
+	 9hm+Xj8wdf1w2JNRK3N0TwK3AmYlXNKBgRn/r0gDiXyteRLLvbTPLsnKwyabxPJ0Ycg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fLZEzE8U;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="uRk/L27n";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DC68606A31A;
-	Wed, 28 Oct 2026 19:23:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 323AD606A31E;
+	Wed, 28 Oct 2026 19:23:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fLZEzE8U
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C6261F01825;
-	Wed, 28 Oct 2026 19:23:00 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uRk/L27n
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 814061F01828;
+	Wed, 28 Oct 2026 19:23:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215381;
-	bh=ukASllKf1TcKG8mxvAky2npVvLCWIjfFu8E7VMNxtXM=;
+	s=korg; t=1793215384;
+	bh=2PLO5NukAz5JxNHb2R9KRAIziz9SkVOZ1qbfBcvc1Js=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fLZEzE8UpWRbX6lAonQjMscjLRwdDMv0L411NAqzeOf01s/C7x1+WaI3GB66jpujc
-	 NJqCq7M9aKTFZLiS8bLqPpn2gv5qZw/IoibFKI14XzuOZKMXLAUQrDZKJTT4XG7UxZ
-	 RdEiFzd+zFEuXcR2i/6qL0IV7POXEB+SL3RYCLzE=
+	b=uRk/L27nsc2e2iPfdMXLPdSmrh4AojGRo6hZduJCCYF9wHMD459gGCUf+ZCt2hHF+
+	 bNXANLsJHZjWQKIPHGiilGBmzhFkTlQDGxNl5Bm7N89HAhdEsGGVT7+YdhearDTKBj
+	 XpGtfM1xAcvxC+oFeelpvuF2nPzkxQ1WReL5ss6k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Petr Wozniak <petr.wozniak@gmail.com>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+	kernel test robot <lkp@intel.com>,
+	Kexin Liu <liukexin@kylinos.cn>,
+	George Guo <guodongtai@kylinos.cn>,
+	Huacai Chen <chenhuacai@loongson.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1192/1887] xfrm: fix stale skb->prev after async crypto steals a GSO segment
-Date: Wed, 28 Oct 2026 17:54:48 +0100
-Message-ID: <20261028170526.533030100@linuxfoundation.org>
+Subject: [PATCH 6.1 1193/1887] LoongArch: Fix address space mismatch in kexec command line lookup
+Date: Wed, 28 Oct 2026 17:54:49 +0100
+Message-ID: <20261028170526.554695329@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,51 +70,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Petr Wozniak <petr.wozniak@gmail.com>
+From: George Guo <guodongtai@kylinos.cn>
 
-[ Upstream commit 3f4c3919baf0944ad96580467c302bc6c7758b00 ]
+[ Upstream commit 485ed44db5694d8d2e5027f63ad608e705286f30 ]
 
-skb_gso_segment() leaves the segment list head with ->prev pointing at
-the last segment, an invariant validate_xmit_skb_list() relies on when
-it sets its tail pointer (tail = skb->prev).
+When searching the loaded segments for the "kexec" command line marker,
+the kexec_load(2) path (file_mode == 0) passes the user-space segment
+buffer straight to strncmp() through a bogus (char __user *) cast. This
+dereferences a user pointer in kernel context, which is wrong and is
+flagged by sparse:
 
-When validate_xmit_xfrm() walks a GSO list and some segments are stolen
-by async crypto (->xmit() returns -EINPROGRESS), those segments are
-unlinked from the list but the head ->prev is never updated.  If the
-last segment is the one stolen, the returned head still has ->prev
-pointing at it, even though it is now owned by the crypto engine and may
-be freed.  validate_xmit_skb_list() later does tail->next = skb, writing
-through that stale pointer -- a use-after-free.
+  arch/loongarch/kernel/machine_kexec.c:84:51: sparse: incorrect type in
+  argument 2 (different address spaces) @@ expected char const * @@ got
+  char [noderef] __user *
 
-Repoint skb->prev at the last retained segment before returning.
+Here copy the marker-sized prefix of each segment into a small on-stack
+buffer with copy_from_user() before comparing, and skip segments that
+fault. The subsequent copy_from_user() that stages the full command line
+into the safe area is left unchanged.
 
-Fixes: f53c723902d1 ("net: Add asynchronous callbacks for xfrm on layer 2.")
-Signed-off-by: Petr Wozniak <petr.wozniak@gmail.com>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Cc: stable@vger.kernel.org
+Fixes: 4a03b2ac06a5 ("LoongArch: Add kexec support")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202605051639.aEPioXdD-lkp@intel.com/
+Co-developed-by: Kexin Liu <liukexin@kylinos.cn>
+Signed-off-by: Kexin Liu <liukexin@kylinos.cn>
+Signed-off-by: George Guo <guodongtai@kylinos.cn>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xfrm/xfrm_device.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ arch/loongarch/kernel/machine_kexec.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/net/xfrm/xfrm_device.c b/net/xfrm/xfrm_device.c
-index c676ff2f21acc..b16c4657fe0fe 100644
---- a/net/xfrm/xfrm_device.c
-+++ b/net/xfrm/xfrm_device.c
-@@ -215,6 +215,14 @@ struct sk_buff *validate_xmit_xfrm(struct sk_buff *skb, netdev_features_t featur
- 		pskb = skb2;
- 	}
+diff --git a/arch/loongarch/kernel/machine_kexec.c b/arch/loongarch/kernel/machine_kexec.c
+index ce4e132ac1373..7c93e9d1f020b 100644
+--- a/arch/loongarch/kernel/machine_kexec.c
++++ b/arch/loongarch/kernel/machine_kexec.c
+@@ -62,6 +62,7 @@ static void kexec_image_info(const struct kimage *kimage)
+ int machine_kexec_prepare(struct kimage *kimage)
+ {
+ 	int i;
++	char head[8];
+ 	char *bootloader = "kexec";
+ 	void *cmdline_ptr = (void *)KEXEC_CMDLINE_ADDR;
  
-+	/* skb_gso_segment() set skb->prev to the last segment, but async
-+	 * crypto may have stolen it above without updating ->prev.  Repoint
-+	 * it at the last retained segment so validate_xmit_skb_list() does
-+	 * not chain onto a segment now owned by the crypto engine.
-+	 */
-+	if (skb)
-+		skb->prev = pskb;
-+
- 	return skb;
- }
- EXPORT_SYMBOL_GPL(validate_xmit_xfrm);
+@@ -72,7 +73,9 @@ int machine_kexec_prepare(struct kimage *kimage)
+ 
+ 	/* Find the command line */
+ 	for (i = 0; i < kimage->nr_segments; i++) {
+-		if (!strncmp(bootloader, (char __user *)kimage->segment[i].buf, strlen(bootloader))) {
++		if (copy_from_user(head, kimage->segment[i].buf, strlen(bootloader)))
++			continue;
++		if (!strncmp(bootloader, head, strlen(bootloader))) {
+ 			if (!copy_from_user(cmdline_ptr, kimage->segment[i].buf, COMMAND_LINE_SIZE))
+ 				kimage->arch.cmdline_ptr = (unsigned long)cmdline_ptr;
+ 			break;
 -- 
 2.53.0
 
