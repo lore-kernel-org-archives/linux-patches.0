@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793207835;
-	b=gb61wXhE1LxmbWaOOGeYpQhzM1XJuuwOxpvOAi727TF0GDCLjqH9qveRViopxfnrUEyW
-	 fFH65IzlVNUpK4yUPXubZt15TNC8I77fFUuHZsDVR3+ktu/78RSLlI94w6LQ8DTWeMP2F
-	 /083oZMbVPZ5rDxnTp2JGP6NLLUV/q7ve0tpqPgcTR6fpDDZy9OKQQ1DlCNH+7yCNG4wB
-	 ibCFSvVvpv8t9GFD4HDqnlUP2Vv03JSAvtk6e3k/1pxnnByQfwGYbroRsLNk9rWlvWk+v
-	 Wz/kmSvTHUmRLgQI5p6rC3JrCtdZnnBzTXc2BRr1pt3b0lIVfPHfSe0TV/Hxg2JTTwg==
+	t=1793207838;
+	b=khCtIX9enhpFVCmk0fN32SlotI9vt+dLNGruO21UVinb0u4L0FWZibxq2MJ/EsnoTX64
+	 /ZD+qtJW4A6ZH/Tdi9mVNXOGk2VYQTNhWtEIZllO9Km+52qQSqzeMok0qz0u9yKjh3GrU
+	 RtiAxPKKSdFXtwWzNr4XyIEt+U2HNLJLMVlY/fNz0sw8YmWceX/Jih46f20RDK2N+vnLf
+	 FcuFno1ElGyeLplmOHrV1uYrotULLFxV5a0OkfdtF/TX5CKwCca8JDYg3F14ETTFQWaUr
+	 n0PMq7Wx8MgRC8ICJ9AI/YnvEm+Mcae/l1gUrHMPuIxGQ42ux1u4cJTD8HH/vqp1MQw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793207835;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793207838;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=9T0mqqTw1uhCIIl1u8kIUxvpuRl8B8rCRs99Kgv3Z6M=;
-	b=bAqESairrI9lYCJ+UHve5Iia87NhWog9lNOSS/co5wtKazN0PMWRR+F5YaDgu4wY3x24
-	 x3sHTkPZ2l/VrlXUqXpmb9TCIJF9VgHpfBKVXEcF8sw1B16s3Mrkanbe+nu7D9dPTljUi
-	 KFgp/grDo4K+5PSBm2eUKL8ohvZpW+KjeROENm86f/chAEracKNn0/+kOhSlG+iWH3UaY
-	 1Qa03zrMPRiKnQOqSUn31d92VMupf40UujARmMhWnlFwowZQqyYetDm5XIQb6Z0ugXCoJ
-	 CYb8dRpcsdcYTrYP7GYHllrCCSQ+oN3mlahClcY0qj1WjzWxy2/PwcJrh6nexKnZ3Lw==
+	bh=hFZRHWCM15nSoxy9zC0mMS7kRtzFnIsOc6U6M2tHFCA=;
+	b=cbPwwWZl6E/CilZw1mSL/ZTy6ehZYbFtmokdmhrqRMPduKmZMWgOHhAY8itMYWhVMo35
+	 uiCpDCEBdx6+DiF7jQV0ijrT4nHqyzvu+/bavkLkcgxa8pWD+AbUwotw8VfgUwnruCLue
+	 e9wc22LCjhjuP77pgMVyTtjNEDrqtfPs1+m3V/Zb0H7z1EnJPRvZr6gBR8XvKHnMvnDwb
+	 ocmQV7JcU4bth3jI3hFj+5erXkLw9r1sMgdDh2p0N+60L4i6V63s72uGErsEB2Gcensd8
+	 VtNcoGRWrs0LzRV7uosvyr9XjL5cy23wuSklf8VmLJKrL+UETk2NN+pkI5vfwJn36Ww==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0QEIf7pU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nOIYzOWT;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AFA1606A32F;
-	Wed, 28 Oct 2026 17:17:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 750D2606A323;
+	Wed, 28 Oct 2026 17:17:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0QEIf7pU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EE481F01828;
-	Wed, 28 Oct 2026 17:17:14 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nOIYzOWT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 793271F01825;
+	Wed, 28 Oct 2026 17:17:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793207835;
-	bh=9T0mqqTw1uhCIIl1u8kIUxvpuRl8B8rCRs99Kgv3Z6M=;
+	s=korg; t=1793207838;
+	bh=hFZRHWCM15nSoxy9zC0mMS7kRtzFnIsOc6U6M2tHFCA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0QEIf7pUVQ4NnpVvp4ShWKRWnCMj/L0GNhXURTCeXrErDKjYNnP2nqtTfhFPZFh79
-	 QBjwZZcyZD6rwsBXyNQctLGWotSU12FgR4Y+Nkh0a0nM5PrF3k+BEdffh5gsWG+td8
-	 Ki3imJpceRkcV33uUIH7bS8SUc/D2ZnPDxb5VbmY=
+	b=nOIYzOWTpV2LwwdU7wNSp6ae22ogo+Rra80qa4SqM3icvDZlRYwBKm0JPXMvRbVZL
+	 BSy4QZFZGDjSAImvkQnyNonAC6wUZR1iqDAlh45ihktUsszLDrErW0yMop+nSL6D1U
+	 HW82NwySR3aI0jDydw7T1lcxbTzo5JnyOJs6V/RA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bernard Pidoux <bernard.f6bvp@gmail.com>,
+	Dingisoul <dingiso.kernel@gmail.com>,
+	Laurence Oberman <loberman@redhat.com>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 156/247] rose: clear stale N(R)/N(S) before (re)transmitting a data frame
-Date: Wed, 28 Oct 2026 17:59:19 +0100
-Message-ID: <20261028165951.107252505@linuxfoundation.org>
+Subject: [PATCH 6.12 130/247] scsi: st: Fix use-after-free race between st_remove() and st_open()
+Date: Wed, 28 Oct 2026 17:58:53 +0100
+Message-ID: <20261028165950.483245257@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165947.349197979@linuxfoundation.org>
 References: <20261028165947.349197979@linuxfoundation.org>
@@ -67,47 +69,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bernard Pidoux <bernard.f6bvp@gmail.com>
+From: Laurence Oberman <loberman@redhat.com>
 
-rose_kick() transmits a skb_clone() of each data frame and keeps the
-original on ack_queue. The clone shares its data buffer with the
-original, so the sequence numbers that rose_send_iframe() ORs into
-byte 2 of the header are also left in the queued original.
+commit 71caf7f84bd62a4bf91cc95abd2de690afb8d15f upstream.
 
-After a RESET, rose_requeue_frames() puts those originals back on the
-write queue and rose_kick() sends them again with vs/vr restarted at
-zero. rose_send_iframe() only ORs the new values into byte 2, so the
-retransmitted frame carries the bitwise OR of the old and new N(R) and
-N(S). The peer rejects the invalid N(R) with a new RESET REQUEST, the
-frames are requeued again, and the two nodes reset each other forever.
+st_remove() drops the probe reference on the scsi_tape with kref_put()
+and only afterwards removes its index from st_index_idr. If that was the
+last reference, scsi_tape_release() frees the structure while it is
+still published in the idr.
 
-This was observed on a live FPAC network: a White Pages circuit between
-two nodes looping on RESET REQUEST / RESET CONFIRMATION / DATA at about
-2000 frames per second, with DATA frames resent as "R3 S7" right after
-a reset instead of "R0 S0", until the application was restarted.
+scsi_tape_get(), called from st_open(), looks up the tape in
+st_index_idr and takes a reference under st_ref_mutex and
+st_index_lock. remove_cdevs() does not wait for opens that are already
+past chrdev_open(), so an open that is blocked on st_ref_mutex while
+st_remove() holds it can take the mutex as soon as st_remove() drops it,
+find the freed tpnt in the idr and call kref_get() on it:
 
-Clear everything but the M bit before setting the sequence numbers, as
-x25_send_iframe() does for modulo 8 circuits.
+  BUG: KASAN: slab-use-after-free in st_open
+  Write of size 4 ...
+   st_open (drivers/scsi/st.c:254 drivers/scsi/st.c:1291)
+   chrdev_open
+  ...
+  Freed by task ...:
+   kfree
+   st_remove (drivers/scsi/st.c:4512)
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Bernard Pidoux <bernard.f6bvp@gmail.com>
-(cherry picked from commit b16b091aeb78faac22cf2b850246826d23f4a335)
+Remove the index from the idr before dropping the reference, all under
+st_ref_mutex. A concurrent scsi_tape_get() now either runs first and
+holds a valid reference that keeps the tape alive, or runs afterwards
+and finds nothing, so st_open() fails with -ENXIO.
+
+This restores the ordering st_remove() had before the conversion to
+st_index_idr, where the tape was unpublished from scsi_tapes[] before
+the final kref_put().
+
+Fixes: 6c648d95a6af ("[SCSI] st: get rid of scsi_tapes array")
+Cc: stable@vger.kernel.org
+Reported-by: Dingisoul <dingiso.kernel@gmail.com>
+Closes: https://lore.kernel.org/linux-scsi/20261007211520.1428497-1-dingiso.kernel@gmail.com/
+Tested-by: Dingisoul <dingiso.kernel@gmail.com>
+Signed-off-by: Laurence Oberman <loberman@redhat.com>
+Link: https://patch.msgid.link/20261013202548.249628-1-loberman@redhat.com
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+[ loberman: st_remove() still returns int in 6.12; context adjusted ]
+Signed-off-by: Laurence Oberman <loberman@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rose/rose_out.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/scsi/st.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/rose/rose_out.c b/net/rose/rose_out.c
-index 9050e33c96042..6672fc65a7651 100644
---- a/net/rose/rose_out.c
-+++ b/net/rose/rose_out.c
-@@ -34,6 +34,7 @@ static void rose_send_iframe(struct sock *sk, struct sk_buff *skb)
- 	if (skb == NULL)
- 		return;
+diff --git a/drivers/scsi/st.c b/drivers/scsi/st.c
+index 95da0d15e0490..53d37c8497714 100644
+--- a/drivers/scsi/st.c
++++ b/drivers/scsi/st.c
+@@ -4448,11 +4448,11 @@ static int st_remove(struct device *dev)
+ 	remove_cdevs(tpnt);
  
-+	skb->data[2] &= ROSE_M_BIT;
- 	skb->data[2] |= (rose->vr << 5) & 0xE0;
- 	skb->data[2] |= (rose->vs << 1) & 0x0E;
+ 	mutex_lock(&st_ref_mutex);
+-	kref_put(&tpnt->kref, scsi_tape_release);
+-	mutex_unlock(&st_ref_mutex);
+ 	spin_lock(&st_index_lock);
+ 	idr_remove(&st_index_idr, index);
+ 	spin_unlock(&st_index_lock);
++	kref_put(&tpnt->kref, scsi_tape_release);
++	mutex_unlock(&st_ref_mutex);
+ 	return 0;
+ }
  
 -- 
 2.53.0
