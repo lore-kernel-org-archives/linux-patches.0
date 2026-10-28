@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793207784;
-	b=Rg4IHlgHDKM4PO2Znvph2o8MtozR1756egWa22fuDL/waLD2njdgTwq1SIUa7bQFJnv0
-	 vzaoGLbFXUO9VaHC+gRc40yy763Ulp95j7rpRBuKvy9nzYMJJ9Jxl/J6hzu0DRFN/NTPg
-	 kjkeu1jIwQDzZt8lC38v0gzuESpl/bMFgNyXOB5P7xtu7aowRXaaQg8wgCvdrb6jDL2cZ
-	 QCsqJ462zhV0yYH30jHvOiTbE4ei07kfP5Bhy/71kB/Yenooi1Ptp4mXeE16+8Lc4Na5f
-	 0E8QEEkHjeHdPnVRlQ9skpGel64ITkGFmtWMt+7e4VhfQOp6RjrJfnNFakj0i9A/m9g==
+	t=1793207787;
+	b=GYsKZzA/C2KTcTNEnXnuECrgx8f5x6yxZCzEXnboXWsbZG82aTugztoNWNn7FyXvrzwu
+	 DSbpR9f0+PlHRU87GMvz+JYYqBVvcHpqMcoAarE1/UMPtDLKeJoOg36iT4bYmt6ktlP2t
+	 0CDLZCFIOKmR8u7mDPgMBA6Bf0rF4YsK86DxV9PfpUvIwMWCKtJW8od2dIStmD86aWiVB
+	 msGwtECjPkFot+XB2OUrfgpV9aLRf3VEkNGVyLqJOWUQR9Oq0g7wGxCJUiERH+X2SJ/d0
+	 JsZOOZb0hUPFpmDdJT+pgSO3zopH9yxEbQ2yPD/QoqfoUmZeeipF3L5qnF3zMysFnSA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793207784;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793207787;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=3CaoHUj/sUYYGotAInuBmRc+XZyBzxtHWVDenI5vMaQ=;
-	b=la2Ar1z7TkdvuG3X22+DjGBpBTmjS5Gz+/LK7kWtvE+pT4Y78G2qQyXC7KyNOZisTzCR
-	 JWSGH3bdK7bLaSRhMQHGIaOvkff+/bqxW66C034o2UhNn2NAdQ0i0Je9NXUlfjMJuIvo8
-	 FP8K87QRUAmMgOVxeHl5qfpPLgWokasXaC7kuZyRZY/pCYvjpyhM3gzqYrGNYbpgf0rQr
-	 Rk0MANV/ETR++iQ5+8I6eZ3EY5dxniYquHOcoA7PxP4ya43XBG+fruZsSTZu3iQC1oHmO
-	 akoo6SEnRTZNAH6P2YRoAip0d7Dlv9ynZ7XjLzBVqjbJPwI7Bq+YEEhGmXhjXPkqopg==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=/r6EYK9gpIrM8GHXKehf2EDfOGWm5E9YjcOhzPhaVYw=;
+	b=LlwZ5CQ+Mbj10YNH3vlxYvWOhEAX4irDJZ470Egp+dOR/wXedyq76+yokQk3fulcOl8C
+	 3OU+A7UROk9qXt/BeX9oPSK1D9XitPrYgk+LmiKSz1+mCkjSEe5wU3dm925AHi9iRsvHT
+	 o/VlCrP+nZv/r7fg0Qrc4LxrUHrnrCqA7+E0fZX0EXFY08BkG4DAfACVHrwfR4gWhdDnF
+	 2eq46wD8zetIK1UPPYg8lbtok26ryd0wmK7dPpKfL40TNgrYSjVmQtxvB5ad3adJMPP5v
+	 LWeqlHXoPmavsC3HLw/ZWJ4tRT3J+0l4fYrHQ9Ec8R2A7rq81jsUyeY7hioozS+mWkA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hue0sjAR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nL25nOWN;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C707606A330;
-	Wed, 28 Oct 2026 17:16:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1A94606A31D;
+	Wed, 28 Oct 2026 17:16:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hue0sjAR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DB2D1F031E3;
-	Wed, 28 Oct 2026 17:16:23 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nL25nOWN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 509831F031E1;
+	Wed, 28 Oct 2026 17:16:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793207784;
-	bh=3CaoHUj/sUYYGotAInuBmRc+XZyBzxtHWVDenI5vMaQ=;
+	s=korg; t=1793207786;
+	bh=/r6EYK9gpIrM8GHXKehf2EDfOGWm5E9YjcOhzPhaVYw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hue0sjARgX70omGX0IzVXt4EOhZV27dF/TWQmEzpEnpa8aLtghmX9Gktt3kM4v2cT
-	 gGGq5x70+Xha9AEk7fE9o8sWzyT0zG/HbgSp5OPYVzoV5/snKOLE1pYxKevjD/7jlc
-	 jOvxo7nhNgBrLfvwAU7qGCrNIk+giHQMk2LwMoiY=
+	b=nL25nOWNE6b43DzZt7hR69yaZ7dUvDC8M72gVuXSta/JJYsaRDTyuJw1C54MEFHFR
+	 ZpYGeAqcjiwWIS5gs3LvO6/UUIhT6w+4h/A1sODfLY02w8tTAjJEvgdVuVPvigBIk6
+	 FogeH1AOPye7NugQNq9zVDn0xylzXb5V2VoQagWs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Auld <matthew.auld@intel.com>,
-	Matthew Brost <matthew.brost@intel.com>,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Taeyang Lee <0wn@theori.io>,
+	Steven Rostedt <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 139/247] drm/xe: Bump LRU for external objects on exec and rebind
-Date: Wed, 28 Oct 2026 17:59:02 +0100
-Message-ID: <20261028165950.699461845@linuxfoundation.org>
+Subject: [PATCH 6.12 140/247] tracing: Keep the predicate limit separate from program capacity
+Date: Wed, 28 Oct 2026 17:59:03 +0100
+Message-ID: <20261028165950.724535174@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165947.349197979@linuxfoundation.org>
 References: <20261028165947.349197979@linuxfoundation.org>
@@ -64,129 +62,63 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+From: Taeyang Lee <0wn@theori.io>
 
-[ Upstream commit d2ce8fcd778ee6d92748c92d23a56d4416c29d86 ]
+[ Upstream commit 803aa6fc2dbea25ab9d3ed19eca1c96d0ab17445 ]
 
-The VM's private BOs get their LRU position refreshed in bulk via
-ttm_lru_bulk_move_tail() on vm->lru_bulk_move, both after a successful
-non-LR exec and after the LR preempt-fence rebind worker runs. External
-objects (BOs potentially shared across VMs) are never added to that
-per-VM bulk move list, so their LRU position is never refreshed by
-either path. This makes external objects in active use look more
-evictable than they are.
+predicate_parse() adds two to nr_preds to reserve the terminal TRUE
+and FALSE entries. It also uses that increased value as the limit for
+parsed predicates. If the initial count is smaller than the number
+actually parsed, the program can fill the allocation and subsequent
+accesses can go past its end.
 
-Add xe_vm_bump_lru(), which, under a single lru_lock critical section,
-performs the bulk move of the VM's private BOs and bumps each external
-object locked by the drm_exec transaction. Use it from both the non-LR
-exec path and the LR rebind worker, replacing the open-coded bulk move.
+Keep nr_preds as the predicate limit and use a separate value for the
+allocation size. This leaves space for both terminal entries and a
+zeroed entry when parsing stops at the limit.
 
-Fixes: d490ecf57790 ("drm/xe: Rework xe_exec and the VM rebind worker to use the drm_exec helper")
-Cc: Matthew Auld <matthew.auld@intel.com>
-Cc: Matthew Brost <matthew.brost@intel.com>
-Cc: <stable@vger.kernel.org> # v6.8+
-Assisted-by: LLM
-Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
-Reviewed-by: Matthew Brost <matthew.brost@intel.com>
-Reviewed-by: Matthew Auld <matthew.auld@intel.com>
-Link: https://patch.msgid.link/20261012132607.21387-1-thomas.hellstrom@linux.intel.com
-(cherry picked from commit 324ba30cca180c2e1d02090743dd78ccb15b9e4a)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-[ sashal: Adjusted header context to accommodate missing xe_vm_bind_kernel_bo() and xe_vm_resume_rebind_worker() declarations. ]
+Cc: stable@vger.kernel.org
+Fixes: 39f7c41c908b ("tracing/filters: Enable filtering a cpumask field by another cpumask")
+Link: https://patch.msgid.link/atELCd1XjKVhrkFL@Taeyangs-MacBook-Pro.local
+Signed-off-by: Taeyang Lee <0wn@theori.io>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+[ sashal: adapted the allocation change to use kcalloc() instead of kzalloc_objs(). ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_exec.c |  7 ++-----
- drivers/gpu/drm/xe/xe_vm.c   | 31 ++++++++++++++++++++++++++++---
- drivers/gpu/drm/xe/xe_vm.h   |  2 ++
- 3 files changed, 32 insertions(+), 8 deletions(-)
+ kernel/trace/trace_events_filter.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_exec.c b/drivers/gpu/drm/xe/xe_exec.c
-index 04a88c16d8358..03af3704ee68d 100644
---- a/drivers/gpu/drm/xe/xe_exec.c
-+++ b/drivers/gpu/drm/xe/xe_exec.c
-@@ -330,11 +330,8 @@ int xe_exec_ioctl(struct drm_device *dev, void *data, struct drm_file *file)
- 	xe_sched_job_push(job);
- 	xe_vm_reactivate_rebind(vm);
+diff --git a/kernel/trace/trace_events_filter.c b/kernel/trace/trace_events_filter.c
+index ada02ae893c20..cd89fbf2fb208 100644
+--- a/kernel/trace/trace_events_filter.c
++++ b/kernel/trace/trace_events_filter.c
+@@ -482,18 +482,17 @@ predicate_parse(const char *str, int nr_parens, int nr_preds,
+ 	int len;
+ 	int N = 0;
+ 	int i;
+-
+-	nr_preds += 2; /* For TRUE and FALSE */
++	int nr_preds_alloc = nr_preds + 2; /* For TRUE and FALSE */
  
--	if (!err && !xe_vm_in_lr_mode(vm)) {
--		spin_lock(&xe->ttm.lru_lock);
--		ttm_lru_bulk_move_tail(&vm->lru_bulk_move);
--		spin_unlock(&xe->ttm.lru_lock);
--	}
-+	if (!err && !xe_vm_in_lr_mode(vm))
-+		xe_vm_bump_lru(vm, exec);
- 
- 	if (mode == EXEC_MODE_LR)
- 		xe_hw_engine_group_resume_faulting_lr_jobs(group);
-diff --git a/drivers/gpu/drm/xe/xe_vm.c b/drivers/gpu/drm/xe/xe_vm.c
-index da148df421057..d53cb4e625172 100644
---- a/drivers/gpu/drm/xe/xe_vm.c
-+++ b/drivers/gpu/drm/xe/xe_vm.c
-@@ -439,6 +439,33 @@ int xe_vm_validate_rebind(struct xe_vm *vm, struct drm_exec *exec,
- 	return 0;
- }
- 
-+/**
-+ * xe_vm_bump_lru() - Bump the LRU position of BOs used by a submission
-+ * @vm: The vm for which we are bumping LRUs.
-+ * @exec: The struct drm_exec with the locked GEM objects.
-+ *
-+ * Move the VM's private BOs, and all external objects locked by @exec,
-+ * to the LRU tail. Private BOs are moved in bulk using @vm's
-+ * &xe_vm.lru_bulk_move. External objects, which may be shared with other
-+ * VMs, are not part of that bulk move and are bumped individually.
-+ */
-+void xe_vm_bump_lru(struct xe_vm *vm, struct drm_exec *exec)
-+{
-+	spinlock_t *lru_lock = &vm->xe->ttm.lru_lock;
-+	struct drm_gem_object *obj;
-+
-+	spin_lock(lru_lock);
-+	ttm_lru_bulk_move_tail(&vm->lru_bulk_move);
-+	drm_exec_for_each_locked_object(exec, obj) {
-+		if (!drm_gpuvm_is_extobj(&vm->gpuvm, obj))
-+			continue;
-+
-+		ttm_bo_move_to_lru_tail(&gem_to_xe_bo(obj)->ttm);
-+		cond_resched_lock(lru_lock);
-+	}
-+	spin_unlock(lru_lock);
-+}
-+
- static int xe_preempt_work_begin(struct drm_exec *exec, struct xe_vm *vm,
- 				 bool *done)
- {
-@@ -552,9 +579,7 @@ static void preempt_rebind_work_func(struct work_struct *w)
- 
- #undef retry_required
- 
--	spin_lock(&vm->xe->ttm.lru_lock);
--	ttm_lru_bulk_move_tail(&vm->lru_bulk_move);
--	spin_unlock(&vm->xe->ttm.lru_lock);
-+	xe_vm_bump_lru(vm, &exec);
- 
- 	/* Point of no return. */
- 	arm_preempt_fences(vm, &preempt_fences);
-diff --git a/drivers/gpu/drm/xe/xe_vm.h b/drivers/gpu/drm/xe/xe_vm.h
-index d2406532fcc50..b0a864618eccc 100644
---- a/drivers/gpu/drm/xe/xe_vm.h
-+++ b/drivers/gpu/drm/xe/xe_vm.h
-@@ -248,6 +248,8 @@ int xe_vm_lock_vma(struct drm_exec *exec, struct xe_vma *vma);
- int xe_vm_validate_rebind(struct xe_vm *vm, struct drm_exec *exec,
- 			  unsigned int num_fences);
- 
-+void xe_vm_bump_lru(struct xe_vm *vm, struct drm_exec *exec);
-+
- /**
-  * xe_vm_resv() - Return's the vm's reservation object
-  * @vm: The vm
+ 	op_stack = kmalloc_array(nr_parens, sizeof(*op_stack), GFP_KERNEL);
+ 	if (!op_stack)
+ 		return ERR_PTR(-ENOMEM);
+-	prog_stack = kcalloc(nr_preds, sizeof(*prog_stack), GFP_KERNEL);
++	prog_stack = kcalloc(nr_preds_alloc, sizeof(*prog_stack), GFP_KERNEL);
+ 	if (!prog_stack) {
+ 		parse_error(pe, -ENOMEM, 0);
+ 		goto out_free;
+ 	}
+-	inverts = kmalloc_array(nr_preds, sizeof(*inverts), GFP_KERNEL);
++	inverts = kmalloc_array(nr_preds_alloc, sizeof(*inverts), GFP_KERNEL);
+ 	if (!inverts) {
+ 		parse_error(pe, -ENOMEM, 0);
+ 		goto out_free;
 -- 
 2.53.0
 
