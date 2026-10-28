@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213997;
-	b=YSArCkA2FaSTiTROctoT/saSZwQ14RUFuG9oC4ROa0VBGsHympj0OaQ5sdeM87n/PXlJ
-	 Yz9anAnqVWU48nBbYTtnvJu5TRamIly0C1veD7FDWOlTUQ4Vjm7jSaV9QlnLxU1PFIzy3
-	 58OzolAozvmmuKaASz0G9AhhbComVIkC2yuPCiNzI7qRuMs4QLfRi6OXSWhn5tII9yE//
-	 Uey2IgSq6alxFjp4OBG80m3bJASpz1pOXvGwTMaXIiUICod1mIkGYSV95a96w8yrpZ6Q9
-	 W4RDTckHNuvSafJh79ou3c3w3dNot9Pr6fB4BRdACKN8LxSYAbP8aHJMLEQWTnN8QNw==
+	t=1793214000;
+	b=zY8IWqZCcAneD51Sh+a9xk/LFZZx2jhbBnlhclOfmZzOg1A4RgvsIepj0gSB9Dwx8HyN
+	 MhPCNUtmpRUyvLZAtOUmEj1GSstJbJgRIdb5BPTHJiLDok845r3wyzaYSoy0fxtoB8fLy
+	 62subv358YNenkokpdfRXSYyM+iDtMANy1hbdvO7froz1DFomCj8KBTS+WjSikulWPHfy
+	 kWB8Fu7h5RymovVksjGCUr73GIqnASHCZcX5mzXipNP3Ozmt1nDLs3FaqsQXuy7RvvLKo
+	 WxSPWGt4lh2gvrLl2C6g0cfUuRgLxMeGedDS5W12ajF6e8tNL4LodEbP/loLbDHUIwg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213997;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214000;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=iswk2nA935ZMxq3JkrrU3yn3XNk3DJprbZVdgqyIyDY=;
-	b=hG4aOIEOR3q9u59jUctDibBeOXlIb2YOtE/iqpaARv9IrIHyJxDhaMxOclM0htEQlfw3
-	 UQuC9RamDKSb1Nuyew395UzLpRjhMP+tK9p85iWP8CaI8fRMJVjZvL+WC9jY5QdRHS20E
-	 SpNKD4piemYb8OVcQfsIult3zaHMLMj1tIwyWbQXA8/JjolhAv8/umrpvBSmWaaJEj8yI
-	 fK3hbruW7eAf7zSf/0jG5yyrxgLuQmIa0vX2BJLgcAymLd4LBz82bFec39fsJGao5ca6k
-	 snKKcVp8QyPD0AjtEfktRB9q2Ou2TNUdynnQZgW6oyDGlbHncNmqB8TiRT3lGo7SY7A==
+	bh=YN0yrlgqbRdWdLRp/sHJ2YA3/Z7Z3rJwGSu9mRMzeLs=;
+	b=ifemsZApv3Mm6oYXSOizAbsNenErmHtqx4KFBSpFHmToLx39F2TuGpurla2EoH07oM0r
+	 qULQ4fC2ANqjByj9HyrLDQrtE1hcXqRDwOGMWSmKzWA7IDW5nTLZ/Oirih6Amlj4xMd3s
+	 qlFk7ZghAv6ACq+//sa+45QfxsM4h9bdLqERvPsoz+MfLWco4CWWbQcR59dgyTXnTEWkh
+	 iJpZm/EsLgl9LSQsiXX2CfRYvVFpix2TAF+7zEhFL9P93y/YOt3tJM6IVzDN/1WqR2VWG
+	 FmxE3udFlsE1rYMFDK9fKLdG9eFjHZ74Ery3fCgq7SyhGcgAna3Dy3n78ocjTyVskFA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vyj38NtG;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rbZEkJXy;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACF9260A2609;
-	Wed, 28 Oct 2026 18:59:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4285606A31A;
+	Wed, 28 Oct 2026 18:59:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vyj38NtG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07F1C1F01825;
-	Wed, 28 Oct 2026 18:59:55 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rbZEkJXy
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBCDF1F031E2;
+	Wed, 28 Oct 2026 18:59:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213996;
-	bh=iswk2nA935ZMxq3JkrrU3yn3XNk3DJprbZVdgqyIyDY=;
+	s=korg; t=1793213999;
+	bh=YN0yrlgqbRdWdLRp/sHJ2YA3/Z7Z3rJwGSu9mRMzeLs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vyj38NtG0IcNKCke2W36ggTFSP+yzZy/bYcYD6kAyGUGifgqYT+u5/MqW5YyPuDXG
-	 ADP7EwcA9gdTfEeYZU62gaRSvPf9XsP8+El9NF0hi6mmqmwC2Q24pxioM6251OPEvI
-	 6rQLR/Rgy1Oe3KqTfDORYm+4O7+O1Z2irWRcgIAs=
+	b=rbZEkJXytRl8QEbucO/sDKmbB5oyQn+/EvF5r7Ftr38C7lm1H6JbQ8H21fU2dxMiP
+	 vGfFRQF9sbp10ebdzbGH6JTxtA1PbxIw3x+Pg5z7lnfdDASiTumjSJwn3fesQy+/qs
+	 VXqAJAMrBimFuct5LJ/KStZ+U2QHz1dBl7sGfIdo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Erkun <yangerkun@huawei.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	Patrisious Haddad <phaddad@nvidia.com>,
+	Michael Guralnik <michaelgur@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0702/1887] nfsd: release svc_expkey/svc_export with rcu_work
-Date: Wed, 28 Oct 2026 17:46:38 +0100
-Message-ID: <20261028170515.385848532@linuxfoundation.org>
+Subject: [PATCH 6.1 0703/1887] RDMA/mlx5: Move events notifier registration to be after device registration
+Date: Wed, 28 Oct 2026 17:46:39 +0100
+Message-ID: <20261028170515.408689804@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,197 +69,190 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yang Erkun <yangerkun@huawei.com>
+From: Patrisious Haddad <phaddad@nvidia.com>
 
-[ Upstream commit f8c989a0c89a75d30f899a7cabdc14d72522bb8d ]
+[ Upstream commit ede132a5cf559f3ab35a4c28bac4f4a6c20334d8 ]
 
-The last reference for `cache_head` can be reduced to zero in `c_show`
-and `e_show`(using `rcu_read_lock` and `rcu_read_unlock`). Consequently,
-`svc_export_put` and `expkey_put` will be invoked, leading to two
-issues:
+Move pkey change work initialization and cleanup from device resources
+stage to notifier stage, since this is the stage which handles this work
+events.
 
-1. The `svc_export_put` will directly free ex_uuid. However,
-   `e_show`/`c_show` will access `ex_uuid` after `cache_put`, which can
-   trigger a use-after-free issue, shown below.
+Fix a race between the device deregistration and pkey change work by moving
+MLX5_IB_STAGE_DEVICE_NOTIFIER to be after MLX5_IB_STAGE_IB_REG in order to
+ensure that the notifier is deregistered before the device during cleanup.
+Which ensures there are no works that are being executed after the
+device has already unregistered which can cause the panic below.
 
-   ==================================================================
-   BUG: KASAN: slab-use-after-free in svc_export_show+0x362/0x430 [nfsd]
-   Read of size 1 at addr ff11000010fdc120 by task cat/870
+BUG: kernel NULL pointer dereference, address: 0000000000000000
+PGD 0 P4D 0
+Oops: 0000 [#1] PREEMPT SMP PTI
+CPU: 1 PID: 630071 Comm: kworker/1:2 Kdump: loaded Tainted: G W OE --------- --- 5.14.0-162.6.1.el9_1.x86_64 #1
+Hardware name: Microsoft Corporation Virtual Machine/Virtual Machine, BIOS 090008 02/27/2023
+Workqueue: events pkey_change_handler [mlx5_ib]
+RIP: 0010:setup_qp+0x38/0x1f0 [mlx5_ib]
+Code: ee 41 54 45 31 e4 55 89 f5 53 48 89 fb 48 83 ec 20 8b 77 08 65 48 8b 04 25 28 00 00 00 48 89 44 24 18 48 8b 07 48 8d 4c 24 16 <4c> 8b 38 49 8b 87 80 0b 00 00 4c 89 ff 48 8b 80 08 05 00 00 8b 40
+RSP: 0018:ffffbcc54068be20 EFLAGS: 00010282
+RAX: 0000000000000000 RBX: ffff954054494128 RCX: ffffbcc54068be36
+RDX: ffff954004934000 RSI: 0000000000000001 RDI: ffff954054494128
+RBP: 0000000000000023 R08: ffff954001be2c20 R09: 0000000000000001
+R10: ffff954001be2c20 R11: ffff9540260133c0 R12: 0000000000000000
+R13: 0000000000000023 R14: 0000000000000000 R15: ffff9540ffcb0905
+FS: 0000000000000000(0000) GS:ffff9540ffc80000(0000) knlGS:0000000000000000
+CS: 0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 0000000000000000 CR3: 000000010625c001 CR4: 00000000003706e0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+mlx5_ib_gsi_pkey_change+0x20/0x40 [mlx5_ib]
+process_one_work+0x1e8/0x3c0
+worker_thread+0x50/0x3b0
+? rescuer_thread+0x380/0x380
+kthread+0x149/0x170
+? set_kthread_struct+0x50/0x50
+ret_from_fork+0x22/0x30
+Modules linked in: rdma_ucm(OE) rdma_cm(OE) iw_cm(OE) ib_ipoib(OE) ib_cm(OE) ib_umad(OE) mlx5_ib(OE) mlx5_fwctl(OE) fwctl(OE) ib_uverbs(OE) mlx5_core(OE) mlxdevm(OE) ib_core(OE) mlx_compat(OE) psample mlxfw(OE) tls knem(OE) netconsole nfsv3 nfs_acl nfs lockd grace fscache netfs qrtr rfkill sunrpc intel_rapl_msr intel_rapl_common rapl hv_balloon hv_utils i2c_piix4 pcspkr joydev fuse ext4 mbcache jbd2 sr_mod sd_mod cdrom t10_pi sg ata_generic pci_hyperv pci_hyperv_intf hyperv_drm drm_shmem_helper drm_kms_helper hv_storvsc syscopyarea hv_netvsc sysfillrect sysimgblt hid_hyperv fb_sys_fops scsi_transport_fc hyperv_keyboard drm ata_piix crct10dif_pclmul crc32_pclmul crc32c_intel libata ghash_clmulni_intel hv_vmbus serio_raw [last unloaded: ib_core]
+CR2: 0000000000000000
+---[ end trace f6f8be4eae12f7bc ]---
 
-   CPU: 1 UID: 0 PID: 870 Comm: cat Not tainted 6.12.0-rc3+ #1
-   Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS
-   1.16.1-2.fc37 04/01/2014
-   Call Trace:
-    <TASK>
-    dump_stack_lvl+0x53/0x70
-    print_address_description.constprop.0+0x2c/0x3a0
-    print_report+0xb9/0x280
-    kasan_report+0xae/0xe0
-    svc_export_show+0x362/0x430 [nfsd]
-    c_show+0x161/0x390 [sunrpc]
-    seq_read_iter+0x589/0x770
-    seq_read+0x1e5/0x270
-    proc_reg_read+0xe1/0x140
-    vfs_read+0x125/0x530
-    ksys_read+0xc1/0x160
-    do_syscall_64+0x5f/0x170
-    entry_SYSCALL_64_after_hwframe+0x76/0x7e
-
-   Allocated by task 830:
-    kasan_save_stack+0x20/0x40
-    kasan_save_track+0x14/0x30
-    __kasan_kmalloc+0x8f/0xa0
-    __kmalloc_node_track_caller_noprof+0x1bc/0x400
-    kmemdup_noprof+0x22/0x50
-    svc_export_parse+0x8a9/0xb80 [nfsd]
-    cache_do_downcall+0x71/0xa0 [sunrpc]
-    cache_write_procfs+0x8e/0xd0 [sunrpc]
-    proc_reg_write+0xe1/0x140
-    vfs_write+0x1a5/0x6d0
-    ksys_write+0xc1/0x160
-    do_syscall_64+0x5f/0x170
-    entry_SYSCALL_64_after_hwframe+0x76/0x7e
-
-   Freed by task 868:
-    kasan_save_stack+0x20/0x40
-    kasan_save_track+0x14/0x30
-    kasan_save_free_info+0x3b/0x60
-    __kasan_slab_free+0x37/0x50
-    kfree+0xf3/0x3e0
-    svc_export_put+0x87/0xb0 [nfsd]
-    cache_purge+0x17f/0x1f0 [sunrpc]
-    nfsd_destroy_serv+0x226/0x2d0 [nfsd]
-    nfsd_svc+0x125/0x1e0 [nfsd]
-    write_threads+0x16a/0x2a0 [nfsd]
-    nfsctl_transaction_write+0x74/0xa0 [nfsd]
-    vfs_write+0x1a5/0x6d0
-    ksys_write+0xc1/0x160
-    do_syscall_64+0x5f/0x170
-    entry_SYSCALL_64_after_hwframe+0x76/0x7e
-
-2. We cannot sleep while using `rcu_read_lock`/`rcu_read_unlock`.
-   However, `svc_export_put`/`expkey_put` will call path_put, which
-   subsequently triggers a sleeping operation due to the following
-   `dput`.
-
-   =============================
-   WARNING: suspicious RCU usage
-   5.10.0-dirty #141 Not tainted
-   -----------------------------
-   ...
-   Call Trace:
-   dump_stack+0x9a/0xd0
-   ___might_sleep+0x231/0x240
-   dput+0x39/0x600
-   path_put+0x1b/0x30
-   svc_export_put+0x17/0x80
-   e_show+0x1c9/0x200
-   seq_read_iter+0x63f/0x7c0
-   seq_read+0x226/0x2d0
-   vfs_read+0x113/0x2c0
-   ksys_read+0xc9/0x170
-   do_syscall_64+0x33/0x40
-   entry_SYSCALL_64_after_hwframe+0x67/0xd1
-
-Fix these issues by using `rcu_work` to help release
-`svc_expkey`/`svc_export`. This approach allows for an asynchronous
-context to invoke `path_put` and also facilitates the freeing of
-`uuid/exp/key` after an RCU grace period.
-
-Fixes: 9ceddd9da134 ("knfsd: Allow lockless lookups of the exports")
-Signed-off-by: Yang Erkun <yangerkun@huawei.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Fixes: 7722f47e71e5 ("IB/mlx5: Create GSI transmission QPs when P_Key table is changed")
+Signed-off-by: Patrisious Haddad <phaddad@nvidia.com>
+Reviewed-by: Michael Guralnik <michaelgur@nvidia.com>
+Link: https://patch.msgid.link/d271ceeff0c08431b3cbbbb3e2d416f09b6d1621.1731496944.git.leon@kernel.org
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/export.c | 31 +++++++++++++++++++++++++------
- fs/nfsd/export.h |  4 ++--
- 2 files changed, 27 insertions(+), 8 deletions(-)
+ drivers/infiniband/hw/mlx5/main.c    | 40 +++++++++++++---------------
+ drivers/infiniband/hw/mlx5/mlx5_ib.h |  2 +-
+ 2 files changed, 20 insertions(+), 22 deletions(-)
 
-diff --git a/fs/nfsd/export.c b/fs/nfsd/export.c
-index a9d794cfd10e0..191842a5d7ee7 100644
---- a/fs/nfsd/export.c
-+++ b/fs/nfsd/export.c
-@@ -40,15 +40,24 @@
- #define	EXPKEY_HASHMAX		(1 << EXPKEY_HASHBITS)
- #define	EXPKEY_HASHMASK		(EXPKEY_HASHMAX -1)
+diff --git a/drivers/infiniband/hw/mlx5/main.c b/drivers/infiniband/hw/mlx5/main.c
+index 9da42edecb05c..993bdd815bbb2 100644
+--- a/drivers/infiniband/hw/mlx5/main.c
++++ b/drivers/infiniband/hw/mlx5/main.c
+@@ -2802,7 +2802,6 @@ static int mlx5_ib_dev_res_init(struct mlx5_ib_dev *dev)
+ 	struct ib_srq_init_attr attr;
+ 	struct ib_device *ibdev;
+ 	struct ib_cq_init_attr cq_attr = {.cqe = 1};
+-	int port;
+ 	int ret = 0;
  
--static void expkey_put(struct kref *ref)
-+static void expkey_put_work(struct work_struct *work)
+ 	ibdev = &dev->ib_dev;
+@@ -2851,10 +2850,6 @@ static int mlx5_ib_dev_res_init(struct mlx5_ib_dev *dev)
+ 		goto error6;
+ 	}
+ 
+-	for (port = 0; port < ARRAY_SIZE(devr->ports); ++port)
+-		INIT_WORK(&devr->ports[port].pkey_change_work,
+-			  pkey_change_handler);
+-
+ 	return 0;
+ 
+ error6:
+@@ -2873,16 +2868,6 @@ static int mlx5_ib_dev_res_init(struct mlx5_ib_dev *dev)
+ static void mlx5_ib_dev_res_cleanup(struct mlx5_ib_dev *dev)
  {
--	struct svc_expkey *key = container_of(ref, struct svc_expkey, h.ref);
-+	struct svc_expkey *key =
-+		container_of(to_rcu_work(work), struct svc_expkey, ek_rcu_work);
+ 	struct mlx5_ib_resources *devr = &dev->devr;
+-	int port;
+-
+-	/*
+-	 * Make sure no change P_Key work items are still executing.
+-	 *
+-	 * At this stage, the mlx5_ib_event should be unregistered
+-	 * and it ensures that no new works are added.
+-	 */
+-	for (port = 0; port < ARRAY_SIZE(devr->ports); ++port)
+-		cancel_work_sync(&devr->ports[port].pkey_change_work);
  
- 	if (test_bit(CACHE_VALID, &key->h.flags) &&
- 	    !test_bit(CACHE_NEGATIVE, &key->h.flags))
- 		path_put(&key->ek_path);
- 	auth_domain_put(key->ek_client);
--	kfree_rcu(key, ek_rcu);
-+	kfree(key);
-+}
-+
-+static void expkey_put(struct kref *ref)
-+{
-+	struct svc_expkey *key = container_of(ref, struct svc_expkey, h.ref);
-+
-+	INIT_RCU_WORK(&key->ek_rcu_work, expkey_put_work);
-+	queue_rcu_work(system_wq, &key->ek_rcu_work);
- }
+ 	ib_destroy_srq(devr->s1);
+ 	ib_destroy_srq(devr->s0);
+@@ -4089,6 +4074,13 @@ static void mlx5_ib_stage_delay_drop_cleanup(struct mlx5_ib_dev *dev)
  
- static int expkey_upcall(struct cache_detail *cd, struct cache_head *h)
-@@ -351,16 +360,26 @@ static void export_stats_destroy(struct export_stats *stats)
- 					     EXP_STATS_COUNTERS_NUM);
- }
- 
--static void svc_export_put(struct kref *ref)
-+static void svc_export_put_work(struct work_struct *work)
+ static int mlx5_ib_stage_dev_notifier_init(struct mlx5_ib_dev *dev)
  {
--	struct svc_export *exp = container_of(ref, struct svc_export, h.ref);
-+	struct svc_export *exp =
-+		container_of(to_rcu_work(work), struct svc_export, ex_rcu_work);
++	struct mlx5_ib_resources *devr = &dev->devr;
++	int port;
 +
- 	path_put(&exp->ex_path);
- 	auth_domain_put(exp->ex_client);
- 	nfsd4_fslocs_free(&exp->ex_fslocs);
- 	export_stats_destroy(exp->ex_stats);
- 	kfree(exp->ex_stats);
- 	kfree(exp->ex_uuid);
--	kfree_rcu(exp, ex_rcu);
-+	kfree(exp);
-+}
++	for (port = 0; port < ARRAY_SIZE(devr->ports); ++port)
++		INIT_WORK(&devr->ports[port].pkey_change_work,
++			  pkey_change_handler);
 +
-+static void svc_export_put(struct kref *ref)
-+{
-+	struct svc_export *exp = container_of(ref, struct svc_export, h.ref);
+ 	dev->mdev_events.notifier_call = mlx5_ib_event;
+ 	mlx5_notifier_register(dev->mdev, &dev->mdev_events);
+ 	return 0;
+@@ -4096,7 +4088,13 @@ static int mlx5_ib_stage_dev_notifier_init(struct mlx5_ib_dev *dev)
+ 
+ static void mlx5_ib_stage_dev_notifier_cleanup(struct mlx5_ib_dev *dev)
+ {
++	struct mlx5_ib_resources *devr = &dev->devr;
++	int port;
 +
-+	INIT_RCU_WORK(&exp->ex_rcu_work, svc_export_put_work);
-+	queue_rcu_work(system_wq, &exp->ex_rcu_work);
+ 	mlx5_notifier_unregister(dev->mdev, &dev->mdev_events);
++
++	for (port = 0; port < ARRAY_SIZE(devr->ports); ++port)
++		cancel_work_sync(&devr->ports[port].pkey_change_work);
  }
  
- static int svc_export_upcall(struct cache_detail *cd, struct cache_head *h)
-diff --git a/fs/nfsd/export.h b/fs/nfsd/export.h
-index f73e23bb24a1e..fa545d8dcc369 100644
---- a/fs/nfsd/export.h
-+++ b/fs/nfsd/export.h
-@@ -75,7 +75,7 @@ struct svc_export {
- 	u32			ex_layout_types;
- 	struct nfsd4_deviceid_map *ex_devid_map;
- 	struct cache_detail	*cd;
--	struct rcu_head		ex_rcu;
-+	struct rcu_work		ex_rcu_work;
- 	struct export_stats	*ex_stats;
- };
- 
-@@ -91,7 +91,7 @@ struct svc_expkey {
- 	u32			ek_fsid[6];
- 
- 	struct path		ek_path;
--	struct rcu_head		ek_rcu;
-+	struct rcu_work		ek_rcu_work;
- };
- 
- #define EX_ISSYNC(exp)		(!((exp)->ex_flags & NFSEXP_ASYNC))
+ void __mlx5_ib_remove(struct mlx5_ib_dev *dev,
+@@ -4170,9 +4168,6 @@ static const struct mlx5_ib_profile pf_profile = {
+ 	STAGE_CREATE(MLX5_IB_STAGE_DEVICE_RESOURCES,
+ 		     mlx5_ib_dev_res_init,
+ 		     mlx5_ib_dev_res_cleanup),
+-	STAGE_CREATE(MLX5_IB_STAGE_DEVICE_NOTIFIER,
+-		     mlx5_ib_stage_dev_notifier_init,
+-		     mlx5_ib_stage_dev_notifier_cleanup),
+ 	STAGE_CREATE(MLX5_IB_STAGE_ODP,
+ 		     mlx5_ib_odp_init_one,
+ 		     mlx5_ib_odp_cleanup_one),
+@@ -4197,6 +4192,9 @@ static const struct mlx5_ib_profile pf_profile = {
+ 	STAGE_CREATE(MLX5_IB_STAGE_IB_REG,
+ 		     mlx5_ib_stage_ib_reg_init,
+ 		     mlx5_ib_stage_ib_reg_cleanup),
++	STAGE_CREATE(MLX5_IB_STAGE_DEVICE_NOTIFIER,
++		     mlx5_ib_stage_dev_notifier_init,
++		     mlx5_ib_stage_dev_notifier_cleanup),
+ 	STAGE_CREATE(MLX5_IB_STAGE_POST_IB_REG_UMR,
+ 		     mlx5_ib_stage_post_ib_reg_umr_init,
+ 		     NULL),
+@@ -4233,9 +4231,6 @@ const struct mlx5_ib_profile raw_eth_profile = {
+ 	STAGE_CREATE(MLX5_IB_STAGE_DEVICE_RESOURCES,
+ 		     mlx5_ib_dev_res_init,
+ 		     mlx5_ib_dev_res_cleanup),
+-	STAGE_CREATE(MLX5_IB_STAGE_DEVICE_NOTIFIER,
+-		     mlx5_ib_stage_dev_notifier_init,
+-		     mlx5_ib_stage_dev_notifier_cleanup),
+ 	STAGE_CREATE(MLX5_IB_STAGE_COUNTERS,
+ 		     mlx5_ib_counters_init,
+ 		     mlx5_ib_counters_cleanup),
+@@ -4257,6 +4252,9 @@ const struct mlx5_ib_profile raw_eth_profile = {
+ 	STAGE_CREATE(MLX5_IB_STAGE_IB_REG,
+ 		     mlx5_ib_stage_ib_reg_init,
+ 		     mlx5_ib_stage_ib_reg_cleanup),
++	STAGE_CREATE(MLX5_IB_STAGE_DEVICE_NOTIFIER,
++		     mlx5_ib_stage_dev_notifier_init,
++		     mlx5_ib_stage_dev_notifier_cleanup),
+ 	STAGE_CREATE(MLX5_IB_STAGE_POST_IB_REG_UMR,
+ 		     mlx5_ib_stage_post_ib_reg_umr_init,
+ 		     NULL),
+diff --git a/drivers/infiniband/hw/mlx5/mlx5_ib.h b/drivers/infiniband/hw/mlx5/mlx5_ib.h
+index 0ef347e91ffeb..e8e285233b355 100644
+--- a/drivers/infiniband/hw/mlx5/mlx5_ib.h
++++ b/drivers/infiniband/hw/mlx5/mlx5_ib.h
+@@ -927,7 +927,6 @@ enum mlx5_ib_stages {
+ 	MLX5_IB_STAGE_QP,
+ 	MLX5_IB_STAGE_SRQ,
+ 	MLX5_IB_STAGE_DEVICE_RESOURCES,
+-	MLX5_IB_STAGE_DEVICE_NOTIFIER,
+ 	MLX5_IB_STAGE_ODP,
+ 	MLX5_IB_STAGE_COUNTERS,
+ 	MLX5_IB_STAGE_CONG_DEBUGFS,
+@@ -936,6 +935,7 @@ enum mlx5_ib_stages {
+ 	MLX5_IB_STAGE_PRE_IB_REG_UMR,
+ 	MLX5_IB_STAGE_WHITELIST_UID,
+ 	MLX5_IB_STAGE_IB_REG,
++	MLX5_IB_STAGE_DEVICE_NOTIFIER,
+ 	MLX5_IB_STAGE_POST_IB_REG_UMR,
+ 	MLX5_IB_STAGE_DELAY_DROP,
+ 	MLX5_IB_STAGE_RESTRACK,
 -- 
 2.53.0
 
