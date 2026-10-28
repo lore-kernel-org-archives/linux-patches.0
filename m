@@ -1,57 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793212192;
-	b=CEL9NyIYd+Gs2jH3lvRB6yJL0ddgYH+Dyg+d8xlZ00C1LmoHU6IFhLxzbgxdj/nkFS+D
-	 JQnCgNhx2pViT1+nhmM0zJz9WDyPL1X1mdlg2ATTvJtdsGla2I8QGW2TNSWvKgncwRqco
-	 Vye2a+r1Ndm5Rmr+QtJ0Ewq5nbDsuaQfsKu6SPn8PvTfbltea25rGCd/iMmef8RPtLyuI
-	 zDfFpk3sf2ycAY/mYKg4qQ6EGd4EkbzbEKlCDq1V4Wp6KCVeeYZgcpLgXSCyHvRjAgo+a
-	 pPFJxFPor3ur0juR65neGBBbB6iBZESZX7Cgd+JmXzSohFhHeEkL0tdpUHOyxxCDJFw==
+	t=1793212195;
+	b=wR7JdftVbeOwf0igO7Qv2UKvMJi42a4yyvaNPTPxV8GH8ohpMOosV+0IYh3wGlqC7YFj
+	 H9F5k25K12wePwvY6RmYctl8BWVLw6dVz8XPoqJhvwwEfpT3f1uvyoZ1+h4gFg5a7YKOA
+	 wuV2Iko/ogDMqU/2KyvIuASRK6sQ2NQyW9g1Dxqyf7EzC1i1cRugfvUZ2pj0Ks86xRojk
+	 AiZbvlmGzaczA3yNBSZaG5YjEdfxlfi7ragcolgnkn9UmHqLa86Cqx9Xg82zb7T2ig+xY
+	 ARyVtsE8E8DqYd24HyeZsWXJBFEgCcRuG0XwpGFVBHz4l3pleJJRuwl79Ikk3xQrqTQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793212192;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793212195;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ZlZjyjTzhMD8AarFVVmN5xzvUcNX0zhm4uXFUwCKp6Y=;
-	b=rxrP20h45CVkLbJxw1pfo3NJPi60bJlq4v53o+D5PzNUVGYMzmxtK9J6uHLGtn5k+rYN
-	 hzVrr8uJ0EyvLqb4KL8nqZqJGWTx5P3v+3vHk5OR0lpF2R8698rCjcES4A1t+5pwle2WK
-	 xMTFEx46u94D0CgXGd7QY4LCd/3lCmUVDx724l2lRav5lbBspA95QYJvKjkruVnmY6sMB
-	 ejGqeLW+2tfO9WPaFRnsoI8iBcinEhhZpdHT7Nk/6ADAHGGrN2PP7DPdim7HVl5b7UpKz
-	 R71oFQeijReswRFoIJMQi53BjXaBv4Y254VdHEX95hLcZq7nQ4dV4qTvfavqqDGAFmQ==
+	bh=iEqMEeQszASfU6U2CPm+qwb7T2zJKVn9SC0cpTQiynw=;
+	b=1Jwv1g6nMzOVjtHeEBoEwC26BNKlVkX+E9TGzlLHRDzZG61Nc7R04457CEiEOGHIEx6Z
+	 JjdkfubN04/C8xllq6JwQ+JYuR9DcMfSCATSogxy5YM4WmoleV4m4Zhb5WpYZWgxw3ZKi
+	 v4UZCHAeCVzDB9kAgTetBvkMW0LMnmcpnn/UTuv4VmwGlplxEKN3PZDAngvUai1GcicFJ
+	 J/ICcL0SMVWcfABjx1b1WtFvfkO6xsYFLLRRNPCV/IV70xGU1HRwrwPNWSErAUOELxE14
+	 nNpKZJfFgx14ejH46buBO7QoXFfV2LXHwOfWzf2QHLl4GX5skSlMqNhRKz7qtynLGCw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cUjxCm8V;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q4uFwoa7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F9A2606A31A;
-	Wed, 28 Oct 2026 18:29:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC2D8606A31D;
+	Wed, 28 Oct 2026 18:29:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cUjxCm8V
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 854E31F01825;
-	Wed, 28 Oct 2026 18:29:51 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q4uFwoa7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FEC11F01825;
+	Wed, 28 Oct 2026 18:29:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793212192;
-	bh=ZlZjyjTzhMD8AarFVVmN5xzvUcNX0zhm4uXFUwCKp6Y=;
+	s=korg; t=1793212194;
+	bh=iEqMEeQszASfU6U2CPm+qwb7T2zJKVn9SC0cpTQiynw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cUjxCm8VYU7BVQ57GA81hEAV53J0xx8RCr00bGi/ByIeLa3fqJrHwzdZ48N2iow1a
-	 GXYkOhhg+J9VfN6usvFcQi83OBqEfHDH5nmLDeLtEB+7MSRc49QsSx3xzDcLthaXIy
-	 OZ+5+jrAdNSNhhLBNokWOO+juRgFjj89Oz0xX+08=
+	b=Q4uFwoa70DugAfyXUDdANBtq+bfiT/gKxAArn6nNMa5V6wLxhyd8Y9LhWCTn/xy4G
+	 eVQ43tUb2UmPnD5UBYOjFNNyCng/9SgbhpFSwCLcADHtapA+aJYhRpK1P26jVEqNap
+	 TxWcxYpG7viKUq2R2REmdRzMDFAKIr2rcPYeUUnc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zqiang <qiang1.zhang@intel.com>,
-	Marco Elver <elver@google.com>,
+	Hui Su <sh_def@163.com>,
+	Andrey Ryabinin <ryabinin.a.a@gmail.com>,
 	Alexander Potapenko <glider@google.com>,
 	Andrey Konovalov <andreyknvl@gmail.com>,
-	Andrey Ryabinin <ryabinin.a.a@gmail.com>,
 	Dmitry Vyukov <dvyukov@google.com>,
+	Vincenzo Frascino <vincenzo.frascino@arm.com>,
+	"Zhang, Qiang1" <qiang1.zhang@intel.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0071/1887] kasan: fix lockdep report invalid wait context
-Date: Wed, 28 Oct 2026 17:36:07 +0100
-Message-ID: <20261028170500.849881150@linuxfoundation.org>
+Subject: [PATCH 6.1 0072/1887] kasan: fix cache shrink race with CPU hotplug
+Date: Wed, 28 Oct 2026 17:36:08 +0100
+Message-ID: <20261028170500.872829734@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -73,166 +74,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zqiang <qiang1.zhang@intel.com>
+From: Hui Su <sh_def@163.com>
 
-[ Upstream commit be41d814c6c7bbf3ffa66faeefa01f6cea8e3c98 ]
+[ Upstream commit 8790303cbaac52a11dfed4aab261f8ea60682525 ]
 
-For kernels built with the following options and booting
+kasan_quarantine_remove_cache() first invokes per_cpu_remove_cache() on
+all online CPUs.  Each callback moves objects belonging to the cache from
+cpu_quarantine to the CPU's shrink_qlist, where they can later be freed
+from task context.
 
-CONFIG_SLUB=y
-CONFIG_DEBUG_LOCKDEP=y
-CONFIG_PROVE_LOCKING=y
-CONFIG_PROVE_RAW_LOCK_NESTING=y
+kmem_cache_destroy() invokes the quarantine removal path while holding
+cpus_read_lock(), but kmem_cache_shrink() does not.  The latter can
+therefore race with CPU offlining as follows:
 
-[    0.523115] [ BUG: Invalid wait context ]
-[    0.523315] 6.3.0-rc1-yocto-standard+ #739 Not tainted
-[    0.523649] -----------------------------
-[    0.523663] swapper/0/0 is trying to lock:
-[    0.523663] ffff888035611360 (&c->lock){....}-{3:3}, at: put_cpu_partial+0x2e/0x1e0
-[    0.523663] other info that might help us debug this:
-[    0.523663] context-{2:2}
-[    0.523663] no locks held by swapper/0/0.
-[    0.523663] stack backtrace:
-[    0.523663] CPU: 0 PID: 0 Comm: swapper/0 Not tainted 6.3.0-rc1-yocto-standard+ #739
-[    0.523663] Call Trace:
-[    0.523663]  <IRQ>
-[    0.523663]  dump_stack_lvl+0x64/0xb0
-[    0.523663]  dump_stack+0x10/0x20
-[    0.523663]  __lock_acquire+0x6c4/0x3c10
-[    0.523663]  lock_acquire+0x188/0x460
-[    0.523663]  put_cpu_partial+0x5a/0x1e0
-[    0.523663]  __slab_free+0x39a/0x520
-[    0.523663]  ___cache_free+0xa9/0xc0
-[    0.523663]  qlist_free_all+0x7a/0x160
-[    0.523663]  per_cpu_remove_cache+0x5c/0x70
-[    0.523663]  __flush_smp_call_function_queue+0xfc/0x330
-[    0.523663]  generic_smp_call_function_single_interrupt+0x13/0x20
-[    0.523663]  __sysvec_call_function+0x86/0x2e0
-[    0.523663]  sysvec_call_function+0x73/0x90
-[    0.523663]  </IRQ>
-[    0.523663]  <TASK>
-[    0.523663]  asm_sysvec_call_function+0x1b/0x20
-[    0.523663] RIP: 0010:default_idle+0x13/0x20
-[    0.523663] RSP: 0000:ffffffff83e07dc0 EFLAGS: 00000246
-[    0.523663] RAX: 0000000000000000 RBX: ffffffff83e1e200 RCX: ffffffff82a83293
-[    0.523663] RDX: 0000000000000000 RSI: 0000000000000000 RDI: ffffffff8119a6b1
-[    0.523663] RBP: ffffffff83e07dc8 R08: 0000000000000001 R09: ffffed1006ac0d66
-[    0.523663] R10: ffff888035606b2b R11: ffffed1006ac0d65 R12: 0000000000000000
-[    0.523663] R13: ffffffff83e1e200 R14: ffffffff84a7d980 R15: 0000000000000000
-[    0.523663]  default_idle_call+0x6c/0xa0
-[    0.523663]  do_idle+0x2e1/0x330
-[    0.523663]  cpu_startup_entry+0x20/0x30
-[    0.523663]  rest_init+0x152/0x240
-[    0.523663]  arch_call_rest_init+0x13/0x40
-[    0.523663]  start_kernel+0x331/0x470
-[    0.523663]  x86_64_start_reservations+0x18/0x40
-[    0.523663]  x86_64_start_kernel+0xbb/0x120
-[    0.523663]  secondary_startup_64_no_verify+0xe0/0xeb
-[    0.523663]  </TASK>
+  kmem_cache_shrink()             CPU hotplug
+  -------------------             -----------
+  on_each_cpu()
+    CPU1 moves objects to
+    CPU1's shrink_qlist
+  on_each_cpu() returns
+                                  CPU1 goes offline
+                                  kasan_cpu_offline()
+                                    drains cpu_quarantine
+                                    leaves shrink_qlist untouched
+  for_each_online_cpu()
+    skips CPU1
 
-The local_lock_irqsave() is invoked in put_cpu_partial() and happens in
-IPI context, due to the CONFIG_PROVE_RAW_LOCK_NESTING=y (the
-LD_WAIT_CONFIG not equal to LD_WAIT_SPIN), so acquire local_lock in IPI
-context will trigger above calltrace.
+The objects left on CPU1's shrink_qlist are not returned to the slab
+allocator.  This may prevent kmem_cache_shrink() from releasing slabs that
+would otherwise become empty.  If CPU1 remains offline, a later
+kmem_cache_destroy() also skips the list and can report that the cache
+still contains objects.
 
-This commit therefore moves qlist_free_all() from hard-irq context to task
-context.
+An intermittent occurrence was observed with a virtio-9p filesystem.  The
+mount and umount commands both returned 0, but the kernel logged the
+following during the userspace-triggered teardown:
 
-Link: https://lkml.kernel.org/r/20230327120019.1027640-1-qiang1.zhang@intel.com
-Signed-off-by: Zqiang <qiang1.zhang@intel.com>
-Acked-by: Marco Elver <elver@google.com>
+  [  2994.380134][  T111] BUG 9p-fcall-cache-1 (Tainted: G    B              ): Objects remaining on __kmem_cache_shutdown()
+  [  2994.381140][  T111] Object 0xff11000004361118 @offset=4376
+  [  2994.381607][  T111] Allocated in p9_fcall_init+0x201/0x400 age=19564 cpu=1 pid=104
+  [  2994.382591][  T111]  p9_fcall_init+0x201/0x400
+  [  2994.382810][  T111]  p9_tag_alloc+0x12f/0x700
+  [  2994.382982][  T111]  p9_client_prepare_req+0x102/0x3e0
+  [  2994.383165][  T111]  p9_client_rpc+0x1ab/0xa50
+  [  2994.383334][  T111]  p9_client_getattr_dotl+0xb0/0x1a0
+  [  2994.383515][  T111]  v9fs_vfs_getattr_dotl+0x115/0x360
+  [  2994.383719][  T111]  vfs_getattr_nosec+0x22c/0x3a0
+  [  2994.383910][  T111]  vfs_statx+0xd7/0x170
+  [  2994.384062][  T111]  vfs_fstatat+0x45/0x80
+  [  2994.384215][  T111]  __do_sys_newfstatat+0x84/0xe0
+  [  2994.384386][  T111]  do_syscall_64+0x115/0x6a0
+  [  2994.384566][  T111]  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+  [  2994.399720][  T111] WARNING: mm/slub.c:1244 at __kmem_cache_shutdown+0x363/0x500, CPU#0: busybox/111
+  [  2994.405655][  T111] Call Trace:
+  [  2994.406325][  T111]  kmem_cache_destroy+0x73/0x1b0
+  [  2994.406630][  T111]  p9_client_destroy+0x271/0x3c0
+  [  2994.407210][  T111]  v9fs_session_close+0x3c/0x260
+  [  2994.407409][  T111]  v9fs_kill_super+0x48/0x90
+  [  2994.407584][  T111]  deactivate_locked_super+0xa3/0x160
+  [  2994.407778][  T111]  cleanup_mnt+0x1dd/0x3e0
+
+Thus, a successful umount left objects in the 9p fcall cache and prevented
+the cache from being destroyed cleanly.
+
+Per-CPU shrink_qlist storage exists for every possible CPU, and each list
+is protected by its own raw spinlock.  Iterate over possible CPUs so that
+a list populated before its CPU went offline is drained as well.
+
+for_each_possible_cpu() can do more work than for_each_online_cpu(), but
+this change only affects CONFIG_KASAN_GENERIC kernels.  The extra work is
+limited to cache shrink and cache destruction paths and does not affect
+the normal allocation/free fast path.  It adds one raw-spinlock-protected
+scan of each possible CPU's shrink list.  These lists are normally empty;
+a non-empty list is traversed to remove objects belonging to the cache
+being shrunk or destroyed.
+
+Link: https://lore.kernel.org/20260808031459.3032812-1-sh_def@163.com
+Fixes: 07d067e4f2ce ("kasan: fix sleeping function called from invalid context on RT kernel")
+Signed-off-by: Hui Su <sh_def@163.com>
+Reviewed-by: Andrey Ryabinin <ryabinin.a.a@gmail.com>
 Cc: Alexander Potapenko <glider@google.com>
 Cc: Andrey Konovalov <andreyknvl@gmail.com>
-Cc: Andrey Ryabinin <ryabinin.a.a@gmail.com>
 Cc: Dmitry Vyukov <dvyukov@google.com>
+Cc: Vincenzo Frascino <vincenzo.frascino@arm.com>
+Cc: "Zhang, Qiang1" <qiang1.zhang@intel.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Stable-dep-of: 8790303cbaac ("kasan: fix cache shrink race with CPU hotplug")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/kasan/quarantine.c | 34 ++++++++--------------------------
- 1 file changed, 8 insertions(+), 26 deletions(-)
+ mm/kasan/quarantine.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
 diff --git a/mm/kasan/quarantine.c b/mm/kasan/quarantine.c
-index 75585077eb6dd..152dca73f3984 100644
+index 152dca73f3984..11bd18e851a02 100644
 --- a/mm/kasan/quarantine.c
 +++ b/mm/kasan/quarantine.c
-@@ -99,7 +99,6 @@ static unsigned long quarantine_size;
- static DEFINE_RAW_SPINLOCK(quarantine_lock);
- DEFINE_STATIC_SRCU(remove_cache_srcu);
- 
--#ifdef CONFIG_PREEMPT_RT
- struct cpu_shrink_qlist {
- 	raw_spinlock_t lock;
- 	struct qlist_head qlist;
-@@ -108,7 +107,6 @@ struct cpu_shrink_qlist {
- static DEFINE_PER_CPU(struct cpu_shrink_qlist, shrink_qlist) = {
- 	.lock = __RAW_SPIN_LOCK_UNLOCKED(shrink_qlist.lock),
- };
--#endif
- 
- /* Maximum size of the global queue. */
- static unsigned long quarantine_max_size;
-@@ -319,16 +317,6 @@ static void qlist_move_cache(struct qlist_head *from,
- 	}
- }
- 
--#ifndef CONFIG_PREEMPT_RT
--static void __per_cpu_remove_cache(struct qlist_head *q, void *arg)
--{
--	struct kmem_cache *cache = arg;
--	struct qlist_head to_free = QLIST_INIT;
--
--	qlist_move_cache(q, &to_free, cache);
--	qlist_free_all(&to_free, cache);
--}
--#else
- static void __per_cpu_remove_cache(struct qlist_head *q, void *arg)
- {
- 	struct kmem_cache *cache = arg;
-@@ -340,7 +328,6 @@ static void __per_cpu_remove_cache(struct qlist_head *q, void *arg)
- 	qlist_move_cache(q, &sq->qlist, cache);
- 	raw_spin_unlock_irqrestore(&sq->lock, flags);
- }
--#endif
- 
- static void per_cpu_remove_cache(void *arg)
- {
-@@ -362,6 +349,8 @@ void kasan_quarantine_remove_cache(struct kmem_cache *cache)
- {
- 	unsigned long flags, i;
- 	struct qlist_head to_free = QLIST_INIT;
-+	int cpu;
-+	struct cpu_shrink_qlist *sq;
- 
- 	/*
- 	 * Must be careful to not miss any objects that are being moved from
-@@ -372,20 +361,13 @@ void kasan_quarantine_remove_cache(struct kmem_cache *cache)
+@@ -361,7 +361,12 @@ void kasan_quarantine_remove_cache(struct kmem_cache *cache)
  	 */
  	on_each_cpu(per_cpu_remove_cache, cache, 1);
  
--#ifdef CONFIG_PREEMPT_RT
--	{
--		int cpu;
--		struct cpu_shrink_qlist *sq;
--
--		for_each_online_cpu(cpu) {
--			sq = per_cpu_ptr(&shrink_qlist, cpu);
--			raw_spin_lock_irqsave(&sq->lock, flags);
--			qlist_move_cache(&sq->qlist, &to_free, cache);
--			raw_spin_unlock_irqrestore(&sq->lock, flags);
--		}
--		qlist_free_all(&to_free, cache);
-+	for_each_online_cpu(cpu) {
-+		sq = per_cpu_ptr(&shrink_qlist, cpu);
-+		raw_spin_lock_irqsave(&sq->lock, flags);
-+		qlist_move_cache(&sq->qlist, &to_free, cache);
-+		raw_spin_unlock_irqrestore(&sq->lock, flags);
- 	}
--#endif
-+	qlist_free_all(&to_free, cache);
- 
- 	raw_spin_lock_irqsave(&quarantine_lock, flags);
- 	for (i = 0; i < QUARANTINE_BATCHES; i++) {
+-	for_each_online_cpu(cpu) {
++	/*
++	 * A CPU can go offline after on_each_cpu() returns, leaving cache
++	 * objects on that CPU's shrink list. Scan all possible CPUs to
++	 * drain those lists.
++	 */
++	for_each_possible_cpu(cpu) {
+ 		sq = per_cpu_ptr(&shrink_qlist, cpu);
+ 		raw_spin_lock_irqsave(&sq->lock, flags);
+ 		qlist_move_cache(&sq->qlist, &to_free, cache);
 -- 
 2.53.0
 
