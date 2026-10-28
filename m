@@ -1,57 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216814;
-	b=nNPoObBCQzD37e7x/HjBGQYXEW/XEWTcPd+txOw4ymjkrY00e28ipiLpTmwVOdi7Bkds
-	 o8lxgNLEhkXeLeouPico28FC8dK5F0nE3yMkzTjtmu/ifjMiCbLUZYaJH7iQVP0oTg20G
-	 bcIDGKA0fSMxTEUAe+mFZEIn37AJ5K14zSau8fFalg/6VEgqjDGkiIyxkKvneIVSMsWFF
-	 W21QdHDJlAyftoBHkFrRlzrCVspzleY3LGM5ZBj+4AsoOlfC+3PggczehSJsS5wdfRmMR
-	 1UZ1y++w9bzRmwppBi6eiaaXMH8XkWpTB4y4u9sy98LFveaxDI/v09VruZpT+oTOPjg==
+	t=1793216817;
+	b=itBMwHh0osB9LooYxQTGFt9zRGsYuv+FwOMFkxS9ohGsuhR/iwSnc+ZtZzKhLRpU6iMG
+	 915xQW/600nHDWNRY5IVxLMoJs70Hy5qYVYmnYQQYc8IBkXMfXdiC426olprJhSM6FPR4
+	 Jx29VhCpE0fxFD5fEOQBIcHbEvqh5pC17loR3C4JwdcxdkOOhu0FrOFkSX2fJFcGXpOXE
+	 wEQxYJaiaW3ph1cJX2zRBAwwXZo4CWQdePNrajn4tWYUHYMxag04RzFsObMBadVm5omxW
+	 g0EDw7kabeqkq/I1gW5E8xcdUIox0znDOCTjYicEyQ2xCC7FhTJWM+nvyN+43n5vz+g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216814;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216817;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=iuODM13/ggX6kCZ3SlkXXE8YHEDSkhX1jDArd2eQyWc=;
-	b=Y3TG9qI94ftjIPSGlXi3bLKd32MSiFKIXxIScTg6XdMO8KxPh/WBAE2zUUGuFGNI+fGX
-	 MQGbmKZ146pHPzSrIDANTba4kttSvjje/vtG0it4lQw29JnznAMt8Qq7DWn4sqBimW6tA
-	 2MhpwOBdgeufwlRQSmBLuxHeA8mUINS5YAKLbMFIeLD/uPUszbHOPRtQqEMITHBbFuggR
-	 tCQej1osljeK8NbnIWFx4Ym3jIz6gRAOmL0KJLl/HzT3+1vw1090W8oXYjtK3MKeWemMu
-	 vhH+xZVoJrRj5Ga/70zrshIT/BPUZH0NxhoeOE+7livlDqj3Fl48UejgEs5bhoT2l0Q==
+	bh=iuZdUQPQLmvPq3Mhve2N8Kf1MDpdNs+GYTKmDJCH/dE=;
+	b=NLIwl//DkhXNSLsbfNSRLqtpmOBX56WvwWlLnjuxaG5mZAp/T+3XpPXtz8Gpoa7hGCgv
+	 icOiJuTHfhdkb9MAiKgeoj59ASO4iZLQzARg06zwBGJ4tehV9yl9uWU4HukrTI54HQ9gu
+	 Dr7xjvwNf+injUz9zB4RvjVt78oAbTYj0Fz0INlV+8ljYm6qPri+OvPTTp7iWhBW2sKW9
+	 AgWTa1fKsserq0DlkR1kpd78QciuosdiWn4Hv2sLnW3xqDLrkx0LoFgx+KdUc+zofo3FX
+	 uKFqhdBmqi9LC5df3S1Tn+QGH7MEWyma3eSiKit5di/c0gMQwvGviMb7w+JnmDnDH0w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BPzqdCDC;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=trR7iT5O;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29939606A31A;
-	Wed, 28 Oct 2026 19:46:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 055F6606A31A;
+	Wed, 28 Oct 2026 19:46:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BPzqdCDC
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D5A41F01825;
-	Wed, 28 Oct 2026 19:46:53 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=trR7iT5O
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56B021F01825;
+	Wed, 28 Oct 2026 19:46:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216814;
-	bh=iuODM13/ggX6kCZ3SlkXXE8YHEDSkhX1jDArd2eQyWc=;
+	s=korg; t=1793216816;
+	bh=iuZdUQPQLmvPq3Mhve2N8Kf1MDpdNs+GYTKmDJCH/dE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BPzqdCDCNxcBvv5GhIbE75+e+TgmGt7z3H8G6CDwyF5xiiiEXW0e4aUMe5vsBLbAQ
-	 b1Bdpsd7dkoq4OgEqj9s1HeUS7f0BYZGTJE9laDSbyphD0VmSYYs96HnOJGYrnrKk0
-	 L6GrnU87YyYKtlE8Kp0UnjjcZa4himDWTrZ5HaUA=
+	b=trR7iT5OJ1fDAq5A/VfxHfFRIL1vL9ueIXVKfekJChTezd4dTNJRIZuCkujv2iq8f
+	 nPPA2mWXjk/LUqN1VScSAXPhT/R2IMVppm+GQhlZpnzXEMO2E+d+72ZmCH0wbHxH+N
+	 bm9zyscjHiaXhF4V3lvXcWcCy8iXmIzx+LvXbTqw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Yuan Tan <yuantan098@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Yuqi Xu <xuyuqiabc@gmail.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Sashiko <sashiko-dev@google.com>,
+	Nilesh Javali <njavali@marvell.com>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1686/1887] wifi: cfg80211: reject duplicate wiphy cipher suite entries
-Date: Wed, 28 Oct 2026 18:03:02 +0100
-Message-ID: <20261028170537.823913232@linuxfoundation.org>
+Subject: [PATCH 6.1 1687/1887] scsi: qla2xxx: Skip vport under deletion in report ID acquisition
+Date: Wed, 28 Oct 2026 18:03:03 +0100
+Message-ID: <20261028170537.846492482@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -73,77 +69,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuqi Xu <xuyuqiabc@gmail.com>
+From: Nilesh Javali <njavali@marvell.com>
 
-[ Upstream commit 7187d145d9042b037e4f10538f70cf95e380219f ]
+[ Upstream commit 23582731afa35031c94fadb71a4f3b4afd094649 ]
 
-Duplicate entries in wiphy->cipher_suites do not describe any
-additional capability, but cfg80211 currently accepts them and leaves
-individual consumers to deal with them.
+qla24xx_report_id_acquisition() format-1 handling walks ha->vp_list under
+vport_slock, takes a vref_count on the matching vport and calls
+qla_update_host_map() to register its port id.
 
-One such consumer is the WEXT compatibility code, which appends a WEP
-key length for each WEP cipher entry it sees. Repeated WEP entries can
-therefore overflow the fixed iw_range::encoding_size array returned by
-SIOCGIWRANGE.
+A vport teardown via qla24xx_vport_delete() sets VPORT_DELETE, then
+qla24xx_disable_vp() removes the vport from the host_map btree and zeroes
+vha->d_id (RESET_AL_PA). The vport is only unlinked from vp_list later,
+in qla24xx_deallocate_vp_id(), which clears vp_map[idx] (RESET_VP_IDX)
+but does not touch host_map. In the window in between, report ID
+acquisition can still find the vport on vp_list and call
+qla_update_host_map(); with d_id already zeroed it takes the
+btree_insert32() path and re-inserts the dying vport into host_map.
+Nothing cleans that entry afterwards, so once scsi_host_put() frees the
+vha a later host_map lookup dereferences freed memory.
 
-Reject duplicate cipher suite entries in wiphy_register() instead.
-This keeps the cipher suite invariant in one place and makes malformed
-wiphy descriptions fail early with -EINVAL, rather than relying on a
-single cfg80211 user to handle duplicates correctly.
+Skip a vport that has VPORT_DELETE set before taking the reference, so it
+is neither re-registered nor scheduled for DPC re-registration. This
+mirrors the existing guard in qla2x00_alert_all_vps().
 
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Co-developed-by: Yuan Tan <yuantan098@gmail.com>
-Signed-off-by: Yuan Tan <yuantan098@gmail.com>
-Suggested-by: Xin Liu <bird@lzu.edu.cn>
-Signed-off-by: Yuqi Xu <xuyuqiabc@gmail.com>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-Link: https://patch.msgid.link/20260413123000.1480661-1-n05ec@lzu.edu.cn
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: 41dc529a4602 ("qla2xxx: Improve RSCN handling in driver")
+Cc: stable@vger.kernel.org
+Reported-by: Sashiko <sashiko-dev@google.com>
+Signed-off-by: Nilesh Javali <njavali@marvell.com>
+Link: https://patch.msgid.link/20260730155838.2119230-22-njavali@marvell.com
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/core.c | 21 +++++++++++++++++++++
- 1 file changed, 21 insertions(+)
+ drivers/scsi/qla2xxx/qla_mbx.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/wireless/core.c b/net/wireless/core.c
-index 1cd214a743428..3179eb8899d65 100644
---- a/net/wireless/core.c
-+++ b/net/wireless/core.c
-@@ -693,6 +693,24 @@ static int wiphy_verify_combinations(struct wiphy *wiphy)
- 	return 0;
- }
- 
-+static bool wiphy_cipher_suites_valid(const struct wiphy *wiphy)
-+{
-+	int i, j;
-+
-+	if (wiphy->n_cipher_suites && !wiphy->cipher_suites)
-+		return false;
-+
-+	for (i = 0; i < wiphy->n_cipher_suites; i++) {
-+		for (j = 0; j < i; j++) {
-+			if (wiphy->cipher_suites[i] ==
-+			    wiphy->cipher_suites[j])
-+				return false;
-+		}
-+	}
-+
-+	return true;
-+}
-+
- int wiphy_register(struct wiphy *wiphy)
- {
- 	struct cfg80211_registered_device *rdev = wiphy_to_rdev(wiphy);
-@@ -824,6 +842,9 @@ int wiphy_register(struct wiphy *wiphy)
- 	if (res)
- 		return res;
- 
-+	if (!wiphy_cipher_suites_valid(wiphy))
-+		return -EINVAL;
-+
- 	/* sanity check supported bands/channels */
- 	for (band = 0; band < NUM_NL80211_BANDS; band++) {
- 		u16 types = 0;
+diff --git a/drivers/scsi/qla2xxx/qla_mbx.c b/drivers/scsi/qla2xxx/qla_mbx.c
+index 583585783893c..828c424abb3dd 100644
+--- a/drivers/scsi/qla2xxx/qla_mbx.c
++++ b/drivers/scsi/qla2xxx/qla_mbx.c
+@@ -4147,6 +4147,8 @@ qla24xx_report_id_acquisition(scsi_qla_host_t *vha,
+ 			spin_lock_irqsave(&ha->vport_slock, flags);
+ 			list_for_each_entry(vp, &ha->vp_list, list) {
+ 				if (rptid_entry->vp_idx == vp->vp_idx) {
++					if (test_bit(VPORT_DELETE, &vp->dpc_flags))
++						break;
+ 					found = 1;
+ 					atomic_inc(&vp->vref_count);
+ 					break;
 -- 
 2.53.0
 
