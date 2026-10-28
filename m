@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214533;
-	b=n8q4DgDFnApm8YSbxjhmEt42UFCwcgNcdVzY3LzTDAFRxCxiAa4RCE7lBPd5NnCxwdeR
-	 XFqlJfZXtHHwY8hA/cuV3qQhCa1BTqRzAnsLUKQj5MLJzBOXjUO0efM0OXFe5LvMXTvKp
-	 oQu/HHNAlT23IhR3AegGVzTLuN8/sTTbPyzlHk+SI8vHYXJoUNCZFC4FRHgr3TQo5uBxJ
-	 j5Am4jXlsQoMsZ2rTeUDpG/oa/kMUMoZ3xV3yG74LrubOsO0cFoS90nY9A6ht2AifSPcG
-	 ZlubTlQpjTbb87JcnRbxThwCmd1qrJm3K2XZfmEOrTHKpdsyQc25C59pCc1tdGcy68Q==
+	t=1793214535;
+	b=1KZQGQjMArqIZKW/90VCLF/3fdlEHCj34tCvChmISd8LJK4xY0VXuR2MnNM+aaBCpY2n
+	 ehTUzQfgIYFRPOMm47+p1ZwyfNjK/GaXfjK2wf/8QbsmQSIZr2OfYhCbP2fBu46B9qk+D
+	 8oTB5kzw46c1Skm2Iq27YwJeaeRzQ908b8jpsw+pJ7eYR/nNWbUDaLOyy5F3burg8jbKg
+	 luIw4wVd3p9cOZTiCfSwfsn28ghaZY3BnfODFTjaakXd00YU2un5bWujygTYrn8YyVB1h
+	 UDBSrF3fOmufH8UStBSN2jYQkt1eWQhRgm44XrijytHx1mKR1wBoRI4nJ7L2JQfGs9A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214533;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214535;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=xH41hfHfPjjK2ASV21Xnf3gV6fdtJwfGP7ioRIWyqe4=;
-	b=2eborRe1MGJgYIVHOjEWXYSwFe4cr7jAhfU518grByE+70FCbyZ2h9cIghCirp/uPgR3
-	 VSMYiqCK4N1LyJtaAqE8BeTAigzY609BcG7lf1mnbcpuoxUL3/idUi/zhaCR/eeNzrsy8
-	 v1G1F7xs0vmXnIzem63DO/V8fQt8rgVjil5gWOPIOe7BfNYTsH4LuPICyx8DXVeldGNMh
-	 gL3UG7e70hqn2HjunJc8yFG4HWNZm/2reNcbJ2+RBu77dkGuT9BsQdzHTkR6DciP4l+d/
-	 kTz1ZOLpA82vvWxhIkXu5sJqP+Bceox9eUslYcp2QHciUh6U/d+j+s6VueTJNRKwOXA==
+	bh=KKQH1TmHcqSQKa+XzgdftuDszSCRHgHJX1Q/hc/TiiQ=;
+	b=jXGAv+JuNFgt+43LM+FQOXEJ6mOUk4gBf4aQ+HqM3MgUngDsavGElLkvsCxbLiSt/hLL
+	 0H73EIUeRDT6lC0OTc5HG4JVTycntu8HvtuG9adk8JHKZhmlMNipnA2e0UzxMK/0rvnBg
+	 2cxtrDJwtOORsAZk8O8O+e59w/k4AsXxKTApHFW+W/xXvyf88EvmUoMMO1zqJDIJklBt/
+	 7mGrzNoywdHE74svJLl+bbOmjT4XtRtNmyMltk2QJB9Jg+ns8l7RsYZCf1T28pMI2/omt
+	 d/MtvmakvIc973uoIAFa9u/wXDwDn41dZ8J6KIupQoyw2MSDjs08GusN7aexypxmMFw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="1TbXyS/z";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fVzlZAuB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C06A5606BFB4;
-	Wed, 28 Oct 2026 19:08:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DE4C60A2613;
+	Wed, 28 Oct 2026 19:08:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1TbXyS/z
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D7EC1F01829;
-	Wed, 28 Oct 2026 19:08:51 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fVzlZAuB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECDAC1F01825;
+	Wed, 28 Oct 2026 19:08:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214532;
-	bh=xH41hfHfPjjK2ASV21Xnf3gV6fdtJwfGP7ioRIWyqe4=;
+	s=korg; t=1793214535;
+	bh=KKQH1TmHcqSQKa+XzgdftuDszSCRHgHJX1Q/hc/TiiQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1TbXyS/zwya14tut71IpxtWl41bwm5Cbp/5cXWjLuW/soy6zcWCx9hYrdzAmVLju6
-	 +7DLcQ4iJec4xrTMMQl+Iq9pyi6cLUPQSo/aKHZtQEDPP7gQPHvbWO8Sc4ftRCTopb
-	 wTw1mHZb1GR7nCFNXPyRtgcdq7lZoqDilzYuSvGA=
+	b=fVzlZAuBcFkarON1pcVMvJNnOZKJ3ekjnYnrjpI95FkN9XGjIqg9tkKAa5A/r96yp
+	 UdrU42xHuwMWtqoe6wNN+BnOy+hkQM0Ff2DbF5HjCnt79AdKGZpayW75DmQ1xcwspG
+	 LRI46+JT12sHxAxGPdqU6A4QCtuxa0lw8XC7k2rg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+87be6809ed9bf6d718e3@syzkaller.appspotmail.com,
-	David Howells <dhowells@redhat.com>,
-	Shaurya Rane <ssrane_b23@ee.vjti.ac.in>,
-	Steve French <stfrench@microsoft.com>,
+	Nitin Rawat <nitin.rawat@oss.qualcomm.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0891/1887] cifs: fix memory leak in smb3_fs_context_parse_param error path
-Date: Wed, 28 Oct 2026 17:49:47 +0100
-Message-ID: <20261028170519.694924777@linuxfoundation.org>
+Subject: [PATCH 6.1 0892/1887] scsi: ufs: ufs-qcom: Fix UFS OCP issue during UFS power down (PC=3)
+Date: Wed, 28 Oct 2026 17:49:48 +0100
+Message-ID: <20261028170519.717625619@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -70,62 +69,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shaurya Rane <ssrane_b23@ee.vjti.ac.in>
+From: Nitin Rawat <nitin.rawat@oss.qualcomm.com>
 
-[ Upstream commit 7e4d9120cfa413dd34f4f434befc5dbe6c38b2e5 ]
+[ Upstream commit 5127be409c6c3815c4a7d8f6d88043e44f9b9543 ]
 
-Add proper cleanup of ctx->source and fc->source to the
-cifs_parse_mount_err error handler. This ensures that memory allocated
-for the source strings is correctly freed on all error paths, matching
-the cleanup already performed in the success path by
-smb3_cleanup_fs_context_contents().
-Pointers are also set to NULL after freeing to prevent potential
-double-free issues.
+According to UFS specifications, the power-off sequence for a UFS device
+includes:
 
-This change fixes a memory leak originally detected by syzbot. The
-leak occurred when processing Opt_source mount options if an error
-happened after ctx->source and fc->source were successfully
-allocated but before the function completed.
+ - Sending an SSU command with Power_Condition=3 and await a response.
 
-The specific leak sequence was:
-1. ctx->source = smb3_fs_context_fullpath(ctx, '/') allocates memory
-2. fc->source = kstrdup(ctx->source, GFP_KERNEL) allocates more memory
-3. A subsequent error jumps to cifs_parse_mount_err
-4. The old error handler freed passwords but not the source strings,
-causing the memory to leak.
+ - Asserting RST_N low.
 
-This issue was not addressed by commit e8c73eb7db0a ("cifs: client:
-fix memory leak in smb3_fs_context_parse_param"), which only fixed
-leaks from repeated fsconfig() calls but not this error path.
+ - Turning off REF_CLK.
 
-Patch updated with minor change suggested by kernel test robot
+ - Turning off VCC.
 
-Reported-by: syzbot+87be6809ed9bf6d718e3@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=87be6809ed9bf6d718e3
-Fixes: 24e0a1eff9e2 ("cifs: switch to new mount api")
-Reviewed-by: David Howells <dhowells@redhat.com>
-Signed-off-by: Shaurya Rane <ssrane_b23@ee.vjti.ac.in>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+ - Turning off VCCQ/VCCQ2.
+
+As part of ufs shutdown, after the SSU command completion, asserting
+hardware reset (HWRST) triggers the device firmware to wake up and
+execute its reset routine. This routine initializes hardware blocks and
+takes a few milliseconds to complete. During this time, the ICCQ draws a
+large current.
+
+This large ICCQ current may cause issues for the regulator which is
+supplying power to UFS, because the turn off request from UFS driver to
+the regulator framework will be immediately followed by low power
+mode(LPM) request by regulator framework. This is done by framework
+because UFS which is the only client is requesting for disable. So if
+the rail is still in the process of shutting down while ICCQ exceeds LPM
+current thresholds, and LPM mode is activated in hardware during this
+state, it may trigger an overcurrent protection (OCP) fault in the
+regulator.
+
+To prevent this, a 10ms delay is added after asserting HWRST. This
+allows the reset operation to complete while power rails remain active
+and in high-power mode.
+
+Currently there is no way for Host to query whether the reset is
+completed or not and hence this the delay is based on experiments with
+Qualcomm UFS controllers across multiple UFS vendors.
+
+Signed-off-by: Nitin Rawat <nitin.rawat@oss.qualcomm.com>
+Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+Link: https://patch.msgid.link/20251012173828.9880-1-nitin.rawat@oss.qualcomm.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/fs_context.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/ufs/host/ufs-qcom.c | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/fs/smb/client/fs_context.c b/fs/smb/client/fs_context.c
-index abd4f8587fd0f..bd19aab1f3c6b 100644
---- a/fs/smb/client/fs_context.c
-+++ b/fs/smb/client/fs_context.c
-@@ -1511,6 +1511,10 @@ static int smb3_fs_context_parse_param(struct fs_context *fc,
-  cifs_parse_mount_err:
- 	kfree_sensitive(ctx->password);
- 	ctx->password = NULL;
-+	kfree(ctx->source);
-+	ctx->source = NULL;
-+	kfree(fc->source);
-+	fc->source = NULL;
- 	return -EINVAL;
- }
+diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
+index ecd5939f4c9a6..3d5d10612bfd7 100644
+--- a/drivers/ufs/host/ufs-qcom.c
++++ b/drivers/ufs/host/ufs-qcom.c
+@@ -590,7 +590,18 @@ static int ufs_qcom_suspend(struct ufs_hba *hba, enum ufs_pm_op pm_op,
  
+ 		/* reset the connected UFS device during power down */
+ 		ufs_qcom_device_reset_ctrl(hba, true);
+-
++		/*
++		 * After sending the SSU command, asserting the rst_n
++		 * line causes the device firmware to wake up and
++		 * execute its reset routine.
++		 *
++		 * During this process, the device may draw current
++		 * beyond the permissible limit for low-power mode (LPM).
++		 * A 10ms delay, based on experimental observations,
++		 * allows the UFS device to complete its hardware reset
++		 * before transitioning the power rail to LPM.
++		 */
++		usleep_range(10000, 11000);
+ 	} else if (!ufs_qcom_is_link_active(hba)) {
+ 		ufs_qcom_disable_lane_clks(host);
+ 	}
 -- 
 2.53.0
 
