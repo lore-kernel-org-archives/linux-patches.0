@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216110;
-	b=p3dXOl7X5iJ5hAUT6tUtyve5NszSY33/lZ0kKa7Ox/g2xJpIzBQjDMxE/g93UTa5+AC9
-	 82fsljDiwmYQp3cZDPev+zDBYtcmSup9P6sI45ifeYJmU6lbLbh0DHdfNWQ5rRqWmY7WP
-	 WPcX+dIh7305zGf//Xz9Rp6mzmr5R+NfuPjT30gXPZsN1865MRL1oH3slEt1h63i4VYh9
-	 dFjGYiD2eqTDBGyZkp0FBHD9W1Hay3BVexVW7Uk+AD3hNW7XX+L9GLGx8UKJqLyN2gJLq
-	 h+PwtQ794/C4QKNAr1HcN8eRoo7170D50x4H1Y3E7OV1eM/s4qtwiv1C2BnJDVxaysQ==
+	t=1793216113;
+	b=s7EbfC51kE+bsOaN2y5sk1ohbtvsq4oqMV4rZ8qCCxgIVAS5WcDM1mqqNq5tOBzcKCqj
+	 DEeeOS3EtnnRDFFONBQFZRRbOXw31QG2q4ZFJL5EKCauivJpimgoUyVJkXQfAkokU+nao
+	 lqCyw9Ov30qiTbYAFOoL6flLLNMORgPvNITWUtAiIwggsqHTZZoBonOw2u8sL6KqdwHjS
+	 s4RmFx5+427VSnCtxY5orVzRs4Kekb5mrMCYjBAGNhQ0LME+1jYdsNLfc3dZ4zfWgnvBS
+	 0xA38GqcCR9EvGBQebSjKVUsF/6u7MnwbVSp39wHNRHC+sRiOh1uqLuTEntBp9uigEw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216110;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216113;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=tRu/UxajtLaT0nkHHx2FA1Cv0YMmXpIFtnE8XcBCrQw=;
-	b=5CdKcfyvhmXrtsGH+8sbVUmyennRV2G5cACVTEGjJ6+kYgw9Grw0VenlWghQyRoJjNxL
-	 Z901habrOUt/x3OWWssanZG32MCjP+EC8G3Ch3B6szE1zAmHD4e67ggQ6O5aEnPDIhksW
-	 oQtLpDI6Bhc+sX0HGXiQsBh9FqsoJwnvGg6t5L6uiz/k4lvLoC3b4B4szPAMda4+DzocD
-	 +nXAAfv5ezNgr9hZ2/RF1B0ZegWdDM9w+f6l+g8rWQaLP51JnNVp72C3wjKefu/j2ZKD5
-	 +1lgd/NJ0Qxi3FORjV+BRgVTQWBX5IY45z0xxSlCCvy/qkj87i26LDxstGxFl5OUKmw==
+	bh=+Jbh28S+Vs2ShktuNSxSM9NdlnyfrbE3EFkNYTmMly8=;
+	b=sORk6BB79+3jcMjO+Wzspo0bUr/AIsuFu3ba3W7SpHe9E/laOnKpWcu6l8+cQBqPMO6N
+	 ug4CHRa4FvaNUzz9W4rzOlFo2w1bj/C6kNN3lj871y57z91O6Jkq4hZ7uAnQXu3sZuERA
+	 sgGgNbMAr8xjajBCztiA6SBX/VE5E8LjZqJIwnF2DxvVBFKJJ6tvOIRj//DEgpGaNDPAg
+	 z2cZFIOfIKZP5oNyNknyNuI9OJ4AscXPDFYbIAHDLtX2ggxOCusGNP03PHVyDjdW7ISKr
+	 T9szBQqjD6VkhSLHr9EDEoFPW89NXfsQPMV3rIQYe2Av0fPWDX9uszMbSvgQgtzV/EQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Cnlb+au5;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oqhNVV6p;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 124E9606A31A;
-	Wed, 28 Oct 2026 19:35:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3A43606A31E;
+	Wed, 28 Oct 2026 19:35:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Cnlb+au5
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55E4D1F01828;
-	Wed, 28 Oct 2026 19:35:09 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oqhNVV6p
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DAC81F01825;
+	Wed, 28 Oct 2026 19:35:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216109;
-	bh=tRu/UxajtLaT0nkHHx2FA1Cv0YMmXpIFtnE8XcBCrQw=;
+	s=korg; t=1793216112;
+	bh=+Jbh28S+Vs2ShktuNSxSM9NdlnyfrbE3EFkNYTmMly8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Cnlb+au5X7E1RDP0eM+Tu0PB9q1Az+4YBDN8r38hoKAsBS2coGTc+msnNRHd5NbxC
-	 bPHnxFED7QJcS8CChoCrLr0jytcVhIdK5j/j8aJAJ4o5+2wjByk4LRI7qRsF9THROp
-	 3dgzdhrRtk6lq14Oy09GiGm2xVjOa6gEK97if0xo=
+	b=oqhNVV6potLtrFatKfqEHuXFKhYcazadVv0AtgH+v2wnqoFGiCF/goAPC1Spx6aiw
+	 BE7FQFtX2V3rSeLT7IFL/NIkDK2T92cIiT9W1CjlTbJ31YmeE4jqVthGG6JHtDtatR
+	 oHXarnBVnnLecy7IvEAyTfKpqq0Rm3XfKvfiTPWo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhixu Liu <zhixu.liu@gmail.com>,
-	Zqiang <qiang.zhang1211@gmail.com>,
-	Neeraj Upadhyay <neeraj.upadhyay@kernel.org>,
+	syzbot+339e9dbe3a2ca419b85d@syzkaller.appspotmail.com,
+	Anand Jain <anand.jain@oracle.com>,
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1443/1887] rcu-tasks: Fix access non-existent percpu rtpcp variable in rcu_tasks_need_gpcb()
-Date: Wed, 28 Oct 2026 17:58:59 +0100
-Message-ID: <20261028170532.296357302@linuxfoundation.org>
+Subject: [PATCH 6.1 1444/1887] btrfs: avoid NULL pointer dereference if no valid extent tree
+Date: Wed, 28 Oct 2026 17:59:00 +0100
+Message-ID: <20261028170532.318529041@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,262 +70,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zqiang <qiang.zhang1211@gmail.com>
+From: Qu Wenruo <wqu@suse.com>
 
-[ Upstream commit fd70e9f1d85f5323096ad313ba73f5fe3d15ea41 ]
+[ Upstream commit 6aecd91a5c5b68939cf4169e32bc49f3cd2dd329 ]
 
-For kernels built with CONFIG_FORCE_NR_CPUS=y, the nr_cpu_ids is
-defined as NR_CPUS instead of the number of possible cpus, this
-will cause the following system panic:
+[BUG]
+Syzbot reported a crash with the following call trace:
 
-smpboot: Allowing 4 CPUs, 0 hotplug CPUs
-...
-setup_percpu: NR_CPUS:512 nr_cpumask_bits:512 nr_cpu_ids:512 nr_node_ids:1
-...
-BUG: unable to handle page fault for address: ffffffff9911c8c8
-Oops: 0000 [#1] PREEMPT SMP PTI
-CPU: 0 PID: 15 Comm: rcu_tasks_trace Tainted: G W
-6.6.21 #1 5dc7acf91a5e8e9ac9dcfc35bee0245691283ea6
-RIP: 0010:rcu_tasks_need_gpcb+0x25d/0x2c0
-RSP: 0018:ffffa371c00a3e60 EFLAGS: 00010082
-CR2: ffffffff9911c8c8 CR3: 000000040fa20005 CR4: 00000000001706f0
-Call Trace:
-<TASK>
-? __die+0x23/0x80
-? page_fault_oops+0xa4/0x180
-? exc_page_fault+0x152/0x180
-? asm_exc_page_fault+0x26/0x40
-? rcu_tasks_need_gpcb+0x25d/0x2c0
-? __pfx_rcu_tasks_kthread+0x40/0x40
-rcu_tasks_one_gp+0x69/0x180
-rcu_tasks_kthread+0x94/0xc0
-kthread+0xe8/0x140
-? __pfx_kthread+0x40/0x40
-ret_from_fork+0x34/0x80
-? __pfx_kthread+0x40/0x40
-ret_from_fork_asm+0x1b/0x80
-</TASK>
+  BTRFS info (device loop0): scrub: started on devid 1
+  BUG: kernel NULL pointer dereference, address: 0000000000000208
+  #PF: supervisor read access in kernel mode
+  #PF: error_code(0x0000) - not-present page
+  PGD 106e70067 P4D 106e70067 PUD 107143067 PMD 0
+  Oops: Oops: 0000 [#1] PREEMPT SMP NOPTI
+  CPU: 1 UID: 0 PID: 689 Comm: repro Kdump: loaded Tainted: G           O       6.13.0-rc4-custom+ #206
+  Tainted: [O]=OOT_MODULE
+  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS unknown 02/02/2022
+  RIP: 0010:find_first_extent_item+0x26/0x1f0 [btrfs]
+  Call Trace:
+   <TASK>
+   scrub_find_fill_first_stripe+0x13d/0x3b0 [btrfs]
+   scrub_simple_mirror+0x175/0x260 [btrfs]
+   scrub_stripe+0x5d4/0x6c0 [btrfs]
+   scrub_chunk+0xbb/0x170 [btrfs]
+   scrub_enumerate_chunks+0x2f4/0x5f0 [btrfs]
+   btrfs_scrub_dev+0x240/0x600 [btrfs]
+   btrfs_ioctl+0x1dc8/0x2fa0 [btrfs]
+   ? do_sys_openat2+0xa5/0xf0
+   __x64_sys_ioctl+0x97/0xc0
+   do_syscall_64+0x4f/0x120
+   entry_SYSCALL_64_after_hwframe+0x76/0x7e
+   </TASK>
 
-Considering that there may be holes in the CPU numbers, use the
-maximum possible cpu number, instead of nr_cpu_ids, for configuring
-enqueue and dequeue limits.
+[CAUSE]
+The reproducer is using a corrupted image where extent tree root is
+corrupted, thus forcing to use "rescue=all,ro" mount option to mount the
+image.
 
-[ neeraj.upadhyay: Fix htmldocs build error reported by Stephen Rothwell ]
+Then it triggered a scrub, but since scrub relies on extent tree to find
+where the data/metadata extents are, scrub_find_fill_first_stripe()
+relies on an non-empty extent root.
 
-Closes: https://lore.kernel.org/linux-input/CALMA0xaTSMN+p4xUXkzrtR5r6k7hgoswcaXx7baR_z9r5jjskw@mail.gmail.com/T/#u
-Reported-by: Zhixu Liu <zhixu.liu@gmail.com>
-Signed-off-by: Zqiang <qiang.zhang1211@gmail.com>
-Signed-off-by: Neeraj Upadhyay <neeraj.upadhyay@kernel.org>
+But unfortunately scrub_find_fill_first_stripe() doesn't really expect
+an NULL pointer for extent root, it use extent_root to grab fs_info and
+triggered a NULL pointer dereference.
+
+[FIX]
+Add an extra check for a valid extent root at the beginning of
+scrub_find_fill_first_stripe().
+
+The new error path is introduced by 42437a6386ff ("btrfs: introduce
+mount option rescue=ignorebadroots"), but that's pretty old, and later
+commit b979547513ff ("btrfs: scrub: introduce helper to find and fill
+sector info for a scrub_stripe") changed how we do scrub.
+
+So for kernels older than 6.6, the fix will need manual backport.
+
+Reported-by: syzbot+339e9dbe3a2ca419b85d@syzkaller.appspotmail.com
+Link: https://lore.kernel.org/linux-btrfs/67756935.050a0220.25abdd.0a12.GAE@google.com/
+Fixes: 42437a6386ff ("btrfs: introduce mount option rescue=ignorebadroots")
+Reviewed-by: Anand Jain <anand.jain@oracle.com>
+Signed-off-by: Qu Wenruo <wqu@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/rcu/tasks.h | 82 ++++++++++++++++++++++++++++++----------------
- 1 file changed, 54 insertions(+), 28 deletions(-)
+ fs/btrfs/scrub.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/kernel/rcu/tasks.h b/kernel/rcu/tasks.h
-index bb6b037ef30fa..a7c86baebce83 100644
---- a/kernel/rcu/tasks.h
-+++ b/kernel/rcu/tasks.h
-@@ -31,6 +31,7 @@ typedef void (*postgp_func_t)(struct rcu_tasks *rtp);
-  * @barrier_q_head: RCU callback for barrier operation.
-  * @rtp_blkd_tasks: List of tasks blocked as readers.
-  * @cpu: CPU number corresponding to this entry.
-+ * @index: Index of this CPU in rtpcp_array of the rcu_tasks structure.
-  * @rtpp: Pointer to the rcu_tasks structure.
-  */
- struct rcu_tasks_percpu {
-@@ -43,6 +44,7 @@ struct rcu_tasks_percpu {
- 	struct rcu_head barrier_q_head;
- 	struct list_head rtp_blkd_tasks;
- 	int cpu;
-+	int index;
- 	struct rcu_tasks *rtpp;
- };
+diff --git a/fs/btrfs/scrub.c b/fs/btrfs/scrub.c
+index 27d6f431b3dbb..98895adb99e33 100644
+--- a/fs/btrfs/scrub.c
++++ b/fs/btrfs/scrub.c
+@@ -3631,6 +3631,11 @@ static noinline_for_stack int scrub_stripe(struct scrub_ctx *sctx,
+ 	scrub_blocked_if_needed(fs_info);
  
-@@ -68,6 +70,7 @@ struct rcu_tasks_percpu {
-  * @postgp_func: This flavor's post-grace-period function (optional).
-  * @call_func: This flavor's call_rcu()-equivalent function.
-  * @rtpcpu: This flavor's rcu_tasks_percpu structure.
-+ * @rtpcp_array: Array of pointers to rcu_tasks_percpu structure of CPUs in cpu_possible_mask.
-  * @percpu_enqueue_shift: Shift down CPU ID this much when enqueuing callbacks.
-  * @percpu_enqueue_lim: Number of per-CPU callback queues in use for enqueuing.
-  * @percpu_dequeue_lim: Number of per-CPU callback queues in use for dequeuing.
-@@ -100,6 +103,7 @@ struct rcu_tasks {
- 	postgp_func_t postgp_func;
- 	call_rcu_func_t call_func;
- 	struct rcu_tasks_percpu __percpu *rtpcpu;
-+	struct rcu_tasks_percpu **rtpcp_array;
- 	int percpu_enqueue_shift;
- 	int percpu_enqueue_lim;
- 	int percpu_dequeue_lim;
-@@ -164,6 +168,8 @@ module_param(rcu_task_contend_lim, int, 0444);
- static int rcu_task_collapse_lim __read_mostly = 10;
- module_param(rcu_task_collapse_lim, int, 0444);
- 
-+static int rcu_task_cpu_ids;
-+
- /* RCU tasks grace-period state for debugging. */
- #define RTGS_INIT		 0
- #define RTGS_WAIT_WAIT_CBS	 1
-@@ -228,6 +234,13 @@ static void cblist_init_generic(struct rcu_tasks *rtp)
- 	unsigned long flags;
- 	int lim;
- 	int shift;
-+	int maxcpu;
-+	int index = 0;
-+
-+	if (!rtp->rtpcp_array) {
-+		rtp->rtpcp_array = kcalloc(num_possible_cpus(), sizeof(struct rcu_tasks_percpu *), GFP_ATOMIC);
-+		BUG_ON(!rtp->rtpcp_array);
+ 	root = btrfs_extent_root(fs_info, bg->start);
++	if (unlikely(!root)) {
++		btrfs_err(fs_info, "no valid extent root for scrub");
++		btrfs_free_path(path);
++		return -EUCLEAN;
 +	}
+ 	csum_root = btrfs_csum_root(fs_info, bg->start);
  
- 	raw_spin_lock_irqsave(&rtp->cbs_gbl_lock, flags);
- 	if (rcu_task_enqueue_lim < 0) {
-@@ -238,14 +251,6 @@ static void cblist_init_generic(struct rcu_tasks *rtp)
- 	}
- 	lim = rcu_task_enqueue_lim;
- 
--	if (lim > nr_cpu_ids)
--		lim = nr_cpu_ids;
--	shift = ilog2(nr_cpu_ids / lim);
--	if (((nr_cpu_ids - 1) >> shift) >= lim)
--		shift++;
--	WRITE_ONCE(rtp->percpu_enqueue_shift, shift);
--	WRITE_ONCE(rtp->percpu_dequeue_lim, lim);
--	smp_store_release(&rtp->percpu_enqueue_lim, lim);
- 	for_each_possible_cpu(cpu) {
- 		struct rcu_tasks_percpu *rtpcp = per_cpu_ptr(rtp->rtpcpu, cpu);
- 
-@@ -258,16 +263,31 @@ static void cblist_init_generic(struct rcu_tasks *rtp)
- 		INIT_WORK(&rtpcp->rtp_work, rcu_tasks_invoke_cbs_wq);
- 		rtpcp->cpu = cpu;
- 		rtpcp->rtpp = rtp;
-+		rtpcp->index = index;
-+		rtp->rtpcp_array[index] = rtpcp;
-+		index++;
- 		if (!rtpcp->rtp_blkd_tasks.next)
- 			INIT_LIST_HEAD(&rtpcp->rtp_blkd_tasks);
-+		maxcpu = cpu;
- 		raw_spin_unlock_rcu_node(rtpcp); // irqs remain disabled.
- 	}
-+
-+	rcu_task_cpu_ids = maxcpu + 1;
-+	if (lim > rcu_task_cpu_ids)
-+		lim = rcu_task_cpu_ids;
-+	shift = ilog2(rcu_task_cpu_ids / lim);
-+	if (((rcu_task_cpu_ids - 1) >> shift) >= lim)
-+		shift++;
-+	WRITE_ONCE(rtp->percpu_enqueue_shift, shift);
-+	WRITE_ONCE(rtp->percpu_dequeue_lim, lim);
-+	smp_store_release(&rtp->percpu_enqueue_lim, lim);
- 	raw_spin_unlock_irqrestore(&rtp->cbs_gbl_lock, flags);
- 
- 	if (rcu_task_cb_adjust)
- 		pr_info("%s: Setting adjustable number of callback queues.\n", __func__);
- 
--	pr_info("%s: Setting shift to %d and lim to %d.\n", __func__, data_race(rtp->percpu_enqueue_shift), data_race(rtp->percpu_enqueue_lim));
-+	pr_info("%s: Setting shift to %d and lim to %d rcu_task_cpu_ids=%d.\n", __func__,
-+		data_race(rtp->percpu_enqueue_shift), data_race(rtp->percpu_enqueue_lim), rcu_task_cpu_ids);
- }
- 
- // IRQ-work handler that does deferred wakeup for call_rcu_tasks_generic().
-@@ -307,7 +327,7 @@ static void call_rcu_tasks_generic(struct rcu_head *rhp, rcu_callback_t func,
- 			rtpcp->rtp_n_lock_retries = 0;
- 		}
- 		if (rcu_task_cb_adjust && ++rtpcp->rtp_n_lock_retries > rcu_task_contend_lim &&
--		    READ_ONCE(rtp->percpu_enqueue_lim) != nr_cpu_ids)
-+		    READ_ONCE(rtp->percpu_enqueue_lim) != rcu_task_cpu_ids)
- 			needadjust = true;  // Defer adjustment to avoid deadlock.
- 	}
- 	if (!rcu_segcblist_is_enabled(&rtpcp->cblist)) {
-@@ -320,10 +340,10 @@ static void call_rcu_tasks_generic(struct rcu_head *rhp, rcu_callback_t func,
- 	raw_spin_unlock_irqrestore_rcu_node(rtpcp, flags);
- 	if (unlikely(needadjust)) {
- 		raw_spin_lock_irqsave(&rtp->cbs_gbl_lock, flags);
--		if (rtp->percpu_enqueue_lim != nr_cpu_ids) {
-+		if (rtp->percpu_enqueue_lim != rcu_task_cpu_ids) {
- 			WRITE_ONCE(rtp->percpu_enqueue_shift, 0);
--			WRITE_ONCE(rtp->percpu_dequeue_lim, nr_cpu_ids);
--			smp_store_release(&rtp->percpu_enqueue_lim, nr_cpu_ids);
-+			WRITE_ONCE(rtp->percpu_dequeue_lim, rcu_task_cpu_ids);
-+			smp_store_release(&rtp->percpu_enqueue_lim, rcu_task_cpu_ids);
- 			pr_info("Switching %s to per-CPU callback queuing.\n", rtp->name);
- 		}
- 		raw_spin_unlock_irqrestore(&rtp->cbs_gbl_lock, flags);
-@@ -396,6 +416,8 @@ static int rcu_tasks_need_gpcb(struct rcu_tasks *rtp)
- 	for (cpu = 0; cpu < smp_load_acquire(&rtp->percpu_dequeue_lim); cpu++) {
- 		struct rcu_tasks_percpu *rtpcp = per_cpu_ptr(rtp->rtpcpu, cpu);
- 
-+		if (!cpu_possible(cpu))
-+			continue;
- 		/* Advance and accelerate any new callbacks. */
- 		if (!rcu_segcblist_n_cbs(&rtpcp->cblist))
- 			continue;
-@@ -426,7 +448,7 @@ static int rcu_tasks_need_gpcb(struct rcu_tasks *rtp)
- 	if (rcu_task_cb_adjust && ncbs <= rcu_task_collapse_lim) {
- 		raw_spin_lock_irqsave(&rtp->cbs_gbl_lock, flags);
- 		if (rtp->percpu_enqueue_lim > 1) {
--			WRITE_ONCE(rtp->percpu_enqueue_shift, order_base_2(nr_cpu_ids));
-+			WRITE_ONCE(rtp->percpu_enqueue_shift, order_base_2(rcu_task_cpu_ids));
- 			smp_store_release(&rtp->percpu_enqueue_lim, 1);
- 			rtp->percpu_dequeue_gpseq = get_state_synchronize_rcu();
- 			gpdone = false;
-@@ -441,7 +463,9 @@ static int rcu_tasks_need_gpcb(struct rcu_tasks *rtp)
- 			pr_info("Completing switch %s to CPU-0 callback queuing.\n", rtp->name);
- 		}
- 		if (rtp->percpu_dequeue_lim == 1) {
--			for (cpu = rtp->percpu_dequeue_lim; cpu < nr_cpu_ids; cpu++) {
-+			for (cpu = rtp->percpu_dequeue_lim; cpu < rcu_task_cpu_ids; cpu++) {
-+				if (!cpu_possible(cpu))
-+					continue;
- 				struct rcu_tasks_percpu *rtpcp = per_cpu_ptr(rtp->rtpcpu, cpu);
- 
- 				WARN_ON_ONCE(rcu_segcblist_n_cbs(&rtpcp->cblist));
-@@ -456,30 +480,32 @@ static int rcu_tasks_need_gpcb(struct rcu_tasks *rtp)
- // Advance callbacks and invoke any that are ready.
- static void rcu_tasks_invoke_cbs(struct rcu_tasks *rtp, struct rcu_tasks_percpu *rtpcp)
- {
--	int cpu;
--	int cpunext;
- 	int cpuwq;
- 	unsigned long flags;
- 	int len;
-+	int index;
- 	struct rcu_head *rhp;
- 	struct rcu_cblist rcl = RCU_CBLIST_INITIALIZER(rcl);
- 	struct rcu_tasks_percpu *rtpcp_next;
- 
--	cpu = rtpcp->cpu;
--	cpunext = cpu * 2 + 1;
--	if (cpunext < smp_load_acquire(&rtp->percpu_dequeue_lim)) {
--		rtpcp_next = per_cpu_ptr(rtp->rtpcpu, cpunext);
--		cpuwq = rcu_cpu_beenfullyonline(cpunext) ? cpunext : WORK_CPU_UNBOUND;
--		queue_work_on(cpuwq, system_wq, &rtpcp_next->rtp_work);
--		cpunext++;
--		if (cpunext < smp_load_acquire(&rtp->percpu_dequeue_lim)) {
--			rtpcp_next = per_cpu_ptr(rtp->rtpcpu, cpunext);
--			cpuwq = rcu_cpu_beenfullyonline(cpunext) ? cpunext : WORK_CPU_UNBOUND;
-+	index = rtpcp->index * 2 + 1;
-+	if (index < num_possible_cpus()) {
-+		rtpcp_next = rtp->rtpcp_array[index];
-+		if (rtpcp_next->cpu < smp_load_acquire(&rtp->percpu_dequeue_lim)) {
-+			cpuwq = rcu_cpu_beenfullyonline(rtpcp_next->cpu) ? rtpcp_next->cpu : WORK_CPU_UNBOUND;
- 			queue_work_on(cpuwq, system_wq, &rtpcp_next->rtp_work);
-+			index++;
-+			if (index < num_possible_cpus()) {
-+				rtpcp_next = rtp->rtpcp_array[index];
-+				if (rtpcp_next->cpu < smp_load_acquire(&rtp->percpu_dequeue_lim)) {
-+					cpuwq = rcu_cpu_beenfullyonline(rtpcp_next->cpu) ? rtpcp_next->cpu : WORK_CPU_UNBOUND;
-+					queue_work_on(cpuwq, system_wq, &rtpcp_next->rtp_work);
-+				}
-+			}
- 		}
- 	}
- 
--	if (rcu_segcblist_empty(&rtpcp->cblist) || !cpu_possible(cpu))
-+	if (rcu_segcblist_empty(&rtpcp->cblist))
- 		return;
- 	raw_spin_lock_irqsave_rcu_node(rtpcp, flags);
- 	rcu_segcblist_advance(&rtpcp->cblist, rcu_seq_current(&rtp->tasks_gp_seq));
+ 	/*
 -- 
 2.53.0
 
