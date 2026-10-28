@@ -1,55 +1,59 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213898;
-	b=Werp4TPcQG/c6i1e9OzVtjwti2Ha4WKwz9NC1pbo/VOEcU+ZhuFfMEsQe01k68H2CPAI
-	 BAhmVK2LrVRqo4J0wx1ATkJ7xOVX02pPQS7b5NoVFYqe+QdO+06B0w1XxG/boz1o90WkA
-	 +sQAjQW/CmgAXvzlhO4WIiEclL8EHEepURKbv+JW+6anKExD44RP9wANmeV/Pjyq/a/s0
-	 G9zaJz1e46SwrUFCDUcU1dLPjEz5L/9HV9jPa3J6md/SHbB79C+0XGr9cqdDD4n95R0P4
-	 ikDqe79sfAFi0J6XotCF2QNxdg+rrHuXuOrDL4rQ7w63sp2Lo941xlkwv8e/OKBu+7Q==
+	t=1793213900;
+	b=pp9TNEjkLNiBG++sQob0vxnC7vmjYeLIYNt3vuG6d6t14NpfgLRI2+cTS68CWck9GQi9
+	 Lw8vmbbp9WJVoPTkPrWE9SftIsL0htCXN/k826oZ7sA8Xpk2zaip69s/RGhHVrmU7ptri
+	 Td6EZFt3pMqqQPj1kCYoLYshkd4YMNGFk71vz8gggMNuEPg9XDDzfzRzzn2Ui+ObGQkym
+	 lJxdQfs099TJgYdmqWUa+hJo/o7NJBOURrROtvtSbOL9dEHn6q08JjVCmgSrkduWqgC+V
+	 ij7NXuKNeDGc99bcx66MlRNIEHZ/vyLCQUlQ6w3vAZm/ot3f9fCEQullN/arddc2ZRQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213898;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213900;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=VHoPE7w6b+ANKi3YrBpfC9QsGEiHzxuyfB6NejOxRMs=;
-	b=Yp4UWQfQhjR251DzpSQI2sanLwlAlCd69WVoBr9GoCsRrwwZ3kYkyldVWyjCL2oDAOhz
-	 cD1rqDcnFxk9C5UNsjBvyhG8ikUgH3Jdm8kWZTm/sBnPaTBY2QRNqvp/1E0SEhvsJiv9c
-	 6dzgso2nUpkLsNk6Jh5OxYKiBfokrjd2GB8atq3A9BD+Gh+CKH9Df9SCW6rkmPG3XA4BK
-	 ANh1jucOUE9cT5yGltCRsDLUccwRD0u03EsvjPVb0cAjDRP1yc/Bce0/filEBUxnJuIR/
-	 7oW18X71d3Ct1qzP9NedrOSVTmJ/NGOfWPIlg1cQOlGR2IOfTzZZjLW38KNeUuIivaA==
+	bh=BB09DR7sDoN3HGiI49Y1ZDpCwM2SzN4p0U7QnpLo0dk=;
+	b=cTOaVLlq4kpNugS9TXgKEExDdTSvJBE3VsiYLTfMdty68w7T1fpCOtIKsUABmJmYgNLt
+	 s3j9ImJdLKpbfuBnbVzC8Tny4E+Az6ZAaLcerOGXoa5z31l6k/oiZ1FA7/AbBOb2u+4Gf
+	 FWnXbM6rMjaSd3gBGWPDJ66zKWWxl5yZmtL2HB4Y0pJt84Uooj4B2e1IA99bi6abtNOxK
+	 kY2Mv5tfsbOX0ASA1IstoG0/MHolikQEtHmbRBv+tR3PdyYVPiIJqgtypVAMHoCcC/jRe
+	 97SNQ7LqeKXmIUninpwXYp5v669e9u+kM9ubzHkjyfrbe2p2VONDzlbmAfbsuJoPDJg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VRRUcN3m;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=esYe8hB4;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD383606A31A;
-	Wed, 28 Oct 2026 18:58:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71CA9606A31D;
+	Wed, 28 Oct 2026 18:58:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VRRUcN3m
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31FB41F01825;
-	Wed, 28 Oct 2026 18:58:17 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=esYe8hB4
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9BC71F01825;
+	Wed, 28 Oct 2026 18:58:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213897;
-	bh=VHoPE7w6b+ANKi3YrBpfC9QsGEiHzxuyfB6NejOxRMs=;
+	s=korg; t=1793213900;
+	bh=BB09DR7sDoN3HGiI49Y1ZDpCwM2SzN4p0U7QnpLo0dk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VRRUcN3mOoKxwirTZDFK9QVVM32eUaovtYPsUYa+pXMTLeMn98LndAqmGmKe7Vzhn
-	 IozvlZ6pxx5QZIiOqFBXZZw1Yzh3wzePrK0ymQOiACWwbrxkX+UxU35Ch0E1pfIm/W
-	 VA0OwmszC4NENOkv05DgogC1XPcptaHlKWGq629o=
+	b=esYe8hB424NE0nVAMdSYHhWk7uv4ypHnVwqPJD6NBSioRgZZ456Yz2EGzN5ulYkMM
+	 npj8OslYJ2vzzrfoN2XC9cBWHDaFkj2VjIRV0pw83dlmwkruKKpde4IdFyyF4LqP62
+	 qZ8/mISV2E8u6EGdZyA0U8F4ccAl77GysUequEsc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Hung <alex.hung@amd.com>,
-	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
 	Tom Chung <chiahsuan.chung@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
+	Roman Li <roman.li@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Harry Wentland <harry.wentland@amd.com>,
+	Hamza Mahfooz <hamza.mahfooz@amd.com>,
+	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0666/1887] drm/amd/display: Check null pointer before try to access it
-Date: Wed, 28 Oct 2026 17:46:02 +0100
-Message-ID: <20261028170514.568509946@linuxfoundation.org>
+Subject: [PATCH 6.1 0667/1887] drm/amd/display: Add null check for pipe_ctx->plane_state in dcn20_program_pipe
+Date: Wed, 28 Oct 2026 17:46:03 +0100
+Message-ID: <20261028170514.591304328@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -71,47 +75,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
+From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
 
-[ Upstream commit 1b686053c06ffb9f4524b288110cf2a831ff7a25 ]
+[ Upstream commit 8e4ed3cf1642df0c4456443d865cff61a9598aa8 ]
 
-[why & how]
-Change the order of the pipe_ctx->plane_state check to ensure that
-plane_state is not null before accessing it.
+This commit addresses a null pointer dereference issue in the
+`dcn20_program_pipe` function. The issue could occur when
+`pipe_ctx->plane_state` is null.
 
-Reviewed-by: Alex Hung <alex.hung@amd.com>
-Signed-off-by: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
-Signed-off-by: Tom Chung <chiahsuan.chung@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+The fix adds a check to ensure `pipe_ctx->plane_state` is not null
+before accessing. This prevents a null pointer dereference.
+
+Reported by smatch:
+drivers/gpu/drm/amd/amdgpu/../display/dc/hwss/dcn20/dcn20_hwseq.c:1925 dcn20_program_pipe() error: we previously assumed 'pipe_ctx->plane_state' could be null (see line 1877)
+
+Cc: Tom Chung <chiahsuan.chung@amd.com>
+Cc: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
+Cc: Roman Li <roman.li@amd.com>
+Cc: Alex Hung <alex.hung@amd.com>
+Cc: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Cc: Harry Wentland <harry.wentland@amd.com>
+Cc: Hamza Mahfooz <hamza.mahfooz@amd.com>
+Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+Reviewed-by: Tom Chung <chiahsuan.chung@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c b/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c
-index d252d10c81347..d1f49232efa87 100644
+index d1f49232efa87..d0422e1c14fab 100644
 --- a/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c
 +++ b/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c
-@@ -1696,13 +1696,13 @@ static void dcn20_program_pipe(
- 	if (pipe_ctx->update_flags.raw || pipe_ctx->plane_state->update_flags.raw || pipe_ctx->stream->update_flags.raw)
+@@ -1693,7 +1693,9 @@ static void dcn20_program_pipe(
+ 		dc->res_pool->hubbub->funcs->program_det_size(
+ 			dc->res_pool->hubbub, pipe_ctx->plane_res.hubp->inst, pipe_ctx->det_buffer_size_kb);
+ 
+-	if (pipe_ctx->update_flags.raw || pipe_ctx->plane_state->update_flags.raw || pipe_ctx->stream->update_flags.raw)
++	if (pipe_ctx->update_flags.raw ||
++	    (pipe_ctx->plane_state && pipe_ctx->plane_state->update_flags.raw) ||
++	    pipe_ctx->stream->update_flags.raw)
  		dcn20_update_dchubp_dpp(dc, pipe_ctx, context);
  
--	if (pipe_ctx->update_flags.bits.enable
--			|| pipe_ctx->plane_state->update_flags.bits.hdr_mult)
-+	if ((pipe_ctx->plane_state && pipe_ctx->plane_state->update_flags.bits.hdr_mult) ||
-+	    pipe_ctx->update_flags.bits.enable)
- 		hws->funcs.set_hdr_multiplier(pipe_ctx);
- 
--	if (pipe_ctx->update_flags.bits.enable ||
--			pipe_ctx->plane_state->update_flags.bits.in_transfer_func_change ||
--			pipe_ctx->plane_state->update_flags.bits.gamma_change)
-+	if ((pipe_ctx->plane_state && pipe_ctx->plane_state->update_flags.bits.in_transfer_func_change) ||
-+	    (pipe_ctx->plane_state && pipe_ctx->plane_state->update_flags.bits.gamma_change) ||
-+	    pipe_ctx->update_flags.bits.enable)
- 		hws->funcs.set_input_transfer_func(dc, pipe_ctx, pipe_ctx->plane_state);
- 
- 	/* dcn10_translate_regamma_to_hw_format takes 750us to finish
+ 	if ((pipe_ctx->plane_state && pipe_ctx->plane_state->update_flags.bits.hdr_mult) ||
 -- 
 2.53.0
 
