@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793212249;
-	b=lTuN1l3ar3fHy9RHlNw5tRbwqcsw/zQuEe5vz6kKOZ9VdfGVCd1yWM/xL79ACuZY7Ecc
-	 S/Q9ndlSkKFKL+dqxN7jJogmbi3ewYF7orJfijdn7dxSpKbUvKDw9S+/cdDISrPAglC5B
-	 nVjHujm4W+wHrzLj9KF6EztkTLOUIQhbSbGVstAn/sIkG6ezDuKyf4nZfI7RZVQ4lfe/W
-	 eS5vM3W8/fKBnzHDGyhmMjXLMrfl4tVb1uH8olTYUurUmTDr/zx3muyar8/crKMvbaM7c
-	 ItEiXk2ObDXgsuIGde+5yjBzcnl1P0ppFkbqThjHHaspg4TYbxR1Ts/GUFYfDIyShmA==
+	t=1793212252;
+	b=YvlE9HMJOoqka7FCe7nf/Jv44KE/9+3pfdMg+GD9yh0QcQhKxlcCYYkGfxIrrRMql4kg
+	 bFPfIseRc3okKpjJzAzBLME4NoRDfv6trRJuO2EV5QtFogT1Iqod5d/gEMmlMaldWY0I1
+	 McD5G0nkFkeaFsOW3M4X6jDInhNHMfjJPTUzniDefG7HZd8EEwTy+49stN5h1uPLXkyBW
+	 uUs1DtGrTnG4X9xgqeuY9cNNEW6X6wpATvnrup9Lb19FcCCCkZbY5nPkYKJZr1TYbfGvp
+	 Vh6QiYIKd8bBDk/eOe9MoCQ3YonYW+Imbj37lLhz5P+ry3yq4pzE6wLOn+pOcwqJVUw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793212249;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793212252;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=OLfOoQfGw2tlm7cnGxkT1qnc/Wf/ae7S8tkchbWeTqA=;
-	b=2M2qsdWWSy3c/T623mu4EexQnwdi5nwF+hy864GK0/OZq0nnEyKGW2oQBHkUx0b4G6NQ
-	 AelHs36799NNZ8g+TUhjzsmsvasE99PATicmOWQUVBINpOZFI3JPvO/dxiWfMJsn6Vqwo
-	 GPN6+q50mv5RcWTKMdcjBdysRsthFg9a7eCd20ygcCZ6X6fV0sDTAs5nOElssLzIURZNg
-	 ooz2/s2WiHvJ6wbUQQ/6sWUq7MaVoe/mS9a+qQY95/Dqn/AcVcSz//02SBOjX3GRaZxuG
-	 /eB4wphLFquarmkz6t7cL9nxBaAh8TodHVu/PXuC5bKWZDYUjYnezvFYfPy/l/htTWw==
+	bh=bCGSHupccDVL7zf/SivVwqwHHDXHegHghmkkyb3dWaA=;
+	b=GP5/eZu2u728snyEp7/wnNnLiZgd6JZxJzcrlMfO2B/71pDz3Qhv2SMCkZuQNeyjMCQK
+	 glGAZDZ7i89I29/R4p9Kt5mvU5KEqfsm8BjfCVDecJtRAd7DgaqQi8Jxrc9s52+HGRzoO
+	 sfQiJcu0gfWkVlXBgxcZljBCIWLBE5V0IzCGtZqLdv53lmp7dgfhh5Kns3o1LWjU18qwZ
+	 FGH0pxIpL03x0wKY7pA3Od0dV3YVc0Wlt5RiQ6SzGZd592Ky1QvsRjhHgG4f799mUS4WN
+	 Nxcjt9mBFlIXicV+t+cTTv8/ucR8V4G8lG6BDU9X55M3OGJ6XAYEN/ot438q1HLgisA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vULIYHUu;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jx+EvZBt;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06BCD606A327;
-	Wed, 28 Oct 2026 18:30:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D15EB606A32D;
+	Wed, 28 Oct 2026 18:30:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vULIYHUu
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 565071F01828;
-	Wed, 28 Oct 2026 18:30:48 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jx+EvZBt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30FC21F031E1;
+	Wed, 28 Oct 2026 18:30:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793212248;
-	bh=OLfOoQfGw2tlm7cnGxkT1qnc/Wf/ae7S8tkchbWeTqA=;
+	s=korg; t=1793212251;
+	bh=bCGSHupccDVL7zf/SivVwqwHHDXHegHghmkkyb3dWaA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vULIYHUu/oXHwS57khS57boQNMvXi1PWZ/p1SP8Jqd73diwLit38vYaivulkCTydT
-	 5XXGXXJA9BEt4LSNVbrCyMc+CcuhpgRPFUnGgRv1wru2aJSyEChdUpHNkhcA39fC2j
-	 Iwwoa7WSgP0evD76VOfsIGJQaj2Mb2ptsogdqHb8=
+	b=jx+EvZBt5Z6O5UmJ8lbSfB4iObXrBvbaMT/6N3A+P9wdQq51BVtPp3KOoUUT73Eq3
+	 +T0uq1PhViPufyOYd8JAVsm5bdb2nQty7URa85tLbDD2LzBNqtWTH39RVh906ra/Ed
+	 bzuYW+tE027hQzTLHPiBwtyJPg+mIFbmZHJypD5M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fan Wu <fanwu01@zju.edu.cn>,
-	Ulf Hansson <ulfh@kernel.org>,
+	Longlong Xia <xialonglong@kylinos.cn>,
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
+	Jens Axboe <axboe@kernel.dk>,
+	Minchan Kim <minchan@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0090/1887] mmc: via-sdmmc: cancel card-detect work on remove
-Date: Wed, 28 Oct 2026 17:36:26 +0100
-Message-ID: <20261028170501.283461825@linuxfoundation.org>
+Subject: [PATCH 6.1 0064/1887] zram: fix out-of-bounds access in read_block_state()
+Date: Wed, 28 Oct 2026 17:36:00 +0100
+Message-ID: <20261028170500.687037761@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,50 +71,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: Longlong Xia <xialonglong@kylinos.cn>
 
-[ Upstream commit 57e5d877f898d5e5c9d672a77bb6bdd24f0d9bf5 ]
+[ Upstream commit 391f057f44a51cc9418da5cba78b014324174264 ]
 
-Disabling the device interrupt and freeing the IRQ prevents new card-detect
-work from being queued, but carddet_work already queued by the handler can
-still run after via_sd_remove() returns. via_sdc_card_detect() recovers the
-host through container_of() and dereferences its MMIO base; once remove()
-returns the host can be freed, so that work would touch freed memory.
+read_block_state() calculates nr_pages before taking dev_lock.  If the
+device is reset and reinitialized with a smaller disksize before lock
+acquisition, nr_pages still describes the old table.  The subsequent loop
+can then call slot_lock() past the end of the newly allocated table.
 
-Cancel carddet_work after freeing the IRQ and before cancelling
-finish_bh_work, which the card-detect handler can also queue. carddet_work
-can re-enable the interrupt through via_reset_pcictrl(); mask it again
-afterwards.
+Read disksize after acquiring dev_lock and checking that the device is
+initialized.  The read lock then keeps the table and its bound stable for
+the duration of the scan.
 
-This issue was found by an in-house static analysis tool and confirmed by
-manual code review.
-
-Fixes: f0bf7f61b840 ("mmc: Add new via-sdmmc host controller driver")
-Cc: stable@vger.kernel.org
-Assisted-by: Codex:gpt-5.6
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
-Signed-off-by: Ulf Hansson <ulfh@kernel.org>
-[ adjusted context to retain del_timer_sync() instead of timer_delete_sync(). ]
+Link: https://lore.kernel.org/20260804065919.3970386-3-xialonglong2025@163.com
+Fixes: c0265342bff4 ("zram: introduce zram memory tracking")
+Assisted-by: Codex:gpt-5.6-sol
+Signed-off-by: Longlong Xia <xialonglong@kylinos.cn>
+Reviewed-by: Sergey Senozhatsky <senozhatsky@chromium.org>
+Cc: Jens Axboe <axboe@kernel.dk>
+Cc: Minchan Kim <minchan@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/via-sdmmc.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/block/zram/zram_drv.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/mmc/host/via-sdmmc.c b/drivers/mmc/host/via-sdmmc.c
-index 5bf508b6db0e3..3ae8f005f8fe0 100644
---- a/drivers/mmc/host/via-sdmmc.c
-+++ b/drivers/mmc/host/via-sdmmc.c
-@@ -1208,6 +1208,10 @@ static void via_sd_remove(struct pci_dev *pcidev)
+diff --git a/drivers/block/zram/zram_drv.c b/drivers/block/zram/zram_drv.c
+index de5533fadc675..740ca88bb6733 100644
+--- a/drivers/block/zram/zram_drv.c
++++ b/drivers/block/zram/zram_drv.c
+@@ -903,7 +903,7 @@ static ssize_t read_block_state(struct file *file, char __user *buf,
+ 	char *kbuf;
+ 	ssize_t index, written = 0;
+ 	struct zram *zram = file->private_data;
+-	unsigned long nr_pages = zram->disksize >> PAGE_SHIFT;
++	unsigned long nr_pages;
  
- 	free_irq(pcidev->irq, sdhost);
+ 	kbuf = kvmalloc(count, GFP_KERNEL);
+ 	if (!kbuf)
+@@ -916,6 +916,8 @@ static ssize_t read_block_state(struct file *file, char __user *buf,
+ 		return -EINVAL;
+ 	}
  
-+	cancel_work_sync(&sdhost->carddet_work);
-+	/* carddet_work may re-enable the interrupt via via_reset_pcictrl(). */
-+	writeb(0x0, sdhost->pcictrl_mmiobase + VIA_CRDR_PCIINTCTRL);
++	nr_pages = zram->disksize >> PAGE_SHIFT;
 +
- 	del_timer_sync(&sdhost->timer);
- 
- 	tasklet_kill(&sdhost->finish_tasklet);
+ 	for (index = *ppos; index < nr_pages; index++) {
+ 		int copied;
+ 		struct timespec64 ts;
 -- 
 2.53.0
 
