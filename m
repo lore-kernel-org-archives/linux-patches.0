@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793210698;
-	b=my7rZg5dNJI3revEx17FyNg4mdQlZUbEdPit/fuF23IBkOeFPdqB+at9P86eAoWeF9kN
-	 fsG8NxRxEbJ0V+CwY6KYiulkGA63oSphfQhmXr8UJ74tybMbjOC1BOJThH3D0o2001UXQ
-	 q+4jPNllIqxu/n1XcJ0xiwzHp2tUGFHZOa+eI4q7SimY6X7elKOSTRVshShQpWlplesUg
-	 t3yGTZwRTtaS4xHagv8GRUrm8qD6g4klkLA1POTrVa7jEAD9OwznB48Arn1yCGKh99MOr
-	 Uv0VkTXADFYKjWHjyyqIn2i92dMluKfrDrAU1g2Na3Ae4tPfl81QQbBJijSumvMFrHw==
+	t=1793210701;
+	b=5rpO2FdYEYVgRQXWDCkIPb5MssLNGFT5klFbDv3MrQm7Jmsp0AGnuCKdVBV7M7JNZmdM
+	 0sk5zGcXHImJfGdRta+f47luqjlsW6RPdCuil8oSKPVDPxqPsi8mU3S5NMvmm5XL1O1db
+	 9y3ioqRICzuyMqmiTfc03ppS1IHHFiJwTePdxhqgs8M3TWmPYmkPnRMQGatLhJfeG3kaj
+	 fARi/VCOSS1uT+JZdwTk5HI+hTbWFdrKmH0gSZEyBU5NpNV8W6FJl5c2RoT2QxgME0jjY
+	 NvSIqhfMsQMBlje36ym8ko7ymGOcByiUGfqsgS+uojNlJw3q+8ADYgS2dyXn46lR0Zw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793210698;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793210701;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=LOo8FIGIRtbR4g8nLVw4EBZhqTW2Altb+cCYxs6Kd3k=;
-	b=h0rRdc9XRB9ozOLI3JcXVt3SsOGhD35K+2TrEp7e8iOE+0C94Lln+8flK19tFLd7aHaC
-	 J4aSpofEuc0L3dlKzkoeAi3OCqsORjyZoDTljpPUFCbmrVaAE9lPFlkDPr7qlYVFfdkYy
-	 mdeHFomyIRgxR5yOo5xqy9b9vIzl52cmq4HFPGiXL5FoR+3FE/GD4N7kALCpNI0PhwHt8
-	 myGuW/Gj0HdTtpNRLECKsCoVqnQ15MelauejEVLqR1EhWDC8unZ/jw65IUNJxLC1U/fqh
-	 Dhu2n9r0FPPd8BnfnIg0bpJz/9oDDxlLCPfeXkEowA1g2dRv9ZbbBQmrOew4o3OhlIg==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=3vhs6UyybLtfCRJxTm5g6JiBRPYCRVoFwpMvALpNSCc=;
+	b=BvMQfFnY3M0KzAXltQgXIinQg4DsMxacJCiV+uG6pyM6B8W/4x1mP64Ie3lBn0kRfxtl
+	 04kIICPY7OgdiuLB3fmBIP2HaWRJHoy5cV6MdYmpe7vELn934ZLAxrWgZpyf0v4/NjYA0
+	 32wfVJ5WFp9hdm2PAJMjZsEgrDkWImSagsei226s7q2hTAm29/wAAv//I1Ftnoutblx5E
+	 dVaTJUN4yGEji6wIK/RWZ+mX0rBki8S6qOord9lpFjXLaEcQUXrT+o1SpC+ubODIMqz9e
+	 jpcZq5ErsY/hGEnu5Jr6moE0b+WvkNw9yDpuf1fD+VpjtzNDXrLCrvrooWe5j83YQFA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qfdfGYRs;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DW6PgeuV;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F170E606A31A;
-	Wed, 28 Oct 2026 18:04:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA0E7606A31F;
+	Wed, 28 Oct 2026 18:05:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qfdfGYRs
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CAEA1F01825;
-	Wed, 28 Oct 2026 18:04:57 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DW6PgeuV
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31FD21F01825;
+	Wed, 28 Oct 2026 18:05:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793210697;
-	bh=LOo8FIGIRtbR4g8nLVw4EBZhqTW2Altb+cCYxs6Kd3k=;
+	s=korg; t=1793210700;
+	bh=3vhs6UyybLtfCRJxTm5g6JiBRPYCRVoFwpMvALpNSCc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qfdfGYRswMPtTGwrQ4eat7tuC7Aa0iA/aJoULV47DHVz2ogqxdS1Yw79+L8vbbvfo
-	 MSFqM6cQyLfQkac8hOtXnp1WGOjJYi316yGOuVUF+tzjoe8w8qzEX06iGLzl7QixlP
-	 KupOsUe3eZXHKnpvaUFdS02KuVDxxxU+ukof1jC4=
+	b=DW6PgeuVwZ6Gjpg8M4vEXeSPZ4gduCpT4bTHwBmrG+xuhhUdZrU4Swp1Lr0IpMJON
+	 Zb6jQTOeAR3+t4EVMRtQCE+3CsVQSMBou0l3k6D1t5stSurhtb6rOoBdwUUx7OW4BD
+	 sXXKI7NLEbgS7NJfMrSKIBTMOtE3PXuMPzbDU1co=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang Jianzheng <wangjianzheng@vivo.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	Ilya Titov <ilya.titov@wirenboard.com>,
+	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 116/571] pinctrl: sunxi: Use devm_clk_get_enabled() helpers
-Date: Wed, 28 Oct 2026 17:54:23 +0100
-Message-ID: <20261028170010.772557632@linuxfoundation.org>
+Subject: [PATCH 5.15 117/571] pinctrl: sunxi: keep a shadow copy of the data register output latches
+Date: Wed, 28 Oct 2026 17:54:24 +0100
+Message-ID: <20261028170010.796394628@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -62,87 +62,243 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wang Jianzheng <wangjianzheng@vivo.com>
+From: Ilya Titov <ilya.titov@wirenboard.com>
 
-[ Upstream commit 7dc92ece32ed87a352e285e3d9f0d392b61443e2 ]
+[ Upstream commit a13f7f5d14af9baf34eb12c25962f8d3542b281d ]
 
-sunxi sunxi_pinctrl_init_with_variant get, enable clk and
-deinit_device disable and unprepare it.
+On Allwinner SoCs, reading a bank's data register returns the pin level,
+not the output latch, for pins that are muxed as inputs.  Writing a GPIO
+therefore corrupts the output latches of all input-muxed pins in the
+same bank: the read-modify-write in sunxi_pinctrl_gpio_set() reads back
+their pin levels and writes those into their latches.
 
-This simplifes the code and avoids the calls to
-clk_disable_unprepare().
+This breaks emulated open-drain lines (e.g. a bit-banged I2C bus from
+i2c-gpio).  Such a line is released high by muxing it as input and
+letting the pull-up raise it, so any concurrent GPIO write in the same
+bank stores 1 into its latch.  Driving the line low afterwards is a
+non-atomic data-then-mux sequence in sunxi_pinctrl_gpio_direction_output();
+if the poisoning write lands between the two steps, the pin actively
+drives high (push-pull) instead of low.
 
-Signed-off-by: Wang Jianzheng <wangjianzheng@vivo.com>
-Link: https://lore.kernel.org/20240829064737.16169-1-wangjianzheng@vivo.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-Stable-dep-of: a13f7f5d14af ("pinctrl: sunxi: keep a shadow copy of the data register output latches")
+Observed in practice as sporadic glitches on a T507 board bit-banging
+I2C on port E while other PE GPIOs are toggled.  On a scope the failure
+is unmistakable: on a clock pulse where SCL should fall to GND, the line
+instead steps *above* its idle high level for the whole low phase — the
+pad drives a strong push-pull 3.3 V high, higher than the level the
+pull-up sustains on the loaded bus — before the next transition recovers
+it.  The same can hit SDA, corrupting data instead of clocks.
+
+Steps to reproduce on any sunxi board with a bit-banged (i2c-gpio) bus:
+
+  # background: toggle any other GPIO of the same bank, e.g. line 21
+  gpioset -c <chip> --toggle 100us 21=0 &
+
+  # foreground: keep the bit-banged bus busy
+  while :; do i2cdetect -y <bus> 0x50 0x57; done
+
+  # watch SCL/SDA with a scope or logic analyzer: sporadic clock-low
+  # phases driven high (above the pull-up level) instead of low
+
+The bank spinlock cannot help: the racing write is a perfectly valid
+whole-register RMW that faithfully writes back what the hardware
+returned.  There are no set/clear registers on this IP to write a single
+bit atomically.
+
+Fix it the same way gpio-mmio handles hardware whose data register read
+does not return the output latch: keep a shadow copy of each bank's
+latches, base the read-modify-write on the shadow, and only write the
+register.  The shadow is seeded from the hardware at probe time so pins
+left in output mode by the bootloader keep their state.  Pins that reach
+output mode through the gpiolib paths write their value (and thereby
+their shadow bit) before the mux switch in
+sunxi_pinctrl_gpio_direction_output(); pins muxed to gpio_out directly
+through a pinmux node bypass that path, so sunxi_pmx_set() refreshes
+their shadow bit from the latch (readable once the pin is in output
+mode) to keep them driving their pre-existing level.
+
+Seeding the shadow reads the PIO registers at probe time, which requires
+the bus clock to be enabled.  The clock was only requested at the very
+end of probe, after devm_pinctrl_register() had already claimed the pin
+hogs described in the device tree - which mux pins, and thus access
+registers, with the clock still gated.  Move the request ahead of both.
+Boards whose bootloader leaves the PIO clock running are unaffected,
+which is why the pre-existing hog problem has gone unnoticed since
+commit 950707c0eb5c ("pinctrl: sunxi: add clock support").
+
+Fixes: df7b34f4c3d2 ("pinctrl: sunxi: Fix gpio_set behaviour")
+Cc: stable@vger.kernel.org
+Signed-off-by: Ilya Titov <ilya.titov@wirenboard.com>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
+[ Removed the pctl argument from two sunxi_data_reg() calls to match the older four-argument API. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/sunxi/pinctrl-sunxi.c | 14 ++++----------
- 1 file changed, 4 insertions(+), 10 deletions(-)
+ drivers/pinctrl/sunxi/pinctrl-sunxi.c | 76 +++++++++++++++++++++------
+ drivers/pinctrl/sunxi/pinctrl-sunxi.h |  7 +++
+ 2 files changed, 68 insertions(+), 15 deletions(-)
 
 diff --git a/drivers/pinctrl/sunxi/pinctrl-sunxi.c b/drivers/pinctrl/sunxi/pinctrl-sunxi.c
-index f384bfec6c393..7c895ddcb970a 100644
+index 7c895ddcb970a..5e89718a2dbce 100644
 --- a/drivers/pinctrl/sunxi/pinctrl-sunxi.c
 +++ b/drivers/pinctrl/sunxi/pinctrl-sunxi.c
-@@ -1577,30 +1577,26 @@ int sunxi_pinctrl_init_with_variant(struct platform_device *pdev,
- 	}
+@@ -778,6 +778,21 @@ static void sunxi_pmx_set(struct pinctrl_dev *pctldev,
+ 	writel((readl(pctl->membase + reg) & ~mask) | config << shift,
+ 	       pctl->membase + reg);
  
- 	ret = of_clk_get_parent_count(node);
--	clk = devm_clk_get(&pdev->dev, ret == 1 ? NULL : "apb");
++	/*
++	 * A pin muxed to gpio_out directly through a pinmux node bypasses
++	 * sunxi_pinctrl_gpio_set() and drives whatever its output latch
++	 * holds.  Now that the pin is in output mode the data register
++	 * reads back the latch, so refresh the shadow to keep such pins
++	 * driving their pre-existing level.
++	 */
++	if (config == SUN4I_FUNC_OUTPUT) {
++		u32 *shadow = &pctl->dat_shadow[pin / PINS_PER_BANK];
++
++		sunxi_data_reg(pin, &reg, &shift, &mask);
++		*shadow = (*shadow & ~mask) |
++			  (readl(pctl->membase + reg) & mask);
++	}
++
+ 	raw_spin_unlock_irqrestore(&pctl->lock, flags);
+ }
+ 
+@@ -929,21 +944,29 @@ static void sunxi_pinctrl_gpio_set(struct gpio_chip *chip,
+ 				unsigned offset, int value)
+ {
+ 	struct sunxi_pinctrl *pctl = gpiochip_get_data(chip);
+-	u32 reg, shift, mask, val;
++	u32 *shadow = &pctl->dat_shadow[offset / PINS_PER_BANK];
++	u32 reg, shift, mask;
+ 	unsigned long flags;
+ 
+ 	sunxi_data_reg(offset, &reg, &shift, &mask);
+ 
+ 	raw_spin_lock_irqsave(&pctl->lock, flags);
+ 
+-	val = readl(pctl->membase + reg);
+-
++	/*
++	 * Reading the data register returns the pin level, not the output
++	 * latch, for pins muxed as inputs.  A read-modify-write based on
++	 * the register would therefore corrupt the latches of input-muxed
++	 * pins in the same bank (e.g. an emulated open-drain I2C line
++	 * released high), making them drive the wrong level once switched
++	 * to output.  Base the read-modify-write on a shadow copy of the
++	 * latches instead.
++	 */
+ 	if (value)
+-		val |= mask;
++		*shadow |= mask;
+ 	else
+-		val &= ~mask;
++		*shadow &= ~mask;
+ 
+-	writel(val, pctl->membase + reg);
++	writel(*shadow, pctl->membase + reg);
+ 
+ 	raw_spin_unlock_irqrestore(&pctl->lock, flags);
+ }
+@@ -1464,7 +1487,7 @@ int sunxi_pinctrl_init_with_variant(struct platform_device *pdev,
+ 	struct pinctrl_pin_desc *pins;
+ 	struct sunxi_pinctrl *pctl;
+ 	struct pinmux_ops *pmxops;
+-	int i, ret, last_pin, pin_idx;
++	int i, ret, last_pin, pin_idx, nbanks;
+ 	struct clk *clk;
+ 
+ 	pctl = devm_kzalloc(&pdev->dev, sizeof(*pctl), GFP_KERNEL);
+@@ -1489,6 +1512,37 @@ int sunxi_pinctrl_init_with_variant(struct platform_device *pdev,
+ 	if (!pctl->irq_array)
+ 		return -ENOMEM;
+ 
++	/*
++	 * The bus clock has to be enabled before the pinctrl device
++	 * registers, as the pin hogs claimed from there access registers.
++	 */
++	ret = of_clk_get_parent_count(node);
 +	clk = devm_clk_get_enabled(&pdev->dev, ret == 1 ? NULL : "apb");
- 	if (IS_ERR(clk)) {
- 		ret = PTR_ERR(clk);
- 		goto gpiochip_error;
++	if (IS_ERR(clk))
++		return PTR_ERR(clk);
++
++	/*
++	 * Seed the output latch shadow from the hardware so pins the
++	 * bootloader left in output mode keep their state; see
++	 * sunxi_pinctrl_gpio_set() for why a shadow is needed.  This must
++	 * happen before the pinctrl device registers, as pin hogs can mux
++	 * pins to gpio_out and thereby update the shadow.
++	 */
++	last_pin = pctl->desc->pins[pctl->desc->npins - 1].pin.number;
++	nbanks = DIV_ROUND_UP(last_pin + 1 - pctl->desc->pin_base,
++			      PINS_PER_BANK);
++	pctl->dat_shadow = devm_kcalloc(&pdev->dev, nbanks,
++					sizeof(*pctl->dat_shadow), GFP_KERNEL);
++	if (!pctl->dat_shadow)
++		return -ENOMEM;
++
++	for (i = 0; i < nbanks; i++) {
++		u32 reg, shift, mask;
++
++		sunxi_data_reg(i * PINS_PER_BANK, &reg, &shift, &mask);
++		pctl->dat_shadow[i] = readl(pctl->membase + reg);
++	}
++
+ 	ret = sunxi_pinctrl_build_state(pdev);
+ 	if (ret) {
+ 		dev_err(&pdev->dev, "dt probe failed: %d\n", ret);
+@@ -1543,7 +1597,6 @@ int sunxi_pinctrl_init_with_variant(struct platform_device *pdev,
+ 	if (!pctl->chip)
+ 		return -ENOMEM;
+ 
+-	last_pin = pctl->desc->pins[pctl->desc->npins - 1].pin.number;
+ 	pctl->chip->owner = THIS_MODULE;
+ 	pctl->chip->request = gpiochip_generic_request;
+ 	pctl->chip->free = gpiochip_generic_free;
+@@ -1576,13 +1629,6 @@ int sunxi_pinctrl_init_with_variant(struct platform_device *pdev,
+ 			goto gpiochip_error;
  	}
  
--	ret = clk_prepare_enable(clk);
--	if (ret)
+-	ret = of_clk_get_parent_count(node);
+-	clk = devm_clk_get_enabled(&pdev->dev, ret == 1 ? NULL : "apb");
+-	if (IS_ERR(clk)) {
+-		ret = PTR_ERR(clk);
 -		goto gpiochip_error;
+-	}
 -
  	pctl->irq = devm_kcalloc(&pdev->dev,
  				 pctl->desc->irq_banks,
  				 sizeof(*pctl->irq),
- 				 GFP_KERNEL);
- 	if (!pctl->irq) {
- 		ret = -ENOMEM;
--		goto clk_error;
-+		goto gpiochip_error;
- 	}
+diff --git a/drivers/pinctrl/sunxi/pinctrl-sunxi.h b/drivers/pinctrl/sunxi/pinctrl-sunxi.h
+index 3f37e1fc05a79..86bf203445d6f 100644
+--- a/drivers/pinctrl/sunxi/pinctrl-sunxi.h
++++ b/drivers/pinctrl/sunxi/pinctrl-sunxi.h
+@@ -76,6 +76,7 @@
+ #define IO_BIAS_MASK		GENMASK(3, 0)
  
- 	for (i = 0; i < pctl->desc->irq_banks; i++) {
- 		pctl->irq[i] = platform_get_irq(pdev, i);
- 		if (pctl->irq[i] < 0) {
- 			ret = pctl->irq[i];
--			goto clk_error;
-+			goto gpiochip_error;
- 		}
- 	}
+ #define SUN4I_FUNC_INPUT	0
++#define SUN4I_FUNC_OUTPUT	1
+ #define SUN4I_FUNC_IRQ		6
  
-@@ -1611,7 +1607,7 @@ int sunxi_pinctrl_init_with_variant(struct platform_device *pdev,
- 	if (!pctl->domain) {
- 		dev_err(&pdev->dev, "Couldn't register IRQ domain\n");
- 		ret = -ENOMEM;
--		goto clk_error;
-+		goto gpiochip_error;
- 	}
- 
- 	for (i = 0; i < (pctl->desc->irq_banks * IRQ_PER_BANK); i++) {
-@@ -1643,8 +1639,6 @@ int sunxi_pinctrl_init_with_variant(struct platform_device *pdev,
- 
- 	return 0;
- 
--clk_error:
--	clk_disable_unprepare(clk);
- gpiochip_error:
- 	gpiochip_remove(pctl->chip);
- 	return ret;
+ #define PINCTRL_SUN5I_A10S	BIT(1)
+@@ -160,6 +161,12 @@ struct sunxi_pinctrl {
+ 	int				*irq;
+ 	unsigned			*irq_array;
+ 	raw_spinlock_t			lock;
++	/*
++	 * Output latch shadow, one word per bank.  Seeded lockless at
++	 * probe before the pinctrl device registers, protected by @lock
++	 * afterwards.
++	 */
++	u32				*dat_shadow;
+ 	struct pinctrl_dev		*pctl_dev;
+ 	unsigned long			variant;
+ };
 -- 
 2.53.0
 
