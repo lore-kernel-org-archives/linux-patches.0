@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215850;
-	b=zwpae5Ju5poWA7ni0YacKTWIzjk+bjgrMqOFLn/Wpy0I2e9Rhkb/jZR6Xy/QQuFEBzzT
-	 RAXv3dUUE8FJjplOKm9aqefNhXkMGxpcI88frR5FS1WIZTXWDlApr5FN1zbABlcEZFsdG
-	 jaN1iUR2Ni/HGrPhFA6I/nLIGkus0oHsxYeU6z4un73m8NMuNUFCfWp3pWscDHOftbEn+
-	 dPOYcG+C8MELhr6Tfp9yDbdb6kzGdy4ZwMWPG3nSs8X7jK86XKQE8vvN+lBOP1slJyaR7
-	 SPwHOhmuyIGtXJMoA+YLHhrjFFEVGBBEoQynL9sduHX7iCvONWL4hK5YUJeGS75XoVQ==
+	t=1793215853;
+	b=ZinajqXP0iWV0e0imVz/9tumQE7MfyeLUndEU1umcsYUTkllDtJLbq0SPh4BS+XnAJVQ
+	 RowinXhatf77KsY8IohH+lbqLr4zX7S4maG4pE3qvOPpyqv30jRcZIXK68KWzs0+CTtzT
+	 Xsw1NthBSlPpK0nG3L2RQwBbVgWSHXIO1a9IpUUcMaZiOjJqpHj03XQv6abyUwCU6Eg2k
+	 n1qg7aXzcNbXklcT8uB1EeRTYOc6+lCpF1+bJ2S3AAQYqRS7KXxD8/Gk7KShyd3rNchul
+	 9fOv6uRqpOQtar7QC8NWdr8sq9g/f7TGyDqyk4+Iu1y6FYN6auXFE4HLCSkRFD4JtOA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215850;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215853;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=jUYB7MmNKFbcc3BdlPXbGRlOPnGVmLeSMTaE91DngA0=;
-	b=QqwhHvDGNHj6Lq+XR/3EKv7PcmwpjLMsr7Pm/QERWAY903bpwypREzho0pMOYgf0SRk3
-	 uqAilBgnvla/71jzS2iGBEMitHVZoHrYv6PaL7HefIbGuiBe28uAP0USC4uVk+y9x+DsS
-	 6DTC9cTkqPjoKy7mumOXmUGHkTXy4Xy4c1hQZyDaeLfvB1LH9XXhx99LczF4TChWcGVTi
-	 kLyaaaAIBzg9uwS7CktpFYScvVSSYUElYNNoPHBJ3HsDI9Ix/kkI4deOeOWZqBhnir1NK
-	 V2JsjHemPCp7PCrZMqGIgzAaL0Bjb+YFoKQbrb2qr5tmbk2wlJw9DGtTx7JasKsfQ1Q==
+	bh=fvlzorDNE1X4fzMe3q3exnmUI7hYWkZSJKlFFvO8/QY=;
+	b=AQUqFxTb/ipiVYWnS7WuKHFDQtZhH4098Xtr/AEtWX++N+r0BQYiNbPAAIg8oLit0hmX
+	 1bGA/rOAQ5QQVpv/m8R7jSrKpdgpNWA9/A9ep/rtOgrwHmr/Aw/wWNhw+78CsQ8acqB1O
+	 d1SRNkNSkbdRAz1Kdqb9b1ZUzA4dCTZopTAXmdz6uU2kVlqfj3Fs+zqHgeoSswqU7+Jp2
+	 EZ02tyuMvUx5aeQ9O3R/69TD66g7eyxsn4gmYX+c2uTAGLr89KXPa6npQvWknuPwnH/w2
+	 c8Q2ZTp3vBOZQd2zdlZPVolMLs6l04uSY0KZYpzDb4TbsYDggD+V40k4NZmrGAmWeyw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Xn6AWfJ9;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WZ9l718H;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BF5E606A31F;
-	Wed, 28 Oct 2026 19:30:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 515F2606A31F;
+	Wed, 28 Oct 2026 19:30:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Xn6AWfJ9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DAB41F01825;
-	Wed, 28 Oct 2026 19:30:49 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WZ9l718H
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61AE81F01825;
+	Wed, 28 Oct 2026 19:30:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215850;
-	bh=jUYB7MmNKFbcc3BdlPXbGRlOPnGVmLeSMTaE91DngA0=;
+	s=korg; t=1793215852;
+	bh=fvlzorDNE1X4fzMe3q3exnmUI7hYWkZSJKlFFvO8/QY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Xn6AWfJ9SN8RlFyuJpE9tJzgh0XD7N2FsMpnegOC81QoQ7WgBo/pMXvuHHy3D0ON0
-	 ucfpdIBtiEXM8eLcDTwbOx7QOnt7G3HMPbaKpwYAxNh24nVZv7scch5Zi/Ds/UL4X4
-	 q5DdGyrmMYxD9lyaBrd1x5K2l1scV2roruKqJrZY=
+	b=WZ9l718HN+AI57R8DRzrP1+URRJlekIj0RQueL5K5xOx2Jbc5CaVbh+LeVQY1A23/
+	 xfCFyN22QxjXpzYu48LKQFMrkYN03bGyMsohS/IMvZCt78uWD+Sxh6RJIDzkPmag3n
+	 A4CTEdPfOMOuBF+7hVrkPUmNb5Q0ckmNb9C0kOBQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryam Vargas <hexlabsecurity@proton.me>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
+	stable@kernel.org,
+	TencentOS Corvus AI <corvus@tencent.com>,
+	Fourie Zhang <fouriezhang@tencent.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1353/1887] crypto: virtio - bound the akcipher result length
-Date: Wed, 28 Oct 2026 17:57:29 +0100
-Message-ID: <20261028170530.229414807@linuxfoundation.org>
+Subject: [PATCH 6.1 1354/1887] netfilter: nf_tables: dont queue packet path object notifications
+Date: Wed, 28 Oct 2026 17:57:30 +0100
+Message-ID: <20261028170530.252517822@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,45 +70,174 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryam Vargas <hexlabsecurity@proton.me>
+From: Fourie Zhang <littleddfu@gmail.com>
 
-[ Upstream commit f77a956f6a19f9463ef1527c9d0cda50dded6b92 ]
+[ Upstream commit 7904b94768e983bcb2be34a8d6d1f3450f5b838b ]
 
-virtio_crypto_dataq_akcipher_callback() sets the result length from the
-device-reported response length without bounding it to the destination
-buffer, which was allocated for the original request length.
-sg_copy_from_buffer() then reads that many bytes from the destination
-buffer; a backend reporting a larger length over-reads adjacent kernel
-heap into the caller's scatterlist (an out-of-bounds read).
+All file:line references below are against v7.2-rc4 (ac5b0e5651b1). The
+trace was captured on 7.2.0-rc6-kasan72rc6 (075b74841bd0), where the same
+lines apply.
 
-Clamp the reported length to the originally requested destination length.
-A conforming device reports no more than that, so valid results are
-unaffected.
+nft_obj_notify() is exported and reached from the packet path. Its only
+in-tree caller is nft_quota_obj_eval() (net/netfilter/nft_quota.c:68),
+which notifies with GFP_ATOMIC while evaluating a rule for a transiting
+packet, holding no mutex.
 
-Fixes: a36bd0ad9fbf ("virtio-crypto: adjust dst_len at ops callback")
-Cc: stable@vger.kernel.org
-Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
-Message-ID: <20260622-b4-disp-3a2c09a8-v2-1-d1a809281db4@proton.me>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Since commit 67cc570edaa0 ("netfilter: nf_tables: coalesce multiple
+notifications into one skbuff") that notification is no longer sent
+immediately. __nft_obj_notify() queues it onto nft_net->notify_list via
+nft_notify_enqueue() (net/netfilter/nf_tables_api.c:1211), which is a bare
+list_add_tail(). notify_list has no lock of its own
+(include/net/netfilter/nf_tables.h:1951), it is serialised by commit_mutex:
+the six other enqueue sites all run inside a netlink transaction, and the
+drain in nft_commit_notify() (net/netfilter/nf_tables_api.c:10746) does
+list_del() + kfree_skb() from nf_tables_commit() with commit_mutex held.
+
+Sending packets through a chain that references a depleted quota object
+therefore races an unlocked list_add_tail() against list_del() +
+kfree_skb() on another CPU. The WRITE_ONCE(prev->next, new) in __list_add()
+then stores through an sk_buff that has already been freed:
+
+  BUG: KASAN: slab-use-after-free in __nft_obj_notify+0x2c5/0x2d0
+  Write of size 8 at addr ff110001047183c0 by task poc/76
+  CPU: 0 UID: 1000 PID: 76 Comm: poc Tainted: G  W  7.2.0-rc6-kasan72rc6 #4
+  Call Trace:
+   <IRQ>
+   __nft_obj_notify (include/linux/list.h:164 include/linux/list.h:191
+                     net/netfilter/nf_tables_api.c:1211
+                     net/netfilter/nf_tables_api.c:8743)
+   nft_quota_obj_eval (net/netfilter/nft_quota.c:68)
+   nft_do_chain_inet
+   nf_hook_slow
+   __ip_local_out
+   ip_push_pending_frames
+   udp_send_skb
+   udp_sendmsg
+   __x64_sys_sendto
+
+  Allocated by task 77:
+   __alloc_skb (net/core/skbuff.c:704)
+   __nft_obj_notify (include/net/netlink.h:1055
+                     net/netfilter/nf_tables_api.c:8731)
+   nft_quota_obj_eval (net/netfilter/nft_quota.c:68)
+   nft_do_chain
+
+  Freed by task 79:
+   nf_tables_commit (include/linux/skbuff.h:1332
+                     net/netfilter/nf_tables_api.c:10759
+                     net/netfilter/nf_tables_api.c:11185)
+   nfnetlink_rcv_batch (net/netfilter/nfnetlink.c:574)
+   netlink_unicast
+   netlink_sendmsg
+
+  The buggy address belongs to the cache skbuff_head_cache of size 232
+
+Queueing from the packet path is wrong even leaving the race aside:
+notify_list is only drained by nft_commit_notify() from nf_tables_commit()
+(:11185), so a notification enqueued outside a transaction is not sent
+until some later netlink batch commits, if one ever does.
+
+The gfp argument that nft_obj_notify() still takes is a leftover of the
+pre-67cc570edaa0 behaviour, where this path called nfnetlink_send()
+directly. Restore that: split the message construction out into
+nft_obj_notify_alloc() and let each caller decide what to do with the skb.
+nft_obj_notify(), the exported one reached from the packet path, sends it
+straight away; nf_tables_obj_notify(), which runs under commit_mutex, keeps
+queueing it, so transaction notifications are still coalesced.
+
+Fixes: 67cc570edaa0 ("netfilter: nf_tables: coalesce multiple notifications into one skbuff")
+Cc: stable@kernel.org
+Reported-by: TencentOS Corvus AI <corvus@tencent.com>
+Assisted-by: tencentos-corvus-ai:kimi-k3
+Signed-off-by: Fourie Zhang <fouriezhang@tencent.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/virtio/virtio_crypto_akcipher_algs.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/netfilter/nf_tables_api.c | 36 ++++++++++++++++++++++-------------
+ 1 file changed, 23 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/crypto/virtio/virtio_crypto_akcipher_algs.c b/drivers/crypto/virtio/virtio_crypto_akcipher_algs.c
-index db3817f5ab46e..c19920d3397ba 100644
---- a/drivers/crypto/virtio/virtio_crypto_akcipher_algs.c
-+++ b/drivers/crypto/virtio/virtio_crypto_akcipher_algs.c
-@@ -89,7 +89,8 @@ static void virtio_crypto_dataq_akcipher_callback(struct virtio_crypto_request *
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index e09b41468b1e6..afc7f369b8f69 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -7831,18 +7831,17 @@ static int nf_tables_delobj(struct sk_buff *skb, const struct nfnl_info *info,
+ 	return nft_delobj(&ctx, obj);
+ }
+ 
+-static void
+-__nft_obj_notify(struct net *net, const struct nft_table *table,
+-		 struct nft_object *obj, u32 portid, u32 seq, int event,
+-		 u16 flags, int family, int report, gfp_t gfp)
++static struct sk_buff *
++nft_obj_notify_alloc(struct net *net, const struct nft_table *table,
++		     struct nft_object *obj, u32 portid, u32 seq, int event,
++		     u16 flags, int family, int report, gfp_t gfp)
+ {
+-	struct nftables_pernet *nft_net = nft_pernet(net);
+ 	struct sk_buff *skb;
+ 	int err;
+ 
+ 	if (!report &&
+ 	    !nfnetlink_has_listeners(net, NFNLGRP_NFTABLES))
+-		return;
++		return NULL;
+ 
+ 	skb = nlmsg_new(NLMSG_GOODSIZE, gfp);
+ 	if (skb == NULL)
+@@ -7856,10 +7855,10 @@ __nft_obj_notify(struct net *net, const struct nft_table *table,
+ 		goto err;
  	}
  
- 	/* actual length may be less than dst buffer */
--	akcipher_req->dst_len = len - sizeof(vc_req->status);
-+	akcipher_req->dst_len = min_t(unsigned int, len - sizeof(vc_req->status),
-+				      akcipher_req->dst_len);
- 	sg_copy_from_buffer(akcipher_req->dst, sg_nents(akcipher_req->dst),
- 			    vc_akcipher_req->dst_buf, akcipher_req->dst_len);
- 	virtio_crypto_akcipher_finalize_req(vc_akcipher_req, akcipher_req, error);
+-	nft_notify_enqueue(skb, report, &nft_net->notify_list);
+-	return;
++	return skb;
+ err:
+ 	nfnetlink_set_err(net, portid, NFNLGRP_NFTABLES, -ENOBUFS);
++	return NULL;
+ }
+ 
+ void nft_obj_notify(struct net *net, const struct nft_table *table,
+@@ -7869,6 +7868,7 @@ void nft_obj_notify(struct net *net, const struct nft_table *table,
+ 	struct nftables_pernet *nft_net = nft_pernet(net);
+ 	char *buf = kasprintf(gfp, "%s:%u",
+ 			      table->name, nft_net->base_seq);
++	struct sk_buff *skb;
+ 
+ 	audit_log_nfcfg(buf,
+ 			family,
+@@ -7879,17 +7879,27 @@ void nft_obj_notify(struct net *net, const struct nft_table *table,
+ 			gfp);
+ 	kfree(buf);
+ 
+-	__nft_obj_notify(net, table, obj, portid, seq, event,
+-			 flags, family, report, gfp);
++	/* Called from the packet path, holding no mutex: notify_list is
++	 * serialised by commit_mutex, so send this notification directly.
++	 */
++	skb = nft_obj_notify_alloc(net, table, obj, portid, seq, event,
++				   flags, family, report, gfp);
++	if (skb)
++		nfnetlink_send(skb, net, portid, NFNLGRP_NFTABLES, report, gfp);
+ }
+ EXPORT_SYMBOL_GPL(nft_obj_notify);
+ 
+ static void nf_tables_obj_notify(const struct nft_ctx *ctx,
+ 				 struct nft_object *obj, int event)
+ {
+-	__nft_obj_notify(ctx->net, ctx->table, obj, ctx->portid,
+-			 ctx->seq, event, ctx->flags, ctx->family,
+-			 ctx->report, GFP_KERNEL);
++	struct nftables_pernet *nft_net = nft_pernet(ctx->net);
++	struct sk_buff *skb;
++
++	skb = nft_obj_notify_alloc(ctx->net, ctx->table, obj, ctx->portid,
++				   ctx->seq, event, ctx->flags, ctx->family,
++				   ctx->report, GFP_KERNEL);
++	if (skb)
++		nft_notify_enqueue(skb, ctx->report, &nft_net->notify_list);
+ }
+ 
+ /*
 -- 
 2.53.0
 
