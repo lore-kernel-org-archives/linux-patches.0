@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793212749;
-	b=Jhg43V/Oa28aX4yyC6cJ8VkxuGm38b3QGJ+Vmt8O4+JVSrCRxN40rur3/DBrMm1HaW9t
-	 ECMsQ4ErOVH01doJHLsXJ1ZotyowdlvudEAox/fNK1EngViWB9U6zsoqK2rG3BDWH5jUr
-	 f3movZI9oR/15S917NztvuBu+qGpa9gyBJ+iACeDLYnMlvND5bWXgtt3z1vNzpNtpF3tL
-	 UJWmhzorFJ8nWXsG4kPp2RyOKW7ioAUr7BtNMkaHqI4SBhdUbs4NJ1aR2jBi4/1B6cHkm
-	 Iy4aYLruW9d4+jC08zsL8KQhWJIvQVUls96Kyj7DEbVWvUXo/CccSvpmOHet/nblpQQ==
+	t=1793212752;
+	b=Eo4bsbFdo9RbtQThqsqBz1aLXmcTK683vaWS1WBDX8lxO3u73zejWAD7K4YNI/gYlBwC
+	 lUdZbO3gYX5uLtwfW508Vhe0gcKsBllRpR9T2hvKMJH6mCMCh9YVKJl6ZwwRNZKzmSU7x
+	 udortKNT4DlyzrHUDmzjfcwfNB4xSUKcwk1UtUx5SnJuy0zyfYgdQnYZQ0JHFJcVkAEcp
+	 D0YVSLGteIANOH0GJCemqYnvhPbJaoKUrPHBlfNQUwBdGuylldAhYRof95Kuu+RRPbkHk
+	 /fJVlS3r+Vq9+nJcdztINKom9MOMTS/aMBMr0z6IQjtP0x/omfgDUXsBfZH1mAHlpsA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793212749;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793212752;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=dj0Rh3tAo/5sRNGMDb0XdekH8XPeB+/TY2o3HkFjomQ=;
-	b=B5aRUV9bxMuknQPk2TNzVo65wLadksriD9SHqmfhrgspDE/heNBjn3kXPILd9BadCosV
-	 kwy720hhRb6XrAKju2wAljAzzpvlLbAxkFK1sI5BtPSgH7Z9AbQ8KVrb01GQEAcxmIGZr
-	 CMrbPnSENyt0cTdjXZHGOLlf4Krm4YRRwIP0oSJWFMN9A0M/MVAO4lzFaRmjnwbIY5cez
-	 sXBz99sUl0ZIa7tuyF9wwssKBorHzXjr623MRKR9eWtaLfzn4MSfBGTZF6ZY+/j2pTZIQ
-	 kEGX7wHE1iMqihZEG9zDmYsel0yDleHJms2Xh2vYRJ2JBahWDhv48LixwchKqH80EeA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=b5VmDvhcrb9PLLsFD1JFwYkRxz32aDm58xJshcAAZwo=;
+	b=e6yhn6F6cZsJYEHk6Iex7yj8NdZKlaGDCGDDxxuh0JzOn4ReMVnNCy7wW8WjwwU2/Ews
+	 NUlhOuQ+DYL6cHvuDPQhqCnIvIwh/wYs9pUg+FJ92MrlPn97xYxBKRgHEHfIF3gn0xibg
+	 I9NLJnD++RBSuMXOnqm0TM10HuCFPH8cMsPli2jpUyKYzb4hZ9ZR82Uy1EOTVRZwIiDVl
+	 Dl3D15HZG6Ks+l2UZ7lxYAtFUsAWSPf+AUbFYKK7RkUo8dpIqgb8BcpmhdmxDHuKUB0l/
+	 mQX9oRctA/q5foO8V76rITJ4IEAEHFSJ6Rn52/WkcLHWibrnWTreVR+im3fLYiZ67Hg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PtoL16Hm;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BJsnrrs8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DF23606A31C;
-	Wed, 28 Oct 2026 18:39:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AD7B606A31C;
+	Wed, 28 Oct 2026 18:39:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PtoL16Hm
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F5271F01825;
-	Wed, 28 Oct 2026 18:39:08 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BJsnrrs8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7980E1F01825;
+	Wed, 28 Oct 2026 18:39:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793212749;
-	bh=dj0Rh3tAo/5sRNGMDb0XdekH8XPeB+/TY2o3HkFjomQ=;
+	s=korg; t=1793212752;
+	bh=b5VmDvhcrb9PLLsFD1JFwYkRxz32aDm58xJshcAAZwo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PtoL16Hm6mJGkwG4DshHrO/vyKEQIqb8hzTNzVZEyDWgG1I6G3KxkwXDW15FIp4ql
-	 FkboAsr5U5MQd92GW6Ap6v9zTeXhb3waf6n2sr5t7VxHEdkqNHHanqPVWIavOBLh4T
-	 cPgchxdR3oesMzqsJ3ouFJWIWD3cMXX5f7L/FN1o=
+	b=BJsnrrs8Eo9DFpdSSAN7UlC3infBHaTX0pXeAGs0XmXE+gOjkQPJc6+TDKCOIcgv1
+	 SED8vXEKXRo+XdMPcssyeKbG+mD54BzLLyyLo9XXeLeoySD71NPkmI8h3PagFx7ujZ
+	 n8UgqxEhIj7qzrNY6lY14H2B7ZNLRrSxnye7CNwA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Salmun <salmundani@gmail.com>,
-	=?UTF-8?q?Rapha=C3=ABl=20Larocque?= <rlarocque@disroot.org>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.1 0264/1887] Input: synaptics - limit T440p InterTouch quirk to LEN0036
-Date: Wed, 28 Oct 2026 17:39:20 +0100
-Message-ID: <20261028170505.237016222@linuxfoundation.org>
+	Zhaofeng Chen <zhaofeng.chen@certik.com>,
+	Yuxiao Wang <yuxiao.wang@certik.com>,
+	Alexander Graf <graf@amazon.com>
+Subject: [PATCH 6.1 0265/1887] nitro_enclaves: fix use-after-free on SLOT_ALLOC failure
+Date: Wed, 28 Oct 2026 17:39:21 +0100
+Message-ID: <20261028170505.259581611@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -62,56 +62,62 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Raphaël Larocque <rlarocque@disroot.org>
+From: Yuxiao Wang <yuxiao.wang@certik.com>
 
-commit f0fd8993082ca229faa3f9844f1c9fe182eca20b upstream.
+commit 9bc184a2eda8b773c88ecbff934001ad649b9cc1 upstream.
 
-The ThinkPad L440 also uses board id 2722, but does not have the SMBus
-initialization problem seen on the T440p. On the L440, the SMBus
-companion becomes available shortly after psmouse probes, allowing the
-touchpad to use SMBus/RMI4 normally.
+When ne_create_vm_ioctl() fails the SLOT_ALLOC request after
+anon_inode_getfile() has succeeded, the error path calls
+fput(enclave_file) and then frees ne_enclave.
 
-The T440p's quirk is currently applied to all Synaptics touchpads with
-board id 2722, unnecessarily disabling SMBus InterTouch on the L440,
-as reported by Daniel Salmun.
+In normal userspace context, fput() defers the final __fput() via
+task_work. ne_enclave_release() therefore runs after ne_enclave has
+already been freed and dereferences ne_enclave->slot_uid, causing a
+use-after-free: KASAN: slab-use-after-free in ne_enclave_release.
 
-Restrict the quirk to PNP ID LEN0036, which identifies the T440p, so
-that other devices sharing board id 2722 retain their normal
-SMBus/RMI4 operation.
+The enclave has no slot allocated and is not yet linked into the
+enclaves list on this error path, so ne_enclave_release() is expected
+to return early when slot_uid is zero. However, reading slot_uid
+already accesses the freed object.
 
-Reported-by: Daniel Salmun <salmundani@gmail.com>
-Link: https://lore.kernel.org/all/20260925230039.236786-1-salmundani@gmail.com/
-Fixes: 26eb3d92c7a4 ("Input: synaptics - disable InterTouch on ThinkPad T440p (board id 2722)")
+Clear enclave_file->private_data before fput() on the error path.
+ne_enclave_release() then returns immediately when private_data is
+NULL, leaving the ioctl error path as the sole owner of ne_enclave.
+This is safe because the file has not been fd_install()'d yet.
+
+Tested on an AWS EC2 m5.2xlarge with CONFIG_KASAN=y. Without the
+patch, the reproducer triggers a KASAN slab-use-after-free on every
+SLOT_ALLOC failure. With the patch, no KASAN report is produced and
+the SLOT_ALLOC error is still returned. Normal enclave creation and
+teardown are unaffected.
+
+Fixes: 9c8eb50fe9e2 ("nitro_enclaves: Add logic for terminating an enclave")
 Cc: stable@vger.kernel.org
-Signed-off-by: Raphaël Larocque <rlarocque@disroot.org>
-Link: https://patch.msgid.link/20260927005810.85971-1-rlarocque@disroot.org
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Co-developed-by: Zhaofeng Chen <zhaofeng.chen@certik.com>
+Signed-off-by: Zhaofeng Chen <zhaofeng.chen@certik.com>
+Signed-off-by: Yuxiao Wang <yuxiao.wang@certik.com>
+Reviewed-by: Alexander Graf <graf@amazon.com>
+Link: https://patch.msgid.link/20260909124400.27857-1-graf@amazon.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/mouse/synaptics.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/virt/nitro_enclaves/ne_misc_dev.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/input/mouse/synaptics.c
-+++ b/drivers/input/mouse/synaptics.c
-@@ -1811,8 +1811,10 @@ static int synaptics_setup_intertouch(st
- 			return -ENXIO;
- 		}
+--- a/drivers/virt/nitro_enclaves/ne_misc_dev.c
++++ b/drivers/virt/nitro_enclaves/ne_misc_dev.c
+@@ -1710,6 +1710,7 @@ static int ne_create_vm_ioctl(struct ne_
+ 	return enclave_fd;
  
--		/* Disable intertouch on known-broken board revisions */
--		if (info->board_id == 2722) {
-+		/* Disable intertouch on known-broken T440p board revisions */
-+		if (info->board_id == 2722 &&
-+		    psmouse_matches_pnp_id(psmouse,
-+					   (const char * const []){"LEN0036", NULL})) {
- 			psmouse_info(psmouse,
- 				     "Disabling intertouch for board id %u\n",
- 				     info->board_id);
+ put_file:
++	enclave_file->private_data = NULL;
+ 	fput(enclave_file);
+ put_fd:
+ 	put_unused_fd(enclave_fd);
 
 
