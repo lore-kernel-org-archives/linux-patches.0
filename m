@@ -1,62 +1,58 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=185.128.210.58
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216408;
-	b=kDJmvXorX611b8Xw4MBdlM2nMT5nFjNPBTATf4Dh/d1IBspLnQeocoScUi2m2Zqy9XPZ
-	 V6v1/CdqRQk2vvn06a9iQ4iz6EzRutqc7ylRwEIaGYpFRboNlIe9ERk+xbOM3Vfy980MW
-	 4sHbE8OLop//LSeCeiQttLt/j0raVOEnivw6DGaEj8XAwpOL170N0dDeseo5Rv4bHih6/
-	 nzl+JzOhPBMrFVcKW9CrEF/RwtGbMNnjgSeOfwXUb2B5AK+yrdssv7vMa9/rMAcfaetXi
-	 xGU/DfMT3dZvbS8SXaz/BHg5E08JBnBb4AuhZbA6t887KLUO2oPA11WFxyJO3ftLpZw==
+	t=1793216410;
+	b=guVn88F5Xad4EYMhMIUpgLs+l3TQ2vuPypgx9roWZtagPUFUvAXMkytlid8VoRCn4NHr
+	 T1yBWtdZB1vDBNXtrbjtjCQ3FeymMV13RHwJNKDkzOvIXfxt5RMMBXR5+8eeroBpwDNp4
+	 7xuL6LpQh6E7txu/k/K9+rj09fhYjXEveAwOxy5c4w5g6giRI6//ITAizFR7SSDuykz4U
+	 teo10C+1LrJkePNDozYSscXb2Qk+Fjlm+3O+Q6bNYoGrq4aD1lYlNOZwObu2BcuuRixVf
+	 /7BPiH0AOnepcsFG2vCKxY+7F6yc9FilXGsQDnrO7yGB6XzQLK4urjvVHX3hIO4BYYA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216408;
-	h=DMARC-Filter:From:To:Cc:Subject:Date:Message-ID:X-Mailer:In-Reply-To:
-	 References:MIME-Version:Content-Transfer-Encoding;
-	bh=kxTdXS2a2oUsmZwpe/L6fIZmRh7RKOkRqyLuNDjKAxU=;
-	b=xjDCiRftM97ST1hqEah1aipVn9n/U3UftdHj8jCniBxL7hHNOGFR9c8JB3OEgUciG2Bv
-	 vXLLaJ635fUQI9aKf5tkM7PLaaJd2fS60CpARWwTkWleVQljQZwNIgF5Z1++T+11p0bYP
-	 f4UXy3ZO+pvIcni6+VvRYzYg8mUgzyxHv+JALMlEaGhhLryCltbBp2yPoKQftBRkm/dw7
-	 mwWEZUcMObgMh+E1LY+ASSFoz9ZvODczESYXqzUzdSvqrZ3hJPJjQkz/i0U39Tn2BwnqS
-	 ahzgSnD88BdOKcrSjRdb9UQsNsvj2Qjw7JdwYsVTrVBowvHqVMJAvbdiE0XTpvUznAw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216410;
+	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
+	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=yeeTCyea19Hyl494yB0KWomyRTLAu9NTlmjA1IA17rU=;
+	b=tkOPqz/3DmhlSiDsNXeo8mIdOVQ+n3u1lf+wWE0IWUGy6Uw99if00UaDCAxB/sPZepoo
+	 LjnjjNSRB1DYfFiwKjdM9qTi0ikLFEsKU2wheaEh8o5joThFTarBDp5WPy0GNsV7gt3k1
+	 VJ+je/vS0vf9YIoL/TiQ2U5pCfpc+m+TQepQGDpm/M/ax0/azCto19qTx0IDgA+06LMCx
+	 9qaTPxzl7Nk4vbE6Fnnc093WDbjZcZOSbcDorngSYhwNU2HUXLRs5ZbaTifWq1PN8Q2fG
+	 LHaS2vG9uluIHmQTZDVB8X5FbBU6LncHlVJaHb5/f4qSMxVAaKr1+GHNWXU5vRUvJNg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=none header.from=librecast.net;
-	spf=pass smtp.mailfrom=librecast.net;
-	arc=none smtp.remote-ip=185.128.210.58
-Received: from bregans-0.gladserv.net (bregans-0.gladserv.net [185.128.210.58])
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=b8VCcetk;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5122660A2616;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9287560A2617;
+	Wed, 28 Oct 2026 19:40:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=b8VCcetk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D700E1F01829;
 	Wed, 28 Oct 2026 19:40:08 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5122660A2616
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=librecast.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=librecast.net
-From: Brett A C Sheffield <bacs@librecast.net>
-To: gregkh@linuxfoundation.org
-Cc: stable@vger.kernel.org,
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1793216409;
+	bh=yeeTCyea19Hyl494yB0KWomyRTLAu9NTlmjA1IA17rU=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=b8VCcetkQqcO92EJb+Kk611R/naki34Dy5+H+T2UosWZrTQy//c/YK3xn3cEUiUxd
+	 pxQ7P+z8cAcYGjkJEsfeM40TWwHz61VI9kvkPtBy6dERgf4ranptfT36zTLGdroMcu
+	 XRdHqGrf71WgnHEZtgUOMIIQQjVPwY/fwVaxkDUg=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@nabladev.com,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	rwarsow@gmx.de,
-	conor@kernel.org,
-	hargar@microsoft.com,
-	broonie@kernel.org,
-	achill@achill.org,
-	sr@sladewatkins.com,
-	Brett A C Sheffield <bacs@librecast.net>
-Subject: Re: [PATCH 7.3 00/38] 7.3.1-rc1 review
-Date: Wed, 28 Oct 2026 19:40:01 +0000
-Message-ID: <20261028194003.86077-1-bacs@librecast.net>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20261028165940.394092994@linuxfoundation.org>
-References: <20261028165940.394092994@linuxfoundation.org>
+	Yunseong Kim <yunseong.kim@est.tech>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 1544/1887] ksmbd: fix slab-out-of-bounds read in ksmbd_alloc_user()
+Date: Wed, 28 Oct 2026 18:00:40 +0100
+Message-ID: <20261028170534.605288091@linuxfoundation.org>
+X-Mailer: git-send-email 2.56.0
+In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
+References: <20261028170459.200466217@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -66,14 +62,164 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-# Librecast Test Results
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
-044/044 [ OK ] liblcrq
-010/010 [ OK ] libmld
-120/120 [ OK ] liblibrecast
+------------------
 
-CPU/kernel: Linux auntie 7.3.1-rc1-g57ad63e19488 #2 SMP PREEMPT_DYNAMIC Wed Oct 28 17:59:37 -00 2026 x86_64 AMD Ryzen 9 9950X 16-Core Processor AuthenticAMD GNU/Linux
+From: Yunseong Kim <yunseong.kim@est.tech>
 
-Tested-by: Brett A C Sheffield <bacs@librecast.net>
+[ Upstream commit 7405d0ba294306721843bc551611775e6edef516 ]
+
+ksmbd_alloc_user() copies resp->hash_sz bytes out of the mountd IPC
+login response with
+
+	user->passkey_sz = resp->hash_sz;
+	user->passkey = kmalloc(resp->hash_sz, KSMBD_DEFAULT_GFP);
+	if (user->passkey)
+		memcpy(user->passkey, resp->hash, resp->hash_sz);
+
+resp->hash_sz is a __u16 supplied by the response, but resp->hash[] is
+only KSMBD_REQ_MAX_HASH_SZ bytes.  A malformed or malicious login
+response can set hash_sz well beyond that (up to 65535), so the memcpy()
+reads past the end of the response object.  ipc_validate_msg() does not
+bound hash_sz, so reject any response whose hash_sz exceeds the on-stack
+hash[] buffer before allocating and copying.
+
+[ 2030.238706] BUG: KASAN: slab-out-of-bounds in ksmbd_alloc_user+0x278/0x680
+[ 2030.240549] Read of size 65535 at addr ffff888121bb6680 by task kworker/4:1/18611
+[ 2030.242296]
+[ 2030.242710] CPU: 4 UID: 0 PID: 18611 Comm: kworker/4:1 Not tainted 7.1.0-next-20260623-virtme #96 PREEMPT(lazy)
+[ 2030.242732] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.17.0-debian-1.17.0-1 04/01/2014
+[ 2030.242743] Workqueue: ksmbd-io handle_ksmbd_work
+[ 2030.242763] Call Trace:
+[ 2030.242769]  <TASK>
+[ 2030.242776]  dump_stack_lvl+0xa2/0xd0
+[ 2030.242794]  print_address_description+0x77/0x200
+[ 2030.242815]  ? ksmbd_alloc_user+0x278/0x680
+[ 2030.242831]  print_report+0x58/0x70
+[ 2030.242848]  kasan_report+0x117/0x150
+[ 2030.242869]  ? ksmbd_alloc_user+0x278/0x680
+[ 2030.242888]  kasan_check_range+0x3c7/0x3f0
+[ 2030.242908]  ? ksmbd_alloc_user+0x278/0x680
+[ 2030.242925]  __asan_memcpy+0x29/0x70
+[ 2030.242942]  ksmbd_alloc_user+0x278/0x680
+[ 2030.242960]  ksmbd_login_user+0xc3/0x120
+[ 2030.242978]  ntlm_authenticate+0x5e6/0x1b00
+[ 2030.243017]  ? __pfx_ntlm_authenticate+0x10/0x10
+[ 2030.243035]  ? ksmbd_session_lookup+0x188/0x1d0
+[ 2030.243054]  ? __pfx_ksmbd_session_lookup+0x10/0x10
+[ 2030.243090]  ? __sanitizer_cov_trace_switch+0x7b/0x140
+[ 2030.243108]  smb2_sess_setup+0x1e4a/0x27b0
+[ 2030.243126]  ? copy_from_kernel_nofault+0x199/0x300
+[ 2030.243156]  ? __pfx_smb2_sess_setup+0x10/0x10
+[ 2030.243173]  ? get_smb2_cmd_val+0xe3/0x1c0
+[ 2030.243208]  handle_ksmbd_work+0x954/0x1280
+[ 2030.243230]  ? __pfx_handle_ksmbd_work+0x10/0x10
+[ 2030.243249]  ? process_scheduled_works+0xa07/0x1490
+[ 2030.243270]  ? process_scheduled_works+0xa07/0x1490
+[ 2030.243291]  process_scheduled_works+0xa70/0x1490
+[ 2030.243320]  ? __pfx_process_scheduled_works+0x10/0x10
+[ 2030.243340]  ? do_raw_spin_lock+0x130/0x300
+[ 2030.243358]  ? lock_is_held_type+0x7b/0x110
+[ 2030.243388]  worker_thread+0x932/0xe20
+[ 2030.243415]  kthread+0x38a/0x470
+[ 2030.243431]  ? __pfx_worker_thread+0x10/0x10
+[ 2030.243451]  ? __pfx_kthread+0x10/0x10
+[ 2030.243467]  ret_from_fork+0x484/0x910
+[ 2030.243485]  ? __pfx_ret_from_fork+0x10/0x10
+[ 2030.243501]  ? __switch_to+0xc77/0x12c0
+[ 2030.243523]  ? __pfx_kthread+0x10/0x10
+[ 2030.243540]  ret_from_fork_asm+0x1a/0x30
+[ 2030.243564]  </TASK>
+[ 2030.243570]
+[ 2030.290164] Allocated by task 19279:
+[ 2030.290911]  kasan_save_track+0x3e/0x80
+[ 2030.292179]  __kasan_kmalloc+0x72/0x90
+[ 2030.293217]  __kvmalloc_node_noprof+0x3ff/0x6b0
+[ 2030.294467]  handle_generic_event+0x59b/0x750
+[ 2030.295345]  genl_family_rcv_msg_doit+0x238/0x340
+[ 2030.296553]  genl_rcv_msg+0x606/0x7b0
+[ 2030.297129]  netlink_rcv_skb+0x22b/0x4a0
+[ 2030.298500]  genl_rcv+0x2d/0x40
+[ 2030.299273]  netlink_unicast+0x7ba/0x930
+[ 2030.300019]  netlink_sendmsg+0x8c3/0xb00
+[ 2030.301073]  __sock_sendmsg+0xec/0x140
+[ 2030.301579]  __sys_sendto+0x357/0x470
+[ 2030.302255]  __x64_sys_sendto+0xe3/0x100
+[ 2030.303425]  do_syscall_64+0x135/0x460
+[ 2030.304763]  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+[ 2030.305594]
+[ 2030.305819] The buggy address belongs to the object at ffff888121bb6640
+[ 2030.305819]  which belongs to the cache kmalloc-192 of size 192
+[ 2030.309595] The buggy address is located 64 bytes inside of
+[ 2030.309595]  allocated 166-byte region [ffff888121bb6640, ffff888121bb66e6)
+[ 2030.312484]
+[ 2030.312719] The buggy address belongs to the physical page:
+[ 2030.314315] page: refcount:0 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x121bb6
+[ 2030.316481] head: order:1 mapcount:0 entire_mapcount:0 nr_pages_mapped:0 pincount:0
+[ 2030.318248] flags: 0x100000000000040(head|node=0|zone=2)
+[ 2030.319662] page_type: f5(slab)
+[ 2030.320242] raw: 0100000000000040 ffff8881000424c0 ffffea00047c1510 ffff888100040468
+[ 2030.321911] raw: 0000000000000000 0000000000150015 00000000f5000000 0000000000000000
+[ 2030.324413] head: 0100000000000040 ffff8881000424c0 ffffea00047c1510 ffff888100040468
+[ 2030.326150] head: 0000000000000000 0000000000150015 00000000f5000000 0000000000000000
+[ 2030.327960] head: 0100000000000001 ffffffffffffff81 00000000ffffffff 00000000ffffffff
+[ 2030.329615] head: ffff888121bb7ab0 0000000000000000 00000000ffffffff 0000000000000000
+[ 2030.331861] page dumped because: kasan: bad access detected
+[ 2030.332946]
+[ 2030.333502] Memory state around the buggy address:
+[ 2030.334698]  ffff888121bb6580: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+[ 2030.336475]  ffff888121bb6600: fc fc fc fc fc fc fc fc 00 00 00 00 00 00 00 00
+[ 2030.338143] >ffff888121bb6680: 00 00 00 00 00 00 00 00 00 00 00 00 06 fc fc fc
+[ 2030.339116]                                                        ^
+[ 2030.341315]  ffff888121bb6700: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+[ 2030.342801]  ffff888121bb6780: fc fc fc fc fc fc fc fc fa fb fb fb fb fb fb fb
+[ 2030.344643] ==================================================================
+
+Found with ksmbdzzer [2], a KSMBD fuzzer that drives libFuzzer with a
+kcov-dataflow [1] coverage vector: it folds each instrumented
+comparison/argument's runtime operand value together with its PC (the
+default arm mixes them as pc⊕val) so that a new operand value at a known
+site counts as new coverage.
+
+[1] https://lwn.net/Articles/1077606/
+[2] https://github.com/yskzalloc/kcov-dataflow
+
+Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
+Signed-off-by: Yunseong Kim <yunseong.kim@est.tech>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ fs/smb/server/mgmt/user_config.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
+
+diff --git a/fs/smb/server/mgmt/user_config.c b/fs/smb/server/mgmt/user_config.c
+index 279d00feff216..a9c0d80dc3680 100644
+--- a/fs/smb/server/mgmt/user_config.c
++++ b/fs/smb/server/mgmt/user_config.c
+@@ -31,6 +31,17 @@ struct ksmbd_user *ksmbd_alloc_user(struct ksmbd_login_response *resp)
+ {
+ 	struct ksmbd_user *user = NULL;
+ 
++	/*
++	 * resp->hash_sz is a __u16 taken from the mountd IPC login response but
++	 * resp->hash[] is only KSMBD_REQ_MAX_HASH_SZ bytes.  A malformed or
++	 * malicious response can set hash_sz far beyond that (up to 65535),
++	 * making the memcpy() below read past the response object
++	 * (slab-out-of-bounds in ksmbd_alloc_user()).  Reject any oversized
++	 * hash rather than trust the length.
++	 */
++	if (resp->hash_sz > sizeof(resp->hash))
++		return NULL;
++
+ 	user = kmalloc(sizeof(struct ksmbd_user), GFP_KERNEL);
+ 	if (!user)
+ 		return NULL;
+-- 
+2.53.0
+
+
+
