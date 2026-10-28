@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214501;
-	b=f1NnH2cr8IWRdHPgSgphQ26buLZmRdFfpIeRZC/K84I/23MOsFVq/f0OSU8KQAfBVvus
-	 ek+LPUMVwryk0JEmXd5dsm7vWtL7UN9yPHGjl7Iau4jzgdyyADxsR+vlLvHpDkccpx6z1
-	 hOUFlYsVHbmHO7RIoqag+jdpJoU//TYn0rtOmB/tIr3LGKuMhm1x7q0gefrVCAjfQdRSp
-	 wg/AAJcUhmyVwoVPoYX1GTG3nhId/t4MIL1Jp/qIqNWvsXcaXDT3bU9f+GmB6nwvJHe0z
-	 qSTvJW58oDlOyutjTqUHNNkKTyCgR8IY2i3jvFhOcmfuREV+VVHAPEnZv5V1WI6yCTw==
+	t=1793214504;
+	b=dPe6qoV2bCe3kn5YDwagaSS4Rdg5oCNw3iIs1nn07ZBV2J8xHDE+mtFnKsHftGngXwMI
+	 nyHqYJtHPJa20gOdUUX5SYhAaoIwYwTgROacsqcik0c43uwohCLurV6JuH9ydvUCYHP8b
+	 90JFuUhYeQ2QjNDhaVyf15qlFvGWUmUqNuDbFUqbyf48mdY9FiH2wy48+kKSF/04KE7uD
+	 84atvGNzjLPn3Bp5zNH4EIPy4+UaLEIAY7Eh4Xt84u4RuHQbxD6Vq99LczWzwpyoRY3v0
+	 omgINkcrL88SGBbdpPVeLXnF78/nnp4/Bpp3yTQ+lc5Wh3RTeXInTc9LDv2lB3fN4Xg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214501;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214504;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=73d7eyT+DEHa/ArbGWgLQnjv7P0rKwJbe/bisI5A6hE=;
-	b=FrA7XVcromv3Yr+REgKIwkd68zuWadfPzKfLSqcQeDXi/3bCx6Y1Wem05nFp8mzzd76c
-	 x34nwHh+Yeju3BkhprCAvmYZX9qLIdq5elBTctCfrPBQNHPVivPND93aHdNsvpGX4fXy9
-	 Vua/FXG4z/ECT+bWSLyKqOIWF+rHJC5JNGB9vRq/5rqza7qxzdjZjty/ii6lpzpeFlLId
-	 XZnUoksxP1VWBcOB2Jra1dVATxJqcL+F5fF3uR9Q8RKBFPk0F21OTEIk72HcqaQyRyAIJ
-	 EgLyXXKtosieDnv1gC0Qa9WCG3787m2lII2szcqcd3oXkLiArPxz8Ti37liuBpHIgGw==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=DdlK4yjxWvyVYzoCUEcB8Ta9k+EhnCaNkPcn2pK5cLI=;
+	b=hUXwl/UfsP/AGVH+YXuIhRF/5Yco7gCDQgT4MdIgNMDqFtpCmsUUsY4lJpeufc+b9b8C
+	 h86/6gMbcZxBm4rQZPX85Ifp/uwFYhOQ2cbfYQDyAICSee8EwRh/Puwk57uQq+mpy5TN/
+	 SE6L1m0UH+AT9qETBtpIZSgnBnmfCE6AaAVCHZANQaHNgLwTC+q0hg9sqaqsYsaew9AXx
+	 HwEGfVtFbocP4hog2nEs/EvLvyMuoXVqz9+3FJaQuPqduAgvu2RWER97yrq1U7Em6E8E3
+	 BeakDkR1O9NlRU4D+OM5RXJRTzCuJ+qrnARZ76hTqUnAvN9euISwx4MDQDjj7/uaA/Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pwRCT244;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Yqu/bnhX";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E156606BF8F;
-	Wed, 28 Oct 2026 19:08:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65517606BF9E;
+	Wed, 28 Oct 2026 19:08:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pwRCT244
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEE401F01825;
-	Wed, 28 Oct 2026 19:08:20 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Yqu/bnhX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5FCD1F031E4;
+	Wed, 28 Oct 2026 19:08:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214501;
-	bh=73d7eyT+DEHa/ArbGWgLQnjv7P0rKwJbe/bisI5A6hE=;
+	s=korg; t=1793214504;
+	bh=DdlK4yjxWvyVYzoCUEcB8Ta9k+EhnCaNkPcn2pK5cLI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pwRCT244/RPb0PHj4X1MsUurzI17bue7NSmO7/f0QtdJ8Pn5PiE2EjHM0fIGnGe7i
-	 lxGR8DlP0GvFCoq3lMfEeaYUi8Zy1Mh3Ryrxr+RxrOlBpuhOXXEXHIzKlGZmeTwFE2
-	 wq+bPSJkA9YA77eWMJskkR4BvlkN3SNCxXvhb6CY=
+	b=Yqu/bnhXpn/zMBy1o6D5bsYSQAK4dowAR5ElS1smEXAbX/ghryiF/kGgslLx385yY
+	 Kek6xdrcF9c8x71sWE3MreNtJkxLFB36zzPYRVjL9k1hUTO5xdPaJZ1xrlpa+WIRAk
+	 lQ1PM9T2jYpujzZnmCE47HOsI2E9QErL58HQy7yA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Mangesh Gadre <Mangesh.Gadre@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Arunpravin Paneer Selvam <Arunpravin.PaneerSelvam@amd.com>,
+	Moti Haimovski <moti.haimovski@intel.com>,
+	Koby Elbaz <koby.elbaz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0881/1887] drm/amdgpu: hide VRAM sysfs attributes on GPUs without VRAM
-Date: Wed, 28 Oct 2026 17:49:37 +0100
-Message-ID: <20261028170519.466604620@linuxfoundation.org>
+Subject: [PATCH 6.1 0882/1887] accel/habanalabs: support mapping cb with vmalloc-backed coherent memory
+Date: Wed, 28 Oct 2026 17:49:38 +0100
+Message-ID: <20261028170519.490572051@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -64,43 +62,87 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christian König <christian.koenig@amd.com>
+From: Moti Haimovski <moti.haimovski@intel.com>
 
-[ Upstream commit 33cc891b56b93cad1a83263eaf2e417436f70c82 ]
+[ Upstream commit 513024d5a0e34fd34247043f1876b6138ca52847 ]
 
-Otherwise accessing them can cause a crash.
+When IOMMU is enabled, dma_alloc_coherent() with GFP_USER may return
+addresses from the vmalloc range. If such an address is mapped without
+VM_MIXEDMAP, vm_insert_page() will trigger a BUG_ON due to the
+VM_PFNMAP restriction.
 
-Signed-off-by: Christian König <christian.koenig@amd.com>
-Tested-by: Mangesh Gadre <Mangesh.Gadre@amd.com>
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Reviewed-by: Arunpravin Paneer Selvam <Arunpravin.PaneerSelvam@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fix this by checking for vmalloc addresses and setting VM_MIXEDMAP
+in the VMA before mapping. This ensures safe mapping and avoids kernel
+crashes. The memory is still driver-allocated and cannot be accessed
+directly by userspace.
+
+Signed-off-by: Moti Haimovski  <moti.haimovski@intel.com>
+Reviewed-by: Koby Elbaz <koby.elbaz@intel.com>
+Signed-off-by: Koby Elbaz <koby.elbaz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_vram_mgr.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/misc/habanalabs/gaudi/gaudi.c   | 19 +++++++++++++++++++
+ drivers/misc/habanalabs/gaudi2/gaudi2.c |  7 +++++++
+ 2 files changed, 26 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_vram_mgr.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_vram_mgr.c
-index aef76467c409f..4d8912345c38f 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vram_mgr.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vram_mgr.c
-@@ -223,6 +223,9 @@ static umode_t amdgpu_vram_attrs_is_visible(struct kobject *kobj,
- 	    !adev->gmc.vram_vendor)
- 		return 0;
+diff --git a/drivers/misc/habanalabs/gaudi/gaudi.c b/drivers/misc/habanalabs/gaudi/gaudi.c
+index 92560414e8433..7224a4636b685 100644
+--- a/drivers/misc/habanalabs/gaudi/gaudi.c
++++ b/drivers/misc/habanalabs/gaudi/gaudi.c
+@@ -4239,10 +4239,29 @@ static int gaudi_mmap(struct hl_device *hdev, struct vm_area_struct *vma,
+ 	vma->vm_flags |= VM_IO | VM_PFNMAP | VM_DONTEXPAND | VM_DONTDUMP |
+ 			VM_DONTCOPY | VM_NORESERVE;
  
-+	if (!ttm_resource_manager_used(&adev->mman.vram_mgr.manager))
-+		return 0;
++#ifdef _HAS_DMA_MMAP_COHERENT
++	/*
++	 * If dma_alloc_coherent() returns a vmalloc address, set VM_MIXEDMAP
++	 * so vm_insert_page() can handle it safely. Without this, the kernel
++	 * may BUG_ON due to VM_PFNMAP.
++	 */
++	if (is_vmalloc_addr(cpu_addr))
++		vm_flags_set(vma, VM_MIXEDMAP);
 +
- 	return attr->mode;
- }
+ 	rc = dma_mmap_coherent(hdev->dev, vma, cpu_addr,
+ 				(dma_addr - HOST_PHYS_BASE), size);
+ 	if (rc)
+ 		dev_err(hdev->dev, "dma_mmap_coherent error %d", rc);
++#else
++
++	rc = remap_pfn_range(vma, vma->vm_start,
++				virt_to_phys(cpu_addr) >> PAGE_SHIFT,
++				size, vma->vm_page_prot);
++	if (rc)
++		dev_err(hdev->dev, "remap_pfn_range error %d", rc);
++
++ #endif
++
  
+ 	return rc;
+ }
+diff --git a/drivers/misc/habanalabs/gaudi2/gaudi2.c b/drivers/misc/habanalabs/gaudi2/gaudi2.c
+index 65e6cae6100a4..e043f4d2343b2 100644
+--- a/drivers/misc/habanalabs/gaudi2/gaudi2.c
++++ b/drivers/misc/habanalabs/gaudi2/gaudi2.c
+@@ -5603,6 +5603,13 @@ static int gaudi2_mmap(struct hl_device *hdev, struct vm_area_struct *vma,
+ 			VM_DONTCOPY | VM_NORESERVE;
+ 
+ #ifdef _HAS_DMA_MMAP_COHERENT
++	/*
++	 * If dma_alloc_coherent() returns a vmalloc address, set VM_MIXEDMAP
++	 * so vm_insert_page() can handle it safely. Without this, the kernel
++	 * may BUG_ON due to VM_PFNMAP.
++	 */
++	if (is_vmalloc_addr(cpu_addr))
++		vm_flags_set(vma, VM_MIXEDMAP);
+ 
+ 	rc = dma_mmap_coherent(hdev->dev, vma, cpu_addr, dma_addr, size);
+ 	if (rc)
 -- 
 2.53.0
 
