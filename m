@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215714;
-	b=jQ0tw2sopntHbuy6ydJP6KgPm7WZbJUSbDjRIm4XNEO10cUsxqztsEVfqTC2t9/nEG0i
-	 s87Zbl88OreU3Q5ggYcBJFsWrKKFGPgHvoup0RqmtgvKMU/U841IUFhTzNmt9ucAQn33/
-	 frmppxtV6XMOxsPavZ9guAW+xrt9TjVfiA7d8k0ainUJ0dptMwi71RISo6I4dGyT8SL/O
-	 5PYYsExHiRpa8nmwH5RuHD9UZxmK3ckqhuyhsgPIR79+pez+/2sTHL9QFBo5oyffu3oii
-	 XOmPuPT5SU4wFTMja9cBdBb/CcxbkQdmWteh9hIBxsi6gv/DDhSi32YgsdkesgYIp2A==
+	t=1793215717;
+	b=NMWlwd/COVCA9H4am9eT4OWdntt3b/pXsVM+X/5cC1nweYeJMHbBIJW3+5HXguJ1eAPE
+	 k7Zq0I3zIZB5nuPFlZtLJA9ZQI+qP0f1+C29JYiUtx9/tf4z9Jiupf1P6WI/kY6gGEvn1
+	 +CUddwngbEqvqEzo+Tt599SCS0xXRKOMjFoXZDYYbM6qfJP8m+JEQeX2lvuEHuA5ikh2a
+	 tMh/oT1xe2moEvy7HwvWmW0I6UO4p2gDreUTdrXkUpIHSRGCuZ0ez8N64a2nxWKDWyKOF
+	 dBU8DLK5ogave0uyylYIe/l7AQuHieEjImtGakHmDnaiSYoiuKCFDGtKqi8ASnR2kLQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215714;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215717;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Jrubzk59NfibXJfAAG1/JonaFuMrekmGUBcRAY8rQw0=;
-	b=LYAZxu6UDnJPdTiut6tB126MlYdxqgkl2riCRxnJ4P4CtXuFTRxmM297k4LcG5wyWwK8
-	 aoovFDJjAqJzxMpidiD2nNnuc2shxftW6a8BNXb2/3g7z/FvzsrKrZg6E0SYzcFxMEifc
-	 o3REWAyQBr1QAdIpJtFYOHmyK2vTbiHqhB+eHQd0/GhP5pdx09RG9sY/IfPdp4MQJ66vk
-	 gl0iWeb72UClqHj5QA6RVWVluU8EznKu0ArPXrRt/IRNFFD/b2mg/4MpHrRJ8uMgHSl+o
-	 EN8YV1vuHKrvupkHjgpk811QfAVZnz4o2Nc9CyBfy9rrgw03Q+XgjIEjq6HrPIr5f6Q==
+	bh=J7zztXCZ/SENo8N/uB3BUiF1X4nindpFBOyBdIifjD0=;
+	b=lvm7PU1nCs71oKEEcy1AlCaZtLIazA9+ldZArAF0haLVnE3bS+cuODa2ZbXr0630fIQy
+	 LkbxLanzW2bz4oWE+jMkKCkKiKOT9yGSuH5p2ZG99mTwXvb0LoJicJ8lAkSSRQ5SnFPoj
+	 Nxju1DTCpdsRhgnDxG4KmI9I+woxuPPRWtGM0cVf2QHoXqxxf1QzHvGI3lUwL9wuWee29
+	 zg4i02Nr1OK9wc33hQQKBHY2VOD5dGHlCIXf0YbIiIdq/6jkM7MHEoso7x1empl3Yrl3n
+	 wSksDqONiPUIuI9e6RjLaCaXDhRW7SfmEK9LMW3mSPfkfYgUSm3tnOFraa7ZsHoq3Fg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l65+3PWn;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q2Hz5MVG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B0A1606A31F;
-	Wed, 28 Oct 2026 19:28:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52480606A31A;
+	Wed, 28 Oct 2026 19:28:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l65+3PWn
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C58821F01825;
-	Wed, 28 Oct 2026 19:28:33 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q2Hz5MVG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A29A21F01825;
+	Wed, 28 Oct 2026 19:28:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215714;
-	bh=Jrubzk59NfibXJfAAG1/JonaFuMrekmGUBcRAY8rQw0=;
+	s=korg; t=1793215717;
+	bh=J7zztXCZ/SENo8N/uB3BUiF1X4nindpFBOyBdIifjD0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=l65+3PWnAAiEsfQzBFd00gQMm8A5rRziFVPZXxbyXIvvhVr41H/JFlrQj8CGQ67Ow
-	 IBinNEH4fU7CeZ3M0IHsfJC3XqBzMnbFfZY0DSTnKyfZ5guOKjBixpJmQcwPRxR1K+
-	 yPHEQ45W9CKzS3gIagZssBbRfSBmGEKAIJRxm54M=
+	b=Q2Hz5MVGgcUSXDcCy4/Oe0fYSOD5TFlbLqI6WWv36n0/djEseLbyf9tYLA+mQypB+
+	 Nx95gqpZwLjuXaZYbsVDZMxrBZxw4rRnpIUg+F6bCgb7IHP8zCddLh7GNxvcY/qAcD
+	 MaC2XIFMmNJFzQa3347F3FGYIp4hVce5oWg9GBZo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Borkmann <daniel@iogearbox.net>,
+	Ido Schimmel <idosch@idosch.org>,
 	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Victor Nogueira <victor@mojatatu.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Simon Horman <horms@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1306/1887] net, sched: Make tc-related drop reason more flexible
-Date: Wed, 28 Oct 2026 17:56:42 +0100
-Message-ID: <20261028170529.150194985@linuxfoundation.org>
+Subject: [PATCH 6.1 1307/1887] net, sched: Fix SKB_NOT_DROPPED_YET splat under debug config
+Date: Wed, 28 Oct 2026 17:56:43 +0100
+Message-ID: <20261028170529.174769617@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -70,153 +70,142 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Borkmann <daniel@iogearbox.net>
+From: Jamal Hadi Salim <jhs@mojatatu.com>
 
-[ Upstream commit 54a59aed395ce0f4177b5212e5746a6462de3ad9 ]
+[ Upstream commit 40cb2fdfed342e7e578d551a073687789f698d89 ]
 
-Currently, the kfree_skb_reason() in sch_handle_{ingress,egress}() can only
-express a basic SKB_DROP_REASON_TC_INGRESS or SKB_DROP_REASON_TC_EGRESS reason.
+Getting the following splat [1] with CONFIG_DEBUG_NET=y and this
+reproducer [2]. Problem seems to be that classifiers clear 'struct
+tcf_result::drop_reason', thereby triggering the warning in
+__kfree_skb_reason() due to reason being 'SKB_NOT_DROPPED_YET' (0).
 
-Victor kicked-off an initial proposal to make this more flexible by disambiguating
-verdict from return code by moving the verdict into struct tcf_result and
-letting tcf_classify() return a negative error. If hit, then two new drop
-reasons were added in the proposal, that is SKB_DROP_REASON_TC_INGRESS_ERROR
-as well as SKB_DROP_REASON_TC_EGRESS_ERROR. Further analysis of the actual
-error codes would have required to attach to tcf_classify via kprobe/kretprobe
-to more deeply debug skb and the returned error.
+Fixed by disambiguating a legit error from a verdict with a bogus drop_reason
 
-In order to make the kfree_skb_reason() in sch_handle_{ingress,egress}() more
-extensible, it can be addressed in a more straight forward way, that is: Instead
-of placing the verdict into struct tcf_result, we can just put the drop reason
-in there, which does not require changes throughout various classful schedulers
-given the existing verdict logic can stay as is.
+[1]
+WARNING: CPU: 0 PID: 181 at net/core/skbuff.c:1082 kfree_skb_reason+0x38/0x130
+Modules linked in:
+CPU: 0 PID: 181 Comm: mausezahn Not tainted 6.6.0-rc6-custom-ge43e6d9582e0 #682
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.2-1.fc37 04/01/2014
+RIP: 0010:kfree_skb_reason+0x38/0x130
+[...]
+Call Trace:
+ <IRQ>
+ __netif_receive_skb_core.constprop.0+0x837/0xdb0
+ __netif_receive_skb_one_core+0x3c/0x70
+ process_backlog+0x95/0x130
+ __napi_poll+0x25/0x1b0
+ net_rx_action+0x29b/0x310
+ __do_softirq+0xc0/0x29b
+ do_softirq+0x43/0x60
+ </IRQ>
 
-Then, SKB_DROP_REASON_TC_ERROR{,_*} can be added to the enum skb_drop_reason
-to disambiguate between an error or an intentional drop. New drop reason error
-codes can be added successively to the tc code base.
+[2]
 
-For internal error locations which have not yet been annotated with a
-SKB_DROP_REASON_TC_ERROR{,_*}, the fallback is SKB_DROP_REASON_TC_INGRESS and
-SKB_DROP_REASON_TC_EGRESS, respectively. Generic errors could be marked with a
-SKB_DROP_REASON_TC_ERROR code until they are converted to more specific ones
-if it is found that they would be useful for troubleshooting.
+ip link add name veth0 type veth peer name veth1
+ip link set dev veth0 up
+ip link set dev veth1 up
+tc qdisc add dev veth1 clsact
+tc filter add dev veth1 ingress pref 1 proto all flower dst_mac 00:11:22:33:44:55 action drop
+mausezahn veth0 -a own -b 00:11:22:33:44:55 -q -c 1
 
-While drop reasons have infrastructure for subsystem specific error codes which
-are currently used by mac80211 and ovs, Jakub mentioned that it is preferred
-for tc to use the enum skb_drop_reason core codes given it is a better fit and
-currently the tooling support is better, too.
+Ido reported:
 
-With regards to the latter:
+  [...] getting the following splat [1] with CONFIG_DEBUG_NET=y and this
+  reproducer [2]. Problem seems to be that classifiers clear 'struct
+  tcf_result::drop_reason', thereby triggering the warning in
+  __kfree_skb_reason() due to reason being 'SKB_NOT_DROPPED_YET' (0). [...]
 
-  [...] I think Alastair (bpftrace) is working on auto-prettifying enums when
-  bpftrace outputs maps. So we can do something like:
+  [1]
+  WARNING: CPU: 0 PID: 181 at net/core/skbuff.c:1082 kfree_skb_reason+0x38/0x130
+  Modules linked in:
+  CPU: 0 PID: 181 Comm: mausezahn Not tainted 6.6.0-rc6-custom-ge43e6d9582e0 #682
+  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.2-1.fc37 04/01/2014
+  RIP: 0010:kfree_skb_reason+0x38/0x130
+  [...]
+  Call Trace:
+   <IRQ>
+   __netif_receive_skb_core.constprop.0+0x837/0xdb0
+   __netif_receive_skb_one_core+0x3c/0x70
+   process_backlog+0x95/0x130
+   __napi_poll+0x25/0x1b0
+   net_rx_action+0x29b/0x310
+   __do_softirq+0xc0/0x29b
+   do_softirq+0x43/0x60
+   </IRQ>
 
-  $ bpftrace -e 'tracepoint:skb:kfree_skb { @[args->reason] = count(); }'
-  Attaching 1 probe...
-  ^C
+  [2]
+  #!/bin/bash
 
-  @[SKB_DROP_REASON_TC_INGRESS]: 2
-  @[SKB_CONSUMED]: 34
+  ip link add name veth0 type veth peer name veth1
+  ip link set dev veth0 up
+  ip link set dev veth1 up
+  tc qdisc add dev veth1 clsact
+  tc filter add dev veth1 ingress pref 1 proto all flower dst_mac 00:11:22:33:44:55 action drop
+  mausezahn veth0 -a own -b 00:11:22:33:44:55 -q -c 1
 
-  ^^^^^^^^^^^^ names!!
+What happens is that inside most classifiers the tcf_result is copied over
+from a filter template e.g. *res = f->res which then implicitly overrides
+the prior SKB_DROP_REASON_TC_{INGRESS,EGRESS} default drop code which was
+set via sch_handle_{ingress,egress}() for kfree_skb_reason().
 
-  Auto-magically. [...]
+Commit text above copied verbatim from Daniel. The general idea of the patch
+is not very different from what Ido originally posted but instead done at the
+cls_api codepath.
 
-Add a small helper tcf_set_drop_reason() which can be used to set the drop reason
-into the tcf_result.
-
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Cc: Jamal Hadi Salim <jhs@mojatatu.com>
-Cc: Victor Nogueira <victor@mojatatu.com>
-Link: https://lore.kernel.org/netdev/20231006063233.74345d36@kernel.org
-Reviewed-by: Jakub Kicinski <kuba@kernel.org>
-Link: https://lore.kernel.org/r/20231009092655.22025-1-daniel@iogearbox.net
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 54a59aed395c ("net, sched: Make tc-related drop reason more flexible")
+Reported-by: Ido Schimmel <idosch@idosch.org>
+Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Link: https://lore.kernel.org/netdev/ZTjY959R+AFXf3Xy@shredder
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Stable-dep-of: f60b396ee174 ("net/sched: act_api: fix TOCTOU NULL deref on a->goto_chain")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/pkt_cls.h     | 6 ++++++
- include/net/sch_generic.h | 3 +--
- net/core/dev.c            | 6 ++++--
- 3 files changed, 11 insertions(+), 4 deletions(-)
+ net/sched/act_api.c | 2 +-
+ net/sched/cls_api.c | 9 ++++++++-
+ 2 files changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/include/net/pkt_cls.h b/include/net/pkt_cls.h
-index 2ef3c220d52ca..5671a05b744b0 100644
---- a/include/net/pkt_cls.h
-+++ b/include/net/pkt_cls.h
-@@ -181,6 +181,12 @@ __cls_set_class(unsigned long *clp, unsigned long cl)
- 	return xchg(clp, cl);
- }
- 
-+static inline void tcf_set_drop_reason(struct tcf_result *res,
-+				       enum skb_drop_reason reason)
-+{
-+	res->drop_reason = reason;
-+}
-+
- static inline void
- __tcf_bind_filter(struct Qdisc *q, struct tcf_result *r, unsigned long base)
+diff --git a/net/sched/act_api.c b/net/sched/act_api.c
+index a24e8327e7e7b..5fd72b061801e 100644
+--- a/net/sched/act_api.c
++++ b/net/sched/act_api.c
+@@ -1131,7 +1131,7 @@ int tcf_action_exec(struct sk_buff *skb, struct tc_action **actions,
+ 			}
+ 		} else if (TC_ACT_EXT_CMP(ret, TC_ACT_GOTO_CHAIN)) {
+ 			if (unlikely(!rcu_access_pointer(a->goto_chain))) {
+-				net_warn_ratelimited("can't go to NULL chain!\n");
++				tcf_set_drop_reason(res, SKB_DROP_REASON_TC_ERROR);
+ 				return TC_ACT_SHOT;
+ 			}
+ 			tcf_action_goto_chain_exec(a, res);
+diff --git a/net/sched/cls_api.c b/net/sched/cls_api.c
+index 603b7caebad2b..b79d98711e757 100644
+--- a/net/sched/cls_api.c
++++ b/net/sched/cls_api.c
+@@ -1601,6 +1601,7 @@ static inline int __tcf_classify(struct sk_buff *skb,
+ 				 bool compat_mode,
+ 				 u32 *last_executed_chain)
  {
-diff --git a/include/net/sch_generic.h b/include/net/sch_generic.h
-index 9310e02d27c88..e16c97cd6ef91 100644
---- a/include/net/sch_generic.h
-+++ b/include/net/sch_generic.h
-@@ -327,7 +327,6 @@ struct Qdisc_ops {
- 	struct module		*owner;
- };
++	u32 orig_reason = res->drop_reason;
+ #ifdef CONFIG_NET_CLS_ACT
+ 	const int max_reclassify_loop = 16;
+ 	const struct tcf_proto *first_tp;
+@@ -1628,8 +1629,14 @@ static inline int __tcf_classify(struct sk_buff *skb,
+ 			goto reset;
+ 		}
+ #endif
+-		if (err >= 0)
++		if (err >= 0) {
++			/* Policy drop or drop reason is over-written by
++			 * classifiers with a bogus value(0) */
++			if (err == TC_ACT_SHOT &&
++			    res->drop_reason == SKB_NOT_DROPPED_YET)
++				tcf_set_drop_reason(res, orig_reason);
+ 			return err;
++		}
+ 	}
  
--
- struct tcf_result {
- 	union {
- 		struct {
-@@ -335,8 +334,8 @@ struct tcf_result {
- 			u32		classid;
- 		};
- 		const struct tcf_proto *goto_tp;
--
- 	};
-+	enum skb_drop_reason		drop_reason;
- };
- 
- struct tcf_chain;
-diff --git a/net/core/dev.c b/net/core/dev.c
-index 06f4f0f2421b4..1bf404303565e 100644
---- a/net/core/dev.c
-+++ b/net/core/dev.c
-@@ -4080,6 +4080,7 @@ sch_handle_egress(struct sk_buff *skb, int *ret, struct net_device *dev)
- 	/* qdisc_skb_cb(skb)->pkt_len was already set by the caller. */
- 	tc_skb_cb(skb)->mru = 0;
- 	tc_skb_cb(skb)->post_ct = false;
-+	cl_res.drop_reason = SKB_DROP_REASON_TC_EGRESS;
- 	mini_qdisc_bstats_cpu_update(miniq, skb);
- 
- 	switch (tcf_classify(skb, miniq->block, miniq->filter_list, &cl_res, false)) {
-@@ -4090,7 +4091,7 @@ sch_handle_egress(struct sk_buff *skb, int *ret, struct net_device *dev)
- 	case TC_ACT_SHOT:
- 		mini_qdisc_qstats_cpu_drop(miniq);
- 		*ret = NET_XMIT_DROP;
--		kfree_skb_reason(skb, SKB_DROP_REASON_TC_EGRESS);
-+		kfree_skb_reason(skb, cl_res.drop_reason ?: SKB_DROP_REASON_TC_EGRESS);
- 		return NULL;
- 	case TC_ACT_STOLEN:
- 	case TC_ACT_QUEUED:
-@@ -5273,6 +5274,7 @@ sch_handle_ingress(struct sk_buff *skb, struct packet_type **pt_prev, int *ret,
- 	tc_skb_cb(skb)->mru = 0;
- 	tc_skb_cb(skb)->post_ct = false;
- 	skb->tc_at_ingress = 1;
-+	cl_res.drop_reason = SKB_DROP_REASON_TC_INGRESS;
- 	mini_qdisc_bstats_cpu_update(miniq, skb);
- 
- 	switch (tcf_classify(skb, miniq->block, miniq->filter_list, &cl_res, false)) {
-@@ -5282,7 +5284,7 @@ sch_handle_ingress(struct sk_buff *skb, struct packet_type **pt_prev, int *ret,
- 		break;
- 	case TC_ACT_SHOT:
- 		mini_qdisc_qstats_cpu_drop(miniq);
--		kfree_skb_reason(skb, SKB_DROP_REASON_TC_INGRESS);
-+		kfree_skb_reason(skb, cl_res.drop_reason ?: SKB_DROP_REASON_TC_INGRESS);
- 		*ret = NET_RX_DROP;
- 		return NULL;
- 	case TC_ACT_STOLEN:
+ 	return TC_ACT_UNSPEC; /* signal: continue lookup */
 -- 
 2.53.0
 
