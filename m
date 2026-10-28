@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793207605;
-	b=N8qC0LwegDtfRxn83ov1TorEi4ClL/AEP8IDg6xrfUHXRRVHzHYAskZQzmbLGV3/makQ
-	 9AUEqSANRl+A0Za418BqSrQgvBMuBaHHzPfU9Uud2cXgZjQ6NaKSr4TrF9ADi+TqrZFyq
-	 XBcW9mEkyyzcgvBJrWVJ/XWu88VRHHNQH1384oreYzr/03CobSf/jht5blQtvUr2wY6BT
-	 Z8qv0cGGmUg2W4kMEXycizVhp0dEKYCOt6xhHJ476HJjoW26X7zGuzlY1Xb7WhtKKuez1
-	 BF99RnAgQ4YrwVo2BU5cD+S8GNzoitfshT5D6HZLN2MMM6UKcvHyzmCopP5exqUP1LA==
+	t=1793207611;
+	b=40RDwOxVZWrtvpzBnBJ2pXGHN4epTmFe5Qr/TCtrfIbGuuQUdC6PYEQvysdYUueU4lD6
+	 pqiY5uMl5ZWZoQ/X2eLQJoxNm/FIdmHlVlWUhBXH3MLpiBCfe68ljRi5E47haKKOfFj9x
+	 kOcttYre+gaQzSPTt1UBjTA1sKWzRVjBNLlE2JZuIsvyMCMmfINET8IBWsVOrtwCDVG0b
+	 s6Z0wAX/e371UvotyflGwhsAORclX8B0LKllq93+4ld7rOGIrbKTmpImXf2Z6RGV0EJRy
+	 0/vxx0eecni6kRm3B248SUlUDCJYw8JiAUH8M1lZRH96av8eRvsFOcz8VPe+WiIhRwg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793207605;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793207611;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=4msmo3hG3pma8LU2SGhtl6Tejwl+54T3teg6GhEvnLs=;
-	b=Wr7BOKBdcxrQDLu1GOofB/s5YSCYjL48RQZhxakU5okcGj7JbGIovJzE7lfbc0/FAOvA
-	 qP2Q80MxvA+7LUQQ0XVtvN9ZpaBeiT2b6xRXvyALVtlD4LcijI2tH9wfhAqU3XK204lEs
-	 sj2zdJNalHaAKoa88aDEZb7IgOl9fKL1zhlW5eVCp8/Z4eAFB4vprRcL1gK1gX5eWUmtC
-	 aE8yd6UKfflgM2009JXGAOspSOuC5pcb/kElnR0vBQt88u4NTD8tuAEPROJ1U5uFtNxMG
-	 1wNHdcELFXgWnCwDGnkVDPf0KKZ00KWHbMjkucvRUwDiK7UimiA0YwMp/vtmKC94eVQ==
+	bh=zdnrZoR5saUGSWKk+sP5+VMr3LC3vB3oSSMHeSOWcHw=;
+	b=1Y9eNc+OzjuCOT3OJlESZZvrFJFIUk3eIO7l9xGrxHa0WFnR5qJPsEmKL0NeAKeDITxy
+	 voJ5fzTs2hdcdX87LAfoEEo4vOlvmyv1JAvWJCggbbT1k5cThq1uNjuhuiFQX/roSnwPa
+	 CLfOFy0Qr2npU/xruXLCkz0QrZhTpX4Hn85BDwCZIYyAG3rw5o6aSjzOFneE6MmUhLJ1k
+	 ZJfzFjG0aMRxyt5R7AYDB8bPacbFKvdJyuWpgo34fwqhU+wdnQpR41tMaBog1mSfzd682
+	 aeR4eHRXNNcELlJSSEeZwVJlybHdJEn5jIaaR1lc+diLOhrkMM7TlD8Xw2TwZ+TToyw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iMkee+nb;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZeeNq489;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36C9B606A32F;
-	Wed, 28 Oct 2026 17:13:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 343AF606A325;
+	Wed, 28 Oct 2026 17:13:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iMkee+nb
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 856F61F01828;
-	Wed, 28 Oct 2026 17:13:24 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZeeNq489
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CF2C1F01825;
+	Wed, 28 Oct 2026 17:13:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793207605;
-	bh=4msmo3hG3pma8LU2SGhtl6Tejwl+54T3teg6GhEvnLs=;
+	s=korg; t=1793207610;
+	bh=zdnrZoR5saUGSWKk+sP5+VMr3LC3vB3oSSMHeSOWcHw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iMkee+nbAMf2Zdq4H/8+Cyu52Kgq9/xQkodSsKtLaxJMYqD/5qJ/0o2TyvmSia4Su
-	 4yB0TCqSCVwJL6TjNxIHiCOPGirR0CtJJvYL/7hPvpa38EdSLVmTYa+3giUgX/ZYs3
-	 rGcCOhTQY2kYQ2vl4PlkhGVYEmlC33ytfJMcubug=
+	b=ZeeNq489y7J1UZA4USjuGhIMZGUI3M41IHhe2CWy1M8GMA5Joz0Tq73LSwP6VDasf
+	 uJLzGNgUTu4h17ciuJ2BVFPa/D2r6lZP21XTQfVWI3GY4j/Z8REtQ8WTN/MnEhQ0Ob
+	 6h2VmTBxg/liMP3LhJ/53n0WFdW53iiA9M2oNKdc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Francesco Lavra <flavra@baylibre.com>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 038/247] regcache: Do not overwrite error code when finalizing cache after error
-Date: Wed, 28 Oct 2026 17:57:21 +0100
-Message-ID: <20261028165948.269563483@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Subject: [PATCH 6.12 075/247] tools: gpio: fix building from the top level with O=
+Date: Wed, 28 Oct 2026 17:57:58 +0100
+Message-ID: <20261028165949.168795196@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165947.349197979@linuxfoundation.org>
 References: <20261028165947.349197979@linuxfoundation.org>
@@ -68,42 +67,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Francesco Lavra <flavra@baylibre.com>
+From: Sasha Levin <sashal@kernel.org>
 
-[ Upstream commit 9108f7fa493b4c88cbc09503e0c164244456bad5 ]
+commit 52336337f1a01ad803c7f3ddb23f40222e9ad58d upstream.
 
-During regcache initialization, if an error occurs in the
-cache_ops->populate callback, and if cache operations include an exit
-callback, the error code from populate() is overwritten with the return
-value from exit(). This hides the error condition from the caller of
-regcache_init(), and can cause NULL pointer dereferences when the regcache
-is later accessed.
+"make O=<dir> tools/gpio" fails:
 
-Fixes: 94a3a95f0315 ("regcache: Add ->populate() callback to separate from ->init()")
-Signed-off-by: Francesco Lavra <flavra@baylibre.com>
-Link: https://patch.msgid.link/20260616114429.1852456-1-flavra@baylibre.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Stable-dep-of: abff0a48b110 ("regmap: Drop map lock during cache init and exit")
+  Makefile:27: /tools/build/Makefile.include: No such file or directory
+
+tools/Makefile clears srctree, and the gpio Makefile only works it out
+again when building_out_of_srctree is not set, which the top-level
+Makefile sets for O= builds.
+
+Also work out srctree when it is empty, as tools/bpf/Makefile does
+since commit a89b2cbf71d64 ("tools, bpf: Fix build for 'make -s
+tools/bpf O=<dir>'").
+
+Fixes: 4a6a6f5c4aeed ("tools: gpio: Use !building_out_of_srctree to determine srctree")
+Cc: stable@vger.kernel.org
+Assisted-by: LLM
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://patch.msgid.link/20261011223358.2327625-5-sashal@kernel.org
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/base/regmap/regcache.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/gpio/Makefile |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/base/regmap/regcache.c b/drivers/base/regmap/regcache.c
-index d2630a55bb50b..0e929e7ac68aa 100644
---- a/drivers/base/regmap/regcache.c
-+++ b/drivers/base/regmap/regcache.c
-@@ -216,7 +216,7 @@ int regcache_init(struct regmap *map, const struct regmap_config *config)
- 	if (map->cache_ops->exit) {
- 		dev_dbg(map->dev, "Destroying %s cache\n", map->cache_ops->name);
- 		map->lock(map->lock_arg);
--		ret = map->cache_ops->exit(map);
-+		map->cache_ops->exit(map);
- 		map->unlock(map->lock_arg);
- 	}
- err_free:
--- 
-2.53.0
-
+--- a/tools/gpio/Makefile
++++ b/tools/gpio/Makefile
+@@ -7,7 +7,13 @@ bindir ?= /usr/bin
+ # isn't set and when invoked from selftests build, where srctree
+ # is set to ".". building_out_of_srctree is undefined for in srctree
+ # builds
++ifeq ($(srctree),)
++update_srctree := 1
++endif
+ ifndef building_out_of_srctree
++update_srctree := 1
++endif
++ifeq ($(update_srctree),1)
+ srctree := $(patsubst %/,%,$(dir $(CURDIR)))
+ srctree := $(patsubst %/,%,$(dir $(srctree)))
+ endif
 
 
