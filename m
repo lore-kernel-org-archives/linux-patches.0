@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215950;
-	b=giiCoWLN0H9TJopCN/I1Z5GukTh+TOw6fP6FNmDgjO8cAjeSb9ybWmUbUT7nFuqN3ngH
-	 8pMXkEhJpX9hwBEMlIXEkTsVwCx2VrR6mcvH5ktkYcBdUWDBvsDJqjMgh8YSvBWLK/mR+
-	 8H21qv/Kng61MoOImOdDpGBoyGJ4QVmdio6Ju5PhmDLcsc31Jwl/gJn0+kTn2CtOzz2oB
-	 NQxohuyfeTBCBWGjmPiP8knG4ufx/ob4286zT7IaOw3J5QYdY3HhPsMoodC8YWGp9lTIL
-	 45ypK6U+gJraJ2jHRyleaqmyoUIRMf7KVFJ/ojWKhlUXjw+KC0bBCIhQcLO67o7wOwA==
+	t=1793215953;
+	b=I/aVfWZBAKft6+wOygJsaRh3Y0Bzg/3XB+KXswB/vmsVUmid2ru3bPhHVZOOQmaCE/W3
+	 gsMeNKT6/wsUsOQW191fQcxiPCT/+BW6nSR27Qo7F8SH+5vHYaOoA3QUj4iDvG6etNsJb
+	 oB6t757GbbCmxDsZ+lqV0dXDZjKdDnX7OOWFwE/YNTU7CK+u8+MOttesiuKCmRUG5CqcF
+	 n7SfUYb2S3poYRJ47N0NJ3fJ+xKYzNWMqBF9vAOrNvAvy97yOlEpdR6liaGy3dYBO8t/s
+	 iZn3tMY1ONqzoHyCtaf7/VshUjaAtUT3Nw/zXwxg8lCrobI5g6o6D0S41bB7GtRbN8w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215950;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215953;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=pT8o8j6qXc/afwRV2tWpHYNC4NLO4zHXHaH14hJ5KoI=;
-	b=tmtcHjY6QPAssPTNVCCo7xYz3r1HtmOWoQm+vIOViS6IOSxJCPvf/w6dC9/vZQAN/qj5
-	 zjCXrnJolormw3C+a6mM/7QxoeXCfF321KCB7peoTWtSAPl3R8GxPlBzvDsOjHi0llFC6
-	 ApkB4jJ/8wsPJWGWSWxhdNqDAAaMtAw3o4zVZXbfYAyMo5pJSnsL3dSoEy85gAI3xNK4P
-	 F7xL3yykqDql6zQSZo4CRk+PecaG8vnfKH5vkR7/RygP2hEUNyzweYsnXV1xrR9nlLTeO
-	 XxxAUq2CMZNjIivgS4i5rSxnaZQ27jjpBqlTxrtK+Cm6h0rLVUiosb4qtKyW/kIJGfA==
+	bh=XbFM46OUV9j440ALSIkTZNxD9rv/6QcyY6EhyXTzbpQ=;
+	b=AeWAAsDp6qBbATkfyiUwtkR9liELeDJ9HcD75tJ+N0rxshemvJg4sOwvSgyx3fGwu3U6
+	 XEgu8iXDw975ZEZYSJzIDDlxdND2Si1GpdpONKx71pgWbtW2TcgBG0O60uf/IDx7qehYk
+	 faxxx2+MnYhuAzXpi6tvY5QvlKr/bDn4ElFvhw0YhMORc78SRwr9TUEz3llZ/KSm1xxUL
+	 HdYAFVLaw8kXIOOUxTyt4uudyVKZQ0ndlb/kQpWP7xyuHdSmXbPCilIGzwooakjVqIH05
+	 MhMaCiS/E6uKIs4UPp4cShcETVi7Mlh+2o66i885S+x9bu/ww2qdWqCYqZXVmTvQgGg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pdpisgZA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="O/37SlyA";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D8FF606A31E;
-	Wed, 28 Oct 2026 19:32:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D617606A31A;
+	Wed, 28 Oct 2026 19:32:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pdpisgZA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE18E1F01825;
-	Wed, 28 Oct 2026 19:32:29 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O/37SlyA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD1C91F01825;
+	Wed, 28 Oct 2026 19:32:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215950;
-	bh=pT8o8j6qXc/afwRV2tWpHYNC4NLO4zHXHaH14hJ5KoI=;
+	s=korg; t=1793215953;
+	bh=XbFM46OUV9j440ALSIkTZNxD9rv/6QcyY6EhyXTzbpQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pdpisgZA8ZF+3PNj1sCi7JsETp4ozXwo6F37h62ATHYV80AQPlJSGRGMHRRj3/eTD
-	 bL8Z6o8IEEFKBck1q8qj8EkRwi4KiEuh9WqnQBC8PZRytacdqlp3iVliFl3ykYWqcu
-	 BNOnI1LnfS7dvWchhz4eRUPitgtM7PoTezJGnyBo=
+	b=O/37SlyAcOhIdH5kXH8Un8Gbqi914pHTc8xynw/38h5o/d/jqTMK4j5D57FXe0F1O
+	 VvvU//7a7rZCponle/dPHQOC/WeuhRLJ9DqNlCINZrQ7AacGio0zovjbfB8r4I+RTH
+	 eRElgw8HAohdApOwtUso5F2bE7KdY+cjCMev6Ttc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fan Wu <fanwu01@zju.edu.cn>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Shuangpeng Bai <shuangpeng.kernel@gmail.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1389/1887] power: supply: charger-manager: register regulators before exposing sysfs
-Date: Wed, 28 Oct 2026 17:58:05 +0100
-Message-ID: <20261028170531.060357464@linuxfoundation.org>
+Subject: [PATCH 6.1 1390/1887] lockd: fix NULL dereference on lockowner allocation failure
+Date: Wed, 28 Oct 2026 17:58:06 +0100
+Message-ID: <20261028170531.082028602@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,160 +68,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
 
-[ Upstream commit c57cb36f76eb7ced45f57af1a890d8f3a6d76342 ]
+[ Upstream commit 4c7fc129db061c7daab841c4f3c342d894832362 ]
 
-charger_manager_remove() and the err_reg_extcon probe error path free each
-charger regulator with regulator_put() before tearing down the power_supply
-sysfs entries (power_supply_unregister()). charger_manager_remove() also
-calls try_charger_enable(cm, false) after the regulator_put() loop. A
-concurrent write to a charger's externally_control sysfs attribute that
-lands between regulator_put() and power_supply_unregister() can run
-charger_externally_control_store() and call try_charger_enable(), which,
-when charging is enabled, dereferences the already-freed consumer handle.
-When charging is enabled, try_charger_enable(cm, false) in .remove() also
-dereferences the freed handles directly. Both leave use-after-free windows.
-Symmetrically, probe registers the sysfs entries (power_supply_register)
-before acquiring the regulators (regulator_get, inside
-charger_manager_register_extcon), so userspace can reach externally_control
-before the regulators are available.
+nlmclnt_locks_init_private() installs NLM file lock operations even when
+nlmclnt_find_lockowner() fails to allocate a lockowner. nlmclnt_proc()
+then returns -ENOMEM, but the VFS still tears down the partially
+initialized file_lock and calls locks_release_private().
 
-Split charger_manager_register_extcon() on the sync/async boundary:
-charger_manager_get_regulators() (regulator_get only, no async producer)
-now runs before power_supply_register() so sysfs is not live before
-regulators are available, and charger_manager_register_extcon() keeps only
-the extcon notifier/work setup, still after power_supply_register() so a
-power_supply_register() failure cannot reach extcon setup. This keeps the
-sysfs setup/teardown ordering symmetric without introducing an asynchronous
-producer on the earlier probe-error path.
+That invokes nlmclnt_locks_release_private(), which dereferences
+fl->fl_u.nfs_fl.owner and crashes because the owner was never installed.
 
-Move power_supply_unregister() and try_charger_enable(cm, false) ahead of
-the regulator_put() loop on both teardown paths, and adjust err_reg_extcon
-(power_supply_unregister() then fall through err_regulator for
-regulator_put(); get_regulators self-rolls back on its own failure).
+Clear fl_ops before attempting to initialize the NLM private state, and
+install the NLM lock operations only after a lockowner has been allocated
+successfully.
 
-This does not address the separate extcon-notifier-driven deref of the same
-handles, which needs its own synchronization design.
-
-Found by an in-house static analysis tool.
-
-Fixes: 3950c7865cd7 ("charger-manager: Add support sysfs entry for charger")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Assisted-by: Codex:gpt-5.6
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
-Link: https://patch.msgid.link/20260728030123.230202-1-fanwu01@zju.edu.cn
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Signed-off-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/charger-manager.c | 54 +++++++++++++++++++-------
- 1 file changed, 39 insertions(+), 15 deletions(-)
+ fs/lockd/clntproc.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/power/supply/charger-manager.c b/drivers/power/supply/charger-manager.c
-index a20e7aaffbaa8..7f7ddecf2250b 100644
---- a/drivers/power/supply/charger-manager.c
-+++ b/drivers/power/supply/charger-manager.c
-@@ -1017,6 +1017,29 @@ static int charger_extcon_init(struct charger_manager *cm,
- 	return 0;
+diff --git a/fs/lockd/clntproc.c b/fs/lockd/clntproc.c
+index 99fffc9cb9585..7f867122e3883 100644
+--- a/fs/lockd/clntproc.c
++++ b/fs/lockd/clntproc.c
+@@ -479,8 +479,11 @@ static const struct file_lock_operations nlmclnt_lock_ops = {
+ static void nlmclnt_locks_init_private(struct file_lock *fl, struct nlm_host *host)
+ {
+ 	fl->fl_u.nfs_fl.state = 0;
++	fl->fl_ops = NULL;
+ 	fl->fl_u.nfs_fl.owner = nlmclnt_find_lockowner(host, fl->fl_owner);
+ 	INIT_LIST_HEAD(&fl->fl_u.nfs_fl.list);
++	if (!fl->fl_u.nfs_fl.owner)
++		return;
+ 	fl->fl_ops = &nlmclnt_lock_ops;
  }
  
-+static int charger_manager_get_regulators(struct charger_manager *cm)
-+{
-+	struct charger_desc *desc = cm->desc;
-+	struct charger_regulator *charger;
-+	int i, ret;
-+
-+	for (i = 0; i < desc->num_charger_regulators; i++) {
-+		charger = &desc->charger_regulators[i];
-+		charger->consumer = regulator_get(cm->dev,
-+						  charger->regulator_name);
-+		if (IS_ERR(charger->consumer)) {
-+			dev_err(cm->dev, "Cannot find charger(%s)\n",
-+				charger->regulator_name);
-+			ret = PTR_ERR(charger->consumer);
-+			while (i-- > 0)
-+				regulator_put(desc->charger_regulators[i].consumer);
-+			return ret;
-+		}
-+		charger->cm = cm;
-+	}
-+	return 0;
-+}
-+
- /**
-  * charger_manager_register_extcon - Register extcon device to receive state
-  *				     of charger cable.
-@@ -1039,15 +1062,6 @@ static int charger_manager_register_extcon(struct charger_manager *cm)
- 	for (i = 0; i < desc->num_charger_regulators; i++) {
- 		charger = &desc->charger_regulators[i];
- 
--		charger->consumer = regulator_get(cm->dev,
--					charger->regulator_name);
--		if (IS_ERR(charger->consumer)) {
--			dev_err(cm->dev, "Cannot find charger(%s)\n",
--				charger->regulator_name);
--			return PTR_ERR(charger->consumer);
--		}
--		charger->cm = cm;
--
- 		for (j = 0; j < charger->num_cables; j++) {
- 			struct charger_cable *cable = &charger->cables[j];
- 
-@@ -1582,13 +1596,23 @@ static int charger_manager_probe(struct platform_device *pdev)
- 	}
- 	psy_cfg.attr_grp = desc->sysfs_groups;
- 
-+	/*
-+	 * Acquire charger regulators before exposing the sysfs entries, so
-+	 * userspace cannot reach externally_control before the regulators
-+	 * (and charger->cm) are available.  Mirrors the order in remove().
-+	 */
-+	ret = charger_manager_get_regulators(cm);
-+	if (ret < 0)
-+		return ret;
-+
- 	cm->charger_psy = power_supply_register(&pdev->dev,
- 						&cm->charger_psy_desc,
- 						&psy_cfg);
- 	if (IS_ERR(cm->charger_psy)) {
- 		dev_err(&pdev->dev, "Cannot register charger-manager with name \"%s\"\n",
- 			cm->charger_psy_desc.name);
--		return PTR_ERR(cm->charger_psy);
-+		ret = PTR_ERR(cm->charger_psy);
-+		goto err_regulator;
- 	}
- 
- 	/* Register extcon device for charger cable */
-@@ -1622,11 +1646,11 @@ static int charger_manager_probe(struct platform_device *pdev)
- 	return 0;
- 
- err_reg_extcon:
-+	power_supply_unregister(cm->charger_psy);
-+err_regulator:
- 	for (i = 0; i < desc->num_charger_regulators; i++)
- 		regulator_put(desc->charger_regulators[i].consumer);
- 
--	power_supply_unregister(cm->charger_psy);
--
- 	return ret;
- }
- 
-@@ -1644,12 +1668,12 @@ static void charger_manager_remove(struct platform_device *pdev)
- 	cancel_work_sync(&setup_polling);
- 	cancel_delayed_work_sync(&cm_monitor_work);
- 
--	for (i = 0 ; i < desc->num_charger_regulators ; i++)
--		regulator_put(desc->charger_regulators[i].consumer);
-+	try_charger_enable(cm, false);
- 
- 	power_supply_unregister(cm->charger_psy);
- 
--	try_charger_enable(cm, false);
-+	for (i = 0 ; i < desc->num_charger_regulators ; i++)
-+		regulator_put(desc->charger_regulators[i].consumer);
- }
- 
- static const struct platform_device_id charger_manager_id[] = {
 -- 
 2.53.0
 
