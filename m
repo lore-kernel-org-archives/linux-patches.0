@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216328;
-	b=09FFJP5NuSN4LZ+oCFSHzc3SiMVsbUvVhsX+/yuznd8HcvInflfFINcLkyh0WefTMy68
-	 MstMrJcCg6Xq4k95/5F9IwjJP2IIFGPLBtemJcUQKg5HexoI+ait+7dZ9UeWWrGs9lrwA
-	 eACS+PGDxVmqL/nD/3G9KPOvZAkUNo91B3xyz0BP2hqJA4VvoOFRskjNwaLhf8IPzb4iH
-	 N95eT6JY9wUpdVVEYsgO8awzZ3tqsQEL6OV4FixXL1M79BjY+ImIzgPfZfYzYcKrXEGDu
-	 EUH6PKSrChLDZr+LZltt5SIYeGzcz5LvCDMYlWm6cxEOWLc06cplL048SKlSnevwkzA==
+	t=1793216331;
+	b=lWRXV3XPq858qc8hM8IWe+4Xhj81j2Rn7PuX2Xm4rNFzkuCwjZvhku4ev+TNer1z/cUz
+	 TxawpEwL0Rl7XBFEDx5D9TVojnmqc70XVNYvTCYw6QwalucCHjYJsDO/JjxjTdm27NG6v
+	 dwOSvNK4K10qi7VgyWEU3yghi0ZznIPN/8BLvAvG+sPPlhYEsXhdCD2iwnncsJKp+r8vZ
+	 FIMfwE5VwN1dBdJ+8A9IIscWLWjNJNXfSNfnbs6UTXWJvkihM1sqe75u7IYBUXNS/MlwE
+	 hjPnaHN7R0hZ4rJQ9pDDvtwCVUy3p786GNDCMm0bBaiL+rbhXdzgXiKgVpGIZPepBxw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216328;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216331;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=reUopxDVczdFvVP2HP4Al7jT8LM9nz+urYENC4bU1LA=;
-	b=Q97uh4hNm7qaBDEw+FY7gf/dbaRGDCf2i1XI/zx6bkqZVDQfkjLNo7I1ELMt4ac1yaEP
-	 TeiHJRD2RAgsGSr2grF776wkxK7aKInjHcnojd++IUU4AWgw8l1SVvfjB5356AfMw7dcJ
-	 lPK6uooXO2uKrV/xdQhi0YZnS6rJO1fSzmZVbjWO4JWpYLiH5kQzRotuCEtLy2RehtBuJ
-	 ufkQhm7nIYSPylxsSm4y3aJ+nPOBGuD/hXpe6q/eSEExgpxA/nICCIQZdvI3JKCbcIU7+
-	 sdiQcVKzJ9RXm/+/vAyN2YekYIvKhDpOzdQqu9fXHjnHODsrfvaH8SabeWdJQcVYUKg==
+	bh=Osp7STGqAWO0Y9AgJ2Ohvu7XhdLn68Pvdc9bC0jV3cI=;
+	b=yr2/GQ0OzGWNpej8oY9elHVh0IzZxARLa6x4dSRM6mQFkFQlGKfwqPDuUFRk+llSKyeo
+	 zP4+sMA1Md1hMo6kwYCSPJP9yMmV+ozy9e39F7YmMTLpctMk3j08x1MODVjiTFjjmQPph
+	 5Y2pNu9vIKAcAZjSsUnQDHjj2kyOR0Sg7LwElyMlBClZWAbOEQSuTxB8YJVOo3mI0xIbA
+	 K7WYL8N4c6FixjvxgYA9pB6Ix+DFONiRS8xzlSVTtPXCkAGxkLtCygAMJPvQY6DzFZpgR
+	 Dmt7JzIOPSxEMgm1pTx3QifNwG3Ch9dlVfHR49ZHbqMyKikY1pLKjHQMnh1vQUHdXNw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OMKsNwzm;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Nt/JDYTs";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A198606A31A;
-	Wed, 28 Oct 2026 19:38:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0873C606A31D;
+	Wed, 28 Oct 2026 19:38:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OMKsNwzm
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 783611F01825;
-	Wed, 28 Oct 2026 19:38:47 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Nt/JDYTs
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59FBD1F01825;
+	Wed, 28 Oct 2026 19:38:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216328;
-	bh=reUopxDVczdFvVP2HP4Al7jT8LM9nz+urYENC4bU1LA=;
+	s=korg; t=1793216330;
+	bh=Osp7STGqAWO0Y9AgJ2Ohvu7XhdLn68Pvdc9bC0jV3cI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OMKsNwzml265jgwEPkl8ZmmBbaHCWVT57DyhFe1wq1k+7W6td7DB+C880WdfrP77s
-	 llwJcif25ndlyVPEAydip9eiVSKAWAA/HbfRsrvG/SICd326VwyguwHBLdGSq/8HwR
-	 +/HQT11IZz6l5QIQGSHH5xNE9cTaFefSzmuKVDBw=
+	b=Nt/JDYTs6FuOsDAWT1Dux8DDxKOfXOITPu+JYGKJ8Pz9ZBX/bokF+Ene0/+OF67mV
+	 6IEdJ6Pzi61Xlq2xdYEawBo5FgXfiIBNJ3C/ZVOm9hzG5Au3F36ib9D3ggguKCg4hN
+	 N2eZB71wW0vL8lC0Cjt49Ym8mLEUE1zZryqA5o9w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Petr Machata <petrm@nvidia.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Simon Horman <horms@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1521/1887] net: bridge: arp/nd proxy: fix reading neigh ha
-Date: Wed, 28 Oct 2026 18:00:17 +0100
-Message-ID: <20261028170534.076304000@linuxfoundation.org>
+Subject: [PATCH 6.1 1522/1887] net_sched: sch_fifo: implement lockless __fifo_dump()
+Date: Wed, 28 Oct 2026 18:00:18 +0100
+Message-ID: <20261028170534.100259784@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -70,126 +69,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikolay Aleksandrov <razor@blackwall.org>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 57549ab9079122991dfa0f8248ca00e101e8e69b ]
+[ Upstream commit 01daf66b791e1ddd1a4aae2a65ea65fa1d4a96ef ]
 
-Currently neigh ha address is read directly, but that can result in
-torn/partial reads if the neigh is being updated. Use neigh_ha_snapshot
-to take a stable snapshot of the address.
+Instead of relying on RTNL, __fifo_dump() can use READ_ONCE()
+annotations, paired with WRITE_ONCE() ones in __fifo_init().
 
-Fixes: 057658cb33fb ("bridge: suppress arp pkts on BR_NEIGH_SUPPRESS ports")
-Fixes: ed842faeb2bd ("bridge: suppress nd pkts on BR_NEIGH_SUPPRESS ports")
-Signed-off-by: Nikolay Aleksandrov <razor@blackwall.org>
-Reviewed-by: Petr Machata <petrm@nvidia.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260818150756.890025-2-razor@blackwall.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Also add missing READ_ONCE(sh->limit) in bfifo_enqueue(),
+pfifo_enqueue() and pfifo_tail_enqueue().
+
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: 4c660ee8c809 ("net: sched: fix 32-bit backlog wrap in gred, bfifo and plug enqueue")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bridge/br_arp_nd_proxy.c | 24 ++++++++++++++----------
- 1 file changed, 14 insertions(+), 10 deletions(-)
+ net/sched/sch_fifo.c | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/net/bridge/br_arp_nd_proxy.c b/net/bridge/br_arp_nd_proxy.c
-index 97d0349189aaf..9143bb51d83ab 100644
---- a/net/bridge/br_arp_nd_proxy.c
-+++ b/net/bridge/br_arp_nd_proxy.c
-@@ -191,13 +191,15 @@ void br_do_proxy_suppress_arp(struct sk_buff *skb, struct net_bridge *br,
- 	n = neigh_lookup(&arp_tbl, &tip, vlandev);
- 	if (n) {
- 		struct net_bridge_fdb_entry *f;
-+		u8 ha[ETH_ALEN] __aligned(2);
- 
- 		if (!(READ_ONCE(n->nud_state) & NUD_VALID)) {
- 			neigh_release(n);
- 			return;
- 		}
- 
--		f = br_fdb_find_rcu(br, n->ha, vid);
-+		neigh_ha_snapshot(ha, n, n->dev);
-+		f = br_fdb_find_rcu(br, ha, vid);
- 		if (f) {
- 			const struct net_bridge_port *dst = READ_ONCE(f->dst);
- 			bool replied = false;
-@@ -207,10 +209,10 @@ void br_do_proxy_suppress_arp(struct sk_buff *skb, struct net_bridge *br,
- 						   BR_NEIGH_SUPPRESS)))) {
- 				if (!vid)
- 					br_arp_send(br, p, skb->dev, sip, tip,
--						    sha, n->ha, sha, 0, 0);
-+						    sha, ha, sha, 0, 0);
- 				else
- 					br_arp_send(br, p, skb->dev, sip, tip,
--						    sha, n->ha, sha,
-+						    sha, ha, sha,
- 						    skb->vlan_proto,
- 						    skb_vlan_tag_get(skb));
- 				replied = true;
-@@ -248,7 +250,7 @@ struct nd_msg *br_is_nd_neigh_msg(struct sk_buff *skb, struct nd_msg *msg)
- }
- 
- static void br_nd_send(struct net_bridge *br, struct net_bridge_port *p,
--		       struct sk_buff *request, struct neighbour *n,
-+		       struct sk_buff *request, struct neighbour *n, u8 *ha,
- 		       __be16 vlan_proto, u16 vlan_tci)
+diff --git a/net/sched/sch_fifo.c b/net/sched/sch_fifo.c
+index af5f2ab69b8d2..739432c4d8d39 100644
+--- a/net/sched/sch_fifo.c
++++ b/net/sched/sch_fifo.c
+@@ -19,7 +19,8 @@
+ static int bfifo_enqueue(struct sk_buff *skb, struct Qdisc *sch,
+ 			 struct sk_buff **to_free)
  {
- 	struct net_device *dev = request->dev;
-@@ -306,7 +308,7 @@ static void br_nd_send(struct net_bridge *br, struct net_bridge_port *p,
- 		ipv6_eth_mc_map(&in6addr_linklocal_allnodes, eth_hdr(reply)->h_dest);
- 	else
- 		ether_addr_copy(eth_hdr(reply)->h_dest, daddr);
--	ether_addr_copy(eth_hdr(reply)->h_source, n->ha);
-+	ether_addr_copy(eth_hdr(reply)->h_source, ha);
- 	eth_hdr(reply)->h_proto = htons(ETH_P_IPV6);
- 	reply->protocol = htons(ETH_P_IPV6);
+-	if (likely(sch->qstats.backlog + qdisc_pkt_len(skb) <= sch->limit))
++	if (likely(sch->qstats.backlog + qdisc_pkt_len(skb) <=
++		   READ_ONCE(sch->limit)))
+ 		return qdisc_enqueue_tail(skb, sch);
  
-@@ -336,7 +338,7 @@ static void br_nd_send(struct net_bridge *br, struct net_bridge_port *p,
- 	na->icmph.icmp6_override = 1;
- 	na->icmph.icmp6_solicited = dad ? 0 : 1;
- 	na->target = ns->target;
--	ether_addr_copy(&na->opt[2], n->ha);
-+	ether_addr_copy(&na->opt[2], ha);
- 	na->opt[0] = ND_OPT_TARGET_LL_ADDR;
- 	na->opt[1] = na_olen >> 3;
+ 	return qdisc_drop(skb, sch, to_free);
+@@ -28,7 +29,7 @@ static int bfifo_enqueue(struct sk_buff *skb, struct Qdisc *sch,
+ static int pfifo_enqueue(struct sk_buff *skb, struct Qdisc *sch,
+ 			 struct sk_buff **to_free)
+ {
+-	if (likely(sch->q.qlen < sch->limit))
++	if (likely(sch->q.qlen < READ_ONCE(sch->limit)))
+ 		return qdisc_enqueue_tail(skb, sch);
  
-@@ -365,7 +367,7 @@ static void br_nd_send(struct net_bridge *br, struct net_bridge_port *p,
- 		__vlan_hwaccel_put_tag(reply, vlan_proto, vlan_tci);
+ 	return qdisc_drop(skb, sch, to_free);
+@@ -42,7 +43,7 @@ static int pfifo_tail_enqueue(struct sk_buff *skb, struct Qdisc *sch,
+ 	if (unlikely(READ_ONCE(sch->limit) == 0))
+ 		return qdisc_drop(skb, sch, to_free);
  
- 	netdev_dbg(dev, "nd send dev %s dst %pI6 dst_hw %pM src %pI6 src_hw %pM\n",
--		   dev->name, &pip6->daddr, daddr, &pip6->saddr, n->ha);
-+		   dev->name, &pip6->daddr, daddr, &pip6->saddr, ha);
+-	if (likely(sch->q.qlen < sch->limit))
++	if (likely(sch->q.qlen < READ_ONCE(sch->limit)))
+ 		return qdisc_enqueue_tail(skb, sch);
  
- 	if (p) {
- 		dev_queue_xmit(reply);
-@@ -462,24 +464,26 @@ void br_do_suppress_nd(struct sk_buff *skb, struct net_bridge *br,
- 	n = neigh_lookup(ipv6_stub->nd_tbl, &msg->target, vlandev);
- 	if (n) {
- 		struct net_bridge_fdb_entry *f;
-+		u8 ha[ETH_ALEN] __aligned(2);
+ 	prev_backlog = sch->qstats.backlog;
+@@ -108,14 +109,14 @@ static int __fifo_init(struct Qdisc *sch, struct nlattr *opt,
+ 		if (is_bfifo)
+ 			limit *= psched_mtu(qdisc_dev(sch));
  
- 		if (!(READ_ONCE(n->nud_state) & NUD_VALID)) {
- 			neigh_release(n);
- 			return;
- 		}
+-		sch->limit = limit;
++		WRITE_ONCE(sch->limit, limit);
+ 	} else {
+ 		struct tc_fifo_qopt *ctl = nla_data(opt);
  
--		f = br_fdb_find_rcu(br, n->ha, vid);
-+		neigh_ha_snapshot(ha, n, n->dev);
-+		f = br_fdb_find_rcu(br, ha, vid);
- 		if (f) {
- 			const struct net_bridge_port *dst = READ_ONCE(f->dst);
- 			bool replied = false;
+ 		if (nla_len(opt) < sizeof(*ctl))
+ 			return -EINVAL;
  
- 			if (dst && (dst->flags & BR_NEIGH_SUPPRESS)) {
- 				if (vid != 0)
--					br_nd_send(br, p, skb, n,
-+					br_nd_send(br, p, skb, n, ha,
- 						   skb->vlan_proto,
- 						   skb_vlan_tag_get(skb));
- 				else
--					br_nd_send(br, p, skb, n, 0, 0);
-+					br_nd_send(br, p, skb, n, ha, 0, 0);
- 				replied = true;
- 			}
+-		sch->limit = ctl->limit;
++		WRITE_ONCE(sch->limit, ctl->limit);
+ 	}
  
+ 	if (is_bfifo)
+@@ -157,7 +158,7 @@ static void fifo_destroy(struct Qdisc *sch)
+ 
+ static int __fifo_dump(struct Qdisc *sch, struct sk_buff *skb)
+ {
+-	struct tc_fifo_qopt opt = { .limit = sch->limit };
++	struct tc_fifo_qopt opt = { .limit = READ_ONCE(sch->limit) };
+ 
+ 	if (nla_put(skb, TCA_OPTIONS, sizeof(opt), &opt))
+ 		goto nla_put_failure;
 -- 
 2.53.0
 
