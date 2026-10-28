@@ -1,54 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213717;
-	b=NJdP4g0anolasa+3+vNLxy1SXTJCQ7eAn/Buk95tO5JYLvaqURWm5NxRpuZeRvNSq6OX
-	 gy5uig/zZniY/AFVAwYpa7I1TIbtcoJP8Xs29GoM8oNlz7TG93L11HiJpsnzz9q6LCqp0
-	 rXjlHtFpsG3wBafGHFbEsBP0OtuXWk7b/nYXDX+vDVwWtDD9zVxEHxG4lVYM+DakEO0Pi
-	 pf6ofLOKs96rGqOW1Gzn2V3iFxJNb8DbZcPPy0XUfSLWmuNkvutuVNb8KM3KmwRmlUPms
-	 vDXDlJijZNJj2RJgzMJ5JBhu2BPVOorUvYHkkflHEh3gt4DkihHhDa4LvXTJw7rliFg==
+	t=1793213719;
+	b=rmAeoB5hy2ttgEGQc8nOYdrWCxzoB/NsiQbJWtMDcUDL2LTNjy0OTvrWuj2lAQ32Bgrh
+	 2MiB3h1ROYiTsuG0Fi29PBMF8wXrc/m1Iv59tEWNf0+V8YuC+zbLDCpqLvWMuKoYcRLtK
+	 tRNFVN9/LJ3ERoK807bGh4oRVMLKNlOTOPMoXy3IhJuaQQrkwHicNILGHEXqvzY4omgQW
+	 kNibnyLAWixo2v8oj0TOlonZubdt/QIRbBG+rbU5HsP0ifuO90937LvIhJd0yuxnTcQsA
+	 HRmCKSry5aOXsPMGMG2QMxiXiS6/dIpT2zyI1Bd2bal/rvonyHgE5YcmrLIiusdxysw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213717;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213719;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=V9LhXMgYehl7+4OhFu7UYTRtTp7DIcDUGwNmUJQj72k=;
-	b=eUhYiqj1pk1+QjjhmALzwXVhEKka1RTd+XbMjc2ogXbfaUc/rHsMJv/Eo2dVWcRgXT7k
-	 Y3pmfMKblzam+s2dBatLp7RFH1DRCCqz02ZNUOw/dH9ahcvB0HFj0vPFGk36ybSK+WoRY
-	 gv4cv8kby6FVdxIakUvuxYi+yGtsRH+rCb6I891O+y+/JdDAoKXkK37XvvMaVTBAHRU8u
-	 S7+yH3b+y22oQoPEonmlRDKyzGCozomxUOcLwp/c8E0kycBuyi06pi7DhDi54TZ1dglsq
-	 16w7tVG3U+cEhb8zGQwuBKqnHCc/IH78OcQuiJQegLSMqLsFpmDlKeFnN1WksGFROaQ==
+	bh=bURC2zMtGvHK8QjqG6x0apEKiiptxYN1e6NhjSXI+bA=;
+	b=uAk8l1L/DwJggHrqr3vWsLOJMdqdrpWs7W6JTbbcZVCbxFOtXaulKDlyFYbsojh+eSPO
+	 BZBXKtAd8KMYafGU8aeVbyjAv/gkzX9DNJNFz5zWyTB1+qlU3naPBwQ5xI0lPofzD1AY2
+	 MVw7YgQkAQiMn8lH1iHxyZSMciWjtGnXSpmrVxvPrEE9vI6gu0txB4sJJjAfCN/UfTbY+
+	 8nLuykXiXYzneByTgdZkswhcf00zfXR0trLyi4soJ41RDWpIyGIaoldOl1h/qGUYt6LH8
+	 C5N+gr1SMDQ5slsKdAhah+hlLfsfgvAIrunrFcvUWejrSMl1heU5k+UyuiTvSc/MOhQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CbnZJz0Z;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NwKm7fbu;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5E39606A31A;
-	Wed, 28 Oct 2026 18:55:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7997E606A31A;
+	Wed, 28 Oct 2026 18:55:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CbnZJz0Z
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02EEF1F01825;
-	Wed, 28 Oct 2026 18:55:15 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NwKm7fbu
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D01661F01825;
+	Wed, 28 Oct 2026 18:55:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213716;
-	bh=V9LhXMgYehl7+4OhFu7UYTRtTp7DIcDUGwNmUJQj72k=;
+	s=korg; t=1793213719;
+	bh=bURC2zMtGvHK8QjqG6x0apEKiiptxYN1e6NhjSXI+bA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CbnZJz0ZIjCKySS9fRTzGsyn5/4Z3/Jyp8k04tvH3gftybO34DCKYxwqmDqEX2d0v
-	 JcSJuF4nkw+BmacS4ij4+gOSLcDZDJenLEzYWX7Qozss84tY1EBupggbqJAq4L0hwv
-	 1RvCUfP03Wbir9SlgrRpZXsqaQv6n+M2KkKNdbbs=
+	b=NwKm7fbu7rEZBgx7t0rBQQDVmnqqejD4Dy9wCmNhfCr5czzTe+chZiUYSzO7UoYdw
+	 DIKvr6zAjYx95Ty7dAXxjgBEKNvKLrMAnP73k/Ju8ZByzhQvQ1F6OwrBLU09XJX7qk
+	 zDng4bCt17JECLah964st2h9vykeQsoKzZbSO7eU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Serge Semin <fancer.lancer@gmail.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Kory Maincent <kory.maincent@bootlin.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Petr Machata <petrm@nvidia.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	David Ahern <dsahern@kernel.org>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0604/1887] dmaengine: dw-edma: eDMA: Add sync read before starting the DMA transfer in remote setup
-Date: Wed, 28 Oct 2026 17:45:00 +0100
-Message-ID: <20261028170513.161859271@linuxfoundation.org>
+Subject: [PATCH 6.1 0578/1887] net: nexthop: Increase weight to u16
+Date: Wed, 28 Oct 2026 17:44:34 +0100
+Message-ID: <20261028170512.567486613@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -70,62 +71,233 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kory Maincent <kory.maincent@bootlin.com>
+From: Petr Machata <petrm@nvidia.com>
 
-[ Upstream commit bbcc1c83f343e580c3aa1f2a8593343bf7b55bba ]
+[ Upstream commit b72a6a7ab9573e06d5c2fcb92eaa28614a735bfd ]
 
-The Linked list element and pointer are not stored in the same memory as
-the eDMA controller register. If the doorbell register is toggled before
-the full write of the linked list a race condition error will occur.
-In remote setup we can only use a readl to the memory to assure the full
-write has occurred.
+In CLOS networks, as link failures occur at various points in the network,
+ECMP weights of the involved nodes are adjusted to compensate. With high
+fan-out of the involved nodes, and overall high number of nodes,
+a (non-)ECMP weight ratio that we would like to configure does not fit into
+8 bits. Instead of, say, 255:254, we might like to configure something like
+1000:999. For these deployments, the 8-bit weight may not be enough.
 
-Fixes: 7e4b8a4fbe2c ("dmaengine: Add Synopsys eDMA IP version 0 support")
-Reviewed-by: Serge Semin <fancer.lancer@gmail.com>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Signed-off-by: Kory Maincent <kory.maincent@bootlin.com>
-Link: https://lore.kernel.org/r/20240129-b4-feature_hdma_mainline-v7-6-8e8c1acb7a46@bootlin.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+To that end, in this patch increase the next hop weight from u8 to u16.
+
+Increasing the width of an integral type can be tricky, because while the
+code still compiles, the types may not check out anymore, and numerical
+errors come up. To prevent this, the conversion was done in two steps.
+First the type was changed from u8 to a single-member structure, which
+invalidated all uses of the field. This allowed going through them one by
+one and audit for type correctness. Then the structure was replaced with a
+vanilla u16 again. This should ensure that no place was missed.
+
+The UAPI for configuring nexthop group members is that an attribute
+NHA_GROUP carries an array of struct nexthop_grp entries:
+
+	struct nexthop_grp {
+		__u32	id;	  /* nexthop id - must exist */
+		__u8	weight;   /* weight of this nexthop */
+		__u8	resvd1;
+		__u16	resvd2;
+	};
+
+The field resvd1 is currently validated and required to be zero. We can
+lift this requirement and carry high-order bits of the weight in the
+reserved field:
+
+	struct nexthop_grp {
+		__u32	id;	  /* nexthop id - must exist */
+		__u8	weight;   /* weight of this nexthop */
+		__u8	weight_high;
+		__u16	resvd2;
+	};
+
+Keeping the fields split this way was chosen in case an existing userspace
+makes assumptions about the width of the weight field, and to sidestep any
+endianness issues.
+
+The weight field is currently encoded as the weight value minus one,
+because weight of 0 is invalid. This same trick is impossible for the new
+weight_high field, because zero must mean actual zero. With this in place:
+
+- Old userspace is guaranteed to carry weight_high of 0, therefore
+  configuring 8-bit weights as appropriate. When dumping nexthops with
+  16-bit weight, it would only show the lower 8 bits. But configuring such
+  nexthops implies existence of userspace aware of the extension in the
+  first place.
+
+- New userspace talking to an old kernel will work as long as it only
+  attempts to configure 8-bit weights, where the high-order bits are zero.
+  Old kernel will bounce attempts at configuring >8-bit weights.
+
+Renaming reserved fields as they are allocated for some purpose is commonly
+done in Linux. Whoever touches a reserved field is doing so at their own
+risk. nexthop_grp::resvd1 in particular is currently used by at least
+strace, however they carry an own copy of UAPI headers, and the conversion
+should be trivial. A helper is provided for decoding the weight out of the
+two fields. Forcing a conversion seems preferable to bending backwards and
+introducing anonymous unions or whatever.
+
+Signed-off-by: Petr Machata <petrm@nvidia.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Link: https://patch.msgid.link/483e2fcf4beb0d9135d62e7d27b46fa2685479d4.1723036486.git.petrm@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/dw-edma/dw-edma-v0-core.c | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ include/net/nexthop.h        |  4 ++--
+ include/uapi/linux/nexthop.h |  7 ++++++-
+ net/ipv4/nexthop.c           | 37 ++++++++++++++++++++++--------------
+ 3 files changed, 31 insertions(+), 17 deletions(-)
 
-diff --git a/drivers/dma/dw-edma/dw-edma-v0-core.c b/drivers/dma/dw-edma/dw-edma-v0-core.c
-index ace8980c40d54..1fb1b4d18e261 100644
---- a/drivers/dma/dw-edma/dw-edma-v0-core.c
-+++ b/drivers/dma/dw-edma/dw-edma-v0-core.c
-@@ -357,6 +357,20 @@ static void dw_edma_v0_core_write_chunk(struct dw_edma_chunk *chunk)
- 	#endif /* CONFIG_64BIT */
- }
+diff --git a/include/net/nexthop.h b/include/net/nexthop.h
+index f7d4239347351..f37e96f93f20b 100644
+--- a/include/net/nexthop.h
++++ b/include/net/nexthop.h
+@@ -97,7 +97,7 @@ struct nh_res_table {
  
-+static void dw_edma_v0_sync_ll_data(struct dw_edma_chunk *chunk)
+ struct nh_grp_entry {
+ 	struct nexthop	*nh;
+-	u8		weight;
++	u16		weight;
+ 
+ 	union {
+ 		struct {
+@@ -180,7 +180,7 @@ struct nh_notifier_single_info {
+ };
+ 
+ struct nh_notifier_grp_entry_info {
+-	u8 weight;
++	u16 weight;
+ 	struct nh_notifier_single_info nh;
+ };
+ 
+diff --git a/include/uapi/linux/nexthop.h b/include/uapi/linux/nexthop.h
+index d8ffa8c9ca784..6b0de563beec1 100644
+--- a/include/uapi/linux/nexthop.h
++++ b/include/uapi/linux/nexthop.h
+@@ -16,10 +16,15 @@ struct nhmsg {
+ struct nexthop_grp {
+ 	__u32	id;	  /* nexthop id - must exist */
+ 	__u8	weight;   /* weight of this nexthop */
+-	__u8	resvd1;
++	__u8	weight_high;	/* high order bits of weight */
+ 	__u16	resvd2;
+ };
+ 
++static inline __u16 nexthop_grp_weight(const struct nexthop_grp *entry)
 +{
-+	/*
-+	 * In case of remote eDMA engine setup, the DW PCIe RP/EP internal
-+	 * configuration registers and application memory are normally accessed
-+	 * over different buses. Ensure LL-data reaches the memory before the
-+	 * doorbell register is toggled by issuing the dummy-read from the remote
-+	 * LL memory in a hope that the MRd TLP will return only after the
-+	 * last MWr TLP is completed
-+	 */
-+	if (!(chunk->chan->dw->chip->flags & DW_EDMA_CHIP_LOCAL))
-+		readl(chunk->ll_region.vaddr);
++	return ((entry->weight_high << 8) | entry->weight) + 1;
 +}
 +
- void dw_edma_v0_core_start(struct dw_edma_chunk *chunk, bool first)
- {
- 	struct dw_edma_chan *chan = chunk->chan;
-@@ -429,6 +443,9 @@ void dw_edma_v0_core_start(struct dw_edma_chunk *chunk, bool first)
- 		SET_CH_32(dw, chan->dir, chan->id, llp.msb,
- 			  upper_32_bits(chunk->ll_region.paddr));
+ enum {
+ 	NEXTHOP_GRP_TYPE_MPATH,  /* hash-threshold nexthop group
+ 				  * default type if not specified
+diff --git a/net/ipv4/nexthop.c b/net/ipv4/nexthop.c
+index 0bf7b83bec1b9..b48fbc0f42899 100644
+--- a/net/ipv4/nexthop.c
++++ b/net/ipv4/nexthop.c
+@@ -660,6 +660,7 @@ static int nla_put_nh_group(struct sk_buff *skb, struct nh_group *nhg)
+ 	size_t len = nhg->num_nh * sizeof(*p);
+ 	struct nlattr *nla;
+ 	u16 group_type = 0;
++	u16 weight;
+ 	int i;
+ 
+ 	if (nhg->hash_threshold)
+@@ -676,9 +677,12 @@ static int nla_put_nh_group(struct sk_buff *skb, struct nh_group *nhg)
+ 
+ 	p = nla_data(nla);
+ 	for (i = 0; i < nhg->num_nh; ++i) {
++		weight = nhg->nh_entries[i].weight - 1;
++
+ 		*p++ = (struct nexthop_grp) {
+ 			.id = nhg->nh_entries[i].nh->id,
+-			.weight = nhg->nh_entries[i].weight - 1,
++			.weight = weight,
++			.weight_high = weight >> 8,
+ 		};
  	}
+ 
+@@ -1062,11 +1066,14 @@ static int nh_check_attr_group(struct net *net,
+ 
+ 	nhg = nla_data(tb[NHA_GROUP]);
+ 	for (i = 0; i < len; ++i) {
+-		if (nhg[i].resvd1 || nhg[i].resvd2) {
+-			NL_SET_ERR_MSG(extack, "Reserved fields in nexthop_grp must be 0");
++		if (nhg[i].resvd2) {
++			NL_SET_ERR_MSG(extack, "Reserved field in nexthop_grp must be 0");
+ 			return -EINVAL;
+ 		}
+-		if (nhg[i].weight > 254) {
++		if (nexthop_grp_weight(&nhg[i]) == 0) {
++			/* 0xffff got passed in, representing weight of 0x10000,
++			 * which is too heavy.
++			 */
+ 			NL_SET_ERR_MSG(extack, "Invalid value for weight");
+ 			return -EINVAL;
+ 		}
+@@ -1655,9 +1662,9 @@ static void nh_res_table_cancel_upkeep(struct nh_res_table *res_table)
+ static void nh_res_group_rebalance(struct nh_group *nhg,
+ 				   struct nh_res_table *res_table)
+ {
+-	int prev_upper_bound = 0;
+-	int total = 0;
+-	int w = 0;
++	u16 prev_upper_bound = 0;
++	u32 total = 0;
++	u32 w = 0;
+ 	int i;
+ 
+ 	INIT_LIST_HEAD(&res_table->uw_nh_entries);
+@@ -1667,11 +1674,12 @@ static void nh_res_group_rebalance(struct nh_group *nhg,
+ 
+ 	for (i = 0; i < nhg->num_nh; ++i) {
+ 		struct nh_grp_entry *nhge = &nhg->nh_entries[i];
+-		int upper_bound;
++		u16 upper_bound;
++		u64 btw;
+ 
+ 		w += nhge->weight;
+-		upper_bound = DIV_ROUND_CLOSEST(res_table->num_nh_buckets * w,
+-						total);
++		btw = ((u64)res_table->num_nh_buckets) * w;
++		upper_bound = DIV_ROUND_CLOSEST_ULL(btw, total);
+ 		nhge->res.wants_buckets = upper_bound - prev_upper_bound;
+ 		prev_upper_bound = upper_bound;
+ 
+@@ -1737,8 +1745,8 @@ static void replace_nexthop_grp_res(struct nh_group *oldg,
+ 
+ static void nh_hthr_group_rebalance(struct nh_group *nhg)
+ {
+-	int total = 0;
+-	int w = 0;
++	u32 total = 0;
++	u32 w = 0;
+ 	int i;
+ 
+ 	for (i = 0; i < nhg->num_nh; ++i)
+@@ -1746,7 +1754,7 @@ static void nh_hthr_group_rebalance(struct nh_group *nhg)
+ 
+ 	for (i = 0; i < nhg->num_nh; ++i) {
+ 		struct nh_grp_entry *nhge = &nhg->nh_entries[i];
+-		int upper_bound;
++		u32 upper_bound;
+ 
+ 		w += nhge->weight;
+ 		upper_bound = DIV_ROUND_CLOSEST_ULL((u64)w << 31, total) - 1;
+@@ -2492,7 +2500,8 @@ static struct nexthop *nexthop_create_group(struct net *net,
+ 			nhg->has_v4 = true;
+ 
+ 		nhg->nh_entries[i].nh = nhe;
+-		nhg->nh_entries[i].weight = entry[i].weight + 1;
++		nhg->nh_entries[i].weight = nexthop_grp_weight(&entry[i]);
 +
-+	dw_edma_v0_sync_ll_data(chunk);
-+
- 	/* Doorbell */
- 	SET_RW_32(dw, chan->dir, doorbell,
- 		  FIELD_PREP(EDMA_V0_DOORBELL_CH_MASK, chan->id));
+ 		list_add(&nhg->nh_entries[i].nh_list, &nhe->grp_list);
+ 		nhg->nh_entries[i].nh_parent = nh;
+ 	}
 -- 
 2.53.0
 
