@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793208306;
-	b=StHedkTfb8SZra7vY21Y4GJGnz+ethMwxkA/BeR+lVRuSyn+r1oYzDmTKg/UbVogJMzB
-	 pIbXhmvTfeztuYjGYuStnUKPLuFVSX5DHDEINMO9dWlBYF0CLktG2pE5G3vOTQ+J6DTtn
-	 t9aHP5JgkgfxAF6FACtXHc26Sy6X9uwAxTEtaAzljHfIKmRZjsKho12NyZ1DDN0dfrWcg
-	 vZ93yzMEgcpf/v5yBZrEfGK0J313LigOTOWePxTHj1Eq06ygsQyPa5K/1EE0g+i1pd6Y7
-	 EjaDA9JnkM2jhTxmi18ufSCYvs5rCD793CsPa0zTof/t02ra79y4XTe6ObkvdLfbFVw==
+	t=1793208309;
+	b=RjYC2bDE6JxJ5PfuoN38GvoxDVP0cLeQ3H0JMDCXKDoMD3z5XDtPi/fMHpzuvThurBTm
+	 P2mELkhIZRZlknO+WgWNKj9gc/DI/5LozqrxDD5Sre25uzeMh9cFoennP/jmBqZYml0er
+	 UG95zo8zcJgQr86ck8u0cvCEJoTLzqNc/DRdUA+ns8LXpR3TDUAEZ+MAnJSxRPq/D/gqw
+	 YnFKbdp7erfhCZabnVEDI+x5EG+Bn7Hrr4EswDULQssknagoC7aS2nGfG3x6HYlNnqGoR
+	 jxif5z8ButCfsazQnQmw66Hv6VU8IHtovUhwscN2YB0npMTkbjTUMsMR5yAFVcpeFPQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793208306;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793208309;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ayGxBXhYN+Zqf+QTFbClqKs983IOUdo3L8fkvX0lieM=;
-	b=ifen6ZB6f2duCEvGIA1hZK/nCdV0O5huxIQ6uGQrtViwal9pw5ULDfE7pNMA4wMrsI1f
-	 H14LRp7yxtA6DbR4Rbhuwy1PrZUX9f7/t3UmUw7ekvvkxmuyV4O5QiYgXZs4twJnXxrvL
-	 ZtMKiE8Nwxa55L3oKd26gTQhb1ye0jZwCY9UY5C9SVGr4fQqKx4tYUAy8l5ZNeBQEBbgu
-	 8YG1IOghqeLuYkAs858+ZD/XeZ8/vmN9hQr9Okfwy51bKZ7ALdkDRO+lrX6d1X32anUJ+
-	 Hp21W7l19m3b7tsIU+PgdlHI3mtVZxZMm/b+HP+wr/lMmDa+oV0AjQ7gR24SOOLdBPw==
+	bh=YEKMHEAVd3+t+W2LUCq07IpywgOVsOsWjPIC5Kr8zg0=;
+	b=QMQXqrSVeDDOSY45QFMAcHxJrNpe+44au1T2/Zh8hi86vxN0kidRfhXQc2/044jwyKVL
+	 KpCRrDTcYhwWzqeIu0GLYb94FVLMSBPgQAEwmLpve5EY1GY0dShCoZTFfIVEBvX8sX86I
+	 fTIzoeL9tYq5GlsJlSz2W2sCf6gCc8qCSpcgHra0KR4eskq4TDd0CX/CcMmcAyRpQVApD
+	 zNAQeSsf9/mwT589jeISLcfBWBU9B97vZuyYljURWhPsGWhVLoIBS8rUPKTt4owTMvgrM
+	 1K3qRcg1PVGcysbnpFVIuR3glsu7D088fD89lGa0mlCfMCMZolPpwUzv7mwDhBztHgQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="yM/9NzRU";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iSN2RUo6;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27645606A31C;
-	Wed, 28 Oct 2026 17:25:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10CE6606A31D;
+	Wed, 28 Oct 2026 17:25:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yM/9NzRU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76F341F01825;
-	Wed, 28 Oct 2026 17:25:05 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iSN2RUo6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DEF51F01828;
+	Wed, 28 Oct 2026 17:25:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793208306;
-	bh=ayGxBXhYN+Zqf+QTFbClqKs983IOUdo3L8fkvX0lieM=;
+	s=korg; t=1793208308;
+	bh=YEKMHEAVd3+t+W2LUCq07IpywgOVsOsWjPIC5Kr8zg0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yM/9NzRUEjOZzxiXCeJru0CE8jGyx5bcCKVyEP7vH/HnNMcdNLQ2MNIPb87QlOrRL
-	 +KA5Os2N62a5vZYdY6rkekd9uWIhs97+veqmrCM8xj8n4fphUtB6Q7UBdl3Hc/BdPz
-	 vCgAu+otTE3UCvpUf+mVXp5ib504lTAV4LIioh/s=
+	b=iSN2RUo6/pHpDTSJptocRH3KKMALy/hnJegkY5yPKnXQJIbF9yPOY43NQy3cDdhnA
+	 tdTSBDWt42Y1LhfK8wu5O7aLM5ZBqB34dQryoYDvEM0F9sktFLIzYn1601ZnX434TC
+	 Q6k70mfvHMLDkzpQFfzq9cDZzoVKMSpBiSJ1XEHM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Wang <wangborong@cdjrlc.com>,
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 073/516] ALSA: pcxhr: use __func__ to get funcions name in an output message
-Date: Wed, 28 Oct 2026 17:53:45 +0100
-Message-ID: <20261028170005.252298303@linuxfoundation.org>
+Subject: [PATCH 5.10 074/516] ALSA: pcxhr: initialize mutexes before requesting threaded IRQ
+Date: Wed, 28 Oct 2026 17:53:46 +0100
+Message-ID: <20261028170005.275376581@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -68,183 +68,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Wang <wangborong@cdjrlc.com>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-[ Upstream commit fac24b0f34c179c6ca863f5205fad42a676caf9a ]
+[ Upstream commit 6c97817e20598e5473094e0e38d1f51f1cf4dfff ]
 
-Prefer using '"%s...", __func__' to get current function's name in
-an output message.
+pcxhr_probe() requests pcxhr_threaded_irq() before initializing
+mgr->lock, even though the threaded handler takes that mutex.
 
-Signed-off-by: Jason Wang <wangborong@cdjrlc.com>
-Link: https://lore.kernel.org/r/20210731052647.141046-1-wangborong@cdjrlc.com
+Initialize the manager locks before request_threaded_irq() so an
+early interrupt cannot run against uninitialized mutex state during
+probe.
+
+Fixes: 9bef72bdb26e ("ALSA: pcxhr: Use nonatomic PCM ops")
+Cc: stable@vger.kernel.org
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Link: https://patch.msgid.link/20260818144717.2269918-1-runyu.xiao@seu.edu.cn
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Stable-dep-of: 6c97817e2059 ("ALSA: pcxhr: initialize mutexes before requesting threaded IRQ")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/pcxhr/pcxhr.c | 47 ++++++++++++++++++++---------------------
- 1 file changed, 23 insertions(+), 24 deletions(-)
+ sound/pci/pcxhr/pcxhr.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
 diff --git a/sound/pci/pcxhr/pcxhr.c b/sound/pci/pcxhr/pcxhr.c
-index c2e4831c3a13f..1fe7e876c7fb4 100644
+index 1fe7e876c7fb4..318289a94ee21 100644
 --- a/sound/pci/pcxhr/pcxhr.c
 +++ b/sound/pci/pcxhr/pcxhr.c
-@@ -367,7 +367,7 @@ static int pcxhr_sub_set_clock(struct pcxhr_mgr *mgr,
- 		mgr->codec_speed = speed;	/* save new codec speed */
- 	}
+@@ -1548,6 +1548,13 @@ static int pcxhr_probe(struct pci_dev *pci,
+ 	mgr->pci = pci;
+ 	mgr->irq = -1;
  
--	dev_dbg(&mgr->pci->dev, "pcxhr_sub_set_clock to %dHz (realfreq=%d)\n",
-+	dev_dbg(&mgr->pci->dev, "%s to %dHz (realfreq=%d)\n", __func__,
- 		    rate, realfreq);
- 	return 0;
- }
-@@ -500,7 +500,7 @@ static int pcxhr_set_stream_state(struct snd_pcxhr *chip,
- 	else {
- 		if (stream->status != PCXHR_STREAM_STATUS_SCHEDULE_STOP) {
- 			dev_err(chip->card->dev,
--				"pcxhr_set_stream_state CANNOT be stopped\n");
-+				"%s CANNOT be stopped\n", __func__);
- 			return -EINVAL;
- 		}
- 		start = 0;
-@@ -525,7 +525,7 @@ static int pcxhr_set_stream_state(struct snd_pcxhr *chip,
- 	err = pcxhr_send_msg(chip->mgr, &rmh);
- 	if (err)
- 		dev_err(chip->card->dev,
--			"ERROR pcxhr_set_stream_state err=%x;\n", err);
-+			"ERROR %s err=%x;\n", __func__, err);
- 	stream->status =
- 	  start ? PCXHR_STREAM_STATUS_STARTED : PCXHR_STREAM_STATUS_STOPPED;
- 	return err;
-@@ -571,7 +571,7 @@ static int pcxhr_set_format(struct pcxhr_stream *stream)
- 		break;
- 	default:
- 		dev_err(chip->card->dev,
--			"error pcxhr_set_format() : unknown format\n");
-+			"error %s() : unknown format\n", __func__);
- 		return -EINVAL;
- 	}
++	/* ISR lock  */
++	mutex_init(&mgr->lock);
++	mutex_init(&mgr->msg_lock);
++
++	/* init setup mutex*/
++	mutex_init(&mgr->setup_mutex);
++
+ 	if (request_threaded_irq(pci->irq, pcxhr_interrupt,
+ 				 pcxhr_threaded_irq, IRQF_SHARED,
+ 				 KBUILD_MODNAME, mgr)) {
+@@ -1561,13 +1568,6 @@ static int pcxhr_probe(struct pci_dev *pci,
+ 		 "Digigram at 0x%lx & 0x%lx, 0x%lx irq %i",
+ 		 mgr->port[0], mgr->port[1], mgr->port[2], mgr->irq);
  
-@@ -616,7 +616,7 @@ static int pcxhr_set_format(struct pcxhr_stream *stream)
- 	err = pcxhr_send_msg(chip->mgr, &rmh);
- 	if (err)
- 		dev_err(chip->card->dev,
--			"ERROR pcxhr_set_format err=%x;\n", err);
-+			"ERROR %s err=%x;\n", __func__, err);
- 	return err;
- }
- 
-@@ -631,7 +631,7 @@ static int pcxhr_update_r_buffer(struct pcxhr_stream *stream)
- 	stream_num = is_capture ? 0 : subs->number;
- 
- 	dev_dbg(chip->card->dev,
--		"pcxhr_update_r_buffer(pcm%c%d) : addr(%p) bytes(%zx) subs(%d)\n",
-+		"%s(pcm%c%d) : addr(%p) bytes(%zx) subs(%d)\n", __func__,
- 		is_capture ? 'c' : 'p',
- 		chip->chip_idx, (void *)(long)subs->runtime->dma_addr,
- 		subs->runtime->dma_bytes, subs->number);
-@@ -722,21 +722,20 @@ static void pcxhr_start_linked_stream(struct pcxhr_mgr *mgr)
- 	}
- 	if (capture_mask == 0 && playback_mask == 0) {
- 		mutex_unlock(&mgr->setup_mutex);
--		dev_err(&mgr->pci->dev, "pcxhr_start_linked_stream : no pipes\n");
-+		dev_err(&mgr->pci->dev, "%s : no pipes\n", __func__);
- 		return;
- 	}
- 
--	dev_dbg(&mgr->pci->dev, "pcxhr_start_linked_stream : "
--		    "playback_mask=%x capture_mask=%x\n",
--		    playback_mask, capture_mask);
-+	dev_dbg(&mgr->pci->dev, "%s : playback_mask=%x capture_mask=%x\n",
-+		    __func__, playback_mask, capture_mask);
- 
- 	/* synchronous stop of all the pipes concerned */
- 	err = pcxhr_set_pipe_state(mgr,  playback_mask, capture_mask, 0);
- 	if (err) {
- 		mutex_unlock(&mgr->setup_mutex);
--		dev_err(&mgr->pci->dev, "pcxhr_start_linked_stream : "
-+		dev_err(&mgr->pci->dev, "%s : "
- 			   "error stop pipes (P%x C%x)\n",
--			   playback_mask, capture_mask);
-+			   __func__, playback_mask, capture_mask);
- 		return;
- 	}
- 
-@@ -779,9 +778,9 @@ static void pcxhr_start_linked_stream(struct pcxhr_mgr *mgr)
- 	err = pcxhr_set_pipe_state(mgr, playback_mask, capture_mask, 1);
- 	if (err) {
- 		mutex_unlock(&mgr->setup_mutex);
--		dev_err(&mgr->pci->dev, "pcxhr_start_linked_stream : "
-+		dev_err(&mgr->pci->dev, "%s : "
- 			   "error start pipes (P%x C%x)\n",
--			   playback_mask, capture_mask);
-+			   __func__, playback_mask, capture_mask);
- 		return;
- 	}
- 
-@@ -890,7 +889,7 @@ static int pcxhr_hardware_timer(struct pcxhr_mgr *mgr, int start)
- 	}
- 	err = pcxhr_send_msg(mgr, &rmh);
- 	if (err < 0)
--		dev_err(&mgr->pci->dev, "error pcxhr_hardware_timer err(%x)\n",
-+		dev_err(&mgr->pci->dev, "error %s err(%x)\n", __func__,
- 			   err);
- 	return err;
- }
-@@ -905,7 +904,7 @@ static int pcxhr_prepare(struct snd_pcm_substream *subs)
- 	int err = 0;
- 
- 	dev_dbg(chip->card->dev,
--		"pcxhr_prepare : period_size(%lx) periods(%x) buffer_size(%lx)\n",
-+		"%s : period_size(%lx) periods(%x) buffer_size(%lx)\n", __func__,
- 		    subs->runtime->period_size, subs->runtime->periods,
- 		    subs->runtime->buffer_size);
- 
-@@ -998,12 +997,12 @@ static int pcxhr_open(struct snd_pcm_substream *subs)
- 	runtime->hw = pcxhr_caps;
- 
- 	if( subs->stream == SNDRV_PCM_STREAM_PLAYBACK ) {
--		dev_dbg(chip->card->dev, "pcxhr_open playback chip%d subs%d\n",
--			    chip->chip_idx, subs->number);
-+		dev_dbg(chip->card->dev, "%s playback chip%d subs%d\n",
-+			    __func__, chip->chip_idx, subs->number);
- 		stream = &chip->playback_stream[subs->number];
- 	} else {
--		dev_dbg(chip->card->dev, "pcxhr_open capture chip%d subs%d\n",
--			    chip->chip_idx, subs->number);
-+		dev_dbg(chip->card->dev, "%s capture chip%d subs%d\n",
-+			    __func__, chip->chip_idx, subs->number);
- 		if (mgr->mono_capture)
- 			runtime->hw.channels_max = 1;
- 		else
-@@ -1012,8 +1011,8 @@ static int pcxhr_open(struct snd_pcm_substream *subs)
- 	}
- 	if (stream->status != PCXHR_STREAM_STATUS_FREE){
- 		/* streams in use */
--		dev_err(chip->card->dev, "pcxhr_open chip%d subs%d in use\n",
--			   chip->chip_idx, subs->number);
-+		dev_err(chip->card->dev, "%s chip%d subs%d in use\n",
-+			   __func__, chip->chip_idx, subs->number);
- 		mutex_unlock(&mgr->setup_mutex);
- 		return -EBUSY;
- 	}
-@@ -1078,7 +1077,7 @@ static int pcxhr_close(struct snd_pcm_substream *subs)
- 
- 	mutex_lock(&mgr->setup_mutex);
- 
--	dev_dbg(chip->card->dev, "pcxhr_close chip%d subs%d\n",
-+	dev_dbg(chip->card->dev, "%s chip%d subs%d\n", __func__,
- 		    chip->chip_idx, subs->number);
- 
- 	/* sample rate released */
-@@ -1569,7 +1568,7 @@ static int pcxhr_probe(struct pci_dev *pci,
- 	/* init setup mutex*/
- 	mutex_init(&mgr->setup_mutex);
- 
--	mgr->prmh = kmalloc(sizeof(*mgr->prmh) + 
-+	mgr->prmh = kmalloc(sizeof(*mgr->prmh) +
+-	/* ISR lock  */
+-	mutex_init(&mgr->lock);
+-	mutex_init(&mgr->msg_lock);
+-
+-	/* init setup mutex*/
+-	mutex_init(&mgr->setup_mutex);
+-
+ 	mgr->prmh = kmalloc(sizeof(*mgr->prmh) +
  			    sizeof(u32) * (PCXHR_SIZE_MAX_LONG_STATUS -
  					   PCXHR_SIZE_MAX_STATUS),
- 			    GFP_KERNEL);
 -- 
 2.53.0
 
