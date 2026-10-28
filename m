@@ -1,53 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214408;
-	b=NIzgA4lA9C4sEejDAIWKggPcWYa9pdTrKPX34ujOhVp1TnaJOR8SMW2ewTY4jMq2zneB
-	 fNJPYFwOfjkBgAWjLCgqYaroc9mEVohj9AB78aLtzeHm23Fic+QFtg50kWl7xg8qELnYY
-	 8xUkQv8a1tm8KBd+4J2IYoFhc7LnPCGU5VSErUaTo9YZo3GnW4WC0w340l8JzxvJOYPgQ
-	 WVZYStrmTc840QDPaNNpDau7+G4cJQ5pGb3eUI4+yBRukVDywLtLtJCV0O5kmr5er9qjB
-	 1nvbHcsxJU9JKf8halWPDKaN+kwpq1bylrVZG/BGJd2aSx7JXVCxwhfyUobOxxoLnSA==
+	t=1793214411;
+	b=N4JTadE4VDHuAaqVs4YHwa12nZo+wZncTliAk2fuYPAP9Yw278xzhLEsGx17lQ4c4d2S
+	 VvptQ8OxT7ubHx9kFg31oxcMNwGopk89/sTtRfzkqkL75DeNx/M8PAwymh1mFWkKZyBK/
+	 DDcYUNdlr0vl3rM3Cp/vZ1ZouepCEKtHcoRVK4NrB8fyTXI52UxaG4BfsJtJDiL/NT463
+	 xMwe561hJrEjGXM/1SPgQRCX3z9hv7GvnCnGComY/R17Xujc1/n3Du/82Y6wftv98AZk+
+	 9cYo8s6K4XqBPs4cONWOq3OpAWgJphB8ssOy8aw1jQo8OSf1QvbvKVLz5nYNlmokPZQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214408;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214411;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=yYH+rCMkdAessNvMERIEbXkUgFHAXQT6dfekZ7WKjFs=;
-	b=ygyva2PmFLSB7UKt/M2lMMMVY8x18+qfGIyeMJUoqdLNppMI+/016Z7dPyhNwEAWOg/F
-	 672RNedu75YMyvNBtjODtIbGNHJB3l2oWXfYPeqHmguIDoCcr7uzojTokNRKUPy83aCi+
-	 JZFeodxtIdDvxAWX85mkaRJsHgma1XBZ8UekqhPbBFtcew10f6B3VblvowHMw/ILyhKtY
-	 wlB9ldj9vRfizqGFq5b47ficJXJrhQaJkcDvHflsJEKF1+Jf2HAzdPGuQnNpsntFDrcTM
-	 5CoEG4ge4pYCr5UZ4+pmuIB53vSs8VOgj21u5CbzFpO+7wu4PMPBSkv0eVRRbSskFxQ==
+	bh=1RZfCRQhUGlZuq7Apoxi9pfhSAl/uGy7ydnuMPaHYIM=;
+	b=uxPClrgl2KTFKlIJyoQQkfaloL1sRoPHX5i8FEZkbe2nvvw9jE3duwx6EMMiWilrzBWv
+	 oF7XhzgjtFQcgULC7CRPPWlGXAjNHK3jHK+aICM4pPuoQB61J8vXNaqvNY416tRtQAfvj
+	 FqR0Fy+pRPz7Kar85UGY5OyloAl0tVpl2Mg2FCZcabgT9c4tXniOQthUmlOOOg+pbDHvE
+	 ODL/ss7v5E2WeJmnPjtQFCb1i38zSqVadb5nm4vi0MZUCBpSk+rSLR1LXcYM3e+peC/Wu
+	 zRWlOi+6WVPL1iDJvoInSZ4sxshiSoOJ5YL0uKt26kyH6oX7rEbRIxa3at3SrR4Fs2A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Dxe1AHpE;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZmnM6k1j;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7536606A324;
-	Wed, 28 Oct 2026 19:06:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F20DE606A322;
+	Wed, 28 Oct 2026 19:06:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Dxe1AHpE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 401E71F01825;
-	Wed, 28 Oct 2026 19:06:47 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZmnM6k1j
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F3311F01825;
+	Wed, 28 Oct 2026 19:06:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214407;
-	bh=yYH+rCMkdAessNvMERIEbXkUgFHAXQT6dfekZ7WKjFs=;
+	s=korg; t=1793214410;
+	bh=1RZfCRQhUGlZuq7Apoxi9pfhSAl/uGy7ydnuMPaHYIM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Dxe1AHpEd+3oIQ1CfeyvhLWQKyg8cubvaVrHTrIKyF41Lu6RcLSGvGnyEx/AYNG3K
-	 s/ut1XUnlje1QemOfCkDkIl7I4PV1d/UqamTb4cFUvWm84xck6caWFmZCQWVGLRKtA
-	 WnwmCnrVkvxIpyLQfhXiHAErevqvz3DoEvBvlWbw=
+	b=ZmnM6k1jwpUy9+RtjOlPeYw1+vdVCyc42II+WnMHh3Baq0Ppc5sjbl/ZnVAVmwSAa
+	 VcPVUOPCsP1XX/8fqQ+HxkXTCBGxmxSKG8DGEo2yEMYtMUJDprL7f11scodzaQETJK
+	 s3aP4hIg8iLiWrB7BbdYZNXWPY/l9NKyHMw/JIyA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maud Spierings <maudspierings@gocontroll.com>,
-	Andy Shevchenko <andy@kernel.org>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Steve French <smfrench@gmail.com>,
+	Tom Talpey <tom@talpey.com>,
+	Long Li <longli@microsoft.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	linux-cifs@vger.kernel.org,
+	samba-technical@lists.samba.org,
+	Stefan Metzmacher <metze@samba.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0811/1887] iio: common: st_sensors: Fix use of uninitialize device structs
-Date: Wed, 28 Oct 2026 17:48:27 +0100
-Message-ID: <20261028170517.883729550@linuxfoundation.org>
+Subject: [PATCH 6.1 0847/1887] smb: client: let smbd_destroy() call disable_work_sync(&info->post_send_credits_work)
+Date: Wed, 28 Oct 2026 17:49:03 +0100
+Message-ID: <20261028170518.701562757@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,289 +74,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maud Spierings <maudspierings@gocontroll.com>
+From: Stefan Metzmacher <metze@samba.org>
 
-[ Upstream commit 9f92e93e257b33e73622640a9205f8642ec16ddd ]
+[ Upstream commit d9dcbbcf9145b68aa85c40947311a6907277e097 ]
 
-Throughout the various probe functions &indio_dev->dev is used before it
-is initialized. This caused a kernel panic in st_sensors_power_enable()
-when the call to devm_regulator_bulk_get_enable() fails and then calls
-dev_err_probe() with the uninitialized device.
+In smbd_destroy() we may destroy the memory so we better
+wait until post_send_credits_work is no longer pending
+and will never be started again.
 
-This seems to only cause a panic with dev_err_probe(), dev_err(),
-dev_warn() and dev_info() don't seem to cause a panic, but are fixed
-as well.
+I actually just hit the case using rxe:
 
-The issue is reported and traced here: [1]
+WARNING: CPU: 0 PID: 138 at drivers/infiniband/sw/rxe/rxe_verbs.c:1032 rxe_post_recv+0x1ee/0x480 [rdma_rxe]
+...
+[ 5305.686979] [    T138]  smbd_post_recv+0x445/0xc10 [cifs]
+[ 5305.687135] [    T138]  ? srso_alias_return_thunk+0x5/0xfbef5
+[ 5305.687149] [    T138]  ? __kasan_check_write+0x14/0x30
+[ 5305.687185] [    T138]  ? __pfx_smbd_post_recv+0x10/0x10 [cifs]
+[ 5305.687329] [    T138]  ? __pfx__raw_spin_lock_irqsave+0x10/0x10
+[ 5305.687356] [    T138]  ? srso_alias_return_thunk+0x5/0xfbef5
+[ 5305.687368] [    T138]  ? srso_alias_return_thunk+0x5/0xfbef5
+[ 5305.687378] [    T138]  ? _raw_spin_unlock_irqrestore+0x11/0x60
+[ 5305.687389] [    T138]  ? srso_alias_return_thunk+0x5/0xfbef5
+[ 5305.687399] [    T138]  ? get_receive_buffer+0x168/0x210 [cifs]
+[ 5305.687555] [    T138]  smbd_post_send_credits+0x382/0x4b0 [cifs]
+[ 5305.687701] [    T138]  ? __pfx_smbd_post_send_credits+0x10/0x10 [cifs]
+[ 5305.687855] [    T138]  ? __pfx___schedule+0x10/0x10
+[ 5305.687865] [    T138]  ? __pfx__raw_spin_lock_irq+0x10/0x10
+[ 5305.687875] [    T138]  ? queue_delayed_work_on+0x8e/0xa0
+[ 5305.687889] [    T138]  process_one_work+0x629/0xf80
+[ 5305.687908] [    T138]  ? srso_alias_return_thunk+0x5/0xfbef5
+[ 5305.687917] [    T138]  ? __kasan_check_write+0x14/0x30
+[ 5305.687933] [    T138]  worker_thread+0x87f/0x1570
+...
 
-Link: https://lore.kernel.org/all/AM7P189MB100986A83D2F28AF3FFAF976E39EA@AM7P189MB1009.EURP189.PROD.OUTLOOK.COM/ [1]
-Cc: stable@vger.kernel.org
-Signed-off-by: Maud Spierings <maudspierings@gocontroll.com>
-Reviewed-by: Andy Shevchenko <andy@kernel.org>
-Link: https://... [1]
-Link: https://patch.msgid.link/20250527-st_iio_fix-v4-1-12d89801c761@gocontroll.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+It means rxe_post_recv was called after rdma_destroy_qp().
+This happened because put_receive_buffer() was triggered
+by ib_drain_qp() and called:
+queue_work(info->workqueue, &info->post_send_credits_work);
+
+Cc: Steve French <smfrench@gmail.com>
+Cc: Tom Talpey <tom@talpey.com>
+Cc: Long Li <longli@microsoft.com>
+Cc: Namjae Jeon <linkinjeon@kernel.org>
+Cc: linux-cifs@vger.kernel.org
+Cc: samba-technical@lists.samba.org
+Fixes: f198186aa9bb ("CIFS: SMBD: Establish SMB Direct connection")
+Signed-off-by: Stefan Metzmacher <metze@samba.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/accel/st_accel_core.c             | 10 +++---
- .../iio/common/st_sensors/st_sensors_core.c   | 36 +++++++++----------
- .../common/st_sensors/st_sensors_trigger.c    | 20 +++++------
- 3 files changed, 31 insertions(+), 35 deletions(-)
+ fs/smb/client/smbdirect.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/iio/accel/st_accel_core.c b/drivers/iio/accel/st_accel_core.c
-index c4143c5678746..a5c0ecbae271f 100644
---- a/drivers/iio/accel/st_accel_core.c
-+++ b/drivers/iio/accel/st_accel_core.c
-@@ -1269,6 +1269,7 @@ static int apply_acpi_orientation(struct iio_dev *indio_dev)
- 	union acpi_object *ont;
- 	union acpi_object *elements;
- 	acpi_status status;
-+	struct device *parent = indio_dev->dev.parent;
- 	int ret = -EINVAL;
- 	unsigned int val;
- 	int i, j;
-@@ -1287,7 +1288,7 @@ static int apply_acpi_orientation(struct iio_dev *indio_dev)
- 	};
- 
- 
--	adev = ACPI_COMPANION(indio_dev->dev.parent);
-+	adev = ACPI_COMPANION(parent);
- 	if (!adev)
- 		return -ENXIO;
- 
-@@ -1296,8 +1297,7 @@ static int apply_acpi_orientation(struct iio_dev *indio_dev)
- 	if (status == AE_NOT_FOUND) {
- 		return -ENXIO;
- 	} else if (ACPI_FAILURE(status)) {
--		dev_warn(&indio_dev->dev, "failed to execute _ONT: %d\n",
--			 status);
-+		dev_warn(parent, "failed to execute _ONT: %d\n", status);
- 		return status;
+diff --git a/fs/smb/client/smbdirect.c b/fs/smb/client/smbdirect.c
+index 9b16840952c09..d2878973c1476 100644
+--- a/fs/smb/client/smbdirect.c
++++ b/fs/smb/client/smbdirect.c
+@@ -1358,6 +1358,9 @@ void smbd_destroy(struct TCP_Server_Info *server)
+ 			info->transport_status == SMBD_DISCONNECTED);
  	}
  
-@@ -1373,12 +1373,12 @@ static int apply_acpi_orientation(struct iio_dev *indio_dev)
- 	}
- 
- 	ret = 0;
--	dev_info(&indio_dev->dev, "computed mount matrix from ACPI\n");
-+	dev_info(parent, "computed mount matrix from ACPI\n");
- 
- out:
- 	kfree(buffer.pointer);
- 	if (ret)
--		dev_dbg(&indio_dev->dev,
-+		dev_dbg(parent,
- 			"failed to apply ACPI orientation data: %d\n", ret);
- 
- 	return ret;
-diff --git a/drivers/iio/common/st_sensors/st_sensors_core.c b/drivers/iio/common/st_sensors/st_sensors_core.c
-index 42bfd212b90bc..2a645c359fb58 100644
---- a/drivers/iio/common/st_sensors/st_sensors_core.c
-+++ b/drivers/iio/common/st_sensors/st_sensors_core.c
-@@ -154,7 +154,7 @@ static int st_sensors_set_fullscale(struct iio_dev *indio_dev, unsigned int fs)
- 	return err;
- 
- st_accel_set_fullscale_error:
--	dev_err(&indio_dev->dev, "failed to set new fullscale.\n");
-+	dev_err(indio_dev->dev.parent, "failed to set new fullscale.\n");
- 	return err;
- }
- 
-@@ -231,8 +231,7 @@ int st_sensors_power_enable(struct iio_dev *indio_dev)
- 					     ARRAY_SIZE(regulator_names),
- 					     regulator_names);
- 	if (err)
--		return dev_err_probe(&indio_dev->dev, err,
--				     "unable to enable supplies\n");
-+		return dev_err_probe(parent, err, "unable to enable supplies\n");
- 
- 	return 0;
- }
-@@ -241,13 +240,14 @@ EXPORT_SYMBOL_NS(st_sensors_power_enable, IIO_ST_SENSORS);
- static int st_sensors_set_drdy_int_pin(struct iio_dev *indio_dev,
- 					struct st_sensors_platform_data *pdata)
- {
-+	struct device *parent = indio_dev->dev.parent;
- 	struct st_sensor_data *sdata = iio_priv(indio_dev);
- 
- 	/* Sensor does not support interrupts */
- 	if (!sdata->sensor_settings->drdy_irq.int1.addr &&
- 	    !sdata->sensor_settings->drdy_irq.int2.addr) {
- 		if (pdata->drdy_int_pin)
--			dev_info(&indio_dev->dev,
-+			dev_info(parent,
- 				 "DRDY on pin INT%d specified, but sensor does not support interrupts\n",
- 				 pdata->drdy_int_pin);
- 		return 0;
-@@ -256,29 +256,27 @@ static int st_sensors_set_drdy_int_pin(struct iio_dev *indio_dev,
- 	switch (pdata->drdy_int_pin) {
- 	case 1:
- 		if (!sdata->sensor_settings->drdy_irq.int1.mask) {
--			dev_err(&indio_dev->dev,
--					"DRDY on INT1 not available.\n");
-+			dev_err(parent, "DRDY on INT1 not available.\n");
- 			return -EINVAL;
- 		}
- 		sdata->drdy_int_pin = 1;
- 		break;
- 	case 2:
- 		if (!sdata->sensor_settings->drdy_irq.int2.mask) {
--			dev_err(&indio_dev->dev,
--					"DRDY on INT2 not available.\n");
-+			dev_err(parent, "DRDY on INT2 not available.\n");
- 			return -EINVAL;
- 		}
- 		sdata->drdy_int_pin = 2;
- 		break;
- 	default:
--		dev_err(&indio_dev->dev, "DRDY on pdata not valid.\n");
-+		dev_err(parent, "DRDY on pdata not valid.\n");
- 		return -EINVAL;
- 	}
- 
- 	if (pdata->open_drain) {
- 		if (!sdata->sensor_settings->drdy_irq.int1.addr_od &&
- 		    !sdata->sensor_settings->drdy_irq.int2.addr_od)
--			dev_err(&indio_dev->dev,
-+			dev_err(parent,
- 				"open drain requested but unsupported.\n");
- 		else
- 			sdata->int_pin_open_drain = true;
-@@ -336,6 +334,7 @@ EXPORT_SYMBOL_NS(st_sensors_dev_name_probe, IIO_ST_SENSORS);
- int st_sensors_init_sensor(struct iio_dev *indio_dev,
- 					struct st_sensors_platform_data *pdata)
- {
-+	struct device *parent = indio_dev->dev.parent;
- 	struct st_sensor_data *sdata = iio_priv(indio_dev);
- 	struct st_sensors_platform_data *of_pdata;
- 	int err = 0;
-@@ -343,7 +342,7 @@ int st_sensors_init_sensor(struct iio_dev *indio_dev,
- 	mutex_init(&sdata->odr_lock);
- 
- 	/* If OF/DT pdata exists, it will take precedence of anything else */
--	of_pdata = st_sensors_dev_probe(indio_dev->dev.parent, pdata);
-+	of_pdata = st_sensors_dev_probe(parent, pdata);
- 	if (IS_ERR(of_pdata))
- 		return PTR_ERR(of_pdata);
- 	if (of_pdata)
-@@ -370,7 +369,7 @@ int st_sensors_init_sensor(struct iio_dev *indio_dev,
- 		if (err < 0)
- 			return err;
- 	} else
--		dev_info(&indio_dev->dev, "Full-scale not possible\n");
-+		dev_info(parent, "Full-scale not possible\n");
- 
- 	err = st_sensors_set_odr(indio_dev, sdata->odr);
- 	if (err < 0)
-@@ -405,7 +404,7 @@ int st_sensors_init_sensor(struct iio_dev *indio_dev,
- 			mask = sdata->sensor_settings->drdy_irq.int2.mask_od;
- 		}
- 
--		dev_info(&indio_dev->dev,
-+		dev_info(parent,
- 			 "set interrupt line to open drain mode on pin %d\n",
- 			 sdata->drdy_int_pin);
- 		err = st_sensors_write_data_with_mask(indio_dev, addr,
-@@ -605,21 +604,20 @@ EXPORT_SYMBOL_NS(st_sensors_get_settings_index, IIO_ST_SENSORS);
- int st_sensors_verify_id(struct iio_dev *indio_dev)
- {
- 	struct st_sensor_data *sdata = iio_priv(indio_dev);
-+	struct device *parent = indio_dev->dev.parent;
- 	int wai, err;
- 
- 	if (sdata->sensor_settings->wai_addr) {
- 		err = regmap_read(sdata->regmap,
- 				  sdata->sensor_settings->wai_addr, &wai);
- 		if (err < 0) {
--			dev_err(&indio_dev->dev,
--				"failed to read Who-Am-I register.\n");
--			return err;
-+			return dev_err_probe(parent, err,
-+					     "failed to read Who-Am-I register.\n");
- 		}
- 
- 		if (sdata->sensor_settings->wai != wai) {
--			dev_warn(&indio_dev->dev,
--				"%s: WhoAmI mismatch (0x%x).\n",
--				indio_dev->name, wai);
-+			dev_warn(parent, "%s: WhoAmI mismatch (0x%x).\n",
-+				 indio_dev->name, wai);
- 		}
- 	}
- 
-diff --git a/drivers/iio/common/st_sensors/st_sensors_trigger.c b/drivers/iio/common/st_sensors/st_sensors_trigger.c
-index 899b640c0a70c..6672946702edd 100644
---- a/drivers/iio/common/st_sensors/st_sensors_trigger.c
-+++ b/drivers/iio/common/st_sensors/st_sensors_trigger.c
-@@ -127,7 +127,7 @@ int st_sensors_allocate_trigger(struct iio_dev *indio_dev,
- 	sdata->trig = devm_iio_trigger_alloc(parent, "%s-trigger",
- 					     indio_dev->name);
- 	if (sdata->trig == NULL) {
--		dev_err(&indio_dev->dev, "failed to allocate iio trigger.\n");
-+		dev_err(parent, "failed to allocate iio trigger.\n");
- 		return -ENOMEM;
- 	}
- 
-@@ -143,7 +143,7 @@ int st_sensors_allocate_trigger(struct iio_dev *indio_dev,
- 	case IRQF_TRIGGER_FALLING:
- 	case IRQF_TRIGGER_LOW:
- 		if (!sdata->sensor_settings->drdy_irq.addr_ihl) {
--			dev_err(&indio_dev->dev,
-+			dev_err(parent,
- 				"falling/low specified for IRQ but hardware supports only rising/high: will request rising/high\n");
- 			if (irq_trig == IRQF_TRIGGER_FALLING)
- 				irq_trig = IRQF_TRIGGER_RISING;
-@@ -156,21 +156,19 @@ int st_sensors_allocate_trigger(struct iio_dev *indio_dev,
- 				sdata->sensor_settings->drdy_irq.mask_ihl, 1);
- 			if (err < 0)
- 				return err;
--			dev_info(&indio_dev->dev,
-+			dev_info(parent,
- 				 "interrupts on the falling edge or active low level\n");
- 		}
- 		break;
- 	case IRQF_TRIGGER_RISING:
--		dev_info(&indio_dev->dev,
--			 "interrupts on the rising edge\n");
-+		dev_info(parent, "interrupts on the rising edge\n");
- 		break;
- 	case IRQF_TRIGGER_HIGH:
--		dev_info(&indio_dev->dev,
--			 "interrupts active high level\n");
-+		dev_info(parent, "interrupts active high level\n");
- 		break;
- 	default:
- 		/* This is the most preferred mode, if possible */
--		dev_err(&indio_dev->dev,
-+		dev_err(parent,
- 			"unsupported IRQ trigger specified (%lx), enforce rising edge\n", irq_trig);
- 		irq_trig = IRQF_TRIGGER_RISING;
- 	}
-@@ -179,7 +177,7 @@ int st_sensors_allocate_trigger(struct iio_dev *indio_dev,
- 	if (irq_trig == IRQF_TRIGGER_FALLING ||
- 	    irq_trig == IRQF_TRIGGER_RISING) {
- 		if (!sdata->sensor_settings->drdy_irq.stat_drdy.addr) {
--			dev_err(&indio_dev->dev,
-+			dev_err(parent,
- 				"edge IRQ not supported w/o stat register.\n");
- 			return -EOPNOTSUPP;
- 		}
-@@ -214,13 +212,13 @@ int st_sensors_allocate_trigger(struct iio_dev *indio_dev,
- 					sdata->trig->name,
- 					sdata->trig);
- 	if (err) {
--		dev_err(&indio_dev->dev, "failed to request trigger IRQ.\n");
-+		dev_err(parent, "failed to request trigger IRQ.\n");
- 		return err;
- 	}
- 
- 	err = devm_iio_trigger_register(parent, sdata->trig);
- 	if (err < 0) {
--		dev_err(&indio_dev->dev, "failed to register iio trigger.\n");
-+		dev_err(parent, "failed to register iio trigger.\n");
- 		return err;
- 	}
- 	indio_dev->trig = iio_trigger_get(sdata->trig);
++	log_rdma_event(INFO, "cancelling post_send_credits_work\n");
++	cancel_work_sync(&info->post_send_credits_work);
++
+ 	log_rdma_event(INFO, "destroying qp\n");
+ 	ib_drain_qp(info->id->qp);
+ 	rdma_destroy_qp(info->id);
 -- 
 2.53.0
 
