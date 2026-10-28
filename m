@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214213;
-	b=R9qQhGn+clLV0jh1yNFfZpUaGY3MthlWtTPV1Yl6yqKWvS4wcW/cc22AlzXJTdzyDE/z
-	 nNF5mdeYcv7myFeKh3HnffiDJZbadkVW/kQqBYBLWR3FtVWqdWrkTb5EYNfRS/h4wBKIO
-	 lK3TzKv1dxk739EIx4dcaQjwx0JydAj1VOqBMIaYtFVevxAVjugxIFRQUAv08g/LDu1fC
-	 259YFfGRd+xxYCRw0BaT5YmdpVOtgklVGkuk6FJ2+i576uXapkew/BTkQ4eCKFsDH/fjI
-	 jOJNJHt0vQvTLuduIiVh+l8Iz+2u1vK2wGlDD2r28ssCLVMgMgeELgwsTyt4vAenVEQ==
+	t=1793214215;
+	b=vffb7Wtu0M1axZZFp9CNKMvhpXF53cA8IM0WtLjjVX0GC/Ed7vTNri9Z540R/lCK/Tzl
+	 q62yAFkceYJwwSshGzZm9tJXaLg8TCqyukZGqkfPgAZiWrc4WIEeVka1gR+HhUPtajvmM
+	 W4RgW/TnG/ixQM1B4qkXxFx0JuaMYHUHdTf/MCgCx91RrAPQEhHHK+peRKQ/svyd15+o7
+	 I2AaD89PjaaTIP6/1hR8g49cxRB/MrL/XzTP9V90ni1tSC2jNKCrV9ej/g1twX1ALv6W1
+	 bam302pZFUX908xIpNh2PgSExwAAtWC0c8W43+bDiqV56y5agoIyzoge0QAUvdn9oVg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214213;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214215;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=DvkDOyvVnzWNP7E7bsOXzOAQKkWxFYDK5bjg2dh2Asw=;
-	b=0Sr1YRMgB4bXFNtOljr87OD8KuygnPheXxJlGVfQ7Q3Ve3eUVtJ5hC0ocTlmeESWJSrT
-	 G+5gA0gpCgIzHee+WmDyh8xtZlu2bgtqlxfD4c2ESzFz6zqvhS9Z3ckcmEyh4vFDHrzth
-	 H9ZAfAlRdg59Ec4ReLTtmwjA0h4vVzYZgCpYkdJOVG5rLlyvSKbtJnq2EScoI5vNDC9jC
-	 hJ+VLW9WQ1HIp8iuzXPMZgchJcFgUK8L9lgil8hYASGu242AwNfRwm29PbodJ9Lj0Ke60
-	 DAJtt450jsIzhJztSeMkyw8KxyoE1lstMI++mDALRlCYv6XP4+4Fs3JXkJfy2s/GNPg==
+	bh=JnqbBimhoQiFHThi8M15zz5SNoa8WNW7LZcBXiJypM0=;
+	b=X8JyBnpEjNvr2Awbq8uwmu0IRRdA9ZlUbx7YEoW8Jjv0ZNVb1rVflMasXbAQE3lCSUUp
+	 uBBeeOprrqi5AtnDS6vjULcaMbyyBZwJOzxb3iNTfnzlRr6n0zB/UCdwwqm/FOGsHoYM3
+	 CXvrYbAyVz7yv0/qcwoX+LeTRyFt8c1Y2Eqriwc3Wbhk6qdNVK31NjF3A01G2tkDtQGIH
+	 ze6Vbum/Ud28Xhmk4e97Tz6IkWVMvsLfgXdSL1GC1f9JKOcsto5zqk60Zf2yTOk6Smm0g
+	 X6HeWgtzcQvXO13gf1VBVVC0fOT7dTmNxDyH/BG0+gi0OSVoqmKHuEYWndSOaIxj6xw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1+aAYj8N;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BAm8OQL9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB72B60A2612;
-	Wed, 28 Oct 2026 19:03:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8404860A2616;
+	Wed, 28 Oct 2026 19:03:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1+aAYj8N
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C1AC1F013C6;
-	Wed, 28 Oct 2026 19:03:31 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BAm8OQL9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D86F11F013C0;
+	Wed, 28 Oct 2026 19:03:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214212;
-	bh=DvkDOyvVnzWNP7E7bsOXzOAQKkWxFYDK5bjg2dh2Asw=;
+	s=korg; t=1793214215;
+	bh=JnqbBimhoQiFHThi8M15zz5SNoa8WNW7LZcBXiJypM0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1+aAYj8Nb7ilb4kThH0+8gZEvTnPd5Mg2JLB+mMjC8wjYt7OXtbCXOQVZExZNURlb
-	 BCk7oOYmfAbr3yRdEgpO/rumVHaXrCGdCiHYFNDMqzeKF/Y96lLsrxSjonf2ErXGXN
-	 u09dG9JQbbktmbnTNFSBhuETteuq3BGKiW/roU8M=
+	b=BAm8OQL9gTy0vubJh3LswKxQ5W+gW0jgzxwhr0V8uwAr65XYsUO8J25eLaQ3ZfCze
+	 llBHF/w/rt1aG1bOhETWx/iAROFpUcJ7ECrkTZla5DrUNdWRRcVG6CNa3RpHsoIGE8
+	 WKWDkobUgYrRSDPjT1HOxadQ7cAygMJPkNd47UyM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Christopherson <seanjc@google.com>,
-	Mikhail Lobanov <m.lobanov@rosa.ru>,
+	syzbot+5b667f9a1fee4ba3775a@syzkaller.appspotmail.com,
+	Christian Schoenebeck <linux_oss@crudebyte.com>,
+	Dominique Martinet <asmadeus@codewreck.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0780/1887] KVM: SVM: Forcibly leave SMM mode on SHUTDOWN interception
-Date: Wed, 28 Oct 2026 17:47:56 +0100
-Message-ID: <20261028170517.188515701@linuxfoundation.org>
+Subject: [PATCH 6.1 0763/1887] fs/9p: fix NULL pointer dereference on mkdir
+Date: Wed, 28 Oct 2026 17:47:39 +0100
+Message-ID: <20261028170516.805711210@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,131 +69,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikhail Lobanov <m.lobanov@rosa.ru>
+From: Christian Schoenebeck <linux_oss@crudebyte.com>
 
-[ Upstream commit a2620f8932fa9fdabc3d78ed6efb004ca409019f ]
+[ Upstream commit 3f61ac7c65bdb26accb52f9db66313597e759821 ]
 
-Previously, commit ed129ec9057f ("KVM: x86: forcibly leave nested mode
-on vCPU reset") addressed an issue where a triple fault occurring in
-nested mode could lead to use-after-free scenarios. However, the commit
-did not handle the analogous situation for System Management Mode (SMM).
+When a 9p tree was mounted with option 'posixacl', parent directory had a
+default ACL set for its subdirectories, e.g.:
 
-This omission results in triggering a WARN when KVM forces a vCPU INIT
-after SHUTDOWN interception while the vCPU is in SMM. This situation was
-reprodused using Syzkaller by:
+  setfacl -m default:group:simpsons:rwx parentdir
 
-  1) Creating a KVM VM and vCPU
-  2) Sending a KVM_SMI ioctl to explicitly enter SMM
-  3) Executing invalid instructions causing consecutive exceptions and
-     eventually a triple fault
+then creating a subdirectory crashed 9p client, as v9fs_fid_add() call in
+function v9fs_vfs_mkdir_dotl() sets the passed 'fid' pointer to NULL
+(since dafbe689736) even though the subsequent v9fs_set_create_acl() call
+expects a valid non-NULL 'fid' pointer:
 
-The issue manifests as follows:
+  [   37.273191] BUG: kernel NULL pointer dereference, address: 0000000000000000
+  ...
+  [   37.322338] Call Trace:
+  [   37.323043]  <TASK>
+  [   37.323621] ? __die (arch/x86/kernel/dumpstack.c:421 arch/x86/kernel/dumpstack.c:434)
+  [   37.324448] ? page_fault_oops (arch/x86/mm/fault.c:714)
+  [   37.325532] ? search_module_extables (kernel/module/main.c:3733)
+  [   37.326742] ? p9_client_walk (net/9p/client.c:1165) 9pnet
+  [   37.328006] ? search_bpf_extables (kernel/bpf/core.c:804)
+  [   37.329142] ? exc_page_fault (./arch/x86/include/asm/paravirt.h:686 arch/x86/mm/fault.c:1488 arch/x86/mm/fault.c:1538)
+  [   37.330196] ? asm_exc_page_fault (./arch/x86/include/asm/idtentry.h:574)
+  [   37.331330] ? p9_client_walk (net/9p/client.c:1165) 9pnet
+  [   37.332562] ? v9fs_fid_xattr_get (fs/9p/xattr.c:30) 9p
+  [   37.333824] v9fs_fid_xattr_set (fs/9p/fid.h:23 fs/9p/xattr.c:121) 9p
+  [   37.335077] v9fs_set_acl (fs/9p/acl.c:276) 9p
+  [   37.336112] v9fs_set_create_acl (fs/9p/acl.c:307) 9p
+  [   37.337326] v9fs_vfs_mkdir_dotl (fs/9p/vfs_inode_dotl.c:411) 9p
+  [   37.338590] vfs_mkdir (fs/namei.c:4313)
+  [   37.339535] do_mkdirat (fs/namei.c:4336)
+  [   37.340465] __x64_sys_mkdir (fs/namei.c:4354)
+  [   37.341455] do_syscall_64 (arch/x86/entry/common.c:52 arch/x86/entry/common.c:83)
+  [   37.342447] entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:130)
 
-  WARNING: CPU: 0 PID: 25506 at arch/x86/kvm/x86.c:12112
-  kvm_vcpu_reset+0x1d2/0x1530 arch/x86/kvm/x86.c:12112
-  Modules linked in:
-  CPU: 0 PID: 25506 Comm: syz-executor.0 Not tainted
-  6.1.130-syzkaller-00157-g164fe5dde9b6 #0
-  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996),
-  BIOS 1.12.0-1 04/01/2014
-  RIP: 0010:kvm_vcpu_reset+0x1d2/0x1530 arch/x86/kvm/x86.c:12112
-  Call Trace:
-   <TASK>
-   shutdown_interception+0x66/0xb0 arch/x86/kvm/svm/svm.c:2136
-   svm_invoke_exit_handler+0x110/0x530 arch/x86/kvm/svm/svm.c:3395
-   svm_handle_exit+0x424/0x920 arch/x86/kvm/svm/svm.c:3457
-   vcpu_enter_guest arch/x86/kvm/x86.c:10959 [inline]
-   vcpu_run+0x2c43/0x5a90 arch/x86/kvm/x86.c:11062
-   kvm_arch_vcpu_ioctl_run+0x50f/0x1cf0 arch/x86/kvm/x86.c:11283
-   kvm_vcpu_ioctl+0x570/0xf00 arch/x86/kvm/../../../virt/kvm/kvm_main.c:4122
-   vfs_ioctl fs/ioctl.c:51 [inline]
-   __do_sys_ioctl fs/ioctl.c:870 [inline]
-   __se_sys_ioctl fs/ioctl.c:856 [inline]
-   __x64_sys_ioctl+0x19a/0x210 fs/ioctl.c:856
-   do_syscall_x64 arch/x86/entry/common.c:51 [inline]
-   do_syscall_64+0x35/0x80 arch/x86/entry/common.c:81
-   entry_SYSCALL_64_after_hwframe+0x6e/0xd8
+Fix this by simply swapping the sequence of these two calls in
+v9fs_vfs_mkdir_dotl(), i.e. calling v9fs_set_create_acl() before
+v9fs_fid_add().
 
-Architecturally, INIT is blocked when the CPU is in SMM, hence KVM's WARN()
-in kvm_vcpu_reset() to guard against KVM bugs, e.g. to detect improper
-emulation of INIT.  SHUTDOWN on SVM is a weird edge case where KVM needs to
-do _something_ sane with the VMCB, since it's technically undefined, and
-INIT is the least awful choice given KVM's ABI.
-
-So, double down on stuffing INIT on SHUTDOWN, and force the vCPU out of
-SMM to avoid any weirdness (and the WARN).
-
-Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
-
-Fixes: ed129ec9057f ("KVM: x86: forcibly leave nested mode on vCPU reset")
-Cc: stable@vger.kernel.org
-Suggested-by: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Mikhail Lobanov <m.lobanov@rosa.ru>
-Link: https://lore.kernel.org/r/20250414171207.155121-1-m.lobanov@rosa.ru
-[sean: massage changelog, make it clear this isn't architectural behavior]
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+Fixes: dafbe689736f ("9p fid refcount: cleanup p9_fid_put calls")
+Reported-by: syzbot+5b667f9a1fee4ba3775a@syzkaller.appspotmail.com
+Signed-off-by: Christian Schoenebeck <linux_oss@crudebyte.com>
+Message-ID: <E1tsiI6-002iMG-Kh@kylie.crudebyte.com>
+Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/svm/svm.c | 2 ++
- arch/x86/kvm/x86.c     | 5 ++---
- arch/x86/kvm/x86.h     | 1 +
- 3 files changed, 5 insertions(+), 3 deletions(-)
+ fs/9p/vfs_inode_dotl.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/x86/kvm/svm/svm.c b/arch/x86/kvm/svm/svm.c
-index 488e954a4483a..d2a84597711ed 100644
---- a/arch/x86/kvm/svm/svm.c
-+++ b/arch/x86/kvm/svm/svm.c
-@@ -2130,6 +2130,8 @@ static int shutdown_interception(struct kvm_vcpu *vcpu)
- 	 * in response to shutdown.
- 	 */
- 	clear_page(svm->vmcb);
-+	if (is_smm(vcpu))
-+		kvm_smm_changed(vcpu, false);
- 	kvm_vcpu_reset(vcpu, true);
- 
- 	kvm_run->exit_reason = KVM_EXIT_SHUTDOWN;
-diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
-index ffbf532baf7cd..daa52c04630ac 100644
---- a/arch/x86/kvm/x86.c
-+++ b/arch/x86/kvm/x86.c
-@@ -5165,8 +5165,6 @@ static void kvm_vcpu_ioctl_x86_get_vcpu_events(struct kvm_vcpu *vcpu,
- 	memset(&events->reserved, 0, sizeof(events->reserved));
- }
- 
--static void kvm_smm_changed(struct kvm_vcpu *vcpu, bool entering_smm);
--
- static int kvm_vcpu_ioctl_x86_set_vcpu_events(struct kvm_vcpu *vcpu,
- 					      struct kvm_vcpu_events *events)
- {
-@@ -8676,7 +8674,7 @@ static bool retry_instruction(struct x86_emulate_ctxt *ctxt,
- static int complete_emulated_mmio(struct kvm_vcpu *vcpu);
- static int complete_emulated_pio(struct kvm_vcpu *vcpu);
- 
--static void kvm_smm_changed(struct kvm_vcpu *vcpu, bool entering_smm)
-+void kvm_smm_changed(struct kvm_vcpu *vcpu, bool entering_smm)
- {
- 	trace_kvm_smm_transition(vcpu->vcpu_id, vcpu->arch.smbase, entering_smm);
- 
-@@ -8698,6 +8696,7 @@ static void kvm_smm_changed(struct kvm_vcpu *vcpu, bool entering_smm)
- 
- 	kvm_mmu_reset_context(vcpu);
- }
-+EXPORT_SYMBOL_GPL(kvm_smm_changed);
- 
- static int kvm_vcpu_check_hw_bp(unsigned long addr, u32 type, u32 dr7,
- 				unsigned long *db)
-diff --git a/arch/x86/kvm/x86.h b/arch/x86/kvm/x86.h
-index 9bb2f237b0fc0..2f21f99d9ce26 100644
---- a/arch/x86/kvm/x86.h
-+++ b/arch/x86/kvm/x86.h
-@@ -82,6 +82,7 @@ static inline unsigned int __shrink_ple_window(unsigned int val,
- 
- void kvm_service_local_tlb_flush_requests(struct kvm_vcpu *vcpu);
- int kvm_check_nested_events(struct kvm_vcpu *vcpu);
-+void kvm_smm_changed(struct kvm_vcpu *vcpu, bool entering_smm);
- 
- static inline bool kvm_is_exception_pending(struct kvm_vcpu *vcpu)
- {
+diff --git a/fs/9p/vfs_inode_dotl.c b/fs/9p/vfs_inode_dotl.c
+index e15ad46833e05..7c261b354379a 100644
+--- a/fs/9p/vfs_inode_dotl.c
++++ b/fs/9p/vfs_inode_dotl.c
+@@ -424,8 +424,8 @@ static int v9fs_vfs_mkdir_dotl(struct user_namespace *mnt_userns,
+ 				 err);
+ 			goto error;
+ 		}
+-		v9fs_fid_add(dentry, &fid);
+ 		v9fs_set_create_acl(inode, fid, dacl, pacl);
++		v9fs_fid_add(dentry, &fid);
+ 		d_instantiate(dentry, inode);
+ 		err = 0;
+ 	} else {
 -- 
 2.53.0
 
