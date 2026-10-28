@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793211220;
-	b=3Nd7azNl/2sRQOxL/Ig4VUxakJ6a47DOXmaMWbENbXdw1rzlrq0eH61SrcMN8RoXxT6t
-	 GeXSKBGGJn54ilsnYROXhE14udO6y63V3rwvFNMoe8WXVqxEeYzMeAFrJB4IfUYHnVIWT
-	 w+ouSYoiJztLyARkJriGDBD0BbGXonKl7zeDuEveLhJf8Q2zwXPmGr5eu9uy/5MBipKNk
-	 AT2fjK5fxcfaLo3dtgU8dD2SR2EgtklESeFDyuw4+md4BqhzoCCWMU5n3lI+R9WYr+r5q
-	 1MG5G7TaE25V1DzHpiqicAUBNnTCArqxmjbIbEX0BKGna1uKjuypxj1XGEnGhft8WQw==
+	t=1793211223;
+	b=yGRe7kIlSjBOs6ebAmdXT3BZ+7wV+ERj709zCbHmQgWt8YkI0WMeJqv3dgtCarq6zStz
+	 2naK0/DFIumlRdXAewcNAaEljRel4U97AsHk/YP3yc6hxD1HsXe1iBZpVuHEhDbidvKre
+	 RSt41fk3/AHvyBWCpWucGecmi+ICOqvogZ7GYhFRDK7n9tndcmhtF3c2i/gBnNsQaiPM7
+	 CdxQpmD5SS0LDSR9Gnx4jvrhkvZYuM3WD8vZUc/IOxAvOYbpaOCxwbWvP58/QibQb30aH
+	 sTiTWFP1xbAYi9vj/JHiGzq7LONbqFZ0u9MExxvFj0R474KhkZD/T6P7M8xrp8Ml8lA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793211220;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793211223;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=UqaY8fo1TGVSs1K8D3InogOK/b+y1qhlloOzymLNFbY=;
-	b=B818dAM9Ohx60TgYf4We4/GU5bn16zwbjmYXbuVvHwifdX0jdGegCC1Ovy1l9Ae+4uw7
-	 86l626dADOi0lJ44tJLJaAAY81uk0bCdNd+3tc2ZwvnFywBSIGX+pk4KI0Uaus3SvRH1b
-	 Qhi1zvHiykqXzmmFEZwAjCggQxhgcOdC67B67Y+cy5jC1Qv7vbn1TsWjAH3r+3yEOwRyn
-	 RPbifV6xpHXqHAdKTSeNzadS8GJs2u7LD9ioSIARKD2r/8kurBZJ1zSaUJmZl95ncjwoY
-	 NK0LIe1E2Cz/EMpgKkIU+Dht2IFcOke/wXidWRUoNij6tsF7UiLDQMtNq9ojjM9QkGQ==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=vRheazfvgGp9ksEAV85m1m2xMruoRjUbwiNHc9gczVk=;
+	b=jv+8TXKfxGG+RmWniSABSMviV4boa57B3jzHzTJctg/7V/CN9C7CzFZYAZuGqZ/OUgiu
+	 e8IdswLvzA3V0S+s6N7SZFtwf+E9XN0b9IgSp9XscW501HymhUG2pABToPiUMjLSioUFn
+	 BwmP5/j2m7U/mv+ofqfCXwvnrH5UAK4a9ergdpb+MJeZQmRAxN2ZDX9g5MgynxW/Z+hlq
+	 uIl4Q5YK7rNT6o5Zj5Nb2voWCPuXJ5RXtWRT5ZEHG/vnolN+TbKg6q64gW8joS3HvHMwK
+	 b8lWpLTys+QFwsaVCbZNnOeVKV1SAHiKHMr5M/yw6UPMwvuhx4Z1WZt1x/NaStpBYdw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1M9wg1R1;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wFG6FVDc;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19CF0606A97B;
-	Wed, 28 Oct 2026 18:13:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E55F7606B461;
+	Wed, 28 Oct 2026 18:13:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1M9wg1R1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DC9C1F01828;
-	Wed, 28 Oct 2026 18:13:39 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wFG6FVDc
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4187D1F01825;
+	Wed, 28 Oct 2026 18:13:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793211220;
-	bh=UqaY8fo1TGVSs1K8D3InogOK/b+y1qhlloOzymLNFbY=;
+	s=korg; t=1793211222;
+	bh=vRheazfvgGp9ksEAV85m1m2xMruoRjUbwiNHc9gczVk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1M9wg1R18rdf38yVJNJElnxndtGqF+gQB+NPzkYFxPCToY0GO+EbJXuukm3uFrW6m
-	 t3joLSoepIJvGCy2oFWjUwJ+JfNo1PZLhcwoZiKNbG0a97HL9td/QPUMq0SH7z2eSs
-	 1DKAG73roaWQ8y4IKYVtNtOVNTHxXUgpMwY/fYto=
+	b=wFG6FVDcUXrvU0nPmx1RkYKtv1CsiKByHk93ZoiVqzavTviWyIZNScx6rVVTtpJdM
+	 hhecwQ3OHSxYcc8VBRlge16lo1jzSGucHxtYaXditxoUwpvsoz/FGiDzk+wwMIR5IE
+	 Ocusefm+dX6Fstb99YSPT1lIlmayaDzl+YzhOQTs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
+	Frederick Morlock <me@freddy.us>,
+	Andre Eikmeyer <dev@deq.rocks>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 300/571] drm/amd/pm/si: Fix updating clock limits on AC/DC
-Date: Wed, 28 Oct 2026 17:57:27 +0100
-Message-ID: <20261028170015.116877969@linuxfoundation.org>
+Subject: [PATCH 5.15 301/571] drm/amdgpu: reset VI ASIC on MacBookPro15,1
+Date: Wed, 28 Oct 2026 17:57:28 +0100
+Message-ID: <20261028170015.141768345@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -63,99 +63,70 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Timur Kristóf <timur.kristof@gmail.com>
+From: Andre Eikmeyer <dev@deq.rocks>
 
-[ Upstream commit 08c9100f65299c64439e22e6057d750ae0e6c660 ]
+[ Upstream commit a5be7ad8f5f0e067613e9197638f216f46252946 ]
 
-Assume that the AC limits are the maximum of all power states,
-and the DC limits are the maximum of battery power states.
-This shouldn't make any difference in practice, but is
-cleaner and more robust against bogus information in the VBIOS.
+After S3, reloading amdgpu on MacBookPro15,1 systems with a Radeon Pro
+555X or 560X fails while loading the SMU firmware. The existing SMC
+register check does not request a reset because the registers do not
+reliably reflect the stale SMU state on these machines.
 
-Fixes: e6c5d36756e7 ("drm/amd/pm/si: Fix updating clock limits from power states")
-Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
-Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
-Link: https://patch.msgid.link/20260923120354.1027996-2-timur.kristof@gmail.com
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Frederick Morlock found that forcing a VI ASIC reset allows the driver to
+initialize again. This patch limits his workaround to the exact PCI
+device, Apple subsystem device and revision combinations used by these
+two GPUs, leaving other VI hardware unchanged.
+
+Suggested-by: Frederick Morlock <me@freddy.us>
+Signed-off-by: Andre Eikmeyer <dev@deq.rocks>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit ef8cb9dcc7db7b7abcbdbe870a080cc81e4f0bf3)
-Cc: stable@vger.kernel.org
+Stable-dep-of: a22e5e4f2ebb ("drm/amdgpu: reset VI ASIC on MacBookPro14,3")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/pm/powerplay/si_dpm.c | 36 +++++++++++------------
- 1 file changed, 18 insertions(+), 18 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/vi.c | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/pm/powerplay/si_dpm.c b/drivers/gpu/drm/amd/pm/powerplay/si_dpm.c
-index be459903139fb..f24eda530e210 100644
---- a/drivers/gpu/drm/amd/pm/powerplay/si_dpm.c
-+++ b/drivers/gpu/drm/amd/pm/powerplay/si_dpm.c
-@@ -7133,6 +7133,19 @@ static void si_parse_pplib_non_clock_info(struct amdgpu_device *adev,
- 		adev->pm.dpm.uvd_ps = rps;
+diff --git a/drivers/gpu/drm/amd/amdgpu/vi.c b/drivers/gpu/drm/amd/amdgpu/vi.c
+index 6d64d603a97a0..c394be0ac5fa7 100644
+--- a/drivers/gpu/drm/amd/amdgpu/vi.c
++++ b/drivers/gpu/drm/amd/amdgpu/vi.c
+@@ -1432,10 +1432,30 @@ static uint64_t vi_get_pcie_replay_count(struct amdgpu_device *adev)
+ 	return (nak_r + nak_g);
  }
  
-+static void si_update_limits(struct amdgpu_clock_and_voltage_limits *limits,
-+			     struct rv7xx_pl *pl)
-+{
-+	if (pl->sclk > limits->sclk)
-+		limits->sclk = pl->sclk;
-+	if (pl->mclk > limits->mclk)
-+		limits->mclk = pl->mclk;
-+	if (pl->vddc > limits->vddc)
-+		limits->vddc = pl->vddc;
-+	if (pl->vddci > limits->vddci)
-+		limits->vddci = pl->vddci;
-+}
++struct vi_reset_quirk {
++	u16 device;
++	u16 subsystem_vendor;
++	u16 subsystem_device;
++	u8 revision;
++};
 +
- static void si_parse_pplib_clock_info(struct amdgpu_device *adev,
- 				      struct amdgpu_ps *rps, int index,
- 				      union pplib_clock_info *clock_info)
-@@ -7141,7 +7154,6 @@ static void si_parse_pplib_clock_info(struct amdgpu_device *adev,
- 	struct evergreen_power_info *eg_pi = evergreen_get_pi(adev);
- 	struct si_power_info *si_pi = si_get_pi(adev);
- 	struct  si_ps *ps = si_get_ps(rps);
--	struct amdgpu_clock_and_voltage_limits *limits;
- 	u16 leakage_voltage;
- 	struct rv7xx_pl *pl = &ps->performance_levels[index];
- 	int ret;
-@@ -7206,26 +7218,14 @@ static void si_parse_pplib_clock_info(struct amdgpu_device *adev,
- 	 * VBIOS can contain conflicting values between:
- 	 * - the maximum allowed clocks and voltages on AC or DC
- 	 * - the clocks and voltages in power states on AC or DC
-+	 *
-+	 * Assume that the AC limits are the maximum of all power states,
-+	 * and the DC limits are the maximum of battery power states.
- 	 */
-+	si_update_limits(&adev->pm.dpm.dyn_state.max_clock_voltage_on_ac, pl);
- 	if ((rps->class & ATOM_PPLIB_CLASSIFICATION_UI_MASK) ==
--	    ATOM_PPLIB_CLASSIFICATION_UI_PERFORMANCE)
--		limits = &adev->pm.dpm.dyn_state.max_clock_voltage_on_ac;
--	else if ((rps->class & ATOM_PPLIB_CLASSIFICATION_UI_MASK) ==
- 		 ATOM_PPLIB_CLASSIFICATION_UI_BATTERY)
--		limits = &adev->pm.dpm.dyn_state.max_clock_voltage_on_dc;
--	else
--		limits = NULL;
--
--	if (limits) {
--		if (pl->sclk > limits->sclk)
--			limits->sclk = pl->sclk;
--		if (pl->mclk > limits->mclk)
--			limits->mclk = pl->mclk;
--		if (pl->vddc > limits->vddc)
--			limits->vddc = pl->vddc;
--		if (pl->vddci > limits->vddci)
--			limits->vddci = pl->vddci;
--	}
-+		si_update_limits(&adev->pm.dpm.dyn_state.max_clock_voltage_on_dc, pl);
- }
++static const struct vi_reset_quirk vi_reset_quirks[] = {
++	{ 0x67ef, PCI_VENDOR_ID_APPLE, 0x0190, 0xe3 }, /* Radeon Pro 555X */
++	{ 0x67ef, PCI_VENDOR_ID_APPLE, 0x018f, 0xc2 }, /* Radeon Pro 560X */
++};
++
+ static bool vi_need_reset_on_init(struct amdgpu_device *adev)
+ {
++	unsigned int i;
+ 	u32 clock_cntl, pc;
  
- union pplib_power_state {
++	for (i = 0; i < ARRAY_SIZE(vi_reset_quirks); i++)
++		if (adev->pdev->device == vi_reset_quirks[i].device &&
++		    adev->pdev->subsystem_vendor == vi_reset_quirks[i].subsystem_vendor &&
++		    adev->pdev->subsystem_device == vi_reset_quirks[i].subsystem_device &&
++		    adev->pdev->revision == vi_reset_quirks[i].revision)
++			return true;
++
+ 	if (adev->flags & AMD_IS_APU)
+ 		return false;
+ 
 -- 
 2.53.0
 
