@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793211801;
-	b=VEO+e5bhPvDtYsaCxlQdYDuvwsPCym9rRKpT/AOzWDUPse39Qxg6CtwIaOA11qwEMoOY
-	 gwHg9RR08Hf5GnwexJmeVd7yDrYsO2Bvdyx0WuHlbMypi0/j96oQkwo6Gb1OMlR+AG2tp
-	 mCYVnlCM3ap9g01Vzzc2gfzV5Sc9X5Ar0mDhfN31TvDvL/ZiMpcYE5+qZEYuhvzlqUDQe
-	 PCrnXZHm2yxZ+H8KuyqK5WvkBM88exmBzO5J7gSLG7FkMjgX9/d8qnlYgKOfMOsE1/YaD
-	 5jiMk07dJN2RU/ubEf36cnzP4deEKzaRRCjXUkPoqfyYFXJC6SsrdwqiTAKncbwovFQ==
+	t=1793211804;
+	b=2o62wP/DZllxLZt4doqkOK658LgIrTHygRswbAzuStzxr6HnlvXhl/t6hvDvTWkcFW+w
+	 dv7ZRK9HkQ28iIQlvWRfq8S32VhpiWS6/J4EVmcK0BS80JlV2YasygtPn+PScUjBYl60f
+	 XMWA86Rth3yx1N6xRjBGpPfrOpP5VPJYrASCwUXW6ldu/60P69zIA1yF6yhfGzSDDqgcA
+	 DBI/Iv2goFE9guVYUy/psdp1DJt6+dZo4jC785xWabACXgXrEKQTDbuFM0fb8T+6jSC3p
+	 OrUSnKt/kaxXX1t9YXFKULlPma8kkG83NmQMAc9D+sOxInKAJwPJZif1aMIGhOguB8w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793211801;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793211804;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=5rsIZZ5Cfo6zmYAp9sZl7rZOr4vqzt5kGuLdIP6c4ko=;
-	b=XxD1+VzVXfmOMNi89GJCQ4mRob3/lSz3Vh3DsMakWreNwI10LPKa4PM9tuo1HXS1/WVo
-	 MFLuizGV7U0Zpudpe4kpgGF6eXk/1o4M2VbRiFUhkEhRXNR8hRJUzWuEkks4eOcDOkS1E
-	 PT857sq6vVaW9irMMcSbF3kJq4N3K/Uxg2dVygnFd4tG38jKe2qIjD96kbpNSS6YHOC5U
-	 jN9uxsfVRzNqwSJdP5YwIq+7sr4eBAeBktykpyGy3y17JxgVHCqqrnkvxOZW396VyioxD
-	 UouFauT3eqWx4GhYYN8EWSrLpIWOsL58S63KuKvxsIprCGV5jKtRdb4BSF4gziQcNzA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=2Sas+5xZIUWHZktq1fV6fZGMw5BL6irVRuehewH2eqM=;
+	b=agu0UqYl9aTakIXUwrwZecAOxDcfevmVnOgjQT5hG+378GAlbWw/1CxJO6KlMTtX56Q1
+	 dpCpr5sG38yTtNo3QZfsiOinWlcEP8Q6VryssALYWmhHU1Bk+e7TGE/xXjLPtrt9h0F9q
+	 VX1L39sxb0BXbaeJFdFyin+aahEgJ3KjFdSUvqKfPpm5LWoafntTZfTQUXC3lU2YZWQmH
+	 fJU82VbOEhGbndYuA/pCNf5yaaejzhn+RU0GQ1QfU6IMupevA6H3272AWvNUC5jUzWV7y
+	 yHO+cvLaGcpTWK3fsgtuPnh1rOUwjYvwj27IVepoPEzytXaejbT2NbDWkfhT4leDqeA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z5hz3CmY;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JEndXbMT;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 104FA606A31D;
-	Wed, 28 Oct 2026 18:23:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8089606A31A;
+	Wed, 28 Oct 2026 18:23:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z5hz3CmY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F0271F01828;
-	Wed, 28 Oct 2026 18:23:20 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JEndXbMT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4378A1F01825;
+	Wed, 28 Oct 2026 18:23:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793211800;
-	bh=5rsIZZ5Cfo6zmYAp9sZl7rZOr4vqzt5kGuLdIP6c4ko=;
+	s=korg; t=1793211803;
+	bh=2Sas+5xZIUWHZktq1fV6fZGMw5BL6irVRuehewH2eqM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=z5hz3CmY+qnJsb2BAV8Cym0UW/loxNmnYfbxXuz6lDwqPTl2SbfynxMYC+hABjZvo
-	 GOwD3rE+i+oDBGeV5TOeHT0mPP6L49JY6NaOXRUsgspIZgbNr1k2ppk0vmlxjlZV+/
-	 3VQoOeUf6vMqwnmeFI/5vn9SFMuO7UnFWpq2we5I=
+	b=JEndXbMT3O95/4KEhckV9W4r+mkfSYwJoajAqxdswQmYbKiUXoDyRd9QoxgmJhGkj
+	 yLodS1U25eVC/ul8ZDfos3HH9jvQyn4sf0H6hPRN6Apfx02HxPbk6zr4ZJhLaBN1h5
+	 ZyHQxU9+kA/rTcJViblHNmo9pftipAGpNknsldHo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Alex Deucher <alexander.deucher@amd.com>,
-	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>
-Subject: [PATCH 5.15 503/571] drm/amdgpu/sdma3: Work around POLL_REGMEM / FENCE hang
-Date: Wed, 28 Oct 2026 18:00:50 +0100
-Message-ID: <20261028170019.964738002@linuxfoundation.org>
+	Jesse Zhang <Jesse.Zhang@amd.com>
+Subject: [PATCH 5.15 504/571] drm/amdgpu: dont drop the runtime PM reference twice in amdgpu_gpr
+Date: Wed, 28 Oct 2026 18:00:51 +0100
+Message-ID: <20261028170019.989426334@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -61,114 +61,77 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Timur Kristóf <timur.kristof@gmail.com>
+From: Jesse Zhang <Jesse.Zhang@amd.com>
 
-commit 752480ad62964edf0254e151110d3e53a7cb37de upstream.
+commit de9f6bcdb44f0e410031002e2f103826ea6b6259 upstream.
 
-SDMA can randomly hang on Polaris 10. Hard to reproduce,
-but has been occurring sporadically in the Mesa CI
-on the RADV Polaris 10 job even when Mesa isn't using
-the SDMA engine.
+amdgpu_debugfs_gpr_read() drops its runtime PM reference right after
+reading the wave registers. When copying them to userspace fails, it
+jumps to the err label, which drops the reference a second time. A read
+into a bad buffer on Navi31 either steals a reference somebody else
+holds (power/runtime_usage goes from 1 to 0) or underflows the count:
 
-When Mesa actually uses the SDMA on Polaris, the hang
-becomes more frequent and the reproduction rate goes up
-significantly in the CI system.
+  amdgpu 0000:03:00.0: Runtime PM usage count underflow!
 
-We don't know why the hangs occur, but it seems
-that inserting a single NOP packet before each
-POLL_REGMEM and FENCE packet works around it.
-At the moment it's unclear which GPUs are affected,
-so let's apply this to SDMA 3.x for now.
+The registers are already in the kernel buffer at that point, so finish
+the hardware access first and copy the buffer with a single
+copy_to_user() instead of the put_user() loop with its own error path.
 
-Note that this issue is not documented or acknowledged by AMD.
-
+Fixes: 9eee152aab56 ("drm/amdgpu/debugfs: fix ref count leak when pm_runtime_get_sync fails")
 Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
+Signed-off-by: Jesse Zhang <Jesse.Zhang@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit c343a27ed90823d08de125f7c447d96d056b75d9)
+(cherry picked from commit 31035bbd74f7c3e10c163db875b8e67f8b50ee6a)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/sdma_v3_0.c |   25 +++++++++++++++++++++----
- 1 file changed, 21 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c |   21 +++------------------
+ 1 file changed, 3 insertions(+), 18 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/sdma_v3_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/sdma_v3_0.c
-@@ -460,6 +460,9 @@ static void sdma_v3_0_ring_emit_hdp_flus
- 	else
- 		ref_and_mask = REG_SET_FIELD(ref_and_mask, GPU_HDP_FLUSH_DONE, SDMA1, 1);
- 
-+	/* Hang workaround */
-+	amdgpu_ring_write(ring, SDMA_PKT_NOP_HEADER_OP(SDMA_OP_NOP));
-+
- 	amdgpu_ring_write(ring, SDMA_PKT_HEADER_OP(SDMA_OP_POLL_REGMEM) |
- 			  SDMA_PKT_POLL_REGMEM_HEADER_HDP_FLUSH(1) |
- 			  SDMA_PKT_POLL_REGMEM_HEADER_FUNC(3)); /* == */
-@@ -487,6 +490,10 @@ static void sdma_v3_0_ring_emit_fence(st
- 				      unsigned flags)
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c
+@@ -858,7 +858,6 @@ static ssize_t amdgpu_debugfs_gpr_read(s
  {
- 	bool write64bit = flags & AMDGPU_FENCE_FLAG_64BIT;
-+
-+	/* Hang workaround */
-+	amdgpu_ring_write(ring, SDMA_PKT_NOP_HEADER_OP(SDMA_OP_NOP));
-+
- 	/* write the fence */
- 	amdgpu_ring_write(ring, SDMA_PKT_HEADER_OP(SDMA_OP_FENCE));
- 	amdgpu_ring_write(ring, lower_32_bits(addr));
-@@ -495,7 +502,11 @@ static void sdma_v3_0_ring_emit_fence(st
+ 	struct amdgpu_device *adev = f->f_inode->i_private;
+ 	int r;
+-	ssize_t result = 0;
+ 	uint32_t offset, se, sh, cu, wave, simd, thread, bank, *data;
  
- 	/* optionally write high bits as well */
- 	if (write64bit) {
-+		/* Hang workaround */
-+		amdgpu_ring_write(ring, SDMA_PKT_NOP_HEADER_OP(SDMA_OP_NOP));
-+
- 		addr += 4;
-+
- 		amdgpu_ring_write(ring, SDMA_PKT_HEADER_OP(SDMA_OP_FENCE));
- 		amdgpu_ring_write(ring, lower_32_bits(addr));
- 		amdgpu_ring_write(ring, upper_32_bits(addr));
-@@ -1049,6 +1060,9 @@ static void sdma_v3_0_ring_emit_pipeline
- 	uint32_t seq = ring->fence_drv.sync_seq;
- 	uint64_t addr = ring->fence_drv.gpu_addr;
+ 	if (size > 4096 || size & 3 || *pos & 3)
+@@ -903,25 +902,11 @@ static ssize_t amdgpu_debugfs_gpr_read(s
  
-+	/* Hang workaround */
-+	amdgpu_ring_write(ring, SDMA_PKT_NOP_HEADER_OP(SDMA_OP_NOP));
-+
- 	/* wait for idle */
- 	amdgpu_ring_write(ring, SDMA_PKT_HEADER_OP(SDMA_OP_POLL_REGMEM) |
- 			  SDMA_PKT_POLL_REGMEM_HEADER_HDP_FLUSH(0) |
-@@ -1077,6 +1091,9 @@ static void sdma_v3_0_ring_emit_vm_flush
- {
- 	amdgpu_gmc_emit_flush_gpu_tlb(ring, vmid, pd_addr);
+ 	pm_runtime_mark_last_busy(adev_to_drm(adev)->dev);
+ 	pm_runtime_put_autosuspend(adev_to_drm(adev)->dev);
++	amdgpu_virt_disable_access_debugfs(adev);
  
-+	/* Hang workaround */
-+	amdgpu_ring_write(ring, SDMA_PKT_NOP_HEADER_OP(SDMA_OP_NOP));
-+
- 	/* wait for flush */
- 	amdgpu_ring_write(ring, SDMA_PKT_HEADER_OP(SDMA_OP_POLL_REGMEM) |
- 			  SDMA_PKT_POLL_REGMEM_HEADER_HDP_FLUSH(0) |
-@@ -1584,11 +1601,11 @@ static const struct amdgpu_ring_funcs sd
- 	.get_wptr = sdma_v3_0_ring_get_wptr,
- 	.set_wptr = sdma_v3_0_ring_set_wptr,
- 	.emit_frame_size =
--		6 + /* sdma_v3_0_ring_emit_hdp_flush */
-+		6 + 1 + /* sdma_v3_0_ring_emit_hdp_flush */
- 		3 + /* hdp invalidate */
--		6 + /* sdma_v3_0_ring_emit_pipeline_sync */
--		VI_FLUSH_GPU_TLB_NUM_WREG * 3 + 6 + /* sdma_v3_0_ring_emit_vm_flush */
--		10 + 10 + 10, /* sdma_v3_0_ring_emit_fence x3 for user fence, vm fence */
-+		6 + 1 + /* sdma_v3_0_ring_emit_pipeline_sync */
-+		VI_FLUSH_GPU_TLB_NUM_WREG * 3 + 6 + 1 + /* sdma_v3_0_ring_emit_vm_flush */
-+		(10 + 1) * 3, /* sdma_v3_0_ring_emit_fence x3 for user fence, vm fence */
- 	.emit_ib_size = 7 + 6, /* sdma_v3_0_ring_emit_ib */
- 	.emit_ib = sdma_v3_0_ring_emit_ib,
- 	.emit_fence = sdma_v3_0_ring_emit_fence,
+-	while (size) {
+-		uint32_t value;
+-
+-		value = data[result >> 2];
+-		r = put_user(value, (uint32_t *)buf);
+-		if (r) {
+-			amdgpu_virt_disable_access_debugfs(adev);
+-			goto err;
+-		}
+-
+-		result += 4;
+-		buf += 4;
+-		size -= 4;
+-	}
+-
++	r = copy_to_user(buf, data, size) ? -EFAULT : size;
+ 	kfree(data);
+-	amdgpu_virt_disable_access_debugfs(adev);
+-	return result;
++	return r;
+ 
+ err:
+ 	pm_runtime_put_autosuspend(adev_to_drm(adev)->dev);
 
 
