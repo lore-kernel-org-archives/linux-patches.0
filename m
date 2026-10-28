@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793209082;
-	b=5kLS2NtUc9ZQLwuCpBkXweOV3BXSKeLLw0ElgFpSELjStuJIsr9+I4odyYHAIfJd50YK
-	 gjiuFPapj4IRQSOWPLQn1/ks8KwsnmG3qBy2lfE8FA67boZcsfbaFJyUHAgJu8sST10Am
-	 JP56i1Nn+3cPcSmJ/Cd2hArWdhAyjqKCC69sYkguXSrdgtbGbjyOm5AU0Xb/0x27S4xPX
-	 mG1IcsSZ1mVtTkCDk2I6JpJsAg2IUy5Vej7pIRNWj4VFKO7ACD37mahBasPaAWV+rYPTT
-	 nm3ofXYp1q53W+Er6v/UzERGhiW/DTDGxltCdZ1GC13tn2MhPwObPAgTz0FHM8rRVTg==
+	t=1793209085;
+	b=p53cig3esmqi8thtVUrNTgR9TlI0186FCfH3XaYqW2C+cXOzxMK3QR8r1GykreFVgjQw
+	 C+6sE2swVIrjkaiuod1HBPMR4nR8m5eAKuBVcOrogr4QmiAVn6//LG//m3EAoIbhmYjyk
+	 nmo9hYYymQsVBLQV95LkB9YgTBrJXikVLH/GlEEn8zcogp5NvXQ9cFWpedHU2SUJLwPxF
+	 z4VMF8VZtxMUrWrcctRkODF9Px6qGKw/9CA/5h50Ha8b2x3IqeQUXZ2iFF3dAi/DBaVEm
+	 KeJg5wBsTsakvPj7O7ERXxtACwIuP5fnBxCv90+g8CM+N+QWojiEC0hYjHCCZXSgCIw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793209082;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793209085;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=HNIqWM9YPY5XQ8pcGUb9L707B5JANjo2Wc3yfFKfIc4=;
-	b=F9yt/L+42w+Krn8ewIDVXRablee6IFOa8sIkZGg1XBWvua2HBPS2Vym924qHYlEXWQuT
-	 5FdKW90e1H4CqbCpuGEVAS4fUVqhJ9uw1+Y2IL+QGJWlc7kBrpUHjsqeoiLAJgJ/6Q8r5
-	 Wr7/zdf3ZwxO2jNOUfWBQNeZVZ8c5CsxtrvQR0WCMqzrb2+KBxxqnsesCn/KIq7EISgXQ
-	 m8L5yX+zelOjMWTzyUMFbYcky2SZmIxqSARM3XHrnh2/O7SuwrwF5/fKOh8YoP+akljVg
-	 D3F0i+Yc9TKD/uNuO2EJ9sc+CQnLHI3kzn2vXiOrWmhog2PmPRCJInHc86g1ZpPn0Rw==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=gHJiPQR/8a+3UDffElevRTR4JCaTneE2o87OClIJNN8=;
+	b=NxX7jDFmWTZN9FISx0eGolnHD4Mq9AxMmbabknlORxvmQwX2oSU0pJ/NQzJ9mosiTzq2
+	 S7bXb7JPPfyE0+BwhQPM6QNAHF1qMJIr7AtFy9GUICWIvgwZpCJcDRr3Hh9mLT5OugYcl
+	 aqXX6vUtt3hphiULwsp6CDSmLGFOk+MO9o8EgyEfPJljxCiBudSxn5FiDpAd/2ofhH/j8
+	 L/ZLJXaR6K0HxAx3iT+gzq90C+RSHWc0EAiG6zZ+qlAA3p0/8iLPvP7eWhmFqHNg1DKBp
+	 RayNwQO7AGs2iuLk3KlJk3aKZfWxWliSwN6VKrhE4uU8KmFUJJdSBCUwZYQnurqkoMA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Ey/vizKt";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DI2fW64c;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C591606A339;
-	Wed, 28 Oct 2026 17:38:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D4F6606A323;
+	Wed, 28 Oct 2026 17:38:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ey/vizKt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAD7B1F01825;
-	Wed, 28 Oct 2026 17:38:01 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DI2fW64c
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CCFE1F01825;
+	Wed, 28 Oct 2026 17:38:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793209082;
-	bh=HNIqWM9YPY5XQ8pcGUb9L707B5JANjo2Wc3yfFKfIc4=;
+	s=korg; t=1793209085;
+	bh=gHJiPQR/8a+3UDffElevRTR4JCaTneE2o87OClIJNN8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ey/vizKtybRRMwB/p8FzQZKG65PW+Lv3zvi+SJB8P1lTv7KnX5/Wj8PChRBZB16tk
-	 Cmm6KefqzJ9+zZ15iQcZIh1cXlszTAA6iYDVQ76H65PCS1bpUXkpl/IbmPX7N2SLJA
-	 z5NxNKsyx8MGUeSA/R/o8Y6JhKiFldu/sPsCnSxo=
+	b=DI2fW64cCHseVEnx91mi/y+JBLcoMusRLM7wdg5et3JncJrNy5iruLuuldFL5s3QE
+	 UvjoFglVveNSClupJnFNw8kkLU/+c51GbHI/5KhksaAP98iVx1p2gYIZmS89aHczBJ
+	 S2Ecb55AazXLWCrZlY+ExEE7G8fK6zZU8S6Hk5PA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Karas <krzysztof.karas@intel.com>,
-	Andi Shyti <andi.shyti@linux.intel.com>,
-	Jani Nikula <jani.nikula@intel.com>
-Subject: [PATCH 5.10 346/516] drm/i915/gem: Prevent overstepping exec array boundary
-Date: Wed, 28 Oct 2026 17:58:18 +0100
-Message-ID: <20261028170011.686163670@linuxfoundation.org>
+	=?UTF-8?q?Ayhan=20=C3=87i=C3=A7ek?= <ayhancicek@gmail.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 5.10 347/516] drm/amdgpu: make Mac FB workaround generic
+Date: Wed, 28 Oct 2026 17:58:19 +0100
+Message-ID: <20261028170011.711628998@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -62,63 +61,59 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Krzysztof Karas <krzysztof.karas@intel.com>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-commit ebe162db655881a38de43301151ff7ac940602b5 upstream.
+commit c7f44ec5c4ec760e74351f1843dcb8322f67cbf6 upstream.
 
-It is possible for eb_relocate_parse_slow() to call kvfree() on
-entries outside the original exec array during following
-scenario inside eb_relocate_parse_slow():
+Rather than adding a case of every chip where this is seen
+just check if the FB is at 0 and the ssid is apple.  This
+should cover all chips which fall into this case.
 
-1) eb_copy_relocations() allocates as many as eb->buffer_count
-   copies for exec entries;
-2) eb_parse() appends up to two VMAs, right after incrementing
-   eb->buffer_count;
-3) cleanup under "out" label uses this incremented buffer_count
-   to release relocation pointers from exec array via kvfree(),
-   not from VMA array.
-
-To amend this problem, ensure that relocation cleanup uses the
-original exec object count, excluding the VMAs appended by the
-command parser.
-
-Fixes: 8e4ba491b0ba ("drm/i915: Parse command buffer earlier in eb_relocate(slow)")
-Signed-off-by: Krzysztof Karas <krzysztof.karas@intel.com>
-Assisted-by: GitHub-Copilot:gpt-6-astra
-Cc: stable@vger.kernel.org # 5.10+
-Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
-Signed-off-by: Andi Shyti <andi.shyti@linux.intel.com>
-Link: https://patch.msgid.link/20260911061145.3535489-1-krzysztof.karas@intel.com
-(cherry picked from commit 2a0158925fb943c7ba8f3216e2734952128defc9)
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+Tested-by: Ayhan Çiçek <ayhancicek@gmail.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit c54e4d10507722398dc90cf3c532e50b86cf425a)
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c |   17 +++++++----------
+ 1 file changed, 7 insertions(+), 10 deletions(-)
 
---- a/drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c
-+++ b/drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c
-@@ -1902,6 +1902,7 @@ static int eb_prefault_relocations(const
- static noinline int eb_relocate_parse_slow(struct i915_execbuffer *eb,
- 					   struct i915_request *rq)
- {
-+	const unsigned int count = eb->buffer_count;
- 	bool have_copy = false;
- 	struct eb_vma *ev;
- 	int err = 0;
-@@ -2028,7 +2029,6 @@ err:
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c
+@@ -489,20 +489,17 @@ void amdgpu_gmc_get_vbios_allocations(st
+ 	case CHIP_RENOIR:
+ 		adev->mman.keep_stolen_vga_memory = true;
+ 		break;
+-	case CHIP_POLARIS10:
+-	case CHIP_POLARIS11:
+-	case CHIP_POLARIS12:
+-		/* MacBookPros with switchable graphics put VRAM at 0 when
+-		 * the iGPU is enabled which results in cursor issues if
+-		 * the cursor ends up at 0.  Reserve vram at 0 in that case.
+-		 */
+-		if (adev->gmc.vram_start == 0)
+-			adev->mman.keep_stolen_vga_memory = true;
+-		break;
+ 	default:
+ 		adev->mman.keep_stolen_vga_memory = false;
+ 		break;
+ 	}
++	/* MacBookPros with switchable graphics put VRAM at 0 when
++	 * the iGPU is enabled which results in cursor issues if
++	 * the cursor ends up at 0.  Reserve vram at 0 in that case.
++	 */
++	if ((adev->pdev->subsystem_vendor == PCI_VENDOR_ID_APPLE) &&
++	    (adev->gmc.vram_start == 0))
++		adev->mman.keep_stolen_vga_memory = true;
  
- out:
- 	if (have_copy) {
--		const unsigned int count = eb->buffer_count;
- 		unsigned int i;
- 
- 		for (i = 0; i < count; i++) {
+ 	if (!amdgpu_device_ip_get_ip_block(adev, AMD_IP_BLOCK_TYPE_DCE)) {
+ 		size = 0;
 
 
