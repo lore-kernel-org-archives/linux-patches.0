@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216430;
-	b=SZM2nUjqIQg/2FSceqIr0A6rpesZxldL7x0/ZsOkPm3zD1ZeS1p1Z6nLdNCMYQwAInyr
-	 BShI6lQj3UoA0OJprNm5MtOhjAt+pGRm+2au+w1jI5jrunraeOPsANXRy4xvkxxe1fWes
-	 BInn92WWJ7V7FS11rjCBBlmtXnyHI8Dn6oCgCmrtKVxJ8yAFJex9OFU/XVNrtJgVAIwJ4
-	 YbdeKRrMc5icxL9DxqETgLiqia6iI1AQZm/MbTQUlWOC5JtziLYdqKx2xGtisrkaKBAZ0
-	 P7mB6SWKeKQ3CZgrF3DObCIwFJ/3UlbShRgjzVueVBfc1Um/OOrj1O8r5xbuC4HuIdA==
+	t=1793216432;
+	b=lmPcGt0Aa8IjiXyCm0RN1MldlKj06NrZLCYDyFBvrg/vpMP1Ue+6H2BsOotVhghPAwzD
+	 mrN0JfllAhlGWACYcX5mlInWMxA9pKvtkJrMlvJ33DgEGea59X4RlWkCyleep64ItOaJ0
+	 nx4zS0HKl9/nW5c2t1AgK4O9eGr8UiZ/iAOa6KbqlXB7XfcPynC3kjtEP86dD0FjORHGh
+	 yBk7CDnOz6NnXnUH91RE+8ArwIGQSZufr5bNUPBQkWeRTm7jc1d7sLEvbSb6Iq+l3I7cS
+	 p/lFAXa+0TNq5L0zqNO+4NV0QXaG9iFXUVLczDIbbS26HyEvtiLy8sjnlkqO25yMkSw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216430;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216432;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=bZBfsk77rsQKFmgQI+6q1xM2k1LlK6LZIAtg9+uSL0U=;
-	b=oq6e2LIOmbrtUeeQVu3t9cGRD8gmcY8h5OACsjkkDHK8N7uoABb1UCf1W5BM56omDusg
-	 LYuVlsu/w1UAsVQlRS4+cWJW2rkR8q2ILak5Qc2YvruLW6I455Y7tqZZUdtpLyI+YGO7k
-	 G2jUoBeMnQiAXBn7+vuYVhadj0nlDsbJXbCPfVc/pREiuBciiiMMnZutootF7taz4V40p
-	 z3ExyFU1JMOesg4PQmQkXRjjLzJvh7/VkrqibO672tgrohDCZtjQDJ7xM2vwB/B0+rIRk
-	 7OciOntuHlzO8Vx/cid/frRTBItF8gc7qp/3JTYdpwezO/6MCRE58fwC7c1K8uPfTQw==
+	bh=7Sd+mnmvt/EwYF+VyMPefnbLQ6Dh2lgPIbPOHoeg1TY=;
+	b=wCGA5njLT+NM41+TkKXVFfGCkEegY+KYWdzY+1UZTQpHMUhW4QmFydSYadb0VF/AonPM
+	 iiOZzXm+Mwa+gg0gWmkCsnIBl3G8xUTPS8QvTAWr2jnA7I4V7SEGEPXcYRAoLJoRWVTj8
+	 fYuxglZL9feKylj5y5dJFW+RynAkEqqbo5ao1RZ1HzWnJwcpcJSYoYAuwwDyUmcS9qt7a
+	 /35ntNC47D11uHLtHPwsc1k38dI333VrLukU1YS6u0TstaEvSIojLAsL8eds0VtgO7YHf
+	 uSnsMQzFbL2HOxXDPPANSfO3PByq6MW/LiUDGBH/nqv0SWkPISM7tGLLlbpL1zFEVrg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="ECnOnUW/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zMKX+CRF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4434606A321;
-	Wed, 28 Oct 2026 19:40:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83AE2606A332;
+	Wed, 28 Oct 2026 19:40:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ECnOnUW/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01DDC1F01825;
-	Wed, 28 Oct 2026 19:40:28 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zMKX+CRF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D23B61F01825;
+	Wed, 28 Oct 2026 19:40:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216429;
-	bh=bZBfsk77rsQKFmgQI+6q1xM2k1LlK6LZIAtg9+uSL0U=;
+	s=korg; t=1793216432;
+	bh=7Sd+mnmvt/EwYF+VyMPefnbLQ6Dh2lgPIbPOHoeg1TY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ECnOnUW/ENhJyowrddn0KwEof2ND/O0droqRbOxZO5MxpD5zN5HJXrl9O4FQpg/Bo
-	 BGC1JLVs0Bd9oTzvfo0Bxr/kpH00TKFvHuoglVOUglZXVsXQZZ8Oo1IMpUWiGM7u75
-	 bMAQcaWnSDh/Vj4GkZTfAzlHn1BpVPBSn7dOwt9I=
+	b=zMKX+CRFhE4Cm+c22VJ8bTW3fgmWIqgga3zG834aMiXvdg3MlSQXHHkLFNO2W6M98
+	 HmJmgDqakFvVWqH7cKndo4dC8QmakXaJxSEtsz+RzMQbRzMERxrgeDl7AMxXwtISe2
+	 VnRcMIHe72BY5FlF1cdLqzQXW4gndF46yUCgcN2M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Doruk Tan Ozturk <doruk@0sec.ai>,
-	Jiri Kosina <jkosina@suse.com>,
+	Xingyuan Mo <hdthky0@gmail.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1510/1887] HID: sony: clean up device list on probe failure
-Date: Wed, 28 Oct 2026 18:00:06 +0100
-Message-ID: <20261028170533.825689640@linuxfoundation.org>
+Subject: [PATCH 6.1 1511/1887] netfilter: nf_tables: skip double clone set expressions on element insert
+Date: Wed, 28 Oct 2026 18:00:07 +0100
+Message-ID: <20261028170533.850041087@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,124 +68,253 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Doruk Tan Ozturk <doruk@0sec.ai>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit 7c65699a3a311198a07659a614fe64d45924839e ]
+[ Upstream commit 43559058d21e0493aa220ac167e0279334dea5f9 ]
 
-sony_input_configured() adds some controllers to sony_device_list before
-HID core registers their input devices. input_register_device() can fail
-after the callback returns successfully. sony_probe() then observes that
-HID_CLAIMED_INPUT is clear and unwinds, but only stops the HID hardware.
-The devres-managed sony_sc is freed while its list node remains linked, so
-the next matching controller traverses freed memory.
+Both the dynset and newsetelem path clone the existing set expressions
+when setting set element expressions if no override expressions are
+provided. This results in a double clone, once to clone the template set
+expressions then another clone on the new element. Add a flag to
+annotate if userspace provides a override expression (ie. expression of
+the same type of the set but different configuration), otherwise borrow
+the existing expression from the set. Add conditionals to release
+expression iif they represent an override. Use this new override_exprs
+flag to dump the dynset expression override to userspace.
 
-Initialize the list node and device ID to inactive states. Make list
-removal idempotent and run the driver-private cleanup on every probe
-failure path. This also makes a second cleanup safe when
-sony_input_configured() already unwound a partial initialization before
-sony_probe() handles the missing input claim.
+This simplifies the existing logic and it also fixes a bug with the
+connlimit expression which results in a module refcount imbalance
+WARNING splat when resorting on the default set expressions.
 
-Found by 0sec (https://0sec.ai) using automated source analysis;
-verified against the HID input registration and probe unwind paths.
-
-Fixes: 4f967f6d7374 ("HID: sony: Fix memory issue when connecting device using both Bluetooth and USB")
-Cc: stable@vger.kernel.org
-Reported-by: Doruk Tan Ozturk <doruk@0sec.ai>
-Link: https://lore.kernel.org/linux-input/20260724143925.007D61F00A3A@smtp.kernel.org/
-Assisted-by: 0sec:multi-model
-Signed-off-by: Doruk Tan Ozturk <doruk@0sec.ai>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Fixes: 65038428b2c6 ("netfilter: nf_tables: allow to specify stateful expression in set definition")
+Fixes: fca05d4d61e6 ("netfilter: nft_dynset: honor stateful expressions in set definition")
+Reported-by: Xingyuan Mo <hdthky0@gmail.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-sony.c | 32 ++++++++++++++++----------------
- 1 file changed, 16 insertions(+), 16 deletions(-)
+ include/net/netfilter/nf_tables.h |  2 --
+ net/netfilter/nf_tables_api.c     | 56 ++++++++++---------------------
+ net/netfilter/nft_dynset.c        | 25 ++++++++------
+ 3 files changed, 33 insertions(+), 50 deletions(-)
 
-diff --git a/drivers/hid/hid-sony.c b/drivers/hid/hid-sony.c
-index 01745b5df2e4e..f1a861cb99edb 100644
---- a/drivers/hid/hid-sony.c
-+++ b/drivers/hid/hid-sony.c
-@@ -2564,13 +2564,10 @@ static int sony_check_add_dev_list(struct sony_sc *sc)
+diff --git a/include/net/netfilter/nf_tables.h b/include/net/netfilter/nf_tables.h
+index b2e49f3b2bf1c..cdb2e1a344367 100644
+--- a/include/net/netfilter/nf_tables.h
++++ b/include/net/netfilter/nf_tables.h
+@@ -852,8 +852,6 @@ void *nft_set_elem_init(const struct nft_set *set,
+ 			const struct nft_set_ext_tmpl *tmpl,
+ 			const u32 *key, const u32 *key_end, const u32 *data,
+ 			u64 timeout, u64 expiration, gfp_t gfp);
+-int nft_set_elem_expr_clone(const struct nft_ctx *ctx, struct nft_set *set,
+-			    struct nft_expr *expr_array[]);
+ void nft_set_elem_expr_destroy(const struct nft_ctx *ctx,
+ 			       struct nft_set_elem_expr *elem_expr);
+ void nft_set_elem_destroy(const struct nft_set *set, void *elem,
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index 1a47904c377f7..99fba693ab4f6 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -6131,39 +6131,11 @@ void nf_tables_set_elem_destroy(const struct nft_ctx *ctx,
+ 	kfree(elem);
+ }
  
- static void sony_remove_dev_list(struct sony_sc *sc)
- {
--	unsigned long flags;
-+	guard(spinlock_irqsave)(&sony_dev_list_lock);
- 
--	if (sc->list_node.next) {
--		spin_lock_irqsave(&sony_dev_list_lock, flags);
--		list_del(&(sc->list_node));
--		spin_unlock_irqrestore(&sony_dev_list_lock, flags);
+-int nft_set_elem_expr_clone(const struct nft_ctx *ctx, struct nft_set *set,
+-			    struct nft_expr *expr_array[])
+-{
+-	struct nft_expr *expr;
+-	int err, i, k;
+-
+-	for (i = 0; i < set->num_exprs; i++) {
+-		expr = kzalloc(set->exprs[i]->ops->size, GFP_KERNEL_ACCOUNT);
+-		if (!expr)
+-			goto err_expr;
+-
+-		err = nft_expr_clone(expr, set->exprs[i], GFP_KERNEL_ACCOUNT);
+-		if (err < 0) {
+-			kfree(expr);
+-			goto err_expr;
+-		}
+-		expr_array[i] = expr;
 -	}
-+	if (!list_empty(&sc->list_node))
-+		list_del_init(&sc->list_node);
- }
- 
- static int sony_get_bt_devaddr(struct sony_sc *sc)
-@@ -2736,6 +2733,13 @@ static inline void sony_cancel_work_sync(struct sony_sc *sc)
- 	}
- }
- 
-+static void sony_cleanup(struct sony_sc *sc)
-+{
-+	sony_cancel_work_sync(sc);
-+	sony_remove_dev_list(sc);
-+	sony_release_device_id(sc);
-+}
-+
- static int sony_input_configured(struct hid_device *hdev,
- 					struct hid_input *hidinput)
+-
+-	return 0;
+-
+-err_expr:
+-	for (k = i - 1; k >= 0; k--)
+-		nft_expr_destroy(ctx, expr_array[k]);
+-
+-	return -ENOMEM;
+-}
+-
+ static int nft_set_elem_expr_setup(struct nft_ctx *ctx,
+ 				   const struct nft_set_ext_tmpl *tmpl,
+ 				   const struct nft_set_ext *ext,
+ 				   struct nft_expr *expr_array[],
+-				   u32 num_exprs)
++				   u32 num_exprs, bool override_exprs)
  {
-@@ -2968,9 +2972,7 @@ static int sony_input_configured(struct hid_device *hdev,
- 		device_remove_file(&sc->hdev->dev, &dev_attr_firmware_version);
- 	if (sc->hw_version_created)
- 		device_remove_file(&sc->hdev->dev, &dev_attr_hardware_version);
--	sony_cancel_work_sync(sc);
--	sony_remove_dev_list(sc);
--	sony_release_device_id(sc);
-+	sony_cleanup(sc);
- 	return ret;
- }
+ 	struct nft_set_elem_expr *elem_expr = nft_set_ext_expr(ext);
+ 	u32 len = sizeof(struct nft_set_elem_expr);
+@@ -6186,7 +6158,8 @@ static int nft_set_elem_expr_setup(struct nft_ctx *ctx,
+ 			goto err_elem_expr_setup;
  
-@@ -2996,6 +2998,8 @@ static int sony_probe(struct hid_device *hdev, const struct hid_device_id *id)
+ 		elem_expr->size += expr_array[i]->ops->size;
+-		nft_expr_destroy(ctx, expr_array[i]);
++		if (override_exprs)
++			nft_expr_destroy(ctx, expr_array[i]);
+ 		expr_array[i] = NULL;
  	}
  
- 	spin_lock_init(&sc->lock);
-+	INIT_LIST_HEAD(&sc->list_node);
-+	sc->device_id = -1;
+@@ -6194,7 +6167,9 @@ static int nft_set_elem_expr_setup(struct nft_ctx *ctx,
  
- 	sc->quirks = quirks;
- 	hid_set_drvdata(hdev, sc);
-@@ -3024,6 +3028,7 @@ static int sony_probe(struct hid_device *hdev, const struct hid_device_id *id)
- 	ret = hid_hw_start(hdev, connect_mask);
- 	if (ret) {
- 		hid_err(hdev, "hw start failed\n");
-+		sony_cleanup(sc);
- 		return ret;
+ err_elem_expr_setup:
+ 	for (; i < num_exprs; i++) {
+-		nft_expr_destroy(ctx, expr_array[i]);
++		if (override_exprs)
++			nft_expr_destroy(ctx, expr_array[i]);
++
+ 		expr_array[i] = NULL;
  	}
  
-@@ -3075,7 +3080,7 @@ static int sony_probe(struct hid_device *hdev, const struct hid_device_id *id)
+@@ -6427,6 +6402,7 @@ static int nft_add_set_elem(struct nft_ctx *ctx, struct nft_set *set,
+ 	struct nft_set_elem elem;
+ 	struct nft_set_binding *binding;
+ 	struct nft_object *obj = NULL;
++	bool override_exprs = false;
+ 	struct nft_userdata *udata;
+ 	struct nft_data_desc desc;
+ 	enum nft_registers dreg;
+@@ -6533,6 +6509,7 @@ static int nft_add_set_elem(struct nft_ctx *ctx, struct nft_set *set,
  
- err:
- 	usb_free_urb(sc->ghl_urb);
--
-+	sony_cleanup(sc);
- 	hid_hw_stop(hdev);
- 	return ret;
+ 		expr_array[0] = expr;
+ 		num_exprs = 1;
++		override_exprs = true;
+ 
+ 		if (set->num_exprs && set->exprs[0]->ops != expr->ops) {
+ 			err = -EOPNOTSUPP;
+@@ -6561,6 +6538,7 @@ static int nft_add_set_elem(struct nft_ctx *ctx, struct nft_set *set,
+ 			}
+ 			expr_array[i] = expr;
+ 			num_exprs++;
++			override_exprs = true;
+ 
+ 			if (set->num_exprs && expr->ops != set->exprs[i]->ops) {
+ 				err = -EOPNOTSUPP;
+@@ -6574,9 +6552,8 @@ static int nft_add_set_elem(struct nft_ctx *ctx, struct nft_set *set,
+ 		}
+ 	} else if (set->num_exprs > 0 &&
+ 		   !(flags & NFT_SET_ELEM_INTERVAL_END)) {
+-		err = nft_set_elem_expr_clone(ctx, set, expr_array);
+-		if (err < 0)
+-			goto err_set_elem_expr_clone;
++		for (i = 0; i < set->num_exprs; i++)
++			expr_array[i] = set->exprs[i];
+ 
+ 		num_exprs = set->num_exprs;
+ 	}
+@@ -6721,7 +6698,8 @@ static int nft_add_set_elem(struct nft_ctx *ctx, struct nft_set *set,
+ 		udata->len = ulen - 1;
+ 		nla_memcpy(&udata->data, nla[NFTA_SET_ELEM_USERDATA], ulen);
+ 	}
+-	err = nft_set_elem_expr_setup(ctx, &tmpl, ext, expr_array, num_exprs);
++	err = nft_set_elem_expr_setup(ctx, &tmpl, ext, expr_array, num_exprs,
++				      override_exprs);
+ 	if (err < 0)
+ 		goto err_elem_free;
+ 
+@@ -6792,9 +6770,11 @@ static int nft_add_set_elem(struct nft_ctx *ctx, struct nft_set *set,
+ err_parse_key:
+ 	nft_data_release(&elem.key.val, NFT_DATA_VALUE);
+ err_set_elem_expr:
+-	for (i = 0; i < num_exprs && expr_array[i]; i++)
+-		nft_expr_destroy(ctx, expr_array[i]);
+-err_set_elem_expr_clone:
++	if (override_exprs) {
++		for (i = 0; i < num_exprs && expr_array[i]; i++)
++			nft_expr_destroy(ctx, expr_array[i]);
++	}
++
+ 	return err;
  }
-@@ -3102,12 +3107,7 @@ static void sony_remove(struct hid_device *hdev)
- 	if (sc->hw_version_created)
- 		device_remove_file(&sc->hdev->dev, &dev_attr_hardware_version);
  
--	sony_cancel_work_sync(sc);
--
--	sony_remove_dev_list(sc);
--
--	sony_release_device_id(sc);
--
-+	sony_cleanup(sc);
- 	hid_hw_stop(hdev);
+diff --git a/net/netfilter/nft_dynset.c b/net/netfilter/nft_dynset.c
+index cd5ed0b53a90d..a1dfce36b539c 100644
+--- a/net/netfilter/nft_dynset.c
++++ b/net/netfilter/nft_dynset.c
+@@ -19,7 +19,8 @@ struct nft_dynset {
+ 	u8				sreg_key;
+ 	u8				sreg_data;
+ 	bool				invert;
+-	bool				expr;
++	bool				expr:1,
++					override_exprs:1;
+ 	u8				num_exprs;
+ 	u64				timeout;
+ 	struct nft_expr			*expr_array[NFT_SET_EXPR_MAX];
+@@ -254,6 +255,7 @@ static int nft_dynset_init(const struct nft_ctx *ctx,
+ 
+ 		priv->num_exprs++;
+ 		priv->expr_array[0] = dynset_expr;
++		priv->override_exprs = true;
+ 
+ 		if (set->num_exprs > 1 ||
+ 		    (set->num_exprs == 1 &&
+@@ -286,6 +288,7 @@ static int nft_dynset_init(const struct nft_ctx *ctx,
+ 			}
+ 			priv->expr_array[i] = dynset_expr;
+ 			priv->num_exprs++;
++			priv->override_exprs = true;
+ 
+ 			if (set->num_exprs) {
+ 				if (i >= set->num_exprs) {
+@@ -304,9 +307,8 @@ static int nft_dynset_init(const struct nft_ctx *ctx,
+ 			goto err_expr_free;
+ 		}
+ 	} else if (set->num_exprs > 0) {
+-		err = nft_set_elem_expr_clone(ctx, set, priv->expr_array);
+-		if (err < 0)
+-			return err;
++		for (i = 0; i < set->num_exprs; i++)
++			priv->expr_array[i] = set->exprs[i];
+ 
+ 		priv->num_exprs = set->num_exprs;
+ 	}
+@@ -339,8 +341,10 @@ static int nft_dynset_init(const struct nft_ctx *ctx,
+ 	return 0;
+ 
+ err_expr_free:
+-	for (i = 0; i < priv->num_exprs; i++)
+-		nft_expr_destroy(ctx, priv->expr_array[i]);
++	if (priv->override_exprs) {
++		for (i = 0; i < priv->num_exprs; i++)
++			nft_expr_destroy(ctx, priv->expr_array[i]);
++	}
+ 	return err;
  }
  
+@@ -367,9 +371,10 @@ static void nft_dynset_destroy(const struct nft_ctx *ctx,
+ 	struct nft_dynset *priv = nft_expr_priv(expr);
+ 	int i;
+ 
+-	for (i = 0; i < priv->num_exprs; i++)
+-		nft_expr_destroy(ctx, priv->expr_array[i]);
+-
++	if (priv->override_exprs) {
++		for (i = 0; i < priv->num_exprs; i++)
++			nft_expr_destroy(ctx, priv->expr_array[i]);
++	}
+ 	nf_tables_destroy_set(ctx, priv->set);
+ }
+ 
+@@ -393,7 +398,7 @@ static int nft_dynset_dump(struct sk_buff *skb,
+ 			 nf_jiffies64_to_msecs(priv->timeout),
+ 			 NFTA_DYNSET_PAD))
+ 		goto nla_put_failure;
+-	if (priv->set->num_exprs == 0) {
++	if (priv->set->num_exprs == 0 || priv->override_exprs) {
+ 		if (priv->num_exprs == 1) {
+ 			if (nft_expr_dump(skb, NFTA_DYNSET_EXPR,
+ 					  priv->expr_array[0]))
 -- 
 2.53.0
 
