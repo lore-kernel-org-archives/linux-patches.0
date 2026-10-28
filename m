@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216728;
-	b=rZ2C6XvgH3KE5Ovw0cpLbPetzmPqCXMDOyHv+EVt6BaHg+/s0Ot6IKPrW6oBdnqTh9US
-	 ImE5JtKEfL/oXRvv/nrLY292UzyXDCme/tHHZHcI7OHwawqcTrSyIEPHL9JGNdV3XDTWb
-	 74T7vRTqAA1jeNCt/A+iDFImVg96PGouR3qEu1n6r0kLhMUMkVd7ipJgw2rasgipCrDll
-	 07GDlVfmXl74i1qOgsTO85QTWm2Otw6aTW17gXexli/yKtCEt6hmLYtrnDYEkUDCkjpIA
-	 A65ek4mHKR94Hncafz0Au4JTnldXqsC8mS9huDeu+2vfHCSMzKf5eBIEf1ysp8PKGTQ==
+	t=1793216731;
+	b=dwsbekH0/r8pUeQSg22eT6ZWsTYKOQ34s/2cLPh+/8+EpJZGMhc8ZPmMhsIz7KqHkshH
+	 +JfE+J+bDh4aUacXV8O96w+oNxbFIs/6FtCB8TuzJoNSbgqjkwUPSxI24Fx8JNYUdp4X9
+	 uwabn8WdLjDOq7qnGn3rgDoITA5wc1P9K4XEfDIX8T4FiHQbnctFFEfGPXV9mcdnioaFS
+	 ZIo8qxsvA0c5+PBuqFGyRlwONb9wvN2RZ0qKnjbwSlIIaA4yqziEBBityBJdUpOiWdQ+B
+	 Gqv08seaQUOp13pC7ZrjvoasWUoqMyd1ceYhGyic/tK6XuvMWFFMdHGlA5A3KzeTd7Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216728;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216731;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=iGB0ESMXQ9hdeHhR24H717j1E5QmscD2wU558eJ3Ns4=;
-	b=NfO0ZpDlhBiRq/xgHgoo7Bsj64QfuAn3nogRQT1mnfr6KEG30oz9fgDoZvzecslqmIY3
-	 fEDdq4ye1LzEwlqNfqIRujP268ML/QDQJwps/jCVHTuBVhL1VrQm4xqMk7Qp5N+Ta9P6y
-	 0KMQa8uk+sbIyw6txdzO1rdf/NBpQGA/dyxSoW7n+FSj8sxrRrcujFInA43cx1W6Pnd3I
-	 UgmjsTnNdxnOcexw4uQzde40D82bGHFrDXPUWFFboX6F7I8AKxRYoDaWHnrFBbrPU12Nn
-	 8RglC+1cP7DeiUyhrofdn52521yOmuV7ZpKJFVbD0FjoJ6kX71QgIgBMNOut9ignYrA==
+	bh=WOqZYfffyxCiJwRX2o9XiSamZOM7LgPevwm8GhhSzQM=;
+	b=apHGC83L8UdzcX2lxTWHfsg1cH0JVtR4PA6/YgkW7jm2MjecqyrWJeiS+SqJkAD+HIgY
+	 ONF+KjhcNTIXaFdw3PctoH3EY/cds/LseRLbls7/jq22okUEZNXixci/8sWI95txVXTjG
+	 zSlwrc9zYif1iiNc10B6NPHp+OLlwIoVdaCXjRjHRbgDRdsA0j/6BWAcd+VF3CZp/UcTz
+	 SchLiReBrhdMgj+IqCO0BHCDV0nemtEdLzbY6rvkYLXXkygqg+PUqr2tIVlp7jUNEFFmi
+	 71sZtPBQ2srVdYfj9WZwNlL+B0EsUi8GzU5ZbrX0p2+pe3ZKFr61KBe0sdIFgr5mnAA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D2S8bJig;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OY4z8sDH;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F454606A31A;
-	Wed, 28 Oct 2026 19:45:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E0BF606A31A;
+	Wed, 28 Oct 2026 19:45:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D2S8bJig
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE9021F01825;
-	Wed, 28 Oct 2026 19:45:27 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OY4z8sDH
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D23D1F01825;
+	Wed, 28 Oct 2026 19:45:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216728;
-	bh=iGB0ESMXQ9hdeHhR24H717j1E5QmscD2wU558eJ3Ns4=;
+	s=korg; t=1793216731;
+	bh=WOqZYfffyxCiJwRX2o9XiSamZOM7LgPevwm8GhhSzQM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=D2S8bJigZLlaLRuQeI5EVUxxYjs2AwHiCJDv+N0dtEd3QAiKWFrVjJN6T70hjXjDM
-	 vLCFToDRFQuprMaMVWsIxVSH7TyKYk/WalAgLJqYgaLyNmJWPzw4VRrz4GJFfKJQus
-	 mRH6R2fmjjU+y8ihLLiuBrcFFmR7/6P+4s2RvMUY=
+	b=OY4z8sDHV+q5otnD0Ak84sNOOdkeQnnXDnXavfkXN3bBDFKyR15WKijZ9VxdZsoY9
+	 RGC5olom53VI3akxNgutzInjYHRhQu9WywzPB5EIXDbE+C5e+LU2zGySzqisa3TTRn
+	 ig2k3LbYdnmkvSQpS2MYm2bguonQJ0Ts6Mn6qUmI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Huiwen He <hehuiwen@kylinos.cn>,
+	ChenXiaoSong <chenxiaosong@kylinos.cn>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1659/1887] wifi: iwlwifi: mvm: validate TX_CMD response layout
-Date: Wed, 28 Oct 2026 18:02:35 +0100
-Message-ID: <20261028170537.210876035@linuxfoundation.org>
+Subject: [PATCH 6.1 1660/1887] smb/client: flush dirty data before punching a hole
+Date: Wed, 28 Oct 2026 18:02:36 +0100
+Message-ID: <20261028170537.233554875@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,87 +69,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+From: Huiwen He <hehuiwen@kylinos.cn>
 
-[ Upstream commit 8d70881707b47353359df57df12f6de67fdacdd2 ]
+[ Upstream commit d7d2adcd022baade5cab65ca492ce63421ce3a6e ]
 
-TX_CMD parsing uses frame_count to walk status entries and then
-read the trailing SCD SSN. Make the minimum-length check follow
-that exact runtime layout calculation before parsing the payload.
+Punching a hole after a large buffered write may leave the range
+reported as data. Reproduce it with:
 
-For new TX API, reject TX_CMD responses with frame_count != 1 and
-warn/return in the aggregation handler to document that aggregated
-accounting is expected via BA notifications.
+  xfs_io -f \
+    -c "pwrite -b 3m -S 0x61 0 3m" \
+    -c "fpunch 1m 1m" \
+    -c "seek -h 0" \
+    -c "seek -d 1m" \
+    /mnt/test/repro
 
-Assisted-by: GitHubCopilot:gpt-5.3-codex
-Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20260715215523.0474ee89bab9.I84f151aabecb8921b587da092f29f78c47128f0f@changeid
+Punching 1 MiB at offset 1 MiB should produce:
+
+  0          1 MiB       2 MiB       3 MiB
+  |  DATA    |   HOLE    |   DATA    | EOF
+
+Instead, the entire file is reported as data. SEEK_HOLE(0) returns EOF,
+and SEEK_DATA(1M) returns 1M.
+
+This happens because a dirty folio spanning the punched range can be
+written back after the punch and refill the hole.
+
+Fix this by flushing and waiting for dirty data in the punched range
+before invalidating the page cache and issuing FSCTL_SET_ZERO_DATA.
+
+The xfstests generic/539 pass against Samba/ksmbd with this change.
+
+Signed-off-by: Huiwen He <hehuiwen@kylinos.cn>
+Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/tx.c | 35 +++++++++++++++++++++
- 1 file changed, 35 insertions(+)
+ fs/smb/client/smb2ops.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/tx.c b/drivers/net/wireless/intel/iwlwifi/mvm/tx.c
-index 456cd91d56216..a8036e14c0590 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/tx.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/tx.c
-@@ -1550,6 +1550,17 @@ static inline u32 iwl_mvm_get_scd_ssn(struct iwl_mvm *mvm,
- 			    tx_resp->frame_count) & 0xfff;
- }
+diff --git a/fs/smb/client/smb2ops.c b/fs/smb/client/smb2ops.c
+index 590f8d44279a9..ecc5f27ff1413 100644
+--- a/fs/smb/client/smb2ops.c
++++ b/fs/smb/client/smb2ops.c
+@@ -3599,6 +3599,15 @@ static long smb3_punch_hole(struct file *file, struct cifs_tcon *tcon,
+ 		goto out;
  
-+static inline size_t iwl_mvm_tx_resp_min_len(struct iwl_mvm *mvm,
-+					     struct iwl_mvm_tx_resp *tx_resp)
-+{
-+	struct agg_tx_status *agg_status =
-+		iwl_mvm_get_agg_status(mvm, tx_resp);
+ 	filemap_invalidate_lock(inode->i_mapping);
++	/*
++	 * Flush dirty data first, otherwise a dirty folio spanning the punched
++	 * range may be written back after the ioctl and refill the hole.
++	 */
++	rc = filemap_write_and_wait_range(inode->i_mapping, offset,
++					  offset + len - 1);
++	if (rc < 0)
++		goto unlock;
 +
-+	/* The aggregate response ends with a trailing SCD SSN __le32 word. */
-+	return (u8 *)(agg_status + tx_resp->frame_count) - (u8 *)tx_resp +
-+		sizeof(__le32);
-+}
-+
- static void iwl_mvm_rx_tx_cmd_single(struct iwl_mvm *mvm,
- 				     struct iwl_rx_packet *pkt)
- {
-@@ -1854,6 +1865,9 @@ static void iwl_mvm_rx_tx_cmd_agg(struct iwl_mvm *mvm,
- 	int queue = SEQ_TO_QUEUE(sequence);
- 	struct ieee80211_sta *sta;
- 
-+	if (WARN_ON_ONCE(iwl_mvm_has_new_tx_api(mvm)))
-+		return;
-+
- 	if (WARN_ON_ONCE(queue < IWL_MVM_DQA_MIN_DATA_QUEUE &&
- 			 (queue != IWL_MVM_DQA_BSS_CLIENT_QUEUE)))
- 		return;
-@@ -1888,6 +1902,27 @@ void iwl_mvm_rx_tx_cmd(struct iwl_mvm *mvm, struct iwl_rx_cmd_buffer *rxb)
- {
- 	struct iwl_rx_packet *pkt = rxb_addr(rxb);
- 	struct iwl_mvm_tx_resp *tx_resp = (void *)pkt->data;
-+	size_t min_len;
-+
-+	if (!tx_resp->frame_count) {
-+		IWL_WARN(mvm, "invalid TX_CMD frame_count %u\n",
-+			 tx_resp->frame_count);
-+		return;
-+	}
-+
-+	if (iwl_mvm_has_new_tx_api(mvm) && tx_resp->frame_count != 1) {
-+		IWL_WARN(mvm, "invalid TX_CMD frame_count %u for new TX API\n",
-+			 tx_resp->frame_count);
-+		return;
-+	}
-+
-+	min_len = iwl_mvm_tx_resp_min_len(mvm, tx_resp);
-+	if (iwl_rx_packet_payload_len(pkt) < min_len) {
-+		IWL_WARN(mvm, "invalid TX_CMD len %u (frame_count %u, min %zu)\n",
-+			 iwl_rx_packet_payload_len(pkt), tx_resp->frame_count,
-+			 min_len);
-+		return;
-+	}
- 
- 	if (tx_resp->frame_count == 1)
- 		iwl_mvm_rx_tx_cmd_single(mvm, pkt);
+ 	/*
+ 	 * We implement the punch hole through ioctl, so we need remove the page
+ 	 * caches first, otherwise the data may be inconsistent with the server.
+@@ -3615,6 +3624,7 @@ static long smb3_punch_hole(struct file *file, struct cifs_tcon *tcon,
+ 			(char *)&fsctl_buf,
+ 			sizeof(struct file_zero_data_information),
+ 			CIFSMaxBufSize, NULL, NULL);
++unlock:
+ 	filemap_invalidate_unlock(inode->i_mapping);
+ out:
+ 	inode_unlock(inode);
 -- 
 2.53.0
 
