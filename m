@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215500;
-	b=S9nxDFVVBBz2fYMkkJxPXZ3Hd9dZHwU7NTarFa1RP3QT/3FWbEkkW2iUSz+nLvycPHsn
-	 nFTycKHvt+XxVyoFPutaxa7OM6+0ddDXQzqauDTNQvhhs+VrVcT7xRNWZ4KhMMSRAe5OE
-	 6EfeH+ljfq2LNs5uzlUymqs9J7thhJIKU5o1sQk8MiNqMIDtLxy8raxsEKrJc7xp4aCfy
-	 7r7ALxP22C50NUaAb+zBvnCZ9IfLJBFXy9Gzs1Bh6m1bfI9CLTFZvxEA7/6d04/GVlNHQ
-	 qwMjNYLu4k83WegJ24NjCw0IJDuZ+ULoEfpiJjlUP+QD6ljUprHkW21DwRWFTrvbJdw==
+	t=1793215503;
+	b=CWrwp4KKKldEyLr7cstGyuRZV2KBb0RTklRcSNeycbwXGQYnaYXgXpNlnqHMD6dlTgDa
+	 7/hsw74MyDmrELKrQIuT+tVnReKphIQ/LRPxLphqreECKyIxtcL95AHmOZQ3uM3bfdxX7
+	 SxPQTQYNbGdbydPuIStySWmNzn9+6ffnKI+IAfWhDKxzPaZCrAACuveYJHytHCENghQ+n
+	 mkyLzxkYHPGSdjTIUElz7gMFUHVkbiKdyEa50g8+bw2JuJQqO+U6B2mnAwk5Y5q7W4lHK
+	 clp+KpCSKIZ+1/MbFUbvcN6wdMYU3S1OpvEe4YaZ8izd0MWeiCwdRE2JLMhMilct93w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215500;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215503;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=HzkdLfBW7bOZEVldGsD2rwyzBc4c5tMhuWhC2/ccIWU=;
-	b=ULhth1nk7U5T3zbyWBAG+s6mpcizj6oo/0yzpYq0U2IV1eOB2UOemf0KFm0ZvRrHmcJq
-	 fZd6w951QawEirYKtwEg2CVj0vnWCfofdEsLZ8BBae9t4+3mIRsWl37JXsuIvjx3Gbsxy
-	 qfkwDUUSZxJWEOfxJeklfOKVFQdX7RWGuIOktzDumA+bnADcrCBiRfbOCjM1v4Ck0lB8+
-	 xqroyvcOyT7HsUq0lSz6IVuXlp1zQrjyyY2ByPVbBMH67f+2KxwM6KJIUNKjDIAtek3A7
-	 yxd/wN1m4uG1RX4NODJG2ZNeonaw79rmJj/mb3jkSgBj2j8oPdUMRi6eUJhsbZVjoFg==
+	bh=Rk6JKHOp7P3cqnf85urBJUXiNjbglWIb3Ol4PocAPyI=;
+	b=3OX5OyHpYqHJiPDTN4HPDfe5CzJz43Bn8ckLoiX4IDDRdKd4QcfwniXi4KgnNbXVF3in
+	 tDOsZVup0X4JheN/Na9GOOnkJo3Xs/MMjkKfWZeL8pnw5QZMvFk4jbzjqhd7cv/91J8B4
+	 XCmEPJdpTARouwwN++FxB1f1xDq4iIl3Qubi+R0NWdrqaUG7O0uqzI0er0NgL33+5OQYh
+	 /Ez0X4vX3UUGEjrUKqcDT1xDxTae1BJ10G1CCuNQQFDJv/KPHs1w70JEP7Q0gN9wbTqGK
+	 fP8qOM4Igy3L7BDSUJaQhApNYpcDuwOaWC+3+z07zq79ONTypDdDFv1Mtv1E7Yx7yVg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZvaJ0kHn;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uSC2qf4x;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FCA1606A31A;
-	Wed, 28 Oct 2026 19:25:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0306606A31C;
+	Wed, 28 Oct 2026 19:25:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZvaJ0kHn
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 688DD1F01828;
-	Wed, 28 Oct 2026 19:24:59 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uSC2qf4x
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B6A61F01828;
+	Wed, 28 Oct 2026 19:25:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215500;
-	bh=HzkdLfBW7bOZEVldGsD2rwyzBc4c5tMhuWhC2/ccIWU=;
+	s=korg; t=1793215502;
+	bh=Rk6JKHOp7P3cqnf85urBJUXiNjbglWIb3Ol4PocAPyI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZvaJ0kHnzAWe42fqlda5VnzB8Hwu/nvqSLmqsFOuXLiR6QhnzNQ6iDohQz/FHz11X
-	 Y5zHVQcp9ANs0O+NKU6Ewnku1tgQwOVh8BscmaeWIM5wLg99spc/0Ayw9TbXRFsm0q
-	 vzLd4xjxgmcawoM2EZCMjYFq134NJL23o7ta7hgI=
+	b=uSC2qf4xnU6QrFIpoiSB6A0/f+rfsRuCEU6Wcfkh3ZHlDKmyJm+2T36ZAAMt8LGXm
+	 k0nlrwhOFjIOLdjB+okubbpkHS+HIUzOVPgLnzR7AYT+NoWoZ91zTVFvf3ui9Rm6HA
+	 BEZKMwTLpUSj+/+9wVsp5U60+RUOMvwRqI+GtIo8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Sorenson <sorenson@redhat.com>,
-	Steve French <stfrench@microsoft.com>,
+	Cen Zhang <zzzccc427@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1179/1887] cifs: prevent readdir from changing file size due to stale directory metadata
-Date: Wed, 28 Oct 2026 17:54:35 +0100
-Message-ID: <20261028170526.235499215@linuxfoundation.org>
+Subject: [PATCH 6.1 1226/1887] Bluetooth: 6lowpan: avoid untracked enable work
+Date: Wed, 28 Oct 2026 17:55:22 +0100
+Message-ID: <20261028170527.323562458@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,205 +68,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Frank Sorenson <sorenson@redhat.com>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit e8a8d54c2d508891c142a928fc7d298c4c8bd0dd ]
+[ Upstream commit 352a59dc1f4a41314b6f827c17e16af7ca88271a ]
 
-Windows Server's directory enumeration metadata lags behind the actual
-file size after a write+close or rename.  A concurrent readdir() in the
-window between close() returning to userspace and stat() being called
-overwrites the correct cached i_size with the stale server value, causing
-stat() to return the wrong size.
+lowpan_enable_set() allocates a temporary work item and schedules
+do_enable_set() on system_wq, then returns to debugfs. The debugfs active
+operation has ended at that point, but the worker still executes module
+text and manipulates enable_6lowpan and listen_chan.
 
-Once _cifsFileInfo_put() removes the last writable handle from
-openFileList, is_size_safe_to_change() permits readdir to overwrite
-i_size.  smb2_close_getattr() then stamps cifs_i->time = jiffies, making
-the corrupt cached value appear fresh to the next stat().
+bt_6lowpan_exit() removes the debugfs files and immediately closes and
+puts listen_chan. It has no pointer to the queued work item, so it cannot
+cancel or flush it before tearing down the state that the worker uses.
 
-The existing check (see Fixes:) only blocked stale size updates while
-an active RW lease was held, not after the last writable handle closes.
+The buggy scenario involves two paths, with each column showing the order
+within that path:
 
-Add cifsInodeInfo->time_last_write, written via smp_store_release() at
-writable close and on setattr/truncate.  is_size_safe_to_change() checks
-is_inode_writable() first (acquiring open_file_lock), then rejects a
-readdir size update if time_last_write falls within acregmax jiffies.
-The spinlock release in _cifsFileInfo_put() forms a store-release barrier
-that pairs with the spin_lock() (load-acquire) in is_inode_writable(),
-ensuring the subsequent smp_load_acquire() on time_last_write observes
-any update from a concurrent close().  When a size update is rejected and
-the server value differs from the cached one, cifs_i->time is cleared to
-force a fresh QUERY_INFO on the next stat().
+debugfs enable write              module exit
+1. lowpan_enable_set() allocates  1. bt_6lowpan_exit() removes
+   set_enable work                   the debugfs file
+2. schedule_work() queues         2. bt_6lowpan_exit() closes
+   do_enable_set()                   and puts listen_chan
+3. the write operation returns    3. module teardown can continue
+4. do_enable_set() later runs
+   against stale state
 
-readdir is also blocked from changing i_size while writable handles are
-open or an RW lease is held, even on direct-IO mounts.
+Run the enable state transition synchronously in lowpan_enable_set()
+instead. The simple debugfs setter can sleep, and this file already handles
+the 6LoWPAN control write synchronously under the same set_lock. Once the
+setter returns, debugfs removal covers the whole operation and exit can no
+longer race with an untracked work item.
 
-For deferred close (closetimeo > 0), time_last_write is refreshed at the
-actual server close in smb2_deferred_work_close() and in the
-cifs_close_deferred_file*() drain paths invoked by lease/oplock breaks
-and tcon teardown, anchoring the protection window to the real close time
-rather than the earlier userspace close.
+Validation reproduced this kernel report:
+BUG: KASAN: slab-use-after-free in do_enable_set+0x113/0x2e0
+Workqueue: events do_enable_set [bluetooth_6lowpan]
+The buggy address belongs to the object at ffff888109cb8000
 
-time_last_write == 0 skips the time_before() check to avoid false
-positives near boot on 32-bit systems where jiffies starts close to
-INITIAL_JIFFIES.
-
-Does not reproduce against Samba or with actimeo=0.
-
-Fixes: e4b61f3b1c67 ("cifs: prevent updating file size from server if we have a read/write lease")
-Signed-off-by: Frank Sorenson <sorenson@redhat.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-
-[ Adapted for this tree: only the time_last_write field, its initialisation and the
-  stores at writable close, deferred close, truncate and the deferred-close drain
-  paths are kept; the readdir size-check hunks do not apply here. ]
-
-Stable-dep-of: c2f2e83e3bbc ("cifs: fix cifsFileInfo leak on kmalloc failure in deferred close drain paths")
+Fixes: 90305829635d ("Bluetooth: 6lowpan: Converting rwlocks to use RCU")
+Assisted-by: Codex:gpt-5.5
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/cifsfs.c   |  1 +
- fs/smb/client/cifsglob.h |  1 +
- fs/smb/client/file.c     | 18 ++++++++++++++++--
- fs/smb/client/inode.c    |  4 ++++
- fs/smb/client/misc.c     | 27 ++++++++++++++++++++++++---
- 5 files changed, 46 insertions(+), 5 deletions(-)
+ net/bluetooth/6lowpan.c | 27 ++++-----------------------
+ 1 file changed, 4 insertions(+), 23 deletions(-)
 
-diff --git a/fs/smb/client/cifsfs.c b/fs/smb/client/cifsfs.c
-index 8046b54976aa5..c43c937b3f577 100644
---- a/fs/smb/client/cifsfs.c
-+++ b/fs/smb/client/cifsfs.c
-@@ -399,6 +399,7 @@ cifs_alloc_inode(struct super_block *sb)
- 		return NULL;
- 	cifs_inode->cifsAttrs = 0x20;	/* default */
- 	cifs_inode->time = 0;
-+	cifs_inode->time_last_write = 0;
- 	/*
- 	 * Until the file is open and we have gotten oplock info back from the
- 	 * server, can not assume caching of file data or metadata.
-diff --git a/fs/smb/client/cifsglob.h b/fs/smb/client/cifsglob.h
-index 4e463ee8e40bb..761dd1795fbf4 100644
---- a/fs/smb/client/cifsglob.h
-+++ b/fs/smb/client/cifsglob.h
-@@ -1505,6 +1505,7 @@ struct cifsInodeInfo {
- 	spinlock_t writers_lock;
- 	unsigned int writers;		/* Number of writers on this inode */
- 	unsigned long time;		/* jiffies of last update of inode */
-+	unsigned long time_last_write;	/* jiffies of last writable close or truncate */
- 	u64  server_eof;		/* current file size on server -- protected by i_lock */
- 	u64  uniqueid;			/* server inode number */
- 	u64  createtime;		/* creation time on server */
-diff --git a/fs/smb/client/file.c b/fs/smb/client/file.c
-index d2187882c236f..af2e918313a2b 100644
---- a/fs/smb/client/file.c
-+++ b/fs/smb/client/file.c
-@@ -1001,11 +1001,21 @@ void smb2_deferred_work_close(struct work_struct *work)
- {
- 	struct cifsFileInfo *cfile = container_of(work,
- 			struct cifsFileInfo, deferred.work);
-+	struct cifsInodeInfo *cinode = CIFS_I(d_inode(cfile->dentry));
- 
--	spin_lock(&CIFS_I(d_inode(cfile->dentry))->deferred_lock);
-+	spin_lock(&cinode->deferred_lock);
- 	cifs_del_deferred_close(cfile);
- 	cfile->deferred_close_scheduled = false;
--	spin_unlock(&CIFS_I(d_inode(cfile->dentry))->deferred_lock);
-+	spin_unlock(&cinode->deferred_lock);
-+	/*
-+	 * Refresh time_last_write immediately before the actual server close
-+	 * so the protection window is anchored to the real close time, not
-+	 * the earlier userspace close time stored by cifs_close().
-+	 */
-+	if (OPEN_FMODE(cfile->f_flags) & FMODE_WRITE) {
-+		/* Pairs with smp_load_acquire() in is_size_safe_to_change(). */
-+		smp_store_release(&cinode->time_last_write, jiffies);
-+	}
- 	_cifsFileInfo_put(cfile, true, false);
+diff --git a/net/bluetooth/6lowpan.c b/net/bluetooth/6lowpan.c
+index 723ead2c04f16..e59032c67116a 100644
+--- a/net/bluetooth/6lowpan.c
++++ b/net/bluetooth/6lowpan.c
+@@ -1062,23 +1062,15 @@ static void disconnect_all_peers(void)
+ 	} while (nchans);
  }
  
-@@ -1021,6 +1031,10 @@ int cifs_close(struct inode *inode, struct file *file)
- 	if (file->private_data != NULL) {
- 		cfile = file->private_data;
- 		file->private_data = NULL;
-+		if (file->f_mode & FMODE_WRITE) {
-+		/* Pairs with smp_load_acquire() in is_size_safe_to_change(). */
-+			smp_store_release(&cinode->time_last_write, jiffies);
-+		}
- 		dclose = kmalloc(sizeof(struct cifs_deferred_close), GFP_KERNEL);
- 		if ((cifs_sb->ctx->closetimeo && cinode->oplock == CIFS_CACHE_RHW_FLG)
- 		    && cinode->lease_granted &&
-diff --git a/fs/smb/client/inode.c b/fs/smb/client/inode.c
-index 9ea5f5b9dca91..df85fcbe93907 100644
---- a/fs/smb/client/inode.c
-+++ b/fs/smb/client/inode.c
-@@ -2898,6 +2898,8 @@ cifs_setattr_unix(struct dentry *direntry, struct iattr *attrs)
+-struct set_enable {
+-	struct work_struct work;
+-	bool flag;
+-};
+-
+-static void do_enable_set(struct work_struct *work)
++static void do_enable_set(bool flag)
+ {
+-	struct set_enable *set_enable = container_of(work,
+-						     struct set_enable, work);
+-
+-	if (!set_enable->flag || enable_6lowpan != set_enable->flag)
++	if (!flag || enable_6lowpan != flag)
+ 		/* Disconnect existing connections if 6lowpan is
+ 		 * disabled
+ 		 */
+ 		disconnect_all_peers();
  
- 	if ((attrs->ia_valid & ATTR_SIZE) &&
- 	    attrs->ia_size != i_size_read(inode)) {
-+		/* Pairs with smp_load_acquire() in is_size_safe_to_change(). */
-+		smp_store_release(&cifsInode->time_last_write, jiffies);
- 		truncate_setsize(inode, attrs->ia_size);
- 		fscache_resize_cookie(cifs_inode_cookie(inode), attrs->ia_size);
- 	}
-@@ -3112,6 +3114,8 @@ cifs_setattr_nounix(struct dentry *direntry, struct iattr *attrs)
+-	enable_6lowpan = set_enable->flag;
++	enable_6lowpan = flag;
  
- 	if ((attrs->ia_valid & ATTR_SIZE) &&
- 	    attrs->ia_size != i_size_read(inode)) {
-+		/* Pairs with smp_load_acquire() in is_size_safe_to_change(). */
-+		smp_store_release(&cifsInode->time_last_write, jiffies);
- 		truncate_setsize(inode, attrs->ia_size);
- 		fscache_resize_cookie(cifs_inode_cookie(inode), attrs->ia_size);
- 	}
-diff --git a/fs/smb/client/misc.c b/fs/smb/client/misc.c
-index fc6fe4c386342..6942253def3b0 100644
---- a/fs/smb/client/misc.c
-+++ b/fs/smb/client/misc.c
-@@ -784,7 +784,14 @@ cifs_close_deferred_file(struct cifsInodeInfo *cifs_inode)
- 	spin_unlock(&cifs_inode->open_file_lock);
+ 	mutex_lock(&set_lock);
+ 	if (listen_chan) {
+@@ -1088,22 +1080,11 @@ static void do_enable_set(struct work_struct *work)
  
- 	list_for_each_entry_safe(tmp_list, tmp_next_list, &file_head, list) {
--		_cifsFileInfo_put(tmp_list->cfile, false, false);
-+		struct cifsFileInfo *cfile = tmp_list->cfile;
-+
-+		if (OPEN_FMODE(cfile->f_flags) & FMODE_WRITE) {
-+		/* Pairs with smp_load_acquire() in is_size_safe_to_change(). */
-+			smp_store_release(&CIFS_I(d_inode(cfile->dentry))->time_last_write,
-+					  jiffies);
-+		}
-+		_cifsFileInfo_put(cfile, false, false);
- 		list_del(&tmp_list->list);
- 		kfree(tmp_list);
- 	}
-@@ -817,7 +824,14 @@ cifs_close_all_deferred_files(struct cifs_tcon *tcon)
- 	spin_unlock(&tcon->open_file_lock);
+ 	listen_chan = bt_6lowpan_listen();
+ 	mutex_unlock(&set_lock);
+-
+-	kfree(set_enable);
+ }
  
- 	list_for_each_entry_safe(tmp_list, tmp_next_list, &file_head, list) {
--		_cifsFileInfo_put(tmp_list->cfile, true, false);
-+		struct cifsFileInfo *cfile = tmp_list->cfile;
-+
-+		if (OPEN_FMODE(cfile->f_flags) & FMODE_WRITE) {
-+		/* Pairs with smp_load_acquire() in is_size_safe_to_change(). */
-+			smp_store_release(&CIFS_I(d_inode(cfile->dentry))->time_last_write,
-+					  jiffies);
-+		}
-+		_cifsFileInfo_put(cfile, true, false);
- 		list_del(&tmp_list->list);
- 		kfree(tmp_list);
- 	}
-@@ -891,7 +905,14 @@ cifs_close_deferred_file_under_dentry(struct cifs_tcon *tcon, const char *path)
- 	spin_unlock(&tcon->open_file_lock);
+ static int lowpan_enable_set(void *data, u64 val)
+ {
+-	struct set_enable *set_enable;
+-
+-	set_enable = kzalloc(sizeof(*set_enable), GFP_KERNEL);
+-	if (!set_enable)
+-		return -ENOMEM;
+-
+-	set_enable->flag = !!val;
+-	INIT_WORK(&set_enable->work, do_enable_set);
+-
+-	schedule_work(&set_enable->work);
++	do_enable_set(!!val);
  
- 	list_for_each_entry_safe(tmp_list, tmp_next_list, &file_head, list) {
--		_cifsFileInfo_put(tmp_list->cfile, true, false);
-+		struct cifsFileInfo *cfile = tmp_list->cfile;
-+
-+		if (OPEN_FMODE(cfile->f_flags) & FMODE_WRITE) {
-+		/* Pairs with smp_load_acquire() in is_size_safe_to_change(). */
-+			smp_store_release(&CIFS_I(d_inode(cfile->dentry))->time_last_write,
-+					  jiffies);
-+		}
-+		_cifsFileInfo_put(cfile, true, false);
- 		list_del(&tmp_list->list);
- 		kfree(tmp_list);
- 	}
+ 	return 0;
+ }
 -- 
 2.53.0
 
