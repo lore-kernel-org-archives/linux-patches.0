@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793210105;
-	b=RHYxhOKvwZSY8TWAA43yhTzOQvqHVWxGEdBZX9PNrmxqOJogWnFyrRViXHLOicxr+vJU
-	 JUcmDmnoOd/3S0QxapCRnudgy2KIuuRx3V5YT9Jd0XcSyyKxvjXjSmfOPw16evUBvaGOF
-	 jyfGRIgNmeNzad9B6GxuQu2kRDbcQSTmMmDtC1T5/dpYFFElylUvduB+j4aHNHS6W/9I7
-	 wfqHBsL39VYR27UX4DLObSJdDohpNLvJi90Wl4Vyv8geKrbC8P5z5rEGZ9suAmFzztp1p
-	 +zguWq8ifMdD3I/G0Ti5XCIf5JSqiyYqWOcmENeLsKxEQGjKa9rXklAsiAVnh8fcvwA==
+	t=1793210108;
+	b=e6/kfgGe/jnOsV3eRvSj6PeonWiC6TeTYR5RCgy5w39C4wt/PfYoFjkSVchPmi2paNjC
+	 igo1el3bg5soZHq0vCk8I2F+nz0bgORMGcxK22jEo8+SYe7dg0KLPJwrBm7ew7fxFsEqS
+	 NusCCWDpBMjsMydfbO2Vc0TLFxrA9HZPxgYnPFiwq3mp5V95ELuzyhv93HsnpV5cbp19r
+	 2wT9S/StVTaksNQzoAgH8nM1ie/yGdkdOeUeuyBprF8LsiROT/J7H68eqVCyXzZWoEd+r
+	 6Z75i3KPm7z+sb24c1xQrZhjlygB9wnYUqudMRRAhzD/+OHJ8gr3LDG/SJKhRhUuYWQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793210105;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793210108;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=OG991RQMkyMnZUrkVZFm+ArAT+fACVCoKMbyRjpidmU=;
-	b=FYLp6FEIxNZRPghGP/bHeg1tVs525sYNTn0FkICpjHtBdt7/iSs8KZAEX37oR/TXwikI
-	 SNI/Ljn72ykKzB70/qoqtTfSo8DX4yNubRnw/licDIE1iZWGLky40qPDMVO6qU7Wb0yWN
-	 WJqBUHGKKismvM8un/TfxAleis6eDWa4qSwKt9LNeBZx93lwfupeKWvSBwSaziBWFnW49
-	 xZt6w1w0R5st+4mHklDpHO4e66jDJTs9OxLCLIFpd4P5j2ubRY6YjCkwUIKU7iSrFHTXw
-	 0ZazjG4aBSwt0v3semi01LknSc1XYRFkfPsF6RYGShkKUH9Mjs+SRg40fV0+AXTDTgQ==
+	bh=xjzmNzCvZfXYyCLnuKjcTrM/D5jSV1wQMpBQkFPCZUA=;
+	b=FrgGAmt7ggw2Lhytnvu99RRPvZVkPvwJYaLno6a1zwDy5+2wgP7PhHhpvseYB4vyURux
+	 9Tw9hjJJ50tuqjW1Uj8+1m+qjxceVNDno0hxPRYZc3vqyVJZRbVGxc7cq+B8gJsmzmF0l
+	 duNOuRkRhgGAk7xmaaN9RwfUhsJonzKxOHmfZ310IfoTArliBoRowzL9wVaIegqtU0MeQ
+	 t+1gBmA9lDEK/A5BrDyDFsCbVZtPPxsf6HOGg+3hLDI9i1wLcfUlWCMMinBpFt442Ba/O
+	 IP7du/aAqybdlKxBEKRHU4jKCcBk8EkTmCxcUxHQwYmWLfenaHYMP27em0vY0FoknSA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s2GKgKqG;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=f7d4Kx0p;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DA2C606A321;
-	Wed, 28 Oct 2026 17:55:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 094B2606A323;
+	Wed, 28 Oct 2026 17:55:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s2GKgKqG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E4091F01825;
-	Wed, 28 Oct 2026 17:55:04 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=f7d4Kx0p
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5989A1F01825;
+	Wed, 28 Oct 2026 17:55:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793210105;
-	bh=OG991RQMkyMnZUrkVZFm+ArAT+fACVCoKMbyRjpidmU=;
+	s=korg; t=1793210107;
+	bh=xjzmNzCvZfXYyCLnuKjcTrM/D5jSV1wQMpBQkFPCZUA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=s2GKgKqGjoa8AD88EeC11X1DhMm6gfD6v/KGkeqELuHdN3L3r5y4dV5iOz6RdUqMH
-	 Mi6sbdOFFKhMddvkEfTzV/S6aOl6ANK/+GWRFWsypol8qLso5fj3popz3d8INjdoR0
-	 Jo7ksl030UdF12GxFzBEqfVwlpeOvwz+ru/gbL3M=
+	b=f7d4Kx0p8YcJ9DyEDZM6GDLEKh+31G3pewRVqbsuxCO9h7J9vKUi5yQOFlbEGPmud
+	 jVGhiVHpDZa/iV3k1WqTnbVY/kQuKtkKs5ay2w+5Byd2dvzkw2YpSMtjapVDlz6jk0
+	 KPi8qO8LSJFazXq7SasOlftHOeqLQ5Ja3Q4LaTo4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lee Jones <lee@kernel.org>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Steven Rostedt <rostedt@goodmis.org>
-Subject: [PATCH 6.6 051/168] tracing/histograms: Reject non-stacktrace fields for synthetic stacktrace fields
-Date: Wed, 28 Oct 2026 17:59:47 +0100
-Message-ID: <20261028165944.297482113@linuxfoundation.org>
+	Niklas Schnelle <schnelle@linux.ibm.com>,
+	Benjamin Block <bblock@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>
+Subject: [PATCH 6.6 078/168] s390/pci: Fix leak of uninitialized kernel data in SCLP report
+Date: Wed, 28 Oct 2026 18:00:14 +0100
+Message-ID: <20261028165944.930623729@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165943.089486480@linuxfoundation.org>
 References: <20261028165943.089486480@linuxfoundation.org>
@@ -68,95 +69,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lee Jones <lee@kernel.org>
+From: Niklas Schnelle <schnelle@linux.ibm.com>
 
-commit a244c241593b5b38a08f0df2cb43c26574efbdcb upstream.
+commit 8ac60ae2a307a50b599bf5d300b448d638f3ba29 upstream.
 
-In check_synth_field(), when a synthetic event field is a stacktrace
-(field->is_stack) and the histogram field is not a "long[" stacktrace
-array, validation falls through to the generic size and signedness
-comparison.
+While report_error_write() checks that the provided buffer is at least
+as large as the header struct, but not that it is large enough to
+contain the report with the length claimed by report->length. If
+user-space provides a short buffer, meaning a larger report->length than
+the actually written payload, up to around 4K of kernel data from past
+the kmalloc(len + 1) sized buffer allocated in kernfs_fop_write_iter()
+will leak into the SCLP report.
 
-Because parse_synth_field() sets a stacktrace field's type to
-"__data_loc unsigned long[]", its size is sizeof(u64) and
-synth_field_signed() marks it as signed.  Consequently, any 8-byte
-signed scalar histogram field passes the fallback check, and its scalar
-value is subsequently dereferenced as a kernel stacktrace pointer in
-get_field_size() and trace_stack().
+However, as the entity processing the SCLP is privileged and able to
+access at least the page including the report, this does not leak data
+that entity could not access but it is still an out of bounds read and
+a malformed error report that should be rejected.
 
-Furthermore, checking strstr(hist_field->type, "long[") is insufficient
-because tracepoint fields defined with __bitmask() or __rel_bitmask()
-also have type "__data_loc unsigned long[]" or "__rel_loc unsigned
-long[]", whilst create_hist_field() treats them as 4-byte scalar values
-without HIST_FIELD_FL_STACKTRACE.
-
-Propagate HIST_FIELD_FL_STACKTRACE to variable references and field
-variables (whilst excluding variable aliases from per-element
-stacktrace capture), and reject any mismatch between
-HIST_FIELD_FL_STACKTRACE and field->is_stack in check_synth_field().
-
+Fixes: 368704a65be8 ("s390/pci: add report_error attribute")
 Cc: stable@vger.kernel.org
-Fixes: 00cf3d672a9d ("tracing: Allow synthetic events to pass around stacktraces")
-Link: https://patch.msgid.link/20261013112449.1006088-1-lee@kernel.org
-Signed-off-by: Lee Jones <lee@kernel.org>
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Signed-off-by: Niklas Schnelle <schnelle@linux.ibm.com>
+Reviewed-by: Benjamin Block <bblock@linux.ibm.com>
+Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_events_hist.c |   15 +++++++++++----
- 1 file changed, 11 insertions(+), 4 deletions(-)
+ arch/s390/pci/pci_sysfs.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/kernel/trace/trace_events_hist.c
-+++ b/kernel/trace/trace_events_hist.c
-@@ -2098,7 +2098,8 @@ static int init_var_ref(struct hist_fiel
- 	ref_field->size = var_field->size;
- 	ref_field->is_signed = var_field->is_signed;
- 	ref_field->flags |= var_field->flags &
--		(HIST_FIELD_FL_TIMESTAMP | HIST_FIELD_FL_TIMESTAMP_USECS);
-+		(HIST_FIELD_FL_TIMESTAMP | HIST_FIELD_FL_TIMESTAMP_USECS |
-+		 HIST_FIELD_FL_STACKTRACE);
+--- a/arch/s390/pci/pci_sysfs.c
++++ b/arch/s390/pci/pci_sysfs.c
+@@ -146,6 +146,9 @@ static ssize_t report_error_write(struct
+ 	if (off || (count < sizeof(*report)))
+ 		return -EINVAL;
  
- 	if (system) {
- 		ref_field->system = kstrdup(system, GFP_KERNEL);
-@@ -3286,6 +3287,7 @@ static struct field_var *create_field_va
- 		ret =  -ENOMEM;
- 		goto err;
- 	}
-+	var->flags |= val->flags & HIST_FIELD_FL_STACKTRACE;
- 
- 	field_var->var = var;
- 	field_var->val = val;
-@@ -3904,7 +3906,10 @@ static int check_synth_field(struct synt
- 	    && field->is_dynamic)
- 		return 0;
- 
--	if (strstr(hist_field->type, "long[") && field->is_stack)
-+	if (!!(hist_field->flags & HIST_FIELD_FL_STACKTRACE) != field->is_stack)
++	if (count < (report->length + sizeof(*report)))
 +		return -EINVAL;
 +
-+	if (field->is_stack)
- 		return 0;
+ 	ret = sclp_pci_report(report, zdev->fh, zdev->fid);
  
- 	if (strcmp(field->type, hist_field->type) != 0) {
-@@ -4443,7 +4448,8 @@ static int create_var_field(struct hist_
- 	if (!ret && hist_data->fields[val_idx]->flags & HIST_FIELD_FL_EXECNAME)
- 		update_var_execname(hist_data->fields[val_idx]);
- 
--	if (!ret && hist_data->fields[val_idx]->flags &
-+	if (!ret && !(hist_data->fields[val_idx]->flags & HIST_FIELD_FL_ALIAS) &&
-+	    hist_data->fields[val_idx]->flags &
- 	    (HIST_FIELD_FL_STRING | HIST_FIELD_FL_STACKTRACE))
- 		hist_data->fields[val_idx]->var_str_idx = hist_data->n_var_str++;
- 
-@@ -5185,7 +5191,8 @@ static void hist_trigger_elt_update(stru
- 		if (hist_field->flags & HIST_FIELD_FL_VAR) {
- 			var_idx = hist_field->var.idx;
- 
--			if (hist_field->flags &
-+			if (!(hist_field->flags & HIST_FIELD_FL_ALIAS) &&
-+			    hist_field->flags &
- 			    (HIST_FIELD_FL_STRING | HIST_FIELD_FL_STACKTRACE)) {
- 				unsigned int str_start, var_str_idx, idx;
- 				char *str, *val_str;
+ 	return ret ? ret : count;
 
 
