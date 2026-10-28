@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216424;
-	b=3GTZdUjYnCsSTklF8TTszrMRs+mlXJ1VHJESqJspps7h0a+jC//aPqYjhGBi6Bqihd0F
-	 k0DABTN+sWsq+HtlpCxdmhqSIQvOvhKtI67NdhQUGJanklKy2ikgSsOUPzDTTCq2NAAqu
-	 kwIfqQnYoCYuJ1Lfa9yXcuHSB4VJbiMT4VBmhuuKVzqkwDvKgOXN1MlfowUg3G+GgU6wX
-	 /2kVHI4aZo0FXAl1BijUOaY/DFMlFlYiJJdm5BEgK978fMB5Wr1uvga+eUhAmIS1ww5sF
-	 txNfIF8bvVwxIXaIaYDTxfxruanp87YIj6E/AUm5xbA5vSsJki/RYSX9nxVPb1ncVog==
+	t=1793216427;
+	b=lEaqh+8qoYtKgwX6VBSS5GYr72+7+2ChBmYjPKP+ULcov8AulY67adFDEqLVcmYYTgM/
+	 +tJH4fQmsHprK+2mZo3GB6TQhRRhsImGkhfck7bIDRwcUmfJIJ5sGjTRBtIZx6V63l5WV
+	 3aujtdDcP+9vqH3BCa2rA7sn5iPPvsCbuuQsADTH0Bh/W35pfRm4FsnFIByZddPqr0nMB
+	 k/F4//xEl0FUwVW3IFkiWdcSWdowZi2JH+lb8vXNYeBzn67vOFow+9SikFXFnSKWY2GF3
+	 MmdSkrjy6jCQyCeSqZQaiDaUVqxzIiv8MXaiWyqEO9N7OYm6dnBQoToqOxj6mF547Lg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216424;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216427;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=pVUUInu93v8V36I1xc5oN/xdbdSPgnG04rdYpm6Gq78=;
-	b=cOKnFMd0EOQhw0rBJcS6n9wxGs7zt9TV4KJqeD6wxGEvO8+wXv9XSDFtgNdo5Az+RMI1
-	 Co6prGhWQ/clQR8ZlLWf1KADL6IOupNF3Y/uuX/9XHAhbOVF+oYs8DJV6WuR9gEIhD/YZ
-	 ukwu56KC6S9agYrXOwT1ckGjQTQqkLwiIdvU1ZEmAa/CVmDKNVCdefOti6nw36Q8exH5/
-	 kxXv9ThUGkH6TYds9jiVXx6WCd3XR9zT/Yk4eSmYTXg5AMAN5W1UyuEP1/PGbZ9+OKnfT
-	 XREZmLDmCraQRTaOuLfP+0UithbCMoWTlZ7zNhbh4po5jfmz0MY0eSipTqj2orsVXgA==
+	bh=mp8jJGdGfOf24SWXbqLelzmyZ7jwrceuUYItyhNDZUI=;
+	b=c4KJKMVfomw2I1C6z9+1cwnWTpZBSdcnlIqeMq+XM8hCkdd2ZXsx3ujOopdknIcBkRbs
+	 zJpTm7CHleEm7THHXyMU3OGT3hZpUaYHnln6zrNaikmrklVWHn074dqwxwcEsv/v53Ig0
+	 JzrS61rrj1A7WgXOXelqDjb8Dy1LWyzGGEkViy4Rlow0c1kVvCpbJgTz4gEeuNhrqfsyc
+	 CFXb+TjREMtFL8DT1U7C4l5AdCrdTfDurt2r+YjnxS/nJxsWghzGur6vQCmiLVVC8ev9B
+	 o7POFWVTeKmJb/vLNstuhUZT/CUVdmjpXkwXUAMq4sJcs64YgzzPpg5xmvVs0Ik6coA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v9hRRfF2;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oqcWB5gr;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2731A606A32F;
-	Wed, 28 Oct 2026 19:40:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 116EF606A323;
+	Wed, 28 Oct 2026 19:40:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v9hRRfF2
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 464561F01828;
-	Wed, 28 Oct 2026 19:40:23 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oqcWB5gr
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25E061F01825;
+	Wed, 28 Oct 2026 19:40:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216423;
-	bh=pVUUInu93v8V36I1xc5oN/xdbdSPgnG04rdYpm6Gq78=;
+	s=korg; t=1793216426;
+	bh=mp8jJGdGfOf24SWXbqLelzmyZ7jwrceuUYItyhNDZUI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=v9hRRfF2gnK7+4Yrpv830xCt8VSOAgXClRn5HqXbW0/oUiM1d7ZTrk2KFyxKrQ8gY
-	 BvCZDPqVFCGaPOJXLRlaPETrCisv63HddBLSsT9cyK5MOo12LfIfYBCgwWuqyuTYLY
-	 TyPgKDtCQale0eN/0IgqDenNeyLIf9fVAnukszPw=
+	b=oqcWB5grbZ/Tz/scqD1cnFbSbZEgmrVvwsbuS4bwzOxLyMYQfyhbdbfgk7EC+Exal
+	 H4NKLKmr6Pw7hnU+L40No/nNMjdGu784Sd5RoI788Dh1zIY7MRKhF9xargbAnFi4dG
+	 f7aef0FgsYUaLTG4eQhLENOv7J2VdUh7S6YgTOPw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zizhi Wo <wozizhi@huawei.com>,
-	Nilay Shroff <nilay@linux.ibm.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Jens Axboe <axboe@kernel.dk>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <cel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1549/1887] null_blk: free zones array on device power-off
-Date: Wed, 28 Oct 2026 18:00:45 +0100
-Message-ID: <20261028170534.716602748@linuxfoundation.org>
+Subject: [PATCH 6.1 1509/1887] NFSD: Prevent client use-after-free during close_lru reaping
+Date: Wed, 28 Oct 2026 18:00:05 +0100
+Message-ID: <20261028170533.803649819@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -70,92 +68,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zizhi Wo <wozizhi@huawei.com>
+From: Chuck Lever <cel@kernel.org>
 
-[ Upstream commit 2a6357a9b935a34f5508618fee8a7fffbf7722a8 ]
+[ Upstream commit 2330b788d732f43668b965b3105b37ceb276dfea ]
 
-null_init_zoned_dev() allocates dev->zones when a zoned device is powered
-on, but null_del_dev() never frees it on power-off; dev->zones is only
-freed later in null_free_dev(), when the configfs directory is removed. If
-the device is powered off and then on again, null_init_zoned_dev()
-allocates a new array and overwrites the dev->zones pointer, leaking the
-previous allocation each power cycle.
+An nfs4_openowner left on nn->close_lru after its final CLOSE keeps
+its last closed stateid in oo_last_closed_stid, holding only a raw
+pointer to its nfs4_client. The laundromat reaps timed-out entries,
+drops nn->client_lock, and calls nfs4_put_stid(), which dereferences
+the client through cl_lock. Nothing pins the client across that
+window, so a concurrent force_expire_client() can free it and
+nfs4_put_stid() reads freed memory. __destroy_client() hits the same
+race, walking clp->cl_openowners without cl_lock.
 
-Free dev->zones in null_del_dev() via null_free_zoned_dev() to solve it.
-And calling null_free_zoned_dev() in null_free_dev() is no longer necessary
-because every caller already invokes null_del_dev() first: via
-nullb_group_drop_item() before nullb_device_release(), in the
-null_add_dev() error path of null_create_dev(), and in null_destroy_dev().
-Remove the redundant call.
+Pin the client with cl_rpc_users before dropping client_lock, and
+skip clients already expiring. __destroy_client() then cleans up its
+own close_lru entries through release_last_closed_stateid(), so
+teardown no longer races the laundromat.
 
-And take &lock around zone_cond_store() in the two store wrappers to
-serialize dev->zones check-and-deref against its alloc/free, which already
-run under &lock. The reason there was no problem before is that only
-nullb_device_release() or null_exit() frees the dev->zones, which
-guarantees that subsequent users won't access the configfs interface.
-
-Fixes: ca4b2a011948 ("null_blk: add zone support")
-Assisted-by: Claude-Code:GLM-5.2
-Signed-off-by: Zizhi Wo <wozizhi@huawei.com>
-Reviewed-by: Nilay Shroff <nilay@linux.ibm.com>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://patch.msgid.link/20260725022509.714271-6-wozizhi@huaweicloud.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 217526e7ecc9 ("nfsd: protect the close_lru list and oo_last_closed_stid with client_lock")
+Cc: stable@vger.kernel.org
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Link: https://patch.msgid.link/20260709-cel-v4-8-1d519d9be0cb@kernel.org
+Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/null_blk/main.c | 16 +++++++++++++---
- 1 file changed, 13 insertions(+), 3 deletions(-)
+ fs/nfsd/nfs4state.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/block/null_blk/main.c b/drivers/block/null_blk/main.c
-index 237e9a821374c..971dbe77b2947 100644
---- a/drivers/block/null_blk/main.c
-+++ b/drivers/block/null_blk/main.c
-@@ -552,8 +552,13 @@ static ssize_t nullb_device_zone_readonly_store(struct config_item *item,
- 						const char *page, size_t count)
- {
- 	struct nullb_device *dev = to_nullb_device(item);
-+	ssize_t ret;
-+
-+	mutex_lock(&lock);
-+	ret = zone_cond_store(dev, page, count, BLK_ZONE_COND_READONLY);
-+	mutex_unlock(&lock);
- 
--	return zone_cond_store(dev, page, count, BLK_ZONE_COND_READONLY);
-+	return ret;
- }
- CONFIGFS_ATTR_WO(nullb_device_, zone_readonly);
- 
-@@ -561,8 +566,13 @@ static ssize_t nullb_device_zone_offline_store(struct config_item *item,
- 					       const char *page, size_t count)
- {
- 	struct nullb_device *dev = to_nullb_device(item);
-+	ssize_t ret;
- 
--	return zone_cond_store(dev, page, count, BLK_ZONE_COND_OFFLINE);
-+	mutex_lock(&lock);
-+	ret = zone_cond_store(dev, page, count, BLK_ZONE_COND_OFFLINE);
-+	mutex_unlock(&lock);
-+
-+	return ret;
- }
- CONFIGFS_ATTR_WO(nullb_device_, zone_offline);
- 
-@@ -746,7 +756,6 @@ static void null_free_dev(struct nullb_device *dev)
- 	if (!dev)
- 		return;
- 
--	null_free_zoned_dev(dev);
- 	badblocks_exit(&dev->badblocks);
- 	kfree(dev);
- }
-@@ -1825,6 +1834,7 @@ static void null_del_dev(struct nullb *nullb)
+diff --git a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
+index d6f1b9f572bf9..ec37aca0949af 100644
+--- a/fs/nfsd/nfs4state.c
++++ b/fs/nfsd/nfs4state.c
+@@ -6336,11 +6336,18 @@ nfs4_laundromat(struct nfsd_net *nn)
+ 		if (!state_expired(&lt, oo->oo_time))
+ 			break;
+ 		list_del_init(&oo->oo_close_lru);
++		clp = oo->oo_owner.so_client;
++		if (is_client_expired(clp))
++			continue;
+ 		stp = oo->oo_last_closed_stid;
+ 		oo->oo_last_closed_stid = NULL;
++		atomic_inc(&clp->cl_rpc_users);
+ 		spin_unlock(&nn->client_lock);
+ 		nfs4_put_stid(&stp->st_stid);
+ 		spin_lock(&nn->client_lock);
++		if (atomic_dec_and_test(&clp->cl_rpc_users) &&
++		    is_client_expired(clp))
++			wake_up_all(&expiry_wq);
  	}
+ 	spin_unlock(&nn->client_lock);
  
- 	put_disk(nullb->disk);
-+	null_free_zoned_dev(dev);
- 	if (dev->queue_mode == NULL_Q_MQ &&
- 	    nullb->tag_set == &nullb->__tag_set)
- 		blk_mq_free_tag_set(nullb->tag_set);
 -- 
 2.53.0
 
