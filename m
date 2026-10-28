@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793208784;
-	b=huAtylgawG+VyLPaEmfdlMl/g3CuZfmK9KEQNeQtrPVps1Tgv/EvEaauNe30+k+nPmWi
-	 PNGuVMYewFPwrRhoWa/aiiTYz9MoYw2tpBjcM/GGB3CKEy6yUDCb7fp6/Ok+YtyZ0oRqi
-	 ZTdRvopI/mnwgoZFLBplGr0mju0VX5MfaDWPNMgdsTjc3rG2dxbU+V6OGGoLFBPRWxmAu
-	 zjK9YJs8QftcHv3dYGWzYsRt3aXIQUjnMqMfCuKokzwzGvOSp+V+LQeHjYfrio7RICt0C
-	 G9uR3He3CzeofoauYwPmfV1Er7yF7nvF6uQG+LM6ZEk7uQPjfkU9RZnXbq9pb7KKb2Q==
+	t=1793208787;
+	b=asDInSygb6FHjqD9u04SiiggqYlwrazzNmEiSbhXxGJRsB5gKskuTSsgSDxeLxZj7TQm
+	 jcETdivP2fhbcemkhwvUOXbKGGEyhXswylZlwr0JQSJyBISabJbXiaK6qeZbSBZFDgjnk
+	 9Sa84LvWBy1RsO6jXxDevGmVRj4+VVrSpUpkyGgXI+3hp8ncPDov0+YGzTPx8UHjR+gW+
+	 PmMFIcWw5yUC8NyKgkDP127QH36tZGcq/LJa+xEOMSgK1zEmU9E9tRtNIohbskVprFwGo
+	 SRBMUhvdvvPNiybZQDrjjjQu2ihc4eYKqapbmO7MEdt06nh2B/C9ZYjCXLQWt0UYzPA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793208784;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793208787;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=1APNU6eTwqvRhLDQhbKdbtjYX6mti6P8KyoMVNI87e8=;
-	b=Tk7hZF3spbqh7C3rD5sMGuCp2u/qnh6bL681Dox79Z5IKcib6mR7rU7M08trye8g///t
-	 1elIIpwa2Kv/i7YDgbnprnM5H07esikjVUQv4hh3BJrlfDYsnaKvRNXfBViidEf6dYOl1
-	 XGPUccZzd5n8g5sk7fhKldD2YRbsxGdba4QbecDrRLM3sZqxRmzh8joAUYToISj77wh+k
-	 9GtNzY2xHNDZ4Ylc9JKeaTruDEBQrEWp+tZoN4gQXLr3zL8BtTCqPoHdz9L+Q2TUCbt7O
-	 a7G9DsoPba0MKk+qQHh7gru2wdUCU2WqRd8n1GpasMCbpE0jeMo04CnslZUpM484DUA==
+	bh=P4sbK9GS0rUNUsNwW3fwx8MEyZcVXkXby2DUKV0ff/Y=;
+	b=OhyxhoeQoLWiUGrZnu/ZQ0rJIRRYL2NUe7BdHjOq/nIsJnqhFdcatyz5ApsAF/ZTEByw
+	 eFQlACrYLXfXdq27x+f/XwUp4EY6ERv+eV94SpfMToAm/Y5KZ5LWnowYQj0K0GivRhp0m
+	 HT0MZEycfgYoRKwg3ceIXPXd6sBXbzcwgBnl+jJby4WMpQqa8wdiGVrdBVBHx5OMDRnLS
+	 bwt7FoRN9oXSCWh1YTmArij4aES9VjquKIhi0kQeKFpjlYbg5ablU1quGFweBgFLNdheQ
+	 PZe4oBmnOGP0Zzmj3qt+ENSK7m7ypphhCjSCIISXBOL7nxZ+0sW81Z//N3xQci0oRwg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S33VaSWf;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UJVsrDcj;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A156606A31C;
-	Wed, 28 Oct 2026 17:33:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59204606A31C;
+	Wed, 28 Oct 2026 17:33:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S33VaSWf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAEC71F01825;
-	Wed, 28 Oct 2026 17:33:03 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UJVsrDcj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAE441F01825;
+	Wed, 28 Oct 2026 17:33:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793208784;
-	bh=1APNU6eTwqvRhLDQhbKdbtjYX6mti6P8KyoMVNI87e8=;
+	s=korg; t=1793208787;
+	bh=P4sbK9GS0rUNUsNwW3fwx8MEyZcVXkXby2DUKV0ff/Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=S33VaSWfkreZ0UeYffCCYF31RVLWo5zEfRuUjOEzxennenc4F/XNNdCMg90Aucmce
-	 thCt8lgIbC4EREaoM3/d89SzRJ7le1bcf5redTpLr4IEPKLHUykP3veLrydQSBdn3a
-	 WREknz8qE716rz1wwZh3FtrdibnR9jxiiU5eLrvs=
+	b=UJVsrDcja5NU5Hdg/z1p+jmJRFdEbQXzycxf9D++bkxb4TpDSppeloW3JW79k4T4v
+	 89GMXGzv8/hSVFPoqo/w8+o82ZRK+1g2SQib2PN8eUsGgFw2ODxiUd/IbZYNteVDUf
+	 uy1CrjwJvvjvrt5qa7WuVxWxyULzy7DbxXQKkxsM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Oliver Neukum <oneukum@suse.de>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 5.10 187/516] USB: cdc-acm: fix racy TIOCMIWAIT implementation
-Date: Wed, 28 Oct 2026 17:55:39 +0100
-Message-ID: <20261028170007.932945726@linuxfoundation.org>
+	Felix Gu <ustc.gu@gmail.com>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Subject: [PATCH 5.10 235/516] iio: adc: sun4i-gpadc-iio: clean up on thermal zone registration failure
+Date: Wed, 28 Oct 2026 17:56:27 +0100
+Message-ID: <20261028170009.071752875@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -68,102 +67,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Felix Gu <ustc.gu@gmail.com>
 
-commit be4219dd98608736e13e0b790ef742b76a13254d upstream.
+commit 2cdc7ef31827db4fbc6283750420639569e1f0e9 upstream.
 
-Check the wakeup condition after adding the task to the waitqueue and
-updating the task state to avoid missing a racing modem status update or
-disconnect.
+If devm_thermal_of_zone_register() fails, probe returns without
+unregistering the IIO map array or disabling runtime PM.
 
-Store the old icount on entry and do not update it in the completion
-handler to avoid missing events or reporting spurious ones (due to modem
-status changes before TIOCMIWAIT was called).
+Jump to err_map to release them.
 
-Fixes: 5a6a62bdb925 ("cdc-acm: add TIOCMIWAIT")
-Cc: stable <stable@kernel.org>
-Cc: Oliver Neukum <oneukum@suse.de>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260907095130.130636-1-johan@kernel.org
+Fixes: b0a242894f11 ("iio: adc: sun4i-gpadc-iio: register in the thermal after registering in pm")
+Signed-off-by: Felix Gu <ustc.gu@gmail.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/class/cdc-acm.c |   36 +++++++++++++++++++-----------------
- drivers/usb/class/cdc-acm.h |    1 -
- 2 files changed, 19 insertions(+), 18 deletions(-)
+ drivers/iio/adc/sun4i-gpadc-iio.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/usb/class/cdc-acm.c
-+++ b/drivers/usb/class/cdc-acm.c
-@@ -320,7 +320,6 @@ static void acm_process_notification(str
- 		difference = acm->ctrlin ^ newctrl;
- 		spin_lock_irqsave(&acm->read_lock, flags);
- 		acm->ctrlin = newctrl;
--		acm->oldcount = acm->iocount;
- 
- 		if (difference & ACM_CTRL_DSR)
- 			acm->iocount.dsr++;
-@@ -994,11 +993,16 @@ static int wait_serial_change(struct acm
- 	DECLARE_WAITQUEUE(wait, current);
- 	struct async_icount old, new;
- 
--	do {
-+	spin_lock_irq(&acm->read_lock);
-+	old = acm->iocount;
-+	spin_unlock_irq(&acm->read_lock);
-+
-+	add_wait_queue(&acm->wioctl, &wait);
-+	for (;;) {
-+		set_current_state(TASK_INTERRUPTIBLE);
-+
- 		spin_lock_irq(&acm->read_lock);
--		old = acm->oldcount;
- 		new = acm->iocount;
--		acm->oldcount = new;
- 		spin_unlock_irq(&acm->read_lock);
- 
- 		if ((arg & TIOCM_DSR) &&
-@@ -1011,22 +1015,20 @@ static int wait_serial_change(struct acm
- 			old.rng != new.rng)
- 			break;
- 
--		add_wait_queue(&acm->wioctl, &wait);
--		set_current_state(TASK_INTERRUPTIBLE);
--		schedule();
--		remove_wait_queue(&acm->wioctl, &wait);
- 		if (acm->disconnected) {
--			if (arg & TIOCM_CD)
--				break;
--			else
--				rv = -ENODEV;
--		} else {
--			if (signal_pending(current))
--				rv = -ERESTARTSYS;
-+			rv = -ENODEV;
-+			break;
+--- a/drivers/iio/adc/sun4i-gpadc-iio.c
++++ b/drivers/iio/adc/sun4i-gpadc-iio.c
+@@ -645,10 +645,10 @@ static int sun4i_gpadc_probe(struct plat
+ 		 * thermal because no thermal DT node is found.
+ 		 */
+ 		if (IS_ERR(info->tzd) && PTR_ERR(info->tzd) != -ENODEV) {
+-			dev_err(&pdev->dev,
+-				"could not register thermal sensor: %ld\n",
+-				PTR_ERR(info->tzd));
+-			return PTR_ERR(info->tzd);
++			ret = dev_err_probe(&pdev->dev,
++					    PTR_ERR(info->tzd),
++					    "could not register thermal sensor\n");
++			goto err_map;
  		}
--	} while (!rv);
+ 	}
  
--	
-+		schedule();
-+
-+		if (signal_pending(current)) {
-+			rv = -ERESTARTSYS;
-+			break;
-+		}
-+	}
-+	__set_current_state(TASK_RUNNING);
-+	remove_wait_queue(&acm->wioctl, &wait);
- 
- 	return rv;
- }
---- a/drivers/usb/class/cdc-acm.h
-+++ b/drivers/usb/class/cdc-acm.h
-@@ -118,7 +118,6 @@ struct acm {
- 	unsigned int ctrlin;				/* input control lines (DCD, DSR, RI, break, overruns) */
- 	unsigned int ctrlout;				/* output control lines (DTR, RTS) */
- 	struct async_icount iocount;			/* counters for control line changes */
--	struct async_icount oldcount;			/* for comparison of counter */
- 	wait_queue_head_t wioctl;			/* for ioctl */
- 	unsigned int writesize;				/* max packet size for the output bulk endpoint */
- 	unsigned int readsize,ctrlsize;			/* buffer sizes for freeing */
 
 
