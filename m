@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793210635;
-	b=fpSWFvJh/c/Xw7wM3UM0DsOwDYnTj/vQ+WqKTsNSE4xxDa5JXSVwoV0SF/6w0dCX8zXo
-	 pJykBBvpzwiIlr8xRz3Terq1bAz4YWj/nbTXKFHKtP1Hedlbgpq2BpcIofrCGv0Jrwqu4
-	 IK9h7el2m6GrdA34++UTG/MkI9owJ7hE8bFxTaIe+9c0GV2Jn5Nwybb1wYTysImDC5s7C
-	 6gwVETS20l3Pa4Byx70gDW2Oh1uFJtG9h07sw1DfgdgzhG10quttoZWZCFvUnypA0k/Nm
-	 SWV+zmqeaHwPEQWtgCINBvGtqc2q4MwHCY99K6mvsHM/sJ++ovGs30GJVwmOxgVvDMg==
+	t=1793210638;
+	b=mqROITcAagCHQwFizxDvlFkTuJSNeRO0pZ7jIK0Z4evmsA0QTVpa06fgfal4lK4x+zMY
+	 iYogFMsQHXE1xMG6qjK7JQamzqPDanz2jsIE043hztCM18HWYo/AQHIzuQ8oMPBxMOhIB
+	 is8851pt6GBh7ExbM+fIkRQtlXayiyWRHjKx03vKnp4fHkN8X8yhdjFEUFMag4YcF6iZW
+	 82fZzIOrOu+/+1ouiw711H51eJlw/6f1jVgrQiWTInyOvN4ky4yM/YQpVZe0OKnjhVcYk
+	 tVF3s8j4TF2rthZWxtotsxH4UvU7vCM60SCBNR9uz0VcbrvCWLr4n1tsoi9ltoKxq9g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793210635;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793210638;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=VVC9LYX44MG++f8RVfhsf+UFVNZ0TLtxlmIZQlAaUKM=;
-	b=0PhjtYUUDlKe7PGwE11oHL+kbjwDj5clcHgxchmBuM0kB2umTA/demdWZNox6bPr09cf
-	 +zkcMOCLbbwgXDPnKmCnJcsMSA7jpreB/LvC39fsdHI4yHf9KxY+aB2EAbM8q21fzaa4H
-	 o/Uu9iT70HL90ZZQseAtM2e6CVdBRQj8LBVdyRi9u1zuIN0FibGH2YZPL7zIJY48DPCZ0
-	 XFay533uFtPoPpaS6bWri9HkGrV8b3YBKH42a+LcP8h+lV5DW3P13MWHUcVEvP57hOnxM
-	 rGtdVp31t+7fFseuU/kgs32TbQtZwHOSRJwE4nfajmsOOcQJTBSWyLPwERnOyKHD4wA==
+	bh=8AUKT1rnZ9UCdYxsIeVXpU5DPRLkYTJrDd6boskTjc8=;
+	b=dGjuaeCditzW+pKHw7I/1RShK6Xlcelr4xcbo9xynUW9WMM+HDC98XaYda+5CRLlOwCe
+	 Xf0M07K1gQwe6nOqUmfQxbwK0/5fUUinlQv4R1QPLp9sOyGDXGvLsZkTPnA1w8t24bgvD
+	 MyVxpCrrhr2IYa2+HfFf81sNWQfRcF8Eg0W/0vkdK5U1HYTMcXaCNSjzsh52mBWUise9h
+	 WalT0m9dxlVbdX7B7dw/g1B/id7TtVCix1d3Uu5XKvIWX6uxj19neElDShJDaGWrYnZP8
+	 2lFw0Ptr2NbI37TnuVKXuDRHV6fxx+irjkWdCpTM15ZvOG0qLSuvXvpGJ1JyBju6fxw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="C7WbC/tN";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mpivml4B;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F217606A31C;
-	Wed, 28 Oct 2026 18:03:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ADFB606A31C;
+	Wed, 28 Oct 2026 18:03:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C7WbC/tN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EF7D1F01825;
-	Wed, 28 Oct 2026 18:03:54 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mpivml4B
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BD7E1F01825;
+	Wed, 28 Oct 2026 18:03:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793210635;
-	bh=VVC9LYX44MG++f8RVfhsf+UFVNZ0TLtxlmIZQlAaUKM=;
+	s=korg; t=1793210637;
+	bh=8AUKT1rnZ9UCdYxsIeVXpU5DPRLkYTJrDd6boskTjc8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=C7WbC/tNQ/t61+lL1zi13r/8zfzkUG+9qxq6jcTeztc/rO+H+hQW+TaO/XNjF6QZc
-	 ER+t7eWCSrbmNSE1Yii799WEX3u+/sKcAhvy/+oZbKfxEkgJA0ZzqvaZ9OvMsfGcp+
-	 de9UkgJxj7PkNC4P5m+rUphnNMHWGm3C8XbtQcsg=
+	b=mpivml4BZ2S1IRYPbVPewNuR5Oj1r5lpOYAjfIZSsygaVDa11X+x2fww8J+tOdrUT
+	 11Bfg6VwpreDPX9yPfN9qN5QJhF0QTNi5sNFpRMLRr+z9YEDTYZsgqlom66P5VcD+b
+	 LQa6aho6oKPD4vQwpUs416wvJ33NCWEOwEv8JCqw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Song Li <songl@zju.edu.cn>,
-	Fan Wu <fanwu01@zju.edu.cn>,
+	Bjoern Doebel <doebel@amazon.de>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Paulo Alcantara <pc@manguebit.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 096/571] smb: client: fix cifsFileInfo reference leak in deferred close
-Date: Wed, 28 Oct 2026 17:54:03 +0100
-Message-ID: <20261028170010.300085175@linuxfoundation.org>
+Subject: [PATCH 5.15 097/571] smb: client: avoid leaking refcount when cifs_sb_tlink() fails
+Date: Wed, 28 Oct 2026 17:54:04 +0100
+Message-ID: <20261028170010.323784404@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -69,73 +69,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: Bjoern Doebel <doebel@amazon.de>
 
-[ Upstream commit 5520e89a5a4f834bced64cf2ac927001cc513a40 ]
+[ Upstream commit 23b26f4408ac3f35a482d2e5cf6fc865d4201b71 ]
 
-When cifs_close() defers a close, it hands the cifsFileInfo reference
-of the closing struct file to the queued work. Each execution of
-smb2_deferred_work_close() drops one such reference.
+cifs_oplock_break() takes over the reference that
+cifs_queue_oplock_break() acquired when it queued the work, and drops it
+with _cifsFileInfo_put() once the break has been processed.
 
-deferred_close_scheduled can be false while the work is pending: the
-workqueue clears PENDING when the callback starts to run, before the
-callback clears the flag under deferred_lock. A close in that
-interval requeues the running work, and the callback then clears the
-flag, leaving the requeued work pending with the flag down. A later
-cifs_open() can reuse the handle and its cifs_close() reaches the
-same branch: queue_delayed_work() fails because the work is still
-pending, but cifs_close() returns without dropping the closing file's
-reference. The cifsFileInfo count stays pinned and its tlink, dentry
-and server handle are leaked.
+Only in setups with "-o multiuser", cifs_sb_tlink() may fail, at which
+point cifs_oplock_break() returns without putting the file reference,
+mirroring the reference leak we already fixed in the companion patch to
+cifs_queue_oplock_break().
 
-Check the return value and hand off the reference only when work was
-actually queued. Otherwise, use the shared _cifsFileInfo_put(), like
-the mod_delayed_work() branch above: the pending execution already
-owns its reference.
+This would trigger a crash due to busy inodes on the next unmount:
 
-This issue was found by an in-house static analysis tool.
+  BUG: Dentry ... still in use (1) [unmount of cifs cifs]
+  VFS: Busy inodes after unmount of cifs (cifs)
 
-Fixes: c3f207ab29f7 ("cifs: Deferred close for files")
+Drop the reference on that path as well. Doing so before the out label
+mirrors the normal path, which also puts the reference before
+cifs_done_oplock_break().
+
+Found by Sashiko code review. The failure path was not exercised at
+runtime.
+
+Fixes: e8f5f849ffce2 ("cifs: fix potential oops in cifs_oplock_break")
 Cc: stable@vger.kernel.org
-Assisted-by: Codex:gpt-5.6
-Co-developed-by: Song Li <songl@zju.edu.cn>
-Signed-off-by: Song Li <songl@zju.edu.cn>
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Assisted-by: Kiro:claude-opus-5
+Signed-off-by: Bjoern Doebel <doebel@amazon.de>
+Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Paulo Alcantara <pc@manguebit.org>
-[ Adjusted cifs_close() context due to missing trace_smb3_close_cached(). ]
+[ Changed the target path from fs/smb/client/file.c to fs/cifs/file.c. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/cifs/file.c | 17 ++++++++++++-----
- 1 file changed, 12 insertions(+), 5 deletions(-)
+ fs/cifs/file.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
 diff --git a/fs/cifs/file.c b/fs/cifs/file.c
-index 71f585a41d456..b776fb2989df9 100644
+index b776fb2989df9..affb1ade0c15f 100644
 --- a/fs/cifs/file.c
 +++ b/fs/cifs/file.c
-@@ -901,11 +901,18 @@ int cifs_close(struct inode *inode, struct file *file)
- 					cifsFileInfo_get(cfile);
- 			} else {
- 				/* Deferred close for files */
--				queue_delayed_work(deferredclose_wq,
--						&cfile->deferred, cifs_sb->ctx->closetimeo);
--				cfile->deferred_close_scheduled = true;
--				spin_unlock(&cinode->deferred_lock);
--				return 0;
-+				/*
-+				 * Each queued execution owns one reference.
-+				 * If nothing was queued, the reference of
-+				 * the closing file is dropped below.
-+				 */
-+				if (queue_delayed_work(deferredclose_wq,
-+						       &cfile->deferred,
-+						       cifs_sb->ctx->closetimeo)) {
-+					cfile->deferred_close_scheduled = true;
-+					spin_unlock(&cinode->deferred_lock);
-+					return 0;
-+				}
- 			}
- 			spin_unlock(&cinode->deferred_lock);
- 			_cifsFileInfo_put(cfile, true, false);
+@@ -4893,8 +4893,11 @@ void cifs_oplock_break(struct work_struct *work)
+ 			TASK_UNINTERRUPTIBLE);
+ 
+ 	tlink = cifs_sb_tlink(cifs_sb);
+-	if (IS_ERR(tlink))
++	if (IS_ERR(tlink)) {
++		/* drop the reference taken when the break was queued */
++		_cifsFileInfo_put(cfile, false /* do not wait for ourself */, false);
+ 		goto out;
++	}
+ 	tcon = tlink_tcon(tlink);
+ 	server = tcon->ses->server;
+ 
 -- 
 2.53.0
 
