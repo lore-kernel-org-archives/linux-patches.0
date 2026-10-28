@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793208668;
-	b=ZCURkE3LHmSEh9mHA3QhUVz/MDNuHs0F6cbg1i4oeEioZ5linZEGPzVXx06qf85YuhnH
-	 KnH+2wzFstQZrHgZb/TUibrF3iYqxIXdTj9bjYVhOUs+UaUCfCnl2oOUCdiic8FYGTfTN
-	 0djPtSB9LULYV/7u7Z2E2BZ/FB4fhk1dUbpdQ7u+/z2OMDMmM/dr4ZETsJ++YQKEJ+tqX
-	 xKQQxjnf3eDKhrL9NoQKoTIxZtCZXPYtR23kGOnuhm5MLYVAIvzCEFbC46KtptPMKfPtT
-	 XUKNWDmdcdJWizuCTGcScnWUGlZFrZH1vqSNyQAbFO9ZeDsBp9pZt8dRpN29is1DYfA==
+	t=1793208671;
+	b=YonvnGoySAxVfIl6CKRuMx95b80flQpjC4DrKCuxoGR+6pgcefAsJgwLzjcppUIlVF4V
+	 F+59ipG+VZuFUESnVnTQ3JmL/eKTw2U5JVNpNl1gEMvrIQwKimGE6H2OJh12PqJcgBh5M
+	 ObXbh5UtU4NR4/9Ui0+A9oFNOvSZYMYffKb/cO7Y8OBeqFpLNgBeZcJc8A8CLO36cgw26
+	 C7d+5/qHqjkTxWWx2VMBs506jgZ27oFAJq6xzrlPpIxulus9JQ+qGeUs/1MoIgZGYoi/v
+	 2akV9PzrqtcQ3CSK3mfDvVlpkoqT98GANfyFGDjT1K5NS7fPAp8L8zTvXKm5iw+MBlA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793208668;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793208671;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ZFg9eX/wwEsgSUKyWTvPfchP54AcI/l4a8xdAnxCfyc=;
-	b=NojWgK+beAUAbU9f2QN+0LOxMdNEJWi6zPDRG4PPeIyTMNoJaQq9oA99lP27LLcVabYZ
-	 tgOxQX/zQkyMpB7+pXvMPH02KUvEwbhje2GYfYzTr23aX6UdylilpPSalRmZvSObop9Ee
-	 vv8YQ2vJ7G60TXkX8QUcMw+aXmjv88XH+DxyWACOFPkfpGEJa119t0p9HH0tXYgGyf53D
-	 eWXeFecCnu3e5u5/cFK13q48oYBrxxMlNS0DBqrlGvMFZsq3DkZ17P8KUzi0NQZcX674R
-	 sjCk2T2G1/V45LKVgTg3XduEbdjLs4i4wEjNUr6aeLsfC2CHZxnUZCIPrHpq1c7GV4w==
+	bh=8GEc/pfWlQ4xQ5HTXqeDdNzsyFXX2J2RsvnAp+6QcSs=;
+	b=DdDNJw/+kvll8Zw1/xq5I2ox4FBnSqiW3qYlkePmUy+0PO8aGBs68H+CbHJIZ6c/OxUF
+	 l5oe5wHj1SWZR8z4ED5v9OEIlo+rxz0g7H8sfiM/PXOrKXM9RI6E8X3I78wse6omNxnYl
+	 ZW2jSgscxxcsdyQpb6BLoSU3WEV5unN4WJNSEMBvxjKIUUsQvPCz5PbdYAD5wyxYVsWAG
+	 7oyMprWMmNqsSQGWzpQaRQtRkZlB+jVfQSJoXDAqJ7iIOo7wX66IB3waRjuXS2GQbmPRw
+	 mLhtc03nRMXV8gcAf0rpBtPiftxd2PVQ/+1SOG5HTqYlI6kmzdTcmbadCgiY1X8FBTw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gqlV8KMv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IET8KPsf;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB7D7606A31A;
-	Wed, 28 Oct 2026 17:31:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A59F3606A31A;
+	Wed, 28 Oct 2026 17:31:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gqlV8KMv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 248A21F01825;
-	Wed, 28 Oct 2026 17:31:06 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IET8KPsf
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0DF11F01825;
+	Wed, 28 Oct 2026 17:31:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793208667;
-	bh=ZFg9eX/wwEsgSUKyWTvPfchP54AcI/l4a8xdAnxCfyc=;
+	s=korg; t=1793208670;
+	bh=8GEc/pfWlQ4xQ5HTXqeDdNzsyFXX2J2RsvnAp+6QcSs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gqlV8KMvtnQ97ZlG9XalUbJW3Y2qI+KGl2t8txDCzuTelHKoknVQrWgbjZPFMHa+T
-	 Bw6ztjGGzprDQDvPmL/Qd5m/YjGRwqmzYY8CrQztGf0o/2kBqLfRD9EOOM6D/xhoE8
-	 012zVG0EXrFCfvknqda6jFuVS79F/e3/yWEZtFNo=
+	b=IET8KPsf908bCIgGSuy2VvEyFM4LSwKYKUyNJ5KJ/czfJcNLmzSOAWqEyslpZOeK9
+	 D7DCVxx8yiYRgSVhfzELE0QfkJ6OjuzmdtHYw8nV43jSDrtlgne0z1Wie5Lz2iI7xt
+	 nhp6bZNCCwqduJTZMoELJIPnzDkFlVdXlUsRM2Q0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Jie Deng <dengjie03@kylinos.cn>,
-	Peter Chen <peter.chen@kernel.org>
-Subject: [PATCH 5.10 201/516] usb: cdns3: Fix NULL pointer dereference in cdns3_pci_probe
-Date: Wed, 28 Oct 2026 17:55:53 +0100
-Message-ID: <20261028170008.264476037@linuxfoundation.org>
+	sashiko-bot@kernel.org,
+	Arnd Bergmann <arnd@arndb.de>,
+	Johan Hovold <johan@kernel.org>,
+	Jiri Slaby <jirislaby@kernel.org>,
+	stable@kernel.org
+Subject: [PATCH 5.10 202/516] tty: amiserial: fix broken TIOCMIWAIT
+Date: Wed, 28 Oct 2026 17:55:54 +0100
+Message-ID: <20261028170008.287859853@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -68,68 +70,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jie Deng <dengjie03@kylinos.cn>
+From: Johan Hovold <johan@kernel.org>
 
-commit e5052f2c5c73c1dcca42bafc0bc737af2b2af059 upstream.
+commit 615f35fd5aee169cc4881a8594f2fa234a4d0bb8 upstream.
 
-The Cadence USBSS controller is a two-function PCI device. The first
-probed function allocates the driver data and stores it with
-pci_set_drvdata(), while the second function reuses it via
-pci_get_drvdata() when pci_is_enabled() reports that the first
-function has already been probed.
+A change replacing interruptible_sleep_on() inadvertently broke the
+TIOCMIWAIT implementation which now immediately returns -EIO (unless
+there is a racing modem status update).
 
-When the second function is probed while the first one has been
-enabled but has not yet set its driver data, pci_get_drvdata()
-returns NULL, and the subsequent wrap->devfn assignment dereferences
-a NULL pointer and crashes the kernel.
-logs:
-Call trace:
-  cdns3_pci_probe+0xa4/0x300
-  local_pci_probe+0x44/0xa8
-  pci_call_probe+0x54/0x158
-  pci_device_probe+0x84/0x100
-  really_probe+0x184/0x3d0
-  __driver_probe_device+0x80/0x178
-  driver_probe_device+0x44/0xe8
-  __driver_attach+0xec/0x1f8
-  bus_for_each_dev+0x7c/0xe0
-  driver_attach+0x28/0x38
-  bus_add_driver+0x110/0x238
-  driver_register+0x64/0x128
-  __pci_register_driver+0x50/0x60
-  cdns3_pci_driver_init+0x28/0x38
-  do_one_initcall+0x5c/0x280
-  do_initcalls+0x104/0x1d8
-  kernel_init_freeable+0x140/0x218
-  kernel_init+0x28/0x1f8
-  ret_from_fork+0x10/0x20
+Replace the old hangup (and signal) detection with a check for the
+TTY_IO_ERROR flag which is set on hangup.
 
-Return -EPROBE_DEFER in this case so that probing is retried after
-the first function has completed its probe.
-
-Fixes: 7733f6c32e36 ("usb: cdns3: Add Cadence USB3 DRD Driver")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Jie Deng <dengjie03@kylinos.cn>
-Acked-by: Peter Chen <peter.chen@kernel.org>
-Link: https://patch.msgid.link/20260810023626.70669-1-dengjie03@kylinos.cn
+Fixes: 591cee0a3563 ("tty/amiserial: avoid interruptible_sleep_on")
+Reported-by: sashiko-bot@kernel.org
+Link: https://lore.kernel.org/20260910132029.D80801F00898@smtp.kernel.org
+Cc: stable@kernel.org	# 3.14
+Cc: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Reviewed-by: Jiri Slaby <jirislaby@kernel.org>
+Link: https://patch.msgid.link/20260911090132.723531-1-johan@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/cdns3/cdns3-pci-wrap.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/tty/amiserial.c |    9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
---- a/drivers/usb/cdns3/cdns3-pci-wrap.c
-+++ b/drivers/usb/cdns3/cdns3-pci-wrap.c
-@@ -99,6 +99,11 @@ static int cdns3_pci_probe(struct pci_de
- 
- 	if (pci_is_enabled(func)) {
- 		wrap = pci_get_drvdata(func);
-+		if (!wrap) {
-+			dev_err(&pdev->dev,
-+				"second function not initialized, retrying\n");
-+			return -EPROBE_DEFER;
-+		}
- 	} else {
- 		wrap = kzalloc(sizeof(*wrap), GFP_KERNEL);
- 		if (!wrap)
+--- a/drivers/tty/amiserial.c
++++ b/drivers/tty/amiserial.c
+@@ -1173,11 +1173,6 @@ static int rs_ioctl(struct tty_struct *t
+ 				local_irq_save(flags);
+ 				cnow = info->icount; /* atomic copy */
+ 				local_irq_restore(flags);
+-				if (cnow.rng == cprev.rng && cnow.dsr == cprev.dsr && 
+-				    cnow.dcd == cprev.dcd && cnow.cts == cprev.cts) {
+-					ret = -EIO; /* no change => error */
+-					break;
+-				}
+ 				if ( ((arg & TIOCM_RNG) && (cnow.rng != cprev.rng)) ||
+ 				     ((arg & TIOCM_DSR) && (cnow.dsr != cprev.dsr)) ||
+ 				     ((arg & TIOCM_CD)  && (cnow.dcd != cprev.dcd)) ||
+@@ -1185,6 +1180,10 @@ static int rs_ioctl(struct tty_struct *t
+ 					ret = 0;
+ 					break;
+ 				}
++				if (tty_io_error(tty)) {
++					ret = -EIO;
++					break;
++				}
+ 				schedule();
+ 				/* see if a signal did it */
+ 				if (signal_pending(current)) {
 
 
