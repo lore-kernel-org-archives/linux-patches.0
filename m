@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213101;
-	b=XVzOBtfa5f/I4nyxaLD7KgvdCfPlsNOorzRmEv6Nh+maugM1ALJAB6Uinos7rAW3xIUf
-	 mf16A3QV3s0CMNGlvC9RgTUEhc5u93rsH4Wb95nsu6d4+xbg6ouK6xZ75UknlMxU/7SI3
-	 ZLUNI+eP0fVmBXhtF/N4fmsB5Rwa7gkTb21BenGMlISy4MKMchGkRszcYtPjlXXPmowa0
-	 JH8/tRVoK01BbopoMcJVRbX3nt3jzcLC/H5DSElZvA8vHRx0kR0m9aHPkRtbN5fP8B7IY
-	 b9TyOweLQcyybqZ0RjyEi1Kev7Dv0Vu8pBdXxPxSl5dRtLURSjW2lkzizJVbgHwK0jw==
+	t=1793213104;
+	b=aIuKgBFA8ht1XqKSVbpYlxZUyWFmaJEWTeQ05Nb3xHVulo8j3EIH98JP3f+rZFeisLoR
+	 PX0zBkRqnrXn1wCWTLMTnUWm3QRFUtmmV0EMwcrlfpJA5Xc0/huGJpxIPvnDToZzfkKOi
+	 4BQyQISZ5BaTL91onnHdO9yoUxYqNiK0FpqHVtGIM9UHNOk5Yh0IDlVFBk2ZuDZoQ8Htp
+	 MBMoFtX3DLb3qg3wqSdUOjzrZYGVnFt2D6p+AkyotruDNIYJeYY7MwBZ6AYeOgFUoygee
+	 pOZZVHgkTD8jZiZdTDQ43BRnePXoa9cbxjVeoj46l1HjhqpvjyKE3KR6qaEOuX8StLQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213101;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213104;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=YyqlF8KyaTBgH4aIxB2OpgFrwJd7X2pjXnJzpYKTD4c=;
-	b=nwzGoZ+8QxS8wpLq7+xML0HNUrheAqCXb235JDJXlqIhF3MVDosMAWhBU6A9CimOiNmz
-	 iLuA6ept8qQT4Noh6flgvfouCoIktqqGtcVFr9fYJ6KNLiaKKQuill1wfILhFOoJl9pR5
-	 P06UAmg9cTaWEYMOvItoLv4ALib13vY66vCHMyp0BwKfKej4CkHofTeJcdE5SDZFnjyz0
-	 p93LGf9M5mm/riRC2ewYZ41zwRwaybZkqBxkbpgz2TLzcRDSyyaFnL7TJnGc6kZ+6+h38
-	 1A+OtyUiKZCNlkdnBqJwXQoaHKXMZ7HeUx0OPQuv7nI0ox1IaY/pLM53t3yKRLw1t6Q==
+	bh=028HnY0vSIrY4Kp3cwuMePz6BcaKD+ovVxOT2/iVamc=;
+	b=csuiEmaHp0KiSeAN8oH/59FJuKpGJO2VwG+QXzVN0q75ZbUe4xwYd5l0KRhIEXGjyD7d
+	 AlS+Mjxq1oWYCn+jsVRiunmwAtAxCHvuBaKxv6f125M2YIr10gcrqO8ig2FfBtZvs7369
+	 6Q5efjRHYC/7cHxDf7JWspWi3Gv0PX4JNZdy/60vFth8ORrMUCwUuB7F2WBUxw7unVmow
+	 iXseM0HNnkkqXgeuyXoxGSvBPPyY88DmE4SuhwebqhXApR1dDIhlg9CZzzJnB0GorTLem
+	 CJuw2O356kH2Cu1wx+LhU63newmHED9CkmcJ5676+SrjDjMYD5dDEWZ4D7ho/Ngxuzg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KmTmycfp;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G+HqXMsk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45C2B606A321;
-	Wed, 28 Oct 2026 18:45:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18E81606A321;
+	Wed, 28 Oct 2026 18:45:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KmTmycfp
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFF001F01825;
-	Wed, 28 Oct 2026 18:45:00 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G+HqXMsk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A7711F01825;
+	Wed, 28 Oct 2026 18:45:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213101;
-	bh=YyqlF8KyaTBgH4aIxB2OpgFrwJd7X2pjXnJzpYKTD4c=;
+	s=korg; t=1793213104;
+	bh=028HnY0vSIrY4Kp3cwuMePz6BcaKD+ovVxOT2/iVamc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KmTmycfppz/SxMOsgu4M4mTtEFTGTYzLDsC1DU5iV0EbyvGEtr08HnFMJtH/bEM67
-	 uyGjSABlRqkxYgIPzgNPS2feyFY7bWwBdmy5Sk/IAZ++/CuwyZ/xywyA7LP2S6aAcn
-	 LXTOqKJVIOpc6rZBrSWscFlQdmjmC3s1aTEucqtI=
+	b=G+HqXMskvC8RlwRiN94RNRoWVQ4hxkEcWeG1DXf9NRChNqQwDiNZLww1NVjAJkFtG
+	 I92rWCHCmlB+gZI5NnDurt9MMP5TGlcdL+sV+A9T+ZTZdrMw33o+wjP/0Kdt6smiPC
+	 G7rinRl1nmNeZWleWsmi/ywctKAkagYAXRlfun5g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Ni <nichen@iscas.ac.cn>,
+	stable <stable@kernel.org>,
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
 	Alan Stern <stern@rowland.harvard.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0385/1887] usb: ohci-spear: Remove unnecessary NULL check before clk_disable_unprepare()
-Date: Wed, 28 Oct 2026 17:41:21 +0100
-Message-ID: <20261028170507.995911726@linuxfoundation.org>
+Subject: [PATCH 6.1 0386/1887] usb: ohci-spear: disable controller wakeup on removal
+Date: Wed, 28 Oct 2026 17:41:22 +0100
+Message-ID: <20261028170508.019105197@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,37 +70,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen Ni <nichen@iscas.ac.cn>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-[ Upstream commit a891b9aebcc7406fe2f439d184bac3948fb08645 ]
+[ Upstream commit b1b0f8bdbbc891a4ee7f3b1a878c633e02b7bbeb ]
 
-clk_disable_unprepare() already checks NULL by using IS_ERR_OR_NULL.
-Remove unneeded NULL check for clk here.
+Probe enables controller wakeup after the OHCI core marks controllers with
+RemoteWakeupConnected as wakeup-capable. Removal does not undo this, so the
+wakeup source can remain attached after driver unbind.
 
-Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
+Disable controller wakeup after removing the HCD.
+
+This issue was identified during our ongoing static-analysis research
+while reviewing kernel code.
+
+Fixes: a6eeeb9f45b5 ("USB: Update USB default wakeup settings")
+Cc: stable <stable@kernel.org>
+Assisted-by: LLM
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
 Acked-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://lore.kernel.org/r/20250617042050.1930940-1-nichen@iscas.ac.cn
+Link: https://patch.msgid.link/20260915012011.61874-4-mhun512@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: b1b0f8bdbbc8 ("usb: ohci-spear: disable controller wakeup on removal")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/host/ohci-spear.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/usb/host/ohci-spear.c | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/drivers/usb/host/ohci-spear.c b/drivers/usb/host/ohci-spear.c
-index 196951a27f3f2..0f646c35ca737 100644
+index 0f646c35ca737..47f590bdc1aa0 100644
 --- a/drivers/usb/host/ohci-spear.c
 +++ b/drivers/usb/host/ohci-spear.c
-@@ -104,8 +104,7 @@ static int spear_ohci_hcd_drv_remove(struct platform_device *pdev)
+@@ -104,6 +104,7 @@ static int spear_ohci_hcd_drv_remove(struct platform_device *pdev)
  	struct spear_ohci *sohci_p = to_spear_ohci(hcd);
  
  	usb_remove_hcd(hcd);
--	if (sohci_p->clk)
--		clk_disable_unprepare(sohci_p->clk);
-+	clk_disable_unprepare(sohci_p->clk);
++	device_wakeup_disable(hcd->self.controller);
+ 	clk_disable_unprepare(sohci_p->clk);
  
  	usb_put_hcd(hcd);
- 	return 0;
 -- 
 2.53.0
 
