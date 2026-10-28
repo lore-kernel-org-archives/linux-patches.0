@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793210281;
-	b=LR4LTWWdwwaVkZX9rIb3OC7RMs7vt5ehRXJNttZZ+7i3kNMzRNGZUtS1gn1kkBDAwsxl
-	 tI2TjDnizGRovLeCdoNkV9ONqvfF0p4H+zK99W4KGzvq4CNtttRcs+/hNpTKX/V+dbL9/
-	 1skWcrnwZs74HgRlovQHW6T7A4ni1FxEKHOAjx5pTBdBczrz5Mo37KXBg5XXJ+YUalyJe
-	 RtLcXTfLgnfoR9+qpseRD8zk9eU7SLO8X2BwB4sfutrT/664oXvMEBIJ0j3NNvYAIslC+
-	 nEK1ECZg+/xex4P2pihHwrs/sQ8ksxgaOmJpDUl9JKqEdSlGni+RBsbhqQ487JBL8ww==
+	t=1793210284;
+	b=1IDjYrXTiYhZRLjAmOXCy1aYAJIFuYL0gIr+tWazBWOtQ13NTyEaGwg0fux0HWVnc5J0
+	 0XM9fkx+oRRLtxDJeksH/QRKlLNWzcWQ9pAKiTTwwOyJGc8jZ0IKlyMXKPD6WEm0zp0fl
+	 BsjLxyA2rekj7TReYH0w1FAqU9DTkCOdCNLSY7gaiMLgR4vpavAJ3iyJLrMMLjpWhoY+n
+	 8QDMLS9YPenwnZfMeDZbMZC7BtwopqPW5qOedLkG3/atE/GhprZCMbaybbRjF3O1Y3INn
+	 MnXmtAtjlHsGasfXg8B50wiNuHziaqtiP9qOvWLOc2t76ASaw5bpI0nR/2zh1dSh/+Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793210281;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793210284;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=TrvE/cXBRkIygvW/FWo30jbCDFCWBVqkXB9VomQ6Qjg=;
-	b=ud4zHWgqvpuW5YfI11ICNt/3fwju0Vi4bWmZ5J6xgGu2XwqT6F1w1yVP2+29Tkb2KEES
-	 OSG2INMF1hkbNqnYVhXEgM8SrS9H9Qt9vcUlVm80+sk65k9dOQYfM1HI/sy098i4Xvgym
-	 qc1EwVS49YXTw8BfjQ/Tz60IXelDWTPH+oQi8iN5sE7fZ4pP9XF5xxqDZAw60xMVuemWF
-	 Vzv6s+LP5ry0TlVnaGrEIGVvz5JSuCjImHCjXwK2aGI3S2VvHBAcMj8Vewhi+E8+TM0HH
-	 Bygc2qOj0pAsH+4UyEms31z85YNc1ZwwNlkRWwhJrvtT0wnSVI7b46pwf0v24GiAPvA==
+	bh=6dHiO9ueHfePCCqZ1iuPRT2m7OI7x0R2udRtoqQ9crU=;
+	b=iafHTw9s1+YHUrjhQAYsHU+H5f+WddqSzr/lbyaHK719l1H0QZSBgJWEXyb8BS8WfXhR
+	 TVChbmR8Fqxpt+cKNBT86I6Wf+NK6QO7xZuL4FvkShP3JbkAOhUJcwWoq0EwVeBZ/ajI2
+	 Ipl7qRwYa84c9a/ICQol1hWS+RaO+uOxY//E7l6/gYVnG1GqKiEwyzncfdfYYoN5/QSi0
+	 lkkC0WRhZTBXtakb9cjXDg1fT1a+xKZMtL9iLK6/HQkvaxf6/FT3W0CFgaAq1PcbWAcku
+	 5ITv9r/LBSpefO1izEUHjpCbrJr2iAtUVY87NZlCutYYvbcCUyv874H3+ZQD5vVVuiA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vtwpiuU9;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LnXPuiJO;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56022606A31D;
-	Wed, 28 Oct 2026 17:58:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2680606A31A;
+	Wed, 28 Oct 2026 17:58:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vtwpiuU9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A21E11F01825;
-	Wed, 28 Oct 2026 17:58:00 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LnXPuiJO
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D13F1F01825;
+	Wed, 28 Oct 2026 17:58:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793210281;
-	bh=TrvE/cXBRkIygvW/FWo30jbCDFCWBVqkXB9VomQ6Qjg=;
+	s=korg; t=1793210283;
+	bh=6dHiO9ueHfePCCqZ1iuPRT2m7OI7x0R2udRtoqQ9crU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vtwpiuU9C2nVBz+PsZenzUJejmc2MgAnnwUteT26+EFnpk5GvkfOvtAzMMgL/0FvZ
-	 s0lPZ2xWNApKCrDMcvbe1gJnTWR3nL52YXDChbNFcQ+PvTA7GFGCo7ZQdpa9M95/Ap
-	 7iWBto+Gvt4tiJhbPz/0YBgbdRgrEqw7PA8wUhfc=
+	b=LnXPuiJOwCX2zBM58McYEumRXZ7iVj0n5Gc7ghi9evBVv4I2MFI7epDci1J3iOH3Z
+	 AI6z0xv628OcmOXDYhtCss6cz1geTyhMkGYX80yUZIKcckwK0PbyRnF0wt+JX9BiDf
+	 OcrqbE9VYYDKrn8yYs+W1ThEpDCwBDI0usUI36ZU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Josef Bacik <josef@toxicpanda.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.6 138/168] io_uring/cancel: let CANCEL_ALL find parked requests
-Date: Wed, 28 Oct 2026 18:01:14 +0100
-Message-ID: <20261028165946.351803632@linuxfoundation.org>
+	Jens Axboe <axboe@kernel.dk>,
+	"Claude Fable 5.1" <noreply@anthropic.com>
+Subject: [PATCH 6.6 139/168] io_uring: wake ring pollers for local task_work
+Date: Wed, 28 Oct 2026 18:01:15 +0100
+Message-ID: <20261028165946.374832776@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165943.089486480@linuxfoundation.org>
 References: <20261028165943.089486480@linuxfoundation.org>
@@ -69,92 +70,104 @@ Content-Transfer-Encoding: 8bit
 
 From: Josef Bacik <josef@toxicpanda.com>
 
-Commit fe6ca13c98b1223f6005f32913ebd32e4df64b77 upstream.
+Commit b88902d8745a701d24275d012f0830e3628e2a22 upstream.
 
-A cancellation with IORING_ASYNC_CANCEL_ALL or _ANY goes on until it finds
-nothing more. A request may stay where it was found for a while after it
-has been cancelled, so each one that matches is stamped with the sequence
-number of the cancellation, and is skipped from then on.
+With IORING_SETUP_DEFER_TASKRUN completions are queued as local work, and
+only become CQEs when the submitter enters the kernel to wait for events.
+For an application that finds out via poll() or epoll on the ring fd when
+it is time to do that, io_uring_poll() reports EPOLLIN if local work is
+pending.
 
-io_cancel_cb() does so for io-wq work as well. There is no need to:
-pending work is taken off the list, and the workers are looked at once per
-call. And it does harm. A request that is run by io-wq may be parked
-while it still is the current work of the worker: poll gets armed for it,
-or it is put on ->futex_list or ->waitid_list.
+That only helps if the work is there at the time of the call. When
+DEFER_TASKRUN was added, io_req_local_work_add() did io_cqring_wake(),
+which took care of tasks sleeping in poll() as well. Then polling got a
+wait queue of its own, ->poll_wq, and the wake up in
+io_req_local_work_add() was replaced by waking the submitter directly.
+Since then ->poll_wq is only woken when CQEs are committed, which for
+such a ring is done by the very task that is waiting to be told to:
 
-  io-wq worker                       io_try_cancel()
-  io_wq_submit_work()
-    io_arm_poll_handler()
-      io_poll_add_hash()
-                                       io_async_cancel_one()
-                                         io_cancel_cb()
-                                           stamps the request
-                                         sets IO_WQ_WORK_CANCEL
-                                         = -EALREADY
-                                       io_poll_cancel()
-                                         skips the request
-                                       = -ENOENT
-  io_assign_current_work(NULL)
+  submitter                           completion
+  poll(ring_fd)
+    io_uring_poll()  // nothing yet
+    schedule()
+                                      io_req_local_work_add()
+                                        // ->cq_wait_nr: nobody waits
+  // sleeps on
 
-The flag comes too late for the worker to see it, and the search that
-would have found the request takes it for done. The cancellation returns,
-and the request stays.
+Wake ->poll_wq when the first entry is put on the work list. Like for the
+eventfd, that must not be done right away if the work is queued from a
+wake up handler, as the chain of wake ups could get back to the wait
+queue whose lock is held. Use an RCU callback in that case, with a
+reference to the ring.
 
-With a multishot poll, IOSQE_ASYNC, and IORING_OP_ASYNC_CANCEL with
-IORING_ASYNC_CANCEL_ALL up to 63us later, that happens to 4 of 1,000
-requests (4 CPUs, KVM).
-
-Take the stamp off again if the work matches. If the request is found
-on one of the lists it gets a new one, and io_cancel_cb() doesn't match it
-a second time.
-
-__io_async_cancel() tries the io-wq of the caller twice. So far the stamp
-has kept it from counting work that is running there the second time.
-Skip it instead, so that the number that is returned stays the same.
-
-Fixes: 8e29da69fead ("io_uring: add support for IORING_ASYNC_CANCEL_ALL")
+[ 6.6: io_req_local_work_add() lives in io_uring/io_uring.c, and with no IOU_F_TWQ_IN_WAKE to tell a wake up handler context apart, the ->poll_wq wake up is always deferred to an RCU callback ]
+Fixes: 130bd686d9be ("io_uring: waitqueue-less cq waiting")
 Assisted-by: LLM
 Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Link: https://patch.msgid.link/20261015-b4-io-uring-fixes-v1-18-c1556f5d7bf5@toxicpanda.com
+Link: https://patch.msgid.link/20261015-b4-io-uring-fixes-v1-19-c1556f5d7bf5@toxicpanda.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Co-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/cancel.c |   18 ++++++++++++++----
- 1 file changed, 14 insertions(+), 4 deletions(-)
+ include/linux/io_uring_types.h |    3 +++
+ io_uring/io_uring.c            |   28 ++++++++++++++++++++++++++++
+ 2 files changed, 31 insertions(+)
 
---- a/io_uring/cancel.c
-+++ b/io_uring/cancel.c
-@@ -68,7 +68,16 @@ static bool io_cancel_cb(struct io_wq_wo
- 	struct io_kiocb *req = container_of(work, struct io_kiocb, work);
- 	struct io_cancel_data *cd = data;
+--- a/include/linux/io_uring_types.h
++++ b/include/linux/io_uring_types.h
+@@ -362,6 +362,9 @@ struct io_ring_ctx {
+ 	bool				iowq_limits_set;
  
--	return io_cancel_req_match(req, cd);
-+	if (!io_cancel_req_match(req, cd))
-+		return false;
-+	/*
-+	 * Pending work is gone once it has matched. Work that is running may
-+	 * park the request where the same cancellation looks next. Don't make
-+	 * it skip the request as one that it has dealt with.
-+	 */
-+	if (cd->flags & (IORING_ASYNC_CANCEL_ALL | IORING_ASYNC_CANCEL_ANY))
-+		req->cancel_seq_set = false;
-+	return true;
+ 	struct callback_head		poll_wq_task_work;
++	/* deferred ->poll_wq wake up for local task_work */
++	struct rcu_head			poll_wq_rcu;
++	atomic_t			poll_wq_rcu_pending;
+ 	struct list_head		defer_list;
+ 	unsigned			sq_thread_idle;
+ 	/* protected by ->completion_lock */
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -1273,6 +1273,31 @@ void tctx_task_work(struct callback_head
+ 	trace_io_uring_task_work_run(tctx, count, 1);
  }
  
- static int io_async_cancel_one(struct io_uring_task *tctx,
-@@ -177,9 +186,10 @@ static int __io_async_cancel(struct io_c
- 	io_ring_submit_lock(ctx, issue_flags);
- 	ret = -ENOENT;
- 	list_for_each_entry(node, &ctx->tctx_list, ctx_node) {
--		struct io_uring_task *tctx = node->task->io_uring;
--
--		ret = io_async_cancel_one(tctx, cd);
-+		/* has been done above, don't count what is running there */
-+		if (all && node->task->io_uring == tctx)
-+			continue;
-+		ret = io_async_cancel_one(node->task->io_uring, cd);
- 		if (ret != -ENOENT) {
- 			if (!all)
- 				break;
++static void io_poll_wq_wake_rcu(struct rcu_head *rcu)
++{
++	struct io_ring_ctx *ctx = container_of(rcu, struct io_ring_ctx,
++					       poll_wq_rcu);
++
++	atomic_set(&ctx->poll_wq_rcu_pending, 0);
++	io_poll_wq_wake(ctx);
++	percpu_ref_put(&ctx->refs);
++}
++
++/*
++ * io_uring_poll() reports pending local work as EPOLLIN, as it takes a trip to
++ * the kernel to turn it into CQEs. Let those know who are asleep already.
++ * This may be called from a wake up handler with some wait queue lock held,
++ * and this wake up could lead back to it. Do it from a clean context.
++ */
++static void io_local_work_wake_poll(struct io_ring_ctx *ctx)
++{
++	if (!wq_has_sleeper(&ctx->poll_wq) ||
++	    atomic_xchg(&ctx->poll_wq_rcu_pending, 1))
++		return;
++	percpu_ref_get(&ctx->refs);
++	call_rcu_hurry(&ctx->poll_wq_rcu, io_poll_wq_wake_rcu);
++}
++
+ static inline void io_req_local_work_add(struct io_kiocb *req, unsigned flags)
+ {
+ 	struct io_ring_ctx *ctx = req->ctx;
+@@ -1310,6 +1335,9 @@ static inline void io_req_local_work_add
+ 			atomic_or(IORING_SQ_TASKRUN, &ctx->rings->sq_flags);
+ 		if (ctx->has_evfd)
+ 			io_eventfd_signal(ctx, flags & IOU_F_TWQ_IN_WAKE);
++		/* whoever sets the flag wakes ->poll_wq afterwards */
++		if (ctx->poll_activated)
++			io_local_work_wake_poll(ctx);
+ 	}
+ 
+ 	nr_wait = atomic_read(&ctx->cq_wait_nr);
 
 
