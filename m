@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793210278;
-	b=36HmRu1bGIe5cGhiHVK/Nqunw2mW6c2u4/uvHodMOh9VHunmCV3uiM53WNtMsTQtJ8wd
-	 3Z+1FCoHqV6rqhQKkiyv80QL3PchgEXgpt2v4U3Q4Wie424xAJ42a2jh6mL3mCKCogjsG
-	 RKQfNxr71YlF5ZcoOEeARbCdtN5znnQmeWeLQWu9UYfeHGaEVUjaZW7M2ZOD9/SlB1ygo
-	 MQhPjrzUa5wskbo9/TtKfPNV3YX1qQZHZW7edi9nSBJMUxHg4UW5OJNDvT2p+3/acWvOi
-	 18RTSMYUDlEyKap9RhHiuqgPg5Gu1RaM325RifVU1OpRnbYvyBIcmSL/7r33+HXvnpw==
+	t=1793210281;
+	b=LR4LTWWdwwaVkZX9rIb3OC7RMs7vt5ehRXJNttZZ+7i3kNMzRNGZUtS1gn1kkBDAwsxl
+	 tI2TjDnizGRovLeCdoNkV9ONqvfF0p4H+zK99W4KGzvq4CNtttRcs+/hNpTKX/V+dbL9/
+	 1skWcrnwZs74HgRlovQHW6T7A4ni1FxEKHOAjx5pTBdBczrz5Mo37KXBg5XXJ+YUalyJe
+	 RtLcXTfLgnfoR9+qpseRD8zk9eU7SLO8X2BwB4sfutrT/664oXvMEBIJ0j3NNvYAIslC+
+	 nEK1ECZg+/xex4P2pihHwrs/sQ8ksxgaOmJpDUl9JKqEdSlGni+RBsbhqQ487JBL8ww==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793210278;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793210281;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=gaITtSIgz7ardkTgeG3hNJdrOK+qZwHP4RHyPFPpiGo=;
-	b=PCmhoRfi/escG99hX1+QwQbQFrEq3Rv6NrnFMFCXAYURo/ou33fIYUxyq5fNXaMXOD7x
-	 b+j11W3C6r+B86WRyA1436m4mJPKN3lzGKp0htFpE0CBySGLRkoY+TivxKOja8Uh0L5kL
-	 lQ9BRdq8EwBYL0mQgit60Zte2e2ZhhpbiTzGn7XdhCZvVoJiWB6Kstiakze4w2Lqi5flJ
-	 W+TxDG/IGM72RqDGAl79Pd8bd7QOUIxy681BsVpKHXOV33K3XKQ7KQpeJmG5K0ZOMCOaX
-	 AUmEkuuUzGZ2a01SMCvCcs8N3+0E2wR6k7SO86ZOTrVzB2zfQILAQkqX01TbZboMTpQ==
+	bh=TrvE/cXBRkIygvW/FWo30jbCDFCWBVqkXB9VomQ6Qjg=;
+	b=ud4zHWgqvpuW5YfI11ICNt/3fwju0Vi4bWmZ5J6xgGu2XwqT6F1w1yVP2+29Tkb2KEES
+	 OSG2INMF1hkbNqnYVhXEgM8SrS9H9Qt9vcUlVm80+sk65k9dOQYfM1HI/sy098i4Xvgym
+	 qc1EwVS49YXTw8BfjQ/Tz60IXelDWTPH+oQi8iN5sE7fZ4pP9XF5xxqDZAw60xMVuemWF
+	 Vzv6s+LP5ry0TlVnaGrEIGVvz5JSuCjImHCjXwK2aGI3S2VvHBAcMj8Vewhi+E8+TM0HH
+	 Bygc2qOj0pAsH+4UyEms31z85YNc1ZwwNlkRWwhJrvtT0wnSVI7b46pwf0v24GiAPvA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XypPLvDt;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vtwpiuU9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81928606A31C;
-	Wed, 28 Oct 2026 17:57:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56022606A31D;
+	Wed, 28 Oct 2026 17:58:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XypPLvDt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FCAC1F01825;
-	Wed, 28 Oct 2026 17:57:57 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vtwpiuU9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A21E11F01825;
+	Wed, 28 Oct 2026 17:58:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793210278;
-	bh=gaITtSIgz7ardkTgeG3hNJdrOK+qZwHP4RHyPFPpiGo=;
+	s=korg; t=1793210281;
+	bh=TrvE/cXBRkIygvW/FWo30jbCDFCWBVqkXB9VomQ6Qjg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XypPLvDtADvwVwy/JWEBLeN7B3HM6Hop+2VWCvIyYoTa1jwbAR8bEXUmfdjvFP0tI
-	 3v6voZGOpqrml0xxqGW8WRlZz+Rdw7u8DlcJhHC8Ox5FjOhB7tCYVtkst9t2pbwNbQ
-	 crjAy3c3K1RNTMwE0HG+I/J3XNCesXb7PRqfDyhU=
+	b=vtwpiuU9C2nVBz+PsZenzUJejmc2MgAnnwUteT26+EFnpk5GvkfOvtAzMMgL/0FvZ
+	 s0lPZ2xWNApKCrDMcvbe1gJnTWR3nL52YXDChbNFcQ+PvTA7GFGCo7ZQdpa9M95/Ap
+	 7iWBto+Gvt4tiJhbPz/0YBgbdRgrEqw7PA8wUhfc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jens Axboe <axboe@kernel.dk>,
-	"Claude Fable 5.1" <noreply@anthropic.com>
-Subject: [PATCH 6.6 137/168] io_uring/cancel: dont default to setting req->work.cancel_seq
-Date: Wed, 28 Oct 2026 18:01:13 +0100
-Message-ID: <20261028165946.326040387@linuxfoundation.org>
+	Josef Bacik <josef@toxicpanda.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.6 138/168] io_uring/cancel: let CANCEL_ALL find parked requests
+Date: Wed, 28 Oct 2026 18:01:14 +0100
+Message-ID: <20261028165946.351803632@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165943.089486480@linuxfoundation.org>
 References: <20261028165943.089486480@linuxfoundation.org>
@@ -67,117 +67,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Josef Bacik <josef@toxicpanda.com>
 
-Commit 521223d7c229f83915619f888c99e952f24dc39f upstream.
+Commit fe6ca13c98b1223f6005f32913ebd32e4df64b77 upstream.
 
-Just leave it unset by default, avoiding dipping into the last
-cacheline (which is otherwise untouched) for the fast path of using
-poll to drive networked traffic. Add a flag that tells us if the
-sequence is valid or not, and then we can defer actually assigning
-the flag and sequence until someone runs cancelations.
+A cancellation with IORING_ASYNC_CANCEL_ALL or _ANY goes on until it finds
+nothing more. A request may stay where it was found for a while after it
+has been cancelled, so each one that matches is stamped with the sequence
+number of the cancellation, and is skipped from then on.
 
-[ 6.6: prerequisite for "io_uring/cancel: let CANCEL_ALL find parked requests". There is no free request flag bit here, so use the cancel_seq_set field that commit f4a1254f2a07 ("io_uring: fix cancellation overwriting req->flags") introduces upstream, which this also covers ]
+io_cancel_cb() does so for io-wq work as well. There is no need to:
+pending work is taken off the list, and the workers are looked at once per
+call. And it does harm. A request that is run by io-wq may be parked
+while it still is the current work of the worker: poll gets armed for it,
+or it is put on ->futex_list or ->waitid_list.
+
+  io-wq worker                       io_try_cancel()
+  io_wq_submit_work()
+    io_arm_poll_handler()
+      io_poll_add_hash()
+                                       io_async_cancel_one()
+                                         io_cancel_cb()
+                                           stamps the request
+                                         sets IO_WQ_WORK_CANCEL
+                                         = -EALREADY
+                                       io_poll_cancel()
+                                         skips the request
+                                       = -ENOENT
+  io_assign_current_work(NULL)
+
+The flag comes too late for the worker to see it, and the search that
+would have found the request takes it for done. The cancellation returns,
+and the request stays.
+
+With a multishot poll, IOSQE_ASYNC, and IORING_OP_ASYNC_CANCEL with
+IORING_ASYNC_CANCEL_ALL up to 63us later, that happens to 4 of 1,000
+requests (4 CPUs, KVM).
+
+Take the stamp off again if the work matches. If the request is found
+on one of the lists it gets a new one, and io_cancel_cb() doesn't match it
+a second time.
+
+__io_async_cancel() tries the io-wq of the caller twice. So far the stamp
+has kept it from counting work that is running there the second time.
+Skip it instead, so that the number that is returned stays the same.
+
+Fixes: 8e29da69fead ("io_uring: add support for IORING_ASYNC_CANCEL_ALL")
+Assisted-by: LLM
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Link: https://patch.msgid.link/20261015-b4-io-uring-fixes-v1-18-c1556f5d7bf5@toxicpanda.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Co-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/io_uring_types.h |    3 ++-
- io_uring/cancel.c              |    3 +--
- io_uring/cancel.h              |   10 ++++++++++
- io_uring/io_uring.c            |    2 +-
- io_uring/poll.c                |    6 +-----
- 5 files changed, 15 insertions(+), 9 deletions(-)
+ io_uring/cancel.c |   18 ++++++++++++++----
+ 1 file changed, 14 insertions(+), 4 deletions(-)
 
---- a/include/linux/io_uring_types.h
-+++ b/include/linux/io_uring_types.h
-@@ -576,7 +576,7 @@ struct io_kiocb {
- 		__poll_t apoll_events;
- 	};
- 	atomic_t			refs;
--	atomic_t			poll_refs;
-+	bool				cancel_seq_set;
- 	struct io_task_work		io_task_work;
- 	unsigned			nr_tw;
- 	/* for polled requests, i.e. IORING_OP_POLL_ADD and async armed poll */
-@@ -586,6 +586,7 @@ struct io_kiocb {
- 	/* opcode allocated if it needs to store data for async defer */
- 	void				*async_data;
- 	/* linked requests, IFF REQ_F_HARDLINK or REQ_F_LINK are set */
-+	atomic_t			poll_refs;
- 	struct io_kiocb			*link;
- 	/* custom credentials, valid IFF REQ_F_CREDS is set */
- 	const struct cred		*creds;
 --- a/io_uring/cancel.c
 +++ b/io_uring/cancel.c
-@@ -56,9 +56,8 @@ bool io_cancel_req_match(struct io_kiocb
- 		return false;
- 	if (cd->flags & IORING_ASYNC_CANCEL_ALL) {
- check_seq:
--		if (cd->seq == req->work.cancel_seq)
-+		if (io_cancel_match_sequence(req, cd->seq))
- 			return false;
--		req->work.cancel_seq = cd->seq;
- 	}
+@@ -68,7 +68,16 @@ static bool io_cancel_cb(struct io_wq_wo
+ 	struct io_kiocb *req = container_of(work, struct io_kiocb, work);
+ 	struct io_cancel_data *cd = data;
  
- 	return true;
---- a/io_uring/cancel.h
-+++ b/io_uring/cancel.h
-@@ -22,3 +22,13 @@ void init_hash_table(struct io_hash_tabl
+-	return io_cancel_req_match(req, cd);
++	if (!io_cancel_req_match(req, cd))
++		return false;
++	/*
++	 * Pending work is gone once it has matched. Work that is running may
++	 * park the request where the same cancellation looks next. Don't make
++	 * it skip the request as one that it has dealt with.
++	 */
++	if (cd->flags & (IORING_ASYNC_CANCEL_ALL | IORING_ASYNC_CANCEL_ANY))
++		req->cancel_seq_set = false;
++	return true;
+ }
  
- int io_sync_cancel(struct io_ring_ctx *ctx, void __user *arg);
- bool io_cancel_req_match(struct io_kiocb *req, struct io_cancel_data *cd);
-+
-+static inline bool io_cancel_match_sequence(struct io_kiocb *req, int sequence)
-+{
-+	if (req->cancel_seq_set && sequence == req->work.cancel_seq)
-+		return true;
-+
-+	req->cancel_seq_set = true;
-+	req->work.cancel_seq = sequence;
-+	return false;
-+}
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -434,7 +434,6 @@ static void io_prep_async_work(struct io
- 
- 	req->work.list.next = NULL;
- 	req->work.flags = 0;
--	req->work.cancel_seq = atomic_read(&ctx->cancel_seq);
- 	if (req->flags & REQ_F_FORCE_ASYNC)
- 		req->work.flags |= IO_WQ_WORK_CONCURRENT;
- 
-@@ -2164,6 +2163,7 @@ static int io_init_req(struct io_ring_ct
- 	req->file = NULL;
- 	req->rsrc_node = NULL;
- 	req->task = current;
-+	req->cancel_seq_set = false;
- 
- 	if (unlikely(opcode >= IORING_OP_LAST)) {
- 		req->opcode = 0;
---- a/io_uring/poll.c
-+++ b/io_uring/poll.c
-@@ -585,10 +585,7 @@ static int __io_arm_poll_handler(struct
- 				 struct io_poll_table *ipt, __poll_t mask,
- 				 unsigned issue_flags)
- {
--	struct io_ring_ctx *ctx = req->ctx;
+ static int io_async_cancel_one(struct io_uring_task *tctx,
+@@ -177,9 +186,10 @@ static int __io_async_cancel(struct io_c
+ 	io_ring_submit_lock(ctx, issue_flags);
+ 	ret = -ENOENT;
+ 	list_for_each_entry(node, &ctx->tctx_list, ctx_node) {
+-		struct io_uring_task *tctx = node->task->io_uring;
 -
- 	INIT_HLIST_NODE(&req->hash_node);
--	req->work.cancel_seq = atomic_read(&ctx->cancel_seq);
- 	io_init_poll_iocb(poll, mask);
- 	poll->file = req->file;
- 	req->apoll_events = poll->events;
-@@ -826,9 +823,8 @@ static struct io_kiocb *io_poll_find(str
- 		if (poll_only && req->opcode != IORING_OP_POLL_ADD)
- 			continue;
- 		if (cd->flags & IORING_ASYNC_CANCEL_ALL) {
--			if (cd->seq == req->work.cancel_seq)
-+			if (io_cancel_match_sequence(req, cd->seq))
- 				continue;
--			req->work.cancel_seq = cd->seq;
- 		}
- 		*out_bucket = hb;
- 		return req;
+-		ret = io_async_cancel_one(tctx, cd);
++		/* has been done above, don't count what is running there */
++		if (all && node->task->io_uring == tctx)
++			continue;
++		ret = io_async_cancel_one(node->task->io_uring, cd);
+ 		if (ret != -ENOENT) {
+ 			if (!all)
+ 				break;
 
 
