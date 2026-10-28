@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793209942;
-	b=rnLALzkvHQmM4CAUnZ7WM0u9cM9dw3bRZt8rBz7MPF/uiUNSKcU8wpVme0StNmYRUfhX
-	 lkSS7puRK2ScLJU2V1XC3PGbPtIGiG2TN5Zk8D4nBX8YTrpppZDml5EMjqdqP/aFM5Rqf
-	 oZ96nS213gMTX5keaPVMTLigQxxawg9W9RaUgGlkcj8vMkcZ75BwJCd0yBdlU2LQUXMcp
-	 f+U+umE6I9hwlluBe3GSCn4PU6SK90ZEdZg1zFwfJ3I8nv+Fp8HaPsSpeff8P+OGDtLVc
-	 fC/bm2c72m+JOTzPnEX/Vw5OsUCq4b4gVPIlrCdDs4NHuYzRvf2zRCfonbifebDAAdA==
+	t=1793209945;
+	b=Id5WaupDyF+rLCX5bEKupKRL1uXDIO4JjGKnkv3l9tfbq9WzCkvkImYwjfjv0Kb822C6
+	 AovBNKrP3wvJfqTw1HtzVe2M7KcjcQ0F/+7dDrEAxB6oM98iLdTAht9LDQfLSYBnU3kos
+	 WRLUkp6kxT7zDK+/bi8N9bTwBBvfZE+htyGUslmmAB9CK3xySQDetxycPKXC4ss5n1hVV
+	 tIKOHGgUkfbhOR+CKlWLdnAUY3kmKvkMbvhgOHCrlF1OUq48OsK+cacpJf+uiWqyP/Xyb
+	 1OZw/QOBRHy/LOm5G7W+1ap8ph0b7SvMTIPqBt0fcCZ7x9AzPGENFa+IZac29oNO66w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793209942;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793209945;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=l7TRNTGmg+Nk93yy1UjQQXqANRNRMb2K6Ue//W6iKxI=;
-	b=WrsMguPw/GqeNAXbnpNC7xd4gtK0aw1IDC1c/9/0Oa3Z+tUlwPABdlFl3cDZo4mGNk6A
-	 +ZyW7wWJLhShltQLXc1SbWE0VmPMl6YbnMgE0VwzDm5QDsMk6dIDWKCYQ6W5wZyKGZKvx
-	 OSgNbj9QFWS0FhQNsVgjMExgXtp5qDI4l6mgyIrGD3zNl0U9zq0E3kgiqxurOr3OiOiKK
-	 hG79lZDjqtIiVlsLNtpxoYzXVmTiJg5adaHyiWVFrL32ohu9uvx9tChYqAvkj6SHjpoyC
-	 pPKvQy7APPwigclPYVYja3ZYl1hrJCTZ59rvMojCvZxmNBYnRpEkyHUkDXbg9uG4n7Q==
+	bh=OWfmyFY3OZkTjzyzmGA7vjlHFKZsdNn2/I49eNZ7JhA=;
+	b=Mi9K8MSrOG19Pjewmnn/WFkzc/NWw/k4z6fyZiJ86aIxTHLUkwty4ulBS17ppQFa5pSA
+	 wph8CoTiW0KvRWaMgml1du4FPNM7HThD/Mky73inoxuPfBCy6ntm6zjJ9RNn8hjfa1MZ1
+	 jHOINax/HVf7Ix4hMWOABoJXJLA1NNP2oHocE47SnsJUCm0+WcDP0EZbJ/oO+N7EkBwNb
+	 GcS+eLuLPVfgLOzsgU/Erg9MNgmDe+OfZw20OmdceHf+AZ/mKkJexXjDQ2OCqfJGg6+xE
+	 21wOTgfIdI1h9s5qcL/8EdCdeiKaMAi31kge/rzI4Pk5xhNHpa4oPGyX0EeC0oecwSg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KpAfXDBG;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=icQ1pTlN;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8683A606A31A;
-	Wed, 28 Oct 2026 17:52:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61F83606A31C;
+	Wed, 28 Oct 2026 17:52:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KpAfXDBG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7D911F01825;
-	Wed, 28 Oct 2026 17:52:21 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=icQ1pTlN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B17E41F01825;
+	Wed, 28 Oct 2026 17:52:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793209942;
-	bh=l7TRNTGmg+Nk93yy1UjQQXqANRNRMb2K6Ue//W6iKxI=;
+	s=korg; t=1793209945;
+	bh=OWfmyFY3OZkTjzyzmGA7vjlHFKZsdNn2/I49eNZ7JhA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KpAfXDBGyGWhhQydISeWH0bULhB+FhlLgSOLaR6ykaZiY2uvUwc8QklDHA7kOPw7P
-	 2vOiYxaOy3Nl4WeIm3y5cQlRorlDW35hV9DxGyNlfZ9lduhwgH3rO46tt9Mhljqoa+
-	 t9Dx7mOJycWuUG+zUY/eAwdNAKgos2bpkRNNkdzc=
+	b=icQ1pTlN/Mj21TlAKl6ACjw+HJuJ3H+WWXKDigaDesESJHEAEA0BcKSggHWkAZmn8
+	 sQoEKFoWtkkXZXhabs9soI1G/NmnAZ+29i+HdI/knygmYF/rJcsz5wlzcf1IsjDu+g
+	 0kU2a+U81GhbIwbEi6nWWfjA9lAxK3ywKD7vaECo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	HyeongJun An <sammiee5311@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Kyle Zeng <kylebot@openai.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 021/168] ASoC: nau8822: Fix the 128x oversampling switch bits
-Date: Wed, 28 Oct 2026 17:59:17 +0100
-Message-ID: <20261028165943.600016919@linuxfoundation.org>
+Subject: [PATCH 6.6 022/168] netlink: reset skb headers before unicast and multicast filtering
+Date: Wed, 28 Oct 2026 17:59:18 +0100
+Message-ID: <20261028165943.623422858@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165943.089486480@linuxfoundation.org>
 References: <20261028165943.089486480@linuxfoundation.org>
@@ -68,47 +68,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: HyeongJun An <sammiee5311@gmail.com>
+From: Kyle Zeng <kylebot@openai.com>
 
-[ Upstream commit 4db45fc1da3d62d0fa6e8f1e457ae92e8741ed07 ]
+[ Upstream commit 8bf659bd54e1f00e34cf5244b1d289c506fa47c0 ]
 
-The DAC and ADC 128x Oversampling Switches use bit 5 of R10 and R14.
-The NAU8822 datasheet register map puts DACOS and ADCOS at bit 3 of
-those registers.
+Socket filters can use SKF_NET_OFF and SKF_LL_OFF to read relative to
+an skb's network and MAC headers. Netlink producers may reserve
+headroom without resetting those headers, allowing a receiving socket's
+filter to read data before the initialized message.
 
-In R14, bit 5 is inside HPF[6:4], which the High Pass Cut Off control
-owns. So turning on ADC oversampling changes the high pass cut-off, and
-the oversampling bit cannot be set. In R10, bit 5 is reserved, so the
-DAC switch has no effect.
+For example, IWPM HELLO replies are allocated with dev_alloc_skb(),
+which reserves NET_SKB_PAD bytes. An unprivileged NETLINK_RDMA user can
+attach a classic socket filter and disclose this headroom through the
+length of the delivered reply. The resets in netlink_dump() do not help
+because IWPM sends a separately allocated skb through netlink_unicast().
 
-Use bit 3 for both.
+Reset both headers before running the receiver's filter in unicast and
+broadcast delivery, as is already done for dump skbs. This also covers
+other netlink producers that reserve headroom without changing their
+allocation or message-building code.
 
-Fixes: 1e3cb6c321be ("ASoC: nau8822: new codec driver")
-Assisted-by: Claude:claude-opus-5-5
-Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
-Link: https://patch.msgid.link/20261008130953.2446692-7-sammiee5311@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: b1153f29ee07 ("netlink: make socket filters work on netlink")
+Assisted-by: LLM
+Signed-off-by: Kyle Zeng <kylebot@openai.com>
+Link: https://patch.msgid.link/20261006224232.50724-1-kylebot@openai.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/nau8822.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/netlink/af_netlink.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/sound/soc/codecs/nau8822.c b/sound/soc/codecs/nau8822.c
-index 7199d734c79f2..fbdc5db887b6e 100644
---- a/sound/soc/codecs/nau8822.c
-+++ b/sound/soc/codecs/nau8822.c
-@@ -379,9 +379,9 @@ static const struct snd_kcontrol_new nau8822_snd_controls[] = {
- 		NAU8822_REG_RIGHT_ADC_BOOST_CONTROL, 0, 7, 0, boost_tlv),
+diff --git a/net/netlink/af_netlink.c b/net/netlink/af_netlink.c
+index f3a8c8338d203..e539b0a632fad 100644
+--- a/net/netlink/af_netlink.c
++++ b/net/netlink/af_netlink.c
+@@ -1345,6 +1345,8 @@ int netlink_unicast(struct sock *ssk, struct sk_buff *skb,
+ 	if (netlink_is_kernel(sk))
+ 		return netlink_unicast_kernel(sk, skb, ssk);
  
- 	SOC_SINGLE("DAC 128x Oversampling Switch",
--		NAU8822_REG_DAC_CONTROL, 5, 1, 0),
-+		NAU8822_REG_DAC_CONTROL, 3, 1, 0),
- 	SOC_SINGLE("ADC 128x Oversampling Switch",
--		NAU8822_REG_ADC_CONTROL, 5, 1, 0),
-+		NAU8822_REG_ADC_CONTROL, 3, 1, 0),
- };
++	skb_reset_network_header(skb);
++	skb_reset_mac_header(skb);
+ 	if (sk_filter(sk, skb)) {
+ 		err = skb->len;
+ 		kfree_skb(skb);
+@@ -1479,6 +1481,8 @@ static void do_one_broadcast(struct sock *sk,
+ 		goto out;
+ 	}
  
- /* LMAIN and RMAIN Mixer */
++	skb_reset_network_header(p->skb2);
++	skb_reset_mac_header(p->skb2);
+ 	if (sk_filter(sk, p->skb2)) {
+ 		kfree_skb(p->skb2);
+ 		p->skb2 = NULL;
 -- 
 2.53.0
 
