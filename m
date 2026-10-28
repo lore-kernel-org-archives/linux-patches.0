@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793208366;
-	b=O7LaxubITeQYdIn4ZIGrNnBMufhLOhQqxaioTlXD+h5B7ueML6EwcKcc8JAvMOKX3DvK
-	 XBVqA2PVIRtUEaeWsc2bKrPv2tXZfb20OO0JUXj5ZRmFpnSk3sMV2wesLnFtu8yGD4rQC
-	 6bvys/aHUo/0rmpBXlQmipDkyutIbWgNLdKcqk7otnJlyOWLN2UYeQ3XP/QmxYI4a3/uL
-	 dvzpucq7/00M8KI9AXJ2BnpffU7wkR/CSctogZzId1lefIBlcSrjaC5PITDED/bmfL17m
-	 H2KKgPKMjFZO1ebJ25j2Bl23PYselWzQLjxX9bmQJwjrAXDbRQBgVI+QrqUX3qCe72g==
+	t=1793208369;
+	b=1fMRJuUbrRoy6LfG3eLUwLmV7LOlt2MtMg28jwNb7u2GWVRhzkGHJJu1uDaIf8sMqJIK
+	 H9hZDCVk2B+l+kIpOx1o1x9vLvGHnj/z7RogBoMMusO3Z3qrxFgEP+RSfB5Ar8Z686MtF
+	 X4fp8v58+kuiVb/dQvUGugkJeqL35otX32gsj0C9w4OPZlIrNd7YaHTqQMPE3rv/SNBsg
+	 IZx08I5KLnGAZOsqafM2WOO7yQ+Hl1Tv83TIeZiNl7L2/lXNzuTy1cHVklXP74utEe9Py
+	 HCb08f+vo/Me2rJbrW7WVde/p5S2e7rTID71aliMvQ5TWfBQ0woQcUpinaPK2qRQ29Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793208366;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793208369;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=vxVZD9hpERzPH38ArUyNGRHqERZE3uGAb7cRvQDBrGM=;
-	b=1lRoeJgoq4VGGKND6ZexhglrrkTTZON3BcE9EUrdOY/y1bIt3JkMvBqsSF9RXOTt2+qI
-	 rsLrTCWbca2ZGRPzvowoLVpMPngp5KFokNbnDWtqvvbvWIk8gkP33EqATWICNgGjpVnop
-	 4xTAMlg+Pxwm+fyC+YTUzqikUboqLBaL0YrPBEuJoypowdY2ZHWaSJFQVpYWXhnKOWw98
-	 J/o7Byfp+qmmyWxfxRLXPmBiNq1M1AZVvgk+7WIkQa7rLpt+VdHWyKWTU4avrjJNspMlJ
-	 1fg8mHcRQt8pON92b0oW4mogmRSw5KvPhwbBDw/EIBxlYPTVMDPxFH8ZQhrES9BhLSw==
+	bh=wDex9OWQ79PLjQGhLTgzE2nzEwX4herV8y9/fRaiWBk=;
+	b=5KnjZtBl0Q8MHt7MAKur3I1Age80/jeyR8c57vYsktKJXWAMxSCdnbtGnMgJBxh+Lby4
+	 03Y8628wtbnSOYqUxmcgSmiuh/kk78WGVqA5h9Bmw/DeDXeubUW2tYD5bDbgbY8Ag38iA
+	 WDSIWFpz9lk86mea4ZaHfGkq4y/POB6E2lJMn3JebQnJ/sVsLQeFsA2rMypOxRGaXurB0
+	 OfLJr4EAfg8ywarHNFz6bR4R50Mkfuaj5vA4q/ViySBw/hdp990Saqf7aJz/Eescvqosb
+	 M9vkTEUXHDhEfN6bL+PRiOkstDM0Xip34WFiqUNKiuW6SyrfCcLqGCTGSouECCxt+kg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OKrSrWR0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SIw9cTsT;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69AF1606A31C;
-	Wed, 28 Oct 2026 17:26:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FA3F606A31A;
+	Wed, 28 Oct 2026 17:26:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OKrSrWR0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85F011F01825;
-	Wed, 28 Oct 2026 17:26:05 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SIw9cTsT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 644AC1F01825;
+	Wed, 28 Oct 2026 17:26:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793208366;
-	bh=vxVZD9hpERzPH38ArUyNGRHqERZE3uGAb7cRvQDBrGM=;
+	s=korg; t=1793208368;
+	bh=wDex9OWQ79PLjQGhLTgzE2nzEwX4herV8y9/fRaiWBk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OKrSrWR0X7Gk3lCs6SyNltM54DfFbn234JS+MmaBlohj6TPv3X0myzI7vcGYW0XQz
-	 /3Iiz9tSn5DPbcL7577UWFD6UTgwpp7lturPKj3RGdcGwKf9O4ZmGPj+yNxQugGMQy
-	 5VTTx/ZwQ3oCD8kO0ElnatgPeSyYMhkDo7Nldeek=
+	b=SIw9cTsTrf17DGP6XGaXyZqr6tvT+37N2g7PCqjuyFbt3jA/2St0uh4WqBan51Tmm
+	 XqEscG/tgyPVN8kgVGCCL9GeSUnZlMU81Zs2W/fNy4PPqb4pcthHtvNqdch7mHlxMe
+	 sZX+Xm4W6xogk0ocpqmJhZJ6jbR4n6hRLZiBHrqo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-dev@google.com>,
-	Nilesh Javali <njavali@marvell.com>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
+	stable@kernel.org,
+	Wenjie Qi <qiwenjie@xiaomi.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 092/516] scsi: qla2xxx: Use memset_io() to clear QLAFX00 request ring slot
-Date: Wed, 28 Oct 2026 17:54:04 +0100
-Message-ID: <20261028170005.702147044@linuxfoundation.org>
+Subject: [PATCH 5.10 093/516] f2fs: return writeback error from collapse range
+Date: Wed, 28 Oct 2026 17:54:05 +0100
+Message-ID: <20261028170005.725705342@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -69,55 +70,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nilesh Javali <njavali@marvell.com>
+From: Wenjie Qi <qwjhust@gmail.com>
 
-[ Upstream commit 626e44f3d8a924a97a3848a9fd45833947e081e9 ]
+[ Upstream commit f8a4108800254d6f7b2755515fbbd9d0caac561e ]
 
-For QLAFX00 the request ring is ioremapped device I/O memory
-(ha->iobase + req_que_off), not DMA-coherent RAM, which is why the rest
-of the FX00 path accesses it through memcpy_toio() and the wrt_reg_*
-helpers. __qla2x00_alloc_iocbs() however zeroed the producer slot with a
-plain memset(). On architectures such as ARM64 a regular memset() may
-emit unaligned or block-zeroing instructions (e.g. DC ZVA) that are
-invalid on Device memory, leading to a synchronous external abort.
+f2fs_collapse_range() writes back pages moved by f2fs_do_collapse(),
+but ignores the return value. If writeback fails, the ioctl can still
+truncate page cache, shrink blocks, and report success.
 
-Use memset_io() to clear the slot for QLAFX00, matching the I/O
-accessors used elsewhere on this ring. Other adapters keep the plain
-memset() on their DMA-coherent rings. The zero-fill is retained for FX00
-because its IOCB builders (e.g. qlafx00_fxdisc_iocb()) copy only part of
-the entry and rely on the unused tail being pre-zeroed.
+Return the error before truncating page cache or updating the file size.
 
-Fixes: 8ae6d9c7eb10 ("[SCSI] qla2xxx: Enhancements to support ISPFx00.")
-Cc: stable@vger.kernel.org
-Reported-by: Sashiko <sashiko-dev@google.com>
-Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Link: https://patch.msgid.link/20260730155838.2119230-12-njavali@marvell.com
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
-[ replaced qla_req_ring_slot() and qla_req_entry_size() with req->ring_ptr and REQUEST_ENTRY_SIZE. ]
+Fixes: b4ace3370324 ("f2fs: support FALLOC_FL_COLLAPSE_RANGE")
+Cc: stable@kernel.org
+Assisted-by: Codex:gpt-5.5
+Signed-off-by: Wenjie Qi <qiwenjie@xiaomi.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+[ adjusted context to retain down_write()/up_write() on i_mmap_sem instead of filemap_invalidate_lock()/filemap_invalidate_unlock(). ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/qla2xxx/qla_iocb.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/f2fs/file.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/qla2xxx/qla_iocb.c b/drivers/scsi/qla2xxx/qla_iocb.c
-index 1752a62031710..327ffa36774e4 100644
---- a/drivers/scsi/qla2xxx/qla_iocb.c
-+++ b/drivers/scsi/qla2xxx/qla_iocb.c
-@@ -2363,11 +2363,13 @@ __qla2x00_alloc_iocbs(struct qla_qpair *qpair, srb_t *sp)
- 	/* Prep packet */
- 	req->cnt -= req_cnt;
- 	pkt = req->ring_ptr;
--	memset(pkt, 0, REQUEST_ENTRY_SIZE);
- 	if (IS_QLAFX00(ha)) {
-+		memset_io((void __iomem __force *)pkt, 0,
-+			  REQUEST_ENTRY_SIZE);
- 		wrt_reg_byte((u8 __force __iomem *)&pkt->entry_count, req_cnt);
- 		wrt_reg_dword((__le32 __force __iomem *)&pkt->handle, handle);
- 	} else {
-+		memset(pkt, 0, REQUEST_ENTRY_SIZE);
- 		pkt->entry_count = req_cnt;
- 		pkt->handle = handle;
- 	}
+diff --git a/fs/f2fs/file.c b/fs/f2fs/file.c
+index 751485437d7b4..9c12691ace0b6 100644
+--- a/fs/f2fs/file.c
++++ b/fs/f2fs/file.c
+@@ -1402,11 +1402,14 @@ static int f2fs_collapse_range(struct inode *inode, loff_t offset, loff_t len)
+ 
+ 	/* write out all moved pages, if possible */
+ 	down_write(&F2FS_I(inode)->i_mmap_sem);
+-	filemap_write_and_wait_range(inode->i_mapping, offset, LLONG_MAX);
++	ret = filemap_write_and_wait_range(inode->i_mapping, offset, LLONG_MAX);
++	if (ret)
++		goto out_unlock;
+ 	truncate_pagecache(inode, offset);
+ 
+ 	new_size = i_size_read(inode) - len;
+ 	ret = f2fs_truncate_blocks(inode, new_size, true);
++out_unlock:
+ 	up_write(&F2FS_I(inode)->i_mmap_sem);
+ 	if (!ret)
+ 		f2fs_i_size_write(inode, new_size);
 -- 
 2.53.0
 
