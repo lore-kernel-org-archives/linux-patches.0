@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793208072;
-	b=CB6PjD9TSrl4ouYL9wCF6OGW2TcFQA3fvgvv2mAie4czLreYSEpX/ujE/cXKmP2bp7/4
-	 Vmq8DyjFAeGddr0vOd8Ds67oVHPgS7pN1XyX+sfDC6xAq54J5q5TG97zP1GRGJ0wtU9Hy
-	 n0mbr3X/f2gHH5mHhGqftccsr7MYZPAfoHm/IVVgH3PF8P8Mt6wel1aTl1D9ALUkmDgsa
-	 QQts35FU7lxgSD3zU4saql43xeFTOGspw02HkUju8zDjRjOqdDL5H98nRzo5jhbXwCFyg
-	 d5ew0Jo5NIG9W5nUmW/d4ht4afaUMUurhE76QX/crkQ3ukJ+4bRlUISPLVHQhaB+3Jg==
+	t=1793208075;
+	b=TRzy2cF+ahmp5h97glJeLfFU+0PHBpOT4s5KhBrPtdwMRgyJWA+29qOsDEOWaMMfnmmH
+	 qMeEQsnbVnlEXgDkS2ATeIPFo3D+RqaUe3kZN7ppusTkdzNXUm8Qhk7pQwn/M1LOL/7in
+	 K0mXwuESIbe7gHhBkDLC/OhL+qsooaAbQE6S2bMSvmLV44IRK7EmezKOSGFLaBzu/LV40
+	 O+JYiQoGu64mokBd6QNnYaGno/1zTCWdwT7jcScOIRuFCzQ+HQOGMWlRHfw/BYRAsst82
+	 7apUTHoEGX77b5TCaWDZgIwRtYfgxNRifq7qoRxLqlobloaJpFlQ2FwxWnDJ0zmZTtA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793208072;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793208075;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=UQzGCv72SEI1qqYua13zvgXgETPuHVMgWH22FHWmqx0=;
-	b=l+9MRKfKzpMt4cpDH2qKTnV+9VRgFktXp5/JlyMs88mEhHep6ZGwsT31rj0dj5LHVGE4
-	 i0/jsYvs5lDINT01pt7gpy9ZIrH+uk2iL9Rn/CzoXAFWcsCsR+0Idypx7mWVddLx60Zk/
-	 90IXuxQBuCd208mPaoCV0tHvQS93zv4rY9ws7Kc1FB79u0LFZuqrDmfWf5TOJ7cColq1g
-	 zT+G50361rfp6K4iD8W4aTvX9reeHcDm2yyB4nUweEl/HbYYDEJXuRBYLDEuyvWsGF3CE
-	 l6b1LiRzaogz0A0Gi2lOcRDXGX153Z59U+htHMWgYXHgda6lQZI8T0SiYCa6ghIwMog==
+	bh=r0yt+9PlPIDL0+MrTEXzfTyUgAmcxwfwkp8ROWUjGlg=;
+	b=ldCb6NogcRqutYzIwcM65l9GztzvLMQ2723YjTRY85fzYehFLh31OallGLe/izxFiV+0
+	 UkujVQ3MCN9CxOEk3RSS5aQp0060BaYmKgx8zuW5iCwEZWbYfofPef3gaxCp8ndM4ALZ9
+	 YYE2KVyKFnR4gtDkd8YZFcwhDyAmSLbIW30iirpGzYEGY9wUyfJ170j5FtV9Qb1jOHhnX
+	 2k1DOd5xwePYs1QdiJ0JtsNeVWU1wRRL8dr5iOOMs07FM8NIhSgOyF61KJL5MnY+Yc3Wt
+	 VN1bujZvMdzZzAzmYsDoBlfOVh8Qgh6Z4QBcusTOJ/kRyt1esjYtsGUPUqVF3+ghlzA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X5H8tNSu;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JbYKvetf;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D8D6606A31D;
-	Wed, 28 Oct 2026 17:21:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B340606A31D;
+	Wed, 28 Oct 2026 17:21:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X5H8tNSu
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A64301F01825;
-	Wed, 28 Oct 2026 17:21:11 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JbYKvetf
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 795951F01825;
+	Wed, 28 Oct 2026 17:21:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793208072;
-	bh=UQzGCv72SEI1qqYua13zvgXgETPuHVMgWH22FHWmqx0=;
+	s=korg; t=1793208075;
+	bh=r0yt+9PlPIDL0+MrTEXzfTyUgAmcxwfwkp8ROWUjGlg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=X5H8tNSunI1Hh5hFSG/qlshf0rHVOsJOnBDnLmo8SLiuvLY9Fa3Ou6JLueY1wNWw9
-	 uSCocN7uaAi9Vmv9Rek1eDcgQ/CngU+pnoAyv5eHtCdYesjyoFhZzbLX0eqA3GOQdN
-	 kz54XujkJz1uToMW2ed6qcPrI7I/ist84J53sHrw=
+	b=JbYKvetfJir06GrGMon+oOrPO2uMG4+EMhwxT+8/9K/NY6vqq8kmJdP+q2V4SOEmn
+	 KiMnLOjYHHDHijXHPnKGV/2zYreQeXrWeFnsLSW2VWKAwZJNJsxvzZfj93DCfTs2gJ
+	 8aF4OePi+khbJxKKIF/24LHejJB+X4MeUe+JTgdY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gavin Inglis <giinglis@amazon.com>,
-	Aaron Ahmed <aarnahmd@amazon.com>,
-	Steven Rostedt <rostedt@goodmis.org>
-Subject: [PATCH 6.12 239/247] ftrace: Initialize modname and offset in print_rec()
-Date: Wed, 28 Oct 2026 18:00:42 +0100
-Message-ID: <20261028165953.081460666@linuxfoundation.org>
+	Oleg Nesterov <oleg@redhat.com>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>
+Subject: [PATCH 6.12 240/247] coredump: hold RCU while releasing parked threads
+Date: Wed, 28 Oct 2026 18:00:43 +0100
+Message-ID: <20261028165953.105996139@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165947.349197979@linuxfoundation.org>
 References: <20261028165947.349197979@linuxfoundation.org>
@@ -68,54 +67,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aaron Ahmed <aarnahmd@amazon.com>
+From: Christian Brauner <brauner@kernel.org>
 
-commit e1f339ff3b83857b93baf8b88186275a413d445e upstream.
+commit 61d58591aa0188bf2463e263962256316ff8b576 upstream.
 
-print_rec() leaves 'modname' and 'offset' uninitialized and
-kallsyms_lookup() only sets them on success. When the lookup fails like
-when a module is being loaded or unloaded, 'modname' holds a garbage
-value, passes the 'if (modname)' check, and is dereferenced by
-seq_printf().
+coredump_finish() releases the parked threads by clearing ->task in
+their core_thread entry and calling wake_up_process() on each of them.
+It does that without holding a reference on the task and without being
+inside rcu.
 
-  Oops: general protection fault
-  RIP: 0010:string+0x48/0xe0
-  Call Trace:
-   vsnprintf+0x1f5/0x650
-   seq_printf+0x8e/0xb0
-   print_rec+0x6c/0xc0
-   t_show+0x4c/0x440
-   seq_read_iter+0x119/0x480
+But calling wake_up_process(task) without rcu here isn't safe. A parked
+thread doesn't need that wakeup to leave. A spurious wakeup or a
+preemption after the store is enough for the task to go away.
 
-This can be triggered by reading available_filter_functions while a
-module is being loaded or unloaded.
+So if the coredump client is preempted between the store and
+wake_up_process() the thread can exit and be freed in the meantime and
+try_to_wake_up() takes pi_lock in freed memory.
 
-Initialize both variables so a failed lookup skips the module name.
+Hold rcu across the loop.
 
+Fixes: a94e2d408eae ("coredump: kill mm->core_done")
 Cc: stable@vger.kernel.org
-Fixes: b39181f7c690 ("ftrace: Add FTRACE_MCOUNT_MAX_OFFSET to avoid adding weak function")
-Link: https://patch.msgid.link/20261016230403.4916-1-aarnahmd@amazon.com
-Tested-by: Gavin Inglis <giinglis@amazon.com>
-Signed-off-by: Aaron Ahmed <aarnahmd@amazon.com>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Acked-by: Oleg Nesterov <oleg@redhat.com>
+Link: https://patch.msgid.link/20260921-work-coredump-fixes-v3-1-8e4adb1619e6@kernel.org
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/ftrace.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/coredump.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/kernel/trace/ftrace.c
-+++ b/kernel/trace/ftrace.c
-@@ -4316,9 +4316,9 @@ subsys_initcall(ftrace_check_for_weak_fu
+--- a/fs/coredump.c
++++ b/fs/coredump.c
+@@ -474,6 +474,8 @@ static void coredump_finish(bool core_du
+ 	current->signal->core_state = NULL;
+ 	spin_unlock_irq(&current->sighand->siglock);
  
- static int print_rec(struct seq_file *m, unsigned long ip)
- {
--	unsigned long offset;
-+	unsigned long offset = 0;
- 	char str[KSYM_SYMBOL_LEN];
--	char *modname;
-+	char *modname = NULL;
- 	const char *ret;
- 
- 	ret = kallsyms_lookup(ip, NULL, &offset, &modname, str);
++	/* A released thread may exit and be freed before it is woken. */
++	guard(rcu)();
+ 	while ((curr = next) != NULL) {
+ 		next = curr->next;
+ 		task = curr->task;
+@@ -482,6 +484,7 @@ static void coredump_finish(bool core_du
+ 		 * ->task == NULL before we read ->next.
+ 		 */
+ 		smp_mb();
++		/* Any wakeup now lets the thread exit, rcu keeps it alive. */
+ 		curr->task = NULL;
+ 		wake_up_process(task);
+ 	}
 
 
