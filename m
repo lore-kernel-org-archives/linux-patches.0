@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215230;
-	b=nIURNNYy1YOWuAHCEa/x7sa3pXwCwoFNZ6qtR4gXP6rlKhfln3mPelOvF9T0VmwK7ZCX
-	 b8QYyc8PtjyePlNrHEsNTsgBIT+Ql2Z05yW0k4R+vrsR+9LgSfurglAu0ghG7A/asP1vv
-	 J8G6Kau6/9oDcXKg/utygz/Y5kn3QD5VKVLoj391/uC6FKboWOG0kqUYobr9tJPKuxYvH
-	 ygyaqGX+RejelhE+dbU1pk0zl7r00wUGFxcbxlbF2yG9M+1SfMZxV9jkxAf0C4PJMi+b+
-	 2/eb8mteNM3FxZ9nkabK43AVwvnKAAl1h/zvs/z37/Xdd7NQu3YXZ+/ohyWcc1M4Ifw==
+	t=1793215233;
+	b=QGduGi6/GxzXGKqrGPHUrYrAeUXmOxpC+5jJ/Ds8UxDR8jZAcPBGEXep9jGysRKXk1Bi
+	 wTAMVFXpshLa9NSOroXK9qMpcDBt/aPqqbay6eZWBrVGZp0lNaIr4xVMbG3qLKTANP8gl
+	 s7V0ZDKtCKdwKMqd5gAULZOcW+XAbAMgsKKJjTsmpXCowSReBN8d8fWlAqVJ3ZtgEGC96
+	 TpGEH3oyYU3TehAfGdKJ7EBNMaRCLIPbbZ+y0K+nZ/7RMEIb+emfnXgRyymo6/NHUX1H/
+	 vVF8nJWVVOgMXHDfiMWHUc2aATfqCR6769RoLE9kZrY+81AH3xCxQRk+wXniEBveVyg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215230;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215233;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5niivxcnFJhFAmuRk2EZo4xsslcPGlG7LCqrwThgajA=;
-	b=JW/f0Jf1vWq3+XleV/7lKk5/yVbKnEexl0QoQM4xZGbiKq/JoayTTUQBcxiEEezydjTq
-	 POQZYnMf3KTu+aX/VkHM/3L6hG+we3Hiw0VH0O6DdFBcIj78yIEhXJoQ18RbBLorVDMP1
-	 BuGeh5jMbsN2wcmTP5Fak90QPNSBcbxbz/79ZhEAJFn4UJAyuwnU8ZQEW/niy25gq6mJJ
-	 jNl1xwozXEKCwMITSTzb8LCBY05h8qyr8niHMRC/FjctjXsHr1Un/culZ1w+RTodIDGmU
-	 IUNkmdODPtjY1H/8NJ3ZUCzhn02e/kK4fY5xY6MmTz2uaoNNajJpcUX7CHLo4Iw53mQ==
+	bh=O9mbJvHfLgtFdlZZAhAGZ6S/d4oWWYkgqGVSm+ZrHeU=;
+	b=Eg5t68Rqwp4mxX8wMC0vlQa2J5pgDDq+uzrebvgSQiUxRMrQs5uNFHf/MOnp1XrnBYFM
+	 HlIHoIszoPeu6PTF7H2q3Y/ZaH91RptyyUA6cI2X37d5t7ds15Sy7T0vHAwmywqnrJTHT
+	 RuDXuWKVkFTyG6odGNvMgPwZSiLVs32VjPsJEm703kKqIMM5tPIMMp/hReijKUqdayj12
+	 fXW8gI1jEF79bvgvaqrH9fWZxqJPU8HvTeA9PPtlnIjMaI15wWvo/YX3dhf4TfN5XL2bH
+	 zPwis+LkbrDiOFkI4VavX8aHCJHOkzpzqsI8FVutuENgxsMnodoNXnUP8DSPvatfIpg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kQqJfWTh;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hQHgCLgR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40712606A31C;
-	Wed, 28 Oct 2026 19:20:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F3FB606A31C;
+	Wed, 28 Oct 2026 19:20:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kQqJfWTh
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9123B1F01825;
-	Wed, 28 Oct 2026 19:20:29 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hQHgCLgR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BD9E1F01825;
+	Wed, 28 Oct 2026 19:20:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215230;
-	bh=5niivxcnFJhFAmuRk2EZo4xsslcPGlG7LCqrwThgajA=;
+	s=korg; t=1793215233;
+	bh=O9mbJvHfLgtFdlZZAhAGZ6S/d4oWWYkgqGVSm+ZrHeU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kQqJfWThNx2bPL2X39ajqT5p6XMCbJyILJ08lhQLWR+3LoaiAd5iaM2lAKMEds8Zh
-	 uZ4/etYXpKUQ7NeA964E5iim6b307yWaBzf3hD36MnQPCoz9jMO1665XbdCmmEQZ0i
-	 Ngllx1nghO2jAwCRNRLY4TXXH2j7j5/ydbR0wGBI=
+	b=hQHgCLgRbGFnZ56j7hwzbNtv332s4cU6z4yI7WK8mBrUe5k79z0Tk6kNOHkhhaHwW
+	 MFx6HLTsx0fRbDNlkg0C+1UZipRqT+TCoBi6UEGKkPhp+tSODJmBKocoCM5Xvm51ZN
+	 zxexYHe7RpwCs/ETCWE7NhuBBp+Vir+NHcMbhnhY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dragos Tatulea <dtatulea@nvidia.com>,
-	Carolina Jubran <cjubran@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
+	Nicolai Buchwitz <nb@tipi-net.de>,
+	Maxime Chevallier <maxime.chevallier@bootlin.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1094/1887] net/mlx5: Fix slab-out-of-bounds in mlx5_query_nic_vport_mac_list
-Date: Wed, 28 Oct 2026 17:53:10 +0100
-Message-ID: <20261028170524.302709254@linuxfoundation.org>
+Subject: [PATCH 6.1 1095/1887] net: phy: clean the sfp upstream if phy probing fails
+Date: Wed, 28 Oct 2026 17:53:11 +0100
+Message-ID: <20261028170524.325523656@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -70,219 +69,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dragos Tatulea <dtatulea@nvidia.com>
+From: Maxime Chevallier <maxime.chevallier@bootlin.com>
 
-[ Upstream commit 894e036a24a26a6dd7b17d8d3fb5c53ab48a6074 ]
+[ Upstream commit 48774e87bbaa0056819d4b52301e4692e50e3252 ]
 
-mlx5_query_nic_vport_mac_list() sizes its firmware command buffer using
-the PF's log_max_current_uc/mc_list capabilities. When querying a VF
-vport with a larger configured max (via devlink), the firmware response
-can overflow this buffer:
+Sashiko reported that we don't call sfp_bus_del_upstream() in the probe
+failure path, so let's add it, otherwise the sfp-bus is left with a
+dangling 'upstream' field, that may be used later on during SFP events.
 
- BUG: KASAN: slab-out-of-bounds in mlx5_query_nic_vport_mac_list+0x453/0x4c0 [mlx5_core]
- Read of size 4 at addr ff1100013ffc8a12 by task kworker/u96:2/385
+This issue existed before the generic phylib sfp support, back when
+drivers were calling phy_sfp_probe themselves.
 
- CPU: 12 UID: 0 PID: 385 Comm: kworker/u96:2 Not tainted 7.0.0-rc6+ #1 PREEMPT
- Hardware name: QEMU Standard PC (Q35 + ICH9, 2009)
- Workqueue: mlx5_esw_wq esw_vport_change_handler [mlx5_core]
- Call Trace:
-  <TASK>
-  dump_stack_lvl+0x69/0xa0
-  print_report+0x176/0x4e4
-  kasan_report+0xc8/0x100
-  mlx5_query_nic_vport_mac_list+0x453/0x4c0 [mlx5_core]
-  esw_update_vport_addr_list+0x2e3/0xda0 [mlx5_core]
-  esw_vport_change_handle_locked+0xa1f/0x1060 [mlx5_core]
-  esw_vport_change_handler+0x6a/0x90 [mlx5_core]
-  process_one_work+0x87f/0x15e0
-  worker_thread+0x62b/0x1020
-  kthread+0x375/0x490
-  ret_from_fork+0x4dc/0x810
-  ret_from_fork_asm+0x11/0x20
-  </TASK>
-
-Fix by querying the vport's own HCA caps to size the buffer correctly.
-Refactor the function to allocate and return the MAC list internally,
-removing the caller's dependency on knowing the correct max.
-
-Fixes: e16aea2744ab ("net/mlx5: Introduce access functions to modify/query vport mac lists")
-Signed-off-by: Dragos Tatulea <dtatulea@nvidia.com>
-Reviewed-by: Carolina Jubran <cjubran@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20260604135849.458060-1-tariqt@nvidia.com
+Reviewed-by: Nicolai Buchwitz <nb@tipi-net.de>
+Fixes: 298e54fa810e ("net: phy: add core phylib sfp support")
+Signed-off-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Link: https://patch.msgid.link/20260604092819.723505-2-maxime.chevallier@bootlin.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/mellanox/mlx5/core/eswitch.c | 13 +---
- .../net/ethernet/mellanox/mlx5/core/vport.c   | 72 ++++++++++++++-----
- include/linux/mlx5/vport.h                    |  4 +-
- 3 files changed, 59 insertions(+), 30 deletions(-)
+ drivers/net/phy/phy_device.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/eswitch.c b/drivers/net/ethernet/mellanox/mlx5/core/eswitch.c
-index bf9869ee75236..67cdf8cb48866 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/eswitch.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/eswitch.c
-@@ -516,23 +516,16 @@ static void esw_update_vport_addr_list(struct mlx5_eswitch *esw,
- 				       struct mlx5_vport *vport, int list_type)
- {
- 	bool is_uc = list_type == MLX5_NVPRT_LIST_TYPE_UC;
--	u8 (*mac_list)[ETH_ALEN];
-+	u8 (*mac_list)[ETH_ALEN] = NULL;
- 	struct l2addr_node *node;
- 	struct vport_addr *addr;
- 	struct hlist_head *hash;
- 	struct hlist_node *tmp;
--	int size;
-+	int size = 0;
- 	int err;
- 	int hi;
- 	int i;
+diff --git a/drivers/net/phy/phy_device.c b/drivers/net/phy/phy_device.c
+index 96dcd1d70bf4a..b6161175191af 100644
+--- a/drivers/net/phy/phy_device.c
++++ b/drivers/net/phy/phy_device.c
+@@ -1399,6 +1399,9 @@ int phy_sfp_probe(struct phy_device *phydev,
  
--	size = is_uc ? MLX5_MAX_UC_PER_VPORT(esw->dev) :
--		       MLX5_MAX_MC_PER_VPORT(esw->dev);
--
--	mac_list = kcalloc(size, ETH_ALEN, GFP_KERNEL);
--	if (!mac_list)
--		return;
--
- 	hash = is_uc ? vport->uc_list : vport->mc_list;
- 
- 	for_each_l2hash_node(node, tmp, hash, hi) {
-@@ -544,7 +537,7 @@ static void esw_update_vport_addr_list(struct mlx5_eswitch *esw,
- 		goto out;
- 
- 	err = mlx5_query_nic_vport_mac_list(esw->dev, vport->vport, list_type,
--					    mac_list, &size);
-+					    &mac_list, &size);
- 	if (err)
- 		goto out;
- 	esw_debug(esw->dev, "vport[%d] context update %s list size (%d)\n",
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/vport.c b/drivers/net/ethernet/mellanox/mlx5/core/vport.c
-index 81006690db017..c00fa186701a3 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/vport.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/vport.c
-@@ -250,35 +250,63 @@ int mlx5_modify_nic_vport_mtu(struct mlx5_core_dev *mdev, u16 mtu)
- }
- EXPORT_SYMBOL_GPL(mlx5_modify_nic_vport_mtu);
- 
-+static int mlx5_vport_max_mac_list_size(struct mlx5_core_dev *dev, u16 vport,
-+					enum mlx5_list_type list_type)
-+{
-+	void *query_ctx, *hca_caps;
-+	int ret = 0;
+ 		ret = sfp_bus_add_upstream(bus, phydev, ops);
+ 		sfp_bus_put(bus);
 +
-+	if (!vport && !mlx5_core_is_ecpf(dev))
-+		return list_type == MLX5_NVPRT_LIST_TYPE_UC ?
-+			1 << MLX5_CAP_GEN(dev, log_max_current_uc_list) :
-+			1 << MLX5_CAP_GEN(dev, log_max_current_mc_list);
-+
-+	query_ctx = kzalloc(MLX5_ST_SZ_BYTES(query_hca_cap_out), GFP_KERNEL);
-+	if (!query_ctx)
-+		return -ENOMEM;
-+
-+	ret = mlx5_vport_get_other_func_general_cap(dev, vport, query_ctx);
-+	if (ret)
-+		goto out;
-+
-+	hca_caps = MLX5_ADDR_OF(query_hca_cap_out, query_ctx, capability);
-+	ret = list_type == MLX5_NVPRT_LIST_TYPE_UC ?
-+		1 << MLX5_GET(cmd_hca_cap, hca_caps, log_max_current_uc_list) :
-+		1 << MLX5_GET(cmd_hca_cap, hca_caps, log_max_current_mc_list);
-+
-+out:
-+	kfree(query_ctx);
-+
-+	return ret;
-+}
-+
- int mlx5_query_nic_vport_mac_list(struct mlx5_core_dev *dev,
- 				  u16 vport,
- 				  enum mlx5_list_type list_type,
--				  u8 addr_list[][ETH_ALEN],
--				  int *list_size)
-+				  u8 (**addr_list)[ETH_ALEN],
-+				  int *addr_list_size)
- {
- 	u32 in[MLX5_ST_SZ_DW(query_nic_vport_context_in)] = {0};
-+	int allowed_list_size;
- 	void *nic_vport_ctx;
- 	int max_list_size;
--	int req_list_size;
- 	int out_sz;
- 	void *out;
- 	int err;
- 	int i;
- 
--	req_list_size = *list_size;
-+	if (!addr_list || !addr_list_size)
-+		return -EINVAL;
- 
--	max_list_size = list_type == MLX5_NVPRT_LIST_TYPE_UC ?
--		1 << MLX5_CAP_GEN(dev, log_max_current_uc_list) :
--		1 << MLX5_CAP_GEN(dev, log_max_current_mc_list);
-+	*addr_list = NULL;
-+	*addr_list_size = 0;
- 
--	if (req_list_size > max_list_size) {
--		mlx5_core_warn(dev, "Requested list size (%d) > (%d) max_list_size\n",
--			       req_list_size, max_list_size);
--		req_list_size = max_list_size;
--	}
-+	max_list_size = mlx5_vport_max_mac_list_size(dev, vport, list_type);
-+	if (max_list_size < 0)
-+		return max_list_size;
- 
- 	out_sz = MLX5_ST_SZ_BYTES(query_nic_vport_context_out) +
--			req_list_size * MLX5_ST_SZ_BYTES(mac_address_layout);
-+			max_list_size * MLX5_ST_SZ_BYTES(mac_address_layout);
- 
- 	out = kvzalloc(out_sz, GFP_KERNEL);
- 	if (!out)
-@@ -296,16 +324,24 @@ int mlx5_query_nic_vport_mac_list(struct mlx5_core_dev *dev,
- 
- 	nic_vport_ctx = MLX5_ADDR_OF(query_nic_vport_context_out, out,
- 				     nic_vport_context);
--	req_list_size = MLX5_GET(nic_vport_context, nic_vport_ctx,
--				 allowed_list_size);
-+	allowed_list_size = MLX5_GET(nic_vport_context, nic_vport_ctx,
-+				     allowed_list_size);
-+	if (!allowed_list_size)
-+		goto out;
-+
-+	*addr_list = kcalloc(allowed_list_size, ETH_ALEN, GFP_KERNEL);
-+	if (!*addr_list) {
-+		err = -ENOMEM;
-+		goto out;
-+	}
- 
--	*list_size = req_list_size;
--	for (i = 0; i < req_list_size; i++) {
-+	for (i = 0; i < allowed_list_size; i++) {
- 		u8 *mac_addr = MLX5_ADDR_OF(nic_vport_context,
- 					nic_vport_ctx,
- 					current_uc_mac_address[i]) + 2;
--		ether_addr_copy(addr_list[i], mac_addr);
-+		ether_addr_copy((*addr_list)[i], mac_addr);
++		if (ret)
++			phydev->sfp_bus = NULL;
  	}
-+	*addr_list_size = allowed_list_size;
+ 	return ret;
+ }
+@@ -3143,6 +3146,9 @@ static int phy_probe(struct device *dev)
+ 	return 0;
+ 
  out:
- 	kvfree(out);
- 	return err;
-diff --git a/include/linux/mlx5/vport.h b/include/linux/mlx5/vport.h
-index 7f31432f44c2c..5b9c57673c0de 100644
---- a/include/linux/mlx5/vport.h
-+++ b/include/linux/mlx5/vport.h
-@@ -94,8 +94,8 @@ int mlx5_query_hca_vport_node_guid(struct mlx5_core_dev *dev,
- int mlx5_query_nic_vport_mac_list(struct mlx5_core_dev *dev,
- 				  u16 vport,
- 				  enum mlx5_list_type list_type,
--				  u8 addr_list[][ETH_ALEN],
--				  int *list_size);
-+				  u8 (**mac_list)[ETH_ALEN],
-+				  int *mac_list_size);
- int mlx5_modify_nic_vport_mac_list(struct mlx5_core_dev *dev,
- 				   enum mlx5_list_type list_type,
- 				   u8 addr_list[][ETH_ALEN],
++	sfp_bus_del_upstream(phydev->sfp_bus);
++	phydev->sfp_bus = NULL;
++
+ 	/* Re-assert the reset signal on error */
+ 	phy_device_reset(phydev, 1);
+ 
 -- 
 2.53.0
 
