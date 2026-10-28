@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213949;
-	b=M2wUPRxfZ39vwj9jkYhZ3CSEYJ+V8J9Om8iEKsqUTWNMK59n22lntp/6vHjCFJipLdvN
-	 ULHnLecQ+6QkKbVoA8Tn3xk7fpZUyDR5sBdoCINxdpzcw5a6CbEYIr2rtHUVYW0p4IwLV
-	 tI/AeavUjMOy8DSc3nBLHvUWR8BNQH+nJfMVKL4hxoFji7QaGa2AQGFQfU3os+fITWUf5
-	 g32ILyzEE/e76N6tKTIPQqwmTyIMTbiXk059zvIZZrK/VCbQ5jxJNltOBH5eAELq6RA18
-	 gn2kyxUxjhn9MGUiy8O4XesVICOVTy3+iLcXlhgcdc7G5rxtqSIJx+PIN8WwWspEfyg==
+	t=1793213951;
+	b=bDm0Kp/Ty//jprJ7bRXxYk+i24zzi4fEdLfwABbkTBztWWyGjvOLkUIV86HokRXJJGcr
+	 QDhu8DArgjkvAqL7CqpopsI1nVFr7hpjld6dtlkt/ffvMcN5g5jp+tEc00F/nQ4KRDvaK
+	 KTrysxEzHcQe3apsYDAPZw92ucAYCyvtQnDemwxouRuw6zfJZxi2K4YuoSs5M7GedJFj6
+	 Eb75toECxDZLvZd5urEFSM+5nWChtebjg9r64TeV8iPcairguNSxKmN3dbF6UHaY27Ew5
+	 kvMd6H9tTFYA4qsLE+2EWZfpi3q0nalgoI8hY9t9gqa8b5T3j3fK3T/4/d4Yd2FnsNA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213949;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213951;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5XcEKu2nnCJDqi+PSEmfMtLmBMsIdMa26qMPy9JaSVc=;
-	b=SGPqrCPvObr7Pc32Z5uViFsyGygWMjhl8ejoCOKj7hoqTHCGeImGM+VgqMPNncareS1t
-	 DLxWs0t/40NxcRUDzAeyoQclHFRopqmNCXJ9G/MSozMmOR1vm7ggneYsvydPpZL8JyJYB
-	 23ytGlQUOc31Q3DiilzTf6R1l01jnYP5g3we22S87UL+VTiSQFREOUydc2mdTHsLA//Rd
-	 G/gMTf4bSMH9kuylx38X7O/6wVh21fUl4oJdCESHaaDSUkdEwSf08ZbcZnCmSFi66djj2
-	 Fg+0sxmSY3y9/VzgFan8rQ6BUcqTtKaiajLPtBdhtdEeb068EGRqFpJwwNRiLfQpGHg==
+	bh=1xfLKSxD/r9VzOYKNtkLe/Nsgwqxc5AwoXTRf3tgmhM=;
+	b=oFgTcomlvxStzr0BpeWWlLZrEV3Ktzijtk3tdDTT+Gprj8ELiUF8zEC5vY7jZ3XsQ3VZ
+	 co9OiZWJ5Diru8q2hv5oOa2fB9oaGufJP7LDLQj2BQurxXJiEuxiEU7p9HCjloC1e0RIE
+	 CD6dWwLf868thAg8eP47qvcUwchSVkn2Ckhyqpz+NHkIQD+XbI2cQqr0LpbdodIR342eD
+	 hNig5HCoZUHCHvwOOwN2yrHvgam7nUQyXqNtmDPfNQ8OnimDzrhTw1M4++EVs8v+GX+Y1
+	 ylZuhiZDhqoAfrzS0VXPmaDKLGG4tpo7SCg360YcQ+0WQR3GbKRmOPNvUNAL+d7iPsQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vAfT5Uab;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=arFeGgZt;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B080C606A322;
-	Wed, 28 Oct 2026 18:59:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30D28606A31E;
+	Wed, 28 Oct 2026 18:59:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vAfT5Uab
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B26C81F01825;
-	Wed, 28 Oct 2026 18:59:07 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=arFeGgZt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B0851F01825;
+	Wed, 28 Oct 2026 18:59:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213948;
-	bh=5XcEKu2nnCJDqi+PSEmfMtLmBMsIdMa26qMPy9JaSVc=;
+	s=korg; t=1793213951;
+	bh=1xfLKSxD/r9VzOYKNtkLe/Nsgwqxc5AwoXTRf3tgmhM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vAfT5Uab/k+8invTLUZTjrDaYPFFcMpMDkSr7p89uoQxhZtW+D4Q6ls7xlPJGXLq7
-	 2QKf2AETmjl2uYWDvUbTjfE13cPEZskBxEN4bfXlj1CnlcUiH3WYEeXj1wbw10X46o
-	 sa48XjEeUWfVCEc2bslX57g9bm53Cja8T9wVtA9U=
+	b=arFeGgZttSIIRCGbR1NqMl2st5pEXsrldHOAT6oNxFmftonpAQ9WwFLP4AtXCwFNk
+	 WRAQlcmqtqFkCnnYbHQCo+36ZIJdV3JcnrmYxY45W46C89amX5GHxg8uTuagJp8JK9
+	 jRTLDj8vBMEHX+mGBSUmyUZtV6E6F5V/13U8U5nk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cristian Marussi <cristian.marussi@arm.com>,
-	Sudeep Holla <sudeep.holla@arm.com>,
+	Rodrigo Siqueira <rodrigo.siqueira@amd.com>,
+	Jerry Zuo <jerry.zuo@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0687/1887] firmware: arm_scmi: Move handle get/set helpers
-Date: Wed, 28 Oct 2026 17:46:23 +0100
-Message-ID: <20261028170515.047273166@linuxfoundation.org>
+Subject: [PATCH 6.1 0670/1887] drm/amd/display: Check null pointers before multiple uses
+Date: Wed, 28 Oct 2026 17:46:06 +0100
+Message-ID: <20261028170514.659086674@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,154 +71,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cristian Marussi <cristian.marussi@arm.com>
+From: Alex Hung <alex.hung@amd.com>
 
-[ Upstream commit 971fc0665f1361f23251e4d85fac4aed1b683505 ]
+[ Upstream commit fdd5ecbbff751c3b9061d8ebb08e5c96119915b4 ]
 
-Move handle get/set helpers definitions into driver.c and invoke them
-through the bus notifier helper.
+[WHAT & HOW]
+Poniters, such as stream_enc and dc->bw_vbios, are null checked previously
+in the same function, so Coverity warns "implies that stream_enc and
+dc->bw_vbios might be null". They are used multiple times in the
+subsequent code and need to be checked.
 
-Signed-off-by: Cristian Marussi <cristian.marussi@arm.com>
-Link: https://lore.kernel.org/r/20221222185049.737625-7-cristian.marussi@arm.com
-Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
-Stable-dep-of: 295416091e44 ("firmware: arm_scmi: Fix slab-use-after-free in scmi_bus_notifier()")
+This fixes 10 FORWARD_NULL issues reported by Coverity.
+
+Reviewed-by: Rodrigo Siqueira <rodrigo.siqueira@amd.com>
+Signed-off-by: Jerry Zuo <jerry.zuo@amd.com>
+Signed-off-by: Alex Hung <alex.hung@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/arm_scmi/bus.c    | 17 ---------------
- drivers/firmware/arm_scmi/common.h |  4 ----
- drivers/firmware/arm_scmi/driver.c | 35 +++++++++++++++++++++---------
- 3 files changed, 25 insertions(+), 31 deletions(-)
+ drivers/gpu/drm/amd/display/dc/core/dc_link_dp.c        | 5 ++++-
+ drivers/gpu/drm/amd/display/dc/dce112/dce112_resource.c | 5 ++++-
+ drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c      | 3 +++
+ drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource.c   | 3 +++
+ drivers/gpu/drm/amd/display/dc/link/link_hwss_dio.c     | 5 ++++-
+ 5 files changed, 18 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/firmware/arm_scmi/bus.c b/drivers/firmware/arm_scmi/bus.c
-index 7514b3e326114..14f96583b6e0d 100644
---- a/drivers/firmware/arm_scmi/bus.c
-+++ b/drivers/firmware/arm_scmi/bus.c
-@@ -347,27 +347,10 @@ scmi_device_create(struct device_node *np, struct device *parent, int protocol,
- void scmi_device_destroy(struct scmi_device *scmi_dev)
- {
- 	kfree_const(scmi_dev->name);
--	scmi_handle_put(scmi_dev->handle);
- 	ida_free(&scmi_bus_id, scmi_dev->id);
- 	device_unregister(&scmi_dev->dev);
- }
- 
--void scmi_device_link_add(struct device *consumer, struct device *supplier)
--{
--	struct device_link *link;
--
--	link = device_link_add(consumer, supplier, DL_FLAG_AUTOREMOVE_CONSUMER);
--
--	WARN_ON(!link);
--}
--
--void scmi_set_handle(struct scmi_device *scmi_dev)
--{
--	scmi_dev->handle = scmi_handle_get(&scmi_dev->dev);
--	if (scmi_dev->handle)
--		scmi_device_link_add(&scmi_dev->dev, scmi_dev->handle->dev);
--}
--
- static int __scmi_devices_unregister(struct device *dev, void *data)
- {
- 	struct scmi_device *scmi_dev = to_scmi_dev(dev);
-diff --git a/drivers/firmware/arm_scmi/common.h b/drivers/firmware/arm_scmi/common.h
-index feccde5e29650..23f0ab3f2ed7f 100644
---- a/drivers/firmware/arm_scmi/common.h
-+++ b/drivers/firmware/arm_scmi/common.h
-@@ -96,10 +96,6 @@ static inline void unpack_scmi_header(u32 msg_hdr, struct scmi_msg_hdr *hdr)
- 
- struct scmi_revision_info *
- scmi_revision_area_get(const struct scmi_protocol_handle *ph);
--int scmi_handle_put(const struct scmi_handle *handle);
--void scmi_device_link_add(struct device *consumer, struct device *supplier);
--struct scmi_handle *scmi_handle_get(struct device *dev);
--void scmi_set_handle(struct scmi_device *scmi_dev);
- void scmi_setup_protocol_implemented(const struct scmi_protocol_handle *ph,
- 				     u8 *prot_imp);
- 
-diff --git a/drivers/firmware/arm_scmi/driver.c b/drivers/firmware/arm_scmi/driver.c
-index 9fa5632aa2c75..f01097b9e953a 100644
---- a/drivers/firmware/arm_scmi/driver.c
-+++ b/drivers/firmware/arm_scmi/driver.c
-@@ -1934,13 +1934,6 @@ static bool scmi_is_transport_atomic(const struct scmi_handle *handle,
- 	return ret;
- }
- 
--static inline
--struct scmi_handle *scmi_handle_get_from_info_unlocked(struct scmi_info *info)
--{
--	info->users++;
--	return &info->handle;
--}
--
- /**
-  * scmi_handle_get() - Get the SCMI handle for a device
-  *
-@@ -1952,7 +1945,7 @@ struct scmi_handle *scmi_handle_get_from_info_unlocked(struct scmi_info *info)
-  *
-  * Return: pointer to handle if successful, NULL on error
-  */
--struct scmi_handle *scmi_handle_get(struct device *dev)
-+static struct scmi_handle *scmi_handle_get(struct device *dev)
- {
- 	struct list_head *p;
- 	struct scmi_info *info;
-@@ -1962,7 +1955,8 @@ struct scmi_handle *scmi_handle_get(struct device *dev)
- 	list_for_each(p, &scmi_list) {
- 		info = list_entry(p, struct scmi_info, node);
- 		if (dev->parent == info->dev) {
--			handle = scmi_handle_get_from_info_unlocked(info);
-+			info->users++;
-+			handle = &info->handle;
+diff --git a/drivers/gpu/drm/amd/display/dc/core/dc_link_dp.c b/drivers/gpu/drm/amd/display/dc/core/dc_link_dp.c
+index 717e36172a718..f87c6174b7040 100644
+--- a/drivers/gpu/drm/amd/display/dc/core/dc_link_dp.c
++++ b/drivers/gpu/drm/amd/display/dc/core/dc_link_dp.c
+@@ -6187,8 +6187,11 @@ bool dc_link_dp_set_test_pattern(
  			break;
  		}
- 	}
-@@ -1983,7 +1977,7 @@ struct scmi_handle *scmi_handle_get(struct device *dev)
-  * Return: 0 is successfully released
-  *	if null was passed, it returns -EINVAL;
-  */
--int scmi_handle_put(const struct scmi_handle *handle)
-+static int scmi_handle_put(const struct scmi_handle *handle)
+ 
++		if (!pipe_ctx->stream)
++			return false;
++
+ 		if (pipe_ctx->stream_res.tg->funcs->lock_doublebuffer_enable) {
+-			if (pipe_ctx->stream && should_use_dmub_lock(pipe_ctx->stream->link)) {
++			if (should_use_dmub_lock(pipe_ctx->stream->link)) {
+ 				union dmub_hw_lock_flags hw_locks = { 0 };
+ 				struct dmub_hw_lock_inst_flags inst_flags = { 0 };
+ 
+diff --git a/drivers/gpu/drm/amd/display/dc/dce112/dce112_resource.c b/drivers/gpu/drm/amd/display/dc/dce112/dce112_resource.c
+index 19d7cfa53211b..1f1f66d857698 100644
+--- a/drivers/gpu/drm/amd/display/dc/dce112/dce112_resource.c
++++ b/drivers/gpu/drm/amd/display/dc/dce112/dce112_resource.c
+@@ -1065,7 +1065,10 @@ static void bw_calcs_data_update_from_pplib(struct dc *dc)
+ 	struct dm_pp_clock_levels clks = {0};
+ 	int memory_type_multiplier = MEMORY_TYPE_MULTIPLIER_CZ;
+ 
+-	if (dc->bw_vbios && dc->bw_vbios->memory_type == bw_def_hbm)
++	if (!dc->bw_vbios)
++		return;
++
++	if (dc->bw_vbios->memory_type == bw_def_hbm)
+ 		memory_type_multiplier = MEMORY_TYPE_HBM;
+ 
+ 	/*do system clock  TODO PPLIB: after PPLIB implement,
+diff --git a/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c b/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c
+index d0422e1c14fab..a554867ee1a93 100644
+--- a/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c
+@@ -2139,6 +2139,9 @@ bool dcn20_wait_for_blank_complete(
  {
- 	struct scmi_info *info;
+ 	int counter;
  
-@@ -1999,6 +1993,23 @@ int scmi_handle_put(const struct scmi_handle *handle)
- 	return 0;
- }
++	if (!opp)
++		return false;
++
+ 	for (counter = 0; counter < 1000; counter++) {
+ 		if (opp->funcs->dpg_is_blanked(opp))
+ 			break;
+diff --git a/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource.c b/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource.c
+index 591c3166a4687..9f5425e6474fb 100644
+--- a/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource.c
+@@ -1664,6 +1664,9 @@ static void dcn32_enable_phantom_plane(struct dc *dc,
+ 		else
+ 			phantom_plane = dc_create_plane_state(dc);
  
-+static void scmi_device_link_add(struct device *consumer,
-+				 struct device *supplier)
-+{
-+	struct device_link *link;
++		if (!phantom_plane)
++			break;
 +
-+	link = device_link_add(consumer, supplier, DL_FLAG_AUTOREMOVE_CONSUMER);
-+
-+	WARN_ON(!link);
-+}
-+
-+static void scmi_set_handle(struct scmi_device *scmi_dev)
-+{
-+	scmi_dev->handle = scmi_handle_get(&scmi_dev->dev);
-+	if (scmi_dev->handle)
-+		scmi_device_link_add(&scmi_dev->dev, scmi_dev->handle->dev);
-+}
-+
- static int __scmi_xfer_info_init(struct scmi_info *sinfo,
- 				 struct scmi_xfers_info *info)
- {
-@@ -2278,8 +2289,12 @@ static int scmi_bus_notifier(struct notifier_block *nb,
+ 		memcpy(&phantom_plane->address, &curr_pipe->plane_state->address, sizeof(phantom_plane->address));
+ 		memcpy(&phantom_plane->scaling_quality, &curr_pipe->plane_state->scaling_quality,
+ 				sizeof(phantom_plane->scaling_quality));
+diff --git a/drivers/gpu/drm/amd/display/dc/link/link_hwss_dio.c b/drivers/gpu/drm/amd/display/dc/link/link_hwss_dio.c
+index 4227adbc646a8..5ba7749ca52bb 100644
+--- a/drivers/gpu/drm/amd/display/dc/link/link_hwss_dio.c
++++ b/drivers/gpu/drm/amd/display/dc/link/link_hwss_dio.c
+@@ -56,7 +56,10 @@ void reset_dio_stream_encoder(struct pipe_ctx *pipe_ctx)
+ 	struct link_encoder *link_enc = link_enc_cfg_get_link_enc(pipe_ctx->stream->link);
+ 	struct stream_encoder *stream_enc = pipe_ctx->stream_res.stream_enc;
  
- 	switch (action) {
- 	case BUS_NOTIFY_BIND_DRIVER:
-+		/* setup handle now as the transport is ready */
-+		scmi_set_handle(sdev);
- 		break;
- 	case BUS_NOTIFY_UNBOUND_DRIVER:
-+		scmi_handle_put(sdev->handle);
-+		sdev->handle = NULL;
- 		break;
- 	default:
- 		return NOTIFY_DONE;
+-	if (stream_enc && stream_enc->funcs->disable_fifo)
++	if (!stream_enc)
++		return;
++
++	if (stream_enc->funcs->disable_fifo)
+ 		stream_enc->funcs->disable_fifo(stream_enc);
+ 
+ 	link_enc->funcs->connect_dig_be_to_fe(
 -- 
 2.53.0
 
