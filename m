@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793210358;
-	b=06U3YqLcYpMuv6KHsACPcsE01QD8ging646cvj5eMo6NPv1PB1LgG1NaWo4FP1cY4daD
-	 /oC3NbxHlLm41nWKMuJhuT38FdmSc+U+ZFXI7Y4I8h18DxMUkuQlSioBuIsKbxx+rxHol
-	 P1HAXZosRqp5U6U0qddlEKwKaGJuRyrNYW17kIb4uZ4YnZbrOd/VY/ZLMtZNG0OW/jVH1
-	 Oq70pwlYmcCZki+clDzEkhJVsPHo0AlsH3ibjvFY0aMmRI07g6VXYzli5MxAyqMwIBOzR
-	 p+5Na/rLVoQFsv7gUoVBNdO8FZJU6xLW0NL7QaC+qbyfBPwGudExkkHNBxO++rE4guQ==
+	t=1793210361;
+	b=M1KDVskDT/7coGHpkqJhb9YpPMzj8CP/hOf92n00H5cfBOHQ/6eXMGTh/3txwciQBb0d
+	 EYpCz3lt3k+/eZmrx48suCaVV5B6tcAUNAfJQA2+sxuIk2eTgN4TPR9PRYceQizi4gdOO
+	 M71u2fmfCJNNLnG/lKddGGWSfXstv2HRwPkgORJJlKjVGJXKIa8JkzR0QNmAA7prm9xpO
+	 IEqwGtAmQzgKWECA1aZnJgpnHxyK96HuX1RXRrfnfU4mID7LKkVcWoSBg/UQ5Mfl8IHaZ
+	 kdZrW7L95OU8xA/EzB02nTMScn2jGjBLba3DRPpbvT8KpWyDAJecMDOLXmtPt0VgXrg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793210358;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793210361;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=YFSXb59QWlXbeXXfezwUsd5hBBjOw8FkZ2+/knysMao=;
-	b=JkdPmvKI3m+fDRsRdE6EUvXxO5T7866hcXnWUzz27+7AkYKAndpGaXp3A6BOAiJfOapv
-	 b9rK9DMuPfibTAGtYtsej5yxg2EVTvbBal3KFTMr8UyvWJSulX34Vb8FLGQ3WG4LiCRuf
-	 mD15nl5tqHSBeK9ciWOIHvJpePXtLI0gjUWip5+ec9aUrXnHuiEf/AzaciggmFfuTmkO5
-	 aZUt+yYdY/ju+JoxT65C2iqr0LZxBpREu1jnaKiu8esr1gvVIw3MHusqYTvqVun1Xjcou
-	 J/PiKgy696/4IFIhcnwL/cVBSfaNBvLCCq0ONQQLO32JfUS52uRiuf9lw8UBb4OwBfg==
+	bh=fHmk9IhjDzNGFRQONKeygSRypZO1N4L0Qan3VyXPt+o=;
+	b=eTV+b73YfkP7ZL2aOfX+C+2pWU8rAoGKoAKYMrPvaa803Ntl9jySpJ6VHPuz/SlU6mfC
+	 i9lCyPJ1MpYlT7Y1zC2FDLQ41kRyCYmc+cfSpvId1+nA5dVjvWK6tcuNJwC7Dqj0H2fZn
+	 zXbdYhhL1oBcLXI39lojY5PTgppz7n+PcxUi6FOADxNZo9mk/rIIKvd21aDG+FbYH2O4e
+	 DmpfagdvdUUA4HdLErC3k/z5npkVCWYZfn7vN4isegSHLjAAqNYmA5tU5/1v6jL9uRWba
+	 D/JPSlrhEhCwQjrpp5OTJ7YLaPGXzGQuEvB2wCbpxOhgyU5CoxnU937uOhR83fnZH7g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=k7muq5wm;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F+Wz5a6d;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8978606A31A;
-	Wed, 28 Oct 2026 17:59:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF4FC606A31C;
+	Wed, 28 Oct 2026 17:59:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=k7muq5wm
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44C9A1F01825;
-	Wed, 28 Oct 2026 17:59:17 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F+Wz5a6d
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BF151F01825;
+	Wed, 28 Oct 2026 17:59:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793210357;
-	bh=YFSXb59QWlXbeXXfezwUsd5hBBjOw8FkZ2+/knysMao=;
+	s=korg; t=1793210360;
+	bh=fHmk9IhjDzNGFRQONKeygSRypZO1N4L0Qan3VyXPt+o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=k7muq5wmCj0rfqEdZ1TijCvzqFWAdrIm0xZcD+Y7JhKZjRwdBx/DWYKbQSGvJcYnO
-	 FZSE64z/TDn15x5MBvyb+tGJfbao9zJgY7uqK/NBOBldWgNwxb55mXaQP0kqsDzoQR
-	 aG/hK7Q81OsAwFT2xAy/idIsmojC7Iw8R8dYnJzs=
+	b=F+Wz5a6dVUNA74UWVA+4XvUADNjuVuv9kSnwZFO679gpSopT5yKQA1zV+omYoN06l
+	 vKjglrXuAlGQfweaC4SLKNrjhSiwfIXe1h+0jeM4PjFkcbLawm3BFcpbVTm1IuHI8c
+	 i1wXLTXvDe2jDCzQldFTxaBr6tyoKo4kNuh1nzlE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Oleg Nesterov <oleg@redhat.com>,
 	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 6.6 167/168] pid_namespace: prevent TIF_NOTIFY_SIGNAL from interrupting the reaper
-Date: Wed, 28 Oct 2026 18:01:43 +0100
-Message-ID: <20261028165947.040045786@linuxfoundation.org>
+Subject: [PATCH 6.6 168/168] signal: allow taks to temporarily block TIF_NOTIFY_SIGNAL
+Date: Wed, 28 Oct 2026 18:01:44 +0100
+Message-ID: <20261028165947.064021119@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165943.089486480@linuxfoundation.org>
 References: <20261028165943.089486480@linuxfoundation.org>
@@ -69,50 +69,91 @@ Content-Transfer-Encoding: 8bit
 
 From: Christian Brauner <brauner@kernel.org>
 
-commit 5c0985dd3c32fc2bbd0e8beaf13cf52cd97376a2 upstream.
+commit 22b7f491be8f93ff72de0a3fe02b8ee9e64d3f21 upstream.
 
-Since commit 7fea700e04bd ("zap_pid_ns_processes: clear
-TIF_NOTIFY_SIGNAL along with TIF_SIGPENDING") zap_pid_ns_processes()
-clears TIF_NOTIFY_SIGNAL before every kernel_wait4() call. Otherwise
-kernel_wait4() doesn't sleep and returns -ERESTARTSYS if
-signal_pending() is true and the reaper busy-waits.
+TIF_NOTIFY_SIGNAL is used to kick a task in uninterruptible sleep to
+return to userspace and run task work and then go back to sleep. This
+mechanism works well but breaks e.g., coredumps. dump_interrupted() only
+allows fatal signals to interrupt a coredump and the whole regular write
+path going to actual filesystems is impervious to TIF_NOTIFY_SIGNAL as
+well.
 
-But clearing TIF_NOTIFY_SIGNAL doesn't fix it. It can get raised again.
-For example, klp_send_signals() sets it raw against any task that hasn't
-transitioned yet. And it keeps sending it until the livepatch finishes.
+Add PF_NO_NOTIFY_SIGNAL and helpers to raise and restore it. This is the
+same approach as memalloc_nofs_save(). signal_pending() will not report
+a fake pending signal via TIF_NOTIFY_SIGNAL if inside a
+PF_NO_NOTIFY_SIGNAL section.
 
-The sleep loop waiting for pid_allocated to drop has the same problem
-and it doesn't even clear anything. So a schedule() in
-TASK_INTERRUPTIBLE returns immediately.
+No functional changes.
 
-Use a no_notify_signal guard. signal_pending() will ignore
-TIF_NOTIFY_SIGNAL and the pid namespace reaper sleeps until a child
-exits or free_pid() wakes it.
-
-Link: https://patch.msgid.link/20260824-work-tif_notify_signal-v2-5-6609e42b3157@kernel.org
-Fixes: 7fea700e04bd ("zap_pid_ns_processes: clear TIF_NOTIFY_SIGNAL along with TIF_SIGPENDING")
+Link: https://patch.msgid.link/20260824-work-tif_notify_signal-v2-1-6609e42b3157@kernel.org
 Reviewed-by: Oleg Nesterov <oleg@redhat.com>
 Cc: stable@vger.kernel.org
-Suggested-by: Oleg Nesterov <oleg@redhat.com>
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/pid_namespace.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ include/linux/sched.h        |    2 +-
+ include/linux/sched/signal.h |   27 +++++++++++++++++++++++++--
+ 2 files changed, 26 insertions(+), 3 deletions(-)
 
---- a/kernel/pid_namespace.c
-+++ b/kernel/pid_namespace.c
-@@ -215,9 +215,10 @@ void zap_pid_ns_processes(struct pid_nam
- 	 * kernel_wait4() will also block until our children traced from the
- 	 * parent namespace are detached and become EXIT_DEAD.
- 	 */
-+	/* Task work must not busy-loop the reaper, see signal_pending(). */
-+	guard(no_notify_signal)();
- 	do {
- 		clear_thread_flag(TIF_SIGPENDING);
--		clear_thread_flag(TIF_NOTIFY_SIGNAL);
- 		rc = kernel_wait4(-1, NULL, __WALL, NULL);
- 	} while (rc != -ECHILD);
+--- a/include/linux/sched.h
++++ b/include/linux/sched.h
+@@ -1768,7 +1768,7 @@ extern struct pid __rcu *cad_pid;
+ 						 * I am cleaning dirty pages from some other bdi. */
+ #define PF_KTHREAD		0x00200000	/* I am a kernel thread */
+ #define PF_RANDOMIZE		0x00400000	/* Randomize virtual address space */
+-#define PF__HOLE__00800000	0x00800000
++#define PF_NO_NOTIFY_SIGNAL	0x00800000	/* see no_notify_signal_save() */
+ #define PF__HOLE__01000000	0x01000000
+ #define PF__HOLE__02000000	0x02000000
+ #define PF_NO_SETAFFINITY	0x04000000	/* Userland is not allowed to meddle with cpus_mask */
+--- a/include/linux/sched/signal.h
++++ b/include/linux/sched/signal.h
+@@ -2,6 +2,7 @@
+ #ifndef _LINUX_SCHED_SIGNAL_H
+ #define _LINUX_SCHED_SIGNAL_H
  
++#include <linux/cleanup.h>
+ #include <linux/rculist.h>
+ #include <linux/signal.h>
+ #include <linux/sched.h>
+@@ -389,14 +390,36 @@ static inline int task_sigpending(struct
+ 	return unlikely(test_tsk_thread_flag(p,TIF_SIGPENDING));
+ }
+ 
++/* Prevent TIF_NOTIFY_SIGNAL from interrupting this task. */
++static inline unsigned int no_notify_signal_save(void)
++{
++	unsigned int flags = current->flags;
++
++	current->flags |= PF_NO_NOTIFY_SIGNAL;
++	return flags;
++}
++
++/* Restore the previous PF_NO_NOTIFY_SIGNAL state. */
++static inline void no_notify_signal_restore(unsigned int flags)
++{
++	current_restore_flags(flags, PF_NO_NOTIFY_SIGNAL);
++}
++
++DEFINE_LOCK_GUARD_0(no_notify_signal,
++		    _T->flags = no_notify_signal_save(),
++		    no_notify_signal_restore(_T->flags),
++		    unsigned int flags)
++
+ static inline int signal_pending(struct task_struct *p)
+ {
+ 	/*
+ 	 * TIF_NOTIFY_SIGNAL isn't really a signal, but it requires the same
+ 	 * behavior in terms of ensuring that we break out of wait loops
+-	 * so that notify signal callbacks can be processed.
++	 * so that notify signal callbacks can be processed. Not for a task
++	 * that asked not to be interrupted by it, see no_notify_signal_save().
+ 	 */
+-	if (unlikely(test_tsk_thread_flag(p, TIF_NOTIFY_SIGNAL)))
++	if (unlikely(test_tsk_thread_flag(p, TIF_NOTIFY_SIGNAL)) &&
++	    likely(!(READ_ONCE(p->flags) & PF_NO_NOTIFY_SIGNAL)))
+ 		return 1;
+ 	return task_sigpending(p);
+ }
 
 
