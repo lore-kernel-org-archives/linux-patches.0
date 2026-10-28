@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793207202;
-	b=TSnQMA9nMgf8Yd3ilY27zOJgxba00eCr3tH++6R7CjgB3VeWjyr6lHE5qELR69lRU19E
-	 bPtnPVCkqYzSBp6d2sxP3XJeWd+VLWjXtQHJK/OoHlKpm/F6rgMvHru1vE2HmF2Jv5QYu
-	 EqVSpePwdnV4rZtWAYUQ1xyNpBh8Fi8d8NHzvvcxMnD6PP4nfgXx0FeZzw7U+zt0uC72x
-	 HOfWPdypeeohoqxXkCahB2B7rIVuPZA0wdA7cbIOKKFH/BbhF7zuPG3iRqa/l1HBjP1aX
-	 MdAPeQ2knP38nKYXTWFm5h8EaB3In5dkaqlLWD9deJN6C+qyc/KF9frvzqFR1JT5UWw==
+	t=1793207204;
+	b=z4VAe5F63UhM1gZb1T/V5+Ew/n+UBIawSpoWCUIXdZe07tnwMR1Ael9YwNlPzN5wwQ1U
+	 +wwkmUebtFRfal9mzlKDkWRGac7i9HYOjzosOK6tbQ9Dlr6wj1+3xQuR3CR0E/z8abl5E
+	 Y6QQ4xNjZFKA+qwUM0UDf8MyPYn7N/Jst0TfmhrNMlATGR7k76jF9uIQ/8teem+n5/LwL
+	 pO7318kRR43MD5tAeKiTRot17q4rNKELNxcp9OS0AaMxzY5tOXYBd3ZXF2IPkJ9rrJ5cu
+	 t8vz4jhXaviu/PsEkSe0Aa4i7g972MgVv9CW4ifaWUh/wL9PPw7ZA2eTJ31JtwKcsOw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793207202;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793207204;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=xpKG8iQF8iRUh2nuE9rwIwMew/DeBTS14e2kiC91d0g=;
-	b=4moIH1SGMgZ3IdVTswzrAqIsb21UNQVd0yVq91QtXNosij5js3rglglufIpsqmjE62Ed
-	 QpWoMDlSDoSx861gMnCuRdNg5EBoKXWucY6IdVFr+1xbWPL3A8iHtPpj64W6TXYx34S7s
-	 Y67gugoxaMQyKeSIx3mlCxU7+x1Dw68JphPqSgyAOkC1p1NvGjDIa9iphe+hrcE/m6Ljp
-	 S4xVt9t2kyMPwniEPuL//PbT26H4sqkR1SK9GLCIPwYmkJ50fl0zsHyVcuf2c6qwPli/L
-	 DsASlTD6pPwSHMgZZjcRHk3rG2r0LPv4mdrf9kxyhO3Zo0z+1NlvtRSPTw3QWvCGAkw==
+	bh=0TFtC0w1r1pEPqbXbAZL/ikZMCX+fWMsBM9nuRTv3FY=;
+	b=3zxShygAuni0mGBJUWh9vCVxdVn8e3akYj34s7EgjT/HTzugNepvK6GjLLWfJOUopS3m
+	 rwBKLBT39KjU0urvTlCFgk5Cvx/qW8HM6CrgtT76f+WPNkg9J7SlA7w1cCMLVt5hU2hqQ
+	 j/ZFCjB6mGFif2MTmrwNtdMAxtJOuM7fdyyQpHGAxrbR51fqakUZs+nDQPWRDlexZ3UtI
+	 k90M6zwEgZXUlIRlSLSW5gX77fRKUtfk/4V/S+ZE3lolJE+Zwf177tXNcH/+2/YQn9wPX
+	 f58kZ22yw4gQeST8eddO7faYWiR/9NuSWc7L0ja/bavmsPV6wxtIujpwv9bgRwIGbUQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L+xlemKp;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TwtETpb1;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C307B606A31D;
-	Wed, 28 Oct 2026 17:06:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4773606A31E;
+	Wed, 28 Oct 2026 17:06:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L+xlemKp
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1E411F01825;
-	Wed, 28 Oct 2026 17:06:40 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TwtETpb1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A74E91F031E7;
+	Wed, 28 Oct 2026 17:06:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793207201;
-	bh=xpKG8iQF8iRUh2nuE9rwIwMew/DeBTS14e2kiC91d0g=;
+	s=korg; t=1793207204;
+	bh=0TFtC0w1r1pEPqbXbAZL/ikZMCX+fWMsBM9nuRTv3FY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=L+xlemKpJLmkMJBWaMP01V25z1aQneNQSgImy5rqQhoBkCa932JXIWVU7QtvuN/dL
-	 /HMWp4wQcohtiCNjYv7AbctgT8mzoqac1WO/ufKNpwovk8bJAUsu3zuDX+Ld5bxtl4
-	 jWwskqqwHmVUVKe2pSvo7yCeoI5JHJFMxLj4mH/E=
+	b=TwtETpb1EFZIjWTIONUNxH3S6dxydVDTJ3X0sqNPfHEkDmkmDQOPpIZOqM1WicloW
+	 UK7R+c8ViNptsY74XgB6oyBlnPu3z274D2j+9FC0lOUdtI0rBFxA0839jfmkDomKtt
+	 A4wYZZaVniQ9x2El786wy3VkQPwUUCSuXwaH4atQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sasha Levin <sashal@kernel.org>,
-	Qinxin Xia <xiaqinxin@huawei.com>,
-	Marek Szyprowski <m.szyprowski@samsung.com>
-Subject: [PATCH 7.2 07/88] tools/dma: fix building with O=
-Date: Wed, 28 Oct 2026 17:59:15 +0100
-Message-ID: <20261028165942.286486416@linuxfoundation.org>
+	David Carlier <devnexen@gmail.com>,
+	Steven Rostedt <rostedt@goodmis.org>
+Subject: [PATCH 7.2 08/88] tracing: Hold trace_types_lock when updating modules in persistent instances
+Date: Wed, 28 Oct 2026 17:59:16 +0100
+Message-ID: <20261028165942.310825965@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165942.107695352@linuxfoundation.org>
 References: <20261028165942.107695352@linuxfoundation.org>
@@ -68,42 +67,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sasha Levin <sashal@kernel.org>
+From: David Carlier <devnexen@gmail.com>
 
-commit 9441e7eca18c8004d1afe57b2f9b27717549562a upstream.
+commit 66877a312ae3c2c3d849e82e882f642ffd4ec3e2 upstream.
 
-With O= set, "all" depends on $(OUTPUT)dma_map_benchmark, but the only
-rule builds dma_map_benchmark in the source directory, and built-in
-rules are disabled:
+trace_module_record() walks ftrace_trace_arrays from the module notifier
+without trace_types_lock. A concurrent rmdir of an instance removes it
+from the list and frees it under that lock, so a module load or unload
+can walk into a freed trace_array.
 
-  make: *** No rule to make target '<O>/dma_map_benchmark', needed by 'all'.  Stop.
-
-Build $(OUTPUT)dma_map_benchmark.
-
-Fixes: f74ee32963f1b ("tools/dma: move dma_map_benchmark from selftests to tools/dma")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Sasha Levin <sashal@kernel.org>
-Acked-by: Qinxin Xia <xiaqinxin@huawei.com>
-Link: https://lore.kernel.org/r/20261011223358.2327625-3-sashal@kernel.org
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Fixes: 5f3719f697c3 ("tracing: Update modules to persistent instances when loaded")
+Link: https://patch.msgid.link/20261016061638.214847-1-devnexen@gmail.com
+Signed-off-by: David Carlier <devnexen@gmail.com>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/dma/Makefile |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ kernel/trace/trace.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/tools/dma/Makefile
-+++ b/tools/dma/Makefile
-@@ -38,8 +38,8 @@ prepare: $(OUTPUT)include/linux/map_benc
- FORCE:
+--- a/kernel/trace/trace.c
++++ b/kernel/trace/trace.c
+@@ -9261,6 +9261,8 @@ static void trace_module_record(struct m
+ 	struct trace_array *tr;
+ 	unsigned long flags;
  
- DMA_MAP_BENCHMARK = dma_map_benchmark
--$(DMA_MAP_BENCHMARK): prepare FORCE
--	$(CC) $(CFLAGS) $(DMA_MAP_BENCHMARK).c -o $(DMA_MAP_BENCHMARK)
-+$(OUTPUT)$(DMA_MAP_BENCHMARK): prepare FORCE
-+	$(CC) $(CFLAGS) $(DMA_MAP_BENCHMARK).c -o $@
- 
- clean:
- 	rm -f $(ALL_PROGRAMS)
++	guard(mutex)(&trace_types_lock);
++
+ 	list_for_each_entry(tr, &ftrace_trace_arrays, list) {
+ 		flags = tr->flags & (TRACE_ARRAY_FL_BOOT | TRACE_ARRAY_FL_LAST_BOOT);
+ 		/* Update any persistent trace array that has already been started */
 
 
