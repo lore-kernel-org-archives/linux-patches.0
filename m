@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793209054;
-	b=to7dg1T4ZOxhKu5sR7XlOKZ/iGMstSFvl4hmjcVrG96cX3uOFQ0MxMIcDZFCSoa/dS83
-	 qMzzuXPCQWu7yaN7emQEQ54s2Aox9/uiashXIIQzjFNSBgtFJT0RRKp1n4FYWx8ByjWPU
-	 WP3H3vhUT2aW8a6uhAslAfG9uMADAqtXJHxNhTTNQojIRTPCgtBrnjCkJWTKU6yiy5q10
-	 1VHi/MgDqDW2o7Xg88vPh0mE3fGdxwrydOkOIzawMGEkmOO9lCZRDbcM55AAbGb25F6rY
-	 M/Kr/3Tvl7LFPyJxISrLQkp7e0F3dUKaRb5nAvzUPfpbqBh9sLBYz6wJ3rV2qxpTS3w==
+	t=1793209057;
+	b=lDe18pYemWGDiQwm6esYnkvaI6Omr+HUdKegjl7iNplLm4UH+uTyhPjBUtczqDvFCN85
+	 r4GrZ21dAaVwVAcn21P/LpQOs/xeAMLG2zrVmPly1WfywNGvO166ly8zT8JZr2Ohj48vK
+	 04ZMnCh0+5UukFM+DFdcRcgXJ+GgRYkZPSvMUtD5v2xSlF1NE7hYJ7uNsj9S+iz9Vpj/Q
+	 GfaYOCnJTOixDKbnhL5+RbfenxHM8AIZnrmEA3L/KOvgzvA9AP5o7VnBoDgtm6DgCmeTc
+	 vFF6C4QLXOnvGNlaoaPpoXM4wd/jMI0ZUzU5jm8FL6oYymMojK1TvvYE1B0yFRnHeCw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793209054;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793209057;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=35V4WsNSI0SgubuVDWXHZrwM0g2THBAgfulds1aBPhE=;
-	b=nxe5eU5r3Af62w/lCiZpVsZxjSGshX3Ven31eVUZpBhwK4ht9u3GV1KGz+ojn6PmhTFe
-	 HQ/uGeSnp6ebuWZUrTKUas70Tc8ijUMM3vABD/WveDhxciDeZpyKM14NILlL8wwtbLPXh
-	 F7uBPNbgk5sdu9YCf4Jdyi4EWIYa+ppeT4RI9Ebp/UGD4SpEUH4T2YDHbi4Zcz6Kv1qOK
-	 /YXwXITil7O8DvLMKTZzihqXBWOlhJe9W7WR0q/NsEjyGuj89/6k3FKJsIPNzkpHuJaA7
-	 Aw6eaGxzJmhuzz0SIBOS28lToUriIDRAK5/1X0aHkx1F2n2TXKtXON544MuINCcvgWw==
+	bh=VRloFzujeMmVIbOjBBdjOo+EpxYR7FL02wfTomqvoR8=;
+	b=Ms/3U2BxieZx3ZkUBiDLWQ27wRdDEtxyCtc+zggOXz6HpyynA7ZhXLUBXDfsbmSC8V/p
+	 3vPM9q33PaKVZGuIokKlQkYWj7uuAwShvF2EITRcPk2/hOpx5p3cTHw0CuJukwmGWeUGo
+	 Pftyuxxwlc/eoKzv1iKrh5pqRCYanE+LT8LZc0tjy7dGbfCRqA4s5CCavi7g45NGtnUBm
+	 ipizn1nsowOlfwGvtlaXjONXHYQeNGWnWt7Ig5UL0bzWwDx9uTWprdz57LY4zAu24ztQg
+	 3mtWreRNIPnlNiBqJlgvntXbTHzvIMLTxm1oK5N5cy9SzUkz44hruGbGsSlz9Fz8NAA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=isau3zrN;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=w3wkSIlF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D07360A260D;
-	Wed, 28 Oct 2026 17:37:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1F9C60A2614;
+	Wed, 28 Oct 2026 17:37:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=isau3zrN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53DAC1F031EF;
-	Wed, 28 Oct 2026 17:37:33 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=w3wkSIlF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D90B1F031E0;
+	Wed, 28 Oct 2026 17:37:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793209053;
-	bh=35V4WsNSI0SgubuVDWXHZrwM0g2THBAgfulds1aBPhE=;
+	s=korg; t=1793209056;
+	bh=VRloFzujeMmVIbOjBBdjOo+EpxYR7FL02wfTomqvoR8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=isau3zrNru4yw6fFBtawo/E1x5hf+v/M3PG0+YLt6d4XJFZzXyiDCUEF7bTjkh9qh
-	 fsh1AGrg/8s6CWwz1nOSesdRfyylp5SpvsShk2rPqCVKag6ZxRBp/qEwhgtTGNz7Az
-	 zeV8FrLw0EK2x4uPWgyICVrTZ4dQv5xCh0sUXuy4=
+	b=w3wkSIlFSYhr9Fj+sMSsSpFocYv7NgHI6q0tsrth2kgwH6POf7KQljrsAQP6Z5XU9
+	 b3ZSfzeQV8z8nyP5EFnReTjoRe/bs2XcDw3+eTaLWKRlWnBMFqaLhend/L/DoJ8SKc
+	 pIg3unRTYA5xz7jvoQDBFl9dW08wNbaD+x08pTQo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Quchaosheng <quchaosheng000406@163.com>,
-	Willem de Bruijn <willemb@google.com>,
+	Chengfeng Ye <nicoyip.dev@gmail.com>,
+	Mahanta Jambigi <mjambigi@linux.ibm.com>,
+	Dust Li <dust.li@linux.alibaba.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.10 337/516] net/packet: guard the ll header push in packet_rcv_spkt()
-Date: Wed, 28 Oct 2026 17:58:09 +0100
-Message-ID: <20261028170011.470539772@linuxfoundation.org>
+Subject: [PATCH 5.10 338/516] net/smc: protect clcsock lifetime in smc_getname
+Date: Wed, 28 Oct 2026 17:58:10 +0100
+Message-ID: <20261028170011.495435585@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -68,84 +69,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Quchaosheng <quchaosheng000406@163.com>
+From: Chengfeng Ye <nicoyip.dev@gmail.com>
 
-commit 28bc1ef699610ee09ce3d46a00552f5a0a0144bd upstream.
+commit 64a6b36b0e1855288080bc5f89769f27d6dc03c8 upstream.
 
-packet_rcv_spkt() restores the link layer header with
+smc_getname() dereferences smc->clcsock without holding
+clcsock_release_lock. Link-group termination can release the CLC socket
+through smc_close_active_abort() while the SMC socket is still open,
+for example after shutdown(SHUT_WR).
 
-	skb_push(skb, skb->data - skb_mac_header(skb));
+A getsockname() caller can load smc->clcsock, then the termination worker
+can clear the pointer and call sock_release() before the caller accesses
+clcsock->ops or invokes getname(). This causes a use-after-free; if the
+worker clears the pointer before the load, it causes a NULL dereference.
+The syscall's file reference keeps the SMC socket alive but does not
+prevent asynchronous release of its CLC socket.
 
-That subtraction is only meaningful when the device actually has a link
-layer header.  packet_rcv() and tpacket_rcv() both wrap it in
-dev_has_header(), which is also the predicate the block comment at the
-top of the file states the restore in terms of; packet_rcv_spkt() does
-not.  commit d549699048b4 ("net/packet: fix packet receive on L3
-devices without visible hard header") introduced the helper and changed
-the two call sites, and this one stayed behind.
+KASAN reported the following with test-only timing instrumentation:
 
-A device without a visible ll header can leave skb->mac_header at the
-0xFFFF sentinel that __alloc_skb() initialises it to.  A CAN skb does:
-init_can_skb() sets pkt_type and ip_summed but does not reset the
-headers, and commit 9f10374bb024 ("can: remove private CAN skb
-headroom infrastructure") dropped the skb_reset_*_header() calls that
-used to be there.  skb_mac_header() is then 0xFFFF, the length becomes
-a large negative number and skb_push() reports it through
-skb_under_panic() -- from softirq context, so it is a full system panic
-even with panic_on_oops=0:
-
-  skbuff: skb_under_panic: text:ffffffff8bd21bc1 len:-65455 put:-65471 head:... data:... tail:0x50 end:0x180 dev:can0
-  kernel BUG at net/core/skbuff.c:214!
-  RIP: 0010:skb_panic+0x50/0x60
+  BUG: KASAN: slab-use-after-free in smc_getname+0x19e/0x1b0
+  Read of size 8 at addr ffff888109abb4e0 by task poc/103
   Call Trace:
-   <IRQ>
-   skb_push+0x38/0x40
-   packet_rcv_spkt+0xe1/0x170
-   __netif_receive_skb_core.constprop.0+0x7e8/0xd30
-   ...
-  Kernel panic - not syncing: Fatal exception in interrupt
+   smc_getname+0x19e/0x1b0
+   do_getsockname+0xe5/0x170
+   __sys_getsockname+0x8c/0x100
 
-The socket type is reachable: packet_create() accepts SOCK_PACKET
-alongside SOCK_RAW and SOCK_DGRAM behind the same CAP_NET_RAW check,
-and neither the socket length nor a capability check keeps it away
-from a CAN interface.
+  Allocated by task 95:
+   sock_alloc_inode+0x1e/0x280
+   sock_alloc+0x3d/0x240
+   __sock_create+0x7e/0x430
+   smc_create+0x121/0x240
 
-The missing skb_reset_*_header() calls in init_can_skb() are a
-regression in their own right and are being fixed separately, but a
-packet socket should not turn a link layer that did not initialise its
-mac header into a kernel panic.  Guard the push the way the other two
-receive paths do.
+  Freed by task 0:
+   kmem_cache_free+0xcc/0x340
+   rcu_core+0x50a/0x1850
 
-Tested on v7.3-rc5 under QEMU with a slcan device on a pty, which is
-the driver RX path: vcan does not reproduce it, because can_send()
-resets the headers on the way out.  One SOCK_PACKET socket bound to
-can0 and one frame written into the line discipline panics an
-unpatched kernel with the trace above; the same image with this patch
-prints no panic and powers off normally.  Both kernels are this tree,
-defconfig plus CONFIG_CAN_SLCAN=y, differing only in this hunk.
+  Last potentially related work creation:
+   evict+0x446/0x6c0
+   smc_clcsock_release+0xa8/0xd0
+   smc_close_active_abort+0x26a/0x3a0
+   __smc_lgr_terminate.part.0+0x137/0x2e0
 
-Fixes: d549699048b4 ("net/packet: fix packet receive on L3 devices without visible hard header")
+Hold clcsock_release_lock across the pointer check and the getname()
+callback to serialize with smc_clcsock_release(). Return -EBADF if the
+CLC socket has already been released, preserving the existing peer
+state check and the callback's return value otherwise.
+
+Fixes: b03faa1fafc8 ("net/smc: postpone release of clcsock")
 Cc: stable@vger.kernel.org
-Signed-off-by: Quchaosheng <quchaosheng000406@163.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20260928113108.2127215-1-quchaosheng000406@163.com
+Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
+Reviewed-by: Mahanta Jambigi <mjambigi@linux.ibm.com>
+Reviewed-by: Dust Li <dust.li@linux.alibaba.com>
+Link: https://patch.msgid.link/20261008084444.787449-1-nicoyip.dev@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/packet/af_packet.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/smc/af_smc.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/net/packet/af_packet.c
-+++ b/net/packet/af_packet.c
-@@ -1922,7 +1922,8 @@ static int packet_rcv_spkt(struct sk_buf
+--- a/net/smc/af_smc.c
++++ b/net/smc/af_smc.c
+@@ -1987,6 +1987,7 @@ static int smc_getname(struct socket *so
+ 		       int peer)
+ {
+ 	struct smc_sock *smc;
++	int rc = -EBADF;
  
- 	spkt = &PACKET_SKB_CB(skb)->sa.pkt;
+ 	if (peer && (sock->sk->sk_state != SMC_ACTIVE) &&
+ 	    (sock->sk->sk_state != SMC_APPCLOSEWAIT1))
+@@ -1994,7 +1995,11 @@ static int smc_getname(struct socket *so
  
--	skb_push(skb, skb->data - skb_mac_header(skb));
-+	if (dev_has_header(dev))
-+		skb_push(skb, skb->data - skb_mac_header(skb));
+ 	smc = smc_sk(sock->sk);
  
- 	/*
- 	 *	The SOCK_PACKET socket receives _all_ frames.
+-	return smc->clcsock->ops->getname(smc->clcsock, addr, peer);
++	mutex_lock(&smc->clcsock_release_lock);
++	if (smc->clcsock)
++		rc = smc->clcsock->ops->getname(smc->clcsock, addr, peer);
++	mutex_unlock(&smc->clcsock_release_lock);
++	return rc;
+ }
+ 
+ static int smc_sendmsg(struct socket *sock, struct msghdr *msg, size_t len)
 
 
