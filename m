@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793211473;
-	b=j/iHz0LlpjBE4E8gjBUyA84drVDkOXXh9pOo8r7TESO8wIIiBZCG/QV8Av3mg/W7weI/
-	 F3yY+QcFjdqAnOdL4dIqnp7pLnnxnyohGJFO4cCz+uQEHQ5aKqfvlJcwrJEmuxjwUp+q9
-	 ctlhdmEz5ffIUHO3AwWTKHJxJGYCTNXTCrB2ETYviWOYKPYJH1heocXi+5kkNps/lNSLE
-	 h0YiC+KEwBzDYgDzRsPHbWlZM9AjJqK51qsvQC04rcEohpbeLU1Mnt/tdDFM/q3mOcGxL
-	 psc1d7s6G8cIO/I6JgqcGJ/CpacL6RiGAsbQn8rkB2XaXcAxtHg5ZulFR9q+KlZyjCA==
+	t=1793211476;
+	b=jPDiKIb8XrHoA1q6ZE5Os/1PMN+0oZ9OIdFB49UYh+hl1wHYCifo7+tm1vsyQQq0Z5o7
+	 gxITquuAZbtug762ZoB7brTjx+WwQugTKc5306qur0QAPvdtMpiqAFnEqrud76/3cSaOZ
+	 Dc9xs9Xd2YkRcTCO8T0i2lN3Pl0XO6ud3yhSxR3LuLyUZ+/xuoxMt7IkZdSBUzKim2Ue7
+	 o/ScDo0APZkNKA2pQjPvAYxPhz2qKWj1UQgXb8OdZOicVSUELjRsR9FKYH9c+LDgiXDU6
+	 AJyb5dHKtrEzT2PNs2IKBJ1mlv8+diIv/4FsnJNt8c/9x+/sBWWHyUWBBg7sM1I2XtQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793211473;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793211476;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ezNLWOKsOvCg32tb8KUfdyIMudBF0xQHdmophB7cCoY=;
-	b=YX+zxtzGX4ao5STNIxSfGZr8vZ0iMSFNp6pVJbUqJ0pbaCBmhuTxuRuMGhwtjuIe5xru
-	 BeQdlYqRrNpDW8aF+Bsgv5dJuySG1TM9qUcCdj7+HRhJcdy56XZnAZIy/tIp4zolVtsOR
-	 FBh+cfO/If/Hap6/xIs2hVrhfnB7WQ00c4n+4YluatAP8EqREH1znoceofYkOBv895cKW
-	 tJ5N3WXPIv4pgxlprE9ChBByFhtlQOQ9p6lrSlKkaS5SKp3JOtd4yeZfElHlMlIvMt9yx
-	 rbH0z4fpgBthPB3qFaYGwnz6/pdE+I4t7HeyIhqocQvj1i6pz980TKpVsboGO2sGzVw==
+	bh=xXBUj1xql1v4H0uz9sqrJJ9QjuJqWyLhd/C9RvnqPxs=;
+	b=pYXkNq5/FJ8FskXek2bVsVap8lxUiCqftV7rDRfO5vI5fkE9P8dj3V7E8FtV76IJmWWN
+	 7NC39zPUisz8R/PPNz5SYaV7d/R7HNiw5CU6lM26VOB9mKswi4h5GLoXAvudOOvEhKj5K
+	 cOySZ0TabtLY9bO8R8gKOIF8rWGURKmVfvIGk8o4i6bQGaHkg/lWqPSUdub0RNKaGtaUT
+	 sqNZ0YQ8orgepkMcvymXMdc/KQ5UAZHzfnlCCDDWDJHS3WTtr2TZr4c7UFPe4yww+9jR1
+	 7M+BQdpJwyanzImiZTs7QutVPQtnH+v/PeNYohhLI90zMxvjHEj4J51YdrI07iosPxw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LRssfEsn;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bx1ay1Ho;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27D2F606A31A;
-	Wed, 28 Oct 2026 18:17:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 355DF606A31D;
+	Wed, 28 Oct 2026 18:17:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LRssfEsn
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76F381F01825;
-	Wed, 28 Oct 2026 18:17:52 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bx1ay1Ho
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5339B1F01825;
+	Wed, 28 Oct 2026 18:17:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793211473;
-	bh=ezNLWOKsOvCg32tb8KUfdyIMudBF0xQHdmophB7cCoY=;
+	s=korg; t=1793211475;
+	bh=xXBUj1xql1v4H0uz9sqrJJ9QjuJqWyLhd/C9RvnqPxs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LRssfEsnemR1OEq+WpfDC2/PnQAYKFykKK9yeNWo8HRssoQaBPFRtNrBo3zoPRZP+
-	 rMXdR+05hLraaDqF5PeykZBCoEARZbqp8hqUSNe/EpiFIveqhFOGKvwA5M9l8BdXDF
-	 tYBBkoGLtBDi7T4ELTWtiBSH+2yLXiLCX1rAKCYA=
+	b=bx1ay1Ho5I+5BwwuC21W2anT7TwbftvCJZUTyG3GVLKir3SnO8VaSLomVDhqUM0Ba
+	 ZRSGEu6Om7o1+ycrXcvx8Dg/i1tdtimBp9iDgkiML6DBFOjDH0cnZnl5Fw12bOJTWU
+	 40DYOm3ToCOmHVZTzSCBMNaFyBmCkcj87UTR0Ftw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oleg Keri <okerixx@gmail.com>,
-	Douglas Anderson <dianders@chromium.org>,
+	Changyul Lee <lcy8047@gmail.com>,
+	Sang-Hoon Choi <csh0052@gmail.com>,
+	Linus Walleij <linusw@kernel.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 390/571] drm/dp: dont mark the AUX backlight enabled when enabling failed
-Date: Wed, 28 Oct 2026 17:58:57 +0100
-Message-ID: <20261028170017.268622533@linuxfoundation.org>
+Subject: [PATCH 5.15 391/571] gpio: exar: initialize the ID before registering its cleanup
+Date: Wed, 28 Oct 2026 17:58:58 +0100
+Message-ID: <20261028170017.291875893@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -68,42 +70,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oleg Keri <okerixx@gmail.com>
+From: Sang-Hoon Choi <csh0052@gmail.com>
 
-[ Upstream commit 707ce102521496c67860d81221b20c56d8255f2f ]
+[ Upstream commit 4d69e74034b208588636ecc177e0dd43a7696af3 ]
 
-If drm_edp_backlight_enable() fails, dp_aux_backlight_update_status()
-still marks the backlight as enabled. From then on every brightness
-change only updates the level and the enable is never retried, so the
-panel stays dark until something blanks and unblanks the backlight.
+devm_add_action_or_reset() invokes the cleanup action immediately when
+registering the action fails.  gpio_exar_probe() currently stores the
+allocated ID in exar_gpio only after registering the action, so that
+failure makes exar_devm_ida_free() release ID 0.  If the allocated ID is
+nonzero, this leaks that ID and can free ID 0 belonging to another device.
 
-Return the error instead, so the next update tries to enable again.
+Store the ID before registering the cleanup action so both the immediate
+failure path and normal device teardown release the correct allocation.
 
-Fixes: 10f7b40e4f30 ("drm/panel: add basic DP AUX backlight support")
-Signed-off-by: Oleg Keri <okerixx@gmail.com>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Link: https://patch.msgid.link/20260925132558.27518-1-okerixx@gmail.com
+Fixes: 5300ebb695fa ("gpio: exar: use devm action for freeing the IDA and drop remove()")
+Reported-by: Changyul Lee <lcy8047@gmail.com>
+Assisted-by: LLM
+Signed-off-by: Sang-Hoon Choi <csh0052@gmail.com>
+Reviewed-by: Linus Walleij <linusw@kernel.org>
+Link: https://patch.msgid.link/179070265834.12871.48183786512201899.idr-bug-79@gmail.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_dp_helper.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/gpio/gpio-exar.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/drm_dp_helper.c b/drivers/gpu/drm/drm_dp_helper.c
-index b8815e7f5832e..5eedbe47474eb 100644
---- a/drivers/gpu/drm/drm_dp_helper.c
-+++ b/drivers/gpu/drm/drm_dp_helper.c
-@@ -3459,7 +3459,9 @@ static int dp_aux_backlight_update_status(struct backlight_device *bd)
+diff --git a/drivers/gpio/gpio-exar.c b/drivers/gpio/gpio-exar.c
+index 902a385ae7339..320424dccc4e9 100644
+--- a/drivers/gpio/gpio-exar.c
++++ b/drivers/gpio/gpio-exar.c
+@@ -166,6 +166,7 @@ static int gpio_exar_probe(struct platform_device *pdev)
+ 	index = ida_alloc(&ida_index, GFP_KERNEL);
+ 	if (index < 0)
+ 		return index;
++	exar_gpio->index = index;
  
- 	if (!backlight_is_blank(bd)) {
- 		if (!bl->enabled) {
--			drm_edp_backlight_enable(bl->aux, &bl->info, brightness);
-+			ret = drm_edp_backlight_enable(bl->aux, &bl->info, brightness);
-+			if (ret)
-+				return ret;
- 			bl->enabled = true;
- 			return 0;
- 		}
+ 	ret = devm_add_action_or_reset(dev, exar_devm_ida_free, exar_gpio);
+ 	if (ret)
+@@ -181,7 +182,6 @@ static int gpio_exar_probe(struct platform_device *pdev)
+ 	exar_gpio->gpio_chip.set = exar_set_value;
+ 	exar_gpio->gpio_chip.base = -1;
+ 	exar_gpio->gpio_chip.ngpio = ngpios;
+-	exar_gpio->index = index;
+ 	exar_gpio->first_pin = first_pin;
+ 
+ 	ret = devm_gpiochip_add_data(dev, &exar_gpio->gpio_chip, exar_gpio);
 -- 
 2.53.0
 
