@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215824;
-	b=xn9ILWI91S/QQFNTYuKOMyKccIBNvfkKCNPFj6cjqJr+AhqBbavTimZySoqMWqKGUxyb
-	 w0Z3UE33IYSsEzc3qndsYY2tckkx7uJkK9Qcv9l2cNd23d7rE3LqXHxri3XDRLQu9AePX
-	 mmwMurrs12an1RPWxlfc4xk0GQHr90PYDA3FkjGosOKWIpbLUb7MRAptrYtfzQQ4/CUM3
-	 qtXavRFb3aozncHbUGjB/MzBhYxRAiGseoBjtvvE6wXWjLE4VAOc/z//5N/2+X7dEUPCR
-	 gDbhuwlJJpAn/+RWTD8tOBNKONsIGK6x2HCVVkyn/lsfuYk5qpf5Iewv4WOXfTmGEhw==
+	t=1793215827;
+	b=gWtp5vkZ3q5uvnKnZpIBt+mIfyAS5Bb/5/k55Y4GdhGyY4H7WlJ3DbLrhdmfMlKUZSYK
+	 zCrW9j/Du9360wqJaWMNqzgfViewOXkx2dV0EVXx7tIw+lr8moVOxbJ642wB+B71C6x/h
+	 YYEB2BKZDnsPt8Y9jiC0tehkuP1oM7VJcfxWW2HXW663+Bl9bE1SIO/kq/05u1OSPIIoT
+	 Xzzh2bss94uwzpM/p5xt11KmGx2q84SWkGjpYHWP9UGqIljFCbNIQZfDXZlX5HwTAVxu+
+	 fhkEZbPzg/DMWhqdS0P3vJpRvhCwB/5a5xzYxRr3It49GmCvyNGV3bmMpEctVE/A3jw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215824;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215827;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=YKxjxfz4lxa+Ay1uXqUSsgr4X7SoDObCZfnM42XijhU=;
-	b=NEUL71yAgIs/mfYRtGLoDGmw+7CoxX1LwnCAJEXp6JRTBUXvnDBbg/PYkwFfuxePmbip
-	 BJqhkyjH5AXowD5grhUAC+XteOlzqJmCM6MJTbEmZFgXt/LJu/eCblKhYuZh+vUGmRt4+
-	 3ZpSeHEW39DGvUSVzJWENRJShYkgFYQW5VvCT4BTeuT9qvV4vC1+o3v8+USF2iZHmLgF5
-	 Em9ybYebxysZZ+91bpHjQIKNK5LQj1zjNg/4hPypvlj22uQKDrU5KD7dixmhNvbKTfAmT
-	 3th97hMFzsm1AvnH8o3/MxD1cvhimjx8a1SztMnx1iMBmG01GpslPnxlmLVD8n5kAsw==
+	bh=20p7f64Lb8BtwCgSEwiOoWlXUPH+Pa0b7cSuOHwdJ3M=;
+	b=HzcinblOXlshAxq+6yKZofTyVo7PqcthIcI4f9jJ1cGDE3uXvV/spMDKrk27nIqj5wax
+	 2zvidkeUwDycZVKWxbUlH2/v8HIatBE2W1ckNeyRKOzoWAu90yisJolDajHLyPLSounUQ
+	 PZTV4BUysIAdMuXooAvTO++tgoc+XdFjSRsVCRy+ln8Kz1hZCpkxey/yTXWkf9Ys2Tqhy
+	 y1BykGQnUoBpdsX7vZQrJs4x+R/w9h00Ywy8HBspH6HFyK3zk8aDFzIbJ7CXxthIGxTz8
+	 KM325YEYWNJ+CigqysHRbslEDCoxcp6vTucD8+zZwu8HRFfqa/5l4r81ZsVoih8cwbA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="wOX/8PNu";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DQRFtkBi;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28265606A320;
-	Wed, 28 Oct 2026 19:30:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6EC0606A322;
+	Wed, 28 Oct 2026 19:30:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wOX/8PNu
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 345841F01825;
-	Wed, 28 Oct 2026 19:30:23 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DQRFtkBi
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EC411F01825;
+	Wed, 28 Oct 2026 19:30:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215823;
-	bh=YKxjxfz4lxa+Ay1uXqUSsgr4X7SoDObCZfnM42XijhU=;
+	s=korg; t=1793215826;
+	bh=20p7f64Lb8BtwCgSEwiOoWlXUPH+Pa0b7cSuOHwdJ3M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wOX/8PNubG46IxgOrn383ng5OKKGOjQM3Li1FkG0I+qPpi5YdTcFUCbYt9uaaXRMD
-	 UI5s1s37oxgRJTx3Ep1h5rC7u+7OgtoXAq47vuoOpcyPtBlB61atTQcY9zhXMVKO42
-	 WsPFpCGyZmKxl3pXO0Dju8J2KPX9kwGmLDhRXDMQ=
+	b=DQRFtkBirOoODDg5eKHhry/tlIkOKBuY5aOpLuU0HEh+jIFlq64SC5+12gO26obpM
+	 9JMgZsEIcXy3+Wsq8dCNyViyCcnpsarttMX5wSZfLmvZFf7VQ2t3jK5pgH4HXzGRCc
+	 2+C6BpkNg4cciIV04tSnRus+mVH7agG1BgW6Z6uM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	William Palacek <William.Palacek@amd.com>,
-	Alysa Liu <Alysa.Liu@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Bryam Vargas <hexlabsecurity@proton.me>,
+	Stephen Smalley <stephen.smalley.work@gmail.com>,
+	Paul Moore <paul@paul-moore.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1345/1887] drm/amdkfd: Add bounds check for CRAT subtype length
-Date: Wed, 28 Oct 2026 17:57:21 +0100
-Message-ID: <20261028170530.047155722@linuxfoundation.org>
+Subject: [PATCH 6.1 1346/1887] selinux: reject a permission value exceeding the class permission count
+Date: Wed, 28 Oct 2026 17:57:22 +0100
+Message-ID: <20261028170530.070388692@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,48 +69,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: William Palacek <William.Palacek@amd.com>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-[ Upstream commit 6e7566ba4739dd573c331adde1c96690f7a567bd ]
+[ Upstream commit d14b5d0e97fccd27974fedc03b903408872907fd ]
 
-The CRAT parser validates that the subtype header fits within the image,
-but does not verify that the advertised subtype length fits. A malformed
-CRAT table with an oversized length field causes out-of-bounds reads when
-kfd_parse_subtype() casts the header to specific subtype structures.
+perm_read() bounds a permission value by SEL_VEC_MAX but never by the
+nprim of the owning class or common, which is taken verbatim from the
+policy image.  security_get_permissions() then writes perms[value - 1]
+into an nprim-sized kcalloc() array, so a class declaring fewer
+permissions than its largest permission value drives an out-of-bounds
+heap write.  The top-level symbol tables are validated this way; the
+nested per-class permission table is not.
 
-Add validation that sub_type_hdr + length does not exceed the image
-boundary before parsing the subtype contents.
+Reject a permission whose value exceeds nprim, which is already set when
+perm_read() runs.  Well-formed policies are unaffected.
 
-Signed-off-by: William Palacek <William.Palacek@amd.com>
-Reviewed-by: Alysa Liu <Alysa.Liu@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 48e1d1e6e8798aef0312e68d8e586021b5b3cf4d)
 Cc: stable@vger.kernel.org
+Fixes: 55fcf09b3fe4 ("selinux: add support for querying object classes and permissions from the running policy")
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Acked-by: Stephen Smalley <stephen.smalley.work@gmail.com>
+[PM: tweak comment for line length]
+Signed-off-by: Paul Moore <paul@paul-moore.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_crat.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ security/selinux/ss/policydb.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_crat.c b/drivers/gpu/drm/amd/amdkfd/kfd_crat.c
-index 9c0ab7f41278c..78a5119c86eca 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_crat.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_crat.c
-@@ -1324,6 +1324,15 @@ int kfd_parse_crat_table(void *crat_image, struct list_head *device_list,
- 			break;
- 		}
+diff --git a/security/selinux/ss/policydb.c b/security/selinux/ss/policydb.c
+index 42bcd861bbfb7..e6aa1069fd415 100644
+--- a/security/selinux/ss/policydb.c
++++ b/security/selinux/ss/policydb.c
+@@ -1126,6 +1126,10 @@ static int perm_read(struct policydb *p, struct symtab *s, void *fp)
  
-+		/* Validate subtype fits within remaining image */
-+		if ((char *)sub_type_hdr + sub_type_hdr->length >
-+		    (char *)crat_image + image_len) {
-+			pr_warn("CRAT subtype length %u exceeds image bounds\n",
-+				sub_type_hdr->length);
-+			ret = -EINVAL;
-+			break;
-+		}
-+
- 		if (sub_type_hdr->flags & CRAT_SUBTYPE_FLAGS_ENABLED) {
- 			ret = kfd_parse_subtype(sub_type_hdr, device_list);
- 			if (ret)
+ 	len = le32_to_cpu(buf[0]);
+ 	perdatum->value = le32_to_cpu(buf[1]);
++	rc = -EINVAL;
++	/* indexes an nprim-sized array in security_get_permissions() */
++	if (perdatum->value > s->nprim)
++		goto bad;
+ 
+ 	rc = str_read(&key, GFP_KERNEL, fp, len);
+ 	if (rc)
 -- 
 2.53.0
 
