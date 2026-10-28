@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793210874;
-	b=xfGJ+iEgsZKQYweZV928c4gBOXnyiG/YdqqVL8XhB+/AxsSeV+BDzEk4O2oH4ZisBv+h
-	 uD7mG9T1Yu3HGUpfJG/tWPPyZwZ+rRE3RCmDDTWr+jJv2K6QBWKYuitEj8Dl8E9iwPZ15
-	 ckc7RZrWUkM998WPPqKbGTRyiDaGAksuBB+UdwCb3rIBaSgZROANP+0LQ+nZT5prIBARw
-	 VzwgrzN0m6IVHNqmjxbeTtVBQECLgBr7KAVeYSI31YDQ9d8uoXnxDPRY1V/5plcFzR0J4
-	 bVX3qBla8eAgWzfs0HZSe89qkSVQJIqqN6rRjE+Wqe5W1VVez8CFXgCnkdP29G3z4Pg==
+	t=1793210877;
+	b=crxKGt2lyNuQlCMVcGEARQ8kFQbH2EZv2Dcnxpu4kApV6658pJZodhH30PoCN30Ibom1
+	 KewAovHM8PR1lgjh5czKcjJcwlzp+ZTuAF6yii9Vi3cKKPDVbfW9YgH/7b2RtpzXRx5ON
+	 ZY7QO7B2wsjBGyCpecczCwg5gH3DCBvi3/T6obk6y+iOuxc5A6+QYsAotMmy/fH4JDlvo
+	 UM7AB/2SrHmH5cZwzpyEaq8oE610styg9tfWSgHzt5aR/Iv/1z09pZaRImQYO1EgBFbEv
+	 eCqpqxg9JrGkH8xBMimbTwIrJdpsulvsDuG9XbTjhuNJJLcZsXC/uSmw42xg/vN6UkA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793210874;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793210877;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=NdXuLfgmxiiBv4ZT4ABnwk58XteBr658rkdhE7Tyd+0=;
-	b=h4gtdkQsC98z8cE1sx/Uup7iYAHIqN3aIQuTnZfiwSu5SXrEhmht36X7y8ZyxJe762Ly
-	 ITtTAYLjXrpayCW+aefiOgeLgdUYG0u0CIpbj5Odn8o7MgKFFhVqmxgMX0qC4RoRiA/OU
-	 EXrsLJz/C2qqejQBWxqQBBHOLwCwOS/DHD+Qv41BYuoYWFVA55tmvr2CMl9trlw7H78uZ
-	 R5O2jpDJJuOeTtdYcaiWSaDERg5VSqi76bhE9LBDOuEnP0+YnrCeHfbhILkgqjY2DoPbj
-	 GWi7OBv8beXaSeo67wrQnwwvmiWAVBaXlIKdI/aIlwdW+9+SA3OhHjsXKP2vWIoqRCA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=/4ORiZKOg56tFI7VjlAQ9fnH4GvabDFctM0SOQgICXY=;
+	b=d0RzKaRLyO+pE7r3eO/nXxhEaIsTnuQnPo+SHkUqSkeI10ZcVKI9s9rtlkIGHAaffnPq
+	 urRdfihI9khv9mW/gwXOVsn8lhj1crI6U6V+8lObKl9TEbAXiDsoopYKCzsuVX4NHdjbP
+	 n/sFtgCzuE9UzI2L38yC235P0s6bjKPNN9kE+fbmajUnqWvULQBEgpwklWesE7oE8gZr1
+	 a7tQplRe5aUvaIqsXTdhO3fzOqZsOaPOXYyDo+yU3P+ErUBBxjC1slPOob56dC2X60kgY
+	 Nh/M9DcRqysPEJ5wBLuZ3mLLBvxzYKaT8OA/scCAeMn2F+SG3TP2LHTOFgf+TTrd80A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DJCzzqhW;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=URlD6LkB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB17E606A32C;
-	Wed, 28 Oct 2026 18:07:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3AAC606A31A;
+	Wed, 28 Oct 2026 18:07:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DJCzzqhW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 385011F01825;
-	Wed, 28 Oct 2026 18:07:53 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=URlD6LkB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F8CA1F01825;
+	Wed, 28 Oct 2026 18:07:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793210873;
-	bh=NdXuLfgmxiiBv4ZT4ABnwk58XteBr658rkdhE7Tyd+0=;
+	s=korg; t=1793210876;
+	bh=/4ORiZKOg56tFI7VjlAQ9fnH4GvabDFctM0SOQgICXY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DJCzzqhWptxKnP8OcglwfQatecRVZxdE6c6uYIrzR9b0ox0n4A/zMXu/fegyZ0inP
-	 42+kpYP+RgHSzb9FuMW++Lxv/Q2p9kEQOjItwulYszgV5XedV61JCgagymu1iCbiLA
-	 qNkbSIuwa6Iyd/Tk3W3V9dnxSQMQjgmWHcJ5iqLM=
+	b=URlD6LkBpeVdAYC6r3Cv8fwBW1TgN9PukVIswYcMcnRWHkgZ1Okb9Xp03LxJCI1G6
+	 v1501wwGq4dEWs2FXrI7Bo+lIt+mnZTL4OOrE7vK/XEywH14i9XeTvMpeNUUp3P8YC
+	 kyV0VflFwJHDD/GcM1Av2U+S+6+U7og/pR3J4r/c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
-	Ricardo Robaina <rrobaina@redhat.com>,
-	Bradley Morgan <brads@mainlining.org>,
-	Paul Moore <paul@paul-moore.com>
-Subject: [PATCH 5.15 135/571] audit: fix exe mark UAF in kill_rules()
-Date: Wed, 28 Oct 2026 17:54:42 +0100
-Message-ID: <20261028170011.220881175@linuxfoundation.org>
+	Wentao Liang <vulab@iscas.ac.cn>,
+	"Rob Herring (Arm)" <robh@kernel.org>
+Subject: [PATCH 5.15 136/571] of/irq: Fix remaining refcount leaks in of_irq_init()
+Date: Wed, 28 Oct 2026 17:54:43 +0100
+Message-ID: <20261028170011.245118912@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -63,94 +61,42 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-commit aa650d87a498844060eecb1d336f4d46f4d1b0b3 upstream.
+commit 30724547b221e0e670ddfef140fc7d816b2aaec6 upstream.
 
-kill_rules() removes mixed AUDIT_DIR and AUDIT_EXE rules when an audit
-tree is pruned. It drops entry->rule.exe before removing the rule from
-the RCU-visible filter lists.
+Successfully initialized controllers are moved to intc_parent_list,
+but the final cleanup only frees the descriptors. The device node
+references taken with of_node_get() and the interrupt parent
+references are therefore leaked on the normal return path. Drop both
+before kfree(), as the intc_desc_list cleanup already does.
 
-After a rule has been installed with AUDIT_ADD_RULE, which requires
-CAP_AUDIT_CONTROL, removing the watched directory can race with another
-task that is still evaluating the rule. In that case, fsnotify can free
-the executable mark before the reader reaches audit_mark_compare(),
-causing a use-after-free.
-
-KASAN reports:
-
-    BUG: KASAN: slab-use-after-free in audit_mark_compare+0x8d/0xa0
-
-Unlink the published rules from the RCU-visible lists and retain them
-on tree->rules for cleanup. If any rule has an executable mark, wait for
-a single RCU grace period before removing the marks and scheduling the
-entries for freeing. Otherwise, call_rcu() already provides the required
-deferred freeing without a synchronous wait.
-
+Fixes: 8363ccb917c6 ("of/irq: add missing of_node_put")
 Cc: stable@vger.kernel.org
-Fixes: 34d99af52ad4 ("audit: implement audit by executable")
-Assisted-by: Codex:gpt-5
-Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
-Reviewed-by: Ricardo Robaina <rrobaina@redhat.com>
-Tested-by: Ricardo Robaina <rrobaina@redhat.com>
-Reviewed-by: Bradley Morgan <brads@mainlining.org>
-Signed-off-by: Paul Moore <paul@paul-moore.com>
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Link: https://patch.msgid.link/20260917124247.2151674-1-vulab@iscas.ac.cn
+Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/audit_tree.c |   24 ++++++++++++++++++++----
- 1 file changed, 20 insertions(+), 4 deletions(-)
+ drivers/of/irq.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/kernel/audit_tree.c
-+++ b/kernel/audit_tree.c
-@@ -543,22 +543,38 @@ static void kill_rules(struct audit_cont
- {
- 	struct audit_krule *rule, *next;
- 	struct audit_entry *entry;
-+	bool need_sync = false;
+--- a/drivers/of/irq.c
++++ b/drivers/of/irq.c
+@@ -582,6 +582,8 @@ void __init of_irq_init(const struct of_
  
- 	list_for_each_entry_safe(rule, next, &tree->rules, rlist) {
- 		entry = container_of(rule, struct audit_entry, rule);
- 
--		list_del_init(&rule->rlist);
- 		if (rule->tree) {
- 			/* not a half-baked one */
- 			audit_tree_log_remove_rule(context, rule);
--			if (entry->rule.exe)
--				audit_remove_mark(entry->rule.exe);
- 			rule->tree = NULL;
- 			list_del_rcu(&entry->list);
- 			list_del(&entry->rule.list);
--			call_rcu(&entry->rcu, audit_free_rule_rcu);
-+			if (entry->rule.exe)
-+				need_sync = true;
-+		} else {
-+			list_del_init(&rule->rlist);
- 		}
+ 	list_for_each_entry_safe(desc, temp_desc, &intc_parent_list, list) {
+ 		list_del(&desc->list);
++		of_node_put(desc->interrupt_parent);
++		of_node_put(desc->dev);
+ 		kfree(desc);
  	}
-+
-+	if (list_empty(&tree->rules))
-+		return;
-+
-+	if (need_sync)
-+		synchronize_rcu();
-+
-+	list_for_each_entry_safe(rule, next, &tree->rules, rlist) {
-+		entry = container_of(rule, struct audit_entry, rule);
-+
-+		list_del_init(&rule->rlist);
-+		if (entry->rule.exe)
-+			audit_remove_mark(entry->rule.exe);
-+		call_rcu(&entry->rcu, audit_free_rule_rcu);
-+	}
- }
- 
- /*
+ err:
 
 
