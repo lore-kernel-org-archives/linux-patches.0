@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215833;
-	b=rpftdxhN1GaRcCn2fb4n0N8s5QMt2O7vKzAJ5xQibXrZ+z6kcajhLsRWpYcThjBpleo7
-	 Z0AtBrc4+bpEfvAyafcY6bjPAdWyFpcLprSRbNUNlOLTRMBSToLeW5Ssg7O1wtqXY73b7
-	 J4jgBPTR4UjGJ8jWfV2RjVdPScpR4bH11j3rKdkuXW6Q6xZoawyxCkHHNR2c4EuMAH6mj
-	 7SlotycA945eTF2USW4y0L+V1198F4w4W0P9b+DBItD/rB7CEL0gnlRJQ/jn0/xsx+4t0
-	 G8EAgm+RTVomPczXIaVEwp8rr3F+DoXg09PujeFG2BG6f4okZpYw59BtDqj+sZptPtw==
+	t=1793215835;
+	b=RqhzGNCtCoEbRj0/fNr3qeZ9J3uqr2EAhWZ4mbDR/0rzTwTM19WiXncgUtD0dwb0aJng
+	 4iA1i7E/1AKDjg5g/CU49H1cJ9trCOZnXLdpxhRD/5nSjQv5NG/NQB71AyyRLPfntflp/
+	 V+nRCbzAtLaUzDeQYvrsTZbOqnAmOjVUdaSe40apnJ48gZnBcbQ43lTQLxRZr87Sz/M6F
+	 ob/wV+1RLtzHXDDofb20pQcsPdBZ8GM1W5hPHk44pPDy32CQ+vKVgfS7seFqcTZOSdbyC
+	 O/4WLcpuR4O8npF+WGNUGtMPE+VJNR1QLf8ls3t/KX5MUcbJX60DbrELgPBtnyYgvlw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215833;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215835;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=vifZ0tW6YlHOk1VoAEbzAohFZZspXuMyfRt2M6chpUY=;
-	b=h0KRKmEXk+rN/u0cchOOzgaIyhVvXDv5DJ3eSOfyMcPAg3JvbiTbw4Arshzh4WMnv8yQ
-	 rDsg5LX15iwtIIJzC6BkxiIrbk0evCHHhmv5puf1t0E+cbfR2zmBckIW+atnXg04kI/s/
-	 0EGw0fOFT60H4eVLJjoEYipZenNtNMR3OmTEVrkX/65fmIRX+HxS9yUNithCLKsc4hMUo
-	 fKgkS/KY3U62Ks3EAikbNtgMh1idTC4inxz4FxisDUhOQ8HxNuG5JclZNTuau6+rzZnuj
-	 Cvuk2SVIDbOm9AzVbpz/Jp5z8mi7WVcS/Jg1iyIZeJ9MiEa2h5zr3V/IgLJwEtxMyeQ==
+	bh=LeP1Bn0WXFdXSqHuVD1mN8SzoAMqVYTHVI1dfVmMVGw=;
+	b=tN9cYyTr8zWhsImRyg6SX1jb09Pl8FUY7/5CeLPvj5yLAJjFk6KlwCGB7XArxt4tiCDo
+	 3YZfWfRxlyC+Nv7gr7LlyjNM45fFnHpf1djg+tYPTrLUHtZ4wMiekvMJUhp//U1To0/xp
+	 +Dvo1EEb0otcDpd1wSAH9agoW9POSYNcEQwJsoi5YXDz3lSAUCGvJHikXyhi4JXaP6uce
+	 XyhyrEsqqQr7g5Qu/6SSQbgm04FtawWDgjejYCTT4RAFQ3UbgsDkeuzzxGCEeugwwbkwn
+	 aq3+AnFkHhtROdHSzuw1v6ZU4mjx+CFp/TuGtmuuiD6U2qCb8ICu9nK2mJtCxmfuAkw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GMgDeFjj;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aNnirncu;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2C35606A31E;
-	Wed, 28 Oct 2026 19:30:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0B56606A320;
+	Wed, 28 Oct 2026 19:30:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GMgDeFjj
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E98FE1F01825;
-	Wed, 28 Oct 2026 19:30:31 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aNnirncu
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F025D1F01825;
+	Wed, 28 Oct 2026 19:30:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215832;
-	bh=vifZ0tW6YlHOk1VoAEbzAohFZZspXuMyfRt2M6chpUY=;
+	s=korg; t=1793215835;
+	bh=LeP1Bn0WXFdXSqHuVD1mN8SzoAMqVYTHVI1dfVmMVGw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GMgDeFjjUYLArXRrHUuoXeCdmD3svACGP1StEQKIV9p++gL2ZeQUJLGpPgFlB5OPU
-	 5BuFkf77h+3fw7z3Wbl9l+qmPx/7jlGxpcqdEj0Wn4Zl1rpz5gaqkCoHkEUBGVawMb
-	 5I1X7vyXJqcWMMFbkXnHCCcXPf68Lb/WWztC3mGE=
+	b=aNnirncupXEx9hXX8hsrFaHXgKIPqk4tGJUlO9vEVU76Ipf4Y2KQO6mYgMR61OGog
+	 KhDATLe/RnvyWBBaagmFUEs2j9SgqpkBPMbYjlW1M8R8zrwtEpmBGGvTDeMbzCYL3n
+	 0r+oI++xqSrtnRJmsqwLXotKynkNExQMCFK6Z9D8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ali Ahmet Memis <ali@iusegentoo.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1347/1887] Bluetooth: ISO: zero the sockaddr before returning it in getname
-Date: Wed, 28 Oct 2026 17:57:23 +0100
-Message-ID: <20261028170530.092432579@linuxfoundation.org>
+Subject: [PATCH 6.1 1348/1887] fbdev: Wrap user-invoked calls to fb_set_var() in helper
+Date: Wed, 28 Oct 2026 17:57:24 +0100
+Message-ID: <20261028170530.115332951@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,56 +68,167 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ali Ahmet Memis <ali@iusegentoo.com>
+From: Thomas Zimmermann <tzimmermann@suse.de>
 
-[ Upstream commit 884cf2cc957da7ac178a0e6c6c69ddfec0481cc8 ]
+[ Upstream commit 6f611e5e5f3327cf2e2daabe6ee5acac58cc784e ]
 
-iso_sock_getname() fills a struct sockaddr_iso in place and returns its
-size without clearing it first, so bytes it does not write are copied to
-user space from the kernel stack. The getsockname(2) and getpeername(2)
-paths both run through do_getsockname(), which hands getname() an
-uninitialized sockaddr_storage on the stack and copies back up to the
-number of bytes getname() returns, so the driver has to initialize every
-byte it accounts for.
+Handle fbcon during display updates in fb_set_var_from_user(). Check
+with fbcon if the mode change is possible, update hardware state and
+finally update fbcon. Update all callers.
 
-Two ranges are left uninitialized:
+Only the FBIOPUT_VSCREENINFO ioctl currently does all steps. Other
+mode-changes callers in sysfs and driver code are missing fbcon-related
+steps.
 
-  - struct sockaddr_iso is 10 bytes but only 9 are written (family,
-    iso_bdaddr, iso_bdaddr_type), leaking the trailing pad byte on every
-    call.
+With the new helper, ps3fb and sh_mobile_lcdcfb no longer maintain
+fbcon state themselves.
 
-  - for a broadcast peer (BIS_LINK or PA_LINK) the returned length grows
-    by sizeof(struct sockaddr_iso_bc), but only bc_sid, bc_num_bis and
-    bc_bis are filled; bc_bdaddr and bc_bdaddr_type, the first 7 bytes of
-    that structure, are never written.
-
-An unprivileged process can open a BTPROTO_ISO socket and reach the pad
-leak with getsockname(); the broadcast leak needs an established BIS/PA
-connection. l2cap and rfcomm already memset their sockaddr in getname
-for the same reason; do the same here.
-
-Fixes: ccf74f2390d6 ("Bluetooth: Add BTPROTO_ISO socket type")
-Fixes: 0a766a0affb5 ("Bluetooth: ISO: Fix getpeername not returning sockaddr_iso_bc fields")
-Cc: stable@vger.kernel.org
-Signed-off-by: Ali Ahmet Memis <ali@iusegentoo.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/iso.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/video/fbdev/core/fbcon.c       |  2 --
+ drivers/video/fbdev/core/fbmem.c       | 19 ++++++++++++++-----
+ drivers/video/fbdev/core/fbsysfs.c     |  4 +---
+ drivers/video/fbdev/ps3fb.c            |  5 +----
+ drivers/video/fbdev/sh_mobile_lcdcfb.c |  5 +----
+ include/linux/fb.h                     |  3 +++
+ 6 files changed, 20 insertions(+), 18 deletions(-)
 
-diff --git a/net/bluetooth/iso.c b/net/bluetooth/iso.c
-index 999ed7df4dfa3..5bf91e702330d 100644
---- a/net/bluetooth/iso.c
-+++ b/net/bluetooth/iso.c
-@@ -1080,6 +1080,7 @@ static int iso_sock_getname(struct socket *sock, struct sockaddr *addr,
+diff --git a/drivers/video/fbdev/core/fbcon.c b/drivers/video/fbdev/core/fbcon.c
+index 1c807473a0a08..a0a9b0b933184 100644
+--- a/drivers/video/fbdev/core/fbcon.c
++++ b/drivers/video/fbdev/core/fbcon.c
+@@ -2774,7 +2774,6 @@ void fbcon_update_vcs(struct fb_info *info, bool all)
+ 	else
+ 		fbcon_modechanged(info);
+ }
+-EXPORT_SYMBOL(fbcon_update_vcs);
  
- 	BT_DBG("sock %p, sk %p", sock, sk);
+ /* let fbcon check if it supports a new screen resolution */
+ int fbcon_modechange_possible(struct fb_info *info, struct fb_var_screeninfo *var)
+@@ -2802,7 +2801,6 @@ int fbcon_modechange_possible(struct fb_info *info, struct fb_var_screeninfo *va
  
-+	memset(sa, 0, sizeof(struct sockaddr_iso));
- 	addr->sa_family = AF_BLUETOOTH;
+ 	return 0;
+ }
+-EXPORT_SYMBOL_GPL(fbcon_modechange_possible);
  
- 	if (peer) {
+ int fbcon_mode_deleted(struct fb_info *info,
+ 		       struct fb_videomode *mode)
+diff --git a/drivers/video/fbdev/core/fbmem.c b/drivers/video/fbdev/core/fbmem.c
+index bd0be854b1161..c68e1c7b2c729 100644
+--- a/drivers/video/fbdev/core/fbmem.c
++++ b/drivers/video/fbdev/core/fbmem.c
+@@ -1074,6 +1074,19 @@ fb_set_var(struct fb_info *info, struct fb_var_screeninfo *var)
+ }
+ EXPORT_SYMBOL(fb_set_var);
+ 
++int fb_set_var_from_user(struct fb_info *info, struct fb_var_screeninfo *var)
++{
++	int ret = fbcon_modechange_possible(info, var);
++
++	if (!ret)
++		ret = fb_set_var(info, var);
++	if (!ret)
++		fbcon_update_vcs(info, var->activate & FB_ACTIVATE_ALL);
++
++	return ret;
++}
++EXPORT_SYMBOL(fb_set_var_from_user);
++
+ int
+ fb_blank(struct fb_info *info, int blank)
+ {
+@@ -1122,11 +1135,7 @@ static long do_fb_ioctl(struct fb_info *info, unsigned int cmd,
+ 		var.activate &= ~FB_ACTIVATE_KD_TEXT;
+ 		console_lock();
+ 		lock_fb_info(info);
+-		ret = fbcon_modechange_possible(info, &var);
+-		if (!ret)
+-			ret = fb_set_var(info, &var);
+-		if (!ret)
+-			fbcon_update_vcs(info, var.activate & FB_ACTIVATE_ALL);
++		ret = fb_set_var_from_user(info, &var);
+ 		unlock_fb_info(info);
+ 		console_unlock();
+ 		if (!ret && copy_to_user(argp, &var, sizeof(var)))
+diff --git a/drivers/video/fbdev/core/fbsysfs.c b/drivers/video/fbdev/core/fbsysfs.c
+index 2d93adb18d8bd..5ced9e5510c5d 100644
+--- a/drivers/video/fbdev/core/fbsysfs.c
++++ b/drivers/video/fbdev/core/fbsysfs.c
+@@ -100,9 +100,7 @@ static int activate(struct fb_info *fb_info, struct fb_var_screeninfo *var)
+ 	var->activate |= FB_ACTIVATE_FORCE;
+ 	console_lock();
+ 	lock_fb_info(fb_info);
+-	err = fb_set_var(fb_info, var);
+-	if (!err)
+-		fbcon_update_vcs(fb_info, var->activate & FB_ACTIVATE_ALL);
++	err = fb_set_var_from_user(fb_info, var);
+ 	unlock_fb_info(fb_info);
+ 	console_unlock();
+ 	if (err)
+diff --git a/drivers/video/fbdev/ps3fb.c b/drivers/video/fbdev/ps3fb.c
+index 2fe08b67eda71..ae93a23bfce9e 100644
+--- a/drivers/video/fbdev/ps3fb.c
++++ b/drivers/video/fbdev/ps3fb.c
+@@ -29,7 +29,6 @@
+ #include <linux/freezer.h>
+ #include <linux/uaccess.h>
+ #include <linux/fb.h>
+-#include <linux/fbcon.h>
+ #include <linux/init.h>
+ 
+ #include <asm/cell-regs.h>
+@@ -828,9 +827,7 @@ static int ps3fb_ioctl(struct fb_info *info, unsigned int cmd,
+ 				/* Force, in case only special bits changed */
+ 				var.activate |= FB_ACTIVATE_FORCE;
+ 				par->new_mode_id = val;
+-				retval = fb_set_var(info, &var);
+-				if (!retval)
+-					fbcon_update_vcs(info, var.activate & FB_ACTIVATE_ALL);
++				retval = fb_set_var_from_user(info, &var);
+ 				console_unlock();
+ 			}
+ 			break;
+diff --git a/drivers/video/fbdev/sh_mobile_lcdcfb.c b/drivers/video/fbdev/sh_mobile_lcdcfb.c
+index 444c3ca9d4d4d..6ce0fc3e706fc 100644
+--- a/drivers/video/fbdev/sh_mobile_lcdcfb.c
++++ b/drivers/video/fbdev/sh_mobile_lcdcfb.c
+@@ -15,7 +15,6 @@
+ #include <linux/ctype.h>
+ #include <linux/dma-mapping.h>
+ #include <linux/delay.h>
+-#include <linux/fbcon.h>
+ #include <linux/init.h>
+ #include <linux/interrupt.h>
+ #include <linux/ioctl.h>
+@@ -1770,11 +1769,9 @@ static void sh_mobile_fb_reconfig(struct fb_info *info)
+ 	var.height = ch->display.height;
+ 	var.activate = FB_ACTIVATE_NOW;
+ 
+-	if (fb_set_var(info, &var) < 0)
++	if (fb_set_var_from_user(info, &var) < 0)
+ 		/* Couldn't reconfigure, hopefully, can continue as before */
+ 		return;
+-
+-	fbcon_update_vcs(info, true);
+ }
+ 
+ /*
+diff --git a/include/linux/fb.h b/include/linux/fb.h
+index 5f94c58c4672e..0b128f96ec770 100644
+--- a/include/linux/fb.h
++++ b/include/linux/fb.h
+@@ -601,6 +601,9 @@ static inline struct apertures_struct *alloc_apertures(unsigned int max_num) {
+ extern int fb_set_var(struct fb_info *info, struct fb_var_screeninfo *var);
+ extern int fb_pan_display(struct fb_info *info, struct fb_var_screeninfo *var);
+ extern int fb_blank(struct fb_info *info, int blank);
++
++int fb_set_var_from_user(struct fb_info *info, struct fb_var_screeninfo *var);
++
+ extern void cfb_fillrect(struct fb_info *info, const struct fb_fillrect *rect);
+ extern void cfb_copyarea(struct fb_info *info, const struct fb_copyarea *area);
+ extern void cfb_imageblit(struct fb_info *info, const struct fb_image *image);
 -- 
 2.53.0
 
