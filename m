@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216162;
-	b=P3IlFC7jP6UrCR5WsIez7dz1yhyElHqqWsEmJQyZAshzotml4fJg/UOFXjORw1fQrILU
-	 qj9eBhHdSAwc3PD/5qkxH7a0sbzyh2JOtILceBjrkH6KzE6zn4w6NfdIM9pOAWhNSu7Y1
-	 rhru6gfAoahJGWKNpTmS+VK2a4AhwsC7RxWOVZkiPG0Lgcioqq4hMjJwBBuoP5huZfqef
-	 dwJw/t/imaBCN6yS02PNgPLFXlIhlVsV3Mb3ZnQCJWHSCHFqIDPlX7YSp7WHMqMa0UaRM
-	 NAAZ0cDXWhvS7U9nmZRSUlOvFyAuHNtZwRKImSO+8flWys/WxnwZDlR6LgCIaz3uk1w==
+	t=1793216165;
+	b=QOtT7eGoSaaroiy+3v0W+CWFfncz2qAVDOYgyrX80zSs8J5eRdJvcz27GD6xbdH88Cl6
+	 RqYKBDJYi7T8EOnZpd5qFJ74ueHto1UsinkDQTD6pBZ6X6KJfhvBnx0GKakFD2sWo4FVL
+	 Mg6jGkhSILxIj7qlvNROLWOjfcbjMtk4Uzr9OJtdEBSkFFtQteYYbE8GvbZ6B969A7XmM
+	 7/vOw1Aa0arMZGiN3oiFKf309XLDCHjJkLoxJIadsGvwD2hUcoVywnOQvjTtGjwajsaDN
+	 JWRb1eWuVCP2G9NCuxp/UOlxepli/yVQKJDzCUvXVqZ41C/CHY2A7lGdZaDRf0/eBZg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216162;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216165;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=BVEXIsFYUXaq64l1M4kRbWH4LS9MRZE9Mv53kjWMN5g=;
-	b=VJ7GXbY6Lzxe55fDz4QNczRRwdXyBrWnupUDeLAIE9gbBK12ST+ktsmhIwc7PKbzc9no
-	 97gNuRW70RrmQ9yycttCrs1aG5Q3637dPG8e0/DdSug04fWO5CttFxVdKrF1Qof8DsJy7
-	 saBly539w/efHoJQ+8/CSXjK6GURcHO/Rv3+aWTPvQ84xw/CR0Ivxvxi0RS4yNVlC4O2D
-	 xGdZvER8c1Z2J41z+EiDPjd+ksHZpmANW3ERiz2g5TutKUqrzOH2YhYc9Oxw0VZ4UYHNm
-	 5Tclu5dvg7GP1sXLZcLVySTioP+cAzeTPJ+XMpVHubdK321sU9JzHfgUvDRVcMXBPoA==
+	bh=w31YmUV4r4dbAR3M9J5KQwNi0jhtHQfky7FdZDh6hjo=;
+	b=hGXQRxvyJkZXbNgAy8i5Tz1EEDqeC8yoNyN76+KYhoLxB2NbaeCYi3TkzbTSsSZjnpcf
+	 o1P1UR72oaytR31X/ek4YGET0Xq7SXcr4w2aGPbBR3AhMi5b68HHU1YUUh5Z1tsfHi4ic
+	 +D7PTqtmz5Jq58B94aaxXwzMkjXVcwtFJ6L+ltOcQypfwedBw6g+WL/4tjmYKnl0n8XIE
+	 r/QDBc+PlEj3X4PGORStYhIt2BR2ND+XJQtX7HzrzEuDxvCfY2UmUiPrO8O0QqvwWFQaJ
+	 G4l+x682imOc9PLXCP6TfQ+TPL2yKF296q/GRRQxOdodDsIBHrESGKHuXbhEfiBy15A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h6O7eZMi;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yV2zt1X8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32FA0606A31A;
-	Wed, 28 Oct 2026 19:36:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AFCB606A31A;
+	Wed, 28 Oct 2026 19:36:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h6O7eZMi
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE6E01F01825;
-	Wed, 28 Oct 2026 19:36:01 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yV2zt1X8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A6FA1F01825;
+	Wed, 28 Oct 2026 19:36:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216162;
-	bh=BVEXIsFYUXaq64l1M4kRbWH4LS9MRZE9Mv53kjWMN5g=;
+	s=korg; t=1793216164;
+	bh=w31YmUV4r4dbAR3M9J5KQwNi0jhtHQfky7FdZDh6hjo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=h6O7eZMiEdvf6YugoKY54mIfktnVEQvE1p3d6nsMxXyJiKz2VfpDUrR+++Bs7yyXP
-	 3SCLGzP4fqlv23E1vVCUP4pYYkWnLGQFn6A7qtbwOG3pWD5Cw0wMClz1wips0FbQnC
-	 csr/6SAbed/CEKUDK0eV6yxW1j3iBm94rlJZC4Kg=
+	b=yV2zt1X8+t2zPVUxdt0KDqyraqR3QSDfIKNotuaLwuLcsE4L3TeJ4L5Pm7a+4wa9E
+	 Nw4CMlpWWBAiAp8R2cPh3EtrXUT61aBX7MwhKn2RPH4udFXCbbEGdb6mA+eqInuZi1
+	 eYecUPig2KFvwZMQEMKCe1roGLCWmw+OJfdS9cxU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Frank Sorenson <sorenson@redhat.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Paulo Alcantara <pc@manguebit.org>,
+	Qu Wenruo <wqu@suse.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	Shuangpeng Bai <shuangpeng.kernel@gmail.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1419/1887] cifs: call pagecache_isize_extended() in cifs_setsize() when extending
-Date: Wed, 28 Oct 2026 17:58:35 +0100
-Message-ID: <20261028170531.749926628@linuxfoundation.org>
+Subject: [PATCH 6.1 1420/1887] btrfs: fix extent map leak in NOCOW direct I/O write
+Date: Wed, 28 Oct 2026 17:58:36 +0100
+Message-ID: <20261028170531.771897395@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -70,55 +70,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Frank Sorenson <sorenson@redhat.com>
+From: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
 
-[ Upstream commit c510edb9734af1c274d18f4f31a471a166bbc7e8 ]
+[ Upstream commit 3f950867c307c5413d628a153ac44915bd117ffd ]
 
-cifs_setsize() calls truncate_pagecache() but skips
-pagecache_isize_extended() on extension.  truncate_setsize() shows
-the correct pattern:
+btrfs_dio_iomap_begin() calls btrfs_get_extent(), which returns an
+extent map reference that must be dropped on all exit paths.
 
-  i_size_write(inode, newsize);
-  if (newsize > oldsize)
-      pagecache_isize_extended(inode, oldsize, newsize);
-  truncate_pagecache(inode, newsize);
+For direct writes into a NOCOW range, btrfs_get_blocks_direct_write()
+keeps using that extent map and asks btrfs_create_dio_extent() to
+allocate the ordered extent. If that fails, for example because
+btrfs_alloc_ordered_extent() fails, the function returns the error
+without dropping the input extent map. The PREALLOC path avoided this by
+dropping the input extent map before replacing it with the newly created
+one.
 
-pagecache_isize_extended() zeroes the tail of the page straddling old
-EOF.  Without it, dirty bytes in that region can be written back to
-the server, exposing stale data in the newly extended range.
+Check the error from btrfs_create_dio_extent() before replacing the
+map and drop the input extent map on failure.
 
-Cc: stable@vger.kernel.org
-Cc: David Howells <dhowells@redhat.com>
-Signed-off-by: Frank Sorenson <sorenson@redhat.com>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+Fixes: 5f9a8a51d8b9 ("Btrfs: add semaphore to synchronize direct IO writes with fsync")
+CC: stable@vger.kernel.org
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/inode.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ fs/btrfs/inode.c | 19 +++++++++++++------
+ 1 file changed, 13 insertions(+), 6 deletions(-)
 
-diff --git a/fs/smb/client/inode.c b/fs/smb/client/inode.c
-index df85fcbe93907..f87a0a6d68c93 100644
---- a/fs/smb/client/inode.c
-+++ b/fs/smb/client/inode.c
-@@ -2669,13 +2669,17 @@ int cifs_truncate_page(struct address_space *mapping, loff_t from)
- void cifs_setsize(struct inode *inode, loff_t offset)
- {
- 	struct cifsInodeInfo *cifs_i = CIFS_I(inode);
-+	loff_t old_size;
+diff --git a/fs/btrfs/inode.c b/fs/btrfs/inode.c
+index 7d1eab71f17b4..976aad24ae0a3 100644
+--- a/fs/btrfs/inode.c
++++ b/fs/btrfs/inode.c
+@@ -7695,17 +7695,24 @@ static int btrfs_get_blocks_direct_write(struct extent_map **map,
+ 					      len, orig_block_len,
+ 					      ram_bytes, type);
+ 		btrfs_dec_nocow_writers(bg);
+-		if (type == BTRFS_ORDERED_PREALLOC) {
+-			free_extent_map(em);
+-			*map = em2;
+-			em = em2;
+-		}
+-
+ 		if (IS_ERR(em2)) {
+ 			ret = PTR_ERR(em2);
++			free_extent_map(em);
++			*map = NULL;
+ 			goto out;
+ 		}
  
- 	spin_lock(&inode->i_lock);
-+	old_size = i_size_read(inode);
- 	i_size_write(inode, offset);
- 	spin_unlock(&inode->i_lock);
- 
- 	/* Cached inode must be refreshed on truncate */
- 	cifs_i->time = 0;
-+	if (offset > old_size)
-+		pagecache_isize_extended(inode, old_size, offset);
- 	truncate_pagecache(inode, offset);
- }
- 
++		/*
++		 * True NOCOW writes don't need to create a new extent map,
++		 * while PREALLOC writes must replace the existing one.
++		 */
++		if (em2) {
++			ASSERT(type == BTRFS_ORDERED_PREALLOC);
++			free_extent_map(em);
++			*map = em2;
++			em = em2;
++		}
++
+ 		dio_data->nocow_done = true;
+ 	} else {
+ 		/* Our caller expects us to free the input extent map. */
 -- 
 2.53.0
 
