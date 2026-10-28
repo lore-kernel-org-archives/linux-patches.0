@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793209517;
-	b=nC/OBkVB4JbWXbUk0MVIeTdOutxzoqKiciFZD0aTW8i0iqvqN1s5GVcgw+6ge6tvOJzl
-	 LjBS0Pa8xkagE1+2WTEtOl3juFHiE1tTHloY8BJmj5+qkO4QqKIW5NTHYR80tXPbTAsW5
-	 ckZHl4oYz1DZ37Y6x9RX/5+IWXbs0LeuS7oh5ksP9++g3cqR4q2gAQfYJ1xyfretaV9A4
-	 uDqxOx7unQHCL+d29cHv4RCdOPKiMh8742v8orH9nnF8oBa7nan8C8ntK4G9d6ErS7jfv
-	 gbKib4xfdHXfWdKUKO5ohQ7u6Sz7iomGVzhzaZ53BUPzc9HIrF6Kj41dpDGJlp4ra/w==
+	t=1793209520;
+	b=hMVinHaM1d7yLH9cCBJx/DT2MqXlxrgfUHohPfiNf7gdF7GOYvNPGHak8maFMgaYvWAy
+	 aM5Nmktk+Dc2StbanhnuEnM3cc/c/m4/FdY0JyWHlTgFnEWNm7ES+1hBR1nNxuXweOqZ7
+	 gbzY7ishUSVpImhNVDl0rwrYAyE+72WaxdImRmF4QLJE5jLo1PIsmIzK/Jqx7Aaygv+eS
+	 dTLDAuZaV9m/GkWk4pdmhh9WWUmOe6jqDkjPC4wdPTaETL5HhDJZUbgceCyAZTjN0RveF
+	 bba3FlrKQZpp4MUKEzQoGOuMZ7phVecUBTMjCbu1P3EjyuLZr4rbMZHGi0FDa3FtRKA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793209517;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793209520;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/RfrY4hc5amdmiA625d/OhzVRwqDV16uJ3KWuhCSVQw=;
-	b=ba49BxzRisGwb8YOCFMgThSUUHBzU8r0X+rTqtsyQXAwINKODrg+c5nAT8w+m7s/qetI
-	 KgoOsuLfvFvlOpIR8o6TmTYbbVvFPU6U/fEI3NVRcQ+El9DDYbcZ1menBEzz8CizUFMu3
-	 WFb1pmnusjaAhRKVWPg/2Tvm8L+0GNEsoL+LJlFW3LuPN2PsQZwfyW8TceWzZp6WZPLme
-	 3CSo+gYsLzBS4IBq0y9hc70PXX/z9/VphnvdAQrjYFFC9ZxKJYCBGlE3n2Z7puSPXiuHH
-	 zjX2b4alLvUJltrq4HcrG42INtVnNNSi2AC2GjjJT1rE0mCL3h5L6vc+xbV+Fge13Mg==
+	bh=/L5R//FilBfFIgZ544pCk8ezQEIC7lJYDSNtCXjakjM=;
+	b=zkJadkVwZk1O+nnZOlGUvYUCuBdZeRoz7ngfrOH/R55dmtuaj2wFC4qN3VFqxZ6WqWq1
+	 ealU13wELGVwnM0uywm92bYCdvKHus6Qu7B4qNH9w1i4OB7jXQY8hGE2wn8XsKzGrx+Xt
+	 0JNRCSA69f2fVnzcUn4uw4uo6bBYsoDxuG0D8dwYtsexzNauYAuhKVE2m9aT+XmHoxxLb
+	 6++q7IoyYHmMtjZDna7mgghGGXDPsAbsZyyFJrRNjHfcBRElfOxACZjVqmTLu5xUNMu5D
+	 dv0KkMfFvhBMMs+GsuGR6r888OkDCAjhTYsBiNtQOdM9S3VJ0yqGz9yT0osnD1Ee7fA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aSTr6Yst;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kS7kh5yf;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 842C5606A323;
-	Wed, 28 Oct 2026 17:45:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 676E6606A31E;
+	Wed, 28 Oct 2026 17:45:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aSTr6Yst
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D54D81F01828;
-	Wed, 28 Oct 2026 17:45:16 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kS7kh5yf
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B829E1F01825;
+	Wed, 28 Oct 2026 17:45:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793209517;
-	bh=/RfrY4hc5amdmiA625d/OhzVRwqDV16uJ3KWuhCSVQw=;
+	s=korg; t=1793209520;
+	bh=/L5R//FilBfFIgZ544pCk8ezQEIC7lJYDSNtCXjakjM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aSTr6Ystah/7b2pLtQrMESYyIqfAjjcNfF4/SHCci3NeR/XNi5kLAv9aasLE18Iv0
-	 ktVKlfkDBV7vASU6BV7g4vZqNeE9fIF76eOLTensOmi/ci4r75PNp00ZjEAbWC0rRZ
-	 h3zsWEwm4yTBAnNXWQ2eMLdWZ7O1o+XYMSdCPyn8=
+	b=kS7kh5yfIC8ipRwOZeZdch4tSK2Ic04ziWhIPUda+HF4+iEmMApmTQIvi3LNv1OcQ
+	 RBNmCRMal6+yqwefhAaQIqbm+T86MJlNF8SLlcQcoWTADQ+t+UrZeevjQkdeu1X30w
+	 tneWTLPMVsc6oHYVM3qwJmotfzn8UE+KZ2WpUwx0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Sorenson <sorenson@redhat.com>,
-	Paulo Alcantara <pc@manguebit.org>,
+	syzbot+837bcd54843dd6262f2f@syzkaller.appspotmail.com,
+	Yun Zhou <yun.zhou@windriver.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Carlos Maiolino <cem@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 498/516] cifs: add revalidation on FSCTL failure in smb2_duplicate_extents()
-Date: Wed, 28 Oct 2026 18:00:50 +0100
-Message-ID: <20261028170015.276312716@linuxfoundation.org>
+Subject: [PATCH 5.10 499/516] xfs: dont hold buffer locks across sync transaction commit in xfs_sync_sb_buf
+Date: Wed, 28 Oct 2026 18:00:51 +0100
+Message-ID: <20261028170015.299538686@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -68,63 +70,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Frank Sorenson <sorenson@redhat.com>
+From: Yun Zhou <yun.zhou@windriver.com>
 
-[ Upstream commit 53676a5e28231186c9f56d87b7998b640699bc15 ]
+[ Upstream commit 41a28c865d1d5843f8cb9e0af17a8f4d9e2961ff ]
 
-smb2_duplicate_extents() has no handling for
-FSCTL_DUPLICATE_EXTENTS_TO_FILE failure: when the FSCTL fails, local
-inode metadata may be stale from the pre-extension or from concurrent
-remote writes, but is never refreshed.
+xfs_sync_sb_buf() holds sb/rtsb buffer locks across a synchronous
+xfs_trans_commit(), which flushes the CIL push workqueue internally.
+If shutdown occurs during the CIL push, xfs_buf_item_unpin() needs to
+lock these buffers to fail them, causing a deadlock:
 
-Force revalidation on FSCTL failure and use i_size_read() for the
-pre-extension check.
+  setlabel:          holds buf lock -> flush_workqueue(xfs-cil)
+  CIL push worker:   xfs_buf_item_unpin -> xfs_buf_lock(same buf)
 
-Fixes: cfc63fc8126a ("smb3: fix cached file size problems in duplicate extents (reflink)")
+Remove the xfs_trans_bhold() calls so that commit releases the buffer
+locks normally.  After the sync commit, re-acquire the buffers via
+mp->m_sb_bp / mp->m_rtsb_bp for the on-disk writeback.
+
+Fixes: f7664b31975b ("xfs: implement online get/set fs label")
+Reported-by: syzbot+837bcd54843dd6262f2f@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=837bcd54843dd6262f2f
 Cc: stable@vger.kernel.org
-Signed-off-by: Frank Sorenson <sorenson@redhat.com>
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
-[ sashal: replaced cifs_invalidate_cache() with fscache_invalidate() guarded by CONFIG_CIFS_FSCACHE ]
+Signed-off-by: Yun Zhou <yun.zhou@windriver.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
+[ sashal: Omitted realtime superblock changes because xfs_sync_sb_buf() lacks realtime superblock support. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/cifs/smb2ops.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ fs/xfs/libxfs/xfs_sb.c | 17 +++++++----------
+ 1 file changed, 7 insertions(+), 10 deletions(-)
 
-diff --git a/fs/cifs/smb2ops.c b/fs/cifs/smb2ops.c
-index 5d07e1400015b..0e95065ae0767 100644
---- a/fs/cifs/smb2ops.c
-+++ b/fs/cifs/smb2ops.c
-@@ -8,6 +8,7 @@
- #include <linux/pagemap.h>
- #include <linux/vfs.h>
- #include <linux/falloc.h>
-+#include <linux/fscache.h>
- #include <linux/scatterlist.h>
- #include <linux/uuid.h>
- #include <linux/sort.h>
-@@ -2045,7 +2046,7 @@ smb2_duplicate_extents(const unsigned int xid,
- 		src_off, dest_off, len);
+diff --git a/fs/xfs/libxfs/xfs_sb.c b/fs/xfs/libxfs/xfs_sb.c
+index 40b31fa6687b7..2cc8da99a42e4 100644
+--- a/fs/xfs/libxfs/xfs_sb.c
++++ b/fs/xfs/libxfs/xfs_sb.c
+@@ -1151,26 +1151,23 @@ xfs_sync_sb_buf(
+ 	struct xfs_mount	*mp)
+ {
+ 	struct xfs_trans	*tp;
+-	struct xfs_buf		*bp;
+ 	int			error;
  
- 	inode = d_inode(trgtfile->dentry);
--	if (inode->i_size < dest_off + len) {
-+	if (i_size_read(inode) < dest_off + len) {
- 		rc = smb2_set_file_size(xid, tcon, trgtfile, dest_off + len, false);
- 		if (rc)
- 			goto duplicate_extents_out;
-@@ -2070,6 +2071,13 @@ smb2_duplicate_extents(const unsigned int xid,
- 	if (ret_data_len > 0)
- 		cifs_dbg(FYI, "Non-zero response length in duplicate extents\n");
+ 	error = xfs_trans_alloc(mp, &M_RES(mp)->tr_sb, 0, 0, 0, &tp);
+ 	if (error)
+ 		return error;
  
-+	if (rc) {
-+		CIFS_I(inode)->time = 0; /* force reval */
-+#ifdef CONFIG_CIFS_FSCACHE
-+		fscache_invalidate(CIFS_I(inode)->fscache);
-+#endif
-+	}
+-	bp = xfs_trans_getsb(tp);
+ 	xfs_log_sb(tp);
+-	xfs_trans_bhold(tp, bp);
+ 	xfs_trans_set_sync(tp);
+ 	error = xfs_trans_commit(tp);
+ 	if (error)
+-		goto out;
+-	/*
+-	 * write out the sb buffer to get the changes to disk
+-	 */
+-	error = xfs_bwrite(bp);
+-out:
+-	xfs_buf_relse(bp);
++		return error;
 +
- duplicate_extents_out:
- 	return rc;
++	/* Re-acquire and write the sb to disk. */
++	xfs_buf_lock(mp->m_sb_bp);
++	error = xfs_bwrite(mp->m_sb_bp);
++	xfs_buf_unlock(mp->m_sb_bp);
++
+ 	return error;
  }
+ 
 -- 
 2.53.0
 
