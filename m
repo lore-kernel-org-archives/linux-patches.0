@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793208502;
-	b=pO0pM57J99tJNLUdTSpFickgUX0lmh01ekbzncPCADR7Y0uLQabRpTPr7H6I4BpHAJWR
-	 MNEn43oahwxenmrx9ufnH4ZbcDxTFWkHyffzex/hIsHXwvNOhzpRRojPT23efBSw1Qm/g
-	 /mFEo7RIpF7VeodMYyFwA2JBVB6gabCXul5BDoiM/SmeQIjDVY12rCe5RAWVb4S78LDvn
-	 bL8luwtvS7UTnm5RDkOtZm7zzpkEc1KgfZYVoE3f0+cIjyW1bfAPyVNE9q44PA6IcC0mB
-	 IX1VfcL94L8ojdQ5m+PDeSAvGITjZnEG9uQ7iFrp2koZX34IWIbNHLGSyjJP6bPBx0Q==
+	t=1793208505;
+	b=LeWlHkmr0mXUyQssTwdGF5zZLtWFFVmUTS0AolFKtzQUyoM/Cc+I+VxRxUSSjEyfarh/
+	 q4lb+w/YtIYf/6i926e/1tsEaxDUytCCLywylnNvKvr6/i1GWPu5nzT7oCN3YDl30uNlP
+	 zegdA0o7IdVzV5JJWeZkKp7zd38lZOVtMlFbA5dyYfL+/ABunKRpNRfCcR/7LTlVJAfJD
+	 eHZhsbkj68+qLl0jKaLAAzo2QyBvf7huOXzUo9IbEt1tsKuV155vLesGVymUGBDYnzgnd
+	 EBrD5Y7o5ojTkAU6mQMcvjXVQvxQpjK4gs0p/NchQ7Qp06T1LvOz1CyLs0fJOrSxhGg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793208502;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793208505;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=PnX1bmFx4CEpWPojikZOQ8MDjJgrgijMzmsrIlP0sm8=;
-	b=18lC7swc4g1YG55jRyzfFE7sEE9kDz4Gm57dUJXFJAHx9z7duYjkhoaeayWjPSKGnfNQ
-	 kNfcaBm/8NcVhCKQBELKS2ahHJAsI6Q+zu0PDocxr19eCux0q5zTKynyyfSMwbeKw76At
-	 0Oz8hNNnViL60YJyziAzeej0lzblfLb9sKc3BdhSASVfQp+b3AbBppfs2m8MZMYJxEJyw
-	 y4cnlyRcBUcHIiMF5ShsmGZZiftEJoERtC0dy86g3g6zq0EOREkKpF1fFWh3Lcv/nqzwB
-	 cjzCgRfPJKDEQikapPd3eiGmCDS2Vjh5h8Gn8ByTj/kmqzx8kPIuGPBKv0Dsg316i+w==
+	bh=IVAlaHIe3ExAzkC6wIwzDUD9pjYTTzvLX9+0tyvS4bQ=;
+	b=mWt3ccAZlunjNqVr4TO5waxN6/SlrFnHP+o2lK2euWd7KJR9BCQ0wclNlosueF2vh0xg
+	 bFaeH1N3PpoZ630/OeV7q4KFWXXaeFums9Sd4MUEhS60XgORiM7LWxvIL1UK5yigtWYZE
+	 DUxLnJ3NiY25yzK6weix2dM1mt+oiRdP1PeMR3Wui378T+qQrl9vYKq4UwtXaqNhaSRup
+	 O3+tRIOe46EMkIQCLfPv8yaviT2ZQWJV2jTa+aw8UzggsbOcA5cM0uXxLNvzvMRdsP+qR
+	 quFQmD/nCYdYr4VkZE6+QRSXBeOZRmKbPcI7sao2aGOl91p4y+qbxpL67iwV9smkj9Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BjGZ4Oub;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UICSRrG3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85605606A31A;
-	Wed, 28 Oct 2026 17:28:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FC50606A31E;
+	Wed, 28 Oct 2026 17:28:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BjGZ4Oub
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D764E1F01828;
-	Wed, 28 Oct 2026 17:28:21 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UICSRrG3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFBAB1F01825;
+	Wed, 28 Oct 2026 17:28:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793208502;
-	bh=PnX1bmFx4CEpWPojikZOQ8MDjJgrgijMzmsrIlP0sm8=;
+	s=korg; t=1793208505;
+	bh=IVAlaHIe3ExAzkC6wIwzDUD9pjYTTzvLX9+0tyvS4bQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BjGZ4OubORh5oYrJZ69/8Al04GQM/mm242z8uHOGsSHhl1HL5l8NpbJ1XtI+nOCsw
-	 EgCb0Pu1PP6LT2sBmp2FKnFXORZdgIcNjzU4vyi9mgpIxm0x0tfLRKhTapIjbWAFO+
-	 nWUIhSM6gi5HLrpjdeKU9T+fkB4J5SCi8HP5yZM0=
+	b=UICSRrG37v2p8H1f66oK5X0X4rSHUEsAvq0M7phr8FePzQR9YeDpgeoZ8Ej7Th3gc
+	 L8GKwGu76sr4GwvuDVzqaUEdrK0wZwBvlbLX9+KHaj0MOSU6zuw0+xQwmE0FRm+L5v
+	 yWfSqhWNoZSkeQYKwWToiGO7L6zpaXGA7KsiwQIM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abdurrahman Hussain <abdurrahman@nexthop.ai>,
-	"Rob Herring (Arm)" <robh@kernel.org>
-Subject: [PATCH 5.10 140/516] of/overlay: put property on deadprops only after changeset add succeeds
-Date: Wed, 28 Oct 2026 17:54:52 +0100
-Message-ID: <20261028170006.826364283@linuxfoundation.org>
+	Vincent Donnefort <vdonnefort@google.com>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 100/516] ring-buffer: Acquire the lock with irqsave in rb_wake_up_waiters()
+Date: Wed, 28 Oct 2026 17:54:12 +0100
+Message-ID: <20261028170005.890261689@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -67,52 +69,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abdurrahman Hussain <abdurrahman@nexthop.ai>
+From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 
-commit 814f2da6995772c07a7c9c2cc6028b6e3f3ecc9c upstream.
+[ Upstream commit 815e07c8fe885a87751c2496a30ae0dcd4118210 ]
 
-add_changeset_property() links a new property of a not-yet-live
-target node into the node's deadprops list before handing it to
-of_changeset_add_property(). If that fails, the error path frees the
-property but leaves the freed pointer linked in deadprops, and
-of_node_release() frees it a second time when the aborted overlay's
-node is released.
+rb_wake_up_waiters() is a irq_work callback which is initialized with
+init_irq_work(). As such it will be invoked in thread context on
+PREEMPT_RT. Invoking the callback in IRQ context on PREEMPT_RT is not an
+option due its usage of wake_up_all().  Since this callback may run in
+thread context, it needs to acquire ring_buffer_per_cpu::reader_lock with
+disabling interrupts and may not assume that they are disabled.
 
-Record the changeset entry first and link the property into deadprops
-only on success. of_changeset_add_property() never looks at the
-node's property lists, so the order of the two steps is otherwise
-immaterial, and the error path frees a property that nothing
-references.
+Use raw_spinlock_irqsave() to acquire ring_buffer_per_cpu::reader_lock.
 
-Fixes: f96278810150 ("of: overlay: set node fields from properties when add new overlay node")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-fable-5 [Claude Code]
-Signed-off-by: Abdurrahman Hussain <abdurrahman@nexthop.ai>
-Link: https://patch.msgid.link/20260831-nh-of-alias-overlay-v7-4-02754604805a@nexthop.ai
-Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://patch.msgid.link/20260911102152.YEtwkBj9@linutronix.de
+Fixes: 68282dd930ea3 ("ring-buffer: Fix resetting of shortest_full")
+Reviewed-by: Vincent Donnefort <vdonnefort@google.com>
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+[ Replaced scoped_guard() with explicit raw_spin_lock_irqsave()/raw_spin_unlock_irqrestore() calls for GNU89 compatibility. ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/of/overlay.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ kernel/trace/ring_buffer.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/of/overlay.c
-+++ b/drivers/of/overlay.c
-@@ -348,12 +348,13 @@ static int add_changeset_property(struct
- 		return -ENOMEM;
+diff --git a/kernel/trace/ring_buffer.c b/kernel/trace/ring_buffer.c
+index 1c1b4139c4726..0612ef61bf973 100644
+--- a/kernel/trace/ring_buffer.c
++++ b/kernel/trace/ring_buffer.c
+@@ -835,15 +835,15 @@ static void rb_wake_up_waiters(struct irq_work *work)
+ 		/* Only cpu_buffer sets the above flags */
+ 		struct ring_buffer_per_cpu *cpu_buffer =
+ 			container_of(rbwork, struct ring_buffer_per_cpu, irq_work);
++		unsigned long flags;
  
- 	if (!prop) {
--		if (!target->in_livetree) {
-+		ret = of_changeset_add_property(&ovcs->cset, target->np,
-+						new_prop);
-+		/* the detached node owns the property until the apply */
-+		if (!ret && !target->in_livetree) {
- 			new_prop->next = target->np->deadprops;
- 			target->np->deadprops = new_prop;
- 		}
--		ret = of_changeset_add_property(&ovcs->cset, target->np,
--						new_prop);
- 	} else {
- 		ret = of_changeset_update_property(&ovcs->cset, target->np,
- 						   new_prop);
+-		/* Called from interrupt context */
+-		raw_spin_lock(&cpu_buffer->reader_lock);
++		raw_spin_lock_irqsave(&cpu_buffer->reader_lock, flags);
+ 		rbwork->wakeup_full = false;
+ 		rbwork->full_waiters_pending = false;
+ 
+ 		/* Waking up all waiters, they will reset the shortest full */
+ 		cpu_buffer->shortest_full = 0;
+-		raw_spin_unlock(&cpu_buffer->reader_lock);
++		raw_spin_unlock_irqrestore(&cpu_buffer->reader_lock, flags);
+ 
+ 		wake_up_all(&rbwork->full_waiters);
+ 	}
+-- 
+2.53.0
+
 
 
