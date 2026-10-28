@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793207329;
-	b=Z4L9ClrT8ew2bm7sgunhIooDA6r4YyvBIz1/1fP4FCP762JBG4LammID2U0gFSxWnqpB
-	 AfuEjzFXs07Yz/nKNa12EhFM/sQej8UNMtJPjtJ8XABKEyfBX0FVNcNQfe74iX+y1/xyW
-	 KihG7a66dlzy7kwHpIi3dQWnfS87HLeUr/CKtkO9GW4aWs5DFya+gJF+C8/Ok/5CzF+GQ
-	 5BPruyCpOm4pr/7VpzFfsSnMjFphmdIMy4hzOhwWEPwJUJ6YUdfm9IgdCd7RF+5+T+Kbh
-	 57QfMRa8NOZK+cnEX3Ycu8rPW4tol+OMB5q7+4OV7pj8jkDPZXsK/k2nd1lJbkDE2KA==
+	t=1793207332;
+	b=ZEzG7iLFXrU+KQGJGQ3gvfRbJUxeVQL6jgiLYOxn1LYzN3Oh/Cr6IJimL2uzr4zQVJD/
+	 D/t5Nu+4ApcolIFxqT7NHVDmQkw1/d7Ay/+zdT2XULO3ZTimjk3MC38ixaGNbhlYH29kM
+	 R0aaaJci1iVOYFkYU6Y4PCDjmB7OEgy/bDQSORbCPDXClrG6r2Hb5cEkU5Uu4ZrDyAbTC
+	 iidFmy9S2NN0Sln7v2/++F2p1DS84l4CNQHdBTy2RgEMb6yfL5YoZ4Y07mqavmorj5Rsm
+	 WPkxHk8ocVH/AlnF2gv8R9Pf+uxrDVdecfzoWlEmqE00cwc58oaJLdFIHRA3ZDQh8gQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793207329;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793207332;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=OkaKsAMouid2dmyVOg2tkYvFlCXfYuJzOqzb2J4FBeI=;
-	b=kdZWFtWY1dH10scA06KwObW9xUdqAFrT8RxeoqxFYlFRoHrfhN/YP5vQP00YHSz7yo9c
-	 byI8sWdGLx7rUdaCMaZs/4NYKHL16d/Aaqsp7/qsVwTC44r8Gi/6rw8Gy+RcDar4LRZ2B
-	 n8gRiQb7AnD3GsYu56QA416eWhxbNDwbNkiWIf1+WfrWXsFf30AL672e4Xt5imKL3fFCt
-	 92BGFNOft7k8EzeJ8a+K8NCwRoIDZO13+bweFgrd8BcI09JDBpmdsRccx4an/+eciMY7I
-	 YKZqzZ7RntMs77AhmQjy7Q9pFHO0RUZtpCbujPX3g4fRp/r3VUyfvUM3yHni6XMSFow==
+	bh=kpma37g0eBY4J5TRcKe3bXxsUMuxas2uwgCTTm6J150=;
+	b=fKQpwpmyGWv3fVVWOfkiPCVuAR3toJBWHfOdPP2jORRNUHPWEQ+ed0THNtBZgjY2/42D
+	 LdHcYOc0URN7MOmN55ylKUULhR3DHwOws+ObMudtRBtxM1cBr8lGvzyxTZHaiSNl6TSDK
+	 ZR1F2wEv6wLfN2XZQVgv8VIL1/bfUUvXZtxKCDP5QqO8NHnDtc2dqr3zqah5HrkG7Y801
+	 meYWGTbbaAJ7gjzowvJnf5LHNW89801o8uHcQpxqbj36JFS8yp3iOm6gTHsfw7L60LgiG
+	 REMEBXuVh9L+FTgelh57bp3yqg+ZCyvurGv4Q5n1rGLbkeHl8HbeJVitLZDte90cn2A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X8skl8DY;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lgfrVJ6q;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B213606A320;
-	Wed, 28 Oct 2026 17:08:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49E61606A31A;
+	Wed, 28 Oct 2026 17:08:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X8skl8DY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B4C91F01825;
-	Wed, 28 Oct 2026 17:08:48 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lgfrVJ6q
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BC9A1F01825;
+	Wed, 28 Oct 2026 17:08:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793207329;
-	bh=OkaKsAMouid2dmyVOg2tkYvFlCXfYuJzOqzb2J4FBeI=;
+	s=korg; t=1793207331;
+	bh=kpma37g0eBY4J5TRcKe3bXxsUMuxas2uwgCTTm6J150=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=X8skl8DYfOacYc06WNw9hzF1odOeIPdOWh3e24bjsfJylQADML4CMeWtuhJsi7jxG
-	 bGdNbpbrMhpasY8cWXMyC90qytD7cBirhqiBjn//mWLw5nYrmwX0J29V0H+Ox22fqa
-	 APDcBR/AHUehIjyHtprFskLBJsuafK7SEJHQ42zQ=
+	b=lgfrVJ6q7EbWhqapZ/7Vd2GykrLlt9TkqFqFrWh8amqbloyQYeZzgAkDnZqEtOW9c
+	 39ASWNVo6+8tEk4k+4/vm5pOnqjmEEQ7lYAkkuixIGIZK/CIGC8p4LpbIqmselkAQf
+	 MBJvRD1TsIz+IfxExfEQFJQXRh91PTSrmlWaoYYw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Josef Bacik <josef@toxicpanda.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 7.2 23/88] io_uring: dont lose the DEFER_TASKRUN wake up
-Date: Wed, 28 Oct 2026 17:59:31 +0100
-Message-ID: <20261028165942.663552842@linuxfoundation.org>
+	Jens Axboe <axboe@kernel.dk>,
+	"Claude Fable 5.1" <noreply@anthropic.com>
+Subject: [PATCH 7.2 24/88] io_uring/cancel: rearm local work wake up before sleep
+Date: Wed, 28 Oct 2026 17:59:32 +0100
+Message-ID: <20261028165942.686871591@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165942.107695352@linuxfoundation.org>
 References: <20261028165942.107695352@linuxfoundation.org>
@@ -69,123 +70,73 @@ Content-Transfer-Encoding: 8bit
 
 From: Josef Bacik <josef@toxicpanda.com>
 
-Commit 8257f6ec45ee07c6ed933c59d8982b03cc7bc1ca upstream.
+Commit 76a82c666abf155ad52d5f41043eac77dd3e41d8 upstream.
 
-Since local task_work moved to the mpscq, ->cq_wait_nr is a credit: the
-add that counts it down to zero, or exchanges it for IO_CQ_WAKE_INIT,
-issues the only wake up of the wait cycle, and every later add returns
-early as the count is <= 0.
+io_uring_try_cancel_requests() sets ->cq_wait_nr to 1 so that the next
+io_req_local_work_add() wakes the cancelling task. The add that takes the
+count to zero is the only one that wakes, later ones see a count <= 0 and
+return. io_uring_cancel_generic() however only becomes
+TASK_INTERRUPTIBLE much later, so the one wake up can be spent on a
+running task. That is fine as long as the entry of that add is still
+queued, as the io_local_work_pending() check then skips the sleep. It is
+not if the add was delayed after queueing its entry:
 
-An add looks at the count after it has queued its entry, so an add that
-gets delayed in between can take the credit of a later cycle. That was
-assumed to cause an early wake up at worst, but the waiter publishes the
-count before it changes its task state:
-
-CPU0 (submitter, io_cqring_wait)      CPU1 (io_req_local_work_add)
+CPU0 (submitter in exec or exit)      CPU1 (io_req_local_work_add)
                                       mpscq_push(req A)
-io_run_local_work()  // runs req A
-atomic_set(&ctx->cq_wait_nr, 1)
+io_uring_try_cancel_requests()
+  io_run_local_work()  // runs req A
+io_uring_try_cancel_requests()
+  atomic_set(&ctx->cq_wait_nr, 1)
                                       atomic_read(&ctx->cq_wait_nr) == 1
-                                      atomic_xchg(.., IO_CQ_WAKE_INIT)
-                                      wake_up_state(.., TASK_INTERRUPTIBLE)
-                                        // still TASK_RUNNING, no-op
-set_current_state(TASK_INTERRUPTIBLE)
+                                      count taken, wake_up_state()
+                                        // task is running, no-op
+prepare_to_wait(TASK_INTERRUPTIBLE)
 io_local_work_pending() == false
 schedule()
                                       mpscq_push(req B)
                                       cq_wait_nr <= 0, return
 
-The task now sleeps with req B queued, until a signal or a timeout ends
-the wait.
+Only the sleeping task can run req B, so it is stuck in execve() until a
+signal happens to wake it. An exiting task doesn't even get that.
 
-Set the task state first and only then make the count visible, so that
-whoever takes the credit finds a task it can wake. The full barrier that
-orders the count against the check of the work list is kept. Do the same
-for the wait of the BPF driven loop, which copied the sequence.
+Arm the count again once the task state is set and before the work list
+is checked, for the rings whose local work this task is the one to run.
 
+[ 7.2: the loop still has the WARN_ON_ONCE() that commit fddcf4c5321b replaced in
+  7.3; the new check makes it unreachable, so it is dropped ]
 Fixes: d46ab2c98aba ("io_uring: switch local task_work to a mpscq")
 Assisted-by: LLM
 Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Link: https://patch.msgid.link/20261015-b4-io-uring-fixes-v1-7-c1556f5d7bf5@toxicpanda.com
+Link: https://patch.msgid.link/20261015-b4-io-uring-fixes-v1-8-c1556f5d7bf5@toxicpanda.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Co-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/loop.c |    8 +-------
- io_uring/tw.c   |    2 +-
- io_uring/wait.c |    3 +--
- io_uring/wait.h |   15 +++++++++++++++
- 4 files changed, 18 insertions(+), 10 deletions(-)
+ io_uring/cancel.c |   14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
---- a/io_uring/loop.c
-+++ b/io_uring/loop.c
-@@ -9,12 +9,6 @@ static inline int io_loop_nr_cqes(const
- 	return lp->cq_wait_idx - READ_ONCE(ctx->rings->cq.tail);
- }
- 
--static inline void io_loop_wait_start(struct io_ring_ctx *ctx, unsigned nr_wait)
--{
--	atomic_set(&ctx->cq_wait_nr, nr_wait);
--	set_current_state(TASK_INTERRUPTIBLE);
--}
--
- static inline void io_loop_wait_finish(struct io_ring_ctx *ctx)
- {
- 	__set_current_state(TASK_RUNNING);
-@@ -24,7 +18,7 @@ static inline void io_loop_wait_finish(s
- static void io_loop_wait(struct io_ring_ctx *ctx, struct iou_loop_params *lp,
- 			 unsigned nr_wait)
- {
--	io_loop_wait_start(ctx, nr_wait);
-+	io_cq_wait_arm(ctx, nr_wait);
- 
- 	if (unlikely(io_local_work_pending(ctx) ||
- 		     io_loop_nr_cqes(ctx, lp) <= 0) ||
---- a/io_uring/tw.c
-+++ b/io_uring/tw.c
-@@ -165,7 +165,7 @@ void io_req_local_work_add(struct io_kio
- 
- 	/*
- 	 * The xchg() in mpscq_push() implies a full barrier, which pairs with
--	 * the barrier in set_current_state() on the io_cqring_wait() side. This
-+	 * the barrier in io_cq_wait_arm() on the io_cqring_wait() side. This
- 	 * ensures that either we see the updated ->cq_wait_nr, or waiters going
- 	 * to sleep will observe the work added to the list, which is similar to
- 	 * the wait/wake task state sync.
---- a/io_uring/wait.c
-+++ b/io_uring/wait.c
-@@ -257,8 +257,7 @@ int io_cqring_wait(struct io_ring_ctx *c
- 		unsigned long check_cq;
- 
- 		if (ctx->flags & IORING_SETUP_DEFER_TASKRUN) {
--			atomic_set(&ctx->cq_wait_nr, nr_wait);
--			set_current_state(TASK_INTERRUPTIBLE);
-+			io_cq_wait_arm(ctx, nr_wait);
- 		} else {
- 			prepare_to_wait_exclusive(&ctx->cq_wait, &iowq.wq,
- 							TASK_INTERRUPTIBLE);
---- a/io_uring/wait.h
-+++ b/io_uring/wait.h
-@@ -14,6 +14,21 @@
-  */
- #define IO_CQ_WAKE_INIT		(-1)
- 
-+/*
-+ * Start a wait cycle of the current task. The add that uses up ->cq_wait_nr
-+ * may be one that queued its entry long ago and only now gets to look at the
-+ * count. As nobody else wakes us after that, it has to find us sleeping, hence
-+ * the task state must be visible before the count is. The barrier pairs with
-+ * the xchg() in mpscq_push(), see io_req_local_work_add().
-+ */
-+static inline void io_cq_wait_arm(struct io_ring_ctx *ctx, int nr_wait)
-+{
-+	__set_current_state(TASK_INTERRUPTIBLE);
-+	atomic_set_release(&ctx->cq_wait_nr, nr_wait);
-+	/* order the above against looking at the work list */
-+	smp_mb();
-+}
-+
- struct ext_arg {
- 	size_t argsz;
- 	struct timespec64 ts;
+--- a/io_uring/cancel.c
++++ b/io_uring/cancel.c
+@@ -636,8 +636,18 @@ __cold void io_uring_cancel_generic(bool
+ 		io_uring_drop_tctx_refs(current);
+ 		/* only skip the sleep for local work this task may run */
+ 		xa_for_each(&tctx->xa, index, node) {
+-			if (io_local_work_pending(node->ctx) &&
+-			    io_allowed_defer_tw_run(node->ctx))
++			if (!(node->ctx->flags & IORING_SETUP_DEFER_TASKRUN) ||
++			    !io_allowed_defer_tw_run(node->ctx))
++				continue;
++			/*
++			 * The wake up io_uring_try_cancel_requests() asked for
++			 * may have been issued while we were still running. Ask
++			 * again now that it can't be missed.
++			 */
++			atomic_set(&node->ctx->cq_wait_nr, 1);
++			/* pairs with the xchg() in mpscq_push() */
++			smp_mb();
++			if (io_local_work_pending(node->ctx))
+ 				goto end_wait;
+ 		}
+ 		/*
 
 
