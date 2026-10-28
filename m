@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214142;
-	b=Ay/RcNZV7+O1ea89vMxSgUfToVlG2Q6qIM0zieF10msowwUl1+wRa1Zp70yWUwWArxI3
-	 5Mk1vE4wkiYwnPpDe7hrK1OW8sJrkB+NxyZu/vsiYRpDBN7yhwnltl0lfQzkSW+X98D4d
-	 Rr0/7Fcbo8oYy3qHwg8sSSocdBwmFvTa8HEMcZg9WZCGDcUIwCK12ybCaUIRa8XM5f9Dz
-	 MZlN3KrZN+SKuZkFZ9Ze/fA/zkG8QUXlDJpiU8xEt6HfXdFhwUfCtNlGqYdZCVqFfISM/
-	 53OzgxRLRcbtmMoip8BC2IBaVqTCDYsuQzspURgQBPsGmM4X37p9uoz0PoMFC1OPYTA==
+	t=1793214144;
+	b=sDcPjRgIDTqtglNCu41yMXWSrqbUCpJUCMC0uVdK+OKczDmyRHePr/U6bwePV31OrUD+
+	 OI7d7fQT4fjBUUxFioIHHZYVF3txJPM0BUqQiI/7rPK81Z7NT74plv4aF8O8xu7iAPyQj
+	 DrJ14hzVE1xxVSZntd5QOMPzthd+32UNrHwxuNMrefFerU6oRuR6BNJ9koENChZt1dS7f
+	 atDzrJl6SQJj7TnVcS6TEIfhiR4E5Kkdhr2iWnD9rjj0CQBIuEUTnDLf2zagOTo5CP8RI
+	 rcpBUNiAVDNpDRrtUdfbHd4uaxZhNVV5sbK0LSHZO+0KkO2YQNpwBRgV+MB7pBJ/ggg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214142;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214144;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=mp36gDLN7CxFBFsdq+WklIvolfomSISsVBGOUwHjQtE=;
-	b=f4nwPrfNH1sCdL5WAOg7NgbYO/KMLNssmbhsAvA3nDjnIsNv/04riTyODlTkque9TqHZ
-	 GJVk2ciwDYb3kNr97X0+3a7IJHnHDIX52+F/JQKj6TClRIS2Rr6EjDHycycme/5OTLBd9
-	 j4Ufgc8MY13+P4XYOfQP7v+GepbpkPRVTvbuQnEOaGGisvU34ocmyZVCdjsVkbOsLSld7
-	 oToNx4J87gUitRNKBvg+9BpEfS47ov7Q8ph8tO54wg5EBAFXpQuAFt7xnigFWCfnqGyWe
-	 0HCGI/lJWRlE+q2vdm36e8U7J1DEofZd21cGMCeQzX82odcrLvMi0lvXhvh1PxnNGKA==
+	bh=ILhR7MJmEKozUKw2BQnMV3LGW0VDjYn3NZny3EQvMpk=;
+	b=yB68eQzywV7flg2HhzOrzDvM/chCOyY2jv3Tfc2XPzAmp1NOpV5DJf60GhZN+AXPVPoL
+	 G1uYGzYxsQjLnxYBoPDekavt++xh5Zd5iplrVnb+oUqX4i1xuNE3CulJn/GHC2QOwQgwN
+	 usCTs/QgZv0PpcgBn/5ZX5NLwd3etFncd+asI6un0JHdtzPOrPVYhX+GxaMN3QkJwcKgd
+	 ufy1RUDVTFg8dS8ssP6nlsUjsI31PfOYqggDu5uEN6odNqQNVamf301NZntDT83aOwY4v
+	 nGYWd/p2elMM2roVbOEvAZsVJeyD/45G4AGQ0mUwlM4bbUrox38Wh+RasaGGzcO9cPg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Lia+rgtn;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hklW56Rr;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C279D606A31C;
-	Wed, 28 Oct 2026 19:02:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B710606A31A;
+	Wed, 28 Oct 2026 19:02:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Lia+rgtn
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CDDA1F01825;
-	Wed, 28 Oct 2026 19:02:20 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hklW56Rr
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC5391F01825;
+	Wed, 28 Oct 2026 19:02:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214141;
-	bh=mp36gDLN7CxFBFsdq+WklIvolfomSISsVBGOUwHjQtE=;
+	s=korg; t=1793214144;
+	bh=ILhR7MJmEKozUKw2BQnMV3LGW0VDjYn3NZny3EQvMpk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Lia+rgtnmTqFPpwB3sRGV+XbKRh+AEgjlfWWIERQJa3PAR6RTTuhx6se8GAy0OIrT
-	 9t2Xqb1+IZAZcgE8CWYyAqZAqhnQnYEUC2nV7NkjIsSJtjKRJcm693Zc2pD8h1v1rz
-	 XBQ+68LDHSokPJ0nZty90o2NkpiMAgo//FSpGV2g=
+	b=hklW56RrtYxhv8YiFnMMBNA3XsvKkBYKX3vp+ZwxYCNwkvWsAi3ZPDkTH8Ojm+/50
+	 5v5r3pUK80Lg4WC77PBmEpcJqusn3ZqY9xV0aUYxXe5/zzet5BDr6byNrF5aSsbmFg
+	 9ez3YU4KWGDw2Jo3KkOEPDo+w0/PaHeiDHd2TzbY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Norbert Szetei <norbert@doyensec.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Taehee Yoo <ap420073@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0753/1887] ksmbd: prevent connection release during oplock break notification
-Date: Wed, 28 Oct 2026 17:47:29 +0100
-Message-ID: <20261028170516.580185943@linuxfoundation.org>
+Subject: [PATCH 6.1 0754/1887] eth: bnxt: fix truesize for mb-xdp-pass case
+Date: Wed, 28 Oct 2026 17:47:30 +0100
+Message-ID: <20261028170516.602980376@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,150 +68,122 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Taehee Yoo <ap420073@gmail.com>
 
-[ Upstream commit 3aa660c059240e0c795217182cf7df32909dd917 ]
+[ Upstream commit 9f7b2aa5034e24d3c49db73d5f760c0435fe31c2 ]
 
-ksmbd_work could be freed when after connection release.
-Increment r_count of ksmbd_conn to indicate that requests
-are not finished yet and to not release the connection.
+When mb-xdp is set and return is XDP_PASS, packet is converted from
+xdp_buff to sk_buff with xdp_update_skb_shared_info() in
+bnxt_xdp_build_skb().
+bnxt_xdp_build_skb() passes incorrect truesize argument to
+xdp_update_skb_shared_info().
+The truesize is calculated as BNXT_RX_PAGE_SIZE * sinfo->nr_frags but
+the skb_shared_info was wiped by napi_build_skb() before.
+So it stores sinfo->nr_frags before bnxt_xdp_build_skb() and use it
+instead of getting skb_shared_info from xdp_get_shared_info_from_buff().
 
-Cc: stable@vger.kernel.org
-Reported-by: Norbert Szetei <norbert@doyensec.com>
-Tested-by: Norbert Szetei <norbert@doyensec.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Splat looks like:
+ ------------[ cut here ]------------
+ WARNING: CPU: 2 PID: 0 at net/core/skbuff.c:6072 skb_try_coalesce+0x504/0x590
+ Modules linked in: xt_nat xt_tcpudp veth af_packet xt_conntrack nft_chain_nat xt_MASQUERADE nf_conntrack_netlink xfrm_user xt_addrtype nft_coms
+ CPU: 2 UID: 0 PID: 0 Comm: swapper/2 Not tainted 6.14.0-rc2+ #3
+ RIP: 0010:skb_try_coalesce+0x504/0x590
+ Code: 4b fd ff ff 49 8b 34 24 40 80 e6 40 0f 84 3d fd ff ff 49 8b 74 24 48 40 f6 c6 01 0f 84 2e fd ff ff 48 8d 4e ff e9 25 fd ff ff <0f> 0b e99
+ RSP: 0018:ffffb62c4120caa8 EFLAGS: 00010287
+ RAX: 0000000000000003 RBX: ffffb62c4120cb14 RCX: 0000000000000ec0
+ RDX: 0000000000001000 RSI: ffffa06e5d7dc000 RDI: 0000000000000003
+ RBP: ffffa06e5d7ddec0 R08: ffffa06e6120a800 R09: ffffa06e7a119900
+ R10: 0000000000002310 R11: ffffa06e5d7dcec0 R12: ffffe4360575f740
+ R13: ffffe43600000000 R14: 0000000000000002 R15: 0000000000000002
+ FS:  0000000000000000(0000) GS:ffffa0755f700000(0000) knlGS:0000000000000000
+ CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+ CR2: 00007f147b76b0f8 CR3: 00000001615d4000 CR4: 00000000007506f0
+ PKRU: 55555554
+ Call Trace:
+  <IRQ>
+  ? __warn+0x84/0x130
+  ? skb_try_coalesce+0x504/0x590
+  ? report_bug+0x18a/0x1a0
+  ? handle_bug+0x53/0x90
+  ? exc_invalid_op+0x14/0x70
+  ? asm_exc_invalid_op+0x16/0x20
+  ? skb_try_coalesce+0x504/0x590
+  inet_frag_reasm_finish+0x11f/0x2e0
+  ip_defrag+0x37a/0x900
+  ip_local_deliver+0x51/0x120
+  ip_sublist_rcv_finish+0x64/0x70
+  ip_sublist_rcv+0x179/0x210
+  ip_list_rcv+0xf9/0x130
+
+How to reproduce:
+<Node A>
+ip link set $interface1 xdp obj xdp_pass.o
+ip link set $interface1 mtu 9000 up
+ip a a 10.0.0.1/24 dev $interface1
+<Node B>
+ip link set $interfac2 mtu 9000 up
+ip a a 10.0.0.2/24 dev $interface2
+ping 10.0.0.1 -s 65000
+
+Following ping.py patch adds xdp-mb-pass case. so ping.py is going to be
+able to reproduce this issue.
+
+Fixes: 1dc4c557bfed ("bnxt: adding bnxt_xdp_build_skb to build skb from multibuffer xdp_buff")
+Signed-off-by: Taehee Yoo <ap420073@gmail.com>
+Link: https://patch.msgid.link/20250309134219.91670-2-ap420073@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/connection.c | 19 +++++++++++++++++++
- fs/smb/server/connection.h |  2 ++
- fs/smb/server/oplock.c     |  6 ++++++
- fs/smb/server/server.c     | 10 ++--------
- 4 files changed, 29 insertions(+), 8 deletions(-)
+ drivers/net/ethernet/broadcom/bnxt/bnxt.c     | 8 ++++++++
+ drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c | 2 +-
+ 2 files changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/fs/smb/server/connection.c b/fs/smb/server/connection.c
-index d99e1343955a3..a0c548447c2af 100644
---- a/fs/smb/server/connection.c
-+++ b/fs/smb/server/connection.c
-@@ -442,6 +442,25 @@ void ksmbd_conn_init_server_callbacks(struct ksmbd_conn_ops *ops)
- 	default_conn_ops.terminate_fn = ops->terminate_fn;
- }
- 
-+void ksmbd_conn_r_count_inc(struct ksmbd_conn *conn)
-+{
-+	atomic_inc(&conn->r_count);
-+}
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+index 3179412d7b33b..321504790948f 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+@@ -1833,6 +1833,7 @@ static int bnxt_rx_pkt(struct bnxt *bp, struct bnxt_cp_ring_info *cpr,
+ 	struct rx_cmp_ext *rxcmp1;
+ 	u32 tmp_raw_cons = *raw_cons;
+ 	u16 cfa_code, cons, prod, cp_cons = RING_CMP(tmp_raw_cons);
++	struct skb_shared_info *sinfo;
+ 	struct bnxt_sw_rx_bd *rx_buf;
+ 	unsigned int len;
+ 	u8 *data_ptr, agg_bufs, cmp_type;
+@@ -1957,6 +1958,7 @@ static int bnxt_rx_pkt(struct bnxt *bp, struct bnxt_cp_ring_info *cpr,
+ 							     false);
+ 			if (!frag_len)
+ 				goto oom_next_rx;
 +
-+void ksmbd_conn_r_count_dec(struct ksmbd_conn *conn)
-+{
-+	/*
-+	 * Checking waitqueue to dropping pending requests on
-+	 * disconnection. waitqueue_active is safe because it
-+	 * uses atomic operation for condition.
-+	 */
-+	atomic_inc(&conn->refcnt);
-+	if (!atomic_dec_return(&conn->r_count) && waitqueue_active(&conn->r_count_q))
-+		wake_up(&conn->r_count_q);
-+
-+	ksmbd_conn_put(conn);
-+}
-+
- int ksmbd_conn_transport_init(void)
- {
- 	int ret;
-diff --git a/fs/smb/server/connection.h b/fs/smb/server/connection.h
-index a38e264889eea..2a6628bb312d9 100644
---- a/fs/smb/server/connection.h
-+++ b/fs/smb/server/connection.h
-@@ -176,6 +176,8 @@ int ksmbd_conn_transport_init(void);
- void ksmbd_conn_transport_destroy(void);
- void ksmbd_conn_lock(struct ksmbd_conn *conn);
- void ksmbd_conn_unlock(struct ksmbd_conn *conn);
-+void ksmbd_conn_r_count_inc(struct ksmbd_conn *conn);
-+void ksmbd_conn_r_count_dec(struct ksmbd_conn *conn);
- 
- /*
-  * WARNING
-diff --git a/fs/smb/server/oplock.c b/fs/smb/server/oplock.c
-index 0b71399af50cc..31f84f59e40a7 100644
---- a/fs/smb/server/oplock.c
-+++ b/fs/smb/server/oplock.c
-@@ -657,6 +657,7 @@ static void __smb2_oplock_break_noti(struct work_struct *wk)
- {
- 	struct smb2_oplock_break *rsp = NULL;
- 	struct ksmbd_work *work = container_of(wk, struct ksmbd_work, work);
-+	struct ksmbd_conn *conn = work->conn;
- 	struct oplock_break_info *br_info = work->request_buf;
- 	struct smb2_hdr *rsp_hdr;
- 	struct ksmbd_file *fp;
-@@ -712,6 +713,7 @@ static void __smb2_oplock_break_noti(struct work_struct *wk)
- 
- out:
- 	ksmbd_free_work_struct(work);
-+	ksmbd_conn_r_count_dec(conn);
- }
- 
- /**
-@@ -746,6 +748,7 @@ static int smb2_oplock_break_noti(struct oplock_info *opinfo)
- 	work->sess = opinfo->sess;
- 
- 	if (opinfo->op_state == OPLOCK_ACK_WAIT) {
-+		ksmbd_conn_r_count_inc(conn);
- 		INIT_WORK(&work->work, __smb2_oplock_break_noti);
- 		ksmbd_queue_work(work);
- 
-@@ -767,6 +770,7 @@ static void __smb2_lease_break_noti(struct work_struct *wk)
- {
- 	struct smb2_lease_break *rsp = NULL;
- 	struct ksmbd_work *work = container_of(wk, struct ksmbd_work, work);
-+	struct ksmbd_conn *conn = work->conn;
- 	struct lease_break_info *br_info = work->request_buf;
- 	struct smb2_hdr *rsp_hdr;
- 
-@@ -813,6 +817,7 @@ static void __smb2_lease_break_noti(struct work_struct *wk)
- 
- out:
- 	ksmbd_free_work_struct(work);
-+	ksmbd_conn_r_count_dec(conn);
- }
- 
- /**
-@@ -863,6 +868,7 @@ static int smb2_lease_break_noti(struct oplock_info *opinfo)
- 			list_del_init(&in_work->interim_entry);
- 			release_async_work(in_work);
  		}
-+		ksmbd_conn_r_count_inc(conn);
- 		INIT_WORK(&work->work, __smb2_lease_break_noti);
- 		ksmbd_queue_work(work);
- 		wait_for_break_ack(opinfo);
-diff --git a/fs/smb/server/server.c b/fs/smb/server/server.c
-index a61488b6b5904..08fe608ac75a2 100644
---- a/fs/smb/server/server.c
-+++ b/fs/smb/server/server.c
-@@ -291,13 +291,7 @@ static void handle_ksmbd_work(struct work_struct *wk)
- 	ksmbd_conn_try_dequeue_request(work);
- 	ksmbd_free_work_struct(work);
- 	atomic_dec(&conn->mux_smb_requests);
--	/*
--	 * Checking waitqueue to dropping pending requests on
--	 * disconnection. waitqueue_active is safe because it
--	 * uses atomic operation for condition.
--	 */
--	if (!atomic_dec_return(&conn->r_count) && waitqueue_active(&conn->r_count_q))
--		wake_up(&conn->r_count_q);
-+	ksmbd_conn_r_count_dec(conn);
+ 		xdp_active = true;
+ 	}
+@@ -1966,6 +1968,12 @@ static int bnxt_rx_pkt(struct bnxt *bp, struct bnxt_cp_ring_info *cpr,
+ 			rc = 1;
+ 			goto next_rx;
+ 		}
++		if (xdp_buff_has_frags(&xdp)) {
++			sinfo = xdp_get_shared_info_from_buff(&xdp);
++			agg_bufs = sinfo->nr_frags;
++		} else {
++			agg_bufs = 0;
++		}
+ 	}
+ 
+ 	if (len <= bp->rx_copy_thresh) {
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c
+index 1b35805627c59..0d787e105b6ae 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c
+@@ -464,7 +464,7 @@ bnxt_xdp_build_skb(struct bnxt *bp, struct sk_buff *skb, u8 num_frags,
+ 
+ 	xdp_update_skb_shared_info(skb, num_frags,
+ 				   sinfo->xdp_frags_size,
+-				   BNXT_RX_PAGE_SIZE * sinfo->nr_frags,
++				   BNXT_RX_PAGE_SIZE * num_frags,
+ 				   xdp_buff_is_frag_pfmemalloc(xdp));
+ 	return skb;
  }
- 
- /**
-@@ -332,7 +326,7 @@ static int queue_ksmbd_work(struct ksmbd_conn *conn)
- 	conn->request_buf = NULL;
- 
- 	ksmbd_conn_enqueue_request(work);
--	atomic_inc(&conn->r_count);
-+	ksmbd_conn_r_count_inc(conn);
- 	/* update activity on connection */
- 	conn->last_active = jiffies;
- 	INIT_WORK(&work->work, handle_ksmbd_work);
 -- 
 2.53.0
 
