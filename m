@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793207383;
-	b=kaZ240njCK6UH6xcYFSmpaSk4vd2MZY8M2mol++xXjCjdIhIriFU+l2Uh5gIpzuCp/dk
-	 UabPmkS2Ijvl77g2868fuNvx0Pp97/SVYjRd0VecO788wtxdVeSYWq+aeqPnDHI3wilwh
-	 LauGSF+vnk3YT4DrI049ZCgrZ9rfOX+V9DU370PliIicr3m7zZc9+xM89f2pzdhirJMWr
-	 denxdSeETUli7gFaU8nb/Urp3/s3JyiZSg7F1vcpNP0PYfMAEQ6R0AlGHSd/XmpYsp8mm
-	 XX4dtOjhfUNGraJtMHg++/jOtX/Iir6HOAMqrJByRrH6XJNLOlkDFolUvcRm03dKTdg==
+	t=1793207386;
+	b=aC+6Htr/g3DmsJfzJ8iMiFunlP/U4TcBwBzNKkPte9io6yyt1/cS9ZOHS3Qnzd3PeW3x
+	 /GVdBuoyikGg4h4we0KfTf3gJY/N7NTGORQtzVD6k/0jDpdXAnKhvoJAzreKuc+/ZUqTT
+	 vtC9CsAkcSeKyEX9VR2XGouAq2MmIkC4jSPKg8a+kxD8EuLVyv1Fw7CzYcdphDjkXT8pG
+	 cpk13FgkPfZm3tMX5DG/krhaBXRXSyIcOcALpauzWxXUtzpX/8zQpLU6kfn2fTKckQpTj
+	 x7UsHXGeWX7EAsnL5MYb/jw4glhmW9XFzlZxNkvxhqRnUUn3/mhRyYQkwg5pbT3P0eQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793207383;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793207386;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=CoZ2GjoIfL+it/u29m7JfCHckja/EXj3kLO14A9ISjY=;
-	b=Uhb85QySLTfacdtgl9cScK3dP9Co1JL83vwM6gP8pglvcJ7Df8EnzSKzoPF73gXhYVX6
-	 icLxH0DIvrlmCjFdU4kXaOj5p/mfsdqX6bznIWtBYC6FZsS9vgSqCrfAmkLxr+Wa5IpDU
-	 nBPCuUfqcfncKSayHfkIngc2QmfFESKtL8GN8P/Rozb6XgpA6KEeGFumP5uH3deUbQ08t
-	 mClJcS/SM3WK+liGGFfa90DBBdGCGoCwmdqh0jIwdqn8vJSbYq5fGcBr4Tc5t10nWhea0
-	 XFjfO45ECmTUcxnjVLRHiDV3x1BywGJ2oV5Aql/w074LS0Kd7elAxfhnag1xgeudQzA==
+	bh=h8+5LXDKj7xkNPbVqSUcvzmv1WPmS7h7ur3iJsaLrQE=;
+	b=Cj9JaQOhcgJ+ESABP5L4uffIqzrwCuvRYwpR1xCeJC66ecI7LXYPt7njMEZk1aNxUOo3
+	 D0ngRd3wywKMop2Beby8/7nrgdrbisfv8IElRwa9AN5s8VJq8TPO08px4k0Lpvl/Zbm6T
+	 UuMZGjKhzdvfBekRp1jTdEXUex/SD43+Gbfw6lrK4eZr5C7D8mney8nn33ebWVLdPDP2x
+	 b8qJ4qJyhXyK622Lc66bfakz/J+hhSLcbCWOUi2pSh92RYlQKJTtdvM6IAAj7XGqtxc8r
+	 uWzIEuaNTtrMzcNtxDwX2YwBPYy3Ec1N71Um/URJYINISkdp1xTyy7Fsvhm/KPuN8qQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LRDMgM37;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=irwKtn0g;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06E6E606A31D;
-	Wed, 28 Oct 2026 17:09:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB290606A31D;
+	Wed, 28 Oct 2026 17:09:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LRDMgM37
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 557AA1F01825;
-	Wed, 28 Oct 2026 17:09:42 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=irwKtn0g
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23DAF1F01828;
+	Wed, 28 Oct 2026 17:09:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793207382;
-	bh=CoZ2GjoIfL+it/u29m7JfCHckja/EXj3kLO14A9ISjY=;
+	s=korg; t=1793207385;
+	bh=h8+5LXDKj7xkNPbVqSUcvzmv1WPmS7h7ur3iJsaLrQE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LRDMgM37gZdBg+3bgNNtoYMIZ+ZyVMiZsPoro560LHWM4JPlnL/Ui100DOUENP1fj
-	 98l+5ypdFXhRpVhgZd3IQKrBxT18zWCgj+ldd6vS9xtYbKRZDj9nPBDiVXNpqfWATA
-	 JjTf7P/QsVdLD5M1CWSoZgGP/U+/4L/xzRNzRkWA=
+	b=irwKtn0gRpqK5nptHNROlu1o6g+Z8Sd0C29bjWI7MRRRNFkFcVL+P5MNPTdzhhsdF
+	 Anp+lVHAqJ0HFW7JlLMwGyqMx5JtbOtlF+s8WqKO+RTHA+LuHLop6pfcKvIB2lQGnb
+	 KEm5eC+rZ6hRiyO1WNfATdXUenyGQnfQ2hrQqxgU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Oleg Nesterov <oleg@redhat.com>,
 	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 7.2 86/88] coredump: prevent TIF_NOTIFY_SIGNAL from interrupting coredumps
-Date: Wed, 28 Oct 2026 18:00:34 +0100
-Message-ID: <20261028165944.138103750@linuxfoundation.org>
+Subject: [PATCH 7.2 87/88] pid_namespace: prevent TIF_NOTIFY_SIGNAL from interrupting the reaper
+Date: Wed, 28 Oct 2026 18:00:35 +0100
+Message-ID: <20261028165944.160852755@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165942.107695352@linuxfoundation.org>
 References: <20261028165942.107695352@linuxfoundation.org>
@@ -69,76 +69,50 @@ Content-Transfer-Encoding: 8bit
 
 From: Christian Brauner <brauner@kernel.org>
 
-commit a58d647acfdc62561f3570d114025b3bf38ae41b upstream.
+commit 5c0985dd3c32fc2bbd0e8beaf13cf52cd97376a2 upstream.
 
-TIF_NOTIFY_SIGNAL is used to kick a task in uninterruptible sleep to
-return to userspace and run task work and then go back to sleep. This
-mechanism works well but breaks coredumps. dump_interrupted() only
-allows fatal signals to interrupt a coredump and the whole regular write
-path going to actual filesystems is impervious to TIF_NOTIFY_SIGNAL as
-well.
+Since commit 7fea700e04bd ("zap_pid_ns_processes: clear
+TIF_NOTIFY_SIGNAL along with TIF_SIGPENDING") zap_pid_ns_processes()
+clears TIF_NOTIFY_SIGNAL before every kernel_wait4() call. Otherwise
+kernel_wait4() doesn't sleep and returns -ERESTARTSYS if
+signal_pending() is true and the reaper busy-waits.
 
-However, both the usermodehelper pipe and the coredump socket will bail
-early on TIF_NOTIFY_SIGNAL. This affects the following codepaths:
+But clearing TIF_NOTIFY_SIGNAL doesn't fix it. It can get raised again.
+For example, klp_send_signals() sets it raw against any task that hasn't
+transitioned yet. And it keeps sending it until the livepatch finishes.
 
-- coredump_sock_recv() -> unix_stream_read_generic()
-  The request/ack handshake is abandoned before any coredump data is
-  sent.
+The sleep loop waiting for pid_allocated to drop has the same problem
+and it doesn't even clear anything. So a schedule() in
+TASK_INTERRUPTIBLE returns immediately.
 
-- anon_pipe_write() returning -ERESTARTSYS
-  Once the pipe is full this truncates the coredump.
+Use a no_notify_signal guard. signal_pending() will ignore
+TIF_NOTIFY_SIGNAL and the pid namespace reaper sleeps until a child
+exits or free_pid() wakes it.
 
-- unix_stream_sendmsg() returning -ERESTARTSYS
-  Once the send buffer is full this truncates the coredump.
-
-- coredump_sock_wait() -> __kernel_read()
-  This reports a failure that didn't happen.
-
-- wait_for_dump_helpers() -> wait_event_interruptible()
-  This stops waiting for the coredump helpers.
-
-Such truncation is entirely invisible to userspace and all uapi bits
-still indicate that a successful coredump happened. A crashing process
-with a bunch of file backed mappings and io_uring thrown in loses most
-of the coredump data. If the NT_FILE note goes past PAGE_SIZE mappings
-it's gonzo.
-
-TIF_NOTIFY_SIGNAL is sent by io_uring for the common case. And it uses
-poll without sleeping so a completion callback runs task_work_add() from
-interrupt context against the task that submitted the request. This is
-the task that is running the coredump. Since that task hasn't set
-work_exited (it hasn't exited yet after all) TIF_NOTIFY_SIGNAL keeps
-reappearing.
-
-A coredumping task doesn't return to userspace. The task work is run at
-exit. So interrupting it doesn't buy anything and just loses the
-coredump which is quite valuable.
-
-Note that this isn't specific to io_uring. There's also
-klp_send_signals(), bpf_task_work_schedule_signal(), landlock's tsync
-and then  technically, kthread_stop() and the printk kunit test set the
-bit raw.
-
-Link: https://patch.msgid.link/20260824-work-tif_notify_signal-v2-2-6609e42b3157@kernel.org
-Fixes: 12db8b690010 ("entry: Add support for TIF_NOTIFY_SIGNAL")
+Link: https://patch.msgid.link/20260824-work-tif_notify_signal-v2-5-6609e42b3157@kernel.org
+Fixes: 7fea700e04bd ("zap_pid_ns_processes: clear TIF_NOTIFY_SIGNAL along with TIF_SIGPENDING")
 Reviewed-by: Oleg Nesterov <oleg@redhat.com>
 Cc: stable@vger.kernel.org
+Suggested-by: Oleg Nesterov <oleg@redhat.com>
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/coredump.c |    2 ++
- 1 file changed, 2 insertions(+)
+ kernel/pid_namespace.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/fs/coredump.c
-+++ b/fs/coredump.c
-@@ -1196,6 +1196,8 @@ void vfs_coredump(const kernel_siginfo_t
- 	if (coredump_wait(siginfo->si_signo, &core_state) < 0)
- 		return;
- 
-+	/* Task work must not cut the dump short, see signal_pending(). */
+--- a/kernel/pid_namespace.c
++++ b/kernel/pid_namespace.c
+@@ -238,9 +238,10 @@ void zap_pid_ns_processes(struct pid_nam
+ 	 * kernel_wait4() will also block until our children traced from the
+ 	 * parent namespace are detached and become EXIT_DEAD.
+ 	 */
++	/* Task work must not busy-loop the reaper, see signal_pending(). */
 +	guard(no_notify_signal)();
- 	scoped_with_creds(cred)
- 		do_coredump(&cn, &cprm, &argv, &argc, binfmt);
- 	coredump_cleanup(&cn, &cprm);
+ 	do {
+ 		clear_thread_flag(TIF_SIGPENDING);
+-		clear_thread_flag(TIF_NOTIFY_SIGNAL);
+ 		rc = kernel_wait4(-1, NULL, __WALL, NULL);
+ 	} while (rc != -ECHILD);
+ 
 
 
