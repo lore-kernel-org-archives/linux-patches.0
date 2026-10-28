@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793212851;
-	b=4EgkV3hL5WffuCgP1Ov8xgPLv45N0mHV+KyV/4O6Gsi8lnG1mW9Vipm1tG42xS7wSf/E
-	 32/U/xXxqEPKn/dMujBXvnrfaIOs7i8wUzxSqFCRR4XhdO1qlUzmvP12v3r5BKfnTpIeq
-	 KRolpMZLScE/tW0czpU+5EGlWlzAvBfohUEO8gZ/ODEBQqhL1uW4dTiJjqtCw8tKv0B6g
-	 r+tF21bVn0PA9LO/ehuJ1UX89MxIY4REMSCHdWD4sQwMDi+ThtWBfxF8NOjEQIOP7RyaD
-	 1YTy7USI+O0QyJvvpkaDNUJDDHAVUMHP8KwhswFPeiY64XlazVoSVgyhRC7aKVHvsyw==
+	t=1793212854;
+	b=RsKBU/d/Pc/UJI80fbBXZcJIskFMJPSghG6yz0sxxTX8MjcGDRWF0E17Bi0mZB9XQBMe
+	 T2Tr3Q6hFQdwbZutRa6tYTJpcYeNk3DQ2+AFLUZbCaDoupANebkYG/RrCl9S+buEPza3H
+	 POvS2B6xBJfLrPhBXwvv/+Yui6o8R02b63aerGpKo55icCfXuBj4E3Nt0uX/GTFoxboK+
+	 7yYiwMEiy+0KnOcGIWlgEYJHmg9zRfFlxnNnZsbFO3yt7DMrf4Woa7GlJeiGSKgrAQadQ
+	 DVv+Uz5KbO/rO2Z2BQB1u+FPFqA0dJ1YuOyKrYgvaQqWJMXA0x65DHs/Hlei+r47egg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793212851;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793212854;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=CR26gf9GkTBNIUYwf0Nvn4HTDulMUqRnnH7CixRDp5g=;
-	b=31NGjEN8IrpfnrFUQDDEL4YtR4GnfhyLJf+N7AOwYfsxs4YE4byg12RqAsyRmJykarcw
-	 i1TmbVnRv3c5gcs58pemuxdBW83XL1tBm3lw0iwsmeA/3LMHsu5E82WJtlfH89XQNybcX
-	 NLV22RZtbyABF83JXG7t5CmVVlNzQ4w+taRZTMl8MJ5C+b2y9Oe/tHHux6WqKQ2u+nSJX
-	 QmvFxPY3nxcyO89ZwAeAPHyL7jDymR74VonIOnrbdTflYeIHw+BR1CkwXLzNQwt/aGshW
-	 AKhtLhT21VrPTfBQbnkWyPB8GqCegPp4iunr+Ek43UmvV4AQCfBt7MRYZHS6wINl0hA==
+	bh=NGL8HyhYv6Dcge+GicwXpD5ymhr7uEZpPv3wvpS2aic=;
+	b=Lp7y/jQZbGOrvbvV5r8Uf2fylt445W4cZ+o7xkqsYMF3HEL7986PDAm6A60J5QKUGPUx
+	 EQQz6GUEeoeFZ/NCiSyiUFkctkxSghQ9cyyjo3MGGUtNxFQuJf+Lx6c+0nuXqYOO1o6T7
+	 Mq6KQWyctGLHp+mYwfeAAp+wDQgEMzSTj4MmhqbwfX+Of5NkTrdqWDkVVemzKPZZhexYQ
+	 q4J8d89MgHqnGoQUvHMQFz9J7rQVTC7Zf5cBX4AVGWSqK/oLGZtaC77OmEF8GhPXQLwfA
+	 cduhw12x+00k+QDPlBkNkNzUZMGTNwc4SjvqnmZ0qw9HtdMSInW7x47niZSpnyBQF4A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ztwKC8YL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TGthuHmO;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81A0C606A31A;
-	Wed, 28 Oct 2026 18:40:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A52E606A31A;
+	Wed, 28 Oct 2026 18:40:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ztwKC8YL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFA541F01825;
-	Wed, 28 Oct 2026 18:40:50 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TGthuHmO
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABD451F01825;
+	Wed, 28 Oct 2026 18:40:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793212851;
-	bh=CR26gf9GkTBNIUYwf0Nvn4HTDulMUqRnnH7CixRDp5g=;
+	s=korg; t=1793212854;
+	bh=NGL8HyhYv6Dcge+GicwXpD5ymhr7uEZpPv3wvpS2aic=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ztwKC8YLRutGlZiCU9eWCv85yeMVwXeU84MIGgpT9UlQPi3VfMmcZypqzZcWlgAgb
-	 Q3O0cj9RY9C+0e6hKK7y9OunVGru1+Eyv5mhengGpTdQnm+YTl9RPyNLDOJgsJAY3I
-	 lbJlcmeY+eSB4pI0HQuiZQG7TGQSiJ1Y520NOwjY=
+	b=TGthuHmOUjQSGFjc24sCWWtCAK289+7TV1ZBGrIagCwjTllmpT7RAzDj2E1fTIPC9
+	 lIT8h7daP8Zg2fx+X806AoE75c5LAcyjPP68+tfrLCjlvpRLgFuASKwmbOSttaT4Ud
+	 OikD5U0ZtSLWvHZyjFidGGMoCmIcZsGNtfHlVoUg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.1 0256/1887] drm/amdgpu: fix ACP MFD device leak on init failure
-Date: Wed, 28 Oct 2026 17:39:12 +0100
-Message-ID: <20261028170505.056188584@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Tomer Pomeranc <tomerpo@gmail.com>,
+	Carlos Llamas <cmllamas@google.com>
+Subject: [PATCH 6.1 0257/1887] binder: fix is_failure flag for superseded transaction cleanup
+Date: Wed, 28 Oct 2026 17:39:13 +0100
+Message-ID: <20261028170505.077892551@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -67,86 +68,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Tomer Pomeranc <tomerpo@gmail.com>
 
-commit f0013046151b7467e62c471c1c83d63ea255799c upstream.
+commit 22c135635fdd9816c0ef140d6de7b2e4fdf73e89 upstream.
 
-acp_hw_init() registers ACP child devices with mfd_add_devices() before
-attaching them to the ACP power domain and initializing the hardware.
+When a TF_UPDATE_TXN transaction supersedes a pending async transaction,
+binder_release_entire_buffer() is called with is_failure=false. Since the
+superseded transaction was never delivered, binder_apply_fd_fixups() was
+never called and no fds were installed in the target process.
 
-If attaching a child to the power domain fails, or if the ACP reset or
-clock enable operation times out, the failure path frees only the
-source cell, resource, and platform-data allocations. The child
-platform devices already registered by mfd_add_devices() remain
-registered and are never released.
+With is_failure=false, the BINDER_TYPE_FDA cleanup handler interprets
+stale buffer contents as installed fd numbers and passes them to
+binder_deferred_fd_close(), closing unrelated file descriptors.
 
-Remove the children from the power domain and unregister the MFD
-devices on failures that occur after mfd_add_devices() succeeds. Keep
-mfd_add_devices() failures on the existing cleanup path since the MFD
-core already rolls back partially registered children itself.
+Pass is_failure=true since the transaction was never delivered to the
+target, matching the semantics of all other undelivered-transaction
+cleanup paths.
 
-The issue was identified by a static analysis tool I developed and
-confirmed by manual review.
-
-Fixes: 25030321ba28 ("drm/amd: add pm domain for ACP IP sub blocks")
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 63da68d6a2279ec945581c990c5a59a5ae8b5560)
-Cc: stable@vger.kernel.org
+Fixes: 9864bb480133 ("Binder: add TF_UPDATE_TXN to replace outdated txn")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Tomer Pomeranc <tomerpo@gmail.com>
+Acked-by: Carlos Llamas <cmllamas@google.com>
+Link: https://patch.msgid.link/20260812195316.259136-3-tomerpo@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_acp.c |   13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ drivers/android/binder.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_acp.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_acp.c
-@@ -324,7 +324,7 @@ static int acp_hw_init(void *handle)
- 		r = device_for_each_child(adev->acp.parent, &adev->acp.acp_genpd->gpd,
- 					  acp_genpd_add_device);
- 		if (r)
--			goto failure;
-+			goto failure_remove_mfd;
- 		break;
- 	}
- 	default:
-@@ -446,7 +446,7 @@ static int acp_hw_init(void *handle)
- 		r = device_for_each_child(adev->acp.parent, &adev->acp.acp_genpd->gpd,
- 					  acp_genpd_add_device);
- 		if (r)
--			goto failure;
-+			goto failure_remove_mfd;
- 	}
- 
- 	/* Assert Soft reset of ACP */
-@@ -464,7 +464,7 @@ static int acp_hw_init(void *handle)
- 		if (--count == 0) {
- 			dev_err(&adev->pdev->dev, "Failed to reset ACP\n");
- 			r = -ETIMEDOUT;
--			goto failure;
-+			goto failure_remove_mfd;
- 		}
- 		udelay(100);
- 	}
-@@ -482,7 +482,7 @@ static int acp_hw_init(void *handle)
- 		if (--count == 0) {
- 			dev_err(&adev->pdev->dev, "Failed to reset ACP\n");
- 			r = -ETIMEDOUT;
--			goto failure;
-+			goto failure_remove_mfd;
- 		}
- 		udelay(100);
- 	}
-@@ -492,6 +492,11 @@ static int acp_hw_init(void *handle)
- 	cgs_write_register(adev->acp.cgs_device, mmACP_SOFT_RESET, val);
- 	return 0;
- 
-+failure_remove_mfd:
-+	device_for_each_child(adev->acp.parent, NULL,
-+			      acp_genpd_remove_device);
-+	mfd_remove_devices(adev->acp.parent);
-+
- failure:
- 	kfree(i2s_pdata);
- 	kfree(adev->acp.acp_res);
+--- a/drivers/android/binder.c
++++ b/drivers/android/binder.c
+@@ -2833,7 +2833,7 @@ static int binder_proc_transaction(struc
+ 		t_outdated->buffer = NULL;
+ 		buffer->transaction = NULL;
+ 		trace_binder_transaction_update_buffer_release(buffer);
+-		binder_release_entire_buffer(proc, NULL, buffer, false);
++		binder_release_entire_buffer(proc, NULL, buffer, true);
+ 		binder_alloc_free_buf(&proc->alloc, buffer);
+ 		kfree(t_outdated);
+ 		binder_stats_deleted(BINDER_STAT_TRANSACTION);
 
 
