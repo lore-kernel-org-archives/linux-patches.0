@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793208218;
-	b=4hLQIjvw0hf8fCb4LqG1kgcJUNegMhCKwUP9YeARb1USiIt25+D2suPmt2sIEkdxjvTZ
-	 B7k8G2RrcDaSUAG6CW+f0fImO4BfsjhZbXOGhK4mmz1CKdBuvppd+7l4IKyX1lOSMChUd
-	 8apzlJixvRX5NO/dblJh2AvaXoqmupb7ek2DhObobwtR+Zs05NwbrLstK91JtMSeQPZAl
-	 Jjxgu8vL/rrBqwMh2SUc6QrRntgPYAospmilARKSvQbZLQBFlCFMgzgqpRHZGGz0rNnXG
-	 XbYwESVglFPUCFdbxKacTwK5V9dUUCi67iLZJLcvKb+qO1HY5YsE72V6wcrN3DdPDdg==
+	t=1793208220;
+	b=MQbIiAStz6DPtrQV3q+/Xzs/uEnwOr+cMXTugI0C8vxxNiGY2TeDIEgT1zF9KVJu9R1b
+	 Kaa+/sMR3dhpl3sAGSizlIcUVUBaUXwA+CPvLLaSi7a7VwvRiTxS+RsDSLu9etiId70xr
+	 Ymte/rdwNpqd3EXzJS+CYWnsTFbyxaxcGnUGsSKqniKNu1MZl09AlVhw70AFOFTXm0E2I
+	 T1mB5+63CQUGaMW+saoetHW0RzT6JOKA7JgVdq0H2VwgYEo7OqyP1qY7UeRqfqZXTESq3
+	 uSfea8d5UFGk73LtHdGhjM+jBqMt5o/RedsFp89VE18PDYCq4mFDHQCf3nTIVev5E1Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793208218;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793208220;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=hct9jtJiQ65kOrJ64FCtGavtPlhMpi0vNgs7OuKkQdg=;
-	b=P/VcGEnrG8gbVrrnCZ5r2JA170W3q5KUx/RpeZA9FK5yn8ViqecdozXgU3iiRdJEJZLF
-	 niLANaHIGlDLyndeCs4cq1tvKDpdMBXUBz99e7tujGuI/xf/5yNUlXnXs9qt8HR2FPW+P
-	 cdzy00DoHZZScpWs+8BClR4FCxfLYUFEIB1PhwN9MJORiWsxA3B2Mz1YKeTumlbgKg7yL
-	 S8KL8grJzk45wz8vrPbSDMKSxnvBO88WfZcRw8AX8emwjh0BGR4WvMRPDb2Qdr0mo6ewZ
-	 J+BGcuswY/J4gWoz1y+9ChJZK6AY+gnvZTrkWDDaFy1O9Un9f59ZKf79u1ZKt9jZoTQ==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=/52aDS0CDVH7NLcae28xrYYNEU/Eqqg608YBj29X+k8=;
+	b=EP0FIAx6w61HR4Qm8W3582KRGvS554N2c8OUgKDs1BLMO+AXzQYJoeKwhad+a34Qj3lJ
+	 dUtKaaWv8HvEIHWsmS89WtJG6SjrbDsFZQcoCMT62L0YvV0SJSr2n3uedNc/MusmSsAjN
+	 1G3k1AXU4LPYAf9sdo607v22PMy/PAeGgQPk6sZfzxIB8tl29BV7kPJjT7bUQZobJLhwV
+	 mC5W8jEGW5chqPLxmwOAUrdu6P5pUOuVTe7IWqmZba7JVQLRxVnY2NxjNXNyUpREwYMQT
+	 D0X+DU0i/u15vf7YlNihf46Jm/QMha2q51iK6gV7w1XEftD+RRjX8jVh/BZpEttNkDw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="K8vV1/OO";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=b+jmV1Py;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFBFB606A31D;
-	Wed, 28 Oct 2026 17:23:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F194606A31A;
+	Wed, 28 Oct 2026 17:23:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=K8vV1/OO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B1061F01829;
-	Wed, 28 Oct 2026 17:23:36 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=b+jmV1Py
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF5F01F01825;
+	Wed, 28 Oct 2026 17:23:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793208217;
-	bh=hct9jtJiQ65kOrJ64FCtGavtPlhMpi0vNgs7OuKkQdg=;
+	s=korg; t=1793208220;
+	bh=/52aDS0CDVH7NLcae28xrYYNEU/Eqqg608YBj29X+k8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=K8vV1/OOrKuLPzlJnupE4yu1Pe3BGL+d6YccKIgwdtU+SzCh3g5DhGjKIB8e6IUbN
-	 hq4Z0zMWjUSWKswnFve90ogjy9DNUFHCsXZlSWWxiHasIPmXU548cx0co1U+nOXsz/
-	 yH7kEa5I5L1Ow0BBbiYcRp9XOqm3IY1qMDB1xdRU=
+	b=b+jmV1PyiZ/YNrYV9DWeVcQQDWCd40gBifiCVVcyyqZuzKaClQCt/Q2NioiVCfkI1
+	 lIKjGprhOuexChgMndugMcT+l/Ff6tnAq4+zDYu+DTToeYEjlgq86lDVR51o9SfFx6
+	 be+Z8W+qtEGmjAr29ap/2YQF1OWwnOSngdvHt/Hc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baokun Li <libaokun@linux.alibaba.com>,
-	Miklos Szeredi <mszeredi@redhat.com>,
+	Breno Leitao <leitao@debian.org>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 041/516] fuse: fix invalidate lock leak on setattr writeback failure
-Date: Wed, 28 Oct 2026 17:53:13 +0100
-Message-ID: <20261028170004.505231967@linuxfoundation.org>
+Subject: [PATCH 5.10 042/516] usb: xhci: bail out of setup if the controller is inaccessible
+Date: Wed, 28 Oct 2026 17:53:14 +0100
+Message-ID: <20261028170004.529049724@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -62,86 +62,105 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Baokun Li <libaokun@linux.alibaba.com>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit 9afeca0d569c9fc89d758fe7a9339d1e8afb1546 ]
+[ Upstream commit 78203d5b54a40f0e36196ebf31c9c7a380fc8811 ]
 
-fuse_do_setattr() takes filemap_invalidate_lock() for a DAX truncate
-(fault_blocked = true) and releases it at the out:/error: labels.  But
-when a writeback flush is also needed, a write_inode_now() failure
-returns directly and leaks the lock, so any later fault or truncate on
-the file stalls on the stale rwsem.
+xhci_gen_setup() locates the operational registers using the capability
+length read from the very first register:
 
-For example, truncate(2) on a setuid file reaches fuse_do_setattr()
-with both ATTR_SIZE and ATTR_MODE set:
+	xhci->op_regs = hcd->regs +
+		HC_LENGTH(readl(&xhci->cap_regs->hc_capbase));
 
-  truncate(2)
-  └─ do_truncate()
-     ├─ dentry_needs_remove_privs()         # S_ISUID
-     └─ notify_change()                     # KILL_SUID -> ATTR_MODE
-        └─ fuse_setattr()                   # no killpriv:
-           │                                #   ia_valid |= ATTR_MODE
-           └─ fuse_do_setattr()
-              ├─ filemap_invalidate_lock()  # IS_DAX && is_truncate
-              └─ write_inode_now()          # is_wb && ATTR_MODE
-                 └─ if (err)                # e.g. daemon -> -EIO
-                    return err              # <- lock leaked
+If the controller is dead or has dropped off the bus, that read returns
+~0, HC_LENGTH() truncates it to 0xff, and op_regs ends up 0xff bytes
+past the page-aligned MMIO base, i.e. unaligned. The first access
+through it, xhci_halt() -> xhci_handshake() reading op_regs->status, is
+then an unaligned readl() on device memory. arm64 faults on unaligned
+device accesses, so instead of xhci_handshake() catching the all-ones
+value and returning -ENODEV, setup oopses:
 
-Fix this by adding an unlock label that releases the lock before
-returning the error, and use it for the fuse_dax_break_layouts()
-failure path as well.
+  xhci-pci-renesas 0005:08:00.0: Unable to change power state from D3cold to D0, device inaccessible
+  xhci-pci-renesas 0005:08:00.0: xHCI Host Controller
+  xhci-pci-renesas 0005:08:00.0: new USB bus registered, assigned bus number 1
+  Unable to handle kernel paging request at virtual address ffff80030a770103
+    ESR = 0x0000000096000021
+    FSC = 0x21: alignment fault
+  Internal error: Oops: 0000000096000021 [#1]  SMP
+  pc : xhci_halt [xhci_hcd]
+  Call trace:
+   xhci_halt
+   xhci_gen_setup
+   xhci_pci_setup
+   usb_add_hcd
+   usb_hcd_pci_probe
+   xhci_pci_common_probe
+   xhci_pci_renesas_probe
 
-Fixes: 6ae330cad6ef ("virtiofs: serialize truncate/punch_hole and dax fault path")
-Cc: stable@vger.kernel.org # v5.10+
-Signed-off-by: Baokun Li <libaokun@linux.alibaba.com>
-Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
-[ replaced up_write(&fi->i_mmap_sem) locking and (inode, 0, 0) call site instead of the mainline filemap_invalidate_lock/(inode, 0, -1) forms ]
+This was hit with a Renesas uPD720201 that failed to power up ("Unable
+to change power state from D3cold to D0, device inaccessible") yet still
+reached the HCD probe path.
+
+Read the capability register once, and if it reads back the all-ones
+value (as xhci_handshake() and xhci_reset() already test for), abort
+setup with -ENODEV before op_regs is derived from it. Reading it once
+also avoids re-reading a register that may change under a concurrent
+hot-removal.
+
+Fixes: 66d4eadd8d06 ("USB: xhci: BIOS handoff and HW initialization.")
+Cc: stable@vger.kernel.org
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://patch.msgid.link/20260806142113.2436238-11-mathias.nyman@linux.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+[ adapted the double hc_capbase register read via hcc_params/hci_version to use a single new local hc_capbase variable ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/fuse/dir.c | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ drivers/usb/host/xhci.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/fs/fuse/dir.c b/fs/fuse/dir.c
-index 4488a53a192dc..d475d19193848 100644
---- a/fs/fuse/dir.c
-+++ b/fs/fuse/dir.c
-@@ -1651,10 +1651,8 @@ int fuse_do_setattr(struct dentry *dentry, struct iattr *attr,
- 		down_write(&fi->i_mmap_sem);
- 		fault_blocked = true;
- 		err = fuse_dax_break_layouts(inode, 0, 0);
--		if (err) {
--			up_write(&fi->i_mmap_sem);
--			return err;
--		}
-+		if (err)
-+			goto unlock;
- 	}
+diff --git a/drivers/usb/host/xhci.c b/drivers/usb/host/xhci.c
+index 4d33130f1378a..4d3f13bd0313b 100644
+--- a/drivers/usb/host/xhci.c
++++ b/drivers/usb/host/xhci.c
+@@ -5247,6 +5247,7 @@ int xhci_gen_setup(struct usb_hcd *hcd, xhci_get_quirks_t get_quirks)
+ 	struct device		*dev = hcd->self.sysdev;
+ 	unsigned int		minor_rev;
+ 	int			retval;
++	u32			hc_capbase;
  
- 	if (attr->ia_valid & ATTR_OPEN) {
-@@ -1681,7 +1679,7 @@ int fuse_do_setattr(struct dentry *dentry, struct iattr *attr,
- 			 ATTR_TIMES_SET)) {
- 		err = write_inode_now(inode, true);
- 		if (err)
--			return err;
-+			goto unlock;
+ 	/* Accept arbitrarily long scatter-gather lists */
+ 	hcd->self.sg_tablesize = ~0;
+@@ -5313,16 +5314,19 @@ int xhci_gen_setup(struct usb_hcd *hcd, xhci_get_quirks_t get_quirks)
  
- 		fuse_set_nowrite(inode);
- 		fuse_release_nowrite(inode);
-@@ -1768,6 +1766,7 @@ int fuse_do_setattr(struct dentry *dentry, struct iattr *attr,
- 
- 	clear_bit(FUSE_I_SIZE_UNSTABLE, &fi->state);
- 
-+unlock:
- 	if (fault_blocked)
- 		up_write(&fi->i_mmap_sem);
- 	return err;
+ 	mutex_init(&xhci->mutex);
+ 	xhci->cap_regs = hcd->regs;
+-	xhci->op_regs = hcd->regs +
+-		HC_LENGTH(readl(&xhci->cap_regs->hc_capbase));
++	hc_capbase = readl(&xhci->cap_regs->hc_capbase);
++	if (hc_capbase == U32_MAX) {
++		xhci_warn(xhci, "Host controller not accessible, removed?\n");
++		return -ENODEV;
++	}
++	xhci->op_regs = hcd->regs + HC_LENGTH(hc_capbase);
+ 	xhci->run_regs = hcd->regs +
+ 		(readl(&xhci->cap_regs->run_regs_off) & RTSOFF_MASK);
+ 	/* Cache read-only capability registers */
+ 	xhci->hcs_params1 = readl(&xhci->cap_regs->hcs_params1);
+ 	xhci->hcs_params2 = readl(&xhci->cap_regs->hcs_params2);
+ 	xhci->hcs_params3 = readl(&xhci->cap_regs->hcs_params3);
+-	xhci->hcc_params = readl(&xhci->cap_regs->hc_capbase);
+-	xhci->hci_version = HC_VERSION(xhci->hcc_params);
++	xhci->hci_version = HC_VERSION(hc_capbase);
+ 	xhci->hcc_params = readl(&xhci->cap_regs->hcc_params);
+ 	if (xhci->hci_version > 0x100)
+ 		xhci->hcc_params2 = readl(&xhci->cap_regs->hcc_params2);
 -- 
 2.53.0
 
