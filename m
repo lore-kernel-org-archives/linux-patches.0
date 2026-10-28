@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793211356;
-	b=arBhhidBaQ4tcsOtMD7UMpwD9qIenbJSjK+WoalzzzhJuiRDqBViEUlnx+uVDSq5b65G
-	 21zs9zf4ZeuKhzXSCrjJCe295hvwiT+dbmiM65UlnSfHXbAHZNf5u3mr81CM9sgAI/pLx
-	 SJ/AvFgFt6B68e6tJbiMPn0EH2MYxNZ7Yd2l7NszLTCs+tpfHn9tKkcGengc3iOhI27xp
-	 7Vqvu9OoH+J5JhmXYBmItBkSt07JUFCfZYMG004vuMhXg/GcMWl6cC39IRqpUChVjpVds
-	 y/OmobC47RYh8esnKGBxcNJcmRcVKGPNX8aZLPELb456R1kZJ2QX80t1G2os4dN+z3Q==
+	t=1793211359;
+	b=1vnDvkFAVJe2RLeD8rt3XDhnUjtilq0TkZDs3ahHq9bWxnoSkBI+9mTBjIiYH2ST68p6
+	 uabcCoD1F1tCDdEdFnKcGalEoFvmRQDS5o56zD12wOvCGJ2LrUG06dPO2LgWfytHe0ITM
+	 6dw5ENbtibqKXg604IYDfqFA7BqYocLX0sGk8g2VtGfotweUsMaQDF0Ha5SzkSYRs28VL
+	 w2G3qKOJwVRqAIYMxajjjOtVByG+OGuGBaDTdnwAo1nINElpPIRZzuD33XhqiuMV0icku
+	 357d9o3ozcycKbumN4lRiL/ik7OXzmZFeWDjjf8HmEDuQ46C/DrQckB/v9GT1FwwKLA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793211356;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793211359;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=g65EvdersRhwYzAwknB8wVaEtMzT1nct0tUbNj/WGac=;
-	b=3+oIpBNyq+9zg5pZOgS7hpCUrB4aapFvgEeIxH5zbYdYJ9oOd/Q0Nf6+vY39sx5hH2su
-	 4gTO50XebsyKNxQMklkDNZoiYIBRDIUxwcJFStkNSls3EByVLhgrPe1UwgB3NkuXNtEjR
-	 ZkTYe2xmUEu8U45dzKi3wuG3HXZqbo4J0ujQWbbzCLIb4bjMIJy7gGQYi1pYNVqjVkdfH
-	 pOJZzeFX3busJmVnolbbV8PSWGUTiaVccHPY4pbnjx6WYycPhf4tPafdYqYj/9VG9vW7J
-	 /OJ2ytClsGk2cVE8UujF7G1i1+4EclBRK3edaWLi3eNHQTj8wsGcTdeqUen189tB7oA==
+	bh=lZXgrIt3lCowo0EdFf31m3gTO3DWzHGg7xh5GC7K8kI=;
+	b=HcFu9Q/rc3K+eVzXxgKDnSs6ravmT1tLVWkBjuhJ0heC+XSmEmUNb2nDJfxt48u9fF9x
+	 YeYHenOym/A/HKMgVnhk9omTDI4Bfl21WfZPQUWQNtUfeFzPkkZEVj4miytiJyxsX3dw/
+	 aDXHXV5Fwi1ffXJu2fVnfq2VK9E1NCbTlbIRRi1N9OuD0A42YxQTD1XUzyqssci4l5GnY
+	 LgxYTB3HcUFxKSXdg4/A8GC3J9Tbqe6w7DfaGkY1zcsI8rQghygbsp08SmaRuzbWGZ3Ou
+	 /qgTGNQZg2J1MnoICEzGxKQ7VQ1tEm5WcVs7TyDVt9m522jjzZEa+GG3bnMKAGi4U9g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="x/AsP+Ko";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sQFdkfRt;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 831A7606A96B;
-	Wed, 28 Oct 2026 18:15:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55F56606A31A;
+	Wed, 28 Oct 2026 18:15:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x/AsP+Ko
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D24481F01825;
-	Wed, 28 Oct 2026 18:15:55 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sQFdkfRt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6B1A1F01825;
+	Wed, 28 Oct 2026 18:15:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793211356;
-	bh=g65EvdersRhwYzAwknB8wVaEtMzT1nct0tUbNj/WGac=;
+	s=korg; t=1793211359;
+	bh=lZXgrIt3lCowo0EdFf31m3gTO3DWzHGg7xh5GC7K8kI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=x/AsP+Koki4aqG87/QVHiE+LyFpPaNrtXfdkHdyoTWdal+MQax+T15TLQDNYVRsH5
-	 +fsZfzF0pSeuJ9kMOd1wq0YAegV7pAMYaGGnI1Ft60EbO6fZFaIQ1BSCIRJoKd+VCF
-	 Fy3TqK5J7vXb9D75L6/RqfKYy/1E6iEiA4Wym4nI=
+	b=sQFdkfRt8WAIJYyoSa8YijUBA3CvYBfaP41RBduphi6R6Kt/B2t8t5vb0jNRzyqvk
+	 MzxCleLYCBXXXYxOp4Au2qe+SXZkfK3WhsbN9i3K2vGzKSiavsSn2dudfAO9zzkfi+
+	 nF7cyvHFycavt/bizK6gKc07jPO2QB0UQaZZGTjo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+48d935cf48a4a76be346@syzkaller.appspotmail.com,
-	Palla Raghunath <raghunathpalla.0209@gmail.com>,
-	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 5.15 348/571] dm ioctl: dont let data_start run past the buffer
-Date: Wed, 28 Oct 2026 17:58:15 +0100
-Message-ID: <20261028170016.274594855@linuxfoundation.org>
+	Michele Dionisio <michele.dionisio@gmail.com>,
+	Arend van Spriel <arend.vanspriel@broadcom.com>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 5.15 349/571] wifi: brcmfmac: fix P2P device removal race in brcmf_detach()
+Date: Wed, 28 Oct 2026 17:58:16 +0100
+Message-ID: <20261028170016.297561906@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -68,64 +68,134 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Palla Raghunath <raghunathpalla.0209@gmail.com>
+From: Michele Dionisio <michele.dionisio@gmail.com>
 
-commit 9b3fcf519d370df94a56f3b272d9eddffffa5be8 upstream.
+commit 08a3f02fea636e97a7422d1512f76dacdb5b0887 upstream.
 
-struct dm_ioctl has seven bytes of trailing padding, so the smallest
-buffer userspace is allowed to ask for, offsetof(struct dm_ioctl, data),
-is seven bytes shorter than sizeof(struct dm_ioctl).
+When the driver is removed while the user space process that created
+the P2P device (e.g. wpa_supplicant) is still exiting, the P2P device
+interface is removed twice and the kernel crashes.
 
-get_result_buffer() sets data_start to sizeof(struct dm_ioctl) without
-looking at how big the buffer actually is. Ask for the minimum and
-data_start ends up seven bytes past the end. Callers add it to
-data_size, and ctl_ioctl() copies that much back to userspace:
+The two paths are:
 
-  BUG: KASAN: slab-out-of-bounds in _copy_to_user+0xad/0xd0
-  Read of size 312 at addr ffff8880169e4c00 by task repro-dm/140
-   ctl_ioctl+0x5e3/0xcb0
-   dm_ctl_ioctl+0x25/0x40
-  allocated 305-byte region [ffff8880169e4c00, ffff8880169e4d31)
+ - wpa_supplicant, on exit, sends NL80211_CMD_DEL_INTERFACE for the P2P
+   device. nl80211_del_interface() holds RTNL and the wiphy mutex and
+   calls brcmf_p2p_del_vif(), which disables discovery and waits up to
+   1.5 s for BRCMF_E_IF_DEL. Then it calls brcmf_remove_interface(),
+   which unregisters the wdev and frees the vif and the ifp.
 
-A DM_LIST_DEVICES with data_size set to 305 is enough to hit it, and the
-seven bytes that leak are whatever sat next to the allocation.
+ - brcmf_detach() sets the bus down, so BRCMF_E_IF_DEL never arrives,
+   and calls brcmf_remove_interface(ifp, false) for the same ifp.
+   brcmf_p2p_ifp_removed() reads ifp->vif and then blocks on
+   rtnl_lock(). When brcmf_p2p_del_vif() releases RTNL, it calls
+   cfg80211_unregister_wdev() on the wdev that was already unregistered
+   and freed.
 
-Clamp data_start to the buffer size.
+The second list_del_rcu() of wdev->list faults on LIST_POISON2:
 
-Note that this is not a security bug because the out-of-bounds read can
-only be triggered by root.
+  brcmfmac: brcmf_p2p_del_vif delete P2P vif
+  brcmfmac: brcmf_p2p_deinit_discovery enter
+  brcmfmac: brcmf_p2p_del_vif P2P: GO_NEG_PHASE status cleared
+  brcmfmac: brcmf_detach Enter
+  brcmfmac: brcmf_bus_change_state 1 -> 0
+  brcmfmac: brcmf_remove_interface Enter, bsscfgidx=1, ifidx=0
+  brcmfmac: brcmf_del_if Enter, bsscfgidx=1, ifidx=0
+  brcmfmac: brcmf_p2p_ifp_removed P2P: device interface removed
+  [1.5 s later, brcmf_p2p_del_vif() timed out]
+  brcmfmac: brcmf_remove_interface Enter, bsscfgidx=1, ifidx=0
+  brcmfmac: brcmf_del_if Enter, bsscfgidx=1, ifidx=0
+  brcmfmac: brcmf_p2p_ifp_removed P2P: device interface removed
+  Unable to handle kernel paging request at virtual address dead000000000122
+  Internal error: Oops: 96000044 [#1] PREEMPT_RT SMP
+  pc : _cfg80211_unregister_wdev+0x6c/0x264 [cfg80211]
+  Call trace:
+   _cfg80211_unregister_wdev+0x6c/0x264 [cfg80211]
+   cfg80211_unregister_wdev+0x10/0x1c [cfg80211]
+   brcmf_p2p_ifp_removed+0x84/0xb0 [brcmfmac]
+   brcmf_remove_interface+0x1f4/0x254 [brcmfmac]
+   brcmf_detach+0x88/0x180 [brcmfmac]
+   brcmf_sdio_remove+0x90/0x7b0 [brcmfmac]
+   brcmf_sdiod_remove+0x20/0xa0 [brcmfmac]
+   brcmf_ops_sdio_remove+0xbc/0x12c [brcmfmac]
+   sdio_bus_remove+0x38/0x144
+   device_release_driver_internal+0x1e8/0x2c0
+   device_release_driver+0x14/0x20
+   brcmf_sdio_bus_remove+0x2c/0x40 [brcmfmac]
+   brcmf_fwvid_unregister_vendor+0xd8/0x170 [brcmfmac]
+   __exit_compat+0x18/0x418 [brcmfmac_cyw]
+   __arm64_sys_delete_module+0x1ac/0x244
 
-Reported-by: syzbot+48d935cf48a4a76be346@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=48d935cf48a4a76be346
-Fixes: 76c072b48e39 ("dm ioctl: move compat code")
+The log was taken with debug=0x406 on an i.MX 8M Plus board with a
+CYW55513 (Sona IF513) on SDIO. The driver is the Ezurio backport of
+brcmfmac from v6.18.22 on a 5.4-rt kernel. The code involved is the same
+in mainline.
+
+To reproduce:
+
+  1. Start wpa_supplicant on wlan0 and let it associate. It creates the
+     P2P device (iw dev shows "type P2P-device").
+  2. Stop wpa_supplicant and remove the driver without waiting for
+     wpa_supplicant to exit:
+
+       kill $(pidof wpa_supplicant)
+       rmmod brcmfmac_cyw brcmfmac
+
+The crash is reproducible on that board.
+
+For the interface without a netdev (the P2P device), take RTNL and the
+wiphy mutex in brcmf_detach() before reading iflist, and remove it with
+locked=true. If brcmf_p2p_del_vif() runs first, brcmf_detach() finds the
+slot empty. If brcmf_detach() runs first, nl80211 does not find the wdev
+any more. The interfaces with a netdev are removed as before, because
+brcmf_del_if() takes RTNL on its own for the primary interface.
+
+Fixes: 9831bcb987df ("brcmfmac: Deleting of p2p device is leaking memory.")
 Cc: stable@vger.kernel.org
-Signed-off-by: Palla Raghunath <raghunathpalla.0209@gmail.com>
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Assisted-by: claude-opus-5-5
+Signed-off-by: Michele Dionisio <michele.dionisio@gmail.com>
+Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
+Link: https://patch.msgid.link/20260924123027.4122909-2-michele.dionisio@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-ioctl.c |   10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c |   27 ++++++++++++++--
+ 1 file changed, 25 insertions(+), 2 deletions(-)
 
---- a/drivers/md/dm-ioctl.c
-+++ b/drivers/md/dm-ioctl.c
-@@ -538,10 +538,16 @@ static void *get_result_buffer(struct dm
- {
- 	param->data_start = align_ptr(param + 1) - (void *) param;
- 
--	if (param->data_start < param_size)
-+	if (param->data_start < param_size) {
- 		*len = param_size - param->data_start;
--	else
-+	} else {
-+		/*
-+		 * The buffer can be as small as offsetof(*param, data), which
-+		 * is less than sizeof(*param), so don't run off the end of it.
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c
+@@ -1481,8 +1481,31 @@ void brcmf_detach(struct device *dev)
+ 	brcmf_bus_change_state(bus_if, BRCMF_BUS_DOWN);
+ 	/* make sure primary interface removed last */
+ 	for (i = BRCMF_MAX_IFS - 1; i > -1; i--) {
+-		if (drvr->iflist[i])
+-			brcmf_remove_interface(drvr->iflist[i], false);
++		struct brcmf_if *ifp = drvr->iflist[i];
++
++		if (!ifp)
++			continue;
++
++		if (ifp->ndev) {
++			brcmf_remove_interface(ifp, false);
++			continue;
++		}
++
++		/* The P2P device interface has no netdev. Its removal can
++		 * race with NL80211_CMD_DEL_INTERFACE issued by a user space
++		 * process that is exiting (e.g. wpa_supplicant), which ends
++		 * in brcmf_p2p_del_vif() under RTNL and the wiphy mutex. If
++		 * both paths remove the interface, the wdev is unregistered
++		 * twice and the vif is used after being freed. Take the same
++		 * locks and re-read iflist, so only one path removes it.
 +		 */
- 		*len = 0;
-+		param->data_start = param_size;
-+	}
++		rtnl_lock();
++		wiphy_lock(drvr->wiphy);
++		ifp = drvr->iflist[i];
++		if (ifp)
++			brcmf_remove_interface(ifp, true);
++		wiphy_unlock(drvr->wiphy);
++		rtnl_unlock();
+ 	}
+ 	brcmf_bus_stop(drvr->bus_if);
  
- 	return ((void *) param) + param->data_start;
- }
 
 
