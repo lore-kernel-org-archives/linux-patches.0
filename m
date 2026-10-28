@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793211833;
-	b=4RUgcTuQgtC6/REwS9Ajt61CETnLhPiieMC3y8aaN5ktDiTQAXV9VxmUwHak3G0aXziK
-	 E37NUBFypwlmtUV4m+afr/oJxWDU+Zf8Mvt2l5huL3azU/wqf70qOFqTkGgIpqTA34++f
-	 QSlsS/PnzZSAnAwsqgsrAIy92wzS4oHLKNoc65mx4uS/Yun6BFD2KmYsd8pT71q6Pdni6
-	 XhQe3yLwAqE9AxNVc5uvYO+FM+DhKIA8qP4GUDpkP0DkCta1bMY9J7+32njXVAZcIUB0n
-	 AznTT9mnvD/wUUQfJdd2DvTHvpEedZvOP48DN5heiEk4tTwuW87UT+J7YriKrPVPsrg==
+	t=1793211835;
+	b=j4QHPp/tr2/3O2gRq/EgJAcNy4YHwfMv+RBJFFsinImmFJnI1yab+0v+8sf+EjdhBMRO
+	 XuqEFl8LmrjQygeCsLMVUcqiMKXSjKgsNyWZUgBEZackE1R38XJoclTCYi6Z61e8eVZLr
+	 cBFO7DPef2yQKxE2uqffM9iXy7rhfQgCld5xSTfBtlpCTGt38kTvGUwv6lf2Wdv+BhEDG
+	 CNLKFMJ4U2JjZXrO2+DEmUwas3DelfDgN65f6tDEROzxdgaPkozFwYUzs+Yvl7Fr27b3w
+	 3htYAp19iHMJtBgi5CAlISumjCEm5mz1++jOppZ9twyucYAdDC8j/9SSn6zQS4P9Z2w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793211833;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793211835;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=C05SP7c1Kldsc1pJzZisjbFquv7DmS8p1G9ag2V2KPE=;
-	b=t07ATwGRsWsPge3jOk9TItJDVBvGYQDyM1A7nkbKE0r1LyrBFwZvdWZQW7TOLIFiQdi/
-	 AoMjdCw6aFXKP0PyPx9ASem2p/+jzeLTWgWJFU4hJ4W/My+JzAGivjuBXPn7kaUU7uqqA
-	 q+JKotsRp466YAfYhbG5kI1g6s6QUHR39kvGbDq3l9NUmkKsSXoRtxRiw7osnqYjBBDyE
-	 MxZ9jaKFx8Uj5MRcbuHSjAzki+w9AXSUt554SCcE6OpV8vo4GGT0IphWbVIr7kXD12IwJ
-	 h1/xRUJDxazmrweeifyHviwp3ePU70DQj02lIzMQ1K71qV9o0Q2qJ9HqkRyI57RlEAA==
+	bh=8Zx6F2CwRSM1gl3arA4NTM6vWi7dlAGrEqlCA7jNYKE=;
+	b=Z7S5bF968wjyVkL9Utpbv3bH7nN/CXpSqvjTXHEyCen/KdgKM1XGL5LRvu9o+a1rZo3l
+	 uor/Geg0sLhZWzzguZiaatYsciJR3ITWtmD8lX7YKq8pZ0NK98ijT3l9BNjIgwNsI+414
+	 psdrGQ05PPNu5r6Wpnf93slI+GljV09ZA0WTmp1Eb1Z48EPWcXJksEHR2OaumMgurb5Co
+	 awvppu0Qp0uD8lS/e8hWq9BJ+UrdAflHhcAa538Z/j6R/KPfLdc5qkO5B4p1mul4PVyQB
+	 XJQA0rkRDuT9Sj0IOjM46jzBdzq33eAwN7CUUH4SL82n2kaaco1/WwZIpYnjGKMMvCw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v3yVMqMQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dSE9RuAB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CD69606A334;
-	Wed, 28 Oct 2026 18:23:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ADEA606A334;
+	Wed, 28 Oct 2026 18:23:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v3yVMqMQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB2461F01825;
-	Wed, 28 Oct 2026 18:23:51 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dSE9RuAB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA6E51F01825;
+	Wed, 28 Oct 2026 18:23:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793211832;
-	bh=C05SP7c1Kldsc1pJzZisjbFquv7DmS8p1G9ag2V2KPE=;
+	s=korg; t=1793211835;
+	bh=8Zx6F2CwRSM1gl3arA4NTM6vWi7dlAGrEqlCA7jNYKE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=v3yVMqMQVqA3iSwNaagkm/tVJ+66mM1LxG8OD/FgvVhL6rHN0gI54dA4/1Lfwd0cy
-	 +w6sxwS97A3Et2aTEtSaLlkfwyIHdmVD1V9ildblVvSncZCeojPZpevHzwzl0XtA/C
-	 lrHBhrRB+oOgTwyXDKr7t41TyPlj5Wzc+lQS4U5Y=
+	b=dSE9RuABZlbkFk/jPaJ/NtBa1XND3C66gF8u0v682CWk01gfxG9PYO33XvuN6bLZW
+	 l2bXEMA7o9RW8dyRoKvclF8izuu5ylVqGnQHcB7ppbkJx50nM8vHIyB4ZDAFHhpRPv
+	 orYkOcrDfKcnpB67FHtGm4sK/p/1ovPb7umZCtAk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Michael Kelley <mhklinux@outlook.com>,
-	Wei Liu <wei.liu@kernel.org>,
+	Hyunwoo Kim <imv4bel@gmail.com>,
+	Michal Luczaj <mhal@rbox.co>,
+	Stefano Garzarella <sgarzare@redhat.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 470/571] Drivers: hv: Dont reset VMBus connection state on error/exit paths
-Date: Wed, 28 Oct 2026 18:00:17 +0100
-Message-ID: <20261028170019.173403561@linuxfoundation.org>
+Subject: [PATCH 5.15 471/571] vsock: treat TCP_CLOSING as once-established
+Date: Wed, 28 Oct 2026 18:00:18 +0100
+Message-ID: <20261028170019.196923341@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -69,65 +70,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Kelley <mhkelley58@gmail.com>
+From: Michal Luczaj <mhal@rbox.co>
 
-[ Upstream commit ec31dc39e835ccde0930daccece8c492d28282fc ]
+[ Upstream commit 4f6ac74fa594a918d41255c941256e1d51592d3b ]
 
-In two places, current code forces vmbus_connection.conn_state to
-DISCONNECTED prior to calling vmbus_disconnect(). But vmbus_disconnect()
-calls vmbus_initiate_unload(), which unloads the VMBus connection
-only if the conn_state is CONNECTED. Consequently, the connection
-remains and the Hyper-V host might continue to send messages or post
-VMBus interrupts.
+Handle the TCP_ESTABLISHED -> TCP_CLOSING transition on OP_RST, which can
+race with the connect loop. Immediately break and return 0 on
+ESTABLISHED/CLOSING. The return value of connect() should reflect what
+happened up to the point the connection was established or failed. Events
+that occur afterwards must not affect it. E.g. even if OP_RW has already
+set sk_err, connect() should still return 0, not ENOBUFS because of it.
+Adapt the inaccurate comment above signal_pending().
 
-The problem was introduced in commit 74347a99e73ae ("x86/Hyper-V:
-Unload vmbus channel in hv panic callback"), in that
-vmbus_initiate_unload() started checking the current connection
-state before doing the unload. This commit removed some occurrences
-where conn_state was forced to DISCONNECTED, but these two remained,
-apparently due to an oversight at the time.
+Resetting a socket that is still present in connected_table can lead to
+memory corruption. The reporter noted lost transports for in-flight skbs,
+and I have reproduced crashes caused by re-insertion into connected_table.
 
-Fix this by not forcing conn_state to DISCONNECTED during VMBus exit,
-or if a failure occurs when establishing the connection in the first
-place. Whatever value conn_state has at the time is then read by
-vmbus_initiate_unload() to determine if there is a connection to
-be unloaded.
+  list_add double add: new=, prev=, next=.
+  kernel BUG at lib/list_debug.c:35!
+  Oops: invalid opcode: 0000 [#1] SMP KASAN NOPTI
+  Workqueue: vsock-loopback vsock_loopback_work
+  RIP: 0010:__list_add_valid_or_report+0x11f/0x130
+  Call Trace:
+   vsock_insert_connected.cold+0xe/0x13
+   virtio_transport_recv_pkt+0x10e9/0x1460
+   vsock_loopback_work+0x305/0x480
+   process_one_work+0xe4c/0x1560
+   worker_thread+0x4f1/0xd60
+   kthread+0x36e/0x470
+   ret_from_fork+0x47b/0x6b0
+   ret_from_fork_asm+0x1a/0x30
 
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/linux-hyperv/20260805205806.B5AC31F000E9@smtp.kernel.org/
-Fixes: 74347a99e73ae ("x86/Hyper-V: Unload vmbus channel in hv panic callback")
-Signed-off-by: Michael Kelley <mhklinux@outlook.com>
-Signed-off-by: Wei Liu <wei.liu@kernel.org>
+This fix is supplementary to commit 002541ef650b ("vsock: Ignore
+signal/timeout on connect() if already established"). Details under Link.
+
+Fixes: d021c344051a ("VSOCK: Introduce VM Sockets")
+Reported-by: Hyunwoo Kim <imv4bel@gmail.com>
+Link: https://lore.kernel.org/netdev/anzT1fREOSyHT99k@v4bel/
+Signed-off-by: Michal Luczaj <mhal@rbox.co>
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+Link: https://patch.msgid.link/20261005-vsock-connect-reset-closing-v4-1-15d41cfda3ed@rbox.co
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hv/connection.c | 1 -
- drivers/hv/vmbus_drv.c  | 1 -
- 2 files changed, 2 deletions(-)
+ net/vmw_vsock/af_vsock.c | 17 ++++++++---------
+ 1 file changed, 8 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/hv/connection.c b/drivers/hv/connection.c
-index 47fb412eafd35..09863960c4b06 100644
---- a/drivers/hv/connection.c
-+++ b/drivers/hv/connection.c
-@@ -274,7 +274,6 @@ int vmbus_connect(void)
- cleanup:
- 	pr_err("Unable to connect to host\n");
+diff --git a/net/vmw_vsock/af_vsock.c b/net/vmw_vsock/af_vsock.c
+index 972e00d987a0f..c89f7b2df4ec1 100644
+--- a/net/vmw_vsock/af_vsock.c
++++ b/net/vmw_vsock/af_vsock.c
+@@ -1493,23 +1493,22 @@ static int vsock_connect(struct socket *sock, struct sockaddr *addr,
+ 		timeout = schedule_timeout(timeout);
+ 		lock_sock(sk);
  
--	vmbus_connection.conn_state = DISCONNECTED;
- 	vmbus_disconnect();
+-		/* Connection established. Whatever happens to socket once we
+-		 * release it, that's not connect()'s concern. No need to go
++		/* Connection was established. Whatever happens to socket once
++		 * we release it, that's not connect()'s concern. No need to go
+ 		 * into signal and timeout handling. Call it a day.
+ 		 *
+ 		 * Note that allowing to "reset" an already established socket
+ 		 * here is racy and insecure.
+ 		 */
+-		if (sk->sk_state == TCP_ESTABLISHED)
+-			break;
++		if (sk->sk_state == TCP_ESTABLISHED ||
++		    sk->sk_state == TCP_CLOSING) {
++			err = 0;
++			goto out_wait;
++		}
  
- 	kfree(msginfo);
-diff --git a/drivers/hv/vmbus_drv.c b/drivers/hv/vmbus_drv.c
-index 7125bccebe2a8..85ef058f9ecda 100644
---- a/drivers/hv/vmbus_drv.c
-+++ b/drivers/hv/vmbus_drv.c
-@@ -2807,7 +2807,6 @@ static void __exit vmbus_exit(void)
- 
- 	hv_remove_kexec_handler();
- 	hv_remove_crash_handler();
--	vmbus_connection.conn_state = DISCONNECTED;
- 	hv_stimer_global_cleanup();
- 	vmbus_disconnect();
- 	if (vmbus_irq == -1) {
+ 		/* If connection was _not_ established and a signal/timeout came
+ 		 * to be, we want the socket's state reset. User space may want
+-		 * to retry.
+-		 *
+-		 * sk_state != TCP_ESTABLISHED implies that socket is not on
+-		 * vsock_connected_table. We keep the binding and the transport
+-		 * assigned.
++		 * to retry, so we keep the binding and the transport assigned.
+ 		 */
+ 		if (signal_pending(current) || timeout == 0) {
+ 			err = timeout == 0 ? -ETIMEDOUT : sock_intr_errno(timeout);
 -- 
 2.53.0
 
