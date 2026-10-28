@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793208534;
-	b=tIt9R1SgbvJZLiZWD5P0fe0LUVKCNzFraaHzYZmDGRU/zjDtWdY4IEHepWaG/1+CXFWQ
-	 14d/dGEpUzCtVnVmIf7JHOEfo+ZvN3+9hNkP7Ok66XUQGxdEUdvmQLovsJBQvWifucIuN
-	 e4gkbqwCWnXMcF9E14NGhTvLDSiLNzLLqyA037Qrs4JGy0GhWKGJSKy1UlRl/R6C8KJl9
-	 VJqfYUxDt8c1ZNqQfqifbFcPOR0HQDB1QJ4eLd2S2IexK1fS5GEBcytPQylRUxSLsjmVg
-	 NWJHC+oIArql8kAGygvei3BIFfzDDRJ+vze1sOn4/LhGtCAUh008GQ+uorqapn1mOoQ==
+	t=1793208536;
+	b=oqHM+vBQuE8xGYA+b3QxqmdADSD9TeDe/dTYVEIaTE4Q9Edxr7TbBIEv4fHaDXBtj7ib
+	 ZN3cX14qgQsufhKSe7i7rhIr5WK7Wc1n1+ZX5HpnAnkHbLj+1ukTDrJiQnm8iYB8gujD0
+	 oHjIAEUDxGFG7EY4WhmeO6Cl8DodkP7waezjbev1avJnPxd9TQq7ljdtquAQ03WbKQqBT
+	 L5M8XBgyOXGTMbW4NdRs7og+6bTuJvDg7yBHHbx7EqMqPWCYMYylPk496YG1bY6ISM7pO
+	 gFV+8renL/0RG3f2/VgNYOhONQ06ZW9OJ7frZO676ZjW50M6YDXYybtD7YKl1CupA/g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793208534;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793208536;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=9VPcCYznS2Nh91+h+v5E2s4MeOk1tOU3RYx8TDusZGE=;
-	b=0xpnuBiOR7G3vFIFmG08//AZ9ANkmTHtfo0xr/YT1Tb2JJ4gmxDBhL/M0DWXY2ATQodE
-	 Aq3I4fX4Njs+vj28/cwVz8Bs8wQ1b51/6qINfVsh2PKScnyM17MaTnll4pvJ49nZUFSaN
-	 BrNYit0rOi2PTDxsVLPOzkMVsyV600EytHyk1h4WMejNsJ355JQl4ekd7sLQjNR7C1obn
-	 4Jy3lWdFwmviDrhxCzeyUBmCgop9KzyIyyoPFLJYsnGQZ9bPVbRcBwVacX9ROXVBVHN5D
-	 3ekbC/xHmV+xmCxJajsScISei/UHPDCM4P1dnB/pjYfhKXGNgDOGWjGPJqDYzbdUV4A==
+	bh=VNjkik5SlydrxX43oX6BQNoJyP8btHbbt2dVQr5gE+Q=;
+	b=pxPJ53lCvI5nsJWV4B+0BpjIlD240wFx5z/3raLugneJEkEw50oLy5a57FD9S/qg73Yv
+	 0nKxQRSgj7OhNds5jYh8KwLY5n7UDBsbIYvPmxyoxQ4ZGrF7IRSzU0ddP+qGx9VCc/IOe
+	 iIxOE7L9vWgphr3WVdpXQNRHT+G9CiQCP6t2v77CUH0G98ChvFABSe+mu3OTPP/tvE7X8
+	 5IHigGL8D2Zfl1jtt+hyhyhlbeH+8Moi3FGY2nDWBpRrGQNWrEAxzmFaHKX33p6rpzGMS
+	 4k0jCW4VB+NJnzyGpkSw5BRSMqidj3VMWrrrYV1DavFaCP21AUM5nMfFnMFi7ROSTLQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SdcPqSbl;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hu0Y4yhM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B297F606A31D;
-	Wed, 28 Oct 2026 17:28:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91C37606A31C;
+	Wed, 28 Oct 2026 17:28:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SdcPqSbl
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EF991F01825;
-	Wed, 28 Oct 2026 17:28:52 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hu0Y4yhM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E18191F01825;
+	Wed, 28 Oct 2026 17:28:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793208533;
-	bh=9VPcCYznS2Nh91+h+v5E2s4MeOk1tOU3RYx8TDusZGE=;
+	s=korg; t=1793208536;
+	bh=VNjkik5SlydrxX43oX6BQNoJyP8btHbbt2dVQr5gE+Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SdcPqSblUmivUAX2xTlAkTebChsfrwUEkV0lUdzNun+S2SmJGlDdWqa3l6/5hmXJR
-	 3JYA1y2nkrChJUVBUUNOEhjesKir65Dq03Rpr/3SpgAJUMwPiH1xUjJPzGS7TWu9QG
-	 erxjOVwVrGr9LSAkE9jfTnBd26fSk/2WsEmjC+Xo=
+	b=hu0Y4yhMsbcAMCnLdoGU9fvCb6xy+4b+/lb3sYpxKKLvLWaZdW9+Ae1xVM1YXFf29
+	 LkBVWL/bwIAqGjikIpdR5sRm+sBs6zxgyw5SoNYfw5qzycn1A9jr6nDQrV7Lwq4KDg
+	 ydELCLn4BYXKNdhyMqzZSfk/08tkcD1XiJBJ8Aoo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+652670cf249077eb498b@syzkaller.appspotmail.com,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Nilesh Javali <njavali@marvell.com>,
+	Hannes Reinecke <hare@kernel.org>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 154/516] hsr: Remove WARN_ONCE() in hsr_addr_is_self().
-Date: Wed, 28 Oct 2026 17:55:06 +0100
-Message-ID: <20261028170007.154613584@linuxfoundation.org>
+Subject: [PATCH 5.10 155/516] scsi: qla2xxx: Initialize NVMe abort_work once at submission
+Date: Wed, 28 Oct 2026 17:55:07 +0100
+Message-ID: <20261028170007.177487636@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -70,107 +69,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Nilesh Javali <njavali@marvell.com>
 
-[ Upstream commit afd0f17ca46258cec3a5cc48b8df9327fe772490 ]
+[ Upstream commit 7e85f6dbc85616de2172bce8eaf84b387a723cd1 ]
 
-syzbot reported the warning [0] in hsr_addr_is_self(),
-whose assumption is simply wrong.
+qla_nvme_fcp_abort() and qla_nvme_ls_abort() ran INIT_WORK() on
+priv->abort_work immediately before schedule_work(). INIT_WORK()
+reinitializes the work_struct, resetting its list head and clearing the
+pending bit. If an abort is issued more than once for the same command
+(for example, concurrent transport teardown and a timeout-driven abort),
+the second INIT_WORK() reinitializes a work item that is already queued,
+which can corrupt the workqueue list and lead to crashes or a looping
+worker.
 
-hsr->self_node is cleared in hsr_del_self_node(), which
-is called from hsr_dellink().
+Initialize priv->abort_work once at command submission, next to the
+existing per-command spin_lock_init(&priv->cmd_lock), and leave only
+schedule_work() in the abort paths. schedule_work() already does nothing
+when the work item is still pending, so a repeated abort no longer
+disturbs an in-flight work item. The command is not returned to the
+transport until the final kref_put()/release callback runs after
+abort_work has completed, so the work item is idle before priv is reused
+and the single submission-time INIT_WORK() is safe.
 
-Since dev->rtnl_link_ops->dellink() is called before
-unregister_netdevice_many(), there is a window when
-user can find the device but without hsr->self_node.
-
-Let's remove WARN_ONCE() in hsr_addr_is_self().
-
-[0]:
-HSR: No self node
-WARNING: net/hsr/hsr_framereg.c:39 at hsr_addr_is_self+0x211/0x3f0 net/hsr/hsr_framereg.c:39, CPU#0: syz.4.16848/17220
-Modules linked in:
-CPU: 0 UID: 0 PID: 17220 Comm: syz.4.16848 Tainted: G             L      syzkaller #0 PREEMPT_{RT,(full)}
-Tainted: [L]=SOFTLOCKUP
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 04/18/2026
-RIP: 0010:hsr_addr_is_self+0x211/0x3f0 net/hsr/hsr_framereg.c:39
-Code: 33 2f 41 0f b7 dd 89 ee 09 de 31 ff e8 c8 b4 c6 f6 09 dd 74 54 e8 0f b0 c6 f6 31 ed eb 53 e8 06 b0 c6 f6 48 8d 3d 2f 50 9c 04 <67> 48 0f b9 3a 31 ed eb 42 e8 c1 13 1f 00 89 c5 31 ff 89 c6 e8 96
-RSP: 0018:ffffc900041c70e0 EFLAGS: 00010283
-RAX: ffffffff8afdc6ca RBX: ffffffff8afdc4e6 RCX: 0000000000080000
-RDX: ffffc90010493000 RSI: 0000000000000948 RDI: ffffffff8f9a1700
-RBP: 0000000000000001 R08: 0000000000000000 R09: 0000000000000000
-R10: ffffc900041c71e8 R11: fffff52000838e3f R12: dffffc0000000000
-R13: ffff888041f9e3c0 R14: ffff888086ee3802 R15: 0000000000000000
-FS:  00007f6fe985d6c0(0000) GS:ffff888126176000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007f80bd437dac CR3: 0000000025096000 CR4: 00000000003526f0
-DR0: ffffffffffffffff DR1: 00000000000001f8 DR2: 0000000000000002
-DR3: ffffffffefffff15 DR6: 00000000ffff0ff0 DR7: 0000000000000400
-Call Trace:
- <TASK>
- check_local_dest net/hsr/hsr_forward.c:592 [inline]
- fill_frame_info net/hsr/hsr_forward.c:728 [inline]
- hsr_forward_skb+0xa11/0x2a80 net/hsr/hsr_forward.c:739
- hsr_dev_xmit+0x253/0x370 net/hsr/hsr_device.c:236
- __netdev_start_xmit include/linux/netdevice.h:5368 [inline]
- netdev_start_xmit include/linux/netdevice.h:5377 [inline]
- xmit_one net/core/dev.c:3888 [inline]
- dev_hard_start_xmit+0x2df/0x860 net/core/dev.c:3904
- __dev_queue_xmit+0x1428/0x3900 net/core/dev.c:4870
- neigh_output include/net/neighbour.h:556 [inline]
- ip_finish_output2+0xcec/0x10b0 net/ipv4/ip_output.c:237
- ip_send_skb net/ipv4/ip_output.c:1510 [inline]
- ip_push_pending_frames+0x8b/0x110 net/ipv4/ip_output.c:1530
- raw_sendmsg+0x1547/0x1a50 net/ipv4/raw.c:659
- sock_sendmsg_nosec net/socket.c:787 [inline]
- __sock_sendmsg net/socket.c:802 [inline]
- ____sys_sendmsg+0x7da/0x9c0 net/socket.c:2698
- ___sys_sendmsg+0x2a5/0x360 net/socket.c:2752
- __sys_sendmsg net/socket.c:2784 [inline]
- __do_sys_sendmsg net/socket.c:2789 [inline]
- __se_sys_sendmsg net/socket.c:2787 [inline]
- __x64_sys_sendmsg+0x1c3/0x2a0 net/socket.c:2787
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0x15f/0xf80 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-RIP: 0033:0x7f6feb62ce59
-Code: ff c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 44 00 00 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 e8 ff ff ff f7 d8 64 89 01 48
-RSP: 002b:00007f6fe985d028 EFLAGS: 00000246 ORIG_RAX: 000000000000002e
-RAX: ffffffffffffffda RBX: 00007f6feb8a6090 RCX: 00007f6feb62ce59
-RDX: 0000000000000000 RSI: 0000200000000000 RDI: 0000000000000004
-RBP: 00007f6feb6c2d6f R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
-R13: 00007f6feb8a6128 R14: 00007f6feb8a6090 R15: 00007ffcf01cc488
- </TASK>
-
-Fixes: f266a683a480 ("net/hsr: Better frame dispatch")
-Reported-by: syzbot+652670cf249077eb498b@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/6a1a861e.b111c304.35cd64.0016.GAE@google.com/
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>
-Link: https://patch.msgid.link/20260530064300.340793-1-kuniyu@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: e473b3074104 ("scsi: qla2xxx: Add FC-NVMe abort processing")
+Cc: stable@vger.kernel.org
+Signed-off-by: Nilesh Javali <njavali@marvell.com>
+Reviewed-by: Hannes Reinecke <hare@kernel.org>
+Link: https://patch.msgid.link/20260723050413.3897522-52-njavali@marvell.com
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/hsr/hsr_framereg.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/scsi/qla2xxx/qla_nvme.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/hsr/hsr_framereg.c b/net/hsr/hsr_framereg.c
-index b715509f6b07e..e2e393a033a7c 100644
---- a/net/hsr/hsr_framereg.c
-+++ b/net/hsr/hsr_framereg.c
-@@ -45,10 +45,8 @@ bool hsr_addr_is_self(struct hsr_priv *hsr, unsigned char *addr)
+diff --git a/drivers/scsi/qla2xxx/qla_nvme.c b/drivers/scsi/qla2xxx/qla_nvme.c
+index 28a5b40e0f329..45fa0e2b78353 100644
+--- a/drivers/scsi/qla2xxx/qla_nvme.c
++++ b/drivers/scsi/qla2xxx/qla_nvme.c
+@@ -278,7 +278,6 @@ static void qla_nvme_ls_abort(struct nvme_fc_local_port *lport,
+ 	}
+ 	spin_unlock_irqrestore(&priv->cmd_lock, flags);
  
- 	rcu_read_lock();
- 	sn = rcu_dereference(hsr->self_node);
--	if (!sn) {
--		WARN_ONCE(1, "HSR: No self node\n");
-+	if (!sn)
- 		goto out;
--	}
+-	INIT_WORK(&priv->abort_work, qla_nvme_abort_work);
+ 	schedule_work(&priv->abort_work);
+ }
  
- 	if (ether_addr_equal(addr, sn->macaddress_A) ||
- 	    ether_addr_equal(addr, sn->macaddress_B))
+@@ -317,6 +316,7 @@ static int qla_nvme_ls_req(struct nvme_fc_local_port *lport,
+ 	priv->sp = sp;
+ 	kref_init(&sp->cmd_kref);
+ 	spin_lock_init(&priv->cmd_lock);
++	INIT_WORK(&priv->abort_work, qla_nvme_abort_work);
+ 	nvme = &sp->u.iocb_cmd;
+ 	priv->fd = fd;
+ 	nvme->u.nvme.desc = fd;
+@@ -361,7 +361,6 @@ static void qla_nvme_fcp_abort(struct nvme_fc_local_port *lport,
+ 	}
+ 	spin_unlock_irqrestore(&priv->cmd_lock, flags);
+ 
+-	INIT_WORK(&priv->abort_work, qla_nvme_abort_work);
+ 	schedule_work(&priv->abort_work);
+ }
+ 
+@@ -600,6 +599,7 @@ static int qla_nvme_post_cmd(struct nvme_fc_local_port *lport,
+ 
+ 	kref_init(&sp->cmd_kref);
+ 	spin_lock_init(&priv->cmd_lock);
++	INIT_WORK(&priv->abort_work, qla_nvme_abort_work);
+ 	sp->priv = priv;
+ 	priv->sp = sp;
+ 	sp->type = SRB_NVME_CMD;
 -- 
 2.53.0
 
