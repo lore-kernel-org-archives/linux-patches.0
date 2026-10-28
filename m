@@ -1,54 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213872;
-	b=dO1M3WZ0Joo04RAKQhdRF9UOe4LK/Q0ks0gsooR9BxL9rab8ilXTjTyV12LWT1y9BVWU
-	 /+DIQU9c/vFaQl4N6n/7F+9TKQN9oMyW+6B+Dyp2PY8m1Sncfa5oDl9FRlOr7ST44mO+f
-	 yqVIKzyEP493Q671NkblDey0Gadb+r+/rOJAb2VyDo1o2JitEbpKtPH4NS4dnni6Eh9P8
-	 R8cxFPXs5LGKIRMiRIqIuoCyKOjToa/vM7oAJ8ty7dW5aDK9yJugNM7QXQUaRA12yEyMJ
-	 0tX14hmK5WwhMBqkh/1BUzDpLsNl+BflmXGrbgeFfyyaFxcAIjCMFa+5sMlEbKTu2Aw==
+	t=1793213875;
+	b=CH7Odh1zGcJaVE1ZdFUnaz4saGVbs9MylVfrsia+7dfQUzD7zgFGmBIjIRWALI6QXezd
+	 BIq1ktUb69VzPFHSZMFcBLbAN+GhGLMkBfKeM+sBmmyrelE407+2brTV7WkcCsT2kig8o
+	 TLmndEiFd6/h1hqH0oX5FnrmCU87jsQoIxkdtt1GKucxkWoXeVOSgqEEWyJ9hxHzuhiDa
+	 B1Br+ty4uONfRXMMBCkvE9RiXj64Ikg5khpN5kbxQ3yOhr1prfX9xSZau9W/O3OdYpPiV
+	 OIgqV+1X0aT7C52bxmJdO4NEqpWDW5APhrwmYYkIp8+neCsLTyyWR9x4/Mmv/dv0XnA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213872;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213875;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=sRfyR1e98U8v4I97z5m5PN+NgwTt6kOUU5b7DvZMqFM=;
-	b=3jCzHrttckZkfElXdTWr37SJQwO1LstIXIfN+LkLpmYCu1MIwtxi0bu0iXyb1NY3Rsf5
-	 xdxVdNaMOopdXstOsyw5DuRmoy57xH1lgh8fyNQ2oMwe+rlXexZjB7GxipK1b+2y9pss2
-	 lYOHcVApXewjxD+v+1uvsootnxiAxbz0hR2i6Aj9+bswAIw5E9bsrkZzjONdKfXPxoQS5
-	 aVH1OckEIGd/ivPEgxkRluu1J096Fs1SoEB6P8rsFlW1hceCx999LQIEWtmW9viGG2RfV
-	 oUSlUwRmR4hvbCQYQdmcSTCwjr6BgMfcTEpqtzLV/FBfHyP1l0fGdH4eY8GYf1Op2Gw==
+	bh=RexffTnStg3ZBFdxtPZ37Dx3HsfXvd5ocfYovK/f26I=;
+	b=RxatyshKDieMJKMe772EPVLkgq+WRrwXoLfZOWM8d/j4AUjg5TS+tyjUfea/hIe6mY1n
+	 1axAHzuXenppcrLQLTwYBth8z5hmdjy9GQ9fDazdNs1v1GNNSnu11/JMQlI69o6WjnMS1
+	 PcPUAUM99Ta+4BgTyS8RKbBtnTPdHs++KaSROaHTk81qU74X6tzkHs8gqVYoRc7WybPH+
+	 CYMQ3WkvDloQrE4lRFG8Dj4p+4hRJXjNiD0NRKH2rZTygkt6iCyymTnQtOyAKRAL433/k
+	 VFA5S/8SZ2JtZJmTkgdHKBV5J5iOO/ug+QpobO3AXPkNoXs5jm+emZY2hxNXhWQi4lw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S8a0ua7q;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Rt+8Z6hv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44CEF606A31C;
-	Wed, 28 Oct 2026 18:57:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1287D606A31A;
+	Wed, 28 Oct 2026 18:57:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S8a0ua7q
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6958A1F01825;
-	Wed, 28 Oct 2026 18:57:51 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Rt+8Z6hv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BACC1F01825;
+	Wed, 28 Oct 2026 18:57:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213872;
-	bh=sRfyR1e98U8v4I97z5m5PN+NgwTt6kOUU5b7DvZMqFM=;
+	s=korg; t=1793213874;
+	bh=RexffTnStg3ZBFdxtPZ37Dx3HsfXvd5ocfYovK/f26I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=S8a0ua7qV2k0dTtO2is4kKIepx+PdhGDOUkPJP6EK5yTYZl6HCzAiGXfmn9/tYcNB
-	 ZnuQf4M/sXNyqpPdfZSzR7YbTp8edxCvhZtMSofttf8Bc5ilax52heATaPibvGLbMd
-	 VtcA3mfrHr8inDcY1bo/ByKF0cR5McsYPZXOtzdk=
+	b=Rt+8Z6hvyqZSJviT41H6qy85FPf6sQuJm1p+DPRzs/gCijbM/mnDD8nZygtIidTi5
+	 CIY7lyCExRk3yQeJHpdQeIZjm7yBLivrG+TIiarignYieTsqtlfeMTO+YgxRuco4X2
+	 DX4wTKJnAllMIKgyjFhJCXhAf4ywOqGs/yxFpEvs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
-	Leon Huang <Leon.Huang1@amd.com>,
+	Rodrigo Siqueira <rodrigo.siqueira@amd.com>,
+	Zaeem Mohamed <zaeem.mohamed@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
 	Daniel Wheeler <daniel.wheeler@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0658/1887] drm/amd/display: Refactor ABM feature
-Date: Wed, 28 Oct 2026 17:45:54 +0100
-Message-ID: <20261028170514.383576380@linuxfoundation.org>
+Subject: [PATCH 6.1 0659/1887] drm/amd/display: Avoid overflow from uint32_t to uint8_t
+Date: Wed, 28 Oct 2026 17:45:55 +0100
+Message-ID: <20261028170514.408983991@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -70,743 +71,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leon Huang <Leon.Huang1@amd.com>
+From: Alex Hung <alex.hung@amd.com>
 
-[ Upstream commit b8fe56375f78835db47565d91ea9d21767fe3c08 ]
+[ Upstream commit d6b54900c564e35989cf6813e4071504fa0a90e0 ]
 
-[Why]
-Refactor ABM feature and implement inbox command for DMUB.
+[WHAT & HOW]
+dmub_rb_cmd's ramping_boundary has size of uint8_t and it is assigned
+0xFFFF. Fix it by changing it to uint8_t with value of 0xFF.
 
-[How]
-Implement the ioctl to send inbox command to DMUB.
+This fixes 2 INTEGER_OVERFLOW issues reported by Coverity.
 
-Reviewed-by: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
-Signed-off-by: Leon Huang <Leon.Huang1@amd.com>
+Reviewed-by: Rodrigo Siqueira <rodrigo.siqueira@amd.com>
+Acked-by: Zaeem Mohamed <zaeem.mohamed@amd.com>
+Signed-off-by: Alex Hung <alex.hung@amd.com>
 Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Stable-dep-of: d6b54900c564 ("drm/amd/display: Avoid overflow from uint32_t to uint8_t")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dce/Makefile   |   2 +-
- drivers/gpu/drm/amd/display/dc/dce/dmub_abm.c | 264 +++++++---------
- .../gpu/drm/amd/display/dc/dce/dmub_abm_lcd.c | 286 ++++++++++++++++++
- .../gpu/drm/amd/display/dc/dce/dmub_abm_lcd.h |  46 +++
- drivers/gpu/drm/amd/display/dc/inc/hw/abm.h   |   6 +
- 5 files changed, 442 insertions(+), 162 deletions(-)
- create mode 100644 drivers/gpu/drm/amd/display/dc/dce/dmub_abm_lcd.c
- create mode 100644 drivers/gpu/drm/amd/display/dc/dce/dmub_abm_lcd.h
+ drivers/gpu/drm/amd/display/dc/dce/dmub_abm_lcd.c  | 2 +-
+ drivers/gpu/drm/amd/display/dc/dcn21/dcn21_hwseq.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dce/Makefile b/drivers/gpu/drm/amd/display/dc/dce/Makefile
-index 0d7db132a20fe..01490c9ba9587 100644
---- a/drivers/gpu/drm/amd/display/dc/dce/Makefile
-+++ b/drivers/gpu/drm/amd/display/dc/dce/Makefile
-@@ -29,7 +29,7 @@
- DCE = dce_audio.o dce_stream_encoder.o dce_link_encoder.o dce_hwseq.o \
- dce_mem_input.o dce_clock_source.o dce_scl_filters.o dce_transform.o \
- dce_opp.o dce_dmcu.o dce_abm.o dce_ipp.o dce_aux.o \
--dce_i2c.o dce_i2c_hw.o dce_i2c_sw.o dmub_psr.o dmub_abm.o dce_panel_cntl.o \
-+dce_i2c.o dce_i2c_hw.o dce_i2c_sw.o dmub_psr.o dmub_abm.o dmub_abm_lcd.o dce_panel_cntl.o \
- dmub_hw_lock_mgr.o dmub_outbox.o
- 
- AMD_DAL_DCE = $(addprefix $(AMDDALPATH)/dc/dce/,$(DCE))
-diff --git a/drivers/gpu/drm/amd/display/dc/dce/dmub_abm.c b/drivers/gpu/drm/amd/display/dc/dce/dmub_abm.c
-index fb0dec4ed3a6c..30bc598811875 100644
---- a/drivers/gpu/drm/amd/display/dc/dce/dmub_abm.c
-+++ b/drivers/gpu/drm/amd/display/dc/dce/dmub_abm.c
-@@ -24,212 +24,151 @@
-  */
- 
- #include "dmub_abm.h"
--#include "dce_abm.h"
-+#include "dmub_abm_lcd.h"
- #include "dc.h"
--#include "dc_dmub_srv.h"
--#include "dmub/dmub_srv.h"
- #include "core_types.h"
--#include "dm_services.h"
--#include "reg_helper.h"
--#include "fixed31_32.h"
--
--#include "atom.h"
- 
- #define TO_DMUB_ABM(abm)\
- 	container_of(abm, struct dce_abm, base)
- 
--#define REG(reg) \
--	(dce_abm->regs->reg)
-+#define ABM_FEATURE_NO_SUPPORT	0
-+#define ABM_LCD_SUPPORT			1
- 
--#undef FN
--#define FN(reg_name, field_name) \
--	dce_abm->abm_shift->field_name, dce_abm->abm_mask->field_name
-+static unsigned int abm_feature_support(struct abm *abm, unsigned int panel_inst)
-+{
-+	struct dc_context *dc = abm->ctx;
-+	struct dc_link *edp_links[MAX_NUM_EDP];
-+	int i;
-+	int edp_num;
-+	unsigned int ret = ABM_FEATURE_NO_SUPPORT;
- 
--#define CTX \
--	dce_abm->base.ctx
-+	get_edp_links(dc->dc, edp_links, &edp_num);
- 
--#define DISABLE_ABM_IMMEDIATELY 255
-+	for (i = 0; i < edp_num; i++) {
-+		if (panel_inst == i)
-+			break;
-+	}
- 
-+	if (i < edp_num) {
-+		ret = ABM_LCD_SUPPORT;
-+	}
- 
-+	return ret;
-+}
- 
--static void dmub_abm_enable_fractional_pwm(struct dc_context *dc)
-+static void dmub_abm_init_ex(struct abm *abm, uint32_t backlight)
- {
--	union dmub_rb_cmd cmd;
--	uint32_t fractional_pwm = (dc->dc->config.disable_fractional_pwm == false) ? 1 : 0;
--	uint32_t edp_id_count = dc->dc_edp_id_count;
--	int i;
--	uint8_t panel_mask = 0;
--
--	for (i = 0; i < edp_id_count; i++)
--		panel_mask |= 0x01 << i;
--
--	memset(&cmd, 0, sizeof(cmd));
--	cmd.abm_set_pwm_frac.header.type = DMUB_CMD__ABM;
--	cmd.abm_set_pwm_frac.header.sub_type = DMUB_CMD__ABM_SET_PWM_FRAC;
--	cmd.abm_set_pwm_frac.abm_set_pwm_frac_data.fractional_pwm = fractional_pwm;
--	cmd.abm_set_pwm_frac.abm_set_pwm_frac_data.version = DMUB_CMD_ABM_CONTROL_VERSION_1;
--	cmd.abm_set_pwm_frac.abm_set_pwm_frac_data.panel_mask = panel_mask;
--	cmd.abm_set_pwm_frac.header.payload_bytes = sizeof(struct dmub_cmd_abm_set_pwm_frac_data);
--
--	dc_dmub_srv_cmd_queue(dc->dmub_srv, &cmd);
--	dc_dmub_srv_cmd_execute(dc->dmub_srv);
--	dc_dmub_srv_wait_idle(dc->dmub_srv);
-+	dmub_abm_init(abm, backlight);
- }
- 
--static void dmub_abm_init(struct abm *abm, uint32_t backlight)
-+static unsigned int dmub_abm_get_current_backlight_ex(struct abm *abm)
- {
--	struct dce_abm *dce_abm = TO_DMUB_ABM(abm);
--
--	REG_WRITE(DC_ABM1_HG_SAMPLE_RATE, 0x3);
--	REG_WRITE(DC_ABM1_HG_SAMPLE_RATE, 0x1);
--	REG_WRITE(DC_ABM1_LS_SAMPLE_RATE, 0x3);
--	REG_WRITE(DC_ABM1_LS_SAMPLE_RATE, 0x1);
--	REG_WRITE(BL1_PWM_BL_UPDATE_SAMPLE_RATE, 0x1);
--
--	REG_SET_3(DC_ABM1_HG_MISC_CTRL, 0,
--			ABM1_HG_NUM_OF_BINS_SEL, 0,
--			ABM1_HG_VMAX_SEL, 1,
--			ABM1_HG_BIN_BITWIDTH_SIZE_SEL, 0);
--
--	REG_SET_3(DC_ABM1_IPCSC_COEFF_SEL, 0,
--			ABM1_IPCSC_COEFF_SEL_R, 2,
--			ABM1_IPCSC_COEFF_SEL_G, 4,
--			ABM1_IPCSC_COEFF_SEL_B, 2);
-+	return dmub_abm_get_current_backlight(abm);
-+}
- 
--	REG_UPDATE(BL1_PWM_CURRENT_ABM_LEVEL,
--			BL1_PWM_CURRENT_ABM_LEVEL, backlight);
-+static unsigned int dmub_abm_get_target_backlight_ex(struct abm *abm)
-+{
-+	return dmub_abm_get_target_backlight(abm);
-+}
- 
--	REG_UPDATE(BL1_PWM_TARGET_ABM_LEVEL,
--			BL1_PWM_TARGET_ABM_LEVEL, backlight);
-+static bool dmub_abm_set_level_ex(struct abm *abm, uint32_t level)
-+{
-+	bool ret = false;
-+	unsigned int feature_support, i;
-+	uint8_t panel_mask0 = 0;
- 
--	REG_UPDATE(BL1_PWM_USER_LEVEL,
--			BL1_PWM_USER_LEVEL, backlight);
-+	for (i = 0; i < MAX_NUM_EDP; i++) {
-+		feature_support = abm_feature_support(abm, i);
- 
--	REG_UPDATE_2(DC_ABM1_LS_MIN_MAX_PIXEL_VALUE_THRES,
--			ABM1_LS_MIN_PIXEL_VALUE_THRES, 0,
--			ABM1_LS_MAX_PIXEL_VALUE_THRES, 1000);
-+		if (feature_support == ABM_LCD_SUPPORT)
-+			panel_mask0 |= (0x01 << i);
-+	}
- 
--	REG_SET_3(DC_ABM1_HGLS_REG_READ_PROGRESS, 0,
--			ABM1_HG_REG_READ_MISSED_FRAME_CLEAR, 1,
--			ABM1_LS_REG_READ_MISSED_FRAME_CLEAR, 1,
--			ABM1_BL_REG_READ_MISSED_FRAME_CLEAR, 1);
-+	if (panel_mask0)
-+		ret = dmub_abm_set_level(abm, level, panel_mask0);
- 
--	dmub_abm_enable_fractional_pwm(abm->ctx);
-+	return ret;
- }
- 
--static unsigned int dmub_abm_get_current_backlight(struct abm *abm)
-+static bool dmub_abm_init_config_ex(struct abm *abm,
-+	const char *src,
-+	unsigned int bytes,
-+	unsigned int inst)
- {
--	struct dce_abm *dce_abm = TO_DMUB_ABM(abm);
--	unsigned int backlight = REG_READ(BL1_PWM_CURRENT_ABM_LEVEL);
-+	unsigned int feature_support;
- 
--	/* return backlight in hardware format which is unsigned 17 bits, with
--	 * 1 bit integer and 16 bit fractional
--	 */
--	return backlight;
--}
-+	feature_support = abm_feature_support(abm, inst);
- 
--static unsigned int dmub_abm_get_target_backlight(struct abm *abm)
--{
--	struct dce_abm *dce_abm = TO_DMUB_ABM(abm);
--	unsigned int backlight = REG_READ(BL1_PWM_TARGET_ABM_LEVEL);
-+	if (feature_support == ABM_LCD_SUPPORT)
-+		dmub_abm_init_config(abm, src, bytes, inst);
- 
--	/* return backlight in hardware format which is unsigned 17 bits, with
--	 * 1 bit integer and 16 bit fractional
--	 */
--	return backlight;
-+	return true;
- }
- 
--static bool dmub_abm_set_level(struct abm *abm, uint32_t level)
-+static bool dmub_abm_set_pause_ex(struct abm *abm, bool pause, unsigned int panel_inst, unsigned int stream_inst)
- {
--	union dmub_rb_cmd cmd;
--	struct dc_context *dc = abm->ctx;
--	struct dc_link *edp_links[MAX_NUM_EDP];
--	int i;
--	int edp_num;
--	uint8_t panel_mask = 0;
-+	bool ret = false;
-+	unsigned int feature_support;
- 
--	get_edp_links(dc->dc, edp_links, &edp_num);
--
--	for (i = 0; i < edp_num; i++) {
--		if (edp_links[i]->link_status.link_active)
--			panel_mask |= (0x01 << i);
--	}
--
--	memset(&cmd, 0, sizeof(cmd));
--	cmd.abm_set_level.header.type = DMUB_CMD__ABM;
--	cmd.abm_set_level.header.sub_type = DMUB_CMD__ABM_SET_LEVEL;
--	cmd.abm_set_level.abm_set_level_data.level = level;
--	cmd.abm_set_level.abm_set_level_data.version = DMUB_CMD_ABM_CONTROL_VERSION_1;
--	cmd.abm_set_level.abm_set_level_data.panel_mask = panel_mask;
--	cmd.abm_set_level.header.payload_bytes = sizeof(struct dmub_cmd_abm_set_level_data);
-+	feature_support = abm_feature_support(abm, panel_inst);
- 
--	dc_dmub_srv_cmd_queue(dc->dmub_srv, &cmd);
--	dc_dmub_srv_cmd_execute(dc->dmub_srv);
--	dc_dmub_srv_wait_idle(dc->dmub_srv);
-+	if (feature_support == ABM_LCD_SUPPORT)
-+		ret = dmub_abm_set_pause(abm, pause, panel_inst, stream_inst);
- 
--	return true;
-+	return ret;
- }
- 
--static bool dmub_abm_init_config(struct abm *abm,
--	const char *src,
--	unsigned int bytes,
--	unsigned int inst)
-+static bool dmub_abm_set_pipe_ex(struct abm *abm, uint32_t otg_inst, uint32_t option, uint32_t panel_inst)
- {
--	union dmub_rb_cmd cmd;
--	struct dc_context *dc = abm->ctx;
--	uint8_t panel_mask = 0x01 << inst;
-+	bool ret = false;
-+	unsigned int feature_support;
- 
--	// TODO: Optimize by only reading back final 4 bytes
--	dmub_flush_buffer_mem(&dc->dmub_srv->dmub->scratch_mem_fb);
-+	feature_support = abm_feature_support(abm, panel_inst);
- 
--	// Copy iramtable into cw7
--	memcpy(dc->dmub_srv->dmub->scratch_mem_fb.cpu_addr, (void *)src, bytes);
-+	if (feature_support == ABM_LCD_SUPPORT)
-+		ret = dmub_abm_set_pipe(abm, otg_inst, option, panel_inst);
- 
--	memset(&cmd, 0, sizeof(cmd));
--	// Fw will copy from cw7 to fw_state
--	cmd.abm_init_config.header.type = DMUB_CMD__ABM;
--	cmd.abm_init_config.header.sub_type = DMUB_CMD__ABM_INIT_CONFIG;
--	cmd.abm_init_config.abm_init_config_data.src.quad_part = dc->dmub_srv->dmub->scratch_mem_fb.gpu_addr;
--	cmd.abm_init_config.abm_init_config_data.bytes = bytes;
--	cmd.abm_init_config.abm_init_config_data.version = DMUB_CMD_ABM_CONTROL_VERSION_1;
--	cmd.abm_init_config.abm_init_config_data.panel_mask = panel_mask;
-+	return ret;
-+}
- 
--	cmd.abm_init_config.header.payload_bytes = sizeof(struct dmub_cmd_abm_init_config_data);
-+static bool dmub_abm_set_event_ex(struct abm *abm, unsigned int full_screen, unsigned int video_mode,
-+		unsigned int hdr_mode, unsigned int panel_inst)
-+{
-+	bool ret = false;
-+	unsigned int feature_support;
- 
--	dc_dmub_srv_cmd_queue(dc->dmub_srv, &cmd);
--	dc_dmub_srv_cmd_execute(dc->dmub_srv);
--	dc_dmub_srv_wait_idle(dc->dmub_srv);
-+	feature_support = abm_feature_support(abm, panel_inst);
- 
--	return true;
-+	return ret;
- }
- 
--static bool dmub_abm_set_pause(struct abm *abm, bool pause, unsigned int panel_inst, unsigned int stream_inst)
-+static bool dmub_abm_set_backlight_level_pwm_ex(struct abm *abm,
-+		unsigned int backlight_pwm_u16_16,
-+		unsigned int frame_ramp,
-+		unsigned int controller_id,
-+		unsigned int panel_inst)
- {
--	union dmub_rb_cmd cmd;
--	struct dc_context *dc = abm->ctx;
--	uint8_t panel_mask = 0x01 << panel_inst;
-+	bool ret = false;
-+	unsigned int feature_support;
- 
--	memset(&cmd, 0, sizeof(cmd));
--	cmd.abm_pause.header.type = DMUB_CMD__ABM;
--	cmd.abm_pause.header.sub_type = DMUB_CMD__ABM_PAUSE;
--	cmd.abm_pause.abm_pause_data.enable = pause;
--	cmd.abm_pause.abm_pause_data.panel_mask = panel_mask;
--	cmd.abm_set_level.header.payload_bytes = sizeof(struct dmub_cmd_abm_pause_data);
-+	feature_support = abm_feature_support(abm, panel_inst);
- 
--	dc_dmub_srv_cmd_queue(dc->dmub_srv, &cmd);
--	dc_dmub_srv_cmd_execute(dc->dmub_srv);
--	dc_dmub_srv_wait_idle(dc->dmub_srv);
-+	if (feature_support == ABM_LCD_SUPPORT)
-+		ret = dmub_abm_set_backlight_level(abm, backlight_pwm_u16_16, frame_ramp, panel_inst);
- 
--	return true;
-+	return ret;
- }
- 
- static const struct abm_funcs abm_funcs = {
--	.abm_init = dmub_abm_init,
--	.set_abm_level = dmub_abm_set_level,
--	.get_current_backlight = dmub_abm_get_current_backlight,
--	.get_target_backlight = dmub_abm_get_target_backlight,
--	.init_abm_config = dmub_abm_init_config,
--	.set_abm_pause = dmub_abm_set_pause,
-+	.abm_init = dmub_abm_init_ex,
-+	.set_abm_level = dmub_abm_set_level_ex,
-+	.get_current_backlight = dmub_abm_get_current_backlight_ex,
-+	.get_target_backlight = dmub_abm_get_target_backlight_ex,
-+	.init_abm_config = dmub_abm_init_config_ex,
-+	.set_abm_pause = dmub_abm_set_pause_ex,
-+	.set_pipe_ex = dmub_abm_set_pipe_ex,
-+	.set_abm_event = dmub_abm_set_event_ex,
-+	.set_backlight_level_pwm = dmub_abm_set_backlight_level_pwm_ex,
- };
- 
- static void dmub_abm_construct(
-@@ -256,16 +195,19 @@ struct abm *dmub_abm_create(
- 	const struct dce_abm_shift *abm_shift,
- 	const struct dce_abm_mask *abm_mask)
- {
--	struct dce_abm *abm_dce = kzalloc(sizeof(*abm_dce), GFP_KERNEL);
-+	if (ctx->dc->caps.dmcub_support) {
-+		struct dce_abm *abm_dce = kzalloc(sizeof(*abm_dce), GFP_KERNEL);
- 
--	if (abm_dce == NULL) {
--		BREAK_TO_DEBUGGER();
--		return NULL;
--	}
-+		if (abm_dce == NULL) {
-+			BREAK_TO_DEBUGGER();
-+			return NULL;
-+		}
- 
--	dmub_abm_construct(abm_dce, ctx, regs, abm_shift, abm_mask);
-+		dmub_abm_construct(abm_dce, ctx, regs, abm_shift, abm_mask);
- 
--	return &abm_dce->base;
-+		return &abm_dce->base;
-+	}
-+	return NULL;
- }
- 
- void dmub_abm_destroy(struct abm **abm)
 diff --git a/drivers/gpu/drm/amd/display/dc/dce/dmub_abm_lcd.c b/drivers/gpu/drm/amd/display/dc/dce/dmub_abm_lcd.c
-new file mode 100644
-index 0000000000000..4055d271ac57f
---- /dev/null
+index 4055d271ac57f..19a97da77df88 100644
+--- a/drivers/gpu/drm/amd/display/dc/dce/dmub_abm_lcd.c
 +++ b/drivers/gpu/drm/amd/display/dc/dce/dmub_abm_lcd.c
-@@ -0,0 +1,286 @@
-+/*
-+ * Copyright 2019 Advanced Micro Devices, Inc.
-+ *
-+ * Permission is hereby granted, free of charge, to any person obtaining a
-+ * copy of this software and associated documentation files (the "Software"),
-+ * to deal in the Software without restriction, including without limitation
-+ * the rights to use, copy, modify, merge, publish, distribute, sublicense,
-+ * and/or sell copies of the Software, and to permit persons to whom the
-+ * Software is furnished to do so, subject to the following conditions:
-+ *
-+ * The above copyright notice and this permission notice shall be included in
-+ * all copies or substantial portions of the Software.
-+ *
-+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL
-+ * THE COPYRIGHT HOLDER(S) OR AUTHOR(S) BE LIABLE FOR ANY CLAIM, DAMAGES OR
-+ * OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
-+ * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
-+ * OTHER DEALINGS IN THE SOFTWARE.
-+ *
-+ * Authors: AMD
-+ *
-+ */
-+
-+#include "dmub_abm.h"
-+#include "dce_abm.h"
-+#include "dc.h"
-+#include "dc_dmub_srv.h"
-+#include "dmub/dmub_srv.h"
-+#include "core_types.h"
-+#include "dm_services.h"
-+#include "reg_helper.h"
-+#include "fixed31_32.h"
-+
-+#ifdef _WIN32
-+#include "atombios.h"
-+#else
-+#include "atom.h"
-+#endif
-+
-+#define TO_DMUB_ABM(abm)\
-+	container_of(abm, struct dce_abm, base)
-+
-+#define REG(reg) \
-+	(dce_abm->regs->reg)
-+
-+#undef FN
-+#define FN(reg_name, field_name) \
-+	dce_abm->abm_shift->field_name, dce_abm->abm_mask->field_name
-+
-+#define CTX \
-+	dce_abm->base.ctx
-+
-+#define DISABLE_ABM_IMMEDIATELY 255
-+
-+
-+
-+static void dmub_abm_enable_fractional_pwm(struct dc_context *dc)
-+{
-+	union dmub_rb_cmd cmd;
-+	uint32_t fractional_pwm = (dc->dc->config.disable_fractional_pwm == false) ? 1 : 0;
-+	uint32_t edp_id_count = dc->dc_edp_id_count;
-+	int i;
-+	uint8_t panel_mask = 0;
-+
-+	for (i = 0; i < edp_id_count; i++)
-+		panel_mask |= 0x01 << i;
-+
-+	memset(&cmd, 0, sizeof(cmd));
-+	cmd.abm_set_pwm_frac.header.type = DMUB_CMD__ABM;
-+	cmd.abm_set_pwm_frac.header.sub_type = DMUB_CMD__ABM_SET_PWM_FRAC;
-+	cmd.abm_set_pwm_frac.abm_set_pwm_frac_data.fractional_pwm = fractional_pwm;
-+	cmd.abm_set_pwm_frac.abm_set_pwm_frac_data.version = DMUB_CMD_ABM_CONTROL_VERSION_1;
-+	cmd.abm_set_pwm_frac.abm_set_pwm_frac_data.panel_mask = panel_mask;
-+	cmd.abm_set_pwm_frac.header.payload_bytes = sizeof(struct dmub_cmd_abm_set_pwm_frac_data);
-+
-+	dc_dmub_srv_cmd_queue(dc->dmub_srv, &cmd);
-+	dc_dmub_srv_cmd_execute(dc->dmub_srv);
-+	dc_dmub_srv_wait_idle(dc->dmub_srv);
-+}
-+
-+void dmub_abm_init(struct abm *abm, uint32_t backlight)
-+{
-+	struct dce_abm *dce_abm = TO_DMUB_ABM(abm);
-+
-+	REG_WRITE(DC_ABM1_HG_SAMPLE_RATE, 0x3);
-+	REG_WRITE(DC_ABM1_HG_SAMPLE_RATE, 0x1);
-+	REG_WRITE(DC_ABM1_LS_SAMPLE_RATE, 0x3);
-+	REG_WRITE(DC_ABM1_LS_SAMPLE_RATE, 0x1);
-+	REG_WRITE(BL1_PWM_BL_UPDATE_SAMPLE_RATE, 0x1);
-+
-+	REG_SET_3(DC_ABM1_HG_MISC_CTRL, 0,
-+			ABM1_HG_NUM_OF_BINS_SEL, 0,
-+			ABM1_HG_VMAX_SEL, 1,
-+			ABM1_HG_BIN_BITWIDTH_SIZE_SEL, 0);
-+
-+	REG_SET_3(DC_ABM1_IPCSC_COEFF_SEL, 0,
-+			ABM1_IPCSC_COEFF_SEL_R, 2,
-+			ABM1_IPCSC_COEFF_SEL_G, 4,
-+			ABM1_IPCSC_COEFF_SEL_B, 2);
-+
-+	REG_UPDATE(BL1_PWM_CURRENT_ABM_LEVEL,
-+			BL1_PWM_CURRENT_ABM_LEVEL, backlight);
-+
-+	REG_UPDATE(BL1_PWM_TARGET_ABM_LEVEL,
-+			BL1_PWM_TARGET_ABM_LEVEL, backlight);
-+
-+	REG_UPDATE(BL1_PWM_USER_LEVEL,
-+			BL1_PWM_USER_LEVEL, backlight);
-+
-+	REG_UPDATE_2(DC_ABM1_LS_MIN_MAX_PIXEL_VALUE_THRES,
-+			ABM1_LS_MIN_PIXEL_VALUE_THRES, 0,
-+			ABM1_LS_MAX_PIXEL_VALUE_THRES, 1000);
-+
-+	REG_SET_3(DC_ABM1_HGLS_REG_READ_PROGRESS, 0,
-+			ABM1_HG_REG_READ_MISSED_FRAME_CLEAR, 1,
-+			ABM1_LS_REG_READ_MISSED_FRAME_CLEAR, 1,
-+			ABM1_BL_REG_READ_MISSED_FRAME_CLEAR, 1);
-+
-+	dmub_abm_enable_fractional_pwm(abm->ctx);
-+}
-+
-+unsigned int dmub_abm_get_current_backlight(struct abm *abm)
-+{
-+	struct dce_abm *dce_abm = TO_DMUB_ABM(abm);
-+	unsigned int backlight = REG_READ(BL1_PWM_CURRENT_ABM_LEVEL);
-+
-+	/* return backlight in hardware format which is unsigned 17 bits, with
-+	 * 1 bit integer and 16 bit fractional
-+	 */
-+	return backlight;
-+}
-+
-+unsigned int dmub_abm_get_target_backlight(struct abm *abm)
-+{
-+	struct dce_abm *dce_abm = TO_DMUB_ABM(abm);
-+	unsigned int backlight = REG_READ(BL1_PWM_TARGET_ABM_LEVEL);
-+
-+	/* return backlight in hardware format which is unsigned 17 bits, with
-+	 * 1 bit integer and 16 bit fractional
-+	 */
-+	return backlight;
-+}
-+
-+bool dmub_abm_set_level(struct abm *abm, uint32_t level, uint8_t panel_mask)
-+{
-+	union dmub_rb_cmd cmd;
-+	struct dc_context *dc = abm->ctx;
-+
-+	memset(&cmd, 0, sizeof(cmd));
-+	cmd.abm_set_level.header.type = DMUB_CMD__ABM;
-+	cmd.abm_set_level.header.sub_type = DMUB_CMD__ABM_SET_LEVEL;
-+	cmd.abm_set_level.abm_set_level_data.level = level;
-+	cmd.abm_set_level.abm_set_level_data.version = DMUB_CMD_ABM_CONTROL_VERSION_1;
-+	cmd.abm_set_level.abm_set_level_data.panel_mask = panel_mask;
-+	cmd.abm_set_level.header.payload_bytes = sizeof(struct dmub_cmd_abm_set_level_data);
-+
-+	dc_dmub_srv_cmd_queue(dc->dmub_srv, &cmd);
-+	dc_dmub_srv_cmd_execute(dc->dmub_srv);
-+	dc_dmub_srv_wait_idle(dc->dmub_srv);
-+
-+	return true;
-+}
-+
-+#ifndef TRIM_AMBIENT_GAMMA
-+void dmub_abm_set_ambient_level(struct abm *abm, unsigned int ambient_lux, uint8_t panel_mask)
-+{
-+	union dmub_rb_cmd cmd;
-+	struct dc_context *dc = abm->ctx;
-+
-+	if (ambient_lux > 0xFFFF)
-+		ambient_lux = 0xFFFF;
-+
-+	memset(&cmd, 0, sizeof(cmd));
-+	cmd.abm_set_ambient_level.header.type = DMUB_CMD__ABM;
-+	cmd.abm_set_ambient_level.header.sub_type = DMUB_CMD__ABM_SET_AMBIENT_LEVEL;
-+	cmd.abm_set_ambient_level.abm_set_ambient_level_data.ambient_lux = ambient_lux;
-+	cmd.abm_set_ambient_level.abm_set_ambient_level_data.version = DMUB_CMD_ABM_CONTROL_VERSION_1;
-+	cmd.abm_set_ambient_level.abm_set_ambient_level_data.panel_mask = panel_mask;
-+	cmd.abm_set_ambient_level.header.payload_bytes = sizeof(struct dmub_cmd_abm_set_ambient_level_data);
-+
-+	dc_dmub_srv_cmd_queue(dc->dmub_srv, &cmd);
-+	dc_dmub_srv_cmd_execute(dc->dmub_srv);
-+	dc_dmub_srv_wait_idle(dc->dmub_srv);
-+}
-+#endif
-+
-+void dmub_abm_init_config(struct abm *abm,
-+	const char *src,
-+	unsigned int bytes,
-+	unsigned int inst)
-+{
-+	union dmub_rb_cmd cmd;
-+	struct dc_context *dc = abm->ctx;
-+	uint8_t panel_mask = 0x01 << inst;
-+
-+	// TODO: Optimize by only reading back final 4 bytes
-+	dmub_flush_buffer_mem(&dc->dmub_srv->dmub->scratch_mem_fb);
-+
-+	// Copy iramtable into cw7
-+	memcpy(dc->dmub_srv->dmub->scratch_mem_fb.cpu_addr, (void *)src, bytes);
-+
-+	memset(&cmd, 0, sizeof(cmd));
-+	// Fw will copy from cw7 to fw_state
-+	cmd.abm_init_config.header.type = DMUB_CMD__ABM;
-+	cmd.abm_init_config.header.sub_type = DMUB_CMD__ABM_INIT_CONFIG;
-+	cmd.abm_init_config.abm_init_config_data.src.quad_part = dc->dmub_srv->dmub->scratch_mem_fb.gpu_addr;
-+	cmd.abm_init_config.abm_init_config_data.bytes = bytes;
-+	cmd.abm_init_config.abm_init_config_data.version = DMUB_CMD_ABM_CONTROL_VERSION_1;
-+	cmd.abm_init_config.abm_init_config_data.panel_mask = panel_mask;
-+
-+	cmd.abm_init_config.header.payload_bytes = sizeof(struct dmub_cmd_abm_init_config_data);
-+
-+	dc_dmub_srv_cmd_queue(dc->dmub_srv, &cmd);
-+	dc_dmub_srv_cmd_execute(dc->dmub_srv);
-+	dc_dmub_srv_wait_idle(dc->dmub_srv);
-+
-+}
-+
-+bool dmub_abm_set_pause(struct abm *abm, bool pause, unsigned int panel_inst, unsigned int stream_inst)
-+{
-+	union dmub_rb_cmd cmd;
-+	struct dc_context *dc = abm->ctx;
-+	uint8_t panel_mask = 0x01 << panel_inst;
-+
-+	memset(&cmd, 0, sizeof(cmd));
-+	cmd.abm_pause.header.type = DMUB_CMD__ABM;
-+	cmd.abm_pause.header.sub_type = DMUB_CMD__ABM_PAUSE;
-+	cmd.abm_pause.abm_pause_data.enable = pause;
-+	cmd.abm_pause.abm_pause_data.panel_mask = panel_mask;
-+	cmd.abm_set_level.header.payload_bytes = sizeof(struct dmub_cmd_abm_pause_data);
-+
-+	dc_dmub_srv_cmd_queue(dc->dmub_srv, &cmd);
-+	dc_dmub_srv_cmd_execute(dc->dmub_srv);
-+	dc_dmub_srv_wait_idle(dc->dmub_srv);
-+
-+	return true;
-+}
-+
-+bool dmub_abm_set_pipe(struct abm *abm, uint32_t otg_inst, uint32_t option, uint32_t panel_inst)
-+{
-+	union dmub_rb_cmd cmd;
-+	struct dc_context *dc = abm->ctx;
-+	uint32_t ramping_boundary = 0xFFFF;
-+
-+	memset(&cmd, 0, sizeof(cmd));
-+	cmd.abm_set_pipe.header.type = DMUB_CMD__ABM;
-+	cmd.abm_set_pipe.header.sub_type = DMUB_CMD__ABM_SET_PIPE;
-+	cmd.abm_set_pipe.abm_set_pipe_data.otg_inst = otg_inst;
-+	cmd.abm_set_pipe.abm_set_pipe_data.set_pipe_option = option;
-+	cmd.abm_set_pipe.abm_set_pipe_data.panel_inst = panel_inst;
-+	cmd.abm_set_pipe.abm_set_pipe_data.ramping_boundary = ramping_boundary;
-+	cmd.abm_set_pipe.header.payload_bytes = sizeof(struct dmub_cmd_abm_set_pipe_data);
-+
-+	dc_dmub_srv_cmd_queue(dc->dmub_srv, &cmd);
-+	dc_dmub_srv_cmd_execute(dc->dmub_srv);
-+	dc_dmub_srv_wait_idle(dc->dmub_srv);
-+
-+	return true;
-+}
-+
-+bool dmub_abm_set_backlight_level(struct abm *abm,
-+		unsigned int backlight_pwm_u16_16,
-+		unsigned int frame_ramp,
-+		unsigned int panel_inst)
-+{
-+	union dmub_rb_cmd cmd;
-+	struct dc_context *dc = abm->ctx;
-+
-+	memset(&cmd, 0, sizeof(cmd));
-+	cmd.abm_set_backlight.header.type = DMUB_CMD__ABM;
-+	cmd.abm_set_backlight.header.sub_type = DMUB_CMD__ABM_SET_BACKLIGHT;
-+	cmd.abm_set_backlight.abm_set_backlight_data.frame_ramp = frame_ramp;
-+	cmd.abm_set_backlight.abm_set_backlight_data.backlight_user_level = backlight_pwm_u16_16;
-+	cmd.abm_set_backlight.abm_set_backlight_data.version = DMUB_CMD_ABM_CONTROL_VERSION_1;
-+	cmd.abm_set_backlight.abm_set_backlight_data.panel_mask = (0x01 << panel_inst);
-+	cmd.abm_set_backlight.header.payload_bytes = sizeof(struct dmub_cmd_abm_set_backlight_data);
-+
-+	dc_dmub_srv_cmd_queue(dc->dmub_srv, &cmd);
-+	dc_dmub_srv_cmd_execute(dc->dmub_srv);
-+	dc_dmub_srv_wait_idle(dc->dmub_srv);
-+
-+	return true;
-+}
-+
-diff --git a/drivers/gpu/drm/amd/display/dc/dce/dmub_abm_lcd.h b/drivers/gpu/drm/amd/display/dc/dce/dmub_abm_lcd.h
-new file mode 100644
-index 0000000000000..00b4e268768ef
---- /dev/null
-+++ b/drivers/gpu/drm/amd/display/dc/dce/dmub_abm_lcd.h
-@@ -0,0 +1,46 @@
-+/*
-+ * Copyright 2019 Advanced Micro Devices, Inc.
-+ *
-+ * Permission is hereby granted, free of charge, to any person obtaining a
-+ * copy of this software and associated documentation files (the "Software"),
-+ * to deal in the Software without restriction, including without limitation
-+ * the rights to use, copy, modify, merge, publish, distribute, sublicense,
-+ * and/or sell copies of the Software, and to permit persons to whom the
-+ * Software is furnished to do so, subject to the following conditions:
-+ *
-+ * The above copyright notice and this permission notice shall be included in
-+ * all copies or substantial portions of the Software.
-+ *
-+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL
-+ * THE COPYRIGHT HOLDER(S) OR AUTHOR(S) BE LIABLE FOR ANY CLAIM, DAMAGES OR
-+ * OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
-+ * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
-+ * OTHER DEALINGS IN THE SOFTWARE.
-+ *
-+ * Authors: AMD
-+ *
-+ */
-+
-+#ifndef __DMUB_ABM_LCD_H__
-+#define __DMUB_ABM_LCD_H__
-+
-+#include "abm.h"
-+
-+void dmub_abm_init(struct abm *abm, uint32_t backlight);
-+bool dmub_abm_set_level(struct abm *abm, uint32_t level, uint8_t panel_mask);
-+unsigned int dmub_abm_get_current_backlight(struct abm *abm);
-+unsigned int dmub_abm_get_target_backlight(struct abm *abm);
-+void dmub_abm_init_config(struct abm *abm,
-+	const char *src,
-+	unsigned int bytes,
-+	unsigned int inst);
-+
-+bool dmub_abm_set_pause(struct abm *abm, bool pause, unsigned int panel_inst, unsigned int stream_inst);
-+bool dmub_abm_set_pipe(struct abm *abm, uint32_t otg_inst, uint32_t option, uint32_t panel_inst);
-+bool dmub_abm_set_backlight_level(struct abm *abm,
-+		unsigned int backlight_pwm_u16_16,
-+		unsigned int frame_ramp,
-+		unsigned int panel_inst);
-+#endif
-diff --git a/drivers/gpu/drm/amd/display/dc/inc/hw/abm.h b/drivers/gpu/drm/amd/display/dc/inc/hw/abm.h
-index ecb4191b6e64f..db5cf9acafe6d 100644
---- a/drivers/gpu/drm/amd/display/dc/inc/hw/abm.h
-+++ b/drivers/gpu/drm/amd/display/dc/inc/hw/abm.h
-@@ -55,6 +55,12 @@ struct abm_funcs {
- 			unsigned int bytes,
- 			unsigned int inst);
- 	bool (*set_abm_pause)(struct abm *abm, bool pause, unsigned int panel_inst, unsigned int otg_inst);
-+	bool (*set_pipe_ex)(struct abm *abm,
-+			unsigned int otg_inst,
-+			unsigned int option,
-+			unsigned int panel_inst);
-+	bool (*set_abm_event)(struct abm *abm, unsigned int full_screen, unsigned int video_mode,
-+			unsigned int hdr_mode, unsigned int panel_inst);
- };
+@@ -242,7 +242,7 @@ bool dmub_abm_set_pipe(struct abm *abm, uint32_t otg_inst, uint32_t option, uint
+ {
+ 	union dmub_rb_cmd cmd;
+ 	struct dc_context *dc = abm->ctx;
+-	uint32_t ramping_boundary = 0xFFFF;
++	uint8_t ramping_boundary = 0xFF;
  
- #endif
+ 	memset(&cmd, 0, sizeof(cmd));
+ 	cmd.abm_set_pipe.header.type = DMUB_CMD__ABM;
+diff --git a/drivers/gpu/drm/amd/display/dc/dcn21/dcn21_hwseq.c b/drivers/gpu/drm/amd/display/dc/dcn21/dcn21_hwseq.c
+index 5910cde0408d0..10c63c47097a5 100644
+--- a/drivers/gpu/drm/amd/display/dc/dcn21/dcn21_hwseq.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn21/dcn21_hwseq.c
+@@ -141,7 +141,7 @@ static bool dmub_abm_set_pipe(struct abm *abm, uint32_t otg_inst, uint32_t optio
+ {
+ 	union dmub_rb_cmd cmd;
+ 	struct dc_context *dc = abm->ctx;
+-	uint32_t ramping_boundary = 0xFFFF;
++	uint8_t ramping_boundary = 0xFF;
+ 
+ 	memset(&cmd, 0, sizeof(cmd));
+ 	cmd.abm_set_pipe.header.type = DMUB_CMD__ABM;
 -- 
 2.53.0
 
