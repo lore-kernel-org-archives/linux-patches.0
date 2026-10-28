@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215279;
-	b=GEp0hq/56Iqodey4awpq1DfY9ehJf3OjfnmzUmqILyYCwXkctj7tndAVC2kDNCBW9IDM
-	 15p7GshzX4Cj+k0hd1e0+j0geWr1hZxWBD2jz8/qMfMv2U49j7/TcnvWapyl3KvaZAQGn
-	 NNv6JTZyfVizFae4Pk6ug63U4bXyz2vd1Mw8E6S2JHfrdZgEhxAbQ0nKVGSd730hwm+N/
-	 vtxnoDorDpjTqP9RPJ7dCiMtE9fegLPW+zfQ1LRAfu3RakPphuE2eI11wEV54nsWcN96B
-	 /12Hul5PTwLHcnJBUVSjWxn3XFgOoq8eOuRjwlKGDTfpX7ADg5u6/1CSK+pJwDT29BQ==
+	t=1793215281;
+	b=KDZqqTHfS+x8yo+zLG18pLNAudcLKT+wJU/XsH698+mUoI3g2xSMRuFUdon//pGf4IJB
+	 fjCRWLztbFbOR5wnXNZwg1pgwr+1aAm0fo5HrSgN5zOtmmxgCqAK49ritAkd64Er29Aut
+	 wfDQTzRFJhVtZ/9DTE+17xgt1s1B0DDlpm8FakVVoEirPr4S/KNnzZevKFCe/uZSBSugH
+	 raOvbJtCWXP9ZtS/8M/mEy3kuLn/WeFoH75EZzu8m0TPXVEAyLUL7EMHfwzSq9aPSIO7/
+	 nctkgzrBR2Mm8o6pTIWFuUoth6LjiQMVVD6GlQoRDM5PlratbM55GfXd8whKHpNYQ8A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215279;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215281;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=wu6LBbTYPbTmGz+mYAjGbgihchzCRu8GBJAGlgZBy0I=;
-	b=dLUxpaxK7pY6SAbi8+vPNObYWwtMwZgRO55vBifoqROSoRpssPNhA7GzLNm8YKsYF2+d
-	 2w+ATrmLjWcP/7jupj6HwUPH2HBR3kCVqQ4wwWj3b3PriIBbEtsltDYHQkvcbYbO9sC2W
-	 xJDcHN7ceKSCrkxumZO9WwOacyWzfbmDYp4QaULT6quEsl5vW6tNLqd0VML92C0lm+Tpw
-	 iUCHOqta33DjSWOUsu1dSxt0aZEDQ8xS27YVW+aMvBjQ97XinMLql5MH6BqjDQ5TKGn/M
-	 dkOGf4M1TioE45pSCBFxrbSEsDU0CprBExeFJoH6DHXqqBuQkIGe6Hpi9/voM1YY2qQ==
+	bh=79LhWZq9+whOi9Bcje2Pu+WxKNSMpAuRbwZaEQB6Rp0=;
+	b=NojG6tm63JN++zUqfRNn2oQVcDVILact2CLrK/3ct82GExZIqZxWff63dCTpbMrW4LUu
+	 WeBwBRCfqAWFeBhAoHatbgPG/hhry/ncPwNoHTkNFIp++liRGK+75E+rOih9s8fypwuEm
+	 btThi2XTLDHcrR/NWMQ8JfMvUAxRSz/Xn9gDT1UwJZTKyW7Ng0TrjHMFz/7yHG+8YYzMi
+	 yVBLdXxLhoMPVg4PjsBKqeEfLWypcOkuCfx8tRzYsbuTWKluHH8JYbs8pmVfIV7DwrvSI
+	 Swp9SV76xAlTFEfervMeJOObDoa2dcMcE5wT0aZSgLhZNGpYApLKrYsKU6zp4tgChzg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Lm0yJkmS;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bD9f9ep2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0B4B606A31C;
-	Wed, 28 Oct 2026 19:21:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56517606A31A;
+	Wed, 28 Oct 2026 19:21:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Lm0yJkmS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C87591F01825;
-	Wed, 28 Oct 2026 19:21:17 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bD9f9ep2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3B2F1F01825;
+	Wed, 28 Oct 2026 19:21:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215278;
-	bh=wu6LBbTYPbTmGz+mYAjGbgihchzCRu8GBJAGlgZBy0I=;
+	s=korg; t=1793215281;
+	bh=79LhWZq9+whOi9Bcje2Pu+WxKNSMpAuRbwZaEQB6Rp0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Lm0yJkmSluy+nTPLobTHEh/px5sWinlGkrJ3m2cyNJ4sjgEt9YqqWA0DbtMdyzaat
-	 xyZOnlyDGyCDKrbLU2orac6UpFdReO6vgnPdqyei36FaRjBwLL3ysp0ZarqaYpqSFu
-	 EpRSyYaAbF9MwWRPcne2+6CPHVOqRZB1jtw1L2GM=
+	b=bD9f9ep2KpNhAnmsvd55uUkyOVAMkvalMmRMhLiywWle+mvEjc62ndhTDh3QPnURc
+	 eIwgeMn544b51IwWzlikXYGAk3NBDhXx0V4JybCOeITBteo+81JIjJSAOp5AYD+Od3
+	 5EMNZ0/j8VZ541X5URfbUcYz0efP/xE97Ug3oVJE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Y s65 <yu4ys@outlook.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Pavan Chebbi <pavan.chebbi@broadcom.com>,
+	Breno Leitao <leitao@debian.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1155/1887] ksmbd: prevent path traversal bypass by restricting caseless retry
-Date: Wed, 28 Oct 2026 17:54:11 +0100
-Message-ID: <20261028170525.691028560@linuxfoundation.org>
+Subject: [PATCH 6.1 1156/1887] netpoll: fix a use-after-free on shutdown path
+Date: Wed, 28 Oct 2026 17:54:12 +0100
+Message-ID: <20261028170525.712931044@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,59 +69,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit 54bab9ba5a9f156ffa9324fcbe5a356fd0242f95 ]
+[ Upstream commit 45f1458a85017a023f138b22ac5c76abd477db42 ]
 
-ksmbd_vfs_path_lookup() enforces LOOKUP_BENEATH to restrict path
-resolution within the share root. When a crafted path attempts to
-escape the share boundary using parent-directory components ('..'),
-vfs_path_parent_lookup() detects this and immediately fails,
-returning -EXDEV.
+There is a use-after-free error on netpoll, which is clearly detected by
+KASAN.
 
-However, a bug exists in __ksmbd_vfs_kern_path() under caseless mode.
-The function fails to intercept the -EXDEV error and erroneously
-falls through to the caseless retry logic, which is intended only
-for genuinely missing files. During this retry process, the path
-is reconstructed, leading to an unintended LOOKUP_BENEATH bypass
-that allows write-capable users to create zero-length files or
-directories outside the exported share.
+      BUG: KASAN: slab-use-after-free in _raw_spin_lock_irqsave+0x3b/0x80
+      Read of size 1 at addr ... by task kworker/9:1
+      Workqueue: events queue_process
+      Call Trace:
+       skb_dequeue+0x1e/0xb0
+       queue_process+0x2c/0x600
+       process_scheduled_works+0x4b6/0x850
+       worker_thread+0x414/0x5a0
+      Allocated by task 242:
+       __netpoll_setup+0x201/0x4a0
+       netpoll_setup+0x249/0x550
+       enabled_store+0x32f/0x380
+      Freed by task 0:
+       kfree+0x1b7/0x540
+       rcu_core+0x3f8/0x7a0
 
-Fix this by ensuring that the execution only proceeds to the caseless
-lookup retry when the error is specifically -ENOENT. Any other errors,
-such as -EXDEV from a path traversal attempt, must be returned immediately.
+The problem happens when there is a pending TX worker running in
+parallel with the cleanup path.
+
+This is what happens on netpoll shutdown path:
+
+1) __netpoll_cleanup() is called
+2) set dev->npinfo to NULL
+3) call_rcu() with rcu_cleanup_netpoll_info()
+  3.1) rcu_cleanup_netpoll_info() tries to cancel all workers with
+       cancel_delayed_work(), but doesn't wait for the worker to finish
+4) and kfree(npinfo);
+
+Because 3.1) doesn't really cancel the work, as the comment says "we
+can't call cancel_delayed_work_sync here, as we are in softirq", the TX
+worker can run after 4).
+
+Tl;DR: queue_process() is not an RCU reader, it reaches npinfo through
+the work item via container_of().
+
+Use disable_delayed_work_sync() to ensure the worker is completely
+stopped and prevent any future re-arming attempts. Once npinfo is set
+to NULL, senders will bail out and not queue new work. The disable flag
+ensures any in-flight re-arming attempts also fail silently.
+
+In the future, we can do the cleanup inline here without needing the
+npinfo->rcu rcu_head, but that is net-next material.
 
 Cc: stable@vger.kernel.org
-Reported-by: Y s65 <yu4ys@outlook.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: 38e6bc185d95 ("netpoll: make __netpoll_cleanup non-block")
+Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Link: https://patch.msgid.link/20260625-netpoll_rcu_fix-v2-1-0748ffac1e98@debian.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/vfs.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/core/netpoll.c | 10 ++--------
+ 1 file changed, 2 insertions(+), 8 deletions(-)
 
-diff --git a/fs/smb/server/vfs.c b/fs/smb/server/vfs.c
-index 992ead0759f7a..29247726d9d27 100644
---- a/fs/smb/server/vfs.c
-+++ b/fs/smb/server/vfs.c
-@@ -1239,7 +1239,7 @@ int ksmbd_vfs_kern_path_locked(struct ksmbd_work *work, char *name,
- 	if (!err)
- 		return 0;
+diff --git a/net/core/netpoll.c b/net/core/netpoll.c
+index a8957be288039..84ce00940bc85 100644
+--- a/net/core/netpoll.c
++++ b/net/core/netpoll.c
+@@ -830,14 +830,6 @@ static void rcu_cleanup_netpoll_info(struct rcu_head *rcu_head)
+ 			container_of(rcu_head, struct netpoll_info, rcu);
  
--	if (caseless) {
-+	if (caseless && err == -ENOENT) {
- 		char *filepath;
- 		size_t path_len, remain_len;
+ 	skb_queue_purge(&npinfo->txq);
+-
+-	/* we can't call cancel_delayed_work_sync here, as we are in softirq */
+-	cancel_delayed_work(&npinfo->tx_work);
+-
+-	/* clean after last, unfinished work */
+-	__skb_queue_purge(&npinfo->txq);
+-	/* now cancel it again */
+-	cancel_delayed_work(&npinfo->tx_work);
+ 	kfree(npinfo);
+ }
  
-@@ -1270,7 +1270,7 @@ int ksmbd_vfs_kern_path_locked(struct ksmbd_work *work, char *name,
- 			err = vfs_path_lookup(share_conf->vfs_path.dentry,
- 					      share_conf->vfs_path.mnt,
- 					      filepath,
--					      flags,
-+					      flags | LOOKUP_BENEATH,
- 					      path);
- 			if (!is_last)
- 				next[0] = '/';
+@@ -863,6 +855,8 @@ void __netpoll_cleanup(struct netpoll *np)
+ 			ops->ndo_netpoll_cleanup(np->dev);
+ 
+ 		RCU_INIT_POINTER(np->dev->npinfo, NULL);
++		synchronize_rcu();
++		cancel_delayed_work_sync(&npinfo->tx_work);
+ 		call_rcu(&npinfo->rcu, rcu_cleanup_netpoll_info);
+ 	}
+ }
 -- 
 2.53.0
 
