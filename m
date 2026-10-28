@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214833;
-	b=mNW1EA0FQCUqHqOi/pXDYQX+rZDSYBJXR/yzyOj7PX8DTd5WjyAaejd3qsIPYcwzXbX6
-	 h/tY65wdBk5yYHozEmVCS2U9DRkTZMZGNl5NjvrB1SN7CXYOYW8D4BIlvlLc5w9+c+lQ5
-	 tsUG+i0ehuK7mrM7qsZyN3VqFY4MTf7lVR/DikfwB8IMmxmJ2Do+AgUo1k9cakUhKwouE
-	 6WB7H2Ve7uSHmUAk/k0RaEoSon1oId4T1xgpvOEEwDNj1+5ocExWOwjWNVVWGpJcx74qN
-	 KASSk4r5TEQ608Q/KRWhdrMXnZQ3QITVbRlfLlaMmT1YSGmno9flMOCJ4JvQxQhuBOA==
+	t=1793214836;
+	b=qTl/dN/pEYtjj11NdmOJOjyhrhlcUS/Au5FzxKYr1LU6hrlkC36nlHe3zdiVKwVgUCz2
+	 b2Ekz7bEYnqgWsIbhPXwEFS3qz0dZQlUuMtBygX5dhSszx5A/xsVuulefjDzLAL4W64md
+	 ga4n1foiYM/KppXcQKeF0JDXhetb0Tx0Vi+cc0K2qHDuvl4dWpKFzj3tg60zz+ALeZGn7
+	 4TxiqEBEPAKgj4Z4sGwMe2vDALvhrH/hCm67LCOadUSP6Hcl7vg/LD0PszvNJo78jTe50
+	 86izXuJLrdpzHQZUp9DUKFAgPyikP/eNlVhKA3yPUE1GYwU7Iw/wC4A42oaRyowRmBQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214833;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214836;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/kCEfvt0rRJxx1fWcpTmeDd3L5CXcrdBUXgZ0+h2KwI=;
-	b=2coH/GzEKRFwoTNr5UWEej2kI/YYLAwWREbu/aDG4RvIMcLMyduCnSGzV53epsWCcn4C
-	 9/Voc20XlYsRW5NLpEdsloO72dEGqTOBlifAWy3XyaVaJscvD8a3Mv/BMweD8eqmxRjgO
-	 EjDWdFyfVAe9YPG3LPweFKRxczxgfYNQXPzeBGoFx9xAwHUhy4KUy0siN/SHL8apg+Ntb
-	 G+W8beqP/+kHhoF5NZKSFHhXxpVA4opvhatJFL5ssHkCxJgbHP66SlXeGweNCkKrqctEr
-	 cbSSS+xpc/F03yCgQLCWaZmUFNNwJey6P5HLc1mWavYdKW7cYQUQcQOgPsg5WXqgePg==
+	bh=iv+nz+Lhp1vbGl2GjqfYnHMmucoObXDPccgWuw4QTBY=;
+	b=XdMBaxlYcphV1xxV2IfLsYJeGcVqwXXq7IGaOSNlNpYMQ84IjwVPsSwDW6SG2IHl5jTs
+	 rh44JakyWZH67Fn/5Y6aAuKOnDf97d6A1ehlg9UUWY67xLySbWnHwCV7HC5tIw2EYfxJB
+	 JiQrO+MZmWfSTmvrkRy91hHPxXeNnXlZ9WwSPfIlXbQwab9xXVM2kBQTxvNh2z+5UTwBe
+	 pI67R8tRkIjnZQSVFSHfasey0kQWQ+S8Kmgq+ezZzpzahsCEcDi/AOkmoF2nEryZ0bUBt
+	 JInWj/t4sOLqnuntzDpXUj6YcrRRyLN7LJx2faqhVa+pB1xSTACVx80Huv4zMvkre9g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ILZAT9+n;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="f/siXvBD";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E48B606A320;
-	Wed, 28 Oct 2026 19:13:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00E6A606A320;
+	Wed, 28 Oct 2026 19:13:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ILZAT9+n
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DA601F01825;
-	Wed, 28 Oct 2026 19:13:52 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=f/siXvBD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51FDC1F01825;
+	Wed, 28 Oct 2026 19:13:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214833;
-	bh=/kCEfvt0rRJxx1fWcpTmeDd3L5CXcrdBUXgZ0+h2KwI=;
+	s=korg; t=1793214835;
+	bh=iv+nz+Lhp1vbGl2GjqfYnHMmucoObXDPccgWuw4QTBY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ILZAT9+n8FLY8o6LJTVrsQ2W1M+otnmkaIHHeDhK23Lo+oHLHFL+o5VcpggfrgdIp
-	 vyWEXwVaIA4Qk8IAqDk32k9z/O8PMnIVbUdR3Y5B9jWYfpkizoBUhr2TCBNB+ubXju
-	 mLNpKW3qR7foDh9b7uJSC4xiO24K9ufHvMt0hOR8=
+	b=f/siXvBDieCO4J2flWsGTBA7Lt7PMEHcrYV2kk9B2cfmMHH40ckL7ICnvK+WoWCXS
+	 TFpPLNHYVDI4NZkwOHL+MsWrSY9+++za6t/sNvVaLrtaKB90vM7Qa5BfYOtgpSDmNq
+	 SlAWFx55r+t8W/NMgkICZWdBk1FlNMrcttUZYcWU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Claudio Imbrenda <imbrenda@linux.ibm.com>,
-	Christian Borntraeger <borntraeger@linux.ibm.com>,
-	Janosch Frank <frankja@linux.ibm.com>,
+	Ge Yang <yangge1116@126.com>,
+	Tom Lendacky <thomas.lendacky@amd.com>,
+	David Hildenbrand <david@redhat.com>,
+	Sean Christopherson <seanjc@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0954/1887] s390/mm: Add missing secure storage access fixups for donated memory
-Date: Wed, 28 Oct 2026 17:50:50 +0100
-Message-ID: <20261028170521.115943749@linuxfoundation.org>
+Subject: [PATCH 6.1 0955/1887] KVM: SEV: Use long-term pin when registering encrypted memory regions
+Date: Wed, 28 Oct 2026 17:50:51 +0100
+Message-ID: <20261028170521.138769949@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -70,61 +70,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Janosch Frank <frankja@linux.ibm.com>
+From: Ge Yang <yangge1116@126.com>
 
-[ Upstream commit b00be77302d7ec4ad0367bb236494fce7172b730 ]
+[ Upstream commit 7e066cb9b71a22c3e5ef233de63ff14525baf6f0 ]
 
-There are special cases where secure storage access exceptions happen
-in a kernel context for pages that don't have the PG_arch_1 bit
-set. That bit is set for non-exported guest secure storage (memory)
-but is absent on storage donated to the Ultravisor since the kernel
-isn't allowed to export donated pages.
+When registering an encrypted memory region for SEV-MEM/SEV-ES guests,
+pin the pages with FOLL_TERM so that the pages are migrated out of
+MIGRATE_CMA/ZONE_MOVABLE.  Failure to do so violates the CMA/MOVABLE
+mechanisms and can result in fragmentation due to unmovable pages, e.g.
+can make CMA allocations fail.
 
-Prior to this patch we would try to export the page by calling
-arch_make_folio_accessible() which would instantly return since the
-arch bit is absent signifying that the page was already exported and
-no further action is necessary. This leads to secure storage access
-exception loops which can never be resolved.
-
-With this patch we unconditionally try to export and if that fails we
-fixup.
-
-Fixes: 084ea4d611a3 ("s390/mm: add (non)secure page access exceptions handlers")
-Reported-by: Heiko Carstens <hca@linux.ibm.com>
-Suggested-by: Heiko Carstens <hca@linux.ibm.com>
-Reviewed-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
-Tested-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-Signed-off-by: Janosch Frank <frankja@linux.ibm.com>
-Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Signed-off-by: Ge Yang <yangge1116@126.com>
+Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
+Acked-by: David Hildenbrand <david@redhat.com>
+Link: https://lore.kernel.org/r/1739241423-14326-1-git-send-email-yangge1116@126.com
+[sean: massage changelog, make @flags an unsigned int]
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Stable-dep-of: b6408b6cec5d ("KVM: SEV: Protect *all* of sev_mem_enc_register_region() with kvm->lock")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/mm/fault.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ arch/x86/kvm/svm/sev.c | 15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
 
-diff --git a/arch/s390/mm/fault.c b/arch/s390/mm/fault.c
-index be6122b0e6d15..dc0aa423e142e 100644
---- a/arch/s390/mm/fault.c
-+++ b/arch/s390/mm/fault.c
-@@ -855,10 +855,17 @@ void do_secure_storage_access(struct pt_regs *regs)
- 		page = phys_to_page(addr);
- 		if (unlikely(!try_get_page(page)))
- 			break;
--		rc = arch_make_page_accessible(page);
-+		rc = uv_convert_from_secure(page_to_phys(page));
-+		if (!rc)
-+			clear_bit(PG_arch_1, &page->flags);
- 		put_page(page);
-+		/*
-+		 * There are some valid fixup types for kernel
-+		 * accesses to donated secure memory. zeropad is one
-+		 * of them.
-+		 */
- 		if (rc)
--			BUG();
-+			return do_no_context(regs, 0);
- 		break;
- 	default:
- 		do_fault_error(regs, VM_FAULT_BADMAP);
+diff --git a/arch/x86/kvm/svm/sev.c b/arch/x86/kvm/svm/sev.c
+index 53b37f3d770bc..302ebbb4878f5 100644
+--- a/arch/x86/kvm/svm/sev.c
++++ b/arch/x86/kvm/svm/sev.c
+@@ -393,7 +393,7 @@ static int sev_launch_start(struct kvm *kvm, struct kvm_sev_cmd *argp)
+ 
+ static struct page **sev_pin_memory(struct kvm *kvm, unsigned long uaddr,
+ 				    unsigned long ulen, unsigned long *n,
+-				    int write)
++				    unsigned int flags)
+ {
+ 	struct kvm_sev_info *sev = &to_kvm_svm(kvm)->sev_info;
+ 	unsigned long npages, size;
+@@ -437,7 +437,7 @@ static struct page **sev_pin_memory(struct kvm *kvm, unsigned long uaddr,
+ 		return ERR_PTR(-ENOMEM);
+ 
+ 	/* Pin the user virtual address. */
+-	npinned = pin_user_pages_fast(uaddr, npages, write ? FOLL_WRITE : 0, pages);
++	npinned = pin_user_pages_fast(uaddr, npages, flags, pages);
+ 	if (npinned != npages) {
+ 		pr_err("SEV: Failure locking %lu pages.\n", npages);
+ 		ret = -ENOMEM;
+@@ -525,7 +525,7 @@ static int sev_launch_update_data(struct kvm *kvm, struct kvm_sev_cmd *argp)
+ 	vaddr_end = vaddr + size;
+ 
+ 	/* Lock the user memory. */
+-	inpages = sev_pin_memory(kvm, vaddr, size, &npages, 1);
++	inpages = sev_pin_memory(kvm, vaddr, size, &npages, FOLL_WRITE);
+ 	if (IS_ERR(inpages))
+ 		return PTR_ERR(inpages);
+ 
+@@ -958,7 +958,7 @@ static int sev_dbg_crypt(struct kvm *kvm, struct kvm_sev_cmd *argp, bool dec)
+ 		if (IS_ERR(src_p))
+ 			return PTR_ERR(src_p);
+ 
+-		dst_p = sev_pin_memory(kvm, dst_vaddr & PAGE_MASK, PAGE_SIZE, &n, 1);
++		dst_p = sev_pin_memory(kvm, dst_vaddr & PAGE_MASK, PAGE_SIZE, &n, FOLL_WRITE);
+ 		if (IS_ERR(dst_p)) {
+ 			sev_unpin_memory(kvm, src_p, n);
+ 			return PTR_ERR(dst_p);
+@@ -1025,7 +1025,7 @@ static int sev_launch_secret(struct kvm *kvm, struct kvm_sev_cmd *argp)
+ 	if (copy_from_user(&params, (void __user *)(uintptr_t)argp->data, sizeof(params)))
+ 		return -EFAULT;
+ 
+-	pages = sev_pin_memory(kvm, params.guest_uaddr, params.guest_len, &n, 1);
++	pages = sev_pin_memory(kvm, params.guest_uaddr, params.guest_len, &n, FOLL_WRITE);
+ 	if (IS_ERR(pages))
+ 		return PTR_ERR(pages);
+ 
+@@ -1507,7 +1507,7 @@ static int sev_receive_update_data(struct kvm *kvm, struct kvm_sev_cmd *argp)
+ 
+ 	/* Pin guest memory */
+ 	guest_page = sev_pin_memory(kvm, params.guest_uaddr & PAGE_MASK,
+-				    PAGE_SIZE, &n, 1);
++				    PAGE_SIZE, &n, FOLL_WRITE);
+ 	if (IS_ERR(guest_page)) {
+ 		ret = PTR_ERR(guest_page);
+ 		goto e_free_trans;
+@@ -1971,7 +1971,8 @@ int sev_mem_enc_register_region(struct kvm *kvm,
+ 		return -ENOMEM;
+ 
+ 	mutex_lock(&kvm->lock);
+-	region->pages = sev_pin_memory(kvm, range->addr, range->size, &region->npages, 1);
++	region->pages = sev_pin_memory(kvm, range->addr, range->size, &region->npages,
++				       FOLL_WRITE | FOLL_LONGTERM);
+ 	if (IS_ERR(region->pages)) {
+ 		ret = PTR_ERR(region->pages);
+ 		mutex_unlock(&kvm->lock);
 -- 
 2.53.0
 
