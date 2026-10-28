@@ -1,54 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214802;
-	b=1vg1rkCBLU1Obxsb5hq8JWOXMzVKO4Zm2pHc1AJrTLNbESHWfZxDJ3GimLEV3ot8vH38
-	 KN0zxwWE/jHKS9Y3tC0Q8FnLeHprDx/Sxn4LhL5cOoUowV9Z5tPpxjmW+7l2W739qF7cb
-	 gnAbERDqb3u7mquSqR871ddlJhRJOuh5WWWO5wl9dVKGSou3zlTp84LrKXMd/29aCRa7/
-	 BCgoMZs4YnDaV+9jl+ktdEwgv2vFKj3P4YoPbUmT51JLn2ZL1Hgguu5YWoTwLRU+UWWxV
-	 jvEIKBGz4se7mpCr09sqdAnpEgyYtECx6HDliaMPRCF+G41PGNZsL5+SaFFQ21uY7Xw==
+	t=1793214805;
+	b=TEf/BmkcE197aqTloE0GPqtUyupKwO/fTWcRAvr9eFFp54Gj7LrRTdtl0EzrpTzw4VUi
+	 VONE0WyG9mvQzZ4VXWUo3NmQQcKs9585CjYWzPR5tVEV8KBKmtvnH0sUp830aRynssCcY
+	 ZRYPqGeQVDS0xJwCwgPFikptr9W73wxB3GYS/ooLoCrsy/R1HL8yxWQMfmu3UmkzmyzHN
+	 vcP0PGoEyPwGpdvOoKIY+jqrTNEbbpJlbu97VJQboUIj2sfplIYMj7hYCT0PVYcLK0P43
+	 WFFjoP6CxMUSjFTTUG4YSkzhXjS8hWg58LT9tzSywIxlY8De8y6WvlcF2bZ2W3ailcg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214802;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214805;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=zec/XScPuhQef/n9OPc17Qnl1/V+aGm29TkB4bxJ7z0=;
-	b=QT0vQ6NfqedK4NAOmqRxdmbMOwoMKXjqM6tB2EBbHZiXWuC/jfnJl2HldOOCZqBGUCLz
-	 kp6kYXu0TmDDGtSpryNgnuW3iYu7ZPo63zzdrh8qPAaR7Tc2NjYH1Sz1Hs3jZNRxXpGcC
-	 dqu7Fhs0Sl9+wCDCqX0WldZm8BLIOCywOF8fjb01RMVGH4BE/UZsN7S7CDgU06XR9xUKp
-	 eUrk3Hz6O4VLsQPEqtwUT1JgYMRlvp75sjeGhOM1uITYd4R19atbG7u9IUPf8AKhQccfb
-	 3abW7/OCysz0GkNySfEQvx1LLFY/brHW4KWVb4dbbSIg4b3oIu/yIzJnzHzZGqYZ29g==
+	bh=CgEHp7g0l1b+Xk318RN2PBnjcqg+c7r4a/9QoZkUJEk=;
+	b=yNW7LMbYuFGSFtOGylAOG8bEvafH7Q0tL7+UJwP3ZiGaxhaWCvJxmIqG3IqNTtPBbSz2
+	 PWfKZ8Ny5BqCobh5xpSoUyvNWyH6LbdNRwbUlGd0fl0bJAumTiW0Frvc0BLRtmNU6L9X9
+	 xEiu6ZsJ264TIZbWP+Cpkwx/0sbTgQyvppSvkIHLQAU9hwTYDb1Wq0pXhtKgWcBiweU7n
+	 4f8DzO0M9C0zYIuDmaxUZckU0ax2Xmoshv0L82UEtJI2z7EXVpkrrzZxNTXAsBQJ0nx57
+	 fdEiUSXm68j9s+lUkhWGRsDkGk7C/CuEq6gwM3/qlmI+h6x1rVY0w15CQj8EMRs2kxg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fnXyX0rQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QG6aiiBQ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E2BA606A335;
-	Wed, 28 Oct 2026 19:13:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E487606A33A;
+	Wed, 28 Oct 2026 19:13:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fnXyX0rQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 731471F01825;
-	Wed, 28 Oct 2026 19:13:21 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QG6aiiBQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C6A11F031E0;
+	Wed, 28 Oct 2026 19:13:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214802;
-	bh=zec/XScPuhQef/n9OPc17Qnl1/V+aGm29TkB4bxJ7z0=;
+	s=korg; t=1793214804;
+	bh=CgEHp7g0l1b+Xk318RN2PBnjcqg+c7r4a/9QoZkUJEk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fnXyX0rQ8iyucUiMwwkVBwHzWeMSZh8+JC4mjfdN1J40BPMchTB9aL7WfYIfTd78A
-	 khgsQbaUjiGq5w8wCjENzx32eWpNyA0P6wn4NLQcBcI2Kf5SMn7bS/WmcxkwtNbt9Z
-	 2Ava3nDBKKMYe3RUdVLzdtSRYMr645oC/gzLRTOk=
+	b=QG6aiiBQ1y87Goyfmtwn1d46dZ8cV7cp4Kj4DNrPmPIUBR4hM9ESCsla4u7AU7CQG
+	 nUo1sfNLl2ffBBWrMt1ii9qZANLDZS4k18nDeirJ1TRV3+6yB3J1gqU9uPx5+e5TxD
+	 GXW92QQFYMSvgcnEGRJOELknW4iVk0/Ae3peS8lo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+3d8bc31c45e11450f24c@syzkaller.appspotmail.com,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Jiayuan Chen <jiayuan.chen@shopee.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0950/1887] team: fix header_ops type confusion with non-Ethernet ports
-Date: Wed, 28 Oct 2026 17:50:46 +0100
-Message-ID: <20261028170521.024358298@linuxfoundation.org>
+Subject: [PATCH 6.1 0986/1887] ALSA: mixer: oss: Add card disconnect checkpoints
+Date: Wed, 28 Oct 2026 17:51:22 +0100
+Message-ID: <20261028170521.847990122@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -70,138 +67,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@shopee.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 425000dbf17373a4ab8be9428f5dc055ef870a56 ]
+[ Upstream commit 084d5d44418148662365eced3e126ad1a81ee3e2 ]
 
-Similar to commit 950803f72547 ("bonding: fix type confusion in
-bond_setup_by_slave()") team has the same class of header_ops type
-confusion.
+ALSA OSS mixer layer calls the kcontrol ops rather individually, and
+pending calls might be not always caught at disconnecting the device.
 
-For non-Ethernet ports, team_setup_by_port() copies port_dev->header_ops
-directly. When the team device later calls dev_hard_header() or
-dev_parse_header(), these callbacks can run with the team net_device
-instead of the real lower device, so netdev_priv(dev) is interpreted as
-the wrong private type and can crash.
+For avoiding the potential UAF scenarios, add sanity checks of the
+card disconnection at each entry point of OSS mixer accesses.  The
+rwsem is taken just before that check, hence the rest context should
+be covered by that properly.
 
-The syzbot report shows a crash in bond_header_create(), but the root
-cause is in team: the topology is gre -> bond -> team, and team calls
-the inherited header_ops with its own net_device instead of the lower
-device, so bond_header_create() receives a team device and interprets
-netdev_priv() as bonding private data, causing a type confusion crash.
-
-Fix this by introducing team header_ops wrappers for create/parse,
-selecting a team port under RCU, and calling the lower device callbacks
-with port->dev, so each callback always sees the correct net_device
-context.
-
-Also pass the selected lower device to the lower parse callback, so
-recursion is bounded in stacked non-Ethernet topologies and parse
-callbacks always run with the correct device context.
-
-Fixes: 1d76efe1577b ("team: add support for non-ethernet devices")
-Reported-by: syzbot+3d8bc31c45e11450f24c@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/69b46af7.050a0220.36eb34.000e.GAE@google.com/T/
-Cc: Jiayuan Chen <jiayuan.chen@linux.dev>
-Signed-off-by: Jiayuan Chen <jiayuan.chen@shopee.com>
-Link: https://patch.msgid.link/20260320072139.134249-2-jiayuan.chen@linux.dev
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Link: https://patch.msgid.link/20260209121212.171430-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/team/team.c | 73 ++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 72 insertions(+), 1 deletion(-)
+ sound/core/oss/mixer_oss.c | 32 ++++++++++++++++++++++++++++++++
+ 1 file changed, 32 insertions(+)
 
-diff --git a/drivers/net/team/team.c b/drivers/net/team/team.c
-index 874a8b78803c4..386c989641a3e 100644
---- a/drivers/net/team/team.c
-+++ b/drivers/net/team/team.c
-@@ -2158,6 +2158,76 @@ static const struct ethtool_ops team_ethtool_ops = {
-  * rt netlink interface
-  ***********************/
+diff --git a/sound/core/oss/mixer_oss.c b/sound/core/oss/mixer_oss.c
+index abc99ae333282..ecb4af6709598 100644
+--- a/sound/core/oss/mixer_oss.c
++++ b/sound/core/oss/mixer_oss.c
+@@ -540,6 +540,10 @@ static void snd_mixer_oss_get_volume1_vol(struct snd_mixer_oss_file *fmixer,
+ 	if (numid == ID_UNKNOWN)
+ 		return;
+ 	down_read(&card->controls_rwsem);
++	if (card->shutdown) {
++		up_read(&card->controls_rwsem);
++		return;
++	}
+ 	kctl = snd_ctl_find_numid_locked(card, numid);
+ 	if (!kctl) {
+ 		up_read(&card->controls_rwsem);
+@@ -579,6 +583,10 @@ static void snd_mixer_oss_get_volume1_sw(struct snd_mixer_oss_file *fmixer,
+ 	if (numid == ID_UNKNOWN)
+ 		return;
+ 	down_read(&card->controls_rwsem);
++	if (card->shutdown) {
++		up_read(&card->controls_rwsem);
++		return;
++	}
+ 	kctl = snd_ctl_find_numid_locked(card, numid);
+ 	if (!kctl) {
+ 		up_read(&card->controls_rwsem);
+@@ -645,6 +653,10 @@ static void snd_mixer_oss_put_volume1_vol(struct snd_mixer_oss_file *fmixer,
+ 	if (numid == ID_UNKNOWN)
+ 		return;
+ 	down_read(&card->controls_rwsem);
++	if (card->shutdown) {
++		up_read(&card->controls_rwsem);
++		return;
++	}
+ 	kctl = snd_ctl_find_numid_locked(card, numid);
+ 	if (!kctl) {
+ 		up_read(&card->controls_rwsem);
+@@ -688,6 +700,10 @@ static void snd_mixer_oss_put_volume1_sw(struct snd_mixer_oss_file *fmixer,
+ 	if (numid == ID_UNKNOWN)
+ 		return;
+ 	down_read(&card->controls_rwsem);
++	if (card->shutdown) {
++		up_read(&card->controls_rwsem);
++		return;
++	}
+ 	kctl = snd_ctl_find_numid_locked(card, numid);
+ 	if (!kctl) {
+ 		up_read(&card->controls_rwsem);
+@@ -833,6 +849,10 @@ static int snd_mixer_oss_get_recsrc2(struct snd_mixer_oss_file *fmixer, unsigned
+ 		goto __free_only;
+ 	}
+ 	down_read(&card->controls_rwsem);
++	if (card->shutdown) {
++		err = -ENODEV;
++		goto __unlock;
++	}
+ 	kctl = snd_mixer_oss_test_id(mixer, "Capture Source", 0);
+ 	if (! kctl) {
+ 		err = -ENOENT;
+@@ -886,6 +906,10 @@ static int snd_mixer_oss_put_recsrc2(struct snd_mixer_oss_file *fmixer, unsigned
+ 		goto __free_only;
+ 	}
+ 	down_read(&card->controls_rwsem);
++	if (card->shutdown) {
++		err = -ENODEV;
++		goto __unlock;
++	}
+ 	kctl = snd_mixer_oss_test_id(mixer, "Capture Source", 0);
+ 	if (! kctl) {
+ 		err = -ENOENT;
+@@ -937,6 +961,10 @@ static int snd_mixer_oss_build_test(struct snd_mixer_oss *mixer, struct slot *sl
+ 	int err;
  
-+/* For tx path we need a linkup && enabled port and for parse any port
-+ * suffices.
-+ */
-+static struct team_port *team_header_port_get_rcu(struct team *team,
-+						  bool txable)
-+{
-+	struct team_port *port;
-+
-+	list_for_each_entry_rcu(port, &team->port_list, list) {
-+		if (!txable || team_port_txable(port))
-+			return port;
+ 	down_read(&card->controls_rwsem);
++	if (card->shutdown) {
++		up_read(&card->controls_rwsem);
++		return -ENODEV;
 +	}
-+
-+	return NULL;
-+}
-+
-+static int team_header_create(struct sk_buff *skb, struct net_device *team_dev,
-+			      unsigned short type, const void *daddr,
-+			      const void *saddr, unsigned int len)
-+{
-+	struct team *team = netdev_priv(team_dev);
-+	const struct header_ops *port_ops;
-+	struct team_port *port;
-+	int ret = 0;
-+
-+	rcu_read_lock();
-+	port = team_header_port_get_rcu(team, true);
-+	if (port) {
-+		port_ops = READ_ONCE(port->dev->header_ops);
-+		if (port_ops && port_ops->create)
-+			ret = port_ops->create(skb, port->dev,
-+					       type, daddr, saddr, len);
+ 	kcontrol = snd_mixer_oss_test_id(mixer, name, index);
+ 	if (kcontrol == NULL) {
+ 		up_read(&card->controls_rwsem);
+@@ -1069,6 +1097,10 @@ static int snd_mixer_oss_build_input(struct snd_mixer_oss *mixer,
+ 	if (snd_mixer_oss_build_test_all(mixer, ptr, &slot))
+ 		return 0;
+ 	down_read(&mixer->card->controls_rwsem);
++	if (mixer->card->shutdown) {
++		up_read(&mixer->card->controls_rwsem);
++		return -ENODEV;
 +	}
-+	rcu_read_unlock();
-+	return ret;
-+}
-+
-+static int team_header_parse(const struct sk_buff *skb, unsigned char *haddr)
-+{
-+	const struct net_device *dev = skb->dev;
-+	const struct header_ops *port_ops;
-+	struct team_port *port;
-+	int ret = 0;
-+
-+	rcu_read_lock();
-+	for (;;) {
-+		if (!(dev->priv_flags & IFF_TEAM))
-+			break;
-+		port = team_header_port_get_rcu(netdev_priv(dev), false);
-+		if (!port)
-+			break;
-+		port_ops = READ_ONCE(port->dev->header_ops);
-+		if (!port_ops || !port_ops->parse)
-+			break;
-+		if (port_ops->parse == team_header_parse) {
-+			dev = port->dev;
-+			continue;
-+		}
-+		ret = port_ops->parse(skb, haddr);
-+		break;
-+	}
-+	rcu_read_unlock();
-+	return ret;
-+}
-+
-+static const struct header_ops team_header_ops = {
-+	.create		= team_header_create,
-+	.parse		= team_header_parse,
-+};
-+
- static void team_setup_by_port(struct net_device *dev,
- 			       struct net_device *port_dev)
- {
-@@ -2166,7 +2236,8 @@ static void team_setup_by_port(struct net_device *dev,
- 	if (port_dev->type == ARPHRD_ETHER)
- 		dev->header_ops	= team->header_ops_cache;
- 	else
--		dev->header_ops	= port_dev->header_ops;
-+		dev->header_ops	= port_dev->header_ops ?
-+				  &team_header_ops : NULL;
- 	dev->type = port_dev->type;
- 	dev->hard_header_len = port_dev->hard_header_len;
- 	dev->needed_headroom = port_dev->needed_headroom;
+ 	kctl = NULL;
+ 	if (!ptr->index)
+ 		kctl = snd_mixer_oss_test_id(mixer, "Capture Source", 0);
 -- 
 2.53.0
 
