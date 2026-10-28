@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793209156;
-	b=wAa6wLJw5iHhuSnT5fTZoieeKfhcYzbBC7QtASOQ76yrRcB5EbaEbPWHYVZKWJkBcRwa
-	 n9W5NpP2r0aYdcRJtZckQ2hIgNll44rfv9An21pRDBa9cMCQJ9+vXLyHCkoKA3ekFmvSr
-	 W031xVMEl+E7aIcjXe4f5nqqd/GYyMulw1nMJ7ImA0upa9vb1vmqv5/GTTFv+EC7mkBQG
-	 +tzC70dlPan39xu1tK1xeDYVtVxk/aF+OH1PYDKIC+hjerxLZr2us9/z8XFVTmlP4qjNx
-	 xseJOklzEz7TXX2O4q7nWFk/sOOaBEfGJSjWvN1mFQPtn/JAYCbH2UJnjTp2AxfSFUQ==
+	t=1793209159;
+	b=lXTRvFTB/li3gUUqp3dD7E7Zp5NZjZc9KN9HSiP/Db7GD/RHJPhDJfqk0MjNX8+S9nAI
+	 RNMt4HYixSXiOKeXMbM0z+cf+8TFqulrw94XCTi7SLNXs7zRguKGZEt5rix2ru1jiQ5uA
+	 tsvIPs7OTk12nvAWTrsJGIhNb5OX9DURp0mpLREVfzQ2cN9SS4cmCoANmR1xGzOtBx2fF
+	 oW/T79iKyPxuLfNdO1Ht/8xMNxeOIzPGHuJiVGFzcS9/A7ZnHahHciTX4T9n3G3UF/cql
+	 v4yRoiUjbgNAjIM/Eun3aY7tn2aiKrq5KdGcB4sfHDyLWSi4LCkdJP3xKiuoUg3ENwA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793209156;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793209159;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=8itYPoirajcgB60hMWYvyMq/Qx/GzJhSALHiXy9drF0=;
-	b=bZQ1PuxAnmNLU0YwdpRmJsgYk6w5WOlmj5RCBcDcq4d6n2IKAV1Z5lA4XN9+TJNsHMxx
-	 4RGKLTjtoTO6pXFPZjT8BI8LGiHzImhuMfXAcxwuC/EHjWf/S8AIRPHzuchZPLB/0uGyc
-	 F37SCQ5s5VmoRxn6nMK2CIdIJVmoeJFa/wC1FFcj4SBmI4QgyI95tvAW9m6GyktlqpV8V
-	 wKAcCRbZjYJvMCpvH9/k0Lq1C8JEaPkUFFq5ern+kQTxFmcq2cd55INWRfLV1xGVd8gBd
-	 UcUsdyj6ugMryAe2rm0ASnlA970+vaV7rWs4UIU7+q1RRCztDiL1Zx9lotvB89B+o3w==
+	bh=RIyTlf6ZEQOSc7qGyp4qQ9CoT+HgdLbzG8cG7/Ibx3U=;
+	b=dO4roivGyAqpMso8TYOea46Jfuk03Z53IMPNGfKphKAafD8mnL88KISs2wVAlJR3SODO
+	 SNISRWUtWoHtFVjXlSs0oekHHBqjLReQqGFeU1gTrwFnoKbNDLCXB+2S6DVQmj2DmCynB
+	 W2l6sGXLUE2Gds+N0efMzINuh22xttNiueIairswIGcRd+SFeSHX8w5ztZqpQ9NlpdVBB
+	 1xyUd36Vgbq/76ngUdjtb3H4PFGYzs/S2OUz6XJjlBXV8pF0zT9aYCVgyxn8McU9FGVvW
+	 ARXwBGixVJMluVNDQjGDhRpFCp7Ep+L0ioHbHJpOgcy6iz9Na7Uo3QvhKzzBfaWsIyw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PLFZS3vD;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=p1+N6iG7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 871FD606A31A;
-	Wed, 28 Oct 2026 17:39:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60399606A31C;
+	Wed, 28 Oct 2026 17:39:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PLFZS3vD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7EF51F01828;
-	Wed, 28 Oct 2026 17:39:15 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=p1+N6iG7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B10FF1F01825;
+	Wed, 28 Oct 2026 17:39:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793209156;
-	bh=8itYPoirajcgB60hMWYvyMq/Qx/GzJhSALHiXy9drF0=;
+	s=korg; t=1793209159;
+	bh=RIyTlf6ZEQOSc7qGyp4qQ9CoT+HgdLbzG8cG7/Ibx3U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PLFZS3vDPFeojUSfazBTQeimdvMzM12V+qYHYv8rDUPYRF+I6ZhZpy48NCHk6OvLB
-	 VuMVh6mlIx+UtmEp650j9QtGAXJrU8LyHTtdw0oD4lkp8V7qnzEy0X2L4FVuh+3WbK
-	 bCvPVW+bDfyI0gX7ud9dAHl/mVZnmL7Le4+zRhWw=
+	b=p1+N6iG77bmr0BzJnfyeV84O02eLiqk3gy2K+ZzFpIzy44wl77se3PjRG6p34gaku
+	 dMxkYfe1PsDkJ+btSeINm3QmMTnyqk78Lhjh2Vwy30ZqWWY5E7Fx+BdMPKXCb7im5y
+	 kXywQguLMdZLOQDeOgIOQkK5vtkf4towz3GvlJ+I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vicki Pfau <vi@endrift.com>,
-	Jiri Kosina <jkosina@suse.com>,
+	Donggeun Yoo <donggeunyoo.kernel@gmail.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
 	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 370/516] HID: steam: Clean up locking
-Date: Wed, 28 Oct 2026 17:58:42 +0100
-Message-ID: <20261028170012.251138112@linuxfoundation.org>
+Subject: [PATCH 5.10 371/516] tracing: Set the trace clock before registering the histogram trigger
+Date: Wed, 28 Oct 2026 17:58:43 +0100
+Message-ID: <20261028170012.275215699@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -69,246 +69,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vicki Pfau <vi@endrift.com>
+From: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
 
-[ Upstream commit de1d341b9b3ec9655f31fb8b44f784cca5e670ad ]
+[ Upstream commit 6ede78d0563a2a3ae3e46f9c07cedb5d79645429 ]
 
-This cleans up several issues with locking behavior, including RCU accesses
-not being guarded behind a lock.
+hist_register_trigger() puts the trigger on the global named_triggers
+list in cmd_ops->init(), and only then sets the trace clock:
 
-Signed-off-by: Vicki Pfau <vi@endrift.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
-[Lee: Use explicit lock/unlock calls instead of guard(), adapt to
-      steam->mutex, and omit Steam Deck sensors, mode_switch,
-      rumble_work, coalesce_rumble_work and Ibex changes as
-      691ead124a0c, e133dc99fc07, a0fbd9437d7d, 1d4549fd1115,
-      fcfa7db89f7a and 0a80b4e8ec6a are not present]
+	if (data->cmd_ops->init) {
+		ret = data->cmd_ops->init(data);
+		if (ret < 0)
+			goto out;
+	}
+
+	if (hist_data->enable_timestamps) {
+		ret = tracing_set_clock(file->tr, hist_data->attrs->clock);
+		if (ret) {
+			hist_err(tr, HIST_ERR_SET_CLOCK_FAIL, errpos(clock));
+			goto out;
+		}
+
+The clock string is not checked anywhere before that call, so a named
+trigger using common_timestamp with an unknown clock fails after it has
+already become findable. event_hist_trigger_parse() then frees it
+without taking it off the list, and the next lookup by name reads the
+freed object:
+
+ ~# cd /sys/kernel/tracing/events/sched/sched_switch
+ ~# echo 'hist:name=foo:keys=common_pid:ts=common_timestamp:clock=bogus' > trigger
+ bash: echo: write error: Invalid argument
+ ~# echo 'hist:name=foo:keys=common_pid' > trigger
+
+  BUG: KASAN: slab-use-after-free in find_named_trigger+0xac/0xc0
+  Read of size 8 at addr ffff88800915d760 by task init/1
+   find_named_trigger+0xac/0xc0
+   hist_register_trigger+0xc1/0x900
+   event_hist_trigger_parse+0x3146/0x6af0
+   event_trigger_write+0xce/0x160
+  Freed by task 63:
+   kfree+0x154/0x420
+   trigger_kthread_fn+0xfd/0x160
+
+Set the clock before the trigger is registered, so that nothing which
+can fail runs after it is published, the way commit 6f86bdeab633
+("tracing: Fix bad hist from corrupting named_triggers list") moved the
+registration below the rest of the setup.
+
+tracing_set_filter_buffering() is reference counted, so the init failure
+path has to drop the reference that the clock block now takes first.
+
+Cc: stable@vger.kernel.org
+Fixes: a4072fe85ba3 ("tracing: Add a clock attribute for hist triggers")
+Link: https://patch.msgid.link/20260907091415.554535-1-donggeunyoo.kernel@gmail.com
+Signed-off-by: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+[Lee: Call data->ops->init(data->ops, data) and
+      tracing_set_time_stamp_abs() as b052d70f7c9c ("tracing: Merge
+      struct event_trigger_ops into struct event_command"), 476705419518
+      ("tracing: Remove redundant trigger_ops params") and b94bc80df648
+      ("tracing: Use a no_filter_buffering_ref to stop using the filter
+      buffer") are not present]
 Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-steam.c | 61 +++++++++++++++++++++++++++--------------
- 1 file changed, 41 insertions(+), 20 deletions(-)
+ kernel/trace/trace_events_hist.c | 15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/hid/hid-steam.c b/drivers/hid/hid-steam.c
-index 544d45f3fc6b5..4ba922d750df3 100644
---- a/drivers/hid/hid-steam.c
-+++ b/drivers/hid/hid-steam.c
-@@ -114,6 +114,7 @@ struct steam_device {
- 	spinlock_t lock;
- 	struct hid_device *hdev, *client_hdev;
- 	struct mutex mutex;
-+	struct mutex registration_mutex;
- 	unsigned long client_opened;
- 	struct input_dev __rcu *input;
- 	unsigned long quirks;
-@@ -294,9 +295,14 @@ static void steam_set_lizard_mode(struct steam_device *steam, bool enable)
- static int steam_input_open(struct input_dev *dev)
- {
- 	struct steam_device *steam = input_get_drvdata(dev);
-+	unsigned long flags;
-+	bool client_opened;
+diff --git a/kernel/trace/trace_events_hist.c b/kernel/trace/trace_events_hist.c
+index a3556edc5904e..c439605bb12ef 100644
+--- a/kernel/trace/trace_events_hist.c
++++ b/kernel/trace/trace_events_hist.c
+@@ -5510,12 +5510,6 @@ static int hist_register_trigger(char *glob, struct event_trigger_ops *ops,
+ 		data->ops = &event_hist_trigger_named_ops;
+ 	}
  
-+	spin_lock_irqsave(&steam->lock, flags);
-+	client_opened = steam->client_opened;
-+	spin_unlock_irqrestore(&steam->lock, flags);
- 	mutex_lock(&steam->mutex);
--	if (!steam->client_opened && lizard_mode)
-+	if (!client_opened && lizard_mode)
- 		steam_set_lizard_mode(steam, false);
- 	mutex_unlock(&steam->mutex);
- 	return 0;
-@@ -305,9 +311,14 @@ static int steam_input_open(struct input_dev *dev)
- static void steam_input_close(struct input_dev *dev)
- {
- 	struct steam_device *steam = input_get_drvdata(dev);
-+	unsigned long flags;
-+	bool client_opened;
- 
-+	spin_lock_irqsave(&steam->lock, flags);
-+	client_opened = steam->client_opened;
-+	spin_unlock_irqrestore(&steam->lock, flags);
- 	mutex_lock(&steam->mutex);
--	if (!steam->client_opened && lizard_mode)
-+	if (!client_opened && lizard_mode)
- 		steam_set_lizard_mode(steam, true);
- 	mutex_unlock(&steam->mutex);
- }
-@@ -513,40 +524,43 @@ static int steam_register(struct steam_device *steam)
- {
- 	int ret;
- 
-+	mutex_lock(&steam->registration_mutex);
- 	/*
- 	 * This function can be called several times in a row with the
- 	 * wireless adaptor, without steam_unregister() between them, because
- 	 * another client send a get_connection_status command, for example.
- 	 * The battery and serial number are set just once per device.
- 	 */
--	if (steam->registered)
-+	if (steam->registered) {
-+		mutex_unlock(&steam->registration_mutex);
- 		return 0;
-+	}
- 
-+	mutex_lock(&steam->mutex);
- 	/*
- 	 * Unlikely, but getting the serial could fail, and it is not so
- 	 * important, so make up a serial number and go on.
- 	 */
--	mutex_lock(&steam->mutex);
- 	if (steam_get_serial(steam) < 0 || !steam->serial_no[0])
- 		strlcpy(steam->serial_no, "XXXXXXXXXX",
- 				sizeof(steam->serial_no));
--	mutex_unlock(&steam->mutex);
- 
- 	hid_info(steam->hdev, "Steam Controller '%s' connected",
- 			steam->serial_no);
- 
-+	steam_set_lizard_mode(steam, lizard_mode);
-+	mutex_unlock(&steam->mutex);
-+
- 	/* ignore battery errors, we can live without it */
- 	if (steam->quirks & STEAM_QUIRK_WIRELESS)
- 		steam_battery_register(steam);
- 
--	mutex_lock(&steam->mutex);
--	steam_set_lizard_mode(steam, lizard_mode);
--	mutex_unlock(&steam->mutex);
- 	ret = steam_input_register(steam);
- 	if (ret != 0)
- 		goto steam_register_input_fail;
- 
- 	steam->registered = true;
-+	mutex_unlock(&steam->registration_mutex);
- 	mutex_lock(&steam_devices_lock);
- 	if (list_empty(&steam->list))
- 		list_add(&steam->list, &steam_devices);
-@@ -555,6 +569,7 @@ static int steam_register(struct steam_device *steam)
- 
- steam_register_input_fail:
- 	steam_battery_unregister(steam);
-+	mutex_unlock(&steam->registration_mutex);
- 	return ret;
- }
- 
-@@ -565,9 +580,11 @@ static void steam_unregister(struct steam_device *steam)
- 
- 	hid_info(steam->hdev, "Steam Controller '%s' disconnected",
- 			steam->serial_no);
-+	mutex_lock(&steam->registration_mutex);
- 	steam->registered = false;
- 	steam_battery_unregister(steam);
- 	steam_input_unregister(steam);
-+	mutex_unlock(&steam->registration_mutex);
- 	mutex_lock(&steam_devices_lock);
- 	list_del_init(&steam->list);
- 	mutex_unlock(&steam_devices_lock);
-@@ -745,6 +762,7 @@ static int steam_probe(struct hid_device *hdev,
- 	hid_set_drvdata(hdev, steam);
- 	spin_lock_init(&steam->lock);
- 	mutex_init(&steam->mutex);
-+	mutex_init(&steam->registration_mutex);
- 	steam->quirks = id->driver_data;
- 	INIT_WORK(&steam->work_connect, steam_work_connect_cb);
- 	INIT_LIST_HEAD(&steam->list);
-@@ -835,13 +853,10 @@ static void steam_remove(struct hid_device *hdev)
- 
- static void steam_do_connect_event(struct steam_device *steam, bool connected)
- {
--	unsigned long flags;
- 	bool changed;
- 
--	spin_lock_irqsave(&steam->lock, flags);
- 	changed = steam->connected != connected;
- 	steam->connected = connected;
--	spin_unlock_irqrestore(&steam->lock, flags);
- 
- 	if (changed && schedule_work(&steam->work_connect) == 0)
- 		dbg_hid("%s: connected=%d event already queued\n",
-@@ -1008,8 +1023,6 @@ static void steam_do_input_event(struct steam_device *steam,
- static void steam_do_battery_event(struct steam_device *steam,
- 		struct power_supply *battery, u8 *data)
- {
--	unsigned long flags;
+-	if (data->ops->init) {
+-		ret = data->ops->init(data->ops, data);
+-		if (ret < 0)
+-			goto out;
+-	}
 -
- 	s16 volts = steam_le16(data + 12);
- 	u8 batt = data[14];
+ 	if (hist_data->enable_timestamps) {
+ 		char *clock = hist_data->attrs->clock;
  
-@@ -1017,10 +1030,8 @@ static void steam_do_battery_event(struct steam_device *steam,
- 	rcu_read_lock();
- 	battery = rcu_dereference(steam->battery);
- 	if (likely(battery)) {
--		spin_lock_irqsave(&steam->lock, flags);
- 		steam->voltage = volts;
- 		steam->battery_charge = batt;
--		spin_unlock_irqrestore(&steam->lock, flags);
- 		power_supply_changed(battery);
+@@ -5528,6 +5522,15 @@ static int hist_register_trigger(char *glob, struct event_trigger_ops *ops,
+ 		tracing_set_time_stamp_abs(file->tr, true);
  	}
- 	rcu_read_unlock();
-@@ -1033,10 +1044,12 @@ static int steam_raw_event(struct hid_device *hdev,
- 	struct steam_device *steam = hid_get_drvdata(hdev);
- 	struct input_dev *input;
- 	struct power_supply *battery;
-+	unsigned long flags;
  
- 	if (!steam)
- 		return 0;
- 
-+	spin_lock_irqsave(&steam->lock, flags);
- 	if (steam->client_opened)
- 		hid_input_report(steam->client_hdev, HID_FEATURE_REPORT,
- 				data, size, 0);
-@@ -1057,12 +1070,12 @@ static int steam_raw_event(struct hid_device *hdev,
- 	 */
- 
- 	if (size != 64 || data[0] != 1 || data[1] != 0)
--		return 0;
-+		goto out;
- 
- 	switch (data[2]) {
- 	case STEAM_EV_INPUT_DATA:
- 		if (steam->client_opened)
--			return 0;
++	if (data->ops->init) {
++		ret = data->ops->init(data->ops, data);
++		if (ret < 0) {
++			if (hist_data->enable_timestamps)
++				tracing_set_time_stamp_abs(file->tr, false);
 +			goto out;
- 		rcu_read_lock();
- 		input = rcu_dereference(steam->input);
- 		if (likely(input))
-@@ -1100,6 +1113,8 @@ static int steam_raw_event(struct hid_device *hdev,
- 		}
- 		break;
- 	}
-+out:
-+	spin_unlock_irqrestore(&steam->lock, flags);
- 	return 0;
- }
- 
-@@ -1108,6 +1123,8 @@ static int steam_param_set_lizard_mode(const char *val,
- {
- 	struct steam_device *steam;
- 	int ret;
-+	bool client_opened;
-+	unsigned long flags;
- 
- 	ret = param_set_bool(val, kp);
- 	if (ret)
-@@ -1115,10 +1132,14 @@ static int steam_param_set_lizard_mode(const char *val,
- 
- 	mutex_lock(&steam_devices_lock);
- 	list_for_each_entry(steam, &steam_devices, list) {
--		mutex_lock(&steam->mutex);
--		if (!steam->client_opened)
-+		spin_lock_irqsave(&steam->lock, flags);
-+		client_opened = steam->client_opened;
-+		spin_unlock_irqrestore(&steam->lock, flags);
-+		if (!client_opened) {
-+			mutex_lock(&steam->mutex);
- 			steam_set_lizard_mode(steam, lizard_mode);
--		mutex_unlock(&steam->mutex);
-+			mutex_unlock(&steam->mutex);
 +		}
- 	}
- 	mutex_unlock(&steam_devices_lock);
- 	return 0;
++	}
++
+ 	if (named_data)
+ 		destroy_hist_data(hist_data);
+ 
 -- 
 2.53.0
 
