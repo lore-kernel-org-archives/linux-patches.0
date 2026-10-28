@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214740;
-	b=n7bppoi2u15wzZ3BdN2M+AOT1xFPtWQduPPSaJLwGhVxNfEDwKJoPNDSfAPXSvUWe38s
-	 PJBXEXCymckfmOeyAouNHQOrqh8GYmnGkbDk3BiT2LfLOVVmyDVyOjrY4THTkz5s5ZsfB
-	 7uCiA3GYp8ROhOrcbwEzN1SWeAaBW/WynCUlhn79GESwDzjEdprnd3Hl4FaywBiHsiUek
-	 QaFULKX2xVh7s58UzJnYYCzgve3yYTsKs5VaiDJYj/N/4C/18v2ec7pLjEfvaoTbyszG5
-	 ZWTH3P2DvHsZ06Z6e6CYP19LyA5R0ZftTnmLHi1bud1YTrQ5rb0ogY8DdzfKSi8BiXQ==
+	t=1793214743;
+	b=18EZ1dSM+Ra/n30O4C90VeehoixSBTlmrrN4f8mVTuDmiTDgubgfSBiYRtxARGU8LlNA
+	 RUzXJUA1p/WRJJR14q1mPzuQJ+DhKf/Mj9qpS+/vD39d5vUba242IfAYxaAAmo3KxCojZ
+	 Jon5pT0H6TY1YCacTWu5enWFQ028ZkEmejrIGYB4bw7FWEFxIdGC7vk6nzBRmzr8XkMVl
+	 yhSz6jpNj2n85EhffQPjGQUi51Yfaic1U7SC0tQZ34YaYo5FwskHzdj0TeyZdWPaD9nyL
+	 yjd7PDJ7g3TN1Z1soaawy9g92LJ6g6wv8spXAE6PeHZcXRzSadHracZDqd75RV6W2lA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214740;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214743;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=o1DD+87jHJviJsLNh813JglAYpdADiS4nX6apq8yWIU=;
-	b=LQhszWj7Gq80/f17divqKTCTLKArpOQFx6vCOpGfvai8/aJYa/tubPi0ktVsjydjyRJo
-	 1uvJnF/Wmf/eEylMNMkC9OLzGpsUPIYE3ucCwhk1cp+XezUKL4TMYeeBy2aLJrdazs/gC
-	 9StfVgMYKrjgJYBzVENdvaRY2paFA1fc/ubOHC+UraX+3pftRscHaziiz9K7GHoaCQRey
-	 1I2kQ+wNwPdIetQOdE0wrLZyPJZKMeA9yizEZVLcD6lsfkKMMgO0lZd8wcG5Njt+a6nxU
-	 H2T4Jwti6Ee3DmarlhFeoYpMhEph2yHV3znviftAe5yhM6nbXH1sFCBmlfmcS2vsyIA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=vUGquj54HQAvhX4ZuEy1Vomx8F7U3Zm8jukraEtnIVk=;
+	b=JSByuy1Fm3p0+CujbmaTDjIe9IcRXu5k85ZCk6nugmA09JO7SbqiKOE8TMQvfB7eulUR
+	 gqTz8WCifoclqYbhnkNOtPBGWN0f925gi2nOVSE0IeCy68IHrpD6ZKt1tt4bIXye9eKgZ
+	 IltzQQgtt55jmiSkRjTeoYT+vOePJQ0DnvdpFcP6sEpiVVF/BCjt+HTDsZfirmsu4mBOL
+	 hziEY9LdJLy8GUihLrz0949tUaQ+vY6HAyPpbvB9nFYOknAFrnWLpEdhcDHsdbAzgTEVj
+	 a316YpFMKhTGce5Fe9eSTBoaUG0lOs77ArowyPLZGvnyuMZG5iT9JHVhQiIgpBveCIA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WLiav4o6;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AUXA5hPW;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1304A60A261A;
-	Wed, 28 Oct 2026 19:12:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19E4360A261B;
+	Wed, 28 Oct 2026 19:12:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WLiav4o6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 667791F01828;
-	Wed, 28 Oct 2026 19:12:19 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AUXA5hPW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 332561F01825;
+	Wed, 28 Oct 2026 19:12:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214739;
-	bh=o1DD+87jHJviJsLNh813JglAYpdADiS4nX6apq8yWIU=;
+	s=korg; t=1793214742;
+	bh=vUGquj54HQAvhX4ZuEy1Vomx8F7U3Zm8jukraEtnIVk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WLiav4o6W77E4xYfdkXDKKwvJs8vYdpibZimo9MoHEPlolxAlEHU5AJ8cL2K6JRz1
-	 Z/PhiYFwzqhPxjzWkW9XXVd21zH7cKQD1sogjygGvxvTJESEfojV8o20tA2VbTgLh2
-	 F47Tqt2fY3QtxwlYMCPMzC/rPYzKaMa84wroKsB8=
+	b=AUXA5hPWdE3MTJ0M/ou9KxCUO5F1WoxSNc2KYDztd0uUOGgtRtJcVWlbqy+thUY+6
+	 xmR8wmwMKYp0wA+Yr5Ur2/KYRjVqolVS3yUCVw4Wvu1OIOCwik2N+SqkqEv50jxSgd
+	 wwCA0P8DY3U8Pm00vpSKshi5Ym9BLn12r9nHApMk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Huang <jinhuieric.huang@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Kuen-Han Tsai <khtsai@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0948/1887] drm/amdgpu: prevent immediate PASID reuse case
-Date: Wed, 28 Oct 2026 17:50:44 +0100
-Message-ID: <20261028170520.980596303@linuxfoundation.org>
+Subject: [PATCH 6.1 0966/1887] usb: gadget: f_eem: Fix net_device lifecycle with device_move
+Date: Wed, 28 Oct 2026 17:51:02 +0100
+Message-ID: <20261028170521.389834955@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -63,143 +61,212 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Huang <jinhuieric.huang@amd.com>
+From: Kuen-Han Tsai <khtsai@google.com>
 
-[ Upstream commit 14b81abe7bdc25f8097906fc2f91276ffedb2d26 ]
+[ Upstream commit d9270c9a8118c1535409db926ac1e2545dc97b81 ]
 
-PASID resue could cause interrupt issue when process
-immediately runs into hw state left by previous
-process exited with the same PASID, it's possible that
-page faults are still pending in the IH ring buffer when
-the process exits and frees up its PASID. To prevent the
-case, it uses idr cyclic allocator same as kernel pid's.
+The net_device is allocated during function instance creation and
+registered during the bind phase with the gadget device as its sysfs
+parent. When the function unbinds, the parent device is destroyed, but
+the net_device survives, resulting in dangling sysfs symlinks:
 
-Signed-off-by: Eric Huang <jinhuieric.huang@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 8f1de51f49be692de137c8525106e0fce2d1912d)
+console:/ # ls -l /sys/class/net/usb0
+lrwxrwxrwx ... /sys/class/net/usb0 ->
+/sys/devices/platform/.../gadget.0/net/usb0
+console:/ # ls -l /sys/devices/platform/.../gadget.0/net/usb0
+ls: .../gadget.0/net/usb0: No such file or directory
+
+Use device_move() to reparent the net_device between the gadget device
+tree and /sys/devices/virtual across bind and unbind cycles. During the
+final unbind, calling device_move(NULL) moves the net_device to the
+virtual device tree before the gadget device is destroyed. On rebinding,
+device_move() reparents the device back under the new gadget, ensuring
+proper sysfs topology and power management ordering.
+
+To maintain compatibility with legacy composite drivers (e.g., multi.c),
+the bound flag is used to indicate whether the network device is shared
+and pre-registered during the legacy driver's bind phase.
+
+Fixes: b29002a15794 ("usb: gadget: f_eem: convert to new function interface with backward compatibility")
 Cc: stable@vger.kernel.org
+Signed-off-by: Kuen-Han Tsai <khtsai@google.com>
+Link: https://patch.msgid.link/20260320-usb-net-lifecycle-v1-5-4886b578161b@google.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_ids.c | 45 ++++++++++++++++++-------
- drivers/gpu/drm/amd/amdgpu/amdgpu_ids.h |  1 +
- drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c  |  1 +
- 3 files changed, 34 insertions(+), 13 deletions(-)
+ drivers/usb/gadget/function/f_eem.c | 59 +++++++++++++++--------------
+ drivers/usb/gadget/function/u_eem.h | 21 +++++++---
+ 2 files changed, 46 insertions(+), 34 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_ids.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_ids.c
-index 43557748d1139..5b248c4df12d5 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ids.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ids.c
-@@ -35,10 +35,13 @@
-  * PASIDs are global address space identifiers that can be shared
-  * between the GPU, an IOMMU and the driver. VMs on different devices
-  * may use the same PASID if they share the same address
-- * space. Therefore PASIDs are allocated using a global IDA. VMs are
-- * looked up from the PASID per amdgpu_device.
-+ * space. Therefore PASIDs are allocated using IDR cyclic allocator
-+ * (similar to kernel PID allocation) which naturally delays reuse.
-+ * VMs are looked up from the PASID per amdgpu_device.
+diff --git a/drivers/usb/gadget/function/f_eem.c b/drivers/usb/gadget/function/f_eem.c
+index a308163fc8bcc..803fe047c512c 100644
+--- a/drivers/usb/gadget/function/f_eem.c
++++ b/drivers/usb/gadget/function/f_eem.c
+@@ -7,6 +7,7 @@
+  * Copyright (C) 2009 EF Johnson Technologies
   */
--static DEFINE_IDA(amdgpu_pasid_ida);
-+
-+static DEFINE_IDR(amdgpu_pasid_idr);
-+static DEFINE_SPINLOCK(amdgpu_pasid_idr_lock);
  
- /* Helper to free pasid from a fence callback */
- struct amdgpu_pasid_cb {
-@@ -50,8 +53,8 @@ struct amdgpu_pasid_cb {
-  * amdgpu_pasid_alloc - Allocate a PASID
-  * @bits: Maximum width of the PASID in bits, must be at least 1
-  *
-- * Allocates a PASID of the given width while keeping smaller PASIDs
-- * available if possible.
-+ * Uses kernel's IDR cyclic allocator (same as PID allocation).
-+ * Allocates sequentially with automatic wrap-around.
-  *
-  * Returns a positive integer on success. Returns %-EINVAL if bits==0.
-  * Returns %-ENOSPC if no PASID was available. Returns %-ENOMEM on
-@@ -59,14 +62,15 @@ struct amdgpu_pasid_cb {
-  */
- int amdgpu_pasid_alloc(unsigned int bits)
- {
--	int pasid = -EINVAL;
-+	int pasid;
++#include <linux/cleanup.h>
+ #include <linux/kernel.h>
+ #include <linux/module.h>
+ #include <linux/device.h>
+@@ -251,24 +252,22 @@ static int eem_bind(struct usb_configuration *c, struct usb_function *f)
+ 	struct usb_ep		*ep;
  
--	for (bits = min(bits, 31U); bits > 0; bits--) {
--		pasid = ida_alloc_range(&amdgpu_pasid_ida, 1U << (bits - 1),
--					(1U << bits) - 1, GFP_KERNEL);
--		if (pasid != -ENOSPC)
--			break;
+ 	struct f_eem_opts	*eem_opts;
++	struct net_device	*net __free(detach_gadget) = NULL;
+ 
+ 	eem_opts = container_of(f->fi, struct f_eem_opts, func_inst);
+-	/*
+-	 * in drivers/usb/gadget/configfs.c:configfs_composite_bind()
+-	 * configurations are bound in sequence with list_for_each_entry,
+-	 * in each configuration its functions are bound in sequence
+-	 * with list_for_each_entry, so we assume no race condition
+-	 * with regard to eem_opts->bound access
+-	 */
+-	if (!eem_opts->bound) {
+-		mutex_lock(&eem_opts->lock);
+-		gether_set_gadget(eem_opts->net, cdev->gadget);
+-		status = gether_register_netdev(eem_opts->net);
+-		mutex_unlock(&eem_opts->lock);
+-		if (status)
+-			return status;
+-		eem_opts->bound = true;
 -	}
-+	if (bits == 0)
-+		return -EINVAL;
 +
-+	spin_lock(&amdgpu_pasid_idr_lock);
-+	pasid = idr_alloc_cyclic(&amdgpu_pasid_idr, NULL, 1,
-+				 1U << bits, GFP_KERNEL);
-+	spin_unlock(&amdgpu_pasid_idr_lock);
++	scoped_guard(mutex, &eem_opts->lock)
++		if (eem_opts->bind_count == 0 && !eem_opts->bound) {
++			if (!device_is_registered(&eem_opts->net->dev)) {
++				gether_set_gadget(eem_opts->net, cdev->gadget);
++				status = gether_register_netdev(eem_opts->net);
++			} else
++				status = gether_attach_gadget(eem_opts->net, cdev->gadget);
++
++			if (status)
++				return status;
++			net = eem_opts->net;
++		}
  
- 	if (pasid >= 0)
- 		trace_amdgpu_pasid_allocated(pasid);
-@@ -81,7 +85,10 @@ int amdgpu_pasid_alloc(unsigned int bits)
- void amdgpu_pasid_free(u32 pasid)
+ 	us = usb_gstrings_attach(cdev, eem_strings,
+ 				 ARRAY_SIZE(eem_string_defs));
+@@ -279,21 +278,19 @@ static int eem_bind(struct usb_configuration *c, struct usb_function *f)
+ 	/* allocate instance-specific interface IDs */
+ 	status = usb_interface_id(c, f);
+ 	if (status < 0)
+-		goto fail;
++		return status;
+ 	eem->ctrl_id = status;
+ 	eem_intf.bInterfaceNumber = status;
+ 
+-	status = -ENODEV;
+-
+ 	/* allocate instance-specific endpoints */
+ 	ep = usb_ep_autoconfig(cdev->gadget, &eem_fs_in_desc);
+ 	if (!ep)
+-		goto fail;
++		return -ENODEV;
+ 	eem->port.in_ep = ep;
+ 
+ 	ep = usb_ep_autoconfig(cdev->gadget, &eem_fs_out_desc);
+ 	if (!ep)
+-		goto fail;
++		return -ENODEV;
+ 	eem->port.out_ep = ep;
+ 
+ 	/* support all relevant hardware speeds... we expect that when
+@@ -309,18 +306,16 @@ static int eem_bind(struct usb_configuration *c, struct usb_function *f)
+ 	status = usb_assign_descriptors(f, eem_fs_function, eem_hs_function,
+ 			eem_ss_function, eem_ss_function);
+ 	if (status)
+-		goto fail;
++		return status;
++
++	eem_opts->bind_count++;
++	no_free_ptr(net);
+ 
+ 	DBG(cdev, "CDC Ethernet (EEM): %s speed IN/%s OUT/%s\n",
+ 			gadget_is_superspeed(c->cdev->gadget) ? "super" :
+ 			gadget_is_dualspeed(c->cdev->gadget) ? "dual" : "full",
+ 			eem->port.in_ep->name, eem->port.out_ep->name);
+ 	return 0;
+-
+-fail:
+-	ERROR(cdev, "%s: can't bind, err %d\n", f->name, status);
+-
+-	return status;
+ }
+ 
+ static void eem_cmd_complete(struct usb_ep *ep, struct usb_request *req)
+@@ -599,7 +594,7 @@ static void eem_free_inst(struct usb_function_instance *f)
+ 	struct f_eem_opts *opts;
+ 
+ 	opts = container_of(f, struct f_eem_opts, func_inst);
+-	if (opts->bound)
++	if (device_is_registered(&opts->net->dev))
+ 		gether_cleanup(netdev_priv(opts->net));
+ 	else
+ 		free_netdev(opts->net);
+@@ -642,9 +637,17 @@ static void eem_free(struct usb_function *f)
+ 
+ static void eem_unbind(struct usb_configuration *c, struct usb_function *f)
  {
- 	trace_amdgpu_pasid_freed(pasid);
--	ida_free(&amdgpu_pasid_ida, pasid);
++	struct f_eem_opts *opts;
 +
-+	spin_lock(&amdgpu_pasid_idr_lock);
-+	idr_remove(&amdgpu_pasid_idr, pasid);
-+	spin_unlock(&amdgpu_pasid_idr_lock);
+ 	DBG(c->cdev, "eem unbind\n");
+ 
++	opts = container_of(f->fi, struct f_eem_opts, func_inst);
++
+ 	usb_free_all_descriptors(f);
++
++	opts->bind_count--;
++	if (opts->bind_count == 0 && !opts->bound)
++		gether_detach_gadget(opts->net);
  }
  
- static void amdgpu_pasid_free_cb(struct dma_fence *fence,
-@@ -581,3 +588,15 @@ void amdgpu_vmid_mgr_fini(struct amdgpu_device *adev)
- 		}
- 	}
- }
-+
+ static struct usb_function *eem_alloc(struct usb_function_instance *fi)
+diff --git a/drivers/usb/gadget/function/u_eem.h b/drivers/usb/gadget/function/u_eem.h
+index 3bd85dfcd71c8..78ef558152197 100644
+--- a/drivers/usb/gadget/function/u_eem.h
++++ b/drivers/usb/gadget/function/u_eem.h
+@@ -15,17 +15,26 @@
+ 
+ #include <linux/usb/composite.h>
+ 
 +/**
-+ * amdgpu_pasid_mgr_cleanup - cleanup PASID manager
-+ *
-+ * Cleanup the IDR allocator.
++ * struct f_eem_opts - EEM function options
++ * @func_inst: USB function instance.
++ * @net: The net_device associated with the EEM function.
++ * @bound: True if the net_device is shared and pre-registered during the
++ *         legacy composite driver's bind phase (e.g., multi.c). If false,
++ *         the EEM function will register the net_device during its own
++ *         bind phase.
++ * @bind_count: Tracks the number of configurations the EEM function is
++ *              bound to, preventing double-registration of the @net device.
++ * @lock: Protects the data from concurrent access by configfs read/write
++ *        and create symlink/remove symlink operations.
++ * @refcnt: Reference counter for the function instance.
 + */
-+void amdgpu_pasid_mgr_cleanup(void)
-+{
-+	spin_lock(&amdgpu_pasid_idr_lock);
-+	idr_destroy(&amdgpu_pasid_idr);
-+	spin_unlock(&amdgpu_pasid_idr_lock);
-+}
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_ids.h b/drivers/gpu/drm/amd/amdgpu/amdgpu_ids.h
-index 06c8a0034fa52..235e7561741a5 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ids.h
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ids.h
-@@ -74,6 +74,7 @@ int amdgpu_pasid_alloc(unsigned int bits);
- void amdgpu_pasid_free(u32 pasid);
- void amdgpu_pasid_free_delayed(struct dma_resv *resv,
- 			       u32 pasid);
-+void amdgpu_pasid_mgr_cleanup(void);
+ struct f_eem_opts {
+ 	struct usb_function_instance	func_inst;
+ 	struct net_device		*net;
+ 	bool				bound;
++	int				bind_count;
  
- bool amdgpu_vmid_had_gpu_reset(struct amdgpu_device *adev,
- 			       struct amdgpu_vmid *id);
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
-index 84e5fe9949f18..3f2b0f192ef41 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
-@@ -2484,6 +2484,7 @@ void amdgpu_vm_manager_fini(struct amdgpu_device *adev)
- 	xa_destroy(&adev->vm_manager.pasids);
- 
- 	amdgpu_vmid_mgr_fini(adev);
-+	amdgpu_pasid_mgr_cleanup();
- }
- 
- /**
+-	/*
+-	 * Read/write access to configfs attributes is handled by configfs.
+-	 *
+-	 * This is to protect the data from concurrent access by read/write
+-	 * and create symlink/remove symlink.
+-	 */
+ 	struct mutex			lock;
+ 	int				refcnt;
+ };
 -- 
 2.53.0
 
