@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214057;
-	b=14KSMnzw2SIrphHUXgd5prbksNKLXUdN1ip+1LGrxDfmc186bR0gE20bd0gWG1+tPIIV
-	 3Bj7mUnyxnuRy8OdGR4KjzGBQiPsYLGpP2bd9gah6tFcnQ3Q2PaCJBK9fTdmFqEfd4nPW
-	 CwAd7ILb9MhHExSTECPu5kKjKKAoICvPJX5iZ1dbuRS7VRSeSyiNbVHA7aYO+OL8VeEcP
-	 rcgd/mh3sJIfmNgQw+rr+cdsP/HiVHWCBRBnGo7fdfwDE52RP6RBdgZE2Pnuqim+6LSPL
-	 IWj32uCWDoF7Lsn3sFMHBiTnjs8IDBO/vRzyY0Kj48OI/3gvFt0Xz77MoVSK0lFrVyA==
+	t=1793214060;
+	b=BXzOKaVdqasuuDjZ706/f/4pXbC0F1kRs/m3eyjZMkJZn53dXV9b7cpSaE7Xab2lz3BS
+	 F5lDAia+vs75YwUrFRqiarMc1yZDB5MbP9SMubyJBG8vm65Mr0i0Xjw/2CZfo3xeD9i4Q
+	 lXOf9BtbpeeliyP98q9u5JNbESPZbY3hudSfGY4YmTMqs0UkOLV/i6HK7zPWHMkEPFV4L
+	 XJ/HYLi5ZPadD4VJyjY95YSJHgGSd/LpoKVNXBpL/qpRz9kJ1YxC6c2h4xG97fM+C+hp9
+	 5mvqEDq3MEYj2JfYdmMXe2Bg4CzqDQG184NB0fb8Zuv7WLyztYd3TIUBjHQXXwLOnmg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214057;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214060;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=VAVFfUehpoDYyCnXXovOHzufR+qk/KnPRwHpMwUlHww=;
-	b=FeoQrNAMo+zhioag9FAcff4Ixrgy/7rT0vb6C6mGeEMMMuUKUXfr6sHhDkyRWWTtfeA4
-	 fdys6kgndjRdSUg8JJJFGNnIJnOmJ4Bn7/kD+A7aAGGryaYvXThN45TTC3tTs4YmebYOW
-	 THCM5B+MbEkzJm9CTJu3pVsVAzy4TEK2UBMKMjDj+sFLIIORxnpi78KBnAaNkiLACoNYQ
-	 AOVfPvxQ+5XNYN+M3ZQ5EWX1WeOyu4YawEzAyCrXzRCewmzQGzDYoeSnPUpqk93iFbxfS
-	 oQyL50A5OIOhnzFvSN6faU4HEx0LHBWBVAU3y0AONIp8RIfB+ISOOHnDjdNvgNjAFRQ==
+	bh=Bw1HiPdsYQfqAXNNp/lMMlIoSaFQKggUaxtQ6SXkgJU=;
+	b=l48TiARpgWr/Kzlaf9HwXhZU9szXpsAg60wPE1nSglY6211Lg6Z+VkcYnKcKxB2jGFW8
+	 XTBruAbJKLY0EqaKvKZO5ed+Yvt9hMJqnyOJaPBi2s8fWsj+Pt9ilZP/BxLfoP7iDQlUR
+	 WYKJoHJTUsa5RGOi+Lvh0zD1jZzxF9mW7k2AyARwhgATJ6ARCJAZMqzHOMsrLPd7yDWGO
+	 X7JHmazXO/VvvUpBeqEOg4+aXC0DxrrUbv9MTcaX+W3uCNoWFyRrw1XLzsVNI7MkHWWor
+	 /R0HBNCS6j8f9jjMgUkpSo5TJngSfBH8hMR/LLRNr8MWlHU4XTR+8e3CH3jHykMv28Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qDf6gF4U;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OAUiOOZE;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5993606A31C;
-	Wed, 28 Oct 2026 19:00:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE8E5606A332;
+	Wed, 28 Oct 2026 19:00:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qDf6gF4U
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EFAE1F01825;
-	Wed, 28 Oct 2026 19:00:56 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OAUiOOZE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A3101F01825;
+	Wed, 28 Oct 2026 19:00:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214056;
-	bh=VAVFfUehpoDYyCnXXovOHzufR+qk/KnPRwHpMwUlHww=;
+	s=korg; t=1793214059;
+	bh=Bw1HiPdsYQfqAXNNp/lMMlIoSaFQKggUaxtQ6SXkgJU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qDf6gF4UvgyphdegGN9+piD3hsG2FZqok1KTez58pCr/cGId66Sult+FrbBypcrF/
-	 YVIj+A9qCJj677iOZMcc1XbuGbUxS/wzT0OY1NEYkawOhwFFNtdMyGXWc+0XGTm1KX
-	 TEa2CtGlksqJmFPlhV0cULTTfckChRrRUmH6NGes=
+	b=OAUiOOZEbQ1GUYgT47mfW5amchXrNR1YPS+NpiFBXOTo/WrpwcO12JlqF4KjeKAeS
+	 89o8G6sMFB6FmPoOmhBhiwHGeUsDABmWNb5D69wZYlNaRbk2vTK+j+YQcbo3qEkPW5
+	 IcvuWOXxFCEvn3pa9CJbfRo59uj5oXKHH5UT1DGc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Boris Burkov <boris@bur.io>,
-	Qu Wenruo <wqu@suse.com>,
-	David Sterba <dsterba@suse.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0725/1887] btrfs: do proper folio cleanup when cow_file_range() failed
-Date: Wed, 28 Oct 2026 17:47:01 +0100
-Message-ID: <20261028170515.945841394@linuxfoundation.org>
+	syzbot+5f9f31cb7d985f584d8e@syzkaller.appspotmail.com,
+	Florian Westphal <fw@strlen.de>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Dmitry Vyukov <dvyukov@google.com>
+Subject: [PATCH 6.1 0726/1887] xfrm: state: fix out-of-bounds read during lookup
+Date: Wed, 28 Oct 2026 17:47:02 +0100
+Message-ID: <20261028170515.969653793@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,256 +70,252 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qu Wenruo <wqu@suse.com>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 06f364284794f149d2abc167c11d556cf20c954b ]
+[ Upstream commit e952837f3ddb0ff726d5b582aa1aad9aa38d024d ]
 
-[BUG]
-When testing with COW fixup marked as BUG_ON() (this is involved with the
-new pin_user_pages*() change, which should not result new out-of-band
-dirty pages), I hit a crash triggered by the BUG_ON() from hitting COW
-fixup path.
+lookup and resize can run in parallel.
 
-This BUG_ON() happens just after a failed btrfs_run_delalloc_range():
+The xfrm_state_hash_generation seqlock ensures a retry, but the hash
+functions can observe a hmask value that is too large for the new hlist
+array.
 
-  BTRFS error (device dm-2): failed to run delalloc range, root 348 ino 405 folio 65536 submit_bitmap 6-15 start 90112 len 106496: -28
-  ------------[ cut here ]------------
-  kernel BUG at fs/btrfs/extent_io.c:1444!
-  Internal error: Oops - BUG: 00000000f2000800 [#1] SMP
-  CPU: 0 UID: 0 PID: 434621 Comm: kworker/u24:8 Tainted: G           OE      6.12.0-rc7-custom+ #86
-  Hardware name: QEMU KVM Virtual Machine, BIOS unknown 2/2/2022
-  Workqueue: events_unbound btrfs_async_reclaim_data_space [btrfs]
-  pc : extent_writepage_io+0x2d4/0x308 [btrfs]
-  lr : extent_writepage_io+0x2d4/0x308 [btrfs]
-  Call trace:
-   extent_writepage_io+0x2d4/0x308 [btrfs]
-   extent_writepage+0x218/0x330 [btrfs]
-   extent_write_cache_pages+0x1d4/0x4b0 [btrfs]
-   btrfs_writepages+0x94/0x150 [btrfs]
-   do_writepages+0x74/0x190
-   filemap_fdatawrite_wbc+0x88/0xc8
-   start_delalloc_inodes+0x180/0x3b0 [btrfs]
-   btrfs_start_delalloc_roots+0x174/0x280 [btrfs]
-   shrink_delalloc+0x114/0x280 [btrfs]
-   flush_space+0x250/0x2f8 [btrfs]
-   btrfs_async_reclaim_data_space+0x180/0x228 [btrfs]
-   process_one_work+0x164/0x408
-   worker_thread+0x25c/0x388
-   kthread+0x100/0x118
-   ret_from_fork+0x10/0x20
-  Code: aa1403e1 9402f3ef aa1403e0 9402f36f (d4210000)
-  ---[ end trace 0000000000000000 ]---
+rehash does:
+  rcu_assign_pointer(net->xfrm.state_bydst, ndst) [..]
+  net->xfrm.state_hmask = nhashmask;
 
-[CAUSE]
-That failure is mostly from cow_file_range(), where we can hit -ENOSPC.
+While state lookup does:
+  h = xfrm_dst_hash(net, daddr, saddr, tmpl->reqid, encap_family);
+  hlist_for_each_entry_rcu(x, net->xfrm.state_bydst + h, bydst) {
 
-Although the -ENOSPC is already a bug related to our space reservation
-code, let's just focus on the error handling.
+This is only safe in case the update to state_bydst is larger than
+net->xfrm.xfrm_state_hmask (or if the lookup function gets
+serialized via state spinlock again).
 
-For example, we have the following dirty range [0, 64K) of an inode,
-with 4K sector size and 4K page size:
+Fix this by prefetching state_hmask and the associated pointers.
+The xfrm_state_hash_generation seqlock retry will ensure that the pointer
+and the hmask will be consistent.
 
-   0        16K        32K       48K       64K
-   |///////////////////////////////////////|
-   |#######################################|
+The existing helpers, like xfrm_dst_hash(), are now unsafe for RCU side,
+add lockdep assertions to document that they are only safe for insert
+side.
 
-Where |///| means page are still dirty, and |###| means the extent io
-tree has EXTENT_DELALLOC flag.
+xfrm_state_lookup_byaddr() uses the spinlock rather than RCU.
+AFAICS this is an oversight from back when state lookup was converted to
+RCU, this lock should be replaced with RCU in a future patch.
 
-- Enter extent_writepage() for page 0
-
-- Enter btrfs_run_delalloc_range() for range [0, 64K)
-
-- Enter cow_file_range() for range [0, 64K)
-
-- Function btrfs_reserve_extent() only reserved one 16K extent
-  So we created extent map and ordered extent for range [0, 16K)
-
-   0        16K        32K       48K       64K
-   |////////|//////////////////////////////|
-   |<- OE ->|##############################|
-
-   And range [0, 16K) has its delalloc flag cleared.
-   But since we haven't yet submit any bio, involved 4 pages are still
-   dirty.
-
-- Function btrfs_reserve_extent() returns with -ENOSPC
-  Now we have to run error cleanup, which will clear all
-  EXTENT_DELALLOC* flags and clear the dirty flags for the remaining
-  ranges:
-
-   0        16K        32K       48K       64K
-   |////////|                              |
-   |        |                              |
-
-  Note that range [0, 16K) still has its pages dirty.
-
-- Some time later, writeback is triggered again for the range [0, 16K)
-  since the page range still has dirty flags.
-
-- btrfs_run_delalloc_range() will do nothing because there is no
-  EXTENT_DELALLOC flag.
-
-- extent_writepage_io() finds page 0 has no ordered flag
-  Which falls into the COW fixup path, triggering the BUG_ON().
-
-Unfortunately this error handling bug dates back to the introduction of
-btrfs.  Thankfully with the abuse of COW fixup, at least it won't crash
-the kernel.
-
-[FIX]
-Instead of immediately unlocking the extent and folios, we keep the extent
-and folios locked until either erroring out or the whole delalloc range
-finished.
-
-When the whole delalloc range finished without error, we just unlock the
-whole range with PAGE_SET_ORDERED (and PAGE_UNLOCK for !keep_locked
-cases), with EXTENT_DELALLOC and EXTENT_LOCKED cleared.
-And the involved folios will be properly submitted, with their dirty
-flags cleared during submission.
-
-For the error path, it will be a little more complex:
-
-- The range with ordered extent allocated (range (1))
-  We only clear the EXTENT_DELALLOC and EXTENT_LOCKED, as the remaining
-  flags are cleaned up by
-  btrfs_mark_ordered_io_finished()->btrfs_finish_one_ordered().
-
-  For folios we finish the IO (clear dirty, start writeback and
-  immediately finish the writeback) and unlock the folios.
-
-- The range with reserved extent but no ordered extent (range(2))
-- The range we never touched (range(3))
-  For both range (2) and range(3) the behavior is not changed.
-
-Now even if cow_file_range() failed halfway with some successfully
-reserved extents/ordered extents, we will keep all folios clean, so
-there will be no future writeback triggered on them.
-
-CC: stable@vger.kernel.org
-Reviewed-by: Boris Burkov <boris@bur.io>
-Signed-off-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Reported-by: syzbot+5f9f31cb7d985f584d8e@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/CACT4Y+azwfrE3uz6A5ZErov5YN2LYBN5KrsymBerT36VU8qzBA@mail.gmail.com/
+Diagnosed-by: Dmitry Vyukov <dvyukov@google.com>
+Fixes: c2f672fc9464 ("xfrm: state lookup can be lockless")
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/inode.c | 63 ++++++++++++++++++++++++++----------------------
- 1 file changed, 34 insertions(+), 29 deletions(-)
+ net/xfrm/xfrm_state.c | 77 ++++++++++++++++++++++++++++++++++---------
+ 1 file changed, 62 insertions(+), 15 deletions(-)
 
-diff --git a/fs/btrfs/inode.c b/fs/btrfs/inode.c
-index e53b42a047e8b..7d1eab71f17b4 100644
---- a/fs/btrfs/inode.c
-+++ b/fs/btrfs/inode.c
-@@ -1265,6 +1265,17 @@ static noinline int cow_file_range(struct btrfs_inode *inode,
+diff --git a/net/xfrm/xfrm_state.c b/net/xfrm/xfrm_state.c
+index 4b0835cb58f5d..ecafa6950139f 100644
+--- a/net/xfrm/xfrm_state.c
++++ b/net/xfrm/xfrm_state.c
+@@ -34,6 +34,8 @@
  
- 	alloc_hint = get_extent_allocation_hint(inode, start, num_bytes);
+ #define xfrm_state_deref_prot(table, net) \
+ 	rcu_dereference_protected((table), lockdep_is_held(&(net)->xfrm.xfrm_state_lock))
++#define xfrm_state_deref_check(table, net) \
++	rcu_dereference_check((table), lockdep_is_held(&(net)->xfrm.xfrm_state_lock))
  
-+	/*
-+	 * We're not doing compressed IO, don't unlock the first page (which
-+	 * the caller expects to stay locked), don't clear any dirty bits and
-+	 * don't set any writeback bits.
-+	 *
-+	 * Do set the Ordered (Private2) bit so we know this page was properly
-+	 * setup for writepage.
-+	 */
-+	page_ops = unlock ? PAGE_UNLOCK : 0;
-+	page_ops |= PAGE_SET_ORDERED;
+ static void xfrm_state_gc_task(struct work_struct *work);
+ 
+@@ -61,6 +63,8 @@ static inline unsigned int xfrm_dst_hash(struct net *net,
+ 					 u32 reqid,
+ 					 unsigned short family)
+ {
++	lockdep_assert_held(&net->xfrm.xfrm_state_lock);
 +
- 	/*
- 	 * Relocation relies on the relocated extents to have exactly the same
- 	 * size as the original extents. Normally writeback for relocation data
-@@ -1335,21 +1346,6 @@ static noinline int cow_file_range(struct btrfs_inode *inode,
+ 	return __xfrm_dst_hash(daddr, saddr, reqid, family, net->xfrm.state_hmask);
+ }
  
- 		btrfs_dec_block_group_reservations(fs_info, ins.objectid);
- 
--		/*
--		 * We're not doing compressed IO, don't unlock the first page
--		 * (which the caller expects to stay locked), don't clear any
--		 * dirty bits and don't set any writeback bits
--		 *
--		 * Do set the Ordered (Private2) bit so we know this page was
--		 * properly setup for writepage.
--		 */
--		page_ops = unlock ? PAGE_UNLOCK : 0;
--		page_ops |= PAGE_SET_ORDERED;
--
--		extent_clear_unlock_delalloc(inode, start, start + ram_size - 1,
--					     locked_page,
--					     EXTENT_LOCKED | EXTENT_DELALLOC,
--					     page_ops);
- 		if (num_bytes < cur_alloc_size)
- 			num_bytes = 0;
- 		else
-@@ -1366,6 +1362,8 @@ static noinline int cow_file_range(struct btrfs_inode *inode,
- 		if (ret)
- 			goto out_unlock;
- 	}
-+	extent_clear_unlock_delalloc(inode, orig_start, end, locked_page,
-+				     EXTENT_LOCKED | EXTENT_DELALLOC, page_ops);
- out:
- 	return ret;
- 
-@@ -1380,10 +1378,15 @@ static noinline int cow_file_range(struct btrfs_inode *inode,
- 	 * caller to write out the successfully allocated region and retry.
- 	 */
- 	if (done_offset && ret == -EAGAIN) {
--		if (orig_start < start)
-+		if (orig_start < start) {
-+			extent_clear_unlock_delalloc(inode, orig_start, start - 1,
-+						     locked_page,
-+						     EXTENT_LOCKED | EXTENT_DELALLOC,
-+						     page_ops);
- 			*done_offset = start - 1;
--		else
-+		} else {
- 			*done_offset = start;
-+		}
- 		return ret;
- 	} else if (ret == -EAGAIN) {
- 		/* Convert to -ENOSPC since the caller cannot retry. */
-@@ -1399,29 +1402,31 @@ static noinline int cow_file_range(struct btrfs_inode *inode,
- 	 * We process each region below.
- 	 */
- 
--	clear_bits = EXTENT_LOCKED | EXTENT_DELALLOC | EXTENT_DELALLOC_NEW |
--		EXTENT_DEFRAG | EXTENT_CLEAR_META_RESV;
--	page_ops = PAGE_UNLOCK | PAGE_START_WRITEBACK | PAGE_END_WRITEBACK;
--
- 	/*
- 	 * For the range (1). We have already instantiated the ordered extents
- 	 * for this region. They are cleaned up by
- 	 * btrfs_cleanup_ordered_extents() in e.g,
--	 * btrfs_run_delalloc_range(). EXTENT_LOCKED | EXTENT_DELALLOC are
--	 * already cleared in the above loop. And, EXTENT_DELALLOC_NEW |
--	 * EXTENT_DEFRAG | EXTENT_CLEAR_META_RESV are handled by the cleanup
--	 * function.
-+	 * btrfs_run_delalloc_range().
-+	 * EXTENT_DELALLOC_NEW | EXTENT_DEFRAG | EXTENT_CLEAR_META_RESV
-+	 * are also handled by the cleanup function.
- 	 *
--	 * However, in case of unlock == 0, we still need to unlock the pages
--	 * (except @locked_page) to ensure all the pages are unlocked.
-+	 * So here we only clear EXTENT_LOCKED and EXTENT_DELALLOC flag, and
-+	 * finish the writeback of the involved folios, which will be never submitted.
- 	 */
--	if (!unlock && orig_start < start) {
-+	if (orig_start < start) {
-+		clear_bits = EXTENT_LOCKED | EXTENT_DELALLOC;
-+		page_ops = PAGE_UNLOCK | PAGE_START_WRITEBACK | PAGE_END_WRITEBACK;
+@@ -69,6 +73,8 @@ static inline unsigned int xfrm_src_hash(struct net *net,
+ 					 const xfrm_address_t *saddr,
+ 					 unsigned short family)
+ {
++	lockdep_assert_held(&net->xfrm.xfrm_state_lock);
 +
- 		if (!locked_page)
- 			mapping_set_error(inode->vfs_inode.i_mapping, ret);
- 		extent_clear_unlock_delalloc(inode, orig_start, start - 1,
--					     locked_page, 0, page_ops);
-+					     locked_page, clear_bits, page_ops);
- 	}
+ 	return __xfrm_src_hash(daddr, saddr, family, net->xfrm.state_hmask);
+ }
  
-+	clear_bits = EXTENT_LOCKED | EXTENT_DELALLOC | EXTENT_DELALLOC_NEW |
-+		     EXTENT_DEFRAG | EXTENT_CLEAR_META_RESV;
-+	page_ops = PAGE_UNLOCK | PAGE_START_WRITEBACK | PAGE_END_WRITEBACK;
+@@ -76,11 +82,15 @@ static inline unsigned int
+ xfrm_spi_hash(struct net *net, const xfrm_address_t *daddr,
+ 	      __be32 spi, u8 proto, unsigned short family)
+ {
++	lockdep_assert_held(&net->xfrm.xfrm_state_lock);
 +
- 	/*
- 	 * For the range (2). If we reserved an extent for our delalloc range
- 	 * (or a subrange) and failed to create the respective ordered extent,
+ 	return __xfrm_spi_hash(daddr, spi, proto, family, net->xfrm.state_hmask);
+ }
+ 
+ static unsigned int xfrm_seq_hash(struct net *net, u32 seq)
+ {
++	lockdep_assert_held(&net->xfrm.xfrm_state_lock);
++
+ 	return __xfrm_seq_hash(seq, net->xfrm.state_hmask);
+ }
+ 
+@@ -944,15 +954,37 @@ xfrm_init_tempstate(struct xfrm_state *x, const struct flowi *fl,
+ 	x->props.family = tmpl->encap_family;
+ }
+ 
+-static struct xfrm_state *__xfrm_state_lookup(struct net *net, u32 mark,
++struct xfrm_hash_state_ptrs {
++	const struct hlist_head *bydst;
++	const struct hlist_head *bysrc;
++	const struct hlist_head *byspi;
++	unsigned int hmask;
++};
++
++static void xfrm_hash_ptrs_get(const struct net *net, struct xfrm_hash_state_ptrs *ptrs)
++{
++	unsigned int sequence;
++
++	do {
++		sequence = read_seqcount_begin(&net->xfrm.xfrm_state_hash_generation);
++
++		ptrs->bydst = xfrm_state_deref_check(net->xfrm.state_bydst, net);
++		ptrs->bysrc = xfrm_state_deref_check(net->xfrm.state_bysrc, net);
++		ptrs->byspi = xfrm_state_deref_check(net->xfrm.state_byspi, net);
++		ptrs->hmask = net->xfrm.state_hmask;
++	} while (read_seqcount_retry(&net->xfrm.xfrm_state_hash_generation, sequence));
++}
++
++static struct xfrm_state *__xfrm_state_lookup(const struct xfrm_hash_state_ptrs *state_ptrs,
++					      u32 mark,
+ 					      const xfrm_address_t *daddr,
+ 					      __be32 spi, u8 proto,
+ 					      unsigned short family)
+ {
+-	unsigned int h = xfrm_spi_hash(net, daddr, spi, proto, family);
++	unsigned int h = __xfrm_spi_hash(daddr, spi, proto, family, state_ptrs->hmask);
+ 	struct xfrm_state *x;
+ 
+-	hlist_for_each_entry_rcu(x, net->xfrm.state_byspi + h, byspi) {
++	hlist_for_each_entry_rcu(x, state_ptrs->byspi + h, byspi) {
+ 		if (x->props.family != family ||
+ 		    x->id.spi       != spi ||
+ 		    x->id.proto     != proto ||
+@@ -969,15 +1001,16 @@ static struct xfrm_state *__xfrm_state_lookup(struct net *net, u32 mark,
+ 	return NULL;
+ }
+ 
+-static struct xfrm_state *__xfrm_state_lookup_byaddr(struct net *net, u32 mark,
++static struct xfrm_state *__xfrm_state_lookup_byaddr(const struct xfrm_hash_state_ptrs *state_ptrs,
++						     u32 mark,
+ 						     const xfrm_address_t *daddr,
+ 						     const xfrm_address_t *saddr,
+ 						     u8 proto, unsigned short family)
+ {
+-	unsigned int h = xfrm_src_hash(net, daddr, saddr, family);
++	unsigned int h = __xfrm_src_hash(daddr, saddr, family, state_ptrs->hmask);
+ 	struct xfrm_state *x;
+ 
+-	hlist_for_each_entry_rcu(x, net->xfrm.state_bysrc + h, bysrc) {
++	hlist_for_each_entry_rcu(x, state_ptrs->bysrc + h, bysrc) {
+ 		if (x->props.family != family ||
+ 		    x->id.proto     != proto ||
+ 		    !xfrm_addr_equal(&x->id.daddr, daddr, family) ||
+@@ -997,14 +1030,17 @@ static struct xfrm_state *__xfrm_state_lookup_byaddr(struct net *net, u32 mark,
+ static inline struct xfrm_state *
+ __xfrm_state_locate(struct xfrm_state *x, int use_spi, int family)
+ {
++	struct xfrm_hash_state_ptrs state_ptrs;
+ 	struct net *net = xs_net(x);
+ 	u32 mark = x->mark.v & x->mark.m;
+ 
++	xfrm_hash_ptrs_get(net, &state_ptrs);
++
+ 	if (use_spi)
+-		return __xfrm_state_lookup(net, mark, &x->id.daddr,
++		return __xfrm_state_lookup(&state_ptrs, mark, &x->id.daddr,
+ 					   x->id.spi, x->id.proto, family);
+ 	else
+-		return __xfrm_state_lookup_byaddr(net, mark,
++		return __xfrm_state_lookup_byaddr(&state_ptrs, mark,
+ 						  &x->id.daddr,
+ 						  &x->props.saddr,
+ 						  x->id.proto, family);
+@@ -1067,6 +1103,7 @@ xfrm_state_find(const xfrm_address_t *daddr, const xfrm_address_t *saddr,
+ 		unsigned short family, u32 if_id)
+ {
+ 	static xfrm_address_t saddr_wildcard = { };
++	struct xfrm_hash_state_ptrs state_ptrs;
+ 	struct net *net = xp_net(pol);
+ 	unsigned int h, h_wildcard;
+ 	struct xfrm_state *x, *x0, *to_put;
+@@ -1083,8 +1120,10 @@ xfrm_state_find(const xfrm_address_t *daddr, const xfrm_address_t *saddr,
+ 	sequence = read_seqcount_begin(&net->xfrm.xfrm_state_hash_generation);
+ 
+ 	rcu_read_lock();
+-	h = xfrm_dst_hash(net, daddr, saddr, tmpl->reqid, encap_family);
+-	hlist_for_each_entry_rcu(x, net->xfrm.state_bydst + h, bydst) {
++	xfrm_hash_ptrs_get(net, &state_ptrs);
++
++	h = __xfrm_dst_hash(daddr, saddr, tmpl->reqid, encap_family, state_ptrs.hmask);
++	hlist_for_each_entry_rcu(x, state_ptrs.bydst + h, bydst) {
+ 		if (x->props.family == encap_family &&
+ 		    x->props.reqid == tmpl->reqid &&
+ 		    (mark & x->mark.m) == x->mark.v &&
+@@ -1100,8 +1139,9 @@ xfrm_state_find(const xfrm_address_t *daddr, const xfrm_address_t *saddr,
+ 	if (best || acquire_in_progress)
+ 		goto found;
+ 
+-	h_wildcard = xfrm_dst_hash(net, daddr, &saddr_wildcard, tmpl->reqid, encap_family);
+-	hlist_for_each_entry_rcu(x, net->xfrm.state_bydst + h_wildcard, bydst) {
++	h_wildcard = __xfrm_dst_hash(daddr, &saddr_wildcard, tmpl->reqid,
++				     encap_family, state_ptrs.hmask);
++	hlist_for_each_entry_rcu(x, state_ptrs.bydst + h_wildcard, bydst) {
+ 		if (x->props.family == encap_family &&
+ 		    x->props.reqid == tmpl->reqid &&
+ 		    (mark & x->mark.m) == x->mark.v &&
+@@ -1119,7 +1159,7 @@ xfrm_state_find(const xfrm_address_t *daddr, const xfrm_address_t *saddr,
+ 	x = best;
+ 	if (!x && !error && !acquire_in_progress) {
+ 		if (tmpl->id.spi &&
+-		    (x0 = __xfrm_state_lookup(net, mark, daddr, tmpl->id.spi,
++		    (x0 = __xfrm_state_lookup(&state_ptrs, mark, daddr, tmpl->id.spi,
+ 					      tmpl->id.proto, encap_family)) != NULL) {
+ 			to_put = x0;
+ 			error = -EEXIST;
+@@ -1807,10 +1847,13 @@ struct xfrm_state *
+ xfrm_state_lookup(struct net *net, u32 mark, const xfrm_address_t *daddr, __be32 spi,
+ 		  u8 proto, unsigned short family)
+ {
++	struct xfrm_hash_state_ptrs state_ptrs;
+ 	struct xfrm_state *x;
+ 
+ 	rcu_read_lock();
+-	x = __xfrm_state_lookup(net, mark, daddr, spi, proto, family);
++	xfrm_hash_ptrs_get(net, &state_ptrs);
++
++	x = __xfrm_state_lookup(&state_ptrs, mark, daddr, spi, proto, family);
+ 	rcu_read_unlock();
+ 	return x;
+ }
+@@ -1821,10 +1864,14 @@ xfrm_state_lookup_byaddr(struct net *net, u32 mark,
+ 			 const xfrm_address_t *daddr, const xfrm_address_t *saddr,
+ 			 u8 proto, unsigned short family)
+ {
++	struct xfrm_hash_state_ptrs state_ptrs;
+ 	struct xfrm_state *x;
+ 
+ 	spin_lock_bh(&net->xfrm.xfrm_state_lock);
+-	x = __xfrm_state_lookup_byaddr(net, mark, daddr, saddr, proto, family);
++
++	xfrm_hash_ptrs_get(net, &state_ptrs);
++
++	x = __xfrm_state_lookup_byaddr(&state_ptrs, mark, daddr, saddr, proto, family);
+ 	spin_unlock_bh(&net->xfrm.xfrm_state_lock);
+ 	return x;
+ }
 -- 
 2.53.0
 
