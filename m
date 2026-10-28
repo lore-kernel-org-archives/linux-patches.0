@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793212376;
-	b=N0z5SJaAc/uCViTKCfEbmBHzHYJb9ANL++2lRM8JBZumB5iZXWSpElwW6GWPx9asdQiW
-	 E+ZPYB4+/ouprBQ12Gjl7gtJUS4IVpKlXDwz96ALL0ZJonGsGDuJ7TC//oCQYp9KpMsrs
-	 V5+TV+dWoOzkYzSnc7U3QWGpYTsgDKTM7C/9NNiaHzgUwC7x/RTbDeVZ4R72LBut1WcbE
-	 jbJonkQggIIsBju7BElk0ZI6NeIx+hZRMTeBev6fz5ozG7JPzQJMCWRoYRHwR4oLM/OlL
-	 2+INnZg82pjYoXrXLhZ3KLvoDNO4Yl5hyUsWlMONGvM1Nx0rAG2FYBcWussK/nK+lHw==
+	t=1793212379;
+	b=1izN21Iikpg0vwZHIn+94etIJKC8xYpd+hDtw35DoHIG9A3G0LogEt1QshpzTUU3lbru
+	 7Bzkd8odjAcNeNOlG4GNOh5P1jAAiCup3GZvTlOm15EIjmvx/uZsYMVrgrTvu4IHdVgv7
+	 OPnkslE+wOOTXkcpWXoWrKNNaaAxSAdW+jdLZQkZlG+S9zDcQR6yhAnH0E2xC+gOyjNn8
+	 Zlp6j5Il5Oyqd9AbQIT3eSiSmEFQ0QsPA2cs0XvyFMKSr6AMjWlsavMCDWYCF3caccjkE
+	 U01ilPY5+agZb5RgJ7VrQFzpdSRhfPDu30H5gecPTJXoXp+DNK8yBQvabW61PY/9j0g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793212376;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793212379;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=MANo8oGOp1qKF1Y62w4RMm+nUSq1KTdo0zAymwcJ54k=;
-	b=Vh+1UaAY+rE6BkL1LRbHV5mndQ+yy2Qdm4LBnvEr7v9j4vPEEz7Y4Am/IWjk9srZARYG
-	 XlHsscXTIXdOm922fGU6n67aW1TBHCV574N5BVKcJLwQjWW+aczu+oTK4S6Ov0YhPMJtW
-	 v3l0pu2aLxUi8Cj00AMjOtWi9FwGxLx0IXJjRjPzIeZLqDQfgjCopQmO6lU+FRQPPAdJe
-	 kpzU2flLcEZg6aJKf3DlRYtvwiUGwMYqCn8o2nrwrFQEag2qC9ObuIptJfRUqSv6lcdxu
-	 +OMJMjLKMsro7J3jbG6s7kX9fhADrnSRvOXcWEr2JmcpYjvxGjn9hEv4NCAzUtJlftA==
+	bh=ZImWKUSYVQe1zk+r/b9pczU+Q3OwfwPPcG+xjoCLBhs=;
+	b=Mf1ZC6ClAlMc7KgrQq/tiioUgAM0r72Rej9nyFZbSVZsBmK7WhC/7BMBLMF0nNhtCnwa
+	 VHHrGm3Fq5i8q029tMqy8MLVAwRvG+qDW1eJSFd9RjsFQ8Fu3+QHiJWpd01lhBRdY051Z
+	 KL+ZIAfSdNpQzyesN/LZRWmXS4QH3/03/NxpLVsqDkJ/xr6LixpHgn0+68U3q7SZMdnew
+	 o7elpY4jEtM7/cjTHGqkDla6Vl6NpvFJfbQitybaHpHTLxBTO+QopUxXDxh2TLo8NZfuf
+	 ULRHGdW7Jr3FsnHgpsmdS8sJ18Oify/+cOmEqM7Q42rQ1roV5hXVJ34EXCwYaPIvIKQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Aue/YR4/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2SeqZbtN;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64D66606A31D;
-	Wed, 28 Oct 2026 18:32:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CCDD606A31A;
+	Wed, 28 Oct 2026 18:32:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Aue/YR4/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B59D11F01825;
-	Wed, 28 Oct 2026 18:32:55 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2SeqZbtN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F1021F01825;
+	Wed, 28 Oct 2026 18:32:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793212376;
-	bh=MANo8oGOp1qKF1Y62w4RMm+nUSq1KTdo0zAymwcJ54k=;
+	s=korg; t=1793212379;
+	bh=ZImWKUSYVQe1zk+r/b9pczU+Q3OwfwPPcG+xjoCLBhs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Aue/YR4/0mSwsWbbdUDrfIzd5nDAeRqEIq5fk4NKm3W6MexVJ6MACzKkFH42Ss6ju
-	 ZYawsZ4D6rzSNFcr9frGd+Fwpzuzj+4j/fHsvBYdLCd/blFB2fEY1dVQfL3aRwuHmK
-	 Q2vo9FbXCBbqtUSdcki+2/kVHpcXnToitEJtkYwM=
+	b=2SeqZbtNW/A3nMlfHmwNZ4kbfHBEVkD9+LKf32T5xUA8dZnRluDkXgBukibKUtu4n
+	 G+suoLzkHwP3kmJ8ym1Jdi/nLLSG1sInoShc3vaiXtMDjkNGbHAbZ//ItaTmfMNQ0o
+	 dMYMvdVhJCzvAHdd1vhvT0wk1UPmYgKD/z/YkcWg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Tzung-Bi Shih <tzungbi@kernel.org>,
 	Guenter Roeck <linux@roeck-us.net>,
-	Wim Van Sebroeck <wim@linux-watchdog.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0132/1887] watchdog: rtd119x: Use devm_clk_get_enabled() helper
-Date: Wed, 28 Oct 2026 17:37:08 +0100
-Message-ID: <20261028170502.241464280@linuxfoundation.org>
+Subject: [PATCH 6.1 0133/1887] watchdog: rtd119x: Avoid division by zero
+Date: Wed, 28 Oct 2026 17:37:09 +0100
+Message-ID: <20261028170502.263299604@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,70 +68,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Tzung-Bi Shih <tzungbi@kernel.org>
 
-[ Upstream commit 6cc0768ba6f5293a4435612164a2cfbf2edbd025 ]
+[ Upstream commit 5af7d2cbd20f893def03c8310a460ade66a5d822 ]
 
-The devm_clk_get_enabled() helper:
-   - calls devm_clk_get()
-   - calls clk_prepare_enable() and registers what is needed in order to
-     call clk_disable_unprepare() when needed, as a managed resource.
+clk_get_rate() could return 0.  Avoid a division by zero panic.
 
-This simplifies the code and avoids the need of a dedicated function used
-with devm_add_action_or_reset().
-
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://lore.kernel.org/r/14b521b821279bc5111dc80b55d0936c5767c737.1672418470.git.christophe.jaillet@wanadoo.fr
+Fixes: 2bdf6acbfead ("watchdog: Add Realtek RTD1295")
+Cc: stable@vger.kernel.org
+Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
+Link: https://patch.msgid.link/20260913064851.8239-3-tzungbi@kernel.org
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
-Stable-dep-of: 5af7d2cbd20f ("watchdog: rtd119x: Avoid division by zero")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/watchdog/rtd119x_wdt.c | 16 +---------------
- 1 file changed, 1 insertion(+), 15 deletions(-)
+ drivers/watchdog/rtd119x_wdt.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/watchdog/rtd119x_wdt.c b/drivers/watchdog/rtd119x_wdt.c
-index 834b94ff3f903..95c8d7abce42e 100644
+index 95c8d7abce42e..e963be4df8c4e 100644
 --- a/drivers/watchdog/rtd119x_wdt.c
 +++ b/drivers/watchdog/rtd119x_wdt.c
-@@ -94,16 +94,10 @@ static const struct of_device_id rtd119x_wdt_dt_ids[] = {
- 	 { }
- };
- 
--static void rtd119x_clk_disable_unprepare(void *data)
--{
--	clk_disable_unprepare(data);
--}
--
- static int rtd119x_wdt_probe(struct platform_device *pdev)
+@@ -98,6 +98,7 @@ static int rtd119x_wdt_probe(struct platform_device *pdev)
  {
  	struct device *dev = &pdev->dev;
  	struct rtd119x_watchdog_device *data;
--	int ret;
++	unsigned long rate;
  
  	data = devm_kzalloc(dev, sizeof(*data), GFP_KERNEL);
  	if (!data)
-@@ -113,18 +107,10 @@ static int rtd119x_wdt_probe(struct platform_device *pdev)
- 	if (IS_ERR(data->base))
- 		return PTR_ERR(data->base);
- 
--	data->clk = devm_clk_get(dev, NULL);
-+	data->clk = devm_clk_get_enabled(dev, NULL);
+@@ -111,10 +112,14 @@ static int rtd119x_wdt_probe(struct platform_device *pdev)
  	if (IS_ERR(data->clk))
  		return PTR_ERR(data->clk);
  
--	ret = clk_prepare_enable(data->clk);
--	if (ret)
--		return ret;
--	ret = devm_add_action_or_reset(dev, rtd119x_clk_disable_unprepare,
--				       data->clk);
--	if (ret)
--		return ret;
--
++	rate = clk_get_rate(data->clk);
++	if (!rate)
++		return -EINVAL;
++
  	data->wdt_dev.info = &rtd119x_wdt_info;
  	data->wdt_dev.ops = &rtd119x_wdt_ops;
  	data->wdt_dev.timeout = 120;
+-	data->wdt_dev.max_timeout = 0xffffffff / clk_get_rate(data->clk);
++	data->wdt_dev.max_timeout = 0xffffffff / rate;
+ 	data->wdt_dev.min_timeout = 1;
+ 	data->wdt_dev.parent = dev;
+ 
 -- 
 2.53.0
 
