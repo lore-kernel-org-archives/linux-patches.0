@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214470;
-	b=5O5okqqEi4F/W0VioG9kLo0tYiXig7JyZmccJdIQNEjsKlokaahSpKl+sFV/hk9YS4IK
-	 p3zZq6niX71EKyPQwduXSRtGiyX8+AxPew3SqR8WI6NTym7aQEJyfBboqOP1FLnGIr7Lo
-	 qfzS1yHFubFdTb1p7X3eBVil+imTPXknFd03uLZg2IqpRUv5BDYmfz5/kF4RnEbkPi3yw
-	 1huABIFX4iYJB7kRFFIzOQQHHcjNzp6lObdm+yovpLVYSWm2J/JI8pIHGpRnp1N3Z9XPJ
-	 /Z8MqdGmzTAoGsgd/g6+VH5Nw0Ui3xdieUVE0/02SKykhvq0nNoCJLhABHzVBmXbnPQ==
+	t=1793214473;
+	b=E3vNPEVNmSkySEWOR/nvD27S3Au9FJLiHtP7ppO3cjMn4qC/tJHeKmD+NUBR/HuPF5/A
+	 RAiWr1XoqMxIVFafD+PvNlFo2Le/yJGdXeqoOR4sNYMu06Lzy35G2eprhTSpcdqBV5mrH
+	 zwOXOGvYpeUEJOrz5OLEEhxlE6dAW9+6C/HjkPfooiX2t1/EVZo4o3eqDD+aTk4tWfT08
+	 8W49B0A765SaBxYzQ7jme6qTAmkswFmU3SCduL94YvAULIRfJXkht32d9q4YR2Z5gaXfk
+	 K32f3Q59ThHu36MoJGMs4Rf/HaDav7NxsDsMps9Q0YL0S9gLkKzt5g6er/HXnI4QTqg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214470;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214473;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Cb2p8rIEccGRqTHx2p0oB7NDBOG/rhAhzGvYFonoELY=;
-	b=NnVXgq54zbc3Df1x6uCVoXBMw0m2MXcGK50/+SXjJFWcUVwnp1MQuoQlKCeZDeCNhruZ
-	 RQ8WXuc/pc0ei5gR1zQbuEg/Oj8zlg/MoKmOeFrEUw4PkNfu6eCu0rEJPBEhqgGBnmhoY
-	 I5Nxi2JZbRlXo4qHikRWcaRtY6xyQvDzg5qtU7nHFZC54iNavkQqzvs8DmarcDKqyCATc
-	 4x4VDPxoWe37/nlvAdQ1GfMImYV9C/OYWFAvs8ieLCna4fW/dzNHJajctSVtieLRWfyoB
-	 EH00BETVgg9nxIf6O/RdNbiNmUI3BXVDmotlUUp3Dvqxfy7ohjDK5HNqkW4jXked5hQ==
+	bh=U1HFf7Nw+iPBmqnyRA2UCCVkUumXVWAzLQ5VdSmslh8=;
+	b=QkNulesYMVqbJs8o5n+y75/4j/fkeAYigp9Swh1yGFIWjRvlsFfvzaQ5WGq1UutFGYfA
+	 XtB+BkxMm+AEaxbpeUhYxQG2eC4WePM1jhKVtWsD7L4ugKv0inMOIMlm/J7oUEy4MYjhu
+	 GncT49hXsXdmyIQAlIANyx/UzFu+50NGm1BieLsY7BokfuSOpo39+fsiXhtiOSC9No6ZX
+	 roWTH1RWpe1BYBy0auZvzJzDOmfRbWi5Yriu5i5K6MfZiOzvLmkmPYiYolAAca3ptOoiT
+	 xHO+0Kec2v+XCj4gVbwfoumiwG6NdC61+cqfJknuLONXHQATth/qz6kOxnhh7NY0Sdg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YKbuysZX;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qTj+ClyB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8704E606AB26;
-	Wed, 28 Oct 2026 19:07:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90B1B606AB19;
+	Wed, 28 Oct 2026 19:07:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YKbuysZX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D733B1F031E6;
-	Wed, 28 Oct 2026 19:07:49 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qTj+ClyB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF4CB1F01828;
+	Wed, 28 Oct 2026 19:07:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214470;
-	bh=Cb2p8rIEccGRqTHx2p0oB7NDBOG/rhAhzGvYFonoELY=;
+	s=korg; t=1793214473;
+	bh=U1HFf7Nw+iPBmqnyRA2UCCVkUumXVWAzLQ5VdSmslh8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YKbuysZXWTkpQO9ZEK+vaOZZTNkEOe3KwFkbAAzIONm6Zm2wG9Bfgv62Nr5luMO4x
-	 Br2p4C4aHC3de10pv9JmXGvLtAxXIhvAY/QFKWH9stNIQkMlNDUMzk3kLGoRGaUmeQ
-	 MU99BRZvcYR5/E97WBNYvmp8XFWwUJzwtSSI7cHs=
+	b=qTj+ClyBQRp/wWoDCWlb5vbuEHFRv4S69d3VP2CbFCTQecMIfWCuwiiNW57mS/Udn
+	 QYwzfj7RsHKtYL+AuJf72LKlkvTZOpbH/7HSyUFICgHKHhDSCFwbQHNe6zMjyidthp
+	 zS3EXnRWxv1BIhxpXqQKawNO7ESKwMCiq+jgZ5Ro=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	David Ahern <dsahern@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Rob Herring <robh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0871/1887] net: use dst_dev_rcu() in sk_setup_caps()
-Date: Wed, 28 Oct 2026 17:49:27 +0100
-Message-ID: <20261028170519.238100917@linuxfoundation.org>
+Subject: [PATCH 6.1 0872/1887] of: Move of_device_(add|register|unregister) to of_platform.h
+Date: Wed, 28 Oct 2026 17:49:28 +0100
+Message-ID: <20261028170519.262252805@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,137 +67,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Rob Herring <robh@kernel.org>
 
-[ Upstream commit 99a2ace61b211b0be861b07fbaa062fca4b58879 ]
+[ Upstream commit 4c32fb7dcf65b16cc7b2837ccfc35d00be92bddb ]
 
-Use RCU to protect accesses to dst->dev from sk_setup_caps()
-and sk_dst_gso_max_size().
+As of_device_(add|register|unregister) functions work on struct
+platform_device, they should be declared in of_platform.h instead.
 
-Also use dst_dev_rcu() in ip6_dst_mtu_maybe_forward(),
-and ip_dst_mtu_maybe_forward().
+This move is transparent for now as both headers include each other.
 
-ip4_dst_hoplimit() can use dst_dev_net_rcu().
-
-Fixes: 4a6ce2b6f2ec ("net: introduce a new function dst_dev_put()")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://patch.msgid.link/20250828195823.3958522-6-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://lore.kernel.org/r/20230329-dt-cpu-header-cleanups-v1-2-581e2605fe47@kernel.org
+Signed-off-by: Rob Herring <robh@kernel.org>
+Stable-dep-of: 0aead8197fc1 ("mailbox: zynqmp-ipi: Fix out-of-bounds access in mailbox cleanup loop")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/ip.h        | 17 +++++++++++++----
- include/net/ip6_route.h |  2 +-
- include/net/route.h     |  2 +-
- net/core/sock.c         | 10 +++++++---
- 4 files changed, 22 insertions(+), 9 deletions(-)
+ include/linux/of_device.h   | 4 ----
+ include/linux/of_platform.h | 5 +++++
+ 2 files changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/include/net/ip.h b/include/net/ip.h
-index 49e86b8bf9c9a..855998087701e 100644
---- a/include/net/ip.h
-+++ b/include/net/ip.h
-@@ -459,9 +459,14 @@ static inline unsigned int ip_dst_mtu_maybe_forward(const struct dst_entry *dst,
- 						    bool forwarding)
- {
- 	const struct rtable *rt = container_of(dst, struct rtable, dst);
--	struct net *net = dev_net(dst_dev(dst));
--	unsigned int mtu;
-+	const struct net_device *dev;
-+	unsigned int mtu, res;
-+	struct net *net;
-+
-+	rcu_read_lock();
- 
-+	dev = dst_dev_rcu(dst);
-+	net = dev_net_rcu(dev);
- 	if (READ_ONCE(net->ipv4.sysctl_ip_fwd_use_pmtu) ||
- 	    ip_mtu_locked(dst) ||
- 	    !forwarding) {
-@@ -475,7 +480,7 @@ static inline unsigned int ip_dst_mtu_maybe_forward(const struct dst_entry *dst,
- 	if (mtu)
- 		goto out;
- 
--	mtu = READ_ONCE(dst_dev(dst)->mtu);
-+	mtu = READ_ONCE(dev->mtu);
- 
- 	if (unlikely(ip_mtu_locked(dst))) {
- 		if (rt->rt_uses_gateway && mtu > 576)
-@@ -485,7 +490,11 @@ static inline unsigned int ip_dst_mtu_maybe_forward(const struct dst_entry *dst,
- out:
- 	mtu = min_t(unsigned int, mtu, IP_MAX_MTU);
- 
--	return mtu - lwtunnel_headroom(dst->lwtstate, mtu);
-+	res = mtu - lwtunnel_headroom(dst->lwtstate, mtu);
-+
-+	rcu_read_unlock();
-+
-+	return res;
+diff --git a/include/linux/of_device.h b/include/linux/of_device.h
+index 1a803e4335d30..90dabbf1e0258 100644
+--- a/include/linux/of_device.h
++++ b/include/linux/of_device.h
+@@ -26,10 +26,6 @@ static inline int of_driver_match_device(struct device *dev,
+ 	return of_match_device(drv->of_match_table, dev) != NULL;
  }
  
- static inline unsigned int ip_skb_dst_mtu(struct sock *sk,
-diff --git a/include/net/ip6_route.h b/include/net/ip6_route.h
-index 9df55c2ee058c..6b7dae7d47dbe 100644
---- a/include/net/ip6_route.h
-+++ b/include/net/ip6_route.h
-@@ -337,7 +337,7 @@ static inline unsigned int ip6_dst_mtu_maybe_forward(const struct dst_entry *dst
+-extern int of_device_add(struct platform_device *pdev);
+-extern int of_device_register(struct platform_device *ofdev);
+-extern void of_device_unregister(struct platform_device *ofdev);
+-
+ extern const void *of_device_get_match_data(const struct device *dev);
  
- 	mtu = IPV6_MIN_MTU;
- 	rcu_read_lock();
--	idev = __in6_dev_get(dst->dev);
-+	idev = __in6_dev_get(dst_dev_rcu(dst));
- 	if (idev)
- 		mtu = idev->cnf.mtu6;
- 	rcu_read_unlock();
-diff --git a/include/net/route.h b/include/net/route.h
-index ce608f8830401..4e2f8c3e1f98e 100644
---- a/include/net/route.h
-+++ b/include/net/route.h
-@@ -362,7 +362,7 @@ static inline int ip4_dst_hoplimit(const struct dst_entry *dst)
- 		const struct net *net;
- 
- 		rcu_read_lock();
--		net = dev_net_rcu(dst_dev(dst));
-+		net = dst_dev_net_rcu(dst);
- 		hoplimit = READ_ONCE(net->ipv4.sysctl_ip_default_ttl);
- 		rcu_read_unlock();
- 	}
-diff --git a/net/core/sock.c b/net/core/sock.c
-index 8593dc1b33eb3..6f8a15aa4a126 100644
---- a/net/core/sock.c
-+++ b/net/core/sock.c
-@@ -2395,9 +2395,12 @@ static void sk_trim_gso_size(struct sock *sk)
- 
- void sk_setup_caps(struct sock *sk, struct dst_entry *dst)
- {
-+	const struct net_device *dev;
- 	u32 max_segs = 1;
- 
--	sk->sk_route_caps = dst_dev(dst)->features;
-+	rcu_read_lock();
-+	dev = dst_dev_rcu(dst);
-+	sk->sk_route_caps = dev->features;
- 	if (sk_is_tcp(sk))
- 		sk->sk_route_caps |= NETIF_F_GSO;
- 	if (sk->sk_route_caps & NETIF_F_GSO)
-@@ -2410,15 +2413,16 @@ void sk_setup_caps(struct sock *sk, struct dst_entry *dst)
- 		} else {
- 			sk->sk_route_caps |= NETIF_F_SG | NETIF_F_HW_CSUM;
- 			/* pairs with the WRITE_ONCE() in netif_set_gso_max_size() */
--			sk->sk_gso_max_size = READ_ONCE(dst_dev(dst)->gso_max_size);
-+			sk->sk_gso_max_size = READ_ONCE(dev->gso_max_size);
- 			sk_trim_gso_size(sk);
- 			sk->sk_gso_max_size -= (MAX_TCP_HEADER + 1);
- 			/* pairs with the WRITE_ONCE() in netif_set_gso_max_segs() */
--			max_segs = max_t(u32, READ_ONCE(dst_dev(dst)->gso_max_segs), 1);
-+			max_segs = max_t(u32, READ_ONCE(dev->gso_max_segs), 1);
- 		}
- 	}
- 	sk->sk_gso_max_segs = max_segs;
- 	sk_dst_set(sk, dst);
-+	rcu_read_unlock();
- }
- EXPORT_SYMBOL_GPL(sk_setup_caps);
- 
+ extern ssize_t of_device_modalias(struct device *dev, char *str, ssize_t len);
+diff --git a/include/linux/of_platform.h b/include/linux/of_platform.h
+index d15b6cd5e1c3a..8ac5cb933dc3c 100644
+--- a/include/linux/of_platform.h
++++ b/include/linux/of_platform.h
+@@ -52,6 +52,11 @@ extern const struct of_device_id of_default_bus_match_table[];
+ extern struct platform_device *of_device_alloc(struct device_node *np,
+ 					 const char *bus_id,
+ 					 struct device *parent);
++
++extern int of_device_add(struct platform_device *pdev);
++extern int of_device_register(struct platform_device *ofdev);
++extern void of_device_unregister(struct platform_device *ofdev);
++
+ #ifdef CONFIG_OF
+ extern struct platform_device *of_find_device_by_node(struct device_node *np);
+ #else
 -- 
 2.53.0
 
