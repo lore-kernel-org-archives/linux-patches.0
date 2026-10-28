@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216648;
-	b=AlaNeiDklvExH29cXEyOyXt1LcpR9olY965H45+D/62W+wwrkg9smn9ouNtAqBbuw0kU
-	 Z8wk/iOyt9/IyoXsfysiZ7dtgr+O4913pqe23nJ5WsPRPaBjyDw0Do8ZIfIz81HPcNvlV
-	 efUMDtNy02mqEgylOvOSPimh714bc8glOYnaopjBwo0tYAoC/VEi30pZC9L2ewjvCUwrz
-	 UImgSyR1MMkVc6DbvleOk0L2imuhY/23JJMjLwSV/ROMysIF18SEY85U8ClFmdLgF7/JB
-	 i7ziHVHJyaqRMOHhLVowbfmQm3MCYCdP61lLN97hOppJKOtIn4//JQw7rZdDnkjWoVQ==
+	t=1793216651;
+	b=UD4lIh1KfpSJSIFRM536rHHtlSxXVpTmH0/olRWxaMkhWxPdwe+SRhsytte4XLTerYW2
+	 yCV5erkh+ADiVlpZ0Fe+97MgbOGJI9eLKcWScvRcMwyWeey+/ozsjnsshXqeT0ZOeeeUC
+	 n/+Jcfb313RJ91iA5CEpa4PMyd5+GYyrYRnXhAlQ+z25Dj1qrQSj7dkYVS/RTnqHr1YFb
+	 u/D+hqkRt64jdxTPnxMRrCFMwOwWh3aubq+0bpYRnMbfQNvAcOzbbK1OqlMKthb2HDIzj
+	 WBF2EoLzDmKvkK+hYnNc6CzI1SYJIl5UhKHMldJaqIJM6oodXGHWl6Cltnfy7P2390Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216648;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216651;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=8FsN2xbgZ2xxsV9tC4CPj0WrLlcBkjGZNd4hXU5bQRE=;
-	b=mV+LqaJXMhC24zxuX34lzwP2KQT9uXlnVW/De96vSJ79duDjH0N0Lihcs+fHCzVNSGoI
-	 wbFrBPeYdZ9ni84dloFwu7ogGjE0eNJPcY7hBMFoDbVGQ/sVWMtAY4MU2xzF8g8bldkxP
-	 J8jcA7CY0qhkChe8YFNBB9WlLHz3DrYMI+xC47pEACOhRk5DShRW9LAKS2eZU3tBupVCt
-	 cSVO9mCgUJzRcje4xlXmGOToDIKsJ4KVpTpygEbsQnO6AeaVb8XgeWUsAzcUB0KDydzeo
-	 4KD6TWZq0TYlEcQQBK/eKyMp2PPx5auLKFOo4i7hFWHb+MVtj+aifsZNMCjlEjkQ3wg==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=Doy7T7q81OJla7HuwTU3vRWLKclOKLSxy+pvbMngQb8=;
+	b=qT+zEUrRKpxnycrFE64adVHTtwJrK6wZ9w9J6ieawiYRziBg4gS6doYY4+jLbMCc2BoG
+	 x9eHI1I/mGz9qAQThnxEvsAlnvt3Xn05OQJ7f5i2syxf2vYPQSCyQWF5POZ7P7hcbouc3
+	 ycZjOBweXFw3jyG+x/Qfy063TTbil7qvhwC186OFT2oIOuTUvxnhEBQbauOZy0f8boz1U
+	 Ixq96AUtVCnd9T/dAEMX9QIvMTabu/dhvpTcWXmfoANuEzEuIFdux5wNRStvyx1qIi/EQ
+	 n3sRjUOJTMo+AngT4krUGFmqz2XJ/cRYS10Wal9kwpJNnvtTnF62PihBbbMB+eetA0w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=onMlQ+YB;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X2RH3VEL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BA01606A31A;
-	Wed, 28 Oct 2026 19:44:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69544606A31C;
+	Wed, 28 Oct 2026 19:44:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=onMlQ+YB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC5071F01825;
-	Wed, 28 Oct 2026 19:44:07 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X2RH3VEL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5E031F01825;
+	Wed, 28 Oct 2026 19:44:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216648;
-	bh=8FsN2xbgZ2xxsV9tC4CPj0WrLlcBkjGZNd4hXU5bQRE=;
+	s=korg; t=1793216651;
+	bh=Doy7T7q81OJla7HuwTU3vRWLKclOKLSxy+pvbMngQb8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=onMlQ+YBujB0ZChPNHgZqxuLDasPJcGU9Xu7xOjOm8WopaHytG8WmTQGiFJ4NZfDX
-	 jJkqQyu+3g/Y14+BXpvqwbAN2KFWGOZI6FKzBAyw0aUaU/6M+Nyc0BpUlbXItFRuEi
-	 4Tc6+9euYycUAiRwtA2qDp66CdnYCtj1uOzjXUIE=
+	b=X2RH3VELbafODCwnQa5wnKPbDz+cX5TPCaLCFw/wEwbQe6DCwUAEeNqG/i8HgVnrM
+	 f99tZiuW0XmYqdy4wGbhmdY03WvFmJ0DjKGGZh/g169Swn+u+L979xqil4++PDR0eF
+	 31NWqDmH9jg/BH2NBHcReciOGMM/hGG4ee2bS54k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicholas Dudar <main.kalliope@gmail.com>,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Armin Wolf <W_Armin@gmx.de>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1629/1887] bpf: Reject rdonly/rdwr_buf_size kfunc arguments that exceed u32 max
-Date: Wed, 28 Oct 2026 18:02:05 +0100
-Message-ID: <20261028170536.536603651@linuxfoundation.org>
+Subject: [PATCH 6.1 1630/1887] platform/x86: lg-laptop: Fix LED resource handling
+Date: Wed, 28 Oct 2026 18:02:06 +0100
+Message-ID: <20261028170536.558344633@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -63,61 +62,102 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nicholas Dudar <main.kalliope@gmail.com>
+From: Armin Wolf <W_Armin@gmx.de>
 
-[ Upstream commit 2aaf67f0516fde29620d0edfc29c01b9ea7ad430 ]
+[ Upstream commit 3e91964aa74ab261aa15d9d96318eded2fd9d22a ]
 
-check_kfunc_args() detects a kfunc argument named rdonly_buf_size or
-rdwr_buf_size and stores reg->var_off.value into meta->r0_size, a u64,
-and does not bound it. check_kfunc_call() later copies that value into
-the returned register's mem_size field:
+The event notification callback might access kbd_backlight even
+when it was not successfully registered with the LED subsystem.
+The same happens inside acpi_remove(), where the LED devices are
+unregistered unconditionally.
 
-  meta->r0_size = reg->var_off.value;
-  ...
-  regs[BPF_REG_0].mem_size = meta.r0_size;
+Fix this by tracking the availability of the kbd_backlight LED
+device and use devm_led_classdev_register() to let devres take
+care of unregistering the LED devices during removal. For this
+the parent device of the LED devices is changed to the native
+platform device.
 
-regs[BPF_REG_0].mem_size is u32. A constant whose upper 32 bits are set
-gets truncated instead of causing a load-time rejection, so the verifier
-records a PTR_TO_MEM register with an approximately 4 GiB mem_size for
-whatever allocation the kfunc returned. A later access check against
-that register uses the truncated, wrong bound.
-
-Reject rdonly_buf_size/rdwr_buf_size values that exceed U32_MAX at the
-point meta->r0_size is set.
-
-Fixes: eb1f7f71c126 ("bpf/verifier: allow kfunc to return an allocated mem")
-Signed-off-by: Nicholas Dudar <main.kalliope@gmail.com>
-Acked-by: Eduard Zingerman <eddyz87@gmail.com>
-Link: https://lore.kernel.org/bpf/20260709155837.1879230-2-main.kalliope@gmail.com
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Fixes: ae26278829a8 ("platform/x86: lg-laptop: Use correct event for keyboard backlight FN-key")
+Signed-off-by: Armin Wolf <W_Armin@gmx.de>
+Link: https://patch.msgid.link/20260708195553.7762-2-W_Armin@gmx.de
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/btf.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/platform/x86/lg-laptop.c | 22 +++++++++++++++++-----
+ 1 file changed, 17 insertions(+), 5 deletions(-)
 
-diff --git a/kernel/bpf/btf.c b/kernel/bpf/btf.c
-index e20b4d024a828..850ea69e05fd5 100644
---- a/kernel/bpf/btf.c
-+++ b/kernel/bpf/btf.c
-@@ -6345,6 +6345,11 @@ static int btf_check_func_arg_match(struct bpf_verifier_env *env,
- 					}
+diff --git a/drivers/platform/x86/lg-laptop.c b/drivers/platform/x86/lg-laptop.c
+index f6028bc1866c5..cd66db74093ee 100644
+--- a/drivers/platform/x86/lg-laptop.c
++++ b/drivers/platform/x86/lg-laptop.c
+@@ -71,6 +71,7 @@ static u32 inited;
+ #define INIT_SPARSE_KEYMAP      0x80
  
- 					kfunc_meta->r0_size = reg->var_off.value;
-+					if (kfunc_meta->r0_size > U32_MAX) {
-+						bpf_log(log, "R%d rdonly/rdwr_buf_size exceeds u32 max\n",
-+							regno);
-+						return -EINVAL;
-+					}
- 					ret = mark_chain_precision(env, regno);
- 					if (ret)
- 						return ret;
+ static int battery_limit_use_wmbb;
++static bool kbd_backlight_available;
+ static struct led_classdev kbd_backlight;
+ static enum led_brightness get_kbd_backlight_level(struct device *dev);
+ 
+@@ -188,6 +189,7 @@ static void wmi_notify(u32 value, void *context)
+ 	union acpi_object *obj;
+ 	acpi_status status;
+ 	long data = (long)context;
++	unsigned int brightness;
+ 
+ 	pr_debug("event guid %li\n", data);
+ 	status = wmi_get_event_data(value, &response);
+@@ -205,8 +207,11 @@ static void wmi_notify(u32 value, void *context)
+ 		struct key_entry *key;
+ 
+ 		if (eventcode == 0x10000000) {
+-			led_classdev_notify_brightness_hw_changed(
+-				&kbd_backlight, get_kbd_backlight_level(kbd_backlight.dev->parent));
++			if (kbd_backlight_available) {
++				brightness = get_kbd_backlight_level(kbd_backlight.dev->parent);
++				led_classdev_notify_brightness_hw_changed(&kbd_backlight,
++									  brightness);
++			}
+ 		} else {
+ 			key = sparse_keymap_entry_from_scancode(
+ 				wmi_input_dev, eventcode);
+@@ -725,7 +730,12 @@ static int acpi_add(struct acpi_device *device)
+ 		goto out_platform_device;
+ 
+ 	/* LEDs are optional */
+-	led_classdev_register(&pf_device->dev, &kbd_backlight);
++	ret = led_classdev_register(&pf_device->dev, &kbd_backlight);
++	if (ret < 0)
++		kbd_backlight_available = false;
++	else
++		kbd_backlight_available = true;
++
+ 	led_classdev_register(&pf_device->dev, &tpad_led);
+ 
+ 	wmi_input_setup();
+@@ -744,11 +754,13 @@ static int acpi_remove(struct acpi_device *device)
+ {
+ 	sysfs_remove_group(&pf_device->dev.kobj, &dev_attribute_group);
+ 
++	battery_hook_unregister(&battery_hook);
++	wmi_input_destroy();
++
++	kbd_backlight_available = false;
+ 	led_classdev_unregister(&tpad_led);
+ 	led_classdev_unregister(&kbd_backlight);
+ 
+-	battery_hook_unregister(&battery_hook);
+-	wmi_input_destroy();
+ 	platform_device_unregister(pf_device);
+ 	pf_device = NULL;
+ 	platform_driver_unregister(&pf_driver);
 -- 
 2.53.0
 
