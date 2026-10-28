@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793211456;
-	b=kjj+nVpX/jCO1CwZAmVdMQIphvB/SaI3ZweIg+iUxsBPeXFPxoG1aEjD2DWp3hm4u4Ih
-	 Lw96DMeVrAU4acfdcG4uwQyIXXadFJpUfJoKHm0FZitUNF/c3ZpEzpPsw0f/8M8ATH4I4
-	 5cFKDNGqOXiVo+GArzWuJKIE2yDhjosBRii21Idknnwj2ubauqA8PGal0AMZ0SNZeRd5F
-	 /jIcqZRBdC2/frD3OnX8FP11WGN4LRghcGXcQgdEK3ho65N9dJtDye+xUPoJ7UFB43AqO
-	 I2bUF2TW7ZibOZTT1XmMU1TbA2UwmQqDiaoCkfK9P/IXxkIostPUcXq7tscE1sZg6yw==
+	t=1793211459;
+	b=rTfQ8hg+Ix4POmtwmHf0v+pB//PZb/odOhLjwjuX+ubUmCaUR2SENUCRBzkcflQKvIOg
+	 gral6bFaKK+5b1vOLEHJODWyAnW5/gsqFKEBUeXLD3VTSivxXnHR2xeOnhIBX2EJDRI1j
+	 twSvE8CNc0eIKasvZHXBKOAze0LgXK8tFV3l0HNQH7O7zSln8O4Ds7UnXd7Lni5RLeo/0
+	 m1eNhmF120aQfND1Rt84JLDza4YBZZkF3ZjxbnhqKBaeeyd7Yfejn07yHCT8BKdNLbpzb
+	 FcAmi/AhBIFvqJBvqNPVmDo5lVmep2GPqbLjwjErVuKBapJXS1dtGYbQndrl+hHzSdQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793211456;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793211459;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=l1NrrT+B2njHeBip697B/XnIyRIPDlAdv8EbKv6rako=;
-	b=MlrRYJqolh6HVKilx3obNWY1/OqvUfIsGjeGH5YmcLKA47Jo5WgrzVGu7wXVCpdt4Eh1
-	 kxf4/EPKtm0Whto/l/FGWIkSaLrP9elekr+KTpBAAEX5kifsIiHn2PvepewdeX/riEgnj
-	 qncK0Kgtm/qUQe3xiq02cAi2xsr5ZUuBG3BXQKzyuKGQ3CEdZQy0MHpeOCEz2Nav+2AiS
-	 bn8NHUwL9sBYIBKtZMX2s++rZkHm6FT5l5zCyTELy6l4jx5+OdLleT89+gv6SsBhK8atU
-	 2Jpk1nKYWYguzSnRKICZho3f2R2/ila38bGYAQFtPvypdhn3SbE3jvLZh6fKwQZKKqw==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=yCdgsdmklSC1El5bFBHePrpyuZNZ9UinJGVkWHbMyrk=;
+	b=VBLQmhiRFgoGVYKdIKCUWQklQ+877fus1YIGiHI22HgbmX+PvH7wQP+7VYC5hAxym+es
+	 HOQSA+1qCdz9Y/7Wo0jfa6Vi3HTnqoOMwWH91zF6/0/UZulsKQRZKG0n82nvs0Fmqd95B
+	 VTFTgNvcoXuVcLZwXJ6wb6FfUMjYP5O01zWZrimari+tsoEIVgO47rDfKkOmPSwu8qzFA
+	 fWX7QyBtjz/T2O/HlIfKAytIzRf5TuXtcJ6VeOO7z8VK3AhIW87UNoUnrRBNjqAguYX57
+	 A5NO17apJCpvDax9hW62I1wUHbxpRBVinU35owaerM7WT/IdW4/NSdHGZywFeP9v+Uw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XQA35deX;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lGBoTae9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AEAE606A31E;
-	Wed, 28 Oct 2026 18:17:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00AA4606A31D;
+	Wed, 28 Oct 2026 18:17:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XQA35deX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 798531F01825;
-	Wed, 28 Oct 2026 18:17:35 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lGBoTae9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 525971F01825;
+	Wed, 28 Oct 2026 18:17:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793211456;
-	bh=l1NrrT+B2njHeBip697B/XnIyRIPDlAdv8EbKv6rako=;
+	s=korg; t=1793211458;
+	bh=yCdgsdmklSC1El5bFBHePrpyuZNZ9UinJGVkWHbMyrk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XQA35deX3gIO6HNo+2Gg+j6DzAf5WFVyo0SsCzMisWVO35+3l7oinDUuA9FcmwBGW
-	 Xgmz1om5kJaKVpmLNUhqpCv6wdoc2gUmB5YK8bdZycMbqFTYu3d3Dt5OfBcXshPe1L
-	 pvoolploREsLwk3w+WqabSJKrmeZF9AcWID2AKdM=
+	b=lGBoTae9rRp7FxLxjUJxNDTIexeoE2s6M2aILq5i+ESBMGDvt1stuXpoNMCrcEoED
+	 vofb08BJpnBDjedmGvRDSHS9oBP4z6YWH2Z1Od2nAoeE0nbQ14Vs2qLRRUhgybC2G2
+	 htYRlz1mZ3qnq6hFdXvn+/K2KRJfa3jjJytFp1DY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Ulf Hansson <ulfh@kernel.org>
-Subject: [PATCH 5.15 367/571] mmc: cavium-octeon: destroy slot platform devices on remove
-Date: Wed, 28 Oct 2026 17:58:34 +0100
-Message-ID: <20261028170016.723887241@linuxfoundation.org>
+	=?UTF-8?q?Ayhan=20=C3=87i=C3=A7ek?= <ayhancicek@gmail.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 5.15 385/571] drm/amdgpu: make Mac FB workaround generic
+Date: Wed, 28 Oct 2026 17:58:52 +0100
+Message-ID: <20261028170017.151029551@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -61,54 +61,59 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-commit 0f4d4424fc1d651ec3fa63a0a8060ba9087eb0ec upstream.
+commit c7f44ec5c4ec760e74351f1843dcb8322f67cbf6 upstream.
 
-octeon_mmc_probe() creates host->slot_pdev[i] with
-of_platform_device_create(), while octeon_mmc_remove() does not destroy
-the child platform devices.
+Rather than adding a case of every chip where this is seen
+just check if the FB is at 0 and the ssid is apple.  This
+should cover all chips which fall into this case.
 
-The probe failure path removes each MMC slot and destroys its associated
-platform device, but the normal remove path only removes the MMC slot.
-As a result, the child platform devices remain registered after the
-Octeon MMC controller is removed.
-
-Destroy each slot platform device during removal after cleaning up the
-corresponding MMC slot, matching the probe failure cleanup path.
-
-This issue was found by manual code inspection.
-
-Fixes: 01d95843335c ("mmc: cavium: Add MMC support for Octeon SOCs.")
+Tested-by: Ayhan Çiçek <ayhancicek@gmail.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit c54e4d10507722398dc90cf3c532e50b86cf425a)
 Cc: stable@vger.kernel.org
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/cavium-octeon.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c |   17 +++++++----------
+ 1 file changed, 7 insertions(+), 10 deletions(-)
 
---- a/drivers/mmc/host/cavium-octeon.c
-+++ b/drivers/mmc/host/cavium-octeon.c
-@@ -300,9 +300,12 @@ static int octeon_mmc_remove(struct plat
- 	u64 dma_cfg;
- 	int i;
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c
+@@ -693,20 +693,17 @@ void amdgpu_gmc_get_vbios_allocations(st
+ 	case CHIP_RENOIR:
+ 		adev->mman.keep_stolen_vga_memory = true;
+ 		break;
+-	case CHIP_POLARIS10:
+-	case CHIP_POLARIS11:
+-	case CHIP_POLARIS12:
+-		/* MacBookPros with switchable graphics put VRAM at 0 when
+-		 * the iGPU is enabled which results in cursor issues if
+-		 * the cursor ends up at 0.  Reserve vram at 0 in that case.
+-		 */
+-		if (adev->gmc.vram_start == 0)
+-			adev->mman.keep_stolen_vga_memory = true;
+-		break;
+ 	default:
+ 		adev->mman.keep_stolen_vga_memory = false;
+ 		break;
+ 	}
++	/* MacBookPros with switchable graphics put VRAM at 0 when
++	 * the iGPU is enabled which results in cursor issues if
++	 * the cursor ends up at 0.  Reserve vram at 0 in that case.
++	 */
++	if ((adev->pdev->subsystem_vendor == PCI_VENDOR_ID_APPLE) &&
++	    (adev->gmc.vram_start == 0))
++		adev->mman.keep_stolen_vga_memory = true;
  
--	for (i = 0; i < CAVIUM_MAX_MMC; i++)
-+	for (i = 0; i < CAVIUM_MAX_MMC; i++) {
- 		if (host->slot[i])
- 			cvm_mmc_of_slot_remove(host->slot[i]);
-+		if (host->slot_pdev[i])
-+			of_platform_device_destroy(&host->slot_pdev[i]->dev, NULL);
-+	}
- 
- 	dma_cfg = readq(host->dma_base + MIO_EMM_DMA_CFG(host));
- 	dma_cfg &= ~MIO_EMM_DMA_CFG_EN;
+ 	if (amdgpu_sriov_vf(adev) ||
+ 	    !amdgpu_device_ip_get_ip_block(adev, AMD_IP_BLOCK_TYPE_DCE)) {
 
 
