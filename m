@@ -1,59 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214051;
-	b=R/wRB0w2pAybSqMpNblcKVXX83EeXFt+MJwCApbUMc/b0zitstpfqhb4lc9MThGB/w1D
-	 1OxlVC16RqOrSzV0rZeOLcTxGxN7GXyO32+EQSUFDsc8EMnIq+ryhnOctYEL7BfaVq+Ol
-	 Mx13E0fX3x5art1f/e3uIfnPuef9N1ek6mYW9mnAkfkj5Nm4kYDpyBPPFc2mwJn5aOpUi
-	 2faV6A2GUGAEJRIBjMp0kZnDG+GsiwQ5d1zjJv0risd1pOJ7MaACQ6rYQOJHAFJaqibF/
-	 AqG8ZsldCZHrVaGpP9odz/D20ACToOyoohBi4wrUd6/A0l8SGK43wkbM64cV8l2WQ6Q==
+	t=1793214054;
+	b=L5Ps43ftJlDXoeqrwWl2TtIndSaNhTfar1DoYdrUijHxob+YmVH5VwTJcpKmBM/eEfyx
+	 KWlNebgJrgfADW6fWot71MxOIKAIYgCSYV2lIvCcGwOGcMG88TLdQ91d8NOyUAeIwCWgt
+	 KDIkdVlv49DMOBYArpCvoKRBGOph3Hc4h1rbSgArwARMhmIczojd8S8eedZZE8Q/0lon8
+	 +AbiVFPvJor3hSa9kV5jBR74Uvnk0Qctg+uHbp7cZV26sF9fpnJsQxlkfrNlNgfWlTW64
+	 WCXTNWVEyOFWOEGVaAr+l7UHq2jnDcTws5AXNwBcfendysptK5wrdAuUWye5GotibOA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214051;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214054;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=VG+rCJAUjIR3wk+7hR2bo7pqk71FxeLRpPrLig3l9o8=;
-	b=JIlLn19WpBAcgYtPOlv9fcLcAlejHNgDs4UmGEHZ9f89wsOEbsfhTkEBltyv++DpM4PZ
-	 F/E05enHM1v5JtUh8UTFP+D+eP1QWjo5fQ8jdsIJT8fsunRGBTlUPIGCPJMIwLUhiIRzh
-	 ZXZvc+l+sa9LrvtiHk2uWyjSEJhlIkMvv8BuvBMtPWBmWoQvTrpzmYdp9FQDMVAWlLUyC
-	 5jBkbOZHCPzIz5e6c91X+Nt28PVaffhUytsZgD8dzdLTCX5LaFDN+sNzhdtqZdEpTKheI
-	 T0qv/ikI6w5z/FSBbuRUu5kfNkwA9tX5ccS2iicVt9Ou+eQwuC8Oe47/HOa1XbhyAPA==
+	bh=fOy2RIrA6kMU/OolQmankH5xBEoJt0sKz5ATrVOgdAU=;
+	b=C+m/6oS9+vfn3tjzi5HrcrDgmKUqofrPnntAKSVBHpXJlpR03zXhsvWzB82Foqy3Q6g2
+	 D9lQMRuB1D/39z2+doOM1x1nq/iq0zvnJdqBhlMXb1qyAWhWtyg1IqqtgVR/1o+bqR5ln
+	 ++0oeMVxEsILeFAi8SjbtT7bHiuxxWbihq8JW5xno37YYrlSLXg1F5YUqsydqthM8DtFE
+	 O35kr0gedh5T7U947ciEgK7cdnQjjqUedB0Xnesg0Wi0itaqBj/HqjTe9N9FhEWiwQOZj
+	 VgMoePbiHmmeiAY9iJD9R6gxnQNfCc92XPifaLpIAIvuyjZv325jqLuFmLOpG18vMfg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t96NNmPo;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hEOGD61W;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40E74606A325;
-	Wed, 28 Oct 2026 19:00:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F1B9606A31C;
+	Wed, 28 Oct 2026 19:00:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t96NNmPo
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F4EF1F01825;
-	Wed, 28 Oct 2026 19:00:50 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hEOGD61W
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66CF01F01825;
+	Wed, 28 Oct 2026 19:00:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214051;
-	bh=VG+rCJAUjIR3wk+7hR2bo7pqk71FxeLRpPrLig3l9o8=;
+	s=korg; t=1793214053;
+	bh=fOy2RIrA6kMU/OolQmankH5xBEoJt0sKz5ATrVOgdAU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=t96NNmPolvkwKoWDH6nTZ4bOY6XpMJvx7ZpQbG4391hjbbG+CFrU9CnpVVODUgjE0
-	 sT+BMwHgbRB5PCUgZrx5KkvYtKVfX+VqzOk4p+dqeUb7ZOBfRKjkoQy8WR3K2s4VVb
-	 myP7UIoOFF6eWf+YxbUej3ZQjcpkNtsrOlrPr86c=
+	b=hEOGD61WqOLRCfFHHLaSg6AaD7zhCIu9Sivud5SwBSuk0Ryok3PmoTqHmJM5pACWS
+	 n6PyCMNdSPSoVYyjh45LPnOmIezhGudG0eaD+W/hIieyAqqndzkNlH6AVhQm6e3fdt
+	 b4hupxELPXKVnADhv9XmhUyYrst9SyiFMWYq5oW4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tom Chung <chiahsuan.chung@amd.com>,
-	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
-	Roman Li <roman.li@amd.com>,
-	Alex Hung <alex.hung@amd.com>,
-	Aurabindo Pillai <aurabindo.pillai@amd.com>,
-	Harry Wentland <harry.wentland@amd.com>,
-	Hamza Mahfooz <hamza.mahfooz@amd.com>,
-	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	David Hildenbrand <david@redhat.com>,
+	syzbot+3511625422f7aa637f0d@syzkaller.appspotmail.com,
+	"Liam R. Howlett" <Liam.Howlett@Oracle.com>,
+	Christoph Lameter <cl@linux.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0668/1887] drm/amd/display: Add null check for head_pipe in dcn32_acquire_idle_pipe_for_head_pipe_in_layer
-Date: Wed, 28 Oct 2026 17:46:04 +0100
-Message-ID: <20261028170514.614890067@linuxfoundation.org>
+Subject: [PATCH 6.1 0716/1887] mm/mempolicy: fix migrate_to_node() assuming there is at least one VMA in a MM
+Date: Wed, 28 Oct 2026 17:46:52 +0100
+Message-ID: <20261028170515.726305329@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -75,52 +71,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+From: David Hildenbrand <david@redhat.com>
 
-[ Upstream commit ac2140449184a26eac99585b7f69814bd3ba8f2d ]
+[ Upstream commit 091c1dd2d4df6edd1beebe0e5863d4034ade9572 ]
 
-This commit addresses a potential null pointer dereference issue in the
-`dcn32_acquire_idle_pipe_for_head_pipe_in_layer` function. The issue
-could occur when `head_pipe` is null.
+We currently assume that there is at least one VMA in a MM, which isn't
+true.
 
-The fix adds a check to ensure `head_pipe` is not null before asserting
-it. If `head_pipe` is null, the function returns NULL to prevent a
-potential null pointer dereference.
+So we might end up having find_vma() return NULL, to then de-reference
+NULL.  So properly handle find_vma() returning NULL.
 
-Reported by smatch:
-drivers/gpu/drm/amd/amdgpu/../display/dc/resource/dcn32/dcn32_resource.c:2690 dcn32_acquire_idle_pipe_for_head_pipe_in_layer() error: we previously assumed 'head_pipe' could be null (see line 2681)
+This fixes the report:
 
-Cc: Tom Chung <chiahsuan.chung@amd.com>
-Cc: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
-Cc: Roman Li <roman.li@amd.com>
-Cc: Alex Hung <alex.hung@amd.com>
-Cc: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Cc: Harry Wentland <harry.wentland@amd.com>
-Cc: Hamza Mahfooz <hamza.mahfooz@amd.com>
-Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
-Reviewed-by: Tom Chung <chiahsuan.chung@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Oops: general protection fault, probably for non-canonical address 0xdffffc0000000000: 0000 [#1] PREEMPT SMP KASAN PTI
+KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
+CPU: 1 UID: 0 PID: 6021 Comm: syz-executor284 Not tainted 6.12.0-rc7-syzkaller-00187-gf868cd251776 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/30/2024
+RIP: 0010:migrate_to_node mm/mempolicy.c:1090 [inline]
+RIP: 0010:do_migrate_pages+0x403/0x6f0 mm/mempolicy.c:1194
+Code: ...
+RSP: 0018:ffffc9000375fd08 EFLAGS: 00010246
+RAX: 0000000000000000 RBX: ffffc9000375fd78 RCX: 0000000000000000
+RDX: ffff88807e171300 RSI: dffffc0000000000 RDI: ffff88803390c044
+RBP: ffff88807e171428 R08: 0000000000000014 R09: fffffbfff2039ef1
+R10: ffffffff901cf78f R11: 0000000000000000 R12: 0000000000000003
+R13: ffffc9000375fe90 R14: ffffc9000375fe98 R15: ffffc9000375fdf8
+FS:  00005555919e1380(0000) GS:ffff8880b8700000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00005555919e1ca8 CR3: 000000007f12a000 CR4: 00000000003526f0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+ <TASK>
+ kernel_migrate_pages+0x5b2/0x750 mm/mempolicy.c:1709
+ __do_sys_migrate_pages mm/mempolicy.c:1727 [inline]
+ __se_sys_migrate_pages mm/mempolicy.c:1723 [inline]
+ __x64_sys_migrate_pages+0x96/0x100 mm/mempolicy.c:1723
+ do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+ do_syscall_64+0xcd/0x250 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+[akpm@linux-foundation.org: add unlikely()]
+Link: https://lkml.kernel.org/r/20241120201151.9518-1-david@redhat.com
+Fixes: 39743889aaf7 ("[PATCH] Swap Migration V5: sys_migrate_pages interface")
+Signed-off-by: David Hildenbrand <david@redhat.com>
+Reported-by: syzbot+3511625422f7aa637f0d@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/lkml/673d2696.050a0220.3c9d61.012f.GAE@google.com/T/
+Reviewed-by: Liam R. Howlett <Liam.Howlett@Oracle.com>
+Reviewed-by: Christoph Lameter <cl@linux.com>
+Cc: Liam R. Howlett <Liam.Howlett@Oracle.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ mm/mempolicy.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource.c b/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource.c
-index 1b1534ffee9f1..591c3166a4687 100644
---- a/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource.c
-@@ -2563,8 +2563,10 @@ struct pipe_ctx *dcn32_acquire_idle_pipe_for_head_pipe_in_layer(
- 	struct resource_context *old_ctx = &stream->ctx->dc->current_state->res_ctx;
- 	int head_index;
- 
--	if (!head_pipe)
-+	if (!head_pipe) {
- 		ASSERT(0);
-+		return NULL;
-+	}
- 
- 	/*
- 	 * Modified from dcn20_acquire_idle_pipe_for_layer
+diff --git a/mm/mempolicy.c b/mm/mempolicy.c
+index 518adfe4ad85b..c4a38d1b695f0 100644
+--- a/mm/mempolicy.c
++++ b/mm/mempolicy.c
+@@ -1068,6 +1068,8 @@ static int migrate_to_node(struct mm_struct *mm, int source, int dest,
+ 	 * space range and MPOL_MF_DISCONTIG_OK, this call can not fail.
+ 	 */
+ 	vma = find_vma(mm, 0);
++	if (unlikely(!vma))
++		return 0;
+ 	VM_BUG_ON(!(flags & (MPOL_MF_MOVE | MPOL_MF_MOVE_ALL)));
+ 	queue_pages_range(mm, vma->vm_start, mm->task_size, &nmask,
+ 			flags | MPOL_MF_DISCONTIG_OK, &pagelist);
 -- 
 2.53.0
 
