@@ -1,52 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793217063;
-	b=fLQ4S1fkdQB44qXVBrecQAT8ltTYu0xeoOVxsDDNNGpWqg6r5O8+gvK8dAaGMO+hZFyD
-	 3dQUnms6mnV7VLRA1bVWKAiBLPhdbqpvibwJojYWTJk5eLwdUlWVJNKuRIEd7lVtB4NMi
-	 gKAy+cbU7y/XePislD/wnw7Nuj21tufyccoV3375arVUkL+vaEII6REzkh/E0D15uuWWu
-	 Q1ZMEA+ZpXB+nMkwVOkx3nkNyN3ThrIZ9yILm6ilH2btQkmuBOX6zWApK8hZVSNXjlOmC
-	 ZQ6BySUaJCW6jevdepYoKyJUiMlji/Pv/ui5QfYZ0AypZSxNW9U6+nTQX2lxu2di0wQ==
+	t=1793217066;
+	b=SX+SSAKcvAlSBH6Amm+fwLd/lfRe9hy56nNwUglybp5Thh2t++Agz93c5NY7m0u2BtOa
+	 dhKkBtEoeFZjFct4DMpCk4nyt0PUqLyjhhVWDayXNgcTZxHMHPciwAtZiK8itoqC7vrEG
+	 yb7VkInVLXwlgz4sPeEL/T7nL/zReUOYrdJ781kDinatawsAhScGmalfQXzUFCM7ZrH7k
+	 7OcLIfLyNFqpjbBD3PbY5RbYhK3sBDfqbdrw426vGWtgNz5t2oQv/e9AapJvWH8Dbmh2X
+	 8/m5yVtEVeX1RYXs7zm3hvGdeGL4rTza8XJ98HFtqnpnNPfAwm2yQ/nfYr0TUJ1zlTA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793217063;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793217066;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=M7Af0MUxXv5vC39OTIEpRVYik49OQB/LKpz75sNuGxk=;
-	b=mnGXcMHpF8Ryc9MB6BwAlSGjGPKazUg2otIR78We7dQFuMQrt5ID4Si69WVO/pSrIKxD
-	 K3Av2WNQ5Q3fw5lyM9YcLU4b3I+UvfoJFHJQt+YWN2LfyoMjLj4I0xNqcwoXYWFWYZx46
-	 3NJvz4GWuheRba09GOYEkKlWx6iKQLZn7XbAQNfT+sKkbsqR4KqPjKMRhted6H2dbOYVo
-	 2NpLInv+dcN2eYiQcYUgC3FG1SQHuoURmznyGLpJvItJavsSr3eLBPZNwIB2vNm+Y1/d4
-	 aZEjLTXShVGF1ABuplQ6SkGyW3CvxhsBeyDvLadZ+LtvDLIu/BMlMl0Ga1nnk14I5Gg==
+	bh=QBdmWyZ6sTXb7cblZACdlmorOwxmWWVtIwbd/TnxerI=;
+	b=PL94uSQ+xI8Rj0CP5NV94tLpQ/dNSPnX9LhWM5aUjPPMtU4jdQROEV8CphuCGOkjX6s4
+	 V+zcr9Igi4iDlzgDfgjUJLDYZERfNZNNGWWBBUpqc07OcCw3oSCOCsc3KaRDw8JcepTqm
+	 qk0+yaw/57NildZWl2UW3yE0wcatDSPMKXaSm19EIiciQgbcRbBlKJKDgoBC4xByUV4T2
+	 d4UMeCNE765jkD+RyMbz9RanczuBOu7eGU3XYLx0flMA7y8iBxzubQ8GzBCVyYm9mMO29
+	 4J0ZfjqYUwD8OmZ10y8W1r63fazhm2eDBUlWHtkEVQ6QDjkKFr/zNLEnXqcBkiYN5Ww==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yvq77mb+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zB+YvfCk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F92D606A31E;
-	Wed, 28 Oct 2026 19:51:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AF0F606A31A;
+	Wed, 28 Oct 2026 19:51:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yvq77mb+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18F091F01825;
-	Wed, 28 Oct 2026 19:51:01 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zB+YvfCk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEF671F01825;
+	Wed, 28 Oct 2026 19:51:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793217062;
-	bh=M7Af0MUxXv5vC39OTIEpRVYik49OQB/LKpz75sNuGxk=;
+	s=korg; t=1793217065;
+	bh=QBdmWyZ6sTXb7cblZACdlmorOwxmWWVtIwbd/TnxerI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yvq77mb+ZV0YLfbPrbNV+AdAOLJqkYD9d/fLYy1KYTjnoj5hBUMTd5+YZQIjrWt8u
-	 OnZfxSkXBsoJmznVSUnKsn+wWMYOuR+gRkvJOUGZEJAJiHgQYE1IBOE3gHoq9ttFYB
-	 q6h1QyY/MaA7/uuEgmoKYSlmy/kZvaN44Pm1MyDw=
+	b=zB+YvfCkC0sEzO2B+DwjriD9FHSx+FdxLSzu6gwnofQSDE3DeHlCA8nzUm+vO6E/2
+	 DWivH1tKMD07546NCQwLpkRoCXVppg/7301IRYtofgdhMR45frzspVfrY60iDZhemk
+	 rp/7Ici31PdKEyIi6vb4uPNWwc2WkNzMLnrtu29I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	TencentOS Corvus AI <corvus@tencent.com>,
-	Aohan Mei <henrymei@tencent.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 1774/1887] net/sched: cls_flower: validate mask pointer after nla_next()
-Date: Wed, 28 Oct 2026 18:04:30 +0100
-Message-ID: <20261028170539.821163688@linuxfoundation.org>
+	Jacob Shivers <jshivers@redhat.com>,
+	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
+	Shyam Prasad N <sprasad@microsoft.com>,
+	Tom Talpey <tom@talpey.com>,
+	Bharath SM <bharathsm@microsoft.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Paulo Alcantara <pc@manguebit.org>
+Subject: [PATCH 6.1 1775/1887] smb: client: fix multiuser mount with krb5
+Date: Wed, 28 Oct 2026 18:04:31 +0100
+Message-ID: <20261028170539.843005411@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,61 +72,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aohan Mei <henrymei@tencent.com>
+From: Paulo Alcantara <pc@manguebit.org>
 
-commit fee10655709c5c597e8e9f722f3035d9ea31ff3a upstream.
+commit 69499395867332364ed4ac8b546537eb3bab6ebb upstream.
 
-fl_set_enc_opt() iterates the key's nested tunnel-option attributes
-with nla_for_each_attr() while advancing a single mask pointer via
-nla_next() at the bottom of each loop, so the mask cursor is driven
-by the number of key attributes rather than by the mask's own
-attributes.  The nla_ok() added by commit c96adff956191 ("cls_flower:
-call nla_ok() before nla_next()") only validates the mask pointer
-that was just consumed; the pointer produced by nla_next() is used by
-the next iteration (fl_set_geneve_opt() and siblings) without any
-validation.
+Customer reported that they could no longer mount their SMB shares
+with multiuser mount option and krb5.  Turned out that the client
+wasn't duplicating username option when creating multiuser
+connections, therefore failing to retrieve credentials as
+cifs.upcall(8) couldn't find them in keytab.
 
-The mask's nested attributes are validated with NL_VALIDATE_LIBERAL,
-which merely warns on trailing bytes that do not form a complete
-attribute.  A mask carrying one valid attribute plus 1-3 residue
-bytes (or a non-aligned attribute length making msk_depth negative)
-therefore reaches the next iteration with msk_depth != 0, so neither
-the !msk_depth check in fl_set_enc_opt() nor the !depth check in the
-per-type helpers fires.  nla_type() then reads past the mask payload
-and nla_parse_nested_deprecated() iterates with an nla_len taken
-from those bytes, reading well beyond the mask attribute (KASAN:
-slab-out-of-bounds read in __nla_validate_parse from fl_change()).
+Fix this by duplicating username option (if set) from original fs
+context before creating multiuser connections with krb5.
 
-Validate the advanced mask pointer as well: when the mask is not
-legitimately exhausted (msk_depth != 0) and the new pointer fails
-nla_ok(), reject the filter with -EINVAL.  An exactly exhausted mask
-still skips the check, preserving exact-match behaviour for the
-remaining key attributes.
+Reproducer:
 
-Fixes: c96adff95619 ("cls_flower: call nla_ok() before nla_next()")
-Reported-by: TencentOS Corvus AI <corvus@tencent.com>
+  ```
+  $ ktutil
+  ktutil:  add_entry -password -p testuser -k 1 -e aes256-cts
+  Password for testuser@ZELDA.TEST:
+  ktutil:  write_kt /etc/krb5.keytab
+  ktutil:  quit
+  $ klist -ke
+  Keytab name: FILE:/etc/krb5.keytab
+  KVNO Principal
+   ---- ----------------------------------------------------------------
+     1 testuser@ZELDA.TEST (aes256-cts-hmac-sha1-96)
+  $ mount.cifs //w22-root2/scratch /mnt/1 -o \
+      	uid=1000,sec=krb5,username=testuser@ZELDA.TEST,multiuser
+  mount error(13): Permission denied
+  Refer to the mount.cifs(8) manual page (e.g. man mount.cifs) and
+  kernel log messages (dmesg)
+  ```
+
+Reported-by: Jacob Shivers <jshivers@redhat.com>
+Fixes: 12b4c5d98cd7 ("smb: client: fix krb5 mount with username option")
+Cc: Ronnie Sahlberg <ronniesahlberg@gmail.com>
+Cc: Shyam Prasad N <sprasad@microsoft.com>
+Cc: Tom Talpey <tom@talpey.com>
+Cc: Bharath SM <bharathsm@microsoft.com>
+Cc: Namjae Jeon <linkinjeon@kernel.org>
 Cc: stable@vger.kernel.org
-Signed-off-by: Aohan Mei <henrymei@tencent.com>
-Link: https://patch.msgid.link/20260826025123.62758-1-ljp1205831794@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/cls_flower.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ fs/smb/client/connect.c |   21 ++++++++++++++++-----
+ 1 file changed, 16 insertions(+), 5 deletions(-)
 
---- a/net/sched/cls_flower.c
-+++ b/net/sched/cls_flower.c
-@@ -1548,6 +1548,11 @@ static int fl_set_enc_opt(struct nlattr
- 			return -EINVAL;
- 		}
- 		nla_opt_msk = nla_next(nla_opt_msk, &msk_depth);
-+
-+		if (msk_depth && !nla_ok(nla_opt_msk, msk_depth)) {
-+			NL_SET_ERR_MSG(extack, "A mask attribute is invalid");
-+			return -EINVAL;
-+		}
- 	}
+--- a/fs/smb/client/connect.c
++++ b/fs/smb/client/connect.c
+@@ -4357,14 +4357,25 @@ cifs_setup_session(const unsigned int xi
+ 	return rc;
+ }
  
- 	return 0;
+-static int
+-cifs_set_vol_auth(struct smb3_fs_context *ctx, struct cifs_ses *ses)
++static int set_fs_context_auth(struct smb3_fs_context *ctx,
++			       struct cifs_ses *ses)
+ {
+ 	ctx->sectype = ses->sectype;
+ 
+-	/* krb5 is special, since we don't need username or pw */
+-	if (ctx->sectype == Kerberos)
++	/*
++	 * krb5 is special as we might need to pass username (passwordless) down
++	 * to cifs.upcall(8) for keytab.
++	 */
++	if (ctx->sectype == Kerberos) {
++		if (ses->user_name && ses->user_name[0]) {
++			ctx->username = kstrndup(ses->user_name,
++						 CIFS_MAX_USERNAME_LEN,
++						 GFP_KERNEL);
++			if (!ctx->username)
++				return -ENOMEM;
++		}
+ 		return 0;
++	}
+ 
+ 	return cifs_set_cifscreds(ctx, ses);
+ }
+@@ -4401,7 +4412,7 @@ cifs_construct_tcon(struct cifs_sb_info
+ 	ctx->seal = master_tcon->seal;
+ 	ctx->witness = master_tcon->use_witness;
+ 
+-	rc = cifs_set_vol_auth(ctx, master_tcon->ses);
++	rc = set_fs_context_auth(ctx, master_tcon->ses);
+ 	if (rc) {
+ 		tcon = ERR_PTR(rc);
+ 		goto out;
 
 
