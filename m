@@ -1,54 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214397;
-	b=uOjGycDyBYKMBhIMUFKXuA0xQO6ZJro+PsF5TaFNjAVDOvh+kuy6eZUMNIFoXwneLYkV
-	 /htYJ4RaioCKCokmlaJ7qhKHjVXs3BPldW5uF5zaLDMBT7o6tCXBs+sRFC55OWqtjaRUe
-	 IXsKefGQ5dax8+cl4nIbFnJh6gEurZiAnnFGdZ0e3MnsKbLmLGf0g9feQ3X7XbTy2UPwA
-	 3S3G26emmV3SK3ypOAuqhNkecPRmuZ04Fvhi06AUpA2TGFe8Pv3e+gC2bKw6MlUOnnKv6
-	 U6TAjdgXrO2uu4wlRFBFwf2gJrB4DlVCazkVyFq5whNOJI6syzZDw7bRR1k/WKc67Ew==
+	t=1793214399;
+	b=i1Tfpqco8H+RQ39LUM3K7W+kGbEBzgxZtaypnICwe13ldzMyR08PE6vVltTroN8BdtQq
+	 jXM1aGpD67RIYwAvMdMMlvmzl2xmYmRKUFSgTV/l8ln2bIENllrITKmB4u3E5ue5h3gzg
+	 kYmGap6HXJ73N/k//6DiVWv1nWpZ0/UFp/zyQ8psS+yBldbozf93CvQPh0qqH/YkpVTdK
+	 8few7dOgT9nAym9PbEuOHLVnpHY3o2Zzao5z8JnDBuFXARE6U57eV+IibsujMpuL/hBAk
+	 leQRRCUbPGTU7PW6KZUdKwJhnPc7+UxIkTZN3TtzG1SpVpkc5l4V7plPfPXALrx/4Rg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214397;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214399;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=pRWbQf31JQHDB0QkB5+9BX5E2sEY2Agw7SV15FFqNFQ=;
-	b=4NZu01uE97/L8e2UoTm4pZUO92VYeZVARi0joSgyRasJhrNaYUiNN4MH2PTKHSB41VLT
-	 9AQkyiTjvRaEZnv7WowXBpaxaF3rUSGy237XIancEEtfg0RVcWv8LibEDLeRz9iZRSclp
-	 EqgOJ06uZl6Xzt8He69kHw8lCWoDZbChBRJxYc0gKc4cuagTd+32HU9bNzNPgS86j9M4W
-	 hf0FqMd91zhjPK+eTOSGPBLOrO98aOEV2xUQUksrk/niC0QHVBCDYJlmdPL+hYwZEcSyb
-	 BMtZZio+P28wh0k4OSxiLvDjEzS/7vRTHHO4ntnff04e8lFoIYss59oW7F2jkkpmpgQ==
+	bh=Bl0FKPSUeUXa9TfVtHgVOZN3gMgfFD7vIfLEQKxYPCQ=;
+	b=yyFQRFYG+5GKpeWb0zwyyNedRDVqm2yY0d5Fnd4VB6VJL/oOQfDY/88pmW+5BPbiyJ02
+	 DovMjxQUmJ9hFffRhEKCqRAQcJ+AFegF73T58lYRJM7Okp/Ss1lGgZST70U/UwXr/cu7Z
+	 ODEriXkbKccs9IlGQ2ZCttrmMBvczwW6o4YcdeTzTw60i+KLyto/A9ngbN9DavtSWqrNQ
+	 /mghBxxZXqOiKnyB7VNLEPBtoNkqeQauhLJE+q3Q18dlCitPfryBtaxcK5pVNKvGksdrE
+	 prezHDQcB7FboXaBsDE2t4C4PNjxI7DcvR716gZAoBxQtxTXAMnIU9K0G12PXlZoeEA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="H04XSa/N";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fD+5UgXo;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5E5A606A334;
-	Wed, 28 Oct 2026 19:06:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 843A0606BF8B;
+	Wed, 28 Oct 2026 19:06:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=H04XSa/N
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05B0E1F01825;
-	Wed, 28 Oct 2026 19:06:35 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fD+5UgXo
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D97CA1F01825;
+	Wed, 28 Oct 2026 19:06:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214396;
-	bh=pRWbQf31JQHDB0QkB5+9BX5E2sEY2Agw7SV15FFqNFQ=;
+	s=korg; t=1793214399;
+	bh=Bl0FKPSUeUXa9TfVtHgVOZN3gMgfFD7vIfLEQKxYPCQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=H04XSa/N7CnfyJWFJDXXgFDL+/iMTMh02CSDmSf3SwlopM87LaFGYYFdiplatj+Iz
-	 g+eBAJqvZoJI61OFcuaG2GhATrvpvNEbzMTXKbGlhvA6qJEUiIKfAKIhXYZRV45Jcc
-	 Lj/tTR1fHlLdsaRGXpCVDVrlcwBDMBdWw37fA2CE=
+	b=fD+5UgXoDL/aOdMmwefkzXkNdCkj1mt615Y/QGnGYVtLIHhmkNMBc+5ochNLv7x8b
+	 zBFKajhahMq819N2+6TO5Tw4jaRD+vnim0xbovJq7IlW1naK21SrCAGYvLkdDvN4Yj
+	 GwQh7mMHP74Q+6ytGMggS1xdA/wRdrQSFnIIViUg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Marlin Cremers <mcremers@cloudbear.nl>,
 	Petr Machata <petrm@nvidia.com>,
 	Ido Schimmel <idosch@nvidia.com>,
 	Nikolay Aleksandrov <razor@blackwall.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0843/1887] vxlan: Fix NPD in {arp,neigh}_reduce() when using nexthop objects
-Date: Wed, 28 Oct 2026 17:48:59 +0100
-Message-ID: <20261028170518.611465578@linuxfoundation.org>
+Subject: [PATCH 6.1 0844/1887] vxlan: Fix NPD when refreshing an FDB entry with a nexthop object
+Date: Wed, 28 Oct 2026 17:49:00 +0100
+Message-ID: <20261028170518.634127943@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -72,31 +73,34 @@ Content-Transfer-Encoding: 8bit
 
 From: Ido Schimmel <idosch@nvidia.com>
 
-[ Upstream commit 1f5d2fd1ca04a23c18b1bde9a43ce2fa2ffa1bce ]
+[ Upstream commit 6ead38147ebb813f08be6ea8ef547a0e4c09559a ]
 
-When the "proxy" option is enabled on a VXLAN device, the device will
-suppress ARP requests and IPv6 Neighbor Solicitation messages if it is
-able to reply on behalf of the remote host. That is, if a matching and
-valid neighbor entry is configured on the VXLAN device whose MAC address
-is not behind the "any" remote (0.0.0.0 / ::).
+VXLAN FDB entries can point to either a remote destination or an FDB
+nexthop group. The latter is usually used in EVPN deployments where
+learning is disabled.
 
-The code currently assumes that the FDB entry for the neighbor's MAC
-address points to a valid remote destination, but this is incorrect if
-the entry is associated with an FDB nexthop group. This can result in a
-NPD [1][3] which can be reproduced using [2][4].
+However, when learning is enabled, an incoming packet might try to
+refresh an FDB entry that points to an FDB nexthop group and therefore
+does not have a remote. Such packets should be dropped, but they are
+only dropped after dereferencing the non-existent remote, resulting in a
+NPD [1] which can be reproduced using [2].
 
-Fix by checking that the remote destination exists before dereferencing
-it.
+Fix by dropping such packets earlier. Remove the misleading comment from
+first_remote_rcu().
 
 [1]
 BUG: kernel NULL pointer dereference, address: 0000000000000000
 [...]
-CPU: 4 UID: 0 PID: 365 Comm: arping Not tainted 6.17.0-rc2-virtme-g2a89cb21162c #2 PREEMPT(voluntary)
+CPU: 13 UID: 0 PID: 361 Comm: mausezahn Not tainted 6.17.0-rc1-virtme-g9f6b606b6b37 #1 PREEMPT(voluntary)
 Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.17.0-4.fc41 04/01/2014
-RIP: 0010:vxlan_xmit+0xb58/0x15f0
+RIP: 0010:vxlan_snoop+0x98/0x1e0
 [...]
 Call Trace:
  <TASK>
+ vxlan_encap_bypass+0x209/0x240
+ encap_bypass_if_local+0xb1/0x100
+ vxlan_xmit_one+0x1375/0x17e0
+ vxlan_xmit+0x6b4/0x15f0
  dev_hard_start_xmit+0x5d/0x1c0
  __dev_queue_xmit+0x246/0xfd0
  packet_sendmsg+0x113a/0x1850
@@ -110,110 +114,73 @@ Call Trace:
  #!/bin/bash
 
  ip address add 192.0.2.1/32 dev lo
+ ip address add 192.0.2.2/32 dev lo
 
- ip nexthop add id 1 via 192.0.2.2 fdb
+ ip nexthop add id 1 via 192.0.2.3 fdb
  ip nexthop add id 10 group 1 fdb
 
- ip link add name vx0 up type vxlan id 10010 local 192.0.2.1 dstport 4789 proxy
+ ip link add name vx0 up type vxlan id 10010 local 192.0.2.1 dstport 12345 localbypass
+ ip link add name vx1 up type vxlan id 10020 local 192.0.2.2 dstport 54321 learning
 
- ip neigh add 192.0.2.3 lladdr 00:11:22:33:44:55 nud perm dev vx0
+ bridge fdb add 00:11:22:33:44:55 dev vx0 self static dst 192.0.2.2 port 54321 vni 10020
+ bridge fdb add 00:aa:bb:cc:dd:ee dev vx1 self static nhid 10
 
- bridge fdb add 00:11:22:33:44:55 dev vx0 self static nhid 10
-
- arping -b -c 1 -s 192.0.2.1 -I vx0 192.0.2.3
-
-[3]
-BUG: kernel NULL pointer dereference, address: 0000000000000000
-[...]
-CPU: 13 UID: 0 PID: 372 Comm: ndisc6 Not tainted 6.17.0-rc2-virtmne-g6ee90cb26014 #3 PREEMPT(voluntary)
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1v996), BIOS 1.17.0-4.fc41 04/01/2x014
-RIP: 0010:vxlan_xmit+0x803/0x1600
-[...]
-Call Trace:
- <TASK>
- dev_hard_start_xmit+0x5d/0x1c0
- __dev_queue_xmit+0x246/0xfd0
- ip6_finish_output2+0x210/0x6c0
- ip6_finish_output+0x1af/0x2b0
- ip6_mr_output+0x92/0x3e0
- ip6_send_skb+0x30/0x90
- rawv6_sendmsg+0xe6e/0x12e0
- __sock_sendmsg+0x38/0x70
- __sys_sendto+0x126/0x180
- __x64_sys_sendto+0x24/0x30
- do_syscall_64+0xa4/0x260
- entry_SYSCALL_64_after_hwframe+0x4b/0x53
-RIP: 0033:0x7f383422ec77
-
-[4]
- #!/bin/bash
-
- ip address add 2001:db8:1::1/128 dev lo
-
- ip nexthop add id 1 via 2001:db8:1::1 fdb
- ip nexthop add id 10 group 1 fdb
-
- ip link add name vx0 up type vxlan id 10010 local 2001:db8:1::1 dstport 4789 proxy
-
- ip neigh add 2001:db8:1::3 lladdr 00:11:22:33:44:55 nud perm dev vx0
-
- bridge fdb add 00:11:22:33:44:55 dev vx0 self static nhid 10
-
- ndisc6 -r 1 -s 2001:db8:1::1 -w 1 2001:db8:1::3 vx0
+ mausezahn vx0 -a 00:aa:bb:cc:dd:ee -b 00:11:22:33:44:55 -c 1 -q
 
 Fixes: 1274e1cc4226 ("vxlan: ecmp support for mac fdb entries")
+Reported-by: Marlin Cremers <mcremers@cloudbear.nl>
 Reviewed-by: Petr Machata <petrm@nvidia.com>
 Signed-off-by: Ido Schimmel <idosch@nvidia.com>
 Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
-Link: https://patch.msgid.link/20250901065035.159644-3-idosch@nvidia.com
+Link: https://patch.msgid.link/20250901065035.159644-2-idosch@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/vxlan/vxlan_core.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/net/vxlan/vxlan_core.c    | 8 ++++----
+ drivers/net/vxlan/vxlan_private.h | 4 +---
+ 2 files changed, 5 insertions(+), 7 deletions(-)
 
 diff --git a/drivers/net/vxlan/vxlan_core.c b/drivers/net/vxlan/vxlan_core.c
-index c9f02da4c8af8..216f67d011f08 100644
+index 216f67d011f08..536c8384d635a 100644
 --- a/drivers/net/vxlan/vxlan_core.c
 +++ b/drivers/net/vxlan/vxlan_core.c
-@@ -1943,6 +1943,7 @@ static int arp_reduce(struct net_device *dev, struct sk_buff *skb, __be32 vni)
- 	n = neigh_lookup(&arp_tbl, &tip, dev);
+@@ -1522,6 +1522,10 @@ static bool vxlan_snoop(struct net_device *dev,
+ 	if (likely(f)) {
+ 		struct vxlan_rdst *rdst = first_remote_rcu(f);
  
- 	if (n) {
-+		struct vxlan_rdst *rdst = NULL;
- 		struct vxlan_fdb *f;
- 		struct sk_buff	*reply;
++		/* Don't override an fdb with nexthop with a learnt entry */
++		if (rcu_access_pointer(f->nh))
++			return true;
++
+ 		if (likely(vxlan_addr_equal(&rdst->remote_ip, src_ip) &&
+ 			   rdst->remote_ifindex == ifindex))
+ 			return false;
+@@ -1530,10 +1534,6 @@ static bool vxlan_snoop(struct net_device *dev,
+ 		if (f->state & (NUD_PERMANENT | NUD_NOARP))
+ 			return true;
  
-@@ -1952,7 +1953,9 @@ static int arp_reduce(struct net_device *dev, struct sk_buff *skb, __be32 vni)
- 		}
+-		/* Don't override an fdb with nexthop with a learnt entry */
+-		if (rcu_access_pointer(f->nh))
+-			return true;
+-
+ 		if (net_ratelimit())
+ 			netdev_info(dev,
+ 				    "%pM migrated from %pIS to %pIS\n",
+diff --git a/drivers/net/vxlan/vxlan_private.h b/drivers/net/vxlan/vxlan_private.h
+index b0e8c6d290579..9e1cc18ca81ab 100644
+--- a/drivers/net/vxlan/vxlan_private.h
++++ b/drivers/net/vxlan/vxlan_private.h
+@@ -56,9 +56,7 @@ static inline struct hlist_head *vs_head(struct net *net, __be16 port)
+ 	return &vn->sock_list[hash_32(ntohs(port), PORT_HASH_BITS)];
+ }
  
- 		f = vxlan_find_mac(vxlan, n->ha, vni);
--		if (f && vxlan_addr_any(&(first_remote_rcu(f)->remote_ip))) {
-+		if (f)
-+			rdst = first_remote_rcu(f);
-+		if (rdst && vxlan_addr_any(&rdst->remote_ip)) {
- 			/* bridge-local neighbor */
- 			neigh_release(n);
- 			goto out;
-@@ -2111,6 +2114,7 @@ static int neigh_reduce(struct net_device *dev, struct sk_buff *skb, __be32 vni)
- 	n = neigh_lookup(ipv6_stub->nd_tbl, &msg->target, dev);
- 
- 	if (n) {
-+		struct vxlan_rdst *rdst = NULL;
- 		struct vxlan_fdb *f;
- 		struct sk_buff *reply;
- 
-@@ -2120,7 +2124,9 @@ static int neigh_reduce(struct net_device *dev, struct sk_buff *skb, __be32 vni)
- 		}
- 
- 		f = vxlan_find_mac(vxlan, n->ha, vni);
--		if (f && vxlan_addr_any(&(first_remote_rcu(f)->remote_ip))) {
-+		if (f)
-+			rdst = first_remote_rcu(f);
-+		if (rdst && vxlan_addr_any(&rdst->remote_ip)) {
- 			/* bridge-local neighbor */
- 			neigh_release(n);
- 			goto out;
+-/* First remote destination for a forwarding entry.
+- * Guaranteed to be non-NULL because remotes are never deleted.
+- */
++/* First remote destination for a forwarding entry. */
+ static inline struct vxlan_rdst *first_remote_rcu(struct vxlan_fdb *fdb)
+ {
+ 	if (rcu_access_pointer(fdb->nh))
 -- 
 2.53.0
 
