@@ -1,53 +1,74 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215646;
-	b=TbKxOqkvXKQNYdw7wxxq/n/IJQkHo3+CSZj1GdRi1/qu0b2Jm/uDEPknNSk4S7ycK8xr
-	 xtZBkLapgDpbNfC/raWGHd8VmIQ3H9wkFVwsfFpXghSXlI8A4eG8O/hKhCmxSXjn1A5qI
-	 uD+FzGRpybpW9XWYvnDsOwRqtdIfm9ahy3bYnfnVYyiaxloU51JeXXP8Dm4j3sKTyk5es
-	 ofAFHjMtpZmraejwgZv0tYcsNGSuFdPyZvWV3zdJ5I2QSVNbSHIgEhoBndthQrcZDnYTf
-	 cdBahBAlH39WVuiTLG+sloCNxBreJGMTnyqo9Bm3M+mw2t7qNIi5c4z8Z4YID3GuqFw==
+	t=1793215649;
+	b=bUfEJ386tkGp+QdJXk2O9zokNcolXXG9YnFAI01GG+pMpb9u9q4n38/j6p5OIO4DwdUc
+	 EwKcbtwCsbf33F6OngHvhTI3QW6n5qMcJ978SNm0iofEyHORFaeeA+dZuWyVSB1e8BA7/
+	 dayTYklCkHVLa63JVFY20qjUUpztgk1m0kZ2Cxzxln9VQ4SNCoYJqwVpgb5MvZafce1hM
+	 Mb/aP26xcMDIi5ap2JFkL0Z0M5Gu3wkT2OTrYK0SLTbAtw6lr7yB5jE1XMeQIEWxWamHh
+	 xyKrzD/QyBEeHpxvPZkraEbaYqoPdudC9wvD0yXOGnf+yl9ohu1z2wc5gs7Gf975QYQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215646;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215649;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=6rmzAFkwPvkw71HaOQHSQSxe1Hljr260sy+YqnqJzXw=;
-	b=UA7YwiywQaRhVK1HAIB0orKF7eYxSdfVZzgiriDmsxLszJzx3zbhN0enSIqllf7/cIyP
-	 86+afUARucslQQ17glMEdZNoew3rf3jmTL9cun4ZDhQWLe0p80Dt/bqmyXutrRtK1pS5h
-	 oBmjBz4oGyuaT2G+uUnBqjLJrL0OlKXAGiQZVo5qdf4RqXiyUXAWd1c56G/5EPyg2jOQH
-	 7pA2yBVVZiidw8Vew9ouFagQDuUUfIx8T+923kdP4iIJ1qoBobK96pHa4fYYjkaBnTWHX
-	 Bm7NSjrzp7PkRhCbF3aDjJqf/ADC2j919kmvnlsFTFI78V8+2PlcfOBmYR++HwogoVw==
+	bh=xFqVStGc5i/PGt5hF8xFMM2OIKTtCWVfDBJFjGproO4=;
+	b=3YVRmvFdLKmKXf72GDPmzrctwVDBOiDJdK4D+rm4Ik026mcTEEQAF0hjgd5rl1t6fNwO
+	 VAlTcOFDgpZe9t+rLk2TYchWGyBwurhKJ3Pyk1EwYelQPQyw52lg/ZMz03VJCq3n+Y2F0
+	 msGHkUXgriHaE4QuVqN0V1ofV6HeIh0WbkFwQCXnlgMTj+afjJbjy+agDsGZij/LoAkbw
+	 QjLlPeIdQpAaG3nMSlFRjzX/YqmblNyq34M3LhlyQGHgS4iJzEpNwPN9jy4ssxOTrdBxm
+	 DCKQKV9kfdkVSrk3hWGi38UIKiV98rYHzloPumsizdZ9/ucwmqqOptIDvoYAsYfbKRQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pfMY6fDm;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zhfY07Nu;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47DA6606A31D;
-	Wed, 28 Oct 2026 19:27:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E437606A31A;
+	Wed, 28 Oct 2026 19:27:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pfMY6fDm
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9909E1F01825;
-	Wed, 28 Oct 2026 19:27:25 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zhfY07Nu
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5016B1F01825;
+	Wed, 28 Oct 2026 19:27:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215646;
-	bh=6rmzAFkwPvkw71HaOQHSQSxe1Hljr260sy+YqnqJzXw=;
+	s=korg; t=1793215648;
+	bh=xFqVStGc5i/PGt5hF8xFMM2OIKTtCWVfDBJFjGproO4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pfMY6fDmdKjklvTieIYPpe5HRBCDH34tWhVwKtiwuH5GZKvkJNoUrMwgGdiDumH2W
-	 gWcjXDL8QWTMi++aqn5yxe1ERAso7cgf8Hlbiv5Ui4N4IRT2SkB6QCpTmts8P3N67s
-	 68aEo5lJwMoRvTbSpR1FjykEL0igdzXfG0q9R10Y=
+	b=zhfY07NuUGGLXy3YrBDo5fdR9/B6FnzMM4sUbb9klkbX9JKF5SvpsT346MSd19q2q
+	 ++POffsrheAsf7hvKeQkHBatpx50awNHglj74HAwY2iE4giOTB+FaNdRtektqt1Ydk
+	 uemt6yCmo/vLSWDgYHgeQs8hSjwJGmECM7wLSRsU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Dongjiang Zhu <zhudongjiang@fnnas.com>,
-	David Sterba <dsterba@suse.com>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Kiryl Shutsemau <kas@kernel.org>,
+	Andy Lutomirski <luto@kernel.org>,
+	"Borah, Chaitanya Kumar" <chaitanya.kumar.borah@intel.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	David Carlier <devnexen@gmail.com>,
+	Dev Jain <dev.jain@arm.com>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Toshi Kani <toshi.kani@hpe.com>,
+	"Uladzislau Rezki (Sony)" <urezki@gmail.com>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Will Deacon <will@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1284/1887] btrfs: skip global block reserve accounting for rescue mounts
-Date: Wed, 28 Oct 2026 17:56:20 +0100
-Message-ID: <20261028170528.647045615@linuxfoundation.org>
+Subject: [PATCH 6.1 1285/1887] mm/ptdump: always stabilise against page table freeing using init_mm
+Date: Wed, 28 Oct 2026 17:56:21 +0100
+Message-ID: <20261028170528.668913599@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,135 +90,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dongjiang Zhu <zhudongjiang@fnnas.com>
+From: Lorenzo Stoakes (ARM) <ljs@kernel.org>
 
-[ Upstream commit 51a0e8399858621442807a26057bcd1cd3ced046 ]
+[ Upstream commit 27c32e5538344b13c1505a08861e04620c125d47 ]
 
-[BUG]
-Mounting with rescue=ibadroots after corrupting the block group tree
-root triggers a NULL pointer dereference:
+Previous commits have established the invariant that kernel page table
+freeing is performed while an mmap read lock on init_mm is held, which
+fixes races between ptdump and kernel page table freeing over init_mm.
 
-  BUG: kernel NULL pointer dereference, address: 0000000000000100
-  RIP: 0010:btrfs_update_global_block_rsv+0x9d/0x1c0 [btrfs]
-  Call Trace:
-   fill_dummy_bgs+0xd4/0x120 [btrfs]
-   open_ctree+0xc6e/0x1ca0 [btrfs]
-   btrfs_get_tree+0x50d/0xa40 [btrfs]
+However, x86 and arm64 can perform a ptdump over an mm other than init_mm
+via ptdump_walk_pgd() and since kernel memory ranges are shared across
+non-kernel mm's, this means that the race still exists for these cases.
 
-The same crash occurs with a corrupted raid stripe tree root, via
-btrfs_read_block_groups() instead of fill_dummy_bgs().
+Fix this by acquiring a nested mmap write lock for init_mm in
+ptdump_walk_pgd().
 
-[CAUSE]
-With rescue=ibadroots, btrfs_read_roots() allows the mount to continue
-when either root cannot be read, leaving the corresponding root pointer
-NULL while its on-disk feature bit remains set.
+This is safe as we take this after mmap write locking the mm, and nothing
+acquires the init_mm lock first before locking an arbitrary mm, so no
+deadlock is possible.
 
-btrfs_update_global_block_rsv() then dereferences the missing root based
-on the feature bit alone.
+Also update walk_page_range_debug() to assert that init_mm is write
+locked, add a comment explaining why and remove some redundant code, and
+eliminate the unnecessary and confusing invocation of
+walk_kernel_page_table_range().
 
-[FIX]
-Rescue mounts are fully read-only and cannot start transactions, so the
-global reserve is never consumed. Under btrfs_is_full_ro(), mark the
-reserve as full and return before performing the accounting.
+We can safely remove the non-NULL check for walk.mm, as the mmap lock
+asserts would NULL pointer deref if it was (and of course no callers do
+this).
 
-And since we need to check if the fs is mount fully RO, export
-fs_is_full_ro() as btrfs_is_full_ro(), and move it to fs.h.
+The first point at which ptdump can race kernel page table freeing is
+commit b6bdb7517c3d ("mm/vmalloc: add interfaces to free unmapped page
+table"), so we target this in the Fixes tag.
 
-Fixes: 8dbfc14fc736 ("btrfs: account block group tree when calculating global reserve size")
-Fixes: 515020900d44 ("btrfs: read raid stripe tree from disk")
-Suggested-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Dongjiang Zhu <zhudongjiang@fnnas.com>
-[ Squash the fs_is_full_ro() export commit into this one. ]
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Link: https://lore.kernel.org/20260723-series-vmap-race-fix-v6-4-8cc77dcc0018@kernel.org
+Fixes: b6bdb7517c3d ("mm/vmalloc: add interfaces to free unmapped page table")
+Signed-off-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Reviewed-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Reviewed-by: Kiryl Shutsemau <kas@kernel.org>
+Cc: Andy Lutomirski <luto@kernel.org>
+Cc: "Borah, Chaitanya Kumar" <chaitanya.kumar.borah@intel.com>
+Cc: "Borislav Petkov (AMD)" <bp@alien8.de>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Cc: Dave Hansen <dave.hansen@linux.intel.com>
+Cc: David Carlier <devnexen@gmail.com>
+Cc: Dev Jain <dev.jain@arm.com>
+Cc: "H. Peter Anvin" <hpa@zytor.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Ryan Roberts <ryan.roberts@arm.com>
+Cc: Shakeel Butt <shakeel.butt@linux.dev>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Toshi Kani <toshi.kani@hpe.com>
+Cc: "Uladzislau Rezki (Sony)" <urezki@gmail.com>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: Will Deacon <will@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/block-rsv.c | 19 +++++++++++++++++--
- fs/btrfs/ctree.h     |  9 +++++++++
- fs/btrfs/disk-io.c   | 11 +----------
- 3 files changed, 27 insertions(+), 12 deletions(-)
+ mm/pagewalk.c | 8 ++++++++
+ mm/ptdump.c   | 7 +++++++
+ 2 files changed, 15 insertions(+)
 
-diff --git a/fs/btrfs/block-rsv.c b/fs/btrfs/block-rsv.c
-index a47c8b4509969..a3fe0ef899a2e 100644
---- a/fs/btrfs/block-rsv.c
-+++ b/fs/btrfs/block-rsv.c
-@@ -352,10 +352,25 @@ int btrfs_cond_migrate_bytes(struct btrfs_fs_info *fs_info,
- void btrfs_update_global_block_rsv(struct btrfs_fs_info *fs_info)
- {
- 	struct btrfs_block_rsv *block_rsv = &fs_info->global_block_rsv;
--	struct btrfs_space_info *sinfo = block_rsv->space_info;
-+	struct btrfs_space_info *sinfo;
- 	struct btrfs_root *root, *tmp;
--	u64 num_bytes = btrfs_root_used(&fs_info->tree_root->root_item);
- 	unsigned int min_items = 1;
-+	u64 num_bytes;
-+
+diff --git a/mm/pagewalk.c b/mm/pagewalk.c
+index 09df5b12aef73..9c3eae516130b 100644
+--- a/mm/pagewalk.c
++++ b/mm/pagewalk.c
+@@ -523,6 +523,14 @@ int walk_page_range_novma(struct mm_struct *mm, unsigned long start,
+ 	 * to account for page table freeing on vmap huge page mapping.
+ 	 */
+ 	mmap_assert_write_locked(walk.mm);
 +	/*
-+	 * A full read-only mount (rescue options) cannot start transactions,
-+	 * so the global reserve is never consumed. Mark it as full and skip
-+	 * the accounting.
++	 * x86, arm64 ptdump allow walks of efi mm's and x86 ptdump allows walks
++	 * of arbitrary mm's.
++	 *
++	 * However, they both must also hold the init_mm lock to account for
++	 * concurrent kernel page table freeing.
 +	 */
-+	if (btrfs_is_full_ro(fs_info)) {
-+		spin_lock(&block_rsv->lock);
-+		block_rsv->full = true;
-+		spin_unlock(&block_rsv->lock);
-+		return;
-+	}
-+
-+	sinfo = block_rsv->space_info;
-+	num_bytes = btrfs_root_used(&fs_info->tree_root->root_item);
++	mmap_assert_write_locked(&init_mm);
  
- 	/*
- 	 * The global block rsv is based on the size of the extent tree, the
-diff --git a/fs/btrfs/ctree.h b/fs/btrfs/ctree.h
-index e115ba97dd44a..c1cfc03fefbe9 100644
---- a/fs/btrfs/ctree.h
-+++ b/fs/btrfs/ctree.h
-@@ -1641,6 +1641,15 @@ enum {
- #define btrfs_test_opt(fs_info, opt)	((fs_info)->mount_opt & \
- 					 BTRFS_MOUNT_##opt)
- 
-+static inline bool btrfs_is_full_ro(const struct btrfs_fs_info *fs_info)
-+{
-+	if (!sb_rdonly(fs_info->sb))
-+		return false;
-+	if (unlikely(fs_info->mount_opt & BTRFS_MOUNT_FULL_RO_MASK))
-+		return true;
-+	return false;
-+}
-+
- #define btrfs_set_and_info(fs_info, opt, fmt, args...)			\
- do {									\
- 	if (!btrfs_test_opt(fs_info, opt))				\
-diff --git a/fs/btrfs/disk-io.c b/fs/btrfs/disk-io.c
-index 7916dbd138554..a71d773d0c3bc 100644
---- a/fs/btrfs/disk-io.c
-+++ b/fs/btrfs/disk-io.c
-@@ -3417,15 +3417,6 @@ int btrfs_check_features(struct btrfs_fs_info *fs_info, bool is_rw_mount)
- 	return 0;
+ 	return walk_pgd_range(start, end, &walk);
  }
+diff --git a/mm/ptdump.c b/mm/ptdump.c
+index 8e29b90d6bc39..4c6cbbaf833fa 100644
+--- a/mm/ptdump.c
++++ b/mm/ptdump.c
+@@ -154,11 +154,18 @@ void ptdump_walk_pgd(struct ptdump_state *st, struct mm_struct *mm, pgd_t *pgd)
  
--static bool fs_is_full_ro(const struct btrfs_fs_info *fs_info)
--{
--	if (!sb_rdonly(fs_info->sb))
--		return false;
--	if (unlikely(fs_info->mount_opt & BTRFS_MOUNT_FULL_RO_MASK))
--		return true;
--	return false;
--}
--
- int __cold open_ctree(struct super_block *sb, struct btrfs_fs_devices *fs_devices,
- 		      char *options)
- {
-@@ -3808,7 +3799,7 @@ int __cold open_ctree(struct super_block *sb, struct btrfs_fs_devices *fs_device
+ 	get_online_mems();
+ 	mmap_write_lock(mm);
++	/* To stabilise kernel page tables we must hold the init_mm lock too. */
++	if (mm != &init_mm)
++		mmap_write_lock_nested(&init_mm, SINGLE_DEPTH_NESTING);
++
+ 	while (range->start != range->end) {
+ 		walk_page_range_novma(mm, range->start, range->end,
+ 				      &ptdump_ops, pgd, st);
+ 		range++;
  	}
++
++	if (mm != &init_mm)
++		mmap_write_unlock(&init_mm);
+ 	mmap_write_unlock(mm);
+ 	put_online_mems();
  
- 	/* If the fs has any rescue options, no transaction is allowed. */
--	if (fs_is_full_ro(fs_info))
-+	if (btrfs_is_full_ro(fs_info))
- 		set_bit(BTRFS_FS_STATE_ERROR, &fs_info->fs_state);
- 
- 	fs_info->fs_root = btrfs_get_fs_root(fs_info, BTRFS_FS_TREE_OBJECTID, true);
 -- 
 2.53.0
 
