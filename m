@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793210028;
-	b=3nwPlcUgTfCkwuW7eRWDM5V4bxVG/6+h9LF1ebwSUvQKPyzQ8FX8+49Rdn9IRCu88uOn
-	 WPNFPVv+aJAD2OGPFO06vBViaKZW4Jkv3zjAbd5SRpSZHq0rVkKn+ZscmwL0nshYYQc0Y
-	 jHMyhT/ZOHKJWJGxZluTrDvVCWwE3H/gsFL0Avh8cAPvLDDEor7SBc3jVa2Z2Gjdki0O3
-	 mJ2bwKjovj9azZ9LVAUhzsrua48HMBSw9qkxxx023gMJc+WaRX5z2+amEA0D0mgAGXTuj
-	 0qxpHRd+sEJKyQ+NoMbjA1qPJw/UJ7wgZ+rLgoI5JMcLG46g4NfS9zCzrxX97D4VVtQ==
+	t=1793210031;
+	b=YyObPNQpaVtu8Dy+AVSaEf3DsyM5sLrF+uS9TC14NNFKeFT0LBoi9CrTwr2ICz3bTunL
+	 Lr7wAj3bLudp5pQoJynK51U2Dq3rpk8+CIL/2F5uvQjMutXp8j+Ro6YInsj4LBEL77y5Z
+	 awxtSMU9CvYYd2kj9rAMf0vSKOSbvUcjhJXjaY7p+ZyT11R2+ueLatEx3t+IqKeSMnFZ2
+	 MRFCrSxhkKSeIrCx9T4YCt5wi+737aYvfIqIO7NNcrsTnwiRJS07GArO+pBFjmRa9yfnn
+	 iieau5b6d5QTt4GwbHJ/8v4b+HW4r8LmJzvQiNidCK/q1PjOJx/ZL1Q9b4+AxvzUi8w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793210028;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793210031;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=SGW02zW4af5SaYbPk4JYGeBdADCseeCCMEB2AGSXN+M=;
-	b=0yAHJeBIEFdEmTnb+tHvY4zGpM2Vgu1px3c7v/c8mlxEJVd+o0oNo0gJ4nhEo92ldC9d
-	 ZjlNLgRnJUsZfpqLRz931+Fc7Q7QAuv0NJDdOrPNjAGfE6nB3saFYmzHj81uC/YOeVjaH
-	 Pk3Nvze8O3ZdS/ZsPd0Pzl+DdU2NvG7gb33aJLAYF0146f+/rD/IU6B27+QRJUDbGDmhY
-	 s5Ni1fikjYU5NNy8GBxs40+xjyNEG1YPbRVqQLZ3E8ApqXQGnvDQltNGHNRZZQWPC1oF/
-	 dfy+OcBYE/XVFquNYvt2OyJyG8CvWVI1WS46KwbrOFP4+wChFRc2WG0W+wqJ0yCr/WA==
+	bh=rPGSEoWPCxIO1nPmFT1o6z4LRZu1TLrcl3WWtFd4eVQ=;
+	b=Bug2HkHC4JGpfePt71ijOYdIriTwf0DGwhYXAl5vQIBdCQWUG5x55iGEil03Ohi5nqc1
+	 HyuWBQxkImWToSCFgPCLBTeSGtt1eSBJepGw4PL9KsH3V43fU5YdDZchwMkX7OYQuWb1U
+	 RioqMC1QG48KNfLPv+kNey8YJ6IoREnVcDtmNvso2JCcfhNBAXwXm2n3fGMraUBd7oONM
+	 VUnV8hWCcK3ap/RnCRlIEM7u/O1y15rjzmtwBCWhq3pY2o2pmcmv3Z4bfTCqfw1YbtDdv
+	 fl+rVxPPe7VG/Lw/S8P+JdbMoY+P6Rnm4Yffuhd7ZwnF2qDj6lKWgz531UhdFnZBWZg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1ysNq1RG;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2tfhhEi1;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E353F606A323;
-	Wed, 28 Oct 2026 17:53:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2EEA606A31C;
+	Wed, 28 Oct 2026 17:53:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1ysNq1RG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FEBC1F01825;
-	Wed, 28 Oct 2026 17:53:47 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2tfhhEi1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E2EF1F01825;
+	Wed, 28 Oct 2026 17:53:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793210027;
-	bh=SGW02zW4af5SaYbPk4JYGeBdADCseeCCMEB2AGSXN+M=;
+	s=korg; t=1793210030;
+	bh=rPGSEoWPCxIO1nPmFT1o6z4LRZu1TLrcl3WWtFd4eVQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1ysNq1RGgbxONS5NwTaVgCK0c47N8DJnGob6WHziYyv8qFINYmc4NRik93jAhsu25
-	 I7qz1LRSa6wf56f42vGdcPvGGV5fWhbKBLgBtgZX3qsBZcfVh9UNfhhcjALAodDAqJ
-	 SWTmSYCG7BY7D/9Buvy73WBWHcvB7tZvmmk+QRRA=
+	b=2tfhhEi1LvIKuHu8Y4TyQAxinChJP6IgO5C6g1IoBtPcUjeRj/EZiS48kmAswTOA6
+	 tLiL3zlof3+vZLwrt8iuWga3bE9yDylfn+rkEzoKyz5JibVyeIuipBeGzKpaY+8vci
+	 DG7ilTgQKTDzp3PGgd1YbaOYePAudog5cKftHn88=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xueqin Luo <luoxueqin@kylinos.cn>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Waiman Long <longman@redhat.com>,
+	Michael Kelley <mhkelley@outlook.com>,
+	Wei Liu <wei.liu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 006/168] power: supply: ds2780: Fix ds2780_get_capacity() returning raw value
-Date: Wed, 28 Oct 2026 17:59:02 +0100
-Message-ID: <20261028165943.244463292@linuxfoundation.org>
+Subject: [PATCH 6.6 007/168] Drivers: hv: Avoid infinite retry loop in init_vp_index()
+Date: Wed, 28 Oct 2026 17:59:03 +0100
+Message-ID: <20261028165943.267721671@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165943.089486480@linuxfoundation.org>
 References: <20261028165943.089486480@linuxfoundation.org>
@@ -68,36 +69,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xueqin Luo <luoxueqin@kylinos.cn>
+From: Waiman Long <longman@redhat.com>
 
-[ Upstream commit a58cbc8b36ec0cd00d2ba3de7d003de818a27523 ]
+[ Upstream commit 32ea0a33e3a0fb7c10c601b43e1b2f6c06a3f5fd ]
 
-ds2780_get_capacity() returns the raw register value instead of 0 on
-success.  The capacity is already stored in *capacity, so the function
-should return 0 to indicate success.
+There is a retry loop in init_vp_index() where the CPUs from a certain
+node are stripped out if they have already been in the allocated cpumask
+or not in HK_TYPE_MANAGED_IRQ housekeeping cpumask. If there is no
+CPU left, the allocated cpumask is ignored and the process is retried
+again. However, if the HK_TYPE_MANAGED_IRQ housekeeping cpumask turns
+out not to contain any CPU in that particular node, that will become an
+infinite retry loop.  This particular problem was reported by sashiko
+[1]. This should rarely happen, but we still need to guard against this.
 
-Fixes: 275ac74629c4 ("w1: add Maxim/Dallas DS2780 Stand-Alone Fuel Gauge IC support")
-Signed-off-by: Xueqin Luo <luoxueqin@kylinos.cn>
-Link: https://patch.msgid.link/20260901072954.1953121-1-luoxueqin@kylinos.cn
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Fix this infinite loop problem by also skipping NUMA node that has no
+housekeeping CPU in the inner while loop of init_vp_index(). Also update
+the early abort check to check for the absence of online housekeeping
+CPUs instead of just the emptiness of the cpumask. As the outer for
+loop will only be reached if the housekeeping cpumask has at least one
+online CPU, a NUMA node with housekeeping CPUs will eventually be found.
+
+Link: https://sashiko.dev/#/message/20260422030903.E1BFCC2BCB0%40smtp.kernel.org [1]
+Fixes: 6640b5df1a38 ("Drivers: hv: vmbus: Don't assign VMbus channel interrupts to isolated CPUs")
+Signed-off-by: Waiman Long <longman@redhat.com>
+Reviewed-by: Michael Kelley <mhkelley@outlook.com>
+Signed-off-by: Wei Liu <wei.liu@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/ds2780_battery.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hv/channel_mgmt.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/power/supply/ds2780_battery.c b/drivers/power/supply/ds2780_battery.c
-index 1e7f297f6cb18..7219ee3def5ad 100644
---- a/drivers/power/supply/ds2780_battery.c
-+++ b/drivers/power/supply/ds2780_battery.c
-@@ -304,7 +304,7 @@ static int ds2780_get_capacity(struct ds2780_device_info *dev_info,
- 		return ret;
+diff --git a/drivers/hv/channel_mgmt.c b/drivers/hv/channel_mgmt.c
+index 3c6011a48dabe..914d479d78723 100644
+--- a/drivers/hv/channel_mgmt.c
++++ b/drivers/hv/channel_mgmt.c
+@@ -743,13 +743,14 @@ static void init_vp_index(struct vmbus_channel *channel)
+ 	u32 i, ncpu = num_online_cpus();
+ 	cpumask_var_t available_mask;
+ 	struct cpumask *allocated_mask;
++	const struct cpumask *node_mask;
+ 	const struct cpumask *hk_mask = housekeeping_cpumask(HK_TYPE_MANAGED_IRQ);
+ 	u32 target_cpu;
+ 	int numa_node;
  
- 	*capacity = raw;
--	return raw;
-+	return 0;
- }
+ 	if (!perf_chn ||
+ 	    !alloc_cpumask_var(&available_mask, GFP_KERNEL) ||
+-	    cpumask_empty(hk_mask)) {
++	    !cpumask_intersects(hk_mask, cpu_online_mask)) {
+ 		/*
+ 		 * If the channel is not a performance critical
+ 		 * channel, bind it to VMBUS_CONNECT_CPU.
+@@ -771,14 +772,19 @@ static void init_vp_index(struct vmbus_channel *channel)
+ 				next_numa_node_id = 0;
+ 				continue;
+ 			}
+-			if (cpumask_empty(cpumask_of_node(numa_node)))
++			/*
++			 * Try next NUMA node if current NUMA node has no CPU
++			 * or doesn't contain any housekeeping CPU.
++			 */
++			node_mask = cpumask_of_node(numa_node);
++			if (!cpumask_intersects(node_mask, hk_mask))
+ 				continue;
+ 			break;
+ 		}
+ 		allocated_mask = &hv_context.hv_numa_map[numa_node];
  
- static int ds2780_get_status(struct ds2780_device_info *dev_info, int *status)
+ retry:
+-		cpumask_xor(available_mask, allocated_mask, cpumask_of_node(numa_node));
++		cpumask_xor(available_mask, allocated_mask, node_mask);
+ 		cpumask_and(available_mask, available_mask, hk_mask);
+ 
+ 		if (cpumask_empty(available_mask)) {
 -- 
 2.53.0
 
