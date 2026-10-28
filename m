@@ -1,54 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793211172;
-	b=uXdkm+axtevmFQdYpta78klIzpHFy4wnzpUNM1VowNaXU6vpihmqbq5jvsC7e0b/qDSL
-	 z97DoN1xnlxyGZaRqZp8QnoRicQmwnEn1e4+tT+HD06xJJFxZRUyI8rD4X50HuNw1gZeu
-	 ZZ28sB1l+LQWX2QkcA1ErpGk3eRPpYBnRJJbGncAcs3M8MVeZ8LriXRCOpL4cNJDpbv8u
-	 u350geMB5VSpRPdc6gCizQ+fKTgCsxEtsoT7pXcXjLQf5cxQBnGSXyi8+oTJWdfoKBe5c
-	 IukqMaxsM30kMw5XfhB4p3INcqOnjKCiKNkYPHBiL7TtBrlzIGrdLSUJYGDoGIbOEgA==
+	t=1793211175;
+	b=wMLFxDnfNzZ+JGa2dktCdx0EhaZbzVDyzMbl91xpYw3Dd9KTfdBffYdC31ilVa836aHF
+	 WyDtItVnGF9cK0LmUbw+ZvAEfxZvR3DRUaLfbJpzl8KnIiP5j18R5W7z+wvGca2ZtMzqQ
+	 jgfGanlkL8ZzJ4/XS2Fv0CIMQ4NG0DKmU9n4BpMX02xjPdSGX3moToVXT5irCrgUeGMUX
+	 s0iT9aA3XSB0+VY9fnDmebVLY3k63+sC1q/0GWiTRlfYhuY2GbR6Ifhg66dAt2/v9LTBE
+	 3jjYmImCYl3+g6volOBVDo87k/jTYoghlGiphq/nmJ4QpUygG8xI0GOVwG6hb+OMWRQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793211172;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793211175;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=EmaSaCp6mjxh+Ft8EkCtTlAQFiHD7NL/GUImr0wG5Us=;
-	b=h5myqZc/dglf9bBmaTzWtVc9iRMxVRgy000MwweJlLxh9+b0wS4lMYOin38+zUhierBC
-	 o9t3SjN7Gm+zoYdeLpYmThnPekblsB7Y9OmwMsedyMBXVBK8fx06Nsm4oPjCQCFDA/oDW
-	 trVQs7hYlkORFtXU2oVGk5UZ6WLgFe57bK1urGe6FqUhUiH8s4WWvfMwq2UWkWJcbksnG
-	 dUKuuLzLDR1YB2zhtkT/hcOy2rw73AtdmfxrZw2CoVsp/ntGoXc1A8YEB1/q3h6oUjziM
-	 5LCJhia2gpfaE+7HAJZ0BPThzSkfThqeL4xJqBXQ2MEHUKXEq1Z8GJGVKktPhJNLXTQ==
+	bh=axCzMV41o3lFzAKIVHUEvool/5otWvsWOdXzL4+cvko=;
+	b=oDI2tEL5LGpIuCrjkXfIADwmPCa08qcnB6efF2L2zrghNmqb6JrqH1u5SQFJRRylAyib
+	 KXikmedfFXj0H0qhjP/YHCUEpiSRjoehb8lYmY2VrldW7C4bH6kQJ7XwIiEa420Oi8up4
+	 ebZ17XgwxYlkZby+4XeI5nM6f31RPY9ycePD+n/dwNtWXPkm+xhlRmM0D9z0bd36GrT/7
+	 3RpsS58Bbn28fdVaFdu/vPp5QN+aNZYVoumo6vsNiMBardId9mtwkvqMPZCCaM+JNMT5t
+	 A8DcNWikD0GLhiLTOY4oE+hiNDScDRtviG4zKHaYTD3wk7dqi9UsLiGEtr5kNcLd4UQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SzWNCA4o;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0i6oI2F8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1C28606BF71;
-	Wed, 28 Oct 2026 18:12:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3E22606BF71;
+	Wed, 28 Oct 2026 18:12:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SzWNCA4o
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DBA41F031E2;
-	Wed, 28 Oct 2026 18:12:50 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0i6oI2F8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00EBE1F031E3;
+	Wed, 28 Oct 2026 18:12:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793211171;
-	bh=EmaSaCp6mjxh+Ft8EkCtTlAQFiHD7NL/GUImr0wG5Us=;
+	s=korg; t=1793211174;
+	bh=axCzMV41o3lFzAKIVHUEvool/5otWvsWOdXzL4+cvko=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SzWNCA4ohBIj+FOBsAYT0wQ2B/UCjZ5c6NV8IYi10HEzjhf/W1TcGYk+RM25qyne5
-	 lHdvstilGSDtcSo2mM2mdq+wrpQRP3F27S5bIzeZusbJNX9HMut/Cd6nlwbsmP2UBX
-	 XS3mtnQi/fJH4UMxHOWKElsQduLX2pOIwXbP4Fa4=
+	b=0i6oI2F8L1kDNV9y8hfvIqBJpIEg+TEcs4PAQo/LIT2E8rebPmm9bRfvz5WjKLs5x
+	 wdLJfu2JRe1+owRM1iFN7+6F8XJDjjIsGbJ5sRwPOFjHR5V6HCufCYQLmYqtaGi3s5
+	 Eu/K1zVLfls2lpxy/iCt+c/17giqUoPoihk1qa8I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Amit Sunil Dhamne <amitsd@google.com>,
-	Badhri Jagan Sridharan <badhri@google.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 285/571] usb: typec: tcpm: constrain TCPM_SOURCING_VBUS event handling
-Date: Wed, 28 Oct 2026 17:57:12 +0100
-Message-ID: <20261028170014.763502139@linuxfoundation.org>
+	Josef Bacik <josef@toxicpanda.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 286/571] xen/netfront: drop RX packets with a short Ethernet header
+Date: Wed, 28 Oct 2026 17:57:13 +0100
+Message-ID: <20261028170014.788512053@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -70,121 +67,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Amit Sunil Dhamne <amitsd@google.com>
+From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit cd3b9cea675bbfebc223f007dc2f4e79524fa54c ]
+commit 089e58805c452e52179482b1025a8e309a57f801 upstream.
 
-When a sink detach occurs while waiting for TX send status, the old
-TCPM_SOURCING_VBUS event along with TCPM_VBUS_EVENT and TCPM_CC_EVENT
-can be queued in port->pd_events. Because TCPM_SOURCING_VBUS is
-evaluated after TCPM_VBUS_EVENT and TCPM_CC_EVENT in
-tcpm_pd_event_handler(), a stale TCPM_SOURCING_VBUS event can override
-the detach handling and incorrectly set port->vbus_source and
-port->vbus_present to true.
+handle_incoming_queue() pulls pull_to bytes into the head before
+calling eth_type_trans().  pull_to is the length of the first RX slot,
+capped at RX_COPY_THRESHOLD, and that length comes from the backend.
+Nothing checks it against ETH_HLEN.
 
-Add a state guard to check that the port is either operating as a
-Source (tcpm_port_is_source(port)) or in a Fast Role Swap (FRS) state
-up to FR_SWAP_SNK_SRC_SOURCE_VBUS_APPLIED before processing
-TCPM_SOURCING_VBUS. Otherwise, discard and log the event.
+If the first slot is shorter than ETH_HLEN and more slots follow, the
+head ends up shorter than an Ethernet header while skb->len is longer,
+and eth_type_trans() BUG()s in __skb_pull().  If the whole packet is
+shorter than ETH_HLEN, eth_type_trans() reads the header past the end
+of the data instead.
 
-Log snippet for error condition before fix:
-[72792.204955] state change SRC_ATTACHED -> SRC_STARTUP [rev3 NONE_AMS]
-[72792.204960] sourcing vbus
-[72792.204962] VBUS on
-[72792.204970] AMS POWER_NEGOTIATION start
-[72792.204974] cc:=4
-[72792.205319] state change SRC_STARTUP -> AMS_START [rev3 POWER_NEGOTIATION]
-[72792.205325] state change AMS_START -> SRC_SEND_CAPABILITIES [rev3 POWER_NEGOTIATION]
-[72792.205332] PD TX, header: 0x11a1
-[72792.216911] PD TX complete, status: 2
-[72792.216957] pending state change SRC_SEND_CAPABILITIES -> SRC_SEND_CAPABILITIES @ 150 ms [rev3 POWER_NEGOTIATION]
-[72792.218005] VBUS off
-[72792.218013] pending state change SRC_SEND_CAPABILITIES -> SNK_UNATTACHED @ 650 ms [rev3 POWER_NEGOTIATION]
-[72792.218020] VBUS VSAFE0V
-[72792.218024] state change SRC_SEND_CAPABILITIES -> SNK_UNATTACHED [rev3 POWER_NEGOTIATION]
-[72792.218458] CC1: 2 -> 0, CC2: 0 -> 0 [state SNK_UNATTACHED, polarity 0, disconnected]
-[72792.218467] VBUS on --> VBUS left on
-[72792.218980] disable vbus discharge ret:0
-[72792.235193] Start toggling
+Pull at least ETH_HLEN, and drop the packet if that fails, which also
+drops packets too short to hold an Ethernet header.  This also checks
+the return value of the pull, which was ignored.
 
-After fix:
-[ 1195.291691] state change SRC_ATTACHED -> SRC_STARTUP [rev3 NONE_AMS]
-[ 1195.291698] sourcing vbus
-[ 1195.291700] VBUS on
-[ 1195.291707] AMS POWER_NEGOTIATION start
-[ 1195.291710] cc:=4
-[ 1195.291758] state change SRC_STARTUP -> AMS_START [rev3 POWER_NEGOTIATION]
-[ 1195.291794] state change AMS_START -> SRC_SEND_CAPABILITIES [rev3 POWER_NEGOTIATION]
-[ 1195.291798] PD TX, header: 0x11a1
-[ 1195.297056] PD TX complete, status: 2
-[ 1195.297092] pending state change SRC_SEND_CAPABILITIES -> SRC_SEND_CAPABILITIES @ 150 ms [rev3 POWER_NEGOTIATION]
-[ 1195.297177] VBUS off
-[ 1195.297184] pending state change SRC_SEND_CAPABILITIES -> SNK_UNATTACHED @ 650 ms [rev3 POWER_NEGOTIATION]
-[ 1195.297227] CC1: 2 -> 0, CC2: 0 -> 0 [state SRC_SEND_CAPABILITIES, polarity 0, disconnected]
-[ 1195.307469] cc:=2
-[ 1195.307544] pending state change SRC_SEND_CAPABILITIES -> SNK_UNATTACHED @ 650 ms [rev3 POWER_NEGOTIATION]
-[ 1195.307555] Discarding sourcing vbus! Invalid state SRC_SEND_CAPABILITIES
-[ 1195.957636] state change SRC_SEND_CAPABILITIES -> SNK_UNATTACHED [delayed 650 ms]
-[ 1195.957732] disable vbus discharge ret:0
-[ 1195.970196] Start toggling
-[ 1195.970468] VBUS off
-[ 1196.051637] VBUS off
-[ 1196.051642] VBUS VSAFE0V
-
-Fixes: 8dc4bd073663 ("usb: typec: tcpm: Add support for Sink Fast Role SWAP(FRS)")
-Cc: stable <stable@kernel.org>
-Assisted-by: Gemini:gemini-3.1-pro
-Signed-off-by: Amit Sunil Dhamne <amitsd@google.com>
-Reviewed-by: Badhri Jagan Sridharan <badhri@google.com>
-Acked-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://patch.msgid.link/20260827-sourcing-vbus-v1-1-9be1aca991a0@google.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 0d160211965b ("xen: add virtual network device driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Link: https://patch.msgid.link/20261007-b4-xen-netfront-short-head-v1-1-12d7113a7e4e@toxicpanda.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/tcpm/tcpm.c |   28 ++++++++++++++++++++++------
- 1 file changed, 22 insertions(+), 6 deletions(-)
+ drivers/net/xen-netfront.c |   12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/typec/tcpm/tcpm.c
-+++ b/drivers/usb/typec/tcpm/tcpm.c
-@@ -5468,16 +5468,32 @@ static void tcpm_pd_event_handler(struct
- 			}
- 		}
- 		if (events & TCPM_SOURCING_VBUS) {
--			tcpm_log(port, "sourcing vbus");
- 			/*
- 			 * In fast role swap case TCPC autonomously sources vbus. Set vbus_source
--			 * true as TCPM wouldn't have called tcpm_set_vbus.
-+			 * true conditionally as TCPM wouldn't have called tcpm_set_vbus.
-+			 * If TCPM calls tcpm_set_vbus to source vbus, vbus_source would already
-+			 * be true.
- 			 *
--			 * When vbus is sourced on the command on TCPM i.e. TCPM called
--			 * tcpm_set_vbus to source vbus, vbus_source would already be true.
-+			 * When TCPM_FRS_EVENT and TCPM_SOURCING_VBUS arrive simultaneously,
-+			 * handling TCPM_FRS_EVENT above transitions the state to AMS_START
-+			 * with upcoming_state FR_SWAP_SEND.
- 			 */
--			port->vbus_source = true;
--			_tcpm_pd_vbus_on(port);
-+
-+			if (tcpm_port_is_source(port) ||
-+			    tcpm_port_is_debug_source(port) ||
-+			    (port->state == AMS_START && port->upcoming_state == FR_SWAP_SEND) ||
-+			    port->state == FR_SWAP_SEND ||
-+			    port->state == FR_SWAP_SEND_TIMEOUT ||
-+			    port->state == FR_SWAP_SNK_SRC_TRANSITION_TO_OFF ||
-+			    port->state == FR_SWAP_SNK_SRC_NEW_SINK_READY ||
-+			    port->state == FR_SWAP_SNK_SRC_SOURCE_VBUS_APPLIED) {
-+				tcpm_log(port, "sourcing vbus");
-+				port->vbus_source = true;
-+				_tcpm_pd_vbus_on(port);
-+			} else {
-+				tcpm_log(port, "Discarding sourcing vbus! Invalid state %s",
-+					 tcpm_states[port->state]);
-+			}
- 		}
+--- a/drivers/net/xen-netfront.c
++++ b/drivers/net/xen-netfront.c
+@@ -1228,8 +1228,16 @@ static int handle_incoming_queue(struct
+ 	while ((skb = __skb_dequeue(rxq)) != NULL) {
+ 		int pull_to = NETFRONT_SKB_CB(skb)->pull_to;
  
- 		spin_lock(&port->pd_event_lock);
+-		if (pull_to > skb_headlen(skb))
+-			__pskb_pull_tail(skb, pull_to - skb_headlen(skb));
++		/* pull_to comes from the first slot's length, which the
++		 * backend controls.  Make sure the head holds at least an
++		 * Ethernet header for eth_type_trans().
++		 */
++		if (!pskb_may_pull(skb, max(pull_to, ETH_HLEN))) {
++			kfree_skb(skb);
++			packets_dropped++;
++			queue->info->netdev->stats.rx_errors++;
++			continue;
++		}
+ 
+ 		/* Ethernet work: Delayed to here as it peeks the header. */
+ 		skb->protocol = eth_type_trans(skb, queue->info->netdev);
 
 
