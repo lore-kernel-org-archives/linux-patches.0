@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216665;
-	b=A+AetlBS9VW2lli8QmvaFWnAtShK/QtJJY/CWbEngXdKf8PlONT5KG3HzyGAT+NGrgP4
-	 sCo4UcWiMkLecozdix31WcrmEhgjO4DC0uzpkEZSd7k59zzlXZ10ji8dNMeNhR8Aq2PtR
-	 onTaJPcetNupU/pHukxvFxe4IRGZHfgUgO+rkoT6P9AHlaGsCR+SSg+9zcfh7wDjI2ACK
-	 QgxijvoesCZxm6che6opyFxnbgkVm91MW4htluUhfwpvgzpooQ1Bzo8Y5eT0fNy+YWe9/
-	 xEbJM1O8hLXYeYNgBpgqfE+AUk6GsP26tmdyK5LWGGQc8vp4ecyMvDcb+nvf96eVFEg==
+	t=1793216669;
+	b=KMf/DPJ/j3PqbLGybEi3Ugmlr2WMp6yV7K03rNE6E/fDSsF9kak3Xy4q/6mt61n9xMlJ
+	 yZArj2p447QaJRascOLALAbvBnQpipED+MOmUpp+RdTJ/CfwJ+orrXRIBZSaU37eWqt6l
+	 qieMXrlewQ7PHkkPTugjBTmoA9MnsFo3kBMPne5uMuhcskUkbMpHCXWvwoDu385BdqJZi
+	 4hc22+jQyQQfrHwn7xWUf5u/2OgfrcF8om9SmYt4hnM/RmPZEKq1TpIbbP9dl6FtFttv1
+	 t6RMjcRIf6khPIS0i6a3HE9mJwtUqbCOE7e6J+QJyk4VFmzzL/ZaUxZkeyQBoqJe4TA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216665;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216669;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/m1B3sDLCVoyvBv02UTJE+6vvexg6pcv2mXIKfl27Wc=;
-	b=QdBlng72YwjJGPsd+p4XCh9/WL/grWW+Q2X49qT5ROirLu/dzyk9yW+8I+c9ZattGjNP
-	 aTCgwwiU7y+pZD3Gsyg4v6SS4N3sDuj3PQr6JH29J/NQN1ktwIWdI0cHD2K6S7iG8l0mp
-	 JAw2RyQN58wC5J/ZDMj9EX4cnvHjfsbp7nsLhdAlcQOXJzHczu00J8jllrafwRr1qGx4Q
-	 itAOTkdZ2TGEkA9gmZPJknIcQqVd096FOr/LxsvrDAzpn8iAduHbEAEsb8IaZCukDLZP/
-	 8FDwAnUQ2LzeDyynLPXzSbNw1Vl6XIIWvrT3ScWqG4QJlTlbsZ34XlyjumckETXj2sg==
+	bh=86hvvIihQrroRMOv3gf5GItDh+eIW4tdZNyUBEFZfK0=;
+	b=yEJ9Hctu8wdxjOQTDJg7wfwyPnV8Umv+OLDbhJ90fmdX2lQPztZqISz0ARA2Ql8jeaov
+	 JqdirXOMk2IwuFuSb8ARnNW/reV7gZFvi2Bt809eST+Nxf/7W69LS3LvnZ5gLZ+Sg3UOm
+	 66ukmLp7wD68isgDCq7mwxhL4tnQbFcDujCXBKUNk1TJWR8WgYyFyJ8QDCVOq52UmDEoP
+	 /rWGyDDs7oLmsoFa6kfXh8y1Wvb+yhnAdbl40PxaX1EtUE6yjRIlYZ/+/ZcHSwsTkNSij
+	 eL2HA/Vp2I9hBKxe2teTQVs1KpDBhB5/z3kNBhxCEd5RG0bpt3ONZfv3kWSTXeJTAgw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PiuJo6ck;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YjyAzKSH;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A04D606A31A;
-	Wed, 28 Oct 2026 19:44:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6719606A325;
+	Wed, 28 Oct 2026 19:44:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PiuJo6ck
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA7331F01825;
-	Wed, 28 Oct 2026 19:44:24 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YjyAzKSH
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA1B71F031E0;
+	Wed, 28 Oct 2026 19:44:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216665;
-	bh=/m1B3sDLCVoyvBv02UTJE+6vvexg6pcv2mXIKfl27Wc=;
+	s=korg; t=1793216668;
+	bh=86hvvIihQrroRMOv3gf5GItDh+eIW4tdZNyUBEFZfK0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PiuJo6ck5pX9m/qxRFlWlS6r+IEQauRB4c7XoSwkip90Pfj5LUSZL2S/9gMWtB5FA
-	 HmSObR3owlozaG7POBf1b6iB4zzai/vSiHZtR93KM6x9BYz9wmVTaOzH8mdJLBPDcB
-	 7/3rVHjyxLxxjbsFFWJrxNipjp3ZU0n9Yxl8mD5w=
+	b=YjyAzKSHAMr2RJ75zdBA6Xtyh91huDauQjdoIH9u9KVkTzGk+8sc2dsS65NC3QPB1
+	 AmKX/PXI7dU3Iuh+HdB3T55PziWmY86vDUoMZGRm0fnsSKniBOZ1aJceRcGd+ek8lV
+	 dpCQOYLyhIxB2Jk9/OVrFFjsJpocKx43PbtJy8a0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ridong Chen <ridong.chen@linux.dev>,
-	Waiman Long <longman@redhat.com>,
-	Tejun Heo <tj@kernel.org>,
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1635/1887] cgroup/cpuset: Make nr_deadline_tasks an atomic_t
-Date: Wed, 28 Oct 2026 18:02:11 +0100
-Message-ID: <20261028170536.673372869@linuxfoundation.org>
+Subject: [PATCH 6.1 1636/1887] crypto: keembay - Fix AEAD unregister count in error path
+Date: Wed, 28 Oct 2026 18:02:12 +0100
+Message-ID: <20261028170536.695229455@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,92 +69,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Waiman Long <longman@redhat.com>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-[ Upstream commit 95220e1f18f6321008f021abc7d6f581f64bcb82 ]
+[ Upstream commit e264401ce4776a288524e5b87593d4d864147115 ]
 
-The nr_deadline_tasks variable in the cpuset structure was introduced by
-commit 6c24849f5515 ("sched/cpuset: Keep track of SCHED_DEADLINE task
-in cpusets"). It is reported by sashiko [1] that nr_deadline_tasks
-can currently be modified by inc_dl_tasks_cs() under rq->lock and
-by cpuset_attach() under cpuset_mutex. So if both updates happen
-simultaneously, the nr_deadline_tasks variable can be corrupted leading
-to incorrect operations down the road.
+register_aes_algs() registers the AEAD algorithms before registering the
+skcipher algorithms.  If skcipher registration fails, the function unwinds
+the earlier AEAD registration with crypto_engine_unregister_aeads(), but it
+passes ARRAY_SIZE(algs), which is the skcipher table size.
 
-Fix that by changing its type to atomic_t so that nr_deadline_tasks
-are always atomically updated. This fix patch is a low hanging fruit.
-It can handle some of the races between a concurrent sched_setscheduler()
-and cpuset_can_attach()/cpuset_attach() calls, but not all of them like
-the other issue raised by sashiko [2]. This will be handled hopefully
-in a future follow up patch.
+Use ARRAY_SIZE(algs_aead) for the AEAD unwind path so the unregister helper
+iterates over the same table that was registered.  Also clarify the nearby
+comment: the crypto registration helpers clean up algorithms registered
+within the same call, while this function must still unwind earlier
+successful registration steps.
 
-[1] https://sashiko.dev/#/patchset/20260626181923.133658-1-longman%40redhat.com
-[2] https://sashiko.dev/#/patchset/20260630033344.352702-1-longman%40redhat.com
-
-Fixes: 6c24849f5515 ("sched/cpuset: Keep track of SCHED_DEADLINE task in cpusets")
-Reviewed-by: Ridong Chen <ridong.chen@linux.dev>
-Signed-off-by: Waiman Long <longman@redhat.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Fixes: 885743324513 ("crypto: keembay - Add support for Keem Bay OCS AES/SM4")
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/cgroup/cpuset-internal.h |  2 +-
- kernel/cgroup/cpuset.c          | 10 +++++-----
- 2 files changed, 6 insertions(+), 6 deletions(-)
+ drivers/crypto/keembay/keembay-ocs-aes-core.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/cgroup/cpuset-internal.h b/kernel/cgroup/cpuset-internal.h
-index f8e300ed0c34d..8e5c275d730da 100644
---- a/kernel/cgroup/cpuset-internal.h
-+++ b/kernel/cgroup/cpuset-internal.h
-@@ -151,7 +151,7 @@ struct cpuset {
- 	 * number of SCHED_DEADLINE tasks attached to this cpuset, so that we
- 	 * know when to rebuild associated root domain bandwidth information.
+diff --git a/drivers/crypto/keembay/keembay-ocs-aes-core.c b/drivers/crypto/keembay/keembay-ocs-aes-core.c
+index 2a96fedc8d639..83c2bf9d25961 100644
+--- a/drivers/crypto/keembay/keembay-ocs-aes-core.c
++++ b/drivers/crypto/keembay/keembay-ocs-aes-core.c
+@@ -1554,7 +1554,7 @@ static int register_aes_algs(struct ocs_aes_dev *aes_dev)
+ 
+ 	/*
+ 	 * If any algorithm fails to register, all preceding algorithms that
+-	 * were successfully registered will be automatically unregistered.
++	 * were registered in the same call are automatically unregistered.
  	 */
--	int nr_deadline_tasks;
-+	atomic_t nr_deadline_tasks;
- 	int nr_migrate_dl_tasks;
- 	u64 sum_migrate_dl_bw;
+ 	ret = crypto_register_aeads(algs_aead, ARRAY_SIZE(algs_aead));
+ 	if (ret)
+@@ -1562,7 +1562,7 @@ static int register_aes_algs(struct ocs_aes_dev *aes_dev)
  
-diff --git a/kernel/cgroup/cpuset.c b/kernel/cgroup/cpuset.c
-index 2700e6a1307b7..61736a4e105bf 100644
---- a/kernel/cgroup/cpuset.c
-+++ b/kernel/cgroup/cpuset.c
-@@ -122,14 +122,14 @@ void inc_dl_tasks_cs(struct task_struct *p)
- {
- 	struct cpuset *cs = task_cs(p);
+ 	ret = crypto_register_skciphers(algs, ARRAY_SIZE(algs));
+ 	if (ret)
+-		crypto_unregister_aeads(algs_aead, ARRAY_SIZE(algs));
++		crypto_unregister_aeads(algs_aead, ARRAY_SIZE(algs_aead));
  
--	cs->nr_deadline_tasks++;
-+	atomic_inc(&cs->nr_deadline_tasks);
+ 	return ret;
  }
- 
- void dec_dl_tasks_cs(struct task_struct *p)
- {
- 	struct cpuset *cs = task_cs(p);
- 
--	cs->nr_deadline_tasks--;
-+	atomic_dec(&cs->nr_deadline_tasks);
- }
- 
- static inline int is_partition_valid(const struct cpuset *cs)
-@@ -925,7 +925,7 @@ static void dl_update_tasks_root_domain(struct cpuset *cs)
- 	struct css_task_iter it;
- 	struct task_struct *task;
- 
--	if (cs->nr_deadline_tasks == 0)
-+	if (atomic_read(&cs->nr_deadline_tasks) == 0)
- 		return;
- 
- 	css_task_iter_start(&cs->css, 0, &it);
-@@ -2515,8 +2515,8 @@ static void cpuset_attach(struct cgroup_taskset *tset)
- 	cs->old_mems_allowed = cpuset_attach_nodemask_to;
- 
- 	if (cs->nr_migrate_dl_tasks) {
--		cs->nr_deadline_tasks += cs->nr_migrate_dl_tasks;
--		oldcs->nr_deadline_tasks -= cs->nr_migrate_dl_tasks;
-+		atomic_add(cs->nr_migrate_dl_tasks, &cs->nr_deadline_tasks);
-+		atomic_sub(cs->nr_migrate_dl_tasks, &oldcs->nr_deadline_tasks);
- 		reset_migrate_dl_data(cs);
- 	}
- 
 -- 
 2.53.0
 
