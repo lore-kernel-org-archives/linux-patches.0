@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213343;
-	b=t/2SUos+ZlQtllToYy7+APMCRGCNRgM6Y7P6k1X65XPgQ8hM42UX8J9bUXhwbrTay6Za
-	 w2pmjuhZm5MMnJGxtMFM2+b7HJU4GkyDc6VFdTJaZGLqpgZD3rplgO8eZt/y56MVqNVYW
-	 QcrRPgM2QQjm1+4V1dR1NHYLQ0GqbJsxpW46qd2BtROd5sz4AIZaOspdarjcvJJqXKL+B
-	 GZHZwEw6nMwyuSDe5eERojxqnVVqLqZzckz48XZsvzM0mOhtO39WeHkI+NNI1hlffkrDb
-	 MPvKJSRAIqZV196zhRmUyGT69lh5vNIF4xDmzoKGavx6N+9wVdwlWX3JgbPWD7L3/AA==
+	t=1793213346;
+	b=peDWDa9jW+0HE/cLv7N25Y/75LHfSop7Oa5Uf84FyS0/WCOqepjJC/cqbCUQKg2vYCmT
+	 95/32zpvrYrseqv8Usl8obGsL2PEm67p26d/Ke22V9KTAjJVQLVs4jRFxxXh5G9v+SmIw
+	 2U01c/4YkKfrrk86zwmohqj6iXw/M1fqGxTjqhiCLbmgUmWcPJfOcrVl5KDj9afYo9Yxv
+	 RGxQMJKAkfIQ0gtv7B5XVQIT0et/InmGQlw2Dq/8prr/Isg/y2hldtI9hkrXV/girrS/E
+	 3wTGIvrdeLlE2r0xxcxBgfsTw8rCF411AGQBL4BPhefy0sFTdRPtgXLHHOKHFtYXaSA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213343;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213346;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=EV/m65ICJ1oljOXRyQTdpGmAPcWx5FcC6OSAYeIlCqo=;
-	b=SzEVC2qocaNLAaKeULYEBXerDmBiVUiO95QGZDmP15s7J/GABfspoIiCH5zgh2Xqoj6l
-	 9S55lAYCqHZTeVftUHeODqM0Qd9TJim9baKjKZH+Cps9n2SYoKNQkdWL7ZADBxalsPHBk
-	 p2uKkBO8CFcGxH0/6WrQWa7FBwdcHfW9BuoJsw4q+tMMdYwPZnVN2YNYXYDRoLRIB2XLF
-	 fZSs7ViiKm2BE6uZv8zLzbOpoay1Rp0f1yoMzkkuza0ZML9J5tcvCq8Th0vKKWJJ4bKzy
-	 mkNUFaRTJjznofkEJlC6a/FnrSrsi1zdnqxa3/fq32pEVz8ahcAZzB5SJAcvSb1qSGw==
+	bh=ZqrKgAUc7zdNvyUHtzQtHvk9IYLOZYeMziyfpxp/F6c=;
+	b=SFXrCe4qhpDRRML/He84YiNrZZZgtqPfeHiWcEG54JxLsw7Sm3WURtj1fNeYP0XORWzm
+	 BV495hOK0xhbM0n8YaV5/4YRfruORf0NQOO/qHLVPlc8s3WuubuLNYjFf0/ncEzxALVNX
+	 +/2JcvQye2QVtAFjuwf/fSpSujzSvBKdovijnEEtAD0v7egm+EKteKAyseH+CDt7vWgYF
+	 Ztqs4RG08h+VpBx8Vz5mXFzxDYZoA1rXOq8OvQbWI6K20g5NoczrarWGaPHJiV6yn3228
+	 eNtT26XOAtfOALZG1WcozN7HPPmDssHsglAWD0i4tuSBgDv1R7L0Ccv8698NLkZ7QSQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zIgi3r3S;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DtLponbV;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBF83606A31C;
-	Wed, 28 Oct 2026 18:49:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC240606A31A;
+	Wed, 28 Oct 2026 18:49:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zIgi3r3S
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A90F1F01825;
-	Wed, 28 Oct 2026 18:49:01 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DtLponbV
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E38F61F01829;
+	Wed, 28 Oct 2026 18:49:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213342;
-	bh=EV/m65ICJ1oljOXRyQTdpGmAPcWx5FcC6OSAYeIlCqo=;
+	s=korg; t=1793213345;
+	bh=ZqrKgAUc7zdNvyUHtzQtHvk9IYLOZYeMziyfpxp/F6c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zIgi3r3Sg10qpj2fodhFkIUpaRqr6RX9TcB4Phk/6Kz8LKX/ihToEKJQa0HpgsOK+
-	 o0RDXtBdFmr3Td23ifcJWIBrDfOk7z5OHkxbqEX74co2BZCCImPpemxqzppEnGiHpZ
-	 3mihJm4vK226RDyXz6tl66jMkYOfnTz676T8ATi8=
+	b=DtLponbVhGXCn2n2EpG60iD/HLuHW89oTdKRFXOeaKhgdY4wZiNx2V7o+MWMDy4lM
+	 rd8PHw9+HyMJr1AwC0g/LfFTzKDlB4MCEsXnWKdohXX52RGKk39Y2zvgmpyRUAPHLR
+	 qwT11LcC58DjpEs/yz8BaXvlDaG6x0VRKagOoJb4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Iaroslav Voitovych <yaroslav.voytovych@gmail.com>,
+	Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>,
+	Maxim Skokov <skokovmaksimevg@gmail.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.1 0471/1887] Bluetooth: MGMT: Fix status of pending commands flushed on power off
-Date: Wed, 28 Oct 2026 17:42:47 +0100
-Message-ID: <20261028170509.956803608@linuxfoundation.org>
+Subject: [PATCH 6.1 0472/1887] Bluetooth: RFCOMM: free the skb when the DLC has no owner
+Date: Wed, 28 Oct 2026 17:42:48 +0100
+Message-ID: <20261028170509.981747323@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -67,64 +68,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Iaroslav Voitovych <yaroslav.voytovych@gmail.com>
+From: Maxim Skokov <skokovmaksimevg@gmail.com>
 
-commit 86ef0f58bdecdedb3a1240971c56d71b7e4ce3fc upstream.
+commit 9d1afbf60ed53c5b051cd124153e0ae3078c8b93 upstream.
 
-cmd_complete_rsp() receives a struct cmd_lookup and, for a pending
-command that has no cmd_complete callback, falls through to
-cmd_status_rsp(cmd, data). cmd_status_rsp() reads data as a u8 *, so
-the status sent comes from the first byte of match->sk's
-representation, not from match->mgmt_status.
+rfcomm_recv_data() hands the skb to d->data_ready() and returns 0
+without freeing it, so the callback owns the skb from that point on.
+The tty implementation frees it when the DLC has been detached from its
+device:
 
-commit f53e1c9c726d ("Bluetooth: MGMT: Fix possible crash on
-mgmt_index_removed") changed the callers' data from &status to &match
-and updated the cmd_complete branch to match->mgmt_status, but left
-the fall-through passing data unchanged.
+  static void rfcomm_dev_data_ready(struct rfcomm_dlc *dlc,
+                                    struct sk_buff *skb)
+  {
+          struct rfcomm_dev *dev = dlc->owner;
 
-In mgmt_index_removed() match->sk is NULL, so every such command is
-answered with status 0x00 (Success) instead of
-MGMT_STATUS_INVALID_INDEX. In __mgmt_power_off() it is NULL too,
-unless a Set Powered command was pending: then settings_rsp() has
-stored that command's socket in match->sk, and the byte sent comes
-from the socket pointer. Either way the status the caller set,
-MGMT_STATUS_NOT_POWERED (or MGMT_STATUS_INVALID_INDEX when the device
-is being unregistered), is lost.
+          if (!dev) {
+                  kfree_skb(skb);
+                  return;
+          }
 
-Pass the status the callers set.
+The socket implementation returns without freeing it, and the skb is
+leaked.
 
-This was seen on a QCA9377 laptop: bluetoothd's Start Discovery,
-pending when the adapter was powered off, was answered with Command
-Status 0x00 and no parameters, and bluetoothd 5.72 crashed on the
-zero-length success. BlueZ master has since added the length check
-on that path ("adapter: Fix crash on short start discovery reply",
-BlueZ a734b06059cb), but userspace should still be told Not Powered,
-not Success.
+A connected DLC can have no owner: rfcomm_sock_destruct() clears
+d->owner, while the DLC itself stays on the session until it is closed.
+Data frames that arrive in that window still find d->state ==
+BT_CONNECTED in rfcomm_recv_data() and are handed to the callback, one
+leaked skb each.
 
-Tested on Ubuntu 7.0.0-31 with a virtual controller (hci_vhci):
-power off is held in HCI Write Scan Enable while a Start Discovery is
-submitted, and the flush answers it with status 0x00 before this
-change and 0x0f (Not Powered) after.
+The leak does not stop on its own either.  The remote runs out of
+credits only once RFCOMM_RX_THROTTLED is set, and for a socket the only
+place that sets it is rfcomm_sk_data_ready() itself, below the return.
+rfcomm_process_dlcs() keeps granting credits, so the remote keeps
+sending and the leak keeps growing.
 
-Fixes: f53e1c9c726d ("Bluetooth: MGMT: Fix possible crash on mgmt_index_removed")
+Free the skb, as the tty side does.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
+Closes: https://lore.kernel.org/linux-bluetooth/CABXGCsPe5wykd8Aj-hm+SJ7SGQyb8yoGNnx3XDpPmBathj+EGg@mail.gmail.com/
 Cc: stable@vger.kernel.org
-Signed-off-by: Iaroslav Voitovych <yaroslav.voytovych@gmail.com>
+Signed-off-by: Maxim Skokov <skokovmaksimevg@gmail.com>
+Assisted-by: Claude:claude-opus-5
+Reviewed-by: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/mgmt.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/bluetooth/rfcomm/sock.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/net/bluetooth/mgmt.c
-+++ b/net/bluetooth/mgmt.c
-@@ -1453,7 +1453,7 @@ static void cmd_complete_rsp(struct mgmt
+--- a/net/bluetooth/rfcomm/sock.c
++++ b/net/bluetooth/rfcomm/sock.c
+@@ -50,8 +50,11 @@ static void rfcomm_sock_kill(struct sock
+ static void rfcomm_sk_data_ready(struct rfcomm_dlc *d, struct sk_buff *skb)
+ {
+ 	struct sock *sk = d->owner;
+-	if (!sk)
++
++	if (!sk) {
++		kfree_skb(skb);
  		return;
- 	}
++	}
  
--	cmd_status_rsp(cmd, data);
-+	cmd_status_rsp(cmd, &match->mgmt_status);
- }
- 
- static int generic_cmd_complete(struct mgmt_pending_cmd *cmd, u8 status)
+ 	atomic_add(skb->len, &sk->sk_rmem_alloc);
+ 	skb_queue_tail(&sk->sk_receive_queue, skb);
 
 
