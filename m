@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793217254;
-	b=s9pDg+mH8WI1ucQVD4sa4Gd1XBJjgFT5IydeKk0mW033rIfbCPPwQgQbaypr62gE6QKO
-	 Lnpq07iAirynHYOmu35GReq2GNMII/yL/h7G0T//dRw+CEmmn6SczjKJqcNZUSGbIznYL
-	 cr9ZEkVgzeqvwXTPjgq+0oKQ+0g5yKy5qQUTwsIlAROCWDdEYAkke4AclIN1+nbZIGzxf
-	 +nGWXfupwMT37qvDc7tfodlzyaP5dmFz/S2cD78XsUmOJ+WNCDfbft3Es12bOyElFEjK1
-	 SSlz9BjZ3JYDB5Om632XU9OiXnpCVQFBMKyMSzdFqCR0Fvuti3jZrRE0XJ2R/WHHIAA==
+	t=1793217257;
+	b=3Vs61JloxZ4Ygzay27ACgPuXPD40ubaNiiBcT/YAK4CYBCDu1da+Wqvlip/abHjkaPYI
+	 mLOPSok/ZuQsNvAhqqRVhTE0J4juv7pUZ7M6tG32prsfwycqDCEMjfipRijr/j8tlqYuH
+	 38ebDgI4rVOGOAXfVTG88EAJ7y1Fol3SS205rRTGFtIsKzPySnsooFmPpjmiL//6dbdTt
+	 G5WVd+GJk63pFzPcgj6rvPAKWzF3s4IHOHaAksI8RX7C4w9FSWDudl1pTpF10zbsXtOji
+	 kgoMT4efEAPVqNiQw+PyNLaU1jqHzHRovsqgHBAhErjPQqKOe4wp6orQoOq/1DkAKAw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793217254;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793217257;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=x6SMs60XAhDnG2/TDR7AOgdwqonm+cvuL6Ba0AAZJRQ=;
-	b=Ky4XW6iHnDUYfi4e2cwg6/Yav7/OYyafLvVt8hJ3HuIl2vI7ei+CzMP4PBHU+kW/KloK
-	 t4YcWTt3M4QUl88KboXlDH1eN/GHgLZrzLIWWF6FA0GJN3CvKDfaLetZB2r1LTcFY5FmB
-	 a2SiJTbeNrhZR0cjocDaYO879Aa5fhek5IOS5f+Q8pOCNlJFp2UyfyPkLKnqfx7Th3m5h
-	 lBC+ZpASuDryzVpTDQXX52p7rj4VJ+iDERGu0BInCvcCxD03o/hDTeBsAHWy949vjTD9s
-	 FObrU6pTXNdGsHiOLD80glTd/uXNMBQIAhvbPdG0rr2v66zQyHHB4HgPmKgYPOAaRgQ==
+	bh=N8fdsOaTanDc/8ghXwcHJaj7LmKeOSBb/hChKlcSras=;
+	b=BsaVwLWSGDUOLRVs9s+TAZdGSWuBeSUayjTlfgiRNsfjDFMOD4MgdxwCnZcBfiIn9IVZ
+	 1XahPEcbXs5u3wL+ccEQCR5uhMsIUDN3hqlS7WmMfGSlhJW+dn3NVFQQ+aJgp/19E0yvB
+	 AiinaEU6Dte0A7TqPPWxgvzuFRZiuzAGaZ22r2QynSkQ8pURlirTzcKt/ZY6gdjAaIax+
+	 SyzxvKN1E0cfsUoqBIUR8NIBgPEsSys9O52vuQ0hiaZBb2D7l/wCjnBo/gU6R+yYtcPOG
+	 2/VpCf6jhY0os7yu7j7Apte3mDWNtoJDD1plfttWbleBnraH0AZohrWG95ZJJr6/HUg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c1FwgQz3;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OPhUCYby;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42D46606A322;
-	Wed, 28 Oct 2026 19:54:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A7D9606A31A;
+	Wed, 28 Oct 2026 19:54:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c1FwgQz3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 914111F01825;
-	Wed, 28 Oct 2026 19:54:13 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OPhUCYby
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 793FA1F01825;
+	Wed, 28 Oct 2026 19:54:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793217254;
-	bh=x6SMs60XAhDnG2/TDR7AOgdwqonm+cvuL6Ba0AAZJRQ=;
+	s=korg; t=1793217257;
+	bh=N8fdsOaTanDc/8ghXwcHJaj7LmKeOSBb/hChKlcSras=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=c1FwgQz35dgcxyLOKemjJ5T6BpE9L0r/b3MF4F0W+VhboViT/pz3QYch9cKKKMZnr
-	 m8yq2WF1cKFX66H9Z/g9WVWdEKQb1etoLSESZBhVg/CNlkFEcttxSeTtNRfKUAg8yI
-	 rUUsc3ZjsgLnuKIHsyWNgf3xDc5VHNXevfs44Tn0=
+	b=OPhUCYbyJvjj5mQ0JgI9rmAH+nzSGdBMh6zf53M6m03GrCq2bK3PWyieUQT/KYzZl
+	 axl6NqkSaPjbFHghgxZpk3uC0T0lIB/pnnIy0r5xmCgdt7/7rFhci2JTCpFZ2bRdS6
+	 pX8IJvZrQ83phHUc3bG3hodX+Y9DN2X/HAafl9zs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sashiko <sashiko-bot@kernel.org>,
 	Sudeep Holla <sudeep.holla@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1841/1887] firmware: arm_scmi: Unrequest devices if driver registration fails
-Date: Wed, 28 Oct 2026 18:05:37 +0100
-Message-ID: <20261028170541.344182247@linuxfoundation.org>
+Subject: [PATCH 6.1 1842/1887] firmware: arm_scmi: Fix requested device removal race
+Date: Wed, 28 Oct 2026 18:05:38 +0100
+Message-ID: <20261028170541.367061817@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -70,49 +70,82 @@ Content-Transfer-Encoding: 8bit
 
 From: Sudeep Holla <sudeep.holla@kernel.org>
 
-[ Upstream commit 9f7cd6a62aa754ed6b48cbd5d50de40add1bcc86 ]
+[ Upstream commit 2c4097e6c4aed276c5e9ec2ab331ab397ea780bf ]
 
-scmi_driver_register() requests protocol devices before registering the
-driver. If driver_register() fails, those requests remain in the global
-IDR and retain pointers to the module's ID table. Once the failed module
-load releases that storage, later request matching or SCMI device creation
-can dereference the stale pointers.
+scmi_protocol_device_unrequest() drops scmi_requested_devices_mtx while
+notifying listeners but continues to retain the per-protocol list head.
+When two SCMI drivers for the same protocol unregister concurrently, one
+thread can remove the final request and free the list head while the other
+is running its notifier. The latter then dereferences the freed list head
+after reacquiring the mutex and can free it a second time.
 
-Unrequest the complete protocol table before returning the registration
-failure. At this point table registration succeeded, so every entry is
-owned by the current registration attempt.
+Complete the list and IDR updates, including freeing an empty list head,
+before dropping the mutex. Keep the blocking notifier outside the critical
+section and retain only the detached request across the callback.
 
 Fixes: d3cd7c525fd2 ("firmware: arm_scmi: Refactor protocol device creation")
 Reported-by: Sashiko <sashiko-bot@kernel.org>
-Link: https://patch.msgid.link/20260722173521.2184378-2-sudeep.holla@kernel.org
+Link: https://patch.msgid.link/20260722095250.2011630-1-sudeep.holla@kernel.org
 Signed-off-by: Sudeep Holla <sudeep.holla@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/arm_scmi/bus.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ drivers/firmware/arm_scmi/bus.c | 26 +++++++++++++-------------
+ 1 file changed, 13 insertions(+), 13 deletions(-)
 
 diff --git a/drivers/firmware/arm_scmi/bus.c b/drivers/firmware/arm_scmi/bus.c
-index 8ef893957ef2e..ca68cfa931b0b 100644
+index ca68cfa931b0b..ef70232511873 100644
 --- a/drivers/firmware/arm_scmi/bus.c
 +++ b/drivers/firmware/arm_scmi/bus.c
-@@ -303,10 +303,14 @@ int scmi_driver_register(struct scmi_driver *driver, struct module *owner,
- 	driver->driver.mod_name = mod_name;
+@@ -157,6 +157,7 @@ static int scmi_protocol_table_register(const struct scmi_device_id *id_table)
+  */
+ static void scmi_protocol_device_unrequest(const struct scmi_device_id *id_table)
+ {
++	struct scmi_requested_dev *rdev, *victim = NULL;
+ 	struct list_head *phead;
  
- 	retval = driver_register(&driver->driver);
--	if (!retval)
--		pr_debug("Registered new scmi driver %s\n", driver->name);
-+	if (retval) {
-+		scmi_protocol_table_unregister(driver->id_table);
-+		return retval;
-+	}
+ 	pr_debug("Unrequesting SCMI device (%s) for protocol %x\n",
+@@ -165,29 +166,28 @@ static void scmi_protocol_device_unrequest(const struct scmi_device_id *id_table
+ 	mutex_lock(&scmi_requested_devices_mtx);
+ 	phead = idr_find(&scmi_requested_devices, id_table->protocol_id);
+ 	if (phead) {
+-		struct scmi_requested_dev *victim, *tmp;
+-
+-		list_for_each_entry_safe(victim, tmp, phead, node) {
+-			if (!strcmp(victim->id_table->name, id_table->name)) {
+-				list_del(&victim->node);
+-
+-				mutex_unlock(&scmi_requested_devices_mtx);
+-				blocking_notifier_call_chain(&scmi_requested_devices_nh,
+-							     SCMI_BUS_NOTIFY_DEVICE_UNREQUEST,
+-							     (void *)victim->id_table);
+-				kfree(victim);
+-				mutex_lock(&scmi_requested_devices_mtx);
++		list_for_each_entry(rdev, phead, node) {
++			if (!strcmp(rdev->id_table->name, id_table->name)) {
++				victim = rdev;
++				list_del(&rdev->node);
+ 				break;
+ 			}
+ 		}
  
--	return retval;
-+	pr_debug("Registered new scmi driver %s\n", driver->name);
+-		if (list_empty(phead)) {
++		if (victim && list_empty(phead)) {
+ 			idr_remove(&scmi_requested_devices,
+ 				   id_table->protocol_id);
+ 			kfree(phead);
+ 		}
+ 	}
+ 	mutex_unlock(&scmi_requested_devices_mtx);
 +
-+	return 0;
++	if (victim) {
++		blocking_notifier_call_chain(&scmi_requested_devices_nh,
++					     SCMI_BUS_NOTIFY_DEVICE_UNREQUEST,
++					     (void *)victim->id_table);
++		kfree(victim);
++	}
  }
- EXPORT_SYMBOL_GPL(scmi_driver_register);
  
+ static void
 -- 
 2.53.0
 
