@@ -1,60 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214405;
-	b=V55PmdOgdF02Wkfr+FedeAqrE8N2C5HVKbBHcQ91SI8CZEzH3tN7UUlh3FldPi6jZO14
-	 F/UJU9vEIpjjehOrD4FHOhvUNdk/VXKfnPY5xPwg/MBn0GTrGaD1RB48zoIyf2rAiZx6M
-	 sKUMIjTLaoT7oOwMJ+0IumVi546ljhJ0xNyIIBvKOxJwZG7B/6FkT3n/73B0KquWdfnSD
-	 3+4IgwHVZcIxVbWrocliDizw0jEDaB4cDXH65bVmhDUxzwEMUintpAEbzW2FXY8TsXBmr
-	 NiBkUO6KbpTpCkUHihpZ4h+nGo6AgFYMFe7i97n0MpBYD9n/yXeYNH29k8nfGSQ+6Tg==
+	t=1793214408;
+	b=NIzgA4lA9C4sEejDAIWKggPcWYa9pdTrKPX34ujOhVp1TnaJOR8SMW2ewTY4jMq2zneB
+	 fNJPYFwOfjkBgAWjLCgqYaroc9mEVohj9AB78aLtzeHm23Fic+QFtg50kWl7xg8qELnYY
+	 8xUkQv8a1tm8KBd+4J2IYoFhc7LnPCGU5VSErUaTo9YZo3GnW4WC0w340l8JzxvJOYPgQ
+	 WVZYStrmTc840QDPaNNpDau7+G4cJQ5pGb3eUI4+yBRukVDywLtLtJCV0O5kmr5er9qjB
+	 1nvbHcsxJU9JKf8halWPDKaN+kwpq1bylrVZG/BGJd2aSx7JXVCxwhfyUobOxxoLnSA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214405;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214408;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=UyKGFmlc6yWt3fGcA3xx1oFfLnhTYlOzbjTlKQ2zxWM=;
-	b=3q0MtyZBglehrMsMNG1rgCECs+WPcgOZnsJT6XTk6AnYozX/qek0AFM/074ixzNdF1R2
-	 aKLWnENbtYIKk4J+gIj/b856jk9V4ouRcyR8zmcdm3HXAnBrEp3QzoZH2ZBtO4LIm7CWG
-	 auMABmq9AO/u2OWu1XT6AhZHa/XR0q6TnJWJqt4yYkc9NCeWTTf0jGilv1xPkFarHuh6J
-	 g1KFo2gPF0GiTBQePqDkWcCeJeZ7xGzydM0aeM2RHpTy0IAt0El10JUla1fUwQR2gawhw
-	 RbPlmZTrr9nNgvBA1eeQefT9ez+arcLm3w3hHTYTieaAo1qY1zmqe7THTfoqosimKjQ==
+	bh=yYH+rCMkdAessNvMERIEbXkUgFHAXQT6dfekZ7WKjFs=;
+	b=ygyva2PmFLSB7UKt/M2lMMMVY8x18+qfGIyeMJUoqdLNppMI+/016Z7dPyhNwEAWOg/F
+	 672RNedu75YMyvNBtjODtIbGNHJB3l2oWXfYPeqHmguIDoCcr7uzojTokNRKUPy83aCi+
+	 JZFeodxtIdDvxAWX85mkaRJsHgma1XBZ8UekqhPbBFtcew10f6B3VblvowHMw/ILyhKtY
+	 wlB9ldj9vRfizqGFq5b47ficJXJrhQaJkcDvHflsJEKF1+Jf2HAzdPGuQnNpsntFDrcTM
+	 5CoEG4ge4pYCr5UZ4+pmuIB53vSs8VOgj21u5CbzFpO+7wu4PMPBSkv0eVRRbSskFxQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z7Sxn+Ks;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Dxe1AHpE;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 127EC606A32C;
-	Wed, 28 Oct 2026 19:06:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7536606A324;
+	Wed, 28 Oct 2026 19:06:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z7Sxn+Ks
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6020A1F01825;
-	Wed, 28 Oct 2026 19:06:44 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Dxe1AHpE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 401E71F01825;
+	Wed, 28 Oct 2026 19:06:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214404;
-	bh=UyKGFmlc6yWt3fGcA3xx1oFfLnhTYlOzbjTlKQ2zxWM=;
+	s=korg; t=1793214407;
+	bh=yYH+rCMkdAessNvMERIEbXkUgFHAXQT6dfekZ7WKjFs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=z7Sxn+KsaDquZQXp1wpS5OaxNY/bbZf5vQKW7a6fxT1R2XrfL9JR41DTIQaUgqgn8
-	 pxb6yGvdDRJZr4tMnZW61Z3ckRW9UGAUkKu4gpLXdvNu/2xY9o/K276TWQT28dOLY0
-	 TcpCnXTAeMx/a0kcswAjOzJm/W5Km6Dtuqnavr9k=
+	b=Dxe1AHpEd+3oIQ1CfeyvhLWQKyg8cubvaVrHTrIKyF41Lu6RcLSGvGnyEx/AYNG3K
+	 s/ut1XUnlje1QemOfCkDkIl7I4PV1d/UqamTb4cFUvWm84xck6caWFmZCQWVGLRKtA
+	 WnwmCnrVkvxIpyLQfhXiHAErevqvz3DoEvBvlWbw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Uladzislau Rezki (Sony)" <urezki@gmail.com>,
-	syzbot+3470c9ffee63e4abafeb@syzkaller.appspotmail.com,
-	Andrey Ryabinin <ryabinin.a.a@gmail.com>,
-	Baoquan He <bhe@redhat.com>,
-	Michal Hocko <mhocko@kernel.org>,
-	Alexander Potapenko <glider@google.com>,
-	Andrey Konovalov <andreyknvl@gmail.com>,
-	Dmitry Vyukov <dvyukov@google.com>,
-	Vincenzo Frascino <vincenzo.frascino@arm.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Maud Spierings <maudspierings@gocontroll.com>,
+	Andy Shevchenko <andy@kernel.org>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0846/1887] mm/vmalloc, mm/kasan: respect gfp mask in kasan_populate_vmalloc()
-Date: Wed, 28 Oct 2026 17:49:02 +0100
-Message-ID: <20261028170518.678610358@linuxfoundation.org>
+Subject: [PATCH 6.1 0811/1887] iio: common: st_sensors: Fix use of uninitialize device structs
+Date: Wed, 28 Oct 2026 17:48:27 +0100
+Message-ID: <20261028170517.883729550@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -76,189 +69,289 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Uladzislau Rezki (Sony) <urezki@gmail.com>
+From: Maud Spierings <maudspierings@gocontroll.com>
 
-[ Upstream commit 79357cd06d41d0f5a11b17d7c86176e395d10ef2 ]
+[ Upstream commit 9f92e93e257b33e73622640a9205f8642ec16ddd ]
 
-kasan_populate_vmalloc() and its helpers ignore the caller's gfp_mask and
-always allocate memory using the hardcoded GFP_KERNEL flag.  This makes
-them inconsistent with vmalloc(), which was recently extended to support
-GFP_NOFS and GFP_NOIO allocations.
+Throughout the various probe functions &indio_dev->dev is used before it
+is initialized. This caused a kernel panic in st_sensors_power_enable()
+when the call to devm_regulator_bulk_get_enable() fails and then calls
+dev_err_probe() with the uninitialized device.
 
-Page table allocations performed during shadow population also ignore the
-external gfp_mask.  To preserve the intended semantics of GFP_NOFS and
-GFP_NOIO, wrap the apply_to_page_range() calls into the appropriate
-memalloc scope.
+This seems to only cause a panic with dev_err_probe(), dev_err(),
+dev_warn() and dev_info() don't seem to cause a panic, but are fixed
+as well.
 
-xfs calls vmalloc with GFP_NOFS, so this bug could lead to deadlock.
+The issue is reported and traced here: [1]
 
-There was a report here
-https://lkml.kernel.org/r/686ea951.050a0220.385921.0016.GAE@google.com
-
-This patch:
- - Extends kasan_populate_vmalloc() and helpers to take gfp_mask;
- - Passes gfp_mask down to alloc_pages_bulk() and __get_free_page();
- - Enforces GFP_NOFS/NOIO semantics with memalloc_*_save()/restore()
-   around apply_to_page_range();
- - Updates vmalloc.c and percpu allocator call sites accordingly.
-
-Link: https://lkml.kernel.org/r/20250831121058.92971-1-urezki@gmail.com
-Fixes: 451769ebb7e7 ("mm/vmalloc: alloc GFP_NO{FS,IO} for vmalloc")
-Signed-off-by: Uladzislau Rezki (Sony) <urezki@gmail.com>
-Reported-by: syzbot+3470c9ffee63e4abafeb@syzkaller.appspotmail.com
-Reviewed-by: Andrey Ryabinin <ryabinin.a.a@gmail.com>
-Cc: Baoquan He <bhe@redhat.com>
-Cc: Michal Hocko <mhocko@kernel.org>
-Cc: Alexander Potapenko <glider@google.com>
-Cc: Andrey Konovalov <andreyknvl@gmail.com>
-Cc: Dmitry Vyukov <dvyukov@google.com>
-Cc: Vincenzo Frascino <vincenzo.frascino@arm.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Link: https://lore.kernel.org/all/AM7P189MB100986A83D2F28AF3FFAF976E39EA@AM7P189MB1009.EURP189.PROD.OUTLOOK.COM/ [1]
+Cc: stable@vger.kernel.org
+Signed-off-by: Maud Spierings <maudspierings@gocontroll.com>
+Reviewed-by: Andy Shevchenko <andy@kernel.org>
+Link: https://... [1]
+Link: https://patch.msgid.link/20250527-st_iio_fix-v4-1-12d89801c761@gocontroll.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/kasan.h |  6 +++---
- mm/kasan/shadow.c     | 31 ++++++++++++++++++++++++-------
- mm/vmalloc.c          |  4 ++--
- 3 files changed, 29 insertions(+), 12 deletions(-)
+ drivers/iio/accel/st_accel_core.c             | 10 +++---
+ .../iio/common/st_sensors/st_sensors_core.c   | 36 +++++++++----------
+ .../common/st_sensors/st_sensors_trigger.c    | 20 +++++------
+ 3 files changed, 31 insertions(+), 35 deletions(-)
 
-diff --git a/include/linux/kasan.h b/include/linux/kasan.h
-index 5614d9da7a9e8..b290621c4ee34 100644
---- a/include/linux/kasan.h
-+++ b/include/linux/kasan.h
-@@ -387,7 +387,7 @@ static inline void kasan_init_hw_tags(void) { }
- #if defined(CONFIG_KASAN_GENERIC) || defined(CONFIG_KASAN_SW_TAGS)
+diff --git a/drivers/iio/accel/st_accel_core.c b/drivers/iio/accel/st_accel_core.c
+index c4143c5678746..a5c0ecbae271f 100644
+--- a/drivers/iio/accel/st_accel_core.c
++++ b/drivers/iio/accel/st_accel_core.c
+@@ -1269,6 +1269,7 @@ static int apply_acpi_orientation(struct iio_dev *indio_dev)
+ 	union acpi_object *ont;
+ 	union acpi_object *elements;
+ 	acpi_status status;
++	struct device *parent = indio_dev->dev.parent;
+ 	int ret = -EINVAL;
+ 	unsigned int val;
+ 	int i, j;
+@@ -1287,7 +1288,7 @@ static int apply_acpi_orientation(struct iio_dev *indio_dev)
+ 	};
  
- void kasan_populate_early_vm_area_shadow(void *start, unsigned long size);
--int kasan_populate_vmalloc(unsigned long addr, unsigned long size);
-+int kasan_populate_vmalloc(unsigned long addr, unsigned long size, gfp_t gfp_mask);
- void kasan_release_vmalloc(unsigned long start, unsigned long end,
- 			   unsigned long free_region_start,
- 			   unsigned long free_region_end);
-@@ -398,7 +398,7 @@ static inline void kasan_populate_early_vm_area_shadow(void *start,
- 						       unsigned long size)
- { }
- static inline int kasan_populate_vmalloc(unsigned long start,
--					unsigned long size)
-+					unsigned long size, gfp_t gfp_mask)
- {
- 	return 0;
- }
-@@ -443,7 +443,7 @@ kasan_unpoison_vmap_areas(struct vm_struct **vms, int nr_vms,
- static inline void kasan_populate_early_vm_area_shadow(void *start,
- 						       unsigned long size) { }
- static inline int kasan_populate_vmalloc(unsigned long start,
--					unsigned long size)
-+					unsigned long size, gfp_t gfp_mask)
- {
- 	return 0;
- }
-diff --git a/mm/kasan/shadow.c b/mm/kasan/shadow.c
-index 9dc041fd4f0f7..c651f3266e064 100644
---- a/mm/kasan/shadow.c
-+++ b/mm/kasan/shadow.c
-@@ -302,13 +302,13 @@ static void ___free_pages_bulk(struct page **pages, int nr_pages)
+ 
+-	adev = ACPI_COMPANION(indio_dev->dev.parent);
++	adev = ACPI_COMPANION(parent);
+ 	if (!adev)
+ 		return -ENXIO;
+ 
+@@ -1296,8 +1297,7 @@ static int apply_acpi_orientation(struct iio_dev *indio_dev)
+ 	if (status == AE_NOT_FOUND) {
+ 		return -ENXIO;
+ 	} else if (ACPI_FAILURE(status)) {
+-		dev_warn(&indio_dev->dev, "failed to execute _ONT: %d\n",
+-			 status);
++		dev_warn(parent, "failed to execute _ONT: %d\n", status);
+ 		return status;
  	}
- }
  
--static int ___alloc_pages_bulk(struct page **pages, int nr_pages)
-+static int ___alloc_pages_bulk(struct page **pages, int nr_pages, gfp_t gfp_mask)
- {
- 	unsigned long nr_populated, nr_total = nr_pages;
- 	struct page **page_array = pages;
+@@ -1373,12 +1373,12 @@ static int apply_acpi_orientation(struct iio_dev *indio_dev)
+ 	}
  
- 	while (nr_pages) {
--		nr_populated = alloc_pages_bulk_array(GFP_KERNEL, nr_pages, pages);
-+		nr_populated = alloc_pages_bulk_array(gfp_mask, nr_pages, pages);
- 		if (!nr_populated) {
- 			___free_pages_bulk(page_array, nr_total - nr_pages);
- 			return -ENOMEM;
-@@ -320,25 +320,42 @@ static int ___alloc_pages_bulk(struct page **pages, int nr_pages)
- 	return 0;
- }
+ 	ret = 0;
+-	dev_info(&indio_dev->dev, "computed mount matrix from ACPI\n");
++	dev_info(parent, "computed mount matrix from ACPI\n");
  
--static int __kasan_populate_vmalloc(unsigned long start, unsigned long end)
-+static int __kasan_populate_vmalloc(unsigned long start, unsigned long end, gfp_t gfp_mask)
- {
- 	unsigned long nr_pages, nr_total = PFN_UP(end - start);
- 	struct vmalloc_populate_data data;
-+	unsigned int flags;
- 	int ret = 0;
- 
--	data.pages = (struct page **)__get_free_page(GFP_KERNEL | __GFP_ZERO);
-+	data.pages = (struct page **)__get_free_page(gfp_mask | __GFP_ZERO);
- 	if (!data.pages)
- 		return -ENOMEM;
- 
- 	while (nr_total) {
- 		nr_pages = min(nr_total, PAGE_SIZE / sizeof(data.pages[0]));
--		ret = ___alloc_pages_bulk(data.pages, nr_pages);
-+		ret = ___alloc_pages_bulk(data.pages, nr_pages, gfp_mask);
- 		if (ret)
- 			break;
- 
- 		data.start = start;
-+
-+		/*
-+		 * page tables allocations ignore external gfp mask, enforce it
-+		 * by the scope API
-+		 */
-+		if ((gfp_mask & (__GFP_FS | __GFP_IO)) == __GFP_IO)
-+			flags = memalloc_nofs_save();
-+		else if ((gfp_mask & (__GFP_FS | __GFP_IO)) == 0)
-+			flags = memalloc_noio_save();
-+
- 		ret = apply_to_page_range(&init_mm, start, nr_pages * PAGE_SIZE,
- 					  kasan_populate_vmalloc_pte, &data);
-+
-+		if ((gfp_mask & (__GFP_FS | __GFP_IO)) == __GFP_IO)
-+			memalloc_nofs_restore(flags);
-+		else if ((gfp_mask & (__GFP_FS | __GFP_IO)) == 0)
-+			memalloc_noio_restore(flags);
-+
- 		___free_pages_bulk(data.pages, nr_pages);
- 		if (ret)
- 			break;
-@@ -352,7 +369,7 @@ static int __kasan_populate_vmalloc(unsigned long start, unsigned long end)
- 	return ret;
- }
- 
--int kasan_populate_vmalloc(unsigned long addr, unsigned long size)
-+int kasan_populate_vmalloc(unsigned long addr, unsigned long size, gfp_t gfp_mask)
- {
- 	unsigned long shadow_start, shadow_end;
- 	int ret;
-@@ -381,7 +398,7 @@ int kasan_populate_vmalloc(unsigned long addr, unsigned long size)
- 	shadow_start = PAGE_ALIGN_DOWN(shadow_start);
- 	shadow_end = PAGE_ALIGN(shadow_end);
- 
--	ret = __kasan_populate_vmalloc(shadow_start, shadow_end);
-+	ret = __kasan_populate_vmalloc(shadow_start, shadow_end, gfp_mask);
+ out:
+ 	kfree(buffer.pointer);
  	if (ret)
- 		return ret;
+-		dev_dbg(&indio_dev->dev,
++		dev_dbg(parent,
+ 			"failed to apply ACPI orientation data: %d\n", ret);
  
-diff --git a/mm/vmalloc.c b/mm/vmalloc.c
-index 6c8a9b748db17..32d172fa3e6cf 100644
---- a/mm/vmalloc.c
-+++ b/mm/vmalloc.c
-@@ -1708,7 +1708,7 @@ static struct vmap_area *alloc_vmap_area(unsigned long size,
- 	BUG_ON(va->va_start < vstart);
- 	BUG_ON(va->va_end > vend);
+ 	return ret;
+diff --git a/drivers/iio/common/st_sensors/st_sensors_core.c b/drivers/iio/common/st_sensors/st_sensors_core.c
+index 42bfd212b90bc..2a645c359fb58 100644
+--- a/drivers/iio/common/st_sensors/st_sensors_core.c
++++ b/drivers/iio/common/st_sensors/st_sensors_core.c
+@@ -154,7 +154,7 @@ static int st_sensors_set_fullscale(struct iio_dev *indio_dev, unsigned int fs)
+ 	return err;
  
--	ret = kasan_populate_vmalloc(addr, size);
-+	ret = kasan_populate_vmalloc(addr, size, gfp_mask);
- 	if (ret) {
- 		free_vmap_area(va);
- 		return ERR_PTR(ret);
-@@ -3997,7 +3997,7 @@ struct vm_struct **pcpu_get_vm_areas(const unsigned long *offsets,
+ st_accel_set_fullscale_error:
+-	dev_err(&indio_dev->dev, "failed to set new fullscale.\n");
++	dev_err(indio_dev->dev.parent, "failed to set new fullscale.\n");
+ 	return err;
+ }
  
- 	/* populate the kasan shadow space */
- 	for (area = 0; area < nr_vms; area++) {
--		if (kasan_populate_vmalloc(vas[area]->va_start, sizes[area]))
-+		if (kasan_populate_vmalloc(vas[area]->va_start, sizes[area], GFP_KERNEL))
- 			goto err_free_shadow;
+@@ -231,8 +231,7 @@ int st_sensors_power_enable(struct iio_dev *indio_dev)
+ 					     ARRAY_SIZE(regulator_names),
+ 					     regulator_names);
+ 	if (err)
+-		return dev_err_probe(&indio_dev->dev, err,
+-				     "unable to enable supplies\n");
++		return dev_err_probe(parent, err, "unable to enable supplies\n");
+ 
+ 	return 0;
+ }
+@@ -241,13 +240,14 @@ EXPORT_SYMBOL_NS(st_sensors_power_enable, IIO_ST_SENSORS);
+ static int st_sensors_set_drdy_int_pin(struct iio_dev *indio_dev,
+ 					struct st_sensors_platform_data *pdata)
+ {
++	struct device *parent = indio_dev->dev.parent;
+ 	struct st_sensor_data *sdata = iio_priv(indio_dev);
+ 
+ 	/* Sensor does not support interrupts */
+ 	if (!sdata->sensor_settings->drdy_irq.int1.addr &&
+ 	    !sdata->sensor_settings->drdy_irq.int2.addr) {
+ 		if (pdata->drdy_int_pin)
+-			dev_info(&indio_dev->dev,
++			dev_info(parent,
+ 				 "DRDY on pin INT%d specified, but sensor does not support interrupts\n",
+ 				 pdata->drdy_int_pin);
+ 		return 0;
+@@ -256,29 +256,27 @@ static int st_sensors_set_drdy_int_pin(struct iio_dev *indio_dev,
+ 	switch (pdata->drdy_int_pin) {
+ 	case 1:
+ 		if (!sdata->sensor_settings->drdy_irq.int1.mask) {
+-			dev_err(&indio_dev->dev,
+-					"DRDY on INT1 not available.\n");
++			dev_err(parent, "DRDY on INT1 not available.\n");
+ 			return -EINVAL;
+ 		}
+ 		sdata->drdy_int_pin = 1;
+ 		break;
+ 	case 2:
+ 		if (!sdata->sensor_settings->drdy_irq.int2.mask) {
+-			dev_err(&indio_dev->dev,
+-					"DRDY on INT2 not available.\n");
++			dev_err(parent, "DRDY on INT2 not available.\n");
+ 			return -EINVAL;
+ 		}
+ 		sdata->drdy_int_pin = 2;
+ 		break;
+ 	default:
+-		dev_err(&indio_dev->dev, "DRDY on pdata not valid.\n");
++		dev_err(parent, "DRDY on pdata not valid.\n");
+ 		return -EINVAL;
  	}
  
+ 	if (pdata->open_drain) {
+ 		if (!sdata->sensor_settings->drdy_irq.int1.addr_od &&
+ 		    !sdata->sensor_settings->drdy_irq.int2.addr_od)
+-			dev_err(&indio_dev->dev,
++			dev_err(parent,
+ 				"open drain requested but unsupported.\n");
+ 		else
+ 			sdata->int_pin_open_drain = true;
+@@ -336,6 +334,7 @@ EXPORT_SYMBOL_NS(st_sensors_dev_name_probe, IIO_ST_SENSORS);
+ int st_sensors_init_sensor(struct iio_dev *indio_dev,
+ 					struct st_sensors_platform_data *pdata)
+ {
++	struct device *parent = indio_dev->dev.parent;
+ 	struct st_sensor_data *sdata = iio_priv(indio_dev);
+ 	struct st_sensors_platform_data *of_pdata;
+ 	int err = 0;
+@@ -343,7 +342,7 @@ int st_sensors_init_sensor(struct iio_dev *indio_dev,
+ 	mutex_init(&sdata->odr_lock);
+ 
+ 	/* If OF/DT pdata exists, it will take precedence of anything else */
+-	of_pdata = st_sensors_dev_probe(indio_dev->dev.parent, pdata);
++	of_pdata = st_sensors_dev_probe(parent, pdata);
+ 	if (IS_ERR(of_pdata))
+ 		return PTR_ERR(of_pdata);
+ 	if (of_pdata)
+@@ -370,7 +369,7 @@ int st_sensors_init_sensor(struct iio_dev *indio_dev,
+ 		if (err < 0)
+ 			return err;
+ 	} else
+-		dev_info(&indio_dev->dev, "Full-scale not possible\n");
++		dev_info(parent, "Full-scale not possible\n");
+ 
+ 	err = st_sensors_set_odr(indio_dev, sdata->odr);
+ 	if (err < 0)
+@@ -405,7 +404,7 @@ int st_sensors_init_sensor(struct iio_dev *indio_dev,
+ 			mask = sdata->sensor_settings->drdy_irq.int2.mask_od;
+ 		}
+ 
+-		dev_info(&indio_dev->dev,
++		dev_info(parent,
+ 			 "set interrupt line to open drain mode on pin %d\n",
+ 			 sdata->drdy_int_pin);
+ 		err = st_sensors_write_data_with_mask(indio_dev, addr,
+@@ -605,21 +604,20 @@ EXPORT_SYMBOL_NS(st_sensors_get_settings_index, IIO_ST_SENSORS);
+ int st_sensors_verify_id(struct iio_dev *indio_dev)
+ {
+ 	struct st_sensor_data *sdata = iio_priv(indio_dev);
++	struct device *parent = indio_dev->dev.parent;
+ 	int wai, err;
+ 
+ 	if (sdata->sensor_settings->wai_addr) {
+ 		err = regmap_read(sdata->regmap,
+ 				  sdata->sensor_settings->wai_addr, &wai);
+ 		if (err < 0) {
+-			dev_err(&indio_dev->dev,
+-				"failed to read Who-Am-I register.\n");
+-			return err;
++			return dev_err_probe(parent, err,
++					     "failed to read Who-Am-I register.\n");
+ 		}
+ 
+ 		if (sdata->sensor_settings->wai != wai) {
+-			dev_warn(&indio_dev->dev,
+-				"%s: WhoAmI mismatch (0x%x).\n",
+-				indio_dev->name, wai);
++			dev_warn(parent, "%s: WhoAmI mismatch (0x%x).\n",
++				 indio_dev->name, wai);
+ 		}
+ 	}
+ 
+diff --git a/drivers/iio/common/st_sensors/st_sensors_trigger.c b/drivers/iio/common/st_sensors/st_sensors_trigger.c
+index 899b640c0a70c..6672946702edd 100644
+--- a/drivers/iio/common/st_sensors/st_sensors_trigger.c
++++ b/drivers/iio/common/st_sensors/st_sensors_trigger.c
+@@ -127,7 +127,7 @@ int st_sensors_allocate_trigger(struct iio_dev *indio_dev,
+ 	sdata->trig = devm_iio_trigger_alloc(parent, "%s-trigger",
+ 					     indio_dev->name);
+ 	if (sdata->trig == NULL) {
+-		dev_err(&indio_dev->dev, "failed to allocate iio trigger.\n");
++		dev_err(parent, "failed to allocate iio trigger.\n");
+ 		return -ENOMEM;
+ 	}
+ 
+@@ -143,7 +143,7 @@ int st_sensors_allocate_trigger(struct iio_dev *indio_dev,
+ 	case IRQF_TRIGGER_FALLING:
+ 	case IRQF_TRIGGER_LOW:
+ 		if (!sdata->sensor_settings->drdy_irq.addr_ihl) {
+-			dev_err(&indio_dev->dev,
++			dev_err(parent,
+ 				"falling/low specified for IRQ but hardware supports only rising/high: will request rising/high\n");
+ 			if (irq_trig == IRQF_TRIGGER_FALLING)
+ 				irq_trig = IRQF_TRIGGER_RISING;
+@@ -156,21 +156,19 @@ int st_sensors_allocate_trigger(struct iio_dev *indio_dev,
+ 				sdata->sensor_settings->drdy_irq.mask_ihl, 1);
+ 			if (err < 0)
+ 				return err;
+-			dev_info(&indio_dev->dev,
++			dev_info(parent,
+ 				 "interrupts on the falling edge or active low level\n");
+ 		}
+ 		break;
+ 	case IRQF_TRIGGER_RISING:
+-		dev_info(&indio_dev->dev,
+-			 "interrupts on the rising edge\n");
++		dev_info(parent, "interrupts on the rising edge\n");
+ 		break;
+ 	case IRQF_TRIGGER_HIGH:
+-		dev_info(&indio_dev->dev,
+-			 "interrupts active high level\n");
++		dev_info(parent, "interrupts active high level\n");
+ 		break;
+ 	default:
+ 		/* This is the most preferred mode, if possible */
+-		dev_err(&indio_dev->dev,
++		dev_err(parent,
+ 			"unsupported IRQ trigger specified (%lx), enforce rising edge\n", irq_trig);
+ 		irq_trig = IRQF_TRIGGER_RISING;
+ 	}
+@@ -179,7 +177,7 @@ int st_sensors_allocate_trigger(struct iio_dev *indio_dev,
+ 	if (irq_trig == IRQF_TRIGGER_FALLING ||
+ 	    irq_trig == IRQF_TRIGGER_RISING) {
+ 		if (!sdata->sensor_settings->drdy_irq.stat_drdy.addr) {
+-			dev_err(&indio_dev->dev,
++			dev_err(parent,
+ 				"edge IRQ not supported w/o stat register.\n");
+ 			return -EOPNOTSUPP;
+ 		}
+@@ -214,13 +212,13 @@ int st_sensors_allocate_trigger(struct iio_dev *indio_dev,
+ 					sdata->trig->name,
+ 					sdata->trig);
+ 	if (err) {
+-		dev_err(&indio_dev->dev, "failed to request trigger IRQ.\n");
++		dev_err(parent, "failed to request trigger IRQ.\n");
+ 		return err;
+ 	}
+ 
+ 	err = devm_iio_trigger_register(parent, sdata->trig);
+ 	if (err < 0) {
+-		dev_err(&indio_dev->dev, "failed to register iio trigger.\n");
++		dev_err(parent, "failed to register iio trigger.\n");
+ 		return err;
+ 	}
+ 	indio_dev->trig = iio_trigger_get(sdata->trig);
 -- 
 2.53.0
 
