@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793211180;
-	b=OMa3U5BC5CDdyIEpWD1IVLLBz8tmg01kuuHuYMAfAXB1bZup5Q7yITOKRU76jYMhImvo
-	 qBzSSxFgMajEb5YaqZIYOCLNGHaKJq7yCBzxUWNlfO/fMbNfF+FhqCxHVsQqqxg0Mnm4a
-	 vvDH/QHEBKcXmbT33kCX1CSm/GTAWYwehi/7m+KPBI8ezeBj2rWjAJN9jLRPKfGumrwsa
-	 Pn5gvnBkzLiydyj5CtkNrVEcTQMqb89ddowfZ3Qya/VEauwj2eIEyXGp76mkcxxPzKImX
-	 gvOCprhbYpLh/LOZ/OLvda57lZFMVsxJvFUJfeNsxyEcSBZs+I+zKn5G/rLh4BKd2Qg==
+	t=1793211183;
+	b=c/BkrxDZlz+eGPpgEGBHA/flWlogzyJHdszbX8opN8RreSsMTqt7q80FHTG+4wRKUJPG
+	 r/vjnlezcxJbAgvhvs6HQdR5vUfIxQovLTMx536Z6IbS8WktQIHt/adzZV6ciZCP8B9ZX
+	 MhNaIkZTefsd5bfLcPyCKKTE1kNElig0pPGTzVNiiP9qURDmcfT43Q48SfyBT2PHQQ60I
+	 VlN93+4Z8TsLKiVYgZSn2S3nkYtm4X2LxCp3b0BTS02fUL1WPOvmq7pZiJezYMLve1ZwC
+	 7m3tyMNbInuTYaeKR2ShFoO+aFpFI2kL3UchabWeIUAKBKRLytiW5X5A6UbEuSI7Olg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793211180;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793211183;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=8MLYfi5ckdp0D7JoE+K9+hemBd+bVxyuTp2IF4zRviE=;
-	b=HaybmhSXZaPqMUFv5caTX5YKNb+bAP4qPr4fomDqY1tQDblN1b54KbOL2SWmYsoWnkeg
-	 5uBbtlHERmtYzQBy+7ZmyL/XQ2p8De6pmBV6Uk9Yh7LrPfyTM9dVHX4xYILTflYQaLHVx
-	 iyPOLmlqJg2tHCoA+YB8uXd3B727XBsGMHTXPfLr7YuARsW41bmeVS/HYagZdqyRzwBVE
-	 xuRqoByozBkfLWy9rVdp8OMb2+2OKyeQhuO9opJFk1zPDlBtGRR17oeH+QrwbquG0waq6
-	 dRqKlsFSmY0natoM2PzX2wFc4qU0b0bi9NFR1CkyDcAoMoPdy3QW+czlynzhTgfhmTg==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=xvL9rS7uAIXO7fbES2QwgXFwMYUzlH8efA8xzs2YR4g=;
+	b=Lky3khtZybz+alw/tgQg1XtL3fIuR1Hp+py8gYRV7dpI8w3LBpBW0fpS+RCAeuvTHpKX
+	 sRadF7C3K+nWGInewvq7yf6rRDicG8t9TxG+9JY1VK0yRQCgYdpO2e0KrDdDMDHB558D3
+	 oup1vVXMN9yU8YsYqa1qYd758nssecb9k86mDZEjC40CqBGJuuvFgXuvqsVoV5zXDmR73
+	 bO1rld0+G7whWc2XFmZjlssIWXTE8Hp4OZ+kataBPRYI2lO4xn2HMSMBuG+lCMN9MclQJ
+	 GrS6nBPuF/Xk4jlRa63DCTTN3vFhfW6JkRgPEE6ZXpnMmpvwiA5tkdRPkunh7y+xZtQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PzDb7Zz2;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jgZF24Ol;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50FAB60A382E;
-	Wed, 28 Oct 2026 18:13:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 497B160A5BCA;
+	Wed, 28 Oct 2026 18:13:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PzDb7Zz2
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0F441F031E0;
-	Wed, 28 Oct 2026 18:12:59 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jgZF24Ol
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 823621F01825;
+	Wed, 28 Oct 2026 18:13:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793211180;
-	bh=8MLYfi5ckdp0D7JoE+K9+hemBd+bVxyuTp2IF4zRviE=;
+	s=korg; t=1793211183;
+	bh=xvL9rS7uAIXO7fbES2QwgXFwMYUzlH8efA8xzs2YR4g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PzDb7Zz2MJV98QtCc+17o6WOhcUsuI2LpyMmQYd9X3nrDBibY5SLQnrZsMOHnByhW
-	 0K0DNcOi+L4Ghx0aGh2+YUe/frbNIx9T+Q5v8rOHxFGI94McU2Q1EE0Ngq4MJcGHrv
-	 yqZLjuQXcas9ccTDbzSoalbV09XrmU6RBcSoLCKs=
+	b=jgZF24OlB2lZ9Efn6rt65nTXthnw/gpWvjHguxolH2SH5b5cTuGWsq+BH8pexFtxb
+	 +kEmKhxqtzrFMpkhitMPAkacNcbxPyplEePmrFUjp2pqkiOyaVsPAhyg1LhXwUD5pB
+	 7fYq6iGb1aHJx2jQmPQqVoydBUawLR4/lWp+vdE0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Edward Karpicz <webmaster@toradex.com>,
+	Mehmet Fide <mehmet.fide@screeningeagle.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 288/571] drm/amd/pm/si: Check AMD_IS_MOBILITY flag for PPSMC_SYSTEMFLAG_GPIO_DC
-Date: Wed, 28 Oct 2026 17:57:15 +0100
-Message-ID: <20261028170014.834146647@linuxfoundation.org>
+Subject: [PATCH 5.15 271/571] mtd: rawnand: vf610_nfc: fix false bitflips on reads of erased pages
+Date: Wed, 28 Oct 2026 17:56:58 +0100
+Message-ID: <20261028170014.431030446@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -63,73 +63,92 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Timur Kristóf <timur.kristof@gmail.com>
+From: Mehmet Fide <mehmet.fide@screeningeagle.com>
 
-[ Upstream commit cd883d0a3937df82a5ea03709ba8ba623b868419 ]
+[ Upstream commit 68fe2faf5c69d0e21f94cd695d28f0ba677d484f ]
 
-Unfortunately, some desktop boards eg. the FirePro D500
-have the HARDWAREDC platform flag set and also have
-a battery power state configured in their VBIOS.
-This makes no sense for a desktop GPU and results in
-incorrect behaviour: the clocks are stuck at lowest.
+When the ECC engine fails to decode a page, the driver re-reads the OOB
+area with the engine bypassed, but runs the erased-page check for the
+data area on the buffer left in the controller SRAM by the failed
+transfer.
 
-We observed that the kernel driver can work around
-the issue in two possible ways:
-1. Set PPSMC_SWSTATE_FLAG_DC on all power states
-2. Clear PPSMC_SYSTEMFLAG_GPIO_DC
+That buffer does not hold what is on the flash: the failing engine
+writes a bogus single-bit "correction" into it. In the 60-byte ECC mode
+the all-0xff content of an erased page always decodes to the same error
+location, so every erased page shows one stale zero bit at data offset
+0x5FD, which the erased-page check then reports as a corrected bitflip.
 
-We think that the PPSMC_SYSTEMFLAG_GPIO_DC flag
-makes the SMC assume it's running on battery even
-though this is a desktop machine with no battery,
-and that's why it doesn't do DPM on power states
-without PPSMC_SYSTEMFLAG_GPIO_DC.
+Edward Karpicz discovered this behaviour and identified the offset on a
+Colibri VF61; the analysis and the fix build on his finding. Measured
+with an instrumented driver on a Colibri VF50 (MX30LF1G18AC, 32-bit
+ECC): reading a 126 MiB partition with nanddump increased the corrected
+counter by 18035, exactly one per erased page, while raw reads of the
+same pages return clean 0xff. A v4.4 kernel on the VF61 (MX30LF4G28AC)
+accumulates the same false counts, so the behaviour follows the
+controller rather than the chip or the driver generation. Neither the
+Vybrid reference manual nor the published mask set errata (VFXXX_2N02G)
+document it. The 45-byte ECC mode is not affected.
 
-Issue was uncovered by "Fix updating clock limits from
-power states" because previously the limits for the
-battery state were not tracked separately. However,
-battery power state has lower frequencies and voltages,
-so the kernel doesn't set the DC flag on the current
-power state anymore. That causes the SMC to be stuck
-on the lowest clocks.
+Restoring the known byte is not enough: on pages that fail to decode
+with content other than all-0xff the engine writes its correction
+wherever the syndrome points (measured at a different offset on such a
+page), so the check has to run on what the flash holds. Re-read the data
+area with the ECC engine bypassed, exactly as already done for the OOB
+area. The corrected counter then stays at zero on both boards.
 
-Let's clear PPSMC_SYSTEMFLAG_GPIO_DC on desktop GPUs.
-We can use the AMD_IS_MOBILITY flag to determine that.
-
-Fixes: e6c5d36756e7 ("drm/amd/pm/si: Fix updating clock limits from power states")
-Closes: https://gitlab.freedesktop.org/mesa/mesa/-/work_items/16352
-Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
-Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
-Link: https://patch.msgid.link/20260923120354.1027996-1-timur.kristof@gmail.com
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 58473c7c49ce9f5f5a4a1c24ffb9aa1d3c8771f4)
-Cc: stable@vger.kernel.org
+Reported-by: Edward Karpicz <webmaster@toradex.com>
+Link: https://community.toradex.com/t/colibri-vf50-vf61-on-the-current-bsp-mainline-u-boot-v2026-07-and-linux-6-18-lts/30735
+Signed-off-by: Mehmet Fide <mehmet.fide@screeningeagle.com>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/pm/powerplay/si_dpm.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/mtd/nand/raw/vf610_nfc.c | 15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/pm/powerplay/si_dpm.c b/drivers/gpu/drm/amd/pm/powerplay/si_dpm.c
-index 8cf2ad07ce620..be459903139fb 100644
---- a/drivers/gpu/drm/amd/pm/powerplay/si_dpm.c
-+++ b/drivers/gpu/drm/amd/pm/powerplay/si_dpm.c
-@@ -5164,7 +5164,8 @@ static int si_init_smc_table(struct amdgpu_device *adev)
- 		break;
- 	}
+diff --git a/drivers/mtd/nand/raw/vf610_nfc.c b/drivers/mtd/nand/raw/vf610_nfc.c
+index 6332e5c2765f1..4e536e53df9b7 100644
+--- a/drivers/mtd/nand/raw/vf610_nfc.c
++++ b/drivers/mtd/nand/raw/vf610_nfc.c
+@@ -518,6 +518,7 @@ static inline int vf610_nfc_correct_data(struct nand_chip *chip, uint8_t *dat,
+ 	u8 ecc_status;
+ 	u8 ecc_count;
+ 	int flips_threshold = nfc->chip.ecc.strength / 2;
++	int ret;
  
--	if (adev->pm.dpm.platform_caps & ATOM_PP_PLATFORM_CAP_HARDWAREDC)
-+	if ((adev->flags & AMD_IS_MOBILITY) &&
-+	    (adev->pm.dpm.platform_caps & ATOM_PP_PLATFORM_CAP_HARDWAREDC))
- 		table->systemFlags |= PPSMC_SYSTEMFLAG_GPIO_DC;
+ 	ecc_status = vf610_nfc_read(nfc, ecc_status_off) & 0xff;
+ 	ecc_count = ecc_status & ECC_STATUS_ERR_COUNT;
+@@ -525,15 +526,21 @@ static inline int vf610_nfc_correct_data(struct nand_chip *chip, uint8_t *dat,
+ 	if (!(ecc_status & ECC_STATUS_MASK))
+ 		return ecc_count;
  
- 	if (adev->pm.dpm.platform_caps & ATOM_PP_PLATFORM_CAP_REGULATOR_HOT) {
++	/* The failed decode leaves a bogus correction in SRAM; re-read without ECC */
+ 	nfc->data_access = true;
+-	nand_read_oob_op(&nfc->chip, page, 0, oob, vf610_nfc_spare_size(mtd));
++	ret = nand_read_page_op(&nfc->chip, page, 0, dat, mtd->writesize);
++	if (!ret)
++		ret = nand_read_oob_op(&nfc->chip, page, 0, oob,
++				       vf610_nfc_spare_size(mtd));
+ 	nfc->data_access = false;
++	if (ret)
++		return ret;
+ 
+ 	/*
+-	 * On an erased page, bit count (including OOB) should be zero or
+-	 * at least less then half of the ECC strength.
++	 * Run the erased-page check with the driver's historic threshold
++	 * of half the ECC strength.
+ 	 */
+-	return nand_check_erased_ecc_chunk(dat, nfc->chip.ecc.size, oob,
++	return nand_check_erased_ecc_chunk(dat, mtd->writesize, oob,
+ 					   vf610_nfc_spare_size(mtd), NULL, 0,
+ 					   flips_threshold);
+ }
 -- 
 2.53.0
 
