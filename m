@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793211519;
-	b=I42w5LUqJl5FAVDYDPJSp+LCwlT9h34fFZynwpQTk5j5frTOuZFykGzaOe9HUFE9Ew/k
-	 J2udlopXUm7fUKpZCwDWcZmU/4bumkuWOpquxjEYyHRd+7HlXFwjBoeMAFL9GVHk1OvtB
-	 KyEQwckHuLf+If5HaTbdBgwav+ZKTUMMoHk8RPgwTtJQGDMotZ2TBDs7g/RwGJxrsW0cy
-	 OdhYdcJJKX6R29elPsqe4h6Z0lAn7NcL0X5NYoPFDulAIukWL1L0LTZ8Ex6nRqLJffN/d
-	 3f7jyOJX8N5/PoSzcOJ1jtljQTOs4VceN8f330xV8GzhUqI4ome1gPGc24pQsKQyzYA==
+	t=1793211522;
+	b=BlDJHO7z7iK4SlXSdPxX8Lx5qc9HoxIgnUxDcRkUaM4k2t16SMiXYuVp6owXW10JApqt
+	 6jf75kEtIRslt9GvEKpehmO1Tv3xk95Tj9lo6mAvqVbCgO2R1WDmBWFP2i2eo/MzOZuGT
+	 pZd29x92a7Icyzsp3ziySp0l+LT2NUpwRVr22J1eAwW2xtwZUdOnqFlzK5LLi7QYqFDvU
+	 AYk+kALa0Z+ceR17tYmADsJ92ZJswKFxYV1e4GK0pi/0RoSUA+k/VNuchDOJkXBZv9B4d
+	 MYTtuftGLJwqWdMsriw14167B5VdUkcJCaKQOXptPts6msHpOw1V3qBXpJ2sOBhP9zA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793211519;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793211522;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Vtyb+Q/siPV1DUTutUyUkyA2nrZ0cPwjHEyORHLynl4=;
-	b=bt0FX0FVqJ8QS74h95qm6atAI4+PU6JXbOwC6aiThr2ODM6pozkCyJL0oTJfdp591JjT
-	 xSPX+P/CKoaBct78nSJ0R5kb50Nc2znVvLQE/gDwi3TajUStm7RHt50uN71MtOSRkDofJ
-	 gjF3wqPVhhhSZ6Uz2Cie2IomK+nuZJj05kk5/5cQxtWgFfQpTJQpJHQ4BzgEoJwnGoL9v
-	 z7aMuriGBgPVeSrC54GOCEGg/Ndpk70E/oZpwqqZhDDEd7vqwDN028sUOiY1L4FYlsm8u
-	 3eTMldgvZaZXIsJLs9aqQYFq3d4Do/bG6PzfvSGyMYIstSj7rKyO49S4ZZaVEGI4jLg==
+	bh=5pP99jXXM8c63mYdseTcadOhP73EDMDe/gpeIFskLR4=;
+	b=aPtftOjRQxWojhSoatmgQPT8hL8tlKK2FaKIhLclCHD1Emz3boL8dPT4pebYBBap6nz6
+	 7MFpD8L8K9671+kbDs4rq/4k0WS/YRCFJlAMHheOxhhQO3FKf39i05tZ3pk2K3pftWNYE
+	 oUsKHdDxsPCpcLq/kSocfMOVNMqannr4pr6UB0R9nkrUAejVsQi2GRf4yGluMcXzp93qY
+	 h5uAxW9/nQfuYufMy38r0IAqIiGheqTOTTYSAB9ahmt/naIBlTsdf0rPFeU9BEUK6STZA
+	 SBmno0GmjGddLYAhj0mh9hoiyMBvk1qSajKPZ3j23gN5tRAWVQXjO41mBTfFM6VvABw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=R8I9oGwD;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jJIMMREG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 183F8606A31C;
-	Wed, 28 Oct 2026 18:18:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B22EE606A31C;
+	Wed, 28 Oct 2026 18:18:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=R8I9oGwD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29C071F01825;
-	Wed, 28 Oct 2026 18:18:37 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jJIMMREG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BB211F01825;
+	Wed, 28 Oct 2026 18:18:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793211518;
-	bh=Vtyb+Q/siPV1DUTutUyUkyA2nrZ0cPwjHEyORHLynl4=;
+	s=korg; t=1793211521;
+	bh=5pP99jXXM8c63mYdseTcadOhP73EDMDe/gpeIFskLR4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=R8I9oGwDsXsQjGKG5wY/LsnO24nL6nZc2VaLzIuPALGJrmJ+UbrsF6wjKP7JdaaJl
-	 3YVOp/6hr8sCVprW2HqvJINhZi18XJlc1o1aLj1EnVgKsnUcX4l4uzuMR4G8i960wS
-	 pmNDxtIRzHUhq1XIc+LgRA0UqOFu6aFafhfHmbio=
+	b=jJIMMREGRQ9LQaVCp/xFvBVEqnfIvZWYjhTlCs+HCBpRnDfvL2D8fLOErOunINqJA
+	 BsbDuTsUcPD5huJG07i+NLrIL0X5WmO+caQu1iGBIb3T5Eq5a+FwRzRK2o1B5kQbRI
+	 JwIk4to2eKo0MRIUtYyCigy8NMVGxbDxr5rv+zfw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yibo Tan <lhfff@tju.edu.cn>,
-	Ulf Hansson <ulfh@kernel.org>
-Subject: [PATCH 5.15 369/571] mmc: mtk-sd: Cancel request timeout work on remove
-Date: Wed, 28 Oct 2026 17:58:36 +0100
-Message-ID: <20261028170016.769653782@linuxfoundation.org>
+	Tomas Winkler <tomas.winkler@intel.com>,
+	Alexander Usyskin <alexander.usyskin@intel.com>,
+	Zhang Xiaoxu <zhangxiaoxu5@huawei.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>
+Subject: [PATCH 5.15 405/571] mtd: Clean refcounting with MTD_PARTITIONED_MASTER
+Date: Wed, 28 Oct 2026 17:59:12 +0100
+Message-ID: <20261028170017.621276350@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -67,45 +69,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yibo Tan <lhfff@tju.edu.cn>
+From: Miquel Raynal <miquel.raynal@bootlin.com>
 
-commit b38af5386a74416e898955443f2e26547b358cb2 upstream.
+commit 264725e35fbc3b67e053a405e022393a6017e6da upstream.
 
-The driver queues req_timeout while a request is active.
-msdc_request_done() uses cancel_delayed_work(), which does not wait for
-a timeout callback that has already started.
+The logic is way too convoluted, let's clean the kref_get/put section to
+clarify what this block does when using CONFIG_MTD_PARTITIONED_MASTER:
+- Iterate through all the parent mtd devices
+- Grab a reference over them all but the master
+- Only grab the master whith CONFIG_MTD_PARTITIONED_MASTER
+Same logic must apply in the put path, otherwise it would be broken.
 
-The timeout callback calls mmc_request_done(), which wakes the request
-waiter, and then continues to use host->dev_comp and check the SDIO IRQ.
-During unbind, msdc_drv_remove() can return and the managed mmc_host can
-be freed before the callback finishes.
-
-KASAN reported use-after-free accesses in msdc_request_done() and
-msdc_recheck_sdio_irq() in each of three unbind tests.  The same tests
-completed without a kernel diagnostic after this change.
-
-Call cancel_delayed_work_sync() after mmc_remove_host() has stopped new
-requests and before the driver releases the host resources.
-
-Fixes: 208489032bdd ("mmc: mediatek: Add Mediatek MMC driver")
-Cc: stable@vger.kernel.org
-Assisted-by: Codex:GPT-5
-Signed-off-by: Yibo Tan <lhfff@tju.edu.cn>
-Signed-off-by: Ulf Hansson <ulfh@kernel.org>
+Cc: Tomas Winkler <tomas.winkler@intel.com>
+Cc: Alexander Usyskin <alexander.usyskin@intel.com>
+Cc: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
+Fixes: 19bfa9ebebb5 ("mtd: use refcount to prevent corruption")
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Tested-by: Alexander Usyskin <alexander.usyskin@intel.com>
+Link: https://lore.kernel.org/linux-mtd/20230731090903.770277-1-miquel.raynal@bootlin.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/mtk-sd.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/mtd/mtdcore.c |   17 ++++++++++-------
+ 1 file changed, 10 insertions(+), 7 deletions(-)
 
---- a/drivers/mmc/host/mtk-sd.c
-+++ b/drivers/mmc/host/mtk-sd.c
-@@ -2702,6 +2702,7 @@ static int msdc_drv_remove(struct platfo
+--- a/drivers/mtd/mtdcore.c
++++ b/drivers/mtd/mtdcore.c
+@@ -1175,14 +1175,15 @@ int __get_mtd_device(struct mtd_info *mt
+ 		return -ENODEV;
+ 	}
  
- 	platform_set_drvdata(pdev, NULL);
- 	mmc_remove_host(mmc);
-+	cancel_delayed_work_sync(&host->req_timeout);
- 	msdc_deinit_hw(host);
- 	msdc_gate_clock(host);
+-	kref_get(&mtd->refcnt);
+-
+-	while (mtd->parent) {
+-		if (IS_ENABLED(CONFIG_MTD_PARTITIONED_MASTER) || mtd->parent != master)
+-			kref_get(&mtd->parent->refcnt);
++	while (mtd) {
++		if (mtd != master)
++			kref_get(&mtd->refcnt);
+ 		mtd = mtd->parent;
+ 	}
+ 
++	if (IS_ENABLED(CONFIG_MTD_PARTITIONED_MASTER))
++		kref_get(&master->refcnt);
++
+ 	return 0;
+ }
+ EXPORT_SYMBOL_GPL(__get_mtd_device);
+@@ -1238,10 +1239,12 @@ void __put_mtd_device(struct mtd_info *m
+ {
+ 	struct mtd_info *master = mtd_get_master(mtd);
+ 
+-	while (mtd != master) {
++	while (mtd) {
++		/* kref_put() can relese mtd, so keep a reference mtd->parent */
+ 		struct mtd_info *parent = mtd->parent;
+ 
+-		kref_put(&mtd->refcnt, mtd_device_release);
++		if (mtd != master)
++			kref_put(&mtd->refcnt, mtd_device_release);
+ 		mtd = parent;
+ 	}
  
 
 
