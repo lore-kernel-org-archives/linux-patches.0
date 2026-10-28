@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214151;
-	b=h6gWgmKDDaHOsRm/CqPBJ/Gdh2qgib1LnrEu8rklA7skGwNKPKlwotKw/HaapINS5EkO
-	 Pw36ER02hjs1SdVe5qIXEaRuVp7JJDMrKFO2MRfsCXo+sAt+hBNa8yUSFMpvlJxguaZZP
-	 A/S/EzbksqyjriYtuzOp4lLQttiT94woS3QLnYt/BIfvjVmXR+W2R2avxmh1hyKSFB+9D
-	 CP0iE7t1wYbNXstNh8ViimvN2KhciWY4Wm/A6GaUA8nqUk388vIeauz4p2OxGiSWZ+EKr
-	 WTSkUC5rsAx9JAyWpLh2PnTBunI+wBp6jJR2XNZ7S54DAGjwuInGioWi9egL/sIZ3QQ==
+	t=1793214153;
+	b=bl7JvjcYEYh+QZfDFn7qfhF+GgULsOdG6XtwFzuLS7sQvOm+hWe2b9qDGYCCvX/xn+4I
+	 nucPzS5w5kr9+fqf3a5CekxcY7ptBqaVB1GfwihidMqsezRxjqZ9PZVWB/T/PYouX2rAZ
+	 6yHgb3MKCimpFNe+EDANFodfdBbd15HSyZ7VZ1tHPkdSL4Q29yf0ZcvRhj5hP9kMoz2en
+	 cLffNyeNNn8xUuLPMc4wRTMoBIcD6zowKSgoMVYQLgJUcvpwGEra5ok69RWx+C36gvvCu
+	 Amwr9JHEZYO7LN1ocZXz1XtGk2dusU7SDVVuQ9l07rhakqll1QZJjwMtrlwJxZmpGQg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214151;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214153;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=EEhBdsMviUUfU/yH8Bp+sdIuLi/hzQ2me7/15xN5K28=;
-	b=Ksn3a9LEBtOv4rKpuWJ9vIJvcSAguHxW+7eycsokmFqSINuDUCaV5sNWts3U6iiC/hae
-	 /MCb+8KUxw72CAsHzWoxAUTtIgsK7YbhKQ8NUaL5687q2yzLWvkTxgyo6wCbleKUpqvm2
-	 4wo8G12km3tcMihjE/R40foJ5/ral/oIFWUGLL7E4QObNiUqdHmaCFZxsmmiKNEC7KIym
-	 nV8ykHFTx4UWstae6s5EtqOm3kBg/VEFzkiZW8dZzCq+y0Wb3oyCqGFhZsglL2Wi+plrT
-	 s3f8BA3QXc+t9AIxBmIQEnil23o0haROqYAOHoqYwZPsfiDYVAMtLfs+jinMTz6DDMw==
+	bh=lg7X23zzE+rG7v5eL3QyG7U7JjkbLBU7ot7NH+Zc6+Q=;
+	b=cjXWh98ipoMWuDqzcoTFsOribug/eSSIuv+Gd8YWDiv4aywPhPgjmUWEBoovjJpUywJw
+	 syQgKBQXdGozVeHCetlNBJTxfIG48MWH2jT2Dwiwe2CYOwacs4jGzTEt5pnNqeXRzSHB4
+	 Iuyk/MB8YH5UdauVJZiyJp/M+IyHLBSAzCOC7ulDK0HB9UE50mDxjeNuC1zSYh4eooAiQ
+	 mrX8opWBpCU9ZNPN9NC6n18d6njuSTpmbTRrtapvr9UIjc5OoMSAsTwc4XTG130duZP9q
+	 jQzA37sY7tZYGn+Co+tI2mgHjEMX9bxbhPclIdJuNrqOTzPUVA7YGPuraaVb/1srjEQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MpKlB7kY;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=q+Jiw2KP;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 615F3606A31A;
-	Wed, 28 Oct 2026 19:02:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B0F3606A31A;
+	Wed, 28 Oct 2026 19:02:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MpKlB7kY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFD361F01825;
-	Wed, 28 Oct 2026 19:02:29 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=q+Jiw2KP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B8151F01825;
+	Wed, 28 Oct 2026 19:02:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214150;
-	bh=EEhBdsMviUUfU/yH8Bp+sdIuLi/hzQ2me7/15xN5K28=;
+	s=korg; t=1793214153;
+	bh=lg7X23zzE+rG7v5eL3QyG7U7JjkbLBU7ot7NH+Zc6+Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MpKlB7kY/v3j7k2Gr48m6m+z6Lxj3qaKNGu1tyYeTTXaPCy6fpHQndX2jKYY3WnxJ
-	 AuU3hnaJti8XEB7qHdtnb4+KfVHDZ2AFaAA4LQEKplaRA4lTd8GLS48dhoBJulDyl7
-	 hDAaFjdjLwE/DQoDEoPsq25mkdegkzaTnylWiLYI=
+	b=q+Jiw2KPjf7EoZcFpAIuSYwSVLQ4HXcJnf8IC4z+fcM4kgCU3n8S8FtBHCBH7nxvh
+	 2DhQvz9YlQPBfwwUHYUyh6iV1tBlGsJ9AYn+dXSLMwo8O//Wla8GU9r10kB9xMD3qX
+	 wh+Bm5n13+zw1iNdO05H7Nqhj05hG/ED3CHPCFOQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Norbert Szetei <norbert@doyensec.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	syzbot+31c2f641b850a348a734@syzkaller.appspotmail.com,
+	Edward Adam Davis <eadavis@qq.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0755/1887] ksmbd: fix use-after-free in ksmbd_free_work_struct
-Date: Wed, 28 Oct 2026 17:47:31 +0100
-Message-ID: <20261028170516.624508509@linuxfoundation.org>
+Subject: [PATCH 6.1 0756/1887] Bluetooth: L2CAP: Fix slab-use-after-free Read in l2cap_send_cmd
+Date: Wed, 28 Oct 2026 17:47:32 +0100
+Message-ID: <20261028170516.647975340@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,184 +69,191 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit bb39ed47065455604729404729d9116868638d31 ]
+[ Upstream commit b4f82f9ed43aefa79bec2504ae8c29be0c0f5d1d ]
 
-->interim_entry of ksmbd_work could be deleted after oplock is freed.
-We don't need to manage it with linked list. The interim request could be
-immediately sent whenever a oplock break wait is needed.
+After the hci sync command releases l2cap_conn, the hci receive data work
+queue references the released l2cap_conn when sending to the upper layer.
+Add hci dev lock to the hci receive data work queue to synchronize the two.
 
-Cc: stable@vger.kernel.org
-Reported-by: Norbert Szetei <norbert@doyensec.com>
-Tested-by: Norbert Szetei <norbert@doyensec.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+[1]
+BUG: KASAN: slab-use-after-free in l2cap_send_cmd+0x187/0x8d0 net/bluetooth/l2cap_core.c:954
+Read of size 8 at addr ffff8880271a4000 by task kworker/u9:2/5837
+
+CPU: 0 UID: 0 PID: 5837 Comm: kworker/u9:2 Not tainted 6.13.0-rc5-syzkaller-00163-gab75170520d4 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 09/13/2024
+Workqueue: hci1 hci_rx_work
+Call Trace:
+ <TASK>
+ __dump_stack lib/dump_stack.c:94 [inline]
+ dump_stack_lvl+0x241/0x360 lib/dump_stack.c:120
+ print_address_description mm/kasan/report.c:378 [inline]
+ print_report+0x169/0x550 mm/kasan/report.c:489
+ kasan_report+0x143/0x180 mm/kasan/report.c:602
+ l2cap_build_cmd net/bluetooth/l2cap_core.c:2964 [inline]
+ l2cap_send_cmd+0x187/0x8d0 net/bluetooth/l2cap_core.c:954
+ l2cap_sig_send_rej net/bluetooth/l2cap_core.c:5502 [inline]
+ l2cap_sig_channel net/bluetooth/l2cap_core.c:5538 [inline]
+ l2cap_recv_frame+0x221f/0x10db0 net/bluetooth/l2cap_core.c:6817
+ hci_acldata_packet net/bluetooth/hci_core.c:3797 [inline]
+ hci_rx_work+0x508/0xdb0 net/bluetooth/hci_core.c:4040
+ process_one_work kernel/workqueue.c:3229 [inline]
+ process_scheduled_works+0xa66/0x1840 kernel/workqueue.c:3310
+ worker_thread+0x870/0xd30 kernel/workqueue.c:3391
+ kthread+0x2f0/0x390 kernel/kthread.c:389
+ ret_from_fork+0x4b/0x80 arch/x86/kernel/process.c:147
+ ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:244
+ </TASK>
+
+Allocated by task 5837:
+ kasan_save_stack mm/kasan/common.c:47 [inline]
+ kasan_save_track+0x3f/0x80 mm/kasan/common.c:68
+ poison_kmalloc_redzone mm/kasan/common.c:377 [inline]
+ __kasan_kmalloc+0x98/0xb0 mm/kasan/common.c:394
+ kasan_kmalloc include/linux/kasan.h:260 [inline]
+ __kmalloc_cache_noprof+0x243/0x390 mm/slub.c:4329
+ kmalloc_noprof include/linux/slab.h:901 [inline]
+ kzalloc_noprof include/linux/slab.h:1037 [inline]
+ l2cap_conn_add+0xa9/0x8e0 net/bluetooth/l2cap_core.c:6860
+ l2cap_connect_cfm+0x115/0x1090 net/bluetooth/l2cap_core.c:7239
+ hci_connect_cfm include/net/bluetooth/hci_core.h:2057 [inline]
+ hci_remote_features_evt+0x68e/0xac0 net/bluetooth/hci_event.c:3726
+ hci_event_func net/bluetooth/hci_event.c:7473 [inline]
+ hci_event_packet+0xac2/0x1540 net/bluetooth/hci_event.c:7525
+ hci_rx_work+0x3f3/0xdb0 net/bluetooth/hci_core.c:4035
+ process_one_work kernel/workqueue.c:3229 [inline]
+ process_scheduled_works+0xa66/0x1840 kernel/workqueue.c:3310
+ worker_thread+0x870/0xd30 kernel/workqueue.c:3391
+ kthread+0x2f0/0x390 kernel/kthread.c:389
+ ret_from_fork+0x4b/0x80 arch/x86/kernel/process.c:147
+ ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:244
+
+Freed by task 54:
+ kasan_save_stack mm/kasan/common.c:47 [inline]
+ kasan_save_track+0x3f/0x80 mm/kasan/common.c:68
+ kasan_save_free_info+0x40/0x50 mm/kasan/generic.c:582
+ poison_slab_object mm/kasan/common.c:247 [inline]
+ __kasan_slab_free+0x59/0x70 mm/kasan/common.c:264
+ kasan_slab_free include/linux/kasan.h:233 [inline]
+ slab_free_hook mm/slub.c:2353 [inline]
+ slab_free mm/slub.c:4613 [inline]
+ kfree+0x196/0x430 mm/slub.c:4761
+ l2cap_connect_cfm+0xcc/0x1090 net/bluetooth/l2cap_core.c:7235
+ hci_connect_cfm include/net/bluetooth/hci_core.h:2057 [inline]
+ hci_conn_failed+0x287/0x400 net/bluetooth/hci_conn.c:1266
+ hci_abort_conn_sync+0x56c/0x11f0 net/bluetooth/hci_sync.c:5603
+ hci_cmd_sync_work+0x22b/0x400 net/bluetooth/hci_sync.c:332
+ process_one_work kernel/workqueue.c:3229 [inline]
+ process_scheduled_works+0xa66/0x1840 kernel/workqueue.c:3310
+ worker_thread+0x870/0xd30 kernel/workqueue.c:3391
+ kthread+0x2f0/0x390 kernel/kthread.c:389
+ ret_from_fork+0x4b/0x80 arch/x86/kernel/process.c:147
+ ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:244
+
+Reported-by: syzbot+31c2f641b850a348a734@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=31c2f641b850a348a734
+Tested-by: syzbot+31c2f641b850a348a734@syzkaller.appspotmail.com
+Signed-off-by: Edward Adam Davis <eadavis@qq.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/ksmbd_work.c |  3 ---
- fs/smb/server/ksmbd_work.h |  1 -
- fs/smb/server/oplock.c     | 37 +++++++++++++++----------------------
- fs/smb/server/oplock.h     |  1 -
- 4 files changed, 15 insertions(+), 27 deletions(-)
+ net/bluetooth/l2cap_core.c | 39 +++++++++++++++++++++++++++++++++-----
+ 1 file changed, 34 insertions(+), 5 deletions(-)
 
-diff --git a/fs/smb/server/ksmbd_work.c b/fs/smb/server/ksmbd_work.c
-index d7c676c151e20..544d8ccd29b0a 100644
---- a/fs/smb/server/ksmbd_work.c
-+++ b/fs/smb/server/ksmbd_work.c
-@@ -26,7 +26,6 @@ struct ksmbd_work *ksmbd_alloc_work_struct(void)
- 		INIT_LIST_HEAD(&work->request_entry);
- 		INIT_LIST_HEAD(&work->async_request_entry);
- 		INIT_LIST_HEAD(&work->fp_entry);
--		INIT_LIST_HEAD(&work->interim_entry);
- 		INIT_LIST_HEAD(&work->aux_read_list);
- 		work->iov_alloc_cnt = 4;
- 		work->iov = kcalloc(work->iov_alloc_cnt, sizeof(struct kvec),
-@@ -56,8 +55,6 @@ void ksmbd_free_work_struct(struct ksmbd_work *work)
- 	kfree(work->tr_buf);
- 	kvfree(work->request_buf);
- 	kfree(work->iov);
--	if (!list_empty(&work->interim_entry))
--		list_del(&work->interim_entry);
- 
- 	if (work->async_id)
- 		ksmbd_release_id(&work->conn->async_ida, work->async_id);
-diff --git a/fs/smb/server/ksmbd_work.h b/fs/smb/server/ksmbd_work.h
-index 9c3f834901e13..6372ba368e14a 100644
---- a/fs/smb/server/ksmbd_work.h
-+++ b/fs/smb/server/ksmbd_work.h
-@@ -96,7 +96,6 @@ struct ksmbd_work {
- 	/* List head at conn->async_requests */
- 	struct list_head                async_request_entry;
- 	struct list_head                fp_entry;
--	struct list_head                interim_entry;
- };
- 
- /**
-diff --git a/fs/smb/server/oplock.c b/fs/smb/server/oplock.c
-index 31f84f59e40a7..58f351be5d905 100644
---- a/fs/smb/server/oplock.c
-+++ b/fs/smb/server/oplock.c
-@@ -45,7 +45,6 @@ static struct oplock_info *alloc_opinfo(struct ksmbd_work *work,
- 	opinfo->fid = id;
- 	opinfo->Tid = Tid;
- 	INIT_LIST_HEAD(&opinfo->op_entry);
--	INIT_LIST_HEAD(&opinfo->interim_list);
- 	init_waitqueue_head(&opinfo->oplock_q);
- 	init_waitqueue_head(&opinfo->oplock_brk);
- 	atomic_set(&opinfo->refcount, 1);
-@@ -830,7 +829,6 @@ static void __smb2_lease_break_noti(struct work_struct *wk)
- static int smb2_lease_break_noti(struct oplock_info *opinfo)
- {
- 	struct ksmbd_conn *conn = opinfo->conn;
--	struct list_head *tmp, *t;
- 	struct ksmbd_work *work;
- 	struct lease_break_info *br_info;
- 	struct lease *lease = opinfo->o_lease;
-@@ -858,16 +856,6 @@ static int smb2_lease_break_noti(struct oplock_info *opinfo)
- 	work->sess = opinfo->sess;
- 
- 	if (opinfo->op_state == OPLOCK_ACK_WAIT) {
--		list_for_each_safe(tmp, t, &opinfo->interim_list) {
--			struct ksmbd_work *in_work;
--
--			in_work = list_entry(tmp, struct ksmbd_work,
--					     interim_entry);
--			setup_async_work(in_work, NULL, NULL);
--			smb2_send_interim_resp(in_work, STATUS_PENDING);
--			list_del_init(&in_work->interim_entry);
--			release_async_work(in_work);
--		}
- 		ksmbd_conn_r_count_inc(conn);
- 		INIT_WORK(&work->work, __smb2_lease_break_noti);
- 		ksmbd_queue_work(work);
-@@ -899,7 +887,8 @@ static void wait_lease_breaking(struct oplock_info *opinfo)
- 	}
+diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
+index cdbb8dc3b7267..e570b44c16003 100644
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -998,6 +998,16 @@ static int l2cap_get_ident(struct l2cap_conn *conn)
+ 	return ident;
  }
  
--static int oplock_break(struct oplock_info *brk_opinfo, int req_op_level)
-+static int oplock_break(struct oplock_info *brk_opinfo, int req_op_level,
-+			struct ksmbd_work *in_work)
- {
- 	int err = 0;
- 
-@@ -942,9 +931,15 @@ static int oplock_break(struct oplock_info *brk_opinfo, int req_op_level)
- 		}
- 
- 		if (lease->state & (SMB2_LEASE_WRITE_CACHING_LE |
--				SMB2_LEASE_HANDLE_CACHING_LE))
-+				SMB2_LEASE_HANDLE_CACHING_LE)) {
-+			if (in_work) {
-+				setup_async_work(in_work, NULL, NULL);
-+				smb2_send_interim_resp(in_work, STATUS_PENDING);
-+				release_async_work(in_work);
-+			}
++static void l2cap_send_acl(struct l2cap_conn *conn, struct sk_buff *skb,
++			   u8 flags)
++{
++	/* Check if the hcon still valid before attempting to send */
++	if (hci_conn_valid(conn->hcon->hdev, conn->hcon))
++		hci_send_acl(conn->hchan, skb, flags);
++	else
++		kfree_skb(skb);
++}
 +
- 			brk_opinfo->op_state = OPLOCK_ACK_WAIT;
--		else
-+		} else
- 			atomic_dec(&brk_opinfo->breaking_cnt);
- 	} else {
- 		err = oplock_break_pending(brk_opinfo, req_op_level);
-@@ -1151,7 +1146,7 @@ void smb_send_parent_lease_break_noti(struct ksmbd_file *fp,
- 			}
+ static void l2cap_send_cmd(struct l2cap_conn *conn, u8 ident, u8 code, u16 len,
+ 			   void *data)
+ {
+@@ -1020,7 +1030,7 @@ static void l2cap_send_cmd(struct l2cap_conn *conn, u8 ident, u8 code, u16 len,
+ 	bt_cb(skb)->force_active = BT_POWER_FORCE_ACTIVE_ON;
+ 	skb->priority = HCI_PRIO_MAX;
  
- 			read_unlock(&p_ci->m_lock);
--			oplock_break(opinfo, SMB2_OPLOCK_LEVEL_NONE);
-+			oplock_break(opinfo, SMB2_OPLOCK_LEVEL_NONE, NULL);
- 			opinfo_conn_put(opinfo);
- 			read_lock(&p_ci->m_lock);
- 		}
-@@ -1192,7 +1187,7 @@ void smb_lazy_parent_lease_break_close(struct ksmbd_file *fp)
- 				continue;
- 			}
- 			read_unlock(&p_ci->m_lock);
--			oplock_break(opinfo, SMB2_OPLOCK_LEVEL_NONE);
-+			oplock_break(opinfo, SMB2_OPLOCK_LEVEL_NONE, NULL);
- 			opinfo_conn_put(opinfo);
- 			read_lock(&p_ci->m_lock);
- 		}
-@@ -1293,8 +1288,7 @@ int smb_grant_oplock(struct ksmbd_work *work, int req_op_level, u64 pid,
- 		goto op_break_not_needed;
- 	}
- 
--	list_add(&work->interim_entry, &prev_opinfo->interim_list);
--	err = oplock_break(prev_opinfo, SMB2_OPLOCK_LEVEL_II);
-+	err = oplock_break(prev_opinfo, SMB2_OPLOCK_LEVEL_II, work);
- 	opinfo_conn_put(prev_opinfo);
- 	if (err == -ENOENT)
- 		goto set_lev;
-@@ -1363,8 +1357,7 @@ static void smb_break_all_write_oplock(struct ksmbd_work *work,
- 	}
- 
- 	brk_opinfo->open_trunc = is_trunc;
--	list_add(&work->interim_entry, &brk_opinfo->interim_list);
--	oplock_break(brk_opinfo, SMB2_OPLOCK_LEVEL_II);
-+	oplock_break(brk_opinfo, SMB2_OPLOCK_LEVEL_II, work);
- 	opinfo_conn_put(brk_opinfo);
+-	hci_send_acl(conn->hchan, skb, flags);
++	l2cap_send_acl(conn, skb, flags);
  }
  
-@@ -1427,7 +1420,7 @@ void smb_break_all_levII_oplock(struct ksmbd_work *work, struct ksmbd_file *fp,
- 			    SMB2_LEASE_KEY_SIZE))
- 			goto next;
- 		brk_op->open_trunc = is_trunc;
--		oplock_break(brk_op, SMB2_OPLOCK_LEVEL_NONE);
-+		oplock_break(brk_op, SMB2_OPLOCK_LEVEL_NONE, NULL);
- next:
- 		opinfo_conn_put(brk_op);
- 		rcu_read_lock();
-diff --git a/fs/smb/server/oplock.h b/fs/smb/server/oplock.h
-index 0e2b1d63ca26b..1890e7f82427e 100644
---- a/fs/smb/server/oplock.h
-+++ b/fs/smb/server/oplock.h
-@@ -74,7 +74,6 @@ struct oplock_info {
- 	bool			is_lease;
- 	bool			open_trunc;	/* truncate on open */
- 	struct lease		*o_lease;
--	struct list_head        interim_list;
- 	struct list_head        op_entry;
- 	struct list_head        lease_entry;
- 	wait_queue_head_t oplock_q; /* Other server threads */
+ static void l2cap_do_send(struct l2cap_chan *chan, struct sk_buff *skb)
+@@ -1843,10 +1853,7 @@ static void l2cap_conn_del(struct hci_conn *hcon, int err)
+ 
+ 	mutex_unlock(&conn->chan_lock);
+ 
+-	hci_chan_del(conn->hchan);
+-
+ 	hcon->l2cap_data = NULL;
+-	conn->hchan = NULL;
+ 	l2cap_conn_put(conn);
+ }
+ 
+@@ -1854,6 +1861,7 @@ static void l2cap_conn_free(struct kref *ref)
+ {
+ 	struct l2cap_conn *conn = container_of(ref, struct l2cap_conn, ref);
+ 
++	hci_chan_del(conn->hchan);
+ 	hci_conn_put(conn->hcon);
+ 	kfree(conn);
+ }
+@@ -7813,14 +7821,33 @@ static void l2cap_recv_reset(struct l2cap_conn *conn)
+ 	conn->rx_len = 0;
+ }
+ 
++static struct l2cap_conn *l2cap_conn_hold_unless_zero(struct l2cap_conn *c)
++{
++	BT_DBG("conn %p orig refcnt %u", c, kref_read(&c->ref));
++
++	if (!kref_get_unless_zero(&c->ref))
++		return NULL;
++
++	return c;
++}
++
+ void l2cap_recv_acldata(struct hci_conn *hcon, struct sk_buff *skb, u16 flags)
+ {
+-	struct l2cap_conn *conn = hcon->l2cap_data;
++	struct l2cap_conn *conn;
+ 	int len;
+ 
++	/* Lock hdev to access l2cap_data to avoid race with l2cap_conn_del */
++	hci_dev_lock(hcon->hdev);
++
++	conn = hcon->l2cap_data;
++
+ 	if (!conn)
+ 		conn = l2cap_conn_add(hcon);
+ 
++	conn = l2cap_conn_hold_unless_zero(conn);
++
++	hci_dev_unlock(hcon->hdev);
++
+ 	if (!conn)
+ 		goto drop;
+ 
+@@ -7912,6 +7939,8 @@ void l2cap_recv_acldata(struct hci_conn *hcon, struct sk_buff *skb, u16 flags)
+ 		break;
+ 	}
+ 
++	l2cap_conn_put(conn);
++
+ drop:
+ 	kfree_skb(skb);
+ }
 -- 
 2.53.0
 
