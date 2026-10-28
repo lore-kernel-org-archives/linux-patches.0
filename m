@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793211431;
-	b=zUud5llLcYb3CLPAx1p+rHI6PNla1tNGdViInvDkKJ651thXjc3JKEAEkNCCeYS9H1Cp
-	 WkGpqJE+YHbxjpr8gVugpqCU7DQI6nJuX/CuqXeVS7h6piFqqXoeGevmJJ3Qht5MxNxBx
-	 pNtTU0Zff8Hlkbc3FJSQBfMXpDjQNWlS+Ey1b4fRKrmQM5ltnxPrFot153hKYOXn1FM0u
-	 NUltrRdDbJBstCWP4I8rywlLPKODg2Vn3iNWo/EhdmGCDA6Uf3tID9HXAv4si2F/y8/zk
-	 hfgnhBdjnJoKFrLM12Qg9OVn+cvH+heNrAEW8CqLiq4WxQL+17ROCKACuP7j0GbozZw==
+	t=1793211433;
+	b=KoALXuvhMueYR1A01THdQagZwl0wULvxIJTELpkRAavU7d+0r9x6tCN9pBxt6A5r/O6+
+	 ZL6qssPPJSLWmBVRqHpFRoM/5CkVOzUGkJ2x7oLaySLAWs7nL5366BJ9mNptgegxurwAU
+	 EYBVHZaPWrLwdkjeD60K0PVhJGTt+eZA4M4aV5+Onr78wIe5DujZqSyMWB8KOz6HBYqzu
+	 wiJV/4RzK8w1bvJaralMXpgqCihovPCjWzc23wN/WXu6vHCkuzETCkwEIaMr0jGikO0PM
+	 bjejyVaHco2f9awNUOHCqApUAcmpCOD7DcemttyBlssTmRE1G7A3cElq/9Soewl0W+A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793211431;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793211433;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=8kyiRtM8veVYvZWEObkaMtx3MYXXjpWMZSnEauC6mZU=;
-	b=TcKQgiKDe2iqe0aVDp2cH4jKfwwDmX7082yT6n5FtgLHgv0Y5c4V3S8mWJnUEiwm8+ij
-	 1wmPEWcOQVxvBadnNDa1cjRpbJxSdy2WlL4R0YutBZUAStatEojHBOYtMegM+5fHxEPhq
-	 gkhMQLs8JCgojILQR3e3OKjiFWLWPpNpjfhcWdVv13tWLE8Y8dWEMBgNXu9iDwpF2Azpi
-	 o4KlepxXrLSDkaz/dBc9Iilke7Q8mZXkqSNs11e8k6niCDc/jsPj7j9DZdSL765IAjuyV
-	 qy139Ech7NtWUIt0GLzF66ihVhHfRhxB+H5NXorvZ1C//n9N00D6FBGBK9kC6z5UovQ==
+	bh=wib2m3Lpesib/L/gG4et9Don/FDNldjzfRy8f1W4+20=;
+	b=5a+S2AzwroIngUXDlAQLtmzRZ1belcESRhIkBBGezIZ3N7BJUoy5Jk1mqpFZpeEkQGdh
+	 UGEeLFWWPUxmnAXhat7LQXl3h2VTBf75xVmCYDFdk8ptQtM1AewFu5U9qTHB5WdV1E/sB
+	 kTG+hL6KW7wPDnLzILJxUN97rd1+R/S/OHI4NdbTPCY3EwIumuNotO/510MZcHNF1b6Qv
+	 5C2X/taAXYlk1rM9G8o7e2sJ4VSyBADHHRxd+VdCcxWzU1BGWGvDZH1Zy5zSqMpfien+7
+	 JmXzj0H1DVbW1hCOzkEWELi6OZlsQ05/aEnr4Gc5cPFZBB6W7Y+K7cy9ipwvUFXASPQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FJgodSDZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="u+ffmqj/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA80E606A327;
-	Wed, 28 Oct 2026 18:17:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56869606A327;
+	Wed, 28 Oct 2026 18:17:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FJgodSDZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7FC11F01825;
-	Wed, 28 Oct 2026 18:17:09 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=u+ffmqj/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4E801F01825;
+	Wed, 28 Oct 2026 18:17:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793211430;
-	bh=8kyiRtM8veVYvZWEObkaMtx3MYXXjpWMZSnEauC6mZU=;
+	s=korg; t=1793211433;
+	bh=wib2m3Lpesib/L/gG4et9Don/FDNldjzfRy8f1W4+20=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FJgodSDZR8uefnmVjDFDRjD5nExB5l/zTctpXBqXZvt1cplNqU7xtzvGqiaGq2PjM
-	 PJyoz69LXNEbKBrzJvZNXHHGn+UJ6XdWrWkeSAghQ4Ie3/8vokOrmiznSfx6Xo2abB
-	 my6hFrJ+VlVtmXbrYMgVtcO0xESLJDHRdj7cPoa8=
+	b=u+ffmqj/5/fILajVLKYMPxkUA0CK/FF3jn1f9xRWJ5CALV5us9XoOFGnL2iqXYg4K
+	 5cFHZ5mkSy9aRsGJ9lVm2xtQzrKjWsAJAHE6X+N11+tcViu+KZcWWCq73m8p/OrGnp
+	 VJtGabbO5ohwQ6Yu0HnNpmogygfFZCKwNrRZTxpE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Denis V. Lunev" <den@openvz.org>,
-	Ilya Maximets <i.maximets@ovn.org>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 5.15 376/571] openvswitch: fix soft lockup in the netlink flow dump
-Date: Wed, 28 Oct 2026 17:58:43 +0100
-Message-ID: <20261028170016.934635728@linuxfoundation.org>
+	Abhishek Ojha <Abhishek.ojha@savoirfairelinux.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 5.15 377/571] regulator: ltc3676: dont read the write-only HRST and CLIRQ registers
+Date: Wed, 28 Oct 2026 17:58:44 +0100
+Message-ID: <20261028170016.957877962@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -68,73 +67,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Denis V. Lunev <den@openvz.org>
+From: Abhishek Ojha <Abhishek.ojha@savoirfairelinux.com>
 
-commit aaaaf87ea99b8766c9a8aa0e71aa42e6bc8a5320 upstream.
+commit 28c2388ee24cdbefbcc458fa41ef7bffaaa1cc83 upstream.
 
-A production compute node carrying a few thousand datapath flows hit a
-soft lockup inside a single netlink flow dump and panicked.
+HRST (0x1e) and CLIRQ (0x1f) are write-only command strobes. Writing HRST
+triggers a hard reset of the chip and writing CLIRQ clears the interrupt;
+reading them returns nothing useful, and the read itself fires the command.
 
-ovs_flow_cmd_dump() calls ovs_flow_stats_get() for every flow it
-emits, and that releases stats->lock with spin_unlock_bh() once per
-CPU that has touched the flow. Every release is a local_bh_enable(),
-and each one runs the pending softirq backlog in the dumping thread's
-own context.
+The result is that a plain register dump resets the board:
 
-The skb bounds the flows one callback emits, but not the softirq work
-it absorbs. On a CPU that carries the box's packet load the backlog
-refills as fast as it drains, so the dumping thread becomes that CPU's
-softirq engine. It never sleeps and it has no reschedule point, so
-under voluntary preemption nothing can take the CPU away from it:
-neither the ksoftirqd the kernel woke to take the work over, nor the
-stopper thread the softlockup detector dispatches to refresh its
-timestamp.
+  cat /sys/kernel/debug/regmap/2-003c/registers
 
-Hold BH off across the whole callback instead, the way
-ctnetlink_dump_table() does, so the nested spin_unlock_bh() stop
-draining softirqs. The loop already runs under rcu_read_lock() and
-cannot sleep. What it gives up is preemption under CONFIG_PREEMPT,
-since a BH-off region is not preemptible outside PREEMPT_RT. The
-region stays short: the skb caps the flows one callback emits, and
-empty buckets cost no skb space but are each visited once per dump, as
-the cursor only moves forward. The table grows on insert and shrinks
-only on flush, so the walk is bounded by the largest flow count the
-datapath has held. The softirq backlog the callback used to absorb has
-no bound at all.
+walks every readable register, hits HRST, and the board reboots.
 
-Fixes: 63e7959c4b9b ("openvswitch: Per NUMA node flow stats.")
+Split the callback back in two so HRST and CLIRQ stay writable but are no
+longer readable. The readable range is left unchanged
+(LTC3676_BUCK1 ... LTC3676_IRQSTAT).
+
+Fixes: 37b918a034fe ("regulator: Add LTC3676 support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Denis V. Lunev <den@openvz.org>
-Reviewed-by: Ilya Maximets <i.maximets@ovn.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Abhishek Ojha <Abhishek.ojha@savoirfairelinux.com>
+Link: https://patch.msgid.link/20260902010701.3360310-1-Abhishek.ojha@savoirfairelinux.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/openvswitch/datapath.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/regulator/ltc3676.c |   15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
 
---- a/net/openvswitch/datapath.c
-+++ b/net/openvswitch/datapath.c
-@@ -1474,6 +1474,12 @@ static int ovs_flow_cmd_dump(struct sk_b
- 		return -ENODEV;
- 	}
+--- a/drivers/regulator/ltc3676.c
++++ b/drivers/regulator/ltc3676.c
+@@ -232,7 +232,7 @@ static const struct regulator_desc ltc36
+ 	LTC3676_FIXED_REG(LDO4, ldo4, LDOB, 2),
+ };
  
-+	/*
-+	 * Not needed for safety. Stops every spin_unlock_bh() in
-+	 * ovs_flow_stats_get() from running the softirq backlog.
-+	 */
-+	local_bh_disable();
-+
- 	ti = rcu_dereference(dp->table.ti);
- 	for (;;) {
- 		struct sw_flow *flow;
-@@ -1494,6 +1500,8 @@ static int ovs_flow_cmd_dump(struct sk_b
- 		cb->args[0] = bucket;
- 		cb->args[1] = obj;
- 	}
-+
-+	local_bh_enable();
- 	rcu_read_unlock();
- 	return skb->len;
+-static bool ltc3676_readable_writeable_reg(struct device *dev, unsigned int reg)
++static bool ltc3676_writeable_reg(struct device *dev, unsigned int reg)
+ {
+ 	switch (reg) {
+ 	case LTC3676_BUCK1 ... LTC3676_IRQSTAT:
+@@ -243,6 +243,15 @@ static bool ltc3676_readable_writeable_r
+ 	return false;
  }
+ 
++static bool ltc3676_readable_reg(struct device *dev, unsigned int reg)
++{
++	switch (reg) {
++	case LTC3676_BUCK1 ... LTC3676_IRQSTAT:
++		return true;
++	}
++	return false;
++}
++
+ static bool ltc3676_volatile_reg(struct device *dev, unsigned int reg)
+ {
+ 	switch (reg) {
+@@ -255,8 +264,8 @@ static bool ltc3676_volatile_reg(struct
+ static const struct regmap_config ltc3676_regmap_config = {
+ 	.reg_bits = 8,
+ 	.val_bits = 8,
+-	.writeable_reg = ltc3676_readable_writeable_reg,
+-	.readable_reg = ltc3676_readable_writeable_reg,
++	.writeable_reg = ltc3676_writeable_reg,
++	.readable_reg = ltc3676_readable_reg,
+ 	.volatile_reg = ltc3676_volatile_reg,
+ 	.max_register = LTC3676_CLIRQ,
+ 	.use_single_read = true,
 
 
