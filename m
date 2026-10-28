@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216035;
-	b=RqcvPOmnw8P+E6iaPluOU118Bvf1sxrZ0saEm+78zTINuDV3eEmr4YWUwQhaA0PjBVS5
-	 1CHXxwAsig70YIrPmkzjcInkXzbR6rxHEoG4SCJgym4F4yLGEf5hJ12nRB1DNehUQ9GFv
-	 O+bTgjMoHNNW0aWJGTuuaYVc7OAr9Cd0nyTxa7iJUD7ArjRr6fT+94oTOa+EoODdalKUr
-	 0NbTrCm7MuXwTxHhsYNvayMPJl6JIJc1ImSU9hHgNbKOxEpYtksVxWp1d75th6PBBmU9v
-	 Hq85yfloFxPZF2WSVVUG/xRJoiVJxgK+F+ASyFccTNEPLm56sf8IciI5QO0SFtdlpeA==
+	t=1793216038;
+	b=NXnEEZ4TB96CXA/dkZDGJWIEi7uIccwDsk3tT1h+MNDn+C7nIbcvnMYK6bGfAFUdFaiE
+	 wYoGZxCqfoMY15OZr7wht/UcU0QoR2mhaPI12ztaZTJGaIm7kqqSfpco0JDC0i4GhtGe9
+	 +0LceULJh63RAfo7L80LqsS5pZI4VM4XBGtcWJ98Ou6Lp1AgTX0vPzaB7qWwfUeubAmKp
+	 qA/VKeTWmlNmOxM/Uqwh2KQ3Lj/RYmWdoVMPhrkfabpomFS2wKbB54N1Ms+PlPUsFgWfk
+	 i3b4yavns4dEFziPRTATicuBgZnGpz/VgJSCSh79o3I9Blx+H27O3cG2EEuLsD4je4w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216035;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216038;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=SuHITySUicMvhnzxma9GmRjrkKBqelfmpo1cBYeN0QM=;
-	b=NTVlFCUxNt5bT5BgTlfD7UbsPnRxADxk76gBF1+sqpc9JkVR1bdQd5izagjzT2+tv2KG
-	 zioY+UwWSq1p3I4gQVIsWw2R24JEN/h93wNPzvSlTAeMOuDhT0nzVsYapmg6nbYs06n1+
-	 38j3jKhTD3XPQbeShKE2mZMyYNWJq2+PfwZzuN4oEPCCpkD3EnpYgDU8sL2p8ipylkE0i
-	 dQhyLvmcgZ3tfrm1He8VCCnwKWI5irA9yTs4FBANLYZQ94jADabtPNN8Jq9v19XPmKlK0
-	 DRmczgWK4DawKGIRjQDjjldT0iNYSD6ZHH7RJvjWEpsk4ne0Y5iOn0Lvrm4qHnZUnHA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=tlGHzF15xrf36oozBcuE0hQl6pbqozZRaaGJYlL0CQE=;
+	b=wlbcK1k2lXLiDLWROQBQUcIdjiTT6aJ52B1LVal2HHduCEZBvdbB6MA4meLofAHJp3fR
+	 /LnzOuvLuiBJ3q0xvUpvHJu8SsasxRY0eea0rZc1FvmOnL3oXLfxfgS09C7ENmmlQ3Bli
+	 EqUzn06ju600op+wrvJxF2CyGQJgqemRQLBQOReIBekNHt2BbspAzodtShXyMHWxMzRTZ
+	 IhBBgL/zGjnbvF4MOxlGH7LsFVDboRxAr2Pt2QlM/VRFe/Ml/+UWKgic/DsUOKeqCpGY8
+	 QTQab58EnNBM6EB5cywZHr3qSSSAVt7I+aWaavaKaxsTFy7gRguQDYDF7yZ+Mx9KyZw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OlQNCTPh;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BDF727DX;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 100A4606A31C;
-	Wed, 28 Oct 2026 19:33:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5D4B606A31A;
+	Wed, 28 Oct 2026 19:33:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OlQNCTPh
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E7DC1F01825;
-	Wed, 28 Oct 2026 19:33:54 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BDF727DX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EDAE1F01825;
+	Wed, 28 Oct 2026 19:33:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216034;
-	bh=SuHITySUicMvhnzxma9GmRjrkKBqelfmpo1cBYeN0QM=;
+	s=korg; t=1793216037;
+	bh=tlGHzF15xrf36oozBcuE0hQl6pbqozZRaaGJYlL0CQE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OlQNCTPhHCoLvk6o8V/1T9HZepn2SFSdFTS/GATxzMzCHh8H/0SIwJJKKgZcFFItB
-	 7lV1dfyUZ0k44ssSwm2gmuxMhMgp7dk1azZ3NoLgvRQlE9TcOAJ0/g01JWXjfra6Lt
-	 pc2r9yTW8/hhvbl/WI2tJi3UOFiKyGZGfxxrrR0c=
+	b=BDF727DXwUGMw0w8GbXNRC26PCEpSJBn5bQNhoyF56xzn38E6FlRT7DMLVgUJNe9K
+	 LsQh2+04/3CmYESmtEz5T7ThEfvHwuWM3sz/JpxTojMHsuyfNUsLgNe4R+06Xw9dPM
+	 Wq2cAGJLravRYJhtUqCbXeNdvwPhSinXtedqDdz0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Deucher <alexander.deucher@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
-	Luben Tuikov <luben.tuikov@amd.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Sam Ravnborg <sam@ravnborg.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1364/1887] drm/amd/amdgpu: Fix errors & warnings in amdgpu _uvd, _vce.c
-Date: Wed, 28 Oct 2026 17:57:40 +0100
-Message-ID: <20261028170530.484239270@linuxfoundation.org>
+Subject: [PATCH 6.1 1412/1887] fbdev: Add initializer macros for struct fb_ops
+Date: Wed, 28 Oct 2026 17:58:28 +0100
+Message-ID: <20261028170531.589170218@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -64,510 +62,182 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+From: Thomas Zimmermann <tzimmermann@suse.de>
 
-[ Upstream commit f10984a353c87e696872de8f9614a58689deb0d0 ]
+[ Upstream commit f1061fa641b8b15c7815d58c20a6c29f2f1f5337 ]
 
-Fix below checkpatch errors & warnings:
+For framebuffers in I/O and system memory, add macros that set
+struct fb_ops to the respective callback functions.
 
-In amdgpu_uvd.c:
+For deferred I/O, add macros that generate callback functions with
+damage handling. Add initializer macros that set struct fb_ops to
+the generated callbacks.
 
-WARNING: Prefer 'unsigned int' to bare use of 'unsigned'
-WARNING: Prefer 'unsigned int *' to bare use of 'unsigned *'
-WARNING: Missing a blank line after declarations
-WARNING: %Lx is non-standard C, use %llx
-ERROR: space required before the open parenthesis '('
-ERROR: space required before the open brace '{'
-WARNING: %LX is non-standard C, use %llX
-WARNING: Block comments use * on subsequent lines
-+/* multiple fence commands without any stream commands in between can
-+   crash the vcpu so just try to emmit a dummy create/destroy msg to
-WARNING: Block comments use a trailing */ on a separate line
-+   avoid this */
-WARNING: braces {} are not necessary for single statement blocks
-+               for (j = 0; j < adev->uvd.num_enc_rings; ++j) {
-+                       fences += amdgpu_fence_count_emitted(&adev->uvd.inst[i].ring_enc[j]);
-+               }
+These macros can remove a lot boilerplate code from fbdev drivers.
+The drivers are supposed to use the macro that is required for its
+framebuffer. Each macro is split into smaller helpers, so that
+drivers with non-standard callbacks can pick and customize callbacks
+as needed. There are individual helper macros for read/write, mmap
+and drawing.
 
-In amdgpu_vce.c:
+v5:
+	* fix whitespace errors (Jingfeng)
 
-WARNING: Prefer 'unsigned int' to bare use of 'unsigned'
-WARNING: Missing a blank line after declarations
-WARNING: %Lx is non-standard C, use %llx
-WARNING: Possible repeated word: 'we'
-ERROR: space required before the open parenthesis '('
-
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Cc: Christian König <christian.koenig@amd.com>
-Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
-Acked-by: Luben Tuikov <luben.tuikov@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Stable-dep-of: 21a8084cd762 ("drm/amdgpu: Fix UVD dpb min size calculation for H264")
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Reviewed-by: Sam Ravnborg <sam@ravnborg.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230530151228.22979-3-tzimmermann@suse.de
+Stable-dep-of: 9ad709afdfa3 ("fbdev: ssd1307fb: defer I2C transfers from damage callbacks")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_uvd.c | 83 +++++++++++++------------
- drivers/gpu/drm/amd/amdgpu/amdgpu_vce.c | 39 ++++++------
- 2 files changed, 63 insertions(+), 59 deletions(-)
+ include/linux/fb.h | 112 +++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 112 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_uvd.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_uvd.c
-index dff155cfb07f6..c144f4ed4f75c 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_uvd.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_uvd.c
-@@ -96,16 +96,16 @@
-  */
- struct amdgpu_uvd_cs_ctx {
- 	struct amdgpu_cs_parser *parser;
--	unsigned reg, count;
--	unsigned data0, data1;
--	unsigned idx;
-+	unsigned int reg, count;
-+	unsigned int data0, data1;
-+	unsigned int idx;
- 	struct amdgpu_ib *ib;
- 
- 	/* does the IB has a msg command */
- 	bool has_msg_cmd;
- 
- 	/* minimum buffer sizes */
--	unsigned *buf_sizes;
-+	unsigned int *buf_sizes;
- };
- 
- #ifdef CONFIG_DRM_AMDGPU_SI
-@@ -186,7 +186,7 @@ int amdgpu_uvd_sw_init(struct amdgpu_device *adev)
- 	unsigned long bo_size;
- 	const char *fw_name;
- 	const struct common_firmware_header *hdr;
--	unsigned family_id;
-+	unsigned int family_id;
- 	int i, j, r;
- 
- 	INIT_DELAYED_WORK(&adev->uvd.idle_work, amdgpu_uvd_idle_work_handler);
-@@ -283,7 +283,7 @@ int amdgpu_uvd_sw_init(struct amdgpu_device *adev)
- 	family_id = le32_to_cpu(hdr->ucode_version) & 0xff;
- 
- 	if (adev->asic_type < CHIP_VEGA20) {
--		unsigned version_major, version_minor;
-+		unsigned int version_major, version_minor;
- 
- 		version_major = (le32_to_cpu(hdr->ucode_version) >> 24) & 0xff;
- 		version_minor = (le32_to_cpu(hdr->ucode_version) >> 8) & 0xff;
-@@ -425,7 +425,7 @@ int amdgpu_uvd_entity_init(struct amdgpu_device *adev)
- 
- int amdgpu_uvd_suspend(struct amdgpu_device *adev)
- {
--	unsigned size;
-+	unsigned int size;
- 	void *ptr;
- 	int i, j, idx;
- 	bool in_ras_intr = amdgpu_ras_intr_triggered();
-@@ -474,7 +474,7 @@ int amdgpu_uvd_suspend(struct amdgpu_device *adev)
- 
- int amdgpu_uvd_resume(struct amdgpu_device *adev)
- {
--	unsigned size;
-+	unsigned int size;
- 	void *ptr;
- 	int i, idx;
- 
-@@ -496,7 +496,7 @@ int amdgpu_uvd_resume(struct amdgpu_device *adev)
- 			adev->uvd.inst[i].saved_bo = NULL;
- 		} else {
- 			const struct common_firmware_header *hdr;
--			unsigned offset;
-+			unsigned int offset;
- 
- 			hdr = (const struct common_firmware_header *)adev->uvd.fw->data;
- 			if (adev->firmware.load_type != AMDGPU_FW_LOAD_PSP) {
-@@ -547,6 +547,7 @@ void amdgpu_uvd_free_handles(struct amdgpu_device *adev, struct drm_file *filp)
- static void amdgpu_uvd_force_into_uvd_segment(struct amdgpu_bo *abo)
- {
- 	int i;
-+
- 	for (i = 0; i < abo->placement.num_placement; ++i) {
- 		abo->placements[i].fpfn = 0 >> PAGE_SHIFT;
- 		abo->placements[i].lpfn = (256 * 1024 * 1024) >> PAGE_SHIFT;
-@@ -584,7 +585,7 @@ static int amdgpu_uvd_cs_pass1(struct amdgpu_uvd_cs_ctx *ctx)
- 
- 	r = amdgpu_cs_find_mapping(ctx->parser, addr, &bo, &mapping);
- 	if (r) {
--		DRM_ERROR("Can't find BO for addr 0x%08Lx\n", addr);
-+		DRM_ERROR("Can't find BO for addr 0x%08llx\n", addr);
- 		return r;
- 	}
- 
-@@ -594,6 +595,7 @@ static int amdgpu_uvd_cs_pass1(struct amdgpu_uvd_cs_ctx *ctx)
- 		if (cmd == 0x0 || cmd == 0x3) {
- 			/* yes, force it into VRAM */
- 			uint32_t domain = AMDGPU_GEM_DOMAIN_VRAM;
-+
- 			amdgpu_bo_placement_from_domain(bo, domain);
- 		}
- 		amdgpu_uvd_force_into_uvd_segment(bo);
-@@ -614,21 +616,21 @@ static int amdgpu_uvd_cs_pass1(struct amdgpu_uvd_cs_ctx *ctx)
-  * Peek into the decode message and calculate the necessary buffer sizes.
-  */
- static int amdgpu_uvd_cs_msg_decode(struct amdgpu_device *adev, uint32_t *msg,
--	unsigned buf_sizes[])
-+	unsigned int buf_sizes[])
- {
--	unsigned stream_type = msg[4];
--	unsigned width = msg[6];
--	unsigned height = msg[7];
--	unsigned dpb_size = msg[9];
--	unsigned pitch = msg[28];
--	unsigned level = msg[57];
-+	unsigned int stream_type = msg[4];
-+	unsigned int width = msg[6];
-+	unsigned int height = msg[7];
-+	unsigned int dpb_size = msg[9];
-+	unsigned int pitch = msg[28];
-+	unsigned int level = msg[57];
- 
--	unsigned width_in_mb = width / 16;
--	unsigned height_in_mb = ALIGN(height / 16, 2);
--	unsigned fs_in_mb = width_in_mb * height_in_mb;
-+	unsigned int width_in_mb = width / 16;
-+	unsigned int height_in_mb = ALIGN(height / 16, 2);
-+	unsigned int fs_in_mb = width_in_mb * height_in_mb;
- 
--	unsigned image_size, tmp, min_dpb_size, num_dpb_buffer;
--	unsigned min_ctx_size = ~0;
-+	unsigned int image_size, tmp, min_dpb_size, num_dpb_buffer;
-+	unsigned int min_ctx_size = ~0;
- 
- 	/* Reject invalid dimensions */
- 	if (width < 16 || height < 16 || width > 4096 || height > 4096) {
-@@ -644,7 +646,7 @@ static int amdgpu_uvd_cs_msg_decode(struct amdgpu_device *adev, uint32_t *msg,
- 
- 	switch (stream_type) {
- 	case 0: /* H264 */
--		switch(level) {
-+		switch (level) {
- 		case 30:
- 			num_dpb_buffer = 8100 / fs_in_mb;
- 			break;
-@@ -722,7 +724,7 @@ static int amdgpu_uvd_cs_msg_decode(struct amdgpu_device *adev, uint32_t *msg,
- 		break;
- 
- 	case 7: /* H264 Perf */
--		switch(level) {
-+		switch (level) {
- 		case 30:
- 			num_dpb_buffer = 8100 / fs_in_mb;
- 			break;
-@@ -755,7 +757,7 @@ static int amdgpu_uvd_cs_msg_decode(struct amdgpu_device *adev, uint32_t *msg,
- 		/* reference picture buffer */
- 		min_dpb_size = image_size * num_dpb_buffer;
- 
--		if (!adev->uvd.use_ctx_buf){
-+		if (!adev->uvd.use_ctx_buf) {
- 			/* macroblock context buffer */
- 			min_dpb_size +=
- 				width_in_mb * height_in_mb * num_dpb_buffer * 192;
-@@ -821,7 +823,7 @@ static int amdgpu_uvd_cs_msg_decode(struct amdgpu_device *adev, uint32_t *msg,
-  * Make sure that we don't open up to many sessions.
-  */
- static int amdgpu_uvd_cs_msg(struct amdgpu_uvd_cs_ctx *ctx,
--			     struct amdgpu_bo *bo, unsigned offset)
-+			     struct amdgpu_bo *bo, unsigned int offset)
- {
- 	struct amdgpu_device *adev = ctx->parser->adev;
- 	int32_t *msg, msg_type, handle;
-@@ -927,7 +929,7 @@ static int amdgpu_uvd_cs_pass2(struct amdgpu_uvd_cs_ctx *ctx)
- 
- 	r = amdgpu_cs_find_mapping(ctx->parser, addr, &bo, &mapping);
- 	if (r) {
--		DRM_ERROR("Can't find BO for addr 0x%08Lx\n", addr);
-+		DRM_ERROR("Can't find BO for addr 0x%08llx\n", addr);
- 		return r;
- 	}
- 
-@@ -946,7 +948,7 @@ static int amdgpu_uvd_cs_pass2(struct amdgpu_uvd_cs_ctx *ctx)
- 	if (cmd < 0x4) {
- 		if ((end - start) < ctx->buf_sizes[cmd]) {
- 			DRM_ERROR("buffer (%d) to small (%d / %d)!\n", cmd,
--				  (unsigned)(end - start),
-+				  (unsigned int)(end - start),
- 				  ctx->buf_sizes[cmd]);
- 			return -EINVAL;
- 		}
-@@ -954,7 +956,7 @@ static int amdgpu_uvd_cs_pass2(struct amdgpu_uvd_cs_ctx *ctx)
- 	} else if (cmd == 0x206) {
- 		if ((end - start) < ctx->buf_sizes[4]) {
- 			DRM_ERROR("buffer (%d) to small (%d / %d)!\n", cmd,
--					  (unsigned)(end - start),
-+					  (unsigned int)(end - start),
- 					  ctx->buf_sizes[4]);
- 			return -EINVAL;
- 		}
-@@ -965,14 +967,14 @@ static int amdgpu_uvd_cs_pass2(struct amdgpu_uvd_cs_ctx *ctx)
- 
- 	if (!ctx->parser->adev->uvd.address_64_bit) {
- 		if ((start >> 28) != ((end - 1) >> 28)) {
--			DRM_ERROR("reloc %LX-%LX crossing 256MB boundary!\n",
-+			DRM_ERROR("reloc %llx-%llx crossing 256MB boundary!\n",
- 				  start, end);
- 			return -EINVAL;
- 		}
- 
- 		if ((cmd == 0 || cmd == 0x3) &&
- 		    (start >> 28) != (ctx->parser->adev->uvd.inst->gpu_addr >> 28)) {
--			DRM_ERROR("msg/fb buffer %LX-%LX out of 256MB segment!\n",
-+			DRM_ERROR("msg/fb buffer %llx-%llx out of 256MB segment!\n",
- 				  start, end);
- 			return -EINVAL;
- 		}
-@@ -1006,7 +1008,7 @@ static int amdgpu_uvd_cs_reg(struct amdgpu_uvd_cs_ctx *ctx,
- 
- 	ctx->idx++;
- 	for (i = 0; i <= ctx->count; ++i) {
--		unsigned reg = ctx->reg + i;
-+		unsigned int reg = ctx->reg + i;
- 
- 		if (ctx->idx >= ctx->ib->length_dw) {
- 			DRM_ERROR("Register command after end of CS!\n");
-@@ -1052,7 +1054,8 @@ static int amdgpu_uvd_cs_packets(struct amdgpu_uvd_cs_ctx *ctx,
- 
- 	for (ctx->idx = 0 ; ctx->idx < ctx->ib->length_dw; ) {
- 		uint32_t cmd = amdgpu_ib_get_value(ctx->ib, ctx->idx);
--		unsigned type = CP_PACKET_GET_TYPE(cmd);
-+		unsigned int type = CP_PACKET_GET_TYPE(cmd);
-+
- 		switch (type) {
- 		case PACKET_TYPE0:
- 			ctx->reg = CP_PACKET0_GET_REG(cmd);
-@@ -1086,7 +1089,7 @@ int amdgpu_uvd_ring_parse_cs(struct amdgpu_cs_parser *parser,
- 			     struct amdgpu_ib *ib)
- {
- 	struct amdgpu_uvd_cs_ctx ctx = {};
--	unsigned buf_sizes[] = {
-+	unsigned int buf_sizes[] = {
- 		[0x00000000]	=	2048,
- 		[0x00000001]	=	0xFFFFFFFF,
- 		[0x00000002]	=	0xFFFFFFFF,
-@@ -1213,8 +1216,9 @@ static int amdgpu_uvd_send_msg(struct amdgpu_ring *ring, struct amdgpu_bo *bo,
- }
- 
- /* multiple fence commands without any stream commands in between can
--   crash the vcpu so just try to emmit a dummy create/destroy msg to
--   avoid this */
-+ * crash the vcpu so just try to emmit a dummy create/destroy msg to
-+ * avoid this
+diff --git a/include/linux/fb.h b/include/linux/fb.h
+index 0b128f96ec770..2435aeddf47fa 100644
+--- a/include/linux/fb.h
++++ b/include/linux/fb.h
+@@ -607,9 +607,31 @@ int fb_set_var_from_user(struct fb_info *info, struct fb_var_screeninfo *var);
+ extern void cfb_fillrect(struct fb_info *info, const struct fb_fillrect *rect);
+ extern void cfb_copyarea(struct fb_info *info, const struct fb_copyarea *area);
+ extern void cfb_imageblit(struct fb_info *info, const struct fb_image *image);
++/*
++ * Initializes struct fb_ops for framebuffers in I/O memory.
 + */
- int amdgpu_uvd_get_create_msg(struct amdgpu_ring *ring, uint32_t handle,
- 			      struct dma_fence **fence)
- {
-@@ -1280,15 +1284,14 @@ static void amdgpu_uvd_idle_work_handler(struct work_struct *work)
- {
- 	struct amdgpu_device *adev =
- 		container_of(work, struct amdgpu_device, uvd.idle_work.work);
--	unsigned fences = 0, i, j;
-+	unsigned int fences = 0, i, j;
- 
- 	for (i = 0; i < adev->uvd.num_uvd_inst; ++i) {
- 		if (adev->uvd.harvest_config & (1 << i))
- 			continue;
- 		fences += amdgpu_fence_count_emitted(&adev->uvd.inst[i].ring);
--		for (j = 0; j < adev->uvd.num_enc_rings; ++j) {
-+		for (j = 0; j < adev->uvd.num_enc_rings; ++j)
- 			fences += amdgpu_fence_count_emitted(&adev->uvd.inst[i].ring_enc[j]);
--		}
- 	}
- 
- 	if (fences == 0) {
-@@ -1384,7 +1387,7 @@ int amdgpu_uvd_ring_test_ib(struct amdgpu_ring *ring, long timeout)
-  */
- uint32_t amdgpu_uvd_used_handles(struct amdgpu_device *adev)
- {
--	unsigned i;
-+	unsigned int i;
- 	uint32_t used_handles = 0;
- 
- 	for (i = 0; i < adev->uvd.max_handles; ++i) {
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_vce.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_vce.c
-index 4161be20d766c..01346b4c22e00 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vce.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vce.c
-@@ -99,7 +99,7 @@ int amdgpu_vce_sw_init(struct amdgpu_device *adev, unsigned long size)
- {
- 	const char *fw_name;
- 	const struct common_firmware_header *hdr;
--	unsigned ucode_version, version_major, version_minor, binary_id;
-+	unsigned int ucode_version, version_major, version_minor, binary_id;
- 	int i, r;
- 
- 	switch (adev->asic_type) {
-@@ -213,7 +213,7 @@ int amdgpu_vce_sw_init(struct amdgpu_device *adev, unsigned long size)
-  */
- int amdgpu_vce_sw_fini(struct amdgpu_device *adev)
- {
--	unsigned i;
-+	unsigned int i;
- 
- 	if (adev->vce.vcpu_bo == NULL)
- 		return 0;
-@@ -292,7 +292,7 @@ int amdgpu_vce_resume(struct amdgpu_device *adev)
- {
- 	void *cpu_addr;
- 	const struct common_firmware_header *hdr;
--	unsigned offset;
-+	unsigned int offset;
- 	int r, idx;
- 
- 	if (adev->vce.vcpu_bo == NULL)
-@@ -338,7 +338,7 @@ static void amdgpu_vce_idle_work_handler(struct work_struct *work)
- {
- 	struct amdgpu_device *adev =
- 		container_of(work, struct amdgpu_device, vce.idle_work.work);
--	unsigned i, count = 0;
-+	unsigned int i, count = 0;
- 
- 	for (i = 0; i < adev->vce.num_rings; i++)
- 		count += amdgpu_fence_count_emitted(&adev->vce.ring[i]);
-@@ -415,6 +415,7 @@ void amdgpu_vce_free_handles(struct amdgpu_device *adev, struct drm_file *filp)
- {
- 	struct amdgpu_ring *ring = &adev->vce.ring[0];
- 	int i, r;
 +
- 	for (i = 0; i < AMDGPU_MAX_VCE_HANDLES; ++i) {
- 		uint32_t handle = atomic_read(&adev->vce.handles[i]);
- 
-@@ -442,7 +443,7 @@ void amdgpu_vce_free_handles(struct amdgpu_device *adev, struct drm_file *filp)
- static int amdgpu_vce_get_create_msg(struct amdgpu_ring *ring, uint32_t handle,
- 				     struct dma_fence **fence)
- {
--	const unsigned ib_size_dw = 1024;
-+	const unsigned int ib_size_dw = 1024;
- 	struct amdgpu_job *job;
- 	struct amdgpu_ib *ib;
- 	struct amdgpu_ib ib_msg;
-@@ -534,7 +535,7 @@ static int amdgpu_vce_get_create_msg(struct amdgpu_ring *ring, uint32_t handle,
- static int amdgpu_vce_get_destroy_msg(struct amdgpu_ring *ring, uint32_t handle,
- 				      bool direct, struct dma_fence **fence)
- {
--	const unsigned ib_size_dw = 1024;
-+	const unsigned int ib_size_dw = 1024;
- 	struct amdgpu_job *job;
- 	struct amdgpu_ib *ib;
- 	struct dma_fence *f = NULL;
-@@ -601,12 +602,12 @@ static int amdgpu_vce_get_destroy_msg(struct amdgpu_ring *ring, uint32_t handle,
++#define __FB_DEFAULT_IO_OPS_RDWR \
++	.fb_read	= fb_io_read, \
++	.fb_write	= fb_io_write
++
++#define __FB_DEFAULT_IO_OPS_DRAW \
++	.fb_fillrect	= cfb_fillrect, \
++	.fb_copyarea	= cfb_copyarea, \
++	.fb_imageblit	= cfb_imageblit
++
++#define __FB_DEFAULT_IO_OPS_MMAP \
++	.fb_mmap	= NULL // default implementation
++
++#define FB_DEFAULT_IO_OPS \
++	__FB_DEFAULT_IO_OPS_RDWR, \
++	__FB_DEFAULT_IO_OPS_DRAW, \
++	__FB_DEFAULT_IO_OPS_MMAP
++
+ /*
+  * Drawing operations where framebuffer is in system RAM
   */
- static int amdgpu_vce_validate_bo(struct amdgpu_cs_parser *p,
- 				  struct amdgpu_ib *ib, int lo, int hi,
--				  unsigned size, int32_t index)
-+				  unsigned int size, int32_t index)
++
+ extern void sys_fillrect(struct fb_info *info, const struct fb_fillrect *rect);
+ extern void sys_copyarea(struct fb_info *info, const struct fb_copyarea *area);
+ extern void sys_imageblit(struct fb_info *info, const struct fb_image *image);
+@@ -618,6 +640,27 @@ extern ssize_t fb_sys_read(struct fb_info *info, char __user *buf,
+ extern ssize_t fb_sys_write(struct fb_info *info, const char __user *buf,
+ 			    size_t count, loff_t *ppos);
+ 
++/*
++ * Initializes struct fb_ops for framebuffers in system memory.
++ */
++
++#define __FB_DEFAULT_SYS_OPS_RDWR \
++	.fb_read	= fb_sys_read, \
++	.fb_write	= fb_sys_write
++
++#define __FB_DEFAULT_SYS_OPS_DRAW \
++	.fb_fillrect	= sys_fillrect, \
++	.fb_copyarea	= sys_copyarea, \
++	.fb_imageblit	= sys_imageblit
++
++#define __FB_DEFAULT_SYS_OPS_MMAP \
++	.fb_mmap	= NULL // default implementation
++
++#define FB_DEFAULT_SYS_OPS \
++	__FB_DEFAULT_SYS_OPS_RDWR, \
++	__FB_DEFAULT_SYS_OPS_DRAW, \
++	__FB_DEFAULT_SYS_OPS_MMAP
++
+ /* drivers/video/fbmem.c */
+ extern int register_framebuffer(struct fb_info *fb_info);
+ extern void unregister_framebuffer(struct fb_info *fb_info);
+@@ -673,6 +716,75 @@ extern void fb_deferred_io_cleanup(struct fb_info *info);
+ extern int fb_deferred_io_fsync(struct file *file, loff_t start,
+ 				loff_t end, int datasync);
+ 
++/*
++ * Generate callbacks for deferred I/O
++ */
++
++#define __FB_GEN_DEFAULT_DEFERRED_OPS_RDWR(__prefix, __damage_range, __mode) \
++	static ssize_t __prefix ## _defio_read(struct fb_info *info, char __user *buf, \
++					       size_t count, loff_t *ppos) \
++	{ \
++		return fb_ ## __mode ## _read(info, buf, count, ppos); \
++	} \
++	static ssize_t __prefix ## _defio_write(struct fb_info *info, const char __user *buf, \
++						size_t count, loff_t *ppos) \
++	{ \
++		unsigned long offset = *ppos; \
++		ssize_t ret = fb_ ## __mode ## _write(info, buf, count, ppos); \
++		if (ret > 0) \
++			__damage_range(info, offset, ret); \
++		return ret; \
++	}
++
++#define __FB_GEN_DEFAULT_DEFERRED_OPS_DRAW(__prefix, __damage_area, __mode) \
++	static void __prefix ## _defio_fillrect(struct fb_info *info, \
++						const struct fb_fillrect *rect) \
++	{ \
++		__mode ## _fillrect(info, rect); \
++		__damage_area(info, rect->dx, rect->dy, rect->width, rect->height); \
++	} \
++	static void __prefix ## _defio_copyarea(struct fb_info *info, \
++						const struct fb_copyarea *area) \
++	{ \
++		__mode ## _copyarea(info, area); \
++		__damage_area(info, area->dx, area->dy, area->width, area->height); \
++	} \
++	static void __prefix ## _defio_imageblit(struct fb_info *info, \
++						 const struct fb_image *image) \
++	{ \
++		__mode ## _imageblit(info, image); \
++		__damage_area(info, image->dx, image->dy, image->width, image->height); \
++	}
++
++#define FB_GEN_DEFAULT_DEFERRED_IO_OPS(__prefix, __damage_range, __damage_area) \
++	__FB_GEN_DEFAULT_DEFERRED_OPS_RDWR(__prefix, __damage_range, io) \
++	__FB_GEN_DEFAULT_DEFERRED_OPS_DRAW(__prefix, __damage_area, cfb)
++
++#define FB_GEN_DEFAULT_DEFERRED_SYS_OPS(__prefix, __damage_range, __damage_area) \
++	__FB_GEN_DEFAULT_DEFERRED_OPS_RDWR(__prefix, __damage_range, sys) \
++	__FB_GEN_DEFAULT_DEFERRED_OPS_DRAW(__prefix, __damage_area, sys)
++
++/*
++ * Initializes struct fb_ops for deferred I/O.
++ */
++
++#define __FB_DEFAULT_DEFERRED_OPS_RDWR(__prefix) \
++	.fb_read	= __prefix ## _defio_read, \
++	.fb_write	= __prefix ## _defio_write
++
++#define __FB_DEFAULT_DEFERRED_OPS_DRAW(__prefix) \
++	.fb_fillrect	= __prefix ## _defio_fillrect, \
++	.fb_copyarea	= __prefix ## _defio_copyarea, \
++	.fb_imageblit	= __prefix ## _defio_imageblit
++
++#define __FB_DEFAULT_DEFERRED_OPS_MMAP(__prefix) \
++	.fb_mmap	= fb_deferred_io_mmap
++
++#define FB_DEFAULT_DEFERRED_OPS(__prefix) \
++	__FB_DEFAULT_DEFERRED_OPS_RDWR(__prefix), \
++	__FB_DEFAULT_DEFERRED_OPS_DRAW(__prefix), \
++	__FB_DEFAULT_DEFERRED_OPS_MMAP(__prefix)
++
+ static inline bool fb_be_math(struct fb_info *info)
  {
- 	int64_t offset = ((uint64_t)size) * ((int64_t)index);
- 	struct ttm_operation_ctx ctx = { false, false };
- 	struct amdgpu_bo_va_mapping *mapping;
--	unsigned i, fpfn, lpfn;
-+	unsigned int i, fpfn, lpfn;
- 	struct amdgpu_bo *bo;
- 	uint64_t addr;
- 	int r;
-@@ -624,7 +625,7 @@ static int amdgpu_vce_validate_bo(struct amdgpu_cs_parser *p,
- 
- 	r = amdgpu_cs_find_mapping(p, addr, &bo, &mapping);
- 	if (r) {
--		DRM_ERROR("Can't find BO for addr 0x%010Lx %d %d %d %d\n",
-+		DRM_ERROR("Can't find BO for addr 0x%010llx %d %d %d %d\n",
- 			  addr, lo, hi, size, index);
- 		return r;
- 	}
-@@ -651,7 +652,7 @@ static int amdgpu_vce_validate_bo(struct amdgpu_cs_parser *p,
-  * Patch relocation inside command stream with real buffer address
-  */
- static int amdgpu_vce_cs_reloc(struct amdgpu_cs_parser *p, struct amdgpu_ib *ib,
--			       int lo, int hi, unsigned size, uint32_t index)
-+			       int lo, int hi, unsigned int size, uint32_t index)
- {
- 	struct amdgpu_bo_va_mapping *mapping;
- 	struct amdgpu_bo *bo;
-@@ -670,14 +671,14 @@ static int amdgpu_vce_cs_reloc(struct amdgpu_cs_parser *p, struct amdgpu_ib *ib,
- 
- 	r = amdgpu_cs_find_mapping(p, addr, &bo, &mapping);
- 	if (r) {
--		DRM_ERROR("Can't find BO for addr 0x%010Lx %d %d %d %d\n",
-+		DRM_ERROR("Can't find BO for addr 0x%010llx %d %d %d %d\n",
- 			  addr, lo, hi, size, index);
- 		return r;
- 	}
- 
- 	if ((addr + (uint64_t)size) >
- 	    (mapping->last + 1) * AMDGPU_GPU_PAGE_SIZE) {
--		DRM_ERROR("BO too small for addr 0x%010Lx %d %d\n",
-+		DRM_ERROR("BO too small for addr 0x%010llx %d %d\n",
- 			  addr, lo, hi);
- 		return -EINVAL;
- 	}
-@@ -700,12 +701,12 @@ static int amdgpu_vce_cs_reloc(struct amdgpu_cs_parser *p, struct amdgpu_ib *ib,
-  * @allocated: allocated a new handle?
-  *
-  * Validates the handle and return the found session index or -EINVAL
-- * we we don't have another free session index.
-+ * we don't have another free session index.
-  */
- static int amdgpu_vce_validate_handle(struct amdgpu_cs_parser *p,
- 				      uint32_t handle, uint32_t *allocated)
- {
--	unsigned i;
-+	unsigned int i;
- 
- 	/* validate the handle */
- 	for (i = 0; i < AMDGPU_MAX_VCE_HANDLES; ++i) {
-@@ -743,7 +744,7 @@ int amdgpu_vce_ring_parse_cs(struct amdgpu_cs_parser *p,
- 			     struct amdgpu_job *job,
- 			     struct amdgpu_ib *ib)
- {
--	unsigned fb_idx = 0, bs_idx = 0;
-+	unsigned int fb_idx = 0, bs_idx = 0;
- 	int session_idx = -1;
- 	uint32_t destroyed = 0;
- 	uint32_t created = 0;
-@@ -751,7 +752,7 @@ int amdgpu_vce_ring_parse_cs(struct amdgpu_cs_parser *p,
- 	uint32_t tmp, handle = 0;
- 	uint32_t dummy = 0xffffffff;
- 	uint32_t *size = &dummy;
--	unsigned idx;
-+	unsigned int idx;
- 	int i, r = 0;
- 
- 	job->vm = NULL;
-@@ -1104,7 +1105,7 @@ void amdgpu_vce_ring_emit_ib(struct amdgpu_ring *ring,
-  *
-  */
- void amdgpu_vce_ring_emit_fence(struct amdgpu_ring *ring, u64 addr, u64 seq,
--				unsigned flags)
-+				unsigned int flags)
- {
- 	WARN_ON(flags & AMDGPU_FENCE_FLAG_64BIT);
- 
-@@ -1126,7 +1127,7 @@ int amdgpu_vce_ring_test_ring(struct amdgpu_ring *ring)
- {
- 	struct amdgpu_device *adev = ring->adev;
- 	uint32_t rptr;
--	unsigned i;
-+	unsigned int i;
- 	int r, timeout = adev->usec_timeout;
- 
- 	/* skip ring test for sriov*/
-@@ -1191,7 +1192,7 @@ int amdgpu_vce_ring_test_ib(struct amdgpu_ring *ring, long timeout)
- 
- enum amdgpu_ring_priority_level amdgpu_vce_get_ring_prio(int ring)
- {
--	switch(ring) {
-+	switch (ring) {
- 	case 0:
- 		return AMDGPU_RING_PRIO_0;
- 	case 1:
+ #ifdef CONFIG_FB_FOREIGN_ENDIAN
 -- 
 2.53.0
 
