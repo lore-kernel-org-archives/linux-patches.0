@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793209759;
-	b=CH7JxygGld/On4c2Tr62jI4JYmf3xsxknPh+/iuD+VYTdoq1LyKpc1Gf1YyQIqZT/Ag6
-	 H1S8h7EpHKQoOctt63NwePDNElt7uxVpu38RCffy8XoEZbJHvOoHmLZ/c05moL05vTwdb
-	 MjGlV3pOgjjzDQ626HX6l5AdiyL8/UncjL+BztJp+kn1JXyIhzK55kAckIuX2wB438XER
-	 /WTbiqhB7w5O2qW/or1dVXNCrLyMzHYWjR/yboplHfSpHoBjbb5dL0hEJ3oLivTO3Zo9p
-	 bP6STD9GGLWEp3JGC56Y1c1A6YVDH2NG2+kmsrCuKxM853OHCFoYv2A2PCwtBZYp4CA==
+	t=1793209762;
+	b=B1TAv0LbiTp9XRO/lN/WbB3e/f/wSpWhqoaWz7fubATKs89ZJvhKvh5xLhoBqa9cp3Lr
+	 DkvuHCptYU6uvucabysN8NOUXOcXeVujA4+olLBG2JNK2CCNRUx6xOlterHl4DYR9Pxx6
+	 sQ87z+hvKa4msQG6/5XSaCTLbTBGOOlB38fNzVW/agfqoIAsuFXmKz2biZ2CfjCQDEnwO
+	 YB5PQJ9iSwYanzVNnO9Z2loUx2woHxb+y29ZX+WGklErPeXp/l9SsosQufiRx/ji0fc4A
+	 4qYpXtX972GT1HQprdVXE9vgJMxs3hAXNLo60DO7iHrqWKZ8yAkq0f1HVR1i3IsghYw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793209759;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793209762;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=w/+peoWYMIAnT0au5P6C/oRnYEVMHTRST5GsWtooc/o=;
-	b=hNtePnDGEGofw6OZSYes0EPBR/XdnHYyQg6ZywBwePImbtwar0qTKTIjZKrf9lVtQGmG
-	 MDSgvfV1ZClWy7ldbKGCeOqk5UWjQ8uurfPzzAb8wNe2lu9E+JDMIyWYzXrRUz4kiUW5m
-	 eenlP3VfURvmsD1dTJH9/jOiWv3/SeaahtnQnixXLpDSNzc9LJVG9BKCWIIitxawhuazr
-	 ibPOZvbNc+KvYJz57vrD3sOdjE3Hq4r0KBi6AFMZveYHw7pQgyWGukhOdY/Yzlyc7/Cj2
-	 48ZlbcLNXe3N/wvj2drPn7k9Na7PGXyUJmAj84XV16sHwjHRTSSznVeCHrkEMIjmP4Q==
+	bh=/SQIFnu3KeTgUxUljYST3aqaOMlp8x94FFO8VmqgWng=;
+	b=Hwa/cj3g+oZXBInxIpU6MV+DYw3KydRV08VksFfwUlEysfEQaB5P9ACYisPVLuzf5kMp
+	 dfcYcwoWGydLBCeVnszAbbXx9gv6CTVuviCJeMRMKwTjBzHNifO8b3wg++PNTZIZeS1dM
+	 fEnKv5nY8KZsqJRvLJByuyIUGuGEdc4zv2WYPYF6XGzjHFRZA+AhZ5BteId4q6RldYrkv
+	 HzB/zWkz2XgXUCaCpYRdsDfVL1dBCYrFuZbjc0/i0A6ZOzgLFZ3X2GI+6fpgOgTrZfdTw
+	 m/vOf+UeN9gn+FOg34+2L1ndscO+3GDmomxECoQejNifXXko+n+s9rp3Da2PQFcx5Tw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NAMWR6XD;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C6qTdwzQ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73C70606A337;
-	Wed, 28 Oct 2026 17:49:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53580606A31A;
+	Wed, 28 Oct 2026 17:49:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NAMWR6XD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C626B1F01825;
-	Wed, 28 Oct 2026 17:49:18 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C6qTdwzQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A28121F01829;
+	Wed, 28 Oct 2026 17:49:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793209759;
-	bh=w/+peoWYMIAnT0au5P6C/oRnYEVMHTRST5GsWtooc/o=;
+	s=korg; t=1793209762;
+	bh=/SQIFnu3KeTgUxUljYST3aqaOMlp8x94FFO8VmqgWng=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NAMWR6XDNDXKyoK/VDincYhB/C8ceJDFu1Nyo/m/uAt00Rl18oKC5+D3T4BnkwRAx
-	 Gq2T/nR1Dx1c4LL34DFdy+UfgT8HKy86GMUxwre1n6L+AIpcEjIxoUNl4T7NUG+ZN0
-	 CgHNIGM9qmFY14nYtnpumTY5PXyBVBs/F1O20aew=
+	b=C6qTdwzQHll9PPFho+MlDYGjZw/dhzFYbF6LhXRoLFi4rcwdg38Lq2K/tF/ldjpjC
+	 pKVRzdPX0XZcfyGIW4Pc2P14Mn3DwPD0pjB2r/JjyMTElQgP5Gf67yG6csZWVoLKZy
+	 Fg7+Pw7vxQQEKqqLINDTw1KzeqP/065bNwAWdQnQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.18 067/109] io_uring/timeout: dont skip over reached sequences
-Date: Wed, 28 Oct 2026 18:00:51 +0100
-Message-ID: <20261028165943.935826917@linuxfoundation.org>
+	Lee Jones <lee@kernel.org>,
+	Steven Rostedt <rostedt@goodmis.org>
+Subject: [PATCH 6.18 041/109] tracing/histograms: Verify event_call identity when updating synth_event refcount
+Date: Wed, 28 Oct 2026 18:00:25 +0100
+Message-ID: <20261028165943.329329818@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165942.357251485@linuxfoundation.org>
 References: <20261028165942.357251485@linuxfoundation.org>
@@ -67,95 +67,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Lee Jones <lee@kernel.org>
 
-Commit c6c0b3eba88c3b13ca11ea112404982e86d58f7a upstream.
+commit 3403d9bb27ebc3572bd048620746b4414e073bf9 upstream.
 
-io_flush_timeouts() copes with the wrap of the CQ sequence by looking at
-the distance from ->cq_last_tm_flush. That relies on the target of each
-pending timeout being at or ahead of the last flush.
+In event_hist_trigger_parse() and hist_unreg_all(), the histogram
+registration and unregistration paths look up find_synth_event() using
+trace_event_name(file->event_call) and adjust se->ref if a match is
+found.
 
-io_timeout() breaks that. It sets ->cq_last_tm_flush to the current
-sequence, on the assumption that nothing has been posted since the last
-flush. That isn't true. A multishot request posts its CQEs right when it
-is issued or retried, but they are committed, and the timeouts flushed,
-at the end of the submission or task_work run:
+Because find_synth_event() only compares the event basename, registering
+or removing a histogram on a non-synthetic trace event whose basename
+matches a synthetic event erroneously modifies the synthetic event's
+reference count.  If a histogram is registered on the non-synthetic
+event before the synthetic event is created and removed afterwards,
+se->ref is decremented without a matching increment, allowing the
+synthetic event to be freed while an active histogram action still holds
+a pointer to it.
 
-  X: IORING_OP_TIMEOUT, off == 1       target_seq == N + 1
-  io_submit_sqes()
-    multishot recv, posts two CQEs     sequence == N + 2
-    Y: IORING_OP_TIMEOUT, off == 100   ->cq_last_tm_flush = N + 2
-  io_flush_timeouts()
-    X: events_needed = N + 1 - (N + 2) // 0xffffffff
-       events_got = 0                  // not yet
+Introduce find_synth_event_call() to verify that &se->call matches
+file->event_call before adjusting se->ref.
 
-X isn't completed although the completions it was waiting for have
-happened, only its timer can end it now. And as the list is sorted and
-the walk ends at the first timeout that isn't due, it gets in the way of
-the ones behind it. The insertion sort has the same problem, it measures
-the distance of the pending targets from the current sequence.
-
-->cq_last_tm_flush only needs to be brought up to date if no timeout is
-waiting for a sequence, as io_flush_timeouts() isn't called before the
-first one is set up. Otherwise it is current enough. Timeouts with a
-sequence come first in the list, so looking at the first entry will do.
-Use the last flush as the base for the insertion sort as well.
-
-Fixes: f010505b78a4 ("io_uring: flush timeouts that should already have expired")
-Assisted-by: LLM
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Link: https://patch.msgid.link/20261015-b4-io-uring-fixes-v1-29-c1556f5d7bf5@toxicpanda.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 4b147936fa50 ("tracing: Add support for 'synthetic' events")
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20261019120730.2342739-1-lee@kernel.org
+Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/timeout.c |   21 ++++++++++++++-------
- 1 file changed, 14 insertions(+), 7 deletions(-)
+ kernel/trace/trace_events_hist.c  |   11 +++--------
+ kernel/trace/trace_events_synth.c |   10 ++++++++++
+ kernel/trace/trace_synth.h        |    1 +
+ 3 files changed, 14 insertions(+), 8 deletions(-)
 
---- a/io_uring/timeout.c
-+++ b/io_uring/timeout.c
-@@ -601,8 +601,9 @@ int io_timeout(struct io_kiocb *req, uns
- 	struct io_timeout *timeout = io_kiocb_to_cmd(req, struct io_timeout);
- 	struct io_ring_ctx *ctx = req->ctx;
- 	struct io_timeout_data *data = req->async_data;
-+	struct io_timeout *first;
- 	struct list_head *entry;
--	u32 tail, off = timeout->off;
-+	u32 tail, base, off = timeout->off;
+--- a/kernel/trace/trace_events_hist.c
++++ b/kernel/trace/trace_events_hist.c
+@@ -6753,7 +6753,6 @@ static void hist_unreg_all(struct trace_
+ 	struct event_trigger_data *test, *n;
+ 	struct hist_trigger_data *hist_data;
+ 	struct synth_event *se;
+-	const char *se_name;
  
- 	raw_spin_lock_irq(&ctx->timeout_lock);
+ 	lockdep_assert_held(&event_mutex);
  
-@@ -619,11 +620,17 @@ int io_timeout(struct io_kiocb *req, uns
- 	tail = data_race(ctx->cached_cq_tail) - atomic_read(&ctx->cq_timeouts);
- 	timeout->target_seq = tail + off;
+@@ -6766,8 +6765,7 @@ static void hist_unreg_all(struct trace_
+ 			list_del_rcu(&test->list);
+ 			trace_event_trigger_enable_disable(file, 0);
  
--	/* Update the last seq here in case io_flush_timeouts() hasn't.
--	 * This is safe because ->completion_lock is held, and submissions
--	 * and completions are never mixed in the same ->completion_lock section.
-+	/*
-+	 * Update the last seq here in case io_flush_timeouts() hasn't, it only
-+	 * gets called once sequences are in use. Leave it alone if there are
-+	 * timeouts waiting for one. CQEs may have been posted since the last
-+	 * flush, and a target that has been reached must not fall behind it.
- 	 */
--	ctx->cq_last_tm_flush = tail;
-+	first = list_first_entry_or_null(&ctx->timeout_list, struct io_timeout,
-+					 list);
-+	if (!first || io_is_timeout_noseq(cmd_to_io_kiocb(first)))
-+		ctx->cq_last_tm_flush = tail;
-+	base = ctx->cq_last_tm_flush;
+-			se_name = trace_event_name(file->event_call);
+-			se = find_synth_event(se_name);
++			se = find_synth_event_call(file->event_call);
+ 			if (se)
+ 				se->ref--;
  
- 	/*
- 	 * Insertion sort, ensuring the first entry in the list is always
-@@ -635,8 +642,8 @@ int io_timeout(struct io_kiocb *req, uns
+@@ -6791,7 +6789,6 @@ static int event_hist_trigger_parse(stru
+ 	struct hist_trigger_data *hist_data;
+ 	char *param, *filter, *p, *start;
+ 	struct synth_event *se;
+-	const char *se_name;
+ 	bool remove;
+ 	int ret = 0;
  
- 		if (io_is_timeout_noseq(nxt))
- 			continue;
--		/* nxt.seq is behind @tail, otherwise would've been completed */
--		if (off >= nextt->target_seq - tail)
-+		/* no target is behind the last flush, see io_flush_timeouts() */
-+		if (timeout->target_seq - base >= nextt->target_seq - base)
- 			break;
- 	}
- add:
+@@ -6885,8 +6882,7 @@ static int event_hist_trigger_parse(stru
+ 		}
+ 
+ 		event_trigger_unregister(cmd_ops, file, glob+1, trigger_data);
+-		se_name = trace_event_name(file->event_call);
+-		se = find_synth_event(se_name);
++		se = find_synth_event_call(file->event_call);
+ 		if (se)
+ 			se->ref--;
+ 		ret = 0;
+@@ -6921,8 +6917,7 @@ static int event_hist_trigger_parse(stru
+ 	if (ret)
+ 		goto out_unreg;
+ 
+-	se_name = trace_event_name(file->event_call);
+-	se = find_synth_event(se_name);
++	se = find_synth_event_call(file->event_call);
+ 	if (se)
+ 		se->ref++;
+  out:
+--- a/kernel/trace/trace_events_synth.c
++++ b/kernel/trace/trace_events_synth.c
+@@ -848,6 +848,16 @@ struct synth_event *find_synth_event(con
+ 	return NULL;
+ }
+ 
++struct synth_event *find_synth_event_call(struct trace_event_call *call)
++{
++	struct synth_event *se;
++	const char *name;
++
++	name = trace_event_name(call);
++	se = find_synth_event(name);
++	return se && &se->call == call ? se : NULL;
++}
++
+ static struct trace_event_fields synth_event_fields_array[] = {
+ 	{ .type = TRACE_FUNCTION_TYPE,
+ 	  .define_fields = synth_event_define_fields },
+--- a/kernel/trace/trace_synth.h
++++ b/kernel/trace/trace_synth.h
+@@ -37,5 +37,6 @@ struct synth_event {
+ };
+ 
+ extern struct synth_event *find_synth_event(const char *name);
++extern struct synth_event *find_synth_event_call(struct trace_event_call *call);
+ 
+ #endif /* __TRACE_SYNTH_H */
 
 
