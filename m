@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213246;
-	b=HHNSlPe2p2g9IUL9Jh6t4gra486DmhtmIHaQXKgvivJilOJdqSZZFeRP+xCll+e+PFL0
-	 PIsbeXXJBT4ZYjyVPmyl1eq9Rb4mFVnI9QWfC7CtvrHd+Ov/PgE13g2r4U3HKbxeegZkP
-	 +Khjv5MOvyb3Y73yM7PUl1Nwe0+/ZBxxM0sb9zX3k3k0zSZ0M/hbd8vOX1mO+SlVyInDW
-	 ai3/+IuPYCQU32rDppadVkAuB7HyBVwwhxew6aBn0LAaNcemXPtm7f8A3EQ1Ge39kIeiU
-	 jJVvnQ4NrgXZQEtPT3Z9leS8ffrzcxaJI5sM/L8mFxapXWmcD7EBPxvPuuA9ri/1i7g==
+	t=1793213249;
+	b=H1O5IcEBZh4NCcBm+uOYhSblrI/hCB0GeGCcXEVkKApWY9Rc2NeEARytfDUz8UnPA7tu
+	 hNT1rd04XBWPArVrSy5T5+ML4EMmZh74HfQgbM8X/RJziSy3y0ew5UeaRigbn/i1PkA1P
+	 h/YwmWy8IPyty/I3va/J3552u/hHRxIKNWunvyaSHcDLj1Ah8dKzKat8luL7P28KOXX1g
+	 711uei87kdQJvAmQHKdeJoxsu5dcDJ+Rfes7FaPOCq1YID91CF74O3Jbc+ZL0BfSbmJJj
+	 SpkoipJIGpsVbAvRUvWiW3vbmtrFzjj1sXGrEg69CKFthDdT5afqPZRbpXiOA0eE/nw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213246;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213249;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=swfGptWG5z7AgOzFbe5UZPtwcl+CaclDS7vaXTdqe9w=;
-	b=VKJKUBOIyEpk0l5JwbcjjUYKCusXA2M/XonJPu1vX+HOvwzanmGaVreS4x9k+DnsnEZA
-	 iLDEObbUOcUj+4EFYXrAdr3s5Fhj6djpr0p/PP3KZxBt29LzwwauKS4CF3ET0fYVPYHWQ
-	 qhMPJX8GjAwFrm9pPtNa6r2bU8KhlZHefvrTqWidKy5+FgBZ2FLHeX8l/dYfrv0gEXYPj
-	 Ju3awM7m9Ndk6bCEercGFuk4IYukSJI992wMzZn0g34AeRmR9L82kykVmbPbS5M2D3w2W
-	 z/xbRs9HynYaOQUWlHqapsXiI+FfN5fK9sE33y9KgXqUY6IcGirEUqgbNlmB71ASYSA==
+	bh=pZt3dwfmG38ZKw+d3jVARLqN+07HRwf/Yr0raikKfr8=;
+	b=yHH2A5+xOPXp9C1dIfgJvcyzxmMwpjLgQIpQAB/kRvF53sb6IuZy0/lFKF/7Bmvd/WkC
+	 +qNVK5tb+99tjPmM11HBcrhyxKVG1ogSblAXFMm+/okefjrrI4VIHsDV0j+zuxntiUCyY
+	 O0Fx/wOMwtggW8z/UDOTgzjoZqErh78WhSUA1qcuSRgEfDhrKU1mKlNcpr96qcLgazEqC
+	 SQCI+ZJUzv+Y/mGWR4GjEVLYQauADlHiFFNxZqI0TuQOmmtsxcYrNms7/DbBj2cagnbYB
+	 u1G4+mis2EeuaHtkSitEpdEqT2xPq28eYsB/U6ssUt45omIjOBb9T8LYH85+PEDxXag==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Jm5uqTnq;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dwF9Byko;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59CE1606A31C;
-	Wed, 28 Oct 2026 18:47:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBD2F606A324;
+	Wed, 28 Oct 2026 18:47:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Jm5uqTnq
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F3C31F01825;
-	Wed, 28 Oct 2026 18:47:25 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dwF9Byko
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3943A1F01828;
+	Wed, 28 Oct 2026 18:47:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213245;
-	bh=swfGptWG5z7AgOzFbe5UZPtwcl+CaclDS7vaXTdqe9w=;
+	s=korg; t=1793213248;
+	bh=pZt3dwfmG38ZKw+d3jVARLqN+07HRwf/Yr0raikKfr8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Jm5uqTnq5TAbjKtKQxlZ/nUCIxZx4+LQdgS4etOf4t78W25BBQXSsMeuM3qn/eETY
-	 ECv6FiGA6zC3EKQ6vaVk5xr5xapxItUcuo6UujySfyDk+nDwP5OaWdh4bGmxJ9anNz
-	 3Suq16BOQhbcQMP/rW7HfNEoDjUbGpxxQsnuVVB0=
+	b=dwF9BykokIZSoetaF/d6Hwy1i1smtMdCwCMhFEbkJYRlSeIYFp7LNyDxx1pGfRGNC
+	 AghTjR5Qm+AUnuQjjaFMtFyuSVRHOJokFPKlbr92738R4+ghsvg7+7wBTug75Ups4y
+	 pCOnXu3CqqB1nCjKxRbr1roBXUU3G6IlwHs9fAE8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	stable@kernel.org,
 	Zhao Li <enderaoelyther@gmail.com>,
 	Johannes Berg <johannes.berg@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	stable@kernel.org
-Subject: [PATCH 6.1 0394/1887] wifi: mac80211: shut down RX BA session timer on teardown
-Date: Wed, 28 Oct 2026 17:41:30 +0100
-Message-ID: <20261028170508.200653585@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 0395/1887] wifi: mac80211: keep fallback association elements alive
+Date: Wed, 28 Oct 2026 17:41:31 +0100
+Message-ID: <20261028170508.222953957@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -71,48 +71,70 @@ Content-Transfer-Encoding: 8bit
 
 From: Zhao Li <enderaoelyther@gmail.com>
 
-[ Upstream commit e588e83e5c7a0f6d7a77dbbb58927c8c8cfd598e ]
+[ Upstream commit a10a2f80476d166fd81c361ec0319493671b694e ]
 
-Tearing down an RX BA session can leave the session timer queued on a
-freed tid_rx. Later timer-wheel processing and the timer callback itself
-then run against freed memory.
+Associating to a non-transmitted MBSSID profile reads freed memory while
+determining the operating channel and applying HT capabilities.
 
-An RX BAR handler can dereference tid_rx under RCU before teardown
-unpublishes it and stay in its read-side critical section while teardown
-deletes the session timer. The stale handler can then rearm the timer
-after timer_delete_sync() returns and before the RCU callback frees
-tid_rx.
+When an association response omits WMM, HT, or VHT information,
+ieee80211_assoc_config_link() parses the cached BSS IEs and copies the
+missing element pointers out of that fallback parse. For a
+non-transmitted MBSSID profile those pointers refer to merged-profile
+storage owned by the parse object, and the fallback block frees that
+object at its end. The copied pointers are used afterwards to determine
+the operating channel, configure bandwidth, and apply HT capabilities.
 
-Use timer_shutdown_sync() so rearm attempts become ineffective once
-teardown starts. Keep reorder_timer unchanged: teardown marks the session
-removed under reorder_lock and its release path checks that state before
-rearming. session_timer has no equivalent guard because
-ieee80211_rx_h_ctrl() rearms it before taking reorder_lock.
+Keep the fallback parse result alive until association setup finishes.
 
-Fixes: a87f736d942c ("mac80211: use RCU for RX aggregation")
-Cc: stable@kernel.org # 5.15+
+Fixes: 5023b14cf4df ("mac80211: support profile split between elements")
+Cc: stable@kernel.org
 Assisted-by: LLM sparse kasan
+[reorder variable declaration]
 Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-[ sashal: Adapted the timer_delete_sync() replacement to the existing del_timer_sync() call. ]
+[ sashal: adjusted context for the existing conn_flags-based VHT check ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/agg-rx.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/mac80211/mlme.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/net/mac80211/agg-rx.c b/net/mac80211/agg-rx.c
-index 9414d3bbd65f6..acb295bdb71cb 100644
---- a/net/mac80211/agg-rx.c
-+++ b/net/mac80211/agg-rx.c
-@@ -103,7 +103,7 @@ void ___ieee80211_stop_rx_ba_session(struct sta_info *sta, u16 tid,
- 	if (!tid_rx)
- 		return;
+diff --git a/net/mac80211/mlme.c b/net/mac80211/mlme.c
+index 32f24dca40ab5..56120762c7fbf 100644
+--- a/net/mac80211/mlme.c
++++ b/net/mac80211/mlme.c
+@@ -4023,6 +4023,7 @@ static bool ieee80211_assoc_config_link(struct ieee80211_link_data *link,
+ 	bool is_6ghz = cbss->channel->band == NL80211_BAND_6GHZ;
+ 	bool is_s1g = cbss->channel->band == NL80211_BAND_S1GHZ;
+ 	const struct cfg80211_bss_ies *bss_ies = NULL;
++	struct ieee802_11_elems *bss_elems = NULL;
+ 	struct ieee80211_supported_band *sband;
+ 	struct ieee802_11_elems *elems;
+ 	u16 capab_info;
+@@ -4059,7 +4060,6 @@ static bool ieee80211_assoc_config_link(struct ieee80211_link_data *link,
+ 	     (!(link->u.mgd.conn_flags & IEEE80211_CONN_DISABLE_VHT) &&
+ 	      (!elems->vht_cap_elem || !elems->vht_operation)))) {
+ 		const struct cfg80211_bss_ies *ies;
+-		struct ieee802_11_elems *bss_elems;
  
--	del_timer_sync(&tid_rx->session_timer);
-+	timer_shutdown_sync(&tid_rx->session_timer);
+ 		rcu_read_lock();
+ 		ies = rcu_dereference(cbss->ies);
+@@ -4115,8 +4115,6 @@ static bool ieee80211_assoc_config_link(struct ieee80211_link_data *link,
+ 			sdata_info(sdata,
+ 				   "AP bug: VHT operation missing from AssocResp\n");
+ 		}
+-
+-		kfree(bss_elems);
+ 	}
  
- 	/* make sure ieee80211_sta_reorder_release() doesn't re-arm the timer */
- 	spin_lock_bh(&tid_rx->reorder_lock);
+ 	/*
+@@ -4343,6 +4341,7 @@ static bool ieee80211_assoc_config_link(struct ieee80211_link_data *link,
+ 	ret = true;
+ out:
+ 	kfree(elems);
++	kfree(bss_elems);
+ 	kfree(bss_ies);
+ 	return ret;
+ }
 -- 
 2.53.0
 
