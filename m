@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793209202;
-	b=zJUxbGkfaUz2ZOSGPp9ckPQu0TLCrZbTj3wDm8vKz0TWyA2PyWTjL2wttyV+Kw97YMNL
-	 FtDQKEEyO2W6sVGmI7zUnMwd+wiBmQnzxYKjQGMQ7iV7r7/rXSHqtiF7oTpCS9T0CyL6E
-	 6jFdN/kpG6BHQECOFTaZvqVDxRZ5ZraeCWtEa+IQuBRXhW1lc045KDBsBJSeCdb3Nlqah
-	 K0s1tmf9WotSnOgeCR/uV5uMWtN1QcmCOa+wdxfnDKhyZ9GafnQL0WzRzVKemUabNX5ig
-	 Sfvs6hzpAh1aKMFLAhwioEsfJSGxfd3wsw1F5ZSvcCFvBCemQ5isdcZu3UyNdfrKRCQ==
+	t=1793209205;
+	b=QYAav+gEYTupuad63RwjOq05qtSqkfFLgFR9VpqeLLitUd3ZhYNfaCSWlLsrcP+tf6P0
+	 /nd3plbmmx9nG3Pfk+HeQrfxLxWgB8TfwhGkSyigpCKb2rEt4ajHF+e5sz9UOwDZCfLC4
+	 rngeMlYOv+wJOKbsWO76M9em0Eg2bo0q06sW1UUne5WBDM4JmCYNsCS7ZI8U6JiNmJxR6
+	 yscSLZySI2Tu8QSPhjujL7byaZpfGMLDklpAxiC79egthG4jxP7tFqbrgEqKLCd/qabA4
+	 1emVY4wyxe7ItJc3sZFnn+Y5iJE6zOFYu6qhV1KXihTBlVblfYOFn25/8Py1LcTMcIA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793209202;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793209205;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=EFqoBXNu25k+z2x4hLpqcwl2842eODejmhH6I36aI94=;
-	b=ZZ8tS5EkN3+4h/Y0hDHaOOVKTNayxAAsK0iT0L/DlVy4W6d9v26BiMdHyjIBTxFDn8y9
-	 /Qdtgu9qbTiteMxwneHWmLYyVsmyoSXsV3hcc2+VGWAJECKvm3tG7Hg/+7w6T8Xl2cGIC
-	 upyUFG1uxDp3k+YWZrJCr3dzgvliwoUcnrlBeJXneWyKLSSJQSB32NnjUa8Pat1dRoyol
-	 YVADXTpfVogvwyrsERYpl53hiBYxpY0nV6RZeOa1MDyC8ZyM2xtm0J+g2RG1VLevpJp+G
-	 oK9682YAQR44ouyiickiPPfcnHuuA5boSF9nEyrK1XVOhSpDcnKzPmkLM4k5QxvpBSA==
+	bh=T/i6w7o1S9dl5d74Ziwuo9B5YY/ciiCciqtmXYyYyeY=;
+	b=gV6m7xqSXjepQnXF2JFhaBVFSJvTCZyXhjy49GgqIqfwtcICQTmo7/HwC38mnRFYWXAc
+	 rnPdG0nKY3U+EIT9k2bh2+dYYpOOj4ZY8DjgsPpu+0YXWQd6TM+xj1EE9zeiYlUESNx6X
+	 KKdTwWG4LJnBImliD37f2tcp9AAsUInP5OST3wJtzPhD03x6qrjD7gkNcuGU7uPDG3BOr
+	 6tb+Nlthp8DJWBQbRn6RoBxKRJEgcLLyHxYit0W7E2Q9aTBIRSCL27W6meGn9skP6BirG
+	 LdF2wZxgO/SG9lthNke8aK5IWgPG0xWc8B+RRdUeFJtQmseqOtFoKlK07OgVb6WKvew==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HNXQAq8r;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=thWMDwGF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D01E0606A31A;
-	Wed, 28 Oct 2026 17:40:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A82C0606A31C;
+	Wed, 28 Oct 2026 17:40:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HNXQAq8r
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F4701F01825;
-	Wed, 28 Oct 2026 17:40:01 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=thWMDwGF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 047681F01825;
+	Wed, 28 Oct 2026 17:40:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793209201;
-	bh=EFqoBXNu25k+z2x4hLpqcwl2842eODejmhH6I36aI94=;
+	s=korg; t=1793209204;
+	bh=T/i6w7o1S9dl5d74Ziwuo9B5YY/ciiCciqtmXYyYyeY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HNXQAq8rl4ZLIc1oUuvQFlzKNxuPWJINYst+6gIgrVUzMD1STvCkF9WJSUSHtvOgE
-	 cd5buvPJTy4rLEBMOvDdUrqSvKSLnE4p/WWd6pNQ/ZBGulJofPzfHEmDsht8Zgz3ZR
-	 uBG/p5cnVYkskJyaSirY9sNeI9fwrg5TmaJrOYIc=
+	b=thWMDwGFkiUbxZS3XVMGBD4xk9HN+gk64xFG5KCUYA9WlYnPoRYO7GH3/5N2gpUCX
+	 JYIpikDE+nwChKx9lYbhqm05OzYhEbr7rTJwp7BCfrgjGl1prz8Q/WczI1necEz836
+	 eW3QWc5hIcFv0ybfYbrULJesCdsiqnA239JaFHSM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Ulf Hansson <ulfh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 389/516] pmdomain: rockchip: fix clock leak on domain probe failure
-Date: Wed, 28 Oct 2026 17:59:01 +0100
-Message-ID: <20261028170012.696521296@linuxfoundation.org>
+Subject: [PATCH 5.10 390/516] pmdomain: rockchip: dont ignore clock lookup errors on attach
+Date: Wed, 28 Oct 2026 17:59:02 +0100
+Message-ID: <20261028170012.719158523@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -71,36 +71,50 @@ Content-Transfer-Encoding: 8bit
 
 From: Shawn Lin <shawn.lin@rock-chips.com>
 
-[ Upstream commit d8b3847770661b7109146e6479eeadcdab9cecf0 ]
+[ Upstream commit 4c66c423593e26273ea0d644906ed007630c6f6d ]
 
-When of_clk_get() failed in the middle of the loop, the references of
-the clocks acquired so far were leaked instead of being released by
-the error path.
+rockchip_pd_attach_dev() treated every of_clk_get() error as the end
+of the clock list, so a clock that exists but is not available yet
+(e.g. -EPROBE_DEFER) was silently skipped and the device ended up
+without pm_clk management.  Only -ENOENT means there are no more
+clocks.
 
-Fixes: d909072d0521 ("soc: rockchip: power-domain: use clk_bulk APIs")
+Fixes: 7c696693a4f5 ("soc: rockchip: power-domain: Add power domain driver")
 Signed-off-by: Shawn Lin <shawn.lin@rock-chips.com>
 Reviewed-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Cc: stable@vger.kernel.org
 Signed-off-by: Ulf Hansson <ulfh@kernel.org>
-[ sashal: adjusted for the Rockchip power-domain driver residing in the SoC subsystem. ]
+[ sashal: adjusted the patch to the Rockchip power-domain driver's older source location ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/rockchip/pm_domains.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/soc/rockchip/pm_domains.c | 14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/soc/rockchip/pm_domains.c b/drivers/soc/rockchip/pm_domains.c
-index 54eb6cfc5d5b1..19034afd2d7c9 100644
+index 19034afd2d7c9..6ccc85ad91c40 100644
 --- a/drivers/soc/rockchip/pm_domains.c
 +++ b/drivers/soc/rockchip/pm_domains.c
-@@ -435,7 +435,7 @@ static int rockchip_pm_add_one_domain(struct rockchip_pmu *pmu,
- 			dev_err(pmu->dev,
- 				"%pOFn: failed to get clk at index %d: %d\n",
- 				node, i, error);
--			return error;
-+			goto err_put_clocks;
- 		}
+@@ -356,7 +356,19 @@ static int rockchip_pd_attach_dev(struct generic_pm_domain *genpd,
  	}
  
+ 	i = 0;
+-	while ((clk = of_clk_get(dev->of_node, i++)) && !IS_ERR(clk)) {
++	while (1) {
++		clk = of_clk_get(dev->of_node, i++);
++		if (IS_ERR(clk)) {
++			error = PTR_ERR(clk);
++			if (error == -ENOENT)
++				break;
++
++			dev_err(dev, "failed to get clock %d: %d\n", i - 1,
++				error);
++			pm_clk_destroy(dev);
++			return error;
++		}
++
+ 		dev_dbg(dev, "adding clock '%pC' to list of PM clocks\n", clk);
+ 		error = pm_clk_add_clk(dev, clk);
+ 		if (error) {
 -- 
 2.53.0
 
