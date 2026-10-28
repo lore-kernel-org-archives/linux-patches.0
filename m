@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215827;
-	b=gWtp5vkZ3q5uvnKnZpIBt+mIfyAS5Bb/5/k55Y4GdhGyY4H7WlJ3DbLrhdmfMlKUZSYK
-	 zCrW9j/Du9360wqJaWMNqzgfViewOXkx2dV0EVXx7tIw+lr8moVOxbJ642wB+B71C6x/h
-	 YYEB2BKZDnsPt8Y9jiC0tehkuP1oM7VJcfxWW2HXW663+Bl9bE1SIO/kq/05u1OSPIIoT
-	 Xzzh2bss94uwzpM/p5xt11KmGx2q84SWkGjpYHWP9UGqIljFCbNIQZfDXZlX5HwTAVxu+
-	 fhkEZbPzg/DMWhqdS0P3vJpRvhCwB/5a5xzYxRr3It49GmCvyNGV3bmMpEctVE/A3jw==
+	t=1793215830;
+	b=lJLt5K37umh4swQVniOeiy1GwcOpYssl4E2yjjHiM0tgz6A9AWbqya6NqQZ+7NJM+W/J
+	 w5qeBdA3RMb2JTDb/oj023Rj29OKtAYBfjymQif6f/ykivjzJ9psmWB+fiX8/MxQTRi7c
+	 bbfPjTMGh6Ch9mezE45aRRR6qH5gqw9dvRykuQEAJyPKQz9cVFAmhEUPvJvVDx2v+OPsD
+	 rKuajUvtF+L0F23ATi4DZ9CfX/X2G3fQkQeuLKjpQmhrsIaVjjGWrqJ8JlVyQ+H24mfzl
+	 unVQMlACFXpk1VWYLfFBN0VG24nKqo3mVhthY001Xb2dBliBeUBLw/1slVE2g7Mdn3A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215827;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215830;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=20p7f64Lb8BtwCgSEwiOoWlXUPH+Pa0b7cSuOHwdJ3M=;
-	b=HzcinblOXlshAxq+6yKZofTyVo7PqcthIcI4f9jJ1cGDE3uXvV/spMDKrk27nIqj5wax
-	 2zvidkeUwDycZVKWxbUlH2/v8HIatBE2W1ckNeyRKOzoWAu90yisJolDajHLyPLSounUQ
-	 PZTV4BUysIAdMuXooAvTO++tgoc+XdFjSRsVCRy+ln8Kz1hZCpkxey/yTXWkf9Ys2Tqhy
-	 y1BykGQnUoBpdsX7vZQrJs4x+R/w9h00Ywy8HBspH6HFyK3zk8aDFzIbJ7CXxthIGxTz8
-	 KM325YEYWNJ+CigqysHRbslEDCoxcp6vTucD8+zZwu8HRFfqa/5l4r81ZsVoih8cwbA==
+	bh=QQ/zaoatNpOpYnQ0HMpYuCYDUhaGne4U2sr4aEFdWjk=;
+	b=E6JRYBfU4q1EL7IGT4L3cICaj9HZpA8ZEqZNapa0CM/RRmjW8ALILpmLrLaXaqf8FXJe
+	 FjldDCSIqwi5URztEbtLR93Y4B8E1bARnwM41hgdbTHSlubejBUmxhgMqAUidK1Qk1JWE
+	 cU26WJDuozHGjN3leSJzJE0bK7WWUIV7dDoKpjRau8l2iuSVm9OfRpa8yE2x6p0n5lU4F
+	 REJBhA/ih2G66KBTeGFklW1Cdexm0Mg95Jgsva9Yk33i9aJLK4xC74VCPoqA48Bp6+CD5
+	 ffmI/KZjod1CKqjwdaqyrCKDt9QT0wxRoACY0hITODhi0tmEm1c8DkPj0n8I/yIUY4w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DQRFtkBi;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rUhClB4x;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6EC0606A322;
-	Wed, 28 Oct 2026 19:30:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B01BE606A31A;
+	Wed, 28 Oct 2026 19:30:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DQRFtkBi
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EC411F01825;
-	Wed, 28 Oct 2026 19:30:25 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rUhClB4x
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A20E1F01825;
+	Wed, 28 Oct 2026 19:30:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215826;
-	bh=20p7f64Lb8BtwCgSEwiOoWlXUPH+Pa0b7cSuOHwdJ3M=;
+	s=korg; t=1793215829;
+	bh=QQ/zaoatNpOpYnQ0HMpYuCYDUhaGne4U2sr4aEFdWjk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DQRFtkBirOoODDg5eKHhry/tlIkOKBuY5aOpLuU0HEh+jIFlq64SC5+12gO26obpM
-	 9JMgZsEIcXy3+Wsq8dCNyViyCcnpsarttMX5wSZfLmvZFf7VQ2t3jK5pgH4HXzGRCc
-	 2+C6BpkNg4cciIV04tSnRus+mVH7agG1BgW6Z6uM=
+	b=rUhClB4xC9w44FCtXiF1lr7xgucvvpJh2b0QVSoxCPogoQPmiHkDvYYqGdIaqAc5k
+	 WbxBPp5DFrfn2JWcO4nqcRFzOJBJS42Og5tb2dfBFvmBsC8KQx6XsVOQHlrSphiW/t
+	 pcyucPXHj/s6K4JC6Ob4QU+3MUVtMei+qcnjLDXo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryam Vargas <hexlabsecurity@proton.me>,
-	Stephen Smalley <stephen.smalley.work@gmail.com>,
-	Paul Moore <paul@paul-moore.com>,
+	Cen Zhang <zzzccc427@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1346/1887] selinux: reject a permission value exceeding the class permission count
-Date: Wed, 28 Oct 2026 17:57:22 +0100
-Message-ID: <20261028170530.070388692@linuxfoundation.org>
+Subject: [PATCH 6.1 1320/1887] ALSA: seq: oss: Serialize readq reset state with q->lock
+Date: Wed, 28 Oct 2026 17:56:56 +0100
+Message-ID: <20261028170529.467761426@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,47 +68,199 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryam Vargas <hexlabsecurity@proton.me>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit d14b5d0e97fccd27974fedc03b903408872907fd ]
+[ Upstream commit 49ce92d207820f588b0406add82f053decfbe5d9 ]
 
-perm_read() bounds a permission value by SEL_VEC_MAX but never by the
-nprim of the owning class or common, which is taken verbatim from the
-policy image.  security_get_permissions() then writes perms[value - 1]
-into an nprim-sized kcalloc() array, so a class declaring fewer
-permissions than its largest permission value drives an out-of-bounds
-heap write.  The top-level symbol tables are validated this way; the
-nested per-class permission table is not.
+snd_seq_oss_readq_clear() resets qlen, head, and tail without
+q->lock even though the normal reader and producer paths serialize the
+same ring state under that spinlock. A reset can therefore race
+snd_seq_oss_readq_free() or snd_seq_oss_readq_put_event() and leave
+stale records in the queue, drop freshly queued ones, or report the
+wrong readiness after wakeup. KCSAN reports a data race between
+snd_seq_oss_readq_clear() and snd_seq_oss_readq_free().
 
-Reject a permission whose value exceeds nprim, which is already set when
-perm_read() runs.  Well-formed policies are unaffected.
+Take q->lock while clearing the ring and resetting input_time. Factor
+the enqueue logic into a caller-locked helper so
+snd_seq_oss_readq_put_timestamp() updates its suppression state under
+the same lock instead of racing the reset path.
 
-Cc: stable@vger.kernel.org
-Fixes: 55fcf09b3fe4 ("selinux: add support for querying object classes and permissions from the running policy")
-Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
-Acked-by: Stephen Smalley <stephen.smalley.work@gmail.com>
-[PM: tweak comment for line length]
-Signed-off-by: Paul Moore <paul@paul-moore.com>
+The buggy scenario involves two paths, with each column showing the
+order within that path:
+
+reset path:                      locked readq updater:
+1. snd_seq_oss_reset() or        1. A reader or callback producer
+   release reaches                  takes q->lock on the same queue.
+   snd_seq_oss_readq_clear().
+2. snd_seq_oss_readq_clear()     2. The updater tests or modifies
+   resets qlen, head, tail,         qlen, head, and tail.
+   and input_time.
+3. snd_seq_oss_readq_clear()     3. The updater completes its
+   wakes sleepers on                read-modify-write sequence.
+   q->midi_sleep.
+4. Without q->lock, the reset    4. The resulting ring state drives
+   can overlap the locked           later reads and readiness.
+   update.
+
+KCSAN reports:
+
+BUG: KCSAN: data-race in snd_seq_oss_readq_clear /
+snd_seq_oss_readq_free
+
+write to 0xffff8881069fe608 of 4 bytes by task 120516 on cpu 0:
+  snd_seq_oss_readq_free+0x6c/0x80
+  snd_seq_oss_read+0xcb/0x250
+  odev_read+0x38/0x60
+  vfs_read+0xff/0x600
+  ksys_read+0xb4/0x140
+  __x64_sys_read+0x46/0x60
+  do_syscall_64+0xbb/0x2f0
+  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+read to 0xffff8881069fe608 of 4 bytes by task 120517 on cpu 1:
+  snd_seq_oss_readq_clear+0x1f/0x90
+  snd_seq_oss_reset+0xa7/0xf0
+  snd_seq_oss_ioctl+0x6f6/0x7e0
+  odev_ioctl+0x56/0xc0
+  __x64_sys_ioctl+0xd1/0x120
+  do_syscall_64+0xbb/0x2f0
+  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+value changed: 0x00000001 -> 0x00000000
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Link: https://patch.msgid.link/20260614004801.3507773-1-zzzccc427@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/selinux/ss/policydb.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ sound/core/seq/oss/seq_oss_readq.c | 83 +++++++++++++++++++-----------
+ 1 file changed, 52 insertions(+), 31 deletions(-)
 
-diff --git a/security/selinux/ss/policydb.c b/security/selinux/ss/policydb.c
-index 42bcd861bbfb7..e6aa1069fd415 100644
---- a/security/selinux/ss/policydb.c
-+++ b/security/selinux/ss/policydb.c
-@@ -1126,6 +1126,10 @@ static int perm_read(struct policydb *p, struct symtab *s, void *fp)
+diff --git a/sound/core/seq/oss/seq_oss_readq.c b/sound/core/seq/oss/seq_oss_readq.c
+index f0db5d3dcba47..b7cdb1c61f265 100644
+--- a/sound/core/seq/oss/seq_oss_readq.c
++++ b/sound/core/seq/oss/seq_oss_readq.c
+@@ -73,13 +73,17 @@ snd_seq_oss_readq_delete(struct seq_oss_readq *q)
+ void
+ snd_seq_oss_readq_clear(struct seq_oss_readq *q)
+ {
+-	if (q->qlen) {
+-		q->qlen = 0;
+-		q->head = q->tail = 0;
++	scoped_guard(spinlock_irqsave, &q->lock) {
++		if (q->qlen) {
++			q->qlen = 0;
++			q->head = 0;
++			q->tail = 0;
++		}
++		q->input_time = (unsigned long)-1;
+ 	}
++
+ 	/* if someone sleeping, wake'em up */
+ 	wake_up(&q->midi_sleep);
+-	q->input_time = (unsigned long)-1;
+ }
  
- 	len = le32_to_cpu(buf[0]);
- 	perdatum->value = le32_to_cpu(buf[1]);
-+	rc = -EINVAL;
-+	/* indexes an nprim-sized array in security_get_permissions() */
-+	if (perdatum->value > s->nprim)
-+		goto bad;
+ /*
+@@ -136,28 +140,37 @@ int snd_seq_oss_readq_sysex(struct seq_oss_readq *q, int dev,
+ /*
+  * copy an event to input queue:
+  * return zero if enqueued
++ * caller must hold lock
+  */
+-int
+-snd_seq_oss_readq_put_event(struct seq_oss_readq *q, union evrec *ev)
++static int snd_seq_oss_readq_put_event_locked(struct seq_oss_readq *q,
++					      union evrec *ev)
+ {
+-	unsigned long flags;
+-
+-	spin_lock_irqsave(&q->lock, flags);
+-	if (q->qlen >= q->maxlen - 1) {
+-		spin_unlock_irqrestore(&q->lock, flags);
++	if (q->qlen >= q->maxlen - 1)
+ 		return -ENOMEM;
+-	}
  
- 	rc = str_read(&key, GFP_KERNEL, fp, len);
- 	if (rc)
+ 	memcpy(&q->q[q->tail], ev, sizeof(*ev));
+ 	q->tail = (q->tail + 1) % q->maxlen;
+ 	q->qlen++;
+ 
+-	/* wake up sleeper */
+-	wake_up(&q->midi_sleep);
++	return 0;
++}
+ 
+-	spin_unlock_irqrestore(&q->lock, flags);
++/*
++ * copy an event to input queue:
++ * return zero if enqueued
++ */
++int
++snd_seq_oss_readq_put_event(struct seq_oss_readq *q, union evrec *ev)
++{
++	int rc;
+ 
+-	return 0;
++	scoped_guard(spinlock_irqsave, &q->lock) {
++		rc = snd_seq_oss_readq_put_event_locked(q, ev);
++		if (!rc)
++			wake_up(&q->midi_sleep);
++	}
++
++	return rc;
+ }
+ 
+ 
+@@ -215,23 +228,31 @@ snd_seq_oss_readq_poll(struct seq_oss_readq *q, struct file *file, poll_table *w
+ int
+ snd_seq_oss_readq_put_timestamp(struct seq_oss_readq *q, unsigned long curt, int seq_mode)
+ {
+-	if (curt != q->input_time) {
+-		union evrec rec;
+-		memset(&rec, 0, sizeof(rec));
+-		switch (seq_mode) {
+-		case SNDRV_SEQ_OSS_MODE_SYNTH:
+-			rec.echo = (curt << 8) | SEQ_WAIT;
+-			snd_seq_oss_readq_put_event(q, &rec);
+-			break;
+-		case SNDRV_SEQ_OSS_MODE_MUSIC:
+-			rec.t.code = EV_TIMING;
+-			rec.t.cmd = TMR_WAIT_ABS;
+-			rec.t.time = curt;
+-			snd_seq_oss_readq_put_event(q, &rec);
+-			break;
++	int queued = 0;
++
++	scoped_guard(spinlock_irqsave, &q->lock) {
++		if (curt != q->input_time) {
++			union evrec rec;
++
++			memset(&rec, 0, sizeof(rec));
++			switch (seq_mode) {
++			case SNDRV_SEQ_OSS_MODE_SYNTH:
++				rec.echo = (curt << 8) | SEQ_WAIT;
++				queued = !snd_seq_oss_readq_put_event_locked(q, &rec);
++				break;
++			case SNDRV_SEQ_OSS_MODE_MUSIC:
++				rec.t.code = EV_TIMING;
++				rec.t.cmd = TMR_WAIT_ABS;
++				rec.t.time = curt;
++				queued = !snd_seq_oss_readq_put_event_locked(q, &rec);
++				break;
++			}
++			q->input_time = curt;
+ 		}
+-		q->input_time = curt;
+ 	}
++	if (queued)
++		wake_up(&q->midi_sleep);
++
+ 	return 0;
+ }
+ 
 -- 
 2.53.0
 
