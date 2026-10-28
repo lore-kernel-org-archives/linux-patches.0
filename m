@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793217137;
-	b=SgfBk/fViinjBDZAPRsvz/tetGbriJSA4dkc/WUdNuu1ctwRKJgc3PISy4WrnJNcguUQ
-	 zMNc05b/NiNjDpuBf5GEAVVccu8+tXV+JQJ9An7YslgSY8myVNnub+oyOfcFf6fMXZkl8
-	 ZoKBnZxIOqop4VIylBK0yTrnupRuU87RDrQ4yRRkocngHwpy6w0cqXWxk25czBQiyvG+S
-	 WRSVUGT2vwUgfqE8vq93Me1wIeHfD3i1OU2P/tbJZSWUC2Z9t8C1857M91upo7IE40eDq
-	 t3LcPqsW4mCPgbRHw1ibD7WwCDw34twVrg2F9BPtl3ViYD8Hh5c2D95kONIPN7+z2Ag==
+	t=1793217139;
+	b=5jbM+w+Ho43kkLOLGIl0vUg5bjn0ZZq5174JKNBs0PzDZ3/m8T/8qWYjs0IxLpr2+efn
+	 ERCqSEL/EMZiquBY+kN/anwMurg6gYlLsSHJvfnkU4DUJnDAGFF/Nv9c3pV6x+2wE3Bz2
+	 V6Qn77Qb4ZTfay1I8acVTBoBiDcwmpf44Clgmlw15DAQs9ceo3gczWPzPr2HTiEbiNWaP
+	 AS6LQrbB0rP70Qn/eaEQqjEMZJvBa9LAnxEDFiMoY/0HGMMtb75m8puSAXfGmDPFnCU43
+	 w62cUDtwk/0GpEG7KhB86Jb8IxjVU6MGDF++xVocQCrJdetZJuebB+bD1nibJ4fgGyw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793217137;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793217139;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=VP+nNR9LjeG09gpx+ugtgVodNsc/C2C4p0IBAWlGUfw=;
-	b=dsFHElK5xX2HbiIcMsC+aTPHXcIhaK8KRsfOWJ/AL5q2ttDnYcbO6b6ZvLI4DerP5ozK
-	 t65QAGkDHfc+UqsMM4o1M6mU+H5560lfxHkCjJiUKtknQKniW33tbf5zmZHl02qzRcFs6
-	 1L8+YbHxZLYyNa6qnZUsrh24TntbJa7cdru9Rva1ZoYIIz93M6YJaqydkfrao6slEZY/X
-	 7IHwTK9SU+ZbvQZCcykX3RsyVcrelIS37fGifjsPj1laOl6MqnqmFhGlHgJQ7stl5Pqql
-	 z8x7YKE7CQ2TzDoEV0xFZLTxGMsWvPjeKdg8a0hfFk3hLjpldwRROpddwO0bhASDbog==
+	bh=uFeZrFuEO+zlRVg45j9S9x7fS1gX1lqFR1IUbcB9AzI=;
+	b=D5q8tRxDwAcaT1C5wSwMYpFaqgdoAI1s+28H61DkICfIA4EjQgvR5b1FI/g490+dKdYg
+	 8Q2v2MRhEkLGZEb0ef8iPD7qd9e7EjyF/eNJSvYggA7XBEOd50XSE1VF8kRfb4Q0uHXjl
+	 e1acOBXxJ0BStHpD/SD9qxz2H/uhp4Oiw1vjSzvVcJz+E/CA9YLiRIbhtWl1y/VXKqaVt
+	 0zNWYwnP7ZafoQaDpgr1U7s3/xB2/aUck/3aqLfSwM/FKa8jO6QQtLr3RNKK7IBjYp4li
+	 T3RtRgi4U2BIP4VJ4gxDHG2exP9vMr8qdFHJDHwtunWBGQdKLdr3I/ox4jxROJDTaAg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=q9QRotCh;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OBrHPiCg;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C60D5606A31A;
-	Wed, 28 Oct 2026 19:52:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C2B9606A31A;
+	Wed, 28 Oct 2026 19:52:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=q9QRotCh
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22C411F01828;
-	Wed, 28 Oct 2026 19:52:15 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OBrHPiCg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC0C31F01825;
+	Wed, 28 Oct 2026 19:52:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793217136;
-	bh=VP+nNR9LjeG09gpx+ugtgVodNsc/C2C4p0IBAWlGUfw=;
+	s=korg; t=1793217139;
+	bh=uFeZrFuEO+zlRVg45j9S9x7fS1gX1lqFR1IUbcB9AzI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=q9QRotChptVuNbpwd5k2AgL3yoISyjJUaeU23njIOv4mmfqjpAPCwHPEljUwMN64X
-	 5+w+01P86Kozgk6AGd3IWI5LBCEj1OTMnIeh6tuSMtQ26J0Ae0zTOHzL2A0l3VlIJd
-	 VnKLi+Jab2cCjHDvrbYkyGLYK5S7IQ5B99UyNag8=
+	b=OBrHPiCgCXKK6Teq5dfw3Nm9cztU6LUJpKv2ugLtcKVMOLYJi2QdTGq/W8qS2bb/A
+	 7ybPFLsXY9+ars26D3ZNfmPvIfZDBL+cIAXq2hk6yTQEHS1DD7+S3avu2KloY+wCTi
+	 o2Tcm57TtdTK7yHHWvDsU6V1ux0qBwQmM7Qp2Up4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot@kernel.org,
-	Donggeun Yoo <donggeunyoo.kernel@gmail.com>,
-	Steven Rostedt <rostedt@goodmis.org>
-Subject: [PATCH 6.1 1802/1887] tracing: Unregister field variable histograms when the command fails
-Date: Wed, 28 Oct 2026 18:04:58 +0100
-Message-ID: <20261028170540.455052103@linuxfoundation.org>
+	Sun Yangkai <sunyangkai@fygo.io>,
+	Chen Cheng <chencheng@fnnas.com>,
+	Mikulas Patocka <mpatocka@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 1785/1887] dm-integrity: require stable writes for internal hash modes
+Date: Wed, 28 Oct 2026 18:04:41 +0100
+Message-ID: <20261028170540.071097917@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,92 +69,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
+From: Chen Cheng <chencheng@fnnas.com>
 
-commit 91c14d6c13096091c56304120aaa26e479130b8b upstream.
+[ Upstream commit b2fd92f016e9d692fd3c8c08d0ee014e9212279d ]
 
-An action that names a field on another event needs that field as a
-variable, so create_field_var_hist() registers a second hist trigger on
-that event to provide it, and records it in
-target_hist_data->field_var_hists[].
+dm-integrity direct, bitmap and inline internal-hash modes compute
+integrity tags from the pages carried by the write bio.  The lower data
+write also uses those pages, so the tag and the data write depend on the
+same memory contents staying unchanged while writeback is in flight.
 
-If a later part of the same command fails, create_actions() returns an
-error and event_hist_trigger_parse() jumps to out_free. The write fails
-with -EINVAL and sched_switch gets no trigger, but:
+Without stable writes, a buffered writer can modify a writeback folio
+after dm-integrity has submitted the data bio and before the lower device
+has consumed the data.  After a crash, this can leave data from the later
+contents with a tag calculated from the earlier contents, causing
+permanent checksum failures on read.
 
-  # echo 'hist:keys=pid:ts0=common_timestamp.usecs' >> \
-      events/sched/sched_waking/trigger
-  # echo 'my_synth u64 lat; int a; int b' >> synthetic_events
-  # echo 'hist:keys=next_pid:wakeup_lat=common_timestamp.usecs-$ts0:\
-      onmatch(sched.sched_waking).my_synth($wakeup_lat,prio,nosuchfld)'\
-      >> events/sched/sched_switch/trigger
-  # cat events/sched/sched_waking/trigger
-  hist:keys=pid:vals=hitcount:ts0=common_timestamp.usecs:sort=hitcount:size=2048:clock=global [active]
-  hist:keys=pid:vals=hitcount:synthetic_prio=prio:sort=hitcount:size=2048 [active]
+Set BLK_FEAT_STABLE_WRITES for internal-hash D, B and I modes so
+filesystems wait for writeback folios to become stable before modifying
+them again.  Journal mode is left unchanged because it copies data into
+the journal before computing and persisting the tag.
 
-The second histogram is the one created for 'prio'. It is still active and
-still counting.
+Tested using dm-delay over a virtio-blk test disk, dm-integrity
+internal_hash:crc32c and no-journal ext4.  The D and B reproducers both
+failed with checksum errors before this change and completed with
+READ_RC=0 and zero mismatches after it.
 
-out_free reaches destroy_field_var_hists(), which frees the
-field_var_hists[] entries, but never unregister_field_var_hists(), which is
-what removes the triggers and runs only from event_hist_trigger_free(). The
-entry is freed and the trigger is left with nothing tracking it.
-
-Unregister the field variable histograms in out_free as well, and record
-each one as soon as its trigger is registered rather than after the lookup
-that follows it, so no exit can leave a registered trigger untracked. The
-entry then belongs to field_var_hists[] and is released by
-destroy_field_var_hists(), so freeing it on that exit would be a double
-free.
-
+Fixes: 7eada909bfd7 ("dm: add integrity target")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260914104036.1768529-1-donggeunyoo.kernel@gmail.com
-Fixes: 02205a6752f2 ("tracing: Add support for 'field variables'")
-Reported-by: sashiko-bot@kernel.org
-Closes: https://lore.kernel.org/all/20260913204302.DB2551F000FF@smtp.kernel.org/
-Signed-off-by: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
-Assisted-by: Claude:claude-fable-5
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: Sun Yangkai <sunyangkai@fygo.io>
+Link: https://github.com/chencheng-fnnas/reproducer/blob/main/dm-integrity-writeback-race.py
+Signed-off-by: Chen Cheng <chencheng@fnnas.com>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+[ sashal: Replaced BLK_FEAT_STABLE_WRITES with a needs_stable_writes target bit propagated to QUEUE_FLAG_STABLE_WRITES. ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace_events_hist.c |   12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/md/dm-integrity.c     | 3 +++
+ drivers/md/dm-table.c         | 2 +-
+ include/linux/device-mapper.h | 5 +++++
+ 3 files changed, 9 insertions(+), 1 deletion(-)
 
---- a/kernel/trace/trace_events_hist.c
-+++ b/kernel/trace/trace_events_hist.c
-@@ -3043,20 +3043,18 @@ create_field_var_hist(struct hist_trigge
- 
- 	kfree(cmd);
- 
-+	n = target_hist_data->n_field_var_hists;
-+	target_hist_data->field_var_hists[n] = var_hist;
-+	target_hist_data->n_field_var_hists++;
-+
- 	/* If we can't find the variable, something went wrong */
- 	event_var = find_synthetic_field_var(target_hist_data, subsys_name,
- 					     event_name, field_name);
- 	if (IS_ERR_OR_NULL(event_var)) {
--		kfree(var_hist->cmd);
--		kfree(var_hist);
- 		hist_err(tr, HIST_ERR_SYNTH_VAR_NOT_FOUND, errpos(field_name));
- 		return ERR_PTR(-EINVAL);
+diff --git a/drivers/md/dm-integrity.c b/drivers/md/dm-integrity.c
+index f552c402b3c17..4fcd7d821568f 100644
+--- a/drivers/md/dm-integrity.c
++++ b/drivers/md/dm-integrity.c
+@@ -3503,6 +3503,9 @@ static void dm_integrity_io_hints(struct dm_target *ti, struct queue_limits *lim
+ 		blk_limits_io_min(limits, ic->sectors_per_block << SECTOR_SHIFT);
+ 		limits->dma_alignment = limits->logical_block_size - 1;
  	}
- 
--	n = target_hist_data->n_field_var_hists;
--	target_hist_data->field_var_hists[n] = var_hist;
--	target_hist_data->n_field_var_hists++;
--
- 	return event_var;
- }
- 
-@@ -6604,6 +6602,8 @@ static int event_hist_trigger_parse(stru
- 
- 	trigger_data_free(trigger_data);
- 
-+	unregister_field_var_hists(hist_data);
 +
- 	destroy_hist_data(hist_data);
- 	goto out;
++	if (ic->internal_hash && (ic->mode == 'D' || ic->mode == 'B'))
++		ti->needs_stable_writes = true;
  }
+ 
+ static void calculate_journal_section_size(struct dm_integrity_c *ic)
+diff --git a/drivers/md/dm-table.c b/drivers/md/dm-table.c
+index 8e0b9783f3da3..214a7af330f89 100644
+--- a/drivers/md/dm-table.c
++++ b/drivers/md/dm-table.c
+@@ -1941,7 +1941,7 @@ static int device_requires_stable_pages(struct dm_target *ti,
+ 					struct dm_dev *dev, sector_t start,
+ 					sector_t len, void *data)
+ {
+-	return bdev_stable_writes(dev->bdev);
++	return ti->needs_stable_writes || bdev_stable_writes(dev->bdev);
+ }
+ 
+ int dm_table_set_restrictions(struct dm_table *t, struct request_queue *q,
+diff --git a/include/linux/device-mapper.h b/include/linux/device-mapper.h
+index 9505674dc883d..bda8f373c91b6 100644
+--- a/include/linux/device-mapper.h
++++ b/include/linux/device-mapper.h
+@@ -357,6 +357,11 @@ struct dm_target {
+ 	 */
+ 	bool discards_supported:1;
+ 
++	/*
++	 * Set if this target requires stable data during writeback.
++	 */
++	bool needs_stable_writes:1;
++
+ 	/*
+ 	 * Set if we need to limit the number of in-flight bios when swapping.
+ 	 */
+-- 
+2.53.0
+
 
 
