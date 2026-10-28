@@ -1,56 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793210561;
-	b=P96quiBurRNdwBo67h+F7Tu/qL5qkwHUFuqmBnqPWPlYYY6WEplfrMonbGwHCY1p19kN
-	 yx2GZVKlOk7hAPyqcblHudm/C04x3tSMfDTFcRjvQGZFNAsGodYlClZYX79OV7cndqx+L
-	 G94s318R9cwFFb56YvFWY6q738+gT/jGZwK182zXzjt/5iCfqwPd3rvnQvET7tVZth8qz
-	 ityLYn90YpROR0OM/9ju86r/BzNIf677Gy+NTm6UejajLGo8AnMIpZZ5psfsfmv/iMMnC
-	 6U7eQ2PXjxwAZK/54KhkLO+S/1WHMKJM+XzP/hMhJTlNq8tITLGY2JKEuic71ry41Bw==
+	t=1793210564;
+	b=VAdr7Njm+UHH58kA8Ab3bZxXX/4q1j5UJOkrgzPtDXhIHn6SibZgoN50vqv8NP6PAPzL
+	 Nicq8TFFO4ICnf3UTZOlkSxWxy+ozyV7y4Nymlk4FZCh17IaoRfr0sjw+PLyF4qEk++e+
+	 6VUH6xKf2ChjyCGgXOsgJDk60PGY2Ts2Le+BDTM3jBIdI1nWNBGxo4uuDmS/jjYmZJLp6
+	 CD6UMGe/TUlO2qsH8FnrL3S3d40hPoVwx/T4ywc34mJ26HNqO7uLqtZV2u0cw7oXYStjf
+	 vy6YCCtfx6GOHNed/G0ZcNwyGc4cyl7+ICp3SIgCtqjhZgZ5R+/OB8OE4/4SxEr+V9g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793210561;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793210564;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=POrkT53oet6CbJuRcLsaztI+HAqWnp99MYjrRBH9G84=;
-	b=y9dq92LoBB6VUSIfpUCmfFBgDTFP5iIQqIPAyiS/SK6EIqkvDzxT09/SKFybbZCvcU/5
-	 1v7MIkXT3CMWpP6Y21cGZQ0GaBQYhM76X6n3tV+jTPRAWdYGbUOiGn/uVtTzoseWQELLT
-	 hki6KdWKUhQYsvVtOUYSxNoiUdCI9tCCZ85gcOG0TIEQ8+6gLZhEjLjxYfEtNs/3OdgLK
-	 f36f8Vgn9LuoMnzvxINk22Btgfprx1TkbL1QGRzb9Q3+iEnHsF4c0TD0bTwY3sjYa2Ulu
-	 MVJciPj4RNFsxRGl6jlAST0pe8LQFxpJq44fuPMwSsc9pRWJqzfeT6JPnj9ZVytz8tg==
+	bh=J/EuWyxXRglKvOvJzG9QgYuWauvh7JdlpDQVsO8YC/s=;
+	b=pza/en8y7I1EI/owAUUOGdWuql1FSW1z5Os1p26NEfNxDhkc9bs9/Tgqw8eL9sWM9ZYd
+	 izSfBeJX5JwKcdHuL2Zsvpd93awfur0j0NJY07gD7eovRlXEQZu9jUnZI7VP9ObqsFouH
+	 1sYeZlEmofebNoj+4b1lYau+6bKGSOkNWozwjWoPoh8bDUGr1c7z8Qjww0jke813cr8kG
+	 mcbO3PalIwvSqc+ZJaqJLYNu8Qi8Ypm2sv1TgusApbynJA1/rmV7zMcz0Zaaifo49Xqjn
+	 gLRWDs02C7AGABUFc/QCbLGARzCJxb6AQgRoPBnUJ3NbphQOA2LnZYiA9i6dLdy0GgA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FvSUAe1a;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="UG7gZ/WR";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCEC5606A31C;
-	Wed, 28 Oct 2026 18:02:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B942B606A31A;
+	Wed, 28 Oct 2026 18:02:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FvSUAe1a
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 391BD1F01825;
-	Wed, 28 Oct 2026 18:02:40 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UG7gZ/WR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 153531F01825;
+	Wed, 28 Oct 2026 18:02:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793210560;
-	bh=POrkT53oet6CbJuRcLsaztI+HAqWnp99MYjrRBH9G84=;
+	s=korg; t=1793210563;
+	bh=J/EuWyxXRglKvOvJzG9QgYuWauvh7JdlpDQVsO8YC/s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FvSUAe1a7MWkgLxzpAc2K61ZUTOgELuRsWO0LrIWVOxKKXerbQ8w3l6n3RNalGvdH
-	 2cR6WDQbWcMj5pcyI42vO0nVAPAQ5dIMXWJeSOyCfho7GGiE8hmyPyOfGUB+EJWGAR
-	 x5oM5fwyhyCcoLtu9sXr4slNs5gEnAkrhcQC97WQ=
+	b=UG7gZ/WRFJhfkT82YS4yrV2Bbpnt+JzcOpggIH5Egh6C+mIBIVYh3FA9ZNZA+nRxX
+	 UJ3qkXFQBhxzCBEl84TsePwLH+ZWfiK0HgYyiC2jGAmTWirN0X1kweOav1E/+ZEpgZ
+	 isQEVS2vfM24AcPGzT3b/eRKsHelUfDGt8PfE/Y8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <noname.nuno@gmail.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Jonathan Cameron <jic23@kernel.org>,
-	Angel Iglesias <ang.iglesiasg@gmail.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Wolfram Sang <wsa@kernel.org>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 068/571] i2c: core: Introduce i2c_client_get_device_id helper function
-Date: Wed, 28 Oct 2026 17:53:35 +0100
-Message-ID: <20261028170009.639644051@linuxfoundation.org>
+Subject: [PATCH 5.15 069/571] power: supply: max17040: Convert to i2cs .probe_new()
+Date: Wed, 28 Oct 2026 17:53:36 +0100
+Message-ID: <20261028170009.662666906@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -73,69 +69,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Angel Iglesias <ang.iglesiasg@gmail.com>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit 662233731d66cf41e7494e532e702849c8ce18f3 ]
+[ Upstream commit a07fca69378c26ea034826feb0011256e25ad237 ]
 
-Introduces new helper function to aid in .probe_new() refactors. In order
-to use existing i2c_get_device_id() on the probe callback, the device
-match table needs to be accessible in that function, which would require
-bigger refactors in some drivers using the deprecated .probe callback.
+.probe_new() doesn't get the i2c_device_id * parameter, so determine
+that explicitly in the probe function.
 
-This issue was discussed in more detail in the IIO mailing list.
-
-Link: https://lore.kernel.org/all/20221023132302.911644-11-u.kleine-koenig@pengutronix.de/
-Suggested-by: Nuno Sá <noname.nuno@gmail.com>
-Suggested-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Suggested-by: Jonathan Cameron <jic23@kernel.org>
-Signed-off-by: Angel Iglesias <ang.iglesiasg@gmail.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Stable-dep-of: 4e4b9f5ce9df ("power: supply: max17040: drop incorrect I2C functionality check")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/i2c-core-base.c | 14 ++++++++++++++
- include/linux/i2c.h         |  1 +
- 2 files changed, 15 insertions(+)
+ drivers/power/supply/max17040_battery.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/i2c/i2c-core-base.c b/drivers/i2c/i2c-core-base.c
-index 04bfd86688bc1..ee8d6e520ca05 100644
---- a/drivers/i2c/i2c-core-base.c
-+++ b/drivers/i2c/i2c-core-base.c
-@@ -2429,6 +2429,20 @@ int i2c_get_device_id(const struct i2c_client *client,
- }
- EXPORT_SYMBOL_GPL(i2c_get_device_id);
+diff --git a/drivers/power/supply/max17040_battery.c b/drivers/power/supply/max17040_battery.c
+index 04b61692da300..8e913f92af9cd 100644
+--- a/drivers/power/supply/max17040_battery.c
++++ b/drivers/power/supply/max17040_battery.c
+@@ -430,9 +430,9 @@ static const struct power_supply_desc max17040_battery_desc = {
+ 	.num_properties		= ARRAY_SIZE(max17040_battery_props),
+ };
  
-+/**
-+ * i2c_client_get_device_id - get the driver match table entry of a device
-+ * @client: the device to query. The device must be bound to a driver
-+ *
-+ * Returns a pointer to the matching entry if found, NULL otherwise.
-+ */
-+const struct i2c_device_id *i2c_client_get_device_id(const struct i2c_client *client)
-+{
-+	const struct i2c_driver *drv = to_i2c_driver(client->dev.driver);
-+
-+	return i2c_match_id(drv->id_table, client);
-+}
-+EXPORT_SYMBOL_GPL(i2c_client_get_device_id);
-+
- /* ----------------------------------------------------
-  * the i2c address scanning function
-  * Will not work for 10-bit addresses!
-diff --git a/include/linux/i2c.h b/include/linux/i2c.h
-index 996886f187a1e..b115fb9e2071e 100644
---- a/include/linux/i2c.h
-+++ b/include/linux/i2c.h
-@@ -188,6 +188,7 @@ s32 i2c_smbus_read_i2c_block_data_or_emulated(const struct i2c_client *client,
- 					      u8 *values);
- int i2c_get_device_id(const struct i2c_client *client,
- 		      struct i2c_device_identity *id);
-+const struct i2c_device_id *i2c_client_get_device_id(const struct i2c_client *client);
- #endif /* I2C */
- 
- /**
+-static int max17040_probe(struct i2c_client *client,
+-			const struct i2c_device_id *id)
++static int max17040_probe(struct i2c_client *client)
+ {
++	const struct i2c_device_id *id = i2c_client_get_device_id(client);
+ 	struct i2c_adapter *adapter = client->adapter;
+ 	struct power_supply_config psy_cfg = {};
+ 	struct max17040_chip *chip;
+@@ -599,7 +599,7 @@ static struct i2c_driver max17040_i2c_driver = {
+ 		.of_match_table = max17040_of_match,
+ 		.pm	= MAX17040_PM_OPS,
+ 	},
+-	.probe		= max17040_probe,
++	.probe_new	= max17040_probe,
+ 	.id_table	= max17040_id,
+ };
+ module_i2c_driver(max17040_i2c_driver);
 -- 
 2.53.0
 
