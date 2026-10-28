@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214082;
-	b=mpGmhxQcaepmr6eslJUnExINKNxASheNvHSZ603UffMG3a9UHVReSsH3jXy+xcllSrzL
-	 HwJk8a094kcNjhTNqh1JmPI/gFQQHsxQ9jktd1B4Q1OAkskE3PNLtEykseQxQ4U3zA6pj
-	 4Vbn+Vu0wg5QiOP2h9OxMVzpgWcLNFQMB9aX5rRxH6mSa0EupB3ipxF+HeTFLu+WF5I3+
-	 a15fLSPmz/GBruGWpbbc2aRtNTtoqOT4OAY6j5Hyw5fVu+dpXKR/clvJPo26CQTC+B9nd
-	 1/Bl3Pp/4rAuO2EUgwvXokHRhTCCQKGr8KsoyZCCJIadGPynN4sGIedFPwSY9VlyAlw==
+	t=1793214085;
+	b=Qf/i3FsjUFvtnjYhgK41S63sNgmdkQqzB20O0wZXaUf0xGcJQgnl2MA38x8ltkPmG8Kd
+	 5XdGD9XShQr1NdWhxWe7h1EGB7PnnCbBLlH10NdyM8Q/Nm2fU71THZewnymvwU36i4gQS
+	 pNga6JYzmFZ3xFPTUL/kRee8PFqdF3Yy/BYDv8nwpuB0qJStwSq14XHhBJo6A817ugYO8
+	 S6e7txua5qb0CiyfKVkHDvZbYteB4pPbU8r3Mpf71jVkvTh4bnq35oc3YTX5YBRpJA2Hz
+	 b/wWMaiwtTzxErmOufCHJRTcYr7wWqU/LDk1QxTQfre6vwq5UqqJwXRkANGXJVzikNA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214082;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214085;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=bGWeQYuUMKbXUhaznK9SNXb79QJDCKei/mUBd9sqLAc=;
-	b=Edf9DpU6NIR7WexHmuv4xrjIFfJ0s0wyPpZc9+4meAXFUC+Ve36ILa+Q02mS1ZsK+0+L
-	 IYqlQ3bDGexypJ5Y63NRRziMoSNpLdmKwogdoev6qIYyKQjPtJOuC9l/wxUeENq72xJcL
-	 RIYq1/HjqyCHcTp80KEXY7z4vAwpdz+nybpw10yJNBDjaF9rjdPAHkAohS1EvBwaZJkKG
-	 FqWF5hDx01D4iqvKenq7iaR1l5S44/rFWwgxVez8M73Op6MF/9T6d4oFp7zYd90J9P9Ig
-	 uaBQCKOat8ImpOCpsheZAS3R5BWp0YLs28tu9o5ApBMm2CJ+xQCD5+MyIwnvSluvzvg==
+	bh=O7XQ9nAW0LQfC0GnURnaUnQhSpr+55TDLeWRH+ziiv8=;
+	b=IqWdTSvHqmHQl6QSbn+s29ts+/qmuI9yLADgYXieUuKbL+9DIAp+AjQ3fy+Sy8BB6tzq
+	 PU2ntVXem1G419KpQnbDK25apaZzsk3QDYTqfUi98NkeDg+RGFuwHDSHzC9LtcEqStTXk
+	 2MOVpuFdWKKMoy+lR3BiY7CxubKPs1apfL0rf2wDNO33IXXumoMVn4TlLABmBGlpdQEgo
+	 eyI3b9/B+AuXbY96GrKO4APrxFHI2+yXTMtJCfyWQ92BF3t039HL9jcjjI0eQ196/HXoL
+	 IkoVggc3pDqwlBpBBMXTBdNIk5LAaIvAbXulglxEtEZghc4NHKp6xuTm677uW7wCiHQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KaSZEaiz;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mhzaw9qs;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A584606A31C;
-	Wed, 28 Oct 2026 19:01:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3167D606A31D;
+	Wed, 28 Oct 2026 19:01:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KaSZEaiz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9D0F1F01825;
-	Wed, 28 Oct 2026 19:01:21 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mhzaw9qs
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 848D11F01825;
+	Wed, 28 Oct 2026 19:01:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214082;
-	bh=bGWeQYuUMKbXUhaznK9SNXb79QJDCKei/mUBd9sqLAc=;
+	s=korg; t=1793214085;
+	bh=O7XQ9nAW0LQfC0GnURnaUnQhSpr+55TDLeWRH+ziiv8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KaSZEaizZq0miIjMhQ4/ssNt8dXvEBCjpBXb/jS20lQLgQsxAWjW4PdywBbCURzjg
-	 gzRzsVtdlCxOmQ70/KRs5ptx6iTw2e8/1Ze+GRRhEgPedbe4lDNzA5Nts/poJeiuJ/
-	 LEERNK0OBHXkfNQohB7RsOBvwaIB61UOVXW3lg9E=
+	b=mhzaw9qsxFKi5loeU3mwUeQBctN0tybZcdKsyPUYt/xY5ukCmEUnjBLtSPIPyS7zQ
+	 zZC8ZUwC9k9Q9TFPA3k9g1OuNj6Blzo9o/hYUacb/lvwyw0/wKIKV6e4yzOAwF0Ue6
+	 soErHkIuUsW7OxKfeDR5gCv2cUId5xjkPucLQXQs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guixin Liu <kanie@linux.alibaba.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Wen Gu <guwen@linux.alibaba.com>,
+	Wenjia Zhang <wenjia@linux.ibm.com>,
+	Alexandra Winter <wintera@linux.ibm.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0734/1887] scsi: mpi3mr: Fix possible crash when setting up bsg fails
-Date: Wed, 28 Oct 2026 17:47:10 +0100
-Message-ID: <20261028170516.152058997@linuxfoundation.org>
+Subject: [PATCH 6.1 0717/1887] net/smc: initialize close_work early to avoid warning
+Date: Wed, 28 Oct 2026 17:46:53 +0100
+Message-ID: <20261028170515.751556315@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,76 +70,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guixin Liu <kanie@linux.alibaba.com>
+From: Wen Gu <guwen@linux.alibaba.com>
 
-[ Upstream commit 295006f6e8c17212d3098811166e29627d19e05c ]
+[ Upstream commit 0541db8ee32c09463a72d0987382b3a3336b0043 ]
 
-If bsg_setup_queue() fails, the bsg_queue is assigned a non-NULL value.
-Consequently, in mpi3mr_bsg_exit(), the condition "if(!mrioc->bsg_queue)"
-will not be satisfied, preventing execution from entering
-bsg_remove_queue(), which could lead to the following crash:
+We encountered a warning that close_work was canceled before
+initialization.
 
-BUG: kernel NULL pointer dereference, address: 000000000000041c
-Call Trace:
-  <TASK>
-  mpi3mr_bsg_exit+0x1f/0x50 [mpi3mr]
-  mpi3mr_remove+0x6f/0x340 [mpi3mr]
-  pci_device_remove+0x3f/0xb0
-  device_release_driver_internal+0x19d/0x220
-  unbind_store+0xa4/0xb0
-  kernfs_fop_write_iter+0x11f/0x200
-  vfs_write+0x1fc/0x3e0
-  ksys_write+0x67/0xe0
-  do_syscall_64+0x38/0x80
-  entry_SYSCALL_64_after_hwframe+0x78/0xe2
+  WARNING: CPU: 7 PID: 111103 at kernel/workqueue.c:3047 __flush_work+0x19e/0x1b0
+  Workqueue: events smc_lgr_terminate_work [smc]
+  RIP: 0010:__flush_work+0x19e/0x1b0
+  Call Trace:
+   ? __wake_up_common+0x7a/0x190
+   ? work_busy+0x80/0x80
+   __cancel_work_timer+0xe3/0x160
+   smc_close_cancel_work+0x1a/0x70 [smc]
+   smc_close_active_abort+0x207/0x360 [smc]
+   __smc_lgr_terminate.part.38+0xc8/0x180 [smc]
+   process_one_work+0x19e/0x340
+   worker_thread+0x30/0x370
+   ? process_one_work+0x340/0x340
+   kthread+0x117/0x130
+   ? __kthread_cancel_work+0x50/0x50
+   ret_from_fork+0x22/0x30
 
-Fixes: 4268fa751365 ("scsi: mpi3mr: Add bsg device support")
-Signed-off-by: Guixin Liu <kanie@linux.alibaba.com>
-Link: https://lore.kernel.org/r/20250107022032.24006-1-kanie@linux.alibaba.com
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+This is because when smc_close_cancel_work is triggered, e.g. the RDMA
+driver is rmmod and the LGR is terminated, the conn->close_work is
+flushed before initialization, resulting in WARN_ON(!work->func).
+
+__smc_lgr_terminate             | smc_connect_{rdma|ism}
+-------------------------------------------------------------
+                                | smc_conn_create
+				| \- smc_lgr_register_conn
+for conn in lgr->conns_all      |
+\- smc_conn_kill                |
+   \- smc_close_active_abort    |
+      \- smc_close_cancel_work  |
+         \- cancel_work_sync    |
+            \- __flush_work     |
+	         (close_work)   |
+	                        | smc_close_init
+	                        | \- INIT_WORK(&close_work)
+
+So fix this by initializing close_work before establishing the
+connection.
+
+Fixes: 46c28dbd4c23 ("net/smc: no socket state changes in tasklet context")
+Fixes: 413498440e30 ("net/smc: add SMC-D support in af_smc")
+Signed-off-by: Wen Gu <guwen@linux.alibaba.com>
+Reviewed-by: Wenjia Zhang <wenjia@linux.ibm.com>
+Reviewed-by: Alexandra Winter <wintera@linux.ibm.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/mpi3mr/mpi3mr_app.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ net/smc/af_smc.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/scsi/mpi3mr/mpi3mr_app.c b/drivers/scsi/mpi3mr/mpi3mr_app.c
-index c77803bd9b009..28f19209c58db 100644
---- a/drivers/scsi/mpi3mr/mpi3mr_app.c
-+++ b/drivers/scsi/mpi3mr/mpi3mr_app.c
-@@ -1531,6 +1531,7 @@ void mpi3mr_bsg_init(struct mpi3mr_ioc *mrioc)
- {
- 	struct device *bsg_dev = &mrioc->bsg_dev;
- 	struct device *parent = &mrioc->shost->shost_gendev;
-+	struct request_queue *q;
+diff --git a/net/smc/af_smc.c b/net/smc/af_smc.c
+index 35cf30486916e..71ceaab9b6dd3 100644
+--- a/net/smc/af_smc.c
++++ b/net/smc/af_smc.c
+@@ -406,6 +406,7 @@ static struct sock *smc_sock_alloc(struct net *net, struct socket *sock,
+ 	sk_refcnt_debug_inc(sk);
+ 	mutex_init(&smc->clcsock_release_lock);
+ 	smc_init_saved_callbacks(smc);
++	smc_close_init(smc);
  
- 	device_initialize(bsg_dev);
- 
-@@ -1546,9 +1547,9 @@ void mpi3mr_bsg_init(struct mpi3mr_ioc *mrioc)
- 		return;
- 	}
- 
--	mrioc->bsg_queue = bsg_setup_queue(bsg_dev, dev_name(bsg_dev),
-+	q = bsg_setup_queue(bsg_dev, dev_name(bsg_dev),
- 			mpi3mr_bsg_request, NULL, 0);
--	if (IS_ERR(mrioc->bsg_queue)) {
-+	if (IS_ERR(q)) {
- 		ioc_err(mrioc, "%s: bsg registration failed\n",
- 		    dev_name(bsg_dev));
- 		device_del(bsg_dev);
-@@ -1556,8 +1557,10 @@ void mpi3mr_bsg_init(struct mpi3mr_ioc *mrioc)
- 		return;
- 	}
- 
--	blk_queue_max_segments(mrioc->bsg_queue, MPI3MR_MAX_APP_XFER_SEGMENTS);
--	blk_queue_max_hw_sectors(mrioc->bsg_queue, MPI3MR_MAX_APP_XFER_SECTORS);
-+	mrioc->bsg_queue = q;
-+
-+	blk_queue_max_segments(q, MPI3MR_MAX_APP_XFER_SEGMENTS);
-+	blk_queue_max_hw_sectors(q, MPI3MR_MAX_APP_XFER_SECTORS);
- 
- 	return;
+ 	return sk;
  }
+@@ -1277,7 +1278,6 @@ static int smc_connect_rdma(struct smc_sock *smc,
+ 		goto connect_abort;
+ 	}
+ 
+-	smc_close_init(smc);
+ 	smc_rx_init(smc);
+ 
+ 	if (ini->first_contact_local) {
+@@ -1397,7 +1397,6 @@ static int smc_connect_ism(struct smc_sock *smc,
+ 	}
+ 
+ 	smc_conn_save_peer_info(smc, aclc);
+-	smc_close_init(smc);
+ 	smc_rx_init(smc);
+ 	smc_tx_init(smc);
+ 
+@@ -2430,7 +2429,6 @@ static void smc_listen_work(struct work_struct *work)
+ 		goto out_decl;
+ 
+ 	mutex_lock(&smc_server_lgr_pending);
+-	smc_close_init(new_smc);
+ 	smc_rx_init(new_smc);
+ 	smc_tx_init(new_smc);
+ 
 -- 
 2.53.0
 
