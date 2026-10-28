@@ -1,50 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793210369;
-	b=B0OO19sV/gHyW0BbKJ7n1VunY6YUIo84jxoCpcGbvQdLsbAcYBKYxS8yoKjZnRFiEEcU
-	 0Z414y0NEvB0O7CPViUOCfxXzD6HzXxANNceEEn8THplqcVPXWx+sBZZhgzv5QuxiEPkn
-	 JGFrTlGc/KtOk9DxZVqf87K0nbjsi1VoEpvuUVYj1vks9TN6tnmXX04eX7OlD2f+qPdB9
-	 AW6iTSsE5FkE8VsfDv9QwRsNNUU7HAShH1N9yv+bOOpZR0ZBeOku4Su/e0spzXm6tH9wx
-	 icq5GxQE7r8xMkZ8S7vN9ZbiN7AqTv41jCB3SFkD+XenyMo/htPGh+T50pgS+pLBtRA==
+	t=1793210372;
+	b=mzf8VnLGQwPOlGw3LJvKUHAukkqbdn1Y0NDmg55oH/63iTmX0geD7eYuJYHSyfsw77pr
+	 krnxpzqRIaLtxBKuKgwGGHQZrC1XCiTU22im4aKH3rHQvoWa18AYa69q4QWJjdq/4uHmF
+	 fMlOUMsnSjN+aEO3rHrTWkaUwErCmp5EsX8/WCXZdytCBonc33ULVGGDOUvmjT/kqPFdn
+	 Euz5WBcBta1dKz+xsQOCe1jwr1gdsFmEMn/V3EBO3eXBISI6C1Kj+60RLYAtYnsxe5aGJ
+	 q6aEmDZ29gssrHkSxoQuxb8WwvwxBu4sz+p9bSfBk/bT44TWndmrra+C3DB6rUy9dQg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793210369;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793210372;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=J8O7+9R0Jy+tcszSGR/PYqP1LM+7BQDHemdNMN3oFb4=;
-	b=pVqyHYRFSW/E9rIT34jjX0LaAtI0fb5WCgOj8fDO/3U2RxI5+9FgqqiMXkim8YNg+Zj0
-	 DQVqqA8zCBv+SUwgrX2OZB4nxG/MDj54PyHnBYupxlAu8x6RSi3i5t+KWZVPSJq5Frv3g
-	 /xbMtieGIcQH6P6jHmKFxxPH1Wgk/+rusZFG8UX/dF7CpPuGt84Ul5Rc2vow8NWw9W5Sp
-	 cnh8DWYyFFDMHWwde/h0LXD7ymvlFO9R+1bXYjvYvTDW0bW9XcIU6LzJELIuRsWUKNiqT
-	 ASIaYm358e1e28apudyD58ygLNcZI/EdVQDopR7oj68NXTBlylendxdrdiMW80qT+MQ==
+	bh=znm3mz72GCM3/d8wIFZuNMk31Z9c5u7THleDTYxpCi0=;
+	b=sx+BbaFkZpSVM2pmtBLyWiGkFD09V0jCGQXVus4OdENaCwK/fcIOgO8+ck4nx5rau5az
+	 7MC925stbktrKnYMoIBJKyi0EznCjxPGiEctYZKHIM7YBFSZE2wTlWu33vQvPwez7bm1V
+	 9T/wVUsvQUTpoME4dMtz3szdzoWP7mSHUzbxWaED83UEfnFhQ/BHxSk2jmxRjT6J2oecN
+	 8I7iv8wPMRiO9NpiFuQEWaZGGWTIsJon6RB4VRLZkBqy30i5jlMSGGrYCW1nuxms/Zo/y
+	 uHercBPFkQOBPZxh8u4MMZFOLo0nxOaUXmQJimjMabrxi/+VzsST3Qu9Ww8WvXFjHyg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0DiJpQOQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wmMJ9Pkr;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 558B9606A31E;
-	Wed, 28 Oct 2026 17:59:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F9E0606A31A;
+	Wed, 28 Oct 2026 17:59:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0DiJpQOQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A64CC1F01825;
-	Wed, 28 Oct 2026 17:59:28 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wmMJ9Pkr
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 805E11F01825;
+	Wed, 28 Oct 2026 17:59:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793210369;
-	bh=J8O7+9R0Jy+tcszSGR/PYqP1LM+7BQDHemdNMN3oFb4=;
+	s=korg; t=1793210372;
+	bh=znm3mz72GCM3/d8wIFZuNMk31Z9c5u7THleDTYxpCi0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0DiJpQOQpShTWN+yBCQ04+9Kj01zVI9ELDRybxUOMrbYQSILj4/HQ1RGXJaBObPNE
-	 aEIjT4xywXyycogr2Ynf5TKEfX2dtcJGMNdxLrkaIqlMpWuHFoplxcV6XfxQouLdjB
-	 5CsAbfet7BN5Elrwcb4xE2gUZtTColaEPHDx28PM=
+	b=wmMJ9Pkr35NHVIzTjMK8dwASUWbMcYHMn8zRUdDboaeJnyjT6MLI7pAbt1MrhWanb
+	 uJtFwjZfqFw9JZxtGJPSm3gina3Fktd0GKYOTfHd9CSK0LA0YMghnwlzFuLj3HMl7c
+	 wiMfqHjHz8Vgjz8n7x/QjDULArcQNZv6Tc7ijPPU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.6 150/168] io_uring/timeout: dont flush with the sequence behind the last flush
-Date: Wed, 28 Oct 2026 18:01:26 +0100
-Message-ID: <20261028165946.635784578@linuxfoundation.org>
+	Jens Axboe <axboe@kernel.dk>,
+	"Claude Fable 5.1" <noreply@anthropic.com>
+Subject: [PATCH 6.6 151/168] io_uring/timeout: dont lose a cancel as io-wq arms a timeout
+Date: Wed, 28 Oct 2026 18:01:27 +0100
+Message-ID: <20261028165946.660824888@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165943.089486480@linuxfoundation.org>
 References: <20261028165943.089486480@linuxfoundation.org>
@@ -68,50 +69,94 @@ Content-Transfer-Encoding: 8bit
 
 From: Jens Axboe <axboe@kernel.dk>
 
-Commit 85f85d573ffa7772e1ad4504d0cec5113a5c5cf1 upstream.
+Commit 89f193dc3ef462059387e9691bf6af4b1808379a upstream.
 
-io_flush_timeouts() measures the events since the last flush as the
-distance of the current sequence from ->cq_last_tm_flush. A fired
-timeout bumps ->cq_timeouts before its CQE is posted, so until it is
-the sequence can be behind the last flush, and the distance wraps:
+An IORING_OP_TIMEOUT run by io-wq, because of IOSQE_ASYNC, has the same
+problem as poll, futex and waitid. io_wq_submit_work() looks at
+IO_WQ_WORK_CANCEL once, before it issues the request. A cancel in between
+flags the work, gets -EALREADY, and searches ->timeout_list in vain,
+while the worker then adds the request and starts the timer:
 
-  last flush: seq 100, cq_last_tm_flush = 100
-  Y: IORING_OP_TIMEOUT, off 50, target_seq 150
-  pure timeout A fires, cq_timeouts = 1
-  task_work posts A's CQE, cached_cq_tail = 101
-  pure timeout B fires before the flush, cq_timeouts = 2
-  io_flush_timeouts(): seq = 99, events_got = 0xffffffff
+  io-wq worker                          io_try_cancel()
+  io_wq_submit_work()
+    IO_WQ_WORK_CANCEL isn't set
+                                        io_async_cancel_one()
+                                          sets IO_WQ_WORK_CANCEL
+                                          = -EALREADY
+                                        io_timeout_cancel() = -ENOENT
+    io_timeout()
+      adds the request to ->timeout_list
+      hrtimer_start()
+    = IOU_ISSUE_SKIP_COMPLETE
 
-Y, and every sequence timeout behind it, is ended with -ETIME although
-no event happened. Two timeouts expiring close together is all it takes,
-a completion with IOSQE_CQE_SKIP_SUCCESS after a single one does it too.
+Nobody looks at the flag again, and the timeout runs its course. At ring
+exit, io_uring_try_cancel_requests() cancels io-wq work and then kills
+the timeouts the same way, so an exiting task can get stuck for the full
+duration of such a timeout.
 
-Nothing but those in flight CQEs separates the two, so count from the
-last flush when the sequence is behind it, as io_timeout() does.
+Look at the flag under ->timeout_lock, which the search takes as well,
+and fail the request if it is set. If the search came first, the flag is
+visible. If it comes later, it finds the request on the list.
 
-Fixes: f010505b78a4 ("io_uring: flush timeouts that should already have expired")
+[ 6.6: carries the __io_wq_cancel_seen()/io_wq_cancel_seen() helpers that
+  the futex/waitid fix 5cb049d2203d brought upstream; work->flags is not
+  atomic and ->timeout_lock isn't raw here ]
+Fixes: ce35a47a3a02 ("io_uring: add IOSQE_ASYNC")
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Co-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/timeout.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ io_uring/io_uring.h |   23 +++++++++++++++++++++++
+ io_uring/timeout.c  |    7 +++++++
+ 2 files changed, 30 insertions(+)
 
+--- a/io_uring/io_uring.h
++++ b/io_uring/io_uring.h
+@@ -259,6 +259,29 @@ static inline void io_ring_submit_lock(s
+ 	lockdep_assert_held(&ctx->uring_lock);
+ }
+ 
++/*
++ * For a handler that is run by io-wq and parks the request on a list where
++ * cancellations find it, rather than completing it. Whoever tried to cancel
++ * the request before that found it running. It has flagged the work item,
++ * has searched the list in vain, and won't come back. To be called with
++ * the lock the search takes held: if the search came first, the flag is
++ * visible. For most lists that is ->uring_lock, timeouts use ->timeout_lock.
++ */
++static inline bool __io_wq_cancel_seen(struct io_kiocb *req,
++				       unsigned int issue_flags)
++{
++	return (issue_flags & IO_URING_F_IOWQ) &&
++	       (req->work.flags & IO_WQ_WORK_CANCEL);
++}
++
++static inline bool io_wq_cancel_seen(struct io_kiocb *req,
++				     unsigned int issue_flags)
++{
++	lockdep_assert_held(&req->ctx->uring_lock);
++
++	return __io_wq_cancel_seen(req, issue_flags);
++}
++
+ static inline void io_commit_cqring(struct io_ring_ctx *ctx)
+ {
+ 	/* order cqe stores with ring update */
 --- a/io_uring/timeout.c
 +++ b/io_uring/timeout.c
-@@ -116,6 +116,14 @@ __cold void io_flush_timeouts(struct io_
- 	spin_lock_irq(&ctx->timeout_lock);
- 	seq = ctx->cached_cq_tail - atomic_read(&ctx->cq_timeouts);
+@@ -609,6 +609,13 @@ int io_timeout(struct io_kiocb *req, uns
  
-+	/*
-+	 * A fired timeout bumps ->cq_timeouts before its CQE is posted, which
-+	 * leaves the sequence behind the last flush until it is. No event has
-+	 * happened then, see io_timeout().
-+	 */
-+	if ((s32)(seq - ctx->cq_last_tm_flush) < 0)
-+		seq = ctx->cq_last_tm_flush;
+ 	spin_lock_irq(&ctx->timeout_lock);
+ 
++	/* the list is searched under ->timeout_lock, see io_wq_cancel_seen() */
++	if (__io_wq_cancel_seen(req, issue_flags)) {
++		spin_unlock_irq(&ctx->timeout_lock);
++		io_req_task_queue_fail(req, -ECANCELED);
++		return IOU_ISSUE_SKIP_COMPLETE;
++	}
 +
- 	list_for_each_entry_safe(timeout, tmp, &ctx->timeout_list, list) {
- 		struct io_kiocb *req = cmd_to_io_kiocb(timeout);
- 		u32 events_needed, events_got;
+ 	/*
+ 	 * sqe->off holds how many events that need to occur for this
+ 	 * timeout event to be satisfied. If it isn't set, then this is
 
 
