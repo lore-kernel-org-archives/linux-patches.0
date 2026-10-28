@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215318;
-	b=wgaTY14Cl/YV17UnxSBvTUQHhith54AQjcoh5KY2ifWzJCzF61QYg0hdgS1ZKhnevSTH
-	 wTiP39QZY4StMej+gtDjHdChBtW+VI5jQKzFSzcRbIIMXPP4DPkbu9u1sG91CrjJDeSb+
-	 rPtufi/mHurX19P/g+sgjSIM7RiF0pj45cYtKWfkPQpeAV1grAYG9g+Z9G/Mej+eoxKIF
-	 8NG6UbK8lgDNfOTK+fExT3M5W40bjP5YYuQALt4i18uJrrTOb5lJwMzMC68fxPCU0Y6Iv
-	 QwGwSmJc2hns/uDjiY6FUhXe16aNxnRfStGvULQ1gdieCtWNwIprZQJ4WXvuncROYkg==
+	t=1793215321;
+	b=fR5bRo9QkbXsCQtmjnJjNYRblRKhWdF0sPkIGGZAy/vTKr88shAdKzQgXsMpahBxw/Zd
+	 act/LL4/6F7iknj2r1a3kwho3xhElOmGYVjRF8eyl8HWQUW9WBOOGHoIUcgCyfuygtYGN
+	 x4BYQIRTIMue1gPpSKFJevi3SOJnvVjae1LKQZLoZoJsKwBwtw9oBEB7igNqiaYqrTZ7J
+	 FfRDVeUBG/iMcIGyWTgRJtQSIK7yyBSEWKdeeU7LvrhzKxDs/myktYKkRyzjXtAdMCocz
+	 lg0d9Nvdrp7FSdSvuzZsW88vucOZe+jgRu4UJnRFBEWKuiC3EFWeKd+PCg8s5/Sh6uw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215318;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215321;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=IO9n8YvOsAsjIDXBjHk6FZy6SqVPgZ/gHfPYQKHMDJ0=;
-	b=4U2/SXul9eU3lYDdp+hR+J3t2rfDtbrj4+yoSxTZ6nvjD7mYIy0CWbmBtT9Yb3lnY5Mu
-	 gbdx24P+l29HK4kqcBxP8iVIyG+SmiH/8hUlDgKV+1INdwB9K+Lj7I0/UAOrFFF4IWQvg
-	 3so/8WLediFXipdiGZm86WmDs9J8u4RY83SkJLzXlxFCHkpdJhmxqCN7nhwx1mXoufzJe
-	 WS7dkTbagPCIQxShzT0vJw0vpvILwoY1BUuCkFrtdaMrRIUNg57x31jt47yqNEYyaL9IA
-	 oBVlSuvYkBEVP9iVrj9ywpFwjSM759Kgq2DoRKzwcUhbiha+def7+Gk7uEW4ob2Ksqw==
+	bh=imAMPj9tqyMgjiPBi+LwzwEunDNCl/Oz8FAgTGzn5OA=;
+	b=VHJAj+peDbGQ3dcatUiE8FSgvoRIn/f7JWiG0GyWwivHB4AlgL9ts88uXTpVSohOcC9I
+	 iJ6RFxY4pCcgtu7t54wu1vfcK89A1987nnswzKCMDuNAcr6waf2ota9cOVZGvCP4Dd6hk
+	 wadv+LiSEgw1MP6BwjW6bEgGtCckKDC2KuqZUtXy8tjW7SbJVhiItDAOXMNszv0wuwpb4
+	 NQbtkjFzLhrBj1wVyg7E21eGdfrSnWgM3m8MPZtNAsuYQHD79uqAEt7xukXgE9FQsBt1E
+	 FCDqfYFV/y3wi6L60/J+od0V1iyOF1MghKCf9wQL5VS5n2h+t+oUP6wLCAyY5qIMCBg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZfcfQ0rW;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jwzjEaRo;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F1E5606A31D;
-	Wed, 28 Oct 2026 19:21:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 179A7606A31C;
+	Wed, 28 Oct 2026 19:22:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZfcfQ0rW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D2561F01825;
-	Wed, 28 Oct 2026 19:21:57 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jwzjEaRo
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90F7A1F01825;
+	Wed, 28 Oct 2026 19:22:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215318;
-	bh=IO9n8YvOsAsjIDXBjHk6FZy6SqVPgZ/gHfPYQKHMDJ0=;
+	s=korg; t=1793215320;
+	bh=imAMPj9tqyMgjiPBi+LwzwEunDNCl/Oz8FAgTGzn5OA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZfcfQ0rW1VIWlviAvH7Fco0kVHGcXAInDDV4hWjjRK6+k8xYEmlueYH3mYlcKr6ZU
-	 D8FWtZuvv+KSLOiI9LkByXg20Wz1F9kDTwCJl+Wf8XFgHyKTWXveNnSciJQLDXy8aB
-	 oVXwj1hgRMUtZBcc9NK7KANN49B7YwZOAT0oLZ/A=
+	b=jwzjEaRo0J2Si7t1ygVqyLTeB2qOh1Ql3zWrcVBuJL29+0MF1mVp9AXoWXzECpsPJ
+	 5fvlK/3J/SuTFfys4Ra39mvfwuvBOvxtg8lxnskEg5zZQ70Luyo9AK78mf8fTwrZA8
+	 7Ey9vYvLyhfxy3QcYBcjyJWOdTiOF35S9L1UvchQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Lijo Lazar <lijo.lazar@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
+	Hawking Zhang <Hawking.Zhang@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1168/1887] drm/amdgpu: Use dbg level for VBIOS check messages
-Date: Wed, 28 Oct 2026 17:54:24 +0100
-Message-ID: <20261028170525.982385346@linuxfoundation.org>
+Subject: [PATCH 6.1 1169/1887] drm/amdgpu: Add wrapper for freeing vbios memory
+Date: Wed, 28 Oct 2026 17:54:25 +0100
+Message-ID: <20261028170526.004151747@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -70,124 +71,125 @@ Content-Transfer-Encoding: 8bit
 
 From: Lijo Lazar <lijo.lazar@amd.com>
 
-[ Upstream commit 635c659fceed82f934623188471ff604e098aab7 ]
+[ Upstream commit e986e89659e18ba986db044df58f165042817dc3 ]
 
-Driver has different ways to fetch VBIOS. If one of the methods doesn't
-find an authentic one, it will show misleading info messages eventhough
-a subsequent method finds a valid VBIOS. Keep the message level at debug
-and add device context.
+Use bios_release wrapper to release memory allocated for vbios image and
+reset the variables.
+
+v2:
+	Use the same wrapper for clean up in sw_fini (Alex Deucher)
 
 Signed-off-by: Lijo Lazar <lijo.lazar@amd.com>
 Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Stable-dep-of: 65bff2661760 ("drm/amdgpu: Release VFCT ACPI table reference")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_bios.c | 26 +++++++++++++-----------
- 1 file changed, 14 insertions(+), 12 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu.h        |  1 +
+ drivers/gpu/drm/amd/amdgpu/amdgpu_bios.c   | 20 ++++++++++++++------
+ drivers/gpu/drm/amd/amdgpu/amdgpu_device.c |  3 +--
+ 3 files changed, 16 insertions(+), 8 deletions(-)
 
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu.h b/drivers/gpu/drm/amd/amdgpu/amdgpu.h
+index c4287e09658fa..c8e619ae33f41 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu.h
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu.h
+@@ -384,6 +384,7 @@ bool amdgpu_get_bios(struct amdgpu_device *adev);
+ bool amdgpu_read_bios(struct amdgpu_device *adev);
+ bool amdgpu_soc15_read_bios_from_rom(struct amdgpu_device *adev,
+ 				     u8 *bios, u32 length_bytes);
++void amdgpu_bios_release(struct amdgpu_device *adev);
+ /*
+  * Clocks
+  */
 diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_bios.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_bios.c
-index 2a313964f63df..61642429a0627 100644
+index 61642429a0627..27e086de3686d 100644
 --- a/drivers/gpu/drm/amd/amdgpu/amdgpu_bios.c
 +++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_bios.c
-@@ -47,35 +47,37 @@
- /* Check if current bios is an ATOM BIOS.
-  * Return true if it is ATOM BIOS. Otherwise, return false.
-  */
--static bool check_atom_bios(uint8_t *bios, size_t size)
-+static bool check_atom_bios(struct amdgpu_device *adev, size_t size)
- {
- 	uint16_t tmp, bios_header_start;
-+	uint8_t *bios = adev->bios;
+@@ -84,6 +84,13 @@ static bool check_atom_bios(struct amdgpu_device *adev, size_t size)
+ 	return false;
+ }
  
- 	if (!bios || size < 0x49) {
--		DRM_INFO("vbios mem is null or mem size is wrong\n");
-+		dev_dbg(adev->dev, "VBIOS mem is null or mem size is wrong\n");
- 		return false;
- 	}
- 
- 	if (!AMD_IS_VALID_VBIOS(bios)) {
--		DRM_INFO("BIOS signature incorrect %x %x\n", bios[0], bios[1]);
-+		dev_dbg(adev->dev, "VBIOS signature incorrect %x %x\n", bios[0],
-+			bios[1]);
- 		return false;
- 	}
- 
- 	bios_header_start = bios[0x48] | (bios[0x49] << 8);
- 	if (!bios_header_start) {
--		DRM_INFO("Can't locate bios header\n");
-+		dev_dbg(adev->dev, "Can't locate VBIOS header\n");
- 		return false;
- 	}
- 
- 	tmp = bios_header_start + 4;
- 	if (size < tmp) {
--		DRM_INFO("BIOS header is broken\n");
-+		dev_dbg(adev->dev, "VBIOS header is broken\n");
- 		return false;
- 	}
- 
- 	if (!memcmp(bios + tmp, "ATOM", 4) ||
- 	    !memcmp(bios + tmp, "MOTA", 4)) {
--		DRM_DEBUG("ATOMBIOS detected\n");
-+		dev_dbg(adev->dev, "ATOMBIOS detected\n");
- 		return true;
- 	}
- 
-@@ -117,7 +119,7 @@ static bool igp_read_bios_from_vram(struct amdgpu_device *adev)
- 	memcpy_fromio(adev->bios, bios, size);
++void amdgpu_bios_release(struct amdgpu_device *adev)
++{
++	kfree(adev->bios);
++	adev->bios = NULL;
++	adev->bios_size = 0;
++}
++
+ /* If you boot an IGP board with a discrete card as the primary,
+  * the IGP rom is not accessible via the rom bar as the IGP rom is
+  * part of the system bios.  On boot, the system bios puts a
+@@ -120,7 +127,7 @@ static bool igp_read_bios_from_vram(struct amdgpu_device *adev)
  	iounmap(bios);
  
--	if (!check_atom_bios(adev->bios, size)) {
-+	if (!check_atom_bios(adev, size)) {
- 		kfree(adev->bios);
+ 	if (!check_atom_bios(adev, size)) {
+-		kfree(adev->bios);
++		amdgpu_bios_release(adev);
  		return false;
  	}
-@@ -145,7 +147,7 @@ bool amdgpu_read_bios(struct amdgpu_device *adev)
- 	memcpy_fromio(adev->bios, bios, size);
+ 
+@@ -148,7 +155,7 @@ bool amdgpu_read_bios(struct amdgpu_device *adev)
  	pci_unmap_rom(adev->pdev, bios);
  
--	if (!check_atom_bios(adev->bios, size)) {
-+	if (!check_atom_bios(adev, size)) {
- 		kfree(adev->bios);
+ 	if (!check_atom_bios(adev, size)) {
+-		kfree(adev->bios);
++		amdgpu_bios_release(adev);
  		return false;
  	}
-@@ -185,7 +187,7 @@ static bool amdgpu_read_bios_from_rom(struct amdgpu_device *adev)
- 	/* read complete BIOS */
+ 
+@@ -188,7 +195,7 @@ static bool amdgpu_read_bios_from_rom(struct amdgpu_device *adev)
  	amdgpu_asic_read_bios_from_rom(adev, adev->bios, len);
  
--	if (!check_atom_bios(adev->bios, len)) {
-+	if (!check_atom_bios(adev, len)) {
- 		kfree(adev->bios);
+ 	if (!check_atom_bios(adev, len)) {
+-		kfree(adev->bios);
++		amdgpu_bios_release(adev);
  		return false;
  	}
-@@ -215,7 +217,7 @@ static bool amdgpu_read_platform_bios(struct amdgpu_device *adev)
- 	memcpy_fromio(adev->bios, bios, romlen);
- 	iounmap(bios);
  
--	if (!check_atom_bios(adev->bios, romlen))
-+	if (!check_atom_bios(adev, romlen))
- 		goto free_bios;
+@@ -224,7 +231,8 @@ static bool amdgpu_read_platform_bios(struct amdgpu_device *adev)
  
- 	adev->bios_size = romlen;
-@@ -337,7 +339,7 @@ static bool amdgpu_atrm_get_bios(struct amdgpu_device *adev)
- 			break;
+ 	return true;
+ free_bios:
+-	kfree(adev->bios);
++	amdgpu_bios_release(adev);
++
+ 	return false;
+ }
+ 
+@@ -340,7 +348,7 @@ static bool amdgpu_atrm_get_bios(struct amdgpu_device *adev)
  	}
  
--	if (!check_atom_bios(adev->bios, size)) {
-+	if (!check_atom_bios(adev, size)) {
- 		kfree(adev->bios);
+ 	if (!check_atom_bios(adev, size)) {
+-		kfree(adev->bios);
++		amdgpu_bios_release(adev);
  		return false;
  	}
-@@ -440,7 +442,7 @@ static bool amdgpu_acpi_vfct_bios(struct amdgpu_device *adev)
- 					     vhdr->ImageLength,
+ 	adev->bios_size = size;
+@@ -443,7 +451,7 @@ static bool amdgpu_acpi_vfct_bios(struct amdgpu_device *adev)
  					     GFP_KERNEL);
  
--			if (!check_atom_bios(adev->bios, vhdr->ImageLength)) {
-+			if (!check_atom_bios(adev, vhdr->ImageLength)) {
- 				kfree(adev->bios);
+ 			if (!check_atom_bios(adev, vhdr->ImageLength)) {
+-				kfree(adev->bios);
++				amdgpu_bios_release(adev);
  				return false;
  			}
+ 			adev->bios_size = vhdr->ImageLength;
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+index af0922eaa7908..fda32238cc6b3 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+@@ -4196,8 +4196,7 @@ void amdgpu_device_fini_sw(struct amdgpu_device *adev)
+ 	if (amdgpu_emu_mode != 1)
+ 		amdgpu_atombios_fini(adev);
+ 
+-	kfree(adev->bios);
+-	adev->bios = NULL;
++	amdgpu_bios_release(adev);
+ 
+ 	px = amdgpu_device_supports_px(adev_to_drm(adev));
+ 
 -- 
 2.53.0
 
