@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793209880;
-	b=nVtzU0ZxDhli01XFt0+KUO1R1Dcfl6Xq2cpbwBwgcSuLj1uizvwIJaM8Gm3oZYTalymP
-	 fsmPX+Pgb+pBUSl+obSwjXxyFczP7oQ3wbLOOkULadoJMA5BbihwfL2UbSo5IxCzpxiDo
-	 i7/rQBHuwEbWPqAMS/J9N5kEOu8aIR3cw+/3fMKEVYxCAFr88xaiODAxFwC7Mf8KbAA67
-	 EVcDQ1xYN6WvoiQHa815q6E9TmNyWFf+jxAYE2Womr7FTNAdlNDvBiO7LpX4rhKA6al0K
-	 ir1F43CLaP1X04/UNxAMHuns0fa/2O8BNUlxNOeUs4cgX/PthpkpaYBdUH9piBeqNNQ==
+	t=1793209883;
+	b=IfEsYx1Tw5V/2ltuXfQMitUymifm87k4Gbu4SR2w/kLIBr3D8H3NGDransf77YATQ1Wi
+	 uV3COIV+2L6QCdVHjolPWTGwzmY0veKiLFByr4lWEEEDzHdel7sOiG1BrQxMv3d7nyAtI
+	 O0eOyfaBS2I9mWwctLRmnv2TTY7AOxnC8fdPG+Mlczz/qPMjeiDD/evaZ0blqPcZS9cec
+	 +1tMyGEv2JeY9eriVS3AO3+FqZ5T+tC3rrihlGw3wN6FCIKvy+7kHeYq0lkvrjxHwns1i
+	 mDG4QkDecLUtEnwKL0uq+w0CcxNEnpMWYN+cS/UuBt5vvxK+TW4zBNSy/bm2OzTCtng==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793209880;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793209883;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Zezn/f1/dspscY3K1FP3SNMuo8c4x9TN5la1Yz4Lzy4=;
-	b=sQA347R/sEs7Rmm/jDydSlmQ9Fc1BHdknEholjHuCWsKcHQyUwggtq7ULuK6jnuZuevu
-	 jauukUJOSj4oDXf+fweWv2dJk7jNFVMyltSL+J4WZIrsPB6NzgoMrGwBZL2rndolX4hl7
-	 hlspUZNS7Yjd+3VrVpu1OhuWp2D8wulXD5UswC+oouYq1iAePo1AYeYGujkkvIhGOcJNh
-	 itUZgbFu/C+fv92/3GMZL1dHbf1/1AsLv5tgXTOiJMw3XXd23sfnU+vYHj+XtY5kJflBd
-	 LEBNUkUsPuqkrod+jmq+YLvPthuIv0bN2ehWddE8bWBQMS0xidxObSdHVQwi9rTL1WA==
+	bh=BcfONCM9hWl1LBC87D1VVeKx0EmVpaA2PKAPxw+63Nc=;
+	b=WGmSOC3Kf9HIXMpVGkvsJS2vcBE5QjGo4WAiESFTpkds4b98SQONdz7v8VyFBKdHoOoT
+	 Ff3l+ztsnn0FUaTGoudS1QErgtln8W8wC54fYhJfZ5EIYB75kO4Q1VWBh7inrzNcuaDZ4
+	 YJRBPpzUsnKSSra7rqj1ZTvrxY1fMq0BLoRHxTUTeqxMOyMx1X8cVYjW0faq0c4xl5uXz
+	 tqREYfAMtmJRKWwKZO7OlZWJnnDwbhrDBQWOp0idQFtqzIpMnB9rq4ZANzZesMQUYo0BG
+	 fi5lFOu5sOmSKYIsAwvnWAMcFyMqrduYiCZ3A49yHrVK44cMtHMzvr3xZW28kwtVvoA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=U7nmkoeM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RtHMxNPt;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07DEB606A31D;
-	Wed, 28 Oct 2026 17:51:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9A1A606A31C;
+	Wed, 28 Oct 2026 17:51:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=U7nmkoeM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EFCF1F01828;
-	Wed, 28 Oct 2026 17:51:18 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RtHMxNPt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB45A1F01825;
+	Wed, 28 Oct 2026 17:51:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793209879;
-	bh=Zezn/f1/dspscY3K1FP3SNMuo8c4x9TN5la1Yz4Lzy4=;
+	s=korg; t=1793209882;
+	bh=BcfONCM9hWl1LBC87D1VVeKx0EmVpaA2PKAPxw+63Nc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=U7nmkoeMjSOv3qtL5UnHF+v4bqPZP9m1KR00p/J+N6Xp5qEAvSZpMC3xzKEVPCy5J
-	 kDpcqkvAfVH1KxwVA9Ghs/LXANOYbzEPZ8wnRzWaFvJ27nRe7zgyC0Scp0Ztt/SOaS
-	 4YuB53bm71+RJmtXrMgRlyft/bntVLsby8STFuPY=
+	b=RtHMxNPtQ0wdcqdx9U4hrDeKThdzJUWgmk+FD4wQEstklkzdJqvcnJ3FpGoJ0oDYM
+	 /aN8Kbl/edmuCGTRw///6nlogA095+pbxWAyIsY3cKV9EddXhU+21HpEyRTVrjvMcS
+	 YZCTVnjSs3nBC2dEI/6i7Apv1v8QtaTPauNXUH0w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Julien <julien82453@gmail.com>,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.18 109/109] ACPI: scan: Avoid registering platform devices with resource overlaps
-Date: Wed, 28 Oct 2026 18:01:33 +0100
-Message-ID: <20261028165944.920350092@linuxfoundation.org>
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.18 090/109] io_uring: keep the drain active when a deferred drain request is started
+Date: Wed, 28 Oct 2026 18:01:14 +0100
+Message-ID: <20261028165944.473785036@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165942.357251485@linuxfoundation.org>
 References: <20261028165942.357251485@linuxfoundation.org>
@@ -69,103 +67,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Jens Axboe <axboe@kernel.dk>
 
-commit f234fdaae1cad8c39265e7ca0a14633076ec7154 upstream.
+Commit 2295613cd3713beffc8665e956135a5d48dfc208 upstream.
 
-If acpi_dev_get_resources() returns overlapping I/O or memory resources,
-the subsequent registration of a platform device will fail with -EBUSY
-due to a resource conflict.  This is reported to happen on Acer Aspire
-ES1-572 [1].
+ecb6817b769f ends the drain when the dispatched drain request has posted
+its CQE and nothing else is deferred. But the deferred list is processed
+in between, and if the request it starts is itself a drain request, the
+drain is over before that one has even run. A request submitted after
+that point then runs ahead of it:
 
-Avoid that by adjusting resources returned by acpi_dev_get_resources()
-to eliminate partial overlaps between them.
+  1. P0 in flight, D1 and D2 (both IOSQE_IO_DRAIN) deferred behind it
+  2. P0 completes, D1 is started
+  3. D1 completes, drain_done is set, D2 is started, the list is empty
+  4. IO_RING_F_DRAIN_ACTIVE is cleared with D2 still in flight
 
-This has not been regarded as necessary before because putting
-overlapping resources into the _CRS of one device is really pointless,
-but now that the issue has been reported to actually happen in the
-field, it needs to be done.
+Anything submitted now bypasses the drain. The same happens with D2 as
+the head of a link, as those aren't tracked in ->drain_req at all.
 
-Fixes: ab06eb920401 ("ACPI: scan: Register platform devices for fixed event buttons")
-Fixes: 48fe2cddc85c ("tpm_crb: Convert ACPI driver to a platform one")
-Reported-by: Julien <julien82453@gmail.com>
-Tested-by: Julien <julien82453@gmail.com>
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Closes: https://lore.kernel.org/linux-integrity/CAJOGg3z6LJPDsdPNBxajgy8_wQxfhYBRxe4EiurZf3kPU5A5Bw@mail.gmail.com/ [1]
-Cc: All applicable <stable@vger.kernel.org>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-[ rjw: Tweaked the new message ]
-Link: https://patch.msgid.link/12955541.O9o76ZdvQC@rafael.j.wysocki
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Have io_queue_deferred() report whether it started a drain request, and
+don't end the drain if it did. Starting non-drain requests and ending it
+is still fine, they were only waiting on the drain request that just
+completed.
+
+[ 6.18: ->drain_active is a bool here ]
+Fixes: ecb6817b769f ("io_uring: end the drain when the drain request completes")
+Reported-by: Karl Mehltretter <kmehltretter@gmail.com>
+Link: https://lore.kernel.org/io-uring/20261027043323.98916-1-kmehltretter@gmail.com/
+Cc: stable@vger.kernel.org
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/acpi_platform.c |   39 +++++++++++++++++++++++++++++++++++++--
- 1 file changed, 37 insertions(+), 2 deletions(-)
+ io_uring/io_uring.c |   20 +++++++++++++-------
+ 1 file changed, 13 insertions(+), 7 deletions(-)
 
---- a/drivers/acpi/acpi_platform.c
-+++ b/drivers/acpi/acpi_platform.c
-@@ -12,6 +12,7 @@
- #include <linux/bits.h>
- #include <linux/device.h>
- #include <linux/err.h>
-+#include <linux/ioport.h>
- #include <linux/kernel.h>
- #include <linux/module.h>
- #include <linux/dma-mapping.h>
-@@ -71,6 +72,36 @@ static struct notifier_block acpi_platfo
- 	.notifier_call = acpi_platform_device_remove_notify,
- };
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -545,9 +545,9 @@ unsigned io_linked_nr(struct io_kiocb *r
+ 	return nr;
+ }
  
-+static unsigned int acpi_platform_adjust_resources(struct acpi_device *adev,
-+						   struct resource *new_res,
-+						   struct resource *resources,
-+						   unsigned int count)
-+{
-+	unsigned int i;
-+
-+	if (!(new_res->flags & (IORESOURCE_IO | IORESOURCE_MEM)))
-+		return count;
-+
-+	for (i = 0; i < count; ) {
-+		struct resource *res = &resources[i];
-+
-+		if (resource_type(new_res) != resource_type(res) ||
-+		    !resource_union(new_res, res, new_res)) {
-+			i++;
-+			continue;
-+		}
-+
-+		dev_info(&adev->dev, "%pR expanded due to overlap\n", new_res);
-+		/*
-+		 * Eliminate the previously processed resource that overlapped
-+		 * with the new one because it is not necessary any more.
-+		 */
-+		memmove(res, res + 1, (--count - i) * sizeof(*res));
-+	}
-+
-+	return count;
-+}
-+
- static void acpi_platform_fill_resource(struct acpi_device *adev,
- 	const struct resource *src, struct resource *dest)
+-static __cold noinline void io_queue_deferred(struct io_ring_ctx *ctx)
++static __cold noinline bool io_queue_deferred(struct io_ring_ctx *ctx)
  {
-@@ -151,10 +182,14 @@ struct platform_device *acpi_create_plat
- 				return ERR_PTR(-ENOMEM);
- 			}
- 			count = 0;
--			list_for_each_entry(rentry, &resource_list, node)
-+			list_for_each_entry(rentry, &resource_list, node) {
-+				count = acpi_platform_adjust_resources(adev,
-+								       rentry->res,
-+								       resources,
-+								       count);
- 				acpi_platform_fill_resource(adev, rentry->res,
- 							    &resources[count++]);
--
-+			}
- 			acpi_dev_free_resource_list(&resource_list);
- 		}
+-	bool drain_seen = false, first = true;
++	bool drain_seen = false, first = true, drain_queued = false;
+ 
+ 	lockdep_assert_held(&ctx->uring_lock);
+ 	__io_req_caches_free(ctx);
+@@ -561,17 +561,21 @@ static __cold noinline void io_queue_def
+ 
+ 		drain_seen |= de->req->flags & REQ_F_IO_DRAIN;
+ 		if ((drain_seen || first) && ctx->nr_req_allocated != ctx->nr_drained)
+-			return;
++			return drain_queued;
+ 
+ 		list_del_init(&de->list);
+ 		ctx->nr_drained -= io_linked_nr(de->req);
+-		/* it runs alone, track its completion unless it's a link */
+-		if ((de->req->flags & REQ_F_IO_DRAIN) && !de->req->link)
+-			ctx->drain_req = de->req;
++		if (de->req->flags & REQ_F_IO_DRAIN) {
++			drain_queued = true;
++			/* it runs alone, track its completion unless it's a link */
++			if (!de->req->link)
++				ctx->drain_req = de->req;
++		}
+ 		io_req_task_queue(de->req);
+ 		kfree(de);
+ 		first = false;
+ 	}
++	return drain_queued;
+ }
+ 
+ void __io_commit_cqring_flush(struct io_ring_ctx *ctx)
+@@ -1677,7 +1681,9 @@ void __io_submit_flush_completions(struc
+ 	}
+ 
+ 	if (unlikely(ctx->drain_active)) {
+-		io_queue_deferred(ctx);
++		/* a drain request started from the list keeps the drain going */
++		if (io_queue_deferred(ctx))
++			drain_done = false;
+ 		if (drain_done && list_empty(&ctx->defer_list))
+ 			ctx->drain_active = false;
  	}
 
 
