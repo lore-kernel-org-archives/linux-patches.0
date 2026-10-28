@@ -1,54 +1,61 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793208954;
-	b=WnDx998ndOkfeJceNvucoWlERS2qGBBvGptPRNF3C7LNNyYMh7MnIchJcJ0JXddg7waP
-	 8nhnJIfHYXlBpwn/eEAC53uMWSfnp0Fzd5Fq1LkdsaiMbqi6rcgOsmyoVebxi82E+umwR
-	 atZBu7fx22NdzckRH14XuMihxvPGAJtPFpGnDtZb0T6FFne5HLDNpVo6GOsvMCiz6njhS
-	 1Et0rzZkNcTusWYOMoTTqvUaZ1kMiHrwKiPA/8f7tQRcikpt8PDwx2cuyMI+QCbBUE+oV
-	 YqXlEHR6M8Add18kMw1kAFXxMOE0So9XW0diKSuivsvEsS1+YyKtAKFqBGFSpo13lfg==
+	t=1793208957;
+	b=IhoSgneZx6LWCYNdSIy+K+xjLiNvxyWIAnBUZYx1eKSeDw+oBlZ1lhzzwtJXld8SKUWJ
+	 IoidsGJIGPMrWL5jFmRrMDCMIyRpATTM9kP2r5LSo73dtXjC0dImED6UKhqAOH7RkSCNp
+	 oF4wQiIKhr7C4W9iLbh/yHdqDATs4tE7w4bEc/LRQXwaudl++I1tx4uKdAchE/fmRug1m
+	 lJGt8XhLkIvLfRHgFYMxYoxe5UMRU3pKLUn8hYrCZz/O++iWGa47XS7JU1rg6sp00FF8s
+	 QzpXiqeRmfyxRb1evJC+8NpVcQezhReD8zSDEC5tKcApftiImwsZ09EJ9XSrBRz6xKA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793208954;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793208957;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=QbYehP/qLcCNkHhcPXkZ/cwg934/rOl38NsemsAfFmk=;
-	b=boKoZo9zIYYjk5hD7qWoITKfrJKX3+fRqMeyiYQLIAgnNygvxvqgwVU/5q0au1TQyeG2
-	 RCF+wR72rJEq7C78+8MhvngAkIsM83FF2GgAadS0sV8Si56Ldt2Fcz2zrfMVcyKmxsj8v
-	 phHg21VL+Ae6R8hH02g5xg2PpR9CeLBkeM+pXg6Yq2fau3aYsY6eFTRjcuBIIiLCaLZqN
-	 0marFZRoNKR2ssHzZvAgik9zX4Q+OM2wIRJk0mWM29FskwKo/kn0LFJKXsCj8cJBWKeub
-	 3oFFSa3DXcpr7qxgClmpXdjKjCrJOGAhq/0vr+q90Yw8ehMP6qgP3kbK879+/fx7kpg==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=Ixn7V7SYRi/9rX02CJLwBTP3PIf2/0NkueAPuZAkAPw=;
+	b=bJ5LLAfPReWDQKFQUJVnDnyjolkwHlUYFXVd6xYZpbMjgASRg9Qzsy/Rx46SthdVAm33
+	 M8jmb7UWW1epzUrQK8r05MYW0tJ6SPeHKi2RPFxZ1LmMU4VLmLlitWighZIeKM0sK1KUL
+	 oHWouVvoHtuWikedydPfQ80E3HRLut+B3594AL2wtbVQFAPI1YtIvCx/N6GyAfl194RgT
+	 jZ7lXH3ZHt+llUzlPUY3mvPtX96A6i2adS+gmkgvXzWrdFIsUzp44iA2bHaUu/2/nQA2f
+	 SCqtzg47ju14ZigbocJ8Ckj9tJM0HLySgb6W7eLSUKeEQJEdEJUH1BCN3Nos29AQc6g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rfYPFcO0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qcbP1DzN;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E0DE606A322;
-	Wed, 28 Oct 2026 17:35:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54EB3606A322;
+	Wed, 28 Oct 2026 17:35:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rfYPFcO0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F06051F01825;
-	Wed, 28 Oct 2026 17:35:53 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qcbP1DzN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A823E1F01825;
+	Wed, 28 Oct 2026 17:35:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793208954;
-	bh=QbYehP/qLcCNkHhcPXkZ/cwg934/rOl38NsemsAfFmk=;
+	s=korg; t=1793208957;
+	bh=Ixn7V7SYRi/9rX02CJLwBTP3PIf2/0NkueAPuZAkAPw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rfYPFcO0m5X2146KXrEDQnOMDME0BAoFaYpdIJWTDqT9//cm1qB+QbZUr4u9SJDSy
-	 YOFC27/yDmbslFR4EBAcTRGM1tPvafLLiK15DABpPYuMk0aSc8O7u6dqGNEmqvN9XM
-	 3wW2fwtBKRKfi7bqm8PG6epPVqZ/aIPbdj6wtOc4=
+	b=qcbP1DzNB3v0irXpUHYnusNC+l/IOmu+RsnEdrSFZedzKQr83E7g230NtRzGEfn6V
+	 Y3dkDzfyDDyXF1SjggoyIbeVqGJRYvSuMNRMzydBfSuBMT9Or9RgZeeaUOJW7Fy+s7
+	 tLZdxBrpYuUiySANNolnUXFY1Pk6PVlT0sP3pAxE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Fleischmann <sfle@kth.se>,
-	Eric Dumazet <edumazet@google.com>,
-	Michael Chan <michael.chan@broadcom.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	"Jiri Slaby (SUSE)" <jirislaby@kernel.org>,
+	Karsten Keil <isdn@linux-pingi.de>,
+	David Lin <dtwlin@gmail.com>,
+	Johan Hovold <johan@kernel.org>,
+	Alex Elder <elder@kernel.org>,
+	Oliver Neukum <oneukum@suse.com>,
+	Marcel Holtmann <marcel@holtmann.org>,
+	Johan Hedberg <johan.hedberg@gmail.com>,
+	Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Ting-Han Hou <ue081723@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 301/516] bnxt_en: fix DMA mapping length for padded small packets
-Date: Wed, 28 Oct 2026 17:57:33 +0100
-Message-ID: <20261028170010.622196521@linuxfoundation.org>
+Subject: [PATCH 5.10 302/516] tty: introduce and use tty_port_tty_vhangup() helper
+Date: Wed, 28 Oct 2026 17:57:34 +0100
+Message-ID: <20261028170010.644936622@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -64,147 +71,261 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@kernel.org>
+From: Jiri Slaby (SUSE) <jirislaby@kernel.org>
 
-[ Upstream commit a51d233ccd4889aadb71dace863525cc2b00271e ]
+[ Upstream commit 2b5eac0f8c6e79bc152c8804f9f88d16717013ab ]
 
-Stefan Fleischmann reported Intel IOMMU DMA Read faults on BCM57412
-NetXtreme-E NICs when transmitting packets on VLAN/macvlan interfaces:
+This code (tty_get -> vhangup -> tty_put) is repeated on few places.
+Introduce a helper similar to tty_port_tty_hangup() (asynchronous) to
+handle even vhangup (synchronous).
 
-  DMAR: [DMA Read NO_PASID] Request device [18:00.0] fault addr 0xfc499000
-        [fault reason 0x06] PTE Read access is not set
-  bnxt_en 0000:18:00.0 eno1np0: Abandoning msg {0xb4 0x41a} len: 0 due to firmware status: 0x2000001
-  ...
-  NETDEV WATCHDOG: eno1np0 (bnxt_en): transmit queue 0 timed out
+And use it on those places.
 
-The fault address (0xfc499000) is on an exact 4KB page boundary,
-pointing to a DMA read buffer overrun.
+In fact, reuse the tty_port_tty_hangup()'s code and call tty_vhangup()
+depending on a new bool parameter.
 
-In bnxt_start_xmit(), packets smaller than BNXT_MIN_PKT_SIZE (52 bytes),
-such as 42-byte untagged ARP frames, are padded:
-
-    if (length < BNXT_MIN_PKT_SIZE) {
-        pad = BNXT_MIN_PKT_SIZE - length;
-        if (skb_pad(skb, pad))
-            goto tx_kick_pending;
-        length = BNXT_MIN_PKT_SIZE;
-    }
-
-    mapping = dma_map_single(&pdev->dev, skb->data, len, DMA_TO_DEVICE);
-    ...
-    dma_unmap_len_set(tx_buf, len, len);
-
-However, 'len' was initialized earlier to skb_headlen(skb) (e.g. 42 bytes)
-and is left unadjusted after padding. Consequently, dma_map_single() and
-dma_unmap_len_set() map and track only 42 bytes.
-
-Later, the hardware TX buffer descriptor is programmed with the padded length:
-
-    txbd->tx_bd_len_flags_type =
-        cpu_to_le32(((len + pad) << TX_BD_LEN_SHIFT) | flags |
-                    TX_BD_FLAGS_PACKET_END);
-
-The NIC DMA engine is thus instructed to read 52 bytes from a region where
-only 42 bytes were DMA-mapped. If skb->data ends near the boundary of a 4KB
-page (within 'pad' bytes of the next page), the hardware DMA read overruns
-into the unmapped adjacent page, triggering an IOMMU fault.
-
-This issue was exposed after commit 447cbe95ebb9 ("vlan: fix skb_under_panic
-and races when toggling HW VLAN offload") because reserving extra VLAN
-headroom rounded LL_RESERVED_SPACE from 48 up to 64 bytes, shifting skb->data
-offsets and potentially causing small frames to land right against page
-boundaries.
-
-Fix this by using skb_put_padto(skb, BNXT_MIN_PKT_SIZE) in
-bnxt_start_xmit(), before skb_shinfo(skb)->nr_frags is sampled,
-because padding might linearize the skb.
-This ensures skb->len and skb_headlen(skb) reflect the padded size so
-that dma_map_single() maps the full buffer and the descriptor length is
-consistent. This also removes the temporary 'pad' variable and masking logic.
-
-The padding is done after the SW USO branch, otherwise
-bnxt_sw_udp_gso_xmit() would account the padding as UDP payload
-and send it in extra segments.
-
-Note that SW USO segments are still not padded: with IPv4, a segment
-carrying less than 10 bytes of UDP payload (small gso_size, or a short
-last segment) is sent as a frame shorter than BNXT_MIN_PKT_SIZE.
-This is a separate issue, left for a followup patch.
-
-Fixes: c0c050c58d84 ("bnxt_en: New Broadcom ethernet driver.")
-Cc: stable@vger.kernel.org
-Reported-by: Stefan Fleischmann <sfle@kth.se>
-Closes: https://lore.kernel.org/netdev/20261004122616.56714cbd@nargothrond/
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Michael Chan <michael.chan@broadcom.com>
-Link: https://patch.msgid.link/20261007051747.455273-1-edumazet@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: "Jiri Slaby (SUSE)" <jirislaby@kernel.org>
+Cc: Karsten Keil <isdn@linux-pingi.de>
+Cc: David Lin <dtwlin@gmail.com>
+Cc: Johan Hovold <johan@kernel.org>
+Cc: Alex Elder <elder@kernel.org>
+Cc: Oliver Neukum <oneukum@suse.com>
+Cc: Marcel Holtmann <marcel@holtmann.org>
+Cc: Johan Hedberg <johan.hedberg@gmail.com>
+Cc: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Link: https://lore.kernel.org/r/20250611100319.186924-2-jirislaby@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+[ Ting-Han: adjust context in uart_remove_one_port(), which is still
+  called that and keeps its "ret" variable in this version; the tty_port
+  prototypes live in include/linux/tty.h here, so add the inline helpers
+  there instead of include/linux/tty_port.h ]
+Assisted-by: LLM
+Signed-off-by: Ting-Han Hou <ue081723@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt.c | 23 ++++++++++-------------
- 1 file changed, 10 insertions(+), 13 deletions(-)
+ drivers/isdn/capi/capi.c         |  8 +-------
+ drivers/staging/greybus/uart.c   |  7 +------
+ drivers/tty/serial/serial_core.c |  7 +------
+ drivers/tty/tty_port.c           | 12 ++++++++----
+ drivers/usb/class/cdc-acm.c      |  7 +------
+ drivers/usb/serial/usb-serial.c  |  7 +------
+ include/linux/tty.h              | 13 ++++++++++++-
+ net/bluetooth/rfcomm/tty.c       |  7 +------
+ 8 files changed, 26 insertions(+), 42 deletions(-)
 
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-index ee849e49f3731..3281eb09f79ed 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-@@ -429,7 +429,7 @@ static netdev_tx_t bnxt_start_xmit(struct sk_buff *skb, struct net_device *dev)
- 	struct netdev_queue *txq;
- 	int i;
- 	dma_addr_t mapping;
--	unsigned int length, pad = 0;
-+	unsigned int length;
- 	u32 len, free_size, vlan_tag_flags, cfa_action, flags;
- 	u16 prod, last_frag;
- 	struct pci_dev *pdev = bp->pdev;
-@@ -447,6 +447,14 @@ static netdev_tx_t bnxt_start_xmit(struct sk_buff *skb, struct net_device *dev)
- 	txr = &bp->tx_ring[bp->tx_ring_map[i]];
- 	prod = txr->tx_prod;
+diff --git a/drivers/isdn/capi/capi.c b/drivers/isdn/capi/capi.c
+index 85767f52fe3c7..e893c151bfa0d 100644
+--- a/drivers/isdn/capi/capi.c
++++ b/drivers/isdn/capi/capi.c
+@@ -303,15 +303,9 @@ static void capincci_alloc_minor(struct capidev *cdev, struct capincci *np)
+ static void capincci_free_minor(struct capincci *np)
+ {
+ 	struct capiminor *mp = np->minorp;
+-	struct tty_struct *tty;
  
-+	/* Must be done before skb_shinfo(skb)->nr_frags is sampled,
-+	 * because skb_put_padto() might linearize the skb.
-+	 */
-+	if (skb_put_padto(skb, BNXT_MIN_PKT_SIZE)) {
-+		/* SKB already freed. */
-+		goto tx_kick_pending;
-+	}
-+
- 	free_size = bnxt_tx_avail(bp, txr);
- 	if (unlikely(free_size < skb_shinfo(skb)->nr_frags + 2)) {
- 		/* We must have raced with NAPI cleanup */
-@@ -554,14 +562,6 @@ static netdev_tx_t bnxt_start_xmit(struct sk_buff *skb, struct net_device *dev)
- 	}
- 
- normal_tx:
--	if (length < BNXT_MIN_PKT_SIZE) {
--		pad = BNXT_MIN_PKT_SIZE - length;
--		if (skb_pad(skb, pad))
--			/* SKB already freed. */
--			goto tx_kick_pending;
--		length = BNXT_MIN_PKT_SIZE;
--	}
+ 	if (mp) {
+-		tty = tty_port_tty_get(&mp->port);
+-		if (tty) {
+-			tty_vhangup(tty);
+-			tty_kref_put(tty);
+-		}
 -
- 	mapping = dma_map_single(&pdev->dev, skb->data, len, DMA_TO_DEVICE);
- 
- 	if (unlikely(dma_mapping_error(&pdev->dev, mapping)))
-@@ -636,10 +636,7 @@ static netdev_tx_t bnxt_start_xmit(struct sk_buff *skb, struct net_device *dev)
- 		txbd->tx_bd_len_flags_type = cpu_to_le32(flags);
++		tty_port_tty_vhangup(&mp->port);
+ 		capiminor_free(mp);
  	}
+ }
+diff --git a/drivers/staging/greybus/uart.c b/drivers/staging/greybus/uart.c
+index 2a88314058a86..4895029bb39f2 100644
+--- a/drivers/staging/greybus/uart.c
++++ b/drivers/staging/greybus/uart.c
+@@ -929,7 +929,6 @@ static void gb_uart_remove(struct gbphy_device *gbphy_dev)
+ {
+ 	struct gb_tty *gb_tty = gb_gbphy_get_data(gbphy_dev);
+ 	struct gb_connection *connection = gb_tty->connection;
+-	struct tty_struct *tty;
+ 	int ret;
  
--	flags &= ~TX_BD_LEN;
--	txbd->tx_bd_len_flags_type =
--		cpu_to_le32(((len + pad) << TX_BD_LEN_SHIFT) | flags |
--			    TX_BD_FLAGS_PACKET_END);
-+	txbd->tx_bd_len_flags_type |= cpu_to_le32(TX_BD_FLAGS_PACKET_END);
+ 	ret = gbphy_runtime_get_sync(gbphy_dev);
+@@ -942,11 +941,7 @@ static void gb_uart_remove(struct gbphy_device *gbphy_dev)
+ 	wake_up_all(&gb_tty->wioctl);
+ 	mutex_unlock(&gb_tty->mutex);
  
- 	netdev_tx_sent_queue(txq, skb->len);
+-	tty = tty_port_tty_get(&gb_tty->port);
+-	if (tty) {
+-		tty_vhangup(tty);
+-		tty_kref_put(tty);
+-	}
++	tty_port_tty_vhangup(&gb_tty->port);
  
+ 	gb_connection_disable_rx(connection);
+ 	tty_unregister_device(gb_tty_driver, gb_tty->minor);
+diff --git a/drivers/tty/serial/serial_core.c b/drivers/tty/serial/serial_core.c
+index 7e4cab742321c..4ffa682203166 100644
+--- a/drivers/tty/serial/serial_core.c
++++ b/drivers/tty/serial/serial_core.c
+@@ -3053,7 +3053,6 @@ int uart_remove_one_port(struct uart_driver *drv, struct uart_port *uport)
+ 	struct uart_state *state = drv->state + uport->line;
+ 	struct tty_port *port = &state->port;
+ 	struct uart_port *uart_port;
+-	struct tty_struct *tty;
+ 	int ret = 0;
+ 
+ 	BUG_ON(in_interrupt());
+@@ -3083,11 +3082,7 @@ int uart_remove_one_port(struct uart_driver *drv, struct uart_port *uport)
+ 	 */
+ 	tty_port_unregister_device(port, drv->tty_driver, uport->line);
+ 
+-	tty = tty_port_tty_get(port);
+-	if (tty) {
+-		tty_vhangup(port->tty);
+-		tty_kref_put(tty);
+-	}
++	tty_port_tty_vhangup(port);
+ 
+ 	/*
+ 	 * If the port is used as a console, unregister it
+diff --git a/drivers/tty/tty_port.c b/drivers/tty/tty_port.c
+index 77e28059ad982..296ba1e6e48cb 100644
+--- a/drivers/tty/tty_port.c
++++ b/drivers/tty/tty_port.c
+@@ -369,15 +369,19 @@ EXPORT_SYMBOL(tty_port_hangup);
+  * @port: tty port
+  * @check_clocal: hang only ttys with CLOCAL unset?
+  */
+-void tty_port_tty_hangup(struct tty_port *port, bool check_clocal)
++void __tty_port_tty_hangup(struct tty_port *port, bool check_clocal, bool async)
+ {
+ 	struct tty_struct *tty = tty_port_tty_get(port);
+ 
+-	if (tty && (!check_clocal || !C_CLOCAL(tty)))
+-		tty_hangup(tty);
++	if (tty && (!check_clocal || !C_CLOCAL(tty))) {
++		if (async)
++			tty_hangup(tty);
++		else
++			tty_vhangup(tty);
++	}
+ 	tty_kref_put(tty);
+ }
+-EXPORT_SYMBOL_GPL(tty_port_tty_hangup);
++EXPORT_SYMBOL_GPL(__tty_port_tty_hangup);
+ 
+ /**
+  * tty_port_tty_wakeup - helper to wake up a tty
+diff --git a/drivers/usb/class/cdc-acm.c b/drivers/usb/class/cdc-acm.c
+index b49b25d055a5a..e3049f31b891a 100644
+--- a/drivers/usb/class/cdc-acm.c
++++ b/drivers/usb/class/cdc-acm.c
+@@ -1578,7 +1578,6 @@ static int acm_probe(struct usb_interface *intf,
+ static void acm_disconnect(struct usb_interface *intf)
+ {
+ 	struct acm *acm = usb_get_intfdata(intf);
+-	struct tty_struct *tty;
+ 	int i;
+ 
+ 	/* sibling interface is already cleaning up */
+@@ -1605,11 +1604,7 @@ static void acm_disconnect(struct usb_interface *intf)
+ 	usb_set_intfdata(acm->data, NULL);
+ 	mutex_unlock(&acm->mutex);
+ 
+-	tty = tty_port_tty_get(&acm->port);
+-	if (tty) {
+-		tty_vhangup(tty);
+-		tty_kref_put(tty);
+-	}
++	tty_port_tty_vhangup(&acm->port);
+ 
+ 	cancel_delayed_work_sync(&acm->dwork);
+ 
+diff --git a/drivers/usb/serial/usb-serial.c b/drivers/usb/serial/usb-serial.c
+index bc3ec34f9f913..5ef62ff3ba9a2 100644
+--- a/drivers/usb/serial/usb-serial.c
++++ b/drivers/usb/serial/usb-serial.c
+@@ -1144,7 +1144,6 @@ static void usb_serial_disconnect(struct usb_interface *interface)
+ 	struct usb_serial *serial = usb_get_intfdata(interface);
+ 	struct device *dev = &interface->dev;
+ 	struct usb_serial_port *port;
+-	struct tty_struct *tty;
+ 
+ 	usb_serial_console_disconnect(serial);
+ 
+@@ -1155,11 +1154,7 @@ static void usb_serial_disconnect(struct usb_interface *interface)
+ 
+ 	for (i = 0; i < serial->num_ports; ++i) {
+ 		port = serial->port[i];
+-		tty = tty_port_tty_get(&port->port);
+-		if (tty) {
+-			tty_vhangup(tty);
+-			tty_kref_put(tty);
+-		}
++		tty_port_tty_vhangup(&port->port);
+ 		usb_serial_port_poison_urbs(port);
+ 		wake_up_interruptible(&port->port.delta_msr_wait);
+ 		cancel_work_sync(&port->work);
+diff --git a/include/linux/tty.h b/include/linux/tty.h
+index 12a841779552d..6a7854c3e54ab 100644
+--- a/include/linux/tty.h
++++ b/include/linux/tty.h
+@@ -623,7 +623,8 @@ extern int tty_port_carrier_raised(struct tty_port *port);
+ extern void tty_port_raise_dtr_rts(struct tty_port *port);
+ extern void tty_port_lower_dtr_rts(struct tty_port *port);
+ extern void tty_port_hangup(struct tty_port *port);
+-extern void tty_port_tty_hangup(struct tty_port *port, bool check_clocal);
++extern void __tty_port_tty_hangup(struct tty_port *port, bool check_clocal,
++				  bool async);
+ extern void tty_port_tty_wakeup(struct tty_port *port);
+ extern int tty_port_block_til_ready(struct tty_port *port,
+ 				struct tty_struct *tty, struct file *filp);
+@@ -641,6 +642,16 @@ static inline int tty_port_users(struct tty_port *port)
+ 	return port->count + port->blocked_open;
+ }
+ 
++static inline void tty_port_tty_hangup(struct tty_port *port, bool check_clocal)
++{
++	__tty_port_tty_hangup(port, check_clocal, true);
++}
++
++static inline void tty_port_tty_vhangup(struct tty_port *port)
++{
++	__tty_port_tty_hangup(port, false, false);
++}
++
+ extern int tty_register_ldisc(int disc, struct tty_ldisc_ops *new_ldisc);
+ extern int tty_unregister_ldisc(int disc);
+ extern int tty_set_ldisc(struct tty_struct *tty, int disc);
+diff --git a/net/bluetooth/rfcomm/tty.c b/net/bluetooth/rfcomm/tty.c
+index 886abe4d64eb4..bc3e597c7dacb 100644
+--- a/net/bluetooth/rfcomm/tty.c
++++ b/net/bluetooth/rfcomm/tty.c
+@@ -437,7 +437,6 @@ static int __rfcomm_release_dev(void __user *arg)
+ {
+ 	struct rfcomm_dev_req req;
+ 	struct rfcomm_dev *dev;
+-	struct tty_struct *tty;
+ 
+ 	if (copy_from_user(&req, arg, sizeof(req)))
+ 		return -EFAULT;
+@@ -463,11 +462,7 @@ static int __rfcomm_release_dev(void __user *arg)
+ 		rfcomm_dlc_close(dev->dlc, 0);
+ 
+ 	/* Shut down TTY synchronously before freeing rfcomm_dev */
+-	tty = tty_port_tty_get(&dev->port);
+-	if (tty) {
+-		tty_vhangup(tty);
+-		tty_kref_put(tty);
+-	}
++	tty_port_tty_vhangup(&dev->port);
+ 
+ 	if (!test_and_set_bit(RFCOMM_TTY_OWNED, &dev->status))
+ 		tty_port_put(&dev->port);
 -- 
 2.53.0
 
