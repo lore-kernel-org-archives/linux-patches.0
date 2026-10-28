@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793209945;
-	b=Id5WaupDyF+rLCX5bEKupKRL1uXDIO4JjGKnkv3l9tfbq9WzCkvkImYwjfjv0Kb822C6
-	 AovBNKrP3wvJfqTw1HtzVe2M7KcjcQ0F/+7dDrEAxB6oM98iLdTAht9LDQfLSYBnU3kos
-	 WRLUkp6kxT7zDK+/bi8N9bTwBBvfZE+htyGUslmmAB9CK3xySQDetxycPKXC4ss5n1hVV
-	 tIKOHGgUkfbhOR+CKlWLdnAUY3kmKvkMbvhgOHCrlF1OUq48OsK+cacpJf+uiWqyP/Xyb
-	 1OZw/QOBRHy/LOm5G7W+1ap8ph0b7SvMTIPqBt0fcCZ7x9AzPGENFa+IZac29oNO66w==
+	t=1793209948;
+	b=CAYDfb7nUgAVLvrglqozYSKSiqj3SoXvZQw5boev0ghTIq2M07w3lkpJmcsWbNYHLbKR
+	 DAhkPyrKagax7NxHGhT3ib+q9qfzcD3f9clxmp0BeMY5IqVBk5BplGhzoKV1aD15Do1yZ
+	 VRXx5IG6glyKrHoGoCW3pLrF2QgpCIlL7ONY4wmNAIIYtnb2+/5vssWr42Cb2WY929hNV
+	 dC/pSSzxs1rOOz8nrCWZBytsteerboy9KcZ5+sBg5m3mWu1J1tBw4viZR9vSifHBaTSoN
+	 hbcJ3cTzww8c9DAtW30VZiw/O1VjMXLE601nXqTbBbNNiflGIjwqCFkqASGRKxLUNaw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793209945;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793209948;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=OWfmyFY3OZkTjzyzmGA7vjlHFKZsdNn2/I49eNZ7JhA=;
-	b=Mi9K8MSrOG19Pjewmnn/WFkzc/NWw/k4z6fyZiJ86aIxTHLUkwty4ulBS17ppQFa5pSA
-	 wph8CoTiW0KvRWaMgml1du4FPNM7HThD/Mky73inoxuPfBCy6ntm6zjJ9RNn8hjfa1MZ1
-	 jHOINax/HVf7Ix4hMWOABoJXJLA1NNP2oHocE47SnsJUCm0+WcDP0EZbJ/oO+N7EkBwNb
-	 GcS+eLuLPVfgLOzsgU/Erg9MNgmDe+OfZw20OmdceHf+AZ/mKkJexXjDQ2OCqfJGg6+xE
-	 21wOTgfIdI1h9s5qcL/8EdCdeiKaMAi31kge/rzI4Pk5xhNHpa4oPGyX0EeC0oecwSg==
+	bh=VHdFv7AVDJDUHSszsK1PdazAkVSPt2Abh4t/WOW0/Do=;
+	b=n2hEd1+idAXa/pTKacUu9lWXc5+sNjFycBz/PPZdaeucbauWEjy3I2on6KNf0L6gRAjq
+	 EzuO4IS9W+NuFxhcAvkj/sphsqoXpgZ/cLxdPEcSuWemG+CnphHclV/VejJbVFDZQzfSP
+	 NEnFEOBqZqAz+Vks1IMoYYMIUgjnIhK9akYUVm+f+UbKgsauV3skdJKcNdAaDsCXLJVYm
+	 vFbRwsWW/QerTYO8QaPcW1/qgrBMhPaEoPGDj4ZYkAywxfdA699Qjl9K9KarSl3E9K0lF
+	 wI+u3O/SzW8RuWXIgYRHrT+M/vxUJ7+c8tqNdiPUFxk+QdIj3HYa5OEjGaU2SKpWAxw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=icQ1pTlN;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bXx0em+T;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61F83606A31C;
-	Wed, 28 Oct 2026 17:52:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E1D7606A31A;
+	Wed, 28 Oct 2026 17:52:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=icQ1pTlN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B17E41F01825;
-	Wed, 28 Oct 2026 17:52:24 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bXx0em+T
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EB3B1F01825;
+	Wed, 28 Oct 2026 17:52:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793209945;
-	bh=OWfmyFY3OZkTjzyzmGA7vjlHFKZsdNn2/I49eNZ7JhA=;
+	s=korg; t=1793209948;
+	bh=VHdFv7AVDJDUHSszsK1PdazAkVSPt2Abh4t/WOW0/Do=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=icQ1pTlN/Mj21TlAKl6ACjw+HJuJ3H+WWXKDigaDesESJHEAEA0BcKSggHWkAZmn8
-	 sQoEKFoWtkkXZXhabs9soI1G/NmnAZ+29i+HdI/knygmYF/rJcsz5wlzcf1IsjDu+g
-	 0kU2a+U81GhbIwbEi6nWWfjA9lAxK3ywKD7vaECo=
+	b=bXx0em+TeicZfYMpcS9DJZuQ5bT/Wd50wsgMdM7o4KQEnNLeelQd8ub8FxQc2TQJl
+	 oPvAXUQpKSK8cEAqoEjQWLsRvCZRYy4LaPb6v97yg3eH1aFcuTdu8Wib7f2TMj9N4g
+	 +bIT+l4ooJMQmXiRNHEL01H/LO7WVn0ELALFoHlY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Zeng <kylebot@openai.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Carlos Jones Jr <carlosjr.jones@analog.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 022/168] netlink: reset skb headers before unicast and multicast filtering
-Date: Wed, 28 Oct 2026 17:59:18 +0100
-Message-ID: <20261028165943.623422858@linuxfoundation.org>
+Subject: [PATCH 6.6 023/168] spi: tegra114: assert CS GPIO for every transfer in a message
+Date: Wed, 28 Oct 2026 17:59:19 +0100
+Message-ID: <20261028165943.645888658@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165943.089486480@linuxfoundation.org>
 References: <20261028165943.089486480@linuxfoundation.org>
@@ -68,58 +68,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kyle Zeng <kylebot@openai.com>
+From: Carlos Jones Jr <carlosjr.jones@analog.com>
 
-[ Upstream commit 8bf659bd54e1f00e34cf5244b1d289c506fa47c0 ]
+[ Upstream commit 8980bc573ae2d2b9d86d76aeb86c76e1597070bf ]
 
-Socket filters can use SKF_NET_OFF and SKF_LL_OFF to read relative to
-an skb's network and MAC headers. Netlink producers may reserve
-headroom without resetting those headers, allowing a receiving socket's
-filter to read data before the initialized message.
+The driver provides its own transfer_one_message() and therefore drives
+the chip-select GPIO itself rather than through the SPI core. The GPIO is
+asserted only in the is_first_of_msg path of
+tegra_spi_setup_transfer_one(), but tegra_spi_transfer_end() deasserts it
+whenever a transfer has cs_change set. For a multi-transfer message whose
+earlier transfers request cs_change -- for example a register read that
+sends the address in one transfer and clocks the data back in the next --
+the CS GPIO is released after the first transfer and never re-asserted,
+so the remaining transfers are clocked with chip-select inactive and the
+peripheral never drives the bus.
 
-For example, IWPM HELLO replies are allocated with dev_alloc_skb(),
-which reserves NET_SKB_PAD bytes. An unprivileged NETLINK_RDMA user can
-attach a classic socket filter and disclose this headroom through the
-length of the delivered reply. The resets in netlink_dump() do not help
-because IWPM sends a separately allocated skb through netlink_unicast().
+This was observed with an ADIS16470 IMU (adis16475 driver), whose
+register read is a two-transfer, cs_change-framed exchange: a logic
+analyzer showed the data frame clocked with CS high, and the driver read
+0 while the device drove 0x4056 on the wire.
 
-Reset both headers before running the receiver's filter in unicast and
-broadcast delivery, as is already done for dump skbs. This also covers
-other netlink producers that reserve headroom without changing their
-allocation or message-building code.
+Re-assert the CS GPIO for every transfer so that multi-transfer messages
+keep chip-select active across the whole message. gpiod_set_value() is
+idempotent and polarity-aware, so this is a no-op for the first transfer
+and for messages that keep CS asserted throughout.
 
-Fixes: b1153f29ee07 ("netlink: make socket filters work on netlink")
-Assisted-by: LLM
-Signed-off-by: Kyle Zeng <kylebot@openai.com>
-Link: https://patch.msgid.link/20261006224232.50724-1-kylebot@openai.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 63c1440596ff ("spi: tegra114: add support for gpio based CS")
+Signed-off-by: Carlos Jones Jr <carlosjr.jones@analog.com>
+Link: https://patch.msgid.link/20261002085540.1625-1-carlosjr.jones@analog.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netlink/af_netlink.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/spi/spi-tegra114.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/net/netlink/af_netlink.c b/net/netlink/af_netlink.c
-index f3a8c8338d203..e539b0a632fad 100644
---- a/net/netlink/af_netlink.c
-+++ b/net/netlink/af_netlink.c
-@@ -1345,6 +1345,8 @@ int netlink_unicast(struct sock *ssk, struct sk_buff *skb,
- 	if (netlink_is_kernel(sk))
- 		return netlink_unicast_kernel(sk, skb, ssk);
- 
-+	skb_reset_network_header(skb);
-+	skb_reset_mac_header(skb);
- 	if (sk_filter(sk, skb)) {
- 		err = skb->len;
- 		kfree_skb(skb);
-@@ -1479,6 +1481,8 @@ static void do_one_broadcast(struct sock *sk,
- 		goto out;
+diff --git a/drivers/spi/spi-tegra114.c b/drivers/spi/spi-tegra114.c
+index ba2c9feab1cdf..2b7fc3e0c244e 100644
+--- a/drivers/spi/spi-tegra114.c
++++ b/drivers/spi/spi-tegra114.c
+@@ -859,6 +859,13 @@ static u32 tegra_spi_setup_transfer_one(struct spi_device *spi,
+ 		command1 |= SPI_BIT_LENGTH(bits_per_word - 1);
  	}
  
-+	skb_reset_network_header(p->skb2);
-+	skb_reset_mac_header(p->skb2);
- 	if (sk_filter(sk, p->skb2)) {
- 		kfree_skb(p->skb2);
- 		p->skb2 = NULL;
++	/*
++	 * Re-assert the CS GPIO for every transfer: transfer_end() drops it
++	 * on cs_change, and the assert above only covers is_first_of_msg.
++	 */
++	if (spi_get_csgpiod(spi, 0))
++		gpiod_set_value(spi_get_csgpiod(spi, 0), 1);
++
+ 	return command1;
+ }
+ 
 -- 
 2.53.0
 
