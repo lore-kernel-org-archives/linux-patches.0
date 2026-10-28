@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793212789;
-	b=H3n8ro9oKU3J7nCR0znJoXTyyh7hwQrnjP0QIjzJkd60vtpi4esv1OF+XX5uvZVw6/Qw
-	 hlmf8sH/pK+fY5fjkSj+zuv+9DPAzowPYkzzu8yO1Kw2TT5MdLs7wfbcdiPHFyKDudeHA
-	 TkT6FU3ueI4D73eYqUVXMi25Oyh4QykHr60hkOZ31ZMSul3vGI+RSnpL3ou/QIRx1G70b
-	 29CQCVbX1E1/uDVjFoPRwqBHJf/4EmKiZfrPLeWCIM1Uh2e6M7e/kDmSlT7SPYOyxINxX
-	 RLJW0lXVif4Ak7xHRDMA0DLnXKLBfG6ab42OPa5dB7W7Qg239QFQV3YOWoxrNYtUKag==
+	t=1793212792;
+	b=UR3m07m1XvmHfjHELnSjICgWoguVUmeBhiwq4/enAJYYNE+gmmaJ9BUeHBXD8JiAP9r8
+	 Ad0acn2UDJQdkU/4aTYtECeUexfo6OQ8dNpPiZMF5qjGBpE2k69w919oR2C6nuFyCNAHZ
+	 Eq0y/7CCey3uj4c9J6SimR/MHW1dAgiG/hol35IJ2er/E3vZK6xMBcnWoRER69MAhv5Gx
+	 DSiczhdjGTPHq/mLyXFTcU0Ww73vOkCJPFFImtZKtD2IDUU4OKEedRj+MDPl528EAerl9
+	 iEwr5EtExGWOwDL8Y4cd+0PKv/aWy5a8nN+PIf7TeTpT9oRAWqh5ph4yfpPn14E6SyA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793212789;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793212792;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=WzCnetFect9T+SjGzZUk2Lk+YQMD7tphKPc1HTM1DVo=;
-	b=Oukmdcp46KPBv3BE1JpOmLatLCyOxGvW8RY5v0Zdf+ITozhfeHh/XcJTbMtKIGMnC/nF
-	 nKf3rJ6RaQWDUumwP6xqqzwpcUZiHl380bQhcp8vfBik6GqctObgFr9Pr4Xh7V10p9zkw
-	 xLrXwz2akPi3LWHRlZQSVkvkzgq72bX+cAAgxVWZ09homT7T74ok1xAtqTQ2NOSDSxMZe
-	 xNdwaEVBR9nLLpec9Nimjw8lJzLQC1z0S9F8yfmD/Z7K5tjQCmpXirpT5vcoemNcUzI8a
-	 ySxQzuYuBXLxZGgDw1CdVQVLXLse8IU4UEL2lJtzUjA67/z74Z9HBRqIkdBp51oGErg==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=wsR7bjoIN9/IJpMOkKwOpjCQe9tItRM2ru2uzkHMLsI=;
+	b=rv1h8LTqHX0RQNSia9RbHF55UlccI33ui6C5E26mMklR5U3O8xLsKnRvQRQrDMY+S2eB
+	 gIJ1yW3rtvOF2xo62ljpzqn/z+NLerPHqR52Vzb1CJ7NbpRklynWER+nOTiVIFhWF8aK7
+	 VnusOVrYPYh4NJcMJ8mH3GR0V+0GU1yisZVDvC4Gk7eZZYPe2bJSueMKXvEhoPq24eMVT
+	 IxVoZFkZJet6dOgT/USDAfOA/7VlrB7fsRJaiJBnMZ/QPijzaZo0e/Q5JMMJ6caaD4f92
+	 lpU0C1iVMosrVOaJJz+xcRtz8s7feW/8TWVPFXO1gnMb8eR5cu+Ex+REwVWh1SFC/QQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aUBkuziH;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F2TB5R2H;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 246F1606A31E;
-	Wed, 28 Oct 2026 18:39:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4648606A31D;
+	Wed, 28 Oct 2026 18:39:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aUBkuziH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 749D11F01825;
-	Wed, 28 Oct 2026 18:39:48 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F2TB5R2H
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 434C31F01825;
+	Wed, 28 Oct 2026 18:39:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793212789;
-	bh=WzCnetFect9T+SjGzZUk2Lk+YQMD7tphKPc1HTM1DVo=;
+	s=korg; t=1793212791;
+	bh=wsR7bjoIN9/IJpMOkKwOpjCQe9tItRM2ru2uzkHMLsI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aUBkuziHfkrvvadNL5hafpZLBuusOX/vmjgwNihs3ZvCq0CRgN0nq6ppBWH5tk9kK
-	 1uYhd2VrJ7xpkhbQLq4MQgPhspyH0Q2TxB3jDAb9T2NJ2w7uRkM5zhn8anNd2gzjRq
-	 50OEGfGjDp6GCV9sw9284fVLO0CU3rFHwkKwWRL4=
+	b=F2TB5R2Hftiq7Gqgf+CRHZ6x4zh8PyBTWS8Pxp8xSVc3OTjQSIfIBA8K5V6nxMNtM
+	 5Cyu7+Igm+IE7sQ3G8ve/A4L9nYLStn2UXAuhnPg0o/wCoVMg4m+1tRPVLUU5sqn02
+	 bxOaR9htDA6y3kl1a4QzqJDO54pTLY/Sa3biIEj8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Subject: [PATCH 6.1 0277/1887] usb: dwc3: am62: Fix runtime PM usage count leak on probe error path
-Date: Wed, 28 Oct 2026 17:39:33 +0100
-Message-ID: <20261028170505.533784815@linuxfoundation.org>
+	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.1 0251/1887] drm/amd/pm/si: Check AMD_IS_MOBILITY flag for PPSMC_SYSTEMFLAG_GPIO_DC
+Date: Wed, 28 Oct 2026 17:39:07 +0100
+Message-ID: <20261028170504.944500437@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -62,52 +62,70 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
+From: Timur Kristóf <timur.kristof@gmail.com>
 
-commit 3d9bbf0ffeb9b7ac1b6ad06b52e037870a7e0c63 upstream.
+commit cd883d0a3937df82a5ea03709ba8ba623b868419 upstream.
 
-dwc3_ti_probe() takes a runtime PM reference with pm_runtime_get_noresume()
-before creating the dwc3 core child device, and releases it with
-pm_runtime_put_autosuspend() once probe has succeeded. The err_pm_disable
-error path only disables runtime PM, so the reference taken a few lines
-earlier is never dropped.
+Unfortunately, some desktop boards eg. the FirePro D500
+have the HARDWAREDC platform flag set and also have
+a battery power state configured in their VBIOS.
+This makes no sense for a desktop GPU and results in
+incorrect behaviour: the clocks are stuck at lowest.
 
-The usage counter lives in struct device and is not reset when the driver
-is unbound, so the leaked reference outlives the failed probe. If the
-device is probed again, through a manual rebind or a module reload, the
-counter starts at one instead of zero and the pm_runtime_put_autosuspend()
-on the success path can no longer bring it back down. The wrapper then
-stays runtime resumed for good and autosuspend never kicks in.
+We observed that the kernel driver can work around
+the issue in two possible ways:
+1. Set PPSMC_SWSTATE_FLAG_DC on all power states
+2. Clear PPSMC_SYSTEMFLAG_GPIO_DC
 
-Drop the reference before disabling runtime PM, matching the ordering
-already used in dwc3_ti_remove().
+We think that the PPSMC_SYSTEMFLAG_GPIO_DC flag
+makes the SMC assume it's running on battery even
+though this is a desktop machine with no battery,
+and that's why it doesn't do DPM on power states
+without PPSMC_SYSTEMFLAG_GPIO_DC.
 
-Fixes: e8784c0aec03 ("drivers: usb: dwc3: Add AM62 USB wrapper driver")
-Cc: stable <stable@kernel.org>
-Assisted-by: Claude:claude-opus-5
-Signed-off-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
-Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Link: https://patch.msgid.link/20260902-dwc3-am62-rpm-fix-v1-1-7a2807e33307@amd.com
+Issue was uncovered by "Fix updating clock limits from
+power states" because previously the limits for the
+battery state were not tracked separately. However,
+battery power state has lower frequencies and voltages,
+so the kernel doesn't set the DC flag on the current
+power state anymore. That causes the SMC to be stuck
+on the lowest clocks.
+
+Let's clear PPSMC_SYSTEMFLAG_GPIO_DC on desktop GPUs.
+We can use the AMD_IS_MOBILITY flag to determine that.
+
+Fixes: e6c5d36756e7 ("drm/amd/pm/si: Fix updating clock limits from power states")
+Closes: https://gitlab.freedesktop.org/mesa/mesa/-/work_items/16352
+Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
+Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
+Link: https://patch.msgid.link/20260923120354.1027996-1-timur.kristof@gmail.com
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 58473c7c49ce9f5f5a4a1c24ffb9aa1d3c8771f4)
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc3/dwc3-am62.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/dwc3/dwc3-am62.c
-+++ b/drivers/usb/dwc3/dwc3-am62.c
-@@ -243,6 +243,7 @@ static int dwc3_ti_probe(struct platform
+--- a/drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c
++++ b/drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c
+@@ -5239,7 +5239,8 @@ static int si_init_smc_table(struct amdg
+ 		break;
+ 	}
  
- err_pm_disable:
- 	clk_disable_unprepare(am62->usb2_refclk);
-+	pm_runtime_put_noidle(dev);
- 	pm_runtime_disable(dev);
- 	pm_runtime_set_suspended(dev);
- 	return ret;
+-	if (adev->pm.dpm.platform_caps & ATOM_PP_PLATFORM_CAP_HARDWAREDC)
++	if ((adev->flags & AMD_IS_MOBILITY) &&
++	    (adev->pm.dpm.platform_caps & ATOM_PP_PLATFORM_CAP_HARDWAREDC))
+ 		table->systemFlags |= PPSMC_SYSTEMFLAG_GPIO_DC;
+ 
+ 	if (adev->pm.dpm.platform_caps & ATOM_PP_PLATFORM_CAP_REGULATOR_HOT) {
 
 
