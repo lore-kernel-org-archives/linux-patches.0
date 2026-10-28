@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216156;
-	b=rlic+So9MChq0ejnlevIGval9BALp8FZfg3bmgmz6akA0AAz27aqYjl+s5KVRFT0zY14
-	 jt3JqcGgLex4kWAUM8QGUjZ+DkZUMXNy44lGzBTXoedAuUw+ZPfwpTvwvJtrzuYnQpU0H
-	 IH+wCIPzDcb/czBIvaV+dPLH9gT3rBqVvTxgvfLHrwD86GC8A2FwrdpD1Gvea6INF0MWM
-	 B7IScLfGaD3yAzYrDHtXiG11KtLsieuALGx8k+UmgZV/rvM/97KfFPQmKuei4GWQ4bojr
-	 werIkbnkxYw+f9ETJxqK40/DKZadssI6nrVDgcHqshre5UGG1wky4PoipA/KOImytIA==
+	t=1793216159;
+	b=wFXTscH3y7DpmvVY3cimO0L6Mzo81jXW9ytgSfoHFvXCBsbRuPX1y5TpBrqtWfOZ0Fus
+	 vWtHKjbeNtptyEi4H61NUUbJYE0puX718Y/tixGrOG/F9T8aPbUpgZz5FnhuiOQPA722i
+	 Z1YC8fb3Vhffppr7YMER41FtF/jWgrkkxWsdvpH6j1j7Ut76MxUy2RsZ1HN+YksynpIga
+	 Gj0pBYoMRBAuRkX0EiztH/lLT0Yu/yFJ1qNq6M9nFGb40zNPgbAI8om6Bc/VVgU6tYhas
+	 q9RbVIujzj5uLTFuDfQZJejE3y+u+iGvq2xrZwyD0eBzq5aNslhsKjf0NjH/8LrJoeA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216156;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216159;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=wfajevJxFFjrPkmr1EGD8e15OTafxiYDSZCEZKH+ZRs=;
-	b=Zso32ppqc8wxwDhogSPHtgLkmpBwLYSCW67zx1eMopkz9G4AAl4AfbJWuu3yCE1BXtq1
-	 IhBJiN4wrLekLlU7OkDmmpfzRtV41UeJhRS8QaGqBvjdWOpyCMYF1sbju37wd+shdEfiD
-	 yAeiHZRM4ZOjQ9jak//LDb6kZRI8oKd2o4VQEwpkr0qibJ+UHT6LoV3nJawRjq9WulD//
-	 mI4X/J0I2phzay3vBnYv3g9WJGqQbNczwxkhtnyAHSDLrNT2579n8M+/Jl8hdc31u7cjT
-	 TOTpNw0jKjCTYpEuEf2Sj0HN47QAgoV8kBbPyGhnuyOspf3/VPhNQXGqrj9EnVHot4A==
+	bh=XEhkCm275o0uuRG1YNPPGdwYUuiR4yu9TqlSud/X5X0=;
+	b=Iv1ggfxxqwzITK+Vonc8IWyD4FzFcxtOa2UvMdFeKmuznCIpFVvMFAyXnja+h3Hn5b+n
+	 5QvymSyoNuYlmzNhCPrflDCMMVyB6dTuh0PCqz4iKa4S+CXc3OcD7Ydi7YfMJJtJYg9KT
+	 WKW5mA3gBlBo/XF/raf27hiTtemEaHs69bGIGNl0e0IlOB6yJx+Bnb6nyMylZR34OQy9A
+	 b7ftuulYSZTFqNZZ92TfqAWjaR1J20hAhH39f94JjSS2w/EfGBsup5uBvvpMW7t+CIzTZ
+	 gQ68M5CPm9zw8XZC+yaxisfMi9mgvz1JOLhW4WMxUQAOaoeFTGszB4yNtSmmx7P/yXA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZO1+fDXF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aH2pJo9c;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A8AF606A31A;
-	Wed, 28 Oct 2026 19:35:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77CE4606A31D;
+	Wed, 28 Oct 2026 19:35:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZO1+fDXF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4D521F01828;
-	Wed, 28 Oct 2026 19:35:55 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aH2pJo9c
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C945D1F01825;
+	Wed, 28 Oct 2026 19:35:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216156;
-	bh=wfajevJxFFjrPkmr1EGD8e15OTafxiYDSZCEZKH+ZRs=;
+	s=korg; t=1793216159;
+	bh=XEhkCm275o0uuRG1YNPPGdwYUuiR4yu9TqlSud/X5X0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZO1+fDXFT5mMstmSBU7q2ArHMPhs+ScAvhlg2kphWhOwy5zJBzl83QbzO2e3bgoZf
-	 hvfSeHFBryJKB/5bx+mx8KpefQp/W3OfK5embo1fHyMSaAXZKpCCHvy3zG/XYihyJV
-	 LWL0EB/aVyVr8QViX8xmuTcISUZaDoGdJY5JCPq0=
+	b=aH2pJo9cWpKWVgi+MLarqeHmvvRbUDk9c57Ml8nfAjMRIZewvyO0qv5aVPJp1/sF9
+	 tZuoamoZwYfa6h7rCB63TDR2n6y4VMMjdPmUfP0Grr3/iPb/cA33OLJUuYWvLk9k2i
+	 NtlRZHBE+fnc8JaeliCXTZEBIal3TxMn8NvSteB4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiangshan Yi <yijiangshan@kylinos.cn>,
-	Jiri Kosina <jkosina@suse.com>,
+	Bryam Vargas <hexlabsecurity@proton.me>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Paulo Alcantara <pc@manguebit.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1417/1887] HID: mcp2221: clear rxbuf after I2C/SMBus transfer completes
-Date: Wed, 28 Oct 2026 17:58:33 +0100
-Message-ID: <20261028170531.703960387@linuxfoundation.org>
+Subject: [PATCH 6.1 1418/1887] smb: client: reject a tree connect response whose byte count is too small
+Date: Wed, 28 Oct 2026 17:58:34 +0100
+Message-ID: <20261028170531.726794038@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,65 +69,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiangshan Yi <yijiangshan@kylinos.cn>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-[ Upstream commit db2333f88729c8aae062cb171ed058725ff5c901 ]
+[ Upstream commit 65deb18359341141d37dc86fc7853511be3c87a7 ]
 
-mcp_i2c_smbus_read() stores the caller-supplied buffer pointer in
-mcp->rxbuf for the duration of a transfer but never clears it when the
-transfer finishes or times out. Once the caller frees or reuses the
-buffer, mcp->rxbuf becomes a dangling pointer. A delayed or spurious
-MCP2221_I2C_GET_DATA report can then drive mcp2221_raw_event() to
-memcpy device data into the freed memory, causing a write
-use-after-free.
+CIFSTCon() bounds its strnlen() over the byte area with the server's
+ByteCount minus two, which for ByteCount 0 or 1 goes negative as an int
+and converts to a huge size_t.  The later subtraction wraps the __u16
+bytes_left, and that is what bounds cifs_strndup_from_utf16(): a bound of
+up to 65535 against a ~16 KB cifs_req_poolp object runs off the end of the
+slab object, and the bytes reach userspace through tcon->nativeFileSystem
+in /proc/fs/cifs/DebugData.
 
-Route all return paths through a single exit point that clears
-mcp->rxbuf and mcp->rxbuf_size, so that the existing !mcp->rxbuf guard
-in the raw_event handler can reject any report arriving after the
-transfer has ended.
+Reject a byte area too small for what the parser consumes.  Two bytes is
+the least it can consume, and no conformant response carries fewer.  The
+new trace point is the 129th smb_eio_trace entry, which __mode(byte)
+cannot represent, so the attribute goes with it.
 
-Fixes: 67a95c21463d ("HID: mcp2221: add usb to i2c-smbus host bridge")
+Fixes: cc20c031bb06 ("cifs: convert CIFSTCon to use new unicode helper functions")
 Cc: stable@vger.kernel.org
-Signed-off-by: Jiangshan Yi <yijiangshan@kylinos.cn>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-mcp2221.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ fs/smb/client/connect.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/hid/hid-mcp2221.c b/drivers/hid/hid-mcp2221.c
-index 4e52af7ec43f6..2356f5d7b3941 100644
---- a/drivers/hid/hid-mcp2221.c
-+++ b/drivers/hid/hid-mcp2221.c
-@@ -302,7 +302,7 @@ static int mcp_i2c_smbus_read(struct mcp2221 *mcp,
- 
- 	ret = mcp_send_data_req_status(mcp, mcp->txbuf, 4);
- 	if (ret)
--		return ret;
-+		goto out;
- 
- 	mcp->rxbuf_idx = 0;
- 
-@@ -324,7 +324,7 @@ static int mcp_i2c_smbus_read(struct mcp2221 *mcp,
- 			} else {
- 				usleep_range(980, 1000);
- 				mcp_cancel_last_cmd(mcp);
--				return ret;
-+				goto out;
- 			}
- 		} else {
- 			retries = 0;
-@@ -334,6 +334,10 @@ static int mcp_i2c_smbus_read(struct mcp2221 *mcp,
- 	usleep_range(980, 1000);
- 	ret = mcp_chk_last_cmd_status_free_bus(mcp);
- 
+diff --git a/fs/smb/client/connect.c b/fs/smb/client/connect.c
+index abc03adb692b5..fd74814bdc84a 100644
+--- a/fs/smb/client/connect.c
++++ b/fs/smb/client/connect.c
+@@ -4138,6 +4138,10 @@ CIFSTCon(const unsigned int xid, struct cifs_ses *ses,
+ 		tcon->tid = smb_buffer_response->Tid;
+ 		bcc_ptr = pByteArea(smb_buffer_response);
+ 		bytes_left = get_bcc(smb_buffer_response);
++		if (bytes_left < 2) {
++			rc = -EIO;
++			goto out;
++		}
+ 		length = strnlen(bcc_ptr, bytes_left - 2);
+ 		if (smb_buffer->Flags2 & SMBFLG2_UNICODE)
+ 			is_unicode = true;
+@@ -4193,6 +4197,7 @@ CIFSTCon(const unsigned int xid, struct cifs_ses *ses,
+ 			reset_cifs_unix_caps(xid, tcon, NULL, NULL);
+ 		}
+ 	}
 +out:
-+	mcp->rxbuf = NULL;
-+	mcp->rxbuf_size = 0;
-+
- 	return ret;
+ 	cifs_buf_release(smb_buffer);
+ 	return rc;
  }
- 
 -- 
 2.53.0
 
