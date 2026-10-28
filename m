@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216168;
-	b=PQAwLpIxkSq5KGzc97PI4WzvbIUzJgeJ/nIWVfD0sjUBfY96LGnr2lju+FDWiwH76bg/
-	 VkK7NBYi2xlNBz56uV5kGR1gpjjh8mgiQgkVf0wTlPp+sKG3z42LbBL4TLRkbYg52h5fI
-	 NjpouqfP6naZwuyLRkSLXro9N2jMn0LCwA9GgJ+OvO1sq3OqBdjjB6c4avciEXF3oiRwI
-	 5lAuXpyb85K/4P+mCEbkWBZzmMoalVUi8Q30Gg6jHA5g+5TLUl7YMWMwY84VDFm3iubGI
-	 gC1xmDa/guiuJprnpBiaJln0f4vYgtXxM4DNBx+ZjHvq+j7F3V4zuUWfnT/VTKMH+pQ==
+	t=1793216171;
+	b=EKyefSroZQ7TXb0XeQr+WynU4m3vXB34un3mk9lVG6wkwYLaa/WXCNcNBoTrenmL1aFB
+	 gkAzBM0ueJh6OOp0k6IP4pYAUJ4Fua78xMrII6tQFrLsLVfL0zc6jltiVpZ+HEHBu0+il
+	 eFmyOHbkM4L50/k6txiqb8qu1xjAP1+yKci0sfGlgbGog5rWKNn42JHQYvFfGmOWVSQGq
+	 09YaVwjOsLgb/H/4XcFEiEJwFdT5nnTV3dTfXnYc6erVr2GTkhiwWgbTX53vMKad2jQzV
+	 ep1IEsqEtc6IcSo9VJBgK0bejeMtUk9gZQabMkoGkEL4bY86OEuCaZQRue0o3aQYvig==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216168;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216171;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=lXhJcUG9wYFNKsKbPZs7+rrHfY8beqqg06QdNtTBUMs=;
-	b=d2CSh2NnSx5EbWFH0/dEkAK86hQbL40ShstZZtLZSxnl6TCuhrg0wjiNMXUwvUhpkUGL
-	 oWDaUTLZrbiPjQ80g12oaRVipryFjRdyO7xggZaugnUa5m+pk0SaKEEftz2dnJOxcjOSD
-	 +xOp7z+6I6EkAyj/LXpQnDR0PxDOLuNz+VPXEfSt1r9Crf/xOEEkhRWPfubHCNn7SZKB7
-	 SVkOW7yHDrZ28fXGX9V+ogiSw+M+lBshBgYAA7jrPC8BhXWn0mc3cC20vsGa8bAzH4t80
-	 pXcwQ3SCafeZVxz5vD1WRsZJozMf4s2P8S3ajenWAXO8KAt50yKiGZWp8ZVh7SZTimQ==
+	bh=e82IiJuNOW0ov9D1SoVNf72CIk8Sorli6pCqiHc/Xq0=;
+	b=LRJMy4MP2yQtSIYYp1yNs18J9dm5ssWMt3Ro1/qojnrLfvC4LAMEGpMdzJehc5ILRfUi
+	 FVHd9TW1pE31b3uV56aDCcmgvh6t4xrUBDnTXP8rULSNAZ1m3HPf0XuKc03TUN44qUp3S
+	 8Hos+Bnp+M5if19VE1jI5a7vsPQ8gJA6u8ckg368W+ZgjpGn5nvKwP2oi4DfG8HOiJJXa
+	 CwrnQC7/OjvdEQhuGTCI4SueRnzR3BemkSKoFVXMAevaTJ1r+ITrYHmsXyzhaV8Qmzrmn
+	 bDU8q70VaYb3KaO1aw9M+BnjmOZW7Ewn/E2ZWo2oF+05zSlokzG/gxcgK3NI1xSdU9A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="X+/SUYl/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=R1c6rQcO;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE06C606A31A;
-	Wed, 28 Oct 2026 19:36:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0AC8606A31C;
+	Wed, 28 Oct 2026 19:36:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X+/SUYl/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B51E1F01825;
-	Wed, 28 Oct 2026 19:36:07 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=R1c6rQcO
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 005EE1F01825;
+	Wed, 28 Oct 2026 19:36:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216167;
-	bh=lXhJcUG9wYFNKsKbPZs7+rrHfY8beqqg06QdNtTBUMs=;
+	s=korg; t=1793216170;
+	bh=e82IiJuNOW0ov9D1SoVNf72CIk8Sorli6pCqiHc/Xq0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=X+/SUYl/hqPG6KuhNOtd6Bh8mqTtYoU/DJYfQ02KGKa21O2rAyWWUDNsxT6w6B+fc
-	 H2YSjNIpw8WX2stXywI60RE1b0NKzI7hj2YVNPsyjv3xHRqptk5SOseC/WwN2ceYH8
-	 wPIIxIJasR0GfLDs182j18WGNLKnFZkOg9ab0DLg=
+	b=R1c6rQcO/EI+XG0gZxC4Nqoce3NSU3jWl6SffRLS9ZpXoAhUNg1L87qKcdszfq0JE
+	 YWRz11Q+9UUJm1eW4BIkNtgls58lCb/BvdnCPSTK3mIL4xUdKQClHR8irhQ4I3wi+0
+	 1VpTOu75ahx+ef8okxRuV+bl2V8XRGpADMABu/58=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Sui Jingfeng <suijingfeng@loongson.cn>,
-	Javier Martinez Canillas <javierm@redhat.com>,
-	Helge Deller <deller@gmx.de>,
+	Cen Zhang <zzzccc427@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1411/1887] fbdev: Validate info->screen_{base, buffer} in fb_ops implementations
-Date: Wed, 28 Oct 2026 17:58:27 +0100
-Message-ID: <20261028170531.567363137@linuxfoundation.org>
+Subject: [PATCH 6.1 1458/1887] Bluetooth: 6lowpan: hold L2CAP conn across debugfs control
+Date: Wed, 28 Oct 2026 17:59:14 +0100
+Message-ID: <20261028170532.639070122@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -70,255 +68,202 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Zimmermann <tzimmermann@suse.de>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit 3f8974f68f408f4983443b745a3cf95b06112469 ]
+[ Upstream commit 518aa9505fa10ea5662349e5d2efd8c9e32a820b ]
 
-Push the test for info->screen_base from fb_read() and fb_write() into
-the implementations of struct fb_ops.{fb_read,fb_write}. In cases where
-the driver operates on info->screen_buffer, test this field instead.
+get_l2cap_conn() looks up an LE hci_conn under hdev protection, but
+then drops that protection before reading hcon->l2cap_data and before
+lowpan_control_write() later dereferences conn->hcon.  A disconnect or
+device close can tear down the same L2CAP connection in that window.
 
-While bothi fields, screen_base and screen_buffer, are stored in the
-same location, they refer to different address spaces. For correctness,
-we want to test each field in exactly the code that uses it.
+The buggy scenario involves two paths, with each column showing the order
+within that path:
 
-v2:
-	* also test screen_base in pvr2fb (Geert)
-	* also test screen_buffer in ivtvfb, arcfb, broadsheetfb,
-	  hecubafb, metronomefb and ssd1307fb (Geert)
-	* give a rational for the change (Geert)
+6LoWPAN control write:              HCI disconnect/device close:
+  1. get_l2cap_conn() finds hcon      1. hci_disconn_cfm() dispatches
+     and hcon->l2cap_data.               the L2CAP disconnect callback.
+  2. get_l2cap_conn() drops hdev      2. l2cap_conn_del() clears
+     protection and returns conn.        hcon->l2cap_data and drops the
+                                         L2CAP connection reference.
+  3. lowpan_control_write() reads     3. hci_conn_del() removes and drops
+     conn->hcon.                         the HCI connection.
 
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Tested-by: Sui Jingfeng <suijingfeng@loongson.cn>
-Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
-Acked-by: Helge Deller <deller@gmx.de>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230428122452.4856-18-tzimmermann@suse.de
-Stable-dep-of: 9ad709afdfa3 ("fbdev: ssd1307fb: defer I2C transfers from damage callbacks")
+Take a reference to the L2CAP connection with
+l2cap_conn_hold_unless_zero() while hdev is still locked, and drop that
+reference after the debugfs command's last use of conn.  This mirrors the
+existing L2CAP ACL receive-side handoff and keeps the connection
+dereferenceable after leaving hdev protection.  Export the existing helper
+so the bluetooth_6lowpan module can use the same lifetime primitive.
+
+Validation reproduced this kernel report:
+BUG: KASAN: slab-use-after-free in lowpan_control_write+0x374/0x520
+The buggy address belongs to the object at ffff888111b9d000 which belongs
+to the cache kmalloc-1k of size 1024
+The buggy address is located 0 bytes inside of freed 1024-byte region
+[ffff888111b9d000, ffff888111b9d400)
+Read of size 8
+Call trace:
+  dump_stack_lvl+0x66/0xa0
+  print_report+0xce/0x5f0
+  lowpan_control_write+0x374/0x520 (net/bluetooth/6lowpan.c:1131)
+  srso_alias_return_thunk+0x5/0xfbef5
+  __virt_addr_valid+0x19f/0x330
+  kasan_report+0xe0/0x110
+  __debugfs_file_get+0xf7/0x400
+  full_proxy_write+0x9e/0xd0
+  vfs_write+0x1b0/0x810
+  ksys_write+0xd2/0x170
+  dnotify_flush+0x32/0x220
+  do_syscall_64+0x115/0x6a0 (arch/x86/entry/syscall_64.c:87)
+  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+Allocated by task stack:
+  kasan_save_stack+0x33/0x60
+  kasan_save_track+0x17/0x60
+  __kasan_kmalloc+0xaa/0xb0
+  l2cap_conn_add+0x45/0x520
+  l2cap_chan_connect+0xac6/0xd90
+  l2cap_sock_connect+0x216/0x350
+  __sys_connect+0x101/0x130
+  __x64_sys_connect+0x40/0x50
+  do_syscall_64+0x115/0x6a0 (arch/x86/entry/syscall_64.c:87)
+  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+Freed by task stack:
+  kasan_save_stack+0x33/0x60
+  kasan_save_track+0x17/0x60
+  kasan_save_free_info+0x3b/0x60
+  __kasan_slab_free+0x5f/0x80
+  kfree+0x313/0x590
+  hci_conn_hash_flush+0xc0/0x140
+  hci_dev_close_sync+0x41a/0xb00
+  hci_dev_close+0x12f/0x160
+  hci_sock_ioctl+0x157/0x570
+  sock_do_ioctl+0xf7/0x210
+  sock_ioctl+0x32f/0x490
+  __x64_sys_ioctl+0xc7/0x110
+  do_syscall_64+0x115/0x6a0 (arch/x86/entry/syscall_64.c:87)
+  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+  kasan_record_aux_stack+0xa7/0xc0
+  insert_work+0x32/0x100
+  __queue_work+0x262/0xa60
+  queue_work_on+0xad/0xb0
+  l2cap_connect_cfm+0x4ef/0x670
+  hci_le_remote_feat_complete_evt+0x247/0x430
+  hci_event_packet+0x360/0x6f0
+  hci_rx_work+0x2ae/0x7a0
+  process_one_work+0x4fd/0xbc0
+  worker_thread+0x2d8/0x570
+  kthread+0x1ad/0x1f0
+  ret_from_fork+0x3c9/0x540
+  ret_from_fork_asm+0x1a/0x30
+
+Fixes: 6b8d4a6a0314 ("Bluetooth: 6LoWPAN: Use connected oriented channel instead of fixed one")
+Assisted-by: Codex:gpt-5.5
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/pci/ivtv/ivtvfb.c        |  3 +++
- drivers/video/fbdev/arcfb.c            |  3 +++
- drivers/video/fbdev/broadsheetfb.c     |  3 +++
- drivers/video/fbdev/cobalt_lcdfb.c     |  6 ++++++
- drivers/video/fbdev/core/fb_sys_fops.c |  6 ++++++
- drivers/video/fbdev/core/fbmem.c       | 10 ++++++++--
- drivers/video/fbdev/hecubafb.c         |  3 +++
- drivers/video/fbdev/metronomefb.c      |  3 +++
- drivers/video/fbdev/pvr2fb.c           |  3 +++
- drivers/video/fbdev/sm712fb.c          |  4 ++--
- drivers/video/fbdev/ssd1307fb.c        |  3 +++
- 11 files changed, 43 insertions(+), 4 deletions(-)
+ include/net/bluetooth/l2cap.h |  1 +
+ net/bluetooth/6lowpan.c       | 22 ++++++++++++++++------
+ net/bluetooth/l2cap_core.c    |  3 ++-
+ 3 files changed, 19 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/media/pci/ivtv/ivtvfb.c b/drivers/media/pci/ivtv/ivtvfb.c
-index 23e6cc5172d7f..19f5abd06907e 100644
---- a/drivers/media/pci/ivtv/ivtvfb.c
-+++ b/drivers/media/pci/ivtv/ivtvfb.c
-@@ -378,6 +378,9 @@ static ssize_t ivtvfb_write(struct fb_info *info, const char __user *buf,
- 	unsigned long dma_size;
- 	u16 lead = 0, tail = 0;
+diff --git a/include/net/bluetooth/l2cap.h b/include/net/bluetooth/l2cap.h
+index ce799df6cbb36..b317c89935e90 100644
+--- a/include/net/bluetooth/l2cap.h
++++ b/include/net/bluetooth/l2cap.h
+@@ -980,6 +980,7 @@ void __l2cap_physical_cfm(struct l2cap_chan *chan, int result);
  
-+	if (!info->screen_base)
-+		return -ENODEV;
+ struct l2cap_conn *l2cap_conn_get(struct l2cap_conn *conn);
+ void l2cap_conn_put(struct l2cap_conn *conn);
++struct l2cap_conn *l2cap_conn_hold_unless_zero(struct l2cap_conn *conn);
+ 
+ int l2cap_register_user(struct l2cap_conn *conn, struct l2cap_user *user);
+ void l2cap_unregister_user(struct l2cap_conn *conn, struct l2cap_user *user);
+diff --git a/net/bluetooth/6lowpan.c b/net/bluetooth/6lowpan.c
+index e59032c67116a..1b5a5bee3d07f 100644
+--- a/net/bluetooth/6lowpan.c
++++ b/net/bluetooth/6lowpan.c
+@@ -998,16 +998,20 @@ static int get_l2cap_conn(char *buf, bdaddr_t *addr, u8 *addr_type,
+ 
+ 	hci_dev_lock(hdev);
+ 	hcon = hci_conn_hash_lookup_le(hdev, addr, le_addr_type);
+-	hci_dev_unlock(hdev);
+-	hci_dev_put(hdev);
+-
+-	if (!hcon)
++	if (!hcon) {
++		hci_dev_unlock(hdev);
++		hci_dev_put(hdev);
+ 		return -ENOENT;
++	}
+ 
+-	*conn = (struct l2cap_conn *)hcon->l2cap_data;
++	*conn = hcon->l2cap_data ?
++		l2cap_conn_hold_unless_zero(hcon->l2cap_data) : NULL;
+ 
+ 	BT_DBG("conn %p dst %pMR type %u", *conn, &hcon->dst, hcon->dst_type);
+ 
++	hci_dev_unlock(hdev);
++	hci_dev_put(hdev);
 +
- 	total_size = info->screen_size;
+ 	return 0;
+ }
  
- 	if (total_size == 0)
-diff --git a/drivers/video/fbdev/arcfb.c b/drivers/video/fbdev/arcfb.c
-index 024d0ee4f04f9..69a6cda61cebe 100644
---- a/drivers/video/fbdev/arcfb.c
-+++ b/drivers/video/fbdev/arcfb.c
-@@ -451,6 +451,9 @@ static ssize_t arcfb_write(struct fb_info *info, const char __user *buf,
- 	struct arcfb_par *par;
- 	unsigned int xres;
+@@ -1131,18 +1135,22 @@ static ssize_t lowpan_control_write(struct file *fp,
+ 		if (conn) {
+ 			struct lowpan_peer *peer;
  
-+	if (!info->screen_buffer)
-+		return -ENODEV;
-+
- 	p = *ppos;
- 	par = info->par;
- 	xres = info->var.xres;
-diff --git a/drivers/video/fbdev/broadsheetfb.c b/drivers/video/fbdev/broadsheetfb.c
-index c694ab918978f..4c6c42e2d32f7 100644
---- a/drivers/video/fbdev/broadsheetfb.c
-+++ b/drivers/video/fbdev/broadsheetfb.c
-@@ -1013,6 +1013,9 @@ static ssize_t broadsheetfb_write(struct fb_info *info, const char __user *buf,
- 	int err = 0;
- 	unsigned long total_size;
+-			if (!is_bt_6lowpan(conn->hcon))
++			if (!is_bt_6lowpan(conn->hcon)) {
++				l2cap_conn_put(conn);
+ 				return -EINVAL;
++			}
  
-+	if (!info->screen_buffer)
-+		return -ENODEV;
-+
- 	total_size = info->fix.smem_len;
+ 			peer = lookup_peer(conn);
+ 			if (peer) {
+ 				BT_DBG("6LoWPAN connection already exists");
++				l2cap_conn_put(conn);
+ 				return -EALREADY;
+ 			}
  
- 	if (p > total_size)
-diff --git a/drivers/video/fbdev/cobalt_lcdfb.c b/drivers/video/fbdev/cobalt_lcdfb.c
-index 5f8b6324d2e8c..26dbd1c78195c 100644
---- a/drivers/video/fbdev/cobalt_lcdfb.c
-+++ b/drivers/video/fbdev/cobalt_lcdfb.c
-@@ -129,6 +129,9 @@ static ssize_t cobalt_lcdfb_read(struct fb_info *info, char __user *buf,
- 	unsigned long pos;
- 	int len, retval = 0;
+ 			BT_DBG("conn %p dst %pMR type %d user %u", conn,
+ 			       &conn->hcon->dst, conn->hcon->dst_type,
+ 			       addr_type);
++			l2cap_conn_put(conn);
+ 		}
  
-+	if (!info->screen_base)
-+		return -ENODEV;
-+
- 	pos = *ppos;
- 	if (pos >= LCD_CHARS_MAX || count == 0)
- 		return 0;
-@@ -175,6 +178,9 @@ static ssize_t cobalt_lcdfb_write(struct fb_info *info, const char __user *buf,
- 	unsigned long pos;
- 	int len, retval = 0;
+ 		ret = bt_6lowpan_connect(&addr, addr_type);
+@@ -1158,6 +1166,8 @@ static ssize_t lowpan_control_write(struct file *fp,
+ 			return ret;
  
-+	if (!info->screen_base)
-+		return -ENODEV;
-+
- 	pos = *ppos;
- 	if (pos >= LCD_CHARS_MAX || count == 0)
- 		return 0;
-diff --git a/drivers/video/fbdev/core/fb_sys_fops.c b/drivers/video/fbdev/core/fb_sys_fops.c
-index facf47a69483c..432fa3fa7fa13 100644
---- a/drivers/video/fbdev/core/fb_sys_fops.c
-+++ b/drivers/video/fbdev/core/fb_sys_fops.c
-@@ -21,6 +21,9 @@ ssize_t fb_sys_read(struct fb_info *info, char __user *buf, size_t count,
- 	int err = 0;
- 	unsigned long total_size;
+ 		ret = bt_6lowpan_disconnect(conn, addr_type);
++		if (conn)
++			l2cap_conn_put(conn);
+ 		if (ret < 0)
+ 			return ret;
  
-+	if (!info->screen_buffer)
-+		return -ENODEV;
-+
- 	total_size = info->screen_size;
+diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
+index e570b44c16003..15bb4ca915134 100644
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -7821,7 +7821,7 @@ static void l2cap_recv_reset(struct l2cap_conn *conn)
+ 	conn->rx_len = 0;
+ }
  
- 	if (total_size == 0)
-@@ -58,6 +61,9 @@ ssize_t fb_sys_write(struct fb_info *info, const char __user *buf,
- 	int err = 0;
- 	unsigned long total_size;
+-static struct l2cap_conn *l2cap_conn_hold_unless_zero(struct l2cap_conn *c)
++struct l2cap_conn *l2cap_conn_hold_unless_zero(struct l2cap_conn *c)
+ {
+ 	BT_DBG("conn %p orig refcnt %u", c, kref_read(&c->ref));
  
-+	if (!info->screen_buffer)
-+		return -ENODEV;
-+
- 	total_size = info->screen_size;
+@@ -7830,6 +7830,7 @@ static struct l2cap_conn *l2cap_conn_hold_unless_zero(struct l2cap_conn *c)
  
- 	if (total_size == 0)
-diff --git a/drivers/video/fbdev/core/fbmem.c b/drivers/video/fbdev/core/fbmem.c
-index c68e1c7b2c729..9b456163db890 100644
---- a/drivers/video/fbdev/core/fbmem.c
-+++ b/drivers/video/fbdev/core/fbmem.c
-@@ -768,7 +768,7 @@ fb_read(struct file *file, char __user *buf, size_t count, loff_t *ppos)
- 	int c, cnt = 0, err = 0;
- 	unsigned long total_size;
+ 	return c;
+ }
++EXPORT_SYMBOL(l2cap_conn_hold_unless_zero);
  
--	if (!info || ! info->screen_base)
-+	if (!info)
- 		return -ENODEV;
- 
- 	if (info->state != FBINFO_STATE_RUNNING)
-@@ -777,6 +777,9 @@ fb_read(struct file *file, char __user *buf, size_t count, loff_t *ppos)
- 	if (info->fbops->fb_read)
- 		return info->fbops->fb_read(info, buf, count, ppos);
- 
-+	if (!info->screen_base)
-+		return -ENODEV;
-+
- 	total_size = info->screen_size;
- 
- 	if (total_size == 0)
-@@ -833,7 +836,7 @@ fb_write(struct file *file, const char __user *buf, size_t count, loff_t *ppos)
- 	int c, cnt = 0, err = 0;
- 	unsigned long total_size;
- 
--	if (!info || !info->screen_base)
-+	if (!info)
- 		return -ENODEV;
- 
- 	if (info->state != FBINFO_STATE_RUNNING)
-@@ -842,6 +845,9 @@ fb_write(struct file *file, const char __user *buf, size_t count, loff_t *ppos)
- 	if (info->fbops->fb_write)
- 		return info->fbops->fb_write(info, buf, count, ppos);
- 
-+	if (!info->screen_base)
-+		return -ENODEV;
-+
- 	total_size = info->screen_size;
- 
- 	if (total_size == 0)
-diff --git a/drivers/video/fbdev/hecubafb.c b/drivers/video/fbdev/hecubafb.c
-index f6be62ed42c5a..98e224a9641c7 100644
---- a/drivers/video/fbdev/hecubafb.c
-+++ b/drivers/video/fbdev/hecubafb.c
-@@ -163,6 +163,9 @@ static ssize_t hecubafb_write(struct fb_info *info, const char __user *buf,
- 	int err = 0;
- 	unsigned long total_size;
- 
-+	if (!info->screen_buffer)
-+		return -ENODEV;
-+
- 	total_size = info->fix.smem_len;
- 
- 	if (p > total_size)
-diff --git a/drivers/video/fbdev/metronomefb.c b/drivers/video/fbdev/metronomefb.c
-index 17307c00d46f0..eba185b58f0ce 100644
---- a/drivers/video/fbdev/metronomefb.c
-+++ b/drivers/video/fbdev/metronomefb.c
-@@ -523,6 +523,9 @@ static ssize_t metronomefb_write(struct fb_info *info, const char __user *buf,
- 	int err = 0;
- 	unsigned long total_size;
- 
-+	if (!info->screen_buffer)
-+		return -ENODEV;
-+
- 	total_size = info->fix.smem_len;
- 
- 	if (p > total_size)
-diff --git a/drivers/video/fbdev/pvr2fb.c b/drivers/video/fbdev/pvr2fb.c
-index 6e14884b4f8d0..6c03dd356d200 100644
---- a/drivers/video/fbdev/pvr2fb.c
-+++ b/drivers/video/fbdev/pvr2fb.c
-@@ -647,6 +647,9 @@ static ssize_t pvr2fb_write(struct fb_info *info, const char __user *buf,
- 	struct page **pages;
- 	int ret, i;
- 
-+	if (!info->screen_base)
-+		return -ENODEV;
-+
- 	nr_pages = (count + PAGE_SIZE - 1) >> PAGE_SHIFT;
- 
- 	pages = kmalloc_array(nr_pages, sizeof(struct page *), GFP_KERNEL);
-diff --git a/drivers/video/fbdev/sm712fb.c b/drivers/video/fbdev/sm712fb.c
-index b1bccb5f83e09..88f898580a68d 100644
---- a/drivers/video/fbdev/sm712fb.c
-+++ b/drivers/video/fbdev/sm712fb.c
-@@ -1028,7 +1028,7 @@ static ssize_t smtcfb_read(struct fb_info *info, char __user *buf,
- 	int c, i, cnt = 0, err = 0;
- 	unsigned long total_size;
- 
--	if (!info || !info->screen_base)
-+	if (!info->screen_base)
- 		return -ENODEV;
- 
- 	total_size = info->screen_size;
-@@ -1091,7 +1091,7 @@ static ssize_t smtcfb_write(struct fb_info *info, const char __user *buf,
- 	int c, i, cnt = 0, err = 0;
- 	unsigned long total_size;
- 
--	if (!info || !info->screen_base)
-+	if (!info->screen_base)
- 		return -ENODEV;
- 
- 	total_size = info->screen_size;
-diff --git a/drivers/video/fbdev/ssd1307fb.c b/drivers/video/fbdev/ssd1307fb.c
-index b9fefa844574e..7620c6913520a 100644
---- a/drivers/video/fbdev/ssd1307fb.c
-+++ b/drivers/video/fbdev/ssd1307fb.c
-@@ -301,6 +301,9 @@ static ssize_t ssd1307fb_write(struct fb_info *info, const char __user *buf,
- 	void *dst;
- 	int ret;
- 
-+	if (!info->screen_buffer)
-+		return -ENODEV;
-+
- 	total_size = info->fix.smem_len;
- 
- 	if (p > total_size)
+ void l2cap_recv_acldata(struct hci_conn *hcon, struct sk_buff *skb, u16 flags)
+ {
 -- 
 2.53.0
 
