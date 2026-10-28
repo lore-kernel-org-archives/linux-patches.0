@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793207051;
-	b=UHq8mz2Yi2eCU527nVSIqW6CzNIyVOEWLLA4mR5NFum+APT/BxxIFpgnVoeIWX1Yu9I3
-	 3dY0AX+Dh35Q6nrOHu6WFh6rUopm7enkI2SNcFPNvFOy/ELvJeBNz4I5fIZ504qkPGg0X
-	 DwEC1zzS38om6jguFjEn+MgOOPDPWIvp4WEBv8Nmq5rX67JQkmfdW2oayjzzhrIXiKPiQ
-	 o9UIV+qtsKDV4Wyr17xIGj6llilYc86UsOaO/6pRrvrepJWznrPExkdqlI5/FfDgCUaLx
-	 35odtYolDrb7dsd30brbidJudhfcpUPEL2bhG+K1Dbmx1uffvYaZupHC2fkhsaBuGjg==
+	t=1793207054;
+	b=1xAWQKkmmAPNkF81gjjwcoF6TtBaF4b6TAR8B2vHBrGf9QgodkNFmE9DJVK/RVD0i2qA
+	 y/80JMmOO9CQI0H4yKs0I6FFf3FLZXUdM3UCJTi5tffqgRwosfZkyNlQs2cS+yY6V/TvI
+	 z6ftvH1b8rnyVULX+sdH1NeRIyVxA4RV7AfHdN/tN9al+UcWNa5zv9ivDtAwjYB+rjIyn
+	 xl009wXusUCX5fE6Ah59ueSCOlxtkc/80yeSWlYQcy8Gc9pN76Te4M94AKwP3UcTsKUEP
+	 Xj1IMA3ku+/zc3wusNDgNOEvomgdcYXlbuZPXM+bbN2lrwm7IUfjuh/Dz3He40dxgkQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793207051;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793207054;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=p4NctfXu6KZM1lZaLq5pbRnbUa5suz8B2B29M2bNgEw=;
-	b=dDTDwNs4NKs61TCyh7rYjFhe+ThHh53dlc1prGaHWCIE58pF8SrMNDUewNEsrDUVC8Wu
-	 E9UHOS9jZWK+I4r8ES0zqgcTje5zRJPkg/5nHrgsZEfFzamvjx7Tg6kXjFaFG9AIvifUB
-	 2mkk8/VSenmQHhSG1EyF0qqlbn3NeiHhdTwWdc305kV+XnjaFeWIpdNGSWV0iPyUFB3Fn
-	 SVqSC69aXS9vbUrAER2PR/PrJeDT5cK3+RiJ6UpxE5boFe3eOVkxAsJNXM477eXXF8lGr
-	 HD53r+dT7IBxXEVuaxNPBvxlVu57qD5sBe2J12oHDnl5NDka1QydrZHhKhTOyR3T/gQ==
+	bh=Z3fBk51DmSnbw9Fa/kU6lKpF1eXaQSHzpdop3Bh2dCw=;
+	b=aWXDriBCV19ZA/Yvx/sWKRF6Pi+UWZMX8xiKpv6zGPNierT2jxzN5jV/rhFCQAIPMmZ4
+	 kk//XH2QgVFwuH7egFJdC7r/MohcthyoeU+iv5oIjUntvmuSbiOLBZmOfaXXcC8YnPJQd
+	 /h7oF3z9KVTsPEvobCGHrbzkxhzJofpAWp8L/ucL8h9+HJdA4y+34GB3WnjE/wRrKxnGT
+	 faKHrY3h+hTHE8D4AuDJVBw3s9ZCQ5cXdWMPu5HGYdmFZkf1NU1nQa7QQ4uTdvHV/9IYK
+	 EGpvvdEXxRf9cbS/M/P3Yglvy1szY7nucav6Ohu+fa9RQ6vHm6cWDLHqyOMwAjB6pvw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ciUynwKh;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Xp3myMvM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FF9B606A31A;
-	Wed, 28 Oct 2026 17:04:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E122606A31A;
+	Wed, 28 Oct 2026 17:04:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ciUynwKh
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 728401F01829;
-	Wed, 28 Oct 2026 17:04:10 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Xp3myMvM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A99D1F01825;
+	Wed, 28 Oct 2026 17:04:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793207051;
-	bh=p4NctfXu6KZM1lZaLq5pbRnbUa5suz8B2B29M2bNgEw=;
+	s=korg; t=1793207053;
+	bh=Z3fBk51DmSnbw9Fa/kU6lKpF1eXaQSHzpdop3Bh2dCw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ciUynwKhzGhcbaU4G675c6N9VqGCtKjd0cMLtid6o2WtPFjWhurpjqkv+5IUwCOMP
-	 QTyWgW8btnby4vxdwHKx1FLHdqJ0I9+qZJu0ubQanYszLLyr3B5D1dnifQaA3mSgXo
-	 wUpiybbQng+r64oh6etWgR5Cp6yJPy61OueUwEiQ=
+	b=Xp3myMvMwLFPupEsm58BFB/56o5Na6+1cUx9wejtU3RC9OGla0tY2C8xoPhqm/D4s
+	 Zs9Blc0WmL3ibsFVEp4ZK8kwbfzFyhiwKcTzUA+lvXJVBlwzEo5PDEm9qL4iMJVRmA
+	 jYgVdw365qL6URPHzDuQT3EbgxelXmUL7mMD0X9k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haris Okanovic <harisokn@amazon.com>,
-	Thomas Gleixner <tglx@kernel.org>,
-	Michael Kelley <mhklinux@outlook.com>,
-	Radu Rendec <radu@rendec.net>
-Subject: [PATCH 7.3 01/38] genirq/proc: Fix missing CPU header in /proc/interrupts
-Date: Wed, 28 Oct 2026 17:59:48 +0100
-Message-ID: <20261028165940.436576652@linuxfoundation.org>
+	Donggeun Yoo <donggeunyoo.kernel@gmail.com>,
+	Steven Rostedt <rostedt@goodmis.org>
+Subject: [PATCH 7.3 10/38] tracing: Add the bucket size to expr_field_str()
+Date: Wed, 28 Oct 2026 17:59:57 +0100
+Message-ID: <20261028165940.663254266@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165940.394092994@linuxfoundation.org>
 References: <20261028165940.394092994@linuxfoundation.org>
@@ -69,91 +67,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haris Okanovic <harisokn@amazon.com>
+From: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
 
-commit e74798f2f8e1562f2bbd2fed8d81929eeef39ffc upstream.
+commit c027ed03bc03a0e82fc368eaad657584a4480c7a upstream.
 
-irq_seq_show() must be idempotent since it may be called multiple times
-to render the same record, e.g. when seq_file's buffer is exceeded. It
-emits the CPU header behind the one-shot print_header flag, which the
-first pass clears, so the header is lost with the discarded buffer.
+expr_field_str() renders a HIST_FIELD_FL_BUCKET field as "pid.buckets",
+dropping the count, and parse_field() rejects that spelling.
 
-This can be seen on large systems, such as 8g.48xl (192 CPUs) and
-8i.96xl (384 CPUs) AWS instance types:
+get_hist_field_flags() returns the bare string "buckets" and keeps the
+count in hist_field->buckets. hist_field_print() appends it,
+expr_field_str() never did. Nothing reaches it today, since .buckets is
+refused on a value and no expression can carry one, but the next patch
+renders histogram keys with expr_field_str(), where a .buckets key is
+legal.
 
-  $ head -1 /proc/interrupts
-     9:          0          0 ...  0  GICv3  25 Level  vgic
+Append the count, as hist_field_print() does.
 
-Replace print_header with the position of the first record and include
-the header whenever that record is emitted.
-
-Fixes: 171cc0d9eed1 ("genirq/proc: Speed up /proc/interrupts iteration")
-Signed-off-by: Haris Okanovic <harisokn@amazon.com>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Tested-by: Michael Kelley <mhklinux@outlook.com>
-Reviewed-by: Radu Rendec <radu@rendec.net>
-Link: https://patch.msgid.link/20260911-dev-harisokn-proc-interrupts-fix-b4-v1-1-f9ff208efcfa@amazon.com
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260914053443.981201-3-donggeunyoo.kernel@gmail.com
+Fixes: de9a48a360b7 ("tracing: Add linear buckets to histogram logic")
+Signed-off-by: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
+Assisted-by: Claude:claude-fable-5
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/irq/proc.c |   24 +++++++++++++++++-------
- 1 file changed, 17 insertions(+), 7 deletions(-)
+ kernel/trace/trace_events_hist.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/kernel/irq/proc.c
-+++ b/kernel/irq/proc.c
-@@ -462,7 +462,7 @@ int __weak arch_show_interrupts(struct s
- static DEFINE_RAW_SPINLOCK(irq_proc_constraints_lock);
- 
- static struct irq_proc_constraints {
--	bool		print_header;
-+	loff_t		first_pos;
- 	unsigned int	num_prec;
- 	unsigned int	chip_width;
- } irq_proc_constraints __read_mostly = {
-@@ -543,14 +543,13 @@ static int irq_seq_show(struct seq_file
- 	struct irqaction *action;
- 
- 	/* Print header for the first interrupt? */
--	if (constr->print_header) {
-+	if (p->index == constr->first_pos) {
- 		unsigned int cpu;
- 
- 		seq_printf(p, "%*s", constr->num_prec + 8, "");
- 		for_each_online_cpu(cpu)
- 			seq_printf(p, "CPU%-8d", cpu);
- 		seq_putc(p, '\n');
--		constr->print_header = false;
+--- a/kernel/trace/trace_events_hist.c
++++ b/kernel/trace/trace_events_hist.c
+@@ -1754,6 +1754,9 @@ static bool expr_field_str(struct hist_f
+ 			seq_buf_printf(s, ".%s", flags_str);
  	}
  
- 	if (desc == ARCH_PROC_IRQDESC)
-@@ -635,14 +634,25 @@ static void *irq_seq_next_desc(loff_t *p
- 
- static void *irq_seq_start(struct seq_file *f, loff_t *pos)
- {
--	if (!*pos) {
--		struct irq_proc_constraints *constr = f->private;
-+	struct irq_proc_constraints *constr = f->private;
-+	bool first = !*pos;
-+	void *ret;
- 
-+	if (first) {
- 		constr->num_prec = READ_ONCE(irq_proc_constraints.num_prec);
- 		constr->chip_width = READ_ONCE(irq_proc_constraints.chip_width);
--		constr->print_header = true;
- 	}
--	return irq_seq_next_desc(pos);
++	if (field->buckets)
++		seq_buf_printf(s, "=%lu", field->buckets);
 +
-+	ret = irq_seq_next_desc(pos);
-+
-+	/*
-+	 * Record position of the first output record so that irq_seq_show()
-+	 * knows where to write the header.
-+	 */
-+	if (first)
-+		constr->first_pos = *pos;
-+
-+	return ret;
+ 	return !seq_buf_has_overflowed(s);
  }
  
- static void *irq_seq_next(struct seq_file *f, void *v, loff_t *pos)
 
 
