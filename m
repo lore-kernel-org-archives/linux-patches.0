@@ -1,55 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793209290;
-	b=acahuhVeuB90QUhg2MLj+70c4uVNr//vXi0ne7/O51GmLfrcDrKrw+uHVjqkuLz65vD+
-	 voXshMzSOLZcWM2LuTLzPDff52rUdqygD1aKHkAT9aCQhI2rd4tI1PON//BH1tIuUXqid
-	 DJ/YQ4B2089glgwvGhgHVGWNlhZBcQI8ecUi3a2Xd6knzrRXYY6f1kCYMo+Pt3QPZPLNw
-	 046VXhFR6m4pU4ebQw1X/TPWU4OjGk1vR6qz02ea9a+wc18uuFYmjkVdZ+ncZn8L1Nib3
-	 p5YepgsLAiLY5QYHnse/ICX14wEnr9KVmO6rb+J7bo9imEsiQKlwl9GQivxLGzoKVeg==
+	t=1793209296;
+	b=fEWH2mOLcQliT3a+Ws6sAiqNgRTFEgyOkC8DpnDtKVvQaaNg79Z6pcsexbD/7ACGwve/
+	 /WGGm9BPolWi1IWf94j1M4vcZCjtf6w9N3R52A6QSfDzPH4kqo8U1rcM8VWAZcRYjyj7i
+	 fiZ95g+BEHduyX8k0/dNpDTpu+EHYY5xRX8H4uZWran+kyfVvNGHIdBVgOV/JR3Gk1Kxf
+	 TjHEC0fjRpME0yiI+URoB9TqvhikjifRNNENqWlTR5zVedenxhBx2RIM/Qo9u+borl6z2
+	 8KnOn+J5CWwFx0/a9cK6YzKKfU/VzPdJnombE7UqiAjgpU4tD/kDQMWlTyc1oaM35Aw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793209290;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793209296;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=h/xpUaYwbemA25Y/cDV2NnUXGVBwmt0Qofnm22roLfw=;
-	b=wfi4dna9Dx+Dr7Fpro6MIUE7OAcOadStjb6T9RryMviIF0O/69RidKe9Mp4W4n9I8maF
-	 SJLgboNI1Mf/Q2XVMFc/oDUp1Oos1dIGnVsrPLGaE1GQiSqYBS0aVAILE/DXreKlKj5ZR
-	 7or87VbjSgNrDwi+QWk9KxeDEnYJMj6kjQ0wDNQ6q9AEhLfJ5+qVju9LE3RpNK9FawY64
-	 ioGbybQ/r5Oiy/xxe+Cs5lwcJwz5/hkkc0ENujAdFMvpF8qTIoCNjbjW76fSzCtCfG/3z
-	 3K4uUNB5MqG7FR3JHL+6AaV/V1M6AR7lni3CGBO5qW0zomvFGjbJ0pL2XzqPCB1sjfQ==
+	bh=CnquhOlD1XIgjMtpUrp1W9o7GDtQK4qeIOGXeJyHEtY=;
+	b=S8xkbB+c4a2HCnf4tP9rjvNSLTub1amdo86oVD2awxWwgHKuZidnsRrlK1YVCdJogjCH
+	 jAWHkAYC1yvyeys16SYCOYzYjGB8IKy54Xb2cwBueLkt9gC48KESTBBaQeAuLfRaSrTz2
+	 10HGs7Td452ABtJqaeh9ZgtKDMgLW6Gp9CPJo71BHK8PEufO53UCQ1c0kU6EDE/ddw+9j
+	 6C/ocgU76r9ff8JVYN3zVuijYHlXN38FujhJERSIxot2EdQ8flbII+W1ecoh2rY31zUuj
+	 j2Mafyz5hZ8ksIXBtbaxITTCzSAYtb4rM0pKQEYIMWwSyGVO/fUGxfCZ9v4erIwPXJA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Iqjbdb4j;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OFN2VOcc;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03C01606A31E;
-	Wed, 28 Oct 2026 17:41:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EC00606A31A;
+	Wed, 28 Oct 2026 17:41:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Iqjbdb4j
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CAA31F01825;
-	Wed, 28 Oct 2026 17:41:29 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OFN2VOcc
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1196E1F01825;
+	Wed, 28 Oct 2026 17:41:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793209289;
-	bh=h/xpUaYwbemA25Y/cDV2NnUXGVBwmt0Qofnm22roLfw=;
+	s=korg; t=1793209295;
+	bh=CnquhOlD1XIgjMtpUrp1W9o7GDtQK4qeIOGXeJyHEtY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Iqjbdb4jqO4kj0w3d6wdUdy6/AIXg07n4aAdm1A3vrLpc7Vo4ujG9esc+5Z5WmRxq
-	 UvRRp65FtZXEBGSc3G5UzMTST3v+SflEoes64hb01rzZUX5mjNLOXsSrW2nxzMQ1N2
-	 izSe/ZkA5+o3BIvheeb8sWAK1hwPRk/xj9QBK9fQ=
+	b=OFN2VOccwentyH+ZmvuCXoEH8yey+79t/v7i34aGjJHTXGd2shCwGXg8WBtUH9QWq
+	 lGG3fjA8qnAUp4RRkVa4YhfUteD8C02O/z5ZoIKZdymsp4O4z51xmYfJ8SJxteUv0K
+	 QDIg+tGBSjObwMSz9Ifo++1DjDXdFoUUZRAFasB4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Chinner <dchinner@redhat.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Carlos Maiolino <cmaiolino@redhat.com>,
-	Carlos Maiolino <cem@kernel.org>,
-	Siddh Raman Pant <siddh.raman.pant@oracle.com>,
+	Vega <vega@nebusec.ai>,
+	Zixuan Chai <petalzu987@gmail.com>,
+	Ren Wei <weir@nebusec.ai>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 417/516] xfs: xfs_ifree_cluster vs xfs_iflush_shutdown_abort deadlock
-Date: Wed, 28 Oct 2026 17:59:29 +0100
-Message-ID: <20261028170013.365413363@linuxfoundation.org>
+Subject: [PATCH 5.10 378/516] net: bridge: avoid recursive multicast port cleanup
+Date: Wed, 28 Oct 2026 17:58:50 +0100
+Message-ID: <20261028170012.437766709@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -71,169 +70,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dave Chinner <dchinner@redhat.com>
+From: Zixuan Chai <petalzu987@gmail.com>
 
-[ Upstream commit 09234a632be42573d9743ac5ff6773622d233ad0 ]
+[ Upstream commit 5158353121bae4f552cb677ce8c5c3ef52f93a0d ]
 
-Lock order of xfs_ifree_cluster() is cluster buffer -> try ILOCK
--> IFLUSHING, except for the last inode in the cluster that is
-triggering the free. In that case, the lock order is ILOCK ->
-cluster buffer -> IFLUSHING.
+br_multicast_sg_del_exclude_ports() removes automatically added STAR_EXCL
+port groups by calling br_multicast_del_pg(). For S,G entries, that
+deletion calls back into br_multicast_sg_del_exclude_ports(), so a large
+number of STAR_EXCL ports consumes one kernel stack frame per port and can
+hit the stack guard page.
 
-xfs_iflush_cluster() uses cluster buffer -> try ILOCK -> IFLUSHING,
-so this can safely run concurrently with xfs_ifree_cluster().
+Keep the complete port-group deletion path for cleanup, but suppress the
+S,G exclude-port cleanup while that helper is already walking the same
+entry. Normal deletion callers retain the existing behavior.
 
-xfs_inode_item_precommit() uses ILOCK -> cluster buffer, but this
-cannot race with xfs_ifree_cluster() so being in a different order
-will not trigger a deadlock.
-
-xfs_reclaim_inode() during a filesystem shutdown uses ILOCK ->
-IFLUSHING -> cluster buffer via xfs_iflush_shutdown_abort(), and
-this deadlocks against xfs_ifree_cluster() like so:
-
- sysrq: Show Blocked State
- task:kworker/10:37   state:D stack:12560 pid:276182 tgid:276182 ppid:2      flags:0x00004000
- Workqueue: xfs-inodegc/dm-3 xfs_inodegc_worker
- Call Trace:
-  <TASK>
-  __schedule+0x650/0xb10
-  schedule+0x6d/0xf0
-  schedule_timeout+0x8b/0x180
-  schedule_timeout_uninterruptible+0x1e/0x30
-  xfs_ifree+0x326/0x730
-  xfs_inactive_ifree+0xcb/0x230
-  xfs_inactive+0x2c8/0x380
-  xfs_inodegc_worker+0xaa/0x180
-  process_scheduled_works+0x1d4/0x400
-  worker_thread+0x234/0x2e0
-  kthread+0x147/0x170
-  ret_from_fork+0x3e/0x50
-  ret_from_fork_asm+0x1a/0x30
-  </TASK>
- task:fsync-tester    state:D stack:12160 pid:2255943 tgid:2255943 ppid:3988702 flags:0x00004006
- Call Trace:
-  <TASK>
-  __schedule+0x650/0xb10
-  schedule+0x6d/0xf0
-  schedule_timeout+0x31/0x180
-  __down_common+0xbe/0x1f0
-  __down+0x1d/0x30
-  down+0x48/0x50
-  xfs_buf_lock+0x3d/0xe0
-  xfs_iflush_shutdown_abort+0x51/0x1e0
-  xfs_icwalk_ag+0x386/0x690
-  xfs_reclaim_inodes_nr+0x114/0x160
-  xfs_fs_free_cached_objects+0x19/0x20
-  super_cache_scan+0x17b/0x1a0
-  do_shrink_slab+0x180/0x350
-  shrink_slab+0xf8/0x430
-  drop_slab+0x97/0xf0
-  drop_caches_sysctl_handler+0x59/0xc0
-  proc_sys_call_handler+0x189/0x280
-  proc_sys_write+0x13/0x20
-  vfs_write+0x33d/0x3f0
-  ksys_write+0x7c/0xf0
-  __x64_sys_write+0x1b/0x30
-  x64_sys_call+0x271d/0x2ee0
-  do_syscall_64+0x68/0x130
-  entry_SYSCALL_64_after_hwframe+0x76/0x7e
-
-We can't change the lock order of xfs_ifree_cluster() - XFS_ISTALE
-and XFS_IFLUSHING are serialised through to journal IO completion
-by the cluster buffer lock being held.
-
-There's quite a few asserts in the code that check that XFS_ISTALE
-does not occur out of sync with buffer locking (e.g. in
-xfs_iflush_cluster). There's also a dependency on the inode log item
-being removed from the buffer before XFS_IFLUSHING is cleared, also
-with asserts that trigger on this.
-
-Further, we don't have a requirement for the inode to be locked when
-completing or aborting inode flushing because all the inode state
-updates are serialised by holding the cluster buffer lock across the
-IO to completion.
-
-We can't check for XFS_IRECLAIM in xfs_ifree_mark_inode_stale() and
-skip the inode, because there is no guarantee that the inode will be
-reclaimed. Hence it *must* be marked XFS_ISTALE regardless of
-whether reclaim is preparing to free that inode. Similarly, we can't
-check for IFLUSHING before locking the inode because that would
-result in dirty inodes not being marked with ISTALE in the event of
-racing with XFS_IRECLAIM.
-
-Hence we have to address this issue from the xfs_reclaim_inode()
-side. It is clear that we cannot hold the inode locked here when
-calling xfs_iflush_shutdown_abort() because it is the inode->buffer
-lock order that causes the deadlock against xfs_ifree_cluster().
-
-Hence we need to drop the ILOCK before aborting the inode in the
-shutdown case. Once we've aborted the inode, we can grab the ILOCK
-again and then immediately reclaim it as it is now guaranteed to be
-clean.
-
-Note that dropping the ILOCK in xfs_reclaim_inode() means that it
-can now be locked by xfs_ifree_mark_inode_stale() and seen whilst in
-this state. This is safe because we have left the XFS_IFLUSHING flag
-on the inode and so xfs_ifree_mark_inode_stale() will simply set
-XFS_ISTALE and move to the next inode. An ASSERT check in this path
-needs to be tweaked to take into account this new shutdown
-interaction.
-
-Signed-off-by: Dave Chinner <dchinner@redhat.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Carlos Maiolino <cmaiolino@redhat.com>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
-
-5.10: Add header.
-
-Signed-off-by: Siddh Raman Pant <siddh.raman.pant@oracle.com>
+Fixes: 8266a0491e92 ("net: bridge: mcast: handle port group filter modes")
+Cc: stable@vger.kernel.org
+Reported-by: Vega <vega@nebusec.ai>
+Assisted-by: LLM
+Signed-off-by: Zixuan Chai <petalzu987@gmail.com>
+Signed-off-by: Ren Wei <weir@nebusec.ai>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+[ sashal: Adjusted context for the __br_multicast_del_pg() declaration because neighboring upstream forward declarations are absent. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/xfs/xfs_icache.c | 8 ++++++++
- fs/xfs/xfs_inode.c  | 3 ++-
- 2 files changed, 10 insertions(+), 1 deletion(-)
+ net/bridge/br_multicast.c | 23 ++++++++++++++++++-----
+ 1 file changed, 18 insertions(+), 5 deletions(-)
 
-diff --git a/fs/xfs/xfs_icache.c b/fs/xfs/xfs_icache.c
-index d973eca1a8815..f52737051b496 100644
---- a/fs/xfs/xfs_icache.c
-+++ b/fs/xfs/xfs_icache.c
-@@ -1040,7 +1040,15 @@ xfs_reclaim_inode(
+diff --git a/net/bridge/br_multicast.c b/net/bridge/br_multicast.c
+index 5cc65f51b3785..53dd2d56c37ef 100644
+--- a/net/bridge/br_multicast.c
++++ b/net/bridge/br_multicast.c
+@@ -76,6 +76,10 @@ __br_multicast_add_group(struct net_bridge *br,
+ 			 bool blocked);
+ static void br_multicast_find_del_pg(struct net_bridge *br,
+ 				     struct net_bridge_port_group *pg);
++static void __br_multicast_del_pg(struct net_bridge_mdb_entry *mp,
++				  struct net_bridge_port_group *pg,
++				  struct net_bridge_port_group __rcu **pp,
++				  bool sg_del_exclude_ports);
  
- 	if (XFS_FORCED_SHUTDOWN(ip->i_mount)) {
- 		xfs_iunpin_wait(ip);
-+		/*
-+		 * Avoid a ABBA deadlock on the inode cluster buffer vs
-+		 * concurrent xfs_ifree_cluster() trying to mark the inode
-+		 * stale. We don't need the inode locked to run the flush abort
-+		 * code, but the flush abort needs to lock the cluster buffer.
-+		 */
-+		xfs_iunlock(ip, XFS_ILOCK_EXCL);
- 		xfs_iflush_shutdown_abort(ip);
-+		xfs_ilock(ip, XFS_ILOCK_EXCL);
- 		goto reclaim;
+ static struct net_bridge_port_group *
+ br_sg_port_find(struct net_bridge *br,
+@@ -361,7 +365,7 @@ static void br_multicast_sg_del_exclude_ports(struct net_bridge_mdb_entry *sgmp)
+ 	for (pp = &sgmp->ports;
+ 	     (p = mlock_dereference(*pp, sgmp->br)) != NULL;) {
+ 		if (!(p->flags & MDB_PG_FLAGS_PERMANENT))
+-			br_multicast_del_pg(sgmp, p, pp);
++			__br_multicast_del_pg(sgmp, p, pp, false);
+ 		else
+ 			pp = &p->next;
  	}
- 	if (xfs_ipincount(ip))
-diff --git a/fs/xfs/xfs_inode.c b/fs/xfs/xfs_inode.c
-index 5c04c61964cec..a36843bfb6efd 100644
---- a/fs/xfs/xfs_inode.c
-+++ b/fs/xfs/xfs_inode.c
-@@ -33,6 +33,7 @@
- #include "xfs_symlink.h"
- #include "xfs_trans_priv.h"
- #include "xfs_log.h"
-+#include "xfs_log_priv.h"
- #include "xfs_bmap_btree.h"
- #include "xfs_reflink.h"
+@@ -582,9 +586,10 @@ static void br_multicast_destroy_port_group(struct net_bridge_mcast_gc *gc)
+ 	kfree_rcu(pg, rcu);
+ }
  
-@@ -2553,7 +2554,7 @@ xfs_ifree_mark_inode_stale(
- 	iip = ip->i_itemp;
- 	if (__xfs_iflags_test(ip, XFS_IFLUSHING)) {
- 		ASSERT(!list_empty(&iip->ili_item.li_bio_list));
--		ASSERT(iip->ili_last_fields);
-+		ASSERT(iip->ili_last_fields || xlog_is_shutdown(mp->m_log));
- 		goto out_iunlock;
+-void br_multicast_del_pg(struct net_bridge_mdb_entry *mp,
+-			 struct net_bridge_port_group *pg,
+-			 struct net_bridge_port_group __rcu **pp)
++static void __br_multicast_del_pg(struct net_bridge_mdb_entry *mp,
++				  struct net_bridge_port_group *pg,
++				  struct net_bridge_port_group __rcu **pp,
++				  bool sg_del_exclude_ports)
+ {
+ 	struct net_bridge *br = pg->key.port->br;
+ 	struct net_bridge_group_src *ent;
+@@ -598,7 +603,8 @@ void br_multicast_del_pg(struct net_bridge_mdb_entry *mp,
+ 	if (!br_multicast_is_star_g(&mp->addr)) {
+ 		rhashtable_remove_fast(&br->sg_port_tbl, &pg->rhnode,
+ 				       br_sg_port_rht_params);
+-		br_multicast_sg_del_exclude_ports(mp);
++		if (sg_del_exclude_ports)
++			br_multicast_sg_del_exclude_ports(mp);
+ 	} else {
+ 		br_multicast_star_g_handle_mode(pg, MCAST_INCLUDE);
  	}
+@@ -609,6 +615,13 @@ void br_multicast_del_pg(struct net_bridge_mdb_entry *mp,
+ 		mod_timer(&mp->timer, jiffies);
+ }
  
++void br_multicast_del_pg(struct net_bridge_mdb_entry *mp,
++			 struct net_bridge_port_group *pg,
++			 struct net_bridge_port_group __rcu **pp)
++{
++	__br_multicast_del_pg(mp, pg, pp, true);
++}
++
+ static void br_multicast_find_del_pg(struct net_bridge *br,
+ 				     struct net_bridge_port_group *pg)
+ {
 -- 
 2.53.0
 
