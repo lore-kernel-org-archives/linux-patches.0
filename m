@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216314;
-	b=KK4PGwO2+v632pRdx/dUt6AeHycvh8nxGLa0W+sm0mlcpxp5A4wy+JdF2uWBaA6mmJpL
-	 rkHj+OC74cQCUTTDGhb8Q4LjnU45GgPEHKgpl5LrOG9ZXAA0+IgdgKUaIcksfkQYDrYs9
-	 cvz9cKbwxiQPQLhtR4GW2/G2bn95b65OEG48wQrY7hcXbHo4Fm8yXy16NoNjbB063pwkm
-	 KASq9AMMwOK2nz8/lkN8ZY5PJh5KbkdBWKsoWpdTB3LXrTBGH+6u+2fyLGF0+kIpSeTV+
-	 QrcwIbhdoeQmeqHKzw/Ls6LfF0hy/gCOwlhtYLUIP06asLweIuy186CzJsEQ/roEp/w==
+	t=1793216317;
+	b=n5dGolNjvTXZ+TcPA5x2ncSCKV+BcR658dOvvx7lvQYeetJZt1wKOefeUYQhjifSrnQh
+	 vJA7acks5ZLxH21chcChSeqfvTVXnyqHyahu//7uRZERR/9F4uWaVVDm3xZigmVxwErh1
+	 q8P8wXg1Reg+aVm8NiGbAWIP6fjP2elE4rTi22fInhD0AY0AwuSdl3MCd01MbD7raQDAU
+	 WIW3vgqdFVdjxbzt8n8Txmom7ck8QpnxhC3y5+NeobuBsT/Sq2xw9ZbMcJ+aVMw/CALgD
+	 TKyKw2TNH4cwbymupmmFIWyocbSRMT/hzDTrhT6gTRPvtx5zTQqxHAdiifcCac5Oywg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216314;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216317;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=2PXamIchOwTvjQ+RV+tIrnLly//9uA5PxcPC5Aiw5I0=;
-	b=yNGgcKHub92jGOU6XF9grPV1jvo9XyYUGx9kP4lGbzRSS9IVxgCGiUeRnhJX/hEqy72N
-	 Xg/LiBWdBbZcXeBx8kNuyoM49NZGcW8k/zYPcD1hAMmK597MAlYrlhNTnV360zK/TzXxT
-	 pwgg8mtzNO7/9+QF/h5BahMUsb8UCYSu56JHARltaepKzapEXmcuFn2iwhZgictdHxJlF
-	 I64KLx005ffcSxN3/arpT9IwYon8a7GtKouzUanxitj0OYMF+9WLT3U4wTWqrwmZ7sxPc
-	 imhSxsc85qUA8ILQZtfwXuFS4QGYg9dmXxAYxhhU+NGUMtqFtJgq67u6trRmdJYdQIg==
+	bh=wbcT9kLq/a9YmYKl317IgEmhv6gVEUjHcNzYA15kOSY=;
+	b=NdtEGwFqbYbbTxqsyb+VwjNCLhyS+YDAerZWm0+GRJ2gttGWpr9whKdq3dJwuAqUaSOs
+	 QvMdmG67zsbJMDRGnIfm32ls93im1yYcHEFaztTnBduHQa9bv7B/3AKOZb6If9jPsYPTR
+	 GpzXXC2r5tp8uYMjUPqGu519KWXW3Mj1QCQYb+KH4z56UlhxiFkXkUono+3BiD2hUOqdY
+	 l6tza44fefcbyJZ8SulyBQFAaZ9hms2RvxakUNDdbW185oRfxb8OTMa67IRWjoHgYx+J7
+	 kZ0aQLS0GtIYhtH5hVuHQIjaUjUds78J0v0QbA6uiGxgDiAWknA6pug24tGooraRACg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2TpBkCbL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="sc/KSCv7";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C958C606A32E;
-	Wed, 28 Oct 2026 19:38:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1CC7606A324;
+	Wed, 28 Oct 2026 19:38:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2TpBkCbL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23A991F01825;
-	Wed, 28 Oct 2026 19:38:32 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sc/KSCv7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B0341F01825;
+	Wed, 28 Oct 2026 19:38:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216313;
-	bh=2PXamIchOwTvjQ+RV+tIrnLly//9uA5PxcPC5Aiw5I0=;
+	s=korg; t=1793216316;
+	bh=wbcT9kLq/a9YmYKl317IgEmhv6gVEUjHcNzYA15kOSY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2TpBkCbLRfYhyxB3a2uNgl0KnkRMe44Bea7VhjyruTly2ptnlppXZ8bwhoWW4ZQIq
-	 cMfLZPcg4LYsX8Nh5vpPr7KKNExNkVDdsc+NuU11FiKgEE89+PTBVKyRTvNva0Nwkr
-	 zUdA0XeWsylRGailDjgTvJjigwR97xoFVaxoBuuM=
+	b=sc/KSCv7y7KgFn4uts461Ri9vvAtQ0Qgs+aNLpLcS3/edXhPOPTtgZPAB+BfYSTOR
+	 gR9bpfrX93tD7dYCQWKq2yemMIa115BGKL4T+3+a1W/PTWw2lqFV/UdRaXFAfrfhGA
+	 eiMNZ8F92BdKqRztqry4AKWfbQaxtU42qsew/QHI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Radek Podgorny <radek@podgorny.cz>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Michael Kelley <mhklinux@outlook.com>,
+	Easwar Hariharan <easwar.hariharan@linux.microsoft.com>,
+	Wei Liu <wei.liu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1516/1887] Bluetooth: do not leak an hci_conn when a second LE connect is rejected
-Date: Wed, 28 Oct 2026 18:00:12 +0100
-Message-ID: <20261028170533.961913450@linuxfoundation.org>
+Subject: [PATCH 6.1 1517/1887] Drivers: hv: vmbus: Skip VMBus module cleanup for non-nested root partition
+Date: Wed, 28 Oct 2026 18:00:13 +0100
+Message-ID: <20261028170533.984432550@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,83 +70,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Radek Podgorny <radek@podgorny.cz>
+From: Michael Kelley <mhkelley58@gmail.com>
 
-[ Upstream commit 7e1e4047200fd7519f9bdfe8a001437715e618b4 ]
+[ Upstream commit cee0d90bceae1dee3bcc70f8d6b2ceb5b87deb42 ]
 
-create_le_conn_complete() decides whether the failed connection is
-still pending by comparing it against hci_lookup_le_connect(), which
-returns the first LE connection in BT_CONNECT. That is the same
-connection only while at most one is pending.
+The VMBus module initialization function, hv_acpi_init(), currently
+does nothing when running in the root partition and root is not nested
+in another VM. But the initialization function reports success, so the
+VMBus module is indeed loaded. VMBus functionality is not actually
+needed, but the VMBus module must be loaded so that hv_vmbus_exists()
+can answer correctly. Furthermore, the mshv_root dependency on the
+VMBus module is needed as described in the commit message for
+840b740a35bf ("mshv: Add conditional VMBus dependency").
 
-Two can be pending. Connections created on the passive scan path sit
-in BT_CONNECT with HCI_CONN_SCANNING set and are invisible to
-hci_lookup_le_connect() until hci_le_create_conn_sync() clears the
-flag when their command is issued, so the -EBUSY guard in
-hci_connect_le() does not prevent a second connection from being
-queued while the first is still on the scan path. Whenever two
-connections are in BT_CONNECT at once, the lookup may return one
-connection while create_le_conn_complete() is reporting the failure
-of the other; the early exit then drops the error and hci_conn_failed()
-never runs on the connection that failed.
+Loading the VMBus module without actually initializing it causes
+failures if the module should later be unloaded. The module unload code
+tries to clean up things that were never initialized, resulting in
+memory faults and a panic.
 
-The controller also rejects a second HCI_OP_LE_CREATE_CONN issued
-while another connection creation is still outstanding, per Core Spec
-Vol 4, Part E. The spec calls for Command Disallowed there; the
-bcm43438 observed here answers with an LMP/LL error code instead,
-which bt_to_errno() maps to the -EPROTO (-71) in the log below.
+Fix this by having VMBus module exit function perform the same
+check for non-nested root partition, and do nothing in such a
+case, just like hv_acpi_init().
 
-The leaked connection stays in BT_CONNECT forever, and because
-hci_connect_le() refuses to dial while hci_lookup_le_connect() finds
-anything, every subsequent attempt to reach any peer fails with
--EBUSY and no command reaches the controller at all.
+In the long run, the code that manages the Hyper-V provided SynIC
+should be refactored to better coordinate the requirements of
+root partition scenarios and normal VM scenarios, and to hopefully
+remove the hv_vmbus_exists() dependnecy between mshv_root and
+VMBus modules. Preventing the current unload failure scenario is
+an expediency until such a refactoring is done.
 
-Seen on a bcm43438 with two BLE peers polled on the same interval
-(state 5 is BT_CONNECT; both handles are UNSET ones, allocated from
-the ida above HCI_CONN_HANDLE_MAX):
-
-  Bluetooth: hci1: Opcode 0x2013 failed: -71
-
-  # hcitool con
-          < LE 14:9C:EF:03:68:81 handle 3840 state 5 lm CENTRAL
-          < LE C4:D3:6A:8C:B5:38 handle 3841 state 5 lm CENTRAL
-
-A btmon capture across the next ten minutes of connect attempts
-contains no HCI_OP_LE_CREATE_CONN at all; outgoing LE connections
-do not recover until the adapter is reset. With this change the same
-scenario fails the rejected connection cleanly and further connects
-to both peers go through.
-
-Ask about the connection itself instead of about the device.
-
-Fixes: c9f73a2178c1 ("Bluetooth: hci_conn: Fix hci_connect_le_sync")
-Signed-off-by: Radek Podgorny <radek@podgorny.cz>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://lore.kernel.org/linux-hyperv/20260721154943.A09BD1F00A3D@smtp.kernel.org/
+Fixes: 7e279d78664aa ("Drivers: hv: vmbus: skip VMBus initialization if Linux is root")
+Signed-off-by: Michael Kelley <mhklinux@outlook.com>
+Reviewed-by: Easwar Hariharan <easwar.hariharan@linux.microsoft.com>
+Signed-off-by: Wei Liu <wei.liu@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_conn.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/hv/vmbus_drv.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-diff --git a/net/bluetooth/hci_conn.c b/net/bluetooth/hci_conn.c
-index 5bc58e465146c..0c0c052294fc7 100644
---- a/net/bluetooth/hci_conn.c
-+++ b/net/bluetooth/hci_conn.c
-@@ -1344,8 +1344,13 @@ static void create_le_conn_complete(struct hci_dev *hdev, void *data, int err)
- 		goto done;
- 	}
+diff --git a/drivers/hv/vmbus_drv.c b/drivers/hv/vmbus_drv.c
+index 8aa775c9382bf..fe9a1e1ad0c2d 100644
+--- a/drivers/hv/vmbus_drv.c
++++ b/drivers/hv/vmbus_drv.c
+@@ -2594,6 +2594,13 @@ static int __init hv_acpi_init(void)
+ 		return -ENODEV;
  
--	/* Check if connection is still pending */
--	if (conn != hci_lookup_le_connect(hdev))
-+	/* Check if this connection is still pending.
-+	 *
-+	 * hci_lookup_le_connect() returns only the first LE connection
-+	 * in BT_CONNECT, which is not necessarily this one when two are
-+	 * pending at once, so ask the connection itself.
-+	 */
-+	if (!hci_conn_valid(hdev, conn) || conn->state != BT_CONNECT)
- 		goto done;
+ 	if (hv_root_partition)
++		/*
++		 * A non-nested root partition does not need VMBus client
++		 * functionality. However, the mshv_root module may have
++		 * a dependency on the VMBus module as described in
++		 * commit 840b740a35bf. Return success so the module
++		 * loads even though no VMBus initialization is done.
++		 */
+ 		return 0;
  
- 	hci_conn_failed(conn, bt_status(err));
+ 	/*
+@@ -2643,6 +2650,14 @@ static void __exit vmbus_exit(void)
+ {
+ 	int cpu;
+ 
++	if (hv_root_partition)
++		/*
++		 * If a non-nested root partition loaded the VMBus module,
++		 * hv_acpi_init() did not do any VMBus initialization.
++		 * There's nothing to clean up, so just return.
++		 */
++		return;
++
+ 	unregister_syscore_ops(&hv_synic_syscore_ops);
+ 
+ 	hv_remove_kexec_handler();
 -- 
 2.53.0
 
