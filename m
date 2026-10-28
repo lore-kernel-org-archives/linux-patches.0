@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793207790;
-	b=RfNP7cCU74q7yQe3VtG4tn4pDwIgR4FwOtV2q8MV79t+5qNsnhA8CjVvePoQfzHBqaIF
-	 1yC4NvbyY7lwUskgETuJYiLhAdKDvqgnLFfX/g5hi3Mpx/dWcSj+vrYhvYBUue3fVgD6l
-	 fPToXs9YqNPhKcfOMiV85pLMv1fLjKJDG+sfAVeoCcgBPBVPWNg/ZSWew+IXjErOgNA8r
-	 I887vKGLBfOVgwtIlVHnUPMQOqzF/MCQSYLi7Z1iC59d5VdQZBuRCmGBaGjUaLy8evH0+
-	 ZVBlvXZS9I998/Va2pCX0HK435U+sN/BEwUj/Dw5WFhqSZL0mLKJUmuG374fN3VOydg==
+	t=1793207793;
+	b=xcHc+LEUtSos3RN+T03IKZjbepPYCtxez/M53SZPCwiEI+8ikyF2rQ8bvWjN4GO+P0MX
+	 ISmxDrexu9XHatvn8zO9U3c+3xuR0d2AritWmN8Qe6qJ8OVkuA/8oZMIp2qhXSvoo0ySZ
+	 4qIaodwO3Tr3/oxrOls/hFJu02S7Exq63twMo/3b1xiPTf/EBvxW6/sLV+lWs6OQD1YO5
+	 pfgdO3CuoD+boalhSExqDQAJ9QXmxnPdum0v2aGlenk2hPaRL6VQvjuNeDC5obwsxixve
+	 55gju7iCSTWUWtwROc03qHiZgB3upXdMiT/xomzglaNz2CBIZsGsuxslLcyzs4beXRA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793207790;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793207793;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=HCZ/Vvs9fZZIk3lMn4vmVRa/ue8KAIqOgiHcV4i/NoE=;
-	b=JyWLsmoYxmrWIMU/3ZlpQXAKCAo0cC7jiqUOAv/AdHBGBzdFfSLyZWtiqUU8HgtTV8Sh
-	 GrKiHhroPVoz8s3Taj31g5EOt/Vm9n/uZpqkYxAlOv+bMM6iKfPc08sle6UHDVJREpVCp
-	 Z0zpggkc7YUaOTk98V0OvrmMO6MH1ek+g7JkG/vKEz+iqGkrPlem5Er9Ev4oUVSyNwmy1
-	 f5LhS82BWKo2qXb5Zso1Xg3oUEPGTIWEzKDour+s9jMWaLl/qboha4BkbybRQWgYWAIa7
-	 oi0IVh4pNCp+rPlaN+fNKnw7fjFDxpvpHlBruYXSCiWs5HIPAnltTRjvucaRfAJzOaA==
+	bh=fL2BEq0CEiVgzvq/6HvV0WA6VfmaUaKqNDnpZ9Jc9hQ=;
+	b=OrXFxpwfZ7rbet3YXAHOZ/bWJlkT0FyQVaPPCk5Flb3kNYumIyGAGtDr/B6gX+kXZdN4
+	 k0Bao5FxG9mCE3PU0DRGfs8EmLH2yz40N4QbB+sj7ROh5dnu5VWFxUvoDsIKpVYvaiVIF
+	 v/2YwyP+YaYmHj/T/T9RJtDFDnCfhPUxC2+FKH1+8vfth/4n9UpAxQ9VPlbccphLpnQh9
+	 QKnKI5EL5oAGT+1uBPFUqJ6zyj3ABI7CkgbG+XERyjD7snXWXNBJOt2cI8v+y4UIt/WV0
+	 WvxcxdJPI8sRs8Suho4APGwwv0YVpaK4NsWoyPcetBnGWBI9crhVRjAxcaWt/u/uTlw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2kjT5voo;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DurfZV+J;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0616606A31D;
-	Wed, 28 Oct 2026 17:16:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4208606A31C;
+	Wed, 28 Oct 2026 17:16:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2kjT5voo
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 226FA1F01828;
-	Wed, 28 Oct 2026 17:16:28 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DurfZV+J
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F389A1F01825;
+	Wed, 28 Oct 2026 17:16:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793207789;
-	bh=HCZ/Vvs9fZZIk3lMn4vmVRa/ue8KAIqOgiHcV4i/NoE=;
+	s=korg; t=1793207792;
+	bh=fL2BEq0CEiVgzvq/6HvV0WA6VfmaUaKqNDnpZ9Jc9hQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2kjT5voo7wFA8l++v3V60c3/wsn9o9lVB+aVWOFVXlp8hCTGyCaPoz6cFTBsDjTqj
-	 MQfxq2emsjixJDoWvijUxbuG0xijW/irlo+7nhGbS4eQZBGXqkHvE1Z4JWcFRKAHpr
-	 EweysDoOSLLHoujnqDf+SGDNJ+ma9S5N5MiBSZQA=
+	b=DurfZV+JpjlXFCzPcJHULjnucwZDncCZuycO4BzfrgojXkSHwzvY2i5DgzA9ohibW
+	 WFbT4J5qV8dwS1gzuhXsBcxf1DytnOWbyNlczqHIp0P3kPa6zbw+wZUoceGiNYxKWK
+	 eFBjL/A9odkpz6ks/pdualQpVGJuTenEs65w/kIg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AutonomousCodeSecurity@microsoft.com,
-	"Cen Zhang (Microsoft Security FORGE Labs)" <cenzhang@linux.microsoft.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Stefano Garzarella <sgarzare@redhat.com>,
+	Bobby Eshleman <bobbyeshleman@meta.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 141/247] io_uring/cancel: dont spin on local work the task cant run
-Date: Wed, 28 Oct 2026 17:59:04 +0100
-Message-ID: <20261028165950.748102276@linuxfoundation.org>
+Subject: [PATCH 6.12 142/247] virtio: set skb owner of virtio_transport_reset_no_sock() reply
+Date: Wed, 28 Oct 2026 17:59:05 +0100
+Message-ID: <20261028165950.772393162@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165947.349197979@linuxfoundation.org>
 References: <20261028165947.349197979@linuxfoundation.org>
@@ -69,65 +70,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang (Microsoft Security FORGE Labs) <cenzhang@linux.microsoft.com>
+From: Bobby Eshleman <bobbyeshleman@meta.com>
 
-[ Upstream commit fddcf4c5321b3ea5f72166c3fd36a9d1c34f80c7 ]
+[ Upstream commit a6ae12a599e0f16bc01a38bcfe8d0278a26b5ee0 ]
 
-io_uring_cancel_generic() refuses to sleep while any ring on the exiting
-task's tctx has local work pending. It assumes the task is that ring's
-submitter and that the next io_uring_try_cancel_requests() pass will run
-the work. This does not hold for a ring that was still
-IORING_SETUP_R_DISABLED when the task got its tctx node from
-io_uring_create() or io_ringfd_register(). The submitter is set later by
-IORING_REGISTER_ENABLE_RINGS, possibly from another task, and only the
-submitter may run local work on an IORING_SETUP_DEFER_TASKRUN ring. To
-the exiting task the work stays pending forever, the loop never reaches
-schedule(), and the task trips the WARN_ON_ONCE() once and then spins in
-do_exit().
+Associate reply packets with the sending socket. When vsock must reply
+with an RST packet and there exists a sending socket (e.g., for
+loopback), setting the skb owner to the socket correctly handles
+reference counting between the skb and sk (i.e., the sk stays alive
+until the skb is freed).
 
-An unprivileged user can set this up at will by creating a disabled
-ring, having a child enable it and stop, posting to the ring with
-IORING_OP_MSG_RING and exiting with a request in flight that only the
-child can complete. The exiting thread burns a CPU until the child runs
-or dies, and with panic_on_warn set the WARN panics the kernel.
+This allows the net namespace to be used for socket lookups for the
+duration of the reply skb's lifetime, preventing race conditions between
+the namespace lifecycle and vsock socket search using the namespace
+pointer.
 
-Fix by skipping the sleep only when io_allowed_defer_tw_run() allows the
-task to run the work. This is reasonable since work it cannot run cannot
-complete any of its requests either, so nothing is lost by sleeping.
-Drop the WARN_ON_ONCE() since handing a disabled ring to another thread
-is a supported scenario, not a bug state.
-
-Fixes: 360cd42c4e95 ("io_uring: optimise io_req_local_work_add")
-Reported-by: AutonomousCodeSecurity@microsoft.com
-Signed-off-by: Cen Zhang (Microsoft Security FORGE Labs) <cenzhang@linux.microsoft.com>
-Link: https://patch.msgid.link/20261008191602.45101-1-cenzhang@linux.microsoft.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-[ sashal: Used !llist_empty(&node->ctx->work_llist) instead of the unavailable io_local_work_pending() helper. ]
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+Signed-off-by: Bobby Eshleman <bobbyeshleman@meta.com>
+Link: https://patch.msgid.link/20260121-vsock-vmtest-v16-2-2859a7512097@meta.com
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Stable-dep-of: dee44f41f206 ("vsock/virtio: validate packet source for connected sockets")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/io_uring.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ net/vmw_vsock/virtio_transport_common.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/io_uring/io_uring.c b/io_uring/io_uring.c
-index 0076c7599c947..68a21552a186f 100644
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -3190,12 +3190,11 @@ __cold void io_uring_cancel_generic(bool cancel_all, struct io_sq_data *sqd)
- 		prepare_to_wait(&tctx->wait, &wait, TASK_INTERRUPTIBLE);
- 		io_run_task_work();
- 		io_uring_drop_tctx_refs(current);
-+		/* only skip the sleep for local work this task may run */
- 		xa_for_each(&tctx->xa, index, node) {
--			if (!llist_empty(&node->ctx->work_llist)) {
--				WARN_ON_ONCE(node->ctx->submitter_task &&
--					     node->ctx->submitter_task != current);
-+			if (!llist_empty(&node->ctx->work_llist) &&
-+			    io_allowed_defer_tw_run(node->ctx))
- 				goto end_wait;
--			}
- 		}
- 		/*
- 		 * If we've seen completions, retry without waiting. This
+diff --git a/net/vmw_vsock/virtio_transport_common.c b/net/vmw_vsock/virtio_transport_common.c
+index 8552173aafe16..75df280bcc81f 100644
+--- a/net/vmw_vsock/virtio_transport_common.c
++++ b/net/vmw_vsock/virtio_transport_common.c
+@@ -1313,6 +1313,12 @@ static int virtio_transport_reset_no_sock(const struct virtio_transport *t,
+ 		.op = VIRTIO_VSOCK_OP_RST,
+ 		.type = le16_to_cpu(hdr->type),
+ 		.reply = true,
++
++		/* Set sk owner to socket we are replying to (may be NULL for
++		 * non-loopback). This keeps a reference to the sock and
++		 * sock_net(sk) until the reply skb is freed.
++		 */
++		.vsk = vsock_sk(skb->sk),
+ 	};
+ 	struct sk_buff *reply;
+ 
 -- 
 2.53.0
 
