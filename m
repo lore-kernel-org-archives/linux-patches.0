@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214881;
-	b=xvw5HE0fF7PfFE7Q0iRA7UmaTKpsp/ca910xmamLYmbz1QG6v+kp0QEvIhueBmSX4zIL
-	 pamFXsFN1HU9Qwct5+9AK48RM4pvFIOaYlX4hFTYUcr91RngPJGQGUr0D6lNmjmeuAwX1
-	 Z0oa3mWANX57ScZidxteS32vGTN0D7MHKkE1tOzb7dYyDANnj/zINnW3GQVvrbbQAgMAf
-	 E4chi3/bKRaw17MSjg4hsQ5Rlntdwk0MB44BR7kUgZX3+/RhJh+cClrWRR1m5qbECd+g2
-	 c+YYF/U5usbBTgiYV6DmypSXSnjdOwOAfqU6pd0Wqiknm6Gs9VHPkQnZaJa0f5Bf5gQ==
+	t=1793214884;
+	b=2ElAEn88V5CYHXPYCtm6q8FfqC6hVzfg+zn5NABrloBE8xmkid0tpeMHfxXTYkzkfrnl
+	 XXPVM0XMv1uqlo+n9LezOm0+8tjT6Qo5QWOhu5jFChvKQ3D0lSmFl2WtLXbdIO4QWfFU6
+	 8EyrCsxyUohqn6nLde4UwUbafOMD6MnBeTiKAqkTeASoSw3Pt8AhxEljI9ylNaH+5izr+
+	 m6/fe7uH0euTzk4XytNps8e7lSZSMvY9BpAg5XUEOU1CBuvjcciu8XHC7EYo2/R8Gkfgy
+	 SbUxlciQDeuQ/r3gFRxGKRXBOHzMyBzmsExw99E4I8gi35q0M6Ys/inFIlFFN859pNw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214881;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214884;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=hQLXVKWHuOqyxowyQcJuVSojUe3WOGocwJi8U/XBJT8=;
-	b=LZYKANAts9K9Rhut0x8uPPcxWwiJWWb0c/jEyVdKd7O88MsiZ9iW4R4S2DrEaQpPypKy
-	 /30i1JsLaZhJj+6kgAWx2texRUAsBE1DfbcJ1Pd8ZTmflMLy16gFjSRqBqS4e4KMoVfp9
-	 Ub+vJSEjHYjdDB4JGtFMM6P/EeBui8O7V6wRqafGM9TKsgtE98wBwaGlWnk6s6pai3vY8
-	 kqiTb4/qQQvuRii3XEuXqciZS7JvTDjzjas7cgMPSSj3TF+ACOqjocsa+GkrgFIK+upUd
-	 E26nQSGctu0v38eMdDYjCZnXYuGjW9Fqeh+rwTI7Y7TkN6UgLFI8nKviisJXBz6t2zg==
+	bh=1uxSn3oB3Ns1kwEdpQZjQYbuWRYIeVz0RD+whmJZPko=;
+	b=lBkkD3BJk3HJGtxxi6hB9ojXtkZxxf7BaP0mq0sbaDi1yPxWdTPWjf1C5F0qzaHqfdmo
+	 WH/wBSUKT5ymDHewWsEPm3E0TFWeQQzYN7YWJ0m3NUKuU2tl+qMfqoDL6qf8slVRauMKf
+	 abNjfvKcNMK4GZIDEsnuRnrnRMWZhdokitU56LbnumUn4yLGpijt5+MPKx5QfbNwSRwa5
+	 8JP3uvtZaX4DLquR85KwbbzC15LxvHOUSAC+qjcH+x49MBD0m5j5YAArrnyG1lzXiDRTe
+	 tSeMmUPxTmLvyO1bOG53MNB6ty++9vm3qhM/TZsSge/UV7TiD5v4I8KdQW8W2TzxCIw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="p7sUz/hc";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LK8EoGv2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19A14606AB3B;
-	Wed, 28 Oct 2026 19:14:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F4147606AB3A;
+	Wed, 28 Oct 2026 19:14:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=p7sUz/hc
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B5A41F01828;
-	Wed, 28 Oct 2026 19:14:40 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LK8EoGv2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E8F01F01828;
+	Wed, 28 Oct 2026 19:14:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214881;
-	bh=hQLXVKWHuOqyxowyQcJuVSojUe3WOGocwJi8U/XBJT8=;
+	s=korg; t=1793214883;
+	bh=1uxSn3oB3Ns1kwEdpQZjQYbuWRYIeVz0RD+whmJZPko=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=p7sUz/hcR59rfrYa1qCdQmcF13yHSNbYg5gm+Wi5nmhP5sZRLQO2UXBKWtfZ/K3Yl
-	 K25zO5i+Vzl8RE6/+By8LicdUh6i29Lwb/DWFkDsfgvn2USb5qg7GhjV7ZE8CvawGK
-	 KscR+MELLOW3c26lt1Zuvj4DHaIBmGRnJaRWXdmU=
+	b=LK8EoGv2fLf/b2Ar/SBAcVP4qLgpSeJ1liWdY4ADBauku3YMs9H2TWE5ylvD8jeoo
+	 +8U8JRlhd/+Da2TDM30aRaSSI9EebeUpH5mwA//YihkAwMtbQYqyk7kHzn5aJZqNm9
+	 a2r7YyPIbFmwv/Z7OK6tWJOey9WoMfqkO925P+d0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Riabchun <ferr.lambarginio@gmail.com>,
-	Farhat Abbas <fabbas@cloudlinux.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Max Kellermann <max.kellermann@ionos.com>,
+	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
+	Ilya Dryomov <idryomov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1015/1887] scsi: qla2xxx: Completely fix fcport double free
-Date: Wed, 28 Oct 2026 17:51:51 +0100
-Message-ID: <20261028170522.514714427@linuxfoundation.org>
+Subject: [PATCH 6.1 1016/1887] ceph: fix memory leaks in ceph_mdsc_build_path()
+Date: Wed, 28 Oct 2026 17:51:52 +0100
+Message-ID: <20261028170522.536513858@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,46 +69,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vladimir Riabchun <ferr.lambarginio@gmail.com>
+From: Max Kellermann <max.kellermann@ionos.com>
 
-[ Upstream commit c0b7da13a04bd70ef6070bfb9ea85f582294560a ]
+[ Upstream commit 040d159a45ded7f33201421a81df0aa2a86e5a0b ]
 
-In qla24xx_els_dcmd_iocb() sp->free is set to qla2x00_els_dcmd_sp_free().
-When an error happens, this function is called by qla2x00_sp_release(),
-when kref_put() releases the first and the last reference.
+Add __putname() calls to error code paths that did not free the "path"
+pointer obtained by __getname().  If ownership of this pointer is not
+passed to the caller via path_info.path, the function must free it
+before returning.
 
-qla2x00_els_dcmd_sp_free() frees fcport by calling qla2x00_free_fcport().
-Doing it one more time after kref_put() is a bad idea.
-
-Fixes: 82f522ae0d97 ("scsi: qla2xxx: Fix double free of fcport")
-Fixes: 4895009c4bb7 ("scsi: qla2xxx: Prevent command send on chip reset")
-Signed-off-by: Vladimir Riabchun <ferr.lambarginio@gmail.com>
-Signed-off-by: Farhat Abbas <fabbas@cloudlinux.com>
-Link: https://patch.msgid.link/aYsDln9NFQQsPDgg@vova-pc
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Cc: stable@vger.kernel.org
+Fixes: 3fd945a79e14 ("ceph: encode encrypted name in ceph_mdsc_build_path and dentry release")
+Fixes: 550f7ca98ee0 ("ceph: give up on paths longer than PATH_MAX")
+Signed-off-by: Max Kellermann <max.kellermann@ionos.com>
+Reviewed-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/qla2xxx/qla_iocb.c | 2 --
- 1 file changed, 2 deletions(-)
+ fs/ceph/mds_client.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/scsi/qla2xxx/qla_iocb.c b/drivers/scsi/qla2xxx/qla_iocb.c
-index f080e19529272..3984b42fe0dd4 100644
---- a/drivers/scsi/qla2xxx/qla_iocb.c
-+++ b/drivers/scsi/qla2xxx/qla_iocb.c
-@@ -2754,7 +2754,6 @@ qla24xx_els_dcmd_iocb(scsi_qla_host_t *vha, int els_opcode,
- 	if (!elsio->u.els_logo.els_logo_pyld) {
- 		/* ref: INIT */
- 		kref_put(&sp->cmd_kref, qla2x00_sp_release);
--		qla2x00_free_fcport(fcport);
- 		return QLA_FUNCTION_FAILED;
- 	}
- 
-@@ -2779,7 +2778,6 @@ qla24xx_els_dcmd_iocb(scsi_qla_host_t *vha, int els_opcode,
- 	if (rval != QLA_SUCCESS) {
- 		/* ref: INIT */
- 		kref_put(&sp->cmd_kref, qla2x00_sp_release);
--		qla2x00_free_fcport(fcport);
- 		return QLA_FUNCTION_FAILED;
+diff --git a/fs/ceph/mds_client.c b/fs/ceph/mds_client.c
+index 939f9e870de0a..63c30ee31763e 100644
+--- a/fs/ceph/mds_client.c
++++ b/fs/ceph/mds_client.c
+@@ -2453,6 +2453,7 @@ char *ceph_mdsc_build_path(struct ceph_mds_client *mdsc, struct dentry *dentry,
+ 		 * cannot ever succeed.  Creating paths that long is
+ 		 * possible with Ceph, but Linux cannot use them.
+ 		 */
++		__putname(path);
+ 		return ERR_PTR(-ENAMETOOLONG);
  	}
  
 -- 
