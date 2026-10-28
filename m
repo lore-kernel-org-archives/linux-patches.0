@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214278;
-	b=iG5ssS2qm1svvrKSAaGTWuhS5dbxBdRQD2rdVhU5QAP031yuLxxpHZgGpGP4HKEtW7sd
-	 o3Hw6DUuOwaIslhbxpjk/7MWnH/YN/+Z0O/5QpWL5aB0AhAqqAEQzOX/3Hp1/Wu39hJQ3
-	 CMg+mWZkOQr+Kr1kSEm0vuBnbPKc9XsNFScL15qE5RYQwm1k8bs6CKxueTjNqMHXfQGmh
-	 cOsysotIs6omfGYiU0XFCbIwfMlJajLyknb55gDhOpN8+X1e1u2vXA9mbW+lCxuEm7AKI
-	 3bQ9rApudDzVk8do2MP5f4iFMAXv+0K04SMJ2tCKT9ntsKFoDux6aU1Z/4toiRywClQ==
+	t=1793214281;
+	b=qYC23V9NkzvOvCnJA4cQCy/lcJr5s4F+SYu4RZ1NIj0N6sdqBfII+Qz9nRzuXovy2UfA
+	 liFo6mhA/x+6AHy2bbQXO3uP52/BWBecynYkIqdhMRwr5U1B5RDaXnJL34lLqI9t8QYzn
+	 hzVhdqhO05CEMNbASAyS+QfwOquPXBodP563efDoE90Ax0Eozgxoh8UC9+HuQCaQpOSz3
+	 OJZgfpDVjikOFHAxPvjbwcXT2Pc11KwRNeWalrrq2GjxWZbETEIN0lzk8Y2SJO2XfZran
+	 CIted2urknoCfMmPMa0sTaJgx+n9ryX+jhX8vVxBqpLmD4RmQwreHut9bITCh6s4+Xg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214278;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214281;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Mh79I7iB3lXL1kMOr8CAHMIJ0mQS2Sh560i8SHxfBAI=;
-	b=zkhPA4lvaFt5i2Il3HEfr9yO6ijtgq78g0hOkUpKjzpzXMVur3ykp/LdyifdtpVdwol0
-	 trpKr8tuRgH5vNSIvYSzl5+hGBFkxaWAnmsF5DPAZVDkCP8SG/FcJ6ieexV8ywsm4sEsa
-	 Wo0KrUBhH5AmbHGvAVbb+Ppcw+FbD+1D7RQg5vBmCPBAXXg58iijxxsX8XWpLL4Poyhh9
-	 N1g9TPTzcLZ1lGjeqZKJtb6eTJlQV1yjLNcm4vyU6VSF9mI5YQGy3FBSMvgEAtxmWSAry
-	 IKV77LIFn/lT8ICTyL4oAnrmalBiW4zTmlfutcHnRPzfLpnZYNm1i0VahFLDhZH3oPw==
+	bh=xDmBGkz14Os4GuiNBXrlUL26vNBGF4KODWRHDbR9O7I=;
+	b=UAsXrxF/jNlLCt69/5Apb2dgizrxaujRDIvA7zN1vy5wtp+KAWclMRpQ0HMuLFvOkB1r
+	 cPefdA7O7Mvs+5h8/kUFpEhQmfKIq/ym6iu6TSzhSoxqbUZUhjwr6O4wzzoRlRXQHOtaD
+	 RMymM0yHzaEz6AsWFAcxNVUzlW1xpnfOMHX3J24+u3u7u/pAx60rYM6XQrSotRF9+AajD
+	 cDAMuv+kfumHTkA8SgFUvq/n6LBKXFYyP8WzOIk1HLV0sVOO1/JvoUbsrKT0/NXBaMbCn
+	 kiM/j+JhZcaE+aD/Di0q/xA+zBn3yX6QTUsukEcHlxXA8nMbRpnkF/U07rdmFFeH1zA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=idcadBIX;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="QeHUBN/L";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5850B60A5BD2;
-	Wed, 28 Oct 2026 19:04:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CD22606A33A;
+	Wed, 28 Oct 2026 19:04:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=idcadBIX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7F0B1F01825;
-	Wed, 28 Oct 2026 19:04:37 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QeHUBN/L
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D4091F01825;
+	Wed, 28 Oct 2026 19:04:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214278;
-	bh=Mh79I7iB3lXL1kMOr8CAHMIJ0mQS2Sh560i8SHxfBAI=;
+	s=korg; t=1793214281;
+	bh=xDmBGkz14Os4GuiNBXrlUL26vNBGF4KODWRHDbR9O7I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=idcadBIXbZiX9ETpQ3I7vviMSY8aIcS3D20a63OvZCJLM/KKO6p7ocFEEpP/4M1uy
-	 wsfiZWV0JQ0TjIpEvnA/ofTTMaW29C1DsHqg13R8HOpAo+dV6O2mOEWVwPqCWCUVfh
-	 PpuT5GEB/EFJQLq38YOFV3nB2637abyGQpt0eC4U=
+	b=QeHUBN/Lpx+Kn2L91vP9ruWQoxeucr6k4xN0pbn0fzotNoVDS1cfc2tO2+d2gtMwv
+	 J6+kE+rlLW0sErDZOYDh+6YTFI4G0Q/Am3SQYsFIVMb1ezzBhijTmcP5dBFwvUmas+
+	 gL5bxekHqC3+px1D8utZrskJaLhhvJfD2fb0SZVY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	Boris Burkov <boris@bur.io>,
-	David Sterba <dsterba@suse.com>,
+	syzbot+7bfa4b72c6a5da128d32@syzkaller.appspotmail.com,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0765/1887] btrfs: fix block group refcount race in btrfs_create_pending_block_groups()
-Date: Wed, 28 Oct 2026 17:47:41 +0100
-Message-ID: <20261028170516.849367977@linuxfoundation.org>
+Subject: [PATCH 6.1 0801/1887] bridge: mcast: Fix use-after-free during router port configuration
+Date: Wed, 28 Oct 2026 17:48:17 +0100
+Message-ID: <20261028170517.657760868@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -70,110 +69,181 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Boris Burkov <boris@bur.io>
+From: Ido Schimmel <idosch@nvidia.com>
 
-[ Upstream commit 2d8e5168d48a91e7a802d3003e72afb4304bebfa ]
+[ Upstream commit 7544f3f5b0b58c396f374d060898b5939da31709 ]
 
-Block group creation is done in two phases, which results in a slightly
-unintuitive property: a block group can be allocated/deallocated from
-after btrfs_make_block_group() adds it to the space_info with
-btrfs_add_bg_to_space_info(), but before creation is completely completed
-in btrfs_create_pending_block_groups(). As a result, it is possible for a
-block group to go unused and have 'btrfs_mark_bg_unused' called on it
-concurrently with 'btrfs_create_pending_block_groups'. This causes a
-number of issues, which were fixed with the block group flag
-'BLOCK_GROUP_FLAG_NEW'.
+The bridge maintains a global list of ports behind which a multicast
+router resides. The list is consulted during forwarding to ensure
+multicast packets are forwarded to these ports even if the ports are not
+member in the matching MDB entry.
 
-However, this fix is not quite complete. Since it does not use the
-unused_bg_lock, it is possible for the following race to occur:
+When per-VLAN multicast snooping is enabled, the per-port multicast
+context is disabled on each port and the port is removed from the global
+router port list:
 
-btrfs_create_pending_block_groups            btrfs_mark_bg_unused
-                                           if list_empty // false
-        list_del_init
-        clear_bit
-                                           else if (test_bit) // true
-                                                list_move_tail
+ # ip link add name br1 up type bridge vlan_filtering 1 mcast_snooping 1
+ # ip link add name dummy1 up master br1 type dummy
+ # ip link set dev dummy1 type bridge_slave mcast_router 2
+ $ bridge -d mdb show | grep router
+ router ports on br1: dummy1
+ # ip link set dev br1 type bridge mcast_vlan_snooping 1
+ $ bridge -d mdb show | grep router
 
-And we get into the exact same broken ref count and invalid new_bgs
-state for transaction cleanup that BLOCK_GROUP_FLAG_NEW was designed to
-prevent.
+However, the port can be re-added to the global list even when per-VLAN
+multicast snooping is enabled:
 
-The broken refcount aspect will result in a warning like:
+ # ip link set dev dummy1 type bridge_slave mcast_router 0
+ # ip link set dev dummy1 type bridge_slave mcast_router 2
+ $ bridge -d mdb show | grep router
+ router ports on br1: dummy1
 
-  [1272.943527] refcount_t: underflow; use-after-free.
-  [1272.943967] WARNING: CPU: 1 PID: 61 at lib/refcount.c:28 refcount_warn_saturate+0xba/0x110
-  [1272.944731] Modules linked in: btrfs virtio_net xor zstd_compress raid6_pq null_blk [last unloaded: btrfs]
-  [1272.945550] CPU: 1 UID: 0 PID: 61 Comm: kworker/u32:1 Kdump: loaded Tainted: G        W          6.14.0-rc5+ #108
-  [1272.946368] Tainted: [W]=WARN
-  [1272.946585] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS Arch Linux 1.16.3-1-1 04/01/2014
-  [1272.947273] Workqueue: btrfs_discard btrfs_discard_workfn [btrfs]
-  [1272.947788] RIP: 0010:refcount_warn_saturate+0xba/0x110
-  [1272.949532] RSP: 0018:ffffbf1200247df0 EFLAGS: 00010282
-  [1272.949901] RAX: 0000000000000000 RBX: ffffa14b00e3f800 RCX: 0000000000000000
-  [1272.950437] RDX: 0000000000000000 RSI: ffffbf1200247c78 RDI: 00000000ffffdfff
-  [1272.950986] RBP: ffffa14b00dc2860 R08: 00000000ffffdfff R09: ffffffff90526268
-  [1272.951512] R10: ffffffff904762c0 R11: 0000000063666572 R12: ffffa14b00dc28c0
-  [1272.952024] R13: 0000000000000000 R14: ffffa14b00dc2868 R15: 000001285dcd12c0
-  [1272.952850] FS:  0000000000000000(0000) GS:ffffa14d33c40000(0000) knlGS:0000000000000000
-  [1272.953458] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-  [1272.953931] CR2: 00007f838cbda000 CR3: 000000010104e000 CR4: 00000000000006f0
-  [1272.954474] Call Trace:
-  [1272.954655]  <TASK>
-  [1272.954812]  ? refcount_warn_saturate+0xba/0x110
-  [1272.955173]  ? __warn.cold+0x93/0xd7
-  [1272.955487]  ? refcount_warn_saturate+0xba/0x110
-  [1272.955816]  ? report_bug+0xe7/0x120
-  [1272.956103]  ? handle_bug+0x53/0x90
-  [1272.956424]  ? exc_invalid_op+0x13/0x60
-  [1272.956700]  ? asm_exc_invalid_op+0x16/0x20
-  [1272.957011]  ? refcount_warn_saturate+0xba/0x110
-  [1272.957399]  btrfs_discard_cancel_work.cold+0x26/0x2b [btrfs]
-  [1272.957853]  btrfs_put_block_group.cold+0x5d/0x8e [btrfs]
-  [1272.958289]  btrfs_discard_workfn+0x194/0x380 [btrfs]
-  [1272.958729]  process_one_work+0x130/0x290
-  [1272.959026]  worker_thread+0x2ea/0x420
-  [1272.959335]  ? __pfx_worker_thread+0x10/0x10
-  [1272.959644]  kthread+0xd7/0x1c0
-  [1272.959872]  ? __pfx_kthread+0x10/0x10
-  [1272.960172]  ret_from_fork+0x30/0x50
-  [1272.960474]  ? __pfx_kthread+0x10/0x10
-  [1272.960745]  ret_from_fork_asm+0x1a/0x30
-  [1272.961035]  </TASK>
-  [1272.961238] ---[ end trace 0000000000000000 ]---
+Since commit 4b30ae9adb04 ("net: bridge: mcast: re-implement
+br_multicast_{enable, disable}_port functions"), when per-VLAN multicast
+snooping is enabled, multicast disablement on a port will disable the
+per-{port, VLAN} multicast contexts and not the per-port one. As a
+result, a port will remain in the global router port list even after it
+is deleted. This will lead to a use-after-free [1] when the list is
+traversed (when adding a new port to the list, for example):
 
-Though we have seen them in the async discard workfn as well. It is
-most likely to happen after a relocation finishes which cancels discard,
-tears down the block group, etc.
+ # ip link del dev dummy1
+ # ip link add name dummy2 up master br1 type dummy
+ # ip link set dev dummy2 type bridge_slave mcast_router 2
 
-Fix this fully by taking the lock around the list_del_init + clear_bit
-so that the two are done atomically.
+Similarly, stale entries can also be found in the per-VLAN router port
+list. When per-VLAN multicast snooping is disabled, the per-{port, VLAN}
+contexts are disabled on each port and the port is removed from the
+per-VLAN router port list:
 
-Fixes: 0657b20c5a76 ("btrfs: fix use-after-free of new block group that became unused")
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Reviewed-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: Boris Burkov <boris@bur.io>
-Signed-off-by: David Sterba <dsterba@suse.com>
+ # ip link add name br1 up type bridge vlan_filtering 1 mcast_snooping 1 mcast_vlan_snooping 1
+ # ip link add name dummy1 up master br1 type dummy
+ # bridge vlan add vid 2 dev dummy1
+ # bridge vlan global set vid 2 dev br1 mcast_snooping 1
+ # bridge vlan set vid 2 dev dummy1 mcast_router 2
+ $ bridge vlan global show dev br1 vid 2 | grep router
+       router ports: dummy1
+ # ip link set dev br1 type bridge mcast_vlan_snooping 0
+ $ bridge vlan global show dev br1 vid 2 | grep router
+
+However, the port can be re-added to the per-VLAN list even when
+per-VLAN multicast snooping is disabled:
+
+ # bridge vlan set vid 2 dev dummy1 mcast_router 0
+ # bridge vlan set vid 2 dev dummy1 mcast_router 2
+ $ bridge vlan global show dev br1 vid 2 | grep router
+       router ports: dummy1
+
+When the VLAN is deleted from the port, the per-{port, VLAN} multicast
+context will not be disabled since multicast snooping is not enabled
+on the VLAN. As a result, the port will remain in the per-VLAN router
+port list even after it is no longer member in the VLAN. This will lead
+to a use-after-free [2] when the list is traversed (when adding a new
+port to the list, for example):
+
+ # ip link add name dummy2 up master br1 type dummy
+ # bridge vlan add vid 2 dev dummy2
+ # bridge vlan del vid 2 dev dummy1
+ # bridge vlan set vid 2 dev dummy2 mcast_router 2
+
+Fix these issues by removing the port from the relevant (global or
+per-VLAN) router port list in br_multicast_port_ctx_deinit(). The
+function is invoked during port deletion with the per-port multicast
+context and during VLAN deletion with the per-{port, VLAN} multicast
+context.
+
+Note that deleting the multicast router timer is not enough as it only
+takes care of the temporary multicast router states (1 or 3) and not the
+permanent one (2).
+
+[1]
+BUG: KASAN: slab-out-of-bounds in br_multicast_add_router.part.0+0x3f1/0x560
+Write of size 8 at addr ffff888004a67328 by task ip/384
+[...]
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0x6f/0xa0
+ print_address_description.constprop.0+0x6f/0x350
+ print_report+0x108/0x205
+ kasan_report+0xdf/0x110
+ br_multicast_add_router.part.0+0x3f1/0x560
+ br_multicast_set_port_router+0x74e/0xac0
+ br_setport+0xa55/0x1870
+ br_port_slave_changelink+0x95/0x120
+ __rtnl_newlink+0x5e8/0xa40
+ rtnl_newlink+0x627/0xb00
+ rtnetlink_rcv_msg+0x6fb/0xb70
+ netlink_rcv_skb+0x11f/0x350
+ netlink_unicast+0x426/0x710
+ netlink_sendmsg+0x75a/0xc20
+ __sock_sendmsg+0xc1/0x150
+ ____sys_sendmsg+0x5aa/0x7b0
+ ___sys_sendmsg+0xfc/0x180
+ __sys_sendmsg+0x124/0x1c0
+ do_syscall_64+0xbb/0x360
+ entry_SYSCALL_64_after_hwframe+0x4b/0x53
+
+[2]
+BUG: KASAN: slab-use-after-free in br_multicast_add_router.part.0+0x378/0x560
+Read of size 8 at addr ffff888009f00840 by task bridge/391
+[...]
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0x6f/0xa0
+ print_address_description.constprop.0+0x6f/0x350
+ print_report+0x108/0x205
+ kasan_report+0xdf/0x110
+ br_multicast_add_router.part.0+0x378/0x560
+ br_multicast_set_port_router+0x6f9/0xac0
+ br_vlan_process_options+0x8b6/0x1430
+ br_vlan_rtm_process_one+0x605/0xa30
+ br_vlan_rtm_process+0x396/0x4c0
+ rtnetlink_rcv_msg+0x2f7/0xb70
+ netlink_rcv_skb+0x11f/0x350
+ netlink_unicast+0x426/0x710
+ netlink_sendmsg+0x75a/0xc20
+ __sock_sendmsg+0xc1/0x150
+ ____sys_sendmsg+0x5aa/0x7b0
+ ___sys_sendmsg+0xfc/0x180
+ __sys_sendmsg+0x124/0x1c0
+ do_syscall_64+0xbb/0x360
+ entry_SYSCALL_64_after_hwframe+0x4b/0x53
+
+Fixes: 2796d846d74a ("net: bridge: vlan: convert mcast router global option to per-vlan entry")
+Fixes: 4b30ae9adb04 ("net: bridge: mcast: re-implement br_multicast_{enable, disable}_port functions")
+Reported-by: syzbot+7bfa4b72c6a5da128d32@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/684c18bd.a00a0220.279073.000b.GAE@google.com/T/
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20250619182228.1656906-1-idosch@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/block-group.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/bridge/br_multicast.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/fs/btrfs/block-group.c b/fs/btrfs/block-group.c
-index 1f9fbec887c03..a8f096b46b7b2 100644
---- a/fs/btrfs/block-group.c
-+++ b/fs/btrfs/block-group.c
-@@ -2586,8 +2586,11 @@ void btrfs_create_pending_block_groups(struct btrfs_trans_handle *trans)
- 		/* Already aborted the transaction if it failed. */
- next:
- 		btrfs_delayed_refs_rsv_release(fs_info, 1);
+diff --git a/net/bridge/br_multicast.c b/net/bridge/br_multicast.c
+index c96a9c2a27780..c2fec582372c9 100644
+--- a/net/bridge/br_multicast.c
++++ b/net/bridge/br_multicast.c
+@@ -1872,10 +1872,19 @@ void br_multicast_port_ctx_init(struct net_bridge_port *port,
+ 
+ void br_multicast_port_ctx_deinit(struct net_bridge_mcast_port *pmctx)
+ {
++	struct net_bridge *br = pmctx->port->br;
++	bool del = false;
 +
-+		spin_lock(&fs_info->unused_bgs_lock);
- 		list_del_init(&block_group->bg_list);
- 		clear_bit(BLOCK_GROUP_FLAG_NEW, &block_group->runtime_flags);
-+		spin_unlock(&fs_info->unused_bgs_lock);
- 	}
- 	btrfs_trans_release_chunk_metadata(trans);
+ #if IS_ENABLED(CONFIG_IPV6)
+ 	del_timer_sync(&pmctx->ip6_mc_router_timer);
+ #endif
+ 	del_timer_sync(&pmctx->ip4_mc_router_timer);
++
++	spin_lock_bh(&br->multicast_lock);
++	del |= br_ip6_multicast_rport_del(pmctx);
++	del |= br_ip4_multicast_rport_del(pmctx);
++	br_multicast_rport_del_notify(pmctx, del);
++	spin_unlock_bh(&br->multicast_lock);
  }
+ 
+ int br_multicast_add_port(struct net_bridge_port *port)
 -- 
 2.53.0
 
