@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793210899;
-	b=3WXb8uy2FlTi4Wa5Dd6sivfyUPHnFLGHdDK68JK95WzdoXzEowezZXMH/IdVXW7iAVRN
-	 6ZJlfdFyyR/UEgFnZqWT9B+aCo7ybRcoBChap4MPkIZp6C3r7J5UvPlirTDR3zzrRgmB8
-	 IqNqWl1q4/c7VtJQBtcYyAA9cyLWoYkRAPWupdHpfF3fTZciI2a+JAK6Kj+wxXfRvejtV
-	 2dlMrDn2cZ88BJotVvgQlDzsr/W1mFuxYZ0NiHbDExxtxJ2aDr+ceTrVCJHmo/TinYshq
-	 P3ZH2lltU/U10eEeiug8UJHqPdKE/80OBWginMDOzNBC7vi+fY5T/q/4k2Ihp/TJHGg==
+	t=1793210902;
+	b=DhdVEkS8r+5+hth0UJCtPajzwKXu3qhmTU4lRwCa6c/b7z8Ji4IR8Pp/jiMbeDJlTUUV
+	 IDRiVsXMuIbfmLVL46x21S1krWuyRFfM24FfJYXkSGasO8bmPHd08aq/yHDjX43BIQVyg
+	 mS7J/tBRlzDJ2A3AFELZxCHkOVsB21z0DI9fHMikY5UD2qGi4bHJHAv0VOR5hESANZzWY
+	 pzP7/6jcCxH0PsPNgGSArcmpHQUchBZnbqSqKVP2/CGcCtKzosh4S++dcedXe1megR6oX
+	 63Vr/Zr/MfhZEWl6GtnxOfzNTOcfwcdDBksJ0DHQQw4Hp8aWc1Qdyo8k6krEmPjSj2w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793210899;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793210902;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=gwi+RKfDMZcDqNHSly+kdBXR+fUmZ+SnIEUQjpwsOpY=;
-	b=h0k47tBvekaZ8zjdbJkrWLVRE28oCV76VEoX0Oj/hE/DSFXyAkRMmW275viloJNh3iJE
-	 UcTCIO2sQDZTswjM3xlfbu9PBJMOIm9QBeWDCY9pe+QxT2ngq0gtvumEJJNHNYZm5K8/X
-	 3I9VhV6Ub0o1J7Om5Q7AkTMSWQ7B3meN9LZjLQHu6AZfycb2CeA1VW9vco/DDhOBYHtZW
-	 PHwyLu4AOuoQno1do34or5kdx17ggAnJHf8rR9sbTc7bEgKhDqvwVv9yN38lRLZ4nYccM
-	 okfcRDtAvRWJBHQe74fbtBhIa7ZmGwoLzKAbtrkUYq1uriv2zoXRceAmbWFKuQTx0kQ==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=JRbNPq8EZZ/RPhG4hnyQ7PurkRc/opuRNY2EXXZokik=;
+	b=THBf2U+c2+MtRfuQzsnZR433wBoSrZ+HeYX+cGAkt62KRe8jVOqCFgHFRdM9IMEcud0O
+	 33JMlyXtWorKLn0s2jk2x9WMFumKfXSc1r/rBphApArzxWqmoNQJGZnGPW2h64ja0nt/l
+	 UXJx3pJhiQcpzoGnB4I41Rq1jhc0nmYW4X/OpCOIwEVpftSgObShaSbhUQSLw81okn6UT
+	 88/sziYH3CrlrkyQHMFm6k/C422OkjRy91mjSJ0CQYgMTWKRSAVblSgag2i0ZQVCXbXe0
+	 xDtqjHqQI5voDUAAU+z4xKd+Y4zdRVhqfTXi2RlGCXjYM/AD0v7AvOr/7rBQbren7aQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nbNFoSpS;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v0LuxIm2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C6BF606A31A;
-	Wed, 28 Oct 2026 18:08:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41C88606A31A;
+	Wed, 28 Oct 2026 18:08:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nbNFoSpS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B88771F01825;
-	Wed, 28 Oct 2026 18:08:18 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v0LuxIm2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91CC41F01825;
+	Wed, 28 Oct 2026 18:08:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793210899;
-	bh=gwi+RKfDMZcDqNHSly+kdBXR+fUmZ+SnIEUQjpwsOpY=;
+	s=korg; t=1793210902;
+	bh=JRbNPq8EZZ/RPhG4hnyQ7PurkRc/opuRNY2EXXZokik=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nbNFoSpSrETBDC2f/FVu7E6LNPE87dpmNHHZfzO/20AIw/Wo9Osaky8mjLLxRXsfw
-	 KeAY9wnUcQBb+GLT4fNJlzX92CsdaPWiRgBIqBteVXX2YdIN+4/e24xSNV+zCVNSff
-	 JsCosUsMahS5JNctx5JM3dbr0HcdOSe9/fI/lYvw=
+	b=v0LuxIm2ELv+jpIzJr2SvyG8kkx8Em1gfoGy6Fp0EgY22GpGQTrhanVGeVZA0um0m
+	 8a42dvMcYfbY2Z5ZuxSuOcIPSFOyQ9CTvJUkNBd0u95+kvVo3Fjl0GM7IJsyvpL9WL
+	 zl0vc2w2dPqR3zcsU4qqhy1FbfgeoQ8d29ry6MCU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luo Gengkun <luogengkun2@huawei.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Nikola Prica <nikola.prica@amd.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Gerd Bayer <gbayer@linux.ibm.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 189/571] perf: Fix race between perf_event_exit_task() and perf_pending_task()
-Date: Wed, 28 Oct 2026 17:55:36 +0100
-Message-ID: <20261028170012.495509330@linuxfoundation.org>
+Subject: [PATCH 5.15 190/571] PCI: Accept AtomicOps already enabled by the hypervisor
+Date: Wed, 28 Oct 2026 17:55:37 +0100
+Message-ID: <20261028170012.519446877@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -62,55 +64,74 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Luo Gengkun <luogengkun2@huawei.com>
+From: Nikola Prica <nikola.prica@amd.com>
 
-[ Upstream commit ffb684f2aa141eeb0caa6308422e7e05d1ded7c4 ]
+[ Upstream commit 40cce45b921f7930886bcba43069edc579725457 ]
 
-A race condition exists between perf_event_exit_task() and
-perf_pending_task() during begin_new_exec().
+pci_enable_atomic_ops_to_root() currently fails when no Root Port is
+visible. That is common in passthrough guests (ESXi, Hyper-V): the Endpoint
+is assigned to the VM, but the Root Port above it is not visible in the
+guest topology.
 
-During begin_new_exec(), perf_event_exit_task() may be called, and the
-PF_EXITING flag is not set on task. So perf_sigtrap() continues to execute
-and triggers WARN_ON_ONCE(event->ctx->task != current).
+In those setups the hypervisor may already have enabled AtomicOp Requester
+Enable on the device. If PCI_EXP_DEVCTL2_ATOMIC_REQ is set, treat AtomicOps
+as already enabled and return success instead of failing the Root Port
+walk.
 
-Since both task exit and exec paths can call perf_event_exit_task() which
-sets ctx->task to TASK_TOMBSTONE, fix this by explicitly checking if
-event->ctx->task equals TASK_TOMBSTONE and dropping the redundant
-PF_EXITING check.
+After 1ae8c4ce1570 ("PCI: Enable AtomicOps only if Root Port supports
+them"), pci_enable_atomic_ops_to_root() always returns failure if the Root
+Port is not visible, so drivers don't use atomics when they could.  On
+systems where the Root Port is not visible but *does* support AtomicOps,
+this is a regression: prior to 1ae8c4ce1570, it enabled AtomicOps in the
+endpoint and returned success.
 
-Fixes: 97ba62b27867 ("perf: Add support for SIGTRAP on perf events")
-Signed-off-by: Luo Gengkun <luogengkun2@huawei.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://patch.msgid.link/20260920075026.990582-1-luogengkun2@huawei.com
+Fixes: 1ae8c4ce1570 ("PCI: Enable AtomicOps only if Root Port supports them")
+Signed-off-by: Nikola Prica <nikola.prica@amd.com>
+[bhelgaas: commit log, code comment]
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Tested-by: Gerd Bayer <gbayer@linux.ibm.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Reviewed-by: Gerd Bayer <gbayer@linux.ibm.com>
+Link: https://patch.msgid.link/20260921111903.978687-1-nikprica@amd.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/events/core.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/pci/pci.c | 15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/events/core.c b/kernel/events/core.c
-index 40d31c3e1eb7a..e350e8d1fb188 100644
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -6692,9 +6692,11 @@ static void perf_sigtrap(struct perf_event *event)
- {
- 	/*
- 	 * Both perf_pending_task() and perf_pending_irq() can race with the
--	 * task exiting.
-+	 * task exiting or exec-ing. We can determine if such a race has
-+	 * occurred by checking if perf_event_exit_task(), which will set
-+	 * ctx->task to TASK_TOMBSTONE, has already been called.
- 	 */
--	if (current->flags & PF_EXITING)
-+	if (event->ctx->task == TASK_TOMBSTONE)
- 		return;
+diff --git a/drivers/pci/pci.c b/drivers/pci/pci.c
+index ab7e61aa9e5c1..adda41abdbedb 100644
+--- a/drivers/pci/pci.c
++++ b/drivers/pci/pci.c
+@@ -3637,8 +3637,21 @@ int pci_enable_atomic_ops_to_root(struct pci_dev *dev, u32 cap_mask)
+ 	}
  
- 	/*
+ 	root = pcie_find_root_port(dev);
+-	if (!root)
++	if (!root) {
++
++		/*
++		 * A hypervisor may expose a topology with the root port
++		 * not visible to the guest.  If the hypervisor has already
++		 * set AtomicOp Requester Enable in the endpoint, we assume
++		 * it has verified support in the root port, so it is safe
++		 * for the driver to use AtomicOps.
++		 */
++		pcie_capability_read_dword(dev, PCI_EXP_DEVCTL2, &ctl2);
++		if (ctl2 & PCI_EXP_DEVCTL2_ATOMIC_REQ)
++			return 0;
++
+ 		return -EINVAL;
++	}
+ 
+ 	pcie_capability_read_dword(root, PCI_EXP_DEVCAP2, &cap);
+ 	if ((cap & cap_mask) != cap_mask)
 -- 
 2.53.0
 
