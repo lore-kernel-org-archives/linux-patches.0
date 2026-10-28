@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215726;
-	b=c+eJELC3H2ZWZJY95RES9dqChr+Fkm5NnLuFRSbKCxxeVptnCayptolvQjhOZE2SeI0e
-	 ZliWTAUClcQr0olj08hOgmp1xtbLxmrJN97fpNIFgkvKQ3vM7jXFzjykmCCQQWQPZECVV
-	 a7AYAmUR+pc2RnqJNf6kFmtA5B0yftEgCJbvGQ9r5t+QIuzTGOGahptgRHV5AriOwifNv
-	 gudjbQgBcQsCdg+lKXqwQ7YQVaq1iFTFAlzxqWD3MKRr4EWP/dv7evuOjK0HZp4JOHR+V
-	 x78/somcA9h3u5LN+GjJ2kW4kYclsYTxs7YbjK5E9CHgaOXVoeKt9z7dL8+oYAZJhsA==
+	t=1793215728;
+	b=cI5fRoT8CzGySuHByDwuUs0GpKM5Rdxn02SiqtCciSZlseW7IDeor5eOCk8xk7zJ2Ezm
+	 RApK+IhZXJzzHJuXTPcp3rjHHKzPIfPraLf/r1j0E9V5EKAgRkwJwiba6jL5+ctDgJmhe
+	 aOjTen5pK58GeVxUQM9hCBRAuLc/uV3k80s3TQGDuSbC+5u66i6LBeGWo4F0WC8NAdRQ1
+	 v+ZRYH3LXnX22W8kg2xmsm+8ciGuq8/LTzG+1pw6sufJ00R9f+/xPlIpVAzFUqd1axOl7
+	 LcWDBKw+eK+B0gg1XJq5oI1S5BmWTq6DnvsPj0oAWwqFXEABI7FRu6IEcbBscO2mwow==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215726;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215728;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=2rgxgDYSqRLuHc0YBvJpJLMgkruLMJz2q4p6JRRBoXQ=;
-	b=j3bKA6LSjAci93EkeuJNwRnD+4AhiqIKpvL7xYqu8SXXFX7Nf2gnHExnCQhL0ELgfu41
-	 VzutcnGP3UjnegITFmMFgz4rdb0e6sPfJnOI7cirnx+KFl/BfU6jO1MdBGHgW3/tVtjAd
-	 NB4IgqsadJ5xj0HtcY9DqPQ1Z2Jahs62K3mc74QkiChW0AxMGLR/Vn+MPY1FS1S9jrlvJ
-	 tP+lMo9LXkMM6HLExkzlnmGU7wu4ORuLO58qo6tvagNgcNmmY2DKIcMb4QJ+GJG9uoQTl
-	 aMOnNiQfKTI5qJfIWPyVUA5XS2kP/f8+Aeuxaa4ca220NKbSPxUdddPMmNUbcdEy+SQ==
+	bh=ZaYIbzciuplCPmAqVnS8Qh88UYebOgmd/Bc+AS+En5c=;
+	b=jKMWkaD8aMs8glROWdWabXY10f1rJTrWS3VXEEke4d/Y6fivZA/IJfahaWGGYDggoP1X
+	 9bdIcEavgbbg4Zx1eGc65Ayx60gGCvMaYgsoeEGSOudpGNocjjvOtsMROAGXLpbxLTbKj
+	 U7fqzomRS7rRBdDWU/FVhAD6qqOcYTJ1pNeGTdTE1gzX9Y/Wn4nvjIUB3efSXsgEjumgi
+	 zQxFpEuVqfh2cJufAhO7fRVmT7mLCT71R7uDigAYsd8/FHDVsvFNQlsY49jq3vJq8+3Dj
+	 1o16VnX4TXBnCTpS4E8qW9eIrg8UOzn0kDwJuXL1WVTZI1bURo20+PB4R+wTOpSqwhg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="gT6kW/ST";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Iske3iyN;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5DE4606A31E;
-	Wed, 28 Oct 2026 19:28:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2D24606A31E;
+	Wed, 28 Oct 2026 19:28:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gT6kW/ST
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2941C1F01825;
-	Wed, 28 Oct 2026 19:28:44 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Iske3iyN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F11021F01825;
+	Wed, 28 Oct 2026 19:28:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215725;
-	bh=2rgxgDYSqRLuHc0YBvJpJLMgkruLMJz2q4p6JRRBoXQ=;
+	s=korg; t=1793215728;
+	bh=ZaYIbzciuplCPmAqVnS8Qh88UYebOgmd/Bc+AS+En5c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gT6kW/STzBmFlQVips6vPx79+1LhgsCOHt9NV8qgFo4bc80cHxtNS/vG9iJs01zE4
-	 4RI8540i7DF7ID8gOu8uGsUy0lwiwrNBGo64TaXiArWmveQDy1Hkd9Vr/w8z4BN4Ll
-	 IW7BsLd31xEkpvPk9dGNZw+rFmv40eR9SWuGjPUg=
+	b=Iske3iyNIf+9mnvQK/oBHFC0hsK3JWS8OsBqmORw07CfqJpOY1pyc5+hO9zuSZ9fW
+	 IDw7+WxMOI9YuMObKMp0encKUVIbw35XKlR/DQFtY2YhTmH8hJG9ntRt0xV3Icz3Yn
+	 4o4S6MEFpsjkzJ2+vvFZR7wegN2z75baB52xV5V0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	vega@nebusec.ai,
-	Victor Nogueira <victor@mojatatu.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Davide Caratti <dcaratti@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Ling Xu <ling_ling.xu@unisoc.com>,
+	Di Shen <di.shen@unisoc.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1310/1887] net/sched: act_api: fix TOCTOU NULL deref on a->goto_chain
-Date: Wed, 28 Oct 2026 17:56:46 +0100
-Message-ID: <20261028170529.243053005@linuxfoundation.org>
+Subject: [PATCH 6.1 1275/1887] OPP: Fix race between OPP addition and lookup
+Date: Wed, 28 Oct 2026 17:56:11 +0100
+Message-ID: <20261028170528.436621104@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -71,69 +69,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jamal Hadi Salim <jhs@mojatatu.com>
+From: Di Shen <di.shen@unisoc.com>
 
-[ Upstream commit f60b396ee174206fe08ebf997d16cd3801b77b22 ]
+[ Upstream commit f5e1cc9a284bff2510981643a5bca4bc4c21b81a ]
 
-tcf_action_exec() handles TC_ACT_GOTO_CHAIN by first checking
-rcu_access_pointer(a->goto_chain) and then calling
-tcf_action_goto_chain_exec(), which does a second, independent
-rcu_dereference_bh(a->goto_chain) read and immediately dereferences
-chain->filter_chain. A concurrent tcf_action_set_ctrlact() (e.g. the gact
-replace path) can clear a->goto_chain between the two reads, so the second
-read returns NULL and tcf_action_goto_chain_exec() dereferences NULL.
+A race exists between dev_pm_opp_add_dynamic() and
+dev_pm_opp_find_freq_exact():
 
-Fix the race by doing a single rcu_dereference_bh() read of a->goto_chain
-in tcf_action_exec(), checking it once for NULL, and passing the resulting
-chain pointer into tcf_action_goto_chain_exec(). This turns the split
-check/use into a single check/use on one value.
+  CPU0 (add)                          CPU1 (lookup)
+  -------------------------------     ------------------------------
+  _opp_add()
+    mutex_lock()
+    list_add(&new_opp->node, head)
+    mutex_unlock()                    _opp_table_find_key()
+                                        mutex_lock()
+                                        dev_pm_opp_get(opp)
+                                          kref_get()
+                                        mutex_unlock()
+    kref_init(&new_opp->kref)
+                                      dev_pm_opp_put()
+                                        kref_put_mutex()
 
-Fixes: ee3bbfe806cd ("net/sched: let actions use RCU to access 'goto_chain'")
-Reported-by: vega@nebusec.ai
-Tested-by: Victor Nogueira <victor@mojatatu.com>
-Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Reviewed-by: Davide Caratti <dcaratti@redhat.com>
-Link: https://patch.msgid.link/20260809090928.868186-1-jhs@mojatatu.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+The newly added OPP is inserted into the list before its kref is
+initialized. A concurrent lookup can find this OPP and increment its
+reference count while it is still uninitialized, leading to refcount
+corruption and a potential premature free.
+
+Fix this by initializing ->kref and ->opp_table before making the OPP
+visible via list_add(). This ensures any concurrent lookup observes a
+fully initialized object.
+
+Fixes: 7034764a1e4a (PM / OPP: Add 'struct kref' to struct dev_pm_opp)
+Co-developed-by: Ling Xu <ling_ling.xu@unisoc.com>
+Signed-off-by: Ling Xu <ling_ling.xu@unisoc.com>
+Signed-off-by: Di Shen <di.shen@unisoc.com>
+[ Viresh: Updated commit log ]
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/act_api.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/opp/core.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/net/sched/act_api.c b/net/sched/act_api.c
-index 9f21cc4d1dacc..7cfae02653002 100644
---- a/net/sched/act_api.c
-+++ b/net/sched/act_api.c
-@@ -40,11 +40,9 @@ int tcf_dev_queue_xmit(struct sk_buff *skb, int (*xmit)(struct sk_buff *skb))
- }
- EXPORT_SYMBOL_GPL(tcf_dev_queue_xmit);
+diff --git a/drivers/opp/core.c b/drivers/opp/core.c
+index 4211cfb27350f..0ba25aba48abf 100644
+--- a/drivers/opp/core.c
++++ b/drivers/opp/core.c
+@@ -1993,12 +1993,12 @@ int _opp_add(struct device *dev, struct dev_pm_opp *new_opp,
+ 		return ret;
+ 	}
  
--static void tcf_action_goto_chain_exec(const struct tc_action *a,
-+static void tcf_action_goto_chain_exec(const struct tcf_chain *chain,
- 				       struct tcf_result *res)
- {
--	const struct tcf_chain *chain = rcu_dereference_bh(a->goto_chain);
+-	list_add(&new_opp->node, head);
+-	mutex_unlock(&opp_table->lock);
 -
- 	res->goto_tp = rcu_dereference_bh(chain->filter_chain);
- }
+ 	new_opp->opp_table = opp_table;
+ 	kref_init(&new_opp->kref);
  
-@@ -1130,12 +1128,14 @@ int tcf_action_exec(struct sk_buff *skb, struct tc_action **actions,
- 					return TC_ACT_OK;
- 			}
- 		} else if (TC_ACT_EXT_CMP(ret, TC_ACT_GOTO_CHAIN)) {
--			if (unlikely(!rcu_access_pointer(a->goto_chain))) {
-+			struct tcf_chain *chain = rcu_dereference_bh(a->goto_chain);
++	list_add(&new_opp->node, head);
++	mutex_unlock(&opp_table->lock);
 +
-+			if (unlikely(!chain)) {
- 				tcf_set_drop_reason(skb,
- 						    SKB_DROP_REASON_TC_CHAIN_NOTFOUND);
- 				return TC_ACT_SHOT;
- 			}
--			tcf_action_goto_chain_exec(a, res);
-+			tcf_action_goto_chain_exec(chain, res);
- 		}
+ 	opp_debug_create_one(new_opp, opp_table);
  
- 		if (ret != TC_ACT_PIPE)
+ 	if (!_opp_supported_by_regulators(new_opp, opp_table)) {
 -- 
 2.53.0
 
