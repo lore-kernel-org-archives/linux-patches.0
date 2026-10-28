@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793210919;
-	b=xEv4/CRqifMrmxGHPq1wGXwon/gLuBz1mYBwg6yvS4GNl36bd6ccbvZzraEeZPrsWreJ
-	 rcOAfiHXTJaWqejNIHJWBU2WWEuKBMk4BKgVjSmIMKyoxYtXi/AOg369E9VMXVQqg3H3+
-	 seAygbQcN3gbRrZ2aiyAm6vUx6aNZhfrv6J9SFE/iUNbgGXpew0MdF3kGMPj6cbb4NvUD
-	 Dc0rH0kwAcYED1R+X69HBJibKP47KEc3JnS5NCvQCvlD+DAnWXQnSs/9CxnkCRyH7Kewk
-	 nRUiEV3twemNyEVMqMBtb8J5H2dbid8cS9OP7K3w0tn1ub2vh0bg2vq/y2VLmhgelgg==
+	t=1793210922;
+	b=mvzR3qO3sBvCWk7tADf+/eyh2yhqeVRAkeF9KR1sAgiDuqo55SHIxQrBoz99JCGlr5wa
+	 LRrmItYeQ9izlfmhz9DHjf5mU3w+t+B63bI077lT1e2cIswQyJIzrzn2Gx7s3+k8+hZcJ
+	 ZKKayQXfFxq8Tq7cFpgs9yS5ic8fBrkSngXoAI2AIhSfx7MQnxonD4odNgYvOJ9gZnXbN
+	 QEfQEular9F1S8KmqEpU/rwfh4u2dF/6u0fqsKshxPvfuR/wTQ0TSJKvV9UDHR2OkOdpR
+	 PcHkGrGOofqKJUrVtcQhHRWsS0bJLXpj5O3fZ1LRTnU65f/nkmW6VOz3RRlFOjepuxA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793210919;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793210922;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=V7jrPY39IIvrbK6AoyTMmKykH4olpuiybqEZ9uPzUr8=;
-	b=hkpE15yW9HtxIgSNNgsOF2NAzdEndxpzitvaweMXrmtWTB5I15TLhq6vl7f7B3qVaJLV
-	 jZUdBXs5g6es+EX/9RUUO3L0a+tsSFPOY0ZZkHChnC1rpbanx7lH9uT53SiFdbTQlcV/w
-	 KABgkuF/RCCsjzbTOI2izDDL9SO9oWFqu6xHKM6FPLkWWXd1Un5D1A9LHybpUcEwylH12
-	 bxcJ0928WzNbw+s4SFtAfkUIYF2Ebqj/XrHxH3GQmv22jjLb1En1RbSEv0dyyaqSoHbPZ
-	 X4nPtOs0+7sZfwFO7xsH92HVBdqVDez0DbliTcYPAz/RS0D3lo8B32OYY9Jk9uXES+w==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=EJprPCFR7BrKJHpqilsRxQOuWMHSHbiVtPOICveJ5EE=;
+	b=F/1ah+6U0bhpbemEvvMBaCJ/tBY3jNysz0zDALRrfhx8OWo6NnTr4GUCvsO5+qnSG4Hq
+	 OBXCSAbnlwJK6+fNLtTbcl1ltgPQl8g51qMIl5MulvLldELdHiOm0wXPDwVpS3t1KRHMz
+	 acKbcD9en5pZncqMVAOeVRdtoFHF2DV7p7C/fmCeUIZV0nunv4lwLYcrz/sSwdkimfoM8
+	 jC2dhnZrHR8jLCb/54OSe2hYv0gr9TQ+MdzZhPVjXrAUToFrZ77SrK/SK6OlMZ5WmyDcY
+	 b5yANxZM6FrmdGREmYlpgp5luJRtgvNimFzYhs2XAdKBO9REEIw81tR0blkmfbSG1eA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1sKu5nNt;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DUiAKwhS;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 835B4606A31A;
-	Wed, 28 Oct 2026 18:08:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EC71606A31D;
+	Wed, 28 Oct 2026 18:08:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1sKu5nNt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 879541F01825;
-	Wed, 28 Oct 2026 18:08:38 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DUiAKwhS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EA451F01825;
+	Wed, 28 Oct 2026 18:08:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793210919;
-	bh=V7jrPY39IIvrbK6AoyTMmKykH4olpuiybqEZ9uPzUr8=;
+	s=korg; t=1793210921;
+	bh=EJprPCFR7BrKJHpqilsRxQOuWMHSHbiVtPOICveJ5EE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1sKu5nNtgvkY2Gs6HRqmup61Q9VusERepLlzotp3yKkKjA9VY9XoiZlNBCOjEpdAg
-	 S06Guyld0axrMsXMOiEPZLI54RkaoqlK5Or7FUslAZqcadK6tOVHy5XoQXAFw3o+tM
-	 IYhY7wuWaqeSmgabLe2mDIKhCUt5gOaZApUGUqsg=
+	b=DUiAKwhSBO4e6ZHj/sXnASim83KPhzWz0RmrWTDjMG5L1+FVEGc+5Us+aFSULSQsT
+	 UcB/EzTip5ogp+etj4QVeuYUR8Lj9ZVZQgqINpBkWeo7gyz9kt/o4CkWybfRgH4kdQ
+	 zDO35S1SrryBNyhrJGNIl8Pq9VHX7XsySUJ5xoJs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Rosencutter <rosencutter@gmail.com>,
-	Lovekesh Solanki <lovekeshsolanki00@gmail.com>,
+	Daniel Salmun <salmundani@gmail.com>,
+	=?UTF-8?q?Rapha=C3=ABl=20Larocque?= <rlarocque@disroot.org>,
 	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 5.15 195/571] Input: synaptics - add LEN205b entry to smbus_pnp_ids for ThinkPad T490
-Date: Wed, 28 Oct 2026 17:55:42 +0100
-Message-ID: <20261028170012.636410505@linuxfoundation.org>
+Subject: [PATCH 5.15 196/571] Input: synaptics - limit T440p InterTouch quirk to LEN0036
+Date: Wed, 28 Oct 2026 17:55:43 +0100
+Message-ID: <20261028170012.658802463@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -62,41 +62,56 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lovekesh Solanki <lovekeshsolanki00@gmail.com>
+From: Raphaël Larocque <rlarocque@disroot.org>
 
-commit a961417c5ae77bbb728a23d9577ecd8f4d8a4b5a upstream.
+commit f0fd8993082ca229faa3f9844f1c9fe182eca20b upstream.
 
-Lenovo ThinkPad T490 has a Synaptics Touchpad that supports SMBus/RMI4
-mode, but is not listed in smbus_pnp_ids table.
+The ThinkPad L440 also uses board id 2722, but does not have the SMBus
+initialization problem seen on the T440p. On the L440, the SMBus
+companion becomes available shortly after psmouse probes, allowing the
+touchpad to use SMBus/RMI4 normally.
 
-Add LEN205b to smbus_pnp_ids[] passlist.
+The T440p's quirk is currently applied to all Synaptics touchpads with
+board id 2722, unnecessarily disabling SMBus InterTouch on the L440,
+as reported by Daniel Salmun.
 
-Reported-by: John Rosencutter <rosencutter@gmail.com>
-Closes: https://lore.kernel.org/all/CAOGuaRh025eKcBf9P8UrvtXNp68vQ0HVF2EbNMp-kpdaC1HNpA@mail.gmail.com/
-Signed-off-by: Lovekesh Solanki <lovekeshsolanki00@gmail.com>
-Link: https://patch.msgid.link/20260920200730.1836756-1-lovekeshsolanki00@gmail.com
+Restrict the quirk to PNP ID LEN0036, which identifies the T440p, so
+that other devices sharing board id 2722 retain their normal
+SMBus/RMI4 operation.
+
+Reported-by: Daniel Salmun <salmundani@gmail.com>
+Link: https://lore.kernel.org/all/20260925230039.236786-1-salmundani@gmail.com/
+Fixes: 26eb3d92c7a4 ("Input: synaptics - disable InterTouch on ThinkPad T440p (board id 2722)")
 Cc: stable@vger.kernel.org
+Signed-off-by: Raphaël Larocque <rlarocque@disroot.org>
+Link: https://patch.msgid.link/20260927005810.85971-1-rlarocque@disroot.org
 Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/mouse/synaptics.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/input/mouse/synaptics.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
 --- a/drivers/input/mouse/synaptics.c
 +++ b/drivers/input/mouse/synaptics.c
-@@ -188,6 +188,7 @@ static const char * const smbus_pnp_ids[
- 	"LEN2054", /* E480 */
- 	"LEN2055", /* E580 */
- 	"LEN2058", /* E490 */
-+	"LEN205b", /* T490 */
- 	"LEN2068", /* T14 Gen 1 */
- 	"SYN1221", /* TUXEDO InfinityBook Pro 14 v5 */
- 	"SYN3003", /* HP EliteBook 850 G1 */
+@@ -1809,8 +1809,10 @@ static int synaptics_setup_intertouch(st
+ 			return -ENXIO;
+ 		}
+ 
+-		/* Disable intertouch on known-broken board revisions */
+-		if (info->board_id == 2722) {
++		/* Disable intertouch on known-broken T440p board revisions */
++		if (info->board_id == 2722 &&
++		    psmouse_matches_pnp_id(psmouse,
++					   (const char * const []){"LEN0036", NULL})) {
+ 			psmouse_info(psmouse,
+ 				     "Disabling intertouch for board id %u\n",
+ 				     info->board_id);
 
 
