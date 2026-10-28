@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213107;
-	b=vc494heAZBNz1U9o2SLqmIswMumJvsWF/Tfq/EwAkhZSnuRp++OnilP5AFXe9mM0qWHK
-	 OGTzgzSsnE9K3vOHusoGoqH+jB6Nc3ibOuulPVV0M9RdLYmejCEs+1m2X34dgcMQaMKnl
-	 dMmhPPHmHHM4usWEj37pXid82hyxyP9QmIbF0ZmUlBcNFdYieKw5GbLZySJsONFxkwYBc
-	 0eQ6ZKRpmMN32wsIio4dhiUOGNzZxNpQNwxmkQbxurUz0aiWvnBj/+bU5rJ2LO2lSiAtK
-	 RLNqpx63VH3SWp238MI22DlTeO16C2cNQ9ySDfX1mH9kCLdHCFQ0+VRiAbffUmRK8jg==
+	t=1793213110;
+	b=jlKEEDCUdAXqBMJJLb6z0cSeK6cVHywl61E/TvMBEUKTtsX+iQHByMJznRtJqWY6ttUF
+	 0OqrBp3kBKoZ5AJqATaX7mFYHuE5X6KVXVMlXWCEkO1NZ2nklBB6a8u2x6PUumCJ6Q+fB
+	 CWRhW5/42A5H7dext0hGJ4u9oIor7mw1UMynLLazSHv6Z9jF6FfTqtcwb3+X76e5iDBec
+	 NdwAyINYn5dL3gAtRnurVZfUvjFGH54OL+kvrPQkvIL0Y+SfcZB4zKRXY/6+qL8Gsqjs+
+	 azoT69mXm6WnApTqevGar5irD+vRdy4t+DusBlUnRvY4RZQyx9XTFScMBHdbnLhFhiw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213107;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213110;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=cYXNmpfs2Xp9fRTwzOTHyXJHDa9iWIHDWmoaWxcGvo4=;
-	b=0Irik5xiEBY6NAlHY4BAoIyGmnxx0rgU5vUqFAqFOAZUMP8jhs3eA+4YIRYpyLsB0nG8
-	 Zm64m0lsxKlpS93NasD2SQCmtw7L6XO9biBl5RJ6JNHA/mVX7SEWL1kfi6b4Coy5y+rNx
-	 fDN8NMgBTjlca7o6VDI0bQN3+J/OHw3RfyhFzmJ3VTSiFQlA+GyW36WYaEqK7JzMXV6hT
-	 uljwL/C60pxiBtGsDRVKjhEDlBAmgxIGVpYAocOXR6QMkRp7LHz0BrGZ99RUVlVYHNvz4
-	 lISZV15Cgv/4rBD6Ixa8SJ/LNLmL1ot+wL/T3hxphI5viHmRhFRHGbhnXXxYJC0u2ZQ==
+	bh=Pprp56bhJMoTYB2PdLUOG9LoopIpfQTRl4BKay0ziCQ=;
+	b=URXLIHhz8BBZyHn9JUnYSuvF3cSHLypAt054mcl6P4QeRJho8p/LpkG2h6aJUZknFJGE
+	 hMiJvujyX59TN7WZjZ/Vde6diE00esebmoE3Ws2JIenpFeW+wlepHY9776BbnAHE3JvK7
+	 ujXwLbiLWVNwjCY+KfuILEo5wDHGHAUxw5HLa5iXugr2hSCz7LQNZr4nbdtJCYDL/dt52
+	 IKmCWfc5nug7oIkKV1+xE/MZ0KtNF0JA/lQVAIgTI+T8hSF2GvmuKXqmrpKycekzXQald
+	 /ces2ZtMBVhFKGKY2nRG2FybpZq8n3OrSPWAbUOMTXB3PirSaEBxUhbEIXWy4ciFaUA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z64vCX+E;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2BQMqyO1;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7D42606A31E;
-	Wed, 28 Oct 2026 18:45:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE6EC606A321;
+	Wed, 28 Oct 2026 18:45:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z64vCX+E
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45E4E1F01825;
-	Wed, 28 Oct 2026 18:45:06 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2BQMqyO1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25F281F01825;
+	Wed, 28 Oct 2026 18:45:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213106;
-	bh=cYXNmpfs2Xp9fRTwzOTHyXJHDa9iWIHDWmoaWxcGvo4=;
+	s=korg; t=1793213109;
+	bh=Pprp56bhJMoTYB2PdLUOG9LoopIpfQTRl4BKay0ziCQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=z64vCX+EdyR2e/UYN9vvkCj45ityrGal22UdZCaAaeIYxaOiPVjcFqUMq5E4zvWed
-	 ZP+sW1eIkG2ltn3Sdol0318S1RJt4OqlteNciIWYInQjoylcxYE1px24wmaFcDSE8n
-	 aqhGo675NcMKcS5KQKb9mNlbjhO+29L7Ur3+Yc8k=
+	b=2BQMqyO16pH6x4P/j9TtZoD3pyCeH0MLQs/dAZ2rLs+8Q5w38q0EE5c3KOLxRTLJp
+	 SRYd3olYMEAHnMQVw/OnDRQ/aC/DrWdLjmuGGxUIFnJbZCj8D3iV8JLhECRCgiKb+a
+	 0vO4aCBKm5RxyetApKCLuKmeWuaiC+Tfh3fpxNiM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0387/1887] USB: dwc2: shut down wakeup timer before freeing HCD state
-Date: Wed, 28 Oct 2026 17:41:23 +0100
-Message-ID: <20261028170508.042053510@linuxfoundation.org>
+	Zhang Jie <zhangjie14@huaqin.corp-partner.google.com>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Subject: [PATCH 6.1 0346/1887] iio: proximity: sx9324: Correct proximity channel resolution
+Date: Wed, 28 Oct 2026 17:40:42 +0100
+Message-ID: <20261028170507.102376446@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,54 +68,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
+From: Zhang Jie <zhangjie14@huaqin.corp-partner.google.com>
 
-[ Upstream commit fd772af9512cdecb83de34a461801533828e77fd ]
+commit fbf33cb18334e7cab1ed4ad2e9a98a1299ad874c upstream.
 
-dwc2_wakeup_detected() accesses the DWC2 host state and can rearm the
-wakeup timer.  dwc2_hcd_free() currently deletes the timer only after
-freeing host-owned state, and timer_delete() does not synchronize a
-callback or prevent it from being queued again.
+The proximity channels were previously defined with 12 realbits.
+However, PROXDIFF is read from RegDiffMsb (0x65) and RegDiffLsb
+(0x66). The SX9324 datasheet assigns bits 7:0 of each register to
+PROXDIFF and documents it as a signed two's-complement value
+(Revision 3, Section 8, Table 8, page 43). In contrast, RegOffsetMsb
+explicitly marks bits 7:6 as reserved. Thus, PROXDIFF is a 16-bit
+signed value.
 
-Stop and shut down the timer in dwc2_hcd_release(), before the HCD
-resources are freed.  This covers both the HCD initialization error path
-and normal HCD removal.
+With realbits = 12, sx_common_read_proximity() uses bit 11 as the
+sign bit in sign_extend32(), causing samples outside the 12-bit
+signed range to wrap into the [-2048, 2047] range.
 
-Fixes: 7359d482eb4d ("staging: HCD files for the DWC2 driver")
-Cc: stable <stable@kernel.org>
-Assisted-by: Codex:GPT-5
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
-Reviewed-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Link: https://patch.msgid.link/20260904065323.4047026-1-runyu.xiao@seu.edu.cn
+Correct the realbits value to 16 to accurately reflect the hardware.
+
+Tested on an SX9324-based device: a phase 0 DIFF readback of 0x7fff
+was reported as -1 before this change and as 32767 afterward.
+
+Fixes: 4c18a890dff8 ("iio:proximity:sx9324: Add SX9324 support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Zhang Jie <zhangjie14@huaqin.corp-partner.google.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-[ sashal: adapted timer_delete() removal to the existing del_timer() call ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/dwc2/hcd.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/iio/proximity/sx9324.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/usb/dwc2/hcd.c b/drivers/usb/dwc2/hcd.c
-index e0f84726f4b1d..5e71094a22b2f 100644
---- a/drivers/usb/dwc2/hcd.c
-+++ b/drivers/usb/dwc2/hcd.c
-@@ -5082,14 +5082,13 @@ static void dwc2_hcd_free(struct dwc2_hsotg *hsotg)
- 	}
- 
- 	cancel_work_sync(&hsotg->phy_reset_work);
--
--	del_timer(&hsotg->wkp_timer);
- }
- 
- static void dwc2_hcd_release(struct dwc2_hsotg *hsotg)
- {
- 	/* Turn off all host-specific interrupts */
- 	dwc2_disable_host_interrupts(hsotg);
-+	timer_shutdown_sync(&hsotg->wkp_timer);
- 
- 	dwc2_hcd_free(hsotg);
- }
--- 
-2.53.0
-
+--- a/drivers/iio/proximity/sx9324.c
++++ b/drivers/iio/proximity/sx9324.c
+@@ -223,7 +223,7 @@ static const struct iio_chan_spec_ext_in
+ 	.scan_index = idx,					 \
+ 	.scan_type = {						 \
+ 		.sign = 's',					 \
+-		.realbits = 12,					 \
++		.realbits = 16,					 \
+ 		.storagebits = 16,				 \
+ 		.endianness = IIO_BE,				 \
+ 	},							 \
 
 
