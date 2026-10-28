@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214144;
-	b=sDcPjRgIDTqtglNCu41yMXWSrqbUCpJUCMC0uVdK+OKczDmyRHePr/U6bwePV31OrUD+
-	 OI7d7fQT4fjBUUxFioIHHZYVF3txJPM0BUqQiI/7rPK81Z7NT74plv4aF8O8xu7iAPyQj
-	 DrJ14hzVE1xxVSZntd5QOMPzthd+32UNrHwxuNMrefFerU6oRuR6BNJ9koENChZt1dS7f
-	 atDzrJl6SQJj7TnVcS6TEIfhiR4E5Kkdhr2iWnD9rjj0CQBIuEUTnDLf2zagOTo5CP8RI
-	 rcpBUNiAVDNpDRrtUdfbHd4uaxZhNVV5sbK0LSHZO+0KkO2YQNpwBRgV+MB7pBJ/ggg==
+	t=1793214148;
+	b=RNRouC93I0xCAIrJWrsmv6nTHOy5C5KEF4U0SBppAvH3/wo2zlGcq+jAy99y4tifFXcD
+	 0wlLCgwcr7LsEghKRD/I3VlUTGTODVbvfGv0q08f3MVe2iblwAEf4rP8d4N/LzSno5FgA
+	 WuqYXw3VpyGvFEcV6R8RVy+8w0fG8iaPGjtPkFB95VhtKA00qHBpDfJ2VtluQFiBM2fcY
+	 G1OkezTZPeay+3HvP0bGHI5UdsMztlT58SsXk0AFHilmZhC9pmNeWkBKG93PcjWTow2W9
+	 xAZqpW5W6gCAH1pKkPbwl6ioNgtrK6rlKdHmDyYEXCB2fIad30pyMC/oq/QtdtIWxjg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214144;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214148;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ILhR7MJmEKozUKw2BQnMV3LGW0VDjYn3NZny3EQvMpk=;
-	b=yB68eQzywV7flg2HhzOrzDvM/chCOyY2jv3Tfc2XPzAmp1NOpV5DJf60GhZN+AXPVPoL
-	 G1uYGzYxsQjLnxYBoPDekavt++xh5Zd5iplrVnb+oUqX4i1xuNE3CulJn/GHC2QOwQgwN
-	 usCTs/QgZv0PpcgBn/5ZX5NLwd3etFncd+asI6un0JHdtzPOrPVYhX+GxaMN3QkJwcKgd
-	 ufy1RUDVTFg8dS8ssP6nlsUjsI31PfOYqggDu5uEN6odNqQNVamf301NZntDT83aOwY4v
-	 nGYWd/p2elMM2roVbOEvAZsVJeyD/45G4AGQ0mUwlM4bbUrox38Wh+RasaGGzcO9cPg==
+	bh=QijXEXiG9lBI4YyFAEeVnmI2UK7XyY7DI9E+xdyuAxE=;
+	b=iDFmVaWZg/bkRJ30jdplLSAfoan0qQ1OQb3sHnSm8zfL89v2l3k6M7k8w7WagW/aekW3
+	 mypFV6/VwhOa/P3rk+2Zd9KA8IwL19IROvgFLezGbKEQnXwyl8NXn69gr+aPGP+gzvHZG
+	 PF+YOp5KKFxIRXNuEbDiIs165fSCWvMBdbEr9BqyeJlhIguRjOwtjJcG5KQNRb9ygjkyg
+	 hQfTC8/SeUM97BgU6Ds6dfGvRBJBpHbGjnHbPeU+Rh/olKkp4WRw3OPBCLY57klKIaHXP
+	 RoKzQg04UU2+xKt6DciJK16/4odmkltLJdz6HEYO6cdGnFtvbvXMe9mZau4syN4pIcA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hklW56Rr;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eTy6WJIU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B710606A31A;
-	Wed, 28 Oct 2026 19:02:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0D3E606A31F;
+	Wed, 28 Oct 2026 19:02:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hklW56Rr
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC5391F01825;
-	Wed, 28 Oct 2026 19:02:23 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eTy6WJIU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC82C1F01825;
+	Wed, 28 Oct 2026 19:02:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214144;
-	bh=ILhR7MJmEKozUKw2BQnMV3LGW0VDjYn3NZny3EQvMpk=;
+	s=korg; t=1793214147;
+	bh=QijXEXiG9lBI4YyFAEeVnmI2UK7XyY7DI9E+xdyuAxE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hklW56RrtYxhv8YiFnMMBNA3XsvKkBYKX3vp+ZwxYCNwkvWsAi3ZPDkTH8Ojm+/50
-	 5v5r3pUK80Lg4WC77PBmEpcJqusn3ZqY9xV0aUYxXe5/zzet5BDr6byNrF5aSsbmFg
-	 9ez3YU4KWGDw2Jo3KkOEPDo+w0/PaHeiDHd2TzbY=
+	b=eTy6WJIUSAxt4MwKq9TGbbbTeWLxSLG+m+L7nWlXztxGS73z+CJvTP7eaAG/F4gx4
+	 b3A7i8f/10XF8IVJXSF7EQ92KmO02ppFkF5gBcZMbkiLof32Jof+GyGlOdoskEeSUQ
+	 biWMLokMzWBp1GfDDptpxmgHQKYyhE1hMGEpk3nA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Taehee Yoo <ap420073@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Vivek Kasireddy <vivek.kasireddy@intel.com>,
+	Jann Horn <jannh@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0754/1887] eth: bnxt: fix truesize for mb-xdp-pass case
-Date: Wed, 28 Oct 2026 17:47:30 +0100
-Message-ID: <20261028170516.602980376@linuxfoundation.org>
+Subject: [PATCH 6.1 0719/1887] udmabuf: fix memory leak on last export_udmabuf() error path
+Date: Wed, 28 Oct 2026 17:46:55 +0100
+Message-ID: <20261028170515.799465179@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,122 +68,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Taehee Yoo <ap420073@gmail.com>
+From: Jann Horn <jannh@google.com>
 
-[ Upstream commit 9f7b2aa5034e24d3c49db73d5f760c0435fe31c2 ]
+[ Upstream commit f49856f525acd5bef52ae28b7da2e001bbe7439e ]
 
-When mb-xdp is set and return is XDP_PASS, packet is converted from
-xdp_buff to sk_buff with xdp_update_skb_shared_info() in
-bnxt_xdp_build_skb().
-bnxt_xdp_build_skb() passes incorrect truesize argument to
-xdp_update_skb_shared_info().
-The truesize is calculated as BNXT_RX_PAGE_SIZE * sinfo->nr_frags but
-the skb_shared_info was wiped by napi_build_skb() before.
-So it stores sinfo->nr_frags before bnxt_xdp_build_skb() and use it
-instead of getting skb_shared_info from xdp_get_shared_info_from_buff().
+In export_udmabuf(), if dma_buf_fd() fails because the FD table is full, a
+dma_buf owning the udmabuf has already been created; but the error handling
+in udmabuf_create() will tear down the udmabuf without doing anything about
+the containing dma_buf.
 
-Splat looks like:
- ------------[ cut here ]------------
- WARNING: CPU: 2 PID: 0 at net/core/skbuff.c:6072 skb_try_coalesce+0x504/0x590
- Modules linked in: xt_nat xt_tcpudp veth af_packet xt_conntrack nft_chain_nat xt_MASQUERADE nf_conntrack_netlink xfrm_user xt_addrtype nft_coms
- CPU: 2 UID: 0 PID: 0 Comm: swapper/2 Not tainted 6.14.0-rc2+ #3
- RIP: 0010:skb_try_coalesce+0x504/0x590
- Code: 4b fd ff ff 49 8b 34 24 40 80 e6 40 0f 84 3d fd ff ff 49 8b 74 24 48 40 f6 c6 01 0f 84 2e fd ff ff 48 8d 4e ff e9 25 fd ff ff <0f> 0b e99
- RSP: 0018:ffffb62c4120caa8 EFLAGS: 00010287
- RAX: 0000000000000003 RBX: ffffb62c4120cb14 RCX: 0000000000000ec0
- RDX: 0000000000001000 RSI: ffffa06e5d7dc000 RDI: 0000000000000003
- RBP: ffffa06e5d7ddec0 R08: ffffa06e6120a800 R09: ffffa06e7a119900
- R10: 0000000000002310 R11: ffffa06e5d7dcec0 R12: ffffe4360575f740
- R13: ffffe43600000000 R14: 0000000000000002 R15: 0000000000000002
- FS:  0000000000000000(0000) GS:ffffa0755f700000(0000) knlGS:0000000000000000
- CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
- CR2: 00007f147b76b0f8 CR3: 00000001615d4000 CR4: 00000000007506f0
- PKRU: 55555554
- Call Trace:
-  <IRQ>
-  ? __warn+0x84/0x130
-  ? skb_try_coalesce+0x504/0x590
-  ? report_bug+0x18a/0x1a0
-  ? handle_bug+0x53/0x90
-  ? exc_invalid_op+0x14/0x70
-  ? asm_exc_invalid_op+0x16/0x20
-  ? skb_try_coalesce+0x504/0x590
-  inet_frag_reasm_finish+0x11f/0x2e0
-  ip_defrag+0x37a/0x900
-  ip_local_deliver+0x51/0x120
-  ip_sublist_rcv_finish+0x64/0x70
-  ip_sublist_rcv+0x179/0x210
-  ip_list_rcv+0xf9/0x130
+This leaves a dma_buf in memory that contains a dangling pointer; though
+that doesn't seem to lead to anything bad except a memory leak.
 
-How to reproduce:
-<Node A>
-ip link set $interface1 xdp obj xdp_pass.o
-ip link set $interface1 mtu 9000 up
-ip a a 10.0.0.1/24 dev $interface1
-<Node B>
-ip link set $interfac2 mtu 9000 up
-ip a a 10.0.0.2/24 dev $interface2
-ping 10.0.0.1 -s 65000
+Fix it by moving the dma_buf_fd() call out of export_udmabuf() so that we
+can give it different error handling.
 
-Following ping.py patch adds xdp-mb-pass case. so ping.py is going to be
-able to reproduce this issue.
+Note that the shape of this code changed a lot in commit 5e72b2b41a21
+("udmabuf: convert udmabuf driver to use folios"); but the memory leak
+seems to have existed since the introduction of udmabuf.
 
-Fixes: 1dc4c557bfed ("bnxt: adding bnxt_xdp_build_skb to build skb from multibuffer xdp_buff")
-Signed-off-by: Taehee Yoo <ap420073@gmail.com>
-Link: https://patch.msgid.link/20250309134219.91670-2-ap420073@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: fbb0de795078 ("Add udmabuf misc device")
+Acked-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
+Signed-off-by: Jann Horn <jannh@google.com>
+Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20241204-udmabuf-fixes-v2-3-23887289de1c@google.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt.c     | 8 ++++++++
- drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c | 2 +-
- 2 files changed, 9 insertions(+), 1 deletion(-)
+ drivers/dma-buf/udmabuf.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-index 3179412d7b33b..321504790948f 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-@@ -1833,6 +1833,7 @@ static int bnxt_rx_pkt(struct bnxt *bp, struct bnxt_cp_ring_info *cpr,
- 	struct rx_cmp_ext *rxcmp1;
- 	u32 tmp_raw_cons = *raw_cons;
- 	u16 cfa_code, cons, prod, cp_cons = RING_CMP(tmp_raw_cons);
-+	struct skb_shared_info *sinfo;
- 	struct bnxt_sw_rx_bd *rx_buf;
- 	unsigned int len;
- 	u8 *data_ptr, agg_bufs, cmp_type;
-@@ -1957,6 +1958,7 @@ static int bnxt_rx_pkt(struct bnxt *bp, struct bnxt_cp_ring_info *cpr,
- 							     false);
- 			if (!frag_len)
- 				goto oom_next_rx;
+diff --git a/drivers/dma-buf/udmabuf.c b/drivers/dma-buf/udmabuf.c
+index 6277c5b8d1251..3ba3574510743 100644
+--- a/drivers/dma-buf/udmabuf.c
++++ b/drivers/dma-buf/udmabuf.c
+@@ -289,7 +289,16 @@ static long udmabuf_create(struct miscdevice *device,
+ 	flags = 0;
+ 	if (head->flags & UDMABUF_FLAGS_CLOEXEC)
+ 		flags |= O_CLOEXEC;
+-	return dma_buf_fd(buf, flags);
 +
- 		}
- 		xdp_active = true;
- 	}
-@@ -1966,6 +1968,12 @@ static int bnxt_rx_pkt(struct bnxt *bp, struct bnxt_cp_ring_info *cpr,
- 			rc = 1;
- 			goto next_rx;
- 		}
-+		if (xdp_buff_has_frags(&xdp)) {
-+			sinfo = xdp_get_shared_info_from_buff(&xdp);
-+			agg_bufs = sinfo->nr_frags;
-+		} else {
-+			agg_bufs = 0;
-+		}
- 	}
++	/*
++	 * Ownership of ubuf is held by the dmabuf from here.
++	 * If the following dma_buf_fd() fails, dma_buf_put() cleans up both the
++	 * dmabuf and the ubuf (through udmabuf_ops.release).
++	 */
++	ret = dma_buf_fd(buf, flags);
++	if (ret < 0)
++		dma_buf_put(buf);
++	return ret;
  
- 	if (len <= bp->rx_copy_thresh) {
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c
-index 1b35805627c59..0d787e105b6ae 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c
-@@ -464,7 +464,7 @@ bnxt_xdp_build_skb(struct bnxt *bp, struct sk_buff *skb, u8 num_frags,
- 
- 	xdp_update_skb_shared_info(skb, num_frags,
- 				   sinfo->xdp_frags_size,
--				   BNXT_RX_PAGE_SIZE * sinfo->nr_frags,
-+				   BNXT_RX_PAGE_SIZE * num_frags,
- 				   xdp_buff_is_frag_pfmemalloc(xdp));
- 	return skb;
- }
+ err:
+ 	while (pgbuf > 0)
 -- 
 2.53.0
 
