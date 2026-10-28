@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793211143;
-	b=se1Pa9bUzkhdetCUskZDx+PjqPd8YJhb72YXZozxofsVZ8xndWlwff+NY9pldwdWufUI
-	 EMx9WfiWHUPCK4v0Y+C59cco4v6Fr7yiE2mbtaJCdCye1lrakbPS0iYayMkSu7SUyBicy
-	 5SN1vxRVqAFQ1NJp608h/hFlqAgVuoCqTkG6ZdQnA7THgucW3+tpeM+mRz0ylKrrhZ1we
-	 W4uhl5CLhAScxvwe6f4+n3IrVjCLFxtER4cy340YUGbPKBGzcvJvBlW7YBNiu5DWhPeY6
-	 fu8eLuVZ3lz25YAMEvaDzMx1qil8kbZ1hppHJVkVugb0+EoD9JxjUiMEOl5vWZWSQXw==
+	t=1793211146;
+	b=gV9TgGXC2VA4jY9aYiTJo6mJmifRLoz1YQucd4NgBPSBStogEWHSKjQfq6oahOCx1suc
+	 rdx/aRVF6UqI0BIXEGWb/uLxBvDJVAUy+bZh5KZ7cOmPlmALjOpNCUI71Lu+q4Hj3fivg
+	 c365g1U4HxekFeU+LOX5sxuu/ci7XmRSmNPY5vPhE9fSZoZNr8OR3E471k5TQPwh/KLCo
+	 yxVrIK6b0DEPTEUjZrL3Iz7oF6dvCLP065EpLCy5GLHPVvfI1aVhOVdnEjxhs76YyTmh9
+	 JVI1hPXUtoBkGS/KMMgDr5+gDDu+cHw5hjtReCVBt2NVx5ielpQ0QyKE9CWVLxTpy4g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793211143;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793211146;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=wSyU7QnhuqpVOuG/Fsxw8FKU5a0wE/lu7mflwcqIMwc=;
-	b=TcLLPiYTlenjV5/1GAlO56AyslLUaAVgWlGwBMQ27MHGpUoQ4xrtGxF1mGbCz7dorCfG
-	 2nYd1dIucDpRiL/AceTXXlk9VXHfXHjmVAENs/8XvRhQfycq0jRuQOBzS7aZDtQxx41xM
-	 yS24CJ+5N22k7d7dkcZuQmSJPhHJ8QYWzB44mIdaugV596ANFvZUdppecOzCphb6egJ7y
-	 zVq9wjJRVRSku81PRNM6KB3dbe+f6tWf9Oo/EjxU78AioIbq3e7t5C258Oe979aPely/P
-	 Ruw6jGmWoPebjumBk474HZ3mI3usESP3JUQXenobYp1NCseIMXVt6JOj8U5dzfnaCww==
+	bh=LSY8iA0NAg3NJoQFFPWZxz8Lq4eGxyka42PYhVKz+bM=;
+	b=vJiR9sUDtIXuTLhKV4Zo2jA1wqv1EYueqfM7W2howG/O4qvi7cnQr0qN7TPF+torlCV4
+	 IeiQNu3z5oFXgyj10U2R63Da1hFgTulu77VhGNqOIA/CWp0Z5QSck+YSSTlebj62icGgB
+	 EP4Zo1d9F3wVEOy48orJwFgAW69GpcOAepU4ceLstroh32WtWyMUBycFut7DBPEL6hbLY
+	 /4pE8ocLgSsMMjXy33mDKyA7nRKIm66KNtIDvYNG0JUNwqUweTyi6EM8EeZ6NlWncV5nf
+	 57qUub4qHPa8SfZMIP4eZMuSrjAegZdtdZJWBDVwnbeaZJs7luhLIrcOhqd1JaSnAjg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dIhVZn6a;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TegdULJa;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3544C606A972;
-	Wed, 28 Oct 2026 18:12:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D48D606A973;
+	Wed, 28 Oct 2026 18:12:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dIhVZn6a
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87A911F01825;
-	Wed, 28 Oct 2026 18:12:22 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TegdULJa
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E2891F031E5;
+	Wed, 28 Oct 2026 18:12:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793211143;
-	bh=wSyU7QnhuqpVOuG/Fsxw8FKU5a0wE/lu7mflwcqIMwc=;
+	s=korg; t=1793211145;
+	bh=LSY8iA0NAg3NJoQFFPWZxz8Lq4eGxyka42PYhVKz+bM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dIhVZn6aYgivUiVD45HNitPVfYY02jnuzUceQgf8zAyddkrMuvXGKASD9t44o0m/U
-	 qWUwC13S5+yH0n/XOYVFSe6Ladt3wafXRAFJgTzrVsKIWkfM3F5eITNeYSeWYx4Fvk
-	 c1hQWeNzB/pBuBOgzDkojAxMZs0m7+HHD5AxW420=
+	b=TegdULJaJIIRTH+E07rd/ULMEz3M/AOb2q4kNwkY/zfkpVJf0o6elroB3Owjqw+aq
+	 Ys6oKOZoAmKj8JxOaguesJejjJPtoxoXUMxHGD/dRp2fNYyDGHCh1AE1jiGEsHRjce
+	 QPVf7Y9xcLK3OSz9s5c5axJjM/0i1EAE/QAVKeLM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leon Hwang <leon.hwang@linux.dev>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 230/571] kprobes: Skip disarmed probes when checking optkprobe overlap
-Date: Wed, 28 Oct 2026 17:56:17 +0100
-Message-ID: <20261028170013.461509228@linuxfoundation.org>
+	Christoph Hellwig <hch@lst.de>,
+	Daehyeon Ko <4ncienth@gmail.com>,
+	Keith Busch <kbusch@kernel.org>
+Subject: [PATCH 5.15 231/571] nvme-multipath: fix underflow in ANA log bounds checks
+Date: Wed, 28 Oct 2026 17:56:18 +0100
+Message-ID: <20261028170013.486121867@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -68,63 +68,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leon Hwang <leon.hwang@linux.dev>
+From: Daehyeon Ko <4ncienth@gmail.com>
 
-[ Upstream commit 7a39c732a22ec4a369af9e19fbe3d666ec83eec4 ]
+commit 63fa2d9c9c37020bd2703fe2a6a38027b5abeb15 upstream.
 
-On x86, an optkprobe at A replaces five bytes with a jump. If a disabled
-probe B is at A+2, get_optimized_kprobe() stops at B when arming a new
-probe C at A+4. It leaves A optimized:
+The number of ANA groups advertised through Identify Controller sizes the
+ANA log buffer. The ANA log header and group descriptors independently
+supply the number of groups and namespace IDs to parse.
 
-              A    A+1  A+2  A+3  A+4
-  A's jump  | e9 | d0 | d1 | d2 | d3 |
-  after C   | e9 | d0 | d1 | d2 | cc |
+Both bounds checks subtract an untrusted object size from ana_log_size
+before comparing the current offset. If the object is larger than the
+buffer, the size_t subtraction underflows and lets the parser read beyond
+ana_log_buf.
 
-The INT3 for C overwrites the last byte of A's jump displacement, so
-execution can jump to the wrong address. B can have prepared optinsns
-while disarmed, but has no jump to unoptimize.
+Check the current offset before the first subtraction and compare each
+object size with the remaining buffer instead. This rejects inconsistent
+ANA data before dereferencing a truncated group descriptor or walking an
+oversized namespace ID array.
 
-Continue past disarmed and unprepared probes to find the active optimized
-probe before arming a probe in its jump.
-
-Link: https://lore.kernel.org/all/20260930053618.104498-1-leon.hwang@linux.dev/
-
-Fixes: afd66255b9a4 ("kprobes: Introduce kprobes jump optimization")
+Fixes: 0d0b660f214d ("nvme: add ANA support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Leon Hwang <leon.hwang@linux.dev>
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-[ sashal: Adapted get_optimized_kprobe() to use unsigned long addresses with byte-wise scanning. ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Assisted-by: LLM
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Daehyeon Ko <4ncienth@gmail.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/kprobes.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/nvme/host/multipath.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/kprobes.c b/kernel/kprobes.c
-index 69d166f42d04a..f2bcfae09fd9d 100644
---- a/kernel/kprobes.c
-+++ b/kernel/kprobes.c
-@@ -485,14 +485,16 @@ static int kprobe_queued(struct kprobe *p)
- static struct kprobe *get_optimized_kprobe(unsigned long addr)
- {
- 	int i;
--	struct kprobe *p = NULL;
-+	struct kprobe *p;
- 	struct optimized_kprobe *op;
+--- a/drivers/nvme/host/multipath.c
++++ b/drivers/nvme/host/multipath.c
+@@ -548,7 +548,8 @@ static int nvme_parse_ana_log(struct nvm
+ 		u32 nr_nsids;
+ 		size_t nsid_buf_size;
  
- 	/* Don't check i == 0, since that is a breakpoint case. */
--	for (i = 1; !p && i < MAX_OPTIMIZED_LENGTH; i++)
-+	for (i = 1; i < MAX_OPTIMIZED_LENGTH; i++) {
- 		p = get_kprobe((void *)(addr - i));
-+		/* A disabled probe can have prepared, but inactive, optinsns. */
-+		if (!p || !kprobe_optready(p) || kprobe_disarmed(p))
-+			continue;
+-		if (WARN_ON_ONCE(offset > ctrl->ana_log_size - sizeof(*desc)))
++		if (WARN_ON_ONCE(offset > ctrl->ana_log_size ||
++				 sizeof(*desc) > ctrl->ana_log_size - offset))
+ 			return -EINVAL;
  
--	if (p && kprobe_optready(p)) {
- 		op = container_of(p, struct optimized_kprobe, kp);
- 		if (arch_within_optimized_kprobe(op, addr))
- 			return p;
--- 
-2.53.0
-
+ 		nr_nsids = le32_to_cpu(desc->nnsids);
+@@ -564,7 +565,7 @@ static int nvme_parse_ana_log(struct nvm
+ 			return -EINVAL;
+ 
+ 		offset += sizeof(*desc);
+-		if (WARN_ON_ONCE(offset > ctrl->ana_log_size - nsid_buf_size))
++		if (WARN_ON_ONCE(nsid_buf_size > ctrl->ana_log_size - offset))
+ 			return -EINVAL;
+ 
+ 		error = cb(ctrl, desc, data);
 
 
