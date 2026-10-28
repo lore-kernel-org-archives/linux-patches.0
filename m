@@ -1,56 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215635;
-	b=iAlqZBYIkYUG6dWhKhnOEut4d3utle3phITqf4uCrGZyGEeM6WNsAZxQIqNRX20mI6tD
-	 CvTQ1cfdGXxnF5YswRxEwswIoVGDiF7I3fXZGiN3d8pio1+sDVMZKts+BgAsmubySUNhE
-	 B4DNQaiDRMupC7mTj5xboKdk3PKLbEIvJajq4dneNQAqESZZQjP/QVyAqH/xdo2JbPvKQ
-	 dVoRC+kNy/NTvG4ncnd3uYdJxbhrCr9n05g6WiTTlbZiJNCkEuGIoZlmki/DJQg59oeQg
-	 bzAB6NcK2SXI5rmgoJUc5DYcNAyqkG1TYZK2OeGrPiZuMrC0JlhRHL6e4Kx1tj1uQ6Q==
+	t=1793215638;
+	b=08kmLGayIQQ1ti7uuToqUo99fCuj/bDNHUaKzzItD8eqTa3MeIQDtlFOMI5V1Sh/Ufw7
+	 B/JlnoKsnYDQ9V3lryPiOTZnX5P9QokTeQUKX8xdITXbuKl/hUfXG7m49AjDXnEY9GU7B
+	 zY7yhEd7H7jsi/dtQ7wCS1L/kMi/cbjh4LHnQvfj6fWoqLpDZuoAPoWlGL21ds7WpGYmw
+	 kBs9iG6ucS/j2bNQC8mpxbE2Na9XIBvl076jPAm47xZHXks9vtqHnozI7JKR0Rx/PcHij
+	 kfrj2UKcXGOWlNgpVED60ogdPXpt4IbPwiCIv7U96/ng9JGez1nZ8XPfysSyw0gTtOw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215635;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215638;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=S4FF7vctiglWvJnIxlxN/hivEE06tQM1+uQUi2GbujA=;
-	b=wYZYSQY150uW+34TDdkVjnqhplDEivMm/VrX4wJaDsPsoHNUluhFQ942XmTxkR8nOcWE
-	 Z1UyumjdVNEkFhsAQan95iugVrkZp7wyctIwsGgaVy8poI+p/C2b1QI5Jm7zYbDnIAZo2
-	 7VOGHwpVL3eheF00EbhuRTrYWJJcL3PUvL3PdmS0hmjgBdpQzRm7mlM4iexPYlM+eLhuJ
-	 DBl9uVfaUywrKvYuIlbYhMOME6fWbcp8JenEojq3dYYT82fjPSWKtJk/r4OemiiLDUz5v
-	 QNfwHmoEX/P0DEhFkXwvs3MWfCqJowFicO9OYUYgwiRH/TBSmQToyJxLkuCtkfPXIPw==
+	bh=dpLJlhYcFtKcEIs9cd698Bjc3k115dV04ts/k8AOMWQ=;
+	b=08RMkzjvrUz5fnN0fIUSobbqBbPAcnckUnvmuOTxPnC5X81wzSv9K4Zb1cQyU9YxzZn0
+	 lJZdtsZxXfPHqbFwtnZPQ8ZYc5m3WlJQE36hW8/iohH4ntKc+bCYMPMs9FJAfZ2Lo7ZU4
+	 xzixb11zpraeWFN1nR4emf3zNsapRgQ95kR0SID3d6IGrUESi3M2rueyq79TnW0qzWoK+
+	 1BoeLmuVWDT7HIw5toVRWoK88XNLPQ8nPZ6lTDkhzfpDeVloiJ4hnaJw5kZ+wJLsiGGOM
+	 C6L4Z/5pXN8SF8ZxYm5EPuDUtl8zKHt17j9QESGm9LWAaPfVrxTKQJAqaKwTFDQedkQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BKqhNE2J;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pwBkYl9F;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCBBE606A31C;
-	Wed, 28 Oct 2026 19:27:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEA9B606A31C;
+	Wed, 28 Oct 2026 19:27:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BKqhNE2J
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C3EA1F01825;
-	Wed, 28 Oct 2026 19:27:14 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pwBkYl9F
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07F4F1F01825;
+	Wed, 28 Oct 2026 19:27:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215634;
-	bh=S4FF7vctiglWvJnIxlxN/hivEE06tQM1+uQUi2GbujA=;
+	s=korg; t=1793215637;
+	bh=dpLJlhYcFtKcEIs9cd698Bjc3k115dV04ts/k8AOMWQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BKqhNE2J8U9gmO5daunK0mN2MtMwUlii0EBEWu5OWS+qmH3GI8zglWJzLovQx3dds
-	 4Yb+2jtlkUnw/FFnZpw2be4MhOchPkT5useqJBgVpj59rfSmckFmFP62Rxy/FLbc9Y
-	 yKzuiEQwXu5g50MHgf67lMcPJGS6ZNgYvjcMUD+E=
+	b=pwBkYl9F0q78r+skvSbkD9W8O/M1ezs3yHKVm3umRezrZM2d89SZnx5+bGc/eYoF3
+	 D2N26AACRyeVuxkRiCggqGe3GojoXhoyPN/qca7azIwHTjD1U4UEmf7ViKi5sFkgHL
+	 YYeI14GGhbHSNsXJdFoJjsOF/CBh/nxFf8liarA4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Tom Zanussi <tom.zanussi@linux.intel.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Tom Zanussi <zanussi@kernel.org>,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Steven Rostedt <rostedt@goodmis.org>,
+	Pauli Virtanen <pav@iki.fi>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1272/1887] tracing: Bound synthetic-field strings with seq_buf
-Date: Wed, 28 Oct 2026 17:56:08 +0100
-Message-ID: <20261028170528.367843896@linuxfoundation.org>
+Subject: [PATCH 6.1 1281/1887] Bluetooth: ISO: hold sk properly in iso_conn_ready
+Date: Wed, 28 Oct 2026 17:56:17 +0100
+Message-ID: <20261028170528.577359665@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -72,125 +68,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Pauli Virtanen <pav@iki.fi>
 
-[ Upstream commit f07883450eb14d1cf020b55d9f3a7ec5683bcd26 ]
+[ Upstream commit 0d255e63fcf3f13a570d7ac11678fa1164ac015c ]
 
-The synthetic field helpers build a prefixed synthetic variable name and
-a generated hist command in fixed MAX_FILTER_STR_VAL buffers. The
-current code appends those strings with raw strcat(), so long key lists,
-field names, or saved filters can run past the end of the staging
-buffers.
+sk deref in iso_conn_ready must be done either under conn->lock, or
+holding a refcount, to avoid concurrent close. conn->sk is currently
+accessed without either:
 
-Build both strings with seq_buf and propagate -E2BIG if either the
-synthetic variable name or the generated command exceeds
-MAX_FILTER_STR_VAL. This keeps the existing tracing-side limit while
-using the helper intended for bounded command construction.
+    [Task 1]            [Task 2]
+                        iso_sock_release
+    iso_conn_ready
+      sk = conn->sk
+                          lock_sock(sk)
+                            conn->sk = NULL
+      lock_sock(sk)
+                          release_sock(sk)
+                          iso_sock_kill(sk)
+       UAF on sk deref
 
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc: Tom Zanussi <tom.zanussi@linux.intel.com>
-Link: https://patch.msgid.link/20260430043350.57928-1-pengpeng@iscas.ac.cn
-Fixes: 02205a6752f2 ("tracing: Add support for 'field variables'")
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Reviewed-by: Tom Zanussi <zanussi@kernel.org>
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-[ sdr: Moved struct seq_buf *s for upside-down x-mas tree formatting ]
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Fix possible UAF by holding sk refcount in iso_conn_ready().  Also
+recheck after lock_sock that the socket is still valid.  Adjust locking
+so conn->sk is cleared only under lock_sock.
+
+Fixes: 27c24fda62b60 ("Bluetooth: switch to lock_sock in SCO")
+Signed-off-by: Pauli Virtanen <pav@iki.fi>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace_events_hist.c | 41 ++++++++++++++++++++++----------
- 1 file changed, 29 insertions(+), 12 deletions(-)
+ net/bluetooth/iso.c | 27 +++++++++++++++++++++------
+ 1 file changed, 21 insertions(+), 6 deletions(-)
 
-diff --git a/kernel/trace/trace_events_hist.c b/kernel/trace/trace_events_hist.c
-index 7753a024829b8..40d9de933fc85 100644
---- a/kernel/trace/trace_events_hist.c
-+++ b/kernel/trace/trace_events_hist.c
-@@ -8,6 +8,7 @@
- #include <linux/module.h>
- #include <linux/kallsyms.h>
- #include <linux/security.h>
-+#include <linux/seq_buf.h>
- #include <linux/mutex.h>
- #include <linux/slab.h>
- #include <linux/stacktrace.h>
-@@ -2882,13 +2883,22 @@ find_synthetic_field_var(struct hist_trigger_data *target_hist_data,
+diff --git a/net/bluetooth/iso.c b/net/bluetooth/iso.c
+index 2281a915c6533..999ed7df4dfa3 100644
+--- a/net/bluetooth/iso.c
++++ b/net/bluetooth/iso.c
+@@ -1463,14 +1463,11 @@ static void iso_sock_ready(struct sock *sk)
  {
- 	struct hist_field *event_var;
- 	char *synthetic_name;
-+	struct seq_buf s;
+ 	BT_DBG("sk %p", sk);
  
- 	synthetic_name = kzalloc(MAX_FILTER_STR_VAL, GFP_KERNEL);
- 	if (!synthetic_name)
- 		return ERR_PTR(-ENOMEM);
+-	if (!sk)
+-		return;
++	lockdep_assert(lockdep_sock_is_held(sk));
  
--	strcpy(synthetic_name, "synthetic_");
--	strcat(synthetic_name, field_name);
-+	seq_buf_init(&s, synthetic_name, MAX_FILTER_STR_VAL);
-+	seq_buf_printf(&s, "synthetic_%s", field_name);
+-	lock_sock(sk);
+ 	iso_sock_clear_timer(sk);
+ 	sk->sk_state = BT_CONNECTED;
+ 	sk->sk_state_change(sk);
+-	release_sock(sk);
+ }
+ 
+ struct iso_list_data {
+@@ -1488,14 +1485,32 @@ static bool iso_match_big(struct sock *sk, void *data)
+ static void iso_conn_ready(struct iso_conn *conn)
+ {
+ 	struct sock *parent;
+-	struct sock *sk = conn->sk;
++	struct sock *sk;
+ 	struct hci_ev_le_big_sync_estabilished *ev;
+ 	struct hci_conn *hcon;
+ 
+ 	BT_DBG("conn %p", conn);
+ 
++	iso_conn_lock(conn);
++	sk = iso_sock_hold(conn);
++	iso_conn_unlock(conn);
 +
-+	/* Terminate synthetic_name with a NUL. */
-+	seq_buf_str(&s);
+ 	if (sk) {
+-		iso_sock_ready(conn->sk);
++		lock_sock(sk);
 +
-+	if (seq_buf_has_overflowed(&s)) {
-+		kfree(synthetic_name);
-+		return ERR_PTR(-E2BIG);
-+	}
- 
- 	event_var = find_event_var(target_hist_data, system, event_name, synthetic_name);
- 
-@@ -2934,6 +2944,7 @@ create_field_var_hist(struct hist_trigger_data *target_hist_data,
- 	struct hist_field *key_field;
- 	struct hist_field *event_var;
- 	char *saved_filter;
-+	struct seq_buf s;
- 	char *cmd;
- 	int ret;
- 
-@@ -2978,28 +2989,34 @@ create_field_var_hist(struct hist_trigger_data *target_hist_data,
- 		return ERR_PTR(-ENOMEM);
- 	}
- 
-+	seq_buf_init(&s, cmd, MAX_FILTER_STR_VAL);
++		/* conn->sk may have become NULL if racing with sk close, but
++		 * due to held hdev->lock, it can't become different sk.
++		 */
++		if (!conn->sk) {
++			release_sock(sk);
++			sock_put(sk);
++			return;
++		}
 +
- 	/* Use the same keys as the compatible histogram */
--	strcat(cmd, "keys=");
-+	seq_buf_puts(&s, "keys=");
- 
- 	for_each_hist_key_field(i, hist_data) {
- 		key_field = hist_data->fields[i];
- 		if (!first)
--			strcat(cmd, ",");
--		strcat(cmd, key_field->field->name);
-+			seq_buf_putc(&s, ',');
-+		seq_buf_puts(&s, key_field->field->name);
- 		first = false;
- 	}
- 
- 	/* Create the synthetic field variable specification */
--	strcat(cmd, ":synthetic_");
--	strcat(cmd, field_name);
--	strcat(cmd, "=");
--	strcat(cmd, field_name);
-+	seq_buf_printf(&s, ":synthetic_%s=%s", field_name, field_name);
- 
- 	/* Use the same filter as the compatible histogram */
- 	saved_filter = find_trigger_filter(hist_data, file);
--	if (saved_filter) {
--		strcat(cmd, " if ");
--		strcat(cmd, saved_filter);
-+	if (saved_filter)
-+		seq_buf_printf(&s, " if %s", saved_filter);
++		iso_sock_ready(sk);
 +
-+	/* Terminate cmd with a NUL. */
-+	seq_buf_str(&s);
-+
-+	if (seq_buf_has_overflowed(&s)) {
-+		kfree(cmd);
-+		kfree(var_hist);
-+		return ERR_PTR(-E2BIG);
- 	}
- 
- 	var_hist->cmd = kstrdup(cmd, GFP_KERNEL);
++		release_sock(sk);
++		sock_put(sk);
+ 	} else {
+ 		hcon = conn->hcon;
+ 		if (!hcon)
 -- 
 2.53.0
 
