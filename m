@@ -1,56 +1,50 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793208790;
-	b=JPhmi0T+1rJpBN5f1xE1dSMNQAUD+uijhL1XaCFQVt7M6Oiwj5d5Hr+ZYELDpYAHKexS
-	 XJyiTelmZVc4w93d8UxAlcX3rSZO5xWhgS5pUycXZidqAcuwT2xgimOkdEVl1jPE6Q6I8
-	 BzGH5ptINnl+BR2tTF6hdtI0UsF3+m5lru2Wv9nCkiEIwKkE9anIbyr0NJHL6UoRtB3nx
-	 w9Zor3OmzMLDhkSHqBx+pISFX/y6KqOVysEkiMC1NIez/nAKqFxCq8d5XjkX8VaBi7rxr
-	 tXAaui72quk4SAb3RfoW6rAag8A1tBHvVs+AgbNuOFdf7BNYNdttVnNAsv1b9grQkRg==
+	t=1793208793;
+	b=K698wOR/U1xAK0K7Wc/05nL/Nis1GucCKS2v+dqB+Cxp//8sPf8ECTADZd9e2gCnh1UH
+	 lLAuwlD/XsBxxhRg3lPqcBrPs8zbEbnv8jhvdWbbwpJMmrnBfd2UmZ4mZlfnTun4AVwDJ
+	 jyn9wHaYzn2tOpRPEH/ZGp4s1POwvxBYG8bj62RpJhYVvVeUkQ/TGdoEGsripXA4fw8ux
+	 wSeSPgsdCU52Ig7VLDXxRa1Xs2jJ8o8lkfbw/bcI+zqZXxE0eP9ZFpgaorvOiR+YRUvoQ
+	 GQf5owhAxmgMhq4x6DFJydOW+UTOkWy37fxD+m4SPjYv+668pHuzOoJwYXb0Tnegj7Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793208790;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793208793;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=1f4hmg5KV6wEsN3ioz1sYM8S1yY3dRvsg7mEfbk94rE=;
-	b=UeXV9SwRXAN+Q1KgeerH9axjU2M7tio91vXbTyfwFtc/PgTZ2IIXN69Gx0Dl8+b+Ymlj
-	 Mqk0hHYhc/p5e+58C3t9OD+SijYKgaxPhNRf54Q2zmPCzYjTOz4Vt3qYX9GzJJPNKLJSx
-	 F7s5PMQLUgG/KP2jODKwAVhoGpBfFHEl7sKNe++eijHiR0RrAKPKoZ0qsdMpLa019P3VG
-	 pNohfT8ov+tpSRyhKgnVbhZ+mlKIeshKcJpDrfrbSDlUkAyl/FlAjbDmtG83AFUxwTTWE
-	 PNYi4Y1AlY+qnvrI47W6IPeb992dtM0S3wCFsYdssaAGG3ShAX2OysClHvlzsNz13MA==
+	bh=boy7M6IiRkrfY8K64owS5FpH3gu1sXN3V16CeEVcX14=;
+	b=rn7LqFgGy894Kdyp5+NaWdTOM5EAVYFr5UI26l3VFn7Wp4S3syNJS+Tfn/OcGDrU4LO0
+	 YEJiA3T1nKMATJLMPOBlxKXSGA2+GloiVnTEd//uoBbXUOItOGa/uj+8eJjY/YWvvLcbZ
+	 c2TiwULnEO3VbDjFWrwn4/zb5KhJO/gQZR8y/bOBUQV19W36SFdAZo8DaFXYy7DLFouah
+	 H9p0dGjcPo+sPf6GOcIpr6ixx8J8if5Ygbig4em5euHhTJdDM176KAXvHTjtrMTbjDdwr
+	 OlhqNe69kkGwX3DT5s2zN8NwdT0rABqymmA1wAxoVR7dPKcqvLz2Je90D5MMccJ3tMw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="kB1/D/Ct";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Kg85KVjE;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35DF9606A31C;
-	Wed, 28 Oct 2026 17:33:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1890C606A31A;
+	Wed, 28 Oct 2026 17:33:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kB1/D/Ct
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C0591F01825;
-	Wed, 28 Oct 2026 17:33:09 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Kg85KVjE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6995F1F01825;
+	Wed, 28 Oct 2026 17:33:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793208790;
-	bh=1f4hmg5KV6wEsN3ioz1sYM8S1yY3dRvsg7mEfbk94rE=;
+	s=korg; t=1793208793;
+	bh=boy7M6IiRkrfY8K64owS5FpH3gu1sXN3V16CeEVcX14=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kB1/D/Ct+xcoJfIoUS1pYnufoV3coNdrZ/mC8gJKa8ZwADHIwyU4XAKSj7fP0/RzC
-	 2NkkcYYMWpN+j03IvmN3RduIhKCnUeoi3hE/Gk82kC/MUYiA/HAdJgYbZtqWEqGZB2
-	 sE2m38Pnv8WBZxibsJ73G3bjeK1PZkf/trJiUsDc=
+	b=Kg85KVjEp8O8sQcJytCd4iFkRm5qP541joj3mbDPrNyEVgLJQu/rJrRk2Snypd9dU
+	 7xTpZ0XIKyIEAc08tZES2xrdkS3bNRtdhJIocFAtBtDNJW9zqQKqnfIqHb+vDR6GMf
+	 m2u+/lFbjIaNt18FNPRIL5FL0uOsSLNbUZiQUefs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Victor Nogueira <victor@mojatatu.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Pedro Tammela <pctammela@mojatatu.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>,
-	"Miguel Gazquez (Schneider Electric)" <miguel.gazquez@bootlin.com>
-Subject: [PATCH 5.10 244/516] net: sched: cls_u32: Undo tcf_bind_filter if u32_replace_hw_knode
-Date: Wed, 28 Oct 2026 17:56:36 +0100
-Message-ID: <20261028170009.280115374@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 245/516] Revert "scsi: sd: sd_zbc: Use logical blocks as unit when querying zones"
+Date: Wed, 28 Oct 2026 17:56:37 +0100
+Message-ID: <20261028170009.303288995@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -72,121 +66,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Victor Nogueira <victor@mojatatu.com>
+This reverts commit cab3909d1be51cf1caa78ac8683e4bb69aab4c4f, the 5.10.y
+backport of upstream 43af5da09efb.
 
-[ Upstream commit 9cb36faedeafb9720ac236aeae2ea57091d90a09 ]
+As Simon Liebold found for the identical 5.15.y backport, the change
+makes sd_zbc_report_zones() advance with
 
-When u32_replace_hw_knode fails, we need to undo the tcf_bind_filter
-operation done at u32_set_parms.
+	lba += sdkp->zone_blocks * i;
 
-Fixes: d34e3e181395 ("net: cls_u32: Add support for skip-sw flag to tc u32 classifier.")
-Signed-off-by: Victor Nogueira <victor@mojatatu.com>
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Reviewed-by: Pedro Tammela <pctammela@mojatatu.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Miguel Gazquez (Schneider Electric) <miguel.gazquez@bootlin.com>
+zone_blocks is u32, so the product is computed in 32 bits and wraps
+before being widened into the 64-bit lba. A host-managed SMR drive that
+returns 8192 or more zones in one REPORT ZONES has the next batch
+requested at a wrapped LBA, zone revalidation fails, and sd truncates
+the device to zero capacity.
+
+Mainline never shipped this form: c976e588b34e ("scsi: sd: sd_zbc: Hide
+gap zones") rewrote the loop in the same series, and it is not in
+5.10.y. 43af5da09efb is only a cleanup, and the scsi_debug fix that
+pulled it in as a dependency (93dde0bf2f39) touches only scsi_debug.c,
+so revert it.
+
+Link: https://lore.kernel.org/stable/20261005150713.3919586-1-simonlie@amazon.de/
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/cls_u32.c | 40 ++++++++++++++++++++++++++++++----------
- 1 file changed, 30 insertions(+), 10 deletions(-)
+ drivers/scsi/sd_zbc.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/net/sched/cls_u32.c b/net/sched/cls_u32.c
-index e501390ccd758..5221ce128526a 100644
---- a/net/sched/cls_u32.c
-+++ b/net/sched/cls_u32.c
-@@ -709,8 +709,23 @@ static const struct nla_policy u32_policy[TCA_U32_MAX + 1] = {
- 	[TCA_U32_FLAGS]		= { .type = NLA_U32 },
- };
+diff --git a/drivers/scsi/sd_zbc.c b/drivers/scsi/sd_zbc.c
+index d5991d905d5f7..cc197f1863138 100644
+--- a/drivers/scsi/sd_zbc.c
++++ b/drivers/scsi/sd_zbc.c
+@@ -224,7 +224,7 @@ int sd_zbc_report_zones(struct gendisk *disk, sector_t sector,
+ 			unsigned int nr_zones, report_zones_cb cb, void *data)
+ {
+ 	struct scsi_disk *sdkp = scsi_disk(disk);
+-	sector_t lba = sectors_to_logical(sdkp->device, sector);
++	sector_t capacity = logical_to_sectors(sdkp->device, sdkp->capacity);
+ 	unsigned int nr, i;
+ 	unsigned char *buf;
+ 	size_t offset, buflen = 0;
+@@ -235,7 +235,7 @@ int sd_zbc_report_zones(struct gendisk *disk, sector_t sector,
+ 		/* Not a zoned device */
+ 		return -EOPNOTSUPP;
  
-+static void u32_unbind_filter(struct tcf_proto *tp, struct tc_u_knode *n,
-+			      struct nlattr **tb)
-+{
-+	if (tb[TCA_U32_CLASSID])
-+		tcf_unbind_filter(tp, &n->res);
-+}
-+
-+static void u32_bind_filter(struct tcf_proto *tp, struct tc_u_knode *n,
-+			    unsigned long base, struct nlattr **tb)
-+{
-+	if (tb[TCA_U32_CLASSID]) {
-+		n->res.classid = nla_get_u32(tb[TCA_U32_CLASSID]);
-+		tcf_bind_filter(tp, &n->res, base);
-+	}
-+}
-+
- static int u32_set_parms(struct net *net, struct tcf_proto *tp,
--			 unsigned long base,
- 			 struct tc_u_knode *n, struct nlattr **tb,
- 			 struct nlattr *est, bool ovr,
- 			 struct netlink_ext_ack *extack)
-@@ -756,10 +771,6 @@ static int u32_set_parms(struct net *net, struct tcf_proto *tp,
- 		if (ht_old)
- 			ht_old->refcnt--;
- 	}
--	if (tb[TCA_U32_CLASSID]) {
--		n->res.classid = nla_get_u32(tb[TCA_U32_CLASSID]);
--		tcf_bind_filter(tp, &n->res, base);
--	}
+-	if (!sdkp->capacity)
++	if (!capacity)
+ 		/* Device gone or invalid */
+ 		return -ENODEV;
  
- 	if (ifindex >= 0)
- 		n->ifindex = ifindex;
-@@ -898,16 +909,20 @@ static int u32_change(struct net *net, struct sk_buff *in_skb,
- 		if (!new)
- 			return -ENOMEM;
+@@ -243,8 +243,9 @@ int sd_zbc_report_zones(struct gendisk *disk, sector_t sector,
+ 	if (!buf)
+ 		return -ENOMEM;
  
--		err = u32_set_parms(net, tp, base, new, tb,
--				    tca[TCA_RATE], ovr, extack);
-+		err = u32_set_parms(net, tp, new, tb,tca[TCA_RATE],
-+				    ovr, extack);
+-	while (zone_idx < nr_zones && lba < sdkp->capacity) {
+-		ret = sd_zbc_do_report_zones(sdkp, buf, buflen, lba, true);
++	while (zone_idx < nr_zones && sector < capacity) {
++		ret = sd_zbc_do_report_zones(sdkp, buf, buflen,
++				sectors_to_logical(sdkp->device, sector), true);
+ 		if (ret)
+ 			goto out;
  
- 		if (err) {
- 			__u32_destroy_key(new);
- 			return err;
+@@ -262,7 +263,7 @@ int sd_zbc_report_zones(struct gendisk *disk, sector_t sector,
+ 			zone_idx++;
  		}
  
-+		u32_bind_filter(tp, new, base, tb);
-+
- 		err = u32_replace_hw_knode(tp, new, flags, extack);
- 		if (err) {
-+			u32_unbind_filter(tp, new, tb);
-+
- 			__u32_destroy_key(new);
- 			return err;
- 		}
-@@ -1108,15 +1123,18 @@ static int u32_change(struct net *net, struct sk_buff *in_skb,
- 	}
- #endif
- 
--	err = u32_set_parms(net, tp, base, n, tb, tca[TCA_RATE], ovr,
-+	err = u32_set_parms(net, tp, n, tb, tca[TCA_RATE], ovr,
- 			    extack);
-+
-+	u32_bind_filter(tp, n, base, tb);
-+
- 	if (err == 0) {
- 		struct tc_u_knode __rcu **ins;
- 		struct tc_u_knode *pins;
- 
- 		err = u32_replace_hw_knode(tp, n, flags, extack);
- 		if (err)
--			goto errhw;
-+			goto errunbind;
- 
- 		if (!tc_in_hw(n->flags))
- 			n->flags |= TCA_CLS_FLAGS_NOT_IN_HW;
-@@ -1134,7 +1152,9 @@ static int u32_change(struct net *net, struct sk_buff *in_skb,
- 		return 0;
+-		lba += sdkp->zone_blocks * i;
++		sector += sd_zbc_zone_sectors(sdkp) * i;
  	}
  
--errhw:
-+errunbind:
-+	u32_unbind_filter(tp, n, tb);
-+
- #ifdef CONFIG_CLS_U32_MARK
- 	free_percpu(n->pcpu_success);
- #endif
+ 	ret = zone_idx;
 -- 
 2.53.0
 
