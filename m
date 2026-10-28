@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793208286;
-	b=v5k+2ZY5Jvf5kse1gBeb5BwH3mF7Lu4Z0UGLlK/vARNc5mpTa6gtKpxZo34DeqqoETsA
-	 4yUZWBVhUBzsbz5DcAwyg6BA/e5apsWpuWpiFVivgxHIDNwG2f3DNGbWAPf36k7BMGkiN
-	 rjZlGIcNqD8ZEvZsVngn66MGj3Ul7spjuUUQIrzsDLsASa7Qt2BrDxXn2fR2TXdH4gAkx
-	 Y2WmG1eKMqCYC6+B6VRqnwqCG4kT7pDXQmkd8yLvuYu7dHsnBeZTY4u+GvX9aaaTan03C
-	 kz3cWzZ4C+ygWvrkv372TCZf9IJd9zDOvl5CkOkDlj8ybPYWU1T0xA+ddbASJEWjwVg==
+	t=1793208289;
+	b=qwRMOZKrdsiVhovegpbRUyG4Ku6JT7bZCbteOS4xFVAwEf8Lgi6+fu5wMVNx3n3vf7iY
+	 LWMdj2gn9OSqZGRObDGTJih8kpVxwZ8wW9xoJ5Iuzp+oSb/dBZe9/lpaWlk7Bc2+GAqdd
+	 V3xH9eHfPvJrzQPzbiYlgmRy8CY9OSyvJiVBt6smbMDSf0wPdvto5OFmAV2Rn8iyKyM+I
+	 6Ej7/t4IOcLjIM7UmhlD1i7JUhDoHs24aXcfj7LbNJx4eYKYF6pAMdz6PTWvMIN6+QwSI
+	 EZ5QhwqZob2NYRikE94CFun3w5NdulaF0msYFL3TJaLNkZ1SiZqT1n/ESAPRWeprrsg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793208286;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793208289;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=dtly/3eRCA+5y9zalZ8uvsrMCMZn/RkSzQgK/pT3KZU=;
-	b=2993JY06EmSpqL6bnd1LQVGa4ytvreKAzW3XTgd1E4mNWMJI7apTN6BbwNtM1iJG0Vc0
-	 VQkGvIHv4XOFnAsWRDNhq2gKzSCNXjc9ymWLXSbhj/3836MV4/LPyQsE2nwaI5D9lvz8K
-	 n2znEtl0K64XTGUBZi6mhIFSJJZjE0Q7hFJWKgORuIAFECIsLP67QarRmHHoQ8JG3Horr
-	 P6IbT8+q5mr5Dt8JCuALcR5Kn6cjzcQf0m5SwFDrdluG0/PI69E2gEFPIn5GhwrjSqvTd
-	 93Jlt1rDwUUc4Y2jfGK8H1oKJ+5aV3AlU3KlP0ZVpARLKd883erWKHTKNdomWnzFnPQ==
+	bh=u0YuMJSYipoUVwIJkW3U4IuUFcSBjfTSNe5AH8FKijI=;
+	b=qVU5dkNHaalfPkNOpbrGIthRPFjGa5vBV9hBe6qNnt49A/rncqb1thaFIWKnJOxpmUeu
+	 NRNPhS3pa1mSonCNMEFGCDS0vtMEFmvKKA/4C6bm4veMfpGaxS58Y6NQYdoPIYISqExE7
+	 YOm0u4Hj20ZHqOtNUhPct50EsOkQKN4MJVJCttx7nWABi1xu6IuiUsqi6OgSHy8/tsHIV
+	 R99qvnQ152GLkSmq+vSObEL8cQhwiSmLr3Lvu8vMlRIMhW0vPPadZGo6L5tqy6LYYP/yj
+	 bTZM04HIpdk/hyi5Kel6OCz8y2ChVedlx9k1Sk+nowPkCNnqls3XtIBF18v8QcV6zCA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lmaXJNS0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ThKGvHP0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21E62606A31C;
-	Wed, 28 Oct 2026 17:24:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F4170606A32E;
+	Wed, 28 Oct 2026 17:24:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lmaXJNS0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7228B1F01828;
-	Wed, 28 Oct 2026 17:24:45 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ThKGvHP0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 516C21F031E2;
+	Wed, 28 Oct 2026 17:24:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793208286;
-	bh=dtly/3eRCA+5y9zalZ8uvsrMCMZn/RkSzQgK/pT3KZU=;
+	s=korg; t=1793208288;
+	bh=u0YuMJSYipoUVwIJkW3U4IuUFcSBjfTSNe5AH8FKijI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lmaXJNS0nX9t8kEHJ48vJ0NdlJJ0nq6E/N5ZsuJxfRtQd+XUfMusfP2MLQ/4cQmZf
-	 CsZNJxGWFgnu/aiyxLip4WzATApJ5eY5TdVn27UQnafGOYC22D8YOPDKZ/6n7rXlGo
-	 FluPUCV/QcmWw9V58dL2DBPFc05mHM4cWnV7tuB8=
+	b=ThKGvHP0Van01t9JzKXFJcKDLvG9igJ6ao0mTpg7f9FxXEvRyhUihAvE8I5TAt4MI
+	 Jn5DRvIiJTbmJ9iL+0wbt58pQ+0kH4VHIIRt8VJPYg2gCRJGfdiNaOXGu+qkKgijLU
+	 YZzrBYLBMawgDi6CRr1ekvbIui+wqDZ4SeWQa2ss=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fan Wu <fanwu01@zju.edu.cn>,
-	Ulf Hansson <ulfh@kernel.org>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 067/516] mmc: via-sdmmc: cancel card-detect work on remove
-Date: Wed, 28 Oct 2026 17:53:39 +0100
-Message-ID: <20261028170005.112186362@linuxfoundation.org>
+Subject: [PATCH 5.10 068/516] workqueue: Add resource managed version of delayed work init
+Date: Wed, 28 Oct 2026 17:53:40 +0100
+Message-ID: <20261028170005.136233413@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -68,50 +68,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>
 
-[ Upstream commit 57e5d877f898d5e5c9d672a77bb6bdd24f0d9bf5 ]
+[ Upstream commit 0341ce5443949588e93581b49b934cdde2befbf8 ]
 
-Disabling the device interrupt and freeing the IRQ prevents new card-detect
-work from being queued, but carddet_work already queued by the handler can
-still run after via_sd_remove() returns. via_sdc_card_detect() recovers the
-host through container_of() and dereferences its MMIO base; once remove()
-returns the host can be freed, so that work would touch freed memory.
+A few drivers which need a delayed work-queue must cancel work at driver
+detach. Some of those implement remove() solely for this purpose. Help
+drivers to avoid unnecessary remove and error-branch implementation by
+adding managed verision of delayed work initialization. This will also
+help drivers to avoid mixing manual and devm based unwinding when other
+resources are handled by devm.
 
-Cancel carddet_work after freeing the IRQ and before cancelling
-finish_bh_work, which the card-detect handler can also queue. carddet_work
-can re-enable the interrupt through via_reset_pcictrl(); mask it again
-afterwards.
-
-This issue was found by an in-house static analysis tool and confirmed by
-manual code review.
-
-Fixes: f0bf7f61b840 ("mmc: Add new via-sdmmc host controller driver")
-Cc: stable@vger.kernel.org
-Assisted-by: Codex:gpt-5.6
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
-Signed-off-by: Ulf Hansson <ulfh@kernel.org>
-[ adjusted context to retain del_timer_sync() instead of timer_delete_sync(). ]
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>
+Link: https://lore.kernel.org/r/51769ea4668198deb798fe47fcfb5f5288d61586.1616506559.git.matti.vaittinen@fi.rohmeurope.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 9d34c9d660c3 ("power: supply: bq24257: fix use-after-free on remove")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/via-sdmmc.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ include/linux/devm-helpers.h | 53 ++++++++++++++++++++++++++++++++++++
+ 1 file changed, 53 insertions(+)
+ create mode 100644 include/linux/devm-helpers.h
 
-diff --git a/drivers/mmc/host/via-sdmmc.c b/drivers/mmc/host/via-sdmmc.c
-index 6ec1e94c9f149..d7afab69fc0d8 100644
---- a/drivers/mmc/host/via-sdmmc.c
-+++ b/drivers/mmc/host/via-sdmmc.c
-@@ -1211,6 +1211,10 @@ static void via_sd_remove(struct pci_dev *pcidev)
- 
- 	free_irq(pcidev->irq, sdhost);
- 
-+	cancel_work_sync(&sdhost->carddet_work);
-+	/* carddet_work may re-enable the interrupt via via_reset_pcictrl(). */
-+	writeb(0x0, sdhost->pcictrl_mmiobase + VIA_CRDR_PCIINTCTRL);
+diff --git a/include/linux/devm-helpers.h b/include/linux/devm-helpers.h
+new file mode 100644
+index 0000000000000..f64e0c9f3763c
+--- /dev/null
++++ b/include/linux/devm-helpers.h
+@@ -0,0 +1,53 @@
++/* SPDX-License-Identifier: GPL-2.0-only */
++#ifndef __LINUX_DEVM_HELPERS_H
++#define __LINUX_DEVM_HELPERS_H
 +
- 	del_timer_sync(&sdhost->timer);
- 
- 	tasklet_kill(&sdhost->finish_tasklet);
++/*
++ * Functions which do automatically cancel operations or release resources upon
++ * driver detach.
++ *
++ * These should be helpful to avoid mixing the manual and devm-based resource
++ * management which can be source of annoying, rarely occurring,
++ * hard-to-reproduce bugs.
++ *
++ * Please take into account that devm based cancellation may be performed some
++ * time after the remove() is ran.
++ *
++ * Thus mixing devm and manual resource management can easily cause problems
++ * when unwinding operations with dependencies. IRQ scheduling a work in a queue
++ * is typical example where IRQs are often devm-managed and WQs are manually
++ * cleaned at remove(). If IRQs are not manually freed at remove() (and this is
++ * often the case when we use devm for IRQs) we have a period of time after
++ * remove() - and before devm managed IRQs are freed - where new IRQ may fire
++ * and schedule a work item which won't be cancelled because remove() was
++ * already ran.
++ */
++
++#include <linux/device.h>
++#include <linux/workqueue.h>
++
++static inline void devm_delayed_work_drop(void *res)
++{
++	cancel_delayed_work_sync(res);
++}
++
++/**
++ * devm_delayed_work_autocancel - Resource-managed work allocation
++ * @dev: Device which lifetime work is bound to
++ * @pdata: work to be cancelled when driver is detached
++ *
++ * Initialize work which is automatically cancelled when driver is detached.
++ * A few drivers need delayed work which must be cancelled before driver
++ * is detached to avoid accessing removed resources.
++ * devm_delayed_work_autocancel() can be used to omit the explicit
++ * cancelleation when driver is detached.
++ */
++static inline int devm_delayed_work_autocancel(struct device *dev,
++					       struct delayed_work *w,
++					       work_func_t worker)
++{
++	INIT_DELAYED_WORK(w, worker);
++	return devm_add_action(dev, devm_delayed_work_drop, w);
++}
++
++#endif
 -- 
 2.53.0
 
