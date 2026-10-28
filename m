@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793210415;
-	b=ipSjHDw4XgI+NsbUZ8gtbwylJQfvCEznYy0AlSFkn1RAEGyorr1QmCS0n+q87a9qq9mR
-	 B9PnwApSmjedWCwuxmxKdMXOgO/QH3JiEAjgMqUcNNeKj2u2Wq/lUd1M6NS04jq6+BYqh
-	 R9HHz9Up1Qyzt8uIxsG40J6ZoHGFWtTHxCGJKnhv3p/qVqIYNuRzzwwlxHVDjQe5bD4i+
-	 hIj1E0JBBpZJneAzqIpYpVn6xZXyJNkFrXSHR2dwCG6zybSgXTYYHoHew91Ojlx43v0Y0
-	 GVy1AZ4y2jPyEvS6r2uoXzx//0IgELL91LPLPoeH7C5hGbhKYIIjcwiuqMjSygOckMg==
+	t=1793210418;
+	b=Gnlnb8Uwwsbz/jjDS8kJw0nvglrmVwNCF9IWgErAxyaOEQMrsVC9XHDyjl8sqiaVCG3t
+	 EAJrGzrNbI3zaCkyE+42s0KXCNeH2DetdsnEcafO2Hg+RQgNJSgjPLW0fAGrJB/UFMq/l
+	 ZSuR7GnZaz2GCoDFQVeByNTFajFaK6/AKEqxu2cMFX7Cs0x+YXWMJyGIUB3BLff8XOvzz
+	 5Tc2tqltLXIXqy8PUKxDLCinPNgk2FNY6Z7fsafi/+02rw/7rtXnzDqwGX6FRu5xByxkX
+	 pxM7Kzdxhf89kaG46fnwaLgikUGGj8boTqMRnqbDofgXXI6AkFIOgDC7+uFohtXRmvQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793210415;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793210418;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=tsKVYN1MmHIeps29r+mk19fcWySjCoLQZJVUqiDuSfI=;
-	b=TZCtzfGg3W9kEpBlIEaE6xDQ0oxY+BJSjWb8XU2MlBGWaTBNrwM9j0IG80VQs/Bryxzo
-	 BGgUFDqQtsnDzikKlvbxFIa9e9WehXhqY907sJ28MX11um4i02TtLkE2lXP6vuRpFQ+6a
-	 4yCVD0HdzjMWJcirYxcseWdbe050N3ye//kzMpa7sQCsgDGxdDKMtzInPCdNioZtZclt/
-	 TZY+pFUDhJVXD1/pQbSo6pKwbKU8xEpgLez1uVsE5O0NsNkGaG7lji/fsJDAnKYoeanIJ
-	 Aa/ItH+Kh5QB4b6sVoMvXVJpqrK6/zhuhvsa4TgYcOVMySny1dfDcJjRLmtZ4R6/NoA==
+	bh=t/eMFk/gIiBd/StfQnzE+2ohH/ojs1R1buGeTxEtdnk=;
+	b=n3iKVf92RyxKcylJ5jL63Zw0qCrTahBbPok0oa+wCErhjkAitEIMogkzV/Re00Py+3SN
+	 PNv4GEtTuLkTcJRBq1O8MDh1+GIjQgcnK0dRoHun3hX5QAy/uHEuuZKLPUAn4XoqAlhVt
+	 PrsLcEAqtgHd+HWhdsCe1oz8hREj87G8tvBOAVdUqdpbM1ILbT0Iuh5yveTrkcdEwju9Q
+	 mmN1PYZY68P0nGQa9mfgdhbL5MVq5Q4ziBMh+l0qqW8q2kbh6Kjgy9z6/hR8G2XF9HgAx
+	 49/dgzPRL9HQqvBjqVtgRwfhagk65PHFuvIcUQwm60aNQt1UNaXlZUoEYS3ffbKmd4w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vid57C84;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rCsSybEo;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32F03606A31D;
-	Wed, 28 Oct 2026 18:00:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49D40606A31C;
+	Wed, 28 Oct 2026 18:00:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vid57C84
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EABB1F01828;
-	Wed, 28 Oct 2026 18:00:14 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rCsSybEo
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5740B1F01825;
+	Wed, 28 Oct 2026 18:00:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793210415;
-	bh=tsKVYN1MmHIeps29r+mk19fcWySjCoLQZJVUqiDuSfI=;
+	s=korg; t=1793210417;
+	bh=t/eMFk/gIiBd/StfQnzE+2ohH/ojs1R1buGeTxEtdnk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vid57C842iGQTAW9WtxcJCel9O7vk9YMqELC3SWp0X5zx9/OSenUth60rwaPeJYIo
-	 LlXEnpv5wrS/1atWTrUy7QQfp4z90wLyiIjej5PpcYQw/Q4EdX5q/0ckGaT2RRZ6MJ
-	 5bbFHPGbXW+U+t++mE671F1wdSY8TNs2bhA0aF70=
+	b=rCsSybEol/8H0OsIbL1ufMz7mQGsmcDKXBUrQVbEi37R+Lx2mWkc8q41cc5guR7cH
+	 oCcXTsHWu5lNqx6AyuPDxt+pkTNjrWawte2CWee8vTqN26QhjZVi1YWuWx0zc57dz4
+	 TP3Y7loCOKBU3AYvCybzvjV1JTqXi0dlz+uOosPk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Hyunwoo Kim <imv4bel@gmail.com>,
+	John Johansen <john.johansen@canonical.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 019/571] kprobes: Protect kprobe_blacklist with RCU
-Date: Wed, 28 Oct 2026 17:52:46 +0100
-Message-ID: <20261028170008.478172105@linuxfoundation.org>
+Subject: [PATCH 5.15 002/571] apparmor: fix out-of-bounds write when null terminating a label vec
+Date: Wed, 28 Oct 2026 17:52:29 +0100
+Message-ID: <20261028170008.072413792@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -68,97 +68,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+From: Hyunwoo Kim <imv4bel@gmail.com>
 
-[ Upstream commit 0c4256196b3a105307e2235fbfd85e768bbcdd0f ]
+[ Upstream commit 9f1e40193eef7f047e6b77cfb4b4cafdecd7a123 ]
 
-__within_kprobe_blacklist() traverses kprobe_blacklist without holding
-kprobe_mutex. When a module is unloaded, kprobe_remove_area_blacklist()
-removes blacklist entries and immediately frees them with kfree().
-A concurrent call to within_kprobe_blacklist() can therefore dereference
-freed memory.
+aa_vec_unique() null terminates at vec[n - dups] when VEC_FLAG_TERMINATE
+is passed. If the components are all distinct no duplicates are dropped,
+dups is 0 and the terminator goes to vec[n], so the caller has to provide
+room for n + 1 entries.
 
-Furthermore, within_kprobe_blacklist() can be called in atomic or
-non-preemptible contexts where the sleeping kprobe_mutex cannot be taken.
+aa_label_strn_parse() sets up its vector with vec_setup(profile, vec, len,
+gfp) and then calls aa_vec_unique(vec, len, VEC_FLAG_TERMINATE), but
+vec_setup() does not reserve the terminator entry. Up to LOCAL_VEC_ENTRIES
+it uses the local array of LOCAL_VEC_ENTRIES pointers, above that it
+allocates exactly len pointers. The terminator therefore lands one entry
+past the end of the local array when len is LOCAL_VEC_ENTRIES, and one
+entry past the end of the allocation when len is larger.
 
-Protect kprobe_blacklist with RCU. Use guard(rcu)() and
-list_for_each_entry_rcu() for traversal, list_add_tail_rcu() for
-insertions, list_del_rcu() for deletions, and kfree_rcu() to reclaim
-entries safely after a grace period.
+len comes from the number of "//&" separated components in the label name
+and label_count_strn_entries() does not bound it. An unprivileged task
+reaches the parse by writing to /proc/self/attr/apparmor/current or through
+lsm_set_self_attr(2), both of which go through do_setattr(), and the name
+is parsed before the change_profile permission is checked.
+The query_label() path behind the securityfs .access file, which is
+mode 0666, performs no permission check at all. Every component has to
+resolve to a loaded profile, so a system with policy loaded is required.
 
-Link: https://lore.kernel.org/all/178810004323.64882.16493230858653316962.stgit@devnote2/
+The other two VEC_FLAG_TERMINATE users work on a label vec that
+aa_label_alloc() has already sized with "+ 1 for null terminator entry on
+vec". Reserve the same entry in vec_setup() and DEFINE_VEC(). Passing
+len + 1 from the caller instead would move len == LOCAL_VEC_ENTRIES out of
+the local array and into kzalloc().
 
-Fixes: 376e242429bf ("kprobes: Introduce NOKPROBE_SYMBOL() macro to maintain kprobes blacklist")
+Fixes: f1bd904175e8 ("apparmor: add the base fns() for domain labels")
 Cc: stable@vger.kernel.org
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/all/20260807155802.F06041F000E9@smtp.kernel.org/
-Assisted-by: Antigravity:gemini-3.7-flash
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-[ Replaced guard(rcu)() with explicit rcu_read_lock()/rcu_read_unlock() to avoid declaration-after-statement warnings. ]
+Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
+Signed-off-by: John Johansen <john.johansen@canonical.com>
+[ replaced unavailable kzalloc_objs() with equivalent kcalloc() allocation ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/kprobes.h |  1 +
- kernel/kprobes.c        | 19 ++++++++++++++-----
- 2 files changed, 15 insertions(+), 5 deletions(-)
+ security/apparmor/include/label.h | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/include/linux/kprobes.h b/include/linux/kprobes.h
-index 24b0eaa5de307..e5262feff8267 100644
---- a/include/linux/kprobes.h
-+++ b/include/linux/kprobes.h
-@@ -177,6 +177,7 @@ struct kprobe_blacklist_entry {
- 	struct list_head list;
- 	unsigned long start_addr;
- 	unsigned long end_addr;
-+	struct rcu_head rcu;
- };
+diff --git a/security/apparmor/include/label.h b/security/apparmor/include/label.h
+index 55986388dfaeb..a987bd117d88d 100644
+--- a/security/apparmor/include/label.h
++++ b/security/apparmor/include/label.h
+@@ -22,7 +22,7 @@ struct aa_ns;
  
- #ifdef CONFIG_KPROBES
-diff --git a/kernel/kprobes.c b/kernel/kprobes.c
-index 0d463859ad329..69d166f42d04a 100644
---- a/kernel/kprobes.c
-+++ b/kernel/kprobes.c
-@@ -1427,11 +1427,20 @@ static bool __within_kprobe_blacklist(unsigned long addr)
- 	/*
- 	 * If there exists a kprobe_blacklist, verify and
- 	 * fail any probe registration in the prohibited area
-+	 * Note: this can return true during transition period where
-+	 * (start_addr, end_addr) in the black list is shrinking
-+	 * but old entry has not been removed yet. This is acceptable
-+	 * because the worst case is that we reject more probes than
-+	 * we should.
- 	 */
--	list_for_each_entry(ent, &kprobe_blacklist, list) {
--		if (addr >= ent->start_addr && addr < ent->end_addr)
-+	rcu_read_lock();
-+	list_for_each_entry_rcu(ent, &kprobe_blacklist, list) {
-+		if (addr >= ent->start_addr && addr < ent->end_addr) {
-+			rcu_read_unlock();
- 			return true;
-+		}
- 	}
-+	rcu_read_unlock();
- 	return false;
- }
+ #define LOCAL_VEC_ENTRIES 8
+ #define DEFINE_VEC(T, V)						\
+-	struct aa_ ## T *(_ ## V ## _localtmp)[LOCAL_VEC_ENTRIES];	\
++	struct aa_ ## T *(_ ## V ## _localtmp)[LOCAL_VEC_ENTRIES + 1];	\
+ 	struct aa_ ## T **(V)
  
-@@ -2258,7 +2267,7 @@ int kprobe_add_ksym_blacklist(unsigned long entry)
- 	ent->start_addr = entry;
- 	ent->end_addr = entry + size;
- 	INIT_LIST_HEAD(&ent->list);
--	list_add_tail(&ent->list, &kprobe_blacklist);
-+	list_add_tail_rcu(&ent->list, &kprobe_blacklist);
- 
- 	return (int)size;
- }
-@@ -2287,8 +2296,8 @@ static void kprobe_remove_area_blacklist(unsigned long start, unsigned long end)
- 	list_for_each_entry_safe(ent, n, &kprobe_blacklist, list) {
- 		if (ent->start_addr < start || ent->start_addr >= end)
- 			continue;
--		list_del(&ent->list);
--		kfree(ent);
-+		list_del_rcu(&ent->list);
-+		kfree_rcu(ent, rcu);
- 	}
- }
+ #define vec_setup(T, V, N, GFP)						\
+@@ -30,10 +30,10 @@ struct aa_ns;
+ 	if ((N) <= LOCAL_VEC_ENTRIES) {					\
+ 		typeof(N) i;						\
+ 		(V) = (_ ## V ## _localtmp);				\
+-		for (i = 0; i < (N); i++)				\
++		for (i = 0; i <= (N); i++)				\
+ 			(V)[i] = NULL;					\
+ 	} else								\
+-		(V) = kzalloc(sizeof(struct aa_ ## T *) * (N), (GFP));	\
++		(V) = kcalloc((N) + 1, sizeof(struct aa_ ## T *), (GFP)); \
+ 	(V) ? 0 : -ENOMEM;						\
+ })
  
 -- 
 2.53.0
