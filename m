@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215212;
-	b=XjKC8/wCbxUjYEf1gmXfXbycvTJ9wgqjaXem11flhQPMURsxUjwBOLCUgMzuBPGcm5MH
-	 b3n6zH88EFynH+AWzcaMRTb/27jNOk8LPVbwnIwnZOnrWmyIUUQas/6058954dGc+Hpao
-	 BOmw6jXjhRiWO3cCYxkDSiYdsIzMImyhys4dJojQrswybIm53LyF2sRjfsacfOMDXtUeH
-	 EbPTEKKPZKyVnZE0RvpM0MS0dXeLeU7/bDu0ts869DyHACagX/IbFnT+PNSM+PIJ3Po3r
-	 NySe93G1/jXtCC8ij+O/qPeRf0I18qBuJSuRnoUZQA5SiHGmICd2mcSklOVg+8v2nog==
+	t=1793215216;
+	b=zRZ/auoQEKYOVgcpN6vsvPT/heLZt566kGQ72ytDNey/m6dsp5GOGNirv/G8jMthpzSm
+	 jqxdwUQ51v7YtE6txO9k806oy0qGSAhkaXEJGYdVNSS+PeHGVTkJR981GvwucH0JKqYyU
+	 Cl1zmsdo+REvPO5G9DtzU/lk9TWVVDixN8dDv5D9mnQiFRgNhN5u5SCWrr9MKO7Sd8ix3
+	 p6oJvaDFxkmpqg1YlqDB4V9wKVGhiqYc3VQGgEvnaNFIGgizDAlTqvIlhuedctI1oM1ip
+	 M4qYo7kxcaRpFXvJgCM7asCmO2VFGHn0EM+m9YmHpmzIVWPQigcL3sHhThghUyfth0g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215212;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215216;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+DFhSZz7GtbOCb6xdjQWKpdsQAJX9RZNCteW2X7BYgE=;
-	b=rFsoVitlPXL/uOn04OhOTDOnQ8Z8DB3SGeBo0uhB5yu0gkYpPTMHwiARrnllWR4pnZaz
-	 VRL1ylfCsqAUe45L/npNNCrHmM2yxbV04E8hgPaVHBxkQsNEZKwcve+2hEmQrDG+r0uXr
-	 tTeuiEz3Ou4RMGDZ/pFzABOdniLAPoY1MMunKcrO3W25XLNFp3mWQxsdB7S3uOOgmVUnY
-	 x8VnfSNOT3euOrsc3wm7MYI4ln58HP+fGZPXs3NZmzYZz/TZEv6KYnt1YfLPZnXF986bg
-	 gH8mA6fonzILwtAA6p1ueI87q1RnwZbF7gOufRdDRcSd6h702cu5/QlQZM54/V8sZBA==
+	bh=B4qpUvgpTajyPgtNryym9uoux+bCugU37V9Et2144tc=;
+	b=IVBFpOofKDxGsn8JgnUoeLKt8bqxemGNVUekHHXwcNRGxBPVvW1C97biytFQjIsEPFiQ
+	 WoUtAVDn3Mq0Xd6CJsqmnFfXW9ZOox4/o6VZe2j7DHVYSelzfbmVMtHXd5gZg9G+V++Lb
+	 FW3rjzFQIS/GRciuZ2UUNqQv+eSxCKaAmOSOLLJuwldE5x17Y01t5UmxK1dEh36tk0NBj
+	 BmWFf8YXVmkll1KJS2NIK7J3QTumyVbAw9PoetFyOzFV8H3QsYDmnIeh88mADKl2YzxrF
+	 8nqm3tcwfrOt5C7tp3vDN3FyKE4SPCIY4CxKdC3QxB4VWn+ylBgNrMQ1yJgKcSOV1qg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XpHyNwWc;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GsZE59+F;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4CB2606A31A;
-	Wed, 28 Oct 2026 19:20:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2A11606A31A;
+	Wed, 28 Oct 2026 19:20:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XpHyNwWc
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F345B1F01825;
-	Wed, 28 Oct 2026 19:20:11 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GsZE59+F
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5AB91F01825;
+	Wed, 28 Oct 2026 19:20:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215212;
-	bh=+DFhSZz7GtbOCb6xdjQWKpdsQAJX9RZNCteW2X7BYgE=;
+	s=korg; t=1793215215;
+	bh=B4qpUvgpTajyPgtNryym9uoux+bCugU37V9Et2144tc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XpHyNwWcatSXfLdo2JzMC+08tYUoGSOU63sfzvelhourIbxTx/gc/HPigxztVYpJ0
-	 sBvcOtQkAO8wWiRtwefDhuJ5EBEiM4aKoG5qFDRjWxPN/i/T4cXwiA+IQtzVuewLIY
-	 zdCh0LRiB6v7pZBKgQbUS0EzVgMZdfusXi5XSRzg=
+	b=GsZE59+FWL0OTVQT17r5+bW/lek4VU6pMefYXQPB75dc6YnODdbwpLxFuLZzq3kcR
+	 pvP+NpytftMHIFRZiy4awLpYOZOjibtU1Sx7EVLWSuX6o5vvUJfcRkoU6R9jZ61wn4
+	 HxxF44T9ibed8lm4HHH6QjOUEN8jolTSIhjjJzFI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heitor Alves de Siqueira <halves@igalia.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Phil Sutter <phil@nwl.cc>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1130/1887] Bluetooth: hci_sync: Set HCI_CMD_DRAIN_WORKQUEUE during device close
-Date: Wed, 28 Oct 2026 17:53:46 +0100
-Message-ID: <20261028170525.116873069@linuxfoundation.org>
+Subject: [PATCH 6.1 1131/1887] netfilter: nf_tables: Extend nft_expr_ops::dump callback parameters
+Date: Wed, 28 Oct 2026 17:53:47 +0100
+Message-ID: <20261028170525.140203145@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,55 +68,830 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heitor Alves de Siqueira <halves@igalia.com>
+From: Phil Sutter <phil@nwl.cc>
 
-[ Upstream commit 525daaea459fc215f432de1b8debbd9144bf97b0 ]
+[ Upstream commit 7d34aa3e03b6a56306296bd98b26c6a1710cd57b ]
 
-Since hci_dev_close_sync() can now be called during the reset path, we
-should also set HCI_CMD_DRAIN_WORKQUEUE. This avoids queuing timeouts
-while the hdev workqueue is being drained.
+Add a 'reset' flag just like with nft_object_ops::dump. This will be
+useful to reset "anonymous stateful objects", e.g. simple rule counters.
 
-Fixes: 877afadad2dc ("Bluetooth: When HCI work queue is drained, only queue chained work")
-Signed-off-by: Heitor Alves de Siqueira <halves@igalia.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+No functional change intended.
+
+Signed-off-by: Phil Sutter <phil@nwl.cc>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Stable-dep-of: 18014147d3ee ("netfilter: nf_tables: fix dst corruption in same register operation")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_sync.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ include/net/netfilter/nf_tables.h  | 3 ++-
+ include/net/netfilter/nft_fib.h    | 2 +-
+ include/net/netfilter/nft_meta.h   | 4 ++--
+ include/net/netfilter/nft_reject.h | 3 ++-
+ net/ipv4/netfilter/nft_dup_ipv4.c  | 3 ++-
+ net/ipv6/netfilter/nft_dup_ipv6.c  | 3 ++-
+ net/netfilter/nf_tables_api.c      | 2 +-
+ net/netfilter/nft_bitwise.c        | 6 ++++--
+ net/netfilter/nft_byteorder.c      | 3 ++-
+ net/netfilter/nft_cmp.c            | 9 ++++++---
+ net/netfilter/nft_compat.c         | 9 ++++++---
+ net/netfilter/nft_connlimit.c      | 3 ++-
+ net/netfilter/nft_counter.c        | 3 ++-
+ net/netfilter/nft_ct.c             | 6 ++++--
+ net/netfilter/nft_dup_netdev.c     | 3 ++-
+ net/netfilter/nft_dynset.c         | 3 ++-
+ net/netfilter/nft_exthdr.c         | 9 ++++++---
+ net/netfilter/nft_fib.c            | 2 +-
+ net/netfilter/nft_flow_offload.c   | 3 ++-
+ net/netfilter/nft_fwd_netdev.c     | 6 ++++--
+ net/netfilter/nft_hash.c           | 4 ++--
+ net/netfilter/nft_immediate.c      | 3 ++-
+ net/netfilter/nft_last.c           | 3 ++-
+ net/netfilter/nft_limit.c          | 5 +++--
+ net/netfilter/nft_log.c            | 3 ++-
+ net/netfilter/nft_lookup.c         | 3 ++-
+ net/netfilter/nft_masq.c           | 3 ++-
+ net/netfilter/nft_meta.c           | 5 +++--
+ net/netfilter/nft_nat.c            | 3 ++-
+ net/netfilter/nft_numgen.c         | 6 ++++--
+ net/netfilter/nft_objref.c         | 6 ++++--
+ net/netfilter/nft_osf.c            | 3 ++-
+ net/netfilter/nft_payload.c        | 6 ++++--
+ net/netfilter/nft_queue.c          | 6 ++++--
+ net/netfilter/nft_quota.c          | 3 ++-
+ net/netfilter/nft_range.c          | 3 ++-
+ net/netfilter/nft_redir.c          | 3 ++-
+ net/netfilter/nft_reject.c         | 3 ++-
+ net/netfilter/nft_rt.c             | 2 +-
+ net/netfilter/nft_socket.c         | 2 +-
+ net/netfilter/nft_synproxy.c       | 3 ++-
+ net/netfilter/nft_tproxy.c         | 2 +-
+ net/netfilter/nft_tunnel.c         | 2 +-
+ net/netfilter/nft_xfrm.c           | 2 +-
+ 44 files changed, 108 insertions(+), 61 deletions(-)
 
-diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
-index 9529dd7e2a352..c0c19abd92590 100644
---- a/net/bluetooth/hci_sync.c
-+++ b/net/bluetooth/hci_sync.c
-@@ -5256,6 +5256,12 @@ int hci_dev_close_sync(struct hci_dev *hdev)
+diff --git a/include/net/netfilter/nf_tables.h b/include/net/netfilter/nf_tables.h
+index b8f283a6e718f..6d07f70b77ec0 100644
+--- a/include/net/netfilter/nf_tables.h
++++ b/include/net/netfilter/nf_tables.h
+@@ -930,7 +930,8 @@ struct nft_expr_ops {
+ 	void				(*destroy_clone)(const struct nft_ctx *ctx,
+ 							 const struct nft_expr *expr);
+ 	int				(*dump)(struct sk_buff *skb,
+-						const struct nft_expr *expr);
++						const struct nft_expr *expr,
++						bool reset);
+ 	int				(*validate)(const struct nft_ctx *ctx,
+ 						    const struct nft_expr *expr);
+ 	bool				(*reduce)(struct nft_regs_track *track,
+diff --git a/include/net/netfilter/nft_fib.h b/include/net/netfilter/nft_fib.h
+index fc6ee031b35c4..38cae7113de46 100644
+--- a/include/net/netfilter/nft_fib.h
++++ b/include/net/netfilter/nft_fib.h
+@@ -18,7 +18,7 @@ nft_fib_is_loopback(const struct sk_buff *skb, const struct net_device *in)
+ 	return skb->pkt_type == PACKET_LOOPBACK || in->flags & IFF_LOOPBACK;
+ }
  
- 	bt_dev_dbg(hdev, "");
+-int nft_fib_dump(struct sk_buff *skb, const struct nft_expr *expr);
++int nft_fib_dump(struct sk_buff *skb, const struct nft_expr *expr, bool reset);
+ int nft_fib_init(const struct nft_ctx *ctx, const struct nft_expr *expr,
+ 		 const struct nlattr * const tb[]);
+ int nft_fib_validate(const struct nft_ctx *ctx, const struct nft_expr *expr);
+diff --git a/include/net/netfilter/nft_meta.h b/include/net/netfilter/nft_meta.h
+index 22e98ac336f7e..b31a9e907417b 100644
+--- a/include/net/netfilter/nft_meta.h
++++ b/include/net/netfilter/nft_meta.h
+@@ -24,10 +24,10 @@ int nft_meta_set_init(const struct nft_ctx *ctx,
+ 		      const struct nlattr * const tb[]);
  
-+	/* Set HCI_DRAIN_WORKQUEUE flag to prevent queuing work during
-+	 * reset/close. See hci_cmd_work() and handle_cmd_cnt_and_timer().
-+	 */
-+	hci_dev_set_flag(hdev, HCI_CMD_DRAIN_WORKQUEUE);
-+	synchronize_rcu();
-+
- 	cancel_delayed_work(&hdev->power_off);
- 	cancel_delayed_work(&hdev->ncmd_timer);
- 	cancel_delayed_work(&hdev->le_scan_disable);
-@@ -5274,6 +5280,7 @@ int hci_dev_close_sync(struct hci_dev *hdev)
+ int nft_meta_get_dump(struct sk_buff *skb,
+-		      const struct nft_expr *expr);
++		      const struct nft_expr *expr, bool reset);
  
- 	if (!test_and_clear_bit(HCI_UP, &hdev->flags)) {
- 		cancel_delayed_work_sync(&hdev->cmd_timer);
-+		hci_dev_clear_flag(hdev, HCI_CMD_DRAIN_WORKQUEUE);
- 		return err;
+ int nft_meta_set_dump(struct sk_buff *skb,
+-		      const struct nft_expr *expr);
++		      const struct nft_expr *expr, bool reset);
+ 
+ void nft_meta_get_eval(const struct nft_expr *expr,
+ 		       struct nft_regs *regs,
+diff --git a/include/net/netfilter/nft_reject.h b/include/net/netfilter/nft_reject.h
+index bce67b3a42aa8..19060212988a1 100644
+--- a/include/net/netfilter/nft_reject.h
++++ b/include/net/netfilter/nft_reject.h
+@@ -21,7 +21,8 @@ int nft_reject_init(const struct nft_ctx *ctx,
+ 		    const struct nft_expr *expr,
+ 		    const struct nlattr * const tb[]);
+ 
+-int nft_reject_dump(struct sk_buff *skb, const struct nft_expr *expr);
++int nft_reject_dump(struct sk_buff *skb,
++		    const struct nft_expr *expr, bool reset);
+ 
+ int nft_reject_icmp_code(u8 code);
+ int nft_reject_icmpv6_code(u8 code);
+diff --git a/net/ipv4/netfilter/nft_dup_ipv4.c b/net/ipv4/netfilter/nft_dup_ipv4.c
+index 000539b94e1ef..ef5dd88107ddb 100644
+--- a/net/ipv4/netfilter/nft_dup_ipv4.c
++++ b/net/ipv4/netfilter/nft_dup_ipv4.c
+@@ -52,7 +52,8 @@ static int nft_dup_ipv4_init(const struct nft_ctx *ctx,
+ 	return err;
+ }
+ 
+-static int nft_dup_ipv4_dump(struct sk_buff *skb, const struct nft_expr *expr)
++static int nft_dup_ipv4_dump(struct sk_buff *skb,
++			     const struct nft_expr *expr, bool reset)
+ {
+ 	struct nft_dup_ipv4 *priv = nft_expr_priv(expr);
+ 
+diff --git a/net/ipv6/netfilter/nft_dup_ipv6.c b/net/ipv6/netfilter/nft_dup_ipv6.c
+index 5a7abea7739c7..492a811828a71 100644
+--- a/net/ipv6/netfilter/nft_dup_ipv6.c
++++ b/net/ipv6/netfilter/nft_dup_ipv6.c
+@@ -50,7 +50,8 @@ static int nft_dup_ipv6_init(const struct nft_ctx *ctx,
+ 	return err;
+ }
+ 
+-static int nft_dup_ipv6_dump(struct sk_buff *skb, const struct nft_expr *expr)
++static int nft_dup_ipv6_dump(struct sk_buff *skb,
++			     const struct nft_expr *expr, bool reset)
+ {
+ 	struct nft_dup_ipv6 *priv = nft_expr_priv(expr);
+ 
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index df5573b2babd5..e09b41468b1e6 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -2976,7 +2976,7 @@ static int nf_tables_fill_expr_info(struct sk_buff *skb,
+ 							    NFTA_EXPR_DATA);
+ 		if (data == NULL)
+ 			goto nla_put_failure;
+-		if (expr->ops->dump(skb, expr) < 0)
++		if (expr->ops->dump(skb, expr, false) < 0)
+ 			goto nla_put_failure;
+ 		nla_nest_end(skb, data);
  	}
+diff --git a/net/netfilter/nft_bitwise.c b/net/netfilter/nft_bitwise.c
+index 5b96f5a490dda..a8f266d18501d 100644
+--- a/net/netfilter/nft_bitwise.c
++++ b/net/netfilter/nft_bitwise.c
+@@ -233,7 +233,8 @@ static int nft_bitwise_dump_shift(struct sk_buff *skb,
+ 	return 0;
+ }
  
-@@ -5367,6 +5374,7 @@ int hci_dev_close_sync(struct hci_dev *hdev)
- 	/* Clear flags */
- 	hdev->flags &= BIT(HCI_RAW);
- 	hci_dev_clear_volatile_flags(hdev);
-+	hci_dev_clear_flag(hdev, HCI_CMD_DRAIN_WORKQUEUE);
+-static int nft_bitwise_dump(struct sk_buff *skb, const struct nft_expr *expr)
++static int nft_bitwise_dump(struct sk_buff *skb,
++			    const struct nft_expr *expr, bool reset)
+ {
+ 	const struct nft_bitwise *priv = nft_expr_priv(expr);
+ 	int err = 0;
+@@ -394,7 +395,8 @@ static int nft_bitwise_fast_init(const struct nft_ctx *ctx,
+ }
  
- 	memset(hdev->eir, 0, sizeof(hdev->eir));
- 	memset(hdev->dev_class, 0, sizeof(hdev->dev_class));
+ static int
+-nft_bitwise_fast_dump(struct sk_buff *skb, const struct nft_expr *expr)
++nft_bitwise_fast_dump(struct sk_buff *skb,
++		      const struct nft_expr *expr, bool reset)
+ {
+ 	const struct nft_bitwise_fast_expr *priv = nft_expr_priv(expr);
+ 	struct nft_data data;
+diff --git a/net/netfilter/nft_byteorder.c b/net/netfilter/nft_byteorder.c
+index 60b18efadf5cc..010d0d2f3423d 100644
+--- a/net/netfilter/nft_byteorder.c
++++ b/net/netfilter/nft_byteorder.c
+@@ -149,7 +149,8 @@ static int nft_byteorder_init(const struct nft_ctx *ctx,
+ 					priv->len);
+ }
+ 
+-static int nft_byteorder_dump(struct sk_buff *skb, const struct nft_expr *expr)
++static int nft_byteorder_dump(struct sk_buff *skb,
++			      const struct nft_expr *expr, bool reset)
+ {
+ 	const struct nft_byteorder *priv = nft_expr_priv(expr);
+ 
+diff --git a/net/netfilter/nft_cmp.c b/net/netfilter/nft_cmp.c
+index 30181e12409dd..4cdcbb74c74dd 100644
+--- a/net/netfilter/nft_cmp.c
++++ b/net/netfilter/nft_cmp.c
+@@ -92,7 +92,8 @@ static int nft_cmp_init(const struct nft_ctx *ctx, const struct nft_expr *expr,
+ 	return 0;
+ }
+ 
+-static int nft_cmp_dump(struct sk_buff *skb, const struct nft_expr *expr)
++static int nft_cmp_dump(struct sk_buff *skb,
++			const struct nft_expr *expr, bool reset)
+ {
+ 	const struct nft_cmp_expr *priv = nft_expr_priv(expr);
+ 
+@@ -253,7 +254,8 @@ static int nft_cmp_fast_offload(struct nft_offload_ctx *ctx,
+ 	return __nft_cmp_offload(ctx, flow, &cmp);
+ }
+ 
+-static int nft_cmp_fast_dump(struct sk_buff *skb, const struct nft_expr *expr)
++static int nft_cmp_fast_dump(struct sk_buff *skb,
++			     const struct nft_expr *expr, bool reset)
+ {
+ 	const struct nft_cmp_fast_expr *priv = nft_expr_priv(expr);
+ 	enum nft_cmp_ops op = priv->inv ? NFT_CMP_NEQ : NFT_CMP_EQ;
+@@ -347,7 +349,8 @@ static int nft_cmp16_fast_offload(struct nft_offload_ctx *ctx,
+ 	return __nft_cmp_offload(ctx, flow, &cmp);
+ }
+ 
+-static int nft_cmp16_fast_dump(struct sk_buff *skb, const struct nft_expr *expr)
++static int nft_cmp16_fast_dump(struct sk_buff *skb,
++			       const struct nft_expr *expr, bool reset)
+ {
+ 	const struct nft_cmp16_fast_expr *priv = nft_expr_priv(expr);
+ 	enum nft_cmp_ops op = priv->inv ? NFT_CMP_NEQ : NFT_CMP_EQ;
+diff --git a/net/netfilter/nft_compat.c b/net/netfilter/nft_compat.c
+index e1ca7f453ed7b..1e8142e64e808 100644
+--- a/net/netfilter/nft_compat.c
++++ b/net/netfilter/nft_compat.c
+@@ -332,7 +332,8 @@ static int nft_extension_dump_info(struct sk_buff *skb, int attr,
+ 	return 0;
+ }
+ 
+-static int nft_target_dump(struct sk_buff *skb, const struct nft_expr *expr)
++static int nft_target_dump(struct sk_buff *skb,
++			   const struct nft_expr *expr, bool reset)
+ {
+ 	const struct xt_target *target = expr->ops->data;
+ 	void *info = nft_expr_priv(expr);
+@@ -596,12 +597,14 @@ static int __nft_match_dump(struct sk_buff *skb, const struct nft_expr *expr,
+ 	return -1;
+ }
+ 
+-static int nft_match_dump(struct sk_buff *skb, const struct nft_expr *expr)
++static int nft_match_dump(struct sk_buff *skb,
++			  const struct nft_expr *expr, bool reset)
+ {
+ 	return __nft_match_dump(skb, expr, nft_expr_priv(expr));
+ }
+ 
+-static int nft_match_large_dump(struct sk_buff *skb, const struct nft_expr *e)
++static int nft_match_large_dump(struct sk_buff *skb,
++				const struct nft_expr *e, bool reset)
+ {
+ 	struct nft_xt_match_priv *priv = nft_expr_priv(e);
+ 
+diff --git a/net/netfilter/nft_connlimit.c b/net/netfilter/nft_connlimit.c
+index b3411dec16fd2..5dd50b3ab5a45 100644
+--- a/net/netfilter/nft_connlimit.c
++++ b/net/netfilter/nft_connlimit.c
+@@ -179,7 +179,8 @@ static void nft_connlimit_eval(const struct nft_expr *expr,
+ 	nft_connlimit_do_eval(priv, regs, pkt, NULL);
+ }
+ 
+-static int nft_connlimit_dump(struct sk_buff *skb, const struct nft_expr *expr)
++static int nft_connlimit_dump(struct sk_buff *skb,
++			      const struct nft_expr *expr, bool reset)
+ {
+ 	struct nft_connlimit *priv = nft_expr_priv(expr);
+ 
+diff --git a/net/netfilter/nft_counter.c b/net/netfilter/nft_counter.c
+index 224c7487b7a3e..a578afc57c00f 100644
+--- a/net/netfilter/nft_counter.c
++++ b/net/netfilter/nft_counter.c
+@@ -222,7 +222,8 @@ void nft_counter_eval(const struct nft_expr *expr, struct nft_regs *regs,
+ 	nft_counter_do_eval(priv, regs, pkt);
+ }
+ 
+-static int nft_counter_dump(struct sk_buff *skb, const struct nft_expr *expr)
++static int nft_counter_dump(struct sk_buff *skb,
++			    const struct nft_expr *expr, bool reset)
+ {
+ 	struct nft_counter_percpu_priv *priv = nft_expr_priv(expr);
+ 
+diff --git a/net/netfilter/nft_ct.c b/net/netfilter/nft_ct.c
+index f35cf4e600379..7f3d54a44be4c 100644
+--- a/net/netfilter/nft_ct.c
++++ b/net/netfilter/nft_ct.c
+@@ -649,7 +649,8 @@ static void nft_ct_set_destroy(const struct nft_ctx *ctx,
+ 	nf_ct_netns_put(ctx->net, ctx->family);
+ }
+ 
+-static int nft_ct_get_dump(struct sk_buff *skb, const struct nft_expr *expr)
++static int nft_ct_get_dump(struct sk_buff *skb,
++			   const struct nft_expr *expr, bool reset)
+ {
+ 	const struct nft_ct *priv = nft_expr_priv(expr);
+ 
+@@ -711,7 +712,8 @@ static bool nft_ct_get_reduce(struct nft_regs_track *track,
+ 	return nft_expr_reduce_bitwise(track, expr);
+ }
+ 
+-static int nft_ct_set_dump(struct sk_buff *skb, const struct nft_expr *expr)
++static int nft_ct_set_dump(struct sk_buff *skb,
++			   const struct nft_expr *expr, bool reset)
+ {
+ 	const struct nft_ct *priv = nft_expr_priv(expr);
+ 
+diff --git a/net/netfilter/nft_dup_netdev.c b/net/netfilter/nft_dup_netdev.c
+index 6e0a66588fb32..0573f96ce0791 100644
+--- a/net/netfilter/nft_dup_netdev.c
++++ b/net/netfilter/nft_dup_netdev.c
+@@ -44,7 +44,8 @@ static int nft_dup_netdev_init(const struct nft_ctx *ctx,
+ 				       sizeof(int));
+ }
+ 
+-static int nft_dup_netdev_dump(struct sk_buff *skb, const struct nft_expr *expr)
++static int nft_dup_netdev_dump(struct sk_buff *skb,
++			       const struct nft_expr *expr, bool reset)
+ {
+ 	struct nft_dup_netdev *priv = nft_expr_priv(expr);
+ 
+diff --git a/net/netfilter/nft_dynset.c b/net/netfilter/nft_dynset.c
+index 6e71b937fb354..cd5ed0b53a90d 100644
+--- a/net/netfilter/nft_dynset.c
++++ b/net/netfilter/nft_dynset.c
+@@ -373,7 +373,8 @@ static void nft_dynset_destroy(const struct nft_ctx *ctx,
+ 	nf_tables_destroy_set(ctx, priv->set);
+ }
+ 
+-static int nft_dynset_dump(struct sk_buff *skb, const struct nft_expr *expr)
++static int nft_dynset_dump(struct sk_buff *skb,
++			   const struct nft_expr *expr, bool reset)
+ {
+ 	const struct nft_dynset *priv = nft_expr_priv(expr);
+ 	u32 flags = priv->invert ? NFT_DYNSET_F_INV : 0;
+diff --git a/net/netfilter/nft_exthdr.c b/net/netfilter/nft_exthdr.c
+index f3fefe70abff2..4e9b0c1c5d301 100644
+--- a/net/netfilter/nft_exthdr.c
++++ b/net/netfilter/nft_exthdr.c
+@@ -672,7 +672,8 @@ static int nft_exthdr_dump_common(struct sk_buff *skb, const struct nft_exthdr *
+ 	return -1;
+ }
+ 
+-static int nft_exthdr_dump(struct sk_buff *skb, const struct nft_expr *expr)
++static int nft_exthdr_dump(struct sk_buff *skb,
++			   const struct nft_expr *expr, bool reset)
+ {
+ 	const struct nft_exthdr *priv = nft_expr_priv(expr);
+ 
+@@ -682,7 +683,8 @@ static int nft_exthdr_dump(struct sk_buff *skb, const struct nft_expr *expr)
+ 	return nft_exthdr_dump_common(skb, priv);
+ }
+ 
+-static int nft_exthdr_dump_set(struct sk_buff *skb, const struct nft_expr *expr)
++static int nft_exthdr_dump_set(struct sk_buff *skb,
++			       const struct nft_expr *expr, bool reset)
+ {
+ 	const struct nft_exthdr *priv = nft_expr_priv(expr);
+ 
+@@ -692,7 +694,8 @@ static int nft_exthdr_dump_set(struct sk_buff *skb, const struct nft_expr *expr)
+ 	return nft_exthdr_dump_common(skb, priv);
+ }
+ 
+-static int nft_exthdr_dump_strip(struct sk_buff *skb, const struct nft_expr *expr)
++static int nft_exthdr_dump_strip(struct sk_buff *skb,
++				 const struct nft_expr *expr, bool reset)
+ {
+ 	const struct nft_exthdr *priv = nft_expr_priv(expr);
+ 
+diff --git a/net/netfilter/nft_fib.c b/net/netfilter/nft_fib.c
+index 60913a97a47f2..358abe2d86a7f 100644
+--- a/net/netfilter/nft_fib.c
++++ b/net/netfilter/nft_fib.c
+@@ -121,7 +121,7 @@ int nft_fib_init(const struct nft_ctx *ctx, const struct nft_expr *expr,
+ }
+ EXPORT_SYMBOL_GPL(nft_fib_init);
+ 
+-int nft_fib_dump(struct sk_buff *skb, const struct nft_expr *expr)
++int nft_fib_dump(struct sk_buff *skb, const struct nft_expr *expr, bool reset)
+ {
+ 	const struct nft_fib *priv = nft_expr_priv(expr);
+ 
+diff --git a/net/netfilter/nft_flow_offload.c b/net/netfilter/nft_flow_offload.c
+index c65175ef47816..7cffa4be67b2a 100644
+--- a/net/netfilter/nft_flow_offload.c
++++ b/net/netfilter/nft_flow_offload.c
+@@ -462,7 +462,8 @@ static void nft_flow_offload_destroy(const struct nft_ctx *ctx,
+ 	nf_ct_netns_put(ctx->net, ctx->family);
+ }
+ 
+-static int nft_flow_offload_dump(struct sk_buff *skb, const struct nft_expr *expr)
++static int nft_flow_offload_dump(struct sk_buff *skb,
++				 const struct nft_expr *expr, bool reset)
+ {
+ 	struct nft_flow_offload *priv = nft_expr_priv(expr);
+ 
+diff --git a/net/netfilter/nft_fwd_netdev.c b/net/netfilter/nft_fwd_netdev.c
+index d1afebeef3541..3b2dc5c3a138e 100644
+--- a/net/netfilter/nft_fwd_netdev.c
++++ b/net/netfilter/nft_fwd_netdev.c
+@@ -56,7 +56,8 @@ static int nft_fwd_netdev_init(const struct nft_ctx *ctx,
+ 				       sizeof(int));
+ }
+ 
+-static int nft_fwd_netdev_dump(struct sk_buff *skb, const struct nft_expr *expr)
++static int nft_fwd_netdev_dump(struct sk_buff *skb,
++			       const struct nft_expr *expr, bool reset)
+ {
+ 	struct nft_fwd_netdev *priv = nft_expr_priv(expr);
+ 
+@@ -196,7 +197,8 @@ static int nft_fwd_neigh_init(const struct nft_ctx *ctx,
+ 				       addr_len);
+ }
+ 
+-static int nft_fwd_neigh_dump(struct sk_buff *skb, const struct nft_expr *expr)
++static int nft_fwd_neigh_dump(struct sk_buff *skb,
++			      const struct nft_expr *expr, bool reset)
+ {
+ 	struct nft_fwd_neigh *priv = nft_expr_priv(expr);
+ 
+diff --git a/net/netfilter/nft_hash.c b/net/netfilter/nft_hash.c
+index e15d0edc761c2..9833fa429e5e9 100644
+--- a/net/netfilter/nft_hash.c
++++ b/net/netfilter/nft_hash.c
+@@ -139,7 +139,7 @@ static int nft_symhash_init(const struct nft_ctx *ctx,
+ }
+ 
+ static int nft_jhash_dump(struct sk_buff *skb,
+-			  const struct nft_expr *expr)
++			  const struct nft_expr *expr, bool reset)
+ {
+ 	const struct nft_jhash *priv = nft_expr_priv(expr);
+ 
+@@ -176,7 +176,7 @@ static bool nft_jhash_reduce(struct nft_regs_track *track,
+ }
+ 
+ static int nft_symhash_dump(struct sk_buff *skb,
+-			    const struct nft_expr *expr)
++			    const struct nft_expr *expr, bool reset)
+ {
+ 	const struct nft_symhash *priv = nft_expr_priv(expr);
+ 
+diff --git a/net/netfilter/nft_immediate.c b/net/netfilter/nft_immediate.c
+index 44d5642418472..02ee5fb69871f 100644
+--- a/net/netfilter/nft_immediate.c
++++ b/net/netfilter/nft_immediate.c
+@@ -228,7 +228,8 @@ static void nft_immediate_destroy(const struct nft_ctx *ctx,
+ 	}
+ }
+ 
+-static int nft_immediate_dump(struct sk_buff *skb, const struct nft_expr *expr)
++static int nft_immediate_dump(struct sk_buff *skb,
++			      const struct nft_expr *expr, bool reset)
+ {
+ 	const struct nft_immediate_expr *priv = nft_expr_priv(expr);
+ 
+diff --git a/net/netfilter/nft_last.c b/net/netfilter/nft_last.c
+index 2ff387b649cfc..de1b6066bfa85 100644
+--- a/net/netfilter/nft_last.c
++++ b/net/netfilter/nft_last.c
+@@ -65,7 +65,8 @@ static void nft_last_eval(const struct nft_expr *expr,
+ 		WRITE_ONCE(last->set, 1);
+ }
+ 
+-static int nft_last_dump(struct sk_buff *skb, const struct nft_expr *expr)
++static int nft_last_dump(struct sk_buff *skb,
++			 const struct nft_expr *expr, bool reset)
+ {
+ 	struct nft_last_priv *priv = nft_expr_priv(expr);
+ 	struct nft_last *last = priv->last;
+diff --git a/net/netfilter/nft_limit.c b/net/netfilter/nft_limit.c
+index a263596da99ac..21d26b79b4607 100644
+--- a/net/netfilter/nft_limit.c
++++ b/net/netfilter/nft_limit.c
+@@ -207,7 +207,8 @@ static int nft_limit_pkts_init(const struct nft_ctx *ctx,
+ 	return 0;
+ }
+ 
+-static int nft_limit_pkts_dump(struct sk_buff *skb, const struct nft_expr *expr)
++static int nft_limit_pkts_dump(struct sk_buff *skb,
++			       const struct nft_expr *expr, bool reset)
+ {
+ 	const struct nft_limit_priv_pkts *priv = nft_expr_priv(expr);
+ 
+@@ -266,7 +267,7 @@ static int nft_limit_bytes_init(const struct nft_ctx *ctx,
+ }
+ 
+ static int nft_limit_bytes_dump(struct sk_buff *skb,
+-				const struct nft_expr *expr)
++				const struct nft_expr *expr, bool reset)
+ {
+ 	const struct nft_limit_priv *priv = nft_expr_priv(expr);
+ 
+diff --git a/net/netfilter/nft_log.c b/net/netfilter/nft_log.c
+index b510b01a06abd..bf01cf8a8907b 100644
+--- a/net/netfilter/nft_log.c
++++ b/net/netfilter/nft_log.c
+@@ -185,7 +185,8 @@ static void nft_log_destroy(const struct nft_ctx *ctx,
+ 	nf_logger_put(ctx->family, li->type);
+ }
+ 
+-static int nft_log_dump(struct sk_buff *skb, const struct nft_expr *expr)
++static int nft_log_dump(struct sk_buff *skb,
++			const struct nft_expr *expr, bool reset)
+ {
+ 	const struct nft_log *priv = nft_expr_priv(expr);
+ 	const struct nf_loginfo *li = &priv->loginfo;
+diff --git a/net/netfilter/nft_lookup.c b/net/netfilter/nft_lookup.c
+index fb4c129c63d30..9b03e6eb2fe69 100644
+--- a/net/netfilter/nft_lookup.c
++++ b/net/netfilter/nft_lookup.c
+@@ -179,7 +179,8 @@ static void nft_lookup_destroy(const struct nft_ctx *ctx,
+ 	nf_tables_destroy_set(ctx, priv->set);
+ }
+ 
+-static int nft_lookup_dump(struct sk_buff *skb, const struct nft_expr *expr)
++static int nft_lookup_dump(struct sk_buff *skb,
++			   const struct nft_expr *expr, bool reset)
+ {
+ 	const struct nft_lookup *priv = nft_expr_priv(expr);
+ 	u32 flags = priv->invert ? NFT_LOOKUP_F_INV : 0;
+diff --git a/net/netfilter/nft_masq.c b/net/netfilter/nft_masq.c
+index b38f455a6c99a..c9e42af8e81c3 100644
+--- a/net/netfilter/nft_masq.c
++++ b/net/netfilter/nft_masq.c
+@@ -72,7 +72,8 @@ static int nft_masq_init(const struct nft_ctx *ctx,
+ 	return nf_ct_netns_get(ctx->net, ctx->family);
+ }
+ 
+-static int nft_masq_dump(struct sk_buff *skb, const struct nft_expr *expr)
++static int nft_masq_dump(struct sk_buff *skb,
++			 const struct nft_expr *expr, bool reset)
+ {
+ 	const struct nft_masq *priv = nft_expr_priv(expr);
+ 
+diff --git a/net/netfilter/nft_meta.c b/net/netfilter/nft_meta.c
+index 671923f4d9eb9..0421751c97e00 100644
+--- a/net/netfilter/nft_meta.c
++++ b/net/netfilter/nft_meta.c
+@@ -667,7 +667,7 @@ int nft_meta_set_init(const struct nft_ctx *ctx,
+ EXPORT_SYMBOL_GPL(nft_meta_set_init);
+ 
+ int nft_meta_get_dump(struct sk_buff *skb,
+-		      const struct nft_expr *expr)
++		      const struct nft_expr *expr, bool reset)
+ {
+ 	const struct nft_meta *priv = nft_expr_priv(expr);
+ 
+@@ -682,7 +682,8 @@ int nft_meta_get_dump(struct sk_buff *skb,
+ }
+ EXPORT_SYMBOL_GPL(nft_meta_get_dump);
+ 
+-int nft_meta_set_dump(struct sk_buff *skb, const struct nft_expr *expr)
++int nft_meta_set_dump(struct sk_buff *skb,
++		      const struct nft_expr *expr, bool reset)
+ {
+ 	const struct nft_meta *priv = nft_expr_priv(expr);
+ 
+diff --git a/net/netfilter/nft_nat.c b/net/netfilter/nft_nat.c
+index e1e2e46dbea74..3b644e6f5a68d 100644
+--- a/net/netfilter/nft_nat.c
++++ b/net/netfilter/nft_nat.c
+@@ -259,7 +259,8 @@ static int nft_nat_init(const struct nft_ctx *ctx, const struct nft_expr *expr,
+ 	return nf_ct_netns_get(ctx->net, family);
+ }
+ 
+-static int nft_nat_dump(struct sk_buff *skb, const struct nft_expr *expr)
++static int nft_nat_dump(struct sk_buff *skb,
++			const struct nft_expr *expr, bool reset)
+ {
+ 	const struct nft_nat *priv = nft_expr_priv(expr);
+ 
+diff --git a/net/netfilter/nft_numgen.c b/net/netfilter/nft_numgen.c
+index 5b4dde41ec363..bd058babfc820 100644
+--- a/net/netfilter/nft_numgen.c
++++ b/net/netfilter/nft_numgen.c
+@@ -112,7 +112,8 @@ static int nft_ng_dump(struct sk_buff *skb, enum nft_registers dreg,
+ 	return -1;
+ }
+ 
+-static int nft_ng_inc_dump(struct sk_buff *skb, const struct nft_expr *expr)
++static int nft_ng_inc_dump(struct sk_buff *skb,
++			   const struct nft_expr *expr, bool reset)
+ {
+ 	const struct nft_ng_inc *priv = nft_expr_priv(expr);
+ 
+@@ -168,7 +169,8 @@ static int nft_ng_random_init(const struct nft_ctx *ctx,
+ 					NULL, NFT_DATA_VALUE, sizeof(u32));
+ }
+ 
+-static int nft_ng_random_dump(struct sk_buff *skb, const struct nft_expr *expr)
++static int nft_ng_random_dump(struct sk_buff *skb,
++			      const struct nft_expr *expr, bool reset)
+ {
+ 	const struct nft_ng_random *priv = nft_expr_priv(expr);
+ 
+diff --git a/net/netfilter/nft_objref.c b/net/netfilter/nft_objref.c
+index 35d8042464b30..b7a30683b6e5d 100644
+--- a/net/netfilter/nft_objref.c
++++ b/net/netfilter/nft_objref.c
+@@ -78,7 +78,8 @@ static int nft_objref_init(const struct nft_ctx *ctx,
+ 	return 0;
+ }
+ 
+-static int nft_objref_dump(struct sk_buff *skb, const struct nft_expr *expr)
++static int nft_objref_dump(struct sk_buff *skb,
++			   const struct nft_expr *expr, bool reset)
+ {
+ 	const struct nft_object *obj = nft_objref_priv(expr);
+ 
+@@ -188,7 +189,8 @@ static int nft_objref_map_init(const struct nft_ctx *ctx,
+ 	return 0;
+ }
+ 
+-static int nft_objref_map_dump(struct sk_buff *skb, const struct nft_expr *expr)
++static int nft_objref_map_dump(struct sk_buff *skb,
++			       const struct nft_expr *expr, bool reset)
+ {
+ 	const struct nft_objref_map *priv = nft_expr_priv(expr);
+ 
+diff --git a/net/netfilter/nft_osf.c b/net/netfilter/nft_osf.c
+index c818426491055..96096819dbfa5 100644
+--- a/net/netfilter/nft_osf.c
++++ b/net/netfilter/nft_osf.c
+@@ -97,7 +97,8 @@ static int nft_osf_init(const struct nft_ctx *ctx,
+ 	return 0;
+ }
+ 
+-static int nft_osf_dump(struct sk_buff *skb, const struct nft_expr *expr)
++static int nft_osf_dump(struct sk_buff *skb,
++			const struct nft_expr *expr, bool reset)
+ {
+ 	const struct nft_osf *priv = nft_expr_priv(expr);
+ 
+diff --git a/net/netfilter/nft_payload.c b/net/netfilter/nft_payload.c
+index 0669b91526c29..64ade8be817c9 100644
+--- a/net/netfilter/nft_payload.c
++++ b/net/netfilter/nft_payload.c
+@@ -198,7 +198,8 @@ static int nft_payload_init(const struct nft_ctx *ctx,
+ 					priv->len);
+ }
+ 
+-static int nft_payload_dump(struct sk_buff *skb, const struct nft_expr *expr)
++static int nft_payload_dump(struct sk_buff *skb,
++			    const struct nft_expr *expr, bool reset)
+ {
+ 	const struct nft_payload *priv = nft_expr_priv(expr);
+ 
+@@ -851,7 +852,8 @@ static int nft_payload_set_init(const struct nft_ctx *ctx,
+ 				       priv->len);
+ }
+ 
+-static int nft_payload_set_dump(struct sk_buff *skb, const struct nft_expr *expr)
++static int nft_payload_set_dump(struct sk_buff *skb,
++				const struct nft_expr *expr, bool reset)
+ {
+ 	const struct nft_payload_set *priv = nft_expr_priv(expr);
+ 
+diff --git a/net/netfilter/nft_queue.c b/net/netfilter/nft_queue.c
+index 5fb9e89d929d2..344fe311878fe 100644
+--- a/net/netfilter/nft_queue.c
++++ b/net/netfilter/nft_queue.c
+@@ -151,7 +151,8 @@ static int nft_queue_sreg_init(const struct nft_ctx *ctx,
+ 	return 0;
+ }
+ 
+-static int nft_queue_dump(struct sk_buff *skb, const struct nft_expr *expr)
++static int nft_queue_dump(struct sk_buff *skb,
++			  const struct nft_expr *expr, bool reset)
+ {
+ 	const struct nft_queue *priv = nft_expr_priv(expr);
+ 
+@@ -167,7 +168,8 @@ static int nft_queue_dump(struct sk_buff *skb, const struct nft_expr *expr)
+ }
+ 
+ static int
+-nft_queue_sreg_dump(struct sk_buff *skb, const struct nft_expr *expr)
++nft_queue_sreg_dump(struct sk_buff *skb,
++		    const struct nft_expr *expr, bool reset)
+ {
+ 	const struct nft_queue *priv = nft_expr_priv(expr);
+ 
+diff --git a/net/netfilter/nft_quota.c b/net/netfilter/nft_quota.c
+index 60e6d0c5f04ec..4bbb63d9b947b 100644
+--- a/net/netfilter/nft_quota.c
++++ b/net/netfilter/nft_quota.c
+@@ -223,7 +223,8 @@ static int nft_quota_init(const struct nft_ctx *ctx,
+ 	return nft_quota_do_init(tb, priv);
+ }
+ 
+-static int nft_quota_dump(struct sk_buff *skb, const struct nft_expr *expr)
++static int nft_quota_dump(struct sk_buff *skb,
++			  const struct nft_expr *expr, bool reset)
+ {
+ 	struct nft_quota *priv = nft_expr_priv(expr);
+ 
+diff --git a/net/netfilter/nft_range.c b/net/netfilter/nft_range.c
+index 229f274f18238..d75772986d051 100644
+--- a/net/netfilter/nft_range.c
++++ b/net/netfilter/nft_range.c
+@@ -111,7 +111,8 @@ static int nft_range_init(const struct nft_ctx *ctx, const struct nft_expr *expr
+ 	return err;
+ }
+ 
+-static int nft_range_dump(struct sk_buff *skb, const struct nft_expr *expr)
++static int nft_range_dump(struct sk_buff *skb,
++			  const struct nft_expr *expr, bool reset)
+ {
+ 	const struct nft_range_expr *priv = nft_expr_priv(expr);
+ 
+diff --git a/net/netfilter/nft_redir.c b/net/netfilter/nft_redir.c
+index ffde20e5cb5eb..ddbb6a79262af 100644
+--- a/net/netfilter/nft_redir.c
++++ b/net/netfilter/nft_redir.c
+@@ -76,7 +76,8 @@ static int nft_redir_init(const struct nft_ctx *ctx,
+ 	return nf_ct_netns_get(ctx->net, ctx->family);
+ }
+ 
+-static int nft_redir_dump(struct sk_buff *skb, const struct nft_expr *expr)
++static int nft_redir_dump(struct sk_buff *skb,
++			  const struct nft_expr *expr, bool reset)
+ {
+ 	const struct nft_redir *priv = nft_expr_priv(expr);
+ 
+diff --git a/net/netfilter/nft_reject.c b/net/netfilter/nft_reject.c
+index 3ef8c41d6876b..9dab7828e1b85 100644
+--- a/net/netfilter/nft_reject.c
++++ b/net/netfilter/nft_reject.c
+@@ -68,7 +68,8 @@ int nft_reject_init(const struct nft_ctx *ctx,
+ }
+ EXPORT_SYMBOL_GPL(nft_reject_init);
+ 
+-int nft_reject_dump(struct sk_buff *skb, const struct nft_expr *expr)
++int nft_reject_dump(struct sk_buff *skb,
++		    const struct nft_expr *expr, bool reset)
+ {
+ 	const struct nft_reject *priv = nft_expr_priv(expr);
+ 
+diff --git a/net/netfilter/nft_rt.c b/net/netfilter/nft_rt.c
+index 8c94bc82f6356..0e95d0d3c557e 100644
+--- a/net/netfilter/nft_rt.c
++++ b/net/netfilter/nft_rt.c
+@@ -146,7 +146,7 @@ static int nft_rt_get_init(const struct nft_ctx *ctx,
+ }
+ 
+ static int nft_rt_get_dump(struct sk_buff *skb,
+-			   const struct nft_expr *expr)
++			   const struct nft_expr *expr, bool reset)
+ {
+ 	const struct nft_rt *priv = nft_expr_priv(expr);
+ 
+diff --git a/net/netfilter/nft_socket.c b/net/netfilter/nft_socket.c
+index f56953f1022eb..6d6bba8d7fb7a 100644
+--- a/net/netfilter/nft_socket.c
++++ b/net/netfilter/nft_socket.c
+@@ -235,7 +235,7 @@ static int nft_socket_init(const struct nft_ctx *ctx,
+ }
+ 
+ static int nft_socket_dump(struct sk_buff *skb,
+-			   const struct nft_expr *expr)
++			   const struct nft_expr *expr, bool reset)
+ {
+ 	const struct nft_socket *priv = nft_expr_priv(expr);
+ 
+diff --git a/net/netfilter/nft_synproxy.c b/net/netfilter/nft_synproxy.c
+index 3c674137eb81a..08e9e1416b87c 100644
+--- a/net/netfilter/nft_synproxy.c
++++ b/net/netfilter/nft_synproxy.c
+@@ -274,7 +274,8 @@ static void nft_synproxy_destroy(const struct nft_ctx *ctx,
+ 	nft_synproxy_do_destroy(ctx);
+ }
+ 
+-static int nft_synproxy_dump(struct sk_buff *skb, const struct nft_expr *expr)
++static int nft_synproxy_dump(struct sk_buff *skb,
++			     const struct nft_expr *expr, bool reset)
+ {
+ 	struct nft_synproxy *priv = nft_expr_priv(expr);
+ 
+diff --git a/net/netfilter/nft_tproxy.c b/net/netfilter/nft_tproxy.c
+index b848539f72a86..430c6ef0fa85e 100644
+--- a/net/netfilter/nft_tproxy.c
++++ b/net/netfilter/nft_tproxy.c
+@@ -294,7 +294,7 @@ static void nft_tproxy_destroy(const struct nft_ctx *ctx,
+ }
+ 
+ static int nft_tproxy_dump(struct sk_buff *skb,
+-			   const struct nft_expr *expr)
++			   const struct nft_expr *expr, bool reset)
+ {
+ 	const struct nft_tproxy *priv = nft_expr_priv(expr);
+ 
+diff --git a/net/netfilter/nft_tunnel.c b/net/netfilter/nft_tunnel.c
+index 1dda2096949d0..92e56b656c18a 100644
+--- a/net/netfilter/nft_tunnel.c
++++ b/net/netfilter/nft_tunnel.c
+@@ -108,7 +108,7 @@ static int nft_tunnel_get_init(const struct nft_ctx *ctx,
+ }
+ 
+ static int nft_tunnel_get_dump(struct sk_buff *skb,
+-			       const struct nft_expr *expr)
++			       const struct nft_expr *expr, bool reset)
+ {
+ 	const struct nft_tunnel *priv = nft_expr_priv(expr);
+ 
+diff --git a/net/netfilter/nft_xfrm.c b/net/netfilter/nft_xfrm.c
+index 34a37699f90f7..82be7823d9c8e 100644
+--- a/net/netfilter/nft_xfrm.c
++++ b/net/netfilter/nft_xfrm.c
+@@ -212,7 +212,7 @@ static void nft_xfrm_get_eval(const struct nft_expr *expr,
+ }
+ 
+ static int nft_xfrm_get_dump(struct sk_buff *skb,
+-			     const struct nft_expr *expr)
++			     const struct nft_expr *expr, bool reset)
+ {
+ 	const struct nft_xfrm *priv = nft_expr_priv(expr);
+ 
 -- 
 2.53.0
 
