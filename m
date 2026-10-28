@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216231;
-	b=b3wu309JTcUWJoBajfXTTlQRMTc/x/x5wyjc/M1ZgSIMwwO8betk/A5suakYoRZXLQ6+
-	 8Khq1BIZ/nUEykx7maLEI1PFykBAUK00fmghe/g0etM+SePFbLWTLSy+i1VDHVrtooLd7
-	 QR+4IjwxiZL2ajvXafEgmlaoV03E30hCN4MasQoXPQzXNwL3VvC6ZbN9ABZBMLmENAAuQ
-	 LpHkERVQ8O8Mq9RCtv/rsib4Axg/Tey/1eY6+bF375zZU5fX5x9uQnL2YEGnI1n7gNqsp
-	 9g9FC0GGd4FHs6IFU4MoHD7k/toS7ih1v9ODpzJ3LCQx+4/OfXCLBLMbSm+OQdwjs8A==
+	t=1793216234;
+	b=0Q0oRKA4kbYMhIr80J65Z5jt2J/3SLJ/UDpTZ/liGciFjdHLyX9bm8Vk6/SBehb5r85v
+	 GAtysrA24jNaxmQpRFp5GyF6xpXTdYTHknXVf5vDv0hQwPlT054NicHB1GxLysOdaGFLj
+	 +ZOLPq3sitgAfd8+lYL6K+8xeyjj1Hbq8DuCzOYAhaxoOU+/1Cmw73fxYuE2N/HU2Ra5K
+	 m3nTgmIgO6bc/Vxz8fqwl8XotKn0tnXCFGjII79AYxfwuAqNs7b9hzvp/MPv12MupDZtF
+	 YBIO3PNzLZLRPB4HTm9iO8UG0WXDS/ZO4RN3VFyqOrGLwqK89VgVXyuUcLhNaQUyjPQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216231;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216234;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=SxtzKafWG5gxv5BrF0YwQJ+Iv0HI2T+xQF+gAjLTEis=;
-	b=FVIXTsSowySGUG5VzN32/x1RSbqdHhj572ePQ5mD3NBrzfwZoq5mnCR3GK18iqqtig1i
-	 jLzD4fDJp/fd+F8hQgxApxO+Zsg9bLBBikEZWJ4mski4OOQhQb4sT2Nn0iqnNPHUVFiqO
-	 nx8r/ZLxzQegRETV+0YCiq9OpSPPsYeCpprvFGjE7G0QMVReHaZs8wbd2Tm8GTZKa7CXO
-	 0ikvbDo6SVwkZnpAZyDn1XAEBgmCZJ6WyY2OW1hLlkZJTokuUaaAK0LKtC+PjcHd6BDWX
-	 vJc9GGwbvCaJaCLsDumQlRrfBsC9iY0u6L7UMwDO0GFe6EtIgERN+rLlJgpQ+FC7MqA==
+	bh=dVZi7TNQZzrH52A+okS/++F42ceQ4W9CNEe33ZyR7bQ=;
+	b=RmvwUE5+CiJSXUY7HprCjMLrtVB6iEpVF5kIy+op9QtCw75ztPRfJcUrB/wtCz16FX8+
+	 iEYwJdEVFrx52m9sftUlNmwtXPcYuXN0AJ4ax/pr2dM5KJeSBI+0g64Uc1vgJ2haOq7Jl
+	 H+9wQcbV9Qf02/0D37QpWR5YHzGrU+VqMF73oJtN9Qgda9I5BH8DZeTrDgjorfIhqLvXP
+	 oS2d2+Q7MpO267ifCUGhxzrNgrgp8vSiMm9ej56pqz3uOlp8PARvLLMLiUJ6xnv/yx2l3
+	 uwJItgex0RRtSEiHQBQnYBfm95ndSK48xD7tpC/5eR3KAOcllljx64RTYQpvJYhbNCg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZNYwYmcS;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2LN2I3e8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9E9B60A2610;
-	Wed, 28 Oct 2026 19:37:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 099DD606A321;
+	Wed, 28 Oct 2026 19:37:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZNYwYmcS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4283A1F031E0;
-	Wed, 28 Oct 2026 19:37:10 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2LN2I3e8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24D3B1F031E0;
+	Wed, 28 Oct 2026 19:37:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216230;
-	bh=SxtzKafWG5gxv5BrF0YwQJ+Iv0HI2T+xQF+gAjLTEis=;
+	s=korg; t=1793216233;
+	bh=dVZi7TNQZzrH52A+okS/++F42ceQ4W9CNEe33ZyR7bQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZNYwYmcS+wVl+M6IozGO3Fx8YD7oFC4ZujGvJ7AHkCSQnK2nYOYRM59HFaNFYqDAz
-	 qxZmsO3fl6iRB/pnvc1h0H1Y8j3Vc5R6bAXV4aVKqQeUg9agUswJrSaYcScZ+biZu/
-	 otOU+7YBbxCYopK4duk4apbVuPgTMsUshX22A9+g=
+	b=2LN2I3e84UbmsRXyxwfomIqZUQv0g3uGX9tjx/lXeA8IldLvSBMuv9GtXV/78krjA
+	 tCjkkqJWfhZ86hmQfzrUtqN0+KzK47V67g349XQyowweYuiq1WSotHzDxMUMPh2d08
+	 uocH3aS53pftrH7V0yTEgBS7x73Rg1Yw+YAWrQr8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daeho Jeong <daehojeong@google.com>,
-	Sunmin Jeong <s_min.jeong@samsung.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	syzbot+381d82bbf0253710b35d@syzkaller.appspotmail.com,
+	syzbot+3479efbc2821cb2a79f2@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1486/1887] f2fs: fix to migrate all curseg types during free_segment_range
-Date: Wed, 28 Oct 2026 17:59:42 +0100
-Message-ID: <20261028170533.266703778@linuxfoundation.org>
+Subject: [PATCH 6.1 1460/1887] net: watchdog: fix refcount tracking races
+Date: Wed, 28 Oct 2026 17:59:16 +0100
+Message-ID: <20261028170532.682680450@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -70,49 +70,200 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daeho Jeong <daehojeong@google.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 8ec06f50ddd8d201bd7e55b896ae28ed9d4cb7d1 ]
+[ Upstream commit 8eed5519e496b7a07f441a0f579cb228a33189f7 ]
 
-In free_segment_range(), the curseg evacuation loop only iterates up to
-NR_CURSEG_PERSIST_TYPE (0..5), missing non-persistent in-memory curseg
-types such as CURSEG_COLD_DATA_PINNED and CURSEG_ALL_DATA_ATGC.
+Blamed commit converted the untracked dev_hold()/dev_put() calls
+in the watchdog code to use the tracked dev_hold_track()/dev_put_track()
+(which were later renamed/interfaced to netdev_hold() and netdev_put()).
 
-Even though these in-memory curseg types are not saved in the on-disk
-checkpoint header, they still occupy active physical segments at runtime.
-If an active in-memory curseg happens to be allocated within the segment
-range being truncated during filesystem shrink, failing to evacuate it
-will cause subsequent writes to the curseg attempting out-of-bounds I/O
-on the truncated storage range.
+By introducing dev->watchdog_dev_tracker to store the
+reference tracking information without adding synchronization
+between netdev_watchdog_up() and dev_watchdog(), it enabled the
+race condition where this pointer could be overwritten or freed
+concurrently, leading to the list corruption crash syzbot reported:
 
-Fix this by expanding the curseg evacuation loop upper bound to
-NR_CURSEG_TYPE to ensure all active curseg types are safely migrated
-out of the target range.
+list_del corruption, ffff888114a18c00->next is NULL
+ kernel BUG at lib/list_debug.c:52 !
+Oops: invalid opcode: 0000 [#1] SMP KASAN PTI
+CPU: 1 UID: 0 PID: 91 Comm: kworker/u8:5 Not tainted syzkaller #0 PREEMPT(lazy)
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 05/09/2026
+Workqueue: events_unbound linkwatch_event
+ RIP: 0010:__list_del_entry_valid_or_report.cold+0x22/0x2a lib/list_debug.c:52
+Call Trace:
+ <TASK>
+  __list_del_entry_valid include/linux/list.h:132 [inline]
+  __list_del_entry include/linux/list.h:246 [inline]
+  list_move_tail include/linux/list.h:341 [inline]
+  ref_tracker_free+0x1a7/0x6c0 lib/ref_tracker.c:329
+  netdev_tracker_free include/linux/netdevice.h:4491 [inline]
+  netdev_put include/linux/netdevice.h:4508 [inline]
+  netdev_put include/linux/netdevice.h:4504 [inline]
+  netdev_watchdog_down net/sched/sch_generic.c:600 [inline]
+  dev_deactivate_many+0x28c/0xfe0 net/sched/sch_generic.c:1363
+  dev_deactivate+0x109/0x1d0 net/sched/sch_generic.c:1397
+  linkwatch_do_dev net/core/link_watch.c:184 [inline]
+  linkwatch_do_dev+0xd3/0x120 net/core/link_watch.c:166
+  __linkwatch_run_queue+0x3a5/0x810 net/core/link_watch.c:240
+  linkwatch_event+0x8f/0xc0 net/core/link_watch.c:314
+  process_one_work+0xa0e/0x1980 kernel/workqueue.c:3314
+  process_scheduled_works kernel/workqueue.c:3397 [inline]
+  worker_thread+0x5ef/0xe50 kernel/workqueue.c:3478
+  kthread+0x370/0x450 kernel/kthread.c:436
+  ret_from_fork+0x69a/0xc80 arch/x86/kernel/process.c:158
+  ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:245
 
-Fixes: d0b9e42ab615 ("f2fs: introduce inmem curseg")
-Cc: stable@vger.kernel.org
-Signed-off-by: Daeho Jeong <daehojeong@google.com>
-Signed-off-by: Sunmin Jeong <s_min.jeong@samsung.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+This patch has three coordinated parts:
+
+1) Add dev->watchdog_lock and dev->watchdog_ref_held to serialize watchdog operations.
+
+2) Remove netdev_watchdog_up() call from netif_carrier_on():
+   This ensures netdev_watchdog_up() is only called from process/BH context
+   (via linkwatch workqueue dev_activate()), allowing us to use
+   spin_lock_bh() for synchronization.
+
+3) Synchronize watchdog up and watchdog timer:
+   Protect netdev_watchdog_up() with tx_global_lock and watchdog_lock.
+   Only allocate a new tracker in netdev_watchdog_up() if one is
+   not already present.
+   In dev_watchdog(), ensure we don't release the tracker if the
+   timer was rescheduled either by dev_watchdog() itself or concurrently
+   by netdev_watchdog_up().
+
+Fixes: f12bf6f3f942 ("net: watchdog: add net device refcount tracker")
+Reported-by: syzbot+381d82bbf0253710b35d@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/6a26b751.c25708ab.1b19ef.0013.GAE@google.com/T/#u
+Tested-by: syzbot+3479efbc2821cb2a79f2@syzkaller.appspotmail.com
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260611152737.2580480-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/gc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/linux/netdevice.h |  4 ++++
+ net/core/dev.c            |  3 ++-
+ net/sched/sch_generic.c   | 45 ++++++++++++++++++++++++++++-----------
+ 3 files changed, 38 insertions(+), 14 deletions(-)
 
-diff --git a/fs/f2fs/gc.c b/fs/f2fs/gc.c
-index 771e38aaeba32..2df6a5b503508 100644
---- a/fs/f2fs/gc.c
-+++ b/fs/f2fs/gc.c
-@@ -2017,7 +2017,7 @@ static int free_segment_range(struct f2fs_sb_info *sbi,
- 	mutex_unlock(&DIRTY_I(sbi)->seglist_lock);
+diff --git a/include/linux/netdevice.h b/include/linux/netdevice.h
+index e97967ca27601..683896a9af446 100644
+--- a/include/linux/netdevice.h
++++ b/include/linux/netdevice.h
+@@ -1938,6 +1938,8 @@ enum netdev_reg_state {
+  *	@qdisc_hash:		qdisc hash table
+  *	@watchdog_timeo:	Represents the timeout that is used by
+  *				the watchdog (see dev_watchdog())
++ *	@watchdog_lock:		protect watchdog_ref_held
++ *	@watchdog_ref_held:	True if the watchdog device ref is taken.
+  *	@watchdog_timer:	List of timers
+  *
+  *	@proto_down_reason:	reason a netdev interface is held down
+@@ -2267,6 +2269,8 @@ struct net_device {
+ 	/* These may be needed for future network-power-down code. */
+ 	struct timer_list	watchdog_timer;
+ 	int			watchdog_timeo;
++	spinlock_t		watchdog_lock;
++	bool			watchdog_ref_held;
  
- 	/* Move out cursegs from the target range */
--	for (type = CURSEG_HOT_DATA; type < NR_CURSEG_PERSIST_TYPE; type++)
-+	for (type = CURSEG_HOT_DATA; type < NR_CURSEG_TYPE; type++)
- 		f2fs_allocate_segment_for_resize(sbi, type, start, end);
+ 	u32                     proto_down_reason;
  
- 	/* do GC to move out valid blocks in the range */
+diff --git a/net/core/dev.c b/net/core/dev.c
+index 7eccf0fb1709e..4a1b16a0c04b8 100644
+--- a/net/core/dev.c
++++ b/net/core/dev.c
+@@ -10078,7 +10078,8 @@ static int netif_alloc_netdev_queues(struct net_device *dev)
+ 
+ 	netdev_for_each_tx_queue(dev, netdev_init_one_queue, NULL);
+ 	spin_lock_init(&dev->tx_global_lock);
+-
++	spin_lock_init(&dev->watchdog_lock);
++	dev->watchdog_ref_held = false;
+ 	return 0;
+ }
+ 
+diff --git a/net/sched/sch_generic.c b/net/sched/sch_generic.c
+index b9cc8e90d6554..9b95e6b120e63 100644
+--- a/net/sched/sch_generic.c
++++ b/net/sched/sch_generic.c
+@@ -541,28 +541,43 @@ static void dev_watchdog(struct timer_list *t)
+ 				dev->netdev_ops->ndo_tx_timeout(dev, i);
+ 				netif_unfreeze_queues(dev);
+ 			}
+-			if (!mod_timer(&dev->watchdog_timer,
+-				       round_jiffies(oldest_start +
+-						     dev->watchdog_timeo)))
+-				release = false;
++			spin_lock(&dev->watchdog_lock);
++			mod_timer(&dev->watchdog_timer,
++				  round_jiffies(oldest_start +
++						dev->watchdog_timeo));
++			release = false;
++			spin_unlock(&dev->watchdog_lock);
+ 		}
+ 	}
+ 	spin_unlock(&dev->tx_global_lock);
+ 
+-	if (release)
++	spin_lock(&dev->watchdog_lock);
++	if (timer_pending(&dev->watchdog_timer))
++		release = false;
++	if (release && dev->watchdog_ref_held) {
+ 		netdev_put(dev, &dev->watchdog_dev_tracker);
++		dev->watchdog_ref_held = false;
++	}
++	spin_unlock(&dev->watchdog_lock);
+ }
+ 
+ void __netdev_watchdog_up(struct net_device *dev)
+ {
+-	if (dev->netdev_ops->ndo_tx_timeout) {
+-		if (dev->watchdog_timeo <= 0)
+-			dev->watchdog_timeo = 5*HZ;
+-		if (!mod_timer(&dev->watchdog_timer,
+-			       round_jiffies(jiffies + dev->watchdog_timeo)))
++	if (!dev->netdev_ops->ndo_tx_timeout)
++		return;
++	if (dev->watchdog_timeo <= 0)
++		dev->watchdog_timeo = 5*HZ;
++
++	spin_lock_bh(&dev->watchdog_lock);
++	if (!mod_timer(&dev->watchdog_timer,
++		       round_jiffies(jiffies + dev->watchdog_timeo))) {
++		if (!dev->watchdog_ref_held) {
+ 			netdev_hold(dev, &dev->watchdog_dev_tracker,
+ 				    GFP_ATOMIC);
++			dev->watchdog_ref_held = true;
++		}
+ 	}
++	spin_unlock_bh(&dev->watchdog_lock);
+ }
+ EXPORT_SYMBOL_GPL(__netdev_watchdog_up);
+ 
+@@ -574,8 +589,14 @@ static void dev_watchdog_up(struct net_device *dev)
+ static void dev_watchdog_down(struct net_device *dev)
+ {
+ 	netif_tx_lock_bh(dev);
+-	if (del_timer(&dev->watchdog_timer))
++
++	spin_lock(&dev->watchdog_lock);
++	if (del_timer(&dev->watchdog_timer)) {
+ 		netdev_put(dev, &dev->watchdog_dev_tracker);
++		dev->watchdog_ref_held = false;
++	}
++	spin_unlock(&dev->watchdog_lock);
++
+ 	netif_tx_unlock_bh(dev);
+ }
+ 
+@@ -592,8 +613,6 @@ void netif_carrier_on(struct net_device *dev)
+ 			return;
+ 		atomic_inc(&dev->carrier_up_count);
+ 		linkwatch_fire_event(dev);
+-		if (netif_running(dev))
+-			__netdev_watchdog_up(dev);
+ 	}
+ }
+ EXPORT_SYMBOL(netif_carrier_on);
 -- 
 2.53.0
 
