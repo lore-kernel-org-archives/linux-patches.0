@@ -1,51 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793212829;
-	b=syV5vrATeepO5d2ETRjqVil6zzzJPZOOPfBqGLlKZaz2ATYJFouAexdhlgXhkCctIQdN
-	 ar0zF3UBCMufCmB2G3ofdw07vdexl/Wf15NJbG1yHlBPKRd4Vvb1OSrWreJcb02vHr66x
-	 uMycCXfu0i/sOHgmAgZDZ/655khXA9p2IV1l3tEQF0/cl5XlSfh75knTi98CY5X1v930K
-	 G+//XURDTY/z+76qhdUPOOdPd5oVubCi2OUjEc9BN74D475Qs/oJe0GB4+4v+z5z5SxdV
-	 AALTCbNT3jiZsCjFH3PVWtlfHyj+EVl5FsZAWu0LG74SZRUR9FkEykUZPdrdzPB2RlQ==
+	t=1793212831;
+	b=EUwgIi6Sq6IZGd2H+kXidOx/iOueWg6wLy3JCa24O100w1aCy+SYCrdcY2jP16xTls/r
+	 izR/Tg1yXo75AahlGOt4zli8FPPW/uPLd9nD6bGPXHA9IUcvlHdaHdsANcC0lHQ2sy0ap
+	 Qx+tiO/27PmwCzclQiMReLHOxla6xy0ULhapjW7SrvVemDrpOpdKjtnzUhk7b4jE5Nvkt
+	 8RsBrNNXcDyjTLAuzklyAgKbZkKZ8L+yEyfk1DmhEyCNM0fqLNLs5CjOAPxAgt/EmCIa5
+	 q0T2/fCtyl+fK7WW30F6oRphvY4cEokqtlujRILu5uJNgJiCnyn7QgHa5W8haIeM7DA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793212829;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793212831;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=u+GpYtDx36P5jREV+OAl5gQUmglyOVbWWuHHAvL5V+E=;
-	b=01V/kmlDCLr4I5r18YvdbJgtmIDzL5KzFd7FJuzb1vTmBsmHJWao8c+lP0gSeYka9Rkx
-	 O5YGOR0YcjaHzxCiAVEzhn5FPwIb9fyDzjZCzOxrbiUsZs3qCUd5011UGSuko91ZK3Gwa
-	 d3Ust3P/M/lKX10V7YLigZQBFv1KEdPUrJBSI5Ro1lDMGX3lHFirwCvvVUEPSglc3UhMq
-	 kXZBLJ5R9ycCWfi2tt7uYyJ34nFj8SPqBSFwtBWcq9uF8QZgEfzCjxcRGYxqTsOgzdT1o
-	 xT6u5ai6AaGAA6wsRq19chh1WZnidvHJWpLC/oqyb8us1BBhfnD1TU3RMQUQrWUoUeA==
+	bh=E9XYuUt9NXkE9nOXF7I6GgtB9CZPwKxUoJghmyfl0Eg=;
+	b=eLV7nb34Uz4n7P3JWHK/n/WGearZsn38EciLCT3n/7U80LO+kaEIjq1M+oerjGGZmDgl
+	 Wn52es7cEBrzqZEUjV8InTTGqxqk1AufDw4fK/yb4NDmG7hWQsW28X3qRqwbBQrdcfkf/
+	 V1j+/7Y2qbgLTkbSgzm5b3Esp9ifwmia4HqaQilJpydu01hx8DjcRU3py35b8Y7XOIaBH
+	 rN7RSsaDUmACIzz697x4H9obENh31S95rV2dugh2lLbkAAJ+jEREw/TIjICk0o4LxcN7G
+	 5z0gzmrd7yD/QsY6FGHdFixd5PJXHjZvXEsnvKzlTJTCdA9rTL2PS9puvqOHV0mIUBw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J6sin2b8;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="mEh+h5/R";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1747606A31D;
-	Wed, 28 Oct 2026 18:40:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 985DA606A31D;
+	Wed, 28 Oct 2026 18:40:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J6sin2b8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EE6D1F031E0;
-	Wed, 28 Oct 2026 18:40:27 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mEh+h5/R
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8E1E1F01828;
+	Wed, 28 Oct 2026 18:40:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793212828;
-	bh=u+GpYtDx36P5jREV+OAl5gQUmglyOVbWWuHHAvL5V+E=;
+	s=korg; t=1793212831;
+	bh=E9XYuUt9NXkE9nOXF7I6GgtB9CZPwKxUoJghmyfl0Eg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=J6sin2b8dxzyiY/6xAPvOqRH5FTGPIyvNPIQ+ouXR9n3SIcSKlcnxuYsnhkLv9pZE
-	 HOuoQ1CZRILtEaI9Ec6IjnmMpu4szqSSE3Kotrk1CIsVITABMZiiBAxciW0ayV0P9B
-	 1x/p9dt0m8i3NDgllXRwOIbicOKfslTMUh/yt2Sc=
+	b=mEh+h5/R1iroKqpvhy51tOA4fo6RcAUHFkD76NgDrzu2BPY7hSPiVMMIcDvZ7MpO7
+	 xqZd1750cPIitrgQcIEPTYpio8cys586jPZEZ/CurVDeGFq/cA6qR0PQJO3v5NYExM
+	 ZKS3CJ5oYzEnIrSemMpYyeVZo1Wqapfwfqi22sh4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Mingyu Wang <25181214217@stu.xidian.edu.cn>
-Subject: [PATCH 6.1 0289/1887] tty: vt: fix memory leak in vc_allocate()
-Date: Wed, 28 Oct 2026 17:39:45 +0100
-Message-ID: <20261028170505.805231364@linuxfoundation.org>
+	sashiko-bot@kernel.org,
+	Arnd Bergmann <arnd@arndb.de>,
+	Johan Hovold <johan@kernel.org>,
+	Jiri Slaby <jirislaby@kernel.org>,
+	stable@kernel.org
+Subject: [PATCH 6.1 0290/1887] tty: amiserial: fix broken TIOCMIWAIT
+Date: Wed, 28 Oct 2026 17:39:46 +0100
+Message-ID: <20261028170505.827968391@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -67,52 +70,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mingyu Wang <25181214217@stu.xidian.edu.cn>
+From: Johan Hovold <johan@kernel.org>
 
-commit 5b114bfc1dfd88f9d50822d532f7f1fce0f7388a upstream.
+commit 615f35fd5aee169cc4881a8594f2fa234a4d0bb8 upstream.
 
-If the screen buffer allocation fails in vc_allocate(), the error handling
-path jumps to `err_free`. However, this path fails to release the unicode
-screen map attached to `vc->uni_pagedict_loc`.
+A change replacing interruptible_sleep_on() inadvertently broke the
+TIOCMIWAIT implementation which now immediately returns -EIO (unless
+there is a racing modem status update).
 
-During the early stages of vc_allocate(), the unicode screen map is either
-newly allocated via con_set_default_unimap() or shares the default unicode
-map from a previously initialized console (which increments its refcount).
-If the subsequent kzalloc() for the screen buffer fails, the err_free path
-frees the vc structure but leaves the attached uni_pagedict with an
-elevated refcount. This results in an unreferenced object memory leak, as
-the reference to the dictionary is lost and its refcount can never reach
-zero.
+Replace the old hangup (and signal) detection with a check for the
+TTY_IO_ERROR flag which is set on hangup.
 
-This issue was discovered by DevGen (an automated virtual device modeling
-fuzzer based on Syzkaller). During fuzzing with kernel fault injection
-(failslab) enabled, the fuzzer forcefully failed the kzalloc() for the
-screen buffer, exposing this error-handling path leak.
-
-Fix this by checking *vc->uni_pagedict_loc and calling con_free_unimap(vc)
-in the err_free path before kfree(vc). This safely decrements the refcount
-and releases the dictionary memory if this was the last reference. The
-explicit check is added to maintain consistency with other callers.
-
-Fixes: 34902b7f2754 ("tty: vt, get rid of weird source code flow")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Mingyu Wang <25181214217@stu.xidian.edu.cn>
-Link: https://patch.msgid.link/20260803144556.163856-1-25181214217@stu.xidian.edu.cn
+Fixes: 591cee0a3563 ("tty/amiserial: avoid interruptible_sleep_on")
+Reported-by: sashiko-bot@kernel.org
+Link: https://lore.kernel.org/20260910132029.D80801F00898@smtp.kernel.org
+Cc: stable@kernel.org	# 3.14
+Cc: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Reviewed-by: Jiri Slaby <jirislaby@kernel.org>
+Link: https://patch.msgid.link/20260911090132.723531-1-johan@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/vt/vt.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/tty/amiserial.c |    9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
---- a/drivers/tty/vt/vt.c
-+++ b/drivers/tty/vt/vt.c
-@@ -1160,6 +1160,8 @@ int vc_allocate(unsigned int currcons)	/
- 	return 0;
- err_free:
- 	visual_deinit(vc);
-+	if (*vc->uni_pagedict_loc)
-+		con_free_unimap(vc);
- 	kfree(vc);
- 	vc_cons[currcons].d = NULL;
- 	return err;
+--- a/drivers/tty/amiserial.c
++++ b/drivers/tty/amiserial.c
+@@ -1140,11 +1140,6 @@ static int rs_ioctl(struct tty_struct *t
+ 				local_irq_save(flags);
+ 				cnow = info->icount; /* atomic copy */
+ 				local_irq_restore(flags);
+-				if (cnow.rng == cprev.rng && cnow.dsr == cprev.dsr && 
+-				    cnow.dcd == cprev.dcd && cnow.cts == cprev.cts) {
+-					ret = -EIO; /* no change => error */
+-					break;
+-				}
+ 				if ( ((arg & TIOCM_RNG) && (cnow.rng != cprev.rng)) ||
+ 				     ((arg & TIOCM_DSR) && (cnow.dsr != cprev.dsr)) ||
+ 				     ((arg & TIOCM_CD)  && (cnow.dcd != cprev.dcd)) ||
+@@ -1152,6 +1147,10 @@ static int rs_ioctl(struct tty_struct *t
+ 					ret = 0;
+ 					break;
+ 				}
++				if (tty_io_error(tty)) {
++					ret = -EIO;
++					break;
++				}
+ 				schedule();
+ 				/* see if a signal did it */
+ 				if (signal_pending(current)) {
 
 
