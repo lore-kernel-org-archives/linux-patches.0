@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793217103;
-	b=b6ciGELluYeeZFDr7i8Xe4PslE2uWiIHWd4/CJrsILUqOValVp6d3/OTVufwF2z8AI2g
-	 UWPA0rVtsR7rxw2ZgkA1aUqLECBlOEJ9XQa1PfKta3aDdcEmgAztreILMO/XJPfZThKwR
-	 kBTWpmDY5SXRIg2vhcbhRXSv7JiJwrlAyd0On25mp8Sbq+JeBe+WK+KYwFNqbiO8ju5QO
-	 /E1APRDD+52EsHBMBZrfl1b2Jxi7tMiRj3wWO8YgcNc85PY2+BLZvBCoJe+2FpOSbx+Tn
-	 dEqFjS4LrJbgyW/sWIVuTkBGZbfFa6NYJbBtDeyibQh4kdSRydqRZvIq7Ew4CYAgKrg==
+	t=1793217105;
+	b=vQfMIZwbU/J+NA7UJ8S5e1j1bgYb7WOqCPHPehjcZ85OxAGDy3UxcBUy/Mtfe9tWJyHb
+	 BPBJw0YdLYd/cUnceVQ2zcxhpceOkG6XxQL5rM6DmLMGlg9RHD6H93JlEtgjcEGk3wVPP
+	 oPVHGkOXlGSRR68UAYGa12ZNO+U4m3iDRK/Fgf5EKxiziasofKtTstLbB7xaLxi4FIY5u
+	 mIzBD6Sa5iw0vlSsijedHj4hi/6dtTknCdGszy4B6WNi2109AP97P6OOtNkoUt4lQf8D+
+	 E4BZawjBiLZF5s0XznEv6OymfSq7SzHVqVLNfnezwj/wOSzA5mgeJhqJvPnRDYMfFQQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793217103;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793217105;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=JKITA6rhJ4E/PvxDNdLzE2bgan9WSuOxZigB/PchQX4=;
-	b=YMLrOBRD8pFePjEDjHfMdzfNjx9mGiQfsEOVjKNRSt5zcJOApBYNoY9h7NzrT8Hl5eB+
-	 2AsI8KIPEz1x+JGCpBTiwPMRcF22c6fJqkxeIFR6neGx0U0cp/W/3Qc7zvWCBpCO+DGCS
-	 8K3srnG9IisQ0U5xrrA/jBNFEnWdwjE7VicBSQR/W/02Es7SWEjyOTZuDIwN/Yf0+pNDA
-	 4uqWdqn8x2Gbth09CH6hBQTHynloyJrmaczIU4UiFrx43lXjQPtHYkFEwmPtwUMvwXnqC
-	 UX1cQ57TOtLEN+QlJ+ufLXW6rCQbC11OKipnM8DkPO/1hwhyOdf87WNiJ6zTdcGCDGQ==
+	bh=6/ID3YpzSJ7n+/ETwVY8KS8/9AK/UzPp+UQ9tkzJ7MQ=;
+	b=F4/arLz0fR06VfFO1W0NoAp2MMUfwEp6fsGCboZXTrjw/P+lZOTLKVF6oNea5WWe07ov
+	 g32XNSNhEttevXYdgiznXbodV979cBGjuLLn5ZQQIDOt8HoiQr5VQsBP7RypktLCI4ZjG
+	 7TaxmwYJ5n9plLGu4AL+ouqJqfXAlKLZXPU+R8mtC4Zen2DMbjsI8fR8I3wxlf9d0+teh
+	 50jr6QDnxhgRLMlrRWngOJ+n1CYdcMH50gn7390PPKw4IlXWvv99uWkGodeVSB75sPXRX
+	 ZkwFDwrGNsw6WXZfbjQETUo/+91nlTpN4z2X2yuJWbdCy3oCF6F2cam+fDmFrL6tJDw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fqmM8fGn;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yWU3IneZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD356606A320;
-	Wed, 28 Oct 2026 19:51:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85F9A606A31C;
+	Wed, 28 Oct 2026 19:51:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fqmM8fGn
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 098BA1F01825;
-	Wed, 28 Oct 2026 19:51:41 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yWU3IneZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6B021F01825;
+	Wed, 28 Oct 2026 19:51:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793217102;
-	bh=JKITA6rhJ4E/PvxDNdLzE2bgan9WSuOxZigB/PchQX4=;
+	s=korg; t=1793217105;
+	bh=6/ID3YpzSJ7n+/ETwVY8KS8/9AK/UzPp+UQ9tkzJ7MQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fqmM8fGnqw9/N4gZB4c7kdc0LrhUDWeWpGVS1gXe/5brLHcR/BWXSx6dVZeVNHs0N
-	 8+T67wU1jTX7xBd08TsbM77fqdx2qG7Nk6CC54lOMQQzVPx10Qdh+GskFD3Hk49Pt+
-	 oCQ0/npfl9E6wcqWb/zoGtdCYl1S5DHIwjc6N3wc=
+	b=yWU3IneZKpidfV7KJgWLrozKI3IVRoRwnRgKyf2W4G7stwutzuJZ9gxnwbKzdHT01
+	 EFRTHKocEcZ6ANosivDB7ywS1Crb8V8yCEIICVWd8qs1WpSmf5SW8UX5jaDww3ZB4i
+	 h0MvPmBcvxHfQ9zbZIOZs7NXEM8keRIN7w3yje8U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Jesse Zhang <Jesse.Zhang@amd.com>
-Subject: [PATCH 6.1 1746/1887] drm/amdgpu: dont drop the runtime PM reference twice in amdgpu_gpr
-Date: Wed, 28 Oct 2026 18:04:02 +0100
-Message-ID: <20261028170539.188323594@linuxfoundation.org>
+	Olzhas Marat <marat.olzhas@gmail.com>,
+	Shyam Sundar S K <Shyam-sundar.S-k@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Linus Walleij <linusw@kernel.org>
+Subject: [PATCH 6.1 1737/1887] pinctrl: amd: Clear S4 wake bits when firmware has _AEI
+Date: Wed, 28 Oct 2026 18:03:53 +0100
+Message-ID: <20261028170538.981017379@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -67,71 +69,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jesse Zhang <Jesse.Zhang@amd.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-commit de9f6bcdb44f0e410031002e2f103826ea6b6259 upstream.
+commit 1cca81a683da7f0ef2fbaf34442376044cbbad22 upstream.
 
-amdgpu_debugfs_gpr_read() drops its runtime PM reference right after
-reading the wave registers. When copying them to userspace fails, it
-jumps to the err label, which drops the reference a second time. A read
-into a bad buffer on Navi31 either steals a reference somebody else
-holds (power/runtime_usage goes from 1 to 0) or underflows the count:
+Commit ffe8a0c6b552 ("pinctrl-amd: Don't clear S4 wake bits at probe")
+preserves firmware-programmed S4 wake sources because some PCIe devices
+rely on them for Wake-on-LAN. The system that motivated that change does
+not expose ACPI GPIO events through _AEI.
 
-  amdgpu 0000:03:00.0: Runtime PM usage count underflow!
+On a Chuwi CoreBook Plus, firmware exposes _AEI but also leaves the S4/S5
+wake bit set for GPIO 24. This causes the machine to power back on
+immediately after shutdown even though Wake-on-LAN is not enabled.
 
-The registers are already in the kernel buffer at that point, so finish
-the hardware access first and copy the buffer with a single
-copy_to_user() instead of the put_user() loop with its own error path.
+GPIO register dumps show that the only relevant difference is bit 15 on
+GPIO 24. Clearing that bit makes the machine remain off. GPIO 24 is not
+itself listed in _AEI, so _AEI is not a per-pin indication of which pins
+the OS manages; it is a platform level signal of which wake model the
+firmware follows.
 
-Fixes: 9eee152aab56 ("drm/amdgpu/debugfs: fix ref count leak when pm_runtime_get_sync fails")
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Jesse Zhang <Jesse.Zhang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 31035bbd74f7c3e10c163db875b8e67f8b50ee6a)
+Use that signal to decide what to clear. Continue clearing S0i3/S3 bits on
+every system. Clear S4 bits when firmware exposes _AEI, indicating that the
+platform hands GPIO events to the OS, but preserve S4 bits when _AEI is
+absent so that firmware-programmed sources such as PCIe PME that bypass the
+GPIO IRQ wake API keep working.
+
+A platform that exposes _AEI for some pins while routing a wake capable
+device through a raw GPIO not listed in _AEI would lose that wake source
+unless firmware re-arms it during the sleep transition. No such system has
+been reported.
+
+Fixes: ffe8a0c6b552 ("pinctrl-amd: Don't clear S4 wake bits at probe")
+Reported-by: Olzhas Marat <marat.olzhas@gmail.com>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=222041
 Cc: stable@vger.kernel.org
+Tested-by: Olzhas Marat <marat.olzhas@gmail.com>
+Reviewed-by: Shyam Sundar S K <Shyam-sundar.S-k@amd.com>
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c |   21 +++------------------
- 1 file changed, 3 insertions(+), 18 deletions(-)
+ drivers/pinctrl/pinctrl-amd.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c
-@@ -997,7 +997,6 @@ static ssize_t amdgpu_debugfs_gpr_read(s
- {
- 	struct amdgpu_device *adev = f->f_inode->i_private;
- 	int r;
--	ssize_t result = 0;
- 	uint32_t offset, se, sh, cu, wave, simd, thread, bank, *data;
+--- a/drivers/pinctrl/pinctrl-amd.c
++++ b/drivers/pinctrl/pinctrl-amd.c
+@@ -871,6 +871,15 @@ static void amd_gpio_irq_init(struct amd
  
- 	if (size > 4096 || size & 3 || *pos & 3)
-@@ -1042,25 +1041,11 @@ static ssize_t amdgpu_debugfs_gpr_read(s
+ 	mask = BIT(WAKE_CNTRL_OFF_S0I3) | BIT(WAKE_CNTRL_OFF_S3);
  
- 	pm_runtime_mark_last_busy(adev_to_drm(adev)->dev);
- 	pm_runtime_put_autosuspend(adev_to_drm(adev)->dev);
-+	amdgpu_virt_disable_access_debugfs(adev);
- 
--	while (size) {
--		uint32_t value;
--
--		value = data[result >> 2];
--		r = put_user(value, (uint32_t *)buf);
--		if (r) {
--			amdgpu_virt_disable_access_debugfs(adev);
--			goto err;
--		}
--
--		result += 4;
--		buf += 4;
--		size -= 4;
--	}
--
-+	r = copy_to_user(buf, data, size) ? -EFAULT : size;
- 	kfree(data);
--	amdgpu_virt_disable_access_debugfs(adev);
--	return result;
-+	return r;
- 
- err:
- 	pm_runtime_put_autosuspend(adev_to_drm(adev)->dev);
++#ifdef CONFIG_ACPI
++	/*
++	 * Platforms without _AEI leave GPIO wake sources to firmware, so
++	 * preserve their S4 wake bits.
++	 */
++	if (acpi_has_method(ACPI_HANDLE(&gpio_dev->pdev->dev), "_AEI"))
++		mask |= BIT(WAKE_CNTRL_OFF_S4);
++#endif
++
+ 	for (i = 0; i < desc->npins; i++) {
+ 		int pin = desc->pins[i].number;
+ 		const struct pin_desc *pd = pin_desc_get(gpio_dev->pctrl, pin);
 
 
