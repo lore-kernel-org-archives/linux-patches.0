@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793217343;
-	b=ETvpYbxWSXAs/KQ+/Z+QHxBgNeneaV7j9qVb8nychpanVX5VpZWk4z4FDB99kbnOAogK
-	 aFQmm/Dovlza//mbt7Abu/a0c7w2i3nU8AtpIjhNN86Qc6grzjHKoPRq+ajD6MilGzZa5
-	 MQt3Bz0sONxnlI6zLZSAMIJH5aib81+LCkbcrnJ9NEOBtLo5DQ+FUkDbuvwMfkFpjezu7
-	 KRd5Y/+VfCl2VASUd4EHT7zxYLpd4zs9Kqw6XglIe+0xbHKCbyzuLLVzLZx0ldey7IZNp
-	 IbNC7YElamLq4yEG5S2uQFvLClKLKWr4UgaZ2tiL52/An9K5TlUpx7JtXHAZm9Pqf7w==
+	t=1793217346;
+	b=cT9PC/Cfpe4xwYwME15lnzPGgLpOsTlDIvTZospMm9cnIf03oi0TE/CFA82JZv/ZKRis
+	 yUu+0bJ3lIBYMSG+NltuVHwbylDxjng3nF5wnnZbqDm5SNGKhEIVfAJwQD/Ah5AsSasXz
+	 xhz+3ExwHAgPmX0KMDCdClxEy4vq5d5lwYKYaaabZoylg5JvwPXT2ntKkznTzDs4FMrXm
+	 F8wNw5cclvp8LmBRsSDPPJG6OKsNDMG+jx3fLGYyeVjiZ5DjzJAj6Yw2171zTIk9d+nsQ
+	 lqMzn/q7Yi2/Z2JiQLtzNqPBkQM/gva73mDazAHWLDXclfBzC5lmX/VT2ug0UX+9nzw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793217343;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793217346;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=HQYdgqwDqXMClK9KfGGgbtXL4LbyP58kIe7Z68+N4K8=;
-	b=Z52GNb7/mssSd6ndcnQ36lKewUukEUf8uyNyhjWa1rwxYQ29/+0gu5id4DxTXYgC74R2
-	 AUUJ5+FTTwg/oCu1Y4iPcD0AjG/0kGpkW5JvOKA5yKOQZ/aE1O6i3DG0tMpZfbFhCYpQ0
-	 YEmTa+l28Og2/CYj5WM4EWTlC5usuvoPmFLH/S/sh3d6RPYtWFXTKw5Vyz34nEyr68D7V
-	 0zpU+dTR6gxqYTKFsrajtCSoE4NEQ8m+tT/QZ/ONA5WqRMgNNWcBHM7L0NFYEeA3B8q4+
-	 85o+umyKs7zW3sikGxnh83mVRmHWgGNSoJ6KprPEQB8b1NNQRgcwbxNebsQmFU/vU7Q==
+	bh=3rFOGGjHinSqfpf0poMiqPbuj2VfAWUO2MZWlpVcIv0=;
+	b=GGTemfPrLrpY9lFOEPK7THIrvMXzy9OhTtCo28Ig9nTJpc+PVOwDPx8qqa0SsGVy69jE
+	 H97sdxo7KLlMYNXoHsyO4gnomfKdtRT7sMkYqqP5NTsi0vf7RUX2Jw1ggiKK1tKX2TFBh
+	 NgeUyBNL6X3kSpDTZ5Qm+Ohuw7gPYtLM5UoNiRD3HkmUOeTCIoRiMjwZRgN9dETa/IVdK
+	 qQr0hAtUsnIN4YLJGL7mlH+RLjhqOtj5fn1yIPal0mENtcXFXGlgfOhqjrP4UncKCMlK0
+	 r4GRTpIbdQRUU7UJH2+aA7GyVpo2zqYdflP4gjAgD8Kkx1vdxBfROjeG+dWUMuiJxEA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dajE1aJf;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qMT1BA3K;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CBE3606A31D;
-	Wed, 28 Oct 2026 19:55:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60E0A606A31A;
+	Wed, 28 Oct 2026 19:55:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dajE1aJf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C96891F01825;
-	Wed, 28 Oct 2026 19:55:42 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qMT1BA3K
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0C931F01825;
+	Wed, 28 Oct 2026 19:55:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793217343;
-	bh=HQYdgqwDqXMClK9KfGGgbtXL4LbyP58kIe7Z68+N4K8=;
+	s=korg; t=1793217346;
+	bh=3rFOGGjHinSqfpf0poMiqPbuj2VfAWUO2MZWlpVcIv0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dajE1aJfMnB2vYsT3BBvIVv3YFpl6EPk+5ABzN+MDrUh8xtvqh2l89bGpzHXiVW0+
-	 ZXPZTVfTBg+tJZW5t/gx5NQ6IAMcX9yoWQpFkyEAgelm2UU672RCka97wK/0VxsvvQ
-	 tFqvDrNaINRzlENbUjUCejq918vYw5FuaPY3Xhss=
+	b=qMT1BA3KLMXRrYxgajccBU4i2+2Tqv2hebjML3jml6ez/13z8vascYkqr6wnUwMga
+	 KMpFdosuBlIYik1ZqjcZXjt+Gn6Ardho41aN2NUVZvHtaokmWIdhq943Mfm4DfEbNw
+	 SFh0hHIgYzP4J9oAp859Z6Wupwcqf1oHOdHa8S/M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Sudeep Holla <sudeep.holla@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1870/1887] Bluetooth: hci_core: Print number of packets in conn->data_q
-Date: Wed, 28 Oct 2026 18:06:06 +0100
-Message-ID: <20261028170542.008499804@linuxfoundation.org>
+Subject: [PATCH 6.1 1835/1887] firmware: arm_scmi: Reject out of range DT protocol IDs
+Date: Wed, 28 Oct 2026 18:05:31 +0100
+Message-ID: <20261028170541.205173741@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -67,53 +68,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Sudeep Holla <sudeep.holla@kernel.org>
 
-[ Upstream commit 3c34d6428740e47b29ae3afd85d6f9eb656a3ea3 ]
+[ Upstream commit 59407ccb52130f2c81f4b3cbe4f14114afceb54f ]
 
-This attempts to print the number of packets pending to be transmitted
-in the conn->data_q.
+SCMI protocol IDs carried in message headers are limited by
+MSG_PROTOCOL_ID_MASK. The DT parsing paths noticed protocol IDs
+outside that range, but only logged an error and then kept processing
+the invalid value.
 
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Stable-dep-of: 6610c6fe4b89 ("Bluetooth: hci_core: Fix queuing tx_work after workqueue is drained")
+That lets a malformed 32-bit DT reg value reach helpers which take a u8
+protocol ID, where it can be truncated and/or treated as a different
+protocol.
+
+For channel setup, two different out-of-range values can also be used as
+distinct IDR keys while aliasing the generated SCMI protocol identity.
+
+Skip DT protocol nodes whose reg value does not fit the SCMI protocol ID
+field before setting up channels or creating protocol devices.
+
+Fixes: 05a2801d8b90 ("firmware: arm_scmi: Use dedicated devices to initialize channels")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Link: https://patch.msgid.link/20260714-scmi_core_fixes-v6-7-3afe499d46e3@kernel.org
+Signed-off-by: Sudeep Holla <sudeep.holla@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_core.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/firmware/arm_scmi/driver.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
-index d01a91fa88797..aebb48bae2a48 100644
---- a/net/bluetooth/hci_core.c
-+++ b/net/bluetooth/hci_core.c
-@@ -3218,6 +3218,8 @@ static void hci_queue_acl(struct hci_chan *chan, struct sk_buff_head *queue,
+diff --git a/drivers/firmware/arm_scmi/driver.c b/drivers/firmware/arm_scmi/driver.c
+index 2f959a3183273..ed32f48c8fe3b 100644
+--- a/drivers/firmware/arm_scmi/driver.c
++++ b/drivers/firmware/arm_scmi/driver.c
+@@ -2194,9 +2194,11 @@ static int scmi_channels_setup(struct scmi_info *info)
+ 		if (of_property_read_u32(child, "reg", &prot_id))
+ 			continue;
  
- 		spin_unlock_bh(&queue->lock);
- 	}
-+
-+	bt_dev_dbg(hdev, "chan %p queued %d", chan, skb_queue_len(queue));
- }
+-		if (!FIELD_FIT(MSG_PROTOCOL_ID_MASK, prot_id))
++		if (!FIELD_FIT(MSG_PROTOCOL_ID_MASK, prot_id)) {
+ 			dev_err(info->dev,
+ 				"Out of range protocol %d\n", prot_id);
++			continue;
++		}
  
- void hci_send_acl(struct hci_chan *chan, struct sk_buff *skb, __u16 flags)
-@@ -3249,6 +3251,10 @@ void hci_send_sco(struct hci_conn *conn, struct sk_buff *skb)
- 	hci_skb_pkt_type(skb) = HCI_SCODATA_PKT;
+ 		ret = scmi_txrx_setup(info, child, prot_id);
+ 		if (ret) {
+@@ -2403,8 +2405,10 @@ static int scmi_probe(struct platform_device *pdev)
+ 		if (of_property_read_u32(child, "reg", &prot_id))
+ 			continue;
  
- 	skb_queue_tail(&conn->data_q, skb);
-+
-+	bt_dev_dbg(hdev, "hcon %p queued %d", conn,
-+		   skb_queue_len(&conn->data_q));
-+
- 	queue_work(hdev->workqueue, &hdev->tx_work);
- }
+-		if (!FIELD_FIT(MSG_PROTOCOL_ID_MASK, prot_id))
++		if (!FIELD_FIT(MSG_PROTOCOL_ID_MASK, prot_id)) {
+ 			dev_err(dev, "Out of range protocol %d\n", prot_id);
++			continue;
++		}
  
-@@ -3312,6 +3318,8 @@ static void hci_queue_iso(struct hci_conn *conn, struct sk_buff_head *queue,
- 
- 		spin_unlock_bh(&queue->lock);
- 	}
-+
-+	bt_dev_dbg(hdev, "hcon %p queued %d", conn, skb_queue_len(queue));
- }
- 
- void hci_send_iso(struct hci_conn *conn, struct sk_buff *skb)
+ 		if (!scmi_is_protocol_implemented(handle, prot_id)) {
+ 			dev_err(dev, "SCMI protocol %d not implemented\n",
 -- 
 2.53.0
 
