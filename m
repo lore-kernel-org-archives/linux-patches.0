@@ -1,56 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793209937;
-	b=KEY0jIXc7QqiFKVtA2UMSsw98f52cZKLQKTK2XEvUrrbcuqY1HKFI8cbI4+q/s92bIJt
-	 Vnwc5BXezgtrwUUZl7AbO3RX6tgtWiRPBmk9a/VvCvKROAUdpWOZJ2oOSrPZEY62L8cWt
-	 bq1Ed0bh0FDRlGgzBI6KOKMF+3aqlgbHF11gjuMAvSb+P8A8CUFti1MuZbqnOpWi5wKHP
-	 s+JL+tYd48OuAZJcLMBz/AscyXiVKG+ap3XquvGW/5Jd+jLm+GiD7cksy4nYGzILJu/yn
-	 jNow4r+zFGSx+a55jpOFpgKbMs95SDWnJPbID4Sv9SlQOxFskRdmjU0pC02kFgivy0g==
+	t=1793209940;
+	b=yKoWkaEXg6BTJY3fqgF2JDA37kzjSOm2v/UGt06KtyL2pSJco1+XQOKPEdRDQGvkYpBs
+	 wfas3oQqWJjWoFU/sMedwyNTHbNH+m/KWOGZvh4mG7RMMKtlEPL8Xjvqk/8Aive7j57ai
+	 whqSJUNqU3opl6Fi8H9ybJBZ4Wi9zcQDwbsOjaVFWxl51H01YvzsvG9mGqvMC9od2zIJy
+	 qJJXL2/dbc409heYX1lmyWjzEo2u7Kg/q6BsGJrwfa/OeXkz/5bt2xT+MYoKUUvwnp9FK
+	 olYDz82QABaRZ1EMYPDjOLjoO8tltiNNTeidzFQ/QyCJG+rNK77uslXU89MSUrhcpxw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793209937;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793209940;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=7YDkouNpxIfThqP5nu4QT4EqE/s/Fay3Fg34pdO3tEE=;
-	b=Ma5iECdbcsI5mCEdGxeBZjXtbWLK1kWLVmW3TUhMlaxPs7jokoolS+UmQWl/qIeSyWyw
-	 S1T/g6EQXZMkDFlVchUMqGNAmH6JzaW66niCwBBkaW31gSgzKgAsoNHcPsBjoN1jP2+Nj
-	 GXvyAqshED6CUZrLOs3LBhNa1T9CTfjqlLFiVo3jnmbjoR8xcLAiO4xR2hwfwqeFrGLL9
-	 W0M/XPM2n9jtSpDGMnuopEjeyuSe3oXRPG4Y6nMAjX8Fv/XSd6mgJHAXxp8t/NgNRolK1
-	 6kenDbbll+jvXmTBCWWISkkiwQnvLXVwGgvuPF6I0QRZyGKpqRtlN4NPBWh/6HokIiQ==
+	bh=BT7Zfqw+/FBLCWctWREpM86uk55x70p/iFieelvGPlQ=;
+	b=VRwfgY5jxOgJioAs2XNgLcsgrgo8dn9902ldOJLE1glMyY7tMhUrBx8W/vPwaYVVuTKh
+	 4YBLx3D9fnkM5fyVwCGQbnEjm8xxxgl3eu9cbBSfjUOYZHLLS/taNMnNm0TSD8gTI+YHf
+	 Sh8pZaNO90ZdLLzZr/XRH6XQ9LfFoTzdDhRUxSARiFF1eV91PUPNhjF3KVF0n4garMuMW
+	 GKwsruDha3B1J2/MImbj0gj3NFuVEKFWIPZNxk6y6IwgLKq4mjQtNXlhD7whpPGTkLOz1
+	 TqEceq74dJ6U6W8nBqNBlCqYizEuL10aRc1EY2kRG49bMG1LM1f9XerM16Qqvb+hk4Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c+sFSURU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="SDeRM/9Z";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 155B6606A31C;
-	Wed, 28 Oct 2026 17:52:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5096606A31C;
+	Wed, 28 Oct 2026 17:52:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c+sFSURU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34E331F01825;
-	Wed, 28 Oct 2026 17:52:16 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SDeRM/9Z
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1164A1F01825;
+	Wed, 28 Oct 2026 17:52:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793209936;
-	bh=7YDkouNpxIfThqP5nu4QT4EqE/s/Fay3Fg34pdO3tEE=;
+	s=korg; t=1793209939;
+	bh=BT7Zfqw+/FBLCWctWREpM86uk55x70p/iFieelvGPlQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=c+sFSURUQQOTPr5GUYQvtKZDu2fJ0mYNUPQXynqWfkOI7QMsC9ovtmEoaAQyQA3Nb
-	 mEugb5ScCHb73uOcID8+2znktRAuHefZZadRJfViWhlz4DTstt0nY3Y49XCKXMmU36
-	 PCL9tHmuv86cXvsgo8KUB34/ekch6vEJ5Ae7VNx0=
+	b=SDeRM/9ZU+yg7A7spE8ERiHpsXgw9i0sGh+UHcxscU96twPyrAXOfbGInw7/GZlo7
+	 sPHvDsoPLyNpwvNBxHWrWCXtENC8J4bp5q6eRYGmUQRHL1ZoMpF9iMFgb2vA569uVs
+	 DXkl4r+2hsvTGfe3HpAZl3BClePa5FxBLruAfjec=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ming Lei <tom.leiming@gmail.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Keith Busch <kbusch@kernel.org>,
-	Chaitanya Kulkarni <kch@nvidia.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	Artem Dinaburg <artem@trailofbits.com>,
+	HyeongJun An <sammiee5311@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 002/168] blk-mq: reinsert cached request to the list
-Date: Wed, 28 Oct 2026 17:58:58 +0100
-Message-ID: <20261028165943.152520205@linuxfoundation.org>
+Subject: [PATCH 6.6 020/168] ASoC: wm8978: Fix the 128x oversampling switch bits
+Date: Wed, 28 Oct 2026 17:59:16 +0100
+Message-ID: <20261028165943.576358901@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165943.089486480@linuxfoundation.org>
 References: <20261028165943.089486480@linuxfoundation.org>
@@ -72,58 +68,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Keith Busch <kbusch@kernel.org>
+From: HyeongJun An <sammiee5311@gmail.com>
 
-[ Upstream commit b051bb6bf0a231117036aa607cadf55be8e63910 ]
+[ Upstream commit d0567ca9a2faa33efbe5ae84ef7b86423a93bffd ]
 
-A previous commit removed an optimization out of caution for a scenario
-that turns out not to be real: all the "queue_exit" goto's are safe to
-reinsert the request into the cached_rq's plug list as they are either
-from a non-blocking path, or a successful merge that already holds the
-queue reference. This optimization is most needed for small sequential
-workloads that successfully merge into larger requests.
+The DAC and ADC 128x Oversampling Switches use bit 5 of R10 and R14.
+Table 66 of the WM8978 datasheet puts DACOSR128 and ADCOSR128 at bit 3
+of those registers.
 
-Fixes: dc278e9bf2b9 ("blk-mq: pop cached request if it is usable")
-Suggested-by: Ming Lei <tom.leiming@gmail.com>
-Suggested-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
-Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
-Link: https://patch.msgid.link/20260526153531.2365935-1-kbusch@meta.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Assisted-by: LLM
-[ Backport to 6.6.y: Reinsert with rq_list_add() on each of the three
-  target preparation or merge exits; the target has a single cached_rq
-  list and no shared queue_exit label. ]
-Signed-off-by: Artem Dinaburg <artem@trailofbits.com>
+In R14, bit 5 is inside HPFCUT[6:4], which the High Pass Cut Off
+control owns. So turning on ADC oversampling changes the high pass
+cut-off, and the oversampling bit cannot be set. In R10, bit 5 is
+reserved, so the DAC switch has no effect.
+
+Use bit 3 for both.
+
+Fixes: 823dba519122 ("ASoC: Fix broken bitfield definitions in WM8978")
+Assisted-by: Claude:claude-opus-5-5
+Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
+Link: https://patch.msgid.link/20261008130953.2446692-6-sammiee5311@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-mq.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ sound/soc/codecs/wm8978.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/block/blk-mq.c b/block/blk-mq.c
-index 1ad77737b27d3..e3fb9222c5ee0 100644
---- a/block/blk-mq.c
-+++ b/block/blk-mq.c
-@@ -3024,16 +3024,16 @@ void blk_mq_submit_bio(struct bio *bio)
- 		if (unlikely(bio_may_exceed_limits(bio, &q->limits))) {
- 			bio = __bio_split_to_limits(bio, &q->limits, &nr_segs);
- 			if (!bio) {
--				blk_mq_free_request(rq);
-+				rq_list_add(&plug->cached_rq, rq);
- 				return;
- 			}
- 		}
- 		if (!bio_integrity_prep(bio)) {
--			blk_mq_free_request(rq);
-+			rq_list_add(&plug->cached_rq, rq);
- 			return;
- 		}
- 		if (blk_mq_attempt_bio_merge(q, bio, nr_segs)) {
--			blk_mq_free_request(rq);
-+			rq_list_add(&plug->cached_rq, rq);
- 			return;
- 		}
- 		rq_qos_throttle(rq->q, bio);
+diff --git a/sound/soc/codecs/wm8978.c b/sound/soc/codecs/wm8978.c
+index 718bfef302cc6..6042a2fb7329c 100644
+--- a/sound/soc/codecs/wm8978.c
++++ b/sound/soc/codecs/wm8978.c
+@@ -255,9 +255,9 @@ static const struct snd_kcontrol_new wm8978_snd_controls[] = {
+ 
+ 	/* DAC / ADC oversampling */
+ 	SOC_SINGLE("DAC 128x Oversampling Switch", WM8978_DAC_CONTROL,
+-		   5, 1, 0),
++		   3, 1, 0),
+ 	SOC_SINGLE("ADC 128x Oversampling Switch", WM8978_ADC_CONTROL,
+-		   5, 1, 0),
++		   3, 1, 0),
+ };
+ 
+ /* Mixer #1: Output (OUT1, OUT2) Mixer: mix AUX, Input mixer output and DAC */
 -- 
 2.53.0
 
