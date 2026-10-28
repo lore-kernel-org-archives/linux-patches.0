@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793207747;
-	b=mWj0AYjt2wDW27iqPa5+0TWiRP5fx/m/u4lkZNXlQ6uX2dPjOIK4t9dfU7+rRsVusYUG
-	 QU3fHIXJCtNHz7x+syPbbjgm8eXPGgl44iFtJrTv/uFDXl/dEplx9j30R42by7o/h8vh6
-	 /i4ePch4/Ex/et+2xc0G7FoG72ir1Ozp4PUGQqphvO0iIwmONLQVF1LIxd7TDywsAZ0wH
-	 GrFwHLFWKYr33OrF+54+RSSXmvLJz1hzNUKgHAMENbAo62+l9m5hk6agIjxG6xi/BIj5Y
-	 Qf1B+QAng1pF9032+lbORrb7OhfI8qhf8AQvuj/2kXthAx1qWJpXZhE0bj3z5ZSxqcQ==
+	t=1793207750;
+	b=jVoQex/MhfxX7BRjxrZ5blvHGoyEHjD/JPWt9Od/0iq/djX3TlKOdgYBdtHxtiXhWMO1
+	 YSRMxnOlYdvIdRu03DaffZ93AeFuV5YLev7uEhgmM9eoYl29XJdyCwi+LGUE9RJ0a1pxp
+	 wR+VjOEFmI2RoX5WfHScxS/aY0AUOorv/dpiy3G/OnCGwcsvkN+pb4B28bkxDGgAS5QwJ
+	 dwxai7ok4uVBw1y9jlvdo2a9iPOVg3vP26Rsk/6nm2+eiCpwbRe+fkIUACsICC+PezxYm
+	 ndujCWkH2VDc92gUDJfTWFuk72fucWTcARAYIsxhW7CckeUNsKci3yHGCgO/7Q3fXyA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793207747;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793207750;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=6KAMN5J9XJhUgVz1lmK4ISJqTBeScZhMn5/5opUL7hI=;
-	b=PcjcChBw7rjg0N3y3NU8x48z13CaUSCL8+0PoFOvvDmFBwyfrwyegyTzQZiJHsltxHPv
-	 f0/+NHyzm42kUw7O/eqx2Nmq8EqIH96wNop7QfB+ZFJ43PYHe14eBvwPOmBmL1pn/VOgd
-	 7asOTqr9HnaEOUoGL571ZPCtiEDigDqg9rpshCPg3rTQyVXc5y0jMlUphL8NVAEcba2MV
-	 v3Gm8N0RhUIBlYDhT8jCXFQ4FuYi08GViBN9cGgFKnIgrgotJBZhWRKjtMqgJaXGl4yTT
-	 380ce8i1AwGVE35DxOrN909jT3JguiS8vrvTvYzxYubwXW6RvmYtj8pJgX2zjtBbEeg==
+	bh=V1IfkB/1qH3xlN+J/8ahALY17NG++TRD4vgjh1GRlSU=;
+	b=X0jb/73tAaHPIEh64WHj3KRjW+yf7JSOf57tfVE9abBNwkZXXMH6Z9AaHY+C8ov/ybYW
+	 2WOa/094A++euoDOuBJZywoaGkV7CBduxLDFafeGKbgxwadobHtu7c7I6CwUPXbqL5Zsb
+	 /snzJ2PX8+a2GHsehPbzHunjdkoG0FwhSzT4dx/JcSsVVBV3pxOTe+q3UnvXgE3Uet+5m
+	 vqZENsCkVbFBdf0K7OQxKAldMmzQBM1smi2Us1TUkiLC5PUd1Kwishypu/V9bOSSebdBz
+	 PaaUtkcgXdA9v7hNFQ8irLcJvoa8Cpsp6aJ+NUxRo+oX/aw4/0dt5NeYiqBIiurUZ0A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Rh1hz/WS";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FfiBg3vx;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32E5A606A31D;
-	Wed, 28 Oct 2026 17:15:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D63A606A31C;
+	Wed, 28 Oct 2026 17:15:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Rh1hz/WS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84A7B1F031E0;
-	Wed, 28 Oct 2026 17:15:46 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FfiBg3vx
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F7911F01825;
+	Wed, 28 Oct 2026 17:15:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793207747;
-	bh=6KAMN5J9XJhUgVz1lmK4ISJqTBeScZhMn5/5opUL7hI=;
+	s=korg; t=1793207749;
+	bh=V1IfkB/1qH3xlN+J/8ahALY17NG++TRD4vgjh1GRlSU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Rh1hz/WSV/70ZxXGqfIiPswzKF7ZwRczBNfqBs5hiSjs9NoooaLzU6uNSK6QUxHcW
-	 jkqfTNLzDKgw6l+Nua3SQq8j9Dd7cnkvX95FuQSTRua970o2oRdA8xFhr6gMCjcxIc
-	 pzVOVNOXiM9mkF7HIuy06RCPOYuJMA2yaqX5O2lA=
+	b=FfiBg3vx7elmrUPxo7qWvzxniYGp4pxLNaTFAaVKp66g/kSdRuurLxCmox3UIyn+w
+	 dAPxHVa14gEKcA0IvL9JckpC3MMVdUCHEsJH7FOLNaNAi3bhXtaHhjEF5jHizgZO4h
+	 6BdSxwFyHd4mHsfYLPrEImspsGjJYCRU76Tmcz90=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	TencentOS Corvus AI <corvus@tencent.com>,
-	Jun Yang <junvyyang@tencent.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 123/247] net: bridge: mcast: dont truncate the port group walk on teardown
-Date: Wed, 28 Oct 2026 17:58:46 +0100
-Message-ID: <20261028165950.315365716@linuxfoundation.org>
+	Aleksandr Khromov <haa@amicon.ru>,
+	Namjae Jeon <linkinjeon@kernel.org>
+Subject: [PATCH 6.12 124/247] ksmbd: fill in FileSysIdentifier in FS_POSIX_INFORMATION
+Date: Wed, 28 Oct 2026 17:58:47 +0100
+Message-ID: <20261028165950.339854580@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165947.349197979@linuxfoundation.org>
 References: <20261028165947.349197979@linuxfoundation.org>
@@ -69,79 +67,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jun Yang <littleddfu@gmail.com>
+From: Aleksandr Khromov <haa@amicon.ru>
 
-commit 5a3f7a683aee56e1f15c9d53041f3236767eaae7 upstream.
+commit db2267b27c054a6c2151ff7fbb67927e784f31d6 upstream.
 
-__br_multicast_disable_port_ctx() and br_multicast_del_port() walk
-port->mglist with hlist_for_each_entry_safe(). However,
-br_multicast_find_del_pg() can also delete other entries from the same
-list through br_multicast_fwd_src_remove() or __fwd_del_star_excl().
+smb2_get_info_filesystem() reports 56 bytes for FS_POSIX_INFORMATION,
+that is the whole of FILE_SYSTEM_POSIX_INFO, but never assigns
+FileSysIdentifier.  Those eight bytes go to the client as they are found
+in the response buffer.
 
-If such an entry is the iterator's saved next node, hlist_del_init()
-clears its ->next and terminates the walk early. The reproducer triggers
-this in both teardown walks, leaving port groups in the bridge mdb with
-a dangling ->key.port after del_nbp() frees the port:
+The buffer is zeroed on allocation, so a standalone request leaks
+nothing.  A compound request can leak: the offset of the next response
+is advanced by the length pinned for the previous one, so a reply that
+was written into the buffer and then dropped in favour of the short
+error response of smb2_set_err_rsp() stays there, and the next reply is
+laid over it with only the header cleared.
 
-  BUG: KASAN: slab-use-after-free in __mdb_fill_info+0x1191/0x1320
-   __mdb_fill_info+0x1191/0x1320
-   br_mdb_dump+0x594/0xe40
-   rtnl_mdb_dump+0x1cf/0x5d0
+Report the file system id statfs() returned, which is what the field is
+for.  FileSysIdentifier is __le64 and f_fsid is a pair of ints, so
+assemble the value first, val[0] as the low half, and convert it on the
+way out.
 
-Use hlist_del_init_rcu() to unlink the group while preserving ->next.
-br_multicast_del_pg() and the teardown walks run under
-br->multicast_lock. The GC worker must acquire the same lock before
-detaching the group for destruction, so the node remains alive while
-the walk uses the preserved pointer.
-
-Preserving ->next means a walk can now reach a group that an earlier
-iteration already deleted as a side effect. That group is off mp->ports,
-so br_multicast_find_del_pg() would fall through its port scan and hit
-the trailing WARN_ON(1). Skip such groups at the top of that helper: a
-port group is put on port->mglist when it is created and only unlinked
-when it is deleted, so hlist_unhashed() identifies exactly this case.
-
-Fixes: b08123684bd5 ("net: bridge: mcast: install S,G entries automatically based on reports")
+Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
 Cc: stable@vger.kernel.org
-Suggested-by: Nikolay Aleksandrov <razor@blackwall.org>
-Reported-by: TencentOS Corvus AI <corvus@tencent.com>
-Signed-off-by: Jun Yang <junvyyang@tencent.com>
-Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
-Link: https://patch.msgid.link/20260831111330.199543-1-junvyyang@tencent.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Aleksandr Khromov <haa@amicon.ru>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bridge/br_multicast.c |   13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ fs/smb/server/smb2pdu.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/net/bridge/br_multicast.c
-+++ b/net/bridge/br_multicast.c
-@@ -813,7 +813,11 @@ static void __br_multicast_del_pg(struct
- 	struct hlist_node *tmp;
- 
- 	rcu_assign_pointer(*pp, pg->next);
--	hlist_del_init(&pg->mglist);
-+	/* Keep ->next (held under multicast_lock, freed later by the GC work):
-+	 * a port->mglist teardown walk may have latched this node as its next,
-+	 * and deleting other groups of the same port must not truncate it.
-+	 */
-+	hlist_del_init_rcu(&pg->mglist);
- 	br_multicast_eht_clean_sets(pg);
- 	hlist_for_each_entry_safe(ent, tmp, &pg->src_list, node)
- 		br_multicast_del_group_src(ent, false);
-@@ -848,6 +852,13 @@ static void br_multicast_find_del_pg(str
- 	struct net_bridge_mdb_entry *mp;
- 	struct net_bridge_port_group *p;
- 
-+	/* A teardown walk over port->mglist can reach a group that an earlier
-+	 * iteration already deleted as a side effect. It is off mp->ports by
-+	 * now, so skip it instead of falling through to the WARN_ON() below.
-+	 */
-+	if (hlist_unhashed(&pg->mglist))
-+		return;
-+
- 	mp = br_mdb_ip_get(br, &pg->key.addr);
- 	if (WARN_ON(!mp))
- 		return;
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -5774,6 +5774,9 @@ static int smb2_get_info_filesystem(stru
+ 			info->UserBlocksAvail = cpu_to_le64(stfs.f_bavail);
+ 			info->TotalFileNodes = cpu_to_le64(stfs.f_files);
+ 			info->FreeFileNodes = cpu_to_le64(stfs.f_ffree);
++			info->FileSysIdentifier =
++				cpu_to_le64((u64)(u32)stfs.f_fsid.val[1] << 32 |
++					    (u32)stfs.f_fsid.val[0]);
+ 			rsp->OutputBufferLength = cpu_to_le32(56);
+ 			fixed_len = 56;
+ 		}
 
 
