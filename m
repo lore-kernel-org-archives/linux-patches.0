@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214139;
-	b=DUCTlcM4iXqxz24nzgEpKpliV77CyLCTop8sJHvEq1HX5OKMzf8ajTfqVbJCc3RVBdwV
-	 xX8ujc5F80ExRwBFoIjbJ+b3cxEE6YkGPNpAT3v1LElqR4bfYmJ6h6/3+zTHJNeM0MScX
-	 f/By9uRBASPA6uZfiCdY+M38IT0JfzHJleLM1V/ymDVpus6xeoPFVg06WNjGkyG9SAYgL
-	 DIzg7VfAXM4GtssgYRy8mQjMdjgf4ffhGV2Y/T+YU5pkndU2vJ5qzUmwasEjjrP6Bmzlv
-	 2Mb0FwQxyJQ6hN/2czeRQVsJYslV7Ru2nGMgTV0s5s4JLq2PUymBNm/E/871/VhrCQw==
+	t=1793214142;
+	b=Ay/RcNZV7+O1ea89vMxSgUfToVlG2Q6qIM0zieF10msowwUl1+wRa1Zp70yWUwWArxI3
+	 5Mk1vE4wkiYwnPpDe7hrK1OW8sJrkB+NxyZu/vsiYRpDBN7yhwnltl0lfQzkSW+X98D4d
+	 Rr0/7Fcbo8oYy3qHwg8sSSocdBwmFvTa8HEMcZg9WZCGDcUIwCK12ybCaUIRa8XM5f9Dz
+	 MZlN3KrZN+SKuZkFZ9Ze/fA/zkG8QUXlDJpiU8xEt6HfXdFhwUfCtNlGqYdZCVqFfISM/
+	 53OzgxRLRcbtmMoip8BC2IBaVqTCDYsuQzspURgQBPsGmM4X37p9uoz0PoMFC1OPYTA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214139;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214142;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=XjZ41kPI3O9etMuxXywuO8RNQQLXfCaqFAZNFYRSnR0=;
-	b=ts6vDZG9565XYHDPJNeTTwMK/51EDbYqJOmfYzEsk3Vnq3ouwimCwYOfH3LLlN+BDP8e
-	 TxprYm12+uqVruCBLPuGINMJfbeAwtfqZ4H1TrIXLiOVPGdR2yTKHafR1UwHSDm1Boudf
-	 rFBtNE0xx/xJMRXRJSh6Tx9vnXWyVBUqgubbtJNnlsMEpqfmRQchdpgPgrqD/XQvIREdt
-	 PBjtrjoJjqw6WUuiw8gKvNEqG8qCUV0P9XcCqLvbX/pHbCO0Wqr0fkA3Qqu0TbZy0E5pR
-	 PxVdY+n2jISFh+JHd4z8WMraFHyZAnseWEVl1PRgsSQVXhNfE5Jzwdt9GLwqPW5F3RA==
+	bh=mp36gDLN7CxFBFsdq+WklIvolfomSISsVBGOUwHjQtE=;
+	b=f4nwPrfNH1sCdL5WAOg7NgbYO/KMLNssmbhsAvA3nDjnIsNv/04riTyODlTkque9TqHZ
+	 GJVk2ciwDYb3kNr97X0+3a7IJHnHDIX52+F/JQKj6TClRIS2Rr6EjDHycycme/5OTLBd9
+	 j4Ufgc8MY13+P4XYOfQP7v+GepbpkPRVTvbuQnEOaGGisvU34ocmyZVCdjsVkbOsLSld7
+	 oToNx4J87gUitRNKBvg+9BpEfS47ov7Q8ph8tO54wg5EBAFXpQuAFt7xnigFWCfnqGyWe
+	 0HCGI/lJWRlE+q2vdm36e8U7J1DEofZd21cGMCeQzX82odcrLvMi0lvXhvh1PxnNGKA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SrLxTP3y;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Lia+rgtn;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4074606A31F;
-	Wed, 28 Oct 2026 19:02:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C279D606A31C;
+	Wed, 28 Oct 2026 19:02:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SrLxTP3y
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40FB51F01825;
-	Wed, 28 Oct 2026 19:02:18 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Lia+rgtn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CDDA1F01825;
+	Wed, 28 Oct 2026 19:02:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214138;
-	bh=XjZ41kPI3O9etMuxXywuO8RNQQLXfCaqFAZNFYRSnR0=;
+	s=korg; t=1793214141;
+	bh=mp36gDLN7CxFBFsdq+WklIvolfomSISsVBGOUwHjQtE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SrLxTP3yLTa5ePUyJw96t/nrtc43s59Anux0lD3A9KWhzHybDtyCB783UXoKTSoAX
-	 Pyfr7NH7/YAzCvqJ1D4ZFfTu6AlKflVDGcjOGPjK5Yf+5Vjk/X8m7HJYnOLwiFeqE6
-	 cmztWVXNKxNEqPInwUR9oFxiNla/NEeE2y7l+mTw=
+	b=Lia+rgtnmTqFPpwB3sRGV+XbKRh+AEgjlfWWIERQJa3PAR6RTTuhx6se8GAy0OIrT
+	 9t2Xqb1+IZAZcgE8CWYyAqZAqhnQnYEUC2nV7NkjIsSJtjKRJcm693Zc2pD8h1v1rz
+	 XBQ+68LDHSokPJ0nZty90o2NkpiMAgo//FSpGV2g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maurizio Lombardi <mlombard@redhat.com>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Keith Busch <kbusch@kernel.org>,
+	Norbert Szetei <norbert@doyensec.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0752/1887] nvme-tcp: fix potential memory corruption in nvme_tcp_recv_pdu()
-Date: Wed, 28 Oct 2026 17:47:28 +0100
-Message-ID: <20261028170516.557779873@linuxfoundation.org>
+Subject: [PATCH 6.1 0753/1887] ksmbd: prevent connection release during oplock break notification
+Date: Wed, 28 Oct 2026 17:47:29 +0100
+Message-ID: <20261028170516.580185943@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,85 +69,150 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maurizio Lombardi <mlombard@redhat.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit ad95bab0cd28ed77c2c0d0b6e76e03e031391064 ]
+[ Upstream commit 3aa660c059240e0c795217182cf7df32909dd917 ]
 
-nvme_tcp_recv_pdu() doesn't check the validity of the header length.
-When header digests are enabled, a target might send a packet with an
-invalid header length (e.g. 255), causing nvme_tcp_verify_hdgst()
-to access memory outside the allocated area and cause memory corruptions
-by overwriting it with the calculated digest.
+ksmbd_work could be freed when after connection release.
+Increment r_count of ksmbd_conn to indicate that requests
+are not finished yet and to not release the connection.
 
-Fix this by rejecting packets with an unexpected header length.
-
-Fixes: 3f2304f8c6d6 ("nvme-tcp: add NVMe over TCP host driver")
-Signed-off-by: Maurizio Lombardi <mlombard@redhat.com>
-Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Cc: stable@vger.kernel.org
+Reported-by: Norbert Szetei <norbert@doyensec.com>
+Tested-by: Norbert Szetei <norbert@doyensec.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/tcp.c | 32 +++++++++++++++++++++++++++++---
- 1 file changed, 29 insertions(+), 3 deletions(-)
+ fs/smb/server/connection.c | 19 +++++++++++++++++++
+ fs/smb/server/connection.h |  2 ++
+ fs/smb/server/oplock.c     |  6 ++++++
+ fs/smb/server/server.c     | 10 ++--------
+ 4 files changed, 29 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/nvme/host/tcp.c b/drivers/nvme/host/tcp.c
-index e139f567a8535..19aed2125a18b 100644
---- a/drivers/nvme/host/tcp.c
-+++ b/drivers/nvme/host/tcp.c
-@@ -189,6 +189,19 @@ static inline int nvme_tcp_queue_id(struct nvme_tcp_queue *queue)
- 	return queue - queue->ctrl->queues;
+diff --git a/fs/smb/server/connection.c b/fs/smb/server/connection.c
+index d99e1343955a3..a0c548447c2af 100644
+--- a/fs/smb/server/connection.c
++++ b/fs/smb/server/connection.c
+@@ -442,6 +442,25 @@ void ksmbd_conn_init_server_callbacks(struct ksmbd_conn_ops *ops)
+ 	default_conn_ops.terminate_fn = ops->terminate_fn;
  }
  
-+static inline bool nvme_tcp_recv_pdu_supported(enum nvme_tcp_pdu_type type)
++void ksmbd_conn_r_count_inc(struct ksmbd_conn *conn)
 +{
-+	switch (type) {
-+	case nvme_tcp_c2h_term:
-+	case nvme_tcp_c2h_data:
-+	case nvme_tcp_r2t:
-+	case nvme_tcp_rsp:
-+		return true;
-+	default:
-+		return false;
-+	}
++	atomic_inc(&conn->r_count);
 +}
 +
- static inline struct blk_mq_tags *nvme_tcp_tagset(struct nvme_tcp_queue *queue)
++void ksmbd_conn_r_count_dec(struct ksmbd_conn *conn)
++{
++	/*
++	 * Checking waitqueue to dropping pending requests on
++	 * disconnection. waitqueue_active is safe because it
++	 * uses atomic operation for condition.
++	 */
++	atomic_inc(&conn->refcnt);
++	if (!atomic_dec_return(&conn->r_count) && waitqueue_active(&conn->r_count_q))
++		wake_up(&conn->r_count_q);
++
++	ksmbd_conn_put(conn);
++}
++
+ int ksmbd_conn_transport_init(void)
  {
- 	u32 queue_idx = nvme_tcp_queue_id(queue);
-@@ -792,6 +805,16 @@ static int nvme_tcp_recv_pdu(struct nvme_tcp_queue *queue, struct sk_buff *skb,
- 		return 0;
+ 	int ret;
+diff --git a/fs/smb/server/connection.h b/fs/smb/server/connection.h
+index a38e264889eea..2a6628bb312d9 100644
+--- a/fs/smb/server/connection.h
++++ b/fs/smb/server/connection.h
+@@ -176,6 +176,8 @@ int ksmbd_conn_transport_init(void);
+ void ksmbd_conn_transport_destroy(void);
+ void ksmbd_conn_lock(struct ksmbd_conn *conn);
+ void ksmbd_conn_unlock(struct ksmbd_conn *conn);
++void ksmbd_conn_r_count_inc(struct ksmbd_conn *conn);
++void ksmbd_conn_r_count_dec(struct ksmbd_conn *conn);
  
- 	hdr = queue->pdu;
-+	if (unlikely(hdr->hlen != sizeof(struct nvme_tcp_rsp_pdu))) {
-+		if (!nvme_tcp_recv_pdu_supported(hdr->type))
-+			goto unsupported_pdu;
-+
-+		dev_err(queue->ctrl->ctrl.device,
-+			"pdu type %d has unexpected header length (%d)\n",
-+			hdr->type, hdr->hlen);
-+		return -EPROTO;
-+	}
-+
- 	if (unlikely(hdr->type == nvme_tcp_c2h_term)) {
- 		/*
- 		 * C2HTermReq never includes Header or Data digests.
-@@ -824,10 +847,13 @@ static int nvme_tcp_recv_pdu(struct nvme_tcp_queue *queue, struct sk_buff *skb,
- 		nvme_tcp_init_recv_ctx(queue);
- 		return nvme_tcp_handle_r2t(queue, (void *)queue->pdu);
- 	default:
--		dev_err(queue->ctrl->ctrl.device,
--			"unsupported pdu type (%d)\n", hdr->type);
--		return -EINVAL;
-+		goto unsupported_pdu;
- 	}
-+
-+unsupported_pdu:
-+	dev_err(queue->ctrl->ctrl.device,
-+		"unsupported pdu type (%d)\n", hdr->type);
-+	return -EINVAL;
+ /*
+  * WARNING
+diff --git a/fs/smb/server/oplock.c b/fs/smb/server/oplock.c
+index 0b71399af50cc..31f84f59e40a7 100644
+--- a/fs/smb/server/oplock.c
++++ b/fs/smb/server/oplock.c
+@@ -657,6 +657,7 @@ static void __smb2_oplock_break_noti(struct work_struct *wk)
+ {
+ 	struct smb2_oplock_break *rsp = NULL;
+ 	struct ksmbd_work *work = container_of(wk, struct ksmbd_work, work);
++	struct ksmbd_conn *conn = work->conn;
+ 	struct oplock_break_info *br_info = work->request_buf;
+ 	struct smb2_hdr *rsp_hdr;
+ 	struct ksmbd_file *fp;
+@@ -712,6 +713,7 @@ static void __smb2_oplock_break_noti(struct work_struct *wk)
+ 
+ out:
+ 	ksmbd_free_work_struct(work);
++	ksmbd_conn_r_count_dec(conn);
  }
  
- static inline void nvme_tcp_end_request(struct request *rq, u16 status)
+ /**
+@@ -746,6 +748,7 @@ static int smb2_oplock_break_noti(struct oplock_info *opinfo)
+ 	work->sess = opinfo->sess;
+ 
+ 	if (opinfo->op_state == OPLOCK_ACK_WAIT) {
++		ksmbd_conn_r_count_inc(conn);
+ 		INIT_WORK(&work->work, __smb2_oplock_break_noti);
+ 		ksmbd_queue_work(work);
+ 
+@@ -767,6 +770,7 @@ static void __smb2_lease_break_noti(struct work_struct *wk)
+ {
+ 	struct smb2_lease_break *rsp = NULL;
+ 	struct ksmbd_work *work = container_of(wk, struct ksmbd_work, work);
++	struct ksmbd_conn *conn = work->conn;
+ 	struct lease_break_info *br_info = work->request_buf;
+ 	struct smb2_hdr *rsp_hdr;
+ 
+@@ -813,6 +817,7 @@ static void __smb2_lease_break_noti(struct work_struct *wk)
+ 
+ out:
+ 	ksmbd_free_work_struct(work);
++	ksmbd_conn_r_count_dec(conn);
+ }
+ 
+ /**
+@@ -863,6 +868,7 @@ static int smb2_lease_break_noti(struct oplock_info *opinfo)
+ 			list_del_init(&in_work->interim_entry);
+ 			release_async_work(in_work);
+ 		}
++		ksmbd_conn_r_count_inc(conn);
+ 		INIT_WORK(&work->work, __smb2_lease_break_noti);
+ 		ksmbd_queue_work(work);
+ 		wait_for_break_ack(opinfo);
+diff --git a/fs/smb/server/server.c b/fs/smb/server/server.c
+index a61488b6b5904..08fe608ac75a2 100644
+--- a/fs/smb/server/server.c
++++ b/fs/smb/server/server.c
+@@ -291,13 +291,7 @@ static void handle_ksmbd_work(struct work_struct *wk)
+ 	ksmbd_conn_try_dequeue_request(work);
+ 	ksmbd_free_work_struct(work);
+ 	atomic_dec(&conn->mux_smb_requests);
+-	/*
+-	 * Checking waitqueue to dropping pending requests on
+-	 * disconnection. waitqueue_active is safe because it
+-	 * uses atomic operation for condition.
+-	 */
+-	if (!atomic_dec_return(&conn->r_count) && waitqueue_active(&conn->r_count_q))
+-		wake_up(&conn->r_count_q);
++	ksmbd_conn_r_count_dec(conn);
+ }
+ 
+ /**
+@@ -332,7 +326,7 @@ static int queue_ksmbd_work(struct ksmbd_conn *conn)
+ 	conn->request_buf = NULL;
+ 
+ 	ksmbd_conn_enqueue_request(work);
+-	atomic_inc(&conn->r_count);
++	ksmbd_conn_r_count_inc(conn);
+ 	/* update activity on connection */
+ 	conn->last_active = jiffies;
+ 	INIT_WORK(&work->work, handle_ksmbd_work);
 -- 
 2.53.0
 
