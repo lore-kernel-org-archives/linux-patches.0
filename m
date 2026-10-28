@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793208070;
-	b=hR7HiWZkojLBWIuOl7USxniiai3ciQdbxBmvSnUNxI0fwcDUig24uEvuhoqjkB6cacYw
-	 EA1MqpOPzEWM2ugXFQuiE71WpCCTpEVqfndrAcwtKvOej2AASjJBZJAfU/5VhPBqszrky
-	 3lJPT0zR2wnJ2N9qkX71A5liwwlXh6TB57hGKPnffOxMLXI1ibvfzbUe7JIL0aNrBOzrL
-	 oINrI0uVT1MfnsEn6XF9zn87FH7A3ffy4jbMQa3uMu0L3WbakKx34PAYSKpr231g6wF4g
-	 uoPXygzseZKAAvHfqi+ndx+XheU4IXuDXvxRMddyokYgfQ32+XvrU53bKoFJApwJN6A==
+	t=1793208072;
+	b=CB6PjD9TSrl4ouYL9wCF6OGW2TcFQA3fvgvv2mAie4czLreYSEpX/ujE/cXKmP2bp7/4
+	 Vmq8DyjFAeGddr0vOd8Ds67oVHPgS7pN1XyX+sfDC6xAq54J5q5TG97zP1GRGJ0wtU9Hy
+	 n0mbr3X/f2gHH5mHhGqftccsr7MYZPAfoHm/IVVgH3PF8P8Mt6wel1aTl1D9ALUkmDgsa
+	 QQts35FU7lxgSD3zU4saql43xeFTOGspw02HkUju8zDjRjOqdDL5H98nRzo5jhbXwCFyg
+	 d5ew0Jo5NIG9W5nUmW/d4ht4afaUMUurhE76QX/crkQ3ukJ+4bRlUISPLVHQhaB+3Jg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793208070;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793208072;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=wWkQt2CONgMICu+Pf678EHgXmpixbrHSxvlbJYtMzjs=;
-	b=J/yf2I47O/Z9Sg1U902IJnqGO2cbhhkE/Z3u1ewCM++FgeBqgdKmicZ88IWdaaUnqp6e
-	 ALycBrs6+9TcxZHfakUebVtRsO5dIG8u1vjaX2H6H3FKPXzoFpRE4Vi9/jwSx82ScJirc
-	 wG4SdBMzWgKbWXNC59PTTtVmp+HSU6llzM7uvamWZlG9HkUfMv7LB1nKpr/9sG+I8pYZB
-	 apCj7ZeSawKo/h6xJPhA/5jFCR9eB1+hJJw4SGNWuHqBy32fcCG97G9vflrjyHW2MoTrw
-	 VSTJ5i3nvCN1D5iY/UHFUyn9PFX7wALcVq72op2Tcd+Y/sMBPPu7UdIEERiMUSlunhg==
+	bh=UQzGCv72SEI1qqYua13zvgXgETPuHVMgWH22FHWmqx0=;
+	b=l+9MRKfKzpMt4cpDH2qKTnV+9VRgFktXp5/JlyMs88mEhHep6ZGwsT31rj0dj5LHVGE4
+	 i0/jsYvs5lDINT01pt7gpy9ZIrH+uk2iL9Rn/CzoXAFWcsCsR+0Idypx7mWVddLx60Zk/
+	 90IXuxQBuCd208mPaoCV0tHvQS93zv4rY9ws7Kc1FB79u0LFZuqrDmfWf5TOJ7cColq1g
+	 zT+G50361rfp6K4iD8W4aTvX9reeHcDm2yyB4nUweEl/HbYYDEJXuRBYLDEuyvWsGF3CE
+	 l6b1LiRzaogz0A0Gi2lOcRDXGX153Z59U+htHMWgYXHgda6lQZI8T0SiYCa6ghIwMog==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="OKHk9J/u";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X5H8tNSu;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C110A606A31C;
-	Wed, 28 Oct 2026 17:21:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D8D6606A31D;
+	Wed, 28 Oct 2026 17:21:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OKHk9J/u
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD4611F01825;
-	Wed, 28 Oct 2026 17:21:08 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X5H8tNSu
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A64301F01825;
+	Wed, 28 Oct 2026 17:21:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793208069;
-	bh=wWkQt2CONgMICu+Pf678EHgXmpixbrHSxvlbJYtMzjs=;
+	s=korg; t=1793208072;
+	bh=UQzGCv72SEI1qqYua13zvgXgETPuHVMgWH22FHWmqx0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OKHk9J/uNsra/+nwlQG7gwTaibKtQUlgfupI3ydgFuMSwTTznr9w1EwhImTF2LlPw
-	 eNhOtGSEcPVQqT8CwCIt2dJ8H2BSm647aVkaQ4ySBlQCppzB6kQLrU8imauycuPCNs
-	 BOpA/t9mcTzXE/IW8CG21aG2Qi3A1iQdbIwxW5W8=
+	b=X5H8tNSunI1Hh5hFSG/qlshf0rHVOsJOnBDnLmo8SLiuvLY9Fa3Ou6JLueY1wNWw9
+	 uSCocN7uaAi9Vmv9Rek1eDcgQ/CngU+pnoAyv5eHtCdYesjyoFhZzbLX0eqA3GOQdN
+	 kz54XujkJz1uToMW2ed6qcPrI7I/ist84J53sHrw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.12 221/247] io_uring: look up the file before queueing to io-wq
-Date: Wed, 28 Oct 2026 18:00:24 +0100
-Message-ID: <20261028165952.655387529@linuxfoundation.org>
+	Gavin Inglis <giinglis@amazon.com>,
+	Aaron Ahmed <aarnahmd@amazon.com>,
+	Steven Rostedt <rostedt@goodmis.org>
+Subject: [PATCH 6.12 239/247] ftrace: Initialize modname and offset in print_rec()
+Date: Wed, 28 Oct 2026 18:00:42 +0100
+Message-ID: <20261028165953.081460666@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165947.349197979@linuxfoundation.org>
 References: <20261028165947.349197979@linuxfoundation.org>
@@ -67,138 +68,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Aaron Ahmed <aarnahmd@amazon.com>
 
-Commit 98bc044d5a5374f8d3605fe55a8e2df6d6fc3f82 upstream.
+commit e1f339ff3b83857b93baf8b88186275a413d445e upstream.
 
-io_prep_async_work() decides by the file of a request what kind of work
-it is for io-wq. I/O on regular files and block devices is bounded work,
-limited to min(SQ entries, 4 * CPUs) workers, for anything else that may
-block indefinitely the limit is RLIMIT_NPROC. Writes to a regular file
-are hashed by the inode, so that they are run one after the other instead
-of having a bunch of workers fight for the inode lock.
+print_rec() leaves 'modname' and 'offset' uninitialized and
+kallsyms_lookup() only sets them on success. When the lookup fails like
+when a module is being loaded or unloaded, 'modname' holds a garbage
+value, passes the 'if (modname)' check, and is dereferenced by
+seq_printf().
 
-Since the file is only assigned when a request is issued, a request that
-is queued without an attempt to issue it, REQ_F_FORCE_ASYNC, doesn't have
-one at that point. io_prep_async_work() takes that for "not a regular
-file or block device":
+  Oops: general protection fault
+  RIP: 0010:string+0x48/0xe0
+  Call Trace:
+   vsnprintf+0x1f5/0x650
+   seq_printf+0x8e/0xb0
+   print_rec+0x6c/0xc0
+   t_show+0x4c/0x440
+   seq_read_iter+0x119/0x480
 
-- Reads and writes end up as unbound work. 32 reads with IOSQE_ASYNC from
-  a slow block device on a ring with 4 SQ entries get 32 workers, not 4.
-- Writes aren't hashed. Four buffered writes to one file get four
-  workers, three of which do nothing but wait for the lock.
+This can be triggered by reading available_filter_functions while a
+module is being loaded or unloaded.
 
-The late assignment is for the benefit of links, where a request may use
-a fixed file that one of its predecessors installs. By the time a request
-gets to io_queue_iowq() these are done, it is as good as issued. Assign
-the file there.
+Initialize both variables so a failed lookup skips the module name.
 
-io_assign_file() moves up and is forced inline. With a third caller the
-compiler may stop inlining it, and every request that is issued would
-pay for a call.
-
-IORING_OP_SPLICE is left as it is, unbound and not hashed. The file of
-the request is where it writes to, which says nothing about how long it
-takes: a splice from an empty pipe or a socket into a regular file waits
-for its input. As bounded work, four of these on a ring with 4 SQ entries
-keep all other bounded work of the task from running, and as hashed work
-one of them blocks all writes to that file.
-
-REQ_F_FORCE_ASYNC is not only set for IOSQE_ASYNC. What changes, and
-brings back what was the case before the file assignment was deferred:
-
-- Requests with IOSQE_ASYNC or IOSQE_IO_DRAIN, and all requests that are
-  submitted while a drain is active: reads and writes on regular files
-  and block devices count against the limit for bounded workers, including
-  the one set with IORING_REGISTER_IOWQ_MAX_WORKERS, so fewer of them run
-  at the same time.
-- Of these, writes to one regular file are run one at a time, unless they
-  are O_DIRECT and the filesystem has FOP_DIO_PARALLEL_WRITE.
-- IORING_OP_FALLOCATE and IORING_OP_FTRUNCATE, which always go to io-wq,
-  are run one at a time per file, and in turn with these writes.
-- The descriptor or the fixed file slot is looked up when the request is
-  queued, not when a worker gets around to it, so closing or replacing it
-  in between no longer has an effect on the request.
-
-Fixes: 6bf9c47a3989 ("io_uring: defer file assignment")
-Assisted-by: LLM
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Link: https://patch.msgid.link/20261015-b4-io-uring-fixes-v1-43-c1556f5d7bf5@toxicpanda.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Cc: stable@vger.kernel.org
+Fixes: b39181f7c690 ("ftrace: Add FTRACE_MCOUNT_MAX_OFFSET to avoid adding weak function")
+Link: https://patch.msgid.link/20261016230403.4916-1-aarnahmd@amazon.com
+Tested-by: Gavin Inglis <giinglis@amazon.com>
+Signed-off-by: Aaron Ahmed <aarnahmd@amazon.com>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/io_uring.c |   43 +++++++++++++++++++++++++++++--------------
- 1 file changed, 29 insertions(+), 14 deletions(-)
+ kernel/trace/ftrace.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -481,17 +481,46 @@ static void io_prep_async_link(struct io
- 	}
- }
+--- a/kernel/trace/ftrace.c
++++ b/kernel/trace/ftrace.c
+@@ -4316,9 +4316,9 @@ subsys_initcall(ftrace_check_for_weak_fu
  
-+/* Called for every request that is issued: keep it inline */
-+static __always_inline bool io_assign_file(struct io_kiocb *req,
-+					   const struct io_issue_def *def,
-+					   unsigned int issue_flags)
-+{
-+	if (req->file || !def->needs_file)
-+		return true;
-+
-+	if (req->flags & REQ_F_FIXED_FILE)
-+		req->file = io_file_get_fixed(req, req->cqe.fd, issue_flags);
-+	else
-+		req->file = io_file_get_normal(req, req->cqe.fd);
-+
-+	return !!req->file;
-+}
-+
- static void io_queue_iowq(struct io_kiocb *req)
+ static int print_rec(struct seq_file *m, unsigned long ip)
  {
- 	struct io_uring_task *tctx = req->task->io_uring;
+-	unsigned long offset;
++	unsigned long offset = 0;
+ 	char str[KSYM_SYMBOL_LEN];
+-	char *modname;
++	char *modname = NULL;
+ 	const char *ret;
  
- 	BUG_ON(!tctx);
-+	lockdep_assert_held(&req->ctx->uring_lock);
- 
- 	if ((current->flags & PF_KTHREAD) || !tctx->io_wq) {
- 		io_req_task_queue_fail(req, -ECANCELED);
- 		return;
- 	}
- 
-+	/*
-+	 * The file is looked up as late as possible, as it may be the result
-+	 * of an earlier request of the link. This one is up now, and what kind
-+	 * of work it is depends on the file. If that fails, leave the error
-+	 * handling to the worker.
-+	 *
-+	 * Not for a splice: whatever it writes to, it may wait for its input
-+	 * for ever. It has to remain unbound work that isn't hashed.
-+	 */
-+	if (req->opcode != IORING_OP_SPLICE)
-+		io_assign_file(req, &io_issue_defs[req->opcode], 0);
-+
- 	/* init ->work of the whole link before punting */
- 	io_prep_async_link(req);
- 
-@@ -1724,20 +1753,6 @@ queue:
- 	spin_unlock(&ctx->completion_lock);
- }
- 
--static bool io_assign_file(struct io_kiocb *req, const struct io_issue_def *def,
--			   unsigned int issue_flags)
--{
--	if (req->file || !def->needs_file)
--		return true;
--
--	if (req->flags & REQ_F_FIXED_FILE)
--		req->file = io_file_get_fixed(req, req->cqe.fd, issue_flags);
--	else
--		req->file = io_file_get_normal(req, req->cqe.fd);
--
--	return !!req->file;
--}
--
- #define REQ_ISSUE_SLOW_FLAGS	(REQ_F_CREDS | REQ_F_ARM_LTIMEOUT)
- 
- static int io_issue_sqe(struct io_kiocb *req, unsigned int issue_flags)
+ 	ret = kallsyms_lookup(ip, NULL, &offset, &modname, str);
 
 
