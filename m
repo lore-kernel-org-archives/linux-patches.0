@@ -1,51 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215063;
-	b=u8gM+66SomleJtVqFvnsya0aE60gZqZHeYIXMCJwHj57j/PIh/r3k2IJalmtuauYxU2N
-	 a9faneKGoWa58OYLTIOx5HiEsUyCwYqRijfzqE/SsLdzOcY11XxKwcC2OBRyVuCnBljPp
-	 M+23wGjdu3nCV2WJwpJsnakWkwdwa6msOvU4tvSPGDsDRj8HJQLJ57aDitCw0q2HtWRSl
-	 1YfU+IItCI3CJj8gBFOKu78wZ7cbtvq3DTtNC5UnO898JpBNNyB4WNoKUCoqaY5JxmSGY
-	 n+deLI6tx1um+1Uq4Crjf+ZWZvztbnLD5m0jUHjsEC3uVNGx1uu0sAwjSN4Sg+RC3TA==
+	t=1793215066;
+	b=1kDQQ7E7wGqZa76SLcZwIjx9P50HLzJ3jPZBItqeJDiC7DQk1HSEOUgEZWaQDlaekcgu
+	 NVDGHFBuSa0yRap4nCYmaFceAL9pgGE0IDGN1ZqqayZ2hpl9OmNiEh/ht6xP9RrMsxEyx
+	 i7ZKKyzYvjHKzJwa0uZvA9TKczBdDvb1YkRTOuqgF93R+XaX0Um3kojYXvFJOG1rLFANI
+	 uZORZ0DQ878yok9VPYb0jASZoctmh0IwxfVJpWUMLX60JnH5st/KuRymEnhsQ26E5rfMQ
+	 jLpUf1DkF5nSaCv3WTGDFxMr4uduwejPQhfnuV2blQ61G8K3KzWFg0JRtsdf9Bc2N0w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215063;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215066;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=6rY+n4BhajpaJnjktk8Y+MiKo9Ge+tYkSxrrkJikobc=;
-	b=qzGF6tv2i6qBbT+iT73K5ySOKOxKj3ptqZ2GBqVxLL1fnyAjyPD6F/8VIfQiHorgpUK+
-	 0xhms0SJmCEaaS6lhUiVxq6AyOUAU3oTZErgZycfE4Oi2gcH6WtWJMzmp7sn+R01Y1Rw3
-	 Jtmz1iY2GdibtiXfgDDsOC+Q8Juq+j/B/tp2D1F6oHC0QYUzQb+ITv4gqLNnYBrKdqbzP
-	 5ZzVISNEMl2KKbNjed9G2/0KbH30/PPdRztH7KCzzsFF3QTvgGYwyn9TsMdAMw38o5vbs
-	 85qnBDTfgxKdt7oLShiYxCbxlF+AlhQbBgMmDTS5HBtirngHIKrxb8KXrbrXiecUPzw==
+	bh=OOmnFDLnxBqTb6Ed3KHpFnyx8Rx9nQSoTGs82rcffO4=;
+	b=0Whb+lsHxqDPrqEcXcLJgUz7QZP+2Uk2lpJM81Di0evgOs7xGLxQOKsmLjvgCOcyHAs7
+	 saJtGyn0oFs7Yy8H3MD/to/yuQtV/XU1sTfk2i4EjffRbvWj1EQOMBTkEGF6YGMNd0ibv
+	 hAHp1oC6jD9LaNujAcYfxQYjdACdmD/8nMMv76CguqV1QTFBNjgYYMXIlUSU/BGvQyY08
+	 r2s+hrBpBFrO47ld/tJAgcCtgK65Jit7OpiNVLH2ne31uzh28pEuds7JsavoNRARWTO8u
+	 8WIj0SAfJGo/GXiId/ybMxp3+ZNox2E3CGmDcyhNIxkZ8PIH5tTDtsYy8VSarvR2H3Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="yBBV6/ZA";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=adrlJpSG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB58E606A31C;
-	Wed, 28 Oct 2026 19:17:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF49B606A31A;
+	Wed, 28 Oct 2026 19:17:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yBBV6/ZA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37DC01F01825;
-	Wed, 28 Oct 2026 19:17:42 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=adrlJpSG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F7541F01825;
+	Wed, 28 Oct 2026 19:17:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215062;
-	bh=6rY+n4BhajpaJnjktk8Y+MiKo9Ge+tYkSxrrkJikobc=;
+	s=korg; t=1793215065;
+	bh=OOmnFDLnxBqTb6Ed3KHpFnyx8Rx9nQSoTGs82rcffO4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yBBV6/ZAJfbSYjC6S2AN7J68X8/TWxH/PVOQUxoitlEi/JO1FY2byxVDa6lUQhFqB
-	 cDBP3L7pSFJ/kJpg4c0KziDH63x8DgLMy3PGpjtjVn6XWtyvQ61QyamtEqF8poAz88
-	 UygKZpKjrpvvgsOKXFgWEJ9R/Od5vkRb2gFtnsxg=
+	b=adrlJpSGdoAZR0ZgpjIIH7orfxeoqfDvAL1SSAQ7Z3Er7q+kyOQsUovb3CSzAIzwX
+	 amCDCPcRwDaGtkB+NAz/1ymYCptSEp53sX/q11PZnqfGaQP2qi2gCKd8WxDPXrEmVa
+	 Ubpa+f8EVlDVHxV0YzZ7mJGPpAv07r1+1ZjfCAUg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gao Xiang <hsiangkao@linux.alibaba.com>,
+	David Howells <dhowells@redhat.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	Jeffrey Altman <jaltman@auristor.com>,
+	Simon Horman <horms@kernel.org>,
+	linux-afs@lists.infradead.org,
+	stable@kernel.org,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1078/1887] erofs: unify lcn as u64 for 32-bit platforms
-Date: Wed, 28 Oct 2026 17:52:54 +0100
-Message-ID: <20261028170523.936279598@linuxfoundation.org>
+Subject: [PATCH 6.1 1043/1887] rxrpc: Fix conn-level packet handling to unshare RESPONSE packets
+Date: Wed, 28 Oct 2026 17:52:19 +0100
+Message-ID: <20261028170523.146854090@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -67,112 +73,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gao Xiang <hsiangkao@linux.alibaba.com>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit 2d8c7edcb661812249469f4a5b62e9339118846f ]
+[ Upstream commit 24481a7f573305706054c59e275371f8d0fe919f ]
 
-As sashiko reported [1], `lcn` was typed as `unsigned long` (or
-`unsigned int` sometimes), which is only 32 bits wide on 32-bit
-platforms, which causes `(lcn << lclusterbits)` to be truncated
-at 4 GiB.
+The security operations that verify the RESPONSE packets decrypt bits of it
+in place - however, the sk_buff may be shared with a packet sniffer, which
+would lead to the sniffer seeing an apparently corrupt packet (actually
+decrypted).
 
-In order to consolidate the logic, just use `u64` consistently
-around the codebase.
+Fix this by handing a copy of the packet off to the specific security
+handler if the packet was cloned.
 
-[1] https://sashiko.dev/r/20260420034612.1899973-1-hsiangkao%40linux.alibaba.com
-
-Fixes: 152a333a5895 ("staging: erofs: add compacted compression indexes support")
-Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Fixes: 17926a79320a ("[AF_RXRPC]: Provide secure RxRPC sockets for use by userspace and kernel both")
+Closes: https://sashiko.dev/#/patchset/20260408121252.2249051-1-dhowells%40redhat.com
+Signed-off-by: David Howells <dhowells@redhat.com>
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: Jeffrey Altman <jaltman@auristor.com>
+cc: Simon Horman <horms@kernel.org>
+cc: linux-afs@lists.infradead.org
+cc: stable@kernel.org
+Link: https://patch.msgid.link/20260422161438.2593376-5-dhowells@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/erofs/zmap.c | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ net/rxrpc/conn_event.c | 30 +++++++++++++++++++++++++++++-
+ 1 file changed, 29 insertions(+), 1 deletion(-)
 
-diff --git a/fs/erofs/zmap.c b/fs/erofs/zmap.c
-index d2d7fe826091f..c120de200eb37 100644
---- a/fs/erofs/zmap.c
-+++ b/fs/erofs/zmap.c
-@@ -30,7 +30,7 @@ struct z_erofs_maprecorder {
- 	struct erofs_map_blocks *map;
- 	void *kaddr;
- 
--	unsigned long lcn;
-+	u64 lcn;
- 	/* compression extent information gathered */
- 	u8  type, headtype;
- 	u16 clusterofs;
-@@ -41,7 +41,7 @@ struct z_erofs_maprecorder {
- };
- 
- static int legacy_load_cluster_from_disk(struct z_erofs_maprecorder *m,
--					 unsigned long lcn)
-+					 u64 lcn)
- {
- 	struct inode *const inode = m->inode;
- 	struct erofs_inode *const vi = EROFS_I(inode);
-@@ -245,7 +245,7 @@ static int unpack_compacted_index(struct z_erofs_maprecorder *m,
+diff --git a/net/rxrpc/conn_event.c b/net/rxrpc/conn_event.c
+index 8079094844c0e..ef9303dcf7bd1 100644
+--- a/net/rxrpc/conn_event.c
++++ b/net/rxrpc/conn_event.c
+@@ -285,6 +285,34 @@ static void rxrpc_call_is_secure(struct rxrpc_call *call)
+ 	}
  }
  
- static int compacted_load_cluster_from_disk(struct z_erofs_maprecorder *m,
--					    unsigned long lcn, bool lookahead)
-+					    u64 lcn, bool lookahead)
- {
- 	struct inode *const inode = m->inode;
- 	struct erofs_inode *const vi = EROFS_I(inode);
-@@ -296,7 +296,7 @@ static int compacted_load_cluster_from_disk(struct z_erofs_maprecorder *m,
- }
++static int rxrpc_verify_response(struct rxrpc_connection *conn,
++				 struct sk_buff *skb,
++				 u32 *_abort_code)
++{
++	int ret;
++
++	if (skb_cloned(skb)) {
++		/* Copy the packet if shared so that we can do in-place
++		 * decryption.
++		 */
++		struct sk_buff *nskb = skb_copy(skb, GFP_NOFS);
++
++		if (nskb) {
++			rxrpc_new_skb(nskb, rxrpc_skb_unshared);
++			ret = conn->security->verify_response(conn, nskb, _abort_code);
++			rxrpc_free_skb(nskb, rxrpc_skb_freed);
++		} else {
++			/* OOM - Drop the packet. */
++			rxrpc_see_skb(skb, rxrpc_skb_unshared_nomem);
++			ret = -ENOMEM;
++		}
++	} else {
++		ret = conn->security->verify_response(conn, skb, _abort_code);
++	}
++
++	return ret;
++}
++
+ /*
+  * connection-level Rx packet processor
+  */
+@@ -345,7 +373,7 @@ static int rxrpc_process_event(struct rxrpc_connection *conn,
+ 		}
+ 		spin_unlock_bh(&conn->state_lock);
  
- static int z_erofs_load_cluster_from_disk(struct z_erofs_maprecorder *m,
--					  unsigned int lcn, bool lookahead)
-+					  u64 lcn, bool lookahead)
- {
- 	const unsigned int datamode = EROFS_I(m->inode)->datalayout;
+-		ret = conn->security->verify_response(conn, skb, _abort_code);
++		ret = rxrpc_verify_response(conn, skb, _abort_code);
+ 		if (ret < 0)
+ 			return ret;
  
-@@ -316,7 +316,7 @@ static int z_erofs_extent_lookback(struct z_erofs_maprecorder *m,
- 	const unsigned int lclusterbits = vi->z_logical_clusterbits;
- 
- 	while (m->lcn >= lookback_distance) {
--		unsigned long lcn = m->lcn - lookback_distance;
-+		u64 lcn = m->lcn - lookback_distance;
- 		int err;
- 
- 		/* load extent head logical cluster if needed */
-@@ -343,7 +343,7 @@ static int z_erofs_extent_lookback(struct z_erofs_maprecorder *m,
- 			return 0;
- 		default:
- 			erofs_err(m->inode->i_sb,
--				  "unknown type %u @ lcn %lu of nid %llu",
-+				  "unknown type %u @ lcn %llu of nid %llu",
- 				  m->type, lcn, vi->nid);
- 			DBG_BUGON(1);
- 			return -EOPNOTSUPP;
-@@ -363,7 +363,7 @@ static int z_erofs_get_extent_compressedlen(struct z_erofs_maprecorder *m,
- 	struct erofs_inode *const vi = EROFS_I(m->inode);
- 	struct erofs_map_blocks *const map = m->map;
- 	const unsigned int lclusterbits = vi->z_logical_clusterbits;
--	unsigned long lcn;
-+	u64 lcn;
- 	int err;
- 
- 	DBG_BUGON(m->type != Z_EROFS_LCLUSTER_TYPE_PLAIN &&
-@@ -416,7 +416,7 @@ static int z_erofs_get_extent_compressedlen(struct z_erofs_maprecorder *m,
- 		fallthrough;
- 	default:
- 		erofs_err(m->inode->i_sb,
--			  "cannot found CBLKCNT @ lcn %lu of nid %llu",
-+			  "cannot found CBLKCNT @ lcn %llu of nid %llu",
- 			  lcn, vi->nid);
- 		DBG_BUGON(1);
- 		return -EFSCORRUPTED;
-@@ -426,7 +426,7 @@ static int z_erofs_get_extent_compressedlen(struct z_erofs_maprecorder *m,
- 	return 0;
- err_bonus_cblkcnt:
- 	erofs_err(m->inode->i_sb,
--		  "bogus CBLKCNT @ lcn %lu of nid %llu",
-+		  "bogus CBLKCNT @ lcn %llu of nid %llu",
- 		  lcn, vi->nid);
- 	DBG_BUGON(1);
- 	return -EFSCORRUPTED;
 -- 
 2.53.0
 
