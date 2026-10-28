@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793212018;
-	b=jSgbI1ilVP+YwnOFM8TeAuxBCiKP7twXmglF9uDxhvP5TgboM7z9PIzxOF1tzrWINRBy
-	 67sCPXT7g08eqJiG/j1br6WcQ8SZc9ijvYYoBoixBlIuFpPG5vuACX5OVfl6Y9S/4F7JV
-	 AFifqpuSIaFAUETQL/Fs42b3IbWSWz3F6jVsaYRODB97pJDSsW+8kXpQWAyIAQqImexO9
-	 IIk2bK8rMTmPk8GC1lJ/hGkykpPNzY1GtyNNczTRoP+plj+IFtPT6ga/8id8VmHbpSMPs
-	 puCERLuP6Ea2AsqEiuNQ4QJkv7m0/QFvngEWj04QunLzQ3+qVKHoUDhTCM/pfoL3vvw==
+	t=1793212021;
+	b=11piE7joawBhRRelYnapJJaBOyaNWH/N6gIBRG9p9PsCVjqTXhqCQnYdSk92lV2x8Dwa
+	 ii0iMg07K3gnFj99L4x3Xj4J7czOnnqv3Wj98BofBgWuRTK4G2jPpWhFEFEqSca9qbSCT
+	 Zlq0mwpDqaG1QSurc401R6iiqhstVjphBnvRYRB8mrG2wjKerWES6pYZ+h1kv6hAYcQsg
+	 mg/g29h95nsjhIAwawVdX2O55OqHhRFU15U/ea7gBAlpPRe5SnUdoYCvrrKSINiZa/M5X
+	 VmtdxQOgIJWjfBy7XGM87rUX/2PL+dwqRYTJtrnu2r7cVtTd0BCzPLgb54h5pXZlwYQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793212018;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793212021;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=azcnJ1F+Ru2eiyN6mBdekYJwS9/AdKJypomQnriSoDM=;
-	b=Pu+agSb++NjvtxsQkBsN2vvlHWUGvxjK58uLYQYzYnnvNya7DI9xnpt4+qyQnPn5ph81
-	 WDkLd+VE8xoHHf2KWdFVTP95v7jv84D6mdrN7CfMc875Cu6QeUe+FXDmisD86DTfZOf6e
-	 xkZbu6G4Rf0QUUyHSME8eec2Q5EY1N/Lxh2tmdtag9FT7Urw9a3WLGcEN1Zkqu6a14Fs6
-	 iP7cZk0lfdUhCklEf81iiZJRZr+GJXjwszoSUCXHYE5p0sPiG59ZLUTAiq8QzljRtg21q
-	 iFZpr6hHaHdgfw59HdYPUIKfd8LY2azeGUNOKKgoYej7GexYUEZCqgXyjbqmmjKZ3Pg==
+	bh=fGM61Cm/R704+hg2qCXyPdbmpH83rxkuud20XbxKsE4=;
+	b=3oM4NMJf7tTkoBfDlxNs8A7pQ6syqnMpnqXpb+l1SPmILYxe+NtE1iuV4YHTeYNwVNtw
+	 yUoaDTmy4ueqhPb/Aq2rkxuM/SpyrKfJBVOLZjxJclOwiqKI0Nty4P8DHnurr1vFjNu7p
+	 8Xy4e63V6OX9WsaSfySJ9FQgjO+D9+U7FHVi3XxR4QvmrFcAXAAHI/5vZL/jrJrPgNgYU
+	 +l0wvQUf/M/E3id6MPo0PTMmj9vD9KzpLgC85qcjA9uag/PCMJr79qmy48dyKX0bOnFRk
+	 lhQlE2d6EobJn1hi5Zx07SdhRXAy39K246OAT/MZK37Ta/JS6gSJQOxGE/YgddqzLeg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=io634r9P;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ug+k+xLG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78005606A31E;
-	Wed, 28 Oct 2026 18:26:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C8D0606A31A;
+	Wed, 28 Oct 2026 18:27:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=io634r9P
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C978B1F01828;
-	Wed, 28 Oct 2026 18:26:57 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ug+k+xLG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A65851F01828;
+	Wed, 28 Oct 2026 18:27:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793212018;
-	bh=azcnJ1F+Ru2eiyN6mBdekYJwS9/AdKJypomQnriSoDM=;
+	s=korg; t=1793212021;
+	bh=fGM61Cm/R704+hg2qCXyPdbmpH83rxkuud20XbxKsE4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=io634r9PVdiv+YIWsWtlOqzSOOFF73AqLnEu6is83mZgyP2yf+iiIxqoRl6kxBRf1
-	 iuT5J8H6uGTLBKOtpxTSPCxiD1a/sPmvDvxxoK4+vZjrpX2BC2sfEKCWzB2KDLAMOp
-	 +fvO7epKHOu0s8b2S8RwSWW3U2/KQWR0DSxX60wQ=
+	b=Ug+k+xLGyxBqr6tpnuGLK7DTjYiCprry33PrTOVicbqkq3sNoaE+VOd1b8reizg28
+	 ONueNQAgaqhWVvDew7v7H+HqpAhBDn3teQND9lSRXO/Nreay3GC5FXB1iMdifKxIZn
+	 8LDdO4Ei45Jf2NIKjC7S7cJOrXyowsRqZ+g153CU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Josef Bacik <josef@toxicpanda.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.1 0010/1887] io_uring/cancel: recognize "no timeout" on 32-bit
-Date: Wed, 28 Oct 2026 17:35:06 +0100
-Message-ID: <20261028170459.456891130@linuxfoundation.org>
+	Jens Axboe <axboe@kernel.dk>,
+	"Claude Fable 5.1" <noreply@anthropic.com>
+Subject: [PATCH 6.1 0011/1887] io_uring/cancel: let CANCEL_ALL find parked requests
+Date: Wed, 28 Oct 2026 17:35:07 +0100
+Message-ID: <20261028170459.479533745@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,42 +70,96 @@ Content-Transfer-Encoding: 8bit
 
 From: Josef Bacik <josef@toxicpanda.com>
 
-Commit 3774e4d4c8533da2caae95556c4d635c7c4f45b8 upstream.
+Commit fe6ca13c98b1223f6005f32913ebd32e4df64b77 upstream.
 
-IORING_REGISTER_SYNC_CANCEL waits without a limit if both fields of
-io_uring_sync_cancel_reg::timeout are -1. io_sync_cancel() compares them
-with -1UL. They are of type long long. With a long of 32 bits -1UL is
-4294967295, which is what it stays when it is converted for the
-comparison, and the fields are never equal to it.
+A cancellation with IORING_ASYNC_CANCEL_ALL or _ANY goes on until it finds
+nothing more. A request may stay where it was found for a while after it
+has been cancelled, so each one that matches is stamped with the sequence
+number of the cancellation, and is skipped from then on.
 
-So { -1, -1 } is taken for a timeout. ktime_set() takes the nanoseconds as
-an unsigned long, so what becomes of it is -1s + 4294967295ns = 3.29s.
+io_cancel_cb() does so for io-wq work as well. There is no need to:
+pending work is taken off the list, and the workers are looked at once per
+call. And it does harm. A request that is run by io-wq may be parked
+while it still is the current work of the worker: poll gets armed for it,
+or it is put on ->futex_list or ->waitid_list.
 
-If the request is being run by io-wq and can't be interrupted, the call
-returns -ETIME after that time, rather than waiting for the request to be
-gone. On i386, with a buffered read from a null_blk device that takes 4s
-to complete a request, IOSQE_ASYNC, that is what each call does.
+  io-wq worker                       io_try_cancel()
+  io_wq_submit_work()
+    io_arm_poll_handler()
+      io_poll_add_hash()
+                                       io_async_cancel_one()
+                                         io_cancel_cb()
+                                           stamps the request
+                                         sets IO_WQ_WORK_CANCEL
+                                         = -EALREADY
+                                       io_poll_cancel()
+                                         skips the request
+                                       = -ENOENT
+  io_assign_current_work(NULL)
 
-Fixes: 78a861b94959 ("io_uring: add sync cancelation API through io_uring_register()")
+The flag comes too late for the worker to see it, and the search that
+would have found the request takes it for done. The cancellation returns,
+and the request stays.
+
+With a multishot poll, IOSQE_ASYNC, and IORING_OP_ASYNC_CANCEL with
+IORING_ASYNC_CANCEL_ALL up to 63us later, that happens to 4 of 1,000
+requests (4 CPUs, KVM).
+
+Take the stamp off again if the work matches. If the request is found
+on one of the lists it gets a new one, and io_cancel_cb() doesn't match it
+a second time.
+
+__io_async_cancel() tries the io-wq of the caller twice. So far the stamp
+has kept it from counting work that is running there the second time.
+Skip it instead, so that the number that is returned stays the same.
+
+[ 6.1: no ->cancel_seq_set, a request is skipped when ->work.cancel_seq
+  equals the sequence of the cancellation, so set it back to the one
+  before ]
+Fixes: 8e29da69fead ("io_uring: add support for IORING_ASYNC_CANCEL_ALL")
 Assisted-by: LLM
 Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Link: https://patch.msgid.link/20261015-b4-io-uring-fixes-v1-17-c1556f5d7bf5@toxicpanda.com
+Link: https://patch.msgid.link/20261015-b4-io-uring-fixes-v1-18-c1556f5d7bf5@toxicpanda.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Co-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/cancel.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ io_uring/cancel.c |   18 ++++++++++++++----
+ 1 file changed, 14 insertions(+), 4 deletions(-)
 
 --- a/io_uring/cancel.c
 +++ b/io_uring/cancel.c
-@@ -306,7 +306,7 @@ int io_sync_cancel(struct io_ring_ctx *c
- 	if (ret != -EALREADY)
- 		goto out;
+@@ -69,7 +69,16 @@ static bool io_cancel_cb(struct io_wq_wo
+ 	struct io_kiocb *req = container_of(work, struct io_kiocb, work);
+ 	struct io_cancel_data *cd = data;
  
--	if (sc.timeout.tv_sec != -1UL || sc.timeout.tv_nsec != -1UL) {
-+	if (sc.timeout.tv_sec != -1 || sc.timeout.tv_nsec != -1) {
- 		struct timespec64 ts = {
- 			.tv_sec		= sc.timeout.tv_sec,
- 			.tv_nsec	= sc.timeout.tv_nsec
+-	return io_cancel_req_match(req, cd);
++	if (!io_cancel_req_match(req, cd))
++		return false;
++	/*
++	 * Pending work is gone once it has matched. Work that is running may
++	 * park the request where the same cancellation looks next. Don't make
++	 * it skip the request as one that it has dealt with.
++	 */
++	if (cd->flags & (IORING_ASYNC_CANCEL_ALL | IORING_ASYNC_CANCEL_ANY))
++		req->work.cancel_seq = cd->seq - 1;
++	return true;
+ }
+ 
+ static int io_async_cancel_one(struct io_uring_task *tctx,
+@@ -178,9 +187,10 @@ static int __io_async_cancel(struct io_c
+ 	io_ring_submit_lock(ctx, issue_flags);
+ 	ret = -ENOENT;
+ 	list_for_each_entry(node, &ctx->tctx_list, ctx_node) {
+-		struct io_uring_task *tctx = node->task->io_uring;
+-
+-		ret = io_async_cancel_one(tctx, cd);
++		/* has been done above, don't count what is running there */
++		if (all && node->task->io_uring == tctx)
++			continue;
++		ret = io_async_cancel_one(node->task->io_uring, cd);
+ 		if (ret != -ENOENT) {
+ 			if (!all)
+ 				break;
 
 
