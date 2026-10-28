@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213061;
-	b=0qQPQmy+j6Xl4mQDUiKQiLF8vJEh+8xwvMYb0ABZQw5rIgsmP/Vk/zv9Ah0K5IgAV5Xp
-	 LjzCZ1f2rCgjfkFX9Kf2f/LYq4vtI4mw4GSQnPfKSG7m4zK9FkZBr8Pjgt/SvzK8Q67Li
-	 eml/yXQvcCGd1KP2CQr3Eq/LErm0rcTTXJW9dxr1Z2YXm3KEk1qTFEi6IClpTqrbbf7yI
-	 SBCfFeHhf2gwVeDpwgxXKU0lr4TmjSaEOK5c5cskzfw+6ocCJiziIc+ykNWKr63Re8NJV
-	 s8GJz2x9YAUcUAq8qLaoLzVMhvyaO9G5uiJdmOjoMdIbhgufKFM5JZcqV1lqiJPSXbw==
+	t=1793213064;
+	b=GG3v/0a6/bAnRw0dQ1cJzkx7q+w7clobP5fpBu6yvkYkjkS74j9cdU1TSjaMBQVRyI1j
+	 csmiixvO2HIrO782IPAM0NJbw0j8ZEoxJUtnxtn8yy0gmbxt+CVDCsVcuO6dNsGl8H9Lq
+	 HUnhq+WKyvnBqYcGBqdmH2RjvRqjoKe+n4HheXRV57orii5KbJ9GGDmXjnYm6M/m8fDHy
+	 WG0Kf4IyEM3cMaw1Vwwr5X2M/PeXt+PO3MIhFLCd/3A3OOfBb0NaZYjHBuAgH04O9n36q
+	 1/itX8y5M00U7AOegAkAHBR4SndghqmkwDDi1ia10wGvOD8XkPvQYAO5dfEA11421oA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213061;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213064;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=r/E/X7IIIpU+T6jHYQBt1NJjeXG4nDPI5feqfXMLmqM=;
-	b=S/dBLheR2JkJXgXvLxZilgkKkIyGWdzrPWaUxYIUZflU8/Zs3HSXBv3OfOPW+kLVbaGM
-	 GLMC3nQhKEsgd8el4M5Y0g5rN5XCI1thkm37cKmjSCGKGMYqx+4G+omcntv4IVcjBl4WK
-	 xA6gvO83ruS78w6x5Fn7dTAebMqDJ2wuzwGhxSIvU769oik65fMbVa5CE6/dNvra/gF/r
-	 LkrF8joEZ+KsKW39qUq4Spyc77ouMEUYAFV05uvEJ/NoniR2iQ5qdVjHRmQwrBt0jP+vT
-	 ccpzMZpCIrAOIBOQAjUSK3VmQbo8hmSOzIuzscExbqlwpAnAorG13d87cqE8G196tRA==
+	bh=5Y5n51K8QAdBoafe5QYYEoro8M51lnx9eOXIhPzlj48=;
+	b=eOd92gi0zJLQPtGW3/o4ScIB7wfdvufZF6DRbJNWOxRo/rMSn4Z22+zj5dD8X1hTiGKv
+	 QsbOhiG/l7HL1q1Rxb+Kj4mmBuMouhudQaDjvvCBUiJDG6lAPgNN+rVn/buXcK2f6lrMA
+	 pxhZFCu+2SkCAAcVF6CDWBJMKnwK1055oIMrLQihc5NZ5WGaQv3Zx6hSDjhuqURQ3Hgxu
+	 7t7i5Cb4trHAdQOa1gxBY87dAWdPmw+5mz6D4iTslI/PxwRJZ1DNUkBSGza7wHaUetGZG
+	 hQoimlPeofa9EwH0iRaYB800lIP7ySK2rLklqvZR9DYzx8jMI0FEGisvu3I71zbv53A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KoO+upoh;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GkUox8yo;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 651C5606A31A;
-	Wed, 28 Oct 2026 18:44:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87A81606A31A;
+	Wed, 28 Oct 2026 18:44:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KoO+upoh
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B125F1F01825;
-	Wed, 28 Oct 2026 18:44:20 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GkUox8yo
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9435B1F01825;
+	Wed, 28 Oct 2026 18:44:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213061;
-	bh=r/E/X7IIIpU+T6jHYQBt1NJjeXG4nDPI5feqfXMLmqM=;
+	s=korg; t=1793213064;
+	bh=5Y5n51K8QAdBoafe5QYYEoro8M51lnx9eOXIhPzlj48=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KoO+upoh5/YlR8vBxwN0/MwwetrS/THgGRS+2w12ttC9AbfOkfNo925SUvfetMVHQ
-	 wIYgvxyz4E8viwEO6wMWt86X+VrV7Zrg7NWgZmLXukG20XIfSDOy5h8KvaJJJffGoH
-	 NX0RMED1KTAWtw17d2PjEpGOfS33RcmRQ2piBq4o=
+	b=GkUox8yoMZh0/SJJBq5XEuqxMATPSFTDC8mcV2+R5b9ao+qe9CZo0uMb62UpuVkRa
+	 rmtVSQlvfKt9V6jUVvf4A5H+UWzNHOpwjMBWhThm637xy/+qfY27MPYZffBksL61v0
+	 F8GvaeYhG6NnmwxmwLPpSPXoBMQvN/G2ZfIyIpUU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	stable <stable@kernel.org>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+	Jiazi Liu <jiazi.liu1984@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0372/1887] soc: qcom: geni-se: Correct QUP Core ICC vote constants
-Date: Wed, 28 Oct 2026 17:41:08 +0100
-Message-ID: <20261028170507.696877926@linuxfoundation.org>
+Subject: [PATCH 6.1 0373/1887] usb: dwc3: gadget: fix IRQ storm on invalid event buffer count
+Date: Wed, 28 Oct 2026 17:41:09 +0100
+Message-ID: <20261028170507.719823195@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,60 +69,355 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>
+From: Jiazi Liu <jiazi.liu1984@gmail.com>
 
-[ Upstream commit 1cd9b1be5a9c56fd69e3f555b200a1844f9b873e ]
+[ Upstream commit 1ff77cbefe5a653ea12874c213ea4bd0d72c1067 ]
 
-The GENI_TO_CORE ("qup-core") ICC vote selects the QUP Core 2X clock
-rate. The CORE_2X_*_MHZ constants are expressed in Bps, but their
-values are several orders of magnitude too small. For example, the
-50 MHz threshold is represented by 2500 rather than 25000000 Bps.
+When dwc3_check_event_buf() reads a GEVNTCOUNT value exceeding the
+event buffer length, commit 63ccd26cd1f6 ("usb: dwc3: gadget: check
+that event count does not exceed event buffer length") returns IRQ_NONE
+without writing back GEVNTCOUNT. Since the DWC3 interrupt is
+level-triggered, the uncleared IRQ source keeps the line asserted,
+causing a tight IRQ storm that accumulates 99,900 unhandled interrupts
+and triggers spurious.c:184 BUG -> kernel panic.
 
-As a result, clients using these constants can severely under-vote the
-QUP Core clock.
+The resulting call stack:
+  __report_bad_irq+0xac/0xc8
+  note_interrupt+0x340/0x468
+  handle_irq_event+0xac/0xc0
+  handle_fasteoi_irq+0x120/0x228
+  gic_handle_irq+0x68/0x108
+  ...
+  kernel BUG at kernel/irq/spurious.c:184
 
-Correct the constants to their intended Bps thresholds so that the ICC
-provider selects the corresponding QUP Core 2X clock rate. Drop the unused
-definitions.
+To reproduce, write a bogus value exceeding the event buffer length
+directly to the GEVNTCOUNT register:
 
-Fixes: 58ffbba6a399 ("soc: qcom: geni: Support for ICC voting")
-Cc: stable@kernel.org
-Signed-off-by: Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260915-correct-icc-bandwidth-vote-constants-v2-1-f78eb611204e@oss.qualcomm.com
+  devmem <DWC3_BASE + 0xc40c> 4 0x1004
+
+Write the bogus count back to GEVNTCOUNT to clear the IRQ source,
+consistent with the stale event clearing pattern in
+dwc3_event_buffers_setup(), and schedule error recovery to
+reinitialize the controller.
+
+Fixes: 63ccd26cd1f6 ("usb: dwc3: gadget: check that event count does not exceed event buffer length")
+Cc: stable <stable@kernel.org>
+Suggested-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Signed-off-by: Jiazi Liu <jiazi.liu1984@gmail.com>
+Link: https://patch.msgid.link/20260915110637.17658-1-jiazi.liu1984@gmail.com
+Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+[ sashal: changed dwc3_writel() calls to pass dwc->regs instead of dwc. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/qcom-geni-se.h | 15 +++++----------
- 1 file changed, 5 insertions(+), 10 deletions(-)
+ drivers/usb/dwc3/core.h   |  19 +++++++
+ drivers/usb/dwc3/ep0.c    |   9 ++++
+ drivers/usb/dwc3/gadget.c | 104 +++++++++++++++++++++++++++++++++++++-
+ 3 files changed, 130 insertions(+), 2 deletions(-)
 
-diff --git a/include/linux/qcom-geni-se.h b/include/linux/qcom-geni-se.h
-index f5672785c0c4a..c54580c480768 100644
---- a/include/linux/qcom-geni-se.h
-+++ b/include/linux/qcom-geni-se.h
-@@ -265,17 +265,12 @@ struct geni_se {
- #define QUP_SE_VERSION_2_5                  0x20050000
+diff --git a/drivers/usb/dwc3/core.h b/drivers/usb/dwc3/core.h
+index 933a208c3aab5..e4e0c40dc51d3 100644
+--- a/drivers/usb/dwc3/core.h
++++ b/drivers/usb/dwc3/core.h
+@@ -42,6 +42,7 @@
+ #define DWC3_ENDPOINTS_NUM	32
+ #define DWC3_XHCI_RESOURCES_NUM	2
+ #define DWC3_ISOC_MAX_RETRIES	5
++#define DWC3_ERR_RECOVERY_MAX	3
  
- /*
-- * Define bandwidth thresholds that cause the underlying Core 2X interconnect
-- * clock to run at the named frequency. These baseline values are recommended
-- * by the hardware team, and are not dynamically scaled with GENI bandwidth
-- * beyond basic on/off.
-+ * QUP Core 2X clock votes used by GENI clients through the "qup-core" ICC
-+ * path. Values are in Bps and must be converted with Bps_to_icc() before
-+ * setting avg_bw.
+ #define DWC3_SCRATCHBUF_SIZE	4096	/* each buffer is assumed to be 4KiB */
+ #define DWC3_EVENT_BUFFERS_SIZE	4096
+@@ -817,6 +818,12 @@ enum dwc3_link_state {
+ 	DWC3_LINK_STATE_MASK		= 0x0f,
+ };
+ 
++enum dwc3_err_state {
++	DWC3_ERR_NONE = 0,
++	DWC3_ERR_RECOVERY,
++	DWC3_ERR_UNRECOVERABLE,
++};
++
+ /* TRB Length, PCM and Status */
+ #define DWC3_TRB_SIZE_MASK	(0x00ffffff)
+ #define DWC3_TRB_SIZE_LENGTH(n)	((n) & DWC3_TRB_SIZE_MASK)
+@@ -972,6 +979,7 @@ struct dwc3_scratchpad_array {
+ /**
+  * struct dwc3 - representation of our controller
+  * @drd_work: workqueue used for role swapping
++ * @err_recovery_work: workqueue used for controller error recovery
+  * @ep0_trb: trb which is used for the ctrl_req
+  * @bounce: address of bounce buffer
+  * @scratchbuf: address of scratch buffer
+@@ -983,6 +991,7 @@ struct dwc3_scratchpad_array {
+  * @ep0_in_setup: one control transfer is completed and enter setup phase
+  * @lock: for synchronizing
+  * @mutex: for mode switching
++ * @connect_mutex: for the pull-up and err_recovery_work
+  * @dev: pointer to our struct device
+  * @sysdev: pointer to the DMA-capable device
+  * @xhci: pointer to our xHCI child
+@@ -1041,6 +1050,9 @@ struct dwc3_scratchpad_array {
+  * @ep0_next_event: hold the next expected event
+  * @ep0state: state of endpoint zero
+  * @link_state: link state
++ * @err_state: current error recovery state.
++ * @err_recovery_count: number of consecutive error recovery attempts until
++ *		confirmed healthy and reset to 0 on reset event.
+  * @speed: device speed (super, high, full, low)
+  * @hwparams: copy of hwparams registers
+  * @regset: debugfs pointer to regdump file
+@@ -1133,6 +1145,7 @@ struct dwc3_scratchpad_array {
   */
--#define CORE_2X_19_2_MHZ		960
--#define CORE_2X_50_MHZ			2500
--#define CORE_2X_100_MHZ			5000
--#define CORE_2X_150_MHZ			7500
--#define CORE_2X_200_MHZ			10000
--#define CORE_2X_236_MHZ			16383
-+#define CORE_2X_19_2_MHZ		9600000
-+#define CORE_2X_50_MHZ			25000000
+ struct dwc3 {
+ 	struct work_struct	drd_work;
++	struct work_struct	err_recovery_work;
+ 	struct dwc3_trb		*ep0_trb;
+ 	void			*bounce;
+ 	void			*scratchbuf;
+@@ -1149,6 +1162,9 @@ struct dwc3 {
+ 	/* mode switching lock */
+ 	struct mutex		mutex;
  
- #define GENI_DEFAULT_BW			Bps_to_icc(1000)
++	/* serializes pull-up run/stop vs error recovery */
++	struct mutex		connect_mutex;
++
+ 	struct device		*dev;
+ 	struct device		*sysdev;
  
+@@ -1265,6 +1281,9 @@ struct dwc3 {
+ 	enum dwc3_ep0_next	ep0_next_event;
+ 	enum dwc3_ep0_state	ep0state;
+ 	enum dwc3_link_state	link_state;
++	enum dwc3_err_state	err_state;
++
++	u32			err_recovery_count;
+ 
+ 	u16			u2sel;
+ 	u16			u2pel;
+diff --git a/drivers/usb/dwc3/ep0.c b/drivers/usb/dwc3/ep0.c
+index f30ad37ea8a19..c4aa925bcd7cf 100644
+--- a/drivers/usb/dwc3/ep0.c
++++ b/drivers/usb/dwc3/ep0.c
+@@ -198,6 +198,11 @@ int dwc3_gadget_ep0_queue(struct usb_ep *ep, struct usb_request *request,
+ 	int				ret;
+ 
+ 	spin_lock_irqsave(&dwc->lock, flags);
++	if (dwc->err_state != DWC3_ERR_NONE) {
++		ret = -ESHUTDOWN;
++		goto out;
++	}
++
+ 	if (!dep->endpoint.desc || !dwc->pullups_connected || !dwc->connected) {
+ 		dev_err(dwc->dev, "%s: can't queue to disabled endpoint\n",
+ 				dep->name);
+@@ -269,6 +274,10 @@ int dwc3_gadget_ep0_set_halt(struct usb_ep *ep, int value)
+ 	int				ret;
+ 
+ 	spin_lock_irqsave(&dwc->lock, flags);
++	if (dwc->err_state != DWC3_ERR_NONE) {
++		spin_unlock_irqrestore(&dwc->lock, flags);
++		return -ESHUTDOWN;
++	}
+ 	ret = __dwc3_gadget_ep0_set_halt(ep, value);
+ 	spin_unlock_irqrestore(&dwc->lock, flags);
+ 
+diff --git a/drivers/usb/dwc3/gadget.c b/drivers/usb/dwc3/gadget.c
+index 25f7ab01c3c3c..cd0532158ba0b 100644
+--- a/drivers/usb/dwc3/gadget.c
++++ b/drivers/usb/dwc3/gadget.c
+@@ -1108,6 +1108,10 @@ static int dwc3_gadget_ep_enable(struct usb_ep *ep,
+ 		return 0;
+ 
+ 	spin_lock_irqsave(&dwc->lock, flags);
++	if (dwc->err_state != DWC3_ERR_NONE) {
++		spin_unlock_irqrestore(&dwc->lock, flags);
++		return -ESHUTDOWN;
++	}
+ 	ret = __dwc3_gadget_ep_enable(dep, DWC3_DEPCFG_ACTION_INIT);
+ 	spin_unlock_irqrestore(&dwc->lock, flags);
+ 
+@@ -2006,6 +2010,10 @@ static int dwc3_gadget_ep_queue(struct usb_ep *ep, struct usb_request *request,
+ 	int				ret;
+ 
+ 	spin_lock_irqsave(&dwc->lock, flags);
++	if (dwc->err_state != DWC3_ERR_NONE) {
++		spin_unlock_irqrestore(&dwc->lock, flags);
++		return -ESHUTDOWN;
++	}
+ 	ret = __dwc3_gadget_ep_queue(dep, req);
+ 	spin_unlock_irqrestore(&dwc->lock, flags);
+ 
+@@ -2238,6 +2246,10 @@ static int dwc3_gadget_ep_set_halt(struct usb_ep *ep, int value)
+ 	int				ret;
+ 
+ 	spin_lock_irqsave(&dwc->lock, flags);
++	if (dwc->err_state != DWC3_ERR_NONE) {
++		spin_unlock_irqrestore(&dwc->lock, flags);
++		return -ESHUTDOWN;
++	}
+ 	ret = __dwc3_gadget_ep_set_halt(dep, value, false);
+ 	spin_unlock_irqrestore(&dwc->lock, flags);
+ 
+@@ -2252,6 +2264,10 @@ static int dwc3_gadget_ep_set_wedge(struct usb_ep *ep)
+ 	int				ret;
+ 
+ 	spin_lock_irqsave(&dwc->lock, flags);
++	if (dwc->err_state != DWC3_ERR_NONE) {
++		spin_unlock_irqrestore(&dwc->lock, flags);
++		return -ESHUTDOWN;
++	}
+ 	dep->flags |= DWC3_EP_WEDGE;
+ 
+ 	if (dep->number == 0 || dep->number == 1)
+@@ -2373,6 +2389,10 @@ static int dwc3_gadget_wakeup(struct usb_gadget *g)
+ 	int			ret;
+ 
+ 	spin_lock_irqsave(&dwc->lock, flags);
++	if (dwc->err_state != DWC3_ERR_NONE) {
++		spin_unlock_irqrestore(&dwc->lock, flags);
++		return -ESHUTDOWN;
++	}
+ 	ret = __dwc3_gadget_wakeup(dwc);
+ 	spin_unlock_irqrestore(&dwc->lock, flags);
+ 
+@@ -2706,10 +2726,13 @@ static int dwc3_gadget_pullup(struct usb_gadget *g, int is_on)
+ 
+ 	synchronize_irq(dwc->irq_gadget);
+ 
++	/* Serialize against dwc3_err_recovery_work() */
++	mutex_lock(&dwc->connect_mutex);
+ 	if (!is_on)
+ 		ret = dwc3_gadget_soft_disconnect(dwc);
+ 	else
+ 		ret = dwc3_gadget_soft_connect(dwc);
++	mutex_unlock(&dwc->connect_mutex);
+ 
+ 	pm_runtime_put(dwc->dev);
+ 
+@@ -3984,6 +4007,10 @@ static void dwc3_gadget_reset_interrupt(struct dwc3 *dwc)
+ 
+ 	dwc->suspended = false;
+ 
++	/* The controller is recovered. */
++	if (dwc->err_state == DWC3_ERR_NONE)
++		dwc->err_recovery_count = 0;
++
+ 	/*
+ 	 * Ideally, dwc3_reset_gadget() would trigger the function
+ 	 * drivers to stop any active transfers through ep disable.
+@@ -4446,6 +4473,12 @@ static irqreturn_t dwc3_thread_interrupt(int irq, void *_evt)
+ 	return ret;
+ }
+ 
++static void dwc3_schedule_err_recovery(struct dwc3 *dwc)
++{
++	dwc->err_state = DWC3_ERR_RECOVERY;
++	schedule_work(&dwc->err_recovery_work);
++}
++
+ static irqreturn_t dwc3_check_event_buf(struct dwc3_event_buffer *evt)
+ {
+ 	struct dwc3 *dwc = evt->dwc;
+@@ -4479,9 +4512,21 @@ static irqreturn_t dwc3_check_event_buf(struct dwc3_event_buffer *evt)
+ 		return IRQ_NONE;
+ 
+ 	if (count > evt->length) {
+-		dev_err_ratelimited(dwc->dev, "invalid count(%u) > evt->length(%u)\n",
++		dev_err(dwc->dev, "invalid count(%u) > evt->length(%u)\n",
+ 			count, evt->length);
+-		return IRQ_NONE;
++		/*
++		 * This is a fatal error - the driver and controller are out of
++		 * sync on which event has been consumed. Reinitializing the
++		 * controller is required to recover. Write the bogus count back
++		 * to GEVNTCOUNT to clear the IRQ source, consistent with the
++		 * stale event clearing in dwc3_event_buffers_setup(), then
++		 * schedule error recovery.
++		 */
++		spin_lock(&dwc->lock);
++		dwc3_schedule_err_recovery(dwc);
++		spin_unlock(&dwc->lock);
++		dwc3_writel(dwc->regs, DWC3_GEVNTCOUNT(0), count);
++		return IRQ_HANDLED;
+ 	}
+ 
+ 	evt->count = count;
+@@ -4546,6 +4591,57 @@ static void dwc_gadget_release(struct device *dev)
+ 	kfree(gadget);
+ }
+ 
++static void dwc3_err_recovery_work(struct work_struct *work)
++{
++	struct dwc3 *dwc = container_of(work, struct dwc3, err_recovery_work);
++	unsigned long flags;
++	int ret;
++
++	/* serializes against dwc3_gadget_pullup() */
++	mutex_lock(&dwc->connect_mutex);
++
++	ret = dwc3_gadget_soft_disconnect(dwc);
++
++	dwc3_disconnect_gadget_sleepable(dwc);
++
++	if (ret)
++		goto err_unrecoverable;
++
++	if (dwc->softconnect) {
++		u32 count;
++		/*
++		 * Wait irq to finish before soft_connect resets evt->lpos and
++		 * the event buffer registers to avoid racing with
++		 * dwc3_process_event_buf().
++		 */
++		synchronize_irq(dwc->irq_gadget);
++
++		spin_lock_irqsave(&dwc->lock, flags);
++		count = ++dwc->err_recovery_count;
++		spin_unlock_irqrestore(&dwc->lock, flags);
++
++		if (count > DWC3_ERR_RECOVERY_MAX)
++			goto err_unrecoverable;
++
++		ret = dwc3_gadget_soft_connect(dwc);
++		if (ret)
++			goto err_unrecoverable;
++	}
++	mutex_unlock(&dwc->connect_mutex);
++
++	spin_lock_irqsave(&dwc->lock, flags);
++	dwc->err_state = DWC3_ERR_NONE;
++	spin_unlock_irqrestore(&dwc->lock, flags);
++	return;
++
++err_unrecoverable:
++	dev_err(dwc->dev, "Unable to recover the controller\n");
++	mutex_unlock(&dwc->connect_mutex);
++	spin_lock_irqsave(&dwc->lock, flags);
++	dwc->err_state = DWC3_ERR_UNRECOVERABLE;
++	spin_unlock_irqrestore(&dwc->lock, flags);
++}
++
+ /**
+  * dwc3_gadget_init - initializes gadget related registers
+  * @dwc: pointer to our controller context structure
+@@ -4589,6 +4685,8 @@ int dwc3_gadget_init(struct dwc3 *dwc)
+ 	}
+ 
+ 	init_completion(&dwc->ep0_in_setup);
++	INIT_WORK(&dwc->err_recovery_work, dwc3_err_recovery_work);
++	mutex_init(&dwc->connect_mutex);
+ 	dwc->gadget = kzalloc(sizeof(struct usb_gadget), GFP_KERNEL);
+ 	if (!dwc->gadget) {
+ 		ret = -ENOMEM;
+@@ -4679,6 +4777,8 @@ void dwc3_gadget_exit(struct dwc3 *dwc)
+ 	if (!dwc->gadget)
+ 		return;
+ 
++	cancel_work_sync(&dwc->err_recovery_work);
++	mutex_destroy(&dwc->connect_mutex);
+ 	dwc3_enable_susphy(dwc, true);
+ 	usb_del_gadget(dwc->gadget);
+ 	dwc3_gadget_free_endpoints(dwc);
 -- 
 2.53.0
 
