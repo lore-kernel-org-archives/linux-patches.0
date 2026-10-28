@@ -1,72 +1,59 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793201281;
-	b=hfJgzOu+OVE3DRXLB0psksuv5H62y6qeswLplItjp4MDlbdzIbXaJhkZR5lyZBNxga0Q
-	 0b+DRdsx51NpA9eKFbLTn68GmEO3COU2tmxaWEdNV38Q5WB9m3RwZHCg71d6l84l2E57A
-	 eyIGU25A+GfGVVfy70HlnFtZXdq08OJrUkxAlW5KfCEy8B5hFysU3VRrTlEtxGTrtllZt
-	 Gc2O9FrV1+tFlY8FLilJInhr/eLgAE631+Fxcg2xOBdEyA+Qj7LDF79fStFwtPnU5nuCW
-	 M18HDOV1Bv2C6lZGPPWoQUxPoTFRX5n3XC1UlI0pLwoy3XSlol4hp0tsTEiZYrTR9wQ==
+	t=1793207051;
+	b=UHq8mz2Yi2eCU527nVSIqW6CzNIyVOEWLLA4mR5NFum+APT/BxxIFpgnVoeIWX1Yu9I3
+	 3dY0AX+Dh35Q6nrOHu6WFh6rUopm7enkI2SNcFPNvFOy/ELvJeBNz4I5fIZ504qkPGg0X
+	 DwEC1zzS38om6jguFjEn+MgOOPDPWIvp4WEBv8Nmq5rX67JQkmfdW2oayjzzhrIXiKPiQ
+	 o9UIV+qtsKDV4Wyr17xIGj6llilYc86UsOaO/6pRrvrepJWznrPExkdqlI5/FfDgCUaLx
+	 35odtYolDrb7dsd30brbidJudhfcpUPEL2bhG+K1Dbmx1uffvYaZupHC2fkhsaBuGjg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793201281;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793207051;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
-	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=fQ5ICJZvo9sE1f7Ztr4VxqbPBKy2FoRlGzIcYO9hGjg=;
-	b=vXiTejOjDM5LmH/GNvLpguzDNtpg81O8vN4ERYoLzMUGVk04Ikm1YfKkBgMXQ9A4srwg
-	 9PP9tKGbfwiCfquQ3ipNMcJbENVqY7ZW3HyHtx/0XnSrZgK/30QQv1PHXi8agSVR7VyUR
-	 eITAbsbasfFv2AtNz7hkOKHlUhTJHgMm+j6NOne1O2mtHUuEJC84X4AGVwYUx81JfvwjE
-	 Z6v2baGMQBrn+96ZlIcqbzV+bt6dzBXZdhPtOh6Bc5tCdxVaeMJgYsCR3nVFJJA5ZOLri
-	 KS4rv6s3P/3ODCViWxlWbskosPzFkLjainipAaUVmZJlUdrw9LZ38JMPz0IcjeYYi6A==
+	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=p4NctfXu6KZM1lZaLq5pbRnbUa5suz8B2B29M2bNgEw=;
+	b=dDTDwNs4NKs61TCyh7rYjFhe+ThHh53dlc1prGaHWCIE58pF8SrMNDUewNEsrDUVC8Wu
+	 E9UHOS9jZWK+I4r8ES0zqgcTje5zRJPkg/5nHrgsZEfFzamvjx7Tg6kXjFaFG9AIvifUB
+	 2mkk8/VSenmQHhSG1EyF0qqlbn3NeiHhdTwWdc305kV+XnjaFeWIpdNGSWV0iPyUFB3Fn
+	 SVqSC69aXS9vbUrAER2PR/PrJeDT5cK3+RiJ6UpxE5boFe3eOVkxAsJNXM477eXXF8lGr
+	 HD53r+dT7IBxXEVuaxNPBvxlVu57qD5sBe2J12oHDnl5NDka1QydrZHhKhTOyR3T/gQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b="oo5+H/mX";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ciUynwKh;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6967606A31A;
-	Wed, 28 Oct 2026 15:28:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FF9B606A31A;
+	Wed, 28 Oct 2026 17:04:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=oo5+H/mX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 734621F01825;
-	Wed, 28 Oct 2026 15:27:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793201280;
-	bh=fQ5ICJZvo9sE1f7Ztr4VxqbPBKy2FoRlGzIcYO9hGjg=;
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ciUynwKh
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 728401F01829;
+	Wed, 28 Oct 2026 17:04:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1793207051;
+	bh=p4NctfXu6KZM1lZaLq5pbRnbUa5suz8B2B29M2bNgEw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oo5+H/mXjDdHyznh2Jp06Kc5SHBnfpE1ZMLoBSePEhTDoc0OPkATXbHWPuWrm5KX5
-	 vMyYfAeyREgrrHqjR9wbkeSP64SNBJDMHTbTxvocbF2x6BCk2yqpRG25ymaFDtknj8
-	 rQGCH4XwckCyA3Xp4z+AG+PQqIpa7vD+yegBeHSo18lJSrL90K50JRtfviGCAuzN3d
-	 HlkDZsOI5LvagWuQYc1T35+IcFmpyqpkAxLW5FCh2UPKSDUQhJ9mGiPDt8K5A7ML+Y
-	 852woU4VkTOT4C81koQjisqxrkGF3/Lw7HgcZOwoVxR/PoHtAaN4kGEcEHOw4sND/z
-	 IUOANYZpFiDAQ==
-From: "Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>
-To: linux-coco@lists.linux.dev
-Cc: "Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>,
-	Jiri Pirko <jiri@resnulli.us>,
-	Kevin Tian <kevin.tian@intel.com>,
-	Alexey Kardashevskiy <aik@amd.com>,
-	Xu Yilun <yilun.xu@linux.intel.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Suzuki K Poulose <suzuki.poulose@arm.com>,
-	Steven Price <steven.price@arm.com>,
-	Kiryl Shutsemau <kas@kernel.org>,
-	Rick Edgecombe <rick.p.edgecombe@intel.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Jonathan Cameron <jic23@kernel.org>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Ashish Kalra <ashish.kalra@amd.com>,
-	Tom Lendacky <thomas.lendacky@amd.com>,
-	John Allen <john.allen@amd.com>,
-	Will Deacon <will@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	patches@lists.linux.dev
-Subject: [RFC PATCH v1 11/11] virt: coco: arm-cca-guest: Refresh selected evidence against trusted digests
-Date: Wed, 28 Oct 2026 20:56:18 +0530
-Message-ID: <20261028152618.1356860-12-aneesh.kumar@kernel.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20261028152618.1356860-1-aneesh.kumar@kernel.org>
-References: <20261028152618.1356860-1-aneesh.kumar@kernel.org>
+	b=ciUynwKhzGhcbaU4G675c6N9VqGCtKjd0cMLtid6o2WtPFjWhurpjqkv+5IUwCOMP
+	 QTyWgW8btnby4vxdwHKx1FLHdqJ0I9+qZJu0ubQanYszLLyr3B5D1dnifQaA3mSgXo
+	 wUpiybbQng+r64oh6etWgR5Cp6yJPy61OueUwEiQ=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Haris Okanovic <harisokn@amazon.com>,
+	Thomas Gleixner <tglx@kernel.org>,
+	Michael Kelley <mhklinux@outlook.com>,
+	Radu Rendec <radu@rendec.net>
+Subject: [PATCH 7.3 01/38] genirq/proc: Fix missing CPU header in /proc/interrupts
+Date: Wed, 28 Oct 2026 17:59:48 +0100
+Message-ID: <20261028165940.436576652@linuxfoundation.org>
+X-Mailer: git-send-email 2.56.0
+In-Reply-To: <20261028165940.394092994@linuxfoundation.org>
+References: <20261028165940.394092994@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -78,214 +65,95 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Refresh either measurements with a 32-byte challenge or the interface
-report without one. Reject other objects and unsupported flags before
-issuing native requests.
+7.3-stable review patch.  If anyone has any objections, please let me know.
 
-Verify refreshed bytes against the trusted digest, hash algorithm,
-certificate slot and lock sequence. Check that the other cached object's
-sequence is unchanged, then replace only the verified selected cache
-entry. Keep the previous cache intact on failure and document refresh
-constraints and generation invalidation.
+------------------
 
-Cc: Catalin Marinas <catalin.marinas@arm.com>
-Cc: Will Deacon <will@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Jonathan Cameron <jic23@kernel.org>
-Cc: Jason Gunthorpe <jgg@nvidia.com>
-Signed-off-by: Aneesh Kumar K.V (Arm) <aneesh.kumar@kernel.org>
+From: Haris Okanovic <harisokn@amazon.com>
+
+commit e74798f2f8e1562f2bbd2fed8d81929eeef39ffc upstream.
+
+irq_seq_show() must be idempotent since it may be called multiple times
+to render the same record, e.g. when seq_file's buffer is exceeded. It
+emits the CPU header behind the one-shot print_header flag, which the
+first pass clears, so the header is lost with the discarded buffer.
+
+This can be seen on large systems, such as 8g.48xl (192 CPUs) and
+8i.96xl (384 CPUs) AWS instance types:
+
+  $ head -1 /proc/interrupts
+     9:          0          0 ...  0  GICv3  25 Level  vgic
+
+Replace print_header with the position of the first record and include
+the header whenever that record is emitted.
+
+Fixes: 171cc0d9eed1 ("genirq/proc: Speed up /proc/interrupts iteration")
+Signed-off-by: Haris Okanovic <harisokn@amazon.com>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Tested-by: Michael Kelley <mhklinux@outlook.com>
+Reviewed-by: Radu Rendec <radu@rendec.net>
+Link: https://patch.msgid.link/20260911-dev-harisokn-proc-interrupts-fix-b4-v1-1-f9ff208efcfa@amazon.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/virt/coco/arm-cca-guest/main.c | 134 +++++++++++++++----------
- 1 file changed, 83 insertions(+), 51 deletions(-)
+ kernel/irq/proc.c |   24 +++++++++++++++++-------
+ 1 file changed, 17 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/virt/coco/arm-cca-guest/main.c b/drivers/virt/coco/arm-cca-guest/main.c
-index f50f3e660bbc..d9de5d6c0e37 100644
---- a/drivers/virt/coco/arm-cca-guest/main.c
-+++ b/drivers/virt/coco/arm-cca-guest/main.c
-@@ -174,86 +174,94 @@ static void unregister_cca_tsm_report(void *data)
+--- a/kernel/irq/proc.c
++++ b/kernel/irq/proc.c
+@@ -462,7 +462,7 @@ int __weak arch_show_interrupts(struct s
+ static DEFINE_RAW_SPINLOCK(irq_proc_constraints_lock);
  
- #ifdef CONFIG_PCI_TSM
+ static struct irq_proc_constraints {
+-	bool		print_header;
++	loff_t		first_pos;
+ 	unsigned int	num_prec;
+ 	unsigned int	chip_width;
+ } irq_proc_constraints __read_mostly = {
+@@ -543,14 +543,13 @@ static int irq_seq_show(struct seq_file
+ 	struct irqaction *action;
  
--static int __maybe_unused
--cca_update_dev_measurements(struct pci_dev *pdev, const u8 *nonce)
-+static int cca_refresh_dev_evidence(struct pci_dev *pdev,
-+		enum pci_tsm_evidence_type type, const u8 *nonce)
+ 	/* Print header for the first interrupt? */
+-	if (constr->print_header) {
++	if (p->index == constr->first_pos) {
+ 		unsigned int cpu;
+ 
+ 		seq_printf(p, "%*s", constr->num_prec + 8, "");
+ 		for_each_online_cpu(cpu)
+ 			seq_printf(p, "CPU%-8d", cpu);
+ 		seq_putc(p, '\n');
+-		constr->print_header = false;
+ 	}
+ 
+ 	if (desc == ARCH_PROC_IRQDESC)
+@@ -635,14 +634,25 @@ static void *irq_seq_next_desc(loff_t *p
+ 
+ static void *irq_seq_start(struct seq_file *f, loff_t *pos)
  {
--	int ret;
--	void *measurements;
--	size_t measurements_size;
--	int vdev_id = rsi_vdev_id(pdev);
--	struct pci_tsm_evidence *evidence;
--	struct rsi_vdevice_info *dev_info;
--	struct pci_tsm_evidence_object *obj;
- 	struct cca_guest_dsc *dsc = to_cca_guest_dsc(pdev);
-+	struct pci_tsm_evidence *evidence = &dsc->pci.base_tsm.evidence;
-+	struct pci_tsm_evidence_object *obj = &evidence->obj[type];
-+	struct rsi_vdevice_info *dev_info;
-+	bool report = type == PCI_TSM_EVIDENCE_TYPE_REPORT;
-+	int vdev_id = rsi_vdev_id(pdev);
-+	void *data;
-+	u8 *digest;
-+	u8 expected_hash_algo;
-+	size_t size;
-+	int object_type;
-+	int ret;
+-	if (!*pos) {
+-		struct irq_proc_constraints *constr = f->private;
++	struct irq_proc_constraints *constr = f->private;
++	bool first = !*pos;
++	void *ret;
  
--	/* Regenerate the measurement from the device */
--	ret = rhi_update_vdev_measurements_cache(pdev, nonce);
--	if (ret) {
--		pci_err(pdev, "failed to update device measurements from device (%d)\n", ret);
--		return ret;
-+	if (report) {
-+		object_type = RHI_DA_OBJECT_INTERFACE_REPORT;
-+		ret = rhi_update_vdev_interface_report_cache(pdev);
-+	} else {
-+		object_type = RHI_DA_OBJECT_MEASUREMENT;
-+		ret = rhi_update_vdev_measurements_cache(pdev, nonce);
++	if (first) {
+ 		constr->num_prec = READ_ONCE(irq_proc_constraints.num_prec);
+ 		constr->chip_width = READ_ONCE(irq_proc_constraints.chip_width);
+-		constr->print_header = true;
  	}
--
--	ret = rhi_read_cached_object(vdev_id, RHI_DA_OBJECT_MEASUREMENT,
--				     &measurements, &measurements_size);
--	if (ret) {
--		pci_err(pdev, "failed to get device measurements from the host (%d)\n", ret);
-+	if (ret)
- 		return ret;
--	}
- 
-+	ret = rhi_read_cached_object(vdev_id, object_type, &data, &size);
-+	if (ret)
-+		return ret;
- 	dev_info = kmalloc(sizeof(*dev_info), GFP_KERNEL);
- 	if (!dev_info) {
- 		ret = -ENOMEM;
--		goto free_measurements;
-+		goto free_data;
- 	}
--
- 	if (rsi_vdev_get_info(vdev_id, virt_to_phys(dev_info))) {
--		pci_err(pdev, "failed to get device digests (%d)\n", ret);
- 		ret = -EIO;
- 		goto free_dev_info;
- 	}
- 
--	/* Make sure no unexpected lock/unlock operation happened from guest */
--	if (dsc->dev_info.lock_seq != dev_info->lock_seq) {
--		pci_err(pdev, "Unexpected lock/unlock operation from host (%d)\n", ret);
-+	if (evidence->digest_algo == HASH_ALGO_SHA256)
-+		expected_hash_algo = RSI_HASH_SHA_256;
-+	else
-+		expected_hash_algo = RSI_HASH_SHA_512;
+-	return irq_seq_next_desc(pos);
 +
-+	/* Keep every cached object bound to the same locked device. */
-+	if (dev_info->lock_seq != dsc->dev_info.lock_seq || dev_info->id_index ||
-+	    dev_info->hash_algo != expected_hash_algo) {
- 		ret = -EIO;
- 		goto free_dev_info;
- 	}
- 
--	/*
--	 * Verify that the digests of the provided reports match with the
--	 * digests from RMM
--	 */
--	ret = cca_verify_digest(dev_info->hash_algo, measurements,
--				measurements_size, dev_info->meas_digest);
--	if (ret) {
--		pci_err(pdev, "RMM provided digest mismatch (%d)\n", ret);
--		goto free_dev_info;
-+	if (report) {
-+		if (dev_info->meas_seq != dsc->dev_info.meas_seq) {
-+			ret = -EIO;
-+			goto free_dev_info;
-+		}
-+		digest = dev_info->report_digest;
-+	} else {
-+		if (dev_info->report_seq != dsc->dev_info.report_seq) {
-+			ret = -EIO;
-+			goto free_dev_info;
-+		}
-+		digest = dev_info->meas_digest;
- 	}
- 
--	/* fill evidence details */
--	evidence = &dsc->pci.base_tsm.evidence;
-+	ret = cca_verify_digest(dev_info->hash_algo, data, size, digest);
-+	if (ret)
-+		goto free_dev_info;
- 
--	/* Now update the evidence under lock. */
-+	/* Publish only after verification; failures preserve the old cache. */
- 	down_write(&evidence->lock);
--	evidence->generation = dev_info->meas_seq;
--
--	obj = &evidence->obj[PCI_TSM_EVIDENCE_TYPE_MEASUREMENTS];
--	if (obj->data)
--		kvfree(obj->data);
--	obj->data = measurements;
--	obj->len = measurements_size;
--
--	dsc->dev_info.meas_seq = dev_info->meas_seq;
--	memcpy(dsc->dev_info.meas_digest, dev_info->meas_digest, SHA512_DIGEST_SIZE);
-+	kvfree(obj->data);
-+	obj->data = data;
-+	obj->len = size;
-+	memcpy(obj->digest, digest, SHA512_DIGEST_SIZE);
-+	if (report)
-+		dsc->dev_info.report_seq = dev_info->report_seq;
-+	else
-+		dsc->dev_info.meas_seq = dev_info->meas_seq;
-+	evidence->generation++;
- 	up_write(&evidence->lock);
--
- 	kfree(dev_info);
- 	return 0;
- 
- free_dev_info:
- 	kfree(dev_info);
--free_measurements:
--	kvfree(measurements);
-+free_data:
-+	kvfree(data);
- 	return ret;
++	ret = irq_seq_next_desc(pos);
++
++	/*
++	 * Record position of the first output record so that irq_seq_show()
++	 * knows where to write the header.
++	 */
++	if (first)
++		constr->first_pos = *pos;
++
++	return ret;
  }
  
-@@ -506,6 +514,29 @@ static int cca_tsm_accept(struct pci_dev *pdev)
- 	return __cca_tsm_accept(pdev, dsc->dev_info.lock_seq);
- }
- 
-+static int cca_tsm_refresh_evidence(struct pci_tsm *tsm,
-+		enum pci_tsm_evidence_type type, unsigned long flags,
-+		void *nonce, size_t nonce_len)
-+{
-+	if (flags)
-+		return -EOPNOTSUPP;
-+
-+	switch (type) {
-+	case PCI_TSM_EVIDENCE_TYPE_MEASUREMENTS:
-+		if (nonce_len != 32)
-+			return -EINVAL;
-+		break;
-+	case PCI_TSM_EVIDENCE_TYPE_REPORT:
-+		if (nonce_len)
-+			return -EINVAL;
-+		break;
-+	default:
-+		return -EOPNOTSUPP;
-+	}
-+
-+	return cca_refresh_dev_evidence(tsm->pdev, type, nonce);
-+}
-+
- static struct pci_tsm_ops cca_devsec_pci_ops = {
- 	.owner = THIS_MODULE,
- 	.evidence_types = BIT(PCI_TSM_EVIDENCE_TYPE_CERT0) |
-@@ -515,6 +546,7 @@ static struct pci_tsm_ops cca_devsec_pci_ops = {
- 	.lock = cca_tsm_lock,
- 	.unlock = cca_tsm_unlock,
- 	.accept	 = cca_tsm_accept,
-+	.refresh_evidence = cca_tsm_refresh_evidence,
- };
- 
- static void cca_devsec_tsm_remove(void *tsm_dev)
--- 
-2.43.0
+ static void *irq_seq_next(struct seq_file *f, void *v, loff_t *pos)
+
 
