@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793212684;
-	b=UdJvTr2Fe56mq6RCdN8txFB3nbR6JHWEeukAsTKpXe/tQLh9ybU4djB1k+N84HczPylC
-	 KHcT3uLnnLll/iK5BVaydjkhni7ESqbhoTAbmeglDJ5AuCXxnzi96spaAuetQgXy5HK63
-	 leALKdUilHP3Ej5DVDxHJ2mDgw+kVvcKxGCZK9NybUy/+eSUZv9r9BYW7nQr6IBQqWnE4
-	 86EGIYxTRGxEoeypJkLZEK76dbCiNHk59vtPUPH4Hxf/XFxnKLLw4K1xqTUFs0EvhbH24
-	 378R5IcHK/1PGAHfy6fm+K+YVBnU7J+Bfz3Q8NKW8Os06DTFD19+PavnCvWihgyQnMQ==
+	t=1793212686;
+	b=isrEFoPTmd/0nsFlD5sAU5Yl8ZQAZRHDhv0iIGPbVmMAgJMYz2uVKful0SZQe+uWxlnZ
+	 LG88LWhtmFBk9wYGubInjxkrL4sA4P6dsmPEK2lyBY6PMVojG693rkDs+bFmM6g+Qi4W9
+	 hg1ZWqSnPyPh/Fkyd1DIubnjILIoG/PcdkQyYdCq9VLDckkBIS0SJROVT5rhAslgd2Ktp
+	 GZ30Y5E3J6T3YLZUHR7jTlkVg1ebZL69kzk82jD56hiWlNI/zRXvgrYFebGFIzShNkmoj
+	 Nvs0lacXeHUCOibVv7CSyvO+uDnSpXasbm0TAaN5iqwa5BBHp/DHCNlkuXvQ2nx/CUA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793212684;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793212686;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=YTPtsSYpHrVk9xoNybE9E1eBYbEH1+nUz2qsl/AwBjw=;
-	b=PYZrSqphHL1U3pTKDqd/c6DPj4ZfOOa19ZySfRjiq2gMcBKagk7eBylAXJYfb3SSC87b
-	 VWSj4TblW7nmhsz04zBirILMPmn2G3PLyx/5ix2kLNURM1/Y6Hfo0n+LxlTNnpSKrVt+u
-	 UN/U0GXzpFPqN2tikOM6GWMtOUzXFIxY/yMaxUvTPh3dmYnIOwkl37p64lyEh2YwqXV8Q
-	 LfJ09L4Mp+jOXmGjRYdCvjDsBH0VT8o5rXhhjY1lDg7eze1akgfbTCIojtLgD7wt42D0A
-	 6fiPNtC2wQAEFh/2UPty3a7IN1mEyJmyofguIWx7nDypjdkviHXEszz65vDgUyv1sGg==
+	bh=UigLXcoSUb1G8Rtto1VKrm7jfdDRGGv4QEE5y+AC96g=;
+	b=46fBOZA1ztk3V/FPrIjheSEpKE/xgsAQF0rQF0Zdy2iS+ieuFmYwhycDj9WkYEwq/py3
+	 ZDrTUFCAwIR4FSDKIoroj70murTikxDoM4f/cVKRWVYGIn5Vi8e4Lh3awamHPLIOT5hhh
+	 XuVsPVLPoZUE0g20lJ85cpSXq2BSug15ACM3REWTUHF6qtMq4BTTbqg8kmv3R0hN32e9t
+	 0b3VfCn+GTqU7Hhh458FimYVSo1DMhrrpt9elx1pQQAKS3GA0Tw7QPCJTEeminRBruED3
+	 D1KibgnspCUzngUcZ5L7Y7Li1NS23kNBTBBLnQFYWhU5nVGsXnfZvjl/XKZsUTT4OpQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0OeIoMWU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2MaQI33l;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2762606A31A;
-	Wed, 28 Oct 2026 18:38:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CDAF606A31C;
+	Wed, 28 Oct 2026 18:38:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0OeIoMWU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F41CA1F01825;
-	Wed, 28 Oct 2026 18:38:02 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2MaQI33l
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE4AE1F01825;
+	Wed, 28 Oct 2026 18:38:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793212683;
-	bh=YTPtsSYpHrVk9xoNybE9E1eBYbEH1+nUz2qsl/AwBjw=;
+	s=korg; t=1793212686;
+	bh=UigLXcoSUb1G8Rtto1VKrm7jfdDRGGv4QEE5y+AC96g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0OeIoMWUhoev6AKI5/N///UQuwOdKIl1EYByy8PpLl7HBmcpaV7hdhKeaDFskwd2u
-	 NVcI/zNXKzKBiDWQhAtX+nr8cWeiWaVjHH/rCZeuS9Bphl94X7zTfzvVZ863cIYtaB
-	 fLTYOlxJqO5r315XLFf+/ft5cEWiLpR7i6LE3HH0=
+	b=2MaQI33llTqiy6l39OYI2CIIBrYey8vz4j+Rh/4BDLBE4Ewx/IV00SVlE+3nyZi7p
+	 boxNEB15UJGui+BmWUM5Wo7WswPtjJVfR7KqGDvxJ4xA4sUZWPN+4G0ZS42mTbVpl+
+	 QC+rUUlSjltxKMWwUGwm1puvRErj6wT961Lur6g4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolai Buchwitz <nb@tipi-net.de>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Jeff Jo <jeffjo@openai.com>,
+	Eric Dumazet <edumazet@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0239/1887] net: bcmgenet: fix NULL dereference in set_coalesce before first open
-Date: Wed, 28 Oct 2026 17:38:55 +0100
-Message-ID: <20261028170504.670531455@linuxfoundation.org>
+Subject: [PATCH 6.1 0240/1887] tcp: refresh TS.Recent for accepted old ACKs
+Date: Wed, 28 Oct 2026 17:38:56 +0100
+Message-ID: <20261028170504.693399408@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,68 +69,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolai Buchwitz <nb@tipi-net.de>
+From: Jeff Jo <jeffjo@openai.com>
 
-[ Upstream commit 19419faf58dfe5bcc8a9e60e622976c5f8e3ddc1 ]
+[ Upstream commit 1b92780ae4fc3be64f05d97ed8833c445e73b0cf ]
 
-The Rx ring priv and index are only set in bcmgenet_init_rx_ring(),
-which runs at open. Setting the Rx coalescing parameters on an interface
-that was never opened, e.g. "ethtool -C eth0 rx-usecs 50", dereferences
-a NULL ring->priv. The oops happens with RTNL held, so networking
-stays stuck until a reboot:
+A TCP packet can carry new data while acknowledging traffic in the
+opposite direction. With overlapping traffic in both directions, a
+delayed packet's acknowledgment can be older than one Linux has already
+accepted, even when that packet fills a gap in the received data.
 
-  Unable to handle kernel paging request at virtual address 0000000000002788
-  pc : bcmgenet_set_rx_coalesce.isra.0+0x10/0x88
-  lr : bcmgenet_set_coalesce+0xe8/0x180
-  Call trace:
-   bcmgenet_set_rx_coalesce.isra.0+0x10/0x88 (P)
-   __ethnl_set_coalesce.isra.0+0x490/0x570
-   ethnl_set_coalesce+0x48/0xc0
-   ethnl_default_set_doit+0xf4/0x230
-   genl_family_rcv_msg_doit+0xe8/0x160
-   genl_rcv_msg+0x220/0x2a0
-   netlink_rcv_skb+0x68/0x140
-   genl_rcv+0x40/0x60
-   netlink_unicast+0x338/0x3c0
-   netlink_sendmsg+0x19c/0x3f8
-   __sock_sendmsg+0x64/0xc0
-   __sys_sendto+0x124/0x198
-   __arm64_sys_sendto+0x30/0x48
+Linux accepts the data, but tcp_ack() takes the old_ack path and skips
+updating TS.Recent, the timestamp saved for outgoing acknowledgments.
+The reply therefore echoes an older timestamp. If the sender uses this
+echo to measure round-trip time after a long idle period, its estimate
+includes the idle time and can reduce its sending rate.
 
-Set priv and index at probe. Writing the registers while the interface
-is down is harmless because open resets the MAC and
-bcmgenet_init_rx_coalesce() reapplies the stored values.
+Update TS.Recent in old_ack using tcp_replace_ts_recent(), before SACK
+processing can trigger a transmission. This reuses the existing timestamp
+and sequence checks, including PAWS protection against old duplicate
+packets. ACK validation already rejects old ACKs in SYN_RECV before this
+path, so no additional state check is needed.
 
-It was observed on a Raspberry Pi CM4, but should apply to all other
-genet devices.
+Echoing the timestamp of the packet that fills the receive gap follows
+RFC 7323 section 4.3. In a socket reproduction with 300 seconds idle,
+controlled reordering and retransmission to exercise timestamp-based RTT
+sampling, the sender's smoothed round-trip time was 37.5 seconds without
+the fix and 15.5 ms with it.
 
-Fixes: 9f4ca05827a2 ("net: bcmgenet: Add support for adaptive RX coalescing")
-Signed-off-by: Nicolai Buchwitz <nb@tipi-net.de>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://patch.msgid.link/20260928105642.856210-1-nb@tipi-net.de
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 12fb3dd9dc3c ("tcp: call tcp_replace_ts_recent() from tcp_ack()")
+Assisted-by: LLM sparse
+Signed-off-by: Jeff Jo <jeffjo@openai.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/genet/bcmgenet.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ net/ipv4/tcp_input.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/net/ethernet/broadcom/genet/bcmgenet.c b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
-index c729da84a19bb..9753b48cfac47 100644
---- a/drivers/net/ethernet/broadcom/genet/bcmgenet.c
-+++ b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
-@@ -4079,8 +4079,11 @@ static int bcmgenet_probe(struct platform_device *pdev)
- 	netif_set_real_num_rx_queues(priv->dev, priv->hw_params->rx_queues + 1);
+diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
+index 4ab6222ff180c..488b1926a2eb2 100644
+--- a/net/ipv4/tcp_input.c
++++ b/net/ipv4/tcp_input.c
+@@ -4024,6 +4024,12 @@ static int tcp_ack(struct sock *sk, const struct sk_buff *skb, int flag)
+ 	return 1;
  
- 	/* Set default coalescing parameters */
--	for (i = 0; i <= priv->hw_params->rx_queues; i++)
-+	for (i = 0; i <= priv->hw_params->rx_queues; i++) {
-+		priv->rx_rings[i].priv = priv;
-+		priv->rx_rings[i].index = i;
- 		priv->rx_rings[i].rx_max_coalesced_frames = 1;
-+	}
- 
- 	/* Initialize u64 stats seq counter for 32bit machines */
- 	for (i = 0; i <= GENET_MAX_MQ_CNT; i++) {
+ old_ack:
++	/* An old ACK can carry new data. Update TS.Recent before SACK
++	 * processing can trigger a retransmission.
++	 */
++	if (flag & FLAG_UPDATE_TS_RECENT)
++		tcp_replace_ts_recent(tp, TCP_SKB_CB(skb)->seq);
++
+ 	/* If data was SACKed, tag it and see if we should send more data.
+ 	 * If data was DSACKed, see if we can undo a cwnd reduction.
+ 	 */
 -- 
 2.53.0
 
