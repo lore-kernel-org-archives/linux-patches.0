@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793210831;
-	b=lBZwpPoeV+yCv7ZdlbMpkvzo8FiS+Xa583RReS5+VE3CtdMZDXrVQ2UEhTKnFEQXG/e4
-	 bK6edH+UM23YqJivfx9tmi+npUHtRuaqbhKyo8BGOCDE6o+s0UAR4Yc+uLxP6b+m7UFzU
-	 wqdD4NIRZjkB5CQ1xhBFgW0PsnOFS/w0IFz02oBS6010eIHfz6TCK2hNmTZBti0Cz+WF+
-	 LP3GINOXuN17zfH3WG3bFz9urjE9beefHI+aU57zWsvQFBn1QS/bNepZH0RD7H0sBFHe4
-	 fbPZgZGV8ponQ4KIT1A2nA23v9dlmh7L0S2giv3udlLNUwPH8dgr+LLlgCvfKE4mSJA==
+	t=1793210834;
+	b=r/A0WwkzKcWZf0xloUlKAKOvnTiDEMcwYodaTrC/s1IXokfdw8hXbYF0J7kqLecxNPjT
+	 XEwMh1El8hvf21v220eIynZLX8SnOiTt9DQZgEnw70HuuF/0I3ouV3DFxpuVaOQozne3a
+	 Dd9SRrVbCyAJKagwi3ml+03ifMznVDGBMBn763rsL93E3GBJJrrqzpszhiDoQEROuW3s3
+	 qpERIvFeN1wirdgU9jnisj0c2qyHVx5PV54aChIRg1aehS8yLQGyDXM3o6DN86MEn+JzY
+	 eNPhgbikA7pPXi/5cYdAxFrab6oBXQ+3CMvAq2e6BnG35WIp+CGYihpLTKWs+cGHkJg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793210831;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793210834;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=263/UqzwLp/hUO8VXXMSHTcpmMhJYTAxeC7Kwhgp/zk=;
-	b=kTH6GmhxCS0kThpm6gOLxoty9E6gd6xLecusaHfVvdLOGLXsQTJIiZr4yGKd40Pf61N/
-	 92V4va4BR4eRtXCcBrq092r/SdNm9PL34CYmlh505o5eUPiU6kVNLWPef6pbzijZeuLB+
-	 CdaVQSbX9bXJEWq46JZYqcEFJhoBhOSbGkbZgmNVP+KR9rNX85bkCa+H3s9uSOOtQA/o6
-	 611/AL78mbD5HOO6YX4qI0qLuzhjgGY7EX+9Y1D7jkTwDPEDkI0BI8z+hB+C1rgSy7yOn
-	 nIZ16BTYpT9q/CUEJzWtEIOAbsA9MRjCxVEZ4VVc/OA5EsdTV0Iym9y2OvgZNhR1Kbw==
+	bh=x+xTMcWaYg8M6hGuMgY6gBKlkWNN5GZ9Ac/MEtFlKrk=;
+	b=sUTGR9xnDiBUe6jFWkknTDWDrOnO4Dqn4L4WnGz/4eE1YGeVRuLE0O2rArXXbKubw/JX
+	 KPPsJQ4nqABmJYlRXfqW2Sn35mtlw89X6iCxCGdLFQ2DizGa5mtBMuOP7mgM2uTlvw709
+	 vXCABNQIYb74VHuz3p4uEr6e80CebU+WtJw1DAkr9JtlSdOvok3Hoy0dbXgYyQqDK2WL6
+	 ZZj8+yz4+6bxnqWUhCNlhB2x0u2/4k+toYB3j3+ZWyldw9P3LeVW2ATOZgYbiTMjQG3bv
+	 yK11stFSo+ClBZ5krVN0SKYIY+ajdvMbknsUzDD7svVlz+zIf2IqlfQe2w1goxPFrxw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CRYfqDWV;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FSZtf7CI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67259606A31D;
-	Wed, 28 Oct 2026 18:07:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77832606A31A;
+	Wed, 28 Oct 2026 18:07:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CRYfqDWV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B867E1F01825;
-	Wed, 28 Oct 2026 18:07:10 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FSZtf7CI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92A861F01828;
+	Wed, 28 Oct 2026 18:07:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793210831;
-	bh=263/UqzwLp/hUO8VXXMSHTcpmMhJYTAxeC7Kwhgp/zk=;
+	s=korg; t=1793210834;
+	bh=x+xTMcWaYg8M6hGuMgY6gBKlkWNN5GZ9Ac/MEtFlKrk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CRYfqDWVqSxrIZDw/zTIzQvVS6KehOmj3nCOubaSiq19jCnOBpS6k/ZuNKC2edk5j
-	 KSFLlxF3wY1dNS02yXGKla1DnDH7o1sKq+tRLDzBJFrBnugtgEtrbhdoRrGY5EghjG
-	 jiAxy4XvAYYDxfvQh3CJLs3n/Zi/lp8ZZRhtaMag=
+	b=FSZtf7CISB4161Dj+S4Ur6lm3tebAa4GOSTylrNFaTMotNcxqVjkFDVMwgedQRBY4
+	 ZUOzPx1/agDJrmQrHTDXM6nyrK+hl3Bsnl9PrOqzjMnO+oerZLFD3/r4D0pHvwlkP/
+	 ohcZzQKM/7W3MyeJGTePLHyE4iA4e6OO717mooiY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Julian Sun <sunjunchao@bytedance.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 163/571] mtd: core: call _get_device() with the master MTD
-Date: Wed, 28 Oct 2026 17:55:10 +0100
-Message-ID: <20261028170011.884586594@linuxfoundation.org>
+Subject: [PATCH 5.15 164/571] nvmet: preserve device path on allocation failure
+Date: Wed, 28 Oct 2026 17:55:11 +0100
+Message-ID: <20261028170011.907625583@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -68,39 +69,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Julian Sun <sunjunchao@bytedance.com>
 
-[ Upstream commit 12b31d1acd20b3185bb5f0748db0cf6874c8e9d1 ]
+[ Upstream commit 2f271b812170d4cad578bae1f91db72f3c2e36e7 ]
 
-__get_mtd_device() calls the master's _get_device() callback with mtd,
-which may be a partition. __put_mtd_device() passes the master.
+nvmet_ns_device_path_store() frees the old path before allocating its
+replacement, losing the existing configuration if allocation fails.
+Allocate the new path before freeing the old one.
 
-This breaks gluebi partitions because gluebi_get_device() uses
-container_of() and therefore requires the master MTD. Pass the master
-to _get_device(), matching _put_device().
-
-Fixes: 46b5889cc2c5 ("mtd: implement proper partition handling")
-Assisted-by: Codex:gpt-5.6-sol
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Fixes: a07b4970f464 ("nvmet: add a generic NVMe target")
+Signed-off-by: Julian Sun <sunjunchao@bytedance.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/mtdcore.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/nvme/target/configfs.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/mtd/mtdcore.c b/drivers/mtd/mtdcore.c
-index 5333d24b8c972..f0fb91a5ca600 100644
---- a/drivers/mtd/mtdcore.c
-+++ b/drivers/mtd/mtdcore.c
-@@ -1158,7 +1158,7 @@ int __get_mtd_device(struct mtd_info *mtd)
- 	int err;
+diff --git a/drivers/nvme/target/configfs.c b/drivers/nvme/target/configfs.c
+index a3d3a1bfd292d..110d33900a001 100644
+--- a/drivers/nvme/target/configfs.c
++++ b/drivers/nvme/target/configfs.c
+@@ -339,6 +339,7 @@ static ssize_t nvmet_ns_device_path_store(struct config_item *item,
+ 	struct nvmet_subsys *subsys = ns->subsys;
+ 	size_t len;
+ 	int ret;
++	char *new_path = NULL;
  
- 	if (master->_get_device) {
--		err = master->_get_device(mtd);
-+		err = master->_get_device(master);
- 		if (err)
- 			return err;
- 	}
+ 	mutex_lock(&subsys->lock);
+ 	ret = -EBUSY;
+@@ -350,12 +351,14 @@ static ssize_t nvmet_ns_device_path_store(struct config_item *item,
+ 	if (!len)
+ 		goto out_unlock;
+ 
+-	kfree(ns->device_path);
+ 	ret = -ENOMEM;
+-	ns->device_path = kmemdup_nul(page, len, GFP_KERNEL);
+-	if (!ns->device_path)
++	new_path = kmemdup_nul(page, len, GFP_KERNEL);
++	if (!new_path)
+ 		goto out_unlock;
+ 
++	kfree(ns->device_path);
++	ns->device_path = new_path;
++
+ 	mutex_unlock(&subsys->lock);
+ 	return count;
+ 
 -- 
 2.53.0
 
