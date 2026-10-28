@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793210885;
-	b=jh1p4fJ80dVess25AhszmON3aGEB1QgW8agVa7F7t7qlcGSjGC5LVT2hiuqD30f2stVv
-	 xeu/jP67qJxb+YrImsynw0i3LOCQ/gQlQdjY+PNc9pvw6+b/Z1vOPddh8sOF8a1NhROnX
-	 O2wpxo9qkpg72sGyleNIUqM7iEtHk7JNqOocxQGIqBHHThHCouJFOmyNEqHrD7yVgYN2q
-	 YO3JkXwHEbT6b3U37dF4MI43Rxpc8Se6BjSIiTs2MUgqpEENde7JrrpnHiLX++jQ8mE+Z
-	 dHKyEUCBRj2gq7pjLv2IdESDIJmDCbxzKCqXnXvdIxUPYSZi7aXqMJVT8Ine6hf9k0w==
+	t=1793210888;
+	b=ACAO96+J/kWBUFW3/iP5vPew7u6iQ3dxZR50bf97xbK/UBdZDcw9mgdIOZLANLc0pqiv
+	 iiYhpQ+c1b+BBLA8fODTq/Ry5ug/YU/er+ZbpH5MXd/+IJwfLv9JjoIcC3hcPI5iT8ZIF
+	 Nb7T+k5vQcGWIo4L0bzYbd3OjvdTivvqQe/KJCzbp06Uj/y8EKTkuVqgwzultuWV/zgGF
+	 XvmJ+YnsV5nJ/MD2cZ2wajpSRJddj84WuWwKxaFu1eQe99yb2ysUVkD6Iy4M4QkDkTAr3
+	 RZkUnqOyFZbrJ2AsTBxw+zYu7zEj2Q3jsdeJWf5NK62x7vpNLoWWfAv6UgEcCfKw31w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793210885;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793210888;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=yyO0wSot/A6GtADgLrVupZeBNTdU7WPc2OstJLYzOTU=;
-	b=S6C9xI9NsyeERvi+ufua7gOsicx5D4M2yy34+v7P1QgMNBlAaW7mFkVNHVmXlxodpj2w
-	 1rrWTbynKVFvUcOjMu4OW2T65MWYDCaCwzUPsiDR9WnxcvNT0zISnpE8uU4B5EGZI/lLJ
-	 ECyjw06YvWTUjucFVt8grNt/vgin/YJqVNYU5E9cvugJI51bL/V6ANmfFxw3Sfi/opwRJ
-	 IrmXJxgafFda6k67ilj0leyQy5uNgQuo4OlzKOr4TyydvALFmFV/2mzxC0gXT/707HC/u
-	 8Z0Qg9lNRLjYHWAO4jSkkPGgN8PsOCn8vRzIA8zhKE4XXgoHEZLspKQBwI2LlLQXcfA==
+	bh=POh4Ai9CCnh9IM8RDjz8MRUROdF1JxhgrQcd47I7HBM=;
+	b=k2T4WvM89VsQLfdhEodKvSDdayyeCRwVUhT9dWnDuDGWRV/JUDTsBeLFV48p9/Szxx8a
+	 paG/lnP0kUz+l9v3ibin/Od7a7vq/vkXUWL26/koNfg5zYcIAmLY3OUWy8DLO5Y4Rrtj3
+	 2VPg6miiVnaKIJMRMUIYhaRCPHSrhLf69ENeLi37RMDYWznpj2COpmRfhQ63ns0FU6BCO
+	 HYkqjgFDsr6p4OvnyarZ3gnnwRwSVIVM7ysdSu/pygnCEEAdN78QKrMjByJT1eaKbYXb5
+	 sexc30t9zIzB6Rq0VW0QCwFJG9OslCep2LH14xeUeigR5emouBCl/EZGyy9wub9T4og==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GTZa87+q;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="CuxE/evE";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47375606A31C;
-	Wed, 28 Oct 2026 18:08:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29393606A31C;
+	Wed, 28 Oct 2026 18:08:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GTZa87+q
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96DA31F01828;
-	Wed, 28 Oct 2026 18:08:04 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CuxE/evE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78F091F01825;
+	Wed, 28 Oct 2026 18:08:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793210885;
-	bh=yyO0wSot/A6GtADgLrVupZeBNTdU7WPc2OstJLYzOTU=;
+	s=korg; t=1793210888;
+	bh=POh4Ai9CCnh9IM8RDjz8MRUROdF1JxhgrQcd47I7HBM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GTZa87+qWB2l/zKyhbyF03RPXE4Rvh+2bYgalBByhlmE9m59Jh3b34mXEnXk7aEuz
-	 xOXVndv9wuyIMvbv+QKZunNM8xS1I3dlWEYTBLbK1966rRieLgkaerwQXM2QlFaj1D
-	 uvj0gL6kuXaAVywwrz98NHAPqXvXXfDGrKJIUMbE=
+	b=CuxE/evEyavGpbNj0w61lFhDzVlmU1p47h+iuhVXsSHUME6+WXipe+8E7dO0CM/zW
+	 RqIiXklSNJzH5tdibwaY1GLzv/sQsbcIT8ibHuRbmYjEJ75y51vlAKasGUsIXaJY9Z
+	 lUTKZHzgTwVwMcEJbnMYiaH0XK9gCAGnlcXTYzNM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Julian Anastasov <ja@ssi.bg>,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 184/571] ipvs: filter some flags received in the backup server
-Date: Wed, 28 Oct 2026 17:55:31 +0100
-Message-ID: <20261028170012.377228667@linuxfoundation.org>
+Subject: [PATCH 5.15 185/571] netfilter: nf_tables: avoid skb access on nf_stolen
+Date: Wed, 28 Oct 2026 17:55:32 +0100
+Message-ID: <20261028170012.400673825@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -68,103 +68,249 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Julian Anastasov <ja@ssi.bg>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit f96e91748f6304668fe647e686d199d7207d36f1 ]
+[ Upstream commit e34b9ed96ce3b06c79bf884009b16961ca478f87 ]
 
-While the IPVS SYNC protocol is not secure by design
-we can still protect the backup server from messages that
-can wreak havoc.
+When verdict is NF_STOLEN, the skb might have been freed.
 
-This commit addresses problems from received connection flags
-or their combinations. We now drop messages as follows:
+When tracing is enabled, this can result in a use-after-free:
+1. access to skb->nf_trace
+2. access to skb->mark
+3. computation of trace id
+4. dump of packet payload
 
-1. the NO_CPORT+TEMPLATE combination allows lookups for normal
-connections to hit template which can break in many ways.
-While the master does not sync connections with NO_CPORT flag,
-i.e. before they are established, we still accept NO_CPORT
-without TEMPLATE.
+To avoid 1, keep a cached copy of skb->nf_trace in the
+trace state struct.
+Refresh this copy whenever verdict is != STOLEN.
 
-2. ONE_PACKET: it is not sent by master, so we do not
-expect it in backup. Before now it was ignored by
-IP_VS_CONN_F_BACKUP_MASK for protocol v1 while protocol
-v0 created connections that are not hashed and dropped
-immediately. Better to apply the IP_VS_CONN_F_BACKUP_MASK
-also to the flags from v0 messages for consistency with v1.
+Avoid 2 by skipping skb->mark access if verdict is STOLEN.
 
-Fixes: 87375ab47cd0 ("[IPVS]: ip_vs_ftp breaks connections using persistence")
-Signed-off-by: Julian Anastasov <ja@ssi.bg>
+3 is avoided by precomputing the trace id.
+
+Only dump the packet when verdict is not "STOLEN".
+
+Reported-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Stable-dep-of: 8ec454dcd00c ("ipv6: sr: use skb_get_hash_net() in seg6_make_flowlabel()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/ipvs/ip_vs_sync.c | 33 ++++++++++++++++++++++++++++++---
- 1 file changed, 30 insertions(+), 3 deletions(-)
+ include/net/netfilter/nf_tables.h | 16 ++++++-----
+ net/netfilter/nf_tables_core.c    | 24 ++++++++++++++---
+ net/netfilter/nf_tables_trace.c   | 44 +++++++++++++++++--------------
+ 3 files changed, 55 insertions(+), 29 deletions(-)
 
-diff --git a/net/netfilter/ipvs/ip_vs_sync.c b/net/netfilter/ipvs/ip_vs_sync.c
-index 56e371b18fc2f..deac3c1715da3 100644
---- a/net/netfilter/ipvs/ip_vs_sync.c
-+++ b/net/netfilter/ipvs/ip_vs_sync.c
-@@ -950,6 +950,21 @@ static void ip_vs_proc_conn(struct netns_ipvs *ipvs, struct ip_vs_conn_param *pa
- 	ip_vs_conn_put(cp);
+diff --git a/include/net/netfilter/nf_tables.h b/include/net/netfilter/nf_tables.h
+index be271c66329e8..e05e2d85f67b2 100644
+--- a/include/net/netfilter/nf_tables.h
++++ b/include/net/netfilter/nf_tables.h
+@@ -1373,24 +1373,28 @@ void nft_unregister_flowtable_type(struct nf_flowtable_type *type);
+ /**
+  *	struct nft_traceinfo - nft tracing information and state
+  *
++ *	@trace: other struct members are initialised
++ *	@nf_trace: copy of skb->nf_trace before rule evaluation
++ *	@type: event type (enum nft_trace_types)
++ *	@skbid: hash of skb to be used as trace id
++ *	@packet_dumped: packet headers sent in a previous traceinfo message
+  *	@pkt: pktinfo currently processed
+  *	@basechain: base chain currently processed
+  *	@chain: chain currently processed
+  *	@rule:  rule that was evaluated
+  *	@verdict: verdict given by rule
+- *	@type: event type (enum nft_trace_types)
+- *	@packet_dumped: packet headers sent in a previous traceinfo message
+- *	@trace: other struct members are initialised
+  */
+ struct nft_traceinfo {
++	bool				trace;
++	bool				nf_trace;
++	bool				packet_dumped;
++	enum nft_trace_types		type:8;
++	u32				skbid;
+ 	const struct nft_pktinfo	*pkt;
+ 	const struct nft_base_chain	*basechain;
+ 	const struct nft_chain		*chain;
+ 	const struct nft_rule		*rule;
+ 	const struct nft_verdict	*verdict;
+-	enum nft_trace_types		type;
+-	bool				packet_dumped;
+-	bool				trace;
+ };
+ 
+ void nft_trace_init(struct nft_traceinfo *info, const struct nft_pktinfo *pkt,
+diff --git a/net/netfilter/nf_tables_core.c b/net/netfilter/nf_tables_core.c
+index 2ab4216d2a903..4ee62c0da1b31 100644
+--- a/net/netfilter/nf_tables_core.c
++++ b/net/netfilter/nf_tables_core.c
+@@ -25,9 +25,7 @@ static noinline void __nft_trace_packet(struct nft_traceinfo *info,
+ 					const struct nft_chain *chain,
+ 					enum nft_trace_types type)
+ {
+-	const struct nft_pktinfo *pkt = info->pkt;
+-
+-	if (!info->trace || !pkt->skb->nf_trace)
++	if (!info->trace || !info->nf_trace)
+ 		return;
+ 
+ 	info->chain = chain;
+@@ -42,11 +40,24 @@ static inline void nft_trace_packet(struct nft_traceinfo *info,
+ 				    enum nft_trace_types type)
+ {
+ 	if (static_branch_unlikely(&nft_trace_enabled)) {
++		const struct nft_pktinfo *pkt = info->pkt;
++
++		info->nf_trace = pkt->skb->nf_trace;
+ 		info->rule = rule;
+ 		__nft_trace_packet(info, chain, type);
+ 	}
  }
  
-+/* Check for incompatible flags */
-+static bool ip_vs_sync_validate_flags(u32 flags)
++static inline void nft_trace_copy_nftrace(struct nft_traceinfo *info)
 +{
-+	/* We do not expect NO_CPORT, especially to allow lookups
-+	 * to hit templates
-+	 */
-+	if (flags & IP_VS_CONN_F_NO_CPORT) {
-+		if (flags & IP_VS_CONN_F_TEMPLATE)
-+			return false;
++	if (static_branch_unlikely(&nft_trace_enabled)) {
++		const struct nft_pktinfo *pkt = info->pkt;
++
++		if (info->trace)
++			info->nf_trace = pkt->skb->nf_trace;
 +	}
-+	if (flags & IP_VS_CONN_F_ONE_PACKET)
-+		return false;
-+	return true;
 +}
 +
- /*
-  *  Process received multicast message for Version 0
-  */
-@@ -973,8 +988,7 @@ static void ip_vs_process_message_v0(struct netns_ipvs *ipvs, const char *buffer
- 			return;
- 		}
- 		s = (struct ip_vs_sync_conn_v0 *) p;
--		flags = ntohs(s->flags) | IP_VS_CONN_F_SYNC;
--		flags &= ~IP_VS_CONN_F_HASHED;
-+		flags = ntohs(s->flags);
- 		if (flags & IP_VS_CONN_F_SEQ_MASK) {
- 			opt = (struct ip_vs_sync_conn_options *)&s[1];
- 			p += FULL_CONN_SIZE;
-@@ -987,6 +1001,13 @@ static void ip_vs_process_message_v0(struct netns_ipvs *ipvs, const char *buffer
- 			p += SIMPLE_CONN_SIZE;
- 		}
+ static void nft_bitwise_fast_eval(const struct nft_expr *expr,
+ 				  struct nft_regs *regs)
+ {
+@@ -85,6 +96,7 @@ static noinline void __nft_trace_verdict(struct nft_traceinfo *info,
+ 					 const struct nft_chain *chain,
+ 					 const struct nft_regs *regs)
+ {
++	const struct nft_pktinfo *pkt = info->pkt;
+ 	enum nft_trace_types type;
  
-+		if (!ip_vs_sync_validate_flags(flags)) {
-+			IP_VS_DBG(2, "BACKUP v0, Invalid flags 0x%X\n", flags);
-+			continue;
-+		}
-+		flags &= IP_VS_CONN_F_BACKUP_MASK;
-+		flags |= IP_VS_CONN_F_SYNC;
-+
- 		state = ntohs(s->state);
- 		if (!(flags & IP_VS_CONN_F_TEMPLATE)) {
- 			pp = ip_vs_proto_get(s->protocol);
-@@ -1142,7 +1163,13 @@ static inline int ip_vs_proc_sync_conn(struct netns_ipvs *ipvs, __u8 *p, __u8 *m
+ 	switch (regs->verdict.code) {
+@@ -92,8 +104,13 @@ static noinline void __nft_trace_verdict(struct nft_traceinfo *info,
+ 	case NFT_RETURN:
+ 		type = NFT_TRACETYPE_RETURN;
+ 		break;
++	case NF_STOLEN:
++		type = NFT_TRACETYPE_RULE;
++		/* can't access skb->nf_trace; use copy */
++		break;
+ 	default:
+ 		type = NFT_TRACETYPE_RULE;
++		info->nf_trace = pkt->skb->nf_trace;
+ 		break;
  	}
  
- 	/* Get flags and Mask off unsupported */
--	flags  = ntohl(s->v4.flags) & IP_VS_CONN_F_BACKUP_MASK;
-+	flags = ntohl(s->v4.flags);
-+	if (!ip_vs_sync_validate_flags(flags)) {
-+		IP_VS_DBG(3, "BACKUP, Invalid flags 0x%X\n", flags);
-+		retc = 25;
-+		goto out;
-+	}
-+	flags &= IP_VS_CONN_F_BACKUP_MASK;
- 	flags |= IP_VS_CONN_F_SYNC;
- 	state = ntohs(s->v4.state);
+@@ -244,6 +261,7 @@ nft_do_chain(struct nft_pktinfo *pkt, void *priv)
+ 		switch (regs.verdict.code) {
+ 		case NFT_BREAK:
+ 			regs.verdict.code = NFT_CONTINUE;
++			nft_trace_copy_nftrace(&info);
+ 			continue;
+ 		case NFT_CONTINUE:
+ 			nft_trace_packet(&info, chain, rule,
+diff --git a/net/netfilter/nf_tables_trace.c b/net/netfilter/nf_tables_trace.c
+index 84a7dea46efae..ed4b067bfb6af 100644
+--- a/net/netfilter/nf_tables_trace.c
++++ b/net/netfilter/nf_tables_trace.c
+@@ -7,7 +7,7 @@
+ #include <linux/module.h>
+ #include <linux/static_key.h>
+ #include <linux/hash.h>
+-#include <linux/jhash.h>
++#include <linux/siphash.h>
+ #include <linux/if_vlan.h>
+ #include <linux/init.h>
+ #include <linux/skbuff.h>
+@@ -25,22 +25,6 @@
+ DEFINE_STATIC_KEY_FALSE(nft_trace_enabled);
+ EXPORT_SYMBOL_GPL(nft_trace_enabled);
  
+-static int trace_fill_id(struct sk_buff *nlskb, struct sk_buff *skb)
+-{
+-	__be32 id;
+-
+-	/* using skb address as ID results in a limited number of
+-	 * values (and quick reuse).
+-	 *
+-	 * So we attempt to use as many skb members that will not
+-	 * change while skb is with netfilter.
+-	 */
+-	id = (__be32)jhash_2words(hash32_ptr(skb), skb_get_hash(skb),
+-				  skb->skb_iif);
+-
+-	return nla_put_be32(nlskb, NFTA_TRACE_ID, id);
+-}
+-
+ static int trace_fill_header(struct sk_buff *nlskb, u16 type,
+ 			     const struct sk_buff *skb,
+ 			     int off, unsigned int len)
+@@ -186,6 +170,7 @@ void nft_trace_notify(struct nft_traceinfo *info)
+ 	struct nlmsghdr *nlh;
+ 	struct sk_buff *skb;
+ 	unsigned int size;
++	u32 mark = 0;
+ 	u16 event;
+ 
+ 	if (!nfnetlink_has_listeners(nft_net(pkt), NFNLGRP_NFTRACE))
+@@ -229,7 +214,7 @@ void nft_trace_notify(struct nft_traceinfo *info)
+ 	if (nla_put_be32(skb, NFTA_TRACE_TYPE, htonl(info->type)))
+ 		goto nla_put_failure;
+ 
+-	if (trace_fill_id(skb, pkt->skb))
++	if (nla_put_u32(skb, NFTA_TRACE_ID, info->skbid))
+ 		goto nla_put_failure;
+ 
+ 	if (nla_put_string(skb, NFTA_TRACE_CHAIN, info->chain->name))
+@@ -249,16 +234,24 @@ void nft_trace_notify(struct nft_traceinfo *info)
+ 	case NFT_TRACETYPE_RULE:
+ 		if (nft_verdict_dump(skb, NFTA_TRACE_VERDICT, info->verdict))
+ 			goto nla_put_failure;
++
++		/* pkt->skb undefined iff NF_STOLEN, disable dump */
++		if (info->verdict->code == NF_STOLEN)
++			info->packet_dumped = true;
++		else
++			mark = pkt->skb->mark;
++
+ 		break;
+ 	case NFT_TRACETYPE_POLICY:
++		mark = pkt->skb->mark;
++
+ 		if (nla_put_be32(skb, NFTA_TRACE_POLICY,
+ 				 htonl(info->basechain->policy)))
+ 			goto nla_put_failure;
+ 		break;
+ 	}
+ 
+-	if (pkt->skb->mark &&
+-	    nla_put_be32(skb, NFTA_TRACE_MARK, htonl(pkt->skb->mark)))
++	if (mark && nla_put_be32(skb, NFTA_TRACE_MARK, htonl(mark)))
+ 		goto nla_put_failure;
+ 
+ 	if (!info->packet_dumped) {
+@@ -283,9 +276,20 @@ void nft_trace_init(struct nft_traceinfo *info, const struct nft_pktinfo *pkt,
+ 		    const struct nft_verdict *verdict,
+ 		    const struct nft_chain *chain)
+ {
++	static siphash_key_t trace_key __read_mostly;
++	struct sk_buff *skb = pkt->skb;
++
+ 	info->basechain = nft_base_chain(chain);
+ 	info->trace = true;
++	info->nf_trace = pkt->skb->nf_trace;
+ 	info->packet_dumped = false;
+ 	info->pkt = pkt;
+ 	info->verdict = verdict;
++
++	net_get_random_once(&trace_key, sizeof(trace_key));
++
++	info->skbid = (u32)siphash_3u32(hash32_ptr(skb),
++					skb_get_hash(skb),
++					skb->skb_iif,
++					&trace_key);
+ }
 -- 
 2.53.0
 
