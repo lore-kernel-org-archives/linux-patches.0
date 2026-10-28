@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793211852;
-	b=j0OqTb1qeZk+TqIiDOBe5peVTvxY5N4oEUzpWrO8iv3k1Ky7DKciuyJdfWJyAt6vk/zd
-	 pScgH1pNFU4iOtSBs9enLy+obo2HJJ4Eu8Jjso2QsvjXoUyrjTu/Mr+xuermG6uJ/iB83
-	 NiGVk2JHT3udSFKQ6dOmJOZyojXk9I4ApDLllizokA4u5IPE46RRUNX8kavcyPa8pZ5eN
-	 FF+pYd5/MqVt1sQ+5U4i/O0K6rI/Od7dbkdC+zue43MD/Z3OAiDwKEWnt0HzkbwicFowH
-	 zXpPARyO3anPm1liAQKdKAZ0iTa6C+hhjxp9EEEKqWmWcqmziTkn0+iIHjviCC1zGDg==
+	t=1793211855;
+	b=Y2Omk8CZEul1RpmiWhqBTxEQB0N0/4niy8MALvbpjLLj1DvGxEcCT5RzRbMU4/+6pNEk
+	 WYZa4lH2pGoGdVbmJkyWFOrOFs/S+LHlsd3YodEFwW12lQHXy1KnTp0HIB3DwdE0MwH2R
+	 d7ySDt30D/r+uIfCfKtQtT4OBIpUXi4kV0raWAYEV+0jdWyEB6VNLOX2gL4V/SYLWdOkX
+	 KFRdvBWgHmoZ8raHQX6R5Q0oo9w9qYlUhn9uf/+wjyRtJCD06VAKNWJ2CGITHSBZCAL97
+	 6+h2MwReHdJdxl6nY4zIDWToY1lD5jTbc3xGpaxl/OZc/dRNdUHwsRV/JLvCXhwDjWQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793211852;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793211855;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Kr4yN178N5p3m6rhKRZqZmuVBkPA9xRylTALR1tlcsY=;
-	b=YffnZGRRDmnVVy/lhHW0L6qtWi8CiaB8MplVgQQn9OCS36AcEK5HAzEtFA0tZI4jdSuB
-	 4Sx/QcmptglS1u3HFCBkwY9hkDB9mskPGXq4zWtsOftdKRr86vqqdMKI1s81Ct01WSB3H
-	 YDfoNHyoxcnK8qUzzAMRLxtL0IPUhh/aAEd1UJxsAhrLpduSQaMrxZQ6EWtbkNl/teWH4
-	 54uxAC+LdqL8n6GF5JKTrIz2lyICKV2l1lixSewkaTfiMe8NC3iRqSDJ53UqtWJAaktW7
-	 vKNLTIL5FpcKGq7mAArk4/b32wo6jFlQ/Yl+puxl5m5VHCLage6hEt6kZcKpuTLDBjw==
+	bh=zjGMlgY3H5JR0P12ZizKAehlDz3ZurLV03ZUK6bPlrM=;
+	b=WzISQ0q/xK9ViYzgqcfAegsjO0iN8/fQqNNt0j4kwBvAogDe8qXOSfFb5Tx1iL04yJxT
+	 pKE1vfXZMflpaukpP+nrnU6khYTpxM27g/uB7Qenj+vfKRCADIjMh6SmuFv0ALWeFktVK
+	 l0BWYf4xra7ejQbFHmT6KRTR9yZ+odWBD1eUbGt9taubzpwU+v4CqvGfkc3FyxInwCwhi
+	 zG6w/heRtswmFADXEOry6Z5hgij75bUNDQXdrEglfR2YAKvj/YINItbffh72rKDIBXz8m
+	 OG992LLspO8rZl6uUdwxQxSTYd71d6itrdRWdMvHUPXsxoktyjzgvpE+u41xcBQJpaw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ID0AHyxk;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RZelR6qW;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83183606A31A;
-	Wed, 28 Oct 2026 18:24:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DDBF606A31A;
+	Wed, 28 Oct 2026 18:24:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ID0AHyxk
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D49F11F01825;
-	Wed, 28 Oct 2026 18:24:11 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RZelR6qW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACB031F01825;
+	Wed, 28 Oct 2026 18:24:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793211852;
-	bh=Kr4yN178N5p3m6rhKRZqZmuVBkPA9xRylTALR1tlcsY=;
+	s=korg; t=1793211855;
+	bh=zjGMlgY3H5JR0P12ZizKAehlDz3ZurLV03ZUK6bPlrM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ID0AHyxkV/HvhNYeJpm2r2UDPytnmGcEwI4UrExhjyTVRov0nxNtctfQZ1lIWNIz9
-	 YHA3kaIbMCj7SHdNRJNM5ii8f467c3/mrLp5xu4lRjX7I+YydulSzfxD+2y3W/m+lT
-	 TB59cdVEI4i94k6OD/eHj8F03e+97ni1Cb8a3Vas=
+	b=RZelR6qWsGI2TF7z1OWQ0G0eUP0tOnjWYGkIWzNjwiH7yMMLSIYvQYRSkBcMgy7MW
+	 eTSr44GA8F3SN6vaRcqjoDpG33R1k+3+oudMowgkrXxiKCvMwu/1ArHCrm5W+BgOhC
+	 YotdZENqQEgGsBKQpmsZLwGH1g/Wfm3sr9xNhXjk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Changzhong <zhangchangzhong@huawei.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Ling Xu <ling_ling.xu@unisoc.com>,
+	Di Shen <di.shen@unisoc.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
 	Sasha Levin <sashal@kernel.org>,
 	"Miguel Gazquez (Schneider Electric)" <miguel.gazquez@bootlin.com>
-Subject: [PATCH 5.15 524/571] net/sched: cls_u32: skip hash tables in u32_bind_class()
-Date: Wed, 28 Oct 2026 18:01:11 +0100
-Message-ID: <20261028170020.465005500@linuxfoundation.org>
+Subject: [PATCH 5.15 525/571] OPP: Fix race between OPP addition and lookup
+Date: Wed, 28 Oct 2026 18:01:12 +0100
+Message-ID: <20261028170020.488419051@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -70,51 +70,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Changzhong <zhangchangzhong@huawei.com>
+From: Di Shen <di.shen@unisoc.com>
 
-[ Upstream commit 6d3724e616faf952c3adcf8414fc21a828ef3709 ]
+[ Upstream commit f5e1cc9a284bff2510981643a5bca4bc4c21b81a ]
 
-u32_walk() enumerates both struct tc_u_hnode and struct tc_u_knode
-through the walker callback. u32_bind_class() unconditionally casts the
-passed fh to tc_u_knode and accesses &n->res, so when fh is actually a
-tc_u_hnode, which has no tcf_result member, this results in a
-slab-out-of-bounds read of res->classid in tc_cls_bind_class().
+A race exists between dev_pm_opp_add_dynamic() and
+dev_pm_opp_find_freq_exact():
 
-The issue can be reproduced with the following commands:
+  CPU0 (add)                          CPU1 (lookup)
+  -------------------------------     ------------------------------
+  _opp_add()
+    mutex_lock()
+    list_add(&new_opp->node, head)
+    mutex_unlock()                    _opp_table_find_key()
+                                        mutex_lock()
+                                        dev_pm_opp_get(opp)
+                                          kref_get()
+                                        mutex_unlock()
+    kref_init(&new_opp->kref)
+                                      dev_pm_opp_put()
+                                        kref_put_mutex()
 
-    tc qdisc add dev lo root handle 1: hfsc
-    tc class add dev lo parent 1: classid 1:1 hfsc sc rate 1000kbit
-    tc filter add dev lo parent 1:1 protocol ip prio 1 u32 match u32 0 0 flowid 1:1
-    tc class add dev lo parent 1: classid 1:2 hfsc sc rate 2000kbit
+The newly added OPP is inserted into the list before its kref is
+initialized. A concurrent lookup can find this OPP and increment its
+reference count while it is still uninitialized, leading to refcount
+corruption and a potential premature free.
 
-Fix this by skipping hash tables via the TC_U32_KEY(handle) check.
+Fix this by initializing ->kref and ->opp_table before making the OPP
+visible via list_add(). This ensures any concurrent lookup observes a
+fully initialized object.
 
-Fixes: 07d79fc7d94e ("net_sched: add reverse binding for tc class")
-Signed-off-by: Zhang Changzhong <zhangchangzhong@huawei.com>
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://patch.msgid.link/1786089038-36366-1-git-send-email-zhangchangzhong@huawei.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 7034764a1e4a (PM / OPP: Add 'struct kref' to struct dev_pm_opp)
+Co-developed-by: Ling Xu <ling_ling.xu@unisoc.com>
+Signed-off-by: Ling Xu <ling_ling.xu@unisoc.com>
+Signed-off-by: Di Shen <di.shen@unisoc.com>
+[ Viresh: Updated commit log ]
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Miguel Gazquez (Schneider Electric) <miguel.gazquez@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/cls_u32.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/opp/core.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/net/sched/cls_u32.c b/net/sched/cls_u32.c
-index b36eced10ff40..cb4d2bfd03d24 100644
---- a/net/sched/cls_u32.c
-+++ b/net/sched/cls_u32.c
-@@ -1318,6 +1318,9 @@ static void u32_bind_class(void *fh, u32 classid, unsigned long cl, void *q,
- {
- 	struct tc_u_knode *n = fh;
+diff --git a/drivers/opp/core.c b/drivers/opp/core.c
+index dbd69d8e44e42..4bcea866954a5 100644
+--- a/drivers/opp/core.c
++++ b/drivers/opp/core.c
+@@ -1720,12 +1720,12 @@ int _opp_add(struct device *dev, struct dev_pm_opp *new_opp,
+ 		return ret;
+ 	}
  
-+	if (TC_U32_KEY(n->handle) == 0)
-+		return;
+-	list_add(&new_opp->node, head);
+-	mutex_unlock(&opp_table->lock);
+-
+ 	new_opp->opp_table = opp_table;
+ 	kref_init(&new_opp->kref);
+ 
++	list_add(&new_opp->node, head);
++	mutex_unlock(&opp_table->lock);
 +
- 	if (n && n->res.classid == classid) {
- 		if (cl)
- 			__tcf_bind_filter(q, &n->res, base);
+ 	opp_debug_create_one(new_opp, opp_table);
+ 
+ 	if (!_opp_supported_by_regulators(new_opp, opp_table)) {
 -- 
 2.53.0
 
