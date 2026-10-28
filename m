@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793208266;
-	b=1Vf1tqUDeBRp7iwYwWVeP/8nd2QuW0MqdxdAzVggsvnAVYcUWthXsUVTxOcjQ0II5nBC
-	 N9JNqEp4ZQBvPWPX0PwpXjzYWcgcg8sLaGiSXWqZpNRng9Tp4bF25JB9wtir6QeB07il6
-	 pyD69XuSZdbp0zs4XXGyMbf64d6FTgSSHLiyP5AdQm+iIlXH5ofF0Wkzfcnxs8qTQBFax
-	 u7+XbnEsDwRK4Y+zJvWObuF4DjkbEVi4Cb0wHxZGBOOyvjtzf+LvsGNFnfymv/NXkvEkj
-	 GHbzR6pZ9tnmYKVbGO7Ci2xYSGi3VWgJTDZ5/yga//aRendCNg7rYOw2VIrYbOgafKQ==
+	t=1793208269;
+	b=pzMDO4o2K0ltAIMrPsf3zjPeKBw9iWNJ/cA1OUVjULcvGNOTJKvTqNAsj4FmEoIWH5i2
+	 05bZIlnEfo4F3iJlpcsgYiqme2IbMqnkz1Ji7RYJq9a1pZvPpxohivkNyCKCwW+rpsF5W
+	 2RlcBjS2m8Um8x5y5OGOJLD4rkhup7+jTEnuZnrxRwideZTX6NpBiINZi+a05l4ZSo7wG
+	 w1J3Zni85jBLBJCyb4XN+neUVMW3+ayZobMgjWYtoelV2bXyADUAdXpG9jLTmcpeUw99x
+	 K30+2RAIMJ+YHmzL+/hJoLZXMHaae1/KS3XByZP0F3qHhnycWQqE6hbRnTHGVpLa/Og==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793208266;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793208269;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=lgmay0/jJ7T5RsQtrZiFkjeyw96y5mr+i356gF2kZu4=;
-	b=lLIMRccY39QAGLi9lIXDfHTG7hqBtYgxD8uQWSQMQ/S3dMHCClU9hhsHoBgcTcswZZ7C
-	 e+gQ4SrMvXoL+eIzCyLOp+2d0ahL1Cn8ZCdxs4a+6hNrcfqKEcFCUbA6RGgGf3lyVjZyo
-	 Yliz9J0egRUYPXhuoWi/xs0zHlHYaUSt4+0mtFzMU1Y9KtUeKwqUWEjGoZaMzENGWJKns
-	 da7SI+IrkoCdqj81mtmYhmK5QfTVv3g9CSPfYnBuN4rBDzu8NHSlQqNE8szbTmdEX7oo8
-	 IDK8bjAf3mSYBjY/Q+5FJlvlvprJ9IE1j5KBWZkizcoz7fTVxofUIhNAx9kVdJk2IJg==
+	bh=xeMBCqOi8C6vvb8y/MoRVarEa5vOS5hf+yMjTuNjGsI=;
+	b=vFFtVcyJfVyRfFQRKzWbjvccNgyLK9/RVfF2HSHrD11Tn5tLli3IuFZ3wC6g7YS41mDd
+	 zsWXQyGbHRy5ZeSqdiL7BULP3Ise5c3qbUpksi3lueNxPTqCW02LhfcWc4kjP8BAxCrcm
+	 OBJcIysFaQ3Eub3ViAwMkhnhqq3xL8j9rqnN9W0QIvJ41OAjjdfnJMOOY7cMAjXOw+VHh
+	 oOh/g87raSNY+7xDalFaniLwU/QrvaU8Bl0DP/9b3T3O2mOfVvQIyvAWainvqkS4RqH4u
+	 4lAT6VYxiF7+jhI9vyXfLHJZRgnL6cd6QWsgtUn23gntFOD6lU7oU2YrOILFLXBtlyw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xWBn7Tjo;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rjekc6iQ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 090DA606A31C;
-	Wed, 28 Oct 2026 17:24:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7DC2606A31C;
+	Wed, 28 Oct 2026 17:24:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xWBn7Tjo
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58D7F1F01825;
-	Wed, 28 Oct 2026 17:24:25 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rjekc6iQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 309DC1F01825;
+	Wed, 28 Oct 2026 17:24:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793208265;
-	bh=lgmay0/jJ7T5RsQtrZiFkjeyw96y5mr+i356gF2kZu4=;
+	s=korg; t=1793208268;
+	bh=xeMBCqOi8C6vvb8y/MoRVarEa5vOS5hf+yMjTuNjGsI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xWBn7TjoCRfA2v/ZpwizfW7dcUDRH2tQsf5kCfzwih3D0/Iq+lkhvYkjbn9N71Xvb
-	 lm47/knUGHYAQpANCCoHhOhyu22xp4IpxMcQ1i8jxe9ZssdQ4GO6BtqW4cfHzZlq9g
-	 rrVL3I/XxaymdaEwLFq5Cd9NygKHJTkqB0CswGg0=
+	b=rjekc6iQE6XXx0hH0mM+uPnU6msxOSMknghDWkyybkbglKZ7EfFVzzWsQMDECInI/
+	 +oljSvi6KmJQXwDf0VC0B4/MU0b0Cd98Hd6in8XM5TdGJxqGY6DKXRKqSjrwGPpB58
+	 tDkpw7P2OCA7zBqqrnwv54i6shcVm8S7WnYLqQHs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ruoyu Wang <ruoyuw560@gmail.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Andi Shyti <andi.shyti@kernel.org>,
+	Oscar Ou <oscarou@synology.com>,
+	Chuck Lever <cel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 060/516] i2c: mxs: fix DMA channel leak on probe error
-Date: Wed, 28 Oct 2026 17:53:32 +0100
-Message-ID: <20261028170004.950178656@linuxfoundation.org>
+Subject: [PATCH 5.10 061/516] lockd: fix swapped arguments in nlmsvc_match_ip()
+Date: Wed, 28 Oct 2026 17:53:33 +0100
+Message-ID: <20261028170004.974042512@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -69,57 +68,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ruoyu Wang <ruoyuw560@gmail.com>
+From: Oscar Ou <oscarou@synology.com>
 
-[ Upstream commit 777979e627115734052b323d2721cdb500e81dcf ]
+[ Upstream commit b9060689f49dc663e9a3d069c4a65ff63a836e66 ]
 
-mxs_i2c_probe() requests an exclusive DMA channel before resetting the
-controller and registering the I2C adapter. If either later operation
-fails, probe returns without releasing the channel because the remove
-callback is not invoked after a failed probe.
+When releasing locks by server IP address via /proc/fs/nfsd/unlock_ip,
+nlmsvc_unlock_all_by_ip() calls nlm_traverse_files() with the server
+sockaddr as the opaque @data argument:
 
-Use devm_dma_request_chan() so the device core releases the channel on
-probe failure and driver detach. Remove the manual release from the
-remove callback because the channel is now device-managed.
+	nlm_traverse_files(server_addr, nlmsvc_match_ip, NULL);
 
-This issue was found by a static analysis checker and confirmed by
-manual source review.
+The match callback is later invoked from nlm_traverse_locks() as:
 
-Fixes: 62885f59a261 ("MXS: Implement DMA support into mxs-i2c")
-Assisted-by: unnamed:claude-opus-4.8 typestate
-Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
-Cc: <stable@vger.kernel.org> # v3.7+
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://patch.msgid.link/20260815151720.3757460-1-ruoyuw560@gmail.com
+	match(lockhost, host);
+
+where the first argument is the nlm_host that owns the lock, and the
+second argument is the @data that was originally passed down (here the
+server sockaddr).  This is the convention every other match callback
+relies on (nlmsvc_mark_host(), nlmsvc_same_host(), nlmsvc_is_client()):
+arg1 is the real nlm_host, arg2 is the caller-supplied reference value.
+
+nlmsvc_match_ip() has had these two arguments reversed ever since the
+unlock-by-IP feature was introduced in commit 4373ea84c84d ("lockd:
+unlock lockd locks associated with a given server ip"):
+
+	return rpc_cmp_addr(nlm_srcaddr(host), datap);
+
+Here @host is actually the server sockaddr, so nlm_srcaddr(host)
+dereferences a struct sockaddr as a struct nlm_host and reads garbage
+at the offset of h_srcaddr; meanwhile @datap is actually the lock
+owner's nlm_host but is compared as a sockaddr.  As a result the
+comparison practically never matches and locks are not released for the
+requested IP.
+
+Swap the arguments so the lock owner's source address is compared
+against the requested server address:
+
+	return rpc_cmp_addr(nlm_srcaddr(datap), (struct sockaddr *)host);
+
+Fixes: 4373ea84c84d ("lockd: unlock lockd locks associated with a given server ip")
+Cc: stable@vger.kernel.org
+Signed-off-by: Oscar Ou <oscarou@synology.com>
+[ cel: fix the misleading typedef parameter names too ]
+Link: https://patch.msgid.link/20260617075738.1151797-1-oscarou@synology.com
+Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-mxs.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ fs/lockd/svcsubs.c          | 2 +-
+ include/linux/lockd/lockd.h | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/i2c/busses/i2c-mxs.c b/drivers/i2c/busses/i2c-mxs.c
-index abad24808e855..cfd81b748ee0f 100644
---- a/drivers/i2c/busses/i2c-mxs.c
-+++ b/drivers/i2c/busses/i2c-mxs.c
-@@ -840,7 +840,7 @@ static int mxs_i2c_probe(struct platform_device *pdev)
- 	}
+diff --git a/fs/lockd/svcsubs.c b/fs/lockd/svcsubs.c
+index 9e2a67bfd0702..bba701e1a6089 100644
+--- a/fs/lockd/svcsubs.c
++++ b/fs/lockd/svcsubs.c
+@@ -493,7 +493,7 @@ EXPORT_SYMBOL_GPL(nlmsvc_unlock_all_by_sb);
+ static int
+ nlmsvc_match_ip(void *datap, struct nlm_host *host)
+ {
+-	return rpc_cmp_addr(nlm_srcaddr(host), datap);
++	return rpc_cmp_addr(nlm_srcaddr(datap), (struct sockaddr *)host);
+ }
  
- 	/* Setup the DMA */
--	i2c->dmach = dma_request_chan(dev, "rx-tx");
-+	i2c->dmach = devm_dma_request_chan(dev, "rx-tx");
- 	if (IS_ERR(i2c->dmach)) {
- 		return dev_err_probe(dev, PTR_ERR(i2c->dmach),
- 				     "Failed to request dma\n");
-@@ -878,9 +878,6 @@ static int mxs_i2c_remove(struct platform_device *pdev)
+ /**
+diff --git a/include/linux/lockd/lockd.h b/include/linux/lockd/lockd.h
+index 70ce419e27093..d6034b8bbb7dc 100644
+--- a/include/linux/lockd/lockd.h
++++ b/include/linux/lockd/lockd.h
+@@ -265,7 +265,7 @@ void		  nsm_release(struct nsm_handle *nsm);
+  * This is used in garbage collection and resource reclaim
+  * A return value != 0 means destroy the lock/block/share
+  */
+-typedef int	  (*nlm_host_match_fn_t)(void *cur, struct nlm_host *ref);
++typedef int	  (*nlm_host_match_fn_t)(void *owner, struct nlm_host *ref);
  
- 	i2c_del_adapter(&i2c->adapter);
- 
--	if (i2c->dmach)
--		dma_release_channel(i2c->dmach);
--
- 	writel(MXS_I2C_CTRL0_SFTRST, i2c->regs + MXS_I2C_CTRL0_SET);
- 
- 	return 0;
+ /*
+  * Server-side lock handling
 -- 
 2.53.0
 
