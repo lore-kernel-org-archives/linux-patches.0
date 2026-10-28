@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216552;
-	b=gt3vZkvbYRh9n5aXn2TeQ0nclGVvNTQO86J2+k/jcBdqwbmRI9uxxQQdALq6HdG4wNpl
-	 EEIRADK5m3rdvILLE2CKmU1SR45hd7P8QOp9E21toQ1nuSiNrpJEn1EicgfhRvd8xSAG3
-	 u9cMAF7z/bzZFSutRKlF8byfOype8kN9VCHAHgRXELcCb81neC/7dsm48mKoZn0q/8Kl9
-	 1Q/+wWmhqZhtZ8yPOvOQVMBW7zt1CBPYmD58bX4sMZ2Kf5lD0RADfAa8tg7wUW2ckAfnp
-	 rilZrcxSPIHNqRAizlDCupCIUMOBiDP+gSRyu1hur/MSTIsns8ey/BKqB2GOg1NI/+Q==
+	t=1793216555;
+	b=OWcoVq07Dr2BAxwkiGM69r5KQD6u0d8pIBmii0H7s2aqoR286sd88x9Vf2gh8iXq5x7s
+	 SSAfaMTlNZtm/H/dIqrPS7qsJ7bNZTWaJEJsaCvWZUrRscy7Bkm8YerZT5NlenKOCcMl9
+	 2PiRxHh93S2UxTI2ELsZc941uNhnuCHpjdpU9zCw/uAWwoa0qn0nU5DIvEIvxu4rgiv6V
+	 Mzr/yENj/yQ3+PsXIY+0N1JUSe7VvyiNlbr/85sVABJqxnk0/iHKidYt6y+3A6eX+UU7L
+	 +3ONTNYgyQJPZb8Q7zm2pzaxtu5ABfQC2lZU0ys84j9GiSOYICw6/aBOH8jiuThbaTg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216552;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216555;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=RAegHLHk3EXVUcH8RUX9Zp9EUdqgo1oeCTo6vkJ1Vt4=;
-	b=1W6FzLcW5twm07l20Ti26rRFzrDm+97AqbkIxEPq6hW07VQH+Ci17fERuFrK3Lm0jDV4
-	 lM19Ctg2uQZW934MLmN13aZGcrmmyiAyRe+IuIg8OLTPe64VAwzpRagxrOIjWnT1hWsrl
-	 /GsQIDDig3GzNR2ObydlRCAC3E1DlH2Zimm9Yc53Y56nTK76K5tsqh3zqfOFM6e27jECM
-	 VwhUgnsUlIdULoX7xUF3UUOTtSnqnA9Z2N2MjEJp5z/ci2DQSztw/sUp7QgI9RCfaMSgP
-	 /2lySuWi/aIOG0pmwPcsnoWqY4VcXoNQ1UsOSYOVGiXg+yzdZJNS2KGez4gg9hTF39Q==
+	bh=1QzQN4UiRWXkRfRiz1u/A6nVmoHOayBGhAKo89FCIHU=;
+	b=Q60X1Ajf1NvJm190ymSs+5y8eTNA2+0EjYSaW6uO5P+0WR4UtkNedbTgRs/E2ENtHu3f
+	 B9YqffcMvMxaaDf/d8MZLdQbXl+In8MF5klf3V4NFX2AfB7VogMbytqtbUvRSW5bGlhMv
+	 ahICV1PHgFoR2sJZWI4hGNOZls/dYT7/kI/Ie4/B6XA0We0KjdqM6l9IekEtUD9C8DYNM
+	 hVS9SZbNSejPc6WQpEspwoWIWleSmODljwGwxUt4ZWh/CekBQOmE9kLxBeRcIzl/O8BW6
+	 vY9bJpx1iKg1T0HUFUZ0OogcjKB/sPDJ7fWUtiX/drfX9OTpNF4vJzn9Ji3H1RZwrLw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uRwhvSLg;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1qJbwoiU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB7CA606A31D;
-	Wed, 28 Oct 2026 19:42:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEB71606A31C;
+	Wed, 28 Oct 2026 19:42:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uRwhvSLg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35F2E1F01825;
-	Wed, 28 Oct 2026 19:42:31 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1qJbwoiU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AA031F031E0;
+	Wed, 28 Oct 2026 19:42:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216551;
-	bh=RAegHLHk3EXVUcH8RUX9Zp9EUdqgo1oeCTo6vkJ1Vt4=;
+	s=korg; t=1793216554;
+	bh=1QzQN4UiRWXkRfRiz1u/A6nVmoHOayBGhAKo89FCIHU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uRwhvSLgFWGLJJ65WzQ9w6E+cNPdr0QA2grbV+obmVMOA7Rf1MtXSaPrtiam6qPZI
-	 NRUazms0l1RAG0tZmWkreHRVR9VDAi5uxGdUJUfrWIEIjxw9VKf/77ZLZEjT+fAXBT
-	 k/jBB5E6VRQMqfM7yVTNtmilkUHj9olODmHVOyBQ=
+	b=1qJbwoiUxQ1PTyStBZbpfiowjNb/Lq7OiZT682h+znyp01MC7MfW+FhdVNOTmukNv
+	 pWtKzsKXsxoJkcCIDNpJZm/hkxcL8v3ABLUnuNhfF+yKxyTEpf+l9dzX/s5itIHaU5
+	 hap+RZ4TwHD+a9kbeKZcMzErCBxXjkhC8ZWOHNt4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1594/1887] wifi: mt76: mt7915: Fix an error handling path in mt7915_add_interface()
-Date: Wed, 28 Oct 2026 18:01:30 +0100
-Message-ID: <20261028170535.744426066@linuxfoundation.org>
+Subject: [PATCH 6.1 1595/1887] wifi: mt76: mt7915: unwind state on add_interface failure
+Date: Wed, 28 Oct 2026 18:01:31 +0100
+Message-ID: <20261028170535.765857494@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,40 +67,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit 126a516fe30639708e759678bcb10178938cc718 ]
+[ Upstream commit 2fb6480c52f611338e1b0abe5e6219be1fc9ab75 ]
 
-If mt76_wcid_alloc() fails, the "mt76.mutex" mutex needs to be released as
-done in the other error handling paths of mt7915_add_interface().
+When mt76_wcid_alloc() fails, mt7915_add_interface() returned without
+clearing the vif_mask/omac_mask bits it had already set, without removing
+the firmware dev info added earlier, and without clearing a monitor_vif
+pointer to the vif mac80211 is about to free. mac80211 does not call
+remove_interface() for a failed add, so the indices and firmware dev
+entry leaked permanently and testmode could dereference the stale
+monitor_vif. Add a proper error unwind.
 
-Fixes: f3049b88b2b3 ("wifi: mt76: mt7915: allocate vif wcid in the same range as stations")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Link: https://patch.msgid.link/b9d8fbfc19360bfe60b9cea1cb0f735ab3b4bc26.1727639596.git.christophe.jaillet@wanadoo.fr
+Fixes: b619e01380ee ("mt76: fix MBSS index condition in DBDC mode")
+Link: https://patch.msgid.link/20260724124813.3961474-4-nbd@nbd.name
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
-Stable-dep-of: 2fb6480c52f6 ("wifi: mt76: mt7915: unwind state on add_interface failure")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7915/main.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7915/main.c | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/main.c b/drivers/net/wireless/mediatek/mt76/mt7915/main.c
-index cee7cd4ad26d7..0b79039e53178 100644
+index 0b79039e53178..4707e7727f179 100644
 --- a/drivers/net/wireless/mediatek/mt76/mt7915/main.c
 +++ b/drivers/net/wireless/mediatek/mt76/mt7915/main.c
-@@ -237,8 +237,10 @@ static int mt7915_add_interface(struct ieee80211_hw *hw,
- 	phy->omac_mask |= BIT_ULL(mvif->mt76.omac_idx);
- 
+@@ -239,7 +239,7 @@ static int mt7915_add_interface(struct ieee80211_hw *hw,
  	idx = mt76_wcid_alloc(dev->mt76.wcid_mask, mt7915_wtbl_size(dev));
--	if (idx < 0)
--		return -ENOSPC;
-+	if (idx < 0) {
-+		ret = -ENOSPC;
-+		goto out;
-+	}
+ 	if (idx < 0) {
+ 		ret = -ENOSPC;
+-		goto out;
++		goto err;
+ 	}
  
  	INIT_LIST_HEAD(&mvif->sta.rc_list);
- 	INIT_LIST_HEAD(&mvif->sta.poll_list);
+@@ -270,7 +270,17 @@ static int mt7915_add_interface(struct ieee80211_hw *hw,
+ 	mt7915_mcu_add_sta(dev, vif, NULL, true);
+ 	rcu_assign_pointer(dev->mt76.wcid[idx], &mvif->sta.wcid);
+ 
++	mutex_unlock(&dev->mt76.mutex);
++
++	return 0;
++
++err:
++	dev->mt76.vif_mask &= ~BIT_ULL(mvif->mt76.idx);
++	phy->omac_mask &= ~BIT_ULL(mvif->mt76.omac_idx);
++	mt7915_mcu_add_dev_info(phy, vif, false);
+ out:
++	if (phy->monitor_vif == vif)
++		phy->monitor_vif = NULL;
+ 	mutex_unlock(&dev->mt76.mutex);
+ 
+ 	return ret;
 -- 
 2.53.0
 
