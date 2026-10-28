@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793210461;
-	b=OICSin69UkZC5X9PzA3w1y2ze7DsV6rOon06Q32Hpo5G0NY0aFqZamLlTaVqM31QXiCM
-	 7a1mgi9pC1jhQ0ykE/+yXfvIyTJnLPh9FF5J7vd8FcYX/o5Y4VErGMQRdmnTj9z7P8Qpe
-	 el3+w/n7VnqtqNkM+7muIJCnGlHR8HkznmPSV7feuAqXHXinrZGk8rPJ0p/lxxMnxmlF7
-	 89SOad27A8vvMEghJtJuFLs5e2L2Ut/WX5hudTkTCGGQfQOz7CVVq+KJVYdzEl62pJZOz
-	 Augm1eGXvB6fY9ArMoQ+Nuj1NhpsmUeIdpsn/4ZegJDiI9DNPpek6OWSzJ/UVnhvUDA==
+	t=1793210463;
+	b=T9JNO7Kn7HIWLQeGo7NsclmmfSkYNASAtpdfa5qu2RPC1QkKB9lC4VDjARDrvPlR5OYo
+	 zLpTE38FEPmb6rq/jF3rcFMFpdIXlcLSsabDTzdHGIgaxa+pwx2n8jTww48YJo94ecb00
+	 2Matw/KFRuUWTsDAcAdBBjiDF60gtgUq13ZMU2/Cc+fF8KV1nf+DPJ8bN150LQFwQlRc7
+	 HwdHJJOIiVpLCXiVg+OWm8HsAWNW2fjVeIhq5KPS9SMAmDXcauOH0kxkJPO2d94DwaozP
+	 v/2nUT78o1mF41jU4DTosnU3S/n+CqU8XmZkMf3o6I4ELiFRdrhmrzQEjH79rs9Ugnw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793210461;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793210463;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=PIVzTwE5CgRhkkPyz+8rd+/xdmdGz43ZscgzIhN5WR0=;
-	b=F/HYi6NYTQBmPFOBEBx8Adyba88RhaFgsUTrbISkeH7BJtJI9TFXKNdyGVV1wq17TQeX
-	 wAe8A+REP2zGWejssJaizHT1DVKdSE9pNJUdJP7om7XR8qSi/XK9uenzXJ6qXq5G9AbYj
-	 7aTH1erM9CgSikPn69TdrIhpUb/zvyx/EDaEQhEeTf1UtWXejqibpQ5qDKfafhRHcwXzy
-	 QqjZlA5DHmGkUFgxoH2YhMqhpJhNuBJhf3G4tiP+s1aglKKLEqPhO4Cx8AkBIyFL1VTyu
-	 18wZZTf58qpkBbhVif0O+2a1/mqbSGaFbMUKApKNeR5p6LBmhDJU+IIfQLNfzDCmYlg==
+	bh=TraaxEPp4UogtuZcMACPTXLJ8cmg91XA0i4Mr82TM7Y=;
+	b=NzQv5+p+HByXZae7LU3kZnkxsQm+2FVAAya09AwjavrfolfpZWZlNhLDazrXnfGoFqNz
+	 6KSuXRtCZ2bPp8P8yzZ8eVBzRzSgtXXYQ/HlATLFcyW2aa9BGaowUnpMQt6lp+CBBq2r6
+	 BmZmp153cYXeZ738yO2HBGbW2noIpGrQwyAy8d+UX9Q0jRjwHvCqJm1IKd8wf1q9/4xbj
+	 I7TeKLh0aZhlPX5DX/3lwKjQ6v2PdCjXrHWaTaLwKjClKbj3QOru257dOs632JlxTjvV5
+	 vncNglCth2bj7W/mW9NSzAqAF7F9mL8u7QIHmWAWJn1Gn5VDdSPdqou8pVy0bEChYqA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JZArPdqN;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I3rwWSYH;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0A0E606A326;
-	Wed, 28 Oct 2026 18:01:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74154606A31C;
+	Wed, 28 Oct 2026 18:01:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JZArPdqN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E34A1F031E1;
-	Wed, 28 Oct 2026 18:00:59 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I3rwWSYH
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0FA61F01825;
+	Wed, 28 Oct 2026 18:01:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793210460;
-	bh=PIVzTwE5CgRhkkPyz+8rd+/xdmdGz43ZscgzIhN5WR0=;
+	s=korg; t=1793210463;
+	bh=TraaxEPp4UogtuZcMACPTXLJ8cmg91XA0i4Mr82TM7Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JZArPdqNvaRVuunSdvyvXmoB2Z+FdiLZVA5Y9laMHyugbpyh2dTjMvPwJTtRSvYnY
-	 eQaAq2H1O0A0CxyrnYZ3On1v+o59WB3sgOY8wPROUw+hWyU3zmkkpZtNgQT9vOsg/T
-	 cLm9+pUfrLvWJgOWUxr6zZ00nWq58xB995J1xcFc=
+	b=I3rwWSYHR7XAHIPeqBIwTqTEwJxwabOnDy+vQB5CbhBVIN/be6CWpZP9bk4oAArNK
+	 n2wR0JeYNeK1QY5+RiLAegKSSeVx4aQovpPvNNW2elmlwCaZTVSp5qbrKJZaZAB8ga
+	 s3VkmF19esBTpiokGEODhwovz2fRGumkYLZGWjcs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
+	Ilya Dryomov <idryomov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 005/571] nfsd: fix nfsd_file leak on inter-server COPY setup failure
-Date: Wed, 28 Oct 2026 17:52:32 +0100
-Message-ID: <20261028170008.145777357@linuxfoundation.org>
+Subject: [PATCH 5.15 006/571] ceph: bound copied dentry name length in NFS export get_name
+Date: Wed, 28 Oct 2026 17:52:33 +0100
+Message-ID: <20261028170008.170023306@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -68,53 +69,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeff Layton <jlayton@kernel.org>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-[ Upstream commit 88a76145451d703eedd867b5989bf73d17340399 ]
+[ Upstream commit eff8013c5a8916613c742ae5a2cc341cb605c0ae ]
 
-When nfsd4_setup_inter_ssc() fails, nfsd4_copy() returns
-nfserr_offload_denied directly, bypassing the out: label where
-release_copy_files() would drop the nf_dst reference taken by
-nfs4_preprocess_stateid_op(). Each failed inter-server COPY
-leaks one nfsd_file, pinning file/inode/dentry/vfsmount.
+ceph_get_name() copies the MDS-supplied name into the caller's
+NAME_MAX-sized buffer with memcpy(name, rinfo->dname, rinfo->dname_len)
+and then writes name[rinfo->dname_len] = 0, without checking dname_len
+against NAME_MAX. A malicious or buggy MDS that returns a LOOKUPNAME reply
+with dname_len > NAME_MAX overflows the buffer. __get_snap_name() copies
+rde->name / rde->name_len the same unchecked way.
 
-Fix by setting status and jumping to out: instead of returning
-directly.
+Impact: a malicious or compromised Ceph MDS overflows the NAME_MAX name
+buffer in a client's NFS-export get_name path, a slab out-of-bounds write
+reported by KASAN. Reachable when a CephFS mount is re-exported over NFS.
 
-Fixes: ce0887ac96d3 ("NFSD add nfs4 inter ssc to nfsd4_copy")
+Add ceph_export_copy_name(), which rejects lengths above NAME_MAX with
+-ENAMETOOLONG before the copy, and use it in both ceph_get_name() and
+__get_snap_name().
+
 Cc: stable@vger.kernel.org
-Assisted-by: kres:claude-opus-4-7
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260531-nfsd-testing-v1-3-7bfa481b0540@kernel.org
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-[ adjusted cleanup paths to omit unavailable trace_nfsd_copy_*() calls ]
+Fixes: 19913b4eac4a ("ceph: add get_name() NFS export callback")
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+[ adapted the bounds check to the older ceph_get_name() flow without encrypted-name handling. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs4proc.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ fs/ceph/export.c | 23 ++++++++++++++++++-----
+ 1 file changed, 18 insertions(+), 5 deletions(-)
 
-diff --git a/fs/nfsd/nfs4proc.c b/fs/nfsd/nfs4proc.c
-index 8db5b820ac558..ecf10e6fdab36 100644
---- a/fs/nfsd/nfs4proc.c
-+++ b/fs/nfsd/nfs4proc.c
-@@ -1778,12 +1778,14 @@ nfsd4_copy(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
- 			goto out;
- 		}
- 		status = nfsd4_setup_inter_ssc(rqstp, cstate, copy);
--		if (status)
--			return nfserr_offload_denied;
-+		if (status) {
-+			status = nfserr_offload_denied;
-+			goto out;
-+		}
- 	} else {
- 		status = nfsd4_setup_intra_ssc(rqstp, cstate, copy);
- 		if (status)
--			return status;
-+			goto out;
- 	}
+diff --git a/fs/ceph/export.c b/fs/ceph/export.c
+index 466af8e0cbce1..ba2b918a5dfe6 100644
+--- a/fs/ceph/export.c
++++ b/fs/ceph/export.c
+@@ -422,6 +422,16 @@ static struct dentry *ceph_fh_to_parent(struct super_block *sb,
+ 	return dentry;
+ }
  
- 	memcpy(&copy->fh, &cstate->current_fh.fh_handle,
++static int ceph_export_copy_name(char *name, const char *src, u32 len)
++{
++	if (len > NAME_MAX)
++		return -ENAMETOOLONG;
++
++	memcpy(name, src, len);
++	name[len] = '\0';
++	return 0;
++}
++
+ static int __get_snap_name(struct dentry *parent, char *name,
+ 			   struct dentry *child)
+ {
+@@ -487,9 +497,8 @@ static int __get_snap_name(struct dentry *parent, char *name,
+ 			BUG_ON(!rde->inode.in);
+ 			if (ceph_snap(inode) ==
+ 			    le64_to_cpu(rde->inode.in->snapid)) {
+-				memcpy(name, rde->name, rde->name_len);
+-				name[rde->name_len] = '\0';
+-				err = 0;
++				err = ceph_export_copy_name(name, rde->name,
++							    rde->name_len);
+ 				goto out;
+ 			}
+ 		}
+@@ -551,8 +560,12 @@ static int ceph_get_name(struct dentry *parent, char *name,
+ 
+ 	if (!err) {
+ 		struct ceph_mds_reply_info_parsed *rinfo = &req->r_reply_info;
+-		memcpy(name, rinfo->dname, rinfo->dname_len);
+-		name[rinfo->dname_len] = 0;
++
++		err = ceph_export_copy_name(name, rinfo->dname,
++					    rinfo->dname_len);
++	}
++
++	if (!err) {
+ 		dout("get_name %p ino %llx.%llx name %s\n",
+ 		     child, ceph_vinop(inode), name);
+ 	} else {
 -- 
 2.53.0
 
