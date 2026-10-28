@@ -1,57 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214629;
-	b=qVswnA2mlY+y+EgfMIy1Ghkd4l0+ZMdpPAKXR3PFgBmEd6BfRpH4Y/RmJ5mAIEKWCoVw
-	 81zlzWNlCA2TNN+esgf/cDRr92tUqy0Xyzz3Xyo/Ira8QOcmLEFUc158Azh87OaS+yIjp
-	 XnTuVqOauDiBRJD+BdiZGs7CfNwQt6iLW7eCtgALgcLw8NxJfkJ6+dNyy/6wE7dGS3u4f
-	 8JNfY3JsIp9Mfa52+dG0fEBD5IsA9c0tAIxupeJYs9kb5OpJdlhgE/zeNgOKj5PBBjMX3
-	 1Sgz9bEU8b/u0rXjLmpLjK6SAlGriu08ansYcGAZcKj1kis+18HXtkbmZ/DeQ/Ij9ZA==
+	t=1793214632;
+	b=o/0hTRxbPpurl+kqiDKBWndM3ea4OBZPaADsXJRQhNpjsI6/UqXi4ArhryvvKBcCjMN2
+	 8oBcS3TTRuINkvaVZ1U+E1TFyweTEyYfsA9o5Zoj2BOh/gmB9k2AF/cd5EDMqmrqJuf6l
+	 uMP8oauUk588pvgyu6K0Yb8/1MvhJYyxc5i7oX267ChmSmQX3paUx5hRtT5BYFktlLDZE
+	 hkVyNpJnbiYk4Kp5+uM0Zpl6O9DbNezNBBPQ7RShtuM/qKVhrGq90eQ5gocsRYdTSOgOe
+	 2HRuQV8PA/utXw0FA6VunTLb2FBKc70aPQPuvEszip70LWUHtAv95/0X2a6YDyf0eDA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214629;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214632;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=RwIHcvbqyBxF69og3/LxUq3xKSkw/sK9S1hrCPvruKs=;
-	b=rOHDm1oRITPdz0AOg74AWlOTT7Yo2U9yD0+RXAWk/XSoN6hig8KIhr1nXpkFP60zjUjx
-	 9O5U4DGQo2ACDckebB6yPskBxEUmgPkX8vkz3GzmD6J1LwG120ovZSTZnBKLi61QDBmuH
-	 lLlP4sUvAUQWKiesckQuB37Uky2XxQVRt2iawu/DaDp4TNk4ao978Ph0c6CZC2SCYXyt9
-	 WM2GCPmQV/NE9F8XM0cIBMqfnrFJO1pRlVyb09yKjnGsA/osHs3AfmwodA40k2FHZzHM0
-	 Z7GjL1HL/Xm3uY2pSF1Rio8kS1tZLsX456iGYCEK93i+3gz/HYuOp9t0NvKV3p7JMjg==
+	bh=IMKJneZE4XlACxlf90ysoMp6uS+9URHTjwNUVTlRQDc=;
+	b=SH5wVG12CmlMcBBVVsbLQzwIz84jJagwDKa4OzxRuCWACMketwPtKlJlnWLGanffq6hn
+	 4Es9yX1DYRuWTZvwxkX57sESL2njdywjWN9kfS7pFTYgTgjNeuqRboUkfVRcY+g6LKiMF
+	 EX6oev+KZEmkemmtFjpK9w0nYGeknYpaE6ikUtEn6ep4XPyvGsRe+eJKlbsoxoO7TPpg/
+	 zQUY1BG4HQK2MZJ3Fx3iN5XAloW1JvMUAZBduOTLymDBX7qx6rYrwIEaxmZww4dDSn/0K
+	 cV3sLpKjgx7TJ+e4m3ySwPBPoKq/jyKJtJ9tTz5WOehSYeERrjXxPJGQHm+cedR+elw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mJIhZoX7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=W3xSnkyH;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 990A4606AB21;
-	Wed, 28 Oct 2026 19:10:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 734DD606AB21;
+	Wed, 28 Oct 2026 19:10:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mJIhZoX7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF0B11F01825;
-	Wed, 28 Oct 2026 19:10:28 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=W3xSnkyH
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C47601F01825;
+	Wed, 28 Oct 2026 19:10:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214629;
-	bh=RwIHcvbqyBxF69og3/LxUq3xKSkw/sK9S1hrCPvruKs=;
+	s=korg; t=1793214632;
+	bh=IMKJneZE4XlACxlf90ysoMp6uS+9URHTjwNUVTlRQDc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mJIhZoX7sVK2/mA7mW5uxXOc2S0U6LyOqcOrSSYLVKwKBY2qXL4rdxBU43ooVfYPP
-	 zQWkeNFPdBr+y3SE+m9xheTqxdZAVRQxH5Tf/RQl0KiWhybtyWeCGmexpl+HHRQJwo
-	 rjE1mC+K4XuaYWTEkPPIDWLJrNXefA+eB0RJ9Ajo=
+	b=W3xSnkyHNSJzE5x+/1LSyL9GdKDeMjdtvLDZEvLQUUXDytbNCRL9kpvkUuDuo/aY7
+	 pJ4BoDS5zM6TnAir2JLw8cGY3Orj1iysCXIaBFWOV007Lq+Fv8St8iXFBjCFtLcKr+
+	 3L9LzDM7Hl4IER/qcoZAcfrNR23WNBJ7Stg6l5hQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+6182afad5045e6703b3d@syzkaller.appspotmail.com,
-	David Howells <dhowells@redhat.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	Simon Horman <horms@kernel.org>,
-	linux-afs@lists.infradead.org,
-	stable@kernel.org,
-	Jakub Kicinski <kuba@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Jianhao Xu <jianhao.xu@seu.edu.cn>,
+	Zilin Guan <zilin@seu.edu.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0926/1887] rxrpc: Fix data-race warning and potential load/store tearing
-Date: Wed, 28 Oct 2026 17:50:22 +0100
-Message-ID: <20261028170520.488736142@linuxfoundation.org>
+Subject: [PATCH 6.1 0927/1887] of: unittest: Fix memory leak in unittest_data_add()
+Date: Wed, 28 Oct 2026 17:50:23 +0100
+Message-ID: <20261028170520.511142152@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -73,228 +69,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Zilin Guan <zilin@seu.edu.cn>
 
-[ Upstream commit 5d5fe8bcd331f1e34e0943ec7c18432edfcf0e8b ]
+[ Upstream commit 235a1eb8d2dcc49a6cf0a5ee1aa85544a5d0054b ]
 
-Fix the following:
+In unittest_data_add(), if of_resolve_phandles() fails, the allocated
+unittest_data is not freed, leading to a memory leak.
 
-        BUG: KCSAN: data-race in rxrpc_peer_keepalive_worker / rxrpc_send_data_packet
+Fix this by using scope-based cleanup helper __free(kfree) for automatic
+resource cleanup. This ensures unittest_data is automatically freed when
+it goes out of scope in error paths.
 
-which is reporting an issue with the reads and writes to ->last_tx_at in:
+For the success path, use retain_and_null_ptr() to transfer ownership
+of the memory to the device tree and prevent double freeing.
 
-        conn->peer->last_tx_at = ktime_get_seconds();
-
-and:
-
-        keepalive_at = peer->last_tx_at + RXRPC_KEEPALIVE_TIME;
-
-The lockless accesses to these to values aren't actually a problem as the
-read only needs an approximate time of last transmission for the purposes
-of deciding whether or not the transmission of a keepalive packet is
-warranted yet.
-
-Also, as ->last_tx_at is a 64-bit value, tearing can occur on a 32-bit
-arch.
-
-Fix both of these by switching to an unsigned int for ->last_tx_at and only
-storing the LSW of the time64_t.  It can then be reconstructed at need
-provided no more than 68 years has elapsed since the last transmission.
-
-Fixes: ace45bec6d77 ("rxrpc: Fix firewall route keepalive")
-Reported-by: syzbot+6182afad5045e6703b3d@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/r/695e7cfb.050a0220.1c677c.036b.GAE@google.com/
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: Simon Horman <horms@kernel.org>
-cc: linux-afs@lists.infradead.org
-cc: stable@kernel.org
-Link: https://patch.msgid.link/1107124.1768903985@warthog.procyon.org.uk
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 2eb46da2a760 ("of/selftest: Use the resolver to fixup phandles")
+Suggested-by: Rob Herring <robh@kernel.org>
+Co-developed-by: Jianhao Xu <jianhao.xu@seu.edu.cn>
+Signed-off-by: Jianhao Xu <jianhao.xu@seu.edu.cn>
+Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
+Link: https://patch.msgid.link/20251231114915.234638-1-zilin@seu.edu.cn
+Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rxrpc/ar-internal.h |  9 ++++++++-
- net/rxrpc/conn_event.c  |  4 ++--
- net/rxrpc/output.c      | 10 +++++-----
- net/rxrpc/peer_event.c  | 17 ++++++++++++++++-
- net/rxrpc/proc.c        |  4 ++--
- net/rxrpc/rxkad.c       |  4 ++--
- 6 files changed, 35 insertions(+), 13 deletions(-)
+ drivers/of/unittest.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/net/rxrpc/ar-internal.h b/net/rxrpc/ar-internal.h
-index 8499ceb7719c8..fbec55c7e6dc5 100644
---- a/net/rxrpc/ar-internal.h
-+++ b/net/rxrpc/ar-internal.h
-@@ -303,7 +303,7 @@ struct rxrpc_peer {
- 	struct hlist_head	error_targets;	/* targets for net error distribution */
- 	struct rb_root		service_conns;	/* Service connections */
- 	struct list_head	keepalive_link;	/* Link in net->peer_keepalive[] */
--	time64_t		last_tx_at;	/* Last time packet sent here */
-+	unsigned int		last_tx_at;	/* Last time packet sent here (time64_t LSW) */
- 	seqlock_t		service_conn_lock;
- 	spinlock_t		lock;		/* access lock */
- 	unsigned int		if_mtu;		/* interface MTU for this peer */
-@@ -986,6 +986,13 @@ void rxrpc_encap_err_rcv(struct sock *sk, struct sk_buff *skb, unsigned int udp_
- void rxrpc_error_report(struct sock *);
- void rxrpc_peer_keepalive_worker(struct work_struct *);
- 
-+/* Update the last transmission time on a peer for keepalive purposes. */
-+static inline void rxrpc_peer_mark_tx(struct rxrpc_peer *peer)
-+{
-+	/* To avoid tearing on 32-bit systems, we only keep the LSW. */
-+	WRITE_ONCE(peer->last_tx_at, ktime_get_seconds());
-+}
-+
- /*
-  * peer_object.c
+diff --git a/drivers/of/unittest.c b/drivers/of/unittest.c
+index 598e0891533fd..2dc62174e1679 100644
+--- a/drivers/of/unittest.c
++++ b/drivers/of/unittest.c
+@@ -1546,7 +1546,6 @@ static void attach_node_and_children(struct device_node *np)
   */
-diff --git a/net/rxrpc/conn_event.c b/net/rxrpc/conn_event.c
-index 293922df2a891..8079094844c0e 100644
---- a/net/rxrpc/conn_event.c
-+++ b/net/rxrpc/conn_event.c
-@@ -142,7 +142,7 @@ static void rxrpc_conn_retransmit_call(struct rxrpc_connection *conn,
+ static int __init unittest_data_add(void)
+ {
+-	void *unittest_data;
+ 	void *unittest_data_align;
+ 	struct device_node *unittest_data_node = NULL, *np;
+ 	/*
+@@ -1565,7 +1564,7 @@ static int __init unittest_data_add(void)
  	}
  
- 	ret = kernel_sendmsg(conn->params.local->socket, &msg, iov, ioc, len);
--	conn->params.peer->last_tx_at = ktime_get_seconds();
-+	rxrpc_peer_mark_tx(conn->params.peer);
- 	if (ret < 0)
- 		trace_rxrpc_tx_fail(chan->call_debug_id, serial, ret,
- 				    rxrpc_tx_point_call_final_resend);
-@@ -262,7 +262,7 @@ static int rxrpc_abort_connection(struct rxrpc_connection *conn,
+ 	/* creating copy */
+-	unittest_data = kmalloc(size + FDT_ALIGN_SIZE, GFP_KERNEL);
++	void *unittest_data __free(kfree) = kmalloc(size + FDT_ALIGN_SIZE, GFP_KERNEL);
+ 	if (!unittest_data)
+ 		return -ENOMEM;
  
- 	trace_rxrpc_tx_packet(conn->debug_id, &whdr, rxrpc_tx_point_conn_abort);
+@@ -1575,12 +1574,10 @@ static int __init unittest_data_add(void)
+ 	ret = of_fdt_unflatten_tree(unittest_data_align, NULL, &unittest_data_node);
+ 	if (!ret) {
+ 		pr_warn("%s: unflatten testcases tree failed\n", __func__);
+-		kfree(unittest_data);
+ 		return -ENODATA;
+ 	}
+ 	if (!unittest_data_node) {
+ 		pr_warn("%s: testcases tree is empty\n", __func__);
+-		kfree(unittest_data);
+ 		return -ENODATA;
+ 	}
  
--	conn->params.peer->last_tx_at = ktime_get_seconds();
-+	rxrpc_peer_mark_tx(conn->params.peer);
+@@ -1602,6 +1599,7 @@ static int __init unittest_data_add(void)
+ 			__of_attach_node_sysfs(np);
+ 		of_aliases = of_find_node_by_path("/aliases");
+ 		of_chosen = of_find_node_by_path("/chosen");
++		no_free_ptr(unittest_data);
+ 		of_overlay_mutex_unlock();
+ 		return 0;
+ 	}
+@@ -1622,6 +1620,7 @@ static int __init unittest_data_add(void)
+ 	EXPECT_END(KERN_INFO,
+ 		   "Duplicate name in testcase-data, renamed to \"duplicate-name#1\"");
  
- 	_leave(" = 0");
++	no_free_ptr(unittest_data);
+ 	of_overlay_mutex_unlock();
+ 
  	return 0;
-diff --git a/net/rxrpc/output.c b/net/rxrpc/output.c
-index 3d9032fae9d91..6fb0c67ef8bb4 100644
---- a/net/rxrpc/output.c
-+++ b/net/rxrpc/output.c
-@@ -254,7 +254,7 @@ int rxrpc_send_ack_packet(struct rxrpc_call *call, bool ping,
- 		rtt_slot = rxrpc_begin_rtt_probe(call, serial, rxrpc_rtt_tx_ping);
- 
- 	ret = kernel_sendmsg(conn->params.local->socket, &msg, iov, 2, len);
--	conn->params.peer->last_tx_at = ktime_get_seconds();
-+	rxrpc_peer_mark_tx(conn->params.peer);
- 	if (ret < 0)
- 		trace_rxrpc_tx_fail(call->debug_id, serial, ret,
- 				    rxrpc_tx_point_call_ack);
-@@ -333,7 +333,7 @@ int rxrpc_send_abort_packet(struct rxrpc_call *call)
- 
- 	ret = kernel_sendmsg(conn->params.local->socket,
- 			     &msg, iov, 1, sizeof(pkt));
--	conn->params.peer->last_tx_at = ktime_get_seconds();
-+	rxrpc_peer_mark_tx(conn->params.peer);
- 	if (ret < 0)
- 		trace_rxrpc_tx_fail(call->debug_id, serial, ret,
- 				    rxrpc_tx_point_call_abort);
-@@ -449,7 +449,7 @@ int rxrpc_send_data_packet(struct rxrpc_call *call, struct sk_buff *skb,
- 	 *     message and update the peer record
- 	 */
- 	ret = kernel_sendmsg(conn->params.local->socket, &msg, iov, 2, len);
--	conn->params.peer->last_tx_at = ktime_get_seconds();
-+	rxrpc_peer_mark_tx(conn->params.peer);
- 
- 	up_read(&conn->params.local->defrag_sem);
- 	if (ret < 0) {
-@@ -525,7 +525,7 @@ int rxrpc_send_data_packet(struct rxrpc_call *call, struct sk_buff *skb,
- 				IP_PMTUDISC_DONT);
- 		ret = kernel_sendmsg(conn->params.local->socket, &msg,
- 				     iov, 2, len);
--		conn->params.peer->last_tx_at = ktime_get_seconds();
-+		rxrpc_peer_mark_tx(conn->params.peer);
- 
- 		ip_sock_set_mtu_discover(conn->params.local->socket->sk,
- 				IP_PMTUDISC_DO);
-@@ -674,6 +674,6 @@ void rxrpc_send_keepalive(struct rxrpc_peer *peer)
- 		trace_rxrpc_tx_packet(peer->debug_id, &whdr,
- 				      rxrpc_tx_point_version_keepalive);
- 
--	peer->last_tx_at = ktime_get_seconds();
-+	rxrpc_peer_mark_tx(peer);
- 	_leave("");
- }
-diff --git a/net/rxrpc/peer_event.c b/net/rxrpc/peer_event.c
-index 32561e9567fe3..77005c97dd904 100644
---- a/net/rxrpc/peer_event.c
-+++ b/net/rxrpc/peer_event.c
-@@ -515,6 +515,21 @@ static void rxrpc_distribute_error(struct rxrpc_peer *peer, int error,
- 	}
- }
- 
-+/*
-+ * Reconstruct the last transmission time.  The difference calculated should be
-+ * valid provided no more than ~68 years elapsed since the last transmission.
-+ */
-+static time64_t rxrpc_peer_get_tx_mark(const struct rxrpc_peer *peer, time64_t base)
-+{
-+	s32 last_tx_at = READ_ONCE(peer->last_tx_at);
-+	s32 base_lsw = base;
-+	s32 diff = last_tx_at - base_lsw;
-+
-+	diff = clamp(diff, -RXRPC_KEEPALIVE_TIME, RXRPC_KEEPALIVE_TIME);
-+
-+	return diff + base;
-+}
-+
- /*
-  * Perform keep-alive pings.
-  */
-@@ -541,7 +556,7 @@ static void rxrpc_peer_keepalive_dispatch(struct rxrpc_net *rxnet,
- 		if (__rxrpc_use_local(peer->local)) {
- 			spin_unlock_bh(&rxnet->peer_hash_lock);
- 
--			keepalive_at = peer->last_tx_at + RXRPC_KEEPALIVE_TIME;
-+			keepalive_at = rxrpc_peer_get_tx_mark(peer, base) + RXRPC_KEEPALIVE_TIME;
- 			slot = keepalive_at - base;
- 			_debug("%02x peer %u t=%d {%pISp}",
- 			       cursor, peer->debug_id, slot, &peer->srx.transport);
-diff --git a/net/rxrpc/proc.c b/net/rxrpc/proc.c
-index 47d36554ad311..ee07785860a01 100644
---- a/net/rxrpc/proc.c
-+++ b/net/rxrpc/proc.c
-@@ -234,13 +234,13 @@ static int rxrpc_peer_seq_show(struct seq_file *seq, void *v)
- 	now = ktime_get_seconds();
- 	seq_printf(seq,
- 		   "UDP   %-47.47s %-47.47s %3u"
--		   " %3u %5u %6llus %8u %8u\n",
-+		   " %3u %5u %6ds %8u %8u\n",
- 		   lbuff,
- 		   rbuff,
- 		   refcount_read(&peer->ref),
- 		   peer->cong_cwnd,
- 		   peer->mtu,
--		   now - peer->last_tx_at,
-+		   (s32)now - (s32)READ_ONCE(peer->last_tx_at),
- 		   peer->srtt_us >> 3,
- 		   jiffies_to_usecs(peer->rto_j));
- 
-diff --git a/net/rxrpc/rxkad.c b/net/rxrpc/rxkad.c
-index 84a61fa18bc06..038c4f2e8cef8 100644
---- a/net/rxrpc/rxkad.c
-+++ b/net/rxrpc/rxkad.c
-@@ -780,7 +780,7 @@ static int rxkad_issue_challenge(struct rxrpc_connection *conn)
- 		return -EAGAIN;
- 	}
- 
--	conn->params.peer->last_tx_at = ktime_get_seconds();
-+	rxrpc_peer_mark_tx(conn->params.peer);
- 	trace_rxrpc_tx_packet(conn->debug_id, &whdr,
- 			      rxrpc_tx_point_rxkad_challenge);
- 	_leave(" = 0");
-@@ -838,7 +838,7 @@ static int rxkad_send_response(struct rxrpc_connection *conn,
- 		return -EAGAIN;
- 	}
- 
--	conn->params.peer->last_tx_at = ktime_get_seconds();
-+	rxrpc_peer_mark_tx(conn->params.peer);
- 	_leave(" = 0");
- 	return 0;
- }
 -- 
 2.53.0
 
