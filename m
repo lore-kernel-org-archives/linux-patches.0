@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213388;
-	b=PD1ZGno7AW8+pQXd7AZa54dCkYp8xzboQnKNI6PuvcmodZTNmfnSRfqdyHnK1boLr8+q
-	 jVePmUUoBY65MNYCMJNnrAAhaQSid+WdUqPc7E2zye8YUpZWNXpfv4s3LmqjIexs3UZhX
-	 FORQgeZQLP64Xo2SLIwdKf0t+KAklz3MRuRhPr4zPq6JZlqzVzKtVmSrlF1AvFls9wor9
-	 d+vk7xQPoe3Okmz/NURClkTFbDUhFfi7P+DsM8Ak1plc4zAUEZc+1tV8bsXfI0LvqfaNy
-	 dOKtFar+T2z5N2e4Lha+U0cra5AeRYZiUaQk5bRa26Tpi+GWyqLfJdEcZQPc392V1ZA==
+	t=1793213391;
+	b=Et4vV1oIAetAigzxnRxBACOkFTvPgXTmClcMt7c0IJUZvsKOntNKdb6NHhRySTll2B8E
+	 qOEorqvNZgpMWNd4wNabuItIfdinKEufbwltCPEpf1YLtSlDHLHKbiYZ93G7FFtmOlejJ
+	 z3g2h57GYZ6egbzRpOk0pONV5pP8IiTjRfWZjmTalWVW5nAWecXlDnxRhmSqttSYuFv2b
+	 QtXUkCJVRJaTHlAoyDDMf7bcPZ7uaGVhqmWVDedaL8cwgXkSwf9ojdSQchSsKt4O7RZkD
+	 uVOYj4sT5iUaK1RFlHT7BkdvBXRFeDXdh/rgNDNlFikT7J+r/drPfeZHOw++svzOgzA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213388;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213391;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Xgyj3yn0nMORmij24DdC+ddbTA6B8SOFXfiFyf9BydY=;
-	b=FCIzW+Rp+80VXqiLWawCm1WxoeMYz0nvjD3cSNhhV3I6K4e/i13NVYLNtdqyrKpfcBUt
-	 F2sGS/+Crmn7t46KVX1wDQE6M3LiQS2Vj1ppHfHIPWpVzHNA+3qENxnny6Eh3jiv5ocJw
-	 tuX90HqCxUoLwFlL4YfAfaEmj4VOJB7A2m0edtlon2gNGVwYvzuWYa5bRIB5Gf5sa3FQw
-	 NI6ndFvzB5bWSqEwqC6EmhmiYiqaxvcrGynr1CdOv/iEJJCrBubHg6fZP8Jm/mlCTO4IO
-	 dHoYE2JyBxP5mJ3t3VHaQ+iotpMtcCsUBl9JkVDmeVxWPfirc0eeAKA4/PdNMqTYr1g==
+	bh=6VhBMZHK6M7LfDeUbA9NK4SUjCjwFkY+G7uSo8gL/vM=;
+	b=sWGUNdYxANVz6YvlNeKWAL3/YDtqxDQWIihTMPAHhX/LvV3KVt+s+uXiJ02yriC3vjMW
+	 jYuIpCa9khTf3B/ghiLFDI29PZttPAqJV594+RiP7CZCvrHDPJurb2Br9Jp+fLjZnF41z
+	 GurgOysmdT9K+U7Q0m9n1HhDRpO1cbZuas9YGySJOf01ygR7SPNZ8VlVP5cAvGRer1lHg
+	 22R3rpMb5kpUVXzDp6uSvQJdsyb4C4CwOK7KAVVp4m9mqTnalNT77TcpqEbJl4Xu83jWX
+	 i3yNSYj4NdhS/XpNY0ho/ukNA9yvDxg6ch/koTa4pgsH5IFE8iNv+CCMpKyn5FBu3aA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="i4SdfU/c";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZG04XX65;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CD7D606A31A;
-	Wed, 28 Oct 2026 18:49:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ED21606A31A;
+	Wed, 28 Oct 2026 18:49:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i4SdfU/c
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CA881F01825;
-	Wed, 28 Oct 2026 18:49:47 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZG04XX65
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F3B81F01829;
+	Wed, 28 Oct 2026 18:49:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213388;
-	bh=Xgyj3yn0nMORmij24DdC+ddbTA6B8SOFXfiFyf9BydY=;
+	s=korg; t=1793213390;
+	bh=6VhBMZHK6M7LfDeUbA9NK4SUjCjwFkY+G7uSo8gL/vM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=i4SdfU/crEwWQUNCwihMwPIArjU8qPcVosiV70Sbc60nI5+FqKtmWaTIUtryAgeCt
-	 hLHo3/85w4lXF3jOuK2qyj0hy2P55mouZ1Cpab9lpYIURwLxDLEWXyVwKpWRZFrrn1
-	 ds9R2HJHhjMdmqctFrlp62MMukDE3iE9bp3hlvP8=
+	b=ZG04XX65ptDLKuibq74zDYga/mqvDkAuNep3nHIt0yMhUIFY65VhCqc5iEjsIAWt/
+	 Dx6HUvY352jQMe21vVgsdfwFyW6tLsI0VhPjSPE1HEaPEqhrjth2bcjG/999FMxTd9
+	 FPXhs+gH33mRwSHza1rabbHBknbO6A0aBbjoWJjY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengfeng Ye <nicoyip.dev@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 0444/1887] tipc: hold a reference to nodes found by link name
-Date: Wed, 28 Oct 2026 17:42:20 +0100
-Message-ID: <20261028170509.337178862@linuxfoundation.org>
+	Michael Garland <minimelkav@gmail.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.1 0435/1887] ASoC: amd: yc: Add DMI quirk for Acer Aspire Go 15 (AG15-21P)
+Date: Wed, 28 Oct 2026 17:42:11 +0100
+Message-ID: <20261028170509.130937524@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -67,119 +67,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chengfeng Ye <nicoyip.dev@gmail.com>
+From: Michael Garland <minimelkav@gmail.com>
 
-commit 17e73bae400f6a434dc006e3bee92c94cf781954 upstream.
+commit d0cb7a7b2a490c381ad97f53155d02a748b60dea upstream.
 
-tipc_node_find_by_name() returns a node after dropping its RCU read lock
-without taking a reference.  The LINK_SET, LINK_GET and LINK_RESET_STATS
-handlers then lock and access the node, racing with timer-driven cleanup of
-a down peer.  Generic netlink serialization does not exclude the node
-timer.
+The Acer Aspire Go 15 (AG15-21P, board MDC Herbag2_MDU) has two PDM
+DMICs connected to the ACP. The BIOS does not set the AcpDmicConnected
+_DSD property, so the acp6x machine driver never registers the DMIC
+card. The existing Herbag_MDU entry does not match this board name, so
+add a DMI quirk for it.
 
-The following interleaving can leave a handler using a freed node:
+Tested on BIOS V1.11: the acp6x DMIC capture device is registered and
+records audio on both channels.
 
-  CPU 0: find the node under RCU and release the node read lock
-  CPU 1: tipc_node_timeout() clears the links and unlinks the down node
-  CPU 1: drop the list and timer references, queuing tipc_node_free()
-  CPU 0: leave the RCU read-side critical section
-  CPU 1: complete the grace period and free the node
-  CPU 0: acquire the node lock through the stale pointer
-
-LINK_SET also uses the node's media address after releasing the node lock,
-when passing queued packets to tipc_bearer_xmit().
-
-KASAN on v7.3-rc5 reported:
-
-  BUG: KASAN: slab-use-after-free in _raw_read_lock_bh
-  Write of size 4 at addr ffff88807e06f008 by task poc/92
-  Call Trace:
-   _raw_read_lock_bh                 kernel/locking/spinlock.c:287
-   tipc_nl_node_set_link             net/tipc/node.c:2475
-   genl_family_rcv_msg_doit          net/netlink/genetlink.c:1114
-   genl_rcv_msg                      net/netlink/genetlink.c:1209
-   netlink_rcv_skb                   net/netlink/af_netlink.c:2575
-
-  Allocated by task 0:
-   tipc_node_create                  net/tipc/node.c:539
-   tipc_node_check_dest              net/tipc/node.c:1196
-   tipc_disc_rcv                     net/tipc/discover.c:252
-
-  Freed by task 92:
-   kfree                             mm/slub.c:6801
-   rcu_core                          kernel/rcu/tree.c:2919
-
-  Last potentially related work creation:
-   __call_rcu_common.constprop.0     kernel/rcu/tree.c:3181
-   tipc_node_timeout                 net/tipc/node.c:814
-
-Acquire a reference to the selected node with kref_get_unless_zero() before
-leaving RCU, returning NULL if the node has already been released.  Release
-that reference on every caller exit after the last node access, including
-transmission in LINK_SET.  Keep the existing link lookup order and locking
-so concurrent link removal still takes the existing error paths.
-
-Fixes: 6a939f365bdb ("tipc: Auto removal of peer down node instance")
 Cc: stable@vger.kernel.org
-Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
-Link: https://patch.msgid.link/20260928161246.1895273-1-nicoyip.dev@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Michael Garland <minimelkav@gmail.com>
+Link: https://patch.msgid.link/20261005-acp6x-herbag2-quirk-v1-1-a1f2683d758f@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/tipc/node.c |   10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ sound/soc/amd/yc/acp6x-mach.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/net/tipc/node.c
-+++ b/net/tipc/node.c
-@@ -2421,8 +2421,11 @@ static struct tipc_node *tipc_node_find_
- 			}
- 		}
- 		tipc_node_read_unlock(n);
--		if (found_node)
-+		if (found_node) {
-+			if (!kref_get_unless_zero(&found_node->kref))
-+				found_node = NULL;
- 			break;
+--- a/sound/soc/amd/yc/acp6x-mach.c
++++ b/sound/soc/amd/yc/acp6x-mach.c
+@@ -608,6 +608,13 @@ static const struct dmi_system_id yc_acp
+ 	{
+ 		.driver_data = &acp6x_card,
+ 		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "MDC"),
++			DMI_MATCH(DMI_BOARD_NAME, "Herbag2_MDU"),
 +		}
- 	}
- 	rcu_read_unlock();
- 
-@@ -2507,6 +2510,7 @@ out:
- 	tipc_node_read_unlock(node);
- 	tipc_bearer_xmit(net, bearer_id, &xmitq, &node->links[bearer_id].maddr,
- 			 NULL);
-+	tipc_node_put(node);
- 	return res;
- }
- 
-@@ -2558,12 +2562,14 @@ int tipc_nl_node_get_link(struct sk_buff
- 		link = node->links[bearer_id].link;
- 		if (!link) {
- 			tipc_node_read_unlock(node);
-+			tipc_node_put(node);
- 			err = -EINVAL;
- 			goto err_free;
++	},
++	{
++		.driver_data = &acp6x_card,
++		.matches = {
+ 			DMI_MATCH(DMI_BOARD_VENDOR, "Micro-Star International Co., Ltd."),
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "Thin A15 B7VE"),
  		}
- 
- 		err = __tipc_nl_add_link(net, &msg, link, 0);
- 		tipc_node_read_unlock(node);
-+		tipc_node_put(node);
- 		if (err)
- 			goto err_free;
- 	}
-@@ -2634,11 +2640,13 @@ int tipc_nl_node_reset_link_stats(struct
- 	if (!link) {
- 		spin_unlock_bh(&le->lock);
- 		tipc_node_read_unlock(node);
-+		tipc_node_put(node);
- 		return -EINVAL;
- 	}
- 	tipc_link_reset_stats(link);
- 	spin_unlock_bh(&le->lock);
- 	tipc_node_read_unlock(node);
-+	tipc_node_put(node);
- 	return 0;
- }
- 
 
 
