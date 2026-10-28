@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793209048;
-	b=guH5gykkNUVMseCb9DqQvA9NNBlIprn5wI9ZZDc2u8Z2kw6DEAInurRj2gUJWa4HdmHk
-	 APm6G/wuzDW//i0vDsz1f18ceXaUmSmdZINdJ+J6jb0cMaySSr8g8VZMV7zHzDVQCId0l
-	 VwOl6xHnsqyQKrdVD8t4324r2jKOKm01fvEYJsPEZe9Ivb3ARv2khyMBcer3eV0jRhF4G
-	 zQP8PGSU0iQSZA4q739RAzXI0mEKlMDJwk/9S4h9+TQduUUsYelQdyRt4umUA/4P3xuNB
-	 NB7LpIdJYV31LkLS0bZY4rEhlpBpnc32sfzAr31Na3ztYyAL7J/gPKH9cnQq/ZxH5mA==
+	t=1793209051;
+	b=d+pquzOiuuUMF2EfYseSenTMSzAkWpqoHnuX0p4hYBLF20o6vqV7EoAIQ8Z31ElNfJsq
+	 ONsWBfdnV9AQWDhZfMf1r8mY0uIT64V3TGeCoqgqayJ6LLMTSNu48huPfndYbtal4kad5
+	 cpd6U1Kvyt6nA3uv3U5Gv9iDRT71pY5GWTxNCqRn7a/1rvNI66jR+aPxxEhY/XT4tPpwp
+	 CmCu9cUY984kKqjN+18zy7CuBgI7qKSTa9/6TuE1b8Xs9/pHhVD8JUaNBe3OCcA+Rq4X9
+	 cpve9TPzHSEqNNLapFMDN1hrFd2WnbflhfrFo2o+rZ4+5y9xoRe2tBBqIVyA/KzzNBA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793209048;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793209051;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=FB6qjKot/oMwVO/iyHvWcDEP3ABXMXlJM5euMSygbh0=;
-	b=chM+1gZnKMNhrPbl5mxNTrMwxCk9KJzX6Flr4dhq6+QPc07p2t7Z6z0Yrtwb8A34O9YQ
-	 mJkCI9ONbHwPEjpbxStQTJP/XyIgZ8bt/VPo3kNP7f6Rzw4B/3K/E8iC/Qv4/Bd3zLgDa
-	 PViV7ZKI5DEEtpNVXE5T2rp1jHwlHPsEueCpQfDCajmopBFyOOK2Fi0Ept3/kyLRAEyxn
-	 ut26Ne92H78fraA0k+uo0UWALurbqarOuX8LRF1OjJrWE5ZxYfe7NOFTAiASQW8iLbVTm
-	 prZpZEvZPNNnVpgK5xDbgQSU/fO/xajebeB2CFJ2atJTjfmH1x8UFfI5d7wjp8Z9jog==
+	bh=yWZulVmQugojBIYkGDjOPzE8tNzKVytxubLAHfIvl2I=;
+	b=o43e2/ykFZeZFvHJlszsgURD31iEAY7bcyZUbUWyIrAmRgwzRADgzFyuaOnNGp1UzUbD
+	 sjfP7sqSQtx0ghiyNHF3gtN9a1Jy1LqwIRWvjPtpIZnNlaW6448SdDHCeq210lJAv1eQm
+	 Y6T8M46yg7JdItMk7JnbhpFNoNs6fZAnY++bVj8X+A09C4wgvjRiieMzMf+yLbkI5fma6
+	 jn5KQLOQFIl0l1pKds4I1SaN39p31YCZGMBtasApGQKO1MwsNw7/kA4qJmQ2ZJ+uUWkyW
+	 dyz4OyUHO+6bptamAKCWC1O2HO3fT5BCkcdB3TLjwMjQOkn6V9oTl3Pl2V3oe791iGg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Snb0ku3t;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UAUgMil6;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7794060A263C;
-	Wed, 28 Oct 2026 17:37:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2517160A2606;
+	Wed, 28 Oct 2026 17:37:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Snb0ku3t
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DCFC1F01825;
-	Wed, 28 Oct 2026 17:37:27 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UAUgMil6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7441A1F031F7;
+	Wed, 28 Oct 2026 17:37:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793209048;
-	bh=FB6qjKot/oMwVO/iyHvWcDEP3ABXMXlJM5euMSygbh0=;
+	s=korg; t=1793209051;
+	bh=yWZulVmQugojBIYkGDjOPzE8tNzKVytxubLAHfIvl2I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Snb0ku3tB7F5zMTdbfwc838a211GutueCbLjk3fmvsuBfPRCr3cDaDo9VoVvC9l4U
-	 oGCTSqHkxpBYH06vpkbz0RGIQYImFsVhBwA/j1af7qbhF4HbvqH8eHSVj7n2KXplfh
-	 wNbkCtnGoXlXcthwMS+Awyuluumh6AOy0icD02n4=
+	b=UAUgMil68GmjXTRtt/c2H4ZfLoLeS8XeCyGqJ+d987GVRSI3AWD4YwHiqgN9Xwp3a
+	 iSaxWALIhkAIN6013vEbgPTZctSG0L1FJrnbcAU27g7JsKi/UU5Ne02Gyg2LIAKRkF
+	 Tzxec2xfaCVS1yyKFUaGhcgMtSmpjTupr1MUfFEc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>
-Subject: [PATCH 5.10 327/516] keys: finalize persistent keyring timeout after link attempt
-Date: Wed, 28 Oct 2026 17:57:59 +0100
-Message-ID: <20261028170011.233896673@linuxfoundation.org>
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ulf Hansson <ulfh@kernel.org>
+Subject: [PATCH 5.10 336/516] mmc: sdhci-sprd: disable runtime PM on remove
+Date: Wed, 28 Oct 2026 17:58:08 +0100
+Message-ID: <20261028170011.447489956@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -67,143 +69,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-commit 25bf14f817168079f731975b8998fc2af380f29e upstream.
+commit e1c6c10a6a70a69e29b04fcc1ebe4b9bcbc7a49a upstream.
 
-When no keyring exists for the requested UID, KEYCTL_GET_PERSISTENT
-creates and registers one before linking it to the requested destination.
-The configured timeout is set only after the destination link succeeds.
+sdhci_sprd_probe() enables runtime PM, while sdhci_sprd_remove() does
+not perform the corresponding runtime PM cleanup.
 
-A destination restricted with KEYCTL_RESTRICT_KEYRING makes that link fail
-with -EPERM. With persistent_keyring_expiry set to 60 seconds, /proc/keys
-still reports the registered keyring's expiry as "perm".
-The failed call therefore leaves a quota-exempt keyring in the namespace's
-hidden register, where it may remain until namespace teardown.
+The probe failure path disables runtime PM before disabling the clocks,
+but the normal remove path directly disables clocks that are also
+managed by the runtime PM callbacks. If the device is runtime
+suspended, those clocks may already be disabled.
 
-Rename the write-locked helper to key_get_or_create_persistent() and return
-the key reference through a result parameter. Return 0 when it creates a
-keyring and 1 when the retry finds an existing one. Return a negative error
-on failure. Another caller may create the keyring between the initial
-read-locked lookup and the retry under the write lock.
+Resume the device before removal, disable runtime PM and drop the
+temporary runtime PM reference before disabling the clocks.
 
-Set the timeout after permission checking and linking. Do this on success,
-or on failure if the call allocated the keyring. This leaves a new keyring
-collectible after failure without starting its timeout while linking is
-still in progress.
+This issue was found by manual code inspection.
 
-Cc: stable@vger.kernel.org # v5.10+
-Fixes: f36f8c75ae2e ("KEYS: Add per-user_namespace registers for persistent per-UID kerberos caches")
-Assisted-by: LLM
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Link: https://lore.kernel.org/r/20260912095440.79864-1-kmehltretter@gmail.com
-Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+Fixes: fb8bd90f83c4 ("mmc: sdhci-sprd: Add Spreadtrum's initial host controller")
+Cc: stable@vger.kernel.org
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/keys/persistent.c |   55 ++++++++++++++++++++++++++-------------------
- 1 file changed, 32 insertions(+), 23 deletions(-)
+ drivers/mmc/host/sdhci-sprd.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/security/keys/persistent.c
-+++ b/security/keys/persistent.c
-@@ -33,25 +33,31 @@ static int key_create_persistent_registe
- }
+--- a/drivers/mmc/host/sdhci-sprd.c
++++ b/drivers/mmc/host/sdhci-sprd.c
+@@ -743,6 +743,10 @@ static int sdhci_sprd_remove(struct plat
+ 	struct sdhci_host *host = platform_get_drvdata(pdev);
+ 	struct sdhci_sprd_host *sprd_host = TO_SPRD_HOST(host);
  
- /*
-- * Create the persistent keyring for the specified user.
-+ * Get or create the persistent keyring for the specified user.
-  *
-  * Called with the namespace's sem locked for writing.
-+ *
-+ * Returns a boolean indicating whether the keyring already existed,
-+ * or a negative error. On success, *persistent_ref holds a reference
-+ * to the keyring.
-  */
--static key_ref_t key_create_persistent(struct user_namespace *ns, kuid_t uid,
--				       struct keyring_index_key *index_key)
-+static int key_get_or_create_persistent(struct user_namespace *ns, kuid_t uid,
-+					struct keyring_index_key *index_key,
-+					key_ref_t *persistent_ref)
- {
- 	struct key *persistent;
--	key_ref_t reg_ref, persistent_ref;
-+	key_ref_t reg_ref;
- 
- 	if (!ns->persistent_keyring_register) {
--		long err = key_create_persistent_register(ns);
-+		int err = key_create_persistent_register(ns);
++	pm_runtime_get_sync(&pdev->dev);
++	pm_runtime_disable(&pdev->dev);
++	pm_runtime_put_noidle(&pdev->dev);
 +
- 		if (err < 0)
--			return ERR_PTR(err);
-+			return err;
- 	} else {
- 		reg_ref = make_key_ref(ns->persistent_keyring_register, true);
--		persistent_ref = find_key_to_update(reg_ref, index_key);
--		if (persistent_ref)
--			return persistent_ref;
-+		*persistent_ref = find_key_to_update(reg_ref, index_key);
-+		if (*persistent_ref)
-+			return 1;
- 	}
+ 	sdhci_remove_host(host, 0);
  
- 	persistent = keyring_alloc(index_key->description,
-@@ -61,9 +67,10 @@ static key_ref_t key_create_persistent(s
- 				   KEY_ALLOC_NOT_IN_QUOTA, NULL,
- 				   ns->persistent_keyring_register);
- 	if (IS_ERR(persistent))
--		return ERR_CAST(persistent);
-+		return PTR_ERR(persistent);
- 
--	return make_key_ref(persistent, true);
-+	*persistent_ref = make_key_ref(persistent, true);
-+	return 0;
- }
- 
- /*
-@@ -78,6 +85,7 @@ static long key_get_persistent(struct us
- 	key_ref_t reg_ref, persistent_ref;
- 	char buf[32];
- 	long ret;
-+	bool created = false;
- 
- 	/* Look in the register if it exists */
- 	memset(&index_key, 0, sizeof(index_key));
-@@ -100,23 +108,24 @@ static long key_get_persistent(struct us
- 	 * also need to create the register.
- 	 */
- 	down_write(&ns->keyring_sem);
--	persistent_ref = key_create_persistent(ns, uid, &index_key);
-+	ret = key_get_or_create_persistent(ns, uid, &index_key,
-+					   &persistent_ref);
- 	up_write(&ns->keyring_sem);
--	if (!IS_ERR(persistent_ref))
--		goto found;
--
--	return PTR_ERR(persistent_ref);
-+	if (ret < 0)
-+		return ret;
-+	created = ret == 0;
- 
- found:
-+	persistent = key_ref_to_ptr(persistent_ref);
- 	ret = key_task_permission(persistent_ref, current_cred(), KEY_NEED_LINK);
--	if (ret == 0) {
--		persistent = key_ref_to_ptr(persistent_ref);
-+	if (ret == 0)
- 		ret = key_link(key_ref_to_ptr(dest_ref), persistent);
--		if (ret == 0) {
--			key_set_timeout(persistent, persistent_keyring_expiry);
--			ret = persistent->serial;
--		}
--	}
-+
-+	if (ret == 0 || created)
-+		key_set_timeout(persistent, persistent_keyring_expiry);
-+
-+	if (ret == 0)
-+		ret = persistent->serial;
- 
- 	key_ref_put(persistent_ref);
- 	return ret;
+ 	clk_disable_unprepare(sprd_host->clk_sdio);
 
 
