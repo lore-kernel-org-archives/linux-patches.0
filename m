@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793209116;
-	b=SQWXEf/NDByhH1HH4rRKunkJZPVO+k9gExkQ2n8FEuJZmpZW3+WsEed1akogPv07fJTw
-	 UvprH0UHBLKlLgbtjQlR8u4Nia5gbCYcw8PTt+Ep7kaZ9Hk9LnIUGYqFVYIrrnxN8FNTH
-	 Xf9+7roXb6ntQNaPkyJGxURIAKR+/sH6QP1okwh7KIbIFdUIdAGjyd0Z9C4PRHf6a6fLg
-	 3y+OHMUuP0dLIeioxHP2id0CAQhW2VusOEO4PKaqgffa/Kr7SsM8TXkjYj55RGr5tNmtU
-	 qzqwGMxB2HAii2dSkLvmVu0PE/yk6Q7HkMBNOen3A0HSnUGL+b3tuD9x7N70TGM/4NA==
+	t=1793209120;
+	b=U6j373ply8GwnyUZ8bb56VFHyZuStJeXvT8zNlwrOu121kCxlN+OcttHu1fruIRj5KjQ
+	 1JAncOZip/UmtRJEOyCMW9vlCDmI1xbG1b2dc+L6yHbJZm2uclgQUg/fmyWXTmj2SQjMV
+	 SZkYKUlX8k1CDRgImK72TUPB3JAsOCiHrSmhLGSpoBLq48yVphXV0BmwziXf73H7NPgga
+	 B3YGxFuRRbfWZAKbZKrHdNCGgMZeYsYgHOjL47el9rrymUdqFyPG8Ke9O60jxo2ZVH9OK
+	 5aJbrcEh+fz6TVyO2WsMdVGpgRsAAUPdT6PdVhIQOP+GY2viZq8fdTwwaTdQPEhqGmg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793209116;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793209120;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=zQTLZITHFyP/YGf8mye0MJ332TTJLjRcWhTIV/rHJ8U=;
-	b=1HKrKP+k1aiTu69VdjpnCYpwb9YlxgU75Zy7q3fccepW7cnPng3RPy90VYosPqHdXIVL
-	 X1Ogv0VL4yuECZ8kBY9X9BiOdbBlJZRdlaf2IFI4+cDsTh/ULfwDrAupFx+xuIoohCmsc
-	 HYxkaDF7Fb1polFqwuw6aQYgHw0x/51dM/ssLVI9Dz2DTIf4XeC2RbA/NKhILKzESrOdy
-	 jxoC4bPWtXlKPgTq+SjbnMnSdxh383DZzEaFu44vD4GSE+g9v6nMsHr+BBP6lXb+9Q76j
-	 cyZOn9qj+B0AFJcmjbuYub1G19bVXZd9ZZosDUaxPTOA+9+ahYmpOCBQ4CTlqKmkytw==
+	bh=r29QZjGy1Abe0lG9xZkIgYALtCa1GRy+yyEWl0q9byM=;
+	b=LqcA/C7YfvXvo8iv7aC+9dpsMSjGwIeTiZiXqL2rner4YP4N8pUA9IWw+Cv7XhzlAOx+
+	 bxPKWwj/1RPQyTCzQ4KuNCjpOr37n7IAiFJr1XB285T0mYlCo3yYm5E3eYyi+LrK+3t6h
+	 Ztj/3k74JefMLp9/r0p4+XEiP9BzoKEZMYt41cTk4AdJe0p3CcAsP5G7MeZens57mcGuS
+	 rH8DnVB2pSTqihmn8/2K65+n0uqxTWnWOXZQdrBKakAOpo67fnrTuJlTcP9MOH+aWVCom
+	 E2HqX35jCFVlCj8Fut7II/Nmisctr9mYkDym4bm6uTEHOByWPhSXEJl78kqaHlc1Tnw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=f71YatKQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T1AkpXZ2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C989606A326;
-	Wed, 28 Oct 2026 17:38:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1D70606A322;
+	Wed, 28 Oct 2026 17:38:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=f71YatKQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBC491F01825;
-	Wed, 28 Oct 2026 17:38:35 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T1AkpXZ2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C84021F01825;
+	Wed, 28 Oct 2026 17:38:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793209116;
-	bh=zQTLZITHFyP/YGf8mye0MJ332TTJLjRcWhTIV/rHJ8U=;
+	s=korg; t=1793209119;
+	bh=r29QZjGy1Abe0lG9xZkIgYALtCa1GRy+yyEWl0q9byM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=f71YatKQQDqfLRy5SxmZOjmvVSICG3egDCVjU7REZ/IdYXyNEvCdgEj4K3THfSREr
-	 L1pwhUoYW0ko0ihJZoIqId6NjWpSoF9alyb7/V+O3bdSgQygEfU1ZCbRIPlEp0Hy4v
-	 cs2/2wLCu0nOxZoZR+jUiPOYn7QVKRLLh31oXkW4=
+	b=T1AkpXZ28KulP+ZvkXHJ0mBMMHZTOR/VfI7k9uCbXtO9eeWVz8na/r5gSdoazJgBa
+	 LPAUexgC8tiRvicDFhjhu104toI/XZp8QWHgRhLuT7wn6b386tvv5w172TCTridRJM
+	 VQxXHlOa12e183pNtt24VzyVEwzu42UXE71saiLo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Changyul Lee <lcy8047@gmail.com>,
-	Maurizio Lombardi <mlombard@redhat.com>,
-	Sang-Hoon Choi <csh0052@gmail.com>,
-	Keith Busch <kbusch@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 357/516] nvmet: use the local P2P device on metadata allocation failure
-Date: Wed, 28 Oct 2026 17:58:29 +0100
-Message-ID: <20261028170011.944750555@linuxfoundation.org>
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	"Claude Opus 5.5" <noreply@anthropic.com>
+Subject: [PATCH 5.10 358/516] ASoC: samsung: i2s: enable op_clk in probe to balance runtime PM
+Date: Wed, 28 Oct 2026 17:58:30 +0100
+Message-ID: <20261028170011.967619560@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -70,41 +69,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sang-Hoon Choi <csh0052@gmail.com>
+From: Marek Szyprowski <m.szyprowski@samsung.com>
 
-[ Upstream commit 4aa9c0f377a4de5e8fddce76b34ee4529639a1ff ]
+[ Upstream commit 7529254014764ae0b8c33d5c61a58f36c65b1a1c ]
 
-nvmet_req_alloc_p2pmem_sgls() assigns req->p2p_dev only after the data
-and metadata SGL allocations succeed. If the data allocation succeeds
-but the metadata allocation fails, out_free_sg passes req->p2p_dev to
-pci_p2pmem_free_sgl() before that assignment has taken place.
+The probe function puts the device into the runtime PM active state with
+only the "iis" bus clock enabled, but it also sets priv->op_clk to the
+parent of the RCLK_SRC mux without enabling it. The runtime PM suspend
+callback disables both clocks, so the first runtime suspend after probe
+disables op_clk once more than it was enabled.
 
-Pass the local p2p_dev argument instead, so cleanup uses the same PCI
-device as the successful data allocation.
+On Exynos5250 Arndale both clocks resolve to the same EXYNOS_I2S_BUS gate,
+so this triggers the following warning during boot:
 
-Fixes: bcd9a0797d73 ("nvmet: fix freeing unallocated p2pmem")
-Reported-by: Changyul Lee <lcy8047@gmail.com>
-Reviewed-by: Maurizio Lombardi <mlombard@redhat.com>
-Signed-off-by: Sang-Hoon Choi <csh0052@gmail.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+ WARNING: drivers/clk/clk.c:1270 at clk_core_disable+0xe4/0x23c, CPU#0: kworker/u8:3/45
+ i2s_bus already disabled
+ ...
+ Workqueue: pm pm_runtime_work
+ Call trace:
+  ...
+  clk_core_disable from clk_disable+0x28/0x34
+  clk_disable from i2s_runtime_suspend+0x58/0x68 [snd_soc_i2s]
+  i2s_runtime_suspend [snd_soc_i2s] from genpd_runtime_suspend+0xc4/0x298
+  genpd_runtime_suspend from __rpm_callback+0x48/0x18c
+  __rpm_callback from rpm_callback+0x4c/0x50
+  rpm_callback from rpm_suspend+0xf4/0x718
+  rpm_suspend from pm_runtime_work+0x9c/0xa0
+  ...
+
+Fix this by enabling op_clk in probe right after getting it, so the clock
+state matches the runtime PM active state, and by disabling it in remove.
+
+Fixes: 48279c53fd1d ("ASoC: samsung: i2s: Prevent external abort on exynos5433 I2S1 access")
+Assisted-by: Claude Opus 5.5 <noreply@anthropic.com>
+Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Link: https://patch.msgid.link/20261002092116.585466-1-m.szyprowski@samsung.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/samsung/i2s.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/nvme/target/core.c b/drivers/nvme/target/core.c
-index ddcfc51fc05c6..61e96097bfe9c 100644
---- a/drivers/nvme/target/core.c
-+++ b/drivers/nvme/target/core.c
-@@ -1027,7 +1027,7 @@ static int nvmet_req_alloc_p2pmem_sgls(struct pci_dev *p2p_dev,
+diff --git a/sound/soc/samsung/i2s.c b/sound/soc/samsung/i2s.c
+index df53d4ea808fe..68898e30fe198 100644
+--- a/sound/soc/samsung/i2s.c
++++ b/sound/soc/samsung/i2s.c
+@@ -1528,9 +1528,16 @@ static int samsung_i2s_probe(struct platform_device *pdev)
+ 		goto err_disable_pm;
+ 
+ 	priv->op_clk = clk_get_parent(priv->clk_table[CLK_I2S_RCLK_SRC]);
++	ret = clk_prepare_enable(priv->op_clk);
++	if (ret < 0) {
++		priv->op_clk = NULL;
++		goto err_unregister_clk;
++	}
  
  	return 0;
- out_free_sg:
--	pci_p2pmem_free_sgl(req->p2p_dev, req->sg);
-+	pci_p2pmem_free_sgl(p2p_dev, req->sg);
- out_err:
- 	return -ENOMEM;
- }
+ 
++err_unregister_clk:
++	i2s_unregister_clock_provider(priv);
+ err_disable_pm:
+ 	pm_runtime_disable(&pdev->dev);
+ err_del_sec:
+@@ -1553,6 +1560,7 @@ static int samsung_i2s_remove(struct platform_device *pdev)
+ 
+ 	i2s_unregister_clock_provider(priv);
+ 	i2s_delete_secondary_device(priv);
++	clk_disable_unprepare(priv->op_clk);
+ 	clk_disable_unprepare(priv->clk);
+ 
+ 	pm_runtime_put_noidle(&pdev->dev);
 -- 
 2.53.0
 
