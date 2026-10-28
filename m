@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793211735;
-	b=HwEsLUXhF0SMSxr38O8MHmy+tBRA/v5AXYLuhwXHH4gtyib2J8jrNlmo3/5xcgPJfAv9
-	 gf5F+RXPDR0r52wsI03bYfDI5IaSTFveH3UbQShzRdn/0TDfhGOH7rOtuHdamZA5l32nM
-	 xHZAyLGXwPV3ib5oZ73cTsWokcTDao/D76ymJh2/iFE7Qzs0WQKeNUS82njIMkqPvo9hv
-	 dRAR1JYwuR2msDTP608wQMQjUXF9zCnGguFjZbZzkD5VAkU4Pd9EG9sI0N3wnEF408RH8
-	 RxypZ0hBrLqGAqqANRXZFakn95jw/QJEKG26+zxsUppjkmSNlbTJLRgNJOdvmfYZwVw==
+	t=1793211738;
+	b=MX94KCvaC8tRCKbW4yNCEdjkysXi8ZlPLO6iJQL5ghIQGS7egyqUmgd6mdpHAWFv8ZgH
+	 ABxeoJPxBSmGxegzai3TQp1IsxC3ZpGBE4yb/7/2+1rLmFAlT66knVkuOqYO2Ps6fzjaX
+	 juvrmMOtzNQywosWFUS+m17ez5he7SFHpdRxtGOjg+P9nj4DBoSNAlAt4Md1DKfIbJPWm
+	 j8UZ6UCK9nrZquXAv32/in0BGItvCWGLjpp0AQKS0YZqifU5xv5Sop7xPyOEELeSQKT0l
+	 imKDCtqlljGqUHRY/HK2UeVg06+sTFQp2O6mFmWxqtv+9OARwW+7GCMqmNU32jIafrA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793211735;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793211738;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ufEidXq+P0tHgqdAVdJXpwbWVknD6Mk0Pl5Tv/urcXQ=;
-	b=ey/QX/aEd6U5pb7BLgyGA5COJBOqWXnmJoNb49uqGHmux+Pu28jIt2lHSxGhUL2VKZqq
-	 LpLmZXM4whT+SxVTmgZ7+wuQRauZgTxiDdvBvP+zMg9nUuoAl3WJ2bdaivb/8wTyHCg8/
-	 76Ycz4IchFVwM27s0aEnCuPS4QQcNe0vPSML3l5rQR4Mv289kBgC7yU8RS8TUiqezCq0G
-	 6DVZBCyuXVlP6Yd6yK370FgUAmXyaumX74U7wJvpIPPHrDOO59ISTusM2cq0/esaEgX3D
-	 yYVZiaWNU6mCC+YkKCgG0Y2iFiGwmcpS3lJbxw67ZTwGJt5a/JGnR9su9UkJ0xCRvmQ==
+	bh=ouTNDl0tPWcTWNBI//ClV7hte4tTx3c8Gor4AJQcKVE=;
+	b=K/LkuGhAZ3caQ2CMSNM4SU2+SL3eRhojNX3kmsbhWPT4YWeH1J1CMykgG7fRSmoEn+7K
+	 i0g5pQBJAurgTzz28lCmSJyskzZswyJvKMSIO7FLZwWLw6GrqBDy6bFn/QGe9f2dAe+km
+	 9YKyNT8YlamDmO3/0pVZLcDaTyit1Kn0czdtgnT58lUdwNtFvldCYKDUht+/UHZNh0+36
+	 6ddsVma0ka+0j/BJ106nwKjkSu4b9Du5+BNdVuVJnw2r3tIh58jkCqKmcpSDB+M++iXMq
+	 3X06cl2fDqqmYNB8O2U+78v3EyKApqMm5RArhooDVky4qQOyX4+dcxzBB9x1vy9iBRw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zaYbAAij;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="kJWZw/7t";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65EDF606A31C;
-	Wed, 28 Oct 2026 18:22:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E80D606A326;
+	Wed, 28 Oct 2026 18:22:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zaYbAAij
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7ED381F01825;
-	Wed, 28 Oct 2026 18:22:14 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kJWZw/7t
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DC1D1F01825;
+	Wed, 28 Oct 2026 18:22:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793211735;
-	bh=ufEidXq+P0tHgqdAVdJXpwbWVknD6Mk0Pl5Tv/urcXQ=;
+	s=korg; t=1793211737;
+	bh=ouTNDl0tPWcTWNBI//ClV7hte4tTx3c8Gor4AJQcKVE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zaYbAAij49/jDxohWsiefpOizOviZbHGJbIMkSoHscunupGM30Fhb5p4z0pcGzrm6
-	 3hwAcFAGsiv0IDf1nWvVaI/PbMCINyaFQQu3YWLkxRW5FTQAlQ/JDdt02tE783kc9O
-	 WW65OY0Cp8Ov6HHDOHH2fXGUMAOpSwDYZ4nUWJ54=
+	b=kJWZw/7tAzoQuAEgzZw02K7ER6BrzlUu8esOx//RFP8fUtuGW5TcQ2v7jCNkEbJYS
+	 1NT2Qxnu2IZd3G2gyAmKtPpF75mQINlgHFKiVm45GQSWJY6ygudcvGfc+ZXP9BEMrc
+	 gGft0V9wKO5wObp99eNrRBJdkeLtQPq8gMc1Rvmk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Zeng <kylebot@openai.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	kernel test robot <lkp@intel.com>,
+	Keith Busch <kbusch@kernel.org>,
+	Dinh Nguyen <dinguyen@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 482/571] netlink: reset skb headers before unicast and multicast filtering
-Date: Wed, 28 Oct 2026 18:00:29 +0100
-Message-ID: <20261028170019.461166889@linuxfoundation.org>
+Subject: [PATCH 5.15 483/571] nios2: fix __wsum type degradation in csum_fold()
+Date: Wed, 28 Oct 2026 18:00:30 +0100
+Message-ID: <20261028170019.485506609@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -68,58 +69,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kyle Zeng <kylebot@openai.com>
+From: Keith Busch <kbusch@kernel.org>
 
-[ Upstream commit 8bf659bd54e1f00e34cf5244b1d289c506fa47c0 ]
+[ Upstream commit b963f2345fa20417401c51a69dedb6a58eea33a9 ]
 
-Socket filters can use SKF_NET_OFF and SKF_LL_OFF to read relative to
-an skb's network and MAC headers. Netlink producers may reserve
-headroom without resetting those headers, allowing a receiving socket's
-filter to read data before the initialized message.
+csum_fold() shifts a bitwise __wsum type, which sparse reports as
+"restricted __wsum degrades to integer". Sparse only checks the body of
+a static inline once something instantiates it, so this went unnoticed
+until a recent block layer change added the first csum_fold() caller to
+a file built on this architecture.
 
-For example, IWPM HELLO replies are allocated with dev_alloc_skb(),
-which reserves NET_SKB_PAD bytes. An unprivileged NETLINK_RDMA user can
-attach a classic socket filter and disclose this headroom through the
-length of the delivered reply. The resets in netlink_dump() do not help
-because IWPM sends a separately allocated skb through netlink_unicast().
+Force cast to a __u32 for the shift, as the other architectures do.
 
-Reset both headers before running the receiver's filter in unicast and
-broadcast delivery, as is already done for dump skbs. This also covers
-other netlink producers that reserve headroom without changing their
-allocation or message-building code.
-
-Fixes: b1153f29ee07 ("netlink: make socket filters work on netlink")
-Assisted-by: LLM
-Signed-off-by: Kyle Zeng <kylebot@openai.com>
-Link: https://patch.msgid.link/20261006224232.50724-1-kylebot@openai.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: eea9507a69d6 ("nios2: Library functions")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202609222053.5gjiJjtb-lkp@intel.com/
+Signed-off-by: Keith Busch <kbusch@kernel.org>
+Signed-off-by: Dinh Nguyen <dinguyen@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netlink/af_netlink.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ arch/nios2/include/asm/checksum.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/netlink/af_netlink.c b/net/netlink/af_netlink.c
-index 0ec133e744af0..63065d2449509 100644
---- a/net/netlink/af_netlink.c
-+++ b/net/netlink/af_netlink.c
-@@ -1339,6 +1339,8 @@ int netlink_unicast(struct sock *ssk, struct sk_buff *skb,
- 	if (netlink_is_kernel(sk))
- 		return netlink_unicast_kernel(sk, skb, ssk);
- 
-+	skb_reset_network_header(skb);
-+	skb_reset_mac_header(skb);
- 	if (sk_filter(sk, skb)) {
- 		err = skb->len;
- 		kfree_skb(skb);
-@@ -1475,6 +1477,8 @@ static void do_one_broadcast(struct sock *sk,
- 		goto out;
- 	}
- 
-+	skb_reset_network_header(p->skb2);
-+	skb_reset_mac_header(p->skb2);
- 	if (sk_filter(sk, p->skb2)) {
- 		kfree_skb(p->skb2);
- 		p->skb2 = NULL;
+diff --git a/arch/nios2/include/asm/checksum.h b/arch/nios2/include/asm/checksum.h
+index 69004e07a1ba3..b6b415ae17a08 100644
+--- a/arch/nios2/include/asm/checksum.h
++++ b/arch/nios2/include/asm/checksum.h
+@@ -27,7 +27,7 @@ static inline __sum16 csum_fold(__wsum sum)
+ 		"add	%0, %0, r8\n"
+ 		"nor	%0, %0, %0\n"
+ 		: "=r" (sum)
+-		: "r" (sum << 16), "0" (sum)
++		: "r" ((__force u32)sum << 16), "0" (sum)
+ 		: "r8");
+ 	return (__force __sum16) sum;
+ }
 -- 
 2.53.0
 
