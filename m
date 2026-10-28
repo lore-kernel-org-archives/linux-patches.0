@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215752;
-	b=qFXfHHBeCMj/16OR15jbQ72GM2Srxrxl2DiLCNAHwwgSDhKq2tWMnZ3XrVAZ69whmj+7
-	 xuBizA6OKVwRnN7OfBn5/5i6ARUb+SQFJkTaoyDKn83UwGCSzDbFq3EPb5Rw4KuNmCbUZ
-	 0SXPFLH1h7NqMSz60hTjlijn2Po0cBlAy/cWJnx3/tSaV3+shjKwR8XQFYF+d8mrBjFf9
-	 BtyLhp9IZPvdxjvPRlUB5XzgAfAEXBaVSm/TxkrEj2BMXoGo/qHYpOEA6burTgVQuzEw5
-	 8mr74278OD8NUPseyl5OJRAKT5OQpINJqlyIkozEfhU+d8X9DUrZlv+QY3qskQB2KcA==
+	t=1793215754;
+	b=qRFhhOcZ8kn75OeAWIgj5CtcPEIqQJKPAeKcizG0WI8c5xkWaYgWQOEIXyUIbtBKYXhg
+	 yjpR39Br2jaI3xcgJqszAbSwDdOOhn8CMUZyMbTXbD0GCVcRt+97cjq4Vx2Pv4mQiuskk
+	 y7t1wpbKH0+Gohu8XR0x/5gbIpNvuOiNqOQ6mtE1S9DBZleLEYMKFwFi0OVGSIdLP6buS
+	 ED5UKPOOu8kGEaZDN8zHCOvvifXaRPf61eAz0uG2XSla7E8IKa+Am80u6JIVB3UtQZO+M
+	 N2s9UUDAG5Grxj9i0ux3QyqUTX5soJaD+Nozxo/CAlyAqgEq5T2FzyYKnmzstoOPzrw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215752;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215754;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+RgJoaC02YmWai7iGH4QFE++cvOn+90nrbMtU0Ep1l0=;
-	b=Wnm3w1IWAG0dTdQVyHZE2i87uyssbBx0Zd9lrTV5fNQIhtlKpuaoL9np7K6s9m3+XzpM
-	 l/H2jmkOw9dSzr8aexzTuRq0yA2Oi/uKXTKEfJwbkoLxv7yWSXdl1JOkE3K2RZnu3CdH1
-	 2YWwLDZhSDgqbQCHWpP/Ax16lxOZioDcWsrzzQzjo6QtDTOhvK48/BGt+0bmn5TghjABK
-	 DZMRLSbi3kfVN5F86Vrb74NDWx4oW4DxPRDZKS0bnYLIxwVYe7CaZ63jp1/kGKK7SjGfF
-	 4UlHcCLB+0hg7VIBzRfAySJf0CXq9DpAR0SdVJB5UfOVtJDgtViMSjheTnlRr8Zh9nw==
+	bh=FCDMFA4J9U8pf3T+Ygtxm9+Ap+7+YOJzJh3wAT6sFG8=;
+	b=Y5VvzNJEbJYtF0tEIl/tTopnqJASQ6eiEWCHEUGGTtRU+CbFbM6I6GoVDg88Ry1hwAdG
+	 TEsNSXVBPJ6o9rNf3BF3lSAWwxstIbyQRLhXXTjUNfvrGnnCtkbyuAq0yRvEEwpDfK2qq
+	 7rOreurtkfDkC46JsEYSGPpLBKkRH15CObnMe/kNQa+uDwjHXLDPG9PoNM/jpL9tsKvUP
+	 2KsO5je8e5xBRsa2T5ModY+3u0+sH9BR+B1x2gnbTVQWaUMM+ACMFuiyu6D2Y12468fFr
+	 n16twOlgqKFmxLVxLlGxaDM1jYBRwJlP0VJoEirdzbxdCuZF4H5IuVpRNI7u17W0tCA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0LBu8GSN;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B1vYL37K;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0E58606A320;
-	Wed, 28 Oct 2026 19:29:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E448606A32A;
+	Wed, 28 Oct 2026 19:29:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0LBu8GSN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E39FC1F01825;
-	Wed, 28 Oct 2026 19:29:10 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B1vYL37K
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA13F1F01825;
+	Wed, 28 Oct 2026 19:29:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215751;
-	bh=+RgJoaC02YmWai7iGH4QFE++cvOn+90nrbMtU0Ep1l0=;
+	s=korg; t=1793215754;
+	bh=FCDMFA4J9U8pf3T+Ygtxm9+Ap+7+YOJzJh3wAT6sFG8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0LBu8GSNU8RYmCrsru1m98vcVYTWfqaqStbBcF2eRYcbSVcXokfFbpZJcAhcxlsT0
-	 oKlJAaGOYtlomtTD5WIBx8OHju+tPv7ORYeLVZld6jll70NtDCglNRzlvPHR+3PKij
-	 nrYHYt04PVQOIBH6BiNh/Nub/MO2ssfnruTM2cao=
+	b=B1vYL37KFEPcJHAXm9n5Y1RqKVqYRDLMCigrVcQJ/8mcvJ9tdBTvw7+qNa3ymKKPE
+	 h2FB5hertMbI7LXF2ZDF1+YuQ4BQnNP0UXQdd76cz2hBRCKROaNwzcSURMxPf/Dz5o
+	 eZAbuB+n8MoiGlMmEaZnmjY6KLcFzDfme95XP51M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Werner Kasselman <werner@verivus.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Zack Rusin <zack.rusin@broadcom.com>,
+	Ian Forbes <ian.forbes@broadcom.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1277/1887] drm/radeon: fix integer overflow in radeon_align_pitch()
-Date: Wed, 28 Oct 2026 17:56:13 +0100
-Message-ID: <20261028170528.482836028@linuxfoundation.org>
+Subject: [PATCH 6.1 1278/1887] drm/vmwgfx: reject DX_BIND_QUERY without a DX context
+Date: Wed, 28 Oct 2026 17:56:14 +0100
+Message-ID: <20261028170528.505650450@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,85 +68,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Werner Kasselman <werner@verivus.ai>
+From: Zack Rusin <zack.rusin@broadcom.com>
 
-[ Upstream commit ce3b24eb3ee8f82de851535f516bf21f83e82259 ]
+[ Upstream commit 55ec09c9ce10b1272802c7ab6c1be2ea0dbc68db ]
 
-radeon_align_pitch() has the same kind of overflow issue as the old
-amdgpu helper: both the alignment round-up add and the final
-'aligned * cpp' calculation can overflow signed int.
+vmw_cmd_dx_bind_query() unconditionally dereferences
+sw_context->dx_ctx_node->ctx.  Userspace can trigger a NULL pointer
+dereference from any render-node fd by submitting an execbuf with
+dx_context_handle == SVGA3D_INVALID_ID and a SVGA_3D_CMD_DX_BIND_QUERY
+opcode in the command stream: dx_ctx_node is left NULL and the kernel
+oopses on the assignment.  The same NULL is then re-read in
+vmw_resources_reserve() via vmw_context_get_dx_query_mob().
 
-If that wraps, radeon_mode_dumb_create() can end up returning an
-invalid pitch or creating a zero-sized dumb buffer.
+All sibling DX handlers fail-close on a missing dx_ctx_node using
+VMW_GET_CTX_NODE().  Use the same pattern here, returning -EINVAL up
+front before any relocation state is published.
 
-Fix this by using check_add_overflow() for the alignment round-up and
-check_mul_overflow() for the final pitch calculation, returning 0 on
-overflow. Also reject zero pitch and size in
-radeon_mode_dumb_create().
-
-Found via AST-based call-graph analysis using sqry.
-
-Fixes: ff72145badb8 ("drm: dumb scanout create/mmap for intel/radeon (v3)")
-Signed-off-by: Werner Kasselman <werner@verivus.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: 9c079b8ce8bf ("drm/vmwgfx: Adapt execbuf to the new validation api")
+Cc: stable@vger.kernel.org
+Assisted-by: Claude:claude-opus-4.7
+Signed-off-by: Zack Rusin <zack.rusin@broadcom.com>
+Reviewed-by: Ian Forbes <ian.forbes@broadcom.com>
+Link: https://patch.msgid.link/20260505222728.519626-3-zack.rusin@broadcom.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/radeon/radeon_fb.c  | 9 +++++++--
- drivers/gpu/drm/radeon/radeon_gem.c | 4 ++++
- 2 files changed, 11 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/radeon/radeon_fb.c b/drivers/gpu/drm/radeon/radeon_fb.c
-index 6ccea51d40722..46800703cd20f 100644
---- a/drivers/gpu/drm/radeon/radeon_fb.c
-+++ b/drivers/gpu/drm/radeon/radeon_fb.c
-@@ -25,6 +25,7 @@
-  */
+diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c b/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c
+index ef2ee93f5e343..1be89105fc6ef 100644
+--- a/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c
++++ b/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c
+@@ -1282,9 +1282,13 @@ static int vmw_cmd_dx_bind_query(struct vmw_private *dev_priv,
+ 				 SVGA3dCmdHeader *header)
+ {
+ 	VMW_DECLARE_CMD_VAR(*cmd, SVGA3dCmdDXBindQuery);
++	struct vmw_ctx_validation_info *ctx_node = VMW_GET_CTX_NODE(sw_context);
+ 	struct vmw_buffer_object *vmw_bo;
+ 	int ret;
  
- #include <linux/module.h>
-+#include <linux/overflow.h>
- #include <linux/pci.h>
- #include <linux/pm_runtime.h>
- #include <linux/slab.h>
-@@ -91,6 +92,7 @@ int radeon_align_pitch(struct radeon_device *rdev, int width, int cpp, bool tile
- 	int aligned = width;
- 	int align_large = (ASIC_IS_AVIVO(rdev)) || tiled;
- 	int pitch_mask = 0;
-+	int pitch;
++	if (!ctx_node)
++		return -EINVAL;
++
+ 	cmd = container_of(header, typeof(*cmd), header);
  
- 	switch (cpp) {
- 	case 1:
-@@ -105,9 +107,12 @@ int radeon_align_pitch(struct radeon_device *rdev, int width, int cpp, bool tile
- 		break;
- 	}
+ 	/*
+@@ -1298,7 +1302,7 @@ static int vmw_cmd_dx_bind_query(struct vmw_private *dev_priv,
+ 		return ret;
  
--	aligned += pitch_mask;
-+	if (check_add_overflow(aligned, pitch_mask, &aligned))
-+		return 0;
- 	aligned &= ~pitch_mask;
--	return aligned * cpp;
-+	if (check_mul_overflow(aligned, cpp, &pitch))
-+		return 0;
-+	return pitch;
+ 	sw_context->dx_query_mob = vmw_bo;
+-	sw_context->dx_query_ctx = sw_context->dx_ctx_node->ctx;
++	sw_context->dx_query_ctx = ctx_node->ctx;
+ 	return 0;
  }
  
- static void radeonfb_destroy_pinned_object(struct drm_gem_object *gobj)
-diff --git a/drivers/gpu/drm/radeon/radeon_gem.c b/drivers/gpu/drm/radeon/radeon_gem.c
-index 3388a3d21d2c0..5e5d4de65bf77 100644
---- a/drivers/gpu/drm/radeon/radeon_gem.c
-+++ b/drivers/gpu/drm/radeon/radeon_gem.c
-@@ -831,8 +831,12 @@ int radeon_mode_dumb_create(struct drm_file *file_priv,
- 
- 	args->pitch = radeon_align_pitch(rdev, args->width,
- 					 DIV_ROUND_UP(args->bpp, 8), 0);
-+	if (!args->pitch)
-+		return -EINVAL;
- 	args->size = (u64)args->pitch * args->height;
- 	args->size = ALIGN(args->size, PAGE_SIZE);
-+	if (!args->size)
-+		return -EINVAL;
- 
- 	r = radeon_gem_object_create(rdev, args->size, 0,
- 				     RADEON_GEM_DOMAIN_VRAM, 0,
 -- 
 2.53.0
 
