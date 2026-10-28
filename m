@@ -1,55 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793210441;
-	b=lBUFps9GHeEhQ4pLfj5qmzhsP8FMmNjJ1yHaWNc4r8u05xV/6b3sHL72Qb5wjNzbH277
-	 K3wdkWimreg+b21SiXLchzz36ma81YKTZjFDNApSFUpxLwxR5/xvHx4LvcG6u8vIjOpZ1
-	 FrnmrsjURu2qPGKh8GUrID9UCL70U0m86Fuv+fxvT0mKN9JTm71OEZ/+CVN/0YDAA1O6l
-	 6+dDaMVNECK2V7KYv8LlCzOsRib+mbxx+j6MzYrJDLO8Ss8EF8qBbob3AFXg7Y9xRcePM
-	 KSrKIl1+xhK8FvthV1hf11NF/h5KW3hMIoWSiLqquSbMvGFCvjjJ+SJHw5V3jATRKiQ==
+	t=1793210444;
+	b=ThgV6cJB69TXF6rkx5uVAQlxeu8CNKvL640dgDytIwMv7KTX39oOHfWc/f/is9CIWkJf
+	 V1S8SUUWkudDLO7QuHgKxDtNH30YOCWo1HYGK+7wX++cIjQncEToLe6/TY+Jcx6+PR7cY
+	 wiv3TtJLl2KA9VecemF+J3jR2t4zId0jToq8nJaS3PVWmq7qk3FUwsfPeWc3APhuRhMb8
+	 b4zvjO7G0pek8PxK/s71bHjjNTsUAikJQE3oBcL2iADroWfLtz8/VdjoanfzurQZU5Sbi
+	 EroNHrZdcz7MJwxlhIPotFQ4iag+M60hp8Lti6MKcwB9asJsDNzV6ulhzpOP2KZ5urw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793210441;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793210444;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=fWfXwlIwzzbVz2e8sqWmOnezVY6z1myx/JuzvAVZzDs=;
-	b=BB6Xcylc8eVdMWs9G2Kwtdjc3CwbYTLa4Drij1UYWAx7u8rUUky+MuzlCHWSIIYLCInO
-	 8q9LGFIloyWtD6HCpP1pRvE/nELwJ7fote229ewf2I+ZPSJMQzqFNS4Q2nnyfuYJ/oiYQ
-	 Bnvi93DJXWUOddl+jHSgElv2JSZKiEhpZo5DKsT9Rqz7OGNlpfqqhnBzlOhc73FbHf5iM
-	 8cooUh6/cse5u83CabawBkx/jMVuhhWWI16A64+qrCtpsBGRP0/NHvMfesgyksISDMp5P
-	 2peog90aYuQdS2lqp3neq+XgiCOx0vLByU+r2W70sEDLh9FlV3T9GrveLVrL7DB8uIQ==
+	bh=TUDPBrgGJJ5VkljRDHVzDF9EYpDMQvzRS+udrdge4Kc=;
+	b=FjfdXXUtCcRhxck9SM3OltajrhNR8i8CcpmMQtF1vyA7MQL/6/p+kldGxwv6E9ARPh/B
+	 3l2ua3F9is1scIVk9Z1F9DAI7foOZeIuLoN51I2A4lwN45DIpBQwJMylvQdAo8SS+ofhi
+	 U9ieCBxk42m6+zSNJJ5J+p5hwE+LsnJbL4S2CL2qk60D1DvjJ3N2ZVCOJAmQzkWmmjslb
+	 qybIHO1nwXIGhLRqWzcV+nja/K+KV2Ngxjyj5kMSfWL3qp2LLhHrDtclqCZyHtsodZ3j2
+	 cHHgi0wNqKdDpvOan2UiNuLSYRiRnI3jt6HazObVyGsmh18T4EU8ngZWQBYz35or1hw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Vkgmyymf;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pTpYVLgg;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAB4E606A31D;
-	Wed, 28 Oct 2026 18:00:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACC8C606A321;
+	Wed, 28 Oct 2026 18:00:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Vkgmyymf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BAC01F01825;
-	Wed, 28 Oct 2026 18:00:40 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pTpYVLgg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 081AE1F01825;
+	Wed, 28 Oct 2026 18:00:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793210440;
-	bh=fWfXwlIwzzbVz2e8sqWmOnezVY6z1myx/JuzvAVZzDs=;
+	s=korg; t=1793210443;
+	bh=TUDPBrgGJJ5VkljRDHVzDF9EYpDMQvzRS+udrdge4Kc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Vkgmyymfo4CG6dZjbnTng0WkIwQ7FTfvqy7EtJeoAShxNaMDUdhUCa2SRFuTep3Nj
-	 3o6lA972ZBVoqHeAiJAf4Gv9ZZziEV6YaTyDp4D/pOdm7UkIpdT4ZXrAUuCNEJbkHY
-	 /ILKLs4Px9h5xKLQAmHLnkzzkpeTAdA72JYD+uyI=
+	b=pTpYVLggbd/YWJCwbM2w3izHN+S0sCZLKoc4s4RAqRcn5YkVwkb1fZvrDarK58s/R
+	 idCCgSuZK9gSxa8k8egiOhQ0r2P6iiSwZQh0RARH9k6EA/lMJ2IwIAqpqjVxKzKeMh
+	 KHokWMUZdRRTwuc2AUxZruJEIrNLlfATTkoU7nlE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?=E6=9C=B1=E6=81=BA=E4=B9=BE?= <zhukaiqian@xiaomi.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Thomas Gleixner <tglx@kernel.org>,
-	Bradley Morgan <brads@mainlining.org>,
-	=?UTF-8?q?=E5=88=98=E6=9C=AF=E9=AB=98?= <liushugao@xiaomi.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 027/571] tick/broadcast: Plug clockevents replacement race
-Date: Wed, 28 Oct 2026 17:52:54 +0100
-Message-ID: <20261028170008.666533731@linuxfoundation.org>
+Subject: [PATCH 5.15 028/571] Bluetooth: btqcomsmd: Convert to platform remove callback returning void
+Date: Wed, 28 Oct 2026 17:52:55 +0100
+Message-ID: <20261028170008.691166390@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -72,208 +69,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Gleixner <tglx@linutronix.de>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit 113a9796effe3376d2ec5aabcca1fef4fef4cd62 ]
+[ Upstream commit 4a62832f565c950d645a4f7b199a0a7985815940 ]
 
-朱恺乾 reported and decoded the following race condition when a broadcast
-device is replaced:
+The .remove() callback for a platform driver returns an int which makes
+many driver authors wrongly assume it's possible to do error handling by
+returning an error code. However the value returned is ignored (apart
+from emitting a warning) and this typically results in resource leaks.
 
-CPUA					CPUB
- __tick_broadcast_oneshot_control()
-   bc = tick_broadcast_device.evtdev;
-					tick_install_broadcast_device(dev)
-        				clockevents_exchange_device(cur, dev)
-					   shutdown(cur);
-					   detach(cur);
-					   cur->handler = noop;
-					   tick_broadcast_device.evtdev = dev;
+To improve here there is a quest to make the remove callback return
+void. In the first step of this quest all drivers are converted to
+.remove_new(), which already returns void. Eventually after all drivers
+are converted, .remove_new() will be renamed to .remove().
 
-  tick_broadcast_set_event(bc, next_event); <- FAIL: arms a detached device.
+Trivially convert this driver from always returning zero in the remove
+callback to the void returning variant.
 
-If the original broadcast device has a restricted interrupt affinity mask
-and the last CPU in that mask goes offline then the BUG() in
-tick_cleanup_dead_cpu() triggers because the clockevent device is not in
-detached state.
-
-The reason for this is that tick_install_broadcast_device() is not
-serialized vs. tick broadcast operations.
-
-The obvious cure is to serialize tick_install_broadcast_device() with
-tick_broadcast_lock against a concurrent tick broadcast operation.
-
-That requires to split clockevents_exchange_device() into two parts, one
-which does the exchange, shutdown and detach operation and the other which
-drops the module reference count. This is required because the module
-reference cannot be dropped while holding tick_broadcast_lock.
-
-Let clockevents_exchange_device() do both operations as before, but let the
-broadcast device code take the two step approach and do the device
-exchange under tick_broadcast_lock and drop the module reference count
-after releasing it.
-
-Fixes: f8381cba04ba ("[PATCH] tick-management: broadcast functionality")
-Reported-by: 朱恺乾 <zhukaiqian@xiaomi.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Reviewed-by: Bradley Morgan <brads@mainlining.org>
-Tested-by: 刘术高 <liushugao@xiaomi.com>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/87cymdsu0r.ffs@tglx
-[ Replaced scoped_guard() with a block containing guard() for GNU89 compatibility. ]
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Stable-dep-of: f5a427b16e45 ("Bluetooth: btqcomsmd: destroy RPMsg endpoints before freeing hci_dev")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/time/clockevents.c    | 33 +++++++++++++++++++-------------
- kernel/time/tick-broadcast.c | 37 ++++++++++++++++++++++--------------
- kernel/time/tick-internal.h  |  2 ++
- 3 files changed, 45 insertions(+), 27 deletions(-)
+ drivers/bluetooth/btqcomsmd.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/kernel/time/clockevents.c b/kernel/time/clockevents.c
-index 003ccf338d201..87892f4c3f293 100644
---- a/kernel/time/clockevents.c
-+++ b/kernel/time/clockevents.c
-@@ -557,33 +557,40 @@ void clockevents_handle_noop(struct clock_event_device *dev)
- {
+diff --git a/drivers/bluetooth/btqcomsmd.c b/drivers/bluetooth/btqcomsmd.c
+index 11c7e04bf3947..88dbb2f3fabf9 100644
+--- a/drivers/bluetooth/btqcomsmd.c
++++ b/drivers/bluetooth/btqcomsmd.c
+@@ -197,7 +197,7 @@ static int btqcomsmd_probe(struct platform_device *pdev)
+ 	return ret;
  }
  
--/**
-- * clockevents_exchange_device - release and request clock devices
-- * @old:	device to release (can be NULL)
-- * @new:	device to request (can be NULL)
-- *
-- * Called from various tick functions with clockevents_lock held and
-- * interrupts disabled.
-- */
--void clockevents_exchange_device(struct clock_event_device *old,
--				 struct clock_event_device *new)
-+void __clockevents_exchange_device(struct clock_event_device *old,
-+				   struct clock_event_device *new)
+-static int btqcomsmd_remove(struct platform_device *pdev)
++static void btqcomsmd_remove(struct platform_device *pdev)
  {
- 	/*
- 	 * Caller releases a clock event device. We queue it into the
- 	 * released list and do a notify add later.
- 	 */
- 	if (old) {
--		module_put(old->owner);
- 		clockevents_switch_state(old, CLOCK_EVT_STATE_DETACHED);
- 		list_move(&old->list, &clockevents_released);
- 	}
+ 	struct btqcomsmd *btq = platform_get_drvdata(pdev);
  
- 	if (new) {
--		BUG_ON(!clockevent_state_detached(new));
-+		WARN_ON(!clockevent_state_detached(new));
- 		clockevents_shutdown(new);
- 	}
+@@ -206,8 +206,6 @@ static int btqcomsmd_remove(struct platform_device *pdev)
+ 
+ 	rpmsg_destroy_ept(btq->cmd_channel);
+ 	rpmsg_destroy_ept(btq->acl_channel);
+-
+-	return 0;
  }
  
-+/**
-+ * clockevents_exchange_device - release and request clock devices
-+ * @old:	device to release (can be NULL)
-+ * @new:	device to request (can be NULL)
-+ *
-+ * Called from various tick functions with clockevents_lock held and
-+ * interrupts disabled.
-+ */
-+void clockevents_exchange_device(struct clock_event_device *old,
-+				 struct clock_event_device *new)
-+{
-+	__clockevents_exchange_device(old, new);
-+	if (old)
-+		module_put(old->owner);
-+}
-+
- /**
-  * clockevents_suspend - suspend clock devices
-  */
-@@ -650,7 +657,7 @@ void tick_cleanup_dead_cpu(int cpu)
- 		if (cpumask_test_cpu(cpu, dev->cpumask) &&
- 		    cpumask_weight(dev->cpumask) == 1 &&
- 		    !tick_is_broadcast_device(dev)) {
--			BUG_ON(!clockevent_state_detached(dev));
-+			WARN_ON(!clockevent_state_detached(dev));
- 			list_del(&dev->list);
- 		}
- 	}
-diff --git a/kernel/time/tick-broadcast.c b/kernel/time/tick-broadcast.c
-index 13a71a894cc16..5ca420e0f7d35 100644
---- a/kernel/time/tick-broadcast.c
-+++ b/kernel/time/tick-broadcast.c
-@@ -162,23 +162,32 @@ static bool tick_set_oneshot_wakeup_device(struct clock_event_device *newdev,
-  */
- void tick_install_broadcast_device(struct clock_event_device *dev, int cpu)
- {
--	struct clock_event_device *cur = tick_broadcast_device.evtdev;
-+	struct clock_event_device *cur;
+ static const struct of_device_id btqcomsmd_of_match[] = {
+@@ -218,7 +216,7 @@ MODULE_DEVICE_TABLE(of, btqcomsmd_of_match);
  
--	if (tick_set_oneshot_wakeup_device(dev, cpu))
--		return;
-+	{
-+		guard(raw_spinlock_irqsave)(&tick_broadcast_lock);
- 
--	if (!tick_check_broadcast_device(cur, dev))
--		return;
-+		if (tick_set_oneshot_wakeup_device(dev, cpu))
-+			return;
- 
--	if (!try_module_get(dev->owner))
--		return;
-+		cur = tick_broadcast_device.evtdev;
-+		if (!tick_check_broadcast_device(cur, dev))
-+			return;
- 
--	clockevents_exchange_device(cur, dev);
-+		if (!try_module_get(dev->owner))
-+			return;
-+
-+		__clockevents_exchange_device(cur, dev);
-+		if (cur)
-+			cur->event_handler = clockevents_handle_noop;
-+		WRITE_ONCE(tick_broadcast_device.evtdev, dev);
-+		if (!cpumask_empty(tick_broadcast_mask))
-+			tick_broadcast_start_periodic(dev);
-+	}
-+
-+	/* Module release must be outside of the lock */
- 	if (cur)
--		cur->event_handler = clockevents_handle_noop;
--	tick_broadcast_device.evtdev = dev;
--	if (!cpumask_empty(tick_broadcast_mask))
--		tick_broadcast_start_periodic(dev);
-+		module_put(cur->owner);
- 
- 	if (!(dev->features & CLOCK_EVT_FEAT_ONESHOT))
- 		return;
-@@ -1205,7 +1214,7 @@ int tick_broadcast_oneshot_active(void)
-  */
- bool tick_broadcast_oneshot_available(void)
- {
--	struct clock_event_device *bc = tick_broadcast_device.evtdev;
-+	struct clock_event_device *bc = READ_ONCE(tick_broadcast_device.evtdev);
- 
- 	return bc ? bc->features & CLOCK_EVT_FEAT_ONESHOT : false;
- }
-@@ -1213,7 +1222,7 @@ bool tick_broadcast_oneshot_available(void)
- #else
- int __tick_broadcast_oneshot_control(enum tick_broadcast_state state)
- {
--	struct clock_event_device *bc = tick_broadcast_device.evtdev;
-+	struct clock_event_device *bc = READ_ONCE(tick_broadcast_device.evtdev);
- 
- 	if (!bc || (bc->features & CLOCK_EVT_FEAT_HRTIMER))
- 		return -EBUSY;
-diff --git a/kernel/time/tick-internal.h b/kernel/time/tick-internal.h
-index 649f2b48e8f06..52e6fec7377d3 100644
---- a/kernel/time/tick-internal.h
-+++ b/kernel/time/tick-internal.h
-@@ -48,6 +48,8 @@ static inline void clockevent_set_state(struct clock_event_device *dev,
- }
- 
- extern void clockevents_shutdown(struct clock_event_device *dev);
-+extern void __clockevents_exchange_device(struct clock_event_device *old,
-+					  struct clock_event_device *new);
- extern void clockevents_exchange_device(struct clock_event_device *old,
- 					struct clock_event_device *new);
- extern void clockevents_switch_state(struct clock_event_device *dev,
+ static struct platform_driver btqcomsmd_driver = {
+ 	.probe = btqcomsmd_probe,
+-	.remove = btqcomsmd_remove,
++	.remove_new = btqcomsmd_remove,
+ 	.driver  = {
+ 		.name  = "btqcomsmd",
+ 		.of_match_table = btqcomsmd_of_match,
 -- 
 2.53.0
 
