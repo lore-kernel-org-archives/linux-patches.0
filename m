@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216700;
-	b=En01oijNmOtsCfpgEZBal0zffTqfoGXP1YADhAwSXBl+uBW4O5wQ1eB7HjVYOu8kjYeA
-	 W29SqfimWR+pdxZOcpShc+CYsm3bG/nT7jVCR4JwmuEq+3FOK4JGg27x9+fgEN5wDjiqW
-	 IF1E5dO7PP3jY/DSdz/819MlbYpdOzDRq3aRbUBAC1D8OL0gnwXbs81982NjnzmI7q1TS
-	 rbrxPz6URPawZW084/0QD2g2fhFmER6ADdyk7k/gp/EkiPs0TwtcvF2gsn8PE98aPtfDZ
-	 kkdknFrlsukn4pGUOGIu9q0doPtN4RpiITBM/uacB6kpR4rYWBTmZzwBvzTafC9btgA==
+	t=1793216703;
+	b=vfA5hwNdZ0roUmNluZyLhbKXPnsOgV6n/Wgwnxm3kBCBmF6Qe+x5RX8LEonvFyMvxrc1
+	 L+zepMlCVxNiTGvx/PNHaxWIP8iAYBdLwWOhmDAVcAvHLdWeCEzQlH4taOXVbJNzkYOvq
+	 YbCXyX/7d8vpEQb+YfJ7GIPuV7nYGP+155zzmVmmB29Ubx8Bvp+DRv/yRsvxEBbhxCJtV
+	 135EYdlv2KAY+aRaGXOqNEoCKUILQKzeDXvvDKlBN1g3y5zOkHcl7ji1knqDCf284UAwk
+	 6outr/f/aOjvS/rdB65F1gUO/a8JuBYLmW9Xrt6UMr9rpSKi1aIV3IaDknVFdMu+zZg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216700;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216703;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Zyy+okyXg/L5VCa2SELqMER2s5hUov30Jlg1PnoaHNo=;
-	b=Yu2jFxTZ4Qpa11OWnvibsx11B4Et9fxE8y9WeRJ0MstKEF7xk+hqZ55mdZZjGeyIXC/C
-	 s4qenB2SRzVRdeuvdQPeIpIJ1ACrmbLZISH6a6KY4Yz0ouXWqpk9VRfVyojVog8wAOBkU
-	 W3VGx9SveRO/kCh/a3vkrqvd6VHp4StQC+SPyJeLitM78bpPnshda4Dfy/RoEvVNZOxuw
-	 8KW6oWeoFFABqQY0t3udQo65ojOul1uMigagjd04zUuetMvSSQ3HFVrrwY6sVfrdZu/Ha
-	 mhzA+PPc1cvnLTOZtD6ZwQz+ouRPWYDgyTuwCPSReJxBfcVSWiWq/ObUxXzHEtU/diA==
+	bh=04WfB+kvISMn7P3H4UK++thEp8ntnS2muAHASZjq2mk=;
+	b=nhlTksJe0ZDNfM2ubQf/O3SL4c6i0GqVQisWj72td6M9a9hP/cFp7sc9voZ32pRemDYI
+	 5P9wCeKiQunmp7wDgLhWM/a7DabGUmEukUqr+PoOfg5y0DlwPvNdDUrXxCyJUjAUJ70kA
+	 h7+LgB+1cTmk9sdTM6qzUcPKV2qtg0gXduHlra+y7CLea4tlmKQ5YbgaaeVVy/itAZ/pn
+	 01TRJwU6odlmEkRXJDnZIkUqmrw67ELj9022qH6WUrYn/ewQxHyqdAFYYBPqsLks7LCtm
+	 Yf6UpVivP0BF3/iCs1F90y5++phzOuAuZHH4cvpPu9PkE9RWytlEH5/XAMtdDy1EBfg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FQPNMutD;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nJ9GdjRF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF82E606A31A;
-	Wed, 28 Oct 2026 19:44:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 878E3606A31E;
+	Wed, 28 Oct 2026 19:45:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FQPNMutD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A3051F01825;
-	Wed, 28 Oct 2026 19:44:58 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nJ9GdjRF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D82441F01825;
+	Wed, 28 Oct 2026 19:45:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216699;
-	bh=Zyy+okyXg/L5VCa2SELqMER2s5hUov30Jlg1PnoaHNo=;
+	s=korg; t=1793216702;
+	bh=04WfB+kvISMn7P3H4UK++thEp8ntnS2muAHASZjq2mk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FQPNMutDis2R9P0HBAGeko3sYVRzodTWwtIuzOPLEF8qU+RcQ2uNxJGGDC3dHAKV0
-	 eHq52g/gQ8HskYpOuhTKjaXZOBcZz7VGtxF1dOuPFZQwh2QulUY/Yl/ri42UgGBksT
-	 SNrNrMwFUmxUfvzquM4uRrpMumgBp141gTmx53jA=
+	b=nJ9GdjRFVICHPG8WBNoH40xAnVcR2UgNIEDV2eQsXFMS7bhSkr8hdIosqMtInYzO1
+	 i8WE825i4/RP4/aR0qvYN890J3DOJHo9EN0AQrKpVB5wDF3ASXUGL0RCaivrKBCJI/
+	 l2+n0iPLO30zoD4lOlKpQKQ0DOFDaCF24wU3fOLs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leon Romanovsky <leonro@nvidia.com>,
+	syzbot+8baf9a79a3ffc6271cb6@syzkaller.appspotmail.com,
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1605/1887] RDMA/cxgb4: Fix dereg_skb leak and double free in write_tpt_entry()
-Date: Wed, 28 Oct 2026 18:01:41 +0100
-Message-ID: <20261028170535.992833396@linuxfoundation.org>
+Subject: [PATCH 6.1 1606/1887] nilfs2: fix BUG in nilfs_copy_dirty_pages() on dirty state mismatch
+Date: Wed, 28 Oct 2026 18:01:42 +0100
+Message-ID: <20261028170536.014601699@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -67,128 +69,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leon Romanovsky <leonro@nvidia.com>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-[ Upstream commit 373f3716a2de7adc739269ebb4d87e5bf4dc180c ]
+[ Upstream commit 66f4ad3ce158902e5f98afea93189972ed8750c2 ]
 
-When the device is in the fatal error state, write_tpt_entry() returns -EIO
-before handing the caller's preallocated skb to the transmit path; its
-allocation-failure returns do the same. c4iw_dereg_mr() ignores the error
-and frees mhp, leaking mhp->dereg_skb. c4iw_get_dma_mr() instead frees the
-skb a second time after dereg_mem() already consumed it, a double free.
+Syzbot reported a kernel BUG triggered within nilfs_copy_dirty_pages(),
+which copies dirty DAT file folios/pages to its shadow page cache.  The
+BUG occurs when a retrieved dirty folio/page unexpectedly loses its
+'dirty' status.
 
-Make write_tpt_entry() the sole owner of a non-NULL skb, freeing it on
-every return preceding handoff to c4iw_ofld_send(): fatal error, tpt and
-stag allocation failure. c4iw_ofld_send() consumes the skb on success and
-error alike, so drop the redundant kfree_skb() in c4iw_get_dma_mr() after
-dereg_mem().
+This issue arises because, since the commit referenced below, the 'dirty'
+flag of a folio/page can be cleared asynchronously after the filesystem
+detects metadata corruption and transitions to read-only mode.
 
-Fixes: 0f8ab0b6e91b ("RDMA/iw_cxgb4: Low resource fixes for Memory registration")
-Link: https://patch.msgid.link/20260726-leaked-mhp-dereg-skb-in-c4iw-dereg-m-v1-1-ebd6df364d53@nvidia.com
-Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
+Resolve the issue by returning an -EROFS error if the filesystem has
+transitioned to read-only mode.  Also change the behavior to issue a
+kernel warning only once instead of triggering a kernel BUG when this
+unexpected 'dirty' state is detected while the filesystem is not in
+read-only mode.
+
+Reported-by: syzbot+8baf9a79a3ffc6271cb6@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=8baf9a79a3ffc6271cb6
+Fixes: 8c26c4e2694a ("nilfs2: fix issue with flush kernel thread after remount in RO mode because of driver's internal error or metadata corruption")
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/cxgb4/mem.c | 46 ++++++++++++-------------------
- 1 file changed, 17 insertions(+), 29 deletions(-)
+ fs/nilfs2/page.c | 17 +++++++++++++++--
+ 1 file changed, 15 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/hw/cxgb4/mem.c b/drivers/infiniband/hw/cxgb4/mem.c
-index 9c24789bbb54b..9ed43d23c1835 100644
---- a/drivers/infiniband/hw/cxgb4/mem.c
-+++ b/drivers/infiniband/hw/cxgb4/mem.c
-@@ -199,7 +199,8 @@ static int _c4iw_write_mem_dma(struct c4iw_rdev *rdev, u32 addr, u32 len,
- 
- 	daddr = dma_map_single(&rdev->lldi.pdev->dev, data, len, DMA_TO_DEVICE);
- 	if (dma_mapping_error(&rdev->lldi.pdev->dev, daddr))
--		return -1;
-+		return _c4iw_write_mem_inline(rdev, addr, len, data, skb,
-+					      wr_waitp);
- 	save = daddr;
- 
- 	while (remain > inline_threshold) {
-@@ -235,30 +236,12 @@ static int write_adapter_mem(struct c4iw_rdev *rdev, u32 addr, u32 len,
- 			     void *data, struct sk_buff *skb,
- 			     struct c4iw_wr_wait *wr_waitp)
+diff --git a/fs/nilfs2/page.c b/fs/nilfs2/page.c
+index bf090240f6ede..89cd1510bf715 100644
+--- a/fs/nilfs2/page.c
++++ b/fs/nilfs2/page.c
+@@ -241,6 +241,7 @@ static void nilfs_copy_page(struct page *dst, struct page *src, int copy_dirty)
+ int nilfs_copy_dirty_pages(struct address_space *dmap,
+ 			   struct address_space *smap)
  {
--	int ret;
--
--	if (!rdev->lldi.ulptx_memwrite_dsgl || !use_dsgl) {
--		ret = _c4iw_write_mem_inline(rdev, addr, len, data, skb,
--					      wr_waitp);
--		goto out;
--	}
--
--	if (len <= inline_threshold) {
--		ret = _c4iw_write_mem_inline(rdev, addr, len, data, skb,
-+	if (!rdev->lldi.ulptx_memwrite_dsgl || !use_dsgl ||
-+	    len <= inline_threshold)
-+		return _c4iw_write_mem_inline(rdev, addr, len, data, skb,
- 					      wr_waitp);
--		goto out;
--	}
--
--	ret = _c4iw_write_mem_dma(rdev, addr, len, data, skb, wr_waitp);
--	if (ret) {
--		pr_warn_ratelimited("%s: dma map failure (non fatal)\n",
--				    pci_name(rdev->lldi.pdev));
--		ret = _c4iw_write_mem_inline(rdev, addr, len, data, skb,
--					      wr_waitp);
--	}
--out:
--	return ret;
++	struct inode *smap_inode = smap->host;
+ 	struct pagevec pvec;
+ 	unsigned int i;
+ 	pgoff_t index = 0;
+@@ -255,8 +256,19 @@ int nilfs_copy_dirty_pages(struct address_space *dmap,
+ 		struct page *page = pvec.pages[i], *dpage;
  
-+	return _c4iw_write_mem_dma(rdev, addr, len, data, skb, wr_waitp);
- }
+ 		lock_page(page);
+-		if (unlikely(!PageDirty(page)))
+-			NILFS_PAGE_BUG(page, "inconsistent dirty state");
++		if (unlikely(!PageDirty(page))) {
++			if (WARN_ONCE(!sb_rdonly(smap_inode->i_sb),
++					"inconsistent dirty state\n"))
++				goto unlock_src_page;
++
++			/*
++			 * If the filesystem has been forced to read-only
++			 * due to metadata corruption.
++			 */
++			unlock_page(page);
++			err = -EROFS;
++			break;
++		}
  
- /*
-@@ -280,12 +263,16 @@ static int write_tpt_entry(struct c4iw_rdev *rdev, u32 reset_tpt_entry,
- 	bool stag_idx_allocated = false;
- 	static atomic_t key;
+ 		dpage = grab_cache_page(dmap, page->index);
+ 		if (unlikely(!dpage)) {
+@@ -274,6 +286,7 @@ int nilfs_copy_dirty_pages(struct address_space *dmap,
  
--	if (c4iw_fatal_error(rdev))
-+	if (c4iw_fatal_error(rdev)) {
-+		kfree_skb(skb);
- 		return -EIO;
-+	}
- 
- 	tpt = kmalloc(sizeof(*tpt), GFP_KERNEL);
--	if (!tpt)
-+	if (!tpt) {
-+		kfree_skb(skb);
- 		return -ENOMEM;
-+	}
- 
- 	stag_state = stag_state > 0;
- 	stag_idx = (*stag) >> 8;
-@@ -297,6 +284,7 @@ static int write_tpt_entry(struct c4iw_rdev *rdev, u32 reset_tpt_entry,
- 			rdev->stats.stag.fail++;
- 			mutex_unlock(&rdev->stats.lock);
- 			kfree(tpt);
-+			kfree_skb(skb);
- 			return -ENOMEM;
- 		}
- 		mutex_lock(&rdev->stats.lock);
-@@ -471,8 +459,10 @@ struct ib_mr *c4iw_get_dma_mr(struct ib_pd *pd, int acc)
- 			      FW_RI_STAG_NSMR, mhp->attr.perms,
- 			      mhp->attr.mw_bind_enable, 0, 0, ~0ULL, 0, 0, 0,
- 			      NULL, mhp->wr_waitp);
--	if (ret)
--		goto err_free_skb;
-+	if (ret) {
-+		kfree_skb(mhp->dereg_skb);
-+		goto err_free_wr_wait;
-+	}
- 
- 	ret = finish_mem_reg(mhp, stag);
- 	if (ret)
-@@ -481,8 +471,6 @@ struct ib_mr *c4iw_get_dma_mr(struct ib_pd *pd, int acc)
- err_dereg_mem:
- 	dereg_mem(&rhp->rdev, mhp->attr.stag, mhp->attr.pbl_size,
- 		  mhp->attr.pbl_addr, mhp->dereg_skb, mhp->wr_waitp);
--err_free_skb:
--	kfree_skb(mhp->dereg_skb);
- err_free_wr_wait:
- 	c4iw_put_wr_wait(mhp->wr_waitp);
- err_free_mhp:
+ 		unlock_page(dpage);
+ 		put_page(dpage);
++unlock_src_page:
+ 		unlock_page(page);
+ 	}
+ 	pagevec_release(&pvec);
 -- 
 2.53.0
 
