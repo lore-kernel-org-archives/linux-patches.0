@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793217009;
-	b=SOwBxeGM9N9gQRF4QhxJOfflorHFnBAGAbnPbp8lshF0fE60WMT+OYeHQpaaAiY1JEN4
-	 mqElfpDbbyBBalN4kRtVHg2ZXhw4zAjgorvQwR/tyLdVtUJskiWHdTrp55pBQJooKlepH
-	 dRVhLaIMsi5YuBJX4Tkh2ASzkNpxAChXilySHGU/JraVaSatxSWBbietUatogsXbDMaFp
-	 Jo13sZRBkqPEYRaDOhx7gqsUo1FOO4RsxyLAz9w/2NtoyniVyHrbH16NvohnuC2r/htFw
-	 Va454nMNTJHMR9tRwaF7nZEl7hp3s08zUuud1moTselGRLKt4PXqszgfQyN3JqGtOHg==
+	t=1793217011;
+	b=uKIa3vKHN8edDfeEsIPVps972QIaeOasFwyqhAsmKXpbwiBRyS3reKmVUN6KwCJDvs/1
+	 /w+IBQgkI1RZ+xWNX0dhFKy6MIFNxvThgROH9Tw5KhGMPGzPKSouYiqpHjnTLp6379/MV
+	 7kWvX6lLCa5H/4BTbnV5Sgf6/DAUPKPn5C0lXfsfBOusInZnazLqOBsU6vSdgEZmwdPui
+	 2SIAOaClNNpfy268OgJQ9xn3PGXkNFd5KAJfX1IEgxvj/topBO/I98Oe3lhIiZY1rg+6H
+	 DFQ5QsxU/0Im7og8Co+1vU4OGNkD+ad36pPE0z/Dg5jgdQ4+wYChKAH6BW3crcbkSYA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793217009;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793217011;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=m6YFy8FzWASa1f6ILHAVE6ONXLe1n20qP/4h651CduU=;
-	b=BwChZc1xKAscZpdu08AxcQJ+PNFO936wW4DQ66AEHzXY5FxhjMztLQe5dgWy83z22bvF
-	 +BchrdHFJtdLVwlj3VdHi/9jWEGZN34RGi/HMPBFdzgdvkfLuus/CxVyrM0JBxjxFhX/o
-	 +yukrqu08juzMEHI7KWW+19+AcJ/B79G2V9MDbR9Gw8zeeGJ166zjUhA8CwCYIbY/1jR5
-	 2RIwMq5kEOVxmfkL2mayoZPmcvYuJ1pDeKbt22ivGXFFS3qaBYUlQXs4LxzanlUy9ra6O
-	 /DgNXmbdDTzp/HA81+mBn+0QPeCOs7rngX1I2p6k8PH7sTODXWDTjUgto8EfVknk62A==
+	bh=CGl24iIoPyGOGkIIluFgdV/kct8B33HP9VbwiyogoC8=;
+	b=RNy46RC0RwIQmRxFCNPChUw3LjMsSJqLS2hRVvjGOG4aVgXQC8PRkTI+oYv6ULarnDXz
+	 PzbSxRnpNloswDWreKbSZEZXPBHRnhIICE+ua5GY/Dwp2Q6zUzpRnYZ2cVSHwVT5c7Bh0
+	 Xm9zrjSnfi7bwccE0f9re9792r2+x/EOvGMePTsyGYz+OdofVN+/9o98QCrbbLZ9QEqH6
+	 l2Zuvmer+oXlyTtnd7lFXKvz8Vp9HrAznh6H1lO+UCjf68mubM651dQlxiWs0hbocbIqy
+	 tK2WKUX9GFqeMe46XRv1DMo0dUKvbTFRgrIBU4j8BvWPbepPOZX2o0hXdxTVbNT8Wew==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EOPUCZBs;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AZq56YHC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1A4660A2602;
-	Wed, 28 Oct 2026 19:50:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97F4D606A326;
+	Wed, 28 Oct 2026 19:50:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EOPUCZBs
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06F4B1F031E4;
-	Wed, 28 Oct 2026 19:50:07 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AZq56YHC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1B0A1F031E2;
+	Wed, 28 Oct 2026 19:50:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793217008;
-	bh=m6YFy8FzWASa1f6ILHAVE6ONXLe1n20qP/4h651CduU=;
+	s=korg; t=1793217011;
+	bh=CGl24iIoPyGOGkIIluFgdV/kct8B33HP9VbwiyogoC8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EOPUCZBs24kBOMDNwq8CM61QMJjzZ4mIgQ8f9qEslHpxe9wC3clluzPXhEDkjnmph
-	 j4lZ6LEA0SuxBaRArhiSOeQzSF3ISK4/iDs2qkDFR90ghSscL2iJdMe8JUx7uKDRob
-	 vHhnpn0qVdZY0inHPzkkwNxjh5sPlfLB/cuadU6g=
+	b=AZq56YHC9HqlqiYVcEqK0ITC62BdNRXvkg61Zx5Ye/PGY/rTa+ogVj9xktfxgWioz
+	 VJzvazet9pTnTWecTIoY9pupA1Qc6mesTg+QL2m93ApmjQg3qQJxnJK2GTVlSoiEx+
+	 HufA1odxMEGMkcSD5z/SjGCpF83NeVDZeO+WBLsU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sasha Levin <sashal@kernel.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Subject: [PATCH 6.1 1739/1887] tools: gpio: fix building from the top level with O=
-Date: Wed, 28 Oct 2026 18:03:55 +0100
-Message-ID: <20261028170539.027652933@linuxfoundation.org>
+	Genjian Zhang <zhanggenjian@kylinos.cn>,
+	Mikulas Patocka <mpatocka@redhat.com>
+Subject: [PATCH 6.1 1757/1887] dm-ebs: fix incorrect device offset check in ebs_ctr()
+Date: Wed, 28 Oct 2026 18:04:13 +0100
+Message-ID: <20261028170539.440472766@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -67,48 +67,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sasha Levin <sashal@kernel.org>
+From: Genjian Zhang <zhanggenjian@kylinos.cn>
 
-commit 52336337f1a01ad803c7f3ddb23f40222e9ad58d upstream.
+commit 7ac81e2d2240f2c57bd073b0733e0b2abca38e82 upstream.
 
-"make O=<dir> tools/gpio" fails:
+<offset> is a backing-device sector offset; ti->len is the virtual
+target length. Comparing them rejects valid tables, e.g.:
 
-  Makefile:27: /tools/build/Makefile.include: No such file or directory
+  dmsetup create ebs0 --table "0 1048576 ebs /dev/sda 2097152 1 8"
+  -> ebs: Invalid device offset sector (-EINVAL)
 
-tools/Makefile clears srctree, and the gpio Makefile only works it out
-again when building_out_of_srctree is not set, which the top-level
-Makefile sets for O= builds.
+Drop the check. Bounds against the backing device are already
+enforced later by device_area_is_invalid() via ebs_iterate_devices().
 
-Also work out srctree when it is empty, as tools/bpf/Makefile does
-since commit a89b2cbf71d64 ("tools, bpf: Fix build for 'make -s
-tools/bpf O=<dir>'").
-
-Fixes: 4a6a6f5c4aeed ("tools: gpio: Use !building_out_of_srctree to determine srctree")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Sasha Levin <sashal@kernel.org>
-Link: https://patch.msgid.link/20261011223358.2327625-5-sashal@kernel.org
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Fixes: d3c7b35c20d6 ("dm: add emulated block size target")
+Signed-off-by: Genjian Zhang <zhanggenjian@kylinos.cn>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/gpio/Makefile |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/md/dm-ebs-target.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/tools/gpio/Makefile
-+++ b/tools/gpio/Makefile
-@@ -7,7 +7,13 @@ bindir ?= /usr/bin
- # isn't set and when invoked from selftests build, where srctree
- # is set to ".". building_out_of_srctree is undefined for in srctree
- # builds
-+ifeq ($(srctree),)
-+update_srctree := 1
-+endif
- ifndef building_out_of_srctree
-+update_srctree := 1
-+endif
-+ifeq ($(update_srctree),1)
- srctree := $(patsubst %/,%,$(dir $(CURDIR)))
- srctree := $(patsubst %/,%,$(dir $(srctree)))
- endif
+--- a/drivers/md/dm-ebs-target.c
++++ b/drivers/md/dm-ebs-target.c
+@@ -264,8 +264,7 @@ static int ebs_ctr(struct dm_target *ti,
+ 
+ 	r = -EINVAL;
+ 	if (sscanf(argv[1], "%llu%c", &tmp, &dummy) != 1 ||
+-	    tmp != (sector_t)tmp ||
+-	    (sector_t)tmp >= ti->len) {
++	    tmp != (sector_t)tmp) {
+ 		ti->error = "Invalid device offset sector";
+ 		goto bad;
+ 	}
 
 
