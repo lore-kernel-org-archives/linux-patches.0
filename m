@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793207886;
-	b=cM0IeNLLDL0yQeelbtKGYQbswrLIno/KrM1hgH/l2G2EDUTGYE6reHxGSko+3tfyFTBG
-	 uWaacEZCFePMke4GMOVXyMHFMEfTcLzg/DmBmJQemWTdhyoTCom7pEQN+IEE6m5mBNJwJ
-	 6CieME2WSDdSaf5o9OzPCuifigFbDVT8YgqQHrI4XxjhKbJgXnCuoxFehBG9HPOC4Eyo9
-	 jrz2yFZw71ym8v+oxOBDqMy9GEKrw0bfdn4w7/Bf7jq/B0evuYNaJyzoxoz8hqazQIpf0
-	 IYuHIQTHFFNEn2Aems6eFvqnT6XjphCgQyMKeomtYU55oftohWkGDW9C1hGnMr/hjlA==
+	t=1793207889;
+	b=avJukAR5ULY9hVllIMwQDdYyUfWKkk81MM1LZSUobjvlFHx7opAcbA/6Kg0IaPhstaNy
+	 4TFf1siwiybvzR3w4V9lfneN6BKtLXMU/beTAbOSzU2ov6nqZK4+3SsGg5mIiEFYysGQ/
+	 OS5zwLykdtoPrrduT4VceCFBFxw7Cs+vSzJQ96XJsVB1yKtAvNNjHzFjWDZVJXqBBZjaj
+	 5WaqzZNtF2g9fOqX9G16Rl7c7PryJlf4Ed0poRTr1/L067XgvPMKXLsaSp7PldzRASxYG
+	 KjazIPC8/BmElko5RknM92aUgg/CyCyIEoIYQU9ESgUBdd6KjbOjrZ0OgZGzZ5htUFw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793207886;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793207889;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ru0ZaIFd7o8EzSqTDOkTcuvZvGNAsu3l+irm9fJ7x3k=;
-	b=kdJcOi142E+TcuGqLLZyaQa/EfTBLmgyPOU73D3sN+NBXNCvYp1ZfFHMAZ8rFSh2twqC
-	 t3dHrSE0YpqJ3nAsxBQbgxvT+4vZ9ShXFMp7GLu9eLYbiputjoaRm1dg8ofsG+cu+d3/l
-	 C1FruJnDds2Sq2usPd5mhiAPm1E/+qSSjsk+RTcNuHsCCp53D0DgeCgm08Evc9jaH87B5
-	 O7ls+4fRD0lPsj0hf8XAVl4cWCi1WK2vhk6EYCV/HX9IjgNfHlsTeh/lxja93DAyoWNer
-	 /ck9iWTxPmpp14cDm0zRgG6GVe45PY8t05X5IFVHoiinomyXpTDzBQFRzyio8jC72jA==
+	bh=ss8gsWKtXL8tWq9lYoizefnzjuf+JHEF1DWOOeGmP8M=;
+	b=b+xnFIdCZH3aNF0PrDei2Jiz3rawdjilmHWjltd+5ZPzC7bPAqGWMYUNNMtFGK4fzBg/
+	 1viTbeaXJk0fGzCuOclR5/fKxjWvBUEodEPlkMyW9c/UhR4aDAwW+pWPNP3yk5jeyI3Ru
+	 iQmPGNb7jRYbIqHJPsBdw9fmtwcGvlBcoXiC52pQoOemJBwGZqwDEj9nQdDVLKCjZve9p
+	 4sjlyB4kqdBYZfu2MIBab+aMO7KAiaiVngv8WSHLCxuZpxmarvcysuXHQKBUxf8NHnX86
+	 OWtzImtXBDKBPWsQ6CkX9LA51d8jtCPyvM8COVanfUcR2MKUthxThHo7r5YyeFUZAcQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cgbEMYYs;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=juClGz3H;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C1C5606A334;
-	Wed, 28 Oct 2026 17:18:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FA38606A333;
+	Wed, 28 Oct 2026 17:18:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cgbEMYYs
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDDC21F01828;
-	Wed, 28 Oct 2026 17:18:05 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=juClGz3H
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C26371F031E1;
+	Wed, 28 Oct 2026 17:18:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793207886;
-	bh=ru0ZaIFd7o8EzSqTDOkTcuvZvGNAsu3l+irm9fJ7x3k=;
+	s=korg; t=1793207889;
+	bh=ss8gsWKtXL8tWq9lYoizefnzjuf+JHEF1DWOOeGmP8M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cgbEMYYsjRoih5v1JADrH+pcu4m+iIssRCEVOcwbydD+rA2/eX5ptU1oekzkm0/l1
-	 OwTgEa+Gfri7c5Bb8z7iO4RRDVGcPUI4zOdXIgZHVm/ArTdxsIOWCDuhA7ZCKNDa7n
-	 IP4vXcuaxDmPNITOD99sTsQZ0lX7XONJGtBwFi+Y=
+	b=juClGz3Hyv9BmrunekVEtCPyzWXItyhj5VfUstBQg5wvAqSJXPAkLYjVCxABN1zPq
+	 yoBbaiq60Q0DcEhmgoogBptVgGUHnDVzht/1X/v2CLwApUAww2B44gYm7UDB5zFiPb
+	 cBPNzFGnjrEqjTr8vNeZw+TV4l/ixrmOA/k3eS9Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bernard Pidoux <bernard.f6bvp@gmail.com>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 172/247] rose: process received frames and send with the socket locked
-Date: Wed, 28 Oct 2026 17:59:35 +0100
-Message-ID: <20261028165951.494631056@linuxfoundation.org>
+Subject: [PATCH 6.12 132/247] eventfs: fix SRCU read lock leak in eventfs_iterate()
+Date: Wed, 28 Oct 2026 17:58:55 +0100
+Message-ID: <20261028165950.531199099@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165947.349197979@linuxfoundation.org>
 References: <20261028165947.349197979@linuxfoundation.org>
@@ -67,154 +67,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bernard Pidoux <bernard.f6bvp@gmail.com>
+From: Joseph Qi <joseph.qi@linux.alibaba.com>
 
-rose_kick() takes frames off the write queue, numbers them from V(S)
-and moves them to the ack queue. It runs from rose_sendmsg() in process
-context and from rose_process_rx_frame() in softirq context, and neither
-holds the socket lock. When a frame for the socket is received on one
-CPU while a process is sending on another, both read the same V(S) and
-two different frames go out under the same N(S), or the queues and
-V(S)/V(A) are updated by one while the other walks them. The peer drops
-the frames it sees as out of sequence, and since ROSE has no REJ and no
-retransmission in state 3 the data is lost for good: messages go
-missing from the stream, or the window fills and the circuit freezes.
+Commit 1b95382da85c ("eventfs: Use children field for rcu head and add
+memory barriers") added an early bail out to the ei->children loop:
 
-The timers already take the socket lock and retry when a process owns
-it. Do the same for the two remaining paths: rose_sendmsg() calls
-rose_kick() under lock_sock(), and received frames go through
-rose_rcv_frame(), which takes bh_lock_sock() and queues the frame on the
-socket backlog when a process owns the socket, as NET/ROM and X.25 do.
+	smp_rmb();
+	if (ei->is_freed)
+		return -EINVAL;
 
-Tested in QEMU, two 4-CPU nodes with lockdep and KASAN over a KISS
-serial link, four ROSE circuits each sending 400 numbered messages at
-the same time (together with the AX.25 fix "ax25: serialise the
-transmission of I frames on a connection", without which the same
-happens one layer down): before, 60 to 90 of the 1600 messages are
-missing from the streams; after, 1600/1600 delivered in order on six
-runs out of six. No lockdep, KASAN or refcount report.
+Upstream wraps eventfs_iterate() in guard(srcu)(&eventfs_srcu), so that
+return still drops the read lock. The 6.12.y backport instead brackets the
+function with srcu_read_lock() and a shared "out" label that calls
+srcu_read_unlock(), so this path returns while still holding eventfs_srcu
+for reading.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Bernard Pidoux <bernard.f6bvp@gmail.com>
-(cherry picked from commit 831b23b977e1fdf14e51dd9652fd27f30965ecb0)
+The unbalanced reader prevents the grace period from ever completing, so
+the call_srcu() callback queued by free_ei() never runs and the
+eventfs_inode is leaked. Every readdir that races with removal adds
+another reader.
+
+Set ret and jump to "out" like the other bail out paths in this function
+do.
+
+Fixes: 1b95382da85c ("eventfs: Use children field for rcu head and add memory barriers")
+Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/rose.h       |  2 ++
- net/rose/af_rose.c       |  5 +++++
- net/rose/rose_in.c       | 31 +++++++++++++++++++++++++++++++
- net/rose/rose_loopback.c |  2 +-
- net/rose/rose_route.c    |  2 +-
- 5 files changed, 40 insertions(+), 2 deletions(-)
+ fs/tracefs/event_inode.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/include/net/rose.h b/include/net/rose.h
-index f5b23c8a11e4d..6ce065480a4e6 100644
---- a/include/net/rose.h
-+++ b/include/net/rose.h
-@@ -227,6 +227,8 @@ void rose_setup(struct net_device *);
+diff --git a/fs/tracefs/event_inode.c b/fs/tracefs/event_inode.c
+index a992c2919f79a..e060dfe7cdac5 100644
+--- a/fs/tracefs/event_inode.c
++++ b/fs/tracefs/event_inode.c
+@@ -678,8 +678,10 @@ static int eventfs_iterate(struct file *file, struct dir_context *ctx)
+ 		 * Matches the smp_wmb() in free_ei()
+ 		 */
+ 		smp_rmb();
+-		if (ei->is_freed)
+-			return -EINVAL;
++		if (ei->is_freed) {
++			ret = -EINVAL;
++			goto out;
++		}
  
- /* rose_in.c */
- int rose_process_rx_frame(struct sock *, struct sk_buff *);
-+int rose_rcv_frame(struct sock *sk, struct sk_buff *skb);
-+int rose_backlog_rcv(struct sock *sk, struct sk_buff *skb);
- 
- /* rose_link.c */
- void rose_start_ftimer(struct rose_neigh *);
-diff --git a/net/rose/af_rose.c b/net/rose/af_rose.c
-index 420408a5ad61c..d8a86006c7448 100644
---- a/net/rose/af_rose.c
-+++ b/net/rose/af_rose.c
-@@ -598,6 +598,7 @@ static int rose_create(struct net *net, struct socket *sock, int protocol,
- 	rose = rose_sk(sk);
- 
- 	sock_init_data(sock, sk);
-+	sk->sk_backlog_rcv = rose_backlog_rcv;
- 
- 	skb_queue_head_init(&rose->ack_queue);
- #ifdef M_BIT
-@@ -637,6 +638,7 @@ static struct sock *rose_make_new(struct sock *osk)
- 	rose = rose_sk(sk);
- 
- 	sock_init_data(NULL, sk);
-+	sk->sk_backlog_rcv = rose_backlog_rcv;
- 
- 	skb_queue_head_init(&rose->ack_queue);
- #ifdef M_BIT
-@@ -1326,7 +1328,10 @@ static int rose_sendmsg(struct socket *sock, struct msghdr *msg, size_t len)
- 	skb_queue_tail(&sk->sk_write_queue, skb);	/* Shove it onto the queue */
- #endif
- 
-+	/* The receive path and the timers run rose_kick() too */
-+	lock_sock(sk);
- 	rose_kick(sk);
-+	release_sock(sk);
- 
- 	return len;
- }
-diff --git a/net/rose/rose_in.c b/net/rose/rose_in.c
-index 69b2af24e85a6..7a556254ee790 100644
---- a/net/rose/rose_in.c
-+++ b/net/rose/rose_in.c
-@@ -309,3 +309,34 @@ int rose_process_rx_frame(struct sock *sk, struct sk_buff *skb)
- 
- 	return queued;
- }
-+
-+/*
-+ * Frames for a socket are processed with the socket locked, as the timers
-+ * already do: rose_kick() may be running in rose_sendmsg() on another CPU,
-+ * and two of them reading the same V(S) send two different frames under the
-+ * same N(S). If a process owns the socket the frame goes to its backlog and
-+ * is processed when the socket is released. Returns non-zero if the skb has
-+ * been consumed.
-+ */
-+int rose_rcv_frame(struct sock *sk, struct sk_buff *skb)
-+{
-+	int queued;
-+
-+	bh_lock_sock(sk);
-+	if (!sock_owned_by_user(sk))
-+		queued = rose_process_rx_frame(sk, skb);
-+	else
-+		queued = !sk_add_backlog(sk, skb, READ_ONCE(sk->sk_rcvbuf) +
-+						  READ_ONCE(sk->sk_sndbuf));
-+	bh_unlock_sock(sk);
-+
-+	return queued;
-+}
-+
-+int rose_backlog_rcv(struct sock *sk, struct sk_buff *skb)
-+{
-+	if (!rose_process_rx_frame(sk, skb))
-+		kfree_skb(skb);
-+
-+	return 0;
-+}
-diff --git a/net/rose/rose_loopback.c b/net/rose/rose_loopback.c
-index fd4e4795776a3..4e4a473910cc8 100644
---- a/net/rose/rose_loopback.c
-+++ b/net/rose/rose_loopback.c
-@@ -107,7 +107,7 @@ static void rose_loopback_timer(struct timer_list *unused)
- 
- 		sk = rose_find_socket(lci_o, rose_loopback_neigh);
- 		if (sk) {
--			if (rose_process_rx_frame(sk, skb) == 0)
-+			if (rose_rcv_frame(sk, skb) == 0)
- 				kfree_skb(skb);
- 			continue;
- 		}
-diff --git a/net/rose/rose_route.c b/net/rose/rose_route.c
-index 7ae3552c19267..883b204121566 100644
---- a/net/rose/rose_route.c
-+++ b/net/rose/rose_route.c
-@@ -1017,7 +1017,7 @@ int rose_route_frame(struct sk_buff *skb, ax25_cb *ax25)
- 		}
- 		else {
- 			skb_reset_transport_header(skb);
--			res = rose_process_rx_frame(sk, skb);
-+			res = rose_rcv_frame(sk, skb);
- 			goto out;
- 		}
- 	}
+ 		if (c > 0) {
+ 			c--;
 -- 
 2.53.0
 
