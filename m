@@ -1,53 +1,68 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793217105;
-	b=vQfMIZwbU/J+NA7UJ8S5e1j1bgYb7WOqCPHPehjcZ85OxAGDy3UxcBUy/Mtfe9tWJyHb
-	 BPBJw0YdLYd/cUnceVQ2zcxhpceOkG6XxQL5rM6DmLMGlg9RHD6H93JlEtgjcEGk3wVPP
-	 oPVHGkOXlGSRR68UAYGa12ZNO+U4m3iDRK/Fgf5EKxiziasofKtTstLbB7xaLxi4FIY5u
-	 mIzBD6Sa5iw0vlSsijedHj4hi/6dtTknCdGszy4B6WNi2109AP97P6OOtNkoUt4lQf8D+
-	 E4BZawjBiLZF5s0XznEv6OymfSq7SzHVqVLNfnezwj/wOSzA5mgeJhqJvPnRDYMfFQQ==
+	t=1793217108;
+	b=Ks6JR2GxyTh5zpTrrJiUc3DTLug7xfwP7vdvamGhju/RJ2fu/8RfEwn5BhfXfWkuXsUt
+	 3nIA3HGwh9LCHDI/+bhBW5PHO797FfywXEPXiLzhWxqe2/qdU+mZph8SVJIsPkSnLVllM
+	 brmRb8Mv54zpbmStWeTDhRsPlT5YF1wp9fOa6/th+es3RPsSjxNyLBy+w0Y2HGPIymIli
+	 wjZGUkGiONIjC7/R6NUo8QM+dzPuQlsgyFj8BAKxrm4irjKnFg6rX3AUe823VUQKHCn8+
+	 gkEQviVjWpsCzro6Ikd293NaSA26RadCeWEBsZxag6kgjlQ2CmQ2Nu1KG1fk6/sPKIQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793217105;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793217108;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=6/ID3YpzSJ7n+/ETwVY8KS8/9AK/UzPp+UQ9tkzJ7MQ=;
-	b=F4/arLz0fR06VfFO1W0NoAp2MMUfwEp6fsGCboZXTrjw/P+lZOTLKVF6oNea5WWe07ov
-	 g32XNSNhEttevXYdgiznXbodV979cBGjuLLn5ZQQIDOt8HoiQr5VQsBP7RypktLCI4ZjG
-	 7TaxmwYJ5n9plLGu4AL+ouqJqfXAlKLZXPU+R8mtC4Zen2DMbjsI8fR8I3wxlf9d0+teh
-	 50jr6QDnxhgRLMlrRWngOJ+n1CYdcMH50gn7390PPKw4IlXWvv99uWkGodeVSB75sPXRX
-	 ZkwFDwrGNsw6WXZfbjQETUo/+91nlTpN4z2X2yuJWbdCy3oCF6F2cam+fDmFrL6tJDw==
+	bh=M/WqyTcrckJ2Vv1FjKVDyGCnmuQqEp27lazby6zbzAQ=;
+	b=hhw4wXG+bwIkeEBjrtg/6t5UJHlyA16fDvx86oL2mq2kcwNTDGbCSJXdL9KaIDA8vVMm
+	 1tVAHxpKeC83g/Io5DgWkxcmKaR3JjqjFBfkwT3xJwJnLwqXDOhUn+eE0yvPJEQuhY3LI
+	 ZZor9F6RVf58XYi7FeCjSgsJ1FWu8nHR3MeXCcxyAshqkQ3SwDXtmV5g1hMIYHXc90DeY
+	 0E6w47QwEKP4jgU7Q/2+vY5O8TTEVRO52yuKKyY/XGM9VIZgQ9m3FEIsk4TJRWg51ikWt
+	 sulwt4t058hh6aqJ7/OXWWNvp4VY3GRPGdsTLNRT7W4YYv7Lc7k4lHGiYDmehhOV+dA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yWU3IneZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nNWG5rLj;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85F9A606A31C;
-	Wed, 28 Oct 2026 19:51:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58F75606A31A;
+	Wed, 28 Oct 2026 19:51:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yWU3IneZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6B021F01825;
-	Wed, 28 Oct 2026 19:51:44 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nNWG5rLj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87B241F01825;
+	Wed, 28 Oct 2026 19:51:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793217105;
-	bh=6/ID3YpzSJ7n+/ETwVY8KS8/9AK/UzPp+UQ9tkzJ7MQ=;
+	s=korg; t=1793217108;
+	bh=M/WqyTcrckJ2Vv1FjKVDyGCnmuQqEp27lazby6zbzAQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yWU3IneZKpidfV7KJgWLrozKI3IVRoRwnRgKyf2W4G7stwutzuJZ9gxnwbKzdHT01
-	 EFRTHKocEcZ6ANosivDB7ywS1Crb8V8yCEIICVWd8qs1WpSmf5SW8UX5jaDww3ZB4i
-	 h0MvPmBcvxHfQ9zbZIOZs7NXEM8keRIN7w3yje8U=
+	b=nNWG5rLjnO8RljD7VWqa3ogn4A73bg0qdklET1epr5sAUrbfkO8PXXBhaMgrPQDxh
+	 sktAGtKHtnVHeBunRMBG9zf+SkaaD6as0AGMm4ABfgP6CDT3k1o8+TBIhVYBwyLROg
+	 Nd0m1uAIl4OqZp4jCsHW1H7jzxVyJz4nBhOTBHd4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Olzhas Marat <marat.olzhas@gmail.com>,
-	Shyam Sundar S K <Shyam-sundar.S-k@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Linus Walleij <linusw@kernel.org>
-Subject: [PATCH 6.1 1737/1887] pinctrl: amd: Clear S4 wake bits when firmware has _AEI
-Date: Wed, 28 Oct 2026 18:03:53 +0100
-Message-ID: <20261028170538.981017379@linuxfoundation.org>
+	Usama Arif <usama.arif@linux.dev>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Kiryl Shutsemau <kas@kernel.org>,
+	Hugh Dickins <hughd@google.com>,
+	Lance Yang <lance.yang@linux.dev>,
+	Zi Yan <ziy@nvidia.com>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Barry Song <baohua@kernel.org>,
+	Dev Jain <dev.jain@arm.com>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Nhat Pham <nphamcs@gmail.com>,
+	Rik van Riel <riel@surriel.com>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Ting-Han Hou <ue081723@gmail.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 1784/1887] mm/huge_memory: transfer the pmd dirty bit to the folio on zap
+Date: Wed, 28 Oct 2026 18:04:40 +0100
+Message-ID: <20261028170540.047851648@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,66 +84,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Usama Arif <usama.arif@linux.dev>
 
-commit 1cca81a683da7f0ef2fbaf34442376044cbbad22 upstream.
+[ Upstream commit fe6cf984939d8e12cb33a99673c8d026c5135e68 ]
 
-Commit ffe8a0c6b552 ("pinctrl-amd: Don't clear S4 wake bits at probe")
-preserves firmware-programmed S4 wake sources because some PCIe devices
-rely on them for Wake-on-LAN. The system that motivated that change does
-not expose ACPI GPIO events through _AEI.
+zap_huge_pmd_folio() propagates the pmd young bit to the folio for the
+file case, but not the dirty bit.  The pte path does propagate it, in
+zap_present_folio_ptes() and so does the pmd split path, in
+__split_huge_pmd_locked().
 
-On a Chuwi CoreBook Plus, firmware exposes _AEI but also leaves the S4/S5
-wake bit set for GPIO 24. This causes the machine to power back on
-immediately after shutdown even though Wake-on-LAN is not enabled.
+For most file mappings the omission is harmless, because writing to a
+shared file mapping goes through page_mkwrite(), which dirties the folio.
+tmpfs is different: it has no page_mkwrite(), and vma_wants_writenotify()
+is false for it, so a *read* fault on a MAP_SHARED tmpfs mapping installs
+a writable pmd via do_read_fault().  do_read_fault() does not call
+fault_dirty_shared_page(), so subsequent stores through that mapping set
+only the hardware dirty bit in the pmd and never call folio_mark_dirty().
+A shmem folio allocated by a fault is marked uptodate but not dirty (see
+the clear: block in shmem_get_folio_gfp()), so PG_dirty is never set at
+all.
 
-GPIO register dumps show that the only relevant difference is bit 15 on
-GPIO 24. Clearing that bit makes the machine remain off. GPIO 24 is not
-itself listed in _AEI, so _AEI is not a per-pin indication of which pins
-the OS manages; it is a platform level signal of which wake model the
-firmware follows.
+Unmapping such a folio - munmap(), or exit_mmap() when the process dies -
+then loses the only record that it was written, because zap_huge_pmd()
+drops the pmd without transferring the dirty bit.  Reclaim afterwards sees
+a clean shmem folio: the whole swap-out block in shrink_folio_list() is
+inside "if (folio_test_dirty(folio))", so pageout() is skipped and the
+folio falls into __remove_mapping().  There, folio_is_file_lru() is false
+for a swapbacked folio, so no shadow entry is created and
+__filemap_remove_folio(folio, NULL) simply empties the i_pages slot.  The
+data is freed without ever being written to swap, and the next fault on
+that index returns a freshly zeroed folio.
 
-Use that signal to decide what to clear. Continue clearing S0i3/S3 bits on
-every system. Clear S4 bits when firmware exposes _AEI, indicating that the
-platform hands GPIO events to the OS, but preserve S4 bits when _AEI is
-absent so that firmware-programmed sources such as PCIe PME that bypass the
-GPIO IRQ wake API keep working.
+This is silent data loss for any process that keeps state in a MAP_SHARED
+tmpfs segment across an unmap - for example a cache handed from one
+process generation to the next through /dev/shm.  It requires the folio to
+be PMD-mapped, so it only shows up once shmem THP is enabled (which is
+what we did in Meta fleet and started noticing crashes); with THP off the
+pte path transfers the dirty bit correctly.  It also only becomes visible
+when swap is enabled, because with no swap device shmem folios (which are
+on the anon LRU) are not scanned by reclaim at all, so the clean folio is
+never dropped.
 
-A platform that exposes _AEI for some pins while routing a wake capable
-device through a raw GPIO not listed in _AEI would lose that wake source
-unless firmware re-arms it during the sleep transition. No such system has
-been reported.
+Reproduced on x86_64 with a tmpfs mounted huge=within_size: read-fault a
+2MB-backed region, write a known pattern through the resulting mapping,
+munmap, force reclaim of the cgroup, then re-map and read back.  Without
+this patch the region reads back as zeros and vmstat shows zswpout 0 - the
+data was discarded rather than swapped.  With this patch the region reads
+back correctly and the pages are swapped out as expected.  With
+huge=never, or when the first touch is a write, the test passes either
+way.
 
-Fixes: ffe8a0c6b552 ("pinctrl-amd: Don't clear S4 wake bits at probe")
-Reported-by: Olzhas Marat <marat.olzhas@gmail.com>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=222041
-Cc: stable@vger.kernel.org
-Tested-by: Olzhas Marat <marat.olzhas@gmail.com>
-Reviewed-by: Shyam Sundar S K <Shyam-sundar.S-k@amd.com>
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Linus Walleij <linusw@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lore.kernel.org/20260819101222.3732660-1-usama.arif@linux.dev
+Fixes: b5072380eb61 ("thp: support file pages in zap_huge_pmd()")
+Signed-off-by: Usama Arif <usama.arif@linux.dev>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Reviewed-by: Kiryl Shutsemau <kas@kernel.org>
+Acked-by: Hugh Dickins <hughd@google.com>
+Tested-by: Lance Yang <lance.yang@linux.dev>
+Reviewed-by: Zi Yan <ziy@nvidia.com>
+Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
+Cc: Barry Song <baohua@kernel.org>
+Cc: Dev Jain <dev.jain@arm.com>
+Cc: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Nhat Pham <nphamcs@gmail.com>
+Cc: Rik van Riel <riel@surriel.com>
+Cc: Ryan Roberts <ryan.roberts@arm.com>
+Cc: Shakeel Butt <shakeel.butt@linux.dev>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+[ Ting-Han: zap_huge_pmd_folio() does not exist in this tree; the file
+  branch is open-coded in zap_huge_pmd(), so transfer the dirty bit
+  there, as the 6.6.y backport does ]
+Assisted-by: LLM
+Signed-off-by: Ting-Han Hou <ue081723@gmail.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/pinctrl-amd.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ mm/huge_memory.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/pinctrl/pinctrl-amd.c
-+++ b/drivers/pinctrl/pinctrl-amd.c
-@@ -871,6 +871,15 @@ static void amd_gpio_irq_init(struct amd
- 
- 	mask = BIT(WAKE_CNTRL_OFF_S0I3) | BIT(WAKE_CNTRL_OFF_S3);
- 
-+#ifdef CONFIG_ACPI
-+	/*
-+	 * Platforms without _AEI leave GPIO wake sources to firmware, so
-+	 * preserve their S4 wake bits.
-+	 */
-+	if (acpi_has_method(ACPI_HANDLE(&gpio_dev->pdev->dev), "_AEI"))
-+		mask |= BIT(WAKE_CNTRL_OFF_S4);
-+#endif
+diff --git a/mm/huge_memory.c b/mm/huge_memory.c
+index 339f2986f2c6a..5807f276fe228 100644
+--- a/mm/huge_memory.c
++++ b/mm/huge_memory.c
+@@ -1701,6 +1701,9 @@ int zap_huge_pmd(struct mmu_gather *tlb, struct vm_area_struct *vma,
+ 			if (arch_needs_pgtable_deposit())
+ 				zap_deposited_table(tlb->mm, pmd);
+ 			add_mm_counter(tlb->mm, mm_counter_file(page), -HPAGE_PMD_NR);
 +
- 	for (i = 0; i < desc->npins; i++) {
- 		int pin = desc->pins[i].number;
- 		const struct pin_desc *pd = pin_desc_get(gpio_dev->pctrl, pin);
++			if (pmd_present(orig_pmd) && pmd_dirty(orig_pmd))
++				folio_mark_dirty(page_folio(page));
+ 		}
+ 
+ 		spin_unlock(ptl);
+-- 
+2.53.0
+
 
 
