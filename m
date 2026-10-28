@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793212481;
-	b=Xq0HKHMOT15ioV4KlnTDowXQqr2Lv65V5I9oyXsKadUSMQOV8q/+sPcgBIkpmXcm3rCk
-	 nFIwHtaYJykoVhOkH6WjGii39h+M1t/Bkg1rX8cBdOqX06J/veySLDnV6v7kd6AxrA6Yf
-	 Xlo+zQ2jwwXu77XPnZ4sgUD4RrEPrUoDIFoZ721z6GJaqyS4zZsmRTUF1F6nK1uysPnU1
-	 BrZAtoaKewwQ6BpqWx/r2FCGUzDmQ5QB7OkOPdgzYKa65+8cKpZJClN7XRjUxcxH2pode
-	 lC9F3FB3ZlcslJZluP6k9NccGlc1a8zHF3XNJ61OKlzsCseWtjEpx2Eys+8qbUr9Grg==
+	t=1793212484;
+	b=opkyqHXgMDIIUPThNjN3BLinMdAngd0cbWbqjNTK6Gx0L/cug9WOnxGqNnZ0Nhwj8WAs
+	 VJbLgCsGQ24cbwAixpLBffq4JmjCO8th8lGeP5wOhEiQoCWtj6FKoFFXUhQXB5H5k0cuX
+	 bmo2T8ND7SsF5IFF1jK6Ztqf4XJ+JgqT8+6vsCLX5+X/qb+j2Q+VPWc8Om6BZ6PFHU5rL
+	 jbNlUIpIzEQxURsAG0lM8Jk1vSM8/d/Fuzj6+SRl6XS3jKXvdTe9hw9Z6uM+AL2R1GSE0
+	 qqqNS+i2vt/pQYizbsBJwcAv6mFj61t7JGtQ3qr9xlRLI0jKjRZzFI+rP2byr1+Trag==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793212481;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793212484;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=B88/GYL/cLiIOgsNqK86TR4lkypPyORoc8g+b6mJjEo=;
-	b=dJiYIrrRdhl84UgpF2tv56FrDpraS0BnpPoOhSiBTq1tVLFXivv3Zs7+/W9DhCEEog/e
-	 EBjic6/qEJfGILUftl74gzQAWZjJur4/dPER/1wllwhAfjOmYR5g/k3kuhoJK3Ae4X10L
-	 TSKDTPwf7xJBgyXLWB4Nh1zAfuLLd1TPTUfgsi/T4uK19DLUmX+Wuf8ARE9poZO3uIJaI
-	 bH37HK5ONWm2mbnI69JXsBUto6csbbSwOOe3QvPfqiJm4VzUV1sDzrxN3CAB9qR7OKBDl
-	 kD6YY4f/nNJDo9BNqVTqw2LJKHCqWgNPXHmVLj/5X5QeWNlsvSr+xANWfb1c5IDWVSw==
+	bh=gSuWkxpqZ386BZdJqqT1xy+e+YGtxcMvPzL0M26UbiI=;
+	b=EHl/7QDQItqTbIufm+Emr9EBnhAzt0O77hMO7zZQ9I3oQAfJdmZhwGOKBar1RYIZ4xLn
+	 DGQJcCuMpUHd5GVdYADALxLI5HvQfYNAh7ZMh5L222zqwd5aiN9y0gEN5hnP86el/6E4y
+	 YBWZFPFo+lk8xOiYTknrWH4nxlXOBttom95NFsbCrzs+Ktxmk9VoAh0Kjx2ujSwLC+zVi
+	 xqgWf9h1JU7hiTm+UF42F78BJGQdjgElrz3OLyurde2oUWChU5Llf3RqNLLS5m46qThcR
+	 ikpwCD3Y8ceI2DPdy8+x91+GiiG3eB0HStT7E5J8jqLiA9B2qe1HwomvKdtC6NEB6Iw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QjzDjgVP;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OUACvoCb;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 939FC606A31A;
-	Wed, 28 Oct 2026 18:34:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AF70606A31A;
+	Wed, 28 Oct 2026 18:34:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QjzDjgVP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2FBA1F01825;
-	Wed, 28 Oct 2026 18:34:40 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OUACvoCb
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC49F1F01825;
+	Wed, 28 Oct 2026 18:34:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793212481;
-	bh=B88/GYL/cLiIOgsNqK86TR4lkypPyORoc8g+b6mJjEo=;
+	s=korg; t=1793212484;
+	bh=gSuWkxpqZ386BZdJqqT1xy+e+YGtxcMvPzL0M26UbiI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QjzDjgVPqtkYo4UiS3mCHWvWYylowCmiXZ7q1hjpD/zXPeB0pIJsumE2cH8pC0Byn
-	 1v/QhOuuhfYORkdNOpa7YRVWjyH5KlkdBAlwLFlEmN3TABzthD3EzrpRhZvPztB+aP
-	 SYKn3GKOYT6+QT9KJYXdOLWzjpRRWagodH7Bh9hE=
+	b=OUACvoCbTQdh/rIJvpWlZPdo7bzYiccCLGCufUUHEZIoi18PqC0EQE8RpcD8dY2Qg
+	 Wt8tBaLx/wcMlexcVJJ29wKQVGuzJYzZaqrXfQp9TIIhBJI0TPdckj8shzrpMAMakG
+	 IJ9U8lmD4eic5hnt2LJ1qkEj7NvMySJJUnbEW74g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Carlos Maiolino <cem@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0170/1887] xfs: fix cursor and pointer handling when recovering iunlink buckets
-Date: Wed, 28 Oct 2026 17:37:46 +0100
-Message-ID: <20261028170503.104702487@linuxfoundation.org>
+	Takashi Iwai <tiwai@suse.de>,
+	Sasha Levin <sashal@kernel.org>,
+	Faaris Ansari <faarisansari@googlemail.com>
+Subject: [PATCH 6.1 0171/1887] ALSA: usb-audio: Apply IGNORE_CTL_ERROR quirk to all Audient devices
+Date: Wed, 28 Oct 2026 17:37:47 +0100
+Message-ID: <20261028170503.129929197@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,99 +68,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Darrick J. Wong <djwong@kernel.org>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 65f39d09d73718611cee40399179323b5d4ead00 ]
+[ Upstream commit a154f7b9f197b3d5e41fa3ad62083f5aa93b1fe8 ]
 
-LOLLM pointed out a bug in xlog_recover_iunlink_bucket:
+Faaris reported a problem with Audient EVO4 device and it turned out
+to be a regression by the recent fix commit 87a6f2fa6e6c ("ALSA:
+usb-audio: Propagate write errors in generic mixer put callbacks").
+It exhibited that the hardware gives errors at accessing the mixer
+unit 10 on certain channels, and the change above made it a fatal
+error.
 
-1. We don't null out prev_ip after releasing it, which can lead to UAF
-   problems if the inodegc flush call in the loop fails.
+We had already a quirk for Audient iD14 to work around such errors
+from the mixer controls, and we can simply apply the same for EVO4.
+OTOH, it's highly possible that other Audient devices suffer from the
+same issue; they must be using similar firmware, after all.
 
-at which point I noticed even more bugs:
+So, in this patch, we apply the quirk generically to all devices with
+the vendor ID Audient (2708), instead.  Ignoring the control error
+isn't usually less critical than overreaction to the firmware
+misbehavior.
 
-2. If the inodegc flush inside the loop fails, we also leak @ip.
-
-3. We set prev_agino to agino having already advanced agino, which
-   results in inodes with i_prev_unlinked set to itself.
-
-4. If we exit the bottom of the loop with prev_ip set, then prev_ip
-   aliases ip and we also set its i_prev_unlinked to itself.
-
-Bugs 3 and 4 introduce loops into the unlinked list, though these loops
-don't surface because we immediately flush each unlinked inode after
-loading it.
-
-Fix all of these issues.
-
-Cc: stable@vger.kernel.org # v6.0
-Fixes: 04755d2e5821b3 ("xfs: refactor xlog_recover_process_iunlinks()")
-Signed-off-by: Darrick J. Wong <djwong@kernel.org>
-Assisted-by: LOLLM # finding obvious bugs
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
-[ Replaced unavailable xfs_agino_to_ino() with the existing XFS_AGINO_TO_INO() macro. ]
+Fixes: 87a6f2fa6e6c ("ALSA: usb-audio: Propagate write errors in generic mixer put callbacks")
+Reported-and-tested-by: Faaris Ansari <faarisansari@googlemail.com>
+Closes: https://lore.kernel.org/CANBVYRCL=8QdLxGg4S6qrahrFtwJxhv-aSGpW7-1S=+iOe4ZGA@mail.gmail.com
+Cc: <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20260929144132.1521617-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/xfs/xfs_log_recover.c | 13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ sound/usb/quirks.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/xfs/xfs_log_recover.c b/fs/xfs/xfs_log_recover.c
-index ffd52f5a4b897..bf510a6fb92e4 100644
---- a/fs/xfs/xfs_log_recover.c
-+++ b/fs/xfs/xfs_log_recover.c
-@@ -2694,12 +2694,13 @@ xlog_recover_iunlink_bucket(
- {
- 	struct xfs_mount	*mp = pag->pag_mount;
- 	struct xfs_inode	*prev_ip = NULL;
--	struct xfs_inode	*ip;
- 	xfs_agino_t		prev_agino, agino;
- 	int			error = 0;
- 
- 	agino = be32_to_cpu(agi->agi_unlinked[bucket]);
- 	while (agino != NULLAGINO) {
-+		struct xfs_inode	*ip;
-+
- 		error = xfs_iget(mp, NULL,
- 				XFS_AGINO_TO_INO(mp, pag->pag_agno, agino),
- 				0, 0, &ip);
-@@ -2709,11 +2710,11 @@ xlog_recover_iunlink_bucket(
- 		ASSERT(VFS_I(ip)->i_nlink == 0);
- 		ASSERT(VFS_I(ip)->i_mode != 0);
- 		xfs_iflags_clear(ip, XFS_IRECOVERY);
--		agino = ip->i_next_unlinked;
- 
- 		if (prev_ip) {
- 			ip->i_prev_unlinked = prev_agino;
- 			xfs_irele(prev_ip);
-+			prev_ip = NULL;
- 
- 			/*
- 			 * Ensure the inode is removed from the unlinked list
-@@ -2725,18 +2726,20 @@ xlog_recover_iunlink_bucket(
- 			 * complete.
- 			 */
- 			error = xfs_inodegc_flush(mp);
--			if (error)
--				break;
-+			if (error) {
-+				xfs_irele(ip);
-+				return error;
-+			}
- 		}
- 
- 		prev_agino = agino;
-+		agino = ip->i_next_unlinked;
- 		prev_ip = ip;
- 	}
- 
- 	if (prev_ip) {
- 		int	error2;
- 
--		ip->i_prev_unlinked = prev_agino;
- 		xfs_irele(prev_ip);
- 
- 		error2 = xfs_inodegc_flush(mp);
+diff --git a/sound/usb/quirks.c b/sound/usb/quirks.c
+index 22e69a6528dff..e2f37a09a8a80 100644
+--- a/sound/usb/quirks.c
++++ b/sound/usb/quirks.c
+@@ -2263,8 +2263,6 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
+ 		   QUIRK_FLAG_SET_IFACE_FIRST),
+ 	DEVICE_FLG(0x262a, 0x9302, /* ddHiFi TC44C */
+ 		   QUIRK_FLAG_DSD_RAW),
+-	DEVICE_FLG(0x2708, 0x0002, /* Audient iD14 */
+-		   QUIRK_FLAG_IGNORE_CTL_ERROR),
+ 	DEVICE_FLG(0x2772, 0x0502, /* Musical Fidelity M6s DAC */
+ 		   0), /* for avoiding QUIRK_FLAG_DSD_RAW with vendor match */
+ 	DEVICE_FLG(0x2912, 0x30c8, /* Audioengine D1 */
+@@ -2330,6 +2328,8 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
+ 		   QUIRK_FLAG_DSD_RAW),
+ 	VENDOR_FLG(0x2622, /* IAG Limited devices */
+ 		   QUIRK_FLAG_DSD_RAW),
++	VENDOR_FLG(0x2708, /* Audient devices */
++		   QUIRK_FLAG_IGNORE_CTL_ERROR),
+ 	VENDOR_FLG(0x278b, /* Rotel? */
+ 		   QUIRK_FLAG_DSD_RAW),
+ 	VENDOR_FLG(0x292b, /* Gustard/Ess based devices */
 -- 
 2.53.0
 
