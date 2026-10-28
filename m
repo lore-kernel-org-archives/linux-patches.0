@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793210176;
-	b=E3MuJGxjbWX4zhhMKEnvHkuKIqeSvB/HWPlKqctdYmzt4uJyMkvMvKUBjz1u6mW9Baxm
-	 a37+hEPHz86/cIvh/V/XDlrVq8OaTNm0UoSYQ/ZaP9M16qbkmJwKjWME6jRH+REbb+fPb
-	 J14rtgdJBmd5EzyP/sR0WQAQZIY+cv8SB1tf41Fk23Yj1PL+jJuF/Fs2mpq/zUyJo2rsH
-	 r/sxIV41FjpFv1PgG8/2OCOzptirUzDXvr4GIV7IvEhvDQOYjys5vQablE2DBxUYmnipe
-	 GieG5HwP+RzTjnJ1Zgzcsmst92Q6O/7upQYi3/z+l1OgXKf6iejvOLHQTYdq8GfXXFA==
+	t=1793210179;
+	b=VYWj/lOwMbmP8rWzlm9Ra7RtA0LG7cwMM/MYy9UNTB72E6AEl9lDMiLCvBo46AOX+lip
+	 XfvUfPmFUWm48QZ6sfh9M5tYARsOksmygFrEELNpbtV8foe2uc4Mc6vmtHicHkEocGHD6
+	 tClUToqK8bXo+OWa8PaLvREF1nxm2ObZjrQbEBP29TKImHEBVQ+uaOnonRmNQ7Q0bkWXD
+	 ktIAaNKla+jTxkh9abs//jgcmKeYNxM8ewXjEcIQn7a/GFOZVFzuEYazdac+Fg3r5elby
+	 pwrBtwSYZFeblFU8fOKYql8wV0KnK2Z3bIXYVh7qK0N0/Q+xgWC1vGVgzatcI76pvZA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793210176;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793210179;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=3O3BfGzR8zIUtyTCB9FMQKCMnwH3rTaL75iVkbGjUbY=;
-	b=eE0ARoissluv8+sBq6YoondwykT0Cx6lHvbqY4YKOsgH4ZKGGu5du6IBkEFnAJuRwRyK
-	 qGVpEiHkbec+ULiHCtGl1wTuYRBkKTrnWviGo8ZIZ9IZJ7Whg226nnlyL/RJKIw9oPSqg
-	 OfJB+qdlc3Y+2zpHGSxxZffhtUKobjlQi1uq0l+F6IeC4IMOL2rbXtaI4it6QX4lc7UOW
-	 ldYWnnM2HiTylXvIKq7dL8yfRnCGhI5fWG81nrh+/YHXjg6mwEmAoAcbDW8qO+YnneifG
-	 DJA6YArTNyHI853fGzXrA7nWb+63gf3YTq4Kp8GGPiSD5gLB4fRu2NQYHd41H4Y3SyA==
+	bh=k3WGK4PAaDVGGYAWbiKXxUIEyBOwlKkHRjqGfoPI7/c=;
+	b=hcgjqa7g4tAEpQnZBbaL2e9TOsTqprimCSNBN9tmq1vBtGODpF+hR2GmpHf57UcnkYbs
+	 rlIwEnhQbdd6fciPGU5uWpjtz8/uT/xYTbgg8r0DQQnrEeUexJ3MNFesTDeICpbnQoKtO
+	 za6WsJxlj1kf5az15fVvfSM/RemJV++0AMYTOeKAO5GhgeyBoRXosQbmmN3N8GghSFKpm
+	 ogjsEPnRY0nUExzqlWoFVAGYE64IZ/j1X2WfYkBOmVCIqh6mPhYGmkxX/Pp8dIzy/1WGS
+	 WCIPGdki6R9ePOB2J8t1ndQh9uaw48jmoZxKNYnWBw4fZwh7YBEqdw4P9yO9Qiz6vDg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mXPoHi7n;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="vdNsa8n/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34B2660A262B;
-	Wed, 28 Oct 2026 17:56:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C99D860A2601;
+	Wed, 28 Oct 2026 17:56:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mXPoHi7n
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D2581F01825;
-	Wed, 28 Oct 2026 17:56:15 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vdNsa8n/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 273861F01828;
+	Wed, 28 Oct 2026 17:56:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793210175;
-	bh=3O3BfGzR8zIUtyTCB9FMQKCMnwH3rTaL75iVkbGjUbY=;
+	s=korg; t=1793210178;
+	bh=k3WGK4PAaDVGGYAWbiKXxUIEyBOwlKkHRjqGfoPI7/c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mXPoHi7n19untQt+OkdaW0taPFGNXzJCnJibxn8D96aG/YaaxgvxoSekPUW+e7z5t
-	 XzYFbXzBvPWpvMI+9VZwSIWYh4uGNysAjmZZkS1Y7qK4NLgXnD38/LwKhp0rDEhYAi
-	 45ogwS9Kp8J5Av6XHH2SJTBDMfK6drDP8LijwEU8=
+	b=vdNsa8n/Xx5zaeHOpCP7x6wD7YNAI68earnkfEdgWpk7H6zgcWhXRmVBiuqAOoYbM
+	 9VH2TX1lKwfO+BS1nIYx8utzDTB+0iGCJSMyWyr3JtXy9KRjs6nniGd1uugszSNDxH
+	 6sG2Z4tFclM81GUnOnj3TFWQQE3FOJVvZeyvXj1g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike Christie <michael.christie@oracle.com>,
-	Yehyeong Lee <yhlee@isslab.korea.ac.kr>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>
-Subject: [PATCH 6.6 057/168] scsi: libiscsi: Validate the task named by a management response
-Date: Wed, 28 Oct 2026 17:59:53 +0100
-Message-ID: <20261028165944.436573734@linuxfoundation.org>
+	Olzhas Marat <marat.olzhas@gmail.com>,
+	Shyam Sundar S K <Shyam-sundar.S-k@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Linus Walleij <linusw@kernel.org>
+Subject: [PATCH 6.6 048/168] pinctrl: amd: Clear S4 wake bits when firmware has _AEI
+Date: Wed, 28 Oct 2026 17:59:44 +0100
+Message-ID: <20261028165944.225707601@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165943.089486480@linuxfoundation.org>
 References: <20261028165943.089486480@linuxfoundation.org>
@@ -68,82 +69,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-commit 11bffcd9cb346732eab2914ef44fe777a3f0b585 upstream.
+commit 1cca81a683da7f0ef2fbaf34442376044cbbad22 upstream.
 
-__iscsi_complete_pdu() fetches the task for five response types from one
-place and checks only that the index resolved:
+Commit ffe8a0c6b552 ("pinctrl-amd: Don't clear S4 wake bits at probe")
+preserves firmware-programmed S4 wake sources because some PCIe devices
+rely on them for Wake-on-LAN. The system that motivated that change does
+not expose ACPI GPIO events through _AEI.
 
-      case ISCSI_OP_LOGOUT_RSP:
-      case ISCSI_OP_LOGIN_RSP:
-      case ISCSI_OP_TEXT_RSP:
-      case ISCSI_OP_SCSI_TMFUNC_RSP:
-      case ISCSI_OP_NOOP_IN:
-              task = iscsi_itt_to_task(conn, hdr->itt);
-              if (!task)
-                      return ISCSI_ERR_BAD_ITT;
+On a Chuwi CoreBook Plus, firmware exposes _AEI but also leaves the S4/S5
+wake bit set for GPIO 24. This causes the machine to power back on
+immediately after shutdown even though Wake-on-LAN is not enabled.
 
-iscsi_itt_to_task() bounds the index against cmds_max and looks at
-nothing else, so a target can name any slot in the pool, including one
-that has never been used. task->conn is then NULL, and both
-iscsi_nop_out_rsp() and iscsi_complete_task() dereference it. One
-unsolicited NOP-In is enough; a Text Response carrying the same ITT
-crashes in iscsi_complete_task() instead.
+GPIO register dumps show that the only relevant difference is bit 15 on
+GPIO 24. Clearing that bit makes the machine remain off. GPIO 24 is not
+itself listed in _AEI, so _AEI is not a per-pin indication of which pins
+the OS manages; it is a platform level signal of which wake model the
+firmware follows.
 
-Require the task to be in flight and not a SCSI command, the way
-iscsi_itt_to_ctask() does for the command opcodes.
+Use that signal to decide what to clear. Continue clearing S0i3/S3 bits on
+every system. Clear S4 bits when firmware exposes _AEI, indicating that the
+platform hands GPIO events to the OS, but preserve S4 bits when _AEI is
+absent so that firmware-programmed sources such as PCIe PME that bypass the
+GPIO IRQ wake API keep working.
 
-[    6.298634] Oops: general protection fault, probably for non-canonical address 0xdffffc000000000c: 0000 [#1] SMP KASAN NOPTI
-[    6.298642] KASAN: null-ptr-deref in range [0x0000000000000060-0x0000000000000067]
-[    6.298652] CPU: 1 UID: 0 PID: 111 Comm: iscsistart Not tainted 7.2.0-rc5-ISCSI1-gf5098b6bae76 #1 PREEMPT(lazy)
-[    6.298654] Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-[    6.298656] RIP: 0010:iscsi_nop_out_rsp.constprop.0+0x46/0x160
-[    6.298691] Code: c1 ea 03 48 83 ec 08 80 3c 02 00 0f 85 f5 00 00 00 48 b8 00 00 00 00 00 fc ff df 48 8b 6b 58 48 8d 7d 60 48 89 fa 48 c1 ea 03 <80> 3c 02 00 0f 85 c0 00 00 00 48 8b 45 60 48 39 c3 74 50 48 b8 00
-[    6.298698] RSP: 0018:ffff88806c907be8 EFLAGS: 00010206
-[    6.298701] RAX: dffffc0000000000 RBX: ffff888006116800 RCX: 0000000000000020
-[    6.298702] RDX: 000000000000000c RSI: ffff88800525d578 RDI: 0000000000000060
-[    6.298703] RBP: 0000000000000000 R08: 0000000000000000 R09: 0000000000000000
-[    6.298706] R10: 0000000000000020 R11: 0000000000000000 R12: 0000000000000000
-[    6.298706] R13: 000000000000002e R14: ffff8880056eb440 R15: ffff888006116800
-[    6.298707] FS:  00007fc02d1c2740(0000) GS:ffff8880b29bc000(0000) knlGS:0000000000000000
-[    6.298710] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[    6.298711] CR2: 000055fe3b56ddf8 CR3: 00000000053b9004 CR4: 0000000000770ef0
-[    6.298712] PKRU: 55555554
-[    6.298713] Call Trace:
-[    6.298714]  <IRQ>
-[    6.298714]  __iscsi_complete_pdu+0x13a8/0x22a0
-[    6.298758]  iscsi_complete_pdu+0x54/0xa0
-[    6.298759]  iscsi_tcp_hdr_recv_done+0x870/0x2c80
-[    6.298778]  iscsi_tcp_recv_skb+0x31e/0xec0
-[    6.298800]  iscsi_sw_tcp_recv+0x12f/0x390
-[    6.298804]  __tcp_read_sock+0x1ab/0x810
-[    6.298812]  iscsi_sw_tcp_data_ready+0x18b/0x510
-[    6.298814]  tcp_rcv_established+0x1f56/0x3a00
-[    6.298842]  tcp_v4_do_rcv+0x449/0x960
-[    6.298847]  tcp_v4_rcv+0x2245/0x3bc0
+A platform that exposes _AEI for some pins while routing a wake capable
+device through a raw GPIO not listed in _AEI would lose that wake source
+unless firmware re-arms it during the sleep transition. No such system has
+been reported.
 
-Fixes: 7996a778ff8c ("[SCSI] iscsi: add libiscsi")
+Fixes: ffe8a0c6b552 ("pinctrl-amd: Don't clear S4 wake bits at probe")
+Reported-by: Olzhas Marat <marat.olzhas@gmail.com>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=222041
 Cc: stable@vger.kernel.org
-Reviewed-by: Mike Christie <michael.christie@oracle.com>
-Signed-off-by: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
-Link: https://patch.msgid.link/20261007015842.634893-4-yhlee@isslab.korea.ac.kr
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+Tested-by: Olzhas Marat <marat.olzhas@gmail.com>
+Reviewed-by: Shyam Sundar S K <Shyam-sundar.S-k@amd.com>
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/libiscsi.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pinctrl/pinctrl-amd.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/drivers/scsi/libiscsi.c
-+++ b/drivers/scsi/libiscsi.c
-@@ -1286,7 +1286,7 @@ int __iscsi_complete_pdu(struct iscsi_co
- 	case ISCSI_OP_SCSI_TMFUNC_RSP:
- 	case ISCSI_OP_NOOP_IN:
- 		task = iscsi_itt_to_task(conn, hdr->itt);
--		if (!task)
-+		if (!task || task->state == ISCSI_TASK_FREE || task->sc)
- 			return ISCSI_ERR_BAD_ITT;
- 		break;
- 	default:
+--- a/drivers/pinctrl/pinctrl-amd.c
++++ b/drivers/pinctrl/pinctrl-amd.c
+@@ -871,6 +871,15 @@ static void amd_gpio_irq_init(struct amd
+ 
+ 	mask = BIT(WAKE_CNTRL_OFF_S0I3) | BIT(WAKE_CNTRL_OFF_S3);
+ 
++#ifdef CONFIG_ACPI
++	/*
++	 * Platforms without _AEI leave GPIO wake sources to firmware, so
++	 * preserve their S4 wake bits.
++	 */
++	if (acpi_has_method(ACPI_HANDLE(&gpio_dev->pdev->dev), "_AEI"))
++		mask |= BIT(WAKE_CNTRL_OFF_S4);
++#endif
++
+ 	for (i = 0; i < desc->npins; i++) {
+ 		int pin = desc->pins[i].number;
+ 		const struct pin_desc *pd = pin_desc_get(gpio_dev->pctrl, pin);
 
 
