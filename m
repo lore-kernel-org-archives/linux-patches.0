@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793211050;
-	b=iOsEQrF0FsP/iUQXrto9iOoJoQylC8v4xVv0TBH6wdtmiFFAQi85yJSe3CPdWUQDcJGu
-	 62raBeERow/3Qcnn/eeWi6rwP3TYcuptcfH4ngSZ/a4h0EdL69ScNr3uFkYQ6OSzgSRAm
-	 1C338WXfosfv49PCk73UE7TYPKiIbPnYDQq5GGPQDkP1AykPe5ALF8P5zUsfAefxbUGlE
-	 KlzhodneLUA49ZSVRCpOkxskRmb0xmVk4r39/pO8ITmzKZJW/sJ+EB0dyi73cIu3If4Ug
-	 3syURLIoa4lQH/9awgsQQT+eWUii8uTtAwmZulKbjg1Ol4IjW1ErIZN2QbPNTPDrm9w==
+	t=1793211053;
+	b=3l9/a+//CGiw+kp29DiiAnVQg/k8fBOQU8PJC627awy0hdMMVVP+ZAb7hYCzLddVRwrq
+	 8/HMugG95gfKSKxzdf+mHVZSQRWJZXGgYgH+8EjjSipK0xJb52FKiKs63Xtdzx96JRQnN
+	 NP1wMQRAT2G8xXMMjgD+x4ZiPQFw/Le2ghH2RUypqGfhf+cY3D8GfAEbzmvgCO9bM+9Mr
+	 5Gy8AoA55YqSy8SYr/F8j6lJJ6b5/oR5ikcWP5Q/kTWaJmvulmeAvvHUowcy9TfFYVLJ6
+	 Fa8JclBpJXpX4XolMi9CkUH5mrL6uPt+TiAxj612x9ujXFBgPgRCXL1+7lKi08ysInw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793211050;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793211053;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=2IzG7GFkeex8JaAE/HP/Czm7QLOkivBVidnBlxX9i/0=;
-	b=m33lJjFlnJb1ZD9AJCM1tTTNo9O+qO4Ga1y78GXzzziWq8Nw75LWAF5sFwp+gUyDYhFi
-	 IGqexJ/WmU6e0hMjlSgTpXzd8gxPqJ7MHYd3v4sAUrcOW/nMBpPfmDPRv+XABed3y3qfK
-	 nGz8ApGU13nQ4itu4BLLzMLxrjallBSgsLS/7uketWdnLGdOmCXEgwjt5GgRvFml2PDNM
-	 fb9rIk+eK32g8z2wr9+TFsNaV3SVfdnu7SVudElIMbh3/l/Xr/hklasw2GX9snx5tWXuV
-	 VU6NmXm3eaacMVsQz2LzKkYc7Ln7kXeyzExmvtf0hvzrggHqmzVWiXE/ZuQLImoIOAg==
+	bh=6yFIVMPsuesJ2YZ0NdXrkcUcOAfnxUpOW9nvNnZjek8=;
+	b=VnZWuFR0xMLK5keuW9Eu2KimX5M7DZtymeL5BGhevJuBtZTX/ZdZffbPgn7ISnCb2r+L
+	 qwI/dwLKRh8xe0qUTJtv858c8TTa6zoH2uuDQqEnEmDL4f0NwVsaG8IwcW+F974O07jw2
+	 D3Ap+IQP2KCP6Dpi44KJrRC98kMn37uN9sQQPIIyRwVqMn9TD6SXEZzvwZSq97ZCIFVJv
+	 SksXEwgyyyxSKNE2uO3D4osBApuYS5akmXNzPa31MxlKm9aPO0lZ2/W5fRACNsSNwVmmp
+	 XCM5sy9I0X78iYC/xv13NwGDIORHu7pjr1CM0tNzz6S6yOKcHmxZlyP9KXF68g//YKA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mwhF6raT;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jHZuUe6m;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9B2260A6F78;
-	Wed, 28 Oct 2026 18:10:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7538606A951;
+	Wed, 28 Oct 2026 18:10:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mwhF6raT
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 328031F031EA;
-	Wed, 28 Oct 2026 18:10:49 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jHZuUe6m
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 048031F01829;
+	Wed, 28 Oct 2026 18:10:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793211049;
-	bh=2IzG7GFkeex8JaAE/HP/Czm7QLOkivBVidnBlxX9i/0=;
+	s=korg; t=1793211052;
+	bh=6yFIVMPsuesJ2YZ0NdXrkcUcOAfnxUpOW9nvNnZjek8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mwhF6raTq5U4xLNan/ez8uw3vnnyfv/yAudCnvIJr/y3J/h1TulWN3PViqsyZoQ9V
-	 Qq3lk5OHogB0ajSrCqXMUanGWbC2Hael5BiOkKOroFwvLl9VqlbwiE5wz/NI2rEEZT
-	 CglB1QxHzCZ12eUbdazoTkzZGDLrejdrs9KrBIuQ=
+	b=jHZuUe6mXTYJDl1jSoeVyn7VTFwNs2kDp6Q5+0jFrWP8UoLz+TVSkfrvOqWe3zZUH
+	 7z6XmgtSvlviS9JlJpymVKV8Ar9t1mJ/eyh5nbSQK3p0yMMHD6gE3tjt622gDgK08R
+	 wo6MngNl3/FtTTwG3TUwtdHDs4BIqTRfESYySSOg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	co+24304d323d28f156@bugs.sh,
-	Xiang Mei <xmei5@asu.edu>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.15 224/571] ALSA: ua101: reject mismatched capture/playback packet sizes
-Date: Wed, 28 Oct 2026 17:56:11 +0100
-Message-ID: <20261028170013.317029707@linuxfoundation.org>
+	Bill Pemberton <wfp5p@virginia.edu>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 5.15 242/571] USB: serial: quatech2: fix baud rate overflow
+Date: Wed, 28 Oct 2026 17:56:29 +0100
+Message-ID: <20261028170013.747696893@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -68,83 +67,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Johan Hovold <johan@kernel.org>
 
-commit 86f86e6fdedc33c5b8d38b9208b350f8accf57ee upstream.
+commit ec06546b43b612cefc851558981b4955c0ef9e46 upstream.
 
-detect_usb_format() cross-checks bSubframeSize, bBitResolution and
-tSamFreq between the capture and playback interfaces, but never relates
-the two endpoints' wMaxPacketSize and bNrChannels.  Each playback URB
-gets a buffer of ua->playback.max_packet_bytes, while the number of
-bytes written into it is derived from the capture stream:
-capture_urb_complete() computes frames from the received capture packet
-and capture.frame_bytes, and start_usb_playback() and playback_work()
-multiply that by playback.frame_bytes.
+The requested baud rate is incorrectly truncated to 16 bits so that
+line speeds above 65535 bps cannot be set.
 
-A device declaring a large capture wMaxPacketSize with few capture
-channels and a small playback wMaxPacketSize with many playback channels
-therefore memset()s and memcpy()s past the end of the playback buffer,
-in open() of the PCM node the driver registers during probe.
-usb_submit_urb() rejects the over-long iso_frame_desc[0].length with
--EMSGSIZE, but only after the write.
+Use 32 bits for the rate while rejecting rates outside of
+[50,921600] to avoid having the 16-bit divisor overflow.
 
-Reject such descriptors at probe time.  Genuine UA-101/UA-1000 hardware
-declares proportional packet sizes and is unaffected.
-
-  BUG: KASAN: slab-out-of-bounds in start_usb_playback (sound/usb/misc/ua101.c:586)
-  Write of size 2048 at addr ffff8881098f3c00 by task exploit/5021
-  Call Trace:
-   __asan_memset (mm/kasan/shadow.c:84)
-   start_usb_playback (sound/usb/misc/ua101.c:586)
-   playback_pcm_open (sound/usb/misc/ua101.c:679)
-   snd_pcm_open_substream (sound/core/pcm_native.c:2829)
-   snd_pcm_open (sound/core/pcm_native.c:2865 sound/core/pcm_native.c:2932)
-   snd_pcm_playback_open (sound/core/pcm_native.c:2891)
-   snd_open (sound/core/sound.c:166)
-   chrdev_open (fs/char_dev.c:411)
-   do_dentry_open (fs/open.c:996)
-   vfs_open (fs/open.c:1101)
-   path_openat (fs/namei.c:4837 fs/namei.c:5000)
-   do_file_open (fs/namei.c:5029)
-   do_sys_openat2 (fs/open.c:1417)
-   __x64_sys_openat (fs/open.c:1423 fs/open.c:1439 fs/open.c:1434)
-   do_syscall_64 (arch/x86/entry/syscall_64.c:61 arch/x86/entry/syscall_64.c:84)
-   entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
-
-  The buggy address belongs to the object at ffff8881098f3c00
-   which belongs to the cache kmalloc-192 of size 192
-  The buggy address is located 0 bytes inside of
-   allocated 168-byte region [ffff8881098f3c00, ffff8881098f3ca8)
-
-Cc: stable@vger.kernel.org
-Fixes: 63978ab3e3e9 ("sound: add Edirol UA-101 support")
-Reported-by: <co+24304d323d28f156@bugs.sh>
-Assisted-by: LLM
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-Link: https://patch.msgid.link/20260918225753.1278505-1-xmei5@asu.edu
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: f7a33e608d9a ("USB: serial: add quatech2 usb to serial driver")
+Cc: stable@vger.kernel.org	# 3.5
+Cc: Bill Pemberton <wfp5p@virginia.edu>
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/misc/ua101.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/usb/serial/quatech2.c |   19 ++++++++++++++++---
+ 1 file changed, 16 insertions(+), 3 deletions(-)
 
---- a/sound/usb/misc/ua101.c
-+++ b/sound/usb/misc/ua101.c
-@@ -1022,6 +1022,15 @@ static int detect_usb_format(struct ua10
- 	}
- 	ua->playback.usb_pipe = usb_sndisocpipe(ua->dev, usb_endpoint_num(epd));
- 	ua->playback.max_packet_bytes = usb_endpoint_maxp(epd);
+--- a/drivers/usb/serial/quatech2.c
++++ b/drivers/usb/serial/quatech2.c
+@@ -54,6 +54,7 @@
+ #define QT2_XMIT_FLUSH      0x05  /* no following info */
+ #define QT2_CONTROL_ESCAPE  0xff  /* pass through previous 2 control bytes */
+ 
++#define  MIN_BAUD_RATE              50
+ #define  MAX_BAUD_RATE              921600
+ #define  DEFAULT_BAUD_RATE          9600
+ 
+@@ -158,7 +159,7 @@ static inline int calc_baud_divisor(int
+ 
+ static inline int qt2_set_port_config(struct usb_device *dev,
+ 				      unsigned char port_number,
+-				      u16 baudrate, u16 lcr)
++				      speed_t baudrate, u16 lcr)
+ {
+ 	int divisor = calc_baud_divisor(baudrate);
+ 	u16 index = ((u16) (lcr << 8) | (u16) (port_number));
+@@ -267,9 +268,9 @@ static void qt2_set_termios(struct tty_s
+ 	struct usb_device *dev = port->serial->dev;
+ 	struct qt2_port_private *port_priv;
+ 	struct ktermios *termios = &tty->termios;
+-	u16 baud;
+ 	unsigned int cflag = termios->c_cflag;
+ 	u16 new_lcr = 0;
++	speed_t baud;
+ 	int status;
+ 
+ 	port_priv = usb_get_serial_port_data(port);
+@@ -301,6 +302,18 @@ static void qt2_set_termios(struct tty_s
+ 	if (!baud)
+ 		baud = 9600;
+ 
++	if (baud < MIN_BAUD_RATE || baud > MAX_BAUD_RATE) {
++		if (old_termios)
++			baud = tty_termios_baud_rate(old_termios);
++		else
++			baud = clamp(baud, MIN_BAUD_RATE, MAX_BAUD_RATE);
 +
-+	if (ua->capture.max_packet_bytes / ua->capture.frame_bytes *
-+	    ua->playback.frame_bytes > ua->playback.max_packet_bytes) {
-+		dev_err(&ua->dev->dev,
-+			"playback packet size %u too small for %u capture frames\n",
-+			ua->playback.max_packet_bytes,
-+			ua->capture.max_packet_bytes / ua->capture.frame_bytes);
-+		return -ENXIO;
++		tty_encode_baud_rate(tty, baud, baud);
++
++		if (!baud)
++			baud = 9600;
 +	}
++
+ 	status = qt2_set_port_config(dev, port_priv->device_port, baud,
+ 				     new_lcr);
+ 	if (status < 0)
+@@ -397,7 +410,7 @@ static int qt2_open(struct tty_struct *t
+ 	port_priv->device_port = (u8) device_port;
+ 
+ 	if (tty)
+-		qt2_set_termios(tty, port, &tty->termios);
++		qt2_set_termios(tty, port, NULL);
+ 
  	return 0;
- }
  
 
 
