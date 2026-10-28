@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793211016;
-	b=IPPJ+E4gExdx+iwfPIVctJv8e+V4YpqeD5R10etFI70n7OX7Xft0fa6hiiMpVvHJHALl
-	 LkAAR1dxptqBTKPmzoY8f00BcrU21yOobufRB/nVXcl/v5pMuF3XksDUNLLCIDH0JuY/n
-	 YoxFR6M0QZbekzjgsaStACeE4WftOJto1YiqaRBozL4HCIIGj/RAhzFECSlMIokGgx+Dy
-	 E8l9VN9F7iKqthmxnq3Xr4VKF9EU89jKPLYJyDyAGh7Ns1UVTOwHbBZFi15gmmJLnBVlQ
-	 wHZjkyaAiR7txEk6xEQyyFYyfKkKiTDTiAz1eCAnhJMvNwTF/II1ggS7ShLCEkbDu5g==
+	t=1793211018;
+	b=g+P0XecXjst/OSIjPim3ITSpPRqjwpjXfKyr0M8rh+6kaSLmd0VgDEM7MUr+weUJlmE0
+	 Bg6dsBrLZkGnAqFwl+RJqmyQlKqrzfnKacBaTBcSZnwzeVRTlcQOhHtVupOVgEHu4OK0F
+	 TLClJmpTDDWdELU4PcJdoaVM9ADOd0zEYt6i1oRYF5AeLgumBNQruHnwdgCWDTW/Jq3nj
+	 P5JUN1bGJ8BfRZ+EF+WHMBt777ma3u3BF4fVu2dWVgnIZiLEj/bBH98U5Kcr8K0D8fWCz
+	 3TbVb4pbU09siKQRpleumYnZ095nqgRK75ljTtGAVBbrRNZ1Hqk5+UJq/UtlVNxHusA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793211016;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793211018;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=XCX53C7pDpbxkWOOBGDJf1Usa+MWux91njk6PhTIUvs=;
-	b=sdjL0cw43Cbgp6b0MYPlzlYkQh1o8PjB9M6FovWmv+VZ7uKQ7V2dVH3fB/uU+IVGQmc5
-	 coBW1gZfkFaewdnN9y+kvfV+21ucKgmY+fgOdtE0L33shq2t0nkDrP3LAav2rgXfSuHGn
-	 u+rtYF7Shzx/Zfb7GStyisoleimr/fi73CJ4pPgTzY+ND+D+26fe7hAHDtdB3W2gE6jfu
-	 D7tR8cIQ6sN6PcE50L+x5uCGmd5PoiqBKtf2BncttvRvG/pGd49UzC0OgbFiU4ZGBcCib
-	 Dx77NY7zVYYvlN5sVQJBOwiSqWsaxp4FEtgjL24ZK4DcrYo923m0M3mcDerimdjc1bQ==
+	bh=Nw0QWq2dVdhgOCdsYFPytUB1UFu7w0SCphchrLm/iSM=;
+	b=z/0zXOh0aZxL3Lp4n+7ngq4fL4X1T/XNJOB2HT0TmcYaygfe2rhzsktqCf5WP5ByAHfA
+	 y7UxebTwg/lH5Njq6PRfMcLQhKL65YFdsvityH1cLin7TSEWegwhWXj5oKh1iDGI7mXG9
+	 gwjIzKw2JRsCNisZmu4jv33g3E2whdbWzFIcSWwyesh2ZvKPrYRcNlO4YbgtQL3cSktEl
+	 tXsaHMPzDW7Qgajf6fG8X0NcWUW7IQyezqfgPxJi6lVCFaykh6AkO8Zu2zxNm/DCknN2I
+	 yKN8VWdzA0HR7XWrZDq9/rDZOUJjyeRKmU9g4sapB+aFWG+wgGQt2By2GYA9u/Jm+Yw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yQTdKpGz;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PKkPtQR6;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE578606A31A;
-	Wed, 28 Oct 2026 18:10:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97536606A325;
+	Wed, 28 Oct 2026 18:10:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yQTdKpGz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B6091F01825;
-	Wed, 28 Oct 2026 18:10:15 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PKkPtQR6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 006651F01828;
+	Wed, 28 Oct 2026 18:10:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793211015;
-	bh=XCX53C7pDpbxkWOOBGDJf1Usa+MWux91njk6PhTIUvs=;
+	s=korg; t=1793211018;
+	bh=Nw0QWq2dVdhgOCdsYFPytUB1UFu7w0SCphchrLm/iSM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yQTdKpGz5Lhmgn3jopj6xXy8FTZuF9vIS0iTxe2gU7miOwkvecCcQFYlOjPocYOzP
-	 IUx3Tlk6VZK342dGqv6Oy4TDp1BswMQKQYw+hZMsyUyrKYNhKshuewAg6Pt3ItF/xV
-	 i8X+yBbshRBc1j0hiBsmtpgAKRa24W/j5XJBdVwI=
+	b=PKkPtQR6rCQiNfzIj/O8256h9iIz/MhSf2ssR5TPGAoIGmHdibnGMntqNEspW8NJx
+	 n05XtdrCKfXkguhWM59JR1TpWIlWATwSgq4RmhYnGWXptJEcCFqP2bRsKktxguSS9l
+	 0FarDVqb+UoPLn6j2cBLMw+Tbhk8lnkutXZ6fhso=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Binbin Deng <18983559317@163.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 174/571] net/mctp: publish the mctp_dev only after it is initialised
-Date: Wed, 28 Oct 2026 17:55:21 +0100
-Message-ID: <20261028170012.142502613@linuxfoundation.org>
+	Zimeng Li <me@lizi.moe>,
+	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 5.15 223/571] ASoC: qcom: lpass-cpu: use DAI table index for playback constraints
+Date: Wed, 28 Oct 2026 17:56:10 +0100
+Message-ID: <20261028170013.292706092@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -69,75 +68,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Binbin Deng <18983559317@163.com>
+From: Zimeng Li <me@lizi.moe>
 
-[ Upstream commit aadf655e8ea9a8ffa24bb8d69f504572e8d18181 ]
+commit ca51771c8efde5df05476ac98dd1b2af4e2b149f upstream.
 
-mctp_add_dev() links the new mctp_dev into dev->mctp_ptr before mdev->dev
-is assigned, so a reader that picks the device up in that window
-dereferences a net_device pointer that is still NULL:
+The DAI ID is a hardware port ID and is not necessarily the index of
+the corresponding entry in variant->dai_driver.
 
-KASAN: null-ptr-deref in range [0x00000000000000b0-0x00000000000000b7]
-Call Trace:
- <TASK>
- ? __pfx_mctp_sendmsg (./include/linux/sockptr.h:49)
- ? __pfx_mctp_dst_output (net/mctp/route.c:41)
- ? selinux_socket_sendmsg (security/selinux/hooks.c:5278)
- ____sys_sendmsg (net/socket.c:775 (discriminator 1) net/socket.c:790
- (discriminator 1) net/socket.c:2684 (discriminator 1))
- ? __pfx_____sys_sendmsg (net/socket.c:1131)
- ? __pfx_copy_msghdr_from_user (net/socket.c:2590)
- ? update_cfs_rq_load_avg (kernel/sched/fair.c:5478)
- ___sys_sendmsg (net/socket.c:2738)
- ? __pfx____sys_sendmsg (net/socket.c:2625)
- ? perf_event_task_tick (./include/linux/rcupdate.h:838)
- ? sched_tick (kernel/sched/core.c:5818)
- ? clockevents_program_event (kernel/time/clockevents.c:372)
- ? fdget (./include/linux/rcupdate.h:873 fs/file.c:1100)
- __sys_sendmsg (net/socket.c:2770)
- ? __pfx___sys_sendmsg (net/socket.c:2751)
- do_syscall_64 (arch/x86/entry/syscall_64.c:63)
- entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
- </TASK>
+When configuring a DAI with LPAIF_I2SCTL_MODE_QUAD01, the probe code
+currently uses dai_id to index variant->dai_driver. This is incorrect
+for platforms where DAI IDs are sparse. For example, the IPQ806x MI2S
+DAI has ID 4 while it is the only entry in the DAI driver table. If
+that DAI is configured for QUAD01 and probe reaches this branch, the
+code writes beyond that single entry via dai_driver[4] instead of
+updating the DAI being processed.
 
-Fix by publishing only once the object is fully initialised:
-__mctp_dev_get() runs under rcu_read_lock() only and hands
-this object to readers as soon as mctp_ptr is assigned, so
-they must never observe mdev->dev == NULL.
+Use the loop index i when updating the current DAI's playback channel
+constraints, while retaining dai_id for indexing the hardware-port
+specific playback SD-line mode array.
 
-Fixes: 583be982d934 ("mctp: Add device handling and netlink interface")
-Signed-off-by: Binbin Deng <18983559317@163.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/729830b8.130.1a0c945579d.Coremail.18983559317@163.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This fixes the incorrect DAI table access for platforms where the DAI
+ID does not match its position in the driver table.
+
+Fixes: c223f41c1a52 ("ASoC: qcom: Add four speaker support on MI2S secondary")
+Cc: stable@vger.kernel.org
+Signed-off-by: Zimeng Li <me@lizi.moe>
+Assisted-by: LLM-assisted source analysis
+Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260927010911.51980-1-me@lizi.moe
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mctp/device.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ sound/soc/qcom/lpass-cpu.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/mctp/device.c b/net/mctp/device.c
-index b248bca58c7c0..639d2c6641780 100644
---- a/net/mctp/device.c
-+++ b/net/mctp/device.c
-@@ -282,13 +282,13 @@ static struct mctp_dev *mctp_add_dev(struct net_device *dev)
+--- a/sound/soc/qcom/lpass-cpu.c
++++ b/sound/soc/qcom/lpass-cpu.c
+@@ -967,8 +967,8 @@ int asoc_qcom_lpass_cpu_platform_probe(s
+ 		}
+ 		if (drvdata->mi2s_playback_sd_mode[dai_id] ==
+ 			LPAIF_I2SCTL_MODE_QUAD01) {
+-			variant->dai_driver[dai_id].playback.channels_min = 4;
+-			variant->dai_driver[dai_id].playback.channels_max = 4;
++			variant->dai_driver[i].playback.channels_min = 4;
++			variant->dai_driver[i].playback.channels_max = 4;
+ 		}
+ 	}
  
- 	mdev->net = mctp_default_net(dev_net(dev));
- 
--	/* associate to net_device */
- 	refcount_set(&mdev->refs, 1);
--	rcu_assign_pointer(dev->mctp_ptr, mdev);
--
- 	dev_hold(dev);
- 	mdev->dev = dev;
- 
-+	/* Associate to net_device, publish the mdev. */
-+	rcu_assign_pointer(dev->mctp_ptr, mdev);
-+
- 	return mdev;
- }
- 
--- 
-2.53.0
-
 
 
