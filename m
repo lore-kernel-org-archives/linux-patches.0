@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793209512;
-	b=n09EhIiAzHF3jvT7E5ybxmSEla4Rxu4Eq41+dr/VtUF7wtPsX1T9u2gksa3W4tL0qNxv
-	 6meC6XVTGylbW1W4fXgF+kz7XaEd2CQJlZmt+UCmM8mbwN3+69Zpq+oR4J5OzSnhlTqLE
-	 3ALVc8vIfixxpjMLsKLyKOQVYOsf3KAGiq24GcEtoEe1arMsQliYMfP8n2MzraXpJRxcg
-	 /tuy9w6x7Wq+ElIbCwr5H7FY8iEJA3N1TLAumAwVCrpVaqwejalxmUDn7shv6tjDdA68J
-	 RL3dwxbAaTyBH/WPfPvitnC9u4tVe1MFrhCDqyS1B9NTwA2C1aomggi9aZbO40eG1Lw==
+	t=1793209515;
+	b=s6gvfL6UZfWXocKWVDOQyhNlAW4z/Y2ucHJtKPDzVj1Ptdss3PYuH1FhaKQHqKKdkJAa
+	 fb1dGyOF/XsT+SloQj1qSsWBb6TqQGImuFwRUISGN4fk7Y+neeQqScTQbvsul1Q7npzSu
+	 4WyCllSWJ5q9F6quPhZkmtP/7krU1K2GZwrCNcbzW6+BULroOGcbexSzSt6XKlUz1cvNm
+	 0NnOatK51KChMfArgSJ9wCNYZV2LPb0FGGyW2R8B2BdVXAyfh/D8py1CJQs5a+JOpqQLV
+	 U5lgJc5AWjhfzA903eQexw1cxVSjOxjNltcuYMzxevMbfuVMH9rUKpn8JPWQB2TPOOQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793209512;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793209515;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=82diPvffMxISCQAdfZTXGVIu+DM+DzwPX4oRei7ecs8=;
-	b=JAgZ8PwkQFxF6KwnzsUpIGqZ50pH2l0KMIxL0Z+9GhF7eMnaKi05Ml9gQjdbnNMVHPGl
-	 yLfg6hBy+/4c+ZSJrkqCRt/y2trPbCHFxnylxMpeTfPLMPz4NbuuG8zfTHpFpayTWGqq2
-	 dg+N/nlJDgF5z3WSlf6rOVUHtgoVrT8a2FZjEQvS/BSXTOAsuUcsDy9kS065LP0qKva3F
-	 nqrSnZzRZZ3fGPscogSmOzRQ/zmEeg+TQNjnJfoBHoWKGXEYQZZSKqJpPxorBHjECebVJ
-	 3Wj8RCT+w9gs1sBgrbF179qOAVY6S7WToERM2arVLA1dfKwosizOL2W4aHh2vToVrbA==
+	bh=92+cOIIH9UuOypu1QIOrGJKraHwVWFmXB2HaQORaKcs=;
+	b=kagqiUETWfILYv+TyH09t6v9BG9ScPWyO8FWCtd0FIoii0AhkyBls1EXvhWHofGdUaSz
+	 jTpXdsI0IPuBsSNyKCH1NpddYHL5/a5EyKXgVdxHGBkNleUWyJ/+8siuVCJ8/bav7klvw
+	 XWwUIhw5BDdYJ/32Ey+kTclVHHBeKxPn76tbIoDiJYJZujtZzowMHLbEUjr/vYYYUfdFa
+	 rO5MoSwTFkFfEtXP5QS+ELnuAw1KB6yOJV5DF2Vdix5DCPKn/qzrPlwlEVEiZ9l+CsdNn
+	 gXI4BIobH/+0r4GX4u4RL48plnsQEIiQQ+khaEvO0jpMEtHUunsOBbc+uxpoa6R8odQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="bTr/MRm2";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vlUNpgZ9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBB94606A31A;
-	Wed, 28 Oct 2026 17:45:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABF11606A31F;
+	Wed, 28 Oct 2026 17:45:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bTr/MRm2
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31DFA1F01825;
-	Wed, 28 Oct 2026 17:45:11 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vlUNpgZ9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A09E1F01825;
+	Wed, 28 Oct 2026 17:45:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793209511;
-	bh=82diPvffMxISCQAdfZTXGVIu+DM+DzwPX4oRei7ecs8=;
+	s=korg; t=1793209514;
+	bh=92+cOIIH9UuOypu1QIOrGJKraHwVWFmXB2HaQORaKcs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bTr/MRm2cJfaPRONGUzHlDBMOHeXolz6JZLAY9jntXX/WgNuSXAqG1TaBRpQVHG1A
-	 IiPZAPWQwS5GH84LiHLXXG8YLalVLxJyro1QmrlZX/OMtyUlRxoQUKxw9e0KxumRQ8
-	 kXtlduM9ctL/66kgScbH6wkWwCZxGrb1jJaZJaJU=
+	b=vlUNpgZ9dCfx2/30ncsEIEIGmMFWrH1Su8nzPSAyCFHB2vHtx4sTiSk5HsyDbezZx
+	 JaO2M2lx9ZbmzhZQli5zx+YaoiVGmUO/OtdZ2Mx9ctewnBgWPUE7cwH+TS+cT2lkUg
+	 O20Dg6nod79fn+00oyYafweufolK7sYOhDO0w8CA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dibin Moolakadan Subrahmanian <dibin.moolakadan.subrahmanian@intel.com>,
-	Mitul Golani <mitulkumar.ajitkumar.golani@intel.com>,
-	Ankit Nautiyal <ankit.k.nautiyal@intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+	"Jose Fernandez (Anthropic)" <jose.fernandez@linux.dev>,
+	Ben Cressey <ben@cressey.dev>,
+	Mikulas Patocka <mpatocka@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 496/516] drm/i915/dmc: Harden DMC firmware payload parsing
-Date: Wed, 28 Oct 2026 18:00:48 +0100
-Message-ID: <20261028170015.230491473@linuxfoundation.org>
+Subject: [PATCH 5.10 497/516] dm-integrity: fix infinite loop on discard with large tag size
+Date: Wed, 28 Oct 2026 18:00:49 +0100
+Message-ID: <20261028170015.252807478@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -70,86 +69,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dibin Moolakadan Subrahmanian <dibin.moolakadan.subrahmanian@intel.com>
+From: Ben Cressey <ben@cressey.dev>
 
-[ Upstream commit 8bb1858db453cd4250e3b633f5d2d09206024ca6 ]
+[ Upstream commit 18d80c77b4c7dd20699e81cedfbbff4e9d198f28 ]
 
-Validate the conversion of the DMC firmware size from dwords to bytes
-using check_mul_overflow() before calculating the firmware payload size.
+When integrity_metadata handles a discard, it fills a buffer with
+DISCARD_FILLER and writes it over the tags, max_blocks blocks at a
+time. If the kmalloc fails, the buffer is the on-stack array
+checksums_onstack and max_size is set to HASH_MAX_DIGESTSIZE. So if the
+tag size is larger than HASH_MAX_DIGESTSIZE, max_blocks is zero, bi_size
+is never decremented and the loop never terminates.
 
-Reject zero-length payloads and zero MMIO counts in the DMC firmware
-header so malformed firmware is caught early. Also set dmc_fw_size only
-after the payload allocation succeeds.
+Fix this by using sizeof(checksums_onstack) as max_size. The array has
+MAX_TAG_SIZE bytes since commit b93b6643e9b5 ("dm integrity: fix a
+crash with unusually large tag size"), so max_blocks is at least 1.
 
-Fixes: eb805623d8b1 ("drm/i915/skl: Add support to load SKL CSR firmware.")
+Fixes: 84597a44a9d8 ("dm integrity: add optional discard support")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude-Code:Sonnet-5
-Signed-off-by: Dibin Moolakadan Subrahmanian <dibin.moolakadan.subrahmanian@intel.com>
-Reviewed-by: Mitul Golani<mitulkumar.ajitkumar.golani@intel.com>
-Signed-off-by: Ankit Nautiyal <ankit.k.nautiyal@intel.com>
-Link: https://patch.msgid.link/20260922133535.3180973-5-dibin.moolakadan.subrahmanian@intel.com
-(cherry picked from commit efde6601a1f1daedfe3dcc2816c934ddb44e3eef)
-Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
-[ sashal: adapted parse_dmc_fw_header() changes to the existing parse_csr_fw_dmc() implementation ]
+Reviewed-by: Jose Fernandez (Anthropic) <jose.fernandez@linux.dev>
+Signed-off-by: Ben Cressey <ben@cressey.dev>
+Assisted-by: Claude:unspecified
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+[ sashal: adjusted context to match the discard handler without extra_space accounting ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/display/intel_csr.c | 19 +++++++++++++++----
- 1 file changed, 15 insertions(+), 4 deletions(-)
+ drivers/md/dm-integrity.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/i915/display/intel_csr.c b/drivers/gpu/drm/i915/display/intel_csr.c
-index d5db16764619c..086ba8720558e 100644
---- a/drivers/gpu/drm/i915/display/intel_csr.c
-+++ b/drivers/gpu/drm/i915/display/intel_csr.c
-@@ -439,7 +439,7 @@ static u32 parse_csr_fw_dmc(struct intel_csr *csr,
- 	}
- 
- 	/* Cache the dmc header info. */
--	if (mmio_count > mmio_count_max) {
-+	if (!mmio_count || mmio_count > mmio_count_max) {
- 		DRM_ERROR("DMC firmware has wrong mmio count %u\n", mmio_count);
- 		return 0;
- 	}
-@@ -454,12 +454,21 @@ static u32 parse_csr_fw_dmc(struct intel_csr *csr,
- 		csr->mmioaddr[i] = _MMIO(mmioaddr[i]);
- 		csr->mmiodata[i] = mmiodata[i];
- 	}
--	csr->mmio_count = mmio_count;
- 
- 	rem_size -= header_len_bytes;
- 
- 	/* fw_size is in dwords, so multiplied by 4 to convert into bytes. */
--	payload_size = dmc_header->fw_size * 4;
-+	if (check_mul_overflow(dmc_header->fw_size, 4u, &payload_size)) {
-+		DRM_ERROR("DMC fw_size too large (%u dwords)\n",
-+			  dmc_header->fw_size);
-+		return 0;
-+	}
-+
-+	if (!payload_size) {
-+		DRM_ERROR("DMC firmware has empty payload\n");
-+		return 0;
-+	}
-+
- 	if (rem_size < payload_size)
- 		goto error_truncated;
- 
-@@ -467,7 +476,6 @@ static u32 parse_csr_fw_dmc(struct intel_csr *csr,
- 		DRM_ERROR("DMC FW too big (%u bytes)\n", payload_size);
- 		return 0;
- 	}
--	csr->dmc_fw_size = dmc_header->fw_size;
- 
- 	csr->dmc_payload = kmalloc(payload_size, GFP_KERNEL);
- 	if (!csr->dmc_payload) {
-@@ -475,6 +483,9 @@ static u32 parse_csr_fw_dmc(struct intel_csr *csr,
- 		return 0;
- 	}
- 
-+	csr->mmio_count = mmio_count;
-+	csr->dmc_fw_size = dmc_header->fw_size;
-+
- 	payload = (u8 *)(dmc_header) + header_len_bytes;
- 	memcpy(csr->dmc_payload, payload, payload_size);
+diff --git a/drivers/md/dm-integrity.c b/drivers/md/dm-integrity.c
+index c889457c3b330..c3801dc41d545 100644
+--- a/drivers/md/dm-integrity.c
++++ b/drivers/md/dm-integrity.c
+@@ -1620,7 +1620,7 @@ static void integrity_metadata(struct work_struct *w)
+ 		if (unlikely(dio->op == REQ_OP_DISCARD)) {
+ 			sector_t bi_sector = dio->bio_details.bi_iter.bi_sector;
+ 			unsigned bi_size = dio->bio_details.bi_iter.bi_size;
+-			unsigned max_size = likely(checksums != checksums_onstack) ? PAGE_SIZE : HASH_MAX_DIGESTSIZE;
++			unsigned max_size = likely(checksums != checksums_onstack) ? PAGE_SIZE : sizeof(checksums_onstack);
+ 			unsigned max_blocks = max_size / ic->tag_size;
+ 			memset(checksums, DISCARD_FILLER, max_size);
  
 -- 
 2.53.0
