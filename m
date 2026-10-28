@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793212885;
-	b=qupAW2VjViMXaHbm0QMQVSRI0VjgbHcVeW2sTKf21Hxs30q3V2kLHdO2U3xJwLcvHUYx
-	 Rrhpo7YhgTXYR7gIQVY3DPaKF8iacSZQln4LkzHXVsKQdF1dFCUwVHEbKhS8CnOGHzYgn
-	 MqSDzqQGKkIGekv9n+xHIxtAlDSdWQ2V7BgJ+1LiQ936P/fEtSe9KOJd4/nu2yrjBwRZq
-	 6zFRidOtK4Z6V2oh9bGXmTQB/gyBQr/1Jmshvo9Zp54DAPsNI3H1OvBCpcxceaRsznd3N
-	 qzGQQBgWIsKn2p+p/lAgkeWGxtygHqz+ugubt7QIzrF2/XZtAT93JRG/MbnisDmNS4g==
+	t=1793212888;
+	b=x/iUcd5fr4zaNLOM6LC8y8vau8f9M12GEpai/LBil2WA6iGqWe2Xe9eABRx7aoA8yAiM
+	 /annotEKr5k/D88Q6zv4dyIyMBCfpJ6B0TwKK2+1CP6etshALPRgGFTUKukM0VrIVw7MJ
+	 0WS7P1xlPXjIEvmfPcd3ASB/QeIDsk/EHIvjlGWWXU216twNp1eL5ErqqDUJ9ZwdP9owC
+	 PR4LKB+qFc+TkJZJnEsyRurTcvljFAcwKIb/6uwU0x49d9kP3Cd4oIL+hJSPncxf19ggT
+	 Bd20e1QkfO1oeTAjoioyk9oeIHADqT1CfOB659ExyoJhn81oSz3vZCetujxcruKo0bw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793212885;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793212888;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=UYIFSzu0uAYgHHP4vByqHVfb+5wgmjcBNTKl11hlkyE=;
-	b=bGDsU9vfOz3q3JwBBu5qxL82ThUeJEGz/oZ8Ai4bkBU4sPDB1h7HsNds/XZc07CXuVRU
-	 N1t+NQIe0Dm54G2ub/iQc3rn4nakO00NrmmCfK9KyN+5JTQNnEAKMVCjgfguAB6cppuEd
-	 FompDgcgLpRaMRXbu/OW56rI6vn2OPlKJXbUg9YnAQc1v6IdMSaWuMnJE1UV/M72J2/3v
-	 STFkedJJnYiQ20tf1nuGoPSKnrUKg47lhCPoJDq01iQZF5WMl10J4MEq4tkKgFJnTRVoM
-	 qv59ps+uVDiCtUEm2CJE76+1A0AVun/Rzdg1QdlsFY5WMoVBx/g5c5TM+9on0uK+i5g==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=prvLrKO4GUizS34XOWHdQI0z1DqWdkfwwuHXFxOy6DM=;
+	b=KsqEebTnje4aej0D9fcftsOBfI4TosscsbHbuxoj+pn1RXTDTVHXiuUP4K69aSOxo3vJ
+	 U0zRBQBiIZ99Wo15IuRFRI7VhyjjiWAp5buakEY/63oX4K518gNZyFSN4nRrYeLcAYil2
+	 wjEzkop2tkZxg+bQsLStSxxwpNeJbg42VQ4v8uDlwDmUZymkJj4nGR/XUsDalkh1/hGQm
+	 BkK5znj+V7kYne4ZIyZj72Z0LL1D+iSSfPTxEGuN4RhouRbn8KabOJveRXxX4DzC1I/De
+	 5s0oZuEvNOMGuhal0EAByKi7+ivlQ0SJHHOwuXgEFFIB1F/+Qhx1j6kgnPn2OXK4pqA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YMAOdLZO;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lgAwMXNx;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9689E606A325;
-	Wed, 28 Oct 2026 18:41:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75EF0606A31D;
+	Wed, 28 Oct 2026 18:41:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YMAOdLZO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5F341F01828;
-	Wed, 28 Oct 2026 18:41:24 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lgAwMXNx
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90AE81F01825;
+	Wed, 28 Oct 2026 18:41:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793212885;
-	bh=UYIFSzu0uAYgHHP4vByqHVfb+5wgmjcBNTKl11hlkyE=;
+	s=korg; t=1793212888;
+	bh=prvLrKO4GUizS34XOWHdQI0z1DqWdkfwwuHXFxOy6DM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YMAOdLZO7oRPq+2IYRR6gXztxzaXRZE2KIB8i685b7c7F+1muGarC8g6/AAf+V1Yd
-	 2fAX6/Ji8cdmLl5ORCtn3gFE7fTb+z457wb3w2LsoNORCykdbWOFUNP84xnKv1PORH
-	 1aSaOa6A6kB+EVKdR4QEscbu1izSPyUZ6dEd0BfY=
+	b=lgAwMXNxCBDV+kgmINHMiprY9vCoVhrRISuUuGWcAFwDDvflwDi/kzaRt4WaVPA3S
+	 GnsSabslw9mDryqklN6GewYOI0xeh0THkxYnSTzCdGQyaeaPE8cRdUeDOQwpe/PxDC
+	 GWK1S0uH6VV2SoB2ECFXgnfOobgZn3Cd2zIC9oX0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 6.1 0312/1887] mtd: spinand: fix zero oobavail when no ECC engine is used
-Date: Wed, 28 Oct 2026 17:40:08 +0100
-Message-ID: <20261028170506.328608668@linuxfoundation.org>
+	Tianchu Chen <flynnnchen@tencent.com>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 6.1 0313/1887] wifi: cw1200: fix TX padding OOB read leaking heap data to device
+Date: Wed, 28 Oct 2026 17:40:09 +0100
+Message-ID: <20261028170506.351657161@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -61,65 +61,115 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nuno Sá <nuno.sa@analog.com>
+From: Tianchu Chen <flynnnchen@tencent.com>
 
-commit 636fe10d8f3559210ff63108a208d39ea2e9c3bd upstream.
+commit 7c1611780823b76219cb1478db53dfd890c4a9a2 upstream.
 
-Commit 00c15b78b4b4 ("mtd: spinand: Allow the case where there is no
-ECC engine") made the OOB free bytes count conditional on having an
-ECC engine so that probing would not fail when none is requested.
-However mtd->oobavail is still assigned from ret just after that
-block, and ret is 0 there, so the device ends up advertising no
-available OOB bytes at all.
+The TX path rounds the transfer size up to the bus alignment
+(align_size(), up to 511 bytes for SDIO, 1 byte for SPI) but sends
+the padded length straight from the frame buffer, which has no room
+reserved for the padding.  cw1200_data_write() therefore reads past
+the end of the frame and the bus transfer carries those bytes to the
+device.  A bogus device can collect up to 511 bytes of kernel heap
+data per TX frame.
 
-mtd_oobavail() returns mtd->oobavail for MTD_OPS_AUTO_OOB, so a zero
-value makes every automatic OOB access fail with -EINVAL. JFFS2 fares
-worse: it keeps its cleanmarker in the OOB area on NAND and refuses to
-mount outright, reporting "inconsistent device description".
+The RX path does not have this problem: it allocates the skb with
+the aligned length (alloc_len) before reading.
 
-No ECC engine also means no ooblayout was ever installed, which would
-make the count return -ENOTSUPP, so install the same fallback layout
-the on-die path already uses before counting unconditionally.
+Compute the exact padding with the bus align_size() callback, make
+sure queued TX frames have tailroom for it, and zero the padding
+bytes before the transfer so nothing past the frame is exposed.
 
-Fixes: 00c15b78b4b4 ("mtd: spinand: Allow the case where there is no ECC engine")
+This is not expected to change driver behavior on most cases: frame
+contents and transfer sizes are unchanged, only the content of the
+padding bytes (previously undefined stale memory, now zero), which
+the device never reads since the WSM header carries the real frame
+length.  The skb expansion can only fail under memory exhaustion,
+in which case the frame is dropped like on the existing error paths
+of cw1200_tx().
+
+Discovered by Atuin - Automated Vulnerability Discovery Engine.
+
+Fixes: a910e4a94f69 ("cw1200: add driver for the ST-E CW1100 & CW1200 WLAN chipsets")
 Cc: stable@vger.kernel.org
-Signed-off-by: Nuno Sá <nuno.sa@analog.com>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Assisted-by: LLM
+Signed-off-by: Tianchu Chen <flynnnchen@tencent.com>
+Link: https://patch.msgid.link/7982b4a7e64f74e2068790ec389ca680a081f730@linux.dev
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/nand/spi/core.c |   13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ drivers/net/wireless/st/cw1200/bh.c   |    8 +++++++-
+ drivers/net/wireless/st/cw1200/txrx.c |   14 ++++++++++++++
+ 2 files changed, 21 insertions(+), 1 deletion(-)
 
---- a/drivers/mtd/nand/spi/core.c
-+++ b/drivers/mtd/nand/spi/core.c
-@@ -1276,12 +1276,17 @@ static int spinand_init(struct spinand_d
- 	mtd->_max_bad_blocks = nanddev_mtd_max_bad_blocks;
- 	mtd->_resume = spinand_mtd_resume;
+--- a/drivers/net/wireless/st/cw1200/bh.c
++++ b/drivers/net/wireless/st/cw1200/bh.c
+@@ -343,6 +343,7 @@ static int cw1200_bh_tx_helper(struct cw
+ 			       int *tx_burst)
+ {
+ 	size_t tx_len;
++	size_t aligned_len;
+ 	u8 *data;
+ 	int ret;
+ 	struct wsm_hdr *wsm;
+@@ -375,9 +376,14 @@ static int cw1200_bh_tx_helper(struct cw
  
--	if (nand->ecc.engine) {
--		ret = mtd_ooblayout_count_freebytes(mtd);
--		if (ret < 0)
--			goto err_cleanup_ecc_engine;
-+	if (!nand->ecc.engine) {
-+		if (spinand->eccinfo.ooblayout)
-+			mtd_set_ooblayout(mtd, spinand->eccinfo.ooblayout);
-+		else
-+			mtd_set_ooblayout(mtd, &spinand_noecc_ooblayout);
- 	}
+ 	atomic_inc(&priv->bh_tx);
  
-+	ret = mtd_ooblayout_count_freebytes(mtd);
-+	if (ret < 0)
-+		goto err_cleanup_ecc_engine;
+-	tx_len = priv->hwbus_ops->align_size(
++	aligned_len = priv->hwbus_ops->align_size(
+ 		priv->hwbus_priv, tx_len);
+ 
++	/* Zero the bus alignment padding so no stale data is sent. */
++	if (aligned_len > tx_len)
++		memset(data + tx_len, 0, aligned_len - tx_len);
++	tx_len = aligned_len;
 +
- 	mtd->oobavail = ret;
+ 	/* Check if not exceeding CW1200 capabilities */
+ 	if (WARN_ON_ONCE(tx_len > EFFECTIVE_BUF_SIZE))
+ 		pr_debug("Write aligned len: %zu\n", tx_len);
+--- a/drivers/net/wireless/st/cw1200/txrx.c
++++ b/drivers/net/wireless/st/cw1200/txrx.c
+@@ -14,6 +14,7 @@
+ #include "wsm.h"
+ #include "bh.h"
+ #include "sta.h"
++#include "hwbus.h"
+ #include "debug.h"
  
- 	/* Propagate ECC information to mtd_info */
+ #define CW1200_INVALID_RATE_ID (0xFF)
+@@ -716,6 +717,7 @@ void cw1200_tx(struct ieee80211_hw *dev,
+ 	struct ieee80211_sta *sta;
+ 	struct wsm_tx *wsm;
+ 	bool tid_update = false;
++	size_t pad_len;
+ 	u8 flags = 0;
+ 	int ret;
+ 
+@@ -764,6 +766,18 @@ void cw1200_tx(struct ieee80211_hw *dev,
+ 
+ 	sta = t.sta;
+ 
++	/*
++	 * The bus transfer is padded up to the bus alignment and the
++	 * padding is transferred from the frame buffer.  Make sure the
++	 * buffer has room for the padding so the device never receives
++	 * data past the end of the frame.
++	 */
++	pad_len = priv->hwbus_ops->align_size(priv->hwbus_priv, skb->len) -
++		skb->len;
++	if (skb_tailroom(skb) < pad_len &&
++	    pskb_expand_head(skb, 0, pad_len, GFP_ATOMIC))
++		goto drop;
++
+ 	spin_lock_bh(&priv->ps_state_lock);
+ 	{
+ 		tid_update = cw1200_tx_h_pm_state(priv, &t);
 
 
