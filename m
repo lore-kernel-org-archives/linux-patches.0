@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793210706;
-	b=YbDhY1Iv7qWpA3JwMHipsbqhNot/yQ5kVMWr6giobWfmIVwMSuFdL8oAboTvdYqhCIC1
-	 p+VP+9ZXrepwwZEev3imgAOx4j5bGmzMOppA3x9HIUiYNuD7kQjW4MCwVmgcSdETYTlRG
-	 8Ad9j5iz6kjEpsXEEJc91+5ailQvTae5Qx89VKedb+KMse7QirVRTPf5tO4m4PZQJI/2M
-	 ZDw0U9l2DEKXX9NqoietcXG/QTjt4AwgxJRaBgz6EoVnY7qGcGlqFPHG3v42q5zap3GP0
-	 XO5IoIUYaoJRjY6f6vgRMrR6xpygQjCTQoLplE+Gf06pHhC42vxt2ciejg8+c0zhtag==
+	t=1793210709;
+	b=pi9OTUItOdbkzAOAuHnImDTURQRbrA8aiDvGvhDzJmwEJx2Zfi8YK7yLfN79lR7nIS00
+	 ozewS+nr0vxyc4lUQRBeubtuBl6mgAsIt1Vzb+uAXO6HwB/t5K4KwEtAUuwBRpLozyiD8
+	 tKIZDsE33NQ8y9r1fqC/bjoBTm0zj4UJvNQXPktv/2IyXW8SC9pMUf+UUKNbMasLiUX9a
+	 7wexknqzHKhPYmjSPueSAdgB6Wg4K3keNsr961bBP/WzS02nX1VzfpC8zDXh5wB5sQhuG
+	 vfJVqbtLr6qgCO4sd3PlhCJIrm3fKwjJNbJSXpJ2K0jMQ79XLqTVkPggpARh5W2lu2Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793210706;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793210709;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ouDuyE4b4D+0lGgIaua9rlk/ef5hoWHGgzo/dOdwxO8=;
-	b=nlzK8ZEMfaWd0P5jGGxyUf8qZGWgn88HY2nBBAn8HpHVJFWBltNMo2Xmvlk7/eJevljc
-	 C9yUUO+AaCQFFqb4w35AOSbCGC+9q0PBElTCOSKFHCnvqH9oLNawVNcSI1h0wjggrqduo
-	 gIjAQx15Ak5DAxgvAuiZxlLc82Deor9jvF63BIihV4HPZZPjSgL/IulbCuRpNRxGox142
-	 KAjvrtv3Illk61bPeyeJdogJFsAVUUEFx7YCXT1FWgg8VNgyy4X9Skg+DZ4ojJT6ByQIR
-	 bOAtU0BOfc6ppE70bSkB0dkI8HZBKIRnPQr/uwKSQR0SUayRv4pWgxmDyxCHZdNSJdg==
+	bh=FAmOhegtfZt0F+SncKLWnNfUfj+N6mctecVQLIUY8MU=;
+	b=qvK1KglDvbn63qlRfU7ON6bJuJawA/NvKetbO76fSkj3mgMoAEfvGTDGCqdC3lmv3zzb
+	 81iW5EyepgHC576lD3gATM+K1nAMIZUFdtYXEqbv7DHQZrwPefdn3NAN+1J1mXRTWu++i
+	 DHwhEEQs5hVtadsfZy94vtUj44eoi9ukCWbLIH5XEMtXTboJ9JWZZy0y5uTC+ydpdOyFu
+	 hFC2bgogZ+C0u/io/yJc1QINSicr8RDS4ACdLx244woTLPg7LB/U6OD0oXWt7kDcl8US3
+	 t3W4a8Wcpc3Z81DbMJ8T6QPqsgKkIGXcgwaWVKg3oPQfEaw8MZTrPbpXddYanm4dmgg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GtwGfpfA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JNoyMqax;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9662D606A31A;
-	Wed, 28 Oct 2026 18:05:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69A9C606A31A;
+	Wed, 28 Oct 2026 18:05:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GtwGfpfA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6A4C1F01825;
-	Wed, 28 Oct 2026 18:05:05 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JNoyMqax
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC2A01F01825;
+	Wed, 28 Oct 2026 18:05:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793210706;
-	bh=ouDuyE4b4D+0lGgIaua9rlk/ef5hoWHGgzo/dOdwxO8=;
+	s=korg; t=1793210709;
+	bh=FAmOhegtfZt0F+SncKLWnNfUfj+N6mctecVQLIUY8MU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GtwGfpfAfhrvyIMC2037WtdSrxiAVHFNZTTMwk1pn9obZcHHCGbBZacgKRbN0gX1a
-	 p76mWLH9C5n94JhftTf27OH9X3JVtPxjwtvzmTAezvnOvqnFhQbCpf8uu2GqPnpH1J
-	 /qLHpVzy7WwAKzfZhtByE87dg2fBw/aCTr2V2uRg=
+	b=JNoyMqaxpn3MGYfli/MT0LxLmjKJc2H5HbBpX/7jTD849xvOYhNAFKNqm95BD0IME
+	 9Xekifo9Una/DWnHkbnyo7z7lKf/sPikL8D4173eLOQsDJnLIM6yh6VN2uyCS+8oTO
+	 NmEMwaYVwFDm4hH1dZdZ+ScoYvOOjK4xt8uauchE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Ruoyu Wang <ruoyuw560@gmail.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 119/571] net: ena: fix MMIO read buffer leak on probe failure
-Date: Wed, 28 Oct 2026 17:54:26 +0100
-Message-ID: <20261028170010.842850262@linuxfoundation.org>
+Subject: [PATCH 5.15 084/571] media: zoran: Avoid freeing a registered video_device twice
+Date: Wed, 28 Oct 2026 17:53:51 +0100
+Message-ID: <20261028170010.020395684@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -68,48 +68,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Ruoyu Wang <ruoyuw560@gmail.com>
 
-[ Upstream commit 9476b4468862927297c94c440863cd8ed1e7cc83 ]
+[ Upstream commit 0735e0b5a96761a9ce277a238e834008ad92a0a5 ]
 
-ena_device_init() initializes the MMIO read mechanism with
-ena_com_mmio_reg_read_request_init(), which allocates a coherent DMA
-buffer for MMIO read responses.
+zoran_init_video_device() installs zoran_vdev_release() as the
+video_device release callback through zoran_template. After
+video_register_device() succeeds, video_unregister_device() drops the
+registered video_device reference and the V4L2 core eventually invokes
+that release callback, which kfree()s the video_device.
 
-The normal removal path releases this buffer through
-ena_com_mmio_reg_read_request_destroy(). However, if ena_probe() fails
-after ena_device_init() succeeds, the error path destroys the admin
-resources and eventually frees ena_dev without destroying the MMIO read
-request, leaving the coherent DMA buffer allocated.
+zoran_exit_video_devices() called video_unregister_device() and then
+kfree(zr->video_dev), so device teardown could free the same
+video_device twice.
 
-Call ena_com_mmio_reg_read_request_destroy() in the probe error path
-before releasing the remaining device resources.
+Remove the direct kfree() and clear the cached pointer after
+unregistering. The pre-registration failure path keeps its manual free
+because the video_device was not registered there.
 
-This issue was found by manual code inspection.
+This issue was found by a static analysis checker and confirmed by
+manual source review.
 
-Fixes: 1738cd3ed342 ("net: ena: Add a driver for Amazon Elastic Network Adapters (ENA)")
+Fixes: 82e3a496eb56 ("media: staging: media: zoran: move videodev alloc")
 Cc: stable@vger.kernel.org
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Link: https://patch.msgid.link/20260921154202.471662-3-lgs201920130244@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ Adjusted cleanup context due to missing PHC, devlink, and customer-metrics code. ]
+Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/amazon/ena/ena_netdev.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/staging/media/zoran/zoran_card.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/amazon/ena/ena_netdev.c b/drivers/net/ethernet/amazon/ena/ena_netdev.c
-index be030e50ecb71..5831f7bd81c23 100644
---- a/drivers/net/ethernet/amazon/ena/ena_netdev.c
-+++ b/drivers/net/ethernet/amazon/ena/ena_netdev.c
-@@ -4517,6 +4517,7 @@ static int ena_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
- err_device_destroy:
- 	ena_com_delete_host_info(ena_dev);
- 	ena_com_admin_destroy(ena_dev);
-+	ena_com_mmio_reg_read_request_destroy(ena_dev);
- err_netdev_destroy:
- 	free_netdev(netdev);
- err_free_region:
+diff --git a/drivers/staging/media/zoran/zoran_card.c b/drivers/staging/media/zoran/zoran_card.c
+index 11d415c0c05d2..b6a9fef71ba2e 100644
+--- a/drivers/staging/media/zoran/zoran_card.c
++++ b/drivers/staging/media/zoran/zoran_card.c
+@@ -832,7 +832,7 @@ static int zoran_init_video_device(struct zoran *zr, struct video_device *video_
+ static void zoran_exit_video_devices(struct zoran *zr)
+ {
+ 	video_unregister_device(zr->video_dev);
+-	kfree(zr->video_dev);
++	zr->video_dev = NULL;
+ }
+ 
+ static int zoran_init_video_devices(struct zoran *zr)
 -- 
 2.53.0
 
