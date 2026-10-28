@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214661;
-	b=P12vDV7Bs2n6YwFo6uEtolMpFgR8R7VIVGhYLG+QRyoFzPbpMv599RpU/fsvJQZtu84k
-	 YKfpmsSGeIEtJQO6AU8kD6Ur5Z1RCFeWA35YyinH47afa7V/lhtPwa0AqFRdUu/IQyctk
-	 iHwUqNHFz0ujMGikyJckN/KyqHDQESlpdnp5EvHctfL7uqtQKmQeBNiCA1CUKyNUzbElv
-	 muXnb+kgSPtN5EVZo9eL+Cb0OMEnBCrL3bJrKYByHpK/Lzav+GuRHe99unPczHYIeQ0th
-	 lQ6KG3yr1w1HRg81127nGyXQBqEI2PY/tzNX3JKPnMvgUGDe9UTBSbSh5kkPmx5n+LA==
+	t=1793214664;
+	b=FS3wKDNmyOo+jlS3DTAPGVKDGmJlKtpoNHEsu4s4sAP5ekH8Wf8Abv/nE45Q10ALT6q/
+	 bWHxKOfU3ctXERUqUH9fpM8FZm4V7vCDzJYfUKVJT/WPKLqnEevOddN2LuyV1xv+13N37
+	 iGxxGe2LJ4q80ug336nDQiLAxbtvxIMQCn+x8UNBDbVpuBCeycUDhnG/NCITS8yXaj1NB
+	 eFsV29pF3pHZX9HAH9K+STXIojivYxTv7UwUw9TkulJPvtOl/V4XiyF+uNcBxNXjEjCqi
+	 LhPKqD4taFsn0RCI85zEw9VAjC6mvoXBJUp5hwF8RG2NjQqZErwtUej2aLWE7ZzOQwg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214661;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214664;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=FWEv/8MjlJyManFnvGSLSUP09r480rzG9tSTQlNalbg=;
-	b=NXO9/LnsgRyQ8aFNeuhfKbU5tHnmmMA8PAY1is4KwvVwkuh6jaVXlWFMTZ06JA2XPf2y
-	 Hrzs15tMrqaPpEbCJqCugtVqoV7OaGeQQ4/XkbFTRFPagLC7JX5MX8uCGXYDq5AG1DSH/
-	 3L33Eruz2qWe8gCfFD1PKCfSgv9evGlmP7I0xyMWAsA4OHF2/XHqwvtgi1vUGtKGO1jmu
-	 xSu/iHriPy4qtqkbr3wiGWQRxUqCi4D6m5bUPNPNUEfRlY0wdy4aLe319S9mNLBkQpaLg
-	 doQColEq0d7Dj2nn8JbMgEIFCrkSFyfxwXCukuQOx+veSZLwlEnhw+KEOCVCC06O4ag==
+	bh=YmnLsest+gyq3hZGhiGMtbNo4BaXWdnC1TSWtmWTafs=;
+	b=dzaUbA/UdE/pgVY0qzAFp/qO6VlnVf8JqYytXIpYw5RBqKOwxpzcLHVtf3GHNUEgVG2r
+	 R0pb7e8U/ZLqe+Esag3jBd6mjzQn9R4KdK8hflxBqDtY76ME61aLvYq5T8SVxo/jm2cm2
+	 vSKyWxZLLIMWd6kbTNcWNEG2ujK6PUClN0KxXkKcn3Pj+EDK3DqF0IgeLi6JHMMBiTP2l
+	 QBf9uY/3chogf5UEz0AHou1Q29h8JZy+2g9qL942bW3aZRuUVq84TEtU7kYpfKtJk4uNM
+	 wwFzBoYBFsc0+iKqDGNCbkRqkmm8XBYhgwMIHFI/ZPohXndatPKyP7/5NlaIlVkwSgQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Jyu2c9Kk;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=azsohrL+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A76CB606A338;
-	Wed, 28 Oct 2026 19:11:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8C9C606B7CF;
+	Wed, 28 Oct 2026 19:11:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Jyu2c9Kk
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0576A1F01829;
-	Wed, 28 Oct 2026 19:10:59 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=azsohrL+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2FAF1F031E0;
+	Wed, 28 Oct 2026 19:11:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214660;
-	bh=FWEv/8MjlJyManFnvGSLSUP09r480rzG9tSTQlNalbg=;
+	s=korg; t=1793214663;
+	bh=YmnLsest+gyq3hZGhiGMtbNo4BaXWdnC1TSWtmWTafs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Jyu2c9KkyQYO1QP3JSzQ1mqoC/Ev7esa93BaeoJ0bimhBLm2aYK/QWyDh6U+39LcV
-	 u7st3xCqOfVDQtzUk+gkq+wo70JZMC4fw4WNcYfeNuatQy4Dq2ZbLnb3+/5vkM5KK6
-	 RakslPY5QlnffUswbuO9A8TtlalnxBveuO/8kTWU=
+	b=azsohrL+urCactZKVrCJc3XwCzHspS4HQ5WLyH+/NrNa6lhPcdBhBsU4SEH6gQT7q
+	 RUJoqo5zyknYxXqMMZ5m8NojmBsiGKMhpFOJBUHf8Rkzsq0kMvsw9pJGnB7BmH3XUg
+	 e/KtSpKS+XgyyBpiN2kUoCIDZ8cgS8I1g1Plvkvs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Davidlohr Bueso <dave@stgolabs.net>,
-	Alison Schofield <alison.schofield@intel.com>,
-	Dave Jiang <dave.jiang@intel.com>,
+	Joe Damato <joe@dama.to>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0936/1887] cxl/mbox: validate payload size before accessing contents in cxl_payload_from_user_allowed()
-Date: Wed, 28 Oct 2026 17:50:32 +0100
-Message-ID: <20261028170520.712564945@linuxfoundation.org>
+Subject: [PATCH 6.1 0937/1887] nfc: nci: complete pending data exchange on device close
+Date: Wed, 28 Oct 2026 17:50:33 +0100
+Message-ID: <20261028170520.735555481@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,107 +68,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Davidlohr Bueso <dave@stgolabs.net>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 60b5d1f68338aff2c5af0113f04aefa7169c50c2 ]
+[ Upstream commit 66083581945bd5b8e99fe49b5aeb83d03f62d053 ]
 
-cxl_payload_from_user_allowed() casts and dereferences the input
-payload without first verifying its size. When a raw mailbox command
-is sent with an undersized payload (ie: 1 byte for CXL_MBOX_OP_CLEAR_LOG,
-which expects a 16-byte UUID), uuid_equal() reads past the allocated buffer,
-triggering a KASAN splat:
+In nci_close_device(), complete any pending data exchange before
+closing. The data exchange callback (e.g.
+rawsock_data_exchange_complete) holds a socket reference.
 
-BUG: KASAN: slab-out-of-bounds in memcmp+0x176/0x1d0 lib/string.c:683
-Read of size 8 at addr ffff88810130f5c0 by task syz.1.62/2258
+NIPA occasionally hits this leak:
 
-CPU: 2 UID: 0 PID: 2258 Comm: syz.1.62 Not tainted 6.19.0-dirty #3 PREEMPT(voluntary)
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.17.0-0-gb52ca86e094d-prebuilt.qemu.org 04/01/2014
-Call Trace:
- <TASK>
- __dump_stack lib/dump_stack.c:94 [inline]
- dump_stack_lvl+0xab/0xe0 lib/dump_stack.c:120
- print_address_description mm/kasan/report.c:378 [inline]
- print_report+0xce/0x650 mm/kasan/report.c:482
- kasan_report+0xce/0x100 mm/kasan/report.c:595
- memcmp+0x176/0x1d0 lib/string.c:683
- uuid_equal include/linux/uuid.h:73 [inline]
- cxl_payload_from_user_allowed drivers/cxl/core/mbox.c:345 [inline]
- cxl_mbox_cmd_ctor drivers/cxl/core/mbox.c:368 [inline]
- cxl_validate_cmd_from_user drivers/cxl/core/mbox.c:522 [inline]
- cxl_send_cmd+0x9c0/0xb50 drivers/cxl/core/mbox.c:643
- __cxl_memdev_ioctl drivers/cxl/core/memdev.c:698 [inline]
- cxl_memdev_ioctl+0x14f/0x190 drivers/cxl/core/memdev.c:713
- vfs_ioctl fs/ioctl.c:51 [inline]
- __do_sys_ioctl fs/ioctl.c:597 [inline]
- __se_sys_ioctl fs/ioctl.c:583 [inline]
- __x64_sys_ioctl+0x18e/0x210 fs/ioctl.c:583
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0xa8/0x330 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-RIP: 0033:0x7fdaf331ba79
-Code: ff ff c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 40 00 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 a8 ff ff ff f7 d8 64 89 01 48
-RSP: 002b:00007fdaf1d77038 EFLAGS: 00000246 ORIG_RAX: 0000000000000010
-RAX: ffffffffffffffda RBX: 00007fdaf3585fa0 RCX: 00007fdaf331ba79
-RDX: 00002000000001c0 RSI: 00000000c030ce02 RDI: 0000000000000003
-RBP: 00007fdaf33749df R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
-R13: 00007fdaf3586038 R14: 00007fdaf3585fa0 R15: 00007ffced2af768
- </TASK>
+unreferenced object 0xff1100000f435000 (size 2048):
+  comm "nci_dev", pid 3954, jiffies 4295441245
+  hex dump (first 32 bytes):
+    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+    27 00 01 40 00 00 00 00 00 00 00 00 00 00 00 00  '..@............
+  backtrace (crc ec2b3c5):
+    __kmalloc_noprof+0x4db/0x730
+    sk_prot_alloc.isra.0+0xe4/0x1d0
+    sk_alloc+0x36/0x760
+    rawsock_create+0xd1/0x540
+    nfc_sock_create+0x11f/0x280
+    __sock_create+0x22d/0x630
+    __sys_socket+0x115/0x1d0
+    __x64_sys_socket+0x72/0xd0
+    do_syscall_64+0x117/0xfc0
+    entry_SYSCALL_64_after_hwframe+0x4b/0x53
 
-Add 'in_size' parameter to cxl_payload_from_user_allowed() and validate
-the payload is large enough.
-
-Fixes: 6179045ccc0c ("cxl/mbox: Block immediate mode in SET_PARTITION_INFO command")
-Fixes: 206f9fa9d555 ("cxl/mbox: Add Clear Log mailbox command")
-Signed-off-by: Davidlohr Bueso <dave@stgolabs.net>
-Reviewed-by: Alison Schofield <alison.schofield@intel.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Link: https://patch.msgid.link/20260220001618.963490-2-dave@stgolabs.net
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+Fixes: 38f04c6b1b68 ("NFC: protect nci_data_exchange transactions")
+Reviewed-by: Joe Damato <joe@dama.to>
+Link: https://patch.msgid.link/20260303162346.2071888-4-kuba@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cxl/core/mbox.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ net/nfc/nci/core.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/cxl/core/mbox.c b/drivers/cxl/core/mbox.c
-index 0c90f13870a43..3e89dc2b60d84 100644
---- a/drivers/cxl/core/mbox.c
-+++ b/drivers/cxl/core/mbox.c
-@@ -223,6 +223,7 @@ static bool cxl_mem_raw_command_allowed(u16 opcode)
-  * cxl_payload_from_user_allowed() - Check contents of in_payload.
-  * @opcode: The mailbox command opcode.
-  * @payload_in: Pointer to the input payload passed in from user space.
-+ * @in_size: Size of @payload_in in bytes.
-  *
-  * Return:
-  *  * true	- payload_in passes check for @opcode.
-@@ -237,12 +238,15 @@ static bool cxl_mem_raw_command_allowed(u16 opcode)
-  *
-  * The specific checks are determined by the opcode.
-  */
--static bool cxl_payload_from_user_allowed(u16 opcode, void *payload_in)
-+static bool cxl_payload_from_user_allowed(u16 opcode, void *payload_in,
-+					  size_t in_size)
- {
- 	switch (opcode) {
- 	case CXL_MBOX_OP_SET_PARTITION_INFO: {
- 		struct cxl_mbox_set_partition_info *pi = payload_in;
+diff --git a/net/nfc/nci/core.c b/net/nfc/nci/core.c
+index bc5f7068e6db1..bfbe405a474eb 100644
+--- a/net/nfc/nci/core.c
++++ b/net/nfc/nci/core.c
+@@ -566,6 +566,10 @@ static int nci_close_device(struct nci_dev *ndev)
+ 		flush_workqueue(ndev->cmd_wq);
+ 		del_timer_sync(&ndev->cmd_timer);
+ 		del_timer_sync(&ndev->data_timer);
++		if (test_bit(NCI_DATA_EXCHANGE, &ndev->flags))
++			nci_data_exchange_complete(ndev, NULL,
++						   ndev->cur_conn_id,
++						   -ENODEV);
+ 		mutex_unlock(&ndev->req_lock);
+ 		return 0;
+ 	}
+@@ -596,6 +600,11 @@ static int nci_close_device(struct nci_dev *ndev)
+ 	flush_workqueue(ndev->cmd_wq);
  
-+		if (in_size < sizeof(*pi))
-+			return false;
- 		if (pi->flags & CXL_SET_PARTITION_IMMEDIATE_FLAG)
- 			return false;
- 		break;
-@@ -268,7 +272,8 @@ static int cxl_mbox_cmd_ctor(struct cxl_mbox_cmd *mbox,
- 		if (IS_ERR(mbox->payload_in))
- 			return PTR_ERR(mbox->payload_in);
+ 	del_timer_sync(&ndev->cmd_timer);
++	del_timer_sync(&ndev->data_timer);
++
++	if (test_bit(NCI_DATA_EXCHANGE, &ndev->flags))
++		nci_data_exchange_complete(ndev, NULL, ndev->cur_conn_id,
++					   -ENODEV);
  
--		if (!cxl_payload_from_user_allowed(opcode, mbox->payload_in)) {
-+		if (!cxl_payload_from_user_allowed(opcode, mbox->payload_in,
-+						  in_size)) {
- 			dev_dbg(cxlds->dev, "%s: input payload not allowed\n",
- 				cxl_mem_opcode_to_name(opcode));
- 			kvfree(mbox->payload_in);
+ 	/* Clear flags except NCI_UNREG */
+ 	ndev->flags &= BIT(NCI_UNREG);
 -- 
 2.53.0
 
