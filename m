@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793207611;
-	b=40RDwOxVZWrtvpzBnBJ2pXGHN4epTmFe5Qr/TCtrfIbGuuQUdC6PYEQvysdYUueU4lD6
-	 pqiY5uMl5ZWZoQ/X2eLQJoxNm/FIdmHlVlWUhBXH3MLpiBCfe68ljRi5E47haKKOfFj9x
-	 kOcttYre+gaQzSPTt1UBjTA1sKWzRVjBNLlE2JZuIsvyMCMmfINET8IBWsVOrtwCDVG0b
-	 s6Z0wAX/e371UvotyflGwhsAORclX8B0LKllq93+4ld7rOGIrbKTmpImXf2Z6RGV0EJRy
-	 0/vxx0eecni6kRm3B248SUlUDCJYw8JiAUH8M1lZRH96av8eRvsFOcz8VPe+WiIhRwg==
+	t=1793207608;
+	b=TDbxV64hJeD3SeRLDyt5ZkAraQ0hAJiO92+QDOmhVlR+9OeDGRwRf6LyncBk77SWjCLE
+	 2BuOZts8ruI2dwtHNZJbNmHdSerbwwpeIcoP38p8HRX2CY9OX5XoBybQDgDtkXxtMPFoz
+	 hGFim1bBE/d+3iqOLLhLF3i5c2k4QjccuD+kffnpUcIIlolWPjKRR8O5eoSetqJl5UtJ5
+	 TOQKg0tOMZN12anODumpxNVmW9o/CMP9M4d+rsvRYC9ARgKLOrfFN7sWeipxqYvBPu/OF
+	 iiTT3gs3hd+jyobohTDp9nVqOFgv5jARZI/m+N53EuvIcDv3+V0ZMvRyyYwjOmtipSg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793207611;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793207608;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=zdnrZoR5saUGSWKk+sP5+VMr3LC3vB3oSSMHeSOWcHw=;
-	b=1Y9eNc+OzjuCOT3OJlESZZvrFJFIUk3eIO7l9xGrxHa0WFnR5qJPsEmKL0NeAKeDITxy
-	 voJ5fzTs2hdcdX87LAfoEEo4vOlvmyv1JAvWJCggbbT1k5cThq1uNjuhuiFQX/roSnwPa
-	 CLfOFy0Qr2npU/xruXLCkz0QrZhTpX4Hn85BDwCZIYyAG3rw5o6aSjzOFneE6MmUhLJ1k
-	 ZJfzFjG0aMRxyt5R7AYDB8bPacbFKvdJyuWpgo34fwqhU+wdnQpR41tMaBog1mSfzd682
-	 aeR4eHRXNNcELlJSSEeZwVJlybHdJEn5jIaaR1lc+diLOhrkMM7TlD8Xw2TwZ+TToyw==
+	bh=YoICpxg4LeCY/dP8uE/awvKo2BcYpFXSPRbK8N/26RI=;
+	b=eqhZxcCHYSeqzqPr2pHJKeo2kA1CXAFsBve0aCEsDXrt5i4kXuowLKEF3VJ4Roai83P0
+	 DIIq+4wkHRpS7Dk5xTenD0VEVoFw8mcToM5k4Q9mSzoj2E3E5cTpooqAHC1uUyJUceTyf
+	 RCVp0pzc+NPULVOzW3sAwk/XbmoqAA1KDBFAyOjy4t7rAcdeYyxV7/507bkZnQ+dUsBTK
+	 bNHrBBqeEm1qepYDq9/KJc2GAounTeFxgZRHOhhPf8whdFtVfv+u/VvZzrrv3xwb4h8O6
+	 QDXIAP/jJVYys8hQ0t2/IL8bQG5GDXuUl5XCo8i7TaNSSq1+AjqDqloNycYEp5acsIA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZeeNq489;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XmQxagbE;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 343AF606A325;
-	Wed, 28 Oct 2026 17:13:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 658C6606A329;
+	Wed, 28 Oct 2026 17:13:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZeeNq489
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CF2C1F01825;
-	Wed, 28 Oct 2026 17:13:30 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XmQxagbE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B4AF1F01828;
+	Wed, 28 Oct 2026 17:13:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793207610;
-	bh=zdnrZoR5saUGSWKk+sP5+VMr3LC3vB3oSSMHeSOWcHw=;
+	s=korg; t=1793207608;
+	bh=YoICpxg4LeCY/dP8uE/awvKo2BcYpFXSPRbK8N/26RI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZeeNq489y7J1UZA4USjuGhIMZGUI3M41IHhe2CWy1M8GMA5Joz0Tq73LSwP6VDasf
-	 uJLzGNgUTu4h17ciuJ2BVFPa/D2r6lZP21XTQfVWI3GY4j/Z8REtQ8WTN/MnEhQ0Ob
-	 6h2VmTBxg/liMP3LhJ/53n0WFdW53iiA9M2oNKdc=
+	b=XmQxagbECTwqdAGr8nMfDMitysxIRQAC+ttB2jP9isL9eN3lhVuHtxPfS/f+E4hVv
+	 yf9fu2TcBI3GXxsKXEtsRH6RzzrTwFfTaafDXPIYb8H2fCdAvBOprmm3w8AcO6xnbr
+	 Lydo5It3MEk2gMiEjhf4YBzgJeDocp8dSQUuKXB0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sasha Levin <sashal@kernel.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Subject: [PATCH 6.12 075/247] tools: gpio: fix building from the top level with O=
-Date: Wed, 28 Oct 2026 17:57:58 +0100
-Message-ID: <20261028165949.168795196@linuxfoundation.org>
+	Daehyeon Ko <4ncienth@gmail.com>,
+	Xin Long <lucien.xin@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.12 074/247] sctp: revalidate output stream after association connect wait
+Date: Wed, 28 Oct 2026 17:57:57 +0100
+Message-ID: <20261028165949.146189326@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165947.349197979@linuxfoundation.org>
 References: <20261028165947.349197979@linuxfoundation.org>
@@ -67,48 +68,118 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sasha Levin <sashal@kernel.org>
+From: Daehyeon Ko <4ncienth@gmail.com>
 
-commit 52336337f1a01ad803c7f3ddb23f40222e9ad58d upstream.
+commit b7ad72414c673ce1fa1f463e807cd4f34f8be9bf upstream.
 
-"make O=<dir> tools/gpio" fails:
+When message interleaving is enabled, the first send waits for association
+establishment before building its data chunks.  The wait drops the socket
+lock, and handshake processing can reduce the output stream count to the
+peer-advertised inbound stream count.  sctp_stream_init() then frees the
+extension of every removed stream.
 
-  Makefile:27: /tools/build/Makefile.include: No such file or directory
+The sender resumes with the stream that it checked before the wait.  If the
+peer removed that stream, sctp_outq_tail() later dereferences its NULL
+extension.  Fatal-oops policies then panic the host.
 
-tools/Makefile clears srctree, and the gpio Makefile only works it out
-again when building_out_of_srctree is not set, which the top-level
-Makefile sets for O= builds.
+KASAN: null-ptr-deref in range [0x38-0x3f]
+RIP: sctp_outq_tail+0x49e/0xaa0
+Call Trace:
+ sctp_primitive_SEND
+ sctp_sendmsg_to_asoc
+ sctp_sendmsg
 
-Also work out srctree when it is empty, as tools/bpf/Makefile does
-since commit a89b2cbf71d64 ("tools, bpf: Fix build for 'make -s
-tools/bpf O=<dir>'").
+A range check alone is insufficient.  Stream reconfiguration can grow the
+output count again while the lock is released without recreating extensions
+freed by the earlier shrink.  The stream can then be in range while its
+extension remains NULL.  The send-buffer wait has the same issue.
 
-Fixes: 4a6a6f5c4aeed ("tools: gpio: Use !building_out_of_srctree to determine srctree")
+Factor the range and extension checks into a helper and repeat both after
+each send-path wait that drops the socket lock.  Once the lock is
+reacquired, the validation remains stable through data creation and
+queueing.
+
+If validation fails after the connect wait, the auto-created association is
+already established.  Return ESRCH so the existing caller path keeps it
+under state-machine ownership instead of freeing it directly, which would
+leave protocol, counter and socket state inconsistent.
+
+Fixes: 668c9beb9020 ("sctp: implement assign_number for sctp_stream_interleave")
 Cc: stable@vger.kernel.org
 Assisted-by: LLM
-Signed-off-by: Sasha Levin <sashal@kernel.org>
-Link: https://patch.msgid.link/20261011223358.2327625-5-sashal@kernel.org
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Signed-off-by: Daehyeon Ko <4ncienth@gmail.com>
+Acked-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/20261007035739.3472432-1-4ncienth@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/gpio/Makefile |    6 ++++++
- 1 file changed, 6 insertions(+)
+ net/sctp/socket.c |   33 +++++++++++++++++++++------------
+ 1 file changed, 21 insertions(+), 12 deletions(-)
 
---- a/tools/gpio/Makefile
-+++ b/tools/gpio/Makefile
-@@ -7,7 +7,13 @@ bindir ?= /usr/bin
- # isn't set and when invoked from selftests build, where srctree
- # is set to ".". building_out_of_srctree is undefined for in srctree
- # builds
-+ifeq ($(srctree),)
-+update_srctree := 1
-+endif
- ifndef building_out_of_srctree
-+update_srctree := 1
-+endif
-+ifeq ($(update_srctree),1)
- srctree := $(patsubst %/,%,$(dir $(CURDIR)))
- srctree := $(patsubst %/,%,$(dir $(srctree)))
- endif
+--- a/net/sctp/socket.c
++++ b/net/sctp/socket.c
+@@ -1786,6 +1786,18 @@ static int sctp_sendmsg_check_sflags(str
+ 	return 1;
+ }
+ 
++static int sctp_sendmsg_check_stream(struct sctp_association *asoc,
++				     struct sctp_sndrcvinfo *sinfo)
++{
++	if (unlikely(sinfo->sinfo_stream >= asoc->stream.outcnt))
++		return -EINVAL;
++
++	if (unlikely(!SCTP_SO(&asoc->stream, sinfo->sinfo_stream)->ext))
++		return sctp_stream_init_ext(&asoc->stream, sinfo->sinfo_stream);
++
++	return 0;
++}
++
+ static int sctp_sendmsg_to_asoc(struct sctp_association *asoc,
+ 				struct msghdr *msg, size_t msg_len,
+ 				struct sctp_transport *transport,
+@@ -1800,16 +1812,9 @@ static int sctp_sendmsg_to_asoc(struct s
+ 	long timeo;
+ 	int err;
+ 
+-	if (sinfo->sinfo_stream >= asoc->stream.outcnt) {
+-		err = -EINVAL;
++	err = sctp_sendmsg_check_stream(asoc, sinfo);
++	if (err)
+ 		goto err;
+-	}
+-
+-	if (unlikely(!SCTP_SO(&asoc->stream, sinfo->sinfo_stream)->ext)) {
+-		err = sctp_stream_init_ext(&asoc->stream, sinfo->sinfo_stream);
+-		if (err)
+-			goto err;
+-	}
+ 
+ 	if (sp->disable_fragments && msg_len > asoc->frag_point) {
+ 		err = -EMSGSIZE;
+@@ -1830,10 +1835,9 @@ static int sctp_sendmsg_to_asoc(struct s
+ 		err = sctp_wait_for_sndbuf(asoc, transport, &timeo, msg_len);
+ 		if (err)
+ 			goto err;
+-		if (unlikely(sinfo->sinfo_stream >= asoc->stream.outcnt)) {
+-			err = -EINVAL;
++		err = sctp_sendmsg_check_stream(asoc, sinfo);
++		if (err)
+ 			goto err;
+-		}
+ 	}
+ 
+ 	if (sctp_state(asoc, CLOSED)) {
+@@ -1848,6 +1852,11 @@ static int sctp_sendmsg_to_asoc(struct s
+ 				err = -ESRCH;
+ 				goto err;
+ 			}
++			err = sctp_sendmsg_check_stream(asoc, sinfo);
++			if (err) {
++				err = -ESRCH;
++				goto err;
++			}
+ 		} else {
+ 			wait_connect = true;
+ 		}
 
 
