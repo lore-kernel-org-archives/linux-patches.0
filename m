@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793212863;
-	b=FR7YkMOBehz7fOWj60c0aSr+cQAaXAB9vJiM3mbbnKusjVvKd1ctCzC6k52zlEc6yk3w
-	 q8Vkqw61Pss2qAkC6Yj5DEJg6V85yxhQLJC1hO91l8oyakirEZK6SbCWjlNW0GXmJg3c+
-	 MMXkdsXSUOtHL0gD2+zCfot1xbdnBLcYj1/k3F0cO7AUXnPKwwKxD05ixY0kS2B4lBM4M
-	 sCPXK3++tq4ag5B1oegTrwLUcz8vWU110qVkXeIPJfBZ2D8wsMWtkdnEJTa61YmJWKb6e
-	 AlBmq2IVHmDKSa4gFfPu4Xhr0vZT8QLPmeBl0+FcG2rJDGHRNktwZfZT0L1iOOHLCWw==
+	t=1793212865;
+	b=Q8ix+Pw3CxQ8C2CoHxvAZhn1hLmKKmhqbjoDUQzi+ERzve/sPG1ZT2+z0hdMIoRdfirz
+	 Ta4iH84PbrFh4XAF33/b0QmRczsygWXbR4FdnTtWgF39VgC/8EfQDNFVBbPDoFiMU8kEb
+	 MdOKAvRX+jbEV86Hwk1AFCgHzZQt/KekAGW3JMBL+bgxdR1aTZPTgyLwSLxqY2wSjAtRm
+	 Xa4aBiuN25745yfs2D+mq7zeS9a6KgwD0KftSZcgkr+0PtFotYL8u4QUfxkC9wQ/mmzcI
+	 +1yJRo9i49EboVXLLv57c6qg6NphPA3W3/CuEKtvHyjHs6ZdxYqNteMk65LnWqrredg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793212863;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793212865;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=RYrGVuTG4rn0gytcAfc4/9DDUWmVG4skNRhqoi4BF8Q=;
-	b=5rtNAzzbwNPBiec2az3nL5JuVyIEJ2kpkltPFOOb3i4De3MYb4vxcr6CbCjh7OYPC+Gu
-	 gfBoQF5fdDqo8E7qej5nMf1mo9LS+eu9EZ/AjEj/s94gLmXRiPaWeYkYR6E3AHBflaCOL
-	 3rweA5kpOERSQ5Uvla2yGoO7iaU37riWTkToE46zWpJeB/GGJVdNsJsaMnLNOjxrfCTuj
-	 L0PMnxzz8/jYgwWzwjWE9ZG4H4/I44vFwJiVlX3g422D7QswknVIvObbjxbnJo4QFCt0a
-	 owaChc/ebJXEPI23F88NgGZID+afZ3pXotsprwHzEiZjY+togJK0cRdiG6WGNjROa8w==
+	bh=ZBRhe8pK7eWcRS5ODG3zGv3s+UdXU6PkyZ/Q/vXRYVk=;
+	b=Jp1bXRRxHNPDEVdfOn6zg/5TIubXXmVTwWJqqX7FkIEjv4KyAc7HGYDL/xIIfbcu0bfB
+	 wU48UsXpvqjkMiSI5CsL8no2FeWbTd2agDb0HzF5sLQc2H77n/d5sRU3ubmDE5O270cwz
+	 yDVh4anrtl62m9NlTGdbul33lXNvL+GKTw5rdKubpy7y3uqF0zUtDBeIYJ+oh8BV+Ie/W
+	 mbIw4DENleYkBbmYAZenE32dJdEI9KH+icUnhPElOsPi4olFZI1niU486M8W4/u41/Itz
+	 8rTDCR7+Cncw56Ad+CuumSXO4MmildLXKagk6gMVJANmE92y2fRl2hPqpX0/MMKyAtQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hZDDO2sh;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c6kFc8X4;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE07D606A31C;
-	Wed, 28 Oct 2026 18:41:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E69C606A320;
+	Wed, 28 Oct 2026 18:41:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hZDDO2sh
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 465E31F01825;
-	Wed, 28 Oct 2026 18:41:02 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c6kFc8X4
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1F2E1F01825;
+	Wed, 28 Oct 2026 18:41:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793212862;
-	bh=RYrGVuTG4rn0gytcAfc4/9DDUWmVG4skNRhqoi4BF8Q=;
+	s=korg; t=1793212865;
+	bh=ZBRhe8pK7eWcRS5ODG3zGv3s+UdXU6PkyZ/Q/vXRYVk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hZDDO2shEbpXcSaGz3SjAEG/5JzvN8APejmyDMQlaN7MQDem2wP883XxZ2giAS9zK
-	 kIYkcOOvTqIw8AHBP74lQloOrk880fixBpdKAwAktHXCctJNXGP6IFf/AD1vlRGsTP
-	 G9+fEbSGfthPIN13t8nSaJB5BY9a5/ouuyI61SBM=
+	b=c6kFc8X45SaovHdE5cLZ1xU1g+xQNXAfJY7ZG1LIqnLTyep2UtJKhhpOxmduWApov
+	 HioE1y9O3OHWz1WsqpMNaGqEJ9ITi8XWPZv3h0ara4qlelADUi8wzrKT4ViG1BMfPT
+	 4PjwwQNW2AH1Xl9FrGN13FsefHKBiKG2eQoPsMGE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Chengfeng Ye <nicoyip.dev@gmail.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.1 0304/1887] Bluetooth: hci_core: Serialize ACL scheduling with channel deletion
-Date: Wed, 28 Oct 2026 17:40:00 +0100
-Message-ID: <20261028170506.148125576@linuxfoundation.org>
+Subject: [PATCH 6.1 0305/1887] Bluetooth: hci_core: Serialize fragmented ISO packet queueing
+Date: Wed, 28 Oct 2026 17:40:01 +0100
+Message-ID: <20261028170506.170564305@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,95 +69,70 @@ Content-Transfer-Encoding: 8bit
 
 From: Chengfeng Ye <nicoyip.dev@gmail.com>
 
-commit f4845ab191a4f686a5da481fbba90ed73bb693b0 upstream.
+commit 1a572db43c057566771b485598ad2e66cb390821 upstream.
 
-hci_chan_sent() selects a channel under RCU but drops the read lock before
-accessing chan->conn and returning the channel. The ACL and LE schedulers
-then use its packet queue and update its transmit counters without any
-protection against channel deletion.
+The fragmented path in hci_queue_iso() calls __skb_queue_tail() without
+holding conn->data_q.lock. The socket lock serializes senders, but the
+transmit worker can concurrently remove packets from this queue using
+skb_dequeue().
 
-After TX selects a channel and releases RCU, a disconnect command timeout
-on the separate request workqueue can run hci_conn_failed() and
-l2cap_conn_del(). hci_chan_del() can then unlink the channel, complete
-synchronize_rcu(), purge its queue and free it before TX resumes. This
-causes use-after-free both in hci_chan_sent() and in its callers.
+After an insertion saves the old tail pointer, hci_sched_iso() can dequeue
+that packet and pass it to the driver. The driver can free the packet
+before the insertion resumes and writes to the old tail's next pointer,
+causing a use-after-free. Concurrent updates can also corrupt the queue.
 
 KASAN reported:
 
-  BUG: KASAN: slab-use-after-free in hci_chan_sent+0x892/0x9b0
-  Workqueue: hci0 hci_tx_work
+  BUG: KASAN: slab-use-after-free in hci_send_iso+0xc7d/0xe10
   Call Trace:
-   hci_chan_sent+0x892/0x9b0
-   hci_tx_work+0x5e6/0xb70
-  Allocated by task 91:
-   hci_chan_create+0xe3/0x350
-   l2cap_conn_add.part.0+0x12/0xa30
-   l2cap_chan_connect+0x110d/0x1b60
-   l2cap_sock_connect+0x310/0x530
-  Freed by task 99:
-   hci_chan_del+0x11f/0x170
-   l2cap_conn_del+0x4f1/0x800
-   l2cap_connect_cfm+0x88c/0xd30
-   hci_conn_failed+0x150/0x250
-   hci_abort_conn_sync+0x3e3/0x800
-   hci_cmd_sync_run+0x7e/0xc0
-   hci_abort_conn+0x105/0x1f0
-   disconnect_sync+0x157/0x290
-   hci_cmd_sync_work+0x13c/0x290
+   hci_send_iso+0xc7d/0xe10
+   iso_sock_sendmsg+0x710/0x900
+   __sys_sendto+0x34a/0x3a0
 
-Hold the existing device mutex across channel selection and transmission
-in both schedulers to serialize them with channel teardown. Keep timeout
-handling outside the critical sections because hci_link_tx_to() acquires
-the same mutex. This also permits the transmit path to sleep, unlike
-extending the RCU read-side critical section across packet submission.
+  Allocated by task 86:
+   __alloc_skb+0xdd/0x820
+   alloc_skb_with_frags+0x7e/0x770
+   sock_alloc_send_pskb+0x67a/0x820
+   bt_skb_sendmsg.constprop.0+0xc0/0x6c0
+   iso_sock_sendmsg+0x44e/0x900
 
-Fixes: 3eff45eaf817 ("Bluetooth: convert tx_task to workqueue")
+  Freed by task 90:
+   kmem_cache_free+0xcb/0x3d0
+   vhci_read+0x33f/0x4d0
+   vfs_read+0x177/0xa20
+
+Hold the queue lock across the entire fragment batch, as hci_queue_acl()
+does, to serialize insertion against dequeue while preserving fragment
+ordering.
+
+Fixes: 26afbd826ee3 ("Bluetooth: Add initial implementation of CIS connections")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
 Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/hci_core.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ net/bluetooth/hci_core.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
 --- a/net/bluetooth/hci_core.c
 +++ b/net/bluetooth/hci_core.c
-@@ -3604,6 +3604,8 @@ static void hci_sched_acl_pkt(struct hci
+@@ -3291,6 +3291,8 @@ static void hci_queue_iso(struct hci_con
  
- 	__check_timeout(hdev, cnt, ACL_LINK);
+ 		skb_shinfo(skb)->frag_list = NULL;
  
-+	hci_dev_lock(hdev);
++		spin_lock_bh(&queue->lock);
 +
- 	while (hdev->acl_cnt &&
- 	       (chan = hci_chan_sent(hdev, ACL_LINK, &quote))) {
- 		u32 priority = (skb_peek(&chan->data_q))->priority;
-@@ -3635,6 +3637,8 @@ static void hci_sched_acl_pkt(struct hci
+ 		__skb_queue_tail(queue, skb);
  
- 	if (cnt != hdev->acl_cnt)
- 		hci_prio_recalculate(hdev, ACL_LINK);
+ 		do {
+@@ -3305,6 +3307,8 @@ static void hci_queue_iso(struct hci_con
+ 
+ 			__skb_queue_tail(queue, skb);
+ 		} while (list);
 +
-+	hci_dev_unlock(hdev);
++		spin_unlock_bh(&queue->lock);
+ 	}
  }
  
- static void hci_sched_acl(struct hci_dev *hdev)
-@@ -3663,6 +3667,8 @@ static void hci_sched_le(struct hci_dev
- 
- 	__check_timeout(hdev, *cnt, LE_LINK);
- 
-+	hci_dev_lock(hdev);
-+
- 	tmp = *cnt;
- 	while (*cnt && (chan = hci_chan_sent(hdev, LE_LINK, &quote))) {
- 		u32 priority = (skb_peek(&chan->data_q))->priority;
-@@ -3691,6 +3697,8 @@ static void hci_sched_le(struct hci_dev
- 
- 	if (*cnt != tmp)
- 		hci_prio_recalculate(hdev, LE_LINK);
-+
-+	hci_dev_unlock(hdev);
- }
- 
- /* Schedule CIS */
 
 
