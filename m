@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214613;
-	b=LK2CEsjtARBpWhC1xblfDKnMEec1KqWvFPAx1VSIjBc4fAk3TeBDQHyPB4N/qYVqsK0r
-	 tSTw3JTCTfaBhPuR4A6BjgrEXUOqJJmsJ9hrsP+Kqpe8Fi6IPW9KD0fg1vJvX42f9HEfZ
-	 uqgf1fE3lI7ul2Strr14cNDdnJt35zDeyAyNnDwnUVzglng4Y8U60axQAqHNmNM9RVY6t
-	 E1yPTwSgDWx2gN2rqCs2DuCbYLjs/clMYD/l/XwbgEh8N7DcXTq0DT7QvX4u9Af4GJxFm
-	 Avhmv/WV6uQeze7Qpd8/OdwY4JF1mxq36nIiOx+tsMHzDLXli9X5rGu7IMqqSDb8viw==
+	t=1793214615;
+	b=BPPDYDZazVhnm+8eNGZZQAXgYosGwXMSEyua17zgOJ10+JozHEeC9VMdc66CY8ETl/7m
+	 y7U7Mqr3d1ZvBJQiHrBIwSgCwGYLMphcC3ioAaHfLhGmGKY+ZtH9yzIqNoes/Mn2wu1lM
+	 bt8Vd0ZBEerDH+pfZomCQ2cwy4KhwiZ6GTEkG7rSB6DyH5NLBJpWbhKwqhLj65IK3VvKA
+	 hTJlnCPaExdYFPyIV69bSQEF9cW6vx9ZUqDXg4oF6jDHdyqN5eeS8lVQyVAUi1B1Rh0Qg
+	 +OIhDoc9BXOTlMnUDxqjCHJm0qnUQ1Dd8bPlV+YUUg6NFsyeuT85twCSnuVsHSgClCQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214613;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214615;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=osN7iURZgbIeEZ/+rDgRSRlWsb9Go45uDLYKep6X1QI=;
-	b=MLvoZ/MNQVWfmuDcx+iSoiwtUsTbEMT/DARbOI/+Y/AeU9rpdJHWx3B3CjrOzzlKNBGV
-	 1WTbKmbUMnIYWg2SvgeFkUrEFjZ96C6zK4CN1nBM2e95Iul4iSe+YEi8vYNz6ebtLMGE1
-	 K2iwp721AxLvm9HMnlMyOzfcSHXuhJ4erpYmmW1Y8HeRK3tQamitMwYRPSbvpjYc2jlaF
-	 DhCc/hGpZh5/e0H4Sn99WEek3FeHBTjtFj01ZVg6eHIx0p1n/etgdm5Qz9NnEy7Zr+j4F
-	 Uh0grXPeIYhYBh9dzK5DfW6iWX9tqa6zCaJWtqAzy+TQPjIj6NWTN1qSElmsUi6GzxQ==
+	bh=P4a9S6e/8M8J8N1ZgwN0kUsZ5A+W+JAr1bal2dffC2Y=;
+	b=QftgZmEktq2dvZsJT6vl2h+MuthKmprFhgWcDMDTwZJ2Owl2cqCTIiMW+6FQ588d+ggt
+	 cLSK+qZRBdpO6TJZ/0qnKK45PtqOW+WFbppsSb4CkEecadrLTHgjduAaKLvWimnwvJWMX
+	 KsXWlfP/ciNF4PkIwfsByW/aoWXdqlLQX9KQh7Q5PX1crwiU8Gpg8larXohfle0CNeGPr
+	 NahFPjlmRqJuSpApfX78cDVYwomGoO8DSRMt9OC16SKWAFDm1YwbtuwrolT6ofSrLMegL
+	 QJaOP/70pMT0BHismw+2iXnWIyf2J0cnHwZc0D4szDbOIazLGekMwJ1qf54ed0ulL6w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jBNOeFck;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dc9GFP09;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCD9E606A32E;
-	Wed, 28 Oct 2026 19:10:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 951DB606AB29;
+	Wed, 28 Oct 2026 19:10:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jBNOeFck
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 168701F01825;
-	Wed, 28 Oct 2026 19:10:11 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dc9GFP09
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5C9F1F01825;
+	Wed, 28 Oct 2026 19:10:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214612;
-	bh=osN7iURZgbIeEZ/+rDgRSRlWsb9Go45uDLYKep6X1QI=;
+	s=korg; t=1793214615;
+	bh=P4a9S6e/8M8J8N1ZgwN0kUsZ5A+W+JAr1bal2dffC2Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jBNOeFck2S4e1YZX+8xebaTyb7ZvM+GF9hZiA4J+Qgkcwr8OVy1i5E5swy9v4hl7B
-	 mVHM0xrBC1/M8UTIU2n4eNuoxM86O12QP2v9P7K6zVl9zl2Jnm+eMiX6TzvSqfZ264
-	 y2czdCbEtqBPPXyVy0K8A4Japdm/FXP3e3yV4z2k=
+	b=dc9GFP09iT3fLGiWrWyZDJSLu/0whf7k3BbBIj8yqtgYqsfs69Mza+cuxtq7vR/WW
+	 8gayFlKNLvgYyWQ/OQuMqACCGsVnKuJUGuUgrJPcFRIMmy3k0MUUL0eC+rzjy/rD6c
+	 5CLX6ynOibUlTt35TZgwSblA7G+JpM+CWTXYS74I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Haotian Zhang <vulab@iscas.ac.cn>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0920/1887] fs/ntfs3: handle attr_set_size() errors when truncating files
-Date: Wed, 28 Oct 2026 17:50:16 +0100
-Message-ID: <20261028170520.352874855@linuxfoundation.org>
+Subject: [PATCH 6.1 0921/1887] PCI: endpoint: Add missing NULL check for alloc_workqueue()
+Date: Wed, 28 Oct 2026 17:50:17 +0100
+Message-ID: <20261028170520.374473975@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -67,65 +69,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+From: Haotian Zhang <vulab@iscas.ac.cn>
 
-[ Upstream commit 576248a34b927e93b2fd3fff7df735ba73ad7d01 ]
+[ Upstream commit 03f336a869b3a3f119d3ae52ac9723739c7fb7b6 ]
 
-If attr_set_size() fails while truncating down, the error is silently
-ignored and the inode may be left in an inconsistent state.
+alloc_workqueue() can return NULL on memory allocation failure. Without
+proper error checking, this may lead to a NULL pointer dereference when
+queue_work() is later called with the NULL workqueue pointer in
+epf_ntb_epc_init().
 
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Add a NULL check immediately after alloc_workqueue() and return -ENOMEM on
+failure to prevent the driver from loading with an invalid workqueue
+pointer.
+
+Fixes: e35f56bb0330 ("PCI: endpoint: Support NTB transfer between RC and EP")
+Fixes: 8b821cf76150 ("PCI: endpoint: Add EP function driver to provide NTB functionality")
+Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Link: https://patch.msgid.link/20251110040446.2065-1-vulab@iscas.ac.cn
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/file.c | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ drivers/pci/endpoint/functions/pci-epf-ntb.c  | 5 +++++
+ drivers/pci/endpoint/functions/pci-epf-vntb.c | 5 +++++
+ 2 files changed, 10 insertions(+)
 
-diff --git a/fs/ntfs3/file.c b/fs/ntfs3/file.c
-index b825862d74f95..81b51d5365f2c 100644
---- a/fs/ntfs3/file.c
-+++ b/fs/ntfs3/file.c
-@@ -390,8 +390,8 @@ static int ntfs_truncate(struct inode *inode, loff_t new_size)
- {
- 	struct super_block *sb = inode->i_sb;
- 	struct ntfs_inode *ni = ntfs_i(inode);
--	int err, dirty = 0;
- 	u64 new_valid;
-+	int err;
+diff --git a/drivers/pci/endpoint/functions/pci-epf-ntb.c b/drivers/pci/endpoint/functions/pci-epf-ntb.c
+index e17dbcc9c8dbb..6abe474fd9405 100644
+--- a/drivers/pci/endpoint/functions/pci-epf-ntb.c
++++ b/drivers/pci/endpoint/functions/pci-epf-ntb.c
+@@ -2073,6 +2073,11 @@ static int __init epf_ntb_init(void)
  
- 	if (!S_ISREG(inode->i_mode))
- 		return 0;
-@@ -407,7 +407,6 @@ static int ntfs_truncate(struct inode *inode, loff_t new_size)
- 	}
+ 	kpcintb_workqueue = alloc_workqueue("kpcintb", WQ_MEM_RECLAIM |
+ 					    WQ_HIGHPRI, 0);
++	if (!kpcintb_workqueue) {
++		pr_err("Failed to allocate kpcintb workqueue\n");
++		return -ENOMEM;
++	}
++
+ 	ret = pci_epf_register_driver(&epf_ntb_driver);
+ 	if (ret) {
+ 		destroy_workqueue(kpcintb_workqueue);
+diff --git a/drivers/pci/endpoint/functions/pci-epf-vntb.c b/drivers/pci/endpoint/functions/pci-epf-vntb.c
+index 88ff306599091..15c707840cc20 100644
+--- a/drivers/pci/endpoint/functions/pci-epf-vntb.c
++++ b/drivers/pci/endpoint/functions/pci-epf-vntb.c
+@@ -1433,6 +1433,11 @@ static int __init epf_ntb_init(void)
  
- 	new_valid = ntfs_up_block(sb, min_t(u64, ni->i_valid, new_size));
--
- 	truncate_setsize(inode, new_size);
- 
- 	ni_lock(ni);
-@@ -421,20 +420,19 @@ static int ntfs_truncate(struct inode *inode, loff_t new_size)
- 		ni->i_valid = new_valid;
- 
- 	ni_unlock(ni);
-+	if (unlikely(err))
-+		return err;
- 
- 	ni->std_fa |= FILE_ATTRIBUTE_ARCHIVE;
- 	inode->i_ctime = inode->i_mtime = current_time(inode);
- 	if (!IS_DIRSYNC(inode)) {
--		dirty = 1;
-+		mark_inode_dirty(inode);
- 	} else {
- 		err = ntfs_sync_inode(inode);
- 		if (err)
- 			return err;
- 	}
- 
--	if (dirty)
--		mark_inode_dirty(inode);
--
- 	/*ntfs_flush_inodes(inode->i_sb, inode, NULL);*/
- 
- 	return 0;
+ 	kpcintb_workqueue = alloc_workqueue("kpcintb", WQ_MEM_RECLAIM |
+ 					    WQ_HIGHPRI, 0);
++	if (!kpcintb_workqueue) {
++		pr_err("Failed to allocate kpcintb workqueue\n");
++		return -ENOMEM;
++	}
++
+ 	ret = pci_epf_register_driver(&epf_ntb_driver);
+ 	if (ret) {
+ 		destroy_workqueue(kpcintb_workqueue);
 -- 
 2.53.0
 
