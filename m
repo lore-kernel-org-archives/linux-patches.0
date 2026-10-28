@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793208320;
-	b=lAFpTwO0fcZ+tZRCBrXUXyVymd0vk9xdsOfGSdvdzq4p32Bqe+b2wbIhUZv1RcMum3F6
-	 /p16rRb9W8aFrypIw9MhHhVFCXZGJK+02ovATIvI4kALzeyMu0KnNlVcdWdO9fOIwmZ6y
-	 oMwBJRF/Mco4yWlcbIP/OmgKr65U8WNEN/+paxA5qKHSM/qBVaX3k4BoWJu+ynp5Ek+Ne
-	 sT7vl7J9V8g6sf0FX+xpoZBluntDZA/5KJ7BI5w1PZSaxymfccEcM4v0CXyLWyxacr+Sr
-	 2bswnvbGJUJ1kvXH4CZ1yAGWX486BqASHt3tug0mLKQsJoy9TIQHHwYNfw8m6gRrVCQ==
+	t=1793208323;
+	b=iP4mvgyenTfyl2oLsjoT6FCxpSUK4mpeitPkarpA+d3s2+BBCUAtf9jT20ZiL+7RZk9h
+	 LHQlBIvMUokVFv4rhVeJ+nRUTQOOdZWJpWi3FYFy3Z5suNd9kXpLhCYTzqAnQUP3qzzmi
+	 vOrI3piUYa7gvSEyphZkI/aEMyxqvH7YpFZBA5XIsr/hvlNNi7LVNyBpeG4qeVPN2BibQ
+	 i298KLC2Kj5CgdYX+AsfaKL5OFdOSb/Q/DPCFvM2XUbEHaWgkr894+jxgL2BuhSkS0VMY
+	 nTtBVM6FWXK5ERmLqdHX8T4BRemTqp7UkBlqCwDVV8Uzu3nbo120ndwk6vxPTkTbTzw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793208320;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793208323;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=vJx1+UDbSpyOkyftnAR6F2ztWUx1ImD9zrvaw73Q4uk=;
-	b=NIEjvNoB0poCTPK7uqe0VoAWS/SRY1ZXaFK8AEv9qSBIkyYPywwLdgnm/eX1/5/Vs4R+
-	 gLV/CH4ptGVSLC1kXZDNZHz81pDmYS4x+gh8U7bhhXnFjaUcJhLlL1XbSFUpgw0F/ZRiV
-	 ujPYZOV3oOGJLPUMNr6Pth28US/l2hU0Q1z/jHt/p39AKPcgZ6LXzzvleaYZLa8eE1r7V
-	 QgAEYgzUHAWLewRwkZxrCoDiINcp55O72UMtv7KDEZ4JlFYyKKVhssV0ayd5WPROGrFQB
-	 YwEjOAz3Uu10J4J1Nu8cUtqi7o3YhWUZXYPOsBEDfZks9LM3zgekoE6HqAODeDh24cA==
+	bh=iBTBtxr3flPf/K9RtkHTHH7hiPR0cyEwp1tFHxEPEbQ=;
+	b=DV09/+5Fnm4r/JK/Qd60SVg9seQsPm2ce1MgLx40T0TGrbob7czFCUw8V9smr1dijHUT
+	 MGINDyXAlMIcy87AUtqQh1n7Cd/xibL5/MJvEeo0Z6pHw9yE6M0XEoZdl04FQqwyoqsWn
+	 SxyTomDipPuHLXzbI7NNq5YLWjfJhwLfxd5AnpxdCVR6UeIg4XVylucwyQHwSXoZ1Gjit
+	 aVNoXJRVm2Nh2ucXtND7/GGVtx4AZkM1MZAYsRKV0fHHzCSvrHVW5IW/VoUhsoPs/Hd6P
+	 WFnvC1udcEUVkp1FQCWwIp9XLaUt21fkn2HL4gwi8pmA1riBLcU7eeQU1nZ8WQ/KvwQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XaYhOPPC;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uUHpiBOL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ABC1606A31C;
-	Wed, 28 Oct 2026 17:25:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35652606A31A;
+	Wed, 28 Oct 2026 17:25:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XaYhOPPC
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC7C91F01825;
-	Wed, 28 Oct 2026 17:25:19 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uUHpiBOL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88A631F01825;
+	Wed, 28 Oct 2026 17:25:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793208320;
-	bh=vJx1+UDbSpyOkyftnAR6F2ztWUx1ImD9zrvaw73Q4uk=;
+	s=korg; t=1793208323;
+	bh=iBTBtxr3flPf/K9RtkHTHH7hiPR0cyEwp1tFHxEPEbQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XaYhOPPCWlwAKa1Axdm7dhrnAvmoVg4mV0KKX8pG5n6M97BpWdoAcluKaDycy532Q
-	 E+57zto5/InViFo4jYBD0US1P0KGXiNPy1QnVc+cLd0lxJ6T8DdzGOA0Ubex1UFvsl
-	 J/7mtJVdXYk3SuTy3WU5XVebWdoxOdiqtbGg4SvM=
+	b=uUHpiBOLgqg5QHT9HOhACI72M8nyHeNuCe8DPj65A6bv30dH3erR6XQ/8dzYwnDhL
+	 7mhWbVttfyijChYdJXeFtS+mdYAYxLCKARjF+c7wJ5GYr/fdzsWQkHmxvoWiLJOWnO
+	 V8N7Mu92mO5y6sNPdDrE8tEf2cP4+wBL9yzsCaB4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Can Peng <pengcan@kylinos.cn>,
-	Mark Brown <broonie@kernel.org>,
+	Kuan-Wei Chiu <visitorckw@gmail.com>,
+	James Clark <james.clark@linaro.org>,
+	Suzuki K Poulose <suzuki.poulose@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 078/516] spi: bcm63xx: disable clock on resume failure
-Date: Wed, 28 Oct 2026 17:53:50 +0100
-Message-ID: <20261028170005.369384635@linuxfoundation.org>
+Subject: [PATCH 5.10 052/516] coresight: etm3x: Fix cntr_val_show() to match cntr_val_store() behavior
+Date: Wed, 28 Oct 2026 17:53:24 +0100
+Message-ID: <20261028170004.763651061@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -68,45 +69,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Can Peng <pengcan@kylinos.cn>
+From: Kuan-Wei Chiu <visitorckw@gmail.com>
 
-[ Upstream commit 2b62c2c134fa32d9d3a9e7323c8ac74518eeb4ac ]
+[ Upstream commit 41fb4e925528aefa4b7a5f76c7f81db99c0d0f38 ]
 
-bcm63xx_spi_resume() enables the controller clock before restarting the
-SPI controller queue.
+The cntr_val_show() function was intended to print the values of all
+counters using a loop. However, due to a buffer overwrite issue with
+sprintf(), it effectively only displayed the value of the last counter.
 
-If spi_controller_resume() fails, the function currently reports success
-and leaves the clock enabled. Propagate the error and disable the clock
-before returning.
+The companion function, cntr_val_store(), allows users to modify a
+specific counter selected by 'cntr_idx'. To maintain consistency
+between read and write operations and to align with the ETM4x driver
+behavior, modify cntr_val_show() to report only the value of the
+currently selected counter.
 
-Fixes: b42dfed83d95 ("spi: add Broadcom BCM63xx SPI controller driver")
+This change removes the loop and the "counter %d:" prefix, printing
+only the hexadecimal value. It also adopts sysfs_emit() for standard
+sysfs output formatting.
+
+Fixes: a939fc5a71ad ("coresight-etm: add CoreSight ETM/PTM driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Can Peng <pengcan@kylinos.cn>
-Link: https://patch.msgid.link/20260804071831.860784-1-pengcan@kylinos.cn
-Signed-off-by: Mark Brown <broonie@kernel.org>
-[ changed spi_controller_resume(host) to spi_master_resume(master) to match the older API and variable name. ]
+Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
+Reviewed-by: James Clark <james.clark@linaro.org>
+Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+Link: https://lore.kernel.org/r/20251202082613.3265761-1-visitorckw@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-bcm63xx.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ .../hwtracing/coresight/coresight-etm3x-sysfs.c   | 15 ++++-----------
+ 1 file changed, 4 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/spi/spi-bcm63xx.c b/drivers/spi/spi-bcm63xx.c
-index e05f8913ccda9..0c4735f58c6e6 100644
---- a/drivers/spi/spi-bcm63xx.c
-+++ b/drivers/spi/spi-bcm63xx.c
-@@ -665,7 +665,11 @@ static int bcm63xx_spi_resume(struct device *dev)
- 	if (ret)
- 		return ret;
+diff --git a/drivers/hwtracing/coresight/coresight-etm3x-sysfs.c b/drivers/hwtracing/coresight/coresight-etm3x-sysfs.c
+index e8c7649f123e7..30fae661090fe 100644
+--- a/drivers/hwtracing/coresight/coresight-etm3x-sysfs.c
++++ b/drivers/hwtracing/coresight/coresight-etm3x-sysfs.c
+@@ -716,26 +716,19 @@ static DEVICE_ATTR_RW(cntr_rld_event);
+ static ssize_t cntr_val_show(struct device *dev,
+ 			     struct device_attribute *attr, char *buf)
+ {
+-	int i, ret = 0;
+ 	u32 val;
+ 	struct etm_drvdata *drvdata = dev_get_drvdata(dev->parent);
+ 	struct etm_config *config = &drvdata->config;
  
--	spi_master_resume(master);
-+	ret = spi_master_resume(master);
-+	if (ret) {
-+		clk_disable_unprepare(bs->clk);
-+		return ret;
-+	}
+ 	if (!local_read(&drvdata->mode)) {
+ 		spin_lock(&drvdata->spinlock);
+-		for (i = 0; i < drvdata->nr_cntr; i++)
+-			ret += sprintf(buf, "counter %d: %x\n",
+-				       i, config->cntr_val[i]);
++		val = config->cntr_val[config->cntr_idx];
+ 		spin_unlock(&drvdata->spinlock);
+-		return ret;
+-	}
+-
+-	for (i = 0; i < drvdata->nr_cntr; i++) {
+-		val = etm_readl(drvdata, ETMCNTVRn(i));
+-		ret += sprintf(buf, "counter %d: %x\n", i, val);
++	} else {
++		val = etm_readl(drvdata, ETMCNTVRn(config->cntr_idx));
+ 	}
  
- 	return 0;
+-	return ret;
++	return sysfs_emit(buf, "%#x\n", val);
  }
+ 
+ static ssize_t cntr_val_store(struct device *dev,
 -- 
 2.53.0
 
