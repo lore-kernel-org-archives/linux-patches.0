@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793212422;
-	b=aXd9NnQ00DXFzv3hmv8P0Q8YDwtUbZC4s0WddfggLXBWkNhC7cMuExWj9RHdS6GYK+57
-	 EJAGEX3v5Qynth7OPRonFzMkC4O2c+sZvz9DsPa1A0Hu7dkAzSKMbZS2G+BZAMiSKG0TD
-	 H16/o06CqnIfVroCWfnD5E1Qdr72JKWA/qq4ee6dYa670wuGODsZ6+AVa3V4fjST1e8U+
-	 bOIo/RY1UVGh8neuPEFBn7/sV33mbxZ4rK91L7U77+1oKrRwj7hekr5PFC4onKfgJxRT1
-	 ZDZrp3JE2dRF+FMn3uPznRYViUJcR7fTP5LEUtXELPEc7U5NSFkc5aqwjwGhxZxlo/A==
+	t=1793212425;
+	b=MU3qg+VI/vhPWjE74hKRNasXe27A2EbrVK88XZN0L0MR4BgeDDIIobLSYsBYpGFLc4Wu
+	 6rLgRH9m+0OzZQgX7uCpXRo8jU4tLHRKr0rv7zjimF6i4g7dZOBNx2nbJVnnMj7/aa6mm
+	 QjDsRqv6NRHsyJufWw/DdeeZ1cY+SCfkR39tibpSTz71G1AFwMTraev+4VYpUltpDMoV8
+	 xPknjivow1aiRPZ8gJHTgQEfwJtTGLjBF90AifY48N7qzSIREXTZu3m3GgFJD827uLpmY
+	 tEoa6emAI8k3aQJAM/BBte5OB/W6dfvjDXYCNJ+uq4vRQq3fmjMsaudJypR+dTBpMIg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793212422;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793212425;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=pahqQX2t69qmM9BoaetSXRQsvFxKwnPRfN+sdjhO6xg=;
-	b=k26TCb++VynnRVULPmCS35F05UBMg787GEK/QcSsFMc8hvJBXV7HZoBgjRuxafAMtZjq
-	 x9mabvmhDv+W0TveN70GGGR+on/WcM2V4KQdNzKk66DH+5mlLQWDR7bEag1OL01e4tM3f
-	 vlbv6SH+CJVqlKNp2SuCdJPjKil/8Cvtl59m8Qo5GHEInTaJj9bG4ae1IZKZZNJYaB0GZ
-	 3AM0AGMQMLgDRByZd8pj4XM8qlUTN6cgNnVbp1tj1hzLVhl918PBvFYDPhzkYfuQ6kXXd
-	 iU/1gy55OspW0Q55yOQbnvcgjfXct4rHCfXPqlEyz546Y4DS+SNguHrTJnrbmrB286Q==
+	bh=6IAEhvr8HlYVUDJYX47qAV0vvS+JFUnQHVTJ1R3PvJk=;
+	b=1Wnx+uaBOYO6COosGH/10T17uWk4AcmYMitsLQxYeOojaa5aJgrYH3QG+KyFPR3IYJ7I
+	 fUxePergkIyuvAaEdnfnKhbPPPc6RHWzjblpDARdV4kWsMGFZOEFaRpzPS4dcq8P63lOm
+	 qESCrZ7SnItzOBiE9+b2PZQCH4hDgjwP+GIoJRgkPKt3Z5XrjI+lgibEkRbT73r+erPTP
+	 ybHKIUwqD6Tw2+Dqoa7rKFTlZ9t2AzsAMt9HPPVcyyVNzHoPf01oSU/bCb88tlrFAmhrc
+	 fA/JGn/UJ2UIhTnSK9TomNvKk4D0ZqC7XwtweA0wbGB9MQKpl6ttHaajAoWYPjM/zxg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C1LZBHS7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2vFc26c0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3DC1606A32E;
-	Wed, 28 Oct 2026 18:33:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B641F606A31C;
+	Wed, 28 Oct 2026 18:33:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C1LZBHS7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32A541F031E6;
-	Wed, 28 Oct 2026 18:33:41 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2vFc26c0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 125441F01829;
+	Wed, 28 Oct 2026 18:33:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793212421;
-	bh=pahqQX2t69qmM9BoaetSXRQsvFxKwnPRfN+sdjhO6xg=;
+	s=korg; t=1793212424;
+	bh=6IAEhvr8HlYVUDJYX47qAV0vvS+JFUnQHVTJ1R3PvJk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=C1LZBHS7IkGoj3e5xUP9Psr08/ZeR3oO3845t0nqxYpIBvH+ZSrqCJe5WCIZrHySh
-	 sR2FK1hzJKkeu1Atv2Uw5z0tgfA0CeUhTh8rUR3z4+CqC0kGcWidpxu9qzZcjIvbfz
-	 hHcseu7MhtkTY50ipMVu0b42LbR940hYgeonwp+0=
+	b=2vFc26c0O+rNrC0Itf56/4wKuHLmaFMmkNg3tuDPmkWV0qjWJqBrnOOD0AsUjGITm
+	 D+HApKh00eFR4mpFEv6eg8/Yi743fAOto2BtiUAGtaiGiBE5NFcxlyLnhI55HNWFN8
+	 e0ad8UmubZKb6gf/hDyrWaEo4qDJG1HYFdMiXG+4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paulo Alcantara (SUSE)" <pc@manguebit.com>,
-	Steve French <stfrench@microsoft.com>,
+	Sashiko <sashiko-dev@google.com>,
+	Nilesh Javali <njavali@marvell.com>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0147/1887] smb3: make query_on_disk_id open context consistent and move to common code
-Date: Wed, 28 Oct 2026 17:37:23 +0100
-Message-ID: <20261028170502.580990261@linuxfoundation.org>
+Subject: [PATCH 6.1 0112/1887] scsi: qla2xxx: Fix soft lockup polling continuation IOCB signature
+Date: Wed, 28 Oct 2026 17:36:48 +0100
+Message-ID: <20261028170501.784241341@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,113 +69,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steve French <stfrench@microsoft.com>
+From: Nilesh Javali <njavali@marvell.com>
 
-[ Upstream commit 1149c8467ddebfb6bb9aab37830f70a49cab7085 ]
+[ Upstream commit d7e3fa7d06bf7fcaac186d3c4d635caac166d36c ]
 
-cifs and ksmbd were using a slightly different version of the query_on_disk_id
-struct which could be confusing. Use the ksmbd version of this struct, and
-move it to common code.
+qla27xx_copy_multiple_pkt() and qla27xx_copy_fpin_pkt() poll
+rsp_q->ring_ptr->signature for RESPONSE_PROCESSED (0xDEADDEAD) to decide
+whether the next continuation IOCB has arrived, spinning on cpu_relax()
+without advancing the ring or decrementing the entry count while it has
+not. response_t::signature lives at byte offset 60, but a continuation
+IOCB (sts_cont_entry_t / struct sts_cont_entry_ext) carries raw FC frame
+payload at that offset (data[56..59]). A received frame whose payload
+bytes happen to equal 0xDEADDEAD is therefore misread as "not yet
+arrived", and the loop spins forever in interrupt/DPC context, causing a
+CPU soft lockup.
 
-Reviewed-by: Paulo Alcantara (SUSE) <pc@manguebit.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Stable-dep-of: 67f4c1c6a1b5 ("smb: client: fix create context out-of-bounds reads")
+The poll is also unnecessary: callers of qla27xx_copy_multiple_pkt()
+(PT_LS4_UNSOL and the NVMe purls path) already gate on
+qla_chk_cont_iocb_avail(), which guarantees all entry_count IOCBs are
+present before copying begins. The sibling helper
+__qla_copy_purex_to_buffer() already drops the signature poll and relies
+on the entry_type == STATUS_CONT_TYPE guard instead.
+
+Remove the signature busy-wait from both helpers, keeping the entry_type
+guard, and gate the FPIN path with qla_chk_cont_iocb_avail() so it defers
+and re-processes on the next interrupt once all continuation IOCBs have
+arrived, mirroring the ELS_AUTH_ELS and PT_LS4_UNSOL arms. With this the
+signature field is never read on a continuation IOCB, eliminating the
+payload-aliasing lockup.
+
+Fixes: 9f2475fe7406 ("scsi: qla2xxx: SAN congestion management implementation")
+Cc: stable@vger.kernel.org
+Reported-by: Sashiko <sashiko-dev@google.com>
+Signed-off-by: Nilesh Javali <njavali@marvell.com>
+Link: https://patch.msgid.link/20260730155838.2119230-15-njavali@marvell.com
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+[ replaced unavailable qla_rsp_ring_rewind_to() with direct ring_ptr and ring_index assignments ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/smb2pdu.c |  2 +-
- fs/smb/client/smb2pdu.h |  9 ---------
- fs/smb/common/smb2pdu.h | 11 +++++++++++
- fs/smb/server/smb2pdu.h |  8 --------
- 4 files changed, 12 insertions(+), 18 deletions(-)
+ drivers/scsi/qla2xxx/qla_isr.c | 25 ++++++++++++++++---------
+ 1 file changed, 16 insertions(+), 9 deletions(-)
 
-diff --git a/fs/smb/client/smb2pdu.c b/fs/smb/client/smb2pdu.c
-index e23060ed57da3..5aa5db211997a 100644
---- a/fs/smb/client/smb2pdu.c
-+++ b/fs/smb/client/smb2pdu.c
-@@ -2179,7 +2179,7 @@ create_reconnect_durable_buf(struct cifs_fid *fid)
- static void
- parse_query_id_ctxt(struct create_context *cc, struct smb2_file_all_info *buf)
- {
--	struct create_on_disk_id *pdisk_id = (struct create_on_disk_id *)cc;
-+	struct create_disk_id_rsp *pdisk_id = (struct create_disk_id_rsp *)cc;
+diff --git a/drivers/scsi/qla2xxx/qla_isr.c b/drivers/scsi/qla2xxx/qla_isr.c
+index 72ecd39a75830..2b3885bd47ff9 100644
+--- a/drivers/scsi/qla2xxx/qla_isr.c
++++ b/drivers/scsi/qla2xxx/qla_isr.c
+@@ -1053,14 +1053,6 @@ qla27xx_copy_fpin_pkt(struct scsi_qla_host *vha, void **pkt,
  
- 	cifs_dbg(FYI, "parse query id context 0x%llx 0x%llx\n",
- 		pdisk_id->DiskFileId, pdisk_id->VolumeId);
-diff --git a/fs/smb/client/smb2pdu.h b/fs/smb/client/smb2pdu.h
-index d12ca9c7e62bc..2c2a2177b553c 100644
---- a/fs/smb/client/smb2pdu.h
-+++ b/fs/smb/client/smb2pdu.h
-@@ -170,15 +170,6 @@ struct durable_reconnect_context_v2 {
- 	__le32 Flags; /* see above DHANDLE_FLAG_PERSISTENT */
- } __packed;
- 
--/* See MS-SMB2 2.2.14.2.9 */
--struct create_on_disk_id {
--	struct create_context ccontext;
--	__u8   Name[8];
--	__le64 DiskFileId;
--	__le64 VolumeId;
--	__u32  Reserved[4];
--} __packed;
+ 	do {
+ 		while ((total_bytes > 0) && (entry_count_remaining > 0)) {
+-			if (rsp_q->ring_ptr->signature == RESPONSE_PROCESSED) {
+-				ql_dbg(ql_dbg_async, vha, 0x5084,
+-				       "Ran out of IOCBs, partial data 0x%x\n",
+-				       buffer_copy_offset);
+-				cpu_relax();
+-				continue;
+-			}
 -
- /* See MS-SMB2 2.2.14.2.12 */
- struct durable_reconnect_context_v2_rsp {
- 	__le32 Timeout;
-diff --git a/fs/smb/common/smb2pdu.h b/fs/smb/common/smb2pdu.h
-index 7d69a2a1d3ba4..430b65512228f 100644
---- a/fs/smb/common/smb2pdu.h
-+++ b/fs/smb/common/smb2pdu.h
-@@ -1240,6 +1240,7 @@ struct create_posix {
+ 			new_pkt = (sts_cont_entry_t *)rsp_q->ring_ptr;
+ 			*pkt = new_pkt;
  
- #define SMB2_LEASE_KEY_SIZE			16
- 
-+/* See MS-SMB2 2.2.13.2.8 */
- struct lease_context {
- 	__u8 LeaseKey[SMB2_LEASE_KEY_SIZE];
- 	__le32 LeaseState;
-@@ -1247,6 +1248,7 @@ struct lease_context {
- 	__le64 LeaseDuration;
- } __packed;
- 
-+/* See MS-SMB2 2.2.13.2.10 */
- struct lease_context_v2 {
- 	__u8 LeaseKey[SMB2_LEASE_KEY_SIZE];
- 	__le32 LeaseState;
-@@ -1270,6 +1272,15 @@ struct create_lease_v2 {
- 	__u8   Pad[4];
- } __packed;
- 
-+/* See MS-SMB2 2.2.14.2.9 */
-+struct create_disk_id_rsp {
-+	struct create_context ccontext;
-+	__u8   Name[8];
-+	__le64 DiskFileId;
-+	__le64 VolumeId;
-+	__u8  Reserved[16];
-+} __packed;
+@@ -3993,9 +3985,24 @@ void qla24xx_process_response_queue(struct scsi_qla_host *vha,
+ 					       "SCM not active for this port\n");
+ 					break;
+ 				}
++				if (qla_chk_cont_iocb_avail(vha, rsp,
++				    (response_t *)pkt, rsp_in)) {
++					/*
++					 * ring_ptr and ring_index were
++					 * pre-incremented above. Reset them
++					 * back to current. Wait for next
++					 * interrupt with all IOCBs to arrive
++					 * and re-process.
++					 */
++					rsp->ring_ptr = (response_t *)pkt;
++					rsp->ring_index = cur_ring_index;
 +
- /* See MS-SMB2 2.2.31 and 2.2.32 */
- struct smb2_ioctl_req {
- 	struct smb2_hdr hdr;
-diff --git a/fs/smb/server/smb2pdu.h b/fs/smb/server/smb2pdu.h
-index 6011fca980456..7518aa42f11ed 100644
---- a/fs/smb/server/smb2pdu.h
-+++ b/fs/smb/server/smb2pdu.h
-@@ -146,14 +146,6 @@ struct create_mxac_rsp {
- 	__le32 MaximalAccess;
- } __packed;
- 
--struct create_disk_id_rsp {
--	struct create_context ccontext;
--	__u8   Name[8];
--	__le64 DiskFileId;
--	__le64 VolumeId;
--	__u8  Reserved[16];
--} __packed;
--
- /* equivalent of the contents of SMB3.1.1 POSIX open context response */
- struct create_posix_rsp {
- 	struct create_context ccontext;
++					ql_dbg(ql_dbg_init, vha, 0x5095,
++					    "Defer processing FPIN...\n");
++					return;
++				}
+ 				pure_item = qla27xx_copy_fpin_pkt(vha,
+ 							  (void **)&pkt, &rsp);
+-				__update_rsp_in(is_shadow_hba, rsp, rsp_in);
+ 				if (!pure_item)
+ 					break;
+ 				qla24xx_queue_purex_item(vha, pure_item,
 -- 
 2.53.0
 
