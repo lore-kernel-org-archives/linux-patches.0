@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793209043;
-	b=faNG5fHa4xe/p2WIHIaVkGFDP5C4Iffz1HAepk4z+xc9qrgWCKj/JkmvGlnBVkj5UmNj
-	 0WczyE54+sw/frshkQ7jf6xmeF4lzCS1ks8mHCPXWKIdAzSNX0KZ0sqDq/mE0yRWxj/kJ
-	 dyL/xZMlhaKseGeYfKPIh3wYa+Gsj/9aHuJJwQYOyXkDrx2B6jg7A9We4PGJMCRHp7x/J
-	 B31kt90Bm18IQzVixSD5QQ5mM0fMSYw8PXatawgBlexyAUHoJOIThOkXwpmF6OaLGoOag
-	 f5ph/NBe02lc22X/tb7vXPEDXozOA8RdUPBlrX7Btehg1Qq94ybKs2QPG9rj7EQrDIA==
+	t=1793209045;
+	b=gGkOULMx6Nz0neardRU8bbW97LGNOcWjTWaZbnIupQpq8ro+fR0RIXvBxK71dwwrxNP0
+	 vJ268yapP0x85HGlzXGUY2sbANlZ1GlU0NDP+t5yJ+4jMYuiL0YXx86znlRE1tRtm5YFZ
+	 +JrUMKLmYC+3hQM8LZk1SFNZVvJP/ZEel7HiBwGbQm6ZSiMF/Pi8J9yNPUc8TjZ1/JyKB
+	 i7qe09pDW4Cjz3+K4GglyyGKzsOoML3h3RZ3xw+iFiL4Uc6FEyXJa19BpLqd5HFg2cYXE
+	 5uVFv8LS/0ltt8YMe9RrRjfyTC1dLK9KOnDVba0GFTKVdq0XNJ7JgDY3jlRAhd3ohKA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793209043;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793209045;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=NHeCcPB1RMb0ro++bkIdHp6M9hy8JKGRqQ7NVwgK32M=;
-	b=zpJYLa0RIJJs9me+dMUcurDsX0sxWOFV1CrkX8hH4S2kaq7x9iUlkxkyrbr/JT3wyCT4
-	 PcKiwyrUdHj0udqLhROkBTVHOXjKqxvB51p5V08g2T2Rgrf84/6WEe1mCjt/gJas08Ph+
-	 Q92LVYbsNA+0N5X2IPQ6dgNb7UBkTuPub0yhBSDTMN11/itqefl7VSaFdmu+zN/c/z9Xr
-	 MfzviA0fhteh2CwDCGTMFOBK7Iitf74t3OfiKco5xiuDSAslXw1nWF2NAMUTW4HbicB4P
-	 qwnKSNFjq/8UFJIHYzSVbMiOKl5Uq6MJgz84Kje2y13uKqJDZb9onqiW4wENLlAtEPg==
+	bh=Qu2+pNeIxsADi79K+CqqOqNO9OtXVsQ2qZPsBWesk3k=;
+	b=nVPOY+PYSjqPuGBUrT/XytcFmBUqPsvyMy6vM/S52fZp5O9fCMjkHffMn6XaDPDEGTQu
+	 VeHaX5u6Zf53r5Ydc/ZXIWiK1C2UHy/YdcG3vIC9YXrKg72rhGCoR/0DtSZs+cOxmHVw5
+	 EZehNzz1Iz6EOksBTbpQAyfY3ccgi26CUPq6KDnMAwHQAhqEHFT8nRpFJYFFyRxLatLH2
+	 AMi52V0zbZMXG4woV9yG0jZngjBS4BNI8yGHNRcHi38MehgvB3YyO6QRx72gMOnMpblK1
+	 67AvVinKfqxGu0JC6eM2P0cBKnhuHvHK49YwnlNLwH+g3MOPwDy1S6gW8Y8ElI32HuA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eJI1IipD;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hZ0GoGgO;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B476660A2613;
-	Wed, 28 Oct 2026 17:37:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89D38606A339;
+	Wed, 28 Oct 2026 17:37:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eJI1IipD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3CB91F031E7;
-	Wed, 28 Oct 2026 17:37:21 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hZ0GoGgO
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA5131F031F4;
+	Wed, 28 Oct 2026 17:37:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793209042;
-	bh=NHeCcPB1RMb0ro++bkIdHp6M9hy8JKGRqQ7NVwgK32M=;
+	s=korg; t=1793209045;
+	bh=Qu2+pNeIxsADi79K+CqqOqNO9OtXVsQ2qZPsBWesk3k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eJI1IipD4LtNjKUJKlBGTY2QClhUnqQcR9QL4dM+u6fPXj3qbvWmnSRpc5bpfw13K
-	 BjgELOaYA59ak8eDDqTka6bmnJqbI+sUMF4akcFQP5J9upNfnaBsNUcld8E/B1a6kQ
-	 yXRAVP4LB2Tlj1XRL4+Duc7ufhymq5+cBsKJRKcA=
+	b=hZ0GoGgOFSm93xv4AQdMB1AYI8Ii2zcq4BrOUrjbOFFW3z7uix7M4ZKNFxshsh+/f
+	 v/v+fzEY3Zriwi0PijpFPKznVABW986yQdt8dD/i+yoR6BAepHs3MaM3LO13ktogWf
+	 u+HZiXC1TSEQGRYL20xJH3UK9wQI2naCrjxoaB6M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Heidelberg <david@ixit.cz>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Willian Oliveira <williandossantosdeoliveira287@gmail.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 289/516] Input: s6sy761 - fix resume ordering and restore sensing
-Date: Wed, 28 Oct 2026 17:57:21 +0100
-Message-ID: <20261028170010.340482835@linuxfoundation.org>
+Subject: [PATCH 5.10 280/516] drm/amdgpu/gfx6: fix firmware leak on teardown
+Date: Wed, 28 Oct 2026 17:57:12 +0100
+Message-ID: <20261028170010.124161250@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -68,67 +68,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Heidelberg <david@ixit.cz>
+From: Willian Oliveira <williandossantosdeoliveira287@gmail.com>
 
-[ Upstream commit a215720959c5450b3699e243904b39c3f8f68888 ]
+[ Upstream commit cc172e177795c5f87bc2d71768d077e1c10633e8 ]
 
-System suspend powers the controller off and resume powers it back on,
-but the resume path enables the interrupt before s6sy761_power_on()
-checks the boot. The firmware raises its boot-complete event on the
-interrupt line, the threaded handler consumes it, s6sy761_power_on()
-then reads an empty event and resume fails with -ENODEV, skipping the
-touch function setup:
+The firmware requested in gfx_v6_0_init_microcode() is not released
+when the GFX block is torn down, leaking the firmware resources.
 
-s6sy761 2-0048: PM: dpm_run_callback(): s6sy761_resume [s6sy761] returns -19
+Add gfx_v6_0_free_microcode() and call it from gfx_v6_0_sw_fini()
+to release the PFP, ME, CE and RLC firmware.
 
-Power the chip on first and only then unmask the interrupt. Once resume
-completes the boot handshake the chip comes back with sensing off, as
-at probe where input_open() turns it on, so the touchscreen stays dead
-after resume. Send SENSE_ON again when the input device is open.
-
-Tested on a Pixel 3 XL over several s2idle cycles: resume succeeds and
-the touch function and sense status match the pre-suspend state.
-
-Assisted-by: LLM
+Signed-off-by: Willian Oliveira <williandossantosdeoliveira287@gmail.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 386e81346f95ab0be5a82c5535de932e7a456924)
 Cc: stable@vger.kernel.org
-Fixes: 0145a7141e59 ("Input: add support for the Samsung S6SY761 touchscreen")
-Signed-off-by: David Heidelberg <david@ixit.cz>
-Link: https://patch.msgid.link/20260926-s6sy761-suspend-v2-1-8f00a96ee6e8@ixit.cz
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-[ sashal: Replaced the guarded input_device_enabled() check with sdata->input->users under explicit mutex locking. ]
+[ sashal: Replaced unavailable amdgpu_ucode_release() calls with inline release_firmware() calls and NULL assignments. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/touchscreen/s6sy761.c | 14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/gfx_v6_0.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/input/touchscreen/s6sy761.c b/drivers/input/touchscreen/s6sy761.c
-index 85a1f465c097e..459513b5da61b 100644
---- a/drivers/input/touchscreen/s6sy761.c
-+++ b/drivers/input/touchscreen/s6sy761.c
-@@ -510,10 +510,22 @@ static int __maybe_unused s6sy761_suspend(struct device *dev)
- static int __maybe_unused s6sy761_resume(struct device *dev)
- {
- 	struct s6sy761_data *sdata = dev_get_drvdata(dev);
-+	int err;
-+
-+	err = s6sy761_power_on(sdata);
-+	if (err)
-+		return err;
+diff --git a/drivers/gpu/drm/amd/amdgpu/gfx_v6_0.c b/drivers/gpu/drm/amd/amdgpu/gfx_v6_0.c
+index 37592cc9f2c50..c0e513f5b6220 100644
+--- a/drivers/gpu/drm/amd/amdgpu/gfx_v6_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gfx_v6_0.c
+@@ -3219,6 +3219,15 @@ static int gfx_v6_0_sw_fini(void *handle)
  
- 	enable_irq(sdata->client->irq);
+ 	amdgpu_gfx_rlc_fini(adev);
  
--	return s6sy761_power_on(sdata);
-+	mutex_lock(&sdata->input->mutex);
++	release_firmware(adev->gfx.pfp_fw);
++	adev->gfx.pfp_fw = NULL;
++	release_firmware(adev->gfx.me_fw);
++	adev->gfx.me_fw = NULL;
++	release_firmware(adev->gfx.ce_fw);
++	adev->gfx.ce_fw = NULL;
++	release_firmware(adev->gfx.rlc_fw);
++	adev->gfx.rlc_fw = NULL;
 +
-+	if (sdata->input->users)
-+		err = i2c_smbus_write_byte(sdata->client, S6SY761_SENSE_ON);
-+
-+	mutex_unlock(&sdata->input->mutex);
-+
-+	return err;
+ 	return 0;
  }
  
- static const struct dev_pm_ops s6sy761_pm_ops = {
 -- 
 2.53.0
 
