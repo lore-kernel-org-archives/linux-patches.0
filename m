@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793208773;
-	b=G38hSCSIRuLFl49UeZuvg0/+ID2lL3wLVtmsA0sLZz0rvNyQsKTlyvzh0VgPIrDEsOCy
-	 6qWscqpcsLlA+AsUyMjllYWJ8QaM/bzLnbKewrxv3/8rg21AkswOqZiowuVdn1B0bf1IU
-	 S4sYa0h+BUSSXbSquyfUo41f0nfcw112xvrrMAbSnFLuwrwowNhpeSvZNxjgo/VLT0cpR
-	 a1sJwsu5V5cP+6+Gtpyi1XXEp3zKwlpA1Y7p6avMRYE+WQE+UreVbFKiYi3/SncqKbPSo
-	 fEbW3GaUKmZS1K/vp0DqN+8JX5wO0vxBtvaQbVjlE65uQbEh7D/NfzgKIuqDbBjjFhw==
+	t=1793208776;
+	b=ccOoaiNNZ6116FWaTh0SwW6IqnzyHY/H1+ur2cNvoPYqqtad8pcd+mpreeCpBNRaVORn
+	 Jxv6YVnIs0anH/4C/Ocq0X3wMLPwLH5i9r4CvNRFR+PiP+BSrMgEDeavKMQ0g50Y89qSi
+	 BSYsmwkZU8++swv6zKGKbHUeekUJbZVRMKg2JSKXxBGemHaXJbswttVZ0V6Vf6kb/cmAc
+	 DQhZenU/FPL4EuGuMIyMiKBwPCdT6iR2GKzsIFnkF6eeWxPhcEetBSISnvFMSqYXFmOG6
+	 NZJTv3bVpF3O0RmEev+duap8wtuSMckmHJCV/U9t6ZlBKLJxN9KEHih82a6+baBeTMA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793208773;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793208776;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=sPHF/fieQGvcGfuTUZLclwLoNUEA28nAWP1aTxGqnik=;
-	b=EdmXEV4KMRr3WaXmRDwXoneccHLKIjVtTfE9mP870Yw2Ci8LsHWb5moV3cXqamKfMYkP
-	 9nPPnZJtmczopj8/l+vt7UkLGeqvfy3LhVymz8bO6ArNxQMtdezFRMXAKEsnLeCFzKftT
-	 yCiVaIL9jBdYO0g899FJ/mhkorMlWVd3H/0Od7P+L13IDd7rai3czbfMa8nzfwXXX+Aow
-	 Oe6ILO6C1G4pKE1JBVg7MtE8d9pZGc9UPc2TX6eKmRUWK8zPW94Gr9DZqAmWuiWM02o+h
-	 /NIbDkC68LaRnAqYcKJ28SstmxEU0xR5CefMERO3WPo+sqiZPSiU3cWc9BRxMVzXgmQ==
+	bh=P4fCHV5yXn+3QrW/APZ+JpmL7UD23BhefS/nvPOyiKo=;
+	b=cy2roBHl8EohZduuFA801zeIVeRRLp/aBD9CMIq6gK0y0/4Xmqgf/fkaO2Rl2Z6EhHDZ
+	 9cWnESehckxWVE/J3IEm3QEmVQqsDYyY+DScRi0gR4SqIB4D6bblDpu8SPg+fSdGJTE8x
+	 ggXZWDhkkKZHyyANCuDWnN9aOtKBLPHt2btcevF/5dKewWsw3kgwPR0uOVnriDNuaSjNA
+	 WHs64e/Sd2iA6z2VvG+GSKWD0aiirW390D7h6nVXmSqdDVzFGQDL0RJvp4O+iPcjy5nDF
+	 yUfSR4DvLoIBaJkYEG6D6IJhfL/gycsjjc11p3hs/OABEoLnFvjcbLiQFjJoUbhiAMg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Qv9zua9J;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eCQiLCzY;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EB9D606A31C;
-	Wed, 28 Oct 2026 17:32:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00C3B606A31A;
+	Wed, 28 Oct 2026 17:32:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Qv9zua9J
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FF461F01825;
-	Wed, 28 Oct 2026 17:32:52 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eCQiLCzY
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 539881F01825;
+	Wed, 28 Oct 2026 17:32:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793208773;
-	bh=sPHF/fieQGvcGfuTUZLclwLoNUEA28nAWP1aTxGqnik=;
+	s=korg; t=1793208775;
+	bh=P4fCHV5yXn+3QrW/APZ+JpmL7UD23BhefS/nvPOyiKo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Qv9zua9JMFBHVkjAuenG0R/dmc4BOWF7bwl5nQKGTO4AtnLPU+yZwjTc6ddfupD3t
-	 kFU+Lj2bMtK3p2FQ26al1NICJrSk6fV8hAyb7RnHlgO6DMEbe59y0aW1tvyMdtw3lG
-	 cRF4N8N7f4/P+B75gfMwcldflZcpNp04BJ7wfXmw=
+	b=eCQiLCzYxloq95iklHLdmc9LNrOgViKcsxzpAOjtrjwRdB4qB3nez7HP65wp8H1qi
+	 X/3lgu110dVNuv8PoXTsE/+fJQI3OeVtCDv7NtJBX8yLRXhM6fvyydyhcx94PWppoi
+	 SEEJzzQEoWV+ztoPpUitP2+2CU+FYXP+QMKyL4y0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Ijae Kim <ae878000@gmail.com>,
-	Myeonghun Pak <mhun512@gmail.com>,
-	Patrice Chotard <patrice.chotard@foss.st.com>,
-	Alan Stern <stern@rowland.harvard.edu>
-Subject: [PATCH 5.10 193/516] usb: ohci-st: disable controller wakeup on removal
-Date: Wed, 28 Oct 2026 17:55:45 +0100
-Message-ID: <20261028170008.074070136@linuxfoundation.org>
+	Weibin Liu <liuwb@xiaopeng.com>,
+	Liu Chao <liuc63@xiaopeng.com>,
+	Ivy Lopez <skunkolee@gmail.com>
+Subject: [PATCH 5.10 194/516] usb: gadget: f_uac1_legacy: validate bRequest index in generic_{set,get}_cmd
+Date: Wed, 28 Oct 2026 17:55:46 +0100
+Message-ID: <20261028170008.098511448@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -70,42 +69,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Liu Chao <liuc63@xiaopeng.com>
 
-commit 08b2ccd7eb7e41f77a04a09112ca3edcc588e3f0 upstream.
+commit 9062d50e75c24dc7911be05c9b1719b3b256af15 upstream.
 
-Probe enables controller wakeup after the OHCI core marks controllers with
-RemoteWakeupConnected as wakeup-capable. Removal does not undo this, so the
-wakeup source can remain attached after driver unbind.
+generic_set_cmd() and generic_get_cmd() use the low nibble of
+ctrl->bRequest as an index into con->data[]:
 
-Disable controller wakeup after removing the HCD.
+    u8 cmd = (ctrl->bRequest & 0x0F);  /* 0 .. 15 */
+    ...
+    con->data[cmd] = value;            /* OOB when cmd >= 5 */
 
-This issue was identified during our ongoing static-analysis research
-while reviewing kernel code.
+struct usb_audio_control (include/linux/usb/audio.h) declares data as
+a 5-element array, so indices 5 through 15 write (or read) up to 44
+bytes past the end of the array on the heap.
 
-Fixes: d115837259ad ("usb: host: ohci-st: Add OHCI driver support for ST STB devices")
+A malicious USB host can craft a class-specific SET_CUR / GET_CUR
+request with an arbitrary bRequest value, triggering the out-of-bounds
+access from an IRQ completion handler with no further preconditions.
+
+Add an ARRAY_SIZE() guard to both functions.
+
+Fixes: c47d7b09891a ("USB: audio: add USB audio class definitions")
 Cc: stable <stable@kernel.org>
-Assisted-by: LLM
-Co-developed-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Reviewed-by: Patrice Chotard <patrice.chotard@foss.st.com>
-Acked-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://patch.msgid.link/20260915012011.61874-5-mhun512@gmail.com
+Reviewed-by: Weibin Liu <liuwb@xiaopeng.com>
+Signed-off-by: Liu Chao <liuc63@xiaopeng.com>
+Reviewed-by: Ivy Lopez <skunkolee@gmail.com>
+Link: https://patch.msgid.link/20260921072551.3708191-1-liuc63@xiaopeng.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/ohci-st.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/usb/gadget/function/f_uac1_legacy.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/usb/host/ohci-st.c
-+++ b/drivers/usb/host/ohci-st.c
-@@ -243,6 +243,7 @@ static int st_ohci_platform_remove(struc
- 	int clk;
+--- a/drivers/usb/gadget/function/f_uac1_legacy.c
++++ b/drivers/usb/gadget/function/f_uac1_legacy.c
+@@ -797,6 +797,9 @@ fail:
  
- 	usb_remove_hcd(hcd);
-+	device_wakeup_disable(hcd->self.controller);
+ static int generic_set_cmd(struct usb_audio_control *con, u8 cmd, int value)
+ {
++	if (cmd >= ARRAY_SIZE(con->data))
++		return -EINVAL;
++
+ 	con->data[cmd] = value;
  
- 	if (pdata->power_off)
- 		pdata->power_off(dev);
+ 	return 0;
+@@ -804,6 +807,9 @@ static int generic_set_cmd(struct usb_au
+ 
+ static int generic_get_cmd(struct usb_audio_control *con, u8 cmd)
+ {
++	if (cmd >= ARRAY_SIZE(con->data))
++		return -EINVAL;
++
+ 	return con->data[cmd];
+ }
+ 
 
 
