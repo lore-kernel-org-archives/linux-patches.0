@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793210601;
-	b=2CuT+1dvxgaN7SoD2rSQwQ7iiuM4co33dZx+V6zzuaHQTMNcRxuRTd4ScPeutoi/nQh9
-	 aprFuywk3QVj+SY8WQHgoLfDcDZE6Q7TPdC041KVNlLWDtIL3YozGmM0V06pBPlwOW+cl
-	 M5qlTIQA9Dm/FYWcr73IHA4Uy6D80OMghSGOfpBR9fxHejcEc95KDRz2TDYV5m/DLoabC
-	 khmx5ddSgZPgBOsbX112Dgnw63Gi3RFWrbfkGmP2Qtb2i5b0VRac3mfc3Z961qqQau1ia
-	 GUx2P+YnrQsFMiU4aNLQFrePMRbkNrBvk1CAwXBCg1JFth2hIGIQ8PjOYZavy14JBhA==
+	t=1793210604;
+	b=tzSeVfSrBwRVDIwHAv/vXfLzZv62WswvMq3q2PfL6pXA7ZxqTGlFpRIaN3Haaod+2gOv
+	 49VrdR4mT/DqAnwKohyVNleY4n6e/Kj/ImP/KFxo+JwdPAh4r8M242Srn6Hr+PFwd7XC+
+	 btvYlXnxdtu8nCvgd5xWnyFPZQpHZs1kk/kGNjv91+hSZiIakLF4As0FlvsSn9JgRrrpx
+	 8mfw3rJiD3OMK1ivI4EqrgPnjp7AqN8WiaC6WUTbA2ZdeQtlKtSD/AXXYl9GCt28WQ5Fd
+	 Me+/nopUKqzjgRo7YcY6mFkD6YMxWpLyzxJ8PBB5aZflRbmeTQLgv4A20Smcb0+HyUg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793210601;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793210604;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=kdCn7nDVRl/Q2qSTljKi0kHpLL8PDaUR6y78HiMSyQc=;
-	b=bl8pvrfswUB1CTfImgYA5hIV27ySuKQyzZWBLIaWj3ncMDhlz5eW2bXuLe6gQbp+sbwO
-	 rKyWWXI9ea6G3U4Xek1fblEe78FyZJRV5vREZOIksCq6NDTeSTT4yrhvss7dzrrxCZMBG
-	 TJsgOgarTfPfWY4MQuPL4hI8GLzHO1x93DM9roKKx/rQJJ0xPLc07R0EsdmxQ8gcQvvvk
-	 NjUt2dBUlVVzZ9IJ06mNDnrmVyHmlJVv3/n/PuC9z3+Zz2TbCbpnyzd1XhmR5siEuxJSs
-	 iLBVGh9a/D1HY07PtgneH67kRc0VAc4L1ZcerKioHU7KY1Thd7MpH62rhuK3gYewCOA==
+	bh=WSO0qaOIFpzEp8n1k8P/y3Xw75Gs7kqkZ6OJ7RnD3lU=;
+	b=0KZlJkHMlsq2o7mR910syhXwwXJLXi0Ug3KmtTtDKlvPyhvsFGn7jmzXdh2Oc84wEmHw
+	 Hc0v9yX+bv4sG2w/3snGbFxxCIKH1eOulw3QLBTLIQoWDmmsNuH5rderwbZsd0Vam+RiL
+	 dlwsX3dhCvIGSl110XLZF4zhdK9zdXusuOrU7kIwVPuHA//F0Vaa21cQRBdDsiCa/GHIw
+	 p4IX2n6Rpc/Ja/PvvEsHe6AqPtkQokTR1+as1UPOf2mwzVzOeiy8ti52ybqSM6nggd0u6
+	 18HPXgvrsduTi4n5Xrj0s+MlbED6n0H/xxPkDYgkt6ctz7zVnMbBNS+RXozjNDNq6SQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="LC/x7g89";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1NB2BJvl;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08BA3606A31C;
-	Wed, 28 Oct 2026 18:03:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0DCA606A31C;
+	Wed, 28 Oct 2026 18:03:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LC/x7g89
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 586251F01825;
-	Wed, 28 Oct 2026 18:03:20 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1NB2BJvl
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B2411F01825;
+	Wed, 28 Oct 2026 18:03:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793210600;
-	bh=kdCn7nDVRl/Q2qSTljKi0kHpLL8PDaUR6y78HiMSyQc=;
+	s=korg; t=1793210603;
+	bh=WSO0qaOIFpzEp8n1k8P/y3Xw75Gs7kqkZ6OJ7RnD3lU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LC/x7g895zcDUoPFpbm7PGBAwYkIKvAda+0ye0N6DtOpHzqeyhsx9jpJ916MMRIDZ
-	 +zTDavrfh23k/uwtEY9otIWPE365rKEeETBVbwoRAVWAb6NA0YVLYXd2bi7IqzAALk
-	 7fxyUNXp0gNrFdO/M/EQ++Cmkp7/yvYTdnhyOzKs=
+	b=1NB2BJvl1kGa/0jYOBYLrD+0/OJEix09uzsmptpeBHcemLWTtbZAxKmpzhfO957Zd
+	 f/sAsABiFjCpqxoVbI+uVZ6zwekwgAAE5p88xMQ9Bir0lbNS+rv/J1AZec0JISMdSd
+	 DQzlu6kOyEt1jFPLAA7X3tVmN3ypUIGbpRh+aHnw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daehyeon Ko <4ncienth@gmail.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Frank Sorenson <sorenson@redhat.com>,
+	David Howells <dhowells@redhat.com>,
+	Paulo Alcantara <pc@manguebit.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 038/571] wifi: libipw: reject TKIP frames without a full MIC
-Date: Wed, 28 Oct 2026 17:53:05 +0100
-Message-ID: <20261028170008.930385982@linuxfoundation.org>
+Subject: [PATCH 5.15 039/571] smb: client: fix potential OOB read in smb3_enum_snapshots()
+Date: Wed, 28 Oct 2026 17:53:06 +0100
+Message-ID: <20261028170008.954219883@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -68,73 +69,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daehyeon Ko <4ncienth@gmail.com>
+From: Frank Sorenson <sorenson@redhat.com>
 
-[ Upstream commit 06f42accaf3c6aecab1dcc57f68dde6c06c8b380 ]
+[ Upstream commit 4775c3b7a597907e0b97556c7986fda238a377ae ]
 
-libipw_michael_mic_verify() assumes that an skb contains an eight-byte
-Michael MIC. A short TKIP frame makes the unsigned payload length wrap,
-causing michael_mic() to read past the skb.
+If snapshot_array_size is smaller than GMT_TOKEN_SIZE,
+smb3_enum_snapshots() sets ret_data_len to
+sizeof(struct smb_snapshot_array) without verifying the actual length
+of the server's reply.
 
-Check that the MIC is present before verifying it, and use the existing
-MICHAEL_MIC_LEN constant for all MIC lengths in the verifier.
+Because SMB2_ioctl() places no lower bound on the server-supplied
+OutputCount and allocates retbuf to exactly that length, a short reply
+results in ret_data_len exceeding the size of retbuf. The subsequent
+copy_to_user() then reads past the end of retbuf, leaking adjacent slab
+memory to userspace.  The subsequent clamp check is ineffective as it
+only reduces ret_data_len.
 
-Fixes: b453872c35cf ("[NET] ieee80211 subsystem")
+Fix this by rejecting replies shorter than
+sizeof(struct smb_snapshot_array) with -EIO. Note that the bound is set
+to the 12-byte struct size rather than the 16-byte
+MIN_SNAPSHOT_ARRAY_SIZE defined in MS-SMB2 3.3.5.15.1, because 12 bytes
+is exactly what copy_to_user() attempts to read.
+
+Fixes: e02789a53d71 ("smb3: enumerating snapshots was leaving part of the data off end")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Daehyeon Ko <4ncienth@gmail.com>
-Link: https://patch.msgid.link/20260909061124.3802517-1-4ncienth@gmail.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-[ adapted libipw changes to the older lib80211 implementation and Michael MIC helper interface. ]
+Signed-off-by: Frank Sorenson <sorenson@redhat.com>
+Reviewed-by: David Howells <dhowells@redhat.com>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/lib80211_crypt_tkip.c | 13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ fs/cifs/smb2ops.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/net/wireless/lib80211_crypt_tkip.c b/net/wireless/lib80211_crypt_tkip.c
-index 1b4d6c87a5c5d..823274728711a 100644
---- a/net/wireless/lib80211_crypt_tkip.c
-+++ b/net/wireless/lib80211_crypt_tkip.c
-@@ -38,6 +38,7 @@ MODULE_DESCRIPTION("lib80211 crypt: TKIP");
- MODULE_LICENSE("GPL");
+diff --git a/fs/cifs/smb2ops.c b/fs/cifs/smb2ops.c
+index 3aaa45375d8ba..42b5e5264fb6e 100644
+--- a/fs/cifs/smb2ops.c
++++ b/fs/cifs/smb2ops.c
+@@ -2271,8 +2271,14 @@ smb3_enum_snapshots(const unsigned int xid, struct cifs_tcon *tcon,
+ 		 * and retry the ioctl again with larger array size sufficient
+ 		 * to hold all of the snapshot GMT tokens on the second try.
+ 		 */
+-		if (snapshot_in.snapshot_array_size < GMT_TOKEN_SIZE)
++		if (snapshot_in.snapshot_array_size < GMT_TOKEN_SIZE) {
++			if (ret_data_len < sizeof(struct smb_snapshot_array)) {
++				rc = -EIO;
++				kfree(retbuf);
++				return rc;
++			}
+ 			ret_data_len = sizeof(struct smb_snapshot_array);
++		}
  
- #define TKIP_HDR_LEN 8
-+#define MICHAEL_MIC_LEN 8
- 
- struct lib80211_tkip_data {
- #define TKIP_KEY_LEN 32
-@@ -585,16 +586,18 @@ static int lib80211_michael_mic_verify(struct sk_buff *skb, int keyidx,
- 					int hdr_len, void *priv)
- {
- 	struct lib80211_tkip_data *tkey = priv;
--	u8 mic[8];
-+	u8 mic[MICHAEL_MIC_LEN];
- 
--	if (!tkey->key_set)
-+	if (!tkey->key_set || skb->len < hdr_len + MICHAEL_MIC_LEN)
- 		return -1;
- 
- 	michael_mic_hdr(skb, tkey->rx_hdr);
- 	if (michael_mic(tkey->rx_tfm_michael, &tkey->key[24], tkey->rx_hdr,
--			skb->data + hdr_len, skb->len - 8 - hdr_len, mic))
-+			skb->data + hdr_len,
-+			skb->len - MICHAEL_MIC_LEN - hdr_len, mic))
- 		return -1;
--	if (memcmp(mic, skb->data + skb->len - 8, 8) != 0) {
-+	if (memcmp(mic, skb->data + skb->len - MICHAEL_MIC_LEN,
-+		   MICHAEL_MIC_LEN) != 0) {
- 		struct ieee80211_hdr *hdr;
- 		hdr = (struct ieee80211_hdr *)skb->data;
- 		printk(KERN_DEBUG "%s: Michael MIC verification failed for "
-@@ -612,7 +615,7 @@ static int lib80211_michael_mic_verify(struct sk_buff *skb, int keyidx,
- 	tkey->rx_iv32 = tkey->rx_iv32_new;
- 	tkey->rx_iv16 = tkey->rx_iv16_new;
- 
--	skb_trim(skb, skb->len - 8);
-+	skb_trim(skb, skb->len - MICHAEL_MIC_LEN);
- 
- 	return 0;
- }
+ 		/*
+ 		 * We return struct SRV_SNAPSHOT_ARRAY, followed by
 -- 
 2.53.0
 
