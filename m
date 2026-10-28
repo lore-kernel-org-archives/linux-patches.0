@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793208297;
-	b=u/mSxJEspjDGovpA2DohQoFD5++6XYDFe1OJsTFxoy9vbuCcw7TlbPTaELOv8vqyEyir
-	 USe+hxYWdnyCJFWULvVgKDIAlS9JnmfR6WBJ+yx4Y6DyWTSbYmmfxQY4fkolf+6QtIqob
-	 8qu9XWCv2dXsEYdo8YdUBUrevA9aWBL8um31pwFk7NFb28Z83xHqzpCc0tHpYorDjBqzV
-	 eA82xpOKmcLA8hnj4gPg8XNBVO8lmd0FCXmyzCzT32rH5+A/HlhfujW24QVVOmvRhqqUh
-	 K+Fq/fy3UdLf/4U8R+JvATaVsEiXkQeUYvSfH2tQcWSRFyx22P9y/csbkG0ReRDP8Jw==
+	t=1793208300;
+	b=sQdh/piIOnfSBNXROKLEPTyYMmf2XlO4rY2c5n2eHLS1GjRpetYw5QUNHIFzHkq60W0g
+	 Y6QipqpP7dHJpeLf32scvjDl7erG8D75CsKA/KfI+iB/1fzoKoMUGrsqgRjdfoB/zvM1c
+	 Zd8C8oDPc2l/o1v6cJ4p8JF91+peTHX0EfPb9jmoACt6cxsmVd7g7AdR59Ok8woxlQR0M
+	 L2dwsmvx8CjrmYO5DpZiwfyZ3OiYU5t1VE7Qx5gQ7VfmrDeR93d9pU/N06+LNk/RDz4du
+	 bON49ayoYl/IEPSTQn0TYz56SayZEdjQxsCzB3e1ArzHnH25E0HmakG9peDCvp6Swgw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793208297;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793208300;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=fEA2FgJ8Bu6yy/DNlumeXmk2kffZI1FBs6eW6WROZ5o=;
-	b=NZTdQU/T+8DMAPpLFWMmCrfpQfIGQIJHOlj/dvZvxKplNQ1S1H6MyuGilL4yyJqhj9YF
-	 NjQi7s6uuwCE6TUkD8RcNkafctUwTOtuhEXE+x+6tBs0hR7rMyg3Jbf4rJvD4uatfS1fy
-	 FMuNZAiAEKnao/+Auc2sv+Z90TdtcGX0W2kNnM50IwIN7VTjAThX/CME3PNN4pal0aKGB
-	 bcK/2pGTuq/CkQEPnNzkA7ObYq2IAi4RhF/1qxRAHyihYqBDrUzrXTzo7w6657UBXGB08
-	 oWVjx5b1QmJzitKKOqfrGn2zyCC1DTijjsQtaJqsj/HC32gXllSnxz1lAKGhYJ/cslw==
+	bh=TdD5EWOiL1G0iK7dnNtVV6vpY5zpogboPxvQseJMMQ0=;
+	b=XY8wTVNsE6x6S8J8G/6iRXlbUqcE8n0TF6GRuSmyo1c5fgPU6CHl7f08aTMn2qkSPIoM
+	 OC66Lw19LrExRzN6e0/yuMI9KqSGA+kS64/ayln5t0/jw8WuHkClMflaCi5+7AeDHhmng
+	 xEPrjYMlc35RBUJEyPGi6uxzPiC7k/rJkotqg20E8Eb5QxC617tYs24wG7chlKtKx9GaK
+	 lObrz44RpPOyFdHQpfAA9+ZiY/LTyiJEj+XDVqrMr9doOqi30DuqlIIy8lUrp2Y+TUwCv
+	 7PSKBMai0P/YRrcCzpzF4e/UiDW+siRFbfNqiizra+gTU+GsC0fNNVE/Z7mSxnRpTTg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VkOC6kgr;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0G+Jc+Aa;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DC62606A32E;
-	Wed, 28 Oct 2026 17:24:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BF58606A31C;
+	Wed, 28 Oct 2026 17:25:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VkOC6kgr
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE8771F031E1;
-	Wed, 28 Oct 2026 17:24:56 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0G+Jc+Aa
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE3FE1F031E0;
+	Wed, 28 Oct 2026 17:24:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793208297;
-	bh=fEA2FgJ8Bu6yy/DNlumeXmk2kffZI1FBs6eW6WROZ5o=;
+	s=korg; t=1793208300;
+	bh=TdD5EWOiL1G0iK7dnNtVV6vpY5zpogboPxvQseJMMQ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VkOC6kgrubc1q9OMlqXVM2xrawCTRLFyFaI2WG9DCHi4AXHtUbsMMt2veKfugmMcU
-	 4lQzrPB9rDY6XdGo9KGSmn6npRA8FVSEvkbYwO9alKbxgfZKUHMl0CcKY08XYlSiEm
-	 quqhFA3uvQUdGxgVSLn0LLVNU9wCMiBX68KTvq9Y=
+	b=0G+Jc+Aa46kx6hOlpVInCFV5EzOfH13AKAbzrabvoB8AAEOUE2hRe8es32qthPpPT
+	 BwqTpRojivXzXu7Kpsv/hfSlCO2jYHpI/eyKicL+cTPk3J1lWfr6sIOLb+Cm3idpxx
+	 q5t/RGwMEF9U5Wzp5PNY0O/W661xXTc2yiJE5swE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fan Wu <fanwu01@zju.edu.cn>,
-	Lucas Stach <l.stach@pengutronix.de>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Mahanta Jambigi <mjambigi@linux.ibm.com>,
+	Breno Leitao <leitao@debian.org>,
+	Hidayath Khan <hidayath@linux.ibm.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 070/516] power: supply: ucs1002: fix use-after-free on remove
-Date: Wed, 28 Oct 2026 17:53:42 +0100
-Message-ID: <20261028170005.182611461@linuxfoundation.org>
+Subject: [PATCH 5.10 071/516] net/smc: fix socket refcount leak in smc_switch_conns()
+Date: Wed, 28 Oct 2026 17:53:43 +0100
+Message-ID: <20261028170005.205721397@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -69,60 +70,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: Hidayath Khan <hidayath@linux.ibm.com>
 
-[ Upstream commit 609af0ceeaefdfa42cd01dd060b20f2e41f9a232 ]
+[ Upstream commit 719296c4aa8213d4ac8002e77d5956d436bc98d0 ]
 
-ucs1002 has no remove callback, so unbind runs entirely through devm.
-The alert IRQ handler queues the health_poll delayed work, and the work
-reschedules itself while the chip reports a bad-health condition.  devm
-frees the alert IRQ, which only synchronizes the handler; it does not
-cancel the delayed work, which can then run after devm frees the driver
-data and dereference it.
+smc_switch_conns() takes a reference on the SMC socket before dropping
+lgr->conns_lock, so the connection stays alive while the CDC slot is
+fetched:
 
-Register health_poll with devm_delayed_work_autocancel() before the
-alert IRQ is requested.  devm then frees the IRQ before cancelling the
-work, so the handler can no longer queue it and the work is cancelled
-before the driver data is freed.
+        sock_hold(&smc->sk);
+        read_unlock_bh(&lgr->conns_lock);
+        /* pre-fetch buffer outside of send_lock, might sleep */
+        rc = smc_cdc_get_free_slot(conn, to_lnk, &wr_buf, NULL, &pend);
+        if (rc)
+                goto err_out;
 
-This issue was found by an in-house static analysis tool.
+The err_out label only drops the wr_tx link reference, so this early exit
+returns without the matching sock_put(). The second error exit is not
+affected, because sock_put() has already run by then.
 
-Fixes: 81196e2e57fc ("power: supply: ucs1002: fix some health status issues")
+A leaked sk_refcnt means the smc_sock is never destroyed. Its send and
+receive buffers stay allocated, and for a user socket the reference held
+on the network namespace is never released, so the netns can no longer be
+torn down.
+
+smc_cdc_get_free_slot() fails when the target link goes down or when the
+connection has been killed while the switch is in progress. Both are
+reachable during the link failover this function implements, so the leak
+is triggered by the same hardware events that make smc_switch_conns() run
+in the first place.
+
+Restructure so there is a single sock_put() covering both outcomes,
+instead of adding a second one to the error path.
+
+Fixes: 95f7f3e7dc6b ("net/smc: improved fix wait on already cleared link")
 Cc: stable@vger.kernel.org
-Assisted-by: Codex:gpt-5.6
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
-Reviewed-by: Lucas Stach <l.stach@pengutronix.de>
-Link: https://patch.msgid.link/20260802051249.424015-1-fanwu01@zju.edu.cn
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Reviewed-by: Mahanta Jambigi <mjambigi@linux.ibm.com>
+Reviewed-by: Breno Leitao <leitao@debian.org>
+Signed-off-by: Hidayath Khan <hidayath@linux.ibm.com>
+Link: https://patch.msgid.link/20260820144729.1019399-1-hidayath@linux.ibm.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ Replaced smc_switch_link_and_count() with the existing conn->lnk = to_lnk assignment. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/ucs1002_power.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ net/smc/smc_core.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/power/supply/ucs1002_power.c b/drivers/power/supply/ucs1002_power.c
-index 332cb50d9fb4f..ee3c1e6888c24 100644
---- a/drivers/power/supply/ucs1002_power.c
-+++ b/drivers/power/supply/ucs1002_power.c
-@@ -12,6 +12,7 @@
- #include <linux/kernel.h>
- #include <linux/kthread.h>
- #include <linux/device.h>
-+#include <linux/devm-helpers.h>
- #include <linux/module.h>
- #include <linux/of.h>
- #include <linux/of_irq.h>
-@@ -644,7 +645,10 @@ static int ucs1002_probe(struct i2c_client *client,
- 	}
- 
- 	info->health = POWER_SUPPLY_HEALTH_GOOD;
--	INIT_DELAYED_WORK(&info->health_poll, ucs1002_health_poll);
-+	ret = devm_delayed_work_autocancel(dev, &info->health_poll,
-+					   ucs1002_health_poll);
-+	if (ret)
-+		return ret;
- 
- 	if (irq_a_det > 0) {
- 		ret = devm_request_threaded_irq(dev, irq_a_det, NULL,
+diff --git a/net/smc/smc_core.c b/net/smc/smc_core.c
+index 995c48388885c..c138a0ab0369d 100644
+--- a/net/smc/smc_core.c
++++ b/net/smc/smc_core.c
+@@ -582,13 +582,13 @@ struct smc_link *smc_switch_conns(struct smc_link_group *lgr,
+ 		read_unlock_bh(&lgr->conns_lock);
+ 		/* pre-fetch buffer outside of send_lock, might sleep */
+ 		rc = smc_cdc_get_free_slot(conn, to_lnk, &wr_buf, NULL, &pend);
+-		if (rc)
+-			goto err_out;
+-		/* avoid race with smcr_tx_sndbuf_nonempty() */
+-		spin_lock_bh(&conn->send_lock);
+-		conn->lnk = to_lnk;
+-		rc = smc_switch_cursor(smc, pend, wr_buf);
+-		spin_unlock_bh(&conn->send_lock);
++		if (!rc) {
++			/* avoid race with smcr_tx_sndbuf_nonempty() */
++			spin_lock_bh(&conn->send_lock);
++			conn->lnk = to_lnk;
++			rc = smc_switch_cursor(smc, pend, wr_buf);
++			spin_unlock_bh(&conn->send_lock);
++		}
+ 		sock_put(&smc->sk);
+ 		if (rc)
+ 			goto err_out;
 -- 
 2.53.0
 
