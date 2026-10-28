@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793211112;
-	b=1P//fAmab6r/ES9CAzxeTzBI4vk6nq8mspi2F5aX38SiV5vEosE4fsDRgldKnLJ+8Dhy
-	 BmIS3eeL09kpNCOs7ZkEc9dHfSvfetU9Qkey/EcCOF5g/qLd4fZHvWh2WMUXqv63Wx/eJ
-	 cduv/0J5lFAJfU6C5GrgNeEeSLMMdo7dYURUj9FCw99hIe2R8cXmmXWlYJtvBC6BJ0+3x
-	 Q5HIhblYCacDJzIEQgFPv4nxNlF4gMk6T4Dr7fTEZhJKnX4cKoh8kx7zvNDrM0lrxDyoy
-	 axh8455MAZiRKaA0i+zycNQGeQDx4X3rttb9dcgtM7ZfzEkJxyzxX1Mxbu6g/A4tejQ==
+	t=1793211115;
+	b=sJz2pTw0jRByYDL2DZrYVns6XdQhjsheG1bQ4GPVV+9S/2fWaZXj8YwfuCn0nI93c+qq
+	 7T42D0yD/B16ZRi8ohT6MNP9rzIxMEZ0BJOUSnnVM6DNkx326PC4zMXGMGjhkXu0FqcVM
+	 YrHSmH3i3VidV5aneV3Lcih2ncijxZG71jEbU01nmncIDnijPT34tPJUK9hA+zLgJLBmj
+	 sZOkRKiM9PoL+hSWa/zHFIJTKkUtiNtkrJAwFVB4K+Akkbzzk+kMtOtenfrmJJe5W76Vd
+	 858ROm6FgSsPyIKXj2eseBYlVBENGgpf+yZJoK9Ynw6rETuqXceYC2fs9+H5eAEtyQg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793211112;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793211115;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=2TLXZXiult/niWn8tkZie10I+ZtC9F25B877tRHvChE=;
-	b=GOFmZtLLH0YYY2FwRCTGcCCjQY0qw2kurBYnGa45HcpElwG4c+XWhyTltoPNex+bVYE/
-	 6wx3llfkBRHWc2eQcNDSaVDbk4LvExk6BF/0wjsVR6LNqXhlSUJy3QvJr+MApUfLTC7LO
-	 398xuRViIlknRbmpHWBdgYk6iaKXWfAbpUs/khsL4em8c76XtWTRatyaJdWozhZuEx6dl
-	 UfDv87x5p6Qx+D7XEsoPkMCRd/mIh6tzO2qKcJbK0QSbfbSkvgf7y5pJtRXkQOiaYCafd
-	 VIfNcsJVsDIUn6JFV9hGdzPIgPXez0WdRmnAndfQcPxQE8DQwoxvi2ggQaoUZ9Vq0MQ==
+	bh=faGAEr+hqgde3TXar7wJakadRpUYMn/OvakZxG/n7L4=;
+	b=V/FXi04RDWMD7Uc8OZsvHXjQaKyS9ziUj661TMSSp/dj0tUmplDdGmLeMMNKme17qtlT
+	 simPG/n5OMXYF0B1K8tT2cjoPOb4pgfyWd7v9DBkoTJ1mFrbS5Qc3FPIsXws5+NOCWtDV
+	 u+1fUQ8kC29bpyUjL1MmnkZ1GCb0k9v2USQy77O/0KgzZUrlGLrhpxNh08uO1loN66CiE
+	 HaggrHk1soiD7zlKwLdKpnzShoP/HF2B83URlPEoxWYFvArz1a7sT9kRSsxPhxTJjnfRL
+	 BcULpPkmqAGBJK1mxHLYJlGVHElV+h+5HQneYSHT01i2J+6AnQs/KcpLgoNCDmpsz6g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IKAd98+z;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="hsGT/hmk";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E85E1606A336;
-	Wed, 28 Oct 2026 18:11:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF7F560A5BE9;
+	Wed, 28 Oct 2026 18:11:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IKAd98+z
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44C511F01828;
-	Wed, 28 Oct 2026 18:11:51 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hsGT/hmk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 191F71F031E0;
+	Wed, 28 Oct 2026 18:11:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793211111;
-	bh=2TLXZXiult/niWn8tkZie10I+ZtC9F25B877tRHvChE=;
+	s=korg; t=1793211114;
+	bh=faGAEr+hqgde3TXar7wJakadRpUYMn/OvakZxG/n7L4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IKAd98+zgp02dSNEPlxeKG8yrbTY/pg0Bxu287FdfKvP5EiOA5S+tVgrReKEL/X1f
-	 xXCGnCbP1VEpY8ztxMLM0o5ohek96/WU8Nm27AqDspdZyRuKwKpYGOdWvBtjBCpLeF
-	 oS4SozLD0PCuVi6AHCrMOkX4SjRJFC/+8UJzOz5k=
+	b=hsGT/hmkN+zvfhNIwPkh+lL3miOlOvckHqdJFW5kpJJQWqIwvILKau5flaTUH3vVZ
+	 psK2+abOnihwj9o/ISAbVCmZutbEr9vzT+rW00ra4UmbYsyK6Vh6eSytm9HLOlVXoH
+	 /l6YuURXMkwIVt5vxPmMs0jtP2/f3NX92WHjtkXA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linmao Li <lilinmao@kylinos.cn>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 5.15 226/571] Bluetooth: hci_core: Fix inquiry cache timestamps on 64-bit systems
-Date: Wed, 28 Oct 2026 17:56:13 +0100
-Message-ID: <20261028170013.364546133@linuxfoundation.org>
+	Fan Wu <fanwu01@zju.edu.cn>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Subject: [PATCH 5.15 262/571] iio: trigger: cancel reenable_work before freeing trigger
+Date: Wed, 28 Oct 2026 17:56:49 +0100
+Message-ID: <20261028170014.221492104@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -67,70 +67,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linmao Li <lilinmao@kylinos.cn>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-commit 74847177eca5638827ab74cdf77f0b10fc40ca6c upstream.
+commit 2a57b9246cecd5dd797a42eb310d6c8816f26d9e upstream.
 
-On 64-bit systems, outgoing BR/EDR connections always fall back to page
-scan repetition mode R2 with no clock offset once the system has been
-up for more than five minutes, even when inquiry found the peer only
-seconds earlier. This lengthens paging and can increase the risk of a
-Page Timeout.
+iio_trigger_notify_done_atomic() defers ->reenable() into
+trig->reenable_work on the system workqueue, and the worker dereferences
+the owning trigger through container_of().  Nothing cancels this work
+before iio_trig_release() frees the trigger, so a worker armed by the
+last in-flight IRQ can outlive the free and touch freed memory.
 
-The inquiry cache stores jiffies in __u32 timestamps, but its age
-helpers subtract them from unsigned long jiffies. INITIAL_JIFFIES casts
--300 * HZ through unsigned int, so jiffies crosses 2^32 five minutes
-after boot on 64-bit systems. Assigning it to __u32 then drops the upper
-32 bits. In one trace, a 7.6-second-old entry (HZ=1000) was reported as
-2^32 + 7620 ticks old and rejected by hci_acl_create_conn_sync().
-hci_inquiry() is affected by the same truncation when checking the whole
-cache. 32-bit systems are unaffected because unsigned long is 32 bits
-wide there.
+Cancel it at the top of iio_trig_release(), which every free path
+reaches through the device core's final put_device().
 
-Use unsigned long for both timestamps so they have the same width as
-jiffies on 32-bit and 64-bit systems, and update the debugfs format
-specifier accordingly.
+Found by an in-house static analysis tool.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: 9020ef659885 ("iio: trigger: Fix a scheduling whilst atomic issue seen on tsc2046")
 Cc: stable@vger.kernel.org
-Signed-off-by: Linmao Li <lilinmao@kylinos.cn>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Assisted-by: Codex:gpt-5.6
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/bluetooth/hci_core.h |    4 ++--
- net/bluetooth/hci_debugfs.c      |    2 +-
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ drivers/iio/industrialio-trigger.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/include/net/bluetooth/hci_core.h
-+++ b/include/net/bluetooth/hci_core.h
-@@ -60,7 +60,7 @@ struct inquiry_entry {
- 		NAME_PENDING,
- 		NAME_KNOWN,
- 	} name_state;
--	__u32			timestamp;
-+	unsigned long		timestamp;
- 	struct inquiry_data	data;
- };
+--- a/drivers/iio/industrialio-trigger.c
++++ b/drivers/iio/industrialio-trigger.c
+@@ -513,6 +513,8 @@ static void iio_trig_release(struct devi
+ 	struct iio_trigger *trig = to_iio_trigger(device);
+ 	int i;
  
-@@ -76,7 +76,7 @@ struct discovery_state {
- 	struct list_head	all;	/* All devices found during inquiry */
- 	struct list_head	unknown;	/* Name state not known */
- 	struct list_head	resolve;	/* Name needs to be resolved */
--	__u32			timestamp;
-+	unsigned long		timestamp;
- 	bdaddr_t		last_adv_addr;
- 	u8			last_adv_addr_type;
- 	s8			last_adv_rssi;
---- a/net/bluetooth/hci_debugfs.c
-+++ b/net/bluetooth/hci_debugfs.c
-@@ -366,7 +366,7 @@ static int inquiry_cache_show(struct seq
- 
- 	list_for_each_entry(e, &cache->all, all) {
- 		struct inquiry_data *data = &e->data;
--		seq_printf(f, "%pMR %d %d %d 0x%.2x%.2x%.2x 0x%.4x %d %d %u\n",
-+		seq_printf(f, "%pMR %d %d %d 0x%.2x%.2x%.2x 0x%.4x %d %d %lu\n",
- 			   &data->bdaddr,
- 			   data->pscan_rep_mode, data->pscan_period_mode,
- 			   data->pscan_mode, data->dev_class[2],
++	cancel_work_sync(&trig->reenable_work);
++
+ 	if (trig->subirq_base) {
+ 		for (i = 0; i < CONFIG_IIO_CONSUMERS_PER_TRIGGER; i++) {
+ 			irq_modify_status(trig->subirq_base + i,
 
 
