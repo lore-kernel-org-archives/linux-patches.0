@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214638;
-	b=Nwc1yaZsosmkn4YNorXlvindj6wkSf7JPdv76zMAugEHRSDaTquRxs6CPB84vVBD5a7V
-	 fVvOXQAO1KfwrE/E6fa1Rqhm7kPtwrDlD8+PKQFdGLfpbvGYImUGGyOahynaV1IgiqrS5
-	 06acWFER4b2bcNNjn7+Ais7z5YQueY4J33QmupXGAWwCm4qZQMQSZ3oOQMKo0XAJImPsL
-	 dNC2M0fzLQFsYe19Zy+E8ZRfFW2xo0yFglfNPqlDpO5cusYoS00a8tnPTSugNWCMWeyO/
-	 HpPx+zy805LwIRv5tZ5fNzFi+s4DrtN8CczO4A1MWCD/v4EV9sqSt7iLNtJ0bfs517g==
+	t=1793214641;
+	b=kqmG9MgWv6qcuVRvjGISurQSi4zKvdOzE0kAY6MYtHnUiQzLCON8ERHtgeEDyIVOQurr
+	 3I215JS8yxw0sGiGXfllcsqvPxYT81yfm4fIxLyteDHj2qwZL4gi+hvwMShAQDFkPn1XR
+	 yq2IfWS4hYqOVeOG6Ww9BCzRbA3P2mt30Ew5wHI3ckMwXwIn/B3tMwLva6WNATWGnWFpO
+	 08h2a/f3jH5FCuiPExu6TNMnMP5g92hUeFWQupH6ipUJDOCL5mB6KOhxWveVFOZtxviAU
+	 trLNOtjEjb0gKouxjaKlvTJHJAMUDx/nesCUSI29Su2Pvp+5TFMX8HTK/nHARZvB7lg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214638;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214641;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=sOxufywgApVPGrFaFIoj8uGrZHV3OdFmbaP6/3BZV4M=;
-	b=qjtC2GGjs49NQqWBZC8Y4qayw4y3OXfd2eef1aZAtFhxLDSf1s5ZO086+pR/RzI/ZGI6
-	 S6W5Jpa9gCB97KJNx6uCgOKEZtG9vk8VexwrIWSC6FDxsFFE2n0UZFuk9JAVTq9hW/OYD
-	 03Vncg2eEtSs5/yIACQb7Afi//BP4qT3wVkCl/+35c3o0dIrtMwnsmVDEcltmy2UbGPqo
-	 oZqadBGS/JbVMJP5k+ijZfULo/JLQfW6G8MBsKz3Fku4nRj7HXBGpQH1vBZ9qYTyQ1Exm
-	 MkYwYpihcXEEq7FwozeCA4LHrUmywdNxGfl+AH0ZahbIQE5+8vkyziqlvi05ELLPCTg==
+	bh=WFxxcpGuac5vtrCBb9R7W1+dUPEiZZcwxnS8hm9nAmw=;
+	b=1dbnjQaHHH9lV3/blQDA/MLSLG15Q85iDmsZn5M4MbeSO9mrlSbvvNsMVW2hy7RGYBF4
+	 1VW9gSKX27T/cC/Nc6xYyaKGjVIShekjgecJNGzMnLCvAuurF/o9A/eESNyLVayS0RfDd
+	 aqj9IdwmFHTbnB+Fos263xgq322D537jx3JRUEwhpsSaBE7xrs/jFJUY7Fl9xhSPt5qu5
+	 q82BHRGnz3Eqv7AeWzBNrjk7usQIXbDXxftly//hIv7jO40Up4djWBB2obgypzUbuyGxF
+	 fGyi+LmLBrBFy2kQnyLUglocMvwx9wtv3xbGPw02f0u9IStMhFbz5yKSafNWSI9SwpA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qFmyAYQA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="b/O8pFPn";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F042606AB1D;
-	Wed, 28 Oct 2026 19:10:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2FD3606A321;
+	Wed, 28 Oct 2026 19:10:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qFmyAYQA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7123E1F01825;
-	Wed, 28 Oct 2026 19:10:37 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=b/O8pFPn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 464AA1F01825;
+	Wed, 28 Oct 2026 19:10:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214638;
-	bh=sOxufywgApVPGrFaFIoj8uGrZHV3OdFmbaP6/3BZV4M=;
+	s=korg; t=1793214640;
+	bh=WFxxcpGuac5vtrCBb9R7W1+dUPEiZZcwxnS8hm9nAmw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qFmyAYQAyKfJAtf4ohQv1v+Dz15196+Q3CIv+2BAqJigpQvpS8IyBujSfjUHbF57R
-	 y1zv76idnIdpeZONTd8r5nCAvrwwTQ/vIhlUi/Ekm/5PBYviSBe01kqS6oH+1L0XkH
-	 uQjpMBFQSMwk6BzJg6RWAgUjgS+opp4aarW1PK2w=
+	b=b/O8pFPn64VinqNjwCrmeeaFw59Q5VANgcYBcBN0Ttldu3QcKFqQ+1Sqwe0qMur05
+	 ElMbM8Zp2PMsVUKoCXbNvc0ybjP7VOZpWnyiTtcwdS6BNVdUqWoU/Uto31rhMUS+Dy
+	 gFl+R8B4d1GVO67Jxv9nJZJOCAnx/8bjlYrHmOMs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joshua Rogers <linux@joshua.hu>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Chen Zhen <chenzhen126@huawei.com>,
+	Jussi Maki <joamaki@gmail.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0902/1887] svcrdma: bound check rq_pages index in inline path
-Date: Wed, 28 Oct 2026 17:49:58 +0100
-Message-ID: <20261028170519.943637676@linuxfoundation.org>
+Subject: [PATCH 6.1 0929/1887] bonding: fix use-after-free due to enslave fail after slave array update
+Date: Wed, 28 Oct 2026 17:50:25 +0100
+Message-ID: <20261028170520.555826821@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,37 +71,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joshua Rogers <linux@joshua.hu>
+From: Nikolay Aleksandrov <razor@blackwall.org>
 
-[ Upstream commit d1bea0ce35b6095544ee82bb54156fc62c067e58 ]
+[ Upstream commit e9acda52fd2ee0cdca332f996da7a95c5fd25294 ]
 
-svc_rdma_copy_inline_range indexed rqstp->rq_pages[rc_curpage] without
-verifying rc_curpage stays within the allocated page array. Add guards
-before the first use and after advancing to a new page.
+Fix a use-after-free which happens due to enslave failure after the new
+slave has been added to the array. Since the new slave can be used for Tx
+immediately, we can use it after it has been freed by the enslave error
+cleanup path which frees the allocated slave memory. Slave update array is
+supposed to be called last when further enslave failures are not expected.
+Move it after xdp setup to avoid any problems.
 
-Fixes: d7cc73972661 ("svcrdma: support multiple Read chunks per RPC")
-Cc: stable@vger.kernel.org
-Signed-off-by: Joshua Rogers <linux@joshua.hu>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+It is very easy to reproduce the problem with a simple xdp_pass prog:
+ ip l add bond1 type bond mode balance-xor
+ ip l set bond1 up
+ ip l set dev bond1 xdp object xdp_pass.o sec xdp_pass
+ ip l add dumdum type dummy
+
+Then run in parallel:
+ while :; do ip l set dumdum master bond1 1>/dev/null 2>&1; done;
+ mausezahn bond1 -a own -b rand -A rand -B 1.1.1.1 -c 0 -t tcp "dp=1-1023, flags=syn"
+
+The crash happens almost immediately:
+ [  605.602850] Oops: general protection fault, probably for non-canonical address 0xe0e6fc2460000137: 0000 [#1] SMP KASAN NOPTI
+ [  605.602916] KASAN: maybe wild-memory-access in range [0x07380123000009b8-0x07380123000009bf]
+ [  605.602946] CPU: 0 UID: 0 PID: 2445 Comm: mausezahn Kdump: loaded Tainted: G    B               6.19.0-rc6+ #21 PREEMPT(voluntary)
+ [  605.602979] Tainted: [B]=BAD_PAGE
+ [  605.602998] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+ [  605.603032] RIP: 0010:netdev_core_pick_tx+0xcd/0x210
+ [  605.603063] Code: 48 89 fa 48 c1 ea 03 80 3c 02 00 0f 85 3e 01 00 00 48 b8 00 00 00 00 00 fc ff df 4c 8b 6b 08 49 8d 7d 30 48 89 fa 48 c1 ea 03 <80> 3c 02 00 0f 85 25 01 00 00 49 8b 45 30 4c 89 e2 48 89 ee 48 89
+ [  605.603111] RSP: 0018:ffff88817b9af348 EFLAGS: 00010213
+ [  605.603145] RAX: dffffc0000000000 RBX: ffff88817d28b420 RCX: 0000000000000000
+ [  605.603172] RDX: 00e7002460000137 RSI: 0000000000000008 RDI: 07380123000009be
+ [  605.603199] RBP: ffff88817b541a00 R08: 0000000000000001 R09: fffffbfff3ed8c0c
+ [  605.603226] R10: ffffffff9f6c6067 R11: 0000000000000001 R12: 0000000000000000
+ [  605.603253] R13: 073801230000098e R14: ffff88817d28b448 R15: ffff88817b541a84
+ [  605.603286] FS:  00007f6570ef67c0(0000) GS:ffff888221dfa000(0000) knlGS:0000000000000000
+ [  605.603319] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+ [  605.603343] CR2: 00007f65712fae40 CR3: 000000011371b000 CR4: 0000000000350ef0
+ [  605.603373] Call Trace:
+ [  605.603392]  <TASK>
+ [  605.603410]  __dev_queue_xmit+0x448/0x32a0
+ [  605.603434]  ? __pfx_vprintk_emit+0x10/0x10
+ [  605.603461]  ? __pfx_vprintk_emit+0x10/0x10
+ [  605.603484]  ? __pfx___dev_queue_xmit+0x10/0x10
+ [  605.603507]  ? bond_start_xmit+0xbfb/0xc20 [bonding]
+ [  605.603546]  ? _printk+0xcb/0x100
+ [  605.603566]  ? __pfx__printk+0x10/0x10
+ [  605.603589]  ? bond_start_xmit+0xbfb/0xc20 [bonding]
+ [  605.603627]  ? add_taint+0x5e/0x70
+ [  605.603648]  ? add_taint+0x2a/0x70
+ [  605.603670]  ? end_report.cold+0x51/0x75
+ [  605.603693]  ? bond_start_xmit+0xbfb/0xc20 [bonding]
+ [  605.603731]  bond_start_xmit+0x623/0xc20 [bonding]
+
+Fixes: 9e2ee5c7e7c3 ("net, bonding: Add XDP support to the bonding driver")
+Signed-off-by: Nikolay Aleksandrov <razor@blackwall.org>
+Reported-by: Chen Zhen <chenzhen126@huawei.com>
+Closes: https://lore.kernel.org/netdev/fae17c21-4940-5605-85b2-1d5e17342358@huawei.com/
+CC: Jussi Maki <joamaki@gmail.com>
+CC: Daniel Borkmann <daniel@iogearbox.net>
+Acked-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://patch.msgid.link/20260123120659.571187-1-razor@blackwall.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/xprtrdma/svc_rdma_rw.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/bonding/bond_main.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/net/sunrpc/xprtrdma/svc_rdma_rw.c b/net/sunrpc/xprtrdma/svc_rdma_rw.c
-index 1bc9dfa1e5bbc..e455f16440334 100644
---- a/net/sunrpc/xprtrdma/svc_rdma_rw.c
-+++ b/net/sunrpc/xprtrdma/svc_rdma_rw.c
-@@ -811,6 +811,9 @@ static int svc_rdma_copy_inline_range(struct svc_rdma_read_info *info,
- 	for (page_no = 0; page_no < numpages; page_no++) {
- 		unsigned int page_len;
+diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
+index 5b8770118c4f0..c94be63284841 100644
+--- a/drivers/net/bonding/bond_main.c
++++ b/drivers/net/bonding/bond_main.c
+@@ -2269,11 +2269,6 @@ int bond_enslave(struct net_device *bond_dev, struct net_device *slave_dev,
+ 		unblock_netpoll_tx();
+ 	}
  
-+		if (&rqstp->rq_pages[info->ri_pageno] >= rqstp->rq_page_end)
-+			return -EINVAL;
+-	/* broadcast mode uses the all_slaves to loop through slaves. */
+-	if (bond_mode_can_use_xmit_hash(bond) ||
+-	    BOND_MODE(bond) == BOND_MODE_BROADCAST)
+-		bond_update_slave_arr(bond, NULL);
+-
+ 	if (!slave_dev->netdev_ops->ndo_bpf ||
+ 	    !slave_dev->netdev_ops->ndo_xdp_xmit) {
+ 		if (bond->xdp_prog) {
+@@ -2307,6 +2302,11 @@ int bond_enslave(struct net_device *bond_dev, struct net_device *slave_dev,
+ 			bpf_prog_inc(bond->xdp_prog);
+ 	}
+ 
++	/* broadcast mode uses the all_slaves to loop through slaves. */
++	if (bond_mode_can_use_xmit_hash(bond) ||
++	    BOND_MODE(bond) == BOND_MODE_BROADCAST)
++		bond_update_slave_arr(bond, NULL);
 +
- 		page_len = min_t(unsigned int, remaining,
- 				 PAGE_SIZE - info->ri_pageoff);
- 
+ 	slave_info(bond_dev, slave_dev, "Enslaving as %s interface with %s link\n",
+ 		   bond_is_active_slave(new_slave) ? "an active" : "a backup",
+ 		   new_slave->link != BOND_LINK_DOWN ? "an up" : "a down");
 -- 
 2.53.0
 
