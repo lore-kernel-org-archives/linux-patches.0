@@ -1,56 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793210487;
-	b=1brWKcLuiKNZe5u430WhGxqONG6fRQaxZ4/o0K5PIbzVfeEFMB7ZK2wgn4rEURIgbVxc
-	 GKuStVKH+GUPOJQlKzo0fbG+Nysj4nwkSzvS39iboC+DfvZ5Z398CEMjT1ZzPq4PXJdh5
-	 DpUp7s6IVvOLPBBJM1DGecjmfEdaHXy/afyFszfI6REIj9T+EwC/3ft5uFInRgMRbI5Tj
-	 EPYA2N9Ow0lQTUvgS0M/eCD5MIT2HlpRDotAbF6rYIn8ohZJdSOrI/XjgSId4JhkqnXmU
-	 JuTO1v8KenUu5RnvV3ey5QTAMwf8jQW7ineb2R1GXYRDVnyNUOfbLNUoPMYx1GPzV0w==
+	t=1793210490;
+	b=NimXMe4S9eIuJwtBpN7gshQy3cL65lU+99NDj072Gx3/Q5rLB4P+PM//e0+b7qXvGCrA
+	 rud3Xzg0mbZmSY5qXNZdySce8P+hUoblemnV3BRMCB/fZ7Qn1HNjwrsPln7MWUxPACNLr
+	 u03q3uzGfn/B67jYFWaDq3JMEbQndHMsnZfnPuhBcaAo32nidBe/VlDiybqz5nnYyZXUC
+	 L0RcLsDeY7UIolGzB19zGKT37mMNP4gtsPpOxrNV/abm9wxmy5SMwcq4CEUbsSAURIonU
+	 uiPR6/BqPsDGszgYCTbIcFfaS6RDJ9b97+CqFEGzB9KMm28/5pk/dzOzg+3BOwE7tEQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793210487;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793210490;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=HseXowtUJk7+J7+DLswiiFQSYflX6Hw8iC0/Ny25Izo=;
-	b=T/NXFK9xMtykVSfVUYWsSqSphEfBJkhyc4FFDwnWEv3ljVMrJzz+I5jOwV2Bv+0dtPQ6
-	 DOBuFprNvl8o14R+dJcN2GXoXIj9rsvBX2YiAPB76K0vO0d3p441qOj/6WGq0GfSLd/+b
-	 SeclCu8WJ71gDB0phkdzK0dltMGv6QEwYqLggtbqzSARexCKXh6NnlSQEAB/uQPhP8un6
-	 WxOAxjpVfgA3JtYVAKnXObhIfJrmGX+cPHPqFYIvmhD6e//emHbILchE2yS507MYrV49h
-	 Ubk9xFfAGDkgwN21tEgb6BsuTukh6/laIR10gia3cGb48MVOJVhaFdoT20iyB7KBoGQ==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=OeA7B/J9SPiBMx6scAL8JyfX5Jh525OsZ25optLjmck=;
+	b=Qy7eozvOAhJDLz7llXs3aKm4RnDAAA8WcEpJ9IWgcC7teDx7CZeQZtJxoajh0ZS6d88M
+	 av1DBXE1nZJNQMMCxHcuRWVU/2EDnYioQLMfuRs+PmSlZmbqUbhkv3S6aUy8y2lN/LKJ/
+	 gmJikJtYOjmZlKP2suwpgSnREkePWM1dPqZwNOjP3X0hd1zXVvlZooRvKr8/VBzFSVmjP
+	 PEUCpguFr7lU59IERBT53kUjbYsx+Bhy+RsSbB2P2iQctnoApk6fv5sB8W8RJAoeRCryz
+	 Aq8LojyVy4P4Z/+bSkGXYmfraJUdN0iaCTkH5dn4YlYAFDEkEj6a83DnDCNPKR7I50A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Im8VPxHb;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1ybPucv1;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1F9E606A31D;
-	Wed, 28 Oct 2026 18:01:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6AF3606A326;
+	Wed, 28 Oct 2026 18:01:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Im8VPxHb
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1CED1F01825;
-	Wed, 28 Oct 2026 18:01:25 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1ybPucv1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB93B1F01825;
+	Wed, 28 Oct 2026 18:01:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793210486;
-	bh=HseXowtUJk7+J7+DLswiiFQSYflX6Hw8iC0/Ny25Izo=;
+	s=korg; t=1793210489;
+	bh=OeA7B/J9SPiBMx6scAL8JyfX5Jh525OsZ25optLjmck=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Im8VPxHbB8LC8TePvhcvb2CAhaQR0GPweJvXuLbhKYRT0BmR08T18+EuuZ4ljDTtX
-	 x6kxWDeA3sfz6gAFI8R8wUeV+6JIFT47bUhZ1i8GLgoyl5ZXcUXlH3qtum/61Ktu69
-	 Di/CMXRq5ki0Eeyn0A7NeDSEYxZiRj6HjWhsQjxQ=
+	b=1ybPucv1/Dcld9R0xk1nZI8OR5AP5SLz0V67BVkDpdkJDZ/ETDsub0VyONtwNFdn/
+	 uB3PCxum4ChgiZnIU6QrnVkb3ufvn0FBpSGukgz+DA7NvDPbXk2D2OCV27nGdaG4cY
+	 pDiP2FPgxj4VUvRwMbxDLgAj2ccvnk27IoFhAQ3g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ian Rogers <irogers@google.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Breno Leitao <leitao@debian.org>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 044/571] perf test bpf: Address error about non-null argument for epoll_pwait 2nd arg
-Date: Wed, 28 Oct 2026 17:53:11 +0100
-Message-ID: <20261028170009.072643831@linuxfoundation.org>
+Subject: [PATCH 5.15 045/571] usb: xhci: bail out of setup if the controller is inaccessible
+Date: Wed, 28 Oct 2026 17:53:12 +0100
+Message-ID: <20261028170009.097072384@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -66,73 +62,105 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: Breno Leitao <leitao@debian.org>
 
-commit ed847e30f001b207013b6136c264454d7560557f upstream
+[ Upstream commit 78203d5b54a40f0e36196ebf31c9c7a380fc8811 ]
 
-First noticed on Fedora Rawhide:
+xhci_gen_setup() locates the operational registers using the capability
+length read from the very first register:
 
-  tests/bpf.c: In function ‘epoll_pwait_loop’:
-  tests/bpf.c:36:17: error: argument 2 null where non-null expected [-Werror=nonnull]
-     36 |                 epoll_pwait(-(i + 1), NULL, 0, 0, NULL);
-        |                 ^~~~~~~~~~~
-  In file included from tests/bpf.c:5:
-  /usr/include/sys/epoll.h:134:12: note: in a call to function ‘epoll_pwait’ declared ‘nonnull’
-    134 | extern int epoll_pwait (int __epfd, struct epoll_event *__events,
-        |            ^~~~~~~~~~~
+	xhci->op_regs = hcd->regs +
+		HC_LENGTH(readl(&xhci->cap_regs->hc_capbase));
 
-  [perfbuilder@27cfe44d67ed perf-6.5.0-rc2]$ gcc -v
-  Using built-in specs.
-  COLLECT_GCC=gcc
-  COLLECT_LTO_WRAPPER=/usr/libexec/gcc/x86_64-redhat-linux/13/lto-wrapper
-  OFFLOAD_TARGET_NAMES=nvptx-none
-  OFFLOAD_TARGET_DEFAULT=1
-  Target: x86_64-redhat-linux
-  Configured with: ../configure --enable-bootstrap --enable-languages=c,c++,fortran,objc,obj-c++,ada,go,d,m2,lto --prefix=/usr --mandir=/usr/share/man --infodir=/usr/share/info --with-bugurl=http://bugzilla.redhat.com/bugzilla --enable-shared --enable-threads=posix --enable-checking=release --enable-multilib --with-system-zlib --enable-__cxa_atexit --disable-libunwind-exceptions --enable-gnu-unique-object --enable-linker-build-id --with-gcc-major-version-only --enable-libstdcxx-backtrace --with-libstdcxx-zoneinfo=/usr/share/zoneinfo --with-linker-hash-style=gnu --enable-plugin --enable-initfini-array --with-isl=/builddir/build/BUILD/gcc-13.2.1-20230728/obj-x86_64-redhat-linux/isl-install --enable-offload-targets=nvptx-none --without-cuda-driver --enable-offload-defaulted --enable-gnu-indirect-function --enable-cet --with-tune=generic --with-arch_32=i686 --build=x86_64-redhat-linux --with-build-config=bootstrap-lto --enable-link-serialization=1
-  Thread model: posix
-  Supported LTO compression algorithms: zlib zstd
-  gcc version 13.2.1 20230728 (Red Hat 13.2.1-1) (GCC)
-  [perfbuilder@27cfe44d67ed perf-6.5.0-rc2]$
+If the controller is dead or has dropped off the bus, that read returns
+~0, HC_LENGTH() truncates it to 0xff, and op_regs ends up 0xff bytes
+past the page-aligned MMIO base, i.e. unaligned. The first access
+through it, xhci_halt() -> xhci_handshake() reading op_regs->status, is
+then an unaligned readl() on device memory. arm64 faults on unaligned
+device accesses, so instead of xhci_handshake() catching the all-ones
+value and returning -ENODEV, setup oopses:
 
-Just add that argument to address this compiler warning.
+  xhci-pci-renesas 0005:08:00.0: Unable to change power state from D3cold to D0, device inaccessible
+  xhci-pci-renesas 0005:08:00.0: xHCI Host Controller
+  xhci-pci-renesas 0005:08:00.0: new USB bus registered, assigned bus number 1
+  Unable to handle kernel paging request at virtual address ffff80030a770103
+    ESR = 0x0000000096000021
+    FSC = 0x21: alignment fault
+  Internal error: Oops: 0000000096000021 [#1]  SMP
+  pc : xhci_halt [xhci_hcd]
+  Call trace:
+   xhci_halt
+   xhci_gen_setup
+   xhci_pci_setup
+   usb_add_hcd
+   usb_hcd_pci_probe
+   xhci_pci_common_probe
+   xhci_pci_renesas_probe
 
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Link: https://lore.kernel.org/lkml/ZMj8+bvN86D0ZKiB@kernel.org
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
+This was hit with a Renesas uPD720201 that failed to power up ("Unable
+to change power state from D3cold to D0, device inaccessible") yet still
+reached the HCD probe path.
+
+Read the capability register once, and if it reads back the all-ones
+value (as xhci_handshake() and xhci_reset() already test for), abort
+setup with -ENODEV before op_regs is derived from it. Reading it once
+also avoids re-reading a register that may change under a concurrent
+hot-removal.
+
+Fixes: 66d4eadd8d06 ("USB: xhci: BIOS handoff and HW initialization.")
+Cc: stable@vger.kernel.org
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://patch.msgid.link/20260806142113.2436238-11-mathias.nyman@linux.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+[ adapted the double hc_capbase register read via hcc_params/hci_version to use a single new local hc_capbase variable ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/tests/bpf.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/usb/host/xhci.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/tools/perf/tests/bpf.c b/tools/perf/tests/bpf.c
-index fa03ff0dc0831..4486de74eca9d 100644
---- a/tools/perf/tests/bpf.c
-+++ b/tools/perf/tests/bpf.c
-@@ -29,11 +29,12 @@
+diff --git a/drivers/usb/host/xhci.c b/drivers/usb/host/xhci.c
+index fee939389a30b..36b6dc304e79e 100644
+--- a/drivers/usb/host/xhci.c
++++ b/drivers/usb/host/xhci.c
+@@ -5320,6 +5320,7 @@ int xhci_gen_setup(struct usb_hcd *hcd, xhci_get_quirks_t get_quirks)
+ 	struct device		*dev = hcd->self.sysdev;
+ 	unsigned int		minor_rev;
+ 	int			retval;
++	u32			hc_capbase;
  
- static int epoll_pwait_loop(void)
- {
-+	struct epoll_event events;
- 	int i;
+ 	/* Accept arbitrarily long scatter-gather lists */
+ 	hcd->self.sg_tablesize = ~0;
+@@ -5388,16 +5389,19 @@ int xhci_gen_setup(struct usb_hcd *hcd, xhci_get_quirks_t get_quirks)
  
- 	/* Should fail NR_ITERS times */
- 	for (i = 0; i < NR_ITERS; i++)
--		epoll_pwait(-(i + 1), NULL, 0, 0, NULL);
-+		epoll_pwait(-(i + 1), &events, 0, 0, NULL);
- 	return 0;
- }
- 
+ 	mutex_init(&xhci->mutex);
+ 	xhci->cap_regs = hcd->regs;
+-	xhci->op_regs = hcd->regs +
+-		HC_LENGTH(readl(&xhci->cap_regs->hc_capbase));
++	hc_capbase = readl(&xhci->cap_regs->hc_capbase);
++	if (hc_capbase == U32_MAX) {
++		xhci_warn(xhci, "Host controller not accessible, removed?\n");
++		return -ENODEV;
++	}
++	xhci->op_regs = hcd->regs + HC_LENGTH(hc_capbase);
+ 	xhci->run_regs = hcd->regs +
+ 		(readl(&xhci->cap_regs->run_regs_off) & RTSOFF_MASK);
+ 	/* Cache read-only capability registers */
+ 	xhci->hcs_params1 = readl(&xhci->cap_regs->hcs_params1);
+ 	xhci->hcs_params2 = readl(&xhci->cap_regs->hcs_params2);
+ 	xhci->hcs_params3 = readl(&xhci->cap_regs->hcs_params3);
+-	xhci->hcc_params = readl(&xhci->cap_regs->hc_capbase);
+-	xhci->hci_version = HC_VERSION(xhci->hcc_params);
++	xhci->hci_version = HC_VERSION(hc_capbase);
+ 	xhci->hcc_params = readl(&xhci->cap_regs->hcc_params);
+ 	if (xhci->hci_version > 0x100)
+ 		xhci->hcc_params2 = readl(&xhci->cap_regs->hcc_params2);
 -- 
 2.53.0
 
