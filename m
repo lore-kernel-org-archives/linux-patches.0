@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213002;
-	b=tcvlEq0oo7+ukOw5hCZYWBqLfXt1fDoiU5zF+7KUozVcTZ0Kf3ZUvA++DbAwIZZbgc20
-	 V7i60nyvspElLcbsHypbbePLNB9dO+/u3ecy42qXZ3dP0pZ/NGcflYtvwubIm5VhiQ8QR
-	 SOPeTcBtGAg3i7dcKZBX3iddWgJZC82LxS5wovg+XQEwQsvz8DdAsJpLp9ndY0uxStjbu
-	 D07x33eBd/JnME1JwvdTDSh5xWqoD7cMP0DDvHYXJOeApPK6TcSRe4dn/YlSwj8e20FSt
-	 Lpkk2zI0aIqSa2e5IVRsQ+VubFrP1k7kKbvZa13M8w4PapF2v4qz8Yhhc4Df3IC4okg==
+	t=1793213005;
+	b=fo9ZRrrkxbp5/Ig5eZnzi30H8Q6XzsOiJ7Z1+Dp2hmllkuOLUlovd38f1ihlI/wA26/j
+	 kowWKzXgag24NmD5lwIYZBLUCtHlFaLZRenDjxSnp8j0Iemdtt4ICqHd/0r/RAOUzjb/M
+	 EAphnPDFc2V+qQMemIoR/QbXO5jERfLWFqfJFKsfKLfs4ASW0ci56iKNEPjTWXgEVmxs4
+	 0gpjYCaZnydn745zAXv1QxS6W5yOvHuOzaI3b9rwXFtLy4NM4GIydwGb82y+pavSkYhnr
+	 vRcJZYX+lKiC142QJ0Pj40oOgfgGHjTf64pmItdeH4Wq3c5hotSSPreSDgJK6Xi5mBA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213002;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213005;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=57RoiG2Y1lH/ow6Pu6bPUVqxMNYpxSCj8SHzrhi4rrE=;
-	b=C28Lwjr117Qi11RtGRKw6OzjY2gFIs3upLHqbOHvyLKWk3afP1fSuEZe2KnSa1jclE/y
-	 xwz7aZZpV4GrlC+SNkVXoVRsGr2XSLBFBkgbq5sWyDkOE6bxp90JVqOuUY2LlmS2HbMvk
-	 RTwlSMG0aAMWI3w1zLW+RegW0AXOUyqIaT1ZRuSCtMBV8v4SD1t9xx/VJDWIngvPvpm+V
-	 LkpbZhRQ0oLvNbURhRqGQB0OhbnipdFE55krw2c4VKK3vZp6qTRKft0e6jbXshJo1TEA4
-	 0os/kKR361dK7aaSmi7AsPMHtiuSAxYYama0YsViOVe+13pXFxKX/tQfpz4N7IQ6RqQ==
+	bh=wXdngkCnWkxbpHXnwgaVwYfRDaQly6pRWsN43Bpggqc=;
+	b=5cJjdx6GQpyZNXW2ufrxEBbXXFLnwbwTeIG9q7nm8etJakzQkGSRFnxd5KagNTyUhXD5
+	 tH1MBrX6TkbouxLhGiI0kRBYxUmgYA5snpoo+hmEJEBIla3Y4PJKlAZCgpZ9Zxzo6OA+F
+	 h08Mp6VMEeEOnKnTxyqewsp5eiVl5uWy+QHPGLQHVOCmsHm3p4TNR6Otp/0no7naM9Wux
+	 +Dwud2xo+dPGRMwhZOZbOjb9YQU/Pv5Nk817EOwgRcjO43+PhiJmMZpixfqFng1bSMj0n
+	 oryjQwChW48Ext3HAhNMl4YVLCrwCp7xSzoE+bvjfqeHw8j00ThQ1dBvGFry/PN7gJA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YYjHlsWH;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rroTtZa4;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1903606A31A;
-	Wed, 28 Oct 2026 18:43:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC4B9606A31D;
+	Wed, 28 Oct 2026 18:43:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YYjHlsWH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5184E1F01825;
-	Wed, 28 Oct 2026 18:43:21 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rroTtZa4
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27A741F01828;
+	Wed, 28 Oct 2026 18:43:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213001;
-	bh=57RoiG2Y1lH/ow6Pu6bPUVqxMNYpxSCj8SHzrhi4rrE=;
+	s=korg; t=1793213004;
+	bh=wXdngkCnWkxbpHXnwgaVwYfRDaQly6pRWsN43Bpggqc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YYjHlsWH8x6EBc4y1+0/I8E47ivOqDcOGjUHWmxTUvu6UFMM3MOAgcDERT8KP9C+9
-	 svZ5oD1HogTm11YSX9MJOoYThtQOaSYjV5JvB4a2t6SHr902J7J2CtYIZeo0SWvbm+
-	 +gnhy4O4EIC+rj/wD1TP+rHHagDEokL4Fy8I0xzw=
+	b=rroTtZa465kzIbelEf9+hdY8oiROWnjvlg6FfvMstMA2Q006VlCblb4lRQaMy1R2w
+	 /A7Nr3ON6mT2qJv3kHNuRtSgLXF2DAUEBos+g1qTL1epHG+vAEYbasyIEx0Zij+AQ3
+	 Pp3QwKqmIZ0+lhcy/Z/mzKD/O8QOgdrYWFKY+rEs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Yi Yang <yiyang13@huawei.com>,
+	Edward Karpicz <webmaster@toradex.com>,
+	Mehmet Fide <mehmet.fide@screeningeagle.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0353/1887] vc_screen: reload vc pointer before if (ret) in vcs_write() to avoid UAF
-Date: Wed, 28 Oct 2026 17:40:49 +0100
-Message-ID: <20261028170507.263338253@linuxfoundation.org>
+Subject: [PATCH 6.1 0354/1887] mtd: rawnand: vf610_nfc: fix false bitflips on reads of erased pages
+Date: Wed, 28 Oct 2026 17:40:50 +0100
+Message-ID: <20261028170507.285940177@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,89 +69,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yi Yang <yiyang13@huawei.com>
+From: Mehmet Fide <mehmet.fide@screeningeagle.com>
 
-[ Upstream commit 226bd5603371cd9f6642cbb9e9a677f445de3530 ]
+[ Upstream commit 68fe2faf5c69d0e21f94cd695d28f0ba677d484f ]
 
-The reload of 'vc' added by commit 8fb9ea65c9d1 ("vc_screen: reload load
-of struct vc_data pointer in vcs_write() to avoid UAF") sits after the
-'if (ret)' block, so the copy-failure break path exits the loop without
-reloading vc. If the vc was kfree()'d via vc_port_destruct during the
-unlocked copy_from_user() window, the post-loop
-'if (written && vc) vcs_scr_updated(vc)' is reached with a stale
-non-NULL vc. The '&& vc' guard from commit a287620312dc ("vc_screen:
-fix null-ptr-deref in vcs_notifier() during concurrent vcs_write") only
-handles the NULL case, not this stale-non-NULL case; vcs_notifier() then
-reads param->vc->vc_num from freed memory:
+When the ECC engine fails to decode a page, the driver re-reads the OOB
+area with the engine bypassed, but runs the erased-page check for the
+data area on the buffer left in the controller SRAM by the failed
+transfer.
 
-  BUG: KASAN: slab-use-after-free in vcs_notifier+0x7c/0xd0
-  Read of size 2 at addr ffff888007149190
-  Call Trace:
-   vcs_notifier+0x7c/0xd0
-   atomic_notifier_call_chain+0x70/0xa0
-   vcs_scr_updated+0x77/0xa0
-   vcs_write+0x71b/0x7e0
-  Allocated by task: vc_allocate -> con_install -> tty_open
-  Freed by task: kfree <- vt_ioctl (VT_DISALLOCATE -> vc_port_destruct)
+That buffer does not hold what is on the flash: the failing engine
+writes a bogus single-bit "correction" into it. In the 60-byte ECC mode
+the all-0xff content of an erased page always decodes to the same error
+location, so every erased page shows one stale zero bit at data offset
+0x5FD, which the erased-page check then reports as a corrected bitflip.
 
-Move the reload to immediately after console_lock(), before 'if (ret)',
-so every break path below passes a fresh vc to the post-loop
-vcs_scr_updated().
+Edward Karpicz discovered this behaviour and identified the offset on a
+Colibri VF61; the analysis and the fix build on his finding. Measured
+with an instrumented driver on a Colibri VF50 (MX30LF1G18AC, 32-bit
+ECC): reading a 126 MiB partition with nanddump increased the corrected
+counter by 18035, exactly one per erased page, while raw reads of the
+same pages return clean 0xff. A v4.4 kernel on the VF61 (MX30LF4G28AC)
+accumulates the same false counts, so the behaviour follows the
+controller rather than the chip or the driver generation. Neither the
+Vybrid reference manual nor the published mask set errata (VFXXX_2N02G)
+document it. The 45-byte ECC mode is not affected.
 
-Fixes: a287620312dc ("vc_screen: fix null-ptr-deref in vcs_notifier() during concurrent vcs_write")
-Cc: stable@kernel.org
-Signed-off-by: Yi Yang <yiyang13@huawei.com>
-Link: https://patch.msgid.link/20260901113131.2760010-1-yiyang13@huawei.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-[ sashal: Adapted the direct -ENXIO return to set ret and jump to unlock_out. ]
+Restoring the known byte is not enough: on pages that fail to decode
+with content other than all-0xff the engine writes its correction
+wherever the syndrome points (measured at a different offset on such a
+page), so the check has to run on what the flash holds. Re-read the data
+area with the ECC engine bypassed, exactly as already done for the OOB
+area. The corrected counter then stays at zero on both boards.
+
+Reported-by: Edward Karpicz <webmaster@toradex.com>
+Link: https://community.toradex.com/t/colibri-vf50-vf61-on-the-current-bsp-mainline-u-boot-v2026-07-and-linux-6-18-lts/30735
+Signed-off-by: Mehmet Fide <mehmet.fide@screeningeagle.com>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/vt/vc_screen.c | 25 +++++++++++++------------
- 1 file changed, 13 insertions(+), 12 deletions(-)
+ drivers/mtd/nand/raw/vf610_nfc.c | 15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/tty/vt/vc_screen.c b/drivers/tty/vt/vc_screen.c
-index 27b44dc123859..22735ca14395a 100644
---- a/drivers/tty/vt/vc_screen.c
-+++ b/drivers/tty/vt/vc_screen.c
-@@ -643,6 +643,19 @@ vcs_write(struct file *file, const char __user *buf, size_t count, loff_t *ppos)
- 		ret = copy_from_user(con_buf, buf, this_round);
- 		console_lock();
+diff --git a/drivers/mtd/nand/raw/vf610_nfc.c b/drivers/mtd/nand/raw/vf610_nfc.c
+index 262dfcb24c9a4..391fff6357472 100644
+--- a/drivers/mtd/nand/raw/vf610_nfc.c
++++ b/drivers/mtd/nand/raw/vf610_nfc.c
+@@ -518,6 +518,7 @@ static inline int vf610_nfc_correct_data(struct nand_chip *chip, uint8_t *dat,
+ 	u8 ecc_status;
+ 	u8 ecc_count;
+ 	int flips_threshold = nfc->chip.ecc.strength / 2;
++	int ret;
  
-+		/* The vc might have been freed or vcs_size might have changed
-+		 * while we slept to grab the user buffer; recheck here, before
-+		 * if (ret), so every break path below passes a fresh vc to the
-+		 * post-loop vcs_scr_updated(). Return data written so far.
-+		 */
-+		vc = vcs_vc(inode, &viewed);
-+		if (!vc) {
-+			if (written)
-+				break;
-+			ret = -ENXIO;
-+			goto unlock_out;
-+		}
-+
- 		if (ret) {
- 			this_round -= ret;
- 			if (!this_round) {
-@@ -655,18 +668,6 @@ vcs_write(struct file *file, const char __user *buf, size_t count, loff_t *ppos)
- 				goto unlock_out;
- 			}
- 		}
--
--		/* The vc might have been freed or vcs_size might have changed
--		 * while we slept to grab the user buffer, so recheck.
--		 * Return data written up to now on failure.
--		 */
--		vc = vcs_vc(inode, &viewed);
--		if (!vc) {
--			if (written)
--				break;
--			ret = -ENXIO;
--			goto unlock_out;
--		}
- 		size = vcs_size(vc, attr, false);
- 		if (size < 0) {
- 			if (written)
+ 	ecc_status = vf610_nfc_read(nfc, ecc_status_off) & 0xff;
+ 	ecc_count = ecc_status & ECC_STATUS_ERR_COUNT;
+@@ -525,15 +526,21 @@ static inline int vf610_nfc_correct_data(struct nand_chip *chip, uint8_t *dat,
+ 	if (!(ecc_status & ECC_STATUS_MASK))
+ 		return ecc_count;
+ 
++	/* The failed decode leaves a bogus correction in SRAM; re-read without ECC */
+ 	nfc->data_access = true;
+-	nand_read_oob_op(&nfc->chip, page, 0, oob, vf610_nfc_spare_size(mtd));
++	ret = nand_read_page_op(&nfc->chip, page, 0, dat, mtd->writesize);
++	if (!ret)
++		ret = nand_read_oob_op(&nfc->chip, page, 0, oob,
++				       vf610_nfc_spare_size(mtd));
+ 	nfc->data_access = false;
++	if (ret)
++		return ret;
+ 
+ 	/*
+-	 * On an erased page, bit count (including OOB) should be zero or
+-	 * at least less then half of the ECC strength.
++	 * Run the erased-page check with the driver's historic threshold
++	 * of half the ECC strength.
+ 	 */
+-	return nand_check_erased_ecc_chunk(dat, nfc->chip.ecc.size, oob,
++	return nand_check_erased_ecc_chunk(dat, mtd->writesize, oob,
+ 					   vf610_nfc_spare_size(mtd), NULL, 0,
+ 					   flips_threshold);
+ }
 -- 
 2.53.0
 
