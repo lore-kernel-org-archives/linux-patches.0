@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215731;
-	b=ab8UAf4S4k8YVi5SVT7Ej0wvI/1HwJcOmaZvM3zhy9DzGhoDfnlqaAGfBOZLLXIYEHdC
-	 Vv9cHAmymXNN/xdSONDJGV19KESJgYWf27esta4p5EWyLk6TfmvYuDi737l+JGHfVMbr8
-	 vnAPmFZB+w3ULYTheof8K7jCQl2ex7WZCTYKD1ONgjj2V6ffr/rO7Kf2OfzSGOuLvaQog
-	 CT3v0BnJHEBf3ao3EsE4wvPExFbGaJSp45K9xwJaeAEmR9uw6vvQJCMU3/WyNpT1lZBkj
-	 VlYFjuoR7ho7o4oVNYdnWWUSagFRzZHesufGpFScbT/KJOoWcEk1rZfW5mWCaOMDzew==
+	t=1793215734;
+	b=Cc7kgv6h7Wsk6wKvlcxzSixwJ3pLlaYwK8QILHjJ0iqvF6QdQNRsOuGnaDmnZXxhK6Mr
+	 vpDqujLFDPBmT05QbyXAcfyNzANP3E2WYwQBXCum38+i0D8bRXFL0Ylck0ylLVfNwk0Gp
+	 hXb/IHyV7gA3fyhr853D587wwcJNPWzKsa6IV2GQif4XFB/Naw5UZhGIChwfLeiJ9ls4D
+	 IH33UDBFL7FwauhbifxwrBN9bpIeYlhJ6vpiDw1sh659YtqSbXhEK8+3W2kthvHlH0ttQ
+	 e/2T5PdDS6IwDe2/ypSHyFFa80iSGS8cSV0VmiXH3gC9DSQMgxjc6GxwFBE6+thn2eg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215731;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215734;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=zNVdrhoFGxBWNAaGFHPAF8BSTRPahvy0LtOLB0Hc9kg=;
-	b=mUau+sX6IJ12Cv2Uwl9V9dlhuD+N7hyb7vTWEdw508PBFCHANmnM1WOaLK7YOs5LjEUF
-	 ACAsnHMlFdaelHj7ye62nSq4ajvVHmF35DxYYEZXji5M8Qjev4WpqPASvOUWczS2X8hS6
-	 GFI4jJLvXXhbNuHteE8Fr3m7i9a8Jmp6WAb+J+Yv0lCQzs3JsFtDN0yNhBnOA7Luap8UX
-	 9hPrkHUinTVekK9g6TPCHLoEG3ccBPBNi9uaC059f7GqSCS0K0qMGGmyBCLr9V9vKcLTP
-	 tZBGvBaJf+WvvYtoIbBmWHtt3yPjj2EfyYrk5D58MVJZWL/Og8dZeaZkIo2iwGzYV8A==
+	bh=0s78ASaOXfOLQ7Xng4Zv7ib81HZV1IDqKeaZ5fugxOU=;
+	b=Ez8sAk3vV2Ku9+h6R66eDZbc9b9HeMLTUJeT2yZFZTZy+EAC2V8hPgHSxi2QurWhCMeP
+	 5ofnwDkxjCY37sBL21jVGDJWYgapgmle017CBeLEvzN+6zNW1+8adGQQqLlTxAEctOfuX
+	 I4pnm7U1SBAcCZE6NTybFkyWZamyMqYNqqA0xPz+iF77uMlzyNRFkBBRJ0xqSRIAs15I6
+	 tjcK09urLPvSf/ffUsKezLc/LLrRO7BwUU63OD1tqn6u6RNwl0PLg1cbZG8rVcKr86nGX
+	 KpyWErZLb/DgH+Nx4gG+n22EYN5KT07dgRigTeOWWcxHQToY/n9FEbFr6zMhXfqtiOA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GliJ8RRN;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=01AamFr0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88D44606A31A;
-	Wed, 28 Oct 2026 19:28:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69C1E606A31A;
+	Wed, 28 Oct 2026 19:28:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GliJ8RRN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D66451F01825;
-	Wed, 28 Oct 2026 19:28:50 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=01AamFr0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8E6C1F01825;
+	Wed, 28 Oct 2026 19:28:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215731;
-	bh=zNVdrhoFGxBWNAaGFHPAF8BSTRPahvy0LtOLB0Hc9kg=;
+	s=korg; t=1793215734;
+	bh=0s78ASaOXfOLQ7Xng4Zv7ib81HZV1IDqKeaZ5fugxOU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GliJ8RRNvworuDAqrok5NgkjMWaQKMpSBK9Xy982pGMDcF+jBDZyLDlF53OvNXgE0
-	 xBnGrd8/7LnwzLqTPjfbzyT9+Dhnibq/MLjQcFFJAWpmWL2ohH6o2TR/JWP2f4HrCV
-	 2h0DcjxrsVYFEOkWI6q/IHIG3L1uYyWAMCP5jK/c=
+	b=01AamFr02ieIfpgLFhWGs4VW2CxI4BfLoU/Oz8mh/ndgDMXbi8UrF8fF8ceSsjK7m
+	 U6Ulw5qL9CUMiaBRzGFvrUb8cPDkUVsGqDOhWAC65tYCFA53TDFwwuebUQFznOmJTE
+	 ayMiCVo6dKI5/96UVpES3Lem+HMMJmLuFoGJ5DeM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Julian Anastasov <ja@ssi.bg>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Hongjie Fang <hongjiefang@asrmicro.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Peter Wang <peter.wang@mediatek.com>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1311/1887] ipvs: revalidate ihl to prevent out-of-bounds access
-Date: Wed, 28 Oct 2026 17:56:47 +0100
-Message-ID: <20261028170529.264726226@linuxfoundation.org>
+Subject: [PATCH 6.1 1312/1887] scsi: core: pair EH runtime PM get and put
+Date: Wed, 28 Oct 2026 17:56:48 +0100
+Message-ID: <20261028170529.286593468@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,103 +70,131 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Julian Anastasov <ja@ssi.bg>
+From: Hongjie Fang <hongjiefang@asrmicro.com>
 
-[ Upstream commit d93660df4dd1d116f608ada4a29a80a5d6f0a6ed ]
+[ Upstream commit 872f486259ae0bc6b73ca4735a15d013241f73e9 ]
 
-While the outer IP header is already pulled into the skb head,
-we must be careful and revalidate the embedded headers after
-reading them from the skb frags to prevent out-of-bounds
-access.
+shost->eh_noresume is currently consulted twice in one error handling
+iteration: once before scsi_autopm_get_host() and once again before
+scsi_autopm_put_host().
 
-One such place reported by Sashiko is ip_vs_nat_icmp() where
-local process can change the ihl field and after
-skb_ensure_writable() we can see larger value which is a
-problem for the ip_send_check(cih) calls.
+That is racy when a PM-triggered error path flips shost->eh_noresume
+while the SCSI EH thread is still running.
 
-Add check to drop the packet if the ihl field is changed.
+The problem flow looks like this:
+PM path
+  ufshcd_set_dev_pwr_mode()
+    shost->eh_noresume = 1
+    ufshcd_execute_start_stop  <-- trigger EH
+    ...
+    shost->eh_noresume = 0
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Link: https://sashiko.dev/#/patchset/20260730183506.87473-1-ja%40ssi.bg
-Signed-off-by: Julian Anastasov <ja@ssi.bg>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+EH path
+  scsi_error_handler()
+    if (!shost->eh_noresume)
+      scsi_autopm_get_host()  <-- skipped
+    ...
+    if (!shost->eh_noresume)
+       scsi_autopm_put_host()  <-- executed later
+
+In that case one EH iteration can skip autoresume on entry and still
+drop a runtime PM reference on exit. That leaves an unmatched runtime PM
+put and can trigger a runtime PM usage count underflow.
+
+Fix this by making eh_noresume a regular bool so it can be accessed with
+READ_ONCE() and WRITE_ONCE(). Snapshot it once per EH iteration and use
+that snapshot for both runtime PM get and put decisions.
+
+Fixes: ae0751ffc77e ("[SCSI] add flag to skip the runtime PM calls on the host")
+Signed-off-by: Hongjie Fang <hongjiefang@asrmicro.com>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Reviewed-by: Peter Wang <peter.wang@mediatek.com>
+Link: https://patch.msgid.link/20260729111614.2407559-1-hongjiefang@asrmicro.com
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/ip_vs.h             |  2 +-
- net/netfilter/ipvs/ip_vs_core.c | 11 +++++++++--
- net/netfilter/ipvs/ip_vs_xmit.c |  3 ++-
- 3 files changed, 12 insertions(+), 4 deletions(-)
+ drivers/scsi/scsi_error.c | 6 ++++--
+ drivers/ufs/core/ufshcd.c | 4 ++--
+ include/scsi/scsi_host.h  | 6 +++---
+ 3 files changed, 9 insertions(+), 7 deletions(-)
 
-diff --git a/include/net/ip_vs.h b/include/net/ip_vs.h
-index 9aeb44f03f17c..9ac0ffb54bebd 100644
---- a/include/net/ip_vs.h
-+++ b/include/net/ip_vs.h
-@@ -1583,7 +1583,7 @@ static inline char ip_vs_fwd_tag(struct ip_vs_conn *cp)
- 	return fwd;
- }
- 
--void ip_vs_nat_icmp(struct sk_buff *skb, struct ip_vs_protocol *pp,
-+bool ip_vs_nat_icmp(struct sk_buff *skb, struct ip_vs_protocol *pp,
- 		    struct ip_vs_conn *cp, int dir, unsigned int toff,
- 		    bool has_ports, struct ip_vs_iphdr *ciph);
- 
-diff --git a/net/netfilter/ipvs/ip_vs_core.c b/net/netfilter/ipvs/ip_vs_core.c
-index 41f09e29d221b..dec212507ba99 100644
---- a/net/netfilter/ipvs/ip_vs_core.c
-+++ b/net/netfilter/ipvs/ip_vs_core.c
-@@ -745,7 +745,7 @@ static int ip_vs_route_me_harder(struct netns_ipvs *ipvs, int af,
-  * Packet has been made sufficiently writable in caller
-  * - inout: 1=in->out, 0=out->in
-  */
--void ip_vs_nat_icmp(struct sk_buff *skb, struct ip_vs_protocol *pp,
-+bool ip_vs_nat_icmp(struct sk_buff *skb, struct ip_vs_protocol *pp,
- 		    struct ip_vs_conn *cp, int inout, unsigned int toff,
- 		    bool has_ports, struct ip_vs_iphdr *ciph)
+diff --git a/drivers/scsi/scsi_error.c b/drivers/scsi/scsi_error.c
+index 8063ec6c82645..b458a8cb619f9 100644
+--- a/drivers/scsi/scsi_error.c
++++ b/drivers/scsi/scsi_error.c
+@@ -2277,6 +2277,7 @@ static void scsi_unjam_host(struct Scsi_Host *shost)
+ int scsi_error_handler(void *data)
  {
-@@ -753,6 +753,11 @@ void ip_vs_nat_icmp(struct sk_buff *skb, struct ip_vs_protocol *pp,
- 	struct icmphdr *icmph	 = (struct icmphdr *)(skb->data + toff);
- 	struct iphdr *cih	 = (struct iphdr *)(icmph + 1);
+ 	struct Scsi_Host *shost = data;
++	bool eh_noresume;
  
-+	/* Before now we may used ihl from skb frag, revalidate it after
-+	 * copying it into skb head to prevent out-of-bounds access
-+	 */
-+	if (cih->ihl * 4 != ciph->len - ciph->off)
-+		return false;
- 	if (inout) {
- 		iph->saddr = cp->vaddr.ip;
- 		ip_send_check(iph);
-@@ -786,6 +791,7 @@ void ip_vs_nat_icmp(struct sk_buff *skb, struct ip_vs_protocol *pp,
- 	else
- 		IP_VS_DBG_PKT(11, AF_INET, pp, skb, ciph->off,
- 			      "Forwarding altered incoming ICMP");
-+	return true;
+ 	/*
+ 	 * We use TASK_INTERRUPTIBLE so that the thread is not
+@@ -2318,7 +2319,8 @@ int scsi_error_handler(void *data)
+ 		 * what we need to do to get it up and online again (if we can).
+ 		 * If we fail, we end up taking the thing offline.
+ 		 */
+-		if (!shost->eh_noresume && scsi_autopm_get_host(shost) != 0) {
++		eh_noresume = READ_ONCE(shost->eh_noresume);
++		if (!eh_noresume && scsi_autopm_get_host(shost) != 0) {
+ 			SCSI_LOG_ERROR_RECOVERY(1,
+ 				shost_printk(KERN_ERR, shost,
+ 					     "scsi_eh_%d: unable to autoresume\n",
+@@ -2342,7 +2344,7 @@ int scsi_error_handler(void *data)
+ 		 * which are still online.
+ 		 */
+ 		scsi_restart_operations(shost);
+-		if (!shost->eh_noresume)
++		if (!eh_noresume)
+ 			scsi_autopm_put_host(shost);
+ 	}
+ 	__set_current_state(TASK_RUNNING);
+diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
+index f8f64b8f111c9..0e9ea032711b9 100644
+--- a/drivers/ufs/core/ufshcd.c
++++ b/drivers/ufs/core/ufshcd.c
+@@ -8838,7 +8838,7 @@ static int ufshcd_set_dev_pwr_mode(struct ufs_hba *hba,
+ 	 * we are functional while we are here, skip host resume in error
+ 	 * handling context.
+ 	 */
+-	hba->host->eh_noresume = 1;
++	WRITE_ONCE(hba->host->eh_noresume, 1);
+ 
+ 	cmd[4] = pwr_mode << 4;
+ 
+@@ -8872,7 +8872,7 @@ static int ufshcd_set_dev_pwr_mode(struct ufs_hba *hba,
+ 		hba->curr_dev_pwr_mode = pwr_mode;
+ 
+ 	scsi_device_put(sdp);
+-	hba->host->eh_noresume = 0;
++	WRITE_ONCE(hba->host->eh_noresume, 0);
+ 	return ret;
  }
  
- #ifdef CONFIG_IP_VS_IPV6
-@@ -877,7 +883,8 @@ static int handle_response_icmp(int af, struct sk_buff *skb,
- 		ip_vs_nat_icmp_v6(skb, pp, cp, 1, toff, has_ports, ciph);
- 	else
- #endif
--		ip_vs_nat_icmp(skb, pp, cp, 1, toff, has_ports, ciph);
-+		if (!ip_vs_nat_icmp(skb, pp, cp, 1, toff, has_ports, ciph))
-+			goto out;
+diff --git a/include/scsi/scsi_host.h b/include/scsi/scsi_host.h
+index 71d47d4ec04d9..4be73c771ed0c 100644
+--- a/include/scsi/scsi_host.h
++++ b/include/scsi/scsi_host.h
+@@ -623,6 +623,9 @@ struct Scsi_Host {
+ 	 */
+ 	unsigned nr_hw_queues;
+ 	unsigned nr_maps;
++	/* Don't resume host in EH */
++	bool eh_noresume;
++
+ 	unsigned active_mode:2;
  
- 	if (ip_vs_route_me_harder(cp->ipvs, af, skb, hooknum))
- 		goto out;
-diff --git a/net/netfilter/ipvs/ip_vs_xmit.c b/net/netfilter/ipvs/ip_vs_xmit.c
-index b424ebd7235fe..cbef6ca5088a6 100644
---- a/net/netfilter/ipvs/ip_vs_xmit.c
-+++ b/net/netfilter/ipvs/ip_vs_xmit.c
-@@ -1615,7 +1615,8 @@ ip_vs_icmp_xmit(struct sk_buff *skb, struct ip_vs_conn *cp,
- 	if (skb_cow(skb, rt->dst.dev->hard_header_len))
- 		goto tx_error;
+ 	/*
+@@ -644,9 +647,6 @@ struct Scsi_Host {
+ 	/* Asynchronous scan in progress */
+ 	unsigned async_scan:1;
  
--	ip_vs_nat_icmp(skb, pp, cp, 0, toff, has_ports, ciph);
-+	if (!ip_vs_nat_icmp(skb, pp, cp, 0, toff, has_ports, ciph))
-+		goto tx_error;
+-	/* Don't resume host in EH */
+-	unsigned eh_noresume:1;
+-
+ 	/* The controller does not support WRITE SAME */
+ 	unsigned no_write_same:1;
  
- 	/* Another hack: avoid icmp_send in ip_fragment */
- 	skb->ignore_df = 1;
 -- 
 2.53.0
 
