@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793207080;
-	b=3CSvqMbPduSlBMovFkNUKE0dRw0rhUr37HPuZz5e2VysMRI2kydOxBwfS1nABBWWkuE9
-	 dvVX4Qiz60Bl6XTSdoou6AOZEO0jqrpRxPw2d7OsaS9l5JHzffNu9G8kUreMCmICo+TDQ
-	 NXzmFuK4NfTJRn3R0vyUw9NGNWLA1xUp31BFbjdoqXVjcxr5iRIIK/fshhHvEvnSDyE/5
-	 lA1Cv/N21U8d2wKc85GJLf1cidySW+F1mNAvFfHnREhixZRKzZBrHvmTbU2vIemYBjJhF
-	 IZ4GuXj/NdZCC8v6j58XUrKxIM4zKzlu98ozQUP2BB0pvmpk5D0jmsN+Iy3P6pJuUqg==
+	t=1793207083;
+	b=QJWmvKXRKvN2+WkNxt5szLoyAMuQNGbRHNxr4a0Hvik6z4HMUVmerXrOgTi2qki5SjiL
+	 ZjBccr4/uPskF6NTsg0cGzXF9GAmvo5crkEw4E6+OBCM6W8XXBNjCZN1GdswhopIMvBCg
+	 mr1zOkiJIrjoTzIObYaQ7/K2XIDIPl8jYsjYXU6wSa2Dsm5Xa3HQVLEV3bIWfPxA7KP33
+	 V8yZC1TecThUaq0Ddtgm/45efxZyGhjIJaw8ozHyC0oFHUa+Z6CBjOLT05AF92di3UWg1
+	 89y+ALgkSQVyWPez2ix8rwjBjLp5DiIEp+7UuCmpfGsxmwyblG2/00FTCBV1vsu1azQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793207080;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793207083;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=QvFn4uJ+EjLzmxqdCrHOCY7pMHcBKolu41TXcWupxl0=;
-	b=5Z1BMUA4AQpnx4Aq74yf6cHR/wmrZ0XEHcNxz8flYEyWm2xdI2wfB6B6zBgV49RkhtHs
-	 ZKxgUCNAr5QuhATH2cJyplPS4slkA5yych0Mnw4HW+FiT6zMf5LCu7Vp50kkAk4w0ElaQ
-	 bl7hC3+CzZg+CljrBRolMTsU5K1LKYj4LnW9JqDGtXY+Ga+uBkUEvzaORaUNDnUMdHNhj
-	 DMVjM08dSSWMg1YIFVtNQ5pdGN61sJnT7QJnaS+8U2O52+zAhyVYJcUxu3NNI0jVEcE+5
-	 5cChGhJPOUmEKHnM3JRoOkRSxYefEwQFtof5TRPnubFRmbNH6oSPwkitRzLQMCaLDeA==
+	bh=yCAaCGXt5izd4EAtdUh7cWzkQKvPcY0QgA3gktSGGb0=;
+	b=5aqin2dFQrjRIDzuj10uitn7GUvKcaDbpAVJueeL2BpvoJnuAvPaccyox32QAPvthIn4
+	 2JfUU1nK6h4FMcwhsqh/hA8gZv29Pv2JrDaPHP8CtwgTyNekTkkVrxOGu/NT6kve7xeH2
+	 xj5G8TCv+HiRM2F7qL9r0a+ByInbNSqYHkjURKt6regFxLZQ/Dm24aQNfamo8Fyb0YQg/
+	 XuzafCERt8U6rhG57UimUtDO8HmHLcTqrZ1hgyF7ORYkofVg9QOcaBm5P4Gc+cu+SgTcc
+	 0HKqQ+adiVIKXcQp6bfUSYV3uz0CvhnajLV2CWYQkGBcXWu/d2jApRu09DYSXJGvDrA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UN5ilZaM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BPY3Jn+j;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76874606A31E;
-	Wed, 28 Oct 2026 17:04:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DA1E606A31C;
+	Wed, 28 Oct 2026 17:04:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UN5ilZaM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9642D1F031E0;
-	Wed, 28 Oct 2026 17:04:39 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BPY3Jn+j
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 643901F01825;
+	Wed, 28 Oct 2026 17:04:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793207080;
-	bh=QvFn4uJ+EjLzmxqdCrHOCY7pMHcBKolu41TXcWupxl0=;
+	s=korg; t=1793207082;
+	bh=yCAaCGXt5izd4EAtdUh7cWzkQKvPcY0QgA3gktSGGb0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UN5ilZaMOG3ZV/eJ/9Lpwz0DMCRtFsKm9Km3KI9wbOF3fXjMa9nhIztI54XXVHF+j
-	 r8lXFk/u6zX8+HXUaO4dYsOP+QzrzcSbCFeeQeLOEranmPM1L5YzVGvSwgqzr7kzzn
-	 KFhROxO8b8iH2z2uKtKHQYZrdDpMuDXYTttlh1kw=
+	b=BPY3Jn+jjcXZzLv1YwlMNd91Pyp7lvfJgupsGtCy8LbRUN9ttTbhc9L/hdkDFAD+8
+	 0n1OWGvbzzm8sKe1P8T0GqRTHe0rXnnQcvmzNIOTLNxvDrGHuJiFqe1gq18xmnNzZu
+	 952tM9CE5m1SPVt68HrNjV+u+59rzoKCCjhsExH8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cen Zhang <zzzccc427@gmail.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>
-Subject: [PATCH 7.3 19/38] keys: Avoid the owner account dereference in named keyring lookup
-Date: Wed, 28 Oct 2026 18:00:06 +0100
-Message-ID: <20261028165940.886335588@linuxfoundation.org>
+	SJ Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.3 02/38] mm/damon/core: error damos_commit_quota_goal() for zero target_value
+Date: Wed, 28 Oct 2026 17:59:49 +0100
+Message-ID: <20261028165940.465084933@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165940.394092994@linuxfoundation.org>
 References: <20261028165940.394092994@linuxfoundation.org>
@@ -67,68 +68,127 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang <zzzccc427@gmail.com>
+From: SJ Park <sj@kernel.org>
 
-commit 51409aaa01f8602552c336009fd22b226b0cdf1d upstream.
+[ Upstream commit 610c4438fb66e06d9e693c0ad3b2c1be54c0d61f ]
 
-Named keyring lookup must keep the storage containing the owner UID
-alive through the namespace mapping check.  find_keyring_by_name()
-reads keyring->user->uid under keyring_name_lock, but that lock protects
-the keyring's name entry and allocation, not its separate key_user.
+Patch series "mm/damon: move zero damos quota target_value handling to the
+core layer".
 
-A named session-keyring join can overlap a privileged KEYCTL_CHOWN on
-another CPU.  If the keyring holds the last reference to its old dynamic
-key_user and the ownership transfer succeeds, the following ordering is
-possible:
+Having zero DAMOS quota target value can cause division by zero.  DAMON
+API callers are checking the target value parameters to avoid that.  It is
+easy to make mistakes in some of the multiple API callers.  Move that to
+the core layer.
 
-    Named join                         Chown
-    find_keyring_by_name()              keyctl_chown_key()
-      read_lock(keyring_name_lock)       down_write(key->sem)
-      load old keyring->user
-                                         replace key->user and key->uid
-                                         up_write(key->sem)
-                                         key_put(key)
-                                         key_user_put(old user): free
-      read old user->uid
-      read_unlock(keyring_name_lock)
+Patch 1 adds the corner case handling into the core layer DAMON parameters
+validation logic.  Patches 2 and 3 remove no more needed DAMON API callers
+side handling of the corner case in DAMON_LRU_SORT and DMON_SAMPLIE_MTIER,
+respectively.
 
-Chown neither takes keyring_name_lock nor key_session_mutex, so it can
-free the old account between the pointer load and the UID read.  The
-lookup then reads freed memory even though the keyring itself is alive.
+This patch (of 3):
 
-Use keyring->uid for the mapping check.  key_alloc() initializes this
-inline owner UID and keyctl_chown_key() updates it on chown.
-The existing name lock keeps its containing keyring allocated throughout
-the check, so lookup no longer depends on the account's lifetime.  This
-also matches the owner UID used by the permission check.
+If a DAMOS scheme has a damos_quota_goal of zero target_value,
+damos_quota_goal() could trigger division-by-zero error.  Hence each DAMON
+API callers should do the zero target_value validation.  It is easy to
+make mistakes.  Actually such bugs in DAMON_LRU_SORT and
+DAMON_SAMPLE_MTIER were found and fixed [1].
 
-KASAN report as below:
+It is better to handle the corner case only once in the core layer,
+instead of multiple places in all DAMON API callers.  One straightforward
+option is using an alternative denominator for the corner case in the
+damos_quota_goal().  However, the zero target_value is meaningless.  In
+this case, the quota goal is always evaluated as achieved or
+over-achieved.  The quota will only keep being reduced.
 
-    BUG: KASAN: slab-use-after-free in find_keyring_by_name+0x577/0x5d0
-    Read of size 4 at addr ffff8881128ae2ec by task keycase/500
+Simply avoid using zero target_value by adding a check in the core layer
+DAMOS quota goal parameters validation/commit path,
+damos_commit_quota_goal().  Update it to return an error in the case.
+Also update its caller to propagate the error.
 
-Cc: stable@vger.kernel.org
-Fixes: 2ea190d0a006 ("keys: skip keys from another user namespace")
-Assisted-by: LLM
-Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
-Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Link: https://lore.kernel.org/r/pm-key-management-objects-candidate-0002-v3-2baa8cad2bb554364e10@gmail.com
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Notes for stable kernel porting.  The upstream commit doesn't have
+Fixes: and therefore not ported to stable kernels.  It turned out it
+fixes commit 8b549a4fd3c5 ("mm/damon/sysfs-schemes: commit damos quota
+goals user input to DAMOS") which was merged into v6.8.  The user impact
+is a race condition that can result in divide-by-zero.  Hence backport.
+Reproducing the issue requires sysfs write permission, certain DAMON ABI
+usages that are supposed to be uncommon, and a rare race timing, though.
+The issue was discovered [2] by Sashiko as a part [3] of its bug report.
+
+[2] https://sashiko.dev/#/bug/linux-7f814c9a-986f-4103-a55a-ef9537dcf62b
+[3] https://lore.kernel.org/20261021005234.94107-1-sj@kernel.org
+
+Link: https://lore.kernel.org/20260903010722.94244-1-sj@kernel.org
+Link: https://lore.kernel.org/20260903010722.94244-2-sj@kernel.org
+Link: https://lore.kernel.org/20260803134034.15217-1-sj@kernel.org [1]
+Signed-off-by: SJ Park <sj@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: SJ Park <sj@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/keys/keyring.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ mm/damon/core.c | 22 ++++++++++++++++------
+ 1 file changed, 16 insertions(+), 6 deletions(-)
 
---- a/security/keys/keyring.c
-+++ b/security/keys/keyring.c
-@@ -1158,7 +1158,7 @@ struct key *find_keyring_by_name(const c
- 	 * grants Search permission and that hasn't been revoked
- 	 */
- 	list_for_each_entry(keyring, &ns->keyring_name_list, name_link) {
--		if (!kuid_has_mapping(ns, keyring->user->uid))
-+		if (!kuid_has_mapping(ns, keyring->uid))
- 			continue;
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index ab3c4d7549644..74d22a596fc13 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -1136,15 +1136,18 @@ static void damos_commit_quota_goal_union(
+ 	}
+ }
  
- 		if (test_bit(KEY_FLAG_REVOKED, &keyring->flags))
+-static void damos_commit_quota_goal(
++static int damos_commit_quota_goal(
+ 		struct damos_quota_goal *dst, struct damos_quota_goal *src)
+ {
++	if (!src->target_value)
++		return  -EINVAL;
+ 	dst->metric = src->metric;
+ 	dst->target_value = src->target_value;
+ 	if (dst->metric == DAMOS_QUOTA_USER_INPUT)
+ 		dst->current_value = src->current_value;
+ 	/* keep last_psi_total as is, since it will be updated in next cycle */
+ 	damos_commit_quota_goal_union(dst, src);
++	return 0;
+ }
+ 
+ /**
+@@ -1162,14 +1165,17 @@ static void damos_commit_quota_goal(
+ int damos_commit_quota_goals(struct damos_quota *dst, struct damos_quota *src)
+ {
+ 	struct damos_quota_goal *dst_goal, *next, *src_goal, *new_goal;
+-	int i = 0, j = 0;
++	int i = 0, j = 0, err;
+ 
+ 	damos_for_each_quota_goal_safe(dst_goal, next, dst) {
+ 		src_goal = damos_nth_quota_goal(i++, src);
+-		if (src_goal)
+-			damos_commit_quota_goal(dst_goal, src_goal);
+-		else
++		if (src_goal) {
++			err = damos_commit_quota_goal(dst_goal, src_goal);
++			if (err)
++				return err;
++		} else {
+ 			damos_destroy_quota_goal(dst_goal);
++		}
+ 	}
+ 	damos_for_each_quota_goal_safe(src_goal, next, src) {
+ 		if (j++ < i)
+@@ -1178,7 +1184,11 @@ int damos_commit_quota_goals(struct damos_quota *dst, struct damos_quota *src)
+ 				src_goal->metric, src_goal->target_value);
+ 		if (!new_goal)
+ 			return -ENOMEM;
+-		damos_commit_quota_goal(new_goal, src_goal);
++		err = damos_commit_quota_goal(new_goal, src_goal);
++		if (err) {
++			damos_free_quota_goal(new_goal);
++			return err;
++		}
+ 		damos_add_quota_goal(dst, new_goal);
+ 	}
+ 	return 0;
+-- 
+2.53.0
+
 
 
