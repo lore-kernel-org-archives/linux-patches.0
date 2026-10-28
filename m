@@ -1,54 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793217392;
-	b=mJ68ulUvnr2h+4nQB7CdTwWEn4C5cqs9AKJreuG6zgnKO4jU1VVXYxvVwGhXEu61lSos
-	 tV4zEIbzrOPIeThuRoSopL0cvnDyE7/ICGqkdqzRjl3YQ+3lC+mRrKXrN8stm2rsOIIlO
-	 HpyBYYsCloaeWlxQrd3ATZHg9HOL28xy0BCM1m1bg2nKwdkhamYyk9qc2kWzS9d4Dzxsr
-	 2WhMMDoaHHpYcmWl9hQS0J7Ay3+5I2guH7yoxQQQgw3LaPsmcZY0EPOISofDDjnAHsZ1Y
-	 kZqXgcCOaYC9ANXq5lavIiHrvj127fuSbva07lumFRWmiTmtKjCz9MOSOAPFx2DKzug==
+	t=1793217395;
+	b=LejiCR7DS0VXe4TpN/wvfZjAZFFxIgHro73Lh66YTaQGu5wtCcDoJ7XimBDPnXce/GKm
+	 VmJ12Z6Xhy6fyZgjLXckFooP/rqfM7r0zAMa+5qAsoxVVJDz3loNmANK3AxxHNcPsvix0
+	 Ukzlq04WnCp7DmPjuwlqmHKtZNdTxkeKriVtAMDiMLEa39fArvWdiz2nKKl8s+IUxpZJ8
+	 Ym8qscwlN8fDfQZ0bBK0MW1HlGScc+DKgbeHjmAzQiGFsFGidK3CnZ+7ySCIv0/2Isug+
+	 gd/TjU8D7obtNaieMmShQ2M39Ym9aIyjkz/vvKdFN5C70wITZEOox7a0s2GZuABFshw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793217392;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793217395;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=SMGduP0aRe0184wn7JQkqEiQD93v6yU8dFTp57siAbw=;
-	b=zd1negO44hcyHjqJEm8ymrYM2xvEUw02G1qB2CWIzqn8bsAKfLTqquzH+OSC9ALqdJ/A
-	 A8pEWza3/GrkhwoldbTEQJ1q4A/v1bO5L+rl81E5Q95T9qpXY6CF+4ar/uvSsqsjU2xKc
-	 gHtxGRt83xGAVwLLJATvt6HORajIOOvvh7MUWJI7j9xPxi8r0pj9G0r3CWBYKYQOIGE85
-	 gmJYhc4ozZWVHfhUaFD97T70VFTDcfDeeSA3dhRt4zWSzihgnBv0E7eTA6eKhD4ifSQno
-	 i7nhu8njHko+z0OWr8r+VgH8NLub5goOlLnsvZbhiuQxKSGZEaiCQbiyIh6n89HV4fw==
+	bh=KmTUAGXOzoCHx3TuBtr6U3sEbnrH8fjIoByELk3I++Q=;
+	b=GANJUjOexjZcZ3cSCmb1THt5J/Q46MmtSUnsgNN4v0rckmySmpXeYUEZ9pHSo78ZVPni
+	 152Nq1cy6WW9trug8NU0uCBb0eqsokvrXAeyNJNWMgE8FOXccbOx1ZRwG+bFDcgn7KDMp
+	 GZiUzLqJmLKTANmC615jAZjJrz04T7BHmPyJXsYKuZJkv0fMYEkOvjSDcrce0UIC7x63h
+	 ITdD+Iw4J/silAzS9+W48KnpxOmJcYC74c2qGsGGmGhnfEty8e1LkAGUi4S5LzGhJQs9t
+	 NaRW8QEhtSyYK7lZxEFDwAHR8Ra1iBo9KomwUpVZiJ7eCtNZe8PXWXn+mWnevEwRMOg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fkoiNmsM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=y6wnP4Uq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CC0E606A31A;
-	Wed, 28 Oct 2026 19:56:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E3CD606A31D;
+	Wed, 28 Oct 2026 19:56:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fkoiNmsM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DF101F01825;
-	Wed, 28 Oct 2026 19:56:31 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=y6wnP4Uq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D0D81F01825;
+	Wed, 28 Oct 2026 19:56:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793217391;
-	bh=SMGduP0aRe0184wn7JQkqEiQD93v6yU8dFTp57siAbw=;
+	s=korg; t=1793217394;
+	bh=KmTUAGXOzoCHx3TuBtr6U3sEbnrH8fjIoByELk3I++Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fkoiNmsMGKUGoC3GJgtHD2OzC8ZgGh8XvwZ2b+R8NVOyRZrpFVuE+TRbh9HRbLvfP
-	 TW+FGZXuyj05j3/C78e9z+8A1axFuxFr/tb1yxvlG9mr/5hUjf4RbwtwN/wk5NWair
-	 U9eHuTt/SDNvIDTXwOwHnTWlDIGA1WC4rElxmS68=
+	b=y6wnP4Uq7k5GX8C/5bx+Jg4y0p3h7cqlmY/N+5TRTc0WbT9JZPvCo6gMq1ALFwsfP
+	 TzIPR0o2eSaM4RsEJsZdqXDX3DNntz084BdvkwPaV+ir7vjnd/NuRp3bYPVXbM/gzD
+	 5aLI2+QePSZ9ZXqIbuGhiU+XIGf8KzUhJpPbqWQA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Niklas Cassel <niklas.cassel@wdc.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	syzbot+bebc6f1acdf4cbb79b03@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
+	Benjamin Coddington <bcodding@redhat.com>,
+	Guillaume Nault <gnault@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1881/1887] scsi: block: Improve ioprio value validity checks
-Date: Wed, 28 Oct 2026 18:06:17 +0100
-Message-ID: <20261028170542.262157518@linuxfoundation.org>
+Subject: [PATCH 6.1 1882/1887] inet: control sockets should not use current thread task_frag
+Date: Wed, 28 Oct 2026 18:06:18 +0100
+Message-ID: <20261028170542.283866853@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -70,140 +71,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Damien Le Moal <dlemoal@kernel.org>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 01584c1e233740519d0e11aa20daa323d26bf598 ]
+[ Upstream commit 1ac88557447088ccd15eb2f2520ce46d463c8e0b ]
 
-The introduction of the macro IOPRIO_PRIO_LEVEL() in commit eca2040972b4
-("scsi: block: ioprio: Clean up interface definition") results in an
-iopriority level to always be masked using the macro IOPRIO_LEVEL_MASK, and
-thus to the kernel always seeing an acceptable value for an I/O priority
-level when checked in ioprio_check_cap().  Before this patch, this function
-would return an error for some (but not all) invalid values for a level
-valid range of [0..7].
+Because ICMP handlers run from softirq contexts,
+they must not use current thread task_frag.
 
-Restore and improve the detection of invalid priority levels by introducing
-the inline function ioprio_value() to check an ioprio class, level and hint
-value before combining these fields into a single value to be used with
-ioprio_set() or AIOs. If an invalid value for the class, level or hint of
-an ioprio is detected, ioprio_value() returns an ioprio using the class
-IOPRIO_CLASS_INVALID, indicating an invalid value and causing
-ioprio_check_cap() to return -EINVAL.
+Previously, all sockets allocated by inet_ctl_sock_create()
+would use the per-socket page fragment, with no chance of
+recursion.
 
-Fixes: 6c913257226a ("scsi: block: Introduce ioprio hints")
-Fixes: eca2040972b4 ("scsi: block: ioprio: Clean up interface definition")
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
-Link: https://lore.kernel.org/r/20230608095556.124001-1-dlemoal@kernel.org
-Reviewed-by: Niklas Cassel <niklas.cassel@wdc.com>
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: 98123866fcf3 ("Treewide: Stop corrupting socket's task_frag")
+Reported-by: syzbot+bebc6f1acdf4cbb79b03@syzkaller.appspotmail.com
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Benjamin Coddington <bcodding@redhat.com>
+Acked-by: Guillaume Nault <gnault@redhat.com>
+Link: https://lore.kernel.org/r/20230103192736.454149-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/ioprio.c              |  1 +
- include/uapi/linux/ioprio.h | 50 ++++++++++++++++++++++++-------------
- 2 files changed, 34 insertions(+), 17 deletions(-)
+ net/ipv4/af_inet.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/block/ioprio.c b/block/ioprio.c
-index f0d9e818abc53..b5a942519a797 100644
---- a/block/ioprio.c
-+++ b/block/ioprio.c
-@@ -58,6 +58,7 @@ int ioprio_check_cap(int ioprio)
- 			if (level)
- 				return -EINVAL;
- 			break;
-+		case IOPRIO_CLASS_INVALID:
- 		default:
- 			return -EINVAL;
- 	}
-diff --git a/include/uapi/linux/ioprio.h b/include/uapi/linux/ioprio.h
-index 4c4806e8230bc..99440b2e8c352 100644
---- a/include/uapi/linux/ioprio.h
-+++ b/include/uapi/linux/ioprio.h
-@@ -2,19 +2,20 @@
- #ifndef _UAPI_LINUX_IOPRIO_H
- #define _UAPI_LINUX_IOPRIO_H
- 
-+#include <linux/stddef.h>
-+#include <linux/types.h>
-+
- /*
-  * Gives us 8 prio classes with 13-bits of data for each class
-  */
- #define IOPRIO_CLASS_SHIFT	13
--#define IOPRIO_CLASS_MASK	0x07
-+#define IOPRIO_NR_CLASSES	8
-+#define IOPRIO_CLASS_MASK	(IOPRIO_NR_CLASSES - 1)
- #define IOPRIO_PRIO_MASK	((1UL << IOPRIO_CLASS_SHIFT) - 1)
- 
- #define IOPRIO_PRIO_CLASS(ioprio)	\
- 	(((ioprio) >> IOPRIO_CLASS_SHIFT) & IOPRIO_CLASS_MASK)
- #define IOPRIO_PRIO_DATA(ioprio)	((ioprio) & IOPRIO_PRIO_MASK)
--#define IOPRIO_PRIO_VALUE(class, data)	\
--	((((class) & IOPRIO_CLASS_MASK) << IOPRIO_CLASS_SHIFT) | \
--	 ((data) & IOPRIO_PRIO_MASK))
- 
- /*
-  * These are the io priority classes as implemented by the BFQ and mq-deadline
-@@ -25,10 +26,13 @@
-  * served when no one else is using the disk.
-  */
- enum {
--	IOPRIO_CLASS_NONE,
--	IOPRIO_CLASS_RT,
--	IOPRIO_CLASS_BE,
--	IOPRIO_CLASS_IDLE,
-+	IOPRIO_CLASS_NONE	= 0,
-+	IOPRIO_CLASS_RT		= 1,
-+	IOPRIO_CLASS_BE		= 2,
-+	IOPRIO_CLASS_IDLE	= 3,
-+
-+	/* Special class to indicate an invalid ioprio value */
-+	IOPRIO_CLASS_INVALID	= 7,
- };
- 
- /*
-@@ -73,15 +77,6 @@ enum {
- #define IOPRIO_PRIO_HINT(ioprio)	\
- 	(((ioprio) >> IOPRIO_HINT_SHIFT) & IOPRIO_HINT_MASK)
- 
--/*
-- * Alternate macro for IOPRIO_PRIO_VALUE() to define an I/O priority with
-- * a class, level and hint.
-- */
--#define IOPRIO_PRIO_VALUE_HINT(class, level, hint)		 \
--	((((class) & IOPRIO_CLASS_MASK) << IOPRIO_CLASS_SHIFT) | \
--	 (((hint) & IOPRIO_HINT_MASK) << IOPRIO_HINT_SHIFT) |	 \
--	 ((level) & IOPRIO_LEVEL_MASK))
--
- /*
-  * I/O hints.
-  */
-@@ -107,4 +102,25 @@ enum {
- 	IOPRIO_HINT_DEV_DURATION_LIMIT_7 = 7,
- };
- 
-+#define IOPRIO_BAD_VALUE(val, max) ((val) < 0 || (val) >= (max))
-+
-+/*
-+ * Return an I/O priority value based on a class, a level and a hint.
-+ */
-+static __always_inline __u16 ioprio_value(int class, int level, int hint)
-+{
-+	if (IOPRIO_BAD_VALUE(class, IOPRIO_NR_CLASSES) ||
-+	    IOPRIO_BAD_VALUE(level, IOPRIO_NR_LEVELS) ||
-+	    IOPRIO_BAD_VALUE(hint, IOPRIO_NR_HINTS))
-+		return IOPRIO_CLASS_INVALID << IOPRIO_CLASS_SHIFT;
-+
-+	return (class << IOPRIO_CLASS_SHIFT) |
-+		(hint << IOPRIO_HINT_SHIFT) | level;
-+}
-+
-+#define IOPRIO_PRIO_VALUE(class, level)			\
-+	ioprio_value(class, level, IOPRIO_HINT_NONE)
-+#define IOPRIO_PRIO_VALUE_HINT(class, level, hint)	\
-+	ioprio_value(class, level, hint)
-+
- #endif /* _UAPI_LINUX_IOPRIO_H */
+diff --git a/net/ipv4/af_inet.c b/net/ipv4/af_inet.c
+index a09b90552cf6e..73881ce0ca561 100644
+--- a/net/ipv4/af_inet.c
++++ b/net/ipv4/af_inet.c
+@@ -1700,6 +1700,7 @@ int inet_ctl_sock_create(struct sock **sk, unsigned short family,
+ 	if (rc == 0) {
+ 		*sk = sock->sk;
+ 		(*sk)->sk_allocation = GFP_ATOMIC;
++		(*sk)->sk_use_task_frag = false;
+ 		/*
+ 		 * Unhash it so that IP input processing does not even see it,
+ 		 * we do not wish this socket to see incoming packets.
 -- 
 2.53.0
 
