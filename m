@@ -1,55 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793211681;
-	b=t3ALeCwfuVgSx6vVW5zusPU/7mHF3Ac11E9h1n9tQtZS4EUUx4X9ORs9o6PTPCcjcBTa
-	 UTlpyUsommpzcD21zYH4rXqPeXNtMWVqfuB3vCvxU6hDL9VFUGMsg9i5TPYD96yA5qmyL
-	 7jTxnst6AxrqNZ8AyFKxb+yAHbGgPJuyTZ5BU7Z5z4HG/wV5s8AJ3qe4lWTUACVWbZeaa
-	 uoa487fbsFkYVLO5kaDgsXiha9jxZ7G1yMtHPGJgTFZhBR/O88HKrEj38gPg0e5CrQZ1h
-	 D7uK5DjRBWW4GFX9MBNDNSw1q+z5I9t4xVN/AU+mYiAHg91GTk/Uk6u0j5odEhNhrwA==
+	t=1793211684;
+	b=MeJToL5liHIpKAfvF1UVdMSO+OkRQF7toTzuNghoXsW6aKRfC2SYQ6h6kkXJ3DBk+9Hw
+	 JDmqVUuvuTK9zpCkOR6vMd3/GjkvRpIlgi5LaNqjKizp7d/pAmq9wBpzDyIxKSg6SgJML
+	 orLBz0xZssLu63jj/a3r8LJDTnqGeSgACO4c84ikNFEDChPLOCEnBiqZtosn4eX+N9NEO
+	 EoEhkYlYjUnDpNCn4lQNZPZmfZ/3lLVZeB1Egn22OLQWrQFZl257YC5PwK329bgt5aben
+	 WH0BxjZwENiotcHFkd/sKIPJT738vvvMJK4DUmYLMSRabVH0WM3pf+FuAFHdtm4R0WA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793211681;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793211684;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=IT6KM9Zvl1XbfRLtM9g+NtQlayiA/aofRuX+zLLwhUo=;
-	b=RB8YTb+6umF+tVDcnz/DeHmjWhNKYKu+dHPwgcGHXJIWlhK9lrHxRvL24YSv8U/j5LAT
-	 pCOAlesLJox1qSvkEmL3Nx4XfFeeosbpQAwr7Pp/X9nrz8pUba2BILRnqxDhPcDXj3NUx
-	 EdWScF3O260qdtAJk91lVJNhBEzIqcM/QlA7WeTdMWJzL5P37nQ1SeQ6pvmTH4oGaoalL
-	 UrKbuKYJcaS9zvMH/OFNZsuj6RSDTFB5k9Waa6lKCNAJ7kmloNIteQxZcM9OJBv26ukoJ
-	 aOxEzB3maOR1Nvs6yk1ph6JK4RelOAaHptPE3Pe/UULAUJIYYf9JzILLF23hkrHHA5Q==
+	bh=Hg8IWNINBQWuPAD7V7GkiNsvntGWfZMGPCWzt4OovSY=;
+	b=DimFZbVt63tImIN2QbJg8sABW8RZ4lPpRAuFGupL2Ti5vC2r/Iye9uILWtbWK4mSFsmH
+	 YdqzfL5s17ikWOxhD0cBoGI5y7XjibTYNZRi/HNcWLBHdLtS4WFKB7J5gQuEEc3///XbN
+	 Nnamxz4B+l7+IWYgyl64cbCesj2aqiGRyss+yyHiN8FFYh1qDXM7UCWFkjCFgpfUTPaue
+	 aKca9lsqVpABi04Wi6eTprM0FC3K284rY3T5AnpVZgXM19MfF95Jr53HHfex1NJfASG4X
+	 X0h1BDDuEkqITjPHNU0FU6YQV9+zX5T5k23Qvu9iJJtneHtzevdlNhra94k/aceB/1g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DGQtr5sn;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1uhIKNzo;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0382606A31A;
-	Wed, 28 Oct 2026 18:21:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECEA3606A321;
+	Wed, 28 Oct 2026 18:21:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DGQtr5sn
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 409601F01825;
-	Wed, 28 Oct 2026 18:21:20 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1uhIKNzo
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 102711F01828;
+	Wed, 28 Oct 2026 18:21:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793211680;
-	bh=IT6KM9Zvl1XbfRLtM9g+NtQlayiA/aofRuX+zLLwhUo=;
+	s=korg; t=1793211683;
+	bh=Hg8IWNINBQWuPAD7V7GkiNsvntGWfZMGPCWzt4OovSY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DGQtr5snrx0PRI7DPDYH+NUBWh6JU/h5yuTAIHy+uR92Pbp73HXWbr31seig2vQVS
-	 UvDrIBqCIUa0R/xGkZN6eIl3t9CQqc9scgvjJ1FkXpxAiT+S8hxGOk/Gt1vNnnNKyf
-	 nofRCjZ1f1SvsVNpIF4Te6/+UPompUhxYpjgGvj8=
+	b=1uhIKNzopdVttLGLjT3wSnAlmGhBNgPvAU3yPw2FMfFoRgDDLD2uOY4WTH4wq4H4V
+	 95acIV3KtcNtSlWfw8+l5HsskDmubA2U3CGJIi+QGzalCdveceNmh1R+Ij165KFqBE
+	 3HFihYK8EsjXoy+iPgqZj9tRV2ncqDV/I0rPpgK4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Chinner <dchinner@redhat.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Carlos Maiolino <cmaiolino@redhat.com>,
-	Carlos Maiolino <cem@kernel.org>,
-	Siddh Raman Pant <siddh.raman.pant@oracle.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Vicki Pfau <vi@endrift.com>,
+	Benjamin Tissoires <bentiss@kernel.org>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 461/571] xfs: xfs_ifree_cluster vs xfs_iflush_shutdown_abort deadlock
-Date: Wed, 28 Oct 2026 18:00:08 +0100
-Message-ID: <20261028170018.964258839@linuxfoundation.org>
+Subject: [PATCH 5.15 418/571] HID: hid-steam: Fix cleanup in probe()
+Date: Wed, 28 Oct 2026 17:59:25 +0100
+Message-ID: <20261028170017.930218218@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -71,158 +70,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dave Chinner <dchinner@redhat.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit 09234a632be42573d9743ac5ff6773622d233ad0 ]
+[ Upstream commit a9f1da09c69f13ef471db8b22107a28042d230ca ]
 
-Lock order of xfs_ifree_cluster() is cluster buffer -> try ILOCK
--> IFLUSHING, except for the last inode in the cluster that is
-triggering the free. In that case, the lock order is ILOCK ->
-cluster buffer -> IFLUSHING.
+There are a number of issues in this code.  First of all if
+steam_create_client_hid() fails then it leads to an error pointer
+dereference when we call hid_destroy_device(steam->client_hdev).
 
-xfs_iflush_cluster() uses cluster buffer -> try ILOCK -> IFLUSHING,
-so this can safely run concurrently with xfs_ifree_cluster().
+Also there are a number of leaks.  hid_hw_stop() is not called if
+hid_hw_open() fails for example.  And it doesn't call steam_unregister()
+or hid_hw_close().
 
-xfs_inode_item_precommit() uses ILOCK -> cluster buffer, but this
-cannot race with xfs_ifree_cluster() so being in a different order
-will not trigger a deadlock.
-
-xfs_reclaim_inode() during a filesystem shutdown uses ILOCK ->
-IFLUSHING -> cluster buffer via xfs_iflush_shutdown_abort(), and
-this deadlocks against xfs_ifree_cluster() like so:
-
- sysrq: Show Blocked State
- task:kworker/10:37   state:D stack:12560 pid:276182 tgid:276182 ppid:2      flags:0x00004000
- Workqueue: xfs-inodegc/dm-3 xfs_inodegc_worker
- Call Trace:
-  <TASK>
-  __schedule+0x650/0xb10
-  schedule+0x6d/0xf0
-  schedule_timeout+0x8b/0x180
-  schedule_timeout_uninterruptible+0x1e/0x30
-  xfs_ifree+0x326/0x730
-  xfs_inactive_ifree+0xcb/0x230
-  xfs_inactive+0x2c8/0x380
-  xfs_inodegc_worker+0xaa/0x180
-  process_scheduled_works+0x1d4/0x400
-  worker_thread+0x234/0x2e0
-  kthread+0x147/0x170
-  ret_from_fork+0x3e/0x50
-  ret_from_fork_asm+0x1a/0x30
-  </TASK>
- task:fsync-tester    state:D stack:12160 pid:2255943 tgid:2255943 ppid:3988702 flags:0x00004006
- Call Trace:
-  <TASK>
-  __schedule+0x650/0xb10
-  schedule+0x6d/0xf0
-  schedule_timeout+0x31/0x180
-  __down_common+0xbe/0x1f0
-  __down+0x1d/0x30
-  down+0x48/0x50
-  xfs_buf_lock+0x3d/0xe0
-  xfs_iflush_shutdown_abort+0x51/0x1e0
-  xfs_icwalk_ag+0x386/0x690
-  xfs_reclaim_inodes_nr+0x114/0x160
-  xfs_fs_free_cached_objects+0x19/0x20
-  super_cache_scan+0x17b/0x1a0
-  do_shrink_slab+0x180/0x350
-  shrink_slab+0xf8/0x430
-  drop_slab+0x97/0xf0
-  drop_caches_sysctl_handler+0x59/0xc0
-  proc_sys_call_handler+0x189/0x280
-  proc_sys_write+0x13/0x20
-  vfs_write+0x33d/0x3f0
-  ksys_write+0x7c/0xf0
-  __x64_sys_write+0x1b/0x30
-  x64_sys_call+0x271d/0x2ee0
-  do_syscall_64+0x68/0x130
-  entry_SYSCALL_64_after_hwframe+0x76/0x7e
-
-We can't change the lock order of xfs_ifree_cluster() - XFS_ISTALE
-and XFS_IFLUSHING are serialised through to journal IO completion
-by the cluster buffer lock being held.
-
-There's quite a few asserts in the code that check that XFS_ISTALE
-does not occur out of sync with buffer locking (e.g. in
-xfs_iflush_cluster). There's also a dependency on the inode log item
-being removed from the buffer before XFS_IFLUSHING is cleared, also
-with asserts that trigger on this.
-
-Further, we don't have a requirement for the inode to be locked when
-completing or aborting inode flushing because all the inode state
-updates are serialised by holding the cluster buffer lock across the
-IO to completion.
-
-We can't check for XFS_IRECLAIM in xfs_ifree_mark_inode_stale() and
-skip the inode, because there is no guarantee that the inode will be
-reclaimed. Hence it *must* be marked XFS_ISTALE regardless of
-whether reclaim is preparing to free that inode. Similarly, we can't
-check for IFLUSHING before locking the inode because that would
-result in dirty inodes not being marked with ISTALE in the event of
-racing with XFS_IRECLAIM.
-
-Hence we have to address this issue from the xfs_reclaim_inode()
-side. It is clear that we cannot hold the inode locked here when
-calling xfs_iflush_shutdown_abort() because it is the inode->buffer
-lock order that causes the deadlock against xfs_ifree_cluster().
-
-Hence we need to drop the ILOCK before aborting the inode in the
-shutdown case. Once we've aborted the inode, we can grab the ILOCK
-again and then immediately reclaim it as it is now guaranteed to be
-clean.
-
-Note that dropping the ILOCK in xfs_reclaim_inode() means that it
-can now be locked by xfs_ifree_mark_inode_stale() and seen whilst in
-this state. This is safe because we have left the XFS_IFLUSHING flag
-on the inode and so xfs_ifree_mark_inode_stale() will simply set
-XFS_ISTALE and move to the next inode. An ASSERT check in this path
-needs to be tweaked to take into account this new shutdown
-interaction.
-
-Signed-off-by: Dave Chinner <dchinner@redhat.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Carlos Maiolino <cmaiolino@redhat.com>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
-Signed-off-by: Siddh Raman Pant <siddh.raman.pant@oracle.com>
+Fixes: 691ead124a0c ("HID: hid-steam: Clean up locking")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Vicki Pfau <vi@endrift.com>
+Link: https://lore.kernel.org/r/1fd87904-dabf-4879-bb89-72d13ebfc91e@moroto.mountain
+Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
+[Lee: Move client_hdev creation after steam_register() and omit
+      mode_switch and rumble_work cancellation as 691ead124a0c and
+      e133dc99fc07 are not present]
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/xfs/xfs_icache.c | 8 ++++++++
- fs/xfs/xfs_inode.c  | 2 +-
- 2 files changed, 9 insertions(+), 1 deletion(-)
+ drivers/hid/hid-steam.c | 43 ++++++++++++++++++++++-------------------
+ 1 file changed, 23 insertions(+), 20 deletions(-)
 
-diff --git a/fs/xfs/xfs_icache.c b/fs/xfs/xfs_icache.c
-index 51fb70bce8193..b609759de490e 100644
---- a/fs/xfs/xfs_icache.c
-+++ b/fs/xfs/xfs_icache.c
-@@ -898,7 +898,15 @@ xfs_reclaim_inode(
+diff --git a/drivers/hid/hid-steam.c b/drivers/hid/hid-steam.c
+index fc616db4231bb..8832f7987006c 100644
+--- a/drivers/hid/hid-steam.c
++++ b/drivers/hid/hid-steam.c
+@@ -751,31 +751,20 @@ static int steam_probe(struct hid_device *hdev,
+ 	INIT_WORK(&steam->work_connect, steam_work_connect_cb);
+ 	INIT_LIST_HEAD(&steam->list);
  
- 	if (xfs_is_shutdown(ip->i_mount)) {
- 		xfs_iunpin_wait(ip);
-+		/*
-+		 * Avoid a ABBA deadlock on the inode cluster buffer vs
-+		 * concurrent xfs_ifree_cluster() trying to mark the inode
-+		 * stale. We don't need the inode locked to run the flush abort
-+		 * code, but the flush abort needs to lock the cluster buffer.
-+		 */
-+		xfs_iunlock(ip, XFS_ILOCK_EXCL);
- 		xfs_iflush_shutdown_abort(ip);
-+		xfs_ilock(ip, XFS_ILOCK_EXCL);
- 		goto reclaim;
- 	}
- 	if (xfs_ipincount(ip))
-diff --git a/fs/xfs/xfs_inode.c b/fs/xfs/xfs_inode.c
-index 13a113ed666fa..3f2cc6204153c 100644
---- a/fs/xfs/xfs_inode.c
-+++ b/fs/xfs/xfs_inode.c
-@@ -2492,7 +2492,7 @@ xfs_ifree_mark_inode_stale(
- 	iip = ip->i_itemp;
- 	if (__xfs_iflags_test(ip, XFS_IFLUSHING)) {
- 		ASSERT(!list_empty(&iip->ili_item.li_bio_list));
--		ASSERT(iip->ili_last_fields);
-+		ASSERT(iip->ili_last_fields || xlog_is_shutdown(mp->m_log));
- 		goto out_iunlock;
+-	steam->client_hdev = steam_create_client_hid(hdev);
+-	if (IS_ERR(steam->client_hdev)) {
+-		ret = PTR_ERR(steam->client_hdev);
+-		goto client_hdev_fail;
+-	}
+-	steam->client_hdev->driver_data = steam;
+-
+ 	/*
+ 	 * With the real steam controller interface, do not connect hidraw.
+ 	 * Instead, create the client_hid and connect that.
+ 	 */
+ 	ret = hid_hw_start(hdev, HID_CONNECT_DEFAULT & ~HID_CONNECT_HIDRAW);
+ 	if (ret)
+-		goto hid_hw_start_fail;
+-
+-	ret = hid_add_device(steam->client_hdev);
+-	if (ret)
+-		goto client_hdev_add_fail;
++		goto err_cancel_work;
+ 
+ 	ret = hid_hw_open(hdev);
+ 	if (ret) {
+ 		hid_err(hdev,
+ 			"%s:hid_hw_open\n",
+ 			__func__);
+-		goto hid_hw_open_fail;
++		goto err_hw_stop;
  	}
  
+ 	if (steam->quirks & STEAM_QUIRK_WIRELESS) {
+@@ -791,19 +780,33 @@ static int steam_probe(struct hid_device *hdev,
+ 			hid_err(hdev,
+ 				"%s:steam_register failed with error %d\n",
+ 				__func__, ret);
+-			goto input_register_fail;
++			goto err_hw_close;
+ 		}
+ 	}
+ 
++	steam->client_hdev = steam_create_client_hid(hdev);
++	if (IS_ERR(steam->client_hdev)) {
++		ret = PTR_ERR(steam->client_hdev);
++		goto err_stream_unregister;
++	}
++	steam->client_hdev->driver_data = steam;
++
++	ret = hid_add_device(steam->client_hdev);
++	if (ret)
++		goto err_destroy;
++
+ 	return 0;
+ 
+-input_register_fail:
+-hid_hw_open_fail:
+-client_hdev_add_fail:
+-	hid_hw_stop(hdev);
+-hid_hw_start_fail:
++err_destroy:
+ 	hid_destroy_device(steam->client_hdev);
+-client_hdev_fail:
++err_stream_unregister:
++	if (steam->connected)
++		steam_unregister(steam);
++err_hw_close:
++	hid_hw_close(hdev);
++err_hw_stop:
++	hid_hw_stop(hdev);
++err_cancel_work:
+ 	cancel_work_sync(&steam->work_connect);
+ steam_alloc_fail:
+ 	hid_err(hdev, "%s: failed with error %d\n",
 -- 
 2.53.0
 
