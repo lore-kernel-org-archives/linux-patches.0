@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215270;
-	b=pNzyNdp6yyIXk+WLALlJObXJ3wh4BTvGcExRu7Qaa6nV2bOJjKbTzLXwWh1//NAklQKJ
-	 5+HCukdc42Q1Bc6Yv0s68vEsUth4G8BzRDC9avCqsOkvXW1XFM/uqsMDpX0c4BbV2/cQB
-	 XTVYR+SnXFlioi1Y0E1aFylgZHpCUxJ8eKMNlwxCa1Z2Czz0siI+/Fd0slOWdG5fyPk0K
-	 Sp/CmKv5CxBgQC2nERZf2QRwZQgL9Z/oVfyNvnvxJr/ZEpRDzzGKcw6nwR2ct6dFRISVI
-	 1VFV+r6pGSn+znKTZ2eu+orZ26IFc5MiZwr6m2uuOmKTYQeiq/aRf1xIdk7N3JmtUcA==
+	t=1793215273;
+	b=HfTrDcNJ2OhBziMyUFW6zMwa5YL8uiXN7Vf/uYUqvXjuxHCKGbCfVeqXlgOXivJ5S4Wb
+	 neaG1IYzu7+Xa0hKUtdslmXRR2zvjmrQAnuSQrIH4KFKBkOQ2sBcYr4eoTQ7yVTxA3ssI
+	 wGAPlVlER5jl1V8CYRLZrDfeTeU5D/Qk0TDM8GY/pQ27LJyyDQuVXqkkb/b+hScZ71iTN
+	 1G2RJvbvEiM+y7vtYAg5XP5wPI45R6qeXusIMXZEdlTYRpexKfH/t5hOu1RTlqupEotJ9
+	 KtQ+2YAZk1Qk6+C35M9EZjEBzB0oy602WOFqNBNZ3naaSMnwf6uhj7uuHN7L80dD87A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215270;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215273;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+JvT7RdxK1R9y0S+os5YxoQJuRQGsOZeoIMV6iUSWS0=;
-	b=SOLQM26LhjN5Ks4+++zdI0+lR5Y9WAJmuGtIVvP0MLBjmus8PuZCysWMLZiycJoWsIbK
-	 iTEKcMNzqSRpTNviMt4dY8xB0Tg00Zpz8rkntuP4mV/Ce2yDRaioQ/sEDpFH8O2hQVmTL
-	 hu7lrwB9++PVVVzcm4QyYwKSEltHevUnYFEDAMoJ4iCnSaf6XkQPlGrmUj0wgjTiV3bmz
-	 DnuTyp/Z2zrFbd6bEuN491upDCYo0ajOSDXDA8C1bEcCcTEhhPkPBNusXoeMCNda0adZY
-	 tPt0110dzbKQvMiuJ5d7RqLpuxulhbf5zZZt5d1+T4PyYCE6ypLumeC5A78yueuImpQ==
+	bh=XFl3zsGrWTd31ATM0WtHBHweZGs2UZxATx7qRL5hc8I=;
+	b=idMmtHja71sw36pi3iHkFJti1ZspfPpazBoIm6ijUw/CmpeS4N+fY5d4UVVrpcOupoeD
+	 tbcpRwQLogzOpIjnHgVSeRg/llq7eHy71vohXPtE56qYgAlv/Uifk/7XdTNJqnZGVyMEe
+	 xETjg/NSxc4lmlKezyoChLnd+ilQctUT89DdOnzzT9qj6Kl25hEImyyR5TJ9kZb/ZC703
+	 VHb3iJ31pbZArER+UozPY0NXZG9DokD4x4YotZpPd/M3/jPEywfSvplDud4p0ugD1cH9R
+	 6ekXh9rPemIwa1rKlPk0r88Rew3N0xcELiUGG0aT7KKW45c8pwZbcPvW/c4RiNZqdzw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="ZCC17/F9";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LQ7Ub0bq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 030B5606A31A;
-	Wed, 28 Oct 2026 19:21:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB362606A31F;
+	Wed, 28 Oct 2026 19:21:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZCC17/F9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 521E61F01825;
-	Wed, 28 Oct 2026 19:21:09 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LQ7Ub0bq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27D4C1F01828;
+	Wed, 28 Oct 2026 19:21:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215269;
-	bh=+JvT7RdxK1R9y0S+os5YxoQJuRQGsOZeoIMV6iUSWS0=;
+	s=korg; t=1793215272;
+	bh=XFl3zsGrWTd31ATM0WtHBHweZGs2UZxATx7qRL5hc8I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZCC17/F9P6TLOQBiA+hhASoBAFUmtd0KouFue7s/FhCBm4AktykSIlMHmCCgi+U/V
-	 u1+MF0BEkUm5M3UUxKxe4SHta7VOic6xuBWJVqg1UVLipQ7v++3zMSmUYpemwA3DXN
-	 AAMoMWHBc9hBqonkuYzVH+qsKRpWGpTyL4ULHkEM=
+	b=LQ7Ub0bqOAGWLP0qUwICUnHFnqG/ZdKACj3lbBj8z9Jwjb2gwyj/mUfjCScw8ICdN
+	 a+qee+oyFQl35WTx8z3vs5/JM8t87X32AdYBxHfjN2budW58BGLpDXuV0pWjNmEd1s
+	 pQoFeOvUCkdlccYRx1+UmEHY6Lzi4UU+BoCn841I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Musaab Khan <musaab.khan@protonmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1135/1887] hwmon: (lm90) Stop work before releasing hwmon device
-Date: Wed, 28 Oct 2026 17:53:51 +0100
-Message-ID: <20261028170525.234326902@linuxfoundation.org>
+Subject: [PATCH 6.1 1153/1887] ksmbd: use opener credentials for ADS I/O
+Date: Wed, 28 Oct 2026 17:54:09 +0100
+Message-ID: <20261028170525.644186265@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,106 +69,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guenter Roeck <linux@roeck-us.net>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit b09a45601094c7f4ec4db8090b825fa61e169d93 ]
+[ Upstream commit baa5e094886fffa7e6272edcb5e08be5ce28262c ]
 
-Sashiko reports:
+Alternate data streams are stored as xattrs. Unlike regular file I/O,
+their read and write paths therefore call VFS xattr helpers which recheck
+inode permissions and LSM policy using the current task credentials.
 
-In lm90_probe(), the devm action to cancel the alert_work and report_work
-(lm90_restore_conf) is registered in lm90_init_client() before
-devm_hwmon_device_register_with_info() is called.
+Run ADS I/O with the credentials captured when the SMB handle was opened.
 
-Because devm executes cleanup actions in reverse order during module
-unbind or probe failure, the hwmon device is unregistered and freed first.
-
-If lm90_alert_work() or lm90_report_alarms() runs in the window between
-the hwmon device being freed and the delayed works being cancelled,
-lm90_update_alarms() will dereference the freed data->hwmon_dev here.
-
-Fix the problem by canceling the workers separately after registering
-the hwmon device and before registering the interrupt handler. This ensures
-that the workers are canceled after interrupts are disabled and before
-the hwmon device is released. Add "shutdown" flag to indicate that device
-shutdown is in progress to prevent workers from being re-armed.
-
-Fixes: f6d0775119fb9 ("hwmon: (lm90) Rework alarm/status handling")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Cc: stable@vger.kernel.org
+Reported-by: Musaab Khan <musaab.khan@protonmail.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/lm90.c | 24 ++++++++++++++++++++----
- 1 file changed, 20 insertions(+), 4 deletions(-)
+ fs/smb/server/vfs.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/hwmon/lm90.c b/drivers/hwmon/lm90.c
-index 7ce75e64cc3ca..8970927bef8ab 100644
---- a/drivers/hwmon/lm90.c
-+++ b/drivers/hwmon/lm90.c
-@@ -694,6 +694,7 @@ struct lm90_data {
- 	struct mutex update_lock;
- 	struct delayed_work alert_work;
- 	struct work_struct report_work;
-+	bool shutdown;		/* true if shutting down */
- 	bool valid;		/* true if register values are valid */
- 	bool alarms_valid;	/* true if status register values are valid */
- 	unsigned long last_updated; /* in jiffies */
-@@ -1112,6 +1113,9 @@ static void lm90_report_alarms(struct work_struct *work)
- 
- static int lm90_update_alarms_locked(struct lm90_data *data, bool force)
+diff --git a/fs/smb/server/vfs.c b/fs/smb/server/vfs.c
+index 1da397999941a..bb5ca68f1701f 100644
+--- a/fs/smb/server/vfs.c
++++ b/fs/smb/server/vfs.c
+@@ -285,17 +285,20 @@ static ssize_t ksmbd_vfs_getcasexattr(struct user_namespace *user_ns,
+ static int ksmbd_vfs_stream_read(struct ksmbd_file *fp, char *buf, loff_t *pos,
+ 				 size_t count)
  {
-+	if (data->shutdown)
-+		return 0;
-+
- 	if (force || !data->alarms_valid ||
- 	    time_after(jiffies, data->alarms_updated + msecs_to_jiffies(data->update_interval))) {
- 		struct i2c_client *client = data->client;
-@@ -2557,15 +2561,23 @@ static void lm90_restore_conf(void *_data)
- 	struct lm90_data *data = _data;
- 	struct i2c_client *client = data->client;
++	const struct cred *saved_cred;
+ 	ssize_t v_len;
+ 	char *stream_buf = NULL;
  
--	cancel_delayed_work_sync(&data->alert_work);
--	cancel_work_sync(&data->report_work);
--
- 	/* Restore initial configuration */
- 	if (data->flags & LM90_HAVE_CONVRATE)
- 		lm90_write_convrate(data, data->convrate_orig);
- 	lm90_write_reg(client, LM90_REG_CONFIG1, data->config_orig);
- }
+ 	ksmbd_debug(VFS, "read stream data pos : %llu, count : %zd\n",
+ 		    *pos, count);
  
-+static void lm90_stop_work(void *_data)
-+{
-+	struct lm90_data *data = _data;
-+
-+	mutex_lock(&data->update_lock);
-+	data->shutdown = true;
-+	mutex_unlock(&data->update_lock);
-+	cancel_delayed_work_sync(&data->alert_work);
-+	cancel_work_sync(&data->report_work);
-+}
-+
- static int lm90_init_client(struct i2c_client *client, struct lm90_data *data)
++	saved_cred = override_creds(fp->filp->f_cred);
+ 	v_len = ksmbd_vfs_getcasexattr(file_mnt_user_ns(fp->filp),
+ 				       fp->filp->f_path.dentry,
+ 				       fp->stream.name,
+ 				       fp->stream.size,
+ 				       &stream_buf);
++	revert_creds(saved_cred);
+ 	if ((int)v_len <= 0)
+ 		return (int)v_len;
+ 
+@@ -414,6 +417,7 @@ int ksmbd_vfs_read(struct ksmbd_work *work, struct ksmbd_file *fp, size_t count,
+ static int ksmbd_vfs_stream_write(struct ksmbd_file *fp, char *buf, loff_t *pos,
+ 				  size_t count)
  {
- 	struct device_node *np = client->dev.of_node;
-@@ -2914,6 +2926,10 @@ static int lm90_probe(struct i2c_client *client)
++	const struct cred *saved_cred;
+ 	char *stream_buf = NULL, *wbuf;
+ 	struct user_namespace *user_ns = file_mnt_user_ns(fp->filp);
+ 	size_t size;
+@@ -434,6 +438,7 @@ static int ksmbd_vfs_stream_write(struct ksmbd_file *fp, char *buf, loff_t *pos,
+ 		count = XATTR_SIZE_MAX - *pos;
+ 	}
  
- 	data->hwmon_dev = hwmon_dev;
++	saved_cred = override_creds(fp->filp->f_cred);
+ 	v_len = ksmbd_vfs_getcasexattr(user_ns,
+ 				       fp->filp->f_path.dentry,
+ 				       fp->stream.name,
+@@ -442,14 +447,14 @@ static int ksmbd_vfs_stream_write(struct ksmbd_file *fp, char *buf, loff_t *pos,
+ 	if (v_len < 0) {
+ 		pr_err("not found stream in xattr : %zd\n", v_len);
+ 		err = v_len;
+-		goto out;
++		goto out_revert;
+ 	}
  
-+	err = devm_add_action_or_reset(&client->dev, lm90_stop_work, data);
-+	if (err)
-+		return err;
-+
- 	if (client->irq) {
- 		dev_dbg(dev, "IRQ: %d\n", client->irq);
- 		err = devm_request_threaded_irq(dev, client->irq,
-@@ -2942,7 +2958,7 @@ static void lm90_alert(struct i2c_client *client, enum i2c_alert_protocol type,
- 		 */
- 		struct lm90_data *data = i2c_get_clientdata(client);
+ 	if (v_len < size) {
+ 		wbuf = kvzalloc(size, GFP_KERNEL);
+ 		if (!wbuf) {
+ 			err = -ENOMEM;
+-			goto out;
++			goto out_revert;
+ 		}
  
--		if ((data->flags & LM90_HAVE_BROKEN_ALERT) &&
-+		if (!data->shutdown && (data->flags & LM90_HAVE_BROKEN_ALERT) &&
- 		    (data->current_alarms & data->alert_alarms)) {
- 			if (!(data->config & 0x80)) {
- 				dev_dbg(&client->dev, "Disabling ALERT#\n");
+ 		if (v_len > 0)
+@@ -467,6 +472,8 @@ static int ksmbd_vfs_stream_write(struct ksmbd_file *fp, char *buf, loff_t *pos,
+ 				 size,
+ 				 0,
+ 				 true);
++out_revert:
++	revert_creds(saved_cred);
+ 	if (err < 0)
+ 		goto out;
+ 
 -- 
 2.53.0
 
