@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215674;
-	b=cK3ivuRBCIm24dFBlFvd1FimMZbFZwYvNjVf/WjrJX0kU6HWFD2QM9/s5yxIb1ydskow
-	 8aldNXh3L1678WMoiTM8Q+AaMum0iR3cfnUAv0fnB67KcU+ieLnRTU/EWvXaAR3npaE3R
-	 ZBLA8CL1s8dcRP+FWLoMHdcqEtdng8cygKw9UWRm8h9ehhcB9veUyM10uQBEGwf/zn9hj
-	 ylkfxQ0DDqGwCJ+6UsLw0YXlUk0CAJJTTICclJYyiqqrkXAFudkYsLZxATrucJ+xFKUK9
-	 /ZyyqRhL0MnKbm29wYuTw8/rm3nvX9kOPZE2buLgjbkvJJ00/9kFll0vHccRlfWd5mw==
+	t=1793215677;
+	b=4jt5jGWjQd9Zl5iipq+EHsVPDFrYanki5MVhNgAWVz5pp1PCkBR35zEWDf5uviMI19mF
+	 hg6+2lDsJY9qQrpwxc7PQsE2u8VhVdQ/a5PnvlG9FlY1JhIeGYG59QGoVMVOnreZwJg+w
+	 04gyfBgr+nrVmWdh0v3JVqSuckJZ/m44wnQ9U8VNFFUy0DWbi6s5HUAqDNW35t4ZukQ9k
+	 /OQ2PEE631O3Fne0oWQBaRFhhIM+NI+2ISqOoi61+4t49M6i4C+Msq+a7CDX0jWbRiuuI
+	 WTSiffQGDs8Sn2FRGTBpVMHck8z9u/bpyubBhlRFItPtAFWmWYBkulQkH3140HcqCwA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215674;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215677;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=adY+MIRbYHFx1QzTnajdNu8JcCfssLe4M3Nmi/FrQkE=;
-	b=3t/3B1anNHRSCJa05HiS7B+yNa/tMqtgR27jGTHWmqnvXRVoo41eehw9uZWuipdrwDPC
-	 so7rPG8GIJyoZFLi7Y5n7Wf8OI8h8LBn7Aj8f+7vK6S739W2Nqmjso7n0aJxuujcskCiJ
-	 Th90/BM/8l2xafHoZKwjo8LTifh317xVR8IwAoYdyYuXx8st35SeG7Ak7nhS6z4TrxIzx
-	 Kt5p6aMn8kMQikJyFodBiMOfYqF4t54g6vABknvu1/4eveFJys+wDkG3o+1sdKx9t6MXW
-	 7k4yD8l9tNlZhhMB1IX0KUrxuVs7CELDPErLGecJDQ4W/SVlBEKJWxukoPVbC6u6blQ==
+	bh=GhVUEtIiZhbofSOAQcqAGNo1RXuoGulH5RseFb5RfTc=;
+	b=zjWgW2GoTxMPwsTRfRZIJFY3elyuGpt5EXtlpkXYmjsycM1zHpiDdrIVuRzwxZUndKtR
+	 yjHz5kCKVDTbM173KDMz8GYBygMpQQZEMk+lJ6TggSlldEiWmdMnHP61TwIFe6c9L/sFg
+	 3qbaRJeYsHZuh3R+uVk0HXdmHv5dvNZA59aHBiib+T7fhPs8EdUn//a3cnS5oDMgiG+ds
+	 edVEoY2hPkGfk/9EGWjRVWGtMRNSus6zJZDTxuOAuHBRBgq2nyKzmOPdUg4zTKsTLgZdq
+	 +5FiKuQ4y9ix9dbezouCI8Nn75/lW1dqQDMF0G6sxGd9XCMUHu2Z69nAdMlirOyI4mw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BLZOxe2i;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UxPdsajV;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A42D9606A32A;
-	Wed, 28 Oct 2026 19:27:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8411E606A31C;
+	Wed, 28 Oct 2026 19:27:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BLZOxe2i
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3D851F031E2;
-	Wed, 28 Oct 2026 19:27:53 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UxPdsajV
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8B621F01825;
+	Wed, 28 Oct 2026 19:27:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215674;
-	bh=adY+MIRbYHFx1QzTnajdNu8JcCfssLe4M3Nmi/FrQkE=;
+	s=korg; t=1793215677;
+	bh=GhVUEtIiZhbofSOAQcqAGNo1RXuoGulH5RseFb5RfTc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BLZOxe2i0TgNRvJZDjBLHUWfnJ8jmn6SVogZ1mB3RviOFWUQLzH97uU66ypNEeb6D
-	 QhbiGE6S+FZN8yi5ollUzpxyYqsohDNjtwzYJ0D3ldqWi0AUhe7v1Qso4mOOglMrHr
-	 tKygejJ3OyjrlumkoOJ2kx7E556BOEOtJx8uCLhY=
+	b=UxPdsajVu4o9p8c/r29M2qvwIe2/rkzmGdGSvE2/xUYm6zhzKOEI1ISdXKhEsvIuw
+	 skjVWxCTBVKX1i4kdi1QUDbLGXXrPXquSVCsGj2nCHY0lW374uehCNn1X34ejWpZoV
+	 zS24HYV0mSLYRYeSE9hfZiJ1gJ0ezo6GlNcjZDyc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandra Winter <wintera@linux.ibm.com>,
+	syzbot+76d4e3a055aec3b007ec@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1293/1887] s390/ism: Fix UAF of sba and ieq during ism_dev_exit()
-Date: Wed, 28 Oct 2026 17:56:29 +0100
-Message-ID: <20261028170528.849345313@linuxfoundation.org>
+Subject: [PATCH 6.1 1294/1887] netfilter: nf_flow_table: drop existing skb dst before skb_dst_set_noref()
+Date: Wed, 28 Oct 2026 17:56:30 +0100
+Message-ID: <20261028170528.871901648@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,92 +70,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexandra Winter <wintera@linux.ibm.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit b1896543ce59c4258625a35cf41e23a9a1f80ea2 ]
+[ Upstream commit 8aecf0bbcc72605592134c917c222207d8f63ab0 ]
 
-A ism interrupt handler can be active in parallel with ism_dev_exit(),
-accessing freed data structures.
+Incoming skbs passing through netfilter flowtable offload hooks (or XFRM
+offload path) might already carry a ref-counted dst_entry assigned during
+earlier RX or routing steps.
 
-No new interrupts will be generated after unregister_ieq(). Drain ongoing
-interrupt handlers by free_irq(), before freeing ism data structures.
+Calling skb_dst_set_noref() when skb already holds a ref-counted dst
+overwrites skb->_skb_refdst, leaking the previous dst_entry reference
+count and triggering a DEBUG_NET_WARN_ON_ONCE assertion in
+skb_dst_check_unset():
 
-Fixes: 684b89bc39ce ("s390/ism: add device driver for internal shared memory")
-Signed-off-by: Alexandra Winter <wintera@linux.ibm.com>
-Link: https://patch.msgid.link/20260805131043.954639-1-wintera@linux.ibm.com
+  WARNING: at skb_dst_check_unset include/linux/skbuff.h:1170
+  WARNING: at skb_dst_set_noref include/linux/skbuff.h:1234
+  WARNING: at nf_flow_offload_ip_hook+0xf6c/0x2b60 net/netfilter/nf_flow_table_ip.c:864
+
+Drop any existing dst_entry reference with skb_dst_drop(skb) before
+setting the non-referenced flowtable destination.
+
+Fixes: 2a79fd3908ac ("netfilter: nf_flow_table: attach dst to skbs")
+Reported-by: syzbot+76d4e3a055aec3b007ec@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/6a71b141.9511d2ce.1fc5b9.033b.GAE@google.com/T/#u
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Link: https://patch.msgid.link/20260804093328.1831847-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/s390/net/ism_drv.c | 20 ++++++++++++++++----
- 1 file changed, 16 insertions(+), 4 deletions(-)
+ net/netfilter/nf_flow_table_ip.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/s390/net/ism_drv.c b/drivers/s390/net/ism_drv.c
-index 9576e3975c721..c4150dba6cd44 100644
---- a/drivers/s390/net/ism_drv.c
-+++ b/drivers/s390/net/ism_drv.c
-@@ -153,13 +153,16 @@ static int unregister_sba(struct ism_dev *ism)
- 	if (ret && ret != ISM_ERROR)
- 		return -EIO;
- 
-+	return 0;
-+}
-+
-+static void ism_free_sba(struct ism_dev *ism)
-+{
- 	dma_free_coherent(&ism->pdev->dev, PAGE_SIZE,
- 			  ism->sba, ism->sba_dma_addr);
- 
- 	ism->sba = NULL;
- 	ism->sba_dma_addr = 0;
--
--	return 0;
- }
- 
- static int unregister_ieq(struct ism_dev *ism)
-@@ -173,13 +176,16 @@ static int unregister_ieq(struct ism_dev *ism)
- 	if (ret && ret != ISM_ERROR)
- 		return -EIO;
- 
-+	return 0;
-+}
-+
-+static void ism_free_ieq(struct ism_dev *ism)
-+{
- 	dma_free_coherent(&ism->pdev->dev, PAGE_SIZE,
- 			  ism->ieq, ism->ieq_dma_addr);
- 
- 	ism->ieq = NULL;
- 	ism->ieq_dma_addr = 0;
--
--	return 0;
- }
- 
- static int ism_read_local_gid(struct ism_dev *ism)
-@@ -537,8 +543,10 @@ static int ism_dev_init(struct ism_dev *ism)
- 
- unreg_ieq:
- 	unregister_ieq(ism);
-+	ism_free_ieq(ism);
- unreg_sba:
- 	unregister_sba(ism);
-+	ism_free_sba(ism);
- free_irq:
- 	free_irq(pci_irq_vector(pdev, 0), ism);
- free_vectors:
-@@ -611,9 +619,13 @@ static void ism_dev_exit(struct ism_dev *ism)
- 	if (SYSTEM_EID.serial_number[0] != '0' ||
- 	    SYSTEM_EID.type[0] != '0')
- 		ism_del_vlan_id(ism->smcd, ISM_RESERVED_VLANID);
-+	/* ism will only generate new IRQs while ieq & sba are registered */
- 	unregister_ieq(ism);
- 	unregister_sba(ism);
-+	/* drain ongoing irpt handlers */
- 	free_irq(pci_irq_vector(pdev, 0), ism);
-+	ism_free_ieq(ism);
-+	ism_free_sba(ism);
- 	pci_free_irq_vectors(pdev);
- }
- 
+diff --git a/net/netfilter/nf_flow_table_ip.c b/net/netfilter/nf_flow_table_ip.c
+index 523228e969ab4..cd744ac065cd0 100644
+--- a/net/netfilter/nf_flow_table_ip.c
++++ b/net/netfilter/nf_flow_table_ip.c
+@@ -262,6 +262,7 @@ static unsigned int nf_flow_xmit_xfrm(struct sk_buff *skb,
+ 				      struct dst_entry *dst)
+ {
+ 	skb_orphan(skb);
++	skb_dst_drop(skb);
+ 	skb_dst_set_noref(skb, dst);
+ 	dst_output(state->net, state->sk, skb);
+ 	return NF_STOLEN;
+@@ -417,6 +418,7 @@ nf_flow_offload_ip_hook(void *priv, struct sk_buff *skb,
+ 		outdev = rt->dst.dev;
+ 		skb->dev = outdev;
+ 		nexthop = rt_nexthop(rt, flow->tuplehash[!dir].tuple.src_v4.s_addr);
++		skb_dst_drop(skb);
+ 		skb_dst_set_noref(skb, &rt->dst);
+ 		neigh_xmit(NEIGH_ARP_TABLE, outdev, &nexthop, skb);
+ 		ret = NF_STOLEN;
+@@ -678,6 +680,7 @@ nf_flow_offload_ipv6_hook(void *priv, struct sk_buff *skb,
+ 		outdev = rt->dst.dev;
+ 		skb->dev = outdev;
+ 		nexthop = rt6_nexthop(rt, &flow->tuplehash[!dir].tuple.src_v6);
++		skb_dst_drop(skb);
+ 		skb_dst_set_noref(skb, &rt->dst);
+ 		neigh_xmit(NEIGH_ND_TABLE, outdev, nexthop, skb);
+ 		ret = NF_STOLEN;
 -- 
 2.53.0
 
