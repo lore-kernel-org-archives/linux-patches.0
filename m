@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793208625;
-	b=Gb96N1YsHM+FyRks/PY6q9+I+WOTjBF/2LjIiWXmCp/aTllqB3KCxhJPVMvW4RT2hLFL
-	 nP4TDFNG+YND1N3D05xIwa9ukUlHe8nPRAvQ+pgTb9M+Nxo1W/Q4IAxC2J959R3ZFfpei
-	 j5AZSxrb8G574pPDoauTx9Dt+SmTDpTchrLy8hF6FASscFLsA6du3gcDHzeNxu4sqcdPS
-	 luSnVlSKcoMhvCFtkq99bjdLglkqYRtIgrd6zjSnhSWd0iqBR7ekilRHq3FAL0BG68ML2
-	 dGInxfCkm7ztU2A8taknLIDvRHfbqil7JnTj6IyFa0bA63azZETQl8PcpBkGv2VLDaA==
+	t=1793208628;
+	b=Lhd4UEQXfA8i08lzXjgQmDbN3h0OB/DuNgxPPWTdmWzb86D3+9QLGsZrgiitpy1zqxD+
+	 4j4+V01GM5C7wH6O5fJfGyJxGiARexLc6xJFI/gEOvjAwtuf9TooabLyDud17nx+6Selz
+	 SeroHlwVzeSkaLrUBeHvFCVUj44s6UmMijHXI8MjwqN7CAwXOQg9HWX2NiIMeyHwhRye4
+	 fdyad9W8CTWMjUA/wqXs3RCbBY3YsN+gIlwUAZ1lArKCWS00A1wDhFH2W1ftHaTN6BI9L
+	 hs7ZS/SZ2WdYVczt+YCT/1lUytAzB2+6M/fOFF5ZzYjT5S44BBdxWx9Qkcu5ZfMTB3A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793208625;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793208628;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=VGx5No6eXHVMHwXbxVlxTUR/HGHnS/eHObm1HNDKzlU=;
-	b=TNkM9jJXukSvPpoIYimkGihlvn6BfYZ+OuHjCwmx6u08YSZBBG5+PzwxAVlwu5tNfm4x
-	 dhOZPB7GKFast8vujZyqFZOIp2AOCt2z1dsuQa5lw6mNvRnfuzA7DhXrNeHvxApT8sV06
-	 buOxiklT0YLhfr+FHqYhSfy4eJWHP0fUWUWT+QiW8IdlIRjSg90im1thkppjmQnVvrJ+t
-	 4TSs8ttsurvZqzN0OhKAFQ66xVxJebveOG/nfThvzoXXpPxvIzGxE/97KhqD3WK+l4kCV
-	 fW0jEfDf6FnIUTqx38w/vkJcTX4qwqKTr0xGVkSnuLtAcOkj749WaPrWWzcdmViRz4A==
+	bh=r3Ur3gNT8O3+p/axhlGqc5YEZlEHEJqi1YtDbYlN9zg=;
+	b=j1qmAxJyDICDTIeKp/vtQhyS1oFFrg5psLbilAeSqw6U/IrTePFvJHqs7C6HCKTK/GgL
+	 sTfdPf98BC+Z1eUZxrrsKv2zwl1MeXrV0Sd7Rl/gE0hEPffv/f/psDOgmOZ/2tby3R6A+
+	 lZ5iAwRzlEvg75VTcYsjGdbFzJCa6XFf5NwlVkWqCKJHCuZcwXnXeIPepdIJ+u6nQOpcq
+	 fJcnrkC/DelB0JmLFUBeN69zUVjKoTYbnEJv/X4Eryb912//mvQlOwLRvuMFhqYEgtdhw
+	 Cz+AgIZznYqR2Nj6+MV3ujlT1AZuHcPoAHacXyvn/jCHnS+iSgcq4XcdYZf9YUDEAGg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X6o1rDlP;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OiImLmKH;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0130B606A31F;
-	Wed, 28 Oct 2026 17:30:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEB92606A31A;
+	Wed, 28 Oct 2026 17:30:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X6o1rDlP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50A771F01825;
-	Wed, 28 Oct 2026 17:30:24 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OiImLmKH
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C4861F01825;
+	Wed, 28 Oct 2026 17:30:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793208624;
-	bh=VGx5No6eXHVMHwXbxVlxTUR/HGHnS/eHObm1HNDKzlU=;
+	s=korg; t=1793208627;
+	bh=r3Ur3gNT8O3+p/axhlGqc5YEZlEHEJqi1YtDbYlN9zg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=X6o1rDlP97a2PsqJnXsJkAuIZkB/CNL5l7uOZz/HMuCjAkvZbZmuDDnvs9SlSBXlk
-	 D0yZW8Hovw53mqQMViHg8p+AWJm9LNMTXbzuoGx8pHaokkuqiou7ILfpgCqlxlJGMJ
-	 2LN2s8I5rXje/V8el8tZrXC3BLG+1V3d1xVE80/Y=
+	b=OiImLmKHSeD25Gu4aSkqbWhIojVCYirQkgUSq7J6vtKA3vgJQHVCUmag/XZ+8kALN
+	 JhR5HgRInvWFF7dzWhLI88WM7/lCvVAEBb1e7APxhl65CYoSq1O8Tr8ciwoZmbzQlh
+	 Anks13WtJhWJeF/a9LlJqZdqlB/qDNb0a4zjlQKs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiko Brey <cico0815@gmx.de>,
+	John Rosencutter <rosencutter@gmail.com>,
 	Lovekesh Solanki <lovekeshsolanki00@gmail.com>,
 	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 5.10 183/516] Input: i8042 - add nomux quirk for Fujitsu LIFEBOOK U7410
-Date: Wed, 28 Oct 2026 17:55:35 +0100
-Message-ID: <20261028170007.840608919@linuxfoundation.org>
+Subject: [PATCH 5.10 184/516] Input: synaptics - add LEN205b entry to smbus_pnp_ids for ThinkPad T490
+Date: Wed, 28 Oct 2026 17:55:36 +0100
+Message-ID: <20261028170007.864087597@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -70,48 +70,33 @@ Content-Transfer-Encoding: 8bit
 
 From: Lovekesh Solanki <lovekeshsolanki00@gmail.com>
 
-commit 495cd7f858b45d2ffa9b685bba3a8c23c1ca4dd3 upstream.
+commit a961417c5ae77bbb728a23d9577ecd8f4d8a4b5a upstream.
 
-On the Fujitsu LIFEBOOK U7410 the internal keyboard and touchpad die
-shortly after boot if i8042 multiplexing controller is probed and
-switched to muxed mode. These multiplexing setup commands disturb the EC
-emulated keyboard and atkbd reports "Spurious ACK" and "Unknown key
-pressed" warnings, after which both keyboard and touchpad stop
-delivering events. Both touchpad and keyboard work in BIOS and GRUB.
+Lenovo ThinkPad T490 has a Synaptics Touchpad that supports SMBus/RMI4
+mode, but is not listed in smbus_pnp_ids table.
 
-Disabling multiplexer using i8042.nomux=1 makes both devices work on
-warm/cold boot.
+Add LEN205b to smbus_pnp_ids[] passlist.
 
-Add a DMI quirk to force nomux mode for this model.
-
-Reported-by: Heiko Brey <cico0815@gmx.de>
-Link: https://lore.kernel.org/all/89f36f3f5e4c2d07b9ff72bc0b355875c336e498.camel@gmx.de/
+Reported-by: John Rosencutter <rosencutter@gmail.com>
+Closes: https://lore.kernel.org/all/CAOGuaRh025eKcBf9P8UrvtXNp68vQ0HVF2EbNMp-kpdaC1HNpA@mail.gmail.com/
 Signed-off-by: Lovekesh Solanki <lovekeshsolanki00@gmail.com>
-Link: https://patch.msgid.link/20260920113541.1484808-1-lovekeshsolanki00@gmail.com
+Link: https://patch.msgid.link/20260920200730.1836756-1-lovekeshsolanki00@gmail.com
 Cc: stable@vger.kernel.org
 Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/serio/i8042-acpipnpio.h |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/input/mouse/synaptics.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/input/serio/i8042-acpipnpio.h
-+++ b/drivers/input/serio/i8042-acpipnpio.h
-@@ -661,6 +661,15 @@ static const struct dmi_system_id i8042_
- 		.driver_data = (void *)(SERIO_QUIRK_NOAUX)
- 	},
- 	{
-+		/* Fujitsu LIFEBOOK U7410 */
-+		/* Mux mode also disturbs the EC keyboard, causing spurious ACKs */
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "FUJITSU CLIENT COMPUTING LIMITED"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "LIFEBOOK U7410"),
-+		},
-+		.driver_data = (void *)(SERIO_QUIRK_NOMUX)
-+	},
-+	{
- 		/* Gigabyte M912 */
- 		.matches = {
- 			DMI_MATCH(DMI_SYS_VENDOR, "GIGABYTE"),
+--- a/drivers/input/mouse/synaptics.c
++++ b/drivers/input/mouse/synaptics.c
+@@ -188,6 +188,7 @@ static const char * const smbus_pnp_ids[
+ 	"LEN2054", /* E480 */
+ 	"LEN2055", /* E580 */
+ 	"LEN2058", /* E490 */
++	"LEN205b", /* T490 */
+ 	"LEN2068", /* T14 Gen 1 */
+ 	"SYN1221", /* TUXEDO InfinityBook Pro 14 v5 */
+ 	"SYN3003", /* HP EliteBook 850 G1 */
 
 
