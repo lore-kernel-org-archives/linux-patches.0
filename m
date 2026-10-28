@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214746;
-	b=sZg2XZbexv1zUn6FMSXMfw4Q1RwnTU9o+p9Ga4RJeD2+WrQG5qtNT2MrZLp4DQMM6bTi
-	 BfZkApetrhjRS26m95/K0IXP5fyLY4hdXDzntcYdjejMqHDUtQqi1B1F5ddXJBwtdo4Rk
-	 KcGRgjHAKO11vIDx328mHmSPi83jM0iyq7paeNXVfj8iOPyaw2I4tBpvWOELV3hUuuXMe
-	 McxNB+wIQX8Trrlta6c3fL9iuWDV0R1oAekMkKIrhrgOLC9n2gVbw4meu855IOyO9myOh
-	 9//SxXiBelHakMDiPokU7HAYNgV6JKgsQICxNa75qQ/8eLxv/HeDuUEmx2hevqguB0g==
+	t=1793214748;
+	b=igFby/goBv7e/VzQDzoIaluulSBfMBBoDwuxS2JVaftQhIVJWeT9oPB6u6Kt0OdTkCZT
+	 VY+DDcqA73PL7c0mLx9ZcC5KDgIsnTDMu1OqLGtP+MwxLn655FnrUPZ86O32XNJSVDUUq
+	 Lgw7QLJG500IYEOMm8FC2bZsELI/an+oLAjwfDYkMjNP/elFumrLq2M7vlsYyb41L3Wkj
+	 lWDoE0mWmN9P1ZNpaaAkO6MVjXfgjJZ54dXh1hoQflX3Nmh1l1viwvlxa9cglWiorgi2n
+	 7OiFdpz+1MP3TLmtFp6Y3jzYVncwIQqtf5iAEjAUZWoCkYwBvh8tAQG1hLcgoqbhN4A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214746;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214748;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=MpIA9dj78fyGSOx47QLbC7t/AmgDmOhFLWhgCtQ+i1A=;
-	b=cOoMxDO/TA/3F+X+FjNJ1nwzN4MecagZPN3Ar2dKa6lZ3wmR2gEr8sOrVzF+jSir1j/5
-	 Gc/ffZYVNz93NIJUExHksfJAG4ihavMnGIctyS5cNmQE6VbekDpiLT1FYwhhlT78OoWZU
-	 /ueH1Ljr8JetGkdC9vmYp+S9j/MYsif62gSEAT7Vya11vvPAIqmFwi0g1niiibs28Hhar
-	 nVCpwjf6hArfiGqSogObypuFs3+g/bVwFOv9dHIb8ZSqtfd0J/9r55in1gHE1SPr2IXhI
-	 7msF4Y/kRsluCkh0CFJ93/mE9EYhQs6VnkBVYq3NRdNSmDqQGG7T67VYXMtMbup5n5A==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=Ih+K+snXb+TEktm3bW3P+oHZefW0QiWUxFH0ec4alc8=;
+	b=ze2Zf5C07tNX88PBw2sdbdmBBl9AgrfDVDcQc1SKa6+TVCNjTBwTNSy0goaudYp5a/iT
+	 ys656OT+8CvTHTg5f7B6oIw6s/X0g/1SHt0y8hl5cfhCyOB9xTWKvdRTZFl/mV88b30Zf
+	 2Od/gAhX2mBZ1P29pUazFkUVm6R1hB/ZrLPfXmlq4eq4fXuzvf3jzhIax3/Da6aIfKSfi
+	 M8FcVyBglgAyPvf/FmrM5H+P2R5L1Yz5se+fruWxLmuD1llmLesfAzs6CA/xcCwIFUvP3
+	 /XOzFRgZJ96bRA5ezanb0PtDP7dAQZzk6gAp7tTCcTzf3LnAeqXmRflEbgHMwPE3A+w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NZUAwY22;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QvAsXwbH;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A802960A262A;
-	Wed, 28 Oct 2026 19:12:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EFC9606AB3F;
+	Wed, 28 Oct 2026 19:12:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NZUAwY22
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 064F81F01825;
-	Wed, 28 Oct 2026 19:12:24 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QvAsXwbH
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE6861F01825;
+	Wed, 28 Oct 2026 19:12:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214745;
-	bh=MpIA9dj78fyGSOx47QLbC7t/AmgDmOhFLWhgCtQ+i1A=;
+	s=korg; t=1793214748;
+	bh=Ih+K+snXb+TEktm3bW3P+oHZefW0QiWUxFH0ec4alc8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NZUAwY22EhJPSxFVX0GFw1DQDnERaulath2/xQK6kHEm0VSUz1nwVSI+0FInwlbhc
-	 eN1jYEtbvVCPMZB7OJBQEsM8m2sehAhDvLByHwH6nAoujsjgVTDxEohheIaWsQPHpR
-	 XLMv1PdD16xQbdHnEUF9R8bCypS7lfZj12vUIMok=
+	b=QvAsXwbHawUBOXE3ujDswPhDg2868g9DV2e7x/bgT3FLkz1PIMpj/lBStVhnaopzZ
+	 ubql+Ql/X5UMkCf9nQ2zuYCmUVYw/fxrIyB+oON5gFRr0217aOegRAeFFVYjkdUCWN
+	 uekRqFb6rYshVre7PaopLdDmtgiKsVz1prS8G8GY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuen-Han Tsai <khtsai@google.com>,
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Jani Nikula <jani.nikula@intel.com>,
+	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0967/1887] usb: gadget: f_ecm: Fix net_device lifecycle with device_move
-Date: Wed, 28 Oct 2026 17:51:03 +0100
-Message-ID: <20261028170521.414093112@linuxfoundation.org>
+Subject: [PATCH 6.1 0968/1887] drm/i915/dsi: Dont do DSC horizontal timing adjustments in command mode
+Date: Wed, 28 Oct 2026 17:51:04 +0100
+Message-ID: <20261028170521.438393954@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -61,176 +63,66 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kuen-Han Tsai <khtsai@google.com>
+From: Ville Syrjälä <ville.syrjala@linux.intel.com>
 
-[ Upstream commit b2cc4fae67a51f60d81d6af2678696accb07c656 ]
+[ Upstream commit 4dfce79e098915d8e5fc2b9e1d980bc3251dd32c ]
 
-The net_device is allocated during function instance creation and
-registered during the bind phase with the gadget device as its sysfs
-parent. When the function unbinds, the parent device is destroyed, but
-the net_device survives, resulting in dangling sysfs symlinks:
+Stop adjusting the horizontal timing values based on the
+compression ratio in command mode. Bspec seems to be telling
+us to do this only in video mode, and this is also how the
+Windows driver does things.
 
-  console:/ # ls -l /sys/class/net/usb0
-  lrwxrwxrwx ... /sys/class/net/usb0 ->
-  /sys/devices/platform/.../gadget.0/net/usb0
-  console:/ # ls -l /sys/devices/platform/.../gadget.0/net/usb0
-  ls: .../gadget.0/net/usb0: No such file or directory
+This should also fix a div-by-zero on some machines because
+the adjusted htotal ends up being so small that we end up with
+line_time_us==0 when trying to determine the vtotal value in
+command mode.
 
-Use device_move() to reparent the net_device between the gadget device
-tree and /sys/devices/virtual across bind and unbind cycles. During the
-final unbind, calling device_move(NULL) moves the net_device to the
-virtual device tree before the gadget device is destroyed. On rebinding,
-device_move() reparents the device back under the new gadget, ensuring
-proper sysfs topology and power management ordering.
+Note that this doesn't actually make the display on the
+Huawei Matebook E work, but at least the kernel no longer
+explodes when the driver loads.
 
-To maintain compatibility with legacy composite drivers (e.g., multi.c),
-the bound flag is used to indicate whether the network device is shared
-and pre-registered during the legacy driver's bind phase.
-
-Fixes: fee562a6450b ("usb: gadget: f_ecm: convert to new function interface with backward compatibility")
 Cc: stable@vger.kernel.org
-Signed-off-by: Kuen-Han Tsai <khtsai@google.com>
-Link: https://patch.msgid.link/20260320-usb-net-lifecycle-v1-4-4886b578161b@google.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Closes: https://gitlab.freedesktop.org/drm/i915/kernel/-/issues/12045
+Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Link: https://patch.msgid.link/20260326111814.9800-2-ville.syrjala@linux.intel.com
+Fixes: 53693f02d80e ("drm/i915/dsi: account for DSC in horizontal timings")
+Reviewed-by: Jani Nikula <jani.nikula@intel.com>
+(cherry picked from commit 0b475e91ecc2313207196c6d7fd5c53e1a878525)
+Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/function/f_ecm.c | 41 +++++++++++++++++------------
- drivers/usb/gadget/function/u_ecm.h | 21 ++++++++++-----
- 2 files changed, 39 insertions(+), 23 deletions(-)
+ drivers/gpu/drm/i915/display/icl_dsi.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/usb/gadget/function/f_ecm.c b/drivers/usb/gadget/function/f_ecm.c
-index 35ec50685b499..4ea8787734f97 100644
---- a/drivers/usb/gadget/function/f_ecm.c
-+++ b/drivers/usb/gadget/function/f_ecm.c
-@@ -692,6 +692,7 @@ ecm_bind(struct usb_configuration *c, struct usb_function *f)
- 	struct usb_ep		*ep;
+diff --git a/drivers/gpu/drm/i915/display/icl_dsi.c b/drivers/gpu/drm/i915/display/icl_dsi.c
+index f7422f0cf579d..1134d01629219 100644
+--- a/drivers/gpu/drm/i915/display/icl_dsi.c
++++ b/drivers/gpu/drm/i915/display/icl_dsi.c
+@@ -913,7 +913,7 @@ gen11_dsi_set_transcoder_timings(struct intel_encoder *encoder,
+ 	 * non-compressed link speeds, and simplifies down to the ratio between
+ 	 * compressed and non-compressed bpp.
+ 	 */
+-	if (crtc_state->dsc.compression_enable) {
++	if (is_vid_mode(intel_dsi) && crtc_state->dsc.compression_enable) {
+ 		mul = crtc_state->dsc.compressed_bpp;
+ 		div = mipi_dsi_pixel_format_to_bpp(intel_dsi->pixel_format);
+ 	}
+@@ -1518,7 +1518,7 @@ static void gen11_dsi_get_timings(struct intel_encoder *encoder,
+ 	struct drm_display_mode *adjusted_mode =
+ 					&pipe_config->hw.adjusted_mode;
  
- 	struct f_ecm_opts	*ecm_opts;
-+	struct net_device	*net __free(detach_gadget) = NULL;
- 	struct usb_request	*request __free(free_usb_request) = NULL;
+-	if (pipe_config->dsc.compressed_bpp) {
++	if (is_vid_mode(intel_dsi) && pipe_config->dsc.compressed_bpp) {
+ 		int div = pipe_config->dsc.compressed_bpp;
+ 		int mul = mipi_dsi_pixel_format_to_bpp(intel_dsi->pixel_format);
  
- 	if (!can_support_ecm(cdev->gadget))
-@@ -699,22 +700,18 @@ ecm_bind(struct usb_configuration *c, struct usb_function *f)
- 
- 	ecm_opts = container_of(f->fi, struct f_ecm_opts, func_inst);
- 
--	/*
--	 * in drivers/usb/gadget/configfs.c:configfs_composite_bind()
--	 * configurations are bound in sequence with list_for_each_entry,
--	 * in each configuration its functions are bound in sequence
--	 * with list_for_each_entry, so we assume no race condition
--	 * with regard to ecm_opts->bound access
--	 */
--	if (!ecm_opts->bound) {
--		mutex_lock(&ecm_opts->lock);
--		gether_set_gadget(ecm_opts->net, cdev->gadget);
--		status = gether_register_netdev(ecm_opts->net);
--		mutex_unlock(&ecm_opts->lock);
--		if (status)
--			return status;
--		ecm_opts->bound = true;
--	}
-+	scoped_guard(mutex, &ecm_opts->lock)
-+		if (ecm_opts->bind_count == 0 && !ecm_opts->bound) {
-+			if (!device_is_registered(&ecm_opts->net->dev)) {
-+				gether_set_gadget(ecm_opts->net, cdev->gadget);
-+				status = gether_register_netdev(ecm_opts->net);
-+			} else
-+				status = gether_attach_gadget(ecm_opts->net, cdev->gadget);
-+
-+			if (status)
-+				return status;
-+			net = ecm_opts->net;
-+		}
- 
- 	ecm_string_defs[1].s = ecm->ethaddr;
- 
-@@ -805,6 +802,9 @@ ecm_bind(struct usb_configuration *c, struct usb_function *f)
- 
- 	ecm->notify_req = no_free_ptr(request);
- 
-+	ecm_opts->bind_count++;
-+	no_free_ptr(net);
-+
- 	DBG(cdev, "CDC Ethernet: %s speed IN/%s OUT/%s NOTIFY/%s\n",
- 			gadget_is_superspeed(c->cdev->gadget) ? "super" :
- 			gadget_is_dualspeed(c->cdev->gadget) ? "dual" : "full",
-@@ -853,7 +853,7 @@ static void ecm_free_inst(struct usb_function_instance *f)
- 	struct f_ecm_opts *opts;
- 
- 	opts = container_of(f, struct f_ecm_opts, func_inst);
--	if (opts->bound)
-+	if (device_is_registered(&opts->net->dev))
- 		gether_cleanup(netdev_priv(opts->net));
- 	else
- 		free_netdev(opts->net);
-@@ -897,9 +897,12 @@ static void ecm_free(struct usb_function *f)
- static void ecm_unbind(struct usb_configuration *c, struct usb_function *f)
- {
- 	struct f_ecm		*ecm = func_to_ecm(f);
-+	struct f_ecm_opts	*ecm_opts;
- 
- 	DBG(c->cdev, "ecm unbind\n");
- 
-+	ecm_opts = container_of(f->fi, struct f_ecm_opts, func_inst);
-+
- 	usb_free_all_descriptors(f);
- 
- 	if (atomic_read(&ecm->notify_count)) {
-@@ -909,6 +912,10 @@ static void ecm_unbind(struct usb_configuration *c, struct usb_function *f)
- 
- 	kfree(ecm->notify_req->buf);
- 	usb_ep_free_request(ecm->notify, ecm->notify_req);
-+
-+	ecm_opts->bind_count--;
-+	if (ecm_opts->bind_count == 0 && !ecm_opts->bound)
-+		gether_detach_gadget(ecm_opts->net);
- }
- 
- static struct usb_function *ecm_alloc(struct usb_function_instance *fi)
-diff --git a/drivers/usb/gadget/function/u_ecm.h b/drivers/usb/gadget/function/u_ecm.h
-index 77cfb89932bea..7f666b9dea026 100644
---- a/drivers/usb/gadget/function/u_ecm.h
-+++ b/drivers/usb/gadget/function/u_ecm.h
-@@ -15,17 +15,26 @@
- 
- #include <linux/usb/composite.h>
- 
-+/**
-+ * struct f_ecm_opts - ECM function options
-+ * @func_inst: USB function instance.
-+ * @net: The net_device associated with the ECM function.
-+ * @bound: True if the net_device is shared and pre-registered during the
-+ *         legacy composite driver's bind phase (e.g., multi.c). If false,
-+ *         the ECM function will register the net_device during its own
-+ *         bind phase.
-+ * @bind_count: Tracks the number of configurations the ECM function is
-+ *              bound to, preventing double-registration of the @net device.
-+ * @lock: Protects the data from concurrent access by configfs read/write
-+ *        and create symlink/remove symlink operations.
-+ * @refcnt: Reference counter for the function instance.
-+ */
- struct f_ecm_opts {
- 	struct usb_function_instance	func_inst;
- 	struct net_device		*net;
- 	bool				bound;
-+	int				bind_count;
- 
--	/*
--	 * Read/write access to configfs attributes is handled by configfs.
--	 *
--	 * This is to protect the data from concurrent access by read/write
--	 * and create symlink/remove symlink.
--	 */
- 	struct mutex			lock;
- 	int				refcnt;
- };
 -- 
 2.53.0
 
