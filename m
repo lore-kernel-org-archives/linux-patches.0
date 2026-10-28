@@ -1,52 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216757;
-	b=FPqgV9FztTQxwUE6ELfjFZD7YsIOxnmH4TjDMOSHH3ZF9Uk2mhPcBbffnZ9Q1t4kZu0P
-	 GO1DL1zqWEHH2Svw8/mWhIq3cAOzOlX6EFidE+6ye8v9ucMDBCsU/ia0I0A9Z7C7/8XUu
-	 8EPFmQKhxplzV3JttTlHNtj+TlYMKpnMsK5G9B5qY9mnjgpPqAmciDibLkozCfRmpFwiC
-	 FczwUZA98BbUCgOh59UiPmbX2MtXT6y+Wwlp/CsxuqDzr1l61c9Xaik4OUA/40XAZF4+o
-	 LrNP/vq/nWDcAyZ79fcHVGv61X/g/r4OKQK2/n5EZIFT2IkPUwaGqJeok3GVH7pBJ8A==
+	t=1793216760;
+	b=CmFOH3LozJm4naYOlhXt2OFWRsqrNHgjft+anZtV+ZS6hghxpLYhdyO+0zpWVIhl8cDQ
+	 bDnE/sXWv8Q7Ntj05TgD4z/tfHSdvb8C3aftZNZ9l+w6TgJe/Ja0xKdkMasdD/PhFHSox
+	 p6VpvFh9dB+kc1x98NARxKEi/hCaxx6GgT/LjrSCGBljTRschPpe+2ivmINKmJapkO3gd
+	 IOGGAjXZxXR7iCocOQ6Ozjbwd+ycJr2dT0pEfF7wqYBn5ONC3ySDqaQIb6n2dTx3kmelC
+	 p5+Fka6eiwYKZPDoYVRsJCPvFH793AzNVWl6ezjWj0O1E6KccgT+PZfQ65RQxfLkdrg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216757;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216760;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=oncArZlTzDPmsdtAhlAKjvGfh5Tsas3r2mzUt6BHPrU=;
-	b=HVf9AzxQiA/+aJE6A2H3da7QsNOJ8YSg3X+kP3GmTK67Tvvb3Tq+dka3mA1tvH8lMyDQ
-	 LGKpHKlzOIJoG5mjYM/H5U5qzFWvRxbAvRCN1EHoytrmHKdiuvG71OlrXxZpSoXx7bwTH
-	 HXoYoUFjD2VMviuVcHFZaM85rA15cqkLgXWIuapdplaW45dRoZB2nbITTz3jk9h5NVTHy
-	 YzVXPD3Pih3PgxVonGGHKQk7rOefWfG3ZDy4UZKLa2qjqC8s7yr5iK7rh8RpjjH+tBi4T
-	 ItsmjT4YYKHI44C80uZLlaL/TS2XCNCriTFQVKvOWOZaOGODpyBYAi1LydUpVwZL55A==
+	bh=efLxgUdv65Y63NMGttrInlw0la2xZRI8PGEbr9lIeKk=;
+	b=HJWTCAJS2yRLc6fyxZQCiWVId9/jo9FUXfjdaMixNM3mhEBG8J7Ax7cHn1trFchqB8wJ
+	 iW0cUwOkg2do8oGirwPjJfvassDbpHhdR2wnALfoRtob+OHiaGFRS+ZXTC8RJOkUjjk2M
+	 i0ZIB02XuceuND23LfVtm4vz2KAMWgp9Z7sJKjmnw8/0m3DoPBy/3fJ3RFTGCqtsVGJYo
+	 tVwVJTV3rrRAWwQjdWBAaBD22qZRXdOVm2ETEC/Z/hdYcVsP+HcsQePw2rzIMKk0JhxVj
+	 6NG5w8jxT4b6k3ctohWjMVsTkIGXer6caygK/d+1c3yA4c2pDq0wzTTzDfn3x0TnL+w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oSsIRGTT;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XKuk0fdJ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3D5C606A31A;
-	Wed, 28 Oct 2026 19:45:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A81B6606A31A;
+	Wed, 28 Oct 2026 19:45:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oSsIRGTT
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30CE21F01825;
-	Wed, 28 Oct 2026 19:45:56 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XKuk0fdJ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08F181F01825;
+	Wed, 28 Oct 2026 19:45:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216756;
-	bh=oncArZlTzDPmsdtAhlAKjvGfh5Tsas3r2mzUt6BHPrU=;
+	s=korg; t=1793216759;
+	bh=efLxgUdv65Y63NMGttrInlw0la2xZRI8PGEbr9lIeKk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oSsIRGTTcc2/r/UBkwlktPeDuDVAnPYdoNxTFbmxF4e1JOXr5jr74l3cqcOrSFCGf
-	 JTl5D/Lj+6UPncBgc2L4lm3ZfislHWfDWqoEo4QkdWmzJqDo7TWTkGz7TIO/ba0Lq3
-	 lNfXv5k4VDwcqHm+Rys99l3gOv9Xi+1ymubwExgU=
+	b=XKuk0fdJ76H0jrbjV15xgN7X7An79lHWy+Sns7GStrEt+bqlHVvo6VS6OtL6YyQEg
+	 dVYnXPy+66nKByIjx213dxFzyHpYD4BCUKRcgSb7hiEehivCirvHiymO5s65Xs5lnE
+	 KzA0bQNFsNnZmLl9NPs88RAwQr+Gy5rrIvBjnhJ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fredric Cover <fredric.cover.lkernel@gmail.com>,
-	Steve French <stfrench@microsoft.com>,
+	Randy Jennings <randyj@purestorage.com>,
+	Hannes Reinecke <hare@kernel.org>,
+	Daniel Wagner <dwagner@suse.de>,
+	Christoph Hellwig <hch@lst.de>,
+	Mohamed Khalfella <mkhalfella@purestorage.com>,
+	James Smart <jsmart833426@gmail.com>,
+	Maurizio Lombardi <mlombard@redhat.com>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1668/1887] smb: client: fix races in cifsd thread creation
-Date: Wed, 28 Oct 2026 18:02:44 +0100
-Message-ID: <20261028170537.415321881@linuxfoundation.org>
+Subject: [PATCH 6.1 1669/1887] nvme-fc: Do not cancel requests in io target before it is initialized
+Date: Wed, 28 Oct 2026 18:02:45 +0100
+Message-ID: <20261028170537.437115603@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,90 +74,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fredric Cover <fredric.cover.lkernel@gmail.com>
+From: Mohamed Khalfella <mkhalfella@purestorage.com>
 
-[ Upstream commit e8a5cf2ff5a13fefb228f2069e29dd7d8e37185d ]
+[ Upstream commit ee38469f88492df99e1d97f03aa40ecfd218934f ]
 
-The cifsd demultiplex thread can run and access tcp_ses before the parent
-thread has finished populating tcp_ses, which the worker thread accesses
-locklessly.
+A new nvme-fc controller in CONNECTING state sees admin request timeout
+schedules ctrl->ioerr_work to abort inflight requests. This ends up
+calling __nvme_fc_abort_outstanding_ios() which aborts requests in both
+admin and io tagsets. In case fc_ctrl->tag_set was not initialized we
+see the warning below. This is because ctrl.queue_count is initialized
+early in nvme_fc_alloc_ctrl().
 
-Also, the kthread_run macro may start the thread before returning the
-thread pointer. Because the pointer is part of the structure that the
-thread can access, if the kernel is preempted after the thread is spawned,
-but before the thread pointer is populated and the thread attempts to exit,
-it will sleep, waiting for a SIGKILL signal.
+nvme nvme0: NVME-FC{0}: starting error recovery Connectivity Loss
+INFO: trying to register non-static key.
+The code is fine but needs lockdep annotation, or maybe
+lpfc 0000:ab:00.0: queue 0 connect admin queue failed (-6).
+you didn't initialize this object before use?
+turning off the locking correctness validator.
+Workqueue: nvme-reset-wq nvme_fc_ctrl_ioerr_work [nvme_fc]
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0x57/0x80
+ register_lock_class+0x567/0x580
+ __lock_acquire+0x330/0xb90
+ lock_acquire.part.0+0xad/0x210
+ blk_mq_tagset_busy_iter+0xf9/0xc00
+ __nvme_fc_abort_outstanding_ios+0x23f/0x320 [nvme_fc]
+ nvme_fc_ctrl_ioerr_work+0x172/0x210 [nvme_fc]
+ process_one_work+0x82c/0x1450
+ worker_thread+0x5ee/0xfd0
+ kthread+0x3a0/0x750
+ ret_from_fork+0x439/0x670
+ ret_from_fork_asm+0x1a/0x30
+ </TASK>
 
-Fix this by moving creation of the thread to after all of tcp_ses'es
-fields are populated, and spawning the thread last, using a split
-kthread_create/wake_up_process logic.
+Update the check in __nvme_fc_abort_outstanding_ios() confirm that io
+tagset was created before iterating over busy requests. Also make sure
+to cancel ctrl->ioerr_work before removing io tagset.
 
-Signed-off-by: Fredric Cover <fredric.cover.lkernel@gmail.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Reviewed-by: Randy Jennings <randyj@purestorage.com>
+Reviewed-by: Hannes Reinecke <hare@kernel.org>
+Reviewed-by: Daniel Wagner <dwagner@suse.de>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Mohamed Khalfella <mkhalfella@purestorage.com>
+Signed-off-by: James Smart <jsmart833426@gmail.com>
+Signed-off-by: Maurizio Lombardi <mlombard@redhat.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/connect.c | 27 ++++++++++++++++-----------
- 1 file changed, 16 insertions(+), 11 deletions(-)
+ drivers/nvme/host/fc.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/fs/smb/client/connect.c b/fs/smb/client/connect.c
-index 10f0009fc7a16..52cd09c25bdb4 100644
---- a/fs/smb/client/connect.c
-+++ b/fs/smb/client/connect.c
-@@ -1817,23 +1817,13 @@ cifs_get_tcp_session(struct smb3_fs_context *ctx,
- 	 * this will succeed. No need for try_module_get().
+diff --git a/drivers/nvme/host/fc.c b/drivers/nvme/host/fc.c
+index 7fc35b16f6296..914e480408553 100644
+--- a/drivers/nvme/host/fc.c
++++ b/drivers/nvme/host/fc.c
+@@ -2492,7 +2492,7 @@ __nvme_fc_abort_outstanding_ios(struct nvme_fc_ctrl *ctrl, bool start_queues)
+ 	 * io requests back to the block layer as part of normal completions
+ 	 * (but with error status).
  	 */
- 	__module_get(THIS_MODULE);
--	tcp_ses->tsk = kthread_run(cifs_demultiplex_thread,
--				  tcp_ses, "cifsd");
--	if (IS_ERR(tcp_ses->tsk)) {
--		rc = PTR_ERR(tcp_ses->tsk);
--		cifs_dbg(VFS, "error %d create cifsd thread\n", rc);
--		module_put(THIS_MODULE);
--		goto out_err_crypto_release;
--	}
- 	tcp_ses->min_offload = ctx->min_offload;
- 	/*
- 	 * at this point we are the only ones with the pointer
- 	 * to the struct since the kernel thread not created yet
- 	 * no need to spinlock this update of tcpStatus
- 	 */
--	spin_lock(&tcp_ses->srv_lock);
- 	tcp_ses->tcpStatus = CifsNeedNegotiate;
--	spin_unlock(&tcp_ses->srv_lock);
- 
- 	if ((ctx->max_credits < 20) || (ctx->max_credits > 60000))
- 		tcp_ses->max_credits = SMB2_MAX_CREDITS_AVAILABLE;
-@@ -1842,7 +1832,16 @@ cifs_get_tcp_session(struct smb3_fs_context *ctx,
- 
- 	tcp_ses->nr_targets = 1;
- 	tcp_ses->ignore_signature = ctx->ignore_signature;
--	/* thread spawned, put it on the list */
-+
-+	tcp_ses->tsk = kthread_create(cifs_demultiplex_thread,
-+				  tcp_ses, "cifsd");
-+	if (IS_ERR(tcp_ses->tsk)) {
-+		rc = PTR_ERR(tcp_ses->tsk);
-+		cifs_dbg(VFS, "error %d create cifsd thread\n", rc);
-+		module_put(THIS_MODULE);
-+		goto out_err_crypto_release;
-+	}
-+	/* thread created, put it on the list */
- 	spin_lock(&cifs_tcp_ses_lock);
- 	list_add(&tcp_ses->tcp_ses_list, &cifs_tcp_ses_list);
- 	spin_unlock(&cifs_tcp_ses_lock);
-@@ -1850,6 +1849,12 @@ cifs_get_tcp_session(struct smb3_fs_context *ctx,
- 	/* queue echo request delayed work */
- 	queue_delayed_work(cifsiod_wq, &tcp_ses->echo, tcp_ses->echo_interval);
- 
+-	if (ctrl->ctrl.queue_count > 1) {
++	if (ctrl->ctrl.queue_count > 1 && ctrl->ctrl.tagset) {
+ 		nvme_stop_queues(&ctrl->ctrl);
+ 		nvme_sync_io_queues(&ctrl->ctrl);
+ 		blk_mq_tagset_busy_iter(&ctrl->tag_set,
+@@ -2925,6 +2925,11 @@ nvme_fc_create_io_queues(struct nvme_fc_ctrl *ctrl)
+ out_delete_hw_queues:
+ 	nvme_fc_delete_hw_io_queues(ctrl);
+ out_cleanup_tagset:
 +	/*
-+	 * Use split create/wake logic to ensure that tcp_ses is fully populated
-+	 * and tcp_ses->tsk is valid
++	 * In CONNECTING state ctrl->ioerr_work will abort both admin
++	 * and io tagsets. Cancel it first before removing io tagset.
 +	 */
-+	wake_up_process(tcp_ses->tsk);
-+
- 	return tcp_ses;
++	cancel_work_sync(&ctrl->ioerr_work);
+ 	nvme_remove_io_tag_set(&ctrl->ctrl);
+ 	nvme_fc_free_io_queues(ctrl);
  
- out_err_crypto_release:
 -- 
 2.53.0
 
