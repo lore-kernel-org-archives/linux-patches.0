@@ -1,55 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793209284;
-	b=2Tw6idMf/aJtxWSZgN8Fm/ex6/FO8goVfwXsb5jz8mvujEwN6YjIjAYbcXV4NSG66oxS
-	 VTxFXdLE6ZHymxTTPb3s3e7eRtouu975n2FcWlxtEgftx6qJdCP4Z2FSb0bwvXIp353os
-	 lvSVdZXbxnYr6jI5d+pERxsJieJAQyJLfuqR3Ztyi7Xqk9CSPa8CCEO5payeW4Bp9h12/
-	 9B+A8I/7/FawDutyDykE7/ame3ZfzF/SHa1FM7F+mnOHQLpKUEcBwC9MR0MypYlgI1MeY
-	 xHgD5OEUx9QO50FZ0/y5I3JAw+RfjFqJ4AIlUH4qTci+n96dUBbS/k3t0ILYln1n7pg==
+	t=1793209287;
+	b=Ui9kZNm8gAFyJurlWaCpd9+a9AMlK4xeo9fFgfXMUDb1GzZPi3uArTFR9RysmtJCE3W1
+	 xeXytaJCL2KpbXYl33KJ/VXb41YhaaN3CHXaBC7mNzTYAFehgTJAYo6rh4VE/KgY50Qh2
+	 rftmrl7Si692P+ATPtyJlV53s3kvcBUCxHJkNqgvsvSeQLyqT/wUyGx6pPij1xlYM2/Bw
+	 zbYvvaN1tzLauymiU5Y6ic4J6UodczP5A7bRFmx2sMAN4odbNI3JdIg+1JQ7+Yue6s3Lc
+	 1VnIIwKapdA2HvD3hdh9u7KhXqlbycpjZJ+USowN0m4FUknRqnlwbxcMro8T+UYNeUA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793209284;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793209287;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Px4TcFbhBGoFjjq37vSqpjFS52qypP0eHo4hoRFCXu8=;
-	b=XK6camahVUiXv717oyYUy9DbG1u0lfkggoSxB5brAFFvS9qF9Y/uMWNXhGJ3KyOds3Rv
-	 P6p6Tvc/Fcop3S7g5F7zSFeUf3Q8oB9YSNtJxLNJXXJQEmWbUB/XdVXjd4uqASxYujfbs
-	 8VjN0Wg6zVRve6QUkXlMVnkmXdZYi5hozasWS/HozmaWdxJbyJtfT+2uzzYqwzWc58P+o
-	 sLapmcy8SnX1AAI9fVyW9OzScmJoItXY4iaWyLUMoy1Be3s7i5a1cEZNQ66Mo1R9UPw0s
-	 qu0J4yW03UnUU6nZ9ra8bi4dYVWMB4v8qEu+pjqoU32tDyfixcmlroiK1c7yjBHIV9w==
+	bh=/opjzXaHd+ZkUoLUTmYZyQsgwbmDq9nxYalE4HsejGE=;
+	b=wGeISNLl2X1JnuzB5h3qvCnXDlm5S/A5nTFqzpkt96ZWIKlacdSIRfdIgpSQ4GT9KclI
+	 Ci8IB750Ev3eNux1ePFmpsayXmjfADW3RqCN2jIX5UraJaeKx747IgRPO5H0K5lBI7PYs
+	 UtLaFzgAWrlWZieiQJlBchdWzt/VtqStm5A7ngUOr/J3Heb9n3tdWytkFFtBu55N/gMy3
+	 3MWKPBtqVYOV1nBhWyL3RsO6URuGX4MB6BA//8UHTn8ax/3UIHpPcGfafMpeBKYahMYME
+	 Wow/Be2/pjWZgb6F6m/toX3uXApZNwGIRuJrAQpcGYxYxWSkwGYLp0yd74kLj3A7p6Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qYwSIcA8;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MojJaTnm;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68BE4606A31D;
-	Wed, 28 Oct 2026 17:41:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CC2D606A321;
+	Wed, 28 Oct 2026 17:41:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qYwSIcA8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF8711F01825;
-	Wed, 28 Oct 2026 17:41:23 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MojJaTnm
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9291C1F01825;
+	Wed, 28 Oct 2026 17:41:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793209284;
-	bh=Px4TcFbhBGoFjjq37vSqpjFS52qypP0eHo4hoRFCXu8=;
+	s=korg; t=1793209287;
+	bh=/opjzXaHd+ZkUoLUTmYZyQsgwbmDq9nxYalE4HsejGE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qYwSIcA8g7MwMZocxpySWq5qvsMm7KVH+tF4n1gFl5f86eL5t3b3CzsgXJHSP/YFw
-	 ZdJqinxvfQ779GW4+kxF85744NZYzdzBL3dtX5ZekWrd0zY6HD2khFQaykzBASbftC
-	 BH4arjxskGeRBPZw2eyGAln5w+YzjBQ2LkoGzEPY=
+	b=MojJaTnm63XNTrzgtDoKBwVLR3NcxDsSQL9LYN6uTamwwW4D0DD82XXpRRW1WqeaC
+	 Ta4kNH/qPgVpe+UwMVPfjEvMcFUOvszKEe60vID1vc506MJtZKIp+lOaVCU+JF4SNB
+	 2HOioYg/QkBq749GsqJ5sSu1Z0K2ewrrMZ7o6eHg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Darrick J. Wong" <djwong@kernel.org>,
+	yangerkun <yangerkun@huawei.com>,
 	Dave Chinner <dchinner@redhat.com>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Dave Chinner <david@fromorbit.com>,
 	Leah Rumancik <leah.rumancik@gmail.com>,
 	Chandan Babu R <chandanbabu@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Siddh Raman Pant <siddh.raman.pant@oracle.com>
-Subject: [PATCH 5.10 415/516] xfs: fix intermittent hang during quotacheck
-Date: Wed, 28 Oct 2026 17:59:27 +0100
-Message-ID: <20261028170013.318114163@linuxfoundation.org>
+	Siddh Raman Pant <siddh.raman.pant@oracle.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 416/516] xfs: buffer pins need to hold a buffer reference
+Date: Wed, 28 Oct 2026 17:59:28 +0100
+Message-ID: <20261028170013.341015176@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -71,94 +74,188 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Darrick J. Wong <djwong@kernel.org>
+From: Dave Chinner <dchinner@redhat.com>
 
-[ Upstream commit f0c2d7d2abca24d19831c99edea458704fac8087 ]
+[ Upstream commit 89a4bf0dc3857569a77061d3d5ea2ac85f7e13c6 ]
 
-Every now and then, I see the following hang during mount time
-quotacheck when running fstests.  Turning on KASAN seems to make it
-happen somewhat more frequently.  I've edited the backtrace for brevity.
+When a buffer is unpinned by xfs_buf_item_unpin(), we need to access
+the buffer after we've dropped the buffer log item reference count.
+This opens a window where we can have two racing unpins for the
+buffer item (e.g. shutdown checkpoint context callback processing
+racing with journal IO iclog completion processing) and both attempt
+to access the buffer after dropping the BLI reference count.  If we
+are unlucky, the "BLI freed" context wins the race and frees the
+buffer before the "BLI still active" case checks the buffer pin
+count.
 
-XFS (sdd): Quotacheck needed: Please wait.
-XFS: Assertion failed: bp->b_flags & _XBF_DELWRI_Q, file: fs/xfs/xfs_buf.c, line: 2411
-------------[ cut here ]------------
-WARNING: CPU: 0 PID: 1831409 at fs/xfs/xfs_message.c:104 assfail+0x46/0x4a [xfs]
-CPU: 0 PID: 1831409 Comm: mount Tainted: G        W         5.19.0-rc6-xfsx #rc6 09911566947b9f737b036b4af85e399e4b9aef64
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.15.0-1 04/01/2014
-RIP: 0010:assfail+0x46/0x4a [xfs]
-Code: a0 8f 41 a0 e8 45 fe ff ff 8a 1d 2c 36 10 00 80 fb 01 76 0f 0f b6 f3 48 c7 c7 c0 f0 4f a0 e8 10 f0 02 e1 80 e3 01 74 02 0f 0b <0f> 0b 5b c3 48 8d 45 10 48 89 e2 4c 89 e6 48 89 1c 24 48 89 44 24
-RSP: 0018:ffffc900078c7b30 EFLAGS: 00010246
-RAX: 0000000000000000 RBX: ffff8880099ac000 RCX: 000000007fffffff
-RDX: 0000000000000000 RSI: 0000000000000000 RDI: ffffffffa0418fa0
-RBP: ffff8880197bc1c0 R08: 0000000000000000 R09: 000000000000000a
-R10: 000000000000000a R11: f000000000000000 R12: ffffc900078c7d20
-R13: 00000000fffffff5 R14: ffffc900078c7d20 R15: 0000000000000000
-FS:  00007f0449903800(0000) GS:ffff88803ec00000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00005610ada631f0 CR3: 0000000014dd8002 CR4: 00000000001706f0
-Call Trace:
- <TASK>
- xfs_buf_delwri_pushbuf+0x150/0x160 [xfs 4561f5b32c9bfb874ec98d58d0719464e1f87368]
- xfs_qm_flush_one+0xd6/0x130 [xfs 4561f5b32c9bfb874ec98d58d0719464e1f87368]
- xfs_qm_dquot_walk.isra.0+0x109/0x1e0 [xfs 4561f5b32c9bfb874ec98d58d0719464e1f87368]
- xfs_qm_quotacheck+0x319/0x490 [xfs 4561f5b32c9bfb874ec98d58d0719464e1f87368]
- xfs_qm_mount_quotas+0x65/0x2c0 [xfs 4561f5b32c9bfb874ec98d58d0719464e1f87368]
- xfs_mountfs+0x6b5/0xab0 [xfs 4561f5b32c9bfb874ec98d58d0719464e1f87368]
- xfs_fs_fill_super+0x781/0x990 [xfs 4561f5b32c9bfb874ec98d58d0719464e1f87368]
- get_tree_bdev+0x175/0x280
- vfs_get_tree+0x1a/0x80
- path_mount+0x6f5/0xaa0
- __x64_sys_mount+0x103/0x140
- do_syscall_64+0x2b/0x80
- entry_SYSCALL_64_after_hwframe+0x46/0xb0
+This results in a use after free that can only be triggered
+in active filesystem shutdown situations.
 
-I /think/ this can happen if xfs_qm_flush_one is racing with
-xfs_qm_dquot_isolate (i.e. dquot reclaim) when the second function has
-taken the dquot flush lock but xfs_qm_dqflush hasn't yet locked the
-dquot buffer, let alone queued it to the delwri list.  In this case,
-flush_one will fail to get the dquot flush lock, but it can lock the
-incore buffer, but xfs_buf_delwri_pushbuf will then trip over this
-ASSERT, which checks that the buffer isn't on a delwri list.  The hang
-results because the _delwri_submit_buffers ignores non DELWRI_Q buffers,
-which means that xfs_buf_iowait waits forever for an IO that has not yet
-been scheduled.
+To fix this, we need to ensure that buffer existence extends beyond
+the BLI reference count checks and until the unpin processing is
+complete. This implies that a buffer pin operation must also take a
+buffer reference to ensure that the buffer cannot be freed until the
+buffer unpin processing is complete.
 
-AFAICT, a reasonable solution here is to detect a dquot buffer that is
-not on a DELWRI list, drop it, and return -EAGAIN to try the flush
-again.  It's not /that/ big of a deal if quotacheck writes the dquot
-buffer repeatedly before we even set QUOTA_CHKD.
-
-Signed-off-by: Darrick J. Wong <djwong@kernel.org>
-Reviewed-by: Dave Chinner <dchinner@redhat.com>
+Reported-by: yangerkun <yangerkun@huawei.com>
+Signed-off-by: Dave Chinner <dchinner@redhat.com>
+Reviewed-by: Darrick J. Wong <djwong@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Dave Chinner <david@fromorbit.com>
 Signed-off-by: Leah Rumancik <leah.rumancik@gmail.com>
 Acked-by: Chandan Babu R <chandanbabu@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
-(cherry picked from commit 8d0baec78e8a7abe03b449820507c9777dae7f7b)
-Stable-dep-of: d62016b1a2df ("xfs: avoid dquot buffer pin deadlock")
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+(cherry picked from commit 81274891036602355e72eabbb5184490f354b506)
+Stable-dep-of: 816c330b605c ("xfs: factor out stale buffer item completion")
 Signed-off-by: Siddh Raman Pant <siddh.raman.pant@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/xfs/xfs_qm.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ fs/xfs/xfs_buf_item.c | 88 ++++++++++++++++++++++++++++++++-----------
+ 1 file changed, 65 insertions(+), 23 deletions(-)
 
-diff --git a/fs/xfs/xfs_qm.c b/fs/xfs/xfs_qm.c
-index 3c17e0c0f8169..907819e7873eb 100644
---- a/fs/xfs/xfs_qm.c
-+++ b/fs/xfs/xfs_qm.c
-@@ -1245,6 +1245,13 @@ xfs_qm_flush_one(
- 			error = -EINVAL;
- 			goto out_unlock;
- 		}
-+
-+		if (!(bp->b_flags & _XBF_DELWRI_Q)) {
-+			error = -EAGAIN;
-+			xfs_buf_relse(bp);
-+			goto out_unlock;
-+		}
-+
- 		xfs_buf_unlock(bp);
+diff --git a/fs/xfs/xfs_buf_item.c b/fs/xfs/xfs_buf_item.c
+index 73c548d5b593d..f864e0b8a8055 100644
+--- a/fs/xfs/xfs_buf_item.c
++++ b/fs/xfs/xfs_buf_item.c
+@@ -371,10 +371,18 @@ xfs_buf_item_format(
+  * This is called to pin the buffer associated with the buf log item in memory
+  * so it cannot be written out.
+  *
+- * We also always take a reference to the buffer log item here so that the bli
+- * is held while the item is pinned in memory. This means that we can
+- * unconditionally drop the reference count a transaction holds when the
+- * transaction is completed.
++ * We take a reference to the buffer log item here so that the BLI life cycle
++ * extends at least until the buffer is unpinned via xfs_buf_item_unpin() and
++ * inserted into the AIL.
++ *
++ * We also need to take a reference to the buffer itself as the BLI unpin
++ * processing requires accessing the buffer after the BLI has dropped the final
++ * BLI reference. See xfs_buf_item_unpin() for an explanation.
++ * If unpins race to drop the final BLI reference and only the
++ * BLI owns a reference to the buffer, then the loser of the race can have the
++ * buffer fgreed from under it (e.g. on shutdown). Taking a buffer reference per
++ * pin count ensures the life cycle of the buffer extends for as
++ * long as we hold the buffer pin reference in xfs_buf_item_unpin().
+  */
+ STATIC void
+ xfs_buf_item_pin(
+@@ -389,13 +397,30 @@ xfs_buf_item_pin(
  
- 		xfs_buf_delwri_pushbuf(bp, buffer_list);
+ 	trace_xfs_buf_item_pin(bip);
+ 
++	xfs_buf_hold(bip->bli_buf);
+ 	atomic_inc(&bip->bli_refcount);
+ 	atomic_inc(&bip->bli_buf->b_pin_count);
+ }
+ 
+ /*
+- * This is called to unpin the buffer associated with the buf log item which
+- * was previously pinned with a call to xfs_buf_item_pin().
++ * This is called to unpin the buffer associated with the buf log item which was
++ * previously pinned with a call to xfs_buf_item_pin().  We enter this function
++ * with a buffer pin count, a buffer reference and a BLI reference.
++ *
++ * We must drop the BLI reference before we unpin the buffer because the AIL
++ * doesn't acquire a BLI reference whenever it accesses it. Therefore if the
++ * refcount drops to zero, the bli could still be AIL resident and the buffer
++ * submitted for I/O at any point before we return. This can result in IO
++ * completion freeing the buffer while we are still trying to access it here.
++ * This race condition can also occur in shutdown situations where we abort and
++ * unpin buffers from contexts other that journal IO completion.
++ *
++ * Hence we have to hold a buffer reference per pin count to ensure that the
++ * buffer cannot be freed until we have finished processing the unpin operation.
++ * The reference is taken in xfs_buf_item_pin(), and we must hold it until we
++ * are done processing the buffer state. In the case of an abort (remove =
++ * true) then we re-use the current pin reference as the IO reference we hand
++ * off to IO failure handling.
+  */
+ STATIC void
+ xfs_buf_item_unpin(
+@@ -412,24 +437,18 @@ xfs_buf_item_unpin(
+ 
+ 	trace_xfs_buf_item_unpin(bip);
+ 
+-	/*
+-	 * Drop the bli ref associated with the pin and grab the hold required
+-	 * for the I/O simulation failure in the abort case. We have to do this
+-	 * before the pin count drops because the AIL doesn't acquire a bli
+-	 * reference. Therefore if the refcount drops to zero, the bli could
+-	 * still be AIL resident and the buffer submitted for I/O (and freed on
+-	 * completion) at any point before we return. This can be removed once
+-	 * the AIL properly holds a reference on the bli.
+-	 */
+ 	freed = atomic_dec_and_test(&bip->bli_refcount);
+-	if (freed && !stale && remove)
+-		xfs_buf_hold(bp);
+ 	if (atomic_dec_and_test(&bp->b_pin_count))
+ 		wake_up_all(&bp->b_waiters);
+ 
+-	 /* nothing to do but drop the pin count if the bli is active */
+-	if (!freed)
++	/*
++	 * Nothing to do but drop the buffer pin reference if the BLI is
++	 * still active.
++	 */
++	if (!freed) {
++		xfs_buf_rele(bp);
+ 		return;
++	}
+ 
+ 	if (stale) {
+ 		ASSERT(bip->bli_flags & XFS_BLI_STALE);
+@@ -441,6 +460,15 @@ xfs_buf_item_unpin(
+ 
+ 		trace_xfs_buf_item_unpin_stale(bip);
+ 
++		/*
++		 * The buffer has been locked and referenced since it was marked
++		 * stale so we own both lock and reference exclusively here. We
++		 * do not need the pin reference any more, so drop it now so
++		 * that we only have one reference to drop once item completion
++		 * processing is complete.
++		 */
++		xfs_buf_rele(bp);
++
+ 		/*
+ 		 * If we get called here because of an IO error, we may or may
+ 		 * not have the item on the AIL. xfs_trans_ail_delete() will
+@@ -457,16 +485,30 @@ xfs_buf_item_unpin(
+ 			ASSERT(bp->b_log_item == NULL);
+ 		}
+ 		xfs_buf_relse(bp);
+-	} else if (remove) {
++		return;
++	}
++
++	if (remove) {
+ 		/*
+-		 * The buffer must be locked and held by the caller to simulate
+-		 * an async I/O failure. We acquired the hold for this case
+-		 * before the buffer was unpinned.
++		 * We need to simulate an async IO failures here to ensure that
++		 * the correct error completion is run on this buffer. This
++		 * requires a reference to the buffer and for the buffer to be
++		 * locked. We can safely pass ownership of the pin reference to
++		 * the IO to ensure that nothing can free the buffer while we
++		 * wait for the lock and then run the IO failure completion.
+ 		 */
+ 		xfs_buf_lock(bp);
+ 		bp->b_flags |= XBF_ASYNC;
+ 		xfs_buf_ioend_fail(bp);
++		return;
+ 	}
++
++	/*
++	 * BLI has no more active references - it will be moved to the AIL to
++	 * manage the remaining BLI/buffer life cycle. There is nothing left for
++	 * us to do here so drop the pin reference to the buffer.
++	 */
++	xfs_buf_rele(bp);
+ }
+ 
+ STATIC uint
 -- 
 2.53.0
 
