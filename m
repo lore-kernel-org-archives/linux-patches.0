@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214819;
-	b=UPlXkXJ5xlsxWfD7uRcbnAqOQfsBldVBmPWUIwIGhz271qdvbDEqtANFathqMnpP0XTN
-	 1Am9cz8n38k2LdLte7PXih/CJOHUcgvlilQ1PY7iRAqTM07rPGteNB1YW/vyy+gOWJSiv
-	 rWG0TMGkcecGsuEYrfGhbBsFYl/UgxjSPA5tL2LmgXduC50XNurkXJnsDBtu2d5hp1oDW
-	 Qyv//hEpJEofQVQahd7Qz1OxpfSwtuDIdht4gj9D0FIs0br8MqJnXkrpfxpqyoT/QalCJ
-	 eu4dvTBGPmLzKSHfDnWSAbjM2QtlJgF8BcvX7FGivbhgfnj0rMgDuthIPMuAG0kUUCw==
+	t=1793214822;
+	b=AVIyK5xme1JzPDW1Rrj3GvLvdHuPc46p5jCrkCfVqlSxmY4X2xoUGRocNQnPQJQu8nZB
+	 hC0e6z4LoAZ1u0o6YMZWGIIYYG71wudCtTq/Q1yQ9BhyqsyJdJbmu5jw+GPObUgje+eyk
+	 J61hPVYOInozDsWmYkR2xSeNpvWadxumU7VsJjZ6zrl8rhT4Z7OTylaMfYmcd6b46soVW
+	 gNE5NDH3QnMaQtImnMKxfKirxYOx/MHO4TmrN8iTIk+MJ8QAxm0PBZvOebkzH4N5DHrfo
+	 g5/ZSvNQtGCX2DLfjHA3WM0Na54v6iq7dZr+K25D2mCpcU4i/ALV6kJrLsVPg4sJmng==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214819;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214822;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=dS4p4GbuweobJUJAdnDLLkkkbyFsKmxXzUWnl7Ljeg4=;
-	b=TYTsf9WIRmkOLtv8Pj3m0YbPDGChH9JEN7J/PNaMKInFjvdivLaaOwUol6uA5I0Utdoh
-	 x5WeH/FLoxvkr33Ch3m7+Bf5uL7V0DQcJZwrDgqPfdCnJFCLKXRtRGFSi2NqF3iCQWz0H
-	 mIOtJaEefUhu1njm+1Mg0IWT7OqJE7g0BqSOOfhn7n4rEGcQZJOGRbmkHAqwet3PXl+3D
-	 Wroot4V+tgCkyNBf594rQY3/8w0fWs4wG0gnz07EmtV2p9H0pG9VRw0xMvx5pOiiNgzK5
-	 5jve+1qxifsi6gxkFwv7tKFF/A9pmKPCkP5YWdUbl2f3HSKq0ZYzRzBe8JVQ1ti+yOQ==
+	bh=qs1qAXeXmidxhg79VoKPrQDnp6l/Px65vtU/ACjkHxY=;
+	b=XRE/mCruZ5jXPbfhZWpsYNka45tlkUjeqF1LBsUPIMLlWlYomIOSi79tH3Ai9Uc4b6CO
+	 ysLl8kyVD4SvqlS1bZ7mxwl+iVZLFZtjL9BvX2g/ENAUS9eV5CU+znUgzwNAeya9AqYL7
+	 MfaPB6gujrXGi05Q2eOVltr39l8CI2ZXCqoDLfu4MAINH9nOeoKkMFwj3L3Heko4t/raY
+	 3TLPAI2KFs1ZKvG2T3OFCJQlv1bV8C81B9GpNz2nVG02bQbLJK5fGWgOUfaCrKoCygBDj
+	 UfrvwzzRy4Xc5CGhm6JB/0dAWNNZeSouPXijqPyQGrabNZFA1qhLV5mIX9fHUun4c1g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RMBhKa3M;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CvlVq2ON;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08800606AB09;
-	Wed, 28 Oct 2026 19:13:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D247F606A33B;
+	Wed, 28 Oct 2026 19:13:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RMBhKa3M
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AA081F01825;
-	Wed, 28 Oct 2026 19:13:38 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CvlVq2ON
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F7EE1F01825;
+	Wed, 28 Oct 2026 19:13:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214818;
-	bh=dS4p4GbuweobJUJAdnDLLkkkbyFsKmxXzUWnl7Ljeg4=;
+	s=korg; t=1793214821;
+	bh=qs1qAXeXmidxhg79VoKPrQDnp6l/Px65vtU/ACjkHxY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RMBhKa3MjysYRF+hAO5TCgPkisgsh22NF036lgAX75BVoSds+p/84HbFjv3OyX/GF
-	 tfu+iJL/0NCXsOBlmdnM2Gsag5Xmrzyxqm+4cQLATx4pOv8gQ817hj8rZnqlBrABhw
-	 UWETiLBNjDa/wUyrrnN3ie56OIQQkwrU8W7iomUA=
+	b=CvlVq2ON6UjkAq/Ln+3fMpfWhQhmkD3u7753rpxh7WNApxPAnjU1z9KP2THOfxX4b
+	 Z1mbCO7I6SnAJxurShdjONcvx2JHjYW0rAxyvjnmSiN32jg+Iatrz7JUcqM4eqKQHi
+	 KDxxCxx5B+KmMiKMmIg/ZzALnMnNZXhyjow8Tppw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicholas Carlini <nicholas@carlini.com>,
-	Stefan Metzmacher <metze@samba.org>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0991/1887] ksmbd: fix signededness bug in smb_direct_prepare_negotiation()
-Date: Wed, 28 Oct 2026 17:51:27 +0100
-Message-ID: <20261028170521.963936003@linuxfoundation.org>
+	Martino Facchin <m.facchin@arduino.cc>,
+	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Alexey Klimov <alexey.klimov@linaro.org>
+Subject: [PATCH 6.1 0992/1887] ASoC: qcom: q6asm: handle the responses after closing
+Date: Wed, 28 Oct 2026 17:51:28 +0100
+Message-ID: <20261028170521.986960751@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -70,49 +70,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicholas Carlini <nicholas@carlini.com>
+From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
 
-[ Upstream commit 6b4f875aac344cdd52a1f34cc70ed2f874a65757 ]
+[ Upstream commit a354f030dbce17ab3cf299660a38b162d97f7151 ]
 
-smb_direct_prepare_negotiation() casts an unsigned __u32 value
-from sp->max_recv_size and req->preferred_send_size to a signed
-int before computing min_t(int, ...). A maliciously provided
-preferred_send_size of 0x80000000 will return as smaller than
-max_recv_size, and then be used to set the maximum allowed
-alowed receive size for the next message.
+For record path, multiple read requests are queued to dsp in advance.
+However when data stream is closed, the pending read requests are rejected
+by the dsp and a response is sent to the driver, this case is not handled
+in the driver resulting in errors like below
 
-By sending a second message with a large value (>1420 bytes)
-the attacker can then achieve a heap buffer overflow.
+q6asm-dai ab00000.remoteproc:glink-edge:apr:service@7:dais: command[0x10dac] not expecting rsp
+q6asm-dai ab00000.remoteproc:glink-edge:apr:service@7:dais: command[0x10dac] not expecting rsp
+q6asm-dai ab00000.remoteproc:glink-edge:apr:service@7:dais: command[0x10dac] not expecting rsp
 
-This fix replaces min_t(int, ...) with min_t(u32)
+This is same for both write and eos.
 
-Fixes: 0626e6641f6b ("cifsd: add server handler for central processing and tranport layers")
-Signed-off-by: Nicholas Carlini <nicholas@carlini.com>
-Reviewed-by: Stefan Metzmacher <metze@samba.org>
-Acked-by: Stefan Metzmacher <metze@samba.org>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fix this by allowing ASM_DATA_CMD_READ_V2, ASM_DATA_CMD_EOS and
+ASM_DATA_CMD_WRITE_V2 as expected response.
+
+Reported-by: Martino Facchin <m.facchin@arduino.cc>
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+Tested-by: Alexey Klimov <alexey.klimov@linaro.org> # RB5, RB3
+Link: https://patch.msgid.link/20251023102444.88158-6-srinivas.kandagatla@oss.qualcomm.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: 8a066a81ee0c ("ASoC: qcom: q6asm: drop DSP responses for closed data streams")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/transport_rdma.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sound/soc/qcom/qdsp6/q6asm.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/fs/smb/server/transport_rdma.c b/fs/smb/server/transport_rdma.c
-index 1290c0fa7dd18..bcf0631ce10a6 100644
---- a/fs/smb/server/transport_rdma.c
-+++ b/fs/smb/server/transport_rdma.c
-@@ -1967,9 +1967,9 @@ static int smb_direct_prepare(struct ksmbd_transport *t)
- 		goto out;
- 
- 	req = (struct smb_direct_negotiate_req *)recvmsg->packet;
--	st->max_recv_size = min_t(int, st->max_recv_size,
-+	st->max_recv_size = min_t(u32, st->max_recv_size,
- 				  le32_to_cpu(req->preferred_send_size));
--	st->max_send_size = min_t(int, st->max_send_size,
-+	st->max_send_size = min_t(u32, st->max_send_size,
- 				  le32_to_cpu(req->max_receive_size));
- 	st->max_fragmented_send_size =
- 		le32_to_cpu(req->max_fragmented_size);
+diff --git a/sound/soc/qcom/qdsp6/q6asm.c b/sound/soc/qcom/qdsp6/q6asm.c
+index 9f53cffe5184e..85abf2ce091fe 100644
+--- a/sound/soc/qcom/qdsp6/q6asm.c
++++ b/sound/soc/qcom/qdsp6/q6asm.c
+@@ -637,6 +637,7 @@ static int32_t q6asm_stream_callback(struct apr_device *adev,
+ 			client_event = ASM_CLIENT_EVENT_CMD_OUT_FLUSH_DONE;
+ 			break;
+ 		case ASM_STREAM_CMD_OPEN_WRITE_V3:
++		case ASM_DATA_CMD_WRITE_V2:
+ 		case ASM_STREAM_CMD_OPEN_READ_V3:
+ 		case ASM_STREAM_CMD_OPEN_READWRITE_V2:
+ 		case ASM_STREAM_CMD_SET_ENCDEC_PARAM:
+@@ -653,6 +654,10 @@ static int32_t q6asm_stream_callback(struct apr_device *adev,
+ 				goto done;
+ 			}
+ 			break;
++		case ASM_DATA_CMD_EOS:
++		case ASM_DATA_CMD_READ_V2:
++			/* response as result of close stream */
++			break;
+ 		default:
+ 			dev_err(ac->dev, "command[0x%x] not expecting rsp\n",
+ 				result->opcode);
 -- 
 2.53.0
 
