@@ -1,54 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793209270;
-	b=DIc6x1PGpr9DtziGC2F7PPVIqjwRunXzjbM4sSvvG/kwJYvEOeGt665idrMG12Y+iRK2
-	 uAG3plXGX9pmUOd8Ob/vIyNs7c8ixpeJOjcCstTv5t4HrcAEDuG3IGFk459CGgNTSL40N
-	 vnO3hNLt9yxJds5Ky11g2MJHj7dXct01yWpgvNkuZ2XEMJnD+ieu1/uwS18wenKpUSyeW
-	 ieutk6W//ZUTEUEsY4EiEMyfEk5Sko142o9fcBHrvajx98x+YY/jAiCOQpWfa5O7yTvd7
-	 lYaID+ggN0gv8qLDXh4dtQCgyHuVfhOiYdjhSSuIVV7d4wTG0MILU+iqsqeM16IlfmA==
+	t=1793209273;
+	b=EcddlK5Cb/bJWnR895JRrEVTdaLmwDzE25mTlWTLVHSw6YxtDbbLKL/AMCiE3vZZZbQ+
+	 G6b1h/XajbSUfXiXUkC8IK0wCCstxyl1BQwUoFstMgAzmnEFdqJqfWovg+ZqZUwhsbfm4
+	 IBBvRFMagQBm98ShvKCLaO1Tat7yVBTFFNFI/JW5Z/zIPghxxRwW/uqMvaH9RC2t1/IqO
+	 dK6aE4WIC3YYka9ezXseVJIGpX9jIBUDTufdyu+nweGPhqpGvwFZSEv3PmOG+4+/k1n9z
+	 k9xFv8+Pzsvyum1M6G2xz6QNlUBLgpw/xrPFDVVNoIPfEVSFFKXkZX7ZDIO1pKG54KA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793209270;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793209273;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=lBEfXHtJUMvCH6JOh+mjE4YUnyvSAuPuHvc/LAxM/YE=;
-	b=kbpv/LoLu410I5EgJzu/xf/HBtJzS4xXhkjvHXZpYeCSIvdcNFoYHZwrMOjvIM98y55p
-	 P7D7bAWqfBut0xkwH7M9mSXrb5z9sYRhNRHsfjGcWsscxyI1QZmUuYo4U73aaRzhEUIDk
-	 aLFaaA9HFC7stA9VThbPcPOmBdoXJFlSLqu5DcSqy/Ia/HagacNmiJ3rrLdDTJeP4lra5
-	 B5CGE1NuCXIjX4rQsXA7e7gE+Jq2zdrwIuEOmtxSknwz1pwyS9YCEgeWhjZQCYj9vvbaq
-	 LTvfXbW7++l+OcmWQWnH1vyiCPRnbUBhr2l5Oq1joypO8XoXsuOoCtlmarRwxaWaqHQ==
+	bh=10vW1Qvh6ftSRPyK301IqE/M55isnEGTb6NiBsjW/5c=;
+	b=WE9wGZfeGe3sPYP0uCYezg0QWOIvzhM4D9jmzqookJDY4TLvVZMOVlUO/aSNJz22u/AO
+	 CWZtaML4cZCarbRHboTBU1SpbBkdwQTtMMcN1uUutPaGov2bYTk/Te0JitYZWhc8moW/I
+	 HMIoBlilrKwmWBf8B1kjRCncC8Jje3Zdkq5VJVLSSRQp++NSxHj5Ycj786fELsmoobM2G
+	 7Tb/xIXSpIjgNcc7cK/9v2VtngI26pWJZhDF47RjWycbOV4fQzYR0zVA7tE7gytpmUCQB
+	 O+AgyZ8zWLNFxmbmp53neVCKJSTVHQbPH7LNaWUb+CJjIOE0o4tARqxXQdERHT6okCQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CBfKRs7F;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Wl7kcNs3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09F7E606A31A;
-	Wed, 28 Oct 2026 17:41:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBA8A606A31C;
+	Wed, 28 Oct 2026 17:41:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CBfKRs7F
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A7801F01825;
-	Wed, 28 Oct 2026 17:41:09 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Wl7kcNs3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D3C91F01825;
+	Wed, 28 Oct 2026 17:41:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793209269;
-	bh=lBEfXHtJUMvCH6JOh+mjE4YUnyvSAuPuHvc/LAxM/YE=;
+	s=korg; t=1793209272;
+	bh=10vW1Qvh6ftSRPyK301IqE/M55isnEGTb6NiBsjW/5c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CBfKRs7FMAWhFjzjcJUjArZqcQWTGTLdOE6YpSOyZfpjNMChwUeZabkE/E9QdlmA0
-	 leN5B/6kPJwdKExdXLhlScljMwK2AmLyi/6VpSz68hHlu2iK8B8O/ugiXvsgdda/wV
-	 G8iqYM0drLnw5quTaphCOkc6tYFQntMhfNngmz8k=
+	b=Wl7kcNs3cvup9laQSvIPQvzWa9tRJkpS80bhAKMV+xoxlHCG9f3C5L7moOwiadtXa
+	 8GhKAlzvIl7sFjrmMnBVTtd98dp4N1uRA7S1Rb+Eb5piWqsndARtviNy0fRWs722tx
+	 G6M03eJoUoVA+DBaH3sUjYgqFGifSWHnej/m9EXI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Chinner <dchinner@redhat.com>,
-	Chandan Babu R <chandan.babu@oracle.com>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Siddh Raman Pant <siddh.raman.pant@oracle.com>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Pedro Falcato <pfalcato@suse.de>,
+	"Kiryl Shutsemau (Meta)" <kas@kernel.org>,
+	"Jose A. Perez de Azpillaga" <azpijr@gmail.com>,
+	Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 411/516] xfs: log items should have a xlog pointer, not a mount
-Date: Wed, 28 Oct 2026 17:59:23 +0100
-Message-ID: <20261028170013.219514083@linuxfoundation.org>
+Subject: [PATCH 5.10 376/516] mm/mremap: fix locked_vm leak from MREMAP_DONTUNMAP self-merge
+Date: Wed, 28 Oct 2026 17:58:48 +0100
+Message-ID: <20261028170012.391196844@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -70,239 +72,179 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dave Chinner <dchinner@redhat.com>
+From: Lorenzo Stoakes (ARM) <ljs@kernel.org>
 
-[ Upstream commit d86142dd7c4e10e50bdb3679b405d748214b2c28 ]
+[ Upstream commit 838bb60dc21553e32df90f2f3bac5b905376e7aa ]
 
-Log items belong to the log, not the xfs_mount. Convert the mount
-pointer in the log item to a xlog pointer in preparation for
-upcoming log centric changes to the log items.
+The MREMAP_DONTUNMAP feature is highly unusual in that it permits mremap()
+operations that keep the original VMA in place.
 
-Signed-off-by: Dave Chinner <dchinner@redhat.com>
-Reviewed-by: Chandan Babu R <chandan.babu@oracle.com>
-Reviewed-by: Darrick J. Wong <djwong@kernel.org>
-Signed-off-by: Darrick J. Wong <djwong@kernel.org>
-Stable-dep-of: 7b5f775be14a ("xfs: fix unmount hang with unflushable inodes stuck in the AIL")
+Historically this has led to a lot of bugs where non-obvious interactions
+occur between existing mremap() operations and the original VMA.
 
-5.10:
+Fix another of these - self-merge.
 
-Fixed conflicts due to the following missing commits:
-        38c26bfd90e1 ("xfs: replace xfs_sb_version checks with feature flag checks")
-        75c8c50fa16a ("xfs: replace XFS_FORCED_SHUTDOWN with xfs_is_shutdown")
+Self-merge occurs when a VMA is moved in front of or behind itself and the
+attributes of the VMA permit such a merge.
 
-Extra conversion in fs/xfs/xfs_dquot_item.c due to missing:
-	40b52225e58c ("xfs: remove support for disabling quota accounting on a mounted file system")
+Practically this can only happen for unfaulted anonymous VMAs due to the
+page offset equality requirement for merge:
 
-Signed-off-by: Siddh Raman Pant <siddh.raman.pant@oracle.com>
+                           |------------|
+                           |            |
+                           |            v
+        |...........||-----------||...........|
+        |           || unfaulted ||           |
+        |...........||-----------||...........|
+              ^            |
+              |            |
+              |------------|
+
+This becomes problematic if the VMA is configured by the user to
+mlock-on-fault, i.e. the VMA_LOCKED_BIT, VMA_LOCKONFAULT_BIT VMA flags are
+set.
+
+MREMAP_DONTUNMAP clears mlock flags for the source VMA and maintains them
+for the destination VMA.
+
+Self-merge makes this impossible (there is only one VMA) and incorrectly
+clears the destination VMA's mlock flags.
+
+This causes a leak in mm->locked_vm as clearing this flag does not
+decrement the counter and the VMA no longer has VMA_LOCKED_BIT set so it
+is not decremented on unmap.
+
+Resolve this by simply disallowing a self-merge in this case - the source
+and destination VMAs are kept distinct and then are able to have distinct
+mlock() flags.
+
+Update to make the now-redundant self-merge check a VM_WARN_ON_ONCE()
+instead to guard against future regressions.
+
+Fixes: e346b3813067 ("mm/mremap: add MREMAP_DONTUNMAP to mremap()")
+Signed-off-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reviewed-by: Pedro Falcato <pfalcato@suse.de>
+Acked-by: Kiryl Shutsemau (Meta) <kas@kernel.org>
+Reviewed-by: Jose A. Perez de Azpillaga <azpijr@gmail.com>
+Tested-by: Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>
+Cc: <stable@vger.kernel.org>
+[ ljs - Converted to work with vma_merge(), tweaked commit msg, removed
+  redundant self-merge code and comment. ]
+Signed-off-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/xfs/xfs_bmap_item.c     | 2 +-
- fs/xfs/xfs_buf_item.c      | 5 +++--
- fs/xfs/xfs_dquot_item.c    | 5 +++--
- fs/xfs/xfs_extfree_item.c  | 2 +-
- fs/xfs/xfs_log.c           | 2 +-
- fs/xfs/xfs_log_cil.c       | 2 +-
- fs/xfs/xfs_refcount_item.c | 2 +-
- fs/xfs/xfs_rmap_item.c     | 2 +-
- fs/xfs/xfs_trace.h         | 4 ++--
- fs/xfs/xfs_trans.c         | 2 +-
- fs/xfs/xfs_trans.h         | 3 ++-
- 11 files changed, 17 insertions(+), 14 deletions(-)
+ include/linux/mm.h |  2 +-
+ mm/mmap.c          | 23 +++++++++++++++++++----
+ mm/mremap.c        | 16 ++++------------
+ 3 files changed, 24 insertions(+), 17 deletions(-)
 
-diff --git a/fs/xfs/xfs_bmap_item.c b/fs/xfs/xfs_bmap_item.c
-index 5f1c2fda8e4ed..70849a2bda451 100644
---- a/fs/xfs/xfs_bmap_item.c
-+++ b/fs/xfs/xfs_bmap_item.c
-@@ -474,7 +474,7 @@ xfs_bui_item_recover(
- 	struct xfs_bui_log_item		*buip = BUI_ITEM(lip);
- 	struct xfs_trans		*tp;
- 	struct xfs_inode		*ip = NULL;
--	struct xfs_mount		*mp = lip->li_mountp;
-+	struct xfs_mount		*mp = lip->li_log->l_mp;
- 	struct xfs_map_extent		*bmap;
- 	struct xfs_bud_log_item		*budp;
- 	xfs_filblks_t			count;
-diff --git a/fs/xfs/xfs_buf_item.c b/fs/xfs/xfs_buf_item.c
-index deb69740d492f..132acdf0aac08 100644
---- a/fs/xfs/xfs_buf_item.c
-+++ b/fs/xfs/xfs_buf_item.c
-@@ -21,6 +21,7 @@
- #include "xfs_dquot.h"
- #include "xfs_trace.h"
- #include "xfs_log.h"
-+#include "xfs_log_priv.h"
+diff --git a/include/linux/mm.h b/include/linux/mm.h
+index 4787d39bbad4a..38825a944ee5a 100644
+--- a/include/linux/mm.h
++++ b/include/linux/mm.h
+@@ -2562,7 +2562,7 @@ extern void __vma_link_rb(struct mm_struct *, struct vm_area_struct *,
+ extern void unlink_file_vma(struct vm_area_struct *);
+ extern struct vm_area_struct *copy_vma(struct vm_area_struct **,
+ 	unsigned long addr, unsigned long len, pgoff_t pgoff,
+-	bool *need_rmap_locks);
++	bool *need_rmap_locks, bool keep_source);
+ extern void exit_mmap(struct mm_struct *);
  
- 
- kmem_zone_t	*xfs_buf_item_zone;
-@@ -347,7 +348,7 @@ xfs_buf_item_format(
- 	 * occurs during recovery.
- 	 */
- 	if (bip->bli_flags & XFS_BLI_INODE_BUF) {
--		if (xfs_sb_version_has_v3inode(&lip->li_mountp->m_sb) ||
-+		if (xfs_sb_version_has_v3inode(&lip->li_log->l_mp->m_sb) ||
- 		    !((bip->bli_flags & XFS_BLI_INODE_ALLOC_BUF) &&
- 		      xfs_log_item_in_current_chkpt(lip)))
- 			bip->__bli_format.blf_flags |= XFS_BLF_INODE_BUF;
-@@ -535,7 +536,7 @@ xfs_buf_item_put(
- 	 * that case, the bli is freed on buffer writeback completion.
- 	 */
- 	aborted = test_bit(XFS_LI_ABORTED, &lip->li_flags) ||
--		  XFS_FORCED_SHUTDOWN(lip->li_mountp);
-+			xlog_is_shutdown(lip->li_log);
- 	dirty = bip->bli_flags & XFS_BLI_DIRTY;
- 	if (dirty && !aborted)
- 		return false;
-diff --git a/fs/xfs/xfs_dquot_item.c b/fs/xfs/xfs_dquot_item.c
-index f2cef1470373c..12b265a630ba7 100644
---- a/fs/xfs/xfs_dquot_item.c
-+++ b/fs/xfs/xfs_dquot_item.c
-@@ -17,6 +17,7 @@
- #include "xfs_trans_priv.h"
- #include "xfs_qm.h"
- #include "xfs_log.h"
-+#include "xfs_log_priv.h"
- 
- static inline struct xfs_dq_logitem *DQUOT_ITEM(struct xfs_log_item *lip)
+ static inline int check_data_rlimit(unsigned long rlim,
+diff --git a/mm/mmap.c b/mm/mmap.c
+index b2869a8034ddd..f820bfbe58527 100644
+--- a/mm/mmap.c
++++ b/mm/mmap.c
+@@ -3330,7 +3330,7 @@ int insert_vm_struct(struct mm_struct *mm, struct vm_area_struct *vma)
+  */
+ struct vm_area_struct *copy_vma(struct vm_area_struct **vmap,
+ 	unsigned long addr, unsigned long len, pgoff_t pgoff,
+-	bool *need_rmap_locks)
++	bool *need_rmap_locks, bool keep_source)
  {
-@@ -331,7 +332,7 @@ xfs_qm_qoff_logitem_relse(
+ 	struct vm_area_struct *vma = *vmap;
+ 	unsigned long vma_start = vma->vm_start;
+@@ -3338,6 +3338,7 @@ struct vm_area_struct *copy_vma(struct vm_area_struct **vmap,
+ 	struct vm_area_struct *new_vma, *prev;
+ 	struct rb_node **rb_link, *rb_parent;
+ 	bool faulted_in_anon_vma = true;
++	bool can_self_merge = false;
  
- 	ASSERT(test_bit(XFS_LI_IN_AIL, &lip->li_flags) ||
- 	       test_bit(XFS_LI_ABORTED, &lip->li_flags) ||
--	       XFS_FORCED_SHUTDOWN(lip->li_mountp));
-+	       xlog_is_shutdown(lip->li_log));
- 	xfs_trans_ail_delete(lip, 0);
- 	kmem_free(lip->li_lv_shadow);
- 	kmem_free(qoff);
-@@ -352,7 +353,7 @@ xfs_qm_qoff_logitem_init(
+ 	/*
+ 	 * If anonymous vma has not yet been faulted, update new pgoff
+@@ -3346,13 +3347,27 @@ struct vm_area_struct *copy_vma(struct vm_area_struct **vmap,
+ 	if (unlikely(vma_is_anonymous(vma) && !vma->anon_vma)) {
+ 		pgoff = addr >> PAGE_SHIFT;
+ 		faulted_in_anon_vma = false;
++		can_self_merge = true;
+ 	}
  
- 	xfs_log_item_init(mp, &qf->qql_item, XFS_LI_QUOTAOFF, start ?
- 			&xfs_qm_qoffend_logitem_ops : &xfs_qm_qoff_logitem_ops);
--	qf->qql_item.li_mountp = mp;
-+	qf->qql_item.li_log = mp->m_log;
- 	qf->qql_start_lip = start;
- 	qf->qql_flags = flags;
- 	return qf;
-diff --git a/fs/xfs/xfs_extfree_item.c b/fs/xfs/xfs_extfree_item.c
-index 11474770d630f..6327473054635 100644
---- a/fs/xfs/xfs_extfree_item.c
-+++ b/fs/xfs/xfs_extfree_item.c
-@@ -588,7 +588,7 @@ xfs_efi_item_recover(
- 	struct list_head		*capture_list)
- {
- 	struct xfs_efi_log_item		*efip = EFI_ITEM(lip);
--	struct xfs_mount		*mp = lip->li_mountp;
-+	struct xfs_mount		*mp = lip->li_log->l_mp;
- 	struct xfs_efd_log_item		*efdp;
- 	struct xfs_trans		*tp;
- 	struct xfs_extent		*extp;
-diff --git a/fs/xfs/xfs_log.c b/fs/xfs/xfs_log.c
-index bb57a125eae5e..dbe5c9ecbebe2 100644
---- a/fs/xfs/xfs_log.c
-+++ b/fs/xfs/xfs_log.c
-@@ -991,7 +991,7 @@ xfs_log_item_init(
- 	int			type,
- 	const struct xfs_item_ops *ops)
- {
--	item->li_mountp = mp;
-+	item->li_log = mp->m_log;
- 	item->li_ailp = mp->m_ail;
- 	item->li_type = type;
- 	item->li_ops = ops;
-diff --git a/fs/xfs/xfs_log_cil.c b/fs/xfs/xfs_log_cil.c
-index 407e80d06bec7..f9c24bada01db 100644
---- a/fs/xfs/xfs_log_cil.c
-+++ b/fs/xfs/xfs_log_cil.c
-@@ -1181,7 +1181,7 @@ bool
- xfs_log_item_in_current_chkpt(
- 	struct xfs_log_item	*lip)
- {
--	struct xfs_cil		*cil = lip->li_mountp->m_log->l_cilp;
-+	struct xfs_cil		*cil = lip->li_log->l_cilp;
+ 	if (find_vma_links(mm, addr, addr + len, &prev, &rb_link, &rb_parent))
+ 		return NULL;	/* should never get here */
+-	new_vma = vma_merge(mm, prev, addr, addr + len, vma->vm_flags,
+-			    vma->anon_vma, vma->vm_file, pgoff, vma_policy(vma),
+-			    vma->vm_userfaultfd_ctx);
++
++	/*
++	 * If the original VMA is kept (MREMAP_DONTUNMAP), the source and
++	 * destination VMA must be treated distinctly.
++	 *
++	 * A merge violates this, so in this case disallow a self-merge. A
++	 * self-merge can only occur if the new range is immediately adjacent to
++	 * the source VMA, so simply do not attempt to merge in that case.
++	 */
++	if (can_self_merge && keep_source &&
++	    (addr == vma->vm_end || vma->vm_start == addr + len))
++		new_vma = NULL;
++	else
++		new_vma = vma_merge(mm, prev, addr, addr + len, vma->vm_flags,
++				    vma->anon_vma, vma->vm_file, pgoff,
++				    vma_policy(vma), vma->vm_userfaultfd_ctx);
+ 	if (new_vma) {
+ 		/*
+ 		 * Source vma may have been merged into new_vma
+diff --git a/mm/mremap.c b/mm/mremap.c
+index 8d8b39f821380..79beead5af830 100644
+--- a/mm/mremap.c
++++ b/mm/mremap.c
+@@ -381,7 +381,7 @@ static unsigned long move_vma(struct vm_area_struct *vma,
  
- 	if (list_empty(&lip->li_cil))
- 		return false;
-diff --git a/fs/xfs/xfs_refcount_item.c b/fs/xfs/xfs_refcount_item.c
-index 2532a2a1cd593..459d04320c6a6 100644
---- a/fs/xfs/xfs_refcount_item.c
-+++ b/fs/xfs/xfs_refcount_item.c
-@@ -463,7 +463,7 @@ xfs_cui_item_recover(
- 	struct xfs_cud_log_item		*cudp;
- 	struct xfs_trans		*tp;
- 	struct xfs_btree_cur		*rcur = NULL;
--	struct xfs_mount		*mp = lip->li_mountp;
-+	struct xfs_mount		*mp = lip->li_log->l_mp;
- 	xfs_fsblock_t			new_fsb;
- 	xfs_extlen_t			new_len;
- 	unsigned int			refc_type;
-diff --git a/fs/xfs/xfs_rmap_item.c b/fs/xfs/xfs_rmap_item.c
-index f248e2b0ab5df..132976ae6888f 100644
---- a/fs/xfs/xfs_rmap_item.c
-+++ b/fs/xfs/xfs_rmap_item.c
-@@ -516,7 +516,7 @@ xfs_rui_item_recover(
- 	struct xfs_rud_log_item		*rudp;
- 	struct xfs_trans		*tp;
- 	struct xfs_btree_cur		*rcur = NULL;
--	struct xfs_mount		*mp = lip->li_mountp;
-+	struct xfs_mount		*mp = lip->li_log->l_mp;
- 	enum xfs_rmap_intent_type	type;
- 	xfs_exntst_t			state;
- 	int				i;
-diff --git a/fs/xfs/xfs_trace.h b/fs/xfs/xfs_trace.h
-index 86951652d3ed6..2b7e6322ec663 100644
---- a/fs/xfs/xfs_trace.h
-+++ b/fs/xfs/xfs_trace.h
-@@ -1169,7 +1169,7 @@ DECLARE_EVENT_CLASS(xfs_log_item_class,
- 		__field(xfs_lsn_t, lsn)
- 	),
- 	TP_fast_assign(
--		__entry->dev = lip->li_mountp->m_super->s_dev;
-+		__entry->dev = lip->li_log->l_mp->m_super->s_dev;
- 		__entry->lip = lip;
- 		__entry->type = lip->li_type;
- 		__entry->flags = lip->li_flags;
-@@ -1222,7 +1222,7 @@ DECLARE_EVENT_CLASS(xfs_ail_class,
- 		__field(xfs_lsn_t, new_lsn)
- 	),
- 	TP_fast_assign(
--		__entry->dev = lip->li_mountp->m_super->s_dev;
-+		__entry->dev = lip->li_log->l_mp->m_super->s_dev;
- 		__entry->lip = lip;
- 		__entry->type = lip->li_type;
- 		__entry->flags = lip->li_flags;
-diff --git a/fs/xfs/xfs_trans.c b/fs/xfs/xfs_trans.c
-index d334bb3ce643d..4e1400ea6a99e 100644
---- a/fs/xfs/xfs_trans.c
-+++ b/fs/xfs/xfs_trans.c
-@@ -644,7 +644,7 @@ xfs_trans_add_item(
- 	struct xfs_trans	*tp,
- 	struct xfs_log_item	*lip)
- {
--	ASSERT(lip->li_mountp == tp->t_mountp);
-+	ASSERT(lip->li_log == tp->t_mountp->m_log);
- 	ASSERT(lip->li_ailp == tp->t_mountp->m_ail);
- 	ASSERT(list_empty(&lip->li_trans));
- 	ASSERT(!test_bit(XFS_LI_DIRTY, &lip->li_flags));
-diff --git a/fs/xfs/xfs_trans.h b/fs/xfs/xfs_trans.h
-index 97485559008bb..f1805119a1ee1 100644
---- a/fs/xfs/xfs_trans.h
-+++ b/fs/xfs/xfs_trans.h
-@@ -8,6 +8,7 @@
+ 	new_pgoff = vma->vm_pgoff + ((old_addr - vma->vm_start) >> PAGE_SHIFT);
+ 	new_vma = copy_vma(&vma, new_addr, new_len, new_pgoff,
+-			   &need_rmap_locks);
++			   &need_rmap_locks, flags & MREMAP_DONTUNMAP);
+ 	if (!new_vma)
+ 		return -ENOMEM;
  
- /* kernel only transaction subsystem defines */
+@@ -437,6 +437,9 @@ static unsigned long move_vma(struct vm_area_struct *vma,
+ 		untrack_pfn_moved(vma);
  
-+struct xlog;
- struct xfs_buf;
- struct xfs_buftarg;
- struct xfs_efd_log_item;
-@@ -31,7 +32,7 @@ struct xfs_log_item {
- 	struct list_head		li_ail;		/* AIL pointers */
- 	struct list_head		li_trans;	/* transaction list */
- 	xfs_lsn_t			li_lsn;		/* last on-disk lsn */
--	struct xfs_mount		*li_mountp;	/* ptr to fs mount */
-+	struct xlog			*li_log;
- 	struct xfs_ail			*li_ailp;	/* ptr to AIL */
- 	uint				li_type;	/* item type */
- 	unsigned long			li_flags;	/* misc flags */
+ 	if (unlikely(!err && (flags & MREMAP_DONTUNMAP))) {
++		/* Self-merge is disallowed. */
++		VM_WARN_ON_ONCE(new_vma == vma);
++
+ 		if (vm_flags & VM_ACCOUNT) {
+ 			/* Always put back VM_ACCOUNT since we won't unmap */
+ 			vma->vm_flags |= VM_ACCOUNT;
+@@ -444,17 +447,6 @@ static unsigned long move_vma(struct vm_area_struct *vma,
+ 			vm_acct_memory(new_len >> PAGE_SHIFT);
+ 		}
+ 
+-		/*
+-		 * VMAs can actually be merged back together in copy_vma
+-		 * calling merge_vma. This can happen with anonymous vmas
+-		 * which have not yet been faulted, so if we were to consider
+-		 * this VMA split we'll end up adding VM_ACCOUNT on the
+-		 * next VMA, which is completely unrelated if this VMA
+-		 * was re-merged.
+-		 */
+-		if (split && new_vma == vma)
+-			split = 0;
+-
+ 		/* We always clear VM_LOCKED[ONFAULT] on the old vma */
+ 		vma->vm_flags &= VM_LOCKED_CLEAR_MASK;
+ 
 -- 
 2.53.0
 
