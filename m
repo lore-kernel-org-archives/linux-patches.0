@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793208796;
-	b=ceqJPI4LPzko1UV3DdIeA0oK8QNvccIiqHF6qCdd5Qrn9uW0yl/WMmyLHKWkI+ev0jKO
-	 uWVvW2i7LyJGVqHPuq/TeuvvJ7LOeZMaA5bicH5+SpDoh6jF8V1ilve/VKgOgOtn96l9r
-	 OAB59HTBv/vpQejHWqr4fd4JE4CqGgiU4p+N3CVeM++y5L3LxfYjOlP7jNyxOFSTsL/0P
-	 ye1XVqCd0NGdcPoNEl9O/EmLDjCEbPOS2bumZ8J0+APB54Ha8NGicNAL7wOZbJsGcwy+8
-	 pm8kjxAIIHhuFYHb+GP+pB2CRua28wafXPS8xrpUlzvN1GwuVr7MfSLMajgFevqNtXw==
+	t=1793208799;
+	b=A/us5EFb09dLTvT+pqe+Qbi7VPNOSTf7qxSain77NYFOpaxDHYmzrsZyChwErwEVzAce
+	 APPl0t/ak/cDgm/dt/IknGWBxb+CIvZjnE6b57ufII2xFUh98uU+68Ueasl8zK/PT6jzG
+	 BIx1wWYSLraUGRlvC4A3dh45ZJD3eOLw9lMAnWTBvt3WoZkiv9zlwS+BquKmNDv5MeALh
+	 q3wPKw2nkuN7gGOT3SgTsEx64gw9oXG/tlgYbMobNb+cl2BEo/efILmdtR13GR7DfLdXv
+	 An5B71yxlOARP2SLKVj5I02QHhKtiAGk8Y4AD9QlDkYI5CVyNxbl4xM0T/gP4VsczXA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793208796;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793208799;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=oPipVxR6ziUbxIy+l9U1ITPU8ZCD9X3yA42Jd+bus98=;
-	b=nA0nC6OBg6rClohQtDFm6kbnq/oh2RtbZWPGottMaiaUqyT4G7RFlyZ3ZYhZcD2qkkFZ
-	 lNP1LfCwOouYEnNncKoyk7TUJYBobJtZCYvEu1A09D19yVLphn4vRruBvjD5O5UpJCEC/
-	 9IZAtPdcD549Wwt0bx4c6ZJWSbgEkwCbSabh8ddGdFXwheMaGAQsE8DNQVXDOJ+JwFxvz
-	 3E2hebdDfl6HHWQyh0mVsqViBCRtIqh0pt2pq5ACR/pv4PK5rF7lTQWSlKJ/16xbUAyVg
-	 b8xGcnEPToKaozZ+z4DEKgs4d0NqJSmFrCMb3PBhbwYW7Ua4/Gy0GPDEXnCdb/sYlTA==
+	bh=2QbEyFJ/q6bcsf9/WDPasOEomVaWhHX7qg+bQq2WDhM=;
+	b=di2Mqco0CUMWUjMYXWPFeRmXDM4zxgGxwKH/HEQrZ0p1FeFw21JYgCb74VrMLmIg4LpU
+	 BEtru1J6mkTUNk48Gdr/CI4h8DRer8ANUXbhRarbQ1Ks0AqaUalrsM/k+OQvmxZruy1Ix
+	 t/LzrVWngYPjbcDf3ioKqZWygo8HFlDThr44O0Vl2u3Ir/TH4yYzyhjNoU/qjK6pTzXoE
+	 RYU3h8UNfAll0ERopPt9mv8jT3uWFGqb3KZ0kF2UVG7guNBwQjPUxY1PoyKCr+RPjG4Rw
+	 btjMcsCuvdLqKfTdbjVOAYs6DklkBomAzIUtkTKsO04xPlJSJPz+LeCgI+Ri59ZoMmg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l22cvLrf;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CVzlxJqH;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5E7A606A31D;
-	Wed, 28 Oct 2026 17:33:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDC27606A31A;
+	Wed, 28 Oct 2026 17:33:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l22cvLrf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 402301F01825;
-	Wed, 28 Oct 2026 17:33:15 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CVzlxJqH
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19DFC1F01825;
+	Wed, 28 Oct 2026 17:33:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793208795;
-	bh=oPipVxR6ziUbxIy+l9U1ITPU8ZCD9X3yA42Jd+bus98=;
+	s=korg; t=1793208798;
+	bh=2QbEyFJ/q6bcsf9/WDPasOEomVaWhHX7qg+bQq2WDhM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=l22cvLrf0gnKSZ4WTxnG94JT7Bcarb9C7g51o8gLyQjY641qh6oEsaYYHwcmZPlin
-	 mS+waGqaMeSCppDBYlEhL8ksAqb7KlQfmMcD8Mcuexn4klPzvuekrHTuEydsc70kA4
-	 ok76xg4ab/jB4YZl8VlwbVlGQxx8oBKhy1nc62UU=
+	b=CVzlxJqHVXr25JmfRdX0/QNKsvIu9NJdcCUlrVUzUDVv6095bgpHyI/DEdZLtfa78
+	 9dz0Yml7fT3r4uM0ZheY+1bCbkN65renVi8dVeg0EgZMrRIRzshai4qDOOLkgxcOK0
+	 6/RCR/MGJWWWnXkkAv3jEMLDhW+Ycj1LzcBDJK1Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Caleb Connolly <caleb.connolly@linaro.org>,
-	Amit Pundir <amit.pundir@linaro.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Asad Kamal <asad.kamal@amd.com>,
+	Lijo Lazar <lijo.lazar@amd.com>,
+	Yang Wang <kevinyang.wang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 246/516] arm64: dts: qcom: sdm845-db845c: Mark cont splash memory region as reserved
-Date: Wed, 28 Oct 2026 17:56:38 +0100
-Message-ID: <20261028170009.325636557@linuxfoundation.org>
+Subject: [PATCH 5.10 247/516] drm/amd/powerplay: fix VoltageObjectInfo zero-stride loop and OOB read
+Date: Wed, 28 Oct 2026 17:56:39 +0100
+Message-ID: <20261028170009.349217439@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -70,55 +70,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Amit Pundir <amit.pundir@linaro.org>
+From: Asad Kamal <asad.kamal@amd.com>
 
-[ Upstream commit 110e70fccce4f22b53986ae797d665ffb1950aa6 ]
+[ Upstream commit 5d3cc8e388464f485d0944b87b8f9426e637d082 ]
 
-Adding a reserved memory region for the framebuffer memory
-(the splash memory region set up by the bootloader).
+Reject voltage objects whose usSize is smaller than the header or would
+advance the cursor past the table end, preventing an infinite loop or
+heap OOB read when the VBIOS supplies a malformed VoltageObjectInfo table.
 
-It fixes a kernel panic (arm-smmu: Unhandled context fault
-at this particular memory region) reported on DB845c running
-v5.10.y.
-
-Cc: stable@vger.kernel.org # v5.10+
-Reviewed-by: Caleb Connolly <caleb.connolly@linaro.org>
-Signed-off-by: Amit Pundir <amit.pundir@linaro.org>
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/20230726132719.2117369-2-amit.pundir@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: c82baa281843 ("drm/amd/powerplay: add Tonga dpm support (v3)")
+Fixes: 0d2c7569e196 ("drm/amdgpu: add new atomfirmware based helpers for powerplay")
+Signed-off-by: Asad Kamal <asad.kamal@amd.com>
+Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
+Reviewed-by: Yang Wang <kevinyang.wang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sdm845-db845c.dts | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppatomctrl.c   | 10 ++++++++--
+ drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppatomfwctrl.c | 11 ++++++++---
+ 2 files changed, 16 insertions(+), 5 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-index e327e398d99ed..2af8c37be459b 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-@@ -85,6 +85,14 @@ hdmi_con: endpoint {
- 		};
- 	};
+diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppatomctrl.c b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppatomctrl.c
+index 04dbd9f89a45d..0e9d33846114f 100644
+--- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppatomctrl.c
++++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppatomctrl.c
+@@ -224,15 +224,21 @@ static const ATOM_VOLTAGE_OBJECT_V3 *atomctrl_lookup_voltage_type_v3(
+ 	unsigned int offset = offsetof(ATOM_VOLTAGE_OBJECT_INFO_V3_1, asVoltageObj[0]);
+ 	uint8_t *start = (uint8_t *)voltage_object_info_table;
  
-+	reserved-memory {
-+		/* Cont splash region set up by the bootloader */
-+		cont_splash_mem: framebuffer@9d400000 {
-+			reg = <0x0 0x9d400000 0x0 0x2400000>;
-+			no-map;
-+		};
-+	};
+-	while (offset < size) {
++	while (offset + sizeof(ATOM_VOLTAGE_OBJECT_HEADER_V3) <= size) {
+ 		const ATOM_VOLTAGE_OBJECT_V3 *voltage_object =
+ 			(const ATOM_VOLTAGE_OBJECT_V3 *)(start + offset);
++		u16 obj_size;
 +
- 	lt9611_1v8: lt9611-vdd18-regulator {
- 		compatible = "regulator-fixed";
- 		regulator-name = "LT9611_1V8";
-@@ -488,6 +496,7 @@ &i2c14 {
- };
++		obj_size = le16_to_cpu(voltage_object->asGpioVoltageObj.sHeader.usSize);
++		if (obj_size < sizeof(voltage_object->asGpioVoltageObj.sHeader) ||
++		    offset + obj_size > size)
++			break;
  
- &mdss {
-+	memory-region = <&cont_splash_mem>;
- 	status = "okay";
- };
+ 		if (voltage_type == voltage_object->asGpioVoltageObj.sHeader.ucVoltageType &&
+ 			voltage_mode == voltage_object->asGpioVoltageObj.sHeader.ucVoltageMode)
+ 			return voltage_object;
  
+-		offset += le16_to_cpu(voltage_object->asGpioVoltageObj.sHeader.usSize);
++		offset += obj_size;
+ 	}
+ 
+ 	return NULL;
+diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppatomfwctrl.c b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppatomfwctrl.c
+index 615cf2c09e54e..26444c20e3cc8 100644
+--- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppatomfwctrl.c
++++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppatomfwctrl.c
+@@ -36,16 +36,21 @@ static const union atom_voltage_object_v4 *pp_atomfwctrl_lookup_voltage_type_v4(
+ 			offsetof(struct atom_voltage_objects_info_v4_1, voltage_object[0]);
+ 	unsigned long start = (unsigned long)voltage_object_info_table;
+ 
+-	while (offset < size) {
++	while (offset + sizeof(struct atom_voltage_object_header_v4) <= size) {
+ 		const union atom_voltage_object_v4 *voltage_object =
+ 			(const union atom_voltage_object_v4 *)(start + offset);
++		u16 obj_size;
++
++		obj_size = le16_to_cpu(voltage_object->gpio_voltage_obj.header.object_size);
++		if (obj_size < sizeof(voltage_object->gpio_voltage_obj.header) ||
++		    offset + obj_size > size)
++			break;
+ 
+ 		if (voltage_type == voltage_object->gpio_voltage_obj.header.voltage_type &&
+ 		    voltage_mode == voltage_object->gpio_voltage_obj.header.voltage_mode)
+ 			return voltage_object;
+ 
+-		offset += le16_to_cpu(voltage_object->gpio_voltage_obj.header.object_size);
+-
++		offset += obj_size;
+ 	}
+ 
+ 	return NULL;
 -- 
 2.53.0
 
