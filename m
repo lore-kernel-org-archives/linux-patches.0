@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214332;
-	b=3vK1m5JQdykGQ0w7guxggSb+oHcOUWETav0q5TZQYylZcQh3iWfV6jsEjrYU+Zv4UiUe
-	 1PUss3p/M5+EC9m8vBtulU8nbhy/I4u5t1ZOspW94gJQXIzT8fVbUsB1p+IJYwKsLet/q
-	 ArDfSg32jfjDSEDNkTIYNMREW3+oEjV2Q/dp08kS1qY9N3qSvTNaGEeHxrxBF0X6NE/87
-	 IsRpEIGxfDhu9pS+Fe1HxhQ+8Ir16HM/RxY095Jp4tDc8vqkL8vjW0jXb7ujbbsRF3i6M
-	 C8uGrLluwIif2BmE52QoaznaQa6Km9wW8J1+2Dhhe4XkQPH0KMm68cMroUlujpaGjqw==
+	t=1793214335;
+	b=kls9NUUYs8Bj3WJHzjxOUzectdl8qrohl2X6IN/eLnhTyBtJyj8ieDIMLTl+HYfebHH+
+	 7dynEM46ENWAlIKv+eF8MReeq5E0zfxTYIPSliJfBXWL2BsLepZ21pqDFxJTPFUjVMoAU
+	 fV94OzVCi+nJlwmjrbtkGD82Zg+/hK+zwAuwOId5LJ5IsUea9Re1c8OznmnHVKsM3NeHi
+	 rhU4rPOs4YLpvULMzvVE+M+Emxaw4jBS3WAavY+1zODmGXq26YBQGKk66fx3Z6aWmqyxR
+	 s9XOBgTcuQ6xOSyPiae4sqBmr5rHzDE5nfujgcTBwcQZhYKi6ZZIo8LxkI+zq6P3NTA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214332;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214335;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=aj2S+43sBpVCckiUQUk6tBs/W2EAOkE1szlzbYRjVcA=;
-	b=xCltpBOWLcrTK8euDdipDslRakrTwhJwei8/mICQ8eVvLx34yAWDEZlP2qDHPCTpBtXG
-	 FOwNdgE14+TJtuhzgNSNB4PvVnzp5M95hsqhzCAnVywzIwUifHjZy4OlJOcGbRUmmdlZA
-	 Bv2SgfI2JA01Ej0OZzRS/z4es+xmsRZUcRInRVR6k+fkniNeY+sU28JbmHaWxHxT53fri
-	 bV/Wi1vY3CW1ymZs6viXJAtkBIbqOXBmeZrzMYyU1xAPqTeXeFtLnFkLbcDKcKutl/2Q6
-	 FXkSc2q5FZGWi9PD2DF5Q6hQXxHv5VGj6euTLFTZnfjcna4wuXmF7lUTFyQBO/j2PMw==
+	bh=5AzTsMJbyAAyx3Beg+hVfPkR0kYOv6e/tPmsunDnSeI=;
+	b=M8w7Dgplf3YhfInr9DYrkfP5CS/3tRgeNCdfrC8drtGF/cn9GhXVL9EeetRYM0BacwRx
+	 tAsFK3PDypvpW+6o6wilBcEtaBWbMT+3RDn3YtcCz0DNS4V5H5zW/KpLTVy/DGIko/xwv
+	 cw3TRDNKWgzRBMwlw33PhXqQ9smjrHYBsXLYiMlWF79zMOXEUDjRGtsv4Ixdowy1i5j4X
+	 Jx0KUwobKYJEngN8TZpaO/XvndUiT5Xl51EHbKKeqlcyinSQ7pj1K25cam4JNl1KMUojs
+	 go+Rr7y1WIeJNkpMXGD3fbDygDJ9ZoBqXTv17OgF2BP/CQ4cIjgWvPP0aOp+rVUHiJw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vC9WC1wp;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LTa2QAjZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9389606A326;
-	Wed, 28 Oct 2026 19:05:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE6D6606BFA8;
+	Wed, 28 Oct 2026 19:05:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vC9WC1wp
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 360801F01825;
-	Wed, 28 Oct 2026 19:05:31 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LTa2QAjZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B65A1F01825;
+	Wed, 28 Oct 2026 19:05:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214331;
-	bh=aj2S+43sBpVCckiUQUk6tBs/W2EAOkE1szlzbYRjVcA=;
+	s=korg; t=1793214334;
+	bh=5AzTsMJbyAAyx3Beg+hVfPkR0kYOv6e/tPmsunDnSeI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vC9WC1wpEmIsQgz7Qkywf3xqwpR92MwtMSONJz8HDujc6Z32qSYuKhztrlSnWVzV0
-	 fmDREm2nb6YrDPx5NRX56PMtXl3wG2P83bln+09U91KIbPzd/1fBXmfkroIDco2Na6
-	 Wb0WWZmWg4OHN46gbBfibOGXNl4daMirPkr9LtsE=
+	b=LTa2QAjZW4ATDweyIA7CzhQbakYX7a1Zc9ZtSPKO/bch6s5dtSqPQhEYKrRNuQJA8
+	 D+jVpCzgEm3KFHKCys0DqyZFcnfrN6xNQmv/7R6fbG0SMRaJisH/WjiJDmhdTQFcE6
+	 Er1IIDie09hH6XnhOpwJkwAzq/8QhjZgbVoqUIl8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Umio Yasuno <coelacanth_dream@protonmail.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	syzbot+01ef7a8da81a975e1ccd@syzkaller.appspotmail.com,
+	Jan Kara <jack@suse.cz>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0822/1887] drm/amd/pm: fix null pointer access
-Date: Wed, 28 Oct 2026 17:48:38 +0100
-Message-ID: <20261028170518.131139424@linuxfoundation.org>
+Subject: [PATCH 6.1 0823/1887] loop: Avoid updating block size under exclusive owner
+Date: Wed, 28 Oct 2026 17:48:39 +0100
+Message-ID: <20261028170518.153625935@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,36 +69,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Umio Yasuno <coelacanth_dream@protonmail.com>
+From: Jan Kara <jack@suse.cz>
 
-[ Upstream commit d524d40e3a6152a3ea1125af729f8cd8ca65efde ]
+[ Upstream commit 7e49538288e523427beedd26993d446afef1a6fb ]
 
-Writing a string without delimiters (' ', '\n', '\0') to the under
-gpu_od/fan_ctrl sysfs or pp_power_profile_mode for the CUSTOM profile
-will result in a null pointer dereference.
+Syzbot came up with a reproducer where a loop device block size is
+changed underneath a mounted filesystem. This causes a mismatch between
+the block device block size and the block size stored in the superblock
+causing confusion in various places such as fs/buffer.c. The particular
+issue triggered by syzbot was a warning in __getblk_slow() due to
+requested buffer size not matching block device block size.
 
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/4401
-Signed-off-by: Umio Yasuno <coelacanth_dream@protonmail.com>
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fix the problem by getting exclusive hold of the loop device to change
+its block size. This fails if somebody (such as filesystem) has already
+an exclusive ownership of the block device and thus prevents modifying
+the loop device under some exclusive owner which doesn't expect it.
+
+Reported-by: syzbot+01ef7a8da81a975e1ccd@syzkaller.appspotmail.com
+Signed-off-by: Jan Kara <jack@suse.cz>
+Tested-by: syzbot+01ef7a8da81a975e1ccd@syzkaller.appspotmail.com
+Link: https://lore.kernel.org/r/20250711163202.19623-2-jack@suse.cz
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/pm/amdgpu_pm.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/block/loop.c | 40 +++++++++++++++++++++++++++++++---------
+ 1 file changed, 31 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/pm/amdgpu_pm.c b/drivers/gpu/drm/amd/pm/amdgpu_pm.c
-index 500cbd1572374..1eaf20cad9fa1 100644
---- a/drivers/gpu/drm/amd/pm/amdgpu_pm.c
-+++ b/drivers/gpu/drm/amd/pm/amdgpu_pm.c
-@@ -1436,6 +1436,8 @@ static ssize_t amdgpu_set_pp_power_profile_mode(struct device *dev,
- 			if (ret)
- 				return -EINVAL;
- 			parameter_size++;
-+			if (!tmp_str)
-+				break;
- 			while (isspace(*tmp_str))
- 				tmp_str++;
- 		}
+diff --git a/drivers/block/loop.c b/drivers/block/loop.c
+index e3e5d533a7eca..20ecd689c2e63 100644
+--- a/drivers/block/loop.c
++++ b/drivers/block/loop.c
+@@ -1472,19 +1472,36 @@ static int loop_set_dio(struct loop_device *lo, unsigned long arg)
+ 	return error;
+ }
+ 
+-static int loop_set_block_size(struct loop_device *lo, unsigned long arg)
++static int loop_set_block_size(struct loop_device *lo, fmode_t mode,
++			       struct block_device *bdev, unsigned long arg)
+ {
+ 	int err = 0;
+ 
+-	if (lo->lo_state != Lo_bound)
+-		return -ENXIO;
++	/*
++	 * If we don't hold exclusive handle for the device, upgrade to it
++	 * here to avoid changing device under exclusive owner.
++	 */
++	if (!(mode & FMODE_EXCL)) {
++		err = bd_prepare_to_claim(bdev, loop_set_block_size);
++		if (err)
++			return err;
++	}
++
++	err = mutex_lock_killable(&lo->lo_mutex);
++	if (err)
++		goto abort_claim;
++
++	if (lo->lo_state != Lo_bound) {
++		err = -ENXIO;
++		goto unlock;
++	}
+ 
+ 	err = blk_validate_block_size(arg);
+ 	if (err)
+-		return err;
++		goto unlock;
+ 
+ 	if (lo->lo_queue->limits.logical_block_size == arg)
+-		return 0;
++		goto unlock;
+ 
+ 	sync_blockdev(lo->lo_device);
+ 	invalidate_bdev(lo->lo_device);
+@@ -1496,6 +1513,11 @@ static int loop_set_block_size(struct loop_device *lo, unsigned long arg)
+ 	loop_update_dio(lo);
+ 	blk_mq_unfreeze_queue(lo->lo_queue);
+ 
++unlock:
++	mutex_unlock(&lo->lo_mutex);
++abort_claim:
++	if (!(mode & FMODE_EXCL))
++		bd_abort_claiming(bdev, loop_set_block_size);
+ 	return err;
+ }
+ 
+@@ -1514,9 +1536,6 @@ static int lo_simple_ioctl(struct loop_device *lo, unsigned int cmd,
+ 	case LOOP_SET_DIRECT_IO:
+ 		err = loop_set_dio(lo, arg);
+ 		break;
+-	case LOOP_SET_BLOCK_SIZE:
+-		err = loop_set_block_size(lo, arg);
+-		break;
+ 	default:
+ 		err = -EINVAL;
+ 	}
+@@ -1573,9 +1592,12 @@ static int lo_ioctl(struct block_device *bdev, fmode_t mode,
+ 		break;
+ 	case LOOP_GET_STATUS64:
+ 		return loop_get_status64(lo, argp);
++	case LOOP_SET_BLOCK_SIZE:
++		if (!(mode & FMODE_WRITE) && !capable(CAP_SYS_ADMIN))
++			return -EPERM;
++		return loop_set_block_size(lo, mode, bdev, arg);
+ 	case LOOP_SET_CAPACITY:
+ 	case LOOP_SET_DIRECT_IO:
+-	case LOOP_SET_BLOCK_SIZE:
+ 		if (!(mode & FMODE_WRITE) && !capable(CAP_SYS_ADMIN))
+ 			return -EPERM;
+ 		fallthrough;
 -- 
 2.53.0
 
