@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213569;
-	b=12iQKB36XJoiHsVxMTAHexJZRgFNryBrsz9yyUCf4v0Vrc9RLzKBUWSRpt78kH/AQUQt
-	 3n36OM/1nF9F/21vfYHSWhuKeznzWldoZCNqe6XTh/gK0n1qL+v+n1tGyqcV2zPnIDybt
-	 u5VBCydgXLVzyYzjl+ba6FYgSGpzXgnXgf6w2NvNHvVWfnNCkzTrZv342ZWawmMo+H9sH
-	 aAAc//7n3BFT7cmXVmkGbiXqHWSXyGP5lwX8e+aj36j8GbsmjuHtADJXELEaB6s5dZL96
-	 DWYNk6YfKex/zPGsHag7Jk465Lf194xaTkWgnG1VU14FWBh9bXeGqtS0vHs1LqxQtiQ==
+	t=1793213572;
+	b=iNP2ER3iXqUoJ5stI3cHNHiwUGeclQhvh0fBXh2VC89DGpk529DgHa8hL1rUQVZjgq1y
+	 JSTJTYSCjaE8B6nekNcRMcmAGnWHmoScLuxJJa1ICJuGEI9dWSXaooziQjf33ABwxTsRF
+	 Yo9eEgWUbF08ptvJKX6ib7oAY/xd7WIPNnty/q2a7k1qg/qpD/zp531AcN3XhF+nXBxzm
+	 NwKowph5pJ4fITZPA4NOs/wMhlElFTY2ClT0jeECnLrNntYDgniZ3npU5zaONuwykbp80
+	 /CnlgrvR0AMG0ejnDzA2+lG9MN8dwsKudrevmaDSTph8q+PajWp4tJbWgGAkCaUIxUQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213569;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213572;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=GzB6HrTdfav/2/oloGvwKDoea6vX7P+rmuwpRsdAQRs=;
-	b=JrzkSts8/PONAEV0AmCPKN64pPaKS+4+E9pSXNIbhR13q2r2UfcIdE0IfuWSiyLRiMKx
-	 Z+Luy0TwX9w/+7o85ymDyCVRmkwMkD/baCnLY6vbrLjRC0GK3+pMlPukdng0v11unbUYt
-	 12mSJl/Ce0ynBoTZYdeaAOUEbX8mbIShDDrfzUKbXxpOXWKeWCbb3ee/5YgC2rwZ+oCKp
-	 rv7ZvA4Yzxww8ox0OW7CcDIWEs1cqRIAJHPxX2IGYhHTa10L5O9ahGeXLkjJ8xwpLVTUn
-	 C8J1eaM3CwqOfwSEFFeyVH/3TVUO95W+VlQvmSwVfkOYpl9eyqNl4/yx3CUvUnfVKIQ==
+	bh=ngmDNOzxod32eE2SX7tUHkSjJiCB6RUK3Z87EU7pJe4=;
+	b=lLjCcl1QTePq6zbvm+PFr4ywj5AKV+EOXaV6NFoO7c3b5xF10unuVygnYJ6KLT/uasVm
+	 219kbwgzNI6a0c0aAjKN8gPDLSc7uHQUIhMrxqeR0D1XCu2wxUw40DN0Y62ZMJx0RvGuW
+	 1WzGGKLa1AUbXEWE6CrqhSt7r/hXeqQdZl12/X+W3kqp3chKKzBWgiHWXYgujsXBtCVNL
+	 bm7EsIeR23K0evF5KC1hLV2UOB+kM0x7109CbhyUtyeEwzbmuWwP/pu1H7bfHhuOwuASC
+	 uO/DC9Jj19S1qQNXoCxOv28TPDlZWL0Iwx+j2E/eaZmdhYOb5efi00uDhIwYWn5URzw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="e+kd/1BQ";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tVcjINzt;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EEEF606A31A;
-	Wed, 28 Oct 2026 18:52:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF698606A31A;
+	Wed, 28 Oct 2026 18:52:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e+kd/1BQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A6301F01825;
-	Wed, 28 Oct 2026 18:52:48 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tVcjINzt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B3EF1F01825;
+	Wed, 28 Oct 2026 18:52:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213569;
-	bh=GzB6HrTdfav/2/oloGvwKDoea6vX7P+rmuwpRsdAQRs=;
+	s=korg; t=1793213571;
+	bh=ngmDNOzxod32eE2SX7tUHkSjJiCB6RUK3Z87EU7pJe4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=e+kd/1BQMgU34JjhCD2owhVz4dIGYjdHzcS495sATERSUIBJ6mmRLJDzX+sVz6i79
-	 unZxb91s2KrTkMThFEhsPCH6RL68ZlXRHNGg7NYHDh/h6M99lgsVwQuiVvJn2M1JHH
-	 OaITplyiKv4ZwYMBKMR+AkOl65yvX223MZsr97k8=
+	b=tVcjINztgHr0ARYeyAztdHQ4SCWo29F5IwIs1xptjnlngoO2qNnLkYGLJWlxxBj36
+	 fsWECwLC/dlmBggGA7FNh3bSqOWjYE0qYvqWgg1V4hoEbTpmagNz+a7E7cwCl8NWSh
+	 gFA1rUIbwFRwGazIyjDoNTpci7CxX+LE2JsEWlbg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paloma Arellano <quic_parellan@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Jeff Layton <jlayton@kernel.org>,
+	Jan Kara <jack@suse.cz>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0552/1887] drm/msm/dpu: Add mutex lock in control vblank irq
-Date: Wed, 28 Oct 2026 17:44:08 +0100
-Message-ID: <20261028170511.937676583@linuxfoundation.org>
+Subject: [PATCH 6.1 0553/1887] fs: new helper: simple_rename_timestamp
+Date: Wed, 28 Oct 2026 17:44:09 +0100
+Message-ID: <20261028170511.961186679@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,225 +69,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paloma Arellano <quic_parellan@quicinc.com>
+From: Jeff Layton <jlayton@kernel.org>
 
-[ Upstream commit 45284ff733e4caf6c118aae5131eb7e7cf3eea5a ]
+[ Upstream commit 0c4767923ed6964d279309744cdb248890e95ec2 ]
 
-Add a mutex lock to control vblank irq to synchronize vblank
-enable/disable operations happening from different threads to prevent
-race conditions while registering/unregistering the vblank irq callback.
+A rename potentially involves updating 4 different inode timestamps. Add
+a function that handles the details sanely, and convert the libfs.c
+callers to use it.
 
-v4: -Removed vblank_ctl_lock from dpu_encoder_virt, so it is only a
-    parameter of dpu_encoder_phys.
-    -Switch from atomic refcnt to a simple int counter as mutex has
-    now been added
-v3: Mistakenly did not change wording in last version. It is done now.
-v2: Slightly changed wording of commit message
-
-Signed-off-by: Paloma Arellano <quic_parellan@quicinc.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Patchwork: https://patchwork.freedesktop.org/patch/571854/
-Link: https://lore.kernel.org/r/20231212231101.9240-2-quic_parellan@quicinc.com
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Message-Id: <20230705185812.579118-3-jlayton@kernel.org>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Stable-dep-of: 49db9b1b86a8 ("reiserfs: Avoid touching renamed directory if parent does not change")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h  |  4 ++-
- .../drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c  | 33 +++++++++++------
- .../drm/msm/disp/dpu1/dpu_encoder_phys_vid.c  | 35 ++++++++++++-------
- .../drm/msm/disp/dpu1/dpu_encoder_phys_wb.c   |  1 -
- 4 files changed, 48 insertions(+), 25 deletions(-)
+ fs/libfs.c         | 36 +++++++++++++++++++++++++++---------
+ include/linux/fs.h |  2 ++
+ 2 files changed, 29 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h
-index f2af07d87f56f..f1f022e9dcf71 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h
-@@ -177,6 +177,7 @@ enum dpu_intr_idx {
-  * @hw_wb:		Hardware interface to the wb registers
-  * @dpu_kms:		Pointer to the dpu_kms top level
-  * @cached_mode:	DRM mode cached at mode_set time, acted on in enable
-+ * @vblank_ctl_lock:	Vblank ctl mutex lock to protect vblank_refcount
-  * @enabled:		Whether the encoder has enabled and running a mode
-  * @split_role:		Role to play in a split-panel configuration
-  * @intf_mode:		Interface mode
-@@ -207,13 +208,14 @@ struct dpu_encoder_phys {
- 	struct dpu_hw_wb *hw_wb;
- 	struct dpu_kms *dpu_kms;
- 	struct drm_display_mode cached_mode;
-+	struct mutex vblank_ctl_lock;
- 	enum dpu_enc_split_role split_role;
- 	enum dpu_intf_mode intf_mode;
- 	enum dpu_intf intf_idx;
- 	enum dpu_wb wb_idx;
- 	spinlock_t *enc_spinlock;
- 	enum dpu_enc_enable_state enable_state;
--	atomic_t vblank_refcount;
-+	int vblank_refcount;
- 	atomic_t vsync_cnt;
- 	atomic_t underrun_cnt;
- 	atomic_t pending_ctlstart_cnt;
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
-index 7581e418418f1..b3cb507c052a6 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
-@@ -246,7 +246,8 @@ static int dpu_encoder_phys_cmd_control_vblank_irq(
- 		return -EINVAL;
- 	}
+diff --git a/fs/libfs.c b/fs/libfs.c
+index 63bc52c20f7e0..60ec2dd903589 100644
+--- a/fs/libfs.c
++++ b/fs/libfs.c
+@@ -449,6 +449,31 @@ int simple_rmdir(struct inode *dir, struct dentry *dentry)
+ }
+ EXPORT_SYMBOL(simple_rmdir);
  
--	refcount = atomic_read(&phys_enc->vblank_refcount);
-+	mutex_lock(&phys_enc->vblank_ctl_lock);
-+	refcount = phys_enc->vblank_refcount;
- 
- 	/* Slave encoders don't report vblank */
- 	if (!dpu_encoder_phys_cmd_is_master(phys_enc))
-@@ -262,16 +263,24 @@ static int dpu_encoder_phys_cmd_control_vblank_irq(
- 		      phys_enc->hw_pp->idx - PINGPONG_0,
- 		      enable ? "true" : "false", refcount);
- 
--	if (enable && atomic_inc_return(&phys_enc->vblank_refcount) == 1)
--		ret = dpu_core_irq_register_callback(phys_enc->dpu_kms,
--				phys_enc->irq[INTR_IDX_RDPTR],
--				dpu_encoder_phys_cmd_pp_rd_ptr_irq,
--				phys_enc);
--	else if (!enable && atomic_dec_return(&phys_enc->vblank_refcount) == 0)
--		ret = dpu_core_irq_unregister_callback(phys_enc->dpu_kms,
--				phys_enc->irq[INTR_IDX_RDPTR]);
-+	if (enable) {
-+		if (phys_enc->vblank_refcount == 0)
-+			ret = dpu_core_irq_register_callback(phys_enc->dpu_kms,
-+					phys_enc->irq[INTR_IDX_RDPTR],
-+					dpu_encoder_phys_cmd_pp_rd_ptr_irq,
-+					phys_enc);
-+		if (!ret)
-+			phys_enc->vblank_refcount++;
-+	} else if (!enable) {
-+		if (phys_enc->vblank_refcount == 1)
-+			ret = dpu_core_irq_unregister_callback(phys_enc->dpu_kms,
-+					phys_enc->irq[INTR_IDX_RDPTR]);
-+		if (!ret)
-+			phys_enc->vblank_refcount--;
-+	}
- 
- end:
-+	mutex_unlock(&phys_enc->vblank_ctl_lock);
- 	if (ret) {
- 		DRM_ERROR("vblank irq err id:%u pp:%d ret:%d, enable %s/%d\n",
- 			  DRMID(phys_enc->parent),
-@@ -287,7 +296,7 @@ static void dpu_encoder_phys_cmd_irq_control(struct dpu_encoder_phys *phys_enc,
++/**
++ * simple_rename_timestamp - update the various inode timestamps for rename
++ * @old_dir: old parent directory
++ * @old_dentry: dentry that is being renamed
++ * @new_dir: new parent directory
++ * @new_dentry: target for rename
++ *
++ * POSIX mandates that the old and new parent directories have their ctime and
++ * mtime updated, and that inodes of @old_dentry and @new_dentry (if any), have
++ * their ctime updated.
++ */
++void simple_rename_timestamp(struct inode *old_dir, struct dentry *old_dentry,
++			     struct inode *new_dir, struct dentry *new_dentry)
++{
++	struct inode *newino = d_inode(new_dentry);
++
++	old_dir->i_mtime = inode_set_ctime_current(old_dir);
++	if (new_dir != old_dir)
++		new_dir->i_mtime = inode_set_ctime_current(new_dir);
++	inode_set_ctime_current(d_inode(old_dentry));
++	if (newino)
++		inode_set_ctime_current(newino);
++}
++EXPORT_SYMBOL_GPL(simple_rename_timestamp);
++
+ int simple_rename_exchange(struct inode *old_dir, struct dentry *old_dentry,
+ 			   struct inode *new_dir, struct dentry *new_dentry)
  {
- 	trace_dpu_enc_phys_cmd_irq_ctrl(DRMID(phys_enc->parent),
- 			phys_enc->hw_pp->idx - PINGPONG_0,
--			enable, atomic_read(&phys_enc->vblank_refcount));
-+			enable, phys_enc->vblank_refcount);
+@@ -464,11 +489,7 @@ int simple_rename_exchange(struct inode *old_dir, struct dentry *old_dentry,
+ 			inc_nlink(old_dir);
+ 		}
+ 	}
+-	old_dir->i_ctime = old_dir->i_mtime =
+-	new_dir->i_ctime = new_dir->i_mtime =
+-	d_inode(old_dentry)->i_ctime =
+-	d_inode(new_dentry)->i_ctime = current_time(old_dir);
+-
++	simple_rename_timestamp(old_dir, old_dentry, new_dir, new_dentry);
+ 	return 0;
+ }
+ EXPORT_SYMBOL_GPL(simple_rename_exchange);
+@@ -477,7 +498,6 @@ int simple_rename(struct user_namespace *mnt_userns, struct inode *old_dir,
+ 		  struct dentry *old_dentry, struct inode *new_dir,
+ 		  struct dentry *new_dentry, unsigned int flags)
+ {
+-	struct inode *inode = d_inode(old_dentry);
+ 	int they_are_dirs = d_is_dir(old_dentry);
  
- 	if (enable) {
- 		dpu_core_irq_register_callback(phys_enc->dpu_kms,
-@@ -777,6 +786,9 @@ struct dpu_encoder_phys *dpu_encoder_phys_cmd_init(
- 	phys_enc->hw_mdptop = p->dpu_kms->hw_mdp;
- 	phys_enc->intf_idx = p->intf_idx;
- 
-+	mutex_init(&phys_enc->vblank_ctl_lock);
-+	phys_enc->vblank_refcount = 0;
-+
- 	dpu_encoder_phys_cmd_init_ops(&phys_enc->ops);
- 	phys_enc->parent = p->parent;
- 	phys_enc->parent_ops = p->parent_ops;
-@@ -789,7 +801,6 @@ struct dpu_encoder_phys *dpu_encoder_phys_cmd_init(
- 	for (i = 0; i < ARRAY_SIZE(phys_enc->irq); i++)
- 		phys_enc->irq[i] = -EINVAL;
- 
--	atomic_set(&phys_enc->vblank_refcount, 0);
- 	atomic_set(&phys_enc->pending_kickoff_cnt, 0);
- 	atomic_set(&phys_enc->pending_ctlstart_cnt, 0);
- 	atomic_set(&cmd_enc->pending_vblank_cnt, 0);
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-index 4b7952c4e639f..3b45a50aa9854 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-@@ -375,7 +375,8 @@ static int dpu_encoder_phys_vid_control_vblank_irq(
- 	int ret = 0;
- 	int refcount;
- 
--	refcount = atomic_read(&phys_enc->vblank_refcount);
-+	mutex_lock(&phys_enc->vblank_ctl_lock);
-+	refcount = phys_enc->vblank_refcount;
- 
- 	/* Slave encoders don't report vblank */
- 	if (!dpu_encoder_phys_vid_is_master(phys_enc))
-@@ -388,18 +389,26 @@ static int dpu_encoder_phys_vid_control_vblank_irq(
+ 	if (flags & ~(RENAME_NOREPLACE | RENAME_EXCHANGE))
+@@ -500,9 +520,7 @@ int simple_rename(struct user_namespace *mnt_userns, struct inode *old_dir,
+ 		inc_nlink(new_dir);
  	}
  
- 	DRM_DEBUG_VBL("id:%u enable=%d/%d\n", DRMID(phys_enc->parent), enable,
--		      atomic_read(&phys_enc->vblank_refcount));
-+		      refcount);
- 
--	if (enable && atomic_inc_return(&phys_enc->vblank_refcount) == 1)
--		ret = dpu_core_irq_register_callback(phys_enc->dpu_kms,
--				phys_enc->irq[INTR_IDX_VSYNC],
--				dpu_encoder_phys_vid_vblank_irq,
--				phys_enc);
--	else if (!enable && atomic_dec_return(&phys_enc->vblank_refcount) == 0)
--		ret = dpu_core_irq_unregister_callback(phys_enc->dpu_kms,
--				phys_enc->irq[INTR_IDX_VSYNC]);
-+	if (enable) {
-+		if (phys_enc->vblank_refcount == 0)
-+			ret = dpu_core_irq_register_callback(phys_enc->dpu_kms,
-+					phys_enc->irq[INTR_IDX_VSYNC],
-+					dpu_encoder_phys_vid_vblank_irq,
-+					phys_enc);
-+		if (!ret)
-+			phys_enc->vblank_refcount++;
-+	} else if (!enable) {
-+		if (phys_enc->vblank_refcount == 1)
-+			ret = dpu_core_irq_unregister_callback(phys_enc->dpu_kms,
-+					phys_enc->irq[INTR_IDX_VSYNC]);
-+		if (!ret)
-+			phys_enc->vblank_refcount--;
-+	}
- 
- end:
-+	mutex_unlock(&phys_enc->vblank_ctl_lock);
- 	if (ret) {
- 		DRM_ERROR("failed: id:%u intf:%d ret:%d enable:%d refcnt:%d\n",
- 			  DRMID(phys_enc->parent),
-@@ -607,7 +616,7 @@ static void dpu_encoder_phys_vid_irq_control(struct dpu_encoder_phys *phys_enc,
- 	trace_dpu_enc_phys_vid_irq_ctrl(DRMID(phys_enc->parent),
- 			    phys_enc->hw_intf->idx - INTF_0,
- 			    enable,
--			    atomic_read(&phys_enc->vblank_refcount));
-+			   phys_enc->vblank_refcount);
- 
- 	if (enable) {
- 		ret = dpu_encoder_phys_vid_control_vblank_irq(phys_enc, true);
-@@ -703,6 +712,9 @@ struct dpu_encoder_phys *dpu_encoder_phys_vid_init(
- 
- 	DPU_DEBUG_VIDENC(phys_enc, "\n");
- 
-+	mutex_init(&phys_enc->vblank_ctl_lock);
-+	phys_enc->vblank_refcount = 0;
-+
- 	dpu_encoder_phys_vid_init_ops(&phys_enc->ops);
- 	phys_enc->parent = p->parent;
- 	phys_enc->parent_ops = p->parent_ops;
-@@ -713,7 +725,6 @@ struct dpu_encoder_phys *dpu_encoder_phys_vid_init(
- 	for (i = 0; i < ARRAY_SIZE(phys_enc->irq); i++)
- 		phys_enc->irq[i] = -EINVAL;
- 
--	atomic_set(&phys_enc->vblank_refcount, 0);
- 	atomic_set(&phys_enc->pending_kickoff_cnt, 0);
- 	init_waitqueue_head(&phys_enc->pending_kickoff_wq);
- 	phys_enc->enable_state = DPU_ENC_DISABLED;
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
-index fd5f9d04f81e6..462fa58c660df 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
-@@ -735,7 +735,6 @@ struct dpu_encoder_phys *dpu_encoder_phys_wb_init(
- 		phys_enc->irq[i] = -EINVAL;
- 
- 	atomic_set(&phys_enc->pending_kickoff_cnt, 0);
--	atomic_set(&phys_enc->vblank_refcount, 0);
- 	wb_enc->wb_done_timeout_cnt = 0;
- 
- 	init_waitqueue_head(&phys_enc->pending_kickoff_wq);
+-	old_dir->i_ctime = old_dir->i_mtime = new_dir->i_ctime =
+-		new_dir->i_mtime = inode->i_ctime = current_time(old_dir);
+-
++	simple_rename_timestamp(old_dir, old_dentry, new_dir, new_dentry);
+ 	return 0;
+ }
+ EXPORT_SYMBOL(simple_rename);
+diff --git a/include/linux/fs.h b/include/linux/fs.h
+index 264381ae06e26..0692c2e0fcf3f 100644
+--- a/include/linux/fs.h
++++ b/include/linux/fs.h
+@@ -3483,6 +3483,8 @@ extern int simple_open(struct inode *inode, struct file *file);
+ extern int simple_link(struct dentry *, struct inode *, struct dentry *);
+ extern int simple_unlink(struct inode *, struct dentry *);
+ extern int simple_rmdir(struct inode *, struct dentry *);
++void simple_rename_timestamp(struct inode *old_dir, struct dentry *old_dentry,
++			     struct inode *new_dir, struct dentry *new_dentry);
+ extern int simple_rename_exchange(struct inode *old_dir, struct dentry *old_dentry,
+ 				  struct inode *new_dir, struct dentry *new_dentry);
+ extern int simple_rename(struct user_namespace *, struct inode *,
 -- 
 2.53.0
 
