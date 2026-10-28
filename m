@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216980;
-	b=fcVH5KllO653J7qpbmYrCxVFjqLojk0lkAjVmQ7YVnweNX0g+OFf22pvc89l+c+Z/TpX
-	 61tjCf8dYLcspUSYpbNT4USuvwet+MEpRMZQu1kgrL4Oh08ZAyJJdFuTmQ+G+6m55NRTr
-	 XqvbSx7Yjg+oeuliVADywUtxF88CIc7jktmsgehS6vV/ULAh7G/OjhPuUeuWi+pYEKFnv
-	 jQOQEje5hxcFYCofWJzn9rk4bymhX/bh6cwzju9WG36rjXNSeNa0BDZFij5/J0mx8lqUH
-	 QgMrYl+roEgE9VGE/oxBLIJlmO9USmZw/qsiwJgvZS49FT28vy///Imixx7xLwZqp+Q==
+	t=1793216983;
+	b=Uaoh8Y3S6JAOU79lERU7CRHUOIX2PyStVWhQS+GXTCs0y/Sgr/U1CI7aURFAXPZWLVSE
+	 STwlC65hOLvh9Z/ywx3JDdGVcFGoHZha9SD60EFJb0YlupCoZb5UtultqcFaxkzx0RDvX
+	 0SKJkEbMcgGAQgkUrLiNWO8hZz9ZJBM4sQAa3/5DVBSsdC+ybxcTX153B7p1HYwkngMch
+	 fs9mFg+X5W/xhBqqgZYT8G7XU51xRrYbYb9mqpIXIoN8hkOhnOFB11KLZRdSHvyF0/hRg
+	 zFd1RldUhI69HHN0HzHCscrwXy2cy4naHlXrSFjvYc4MAAPzLQnPtA54FgKmd31tBLw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216980;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216983;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=Nv0IToGCmvbK4jTNa74I7AGjkxcV+d8plGybRMX8+l8=;
-	b=kJgvWjGlJYzknYTEwquHg5AOrnAuQL/5iNXmxn99wn+dCbyrBD91Sx1XcX3jZkD7cex/
-	 LSiFRhjv4lq9xASIvXw4ntaMlVYmC86gFF0xVrlt6aIfiWk6oOLbH8mhQf2bY+87u3Wz7
-	 sJei6eBVs9thmAxBydPHDGJHRHaOAsCkCkWWtUix75ui2vSk2rKv+h/jtxKB8bKQ1DmxQ
-	 r2y+8kasWaFu+1Vsz1478D462zl5UVcXbLess22zOOdgMr0nmGbLMVwtXy51ooh5/Maf1
-	 vfd6YpKmQT9CjaLF8AvxG9K+xYaR99U2Fla5XoAy5yeUExs/PGh2RfdCQs3VM6FFz1w==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=1dxWVXpedzUBDiEDNSwbsxqX2HbmIhPbGYcp8GiHFrI=;
+	b=xX1x+85toIuwbIP0RcrDlQ/nY3J/FZ3IkC69v7FkjxVpz6UNkA+8T1I2VIt9y8nIRFJl
+	 dvaORn/iw89QQTOnkzmzKP7dwd0jeLpCe96fLb7JBunRT4mwo5asT6W5sPAffGhPXzO5q
+	 HY65Ewc9gNILDG6iaV84K3aTKJdNZFlaeoxJejl8HYxro+ddSdwTWVjCUZnsD34tzUoz2
+	 ut4Qc0BDHy5s/LGLO9giy4uGgpFz1xReNqNDDd+rRBywL0G+kJzYP1QZqThATuDPP5yjQ
+	 pcqxNLtNlIwA7BtuJpf+ovJk1cmkiOec52dlCig0uWdb6QqiIgaTUo1rkxBuurIbGbA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1Vy5fkqa;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GoWLYPDD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68EEE606A31A;
-	Wed, 28 Oct 2026 19:49:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D967606A31C;
+	Wed, 28 Oct 2026 19:49:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1Vy5fkqa
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8051B1F01825;
-	Wed, 28 Oct 2026 19:49:39 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GoWLYPDD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 669FB1F01825;
+	Wed, 28 Oct 2026 19:49:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216980;
-	bh=Nv0IToGCmvbK4jTNa74I7AGjkxcV+d8plGybRMX8+l8=;
+	s=korg; t=1793216983;
+	bh=1dxWVXpedzUBDiEDNSwbsxqX2HbmIhPbGYcp8GiHFrI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1Vy5fkqaVnf4957W/adSmMcwo49Oa5QDxO+CgGUsB/+yfbk977ctg57T0cp4tyCw2
-	 WUEifAl6zqNAt6wrHKOZ6o45dH7Vdjv96DNB9W4LAFkdpWejvDBYf4riNL20/6ZfUq
-	 +rHA0gh5A0OegLrflmRinbm5ux0nN5QpeaYbFgUA=
+	b=GoWLYPDDFvGCaoTvU5Fqd5WL3Uo3MAc9TrPkM2i/AnU6egFJvhng55vZUd7z6XKdY
+	 p/RbOhG/vmy2hRhF9s44J4UeFGzSsqjRau1aIouB6oCPFdQFnOLdVkApJWDgBkPkC5
+	 BWeJHfyMVSnuDf9Ror0MujWMJnWPvr+B5jiqjx/U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Donggeun Yoo <donggeunyoo.kernel@gmail.com>,
+	=?UTF-8?q?Michal=20Such=C3=A1nek?= <msuchanek@suse.de>,
+	Amit Machhiwal <amachhiw@linux.ibm.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
 	Steven Rostedt <rostedt@goodmis.org>
-Subject: [PATCH 6.1 1747/1887] tracing: Fix the shift out of bounds in the log2 histogram modifier
-Date: Wed, 28 Oct 2026 18:04:03 +0100
-Message-ID: <20261028170539.211253700@linuxfoundation.org>
+Subject: [PATCH 6.1 1748/1887] tracing: Do not initialize tracefs work if tracing is disabled
+Date: Wed, 28 Oct 2026 18:04:04 +0100
+Message-ID: <20261028170539.234995834@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -61,76 +63,76 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
+From: Amit Machhiwal <amachhiw@linux.ibm.com>
 
-commit 647c2f97fcb94bc642cefe6db004999974563f06 upstream.
+commit b3b974008388ab59e44d764ba7a63c988fec2524 upstream.
 
-The .log2 key modifier files a value under its base-2 order:
+If trace buffer allocation fails during early boot (e.g.  in
+early_trace_init() -> allocate_trace_buffers()), tracing_disabled is
+left set to 1 and the global trace array events list remains
+uninitialized.
 
-  # echo 'hist:keys=bytes_req.log2' > events/kmem/kmalloc/trigger
+Later during boot, tracer_init_tracefs() (invoked via fs_initcall)
+queues tracerfs_init_work asynchronously without checking if tracing was
+disabled.  When tracer_init_tracefs_work_func() runs, it calls
+event_trace_init() and init_tracer_tracefs(&global_trace, NULL)
+unconditionally.  This leads to __find_event_file() dereferencing an
+uninitialized tr->events list, causing an early boot NULL pointer
+dereference Oops:
 
-hist_field_log2() computes that as ilog2(roundup_pow_of_two(val)). The
-out-of-line form of roundup_pow_of_two() is
+  BUG: Kernel NULL pointer dereference on read at 0x00000010
+  Faulting instruction address: 0xc000000000485be0
+  Oops: Kernel access of bad area, sig: 7 [#1]
+  ...
+  NIP [c000000000485be0] __find_event_file+0x70/0x3c0
+  LR  [c000000000448874] init_tracer_tracefs+0x274/0xc80
+  Call Trace:
+   init_tracer_tracefs+0x274/0xc80
+   tracer_init_tracefs_work_func+0x50/0x320
+   process_one_work+0x1e8/0x5c0
+   worker_thread+0x1dc/0x3d0
+   kthread+0x194/0x1b0
+   start_kernel_thread+0x14/0x18
 
-	return 1UL << fls_long(n - 1);
-
-which shifts by 64 on a 64-bit kernel both when n is 0, where n - 1
-wraps to ULONG_MAX, and when n is above 2^63. Both are ordinary keys,
-because the field fetch hands every value over as a u64: a syscall
-argument of 0 reaches the first, and one above 2^63 reaches the second.
-
-Keying sys_enter_lseek on offset.log2 and passing 0, 1, 2, 3, 1000,
-2^63+1 and U64_MAX gives
-
-  { offset: ~ 2^1  } hitcount:          1
-  { offset: ~ 2^10 } hitcount:          1
-  { offset: ~ 2^2  } hitcount:          1
-  { offset: ~ 2^0  } hitcount:          4
-
-Keys above 2^63 land in the lowest bucket. With CONFIG_UBSAN_SHIFT=y
-the shift is also reported:
-
-  UBSAN: shift-out-of-bounds in include/linux/log2.h:57:13
-  shift exponent 64 is too large for 64-bit type 'long unsigned int'
-   __ubsan_handle_shift_out_of_bounds.cold+0xdd/0x1cb
-   hist_fn_call.cold+0x8b/0xd9
-   event_hist_trigger+0x1cc/0x790
-   ftrace_syscall_enter+0x197/0x360
-   do_syscall_64+0x402/0x4b0
-
-Use order_base_2(), which is ilog2(n - 1) + 1 for n > 1 and 0 below
-that. It returns what the old expression returned on every input the
-old one was defined for. Where it was not, 0 stays in bucket 0, which
-is where x86_64 had been putting it, and the keys above 2^63 move into
-bucket 64.
+Check tracing_disabled at the beginning of tracer_init_tracefs_work_func()
+and return immediately if tracing is disabled or failed to initialize,
+preventing the crash.
 
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260916002735.808520-1-donggeunyoo.kernel@gmail.com
-Fixes: 4b94f5b7b4a5 ("tracing: Add hist trigger 'log2' modifier")
-Signed-off-by: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
-Assisted-by: Claude:claude-fable-5
+Fixes: 6621a7004684 ("tracing: make tracer_init_tracefs initcall asynchronous")
+Link: https://patch.msgid.link/20261009163557.88467-2-amachhiw@linux.ibm.com
+Reported-by: Michal Suchánek <msuchanek@suse.de>
+Closes: https://lore.kernel.org/all/arYskzbiaNzBR9MD@kunlun.suse.cz/
+Signed-off-by: Amit Machhiwal <amachhiw@linux.ibm.com>
+Tested-by: Michal Suchánek <msuchanek@suse.de>
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_events_hist.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/trace/trace.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/kernel/trace/trace_events_hist.c
-+++ b/kernel/trace/trace_events_hist.c
-@@ -281,7 +281,7 @@ static u64 hist_field_log2(struct hist_f
+--- a/kernel/trace/trace.c
++++ b/kernel/trace/trace.c
+@@ -10005,6 +10005,12 @@ static struct notifier_block trace_modul
  
- 	u64 val = hist_fn_call(operand, elt, buffer, rbe, event);
+ static __init void tracer_init_tracefs_work_func(struct work_struct *work)
+ {
++	/*
++	 * Do not attempt to initialize tracefs if tracing was disabled or
++	 * failed to allocate
++	 */
++	if (tracing_disabled)
++		return;
  
--	return (u64) ilog2(roundup_pow_of_two(val));
-+	return order_base_2(val);
- }
+ 	event_trace_init();
  
- static u64 hist_field_bucket(struct hist_field *hist_field,
 
 
