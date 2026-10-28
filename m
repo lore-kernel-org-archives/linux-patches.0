@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793208779;
-	b=Xi/ry3gvGL5Z5PQzJ8Ak3wRanyfR/l3LsTxNlyCnwj/Y4sYN6ARflbdudwRRTPzImaLN
-	 ILvdYRMYX0F1c4dFsvoG82iJz/G1eBwK19BJaM68nNm2ZudUI+QyOwaa9LhGiJT/pvfCu
-	 rmuzx0q2EN8+O+pA9ZLbJ3sfbFumMG6ogUf3ro/g8NoUZ9p3bNJeoHWmGN/Obu2ki0XUY
-	 ST0mwDbvjhE95hhXUMwizueYarUqKmSFIQygrBaz0iB2bk4yn10+lmPmAnEB7UP8dYVXs
-	 JOdoponGmtc/Wypnu1BPllJ4ZjBgSjzz1J7gUzvL66+1ECMokwTRU0mwFhymmpj9bFQ==
+	t=1793208781;
+	b=dx0yQk9KISTsg9C42AnjLwQJ6asLzqvzyOzDpki10fRI9fT7zBAQKeoVSWrMJYgetKnK
+	 edFxOzl0Y72L93tZNCtXf2lAFrjjwPVDFwZ41mnsj1mxj+D8zfiQaYnt2EgFs4paRFuvw
+	 fO5B3pD6aVZ3rngkw3JhbU1b5Ym9yPnYp8nOpJJ+pihDJPkenLavNOCGAn7BRkw2wxtWc
+	 VYU7GJ6Tr5EjAMkhMNUrNSqmjelZOst/ahTlxEAjsxDaZWLvKJTqDiQBAyWLM6RVz4a2m
+	 ShvGqJRRU67DLDnd9Vl6wjtoh4itJYo7Ik2CJgOxK3RgrLjMFpAJI7B77CUQWu70lEw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793208779;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793208781;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=tR3CmW3V/eM95ZyD8G4/DHChUGWJ+D6v+eEbOBwus6w=;
-	b=n7cyHFv8ZaeR1GgXWqK9A0vQ17GfqBnnfzHH8hUM6jXXXUiCpTDRUjFbgh7Dm4S2W//4
-	 k7qB6RXGoiY20d9fT2ErkmZwzryhcx6b8IM16xe8BuyS6vkEyjNy366f/B1ybFJvP7MQm
-	 bwPusUdwT8Rmn7A/LzLuccEC7kV34//ICHAsp7kf7eiVjSs98qi0FHCNPLPtB/FyUi4hM
-	 z8jBRW0IgEEpch0W+0vKUx9qIpRTY0DkyjdVRUWYSFSKBXc7Evl81lJtRgxdgr2t/Y58y
-	 p6dheemo8M70Fl6QOLVfZxCCqgLxkVVWdx+1dKldjqQEbCmF7MYw+eG459BG2ZuLKXg==
+	bh=hktkzAGJnjMtb5Cz6wQrX2Zk88DB9jYoJozdo3zNVqY=;
+	b=vQZ97VbURg3T3rXBGV2l7ni3AY6u+u6aGjU9jdoWFMZREYxP5pWuCkIaH140puCuOwhG
+	 cHWFagpa+wpWnAHdAzQXa5nEGrQs0hNPVum0Qi/5mTJyF8hL7rsLG/lH/KoONKPMAhF0X
+	 eNa9q9IIHkZ9gGOs+XtzveqWzu6aMHAvZMCmI8ARTt/UkXDb3Ba/VsHevK4XLm3Dma8Cg
+	 9J/M11iIYWC7oK+lHyx6O3qip/rMCAYhp+xKZw+h6zAqH0qWSuz3bJ+qzFsVjRDxDOdgG
+	 Yd3U8DjbiELiEwkNJsEgmSr3qsX77LfuopQvUFir62+S3l19LXoI9AeQwGyhweBdPJg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vGVBUUFI;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1z+zLznr;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6616606A31A;
-	Wed, 28 Oct 2026 17:32:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F97F606A31A;
+	Wed, 28 Oct 2026 17:33:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vGVBUUFI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 322801F01825;
-	Wed, 28 Oct 2026 17:32:58 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1z+zLznr
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2AEB1F01825;
+	Wed, 28 Oct 2026 17:33:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793208778;
-	bh=tR3CmW3V/eM95ZyD8G4/DHChUGWJ+D6v+eEbOBwus6w=;
+	s=korg; t=1793208781;
+	bh=hktkzAGJnjMtb5Cz6wQrX2Zk88DB9jYoJozdo3zNVqY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vGVBUUFIUt7nWYFqofHqUCZvdc2uftD+zpq38yolQubpTFQWzojicvaze+MdzDaC2
-	 s4cimJjiRoheM56ReRaoqcuaoumOag3k6GIEUYP9lyiJD4bxG8+HfklwlWVcrNvCQn
-	 EsCM9Ci5C4yLjTGYZmUvRqSeqAXOdnKfldmKZohI=
+	b=1z+zLznroq7TYfJX/sItjhv8jDJ2uimfWXq0t4SCcVm+Xz1Yp6Dvls07nAtUC8RAH
+	 em8TyRBVVKyUbvukpibbv6q4eLGOAkD1O6vdDdcSxfrLBcpJOpdJ4/JUg+sdaOEsko
+	 5DCz3BRspb1I+jfApe7lw7JseVEZdXGrBljz2a2o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Song Li <songl@zju.edu.cn>,
-	Fan Wu <fanwu01@zju.edu.cn>,
-	Benjamin Herrenschmidt <benh@kernel.crashing.org>
-Subject: [PATCH 5.10 195/516] usb: gadget: aspeed-vhub: cancel wake work on device removal
-Date: Wed, 28 Oct 2026 17:55:47 +0100
-Message-ID: <20261028170008.121424127@linuxfoundation.org>
+	Minseo Kim <neck3922@gmail.com>,
+	Alan Stern <stern@rowland.harvard.edu>,
+	stable <stable@kernel.org>
+Subject: [PATCH 5.10 196/516] USB: gadget: dummy-hcd: Fix wait for outstanding request completions
+Date: Wed, 28 Oct 2026 17:55:48 +0100
+Message-ID: <20261028170008.145697938@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -69,116 +68,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: Alan Stern <stern@rowland.harvard.edu>
 
-commit 20388c8d1d74c203fec8194c45cd31afdfab934e upstream.
+commit b263ff9b0fc5c1f371d65c4eb196b31263d039ff upstream.
 
-wake_work is armed from the gadget .wakeup callback to resume suspended
-downstream ports, and it is never cancelled in ast_vhub_remove(), so a
-work item queued before or during removal can run after devm has freed
-vhub and its ports, a use-after-free.
+The dummy-hcd driver emulates synchronize_irq() by waiting until its
+private callback_usage counter drops to 0 (with the private lock not
+held).  This counter is incremented whenever a gadget driver callback
+occurs (which requires the private lock to be dropped), but not when a
+request completion handler is called.
 
-Cancelling the work alone is not sufficient: usb_gadget_wakeup() takes
-no lock and the unbind path never clears wakeup_en, so a remote-wakeup
-request in flight on another CPU can re-arm the work after the cancel
-and before vhub is freed.
+This is an oversight.  Request completion is triggered by timer
+interrupts (emulating device IRQs in a real UDC), and the interrupt
+handlers are supposed to have completed when the synchronize_irq()
+emulation routine returns -- they aren't supposed to be in the middle
+of a completion callback.  If this happens it can lead to a gadget
+driver's unbind routine running before all outstanding request
+completions have finished, maybe even allowing the gadget driver's
+module to be unloaded while a completion handler is still running.
 
-ast_vhub_del_dev() already clears d->registered under vhub->lock before
-unregistering the gadget. Refuse the wakeup in ast_vhub_udc_wakeup()
-once d->registered is clear: the check and the schedule_work() are then
-atomic against the unbind, so a wakeup that passed before the flag was
-cleared is drained by the cancel_work_sync() after the del_dev loop,
-and one that arrives later returns without arming. Also move INIT_WORK()
-to the top of ast_vhub_probe(), since the probe error path reuses
-ast_vhub_remove() and would otherwise cancel a never-initialized work
-item.
+Fix the oversight by incrementing the callback_usage value across
+request completion callbacks.
 
-This issue was found by an in-house static analysis tool.
-
-Fixes: 7ecca2a4080c ("usb/gadget: Add driver for Aspeed SoC virtual hub")
-Cc: stable@kernel.org
-Assisted-by: Codex:gpt-5.6
-Co-developed-by: Song Li <songl@zju.edu.cn>
-Signed-off-by: Song Li <songl@zju.edu.cn>
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
-Reviewed-by: Benjamin Herrenschmidt <benh@kernel.crashing.org>
-Link: https://patch.msgid.link/20260908041740.613713-1-fanwu01@zju.edu.cn
+Link: https://lore.kernel.org/linux-usb/7a87e293-633c-4100-aa8d-91560ba5e5c5@rowland.harvard.edu/
+Fixes: 7dbd8f4cabd9 ("USB: dummy-hcd: Fix erroneous synchronization change")
+Tested-by: Minseo Kim <neck3922@gmail.com>
+Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
+Cc: stable <stable@kernel.org>
+Link: https://patch.msgid.link/f23b9e1a-f110-441a-a1d8-95f442ec09d5@rowland.harvard.edu
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/udc/aspeed-vhub/core.c |    4 ++++
- drivers/usb/gadget/udc/aspeed-vhub/dev.c  |    2 +-
- drivers/usb/gadget/udc/aspeed-vhub/hub.c  |    5 +++--
- drivers/usb/gadget/udc/aspeed-vhub/vhub.h |    1 +
- 4 files changed, 9 insertions(+), 3 deletions(-)
+ drivers/usb/gadget/udc/dummy_hcd.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/usb/gadget/udc/aspeed-vhub/core.c
-+++ b/drivers/usb/gadget/udc/aspeed-vhub/core.c
-@@ -272,6 +272,9 @@ static int ast_vhub_remove(struct platfo
- 	for (i = 0; i < vhub->max_ports; i++)
- 		ast_vhub_del_dev(&vhub->ports[i].dev);
+--- a/drivers/usb/gadget/udc/dummy_hcd.c
++++ b/drivers/usb/gadget/udc/dummy_hcd.c
+@@ -339,9 +339,11 @@ static void dummy_giveback(struct dummy
+ {
+ 	bool fifo = req == &dum->fifo_req;
  
-+	/* Final drain; the worker takes vhub->lock, so stay outside of it */
-+	cancel_work_sync(&vhub->wake_work);
-+
- 	spin_lock_irqsave(&vhub->lock, flags);
- 
- 	/* Mask & ack all interrupts  */
-@@ -332,6 +335,7 @@ static int ast_vhub_probe(struct platfor
- 		return -ENOMEM;
- 
- 	spin_lock_init(&vhub->lock);
-+	INIT_WORK(&vhub->wake_work, ast_vhub_wake_work);
- 	vhub->pdev = pdev;
- 	vhub->port_irq_mask = GENMASK(VHUB_IRQ_DEV1_BIT + vhub->max_ports - 1,
- 				      VHUB_IRQ_DEV1_BIT);
---- a/drivers/usb/gadget/udc/aspeed-vhub/dev.c
-+++ b/drivers/usb/gadget/udc/aspeed-vhub/dev.c
-@@ -275,7 +275,7 @@ static int ast_vhub_udc_wakeup(struct us
- 	int rc = -EINVAL;
- 
- 	spin_lock_irqsave(&d->vhub->lock, flags);
--	if (!d->wakeup_en)
-+	if (!d->wakeup_en || !d->registered)
- 		goto err;
- 
- 	DDBG(d, "Device initiated wakeup\n");
---- a/drivers/usb/gadget/udc/aspeed-vhub/hub.c
-+++ b/drivers/usb/gadget/udc/aspeed-vhub/hub.c
-@@ -532,7 +532,7 @@ void ast_vhub_device_connect(struct ast_
- 		ast_vhub_send_host_wakeup(vhub);
++	++dum->callback_usage;
+ 	spin_unlock(&dum->lock);
+ 	usb_gadget_giveback_request(_ep, &req->req);
+ 	spin_lock(&dum->lock);
++	--dum->callback_usage;
+ 	if (fifo)
+ 		dum->fifo_req_busy = 0;
  }
+@@ -753,11 +755,13 @@ static int dummy_queue(struct usb_ep *_e
+ 		req->req.complete = fifo_complete;
  
--static void ast_vhub_wake_work(struct work_struct *work)
-+void ast_vhub_wake_work(struct work_struct *work)
- {
- 	struct ast_vhub *vhub = container_of(work,
- 					     struct ast_vhub,
-@@ -562,6 +562,8 @@ static void ast_vhub_wake_work(struct wo
- 
- void ast_vhub_hub_wake_all(struct ast_vhub *vhub)
- {
-+	lockdep_assert_held(&vhub->lock);
-+
- 	/*
- 	 * A device is trying to wake the world, because this
- 	 * can recurse into the device, we break the call chain
-@@ -1046,7 +1048,6 @@ static int ast_vhub_init_desc(struct ast
- int ast_vhub_init_hub(struct ast_vhub *vhub)
- {
- 	vhub->speed = USB_SPEED_UNKNOWN;
--	INIT_WORK(&vhub->wake_work, ast_vhub_wake_work);
- 
- 	return ast_vhub_init_desc(vhub);
- }
---- a/drivers/usb/gadget/udc/aspeed-vhub/vhub.h
-+++ b/drivers/usb/gadget/udc/aspeed-vhub/vhub.h
-@@ -545,6 +545,7 @@ void ast_vhub_hub_suspend(struct ast_vhu
- void ast_vhub_hub_resume(struct ast_vhub *vhub);
- void ast_vhub_hub_reset(struct ast_vhub *vhub);
- void ast_vhub_hub_wake_all(struct ast_vhub *vhub);
-+void ast_vhub_wake_work(struct work_struct *work);
- 
- /* dev.c */
- int ast_vhub_init_dev(struct ast_vhub *vhub, unsigned int idx);
+ 		list_add_tail(&req->queue, &ep->queue);
++		++dum->callback_usage;
+ 		spin_unlock(&dum->lock);
+ 		_req->actual = _req->length;
+ 		_req->status = 0;
+ 		usb_gadget_giveback_request(_ep, _req);
+ 		spin_lock(&dum->lock);
++		--dum->callback_usage;
+ 	}  else
+ 		list_add_tail(&req->queue, &ep->queue);
+ 	spin_unlock_irqrestore(&dum->lock, flags);
 
 
