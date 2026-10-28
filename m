@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216348;
-	b=XGH3TlgAPUR4871MCQe2oBIuRMdvVyMGlkydZbPgcaN27fV39IVE+DbKk+PXdhxH9E8e
-	 DyNFLc70YXZPxwhCxZw7pOdd/7VRr0qihz2Gd62NpRTxXEGIPy976s9EDs4kSgnYVok+p
-	 3Bpq5RnoSCL85hQTyQ9SpEj+HgnWbZXI9NEjTZbEn74RuOGRJrQU9oUokUaL2CJx3zCMX
-	 eUKshYpozYI+D/FjZrnytCSNJZDCQcbPhEWwZYhHv7abPE4Ol8tTvdDOGG+5+wyH6ylBd
-	 iI1uKCImmwtUerW279Ru3xK6vDzpEq+Z/YPZoxMY6z7VAqLUO4F0kyDDY0LlxRkcaIA==
+	t=1793216351;
+	b=Ts2rjHspYmWH9PBIQ6mY/kbWnZ7kn92HfrMSx8SR1oX5Ky3m3nPJKhzB5u6vF3A8YcrB
+	 Qj0cqejD1cdQZ6SwUuPa5OzSgmpSfZLKWFBdki74LaoMFCPcKTJ+q3IVRqUD9RtXXINdf
+	 Q1PnO3cps2db/9qrzmKU0ncm7B5/xWUlZRt1i4XnwpqMP/DOzyFisHQxwTrWOucixnaC1
+	 28lptabqaKvLWYSEnvc2BT18JQFZTWT/sJLA88/qzETqTR1KItgXC1T9vVrbWFoosNvvY
+	 5Q/7G/Lyhc2Vp3BPLB86dD5+lJYWJrOd9WJkSSTfsbKxBJ3Y01CDRMiqMScq7aSIoWQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216348;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216351;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=R94nLHxMdeTaFBdZ5Z6VX/EP788epAWrYKyz60ShtNM=;
-	b=zUnkD84Rz5dJts8afvMrYj35fRsCQ1OwrCYjqFXFQM2CIB30wujCM4JRtFCxh2sXgu7W
-	 gr2Y2k+Gsusgyq/VlC3738nNrs8Gw6I2unclIim0+srsGjwFNRKe3/2ryQ9vtTJFpLEi2
-	 2HuBlgX5WA96SVU1m/ak3bv4RxiJ1dKIK9XTHuy0PkQrPqDN9rDsf0Jx+Pj6o9T/UL3BU
-	 twXH8M4WG4U3MhigJdMDTw+P8qnuvSeFsmckAdtBEzDTAAnY1BB83Yaw6RADNCHf9oYji
-	 OeCwJ/Vc6V3d2oiKRpHrbJeavh5ytfMqPxzVXtzfo2BTNHKSp5bsUkga/ZNXldSyHpQ==
+	bh=7VumMwcj9SGfXe5Rd59Jq7CWgZ99ERwBpE+QCz+URoI=;
+	b=JZDa7aUSAC1WJYNckSCC9U1PF1llFYofxfsP0Oh4HXZkmj2ydZ1NXlwcM1uwnqSKsvA3
+	 Z+KuJiW8SLNN9005J41XjRZdmRnprTfbmn4DvdQeoKz/5xD4D7nYkHW9lMWt38Z89BA7p
+	 +Anb5p+rYHYx1zmBpMlZ+LZ1iOCDnqtK0WEMjGVSQx6wmIMrjDDVLqefP3y4HgJBmzJTW
+	 +5UNBhZjynT1R9YUh2xhIyn4RZE7k1odrCIWmiDyunNFRSyEAHaLskJl73vBaFXp9wo90
+	 n7g9lsMYmo/9NEyq6sN4tnky9RpMZ8bBkADzEhcCQw5z7C59tVaryV9mfFKGZrIF46w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=K7I0OjOD;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0vY0PwUy;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65E7B606A31C;
-	Wed, 28 Oct 2026 19:39:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 920C6606A31A;
+	Wed, 28 Oct 2026 19:39:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=K7I0OjOD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA3F41F01825;
-	Wed, 28 Oct 2026 19:39:07 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0vY0PwUy
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6BF61F01825;
+	Wed, 28 Oct 2026 19:39:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216348;
-	bh=R94nLHxMdeTaFBdZ5Z6VX/EP788epAWrYKyz60ShtNM=;
+	s=korg; t=1793216351;
+	bh=7VumMwcj9SGfXe5Rd59Jq7CWgZ99ERwBpE+QCz+URoI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=K7I0OjODSk8z74HT+2d2suQVwle8Ly3jNV0rWaBT4LujCGVUtGoGkO8c4pHoYsATq
-	 TqRVM/Ob8fRaJCAq3tWIFrWRz0g7CZ4wVQP/FCWjgoTtAL9GwDW6frytjap2krAs9H
-	 z6FzCiNNwGDiLDnXX3qejiPtixKycGycn5vkA9bQ=
+	b=0vY0PwUy0MxhU/wnMDng7sbApS59o78ScMvT2wiZQ6LpUXQIpwqxlpoPuID+c76Yy
+	 1++Cx+KQ0Ayjx5XITBLBctciRbs9Gr4x08YrfqR5rVnT+dH4LzTzUXVqg3AGyVQT8D
+	 ZJPPneRzGYCvXFRpbWl3F3z92kGXG3gSOVO4UTjE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christopher Lusk <clusk@northecho.dev>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Paulo Alcantara <pc@manguebit.org>,
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1527/1887] smb: client: fix request buffer leak in smb2_new_read_req()
-Date: Wed, 28 Oct 2026 18:00:23 +0100
-Message-ID: <20261028170534.212162472@linuxfoundation.org>
+Subject: [PATCH 6.1 1528/1887] net: add missing ref_tracker_dir_exit() to alloc_netdev_mqs()
+Date: Wed, 28 Oct 2026 18:00:24 +0100
+Message-ID: <20261028170534.233862864@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,124 +69,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christopher Lusk <clusk@northecho.dev>
+From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
 
-[ Upstream commit deb6468f4164640e4dc875f008aa449cf55987a5 ]
+[ Upstream commit 0b1c2af8a22c35cb099c735c2f63ea3ba757557d ]
 
-smb2_new_read_req() allocates the request buffer with
-smb2_plain_req_init() but only publishes it to the caller with
-*buf = req at the very end of the function. Two error returns sit in
-between:
+sashiko is reporting that trying to read /sys/kernel/debug/ref_tracker/*
+causes use-afer-free crash when either alloc_percpu() or dev_addr_init()
+in alloc_netdev_mqs() failed, for commit 4d92b95ff2f9 ("net: add net device
+refcount tracker infrastructure") added ref_tracker_dir_exit() to only
+free_netdev() path.
 
-	rc = smb2_plain_req_init(SMB2_READ, io_parms->tcon, server,
-				 (void **) &req, total_len);
-	if (rc)
-		return rc;
-
-	if (server == NULL)
-		return -ECONNABORTED;
-	[...]
-		rdata->mr = smbd_register_mr(server->smbd_conn,
-					     &rdata->subreq.io_iter,
-					     true, need_invalidate);
-		if (!rdata->mr)
-			return -EAGAIN;
-
-On either of them the buffer is neither released nor handed back, so
-it is leaked. The caller cannot clean up after it: smb2_async_readv()
-does 'goto out' on a non-zero return, which skips the
-cifs_small_buf_release(buf) at async_readv_out, and buf has not been
-assigned at that point in any case.
-
-The write path has never had this problem. smb2_async_writev()
-registers the memory region inline and jumps to its release label
-instead of returning:
-
-	wdata->mr = smbd_register_mr(...);
-	if (!wdata->mr) {
-		rc = -EAGAIN;
-		goto async_writev_out;
-	}
-
-Commit b7972092199f ("cifs: smbd: Retry on memory registration
-failure") changed both sides from -ENOBUFS to -EAGAIN in a single
-patch, which puts the two shapes next to each other.
-
-Only the -EAGAIN return is reachable in practice, because
-smb2_plain_req_init() calls smb2_reconnect() first and that already
-fails with -EIO when server is NULL, before anything is allocated.
-Both returns are given the same treatment here rather than leaving
-one of them correct only by accident.
-
-Because -EAGAIN is a replayable error, the failure also reaches the
-retry block at the end of smb2_async_readv(), which marks the
-subrequest NETFS_SREQ_NEED_RETRY, so a failing registration can be
-retried rather than ending the I/O, and every attempt that reaches it
-leaks another buffer. smb2_should_replay() short-circuits on
-tcon->retry, so on a hard mount the attempt count is not bounded by
-the retrans setting.
-
-Only the asynchronous read path is affected. The synchronous
-SMB2_read() caller passes rdata == NULL and the memory registration
-block is guarded on rdata.
-
-The memory registration failure path was pointed out by the Sashiko
-AI reviewer while it was reviewing an unrelated patch to
-smb2_async_readv().
-
-Fixes: bd3dcc6a22a9 ("CIFS: SMBD: Upper layer performs SMB read via RDMA write through memory registration")
-Link: https://sashiko.dev/#/patchset/20260729192002.876156-1-clusk%40northecho.dev
-Link: https://lore.kernel.org/all/20260729192002.876156-1-clusk@northecho.dev/
-Assisted-by: Claude:claude-opus-5
-Signed-off-by: Christopher Lusk <clusk@northecho.dev>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+Closes: https://sashiko.dev/#/patchset/56c707e7-1fb0-43ec-b8fb-cf6f451e513e%40I-love.SAKURA.ne.jp
+Fixes: 4d92b95ff2f9 ("net: add net device refcount tracker infrastructure")
+Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/b06ce35d-e7bc-47a5-8e0a-e82be7e4dd08@I-love.SAKURA.ne.jp
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/smb2pdu.c | 16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ net/core/dev.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/smb/client/smb2pdu.c b/fs/smb/client/smb2pdu.c
-index 8f23b8968beb4..e69b4bb9dc919 100644
---- a/fs/smb/client/smb2pdu.c
-+++ b/fs/smb/client/smb2pdu.c
-@@ -4287,8 +4287,10 @@ smb2_new_read_req(void **buf, unsigned int *total_len,
- 	if (rc)
- 		return rc;
- 
--	if (server == NULL)
--		return -ECONNABORTED;
-+	if (!server) {
-+		rc = -ECONNABORTED;
-+		goto free_req;
-+	}
- 
- 	shdr = &req->hdr;
- 	shdr->Id.SyncId.ProcessId = cpu_to_le32(io_parms->pid);
-@@ -4319,8 +4321,10 @@ smb2_new_read_req(void **buf, unsigned int *total_len,
- 				server->smbd_conn, rdata->pages,
- 				rdata->nr_pages, rdata->page_offset,
- 				rdata->tailsz, true, need_invalidate);
--		if (!rdata->mr)
--			return -EAGAIN;
-+		if (!rdata->mr) {
-+			rc = -EAGAIN;
-+			goto free_req;
-+		}
- 
- 		req->Channel = SMB2_CHANNEL_RDMA_V1_INVALIDATE;
- 		if (need_invalidate)
-@@ -4363,6 +4367,10 @@ smb2_new_read_req(void **buf, unsigned int *total_len,
- 
- 	*buf = req;
- 	return rc;
-+
-+free_req:
-+	cifs_small_buf_release(req);
-+	return rc;
+diff --git a/net/core/dev.c b/net/core/dev.c
+index 4a1b16a0c04b8..804752cc864f4 100644
+--- a/net/core/dev.c
++++ b/net/core/dev.c
+@@ -10873,6 +10873,7 @@ struct net_device *alloc_netdev_mqs(int sizeof_priv, const char *name,
+ 	free_percpu(dev->pcpu_refcnt);
+ free_dev:
+ #endif
++	ref_tracker_dir_exit(&dev->refcnt_tracker);
+ 	netdev_freemem(dev);
+ 	return NULL;
  }
- 
- static void
 -- 
 2.53.0
 
