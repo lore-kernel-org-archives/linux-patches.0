@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214009;
-	b=gl2sy9J+lazfpRSkSGp46oxD61Cly+vSGY29wfo2VfD91c833OWPAcohgcsFdekyGTP+
-	 HGWeVmJdRYygkI8No6GuFCggYiGnFTEOJAB5TyTaBsUpagwbMi9DngusxSLT+A/aQLM2o
-	 u7L+RGI/wE6mTmyDnI3rWoEeK9DB0mehdologttovZvQi/Knq9rMMLGOKgGnKcag3sZMw
-	 bV9r4SEz1OI1LLsWbtry8f6Tv0OCvzkKCEct1F3GLlqTGDpljGVgUWLDD8JuVeoOW6vU0
-	 k82njamMu4z0fiPS3eCbQhNBTitsDOjtw2nqiBMgHZ+ENYmU0C8UhIDESGmYxPDkfgQ==
+	t=1793214012;
+	b=4JtxqX41TZTu5rxWZ7LZbeo2yohC4cMAINJlTq8TgjdVpEvRuWfHUTDoHoVrjAsXr+dm
+	 Q2E4V+/zWbpwsVCISanSQ0ZPYj2x+QoCIGe//1QTbQsFIvUh7m9QzAZxD3diZWiJ2w2Mc
+	 WEIdqyZnqW9auzpExjHzcPLtsKytrE4NKXGnFdgAXZ6sHlAn+l6tPZj/gnHWctNUfqqJm
+	 nzVfEDkDbpDB+6ERMH5As8fuGBuaFYuPRwPsCUhkNPf9RozoF/WlVLyEARaNTNUf+iffJ
+	 a1EFYeDesB+x49um+4oTLTChttUllkWOGJVH6uxSJbOEK/A4c7CJTo6kHhbL1XW9NKQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214009;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214012;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=oV9vkqMNl4MXejlHw4Flw6rz6O+7sxbdCZ1NhihJV8E=;
-	b=1syjoZxaUAAsgW6dfGxJ5piiL+9cm6RCc7q5dxYXB5RNAxRTKUEsGOWzmx94XiKoI8kQ
-	 WiCaDakL1aWiuv0gLfbLZPIYCPd5NqKk1wm+Kv2Y1GqVlOdAD3iN5DAW/6EgUzX81okVn
-	 23C3z6Cjlw6sTehhZKhbQ7IOdyM8BC4eby2v8g5K10ltj/VttGStbiYAEDR0Fl/83P68U
-	 bP5ZQrDKp7lRWTf+A0IReExv4Jcw8n+o7T0a+SO9lSkkzxxBXQEvk/iOKaztrqmyFT2LA
-	 +6rrtunv3V0Wicvhegg3XuCeQHfSFG8sl3mmcKGfBV9d8T7ZfYFYKsYYpeAYBwsBpbA==
+	bh=H4i8LOI5o64w0a5cOvnQ/vq3XltKTNKbeTWqwMO3a1g=;
+	b=I5X0jJamcsnmcZBDIodvKnKF+Tu0AO2HNAzokJubUhvLeyN6GlZNSXALuGxkYrwxRul/
+	 ww6+/OE6ETRGdgo3VtthxktUIVJqZnuMP0601AuHYVlGKrnFEZ2dcRmfhQbvXgp4R1skb
+	 DF2VX33+cPwX013JgZRvSWzfUcV/clQESs6tVhKCD+dEh9duKqi/J12Y/I989bFSfs85x
+	 MO5vD+Iq5KljOqPbeUbQMWs8LQFHiham6ruC7myepZOpML+sV7YtwjVMVPnlxdjY1aXUZ
+	 rBZpWqeduhPx9cOUgOZd20QA8r15uVC9J+58oGGm9kSCY827/7Q0yjzYZLhIx1GwhNQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zkK8swGO;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s+Ybdvhn;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13EC160A263B;
-	Wed, 28 Oct 2026 19:00:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF036606A320;
+	Wed, 28 Oct 2026 19:00:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zkK8swGO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62DF71F031E4;
-	Wed, 28 Oct 2026 19:00:08 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s+Ybdvhn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AB411F031E0;
+	Wed, 28 Oct 2026 19:00:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214008;
-	bh=oV9vkqMNl4MXejlHw4Flw6rz6O+7sxbdCZ1NhihJV8E=;
+	s=korg; t=1793214011;
+	bh=H4i8LOI5o64w0a5cOvnQ/vq3XltKTNKbeTWqwMO3a1g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zkK8swGOI/s1VgUifCdUFdSA9KA3KMAzgmdr3aZWO8Z3eLjtFs04nZjWycWNEZL0d
-	 8J70CMhHnGdzrNl3EWG2aSj+AiSMElIX+iO4NWs5EwsUcEICi0Uv418hjw0SVGEKhH
-	 mrnKwoJXCvZFBNsmfy3wD1JPzB8YsqEoDeQ+Llcg=
+	b=s+YbdvhnPmJ4Z8O/XkT0Z2WKK4stBwRhIKTVhChFO1kCoXF/ZM5gqpRPA0m5beCXA
+	 3HydQLkrkCzzNdrY+4sBagjTAKXmPKdKnJOZmoVW5HAdRHnvs6l/GMN2kMYAaVTaqi
+	 NuD9mOqVre1NxSq97GnG8MUOeuaIUtTcemLCTkUY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Piergiorgio Sartor <piergiorgio.sartor@nexgo.de>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Hyeonggon Yoo <42.hyeyoo@gmail.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	"yuan.gao" <yuan.gao@ucloud.cn>,
+	Christoph Lameter <cl@linux.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0706/1887] f2fs: fix to drop all discards after creating snapshot on lvm device
-Date: Wed, 28 Oct 2026 17:46:42 +0100
-Message-ID: <20261028170515.476885430@linuxfoundation.org>
+Subject: [PATCH 6.1 0707/1887] mm/slub: Avoid list corruption when removing a slab from the full list
+Date: Wed, 28 Oct 2026 17:46:43 +0100
+Message-ID: <20261028170515.501899271@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,101 +70,143 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: yuan.gao <yuan.gao@ucloud.cn>
 
-[ Upstream commit bc8aeb04fd80cb8cfae3058445c84410fd0beb5e ]
+[ Upstream commit dbc16915279a548a204154368da23d402c141c81 ]
 
-Piergiorgio reported a bug in bugzilla as below:
+Boot with slub_debug=UFPZ.
 
-------------[ cut here ]------------
-WARNING: CPU: 2 PID: 969 at fs/f2fs/segment.c:1330
-RIP: 0010:__submit_discard_cmd+0x27d/0x400 [f2fs]
-Call Trace:
- __issue_discard_cmd+0x1ca/0x350 [f2fs]
- issue_discard_thread+0x191/0x480 [f2fs]
- kthread+0xcf/0x100
- ret_from_fork+0x31/0x50
- ret_from_fork_asm+0x1a/0x30
+If allocated object failed in alloc_consistency_checks, all objects of
+the slab will be marked as used, and then the slab will be removed from
+the partial list.
 
-w/ below testcase, it can reproduce this bug quickly:
-- pvcreate /dev/vdb
-- vgcreate myvg1 /dev/vdb
-- lvcreate -L 1024m -n mylv1 myvg1
-- mount /dev/myvg1/mylv1 /mnt/f2fs
-- dd if=/dev/zero of=/mnt/f2fs/file bs=1M count=20
-- sync
-- rm /mnt/f2fs/file
-- sync
-- lvcreate -L 1024m -s -n mylv1-snapshot /dev/myvg1/mylv1
-- umount /mnt/f2fs
+When an object belonging to the slab got freed later, the remove_full()
+function is called. Because the slab is neither on the partial list nor
+on the full list, it eventually lead to a list corruption (actually a
+list poison being detected).
 
-The root cause is: it will update discard_max_bytes of mounted lvm
-device to zero after creating snapshot on this lvm device, then,
-__submit_discard_cmd() will pass parameter @nr_sects w/ zero value
-to __blkdev_issue_discard(), it returns a NULL bio pointer, result
-in panic.
+So we need to mark and isolate the slab page with metadata corruption,
+do not put it back in circulation.
 
-This patch changes as below for fixing:
-1. Let's drop all remained discards in f2fs_unfreeze() if snapshot
-of lvm device is created.
-2. Checking discard_max_bytes before submitting discard during
-__submit_discard_cmd().
+Because the debug caches avoid all the fastpaths, reusing the frozen bit
+to mark slab page with metadata corruption seems to be fine.
 
-Cc: stable@vger.kernel.org
-Fixes: 35ec7d574884 ("f2fs: split discard command in prior to block layer")
-Reported-by: Piergiorgio Sartor <piergiorgio.sartor@nexgo.de>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=219484
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+[ 4277.385669] list_del corruption, ffffea00044b3e50->next is LIST_POISON1 (dead000000000100)
+[ 4277.387023] ------------[ cut here ]------------
+[ 4277.387880] kernel BUG at lib/list_debug.c:56!
+[ 4277.388680] invalid opcode: 0000 [#1] PREEMPT SMP PTI
+[ 4277.389562] CPU: 5 PID: 90 Comm: kworker/5:1 Kdump: loaded Tainted: G           OE      6.6.1-1 #1
+[ 4277.392113] Workqueue: xfs-inodegc/vda1 xfs_inodegc_worker [xfs]
+[ 4277.393551] RIP: 0010:__list_del_entry_valid_or_report+0x7b/0xc0
+[ 4277.394518] Code: 48 91 82 e8 37 f9 9a ff 0f 0b 48 89 fe 48 c7 c7 28 49 91 82 e8 26 f9 9a ff 0f 0b 48 89 fe 48 c7 c7 58 49 91
+[ 4277.397292] RSP: 0018:ffffc90000333b38 EFLAGS: 00010082
+[ 4277.398202] RAX: 000000000000004e RBX: ffffea00044b3e50 RCX: 0000000000000000
+[ 4277.399340] RDX: 0000000000000002 RSI: ffffffff828f8715 RDI: 00000000ffffffff
+[ 4277.400545] RBP: ffffea00044b3e40 R08: 0000000000000000 R09: ffffc900003339f0
+[ 4277.401710] R10: 0000000000000003 R11: ffffffff82d44088 R12: ffff888112cf9910
+[ 4277.402887] R13: 0000000000000001 R14: 0000000000000001 R15: ffff8881000424c0
+[ 4277.404049] FS:  0000000000000000(0000) GS:ffff88842fd40000(0000) knlGS:0000000000000000
+[ 4277.405357] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[ 4277.406389] CR2: 00007f2ad0b24000 CR3: 0000000102a3a006 CR4: 00000000007706e0
+[ 4277.407589] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+[ 4277.408780] DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+[ 4277.410000] PKRU: 55555554
+[ 4277.410645] Call Trace:
+[ 4277.411234]  <TASK>
+[ 4277.411777]  ? die+0x32/0x80
+[ 4277.412439]  ? do_trap+0xd6/0x100
+[ 4277.413150]  ? __list_del_entry_valid_or_report+0x7b/0xc0
+[ 4277.414158]  ? do_error_trap+0x6a/0x90
+[ 4277.414948]  ? __list_del_entry_valid_or_report+0x7b/0xc0
+[ 4277.415915]  ? exc_invalid_op+0x4c/0x60
+[ 4277.416710]  ? __list_del_entry_valid_or_report+0x7b/0xc0
+[ 4277.417675]  ? asm_exc_invalid_op+0x16/0x20
+[ 4277.418482]  ? __list_del_entry_valid_or_report+0x7b/0xc0
+[ 4277.419466]  ? __list_del_entry_valid_or_report+0x7b/0xc0
+[ 4277.420410]  free_to_partial_list+0x515/0x5e0
+[ 4277.421242]  ? xfs_iext_remove+0x41a/0xa10 [xfs]
+[ 4277.422298]  xfs_iext_remove+0x41a/0xa10 [xfs]
+[ 4277.423316]  ? xfs_inodegc_worker+0xb4/0x1a0 [xfs]
+[ 4277.424383]  xfs_bmap_del_extent_delay+0x4fe/0x7d0 [xfs]
+[ 4277.425490]  __xfs_bunmapi+0x50d/0x840 [xfs]
+[ 4277.426445]  xfs_itruncate_extents_flags+0x13a/0x490 [xfs]
+[ 4277.427553]  xfs_inactive_truncate+0xa3/0x120 [xfs]
+[ 4277.428567]  xfs_inactive+0x22d/0x290 [xfs]
+[ 4277.429500]  xfs_inodegc_worker+0xb4/0x1a0 [xfs]
+[ 4277.430479]  process_one_work+0x171/0x340
+[ 4277.431227]  worker_thread+0x277/0x390
+[ 4277.431962]  ? __pfx_worker_thread+0x10/0x10
+[ 4277.432752]  kthread+0xf0/0x120
+[ 4277.433382]  ? __pfx_kthread+0x10/0x10
+[ 4277.434134]  ret_from_fork+0x2d/0x50
+[ 4277.434837]  ? __pfx_kthread+0x10/0x10
+[ 4277.435566]  ret_from_fork_asm+0x1b/0x30
+[ 4277.436280]  </TASK>
+
+Fixes: 643b113849d8 ("slub: enable tracking of full slabs")
+Suggested-by: Hyeonggon Yoo <42.hyeyoo@gmail.com>
+Suggested-by: Vlastimil Babka <vbabka@suse.cz>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: yuan.gao <yuan.gao@ucloud.cn>
+Reviewed-by: Hyeonggon Yoo <42.hyeyoo@gmail.com>
+Acked-by: Christoph Lameter <cl@linux.com>
+Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/segment.c |  9 +++++++++
- fs/f2fs/super.c   | 12 ++++++++++++
- 2 files changed, 21 insertions(+)
+ mm/slab.h | 5 +++++
+ mm/slub.c | 9 ++++++++-
+ 2 files changed, 13 insertions(+), 1 deletion(-)
 
-diff --git a/fs/f2fs/segment.c b/fs/f2fs/segment.c
-index 4b13e04c6e608..bf52ba8a32c04 100644
---- a/fs/f2fs/segment.c
-+++ b/fs/f2fs/segment.c
-@@ -1125,6 +1125,15 @@ static int __submit_discard_cmd(struct f2fs_sb_info *sbi,
- 	if (is_sbi_flag_set(sbi, SBI_NEED_FSCK))
+diff --git a/mm/slab.h b/mm/slab.h
+index 0202a8c2f0d25..42eb31375fdf9 100644
+--- a/mm/slab.h
++++ b/mm/slab.h
+@@ -40,6 +40,11 @@ struct slab {
+ 		struct {
+ 			unsigned inuse:16;
+ 			unsigned objects:15;
++			/*
++			 * If slab debugging is enabled then the
++			 * frozen bit can be reused to indicate
++			 * that the slab was corrupted
++			 */
+ 			unsigned frozen:1;
+ 		};
+ 	};
+diff --git a/mm/slub.c b/mm/slub.c
+index 5428a41d70eb7..bafb09a3c00a4 100644
+--- a/mm/slub.c
++++ b/mm/slub.c
+@@ -1196,6 +1196,11 @@ static int check_slab(struct kmem_cache *s, struct slab *slab)
+ 			slab->inuse, slab->objects);
  		return 0;
- 
-+	/*
-+	 * stop issuing discard for any of below cases:
-+	 * 1. device is conventional zone, but it doesn't support discard.
-+	 * 2. device is regulare device, after snapshot it doesn't support
-+	 * discard.
-+	 */
-+	if (!bdev_max_discard_sectors(bdev))
-+		return -EOPNOTSUPP;
+ 	}
++	if (slab->frozen) {
++		slab_err(s, slab, "Slab disabled since SLUB metadata consistency check failed");
++		return 0;
++	}
 +
- 	trace_f2fs_issue_discard(bdev, dc->start, dc->len);
- 
- 	lstart = dc->lstart;
-diff --git a/fs/f2fs/super.c b/fs/f2fs/super.c
-index 375daa37b3795..a1c33931d175e 100644
---- a/fs/f2fs/super.c
-+++ b/fs/f2fs/super.c
-@@ -1742,6 +1742,18 @@ static int f2fs_freeze(struct super_block *sb)
- 
- static int f2fs_unfreeze(struct super_block *sb)
- {
-+	struct f2fs_sb_info *sbi = F2FS_SB(sb);
-+
-+	/*
-+	 * It will update discard_max_bytes of mounted lvm device to zero
-+	 * after creating snapshot on this lvm device, let's drop all
-+	 * remained discards.
-+	 * We don't need to disable real-time discard because discard_max_bytes
-+	 * will recover after removal of snapshot.
-+	 */
-+	if (test_opt(sbi, DISCARD) && !f2fs_hw_support_discard(sbi))
-+		f2fs_issue_discard_timeout(sbi, false);
-+
- 	clear_sbi_flag(F2FS_SB(sb), SBI_IS_FREEZING);
- 	return 0;
+ 	/* Slab_pad_check fixes things up after itself */
+ 	slab_pad_check(s, slab);
+ 	return 1;
+@@ -1392,6 +1397,7 @@ static noinline bool alloc_debug_processing(struct kmem_cache *s,
+ 		slab_fix(s, "Marking all objects used");
+ 		slab->inuse = slab->objects;
+ 		slab->freelist = NULL;
++		slab->frozen = 1; /* mark consistency-failed slab as frozen */
+ 	}
+ 	return false;
  }
+@@ -2088,7 +2094,8 @@ static void *alloc_single_from_partial(struct kmem_cache *s,
+ 	slab->inuse++;
+ 
+ 	if (!alloc_debug_processing(s, slab, object, orig_size)) {
+-		remove_partial(n, slab);
++		if (folio_test_slab(slab_folio(slab)))
++			remove_partial(n, slab);
+ 		return NULL;
+ 	}
+ 
 -- 
 2.53.0
 
