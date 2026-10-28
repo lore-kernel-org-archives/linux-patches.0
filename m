@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793209940;
-	b=yKoWkaEXg6BTJY3fqgF2JDA37kzjSOm2v/UGt06KtyL2pSJco1+XQOKPEdRDQGvkYpBs
-	 wfas3oQqWJjWoFU/sMedwyNTHbNH+m/KWOGZvh4mG7RMMKtlEPL8Xjvqk/8Aive7j57ai
-	 whqSJUNqU3opl6Fi8H9ybJBZ4Wi9zcQDwbsOjaVFWxl51H01YvzsvG9mGqvMC9od2zIJy
-	 qJJXL2/dbc409heYX1lmyWjzEo2u7Kg/q6BsGJrwfa/OeXkz/5bt2xT+MYoKUUvwnp9FK
-	 olYDz82QABaRZ1EMYPDjOLjoO8tltiNNTeidzFQ/QyCJG+rNK77uslXU89MSUrhcpxw==
+	t=1793209942;
+	b=rnLALzkvHQmM4CAUnZ7WM0u9cM9dw3bRZt8rBz7MPF/uiUNSKcU8wpVme0StNmYRUfhX
+	 lkSS7puRK2ScLJU2V1XC3PGbPtIGiG2TN5Zk8D4nBX8YTrpppZDml5EMjqdqP/aFM5Rqf
+	 oZ96nS213gMTX5keaPVMTLigQxxawg9W9RaUgGlkcj8vMkcZ75BwJCd0yBdlU2LQUXMcp
+	 f+U+umE6I9hwlluBe3GSCn4PU6SK90ZEdZg1zFwfJ3I8nv+Fp8HaPsSpeff8P+OGDtLVc
+	 fC/bm2c72m+JOTzPnEX/Vw5OsUCq4b4gVPIlrCdDs4NHuYzRvf2zRCfonbifebDAAdA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793209940;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793209942;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=BT7Zfqw+/FBLCWctWREpM86uk55x70p/iFieelvGPlQ=;
-	b=VRwfgY5jxOgJioAs2XNgLcsgrgo8dn9902ldOJLE1glMyY7tMhUrBx8W/vPwaYVVuTKh
-	 4YBLx3D9fnkM5fyVwCGQbnEjm8xxxgl3eu9cbBSfjUOYZHLLS/taNMnNm0TSD8gTI+YHf
-	 Sh8pZaNO90ZdLLzZr/XRH6XQ9LfFoTzdDhRUxSARiFF1eV91PUPNhjF3KVF0n4garMuMW
-	 GKwsruDha3B1J2/MImbj0gj3NFuVEKFWIPZNxk6y6IwgLKq4mjQtNXlhD7whpPGTkLOz1
-	 TqEceq74dJ6U6W8nBqNBlCqYizEuL10aRc1EY2kRG49bMG1LM1f9XerM16Qqvb+hk4Q==
+	bh=l7TRNTGmg+Nk93yy1UjQQXqANRNRMb2K6Ue//W6iKxI=;
+	b=WrsMguPw/GqeNAXbnpNC7xd4gtK0aw1IDC1c/9/0Oa3Z+tUlwPABdlFl3cDZo4mGNk6A
+	 +ZyW7wWJLhShltQLXc1SbWE0VmPMl6YbnMgE0VwzDm5QDsMk6dIDWKCYQ6W5wZyKGZKvx
+	 OSgNbj9QFWS0FhQNsVgjMExgXtp5qDI4l6mgyIrGD3zNl0U9zq0E3kgiqxurOr3OiOiKK
+	 hG79lZDjqtIiVlsLNtpxoYzXVmTiJg5adaHyiWVFrL32ohu9uvx9tChYqAvkj6SHjpoyC
+	 pPKvQy7APPwigclPYVYja3ZYl1hrJCTZ59rvMojCvZxmNBYnRpEkyHUkDXbg9uG4n7Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="SDeRM/9Z";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KpAfXDBG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5096606A31C;
-	Wed, 28 Oct 2026 17:52:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8683A606A31A;
+	Wed, 28 Oct 2026 17:52:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SDeRM/9Z
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1164A1F01825;
-	Wed, 28 Oct 2026 17:52:18 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KpAfXDBG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7D911F01825;
+	Wed, 28 Oct 2026 17:52:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793209939;
-	bh=BT7Zfqw+/FBLCWctWREpM86uk55x70p/iFieelvGPlQ=;
+	s=korg; t=1793209942;
+	bh=l7TRNTGmg+Nk93yy1UjQQXqANRNRMb2K6Ue//W6iKxI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SDeRM/9ZU+yg7A7spE8ERiHpsXgw9i0sGh+UHcxscU96twPyrAXOfbGInw7/GZlo7
-	 sPHvDsoPLyNpwvNBxHWrWCXtENC8J4bp5q6eRYGmUQRHL1ZoMpF9iMFgb2vA569uVs
-	 DXkl4r+2hsvTGfe3HpAZl3BClePa5FxBLruAfjec=
+	b=KpAfXDBGyGWhhQydISeWH0bULhB+FhlLgSOLaR6ykaZiY2uvUwc8QklDHA7kOPw7P
+	 2vOiYxaOy3Nl4WeIm3y5cQlRorlDW35hV9DxGyNlfZ9lduhwgH3rO46tt9Mhljqoa+
+	 t9Dx7mOJycWuUG+zUY/eAwdNAKgos2bpkRNNkdzc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	HyeongJun An <sammiee5311@gmail.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 020/168] ASoC: wm8978: Fix the 128x oversampling switch bits
-Date: Wed, 28 Oct 2026 17:59:16 +0100
-Message-ID: <20261028165943.576358901@linuxfoundation.org>
+Subject: [PATCH 6.6 021/168] ASoC: nau8822: Fix the 128x oversampling switch bits
+Date: Wed, 28 Oct 2026 17:59:17 +0100
+Message-ID: <20261028165943.600016919@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165943.089486480@linuxfoundation.org>
 References: <20261028165943.089486480@linuxfoundation.org>
@@ -70,45 +70,45 @@ Content-Transfer-Encoding: 8bit
 
 From: HyeongJun An <sammiee5311@gmail.com>
 
-[ Upstream commit d0567ca9a2faa33efbe5ae84ef7b86423a93bffd ]
+[ Upstream commit 4db45fc1da3d62d0fa6e8f1e457ae92e8741ed07 ]
 
 The DAC and ADC 128x Oversampling Switches use bit 5 of R10 and R14.
-Table 66 of the WM8978 datasheet puts DACOSR128 and ADCOSR128 at bit 3
-of those registers.
+The NAU8822 datasheet register map puts DACOS and ADCOS at bit 3 of
+those registers.
 
-In R14, bit 5 is inside HPFCUT[6:4], which the High Pass Cut Off
-control owns. So turning on ADC oversampling changes the high pass
-cut-off, and the oversampling bit cannot be set. In R10, bit 5 is
-reserved, so the DAC switch has no effect.
+In R14, bit 5 is inside HPF[6:4], which the High Pass Cut Off control
+owns. So turning on ADC oversampling changes the high pass cut-off, and
+the oversampling bit cannot be set. In R10, bit 5 is reserved, so the
+DAC switch has no effect.
 
 Use bit 3 for both.
 
-Fixes: 823dba519122 ("ASoC: Fix broken bitfield definitions in WM8978")
+Fixes: 1e3cb6c321be ("ASoC: nau8822: new codec driver")
 Assisted-by: Claude:claude-opus-5-5
 Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
-Link: https://patch.msgid.link/20261008130953.2446692-6-sammiee5311@gmail.com
+Link: https://patch.msgid.link/20261008130953.2446692-7-sammiee5311@gmail.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/wm8978.c | 4 ++--
+ sound/soc/codecs/nau8822.c | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/codecs/wm8978.c b/sound/soc/codecs/wm8978.c
-index 718bfef302cc6..6042a2fb7329c 100644
---- a/sound/soc/codecs/wm8978.c
-+++ b/sound/soc/codecs/wm8978.c
-@@ -255,9 +255,9 @@ static const struct snd_kcontrol_new wm8978_snd_controls[] = {
+diff --git a/sound/soc/codecs/nau8822.c b/sound/soc/codecs/nau8822.c
+index 7199d734c79f2..fbdc5db887b6e 100644
+--- a/sound/soc/codecs/nau8822.c
++++ b/sound/soc/codecs/nau8822.c
+@@ -379,9 +379,9 @@ static const struct snd_kcontrol_new nau8822_snd_controls[] = {
+ 		NAU8822_REG_RIGHT_ADC_BOOST_CONTROL, 0, 7, 0, boost_tlv),
  
- 	/* DAC / ADC oversampling */
- 	SOC_SINGLE("DAC 128x Oversampling Switch", WM8978_DAC_CONTROL,
--		   5, 1, 0),
-+		   3, 1, 0),
- 	SOC_SINGLE("ADC 128x Oversampling Switch", WM8978_ADC_CONTROL,
--		   5, 1, 0),
-+		   3, 1, 0),
+ 	SOC_SINGLE("DAC 128x Oversampling Switch",
+-		NAU8822_REG_DAC_CONTROL, 5, 1, 0),
++		NAU8822_REG_DAC_CONTROL, 3, 1, 0),
+ 	SOC_SINGLE("ADC 128x Oversampling Switch",
+-		NAU8822_REG_ADC_CONTROL, 5, 1, 0),
++		NAU8822_REG_ADC_CONTROL, 3, 1, 0),
  };
  
- /* Mixer #1: Output (OUT1, OUT2) Mixer: mix AUX, Input mixer output and DAC */
+ /* LMAIN and RMAIN Mixer */
 -- 
 2.53.0
 
