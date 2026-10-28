@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213084;
-	b=lSkZXEVVpGPePLjIyWLs+cNxc9Yc3ndtkWMqNNhXc2ZHVlYF0tNvePRI2DKXHdHaHvF4
-	 fFB3wapFD+fauFqIfwqoxq6LGLbW7KhpK5lHFzgxo7iWs9pxyULN/RtPGEnOCmlopOS9b
-	 UHESYjpQGFAzkVsvyrTcu2prlO3kduHDqGafXSsDQ1PePGHzkjFq+7R23vMNo7QUDGuFC
-	 i2KBilYzJYOy8VFoeAcxX4XILK0jbd5vHQ2V/pfZCYFMe0a5GRbaMVaxobcwI3MSbQmpk
-	 kHraVXaqmhD/zeOkqNTetcw9DCW6RpzKYg/qBF/msf++YEQBLjm9/4Y8Qs+NIG4LG1A==
+	t=1793213087;
+	b=4vK+UGWA/tU4qaa9RKdSEEvPaLyNI/0ogZ6EIj3IRfkEz2BY8Gu0SVP4owGjoSUF2N4B
+	 MXY6i+6okRvPwQ6sc3/4lsCpcloZLOGrc5vUOX/6u9u5ay9as6MJtS4FXLXOczHr2dcHl
+	 uGfJEPL8G9RJI+rBt64wfQou2g9ZzsIKksFWCqjl94HEC+ccc7wB4fZHGk5YB1ZycIt+T
+	 R/1aNW1mK4uNxdZjZy/3zn1/DhZiIvpvARfrBU3wbT5p2HeZh5LVoU2Zyse2ZZSQtR00Z
+	 HSuH2/HHRtx/u9GUQ6BfZYukD/WbT0yPZhlK5LSMwgw382yHuxFR8ncDwcdl0/vZXmQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213084;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213087;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=XpiN9LYDSG1A0KErjAe8RkJ2TzdTB6+Qrl6kyR3K/Cw=;
-	b=T4rqfmiy0r9jL49+mmCUOdmocJ9gDu/dPNQ4IYaIzyr5WFIlJKqvQIAmrVGxIXy/u0b1
-	 D9i/wwtk+asgeP6s+6dXDeZ2v7lAW1Fz45aktALQxc++Zk+swg7kP5esHFPWmlo2Sx2Xs
-	 GsAUApoONMeQzgHXWlb3lIWs7qV9A01RmJA+nNU4BvpkPOzS4EPq1LDX5ubZro0/dKP6t
-	 ekwsvAdAwLrd6JkqdOuxcMujjOqU1A//252o9T3dK+sTTccruvdtUc0f2Bn1NuZVgnsVG
-	 QoZmZzXIIWfM8qu9M+81XwwxIM68pxEDdDMv78BE9K6+j6cG2JSryCnl4AmeNZEhdpA==
+	bh=X79PEEJzccS4Ad3ni1aLhHh6MeVznjB0F33SKudEj1o=;
+	b=VBV9I+PaFkyImIDAEct/rbOOrS9Vw+bV43f4XBYRePUzQdijcRHDGj6qwEg/aUNqQDXY
+	 b+ELPB970OLXZJTMxwf/dSGx4c0lQFsqRPTpF/WrZX/5thzArXD3832dQwIG7pEbZoltk
+	 M5ZxGXeMSXbIR/qz8a04ft9tb5lNDhIpQWXfx5caxlE5QIEeU6dVYWLejg+nuFoT6XH3H
+	 DDI83xW0wFa7Xqy6dW/J08UihL1BeqSLEV/wmXgpqGUSd3nyiN7UgN8gbKnpQpyqhyX23
+	 UlR83we9SaCCp1eZjhsYA/LUmta4aRWnf3xY7//CNCZXIWvLzoYnIggFxoZR4RwJS9w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cPBU5NLx;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iWWGlh8o;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68CD1606A325;
-	Wed, 28 Oct 2026 18:44:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49E5C606A31A;
+	Wed, 28 Oct 2026 18:44:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cPBU5NLx
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 846011F01825;
-	Wed, 28 Oct 2026 18:44:43 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iWWGlh8o
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54B2D1F01825;
+	Wed, 28 Oct 2026 18:44:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213084;
-	bh=XpiN9LYDSG1A0KErjAe8RkJ2TzdTB6+Qrl6kyR3K/Cw=;
+	s=korg; t=1793213086;
+	bh=X79PEEJzccS4Ad3ni1aLhHh6MeVznjB0F33SKudEj1o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cPBU5NLxnV1VgH6sBJVB19rOLYiNj9LFWbi03WysiidmI/2Cr6PJDCkEO9tmqIfYj
-	 HdF8z5xxuxzQadFuGnV95s6190mlgQq4Ar8M8zVVL/61N7s6VBPllamKdSIdQueK01
-	 gw8ocr4Et+cDGkD9fdWdw0sGrhu3S+tgQm1DqGRI=
+	b=iWWGlh8okzQb/uH2fXJvVoV7DwTcRZxje44LnStDLrEfRc7iPB0/ymqKhZ4NvES1t
+	 vlWXf//pHaEW3i+sGCMy7PuIGaPv8dfQsWCa54jq4l0+KSXuRDD8iei7VBofLjlUr5
+	 YzDDrSjmUh2Q732xzgwbZ54r5okl7qKuNDDTJUU8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mostafa Saleh <smostafa@google.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0380/1887] KVM: arm64: Dont use the VMA to size stage-2 block mappings for VM_PFNMAP
-Date: Wed, 28 Oct 2026 17:41:16 +0100
-Message-ID: <20261028170507.879414337@linuxfoundation.org>
+	Cong Nguyen <congnt264@gmail.com>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Subject: [PATCH 6.1 0345/1887] iio: proximity: pulsedlight: fix iio_device left registered on PM setup failure
+Date: Wed, 28 Oct 2026 17:40:41 +0100
+Message-ID: <20261028170507.079272098@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -67,79 +67,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mostafa Saleh <smostafa@google.com>
+From: Cong Nguyen <congnt264@gmail.com>
 
-[ Upstream commit 71cc2c67fb8f8d5aa8154eb482e9846d2214f11b ]
+commit 4daa9ca557b4b98ae1ad38a6d1deaa3e31eb8edf upstream.
 
-get_vma_page_shift() derives the stage-2 block size for VM_PFNMAP VMAs
-from the VMA layout alone, which does not necessarily match what
-stage-1 maps for that VMA.
+pm_runtime_set_active() failing in probe() jumps to error_unreg_buffer,
+which only calls iio_triggered_buffer_cleanup() -- it does not undo the
+iio_device_register() that already succeeded a few lines above. probe()
+then returns the error, the devm-managed indio_dev is freed, but the
+iio core still has it registered: the sysfs/chardev nodes stay live and
+point at freed memory.
 
-Upstream commit 71cc2c67fb8f ("KVM: arm64: Use stage-1 leaf size for
-VM_PFNMAP") drops that calculation and lets transparent_hugepage_adjust()
-derive the mapping size from the stage-1 leaf instead. The second part
-is not applicable here: in this kernel transparent_hugepage_adjust()
-takes a reference on the backing struct page, which is not safe for
-MMIO, and stage-1 has no huge PFNMAP before v6.12 anyway. Only drop the
-VMA-based calculation, so VM_PFNMAP VMAs are mapped at PAGE_SIZE.
+Add an error_unreg_dev label that unregisters the iio device before
+falling through to the existing buffer cleanup, mirroring the teardown
+order already used in lidar_remove().
 
-Fixes: 2aa53d68cee6 ("KVM: arm64: Try stage2 block mapping for host device MMIO")
+Fixes: 4ac4e086fd8c ("iio: pulsedlight-lidar-lite: add runtime PM")
+Assisted-by: Claude:claude-opus-4
+Signed-off-by: Cong Nguyen <congnt264@gmail.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Mostafa Saleh <smostafa@google.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kvm/mmu.c | 25 ++-----------------------
- 1 file changed, 2 insertions(+), 23 deletions(-)
+ drivers/iio/proximity/pulsedlight-lidar-lite-v2.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/kvm/mmu.c b/arch/arm64/kvm/mmu.c
-index 54ccdcc2dbdf7..2ccc623796429 100644
---- a/arch/arm64/kvm/mmu.c
-+++ b/arch/arm64/kvm/mmu.c
-@@ -1077,32 +1077,11 @@ transparent_hugepage_adjust(struct kvm *kvm, struct kvm_memory_slot *memslot,
- 	return PAGE_SIZE;
- }
+--- a/drivers/iio/proximity/pulsedlight-lidar-lite-v2.c
++++ b/drivers/iio/proximity/pulsedlight-lidar-lite-v2.c
+@@ -299,12 +299,14 @@ static int lidar_probe(struct i2c_client
  
--static int get_vma_page_shift(struct vm_area_struct *vma, unsigned long hva)
-+static int get_vma_page_shift(struct vm_area_struct *vma)
- {
--	unsigned long pa;
--
- 	if (is_vm_hugetlb_page(vma) && !(vma->vm_flags & VM_PFNMAP))
- 		return huge_page_shift(hstate_vma(vma));
+ 	ret = pm_runtime_set_active(&client->dev);
+ 	if (ret)
+-		goto error_unreg_buffer;
++		goto error_unreg_dev;
+ 	pm_runtime_enable(&client->dev);
+ 	pm_runtime_idle(&client->dev);
  
--	if (!(vma->vm_flags & VM_PFNMAP))
--		return PAGE_SHIFT;
--
--	VM_BUG_ON(is_vm_hugetlb_page(vma));
--
--	pa = (vma->vm_pgoff << PAGE_SHIFT) + (hva - vma->vm_start);
--
--#ifndef __PAGETABLE_PMD_FOLDED
--	if ((hva & (PUD_SIZE - 1)) == (pa & (PUD_SIZE - 1)) &&
--	    ALIGN_DOWN(hva, PUD_SIZE) >= vma->vm_start &&
--	    ALIGN(hva, PUD_SIZE) <= vma->vm_end)
--		return PUD_SHIFT;
--#endif
--
--	if ((hva & (PMD_SIZE - 1)) == (pa & (PMD_SIZE - 1)) &&
--	    ALIGN_DOWN(hva, PMD_SIZE) >= vma->vm_start &&
--	    ALIGN(hva, PMD_SIZE) <= vma->vm_end)
--		return PMD_SHIFT;
--
- 	return PAGE_SHIFT;
- }
+ 	return 0;
  
-@@ -1214,7 +1193,7 @@ static int user_mem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
- 		use_read_lock = (fault_status == FSC_PERM && write_fault &&
- 				 fault_granule == PAGE_SIZE);
- 	} else {
--		vma_shift = get_vma_page_shift(vma, hva);
-+		vma_shift = get_vma_page_shift(vma);
- 	}
++error_unreg_dev:
++	iio_device_unregister(indio_dev);
+ error_unreg_buffer:
+ 	iio_triggered_buffer_cleanup(indio_dev);
  
- 	shared = (vma->vm_flags & VM_SHARED);
--- 
-2.53.0
-
 
 
