@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793209441;
-	b=WvV2K3LyBbyXy5EE4PVdQs3KP8CYY8VdmaixAdYzGE//OIYe8GbUoWo2X2hXo9vOWZ/g
-	 bi5VXNPMtVMwACJQaNA+O/EV5I2HHi90HgzidB5qo8BnhoGEIhyWAuRsiTfQ1kB1Z1jh1
-	 +qpCiTrVl+hlr4hCKqBCQcm1T/78jFcX9/fvvH8eYBzRNk7muvMXPZZysiB+xPIMVzaPh
-	 tCem8IT17vF3c/0lrnvY6imijc1rYNb14/q09bu6fifj1KtnipBupXSVR+ofV9Hb+oSjQ
-	 cNFfGJjiTZpFpLcPaLobM4GSSaK6v/gzOq/nyufRd2vTwV7zIjl2laOAcQfACfjinXw==
+	t=1793209444;
+	b=h74NPhtISpQU7JdlqiT0BHZWd+gZvlUrO8MdwHlnGXeNgjIxACUDSlQZsb0SkTn67sC1
+	 NR66hjPbhNqpzuN+Hu1ewNfs7Gn4H0ogdAhZ0q09YXIkNkvBzFG5N3lpQIiIJnh4kCt0v
+	 fl+7mWKiFHaqj5wyWOrtHBRAe55tNzGtY/UVqHxlYVfGBGs9AVeMVbiegHKrmlSLFiLk2
+	 hwg33hgcl65sE5L4K5SRzz2VgNmorlGTKE8VW9VsalCZh3DNxLBNARS9JpAUxQH9UoGzd
+	 pIqVytPnvrYu4zdWwsIv0QaOBosdJd3FkwvAxCrcRNf1EiIqk06NAQBJEbsKjht41Rw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793209441;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793209444;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=z2CinoK0JU0v5NaN4iwdafnc8hF9VBcaJTfjcmDelrM=;
-	b=gRPYoPiSXBAOSOkPLOhiN8q8EUa26wFCH7ruY++Lb+/blAjSIH6C75Idu16hwsh+VpLq
-	 C/1qtAdqIloIoXkK8QKJ70s1YZHrhIrwewNlu0CNiVZEesa/Cc4OOVIl06/8NN3c2unmC
-	 WwuWVaaTDwZlJy+ptR5bK+MUkJMzC414L5/zJSRq0M9jbYp8s9QQcdPYpz0+WjfpEznXm
-	 iGESc5c1m1brLCGIcw52zoBmHtx4YIakCZD2K97gPhE+mJULarE9BcHm9ZQ8CMW3ZPzMn
-	 05/B7wVvRN12fgoCBk1fQUDUyJ7J84JmDySh7wqf0XxhbNKrHEgyUsSJ3LWWwmXPTRQ==
+	bh=bFgW6o9k+WoI6HusjSPC/0QtW3AzQW4FZwagtetiF9I=;
+	b=3GZsOsHthxoxlv2ul57/kT3MIWWYgjMHCdPOys+NQG01UCNOGTbUTdRO8RJr99Aj7xlA
+	 Tin+qo3xrr2hTIKPuqoMZ+PRpBZN77DROPBKcFLJ5nT5WZrU9Fklfzou4V0Y3FPASFTdF
+	 CSswcm2Y6gYp5KiHTW4ugz+wqPt8tYQyrDxWEImz80hKBZyikAAOacMBystmVI/YKOHBw
+	 mu1g47dUpdbnPoY823tjsoE9prZWqzb/B/7H35wwCx+MnN9vmxzwDYp6RMln5l09InEM/
+	 ncpnfT1+4Zgh8rNZv2ShD3xchsa23Nu57S+8Wa+kU5FWpdn7/ERZLWsK7PhJzxc1XYw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zRCQrJbE;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VDwB2n0o;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D852B606A31A;
-	Wed, 28 Oct 2026 17:44:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B260D606A324;
+	Wed, 28 Oct 2026 17:44:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zRCQrJbE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 328821F01825;
-	Wed, 28 Oct 2026 17:44:00 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VDwB2n0o
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0ECF41F031E0;
+	Wed, 28 Oct 2026 17:44:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793209440;
-	bh=z2CinoK0JU0v5NaN4iwdafnc8hF9VBcaJTfjcmDelrM=;
+	s=korg; t=1793209443;
+	bh=bFgW6o9k+WoI6HusjSPC/0QtW3AzQW4FZwagtetiF9I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zRCQrJbEVq1UHrLNrZHcJAcTZkhRCvAy5MqoWBBp7mZcd4hcf4dUhHTE3MH2fs4oW
-	 WqY+BXG9ZW5692Kn6f609PtHTznyAoCK+042Lvxdg8kxkPCFCU0BA/nnUesWypnLyz
-	 JNfYFZndsehn+2OLielvXm1xbEJthUNSyXopKYXI=
+	b=VDwB2n0onmaTjpEKt+brhHxTJuaDdFexDAUvMw9pOoPwbeQpRLmNo9a8D+bSXnGe0
+	 uuWYeI2o52+YMZT9epn1aZEEU8iaDgwaU9yX4sphrqA7nzYFDGHP5NxDIdEkueyGDI
+	 ILiJi0e9xqqJdO7IBkR/n90eB4S0XLw34PzhLzro=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Chinner <dchinner@redhat.com>,
-	Carlos Maiolino <cmaiolino@redhat.com>,
-	Carlos Maiolino <cem@kernel.org>,
-	Siddh Raman Pant <siddh.raman.pant@oracle.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 418/516] xfs: catch stale AGF/AGF metadata
-Date: Wed, 28 Oct 2026 17:59:30 +0100
-Message-ID: <20261028170013.389997319@linuxfoundation.org>
+	Benjamin Marzinski <bmarzins@redhat.com>,
+	Matthew Sakai <msakai@redhat.com>,
+	Ming-Hung Tsai <mtsai@redhat.com>,
+	Mikulas Patocka <mpatocka@redhat.com>
+Subject: [PATCH 5.10 466/516] dm cache: fix issue with background work locking
+Date: Wed, 28 Oct 2026 18:00:18 +0100
+Message-ID: <20261028170014.520699103@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -70,287 +69,158 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dave Chinner <dchinner@redhat.com>
+From: Benjamin Marzinski <bmarzins@redhat.com>
 
-[ Upstream commit db6a2274162de615ff74b927d38942fe3134d298 ]
+commit bc9781c0247de107876f32929f1637db93a42b34 upstream.
 
-There is a race condition that can trigger in dmflakey fstests that
-can result in asserts in xfs_ialloc_read_agi() and
-xfs_alloc_read_agf() firing. The asserts look like this:
+dm cache used a rw_semaphore for background_work_lock. Write locks on
+rw_semaphores have strict owner semantics, but there was no guarantee
+that the process that locked background_work_lock was the same process
+that unlocked it. This can be easily seen using a kernel compiled with
+CONFIG_DEBUG_RWSEMS. Given a dm cache device <cache>, run: 'dmsetup
+suspend <cache> && dmsetup resume <cache>'. This will trigger a kernel
+warning:
 
- XFS: Assertion failed: pag->pagf_freeblks == be32_to_cpu(agf->agf_freeblks), file: fs/xfs/libxfs/xfs_alloc.c, line: 3440
-.....
- Call Trace:
-  <TASK>
-  xfs_alloc_read_agf+0x2ad/0x3a0
-  xfs_alloc_fix_freelist+0x280/0x720
-  xfs_alloc_vextent_prepare_ag+0x42/0x120
-  xfs_alloc_vextent_iterate_ags+0x67/0x260
-  xfs_alloc_vextent_start_ag+0xe4/0x1c0
-  xfs_bmapi_allocate+0x6fe/0xc90
-  xfs_bmapi_convert_delalloc+0x338/0x560
-  xfs_map_blocks+0x354/0x580
-  iomap_writepages+0x52b/0xa70
-  xfs_vm_writepages+0xd7/0x100
-  do_writepages+0xe1/0x2c0
-  __writeback_single_inode+0x44/0x340
-  writeback_sb_inodes+0x2d0/0x570
-  __writeback_inodes_wb+0x9c/0xf0
-  wb_writeback+0x139/0x2d0
-  wb_workfn+0x23e/0x4c0
-  process_scheduled_works+0x1d4/0x400
-  worker_thread+0x234/0x2e0
-  kthread+0x147/0x170
-  ret_from_fork+0x3e/0x50
-  ret_from_fork_asm+0x1a/0x30
+DEBUG_RWSEMS_WARN_ON((rwsem_owner(sem) != current) && !rwsem_test_oflags(sem, RWSEM_NONSPINNABLE))
 
-I've seen the AGI variant from scrub running on the filesysetm
-after unmount failed due to systemd interference:
+triggered by cache_resume(). To fix this, switch from a rw_semaphore to
+a spinlock and a wait queue. dm cache already has a wait queue and
+associated counter, migration_wait and nr_allocated_migrations, that was
+getting woken up when background work was getting completed, but wasn't
+actually used by anything. This is replaced by the background_work queue
+and counter.
 
- XFS: Assertion failed: pag->pagi_freecount == be32_to_cpu(agi->agi_freecount) || xfs_is_shutdown(pag->pag_mount), file: fs/xfs/libxfs/xfs_ialloc.c, line: 2804
-.....
- Call Trace:
-  <TASK>
-  xfs_ialloc_read_agi+0xee/0x150
-  xchk_perag_drain_and_lock+0x7d/0x240
-  xchk_ag_init+0x34/0x90
-  xchk_inode_xref+0x7b/0x220
-  xchk_inode+0x14d/0x180
-  xfs_scrub_metadata+0x2e2/0x510
-  xfs_ioc_scrub_metadata+0x62/0xb0
-  xfs_file_ioctl+0x446/0xbf0
-  __se_sys_ioctl+0x6f/0xc0
-  __x64_sys_ioctl+0x1d/0x30
-  x64_sys_call+0x1879/0x2ee0
-  do_syscall_64+0x68/0x130
-  ? exc_page_fault+0x62/0xc0
-  entry_SYSCALL_64_after_hwframe+0x76/0x7e
-
-Essentially, it is the same problem. When _flakey_drop_and_remount()
-loads the drop-writes table, it makes all writes silently fail. Writes
-are reported to the fs as completed successfully, but they are not
-issued to the backing store. The filesystem sees the successful
-write completion and marks the metadata buffer clean and removes it
-from the AIL.
-
-If this happens at the same time as memory pressure is occuring,
-the now-clean AGF and/or AGI buffers can be reclaimed from memory.
-
-Shortly afterwards, but before _flakey_drop_and_remount() runs
-unmount, background writeback is kicked and it tries to allocate
-blocks for the dirty pages in memory. This then tries to access the
-AGF buffer we just turfed out of memory. It's not found, so it gets
-read in from disk.
-
-This is all fine, except for the fact that the last writeback of the
-AGF did not actually reach disk. The AGF on disk is stale compared
-to the in-memory state held by the perag, and so they don't match
-and the assert fires.
-
-Then other operations on that inode hang because the task was killed
-whilst holding inode locks. e.g:
-
- Workqueue: xfs-conv/dm-12 xfs_end_io
- Call Trace:
-  <TASK>
-  __schedule+0x650/0xb10
-  schedule+0x6d/0xf0
-  schedule_preempt_disabled+0x15/0x30
-  rwsem_down_write_slowpath+0x31a/0x5f0
-  down_write+0x43/0x60
-  xfs_ilock+0x1a8/0x210
-  xfs_trans_alloc_inode+0x9c/0x240
-  xfs_iomap_write_unwritten+0xe3/0x300
-  xfs_end_ioend+0x90/0x130
-  xfs_end_io+0xce/0x100
-  process_scheduled_works+0x1d4/0x400
-  worker_thread+0x234/0x2e0
-  kthread+0x147/0x170
-  ret_from_fork+0x3e/0x50
-  ret_from_fork_asm+0x1a/0x30
-  </TASK>
-
-and it's all down hill from there.
-
-Memory pressure is one way to trigger this, another is to run "echo
-3 > /proc/sys/vm/drop_caches" randomly while tests are running.
-
-Regardless of how it is triggered, this effectively takes down the
-system once umount hangs because it's holding a sb->s_umount lock
-exclusive and now every sync(1) call gets stuck on it.
-
-Fix this by replacing the asserts with a corruption detection check
-and a shutdown.
-
-Signed-off-by: Dave Chinner <dchinner@redhat.com>
-Reviewed-by: Carlos Maiolino <cmaiolino@redhat.com>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
-
-6.12:
-
-Fixed conflict due to the following missing commit:
-	e9c4d8bfb26c ("xfs: factor out a generic xfs_group structure")
-
-6.6:
-
-Fixed conflict due to the following missing commit:
-	e45ea3645178 ("xfs: split the agf_roots and agf_levels arrays")
-
-5.15:
-
-Fixed conflict due to the following missing commits:
-	6f643c57d57c ("xfs: implement ->notify_failure() for XFS")
-	[Continuous range: a95fee40e3d4^..08d3e84feeb8]
-	08d3e84feeb8 ("xfs: pass perag to xfs_alloc_read_agf()")
-	76b47e528e3a ("xfs: kill xfs_alloc_pagf_init()")
-	99b13c7f0bd3 ("xfs: pass perag to xfs_ialloc_read_agi()")
-	a95fee40e3d4 ("xfs: kill xfs_ialloc_pagi_init()")
-
-5.10:
-
-Fixed conflicts due to the following missing commits:
-
-fs/xfs/libxfs/xfs_alloc.c, fs/xfs/libxfs/xfs_ialloc.c:
-        75c8c50fa16a ("xfs: replace XFS_FORCED_SHUTDOWN with xfs_is_shutdown")
-
-fs/xfs/libxfs/xfs_ialloc.c:
-        9bbafc71919a ("xfs: move xfs_perag_get/put to xfs_ag.[ch]")
-
-Signed-off-by: Siddh Raman Pant <siddh.raman.pant@oracle.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: b29d4986d0da ("dm cache: significant rework to leverage dm-bio-prison-v2")
+Cc: stable@vger.kernel.org
+Signed-off-by: Benjamin Marzinski <bmarzins@redhat.com>
+Reviewed-by: Matthew Sakai <msakai@redhat.com>
+Reviewed-by: Ming-Hung Tsai <mtsai@redhat.com>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/libxfs/xfs_alloc.c  | 45 +++++++++++++++++++++++++++++---------
- fs/xfs/libxfs/xfs_ialloc.c | 34 +++++++++++++++++++++++-----
- 2 files changed, 64 insertions(+), 15 deletions(-)
+ drivers/md/dm-cache-target.c |   55 +++++++++++++++++++++----------------------
+ 1 file changed, 28 insertions(+), 27 deletions(-)
 
-diff --git a/fs/xfs/libxfs/xfs_alloc.c b/fs/xfs/libxfs/xfs_alloc.c
-index 7cb9f064ac645..896cf97fa4a0f 100644
---- a/fs/xfs/libxfs/xfs_alloc.c
-+++ b/fs/xfs/libxfs/xfs_alloc.c
-@@ -26,6 +26,7 @@
- #include "xfs_log.h"
- #include "xfs_ag_resv.h"
- #include "xfs_bmap.h"
-+#include "xfs_health.h"
+--- a/drivers/md/dm-cache-target.c
++++ b/drivers/md/dm-cache-target.c
+@@ -408,8 +408,6 @@ struct cache {
+ 	struct list_head invalidation_requests;
  
- extern kmem_zone_t	*xfs_bmap_free_item_zone;
+ 	sector_t migration_threshold;
+-	wait_queue_head_t migration_wait;
+-	atomic_t nr_allocated_migrations;
  
-@@ -3017,18 +3018,42 @@ xfs_alloc_read_agf(
- 		pag->pagf_init = 1;
- 		pag->pagf_agflreset = xfs_agfl_needs_reset(mp, agf);
- 	}
-+
- #ifdef DEBUG
--	else if (!XFS_FORCED_SHUTDOWN(mp)) {
--		ASSERT(pag->pagf_freeblks == be32_to_cpu(agf->agf_freeblks));
--		ASSERT(pag->pagf_btreeblks == be32_to_cpu(agf->agf_btreeblks));
--		ASSERT(pag->pagf_flcount == be32_to_cpu(agf->agf_flcount));
--		ASSERT(pag->pagf_longest == be32_to_cpu(agf->agf_longest));
--		ASSERT(pag->pagf_levels[XFS_BTNUM_BNOi] ==
--		       be32_to_cpu(agf->agf_levels[XFS_BTNUM_BNOi]));
--		ASSERT(pag->pagf_levels[XFS_BTNUM_CNTi] ==
--		       be32_to_cpu(agf->agf_levels[XFS_BTNUM_CNTi]));
-+	/*
-+	 * It's possible for the AGF to be out of sync if the block device is
-+	 * silently dropping writes. This can happen in fstests with dmflakey
-+	 * enabled, which allows the buffer to be cleaned and reclaimed by
-+	 * memory pressure and then re-read from disk here. We will get a
-+	 * stale version of the AGF from disk, and nothing good can happen from
-+	 * here. Hence if we detect this situation, immediately shut down the
-+	 * filesystem.
-+	 *
-+	 * This can also happen if we are already in the middle of a forced
-+	 * shutdown, so don't bother checking if we are already shut down.
-+	 */
-+	if (!XFS_FORCED_SHUTDOWN(mp)) {
-+		bool	ok = true;
-+
-+		ok &= pag->pagf_freeblks == be32_to_cpu(agf->agf_freeblks);
-+		ok &= pag->pagf_freeblks == be32_to_cpu(agf->agf_freeblks);
-+		ok &= pag->pagf_btreeblks == be32_to_cpu(agf->agf_btreeblks);
-+		ok &= pag->pagf_flcount == be32_to_cpu(agf->agf_flcount);
-+		ok &= pag->pagf_longest == be32_to_cpu(agf->agf_longest);
-+		ok &= pag->pagf_levels[XFS_BTNUM_BNOi] ==
-+		       be32_to_cpu(agf->agf_levels[XFS_BTNUM_BNOi]);
-+		ok &= pag->pagf_levels[XFS_BTNUM_CNTi] ==
-+		       be32_to_cpu(agf->agf_levels[XFS_BTNUM_CNTi]);
-+
-+		if (XFS_IS_CORRUPT(mp, !ok)) {
-+			xfs_ag_mark_sick(pag, XFS_SICK_AG_AGF);
-+			xfs_trans_brelse(tp, *bpp);
-+			*bpp = NULL;
-+			xfs_force_shutdown(mp, SHUTDOWN_CORRUPT_INCORE);
-+			return -EFSCORRUPTED;
-+		}
- 	}
--#endif
-+#endif /* DEBUG */
- 	return 0;
- }
- 
-diff --git a/fs/xfs/libxfs/xfs_ialloc.c b/fs/xfs/libxfs/xfs_ialloc.c
-index 8fcb5c6810e9e..3f0cfb50f61e4 100644
---- a/fs/xfs/libxfs/xfs_ialloc.c
-+++ b/fs/xfs/libxfs/xfs_ialloc.c
-@@ -27,6 +27,7 @@
- #include "xfs_trace.h"
- #include "xfs_log.h"
- #include "xfs_rmap.h"
-+#include "xfs_health.h"
- 
- /*
-  * Lookup a record by ino in the btree given by cur.
-@@ -2034,7 +2035,7 @@ xfs_difree_inobt(
- 			goto error0;
- 		}
- 
--		/* 
-+		/*
- 		 * Change the inode free counts and log the ag/sb changes.
- 		 */
- 		be32_add_cpu(&agi->agi_freecount, 1);
-@@ -2657,12 +2658,35 @@ xfs_ialloc_read_agi(
- 		pag->pagi_init = 1;
- 	}
- 
-+#ifdef DEBUG
  	/*
--	 * It's possible for these to be out of sync if
--	 * we are in the middle of a forced shutdown.
-+	 * It's possible for the AGF to be out of sync if the block device is
-+	 * silently dropping writes. This can happen in fstests with dmflakey
-+	 * enabled, which allows the buffer to be cleaned and reclaimed by
-+	 * memory pressure and then re-read from disk here. We will get a
-+	 * stale version of the AGF from disk, and nothing good can happen from
-+	 * here. Hence if we detect this situation, immediately shut down the
-+	 * filesystem.
-+	 *
-+	 * This can also happen if we are already in the middle of a forced
-+	 * shutdown, so don't bother checking if we are already shut down.
- 	 */
--	ASSERT(pag->pagi_freecount == be32_to_cpu(agi->agi_freecount) ||
--		XFS_FORCED_SHUTDOWN(mp));
-+	if (!XFS_FORCED_SHUTDOWN(mp)) {
-+		bool	ok = true;
-+
-+		ok &= pag->pagi_freecount == be32_to_cpu(agi->agi_freecount);
-+		ok &= pag->pagi_count == be32_to_cpu(agi->agi_count);
-+
-+		if (XFS_IS_CORRUPT(mp, !ok)) {
-+			xfs_ag_mark_sick(pag, XFS_SICK_AG_AGI);
-+			xfs_trans_brelse(tp, *bpp);
-+			*bpp = NULL;
-+			xfs_force_shutdown(mp, SHUTDOWN_CORRUPT_INCORE);
-+			return -EFSCORRUPTED;
-+		}
-+	}
-+#endif /* DEBUG */
-+
- 	return 0;
+ 	 * The number of in flight migrations that are performing
+@@ -465,7 +463,11 @@ struct cache {
+ 	bool loaded_mappings:1;
+ 	bool loaded_discards:1;
+ 
+-	struct rw_semaphore background_work_lock;
++	/* background work management */
++	bool background_work_allowed;
++	unsigned background_work_nr;
++	spinlock_t background_work_lock;
++	wait_queue_head_t background_work_wait;
+ 
+ 	struct batcher committer;
+ 	struct work_struct commit_ws;
+@@ -556,19 +558,13 @@ static struct dm_cache_migration *alloc_
+ 	memset(mg, 0, sizeof(*mg));
+ 
+ 	mg->cache = cache;
+-	atomic_inc(&cache->nr_allocated_migrations);
+ 
+ 	return mg;
  }
  
--- 
-2.53.0
-
+ static void free_migration(struct dm_cache_migration *mg)
+ {
+-	struct cache *cache = mg->cache;
+-
+-	if (atomic_dec_and_test(&cache->nr_allocated_migrations))
+-		wake_up(&cache->migration_wait);
+-
+-	mempool_free(mg, &cache->migration_pool);
++	mempool_free(mg, &mg->cache->migration_pool);
+ }
+ 
+ /*----------------------------------------------------------------*/
+@@ -1096,34 +1092,39 @@ static void calc_discard_block_range(str
+ 
+ static void prevent_background_work(struct cache *cache)
+ {
+-	lockdep_off();
+-	down_write(&cache->background_work_lock);
+-	lockdep_on();
++	spin_lock_irq(&cache->background_work_lock);
++	cache->background_work_allowed = false;
++	wait_event_lock_irq(cache->background_work_wait,
++			    cache->background_work_nr == 0,
++			    cache->background_work_lock);
++	spin_unlock_irq(&cache->background_work_lock);
+ }
+ 
+ static void allow_background_work(struct cache *cache)
+ {
+-	lockdep_off();
+-	up_write(&cache->background_work_lock);
+-	lockdep_on();
++	spin_lock_irq(&cache->background_work_lock);
++	cache->background_work_allowed = true;
++	spin_unlock_irq(&cache->background_work_lock);
+ }
+ 
+ static bool background_work_begin(struct cache *cache)
+ {
+ 	bool r;
+ 
+-	lockdep_off();
+-	r = down_read_trylock(&cache->background_work_lock);
+-	lockdep_on();
+-
++	spin_lock_irq(&cache->background_work_lock);
++	r = cache->background_work_allowed;
++	if (r)
++		cache->background_work_nr++;
++	spin_unlock_irq(&cache->background_work_lock);
+ 	return r;
+ }
+ 
+ static void background_work_end(struct cache *cache)
+ {
+-	lockdep_off();
+-	up_read(&cache->background_work_lock);
+-	lockdep_on();
++	spin_lock_irq(&cache->background_work_lock);
++	if (--cache->background_work_nr == 0)
++		wake_up(&cache->background_work_wait);
++	spin_unlock_irq(&cache->background_work_lock);
+ }
+ 
+ /*----------------------------------------------------------------*/
+@@ -2547,9 +2548,7 @@ static int cache_create(struct cache_arg
+ 
+ 	spin_lock_init(&cache->lock);
+ 	bio_list_init(&cache->deferred_bios);
+-	atomic_set(&cache->nr_allocated_migrations, 0);
+ 	atomic_set(&cache->nr_io_migrations, 0);
+-	init_waitqueue_head(&cache->migration_wait);
+ 
+ 	r = -ENOMEM;
+ 	atomic_set(&cache->nr_dirty, 0);
+@@ -2631,8 +2630,10 @@ static int cache_create(struct cache_arg
+ 		     issue_op, cache, cache->wq);
+ 	iot_init(&cache->tracker);
+ 
+-	init_rwsem(&cache->background_work_lock);
+-	prevent_background_work(cache);
++	init_waitqueue_head(&cache->background_work_wait);
++	spin_lock_init(&cache->background_work_lock);
++	cache->background_work_allowed = false;
++	cache->background_work_nr = 0;
+ 
+ 	*result = cache;
+ 	return 0;
 
 
