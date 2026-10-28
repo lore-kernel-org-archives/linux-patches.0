@@ -1,53 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215085;
-	b=AU1rTE1cfX8zFo4BgXTRrb+LaV9Z08X3gijajfzoGtIZia/GtTpyqn054g8gfNoQzZ4r
-	 qOiSxaMoaOefKINTjywxlBWIyf/tiwrFHHwefX5pHlJJmAkRR3QMHdNYzxcT0YlIt6VH5
-	 nJF92HtKYgh6kvmR+PBYyyreR31Sdi9Otq6vjhTotsn7Ot6iV5xBRFEXuwyKAgrBUH00T
-	 775+Nu4CsQO2ljO8+94yizJOfeMeT747GSWZgWbY60l7lmnEuKpAG0LD5Uga2WnfEIJMk
-	 TiWqk7wq+DcgzU5v8szC4K0wWowtD6R0c+LsdeKOdqLDY2QGLmkWydPCfPlzIs0GI5w==
+	t=1793215088;
+	b=NmiO6ME0Yxwo9vVHNe1q5WofGPWLE1qH4wFM5coS9D5XtszvbgzXv/28xe/8SKCvqmpR
+	 xBB6mCAyiMAECzezPJ05ZwU3/36QYDzzYUeCG3pbDG+C4Az8V8LQ2D353RO7kxPjYvlW/
+	 Fwa+ukzD56v/WMysRoZG4+eU9g6EG/dhp8A/oDgDAcQFAef9aBSeJsVpmD8fS30qayNgq
+	 pS3foOIQnqlsrgp38aAmlt/LlT7OBy0zJACdVTes7/8PoZYTWUtnzEYdLyeIT8EMRGr3q
+	 sqpyPUKmZG7eh+Qf0Sdj/D/gSDI8JGG8Kv4l27M1ERCUchwLlXN6ehiSWMkjQjtziPQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215085;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215088;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=CGHzK9FS+fD9hpLldIzpZh4R0GE/DkqHNP34XnGeKuc=;
-	b=c8HbVuaiHpVcBa/BP+xvTWTZbweI2O6WiWE8LsBJrqR7gv17YLJlkBxbL3kyXUMHdAUb
-	 SvrQhGQuZz56xKLaAVgMik8L2ZVlJNvd3uYSBTQY2Wlr2kF2LtGUvhywDohlDSC9MN2Ns
-	 qUsxokP4fJiO5kyr5Ow3viqpDQGVNyd+GtUCD79FQoe6/8EsLnM9Ev69LdZ6I38Bthrag
-	 rENkhf7e76MXJ6AYScQi2X9TD3TPpFTe+wIXyWhwei62AtUZ8Gl/G78Pv2KjCgccmLN6g
-	 NVsxuhMNEXpzNoOfUJrgsjEbeG5yQStTa1UD72qnnFzPHJ0S0irqRayb2iBfUGlGNCQ==
+	bh=kD0xUqb5ZLyP5mKzSao69lzbimXBsfgQRiSMt4RgyDQ=;
+	b=5Ie3F4+PjI//CIiTa+10y7p+mg7PWmV/yxCHF6v7BR7xmpTg84V7lKCm9KheXfJJBt2f
+	 IlaDvuQ6O2WjiXDJYJIYmb9Yb/ktYwtVb2fDgHawzJ9ZR5ixXSOI+DxJMKbLVWsG9Oj6K
+	 vJVWbwuAr194P4BRlUC0bUQmo7ExCGvrYJPgyOB2xCDi7Qzf68uL99iiYFNOexG02VnJs
+	 Wlc/aupkLCj1N/v9mgcaxIA5yty3Fx1oRRKVov08+7XXfRU4Qj/8QNxYaJ0p6PYoPxtAI
+	 RXZoUEFdZ4ahcZ+6usGF4C7bHUtd2eh3tvr0MN8pXyqmXbWVCY8qwjuca1LavtttPrg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="m/gRcB3P";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jYgDDnyi;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68691606A31A;
-	Wed, 28 Oct 2026 19:18:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FB76606A31C;
+	Wed, 28 Oct 2026 19:18:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=m/gRcB3P
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC6511F01825;
-	Wed, 28 Oct 2026 19:18:04 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jYgDDnyi
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F2E91F01825;
+	Wed, 28 Oct 2026 19:18:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215085;
-	bh=CGHzK9FS+fD9hpLldIzpZh4R0GE/DkqHNP34XnGeKuc=;
+	s=korg; t=1793215088;
+	bh=kD0xUqb5ZLyP5mKzSao69lzbimXBsfgQRiSMt4RgyDQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=m/gRcB3PJ/KKJIqTJ8qZgb82cb8DV25Ufe4sv8IBjXpVvMjEvAFYhuzeW/TnOOAAG
-	 DD0evgBe5JDqS+1UYfamSEIixtKA8hctQLpztxg1ZCFuaNA2OxiIBdflizt78Vg6BU
-	 x6Xvmy0fibd8rGmHTD29wmYCCfqBYequ4qallvPU=
+	b=jYgDDnyi6j9VrzjXGikTLQb5kP6D5+VgHMvYLLPzskiUNm8UxSjc0zxJfG/xMab3E
+	 svpGD8cov7nENaCkxmXCgFynwChIMU2rTHBd/wzeBY11fcZvIP1a+4lhp+9edIqmBh
+	 kBO9EqRE3yQcjzaCuy1jSMjyJaGyqpLa0utZWK8w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kaiyan Mei <kaiyanm@hust.edu.cn>,
-	Lang Xu <xulang@uniontech.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	David Howells <dhowells@redhat.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	Jeffrey Altman <jaltman@auristor.com>,
+	Simon Horman <horms@kernel.org>,
+	linux-afs@lists.infradead.org,
+	stable@kernel.org,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1085/1887] bpf: Fix OOB in pcpu_init_value
-Date: Wed, 28 Oct 2026 17:53:01 +0100
-Message-ID: <20261028170524.096560885@linuxfoundation.org>
+Subject: [PATCH 6.1 1044/1887] rxrpc: Fix memory leaks in rxkad_verify_response()
+Date: Wed, 28 Oct 2026 17:52:20 +0100
+Message-ID: <20261028170523.169820150@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,54 +73,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lang Xu <xulang@uniontech.com>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit 576afddfee8d1108ee299bf10f581593540d1a36 ]
+[ Upstream commit 34f61a07e0cdefaecd3ec03bb5fb22215643678f ]
 
-An out-of-bounds read occurs when copying element from a
-BPF_MAP_TYPE_CGROUP_STORAGE map to another pcpu map with the
-same value_size that is not rounded up to 8 bytes.
+Fix rxkad_verify_response() to free the ticket and the server key under all
+circumstances by initialising the ticket pointer to NULL and then making
+all paths through the function after the first allocation has been done go
+through a single common epilogue that just releases everything - where all
+the releases skip on a NULL pointer.
 
-The issue happens when:
-1. A CGROUP_STORAGE map is created with value_size not aligned to
-   8 bytes (e.g., 4 bytes)
-2. A pcpu map is created with the same value_size (e.g., 4 bytes)
-3. Update element in 2 with data in 1
-
-pcpu_init_value assumes that all sources are rounded up to 8 bytes,
-and invokes copy_map_value_long to make a data copy, However, the
-assumption doesn't stand since there are some cases where the source
-may not be rounded up to 8 bytes, e.g., CGROUP_STORAGE, skb->data.
-the verifier verifies exactly the size that the source claims, not
-the size rounded up to 8 bytes by kernel, an OOB happens when the
-source has only 4 bytes while the copy size(4) is rounded up to 8.
-
-Fixes: d3bec0138bfb ("bpf: Zero-fill re-used per-cpu map element")
-Reported-by: Kaiyan Mei <kaiyanm@hust.edu.cn>
-Closes: https://lore.kernel.org/all/14e6c70c.6c121.19c0399d948.Coremail.kaiyanm@hust.edu.cn/
-Link: https://lore.kernel.org/r/420FEEDDC768A4BE+20260402074236.2187154-1-xulang@uniontech.com
-Signed-off-by: Lang Xu <xulang@uniontech.com>
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: 57af281e5389 ("rxrpc: Tidy up abort generation infrastructure")
+Fixes: ec832bd06d6f ("rxrpc: Don't retain the server key in the connection")
+Closes: https://sashiko.dev/#/patchset/20260408121252.2249051-1-dhowells%40redhat.com
+Signed-off-by: David Howells <dhowells@redhat.com>
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: Jeffrey Altman <jaltman@auristor.com>
+cc: Simon Horman <horms@kernel.org>
+cc: linux-afs@lists.infradead.org
+cc: stable@kernel.org
+Link: https://patch.msgid.link/20260422161438.2593376-2-dhowells@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/hashtab.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/rxrpc/rxkad.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/kernel/bpf/hashtab.c b/kernel/bpf/hashtab.c
-index 36c44451b0911..efe73a684c48d 100644
---- a/kernel/bpf/hashtab.c
-+++ b/kernel/bpf/hashtab.c
-@@ -963,8 +963,8 @@ static void pcpu_init_value(struct bpf_htab *htab, void __percpu *pptr,
+diff --git a/net/rxrpc/rxkad.c b/net/rxrpc/rxkad.c
+index 038c4f2e8cef8..262b0df1e447b 100644
+--- a/net/rxrpc/rxkad.c
++++ b/net/rxrpc/rxkad.c
+@@ -1311,6 +1311,7 @@ static int rxkad_verify_response(struct rxrpc_connection *conn,
  
- 		for_each_possible_cpu(cpu) {
- 			if (cpu == current_cpu)
--				bpf_long_memcpy(per_cpu_ptr(pptr, cpu), value,
--						size);
-+				memcpy(per_cpu_ptr(pptr, cpu), value,
-+				       htab->map.value_size);
- 			else
- 				memset(per_cpu_ptr(pptr, cpu), 0, size);
- 		}
+ 	kfree(ticket);
+ 	kfree(response);
++	key_put(server_key);
+ 	_leave(" = 0");
+ 	return 0;
+ 
 -- 
 2.53.0
 
