@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216722;
-	b=poeq7DplPzz91UiPqJC4xfVAheiUHNN0P5q7wP1iJC9g8aoG/f8A9ps5J8bfAsecE70G
-	 pItrnxEwib0UwVm5eUNXixHGoKggDpel07wk4ME0YAXC0MUEvbhv377kC4BYmcFVzPlVC
-	 oo5LoimkS+Te4VGXNEdjRekoTxB4k5pVTgQ53tQ/hGdzNHOsUoqAhzUpMbtHJHp04eLA8
-	 kJff7OiBPFhaEmLNtr0MQte4uKAwdiPqpo2yNS1p0krzCJKunlJhDRZYGAX2M0v44SNnq
-	 Dj9ZHlMf1waw7dacKQYXbo/QMaGruWxO4i4K64V3P6htP501rc00X68Lro046L4l8wg==
+	t=1793216725;
+	b=EVZQgp9uhiuvzUKJ6IS4FSQOz3nWJbiB1sVFeCZsmLHjNLjR/Ipz+qon7/xeF9u3Lto4
+	 Qj96rvLhYUGyFltLsCekn1hGS2TER5NfohdMLZPfWENayGsXB5qpCbFcbAFvhfHZTNdwA
+	 LxrQU21LpXWUgUv8qAfmICUhHcHGo+1OzU2NcPBtyCCSjHoenqurI26LO74OoDWceTQqK
+	 S3FGegrVeW4znQ52miF3TIGzAf5lbgZjfpLCtM0utwFqprjRWGjGfMoxHHjI8ftCWTjan
+	 USjQedL/pTyUm2as3FBF7iQxqJiGt3erQ6OD3BAqF+FxB2YpguL4Yxig47jSMuVCrCw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216722;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216725;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/IpOwopAyovlXH1XFsrfTKDKa/j9FjwNPnFNwCPqjEU=;
-	b=CcEbo/0qedqyAj9bVpZj3rWGnrcqP5wI2bW9ivMdlTATZ7hEifaIcclLLSC7jfBmwMB2
-	 0xDF/drvZrjd7Hdacae2rT1eLFu7YcOCaNCsz2DZnGc0ZaBFR86OMJigJ/RoyughkxP6e
-	 X4iAz+eCada7iQujU1rc86bfKxHv++jgJBqQOFo3arMvzBVAiNdQlT9JOmYvUywHlGl7u
-	 9RtVmm/ET3J419I7qiivITbnLkRPTntNOS2xPbupdfeCuAHdJ8lYFHUffWIEXt7daUCkO
-	 r15DsDxiwNwM6buuew320G6mk3mqV7rKDpVKjlBdmWu+k6j+KZWlVKdffOHKWONXGjw==
+	bh=9hb+W9DT6g9bjjhobiR1NRcdUoktBuhWZ2ajuiUlyhA=;
+	b=sgvAtasJDSDnbKWQEolmXICtFuoOhMOC2FLuznEYWc+WmcuqueRiPVKRIhW8ELpI3vk8
+	 l06sNz7x9lJPJrJP1lZD/B+RSYBCwvv8EgkW25KgBdtbjOEbtbBx9XdssH9qIJeK5jZBQ
+	 ray4WiYANQ61XbUnIaCBy2ocQcve6FJXzWlipepLz2OLrLIZiAYN2pFO29+yaUhP3Sj1p
+	 7TCUfokQ2V8NwfSV6rvVhJpX5bwJGJ3KvYbeCzZbjsGXFSbyyBrD9rKGPFMDOMYDC8V4s
+	 4HXEWzD4KeKW7wXD5D/rVq597+/i/wSYzDMnukhexf6k8TT9nylzMq+JbNwBWveKe2g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jBQwQQTu;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="l7/3XaoH";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92D41606A31A;
-	Wed, 28 Oct 2026 19:45:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DBD3606A31A;
+	Wed, 28 Oct 2026 19:45:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jBQwQQTu
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2DD61F01825;
-	Wed, 28 Oct 2026 19:45:21 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l7/3XaoH
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB1A01F01825;
+	Wed, 28 Oct 2026 19:45:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216722;
-	bh=/IpOwopAyovlXH1XFsrfTKDKa/j9FjwNPnFNwCPqjEU=;
+	s=korg; t=1793216725;
+	bh=9hb+W9DT6g9bjjhobiR1NRcdUoktBuhWZ2ajuiUlyhA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jBQwQQTuyDKozyzPiEHOGQA7ED4DXDhw4FcUtzt6yVqtwZIPXyRn/7pFU/0xQivtG
-	 zOhGp580uqBizP1HWhFN6jxLI/keA9Om2lP7WOSlFocRW4g85JflC1gjnSLTVC/xy7
-	 xZZjjsUeOGPdxXpW23CALuCPrXQs9jd2PXCRyMhk=
+	b=l7/3XaoHp9WBxkhOy2WJm5O5E/LgQZuwYU0ngeSwqKwEt/UQk0PRM74Arkyq3j8R+
+	 zVQtLbhiT2NU6M0q4AQLRO0D3H/V1sKeSqZ7pZUU4AOXzD51ySMyoIlqXDBsC7mYKQ
+	 FUDSqgrIC4lVUgrUws6osmyrxEnu1dfrALkr1ygk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
 	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1657/1887] wifi: iwlwifi: mvm: add a check on the tid coming from the firmware
-Date: Wed, 28 Oct 2026 18:02:33 +0100
-Message-ID: <20261028170537.165027171@linuxfoundation.org>
+Subject: [PATCH 6.1 1658/1887] wifi: iwlwifi: mvm: fix a possible underflow
+Date: Wed, 28 Oct 2026 18:02:34 +0100
+Message-ID: <20261028170537.188301883@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -70,37 +70,61 @@ Content-Transfer-Encoding: 8bit
 
 From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
 
-[ Upstream commit 0e4c0d83267261cf67ec9690856edf4a56bb7dfc ]
+[ Upstream commit 0cb5260a1027a43f8cdb961e128f2ddd42e46832 ]
 
-ba_notif->tid is a firmware-controlled u8 that is used directly
-as an array index into tid_data[] without any validation. Add a
-bounds check against IWL_MAX_TID_COUNT before dereferencing the
-array.
+We shouldn't trust the firmware about the length of the wowlan packet.
 
-Assisted-by: GitHubCopilot:gpt-5.3-codex
 Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
 Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20260715215523.d7c3e75d47af.If88948108cfc8b5fb3ce5531d927855d1b3b6b30@changeid
+Link: https://patch.msgid.link/20260715215523.fbd989cc85e2.If68de403bfa4943732c025961154c20b01b09e83@changeid
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/tx.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/net/wireless/intel/iwlwifi/mvm/d3.c | 18 ++++++++++++++----
+ 1 file changed, 14 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/tx.c b/drivers/net/wireless/intel/iwlwifi/mvm/tx.c
-index d04fa56e645e7..456cd91d56216 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/tx.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/tx.c
-@@ -2126,6 +2126,10 @@ void iwl_mvm_rx_ba_notif(struct iwl_mvm *mvm, struct iwl_rx_cmd_buffer *rxb)
- 	ba_notif = (void *)pkt->data;
- 	sta_id = ba_notif->sta_id;
- 	tid = ba_notif->tid;
-+	if (tid >= IWL_MAX_TID_COUNT) {
-+		IWL_WARN(mvm, "invalid TID %d in BA notif\n", tid);
-+		return;
-+	}
- 	/* "flow" corresponds to Tx queue */
- 	txq = le16_to_cpu(ba_notif->scd_flow);
- 	/* "ssn" is start of block-ack Tx window, corresponds to index
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/d3.c b/drivers/net/wireless/intel/iwlwifi/mvm/d3.c
+index d7b2781a1eeaf..b28c9627d5b04 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/d3.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/d3.c
+@@ -1508,6 +1508,10 @@ static void iwl_mvm_report_wakeup_reasons(struct iwl_mvm *mvm,
+ 		if (WARN_ON_ONCE(truncated < 0))
+ 			truncated = 0;
+ 
++		/* this would be a firmware bug */
++		if (WARN_ON_ONCE(pktsize < sizeof(*hdr)))
++			return;
++
+ 		if (ieee80211_is_data(hdr->frame_control)) {
+ 			int hdrlen = ieee80211_hdrlen(hdr->frame_control);
+ 			int ivlen = 0, icvlen = 4; /* also FCS */
+@@ -1516,10 +1520,6 @@ static void iwl_mvm_report_wakeup_reasons(struct iwl_mvm *mvm,
+ 			if (!pkt)
+ 				goto report;
+ 
+-			skb_put_data(pkt, pktdata, hdrlen);
+-			pktdata += hdrlen;
+-			pktsize -= hdrlen;
+-
+ 			if (ieee80211_has_protected(hdr->frame_control)) {
+ 				/*
+ 				 * This is unlocked and using gtk_i(c)vlen,
+@@ -1545,6 +1545,16 @@ static void iwl_mvm_report_wakeup_reasons(struct iwl_mvm *mvm,
+ 				truncated = 0;
+ 			}
+ 
++			if (pktsize <= hdrlen + ivlen + icvlen) {
++				IWL_WARN(mvm, "pktsize is too small %d\n",
++					 pktsize);
++				kfree_skb(pkt);
++				return;
++			}
++
++			skb_put_data(pkt, pktdata, hdrlen);
++			pktdata += hdrlen;
++			pktsize -= hdrlen;
+ 			pktsize -= ivlen + icvlen;
+ 			pktdata += ivlen;
+ 
 -- 
 2.53.0
 
