@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213830;
-	b=jWGGiXP7QSYKRaSFSG+MKfuw/Z/166h7RxbqhXKovPidzgSCn+8p1sUq+GHkbEzu6+JV
-	 2UWW644A2IQcKNy5sGyembOGcpM74JF1aWQSkaLyTat6pazsEYRRRWyzIP8U1Ui2upft5
-	 g/mDz0bSxr9kPdSX3WU6YGyCjo1oKMiAVMArARS8mynORpL3PuwXBhmFx5c6CWfw4u4F+
-	 GOj8+vEShSASAPOFsMtg2tG1dZOrgPFNPEvqABgvg7Wv0gg3v81ylFfVhHai+YI9S2Rcz
-	 TvPnA3MLE4AyrVboPjKlecCbDgyqOxmNEEO9joWUffYu4/gqBzR9wVlbFvujt/S/NPA==
+	t=1793213833;
+	b=2Iklzcv/0/M3Ap8P/A1HpuC8IP+3UD1k3mD2T/elZfcdYBmOVmosvzIOxRqnqXVaV7iE
+	 HAtEuwHZkEnokP7YMRaSHURHhcqB1W5XkVrZj3jyQdfqggsemsqAQeLFvfjLIQIWacTP8
+	 fnKnz8rrF6xI9o6ItokkRuiE3EUC9Pte8I8jLodcyqWljKhIUL/pp849O++TWk9v1Hj0Q
+	 mAzQdC7U7XAPvvzZlY2w0t5DxtkwQx+6vS+n2w0cSRNYsxoJ3vku2zVot2jKhXsVWrsES
+	 Ce0CJk7hnA75CJrK5WMCRxrGPWBExeqIrrWX6Sz0BDGqtqsoAV6cMytXKK7LyI9Hknw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213830;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213833;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=90Uzf3evrcDX0w4crJ0Q2lMzALUPRjjBJ8yxPZf3VbU=;
-	b=jsjRxD+IZhn2Tj5cLpSTtNZ6sml13F/HXgE5p9yeXEuyKj0A9ME+FOKadRuANOjEyzlz
-	 iFyIGo+QCa4Dw4lrGZ3phDVPyBMMZ5mBUdpvB5uHikEGccjHwwQ9ByI6qyFljHJyzQ0Me
-	 Mt8AiGo9BbfBohjl+2zpKzGUMv5G9K/F5oaORwqwtONSGxsy4qrORWi88jdvjgC9rCrTe
-	 7uNUnSiVVmY1ohtci2+QjvaMpNeIUtCEzPrzeJKkeRYrXo+ctxCxx2LOgIBYHkdR1PZaL
-	 OEbmksFBWhBpyGozrMQI75cDz49moOFkwH2iWsw2kUm5P/5/X+4Z4wJJWbHt6MmWcqg==
+	bh=k/wqKKw29Zdj72HhR/onZ5J76/1YJveL844HACBEq18=;
+	b=U8CpP0hAGXZFXskZCtq9fOuM0A24aLeWsxzStVjk1jbDhPFSySIM2ytQvC+sJJiGtuu7
+	 WymIQjcSDPn8PHoP5c6kMSBh3bgoQwbkQgLPqBDsp7O+ydR4APJVhTt2Q9fR8dRlZ//i1
+	 OMgIfKAc+Nzdo5NLteKDtYqXwpO3EqaqHJWvtZrU4d5xVBgxtuSyiOleCAec4a/Bp+7GS
+	 t4rOsjxffA+e+ME/a42TPyPth3Dm74pLxt6g/Qbv132SplASkKKuD6Ef/PRTuEbF/nI5h
+	 wU66bhzSYauppeHXW3J4g5+qTMps4V7E4HgVkjvV3NzEMs8ZP9Oo96AdaDdFrkU4r1Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ry6jjowJ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QgBMwAix;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBB14606A31C;
-	Wed, 28 Oct 2026 18:57:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2F02606A31D;
+	Wed, 28 Oct 2026 18:57:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ry6jjowJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 284141F01825;
-	Wed, 28 Oct 2026 18:57:08 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QgBMwAix
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F40251F01828;
+	Wed, 28 Oct 2026 18:57:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213829;
-	bh=90Uzf3evrcDX0w4crJ0Q2lMzALUPRjjBJ8yxPZf3VbU=;
+	s=korg; t=1793213832;
+	bh=k/wqKKw29Zdj72HhR/onZ5J76/1YJveL844HACBEq18=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ry6jjowJYksWQZpa/cZNTnnPqeUz2wdqXkC/BF0isBFe4SuOArxowb252S4ELWu8o
-	 9N5bGSYtRj9uESa1m1M7pMAwJlWMP8flrc0tZt7js8nbujPUrmGhKP2+Vbxmsoj3Bc
-	 tUzCgaupHeMgK28g/Rqq3LuJsGq2u4V1UJqJ/DCQ=
+	b=QgBMwAixxWmnz+t5S55SCq8Lo35Dlv5DrRiofCy+ZvTt88en7xtOUq2rzQ1K1t9dr
+	 WkGTNjHocgeSNsMbNIrpKjLt7OWrImztmLVBzVHpQIMtQudMSK2FM+CVGvFj8h+pjX
+	 rYZC8/tewsY10jdK3R5iUpgySh/rq+HoCJyVJLG4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+74ebe2104433e9dc610d@syzkaller.appspotmail.com,
+	syzbot+848062ba19c8782ca5c8@syzkaller.appspotmail.com,
 	Chao Yu <chao@kernel.org>,
 	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0644/1887] f2fs: fix to cover read extent cache access with lock
-Date: Wed, 28 Oct 2026 17:45:40 +0100
-Message-ID: <20261028170514.065669239@linuxfoundation.org>
+Subject: [PATCH 6.1 0645/1887] f2fs: fix to do sanity check on F2FS_INLINE_DATA flag in inode during GC
+Date: Wed, 28 Oct 2026 17:45:41 +0100
+Message-ID: <20261028170514.089596390@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -71,191 +71,71 @@ Content-Transfer-Encoding: 8bit
 
 From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit d7409b05a64f212735f0d33f5f1602051a886eab ]
+[ Upstream commit fc01008c92f40015aeeced94750855a7111b6929 ]
 
 syzbot reports a f2fs bug as below:
 
-BUG: KASAN: slab-use-after-free in sanity_check_extent_cache+0x370/0x410 fs/f2fs/extent_cache.c:46
-Read of size 4 at addr ffff8880739ab220 by task syz-executor200/5097
-
-CPU: 0 PID: 5097 Comm: syz-executor200 Not tainted 6.9.0-rc6-syzkaller #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 03/27/2024
+------------[ cut here ]------------
+kernel BUG at fs/f2fs/inline.c:258!
+CPU: 1 PID: 34 Comm: kworker/u8:2 Not tainted 6.9.0-rc6-syzkaller-00012-g9e4bc4bcae01 #0
+RIP: 0010:f2fs_write_inline_data+0x781/0x790 fs/f2fs/inline.c:258
 Call Trace:
- <TASK>
- __dump_stack lib/dump_stack.c:88 [inline]
- dump_stack_lvl+0x241/0x360 lib/dump_stack.c:114
- print_address_description mm/kasan/report.c:377 [inline]
- print_report+0x169/0x550 mm/kasan/report.c:488
- kasan_report+0x143/0x180 mm/kasan/report.c:601
- sanity_check_extent_cache+0x370/0x410 fs/f2fs/extent_cache.c:46
- do_read_inode fs/f2fs/inode.c:509 [inline]
- f2fs_iget+0x33e1/0x46e0 fs/f2fs/inode.c:560
- f2fs_nfs_get_inode+0x74/0x100 fs/f2fs/super.c:3237
- generic_fh_to_dentry+0x9f/0xf0 fs/libfs.c:1413
- exportfs_decode_fh_raw+0x152/0x5f0 fs/exportfs/expfs.c:444
- exportfs_decode_fh+0x3c/0x80 fs/exportfs/expfs.c:584
- do_handle_to_path fs/fhandle.c:155 [inline]
- handle_to_path fs/fhandle.c:210 [inline]
- do_handle_open+0x495/0x650 fs/fhandle.c:226
- do_syscall_x64 arch/x86/entry/common.c:52 [inline]
- do_syscall_64+0xf5/0x240 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
+ f2fs_write_single_data_page+0xb65/0x1d60 fs/f2fs/data.c:2834
+ f2fs_write_cache_pages fs/f2fs/data.c:3133 [inline]
+ __f2fs_write_data_pages fs/f2fs/data.c:3288 [inline]
+ f2fs_write_data_pages+0x1efe/0x3a90 fs/f2fs/data.c:3315
+ do_writepages+0x35b/0x870 mm/page-writeback.c:2612
+ __writeback_single_inode+0x165/0x10b0 fs/fs-writeback.c:1650
+ writeback_sb_inodes+0x905/0x1260 fs/fs-writeback.c:1941
+ wb_writeback+0x457/0xce0 fs/fs-writeback.c:2117
+ wb_do_writeback fs/fs-writeback.c:2264 [inline]
+ wb_workfn+0x410/0x1090 fs/fs-writeback.c:2304
+ process_one_work kernel/workqueue.c:3254 [inline]
+ process_scheduled_works+0xa12/0x17c0 kernel/workqueue.c:3335
+ worker_thread+0x86d/0xd70 kernel/workqueue.c:3416
+ kthread+0x2f2/0x390 kernel/kthread.c:388
+ ret_from_fork+0x4d/0x80 arch/x86/kernel/process.c:147
+ ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:244
 
-We missed to cover sanity_check_extent_cache() w/ extent cache lock,
-so, below race case may happen, result in use after free issue.
+The root cause is: inline_data inode can be fuzzed, so that there may
+be valid blkaddr in its direct node, once f2fs triggers background GC
+to migrate the block, it will hit f2fs_bug_on() during dirty page
+writeback.
 
-- f2fs_iget
- - do_read_inode
-  - f2fs_init_read_extent_tree
-  : add largest extent entry in to cache
-					- shrink
-					 - f2fs_shrink_read_extent_tree
-					  - __shrink_extent_tree
-					   - __detach_extent_node
-					   : drop largest extent entry
-  - sanity_check_extent_cache
-  : access et->largest w/o lock
+Let's add sanity check on F2FS_INLINE_DATA flag in inode during GC,
+so that, it can forbid migrating inline_data inode's data block for
+fixing.
 
-let's refactor sanity_check_extent_cache() to avoid extent cache access
-and call it before f2fs_init_read_extent_tree() to fix this issue.
-
-Reported-by: syzbot+74ebe2104433e9dc610d@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/linux-f2fs-devel/00000000000009beea061740a531@google.com
+Reported-by: syzbot+848062ba19c8782ca5c8@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/linux-f2fs-devel/000000000000d103ce06174d7ec3@google.com
 Signed-off-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/extent_cache.c | 44 ++++++++++++++++++++----------------------
- fs/f2fs/f2fs.h         |  2 +-
- fs/f2fs/inode.c        |  8 ++++----
- 3 files changed, 26 insertions(+), 28 deletions(-)
+ fs/f2fs/gc.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/fs/f2fs/extent_cache.c b/fs/f2fs/extent_cache.c
-index 0b35892e9eb6c..f84493c7b072c 100644
---- a/fs/f2fs/extent_cache.c
-+++ b/fs/f2fs/extent_cache.c
-@@ -15,26 +15,24 @@
- #include "node.h"
- #include <trace/events/f2fs.h>
+diff --git a/fs/f2fs/gc.c b/fs/f2fs/gc.c
+index abb8f3c37b782..216171e020710 100644
+--- a/fs/f2fs/gc.c
++++ b/fs/f2fs/gc.c
+@@ -1567,6 +1567,16 @@ static int gc_data_segment(struct f2fs_sb_info *sbi, struct f2fs_summary *sum,
+ 				continue;
+ 			}
  
--bool sanity_check_extent_cache(struct inode *inode)
-+bool sanity_check_extent_cache(struct inode *inode, struct page *ipage)
- {
- 	struct f2fs_sb_info *sbi = F2FS_I_SB(inode);
--	struct f2fs_inode_info *fi = F2FS_I(inode);
--	struct extent_info *ei;
-+	struct f2fs_extent *i_ext = &F2FS_INODE(ipage)->i_ext;
-+	struct extent_info ei;
- 
--	if (!fi->extent_tree[EX_READ])
--		return true;
-+	get_read_extent_info(&ei, i_ext);
- 
--	ei = &fi->extent_tree[EX_READ]->largest;
-+	if (!ei.len)
-+		return true;
- 
--	if (ei->len &&
--		(!f2fs_is_valid_blkaddr(sbi, ei->blk,
--					DATA_GENERIC_ENHANCE) ||
--		!f2fs_is_valid_blkaddr(sbi, ei->blk + ei->len - 1,
--					DATA_GENERIC_ENHANCE))) {
-+	if (!f2fs_is_valid_blkaddr(sbi, ei.blk, DATA_GENERIC_ENHANCE) ||
-+	    !f2fs_is_valid_blkaddr(sbi, ei.blk + ei.len - 1,
-+					DATA_GENERIC_ENHANCE)) {
- 		set_sbi_flag(sbi, SBI_NEED_FSCK);
- 		f2fs_warn(sbi, "%s: inode (ino=%lx) extent info [%u, %u, %u] is incorrect, run fsck to fix",
- 			  __func__, inode->i_ino,
--			  ei->blk, ei->fofs, ei->len);
-+			  ei.blk, ei.fofs, ei.len);
- 		return false;
- 	}
- 	return true;
-@@ -442,24 +440,22 @@ void f2fs_init_read_extent_tree(struct inode *inode, struct page *ipage)
- 
- 	if (!__may_extent_tree(inode, EX_READ)) {
- 		/* drop largest read extent */
--		if (i_ext && i_ext->len) {
-+		if (i_ext->len) {
- 			f2fs_wait_on_page_writeback(ipage, NODE, true, true);
- 			i_ext->len = 0;
- 			set_page_dirty(ipage);
- 		}
--		goto out;
-+		set_inode_flag(inode, FI_NO_EXTENT);
-+		return;
- 	}
- 
- 	et = __grab_extent_tree(inode, EX_READ);
- 
--	if (!i_ext || !i_ext->len)
--		goto out;
--
- 	get_read_extent_info(&ei, i_ext);
- 
- 	write_lock(&et->lock);
--	if (atomic_read(&et->node_cnt))
--		goto unlock_out;
-+	if (atomic_read(&et->node_cnt) || !ei.len)
-+		goto skip;
- 
- 	en = __attach_extent_node(sbi, et, &ei, NULL,
- 				&et->root.rb_root.rb_node, true);
-@@ -471,11 +467,13 @@ void f2fs_init_read_extent_tree(struct inode *inode, struct page *ipage)
- 		list_add_tail(&en->list, &eti->extent_list);
- 		spin_unlock(&eti->extent_lock);
- 	}
--unlock_out:
-+skip:
-+	/* Let's drop, if checkpoint got corrupted. */
-+	if (f2fs_cp_error(sbi)) {
-+		et->largest.len = 0;
-+		et->largest_updated = true;
-+	}
- 	write_unlock(&et->lock);
--out:
--	if (!F2FS_I(inode)->extent_tree[EX_READ])
--		set_inode_flag(inode, FI_NO_EXTENT);
- }
- 
- void f2fs_init_extent_tree(struct inode *inode)
-diff --git a/fs/f2fs/f2fs.h b/fs/f2fs/f2fs.h
-index f18e380967678..6d22c18f948d3 100644
---- a/fs/f2fs/f2fs.h
-+++ b/fs/f2fs/f2fs.h
-@@ -4164,7 +4164,7 @@ void f2fs_leave_shrinker(struct f2fs_sb_info *sbi);
- /*
-  * extent_cache.c
-  */
--bool sanity_check_extent_cache(struct inode *inode);
-+bool sanity_check_extent_cache(struct inode *inode, struct page *ipage);
- struct rb_entry *f2fs_lookup_rb_tree(struct rb_root_cached *root,
- 				struct rb_entry *cached_re, unsigned int ofs);
- struct rb_node **f2fs_lookup_rb_tree_for_insert(struct f2fs_sb_info *sbi,
-diff --git a/fs/f2fs/inode.c b/fs/f2fs/inode.c
-index 1715663e26a8d..e97aa6a8ac53b 100644
---- a/fs/f2fs/inode.c
-+++ b/fs/f2fs/inode.c
-@@ -455,15 +455,15 @@ static int do_read_inode(struct inode *inode)
- 
- 	init_idisk_time(inode);
- 
--	/* Need all the flag bits */
--	f2fs_init_read_extent_tree(inode, node_page);
--
--	if (!sanity_check_extent_cache(inode)) {
-+	if (!sanity_check_extent_cache(inode, node_page)) {
- 		f2fs_put_page(node_page, 1);
- 		f2fs_handle_error(sbi, ERROR_CORRUPTED_INODE);
- 		return -EFSCORRUPTED;
- 	}
- 
-+	/* Need all the flag bits */
-+	f2fs_init_read_extent_tree(inode, node_page);
++			if (f2fs_has_inline_data(inode)) {
++				set_sbi_flag(sbi, SBI_NEED_FSCK);
++				f2fs_err(sbi,
++					"inode %lx has both inline_data flag and "
++					"data block, nid=%u, ofs_in_node=%u",
++					inode->i_ino, dni.nid, ofs_in_node);
++				iput(inode);
++				continue;
++			}
 +
- 	f2fs_put_page(node_page, 1);
- 
- 	stat_inc_inline_xattr(inode);
+ 			err = f2fs_gc_pinned_control(inode, gc_type, segno);
+ 			if (err == -EAGAIN) {
+ 				iput(inode);
 -- 
 2.53.0
 
