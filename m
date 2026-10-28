@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793208781;
-	b=dx0yQk9KISTsg9C42AnjLwQJ6asLzqvzyOzDpki10fRI9fT7zBAQKeoVSWrMJYgetKnK
-	 edFxOzl0Y72L93tZNCtXf2lAFrjjwPVDFwZ41mnsj1mxj+D8zfiQaYnt2EgFs4paRFuvw
-	 fO5B3pD6aVZ3rngkw3JhbU1b5Ym9yPnYp8nOpJJ+pihDJPkenLavNOCGAn7BRkw2wxtWc
-	 VYU7GJ6Tr5EjAMkhMNUrNSqmjelZOst/ahTlxEAjsxDaZWLvKJTqDiQBAyWLM6RVz4a2m
-	 ShvGqJRRU67DLDnd9Vl6wjtoh4itJYo7Ik2CJgOxK3RgrLjMFpAJI7B77CUQWu70lEw==
+	t=1793208784;
+	b=huAtylgawG+VyLPaEmfdlMl/g3CuZfmK9KEQNeQtrPVps1Tgv/EvEaauNe30+k+nPmWi
+	 PNGuVMYewFPwrRhoWa/aiiTYz9MoYw2tpBjcM/GGB3CKEy6yUDCb7fp6/Ok+YtyZ0oRqi
+	 ZTdRvopI/mnwgoZFLBplGr0mju0VX5MfaDWPNMgdsTjc3rG2dxbU+V6OGGoLFBPRWxmAu
+	 zjK9YJs8QftcHv3dYGWzYsRt3aXIQUjnMqMfCuKokzwzGvOSp+V+LQeHjYfrio7RICt0C
+	 G9uR3He3CzeofoauYwPmfV1Er7yF7nvF6uQG+LM6ZEk7uQPjfkU9RZnXbq9pb7KKb2Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793208781;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793208784;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=hktkzAGJnjMtb5Cz6wQrX2Zk88DB9jYoJozdo3zNVqY=;
-	b=vQZ97VbURg3T3rXBGV2l7ni3AY6u+u6aGjU9jdoWFMZREYxP5pWuCkIaH140puCuOwhG
-	 cHWFagpa+wpWnAHdAzQXa5nEGrQs0hNPVum0Qi/5mTJyF8hL7rsLG/lH/KoONKPMAhF0X
-	 eNa9q9IIHkZ9gGOs+XtzveqWzu6aMHAvZMCmI8ARTt/UkXDb3Ba/VsHevK4XLm3Dma8Cg
-	 9J/M11iIYWC7oK+lHyx6O3qip/rMCAYhp+xKZw+h6zAqH0qWSuz3bJ+qzFsVjRDxDOdgG
-	 Yd3U8DjbiELiEwkNJsEgmSr3qsX77LfuopQvUFir62+S3l19LXoI9AeQwGyhweBdPJg==
+	bh=1APNU6eTwqvRhLDQhbKdbtjYX6mti6P8KyoMVNI87e8=;
+	b=Tk7hZF3spbqh7C3rD5sMGuCp2u/qnh6bL681Dox79Z5IKcib6mR7rU7M08trye8g///t
+	 1elIIpwa2Kv/i7YDgbnprnM5H07esikjVUQv4hh3BJrlfDYsnaKvRNXfBViidEf6dYOl1
+	 XGPUccZzd5n8g5sk7fhKldD2YRbsxGdba4QbecDrRLM3sZqxRmzh8joAUYToISj77wh+k
+	 9GtNzY2xHNDZ4Ylc9JKeaTruDEBQrEWp+tZoN4gQXLr3zL8BtTCqPoHdz9L+Q2TUCbt7O
+	 a7G9DsoPba0MKk+qQHh7gru2wdUCU2WqRd8n1GpasMCbpE0jeMo04CnslZUpM484DUA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1z+zLznr;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S33VaSWf;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F97F606A31A;
-	Wed, 28 Oct 2026 17:33:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A156606A31C;
+	Wed, 28 Oct 2026 17:33:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1z+zLznr
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2AEB1F01825;
-	Wed, 28 Oct 2026 17:33:00 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S33VaSWf
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAEC71F01825;
+	Wed, 28 Oct 2026 17:33:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793208781;
-	bh=hktkzAGJnjMtb5Cz6wQrX2Zk88DB9jYoJozdo3zNVqY=;
+	s=korg; t=1793208784;
+	bh=1APNU6eTwqvRhLDQhbKdbtjYX6mti6P8KyoMVNI87e8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1z+zLznroq7TYfJX/sItjhv8jDJ2uimfWXq0t4SCcVm+Xz1Yp6Dvls07nAtUC8RAH
-	 em8TyRBVVKyUbvukpibbv6q4eLGOAkD1O6vdDdcSxfrLBcpJOpdJ4/JUg+sdaOEsko
-	 5DCz3BRspb1I+jfApe7lw7JseVEZdXGrBljz2a2o=
+	b=S33VaSWfkreZ0UeYffCCYF31RVLWo5zEfRuUjOEzxennenc4F/XNNdCMg90Aucmce
+	 thCt8lgIbC4EREaoM3/d89SzRJ7le1bcf5redTpLr4IEPKLHUykP3veLrydQSBdn3a
+	 WREknz8qE716rz1wwZh3FtrdibnR9jxiiU5eLrvs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Minseo Kim <neck3922@gmail.com>,
-	Alan Stern <stern@rowland.harvard.edu>,
-	stable <stable@kernel.org>
-Subject: [PATCH 5.10 196/516] USB: gadget: dummy-hcd: Fix wait for outstanding request completions
-Date: Wed, 28 Oct 2026 17:55:48 +0100
-Message-ID: <20261028170008.145697938@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Oliver Neukum <oneukum@suse.de>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 5.10 187/516] USB: cdc-acm: fix racy TIOCMIWAIT implementation
+Date: Wed, 28 Oct 2026 17:55:39 +0100
+Message-ID: <20261028170007.932945726@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -68,66 +68,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alan Stern <stern@rowland.harvard.edu>
+From: Johan Hovold <johan@kernel.org>
 
-commit b263ff9b0fc5c1f371d65c4eb196b31263d039ff upstream.
+commit be4219dd98608736e13e0b790ef742b76a13254d upstream.
 
-The dummy-hcd driver emulates synchronize_irq() by waiting until its
-private callback_usage counter drops to 0 (with the private lock not
-held).  This counter is incremented whenever a gadget driver callback
-occurs (which requires the private lock to be dropped), but not when a
-request completion handler is called.
+Check the wakeup condition after adding the task to the waitqueue and
+updating the task state to avoid missing a racing modem status update or
+disconnect.
 
-This is an oversight.  Request completion is triggered by timer
-interrupts (emulating device IRQs in a real UDC), and the interrupt
-handlers are supposed to have completed when the synchronize_irq()
-emulation routine returns -- they aren't supposed to be in the middle
-of a completion callback.  If this happens it can lead to a gadget
-driver's unbind routine running before all outstanding request
-completions have finished, maybe even allowing the gadget driver's
-module to be unloaded while a completion handler is still running.
+Store the old icount on entry and do not update it in the completion
+handler to avoid missing events or reporting spurious ones (due to modem
+status changes before TIOCMIWAIT was called).
 
-Fix the oversight by incrementing the callback_usage value across
-request completion callbacks.
-
-Link: https://lore.kernel.org/linux-usb/7a87e293-633c-4100-aa8d-91560ba5e5c5@rowland.harvard.edu/
-Fixes: 7dbd8f4cabd9 ("USB: dummy-hcd: Fix erroneous synchronization change")
-Tested-by: Minseo Kim <neck3922@gmail.com>
-Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
+Fixes: 5a6a62bdb925 ("cdc-acm: add TIOCMIWAIT")
 Cc: stable <stable@kernel.org>
-Link: https://patch.msgid.link/f23b9e1a-f110-441a-a1d8-95f442ec09d5@rowland.harvard.edu
+Cc: Oliver Neukum <oneukum@suse.de>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://patch.msgid.link/20260907095130.130636-1-johan@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/udc/dummy_hcd.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/usb/class/cdc-acm.c |   36 +++++++++++++++++++-----------------
+ drivers/usb/class/cdc-acm.h |    1 -
+ 2 files changed, 19 insertions(+), 18 deletions(-)
 
---- a/drivers/usb/gadget/udc/dummy_hcd.c
-+++ b/drivers/usb/gadget/udc/dummy_hcd.c
-@@ -339,9 +339,11 @@ static void dummy_giveback(struct dummy
- {
- 	bool fifo = req == &dum->fifo_req;
+--- a/drivers/usb/class/cdc-acm.c
++++ b/drivers/usb/class/cdc-acm.c
+@@ -320,7 +320,6 @@ static void acm_process_notification(str
+ 		difference = acm->ctrlin ^ newctrl;
+ 		spin_lock_irqsave(&acm->read_lock, flags);
+ 		acm->ctrlin = newctrl;
+-		acm->oldcount = acm->iocount;
  
-+	++dum->callback_usage;
- 	spin_unlock(&dum->lock);
- 	usb_gadget_giveback_request(_ep, &req->req);
- 	spin_lock(&dum->lock);
-+	--dum->callback_usage;
- 	if (fifo)
- 		dum->fifo_req_busy = 0;
+ 		if (difference & ACM_CTRL_DSR)
+ 			acm->iocount.dsr++;
+@@ -994,11 +993,16 @@ static int wait_serial_change(struct acm
+ 	DECLARE_WAITQUEUE(wait, current);
+ 	struct async_icount old, new;
+ 
+-	do {
++	spin_lock_irq(&acm->read_lock);
++	old = acm->iocount;
++	spin_unlock_irq(&acm->read_lock);
++
++	add_wait_queue(&acm->wioctl, &wait);
++	for (;;) {
++		set_current_state(TASK_INTERRUPTIBLE);
++
+ 		spin_lock_irq(&acm->read_lock);
+-		old = acm->oldcount;
+ 		new = acm->iocount;
+-		acm->oldcount = new;
+ 		spin_unlock_irq(&acm->read_lock);
+ 
+ 		if ((arg & TIOCM_DSR) &&
+@@ -1011,22 +1015,20 @@ static int wait_serial_change(struct acm
+ 			old.rng != new.rng)
+ 			break;
+ 
+-		add_wait_queue(&acm->wioctl, &wait);
+-		set_current_state(TASK_INTERRUPTIBLE);
+-		schedule();
+-		remove_wait_queue(&acm->wioctl, &wait);
+ 		if (acm->disconnected) {
+-			if (arg & TIOCM_CD)
+-				break;
+-			else
+-				rv = -ENODEV;
+-		} else {
+-			if (signal_pending(current))
+-				rv = -ERESTARTSYS;
++			rv = -ENODEV;
++			break;
+ 		}
+-	} while (!rv);
+ 
+-	
++		schedule();
++
++		if (signal_pending(current)) {
++			rv = -ERESTARTSYS;
++			break;
++		}
++	}
++	__set_current_state(TASK_RUNNING);
++	remove_wait_queue(&acm->wioctl, &wait);
+ 
+ 	return rv;
  }
-@@ -753,11 +755,13 @@ static int dummy_queue(struct usb_ep *_e
- 		req->req.complete = fifo_complete;
- 
- 		list_add_tail(&req->queue, &ep->queue);
-+		++dum->callback_usage;
- 		spin_unlock(&dum->lock);
- 		_req->actual = _req->length;
- 		_req->status = 0;
- 		usb_gadget_giveback_request(_ep, _req);
- 		spin_lock(&dum->lock);
-+		--dum->callback_usage;
- 	}  else
- 		list_add_tail(&req->queue, &ep->queue);
- 	spin_unlock_irqrestore(&dum->lock, flags);
+--- a/drivers/usb/class/cdc-acm.h
++++ b/drivers/usb/class/cdc-acm.h
+@@ -118,7 +118,6 @@ struct acm {
+ 	unsigned int ctrlin;				/* input control lines (DCD, DSR, RI, break, overruns) */
+ 	unsigned int ctrlout;				/* output control lines (DTR, RTS) */
+ 	struct async_icount iocount;			/* counters for control line changes */
+-	struct async_icount oldcount;			/* for comparison of counter */
+ 	wait_queue_head_t wioctl;			/* for ioctl */
+ 	unsigned int writesize;				/* max packet size for the output bulk endpoint */
+ 	unsigned int readsize,ctrlsize;			/* buffer sizes for freeing */
 
 
