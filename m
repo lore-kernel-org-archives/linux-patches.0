@@ -1,54 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213787;
-	b=WHl988EXsg2rLI86VeFT/Llyc4Cyy3PUJl93ByTXbtmETRQcU8cj/hn9rtUU4mdrTkLr
-	 Le423zzVEAA9k/m/8WLeXrDXJehqX7OnML37gIR0M3ohSQP/8JBKHMJJQL7u4R6jUL5/l
-	 siRiqsBfs4/JysVa4MhLoqmvG8/+9qllv9Vk+TZAlfPUuIclit1PQYKsy7lFiRBlQq+cR
-	 eM7bN1FoQ1zO7IqoIYbFiEoBEyQ5JAxXx8S869yIhXd33+qmqPMXoreThHsdmTV2Da7ug
-	 tdr10eYebULu0dFY16iJZptjCn139bHDFuPJ1qNXyFVhixmylOjXDpx7UhcUhKFgO/Q==
+	t=1793213790;
+	b=nhkOG7oofOjRP3EluhNH8u2YgQkkJiD9fmOt8mzRZlNRLU9Z/6EBaO8vIxbmzGPN3CWr
+	 zSpSIT1gCRbyXjJXGt/+X91DuvzppU8g9qi+BnBpKLe5O/eXoOIWQSA9hpYYJTuvtUwez
+	 pzV0x2TUM10I4ipu7/nD+z8d9uCXwSOQK8+N+LyrA65qkw82RRJhKHjb92K1YmJC1VJdy
+	 Mx0pHej3+5F3HykLEOZr+quxv378phA4CdeW7KuAHzb3LX2k6demGPYle2R5gqrpS8SJR
+	 sI3ajDFuBMTzKwQD/m+egkj1GNYfe46ohIAtT7T7YPJ086X5TcTrcUT5Y1FUw5ApicA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213787;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213790;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=JNa83MJSeQLYOXRQmr70W6+TWfmJu6vBR/xwwlObeWM=;
-	b=19lFVOL1k2DM7IMqFNoq/1UCNg70r42kRUlAT0gMIZqPffU6mQTHLePLWtCIwWojtF/7
-	 eGVtlBpUKysDWqkLDr3Dec20+MHc3Q1rPiWIugu5u8MIMk7ec5RIHlHE2oVuIaD4S09nu
-	 9s4FE1txNXMQ0k+vNJjQtHzet1z1NTmiaMrO/LvRgWx2sSG6eHWfnY5affvrlp+sMxEki
-	 7fomFSULhPodC5+BSRdUaF8nVUjQrFjqzGI7ePG4eaPu3oXOuOiw3GkKsAiiu0cq7OISC
-	 EXoJT0hCy9qKlF4Zkob81cc3kwam7CkTYPtr+cpqEmKp9zRnZiabCNxSasjcYKH4VlQ==
+	bh=7/n1qvoWWCK4JAdskADB3gbEFor2Zs7+CP2gHgWLW8k=;
+	b=fxQDnLfzAj5Zi7CBR7NqdZgNQPzE9bzklAV9TzIpU8iHbhmFmyA0gO0zC0cElmxnlm/j
+	 QnPWTk51BdAZL/Ui9ufOsVK1/M51DXzpcpo3Yc35sghlaW5Ow0UWohCNR+DChYz3Ma7cB
+	 ck7kU1fAnWY+dAJHs2mzgJKyhkaf5eF4ztotzMP12aBjWExqU7VxlvBn9l+d+yhKPQ2t0
+	 EU4ZQ8M+cZkYg4DoCBNsFZy4DEjif43Ze0XaA7JAuxNyFHvLGEop3cgX3lUx+HCtkRe8R
+	 25x2Rg8QfhphiROZp8hre7PBAzJdAJ2BoJxpzp4FyIPnj20peoobdyOyupIKkh6iL2w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ylPUFBBM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=d7fZGA8o;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B4D9606A31A;
-	Wed, 28 Oct 2026 18:56:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5403A606A31A;
+	Wed, 28 Oct 2026 18:56:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ylPUFBBM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC8121F01825;
-	Wed, 28 Oct 2026 18:56:26 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=d7fZGA8o
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A36351F01825;
+	Wed, 28 Oct 2026 18:56:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213787;
-	bh=JNa83MJSeQLYOXRQmr70W6+TWfmJu6vBR/xwwlObeWM=;
+	s=korg; t=1793213790;
+	bh=7/n1qvoWWCK4JAdskADB3gbEFor2Zs7+CP2gHgWLW8k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ylPUFBBMe+AMtafqAB5H7oxWePJk82JJWt25e2Lbi+Z3Q8Xxq9nYxjUuetw1NOMvx
-	 R+yWgpvb9kHj4I5DNtouxIs7Y2pSzTIMY2zWUuRCF5qQjG/XxV99MveIFpGcmqAk4r
-	 HO5IBAuteSv+QxZ4zZczn6jC7PDKx9wyKaSdHERw=
+	b=d7fZGA8oEhD5WyHWankqq6v13e7PJdczZXkzD/iHT4CT7FqP4WgX33BUCw7WgzdiE
+	 dY+dFJ2ZgKv4l+IJZfyeA+3HTutYDdUoi5HDS7O+2f29UiwY0IzF1GPiIVgO5KbyKh
+	 R28+Ohv1BtCZfoRoQizcwYNCkVBY9/8YX6jLLnVI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ido Schimmel <idosch@nvidia.com>,
-	Benjamin Poirier <bpoirier@nvidia.com>,
-	David Ahern <dsahern@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0575/1887] nexthop: Factor out neighbor validity check
-Date: Wed, 28 Oct 2026 17:44:31 +0100
-Message-ID: <20261028170512.495827764@linuxfoundation.org>
+Subject: [PATCH 6.1 0623/1887] platform/x86: x86-android-tablets: Unregister devices in reverse order
+Date: Wed, 28 Oct 2026 17:45:19 +0100
+Message-ID: <20261028170513.586473580@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -70,80 +67,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Poirier <bpoirier@nvidia.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit 4bb5239b43348f4a1cd73f44be3dc57ac653ae9c ]
+[ Upstream commit 3de0f2627ef849735f155c1818247f58404dddfe ]
 
-For legacy nexthops, there is fib_good_nh() to check the neighbor validity.
-In order to make the nexthop object code more similar to the legacy nexthop
-code, factor out the nexthop object neighbor validity check into its own
-function.
+Not all subsystems support a device getting removed while there are
+still consumers of the device with a reference to the device.
 
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Signed-off-by: Benjamin Poirier <bpoirier@nvidia.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://lore.kernel.org/r/20230719-nh_select-v2-2-04383e89f868@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: b72a6a7ab957 ("net: nexthop: Increase weight to u16")
+One example of this is the regulator subsystem. If a regulator gets
+unregistered while there are still drivers holding a reference
+a WARN() at drivers/regulator/core.c:5829 triggers, e.g.:
+
+ WARNING: CPU: 1 PID: 1587 at drivers/regulator/core.c:5829 regulator_unregister
+ Hardware name: Intel Corp. VALLEYVIEW C0 PLATFORM/BYT-T FFD8, BIOS BLADE_21.X64.0005.R00.1504101516 FFD8_X64_R_2015_04_10_1516 04/10/2015
+ RIP: 0010:regulator_unregister
+ Call Trace:
+  <TASK>
+  regulator_unregister
+  devres_release_group
+  i2c_device_remove
+  device_release_driver_internal
+  bus_remove_device
+  device_del
+  device_unregister
+  x86_android_tablet_remove
+
+On the Lenovo Yoga Tablet 2 series the bq24190 charger chip also provides
+a 5V boost converter output for powering USB devices connected to the micro
+USB port, the bq24190-charger driver exports this as a Vbus regulator.
+
+On the 830 (8") and 1050 ("10") models this regulator is controlled by
+a platform_device and x86_android_tablet_remove() removes platform_device-s
+before i2c_clients so the consumer gets removed first.
+
+But on the 1380 (13") model there is a lc824206xa micro-USB switch
+connected over I2C and the extcon driver for that controls the regulator.
+The bq24190 i2c-client *must* be registered first, because that creates
+the regulator with the lc824206xa listed as its consumer. If the regulator
+has not been registered yet the lc824206xa driver will end up getting
+a dummy regulator.
+
+Since in this case both the regulator provider and consumer are I2C
+devices, the only way to ensure that the consumer is unregistered first
+is to unregister the I2C devices in reverse order of in which they were
+created.
+
+For consistency and to avoid similar problems in the future change
+x86_android_tablet_remove() to unregister all device types in reverse
+order.
+
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://lore.kernel.org/r/20240406125058.13624-1-hdegoede@redhat.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/nexthop.c | 29 ++++++++++++++++-------------
- 1 file changed, 16 insertions(+), 13 deletions(-)
+ drivers/platform/x86/x86-android-tablets.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/net/ipv4/nexthop.c b/net/ipv4/nexthop.c
-index e3d9660bf0e5c..005465e61ae3d 100644
---- a/net/ipv4/nexthop.c
-+++ b/net/ipv4/nexthop.c
-@@ -1153,6 +1153,20 @@ static bool ipv4_good_nh(const struct fib_nh *nh)
- 	return !!(state & NUD_VALID);
- }
- 
-+static bool nexthop_is_good_nh(const struct nexthop *nh)
-+{
-+	struct nh_info *nhi = rcu_dereference(nh->nh_info);
-+
-+	switch (nhi->family) {
-+	case AF_INET:
-+		return ipv4_good_nh(&nhi->fib_nh);
-+	case AF_INET6:
-+		return ipv6_good_nh(&nhi->fib6_nh);
-+	}
-+
-+	return false;
-+}
-+
- static struct nexthop *nexthop_select_path_fdb(struct nh_group *nhg, int hash)
+diff --git a/drivers/platform/x86/x86-android-tablets.c b/drivers/platform/x86/x86-android-tablets.c
+index 94710471d7dd2..2063e1ac9d0bd 100644
+--- a/drivers/platform/x86/x86-android-tablets.c
++++ b/drivers/platform/x86/x86-android-tablets.c
+@@ -1748,19 +1748,19 @@ static void x86_android_tablet_cleanup(void)
  {
  	int i;
-@@ -1180,26 +1194,15 @@ static struct nexthop *nexthop_select_path_hthr(struct nh_group *nhg, int hash)
  
- 	for (i = 0; i < nhg->num_nh; ++i) {
- 		struct nh_grp_entry *nhge = &nhg->nh_entries[i];
--		struct nh_info *nhi;
+-	for (i = 0; i < serdev_count; i++) {
++	for (i = serdev_count - 1; i >= 0; i--) {
+ 		if (serdevs[i])
+ 			serdev_device_remove(serdevs[i]);
+ 	}
  
- 		if (hash > atomic_read(&nhge->hthr.upper_bound))
- 			continue;
+ 	kfree(serdevs);
  
--		nhi = rcu_dereference(nhge->nh->nh_info);
--
- 		/* nexthops always check if it is good and does
- 		 * not rely on a sysctl for this behavior
- 		 */
--		switch (nhi->family) {
--		case AF_INET:
--			if (ipv4_good_nh(&nhi->fib_nh))
--				return nhge->nh;
--			break;
--		case AF_INET6:
--			if (ipv6_good_nh(&nhi->fib6_nh))
--				return nhge->nh;
--			break;
--		}
-+		if (nexthop_is_good_nh(nhge->nh))
-+			return nhge->nh;
+-	for (i = 0; i < pdev_count; i++)
++	for (i = pdev_count - 1; i >= 0; i--)
+ 		platform_device_unregister(pdevs[i]);
  
- 		if (!rc)
- 			rc = nhge->nh;
+ 	kfree(pdevs);
+ 
+-	for (i = 0; i < i2c_client_count; i++)
++	for (i = i2c_client_count - 1; i >= 0; i--)
+ 		i2c_unregister_device(i2c_clients[i]);
+ 
+ 	kfree(i2c_clients);
 -- 
 2.53.0
 
