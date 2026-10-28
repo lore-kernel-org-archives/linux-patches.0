@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793210361;
-	b=M1KDVskDT/7coGHpkqJhb9YpPMzj8CP/hOf92n00H5cfBOHQ/6eXMGTh/3txwciQBb0d
-	 EYpCz3lt3k+/eZmrx48suCaVV5B6tcAUNAfJQA2+sxuIk2eTgN4TPR9PRYceQizi4gdOO
-	 M71u2fmfCJNNLnG/lKddGGWSfXstv2HRwPkgORJJlKjVGJXKIa8JkzR0QNmAA7prm9xpO
-	 IEqwGtAmQzgKWECA1aZnJgpnHxyK96HuX1RXRrfnfU4mID7LKkVcWoSBg/UQ5Mfl8IHaZ
-	 kdZrW7L95OU8xA/EzB02nTMScn2jGjBLba3DRPpbvT8KpWyDAJecMDOLXmtPt0VgXrg==
+	t=1793210363;
+	b=yefnn9gwf+auVnX/7Hd7PFTlzcBehW8jshS6oKFeHDDBIgiJzegbEegR3p5B3m6H21m6
+	 ptpkm4mGsaiyu7uajp6/eiqMHF3Yis0KwwMo5jrpS+RSOgNo1j+P4NWt3t9fCfKMKoo7D
+	 9JlNLy9vlYs872DZmCB9XRNdrovZPbT9zH50dFyNMvkeFZ69vYDm1dsop7sSEOanSrdlb
+	 O5qx3u6I94mrHzwDCN73Pd9iJuSi6IwS3Uh+/oU6saEzOy7wBSnz4RGsabCzvo3Cz40Hi
+	 YZkEmIJWg8M+X+WFP9Q24NQQFhP57E1Y0WqFDKEzUrlO8YHotsKx6nNuwVYTVQyKdjg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793210361;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793210363;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=fHmk9IhjDzNGFRQONKeygSRypZO1N4L0Qan3VyXPt+o=;
-	b=eTV+b73YfkP7ZL2aOfX+C+2pWU8rAoGKoAKYMrPvaa803Ntl9jySpJ6VHPuz/SlU6mfC
-	 i9lCyPJ1MpYlT7Y1zC2FDLQ41kRyCYmc+cfSpvId1+nA5dVjvWK6tcuNJwC7Dqj0H2fZn
-	 zXbdYhhL1oBcLXI39lojY5PTgppz7n+PcxUi6FOADxNZo9mk/rIIKvd21aDG+FbYH2O4e
-	 DmpfagdvdUUA4HdLErC3k/z5npkVCWYZfn7vN4isegSHLjAAqNYmA5tU5/1v6jL9uRWba
-	 D/JPSlrhEhCwQjrpp5OTJ7YLaPGXzGQuEvB2wCbpxOhgyU5CoxnU937uOhR83fnZH7g==
+	bh=GEeGg4AIqYmuqxoCdqMd0hizBM2P4nwuUQAxXaCzAHE=;
+	b=WeijaVcTfcjjoIe1WBgrMTkdN+jFaBnFFrkxzU8WsW+lVEb0cchCfroJ0IQ+YyHNjuFa
+	 j0x9+IJYOaQ0uweWacxTaNj/9XkjeIaV1UaW3KGTIhMDuHuhFae1XJt4n4AK70JTy++o1
+	 tO8XeB794LOf8pT4mFOWJQ2ovd0uXCK9Ing0ejbxw8SposAh7UlNo14UDJHE6jPXhVCL1
+	 zSxjEXBt5/Hh3GvlgyoqODW2wamO82qsRZhPtZQRCmqcZndrBVKFcbOMn5VtfINciEi+y
+	 xHjdADa9HpeVP8jfppRKsj7ZTpwInYVQYGzdtborpWK6IyCdOL4bfqStoMx2pzshy4g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F+Wz5a6d;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uLZg36Ns;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF4FC606A31C;
-	Wed, 28 Oct 2026 17:59:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99DF2606A31A;
+	Wed, 28 Oct 2026 17:59:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F+Wz5a6d
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BF151F01825;
-	Wed, 28 Oct 2026 17:59:19 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uLZg36Ns
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9AE81F01825;
+	Wed, 28 Oct 2026 17:59:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793210360;
-	bh=fHmk9IhjDzNGFRQONKeygSRypZO1N4L0Qan3VyXPt+o=;
+	s=korg; t=1793210363;
+	bh=GEeGg4AIqYmuqxoCdqMd0hizBM2P4nwuUQAxXaCzAHE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=F+Wz5a6dVUNA74UWVA+4XvUADNjuVuv9kSnwZFO679gpSopT5yKQA1zV+omYoN06l
-	 vKjglrXuAlGQfweaC4SLKNrjhSiwfIXe1h+0jeM4PjFkcbLawm3BFcpbVTm1IuHI8c
-	 i1wXLTXvDe2jDCzQldFTxaBr6tyoKo4kNuh1nzlE=
+	b=uLZg36Nso+iAYw8vuB6c4Epfs4+yUdlyzfQDpZO1b7aG6sGBsp+CP+ZNDazlmNRKF
+	 IrSfTcUA1wVENjnkUPQ5i1yogPo6xVUlGMFbpsN9F7hMuZa1bgWQkCJ0dZtYC2ONVP
+	 UOzQA2Dk9kStDZlDfAmVkZGUTsypB4Lss34pE0LI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oleg Nesterov <oleg@redhat.com>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 6.6 168/168] signal: allow taks to temporarily block TIF_NOTIFY_SIGNAL
-Date: Wed, 28 Oct 2026 18:01:44 +0100
-Message-ID: <20261028165947.064021119@linuxfoundation.org>
+	Juanlu Herrero <juanlu@fastmail.com>,
+	Anand Natarajan <anand@meta.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.6 148/168] io_uring/poll: avoid retry wakeup loss when dropping ownership
+Date: Wed, 28 Oct 2026 18:01:24 +0100
+Message-ID: <20261028165946.588467872@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165943.089486480@linuxfoundation.org>
 References: <20261028165943.089486480@linuxfoundation.org>
@@ -67,93 +68,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Juanlu Herrero <juanlu@fastmail.com>
 
-commit 22b7f491be8f93ff72de0a3fe02b8ee9e64d3f21 upstream.
+Commit 937d38dcacd675dc0572d6c9b6743960df3128ed upstream.
 
-TIF_NOTIFY_SIGNAL is used to kick a task in uninterruptible sleep to
-return to userspace and run task work and then go back to sleep. This
-mechanism works well but breaks e.g., coredumps. dump_interrupted() only
-allows fatal signals to interrupt a coredump and the whole regular write
-path going to actual filesystems is impervious to TIF_NOTIFY_SIGNAL as
-well.
+If a wakeup sets IO_POLL_RETRY_FLAG between the owning task consuming
+the existing instance of IO_POLL_RETRY_FLAG and the loop check
+of io_poll_check_events(), then we stall on processing the request
+until an unrelated wakeup comes along.
 
-Add PF_NO_NOTIFY_SIGNAL and helpers to raise and restore it. This is the
-same approach as memalloc_nofs_save(). signal_pending() will not report
-a fake pending signal via TIF_NOTIFY_SIGNAL if inside a
-PF_NO_NOTIFY_SIGNAL section.
+Using atomic_cmpxchg instead of atomic_sub_return to guarantee both the
+count v and poll_refs are 0 and no wake-ups are missed.
 
-No functional changes.
-
-Link: https://patch.msgid.link/20260824-work-tif_notify_signal-v2-1-6609e42b3157@kernel.org
-Reviewed-by: Oleg Nesterov <oleg@redhat.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Fixes: a26a35e9019f ("io_uring: make poll refs more robust")
+Signed-off-by: Juanlu Herrero <juanlu@fastmail.com>
+Assisted-by: LLM
+Suggested-by: Anand Natarajan <anand@meta.com>
+Link: https://patch.msgid.link/20261013-pu-cmpxchg-v1-1-4ddc10fd8a03@fastmail.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/sched.h        |    2 +-
- include/linux/sched/signal.h |   27 +++++++++++++++++++++++++--
- 2 files changed, 26 insertions(+), 3 deletions(-)
+ io_uring/poll.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/include/linux/sched.h
-+++ b/include/linux/sched.h
-@@ -1768,7 +1768,7 @@ extern struct pid __rcu *cad_pid;
- 						 * I am cleaning dirty pages from some other bdi. */
- #define PF_KTHREAD		0x00200000	/* I am a kernel thread */
- #define PF_RANDOMIZE		0x00400000	/* Randomize virtual address space */
--#define PF__HOLE__00800000	0x00800000
-+#define PF_NO_NOTIFY_SIGNAL	0x00800000	/* see no_notify_signal_save() */
- #define PF__HOLE__01000000	0x01000000
- #define PF__HOLE__02000000	0x02000000
- #define PF_NO_SETAFFINITY	0x04000000	/* Userland is not allowed to meddle with cpus_mask */
---- a/include/linux/sched/signal.h
-+++ b/include/linux/sched/signal.h
-@@ -2,6 +2,7 @@
- #ifndef _LINUX_SCHED_SIGNAL_H
- #define _LINUX_SCHED_SIGNAL_H
+--- a/io_uring/poll.c
++++ b/io_uring/poll.c
+@@ -345,8 +345,8 @@ static int io_poll_check_events(struct i
+ 		 * Release all references, retry if someone tried to restart
+ 		 * task_work while we were executing it.
+ 		 */
+-	} while (atomic_sub_return(v & IO_POLL_REF_MASK, &req->poll_refs) &
+-					IO_POLL_REF_MASK);
++		v &= IO_POLL_REF_MASK;
++	} while (atomic_cmpxchg(&req->poll_refs, v, 0) != v);
  
-+#include <linux/cleanup.h>
- #include <linux/rculist.h>
- #include <linux/signal.h>
- #include <linux/sched.h>
-@@ -389,14 +390,36 @@ static inline int task_sigpending(struct
- 	return unlikely(test_tsk_thread_flag(p,TIF_SIGPENDING));
- }
- 
-+/* Prevent TIF_NOTIFY_SIGNAL from interrupting this task. */
-+static inline unsigned int no_notify_signal_save(void)
-+{
-+	unsigned int flags = current->flags;
-+
-+	current->flags |= PF_NO_NOTIFY_SIGNAL;
-+	return flags;
-+}
-+
-+/* Restore the previous PF_NO_NOTIFY_SIGNAL state. */
-+static inline void no_notify_signal_restore(unsigned int flags)
-+{
-+	current_restore_flags(flags, PF_NO_NOTIFY_SIGNAL);
-+}
-+
-+DEFINE_LOCK_GUARD_0(no_notify_signal,
-+		    _T->flags = no_notify_signal_save(),
-+		    no_notify_signal_restore(_T->flags),
-+		    unsigned int flags)
-+
- static inline int signal_pending(struct task_struct *p)
- {
- 	/*
- 	 * TIF_NOTIFY_SIGNAL isn't really a signal, but it requires the same
- 	 * behavior in terms of ensuring that we break out of wait loops
--	 * so that notify signal callbacks can be processed.
-+	 * so that notify signal callbacks can be processed. Not for a task
-+	 * that asked not to be interrupted by it, see no_notify_signal_save().
- 	 */
--	if (unlikely(test_tsk_thread_flag(p, TIF_NOTIFY_SIGNAL)))
-+	if (unlikely(test_tsk_thread_flag(p, TIF_NOTIFY_SIGNAL)) &&
-+	    likely(!(READ_ONCE(p->flags) & PF_NO_NOTIFY_SIGNAL)))
- 		return 1;
- 	return task_sigpending(p);
+ 	return IOU_POLL_NO_ACTION;
  }
 
 
