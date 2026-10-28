@@ -1,53 +1,59 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214049;
-	b=bIFcrOss6+Jv2tLwKZz5YLoCiKENus2uwLftGQja37SgXv7HllEXbwJ7tFSzcBt8lZVQ
-	 UOfexhks83D0zpZfadYm7QjfklxM44h6PaNWPh1CkpakkhJ0rw+nw3R/Yk+cV4dS8MSjI
-	 q1lqZQ0d7AHZB9z3IXKJg0B50XqSz/ZYA8z0fInJymZg+MkNlbo+8xWshf/mAZxMJ/x1f
-	 QC/fPIeHNrQgv7RzBT3fmkSiH5ZzfdOcfDHnX5uRCw0ZqQ4UiPE1jbdjFCx0g44dYwxoO
-	 RV35Am+ptYK+sXCwsD32CxW56ZqbaR5qNqG4LncEc00NRvgYPEdYrhcxwiWeiHkEZ1Q==
+	t=1793214051;
+	b=R/wRB0w2pAybSqMpNblcKVXX83EeXFt+MJwCApbUMc/b0zitstpfqhb4lc9MThGB/w1D
+	 1OxlVC16RqOrSzV0rZeOLcTxGxN7GXyO32+EQSUFDsc8EMnIq+ryhnOctYEL7BfaVq+Ol
+	 Mx13E0fX3x5art1f/e3uIfnPuef9N1ek6mYW9mnAkfkj5Nm4kYDpyBPPFc2mwJn5aOpUi
+	 2faV6A2GUGAEJRIBjMp0kZnDG+GsiwQ5d1zjJv0risd1pOJ7MaACQ6rYQOJHAFJaqibF/
+	 AqG8ZsldCZHrVaGpP9odz/D20ACToOyoohBi4wrUd6/A0l8SGK43wkbM64cV8l2WQ6Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214049;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214051;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/MCeCl99YotZkUaZWWuuK7dIuMTuJVMXkqU3GmGlljg=;
-	b=G2Gp39kAVVIQn2Bva84Uy46QCD0pnFCjNPP5ITOTI30RY3lTu2giGkKtdaUdj7OdvH64
-	 WB9k0IQ59nkrDj4fwqb1AxQs/C01PwWCwa6JhL96sSGVc43B5EOX3odNLjpEwrA1JzHvU
-	 K7NrvbelcBfwOMJU6ME++gI3fnvkS9dLNbfDGgFHM9PWuB5BudfbBfrWOs1ADg9LmzhNZ
-	 4fgG14zCT2f8EhIiU4UG4O0tqMgKFYb8rqF/NlXW9rNnFX0jmMU3NnKoeg72tgyEBuCDS
-	 1wC6WK8rYIVC0Onjzx3an3Wg9dSzlBQDweV8g1yI/u1SZD+b9QGZwD1GHEO5b6gtyyQ==
+	bh=VG+rCJAUjIR3wk+7hR2bo7pqk71FxeLRpPrLig3l9o8=;
+	b=JIlLn19WpBAcgYtPOlv9fcLcAlejHNgDs4UmGEHZ9f89wsOEbsfhTkEBltyv++DpM4PZ
+	 F/E05enHM1v5JtUh8UTFP+D+eP1QWjo5fQ8jdsIJT8fsunRGBTlUPIGCPJMIwLUhiIRzh
+	 ZXZvc+l+sa9LrvtiHk2uWyjSEJhlIkMvv8BuvBMtPWBmWoQvTrpzmYdp9FQDMVAWlLUyC
+	 5jBkbOZHCPzIz5e6c91X+Nt28PVaffhUytsZgD8dzdLTCX5LaFDN+sNzhdtqZdEpTKheI
+	 T0qv/ikI6w5z/FSBbuRUu5kfNkwA9tX5ccS2iicVt9Ou+eQwuC8Oe47/HOa1XbhyAPA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ekuvdXCi;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t96NNmPo;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0981606A31D;
-	Wed, 28 Oct 2026 19:00:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40E74606A325;
+	Wed, 28 Oct 2026 19:00:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ekuvdXCi
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E48681F01825;
-	Wed, 28 Oct 2026 19:00:47 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t96NNmPo
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F4EF1F01825;
+	Wed, 28 Oct 2026 19:00:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214048;
-	bh=/MCeCl99YotZkUaZWWuuK7dIuMTuJVMXkqU3GmGlljg=;
+	s=korg; t=1793214051;
+	bh=VG+rCJAUjIR3wk+7hR2bo7pqk71FxeLRpPrLig3l9o8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ekuvdXCiAG2uwnt+hi2cNvcNEeiDb9w1ni2ODsNQMYHiYh1eFF6AfQY8cETPKTvIx
-	 M5o9qbAx+nzbIMhwyLjaWKBOWe7nMm9MGOhgkJOBK1XmQ7JYCwxkKDJ/yLJMkd4DdJ
-	 5P2FC5bz6VvaqV3mxDZhA+MRE6pQkbcukK1oGu3I=
+	b=t96NNmPolvkwKoWDH6nTZ4bOY6XpMJvx7ZpQbG4391hjbbG+CFrU9CnpVVODUgjE0
+	 sT+BMwHgbRB5PCUgZrx5KkvYtKVfX+VqzOk4p+dqeUb7ZOBfRKjkoQy8WR3K2s4VVb
+	 myP7UIoOFF6eWf+YxbUej3ZQjcpkNtsrOlrPr86c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anastasia Belova <abelova@astralinux.ru>,
-	Perry Yuan <perry.yuan@amd.com>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
+	Tom Chung <chiahsuan.chung@amd.com>,
+	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
+	Roman Li <roman.li@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Harry Wentland <harry.wentland@amd.com>,
+	Hamza Mahfooz <hamza.mahfooz@amd.com>,
+	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0677/1887] cpufreq: amd-pstate: add check for cpufreq_cpu_gets return value
-Date: Wed, 28 Oct 2026 17:46:13 +0100
-Message-ID: <20261028170514.817634001@linuxfoundation.org>
+Subject: [PATCH 6.1 0668/1887] drm/amd/display: Add null check for head_pipe in dcn32_acquire_idle_pipe_for_head_pipe_in_layer
+Date: Wed, 28 Oct 2026 17:46:04 +0100
+Message-ID: <20261028170514.614890067@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,43 +75,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anastasia Belova <abelova@astralinux.ru>
+From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
 
-[ Upstream commit 5493f9714e4cdaf0ee7cec15899a231400cb1a9f ]
+[ Upstream commit ac2140449184a26eac99585b7f69814bd3ba8f2d ]
 
-cpufreq_cpu_get may return NULL. To avoid NULL-dereference check it
-and return in case of error.
+This commit addresses a potential null pointer dereference issue in the
+`dcn32_acquire_idle_pipe_for_head_pipe_in_layer` function. The issue
+could occur when `head_pipe` is null.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+The fix adds a check to ensure `head_pipe` is not null before asserting
+it. If `head_pipe` is null, the function returns NULL to prevent a
+potential null pointer dereference.
 
-Signed-off-by: Anastasia Belova <abelova@astralinux.ru>
-Reviewed-by: Perry Yuan <perry.yuan@amd.com>
-Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+Reported by smatch:
+drivers/gpu/drm/amd/amdgpu/../display/dc/resource/dcn32/dcn32_resource.c:2690 dcn32_acquire_idle_pipe_for_head_pipe_in_layer() error: we previously assumed 'head_pipe' could be null (see line 2681)
+
+Cc: Tom Chung <chiahsuan.chung@amd.com>
+Cc: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
+Cc: Roman Li <roman.li@amd.com>
+Cc: Alex Hung <alex.hung@amd.com>
+Cc: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Cc: Harry Wentland <harry.wentland@amd.com>
+Cc: Hamza Mahfooz <hamza.mahfooz@amd.com>
+Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+Reviewed-by: Tom Chung <chiahsuan.chung@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/amd-pstate.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/cpufreq/amd-pstate.c b/drivers/cpufreq/amd-pstate.c
-index 90dcf26f09731..106aef210003d 100644
---- a/drivers/cpufreq/amd-pstate.c
-+++ b/drivers/cpufreq/amd-pstate.c
-@@ -309,9 +309,14 @@ static void amd_pstate_adjust_perf(unsigned int cpu,
- 	unsigned long max_perf, min_perf, des_perf,
- 		      cap_perf, lowest_nonlinear_perf, max_freq;
- 	struct cpufreq_policy *policy = cpufreq_cpu_get(cpu);
--	struct amd_cpudata *cpudata = policy->driver_data;
-+	struct amd_cpudata *cpudata;
- 	unsigned int target_freq;
+diff --git a/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource.c b/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource.c
+index 1b1534ffee9f1..591c3166a4687 100644
+--- a/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource.c
+@@ -2563,8 +2563,10 @@ struct pipe_ctx *dcn32_acquire_idle_pipe_for_head_pipe_in_layer(
+ 	struct resource_context *old_ctx = &stream->ctx->dc->current_state->res_ctx;
+ 	int head_index;
  
-+	if (!policy)
-+		return;
-+
-+	cpudata = policy->driver_data;
-+
- 	cap_perf = READ_ONCE(cpudata->highest_perf);
- 	lowest_nonlinear_perf = READ_ONCE(cpudata->lowest_nonlinear_perf);
- 	max_freq = READ_ONCE(cpudata->max_freq);
+-	if (!head_pipe)
++	if (!head_pipe) {
+ 		ASSERT(0);
++		return NULL;
++	}
+ 
+ 	/*
+ 	 * Modified from dcn20_acquire_idle_pipe_for_layer
 -- 
 2.53.0
 
