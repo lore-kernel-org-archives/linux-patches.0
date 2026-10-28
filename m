@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793210678;
-	b=IJlNAssjqRXSUjI97aZ9cnGwB7KBqw72Hcutl88isrVhjsFqMXd/7qrmVGMSxjRxng5h
-	 T2xUysiIKQXzMmmSyBlSL0skJ4Db8QDyvAMUXfGxrI2VIvjPa2K5ttFVOfg145LVLaZ5r
-	 JRElKxGQWPlZ2Sd/+IdOwAuoTkDLN+2FLU5v8AFRGfeYNUhAecw04vR3ph1MeINuIouPG
-	 KVzTpg/b2sJLkfT8zfnx3NK/IKfNLMlJYvG7E0sSpWia/W2sMwfq3L6LIXLRLbtr+uk7P
-	 /8OB5mk3v2KUPSjMYTs1lv8jdjB6Cj5JDqZVez5eIuk50A234gvSyS1+zdzIkKLCIkA==
+	t=1793210681;
+	b=Zt2tEeROI3QauOymxroGiTyEFQRZv270vQxXjhUn9Iw1JdVNA7f2QnCUvtrRcTMvzUu2
+	 5M6BrvqHO7YNT8SeR/d/aUeQwsMPrLVaGy9UG7704vNckhUTGrfzMHKd40YFhExMTI2zM
+	 0dMH8fCzEUZgpyrZ0z2rr+VuQFJGOE5taoPGhrx5z0UJEAfvXMFBrPZN/+nND46ntyk7E
+	 nrHDKZ0/6DRJJxU27M+ruY82Id/H9jOOeONKB3h/UMRrqo96rfM7VWCOFubCzBuWomwJB
+	 H2hLrfmQ5XPv5CWndWAOMcP/OC0AYXN2NF+mByztASr/JvmXZksECOeUiGy7rcqJOgA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793210678;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793210681;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=lzttua87wOq9DZ/fVKZMxGG3Jhih1DYpzWkawtCdzoU=;
-	b=sA8CGBpAqIYNCke2upn+qiYs8cvtu4jQnyic5xTH/BUmU6Be2tR+MK6CylhAMGsFpFH6
-	 9oUJobOwMhYwL9ZkFm5JVCYJDPwNda52dDKgKGfa2ORu6VR2IKG5MQFOrQGoYR6HSr9/b
-	 5CKfE1FqvaTeEFHavKU5exXR3qjGImm1cufot4ORRxmuXpfsNzHZtql0M63sqKEiNfoNe
-	 CrM+af0RbE3QdJtv5gL3orj5HSA8/II9KodWhLkqIWO0URQjZsTM5X/DzVo5lgvyScGgo
-	 xILi9hYp/qQ6eorXf/YL+4yGb+JF2EOxI4GzrpUMgn7ixlN2UUNcSDePvnutQOzxgtQ==
+	bh=nTUkmUy7NSUuBnzBSpGtiVuhB91Dv0shXNbsc7qAGGQ=;
+	b=YTeVUrlL45Xf8CM/R3LZAvlxFzCxg3wbaw3pUt7MlguH8N+WlRJtdCr8HXy4lhoZwbYR
+	 yll+VjIPJQcGrcru2TTYcrmVkM9crubnC8uxnaj7BecOh7QIm5XdS6dvm6gcohfkIgHYz
+	 uFLdDn7mJ+1+8ugwlwTAQe+62p34qPloYz1thU+n+KkQFQ14xEIf7k90MCQYFgEF/BM5M
+	 JoKbCxHWI7K45BgQOfQvCypGd5k+K3TPL8dZKGzT4tAQOFRLjtqSV6LTNXLCGQ25wbGE3
+	 J9gpWFWNDYPfWQZqlRiILoXRLzbKjq3HIdG9BbUlaRyLnbIU7oeskm+Yn5PYh6uZLBQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OLFBRlVa;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=scccmZAr;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA1AC606A31C;
-	Wed, 28 Oct 2026 18:04:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6394606A31A;
+	Wed, 28 Oct 2026 18:04:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OLFBRlVa
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 286811F01825;
-	Wed, 28 Oct 2026 18:04:36 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=scccmZAr
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 016AC1F01825;
+	Wed, 28 Oct 2026 18:04:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793210677;
-	bh=lzttua87wOq9DZ/fVKZMxGG3Jhih1DYpzWkawtCdzoU=;
+	s=korg; t=1793210680;
+	bh=nTUkmUy7NSUuBnzBSpGtiVuhB91Dv0shXNbsc7qAGGQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OLFBRlVa3yNGjSlBWDEoUB58PGLDwYoE19uu+erv5o4UTxbL2I4eYIUMEmlN4V3Zx
-	 S8ZKz2eWVDM4PZFH5kd8q3uar+oo6fLxXxd5N+Lnht/K3kJX6FOeAWHGcHRmEOlW0f
-	 +2XevoyJbjlTPo/vUasB+0MWWSHyhwWT3aDM3wO4=
+	b=scccmZArN3KUmgfTF2ZP6g5NnRFRL0h930aBHq/jLKtEHkMFtpH4iSwH1ka2wWwox
+	 1QCPQ3yp0vPKZB10FTpvYIoN+0q5GAskIJ/qtA0EcX9rMN1ZE1IVkBpeOrFcLsAqlw
+	 sVDj/6XNxd1bNXcsEkawECLRwYJT6QEd3vhHWqD4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Axel Mierczuk <axel.mierczuk@1password.com>,
+	Ilya Maximets <i.maximets@ovn.org>,
+	Aaron Conole <aconole@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 083/571] media: saa7164: fix cleanup on resource allocation failure
-Date: Wed, 28 Oct 2026 17:53:50 +0100
-Message-ID: <20261028170009.997412088@linuxfoundation.org>
+Subject: [PATCH 5.15 110/571] net: openvswitch: conntrack: fix helper UAF due to extensions realloc
+Date: Wed, 28 Oct 2026 17:54:17 +0100
+Message-ID: <20261028170010.631315646@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -68,58 +70,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Ilya Maximets <i.maximets@ovn.org>
 
-[ Upstream commit 28e84c6e2e6753ed238ea097b2842a32a6a6879b ]
+[ Upstream commit 1a4151e6be57b098b7a5ebfbde58585e83200cdc ]
 
-saa7164_dev_setup() adds the device to the global saa7164_devlist before
-requesting the PCI BAR memory regions.
+While calling the helpers, a raw pointer to the extensions area is
+wired into expectations list:
 
-If get_resources() fails, saa7164_dev_setup() decrements the device count
-and returns an error, but leaves the device on saa7164_devlist. The probe
-error path then frees the device, leaving a dangling entry on the global
-list.
+  -> nf_ct_helper()
+   -> helper->help()
+    -> nf_ct_expect_related_report()
+     -> nf_ct_expect_insert()
+      -> hlist_add_head_rcu(&exp->lnode, &master_help->expectations)
 
-Reuse the existing MMIO mapping error path to remove the device from
-saa7164_devlist and decrement the device count before returning.
+In case the connection is not confirmed yet, more extensions can be
+added afterwards with *_ext_add() calls reallocating the extension
+space and leaving the now invalid pointer in the expectations list
+that is later accessed while removing the expectation.
 
-Also release BAR0 if it was successfully requested but the BAR2 request
-fails.
+Make sure that helpers are called at the end after all the other
+extensions are already added.
 
-Fixes: 443c1228d505 ("V4L/DVB (12923): SAA7164: Add support for the NXP SAA7164 silicon")
+Note that the helper rejection now leaves the mark and labels set,
+but that's not different from how the NAT was handled before or how
+the mark and the labels were handled on confirmation failure.  And
+there are no atomicity guarantees provided by the API anyway.
+
+Fixes: cae3a2627520 ("openvswitch: Allow attaching helpers to ct action")
 Cc: stable@vger.kernel.org
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
-[ Inlined err_devlist cleanup with explicit mutex locking because the shared MMIO cleanup path is absent. ]
+Reported-by: Axel Mierczuk <axel.mierczuk@1password.com>
+Signed-off-by: Ilya Maximets <i.maximets@ovn.org>
+Reviewed-by: Aaron Conole <aconole@redhat.com>
+Link: https://patch.msgid.link/20260921145655.3167436-4-i.maximets@ovn.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ adapted nf_ct_helper() calls to the existing ovs_ct_helper() API. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/pci/saa7164/saa7164-core.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ net/openvswitch/conntrack.c | 20 +++++++++++++-------
+ 1 file changed, 13 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/media/pci/saa7164/saa7164-core.c b/drivers/media/pci/saa7164/saa7164-core.c
-index c10997e2271d2..6691042cc4211 100644
---- a/drivers/media/pci/saa7164/saa7164-core.c
-+++ b/drivers/media/pci/saa7164/saa7164-core.c
-@@ -880,6 +880,9 @@ static int get_resources(struct saa7164_dev *dev)
- 		if (request_mem_region(pci_resource_start(dev->pci, 2),
- 			pci_resource_len(dev->pci, 2), dev->name))
- 			return 0;
+diff --git a/net/openvswitch/conntrack.c b/net/openvswitch/conntrack.c
+index ee42c9357dffd..f0f0204a0e2b6 100644
+--- a/net/openvswitch/conntrack.c
++++ b/net/openvswitch/conntrack.c
+@@ -1051,14 +1051,14 @@ static int __ovs_ct_lookup(struct net *net, struct sw_flow_key *key,
+ 			}
+ 		}
+ 
+-		/* Call the helper only if:
+-		 * - nf_conntrack_in() was executed above ("!cached") or a
+-		 *   helper was just attached ("add_helper") for a confirmed
+-		 *   connection, or
+-		 * - When committing an unconfirmed connection.
++		/* Call the helper only if nf_conntrack_in() was executed
++		 * above ("!cached") or a helper was just attached ("add_helper").
++		 *
++		 * For unconfirmed connections it will be called later during
++		 * commit as we need to have all the other extensions allocated
++		 * before the call.
+ 		 */
+-		if ((nf_ct_is_confirmed(ct) ? !cached || add_helper :
+-					      info->commit) &&
++		if (nf_ct_is_confirmed(ct) && (!cached || add_helper) &&
+ 		    ovs_ct_helper(skb, info->family) != NF_ACCEPT) {
+ 			return -EINVAL;
+ 		}
+@@ -1274,6 +1274,12 @@ static int ovs_ct_commit(struct net *net, struct sw_flow_key *key,
+ 					 &info->labels.mask);
+ 		if (err)
+ 			return err;
 +
-+		release_mem_region(pci_resource_start(dev->pci, 0),
-+				   pci_resource_len(dev->pci, 0));
- 	}
- 
- 	printk(KERN_ERR "%s: can't get MMIO memory @ 0x%llx or 0x%llx\n",
-@@ -993,6 +996,9 @@ static int saa7164_dev_setup(struct saa7164_dev *dev)
- 		       dev->name, dev->pci->subsystem_vendor,
- 		       dev->pci->subsystem_device);
- 
-+		mutex_lock(&devlist);
-+		list_del(&dev->devlist);
-+		mutex_unlock(&devlist);
- 		saa7164_devcount--;
- 		return -ENODEV;
- 	}
++		/* Call the helpers now.  We couldn't do this before as
++		 * all the extensions must be allocated before the call.
++		 */
++		if (ovs_ct_helper(skb, info->family) != NF_ACCEPT)
++			return -EINVAL;
+ 	} else if (IS_ENABLED(CONFIG_NF_CONNTRACK_LABELS) &&
+ 		   labels_nonzero(&info->labels.mask)) {
+ 		err = ovs_ct_set_labels(ct, key, &info->labels.value,
 -- 
 2.53.0
 
