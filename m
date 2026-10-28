@@ -1,60 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213155;
-	b=YSisNaQ/QKZ21d7xIvTn7MMzPC0GHmkVuOI0l5rLocpBEupsBj2ywdwFUu1wiqnlx4KC
-	 DuUiXrYln9iio8VRsZOzaoi3FDJ6V0RfX3j5NhTD3z56Fk2PgWV2VRImFVteS7DdieyXO
-	 vtHItjn4L1rzt6UZrAlM5+KXc2OEHQVu8Ce2jO85N4bzFLsjFsGMjOXXvqog5rRIPgRQt
-	 Hk2lIg+s/VglPmmnIIIw+wYIUFiXAK0AqRp08B9FwnBKP7jvbZNCJ8GrmCkV4SDkgS7wu
-	 b816bbbLWmSWrieNOCXP6qSkVWkV5GJSuxRrtl+IVQGNrnM+yx358BGIfaguqJTJapQ==
+	t=1793213158;
+	b=MssgmyDJOEeW7X5XLrHCe/BM3I3NlmNRsmkK4Qk63KPXDrbWnttkLxbUMyAKe46M6t55
+	 BjAP7xOvJcye/TeOJe1cs0QoD4TxLxiWnRurAUBH+H94lbf5aqVZYF+MxOAC9zOX3qgU4
+	 2x1e4OngbraAoGoxNLest3Q/KBBpU/Fzn95/5BxLHMlKBV1f2sjbSf/OtMXdQyCsbIObV
+	 OiUTe9086cmbp2BdZgZpe8cG7EkqbCqknQEfcjd3qyS6XnzOq/y+HKuxO6FbwqGWQZwJx
+	 tHdcIDPaqqehCOCgJWMm8Q3k56BUZkiygCRp2xlsFjt8Ml5xBnmaKculMSgv12LwxSg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213155;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213158;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=3G4dbCKETTdAwPsNscpA6DmslotKRNobwLIqKapgBJ0=;
-	b=2P4iQNa98KkzPf8ZJU/0zE/O0dX569ppnI6K4bB+lOirYZ+//6qnkm6JlOFg/yvJ71bj
-	 Qpx6gm8GaGCz3ytrwQQP5Ksdip6iMfvydlhwvGxCemq1nZ9eZjV2VTVIb6kCZ0HUpBEgx
-	 2JGxV04vL76E02njcrH9nvC7LYWEWrHiHtf1596wqDOY/duBqSZcXUvvCyWWTSql0NwlP
-	 zyWGxUXGaAmBKuufNjmhyhwNwHF3eeqmsDisD5wbuUCYM6nz9qPCUCwhcwnBeK94KKIr5
-	 9yFLg3O0R3Xpu7dAWR4T1kjc29MwGiK2Ha1cAEwf0mlhgT4FR96OWlHZhhJbiyZGXYw==
+	bh=T9V72xkF+lFWxEgslF7FOPHSp7H+cv5WU3FDLznXztU=;
+	b=JX2+Q40/j041kVqt5JqJOyHIvWY+a5/6wsy5E/JFaWW8/9pqLfToP9Dhq1+lLqvrKcs1
+	 Pdh91bBfkMx02MUeUlCb5Jo0T0Y209Y1YNRXIzFsFlT4w741mkGpozn1oYklSE4yWfvIw
+	 iu/gzPw0ZAz09tGVV73omLPYAs5VMqXQRDucSu8rmH+WpbgPS2b5ft8EIl+7iQkahfRDT
+	 Y1YukHUJKKRNzNre9opejMD6lxKh9DVQt2YHQwC0V5DOnqf0VoqumwurC7wOnCALozLcO
+	 yLamB1s1XPOsz4w1jpSWFTrvqYzQmHiDuUOC2hd08omz7O4ebvC4WeYUHfd1C9MaqCw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ErLtVQQl;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ISawKs7d;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20A72606A31A;
-	Wed, 28 Oct 2026 18:45:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00E05606A31A;
+	Wed, 28 Oct 2026 18:45:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ErLtVQQl
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DDB71F01825;
-	Wed, 28 Oct 2026 18:45:54 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ISawKs7d
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E7431F01829;
+	Wed, 28 Oct 2026 18:45:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213155;
-	bh=3G4dbCKETTdAwPsNscpA6DmslotKRNobwLIqKapgBJ0=;
+	s=korg; t=1793213157;
+	bh=T9V72xkF+lFWxEgslF7FOPHSp7H+cv5WU3FDLznXztU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ErLtVQQlalvKXY37M32jMQ7zmd3s28NLemseUd4n1/VVoaNRSLx08KSQm0zU4zvnD
-	 aV4pRadfq2p9dXFOfY+arHP81h4pIsO6iVMSn/KPZDbGusiZQZpJt5zhQr86q6oiJP
-	 4WEsufUAW9pTTnUqR3DXI5MScyiZSU2JU8nhaHs8=
+	b=ISawKs7debCWMYdxrfSnKqMQF+qa1mj26c732tJl16nnjaTkUBXWkY5LkdSai7rnt
+	 bOMYHyT9XfpdosBpkvYgVyzG1A4qT5VEn2YR78uc+3i+vpjvflmQizviUWOoX76M8f
+	 jwyNFGfMFlV1CKwRodbmLWpZarr24M0l2Bx3jXWU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Xu <peterx@redhat.com>,
-	Ackerley Tng <ackerleytng@google.com>,
-	Oscar Salvador <osalvador@suse.de>,
-	Breno Leitao <leitao@debian.org>,
-	Muchun Song <muchun.song@linux.dev>,
-	Naoya Horiguchi <nao.horiguchi@gmail.com>,
-	Rik van Riel <riel@surriel.com>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0407/1887] mm/hugetlb: fix avoid_reserve to allow taking folio from subpool
-Date: Wed, 28 Oct 2026 17:41:43 +0100
-Message-ID: <20261028170508.494938413@linuxfoundation.org>
+	Fan Wu <fanwu01@zju.edu.cn>,
+	Sasha Levin <sashal@kernel.org>,
+	stable@kernel.org
+Subject: [PATCH 6.1 0390/1887] tty: serial: max3100: shut down timer before freeing port
+Date: Wed, 28 Oct 2026 17:41:26 +0100
+Message-ID: <20261028170508.109228916@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -76,238 +68,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Xu <peterx@redhat.com>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-commit 58db7c5fbe7daa42098d4965133a864f98ba90ba upstream.
+[ Upstream commit db0949bbd06db0a75b4b1076f1e25194be7d956a ]
 
-Patch series "mm/hugetlb: Refactor hugetlb allocation resv accounting",
-v2.
+max3100_shutdown() stops the polling timer but returns early during
+system suspend. If the SPI device is unbound before resume, the serial
+core does not call max3100_shutdown() again, so max3100_remove() frees
+the port while the timer remains armed. max3100_timeout() may then
+access the freed port and re-arm the timer.
 
-This is a follow up on Ackerley's series here as replacement:
+Add final timer teardown to max3100_remove() and use
+timer_shutdown_sync() to prevent a racing callback from re-arming it.
+Also free the IRQ and destroy the workqueue there before freeing the
+port. Keep timer_delete_sync() in max3100_shutdown() so that a
+subsequent open() can re-arm the timer.
 
-https://lore.kernel.org/r/cover.1728684491.git.ackerleytng@google.com
+The workqueue is created before request_irq() and destroyed on both
+request_irq() failure and normal shutdown. Its presence at remove thus
+identifies the IRQ left registered when suspend bypasses shutdown.
 
-The goal of this series is to cleanup hugetlb resv accounting, especially
-during folio allocation, to decouple a few things:
+Free the IRQ before destroying the workqueue, in both
+max3100_shutdown() and max3100_remove(), and cancel the pending work
+in between. free_irq() waits for a running interrupt handler to
+finish and no new handler can start afterwards, so a racing handler
+cannot queue work on a workqueue that is being destroyed; the
+force_end_work check in max3100_dowork() only narrows that window, as
+a handler delayed between the check and queue_work() could still run
+after the teardown has cleared the workqueue pointer. Cancelling the
+work also keeps destroy_workqueue() from waiting on a queued work item
+in case remove() ever runs while the freezable workqueue is still
+frozen, e.g. device removal during the resume window, before
+workqueues are thawed.
 
-  - Hugetlb folios v.s. Hugetlbfs: IOW, the hope is in the future hugetlb
-    folios can be allocated completely without hugetlbfs.
+This issue was found by an in-house static analysis tool.
 
-  - Decouple VMA v.s. hugetlb folio allocations: allocating a hugetlb folio
-    should not always require a hugetlbfs VMA.  For example, either it got
-    allocated from the inode level (see hugetlbfs_fallocate() where it used
-    a pesudo VMA for allocation), or it can be allocated by other kernel
-    subsystems.
-
-It paves way for other users to allocate hugetlb folios out of either
-system reservations, or subpools (instead of hugetlbfs, as a file system).
-For longer term, this prepares hugetlb as a separate concept versus
-hugetlbfs, so that hugetlb folios can be allocated by not only hugetlbfs
-and other things.
-
-Tests I've done:
-
-- I had a reproducer in patch 1 for the bug I found, this will start to
-  work after patch 1 or the whole set applied.
-
-- Hugetlb regression tests (on x86_64 2MBs), includes:
-
-  - All vmtests on hugetlbfs
-
-  - libhugetlbfs test suite (which may fail some tests, but no new failures
-    will be introduced by this series, so all such failures happen before
-    this series so shouldn't be relevant).
-
-This patch (of 7):
-
-Since commit 04f2cbe35699 ("hugetlb: guarantee that COW faults for a
-process that called mmap(MAP_PRIVATE) on hugetlbfs will succeed"),
-avoid_reserve was introduced for a special case of CoW on hugetlb private
-mappings, and only if the owner VMA is trying to allocate yet another
-hugetlb folio that is not reserved within the private vma reserved map.
-
-Later on, in commit d85f69b0b533 ("mm/hugetlb: alloc_huge_page handle
-areas hole punched by fallocate"), alloc_huge_page() enforced to not
-consume any global reservation as long as avoid_reserve=true.  This
-operation doesn't look correct, because even if it will enforce the
-allocation to not use global reservation at all, it will still try to take
-one reservation from the spool (if the subpool existed).  Then since the
-spool reserved pages take from global reservation, it'll also take one
-reservation globally.
-
-Logically it can cause global reservation to go wrong.
-
-I wrote a reproducer below, trigger this special path, and every run of
-such program will cause global reservation count to increment by one, until
-it hits the number of free pages:
-
-  #define _GNU_SOURCE             /* See feature_test_macros(7) */
-  #include <stdio.h>
-  #include <fcntl.h>
-  #include <errno.h>
-  #include <unistd.h>
-  #include <stdlib.h>
-  #include <sys/mman.h>
-
-  #define  MSIZE  (2UL << 20)
-
-  int main(int argc, char *argv[])
-  {
-      const char *path;
-      int *buf;
-      int fd, ret;
-      pid_t child;
-
-      if (argc < 2) {
-          printf("usage: %s <hugetlb_file>\n", argv[0]);
-          return -1;
-      }
-
-      path = argv[1];
-
-      fd = open(path, O_RDWR | O_CREAT, 0666);
-      if (fd < 0) {
-          perror("open failed");
-          return -1;
-      }
-
-      ret = fallocate(fd, 0, 0, MSIZE);
-      if (ret != 0) {
-          perror("fallocate");
-          return -1;
-      }
-
-      buf = mmap(NULL, MSIZE, PROT_READ|PROT_WRITE,
-                 MAP_PRIVATE, fd, 0);
-
-      if (buf == MAP_FAILED) {
-          perror("mmap() failed");
-          return -1;
-      }
-
-      /* Allocate a page */
-      *buf = 1;
-
-      child = fork();
-      if (child == 0) {
-          /* child doesn't need to do anything */
-          exit(0);
-      }
-
-      /* Trigger CoW from owner */
-      *buf = 2;
-
-      munmap(buf, MSIZE);
-      close(fd);
-      unlink(path);
-
-      return 0;
-  }
-
-It can only reproduce with a sub-mount when there're reserved pages on the
-spool, like:
-
-  # sysctl vm.nr_hugepages=128
-  # mkdir ./hugetlb-pool
-  # mount -t hugetlbfs -o min_size=8M,pagesize=2M none ./hugetlb-pool
-
-Then run the reproducer on the mountpoint:
-
-  # ./reproducer ./hugetlb-pool/test
-
-Fix it by taking the reservation from spool if available.  In general,
-avoid_reserve is IMHO more about "avoid vma resv map", not spool's.
-
-I copied stable, however I have no intention for backporting if it's not a
-clean cherry-pick, because private hugetlb mapping, and then fork() on top
-is too rare to hit.
-
-Link: https://lkml.kernel.org/r/20250107204002.2683356-1-peterx@redhat.com
-Link: https://lkml.kernel.org/r/20250107204002.2683356-2-peterx@redhat.com
-Fixes: d85f69b0b533 ("mm/hugetlb: alloc_huge_page handle areas hole punched by fallocate")
-Signed-off-by: Peter Xu <peterx@redhat.com>
-Reviewed-by: Ackerley Tng <ackerleytng@google.com>
-Tested-by: Ackerley Tng <ackerleytng@google.com>
-Reviewed-by: Oscar Salvador <osalvador@suse.de>
-Cc: Breno Leitao <leitao@debian.org>
-Cc: Muchun Song <muchun.song@linux.dev>
-Cc: Naoya Horiguchi <nao.horiguchi@gmail.com>
-Cc: Rik van Riel <riel@surriel.com>
-Cc: Roman Gushchin <roman.gushchin@linux.dev>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-[ Karl Mehltretter: The upstream changes map directly to this stable tree's
-  page-based HugeTLB helpers. The backport retains this stable tree's direct
-  -ENOSPC return instead of importing the later out_end_reservation path;
-  the functional changes otherwise match upstream. ]
-Assisted-by: LLM
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Fixes: 7831d56b0a35 ("tty: MAX3100")
+Cc: stable@kernel.org # 6.2+
+Assisted-by: Codex:gpt-5.6
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Link: https://patch.msgid.link/20260927055957.561030-1-fanwu01@zju.edu.cn
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+[ sashal: Changed free_irq() calls to use s->irq instead of the uart_port IRQ field. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/hugetlb.c | 22 +++-------------------
- 1 file changed, 3 insertions(+), 19 deletions(-)
+ drivers/tty/serial/max3100.c | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
-diff --git a/mm/hugetlb.c b/mm/hugetlb.c
-index a44a6602659cf..cfe083798f3b4 100644
---- a/mm/hugetlb.c
-+++ b/mm/hugetlb.c
-@@ -1397,8 +1397,7 @@ static unsigned long available_huge_pages(struct hstate *h)
+diff --git a/drivers/tty/serial/max3100.c b/drivers/tty/serial/max3100.c
+index 67803242a70c2..4ba444460753c 100644
+--- a/drivers/tty/serial/max3100.c
++++ b/drivers/tty/serial/max3100.c
+@@ -568,11 +568,11 @@ static void max3100_shutdown(struct uart_port *port)
+ 		del_timer_sync(&s->timer);
  
- static struct page *dequeue_huge_page_vma(struct hstate *h,
- 				struct vm_area_struct *vma,
--				unsigned long address, int avoid_reserve,
--				long chg)
-+				unsigned long address, long chg)
- {
- 	struct page *page = NULL;
- 	struct mempolicy *mpol;
-@@ -1414,10 +1413,6 @@ static struct page *dequeue_huge_page_vma(struct hstate *h,
- 	if (!vma_has_reserves(vma, chg) && !available_huge_pages(h))
- 		goto err;
- 
--	/* If reserves cannot be used, ensure enough pages are in the pool */
--	if (avoid_reserve && !available_huge_pages(h))
--		goto err;
--
- 	gfp_mask = htlb_alloc_mask(h);
- 	nid = huge_node(vma, address, gfp_mask, &mpol, &nodemask);
- 
-@@ -1431,7 +1426,7 @@ static struct page *dequeue_huge_page_vma(struct hstate *h,
- 	if (!page)
- 		page = dequeue_huge_page_nodemask(h, gfp_mask, nid, nodemask);
- 
--	if (page && !avoid_reserve && vma_has_reserves(vma, chg)) {
-+	if (page && vma_has_reserves(vma, chg)) {
- 		SetHPageRestoreReserve(page);
- 		h->resv_huge_pages--;
+ 	if (s->workqueue) {
++		free_irq(s->irq, s);
++		cancel_work_sync(&s->work);
+ 		destroy_workqueue(s->workqueue);
+ 		s->workqueue = NULL;
  	}
-@@ -3114,17 +3109,6 @@ struct page *alloc_huge_page(struct vm_area_struct *vma,
- 			vma_end_reservation(h, vma, addr);
- 			return ERR_PTR(-ENOSPC);
- 		}
--
--		/*
--		 * Even though there was no reservation in the region/reserve
--		 * map, there could be reservations associated with the
--		 * subpool that can be used.  This would be indicated if the
--		 * return value of hugepage_subpool_get_pages() is zero.
--		 * However, if avoid_reserve is specified we still avoid even
--		 * the subpool reservations.
--		 */
--		if (avoid_reserve)
--			gbl_chg = 1;
- 	}
+-	if (s->irq)
+-		free_irq(s->irq, s);
  
- 	/* If this allocation is not consuming a reservation, charge it now.
-@@ -3147,7 +3131,7 @@ struct page *alloc_huge_page(struct vm_area_struct *vma,
- 	 * from the global free pool (global change).  gbl_chg == 0 indicates
- 	 * a reservation exists for the allocation.
- 	 */
--	page = dequeue_huge_page_vma(h, vma, addr, avoid_reserve, gbl_chg);
-+	page = dequeue_huge_page_vma(h, vma, addr, gbl_chg);
- 
- 	if (!page) {
- 		spin_unlock_irq(&hugetlb_lock);
+ 	/* set shutdown mode to save power */
+ 	if (s->max3100_hw_suspend)
+@@ -831,6 +831,15 @@ static void max3100_remove(struct spi_device *spi)
+ 		if (max3100s[i] == s) {
+ 			dev_dbg(&spi->dev, "%s: removing port %d\n", __func__, i);
+ 			uart_remove_one_port(&max3100_uart_driver, &max3100s[i]->port);
++
++			s->force_end_work = 1;
++			timer_shutdown_sync(&s->timer);
++			if (s->workqueue) {
++				free_irq(s->irq, s);
++				cancel_work_sync(&s->work);
++				destroy_workqueue(s->workqueue);
++				s->workqueue = NULL;
++			}
+ 			kfree(max3100s[i]);
+ 			max3100s[i] = NULL;
+ 			break;
 -- 
 2.53.0
 
