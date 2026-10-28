@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793217171;
-	b=ecLujbtnw0ssf1fNTxigVvyPo7D3dad+2FT0xhRzheB1dPhHRb4p+JRz8Tb4264LO1nM
-	 IKIPx1dKAGvtssqytEPhaA6cJ5hezUt1WBH+MMxEVoswPbpkZ/QEyM1GSHIQVtvewjULn
-	 kDtzWhTbmNRetF4rGDQHsgM7AHKU3RUJj0LbfJ5NwED/oe5Ieyji192vk/MYfht6Nnxj6
-	 bEr3GtZS1K6LfZLU8zn55yluR5Lyx4n8kZnsOc6w1i/yMoursmsUeGXVHpXX7AvhtqPok
-	 GSuz2BHmSX26MSWKS4Ub7Wv0qrtabbFSG7VHLRd43FZ/4UuHJEsVfMuU3YOgynyIUJg==
+	t=1793217174;
+	b=16C9sW/7LMV7aVN4f5vmVDPx1MKImKr37TeNsVuiP+647hAGCtOhFt6EnYnnzoueJxxz
+	 SM4udhnB5FAe4t2gq1k+BZDpyE/n53Ee4+4R6CzNbAqBrZiZ5hnzZDWdSK4+c46f+9197
+	 3Qf2+ME7+QiG29Zr/3yF+VUN11aOJSjUtVp2HwcQvnfD0cqo7vqo5ZO3Qrd6MA+73mBVN
+	 CS0wnfcVAlUQJ8euEbQ7u8qhqbJVB8TCmW2+/K1++QhwQStJxGiyFIUQ38p4qVkoqzrk8
+	 ywPLoUVYnRwk6mQLb2ViytwL6GFb6rRCa/0bO1D4zL8k6k5JLwRzHs0QBOa/biEWAjw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793217171;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793217174;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=DtpTqaMY63hvy2f3QpCF3HuHP7x5ZoIt0mDEDZAE78w=;
-	b=y4v+wrYPwKbzYBBQVWaQV0kXqTySTWo045GZ7AutsMB3pABUZ2n8n2yJMgjvaDEUbSXk
-	 OJuOyCTTVobraUlHKlecp4rtO33ET1WnuWIBKvL76ws4Nr7lS0ZFQaRwORR2gYemw+qmP
-	 aCcBrrs+U4oYxtXDjiMMyBPURceOYLqY4ELta+yWVJOzHhQqgkLoZoe9pYfE5KAlEyT2/
-	 UaEr0ZNEJWGGLOOTewjgEq4g7OXj3LlUx84BbIyuVejFFwi219HmRga4lq2BdB3bmGWGb
-	 YSgtrWu9u0WlzdSEUNdFzWz8kmnpMFv4hqokm84NVwtvWzZtx6v6+D2HsZ/mFGKdNHQ==
+	bh=sMbIb4Y2Uudv8NAw+AIPHZfRaj5L+7jhenXWuW5Lb4A=;
+	b=veRLUqbDWyVsTcRAicpYs9sc9sQKReRw8li8H9gvDJdOzDUFdlOzZ5LCRjKkUSOVfemR
+	 bWhpbHUkgGXL0FaECIO5u8rj946VQmt9f9TiN/3VEBunWNLzPG2qcTqfln0OOCYIRorJI
+	 O4GeuIv9/PZe2/4wEj27yFx8vk1vEiq5Qkdt1jt4RwlZpT8lem//B+ewBE4LpqyZJ6crF
+	 RyYbHtLnppgTJMq1LdSGL5W9KOBGLzRHJW9wM9/cITdWdPxr52t2paao2/yc3g0pgFW3P
+	 p6Kcxf1ju9FEEkU5HLAwb15Q2jWEFp1UqmmiOIEFLKeCd9h/tSDkFxTN0j66G1LVTbA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A5sQRf6N;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EvVgfxsU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AAA4606A31C;
-	Wed, 28 Oct 2026 19:52:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C03B606A31A;
+	Wed, 28 Oct 2026 19:52:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A5sQRf6N
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A93BF1F01825;
-	Wed, 28 Oct 2026 19:52:50 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EvVgfxsU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B0261F01825;
+	Wed, 28 Oct 2026 19:52:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793217171;
-	bh=DtpTqaMY63hvy2f3QpCF3HuHP7x5ZoIt0mDEDZAE78w=;
+	s=korg; t=1793217174;
+	bh=sMbIb4Y2Uudv8NAw+AIPHZfRaj5L+7jhenXWuW5Lb4A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=A5sQRf6Nad8UBxMcdBBAX6CzwycTqOhhiM6U5KZm/OPDXS4C+fC/oz5l/WWIIS3Im
-	 87Uu8Przk1KwAAS8KMleys081lp3JuvkaIXYz81UWpUz1+n3EsMGcHpU9DO/P6xWNW
-	 jV8SR2IsxLOeoX1N8q5Vx0ChHs2CuSOCd2G6BGtQ=
+	b=EvVgfxsUDfXj9pkTX0o4jBBj3wQO+gv2ebArbdh52/gmFKR7P9q30TN5n8MczXfa8
+	 EyedL/lgGQ/wwD0vv+OBc/LUfHXX5zix60BgBy6lOQ46YlXpRbv0TJIonQNuVJPgEV
+	 UHdZ/TXh141QyET6h1xG5SUhCsm5mMOLzkKrDdKo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefano Garzarella <sgarzare@redhat.com>,
-	Bobby Eshleman <bobbyeshleman@meta.com>,
-	Daehyeon Ko <4ncienth@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1786/1887] vsock/virtio: validate packet source for connected sockets
-Date: Wed, 28 Oct 2026 18:04:42 +0100
-Message-ID: <20261028170540.093865259@linuxfoundation.org>
+	Xiang Mei <xmei5@asu.edu>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 6.1 1813/1887] asymmetric_keys: reject trust keys without IDs
+Date: Wed, 28 Oct 2026 18:05:09 +0100
+Message-ID: <20261028170540.703958992@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -70,123 +68,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daehyeon Ko <4ncienth@gmail.com>
+From: Weiming Shi <bestswngs@gmail.com>
 
-[ Upstream commit dee44f41f206becb41c492899c1996cfd7f82a1b ]
+commit 9695df3b1db4ac4534274d38ee16e3b9b0bf910e upstream.
 
-virtio_transport_recv_pkt() looks up sockets first by the full source and
-destination tuple, then by destination only in the bound table. The
-fallback is needed for listening and connecting sockets, but sockets remain
-in the bound table after connect(), so it can also return a non-listening
-socket.
+The PKCS#8 parser deliberately leaves the asym_key_ids payload slot
+empty. key_or_keyring_common() unconditionally dereferences that slot
+when a PKCS#8 key is supplied to a key_or_keyring restriction. Both the
+plain and :chain forms reach this branch, allowing an unprivileged caller
+to trigger a NULL pointer dereference through KEYCTL_RESTRICT_KEYRING
+followed by add_key().
 
-The fallback does not validate the source address. In TCP_SYN_SENT, a
-RESPONSE from an unrelated source can transition the victim socket to
-TCP_ESTABLISHED while its stored remote address remains unchanged.
-Subsequent RW packets from that source are delivered through the same
-destination-only fallback.
+ Oops: general protection fault, probably for non-canonical address 0xdffffc0000000000
+ KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
+ RIP: 0010:key_or_keyring_common (crypto/asymmetric_keys/restrict.c:205 crypto/asymmetric_keys/restrict.c:279)
+ Call Trace:
+  <TASK>
+  __key_create_or_update (security/keys/key.c:884)
+  key_create_or_update (security/keys/key.c:1021)
+  __do_sys_add_key (security/keys/keyctl.c:134)
+  do_syscall_64 (arch/x86/entry/common.c:52 arch/x86/entry/common.c:83)
+  entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:130)
+  </TASK>
+ Kernel panic - not syncing: Fatal exception
 
-This was reproduced with capability-empty processes under different UIDs.
-The attacker discovered the target tuple through unprivileged AF_VSOCK
-sock_diag and caused the victim socket to read 16 attacker-chosen bytes;
-the intended peer-side socket read 0 of those 16 bytes.
+Reject an asymmetric restriction key without key IDs. A PKCS#8 private
+key cannot identify the signer of a candidate certificate and is not a
+valid trust anchor.
 
-Add vsock_check_source() to validate the transport, source port and source
-CID against the peer stored in a non-listening socket. The local transport
-is the CID exception because its packets are generated internally with
-VMADDR_CID_LOCAL as their source, including connections using CID aliases.
-
-Use the helper after lock_sock() in the virtio receive path.
-
-Fixes: 06a8fc78367d ("VSOCK: Introduce virtio_vsock_common.ko")
-Closes: https://lore.kernel.org/netdev/20260813121236.2328599-1-4ncienth@gmail.com/
+Fixes: 3c58b2362ba8 ("KEYS: Implement PKCS#8 RSA Private Key parser [ver #2]")
 Cc: stable@vger.kernel.org
-Suggested-by: Stefano Garzarella <sgarzare@redhat.com>
-Reviewed-by: Bobby Eshleman <bobbyeshleman@meta.com>
-Signed-off-by: Daehyeon Ko <4ncienth@gmail.com>
-Link: https://patch.msgid.link/20260826003929.966160-2-4ncienth@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ sashal: Adjusted context for socket lookup and reset helpers without network namespace arguments. ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: Xiang Mei <xmei5@asu.edu>
+Link: https://lore.kernel.org/r/20260429181629.110802-2-bestswngs@gmail.com
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Weiming Shi <bestswngs@gmail.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/af_vsock.h                  |  3 +++
- net/vmw_vsock/af_vsock.c                | 32 +++++++++++++++++++++++++
- net/vmw_vsock/virtio_transport_common.c |  3 ++-
- 3 files changed, 37 insertions(+), 1 deletion(-)
+ crypto/asymmetric_keys/restrict.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/include/net/af_vsock.h b/include/net/af_vsock.h
-index 568a87c5e0d0f..a1aebfa14a3ef 100644
---- a/include/net/af_vsock.h
-+++ b/include/net/af_vsock.h
-@@ -207,6 +207,9 @@ void vsock_remove_connected(struct vsock_sock *vsk);
- struct sock *vsock_find_bound_socket(struct sockaddr_vm *addr);
- struct sock *vsock_find_connected_socket(struct sockaddr_vm *src,
- 					 struct sockaddr_vm *dst);
-+bool vsock_check_source(const struct vsock_sock *vsk,
-+			const struct vsock_transport *transport,
-+			const struct sockaddr_vm *src);
- void vsock_remove_sock(struct vsock_sock *vsk);
- void vsock_for_each_connected_socket(struct vsock_transport *transport,
- 				     void (*fn)(struct sock *sk));
-diff --git a/net/vmw_vsock/af_vsock.c b/net/vmw_vsock/af_vsock.c
-index 893893869fd45..5675f224ea7d8 100644
---- a/net/vmw_vsock/af_vsock.c
-+++ b/net/vmw_vsock/af_vsock.c
-@@ -331,6 +331,38 @@ struct sock *vsock_find_connected_socket(struct sockaddr_vm *src,
- }
- EXPORT_SYMBOL_GPL(vsock_find_connected_socket);
+--- a/crypto/asymmetric_keys/restrict.c
++++ b/crypto/asymmetric_keys/restrict.c
+@@ -152,10 +152,14 @@ static int key_or_keyring_common(struct
+ 			if (IS_ERR(key))
+ 				key = NULL;
+ 		} else if (trusted->type == &key_type_asymmetric) {
++			const struct asymmetric_key_ids *kids;
+ 			const struct asymmetric_key_id **signer_ids;
  
-+/**
-+ * vsock_check_source - validate a packet source against a socket peer
-+ * @vsk: socket receiving the packet
-+ * @transport: transport receiving the packet
-+ * @src: source address from the packet
-+ *
-+ * Return: true if the packet arrived on the socket's assigned transport and
-+ * its source matches the stored peer. Loopback packets are generated
-+ * internally and always use the local CID as their source, including
-+ * connections using a valid CID alias.
-+ *
-+ * The caller must hold the socket lock and must not call this for listening
-+ * sockets, which accept packets from any source and have no assigned
-+ * transport.
-+ */
-+bool vsock_check_source(const struct vsock_sock *vsk,
-+			const struct vsock_transport *transport,
-+			const struct sockaddr_vm *src)
-+{
-+	if (vsk->transport != transport)
-+		return false;
+-			signer_ids = (const struct asymmetric_key_id **)
+-				asymmetric_key_ids(trusted)->id;
++			kids = asymmetric_key_ids(trusted);
++			if (!kids)
++				return -ENOKEY;
 +
-+	if (src->svm_port != vsk->remote_addr.svm_port)
-+		return false;
-+
-+	if (src->svm_cid == vsk->remote_addr.svm_cid)
-+		return true;
-+
-+	return transport->get_local_cid() == VMADDR_CID_LOCAL;
-+}
-+EXPORT_SYMBOL_GPL(vsock_check_source);
-+
- void vsock_remove_sock(struct vsock_sock *vsk)
- {
- 	/* Transport reassignment must not remove the binding. */
-diff --git a/net/vmw_vsock/virtio_transport_common.c b/net/vmw_vsock/virtio_transport_common.c
-index 6ea00b8630351..81bb95875f203 100644
---- a/net/vmw_vsock/virtio_transport_common.c
-+++ b/net/vmw_vsock/virtio_transport_common.c
-@@ -1372,7 +1372,8 @@ void virtio_transport_recv_pkt(struct virtio_transport *t,
- 	 * lock_sock (note: listener sockets are not assigned to any transport)
- 	 */
- 	if (sock_flag(sk, SOCK_DONE) ||
--	    (sk->sk_state != TCP_LISTEN && vsk->transport != &t->transport)) {
-+	    (sk->sk_state != TCP_LISTEN &&
-+	     !vsock_check_source(vsk, &t->transport, &src))) {
- 		(void)virtio_transport_reset_no_sock(t, skb);
- 		release_sock(sk);
- 		sock_put(sk);
--- 
-2.53.0
-
++			signer_ids = (const struct asymmetric_key_id **)kids->id;
+ 
+ 			/*
+ 			 * The auth_ids come from the candidate key (the
 
 
