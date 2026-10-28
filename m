@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214698;
-	b=ARXXNUsYsAnf0uOSI5S9hfOEBIXqBEMduC0+c1+pBVYhjFKEZ9/SG+ZPWVp3yKL5ZuQX
-	 hIes/t/Udn0ei88ydINaIvPxN5ni3KMYbIGfyflCJaFBPiYtvUuWGbZmTf4ZPbBgOdbm8
-	 LUspK7iFv7LctULLU/fZxU0zVs7rV8ao5v0e8A9irJYe15kIS4aUiihMY2zLqcCYz0k6G
-	 sPTb0jH3yZ9WDS5QoDysGwxuFQvPzj0Cp1ANivXQeb5A9ibJmJzvuhoeLo105s73bnUkN
-	 V+fOpVq5sKjNQiz0HyEk7A670rJWPi9vD3FuKw9/jTOaLtyOQ9JeqKd76HgXT+5v6bA==
+	t=1793214700;
+	b=wO3wPa+N3KPIblyH9IbP9TMMXchS7MEcNDMjBP2cb+UfwLvGmSyeM0O7EkByYRxBVrsu
+	 y0GkTWImPjI4uHUaxOwzEaBsupoJHNhqkrzYWRKTwKHirpAQ8ufP4tOrhpphSdSd/VSvJ
+	 KOxrckgEWDjQ7kmkld6JHD/DVMrM3ujEuFnj4YtBFs9ePmAc4BrQeJGvpWUljDK8nORca
+	 ogqoG93l/W2MOTx6ZncN025Nh/BbGdOmqgJq71qROXipgNdVoqnYhfXpLPn3fIfs/RwS9
+	 qhiIrCDIJf+SiRZiMdIzgbe0Sj94ix4xCpcFO7Z1yQxhr3gows6HqnzloaW+XXNYLvQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214698;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214700;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=RkvVwvguM8mFEkEzZ9ExdQ6H1UaV+eYrjX8/DmiYfH8=;
-	b=0KEPutM4wBkiWfP2EAgFi3pTZxigpVFhgbqFGdrJ19hrqhiZCvXxA9CIJECcHZw490dW
-	 easXt2qji6W+UJL51potKfDQjd8ukkpr5ACCftFRRvXqQ1he5A4YXKbUCc1TrurMU1rMa
-	 kgeV6fb7hAzy0pCw1fH3+Q7LSZMP2ZGG0xveAO304SRciIGg7BeFRkhz7MtLbX3Dqb3+r
-	 8rgHNr+jjkBk4FPXSKZMuj0CTLwJPxWR0Kif8stGTmfZ1i3FbYLTJjkTkIqpPSnbLkakA
-	 n0MDUDe1O04Xqz4ZuSBLZMcJWPbtNTyHFW5R+3B4cRRTgtxxV6ZA754bpwevr9qQ0vQ==
+	bh=Wp3e3cNbBaccEPUrPNVoRY69mMbvHYz72yqs2PIewpQ=;
+	b=dqxBTsfw0UCBJ1ewdHbjNc11KF6M8dG+u2UhRu2Rh+OFreqLr++Bu7WN/GPlwvw60yF7
+	 8akxkf642XLXUiZ6tqE2VagGDr6HSNz8RwaXBbGc3vJVEJf2tnevacO0waJ6UjRJm7frM
+	 GO/65EXyoGwep9oCY0ysnYZqmXvcKgT21z084fDsQr1f8cLy6mmkjrKFsScxayKusnBjc
+	 M3/v5SM81B2kpkp74bMldhFzUVeggysnTPtQ7k+5Iuxf3FezR69fpX7YQtOCmg009lITN
+	 iSnsLnaFrKRV8ARwDkQhEFQPDHyvFAGzS1ZjECGJjlesJhODLxr9BJokg89ExTiXojg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WeEtLfMP;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="UBt+/gu0";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7BDF606A337;
-	Wed, 28 Oct 2026 19:11:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47931606BF8D;
+	Wed, 28 Oct 2026 19:11:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WeEtLfMP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C38681F01825;
-	Wed, 28 Oct 2026 19:11:36 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UBt+/gu0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99B461F01825;
+	Wed, 28 Oct 2026 19:11:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214697;
-	bh=RkvVwvguM8mFEkEzZ9ExdQ6H1UaV+eYrjX8/DmiYfH8=;
+	s=korg; t=1793214700;
+	bh=Wp3e3cNbBaccEPUrPNVoRY69mMbvHYz72yqs2PIewpQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WeEtLfMPet9UxAGBkS4nj9v8ScJYJtZHtw0/FJB8/WFcq2DOxil3FrRxDmOBDjxkq
-	 InWS3/iFXZij34ugqVZcD2F0+GBHIjZXr80RrV4g5uZwg5jBNhZMILRHU1Eh7ss99R
-	 WHIl9/WKSwrfBvVu/VG4f0L/rd+b1x5czyifMyUI=
+	b=UBt+/gu0I272ZkwpONo1Frgv224AyWiHTUzE179nxw8mXpqeUkg1kwCBQ8OS/yWzX
+	 xZHmxTLr0E9f+gWngC6+z2ncAGgfeMw/aoU1D11tJmWK+GEjL7JLUXiXqwSWYOaZTo
+	 k5GHF4ze9oSEXE7reF6+f8L8SBYdg32rgJrfxFB4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Cercueil <paul@crapouillou.net>,
+	Christian Brauner <brauner@kernel.org>,
+	Al Viro <viro@zeniv.linux.org.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0906/1887] usb: gadget: functionfs: Factorize wait-for-endpoint code
-Date: Wed, 28 Oct 2026 17:50:02 +0100
-Message-ID: <20261028170520.033449116@linuxfoundation.org>
+Subject: [PATCH 6.1 0907/1887] functionfs, gadgetfs: use simple_recursive_removal()
+Date: Wed, 28 Oct 2026 17:50:03 +0100
+Message-ID: <20261028170520.055361005@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -67,101 +68,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paul Cercueil <paul@crapouillou.net>
+From: Al Viro <viro@zeniv.linux.org.uk>
 
-[ Upstream commit 799970a5b15deec8bbcb098b11a73d8acc55d075 ]
+[ Upstream commit bad356bb50e64170f8af14a00797a04313846aeb ]
 
-This exact same code was duplicated in two different places.
+usual mount leaks if something had been bound on top of disappearing
+files there.
 
-Signed-off-by: Paul Cercueil <paul@crapouillou.net>
-Link: https://lore.kernel.org/r/20240130122340.54813-3-paul@crapouillou.net
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
 Stable-dep-of: e5bf5ee26663 ("functionfs: fix the open/removal races")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/function/f_fs.c | 48 +++++++++++++++++-------------
- 1 file changed, 27 insertions(+), 21 deletions(-)
+ drivers/usb/gadget/function/f_fs.c | 3 +--
+ drivers/usb/gadget/legacy/inode.c  | 7 +------
+ 2 files changed, 2 insertions(+), 8 deletions(-)
 
 diff --git a/drivers/usb/gadget/function/f_fs.c b/drivers/usb/gadget/function/f_fs.c
-index 3a1f823d71acf..e3a4d5819f004 100644
+index e3a4d5819f004..42095e9b472fa 100644
 --- a/drivers/usb/gadget/function/f_fs.c
 +++ b/drivers/usb/gadget/function/f_fs.c
-@@ -952,31 +952,44 @@ static ssize_t __ffs_epfile_read_data(struct ffs_epfile *epfile,
- 	return ret;
- }
- 
--static ssize_t ffs_epfile_io(struct file *file, struct ffs_io_data *io_data)
-+static struct ffs_ep *ffs_epfile_wait_ep(struct file *file)
- {
- 	struct ffs_epfile *epfile = file->private_data;
--	struct usb_request *req;
- 	struct ffs_ep *ep;
--	char *data = NULL;
--	ssize_t ret, data_len = -EINVAL;
--	int halt;
--
--	/* Are we still active? */
--	if (WARN_ON(epfile->ffs->state != FFS_ACTIVE))
--		return -ENODEV;
-+	int ret;
- 
- 	/* Wait for endpoint to be enabled */
- 	ep = epfile->ep;
- 	if (!ep) {
- 		if (file->f_flags & O_NONBLOCK)
--			return -EAGAIN;
-+			return ERR_PTR(-EAGAIN);
- 
- 		ret = wait_event_interruptible(
- 				epfile->ffs->wait, (ep = epfile->ep));
- 		if (ret)
--			return -EINTR;
-+			return ERR_PTR(-EINTR);
+@@ -1935,8 +1935,7 @@ static void ffs_epfiles_destroy(struct ffs_epfile *epfiles, unsigned count)
+ 		BUG_ON(mutex_is_locked(&epfile->mutex));
+ 		__ffs_epfile_read_buffer_free(epfile);
+ 		if (epfile->dentry) {
+-			d_delete(epfile->dentry);
+-			dput(epfile->dentry);
++			simple_recursive_removal(epfile->dentry, NULL);
+ 			epfile->dentry = NULL;
+ 		}
  	}
+diff --git a/drivers/usb/gadget/legacy/inode.c b/drivers/usb/gadget/legacy/inode.c
+index 471f3f83753b0..9ef922c537b4b 100644
+--- a/drivers/usb/gadget/legacy/inode.c
++++ b/drivers/usb/gadget/legacy/inode.c
+@@ -1547,7 +1547,6 @@ static void destroy_ep_files (struct dev_data *dev)
+ 	spin_lock_irq (&dev->lock);
+ 	while (!list_empty(&dev->epfiles)) {
+ 		struct ep_data	*ep;
+-		struct inode	*parent;
+ 		struct dentry	*dentry;
  
-+	return ep;
-+}
-+
-+static ssize_t ffs_epfile_io(struct file *file, struct ffs_io_data *io_data)
-+{
-+	struct ffs_epfile *epfile = file->private_data;
-+	struct usb_request *req;
-+	struct ffs_ep *ep;
-+	char *data = NULL;
-+	ssize_t ret, data_len = -EINVAL;
-+	int halt;
-+
-+	/* Are we still active? */
-+	if (WARN_ON(epfile->ffs->state != FFS_ACTIVE))
-+		return -ENODEV;
-+
-+	ep = ffs_epfile_wait_ep(file);
-+	if (IS_ERR(ep))
-+		return PTR_ERR(ep);
-+
- 	/* Do we halt? */
- 	halt = (!io_data->read == !epfile->in);
- 	if (halt && epfile->isoc)
-@@ -1308,16 +1321,9 @@ static long ffs_epfile_ioctl(struct file *file, unsigned code,
- 		return -ENODEV;
+ 		/* break link to FS */
+@@ -1557,7 +1556,6 @@ static void destroy_ep_files (struct dev_data *dev)
  
- 	/* Wait for endpoint to be enabled */
--	ep = epfile->ep;
--	if (!ep) {
--		if (file->f_flags & O_NONBLOCK)
--			return -EAGAIN;
--
--		ret = wait_event_interruptible(
--				epfile->ffs->wait, (ep = epfile->ep));
--		if (ret)
--			return -EINTR;
--	}
-+	ep = ffs_epfile_wait_ep(file);
-+	if (IS_ERR(ep))
-+		return PTR_ERR(ep);
+ 		dentry = ep->dentry;
+ 		ep->dentry = NULL;
+-		parent = d_inode(dentry->d_parent);
  
- 	spin_lock_irq(&epfile->ffs->eps_lock);
+ 		/* break link to controller */
+ 		mutex_lock(&ep->lock);
+@@ -1572,10 +1570,7 @@ static void destroy_ep_files (struct dev_data *dev)
+ 		put_ep (ep);
  
+ 		/* break link to dcache */
+-		inode_lock(parent);
+-		d_delete (dentry);
+-		dput (dentry);
+-		inode_unlock(parent);
++		simple_recursive_removal(dentry, NULL);
+ 
+ 		spin_lock_irq (&dev->lock);
+ 	}
 -- 
 2.53.0
 
