@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793209883;
-	b=IfEsYx1Tw5V/2ltuXfQMitUymifm87k4Gbu4SR2w/kLIBr3D8H3NGDransf77YATQ1Wi
-	 uV3COIV+2L6QCdVHjolPWTGwzmY0veKiLFByr4lWEEEDzHdel7sOiG1BrQxMv3d7nyAtI
-	 O0eOyfaBS2I9mWwctLRmnv2TTY7AOxnC8fdPG+Mlczz/qPMjeiDD/evaZ0blqPcZS9cec
-	 +1tMyGEv2JeY9eriVS3AO3+FqZ5T+tC3rrihlGw3wN6FCIKvy+7kHeYq0lkvrjxHwns1i
-	 mDG4QkDecLUtEnwKL0uq+w0CcxNEnpMWYN+cS/UuBt5vvxK+TW4zBNSy/bm2OzTCtng==
+	t=1793209886;
+	b=uru+LlWfmvVQTm9/SdVORkmoJkt1RsFUSkr7Ivu6lZM65S87Ypo/KB8IC27CItF4VY6W
+	 puVNJSRxat+tLK6DPghYlBqpJixAyiMKSSXAAwtnRw7gXk7luM1dMb+pYCs/5UoCE20uc
+	 5fF6f0OY3e35Hd7+2jxadecch37inxVQZc3TCurEwuWlilenlESPH2IONwzjeyhzZ+O3V
+	 fIz47HyUMm52LhkOFQSG3mBfdMSbGr/dpLC922sxriKLFf4x3Ql9bEYC2O3G21YiZvh5i
+	 cGSKlnyPily/PsKCg/JMT948Xi4IfSm98QdlJF4Ly51pXQYpmE8pTUFFEjyllLgwgYQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793209883;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793209886;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=BcfONCM9hWl1LBC87D1VVeKx0EmVpaA2PKAPxw+63Nc=;
-	b=WGmSOC3Kf9HIXMpVGkvsJS2vcBE5QjGo4WAiESFTpkds4b98SQONdz7v8VyFBKdHoOoT
-	 Ff3l+ztsnn0FUaTGoudS1QErgtln8W8wC54fYhJfZ5EIYB75kO4Q1VWBh7inrzNcuaDZ4
-	 YJRBPpzUsnKSSra7rqj1ZTvrxY1fMq0BLoRHxTUTeqxMOyMx1X8cVYjW0faq0c4xl5uXz
-	 tqREYfAMtmJRKWwKZO7OlZWJnnDwbhrDBQWOp0idQFtqzIpMnB9rq4ZANzZesMQUYo0BG
-	 fi5lFOu5sOmSKYIsAwvnWAMcFyMqrduYiCZ3A49yHrVK44cMtHMzvr3xZW28kwtVvoA==
+	bh=aNPCkNgSnEie5VIcIAlwSEqZHgZ/pjdpM7vE0RNMq9Y=;
+	b=wSHu1NwnUUHY0FAPPAZU3Mln5VZ+DtpQJXEM5BSRJDs9mU2TOVL7D+4BUJXyVrmTXUfd
+	 ZOH6O8HXm2HybI0G5XkQCGXGWd5IALrTJjIUEQXW5Z2h3KfhmMX2i1P+ozKHdukY+iQIX
+	 QUvrkLb8dWs+ZbQE3JS69od8P5e4LT44m8IXUpTtPd0gXbjM0J6UlGL8+ucFL2TyuSs+m
+	 tvNFMM9w+E2MfjNdWZ38u41Qr5YQnZ/aibq15HHGAsCJDjrArYE1cYZ5g/EA7xFjt2RKK
+	 OIDpvQSISL+inp56oBm46kCudrCuwN1aUTXVY79R8PWVnWC2QZJzWDZ1LPuQ4WkRKMw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RtHMxNPt;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nX27fApk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9A1A606A31C;
-	Wed, 28 Oct 2026 17:51:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C10DC606A31D;
+	Wed, 28 Oct 2026 17:51:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RtHMxNPt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB45A1F01825;
-	Wed, 28 Oct 2026 17:51:21 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nX27fApk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB5C61F01825;
+	Wed, 28 Oct 2026 17:51:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793209882;
-	bh=BcfONCM9hWl1LBC87D1VVeKx0EmVpaA2PKAPxw+63Nc=;
+	s=korg; t=1793209885;
+	bh=aNPCkNgSnEie5VIcIAlwSEqZHgZ/pjdpM7vE0RNMq9Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RtHMxNPtQ0wdcqdx9U4hrDeKThdzJUWgmk+FD4wQEstklkzdJqvcnJ3FpGoJ0oDYM
-	 /aN8Kbl/edmuCGTRw///6nlogA095+pbxWAyIsY3cKV9EddXhU+21HpEyRTVrjvMcS
-	 YZCTVnjSs3nBC2dEI/6i7Apv1v8QtaTPauNXUH0w=
+	b=nX27fApkE+fTT7Tc9iEJTrVpaS8OyL8fPsk5ZLi8LN25GSmPwGYEg+Yu85PsfARhf
+	 ZOTtbCYOfkQEzbtTIbiadUAUX6QMczh5aTVl3/PdL3LSapAP+8K/b1A5ArJZUrUwEr
+	 ZwUgObi60Me23ron32RcwtIolfBcWsH2ZoSChdyI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.18 090/109] io_uring: keep the drain active when a deferred drain request is started
-Date: Wed, 28 Oct 2026 18:01:14 +0100
-Message-ID: <20261028165944.473785036@linuxfoundation.org>
+	Cen Zhang <zzzccc427@gmail.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>
+Subject: [PATCH 6.18 091/109] keys: Avoid the owner account dereference in named keyring lookup
+Date: Wed, 28 Oct 2026 18:01:15 +0100
+Message-ID: <20261028165944.495900661@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165942.357251485@linuxfoundation.org>
 References: <20261028165942.357251485@linuxfoundation.org>
@@ -67,90 +67,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-Commit 2295613cd3713beffc8665e956135a5d48dfc208 upstream.
+commit 51409aaa01f8602552c336009fd22b226b0cdf1d upstream.
 
-ecb6817b769f ends the drain when the dispatched drain request has posted
-its CQE and nothing else is deferred. But the deferred list is processed
-in between, and if the request it starts is itself a drain request, the
-drain is over before that one has even run. A request submitted after
-that point then runs ahead of it:
+Named keyring lookup must keep the storage containing the owner UID
+alive through the namespace mapping check.  find_keyring_by_name()
+reads keyring->user->uid under keyring_name_lock, but that lock protects
+the keyring's name entry and allocation, not its separate key_user.
 
-  1. P0 in flight, D1 and D2 (both IOSQE_IO_DRAIN) deferred behind it
-  2. P0 completes, D1 is started
-  3. D1 completes, drain_done is set, D2 is started, the list is empty
-  4. IO_RING_F_DRAIN_ACTIVE is cleared with D2 still in flight
+A named session-keyring join can overlap a privileged KEYCTL_CHOWN on
+another CPU.  If the keyring holds the last reference to its old dynamic
+key_user and the ownership transfer succeeds, the following ordering is
+possible:
 
-Anything submitted now bypasses the drain. The same happens with D2 as
-the head of a link, as those aren't tracked in ->drain_req at all.
+    Named join                         Chown
+    find_keyring_by_name()              keyctl_chown_key()
+      read_lock(keyring_name_lock)       down_write(key->sem)
+      load old keyring->user
+                                         replace key->user and key->uid
+                                         up_write(key->sem)
+                                         key_put(key)
+                                         key_user_put(old user): free
+      read old user->uid
+      read_unlock(keyring_name_lock)
 
-Have io_queue_deferred() report whether it started a drain request, and
-don't end the drain if it did. Starting non-drain requests and ending it
-is still fine, they were only waiting on the drain request that just
-completed.
+Chown neither takes keyring_name_lock nor key_session_mutex, so it can
+free the old account between the pointer load and the UID read.  The
+lookup then reads freed memory even though the keyring itself is alive.
 
-[ 6.18: ->drain_active is a bool here ]
-Fixes: ecb6817b769f ("io_uring: end the drain when the drain request completes")
-Reported-by: Karl Mehltretter <kmehltretter@gmail.com>
-Link: https://lore.kernel.org/io-uring/20261027043323.98916-1-kmehltretter@gmail.com/
+Use keyring->uid for the mapping check.  key_alloc() initializes this
+inline owner UID and keyctl_chown_key() updates it on chown.
+The existing name lock keeps its containing keyring allocated throughout
+the check, so lookup no longer depends on the account's lifetime.  This
+also matches the owner UID used by the permission check.
+
+KASAN report as below:
+
+    BUG: KASAN: slab-use-after-free in find_keyring_by_name+0x577/0x5d0
+    Read of size 4 at addr ffff8881128ae2ec by task keycase/500
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 2ea190d0a006 ("keys: skip keys from another user namespace")
+Assisted-by: LLM
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Link: https://lore.kernel.org/r/pm-key-management-objects-candidate-0002-v3-2baa8cad2bb554364e10@gmail.com
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/io_uring.c |   20 +++++++++++++-------
- 1 file changed, 13 insertions(+), 7 deletions(-)
+ security/keys/keyring.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -545,9 +545,9 @@ unsigned io_linked_nr(struct io_kiocb *r
- 	return nr;
- }
+--- a/security/keys/keyring.c
++++ b/security/keys/keyring.c
+@@ -1158,7 +1158,7 @@ struct key *find_keyring_by_name(const c
+ 	 * grants Search permission and that hasn't been revoked
+ 	 */
+ 	list_for_each_entry(keyring, &ns->keyring_name_list, name_link) {
+-		if (!kuid_has_mapping(ns, keyring->user->uid))
++		if (!kuid_has_mapping(ns, keyring->uid))
+ 			continue;
  
--static __cold noinline void io_queue_deferred(struct io_ring_ctx *ctx)
-+static __cold noinline bool io_queue_deferred(struct io_ring_ctx *ctx)
- {
--	bool drain_seen = false, first = true;
-+	bool drain_seen = false, first = true, drain_queued = false;
- 
- 	lockdep_assert_held(&ctx->uring_lock);
- 	__io_req_caches_free(ctx);
-@@ -561,17 +561,21 @@ static __cold noinline void io_queue_def
- 
- 		drain_seen |= de->req->flags & REQ_F_IO_DRAIN;
- 		if ((drain_seen || first) && ctx->nr_req_allocated != ctx->nr_drained)
--			return;
-+			return drain_queued;
- 
- 		list_del_init(&de->list);
- 		ctx->nr_drained -= io_linked_nr(de->req);
--		/* it runs alone, track its completion unless it's a link */
--		if ((de->req->flags & REQ_F_IO_DRAIN) && !de->req->link)
--			ctx->drain_req = de->req;
-+		if (de->req->flags & REQ_F_IO_DRAIN) {
-+			drain_queued = true;
-+			/* it runs alone, track its completion unless it's a link */
-+			if (!de->req->link)
-+				ctx->drain_req = de->req;
-+		}
- 		io_req_task_queue(de->req);
- 		kfree(de);
- 		first = false;
- 	}
-+	return drain_queued;
- }
- 
- void __io_commit_cqring_flush(struct io_ring_ctx *ctx)
-@@ -1677,7 +1681,9 @@ void __io_submit_flush_completions(struc
- 	}
- 
- 	if (unlikely(ctx->drain_active)) {
--		io_queue_deferred(ctx);
-+		/* a drain request started from the list keeps the drain going */
-+		if (io_queue_deferred(ctx))
-+			drain_done = false;
- 		if (drain_done && list_empty(&ctx->defer_list))
- 			ctx->drain_active = false;
- 	}
+ 		if (test_bit(KEY_FLAG_REVOKED, &keyring->flags))
 
 
