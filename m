@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793210000;
-	b=XG/0vvpcSec4Zba321UjAcsPfZqqrpV+ijlAXBFS9/QiWxI6+l+68q7u9YQRjn2tEpOd
-	 tzxcwwembI5846AqCvugDFRIKqWMw/SlLH5XyiMo9mMuLUt29X0A+PjbP9B+rmT3zL+eG
-	 yrRTWauZ4zs27RlVb6HUnOW4mFHpo1phMktXKxbfZYzf97irvXjx0fnOw9YOo6CYOAR97
-	 EIB68Z5yeJy9qKBYwbMwlWjYOKPaJjy17it4Gv+4sIwJBCSA2yJs/gaf2/oNuhkyhB+nP
-	 KDVI5xsSBnKq3YwV8VzFeC8vwUpvQ75v5hxT39HALhoME3P/B4iKJV2fI2lW1FYM2kg==
+	t=1793210002;
+	b=EeqjbmqV5Jo3xn4lZIwSuJ/2JMvf5wtkL76RG+Hgr/2G7MtinpQeVCWM97GX+t4qM3Oi
+	 K0G+gTvY+JNTa/n3bMHewqbxLkQBTliGGPk5wsoQ5TCjJrTaht5rRqbaA9sLV+G3DNzte
+	 hhMFb1aSM4fRDn+mqCT5enVZrn5n9HGuMZehFNNGLXdAnkZChfF/cBQUh9dyfNo1KCuna
+	 ClH7Uu17jTh55uC7WYj92x8kj2bAIHTwMe85SQrY5N803iNJ+N04y+MLWHe/S/SxMlT4H
+	 FXht9ta6GTkv1f8R5z2DS54kJwGrFJ/gQaw+GfAvCLraDG5qtNhBv13nXY69O4BLkEg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793210000;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793210002;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=VVqC6Tmw/UZTSwgjDGsXmVz7R0xSaWZnSO+0imHvK44=;
-	b=Rcz9kcDSBeeicyYPTNiWk3/ZfLEx7KAtKrGPdtYotlbC4EDSj1TpCqgZa+hlHr8ntqas
-	 CkiPFTqsZP7NP4z7iWaT7h4xAgMBtaSqp4Qx+QbObGNi6Ohm6IdQ7zCS7H0ES1sgzno3B
-	 xpVd50XEI0pIIaRBOxY4xMcRebkbpN2KUDLFQPsGoue39fMCbZRNWK3EPSrj1KmSTr/Pn
-	 w+a0War3YTjNNllZD7AE6blDddbFbkZK4/QE9FybZOFbfzh4OVCb7y+DoK/yKs/2yy79n
-	 4/HmLAlZPYPdvxiSx57NZHsJSXHCccbiKIPdlGR8jZJryGCt+dugNKi6CO+zxDno0xQ==
+	bh=k9Uktwkcb4dDrqo3CqUhZ5hpGEU7JqSJb5symXMdx6A=;
+	b=kFHHAy/l148kXmB/RpQaAQegG7Rdfo44CrYJ7SFE7RFi59R5RDB4zYp++ouGc/0kWEI+
+	 OLkWG1zPfgBrj7URI/bJs4dZMoHakVXPgL/D+CY2E+21Nj4ZTbjTe0lotI2jzJA3Nb4lu
+	 IY/Og+5wwt4dJN0tVkpi/g7PIphQQtAUgZgZihPnsmaYmGygsyltDcWlgN2KLC/NGkKqh
+	 qf0A7ukbsDVZb1OYVUG/ugdSBzy1FehBqjw9XiLcxauRj0H3IA7CRk9NASXZ/fGsJiw89
+	 OIBJYatqiuqkmPsFNJ0KxWj1BJpXcljPNTQnYhF9XOnMDH99KKst8qssBA2YRF8y3UA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=k4Nscmo8;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=y3ftLiEx;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A76C0606A31A;
-	Wed, 28 Oct 2026 17:53:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FA98606A31D;
+	Wed, 28 Oct 2026 17:53:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=k4Nscmo8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 051EB1F01825;
-	Wed, 28 Oct 2026 17:53:18 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=y3ftLiEx
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD81E1F01825;
+	Wed, 28 Oct 2026 17:53:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793209999;
-	bh=VVqC6Tmw/UZTSwgjDGsXmVz7R0xSaWZnSO+0imHvK44=;
+	s=korg; t=1793210002;
+	bh=k9Uktwkcb4dDrqo3CqUhZ5hpGEU7JqSJb5symXMdx6A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=k4Nscmo8BDUq7Y6rnBFxA2Q1NxuhmlFiCnJRV6viPXIUeHuVXe4l+eX9H7HKjED2a
-	 yD1iFEe0XMrHtaSpOxr6BepYOeyCDRmKMcfaBI3WfZoS3j6CfoKOtYhY8HiHHYsOW2
-	 6QgwFg39ChGOPKNC4SVpnR9pYwA5A4GSyQomNyFI=
+	b=y3ftLiExXYXmzYK7xf8vVpYhoaQy6lqDjDPXQb+3RLDCK3EVB13DPY6eWnXo7xisM
+	 bzNF2qhQFBirWSZy7S8T072KmGSJ/R813K4Tlc1UnYnioiYUFNOP4/l4xpB/93YaEU
+	 ijNmNqDINEy63g84iSMSTuayQlZp0737jZ0xQ018=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
-	Hamza Mahfooz <hamzamahfooz@linux.microsoft.com>,
+	Haris Okanovic <harisokn@amazon.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 004/168] ext4: fallback to complex scan if aligned scan doesnt work
-Date: Wed, 28 Oct 2026 17:59:00 +0100
-Message-ID: <20261028165943.198849420@linuxfoundation.org>
+Subject: [PATCH 6.6 040/168] perf: Fix perf_pmu_migrate_context() leaving events behind
+Date: Wed, 28 Oct 2026 17:59:36 +0100
+Message-ID: <20261028165944.040799664@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165943.089486480@linuxfoundation.org>
 References: <20261028165943.089486480@linuxfoundation.org>
@@ -70,67 +68,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ojaswin Mujoo <ojaswin@linux.ibm.com>
+From: Haris Okanovic <harisokn@amazon.com>
 
-[ Upstream commit 1f6bc02f18489b9c9ea39b068d0695fb0e4567e9 ]
+[ Upstream commit e76b36b4be7160eaa14b416681e548b125702395 ]
 
-Currently in case the goal length is a multiple of stripe size we use
-ext4_mb_scan_aligned() to find the stripe size aligned physical blocks.
-In case we are not able to find any, we again go back to calling
-ext4_mb_choose_next_group() to search for a different suitable block
-group. However, since the linear search always begins from the start,
-most of the times we end up with the same BG and the cycle continues.
+__perf_pmu_remove() walks the group leaders of a CPU and PMU with
+perf_event_groups_for_cpu_pmu(), removing each one as it goes.
+perf_remove_from_context() takes the leader out of the groups rbtree,
+after which rb_next() on that node returns NULL, prematurely ending the
+walk. Other groups stay behind in the source context.
 
-With large fliesystems, the CPU can be stuck in this loop for hours
-which can slow down the whole system. Hence, until we figure out a
-better way to continue the search (rather than starting from beginning)
-in ext4_mb_choose_next_group(), lets just fallback to
-ext4_mb_complex_scan_group() in case aligned scan fails, as it is much
-more likely to find the needed blocks.
+On CPU hotplug, they are then torn down with the dying CPU. They keep
+running until teardown, while the PMU's interrupt and migrated events
+are on a new CPU, which drivers rely on never happening.
 
-Signed-off-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/ee033f6dfa0a7f2934437008a909c3788233950f.1702455010.git.ojaswin@linux.ibm.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Fixes: 83e80a6e3543 ("ext4: use buckets for cr 1 block scan instead of rbtree")
-Signed-off-by: Hamza Mahfooz <hamzamahfooz@linux.microsoft.com>
+Walk ctx->event_list instead and pick out the PMU's events by their
+pmu_ctx.
+
+Fixes: bd2756811766 ("perf: Rewrite core context handling")
+Signed-off-by: Haris Okanovic <harisokn@amazon.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://patch.msgid.link/20261013185603.1347265-2-harisokn@amazon.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/mballoc.c | 21 +++++++++++++--------
- 1 file changed, 13 insertions(+), 8 deletions(-)
+ kernel/events/core.c | 20 +++++++-------------
+ 1 file changed, 7 insertions(+), 13 deletions(-)
 
-diff --git a/fs/ext4/mballoc.c b/fs/ext4/mballoc.c
-index 4ec4388932eaf..646f55ba0dd1b 100644
---- a/fs/ext4/mballoc.c
-+++ b/fs/ext4/mballoc.c
-@@ -2954,14 +2954,19 @@ ext4_mb_regular_allocator(struct ext4_allocation_context *ac)
- 			ac->ac_groups_scanned++;
- 			if (cr == CR_POWER2_ALIGNED)
- 				ext4_mb_simple_scan_group(ac, &e4b);
--			else if ((cr == CR_GOAL_LEN_FAST ||
--				 cr == CR_BEST_AVAIL_LEN) &&
--				 sbi->s_stripe &&
--				 !(ac->ac_g_ex.fe_len %
--				 EXT4_B2C(sbi, sbi->s_stripe)))
--				ext4_mb_scan_aligned(ac, &e4b);
--			else
--				ext4_mb_complex_scan_group(ac, &e4b);
-+			else {
-+				bool is_stripe_aligned = sbi->s_stripe &&
-+					!(ac->ac_g_ex.fe_len %
-+					  EXT4_B2C(sbi, sbi->s_stripe));
-+
-+				if ((cr == CR_GOAL_LEN_FAST ||
-+				     cr == CR_BEST_AVAIL_LEN) &&
-+				    is_stripe_aligned)
-+					ext4_mb_scan_aligned(ac, &e4b);
-+
-+				if (ac->ac_status == AC_STATUS_CONTINUE)
-+					ext4_mb_complex_scan_group(ac, &e4b);
-+			}
+diff --git a/kernel/events/core.c b/kernel/events/core.c
+index a226f908490f0..c891243ddef9b 100644
+--- a/kernel/events/core.c
++++ b/kernel/events/core.c
+@@ -13099,23 +13099,18 @@ perf_event_create_kernel_counter(struct perf_event_attr *attr, int cpu,
+ }
+ EXPORT_SYMBOL_GPL(perf_event_create_kernel_counter);
  
- 			ext4_unlock_group(sb, group);
- 			ext4_mb_unload_buddy(&e4b);
+-static void __perf_pmu_remove(struct perf_event_context *ctx,
+-			      int cpu, struct pmu *pmu,
+-			      struct perf_event_groups *groups,
++static void __perf_pmu_remove(struct perf_event_context *ctx, struct pmu *pmu,
+ 			      struct list_head *events)
+ {
+-	struct perf_event *event, *sibling;
++	struct perf_event *event, *tmp;
++
++	list_for_each_entry_safe(event, tmp, &ctx->event_list, event_entry) {
++		if (event->pmu_ctx->pmu != pmu)
++			continue;
+ 
+-	perf_event_groups_for_cpu_pmu(event, groups, cpu, pmu) {
+ 		perf_remove_from_context(event, 0);
+ 		put_pmu_ctx(event->pmu_ctx);
+ 		list_add(&event->migrate_entry, events);
+-
+-		for_each_sibling_event(sibling, event) {
+-			perf_remove_from_context(sibling, 0);
+-			put_pmu_ctx(sibling->pmu_ctx);
+-			list_add(&sibling->migrate_entry, events);
+-		}
+ 	}
+ }
+ 
+@@ -13191,8 +13186,7 @@ void perf_pmu_migrate_context(struct pmu *pmu, int src_cpu, int dst_cpu)
+ 	 */
+ 	mutex_lock_double(&src_ctx->mutex, &dst_ctx->mutex);
+ 
+-	__perf_pmu_remove(src_ctx, src_cpu, pmu, &src_ctx->pinned_groups, &events);
+-	__perf_pmu_remove(src_ctx, src_cpu, pmu, &src_ctx->flexible_groups, &events);
++	__perf_pmu_remove(src_ctx, pmu, &events);
+ 
+ 	if (!list_empty(&events)) {
+ 		/*
 -- 
 2.53.0
 
