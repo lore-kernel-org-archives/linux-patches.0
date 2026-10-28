@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793207303;
-	b=BG/GET63qdAZ/KVH4GCSoQa2ndT9Tig4sHR3bm6s38BzgfZUjsMA6+oCzkHtfv+9D8zU
-	 d7YQxt2+DgebpTMIK8SLU2AcTJqIlcM22CH7war+JJVU+mL8o59TcyC9NSB6Ym+URW9O8
-	 9G1VilnMsgrcFBQ6T5trhi4ZhMW565sN7bGndN9KNZiQeaH4oDi69kVRH1vQQuDROPwV6
-	 FuXEU8flLpwpQru/31GlonHCf1y9W33heVCTH1makCLI7ikNxqm89+U0YITwieKn8Aooq
-	 FaChgP7WeD+UUjMtijIq1ssmEJJAJoNta5/izAu3+0awef7zHAaOKKEoQ5iNjB2DQrg==
+	t=1793207306;
+	b=HyxjRuRWcqsAoEj+o5OyVzlxGXvr0SUYk1smXC8yh90MNB01Dsm23OQnEwhFEvAqXx5i
+	 LiCI2YbSjJV90RTvoOpuUi/qdjtx470ycCgB6ZjTQ5UoHC4Yc+D/3bP6ojKMg1CDgqf2S
+	 my+h0He6sEJ24kd3ufD47NHhjIc2xsnNY5MCaPVhV2olPaZU5FJnDrZXa3jms7AaNGoDY
+	 5TLr2hnQJI/3iRUeYnFzgzRLXGLAEhsVmz6H++ak3dDGNi54VAmyUsg2kRBDADdBfmEX9
+	 mv/3YiemlVqTbpoRKBmTiBV9B1aZBavURTQ7IK/BkrX3UcY/BlDUrTM09btrk7Yy1ag==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793207303;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793207306;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=8fG4xflSzArtS3wrqadN9Mmgb2YpKiqUVGuefstLnU4=;
-	b=g3ga7aCcxT2QgIsHZXbHIKTvr0JZTWmwIsmdYE5fJH6kXmPUNkrn3WTl4vv9ffQhdzI3
-	 WSLKJN0YDkg3pu7Hf127lGMwjHf+pSpzu7TrZPqfUyTqYNXKPYsrsAyH99pUHt0zbUAGe
-	 XxwCbfp2avcf3DxuBF+etSJhm/ragk3LVALTEv3cdS8KCTpPJ+y3QErP67EBMFmSMZY+3
-	 VXD7IN5rQRy5HX3GUN2gEAm/stNPwevKkflL7YZ7yXYAuwYvW7cZiZ6wCm9NilulzIWR4
-	 z+Rk/gXEPjTfGXoFVu6QoQSY9pR2xuAuXnnHVCBj+K+gikixRO3ZRbBMGGmd+eS9IBA==
+	bh=93mxF0/wZ+PyBBqjzSOqGpKSfb9zMEvY5EZaXrHvn0Q=;
+	b=IhCNXD8jt41yv7IzQHI2ETUXWnwEm83OTijru0rqJ4nqIQDiztqSI+w/4qsp0tM5t4US
+	 Sdut+t1EE8KCzF4XLDVWECpI2nyGSrN8bjOd4JV8CUAkEy+/ozXuFlAnRD8wi4wQupLYH
+	 s1xQ9RwuOR3BJtxOXO5ceBCQ3617KQGUwaaSXmPJ19sjThxPZAKQHaVWNQZvwoDVhLFLd
+	 BSfLeG/JNnnFTiB5MUkdIorUNkM7rj0O81X9E5c1t9du7miFJzJj0pz2E1Tf8Cw5/xf0C
+	 414OCH+C8/nBmNbRXIzUdg0uwXlm4XzFvukl7Q3zR+IsAtC9DwrR45zszldipGIerJA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zMHDemNA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZSrCWUcd;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A06FA606A321;
-	Wed, 28 Oct 2026 17:08:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CA31606A31A;
+	Wed, 28 Oct 2026 17:08:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zMHDemNA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF00C1F01825;
-	Wed, 28 Oct 2026 17:08:22 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZSrCWUcd
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF9331F01825;
+	Wed, 28 Oct 2026 17:08:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793207303;
-	bh=8fG4xflSzArtS3wrqadN9Mmgb2YpKiqUVGuefstLnU4=;
+	s=korg; t=1793207306;
+	bh=93mxF0/wZ+PyBBqjzSOqGpKSfb9zMEvY5EZaXrHvn0Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zMHDemNA7Tyt+wxNRqjFlEDS/m9Wnsnc6BGWbSrG1FFjcTEQENL2IQD3wdbCrr7o8
-	 QVjqnIUZngIZNQh9TVb3p3Gv8GwJtfIqfZT9Ckn9jrH5FVSyINgfITlXJ9t4ZnN9zl
-	 652Qv9XBFsoMzj7kp2vcGcMtBHOOHvHHnVjRgbo8=
+	b=ZSrCWUcd0mdkgKzHgd3DrlKcyySCyRxThyN4urPyrqv/3DqdzxRunFbqlCjYC1gKo
+	 k2jdM+cQbsInlAsg9mD+nOue5zlWcqd2YYo01ll+M4pRzpDSdkIPGMaocGafHqrBY+
+	 B411pTC7KEPfUqA3bqH/sz0sCXvh3VrV9BfmfLmg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Josef Bacik <josef@toxicpanda.com>,
 	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 7.2 57/88] io_uring/timeout: no ABS update of multishot timeouts
-Date: Wed, 28 Oct 2026 18:00:05 +0100
-Message-ID: <20261028165943.455295125@linuxfoundation.org>
+Subject: [PATCH 7.2 22/88] io_uring: dont flood a cancelling task with task_work
+Date: Wed, 28 Oct 2026 17:59:30 +0100
+Message-ID: <20261028165942.640244449@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165942.107695352@linuxfoundation.org>
 References: <20261028165942.107695352@linuxfoundation.org>
@@ -69,95 +69,79 @@ Content-Transfer-Encoding: 8bit
 
 From: Josef Bacik <josef@toxicpanda.com>
 
-Commit b088ae34d4da730dc647261b893a6eb622fe5e1f upstream.
+Commit 22e643e61b9b6299b42ff7d88bab48bccada8a5d upstream.
 
-IORING_TIMEOUT_MULTISHOT can't be combined with IORING_TIMEOUT_ABS, prep
-rejects that, as the request is armed again with the same value each time
-it fires. IORING_TIMEOUT_UPDATE doesn't check and takes an absolute time
-for a multishot timeout. The first expiry is as asked for, but
-io_timeout_complete() then arms the timer with ->mode of the original
-request, i.e. it uses the absolute time as the interval. With
-CLOCK_MONOTONIC the next expiry is an uptime away, with CLOCK_REALTIME
-more than fifty years.
+io_ring_exit_work() asks each task which has used the ring to remove its
+tctx node, by task_work, and repeats that until the list is empty.
+io_tctx_exit_cb() doesn't touch the node while the task is in
+io_uring_cancel_generic(), which removes all the nodes at its end. So the
+work item queues the callback again as soon as it has completed, for
+nothing.
 
-Fail such an update with -EINVAL, and do so before the timeout is
-touched.
+That is more than a waste of time. task_work_run() only returns when it
+finds the list empty. If the rings are released from inside the
+cancellation, because requests of other rings held the last references to
+their files, up to 64 work items keep sending callbacks to the one task
+which is running them. It never finds the list empty, never gets back to
+the cancellation, the nodes stay, and so it goes on: a task with 60 pairs
+of rings which poll each other ran 280000 callbacks in 5 seconds, 20
+seconds after exit_group(). It ends when all the senders happen to be late
+at the same time. Until then the task keeps a CPU and the work items busy.
 
-Fixes: ea97f6c8558e ("io_uring: add support for multishot timeouts")
+An exiting task can't be killed meanwhile. execve() cancels the requests in
+the same way, so a live task can get stuck there as well, for minutes. If
+it takes more than five, the work items run into the
+WARN_ON_ONCE(time_after(jiffies, timeout)) of io_ring_exit_work(). No
+privilege is needed for any of this.
+
+If the callback has met a task in cancellation, wait a little before it is
+sent again. Nobody has to wake the work item up for that: either the node
+is gone by then, or it is the turn of the next round.
+
+Fixes: d56d938b4bef ("io_uring: do ctx initiated file note removal")
 Assisted-by: LLM
 Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Link: https://patch.msgid.link/20261015-b4-io-uring-fixes-v1-41-c1556f5d7bf5@toxicpanda.com
+Link: https://patch.msgid.link/20261015-b4-io-uring-fixes-v1-6-c1556f5d7bf5@toxicpanda.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/timeout.c |   38 ++++++++++++++++++++++++++------------
- 1 file changed, 26 insertions(+), 12 deletions(-)
+ io_uring/io_uring.c |   12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
---- a/io_uring/timeout.c
-+++ b/io_uring/timeout.c
-@@ -321,22 +321,29 @@ static enum hrtimer_restart io_timeout_f
- 	return HRTIMER_NORESTART;
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -2310,6 +2310,7 @@ struct io_tctx_exit {
+ 	struct callback_head		task_work;
+ 	struct completion		completion;
+ 	struct io_ring_ctx		*ctx;
++	bool				in_cancel;
+ };
+ 
+ static __cold void io_tctx_exit_cb(struct callback_head *cb)
+@@ -2324,7 +2325,8 @@ static __cold void io_tctx_exit_cb(struc
+ 	 * tctx can be NULL if the queueing of this task_work raced with
+ 	 * work cancelation off the exec path.
+ 	 */
+-	if (tctx && !atomic_read(&tctx->in_cancel))
++	work->in_cancel = tctx && atomic_read(&tctx->in_cancel);
++	if (tctx && !work->in_cancel)
+ 		io_uring_del_tctx_node((unsigned long)work->ctx);
+ 	complete(&work->completion);
  }
- 
--static struct io_kiocb *io_timeout_extract(struct io_ring_ctx *ctx,
--					   struct io_cancel_data *cd)
-+static struct io_kiocb *io_timeout_find(struct io_ring_ctx *ctx,
-+					struct io_cancel_data *cd)
- 	__must_hold(&ctx->timeout_lock)
- {
- 	struct io_timeout *timeout;
--	struct io_timeout_data *io;
--	struct io_kiocb *req = NULL;
- 
- 	list_for_each_entry(timeout, &ctx->timeout_list, list) {
--		struct io_kiocb *tmp = cmd_to_io_kiocb(timeout);
-+		struct io_kiocb *req = cmd_to_io_kiocb(timeout);
- 
--		if (io_cancel_req_match(tmp, cd)) {
--			req = tmp;
--			break;
--		}
-+		if (io_cancel_req_match(req, cd))
-+			return req;
+@@ -2418,6 +2420,14 @@ static __cold void io_ring_exit_work(str
+ 		 * wait is marked as interruptible.
+ 		 */
+ 		wait_for_completion_interruptible(&exit.completion);
++		/*
++		 * The task removes the node when it is done with its
++		 * cancellation. Give it the time for that: it doesn't get back
++		 * to it as long as it finds new task_work each time it has run
++		 * the old one, and we may be one of many who send it.
++		 */
++		if (exit.in_cancel)
++			schedule_timeout_idle(HZ / 20);
+ 		mutex_lock(&ctx->uring_lock);
+ 		mutex_lock(&ctx->tctx_lock);
  	}
-+	return NULL;
-+}
-+
-+static struct io_kiocb *io_timeout_extract(struct io_ring_ctx *ctx,
-+					   struct io_cancel_data *cd)
-+	__must_hold(&ctx->timeout_lock)
-+{
-+	struct io_kiocb *req = io_timeout_find(ctx, cd);
-+	struct io_timeout *timeout;
-+	struct io_timeout_data *io;
-+
- 	if (!req)
- 		return ERR_PTR(-ENOENT);
- 
-@@ -470,14 +477,21 @@ static int io_timeout_update(struct io_r
- 	__must_hold(&ctx->timeout_lock)
- {
- 	struct io_cancel_data cd = { .ctx = ctx, .data = user_data, };
--	struct io_kiocb *req = io_timeout_extract(ctx, &cd);
-+	struct io_kiocb *req = io_timeout_find(ctx, &cd);
- 	struct io_timeout *timeout = io_kiocb_to_cmd(req, struct io_timeout);
- 	struct io_timeout_data *data;
- 
--	if (IS_ERR(req))
--		return PTR_ERR(req);
-+	if (!req)
-+		return -ENOENT;
- 
- 	data = req->async_data;
-+	/* multishot requests only make sense with rel values */
-+	if ((data->flags & IORING_TIMEOUT_MULTISHOT) && mode == HRTIMER_MODE_ABS)
-+		return -EINVAL;
-+
-+	req = io_timeout_extract(ctx, &cd);
-+	if (IS_ERR(req))
-+		return PTR_ERR(req);
- 	/* for a multishot request this isn't a sequence, keep the repeats */
- 	if (!(data->flags & IORING_TIMEOUT_MULTISHOT))
- 		timeout->off = 0; /* noseq */
 
 
