@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215754;
-	b=qRFhhOcZ8kn75OeAWIgj5CtcPEIqQJKPAeKcizG0WI8c5xkWaYgWQOEIXyUIbtBKYXhg
-	 yjpR39Br2jaI3xcgJqszAbSwDdOOhn8CMUZyMbTXbD0GCVcRt+97cjq4Vx2Pv4mQiuskk
-	 y7t1wpbKH0+Gohu8XR0x/5gbIpNvuOiNqOQ6mtE1S9DBZleLEYMKFwFi0OVGSIdLP6buS
-	 ED5UKPOOu8kGEaZDN8zHCOvvifXaRPf61eAz0uG2XSla7E8IKa+Am80u6JIVB3UtQZO+M
-	 N2s9UUDAG5Grxj9i0ux3QyqUTX5soJaD+Nozxo/CAlyAqgEq5T2FzyYKnmzstoOPzrw==
+	t=1793215757;
+	b=0pJTjASU7n8i8nxsU49vMaqsPGfhqe+agQoQmGqjVXm1l4xWas0yy+rbPVSdwVvINX1K
+	 BcchsWrnyui5cXWQtjG3lJ9xZ5kSq4NsCA947GnTTQCtM36/m/ZliLZuaTWGHN/vzcQXc
+	 /pUqA9HVZNuhlnN6DlrYRg6IT8RpODPJ2+FVl8BuvfEnJal+A2TVBVkQghbo3q40SIQmb
+	 97wiQz6/nkpli8GogWH7KJc6YH/fGQcAX/qS/dc4UPSp9SpOGsyNGnO1wWGqt9JWw8L+f
+	 sazevKWL4AfvCRNoQaVJbMcP02Xke1LO2sBYgYdzi7bhsTzhYLW3w1TgpTLvvgLscDA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215754;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215757;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=FCDMFA4J9U8pf3T+Ygtxm9+Ap+7+YOJzJh3wAT6sFG8=;
-	b=Y5VvzNJEbJYtF0tEIl/tTopnqJASQ6eiEWCHEUGGTtRU+CbFbM6I6GoVDg88Ry1hwAdG
-	 TEsNSXVBPJ6o9rNf3BF3lSAWwxstIbyQRLhXXTjUNfvrGnnCtkbyuAq0yRvEEwpDfK2qq
-	 7rOreurtkfDkC46JsEYSGPpLBKkRH15CObnMe/kNQa+uDwjHXLDPG9PoNM/jpL9tsKvUP
-	 2KsO5je8e5xBRsa2T5ModY+3u0+sH9BR+B1x2gnbTVQWaUMM+ACMFuiyu6D2Y12468fFr
-	 n16twOlgqKFmxLVxLlGxaDM1jYBRwJlP0VJoEirdzbxdCuZF4H5IuVpRNI7u17W0tCA==
+	bh=ExlK1Z0w08UB6FEJx5QQWXodvXchRNugHo7PxUaaJrc=;
+	b=xO/GDhuh6o6Exd8vnS54ZOO5NoHm3kqEn7QIFzVgCLXMqNqVCrQrfDw900IlA4nlwShF
+	 BhJ6FbFUjGmwHUNi/oHCSjy5hcPRrzQv3RtgAu+Z6iPqyPX3Xp+Dfo82NG13NntDCeIeZ
+	 HEDUafU+3zZe01yTlhlErbcYR+bGiUkFKSuv2KBGcNGI1UAZZmSuKki6th0xMded3O9zX
+	 ukDA2+mwuOVr4Lao+yiRmmmYR+3E+0dWPYZq8TEBnnAxc6l6nqBt9XFxKvy/f9O1ukT2d
+	 TOJzjmC3uj1NE2iUmJ5eqEUmoSxP/wEtNGt8x+GcQtJioQ3KrEKz91s6olc9YhqsjFQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B1vYL37K;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fvTGCCaf;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E448606A32A;
-	Wed, 28 Oct 2026 19:29:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DD11606A31A;
+	Wed, 28 Oct 2026 19:29:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B1vYL37K
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA13F1F01825;
-	Wed, 28 Oct 2026 19:29:13 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fvTGCCaf
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE8A21F01825;
+	Wed, 28 Oct 2026 19:29:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215754;
-	bh=FCDMFA4J9U8pf3T+Ygtxm9+Ap+7+YOJzJh3wAT6sFG8=;
+	s=korg; t=1793215757;
+	bh=ExlK1Z0w08UB6FEJx5QQWXodvXchRNugHo7PxUaaJrc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=B1vYL37KFEPcJHAXm9n5Y1RqKVqYRDLMCigrVcQJ/8mcvJ9tdBTvw7+qNa3ymKKPE
-	 h2FB5hertMbI7LXF2ZDF1+YuQ4BQnNP0UXQdd76cz2hBRCKROaNwzcSURMxPf/Dz5o
-	 eZAbuB+n8MoiGlMmEaZnmjY6KLcFzDfme95XP51M=
+	b=fvTGCCafWV19xWU8R7El1uYK5/ot9JPqez/5fZyJkVrzmrQ4TYQaOEckXRmaf7zpV
+	 ge9Xkyk+bLadDe6jUbmHK8mYaZBisR1QkJJqAg3WIwpSgleATA0MngFgoKuqiuLK9Q
+	 P1dvlmWF+b8r7X4GezmRtPhDXmaU9nmVbV6Wtoxo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zack Rusin <zack.rusin@broadcom.com>,
-	Ian Forbes <ian.forbes@broadcom.com>,
+	Christian Borntraeger <borntraeger@linux.ibm.com>,
+	Finn Callies <fcallies@linux.ibm.com>,
+	Harald Freudenberger <freude@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1278/1887] drm/vmwgfx: reject DX_BIND_QUERY without a DX context
-Date: Wed, 28 Oct 2026 17:56:14 +0100
-Message-ID: <20261028170528.505650450@linuxfoundation.org>
+Subject: [PATCH 6.1 1279/1887] s390/zcrypt: Close speculative mem read possibility
+Date: Wed, 28 Oct 2026 17:56:15 +0100
+Message-ID: <20261028170528.529384471@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,60 +70,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zack Rusin <zack.rusin@broadcom.com>
+From: Harald Freudenberger <freude@linux.ibm.com>
 
-[ Upstream commit 55ec09c9ce10b1272802c7ab6c1be2ea0dbc68db ]
+[ Upstream commit e935cd525af4c6ed2e2c6404aa27ca19c7f39ddb ]
 
-vmw_cmd_dx_bind_query() unconditionally dereferences
-sw_context->dx_ctx_node->ctx.  Userspace can trigger a NULL pointer
-dereference from any render-node fd by submitting an execbuf with
-dx_context_handle == SVGA3D_INVALID_ID and a SVGA_3D_CMD_DX_BIND_QUERY
-opcode in the command stream: dx_ctx_node is left NULL and the kernel
-oopses on the assignment.  The same NULL is then re-read in
-vmw_resources_reserve() via vmw_context_get_dx_query_mob().
+The domain value is extracted from a given CCA or EP11 ioctl struct
+when a CPRB is about to be sent. Thus this is a user controlled value.
+Under some special conditions (custom device node used, administrative
+load) this value is used as an array index after bounds checking, but
+without speculation barrier.
 
-All sibling DX handlers fail-close on a missing dx_ctx_node using
-VMW_GET_CTX_NODE().  Use the same pattern here, returning -EINVAL up
-front before any relocation state is published.
+Add the missing array_index_nospec() call to prevent speculative
+execution where this domain value is used.
 
-Fixes: 9c079b8ce8bf ("drm/vmwgfx: Adapt execbuf to the new validation api")
+Fixes: cfd68b33094e ("s390/zcrypt: Filter admin CPRBs on custom devices")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4.7
-Signed-off-by: Zack Rusin <zack.rusin@broadcom.com>
-Reviewed-by: Ian Forbes <ian.forbes@broadcom.com>
-Link: https://patch.msgid.link/20260505222728.519626-3-zack.rusin@broadcom.com
+Reported-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Reviewed-by: Finn Callies <fcallies@linux.ibm.com>
+Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
+Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/s390/crypto/zcrypt_api.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c b/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c
-index ef2ee93f5e343..1be89105fc6ef 100644
---- a/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c
-+++ b/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c
-@@ -1282,9 +1282,13 @@ static int vmw_cmd_dx_bind_query(struct vmw_private *dev_priv,
- 				 SVGA3dCmdHeader *header)
- {
- 	VMW_DECLARE_CMD_VAR(*cmd, SVGA3dCmdDXBindQuery);
-+	struct vmw_ctx_validation_info *ctx_node = VMW_GET_CTX_NODE(sw_context);
- 	struct vmw_buffer_object *vmw_bo;
- 	int ret;
+diff --git a/drivers/s390/crypto/zcrypt_api.c b/drivers/s390/crypto/zcrypt_api.c
+index d75affe6f4b67..d0e18a0806244 100644
+--- a/drivers/s390/crypto/zcrypt_api.c
++++ b/drivers/s390/crypto/zcrypt_api.c
+@@ -26,6 +26,7 @@
+ #include <linux/cdev.h>
+ #include <linux/ctype.h>
+ #include <linux/capability.h>
++#include <linux/nospec.h>
+ #include <asm/debug.h>
  
-+	if (!ctx_node)
-+		return -EINVAL;
-+
- 	cmd = container_of(header, typeof(*cmd), header);
+ #define CREATE_TRACE_POINTS
+@@ -929,6 +930,7 @@ static long _zcrypt_send_cprb(bool userspace, struct ap_perms *perms,
+ 	tdom = *domain;
+ 	if (perms != &ap_perms && tdom < AP_DOMAINS) {
+ 		if (ap_msg.flags & AP_MSG_FLAG_ADMIN) {
++			tdom = array_index_nospec(tdom, AP_DOMAINS);
+ 			if (!test_bit_inv(tdom, perms->adm)) {
+ 				rc = -ENODEV;
+ 				goto out;
+@@ -1121,6 +1123,7 @@ static long _zcrypt_send_ep11_cprb(bool userspace, struct ap_perms *perms,
  
- 	/*
-@@ -1298,7 +1302,7 @@ static int vmw_cmd_dx_bind_query(struct vmw_private *dev_priv,
- 		return ret;
- 
- 	sw_context->dx_query_mob = vmw_bo;
--	sw_context->dx_query_ctx = sw_context->dx_ctx_node->ctx;
-+	sw_context->dx_query_ctx = ctx_node->ctx;
- 	return 0;
- }
- 
+ 	if (perms != &ap_perms && domain < AP_DOMAINS) {
+ 		if (ap_msg.flags & AP_MSG_FLAG_ADMIN) {
++			domain = array_index_nospec(domain, AP_DOMAINS);
+ 			if (!test_bit_inv(domain, perms->adm)) {
+ 				rc = -ENODEV;
+ 				goto out_free;
 -- 
 2.53.0
 
