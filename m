@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215666;
-	b=yn6XqKgGqaeFW5DG86GRrgUfHbZXnUxvdhTAXDpEH+xA+iJn9PvRyZDXDpVsYbRxkmSS
-	 vCMDjX+Xqr96mW/yXRIHSyePWGwft6TIHUR5WhmViux0mX06gitIGXCKa4Co5S0xB2VAx
-	 1g4ghT/eDEbp4JAnxei0C37mgP8Qaz/0vf0SNoyXDf7QQmdnt5PM02PgsA6O+xCcQOYwB
-	 P804r5J4uRNrO50XawZMmykWGHoh4TZvOGy96Nsu6FDkuthWK/eqJy6H1pBDm1+cmFmWY
-	 tHyMLFNPnUBami6/qRFONnL/FumgUpDX9kxXwqlQFnJwfqrKeJDnNJPsl/+W7YwpxKw==
+	t=1793215669;
+	b=oQp2tOVk92Oxcov5/wXjYiI8MmR8q7jKdWBsJGTvUtPwQol4Mm9oeNGbjWY5bME4lvfc
+	 SBuNT6oHBTVgRAYe9nvvenkT2RxQyI4fCCMG0tMw5LA1t8GdYDdHHcuxPvJ7oxOpDw58v
+	 fSThEFD8yHRStKWkVlTPyKJc09Np/9IOsybu3oPSfbJ/ME1VDsVv8Uj7+uV1TmLzxPcP9
+	 E8YcJ+W3rCEG1VlA6j49GhAFNWRNIx6JpwBJclnkcpyRpeDsrjYkbAm/NE9yHDaYkRjjg
+	 HJBFIbIU1l5xHoxZv4GhNdHywKyNF71XgJ+T2MgLvmS4WhudzEBZRjE1dHr9zF+pcZQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215666;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215669;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=VZcRW7jogJIZcBHjZ0Kr8Ijasj48HJpXK17rYOcPUgk=;
-	b=LdMKQV0IsUL1EXeURU6xn5qX4qO3tVGEBq/k0avFZ1fCzOrDX+Mh72MulCMU8CZ0zQ40
-	 fz5hoU5IWC8PPtOBTXHH2StIVUaBX6j0goh7z7MpvAQPHFt7CbIpzqp3BqZUEB/e55YDG
-	 xNHQTUIyYgyrF/83vKxrcE70RmjudYK2BlthUniaeIF2eFSwTILtoruogjhkc0faiYex4
-	 F4SpFyPFxIiRJ+5UE+74pSC1JcP1Fh4dQnJe66olakmPJxeywShcxpr3I/Q5NBLnkCPlZ
-	 DPsXqBNv2olTzrfSj433tLyNV8DW8pYNOZ41n3Cq67QRqXvMarfELd5tzW9p94EnHew==
+	bh=62e1ulYSatL0o+XkN9zxySl5F3vQgu+CDI6xtpPzeGY=;
+	b=QwWbThtF/sZ3Khb6y76a9Ei9zgUYSL/Xfp7SyYk3xFbx6DM8pmz8GIhMo0/Dqv/c62fk
+	 IkOpJGs8MNcUg3ZdWqEEbLhazIMycYinfulMRI8QkAB98KkZO2/rO+c8tJDSzrjLXNv+y
+	 SbTBq8Lwp0RDAjergWDWpIHv5DG+1b2pqs9QGDbFI6FThpk185mH7C2B4xg6LGlx0aYUb
+	 si4HWu89QUxlhTqCR/BBpl2Cs3XNnQjXwvKgnVJT4TlZ/guNuP75cR3bhBR1yQKM7E0JB
+	 dY77S8LGp7dOGxmqmLVprwJ+RFQLmlxTxtGjB+lhlj96ylDWYCl0hOEfdCtRssTGfCQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e2istLxE;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HxkKH6Ru;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69355606A31C;
-	Wed, 28 Oct 2026 19:27:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05CAF606A31A;
+	Wed, 28 Oct 2026 19:27:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e2istLxE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78CB71F01825;
-	Wed, 28 Oct 2026 19:27:45 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HxkKH6Ru
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B1BF1F01825;
+	Wed, 28 Oct 2026 19:27:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215666;
-	bh=VZcRW7jogJIZcBHjZ0Kr8Ijasj48HJpXK17rYOcPUgk=;
+	s=korg; t=1793215668;
+	bh=62e1ulYSatL0o+XkN9zxySl5F3vQgu+CDI6xtpPzeGY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=e2istLxELwW4gGlma3YWCMsw+EtoNlDzcPIaaf6VL487gHiWcZTkv5beLE3TZX31p
-	 zVUnlWTRNo8CApewkuTsc5+rAaNFbrvVBgCY8ydr8CNBV26v+jvDP9tSPL9X+XINc3
-	 e/Y8RFRyhJCfpIhrhhTR/CavDo5glfbzdoCSQ06U=
+	b=HxkKH6Ruv7bcxJs8CafTmuS/E29zx6Je9I1LXdCUrg0GTJKqIrquKrw8COvJqSpHr
+	 wunp+HI3IxUbwtLNi4ew7r0k5AOurCGqTKHHwBCgffsqiJYBYAprsKYMghBb66JfTY
+	 dsgMb+N7K+aUwV57P+NKXGq3Roml5RJM5hhlQcOA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Prathamesh Deshpande <prathameshdeshpande7@gmail.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Dongli Zhang <dongli.zhang@oracle.com>,
+	Willem de Bruijn <willemb@google.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1273/1887] IB/mlx5: Fix transport-domain rollback and initialize lb mutex earlier
-Date: Wed, 28 Oct 2026 17:56:09 +0100
-Message-ID: <20261028170528.389961373@linuxfoundation.org>
+Subject: [PATCH 6.1 1291/1887] net: tap: set skb->dev before parsing virtio net header in tap_get_user_xdp()
+Date: Wed, 28 Oct 2026 17:56:27 +0100
+Message-ID: <20261028170528.805655115@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,66 +70,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Prathamesh Deshpande <prathameshdeshpande7@gmail.com>
+From: Dongli Zhang <dongli.zhang@oracle.com>
 
-[ Upstream commit e79389115b9d27287ff6230a9750675106ed7668 ]
+[ Upstream commit 3874892dd27d5387aa9a06f58d9060f18f351d24 ]
 
-mlx5_ib_alloc_transport_domain() allocates a transport domain and then
-may fail in mlx5_ib_enable_lb(). In that case, the allocated TD is leaked.
+The commit 4f61f133f354 ("net: tap: NULL pointer derefence in
+dev_parse_header_protocol when skb->dev is null") fixed a crash in
+tap_get_user() by assigning skb->dev before calling tun_vnet_hdr_to_skb().
+This is required because virtio_net_hdr_to_skb() may invoke
+dev_parse_header_protocol(), which dereferences skb->dev. Without the
+assignment, a NULL pointer dereference can occur.
 
-Fix this by deallocating the TD when mlx5_ib_enable_lb() returns an
-error. Also return 0 explicitly in the no-loopback-capability success
-branch, and move dev->lb.mutex initialization to mlx5_ib_stage_init_init().
+However, tap_get_user_xdp() still parses the virtio-net header before
+assigning skb->dev. When the vhost TX path passes an XDP buffer containing
+a GSO virtio-net header but the protocol is set to zero on purpose,
+tun_vnet_hdr_to_skb() can reach dev_parse_header_protocol() while skb->dev
+is still NULL, resulting in a crash.
 
-Fixes: 146d2f1af324 ("IB/mlx5: Allocate a Transport Domain for each ucontext")
-Signed-off-by: Prathamesh Deshpande <prathameshdeshpande7@gmail.com>
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fix this by looking up the tap device and assigning skb->dev before calling
+tun_vnet_hdr_to_skb(), matching the ordering already used in
+tap_get_user(). Preserve the existing RCU read-side critical section across
+dev_queue_xmit().
+
+Fixes: 924a9bc362a5 ("net: check if protocol extracted by virtio_net_hdr_set_proto is correct")
+Cc: stable@vger.kernel.org
+Signed-off-by: Dongli Zhang <dongli.zhang@oracle.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Link: https://patch.msgid.link/20260802224612.264563-1-dongli.zhang@oracle.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx5/main.c | 15 ++++++++-------
- 1 file changed, 8 insertions(+), 7 deletions(-)
+ drivers/net/tap.c | 24 ++++++++++++++----------
+ 1 file changed, 14 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/infiniband/hw/mlx5/main.c b/drivers/infiniband/hw/mlx5/main.c
-index 993bdd815bbb2..72bba5f05d248 100644
---- a/drivers/infiniband/hw/mlx5/main.c
-+++ b/drivers/infiniband/hw/mlx5/main.c
-@@ -1743,9 +1743,13 @@ static int mlx5_ib_alloc_transport_domain(struct mlx5_ib_dev *dev, u32 *tdn,
- 	if ((MLX5_CAP_GEN(dev->mdev, port_type) != MLX5_CAP_PORT_TYPE_ETH) ||
- 	    (!MLX5_CAP_GEN(dev->mdev, disable_local_lb_uc) &&
- 	     !MLX5_CAP_GEN(dev->mdev, disable_local_lb_mc)))
--		return err;
+diff --git a/drivers/net/tap.c b/drivers/net/tap.c
+index 9124601d658b4..5b4b07e669cd1 100644
+--- a/drivers/net/tap.c
++++ b/drivers/net/tap.c
+@@ -1179,10 +1179,21 @@ static int tap_get_user_xdp(struct tap_queue *q, struct xdp_buff *xdp)
+ 	skb_reset_mac_header(skb);
+ 	skb->protocol = eth_hdr(skb)->h_proto;
+ 
++	rcu_read_lock();
++	tap = rcu_dereference(q->tap);
++	if (!tap) {
++		kfree_skb(skb);
++		rcu_read_unlock();
 +		return 0;
++	}
++	skb->dev = tap->dev;
 +
-+	err = mlx5_ib_enable_lb(dev, true, false);
-+	if (err)
-+		mlx5_cmd_dealloc_transport_domain(dev->mdev, *tdn, uid);
- 
--	return mlx5_ib_enable_lb(dev, true, false);
-+	return err;
- }
- 
- static void mlx5_ib_dealloc_transport_domain(struct mlx5_ib_dev *dev, u32 tdn,
-@@ -3635,6 +3639,8 @@ static int mlx5_ib_stage_init_init(struct mlx5_ib_dev *dev)
- 		dev->port[i].roce.last_port_state = IB_PORT_DOWN;
+ 	if (vnet_hdr_len) {
+ 		err = virtio_net_hdr_to_skb(skb, gso, tap_is_little_endian(q));
+-		if (err)
++		if (err) {
++			rcu_read_unlock();
+ 			goto err_kfree;
++		}
  	}
  
-+	mutex_init(&dev->lb.mutex);
-+
- 	err = mlx5_ib_init_multiport_master(dev);
- 	if (err)
- 		return err;
-@@ -3841,11 +3847,6 @@ static int mlx5_ib_stage_caps_init(struct mlx5_ib_dev *dev)
- 	if (err)
- 		return err;
+ 	/* Move network header to the right position for VLAN tagged packets */
+@@ -1190,15 +1201,8 @@ static int tap_get_user_xdp(struct tap_queue *q, struct xdp_buff *xdp)
+ 	    vlan_get_protocol_and_depth(skb, skb->protocol, &depth) != 0)
+ 		skb_set_network_header(skb, depth);
  
--	if ((MLX5_CAP_GEN(dev->mdev, port_type) == MLX5_CAP_PORT_TYPE_ETH) &&
--	    (MLX5_CAP_GEN(dev->mdev, disable_local_lb_uc) ||
--	     MLX5_CAP_GEN(dev->mdev, disable_local_lb_mc)))
--		mutex_init(&dev->lb.mutex);
--
- 	if (MLX5_CAP_GEN_64(dev->mdev, general_obj_types) &
- 			MLX5_GENERAL_OBJ_TYPES_CAP_VIRTIO_NET_Q) {
- 		err = mlx5_ib_init_var_table(dev);
+-	rcu_read_lock();
+-	tap = rcu_dereference(q->tap);
+-	if (tap) {
+-		skb->dev = tap->dev;
+-		skb_probe_transport_header(skb);
+-		dev_queue_xmit(skb);
+-	} else {
+-		kfree_skb(skb);
+-	}
++	skb_probe_transport_header(skb);
++	dev_queue_xmit(skb);
+ 	rcu_read_unlock();
+ 
+ 	return 0;
 -- 
 2.53.0
 
