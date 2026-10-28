@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215193;
-	b=INZwMyhNDV6d8o7qGBV9tA7f+IjcVRHA38I0nASspQnDfPx5r3FHGALSMeD7cuXcbBCT
-	 q9MO4fS+MocM9Bx7EJsiH4MQPcl043C6/Vn6OkTTE5q/FwuHhmWB0/SbOqwefnBWKPRX4
-	 wJchoqED3AQoPd4EGXAO6PtxxSViJwPp1VOBO4yebe4RkFCz+PHv3Nj1Z/Z/1OEgyFgL+
-	 9LNL4uQxTKzU0Bs/bdnccTIyKWG+YaDXz7iztls9AM2b3rqU7aDrPTMhdI4nRZuCr5PsV
-	 guHUW7tLUAtAZKQKEm9DVGzgUStGHdcCq0hwx6gVA3SXtwEqd8A+srJRBFYsEqBgrlQ==
+	t=1793215195;
+	b=uY9S2v8sBEM/mfPKWrHoMuNvuu66rQCPv+evtRIq3KUaYh6dvXTsDVx1wxBCQ3Gjjtu1
+	 F4a6BHdEiWXI5YLiSyopwovD9SzlsK9rw7l5ZKCVl6kYiEkjR5D6mxWtQOPcT379OWn4x
+	 T50BLwb1VijtoiSdBEqI4BQGlDCtThWb2IqRmkQVgtagu81vIyLnvjq0xnYJ3gjZNp0KC
+	 BgnKoQxRvjVhzbs5jQhk98CaiJmYIN9OJAEcTefVphAUC1GFHi4DYH/vm2VFLZMHt1GOk
+	 ccfjFXuMNttSX/yDTCkKUqN8QQNGFpdZsOc9HH+ie6iQ+frsw7CGuwfND8erHkWF6kQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215193;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215195;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=viDgg+eV6grt0JlIkIfYnFjnvUrYnukL5w8QnYXCnH8=;
-	b=OYOBnMrTxf6GdDTiP2KVIIDlRvLGFDtSIyR5qeN05uIoEVAT/nEysy2+AqXY6gCpFL07
-	 xEIr0S/qkqWEzIIg1cvK4XKG9cLcrPMCSjW1dat0aAMUNw0GAF4yhg5ohd/XGnOZOmYzs
-	 pFbPdU3gbIZ6KV/87+YnTtm64gMObzB0pz1CIqB08FblxfT8GkAtYmGOd2prF2wrtgApw
-	 81uQGitlPTScizijnDn85NnOkOBjTLnzl4mYPmLyG9cof8HdoPozrPAKmW9qymiCrP7Ew
-	 5vZDvtFQRX9eF63va/qOl5kilxuPFIYErJq1Upc1DX++sCS3GHqk4D6wAKxB1VJ8Z5Q==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=vUw4Dm7/q9TFyPdMPJykTKvdPAAC270TaTOohUMi3LI=;
+	b=H2/5UHIBFJjXowzD5+/0iZuKirGSrRXdpVu7L0dBkTg5kvqWqTf10WqflOvqtutI3EBN
+	 HIxQohGtiBoiJHnKPUaD6IV1Iw30GKg15xYfMe4nTmkZLgM2VDRDMKPiINOe49BBcbr7U
+	 zyh1Rvg/oILL+QtKa/f7KlWxilUmO0cVYWkrTgrV1ExOo21RW2FYWjtwbqvaA07iFsrXl
+	 n8HIAc5mmsAFn2faHAIDFHN53SbKNNacrrkatkjCNFkzjPSE62qo2qPSmTpby2tGXX/Qk
+	 dIeepuk8UoXMEqodiBfSBdKO4ooUiLqQIon2lD6sGPQYz4SXSn7oJimphfmww5bKd1Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="KC/VQZga";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=enL+REKG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE1C0606A31A;
-	Wed, 28 Oct 2026 19:19:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94E1E606A31A;
+	Wed, 28 Oct 2026 19:19:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KC/VQZga
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A3E51F01825;
-	Wed, 28 Oct 2026 19:19:51 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=enL+REKG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E98461F01825;
+	Wed, 28 Oct 2026 19:19:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215192;
-	bh=viDgg+eV6grt0JlIkIfYnFjnvUrYnukL5w8QnYXCnH8=;
+	s=korg; t=1793215195;
+	bh=vUw4Dm7/q9TFyPdMPJykTKvdPAAC270TaTOohUMi3LI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KC/VQZgaKk7VWdpKjfhZqfJdQjAFcHHcEnl/J9v6u05UvSmZyPejEZPeAzmc18riD
-	 z1PExD/Gxo/m0NuUxmfTI4uwDFWbIF/sjQn+wufA1HsqH32iGxNll/1WZ4VcCBus0J
-	 eZrTRcbOcEQs6A4bSPsyKrsm9aSTcQ3at9h3nH9E=
+	b=enL+REKGntikzp7MUaeaA88UiAfay9QOeL48oLLwtuwasbKmHO+hXSegfUPI5QPJE
+	 wVqrtucd+1HX6qoYtCHQX1dQ+fQspTbSjmFdMs8yLY4YEwDCX26DzsaLV1S5Dqsk3P
+	 +yMJs/yDKY+gfM1thyjbBB9iRJd2QjvpTJahIDkA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Yinjie Yao <yinjie.yao@amd.com>,
+	SeungJu Cheon <suunj1331@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1124/1887] drm/amdgpu/vcn: set no_user_fence for VCN v2.0 enc/dec rings
-Date: Wed, 28 Oct 2026 17:53:40 +0100
-Message-ID: <20261028170524.978349390@linuxfoundation.org>
+Subject: [PATCH 6.1 1125/1887] Bluetooth: ISO: Fix data-race on iso_pi fields in hci_get_route calls
+Date: Wed, 28 Oct 2026 17:53:41 +0100
+Message-ID: <20261028170525.000550993@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -63,51 +62,99 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yinjie Yao <yinjie.yao@amd.com>
+From: SeungJu Cheon <suunj1331@gmail.com>
 
-[ Upstream commit 8d80b293b41fcb5e9396db93e788b0f4ebcbafb7 ]
+[ Upstream commit 9ca7053d6215d89c33f28893bfd1625a32919d3f ]
 
-VCN encoder and decoder rings do not support 64-bit user fence writes,
-reject CS submissions with user fences.
+iso_connect_bis(), iso_connect_cis(), iso_listen_bis(), and
+iso_conn_big_sync() call hci_get_route() using iso_pi(sk)->dst,
+iso_pi(sk)->src, and iso_pi(sk)->src_type without holding lock_sock().
 
-Fixes: 1b61de45dfaf ("drm/amdgpu: add initial VCN2.0 support (v2)")
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Yinjie Yao <yinjie.yao@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit e2b5499fca55f1a32960a311bbb62e35891eaf73)
+These fields may be modified concurrently by connect() or setsockopt()
+on the same socket, resulting in data-races reported by KCSAN.
+
+Fix this by snapshotting the required fields under lock_sock() before
+calling hci_get_route().
+
+BUG: KCSAN: data-race in memcmp+0x45/0xb0
+
+race at unknown origin, with read to 0xffff8880122135cf of 1 bytes
+by task 333 on cpu 1:
+ memcmp+0x45/0xb0
+ hci_get_route+0x27e/0x490
+ iso_connect_cis+0x4c/0xa10
+ iso_sock_connect+0x60e/0xb30
+ __sys_connect_file+0xbd/0xe0
+ __sys_connect+0xe0/0x110
+ __x64_sys_connect+0x40/0x50
+ x64_sys_call+0xcad/0x1c60
+ do_syscall_64+0x133/0x590
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+Fixes: 241f51931c35 ("Bluetooth: ISO: Avoid circular locking dependency")
+Signed-off-by: SeungJu Cheon <suunj1331@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/vcn_v2_0.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/bluetooth/iso.c | 26 ++++++++++++++++++++------
+ 1 file changed, 20 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/vcn_v2_0.c b/drivers/gpu/drm/amd/amdgpu/vcn_v2_0.c
-index 08bdacf8690bc..c271f3f0c70a1 100644
---- a/drivers/gpu/drm/amd/amdgpu/vcn_v2_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/vcn_v2_0.c
-@@ -2013,6 +2013,7 @@ static const struct amd_ip_funcs vcn_v2_0_ip_funcs = {
- static const struct amdgpu_ring_funcs vcn_v2_0_dec_ring_vm_funcs = {
- 	.type = AMDGPU_RING_TYPE_VCN_DEC,
- 	.align_mask = 0xf,
-+	.no_user_fence = true,
- 	.secure_submission_supported = true,
- 	.vmhub = AMDGPU_MMHUB_0,
- 	.get_rptr = vcn_v2_0_dec_ring_get_rptr,
-@@ -2045,6 +2046,7 @@ static const struct amdgpu_ring_funcs vcn_v2_0_enc_ring_vm_funcs = {
- 	.type = AMDGPU_RING_TYPE_VCN_ENC,
- 	.align_mask = 0x3f,
- 	.nop = VCN_ENC_CMD_NO_OP,
-+	.no_user_fence = true,
- 	.vmhub = AMDGPU_MMHUB_0,
- 	.get_rptr = vcn_v2_0_enc_ring_get_rptr,
- 	.get_wptr = vcn_v2_0_enc_ring_get_wptr,
+diff --git a/net/bluetooth/iso.c b/net/bluetooth/iso.c
+index bb6e02f7e32e6..2281a915c6533 100644
+--- a/net/bluetooth/iso.c
++++ b/net/bluetooth/iso.c
+@@ -267,12 +267,19 @@ static int iso_connect_bis(struct sock *sk)
+ 	struct iso_conn *conn;
+ 	struct hci_conn *hcon;
+ 	struct hci_dev  *hdev;
++	bdaddr_t src, dst;
++	u8 src_type;
+ 	int err;
+ 
+-	BT_DBG("%pMR", &iso_pi(sk)->src);
++	lock_sock(sk);
++	bacpy(&src, &iso_pi(sk)->src);
++	bacpy(&dst, &iso_pi(sk)->dst);
++	src_type = iso_pi(sk)->src_type;
++	release_sock(sk);
+ 
+-	hdev = hci_get_route(&iso_pi(sk)->dst, &iso_pi(sk)->src,
+-			     iso_pi(sk)->src_type);
++	BT_DBG("%pMR", &src);
++
++	hdev = hci_get_route(&dst, &src, src_type);
+ 	if (!hdev)
+ 		return -EHOSTUNREACH;
+ 
+@@ -337,12 +344,19 @@ static int iso_connect_cis(struct sock *sk)
+ 	struct iso_conn *conn;
+ 	struct hci_conn *hcon;
+ 	struct hci_dev  *hdev;
++	bdaddr_t src, dst;
++	u8 src_type;
+ 	int err;
+ 
+-	BT_DBG("%pMR -> %pMR", &iso_pi(sk)->src, &iso_pi(sk)->dst);
++	lock_sock(sk);
++	bacpy(&src, &iso_pi(sk)->src);
++	bacpy(&dst, &iso_pi(sk)->dst);
++	src_type = iso_pi(sk)->src_type;
++	release_sock(sk);
+ 
+-	hdev = hci_get_route(&iso_pi(sk)->dst, &iso_pi(sk)->src,
+-			     iso_pi(sk)->src_type);
++	BT_DBG("%pMR -> %pMR", &src, &dst);
++
++	hdev = hci_get_route(&dst, &src, src_type);
+ 	if (!hdev)
+ 		return -EHOSTUNREACH;
+ 
 -- 
 2.53.0
 
