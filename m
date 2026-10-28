@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793211410;
-	b=rfu9YwYrfPl2x5rWJk73z7gMtx1X+zw2Po2nlBy1WgwFc+W3GygbBQFoJwNy6sza4+Zx
-	 gCCGery0TEv/11jQHxQu/Wq9OJYMDZxT9t+taBkXbf4wUq6g/cRzgvoYhZYgdcprPNMSR
-	 nnvnnLkwcun0DwQXiIJoKnCmjbzvF+ySksOyB89AtC2Q4VKTZ0yttCqpgx3+nmo4cuCEe
-	 hEPmsvPZkFRwEMR6I8YxZei8sx72LeBCL/zlPd0JOEyjYNQdvI3jUnoQ3IY9O9WpZDdpg
-	 RPmWSw4Pe5wOMB4XHUe0xQ0G+t7rgEXr/R2ZU1RUEfDl2s97uhp85IuVBoJdhv7p74Q==
+	t=1793211413;
+	b=z5zuht++/WS1yDRWJlbnk/6bBh5Th2R+2jpqJMJQ0GLFnue8eCC8hR9gdOnuw+wPZSlx
+	 ITboFAHnN4uqZK3DorZjFrs4IZXCRzeRvJb447QtSHnwlttITzotvqQ5r5B03q4Q6y8T6
+	 gJHRXlvhCDfMAWoSb/ynMfaqjrXK8iOMwJGHgE4EDDH5lQPEhQvzj/JOmL2iNHKx8gmst
+	 uUovgQIrU6XA69UyVF8Oz/olAlO/bpwtMPj4BUNiMwW4vrnckO9HHNH3qofGSa010HStn
+	 hDH2xMx4npIzVbVEpbPtP+j4pVDQmcT3TP0vHa4NhHIu/3tmMHTPtfj52ah/1bjs1kg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793211410;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793211413;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=WAYj4j/3XJ/WIeWB6CLgyLVNDpdcxiguP5t/X0VNNNg=;
-	b=JPVXrseSAwWgbecD5CPsIncG4Ue/4yrltqVVU7q9jIE3oAev/lDYehK1occI1hHcshAm
-	 zEuLSyvkrPwSPtgvZkb8faWtZOakwmlftUjwGW6nyidAGlBOd7e+Yl2U/eKGJ/j+LzkAg
-	 m1lKtGRZVYonAG1kwNHhuhNBg259sMROQ91xF4t0GXdeZkOj1WWYtVPdo7MrkEpw2kcDF
-	 Kzck07Ail18tfSo4z1WnnAET3iTbp+YLLvFJRhI0Eb/WTwqR6ktUQE/PcHhNkrDB9Zy7L
-	 n1WibJ/Vo7oc4vZztTa8jV364wxc4DgVtjd1dbdfBR+ObJJswgnwFn14jNxLOfrMwUg==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=ualmab7h67fCS954UpAY6pNKBpqsrPiXaTC/Kc/jLIk=;
+	b=ZlvbqTJ7r9mUgPm25bk6Q7ioSomEvTnfFeLxzZXlRX/MxDI+pGf/pE9AU680DOwF6q5D
+	 iTbbfHuGcaje2RU/eiVe5LSLhteay5KP0KMBXqqrKO5Tf8RMrDBlZZGXFCtPlhzwiaxfO
+	 m+Y6ClEuzB3F53b3oHv0ucM76r747tjkQHtC/XsITRFsrYg6Mxqnz7dKPMYOnmVAGVc5q
+	 fwixfnM9443v/JTGV80pR6B8m+MRNOWa/nNsUNplAFp+VIA7ZxrU1a2jvSpsY78hJ2sYF
+	 eW0jFWFigy0F9khUkUah3UxV3KyjniJlDHkey1ChRAg1iisE5C79HOAsWshxdKPhckA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hh5lx45C;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AP0m0NRr;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77BFF606A321;
-	Wed, 28 Oct 2026 18:16:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 585E7606A326;
+	Wed, 28 Oct 2026 18:16:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hh5lx45C
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C87D41F01825;
-	Wed, 28 Oct 2026 18:16:49 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AP0m0NRr
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8D0C1F01825;
+	Wed, 28 Oct 2026 18:16:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793211410;
-	bh=WAYj4j/3XJ/WIeWB6CLgyLVNDpdcxiguP5t/X0VNNNg=;
+	s=korg; t=1793211413;
+	bh=ualmab7h67fCS954UpAY6pNKBpqsrPiXaTC/Kc/jLIk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hh5lx45CupEvlGfNAnEMDDd7SnqQrlXAogfe5A9d6ONjUb9bgYHThK/w7yVae0qIE
-	 Fmm3b8kiR0A5RwREgssurO9ZxpuIRsqSYqx5y2qYniBmXuzxj/Eh/V0q/aU5PutDj9
-	 jdaoDEpmk7pvnJxvAm2Gr8DIkiEqBErDiaqX3acs=
+	b=AP0m0NRr0jLxfZxfTt9ZFhEBp4tfkXGwmb5sSOephu8h6eJOsQRMM2fYBQ1af4D4s
+	 pwllv4d7pYFjJLIf0N9rCyjDXD60kQaCusxyoHWsUZkfZFHWXh0DmdU+rzO+ZkKHX6
+	 HrJ0Oa2F8lMk7aenOObzhFNKPxi1BJNdtxVU9S7o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nick Bowler <nbowler@draconx.ca>,
-	syzbot+473d7477c523b41d4046@syzkaller.appspotmail.com,
-	Johan Hovold <johan@kernel.org>,
+	syzbot+b320a4d5f65a61dbbf89@syzkaller.appspotmail.com,
+	=?UTF-8?q?J=C3=B6rn=20Engel?= <joern@barelysecure.org>,
+	Pei Xiao <xiaopei01@kylinos.cn>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 322/571] USB: serial: fix ioctl hangup race
-Date: Wed, 28 Oct 2026 17:57:49 +0100
-Message-ID: <20261028170015.644043564@linuxfoundation.org>
+Subject: [PATCH 5.15 323/571] mtd: block2mtd: Fix divide error when erase_size is zero
+Date: Wed, 28 Oct 2026 17:57:50 +0100
+Message-ID: <20261028170015.669145456@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -63,260 +64,64 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Pei Xiao <xiaopei01@kylinos.cn>
 
-[ Upstream commit ae0e61d95677efa778379853e495d748e6efbf95 ]
+[ Upstream commit b5965c4221165045e19736794ca5f48ae3d67142 ]
 
-The tty ioctls can race with hangup and end up calling into a tty driver
-for a device that is already gone or powered down.
+The erase size is parsed from the "block2mtd" module parameter and can
+be set to zero. add_device() then evaluates
 
-Serialise the callbacks using the tty port mutex and add the missing
-checks to make sure the port has not been hung up before accessing port
-driver data or hardware.
+        if (size % erase_size)
 
-This specifically avoids dereferencing a NULL-pointer if a device is
-disconnected during lengthy break signalling.
+with a zero divisor, which triggers a divide error:
 
-Note that TIOCGICOUNT and TIOCMIWAIT do not access port driver data or
-hardware and are therefore not affected by the race.
+divide error: 0000 [#1] PREEMPT SMP PTI
+RIP: 0010:add_device drivers/mtd/devices/block2mtd.c:296 [inline]
+RIP: 0010:block2mtd_setup2+0x592/0xda0 drivers/mtd/devices/block2mtd.c:459
+Call Trace:
+block2mtd_setup+0x27/0xe0 drivers/mtd/devices/block2mtd.c:476
+param_attr_store+0x214/0x310 kernel/params.c:589
+module_attr_store+0x65/0x90 kernel/params.c:904
+kernfs_fop_write_iter+0x3a4/0x540 fs/kernfs/file.c:345
+...
 
-Fixes: f34d7a5b7010 ("tty: The big operations rework")
-Reported-by: Nick Bowler <nbowler@draconx.ca>
-Link: https://lore.kernel.org/all/CADyTPExB2kYOOwkO0JqGhKaYVDqO9uS9WCw0J=MCTdVhcGOogA@mail.gmail.com/
-Reported-by: syzbot+473d7477c523b41d4046@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/r/6a9087a4.4d659fcc.734b4.0013.GAE@google.com
-Cc: stable@vger.kernel.org	# 2.6.26
-Signed-off-by: Johan Hovold <johan@kernel.org>
-[ sashal: Adapted to void-returning break_ctl() and the older termios signature while omitting hunks for absent XR RS-485 handlers. ]
+Reject a zero erase size before performing the modulo operation so the
+existing "erasesize must be a divisor of device size" error path
+reports the invalid argument and frees the device.
+
+Fixes: ea6d833a3fdd ("mtd: block2mtd: check device size")
+Reported-by: syzbot+b320a4d5f65a61dbbf89@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/lkml/6a7b58ba.ac361c09.22ff0a.0045.GAE@google.com/
+Suggested-by: Jörn Engel <joern@barelysecure.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+[ sashal: adapted the size variable check to direct dev->blkdev->bd_inode->i_size access ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/serial/generic.c    | 10 +++-
- drivers/usb/serial/usb-serial.c | 92 ++++++++++++++++++++++++++-------
- 2 files changed, 82 insertions(+), 20 deletions(-)
+ drivers/mtd/devices/block2mtd.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/usb/serial/generic.c b/drivers/usb/serial/generic.c
-index 15b6dee3a8e50..64890f6d78e03 100644
---- a/drivers/usb/serial/generic.c
-+++ b/drivers/usb/serial/generic.c
-@@ -268,6 +268,7 @@ EXPORT_SYMBOL_GPL(usb_serial_generic_chars_in_buffer);
- void usb_serial_generic_wait_until_sent(struct tty_struct *tty, long timeout)
- {
- 	struct usb_serial_port *port = tty->driver_data;
-+	struct tty_port *tport = &port->port;
- 	unsigned int bps;
- 	unsigned long period;
- 	unsigned long expire;
-@@ -287,7 +288,14 @@ void usb_serial_generic_wait_until_sent(struct tty_struct *tty, long timeout)
- 					__func__, jiffies_to_msecs(timeout),
- 					jiffies_to_msecs(period));
- 	expire = jiffies + timeout;
--	while (!port->serial->type->tx_empty(port)) {
-+	for (;;) {
-+		mutex_lock(&tport->mutex);
-+		if (tty_io_error(tty) || port->serial->type->tx_empty(port)) {
-+			mutex_unlock(&tport->mutex);
-+			break;
-+		}
-+		mutex_unlock(&tport->mutex);
-+
- 		schedule_timeout_interruptible(period);
- 		if (signal_pending(current))
- 			break;
-diff --git a/drivers/usb/serial/usb-serial.c b/drivers/usb/serial/usb-serial.c
-index 97a031033e946..ec84825d45aae 100644
---- a/drivers/usb/serial/usb-serial.c
-+++ b/drivers/usb/serial/usb-serial.c
-@@ -401,17 +401,13 @@ static unsigned int serial_chars_in_buffer(struct tty_struct *tty)
- static void serial_wait_until_sent(struct tty_struct *tty, int timeout)
- {
- 	struct usb_serial_port *port = tty->driver_data;
--	struct usb_serial *serial = port->serial;
- 
- 	dev_dbg(&port->dev, "%s\n", __func__);
- 
- 	if (!port->serial->type->wait_until_sent)
- 		return;
- 
--	mutex_lock(&serial->disc_mutex);
--	if (!serial->disconnected)
--		port->serial->type->wait_until_sent(tty, timeout);
--	mutex_unlock(&serial->disc_mutex);
-+	port->serial->type->wait_until_sent(tty, timeout);
- }
- 
- static void serial_throttle(struct tty_struct *tty)
-@@ -439,8 +435,13 @@ static int serial_get_serial(struct tty_struct *tty, struct serial_struct *ss)
- 	struct usb_serial_port *port = tty->driver_data;
- 	struct tty_port *tport = &port->port;
- 	unsigned int close_delay, closing_wait;
-+	int ret = 0;
- 
- 	mutex_lock(&tport->mutex);
-+	if (tty_io_error(tty)) {
-+		ret = -EIO;
-+		goto out_unlock;
-+	}
- 
- 	close_delay = jiffies_to_msecs(tport->close_delay) / 10;
- 	closing_wait = tport->closing_wait;
-@@ -453,10 +454,10 @@ static int serial_get_serial(struct tty_struct *tty, struct serial_struct *ss)
- 
- 	if (port->serial->type->get_serial)
- 		port->serial->type->get_serial(tty, ss);
--
-+out_unlock:
- 	mutex_unlock(&tport->mutex);
- 
--	return 0;
-+	return ret;
- }
- 
- static int serial_set_serial(struct tty_struct *tty, struct serial_struct *ss)
-@@ -472,6 +473,10 @@ static int serial_set_serial(struct tty_struct *tty, struct serial_struct *ss)
- 		closing_wait = msecs_to_jiffies(closing_wait * 10);
- 
- 	mutex_lock(&tport->mutex);
-+	if (tty_io_error(tty)) {
-+		ret = -EIO;
-+		goto out_unlock;
-+	}
- 
- 	if (!capable(CAP_SYS_ADMIN)) {
- 		if (close_delay != tport->close_delay ||
-@@ -499,6 +504,7 @@ static int serial_ioctl(struct tty_struct *tty,
- 					unsigned int cmd, unsigned long arg)
- {
- 	struct usb_serial_port *port = tty->driver_data;
-+	struct tty_port *tport = &port->port;
- 	int retval = -ENOIOCTLCMD;
- 
- 	dev_dbg(&port->dev, "%s - cmd 0x%04x\n", __func__, cmd);
-@@ -509,8 +515,21 @@ static int serial_ioctl(struct tty_struct *tty,
- 			retval = port->serial->type->tiocmiwait(tty, arg);
- 		break;
- 	default:
--		if (port->serial->type->ioctl)
-+		if (!port->serial->type->ioctl)
-+			break;
-+
-+		if (cmd == TIOCSRS485)
-+			down_write(&tty->termios_rwsem);
-+
-+		mutex_lock(&tport->mutex);
-+		if (tty_io_error(tty))
-+			retval = -EIO;
-+		else
- 			retval = port->serial->type->ioctl(tty, cmd, arg);
-+		mutex_unlock(&tport->mutex);
-+
-+		if (cmd == TIOCSRS485)
-+			up_write(&tty->termios_rwsem);
+diff --git a/drivers/mtd/devices/block2mtd.c b/drivers/mtd/devices/block2mtd.c
+index c08721b11642b..58ec5d0525ec2 100644
+--- a/drivers/mtd/devices/block2mtd.c
++++ b/drivers/mtd/devices/block2mtd.c
+@@ -269,7 +269,7 @@ static struct block2mtd_dev *add_device(char *devname, int erase_size,
+ 		goto err_free_block2mtd;
  	}
  
- 	return retval;
-@@ -519,25 +538,40 @@ static int serial_ioctl(struct tty_struct *tty,
- static void serial_set_termios(struct tty_struct *tty, struct ktermios *old)
- {
- 	struct usb_serial_port *port = tty->driver_data;
-+	struct tty_port *tport = &port->port;
- 
- 	dev_dbg(&port->dev, "%s\n", __func__);
- 
--	if (port->serial->type->set_termios)
--		port->serial->type->set_termios(tty, port, old);
--	else
-+	if (!port->serial->type->set_termios) {
- 		tty_termios_copy_hw(&tty->termios, old);
-+		return;
-+	}
-+
-+	mutex_lock(&tport->mutex);
-+	if (!tty_io_error(tty))
-+		port->serial->type->set_termios(tty, port, old);
-+	mutex_unlock(&tport->mutex);
- }
- 
- static int serial_break(struct tty_struct *tty, int break_state)
- {
- 	struct usb_serial_port *port = tty->driver_data;
-+	struct tty_port *tport = &port->port;
-+	int ret = 0;
- 
- 	dev_dbg(&port->dev, "%s\n", __func__);
- 
--	if (port->serial->type->break_ctl)
-+	if (!port->serial->type->break_ctl)
-+		return 0;
-+
-+	mutex_lock(&tport->mutex);
-+	if (tty_io_error(tty))
-+		ret = -EIO;
-+	else
- 		port->serial->type->break_ctl(tty, break_state);
-+	mutex_unlock(&tport->mutex);
- 
--	return 0;
-+	return ret;
- }
- 
- static int serial_proc_show(struct seq_file *m, void *v)
-@@ -578,24 +612,44 @@ static int serial_proc_show(struct seq_file *m, void *v)
- static int serial_tiocmget(struct tty_struct *tty)
- {
- 	struct usb_serial_port *port = tty->driver_data;
-+	struct tty_port *tport = &port->port;
-+	int ret;
- 
- 	dev_dbg(&port->dev, "%s\n", __func__);
- 
--	if (port->serial->type->tiocmget)
--		return port->serial->type->tiocmget(tty);
--	return -ENOTTY;
-+	if (!port->serial->type->tiocmget)
-+		return -ENOTTY;
-+
-+	mutex_lock(&tport->mutex);
-+	if (tty_io_error(tty))
-+		ret = -EIO;
-+	else
-+		ret = port->serial->type->tiocmget(tty);
-+	mutex_unlock(&tport->mutex);
-+
-+	return ret;
- }
- 
- static int serial_tiocmset(struct tty_struct *tty,
- 			    unsigned int set, unsigned int clear)
- {
- 	struct usb_serial_port *port = tty->driver_data;
-+	struct tty_port *tport = &port->port;
-+	int ret;
- 
- 	dev_dbg(&port->dev, "%s\n", __func__);
- 
--	if (port->serial->type->tiocmset)
--		return port->serial->type->tiocmset(tty, set, clear);
--	return -ENOTTY;
-+	if (!port->serial->type->tiocmset)
-+		return -ENOTTY;
-+
-+	mutex_lock(&tport->mutex);
-+	if (tty_io_error(tty))
-+		ret = -EIO;
-+	else
-+		ret = port->serial->type->tiocmset(tty, set, clear);
-+	mutex_unlock(&tport->mutex);
-+
-+	return ret;
- }
- 
- static int serial_get_icount(struct tty_struct *tty,
+-	if ((long)dev->blkdev->bd_inode->i_size % erase_size) {
++	if (!erase_size || (long)dev->blkdev->bd_inode->i_size % erase_size) {
+ 		pr_err("erasesize must be a divisor of device size\n");
+ 		goto err_free_block2mtd;
+ 	}
 -- 
 2.53.0
 
