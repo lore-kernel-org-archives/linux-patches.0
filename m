@@ -1,55 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793212144;
-	b=tS/uJMz7lFfb+g9NTNG3Nh3SgPBJfYdjjrZ+rehbn/cawgKIIKKbs1aQ8doXZkV4fDgr
-	 7b85my0bfyznBP3cxmMt6D9rJtd6vVGhREWkIseusgKOBGb7BSyPuLZXXZpNPBxzXBA59
-	 FQvxuZODDj7ar6dkGG5XV5T86dNdLiWFgE+LH2MXmQTg2Asc0OKjgVj+dfnScP/HQB4Da
-	 PwkbuVJBnUtYy/4xcvvJIYupjBP+knt9DZD4ZO0V3p5UxvXaFmuPAqXjWM5LcAdlAcpWW
-	 u5BKsgTwQhnN7WHkDL3Tl9B+/DspsCsrRK+lpYdeLOAEDjR+NDCVl46UR6569nT1X0g==
+	t=1793212147;
+	b=CrVfElS728zI5QRjWq7nU3YWj/+oZzGZNdbDDlu75Mvrz78M7Ctmq95UaMe8tlIsjGaX
+	 t9TvHh/RNSNxPzayukCEW2qU4njwZ+VaMDs8Zy7ESjiCg4D+GklcyRopjv1731AQeKnks
+	 ffsWD+6lBEGJgilzbYz1GwODZIzftlImyhrb8Nyk3YVvOS0cs3Yw7PgtAeQv4ViSw2YcP
+	 khorXqcaUrXjURDp5KjQ89qggLkyAKGWpZ7AJEhJj8D+zSsUzdKEdWrqX2GvXFHW0gKG1
+	 lxNseey9nWTH71HAf2a0x7AFGtPsZ4oZgrmRMan/lpVByZOeMcVlm7m64Ir1CzmqPqA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793212144;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793212147;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=rvioDNIuytI123GbGu/IbvAzZPyGlgPM4ejcPjsZegY=;
-	b=pCmHH/VK7lYeklX8iGdQr4fQbWy6a+1ELECFHcuvIEUFlIpoVCkMMc2L4Hsyq2XYmZ/R
-	 X3HmFhYfEOeKS1Zqxvzd7iaR6rEolPCr9g2Nc115PPjr34cIKahS4+bthGWFjBRLFe/Dd
-	 AO6spUrsggfzEoarD2UveTlwcirzcFaSdevffVJ2t/WN0QTwutKuBLLTffkF4FpZn5mae
-	 0olNmYv22DWTAke5zxAVCJHWiPo1qmkMx/8NYTbThFclpLQORNSRQnXnCHXdeNk1BakYf
-	 WhCqDb/s/O8Zxk4Az9qRKewYv092r53fR5s0LKaOczmu8irVJqkCtkkH7BmDg9aXuAQ==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=EeX5+u1jhLgiRTX4ti7d9jEZWZ17InGx5CbVOObyaE4=;
+	b=UXB5mRRmRdphW2NnuDQSeyvRAGcliExBz7fctaQzm7U3bJ8iagibOpK8nf4VQMB0sgVr
+	 6BW0CrSAJ/L09RQzMczn6iS/AVWNramf03AzhuGPbW2KS6uOT/kDrarWlPPxkCeRpyF3c
+	 btUhRxbhiMonNUMaN05f8mTJ+pEXD4ApSxZnm1YeCNCyiW3u+2FH1groPpOYScsLG1o1a
+	 Sxb5P5kZIyjCLrnSXOgrIft9608e5Ac//3fi/dUXQZRCX5q08iToloneHsI2H9sdPNG03
+	 xNp+i2UNssbFfU1po5kHlIJPbCuJvWRIWM9dj92JgcZS4JHHHnp6tlESRibTLO6pLZA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fN24odb6;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Iy24rN8z;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 293D0606A320;
-	Wed, 28 Oct 2026 18:29:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 103FD606A31E;
+	Wed, 28 Oct 2026 18:29:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fN24odb6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 460BE1F01825;
-	Wed, 28 Oct 2026 18:29:03 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Iy24rN8z
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 241B81F031E2;
+	Wed, 28 Oct 2026 18:29:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793212143;
-	bh=rvioDNIuytI123GbGu/IbvAzZPyGlgPM4ejcPjsZegY=;
+	s=korg; t=1793212146;
+	bh=EeX5+u1jhLgiRTX4ti7d9jEZWZ17InGx5CbVOObyaE4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fN24odb6FAL2kKVUHkiPgbJ3Brp5JD2eauIjiRw7GCECOPz+Tz6+1hPvWxLqegH3r
-	 pWEemxa/ngFzB1Ycz7I4bdE/qC2dr8MLLnZI/A1de+ZslzOrnACcjGsV1aVYCI+EDq
-	 KrjHjqegkkqxRPhomI7uUcTpG4EfGZD87hWIkNPg=
+	b=Iy24rN8zkcyZ3GMkPoYr4uYILSGZHHzNpXJLBJLrLXvJuNRDF+T72J76pWuRsy3I4
+	 5sk0hiWkZ46GlLggKXUfJI2JXEMZqSet5NU74KprYKpxEuNWi7veNpw5bjMp4VmSGx
+	 5Q+sBjGtg1oqB/codsqZMOsvSWohfE//2Gm0kcmc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hyunwoo Kim <imv4bel@gmail.com>,
-	Thomas Gleixner <tglx@kernel.org>,
-	Kijo Park <red993688@gmail.com>,
-	Oleg Nesterov <oleg@redhat.com>,
-	Frederic Weisbecker <frederic@kernel.org>,
+	Daehyeon Ko <4ncienth@gmail.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0052/1887] exec: Cleanup POSIX timers right after de_thread()
-Date: Wed, 28 Oct 2026 17:35:48 +0100
-Message-ID: <20261028170500.411389431@linuxfoundation.org>
+Subject: [PATCH 6.1 0053/1887] wifi: libipw: reject TKIP frames without a full MIC
+Date: Wed, 28 Oct 2026 17:35:49 +0100
+Message-ID: <20261028170500.434091174@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -65,126 +62,79 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hyunwoo Kim <imv4bel@gmail.com>
+From: Daehyeon Ko <4ncienth@gmail.com>
 
-[ Upstream commit acb03d3881818581052924a9bbbe92b8741ed448 ]
+[ Upstream commit 06f42accaf3c6aecab1dcc57f68dde6c06c8b380 ]
 
-A per-thread CPU timer holds a reference to the PID of the thread it is
-attached to and, while it is armed, its node is queued in that thread's
-posix_cputimers. The task is looked up by that PID.
+libipw_michael_mic_verify() assumes that an skb contains an eight-byte
+Michael MIC. A short TKIP frame makes the unsigned payload length wrap,
+causing michael_mic() to read past the skb.
 
-When a non-leader thread exec()s, de_thread() changes which task owns
-that PID. pid_task(timer->it.cpu.pid, PIDTYPE_PID) then returns NULL,
-but the node is still queued on tsk, which is alive. timer_lock_sighand()
-takes a failed lookup to mean that the node is already dequeued, so it
-has nothing to undo.
+Check that the MIC is present before verifying it, and use the existing
+MICHAEL_MIC_LEN constant for all MIC lengths in the verifier.
 
-begin_new_exec() calls posix_cpu_timers_exit(me) right after
-exec_task_namespaces() and that removes the leftover node, so the state
-normally stays invisible. But bprm->point_of_no_return is set before
-de_thread(), so if unshare_files(), set_mm_exe_file(), exec_mmap() or
-exec_task_namespaces() fails, the task dies before it gets there.
-exit_itimers() then frees the k_itimer while its node is still queued,
-and reaping tsk later erases that freed node from the rbtree.
-
-In short:
-
-      the non-leader thread B           the parent
-
-  timer_create(CLOCK_THREAD_CPUTIME_ID)
-  timer_settime()
-    arm_timer()            // the node is queued on B
-  execve()
-    de_thread(B)
-      exchange_tids(B, leader)  // B's PID now belongs to the leader
-      release_task(leader)
-        __exit_signal(leader)
-          posix_cpu_timers_exit(leader)  // cleans leader's queue, not B's
-          __unhash_process(leader)  // that PID has no task anymore
-    exec_mmap()
-      mmap_read_lock_killable(old_mm)
-                                kill(B, SIGKILL)
-      // -EINTR
-  get_signal()
-    do_exit()
-      exit_itimers()
-        posix_timer_delete()
-          posix_cpu_timer_del()
-        posix_timer_unhash_and_free()  // freed while still queued
-                                wait4()
-                                  release_task(B)
-                                    posix_cpu_timers_exit(B)
-                                      cleanup_timerqueue()
-                                        timerqueue_del()  // use-after-free
-
-Move the POSIX timer cleanup right after de_thread() before any of the
-later failure conditions brings the task into do_exit().
-
-[ tglx: Move the cleanup right after de_thread() ]
-
-Fixes: 55e8c8eb2c7b ("posix-cpu-timers: Store a reference to a pid not a task")
-Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Tested-by: Kijo Park <red993688@gmail.com>
-Reviewed-by: Oleg Nesterov <oleg@redhat.com>
-Reviewed-by: Frederic Weisbecker <frederic@kernel.org>
+Fixes: b453872c35cf ("[NET] ieee80211 subsystem")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/ao7Q8miiuLAPVnWv@v4bel
-Link: https://patch.msgid.link/20260911090541.627712075@kernel.org
-[ kept timer cleanup inline instead of introducing upstream’s posixtimer_exec() helper. ]
+Assisted-by: LLM
+Signed-off-by: Daehyeon Ko <4ncienth@gmail.com>
+Link: https://patch.msgid.link/20260909061124.3802517-1-4ncienth@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+[ adapted libipw changes to the older lib80211 implementation and Michael MIC helper interface. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/exec.c | 23 +++++++++++++++--------
- 1 file changed, 15 insertions(+), 8 deletions(-)
+ net/wireless/lib80211_crypt_tkip.c | 13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/fs/exec.c b/fs/exec.c
-index 6ff6367793b9e..7391ec00a1cc1 100644
---- a/fs/exec.c
-+++ b/fs/exec.c
-@@ -1268,6 +1268,21 @@ int begin_new_exec(struct linux_binprm * bprm)
- 	if (retval)
- 		goto out;
+diff --git a/net/wireless/lib80211_crypt_tkip.c b/net/wireless/lib80211_crypt_tkip.c
+index 1b4d6c87a5c5d..823274728711a 100644
+--- a/net/wireless/lib80211_crypt_tkip.c
++++ b/net/wireless/lib80211_crypt_tkip.c
+@@ -38,6 +38,7 @@ MODULE_DESCRIPTION("lib80211 crypt: TKIP");
+ MODULE_LICENSE("GPL");
  
-+	/*
-+	 * This must be done here to ensure that POSIX CPU timers which were
-+	 * armed on the current task are dequeued from me::posix_cputimers.
-+	 * Otherwise in case of a TID switch the deletion of the related POSIX
-+	 * timer would not remove an enqueued timer because the TID lookup
-+	 * of the old TID fails.
-+	 */
-+#ifdef CONFIG_POSIX_TIMERS
-+	spin_lock_irq(&me->sighand->siglock);
-+	posix_cpu_timers_exit(me);
-+	spin_unlock_irq(&me->sighand->siglock);
-+	exit_itimers(me);
-+	flush_itimer_signals();
-+#endif
-+
- 	/*
- 	 * Cancel any io_uring activity across execve
- 	 */
-@@ -1316,14 +1331,6 @@ int begin_new_exec(struct linux_binprm * bprm)
+ #define TKIP_HDR_LEN 8
++#define MICHAEL_MIC_LEN 8
  
- 	bprm->mm = NULL;
+ struct lib80211_tkip_data {
+ #define TKIP_KEY_LEN 32
+@@ -585,16 +586,18 @@ static int lib80211_michael_mic_verify(struct sk_buff *skb, int keyidx,
+ 					int hdr_len, void *priv)
+ {
+ 	struct lib80211_tkip_data *tkey = priv;
+-	u8 mic[8];
++	u8 mic[MICHAEL_MIC_LEN];
  
--#ifdef CONFIG_POSIX_TIMERS
--	spin_lock_irq(&me->sighand->siglock);
--	posix_cpu_timers_exit(me);
--	spin_unlock_irq(&me->sighand->siglock);
--	exit_itimers(me);
--	flush_itimer_signals();
--#endif
--
- 	/*
- 	 * Make the signal table private.
- 	 */
+-	if (!tkey->key_set)
++	if (!tkey->key_set || skb->len < hdr_len + MICHAEL_MIC_LEN)
+ 		return -1;
+ 
+ 	michael_mic_hdr(skb, tkey->rx_hdr);
+ 	if (michael_mic(tkey->rx_tfm_michael, &tkey->key[24], tkey->rx_hdr,
+-			skb->data + hdr_len, skb->len - 8 - hdr_len, mic))
++			skb->data + hdr_len,
++			skb->len - MICHAEL_MIC_LEN - hdr_len, mic))
+ 		return -1;
+-	if (memcmp(mic, skb->data + skb->len - 8, 8) != 0) {
++	if (memcmp(mic, skb->data + skb->len - MICHAEL_MIC_LEN,
++		   MICHAEL_MIC_LEN) != 0) {
+ 		struct ieee80211_hdr *hdr;
+ 		hdr = (struct ieee80211_hdr *)skb->data;
+ 		printk(KERN_DEBUG "%s: Michael MIC verification failed for "
+@@ -612,7 +615,7 @@ static int lib80211_michael_mic_verify(struct sk_buff *skb, int keyidx,
+ 	tkey->rx_iv32 = tkey->rx_iv32_new;
+ 	tkey->rx_iv16 = tkey->rx_iv16_new;
+ 
+-	skb_trim(skb, skb->len - 8);
++	skb_trim(skb, skb->len - MICHAEL_MIC_LEN);
+ 
+ 	return 0;
+ }
 -- 
 2.53.0
 
