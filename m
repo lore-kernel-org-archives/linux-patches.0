@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216575;
-	b=SURanmThwkCUKzmSHv90K/COVVqBJadHDMcIJyNRNLNY6ddz3upzYTv0wDnyGfiodUVd
-	 m2UnrrNgvl62Lh1SzTB0R3KanyP2a1a+QjrRhQdWMGtjpS69RcWstPd5Mp2UV4cEaZnI8
-	 vEUL+HJi8+Ccvcmi58OTnoB21NFmDndejwxti+x1p3QYvZbVYZ3xGjqaxSaGIloo7GFga
-	 XSW2EbvdSNiIqXXxEWJ/zR8p3gE6WGdH89iUPwt6En4Ia+HkryqlOOnkYkDgD25wznWJr
-	 KUKYjSAJj7zZGUnawWi2wB3l9ZtqoA3KFJQmuH/B8zSlTUO2Ya9iuVrH2qi3hp4K8bw==
+	t=1793216577;
+	b=n9VLfHSyJJ0lOMUe3YYOryPve11YUWyOk3GMNHe1AMdjpwBGTKgp4K6fClDu6gx4stvm
+	 8pCThcw+hmSEn99dNvM5ssuRDA2hw1KcwfwFl7J/hCASr2A8n8li8ZDsCRB7LMWRWyWml
+	 MyubuiVhRygtkjNVEgVHUzgnodAAWPGB2ikfG01LLLVNXfxxjT0fU/mOYzKTT7fvkjWXL
+	 c/3Hhy9/ZzOWfJcyAAj0yomYj/dsLurBCO7h7ObJXt9TDEHmxNwX6Dq1EjruKPU5wJHnL
+	 peRUNwPMUOWvkVfddb5k86G87A7GRQYMoX8EXGNJDWmfEWEUpdY5NEZEdheRt5XeL2Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216575;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216577;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=y9+gBLarCMYsVZiyj0ej4LVh0R+UYH7S40TPeagiv4E=;
-	b=YVWRL9dOjxEQoxfPYiddtHgXRrqtMjlspHWeYJVpcx4VR5V+OEamOQ4XCgCzkXm2MOSE
-	 cDwOeR94zPLoJkkMckzY1gijXpwFGbg3MexBA2lHFsMhjebCBYjfwhQDCb7lAUfbIckWZ
-	 N5aWfw8a7bRWM23iYkgGwJlhBFQ+dC7o8ebLkgajBY7zbBXqEsuGEZyh5K5w8s7zFtHWB
-	 ke8HvUtVRrkRNg1nsarOTYQy4Rybbv1ot7JN8NNy/lcDwGOZ+tuqkV5GduMkGxcUEL1zs
-	 X822TBRsNM5Gl4q4xBm7h2sOs8XgL4zskg/ZFv/gANZiHYkJIO/oBNZBJ70h48BvoUw==
+	bh=92gI5MYxQ2WF112SQN3YUce3SAsxiCaSBnrbISw7EWg=;
+	b=jAjla5pjVC8tM16bo5sfUZGACiwQGWxX3OWylAgffkpwAGFJTfj1svGoYy/uY8nJgXpg
+	 KFjEWgZ0XqD7jS8IGybQleDw/XBZOvEARnmy/Ito9r3otWc+HV39nFkyEh/Fs7WBjwaVP
+	 K4E5qoFZs/vo8Emo/kAypyfRg/F5XAJq/a6NZVFAfrrpJwfuGVUaWab5XB9qoRfe5SSZb
+	 WyyEPmCkRzZO686Ia+IOpLkDhUXuRctjzEBJSKKehrWzdyW++G1pF1TIcpQlCncOvhNs0
+	 NrkOxvl9qqMJAxZRQQ/qSOBdUF4ojRJcoSWRV+d/joeuc9R3AntUnbVJzZylEo4IQMw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=16PTmocX;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="UJO/pBFV";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0656A606A31D;
-	Wed, 28 Oct 2026 19:42:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9729C606A31C;
+	Wed, 28 Oct 2026 19:42:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=16PTmocX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A9D61F01825;
-	Wed, 28 Oct 2026 19:42:53 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UJO/pBFV
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7B011F01825;
+	Wed, 28 Oct 2026 19:42:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216574;
-	bh=y9+gBLarCMYsVZiyj0ej4LVh0R+UYH7S40TPeagiv4E=;
+	s=korg; t=1793216577;
+	bh=92gI5MYxQ2WF112SQN3YUce3SAsxiCaSBnrbISw7EWg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=16PTmocXEdNmqqfuWxqhEHNJ26c/0thJGQC1KA15mcsdLjxifRK2RYr7MJC7Sd4eI
-	 3DCo/mjNFOSTXgmsaXBKc+LHwx3Wwf1KuAxfkZL9ePsbqXWJG3RIhinYYewP25DEGi
-	 QNOgX2K0WzjNPbPc9dCRQGlh7X9cj7mDtiiUPafI=
+	b=UJO/pBFVa1CN7TTnVlK591A+X7FT0PB9+kz7c3zKk60qViII/YMrs0PAPP5Vof3Me
+	 5mnSp9AGQIYevBSEC7APWsFj4utQa6CeZNJnUy/g6onvJiD6OTbfcghX8vIgdR5I1Z
+	 umvC/iULUB+bUhIcIcLZuoj5RC8U+Qub8Wr27xlg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhan Xusheng <zhanxusheng@xiaomi.com>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Martin Wilck <mwilck@suse.com>,
+	Mykola Marzhan <mykola@meshstor.io>,
+	Yu Kuai <yukuai@fygo.io>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1550/1887] fs/ntfs3: fix integer overflow in MFT cluster validation
-Date: Wed, 28 Oct 2026 18:00:46 +0100
-Message-ID: <20261028170534.739906564@linuxfoundation.org>
+Subject: [PATCH 6.1 1598/1887] md/raid1: create serial pool adding rdev to array with serialize_policy=1
+Date: Wed, 28 Oct 2026 18:01:34 +0100
+Message-ID: <20261028170535.835159369@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,95 +69,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhan Xusheng <zhanxusheng1024@gmail.com>
+From: Martin Wilck <mwilck@suse.com>
 
-[ Upstream commit c510c63873103a5da6a498fe537bdb5d6f8d03a2 ]
+[ Upstream commit 140234b2380ffb8ffb0cfc46fee0e822f43adef7 ]
 
-In ntfs_init_from_boot(), the boot sector's MFT cluster numbers are
-validated against the volume size with:
+The following bug has been observed with kernel 7.1.3 after adding a new
+rdev to an existing RAID1 array with serialize_policy enabled:
 
-	if (mlcn  * sct_per_clst >= sectors ||
-	    mlcn2 * sct_per_clst >= sectors)
-		goto out;
+  Oops: 0002 [#1]
+  CPU: 0 UID: 0 PID: 19639 Comm: ext4lazyinit Not tainted 7.1.3-1-default
+  RIP: _raw_spin_lock_irqsave+0x27/0x50
+  CR2: 0000000000004960
+  Call Trace:
+   wait_for_serialization+0xb9/0x260 [raid1]
+   raid1_make_request+0x762/0xaff [raid1]
+   md_handle_request+0x1c9/0x2e0 [md_mod]
 
-mlcn and mlcn2 are u64 fields read directly from the boot sector.
-sct_per_clst is bounded above by 4096 (true_sectors_per_clst() plus
-the is_power_of_2() check below it), but the multiplication is done
-in u64 and wraps when mlcn (or mlcn2) is large enough -- e.g. mlcn
-near 2^62 with sct_per_clst == 4 wraps to 0, which compares below
-any non-zero 'sectors', so the check is bypassed and the malformed
-record is accepted.
+The raid1.c code calls wait_for_serialization() if the MD_SERIALIZE_POLICY
+is set, and wait_for_serialization assumes that rdev->serial is
+initialized. Normally this will be the case for arrays that have
+the serialize_policy sysfs attribute set to 1.
 
-The accepted mlcn is then used unchanged in
+But when a new rdev is added to an existing array in bind_rdev_to_array(),
+the condition at mddev_create_serial_pool() causes creation of rdev->serial
+to be skipped. Fix it.
 
-	sbi->mft.lbo = mlcn << cluster_bits;
-
-In practice the resulting reads fail at the block layer (sb_bread()
-returns NULL via grow_buffers()'s check_mul_overflow() guard), so
-today this manifests as mount failing in odd places rather than as
-something more dangerous, but the validation step is still wrong
-and there is no reason for callers to rely on the block layer to
-catch a value that should never have been accepted in the first
-place.
-
-Use check_mul_overflow() to compute the two sector positions and
-fail the mount if either multiplication wraps; this preserves the
-existing semantics (mlcn * sct_per_clst >= sectors) instead of
-switching to division (mlcn >= sectors / sct_per_clst), which
-would tighten the check at edge cases where 'sectors' is not a
-multiple of sct_per_clst.  The check_*_overflow() style is the
-one ntfs3 already uses for similar on-disk arithmetic in
-fs/ntfs3/run.c.
-
-Fixes: 82cae269cfa9 ("fs/ntfs3: Add initialization of super block")
-Signed-off-by: Zhan Xusheng <zhanxusheng@xiaomi.com>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Fixes: 69b00b5bb235 ("md: introduce a new struct for IO serialization")
+Signed-off-by: Martin Wilck <mwilck@suse.com>
+Reviewed-by: Mykola Marzhan <mykola@meshstor.io>
+Link: https://patch.msgid.link/20260723112741.1206836-1-mwilck@suse.com
+Signed-off-by: Yu Kuai <yukuai@fygo.io>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/super.c | 16 +++++++++++-----
- 1 file changed, 11 insertions(+), 5 deletions(-)
+ drivers/md/md.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/fs/ntfs3/super.c b/fs/ntfs3/super.c
-index 35dd0018e2bd4..9bf327a7cc7b9 100644
---- a/fs/ntfs3/super.c
-+++ b/fs/ntfs3/super.c
-@@ -33,6 +33,7 @@
- #include <linux/minmax.h>
- #include <linux/module.h>
- #include <linux/nls.h>
-+#include <linux/overflow.h>
- #include <linux/seq_file.h>
- #include <linux/statfs.h>
+diff --git a/drivers/md/md.c b/drivers/md/md.c
+index ce5063114449c..e268eb0be6da9 100644
+--- a/drivers/md/md.c
++++ b/drivers/md/md.c
+@@ -213,7 +213,8 @@ void mddev_create_serial_pool(struct mddev *mddev, struct md_rdev *rdev,
+ {
+ 	int ret = 0;
  
-@@ -685,7 +686,7 @@ static int ntfs_init_from_boot(struct super_block *sb, u32 sector_size,
- 	struct ntfs_sb_info *sbi = sb->s_fs_info;
- 	int err;
- 	u32 mb, gb, boot_sector_size, sct_per_clst, record_size;
--	u64 sectors, clusters, mlcn, mlcn2;
-+	u64 sectors, clusters, mlcn, mlcn2, mft_pos, mft2_pos;
- 	struct NTFS_BOOT *boot;
- 	struct buffer_head *bh;
- 	struct MFT_REC *rec;
-@@ -730,10 +731,15 @@ static int ntfs_init_from_boot(struct super_block *sb, u32 sector_size,
- 	mlcn2 = le64_to_cpu(boot->mft2_clst);
- 	sectors = le64_to_cpu(boot->sectors_per_volume);
+-	if (rdev && !rdev_need_serial(rdev) &&
++	if (!mddev->serialize_policy &&
++	    rdev && !rdev_need_serial(rdev) &&
+ 	    !test_bit(CollisionCheck, &rdev->flags))
+ 		return;
  
--	if (mlcn * sct_per_clst >= sectors)
--		goto out;
--
--	if (mlcn2 * sct_per_clst >= sectors)
-+	/*
-+	 * Convert mlcn/mlcn2 to sector positions before comparing with
-+	 * 'sectors'.  All three are u64 values that come from the boot
-+	 * sector, so use check_mul_overflow() to keep a wraparound from
-+	 * silently bypassing the comparison.
-+	 */
-+	if (check_mul_overflow(mlcn, (u64)sct_per_clst, &mft_pos) ||
-+	    check_mul_overflow(mlcn2, (u64)sct_per_clst, &mft2_pos) ||
-+	    mft_pos >= sectors || mft2_pos >= sectors)
- 		goto out;
- 
- 	/* Check MFT record size. */
 -- 
 2.53.0
 
