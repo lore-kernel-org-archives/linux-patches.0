@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793208354;
-	b=MLRRLTiwhqcbY9MXu4jMvbYfHetO/ziOrp/YjBKQrW/wkGxUcBHULuF54mpcru4iVOWe
-	 5AYkT0x0oHo0ha0609riCO9GeYmTRaatquCeZ4aEIiwfceZOvJhl+k8RVk+wa6xFCEQSx
-	 O0qyokogYXQNnIXxNiHbwZmLE1NVYH3y1DB4kn0mVo8x9kz9G0+PhB8wbWdIl0wDXMqY4
-	 z8FcwQ+uqE70BrMkpOKbM2bCmvf7ZaHAexAMUkgz28fU66sjNLd4O+uw7NEdzIJK1JdIc
-	 47a7dPpIwgxdWtRysYJ1NAbHimzjOfY2iEQiQ5+yybnkeGFK7ldsDTNdz/QTAp/a1sw==
+	t=1793208358;
+	b=wpOecM+RnJxJddlxwkcBfYgWtIRgVCuPeQtD9esSqhiGrfr7eVIKBHIV/8+3us07BHcG
+	 HzU3rxz3waUUUjow4hK1PL+HtKywqbncXpdT6jG5Ljk9WrIBk/UhMzspUYSaeqxg/KWbP
+	 eXhzjHtF4Rb2DWYfvnkQv6S/OwvbumcXtQn7eZh9aMpPPu93du3Z/bLU0/xyg4v7Q0L0v
+	 YcjwqTLCMkpGhLepjGAllCisQy16UowPRjYWL5TCcwCY5mZFitb79TahPYPbtadXDznIf
+	 ru4TJqjkr8nnFdoiZgzOQvqhAmzOHoPouKnPsyt4svjdFmDtdnkuX8B6pU4icXpO0nA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793208354;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793208358;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=4VZiOAh8E25BwYdkmD4oOMVTLYqQfb/GuX66oQCFx8M=;
-	b=1K6koXnTdTENUUSgO0JFj3y7vSDec/87wsgfqyfy9dwDEnPW/DOhcxHlYh/v8xjcVMCw
-	 hQpsxfVxdvYUwMaSsg8hmPSIimRNOVEioxXaBEQB8g6dlYf7ikWWUiZDd9rcUntGXjFru
-	 C4zWmvPgCt+lRXc7Zrv4sW9E9WUiS1zgmIpDcqLIwgA4j9emWY6EgfbiU61MtckLxatew
-	 O107aYU2eySKdwEknV9dfFBPvW20Cbqyxn6HPdWH/wad0nPNiGK4sWFgyGLLKQeJOj/03
-	 50q3wNuaaxqELc/SAkSiF1W0Gc3ViL+ltPYsJtgqsi2Vvnc2cL1VxA+smQmS05n9Owg==
+	bh=AaYL5J+JsmDMT/gnXP+tik3AziXb03VBSvhRih10l18=;
+	b=yX7GGpQ2pJl8zyfkWNYNDIXxbArue16/jy6mWTRVPFssjhcov1FGFELhonAOUIZOqyFD
+	 UoS4lDEyxkL2UPWid0piyErG7x0tfyD19w610/HqCDzl3iRgoqI4eGGG06LzTJacMaJ30
+	 73TkVqEE6QSnvQmOa0BLh1iZTK/NaXLiG3wpYaZe+ry+2qgNBsgNqxY/6cAewOcHbv5ht
+	 uKehjSA6PX8M/5b+i5AWJ+i9mD1/YyXwQspXv5V4yA+gfL1hXPBaJM+GdrI6gKylr5n8P
+	 POQNJIBfmj1Vrf7gzxWT8ozRi1e58CxjTWoqsUbB/3i35uQjVzaiO60Rn8P3gLox2Kg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=whfBoXa3;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=o+vEILRb;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AB63606A32C;
-	Wed, 28 Oct 2026 17:25:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE96B606A31C;
+	Wed, 28 Oct 2026 17:25:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=whfBoXa3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAF581F01829;
-	Wed, 28 Oct 2026 17:25:53 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=o+vEILRb
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD3B11F01829;
+	Wed, 28 Oct 2026 17:25:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793208354;
-	bh=4VZiOAh8E25BwYdkmD4oOMVTLYqQfb/GuX66oQCFx8M=;
+	s=korg; t=1793208357;
+	bh=AaYL5J+JsmDMT/gnXP+tik3AziXb03VBSvhRih10l18=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=whfBoXa3B4pu/W6eEc1g3J5SmzFG4gH3+UTljlMw1xPpqAyY1wYvw0TkOzHZqrq9x
-	 GIRRd/8JNI8tWgJGD1o9mmoDWllRKWrziBNDrv04GRjtkgCbBTfyIslGPs5EuTb56N
-	 94pxu9n+CBynJzN7G43xwCQpw2mOKiQe3iHqO9sg=
+	b=o+vEILRbhRC13DLMZQC965Xv64pPdxAhZq7C8h0m8N7t60t6E1NsmrcxA26v4TBV6
+	 aZYi+rRCeUFB7xh+zS8oWmlNJYtQXIgfauXPWJStVaM+eWo6SogQT6wE0v1iYwKLFa
+	 FzBJtoOtCfG9CCrwCt7QTL9CxB2MUcvqCgGXlk58=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Miroslav Benes <mbenes@suse.cz>,
-	Luis Chamberlain <mcgrof@kernel.org>,
+	Sashiko <sashiko-dev@google.com>,
+	Nilesh Javali <njavali@marvell.com>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 053/516] kernel/params.c: Use kstrtobool() instead of strtobool()
-Date: Wed, 28 Oct 2026 17:53:25 +0100
-Message-ID: <20261028170004.787021877@linuxfoundation.org>
+Subject: [PATCH 5.10 089/516] scsi: qla2xxx: Null out freed pointers in qla2x00_mem_alloc() error path
+Date: Wed, 28 Oct 2026 17:54:01 +0100
+Message-ID: <20261028170005.628476378@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -69,48 +69,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Nilesh Javali <njavali@marvell.com>
 
-[ Upstream commit def7b92efd868a6c78da86770704c1a03506016e ]
+[ Upstream commit 6d90f0feb929f6c0f3010f9af4747c7230b75993 ]
 
-strtobool() is the same as kstrtobool().
-However, the latter is more used within the kernel.
+When qla2x00_mem_alloc() fails, qla2x00_probe_one() jumps to
+probe_hw_failed and calls qla2x00_mem_free(). Several error labels in
+qla2x00_mem_alloc() freed adapter members (elsrej.c, purex_dma_pool,
+flt, sfp_data, loop_id_map, async_pd, sf_init_cb, ex_init_cb, npiv_info)
+but left the pointers dangling. qla2x00_mem_free() then freed them a
+second time. Worse, for the dma_pool members it issued
+dma_pool_free(ha->s_dma_pool, ...) after s_dma_pool had already been
+destroyed and set to NULL at fail_s_dma_pool, dereferencing a NULL pool.
 
-In order to remove strtobool() and slightly simplify kstrtox.h, switch to
-the other function name.
+Clear each freed pointer (and its DMA handle) in the error labels so the
+subsequent qla2x00_mem_free() skips them.
 
-While at it, include the corresponding header file (<linux/kstrtox.h>)
-
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Reviewed-by: Miroslav Benes <mbenes@suse.cz>
-Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
-Stable-dep-of: 3dfaae04243c ("params: fix charp corruption on allocation failure")
+Cc: stable@vger.kernel.org
+Reported-by: Sashiko <sashiko-dev@google.com>
+Signed-off-by: Nilesh Javali <njavali@marvell.com>
+Link: https://patch.msgid.link/20260730155838.2119230-13-njavali@marvell.com
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+[ omitted the upstream cleanup block for allocation paths absent from Linux 5.10. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/params.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/scsi/qla2xxx/qla_os.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/kernel/params.c b/kernel/params.c
-index 0df4a315760d5..9f0f059571a0a 100644
---- a/kernel/params.c
-+++ b/kernel/params.c
-@@ -4,6 +4,7 @@
- 
- */
- #include <linux/kernel.h>
-+#include <linux/kstrtox.h>
- #include <linux/string.h>
- #include <linux/errno.h>
- #include <linux/module.h>
-@@ -310,7 +311,7 @@ int param_set_bool(const char *val, const struct kernel_param *kp)
- 	if (!val) val = "1";
- 
- 	/* One of =[yYnN01] */
--	return strtobool(val, kp->arg);
-+	return kstrtobool(val, kp->arg);
- }
- EXPORT_SYMBOL(param_set_bool);
- 
+diff --git a/drivers/scsi/qla2xxx/qla_os.c b/drivers/scsi/qla2xxx/qla_os.c
+index 05d204b8f125c..eacf6e234e34b 100644
+--- a/drivers/scsi/qla2xxx/qla_os.c
++++ b/drivers/scsi/qla2xxx/qla_os.c
+@@ -4259,16 +4259,26 @@ qla2x00_mem_alloc(struct qla_hw_data *ha, uint16_t req_len, uint16_t rsp_len,
+ fail_flt_buffer:
+ 	dma_free_coherent(&ha->pdev->dev, SFP_DEV_SIZE,
+ 	    ha->sfp_data, ha->sfp_data_dma);
++	ha->sfp_data = NULL;
++	ha->sfp_data_dma = 0;
+ fail_sfp_data:
+ 	kfree(ha->loop_id_map);
++	ha->loop_id_map = NULL;
+ fail_loop_id_map:
+ 	dma_pool_free(ha->s_dma_pool, ha->async_pd, ha->async_pd_dma);
++	ha->async_pd = NULL;
++	ha->async_pd_dma = 0;
+ fail_async_pd:
+ 	dma_pool_free(ha->s_dma_pool, ha->sf_init_cb, ha->sf_init_cb_dma);
++	ha->sf_init_cb = NULL;
++	ha->sf_init_cb_dma = 0;
+ fail_sf_init_cb:
+ 	dma_pool_free(ha->s_dma_pool, ha->ex_init_cb, ha->ex_init_cb_dma);
++	ha->ex_init_cb = NULL;
++	ha->ex_init_cb_dma = 0;
+ fail_ex_init_cb:
+ 	kfree(ha->npiv_info);
++	ha->npiv_info = NULL;
+ fail_npiv_info:
+ 	dma_free_coherent(&ha->pdev->dev, ((*rsp)->length + 1) *
+ 		sizeof(response_t), (*rsp)->ring, (*rsp)->dma);
 -- 
 2.53.0
 
