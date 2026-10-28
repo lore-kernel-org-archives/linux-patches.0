@@ -1,52 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213589;
-	b=BoxZt/tvowmlLcxo9bc83U/IsL2wgEJRH6baohQmHRYzPISMk40raIRe+CAo5HGsNHa+
-	 DT0hgKmbZ6Y8HIR6A7PkYuhvmVBsEkgAue1O2Yt3Lf6Sd1FHPA+ytb0CLPWcVxhgYBKhb
-	 RziEEFiXg7v5MrZDenyBH+hJIIU6smSeVyuyU4kP+bwM/y9H0GwBkxMI4Eewp5hg4Vt2P
-	 JEK9031XIn4Kn0czrPLdzBf6SPZpUTGdoMzFwSkyjrqFmqtH3tOn1WoDwdT3iiIdt+Jd+
-	 hu9UcakH0CzqYvbsMhic3UaFKJrIyLzfalspig5Au+AhMXlM2nNxo3SLHgD16VYsKyA==
+	t=1793213592;
+	b=OPCE6jzrcOmJTl+DzuUv54ep70BZNHE3Sn4oGtknbOvaHDycl06ScRo0OTLArVC3QHm5
+	 MAdvUTLvfd3dyYQghnOGa+u+PyJllljbV7GyNPK2O0b0ugiFB+eQHcO5D+VrTz9Hkh3DE
+	 gw/MPL1VPJYgpAyob03rq845hIm2ooJizTYGEaHbtFWwgr4IU8qYQ6ZJqb3J//K1DMhDk
+	 N4vuf/zYOAUyXWaHgZqqQlgqrrMooIi7b9sVuvgsZPpR3nHOM7P/UDnQfh/2YGB7AIlR7
+	 N/nIt2DUATskKeGWc2xDTV/ztmEKfAxw/cMWaRpQ1k1M1t7RqWvDDAyZZQRN+qg+TUQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213589;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213592;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=XYlMpUCZ+glqJWq5p6cXS8NR9vmg8+A4KhwRH+Wsvh8=;
-	b=fCp0bMwqn3io+etd3KIGba4gImZ7Dh9tkEZXbJREdDO2WKCOooeW7JjzW8Q2MmSXTZxf
-	 MTWFSFHH1OCv+r5AWJUAv9nXCdNhPYph8luFvEyI12GrX+hBS3jG/KWdqfH4zA3Cb0fLm
-	 fY0nLqx3b0z1VjTvUdb0+noWHfrDrHqFxsLsWDEHyimnLF4g92Ii+XhBJWpctVGWdyP0G
-	 rJWDrTJSme2K4zYe5dj8wgjbZzPtoJXZzKIJOCSlPAzj8WrCNcqvegqWjB++E9TY7ZYVP
-	 GS7deBwacbAub2mWPdKIE2/SFokeHHfVmttFdRjbP1Iuk/dmI0TlWdfiVLUb24Bp6Kw==
+	bh=KDfe2Yl/UOz7mFZWhHHuK0bRJ5Bzm3eY+m3Z5AzE6C4=;
+	b=xGvk8X+oRVIZ7ETy+Bufd8bOnj9JmxncOjRreGFnhov6sFZ0Y5rfPNpumHryoLwY/+8F
+	 98jkVmU7M6NR5RMk7ea7549BjpG1SiRfNXbq+GHKo8aOZU4booZnTvTYs3lsxPfNxzs1R
+	 0ejUsDBSwEFHN9vTuj0JmkRneSSxmsZH98Olqi8g0s7dkUDCtZmIzwi+PqABnddXKp6Ue
+	 wCBWmg0QlpJwVCuncRrjvnMqyvkc0r9wajx+y4/rLGus7+d+6FQ/m3phCHWaupRR44KhX
+	 zFykx575B7ViK49+qItf06lvxSnyoW3NAeW7jLGpPczqfas5MV3ydV9VDbKwNAcx49g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZYNn2Lf+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SnFDwaKs;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05C0C606A31D;
-	Wed, 28 Oct 2026 18:53:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFC0B606A31A;
+	Wed, 28 Oct 2026 18:53:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZYNn2Lf+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 551991F01828;
-	Wed, 28 Oct 2026 18:53:08 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SnFDwaKs
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F3A21F01825;
+	Wed, 28 Oct 2026 18:53:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213588;
-	bh=XYlMpUCZ+glqJWq5p6cXS8NR9vmg8+A4KhwRH+Wsvh8=;
+	s=korg; t=1793213591;
+	bh=KDfe2Yl/UOz7mFZWhHHuK0bRJ5Bzm3eY+m3Z5AzE6C4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZYNn2Lf+ZHl3WtDxgFQ8KkpVYMzMupQVO+i/SqZ8QBcHtIH7izCQo1JwCgW8GAEx5
-	 +8pOsX86B11otqcdX1/vRl1N6V8Kt44OqBtEZgy6MvfuFMfPN2QYpwrawPmRIZxNFC
-	 zUYg3ePWNj5CA06OpUONPyW7rLAUT/1ky5Dw2zFU=
+	b=SnFDwaKst67Hmg+ZyCMbAmygP3Krb0oGBf5pTKetI26lK49oOlMf3Erco465Jg8C1
+	 EtN5uFAANeuPcKZ3PdmnQ8RCGiK9t22J80HI6OERkJSOA43uDT4q0bN53Ba0UtFyi7
+	 BuMnJrNAVw35XVbO18LPXPpS44rWsn1Vjw8ppnUY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paulo Alcantara (SUSE)" <pc@manguebit.com>,
-	Steve French <stfrench@microsoft.com>,
+	Guo Ren <guoren@kernel.org>,
+	Jisheng Zhang <jszhang@kernel.org>,
+	Deepak Gupta <debug@rivosinc.com>,
+	Sami Tolvanen <samitolvanen@google.com>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0558/1887] smb: client: fix use-after-free in smb2_query_info_compound()
-Date: Wed, 28 Oct 2026 17:44:14 +0100
-Message-ID: <20261028170512.079641884@linuxfoundation.org>
+Subject: [PATCH 6.1 0559/1887] riscv: VMAP_STACK overflow detection thread-safe
+Date: Wed, 28 Oct 2026 17:44:15 +0100
+Message-ID: <20261028170512.105896735@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,292 +72,308 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.com>
+From: Deepak Gupta <debug@rivosinc.com>
 
-[ Upstream commit 5c86919455c1edec99ebd3338ad213b59271a71b ]
+[ Upstream commit be97d0db5f44c0674480cb79ac6f5b0529b84c76 ]
 
-The following UAF was triggered when running fstests generic/072 with
-KASAN enabled against Windows Server 2022 and mount options
-'multichannel,max_channels=2,vers=3.1.1,mfsymlinks,noperm'
+commit 31da94c25aea ("riscv: add VMAP_STACK overflow detection") added
+support for CONFIG_VMAP_STACK. If overflow is detected, CPU switches to
+`shadow_stack` temporarily before switching finally to per-cpu
+`overflow_stack`.
 
-  BUG: KASAN: slab-use-after-free in smb2_query_info_compound+0x423/0x6d0 [cifs]
-  Read of size 8 at addr ffff888014941048 by task xfs_io/27534
+If two CPUs/harts are racing and end up in over flowing kernel stack, one
+or both will end up corrupting each other state because `shadow_stack` is
+not per-cpu. This patch optimizes per-cpu overflow stack switch by
+directly picking per-cpu `overflow_stack` and gets rid of `shadow_stack`.
 
-  CPU: 0 PID: 27534 Comm: xfs_io Not tainted 6.6.0-rc7 #1
-  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS
-  rel-1.16.2-3-gd478f380-rebuilt.opensuse.org 04/01/2014
-  Call Trace:
-   dump_stack_lvl+0x4a/0x80
-   print_report+0xcf/0x650
-   ? srso_alias_return_thunk+0x5/0x7f
-   ? srso_alias_return_thunk+0x5/0x7f
-   ? __phys_addr+0x46/0x90
-   kasan_report+0xda/0x110
-   ? smb2_query_info_compound+0x423/0x6d0 [cifs]
-   ? smb2_query_info_compound+0x423/0x6d0 [cifs]
-   smb2_query_info_compound+0x423/0x6d0 [cifs]
-   ? __pfx_smb2_query_info_compound+0x10/0x10 [cifs]
-   ? srso_alias_return_thunk+0x5/0x7f
-   ? __stack_depot_save+0x39/0x480
-   ? kasan_save_stack+0x33/0x60
-   ? kasan_set_track+0x25/0x30
-   ? ____kasan_slab_free+0x126/0x170
-   smb2_queryfs+0xc2/0x2c0 [cifs]
-   ? __pfx_smb2_queryfs+0x10/0x10 [cifs]
-   ? __pfx___lock_acquire+0x10/0x10
-   smb311_queryfs+0x210/0x220 [cifs]
-   ? __pfx_smb311_queryfs+0x10/0x10 [cifs]
-   ? srso_alias_return_thunk+0x5/0x7f
-   ? __lock_acquire+0x480/0x26c0
-   ? lock_release+0x1ed/0x640
-   ? srso_alias_return_thunk+0x5/0x7f
-   ? do_raw_spin_unlock+0x9b/0x100
-   cifs_statfs+0x18c/0x4b0 [cifs]
-   statfs_by_dentry+0x9b/0xf0
-   fd_statfs+0x4e/0xb0
-   __do_sys_fstatfs+0x7f/0xe0
-   ? __pfx___do_sys_fstatfs+0x10/0x10
-   ? srso_alias_return_thunk+0x5/0x7f
-   ? lockdep_hardirqs_on_prepare+0x136/0x200
-   ? srso_alias_return_thunk+0x5/0x7f
-   do_syscall_64+0x3f/0x90
-   entry_SYSCALL_64_after_hwframe+0x6e/0xd8
+Following are the changes in this patch
 
-  Allocated by task 27534:
-   kasan_save_stack+0x33/0x60
-   kasan_set_track+0x25/0x30
-   __kasan_kmalloc+0x8f/0xa0
-   open_cached_dir+0x71b/0x1240 [cifs]
-   smb2_query_info_compound+0x5c3/0x6d0 [cifs]
-   smb2_queryfs+0xc2/0x2c0 [cifs]
-   smb311_queryfs+0x210/0x220 [cifs]
-   cifs_statfs+0x18c/0x4b0 [cifs]
-   statfs_by_dentry+0x9b/0xf0
-   fd_statfs+0x4e/0xb0
-   __do_sys_fstatfs+0x7f/0xe0
-   do_syscall_64+0x3f/0x90
-   entry_SYSCALL_64_after_hwframe+0x6e/0xd8
+ - Defines an asm macro to obtain per-cpu symbols in destination
+   register.
+ - In entry.S, when overflow is detected, per-cpu overflow stack is
+   located using per-cpu asm macro. Computing per-cpu symbol requires
+   a temporary register. x31 is saved away into CSR_SCRATCH
+   (CSR_SCRATCH is anyways zero since we're in kernel).
 
-  Freed by task 27534:
-   kasan_save_stack+0x33/0x60
-   kasan_set_track+0x25/0x30
-   kasan_save_free_info+0x2b/0x50
-   ____kasan_slab_free+0x126/0x170
-   slab_free_freelist_hook+0xd0/0x1e0
-   __kmem_cache_free+0x9d/0x1b0
-   open_cached_dir+0xff5/0x1240 [cifs]
-   smb2_query_info_compound+0x5c3/0x6d0 [cifs]
-   smb2_queryfs+0xc2/0x2c0 [cifs]
+Please see Links for additional relevant disccussion and alternative
+solution.
 
-This is a race between open_cached_dir() and cached_dir_lease_break()
-where the cache entry for the open directory handle receives a lease
-break while creating it.  And before returning from open_cached_dir(),
-we put the last reference of the new @cfid because of
-!@cfid->has_lease.
+Tested by `echo EXHAUST_STACK > /sys/kernel/debug/provoke-crash/DIRECT`
+Kernel crash log below
 
-Besides the UAF, while running xfstests a lot of missed lease breaks
-have been noticed in tests that run several concurrent statfs(2) calls
-on those cached fids
+ Insufficient stack space to handle exception!/debug/provoke-crash/DIRECT
+ Task stack:     [0xff20000010a98000..0xff20000010a9c000]
+ Overflow stack: [0xff600001f7d98370..0xff600001f7d99370]
+ CPU: 1 PID: 205 Comm: bash Not tainted 6.1.0-rc2-00001-g328a1f96f7b9 #34
+ Hardware name: riscv-virtio,qemu (DT)
+ epc : __memset+0x60/0xfc
+  ra : recursive_loop+0x48/0xc6 [lkdtm]
+ epc : ffffffff808de0e4 ra : ffffffff0163a752 sp : ff20000010a97e80
+  gp : ffffffff815c0330 tp : ff600000820ea280 t0 : ff20000010a97e88
+  t1 : 000000000000002e t2 : 3233206874706564 s0 : ff20000010a982b0
+  s1 : 0000000000000012 a0 : ff20000010a97e88 a1 : 0000000000000000
+  a2 : 0000000000000400 a3 : ff20000010a98288 a4 : 0000000000000000
+  a5 : 0000000000000000 a6 : fffffffffffe43f0 a7 : 00007fffffffffff
+  s2 : ff20000010a97e88 s3 : ffffffff01644680 s4 : ff20000010a9be90
+  s5 : ff600000842ba6c0 s6 : 00aaaaaac29e42b0 s7 : 00fffffff0aa3684
+  s8 : 00aaaaaac2978040 s9 : 0000000000000065 s10: 00ffffff8a7cad10
+  s11: 00ffffff8a76a4e0 t3 : ffffffff815dbaf4 t4 : ffffffff815dbaf4
+  t5 : ffffffff815dbab8 t6 : ff20000010a9bb48
+ status: 0000000200000120 badaddr: ff20000010a97e88 cause: 000000000000000f
+ Kernel panic - not syncing: Kernel stack overflow
+ CPU: 1 PID: 205 Comm: bash Not tainted 6.1.0-rc2-00001-g328a1f96f7b9 #34
+ Hardware name: riscv-virtio,qemu (DT)
+ Call Trace:
+ [<ffffffff80006754>] dump_backtrace+0x30/0x38
+ [<ffffffff808de798>] show_stack+0x40/0x4c
+ [<ffffffff808ea2a8>] dump_stack_lvl+0x44/0x5c
+ [<ffffffff808ea2d8>] dump_stack+0x18/0x20
+ [<ffffffff808dec06>] panic+0x126/0x2fe
+ [<ffffffff800065ea>] walk_stackframe+0x0/0xf0
+ [<ffffffff0163a752>] recursive_loop+0x48/0xc6 [lkdtm]
+ SMP: stopping secondary CPUs
+ ---[ end Kernel panic - not syncing: Kernel stack overflow ]---
 
-  CIFS: VFS: \\w22-root1.gandalf.test No task to wake, unknown frame...
-  CIFS: VFS: \\w22-root1.gandalf.test Cmd: 18 Err: 0x0 Flags: 0x1...
-  CIFS: VFS: \\w22-root1.gandalf.test smb buf 00000000715bfe83 len 108
-  CIFS: VFS: Dump pending requests:
-  CIFS: VFS: \\w22-root1.gandalf.test No task to wake, unknown frame...
-  CIFS: VFS: \\w22-root1.gandalf.test Cmd: 18 Err: 0x0 Flags: 0x1...
-  CIFS: VFS: \\w22-root1.gandalf.test smb buf 000000005aa7316e len 108
-  ...
-
-To fix both, in open_cached_dir() ensure that @cfid->has_lease is set
-right before sending out compounded request so that any potential
-lease break will be get processed by demultiplex thread while we're
-still caching @cfid.  And, if open failed for some reason, re-check
-@cfid->has_lease to decide whether or not put lease reference.
-
-Cc: stable@vger.kernel.org
-Signed-off-by: Paulo Alcantara (SUSE) <pc@manguebit.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Cc: Guo Ren <guoren@kernel.org>
+Cc: Jisheng Zhang <jszhang@kernel.org>
+Link: https://lore.kernel.org/linux-riscv/Y347B0x4VUNOd6V7@xhacker/T/#t
+Link: https://lore.kernel.org/lkml/20221124094845.1907443-1-debug@rivosinc.com/
+Signed-off-by: Deepak Gupta <debug@rivosinc.com>
+Co-developed-by: Sami Tolvanen <samitolvanen@google.com>
+Signed-off-by: Sami Tolvanen <samitolvanen@google.com>
+Acked-by: Guo Ren <guoren@kernel.org>
+Tested-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://lore.kernel.org/r/20230927224757.1154247-9-samitolvanen@google.com
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/cached_dir.c | 97 +++++++++++++++++++++++---------------
- 1 file changed, 60 insertions(+), 37 deletions(-)
+ arch/riscv/include/asm/asm-prototypes.h |  1 -
+ arch/riscv/include/asm/asm.h            | 23 ++++++++
+ arch/riscv/include/asm/thread_info.h    |  3 --
+ arch/riscv/kernel/asm-offsets.c         |  1 +
+ arch/riscv/kernel/entry.S               | 70 ++++---------------------
+ arch/riscv/kernel/traps.c               | 30 +----------
+ 6 files changed, 35 insertions(+), 93 deletions(-)
 
-diff --git a/fs/smb/client/cached_dir.c b/fs/smb/client/cached_dir.c
-index fca8656929399..bac6ceccaaa9c 100644
---- a/fs/smb/client/cached_dir.c
-+++ b/fs/smb/client/cached_dir.c
-@@ -30,7 +30,7 @@ static struct cached_fid *find_or_create_cached_dir(struct cached_fids *cfids,
- 			 * fully cached or it may be in the process of
- 			 * being deleted due to a lease break.
- 			 */
--			if (!cfid->has_lease) {
-+			if (!cfid->time || !cfid->has_lease) {
- 				spin_unlock(&cfids->cfid_list_lock);
- 				return NULL;
- 			}
-@@ -188,10 +188,20 @@ int open_cached_dir(unsigned int xid, struct cifs_tcon *tcon,
- 	npath = path_no_prefix(cifs_sb, path);
- 	if (IS_ERR(npath)) {
- 		rc = PTR_ERR(npath);
--		kfree(utf16_path);
--		return rc;
-+		goto out;
- 	}
+diff --git a/arch/riscv/include/asm/asm-prototypes.h b/arch/riscv/include/asm/asm-prototypes.h
+index ef386fcf39394..4a06fa0f64932 100644
+--- a/arch/riscv/include/asm/asm-prototypes.h
++++ b/arch/riscv/include/asm/asm-prototypes.h
+@@ -25,7 +25,6 @@ DECLARE_DO_ERROR_INFO(do_trap_ecall_s);
+ DECLARE_DO_ERROR_INFO(do_trap_ecall_m);
+ DECLARE_DO_ERROR_INFO(do_trap_break);
  
-+	if (!npath[0]) {
-+		dentry = dget(cifs_sb->root);
-+	} else {
-+		dentry = path_to_dentry(cifs_sb, npath);
-+		if (IS_ERR(dentry)) {
-+			rc = -ENOENT;
-+			goto out;
-+		}
-+	}
-+	cfid->dentry = dentry;
+-asmlinkage unsigned long get_overflow_stack(void);
+ asmlinkage void handle_bad_stack(struct pt_regs *regs);
+ 
+ #endif /* _ASM_RISCV_PROTOTYPES_H */
+diff --git a/arch/riscv/include/asm/asm.h b/arch/riscv/include/asm/asm.h
+index 816e753de636d..9890a42c18103 100644
+--- a/arch/riscv/include/asm/asm.h
++++ b/arch/riscv/include/asm/asm.h
+@@ -69,6 +69,7 @@
+ #endif
+ 
+ #ifdef __ASSEMBLY__
++#include <asm/asm-offsets.h>
+ 
+ /* Common assembly source macros */
+ 
+@@ -81,6 +82,28 @@
+ 	.endr
+ .endm
+ 
++#ifdef CONFIG_SMP
++#ifdef CONFIG_32BIT
++#define PER_CPU_OFFSET_SHIFT 2
++#else
++#define PER_CPU_OFFSET_SHIFT 3
++#endif
 +
- 	/*
- 	 * We do not hold the lock for the open because in case
- 	 * SMB2_open needs to reconnect.
-@@ -253,6 +263,15 @@ int open_cached_dir(unsigned int xid, struct cifs_tcon *tcon,
- 
- 	smb2_set_related(&rqst[1]);
- 
-+	/*
-+	 * Set @cfid->has_lease to true before sending out compounded request so
-+	 * its lease reference can be put in cached_dir_lease_break() due to a
-+	 * potential lease break right after the request is sent or while @cfid
-+	 * is still being cached.  Concurrent processes won't be to use it yet
-+	 * due to @cfid->time being zero.
-+	 */
-+	cfid->has_lease = true;
++.macro asm_per_cpu dst sym tmp
++	REG_L \tmp, TASK_TI_CPU_NUM(tp)
++	slli  \tmp, \tmp, PER_CPU_OFFSET_SHIFT
++	la    \dst, __per_cpu_offset
++	add   \dst, \dst, \tmp
++	REG_L \tmp, 0(\dst)
++	la    \dst, \sym
++	add   \dst, \dst, \tmp
++.endm
++#else /* CONFIG_SMP */
++.macro asm_per_cpu dst sym tmp
++	la    \dst, \sym
++.endm
++#endif /* CONFIG_SMP */
 +
- 	rc = compound_send_recv(xid, ses, server,
- 				flags, 2, rqst,
- 				resp_buftype, rsp_iov);
-@@ -267,6 +286,8 @@ int open_cached_dir(unsigned int xid, struct cifs_tcon *tcon,
- 	cfid->tcon = tcon;
- 	cfid->is_open = true;
+ #endif /* __ASSEMBLY__ */
  
-+	spin_lock(&cfids->cfid_list_lock);
-+
- 	o_rsp = (struct smb2_create_rsp *)rsp_iov[0].iov_base;
- 	oparms.fid->persistent_fid = o_rsp->PersistentFileId;
- 	oparms.fid->volatile_fid = o_rsp->VolatileFileId;
-@@ -274,20 +295,30 @@ int open_cached_dir(unsigned int xid, struct cifs_tcon *tcon,
- 	oparms.fid->mid = le64_to_cpu(o_rsp->hdr.MessageId);
- #endif /* CIFS_DEBUG2 */
+ #endif /* _ASM_RISCV_ASM_H */
+diff --git a/arch/riscv/include/asm/thread_info.h b/arch/riscv/include/asm/thread_info.h
+index f704c8dd57e04..78933ac04995b 100644
+--- a/arch/riscv/include/asm/thread_info.h
++++ b/arch/riscv/include/asm/thread_info.h
+@@ -42,9 +42,6 @@
  
--	if (o_rsp->OplockLevel != SMB2_OPLOCK_LEVEL_LEASE)
-+	rc = -EINVAL;
-+	if (o_rsp->OplockLevel != SMB2_OPLOCK_LEVEL_LEASE) {
-+		spin_unlock(&cfids->cfid_list_lock);
- 		goto oshr_free;
-+	}
+ #ifndef __ASSEMBLY__
  
- 	rc = smb2_parse_contexts(server, rsp_iov,
- 			    &oparms.fid->epoch,
- 			    oparms.fid->lease_key,
- 			    &oplock, NULL, NULL);
--	if (rc)
-+	if (rc) {
-+		spin_unlock(&cfids->cfid_list_lock);
- 		goto oshr_free;
--	if (!(oplock & SMB2_LEASE_READ_CACHING_HE))
-+	}
-+	rc = -EINVAL;
-+	if (!(oplock & SMB2_LEASE_READ_CACHING_HE)) {
-+		spin_unlock(&cfids->cfid_list_lock);
- 		goto oshr_free;
-+	}
- 	qi_rsp = (struct smb2_query_info_rsp *)rsp_iov[1].iov_base;
--	if (le32_to_cpu(qi_rsp->OutputBufferLength) < sizeof(struct smb2_file_all_info))
-+	if (le32_to_cpu(qi_rsp->OutputBufferLength) < sizeof(struct smb2_file_all_info)) {
-+		spin_unlock(&cfids->cfid_list_lock);
- 		goto oshr_free;
-+	}
- 	if (!smb2_validate_and_copy_iov(
- 				le16_to_cpu(qi_rsp->OutputBufferOffset),
- 				sizeof(struct smb2_file_all_info),
-@@ -295,57 +326,49 @@ int open_cached_dir(unsigned int xid, struct cifs_tcon *tcon,
- 				(char *)&cfid->file_all_info))
- 		cfid->file_all_info_is_valid = true;
- 
--	if (!npath[0])
--		dentry = dget(cifs_sb->root);
--	else {
--		dentry = path_to_dentry(cifs_sb, npath);
--		if (IS_ERR(dentry)) {
--			rc = -ENOENT;
--			goto oshr_free;
--		}
--	}
--	cfid->dentry = dentry;
- 	cfid->time = jiffies;
--	cfid->has_lease = true;
-+	spin_unlock(&cfids->cfid_list_lock);
-+	/* At this point the directory handle is fully cached */
-+	rc = 0;
- 
- oshr_free:
--	kfree(utf16_path);
- 	SMB2_open_free(&rqst[0]);
- 	SMB2_query_info_free(&rqst[1]);
- 	free_rsp_buf(resp_buftype[0], rsp_iov[0].iov_base);
- 	free_rsp_buf(resp_buftype[1], rsp_iov[1].iov_base);
--	spin_lock(&cfids->cfid_list_lock);
--	if (rc && !cfid->has_lease) {
-+	if (rc) {
-+		spin_lock(&cfids->cfid_list_lock);
- 		if (cfid->on_list) {
- 			list_del(&cfid->entry);
- 			cfid->on_list = false;
- 			cfids->num_entries--;
- 		}
--		rc = -ENOENT;
--	}
--	spin_unlock(&cfids->cfid_list_lock);
--	if (!rc && !cfid->has_lease) {
--		/*
--		 * We are guaranteed to have two references at this point.
--		 * One for the caller and one for a potential lease.
--		 * Release the Lease-ref so that the directory will be closed
--		 * when the caller closes the cached handle.
--		 */
--		kref_put(&cfid->refcount, smb2_close_cached_fid);
-+		if (cfid->has_lease) {
-+			/*
-+			 * We are guaranteed to have two references at this
-+			 * point. One for the caller and one for a potential
-+			 * lease. Release the Lease-ref so that the directory
-+			 * will be closed when the caller closes the cached
-+			 * handle.
-+			 */
-+			cfid->has_lease = false;
-+			spin_unlock(&cfids->cfid_list_lock);
-+			kref_put(&cfid->refcount, smb2_close_cached_fid);
-+			goto out;
-+		}
-+		spin_unlock(&cfids->cfid_list_lock);
- 	}
-+out:
- 	if (rc) {
- 		if (cfid->is_open)
- 			SMB2_close(0, cfid->tcon, cfid->fid.persistent_fid,
- 				   cfid->fid.volatile_fid);
- 		free_cached_dir(cfid);
--		cfid = NULL;
--	}
+-extern long shadow_stack[SHADOW_OVERFLOW_STACK_SIZE / sizeof(long)];
+-extern unsigned long spin_shadow_stack;
 -
--	if (rc == 0) {
-+	} else {
- 		*ret_cfid = cfid;
- 		atomic_inc(&tcon->num_remote_opens);
- 	}
--
-+	kfree(utf16_path);
- 	return rc;
- }
+ #include <asm/processor.h>
+ #include <asm/csr.h>
  
+diff --git a/arch/riscv/kernel/asm-offsets.c b/arch/riscv/kernel/asm-offsets.c
+index 21f034b3fdbeb..9e6e35da69ce4 100644
+--- a/arch/riscv/kernel/asm-offsets.c
++++ b/arch/riscv/kernel/asm-offsets.c
+@@ -37,6 +37,7 @@ void asm_offsets(void)
+ 	OFFSET(TASK_TI_KERNEL_SP, task_struct, thread_info.kernel_sp);
+ 	OFFSET(TASK_TI_USER_SP, task_struct, thread_info.user_sp);
+ 
++	OFFSET(TASK_TI_CPU_NUM, task_struct, thread_info.cpu);
+ 	OFFSET(TASK_THREAD_F0,  task_struct, thread.fstate.f[0]);
+ 	OFFSET(TASK_THREAD_F1,  task_struct, thread.fstate.f[1]);
+ 	OFFSET(TASK_THREAD_F2,  task_struct, thread.fstate.f[2]);
+diff --git a/arch/riscv/kernel/entry.S b/arch/riscv/kernel/entry.S
+index 99d38fdf8b18f..f6c3841df2f5a 100644
+--- a/arch/riscv/kernel/entry.S
++++ b/arch/riscv/kernel/entry.S
+@@ -10,9 +10,11 @@
+ #include <asm/asm.h>
+ #include <asm/csr.h>
+ #include <asm/unistd.h>
++#include <asm/page.h>
+ #include <asm/thread_info.h>
+ #include <asm/asm-offsets.h>
+ #include <asm/errata_list.h>
++#include <linux/sizes.h>
+ 
+ #if !IS_ENABLED(CONFIG_PREEMPTION)
+ .set resume_kernel, restore_all
+@@ -397,67 +399,15 @@ handle_syscall_trace_exit:
+ 
+ #ifdef CONFIG_VMAP_STACK
+ handle_kernel_stack_overflow:
+-	/*
+-	 * Takes the psuedo-spinlock for the shadow stack, in case multiple
+-	 * harts are concurrently overflowing their kernel stacks.  We could
+-	 * store any value here, but since we're overflowing the kernel stack
+-	 * already we only have SP to use as a scratch register.  So we just
+-	 * swap in the address of the spinlock, as that's definately non-zero.
+-	 *
+-	 * Pairs with a store_release in handle_bad_stack().
+-	 */
+-1:	la sp, spin_shadow_stack
+-	REG_AMOSWAP_AQ sp, sp, (sp)
+-	bnez sp, 1b
+-
+-	la sp, shadow_stack
+-	addi sp, sp, SHADOW_OVERFLOW_STACK_SIZE
+-
+-	//save caller register to shadow stack
+-	addi sp, sp, -(PT_SIZE_ON_STACK)
+-	REG_S x1,  PT_RA(sp)
+-	REG_S x5,  PT_T0(sp)
+-	REG_S x6,  PT_T1(sp)
+-	REG_S x7,  PT_T2(sp)
+-	REG_S x10, PT_A0(sp)
+-	REG_S x11, PT_A1(sp)
+-	REG_S x12, PT_A2(sp)
+-	REG_S x13, PT_A3(sp)
+-	REG_S x14, PT_A4(sp)
+-	REG_S x15, PT_A5(sp)
+-	REG_S x16, PT_A6(sp)
+-	REG_S x17, PT_A7(sp)
+-	REG_S x28, PT_T3(sp)
+-	REG_S x29, PT_T4(sp)
+-	REG_S x30, PT_T5(sp)
+-	REG_S x31, PT_T6(sp)
+-
+-	la ra, restore_caller_reg
+-	tail get_overflow_stack
+-
+-restore_caller_reg:
+-	//save per-cpu overflow stack
+-	REG_S a0, -8(sp)
+-	//restore caller register from shadow_stack
+-	REG_L x1,  PT_RA(sp)
+-	REG_L x5,  PT_T0(sp)
+-	REG_L x6,  PT_T1(sp)
+-	REG_L x7,  PT_T2(sp)
+-	REG_L x10, PT_A0(sp)
+-	REG_L x11, PT_A1(sp)
+-	REG_L x12, PT_A2(sp)
+-	REG_L x13, PT_A3(sp)
+-	REG_L x14, PT_A4(sp)
+-	REG_L x15, PT_A5(sp)
+-	REG_L x16, PT_A6(sp)
+-	REG_L x17, PT_A7(sp)
+-	REG_L x28, PT_T3(sp)
+-	REG_L x29, PT_T4(sp)
+-	REG_L x30, PT_T5(sp)
+-	REG_L x31, PT_T6(sp)
++	/* we reach here from kernel context, sscratch must be 0 */
++	csrrw x31, CSR_SCRATCH, x31
++	asm_per_cpu sp, overflow_stack, x31
++	li x31, OVERFLOW_STACK_SIZE
++	add sp, sp, x31
++	/* zero out x31 again and restore x31 */
++	xor x31, x31, x31
++	csrrw x31, CSR_SCRATCH, x31
+ 
+-	//load per-cpu overflow stack
+-	REG_L sp, -8(sp)
+ 	addi sp, sp, -(PT_SIZE_ON_STACK)
+ 
+ 	//save context to overflow stack
+diff --git a/arch/riscv/kernel/traps.c b/arch/riscv/kernel/traps.c
+index 7a6c02e17f4f0..ffa37f4f6a107 100644
+--- a/arch/riscv/kernel/traps.c
++++ b/arch/riscv/kernel/traps.c
+@@ -209,42 +209,14 @@ int is_valid_bugaddr(unsigned long pc)
+ #endif /* CONFIG_GENERIC_BUG */
+ 
+ #ifdef CONFIG_VMAP_STACK
+-static DEFINE_PER_CPU(unsigned long [OVERFLOW_STACK_SIZE/sizeof(long)],
++DEFINE_PER_CPU(unsigned long [OVERFLOW_STACK_SIZE/sizeof(long)],
+ 		overflow_stack)__aligned(16);
+-/*
+- * shadow stack, handled_ kernel_ stack_ overflow(in kernel/entry.S) is used
+- * to get per-cpu overflow stack(get_overflow_stack).
+- */
+-long shadow_stack[SHADOW_OVERFLOW_STACK_SIZE/sizeof(long)] __aligned(16);
+-asmlinkage unsigned long get_overflow_stack(void)
+-{
+-	return (unsigned long)this_cpu_ptr(overflow_stack) +
+-		OVERFLOW_STACK_SIZE;
+-}
+-
+-/*
+- * A pseudo spinlock to protect the shadow stack from being used by multiple
+- * harts concurrently.  This isn't a real spinlock because the lock side must
+- * be taken without a valid stack and only a single register, it's only taken
+- * while in the process of panicing anyway so the performance and error
+- * checking a proper spinlock gives us doesn't matter.
+- */
+-unsigned long spin_shadow_stack;
+ 
+ asmlinkage void handle_bad_stack(struct pt_regs *regs)
+ {
+ 	unsigned long tsk_stk = (unsigned long)current->stack;
+ 	unsigned long ovf_stk = (unsigned long)this_cpu_ptr(overflow_stack);
+ 
+-	/*
+-	 * We're done with the shadow stack by this point, as we're on the
+-	 * overflow stack.  Tell any other concurrent overflowing harts that
+-	 * they can proceed with panicing by releasing the pseudo-spinlock.
+-	 *
+-	 * This pairs with an amoswap.aq in handle_kernel_stack_overflow.
+-	 */
+-	smp_store_release(&spin_shadow_stack, 0);
+-
+ 	console_verbose();
+ 
+ 	pr_emerg("Insufficient stack space to handle exception!\n");
 -- 
 2.53.0
 
