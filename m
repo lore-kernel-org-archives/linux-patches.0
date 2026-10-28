@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214816;
-	b=fwPRbOehPLKYpXOrFOr9J5dYQDIAQO1HJGTkCDdUY7DDftrigkLcwIDXV/+kuTIzBkqx
-	 B4ZTsWa7QOcbkebzYUGGJMORRvHLjpQCVxCWo0rcfJkTHGwjmZtAUo+sJxJzWFbpL4pGG
-	 ohRZk2DBRAFCVGZ8zxvV4UY7ggMDCCGx5gRwewXSO34rEPkzLKxvfJ0OqdG8mscXJPjbP
-	 ugsxsJX2hE7jUwFuFaR3Z5hqMBty2vJ9ng0Ahbo797WwYZEsy/VvxlwO2loABMV5xXizY
-	 dPjLSov+Wlxy+Niby3RcZ0+r/3ZKNegSV3kXQn3/V4Ns5SA6i8BdDDShW+epkiinrTw==
+	t=1793214819;
+	b=UPlXkXJ5xlsxWfD7uRcbnAqOQfsBldVBmPWUIwIGhz271qdvbDEqtANFathqMnpP0XTN
+	 1Am9cz8n38k2LdLte7PXih/CJOHUcgvlilQ1PY7iRAqTM07rPGteNB1YW/vyy+gOWJSiv
+	 rWG0TMGkcecGsuEYrfGhbBsFYl/UgxjSPA5tL2LmgXduC50XNurkXJnsDBtu2d5hp1oDW
+	 Qyv//hEpJEofQVQahd7Qz1OxpfSwtuDIdht4gj9D0FIs0br8MqJnXkrpfxpqyoT/QalCJ
+	 eu4dvTBGPmLzKSHfDnWSAbjM2QtlJgF8BcvX7FGivbhgfnj0rMgDuthIPMuAG0kUUCw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214816;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214819;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+l8tS5NVVHmiZ31dbDWl4il6ZnmKoky0QnhKBbhB5Rc=;
-	b=PA5uvo1VhdvVWecFQN3LyvJHOs2XlJXDD9YCtLdn2Ba5IonAU97aiUR7weDrCZpQJ+ol
-	 3g3TBLJwOtOlZCSWXDxB++K0wbt62OXFIPJUvq6ewDou41XeND3EPz+gGa/YaY8qha5X0
-	 8Db1picUrfDWDr50xik78O5f2XU5h6L5jBq9sbqr4e5cSZkFJD2109ymybiZHGdyJ8MGv
-	 HcfwMour/JC+oRXos5mit0Pwh5BGmvml8/ZEwLJX/U9Sjtk2H4XyyeFzQr41iHvGxagyA
-	 KrzLS0bTgs85BqQcTU4OJBxBD2845q55F0blGm4RoAp/dcbsng6ReOq/Jk1swcBID0A==
+	bh=dS4p4GbuweobJUJAdnDLLkkkbyFsKmxXzUWnl7Ljeg4=;
+	b=TYTsf9WIRmkOLtv8Pj3m0YbPDGChH9JEN7J/PNaMKInFjvdivLaaOwUol6uA5I0Utdoh
+	 x5WeH/FLoxvkr33Ch3m7+Bf5uL7V0DQcJZwrDgqPfdCnJFCLKXRtRGFSi2NqF3iCQWz0H
+	 mIOtJaEefUhu1njm+1Mg0IWT7OqJE7g0BqSOOfhn7n4rEGcQZJOGRbmkHAqwet3PXl+3D
+	 Wroot4V+tgCkyNBf594rQY3/8w0fWs4wG0gnz07EmtV2p9H0pG9VRw0xMvx5pOiiNgzK5
+	 5jve+1qxifsi6gxkFwv7tKFF/A9pmKPCkP5YWdUbl2f3HSKq0ZYzRzBe8JVQ1ti+yOQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UR5glfUg;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RMBhKa3M;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33BC8606A33B;
-	Wed, 28 Oct 2026 19:13:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08800606AB09;
+	Wed, 28 Oct 2026 19:13:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UR5glfUg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84E261F01825;
-	Wed, 28 Oct 2026 19:13:35 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RMBhKa3M
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AA081F01825;
+	Wed, 28 Oct 2026 19:13:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214816;
-	bh=+l8tS5NVVHmiZ31dbDWl4il6ZnmKoky0QnhKBbhB5Rc=;
+	s=korg; t=1793214818;
+	bh=dS4p4GbuweobJUJAdnDLLkkkbyFsKmxXzUWnl7Ljeg4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UR5glfUgygbRAiaZufkL0wi6HYymKyqPOOIxsL1/4iDCkxHVTcKyx2Y2t/fy2WeI1
-	 nVF3XnHCJg5HkiuJHoc0vsv0eHs+xWdifFQ4gCvF6lSZEHj3ff2MDMLS7sZU3VKoVC
-	 fI0xlWt2pAcDjglzjClI4f5K+1ChdzBe8XHHWFs8=
+	b=RMBhKa3MjysYRF+hAO5TCgPkisgsh22NF036lgAX75BVoSds+p/84HbFjv3OyX/GF
+	 tfu+iJL/0NCXsOBlmdnM2Gsag5Xmrzyxqm+4cQLATx4pOv8gQ817hj8rZnqlBrABhw
+	 UWETiLBNjDa/wUyrrnN3ie56OIQQkwrU8W7iomUA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Samuel Wu <wusamuel@google.com>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-	Prashanth K <prashanth.k@oss.qualcomm.com>,
+	Nicholas Carlini <nicholas@carlini.com>,
+	Stefan Metzmacher <metze@samba.org>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0990/1887] usb: dwc3: gadget: Move vbus draw to workqueue context
-Date: Wed, 28 Oct 2026 17:51:26 +0100
-Message-ID: <20261028170521.939881291@linuxfoundation.org>
+Subject: [PATCH 6.1 0991/1887] ksmbd: fix signededness bug in smb_direct_prepare_negotiation()
+Date: Wed, 28 Oct 2026 17:51:27 +0100
+Message-ID: <20261028170521.963936003@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -70,125 +70,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Prashanth K <prashanth.k@oss.qualcomm.com>
+From: Nicholas Carlini <nicholas@carlini.com>
 
-[ Upstream commit 54aaa3b387c2f580a99dc86a9cc2eb6dfaf599a7 ]
+[ Upstream commit 6b4f875aac344cdd52a1f34cc70ed2f874a65757 ]
 
-Currently dwc3_gadget_vbus_draw() can be called from atomic
-context, which in turn invokes power-supply-core APIs. And
-some these PMIC APIs have operations that may sleep, leading
-to kernel panic.
+smb_direct_prepare_negotiation() casts an unsigned __u32 value
+from sp->max_recv_size and req->preferred_send_size to a signed
+int before computing min_t(int, ...). A maliciously provided
+preferred_send_size of 0x80000000 will return as smaller than
+max_recv_size, and then be used to set the maximum allowed
+alowed receive size for the next message.
 
-Fix this by moving the vbus_draw into a workqueue context.
+By sending a second message with a large value (>1420 bytes)
+the attacker can then achieve a heap buffer overflow.
 
-Fixes: 99288de36020 ("usb: dwc3: add an alternate path in vbus_draw callback")
-Cc: stable <stable@kernel.org>
-Tested-by: Samuel Wu <wusamuel@google.com>
-Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Signed-off-by: Prashanth K <prashanth.k@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260204054155.3063825-1-prashanth.k@oss.qualcomm.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This fix replaces min_t(int, ...) with min_t(u32)
+
+Fixes: 0626e6641f6b ("cifsd: add server handler for central processing and tranport layers")
+Signed-off-by: Nicholas Carlini <nicholas@carlini.com>
+Reviewed-by: Stefan Metzmacher <metze@samba.org>
+Acked-by: Stefan Metzmacher <metze@samba.org>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/dwc3/core.c   | 19 ++++++++++++++++++-
- drivers/usb/dwc3/core.h   |  4 ++++
- drivers/usb/dwc3/gadget.c |  8 +++-----
- 3 files changed, 25 insertions(+), 6 deletions(-)
+ fs/smb/server/transport_rdma.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/usb/dwc3/core.c b/drivers/usb/dwc3/core.c
-index 7793936757ac3..dbddc1d45fdcc 100644
---- a/drivers/usb/dwc3/core.c
-+++ b/drivers/usb/dwc3/core.c
-@@ -1855,6 +1855,20 @@ static struct extcon_dev *dwc3_get_extcon(struct dwc3 *dwc)
- 	return edev;
- }
+diff --git a/fs/smb/server/transport_rdma.c b/fs/smb/server/transport_rdma.c
+index 1290c0fa7dd18..bcf0631ce10a6 100644
+--- a/fs/smb/server/transport_rdma.c
++++ b/fs/smb/server/transport_rdma.c
+@@ -1967,9 +1967,9 @@ static int smb_direct_prepare(struct ksmbd_transport *t)
+ 		goto out;
  
-+static void dwc3_vbus_draw_work(struct work_struct *work)
-+{
-+	struct dwc3 *dwc = container_of(work, struct dwc3, vbus_draw_work);
-+	union power_supply_propval val = {0};
-+	int ret;
-+
-+	val.intval = 1000 * (dwc->current_limit);
-+	ret = power_supply_set_property(dwc->usb_psy, POWER_SUPPLY_PROP_INPUT_CURRENT_LIMIT, &val);
-+
-+	if (ret < 0)
-+		dev_dbg(dwc->dev, "Error (%d) setting vbus draw (%d mA)\n",
-+			ret, dwc->current_limit);
-+}
-+
- static struct power_supply *dwc3_get_usb_power_supply(struct dwc3 *dwc)
- {
- 	struct power_supply *usb_psy;
-@@ -1869,6 +1883,7 @@ static struct power_supply *dwc3_get_usb_power_supply(struct dwc3 *dwc)
- 	if (!usb_psy)
- 		return ERR_PTR(-EPROBE_DEFER);
- 
-+	INIT_WORK(&dwc->vbus_draw_work, dwc3_vbus_draw_work);
- 	return usb_psy;
- }
- 
-@@ -2120,8 +2135,10 @@ static int dwc3_remove(struct platform_device *pdev)
- 	dwc3_free_event_buffers(dwc);
- 	dwc3_free_scratch_buffers(dwc);
- 
--	if (dwc->usb_psy)
-+	if (dwc->usb_psy) {
-+		cancel_work_sync(&dwc->vbus_draw_work);
- 		power_supply_put(dwc->usb_psy);
-+	}
- 
- 	return 0;
- }
-diff --git a/drivers/usb/dwc3/core.h b/drivers/usb/dwc3/core.h
-index e4e0c40dc51d3..0119a8940c8d5 100644
---- a/drivers/usb/dwc3/core.h
-+++ b/drivers/usb/dwc3/core.h
-@@ -1035,6 +1035,8 @@ struct dwc3_scratchpad_array {
-  * @role_switch_default_mode: default operation mode of controller while
-  *			usb role is USB_ROLE_NONE.
-  * @usb_psy: pointer to power supply interface.
-+ * @vbus_draw_work: Work to set the vbus drawing limit
-+ * @current_limit: How much current to draw from vbus, in milliAmperes.
-  * @usb2_phy: pointer to USB2 PHY
-  * @usb3_phy: pointer to USB3 PHY
-  * @usb2_generic_phy: pointer to USB2 PHY
-@@ -1207,6 +1209,8 @@ struct dwc3 {
- 	enum usb_dr_mode	role_switch_default_mode;
- 
- 	struct power_supply	*usb_psy;
-+	struct work_struct	vbus_draw_work;
-+	unsigned int		current_limit;
- 
- 	u32			fladj;
- 	u32			ref_clk_per;
-diff --git a/drivers/usb/dwc3/gadget.c b/drivers/usb/dwc3/gadget.c
-index cd0532158ba0b..18fab84af369e 100644
---- a/drivers/usb/dwc3/gadget.c
-+++ b/drivers/usb/dwc3/gadget.c
-@@ -3019,8 +3019,6 @@ static void dwc3_gadget_set_ssp_rate(struct usb_gadget *g,
- static int dwc3_gadget_vbus_draw(struct usb_gadget *g, unsigned int mA)
- {
- 	struct dwc3		*dwc = gadget_to_dwc(g);
--	union power_supply_propval	val = {0};
--	int				ret;
- 
- 	if (dwc->usb2_phy)
- 		return usb_phy_set_power(dwc->usb2_phy, mA);
-@@ -3028,10 +3026,10 @@ static int dwc3_gadget_vbus_draw(struct usb_gadget *g, unsigned int mA)
- 	if (!dwc->usb_psy)
- 		return -EOPNOTSUPP;
- 
--	val.intval = 1000 * mA;
--	ret = power_supply_set_property(dwc->usb_psy, POWER_SUPPLY_PROP_INPUT_CURRENT_LIMIT, &val);
-+	dwc->current_limit = mA;
-+	schedule_work(&dwc->vbus_draw_work);
- 
--	return ret;
-+	return 0;
- }
- 
- /**
+ 	req = (struct smb_direct_negotiate_req *)recvmsg->packet;
+-	st->max_recv_size = min_t(int, st->max_recv_size,
++	st->max_recv_size = min_t(u32, st->max_recv_size,
+ 				  le32_to_cpu(req->preferred_send_size));
+-	st->max_send_size = min_t(int, st->max_send_size,
++	st->max_send_size = min_t(u32, st->max_send_size,
+ 				  le32_to_cpu(req->max_receive_size));
+ 	st->max_fragmented_send_size =
+ 		le32_to_cpu(req->max_fragmented_size);
 -- 
 2.53.0
 
