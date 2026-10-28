@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216703;
-	b=vfA5hwNdZ0roUmNluZyLhbKXPnsOgV6n/Wgwnxm3kBCBmF6Qe+x5RX8LEonvFyMvxrc1
-	 L+zepMlCVxNiTGvx/PNHaxWIP8iAYBdLwWOhmDAVcAvHLdWeCEzQlH4taOXVbJNzkYOvq
-	 YbCXyX/7d8vpEQb+YfJ7GIPuV7nYGP+155zzmVmmB29Ubx8Bvp+DRv/yRsvxEBbhxCJtV
-	 135EYdlv2KAY+aRaGXOqNEoCKUILQKzeDXvvDKlBN1g3y5zOkHcl7ji1knqDCf284UAwk
-	 6outr/f/aOjvS/rdB65F1gUO/a8JuBYLmW9Xrt6UMr9rpSKi1aIV3IaDknVFdMu+zZg==
+	t=1793216705;
+	b=RkLsYSyF4y+WQjPyoTgxFy2HfPgiOmnqMBTh3YhlPlXEvOzNbV4MH635hWpb3QNi4Wg9
+	 jw0uYVDvRcnMio1PkYm7YxwhBEEzdEfxhwVjGodTzLaVUmxYVBW6qHy3Y81RLa0sMj6xe
+	 LggGZyti59LPlle4vBWMJITjXBh3FmEkxNsQYsJvxLCZ/y8Kg7oZosCB2p0unVFqWSGyS
+	 oSO0HS2KgnQ0Q8Pb4v88wTvhwHY/8HCcOY3Baw9jsPrtSAnHWg/niGq8bKlV/gquQbOa6
+	 SygpKzF4Vzi9yTmOc9VywsZEyI6TA8J8heQaOpwRDETff5KpfxkoKbUKVhGtUEunBAw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216703;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216705;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=04WfB+kvISMn7P3H4UK++thEp8ntnS2muAHASZjq2mk=;
-	b=nhlTksJe0ZDNfM2ubQf/O3SL4c6i0GqVQisWj72td6M9a9hP/cFp7sc9voZ32pRemDYI
-	 5P9wCeKiQunmp7wDgLhWM/a7DabGUmEukUqr+PoOfg5y0DlwPvNdDUrXxCyJUjAUJ70kA
-	 h7+LgB+1cTmk9sdTM6qzUcPKV2qtg0gXduHlra+y7CLea4tlmKQ5YbgaaeVVy/itAZ/pn
-	 01TRJwU6odlmEkRXJDnZIkUqmrw67ELj9022qH6WUrYn/ewQxHyqdAFYYBPqsLks7LCtm
-	 Yf6UpVivP0BF3/iCs1F90y5++phzOuAuZHH4cvpPu9PkE9RWytlEH5/XAMtdDy1EBfg==
+	bh=urt70yWYOn2S4aLQaed4vyRtn+omh/rJ6TJLk6mxdOo=;
+	b=JbQyCkxfkPxwn9AzsFYjZ3zFAW1bfGZCYBxuJ0HL8QZn2lW0+0yOG/8xQKq1grKDLbUZ
+	 kyDS2EdsLXKxilM+lF9cP0Z3BHGJTNeUAiI0KLIh2CjrqoKP7S1ivzfI7Q7BWYdPsBlct
+	 hhJXKpa4hW7p8NDR3qnoocgwC7jxB/6ARlh07JBvNeI54wSsDOhx2rvdkW1crdjA8gwMX
+	 h/b3TTDZSH+QyGk+Ej4qZb2nqywd0qI4mSQNL30T99a0ZkI/e3iTRWyIX5bzFDxF+LD6m
+	 K9QND9qtJD9m7hzf5ZdikgHpFgS5FOrD1DNEVxUetqffM3OM97wpE24ngMz0gFqyxxg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nJ9GdjRF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=b7LFhcq7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 878E3606A31E;
-	Wed, 28 Oct 2026 19:45:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64891606A31E;
+	Wed, 28 Oct 2026 19:45:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nJ9GdjRF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D82441F01825;
-	Wed, 28 Oct 2026 19:45:01 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=b7LFhcq7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4B361F01825;
+	Wed, 28 Oct 2026 19:45:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216702;
-	bh=04WfB+kvISMn7P3H4UK++thEp8ntnS2muAHASZjq2mk=;
+	s=korg; t=1793216705;
+	bh=urt70yWYOn2S4aLQaed4vyRtn+omh/rJ6TJLk6mxdOo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nJ9GdjRFVICHPG8WBNoH40xAnVcR2UgNIEDV2eQsXFMS7bhSkr8hdIosqMtInYzO1
-	 i8WE825i4/RP4/aR0qvYN890J3DOJHo9EN0AQrKpVB5wDF3ASXUGL0RCaivrKBCJI/
-	 l2+n0iPLO30zoD4lOlKpQKQ0DOFDaCF24wU3fOLs=
+	b=b7LFhcq7SEW1Rtle09VeSd/bJO9H11P37hthtvIYeckzBcgBhDWbJEv6qvjfg9Viv
+	 JCjpxBRT3EB5f+6YTWb3R8PfRZPSYhx8Tn2e0K93ukXyihnCjbGYN4uSDf3HK/Yekj
+	 nq7jW1fnioWiRNt/bPoNrezPVym+a8B6kUhAMYmk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+8baf9a79a3ffc6271cb6@syzkaller.appspotmail.com,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	Viacheslav Dubeyko <slava@dubeyko.com>,
+	Muhammad Usama Anjum <usama.anjum@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1606/1887] nilfs2: fix BUG in nilfs_copy_dirty_pages() on dirty state mismatch
-Date: Wed, 28 Oct 2026 18:01:42 +0100
-Message-ID: <20261028170536.014601699@linuxfoundation.org>
+Subject: [PATCH 6.1 1597/1887] misc: sgi-gru: remove interrupt-context page-table walks
+Date: Wed, 28 Oct 2026 18:01:33 +0100
+Message-ID: <20261028170535.812451757@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,77 +67,193 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+From: Muhammad Usama Anjum <usama.anjum@arm.com>
 
-[ Upstream commit 66f4ad3ce158902e5f98afea93189972ed8750c2 ]
+[ Upstream commit 928a8e9f523df845fc496bcb9811013b67aabec5 ]
 
-Syzbot reported a kernel BUG triggered within nilfs_copy_dirty_pages(),
-which copies dirty DAT file folios/pages to its shadow page cache.  The
-BUG occurs when a retrieved dirty folio/page unexpectedly loses its
-'dirty' status.
+The GRU TLB miss handler walks a process's page tables without holding
+page-table locks or a reference to the mapped page. It also uses a kernel
+page-table accessor on user page tables and supports only PMD-level large
+mappings on x86-64.
 
-This issue arises because, since the commit referenced below, the 'dirty'
-flag of a folio/page can be cleared asynchronously after the filesystem
-detects metadata corruption and transitions to read-only mode.
+Remove the direct walker. Send interrupt faults directly to user polling
+mode so the existing call-OS fallback retries them in process context.
 
-Resolve the issue by returning an -EROFS error if the filesystem has
-transitioned to read-only mode.  Also change the behavior to issue a
-kernel warning only once instead of triggering a kernel BUG when this
-unexpected 'dirty' state is detected while the filesystem is not in
-read-only mode.
+Remove the mmap-lock failure statistic that can no longer be incremented.
 
-Reported-by: syzbot+8baf9a79a3ffc6271cb6@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=8baf9a79a3ffc6271cb6
-Fixes: 8c26c4e2694a ("nilfs2: fix issue with flush kernel thread after remount in RO mode because of driver's internal error or metadata corruption")
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Fixes: 142586409c8b ("GRU Driver: page faults & exceptions")
+Signed-off-by: Muhammad Usama Anjum <usama.anjum@arm.com>
+Link: https://patch.msgid.link/20260730111316.3672672-2-usama.anjum@arm.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nilfs2/page.c | 17 +++++++++++++++--
- 1 file changed, 15 insertions(+), 2 deletions(-)
+ drivers/misc/sgi-gru/grufault.c  | 101 ++++---------------------------
+ drivers/misc/sgi-gru/gruprocfs.c |   1 -
+ drivers/misc/sgi-gru/grutables.h |   1 -
+ 3 files changed, 12 insertions(+), 91 deletions(-)
 
-diff --git a/fs/nilfs2/page.c b/fs/nilfs2/page.c
-index bf090240f6ede..89cd1510bf715 100644
---- a/fs/nilfs2/page.c
-+++ b/fs/nilfs2/page.c
-@@ -241,6 +241,7 @@ static void nilfs_copy_page(struct page *dst, struct page *src, int copy_dirty)
- int nilfs_copy_dirty_pages(struct address_space *dmap,
- 			   struct address_space *smap)
+diff --git a/drivers/misc/sgi-gru/grufault.c b/drivers/misc/sgi-gru/grufault.c
+index b836936e97471..c2f38e650b66b 100644
+--- a/drivers/misc/sgi-gru/grufault.c
++++ b/drivers/misc/sgi-gru/grufault.c
+@@ -166,13 +166,8 @@ static void get_clear_fault_map(struct gru_state *gru,
+ }
+ 
+ /*
+- * Atomic (interrupt context) & non-atomic (user context) functions to
+- * convert a vaddr into a physical address. The size of the page
+- * is returned in pageshift.
+- * 	returns:
+- * 		  0 - successful
+- * 		< 0 - error code
+- * 		  1 - (atomic only) try again in non-atomic context
++ * Convert a user virtual address to a physical address in process context.
++ * The size of the page is returned in pageshift.
+  */
+ static int non_atomic_pte_lookup(struct vm_area_struct *vma,
+ 				 unsigned long vaddr, int write,
+@@ -192,87 +187,25 @@ static int non_atomic_pte_lookup(struct vm_area_struct *vma,
+ 	return 0;
+ }
+ 
+-/*
+- * atomic_pte_lookup
+- *
+- * Convert a user virtual address to a physical address
+- * Only supports Intel large pages (2MB only) on x86_64.
+- *	ZZZ - hugepage support is incomplete
+- *
+- * NOTE: mmap_lock is already held on entry to this function. This
+- * guarantees existence of the page tables.
+- */
+-static int atomic_pte_lookup(struct vm_area_struct *vma, unsigned long vaddr,
+-	int write, unsigned long *paddr, int *pageshift)
+-{
+-	pgd_t *pgdp;
+-	p4d_t *p4dp;
+-	pud_t *pudp;
+-	pmd_t *pmdp;
+-	pte_t pte;
+-
+-	pgdp = pgd_offset(vma->vm_mm, vaddr);
+-	if (unlikely(pgd_none(*pgdp)))
+-		goto err;
+-
+-	p4dp = p4d_offset(pgdp, vaddr);
+-	if (unlikely(p4d_none(*p4dp)))
+-		goto err;
+-
+-	pudp = pud_offset(p4dp, vaddr);
+-	if (unlikely(pud_none(*pudp)))
+-		goto err;
+-
+-	pmdp = pmd_offset(pudp, vaddr);
+-	if (unlikely(pmd_none(*pmdp)))
+-		goto err;
+-#ifdef CONFIG_X86_64
+-	if (unlikely(pmd_large(*pmdp)))
+-		pte = *(pte_t *) pmdp;
+-	else
+-#endif
+-		pte = *pte_offset_kernel(pmdp, vaddr);
+-
+-	if (unlikely(!pte_present(pte) ||
+-		     (write && (!pte_write(pte) || !pte_dirty(pte)))))
+-		return 1;
+-
+-	*paddr = pte_pfn(pte) << PAGE_SHIFT;
+-#ifdef CONFIG_HUGETLB_PAGE
+-	*pageshift = is_vm_hugetlb_page(vma) ? HPAGE_SHIFT : PAGE_SHIFT;
+-#else
+-	*pageshift = PAGE_SHIFT;
+-#endif
+-	return 0;
+-
+-err:
+-	return 1;
+-}
+-
+ static int gru_vtop(struct gru_thread_state *gts, unsigned long vaddr,
+ 		    int write, int atomic, unsigned long *gpa, int *pageshift)
  {
-+	struct inode *smap_inode = smap->host;
- 	struct pagevec pvec;
- 	unsigned int i;
- 	pgoff_t index = 0;
-@@ -255,8 +256,19 @@ int nilfs_copy_dirty_pages(struct address_space *dmap,
- 		struct page *page = pvec.pages[i], *dpage;
+ 	struct mm_struct *mm = gts->ts_mm;
+ 	struct vm_area_struct *vma;
+ 	unsigned long paddr;
+-	int ret, ps;
++	int ps;
  
- 		lock_page(page);
--		if (unlikely(!PageDirty(page)))
--			NILFS_PAGE_BUG(page, "inconsistent dirty state");
-+		if (unlikely(!PageDirty(page))) {
-+			if (WARN_ONCE(!sb_rdonly(smap_inode->i_sb),
-+					"inconsistent dirty state\n"))
-+				goto unlock_src_page;
+ 	vma = find_vma(mm, vaddr);
+ 	if (!vma)
+ 		goto inval;
+ 
+-	/*
+-	 * Atomic lookup is faster & usually works even if called in non-atomic
+-	 * context.
+-	 */
+-	rmb();	/* Must/check ms_range_active before loading PTEs */
+-	ret = atomic_pte_lookup(vma, vaddr, write, &paddr, &ps);
+-	if (ret) {
+-		if (atomic)
+-			goto upm;
+-		if (non_atomic_pte_lookup(vma, vaddr, write, &paddr, &ps))
+-			goto inval;
+-	}
++	if (atomic)
++		goto upm;
 +
-+			/*
-+			 * If the filesystem has been forced to read-only
-+			 * due to metadata corruption.
-+			 */
-+			unlock_page(page);
-+			err = -EROFS;
-+			break;
-+		}
++	/* Order the caller's ms_range_active check before loading PTEs. */
++	rmb();
++	if (non_atomic_pte_lookup(vma, vaddr, write, &paddr, &ps))
++		goto inval;
+ 	if (is_gru_paddr(paddr))
+ 		goto inval;
+ 	paddr = paddr & ~((1UL << ps) - 1);
+@@ -569,19 +502,9 @@ static irqreturn_t gru_intr(int chiplet, int blade)
+ 			continue;
+ 		}
  
- 		dpage = grab_cache_page(dmap, page->index);
- 		if (unlikely(!dpage)) {
-@@ -274,6 +286,7 @@ int nilfs_copy_dirty_pages(struct address_space *dmap,
- 
- 		unlock_page(dpage);
- 		put_page(dpage);
-+unlock_src_page:
- 		unlock_page(page);
+-		/*
+-		 * This is running in interrupt context. Trylock the mmap_lock.
+-		 * If it fails, retry the fault in user context.
+-		 */
++		/* Address translation may sleep, so retry the fault in user context. */
+ 		gts->ustats.fmm_tlbmiss++;
+-		if (!gts->ts_force_cch_reload &&
+-					mmap_read_trylock(gts->ts_mm)) {
+-			gru_try_dropin(gru, gts, tfh, NULL);
+-			mmap_read_unlock(gts->ts_mm);
+-		} else {
+-			tfh_user_polling_mode(tfh);
+-			STAT(intr_mm_lock_failed);
+-		}
++		tfh_user_polling_mode(tfh);
  	}
- 	pagevec_release(&pvec);
+ 	return IRQ_HANDLED;
+ }
+diff --git a/drivers/misc/sgi-gru/gruprocfs.c b/drivers/misc/sgi-gru/gruprocfs.c
+index 97b8b38ab47df..b8139c27bc7f8 100644
+--- a/drivers/misc/sgi-gru/gruprocfs.c
++++ b/drivers/misc/sgi-gru/gruprocfs.c
+@@ -54,7 +54,6 @@ static int statistics_show(struct seq_file *s, void *p)
+ 	printstat(s, intr_cbr);
+ 	printstat(s, intr_tfh);
+ 	printstat(s, intr_spurious);
+-	printstat(s, intr_mm_lock_failed);
+ 	printstat(s, call_os);
+ 	printstat(s, call_os_wait_queue);
+ 	printstat(s, user_flush_tlb);
+diff --git a/drivers/misc/sgi-gru/grutables.h b/drivers/misc/sgi-gru/grutables.h
+index 640daf1994df7..3348552925c61 100644
+--- a/drivers/misc/sgi-gru/grutables.h
++++ b/drivers/misc/sgi-gru/grutables.h
+@@ -182,7 +182,6 @@ struct gru_stats_s {
+ 	atomic_long_t intr_cbr;
+ 	atomic_long_t intr_tfh;
+ 	atomic_long_t intr_spurious;
+-	atomic_long_t intr_mm_lock_failed;
+ 	atomic_long_t call_os;
+ 	atomic_long_t call_os_wait_queue;
+ 	atomic_long_t user_flush_tlb;
 -- 
 2.53.0
 
