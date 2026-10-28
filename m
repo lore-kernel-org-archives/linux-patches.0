@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793210173;
-	b=d2bxDFB/O/NhE6bbEHLzxo1195IZhZi2HUDChzGHyJdgvTszL+wlkcLgg9+OQ3RaOfqy
-	 e+Eg3ANLTLiqC/HZABQJE8GwALmvIA+aLopeJWtMJv6syy5pxV2bjxB65g8UrWPQ+R+WL
-	 OPB7xynP2MmesNxh8MztdppYtHcF5RMiYWzHwUb1PU8nce1Eo+WQ+emYHf6DXkSoeiSaO
-	 40xivmos4WCCufGDK3knk8olmH6zB6qcPq+r9eilUx5HkDkTxCCO+F6+0mLqwFas4jLPf
-	 y8U68CvC/iSGDeByOV4e+qFYSV90j/JJQRy54OTEDqbPlhv6qZbJeuv3Ek8wAZJRE9g==
+	t=1793210176;
+	b=E3MuJGxjbWX4zhhMKEnvHkuKIqeSvB/HWPlKqctdYmzt4uJyMkvMvKUBjz1u6mW9Baxm
+	 a37+hEPHz86/cIvh/V/XDlrVq8OaTNm0UoSYQ/ZaP9M16qbkmJwKjWME6jRH+REbb+fPb
+	 J14rtgdJBmd5EzyP/sR0WQAQZIY+cv8SB1tf41Fk23Yj1PL+jJuF/Fs2mpq/zUyJo2rsH
+	 r/sxIV41FjpFv1PgG8/2OCOzptirUzDXvr4GIV7IvEhvDQOYjys5vQablE2DBxUYmnipe
+	 GieG5HwP+RzTjnJ1Zgzcsmst92Q6O/7upQYi3/z+l1OgXKf6iejvOLHQTYdq8GfXXFA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793210173;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793210176;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=dCOoNtf4HMiNMQjP/XRjCGNNdJNk/0p/ZytAkBC9Y/w=;
-	b=az6i/ljWbBN+mlNCNshLhmwi6+KGH1XN9gKJekyPhXVdZR1ai0nRW1QVZxxfJK89IPWN
-	 nCJojmlAXS1GBYsUOTFflwsSgyNOd9v3ZAmIeiTS/dRlZX9vn1D37e9JLqi+/HyL6utlR
-	 alTkmNrlWXlL0glWn5dH4xOkCn/t9pr22/jlPtoM4mGUwBRjzmPTGPTqSIUdpZ5JCbEU8
-	 38KfILHC92sL+FmCU3pbH6xMrXvCUeboYOLZFkloAn1XtLvWqrZmHXuiEngZAvdB8pNPf
-	 h48OLQVHjoZuM0W3r5Kc7TR9Xb19LS6Ve2LsU/2PvtJJ3gyHnmjNTTkw7359jbJS0QA==
+	bh=3O3BfGzR8zIUtyTCB9FMQKCMnwH3rTaL75iVkbGjUbY=;
+	b=eE0ARoissluv8+sBq6YoondwykT0Cx6lHvbqY4YKOsgH4ZKGGu5du6IBkEFnAJuRwRyK
+	 qGVpEiHkbec+ULiHCtGl1wTuYRBkKTrnWviGo8ZIZ9IZJ7Whg226nnlyL/RJKIw9oPSqg
+	 OfJB+qdlc3Y+2zpHGSxxZffhtUKobjlQi1uq0l+F6IeC4IMOL2rbXtaI4it6QX4lc7UOW
+	 ldYWnnM2HiTylXvIKq7dL8yfRnCGhI5fWG81nrh+/YHXjg6mwEmAoAcbDW8qO+YnneifG
+	 DJA6YArTNyHI853fGzXrA7nWb+63gf3YTq4Kp8GGPiSD5gLB4fRu2NQYHd41H4Y3SyA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D6A34abE;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mXPoHi7n;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27C6360A3836;
-	Wed, 28 Oct 2026 17:56:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34B2660A262B;
+	Wed, 28 Oct 2026 17:56:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D6A34abE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77F221F01825;
-	Wed, 28 Oct 2026 17:56:12 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mXPoHi7n
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D2581F01825;
+	Wed, 28 Oct 2026 17:56:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793210173;
-	bh=dCOoNtf4HMiNMQjP/XRjCGNNdJNk/0p/ZytAkBC9Y/w=;
+	s=korg; t=1793210175;
+	bh=3O3BfGzR8zIUtyTCB9FMQKCMnwH3rTaL75iVkbGjUbY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=D6A34abEJrBM8ODjzbHxL2XINSqLGrEI51Kxy0dtHPqWtvOxuEceUdGUFxqeY6lw6
-	 rGL8FqE9KHKvT6E+IAhOxqcgHP6koLriPQJAvJAIT3JfMfmGhc6XRxm5gG3AUg/rJt
-	 3mzAzxMGHDuZmxfBmnOqTgZMKc05sYjFN2EJoDbg=
+	b=mXPoHi7n19untQt+OkdaW0taPFGNXzJCnJibxn8D96aG/YaaxgvxoSekPUW+e7z5t
+	 XzYFbXzBvPWpvMI+9VZwSIWYh4uGNysAjmZZkS1Y7qK4NLgXnD38/LwKhp0rDEhYAi
+	 45ogwS9Kp8J5Av6XHH2SJTBDMfK6drDP8LijwEU8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Mike Christie <michael.christie@oracle.com>,
 	Yehyeong Lee <yhlee@isslab.korea.ac.kr>,
 	"Martin K. Petersen (Oracle)" <mkp@kernel.org>
-Subject: [PATCH 6.6 056/168] scsi: libiscsi: Validate the ITT reflected in a Reject PDU
-Date: Wed, 28 Oct 2026 17:59:52 +0100
-Message-ID: <20261028165944.414191310@linuxfoundation.org>
+Subject: [PATCH 6.6 057/168] scsi: libiscsi: Validate the task named by a management response
+Date: Wed, 28 Oct 2026 17:59:53 +0100
+Message-ID: <20261028165944.436573734@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165943.089486480@linuxfoundation.org>
 References: <20261028165943.089486480@linuxfoundation.org>
@@ -70,93 +70,80 @@ Content-Transfer-Encoding: 8bit
 
 From: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
 
-commit c5958c770b2a0ee492414e26b07da9164a0d1f5d upstream.
+commit 11bffcd9cb346732eab2914ef44fe777a3f0b585 upstream.
 
-A Reject PDU carries a copy of the header it rejects, and
-iscsi_handle_reject() takes the ITT out of that copy to find the task to
-clean up:
+__iscsi_complete_pdu() fetches the task for five response types from one
+place and checks only that the index resolved:
 
-      memcpy(&rejected_pdu, data, sizeof(struct iscsi_hdr));
-      ...
-      task = iscsi_itt_to_task(conn, rejected_pdu.itt);
+      case ISCSI_OP_LOGOUT_RSP:
+      case ISCSI_OP_LOGIN_RSP:
+      case ISCSI_OP_TEXT_RSP:
+      case ISCSI_OP_SCSI_TMFUNC_RSP:
+      case ISCSI_OP_NOOP_IN:
+              task = iscsi_itt_to_task(conn, hdr->itt);
+              if (!task)
+                      return ISCSI_ERR_BAD_ITT;
 
-That value is whatever the target put there. iscsi_itt_to_task() bounds
-the index against cmds_max and checks nothing else, so any task in the
-pool can be named, and iscsi_nop_out_rsp() then completes it.
+iscsi_itt_to_task() bounds the index against cmds_max and looks at
+nothing else, so a target can name any slot in the pool, including one
+that has never been used. task->conn is then NULL, and both
+iscsi_nop_out_rsp() and iscsi_complete_task() dereference it. One
+unsolicited NOP-In is enough; a Text Response carrying the same ITT
+crashes in iscsi_complete_task() instead.
 
-An index that has never been used gives a NULL task->conn: the pool is
-zeroed at session setup and conn is assigned only when a task is
-allocated. If the task was used and returned, iscsi_complete_task() hits
-its WARN_ON_ONCE(task->state == ISCSI_TASK_FREE) and the refcount
-underflows. An in-flight SCSI command is completed as successful - a 1
-MiB read returned 1048576 with none of its buffer written and no
-warning.
+Require the task to be in flight and not a SCSI command, the way
+iscsi_itt_to_ctask() does for the command opcodes.
 
-Validate the reflected ITT the way iscsi_itt_to_ctask() validates a
-command ITT, and require the task to be in flight and not a SCSI
-command.
+[    6.298634] Oops: general protection fault, probably for non-canonical address 0xdffffc000000000c: 0000 [#1] SMP KASAN NOPTI
+[    6.298642] KASAN: null-ptr-deref in range [0x0000000000000060-0x0000000000000067]
+[    6.298652] CPU: 1 UID: 0 PID: 111 Comm: iscsistart Not tainted 7.2.0-rc5-ISCSI1-gf5098b6bae76 #1 PREEMPT(lazy)
+[    6.298654] Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+[    6.298656] RIP: 0010:iscsi_nop_out_rsp.constprop.0+0x46/0x160
+[    6.298691] Code: c1 ea 03 48 83 ec 08 80 3c 02 00 0f 85 f5 00 00 00 48 b8 00 00 00 00 00 fc ff df 48 8b 6b 58 48 8d 7d 60 48 89 fa 48 c1 ea 03 <80> 3c 02 00 0f 85 c0 00 00 00 48 8b 45 60 48 39 c3 74 50 48 b8 00
+[    6.298698] RSP: 0018:ffff88806c907be8 EFLAGS: 00010206
+[    6.298701] RAX: dffffc0000000000 RBX: ffff888006116800 RCX: 0000000000000020
+[    6.298702] RDX: 000000000000000c RSI: ffff88800525d578 RDI: 0000000000000060
+[    6.298703] RBP: 0000000000000000 R08: 0000000000000000 R09: 0000000000000000
+[    6.298706] R10: 0000000000000020 R11: 0000000000000000 R12: 0000000000000000
+[    6.298706] R13: 000000000000002e R14: ffff8880056eb440 R15: ffff888006116800
+[    6.298707] FS:  00007fc02d1c2740(0000) GS:ffff8880b29bc000(0000) knlGS:0000000000000000
+[    6.298710] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[    6.298711] CR2: 000055fe3b56ddf8 CR3: 00000000053b9004 CR4: 0000000000770ef0
+[    6.298712] PKRU: 55555554
+[    6.298713] Call Trace:
+[    6.298714]  <IRQ>
+[    6.298714]  __iscsi_complete_pdu+0x13a8/0x22a0
+[    6.298758]  iscsi_complete_pdu+0x54/0xa0
+[    6.298759]  iscsi_tcp_hdr_recv_done+0x870/0x2c80
+[    6.298778]  iscsi_tcp_recv_skb+0x31e/0xec0
+[    6.298800]  iscsi_sw_tcp_recv+0x12f/0x390
+[    6.298804]  __tcp_read_sock+0x1ab/0x810
+[    6.298812]  iscsi_sw_tcp_data_ready+0x18b/0x510
+[    6.298814]  tcp_rcv_established+0x1f56/0x3a00
+[    6.298842]  tcp_v4_do_rcv+0x449/0x960
+[    6.298847]  tcp_v4_rcv+0x2245/0x3bc0
 
-[    6.248477] Oops: general protection fault, probably for non-canonical address 0xdffffc000000000c: 0000 [#1] SMP KASAN NOPTI
-[    6.249357] KASAN: null-ptr-deref in range [0x0000000000000060-0x0000000000000067]
-[    6.249951] CPU: 1 UID: 0 PID: 0 Comm: swapper/1 Not tainted 7.2.0-rc5-ISCSI1-gf5098b6bae76 #1 PREEMPT(lazy)
-[    6.250718] Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-[    6.251616] RIP: 0010:iscsi_nop_out_rsp.constprop.0+0x46/0x160
-[    6.252043] Code: c1 ea 03 48 83 ec 08 80 3c 02 00 0f 85 f5 00 00 00 48 b8 00 00 00 00 00 fc ff df 48 8b 6b 58 48 8d 7d 60 48 89 fa 48 c1 ea 03 <80> 3c 02 00 0f 85 c0 00 00 00 48 8b 45 60 48 39 c3 74 50 48 b8 00
-[    6.252813] RSP: 0018:ffff88806c907b80 EFLAGS: 00010206
-[    6.253042] RAX: dffffc0000000000 RBX: ffff88800607e000 RCX: ffffffff8d571a25
-[    6.253345] RDX: 000000000000000c RSI: ffff88806c907c38 RDI: 0000000000000060
-[    6.253642] RBP: 0000000000000000 R08: 0000000000000000 R09: fffffbfff235a504
-[    6.253947] R10: 0000000000000003 R11: 7463656e6e6f6320 R12: 0000000000000000
-[    6.254251] R13: 0000000000000000 R14: ffff88806c907c38 R15: 0000000000000000
-[    6.254549] FS:  0000000000000000(0000) GS:ffff8880d95bc000(0000) knlGS:0000000000000000
-[    6.254887] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[    6.255140] CR2: 00007fc393e8ffc0 CR3: 0000000005252006 CR4: 0000000000770ef0
-[    6.255439] PKRU: 55555554
-[    6.255564] Call Trace:
-[    6.255674]  <IRQ>
-[    6.255768]  __iscsi_complete_pdu+0x18bf/0x22a0
-[    6.256733]  iscsi_complete_pdu+0x54/0xa0
-[    6.256905]  iscsi_tcp_data_recv_done+0xf4/0x250
-[    6.257103]  iscsi_tcp_recv_skb+0x31e/0xec0
-[    6.257680]  iscsi_sw_tcp_recv+0x12f/0x390
-[    6.258061]  __tcp_read_sock+0x1ab/0x810
-[    6.258853]  iscsi_sw_tcp_data_ready+0x18b/0x510
-[    6.259808]  tcp_data_queue+0x1f13/0x4cd0
-[    6.260567]  tcp_rcv_established+0x8a5/0x3a00
-[    6.261931]  tcp_v4_do_rcv+0x449/0x960
-[    6.262269]  tcp_v4_rcv+0x2245/0x3bc0
-
-Fixes: 8afa1439fcff ("[SCSI] libiscsi: handle immediate command rejections")
+Fixes: 7996a778ff8c ("[SCSI] iscsi: add libiscsi")
 Cc: stable@vger.kernel.org
 Reviewed-by: Mike Christie <michael.christie@oracle.com>
 Signed-off-by: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
-Link: https://patch.msgid.link/20261007015842.634893-3-yhlee@isslab.korea.ac.kr
+Link: https://patch.msgid.link/20261007015842.634893-4-yhlee@isslab.korea.ac.kr
 Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/libiscsi.c |    8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/scsi/libiscsi.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 --- a/drivers/scsi/libiscsi.c
 +++ b/drivers/scsi/libiscsi.c
-@@ -1142,13 +1142,15 @@ static int iscsi_handle_reject(struct is
- 			spin_unlock(&conn->session->frwd_lock);
- 			spin_lock(&conn->session->back_lock);
- 		} else {
--			struct iscsi_task *task;
-+			struct iscsi_task *task = NULL;
- 			/*
- 			 * Our nop as ping got dropped. We know the target
- 			 * and transport are ok so just clean up
- 			 */
--			task = iscsi_itt_to_task(conn, rejected_pdu.itt);
--			if (!task) {
-+			if (!iscsi_verify_itt(conn, rejected_pdu.itt))
-+				task = iscsi_itt_to_task(conn, rejected_pdu.itt);
-+			if (!task || task->state == ISCSI_TASK_FREE ||
-+			    task->sc) {
- 				iscsi_conn_printk(KERN_ERR, conn,
- 						 "Invalid pdu reject. Could "
- 						 "not lookup rejected task.\n");
+@@ -1286,7 +1286,7 @@ int __iscsi_complete_pdu(struct iscsi_co
+ 	case ISCSI_OP_SCSI_TMFUNC_RSP:
+ 	case ISCSI_OP_NOOP_IN:
+ 		task = iscsi_itt_to_task(conn, hdr->itt);
+-		if (!task)
++		if (!task || task->state == ISCSI_TASK_FREE || task->sc)
+ 			return ISCSI_ERR_BAD_ITT;
+ 		break;
+ 	default:
 
 
