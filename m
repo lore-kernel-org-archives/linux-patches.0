@@ -1,53 +1,61 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793217077;
-	b=RRI1BlDqGsnCeABTV5IlhzForJAzbr4PFRB531XB2fl/LFpQfqjfYBE3F24BXvWIjNDn
-	 v0KRBUqiecbFyM7AgUJrJAknL8XEi9I8DjtYvMGBBIyg2Nm4nnPAak+Jqh0h60S6+qv+e
-	 Nya4lU83fDHo9965/ZzXaiklqP/kEdJ7lsilJkkr0bQDJvTapyO4yCXjRSp3HzLxNP0Oz
-	 +sDTtPslK/X4/ir9wNMN+BdNmXG3qU9RazbVe+5dA74yLbCWbpa1m9JZk13f44NSi2JVa
-	 N9jVmEBafvX0EmnHKr//uUatVkiIFGy1JWD3tzqMWacGVV/6nGA5LeA9tYhKWi+nACg==
+	t=1793217080;
+	b=1HRJcBLhi65SFsMk9fGK2wUo9+JVcaO0eY7uuHwVjM2oLLkRP6E+uUGw9lNGQGZsKrsn
+	 S9Uc1hC046O8ImVd8UOp60qPOVevGm+QpIfow3PsxuQve0HVgrTLrHaUbmcCqi4xDJwLQ
+	 itqT6QhSVngcchwCqc3SWPxJGuHVMaZ2yD1bTN93yAdcRNsfdpmq65yAEaaRLOMXeJ/Ri
+	 O2B8Axlgpma/rqz31lxJsf6R40VZTktPSyP7fp44iRzOO2ojS3tKmHHC+YIHg4dsmKvZ5
+	 /ib4OqmvPNkJNt8NMQTFKVjyWq60I/8whY4qqDiXaSbmHZRO2+4aoIoq4HMl+Okm5vA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793217077;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793217080;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=CTSE+l+bcJafI50zhjcZ1h9XpP5A9KTeYqEL8wCwkuc=;
-	b=uYfxiTgs4lSIuxLE9uTS8vhcHFCaqWDIKhJL0lUxpTORWsRv15dMLNBut6Eu3AtAPrxn
-	 CNcPbHjN6ysJ0Ys0CNCFHWuSUqnyPHDui3TkzzTY6D2BdjbQq9vgJV+pMqR1kIFg1xtKN
-	 /JcDBUetcxPC40Hqw5ZZVnaT45s7bh4jBEH5caBYKg00nwDhVAHTLdxTfp2UyK08D+Uco
-	 NpvZeq22C27HWVbaMEKmpTvFiTWnjAMp5dVww94OT5aRLqpA+JmMOY+HsVC9wnHblpF6w
-	 gDh00AyEDUed6aM4XXcvxijJUqpwRsI3bVVR7OqDNL0zxWUiGR5Sg0QI5Zke3PoP5rg==
+	bh=i6f0QeEq1H2S/vNkISekiiOHHXnBUKuLQOaQmB90gW8=;
+	b=B1Maooa+z99G3CGfPfyaHH4uWQ9Ry+W1X1jhAOM4u+NQgV7v7cFRkKURQcMD9j72OAIw
+	 Z+qy9zIsB4r9rWl+J7xB70LvzVlurHvmsnc5BeANiIllr0vkunLWF7ANQiKzVRqh/hm+a
+	 /Y/Qw05DDfIspUV9PB/td1p8/BH9PWs2MqnQR2Oy/mGsyY5xgVkdg2P4Ac/H7kz+N1LGs
+	 4VM8/pmCRRvSbQ8elleeFsx+79gIE9IkxGsK163S9T5WaXD6ZHuxLVf4lsHuRYIe4DO7O
+	 Izl83dBG1jsh8xFxVcKVLUPjvpUVI3gAztYXrVvWQlvxIYnJVZceYyumpti0ynwRkJA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D6AkUwd6;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cEA3Knjf;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BFF8606A31A;
-	Wed, 28 Oct 2026 19:51:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0013606A31C;
+	Wed, 28 Oct 2026 19:51:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D6AkUwd6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78B0B1F01825;
-	Wed, 28 Oct 2026 19:51:16 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cEA3Knjf
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 292521F01825;
+	Wed, 28 Oct 2026 19:51:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793217077;
-	bh=CTSE+l+bcJafI50zhjcZ1h9XpP5A9KTeYqEL8wCwkuc=;
+	s=korg; t=1793217079;
+	bh=i6f0QeEq1H2S/vNkISekiiOHHXnBUKuLQOaQmB90gW8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=D6AkUwd6ZR+pfZJp4+ISSa56MHZhdPBwXUJHrXdGJamSoDcYTuFJ6z32iB4K3aHuE
-	 q/4wAQMrClcN8PJM966CC+BTw4uwOY5+W6DtWSg7M/UgmTPNk1bW2JWioGs0l/waMo
-	 UzbAs9L7mu7HrA+EqqhEdjHvCFTdRBLRteowYWUA=
+	b=cEA3Knjfro/xa3uY/aqbHrDvleEL0bjiAqx5XJ0BYGiDcDil+KFVzhTMRNe4a+vjm
+	 mEkKvILMoUaI9INn62v7yeVbA7BXapoCjMZWa3DemmJjbmEFp3K7u3jvoWPt0x8yPV
+	 5FdNlbWEeQoye4M58+qFUsIDppBgT7Qj0f5LNQ64=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ameer Hamza <ameer.hamza@truenas.com>,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Daniil Stas <daniil.stas@posteo.net>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Chris Healy <cphealy@gmail.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	linux-kernel@vger.kernel.org,
+	linux-scsi@vger.kernel.org,
+	linux-ide@vger.kernel.org,
+	linux-hwmon@vger.kernel.org,
+	"Nobuhiro Iwamatsu (CIP)" <nobuhiro.iwamatsu.x90@mail.toshiba>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1778/1887] perf: Track the perf mlock gift separately
-Date: Wed, 28 Oct 2026 18:04:34 +0100
-Message-ID: <20261028170539.912578192@linuxfoundation.org>
+Subject: [PATCH 6.1 1779/1887] hwmon: (drivetemp) Fix driver producing garbage data when SCSI errors occur
+Date: Wed, 28 Oct 2026 18:04:35 +0100
+Message-ID: <20261028170539.934442300@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,140 +77,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+From: Daniil Stas <daniil.stas@posteo.net>
 
-commit 78436f3882fb8d848c823bf8cf754988202c5ca5 upstream.
+commit 82163d63ae7a4c36142cd252388737205bb7e4b9 upstream.
 
-The locked_vm field in struct user_struct was originally introduced by
-commit 789f90fcf6b0 ("perf_counter: per user mlock gift") to provide an
-mlock-like budget for perf measured against mm->pinned_vm (since 2011).
+scsi_execute_cmd() function can return both negative (linux codes) and
+positive (scsi_cmnd result field) error codes.
 
-perf grants each user a 'gift' of perf_event_mlock_kb * online CPUs of
-buffer pages which is charged to user->locked_vm without any RLIMIT_MEMLOCK
-check.
+Currently the driver just passes error codes of scsi_execute_cmd() to
+hwmon core, which is incorrect because hwmon only checks for negative
+error codes. This leads to hwmon reporting uninitialized data to
+userspace in case of SCSI errors (for example if the disk drive was
+disconnected).
 
-Only pages beyond the gift are checked against RLIMIT_MEMLOCK, per-mm, via
-mm->pinned_vm, which makes it different from the standard mlock() check,
-which is per-mm and made against RLIMIT_MEMLOCK.
+This patch checks scsi_execute_cmd() output and returns -EIO if it's
+error code is positive.
 
-However, since this was introduced, a number of other components have
-utilised this field where a shared resource needed to be limited against
-RLIMIT_MEMLOCK.
-
-The other users are currently MSG_ZEROCOPY, io_uring, AF_XDP, iommufd,
-s390 KVM zPCI and most recently, secretmem in commit 97d34aa65c29
-("mm/secretmem: properly account locked pages").
-
-This field is shared between all of these, but because the gift is not
-checked against RLIMIT_MEMLOCK, user->locked_vm alone can exceed it - 16
-CPUs * 516 KiB is already more than the default 8 MiB - after which every
-other user of the field fails unconditionally.
-
-This was reported by a user who saw secretmem failing while running a
-simultaneous perf record.
-
-Resolve the issue by simply giving perf its own field separate from the
-rest.
-
-BPF used user->locked_vm up until commit 80ee81e0403c ("bpf: Eliminate
-rlimit-based memory accounting infra for bpf maps") which landed in 5.11.
-
-Thus also eliminate the now-defunct ifdef for CONFIG_BPF_SYSCALL for
-user->locked_vm.
-
-This issue exists between all of the components which use user->locked_vm
-and perf, however secretmem is the first user who has caused a report over
-many years and has been backported, so target the fix at that.
-
-Fixes: 97d34aa65c29 ("mm/secretmem: properly account locked pages")
-Closes: https://lore.kernel.org/20261002175651.811343-1-ameer.hamza@truenas.com
-Reported-by: Ameer Hamza <ameer.hamza@truenas.com>
-Signed-off-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Cc: stable@vger.kernel.org
-[ ljs - Applied to open-coded accounting in perf_mmap()/perf_mmap_close(). ]
-Signed-off-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Fixes: 5b46903d8bf37 ("hwmon: Driver for disk and solid state drives with temperature sensors")
+Signed-off-by: Daniil Stas <daniil.stas@posteo.net>
+Cc: Guenter Roeck <linux@roeck-us.net>
+Cc: Chris Healy <cphealy@gmail.com>
+Cc: Linus Walleij <linus.walleij@linaro.org>
+Cc: Martin K. Petersen <martin.petersen@oracle.com>
+Cc: Bart Van Assche <bvanassche@acm.org>
+Cc: linux-kernel@vger.kernel.org
+Cc: linux-scsi@vger.kernel.org
+Cc: linux-ide@vger.kernel.org
+Cc: linux-hwmon@vger.kernel.org
+Link: https://lore.kernel.org/r/20250105213618.531691-1-daniil.stas@posteo.net
+[groeck: Avoid inline variable declaration for portability]
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Nobuhiro Iwamatsu (CIP) <nobuhiro.iwamatsu.x90@mail.toshiba>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/sched/user.h |  8 +++++---
- kernel/events/core.c       | 12 ++++++------
- 2 files changed, 11 insertions(+), 9 deletions(-)
+ drivers/hwmon/drivetemp.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/include/linux/sched/user.h b/include/linux/sched/user.h
-index 8d7e5521f7cdd..ec262b605437c 100644
---- a/include/linux/sched/user.h
-+++ b/include/linux/sched/user.h
-@@ -23,11 +23,13 @@ struct user_struct {
- 	struct hlist_node uidhash_node;
- 	kuid_t uid;
+diff --git a/drivers/hwmon/drivetemp.c b/drivers/hwmon/drivetemp.c
+index 5bac2b0fc7bb6..b3de637a3a1f2 100644
+--- a/drivers/hwmon/drivetemp.c
++++ b/drivers/hwmon/drivetemp.c
+@@ -165,6 +165,7 @@ static int drivetemp_scsi_command(struct drivetemp_data *st,
+ {
+ 	u8 scsi_cmd[MAX_COMMAND_SIZE];
+ 	int data_dir;
++	int err;
  
--#if defined(CONFIG_PERF_EVENTS) || defined(CONFIG_BPF_SYSCALL) || \
--	defined(CONFIG_NET) || defined(CONFIG_IO_URING) || \
-+#if defined(CONFIG_NET) || defined(CONFIG_IO_URING) || \
- 	defined(CONFIG_VFIO_PCI_ZDEV_KVM) || IS_ENABLED(CONFIG_IOMMUFD) || \
- 	defined(CONFIG_SECRETMEM)
--	atomic_long_t locked_vm;
-+	atomic_long_t locked_vm;	/* pinned pages charged to RLIMIT_MEMLOCK */
-+#endif
-+#ifdef CONFIG_PERF_EVENTS
-+	atomic_long_t perf_mlock;	/* perf buffer pages within perf_event_mlock_kb */
- #endif
- #ifdef CONFIG_WATCH_QUEUE
- 	atomic_t nr_watches;	/* The number of watches this user currently has */
-diff --git a/kernel/events/core.c b/kernel/events/core.c
-index 95dcc8e6907e2..e256ad0bfa4c6 100644
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -6195,7 +6195,7 @@ static void perf_mmap_close(struct vm_area_struct *vma)
- 		perf_pmu_output_stop(event);
+ 	memset(scsi_cmd, 0, sizeof(scsi_cmd));
+ 	scsi_cmd[0] = ATA_16;
+@@ -192,9 +193,12 @@ static int drivetemp_scsi_command(struct drivetemp_data *st,
+ 	scsi_cmd[12] = lba_high;
+ 	scsi_cmd[14] = ata_command;
  
- 		/* now it's safe to free the pages */
--		atomic_long_sub(rb->aux_nr_pages - rb->aux_mmap_locked, &mmap_user->locked_vm);
-+		atomic_long_sub(rb->aux_nr_pages - rb->aux_mmap_locked, &mmap_user->perf_mlock);
- 		atomic64_sub(rb->aux_mmap_locked, &vma->vm_mm->pinned_vm);
+-	return scsi_execute_req(st->sdev, scsi_cmd, data_dir,
+-				st->smartdata, ATA_SECT_SIZE, NULL, HZ, 5,
+-				NULL);
++	err = scsi_execute_req(st->sdev, scsi_cmd, data_dir,
++			       st->smartdata, ATA_SECT_SIZE, NULL, HZ, 5,
++			       NULL);
++	if (err > 0)
++		err = -EIO;
++	return err;
+ }
  
- 		/* this has to be the last one */
-@@ -6270,7 +6270,7 @@ static void perf_mmap_close(struct vm_area_struct *vma)
- 	 */
- 
- 	atomic_long_sub((size >> PAGE_SHIFT) + 1 - mmap_locked,
--			&mmap_user->locked_vm);
-+			&mmap_user->perf_mlock);
- 	atomic64_sub(mmap_locked, &vma->vm_mm->pinned_vm);
- 	free_uid(mmap_user);
- 
-@@ -6430,11 +6430,11 @@ static int perf_mmap(struct file *file, struct vm_area_struct *vma)
- 	 */
- 	user_lock_limit *= num_online_cpus();
- 
--	user_locked = atomic_long_read(&user->locked_vm);
-+	user_locked = atomic_long_read(&user->perf_mlock);
- 
- 	/*
- 	 * sysctl_perf_event_mlock may have changed, so that
--	 *     user->locked_vm > user_lock_limit
-+	 *     user->perf_mlock > user_lock_limit
- 	 */
- 	if (user_locked > user_lock_limit)
- 		user_locked = user_lock_limit;
-@@ -6442,7 +6442,7 @@ static int perf_mmap(struct file *file, struct vm_area_struct *vma)
- 
- 	if (user_locked > user_lock_limit) {
- 		/*
--		 * charge locked_vm until it hits user_lock_limit;
-+		 * charge perf_mlock until it hits user_lock_limit;
- 		 * charge the rest from pinned_vm
- 		 */
- 		extra = user_locked - user_lock_limit;
-@@ -6494,7 +6494,7 @@ static int perf_mmap(struct file *file, struct vm_area_struct *vma)
- 
- unlock:
- 	if (!ret) {
--		atomic_long_add(user_extra, &user->locked_vm);
-+		atomic_long_add(user_extra, &user->perf_mlock);
- 		atomic64_add(extra, &vma->vm_mm->pinned_vm);
- 
- 		atomic_inc(&event->mmap_count);
+ static int drivetemp_ata_command(struct drivetemp_data *st, u8 feature,
 -- 
 2.53.0
 
