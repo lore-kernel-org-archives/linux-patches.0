@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793210524;
-	b=x/qV6Y6r4CjsxKDj5kdYqCQ8QmFw6K6vK2u3LgerB2hhXGdU5ANRUIZRMa+59t/s8H49
-	 MNdxpkp6oRNTdf6HA6ue7+36PTgBlSUyVYC0Rcta8OuVflU4jMSVOPQGISlbPfagEsMLt
-	 WvpCXVdKFWj1UAr2OVNMD5NcFNBk5QIxwxRSj7dKWscj7dIG6ho7dhtPw7w1oa38FRaOc
-	 uLkLnKZgCnkI0vxKRR6npruvH2el/AJCNRkXflAlQvvXpMnfRdr7GtxgGdWGRrE7MGTN0
-	 57Fbd1cLukf04TE6DKiW5YorSZ3i/LPVayyIQNzGCytW0YNe0SFHUtdMFaaRiIftF9w==
+	t=1793210527;
+	b=0UHrs2zRxrdwVjrTk04SVPuhE4Ay9dt/Y57vX4NForzq+UdeBKiiBnj6cyIIYwNmMf6n
+	 DW+StU19Rix/YLUeBnMWucGfdZAmWDdXP8HItejrdQ+YYQdrLxxuQ+3kCm9Y+9KiOwZ/N
+	 WTSsY/qKJhsbl0fWG0oT8PiFCBj3TBlRK5IktmliRb9Hw3eIIE1cz/qLZguFH0B99NGiQ
+	 oUskfal9bVlsASzf9CqwbP0njWCDqk6LtkDDbEXNOZD6j/szYH/cD0MPFgFWVNQH63hrx
+	 WL9McsySkNxRYgFzPN5+11J/EKLL1O0cqGdXeg2Dz5ijD/du1tAbAaPs4BYVyaWhDaQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793210524;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793210527;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=u5+kA/9WTRey4pFnpcqhFmD6lkM/R8QE0btA/5DjZVY=;
-	b=DX6iHj6sc+lqZlEDvEsdiZLzyQj7JeVY/Hg7toBTlKpa14WNHoCpiq03CGMULuCRGvF1
-	 +XUx07zzsFxR6lv0MnuKcqdALG8H34nYDh6oFvS8uXqGO9eZhfeq2YVb7TVtelk+MrX1B
-	 zPeQfSpqEPiRfz0MYPE7VRXPcW4zuvqKWt+3baIQ1Q3MvRPFV/nblTON3vpPpVjnukW+e
-	 h+QcOh9tz5SBAzXp+zsgCa4LhyC50oJ6VWq1HFcDiTChjvszmwL3jUK8TtVNIu7xjMiBF
-	 2gVXnqHED3iXwEXzEmLYDjd+pULZKBYwpZMw/8/Znc/IoqGnWCx1VG2Tpbs6NFAPTIQ==
+	bh=3nVIh1QOfIM6jwNsnFLdmOzVtgG8ETSl0v8sgThJSVM=;
+	b=ADUttI+ErN7PtIqYK0ODtnKmPWU6mTSWpM8qq50Nd9qnx9EKSMKoHuF6nIQjdYBSRSVT
+	 u1qTPx49PI8yoGoEFwEnp4GPNXjSbCMNAi6W9+ZCWqY1f6s2tlAzdZq01hLCe7gzAA56F
+	 a+e0ID/6Y3w1yd5UZzm6XknInWQcG/6dV9EivhQ7hWy87LArD184pgwT23NYrfHpaKsZn
+	 g2uNdpJPMN+0OzFwiH0AHbZyLxyv4Q9vB+ThD5aB5wsUw5uzmOUsBdv37dtT25eg75HtF
+	 E6EF5D7v8+u9gjyyNgxKREMRgU0yoQI5lX1IPDsPYUAlEAWpSH1um7QSYWjvKwM61xQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iFq4Rex7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CFQTY70i;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A93DD606A336;
-	Wed, 28 Oct 2026 18:02:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF9B9606A31A;
+	Wed, 28 Oct 2026 18:02:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iFq4Rex7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 069D21F031E0;
-	Wed, 28 Oct 2026 18:02:02 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CFQTY70i
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E21DD1F01829;
+	Wed, 28 Oct 2026 18:02:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793210523;
-	bh=u5+kA/9WTRey4pFnpcqhFmD6lkM/R8QE0btA/5DjZVY=;
+	s=korg; t=1793210526;
+	bh=3nVIh1QOfIM6jwNsnFLdmOzVtgG8ETSl0v8sgThJSVM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iFq4Rex7b3cr1QFZVv0yk9hWISyeyKrMX5QDsk+0DqeUweG7xZ3PALTwZF7MO0XNZ
-	 YWY+jqLpU4S8RqmvBkIOlCd2vVOauTcSLlyp6UWVmP27F7i9wPPax192LRbYQzkyG8
-	 +yJ/wayBQRZiKfh7nUuHgLp2I50MsJydESQZ9W6s=
+	b=CFQTY70iispNtiigQBb8b2z8QX9QW57uVuA7OGnhQiRYVN46IWCRclGS5mdnmZ1Ud
+	 QhnnS1fkU3ZagJma/WidlCLV1hhEQSvlkoxF4zthOed0NHFcAQUZAlDApQ4NSF/P5E
+	 dTANK2Lf+TB5MH9+wtPb1ePZSEVhNW+WQO++NDT8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuan-Wei Chiu <visitorckw@gmail.com>,
-	James Clark <james.clark@linaro.org>,
-	Suzuki K Poulose <suzuki.poulose@arm.com>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Miroslav Benes <mbenes@suse.cz>,
+	Luis Chamberlain <mcgrof@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 056/571] coresight: etm3x: Fix cntr_val_show() to match cntr_val_store() behavior
-Date: Wed, 28 Oct 2026 17:53:23 +0100
-Message-ID: <20261028170009.356850305@linuxfoundation.org>
+Subject: [PATCH 5.15 057/571] kernel/params.c: Use kstrtobool() instead of strtobool()
+Date: Wed, 28 Oct 2026 17:53:24 +0100
+Message-ID: <20261028170009.380810155@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -69,70 +69,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuan-Wei Chiu <visitorckw@gmail.com>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit 41fb4e925528aefa4b7a5f76c7f81db99c0d0f38 ]
+[ Upstream commit def7b92efd868a6c78da86770704c1a03506016e ]
 
-The cntr_val_show() function was intended to print the values of all
-counters using a loop. However, due to a buffer overwrite issue with
-sprintf(), it effectively only displayed the value of the last counter.
+strtobool() is the same as kstrtobool().
+However, the latter is more used within the kernel.
 
-The companion function, cntr_val_store(), allows users to modify a
-specific counter selected by 'cntr_idx'. To maintain consistency
-between read and write operations and to align with the ETM4x driver
-behavior, modify cntr_val_show() to report only the value of the
-currently selected counter.
+In order to remove strtobool() and slightly simplify kstrtox.h, switch to
+the other function name.
 
-This change removes the loop and the "counter %d:" prefix, printing
-only the hexadecimal value. It also adopts sysfs_emit() for standard
-sysfs output formatting.
+While at it, include the corresponding header file (<linux/kstrtox.h>)
 
-Fixes: a939fc5a71ad ("coresight-etm: add CoreSight ETM/PTM driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
-Reviewed-by: James Clark <james.clark@linaro.org>
-Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-Link: https://lore.kernel.org/r/20251202082613.3265761-1-visitorckw@gmail.com
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Reviewed-by: Miroslav Benes <mbenes@suse.cz>
+Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
+Stable-dep-of: 3dfaae04243c ("params: fix charp corruption on allocation failure")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../hwtracing/coresight/coresight-etm3x-sysfs.c   | 15 ++++-----------
- 1 file changed, 4 insertions(+), 11 deletions(-)
+ kernel/params.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/hwtracing/coresight/coresight-etm3x-sysfs.c b/drivers/hwtracing/coresight/coresight-etm3x-sysfs.c
-index e8c7649f123e7..30fae661090fe 100644
---- a/drivers/hwtracing/coresight/coresight-etm3x-sysfs.c
-+++ b/drivers/hwtracing/coresight/coresight-etm3x-sysfs.c
-@@ -716,26 +716,19 @@ static DEVICE_ATTR_RW(cntr_rld_event);
- static ssize_t cntr_val_show(struct device *dev,
- 			     struct device_attribute *attr, char *buf)
- {
--	int i, ret = 0;
- 	u32 val;
- 	struct etm_drvdata *drvdata = dev_get_drvdata(dev->parent);
- 	struct etm_config *config = &drvdata->config;
+diff --git a/kernel/params.c b/kernel/params.c
+index 1233673b42ecc..b904bd98dd01b 100644
+--- a/kernel/params.c
++++ b/kernel/params.c
+@@ -4,6 +4,7 @@
  
- 	if (!local_read(&drvdata->mode)) {
- 		spin_lock(&drvdata->spinlock);
--		for (i = 0; i < drvdata->nr_cntr; i++)
--			ret += sprintf(buf, "counter %d: %x\n",
--				       i, config->cntr_val[i]);
-+		val = config->cntr_val[config->cntr_idx];
- 		spin_unlock(&drvdata->spinlock);
--		return ret;
--	}
--
--	for (i = 0; i < drvdata->nr_cntr; i++) {
--		val = etm_readl(drvdata, ETMCNTVRn(i));
--		ret += sprintf(buf, "counter %d: %x\n", i, val);
-+	} else {
-+		val = etm_readl(drvdata, ETMCNTVRn(config->cntr_idx));
- 	}
+ */
+ #include <linux/kernel.h>
++#include <linux/kstrtox.h>
+ #include <linux/string.h>
+ #include <linux/errno.h>
+ #include <linux/module.h>
+@@ -310,7 +311,7 @@ int param_set_bool(const char *val, const struct kernel_param *kp)
+ 	if (!val) val = "1";
  
--	return ret;
-+	return sysfs_emit(buf, "%#x\n", val);
+ 	/* One of =[yYnN01] */
+-	return strtobool(val, kp->arg);
++	return kstrtobool(val, kp->arg);
  }
+ EXPORT_SYMBOL(param_set_bool);
  
- static ssize_t cntr_val_store(struct device *dev,
 -- 
 2.53.0
 
