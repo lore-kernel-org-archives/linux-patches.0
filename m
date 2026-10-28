@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793209310;
-	b=DoQb6+Xn43gU9vgek43GQ37Pbg481IWoOOSAQwYdd5H+6fgmekp3f+t9df/yNSyx7+xC
-	 DJpX806JXwngnCSg6G8D4vo3dDX2VGLAp9HBgrtAqa9HIS97ry92yCc7nDt8zLGeDC1oj
-	 sFzVOF/j4ScoPWd8Erwii+Esejr7TvkR/+d1fOavSQcgp38cSuJlIIPc0hGfqG9aXvvKt
-	 ttGRppb45eFnfvxZmSK34fSgg9y655h1ulDMnbd8l1EbWwGyHlSdf/51gMDEHXgiLyG6N
-	 lE2ggZNZQbaunRD0eYw6qhdM3mebi76ESE7pfIsjcVSkS+LXvSLH4FlVtBGv80fT6Ww==
+	t=1793209313;
+	b=bfUKMuDtNJ8bgNBQQgrN1MfkPjVNihuO/CO198YP86TyYpJgANnqrbH/EJ8X1/QZHEaR
+	 hsnPa+tHIGjUVzTqu4fbJwbHDWfJ440Rp2wv87pl2fXGJrRz/Cm/qYfGhxcqEQVIN5hEc
+	 Yrnf+rqEjKZI9FXqD87To+WerTIp3skk1O/xdvePM8mxGXkLTpC6h8JnJUaFwkpWbNFag
+	 yvyzRnHSGlD4QBjH9OiEbv8H+4LZQ1HPj+R1TaNlcEIEiHMGdGpdx/k8eEWbjJSvxYLlc
+	 81iV0mBiueXrwirB4H7Jlud22mZI3Lr/PoF8nixMEHZsPNlsGjmPvNJy1ybEm+glcog==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793209310;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793209313;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=e44ipic5qT9glKScfFFrlV4xI75wMWhSnMmsgWxrvsU=;
-	b=0piHioYz1J2v6XyPqFgVaVuGSfbHzoxJ1cJRv9xJxevQHSebHlSmEj/CTJNjxIQASY4q
-	 6Wj98bwMWBrSzhAsVdd+dwE8HUBm3qYRWEbOl98Hv0stIj0HH0e9BTNufZYABys790aO/
-	 sD1w/HsnM4wCyDFnJ85cay5LJJULfwOPFyyYS5zA61hlCbN4/vXbkKSYvC8oYjZJhCxnF
-	 YE0NuiQAxQXPl1rH7J7WGK3yfT5JkgF59maGtM/LTkUgzQs0zo0wyzWmBAOXxGyDvoD74
-	 Dy45TOsKEdJSZfP6xguiyOombVapWKpSaRLJDvRib92ImWZf3nuDWB6txWe/wahf8lA==
+	bh=JDHO/9l9mvgxnQ+8GjclDlHGNqTJp1YOIs+3sGGeLYs=;
+	b=ALSVB9jVd0Nsc2R6/k3K8EXWC3yEU2ffugqE0a0g6YXHzxtu8tFJpK2L5rcVN2gsrueX
+	 /BJuylqDcZr1Uk6nFOsc1u9gr4vAAB1c/FIkkzeW1wBivSlRx28RnLHD1/2cSbPvgPcw7
+	 lWQjJaWfnSodzLj2hDeCJeEf2VV8NhApva5j9P/DxiH5pDbQYSjFVEioOt3/kwHD17Y4K
+	 k47urK2W1+BkJf2Z2XJGJhMLEcp86vSCQwsHOda9j2ZZIfmaCiu7cLJdWoDc2z/NwCjXf
+	 ao/dUQ7KR/dSRmcdvx/VcD6fSP2UK+XY9FtJDFn8x6r04MbV/kUIPxyhWX+rqgDXRNw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Gd//ZBOK";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="H+94Gtw/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 091EE606A31C;
-	Wed, 28 Oct 2026 17:41:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB971606A31C;
+	Wed, 28 Oct 2026 17:41:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Gd//ZBOK
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AC9D1F01825;
-	Wed, 28 Oct 2026 17:41:49 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=H+94Gtw/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 370651F01825;
+	Wed, 28 Oct 2026 17:41:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793209309;
-	bh=e44ipic5qT9glKScfFFrlV4xI75wMWhSnMmsgWxrvsU=;
+	s=korg; t=1793209312;
+	bh=JDHO/9l9mvgxnQ+8GjclDlHGNqTJp1YOIs+3sGGeLYs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Gd//ZBOKy8b/E9lRbXMenAQtvpTWZmlll+0ve5kqhHHYgP9/nPBc5K0yevSI52egK
-	 WTjPHdfnP2rEr/Q9QSd9oFnBYb9J09Z1Fd6YWda09/ie1fxDaiKVIDh0nd3Wvcof+Z
-	 eK1SF04sYN92XzaIFJk8IAZpw3u2zbBm1OrsGxwo=
+	b=H+94Gtw/8GZ8VPcXOp6SyeGmtOgdlDFNdSUOjdfR+b2Jy7i7tw2XZroDVq9S4/6+/
+	 BbkCWYkxYulVyicxAUlfq6W/qaxlYT0nHDsJUeEoGcwv4xkQ0jyBEsoqHiWBp5OuQX
+	 Jpm2iM0DABwTgUiFYSL6AE1QMMbFomtMFOPNSfNk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Chinner <dchinner@redhat.com>,
-	Carlos Maiolino <cmaiolino@redhat.com>,
-	Carlos Maiolino <cem@kernel.org>,
-	Siddh Raman Pant <siddh.raman.pant@oracle.com>,
+	Hyunwoo Kim <imv4bel@gmail.com>,
+	Michal Luczaj <mhal@rbox.co>,
+	Stefano Garzarella <sgarzare@redhat.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 419/516] xfs: rearrange code in xfs_buf_item.c
-Date: Wed, 28 Oct 2026 17:59:31 +0100
-Message-ID: <20261028170013.413818361@linuxfoundation.org>
+Subject: [PATCH 5.10 428/516] vsock: treat TCP_CLOSING as once-established
+Date: Wed, 28 Oct 2026 17:59:40 +0100
+Message-ID: <20261028170013.625355651@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -70,222 +70,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dave Chinner <dchinner@redhat.com>
+From: Michal Luczaj <mhal@rbox.co>
 
-[ Upstream commit d2fe5c4c8d25999862d615f616aea7befdd62799 ]
+[ Upstream commit 4f6ac74fa594a918d41255c941256e1d51592d3b ]
 
-The code to initialise, release and free items is all the way down
-the bottom of the file. Upcoming fixes need to these functions
-earlier in the file, so move them to the top.
+Handle the TCP_ESTABLISHED -> TCP_CLOSING transition on OP_RST, which can
+race with the connect loop. Immediately break and return 0 on
+ESTABLISHED/CLOSING. The return value of connect() should reflect what
+happened up to the point the connection was established or failed. Events
+that occur afterwards must not affect it. E.g. even if OP_RW has already
+set sk_err, connect() should still return 0, not ENOBUFS because of it.
+Adapt the inaccurate comment above signal_pending().
 
-There is one code change in this move - the parameter to
-xfs_buf_item_relse() is changed from the xfs_buf to the
-xfs_buf_log_item - the thing that the function is releasing.
+Resetting a socket that is still present in connected_table can lead to
+memory corruption. The reporter noted lost transports for in-flight skbs,
+and I have reproduced crashes caused by re-insertion into connected_table.
 
-Signed-off-by: Dave Chinner <dchinner@redhat.com>
-Reviewed-by: Carlos Maiolino <cmaiolino@redhat.com>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
+  list_add double add: new=, prev=, next=.
+  kernel BUG at lib/list_debug.c:35!
+  Oops: invalid opcode: 0000 [#1] SMP KASAN NOPTI
+  Workqueue: vsock-loopback vsock_loopback_work
+  RIP: 0010:__list_add_valid_or_report+0x11f/0x130
+  Call Trace:
+   vsock_insert_connected.cold+0xe/0x13
+   virtio_transport_recv_pkt+0x10e9/0x1460
+   vsock_loopback_work+0x305/0x480
+   process_one_work+0xe4c/0x1560
+   worker_thread+0x4f1/0xd60
+   kthread+0x36e/0x470
+   ret_from_fork+0x47b/0x6b0
+   ret_from_fork_asm+0x1a/0x30
 
-6.6:
+This fix is supplementary to commit 002541ef650b ("vsock: Ignore
+signal/timeout on connect() if already established"). Details under Link.
 
-Fixed conflict due to the following missing commits:
-	[Continuous range: 10634530f7ba^..d4c75a1b40cd]
-	d4c75a1b40cd ("xfs: convert remaining kmem_free() to kfree()")
-	49292576136f ("xfs: convert kmem_free() for kvmalloc users to kvfree()")
-	afdc115559c5 ("xfs: move kmem_to_page()")
-	f078d4ea8276 ("xfs: convert kmem_alloc() to kmalloc()")
-	10634530f7ba ("xfs: convert kmem_zalloc() to kzalloc()")
-
-Removed ASSERT in favour of existing atomic_read-and-return in
-xfs_buf_item_relse() due to the following missing commit:
-	3762113b597f ("xfs: don't lose solo superblock counter update transactions")
-
-5.15:
-
-Fixed conflict due to the following missing commit:
-	182696fb021f ("xfs: rename _zone variables to _cache")
-
-Signed-off-by: Siddh Raman Pant <siddh.raman.pant@oracle.com>
+Fixes: d021c344051a ("VSOCK: Introduce VM Sockets")
+Reported-by: Hyunwoo Kim <imv4bel@gmail.com>
+Link: https://lore.kernel.org/netdev/anzT1fREOSyHT99k@v4bel/
+Signed-off-by: Michal Luczaj <mhal@rbox.co>
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+Link: https://patch.msgid.link/20261005-vsock-connect-reset-closing-v4-1-15d41cfda3ed@rbox.co
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/xfs/xfs_buf_item.c | 118 +++++++++++++++++++++---------------------
- fs/xfs/xfs_buf_item.h |   1 -
- 2 files changed, 60 insertions(+), 59 deletions(-)
+ net/vmw_vsock/af_vsock.c | 17 ++++++++---------
+ 1 file changed, 8 insertions(+), 9 deletions(-)
 
-diff --git a/fs/xfs/xfs_buf_item.c b/fs/xfs/xfs_buf_item.c
-index f864e0b8a8055..3124f96ad6b32 100644
---- a/fs/xfs/xfs_buf_item.c
-+++ b/fs/xfs/xfs_buf_item.c
-@@ -31,6 +31,63 @@ static inline struct xfs_buf_log_item *BUF_ITEM(struct xfs_log_item *lip)
- 	return container_of(lip, struct xfs_buf_log_item, bli_item);
- }
+diff --git a/net/vmw_vsock/af_vsock.c b/net/vmw_vsock/af_vsock.c
+index 15dd900beaf22..d49840fddbcb6 100644
+--- a/net/vmw_vsock/af_vsock.c
++++ b/net/vmw_vsock/af_vsock.c
+@@ -1464,23 +1464,22 @@ static int vsock_stream_connect(struct socket *sock, struct sockaddr *addr,
+ 		timeout = schedule_timeout(timeout);
+ 		lock_sock(sk);
  
-+static void
-+xfs_buf_item_get_format(
-+	struct xfs_buf_log_item	*bip,
-+	int			count)
-+{
-+	ASSERT(bip->bli_formats == NULL);
-+	bip->bli_format_count = count;
-+
-+	if (count == 1) {
-+		bip->bli_formats = &bip->__bli_format;
-+		return;
-+	}
-+
-+	bip->bli_formats = kmem_zalloc(count * sizeof(struct xfs_buf_log_format),
-+				0);
-+}
-+
-+static void
-+xfs_buf_item_free_format(
-+	struct xfs_buf_log_item	*bip)
-+{
-+	if (bip->bli_formats != &bip->__bli_format) {
-+		kmem_free(bip->bli_formats);
-+		bip->bli_formats = NULL;
-+	}
-+}
-+
-+static void
-+xfs_buf_item_free(
-+	struct xfs_buf_log_item	*bip)
-+{
-+	xfs_buf_item_free_format(bip);
-+	kmem_free(bip->bli_item.li_lv_shadow);
-+	kmem_cache_free(xfs_buf_item_zone, bip);
-+}
-+
-+/*
-+ * xfs_buf_item_relse() is called when the buf log item is no longer needed.
-+ */
-+static void
-+xfs_buf_item_relse(
-+	struct xfs_buf_log_item	*bip)
-+{
-+	struct xfs_buf		*bp = bip->bli_buf;
-+
-+	trace_xfs_buf_item_relse(bp, _RET_IP_);
-+
-+	ASSERT(!test_bit(XFS_LI_IN_AIL, &bip->bli_item.li_flags));
-+
-+	if (atomic_read(&bip->bli_refcount))
-+		return;
-+
-+	bp->b_log_item = NULL;
-+	xfs_buf_rele(bp);
-+	xfs_buf_item_free(bip);
-+}
-+
- /* Is this log iovec plausibly large enough to contain the buffer log format? */
- bool
- xfs_buf_log_check_iovec(
-@@ -481,7 +538,7 @@ xfs_buf_item_unpin(
- 			ASSERT(list_empty(&bp->b_li_list));
- 		} else {
- 			xfs_trans_ail_delete(lip, SHUTDOWN_LOG_IO_ERROR);
--			xfs_buf_item_relse(bp);
-+			xfs_buf_item_relse(bip);
- 			ASSERT(bp->b_log_item == NULL);
- 		}
- 		xfs_buf_relse(bp);
-@@ -591,7 +648,7 @@ xfs_buf_item_put(
- 	 */
- 	if (aborted)
- 		xfs_trans_ail_delete(lip, 0);
--	xfs_buf_item_relse(bip->bli_buf);
-+	xfs_buf_item_relse(bip);
- 	return true;
- }
+-		/* Connection established. Whatever happens to socket once we
+-		 * release it, that's not connect()'s concern. No need to go
++		/* Connection was established. Whatever happens to socket once
++		 * we release it, that's not connect()'s concern. No need to go
+ 		 * into signal and timeout handling. Call it a day.
+ 		 *
+ 		 * Note that allowing to "reset" an already established socket
+ 		 * here is racy and insecure.
+ 		 */
+-		if (sk->sk_state == TCP_ESTABLISHED)
+-			break;
++		if (sk->sk_state == TCP_ESTABLISHED ||
++		    sk->sk_state == TCP_CLOSING) {
++			err = 0;
++			goto out_wait;
++		}
  
-@@ -711,33 +768,6 @@ static const struct xfs_item_ops xfs_buf_item_ops = {
- 	.iop_push	= xfs_buf_item_push,
- };
- 
--STATIC void
--xfs_buf_item_get_format(
--	struct xfs_buf_log_item	*bip,
--	int			count)
--{
--	ASSERT(bip->bli_formats == NULL);
--	bip->bli_format_count = count;
--
--	if (count == 1) {
--		bip->bli_formats = &bip->__bli_format;
--		return;
--	}
--
--	bip->bli_formats = kmem_zalloc(count * sizeof(struct xfs_buf_log_format),
--				0);
--}
--
--STATIC void
--xfs_buf_item_free_format(
--	struct xfs_buf_log_item	*bip)
--{
--	if (bip->bli_formats != &bip->__bli_format) {
--		kmem_free(bip->bli_formats);
--		bip->bli_formats = NULL;
--	}
--}
--
- /*
-  * Allocate a new buf log item to go with the given buffer.
-  * Set the buffer's b_log_item field to point to the new
-@@ -959,34 +989,6 @@ xfs_buf_item_dirty_format(
- 	return false;
- }
- 
--STATIC void
--xfs_buf_item_free(
--	struct xfs_buf_log_item	*bip)
--{
--	xfs_buf_item_free_format(bip);
--	kmem_free(bip->bli_item.li_lv_shadow);
--	kmem_cache_free(xfs_buf_item_zone, bip);
--}
--
--/*
-- * xfs_buf_item_relse() is called when the buf log item is no longer needed.
-- */
--void
--xfs_buf_item_relse(
--	struct xfs_buf	*bp)
--{
--	struct xfs_buf_log_item	*bip = bp->b_log_item;
--
--	trace_xfs_buf_item_relse(bp, _RET_IP_);
--	ASSERT(!test_bit(XFS_LI_IN_AIL, &bip->bli_item.li_flags));
--
--	if (atomic_read(&bip->bli_refcount))
--		return;
--	bp->b_log_item = NULL;
--	xfs_buf_rele(bp);
--	xfs_buf_item_free(bip);
--}
--
- void
- xfs_buf_item_done(
- 	struct xfs_buf		*bp)
-@@ -1006,5 +1008,5 @@ xfs_buf_item_done(
- 	xfs_trans_ail_delete(&bp->b_log_item->bli_item,
- 			     (bp->b_flags & _XBF_LOGRECOVERY) ? 0 :
- 			     SHUTDOWN_CORRUPT_INCORE);
--	xfs_buf_item_relse(bp);
-+	xfs_buf_item_relse(bp->b_log_item);
- }
-diff --git a/fs/xfs/xfs_buf_item.h b/fs/xfs/xfs_buf_item.h
-index 50aa0f5ef9590..e3ccbf3ca8014 100644
---- a/fs/xfs/xfs_buf_item.h
-+++ b/fs/xfs/xfs_buf_item.h
-@@ -51,7 +51,6 @@ struct xfs_buf_log_item {
- 
- int	xfs_buf_item_init(struct xfs_buf *, struct xfs_mount *);
- void	xfs_buf_item_done(struct xfs_buf *bp);
--void	xfs_buf_item_relse(struct xfs_buf *);
- bool	xfs_buf_item_put(struct xfs_buf_log_item *);
- void	xfs_buf_item_log(struct xfs_buf_log_item *, uint, uint);
- bool	xfs_buf_item_dirty_format(struct xfs_buf_log_item *);
+ 		/* If connection was _not_ established and a signal/timeout came
+ 		 * to be, we want the socket's state reset. User space may want
+-		 * to retry.
+-		 *
+-		 * sk_state != TCP_ESTABLISHED implies that socket is not on
+-		 * vsock_connected_table. We keep the binding and the transport
+-		 * assigned.
++		 * to retry, so we keep the binding and the transport assigned.
+ 		 */
+ 		if (signal_pending(current) || timeout == 0) {
+ 			err = timeout == 0 ? -ETIMEDOUT : sock_intr_errno(timeout);
 -- 
 2.53.0
 
