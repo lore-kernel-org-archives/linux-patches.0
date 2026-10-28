@@ -1,55 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215711;
-	b=aXbvSg47b/7Siol3HAAjCoJPrb0NiSDsxWUgAtdX1BRFJvZwGAR0+rufghZOYnF+75vD
-	 tMZQDRZOJcC3ZDpqBMKJZZAJDGxyRiXZKzXAIKhUQGfiKN8rKKPDfgVnGsXvUi8cOwHLD
-	 qJYilNn0L8QXAh5sc8D8mH5HAS5cO1eDbqLW0Tk/okcWbhdWTFoDyFqEP0vji9H2HHlI8
-	 UtEVlZJLqd2UQwAQ3aXLlNeBjabN35coQKNmvJXgebpm2ZJit6Exj25EONcScp/AvmeLU
-	 2jX7xgqTxYi8QySWqbk2+kzZtAssmLeMH+5GHlNkK71dSheesT9Wxetw6hyjtuev9yQ==
+	t=1793215714;
+	b=jQ0tw2sopntHbuy6ydJP6KgPm7WZbJUSbDjRIm4XNEO10cUsxqztsEVfqTC2t9/nEG0i
+	 s87Zbl88OreU3Q5ggYcBJFsWrKKFGPgHvoup0RqmtgvKMU/U841IUFhTzNmt9ucAQn33/
+	 frmppxtV6XMOxsPavZ9guAW+xrt9TjVfiA7d8k0ainUJ0dptMwi71RISo6I4dGyT8SL/O
+	 5PYYsExHiRpa8nmwH5RuHD9UZxmK3ckqhuyhsgPIR79+pez+/2sTHL9QFBo5oyffu3oii
+	 XOmPuPT5SU4wFTMja9cBdBb/CcxbkQdmWteh9hIBxsi6gv/DDhSi32YgsdkesgYIp2A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215711;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215714;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Y+c0Ai3sXTUjsUXRjcmD+KAzHkpB34Hcb15mVA6Vvjg=;
-	b=v36vwh7tUvXOGyU3IWL8UBJ5cofeS9jbd5HP2356T3EghBsQ943qhcupCiaTcW9McWww
-	 9nDG3xVLicn1ObnMUW2dwwtYloc5dVyGYWAc0irzNp91Ov796VOpmqOsN+RGt2FrPRuJo
-	 AHfHxSTmNxo3Nojszp94mb/qsYX6etaSxVR1CG5x9EkVKrlF3IW7AIYpeDrxrThKDfNwn
-	 tDRlD2137rh1S9lZsdYUUbnDarxl5bhKf9/CZ4WP+yBQjfIqSqTlaKblaEDwjjo8OHfA1
-	 boKG82boLV6OerZ7HgYeuD6AROhcgKsFK6/UMLBhYOUCqH/csIXsg+8O3VhxBnNXUUg==
+	bh=Jrubzk59NfibXJfAAG1/JonaFuMrekmGUBcRAY8rQw0=;
+	b=LYAZxu6UDnJPdTiut6tB126MlYdxqgkl2riCRxnJ4P4CtXuFTRxmM297k4LcG5wyWwK8
+	 aoovFDJjAqJzxMpidiD2nNnuc2shxftW6a8BNXb2/3g7z/FvzsrKrZg6E0SYzcFxMEifc
+	 o3REWAyQBr1QAdIpJtFYOHmyK2vTbiHqhB+eHQd0/GhP5pdx09RG9sY/IfPdp4MQJ66vk
+	 gl0iWeb72UClqHj5QA6RVWVluU8EznKu0ArPXrRt/IRNFFD/b2mg/4MpHrRJ8uMgHSl+o
+	 EN8YV1vuHKrvupkHjgpk811QfAVZnz4o2Nc9CyBfy9rrgw03Q+XgjIEjq6HrPIr5f6Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zOeTnuP4;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l65+3PWn;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FDB5606A31E;
-	Wed, 28 Oct 2026 19:28:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B0A1606A31F;
+	Wed, 28 Oct 2026 19:28:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zOeTnuP4
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6D901F01828;
-	Wed, 28 Oct 2026 19:28:30 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l65+3PWn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C58821F01825;
+	Wed, 28 Oct 2026 19:28:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215711;
-	bh=Y+c0Ai3sXTUjsUXRjcmD+KAzHkpB34Hcb15mVA6Vvjg=;
+	s=korg; t=1793215714;
+	bh=Jrubzk59NfibXJfAAG1/JonaFuMrekmGUBcRAY8rQw0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zOeTnuP4GNbjWR2O5GR5fVcqYtNQurEjlS8SZrSwVuC9PLBZ299IEjh0Y7HEY08Ri
-	 jxG4BTmQQ23ME0FbS19CuD2/VTljUTqNNs7rjnCnFsPd2bd0+umDqTzmrPNR5vpxKD
-	 6hy1IEZmedke61q0hbAabyJnyPkKT/OIUKFGm3f0=
+	b=l65+3PWnAAiEsfQzBFd00gQMm8A5rRziFVPZXxbyXIvvhVr41H/JFlrQj8CGQ67Ow
+	 IBinNEH4fU7CeZ3M0IHsfJC3XqBzMnbFfZY0DSTnKyfZ5guOKjBixpJmQcwPRxR1K+
+	 yPHEQ45W9CKzS3gIagZssBbRfSBmGEKAIJRxm54M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+d6fa74e3f19d6ee01e3a@syzkaller.appspotmail.com,
-	James Chapman <jchapman@katalix.com>,
-	Guillaume Nault <gnault@redhat.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Victor Nogueira <victor@mojatatu.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1305/1887] l2tp: fix tunnel and session refcount leak on seq_file release
-Date: Wed, 28 Oct 2026 17:56:41 +0100
-Message-ID: <20261028170529.126855556@linuxfoundation.org>
+Subject: [PATCH 6.1 1306/1887] net, sched: Make tc-related drop reason more flexible
+Date: Wed, 28 Oct 2026 17:56:42 +0100
+Message-ID: <20261028170529.150194985@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -71,136 +70,153 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Daniel Borkmann <daniel@iogearbox.net>
 
-[ Upstream commit 9006c116dd111d457bf5d074990210f70a4ad2c8 ]
+[ Upstream commit 54a59aed395ce0f4177b5212e5746a6462de3ad9 ]
 
-In pppol2tp_proc_open() and l2tp_dfs_seq_open(), iteration state
-(pd->tunnel and pd->session) is kept in seq_file private data to allow
-iteration across multiple read() system calls.
+Currently, the kfree_skb_reason() in sch_handle_{ingress,egress}() can only
+express a basic SKB_DROP_REASON_TC_INGRESS or SKB_DROP_REASON_TC_EGRESS reason.
 
-However, if userspace closes /proc/net/pppol2tp or /sys/kernel/debug/l2tp/tunnels
-before reading to end-of-file (EOF), any tunnel or session reference stored in
-pd->tunnel / pd->session is left un-dropped when seq_file private data is freed.
+Victor kicked-off an initial proposal to make this more flexible by disambiguating
+verdict from return code by moving the verdict into struct tcf_result and
+letting tcf_classify() return a negative error. If hit, then two new drop
+reasons were added in the proposal, that is SKB_DROP_REASON_TC_INGRESS_ERROR
+as well as SKB_DROP_REASON_TC_EGRESS_ERROR. Further analysis of the actual
+error codes would have required to attach to tcf_classify via kprobe/kretprobe
+to more deeply debug skb and the returned error.
 
-Fix this by dropping any remaining pd->tunnel and pd->session references in
-pppol2tp_proc_release() and l2tp_dfs_seq_release() when closing the file.
+In order to make the kfree_skb_reason() in sch_handle_{ingress,egress}() more
+extensible, it can be addressed in a more straight forward way, that is: Instead
+of placing the verdict into struct tcf_result, we can just put the drop reason
+in there, which does not require changes throughout various classful schedulers
+given the existing verdict logic can stay as is.
 
-Fixes: 0e0c3fee3a59 ("l2tp: hold reference on tunnels printed in pppol2tp proc file")
-Fixes: f726214d9b23 ("l2tp: hold reference on tunnels printed in l2tp/tunnels debugfs file")
-Reported-by: syzbot+d6fa74e3f19d6ee01e3a@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/6a760f32.01d0871a.3a0d52.004f.GAE@google.com/T/#u
-Assisted-by: Jetski:Gemini-3.1-Pro
-Cc: James Chapman <jchapman@katalix.com>
-Cc: Guillaume Nault <gnault@redhat.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260811144651.2733424-1-edumazet@google.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Then, SKB_DROP_REASON_TC_ERROR{,_*} can be added to the enum skb_drop_reason
+to disambiguate between an error or an intentional drop. New drop reason error
+codes can be added successively to the tc code base.
+
+For internal error locations which have not yet been annotated with a
+SKB_DROP_REASON_TC_ERROR{,_*}, the fallback is SKB_DROP_REASON_TC_INGRESS and
+SKB_DROP_REASON_TC_EGRESS, respectively. Generic errors could be marked with a
+SKB_DROP_REASON_TC_ERROR code until they are converted to more specific ones
+if it is found that they would be useful for troubleshooting.
+
+While drop reasons have infrastructure for subsystem specific error codes which
+are currently used by mac80211 and ovs, Jakub mentioned that it is preferred
+for tc to use the enum skb_drop_reason core codes given it is a better fit and
+currently the tooling support is better, too.
+
+With regards to the latter:
+
+  [...] I think Alastair (bpftrace) is working on auto-prettifying enums when
+  bpftrace outputs maps. So we can do something like:
+
+  $ bpftrace -e 'tracepoint:skb:kfree_skb { @[args->reason] = count(); }'
+  Attaching 1 probe...
+  ^C
+
+  @[SKB_DROP_REASON_TC_INGRESS]: 2
+  @[SKB_CONSUMED]: 34
+
+  ^^^^^^^^^^^^ names!!
+
+  Auto-magically. [...]
+
+Add a small helper tcf_set_drop_reason() which can be used to set the drop reason
+into the tcf_result.
+
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Cc: Jamal Hadi Salim <jhs@mojatatu.com>
+Cc: Victor Nogueira <victor@mojatatu.com>
+Link: https://lore.kernel.org/netdev/20231006063233.74345d36@kernel.org
+Reviewed-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://lore.kernel.org/r/20231009092655.22025-1-daniel@iogearbox.net
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: f60b396ee174 ("net/sched: act_api: fix TOCTOU NULL deref on a->goto_chain")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/l2tp/l2tp_debugfs.c |  4 +++
- net/l2tp/l2tp_ppp.c     | 56 ++++++++++++++++++++++++++++++++++++++---
- 2 files changed, 57 insertions(+), 3 deletions(-)
+ include/net/pkt_cls.h     | 6 ++++++
+ include/net/sch_generic.h | 3 +--
+ net/core/dev.c            | 6 ++++--
+ 3 files changed, 11 insertions(+), 4 deletions(-)
 
-diff --git a/net/l2tp/l2tp_debugfs.c b/net/l2tp/l2tp_debugfs.c
-index 4595b56d175d9..fe56dbae43bea 100644
---- a/net/l2tp/l2tp_debugfs.c
-+++ b/net/l2tp/l2tp_debugfs.c
-@@ -307,6 +307,10 @@ static int l2tp_dfs_seq_release(struct inode *inode, struct file *file)
- 
- 	seq = file->private_data;
- 	pd = seq->private;
-+	if (pd->session)
-+		l2tp_session_dec_refcount(pd->session);
-+	if (pd->tunnel)
-+		l2tp_tunnel_dec_refcount(pd->tunnel);
- 	if (pd->net)
- 		put_net_track(pd->net, &pd->ns_tracker);
- 	kfree(pd);
-diff --git a/net/l2tp/l2tp_ppp.c b/net/l2tp/l2tp_ppp.c
-index 230b1b156465a..21b1016020f3a 100644
---- a/net/l2tp/l2tp_ppp.c
-+++ b/net/l2tp/l2tp_ppp.c
-@@ -1620,7 +1620,53 @@ static const struct seq_operations pppol2tp_seq_ops = {
- 	.stop		= pppol2tp_seq_stop,
- 	.show		= pppol2tp_seq_show,
- };
--#endif /* CONFIG_PROC_FS */
-+
-+static int pppol2tp_proc_open(struct inode *inode, struct file *file)
-+{
-+	struct net *net = pde_data(inode);
-+	struct pppol2tp_seq_data *pd;
-+
-+	net = maybe_get_net(net);
-+	if (!net)
-+		return -ENXIO;
-+
-+	pd = __seq_open_private(file, &pppol2tp_seq_ops, sizeof(*pd));
-+	if (!pd) {
-+		put_net(net);
-+		return -ENOMEM;
-+	}
-+
-+#ifdef CONFIG_NET_NS
-+	pd->p.net = net;
-+	netns_tracker_alloc(net, &pd->p.ns_tracker, GFP_KERNEL);
-+#endif
-+	return 0;
-+}
-+
-+static int pppol2tp_proc_release(struct inode *inode, struct file *file)
-+{
-+	struct seq_file *seq = file->private_data;
-+	struct pppol2tp_seq_data *pd = seq->private;
-+
-+	if (pd->session)
-+		l2tp_session_dec_refcount(pd->session);
-+	if (pd->tunnel)
-+		l2tp_tunnel_dec_refcount(pd->tunnel);
-+
-+#ifdef CONFIG_NET_NS
-+	put_net_track(pd->p.net, &pd->p.ns_tracker);
-+#else
-+	put_net(&init_net);
-+#endif
-+	return seq_release_private(inode, file);
-+}
-+
-+static const struct proc_ops pppol2tp_proc_ops = {
-+	.proc_open	= pppol2tp_proc_open,
-+	.proc_read	= seq_read,
-+	.proc_lseek	= seq_lseek,
-+	.proc_release	= pppol2tp_proc_release,
-+};
- 
- /*****************************************************************************
-  * Network namespace
-@@ -1631,8 +1677,8 @@ static __net_init int pppol2tp_init_net(struct net *net)
- 	struct proc_dir_entry *pde;
- 	int err = 0;
- 
--	pde = proc_create_net("pppol2tp", 0444, net->proc_net,
--			      &pppol2tp_seq_ops, sizeof(struct pppol2tp_seq_data));
-+	pde = proc_create_data("pppol2tp", 0444, net->proc_net,
-+			       &pppol2tp_proc_ops, net);
- 	if (!pde) {
- 		err = -ENOMEM;
- 		goto out;
-@@ -1647,9 +1693,13 @@ static __net_exit void pppol2tp_exit_net(struct net *net)
- 	remove_proc_entry("pppol2tp", net->proc_net);
+diff --git a/include/net/pkt_cls.h b/include/net/pkt_cls.h
+index 2ef3c220d52ca..5671a05b744b0 100644
+--- a/include/net/pkt_cls.h
++++ b/include/net/pkt_cls.h
+@@ -181,6 +181,12 @@ __cls_set_class(unsigned long *clp, unsigned long cl)
+ 	return xchg(clp, cl);
  }
  
-+#endif /* CONFIG_PROC_FS */
++static inline void tcf_set_drop_reason(struct tcf_result *res,
++				       enum skb_drop_reason reason)
++{
++	res->drop_reason = reason;
++}
 +
- static struct pernet_operations pppol2tp_net_ops = {
-+#ifdef CONFIG_PROC_FS
- 	.init = pppol2tp_init_net,
- 	.exit = pppol2tp_exit_net,
-+#endif
- 	.id   = &pppol2tp_net_id,
+ static inline void
+ __tcf_bind_filter(struct Qdisc *q, struct tcf_result *r, unsigned long base)
+ {
+diff --git a/include/net/sch_generic.h b/include/net/sch_generic.h
+index 9310e02d27c88..e16c97cd6ef91 100644
+--- a/include/net/sch_generic.h
++++ b/include/net/sch_generic.h
+@@ -327,7 +327,6 @@ struct Qdisc_ops {
+ 	struct module		*owner;
  };
  
+-
+ struct tcf_result {
+ 	union {
+ 		struct {
+@@ -335,8 +334,8 @@ struct tcf_result {
+ 			u32		classid;
+ 		};
+ 		const struct tcf_proto *goto_tp;
+-
+ 	};
++	enum skb_drop_reason		drop_reason;
+ };
+ 
+ struct tcf_chain;
+diff --git a/net/core/dev.c b/net/core/dev.c
+index 06f4f0f2421b4..1bf404303565e 100644
+--- a/net/core/dev.c
++++ b/net/core/dev.c
+@@ -4080,6 +4080,7 @@ sch_handle_egress(struct sk_buff *skb, int *ret, struct net_device *dev)
+ 	/* qdisc_skb_cb(skb)->pkt_len was already set by the caller. */
+ 	tc_skb_cb(skb)->mru = 0;
+ 	tc_skb_cb(skb)->post_ct = false;
++	cl_res.drop_reason = SKB_DROP_REASON_TC_EGRESS;
+ 	mini_qdisc_bstats_cpu_update(miniq, skb);
+ 
+ 	switch (tcf_classify(skb, miniq->block, miniq->filter_list, &cl_res, false)) {
+@@ -4090,7 +4091,7 @@ sch_handle_egress(struct sk_buff *skb, int *ret, struct net_device *dev)
+ 	case TC_ACT_SHOT:
+ 		mini_qdisc_qstats_cpu_drop(miniq);
+ 		*ret = NET_XMIT_DROP;
+-		kfree_skb_reason(skb, SKB_DROP_REASON_TC_EGRESS);
++		kfree_skb_reason(skb, cl_res.drop_reason ?: SKB_DROP_REASON_TC_EGRESS);
+ 		return NULL;
+ 	case TC_ACT_STOLEN:
+ 	case TC_ACT_QUEUED:
+@@ -5273,6 +5274,7 @@ sch_handle_ingress(struct sk_buff *skb, struct packet_type **pt_prev, int *ret,
+ 	tc_skb_cb(skb)->mru = 0;
+ 	tc_skb_cb(skb)->post_ct = false;
+ 	skb->tc_at_ingress = 1;
++	cl_res.drop_reason = SKB_DROP_REASON_TC_INGRESS;
+ 	mini_qdisc_bstats_cpu_update(miniq, skb);
+ 
+ 	switch (tcf_classify(skb, miniq->block, miniq->filter_list, &cl_res, false)) {
+@@ -5282,7 +5284,7 @@ sch_handle_ingress(struct sk_buff *skb, struct packet_type **pt_prev, int *ret,
+ 		break;
+ 	case TC_ACT_SHOT:
+ 		mini_qdisc_qstats_cpu_drop(miniq);
+-		kfree_skb_reason(skb, SKB_DROP_REASON_TC_INGRESS);
++		kfree_skb_reason(skb, cl_res.drop_reason ?: SKB_DROP_REASON_TC_INGRESS);
+ 		*ret = NET_RX_DROP;
+ 		return NULL;
+ 	case TC_ACT_STOLEN:
 -- 
 2.53.0
 
