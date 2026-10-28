@@ -1,55 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213841;
-	b=zFv2LchYZED8ZXNnRMLMmahdA77WSGk+3IA4Dlu88LSmCZNOmjXNAds6EECR0FlCWPVt
-	 iQ8Apdcw6QKWndFXSFdAoiys26EkRSFBZ0S0AsX3WnRkObJDee9e9uzBMc1xCBYJwXtiO
-	 XMBYvxknEdZJfL2GYMXUpHIzAnl0Sl9oJyofQTNeFJUUT3G0tFkMMT49vGWZmmGEKaixP
-	 V2hcFcmdmtLD5POk0jlg1zV16B6lGliuhhFyNrDX1pH198SN8m8znCPKLo8aiucPzLoaR
-	 aWZSwUHsCsWimCQqpBJhu5sPQZYIC5REeNFDYFRRJ6Yp8cc6+tF50uPayxcF5YIEqzw==
+	t=1793213847;
+	b=XMFN+h8hOZlAmAPQ6uBYnYLhN/kr5kurMtWJcF1IkesptrlbjTJpCOy/IMWdR4FJ2Pzf
+	 lrdI8NZ36OYH4lsZyJPCP3GnlFWtSHJZsIspK6ty2QM+aD5IFw6yR1qcqFe1gLMjJ7Rk8
+	 F5tsG/p8m7ClCSiYW9EPSSn9647/l+KDiBHiqQnJ0M67dLGsoXlFpV9zcMOFcFtrWQtwU
+	 2e8k7enHVYX/xzxJX9HnnTvw1pyRNSO295qGYRqZCY2hGIu1aMC13XXoOCnUN9i+IOs7u
+	 eX+Pi+08LAMQsA3WXDCBjKerjlUGBYVpSsvs2JB115or4V5Bertcn2PA1uxL1osm1jg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213841;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213847;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/EWbGidE1sXB7pPo6UPom1JHXdQkPP/nMoaBxxiokQA=;
-	b=X+7DQel9RaJE3AczXWqftBmLHKgF1FIU87K1/oDVwWwG94r18+Dmy1ytuACmFyRLheMD
-	 tVfEEWe/+WebJ8FnK0UGs70NwmeFOzH6poRBKhcyjvVAy56CDpPfUYObhNBChWQx1vy/l
-	 /9kn2uc/U0oiJzMHNUt5TV6m9alyv1fKc1xxQxcjzAoT6RFmYDgiFcJ7C8g8g5FdOp2kM
-	 k+WGr9ncOuO2UCDrBVZCAJyeSHVSiYkXs4sdb3wobc3RgGia9UI4r4dhS16LdP285G9C0
-	 hKsOFXgyNwsdY2AWSz3+28v2vXmAvwrsEd+54xa/LV+AuYLZZnWlXJuz0UliENpyqLA==
+	bh=eC+tQvf0QUytZHyjo7vcHUQpYGWRQxJKsJqqRettURA=;
+	b=BLy+2eCMloHIG0OkNfvPxNjvHn6RtjgWJTnfzpzLnXgiioYpccMxp+HcTHdMjH5UtVR0
+	 mob8C6sqjgwg8LFCm+HdOIdxa68IzBHk37OL6oZtqSGUhZc187mjkMaU2EqXKupa8NmWP
+	 Omo31HsyFmqbWsNZbQidL8P8rQ3aKARk3+3/T9asyr7mmJntcQeqVOPDmrxrcYOS5nzjL
+	 oNCw/flU3W7u8b2KaHB2avXKqpFTdtchjFpHwi6lp+aSmRS3Z6p5O47ssLESnfM4fPrOV
+	 6+j/qY5SRxMr+LcVv7s1SqnS7ldOPBsen5mMEBQsi/9+BNO1A3qknNU9s4L/xmkCOrQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IRKebXbk;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZZNR+uFS;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37278606A31A;
-	Wed, 28 Oct 2026 18:57:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3A07606A31F;
+	Wed, 28 Oct 2026 18:57:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IRKebXbk
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C34D1F01825;
-	Wed, 28 Oct 2026 18:57:20 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZZNR+uFS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3781E1F01825;
+	Wed, 28 Oct 2026 18:57:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213841;
-	bh=/EWbGidE1sXB7pPo6UPom1JHXdQkPP/nMoaBxxiokQA=;
+	s=korg; t=1793213846;
+	bh=eC+tQvf0QUytZHyjo7vcHUQpYGWRQxJKsJqqRettURA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IRKebXbkgq8DoGdVfTjWPzQtfVBzoDa4rP4AcOxFsh3/MZwmyrEyBNW9+0IySQdgK
-	 0aVgsrG4gISI3t59aDhdblD1x8vG12+DUih1USA8hdO8+1H4PCIe2gwntQ5jczO8tM
-	 vZeVKt5JUulfTujl11qTid0UAliDuAUfvEYaPK7w=
+	b=ZZNR+uFSJRl4wumJY06xdspn0M1e4aW6katlO7GiajMeI6eFhgJYyfp1jgNM2i70a
+	 U4mbPvLhGcz2YUM0SsRbR5cTS6YtxQ5D/eW8PZ5A3Dj4rMc34aLfGp65OnhCMijT5N
+	 8HYP9YY1+18cPzOJscC99H84ubApKlpU3i/YPVmk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rodrigo Siqueira <rodrigo.siqueira@amd.com>,
-	Tom Chung <chiahsuan.chung@amd.com>,
-	Alex Hung <alex.hung@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Wojciech Drewek <wojciech.drewek@intel.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Chandan Kumar Rout <chandanx.rout@intel.com>,
+	Larysa Zaremba <larysa.zaremba@intel.com>,
+	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0648/1887] drm/amd/display: Check index for aux_rd_interval before using
-Date: Wed, 28 Oct 2026 17:45:44 +0100
-Message-ID: <20261028170514.157371184@linuxfoundation.org>
+Subject: [PATCH 6.1 0650/1887] ice: protect XDP configuration with a mutex
+Date: Wed, 28 Oct 2026 17:45:46 +0100
+Message-ID: <20261028170514.201750075@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -71,41 +72,287 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Hung <alex.hung@amd.com>
+From: Larysa Zaremba <larysa.zaremba@intel.com>
 
-[ Upstream commit 9ba2ea6337b4f159aecb177555a6a81da92d302e ]
+[ Upstream commit 2504b8405768a57a71e660dbfd5abd59f679a03f ]
 
-aux_rd_interval has size of 7 and should be checked.
+The main threat to data consistency in ice_xdp() is a possible asynchronous
+PF reset. It can be triggered by a user or by TX timeout handler.
 
-This fixes 3 OVERRUN and 1 INTEGER_OVERFLOW issues reported by Coverity.
+XDP setup and PF reset code access the same resources in the following
+sections:
+* ice_vsi_close() in ice_prepare_for_reset() - already rtnl-locked
+* ice_vsi_rebuild() for the PF VSI - not protected
+* ice_vsi_open() - already rtnl-locked
 
-Reviewed-by: Rodrigo Siqueira <rodrigo.siqueira@amd.com>
-Acked-by: Tom Chung <chiahsuan.chung@amd.com>
-Signed-off-by: Alex Hung <alex.hung@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+With an unfortunate timing, such accesses can result in a crash such as the
+one below:
+
+[ +1.999878] ice 0000:b1:00.0: Registered XDP mem model MEM_TYPE_XSK_BUFF_POOL on Rx ring 14
+[ +2.002992] ice 0000:b1:00.0: Registered XDP mem model MEM_TYPE_XSK_BUFF_POOL on Rx ring 18
+[Mar15 18:17] ice 0000:b1:00.0 ens801f0np0: NETDEV WATCHDOG: CPU: 38: transmit queue 14 timed out 80692736 ms
+[ +0.000093] ice 0000:b1:00.0 ens801f0np0: tx_timeout: VSI_num: 6, Q 14, NTC: 0x0, HW_HEAD: 0x0, NTU: 0x0, INT: 0x4000001
+[ +0.000012] ice 0000:b1:00.0 ens801f0np0: tx_timeout recovery level 1, txqueue 14
+[ +0.394718] ice 0000:b1:00.0: PTP reset successful
+[ +0.006184] BUG: kernel NULL pointer dereference, address: 0000000000000098
+[ +0.000045] #PF: supervisor read access in kernel mode
+[ +0.000023] #PF: error_code(0x0000) - not-present page
+[ +0.000023] PGD 0 P4D 0
+[ +0.000018] Oops: 0000 [#1] PREEMPT SMP NOPTI
+[ +0.000023] CPU: 38 PID: 7540 Comm: kworker/38:1 Not tainted 6.8.0-rc7 #1
+[ +0.000031] Hardware name: Intel Corporation S2600WFT/S2600WFT, BIOS SE5C620.86B.02.01.0014.082620210524 08/26/2021
+[ +0.000036] Workqueue: ice ice_service_task [ice]
+[ +0.000183] RIP: 0010:ice_clean_tx_ring+0xa/0xd0 [ice]
+[...]
+[ +0.000013] Call Trace:
+[ +0.000016] <TASK>
+[ +0.000014] ? __die+0x1f/0x70
+[ +0.000029] ? page_fault_oops+0x171/0x4f0
+[ +0.000029] ? schedule+0x3b/0xd0
+[ +0.000027] ? exc_page_fault+0x7b/0x180
+[ +0.000022] ? asm_exc_page_fault+0x22/0x30
+[ +0.000031] ? ice_clean_tx_ring+0xa/0xd0 [ice]
+[ +0.000194] ice_free_tx_ring+0xe/0x60 [ice]
+[ +0.000186] ice_destroy_xdp_rings+0x157/0x310 [ice]
+[ +0.000151] ice_vsi_decfg+0x53/0xe0 [ice]
+[ +0.000180] ice_vsi_rebuild+0x239/0x540 [ice]
+[ +0.000186] ice_vsi_rebuild_by_type+0x76/0x180 [ice]
+[ +0.000145] ice_rebuild+0x18c/0x840 [ice]
+[ +0.000145] ? delay_tsc+0x4a/0xc0
+[ +0.000022] ? delay_tsc+0x92/0xc0
+[ +0.000020] ice_do_reset+0x140/0x180 [ice]
+[ +0.000886] ice_service_task+0x404/0x1030 [ice]
+[ +0.000824] process_one_work+0x171/0x340
+[ +0.000685] worker_thread+0x277/0x3a0
+[ +0.000675] ? preempt_count_add+0x6a/0xa0
+[ +0.000677] ? _raw_spin_lock_irqsave+0x23/0x50
+[ +0.000679] ? __pfx_worker_thread+0x10/0x10
+[ +0.000653] kthread+0xf0/0x120
+[ +0.000635] ? __pfx_kthread+0x10/0x10
+[ +0.000616] ret_from_fork+0x2d/0x50
+[ +0.000612] ? __pfx_kthread+0x10/0x10
+[ +0.000604] ret_from_fork_asm+0x1b/0x30
+[ +0.000604] </TASK>
+
+The previous way of handling this through returning -EBUSY is not viable,
+particularly when destroying AF_XDP socket, because the kernel proceeds
+with removal anyway.
+
+There is plenty of code between those calls and there is no need to create
+a large critical section that covers all of them, same as there is no need
+to protect ice_vsi_rebuild() with rtnl_lock().
+
+Add xdp_state_lock mutex to protect ice_vsi_rebuild() and ice_xdp().
+
+Leaving unprotected sections in between would result in two states that
+have to be considered:
+1. when the VSI is closed, but not yet rebuild
+2. when VSI is already rebuild, but not yet open
+
+The latter case is actually already handled through !netif_running() case,
+we just need to adjust flag checking a little. The former one is not as
+trivial, because between ice_vsi_close() and ice_vsi_rebuild(), a lot of
+hardware interaction happens, this can make adding/deleting rings exit
+with an error. Luckily, VSI rebuild is pending and can apply new
+configuration for us in a managed fashion.
+
+Therefore, add an additional VSI state flag ICE_VSI_REBUILD_PENDING to
+indicate that ice_xdp() can just hot-swap the program.
+
+Also, as ice_vsi_rebuild() flow is touched in this patch, make it more
+consistent by deconfiguring VSI when coalesce allocation fails.
+
+Fixes: 2d4238f55697 ("ice: Add support for AF_XDP")
+Fixes: efc2214b6047 ("ice: Add support for XDP")
+Reviewed-by: Wojciech Drewek <wojciech.drewek@intel.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Tested-by: Chandan Kumar Rout <chandanx.rout@intel.com>
+Signed-off-by: Larysa Zaremba <larysa.zaremba@intel.com>
+Reviewed-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/core/dc_link_dp.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/intel/ice/ice.h      |  2 ++
+ drivers/net/ethernet/intel/ice/ice_lib.c  | 18 ++++++++++++++++--
+ drivers/net/ethernet/intel/ice/ice_main.c | 20 +++++++++++++++-----
+ drivers/net/ethernet/intel/ice/ice_xsk.c  |  3 ++-
+ 4 files changed, 35 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/core/dc_link_dp.c b/drivers/gpu/drm/amd/display/dc/core/dc_link_dp.c
-index 1d3d9a82c4637..717e36172a718 100644
---- a/drivers/gpu/drm/amd/display/dc/core/dc_link_dp.c
-+++ b/drivers/gpu/drm/amd/display/dc/core/dc_link_dp.c
-@@ -1676,10 +1676,10 @@ static enum dc_status configure_lttpr_mode_non_transparent(
- 			/* Driver does not need to train the first hop. Skip DPCD read and clear
- 			 * AUX_RD_INTERVAL for DPTX-to-DPIA hop.
- 			 */
--			if (link->ep_type == DISPLAY_ENDPOINT_USB4_DPIA)
-+			if (link->ep_type == DISPLAY_ENDPOINT_USB4_DPIA && repeater_cnt > 0 && repeater_cnt < MAX_REPEATER_CNT)
- 				link->dpcd_caps.lttpr_caps.aux_rd_interval[--repeater_cnt] = 0;
+diff --git a/drivers/net/ethernet/intel/ice/ice.h b/drivers/net/ethernet/intel/ice/ice.h
+index 1fe9cccf18d2f..874d6133cb177 100644
+--- a/drivers/net/ethernet/intel/ice/ice.h
++++ b/drivers/net/ethernet/intel/ice/ice.h
+@@ -302,6 +302,7 @@ enum ice_vsi_state {
+ 	ICE_VSI_UMAC_FLTR_CHANGED,
+ 	ICE_VSI_MMAC_FLTR_CHANGED,
+ 	ICE_VSI_PROMISC_CHANGED,
++	ICE_VSI_REBUILD_PENDING,
+ 	ICE_VSI_STATE_NBITS		/* must be last */
+ };
  
--			for (repeater_id = repeater_cnt; repeater_id > 0; repeater_id--) {
-+			for (repeater_id = repeater_cnt; repeater_id > 0 && repeater_id < MAX_REPEATER_CNT; repeater_id--) {
- 				aux_interval_address = DP_TRAINING_AUX_RD_INTERVAL_PHY_REPEATER1 +
- 							((DP_REPEATER_CONFIGURATION_AND_STATUS_SIZE) * (repeater_id - 1));
- 				core_link_read_dpcd(
+@@ -390,6 +391,7 @@ struct ice_vsi {
+ 	struct ice_tx_ring **xdp_rings;	 /* XDP ring array */
+ 	u16 num_xdp_txq;		 /* Used XDP queues */
+ 	u8 xdp_mapping_mode;		 /* ICE_MAP_MODE_[CONTIG|SCATTER] */
++	struct mutex xdp_state_lock;
+ 
+ 	struct net_device **target_netdevs;
+ 
+diff --git a/drivers/net/ethernet/intel/ice/ice_lib.c b/drivers/net/ethernet/intel/ice/ice_lib.c
+index 347c6c23bfc1c..441e8a6c26a13 100644
+--- a/drivers/net/ethernet/intel/ice/ice_lib.c
++++ b/drivers/net/ethernet/intel/ice/ice_lib.c
+@@ -365,6 +365,7 @@ int ice_vsi_clear(struct ice_vsi *vsi)
+ 		pf->next_vsi = vsi->idx;
+ 
+ 	ice_vsi_free_arrays(vsi);
++	mutex_destroy(&vsi->xdp_state_lock);
+ 	mutex_unlock(&pf->sw_mutex);
+ 	devm_kfree(dev, vsi);
+ 
+@@ -540,6 +541,8 @@ ice_vsi_alloc(struct ice_pf *pf, enum ice_vsi_type vsi_type,
+ 
+ 	if (vsi->type == ICE_VSI_CTRL && vf)
+ 		vf->ctrl_vsi_idx = vsi->idx;
++
++	mutex_init(&vsi->xdp_state_lock);
+ 	goto unlock_pf;
+ 
+ err_rings:
+@@ -3204,10 +3207,14 @@ int ice_vsi_rebuild(struct ice_vsi *vsi, bool init_vsi)
+ 
+ 	ice_vsi_init_vlan_ops(vsi);
+ 
++	mutex_lock(&vsi->xdp_state_lock);
++
+ 	coalesce = kcalloc(vsi->num_q_vectors,
+ 			   sizeof(struct ice_coalesce_stored), GFP_KERNEL);
+-	if (!coalesce)
++	if (!coalesce) {
++		mutex_unlock(&vsi->xdp_state_lock);
+ 		return -ENOMEM;
++	}
+ 
+ 	prev_num_q_vectors = ice_vsi_rebuild_get_coalesce(vsi, coalesce);
+ 
+@@ -3230,7 +3237,7 @@ int ice_vsi_rebuild(struct ice_vsi *vsi, bool init_vsi)
+ 		vsi->base_vector = 0;
+ 	}
+ 
+-	if (ice_is_xdp_ena_vsi(vsi))
++	if (vsi->xdp_rings)
+ 		/* return value check can be skipped here, it always returns
+ 		 * 0 if reset is in progress
+ 		 */
+@@ -3358,24 +3365,31 @@ int ice_vsi_rebuild(struct ice_vsi *vsi, bool init_vsi)
+ 			ret = -EIO;
+ 			goto err_vectors;
+ 		} else {
++			mutex_unlock(&vsi->xdp_state_lock);
+ 			return ice_schedule_reset(pf, ICE_RESET_PFR);
+ 		}
+ 	}
+ 	ice_vsi_rebuild_set_coalesce(vsi, coalesce, prev_num_q_vectors);
++	clear_bit(ICE_VSI_REBUILD_PENDING, vsi->state);
+ 	kfree(coalesce);
++	mutex_unlock(&vsi->xdp_state_lock);
+ 
+ 	return 0;
+ 
+ err_vectors:
+ 	ice_vsi_free_q_vectors(vsi);
+ err_rings:
++	mutex_unlock(&vsi->xdp_state_lock);
+ 	if (vsi->netdev) {
+ 		vsi->current_netdev_flags = 0;
+ 		unregister_netdev(vsi->netdev);
+ 		free_netdev(vsi->netdev);
+ 		vsi->netdev = NULL;
+ 	}
++	goto err_clear;
+ err_vsi:
++	mutex_unlock(&vsi->xdp_state_lock);
++err_clear:
+ 	ice_vsi_clear(vsi);
+ 	set_bit(ICE_RESET_FAILED, pf->state);
+ 	kfree(coalesce);
+diff --git a/drivers/net/ethernet/intel/ice/ice_main.c b/drivers/net/ethernet/intel/ice/ice_main.c
+index e923b64f2a668..75fede7d31749 100644
+--- a/drivers/net/ethernet/intel/ice/ice_main.c
++++ b/drivers/net/ethernet/intel/ice/ice_main.c
+@@ -620,6 +620,7 @@ ice_prepare_for_reset(struct ice_pf *pf, enum ice_reset_req reset_type)
+ 	/* clear SW filtering DB */
+ 	ice_clear_hw_tbls(hw);
+ 	/* disable the VSIs and their queues that are not already DOWN */
++	set_bit(ICE_VSI_REBUILD_PENDING, ice_get_main_vsi(pf)->state);
+ 	ice_pf_dis_all_vsi(pf, false);
+ 
+ 	if (test_bit(ICE_FLAG_PTP_SUPPORTED, pf->flags))
+@@ -2770,6 +2771,7 @@ int ice_prepare_xdp_rings(struct ice_vsi *vsi, struct bpf_prog *prog)
+ 	mutex_unlock(&pf->avail_q_mutex);
+ 
+ 	devm_kfree(dev, vsi->xdp_rings);
++	vsi->xdp_rings = NULL;
+ 	return -ENOMEM;
+ }
+ 
+@@ -2919,7 +2921,8 @@ ice_xdp_setup_prog(struct ice_vsi *vsi, struct bpf_prog *prog,
+ 	}
+ 
+ 	/* hot swap progs and avoid toggling link */
+-	if (ice_is_xdp_ena_vsi(vsi) == !!prog) {
++	if (ice_is_xdp_ena_vsi(vsi) == !!prog ||
++	    test_bit(ICE_VSI_REBUILD_PENDING, vsi->state)) {
+ 		ice_vsi_assign_bpf_prog(vsi, prog);
+ 		return 0;
+ 	}
+@@ -2991,21 +2994,28 @@ static int ice_xdp(struct net_device *dev, struct netdev_bpf *xdp)
+ {
+ 	struct ice_netdev_priv *np = netdev_priv(dev);
+ 	struct ice_vsi *vsi = np->vsi;
++	int ret;
+ 
+ 	if (vsi->type != ICE_VSI_PF) {
+ 		NL_SET_ERR_MSG_MOD(xdp->extack, "XDP can be loaded only on PF VSI");
+ 		return -EINVAL;
+ 	}
+ 
++	mutex_lock(&vsi->xdp_state_lock);
++
+ 	switch (xdp->command) {
+ 	case XDP_SETUP_PROG:
+-		return ice_xdp_setup_prog(vsi, xdp->prog, xdp->extack);
++		ret = ice_xdp_setup_prog(vsi, xdp->prog, xdp->extack);
++		break;
+ 	case XDP_SETUP_XSK_POOL:
+-		return ice_xsk_pool_setup(vsi, xdp->xsk.pool,
+-					  xdp->xsk.queue_id);
++		ret = ice_xsk_pool_setup(vsi, xdp->xsk.pool, xdp->xsk.queue_id);
++		break;
+ 	default:
+-		return -EINVAL;
++		ret = -EINVAL;
+ 	}
++
++	mutex_unlock(&vsi->xdp_state_lock);
++	return ret;
+ }
+ 
+ /**
+diff --git a/drivers/net/ethernet/intel/ice/ice_xsk.c b/drivers/net/ethernet/intel/ice/ice_xsk.c
+index 2677d7c86a6d7..98d827db84848 100644
+--- a/drivers/net/ethernet/intel/ice/ice_xsk.c
++++ b/drivers/net/ethernet/intel/ice/ice_xsk.c
+@@ -388,7 +388,8 @@ int ice_xsk_pool_setup(struct ice_vsi *vsi, struct xsk_buff_pool *pool, u16 qid)
+ 		goto failure;
+ 	}
+ 
+-	if_running = netif_running(vsi->netdev) && ice_is_xdp_ena_vsi(vsi);
++	if_running = !test_bit(ICE_VSI_DOWN, vsi->state) &&
++		     ice_is_xdp_ena_vsi(vsi);
+ 
+ 	if (if_running) {
+ 		struct ice_rx_ring *rx_ring = vsi->rx_rings[qid];
 -- 
 2.53.0
 
