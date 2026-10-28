@@ -1,54 +1,59 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216441;
-	b=ODKe3WpbrMPi+dBOiHJzklLQoRGGBEXSTG+3ifwrYTIKDAIQGTo3h9kJj/9OifjAE75M
-	 zLGPpZo3hmJCTEwp7qP5Ia3Oi+vxh7pB2uBDvFWEoMlULwjGau4OdN12/VMQtrm7oD+43
-	 qAGVVeXVXVmJNrK7nIFKOd/9ACDaF5wmnanlbUrq2uWxFFAf74YQhL/dlsCZ4o82CwUzh
-	 vA2QPebiZzV6Bqg9sT+XqkKtHc4MJnQGZW7ec9qEni/3irlsNos98GrcAmxqRtWapWQCo
-	 AlTCYwIGYZWRm2z1Sv/oyssspg5442OW+ZRBLzJRDKXDBfllcIOW9+qcUttlEcEPZtw==
+	t=1793216444;
+	b=K5a83VFMDPb61dFJPALTKyZL6abM6xJSBnL3MLbINnhHKLTej+S7XDk2YePd+80h/bXi
+	 y5LuDnJPmpJDovdj2OJtMePidFmVZ2Ljcgxv74OoD3AHLMLmM7jImXgFiauGt1IosMa6j
+	 edUhUtpNPFY7P8+6yCRYX5hs1pDHaFTnnHqndC9U9f4A0qMDxQw4UGex40vSDTIT7Oxh6
+	 B731MNNDGDUlSy8+yc0wB7+uuKOZ/FQ465aWkf99nv/f0ImjwdeC2fue4a25bPPaI2kV9
+	 lQBc6WpHgrUbdL7yA1561y4t4uYvGEbiX2xT4FS0A+vw0mz7h57XO1xVcpbtX0KSgsg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216441;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216444;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=0zkCNORqdEMvKHNQdvSJjRzT9nsaTE6SKNmN+zad6H8=;
-	b=F1OARdHhygzQajTaRVLogdPC+7KpUnjtwOvVDqXPh9K6ANtL+HJ9Hi6jq9xAsY/3VUtb
-	 yzodp/w7FaSV3pd6s0tSxVWNSrJfx1cW7wYPKVDLigwhYoC2ShwlT6gOwvOXVusjs7LxU
-	 mS0o2U9uOEavK4VjuDnjc2I3aTma1E8wxAI/Hnucto0OFskZFFBX+ikTHekemKSOzSAmT
-	 Kh1XBeSFOj3gez2y3+d3OEdqV6RcgVRAeXZU4gTXn2ZDJfs5gzHTm4Xh67dflQDtA/q5C
-	 NTjysADUUThm8d5rCI6PBWFhVnWbtTKXworpiQAEgSMB38v7oV+kg5l52QUDwAOXKog==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=pN5yhx9w67ikaqvz2QB56v4m93ydtUvtisWTF2aV5KE=;
+	b=11WTbtY8KyVAl8P1SM2jIMiLRyHvRy/a7OBvyAHrhAX2D4lXt6E+yaIWBl8Lzr97NHlW
+	 /gcrhabYQ4ewU44+d5rzv/UcrcC3kZM9sRp5htox4IhkW4miJ6rm/yRo9tO9wH1Q0OODN
+	 JuugKTynWKanN7dbxWDW0yieAfCvFTcDGEtclOapy1WQ4tQKFdUR8+1Q5zsKyce9hkf0C
+	 8v81hpOal3PZm7u+iBjPncSVo3FVbM1A3As6uH2um8QdOVVv8OtY9a1b13RK5UWox8XKy
+	 mFD70/KgldSYk9hXjk4mEBifdm/aPA2uBbO5ihl84W26ZSt+n12TBE1RxBgi6HMCluA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=13cf3ngm;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="zRoCF/5U";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EB01606A31E;
-	Wed, 28 Oct 2026 19:40:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DABA4606A31E;
+	Wed, 28 Oct 2026 19:40:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=13cf3ngm
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BDD71F01825;
-	Wed, 28 Oct 2026 19:40:40 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zRoCF/5U
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34AC21F01825;
+	Wed, 28 Oct 2026 19:40:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216441;
-	bh=0zkCNORqdEMvKHNQdvSJjRzT9nsaTE6SKNmN+zad6H8=;
+	s=korg; t=1793216443;
+	bh=pN5yhx9w67ikaqvz2QB56v4m93ydtUvtisWTF2aV5KE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=13cf3ngmzDJ/Q36w0Q9DvVCd9N07Zy1TSQZ6dNGqaXyTnsmJUf3BH31yi7ndebqBX
-	 QkRSH8PxBa+Q1ekQSyNp81Ph6SaVzdd7U3bvlluqMjvKAjemZ/Mq43F35O+d+EFYu2
-	 m3lxHBRQg39KB+N1ueA7Fui0SZsngUYAj2xHDmok=
+	b=zRoCF/5UCQXnGXQM9TYFqrcs4eGeh4R8vS7zyWoZ/VoQwB9eYAl6paCC/l5vjVZ3C
+	 dOOXYHhM1dooGQ6WFa6tFdEdmnq8PStVHweAZRXXCmAhydv8bjJMiutUsxWyoShimz
+	 ze6Xl6SNxEjewGYAlkmn49hUhv1NkOMLkOFa7QTw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"T.J. Mercier" <tjmercier@google.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Sumit Semwal <sumit.semwal@linaro.org>,
-	Baineng Shou <shoubaineng@gmail.com>,
+	ZhengYuan Huang <gality369@gmail.com>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Jun Piao <piaojun@huawei.com>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1504/1887] dma-buf: dma-heap: dont publish fd before copy_to_user() succeeds
-Date: Wed, 28 Oct 2026 18:00:00 +0100
-Message-ID: <20261028170533.686522055@linuxfoundation.org>
+Subject: [PATCH 6.1 1551/1887] ocfs2: validate DIO orphan slot during inode read
+Date: Wed, 28 Oct 2026 18:00:47 +0100
+Message-ID: <20261028170534.762997541@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -64,251 +69,83 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Baineng Shou <shoubaineng@gmail.com>
+From: ZhengYuan Huang <gality369@gmail.com>
 
-[ Upstream commit 30d0aff2c65a277135cfd8ea28fa1ee75e0ea4e0 ]
+[ Upstream commit bb88131c9831075b8dc08cdd375743e5d44c7ca2 ]
 
-DMA_HEAP_IOCTL_ALLOC allocates a dma-buf and installs an fd into the
-caller's fd table via dma_buf_fd() -> fd_install() before
-dma_heap_ioctl() copies the result back to userspace.  If the trailing
-copy_to_user() fails, userspace never learns the fd number, but the
-fd (and the underlying dma-buf reference) are already visible to
-other threads in the same process and are leaked for the lifetime of
-the process.
+[BUG]
+A corrupted append-DIO dinode (high byte at offset 0xa1
+corrupted from 0 to 1) can carry an i_dio_orphaned_slot
+outside the mounted filesystem slot range and trigger a
+use-after-free error:
 
-The obvious "close it on the failure path" fix is unsafe: once
-fd_install() has run, another thread can already dup() the fd, send
-it via SCM_RIGHTS, or close() it and let its number be reused, so a
-subsequent close_fd() from the ioctl path can operate on an unrelated
-file.  This was pointed out by Christian König on v1 [1].
+BUG: KASAN: slab-use-after-free in ocfs2_get_system_file_inode+0x780/0x820 fs/ocfs2/sysfile.c:102
+Read of size 8 at addr ffff88800b767c00 by task kworker/u8:3/85
+Call Trace:
+ ...
+ ocfs2_get_system_file_inode+0x780/0x820 fs/ocfs2/sysfile.c:102
+ ocfs2_wipe_inode+0x292/0xf70 fs/ocfs2/inode.c:840
+ ocfs2_delete_inode fs/ocfs2/inode.c:1155 [inline]
+ ocfs2_evict_inode+0x6c9/0x1170 fs/ocfs2/inode.c:1295
+ evict+0x38e/0x8f0 fs/inode.c:810
+ iput_final fs/inode.c:1914 [inline]
+ iput fs/inode.c:1966 [inline]
+ iput+0x55b/0x8b0 fs/inode.c:1926
+ ocfs2_recover_orphans+0x610/0xe40 fs/ocfs2/journal.c:2374
+ ocfs2_complete_recovery+0x5af/0xd00 fs/ocfs2/journal.c:1373
+ ...
 
-Restructure the allocation path so that fd_install() is the last,
-unfailable step of a successful ioctl:
+[CAUSE]
+ocfs2_del_inode_from_orphan() uses i_dio_orphaned_slot to index the
+slot-local system inode cache. The dinode validator does not check
+this active slot, so an out-of-range value produces an invalid cache
+entry pointer that is dereferenced as an inode pointer.
 
-  1. heap->ops->allocate()      creates the dma_buf.
-  2. get_unused_fd_flags()      reserves an fd number in the caller's
-                                fd table without publishing it, so
-                                no other thread can observe it.
-  3. copy_to_user()             delivers the fd number to userspace;
-                                on failure the fd is returned with
-                                put_unused_fd() and the dma_buf
-                                reference is dropped with
-                                dma_buf_put(), leaving no user-
-                                visible state behind.
-  4. dma_buf_fd_install()       publishes the fd and emits the
-                                trace_dma_buf_fd tracepoint -- from
-                                here on the ioctl cannot fail.
+[FIX]
+Reject an active i_dio_orphaned_slot outside the slot range during
+dinode validation, before DIO orphan recovery can consume it.
 
-A new dma_buf_fd_install() helper is introduced in dma-buf.c to wrap
-fd_install() together with the DMA_BUF_TRACE() call, preserving the
-export tracing that dma_buf_fd() provides.  dma_heap_ioctl_allocate()
-is refactored to return the struct dma_buf * directly (returning
-ERR_PTR on failure) so the caller holds the dmabuf reference across
-steps 3 and 4.
-
-The failure at step 3 is easily reachable from userspace: pass a
-struct dma_heap_allocation_data that lives in a page whose protection
-is flipped to PROT_READ between copy_from_user() and copy_to_user()
-(e.g. via mprotect()).  Before this change each such ioctl leaks one
-dmabuf fd; after it, the fd table is unchanged on failure and only
-/dev/dma_heap/<name> remains open.
-
-No UAPI or heap-driver interface change.
-
-[1] https://lore.kernel.org/dri-devel/175e98de-f414-47d7-81c1-c0fe0a8f7f62@amd.com/
-
-Fixes: c02a81fba74f ("dma-buf: Add dma-buf heaps framework")
-Cc: stable@vger.kernel.org
-Reviewed-by: T.J. Mercier <tjmercier@google.com>
-Acked-by: Christian König <christian.koenig@amd.com>
-Acked-by: Sumit Semwal <sumit.semwal@linaro.org>
-Signed-off-by: Baineng Shou <shoubaineng@gmail.com>
-Link: https://lore.kernel.org/r/20260817050457.1005285-2-shoubaineng@gmail.com
-Signed-off-by: Christian König <christian.koenig@amd.com>
+Link: https://lore.kernel.org/20260803030007.3993199-3-gality369@gmail.com
+Fixes: 06ee5c75b575 ("ocfs2: add functions to add and remove inode in orphan dir")
+Signed-off-by: ZhengYuan Huang <gality369@gmail.com>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Jun Piao <piaojun@huawei.com>
+Cc: Heming Zhao <heming.zhao@suse.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma-buf/dma-buf.c  | 15 +++++++
- drivers/dma-buf/dma-heap.c | 80 +++++++++++++++++++-------------------
- include/linux/dma-buf.h    |  1 +
- 3 files changed, 56 insertions(+), 40 deletions(-)
+ fs/ocfs2/inode.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/dma-buf/dma-buf.c b/drivers/dma-buf/dma-buf.c
-index 3d58514d04826..36177d14a724d 100644
---- a/drivers/dma-buf/dma-buf.c
-+++ b/drivers/dma-buf/dma-buf.c
-@@ -715,6 +715,21 @@ int dma_buf_fd(struct dma_buf *dmabuf, int flags)
- }
- EXPORT_SYMBOL_NS_GPL(dma_buf_fd, DMA_BUF);
- 
-+/**
-+ * dma_buf_fd_install - install a reserved fd for a dma-buf
-+ * @dmabuf:	[in]	pointer to dma_buf
-+ * @fd:		[in]	fd reserved with get_unused_fd_flags()
-+ *
-+ * Publishes a previously reserved fd into the caller's fd table.
-+ * Must only be called after all fallible work (e.g. copy_to_user)
-+ * has succeeded, as it cannot be undone safely once called.
-+ */
-+void dma_buf_fd_install(struct dma_buf *dmabuf, int fd)
-+{
-+	fd_install(fd, dmabuf->file);
-+}
-+EXPORT_SYMBOL_NS_GPL(dma_buf_fd_install, DMA_BUF);
-+
- /**
-  * dma_buf_get - returns the struct dma_buf related to an fd
-  * @fd:	[in]	fd associated with the struct dma_buf to be returned
-diff --git a/drivers/dma-buf/dma-heap.c b/drivers/dma-buf/dma-heap.c
-index 59d158873f4cb..38b425c8e1119 100644
---- a/drivers/dma-buf/dma-heap.c
-+++ b/drivers/dma-buf/dma-heap.c
-@@ -49,33 +49,6 @@ static dev_t dma_heap_devt;
- static struct class *dma_heap_class;
- static DEFINE_XARRAY_ALLOC(dma_heap_minors);
- 
--static int dma_heap_buffer_alloc(struct dma_heap *heap, size_t len,
--				 unsigned int fd_flags,
--				 unsigned int heap_flags)
--{
--	struct dma_buf *dmabuf;
--	int fd;
--
--	/*
--	 * Allocations from all heaps have to begin
--	 * and end on page boundaries.
--	 */
--	len = PAGE_ALIGN(len);
--	if (!len)
--		return -EINVAL;
--
--	dmabuf = heap->ops->allocate(heap, len, fd_flags, heap_flags);
--	if (IS_ERR(dmabuf))
--		return PTR_ERR(dmabuf);
--
--	fd = dma_buf_fd(dmabuf, fd_flags);
--	if (fd < 0) {
--		dma_buf_put(dmabuf);
--		/* just return, as put will call release and that will free */
--	}
--	return fd;
--}
--
- static int dma_heap_open(struct inode *inode, struct file *file)
- {
- 	struct dma_heap *heap;
-@@ -93,30 +66,42 @@ static int dma_heap_open(struct inode *inode, struct file *file)
- 	return 0;
- }
- 
--static long dma_heap_ioctl_allocate(struct file *file, void *data)
-+static struct dma_buf *dma_heap_ioctl_allocate(struct file *file, void *data)
- {
- 	struct dma_heap_allocation_data *heap_allocation = data;
- 	struct dma_heap *heap = file->private_data;
-+	struct dma_buf *dmabuf;
- 	int fd;
-+	size_t len;
- 
- 	if (heap_allocation->fd)
--		return -EINVAL;
-+		return ERR_PTR(-EINVAL);
- 
- 	if (heap_allocation->fd_flags & ~DMA_HEAP_VALID_FD_FLAGS)
--		return -EINVAL;
-+		return ERR_PTR(-EINVAL);
- 
- 	if (heap_allocation->heap_flags & ~DMA_HEAP_VALID_HEAP_FLAGS)
--		return -EINVAL;
-+		return ERR_PTR(-EINVAL);
-+
-+	len = PAGE_ALIGN(heap_allocation->len);
-+	if (!len)
-+		return ERR_PTR(-EINVAL);
-+
-+	dmabuf = heap->ops->allocate(heap, len, heap_allocation->fd_flags,
-+				     heap_allocation->heap_flags);
- 
--	fd = dma_heap_buffer_alloc(heap, heap_allocation->len,
--				   heap_allocation->fd_flags,
--				   heap_allocation->heap_flags);
--	if (fd < 0)
--		return fd;
-+	if (IS_ERR(dmabuf))
-+		return dmabuf;
-+
-+	fd = get_unused_fd_flags(heap_allocation->fd_flags);
-+	if (fd < 0) {
-+		dma_buf_put(dmabuf);
-+		return ERR_PTR(fd);
-+	}
- 
- 	heap_allocation->fd = fd;
- 
--	return 0;
-+	return dmabuf;
- }
- 
- static unsigned int dma_heap_ioctl_cmds[] = {
-@@ -132,6 +117,8 @@ static long dma_heap_ioctl(struct file *file, unsigned int ucmd,
- 	unsigned int in_size, out_size, drv_size, ksize;
- 	int nr = _IOC_NR(ucmd);
- 	int ret = 0;
-+	int fd;
-+	struct dma_buf *dmabuf;
- 
- 	if (nr >= ARRAY_SIZE(dma_heap_ioctl_cmds))
- 		return -EINVAL;
-@@ -168,15 +155,28 @@ static long dma_heap_ioctl(struct file *file, unsigned int ucmd,
- 
- 	switch (kcmd) {
- 	case DMA_HEAP_IOCTL_ALLOC:
--		ret = dma_heap_ioctl_allocate(file, kdata);
-+		dmabuf = dma_heap_ioctl_allocate(file, kdata);
-+
-+		if (IS_ERR(dmabuf)) {
-+			ret = PTR_ERR(dmabuf);
-+			break;
-+		}
-+
-+		fd = ((struct dma_heap_allocation_data *)kdata)->fd;
-+		if (copy_to_user((void __user *)arg, kdata, out_size) != 0) {
-+			put_unused_fd(fd);
-+			dma_buf_put(dmabuf);
-+			ret = -EFAULT;
-+		} else {
-+			dma_buf_fd_install(dmabuf, fd);
-+		}
-+
- 		break;
- 	default:
- 		ret = -ENOTTY;
- 		goto err;
+diff --git a/fs/ocfs2/inode.c b/fs/ocfs2/inode.c
+index ed7b4be3ea7a5..8cd76357d3bf9 100644
+--- a/fs/ocfs2/inode.c
++++ b/fs/ocfs2/inode.c
+@@ -1585,6 +1585,14 @@ int ocfs2_validate_inode_block(struct super_block *sb,
+ 		goto bail;
  	}
  
--	if (copy_to_user((void __user *)arg, kdata, out_size) != 0)
--		ret = -EFAULT;
- err:
- 	if (kdata != stack_kdata)
- 		kfree(kdata);
-diff --git a/include/linux/dma-buf.h b/include/linux/dma-buf.h
-index 9c31f1f430d8e..f4e2ec3320c4b 100644
---- a/include/linux/dma-buf.h
-+++ b/include/linux/dma-buf.h
-@@ -615,6 +615,7 @@ void dma_buf_unpin(struct dma_buf_attachment *attach);
- struct dma_buf *dma_buf_export(const struct dma_buf_export_info *exp_info);
- 
- int dma_buf_fd(struct dma_buf *dmabuf, int flags);
-+void dma_buf_fd_install(struct dma_buf *dmabuf, int fd);
- struct dma_buf *dma_buf_get(int fd);
- void dma_buf_put(struct dma_buf *dmabuf);
- 
++	if ((le32_to_cpu(di->i_flags) & OCFS2_DIO_ORPHANED_FL) &&
++	    le16_to_cpu(di->i_dio_orphaned_slot) >= OCFS2_SB(sb)->max_slots) {
++		rc = ocfs2_error(sb, "Invalid dinode %llu: DIO orphaned slot %u\n",
++				 (unsigned long long)bh->b_blocknr,
++				 le16_to_cpu(di->i_dio_orphaned_slot));
++		goto bail;
++	}
++
+ 	if (S_ISLNK(le16_to_cpu(di->i_mode)) &&
+ 	    !le32_to_cpu(di->i_clusters)) {
+ 		int max_inline = ocfs2_fast_symlink_chars(sb);
 -- 
 2.53.0
 
