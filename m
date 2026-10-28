@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215797;
-	b=Ia9zqZ4WKwMuZJORN4Q/Vec6aldxuyElQbGF/w1WmUYem/eLCHOJ8GKJSzcz6aMEMWt7
-	 wecHTldi6LnllE+3mq+csUsyj5w+/Sw+gU2LC0VQooHDr0ygudPy/z548B28TvipFVV38
-	 lLmsB+WpAtfXZovw5AnejeJ/3ijCDq6XC7LKPQLJcbokzNL9hvwulzXUiZyfdo8t05qX9
-	 BPBZAjTuYEyJDjZGQvk1z+GykelBqN8Mwfj9tDVmjt4pwnCARzXiNToleKQ3G30D8byTK
-	 y6JpYX83hqhReh/47rWKgnIPfdl5hfpK/jxUpVi3R7bO5LPXnbzitKy3RqgpIS2Ioow==
+	t=1793215801;
+	b=qAKdGNOngbiHMmAspk+za/nLp/ahunyxieA5WqcW+jYBVM1DPR4QS5rCEpGDZtLgvRuc
+	 N9o3Xhr18+31Erb1GyurtnfxGUZvvxfV6iFkeoz0ZCrKzQ/LAI3TG2Qm0KgB0wtU2NAcN
+	 Z5VbJErSgqNOIxXIhUNRIqH3izuJMUVl1WwphjFlju1gtit7/TAbsntHbrN7gyHMHZL1U
+	 gf61BM9AcvUn01gOEYFmHaGprRtE3V1fDZx3KYIchJlvCXDurPVlOTh7IyDPHpXPd9bP6
+	 3uwO18EoGPi7KP4YGLDLdE5GQab4+k612UYwVRRNN3ivcdw4DIH4e96297VHcG0O9fA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215797;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215801;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=XWuOmFaFU0Ve9ztrPeUa+ujY58s5HKjJ4o5E6Okg8Us=;
-	b=v504Tv0KOPQITsLph5i8eVxhrYbICeyNdf5yCecK4lzKQastAa59+VDZ6ZQLUUQDAvIa
-	 Zbtv/LDtkT0sOpOz6TrwSveOg8uWCiBSJB8Hsvsx5eVh961d23jbHCsvnwCZ5zjof9myl
-	 4DUcNJIj61wFC1Y8Dq6J7UyipGA1NC4rw4Bv4icir6tKFap92f5+D5OR26gj+5R1Lvo5U
-	 uBNw4uNATLOy7aOQ5S9idM8SAxAPy1jaTH/vYNolllSFyhI++E2krTUYcpGu3y2lIBvVa
-	 rSAs217bZ6rEFeNvGJF+R+Lex7tE2+5W7i8nawxVbSwQ9fSEXtUdNXY8FyUrBGDXN+w==
+	bh=TuVynu98zdXcfaRtpks9i1vSL21BdtYNfOQUorPKLN8=;
+	b=e8yBrkSMk1dqiIqu7Rx5ka+gHSlveFVd+hY9+xrzsc0Zr/PgnRcEFypnPenIU7pbv12W
+	 sspYLMFNfhyvjhCCv3xb1doL+2NlyMlWHGbVhdzHniB2x7h+VakxtWvbDmFaHorCbpytL
+	 DtbrlQCGpyDrGyLQQYJ51j+Kvqdt/9ozfGy/ZtLA8aB7qOkHqVOhdO9nXVfl4vtjCZ9Jc
+	 ldDpobA0ProPSTdXnC+sDVQPX/lEVe3pQPPfnKzq5ObUKfd3Aip/fUiDEqIdnMCd/PDiS
+	 yfAYqqfUnPSZIqripTHvNrVxwZm+gNlbBhY+cHMG62aKuXSw/VWps9W+dMIYKcMW/9A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yFIPfViw;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fIrpoCth;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90B71606A31A;
-	Wed, 28 Oct 2026 19:29:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1E57606A320;
+	Wed, 28 Oct 2026 19:30:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yFIPfViw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1C8E1F01825;
-	Wed, 28 Oct 2026 19:29:56 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fIrpoCth
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C69211F01825;
+	Wed, 28 Oct 2026 19:29:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215797;
-	bh=XWuOmFaFU0Ve9ztrPeUa+ujY58s5HKjJ4o5E6Okg8Us=;
+	s=korg; t=1793215800;
+	bh=TuVynu98zdXcfaRtpks9i1vSL21BdtYNfOQUorPKLN8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yFIPfViw6RhAKyVR6j2TE6Ay01vgX7x2MTy5qlBgVHb58Gm0A1Vxt3u/sx5eCCsyj
-	 w9ujvC6wP0uBjNbARgKue33mVVOwfwEAtAWO12LyLwFjm2foNtrY0QPRL3Qv1zPT9V
-	 ehvayun82yp63NtMelxHTWfNK7nyrRgFsxat9MfU=
+	b=fIrpoCthsJja4vxWqvFxrAQMYtOhmryogWxp2MLpNsfm4wqkx8i+ROMqkxe6kS5Ew
+	 QYF4dYDfxopwyFd3M5oh4/dgxh9vVMGZz3ASlR9vFtUuoSV/Zb2+zLITJLNe5oYqvO
+	 AviShnG0hY0FZlSIlOTBgVm4W2Vz/Pdwfy0zsFxo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Clark <james.clark@linaro.org>,
-	Leo Yan <leo.yan@arm.com>,
-	Suzuki K Poulose <suzuki.poulose@arm.com>,
+	Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1319/1887] coresight: ete: Always save state on power down
-Date: Wed, 28 Oct 2026 17:56:55 +0100
-Message-ID: <20261028170529.445904950@linuxfoundation.org>
+Subject: [PATCH 6.1 1337/1887] s390/appldata: remove power management callbacks
+Date: Wed, 28 Oct 2026 17:57:13 +0100
+Message-ID: <20261028170529.861043870@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,131 +69,181 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: James Clark <james.clark@linaro.org>
+From: Heiko Carstens <hca@linux.ibm.com>
 
-[ Upstream commit 2ab4645fe4206c142a5f1491e191c906279686cf ]
+[ Upstream commit 78c045c08a393285e615260c50cedf9cea5a7fa1 ]
 
-System register ETMs and ETE are unlikely to be preserved on CPU power
-down. The ETE DT binding also never documented
-"arm,coresight-loses-context-with-cpu" so nobody would have legitimately
-been able to use that binding to fix it and ACPI has no such binding at
-all.
+Support for power managemant has been removed from s390 since quite
+some time. Therefore remove unused power managemant code from the
+appldata device driver.
 
-Fix it by hard coding the setting for sysreg ETMs (ETE is always sysreg)
-or ACPI boots. Use a local variable when setting up save_state so that
-it's immune to concurrent probing when devices have different
-configurations which is an issue with modifying the global.
-
-This fixes the following error when using Coresight with ACPI on the FVP
-which supports CPU PM:
-
-  coresight ete0: External agent took claim tag
-  WARNING: drivers/hwtracing/coresight/coresight-core.c:248 at coresight_disclaim_device_unlocked+0xe0/0xe8, CPU#0: perf/117
-
-Fixes: 35e1c9163e02 ("coresight: ete: Add support for ETE tracing")
-Signed-off-by: James Clark <james.clark@linaro.org>
-Reviewed-by: Leo Yan <leo.yan@arm.com>
-Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-Link: https://lore.kernel.org/r/20260505-james-cs-ete-pm_save_enable-v3-1-485d21dd79b8@linaro.org
+Reviewed-by: Gerald Schaefer <gerald.schaefer@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Stable-dep-of: 7f40b346462f ("s390/dasd: Fix undersized format-check buffer")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../coresight/coresight-etm4x-core.c          | 45 ++++++++++++++-----
- 1 file changed, 33 insertions(+), 12 deletions(-)
+ arch/s390/appldata/appldata_base.c | 113 +----------------------------
+ 1 file changed, 2 insertions(+), 111 deletions(-)
 
-diff --git a/drivers/hwtracing/coresight/coresight-etm4x-core.c b/drivers/hwtracing/coresight/coresight-etm4x-core.c
-index 45f2f6db15886..32be2cd1b3b7d 100644
---- a/drivers/hwtracing/coresight/coresight-etm4x-core.c
-+++ b/drivers/hwtracing/coresight/coresight-etm4x-core.c
-@@ -3,6 +3,7 @@
-  * Copyright (c) 2014, The Linux Foundation. All rights reserved.
-  */
+diff --git a/arch/s390/appldata/appldata_base.c b/arch/s390/appldata/appldata_base.c
+index d74a4c7d5df6d..c0fd29133f27a 100644
+--- a/arch/s390/appldata/appldata_base.c
++++ b/arch/s390/appldata/appldata_base.c
+@@ -26,8 +26,6 @@
+ #include <linux/notifier.h>
+ #include <linux/cpu.h>
+ #include <linux/workqueue.h>
+-#include <linux/suspend.h>
+-#include <linux/platform_device.h>
+ #include <asm/appldata.h>
+ #include <asm/vtimer.h>
+ #include <linux/uaccess.h>
+@@ -44,8 +42,6 @@
+ #define TOD_MICRO	0x01000			/* nr. of TOD clock units
+ 						   for 1 microsecond */
  
-+#include <linux/acpi.h>
- #include <linux/bitops.h>
- #include <linux/kernel.h>
- #include <linux/moduleparam.h>
-@@ -51,10 +52,14 @@ MODULE_PARM_DESC(boot_enable, "Enable tracing on boot");
- #define PARAM_PM_SAVE_NEVER	  1 /* never save any state */
- #define PARAM_PM_SAVE_SELF_HOSTED 2 /* save self-hosted state only */
- 
-+/*
-+ * Save option for ETM4. ETE, sysreg ETM4s and ACPI boots ignore this option and
-+ * will always save.
-+ */
- static int pm_save_enable = PARAM_PM_SAVE_FIRMWARE;
- module_param(pm_save_enable, int, 0444);
- MODULE_PARM_DESC(pm_save_enable,
--	"Save/restore state on power down: 1 = never, 2 = self-hosted");
-+	"Save/restore state on power down: 1 = never, 2 = self-hosted. MMIO and DT only.");
- 
- static struct etmv4_drvdata *etmdrvdata[NR_CPUS];
- static void etm4_set_default_config(struct etmv4_config *config);
-@@ -1994,6 +1999,17 @@ static void etm4_pm_clear(void)
- 	}
- }
- 
-+static bool etm4x_always_pm_save(struct device *dev, struct csdev_access *csa)
-+{
-+	/*
-+	 * Only IO mem ETM devices will benefit from skipping PM save and only
-+	 * DT has the option to control it, not ACPI. Otherwise system register
-+	 * based ETMs and ETEs will always lose context on CPU power down, so
-+	 * always save.
-+	 */
-+	return !csa->io_mem || is_acpi_device_node(dev_fwnode(dev));
-+}
-+
- static int etm4_probe(struct device *dev, void __iomem *base, u32 etm_pid)
- {
- 	int ret;
-@@ -2003,6 +2019,7 @@ static int etm4_probe(struct device *dev, void __iomem *base, u32 etm_pid)
- 	struct etm4_init_arg init_arg = { 0 };
- 	u8 major, minor;
- 	char *type_name;
-+	bool pm_save;
- 
- 	drvdata = devm_kzalloc(dev, sizeof(*drvdata), GFP_KERNEL);
- 	if (!drvdata)
-@@ -2010,17 +2027,6 @@ static int etm4_probe(struct device *dev, void __iomem *base, u32 etm_pid)
- 
- 	dev_set_drvdata(dev, drvdata);
- 
--	if (pm_save_enable == PARAM_PM_SAVE_FIRMWARE)
--		pm_save_enable = coresight_loses_context_with_cpu(dev) ?
--			       PARAM_PM_SAVE_SELF_HOSTED : PARAM_PM_SAVE_NEVER;
+-static struct platform_device *appldata_pdev;
 -
--	if (pm_save_enable != PARAM_PM_SAVE_NEVER) {
--		drvdata->save_state = devm_kmalloc(dev,
--				sizeof(struct etmv4_save_state), GFP_KERNEL);
--		if (!drvdata->save_state)
--			return -ENOMEM;
+ /*
+  * /proc entries (sysctl)
+  */
+@@ -88,7 +84,6 @@ static struct vtimer_list appldata_timer;
+ static DEFINE_SPINLOCK(appldata_timer_lock);
+ static int appldata_interval = APPLDATA_CPU_INTERVAL;
+ static int appldata_timer_active;
+-static int appldata_timer_suspended = 0;
+ 
+ /*
+  * Work queue
+@@ -412,88 +407,6 @@ void appldata_unregister_ops(struct appldata_ops *ops)
+ /********************** module-ops management <END> **************************/
+ 
+ 
+-/**************************** suspend / resume *******************************/
+-static int appldata_freeze(struct device *dev)
+-{
+-	struct appldata_ops *ops;
+-	int rc;
+-	struct list_head *lh;
+-
+-	spin_lock(&appldata_timer_lock);
+-	if (appldata_timer_active) {
+-		__appldata_vtimer_setup(APPLDATA_DEL_TIMER);
+-		appldata_timer_suspended = 1;
+-	}
+-	spin_unlock(&appldata_timer_lock);
+-
+-	mutex_lock(&appldata_ops_mutex);
+-	list_for_each(lh, &appldata_ops_list) {
+-		ops = list_entry(lh, struct appldata_ops, list);
+-		if (ops->active == 1) {
+-			rc = appldata_diag(ops->record_nr, APPLDATA_STOP_REC,
+-					(unsigned long) ops->data, ops->size,
+-					ops->mod_lvl);
+-			if (rc != 0)
+-				pr_err("Stopping the data collection for %s "
+-				       "failed with rc=%d\n", ops->name, rc);
+-		}
+-	}
+-	mutex_unlock(&appldata_ops_mutex);
+-	return 0;
+-}
+-
+-static int appldata_restore(struct device *dev)
+-{
+-	struct appldata_ops *ops;
+-	int rc;
+-	struct list_head *lh;
+-
+-	spin_lock(&appldata_timer_lock);
+-	if (appldata_timer_suspended) {
+-		__appldata_vtimer_setup(APPLDATA_ADD_TIMER);
+-		appldata_timer_suspended = 0;
+-	}
+-	spin_unlock(&appldata_timer_lock);
+-
+-	mutex_lock(&appldata_ops_mutex);
+-	list_for_each(lh, &appldata_ops_list) {
+-		ops = list_entry(lh, struct appldata_ops, list);
+-		if (ops->active == 1) {
+-			ops->callback(ops->data);	// init record
+-			rc = appldata_diag(ops->record_nr,
+-					APPLDATA_START_INTERVAL_REC,
+-					(unsigned long) ops->data, ops->size,
+-					ops->mod_lvl);
+-			if (rc != 0) {
+-				pr_err("Starting the data collection for %s "
+-				       "failed with rc=%d\n", ops->name, rc);
+-			}
+-		}
+-	}
+-	mutex_unlock(&appldata_ops_mutex);
+-	return 0;
+-}
+-
+-static int appldata_thaw(struct device *dev)
+-{
+-	return appldata_restore(dev);
+-}
+-
+-static const struct dev_pm_ops appldata_pm_ops = {
+-	.freeze		= appldata_freeze,
+-	.thaw		= appldata_thaw,
+-	.restore	= appldata_restore,
+-};
+-
+-static struct platform_driver appldata_pdrv = {
+-	.driver = {
+-		.name	= "appldata",
+-		.pm	= &appldata_pm_ops,
+-	},
+-};
+-/************************* suspend / resume <END> ****************************/
+-
+-
+ /******************************* init / exit *********************************/
+ 
+ /*
+@@ -503,36 +416,14 @@ static struct platform_driver appldata_pdrv = {
+  */
+ static int __init appldata_init(void)
+ {
+-	int rc;
+-
+ 	init_virt_timer(&appldata_timer);
+ 	appldata_timer.function = appldata_timer_function;
+ 	appldata_timer.data = (unsigned long) &appldata_work;
+-
+-	rc = platform_driver_register(&appldata_pdrv);
+-	if (rc)
+-		return rc;
+-
+-	appldata_pdev = platform_device_register_simple("appldata", -1, NULL,
+-							0);
+-	if (IS_ERR(appldata_pdev)) {
+-		rc = PTR_ERR(appldata_pdev);
+-		goto out_driver;
+-	}
+ 	appldata_wq = alloc_ordered_workqueue("appldata", 0);
+-	if (!appldata_wq) {
+-		rc = -ENOMEM;
+-		goto out_device;
 -	}
 -
- 	drvdata->base = base;
++	if (!appldata_wq)
++		return -ENOMEM;
+ 	appldata_sysctl_header = register_sysctl_table(appldata_dir_table);
+ 	return 0;
+-
+-out_device:
+-	platform_device_unregister(appldata_pdev);
+-out_driver:
+-	platform_driver_unregister(&appldata_pdrv);
+-	return rc;
+ }
  
- 	spin_lock_init(&drvdata->spinlock);
-@@ -2064,6 +2070,21 @@ static int etm4_probe(struct device *dev, void __iomem *base, u32 etm_pid)
- 	etm4_init_trace_id(drvdata);
- 	etm4_set_default(&drvdata->config);
- 
-+	if (etm4x_always_pm_save(dev, &desc.access))
-+		pm_save = true;
-+	else if (pm_save_enable == PARAM_PM_SAVE_FIRMWARE)
-+		pm_save = coresight_loses_context_with_cpu(dev);
-+	else
-+		pm_save = pm_save_enable != PARAM_PM_SAVE_NEVER;
-+
-+	if (pm_save) {
-+		drvdata->save_state = devm_kmalloc(dev,
-+						   sizeof(struct etmv4_save_state),
-+						   GFP_KERNEL);
-+		if (!drvdata->save_state)
-+			return -ENOMEM;
-+	}
-+
- 	pdata = coresight_get_platform_data(dev);
- 	if (IS_ERR(pdata))
- 		return PTR_ERR(pdata);
+ __initcall(appldata_init);
 -- 
 2.53.0
 
