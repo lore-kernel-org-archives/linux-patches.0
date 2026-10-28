@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793209586;
-	b=3n/U2dYoFRovBxnG+aZ7HZ47iTOymULJvho81VNgoQGSI8uNqQlynz8jGUpspmik/uO+
-	 F8mtBp27zPHkraNrckLHaLbAlV96IwziIvkb4DumGn2lkHLXwoiHXzgoytwppQcejAtlH
-	 D9/Xzrbu25uGbxl8082/lvl4vwtgUQOlJOPLeoAHYQ0wbwrC+QqX7ebB7kqPEY9gNQHdE
-	 2Rpe2EX2F3YZKimfTjODqQuIYeKNU7YHJ0ST0AxCAuhcM34GjkwRU6sUxlAF9H5hsS3bW
-	 M9JSJqHZoK1MwpehHDFQgs6ln0xiVF7wBhf8sMggZ4zA13pmVnRCPANFW5cc23qei6Q==
+	t=1793209588;
+	b=l7tSGA+peNItH2im8FrGEYil3TpgR++15kz65uyo51pkW/3jcXON4pqPMG6B5Mg8r7eh
+	 Sww2ZewEKLyv76umFC/FNZXTXWnNKn7H7zh25b61zNQBD8jxM8zSrVvJVM6yaZqX8en52
+	 rodyh7IKjSVLYaLbTl/ioyHkbO94TouHTOiaJE6uATp08dNlQwRQXiSYEYeoL3HUSCS61
+	 qmXHdvRp5YUeLJf4QazKEvI/lKUOXYH/0oEdNlbRe07Yy6+wHK58PaCz0czUWGSA3Vuf9
+	 8sQnUBDc4CNiK64R6ScyMfsaaGxC78OTwjnbSfkGfbqKeImQWHumyadPjsFwn9ZwrXw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793209586;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793209588;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ELEXb1AQczi3BlxvZHTmfAMABbzrbdz9d8diuRQ3Il4=;
-	b=TdW2GY563KpnWBCHnLXhYeY4XPPgH34VzSpZVpy0Cnyy/tiWON0g1hMK80tWEXCSgyIF
-	 mP8MJ5w7ngqfn86+HjxMXPW1EYbPfOwcDd4jSTDbgMfRBeCUyLOWM1VUh0iOs1DAVGqcv
-	 mJ27MfVXU43By0IudDeKaXiJfteC26utaAiwPHNe4Y2/fDaZypxrkLArXqwBwLNEGR9ML
-	 ssWIy5m7Dyf09wGNu9mewlW7AmNCKclKHDkTNZoPKFuCzwhgENYXuH9E1eLAKfbwOO056
-	 gJgiHlg3SokHfCD4OtUHzyUcQ5/a+OC37tUest6pWCxxB6TZY8z+gG1iF+UAaL5pkGA==
+	bh=lYUsWkYGlyw/WtHnZ6rmm6of0ywwJrSzgs+qRvwSPno=;
+	b=JkJDzM2XOTsxVlW/fL84hLJuSHr6WQXbKErQhNtl3zocSAZbGlBpTp6DkAjNi/1k0wSz
+	 PL+B3O2/QkjxyCX7O3SqnIYlNGiQMEetEUQ/3w9KhEpHL/v+H0tHeBK+Y5PtMXCTyWY7D
+	 beYi/rFNPe/oexlD5L9BZuAI2hrj00jLVYFgc+vmhJx6L+CQltfH/YeFboAg/2NXG+5cJ
+	 YPWDsBZEGy9wivpnsLZle+GClShDR7tWtid0FsVSjh1jJYrbijEcYc5x3IF9vWtpnlnyl
+	 JjugRLoeuzdQXyGlpcd2k6g5kE219/b/189jXEbcgQUqJNAns70ahZzYJvTedPmvADQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e5WwaXXq;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ojG5dpyr;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCA92606A31A;
-	Wed, 28 Oct 2026 17:46:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B791606A31A;
+	Wed, 28 Oct 2026 17:46:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e5WwaXXq
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEF7E1F01825;
-	Wed, 28 Oct 2026 17:46:24 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ojG5dpyr
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC6241F01825;
+	Wed, 28 Oct 2026 17:46:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793209585;
-	bh=ELEXb1AQczi3BlxvZHTmfAMABbzrbdz9d8diuRQ3Il4=;
+	s=korg; t=1793209588;
+	bh=lYUsWkYGlyw/WtHnZ6rmm6of0ywwJrSzgs+qRvwSPno=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=e5WwaXXqhNCVh2vVdY+iSY53RvSXlzLzjiNBihecsT+29BouGxeq7WcU8Kxb14aea
-	 pMj6OusyN+3j5bnlG54LIJ9nhYf739U99EyR3NoHYeHOkW78euKM4FmDZ6SN8X1DvJ
-	 BaIAyXEW55ah3dk/fStVMo8ZJuo2EL5xX8To43co=
+	b=ojG5dpyrKxGFmGd5UHrMMCuG+R6lwWCm1YS2sviCqVCpMpg+1Kq4a7svl0McCfPDH
+	 3Gy8etaAUp7ub6OeHQ10giI/Fq6ffOhUWchB6xctrMQFVECg+XI43P6qEqIGGyimpK
+	 WwzkmRrkPidlxN3fpTRIHO5UqCn+OrR/ZxycLiv0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oleg Nesterov <oleg@redhat.com>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 5.10 516/516] signal: dont retarget shared signals in a dying thread group
-Date: Wed, 28 Oct 2026 18:01:08 +0100
-Message-ID: <20261028170015.699648478@linuxfoundation.org>
+	Cen Zhang <zzzccc427@gmail.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>
+Subject: [PATCH 5.10 511/516] keys: Check the authorization payload in process keyring searches
+Date: Wed, 28 Oct 2026 18:01:03 +0100
+Message-ID: <20261028170015.581904921@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -67,54 +67,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-commit c0e659511d4f49087da095a95799edb5b775a705 upstream.
+commit 0a0ec45bf577a9b4d4960567f20d3877ef480de9 upstream.
 
-If the calling thread has blocked a signal then
-retarget_shared_pending() slingshots a shared pending signal to a
-sibling thread. Today it only skips PF_EXITING threads but not a
-coredumping thread.
+An authorization payload and its saved credentials must remain valid
+while search_process_keyrings_rcu() searches the requestor's keyrings.
+The function validates the authorization key, then separately loads
+payload.data[0] and unconditionally reads rka->cred. Validation does
+not prevent request_key_auth_revoke() from clearing the payload.
 
-But if SIGNAL_GROUP_EXIT is set no thread in the thread-group can
-dequeue such signals anymore as get_signal() sends SIGKILL to every
-thread and prepare_signal() drops any other signal.
+A request-key helper can assume authority and fork a descendant that
+inherits the authorization key. If the descendant misses in its own
+keyrings, it falls back to the saved requestor credentials. Successful
+target instantiation invalidates the authorization key without clearing
+the payload. After the helper exits, UMH_WAIT_PROC returns to the
+requester, which calls complete_request_key() and revokes that key.
 
-exit_signals() also returns early on SIGNAL_GROUP_EXIT. But neither
-sigprocmask() nor the mask restore in sigtimedwait() do.
+With the descendant paused after validation, the paths can interleave
+as follows:
 
-Say a thread sleeps in sigtimedwait() and a sibling thread crashes. The
-sleeping thread gets woken by the zap call. It restores its mask on the
-way out and retargets a signal that was queued for the coredumping
-process. That means TIF_SIGPENDING is set on the coredumping task which
-zap_threads() had cleared. So a blocking write sees TIF_SIGPENDING and
-truncates the dump.
+  1. The descendant enters search_process_keyrings_rcu() under RCU and
+     key_validate() succeeds.
+  2. The helper instantiates the target, invalidates the authorization
+     key, and exits.
+  3. The requester resumes from UMH_WAIT_PROC, calls
+     complete_request_key(), and revokes the authorization key.
+     request_key_auth_revoke() sets its payload pointer to NULL.
+  4. The descendant loads NULL and dereferences rka->cred.
 
-Stop retargeting signals when SIGNAL_GROUP_EXIT is set and avoid
-needlessly truncating coredumps.
+This NULL dereference can oops the kernel. RCU delays payload disposal
+but does not prevent the pointer from being cleared.
 
-Fixes: e6fa16ab9c1e ("signal: sigprocmask() should do retarget_shared_pending()")
+Load the payload with dereference_key_rcu() and require a non-NULL
+result before validating the authorization key and searching its saved
+credentials. A non-NULL payload and its credentials remain alive for
+the caller's RCU read-side section; a cleared payload skips the fallback
+search and follows the existing error selection.
+
+KASAN report as below:
+
+    Oops: general protection fault, probably for non-canonical address 0xdffffc0000000005: 0000 [#1] SMP KASAN NOPTI
+    KASAN: null-ptr-deref in range [0x0000000000000028-0x000000000000002f]
+    RIP: 0010:search_process_keyrings_rcu+0x32b/0x790
+
 Cc: stable@vger.kernel.org
-Acked-by: Oleg Nesterov <oleg@redhat.com>
-Link: https://patch.msgid.link/20260921-work-coredump-fixes-v3-5-8e4adb1619e6@kernel.org
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Fixes: e59428f721ee ("keys: Move the RCU locks outwards from the keyring search functions")
+Assisted-by: LLM
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Link: https://lore.kernel.org/r/pm-key-management-objects-candidate-0004-v3-598361863b76bc25d58d@gmail.com
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/signal.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ security/keys/process_keys.c |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
---- a/kernel/signal.c
-+++ b/kernel/signal.c
-@@ -2830,6 +2830,10 @@ static void retarget_shared_pending(stru
- 	sigset_t retarget;
- 	struct task_struct *t;
+--- a/security/keys/process_keys.c
++++ b/security/keys/process_keys.c
+@@ -556,9 +556,8 @@ key_ref_t search_process_keyrings_rcu(st
+ 	    ) {
+ 		const struct cred *cred = ctx->cred;
  
-+	/* Nobody dequeues them in a dying group, see get_signal(). */
-+	if (tsk->signal->flags & SIGNAL_GROUP_EXIT)
-+		return;
-+
- 	sigandsets(&retarget, &tsk->signal->shared_pending.signal, which);
- 	if (sigisemptyset(&retarget))
- 		return;
+-		if (key_validate(cred->request_key_auth) == 0) {
+-			rka = ctx->cred->request_key_auth->payload.data[0];
+-
++		rka = dereference_key_rcu(cred->request_key_auth);
++		if (rka && key_validate(cred->request_key_auth) == 0) {
+ 			//// was search_process_keyrings() [ie. recursive]
+ 			ctx->cred = rka->cred;
+ 			key_ref = search_cred_keyrings_rcu(ctx);
 
 
