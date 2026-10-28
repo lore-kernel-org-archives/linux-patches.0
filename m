@@ -1,50 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213374;
-	b=GJwKmD7kzxi2nsL48dvfbOO2no3usNCDdTfr5GWKhrB6igfSFe1IGFMMvEo2xCh+LcW6
-	 Tt+HxkvLwTteTJcrAxGpXRUCwI73sZ38Xa1GjPWIEFAGyN1PSW6SdiHAS42x6RE2qny+Z
-	 H9xZi/Ju/6ZRaGYJ+PSzZs+ZUR27Kl0aAgPdVkicuPyScxfknG7LEH+NGx23ukhjFFBfR
-	 OP70uDS7+gCQGy3KOJ/DUX4B/m2c8PB8GjJVo4Be+EUFnJXypVUW/xaxmsHYVGhUd8SFk
-	 XIwWWiyaifoCJ9MuOTFEXbBWzOfMEYDi2awMVFd243dyaqXfZKfe/FyKnCr8pBYskcg==
+	t=1793213377;
+	b=jxsvvNggm/5ptXv+GoJXec12AY7duA3xwV6X6CsTl0vbZNl3xSfpvkDAieo95Rv+tC2k
+	 EZti9ooFVod1hpcI9kIXJ1jiWQB53oQtAxiMxuVxLlRPegUH3+FLAe9JYjVyZ24xZ85W3
+	 jUHdxk6WBsE2zeOFREw6NlWJz4yRAYvaHcChIIXxk64z3RoUgzI0sgT/ww+0O4f+5/ody
+	 9UWVZ4GzyP75T82b9L36RT+lvuX3+4wpAiQQO4g3VANGEFKWhyneAL5NO9qfc6echm72P
+	 FkwdYElOXvGg1xyjgfRzGzwWi2ygRltMEXpjvKX/caBywi8KReXMQIwr9N2vvXCMHIA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213374;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213377;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=XMKkqVD4kRgbdho14nQTXc/o5fYC0cBTlElWvHcyI0o=;
-	b=axVrK4fXGelBD4cpqhDgJ3CL13NSHgOfJRNMfWnAZoZJgiv2hwZqO5H6jNVJo2IB9iN6
-	 QzWDabPl79+F7W7kX7Tjc4OMLz//SwN3sOYIQJrztrHVkgeRAVFsjTJ3Bg9kumOYgqfjt
-	 z9iuei3CJfVN56qcjS4J4B8FytgVeoVXYG/6skDpwwgN55m6pik8DyI/QfVgFfwYjE/AL
-	 UuWoFCfQf7yRXJnu9BDbl/bB0Ro6vDR8Q1wPXqdx5YNDHKsF617YAci7bK2gebYUj7r0W
-	 Nf2rgoStalx5bRiJpIomrJX+hYOcs6fdhSGN5ocGGlvpotGVgkh9WyP7qEgLy2mTrSg==
+	bh=Y0uUNveI6bXvPpEyqzv8PT56l+N3tubK7BmpbRplIAs=;
+	b=KIGAJ1cijeg2I+O5ceqApqQLKrsH4Vm7Q9sSsWLnJ9wOORxf+uXoIDyUKWzTcG2mnTFO
+	 4gC18V1DqnUxdFldrFmd1Tv/YyL+zFRB5yIumdSGBwN0yrhWZJMKV9aF1tFpJQKYW2gp3
+	 +8AMXRocTTFNfU9oNJQFV0myTmXgu4Qp4yrFkevRJk5kCImSM9IwcEbPf/xISaBYzb0wG
+	 /uCSxjzuQYLpSVb3KF9qnM5H+M8KbspZ46gj0oiNVB/k8b7GHqbbnttj+wPD+Hzmhyxii
+	 uW6IJqpP1HTUQLLKIHVs/Ih+ZOQkwlkpoz8uY4m03Z/uQ/+ixBPrhjfdcO6Hn4w2CaQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UpjVCGP3;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UrpxWT41;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BD1D606A31C;
-	Wed, 28 Oct 2026 18:49:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8461606A31C;
+	Wed, 28 Oct 2026 18:49:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UpjVCGP3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BBA91F01825;
-	Wed, 28 Oct 2026 18:49:33 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UrpxWT41
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44E711F01825;
+	Wed, 28 Oct 2026 18:49:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213374;
-	bh=XMKkqVD4kRgbdho14nQTXc/o5fYC0cBTlElWvHcyI0o=;
+	s=korg; t=1793213376;
+	bh=Y0uUNveI6bXvPpEyqzv8PT56l+N3tubK7BmpbRplIAs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UpjVCGP3sxBVa1c87kNoofOL5M2waY7sVnwFWlaRMuc3LK1m6d6v1MaLKHVIbVUQe
-	 GT7uh5wxvFUIjAWQMPh4U1yNrw0qmeV2zt5wOw0jMcwtOFv9iKmyrx7xp/hUsj1VXM
-	 7zwZ5CTn7+puD5Bgwy9h8KxgKeHRI3LWMntJWcUQ=
+	b=UrpxWT41cTp2esBGyWRbrCE6mm+xgbj5sY30q0P1MRFXb0kQlqEaSSgCGv8IempPk
+	 0VNcVSzpfFaFoEXMMZpzK/zRhvKGDaYIw3mnySszBSCV3qAkGdVsp8YE/CqJ/5jz0e
+	 Tv+Us763ABIKExCmMFyaM2xJb38QOvMWyjo6woMQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 6.1 0481/1887] dcache: dont put a mountpoint on a dentry thats being removed
-Date: Wed, 28 Oct 2026 17:42:57 +0100
-Message-ID: <20261028170510.202932962@linuxfoundation.org>
+	Pavankumar Kondeti <pavan.kondeti@oss.qualcomm.com>,
+	Tejun Heo <tj@kernel.org>
+Subject: [PATCH 6.1 0440/1887] workqueue: Fix NULL current_pwq deref in chained work check
+Date: Wed, 28 Oct 2026 17:42:16 +0100
+Message-ID: <20261028170509.244752580@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -66,64 +67,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Pavankumar Kondeti <pavan.kondeti@oss.qualcomm.com>
 
-commit 75f4197f1e11d2eb75c2d6f916a7d4764db621e5 upstream.
+commit 980db94e3eeefdd8a1c46f86412c33a7f7806f51 upstream.
 
-rmdir(), unlink() and rename() call dont_mount() on the victim and then
-detach_mounts() with the victim's inode locked. do_lock_mount() takes
-the inode lock of the mountpoint and checks cant_mount() so a mount
-can't show up after detach_mounts().
+current_wq_worker() only tells us that %current is a kworker. It does
+not guarantee that the worker is currently executing a work item, as
+worker->current_pwq is populated only while process_one_work() is running
+the work function.
 
-But attach_recursive_mnt() makes a second mountpoint for the root of the
-source mount so that the mounts already located at the destination can
-be put on top of it. No inode is locked for that one and d_set_mounted()
-only refuses a dentry that is unlinked. Between detach_mounts() and
-d_delete() the victim is still hashed:
+is_chained_work() can be reached while queueing on a draining or
+destroying workqueue. If a kworker outside work-item execution reaches
+that path, current_wq_worker() returns a worker but worker->current_pwq is
+NULL, and the chained-work test can fault before it emits the intended
+warning.
 
-  rmrace: b passed dont_mount() and detach_mounts(), sleeping
-  T2: move_mount(S, /tmp/plcant/x, BENEATH) = 0 errno 0 ()
-  T1: rmdir(/tmp/plcant/d/b) = 0 errno 0
-      109 107 0:61 /d/b//deleted /tmp/plcant/x rw,relatime - tmpfs tmpfs rw
-      108 109 0:63 / /tmp/plcant/x rw,relatime - tmpfs T rw
+Guard the chained-work test with worker->current_pwq. A kworker without
+current_pwq is not executing work on the target workqueue, so the helper
+should return false and let the draining/destroying warning fire.
 
-A bind mount of the directory that's being removed is moved beneath an
-existing mount while the rmdir() is located between the two calls. The
-mount ends up on the removed directory and nothing will ever detach it.
-
-Check cant_mount() in d_set_mounted() as well. dont_mount() raises the
-flag under d_lock before detach_mounts() runs so either the mountpoint
-is set first and detach_mounts() finds the mount or the flag is seen and
-the mount is refused.
-
-Fixes: 1064f874abc0 ("mnt: Tuck mounts under others instead of creating shadow/side mounts.")
+Fixes: 8d03ecfe4718 ("workqueue: reimplement is_chained_work() using current_wq_worker()")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260930-work-mount-fixes-3-v1-15-be34c83956ae@kernel.org
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Signed-off-by: Pavankumar Kondeti <pavan.kondeti@oss.qualcomm.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/dcache.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ kernel/workqueue.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/dcache.c
-+++ b/fs/dcache.c
-@@ -1502,6 +1502,8 @@ EXPORT_SYMBOL(path_has_submounts);
-  *
-  * Only one of d_invalidate() and d_set_mounted() must succeed.  For
-  * this reason take rename_lock and d_lock on dentry and ancestors.
-+ * Likewise for dont_mount() which marks a dentry that is being removed
-+ * under d_lock.
-  */
- int d_set_mounted(struct dentry *dentry)
- {
-@@ -1518,7 +1520,7 @@ int d_set_mounted(struct dentry *dentry)
- 		spin_unlock(&p->d_lock);
- 	}
- 	spin_lock(&dentry->d_lock);
--	if (!d_unlinked(dentry)) {
-+	if (!d_unlinked(dentry) && !cant_mount(dentry)) {
- 		ret = -EBUSY;
- 		if (!d_mountpoint(dentry)) {
- 			dentry->d_flags |= DCACHE_MOUNTED;
+--- a/kernel/workqueue.c
++++ b/kernel/workqueue.c
+@@ -1382,7 +1382,7 @@ static bool is_chained_work(struct workq
+ 	 * Return %true iff I'm a worker executing a work item on @wq.  If
+ 	 * I'm @worker, it's safe to dereference it without locking.
+ 	 */
+-	return worker && worker->current_pwq->wq == wq;
++	return worker && worker->current_pwq && worker->current_pwq->wq == wq;
+ }
+ 
+ /*
 
 
