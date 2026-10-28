@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216294;
-	b=Y1QASvprC3Ijjaj4nPRe7MHzCLbORJBgqvOnw1sjqR34YmcQS+4JJ2y/ExzFDc1TehE7
-	 mkTOFMnWxsBGaFuDLY5oeeWdNvU5JU9DN2y/0RXW7gQ66WlTS1nvTXkyj8jPTWXECM5Ep
-	 J2b9bqWU1fIwFTtt56MsK7+3sh8vtD4ObydB4pKHBh04R9DE1PaYSwx2K2Ost7lrddLIb
-	 wfKMGr2wJ7oYU/YgREYcuy+ZNIqgML3freZ+PSGd/1Gy3jtvJ7RgKuRyxB1/I0vVU6uwy
-	 Lj4Fzmct/X89QflOmWF5dq5SXLi52E3iowocZreGtQau1e4pGOHR65OZwOQ8XIV7qlA==
+	t=1793216297;
+	b=Y3TbYj+QgXhGWbUVnmntaCf7MY5wkAuurdF+VsxaWl4EJa/eolcOOQ7sDKDawDSnweXV
+	 BIbtgOf8LzTa84YFq2u3qEKMW2uhP296tKzND7CP8+xxpGcGC7KNkvc4X9ZHW+M4h894R
+	 GIWivRMeAHgWBT72itaYXjv0VqiwhUvNXpFwC3D7W91RkximOpw3NqYchuDcCn1YWNTDU
+	 CoOvy0hTYSzmdMSEbMMkuJ8u4JabeJ4LUvURNKzkh9K09g8fWudyf6Oz762B9c6uvaER3
+	 NbQD8JgqcVnGxqWNiUDIBuGlyOzZUYz2OQ/N/oBPQp/H6kutnQ6l4rCQNoTjsp1aeWQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216294;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216297;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=uIH5bxeYZ8+JGkQobI4+++58Id1xLqyurBIj2IVkN+A=;
-	b=WCiuO2ww7+SiSKHzabjqB0lyIyTh2h7QJldFWYZ4FA9yxEl3svM9t37BQpDu4Y1mIsLl
-	 OJk7pMv1LrY1vrH5dDlTusTwj1dPA5FKQTRxUeqVgUzx38hGKFpKIzghJBMk2/xYbh73O
-	 PiDTU6S7IiUS1vQIk6m4ZUY2+XHm9yecl8k5TEhfgjtm0gWcZ0YLL1kNHdnjZO8BEGl7C
-	 vXXAovmnhwfNKrL0YKdFXHBEafjtOVULuMU/znDJwN9O370Ub9M0v5j/LssN6usPHki0y
-	 +9oO/DKKDs7FihgrCmHcbrCBW8nZe4C0laD9BKvkGXj6LDPZUwEMFHqjacPr2YDYTog==
+	bh=Tu6OBLZOTVhnoKLoxqTQNMLMWhDTaWeDc/BRrSfO7F4=;
+	b=3VW+cWpr5gnhwQaV5wdm6HIG/Je4LskzFbOcQtDs8jtmSBinMP5YAJdjBnSC9nMxjsS1
+	 W3eFWL8Gt+tjeFXiK34a2LjUUFMfQ4XlUyqFVxiZzDRcwDUAUrE9jWbHJtQNIj6/5uK3N
+	 9ilx1uTO/2tkJ+ogKuOLhzjVvCUqS7Bl4THGV15USzidH0OsExWqUoXgGSJg3eycE4+jO
+	 hlozqzeHLPPrM8FULcOaDcS3dhUiQW0iGqM6G+BwWulrBJbb/PjtoI2VBk0vbztHT0Y/A
+	 vy7qg5pN2XeZYzrKCVWb0Sd50+MtuQbtDfHLTb9jbNhMWpIQcAZA7bOmGnWCEQFfw7A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=q4IFYCTz;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=R4FHZYyd;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8E7B60A2601;
-	Wed, 28 Oct 2026 19:38:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE251606A31A;
+	Wed, 28 Oct 2026 19:38:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=q4IFYCTz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35C2A1F01829;
-	Wed, 28 Oct 2026 19:38:13 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=R4FHZYyd
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12FC51F01828;
+	Wed, 28 Oct 2026 19:38:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216293;
-	bh=uIH5bxeYZ8+JGkQobI4+++58Id1xLqyurBIj2IVkN+A=;
+	s=korg; t=1793216296;
+	bh=Tu6OBLZOTVhnoKLoxqTQNMLMWhDTaWeDc/BRrSfO7F4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=q4IFYCTz55im46PsNZx+t+L8Q6+2K72MkwrAYx6Mf0331Y0b0cSSJfyQdvXYDrHe3
-	 X0UGudsQ9y2UB/QHKiBGNe0TSYMFEyfmM9kIyKtH5MOh+I0umf4BMWZud5+HjcMzsm
-	 YIYTKcFn3HtnKZdglQc1XnSnVBYrQzm+et4sTmN0=
+	b=R4FHZYydP2kBngfF+ETQRYDbnRUg10uhS07zsPLOl5Q2ePGooNyovnqgJQquxOkTP
+	 3ScyR04ZxhhDEYuVfdo1YnGunVKuGlbHWXD/cHfX8cPZFqCQBTe2bSLZK9cUTP8er9
+	 BNpOV3W6BZtL8TgOcllwlD1WJFTKv0eHHMJpBoEE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot@kernel.org,
-	Jiangshan Yi <yijiangshan@kylinos.cn>,
-	Jiri Kosina <jkosina@suse.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1464/1887] HID: nintendo: register input device after capabilities are set
-Date: Wed, 28 Oct 2026 17:59:20 +0100
-Message-ID: <20261028170532.771154054@linuxfoundation.org>
+Subject: [PATCH 6.1 1465/1887] svcrdma: Validate Read chunk positions before reconstruction
+Date: Wed, 28 Oct 2026 17:59:21 +0100
+Message-ID: <20261028170532.793076179@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,58 +68,156 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiangshan Yi <yijiangshan@kylinos.cn>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit d723bc1fe2e72b9252234e94c11af644ec477bf7 ]
+[ Upstream commit 3779b7b9e7d1c8ba4738f9d327de3b0288cefe9b ]
 
-input_register_device() exposes the device to userspace immediately.
-In joycon_input_create() it was called before joycon_config_rumble()
-configures the FF_RUMBLE capability and the memless force-feedback
-device, so a concurrent EVIOCSFF could dereference a NULL dev->ff.
+The RPC/RDMA Read chunk position field is supplied by the remote
+client and stored verbatim in the parsed chunk list.
+xdr_count_read_segments() checks only 4-byte alignment; it never
+compares the position against the received inline body length.
 
-Registering early also means the initial udev event lacks button and
-axis information, which can make input managers ignore the device.
+In the single-chunk path, svc_rdma_read_complete_one() splits the
+head and tail kvecs at ch_position. A position past the inline
+body underflows the tail length, exposing adjacent slab memory to
+the upper XDR decoder.
 
-Move input_register_device() to the end of joycon_input_create(), after
-all capabilities, the IMU input device and the force-feedback callbacks
-have been configured.
+In the multi-chunk path, svc_rdma_read_multiple_chunks() computes
+gap lengths between chunks as unsigned subtractions from
+ch_position. Overlapping Read chunks cause these subtractions to
+underflow. A final position past the inline body likewise
+underflows the trailing gap length. svc_rdma_copy_inline_range()
+then copies past the receive buffer into request pages that are
+returned to the client through the Reply channel.
 
-Fixes: 2af16c1f846b ("HID: nintendo: add nintendo switch controller driver")
-Reported-by: sashiko-bot@kernel.org
-Closes: https://sashiko.dev/#/patchset/20260730031927.25444-1-yijiangshan@kylinos.cn?part=1
+Bound inline-range copies in svc_rdma_copy_inline_range() against
+the decoded inline RPC body saved in rc_saved_arg. Reject a
+single Read chunk positioned beyond that body, and reject
+multi-chunk lists where accumulated read bytes exceed the next
+chunk's position. Apply the same position and overlap checks in
+the call-chunk interleaving path.
+
+Fixes: d96962e6d0e2 ("svcrdma: Use the new parsed chunk list when pulling Read chunks")
 Cc: stable@vger.kernel.org
-Signed-off-by: Jiangshan Yi <yijiangshan@kylinos.cn>
-Link: https://sashiko.dev/#/patchset/20260730031927.25444-1-yijiangshan@kylinos.cn?part=1
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Acked-by: Jeff Layton <jlayton@kernel.org>
+Link: https://patch.msgid.link/20260526-rpc-kernel-bugs-v1-1-e251306ccca9@oracle.com
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-nintendo.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ net/sunrpc/xprtrdma/svc_rdma_rw.c | 33 +++++++++++++++++++++++++------
+ 1 file changed, 27 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/hid/hid-nintendo.c b/drivers/hid/hid-nintendo.c
-index 7a1bb4c876659..6a57681fe123e 100644
---- a/drivers/hid/hid-nintendo.c
-+++ b/drivers/hid/hid-nintendo.c
-@@ -1719,10 +1719,6 @@ static int joycon_input_create(struct joycon_ctlr *ctlr)
- 	ctlr->rumble_msecs = jiffies_to_msecs(jiffies);
- #endif
+diff --git a/net/sunrpc/xprtrdma/svc_rdma_rw.c b/net/sunrpc/xprtrdma/svc_rdma_rw.c
+index e455f16440334..15140246f03e8 100644
+--- a/net/sunrpc/xprtrdma/svc_rdma_rw.c
++++ b/net/sunrpc/xprtrdma/svc_rdma_rw.c
+@@ -786,7 +786,7 @@ static int svc_rdma_build_read_chunk(struct svc_rdma_read_info *info,
+ /**
+  * svc_rdma_copy_inline_range - Copy part of the inline content into pages
+  * @info: context for RDMA Reads
+- * @offset: offset into the Receive buffer of region to copy
++ * @offset: offset into the inline content of region to copy
+  * @remaining: length of region to copy
+  *
+  * Take a page at a time from rqstp->rq_pages and copy the inline
+@@ -803,10 +803,14 @@ static int svc_rdma_copy_inline_range(struct svc_rdma_read_info *info,
+ 				      unsigned int remaining)
+ {
+ 	struct svc_rdma_recv_ctxt *head = info->ri_readctxt;
+-	unsigned char *dst, *src = head->rc_recv_buf;
+ 	struct svc_rqst *rqstp = info->ri_rqst;
++	unsigned char *dst, *src = rqstp->rq_arg.head[0].iov_base;
++	unsigned int inline_len = rqstp->rq_arg.head[0].iov_len;
+ 	unsigned int page_no, numpages;
  
--	ret = input_register_device(ctlr->input);
--	if (ret)
--		return ret;
--
- 	/* configure the imu input device */
- 	ctlr->imu_input = devm_input_allocate_device(&hdev->dev);
- 	if (!ctlr->imu_input)
-@@ -1773,6 +1769,10 @@ static int joycon_input_create(struct joycon_ctlr *ctlr)
- 	if (ret)
- 		return ret;
- 
-+	ret = input_register_device(ctlr->input);
-+	if (ret)
-+		return ret;
++	if (offset > inline_len || remaining > inline_len - offset)
++		return -EINVAL;
 +
- 	return 0;
+ 	numpages = PAGE_ALIGN(info->ri_pageoff + remaining) >> PAGE_SHIFT;
+ 	for (page_no = 0; page_no < numpages; page_no++) {
+ 		unsigned int page_len;
+@@ -856,9 +860,10 @@ static noinline int svc_rdma_read_multiple_chunks(struct svc_rdma_read_info *inf
+ 	const struct svc_rdma_pcl *pcl = &head->rc_read_pcl;
+ 	struct xdr_buf *buf = &info->ri_rqst->rq_arg;
+ 	struct svc_rdma_chunk *chunk, *next;
+-	unsigned int start, length;
++	unsigned int inline_len, start, length;
+ 	int ret;
+ 
++	inline_len = buf->head[0].iov_len;
+ 	start = 0;
+ 	chunk = pcl_first_chunk(pcl);
+ 	length = chunk->ch_position;
+@@ -876,6 +881,8 @@ static noinline int svc_rdma_read_multiple_chunks(struct svc_rdma_read_info *inf
+ 			break;
+ 
+ 		start += length;
++		if (info->ri_totalbytes > next->ch_position)
++			return -EINVAL;
+ 		length = next->ch_position - info->ri_totalbytes;
+ 		ret = svc_rdma_copy_inline_range(info, start, length);
+ 		if (ret < 0)
+@@ -883,7 +890,9 @@ static noinline int svc_rdma_read_multiple_chunks(struct svc_rdma_read_info *inf
+ 	}
+ 
+ 	start += length;
+-	length = head->rc_byte_len - start;
++	if (start > inline_len)
++		return -EINVAL;
++	length = inline_len - start;
+ 	ret = svc_rdma_copy_inline_range(info, start, length);
+ 	if (ret < 0)
+ 		return ret;
+@@ -924,6 +933,9 @@ static int svc_rdma_read_data_item(struct svc_rdma_read_info *info)
+ 	int ret;
+ 
+ 	chunk = pcl_first_chunk(&head->rc_read_pcl);
++	if (chunk->ch_position > buf->head[0].iov_len)
++		return -EINVAL;
++
+ 	ret = svc_rdma_build_read_chunk(info, chunk);
+ 	if (ret < 0)
+ 		goto out;
+@@ -1024,14 +1036,17 @@ static int svc_rdma_read_call_chunk(struct svc_rdma_read_info *info)
+ 			pcl_first_chunk(&head->rc_call_pcl);
+ 	const struct svc_rdma_pcl *pcl = &head->rc_read_pcl;
+ 	struct svc_rdma_chunk *chunk, *next;
+-	unsigned int start, length;
++	unsigned int call_len, start, length;
+ 	int ret;
+ 
+ 	if (pcl_is_empty(pcl))
+ 		return svc_rdma_build_read_chunk(info, call_chunk);
+ 
++	call_len = call_chunk->ch_length;
+ 	start = 0;
+ 	chunk = pcl_first_chunk(pcl);
++	if (chunk->ch_position > call_len)
++		return -EINVAL;
+ 	length = chunk->ch_position;
+ 	ret = svc_rdma_read_chunk_range(info, call_chunk, start, length);
+ 	if (ret < 0)
+@@ -1047,7 +1062,11 @@ static int svc_rdma_read_call_chunk(struct svc_rdma_read_info *info)
+ 			break;
+ 
+ 		start += length;
++		if (info->ri_totalbytes > next->ch_position)
++			return -EINVAL;
+ 		length = next->ch_position - info->ri_totalbytes;
++		if (length > call_len - start)
++			return -EINVAL;
+ 		ret = svc_rdma_read_chunk_range(info, call_chunk,
+ 						start, length);
+ 		if (ret < 0)
+@@ -1055,7 +1074,9 @@ static int svc_rdma_read_call_chunk(struct svc_rdma_read_info *info)
+ 	}
+ 
+ 	start += length;
+-	length = call_chunk->ch_length - start;
++	if (start > call_len)
++		return -EINVAL;
++	length = call_len - start;
+ 	return svc_rdma_read_chunk_range(info, call_chunk, start, length);
  }
  
 -- 
