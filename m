@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793212272;
-	b=oLHAPo1Vj+sYkghBP+hO55lRwI2LdiLU4zYnrqMzJzCZkYkdFhySOXFUUTe732x28jk1
-	 A88+V6HG8joaHSD9MDPi8G0jZ6r16QczTAZFQ/m9Y2tRwsntoGvqDCSubBE5QzMxKZBO4
-	 dTx7pKsL6HuFoSUA4k9OMHfIo775hYaSD1uRqsClbk28Lnb16rU5KfFaPFn6q3tEOEyyy
-	 2Qc036utjyw8wBOCf6DzDRG5Q1Jku2sSYq32i9fIgjTIj7M4vUKL1THRG7KCCHb7rTC2l
-	 NVxVncsDLimmDg1QcCpwVAXYBw7yaNMxZXCOmt5SqzKa2Nhe8B5Y7SStj9hUY52z+kQ==
+	t=1793212275;
+	b=YLKWwSD9BLIsvI0bQNUxKP+YCquh3kIF5XQ3H6OoDEKX5K+V1RE4vsKXV9pB/oHQHkpW
+	 T7cpHLDk3D05BGCofdIc4PVMhjHAIIfd2RO8nSmKih2SNvIwkKPPI3GGGPta8/ZxYSvBI
+	 lV2i4fcYWCXfFEDlKr6n0AqCLlhh4D1ACEWsJH0GPAaojIZPzyV1+wDAQzbliPWWYek80
+	 Nd2Or0m8X4V+5Wp8gHLLhuN8PnMN7epu9IV2QgA97NBTL5ZqBKveKaPzki3XX2n4RaIFw
+	 Zmmik61NuYRJoMJSdf1qjDysJJhDRYV8xBxVcrhga0g2NOmW9oCsc0YmXml/SZiWJJQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793212272;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793212275;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=HKie8Ua1wNq0frcnq/KsMGE6nadRIcVi9i1lH86zlnI=;
-	b=sCNPTbKRKF8JSriaTpxFVjtnlB8BBWkIpnZVR93YtI4S/Q/HdwxN53c6uPqbNkE4e3e3
-	 Jbz+M2O3Pz6Giz0GzNpZ6QutkCQIrzlw8itwWpYAc7G7P2YOzDu0rXFWoVZ14hitpGm9j
-	 1QAOhTt+j53VC9KlJOIf6uN793qlBy1e7Dz5jQEd0I2R6IghOSmBt2zz0Vri7LQQPip6E
-	 SR0q4+62vZLm6gCwrE5DWYIw1a7jlnUoPuoUmF1Wwp0V+vVDuQOwZyLmFVeNtV8oivU4G
-	 HHKtNTcRdpfwBJds0O9ZEwT71HrelQXNeINxbswVQ/dSHuNTxFPrkW4tFYok9nG7Xww==
+	bh=sbkjhc/tDFXmy84LTQfGEUJISIcdzH+YYsFhDRKBLYs=;
+	b=oJysam1GBn72WJCc7oAKc2hTdAvvMOc0t7QExD9itLc436rwJnrFOV/xa4+89yJilGvY
+	 ICYtw1x2ilgpp4VXd6jKnQwQRInsEZofWxwbu4rTasipteTVi9wUaXtWkxTYWP4nMKcXt
+	 M2flnJ2knk3LEBCfGXxzAU7Y14QyPIcy7n+2H19sElmPh0TE11yCgL1WmaSs/eIh1YE6W
+	 OEIB2nMt0JxrjqpI/QdGvt6kO6mp7JOhhpBdBIyWJjrrA3LhQegc8oehcp3z3jPO21Rh0
+	 U8tA0oKY3PdPRR0NR8IsNCK3WqwYQmqlf/uAXoz7u2HsE/ZLkXmriVMwTWUY09F8J4w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gY5DTsYV;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xz7wn6Bc;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 309BE606A31C;
-	Wed, 28 Oct 2026 18:31:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C88A606A31A;
+	Wed, 28 Oct 2026 18:31:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gY5DTsYV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4345E1F01825;
-	Wed, 28 Oct 2026 18:31:11 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xz7wn6Bc
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7276C1F01825;
+	Wed, 28 Oct 2026 18:31:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793212271;
-	bh=HKie8Ua1wNq0frcnq/KsMGE6nadRIcVi9i1lH86zlnI=;
+	s=korg; t=1793212275;
+	bh=sbkjhc/tDFXmy84LTQfGEUJISIcdzH+YYsFhDRKBLYs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gY5DTsYVa0Q6MEXDa5yQTi4NXPgiMWsxfti6ojQTaBMR0riYoIeeM/N5+aCZggUye
-	 QDH/QKPAjnQsENrVyh6kh8MRHhb25xb8c2C4PcYUNcOxCZoMOXDa9r3GWc648kNy6x
-	 g/OgZKdmQxRrUMUxYPXgyZkuOYwdgRCD2OIPDQeg=
+	b=xz7wn6BcDDlUThJKwFyypuu95vsTHHQb08Qcnm2TzkZqMJntgJ3nJdK2v6TVytARb
+	 1JDYpnJwOEMOvhx9YFau1qqeNUa5dGH3MX1HVAX4wqlS7gflfiJoSqdwrKJUe/OgrL
+	 eeQR/MBALulhmZF1mEIE0pXQRwYnZOjwkHhQfcbE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <error27@gmail.com>,
-	Muhammad Bilal <meatuni001@gmail.com>,
+	sashiko-bot@kernel.org,
+	Steven Rostedt <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0097/1887] staging: sm750fb: fix mono image source stride mismatch in lynxfb_ops_imageblit()
-Date: Wed, 28 Oct 2026 17:36:33 +0100
-Message-ID: <20261028170501.441540229@linuxfoundation.org>
+Subject: [PATCH 6.1 0098/1887] ftrace: Synchronize the initialization of ftrace_ops
+Date: Wed, 28 Oct 2026 17:36:34 +0100
+Message-ID: <20261028170501.463725678@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,140 +68,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Muhammad Bilal <meatuni001@gmail.com>
+From: Steven Rostedt <rostedt@goodmis.org>
 
-[ Upstream commit cc7cd2a9228175c975f62ad56ed7c767701cb4fa ]
+[ Upstream commit 4617721c502b2ddaa4e324e86da4997edf738fa5 ]
 
-sm750_hw_imageblit() advances its monochrome source pointer by
-src_delta per scanline, and computes the correct rounded-up stride
-internally as:
+There's some internal state that ftrace_ops needs to have set, but since
+it can be declared outside of the ftrace.c code, it calls
+ftrace_ops_init() on the ops in every global function. The issue is that
+if two tasks call it on the same ops at the same time it is possible to
+have the initialization of one corrupt the initialization of the other
+call.
 
-        bytes_per_scan = (width + start_bit + 7) / 8;
+Create a ops_mutex to use to synchronize every initialization of the
+ftrace_ops. The mutex is taken within checking the ftrace_ops flag that
+states it was initializied but the flag is checked again after the mutex
+has been taken. Checking first outside the mutex allows it to shortcut
+having to take the mutex. But then the check needs to be done again after
+the mute is taken in case of races.
 
-Its only caller, lynxfb_ops_imageblit(), instead passed src_delta as
-image->width >> 3. For widths not a multiple of 8 this under-counted
-the stride, so the source pointer fell further behind the real
-per-scanline layout on every line, corrupting the rendered image.
-
-Rather than just fixing the caller's calculation, remove src_delta
-as a parameter entirely and have sm750_hw_imageblit() advance by the
-bytes_per_scan it already computes for itself. There has only ever
-been one caller, and that caller was passing an out-of-sync
-derivative of the same width/start_bit values sm750_hw_imageblit()
-already has, so keeping stride as a separate parameter served no
-purpose beyond letting the two calculations drift apart, which is
-exactly what happened here.
-
-Rounding up, rather than down, is the direction consistent with the
-rest of the fbdev core: struct fb_image mono bitmap data (the same
-image->data this driver receives) is walked elsewhere with byte
-strides derived from a ceiling division of width by 8. The generic
-mono bit iterator in drivers/video/fbdev/core/fb_imageblit.h advances
-scanlines with "iter->data += BITS_TO_BYTES(iter->width)", and
-BITS_TO_BYTES() (include/linux/bitops.h) is a ceiling division.
-sm750_hw_imageblit()'s own "(width + start_bit + 7) / 8" is that same
-ceiling division with an added start_bit offset, so the caller's
-">> 3" (floor) was the one calculation out of step with how this data
-layout is handled everywhere else.
-
-Found by code review of sm750_hw_imageblit()'s internal stride
-calculation against what its only caller was passing in, and
-confirmed with a clean -Werror build. I do not have this hardware,
-so this has not been exercised at runtime on real sm750 silicon.
-
-Fixes: 81dee67e215b2 ("staging: sm750fb: add sm750 to staging")
 Cc: stable@vger.kernel.org
-Reviewed-by: Dan Carpenter <error27@gmail.com>
-Signed-off-by: Muhammad Bilal <meatuni001@gmail.com>
-Link: https://patch.msgid.link/20260901113031.161610-1-meatuni001@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://patch.msgid.link/20260902095501.6b59af20@gandalf.local.home
+Fixes: f04f24fb7e48d ("ftrace, kprobes: Fix a deadlock on ftrace_regex_lock")
+Reported-by: sashiko-bot@kernel.org
+Close: https://lore.kernel.org/all/20260829025528.49A831F000E9@smtp.kernel.org/
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+[ adjusted INIT_OPS_HASH macro context for the missing subop_list member. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/sm750fb/sm750.c       | 2 +-
- drivers/staging/sm750fb/sm750.h       | 2 +-
- drivers/staging/sm750fb/sm750_accel.c | 6 ++----
- drivers/staging/sm750fb/sm750_accel.h | 4 +---
- 4 files changed, 5 insertions(+), 9 deletions(-)
+ kernel/trace/ftrace.c | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/staging/sm750fb/sm750.c b/drivers/staging/sm750fb/sm750.c
-index 758759b706d47..ad41ba284a3af 100644
---- a/drivers/staging/sm750fb/sm750.c
-+++ b/drivers/staging/sm750fb/sm750.c
-@@ -276,7 +276,7 @@ static void lynxfb_ops_imageblit(struct fb_info *info,
- 	spin_lock(&sm750_dev->slock);
- 
- 	sm750_dev->accel.de_imageblit(&sm750_dev->accel,
--				      image->data, image->width >> 3, 0,
-+				      image->data, 0,
- 				      base, pitch, Bpp,
- 				      image->dx, image->dy,
- 				      image->width, image->height,
-diff --git a/drivers/staging/sm750fb/sm750.h b/drivers/staging/sm750fb/sm750.h
-index aff69661c8e62..a693d9f1d0d5e 100644
---- a/drivers/staging/sm750fb/sm750.h
-+++ b/drivers/staging/sm750fb/sm750.h
-@@ -73,7 +73,7 @@ struct lynx_accel {
- 			   u32 rop2);
- 
- 	int (*de_imageblit)(struct lynx_accel *accel, const char *p_srcbuf,
--			    u32 src_delta, u32 start_bit, u32 d_base, u32 d_pitch,
-+			    u32 start_bit, u32 d_base, u32 d_pitch,
- 			    u32 byte_per_pixel, u32 dx, u32 dy, u32 width,
- 			    u32 height, u32 f_color, u32 b_color, u32 rop2);
- 
-diff --git a/drivers/staging/sm750fb/sm750_accel.c b/drivers/staging/sm750fb/sm750_accel.c
-index 24b9077a634a6..eb47c18a585d0 100644
---- a/drivers/staging/sm750fb/sm750_accel.c
-+++ b/drivers/staging/sm750fb/sm750_accel.c
-@@ -301,8 +301,6 @@ static unsigned int deGetTransparency(struct lynx_accel *accel)
-  * sm750_hw_imageblit
-  * @accel: Acceleration device data
-  * @pSrcbuf: pointer to start of source buffer in system memory
-- * @srcDelta: Pitch value (in bytes) of the source buffer, +ive means top down
-- *	      and -ive mean button up
-  * @startBit: Mono data can start at any bit in a byte, this value should be
-  *	      0 to 7
-  * @dBase: Address of destination: offset in frame buffer
-@@ -317,7 +315,7 @@ static unsigned int deGetTransparency(struct lynx_accel *accel)
-  * @rop2: ROP value
-  */
- int sm750_hw_imageblit(struct lynx_accel *accel, const char *pSrcbuf,
--		       u32 srcDelta, u32 startBit, u32 dBase, u32 dPitch,
-+		       u32 startBit, u32 dBase, u32 dPitch,
- 		       u32 bytePerPixel, u32 dx, u32 dy, u32 width,
- 		       u32 height, u32 fColor, u32 bColor, u32 rop2)
+diff --git a/kernel/trace/ftrace.c b/kernel/trace/ftrace.c
+index eee7bb2843940..359cea3478b65 100644
+--- a/kernel/trace/ftrace.c
++++ b/kernel/trace/ftrace.c
+@@ -71,6 +71,8 @@
+ #define INIT_OPS_HASH(opsname)	\
+ 	.func_hash		= &opsname.local_hash,			\
+ 	.local_hash.regex_lock	= __MUTEX_INITIALIZER(opsname.local_hash.regex_lock),
++/* Used only to synchronize the initialization of ftrace_ops */
++static DEFINE_MUTEX(ops_mutex);
+ #else
+ #define INIT_OPS_HASH(opsname)
+ #endif
+@@ -128,10 +130,17 @@ void ftrace_ops_list_func(unsigned long ip, unsigned long parent_ip,
+ static inline void ftrace_ops_init(struct ftrace_ops *ops)
  {
-@@ -406,7 +404,7 @@ int sm750_hw_imageblit(struct lynx_accel *accel, const char *pSrcbuf,
- 			write_dpPort(accel, *(unsigned int *)ajRemain);
- 		}
- 
--		pSrcbuf += srcDelta;
-+		pSrcbuf += ulBytesPerScan;
+ #ifdef CONFIG_DYNAMIC_FTRACE
+-	if (!(ops->flags & FTRACE_OPS_FL_INITIALIZED)) {
++	unsigned long flags = smp_load_acquire(&ops->flags);
++
++	if (!(flags & FTRACE_OPS_FL_INITIALIZED)) {
++		guard(mutex)(&ops_mutex);
++		/* Could have been initialized before lock taken */
++		if (unlikely(ops->flags & FTRACE_OPS_FL_INITIALIZED))
++			return;
+ 		mutex_init(&ops->local_hash.regex_lock);
+ 		ops->func_hash = &ops->local_hash;
+-		ops->flags |= FTRACE_OPS_FL_INITIALIZED;
++		flags = ops->flags | FTRACE_OPS_FL_INITIALIZED;
++		smp_store_release(&ops->flags, flags);
  	}
- 
- 	return 0;
-diff --git a/drivers/staging/sm750fb/sm750_accel.h b/drivers/staging/sm750fb/sm750_accel.h
-index 2c79cb730a0a6..df48ed57a054e 100644
---- a/drivers/staging/sm750fb/sm750_accel.h
-+++ b/drivers/staging/sm750fb/sm750_accel.h
-@@ -220,8 +220,6 @@ int sm750_hw_copyarea(struct lynx_accel *accel,
- /**
-  * sm750_hw_imageblit
-  * @pSrcbuf: pointer to start of source buffer in system memory
-- * @srcDelta: Pitch value (in bytes) of the source buffer, +ive means top down
-- *>-----      and -ive mean button up
-  * @startBit: Mono data can start at any bit in a byte, this value should be
-  *>-----      0 to 7
-  * @dBase: Address of destination: offset in frame buffer
-@@ -236,7 +234,7 @@ int sm750_hw_copyarea(struct lynx_accel *accel,
-  * @rop2: ROP value
-  */
- int sm750_hw_imageblit(struct lynx_accel *accel, const char *pSrcbuf,
--		       u32 srcDelta, u32 startBit, u32 dBase, u32 dPitch,
-+		       u32 startBit, u32 dBase, u32 dPitch,
- 		       u32 bytePerPixel, u32 dx, u32 dy, u32 width,
- 		       u32 height, u32 fColor, u32 bColor, u32 rop2);
- 
+ #endif
+ }
 -- 
 2.53.0
 
