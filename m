@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793210783;
-	b=uA+f85cumAOVXDMin+zQhgs4S1w5RmZPn6W+E1XqCqs5XQX3geJwLNoIjGKJQJfG2sor
-	 cO2jsY+YxNTBJVSI0bip8BU0FfLCh/uZGDFv4xxSabFTl8UOsRvcPfBejXFLAjI+r5n0n
-	 N/4YS+K3pRnofvjs+6AVizPysuMhfjXHf5onyXwgzbwaguN7y1U8xnD8HSRM9Y8+h2y8k
-	 zn6yDYnE6x6FuKw/qbVzPvCC3udRahIt9ao+JxXebgeBb8eY2fBxmLqFYukD2nL0zdJKk
-	 AK93ynKIEqQmkb5voxVNg4rs3k0v/Gd1kKijnsRrKty2ph56jR9xegn1SxqzokszTCQ==
+	t=1793210786;
+	b=yn/ukL5wNivZMWWh+CuKyr6vNhssy9ARHbRtlF5Z1b02N32optWTudcr27NXOsA/bH7u
+	 MwJw5f6DjS5Y9+9EES3A7ZhtcMp7gfUwaCjNyyXC7flGtcMWB/jCE5H/W48THhNNyIgy4
+	 4qVekrRLZn/SbErCj/oYlP1R7NGq6ZWXYnPVG19eRMrV51huYj5p35G4QhTsNfzUGUAZn
+	 kmmojPTqhwlut4oX10Jl5ICYJ3JryktnuKlQwE5lXi+tFKtlEYyuACsJXcZq7jgy3WG/J
+	 QOr9o4RWGHPBIXK3SfbhVTi+NZDEZCoPzPP6oR2dDg+Gz3sV9uHE82O871Bijo8rh4Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793210783;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793210786;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=sqyk2+yNiax6e9Eye+J6bXFKN8Te0An1M4fjXa7jVcI=;
-	b=VhNuW0QzH0O9eqYgx+g8V64fsWm61hAUXSzOFFkYMP5myn0W+ljUC/fUET5rSLuAF2zE
-	 LtReT4vDddX4QNVrbExQG4pNWyJd4uipsUIKtdLUEjMElsdwc0jBqhiGZ8sSRrx563gX6
-	 ZXRCVExiORVmGAc3gM3tlMLCaFETRMbixgNBdNA53KRQnwU9flKyggkQNFajaVsLEQCKo
-	 EQSdYEDANSbB6Qx5KdSoIAcOw1tdSs+9HDcp52HidFii6tYUPtNWR0B3gBcHVjR6O/i1U
-	 EEwe2XYpaCG5nNi48V+njLJu66c65uoOd8s/aRugiPtV4u9cT6A3u9cH2/NW0od8cgg==
+	bh=13vrH4EoWcW8iaptOxwhLNFcMcwXIlpfGRt4Jfm/xKo=;
+	b=i4T/NG9OpUTGQBCJ5guRMVg3qhqp1tdncpIi1rqE4MCcmp0eLYLnFNYQE3GtR2IXplnB
+	 SOuzPkYWL6/nHRAk00BNJ3XnEU7ZHhUrCOGDUKLJhOBwRwcPt4B+kPy266IH8zAhuGK2y
+	 4IETNRf8aPl/MGRCn1iIxxCikFmp0e4LGIfjZGThvgCNtyeSOGlj/wI8+5xCS/ct1ULGv
+	 rmJgtV2RISaGtTJJueP7M96z2fcGIG2vvVYx8lfMXm68DWvsI0Pn13+du0OtcRyVc7J14
+	 j5tUHZ741KSXJquhII+uY/L35lJnftykeTswpPCpWoYUCqkSWzfZv0zkcJvFbKtjmBg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=milGoUPk;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Yzj2YJwW;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C462606A31F;
-	Wed, 28 Oct 2026 18:06:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 039C2606A31A;
+	Wed, 28 Oct 2026 18:06:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=milGoUPk
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D71A1F031E0;
-	Wed, 28 Oct 2026 18:06:22 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Yzj2YJwW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 546E71F01825;
+	Wed, 28 Oct 2026 18:06:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793210783;
-	bh=sqyk2+yNiax6e9Eye+J6bXFKN8Te0An1M4fjXa7jVcI=;
+	s=korg; t=1793210785;
+	bh=13vrH4EoWcW8iaptOxwhLNFcMcwXIlpfGRt4Jfm/xKo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=milGoUPk7IQyxL4tD+oA8ZioZj+wauPKyV0csGqk89dLo+00zyrb80FwWI4fvFIi4
-	 4fmimdMnT0LNb4W6vLxA0xqt3x4lLAkFOgTyK6jEX0fyxFLHi+U8Uk2GbQl+YCfNwg
-	 3ZZmCcXrxg4nlJqDl+NwD/91XmRXkutsYOQPNMWA=
+	b=Yzj2YJwWu+rPj9FL1TDhVSkCVNeZ7aAOQU850afMFsXE6JipIZccnS0i0f4O0EkLK
+	 uAb7861GXSyKp98OKyEhExD95dUcE3wkcOq46UiXox80vKl9vuSejS/XhVWO+eIYVN
+	 MjrVyE9C4mvWjo/D+8H5TeQQpxSK+6AH+PEkmTbU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Horman <horms@kernel.org>,
-	Maoyi Xie <maoyi.xie@ntu.edu.sg>,
-	Allison Henderson <achender@kernel.org>,
+	Sanghyun Park <sanghyun.park.cnu@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 147/571] rds_tcp: close NULL deref window in rds_tcp_set_callbacks
-Date: Wed, 28 Oct 2026 17:54:54 +0100
-Message-ID: <20261028170011.504717464@linuxfoundation.org>
+Subject: [PATCH 5.15 148/571] vxlan: use one headroom snapshot for neighbour replies
+Date: Wed, 28 Oct 2026 17:54:55 +0100
+Message-ID: <20261028170011.528331506@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -70,73 +68,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maoyi Xie <maoyixie.tju@gmail.com>
+From: Sanghyun Park <sanghyun.park.cnu@gmail.com>
 
-commit d2bfdbb69cf87676981b1043010b6224d84c6d3a upstream.
+[ Upstream commit 481506a756dcd828ef42391cb08f38d8d96d38fc ]
 
-rds_tcp_set_callbacks() links a new rds_tcp_connection onto
-rds_tcp_tc_list under rds_tcp_tc_list_lock. It releases the
-lock, then assigns tc->t_sock = sock outside the lock.
+vxlan_na_create() samples LL_RESERVED_SPACE() to size the reply skb and then
+samples it again to reserve headroom. A concurrent vxlan_changelink() can
+update needed_headroom between the two reads, creating a TOCTOU race. The
+second value can exceed the allocation and make the Ethernet header write out
+of bounds.
 
-rds_tcp_tc_info() and rds6_tcp_tc_info() walk rds_tcp_tc_list
-under the same lock. Both dereference tc->t_sock->sk without
-a NULL check.
+The race is reproducible on the unpatched kernel. It occurred when
+vxlan_na_create() generated a neighbour reply while vxlan_changelink() changed
+the link headroom. KASAN caught a four-byte write two bytes beyond a 704-byte
+skbuff_small_head allocation.
 
-A reader can acquire rds_tcp_tc_list_lock between the writer's
-spin_unlock and the t_sock store. It then sees a list entry
-whose t_sock is NULL. The dereference of tc->t_sock->sk is a
-NULL access.
+Snapshot the headroom once and use that value for both allocation and
+reservation.
 
-Move tc->t_sock = sock inside rds_tcp_tc_list_lock, before
-list_add_tail. A reader holding the lock then observes the
-linkage and the t_sock store together.
-
-The restore path is safe. rds_tcp_restore_callbacks() does
-list_del_init inside the lock. The matching tc->t_sock = NULL
-after unlink is harmless to readers holding the lock.
-
-Fixes: 70041088e3b9 ("RDS: Add TCP transport to RDS")
-Suggested-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Maoyi Xie <maoyi.xie@ntu.edu.sg>
-Reviewed-by: Allison Henderson <achender@kernel.org>
-Link: https://patch.msgid.link/20260512142807.1855619-1-maoyi.xie@ntu.edu.sg
+Fixes: 4b29dba9c085 ("vxlan: fix nonfunctional neigh_reduce()")
+Signed-off-by: Sanghyun Park <sanghyun.park.cnu@gmail.com>
+Link: https://patch.msgid.link/20260918032842.502409-2-sanghyun.park.cnu@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-
-[ achender: resolved context conflict; tc->t_rtn initialization is not
-  present in this tree ]
-Signed-off-by: Allison Henderson <achender@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rds/tcp.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/net/vxlan/vxlan_core.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/net/rds/tcp.c b/net/rds/tcp.c
-index fba2c7a2210ba..f8bf7356f78dc 100644
---- a/net/rds/tcp.c
-+++ b/net/rds/tcp.c
-@@ -231,16 +231,19 @@ void rds_tcp_set_callbacks(struct socket *sock, struct rds_conn_path *cp)
- 	rdsdebug("setting sock %p callbacks to tc %p\n", sock, tc);
- 	write_lock_bh(&sock->sk->sk_callback_lock);
+diff --git a/drivers/net/vxlan/vxlan_core.c b/drivers/net/vxlan/vxlan_core.c
+index c1ee03aebed51..0491ff123b38e 100644
+--- a/drivers/net/vxlan/vxlan_core.c
++++ b/drivers/net/vxlan/vxlan_core.c
+@@ -2086,13 +2086,15 @@ static struct sk_buff *vxlan_na_create(struct sk_buff *request,
+ 	struct ipv6hdr *pip6;
+ 	u8 *daddr;
+ 	int na_olen = 8; /* opt hdr + ETH_ALEN for target */
++	int headroom;
+ 	int ns_olen;
+ 	int i, len;
  
--	/* done under the callback_lock to serialize with write_space */
-+	/* done under the callback_lock to serialize with write_space.
-+	 * Set t_sock inside rds_tcp_tc_list_lock so readers walking
-+	 * rds_tcp_tc_list under the same lock cannot observe an
-+	 * entry whose t_sock is NULL.
-+	 */
- 	spin_lock(&rds_tcp_tc_list_lock);
-+	tc->t_sock = sock;
- 	list_add_tail(&tc->t_list_item, &rds_tcp_tc_list);
- 	spin_unlock(&rds_tcp_tc_list_lock);
+ 	if (dev == NULL || !pskb_may_pull(request, request->len))
+ 		return NULL;
  
- 	/* accepted sockets need our listen data ready undone */
- 	if (sock->sk->sk_data_ready == rds_tcp_listen_data_ready)
- 		sock->sk->sk_data_ready = sock->sk->sk_user_data;
--
--	tc->t_sock = sock;
- 	tc->t_cpath = cp;
- 	tc->t_orig_data_ready = sock->sk->sk_data_ready;
- 	tc->t_orig_write_space = sock->sk->sk_write_space;
+-	len = LL_RESERVED_SPACE(dev) + sizeof(struct ipv6hdr) +
++	headroom = LL_RESERVED_SPACE(dev);
++	len = headroom + sizeof(struct ipv6hdr) +
+ 		sizeof(*na) + na_olen + dev->needed_tailroom;
+ 	reply = alloc_skb(len, GFP_ATOMIC);
+ 	if (reply == NULL)
+@@ -2100,7 +2102,7 @@ static struct sk_buff *vxlan_na_create(struct sk_buff *request,
+ 
+ 	reply->protocol = htons(ETH_P_IPV6);
+ 	reply->dev = dev;
+-	skb_reserve(reply, LL_RESERVED_SPACE(request->dev));
++	skb_reserve(reply, headroom);
+ 	skb_push(reply, sizeof(struct ethhdr));
+ 	skb_reset_mac_header(reply);
+ 
 -- 
 2.53.0
 
