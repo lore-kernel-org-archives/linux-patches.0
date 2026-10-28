@@ -1,56 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213847;
-	b=XMFN+h8hOZlAmAPQ6uBYnYLhN/kr5kurMtWJcF1IkesptrlbjTJpCOy/IMWdR4FJ2Pzf
-	 lrdI8NZ36OYH4lsZyJPCP3GnlFWtSHJZsIspK6ty2QM+aD5IFw6yR1qcqFe1gLMjJ7Rk8
-	 F5tsG/p8m7ClCSiYW9EPSSn9647/l+KDiBHiqQnJ0M67dLGsoXlFpV9zcMOFcFtrWQtwU
-	 2e8k7enHVYX/xzxJX9HnnTvw1pyRNSO295qGYRqZCY2hGIu1aMC13XXoOCnUN9i+IOs7u
-	 eX+Pi+08LAMQsA3WXDCBjKerjlUGBYVpSsvs2JB115or4V5Bertcn2PA1uxL1osm1jg==
+	t=1793213849;
+	b=h4lrhLa1cskS6KvzOkX6+CDpbcSESNtbiLm1PIiSP8Ru2+4Yy/N8qKchFmvItxZzyOdQ
+	 jibTwrlBD8Cy9SY9z9dQ/YE/+6qMCph54iPHzKm9iBbmQsASdrXg8HKpykfUOtWJCYHsW
+	 vFb8zDYBnH1cbjgS/KNM1kRk2SEGNf/zujLe5dCWROKbQEJaR2myRUgxSEsinlugGDvNV
+	 IpRdiC0t840CA33XHTKyMJeOezQjI0xWn8ZKyPEVGs+HnJlohvqHKHobHRXWrqzlFpXCL
+	 pCOJqQpcI88CsT/zjMT1RHWTbeYNOTIqTeG8mMNfP8M1WVXaUOOQYAVQomzqTPs1Zfw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213847;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213849;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=eC+tQvf0QUytZHyjo7vcHUQpYGWRQxJKsJqqRettURA=;
-	b=BLy+2eCMloHIG0OkNfvPxNjvHn6RtjgWJTnfzpzLnXgiioYpccMxp+HcTHdMjH5UtVR0
-	 mob8C6sqjgwg8LFCm+HdOIdxa68IzBHk37OL6oZtqSGUhZc187mjkMaU2EqXKupa8NmWP
-	 Omo31HsyFmqbWsNZbQidL8P8rQ3aKARk3+3/T9asyr7mmJntcQeqVOPDmrxrcYOS5nzjL
-	 oNCw/flU3W7u8b2KaHB2avXKqpFTdtchjFpHwi6lp+aSmRS3Z6p5O47ssLESnfM4fPrOV
-	 6+j/qY5SRxMr+LcVv7s1SqnS7ldOPBsen5mMEBQsi/9+BNO1A3qknNU9s4L/xmkCOrQ==
+	bh=yaJq9NdDEcvjiKGUISjuI3uadDfLyJD0FvA1qvyB6Z4=;
+	b=s4OAF5KPclJUO9fnG3S9XI6Gv5lTrujn+k/s7ZSoAAh+oXurR2kIaG2HUH5BKXzllC48
+	 BykCxN4L4oBKuzscLomr5BwsDcuKvhLN7x5gx4OvePn3Hf2xxOgYFQgwBq09WcwGhz6+4
+	 BEiLng3+cE0R2K/Tgyi44r18BOThBBBsZX+QCyLl5/fozUhXQ7DGWzhhTnm07ydyGftEg
+	 zEc/KfKc2g23ZalGJBJwM+zIN2orx76/bshQqoF8tdQy+t2Vx4+n3UN69Mx58kN3m/R35
+	 zAOSdMAnt6y7LZQHhn9hr0+kIIiikHnKGeG57QEKJB/Qz4fAROx2xIfciSRtCZEp6hw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZZNR+uFS;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WhXm+B44;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3A07606A31F;
-	Wed, 28 Oct 2026 18:57:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97A77606A31E;
+	Wed, 28 Oct 2026 18:57:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZZNR+uFS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3781E1F01825;
-	Wed, 28 Oct 2026 18:57:26 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WhXm+B44
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F22331F031E2;
+	Wed, 28 Oct 2026 18:57:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213846;
-	bh=eC+tQvf0QUytZHyjo7vcHUQpYGWRQxJKsJqqRettURA=;
+	s=korg; t=1793213849;
+	bh=yaJq9NdDEcvjiKGUISjuI3uadDfLyJD0FvA1qvyB6Z4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZZNR+uFSJRl4wumJY06xdspn0M1e4aW6katlO7GiajMeI6eFhgJYyfp1jgNM2i70a
-	 U4mbPvLhGcz2YUM0SsRbR5cTS6YtxQ5D/eW8PZ5A3Dj4rMc34aLfGp65OnhCMijT5N
-	 8HYP9YY1+18cPzOJscC99H84ubApKlpU3i/YPVmk=
+	b=WhXm+B44AWoJb5HIXC1p3k+o5sTpkw25yu6MNC24YyxFRT7TvTRZ5bH/lXVtFSf9/
+	 P+/tvDilQonasVC8QYG8hrV+BXlBfu/nhtrnPPr4dZ7jibJYXounIDn8G9aoruvXgZ
+	 DAh8dUjo9SJlemtUH3htgu6eN/cfaM5idKpwAzzA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wojciech Drewek <wojciech.drewek@intel.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Chandan Kumar Rout <chandanx.rout@intel.com>,
-	Larysa Zaremba <larysa.zaremba@intel.com>,
-	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Jann Horn <jannh@google.com>,
+	David Hildenbrand <david@redhat.com>,
+	Andrea Arcangeli <aarcange@redhat.com>,
+	Hugh Dickins <hughd@google.com>,
+	Pavel Emelyanov <xemul@virtuozzo.com>,
+	Qi Zheng <zhengqi.arch@bytedance.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0650/1887] ice: protect XDP configuration with a mutex
-Date: Wed, 28 Oct 2026 17:45:46 +0100
-Message-ID: <20261028170514.201750075@linuxfoundation.org>
+Subject: [PATCH 6.1 0651/1887] userfaultfd: fix checks for huge PMDs
+Date: Wed, 28 Oct 2026 17:45:47 +0100
+Message-ID: <20261028170514.225556825@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -72,287 +73,144 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Larysa Zaremba <larysa.zaremba@intel.com>
+From: Jann Horn <jannh@google.com>
 
-[ Upstream commit 2504b8405768a57a71e660dbfd5abd59f679a03f ]
+[ Upstream commit 71c186efc1b2cf1aeabfeff3b9bd5ac4c5ac14d8 ]
 
-The main threat to data consistency in ice_xdp() is a possible asynchronous
-PF reset. It can be triggered by a user or by TX timeout handler.
+Patch series "userfaultfd: fix races around pmd_trans_huge() check", v2.
 
-XDP setup and PF reset code access the same resources in the following
-sections:
-* ice_vsi_close() in ice_prepare_for_reset() - already rtnl-locked
-* ice_vsi_rebuild() for the PF VSI - not protected
-* ice_vsi_open() - already rtnl-locked
+The pmd_trans_huge() code in mfill_atomic() is wrong in three different
+ways depending on kernel version:
 
-With an unfortunate timing, such accesses can result in a crash such as the
-one below:
+1. The pmd_trans_huge() check is racy and can lead to a BUG_ON() (if you hit
+   the right two race windows) - I've tested this in a kernel build with
+   some extra mdelay() calls. See the commit message for a description
+   of the race scenario.
+   On older kernels (before 6.5), I think the same bug can even
+   theoretically lead to accessing transhuge page contents as a page table
+   if you hit the right 5 narrow race windows (I haven't tested this case).
+2. As pointed out by Qi Zheng, pmd_trans_huge() is not sufficient for
+   detecting PMDs that don't point to page tables.
+   On older kernels (before 6.5), you'd just have to win a single fairly
+   wide race to hit this.
+   I've tested this on 6.1 stable by racing migration (with a mdelay()
+   patched into try_to_migrate()) against UFFDIO_ZEROPAGE - on my x86
+   VM, that causes a kernel oops in ptlock_ptr().
+3. On newer kernels (>=6.5), for shmem mappings, khugepaged is allowed
+   to yank page tables out from under us (though I haven't tested that),
+   so I think the BUG_ON() checks in mfill_atomic() are just wrong.
 
-[ +1.999878] ice 0000:b1:00.0: Registered XDP mem model MEM_TYPE_XSK_BUFF_POOL on Rx ring 14
-[ +2.002992] ice 0000:b1:00.0: Registered XDP mem model MEM_TYPE_XSK_BUFF_POOL on Rx ring 18
-[Mar15 18:17] ice 0000:b1:00.0 ens801f0np0: NETDEV WATCHDOG: CPU: 38: transmit queue 14 timed out 80692736 ms
-[ +0.000093] ice 0000:b1:00.0 ens801f0np0: tx_timeout: VSI_num: 6, Q 14, NTC: 0x0, HW_HEAD: 0x0, NTU: 0x0, INT: 0x4000001
-[ +0.000012] ice 0000:b1:00.0 ens801f0np0: tx_timeout recovery level 1, txqueue 14
-[ +0.394718] ice 0000:b1:00.0: PTP reset successful
-[ +0.006184] BUG: kernel NULL pointer dereference, address: 0000000000000098
-[ +0.000045] #PF: supervisor read access in kernel mode
-[ +0.000023] #PF: error_code(0x0000) - not-present page
-[ +0.000023] PGD 0 P4D 0
-[ +0.000018] Oops: 0000 [#1] PREEMPT SMP NOPTI
-[ +0.000023] CPU: 38 PID: 7540 Comm: kworker/38:1 Not tainted 6.8.0-rc7 #1
-[ +0.000031] Hardware name: Intel Corporation S2600WFT/S2600WFT, BIOS SE5C620.86B.02.01.0014.082620210524 08/26/2021
-[ +0.000036] Workqueue: ice ice_service_task [ice]
-[ +0.000183] RIP: 0010:ice_clean_tx_ring+0xa/0xd0 [ice]
-[...]
-[ +0.000013] Call Trace:
-[ +0.000016] <TASK>
-[ +0.000014] ? __die+0x1f/0x70
-[ +0.000029] ? page_fault_oops+0x171/0x4f0
-[ +0.000029] ? schedule+0x3b/0xd0
-[ +0.000027] ? exc_page_fault+0x7b/0x180
-[ +0.000022] ? asm_exc_page_fault+0x22/0x30
-[ +0.000031] ? ice_clean_tx_ring+0xa/0xd0 [ice]
-[ +0.000194] ice_free_tx_ring+0xe/0x60 [ice]
-[ +0.000186] ice_destroy_xdp_rings+0x157/0x310 [ice]
-[ +0.000151] ice_vsi_decfg+0x53/0xe0 [ice]
-[ +0.000180] ice_vsi_rebuild+0x239/0x540 [ice]
-[ +0.000186] ice_vsi_rebuild_by_type+0x76/0x180 [ice]
-[ +0.000145] ice_rebuild+0x18c/0x840 [ice]
-[ +0.000145] ? delay_tsc+0x4a/0xc0
-[ +0.000022] ? delay_tsc+0x92/0xc0
-[ +0.000020] ice_do_reset+0x140/0x180 [ice]
-[ +0.000886] ice_service_task+0x404/0x1030 [ice]
-[ +0.000824] process_one_work+0x171/0x340
-[ +0.000685] worker_thread+0x277/0x3a0
-[ +0.000675] ? preempt_count_add+0x6a/0xa0
-[ +0.000677] ? _raw_spin_lock_irqsave+0x23/0x50
-[ +0.000679] ? __pfx_worker_thread+0x10/0x10
-[ +0.000653] kthread+0xf0/0x120
-[ +0.000635] ? __pfx_kthread+0x10/0x10
-[ +0.000616] ret_from_fork+0x2d/0x50
-[ +0.000612] ? __pfx_kthread+0x10/0x10
-[ +0.000604] ret_from_fork_asm+0x1b/0x30
-[ +0.000604] </TASK>
+I decided to write two separate fixes for these (one fix for bugs 1+2, one
+fix for bug 3), so that the first fix can be backported to kernels
+affected by bugs 1+2.
 
-The previous way of handling this through returning -EBUSY is not viable,
-particularly when destroying AF_XDP socket, because the kernel proceeds
-with removal anyway.
+This patch (of 2):
 
-There is plenty of code between those calls and there is no need to create
-a large critical section that covers all of them, same as there is no need
-to protect ice_vsi_rebuild() with rtnl_lock().
+This fixes two issues.
 
-Add xdp_state_lock mutex to protect ice_vsi_rebuild() and ice_xdp().
+I discovered that the following race can occur:
 
-Leaving unprotected sections in between would result in two states that
-have to be considered:
-1. when the VSI is closed, but not yet rebuild
-2. when VSI is already rebuild, but not yet open
+  mfill_atomic                other thread
+  ============                ============
+                              <zap PMD>
+  pmdp_get_lockless() [reads none pmd]
+  <bail if trans_huge>
+  <if none:>
+                              <pagefault creates transhuge zeropage>
+    __pte_alloc [no-op]
+                              <zap PMD>
+  <bail if pmd_trans_huge(*dst_pmd)>
+  BUG_ON(pmd_none(*dst_pmd))
 
-The latter case is actually already handled through !netif_running() case,
-we just need to adjust flag checking a little. The former one is not as
-trivial, because between ice_vsi_close() and ice_vsi_rebuild(), a lot of
-hardware interaction happens, this can make adding/deleting rings exit
-with an error. Luckily, VSI rebuild is pending and can apply new
-configuration for us in a managed fashion.
+I have experimentally verified this in a kernel with extra mdelay() calls;
+the BUG_ON(pmd_none(*dst_pmd)) triggers.
 
-Therefore, add an additional VSI state flag ICE_VSI_REBUILD_PENDING to
-indicate that ice_xdp() can just hot-swap the program.
+On kernels newer than commit 0d940a9b270b ("mm/pgtable: allow
+pte_offset_map[_lock]() to fail"), this can't lead to anything worse than
+a BUG_ON(), since the page table access helpers are actually designed to
+deal with page tables concurrently disappearing; but on older kernels
+(<=6.4), I think we could probably theoretically race past the two
+BUG_ON() checks and end up treating a hugepage as a page table.
 
-Also, as ice_vsi_rebuild() flow is touched in this patch, make it more
-consistent by deconfiguring VSI when coalesce allocation fails.
+The second issue is that, as Qi Zheng pointed out, there are other types
+of huge PMDs that pmd_trans_huge() can't catch: devmap PMDs and swap PMDs
+(in particular, migration PMDs).
 
-Fixes: 2d4238f55697 ("ice: Add support for AF_XDP")
-Fixes: efc2214b6047 ("ice: Add support for XDP")
-Reviewed-by: Wojciech Drewek <wojciech.drewek@intel.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Tested-by: Chandan Kumar Rout <chandanx.rout@intel.com>
-Signed-off-by: Larysa Zaremba <larysa.zaremba@intel.com>
-Reviewed-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+On <=6.4, this is worse than the first issue: If mfill_atomic() runs on a
+PMD that contains a migration entry (which just requires winning a single,
+fairly wide race), it will pass the PMD to pte_offset_map_lock(), which
+assumes that the PMD points to a page table.
+
+Breakage follows: First, the kernel tries to take the PTE lock (which will
+crash or maybe worse if there is no "struct page" for the address bits in
+the migration entry PMD - I think at least on X86 there usually is no
+corresponding "struct page" thanks to the PTE inversion mitigation, amd64
+looks different).
+
+If that didn't crash, the kernel would next try to write a PTE into what
+it wrongly thinks is a page table.
+
+As part of fixing these issues, get rid of the check for pmd_trans_huge()
+before __pte_alloc() - that's redundant, we're going to have to check for
+that after the __pte_alloc() anyway.
+
+Backport note: pmdp_get_lockless() is pmd_read_atomic() in older kernels.
+
+Link: https://lkml.kernel.org/r/20240813-uffd-thp-flip-fix-v2-0-5efa61078a41@google.com
+Link: https://lkml.kernel.org/r/20240813-uffd-thp-flip-fix-v2-1-5efa61078a41@google.com
+Fixes: c1a4de99fada ("userfaultfd: mcopy_atomic|mfill_zeropage: UFFDIO_COPY|UFFDIO_ZEROPAGE preparation")
+Signed-off-by: Jann Horn <jannh@google.com>
+Acked-by: David Hildenbrand <david@redhat.com>
+Cc: Andrea Arcangeli <aarcange@redhat.com>
+Cc: Hugh Dickins <hughd@google.com>
+Cc: Jann Horn <jannh@google.com>
+Cc: Pavel Emelyanov <xemul@virtuozzo.com>
+Cc: Qi Zheng <zhengqi.arch@bytedance.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice.h      |  2 ++
- drivers/net/ethernet/intel/ice/ice_lib.c  | 18 ++++++++++++++++--
- drivers/net/ethernet/intel/ice/ice_main.c | 20 +++++++++++++++-----
- drivers/net/ethernet/intel/ice/ice_xsk.c  |  3 ++-
- 4 files changed, 35 insertions(+), 8 deletions(-)
+ mm/userfaultfd.c | 22 ++++++++++++----------
+ 1 file changed, 12 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice.h b/drivers/net/ethernet/intel/ice/ice.h
-index 1fe9cccf18d2f..874d6133cb177 100644
---- a/drivers/net/ethernet/intel/ice/ice.h
-+++ b/drivers/net/ethernet/intel/ice/ice.h
-@@ -302,6 +302,7 @@ enum ice_vsi_state {
- 	ICE_VSI_UMAC_FLTR_CHANGED,
- 	ICE_VSI_MMAC_FLTR_CHANGED,
- 	ICE_VSI_PROMISC_CHANGED,
-+	ICE_VSI_REBUILD_PENDING,
- 	ICE_VSI_STATE_NBITS		/* must be last */
- };
- 
-@@ -390,6 +391,7 @@ struct ice_vsi {
- 	struct ice_tx_ring **xdp_rings;	 /* XDP ring array */
- 	u16 num_xdp_txq;		 /* Used XDP queues */
- 	u8 xdp_mapping_mode;		 /* ICE_MAP_MODE_[CONTIG|SCATTER] */
-+	struct mutex xdp_state_lock;
- 
- 	struct net_device **target_netdevs;
- 
-diff --git a/drivers/net/ethernet/intel/ice/ice_lib.c b/drivers/net/ethernet/intel/ice/ice_lib.c
-index 347c6c23bfc1c..441e8a6c26a13 100644
---- a/drivers/net/ethernet/intel/ice/ice_lib.c
-+++ b/drivers/net/ethernet/intel/ice/ice_lib.c
-@@ -365,6 +365,7 @@ int ice_vsi_clear(struct ice_vsi *vsi)
- 		pf->next_vsi = vsi->idx;
- 
- 	ice_vsi_free_arrays(vsi);
-+	mutex_destroy(&vsi->xdp_state_lock);
- 	mutex_unlock(&pf->sw_mutex);
- 	devm_kfree(dev, vsi);
- 
-@@ -540,6 +541,8 @@ ice_vsi_alloc(struct ice_pf *pf, enum ice_vsi_type vsi_type,
- 
- 	if (vsi->type == ICE_VSI_CTRL && vf)
- 		vf->ctrl_vsi_idx = vsi->idx;
-+
-+	mutex_init(&vsi->xdp_state_lock);
- 	goto unlock_pf;
- 
- err_rings:
-@@ -3204,10 +3207,14 @@ int ice_vsi_rebuild(struct ice_vsi *vsi, bool init_vsi)
- 
- 	ice_vsi_init_vlan_ops(vsi);
- 
-+	mutex_lock(&vsi->xdp_state_lock);
-+
- 	coalesce = kcalloc(vsi->num_q_vectors,
- 			   sizeof(struct ice_coalesce_stored), GFP_KERNEL);
--	if (!coalesce)
-+	if (!coalesce) {
-+		mutex_unlock(&vsi->xdp_state_lock);
- 		return -ENOMEM;
-+	}
- 
- 	prev_num_q_vectors = ice_vsi_rebuild_get_coalesce(vsi, coalesce);
- 
-@@ -3230,7 +3237,7 @@ int ice_vsi_rebuild(struct ice_vsi *vsi, bool init_vsi)
- 		vsi->base_vector = 0;
- 	}
- 
--	if (ice_is_xdp_ena_vsi(vsi))
-+	if (vsi->xdp_rings)
- 		/* return value check can be skipped here, it always returns
- 		 * 0 if reset is in progress
- 		 */
-@@ -3358,24 +3365,31 @@ int ice_vsi_rebuild(struct ice_vsi *vsi, bool init_vsi)
- 			ret = -EIO;
- 			goto err_vectors;
- 		} else {
-+			mutex_unlock(&vsi->xdp_state_lock);
- 			return ice_schedule_reset(pf, ICE_RESET_PFR);
+diff --git a/mm/userfaultfd.c b/mm/userfaultfd.c
+index 992a0a16846f7..998c7075c62a5 100644
+--- a/mm/userfaultfd.c
++++ b/mm/userfaultfd.c
+@@ -642,21 +642,23 @@ static __always_inline ssize_t __mcopy_atomic(struct mm_struct *dst_mm,
  		}
- 	}
- 	ice_vsi_rebuild_set_coalesce(vsi, coalesce, prev_num_q_vectors);
-+	clear_bit(ICE_VSI_REBUILD_PENDING, vsi->state);
- 	kfree(coalesce);
-+	mutex_unlock(&vsi->xdp_state_lock);
  
- 	return 0;
- 
- err_vectors:
- 	ice_vsi_free_q_vectors(vsi);
- err_rings:
-+	mutex_unlock(&vsi->xdp_state_lock);
- 	if (vsi->netdev) {
- 		vsi->current_netdev_flags = 0;
- 		unregister_netdev(vsi->netdev);
- 		free_netdev(vsi->netdev);
- 		vsi->netdev = NULL;
- 	}
-+	goto err_clear;
- err_vsi:
-+	mutex_unlock(&vsi->xdp_state_lock);
-+err_clear:
- 	ice_vsi_clear(vsi);
- 	set_bit(ICE_RESET_FAILED, pf->state);
- 	kfree(coalesce);
-diff --git a/drivers/net/ethernet/intel/ice/ice_main.c b/drivers/net/ethernet/intel/ice/ice_main.c
-index e923b64f2a668..75fede7d31749 100644
---- a/drivers/net/ethernet/intel/ice/ice_main.c
-+++ b/drivers/net/ethernet/intel/ice/ice_main.c
-@@ -620,6 +620,7 @@ ice_prepare_for_reset(struct ice_pf *pf, enum ice_reset_req reset_type)
- 	/* clear SW filtering DB */
- 	ice_clear_hw_tbls(hw);
- 	/* disable the VSIs and their queues that are not already DOWN */
-+	set_bit(ICE_VSI_REBUILD_PENDING, ice_get_main_vsi(pf)->state);
- 	ice_pf_dis_all_vsi(pf, false);
- 
- 	if (test_bit(ICE_FLAG_PTP_SUPPORTED, pf->flags))
-@@ -2770,6 +2771,7 @@ int ice_prepare_xdp_rings(struct ice_vsi *vsi, struct bpf_prog *prog)
- 	mutex_unlock(&pf->avail_q_mutex);
- 
- 	devm_kfree(dev, vsi->xdp_rings);
-+	vsi->xdp_rings = NULL;
- 	return -ENOMEM;
- }
- 
-@@ -2919,7 +2921,8 @@ ice_xdp_setup_prog(struct ice_vsi *vsi, struct bpf_prog *prog,
- 	}
- 
- 	/* hot swap progs and avoid toggling link */
--	if (ice_is_xdp_ena_vsi(vsi) == !!prog) {
-+	if (ice_is_xdp_ena_vsi(vsi) == !!prog ||
-+	    test_bit(ICE_VSI_REBUILD_PENDING, vsi->state)) {
- 		ice_vsi_assign_bpf_prog(vsi, prog);
- 		return 0;
- 	}
-@@ -2991,21 +2994,28 @@ static int ice_xdp(struct net_device *dev, struct netdev_bpf *xdp)
- {
- 	struct ice_netdev_priv *np = netdev_priv(dev);
- 	struct ice_vsi *vsi = np->vsi;
-+	int ret;
- 
- 	if (vsi->type != ICE_VSI_PF) {
- 		NL_SET_ERR_MSG_MOD(xdp->extack, "XDP can be loaded only on PF VSI");
- 		return -EINVAL;
- 	}
- 
-+	mutex_lock(&vsi->xdp_state_lock);
-+
- 	switch (xdp->command) {
- 	case XDP_SETUP_PROG:
--		return ice_xdp_setup_prog(vsi, xdp->prog, xdp->extack);
-+		ret = ice_xdp_setup_prog(vsi, xdp->prog, xdp->extack);
-+		break;
- 	case XDP_SETUP_XSK_POOL:
--		return ice_xsk_pool_setup(vsi, xdp->xsk.pool,
--					  xdp->xsk.queue_id);
-+		ret = ice_xsk_pool_setup(vsi, xdp->xsk.pool, xdp->xsk.queue_id);
-+		break;
- 	default:
--		return -EINVAL;
-+		ret = -EINVAL;
- 	}
-+
-+	mutex_unlock(&vsi->xdp_state_lock);
-+	return ret;
- }
- 
- /**
-diff --git a/drivers/net/ethernet/intel/ice/ice_xsk.c b/drivers/net/ethernet/intel/ice/ice_xsk.c
-index 2677d7c86a6d7..98d827db84848 100644
---- a/drivers/net/ethernet/intel/ice/ice_xsk.c
-+++ b/drivers/net/ethernet/intel/ice/ice_xsk.c
-@@ -388,7 +388,8 @@ int ice_xsk_pool_setup(struct ice_vsi *vsi, struct xsk_buff_pool *pool, u16 qid)
- 		goto failure;
- 	}
- 
--	if_running = netif_running(vsi->netdev) && ice_is_xdp_ena_vsi(vsi);
-+	if_running = !test_bit(ICE_VSI_DOWN, vsi->state) &&
-+		     ice_is_xdp_ena_vsi(vsi);
- 
- 	if (if_running) {
- 		struct ice_rx_ring *rx_ring = vsi->rx_rings[qid];
+ 		dst_pmdval = pmd_read_atomic(dst_pmd);
+-		/*
+-		 * If the dst_pmd is mapped as THP don't
+-		 * override it and just be strict.
+-		 */
+-		if (unlikely(pmd_trans_huge(dst_pmdval))) {
+-			err = -EEXIST;
+-			break;
+-		}
+ 		if (unlikely(pmd_none(dst_pmdval)) &&
+ 		    unlikely(__pte_alloc(dst_mm, dst_pmd))) {
+ 			err = -ENOMEM;
+ 			break;
+ 		}
+-		/* If an huge pmd materialized from under us fail */
+-		if (unlikely(pmd_trans_huge(*dst_pmd))) {
++		dst_pmdval = pmd_read_atomic(dst_pmd);
++		/*
++		 * If the dst_pmd is THP don't override it and just be strict.
++		 * (This includes the case where the PMD used to be THP and
++		 * changed back to none after __pte_alloc().)
++		 */
++		if (unlikely(!pmd_present(dst_pmdval) || pmd_trans_huge(dst_pmdval) ||
++			     pmd_devmap(dst_pmdval))) {
++			err = -EEXIST;
++			break;
++		}
++		if (unlikely(pmd_bad(dst_pmdval))) {
+ 			err = -EFAULT;
+ 			break;
+ 		}
 -- 
 2.53.0
 
