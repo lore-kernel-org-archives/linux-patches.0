@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793210170;
-	b=DwOpKjsELWk8IcI88PIOQ6pvrpDCGytm4j91DSHjAg8d22+xqkRa6aryN4JfkyvTmEcE
-	 YlDCX7rTgs4Kac+fbXplacmUHyDaRpKRjAEbei2wLPjK/GUPy4FWGXIb9FlMj5gW0Aa6H
-	 E52gxj2kjRTosCwqRD8FU017JWJhhOKOhyawdC22mNiP9otoKUtX8Zw88nucF7rUPMjfJ
-	 eJoAcgFUtzYuKfozPfUnL22oD+BzErpn1BCOF39Tm1geZDzJSUMJjV6J3XwudHrHXX/QA
-	 IBZWrLkvj/HhkQyv7ZurAGh3+Wl5p9fDcFu/KFI1zUaiNagtNy8eHSZAZg5kSv6dCjQ==
+	t=1793210173;
+	b=d2bxDFB/O/NhE6bbEHLzxo1195IZhZi2HUDChzGHyJdgvTszL+wlkcLgg9+OQ3RaOfqy
+	 e+Eg3ANLTLiqC/HZABQJE8GwALmvIA+aLopeJWtMJv6syy5pxV2bjxB65g8UrWPQ+R+WL
+	 OPB7xynP2MmesNxh8MztdppYtHcF5RMiYWzHwUb1PU8nce1Eo+WQ+emYHf6DXkSoeiSaO
+	 40xivmos4WCCufGDK3knk8olmH6zB6qcPq+r9eilUx5HkDkTxCCO+F6+0mLqwFas4jLPf
+	 y8U68CvC/iSGDeByOV4e+qFYSV90j/JJQRy54OTEDqbPlhv6qZbJeuv3Ek8wAZJRE9g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793210170;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793210173;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=gUO2WX69AhFXz+Rij60qDu6BS9X2Za8zyek932ralLo=;
-	b=fqDb2bUIJ/6QTY89fHoM2SS4eS3Kp/FBgP7AXSsiuRqPNo1LviFTLCFzi8Rz3CTAIzHU
-	 kinHxqPLZC+41MTnNjYM4ateviOAkpPYl8b3sidiEJlgyrZ2UfE8NvsDJdIfldbXrz4TN
-	 5yli/7Zobf45c8kh8ajX2sfY81tTeV4QrwTnSRHSPjuyoB1udwYBGZfHT1wuRdWbNBGN0
-	 V/sQAuRlO57hXFCG//2XJ12kuEFaCNnNAfHjIvm6543sGOhVtaLdOBKy1u7NVt83MowkY
-	 Fc2lN6ERtju+Hc2zYBbrCDifjareiaQH84DdP8+AerNoEZe9qRTwSaV6y9YQxZv+uYw==
+	bh=dCOoNtf4HMiNMQjP/XRjCGNNdJNk/0p/ZytAkBC9Y/w=;
+	b=az6i/ljWbBN+mlNCNshLhmwi6+KGH1XN9gKJekyPhXVdZR1ai0nRW1QVZxxfJK89IPWN
+	 nCJojmlAXS1GBYsUOTFflwsSgyNOd9v3ZAmIeiTS/dRlZX9vn1D37e9JLqi+/HyL6utlR
+	 alTkmNrlWXlL0glWn5dH4xOkCn/t9pr22/jlPtoM4mGUwBRjzmPTGPTqSIUdpZ5JCbEU8
+	 38KfILHC92sL+FmCU3pbH6xMrXvCUeboYOLZFkloAn1XtLvWqrZmHXuiEngZAvdB8pNPf
+	 h48OLQVHjoZuM0W3r5Kc7TR9Xb19LS6Ve2LsU/2PvtJJ3gyHnmjNTTkw7359jbJS0QA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X1XtPSJQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D6A34abE;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EFCA606A32D;
-	Wed, 28 Oct 2026 17:56:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27C6360A3836;
+	Wed, 28 Oct 2026 17:56:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X1XtPSJQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A19CC1F031E1;
-	Wed, 28 Oct 2026 17:56:09 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D6A34abE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77F221F01825;
+	Wed, 28 Oct 2026 17:56:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793210170;
-	bh=gUO2WX69AhFXz+Rij60qDu6BS9X2Za8zyek932ralLo=;
+	s=korg; t=1793210173;
+	bh=dCOoNtf4HMiNMQjP/XRjCGNNdJNk/0p/ZytAkBC9Y/w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=X1XtPSJQ3znrzFeX3wNwhdWFgFOOyJOlBXFsv+1mr8K2Yf+sn36S7rEJLjvbhKrj7
-	 aX+zlT3wSNRo2JHAFeh/VtSLcQN/VXaZf5KxDdBf3KWQcawjLH/4obZodg+c8Y2VVl
-	 iPfJFRcslyqJ/Z2s9f+5YenpAP/URnhIXQyWoI00=
+	b=D6A34abEJrBM8ODjzbHxL2XINSqLGrEI51Kxy0dtHPqWtvOxuEceUdGUFxqeY6lw6
+	 rGL8FqE9KHKvT6E+IAhOxqcgHP6koLriPQJAvJAIT3JfMfmGhc6XRxm5gG3AUg/rJt
+	 3mzAzxMGHDuZmxfBmnOqTgZMKc05sYjFN2EJoDbg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Mike Christie <michael.christie@oracle.com>,
 	Yehyeong Lee <yhlee@isslab.korea.ac.kr>,
 	"Martin K. Petersen (Oracle)" <mkp@kernel.org>
-Subject: [PATCH 6.6 055/168] scsi: libiscsi: Reject a negative task index from parse_pdu_itt
-Date: Wed, 28 Oct 2026 17:59:51 +0100
-Message-ID: <20261028165944.391859070@linuxfoundation.org>
+Subject: [PATCH 6.6 056/168] scsi: libiscsi: Validate the ITT reflected in a Reject PDU
+Date: Wed, 28 Oct 2026 17:59:52 +0100
+Message-ID: <20261028165944.414191310@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165943.089486480@linuxfoundation.org>
 References: <20261028165943.089486480@linuxfoundation.org>
@@ -70,58 +70,93 @@ Content-Transfer-Encoding: 8bit
 
 From: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
 
-commit 8ee2a09a1dbb257c9e828ad2497f8e4832dfb142 upstream.
+commit c5958c770b2a0ee492414e26b07da9164a0d1f5d upstream.
 
-A transport that implements parse_pdu_itt hands libiscsi an index taken
-from the PDU, and both lookups bound it from above only:
+A Reject PDU carries a copy of the header it rejects, and
+iscsi_handle_reject() takes the ITT out of that copy to find the task to
+clean up:
 
-      if (i >= session->cmds_max)
+      memcpy(&rejected_pdu, data, sizeof(struct iscsi_hdr));
+      ...
+      task = iscsi_itt_to_task(conn, rejected_pdu.itt);
 
-i and cmds_max are both int, so a negative index passes and
-session->cmds[i] is read from before the array.
+That value is whatever the target put there. iscsi_itt_to_task() bounds
+the index against cmds_max and checks nothing else, so any task in the
+pool can be named, and iscsi_nop_out_rsp() then completes it.
 
-be2iscsi produces one. beiscsi_parse_pdu() assigns the raw tag,
+An index that has never been used gives a NULL task->conn: the pool is
+zeroed at session setup and conn is assigned only when a task is
+allocated. If the task was used and returned, iscsi_complete_task() hits
+its WARN_ON_ONCE(task->state == ISCSI_TASK_FREE) and the refcount
+underflows. An in-flight SCSI command is completed as successful - a 1
+MiB read returned 1048576 with none of its buffer written and no
+warning.
 
-      *index = (int)itt;
+Validate the reflected ITT the way iscsi_itt_to_ctask() validates a
+command ITT, and require the task to be in flight and not a SCSI
+command.
 
-and beiscsi_complete_pdu() forwards an unsolicited NOP-In from the
-hardware async ring without replacing its ITT, so the value is the
-target's. It also reports the session's own age rather than the one in
-the tag, which leaves the age comparison in iscsi_verify_itt() with
-nothing to reject.
+[    6.248477] Oops: general protection fault, probably for non-canonical address 0xdffffc000000000c: 0000 [#1] SMP KASAN NOPTI
+[    6.249357] KASAN: null-ptr-deref in range [0x0000000000000060-0x0000000000000067]
+[    6.249951] CPU: 1 UID: 0 PID: 0 Comm: swapper/1 Not tainted 7.2.0-rc5-ISCSI1-gf5098b6bae76 #1 PREEMPT(lazy)
+[    6.250718] Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+[    6.251616] RIP: 0010:iscsi_nop_out_rsp.constprop.0+0x46/0x160
+[    6.252043] Code: c1 ea 03 48 83 ec 08 80 3c 02 00 0f 85 f5 00 00 00 48 b8 00 00 00 00 00 fc ff df 48 8b 6b 58 48 8d 7d 60 48 89 fa 48 c1 ea 03 <80> 3c 02 00 0f 85 c0 00 00 00 48 8b 45 60 48 39 c3 74 50 48 b8 00
+[    6.252813] RSP: 0018:ffff88806c907b80 EFLAGS: 00010206
+[    6.253042] RAX: dffffc0000000000 RBX: ffff88800607e000 RCX: ffffffff8d571a25
+[    6.253345] RDX: 000000000000000c RSI: ffff88806c907c38 RDI: 0000000000000060
+[    6.253642] RBP: 0000000000000000 R08: 0000000000000000 R09: fffffbfff235a504
+[    6.253947] R10: 0000000000000003 R11: 7463656e6e6f6320 R12: 0000000000000000
+[    6.254251] R13: 0000000000000000 R14: ffff88806c907c38 R15: 0000000000000000
+[    6.254549] FS:  0000000000000000(0000) GS:ffff8880d95bc000(0000) knlGS:0000000000000000
+[    6.254887] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[    6.255140] CR2: 00007fc393e8ffc0 CR3: 0000000005252006 CR4: 0000000000770ef0
+[    6.255439] PKRU: 55555554
+[    6.255564] Call Trace:
+[    6.255674]  <IRQ>
+[    6.255768]  __iscsi_complete_pdu+0x18bf/0x22a0
+[    6.256733]  iscsi_complete_pdu+0x54/0xa0
+[    6.256905]  iscsi_tcp_data_recv_done+0xf4/0x250
+[    6.257103]  iscsi_tcp_recv_skb+0x31e/0xec0
+[    6.257680]  iscsi_sw_tcp_recv+0x12f/0x390
+[    6.258061]  __tcp_read_sock+0x1ab/0x810
+[    6.258853]  iscsi_sw_tcp_data_ready+0x18b/0x510
+[    6.259808]  tcp_data_queue+0x1f13/0x4cd0
+[    6.260567]  tcp_rcv_established+0x8a5/0x3a00
+[    6.261931]  tcp_v4_do_rcv+0x449/0x960
+[    6.262269]  tcp_v4_rcv+0x2245/0x3bc0
 
-Bound the index from below in both lookups.
-
-Fixes: bfead3b2cb46 ("[SCSI] be2iscsi: Adding msix and mcc_rings V3")
+Fixes: 8afa1439fcff ("[SCSI] libiscsi: handle immediate command rejections")
 Cc: stable@vger.kernel.org
 Reviewed-by: Mike Christie <michael.christie@oracle.com>
 Signed-off-by: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
-Link: https://patch.msgid.link/20261007015842.634893-2-yhlee@isslab.korea.ac.kr
+Link: https://patch.msgid.link/20261007015842.634893-3-yhlee@isslab.korea.ac.kr
 Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/libiscsi.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/scsi/libiscsi.c |    8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
 --- a/drivers/scsi/libiscsi.c
 +++ b/drivers/scsi/libiscsi.c
-@@ -1191,7 +1191,7 @@ struct iscsi_task *iscsi_itt_to_task(str
- 		session->tt->parse_pdu_itt(conn, itt, &i, NULL);
- 	else
- 		i = get_itt(itt);
--	if (i >= session->cmds_max)
-+	if (i < 0 || i >= session->cmds_max)
- 		return NULL;
- 
- 	return session->cmds[i];
-@@ -1384,7 +1384,7 @@ int iscsi_verify_itt(struct iscsi_conn *
- 		return ISCSI_ERR_BAD_ITT;
- 	}
- 
--	if (i >= session->cmds_max) {
-+	if (i < 0 || i >= session->cmds_max) {
- 		iscsi_conn_printk(KERN_ERR, conn,
- 				  "received invalid itt index %u (max cmds "
- 				   "%u.\n", i, session->cmds_max);
+@@ -1142,13 +1142,15 @@ static int iscsi_handle_reject(struct is
+ 			spin_unlock(&conn->session->frwd_lock);
+ 			spin_lock(&conn->session->back_lock);
+ 		} else {
+-			struct iscsi_task *task;
++			struct iscsi_task *task = NULL;
+ 			/*
+ 			 * Our nop as ping got dropped. We know the target
+ 			 * and transport are ok so just clean up
+ 			 */
+-			task = iscsi_itt_to_task(conn, rejected_pdu.itt);
+-			if (!task) {
++			if (!iscsi_verify_itt(conn, rejected_pdu.itt))
++				task = iscsi_itt_to_task(conn, rejected_pdu.itt);
++			if (!task || task->state == ISCSI_TASK_FREE ||
++			    task->sc) {
+ 				iscsi_conn_printk(KERN_ERR, conn,
+ 						 "Invalid pdu reject. Could "
+ 						 "not lookup rejected task.\n");
 
 
