@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215119;
-	b=XtHsPl8V6ChbovWS2XcvHzc910TCv/4EgueKwtgfChtW0oHpsJ5veuBvVLxh7bqRMGB+
-	 BB9gvqx0k3/1I5xJHsIRSeOSfjhMAXek3QbIcICIRmuWr9MnbsHgMTlJZgfqwZXhEZ7IX
-	 P3esp76avQ5BqLgiRHNyZCF/4fneGkz1D+kM7ZKbIssE2OgRMjWEm4WVk0FkKBuyMBy76
-	 KXKz8BZXlGY98iiLphmZ8Ag+o6/3dhGYqR4VduxOC0CE9GKt+i3yrdu6bVmJFdxvXMKjp
-	 ckkx11bz6ww8k84sFOLisOaErHgxHeWfM9zE3D0DCtkpP2icWZEm8JY0j9ZnnvIWn1w==
+	t=1793215122;
+	b=YjD/9kHvtan0D0kdJgdg3BfTrbrGVihamM54Ray1ETgU2k9VtUZHU39sWZ9n5Bux7nfD
+	 2Pvxwd9EErByj3I8me9g25CXJDP0FZvMZI/4UAmpzmzq24dFZpkZtmOmfa4JWgDihuk4t
+	 tHlLMmBTBOEEny+IKp1ofGksh5RHpQzbrdpVjnZjkrB1i6GK0q6+B3STrR8ZOjRhqgBLA
+	 dECCqEIfJ5ct5WCRPCejtUirHLbvKoCWqEiKcf6WrZdIZ2WFmKsPZ1imsAwYnIYT9/pc4
+	 eZCIJ5k0ZqN+Ijvij+jm6rFYoPvlTztsYg0R5SJZP8HN4dpzIIhi/s8VyGOM7UIYA3Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215119;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215122;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=zg66qxL0MkCBO0HcSkglmTQ32Q6EoXAnfNkEN7LYDu0=;
-	b=iRPOrlxp635gvwlo8hlC3gBprLQmO/FF4zjIKRmQ9+7vhSbh26g7xr6aPnjoSnswqtny
-	 bQ0Hlemvwi0xfw5XKvHWwl7EV/rYFa2nm35dZVgR4cQcqwvM+SSJ6W8tFsRFbTNJVUdk4
-	 GSb9/8pDN16JrHLWgc0nxToCPAUvc5R/jq3VGTEpVC6XKrQjbRobUsoh73wvubNJAbzen
-	 4kIWxkUtDlZMhAkh4bzcdGYFlCKGWzhoeaX9VZxyPZu6j7vyEGptPzWyEn5/PaTCiQKOe
-	 e/GJzSD6SAqKXa8ms5cQxbVs0PyJZrCErIPayCYF78/f8BVcSi3Qs5ByYGSZfqiDATw==
+	bh=sEm2VTbDhLQR3RV83ih8Ug8nb0TWU5LHhLnKdG9ezjI=;
+	b=zNtcy2SgO8KOMJ62AQMeX6nrlmkJydQvJsRkEUFY7ez7nM6AJ01WxsxnyyN9VuhbcmsQ
+	 5g6mRArILNpK9M0DpaWEcXWQDbnnt9whW1f7xn/n+6sKtWzdb+LT9ipp27srmvBzTw7m2
+	 XdXipiDGXiE2XArkx5kn0dZ5RIn5O9sVEKtkih5oUyJe0FrQpt9u+OWNFRWc19jq3IGZi
+	 VVKbwe5GSuwwokFh1OVEBMzAckHo4tRu9GinsjEbJYSnJsHfbCzwcDRZmOOtgpga/3sQY
+	 J+uFN7LPi3yIRJgodBb/yi2VnHyt9QoMvo4TEC0hT0+qhgTmm51bjAFRcvnJlk6RRoA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JmnTj0eJ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NubRsKZS;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 753DA606A31C;
-	Wed, 28 Oct 2026 19:18:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 521A5606A31C;
+	Wed, 28 Oct 2026 19:18:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JmnTj0eJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5A551F01825;
-	Wed, 28 Oct 2026 19:18:38 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NubRsKZS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A04EA1F01825;
+	Wed, 28 Oct 2026 19:18:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215119;
-	bh=zg66qxL0MkCBO0HcSkglmTQ32Q6EoXAnfNkEN7LYDu0=;
+	s=korg; t=1793215122;
+	bh=sEm2VTbDhLQR3RV83ih8Ug8nb0TWU5LHhLnKdG9ezjI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JmnTj0eJBmeaoVRRkWIX5bA2+TCcB8IcPOt7O8hErT/615J75hb/cvK5LGCbyOj9I
-	 9sFzpPMpx1X4bUXVygY6dunDTBOxfsWwdv9GQq4J0pDg4nxJJpDDNBKCSzynEw7I3+
-	 OSiIMHQQOmB0BSboeoK7twSRBBNjwv2khvrNVaP4=
+	b=NubRsKZSf78QQKCr2lNQQAqFT6HTzr2e4hzkJNZeuJbC0kVVh7B1Zd02OGhCQ95yS
+	 chTDzIxZ3Qk8IOWXgR7FNy+V4EhuRD5lk8DB0ZI7UjuO/c1RI0fVafkYKORZJagDMm
+	 ZZq01pQK4nTj8PvsEOftkJmwoRxpqKAs+QaMIEZM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	syzbot+52bae5c495dbe261a0bc@syzkaller.appspotmail.com,
+	Chao Yu <chao@kernel.org>,
+	Jianan Huang <jnhuang95@gmail.com>,
+	Gao Xiang <hsiangkao@linux.alibaba.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1100/1887] netfilter: nft_ct: bail out on template ct in get eval
-Date: Wed, 28 Oct 2026 17:53:16 +0100
-Message-ID: <20261028170524.436732995@linuxfoundation.org>
+Subject: [PATCH 6.1 1101/1887] erofs: fix use-after-free on sbi->sync_decompress
+Date: Wed, 28 Oct 2026 17:53:17 +0100
+Message-ID: <20261028170524.459935139@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,80 +70,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
+From: Gao Xiang <hsiangkao@linux.alibaba.com>
 
-[ Upstream commit 3027ecbdb5fdf9200251c21d4818e4c447ef78e1 ]
+[ Upstream commit 1aee05e814d292064bf5fa15733741040cdc48ba ]
 
-I noticed this issue while looking at a historic syzbot report [1].
+z_erofs_decompress_kickoff() can race with filesystem unmount, causing
+a use-after-free on sbi->sync_decompress.
 
-A rule like the one below is enough to trigger the bug:
+When I/O completes, z_erofs_endio() calls z_erofs_decompress_kickoff()
+to queue z_erofs_decompressqueue_work() asynchronously. Then, after all
+folios are unlocked, unmount workflow can proceed and sbi will be freed
+before accessing to sbi->sync_decompress.
 
-    table ip t {
-        chain pre {
-            type filter hook prerouting priority raw;
-            ct zone set 1
-            ct original saddr 1.2.3.4 accept
-        }
-    }
+Thread (unmount)        I/O completion        kworker
+                        queue_work
+                                              z_erofs_decompressqueue_work
+                                               (all folios are unlocked)
+cleanup_mnt
+ ..
+ erofs_kill_sb
+  erofs_sb_free
+   kfree(sbi)
+                        access sbi->sync_decompress  // UAF!!
 
-The first expression attaches a per-cpu template ct via
-nft_ct_set_zone_eval() (nf_ct_tmpl_alloc -> kzalloc, tuple is all
-zero, nf_ct_l3num(ct) == 0). The next expression then calls
-nft_ct_get_eval() on the same skb, treats the template as a real ct
-and hits the 16-byte memcpy path. With dreg at NFT_REG32_15 this
-overflows past struct nft_regs on the kernel stack; with smaller
-dreg values it silently clobbers adjacent registers.
-
-Reject template ct at the eval entry and in nft_ct_get_fast_eval(),
-mirroring the check nft_ct_set_eval() already has. Additionally,
-bound the address copy in NFT_CT_SRC / NFT_CT_DST by priv->len
-instead of by nf_ct_l3num(ct): nf_ct_get_tuple() zeroes the tuple
-before pkt_to_tuple() fills in only the protocol-relevant leading
-bytes, so the trailing bytes of tuple->{src,dst}.u3.all are
-well-defined zero. priv->len is validated at rule load, so the
-copy size is now bounded by the destination register rather than
-by an untrusted field on the conntrack.
-
-[1]: https://syzkaller.appspot.com/bug?id=389cf09cb72926114fce90dc85a2c3231dcb647c
-
-Fixes: 45d9bcda21f4 ("netfilter: nf_tables: validate len in nft_validate_data_load()")
-Suggested-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: 40452ffca3c1 ("erofs: add sysfs node to control sync decompression strategy")
+Reported-by: syzbot+52bae5c495dbe261a0bc@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=52bae5c495dbe261a0bc
+Reviewed-by: Chao Yu <chao@kernel.org>
+Reviewed-by: Jianan Huang <jnhuang95@gmail.com>
+Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_ct.c | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ fs/erofs/zdata.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/netfilter/nft_ct.c b/net/netfilter/nft_ct.c
-index e2ef510ab0489..f35cf4e600379 100644
---- a/net/netfilter/nft_ct.c
-+++ b/net/netfilter/nft_ct.c
-@@ -88,7 +88,7 @@ static void nft_ct_get_eval(const struct nft_expr *expr,
- 		break;
+diff --git a/fs/erofs/zdata.c b/fs/erofs/zdata.c
+index 27cfc9aa30722..f3d859e6ffbcc 100644
+--- a/fs/erofs/zdata.c
++++ b/fs/erofs/zdata.c
+@@ -1281,10 +1281,10 @@ static void z_erofs_decompress_kickoff(struct z_erofs_decompressqueue *io,
+ 	if (atomic_add_return(bios, &io->pending_bios))
+ 		return;
+ 	if (z_erofs_in_atomic()) {
+-		queue_work(z_erofs_workqueue, &io->u.work);
+ 		/* enable sync decompression for readahead */
+ 		if (sbi->opt.sync_decompress == EROFS_SYNC_DECOMPRESS_AUTO)
+ 			sbi->opt.sync_decompress = EROFS_SYNC_DECOMPRESS_FORCE_ON;
++		queue_work(z_erofs_workqueue, &io->u.work);
+ 		return;
  	}
- 
--	if (ct == NULL)
-+	if (!ct || nf_ct_is_template(ct))
- 		goto err;
- 
- 	switch (priv->key) {
-@@ -190,12 +190,10 @@ static void nft_ct_get_eval(const struct nft_expr *expr,
- 	tuple = &ct->tuplehash[priv->dir].tuple;
- 	switch (priv->key) {
- 	case NFT_CT_SRC:
--		memcpy(dest, tuple->src.u3.all,
--		       nf_ct_l3num(ct) == NFPROTO_IPV4 ? 4 : 16);
-+		memcpy(dest, tuple->src.u3.all, priv->len);
- 		return;
- 	case NFT_CT_DST:
--		memcpy(dest, tuple->dst.u3.all,
--		       nf_ct_l3num(ct) == NFPROTO_IPV4 ? 4 : 16);
-+		memcpy(dest, tuple->dst.u3.all, priv->len);
- 		return;
- 	case NFT_CT_PROTO_SRC:
- 		nft_reg_store16(dest, (__force u16)tuple->src.u.all);
+ 	gfp_flag = memalloc_noio_save();
 -- 
 2.53.0
 
