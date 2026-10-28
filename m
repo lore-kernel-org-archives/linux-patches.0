@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793212101;
-	b=4JF4PTIYd17PZOi6Bwl8wLFv5EmeFD+1wtibE9TwErdAI0Xv0ROrVKu3JdQqXaqZG+JL
-	 Mw9kFaMF5KoH2J0aIIeomL6HEETYtdz1wvIbHb/neFaTdBsGyyX/DjVwL1q5Qn8YhvZTO
-	 ExbroI8BA5jB6H7GKV3JRK7i5n7QV7tOKDu80uL+WVc/5V0wn/cu9HNwtDdUe8keLqmyJ
-	 arhZrBq/4u//Dbmb6EBj4X/JD06PHO0NEsbIRfmgrdBBSEVZzbFXGCPy3Z/46HOZQDzKH
-	 Tb3I0MaU7Lria0+/lNyHIMBRJ0SGjdC5ZU9SP4enk+4VY2xu95WXX8mTtOsPe4jKexA==
+	t=1793212104;
+	b=uoa8eew8cQj3+rld6vXlruproAsX6vudNWyWQJGsLTEjNaT2Ldf89xXTM1B+ExiQYXDO
+	 C9dAEbXcBvEcRl5GN2xMlu8iD2uyoSTphqEBBARKOJt6JMnOAHf0J45PkixjOo/W3iq6V
+	 y2fuJOcIMiRb/gqp+wFKLYTRUfWsR1U2I5hDkBwb7J2AC4MrJ+bYH0peSUzq/IfpIOsu2
+	 0flDCixCa79VqJLusDBXcEum0gD2/56x4uWnaUBW1xefxAY5odikhaPU30swCDO7kKSar
+	 Agnh19DrDXOKU3w3c83OstHIKSX0/Ei7sLW0ZX1fXE8L3Cr6te2vw122sFaXR1ZrnMg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793212101;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793212104;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=kXpiX08ZsOsbwQGo8AVUP6KvvqwwW4qfCyqmhNHPwng=;
-	b=IyNSPmhdfVIeIqVvDwOplVnYnZeoYk0PPcUb0YgtM7Gr7BuzWmJ3uDAHBKParel1NrKz
-	 +Rffrefbcf04C+ern9CRwBx583hyreuFR7C/3qLiw+wrQW9iie+J9R54i4SCfMiCRaml7
-	 1auhoywi7cmwL3baqip8QeOYRyM9Tz6pQRno/mfcxINk3mVmgaUewMaLlhrwtVQKLxzad
-	 Nh/H3TinjD+ch3Ohrxes3iwlzT/Wm2A//grCp0WDlGB0b6VeQ8+5DBK33c07vHS8uBN0D
-	 Ug3eeT1goJ36mwfkiV1lPCHa3ZcYon2/hyANsFiVVFu9SyZ1rV4YdS3xv7G2nGQjl5A==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=shgBdnvpO6BEI2DUfsWE/Y7ebnIE75G6l7i41LnIvDg=;
+	b=pFMzYoRR7ajFd67IcaB8sHZCrcWjoU4oMwM/PVpGTg+sPzLZzuAb/+c1E3Yb+Q/q+NRz
+	 GWIlaqg10fr2jcyzaaCiCPJNz7+cdzcxtXrAJ29gqR4fEa1e35BUtevJCcAHJ64n02hv3
+	 2nroAuEZiOzn/nacf478Lc/4kPh1dnLqY3HmC6SnjRxwEa7IAXkrNLkt4gmFOYyu+91gr
+	 fWbVd8F2eTUX/VJGeG3RiYCzda5HyLU2lOrRQ5gX6mMqEqL2urOtougIlGVy+ZzXisrSR
+	 EiVDVdXy4cNAePKiCHz8b10HCXqCIJ8Wi9IslPJfuOaGay7CsnXzpbU+wnrOKCBleAg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xIqJXzYR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MqwtQfqW;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47D2D606A31A;
-	Wed, 28 Oct 2026 18:28:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E8A9606A31A;
+	Wed, 28 Oct 2026 18:28:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xIqJXzYR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97B2A1F01825;
-	Wed, 28 Oct 2026 18:28:20 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MqwtQfqW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A4171F01825;
+	Wed, 28 Oct 2026 18:28:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793212101;
-	bh=kXpiX08ZsOsbwQGo8AVUP6KvvqwwW4qfCyqmhNHPwng=;
+	s=korg; t=1793212104;
+	bh=shgBdnvpO6BEI2DUfsWE/Y7ebnIE75G6l7i41LnIvDg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xIqJXzYRvNztsDIde+mYuHakpodoIpkQyxZ/vi3aXrngJf2DwB5cwnkB+SzDexTU0
-	 9g0UyEVIWxpXk6Htma/nNl+/DQVxTQJNHj/XAxyEavYaBCesuLuXpptQ+d91zWsXBS
-	 vH1vvzcEI0fYgsgIGP4IzJSZBip+0Q/Db6yWkFCQ=
+	b=MqwtQfqWtbu7ScwQfRdfCVg63cHHkQuDApChlVZPq/uZShXZKwUmmgrsXr93VnU0/
+	 xs5c6p8ACqE2RWi12/ewsEKEurFHH9G5+1SNDEq+7+bWU6vpUD6VtcS/oVltis8Iao
+	 FX9LAiDS723lMfoSAD9uQPKfekTCUUJcejdeS6+g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Borntraeger <borntraeger@linux.ibm.com>,
-	Matthew Rosato <mjrosato@linux.ibm.com>,
-	Claudio Imbrenda <imbrenda@linux.ibm.com>,
+	Nilesh Javali <njavali@marvell.com>,
+	Hannes Reinecke <hare@kernel.org>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0038/1887] KVM: s390: Zero initialize data structures for inject_pfault_token
-Date: Wed, 28 Oct 2026 17:35:34 +0100
-Message-ID: <20261028170500.091628819@linuxfoundation.org>
+Subject: [PATCH 6.1 0039/1887] scsi: qla2xxx: Zero dport diagnostics buffer to avoid info leak
+Date: Wed, 28 Oct 2026 17:35:35 +0100
+Message-ID: <20261028170500.113066377@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -63,55 +63,52 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christian Borntraeger <borntraeger@linux.ibm.com>
+From: Nilesh Javali <njavali@marvell.com>
 
-[ Upstream commit 4e2c7f7cbc27418f9a290399b986c1b85ff93b90 ]
+[ Upstream commit a152edab3854f01dd2daf3eaf8f32cbabdb3834e ]
 
-__kvm_inject_pfault_token() only sets .type and .u.ext.ext_params2 of
-the on-stack struct kvm_s390_irq but the full ext substructure is copied
-into the cpu local variable on inject. ext_params and pad contain stale
-stack values.
+qla2x00_do_dport_diagnostics() allocates the qla_dport_diag response
+buffer with kmalloc_obj() (non-zeroing) and, on success, copies the full
+sizeof(*dd) back to user space via sg_copy_from_buffer(). The inbound
+sg_copy_to_buffer() only fills as many bytes as the user request payload
+provides, and qla26xx_dport_diagnostics() zeroes only dd->buf. The
+options and unused[] fields are therefore copied out uninitialized,
+leaking kernel heap contents to user space.
 
-Interrupt delivery only uses ext_params2, so nothing leaks to the guest,
-but a host user can use the migration ioctls to get to the data.
+Allocate with kzalloc_obj(), matching qla2x00_do_dport_diagnostics_v2().
 
-Fix by zero-initializing the irq struct.
-Do the same for the inti data structure.
-
-Fixes: 383d0b050106 ("KVM: s390: handle pending local interrupts via bitmap")
+Fixes: ec89146215d1 ("qla2xxx: Add bsg interface to support D_Port Diagnostics.")
 Cc: stable@vger.kernel.org
-Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Reviewed-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
-Signed-off-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
-Message-ID: <20260805110455.7200-3-borntraeger@linux.ibm.com>
-[ Adjusted context for missing inti_mem and ret declarations in __kvm_inject_pfault_token(). ]
+Signed-off-by: Nilesh Javali <njavali@marvell.com>
+Reviewed-by: Hannes Reinecke <hare@kernel.org>
+Link: https://patch.msgid.link/20260723050413.3897522-54-njavali@marvell.com
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+[ Adapted kzalloc_obj(*dd) to kzalloc(sizeof(*dd), GFP_KERNEL) to match the branch’s allocation syntax. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/kvm/kvm-s390.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/scsi/qla2xxx/qla_bsg.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/s390/kvm/kvm-s390.c b/arch/s390/kvm/kvm-s390.c
-index c7b4c0d37c87b..9b9d8d37bcc41 100644
---- a/arch/s390/kvm/kvm-s390.c
-+++ b/arch/s390/kvm/kvm-s390.c
-@@ -4430,8 +4430,8 @@ long kvm_arch_fault_in_page(struct kvm_vcpu *vcpu, gpa_t gpa, int writable)
- static void __kvm_inject_pfault_token(struct kvm_vcpu *vcpu, bool start_token,
- 				      unsigned long token)
- {
--	struct kvm_s390_interrupt inti;
--	struct kvm_s390_irq irq;
-+	struct kvm_s390_interrupt inti = {};
-+	struct kvm_s390_irq irq = {};
+diff --git a/drivers/scsi/qla2xxx/qla_bsg.c b/drivers/scsi/qla2xxx/qla_bsg.c
+index 3982f7d576a83..8e859d79bdee1 100644
+--- a/drivers/scsi/qla2xxx/qla_bsg.c
++++ b/drivers/scsi/qla2xxx/qla_bsg.c
+@@ -2412,7 +2412,7 @@ qla2x00_do_dport_diagnostics(struct bsg_job *bsg_job)
+ 	    !IS_QLA28XX(vha->hw))
+ 		return -EPERM;
  
- 	if (start_token) {
- 		irq.u.ext.ext_params2 = token;
+-	dd = kmalloc(sizeof(*dd), GFP_KERNEL);
++	dd = kzalloc(sizeof(*dd), GFP_KERNEL);
+ 	if (!dd) {
+ 		ql_log(ql_log_warn, vha, 0x70db,
+ 		    "Failed to allocate memory for dport.\n");
 -- 
 2.53.0
 
