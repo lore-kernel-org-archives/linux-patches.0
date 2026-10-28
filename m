@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213623;
-	b=ewzXju/2XaeUsjxleGYF00cWsXkkeXtrJUc61Pks7NZt7TphrguQAkFCEaU1SQ24U06L
-	 qN8ECDFB08DEUgKxe9NiSobW33PJkcQR4PUvXkcdiwxQRIvRWPkXBxyulc1sglGGJt4um
-	 fCHy4LV6begbQ2iBIfEganZXlkMGFTzocluTZcCRaZNXmaLM8LUnK0GpCLRL4Xb9XK3RC
-	 XtvFjV8lmbdmT8kW/7lQsiCfTIgbrfYzZUzViuVmeGuCAma7GgKNlOHN7TZoHzhcNzRVo
-	 RkS1/X6XS9jfMSGoG/PAckfnz6I5gEyMjvVB3YxMkHBKNMInsYlrTNKxx8B/owccUeg==
+	t=1793213626;
+	b=TGPy5CZA3UdTjDbYDygnjjdMeA/yBFG+B6sZFFhFGgJ18M+6CVRRuVJSGSmV7HeLheuu
+	 0ug9XtxpsNjTFBRdyDNT6hQtB6eIv35nsM/RzNVMWEJfFB8392rR464LJSoybYtjuZHGB
+	 7NzPSWY2EIO3fScnRml7jbz+L+K3YV8dOpS9KErOOzHWZiywD2hIWPi062FgnaL7N+Uv6
+	 CyzhxYhkf5QtCEgeNJwUNv4CQIrruotEwDWZzpIZMI2q+op7aVSg0JrrkNIfwQ0HhAPSY
+	 lcxI9DiyJYImfHj+jZG5yAARWef1Gkt1DM7iSqr/DYOtpU8FuBbchvZSTG+Xg9pzesQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213623;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213626;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=fKMSB4GUJZD8+lLNzDNylae+Vz5nVlhp4iMi26Zpdcs=;
-	b=NJTfE/UEelLXcHDp1ori1YB3RIMl1pxaT5SpBK2NrcGLLs5bNiv3Jbu3KmUXy+SBznFo
-	 FZJteSfISxicMrRYRoXQnCg5mgAQjtVT15F5sADbgBU/fukJzYfTs74BxESsTP8AU6m9l
-	 Bb9vSq5hOG4D7dHxTnCmhun10Ek8wyGgPcYpPNcnHZVb0dXadRtHCxM8VaG4l3AwgxXYX
-	 O7v8Ek2+zzpiR2pMjT0YaJam+fhbM+/vYckYkVQRvgp4rFr/Z+J55flWAgc+fIgwlQ1QV
-	 VGT1xnOuDSDlD4ggY+afuGrA44fu+q/UvFKNySTp49Pu7zbI/nV4i/cW6Vt4+ClTPpg==
+	bh=f/D2HJUCBFrtfMDiJwV9N9o+Q+IrNV5ipOQ5MK0LNp8=;
+	b=RxyDNhIe0o9DspsgtqBOi8UPrKwemwu7r3QtX07lGBT46q4yRg3my4RyfatC4tXH2/j6
+	 4p9OJaGP12a9uqhK5JU8I1zThBCl1gi8Blq6MS0lBcUIBv9yrQ9XvwJ4pv31VX1xheQcW
+	 dFOl7m81MfpQ31JRWUaQYjjBBkpMQpLuIMiCqnil9t8Rcm7R+ANpIIUXAdSQDd8GO/MZL
+	 qBCLs4HygMxioNLegqc4SJzQs7tGP5wGu7oxhsPx0JPUheW83zet3AzqzRXiGR84RMDBd
+	 DVOsLMy9uH73MrFLcNutwp0PSTkAmZggHX9Bw2N5KSqhRPW/vqJSUsEbTX9fzZwjOCw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kyYGN0fF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TFkqvmsC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CC9E606A31A;
-	Wed, 28 Oct 2026 18:53:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8F54606A31A;
+	Wed, 28 Oct 2026 18:53:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kyYGN0fF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D5121F01825;
-	Wed, 28 Oct 2026 18:53:42 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TFkqvmsC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 252CE1F01825;
+	Wed, 28 Oct 2026 18:53:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213622;
-	bh=fKMSB4GUJZD8+lLNzDNylae+Vz5nVlhp4iMi26Zpdcs=;
+	s=korg; t=1793213625;
+	bh=f/D2HJUCBFrtfMDiJwV9N9o+Q+IrNV5ipOQ5MK0LNp8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kyYGN0fFpesj4qzDSASM2f8fvMhQeg9eFgoDk5WwiruhBcWNCiUo6Nmim4qwMt8MV
-	 gprdHo+d0n7Y8VI6QNeipAGbViCxq5aVE/jKxBJxUY1nhOO31vBJerEpHiN1zN6ftU
-	 iRrmnk1OULB/yo3vWxcZvvAtFCiGuZjDxvfgPhes=
+	b=TFkqvmsCWtZ6x2/+3jRkdj1O3f/bgnt4gOSCCOR4coiyBcr6nJITJlSj/qB7oeY1G
+	 zXKuvziIT169ts36iYTH6FzrPTk/x+XwV0CpkFjnT80jlQpAdCSRamxjT5afc4fHCt
+	 VBjyBlkSNilcfctIPpyocH+xl3QkjyeGzRXnoWF4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+7e1e1bdb852961150198@syzkaller.appspotmail.com,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Tony Lu <tonylu@linux.alibaba.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Tejun Heo <tj@kernel.org>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0569/1887] smc: Fix use-after-free in tcp_write_timer_handler().
-Date: Wed, 28 Oct 2026 17:44:25 +0100
-Message-ID: <20261028170512.349981984@linuxfoundation.org>
+Subject: [PATCH 6.1 0570/1887] block/rq_qos: protect rq_qos apis with a new lock
+Date: Wed, 28 Oct 2026 17:44:26 +0100
+Message-ID: <20261028170512.373341103@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -70,92 +69,256 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Yu Kuai <yukuai3@huawei.com>
 
-[ Upstream commit 9744d2bf19762703704ecba885b7ac282c02eacf ]
+[ Upstream commit a13bd91be22318768d55470cbc0b0f4488ef9edf ]
 
-With Eric's ref tracker, syzbot finally found a repro for
-use-after-free in tcp_write_timer_handler() by kernel TCP
-sockets. [0]
+commit 50e34d78815e ("block: disable the elevator int del_gendisk")
+move rq_qos_exit() from disk_release() to del_gendisk(), this will
+introduce some problems:
 
-If SMC creates a kernel socket in __smc_create(), the kernel
-socket is supposed to be freed in smc_clcsock_release() by
-calling sock_release() when we close() the parent SMC socket.
+1) If rq_qos_add() is triggered by enabling iocost/iolatency through
+   cgroupfs, then it can concurrent with del_gendisk(), it's not safe to
+   write 'q->rq_qos' concurrently.
 
-However, at the end of smc_clcsock_release(), the kernel
-socket's sk_state might not be TCP_CLOSE.  This means that
-we have not called inet_csk_destroy_sock() in __tcp_close()
-and have not stopped the TCP timers.
+2) Activate cgroup policy that is relied on rq_qos will call
+   rq_qos_add() and blkcg_activate_policy(), and if rq_qos_exit() is
+   called in the middle, null-ptr-dereference will be triggered in
+   blkcg_activate_policy().
 
-The kernel socket's TCP timers can be fired later, so we
-need to hold a refcnt for net as we do for MPTCP subflows
-in mptcp_subflow_create_socket().
+3) blkg_conf_open_bdev() can call blkdev_get_no_open() first to find the
+   disk, then if rq_qos_exit() from del_gendisk() is done before
+   rq_qos_add(), then memory will be leaked.
 
-[0]:
-leaked reference.
- sk_alloc (./include/net/net_namespace.h:335 net/core/sock.c:2108)
- inet_create (net/ipv4/af_inet.c:319 net/ipv4/af_inet.c:244)
- __sock_create (net/socket.c:1546)
- smc_create (net/smc/af_smc.c:3269 net/smc/af_smc.c:3284)
- __sock_create (net/socket.c:1546)
- __sys_socket (net/socket.c:1634 net/socket.c:1618 net/socket.c:1661)
- __x64_sys_socket (net/socket.c:1672)
- do_syscall_64 (arch/x86/entry/common.c:50 arch/x86/entry/common.c:80)
- entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:120)
-==================================================================
-BUG: KASAN: slab-use-after-free in tcp_write_timer_handler (net/ipv4/tcp_timer.c:378 net/ipv4/tcp_timer.c:624 net/ipv4/tcp_timer.c:594)
-Read of size 1 at addr ffff888052b65e0d by task syzrepro/18091
+This patch add a new disk level mutex 'rq_qos_mutex':
 
-CPU: 0 PID: 18091 Comm: syzrepro Tainted: G        W          6.3.0-rc4-01174-gb5d54eb5899a #7
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.0-1.amzn2022.0.1 04/01/2014
-Call Trace:
- <IRQ>
- dump_stack_lvl (lib/dump_stack.c:107)
- print_report (mm/kasan/report.c:320 mm/kasan/report.c:430)
- kasan_report (mm/kasan/report.c:538)
- tcp_write_timer_handler (net/ipv4/tcp_timer.c:378 net/ipv4/tcp_timer.c:624 net/ipv4/tcp_timer.c:594)
- tcp_write_timer (./include/linux/spinlock.h:390 net/ipv4/tcp_timer.c:643)
- call_timer_fn (./arch/x86/include/asm/jump_label.h:27 ./include/linux/jump_label.h:207 ./include/trace/events/timer.h:127 kernel/time/timer.c:1701)
- __run_timers.part.0 (kernel/time/timer.c:1752 kernel/time/timer.c:2022)
- run_timer_softirq (kernel/time/timer.c:2037)
- __do_softirq (./arch/x86/include/asm/jump_label.h:27 ./include/linux/jump_label.h:207 ./include/trace/events/irq.h:142 kernel/softirq.c:572)
- __irq_exit_rcu (kernel/softirq.c:445 kernel/softirq.c:650)
- irq_exit_rcu (kernel/softirq.c:664)
- sysvec_apic_timer_interrupt (arch/x86/kernel/apic/apic.c:1107 (discriminator 14))
- </IRQ>
+1) The lock will protect rq_qos_exit() directly.
 
-Fixes: ac7138746e14 ("smc: establish new socket family")
-Reported-by: syzbot+7e1e1bdb852961150198@syzkaller.appspotmail.com
-Link: https://lore.kernel.org/netdev/000000000000a3f51805f8bcc43a@google.com/
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reviewed-by: Tony Lu <tonylu@linux.alibaba.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+2) For wbt that doesn't relied on blk-cgroup, rq_qos_add() can only be
+   called from disk initialization for now because wbt can't be
+   destructed until rq_qos_exit(), so it's safe not to protect wbt for
+   now. Hoever, in case that rq_qos dynamically destruction is supported
+   in the furture, this patch also protect rq_qos_add() from wbt_init()
+   directly, this is enough because blk-sysfs already synchronize
+   writers with disk removal.
+
+3) For iocost and iolatency, in order to synchronize disk removal and
+   cgroup configuration, the lock is held after blkdev_get_no_open()
+   from blkg_conf_open_bdev(), and is released in blkg_conf_exit().
+   In order to fix the above memory leak, disk_live() is checked after
+   holding the new lock.
+
+Fixes: 50e34d78815e ("block: disable the elevator int del_gendisk")
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Acked-by: Tejun Heo <tj@kernel.org>
+Link: https://lore.kernel.org/r/20230414084008.2085155-1-yukuai1@huaweicloud.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/smc/af_smc.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ block/blk-cgroup.c     | 12 ++++++++++++
+ block/blk-core.c       |  1 +
+ block/blk-iocost.c     |  4 ++++
+ block/blk-rq-qos.c     |  2 ++
+ block/blk-rq-qos.h     | 18 ++++--------------
+ block/blk-wbt.c        |  2 ++
+ include/linux/blkdev.h |  1 +
+ 7 files changed, 26 insertions(+), 14 deletions(-)
 
-diff --git a/net/smc/af_smc.c b/net/smc/af_smc.c
-index 9e142f49a8102..35cf30486916e 100644
---- a/net/smc/af_smc.c
-+++ b/net/smc/af_smc.c
-@@ -3315,6 +3315,16 @@ static int __smc_create(struct net *net, struct socket *sock, int protocol,
- 			sk_common_release(sk);
- 			goto out;
- 		}
-+
-+		/* smc_clcsock_release() does not wait smc->clcsock->sk's
-+		 * destruction;  its sk_state might not be TCP_CLOSE after
-+		 * smc->sk is close()d, and TCP timers can be fired later,
-+		 * which need net ref.
-+		 */
-+		sk = smc->clcsock->sk;
-+		sk->sk_net_refcnt = 1;
-+		get_net_track(net, &sk->ns_tracker, GFP_KERNEL);
-+		sock_inuse_add(net, 1);
- 	} else {
- 		smc->clcsock = clcsock;
+diff --git a/block/blk-cgroup.c b/block/blk-cgroup.c
+index 7d7c99d93bdb8..3a33ec0af8419 100644
+--- a/block/blk-cgroup.c
++++ b/block/blk-cgroup.c
+@@ -656,6 +656,13 @@ struct block_device *blkcg_conf_open_bdev(char **inputp)
+ 		return ERR_PTR(-ENODEV);
  	}
+ 
++	mutex_lock(&bdev->bd_queue->rq_qos_mutex);
++	if (!disk_live(bdev->bd_disk)) {
++		mutex_unlock(&bdev->bd_queue->rq_qos_mutex);
++		blkdev_put_no_open(bdev);
++		return ERR_PTR(-ENODEV);
++	}
++
+ 	*inputp = input;
+ 	return bdev;
+ }
+@@ -779,6 +786,7 @@ int blkg_conf_prep(struct blkcg *blkcg, const struct blkcg_policy *pol,
+ fail_exit_queue:
+ 	blk_queue_exit(q);
+ fail:
++	mutex_unlock(&q->rq_qos_mutex);
+ 	blkdev_put_no_open(bdev);
+ 	/*
+ 	 * If queue was bypassing, we should retry.  Do so after a
+@@ -803,9 +811,11 @@ EXPORT_SYMBOL_GPL(blkg_conf_prep);
+  */
+ void blkg_conf_finish(struct blkg_conf_ctx *ctx)
+ 	__releases(&ctx->bdev->bd_queue->queue_lock) __releases(rcu)
++	__releases(&ctx->bdev->bd_queue->rq_qos_mutex)
+ {
+ 	spin_unlock_irq(&bdev_get_queue(ctx->bdev)->queue_lock);
+ 	rcu_read_unlock();
++	mutex_unlock(&ctx->bdev->bd_queue->rq_qos_mutex);
+ 	blkdev_put_no_open(ctx->bdev);
+ }
+ EXPORT_SYMBOL_GPL(blkg_conf_finish);
+@@ -1297,7 +1307,9 @@ int blkcg_init_disk(struct gendisk *disk)
+ 	if (ret)
+ 		goto err_ioprio_exit;
+ 
++	mutex_lock(&q->rq_qos_mutex);
+ 	ret = blk_iolatency_init(disk);
++	mutex_unlock(&q->rq_qos_mutex);
+ 	if (ret)
+ 		goto err_throtl_exit;
+ 
+diff --git a/block/blk-core.c b/block/blk-core.c
+index 1fcd80a1c54fd..641bc0fa8a4ad 100644
+--- a/block/blk-core.c
++++ b/block/blk-core.c
+@@ -412,6 +412,7 @@ struct request_queue *blk_alloc_queue(int node_id, bool alloc_srcu)
+ 	mutex_init(&q->debugfs_mutex);
+ 	mutex_init(&q->sysfs_lock);
+ 	mutex_init(&q->sysfs_dir_lock);
++	mutex_init(&q->rq_qos_mutex);
+ 	spin_lock_init(&q->queue_lock);
+ 
+ 	init_waitqueue_head(&q->mq_freeze_wq);
+diff --git a/block/blk-iocost.c b/block/blk-iocost.c
+index 93482cc420c97..3989d8c796b0f 100644
+--- a/block/blk-iocost.c
++++ b/block/blk-iocost.c
+@@ -3309,11 +3309,13 @@ static ssize_t ioc_qos_write(struct kernfs_open_file *of, char *input,
+ 	ioc_refresh_params(ioc, true);
+ 	spin_unlock_irq(&ioc->lock);
+ 
++	mutex_unlock(&bdev->bd_queue->rq_qos_mutex);
+ 	blkdev_put_no_open(bdev);
+ 	return nbytes;
+ einval:
+ 	ret = -EINVAL;
+ err:
++	mutex_unlock(&bdev->bd_queue->rq_qos_mutex);
+ 	blkdev_put_no_open(bdev);
+ 	return ret;
+ }
+@@ -3434,12 +3436,14 @@ static ssize_t ioc_cost_model_write(struct kernfs_open_file *of, char *input,
+ 	ioc_refresh_params(ioc, true);
+ 	spin_unlock_irq(&ioc->lock);
+ 
++	mutex_unlock(&bdev->bd_queue->rq_qos_mutex);
+ 	blkdev_put_no_open(bdev);
+ 	return nbytes;
+ 
+ einval:
+ 	ret = -EINVAL;
+ err:
++	mutex_unlock(&bdev->bd_queue->rq_qos_mutex);
+ 	blkdev_put_no_open(bdev);
+ 	return ret;
+ }
+diff --git a/block/blk-rq-qos.c b/block/blk-rq-qos.c
+index a319311d1ced1..aa45f073d51b0 100644
+--- a/block/blk-rq-qos.c
++++ b/block/blk-rq-qos.c
+@@ -288,9 +288,11 @@ void rq_qos_wait(struct rq_wait *rqw, void *private_data,
+ 
+ void rq_qos_exit(struct request_queue *q)
+ {
++	mutex_lock(&q->rq_qos_mutex);
+ 	while (q->rq_qos) {
+ 		struct rq_qos *rqos = q->rq_qos;
+ 		q->rq_qos = rqos->next;
+ 		rqos->ops->exit(rqos);
+ 	}
++	mutex_unlock(&q->rq_qos_mutex);
+ }
+diff --git a/block/blk-rq-qos.h b/block/blk-rq-qos.h
+index 1ef1f7d4bc3cb..98be0e02a86c1 100644
+--- a/block/blk-rq-qos.h
++++ b/block/blk-rq-qos.h
+@@ -87,21 +87,18 @@ static inline void rq_wait_init(struct rq_wait *rq_wait)
+ 
+ static inline int rq_qos_add(struct request_queue *q, struct rq_qos *rqos)
+ {
++	lockdep_assert_held(&q->rq_qos_mutex);
++
+ 	/*
+ 	 * No IO can be in-flight when adding rqos, so freeze queue, which
+ 	 * is fine since we only support rq_qos for blk-mq queue.
+-	 *
+-	 * Reuse ->queue_lock for protecting against other concurrent
+-	 * rq_qos adding/deleting
+ 	 */
+ 	blk_mq_freeze_queue(q);
+ 
+-	spin_lock_irq(&q->queue_lock);
+ 	if (rq_qos_id(q, rqos->id))
+ 		goto ebusy;
+ 	rqos->next = q->rq_qos;
+ 	q->rq_qos = rqos;
+-	spin_unlock_irq(&q->queue_lock);
+ 
+ 	blk_mq_unfreeze_queue(q);
+ 
+@@ -113,7 +110,6 @@ static inline int rq_qos_add(struct request_queue *q, struct rq_qos *rqos)
+ 
+ 	return 0;
+ ebusy:
+-	spin_unlock_irq(&q->queue_lock);
+ 	blk_mq_unfreeze_queue(q);
+ 	return -EBUSY;
+ 
+@@ -123,21 +119,15 @@ static inline void rq_qos_del(struct request_queue *q, struct rq_qos *rqos)
+ {
+ 	struct rq_qos **cur;
+ 
+-	/*
+-	 * See comment in rq_qos_add() about freezing queue & using
+-	 * ->queue_lock.
+-	 */
+-	blk_mq_freeze_queue(q);
++	lockdep_assert_held(&q->rq_qos_mutex);
+ 
+-	spin_lock_irq(&q->queue_lock);
++	blk_mq_freeze_queue(q);
+ 	for (cur = &q->rq_qos; *cur; cur = &(*cur)->next) {
+ 		if (*cur == rqos) {
+ 			*cur = rqos->next;
+ 			break;
+ 		}
+ 	}
+-	spin_unlock_irq(&q->queue_lock);
+-
+ 	blk_mq_unfreeze_queue(q);
+ 
+ 	mutex_lock(&q->debugfs_mutex);
+diff --git a/block/blk-wbt.c b/block/blk-wbt.c
+index c293e08b301ff..46534c877c12f 100644
+--- a/block/blk-wbt.c
++++ b/block/blk-wbt.c
+@@ -850,7 +850,9 @@ int wbt_init(struct request_queue *q)
+ 	/*
+ 	 * Assign rwb and add the stats callback.
+ 	 */
++	mutex_lock(&q->rq_qos_mutex);
+ 	ret = rq_qos_add(q, &rwb->rqos);
++	mutex_unlock(&q->rq_qos_mutex);
+ 	if (ret)
+ 		goto err_free;
+ 
+diff --git a/include/linux/blkdev.h b/include/linux/blkdev.h
+index de013fc37ef83..c5d07c7609d4b 100644
+--- a/include/linux/blkdev.h
++++ b/include/linux/blkdev.h
+@@ -397,6 +397,7 @@ struct request_queue {
+ 
+ 	struct blk_queue_stats	*stats;
+ 	struct rq_qos		*rq_qos;
++	struct mutex		rq_qos_mutex;
+ 
+ 	const struct blk_mq_ops	*mq_ops;
+ 
 -- 
 2.53.0
 
