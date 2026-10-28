@@ -1,51 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793210273;
-	b=JXeRXVulUHl30q++p11wrhubDqkyTSvFiAa/OMmnws8CAOCxTZWGBkgl3nnId+crDEBX
-	 ws7uL467L0luTgVsOlD0R/WwrvGp4dhWt54PhCwLe1qZQWbxKILeI2bB7IS/octLH6/gi
-	 B9noOz68aWkFIsW6saTMMgCXxrog7YjBKjk0PbTdh7gT2O2iV4LpyxFL3We0KP0AL0LEr
-	 C++xkq9n1ZeyuPCZQ90SVcbnNjgj5moUK5tEvJe01Mil2a+JAQCp7o/f6lbnhze2/mYkc
-	 9GlNi1xTJOnq6vHWKx+QXK4M/mTUmdIqc+7S0FNFChJzzka8G6JIbcilxcoRMg48M6w==
+	t=1793210275;
+	b=lC+s1wkThKxdeXpKUtRfXvqowLaO2s5FztcX+T1qp6sG2jVD/WLbFajT8E8hTmqUYvKX
+	 kq9hcdz9fcX4LLe/6l9+tWeNKZSRsPpe0edQJ8XhDTQn30Qpa4vMfV830UGI+HBNqcXIE
+	 yy0Qdj58iuGCuB4M+BiworKrL5G9HhXjzx/Qa/1TE8/Y1NjzRqKeWsDKEpvjFem2Nssx9
+	 d+/higQOswexw2ptLpOGlu2gPGuG7rthm3LIhH/upTA78++9plcCTKtAgzl4kFdLFdk7x
+	 Z0TW2u/Ppa619lSopy0rOCQCO1XIO+f1sHDNRieUygGUrfIMGwaPvvHLfDIx3S0RRsQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793210273;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793210275;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=JZ4Ol55NXojn/n2i+skZNv6G3/G5k0YX706eyd5lNpY=;
-	b=1x71sNk8MMtwdHj7OG0sgvI+8PPygL1K4suk45pKZQmd/lzF4gDNuMf5XJ8imKvvxkoR
-	 wL6mx8Jtz6gy3tsWv21XloHdBH4eHp1qVEHP6NVi7oup7OoUS4hF1yb+iZpH1mlUAOI2C
-	 HTCSl/Kz5qi7Rf4S4ojHd4wOtBcRl5zDp4kYu2e7yhtP3C3ugpTJo9gtuDSwfWm0A73T0
-	 /JGHN0Y3O5//Tnvq53mxZ0CSCtRYwvPJaklZb4EcALZWZCEBSgsOy81/RouJhFNQt2CKE
-	 Cx1r49eGljHzkG6CgvMO+2Nnke1D9flZ+fnKomqDXT2U56+TGO4R6PjvyrjtR4Hgdfg==
+	bh=9OmtLjPzcPuisTUM3NhMQuSXm0oE5unCQijxCCWZxjw=;
+	b=p36yjOkCD4hoGOd8GqpiakVLRMfMZ8W0w5R2ZopM4KqvpjzyTytmI+NiDeOxvBPvERXV
+	 Tk7gGk1XpqwZ1LFwyxNU2e/cbhgMkn7TNhPbVe+LG65k824OKIRyNh0A23uZ94MEXRWf8
+	 oGIV4mu+B2IoNQCRnegF3E/ydv1WdblG5KV8CJKkatlTxG6+wmEFC+S9+gEsxIVQPpG8l
+	 dw8nZOfG2/oKYKZjJAWQYFqi6rIwNawBezl0c/8J4y5sQLqTJ/83CJLwsLM0o6yWe/4AG
+	 Vjb1ssVZqmrNhj9IbplnV1el1ni31FB/rVYZBL1zyUZTPAe0qJAKiH29rNR9/QQdkzg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PrQJzaH+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZyRfWHYV;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00577606A31A;
-	Wed, 28 Oct 2026 17:57:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80650606A31D;
+	Wed, 28 Oct 2026 17:57:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PrQJzaH+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 084AE1F01825;
-	Wed, 28 Oct 2026 17:57:51 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZyRfWHYV
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D18091F01825;
+	Wed, 28 Oct 2026 17:57:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793210272;
-	bh=JZ4Ol55NXojn/n2i+skZNv6G3/G5k0YX706eyd5lNpY=;
+	s=korg; t=1793210275;
+	bh=9OmtLjPzcPuisTUM3NhMQuSXm0oE5unCQijxCCWZxjw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PrQJzaH+FpD+xFE+Go/6gj1qlggLFF6zRb0EAfXlBEhACNFMdbav8+els88GXOBTS
-	 N1KzWSWb+1MEAR1vVHay1kNKU7JHp848uOXAtHHpfYXqG4egvgMMvnf1Xgk170vkTs
-	 IyzUI4O2xc4x26uOmh6bZ8U1deO8Ip8VHlZzuQ2A=
+	b=ZyRfWHYVxlehzqbklwk2JA1kJzF1Mt9XrryVzGOrjSEzwlfv1kSVIf1poEPG0BeI4
+	 DU1WWbuLn62xv/ZVIthVXKolUkjmfub9dxRZehswuBpXHgl+thYaAA3jEY9+66uijS
+	 R217li7Q16vPiPT9Qcrq0AV+5TzsXGo5LcTp8FbA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.6 136/168] io_uring/cancel: recognize "no timeout" on 32-bit
-Date: Wed, 28 Oct 2026 18:01:12 +0100
-Message-ID: <20261028165946.302711323@linuxfoundation.org>
+	Oleg Nesterov <oleg@redhat.com>,
+	Aviv Vaknin <vaknins33@gmail.com>,
+	Bradley Morgan <brads@mainlining.org>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 101/168] pid_namespace: make zap_pid_ns_processes() freezable
+Date: Wed, 28 Oct 2026 18:00:37 +0100
+Message-ID: <20261028165945.478191829@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165943.089486480@linuxfoundation.org>
 References: <20261028165943.089486480@linuxfoundation.org>
@@ -67,44 +70,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Aviv Vaknin <vaknins33@gmail.com>
 
-Commit 3774e4d4c8533da2caae95556c4d635c7c4f45b8 upstream.
+[ Upstream commit 81933038f5e273d17ed22792f906889393b204c5 ]
 
-IORING_REGISTER_SYNC_CANCEL waits without a limit if both fields of
-io_uring_sync_cancel_reg::timeout are -1. io_sync_cancel() compares them
-with -1UL. They are of type long long. With a long of 32 bits -1UL is
-4294967295, which is what it stays when it is converted for the
-comparison, and the fields are never equal to it.
+When the init of a pid namespace exits, zap_pid_ns_processes() waits
+until all other pids in the namespace are freed. A tracer outside the
+namespace that does not reap its traced zombies keeps those pids
+allocated, so this wait has no upper bound, and while it lasts every
+suspend attempt fails:
 
-So { -1, -1 } is taken for a timeout. ktime_set() takes the nanoseconds as
-an unsigned long, so what becomes of it is -1s + 4294967295ns = 3.29s.
+  Freezing user space processes failed after 20.006 seconds (2 tasks refusing to freeze, wq_busy=0):
 
-If the request is being run by io-wq and can't be interrupted, the call
-returns -ETIME after that time, rather than waiting for the request to be
-gone. On i386, with a buffered read from a null_blk device that takes 4s
-to complete a request, IOSQE_ASYNC, that is what each call does.
+Neither wait is freezable. The first loop sleeps in do_wait(), which
+returns -ERESTARTSYS on the freezer's fake signal; the loop then clears
+TIF_SIGPENDING and waits again without ever freezing. The final loop
+sleeps in TASK_INTERRUPTIBLE, and since nothing clears TIF_SIGPENDING
+there, schedule() returns immediately after the first freeze attempt
+and the task spins until the wait ends.
 
-Fixes: 78a861b94959 ("io_uring: add sync cancelation API through io_uring_register()")
-Assisted-by: LLM
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Link: https://patch.msgid.link/20261015-b4-io-uring-fixes-v1-17-c1556f5d7bf5@toxicpanda.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Sleep in TASK_INTERRUPTIBLE | TASK_FREEZABLE in do_wait(), so that the
+freezer can freeze tasks waiting there directly, and in TASK_IDLE |
+TASK_FREEZABLE in the final loop, like coredump_task_exit() does.
+
+This was hit with Chromium-based browsers: crashpad ptrace-attaches the
+threads of a crashed renderer, which is a pid namespace init, and does
+not reap those killed during the dump.
+
+Fixes: 3eb07c8c8adb ("pid namespaces: destroy pid namespace on init's death")
+Fixes: b9a985db9896 ("pid_ns: Sleep in TASK_INTERRUPTIBLE in zap_pid_ns_processes")
+Cc: stable@vger.kernel.org # 6.1+
+Suggested-by: Oleg Nesterov <oleg@redhat.com>
+Signed-off-by: Aviv Vaknin <vaknins33@gmail.com>
+Link: https://patch.msgid.link/20261002202820.3433318-1-vaknins33@gmail.com
+Acked-by: Oleg Nesterov <oleg@redhat.com>
+Reviewed-by: Bradley Morgan <brads@mainlining.org>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/cancel.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/exit.c          | 2 +-
+ kernel/pid_namespace.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
---- a/io_uring/cancel.c
-+++ b/io_uring/cancel.c
-@@ -308,7 +308,7 @@ int io_sync_cancel(struct io_ring_ctx *c
- 	if (ret != -EALREADY)
- 		goto out;
+diff --git a/kernel/exit.c b/kernel/exit.c
+index 07a17f0916107..e2dae48578d96 100644
+--- a/kernel/exit.c
++++ b/kernel/exit.c
+@@ -1648,7 +1648,7 @@ static long do_wait(struct wait_opts *wo)
+ 	add_wait_queue(&current->signal->wait_chldexit, &wo->child_wait);
  
--	if (sc.timeout.tv_sec != -1UL || sc.timeout.tv_nsec != -1UL) {
-+	if (sc.timeout.tv_sec != -1 || sc.timeout.tv_nsec != -1) {
- 		struct timespec64 ts = {
- 			.tv_sec		= sc.timeout.tv_sec,
- 			.tv_nsec	= sc.timeout.tv_nsec
+ 	do {
+-		set_current_state(TASK_INTERRUPTIBLE);
++		set_current_state(TASK_INTERRUPTIBLE | TASK_FREEZABLE);
+ 		retval = __do_wait(wo);
+ 		if (retval != -ERESTARTSYS)
+ 			break;
+diff --git a/kernel/pid_namespace.c b/kernel/pid_namespace.c
+index e9b2bb260ee6c..eea15232f6690 100644
+--- a/kernel/pid_namespace.c
++++ b/kernel/pid_namespace.c
+@@ -245,7 +245,7 @@ void zap_pid_ns_processes(struct pid_namespace *pid_ns)
+ 	 * free_pid() will awaken this task.
+ 	 */
+ 	for (;;) {
+-		set_current_state(TASK_INTERRUPTIBLE);
++		set_current_state(TASK_IDLE | TASK_FREEZABLE);
+ 		if (pid_ns->pid_allocated == init_pids)
+ 			break;
+ 		/*
+-- 
+2.53.0
+
 
 
