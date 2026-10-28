@@ -1,47 +1,47 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216492;
-	b=eof6B5HeIkUo37dr6zugq8EJGQ2D2S0p+2D+truOnpScHvk1bLKGMjS9iLsjzkwsNpoG
-	 EUtCl+K/eEHFa43HTSias4IFMgt591khJw0NvELpMkn4yDkBNF5+kNTIxupkULAn7Sr50
-	 r/zoorU57j+TwwX7CyeTemtGbu35ONnEKuKKngGPfrK4h5bQruUhMrl/lO4r8SDpZu/g1
-	 Sr4mw3cWlRmU8LhSXtzpaUdETFhmDQ+9Q9C8/gU8MxNNsM9jl5i6saHwj6wo0I8jy5GAR
-	 vd2PHcKSBejkXRGd4iNdTyDRslhQiFym45n8gX0+vFF3UoNHykHjNab3ruEv2jMnEMg==
+	t=1793216495;
+	b=z7XwvQmoWyY+B+wuCt7WTI4qeoGt7aRAjQX19dAYIMbsVe2KZay/tipJD14iDarWORcP
+	 XzSlKMRU8GOBUGgyRHDIPwedLLQxmVOVr6tdQ8Gqutt9p/asWNQSxKLhliC/54Brp3gVJ
+	 nTFVciahJhgcjOM7u5rDVkDJ+AexNCoG9CZ9G3is+i/BQs1NXi7k8pcOQCu/ZKzkNG9k+
+	 7tVqNDjd0NKgqRSPe7CDgvlr4O0aigfo5RE6VOo6nfK2Y9zbvl8SvuxTFDdeJ3WKZGZnA
+	 89pqRFQvgWdd7oKhQmsd9VYsDmOBMvBfJdqKskH2eW/ofrWFnuqBbCbsmXXM8iSSqXw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216492;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216495;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Tx7LAzkXBLM8JoP3cE3EFvoPVtyDdd7kTmCxUFsYPng=;
-	b=4PXejV+glWkzGNsKhVgRIwwERuIrRw7+fG3Vm5UMZovBmu4R3REaAkIbfqcTSqVv+hU9
-	 QldVcV1s6HbW+yxxCiwFo9acA83txmx4otuUo2pV2b04WsZCScB1t+hH2Fgd7GTjss3lf
-	 8J+yl0mfXN5Ft4QgHn1oYNp/y91UOEpMPQVtvNx/tbEJDyoIQE766PpIZBmFrwPbKqUgF
-	 pXl0+i9RY2XDPa7QgjDUpcKdA2UQapDoJiKUPCLgy/g7Eesahrx9cP2J16Uo4Pi/ZT2ej
-	 GqGozb54dzqmf6lOzDQiuZt1Kl9ynN5gZhV+KJed/80cKhnQiV4uAG9RW6t75TCEYOA==
+	bh=m0G+fFWIE7xUtLPPHiKpWmdtXa9CMU+VxO+BLCYrG4Q=;
+	b=Z0I/tKYbratp+A83TBQ51P1F09KRWPV0Cnqs82R2/RmUXwrJNUjyHI6nTnxrH/LzZsNg
+	 XErfMnLTb3LzOLcRQGNH1YYQcOm7IsBABf9+xEpIhRKDaeLHTOUt4VruyoHdXu5IAzgQ9
+	 3kkkySjmYthSRh28nsYpUO8oZD+zS2l0FS9ST/sTvHjaNBsYZpjzJGnOB2T4lepQGxrxx
+	 OdsRxuKvNbai2iADlNI9yjoeiKpzG8IsXvPesGJGlCzcDRn8HLG3rKCzGFaz9sJyvKxLI
+	 Ditna6hnKmwgrKuaJy2Rs7QMibdRqXQtDMXAU1YTRwZY789W526dxt62/vByJZvT9Ug==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pn3mZhGs;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zxXgxGeB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 278C3606A31C;
-	Wed, 28 Oct 2026 19:41:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7A6E606A31C;
+	Wed, 28 Oct 2026 19:41:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pn3mZhGs
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 731F21F01825;
-	Wed, 28 Oct 2026 19:41:31 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zxXgxGeB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B0B41F01825;
+	Wed, 28 Oct 2026 19:41:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216492;
-	bh=Tx7LAzkXBLM8JoP3cE3EFvoPVtyDdd7kTmCxUFsYPng=;
+	s=korg; t=1793216494;
+	bh=m0G+fFWIE7xUtLPPHiKpWmdtXa9CMU+VxO+BLCYrG4Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pn3mZhGsA3DKGpQh3Y0EzPQnBCd6BNkS1Fa7w3kUaiq0JkWeyJu665Uuh3B48QePh
-	 RLRO9qbfaEvXQiYBSOIPv/cGpDd8z4rO+KlXQyvTWOfgxiJhiLOIaJEX0pnHn9AZoT
-	 K+41r8W7WXq+7lAUwxkd4AnPxCactNIY5Ds4vIu4=
+	b=zxXgxGeBLMPah6YlIoxYfyHRkUBURCSvKn0ajnk+/gbKJoNw2xieYFYzQBz93Zjhs
+	 UquBPqQPYr10e6tGjHrHpWM82XcRFgJymn27xNMmHkqvUeRmh4nOh4NhmwMScfus4V
+	 i2LWD5glzi5MvFwKdODfQuI7n9j+Wo6ekLlEorDg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yufan Chen <ericterminal@gmail.com>,
+	Cen Zhang <zzzccc427@gmail.com>,
 	Joseph Qi <joseph.qi@linux.alibaba.com>,
 	Mark Fasheh <mark@fasheh.com>,
 	Joel Becker <jlbec@evilplan.org>,
@@ -51,9 +51,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Heming Zhao <heming.zhao@suse.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1575/1887] ocfs2/heartbeat: fix slot mapping rollback leaks on error paths
-Date: Wed, 28 Oct 2026 18:01:11 +0100
-Message-ID: <20261028170535.308634645@linuxfoundation.org>
+Subject: [PATCH 6.1 1576/1887] ocfs2/cluster: keep heartbeat local node stable
+Date: Wed, 28 Oct 2026 18:01:12 +0100
+Message-ID: <20261028170535.332143830@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -75,29 +75,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yufan Chen <ericterminal@gmail.com>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit 5686459423d03d192134166f0ec45f98bb2d5d57 ]
+[ Upstream commit 688bc88e2046dd6ce81ce18079b5254cb8dadc0e ]
 
-o2hb_map_slot_data() allocates hr_tmp_block, hr_slots, hr_slot_data, and
-pages in stages.  If a later allocation fails, the current code returns
-without unwinding the earlier allocations.
+o2nm_node_local_store() handles local=0 by stopping o2net and setting
+cl_local_node to O2NM_INVALID_NODE_NUM, but it leaves cl_has_local set.
+That stale state makes o2nm_this_node() return 255, blocks a later local=1
+attempt with -EBUSY, and can feed 255 to heartbeat users that call
+o2nm_this_node() dynamically.
 
-o2hb_region_dev_store() also leaves slot mapping resources behind when
-setup aborts, and it keeps hr_aborted_start/hr_node_deleted set across
-retries.  That leaves stale state behind after a failed start.
+Clearing cl_has_local is required when the local node is reset.  But
+heartbeat threads can still be running at that point.  They pin the local
+node config item at startup, yet o2hb_do_disk_heartbeat() and thread
+teardown re-read o2nm_this_node() for the local slot and for
+o2nm_undepend_this_node().  Once local=0 has cleared the live local-node
+state, those dynamic reads return O2NM_MAX_NODES, which is also the
+invalid node number 255.
 
-Factor the slot cleanup into o2hb_unmap_slot_data(), use it from both
-o2hb_map_slot_data() and o2hb_region_release(), and call it from the
-dev_store() rollback after stopping a started heartbeat thread.  While
-freeing pages, clear each hr_slot_data entry as it is released, and reset
-the start state before each new setup attempt.
+Store the local node number in the heartbeat region when the region
+starts.  Use that stable node for heartbeat slot writes/checks,
+negotiation messages, and the final configfs undepend.  Stop the heartbeat
+loop when the current local node no longer matches the stored node, and
+clear cl_has_local together with cl_local_node in the local=0 path so
+nodemanager state matches node removal.
 
-This closes the slot mapping leak on allocation/setup failure paths and
-keeps failed setup attempts retryable.
+Validation reproduced this kernel report:
+KASAN slab-out-of-bounds in o2hb_do_disk_heartbeat+0x372/0xb30
+RIP: 0010:memset+0xf/0x20
+Read of size 8
+Call trace:
+  dump_stack_lvl+0x66/0xa0
+  print_report+0xd0/0x630
+  o2hb_do_disk_heartbeat+0x372/0xb30 (fs/ocfs2/cluster/heartbeat.c:1079)
+  srso_alias_return_thunk+0x5/0xfbef5
+  __virt_addr_valid+0x188/0x2f0
+  kasan_report+0xe4/0x120
+  o2hb_do_disk_heartbeat+0x5/0xb30 (fs/ocfs2/cluster/heartbeat.c:1079)
+  o2hb_thread+0x14e/0x770
+  kthread_affine_node+0x139/0x180
+  lockdep_hardirqs_on_prepare+0xda/0x190
+  trace_hardirqs_on+0x18/0x130
+  kthread+0x19d/0x1e0
+  ret_from_fork+0x37a/0x4d0
+  __switch_to+0x2d5/0x6f0
+  ret_from_fork_asm+0x1a/0x30
 
-Link: https://lkml.kernel.org/r/20260330153428.19586-1-yufan.chen@linux.dev
-Signed-off-by: Yufan Chen <ericterminal@gmail.com>
+Link: https://lore.kernel.org/20260616074931.3774929-1-zzzccc427@gmail.com
+Fixes: a7f6a5fb4bde ("[PATCH] OCFS2: The Second Oracle Cluster Filesystem")
+Assisted-by: Codex:gpt-5.5
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Suggested-by: Joseph Qi <joseph.qi@linux.alibaba.com>
 Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
 Cc: Mark Fasheh <mark@fasheh.com>
 Cc: Joel Becker <jlbec@evilplan.org>
@@ -109,153 +137,237 @@ Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Stable-dep-of: 011291b70ba4 ("ocfs2: o2hb: quiesce negotiate handlers and timeout work")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/cluster/heartbeat.c | 69 +++++++++++++++++++++++++-----------
- 1 file changed, 49 insertions(+), 20 deletions(-)
+ fs/ocfs2/cluster/heartbeat.c   | 43 +++++++++++++++++++++++-----------
+ fs/ocfs2/cluster/nodemanager.c | 19 +++++++++++----
+ fs/ocfs2/cluster/nodemanager.h |  2 ++
+ 3 files changed, 46 insertions(+), 18 deletions(-)
 
 diff --git a/fs/ocfs2/cluster/heartbeat.c b/fs/ocfs2/cluster/heartbeat.c
-index a350633bf7222..18c10fa9d7761 100644
+index 18c10fa9d7761..3b1afb46b199e 100644
 --- a/fs/ocfs2/cluster/heartbeat.c
 +++ b/fs/ocfs2/cluster/heartbeat.c
-@@ -1511,33 +1511,45 @@ static struct o2hb_region *to_o2hb_region(struct config_item *item)
- 	return item ? container_of(item, struct o2hb_region, hr_item) : NULL;
+@@ -210,6 +210,7 @@ struct o2hb_region {
+ 
+ 	/* protected by the hr_callback_sem */
+ 	struct task_struct 	*hr_task;
++	u8			hr_node_num;
+ 
+ 	unsigned int		hr_blocks;
+ 	unsigned long long	hr_start_block;
+@@ -352,12 +353,12 @@ static void o2hb_disarm_timeout(struct o2hb_region *reg)
+ 	cancel_delayed_work_sync(&reg->hr_nego_timeout_work);
  }
  
--/* drop_item only drops its ref after killing the thread, nothing should
-- * be using the region anymore.  this has to clean up any state that
-- * attributes might have built up. */
--static void o2hb_region_release(struct config_item *item)
-+static void o2hb_unmap_slot_data(struct o2hb_region *reg)
+-static int o2hb_send_nego_msg(int key, int type, u8 target)
++static int o2hb_send_nego_msg(int key, int type, u8 target, u8 node_num)
  {
- 	int i;
- 	struct page *page;
--	struct o2hb_region *reg = to_o2hb_region(item);
--
--	mlog(ML_HEARTBEAT, "hb region release (%pg)\n", reg->hr_bdev);
--
--	kfree(reg->hr_tmp_block);
+ 	struct o2hb_nego_msg msg;
+ 	int status, ret;
  
- 	if (reg->hr_slot_data) {
- 		for (i = 0; i < reg->hr_num_pages; i++) {
- 			page = reg->hr_slot_data[i];
--			if (page)
-+			if (page) {
- 				__free_page(page);
-+				reg->hr_slot_data[i] = NULL;
-+			}
+-	msg.node_num = o2nm_this_node();
++	msg.node_num = node_num;
+ again:
+ 	ret = o2net_send_message(type, key, &msg, sizeof(msg),
+ 			target, &status);
+@@ -375,8 +376,10 @@ static void o2hb_nego_timeout(struct work_struct *work)
+ 	unsigned long live_node_bitmap[BITS_TO_LONGS(O2NM_MAX_NODES)];
+ 	int master_node, i, ret;
+ 	struct o2hb_region *reg;
++	u8 node_num;
+ 
+ 	reg = container_of(work, struct o2hb_region, hr_nego_timeout_work.work);
++	node_num = reg->hr_node_num;
+ 	/* don't negotiate timeout if last hb failed since it is very
+ 	 * possible io failed. Should let write timeout fence self.
+ 	 */
+@@ -387,10 +390,10 @@ static void o2hb_nego_timeout(struct work_struct *work)
+ 	/* lowest node as master node to make negotiate decision. */
+ 	master_node = find_first_bit(live_node_bitmap, O2NM_MAX_NODES);
+ 
+-	if (master_node == o2nm_this_node()) {
++	if (master_node == node_num) {
+ 		if (!test_bit(master_node, reg->hr_nego_node_bitmap)) {
+ 			printk(KERN_NOTICE "o2hb: node %d hb write hung for %ds on region %s (%pg).\n",
+-				o2nm_this_node(), O2HB_NEGO_TIMEOUT_MS/1000,
++				node_num, O2HB_NEGO_TIMEOUT_MS / 1000,
+ 				config_item_name(&reg->hr_item), reg->hr_bdev);
+ 			set_bit(master_node, reg->hr_nego_node_bitmap);
  		}
- 		kfree(reg->hr_slot_data);
-+		reg->hr_slot_data = NULL;
+@@ -418,7 +421,7 @@ static void o2hb_nego_timeout(struct work_struct *work)
+ 
+ 			mlog(ML_HEARTBEAT, "send NEGO_APPROVE msg to node %d\n", i);
+ 			ret = o2hb_send_nego_msg(reg->hr_key,
+-					O2HB_NEGO_APPROVE_MSG, i);
++					O2HB_NEGO_APPROVE_MSG, i, node_num);
+ 			if (ret)
+ 				mlog(ML_ERROR, "send NEGO_APPROVE msg to node %d fail %d\n",
+ 					i, ret);
+@@ -426,10 +429,10 @@ static void o2hb_nego_timeout(struct work_struct *work)
+ 	} else {
+ 		/* negotiate timeout with master node. */
+ 		printk(KERN_NOTICE "o2hb: node %d hb write hung for %ds on region %s (%pg), negotiate timeout with node %d.\n",
+-			o2nm_this_node(), O2HB_NEGO_TIMEOUT_MS/1000, config_item_name(&reg->hr_item),
++			node_num, O2HB_NEGO_TIMEOUT_MS / 1000, config_item_name(&reg->hr_item),
+ 			reg->hr_bdev, master_node);
+ 		ret = o2hb_send_nego_msg(reg->hr_key, O2HB_NEGO_TIMEOUT_MSG,
+-				master_node);
++				master_node, node_num);
+ 		if (ret)
+ 			mlog(ML_ERROR, "send NEGO_TIMEOUT msg to node %d fail %d\n",
+ 				master_node, ret);
+@@ -601,7 +604,9 @@ static int o2hb_issue_node_write(struct o2hb_region *reg,
+ 
+ 	o2hb_bio_wait_init(write_wc);
+ 
+-	slot = o2nm_this_node();
++	slot = reg->hr_node_num;
++	if (slot >= O2NM_MAX_NODES)
++		return -EINVAL;
+ 
+ 	bio = o2hb_setup_one_bio(reg, write_wc, &slot, slot+1,
+ 				 REQ_OP_WRITE | REQ_SYNC);
+@@ -670,8 +675,12 @@ static int o2hb_check_own_slot(struct o2hb_region *reg)
+ 	struct o2hb_disk_slot *slot;
+ 	struct o2hb_disk_heartbeat_block *hb_block;
+ 	char *errstr;
++	u8 node_num = reg->hr_node_num;
++
++	if (node_num >= O2NM_MAX_NODES)
++		return 0;
+ 
+-	slot = &reg->hr_slots[o2nm_this_node()];
++	slot = &reg->hr_slots[node_num];
+ 	/* Don't check on our 1st timestamp */
+ 	if (!slot->ds_last_time)
+ 		return 0;
+@@ -712,7 +721,10 @@ static inline void o2hb_prepare_block(struct o2hb_region *reg,
+ 	struct o2hb_disk_slot *slot;
+ 	struct o2hb_disk_heartbeat_block *hb_block;
+ 
+-	node_num = o2nm_this_node();
++	node_num = reg->hr_node_num;
++	if (node_num >= O2NM_MAX_NODES)
++		return;
++
+ 	slot = &reg->hr_slots[node_num];
+ 
+ 	hb_block = (struct o2hb_disk_heartbeat_block *)slot->ds_raw_block;
+@@ -1206,7 +1218,7 @@ static int o2hb_thread(void *data)
+ 	set_user_nice(current, MIN_NICE);
+ 
+ 	/* Pin node */
+-	ret = o2nm_depend_this_node();
++	ret = o2nm_depend_node(reg->hr_node_num);
+ 	if (ret) {
+ 		mlog(ML_ERROR, "Node has been deleted, ret = %d\n", ret);
+ 		reg->hr_node_deleted = 1;
+@@ -1215,7 +1227,8 @@ static int o2hb_thread(void *data)
  	}
  
-+	kfree(reg->hr_slots);
-+	reg->hr_slots = NULL;
-+
-+	kfree(reg->hr_tmp_block);
-+	reg->hr_tmp_block = NULL;
+ 	while (!kthread_should_stop() &&
+-	       !reg->hr_unclean_stop && !reg->hr_aborted_start) {
++	       !reg->hr_unclean_stop && !reg->hr_aborted_start &&
++	       o2nm_this_node() == reg->hr_node_num) {
+ 		/* We track the time spent inside
+ 		 * o2hb_do_disk_heartbeat so that we avoid more than
+ 		 * hr_timeout_ms between disk writes. On busy systems
+@@ -1264,7 +1277,7 @@ static int o2hb_thread(void *data)
+ 	}
+ 
+ 	/* Unpin node */
+-	o2nm_undepend_this_node();
++	o2nm_undepend_node(reg->hr_node_num);
+ 
+ 	mlog(ML_HEARTBEAT|ML_KTHREAD, "o2hb thread exiting\n");
+ 
+@@ -1812,7 +1825,8 @@ static ssize_t o2hb_region_dev_store(struct config_item *item,
+ 
+ 	/* We can't heartbeat without having had our node number
+ 	 * configured yet. */
+-	if (o2nm_this_node() == O2NM_MAX_NODES)
++	reg->hr_node_num = o2nm_this_node();
++	if (reg->hr_node_num == O2NM_MAX_NODES)
+ 		goto out;
+ 
+ 	fd = simple_strtol(p, &p, 0);
+@@ -2060,6 +2074,7 @@ static struct config_item *o2hb_heartbeat_group_make_item(struct config_group *g
+ 		ret = -ENAMETOOLONG;
+ 		goto free;
+ 	}
++	reg->hr_node_num = O2NM_MAX_NODES;
+ 
+ 	spin_lock(&o2hb_live_lock);
+ 	reg->hr_region_num = 0;
+diff --git a/fs/ocfs2/cluster/nodemanager.c b/fs/ocfs2/cluster/nodemanager.c
+index d244def401eab..adb60bc6e9bc2 100644
+--- a/fs/ocfs2/cluster/nodemanager.c
++++ b/fs/ocfs2/cluster/nodemanager.c
+@@ -368,6 +368,7 @@ static ssize_t o2nm_node_local_store(struct config_item *item, const char *page,
+ 	if (!tmp && cluster->cl_has_local &&
+ 	    cluster->cl_local_node == node->nd_num) {
+ 		o2net_stop_listening(node);
++		cluster->cl_has_local = 0;
+ 		cluster->cl_local_node = O2NM_INVALID_NODE_NUM;
+ 	}
+ 
+@@ -791,12 +792,12 @@ void o2nm_undepend_item(struct config_item *item)
+ 	configfs_undepend_item(item);
+ }
+ 
+-int o2nm_depend_this_node(void)
++int o2nm_depend_node(u8 node_num)
+ {
+ 	int ret = 0;
+ 	struct o2nm_node *local_node;
+ 
+-	local_node = o2nm_get_node_by_num(o2nm_this_node());
++	local_node = o2nm_get_node_by_num(node_num);
+ 	if (!local_node) {
+ 		ret = -EINVAL;
+ 		goto out;
+@@ -809,17 +810,27 @@ int o2nm_depend_this_node(void)
+ 	return ret;
+ }
+ 
+-void o2nm_undepend_this_node(void)
++void o2nm_undepend_node(u8 node_num)
+ {
+ 	struct o2nm_node *local_node;
+ 
+-	local_node = o2nm_get_node_by_num(o2nm_this_node());
++	local_node = o2nm_get_node_by_num(node_num);
+ 	BUG_ON(!local_node);
+ 
+ 	o2nm_undepend_item(&local_node->nd_item);
+ 	o2nm_node_put(local_node);
+ }
+ 
++int o2nm_depend_this_node(void)
++{
++	return o2nm_depend_node(o2nm_this_node());
 +}
 +
-+/* drop_item only drops its ref after killing the thread, nothing should
-+ * be using the region anymore.  this has to clean up any state that
-+ * attributes might have built up.
-+ */
-+static void o2hb_region_release(struct config_item *item)
++void o2nm_undepend_this_node(void)
 +{
-+	struct o2hb_region *reg = to_o2hb_region(item);
++	o2nm_undepend_node(o2nm_this_node());
++}
 +
-+	mlog(ML_HEARTBEAT, "hb region release (%pg)\n", reg->hr_bdev);
-+
-+	o2hb_unmap_slot_data(reg);
-+
- 	if (reg->hr_bdev)
- 		blkdev_put(reg->hr_bdev, FMODE_READ|FMODE_WRITE);
  
--	kfree(reg->hr_slots);
--
- 	debugfs_remove_recursive(reg->hr_debug_dir);
- 	kfree(reg->hr_db_livenodes);
- 	kfree(reg->hr_db_regnum);
-@@ -1688,6 +1700,7 @@ static void o2hb_init_region_params(struct o2hb_region *reg)
- static int o2hb_map_slot_data(struct o2hb_region *reg)
+ static void __exit exit_o2nm(void)
  {
- 	int i, j;
-+	int ret = -ENOMEM;
- 	unsigned int last_slot;
- 	unsigned int spp = reg->hr_slots_per_page;
- 	struct page *page;
-@@ -1695,15 +1708,15 @@ static int o2hb_map_slot_data(struct o2hb_region *reg)
- 	struct o2hb_disk_slot *slot;
+diff --git a/fs/ocfs2/cluster/nodemanager.h b/fs/ocfs2/cluster/nodemanager.h
+index 2f72f56996bd9..ca3483fb54504 100644
+--- a/fs/ocfs2/cluster/nodemanager.h
++++ b/fs/ocfs2/cluster/nodemanager.h
+@@ -66,6 +66,8 @@ void o2nm_node_put(struct o2nm_node *node);
+ int o2nm_depend_item(struct config_item *item);
+ int o2nm_depend_item_unlocked(struct config_item *item);
+ void o2nm_undepend_item(struct config_item *item);
++int o2nm_depend_node(u8 node_num);
++void o2nm_undepend_node(u8 node_num);
+ int o2nm_depend_this_node(void);
+ void o2nm_undepend_this_node(void);
  
- 	reg->hr_tmp_block = kmalloc(reg->hr_block_bytes, GFP_KERNEL);
--	if (reg->hr_tmp_block == NULL)
--		return -ENOMEM;
-+	if (!reg->hr_tmp_block)
-+		goto out;
- 
- 	reg->hr_slots = kcalloc(reg->hr_blocks,
- 				sizeof(struct o2hb_disk_slot), GFP_KERNEL);
--	if (reg->hr_slots == NULL)
--		return -ENOMEM;
-+	if (!reg->hr_slots)
-+		goto out;
- 
--	for(i = 0; i < reg->hr_blocks; i++) {
-+	for (i = 0; i < reg->hr_blocks; i++) {
- 		slot = &reg->hr_slots[i];
- 		slot->ds_node_num = i;
- 		INIT_LIST_HEAD(&slot->ds_live_item);
-@@ -1718,12 +1731,12 @@ static int o2hb_map_slot_data(struct o2hb_region *reg)
- 	reg->hr_slot_data = kcalloc(reg->hr_num_pages, sizeof(struct page *),
- 				    GFP_KERNEL);
- 	if (!reg->hr_slot_data)
--		return -ENOMEM;
-+		goto out;
- 
--	for(i = 0; i < reg->hr_num_pages; i++) {
-+	for (i = 0; i < reg->hr_num_pages; i++) {
- 		page = alloc_page(GFP_KERNEL);
- 		if (!page)
--			return -ENOMEM;
-+			goto out;
- 
- 		reg->hr_slot_data[i] = page;
- 
-@@ -1743,6 +1756,10 @@ static int o2hb_map_slot_data(struct o2hb_region *reg)
- 	}
- 
- 	return 0;
-+
-+out:
-+	o2hb_unmap_slot_data(reg);
-+	return ret;
- }
- 
- /* Read in all the slots available and populate the tracking
-@@ -1833,6 +1850,8 @@ static ssize_t o2hb_region_dev_store(struct config_item *item,
- 		goto out3;
- 	}
- 
-+	reg->hr_aborted_start = 0;
-+	reg->hr_node_deleted = 0;
- 	o2hb_init_region_params(reg);
- 
- 	/* Generation of zero is invalid */
-@@ -1924,6 +1943,16 @@ static ssize_t o2hb_region_dev_store(struct config_item *item,
- 
- out3:
- 	if (ret < 0) {
-+		spin_lock(&o2hb_live_lock);
-+		hb_task = reg->hr_task;
-+		reg->hr_task = NULL;
-+		spin_unlock(&o2hb_live_lock);
-+
-+		if (hb_task)
-+			kthread_stop(hb_task);
-+
-+		o2hb_unmap_slot_data(reg);
-+
- 		blkdev_put(reg->hr_bdev, FMODE_READ | FMODE_WRITE);
- 		reg->hr_bdev = NULL;
- 	}
 -- 
 2.53.0
 
