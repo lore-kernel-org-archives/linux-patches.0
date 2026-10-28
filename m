@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793210922;
-	b=mvzR3qO3sBvCWk7tADf+/eyh2yhqeVRAkeF9KR1sAgiDuqo55SHIxQrBoz99JCGlr5wa
-	 LRrmItYeQ9izlfmhz9DHjf5mU3w+t+B63bI077lT1e2cIswQyJIzrzn2Gx7s3+k8+hZcJ
-	 ZKKayQXfFxq8Tq7cFpgs9yS5ic8fBrkSngXoAI2AIhSfx7MQnxonD4odNgYvOJ9gZnXbN
-	 QEfQEular9F1S8KmqEpU/rwfh4u2dF/6u0fqsKshxPvfuR/wTQ0TSJKvV9UDHR2OkOdpR
-	 PcHkGrGOofqKJUrVtcQhHRWsS0bJLXpj5O3fZ1LRTnU65f/nkmW6VOz3RRlFOjepuxA==
+	t=1793210928;
+	b=lUMKi/QqDtNrQKwY/jJ9HOM9zViGf7U8wdKOuBpgZWLbPpwis3JH97rCVJ8nfhuvR/qu
+	 Fwx9fDoK7eAq8gSR4vdLnerD3j6ZQcfMxccb9WVZOTPS1eg3MXNxymkSY4UKwMuB/W+ys
+	 bxheJQiD9JSwQwmaBT6JYm1xP2MLUqjwrSOtPlxxFQ7d0sBW+68VlkWeItrwb7Ekg9vNZ
+	 99HBwHysCIKfSHHCSYYwar94Rm3eqK88DUmvwDCQVBVzoufyWLX/KuP0PanfIOQrpCFeK
+	 IFxtryulhd1G4cGXf2yJFg1qTJlKXXKARQsns37vyYrJocvrYJBDNyrcc2kz7N1rtnw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793210922;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793210928;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=EJprPCFR7BrKJHpqilsRxQOuWMHSHbiVtPOICveJ5EE=;
-	b=F/1ah+6U0bhpbemEvvMBaCJ/tBY3jNysz0zDALRrfhx8OWo6NnTr4GUCvsO5+qnSG4Hq
-	 OBXCSAbnlwJK6+fNLtTbcl1ltgPQl8g51qMIl5MulvLldELdHiOm0wXPDwVpS3t1KRHMz
-	 acKbcD9en5pZncqMVAOeVRdtoFHF2DV7p7C/fmCeUIZV0nunv4lwLYcrz/sSwdkimfoM8
-	 jC2dhnZrHR8jLCb/54OSe2hYv0gr9TQ+MdzZhPVjXrAUToFrZ77SrK/SK6OlMZ5WmyDcY
-	 b5yANxZM6FrmdGREmYlpgp5luJRtgvNimFzYhs2XAdKBO9REEIw81tR0blkmfbSG1eA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=vDJYLd3zF7X1JOp/T3/Wh2Na4tJL+NV1ZyjIU6HEeYc=;
+	b=BXyX9mynIAk6BQh6JQIGITlMHElLVUFeDdXR3At+N8fk/mY5iagC3V+4PouZEGapya63
+	 Ot2HVQXjilg9+wbiw86Mg50JyPejhEF9iA9Aikyd8NudVj0GtxoGT6QQbQbvZmXcFGHF2
+	 /aRlVYxD2HCK4aPjmgubkQ1BMHgnLdwgfIYojIFOt4ciE1Y2kNbI1rWKAQL/EwIdNUro+
+	 jM1WQAcXtOljbwpZNxm0do8fdIQWMEnY347A0gmghE6X64De9nW3z1/5pi7cpwNrdjjAH
+	 tlf4+RB5WgGPZ4y45LZ7IhN+xOx0niSnhpHIaAhqoOoAz6BYO9VJwsxsXnnGGCsJxWw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DUiAKwhS;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pc8HOzPX;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EC71606A31D;
-	Wed, 28 Oct 2026 18:08:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B522D606A31D;
+	Wed, 28 Oct 2026 18:08:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DUiAKwhS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EA451F01825;
-	Wed, 28 Oct 2026 18:08:41 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pc8HOzPX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10F551F01825;
+	Wed, 28 Oct 2026 18:08:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793210921;
-	bh=EJprPCFR7BrKJHpqilsRxQOuWMHSHbiVtPOICveJ5EE=;
+	s=korg; t=1793210927;
+	bh=vDJYLd3zF7X1JOp/T3/Wh2Na4tJL+NV1ZyjIU6HEeYc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DUiAKwhSBO4e6ZHj/sXnASim83KPhzWz0RmrWTDjMG5L1+FVEGc+5Us+aFSULSQsT
-	 UcB/EzTip5ogp+etj4QVeuYUR8Lj9ZVZQgqINpBkWeo7gyz9kt/o4CkWybfRgH4kdQ
-	 zDO35S1SrryBNyhrJGNIl8Pq9VHX7XsySUJ5xoJs=
+	b=pc8HOzPXvB3cgiciubPz49t+b6EDzyOTBu2JMtpaS4QEoUjF2+sFq/dW5+PFjZk2l
+	 RVNg504SZwAdyyK+a1/+ZfPYtdZPUqE9LeEoyRJ9uCy8K4547gn/0p29Tr9m6uMgps
+	 YnGbnGfnDWrbrWjhbGHfmhz2SqkzqFyifWI2Cdio=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Salmun <salmundani@gmail.com>,
-	=?UTF-8?q?Rapha=C3=ABl=20Larocque?= <rlarocque@disroot.org>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 5.15 196/571] Input: synaptics - limit T440p InterTouch quirk to LEN0036
-Date: Wed, 28 Oct 2026 17:55:43 +0100
-Message-ID: <20261028170012.658802463@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Oliver Neukum <oneukum@suse.de>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 5.15 198/571] USB: cdc-acm: fix racy TIOCMIWAIT implementation
+Date: Wed, 28 Oct 2026 17:55:45 +0100
+Message-ID: <20261028170012.705560481@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -62,56 +62,108 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Raphaël Larocque <rlarocque@disroot.org>
+From: Johan Hovold <johan@kernel.org>
 
-commit f0fd8993082ca229faa3f9844f1c9fe182eca20b upstream.
+commit be4219dd98608736e13e0b790ef742b76a13254d upstream.
 
-The ThinkPad L440 also uses board id 2722, but does not have the SMBus
-initialization problem seen on the T440p. On the L440, the SMBus
-companion becomes available shortly after psmouse probes, allowing the
-touchpad to use SMBus/RMI4 normally.
+Check the wakeup condition after adding the task to the waitqueue and
+updating the task state to avoid missing a racing modem status update or
+disconnect.
 
-The T440p's quirk is currently applied to all Synaptics touchpads with
-board id 2722, unnecessarily disabling SMBus InterTouch on the L440,
-as reported by Daniel Salmun.
+Store the old icount on entry and do not update it in the completion
+handler to avoid missing events or reporting spurious ones (due to modem
+status changes before TIOCMIWAIT was called).
 
-Restrict the quirk to PNP ID LEN0036, which identifies the T440p, so
-that other devices sharing board id 2722 retain their normal
-SMBus/RMI4 operation.
-
-Reported-by: Daniel Salmun <salmundani@gmail.com>
-Link: https://lore.kernel.org/all/20260925230039.236786-1-salmundani@gmail.com/
-Fixes: 26eb3d92c7a4 ("Input: synaptics - disable InterTouch on ThinkPad T440p (board id 2722)")
-Cc: stable@vger.kernel.org
-Signed-off-by: Raphaël Larocque <rlarocque@disroot.org>
-Link: https://patch.msgid.link/20260927005810.85971-1-rlarocque@disroot.org
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Fixes: 5a6a62bdb925 ("cdc-acm: add TIOCMIWAIT")
+Cc: stable <stable@kernel.org>
+Cc: Oliver Neukum <oneukum@suse.de>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://patch.msgid.link/20260907095130.130636-1-johan@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/mouse/synaptics.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/usb/class/cdc-acm.c |   36 +++++++++++++++++++-----------------
+ drivers/usb/class/cdc-acm.h |    1 -
+ 2 files changed, 19 insertions(+), 18 deletions(-)
 
---- a/drivers/input/mouse/synaptics.c
-+++ b/drivers/input/mouse/synaptics.c
-@@ -1809,8 +1809,10 @@ static int synaptics_setup_intertouch(st
- 			return -ENXIO;
- 		}
+--- a/drivers/usb/class/cdc-acm.c
++++ b/drivers/usb/class/cdc-acm.c
+@@ -320,7 +320,6 @@ static void acm_process_notification(str
+ 		difference = acm->ctrlin ^ newctrl;
+ 		spin_lock_irqsave(&acm->read_lock, flags);
+ 		acm->ctrlin = newctrl;
+-		acm->oldcount = acm->iocount;
  
--		/* Disable intertouch on known-broken board revisions */
--		if (info->board_id == 2722) {
-+		/* Disable intertouch on known-broken T440p board revisions */
-+		if (info->board_id == 2722 &&
-+		    psmouse_matches_pnp_id(psmouse,
-+					   (const char * const []){"LEN0036", NULL})) {
- 			psmouse_info(psmouse,
- 				     "Disabling intertouch for board id %u\n",
- 				     info->board_id);
+ 		if (difference & ACM_CTRL_DSR)
+ 			acm->iocount.dsr++;
+@@ -994,11 +993,16 @@ static int wait_serial_change(struct acm
+ 	DECLARE_WAITQUEUE(wait, current);
+ 	struct async_icount old, new;
+ 
+-	do {
++	spin_lock_irq(&acm->read_lock);
++	old = acm->iocount;
++	spin_unlock_irq(&acm->read_lock);
++
++	add_wait_queue(&acm->wioctl, &wait);
++	for (;;) {
++		set_current_state(TASK_INTERRUPTIBLE);
++
+ 		spin_lock_irq(&acm->read_lock);
+-		old = acm->oldcount;
+ 		new = acm->iocount;
+-		acm->oldcount = new;
+ 		spin_unlock_irq(&acm->read_lock);
+ 
+ 		if ((arg & TIOCM_DSR) &&
+@@ -1011,22 +1015,20 @@ static int wait_serial_change(struct acm
+ 			old.rng != new.rng)
+ 			break;
+ 
+-		add_wait_queue(&acm->wioctl, &wait);
+-		set_current_state(TASK_INTERRUPTIBLE);
+-		schedule();
+-		remove_wait_queue(&acm->wioctl, &wait);
+ 		if (acm->disconnected) {
+-			if (arg & TIOCM_CD)
+-				break;
+-			else
+-				rv = -ENODEV;
+-		} else {
+-			if (signal_pending(current))
+-				rv = -ERESTARTSYS;
++			rv = -ENODEV;
++			break;
+ 		}
+-	} while (!rv);
+ 
+-	
++		schedule();
++
++		if (signal_pending(current)) {
++			rv = -ERESTARTSYS;
++			break;
++		}
++	}
++	__set_current_state(TASK_RUNNING);
++	remove_wait_queue(&acm->wioctl, &wait);
+ 
+ 	return rv;
+ }
+--- a/drivers/usb/class/cdc-acm.h
++++ b/drivers/usb/class/cdc-acm.h
+@@ -118,7 +118,6 @@ struct acm {
+ 	unsigned int ctrlin;				/* input control lines (DCD, DSR, RI, break, overruns) */
+ 	unsigned int ctrlout;				/* output control lines (DTR, RTS) */
+ 	struct async_icount iocount;			/* counters for control line changes */
+-	struct async_icount oldcount;			/* for comparison of counter */
+ 	wait_queue_head_t wioctl;			/* for ioctl */
+ 	unsigned int writesize;				/* max packet size for the output bulk endpoint */
+ 	unsigned int readsize,ctrlsize;			/* buffer sizes for freeing */
 
 
