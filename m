@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793210823;
-	b=PaPYKN7Drm8kwy3r56gEuCXhXj0CYxkk4nN+zWlhfSwnJWsJ/znbTfytvW3gqOwpi3Pj
-	 PDVM63CxburBNhH69jpEVBImVt1XBG++hjzJoxEBhIIYVwpFAhypJYS1oLGDqs2BcNgE/
-	 rGz8GwJiMTOM9A5Prl08ndIauCYlNyBBxC/dKpIoVQUyQA+Zbrp00Qr2sT0FPXEQbyslO
-	 uf7O7/We12VK822gGNsEFMH9lq9g0BOWpZcaaAoyY0cqZYEqJ1Jf/L6LVTE8yJNyf9xmo
-	 kcfhoQyZWMPPd+bRj54A5tkuYpwjaQxLvp9UshpC75V2UKLdns7QRG0Y1qYbfCANxfw==
+	t=1793210826;
+	b=nrJHWcDrddmiQtnVuSriUV3meEv2ZUgJ6fGPb72AjcB2I+BbZLw4vVc+1gWGAEKzR0nT
+	 FYKJgEhHC5RfTdKAKMC8PrD0VGXFU9uqaSb8f9jchgxL+/oPgDO1JQ1OnJSDIvUzWyzad
+	 xTvBrwk+IdOIE+fQoM3gmmzEWrQgw59NEd3kOXsl0M2Ww1/Ido3BWkfIYdfiHB3Wt8BO8
+	 EE+LGixgVulvjWnfmiR6P08DgnFN9prvrUOB4kDXfejPKLxvHVNAIjCrlSiPaGwf2Z4jH
+	 vyegtmRM/IPE9lkTCDqmIPMVZfmm3NLMliPn/vHt0lc3XNiNXkBtLdiezKxgYSoHoBA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793210823;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793210826;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=HiFjJIXXz4jPB7QMRssnzaIiGe1FoR12Bwtb+dmM7fQ=;
-	b=eHfL50MllyYEKiazGR23bHPHyYRoc9Bsb8VGm5O4D5xM6hQ5q0V2pjEQ0VrQUkvGA+nH
-	 Kg37IKTLC7GIYDIWD6gJR90RpzhNhUfVKGk3CO6zbjtXpt+CL0WPIwP0VukDJsdf2igVx
-	 C451PKKC1g3WGb8FeHRRBF/NEpcitjp+ZB0C79g0AIOck+t4If+Y0bmDvoSQmUeNiVMJH
-	 a3xIlTbx+iviTjlwzIqdb7BAnzjV4waxQg7JMLqx2dO/9dTBv7Ll99Y9DP7yfOtG0DMk5
-	 jEYcfkdBpIpFmFBZuyheRuLuDzN9E3Rnek+QbNMz+n/0hBt5BvRdmYnjGONhaeWUNAw==
+	bh=G5aV7EO/qaqM6TpsYjVcVvKTOu9RGLwanF2EMes3Ans=;
+	b=MmxcuxORQFnS/P8G3mtGJXU2qwHbSs8dQBLHnTnPHsLJC8EKI2wdmlujNCqHOlXctgbH
+	 YRcyRyjpElvgahG0naCVuITAwdaMVTuxv6xXmHNFTtjl4pDzmzwKTjexCjN3uEwaoF+hd
+	 GYXf4882wJ1W0Plw4u5I6S1ZqUR3DTe6yEPSEyaFP+68kPZ2kK5TuyoJGPmUvlAC+g9y5
+	 Y6InDouGNyz6auerMqN4zmbKFwJ40pAlJOP4QMtMAQHCAM+H1ZUnPfvicv4HrPVqJbNby
+	 STjVAoP2e8TqJcmJbFCODiwIr9GSiAYunY5g2TMABrfK038g/W2uS4mY5xQJPz4vqLA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v57ph1nm;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uyDmnhKu;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D244C606A31A;
-	Wed, 28 Oct 2026 18:07:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3E36606A31C;
+	Wed, 28 Oct 2026 18:07:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v57ph1nm
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AACC1F01829;
-	Wed, 28 Oct 2026 18:07:02 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uyDmnhKu
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1073C1F01825;
+	Wed, 28 Oct 2026 18:07:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793210822;
-	bh=HiFjJIXXz4jPB7QMRssnzaIiGe1FoR12Bwtb+dmM7fQ=;
+	s=korg; t=1793210825;
+	bh=G5aV7EO/qaqM6TpsYjVcVvKTOu9RGLwanF2EMes3Ans=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=v57ph1nmtINeSpp96Yo0A+K3yWNgu9QGT1zLmPjGUPufu2leqWCwDMYN5w4E1DMtJ
-	 +nVHkmgbJ5A/YHG/PwoG1qJQvlc1tcSYP6dIHW62hk/iqu5Da1xoGtNdSEtbTQtItT
-	 gTcbzzBd5JMJ89iXHvi2w2s6N+Y/zGUm7vS/iFJM=
+	b=uyDmnhKus17zVJfKTNS19YbDUz/AtK1XBtHdICcbW2IDs0CC+af75Nwdh68CWWIUe
+	 FsoPt7Ghf6AaNLOAi+V6HhBJIpA/WmBevdw6i34BCPb0vE2Nrl2uNYmFVVDjAdNMyJ
+	 cJzKM7w2vxaCUkIVLz3gS+hR7FpQWRs2b7U0CJBc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shang XiaoJing <shangxiaojing@huawei.com>,
+	Tomas Winkler <tomas.winkler@intel.com>,
+	Alexander Usyskin <alexander.usyskin@intel.com>,
 	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 160/571] mtd: core: Fix refcount error in del_mtd_device()
-Date: Wed, 28 Oct 2026 17:55:07 +0100
-Message-ID: <20261028170011.815065510@linuxfoundation.org>
+Subject: [PATCH 5.15 161/571] mtd: use refcount to prevent corruption
+Date: Wed, 28 Oct 2026 17:55:08 +0100
+Message-ID: <20261028170011.838480443@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -68,93 +69,241 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shang XiaoJing <shangxiaojing@huawei.com>
+From: Tomas Winkler <tomas.winkler@intel.com>
 
-[ Upstream commit 56570bdad5e31c5c538cd6efff5c4510256e1bb4 ]
+[ Upstream commit 19bfa9ebebb5ec0695def57eb1d80de7e9cab369 ]
 
-del_mtd_device() will call of_node_put() to mtd_get_of_node(mtd), which
-is mtd->dev.of_node. However, memset(&mtd->dev, 0) is called before
-of_node_put(). As the result, of_node_put() won't do anything in
-del_mtd_device(), and causes the refcount leak.
+When underlying device is removed mtd core will crash
+in case user space is holding open handle.
+Need to use proper refcounting so device is release
+only when has no users.
 
-del_mtd_device()
-    memset(&mtd->dev, 0, sizeof(mtd->dev) # clear mtd->dev
-    of_node_put()
-        mtd_get_of_node(mtd) # mtd->dev is cleared, can't locate of_node
-                             # of_node_put(NULL) won't do anything
-
-Fix the error by caching the pointer of the device_node.
-
-OF: ERROR: memory leak, expected refcount 1 instead of 2,
-of_node_get()/of_node_put() unbalanced - destroy cset entry: attach
-overlay node /spi/spi-sram@0
-CPU: 3 PID: 275 Comm: python3 Tainted: G N 6.1.0-rc3+ #54
-    0d8a1edddf51f172ff5226989a7565c6313b08e2
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS
-rel-1.15.0-0-g2dd4b9b3f840-prebuilt.qemu.org 04/01/2014
-Call Trace:
-<TASK>
-    dump_stack_lvl+0x67/0x83
-    kobject_get+0x155/0x160
-    of_node_get+0x1f/0x30
-    of_fwnode_get+0x43/0x70
-    fwnode_handle_get+0x54/0x80
-    fwnode_get_nth_parent+0xc9/0xe0
-    fwnode_full_name_string+0x3f/0xa0
-    device_node_string+0x30f/0x750
-    pointer+0x598/0x7a0
-    vsnprintf+0x62d/0x9b0
-    ...
-    cfs_overlay_release+0x30/0x90
-    config_item_release+0xbe/0x1a0
-    config_item_put+0x5e/0x80
-    configfs_rmdir+0x3bd/0x540
-    vfs_rmdir+0x18c/0x320
-    do_rmdir+0x198/0x330
-    __x64_sys_rmdir+0x2c/0x40
-    do_syscall_64+0x37/0x90
-    entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-Fixes: 00596576a051 ("mtd: core: clear out unregistered devices a bit more")
-Signed-off-by: Shang XiaoJing <shangxiaojing@huawei.com>
-[<miquel.raynal@bootlin.com>: Light reword of the commit log]
+Signed-off-by: Tomas Winkler <tomas.winkler@intel.com>
+Signed-off-by: Alexander Usyskin <alexander.usyskin@intel.com>
 Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://lore.kernel.org/linux-mtd/20221119063915.11108-1-shangxiaojing@huawei.com
+Link: https://lore.kernel.org/linux-mtd/20230620131905.648089-2-alexander.usyskin@intel.com
 Stable-dep-of: 12b31d1acd20 ("mtd: core: call _get_device() with the master MTD")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/mtdcore.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/mtd/mtdcore.c   | 72 ++++++++++++++++++++++-------------------
+ drivers/mtd/mtdcore.h   |  1 +
+ drivers/mtd/mtdpart.c   | 14 ++++----
+ include/linux/mtd/mtd.h |  2 +-
+ 4 files changed, 49 insertions(+), 40 deletions(-)
 
 diff --git a/drivers/mtd/mtdcore.c b/drivers/mtd/mtdcore.c
-index 74e449db33ac3..69cc4a66ea151 100644
+index 69cc4a66ea151..2891150478133 100644
 --- a/drivers/mtd/mtdcore.c
 +++ b/drivers/mtd/mtdcore.c
-@@ -724,6 +724,7 @@ int del_mtd_device(struct mtd_info *mtd)
+@@ -92,10 +92,33 @@ static void mtd_release(struct device *dev)
+ 	struct mtd_info *mtd = dev_get_drvdata(dev);
+ 	dev_t index = MTD_DEVT(mtd->index);
+ 
++	if (mtd_is_partition(mtd))
++		release_mtd_partition(mtd);
++
+ 	/* remove /dev/mtdXro node */
+ 	device_destroy(&mtd_class, index + 1);
+ }
+ 
++static void mtd_device_release(struct kref *kref)
++{
++	struct mtd_info *mtd = container_of(kref, struct mtd_info, refcnt);
++
++	debugfs_remove_recursive(mtd->dbg.dfs_dir);
++
++	/* Try to remove the NVMEM provider */
++	nvmem_unregister(mtd->nvmem);
++
++	device_unregister(&mtd->dev);
++
++	/* Clear dev so mtd can be safely re-registered later if desired */
++	memset(&mtd->dev, 0, sizeof(mtd->dev));
++
++	idr_remove(&mtd_idr, mtd->index);
++	of_node_put(mtd_get_of_node(mtd));
++
++	module_put(THIS_MODULE);
++}
++
+ #define MTD_DEVICE_ATTR_RO(name) \
+ static DEVICE_ATTR(name, 0444, mtd_##name##_show, NULL)
+ 
+@@ -623,7 +646,7 @@ int add_mtd_device(struct mtd_info *mtd)
+ 	}
+ 
+ 	mtd->index = i;
+-	mtd->usecount = 0;
++	kref_init(&mtd->refcnt);
+ 
+ 	/* default value if not set by driver */
+ 	if (mtd->bitflip_threshold == 0)
+@@ -724,7 +747,6 @@ int del_mtd_device(struct mtd_info *mtd)
  {
  	int ret;
  	struct mtd_notifier *not;
-+	struct device_node *mtd_of_node;
+-	struct device_node *mtd_of_node;
  
  	mutex_lock(&mtd_table_mutex);
  
-@@ -742,6 +743,7 @@ int del_mtd_device(struct mtd_info *mtd)
- 		       mtd->index, mtd->name, mtd->usecount);
- 		ret = -EBUSY;
- 	} else {
-+		mtd_of_node = mtd_get_of_node(mtd);
- 		debugfs_remove_recursive(mtd->dbg.dfs_dir);
+@@ -738,28 +760,8 @@ int del_mtd_device(struct mtd_info *mtd)
+ 	list_for_each_entry(not, &mtd_notifiers, list)
+ 		not->remove(mtd);
  
- 		/* Try to remove the NVMEM provider */
-@@ -753,7 +755,7 @@ int del_mtd_device(struct mtd_info *mtd)
- 		memset(&mtd->dev, 0, sizeof(mtd->dev));
+-	if (mtd->usecount) {
+-		printk(KERN_NOTICE "Removing MTD device #%d (%s) with use count %d\n",
+-		       mtd->index, mtd->name, mtd->usecount);
+-		ret = -EBUSY;
+-	} else {
+-		mtd_of_node = mtd_get_of_node(mtd);
+-		debugfs_remove_recursive(mtd->dbg.dfs_dir);
+-
+-		/* Try to remove the NVMEM provider */
+-		nvmem_unregister(mtd->nvmem);
+-
+-		device_unregister(&mtd->dev);
+-
+-		/* Clear dev so mtd can be safely re-registered later if desired */
+-		memset(&mtd->dev, 0, sizeof(mtd->dev));
+-
+-		idr_remove(&mtd_idr, mtd->index);
+-		of_node_put(mtd_of_node);
+-
+-		module_put(THIS_MODULE);
+-		ret = 0;
+-	}
++	kref_put(&mtd->refcnt, mtd_device_release);
++	ret = 0;
  
- 		idr_remove(&mtd_idr, mtd->index);
--		of_node_put(mtd_get_of_node(mtd));
-+		of_node_put(mtd_of_node);
+ out_error:
+ 	mutex_unlock(&mtd_table_mutex);
+@@ -1158,19 +1160,21 @@ int __get_mtd_device(struct mtd_info *mtd)
+ 	if (!try_module_get(master->owner))
+ 		return -ENODEV;
  
- 		module_put(THIS_MODULE);
- 		ret = 0;
++	kref_get(&mtd->refcnt);
++
+ 	if (master->_get_device) {
+ 		err = master->_get_device(mtd);
+ 
+ 		if (err) {
++			kref_put(&mtd->refcnt, mtd_device_release);
+ 			module_put(master->owner);
+ 			return err;
+ 		}
+ 	}
+ 
+-	master->usecount++;
+-
+ 	while (mtd->parent) {
+-		mtd->usecount++;
++		if (IS_ENABLED(CONFIG_MTD_PARTITIONED_MASTER) || mtd->parent != master)
++			kref_get(&mtd->parent->refcnt);
+ 		mtd = mtd->parent;
+ 	}
+ 
+@@ -1229,18 +1233,20 @@ void __put_mtd_device(struct mtd_info *mtd)
+ {
+ 	struct mtd_info *master = mtd_get_master(mtd);
+ 
+-	while (mtd->parent) {
+-		--mtd->usecount;
+-		BUG_ON(mtd->usecount < 0);
+-		mtd = mtd->parent;
+-	}
++	while (mtd != master) {
++		struct mtd_info *parent = mtd->parent;
+ 
+-	master->usecount--;
++		kref_put(&mtd->refcnt, mtd_device_release);
++		mtd = parent;
++	}
+ 
+ 	if (master->_put_device)
+ 		master->_put_device(master);
+ 
+ 	module_put(master->owner);
++
++	if (IS_ENABLED(CONFIG_MTD_PARTITIONED_MASTER))
++		kref_put(&master->refcnt, mtd_device_release);
+ }
+ EXPORT_SYMBOL_GPL(__put_mtd_device);
+ 
+diff --git a/drivers/mtd/mtdcore.h b/drivers/mtd/mtdcore.h
+index b5eefeabf310d..b014861a06a6f 100644
+--- a/drivers/mtd/mtdcore.h
++++ b/drivers/mtd/mtdcore.h
+@@ -12,6 +12,7 @@ int __must_check add_mtd_device(struct mtd_info *mtd);
+ int del_mtd_device(struct mtd_info *mtd);
+ int add_mtd_partitions(struct mtd_info *, const struct mtd_partition *, int);
+ int del_mtd_partitions(struct mtd_info *);
++void release_mtd_partition(struct mtd_info *mtd);
+ 
+ struct mtd_partitions;
+ 
+diff --git a/drivers/mtd/mtdpart.c b/drivers/mtd/mtdpart.c
+index 44384726aa443..63d8a5fff35e7 100644
+--- a/drivers/mtd/mtdpart.c
++++ b/drivers/mtd/mtdpart.c
+@@ -31,6 +31,12 @@ static inline void free_partition(struct mtd_info *mtd)
+ 	kfree(mtd);
+ }
+ 
++void release_mtd_partition(struct mtd_info *mtd)
++{
++	WARN_ON(!list_empty(&mtd->part.node));
++	free_partition(mtd);
++}
++
+ static struct mtd_info *allocate_partition(struct mtd_info *parent,
+ 					   const struct mtd_partition *part,
+ 					   int partno, uint64_t cur_offset)
+@@ -309,13 +315,11 @@ static int __mtd_del_partition(struct mtd_info *mtd)
+ 
+ 	sysfs_remove_files(&mtd->dev.kobj, mtd_partition_attrs);
+ 
++	list_del_init(&mtd->part.node);
+ 	err = del_mtd_device(mtd);
+ 	if (err)
+ 		return err;
+ 
+-	list_del(&mtd->part.node);
+-	free_partition(mtd);
+-
+ 	return 0;
+ }
+ 
+@@ -334,6 +338,7 @@ static int __del_mtd_partitions(struct mtd_info *mtd)
+ 			__del_mtd_partitions(child);
+ 
+ 		pr_info("Deleting %s MTD partition\n", child->name);
++		list_del_init(&child->part.node);
+ 		ret = del_mtd_device(child);
+ 		if (ret < 0) {
+ 			pr_err("Error when deleting partition \"%s\" (%d)\n",
+@@ -341,9 +346,6 @@ static int __del_mtd_partitions(struct mtd_info *mtd)
+ 			err = ret;
+ 			continue;
+ 		}
+-
+-		list_del(&child->part.node);
+-		free_partition(child);
+ 	}
+ 
+ 	return err;
+diff --git a/include/linux/mtd/mtd.h b/include/linux/mtd/mtd.h
+index 8a2c60235ebb8..c5a644f5cd4e2 100644
+--- a/include/linux/mtd/mtd.h
++++ b/include/linux/mtd/mtd.h
+@@ -377,7 +377,7 @@ struct mtd_info {
+ 
+ 	struct module *owner;
+ 	struct device dev;
+-	int usecount;
++	struct kref refcnt;
+ 	struct mtd_debug_info dbg;
+ 	struct nvmem_device *nvmem;
+ 	struct nvmem_device *otp_user_nvmem;
 -- 
 2.53.0
 
