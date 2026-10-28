@@ -1,57 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214726;
-	b=nntYnejebqYocoGAimOF20ER00O0jSbFDcJjRmKHcb/+PdQcSgn/zdYrd6GfOFMFsu7J
-	 c4HCfZIgHa2erm5bUP8JqMF3fMNgBxVBYMHz94cO1pwMNvurSbE4uizasc6ifUFDuNU5Y
-	 NyFhAdUh0IB4el9UA3TNaFz3u9RWPicTHbrO9Uq6zvATk3chBxWVpgFZvWgUk/SEE8KyI
-	 yqrDUAEODvUIDdaFJd7ZCgCywHhNZqBjpcO97cCWhV1shXGfdb9OvCIwj4epNOzB1LB+y
-	 6WGsr+lkdJKpGu4JGJV/CakVk6Z2jnGyzfIZu32VMFWwKtNDAb8eFxcm+dkgfTjq+Ew==
+	t=1793214729;
+	b=sCvTITNqDDErVdmsHLSnzlCDKbLQVkuJqrxYJj1gAi/eAPwD39eicFFZYSHiFulopbBP
+	 c1NvRDR+Kcdh7UbrNXrH5p/aBUyy+ea/ANa+MN08/WgmvUPYoT7kCFO6oqSjcJjS6fxAL
+	 I+zFPhkHxJmj3am+uGlBsFviMyCdOJHnq5e/bvbdxvp3Ocj/XKMem9r2o+tHes6bt8ERc
+	 spnhK5e28rbiCV9GJ95UzkPgY0WE0r58eqfrTrIzJSh7QbQXC68d+BTA8U4UR2QlJTTu9
+	 Ot5tU1b9z+BcSkswIj2K24Hd6weigvpg3veDW+I2q3Qi/yeuq9Y7jhNEAzIgV665GFg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214726;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214729;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=3dj/D2fJ86m0CnZ1d6G60lySNT9Nlk8bTgOq2AyEe/4=;
-	b=DREIS18UnhO03YeHC3uLygGV6FeKf9y/8I9sP0Z19A532tarM567zU4yt9eESYQ9BPOt
-	 cpMUBhZnDx9IUTNKkjlY7njE+3nnfDtcAzNfZ4VPbbleG2BE7Cju8N6knkMz3V5rm0BVr
-	 lXcPITMZ2tRZsGU5CMNnNeqOQ7T4zvUr/z/PNXg2mHsxdZ7YXrjJCyZBwPqyA52lTvWi4
-	 MK8UId7MKL3RlB/0todcrxWhMahPmfFHK9ebo6opLoJZX1fFSo/wa26B9fkGrOTDJ6P69
-	 k7CrC73xDzBmfn1XZrBeXzBPC23ga+cnhr9T80UjkvmjmHwk6PU43/6XvDT2bDQpGHA==
+	bh=N56q66mJ3ActQ6q22zn05ibwFwQZgDIX4gQnwDQPRF4=;
+	b=PDlERbY7m5ZDMejxrO7B+dGPp5i2vNxbilC1zgV+KDjMR8euf1sE83p/XHJ7Bt2yBXWE
+	 mp2KpIDnlJKPdT0sx+foAtL5ZNeRvAVEeaxGXwhm3pJNUMUqtOIFnWObrMosf4Xsxj+D5
+	 TVnwgxUWJF/Dfdj5O51P1qM6CoSZAu2gm1DWCHtxDN/z3M3P4QY8AF5ZYl6If27ZFx0QZ
+	 hRH86zVfHHuRsBYNZs7K7j05XmMl5U4jcfgI0U7OUJ8yFaBB0WTw1jYxI8VS7oOYS830h
+	 7yJRvem6oj2u2pUEbPZHtWDTbXrB+YQnCPvwDh13KeOs3232evCyYljOw1QX5Tttg5g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ODF8jQ8G;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UFMi2at3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBB26606AB0C;
-	Wed, 28 Oct 2026 19:12:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4876606AB0D;
+	Wed, 28 Oct 2026 19:12:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ODF8jQ8G
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 509811F01825;
-	Wed, 28 Oct 2026 19:12:05 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UFMi2at3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 211721F01825;
+	Wed, 28 Oct 2026 19:12:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214725;
-	bh=3dj/D2fJ86m0CnZ1d6G60lySNT9Nlk8bTgOq2AyEe/4=;
+	s=korg; t=1793214728;
+	bh=N56q66mJ3ActQ6q22zn05ibwFwQZgDIX4gQnwDQPRF4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ODF8jQ8GFV3ZbZSVMDpDxukiF9tY6qFKBsvpcEbpr9GHHWznzzTwaKS4EGE9tA1FQ
-	 VtxMUN83TywCW0qMvxTHaDkAMXNHXnALYo2ekSc1X6tL+KN5VNsb0MKrwSTpf09RPt
-	 zyvFUnQbbXT4hSWYdATU7gTUfa+GguHVMlYNQbQM=
+	b=UFMi2at3NTlHEl2IslawCpQhTd0hEN8bN78OSLDqBbqSrZjGw9iSmgsqefIXvM50x
+	 twsrsvOGVRwX0s1/0FjddvYkHmgOqZcU28Kcm2OjO2dNkHf0wORO5ImK92hA76y9oa
+	 NDDDAMzHZp6yXj45XmBQqKKeNIDyjp99+5hLQfiM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Yuan Tan <yuantan098@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Douya Le <ldy3087146292@gmail.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0961/1887] crypto: af_alg - limit RX SG extraction by receive buffer budget
-Date: Wed, 28 Oct 2026 17:50:57 +0100
-Message-ID: <20261028170521.276750123@linuxfoundation.org>
+Subject: [PATCH 6.1 0962/1887] ksmbd: validate num_aces and harden ACE walk in smb_inherit_dacl()
+Date: Wed, 28 Oct 2026 17:50:58 +0100
+Message-ID: <20261028170521.300044075@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -73,70 +69,141 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Douya Le <ldy3087146292@gmail.com>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-[ Upstream commit 8eceab19eba9dcbfd2a0daec72e1bf48aa100170 ]
+[ Upstream commit 3e4e2ea2a781018ed5d75f969e3e5606beb66e48 ]
 
-Make af_alg_get_rsgl() limit each RX scatterlist extraction to the
-remaining receive buffer budget.
+smb_inherit_dacl() trusts the on-disk num_aces value from the parent
+directory's DACL xattr and uses it to size a heap allocation:
 
-af_alg_get_rsgl() currently uses af_alg_readable() only as a gate
-before extracting data into the RX scatterlist. Limit each extraction
-to the remaining af_alg_rcvbuf(sk) budget so that receive-side
-accounting matches the amount of data attached to the request.
+  aces_base = kmalloc(sizeof(struct smb_ace) * num_aces * 2, ...);
 
-If skcipher cannot obtain enough RX space for at least one chunk while
-more data remains to be processed, reject the recvmsg call instead of
-rounding the request length down to zero.
+num_aces is a u16 read from le16_to_cpu(parent_pdacl->num_aces)
+without checking that it is consistent with the declared pdacl_size.
+An authenticated client whose parent directory's security.NTACL is
+tampered (e.g. via offline xattr corruption or a concurrent path that
+bypasses parse_dacl()) can present num_aces = 65535 with minimal
+actual ACE data.  This causes a ~8 MB allocation (not kzalloc, so
+uninitialized) that the subsequent loop only partially populates, and
+may also overflow the three-way size_t multiply on 32-bit kernels.
 
-Fixes: e870456d8e7c8d57c059ea479b5aadbb55ff4c3a ("crypto: algif_skcipher - overhaul memory management")
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Co-developed-by: Yuan Tan <yuantan098@gmail.com>
-Signed-off-by: Yuan Tan <yuantan098@gmail.com>
-Suggested-by: Xin Liu <bird@lzu.edu.cn>
-Signed-off-by: Douya Le <ldy3087146292@gmail.com>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Additionally, the ACE walk loop uses the weaker
+offsetof(struct smb_ace, access_req) minimum size check rather than
+the minimum valid on-wire ACE size, and does not reject ACEs whose
+declared size is below the minimum.
+
+Reproduced on UML + KASAN + LOCKDEP against the real ksmbd code path.
+A legitimate mount.cifs client creates a parent directory over SMB
+(ksmbd writes a valid security.NTACL xattr), then the NTACL blob on
+the backing filesystem is rewritten to set num_aces = 0xFFFF while
+keeping the posix_acl_hash bytes intact so ksmbd_vfs_get_sd_xattr()'s
+hash check still passes.  A subsequent SMB2 CREATE of a child under
+that parent drives smb2_open() into smb_inherit_dacl() (share has
+"vfs objects = acl_xattr" set), which fails the page allocator:
+
+  WARNING: mm/page_alloc.c:5226 at __alloc_frozen_pages_noprof+0x46c/0x9c0
+  Workqueue: ksmbd-io handle_ksmbd_work
+   __alloc_frozen_pages_noprof+0x46c/0x9c0
+   ___kmalloc_large_node+0x68/0x130
+   __kmalloc_large_node_noprof+0x24/0x70
+   __kmalloc_noprof+0x4c9/0x690
+   smb_inherit_dacl+0x394/0x2430
+   smb2_open+0x595d/0xabe0
+   handle_ksmbd_work+0x3d3/0x1140
+
+With the patch applied the added guard rejects the tampered value
+with -EINVAL before any large allocation runs, smb2_open() falls back
+to smb2_create_sd_buffer(), and the child is created with a default
+SD.  No warning, no splat.
+
+Fix by:
+
+  1. Validating num_aces against pdacl_size using the same formula
+     applied in parse_dacl().
+
+  2. Replacing the raw kmalloc(sizeof * num_aces * 2) with
+     kmalloc_array(num_aces * 2, sizeof(...)) for overflow-safe
+     allocation.
+
+  3. Tightening the per-ACE loop guard to require the minimum valid
+     ACE size (offsetof(smb_ace, sid) + CIFS_SID_BASE_SIZE) and
+     rejecting under-sized ACEs, matching the hardening in
+     smb_check_perm_dacl() and parse_dacl().
+
+v1 -> v2:
+  - Replace the synthetic test-module splat in the changelog with a
+    real-path UML + KASAN reproduction driven through mount.cifs and
+    SMB2 CREATE; Namjae flagged the kcifs3_test_inherit_dacl_old name
+    in v1 since it does not exist in ksmbd.
+  - Drop the commit-hash citation from the code comment per Namjae's
+    review; keep the parse_dacl() pointer.
+
+Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
+Cc: stable@vger.kernel.org
+Assisted-by: Claude:claude-opus-4-6
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- crypto/af_alg.c         | 2 ++
- crypto/algif_skcipher.c | 8 +++++++-
- 2 files changed, 9 insertions(+), 1 deletion(-)
+ fs/smb/server/smbacl.c | 27 +++++++++++++++++++++++----
+ 1 file changed, 23 insertions(+), 4 deletions(-)
 
-diff --git a/crypto/af_alg.c b/crypto/af_alg.c
-index 80a8d3a4a3cf7..3cfdd7f1479e9 100644
---- a/crypto/af_alg.c
-+++ b/crypto/af_alg.c
-@@ -1126,6 +1126,8 @@ int af_alg_get_rsgl(struct sock *sk, struct msghdr *msg, int flags,
+diff --git a/fs/smb/server/smbacl.c b/fs/smb/server/smbacl.c
+index d09cd2ddd1adb..fb48a504435d6 100644
+--- a/fs/smb/server/smbacl.c
++++ b/fs/smb/server/smbacl.c
+@@ -1150,7 +1150,24 @@ int smb_inherit_dacl(struct ksmbd_conn *conn,
+ 		goto free_parent_pntsd;
+ 	}
  
- 		seglen = min_t(size_t, (maxsize - len),
- 			       msg_data_left(msg));
-+		/* Never pin more pages than the remaining RX accounting budget. */
-+		seglen = min_t(size_t, seglen, af_alg_rcvbuf(sk));
- 
- 		if (list_empty(&areq->rsgl_list)) {
- 			rsgl = &areq->first_rsgl;
-diff --git a/crypto/algif_skcipher.c b/crypto/algif_skcipher.c
-index 6a1a71284fe82..0fe62be7470f2 100644
---- a/crypto/algif_skcipher.c
-+++ b/crypto/algif_skcipher.c
-@@ -82,8 +82,14 @@ static int _skcipher_recvmsg(struct socket *sock, struct msghdr *msg,
- 	 * If more buffers are to be expected to be processed, process only
- 	 * full block size buffers.
- 	 */
--	if (ctx->more || len < ctx->used)
-+	if (ctx->more || len < ctx->used) {
-+		if (len < bs) {
-+			err = -EINVAL;
-+			goto free;
-+		}
+-	aces_base = kmalloc(sizeof(struct smb_ace) * num_aces * 2, GFP_KERNEL);
++	aces_size = pdacl_size - sizeof(struct smb_acl);
 +
- 		len -= len % bs;
++	/*
++	 * Validate num_aces against the DACL payload before allocating.
++	 * Each ACE must be at least as large as its fixed-size header
++	 * (up to the SID base), so num_aces cannot exceed the payload
++	 * divided by the minimum ACE size.  This mirrors the existing
++	 * check in parse_dacl().
++	 */
++	if (num_aces > aces_size / (offsetof(struct smb_ace, sid) +
++				    offsetof(struct smb_sid, sub_auth) +
++				    sizeof(__le16))) {
++		rc = -EINVAL;
++		goto free_parent_pntsd;
 +	}
++
++	aces_base = kmalloc_array(num_aces * 2, sizeof(struct smb_ace),
++				  GFP_KERNEL);
+ 	if (!aces_base) {
+ 		rc = -ENOMEM;
+ 		goto free_parent_pntsd;
+@@ -1159,7 +1176,6 @@ int smb_inherit_dacl(struct ksmbd_conn *conn,
+ 	aces = (struct smb_ace *)aces_base;
+ 	parent_aces = (struct smb_ace *)((char *)parent_pdacl +
+ 			sizeof(struct smb_acl));
+-	aces_size = acl_len - sizeof(struct smb_acl);
  
- 	/*
- 	 * Create a per request TX SGL for this request which tracks the
+ 	if (pntsd_type & DACL_AUTO_INHERITED)
+ 		inherited_flags = INHERITED_ACE;
+@@ -1167,11 +1183,14 @@ int smb_inherit_dacl(struct ksmbd_conn *conn,
+ 	for (i = 0; i < num_aces; i++) {
+ 		int pace_size;
+ 
+-		if (offsetof(struct smb_ace, access_req) > aces_size)
++		if (aces_size < offsetof(struct smb_ace, sid) +
++		    CIFS_SID_BASE_SIZE)
+ 			break;
+ 
+ 		pace_size = le16_to_cpu(parent_aces->size);
+-		if (pace_size > aces_size)
++		if (pace_size > aces_size ||
++		    pace_size < offsetof(struct smb_ace, sid) +
++				CIFS_SID_BASE_SIZE)
+ 			break;
+ 
+ 		aces_size -= pace_size;
 -- 
 2.53.0
 
