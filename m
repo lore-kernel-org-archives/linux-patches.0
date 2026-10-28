@@ -1,55 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793211539;
-	b=U0naEoU7zFz3I2PKavoROPqPTefRTDYkQBatV4OocgCmjg+9WCH5mY0iaSaJc4A3Qn8+
-	 EfCOop4YlO/UimcpoAILi5pL4+Zn6qyhAguNBBk3zDd5sJF8K/03GT+a++1nhfqfkhtrh
-	 RW4KdWi+E6vcywFK0jSX9NxEJwn9qgoJOfYgihR4CbwfprnbY2Mlw74Xpz0pMrHpzOBu0
-	 hiDzEabPo2QDZOFyCT/qNEQcAdh2Dlzlt+EtL6tL8WG7HeFVOoKt68G2XCzOxwiiDTNoY
-	 nEu8vK8O2LuRm2LEc8oijnat3Wp0IsSMXtvuMkM8y7yk1btOLhK0wcRb0UZPoSYyHgA==
+	t=1793211541;
+	b=rHTUsojr5FEX9AJmbyys2lF/ON12OnBbooiuYkshYt0qyElxdw3BNdYwylJGKNq8tHyP
+	 Klvgrjhgnd2Enwe5GX1Z+eB25WqEELX3dCfwQSuTujrjr3QWDUZOvR0DZ+irLba3WwPpb
+	 tID72rjDT0qCuELAoFBWrLTLTLoNnOmupeFfv2sbS9GzV0Y1Z5WPHq0dtkxW1AHFxKtXq
+	 aGcjcJJgo+hFgtIJIkPYArsjmcYGA9ljK1CrmdYSxkdlVKGr30Txfkpz6BDlFGg5wEP2O
+	 MfYZIn0OnExOideZ5buHGcq4xjgsDud0D2VtSzhjWuIoJgG3szp9mvrlOdQDR8g5lZQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793211539;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793211541;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=sgSOcrrgQBX8BOOYN3pJQ8TAPF5gqcWhuQsHojskedQ=;
-	b=qarjf+N7ThUNAMHVSHvQr9X3yY+pxBlbh+frk5o6J8aLPxYR+n8+Vxq/1GgdED3gSqe4
-	 MIy1BuJuOKa5/P2UoreWZDIlrLFhwNtZPXgPMqHq9VdXUCeh5RAys3kw/qnnyDjegnghm
-	 9YK4P7G2CUcSyRPZt6TcwoDuqbDv7zDg42PeZBTNHv40Oibp21s2xv50kuOz6y6nTkmp9
-	 U2ip/ukg4vO73CdcDHz/RBolD+YMBIVAJG9EKke6xeBrC8j8dPcI5wZVg7fz9EeloRcpp
-	 Zizl7fLmN6hnVu9uS8ANVUi377vACe+1hAL+FzBT/cKgjsQ698NkueE6nQTCvQEI5tw==
+	bh=LEgvvu+mhROAPlV40K6X+0LXfLvVsfMu/LpT8ttV4mQ=;
+	b=ZnRn7n0+yjQv+TiC1f5norOC38Z+xO4DeDMu1pi5PX0isEroqQfl23l9PZdYlJ03ox9a
+	 MxXklw8BVF+ybejehLrwpyr9a/jUX9SvOuawS8HpDxZiaeBfehNsh3ldpCvTXMsVmTG+r
+	 amjOw0+q+Oe4RTxjbXCtAKYtXy70+3LqPzPH+TtLcBVoAGjYXWNiSHyxXAM0YP7NgcyL0
+	 n4/Dd3HoQNi+vd7VO/vYM2yAtQyl6GamxXL55UM8PdEqt2VvORkevZHKCrl5r5PRPqYa9
+	 lLlmc9WGHXv985dDHQHef4+yKcCQ9WaNeoUiLbu5PP0DEYKNx6cFT6FA8FG3EsX/LTw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OtU7jiR1;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xEEQbrg3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBF26606A333;
-	Wed, 28 Oct 2026 18:18:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B211606A31C;
+	Wed, 28 Oct 2026 18:19:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OtU7jiR1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C7721F031E2;
-	Wed, 28 Oct 2026 18:18:57 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xEEQbrg3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC5AC1F01828;
+	Wed, 28 Oct 2026 18:19:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793211538;
-	bh=sgSOcrrgQBX8BOOYN3pJQ8TAPF5gqcWhuQsHojskedQ=;
+	s=korg; t=1793211541;
+	bh=LEgvvu+mhROAPlV40K6X+0LXfLvVsfMu/LpT8ttV4mQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OtU7jiR1QFmlPVekFzMZHCbqK3YnOedxscBEZsN6pbhFaE77u2p341djO03bEnnE4
-	 5AEBjOkdK38rD7WJRuNYcf9fnpp7+vUCpat0ZNdEdGRTBg3w8uC3UKWZHOsEcc21De
-	 zNVo2YZj7cDpTGvnJQpdiJFVvzTzQATW72m54e0o=
+	b=xEEQbrg3XPMesHm0EaWRkvcpkG7ARLnIL7/Cu5bKSoW5i7a+lwqnK/S5xGdoza+8w
+	 FT8Y/fmQT8U+YbxmnZXXgeQbD04fQsJVZmS4bfylMn2ECVm1RZXK7RBmgzPiYRy7qd
+	 VatXTiWLMUEhV+K/WFh4u+FbBRMA2Oszf6h1EaDU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yiming Qian <yimingqian591@gmail.com>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Florian Westphal <fw@strlen.de>,
-	Dai Ngo <dai.ngo@oracle.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Shyam Prasad N <sprasad@microsoft.com>,
+	Steve French <stfrench@microsoft.com>,
 	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 411/571] netfilter: nf_tables: release flowtable after rcu grace period on error
-Date: Wed, 28 Oct 2026 17:59:18 +0100
-Message-ID: <20261028170017.766676111@linuxfoundation.org>
+Subject: [PATCH 5.15 412/571] cifs: fix underflow in parse_server_interfaces()
+Date: Wed, 28 Oct 2026 17:59:19 +0100
+Message-ID: <20261028170017.789480148@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -71,56 +70,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit d73f4b53aaaea4c95f245e491aa5eeb8a21874ce ]
+[ Upstream commit cffe487026be13eaf37ea28b783d9638ab147204 ]
 
-Call synchronize_rcu() after unregistering the hooks from error path,
-since a hook that already refers to this flowtable can be already
-registered, exposing this flowtable to packet path and nfnetlink_hook
-control plane.
+In this loop, we step through the buffer and after each item we check
+if the size_left is greater than the minimum size we need.  However,
+the problem is that "bytes_left" is type ssize_t while sizeof() is type
+size_t.  That means that because of type promotion, the comparison is
+done as an unsigned and if we have negative bytes left the loop
+continues instead of ending.
 
-This error path is rare, it should only happen by reaching the maximum
-number hooks or by failing to set up to hardware offload, just call
-synchronize_rcu().
-
-There is a check for already used device hooks by different flowtable
-that could result in EEXIST at this late stage. The hook parser can be
-updated to perform this check earlier to this error path really becomes
-rarely exercised.
-
-Uncovered by KASAN reported as use-after-free from nfnetlink_hook path
-when dumping hooks.
-
-Fixes: 3b49e2e94e6e ("netfilter: nf_tables: add flow table netlink frontend")
-Reported-by: Yiming Qian <yimingqian591@gmail.com>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Florian Westphal <fw@strlen.de>
-
-(cherry picked from commit d73f4b53aaaea4c95f245e491aa5eeb8a21874ce)
-The cherry-pick did not apply cleanly and required manual conflict
-resolution because the nftables code differs between the 5.15.y and
-Linux 6.12.y branches.
-
-Signed-off-by: Dai Ngo <dai.ngo@oracle.com>
+Fixes: fe856be475f7 ("CIFS: parse and store info on iface queries")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Shyam Prasad N <sprasad@microsoft.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+(cherry picked from commit cffe487026be13eaf37ea28b783d9638ab147204)
+[Harshit: Apply the signed guard to both 5.15 parser passes]
 Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_tables_api.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/cifs/smb2ops.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index 90048faccf2a3..b4c3615a2bf6a 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -8121,6 +8121,7 @@ static int nf_tables_newflowtable(struct sk_buff *skb,
- 					       &flowtable->hook_list,
- 					       flowtable);
- 	if (err < 0) {
-+		synchronize_rcu();
- 		nft_flowtable_hooks_destroy(&flowtable->hook_list);
- 		goto err4;
- 	}
+diff --git a/fs/cifs/smb2ops.c b/fs/cifs/smb2ops.c
+index 2f5c446de223c..88ae29c66becb 100644
+--- a/fs/cifs/smb2ops.c
++++ b/fs/cifs/smb2ops.c
+@@ -521,7 +521,7 @@ parse_server_interfaces(struct network_interface_info_ioctl_rsp *buf,
+ 
+ 	bytes_left = buf_len;
+ 	p = buf;
+-	while (bytes_left >= sizeof(*p)) {
++	while (bytes_left >= (ssize_t)sizeof(*p)) {
+ 		nb_iface++;
+ 		next = le32_to_cpu(p->Next);
+ 		if (!next) {
+@@ -556,7 +556,7 @@ parse_server_interfaces(struct network_interface_info_ioctl_rsp *buf,
+ 	info = *iface_list;
+ 	bytes_left = buf_len;
+ 	p = buf;
+-	while (bytes_left >= sizeof(*p)) {
++	while (bytes_left >= (ssize_t)sizeof(*p)) {
+ 		info->speed = le64_to_cpu(p->LinkSpeed);
+ 		info->rdma_capable = le32_to_cpu(p->Capability & RDMA_CAPABLE) ? 1 : 0;
+ 		info->rss_capable = le32_to_cpu(p->Capability & RSS_CAPABLE) ? 1 : 0;
 -- 
 2.53.0
 
