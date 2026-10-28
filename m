@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214459;
-	b=AmifrderSibbUKP/c1PFbj9WmSX9FuhBHNJF5KMLfdPSOHWnhG66FPVugBWHkUA2FsLM
-	 RueuWKytnZrRtjzy7tAWJOimQ8kziZRD39iIiWcUDUFt5XQfEvxbaNa2x2NYeahfHGpS6
-	 XZ8HpP9yI9Q5Ij3H9uBW0r4aLNC/yW37OaVE6AGJUn7WIoyUFb4HtrFKG34OisTXDv1NA
-	 vX1ToUK6X0k5+CymA7IXBzaDujHAA26JuBMHiPAumwz+egha+IYehcIQYeswmeFrUq1EB
-	 hDCTiyv0MKUTe6GMHzXkq+bjD/oGb33COIDrJATlMTFd3JpsOSgOTOTkC5LmbGquNIg==
+	t=1793214462;
+	b=gB0eNCGRWDr0t/riwP7ZondT3ty7RGpOGbmZFJ59hd7ONWs41zxTdvWxthCz7y/l1ezk
+	 KwFipeMk7hWvRlECLyMt+prT5dYuaLQevJ5OcW6b2X7/OgQ4xVRwoIkQH9KTne8hvrNhs
+	 R5cIKbgYscPU7f6WkEnUCh9qBXFmTOTFQnLrpuyk8zi9kD0+FtfUclKFF3Fs4Tjc4mOgG
+	 7RgmSKyrkW1CIY3W7RH+jdfAkMaNncow6aKJvtE/jcsT2PLQjW6tFI4ISat6X42n1FEA9
+	 UEOQJKUiornrdnELG0dS3KyAmnnJp6irDa8PjlEPmdqlOqJasMFbjdISY6vyZD0Kvpw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214459;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214462;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=2fTK8ogVDSQHOBQNUNXyP/mQ3Y+NElXFWtAKeTCITLs=;
-	b=mXM4abFly1OpQxypl55BmkfcSYaYzkgo6ox7+KvXt/mDrAoNUfSMgEkHPcnJVi+KLW1S
-	 PopsRsl7b50Q4ROyg/Cm4OfqFxbWxMW4ileX+y4IC00NXpynKF5gu6jvSFZRd/Y5ztT3F
-	 J+zgjJUf9Qd5A2tC+Kh67R+Hy70QsdfsS+0PyrE4L8TYX4s8qR88EhrrO7MArl96BklwA
-	 Lr6f8TZ7MASb6E1nmQT8Bo0i5EtSvhg/Ev7TNrU0oC7JnV1+FUseCOx3awec/kJm29nVS
-	 Z9Edss/PVZeSEkJvl2ppqwnwYqwW3w/aXbs2j3UdyWbiRczSKf97Ij/MAfD0YbXQhQQ==
+	bh=WUCxNuNeDlfETojzxMM8Z4lg8A3oeJHpwpQ+mH4U8GE=;
+	b=JxWDuwop3SGaX3jXCZwMxhZjZis7wr67thUfxRTWbjRIjgulO9UG/LocZzuggI7/MIVU
+	 qnKRZUY//AR3+KhydyHzAyhoX6U49vDb1aqTJRCITib7lfrHCLsM5tjOrUWfRiBp0TMqJ
+	 mCyy2zzeG5H3gV+k2texRTjFiRgXpfHurQXgtVc3wZyIssPIUXFHA2oeOIjcrNvJJrZfB
+	 mxhBv/QzA7LYQrQtdL0YbjLCHteJYJGByaDQzPWUTMhCvQzKnRlimMZt7vo1XJ2sgP6Wr
+	 g2zmEeXGwsgfvAyKgmzlPVWeJVYoYfNAgyCDW3M4xtIH3CHfoVc+pFcYjkV6BJs2jvQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=R5sBB05V;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Tx5pHzT9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2380560A381A;
-	Wed, 28 Oct 2026 19:07:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43A0A60A6F41;
+	Wed, 28 Oct 2026 19:07:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=R5sBB05V
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7515F1F031E4;
-	Wed, 28 Oct 2026 19:07:38 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Tx5pHzT9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AF6F1F031E7;
+	Wed, 28 Oct 2026 19:07:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214459;
-	bh=2fTK8ogVDSQHOBQNUNXyP/mQ3Y+NElXFWtAKeTCITLs=;
+	s=korg; t=1793214461;
+	bh=WUCxNuNeDlfETojzxMM8Z4lg8A3oeJHpwpQ+mH4U8GE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=R5sBB05V8Y7xHSvrLmWzAueF/3Ny3cBmD54Bj1vcYV6s2/OPXFDR4fGZBJ5XAcpUd
-	 V5/9djS6UjTSkuXWPc0ug7mUT/avDWBi4erbXPp5pD47mNYAC79H/r1yYYYkFhDtii
-	 W1jxpH8/3RMJLKrp4nRFOz0w/isswhb9fBE34o10=
+	b=Tx5pHzT9qL55h32UFo2P1PyxQhaKCQuX70B1akXwjcZ8OFr5NEMtyS2bQuenGkrKv
+	 esZMrG5VxYSgM/Q4p+48hYwE9mi3O2jQ1KM+o8mBQ4Sl/ZqRw1AqskMtNnJ9b/DOw0
+	 Z5C1ds8MDRlFrkb9e2pQW6YK7nmzWi8Lpr5phqFg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Juergen Gross <jgross@suse.com>,
 	Oleksandr Tyshchenko <oleksandr_tyshchenko@epam.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0867/1887] xen/events: remove some simple helpers from events_base.c
-Date: Wed, 28 Oct 2026 17:49:23 +0100
-Message-ID: <20261028170519.148818680@linuxfoundation.org>
+Subject: [PATCH 6.1 0868/1887] xen/events: drop xen_allocate_irqs_dynamic()
+Date: Wed, 28 Oct 2026 17:49:24 +0100
+Message-ID: <20261028170519.170973894@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -70,14 +70,19 @@ Content-Transfer-Encoding: 8bit
 
 From: Juergen Gross <jgross@suse.com>
 
-[ Upstream commit 3bdb0ac350fe5e6301562143e4573971dd01ae0b ]
+[ Upstream commit 5dd9ad32d7758b1a76742f394acf0eb3ac8a636a ]
 
-The helper functions type_from_irq() and cpu_from_irq() are just one
-line functions used only internally.
+Instead of having a common function for allocating a single IRQ or a
+consecutive number of IRQs, split up the functionality into the callers
+of xen_allocate_irqs_dynamic().
 
-Open code them where needed. At the same time modify and rename
-get_evtchn_to_irq() to return a struct irq_info instead of the IRQ
-number.
+This allows to handle any allocation error in xen_irq_init() gracefully
+instead of panicing the system. Let xen_irq_init() return the irq_info
+pointer or NULL in case of an allocation error.
+
+Additionally set the IRQ into irq_info already at allocation time, as
+otherwise the IRQ would be '0' (which is a valid IRQ number) until
+being set.
 
 Signed-off-by: Juergen Gross <jgross@suse.com>
 Reviewed-by: Oleksandr Tyshchenko <oleksandr_tyshchenko@epam.com>
@@ -85,240 +90,164 @@ Signed-off-by: Juergen Gross <jgross@suse.com>
 Stable-dep-of: 07ce121d93a5 ("xen/events: Return -EEXIST for bound VIRQs")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/xen/events/events_base.c | 97 +++++++++++++-------------------
- 1 file changed, 38 insertions(+), 59 deletions(-)
+ drivers/xen/events/events_base.c | 74 +++++++++++++++++++-------------
+ 1 file changed, 44 insertions(+), 30 deletions(-)
 
 diff --git a/drivers/xen/events/events_base.c b/drivers/xen/events/events_base.c
-index a92b96b575757..72eace5842852 100644
+index 72eace5842852..fa1c5d7f4aded 100644
 --- a/drivers/xen/events/events_base.c
 +++ b/drivers/xen/events/events_base.c
-@@ -247,15 +247,6 @@ static int set_evtchn_to_irq(evtchn_port_t evtchn, unsigned int irq)
- 	return 0;
+@@ -303,6 +303,13 @@ static void channels_on_cpu_inc(struct irq_info *info)
+ 	info->is_accounted = 1;
  }
  
--static int get_evtchn_to_irq(evtchn_port_t evtchn)
--{
--	if (evtchn >= xen_evtchn_max_channels())
--		return -1;
--	if (evtchn_to_irq[EVTCHN_ROW(evtchn)] == NULL)
--		return -1;
--	return READ_ONCE(evtchn_to_irq[EVTCHN_ROW(evtchn)][EVTCHN_COL(evtchn)]);
--}
--
- /* Get info for IRQ */
- static struct irq_info *info_for_irq(unsigned irq)
- {
-@@ -273,6 +264,19 @@ static void set_info_for_irq(unsigned int irq, struct irq_info *info)
- 		irq_set_chip_data(irq, info);
- }
- 
-+static struct irq_info *evtchn_to_info(evtchn_port_t evtchn)
++static void xen_irq_free_desc(unsigned int irq)
 +{
-+	int irq;
-+
-+	if (evtchn >= xen_evtchn_max_channels())
-+		return NULL;
-+	if (evtchn_to_irq[EVTCHN_ROW(evtchn)] == NULL)
-+		return NULL;
-+	irq = READ_ONCE(evtchn_to_irq[EVTCHN_ROW(evtchn)][EVTCHN_COL(evtchn)]);
-+
-+	return (irq < 0) ? NULL : info_for_irq(irq);
++	/* Legacy IRQ descriptors are managed by the arch. */
++	if (irq >= nr_legacy_irqs())
++		irq_free_desc(irq);
 +}
 +
- /* Per CPU channel accounting */
- static void channels_on_cpu_dec(struct irq_info *info)
+ static void delayed_free_irq(struct work_struct *work)
  {
-@@ -428,7 +432,9 @@ static evtchn_port_t evtchn_from_irq(unsigned int irq)
+ 	struct irq_info *info = container_of(to_rcu_work(work), struct irq_info,
+@@ -314,9 +321,7 @@ static void delayed_free_irq(struct work_struct *work)
  
- unsigned int irq_from_evtchn(evtchn_port_t evtchn)
- {
--	return get_evtchn_to_irq(evtchn);
-+	struct irq_info *info = evtchn_to_info(evtchn);
-+
-+	return info ? info->irq : -1;
- }
- EXPORT_SYMBOL_GPL(irq_from_evtchn);
+ 	kfree(info);
  
-@@ -472,25 +478,11 @@ static unsigned pirq_from_irq(unsigned irq)
- 	return info->u.pirq.pirq;
+-	/* Legacy IRQ descriptors are managed by the arch. */
+-	if (irq >= nr_legacy_irqs())
+-		irq_free_desc(irq);
++	xen_irq_free_desc(irq);
  }
  
--static enum xen_irq_type type_from_irq(unsigned irq)
--{
--	return info_for_irq(irq)->type;
--}
--
--static unsigned cpu_from_irq(unsigned irq)
--{
--	return info_for_irq(irq)->cpu;
--}
--
- unsigned int cpu_from_evtchn(evtchn_port_t evtchn)
- {
--	int irq = get_evtchn_to_irq(evtchn);
--	unsigned ret = 0;
--
--	if (irq != -1)
--		ret = cpu_from_irq(irq);
-+	struct irq_info *info = evtchn_to_info(evtchn);
+ /* Constructors for packed IRQ information. */
+@@ -331,7 +336,6 @@ static int xen_irq_info_common_setup(struct irq_info *info,
+ 	BUG_ON(info->type != IRQT_UNBOUND && info->type != type);
  
--	return ret;
-+	return info ? info->cpu : 0;
+ 	info->type = type;
+-	info->irq = irq;
+ 	info->evtchn = evtchn;
+ 	info->cpu = cpu;
+ 	info->mask_reason = EVT_MASK_REASON_EXPLICIT;
+@@ -732,47 +736,45 @@ void xen_irq_lateeoi(unsigned int irq, unsigned int eoi_flags)
+ }
+ EXPORT_SYMBOL_GPL(xen_irq_lateeoi);
+ 
+-static void xen_irq_init(unsigned irq)
++static struct irq_info *xen_irq_init(unsigned int irq)
+ {
+ 	struct irq_info *info;
+ 
+ 	info = kzalloc(sizeof(*info), GFP_KERNEL);
+-	if (info == NULL)
+-		panic("Unable to allocate metadata for IRQ%d\n", irq);
++	if (info) {
++		info->irq = irq;
++		info->type = IRQT_UNBOUND;
++		info->refcnt = -1;
++		INIT_RCU_WORK(&info->rwork, delayed_free_irq);
+ 
+-	info->type = IRQT_UNBOUND;
+-	info->refcnt = -1;
+-	INIT_RCU_WORK(&info->rwork, delayed_free_irq);
++		set_info_for_irq(irq, info);
++		/*
++		 * Interrupt affinity setting can be immediate. No point
++		 * in delaying it until an interrupt is handled.
++		 */
++		irq_set_status_flags(irq, IRQ_MOVE_PCNTXT);
+ 
+-	set_info_for_irq(irq, info);
+-	/*
+-	 * Interrupt affinity setting can be immediate. No point
+-	 * in delaying it until an interrupt is handled.
+-	 */
+-	irq_set_status_flags(irq, IRQ_MOVE_PCNTXT);
++		INIT_LIST_HEAD(&info->eoi_list);
++		list_add_tail(&info->list, &xen_irq_list_head);
++	}
+ 
+-	INIT_LIST_HEAD(&info->eoi_list);
+-	list_add_tail(&info->list, &xen_irq_list_head);
++	return info;
  }
  
- static void do_mask(struct irq_info *info, u8 reason)
-@@ -539,13 +531,12 @@ static bool pirq_needs_eoi_flag(unsigned irq)
- static void bind_evtchn_to_cpu(evtchn_port_t evtchn, unsigned int cpu,
- 			       bool force_affinity)
+-static int __must_check xen_allocate_irqs_dynamic(int nvec)
++static inline int __must_check xen_allocate_irq_dynamic(void)
  {
--	int irq = get_evtchn_to_irq(evtchn);
--	struct irq_info *info = info_for_irq(irq);
-+	struct irq_info *info = evtchn_to_info(evtchn);
+-	int i, irq = irq_alloc_descs(-1, 0, nvec, -1);
++	int irq = irq_alloc_desc_from(0, -1);
  
--	BUG_ON(irq == -1);
-+	BUG_ON(info == NULL);
- 
- 	if (IS_ENABLED(CONFIG_SMP) && force_affinity) {
--		struct irq_data *data = irq_get_irq_data(irq);
-+		struct irq_data *data = irq_get_irq_data(info->irq);
- 
- 		irq_data_update_affinity(data, cpumask_of(cpu));
- 		irq_data_update_effective_affinity(data, cpumask_of(cpu));
-@@ -987,10 +978,10 @@ static void __unbind_from_irq(unsigned int irq)
+ 	if (irq >= 0) {
+-		for (i = 0; i < nvec; i++)
+-			xen_irq_init(irq + i);
++		if (!xen_irq_init(irq)) {
++			xen_irq_free_desc(irq);
++			irq = -1;
++		}
  	}
  
- 	if (VALID_EVTCHN(evtchn)) {
--		unsigned int cpu = cpu_from_irq(irq);
-+		unsigned int cpu = info->cpu;
- 		struct xenbus_device *dev;
+ 	return irq;
+ }
  
--		switch (type_from_irq(irq)) {
-+		switch (info->type) {
- 		case IRQT_VIRQ:
- 			per_cpu(virq_to_irq, cpu)[virq_from_irq(irq)] = -1;
- 			break;
-@@ -1214,15 +1205,16 @@ static int bind_evtchn_to_irq_chip(evtchn_port_t evtchn, struct irq_chip *chip,
+-static inline int __must_check xen_allocate_irq_dynamic(void)
+-{
+-
+-	return xen_allocate_irqs_dynamic(1);
+-}
+-
+ static int __must_check xen_allocate_irq_gsi(unsigned gsi)
  {
  	int irq;
- 	int ret;
-+	struct irq_info *info;
+@@ -792,7 +794,10 @@ static int __must_check xen_allocate_irq_gsi(unsigned gsi)
+ 	else
+ 		irq = irq_alloc_desc_at(gsi, -1);
  
- 	if (evtchn >= xen_evtchn_max_channels())
- 		return -ENOMEM;
+-	xen_irq_init(irq);
++	if (!xen_irq_init(irq)) {
++		xen_irq_free_desc(irq);
++		irq = -1;
++	}
  
- 	mutex_lock(&irq_mapping_update_lock);
+ 	return irq;
+ }
+@@ -971,6 +976,11 @@ static void __unbind_from_irq(unsigned int irq)
+ 	evtchn_port_t evtchn = evtchn_from_irq(irq);
+ 	struct irq_info *info = info_for_irq(irq);
  
--	irq = get_evtchn_to_irq(evtchn);
-+	info = evtchn_to_info(evtchn);
- 
--	if (irq == -1) {
 +	if (!info) {
- 		irq = xen_allocate_irq_dynamic();
- 		if (irq < 0)
- 			goto out;
-@@ -1245,8 +1237,8 @@ static int bind_evtchn_to_irq_chip(evtchn_port_t evtchn, struct irq_chip *chip,
- 		 */
- 		bind_evtchn_to_cpu(evtchn, 0, false);
- 	} else {
--		struct irq_info *info = info_for_irq(irq);
--		WARN_ON(info == NULL || info->type != IRQT_EVTCHN);
-+		WARN_ON(info->type != IRQT_EVTCHN);
-+		irq = info->irq;
- 	}
- 
- out:
-@@ -1585,13 +1577,7 @@ EXPORT_SYMBOL_GPL(xen_set_irq_priority);
- 
- int evtchn_make_refcounted(evtchn_port_t evtchn)
- {
--	int irq = get_evtchn_to_irq(evtchn);
--	struct irq_info *info;
--
--	if (irq == -1)
--		return -ENOENT;
--
--	info = info_for_irq(irq);
-+	struct irq_info *info = evtchn_to_info(evtchn);
- 
- 	if (!info)
- 		return -ENOENT;
-@@ -1606,7 +1592,6 @@ EXPORT_SYMBOL_GPL(evtchn_make_refcounted);
- 
- int evtchn_get(evtchn_port_t evtchn)
- {
--	int irq;
- 	struct irq_info *info;
- 	int err = -ENOENT;
- 
-@@ -1615,11 +1600,7 @@ int evtchn_get(evtchn_port_t evtchn)
- 
- 	mutex_lock(&irq_mapping_update_lock);
- 
--	irq = get_evtchn_to_irq(evtchn);
--	if (irq == -1)
--		goto done;
--
--	info = info_for_irq(irq);
-+	info = evtchn_to_info(evtchn);
- 
- 	if (!info)
- 		goto done;
-@@ -1639,10 +1620,11 @@ EXPORT_SYMBOL_GPL(evtchn_get);
- 
- void evtchn_put(evtchn_port_t evtchn)
- {
--	int irq = get_evtchn_to_irq(evtchn);
--	if (WARN_ON(irq == -1))
-+	struct irq_info *info = evtchn_to_info(evtchn);
++		xen_irq_free_desc(irq);
++		return;
++	}
 +
-+	if (WARN_ON(!info))
- 		return;
--	unbind_from_irq(irq);
-+	unbind_from_irq(info->irq);
- }
- EXPORT_SYMBOL_GPL(evtchn_put);
+ 	if (info->refcnt > 0) {
+ 		info->refcnt--;
+ 		if (info->refcnt != 0)
+@@ -1107,11 +1117,14 @@ int xen_bind_pirq_msi_to_irq(struct pci_dev *dev, struct msi_desc *msidesc,
  
-@@ -1672,12 +1654,10 @@ struct evtchn_loop_ctrl {
- 
- void handle_irq_for_port(evtchn_port_t port, struct evtchn_loop_ctrl *ctrl)
- {
--	int irq;
--	struct irq_info *info;
-+	struct irq_info *info = evtchn_to_info(port);
- 	struct xenbus_device *dev;
- 
--	irq = get_evtchn_to_irq(port);
--	if (irq == -1)
-+	if (!info)
- 		return;
- 
- 	/*
-@@ -1702,7 +1682,6 @@ void handle_irq_for_port(evtchn_port_t port, struct evtchn_loop_ctrl *ctrl)
- 		}
- 	}
- 
--	info = info_for_irq(irq);
- 	if (xchg_acquire(&info->is_active, 1))
- 		return;
- 
-@@ -1716,7 +1695,7 @@ void handle_irq_for_port(evtchn_port_t port, struct evtchn_loop_ctrl *ctrl)
- 		info->eoi_time = get_jiffies_64() + event_eoi_delay;
- 	}
- 
--	generic_handle_irq(irq);
-+	generic_handle_irq(info->irq);
- }
- 
- int xen_evtchn_do_upcall(void)
-@@ -1774,7 +1753,7 @@ void rebind_evtchn_irq(evtchn_port_t evtchn, int irq)
  	mutex_lock(&irq_mapping_update_lock);
  
- 	/* After resume the irq<->evtchn mappings are all cleared out */
--	BUG_ON(get_evtchn_to_irq(evtchn) != -1);
-+	BUG_ON(evtchn_to_info(evtchn));
- 	/* Expect irq to have been bound before,
+-	irq = xen_allocate_irqs_dynamic(nvec);
++	irq = irq_alloc_descs(-1, 0, nvec, -1);
+ 	if (irq < 0)
+ 		goto out;
+ 
+ 	for (i = 0; i < nvec; i++) {
++		if (!xen_irq_init(irq + i))
++			goto error_irq;
++
+ 		irq_set_chip_and_handler_name(irq + i, &xen_pirq_chip, handle_edge_irq, name);
+ 
+ 		ret = xen_irq_info_pirq_setup(irq + i, 0, pirq + i, 0, domid,
+@@ -1758,6 +1771,7 @@ void rebind_evtchn_irq(evtchn_port_t evtchn, int irq)
  	   so there should be a proper type */
  	BUG_ON(info->type == IRQT_UNBOUND);
+ 
++	info->irq = irq;
+ 	(void)xen_irq_info_evtchn_setup(irq, evtchn, NULL);
+ 
+ 	mutex_unlock(&irq_mapping_update_lock);
 -- 
 2.53.0
 
