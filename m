@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793210584;
-	b=cBlEFiGizBKgnLBPyqGmII6cvABXf2GCUyiblc3xrN5M2R4RG8hofJjA8/9nxX7sn8Dd
-	 iYCh5BtJ23agViv8ywwbG6BtjzkTQ4asFM9mV4X1AON3J8y/IZkScFYH+UFI+1tYQ8QQP
-	 Vr9gKIT52WUO6oRcUC3iJ0EjCBz+LTaSXymcdzW07b1OcjUJLOsvWYD11gAyjhedEjyfC
-	 H2n6iNpf+swzJBZ0W3jgjCE8x69cRcLnVltt12edigS7KPnpeijyhizIwUzITFivo7anM
-	 ai+QbXm4b1iWkmA8mYPsI3fgwzkXbaXSMC8+uRSOcrkzlDuklxRvFNLAtrbDDHL8tpA==
+	t=1793210587;
+	b=T8Kpsf1UWzzdHpULH+ztDK36qtdz+DM/44POcRGqZ/sG3eEg1XHSZ3AAwOCaZhq3pfMZ
+	 xLYnCRLSXsQgxxSNh/T6gyIZMTcp+20m+4kwHZ7jwiF7oBipoSul0xXQWPX95iHfI49y3
+	 1l+2o0Qk+imXQe931jxhJvW8rusHL8CqlM5SULcC18+gV0C8TuVTTRzw03m/evjhIhA1E
+	 M/nmyzogoDeqKifEzTzXYGPC8IqN7+fh7Q4oSfV9Qg8N8Q7tQTpuMp53gRu1QaX5wAeKH
+	 6CCTmsIy/P9PHcnxSBLDXZyitfJN/7uuMxz8wiFy4a7zEFl7CwGOmyYJ31FdH6Br3hw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793210584;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793210587;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=H2rZge/iPJhJabySBJEsa8h1xfXB1JNoXweLYP4CuaE=;
-	b=fE77h90ADrBe+CtZ/9rOs9CGEXLsohYTrlk+M894+3ewe7XU8k8omdIK+R2oM3FVCfKM
-	 6AsthsGDlXeR9t5FBAEc98E9ODXBa7v+6mkS/k6QzGBaWWqjNGaZlyzJxDf8jHsn0bSBp
-	 IuMszPmB4wu5wVdxnqnkB9yxxirP/ZaqzgsZJLIdCPQy47Z0G0QwrUe1s8kIaepjVXRiN
-	 aUZUJy+RWAAreeZcWyLFXOpG8eTeH/Ow2efVfJrcaMT1A/s00pdNHxqBYVNEOMrakyawr
-	 y4U9B9sf0ESnzC+o03uMZM3AXD/S2m9/pDNO3OXn3o+zNA+lKGMVtf+T1a0EepvkFcw==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=QHaazYS+RVsl8W/MKbQnTiCyzbH3guXMqIa+WDJ3WyA=;
+	b=DUsB1UcvOpB+JbP++KLnYSA/XnERic9ujoubEy9m5ZiPTzhbkOzr8cwPgitpItuhF2i8
+	 aMvEk2l3PfHBGNGCVaLTvcNy9rkFLDDd5r5fPeQAahTS3+H/KkYgfu29MnVXtkqqugkOp
+	 CNNYyt0VXlec+I73OtkS0j1VZK4HOlRzM1yH6/b7cn8HWVeVpy9PdbOMNPLoon57793JN
+	 hizb3BI9E1bGLPi0eHKkpQWKzWIuenojbmtuQpHEXZ6uS19IrgL5glTxj8Fex3yM6OvHz
+	 1s3Qdr8mDouHADbdUGqV3gOIQ+Of8ltfpD2HW1zj+BEGLUB5kNd9yK57BTFv/LKLjkQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NZLyU4Rk;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VohDI67s;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6457606A31C;
-	Wed, 28 Oct 2026 18:03:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C23C8606A31C;
+	Wed, 28 Oct 2026 18:03:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NZLyU4Rk
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 314841F01825;
-	Wed, 28 Oct 2026 18:03:03 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VohDI67s
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DD2F1F01825;
+	Wed, 28 Oct 2026 18:03:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793210583;
-	bh=H2rZge/iPJhJabySBJEsa8h1xfXB1JNoXweLYP4CuaE=;
+	s=korg; t=1793210586;
+	bh=QHaazYS+RVsl8W/MKbQnTiCyzbH3guXMqIa+WDJ3WyA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NZLyU4RkalLQCOm2vfTHOu69qctwxr19l1welVQTVubhH7dbSMXDgxoCHpnLcMlyS
-	 ZHZ1RwJxpHtRqLUVOmaAXAnEf05Rwoxj+fa24HbCQ3QTIrPQHxQ//gBLGUSlTf6z+6
-	 gYXS3fX2gtej4cVCl0YkQj9V414f/PpgX0MBQCKA=
+	b=VohDI67sttqAdyqsJ6QuwqsvfTU7Cw/OekuKKx2U1mHb5ugNzhBZoGEnHHLd+nnOW
+	 SqhqECR8LGmnJcJ6CP3YaeclhtSrdz26jfBaceLgYaV2cxzDGgUn+1yH0UNI37Rpob
+	 9jcqYJ7yTRdhhnJWgmbXO2lmPTyy3JHUm0TCyu70=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+791be35f1fbcc85d06d7@syzkaller.appspotmail.com,
-	stable <stable@kernel.org>,
-	Jeffin Philip <jeffinphilip14@gmail.com>,
-	Alan Stern <stern@rowland.harvard.edu>,
+	Can Peng <pengcan@kylinos.cn>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 075/571] usb: gadget: f_mass_storage: fix null pointer dereference in fsg_common_set_num_buffers()
-Date: Wed, 28 Oct 2026 17:53:42 +0100
-Message-ID: <20261028170009.806879917@linuxfoundation.org>
+Subject: [PATCH 5.15 076/571] spi: bcm63xx: disable clock on resume failure
+Date: Wed, 28 Oct 2026 17:53:43 +0100
+Message-ID: <20261028170009.830123172@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -64,53 +62,51 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jeffin Philip <jeffinphilip14@gmail.com>
+From: Can Peng <pengcan@kylinos.cn>
 
-[ Upstream commit 2c0f5ca48674a5b5f9fa4a9c3325aa48053af0bc ]
+[ Upstream commit 2b62c2c134fa32d9d3a9e7323c8ac74518eeb4ac ]
 
-Previously fsg_num_buffers_validate() was removed as it was not
-necessary due to Kconfig setting the limits for n from 2 to 256 with
-default as 2. However, setting the page content in such a way that
-kstrtou8() reflects n value as either 0 or 1 bypasses these
-restrictions leading to a null pointer dereference if n is 0. Fix
-this by adding a check for n < 2 and returning -EINVAL if n is
-either 0 or 1 consistent with Kconfig logic.
+bcm63xx_spi_resume() enables the controller clock before restarting the
+SPI controller queue.
 
-Reported-by: syzbot+791be35f1fbcc85d06d7@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=791be35f1fbcc85d06d7
-Fixes: fe5a6c48fd95 ("usb: gadget: storage: get rid of fsg_num_buffers_validate()")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Jeffin Philip <jeffinphilip14@gmail.com>
-Acked-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://patch.msgid.link/20260818035904.10324-1-jeffinphilip14@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-[ adjusted context to retain the branch’s existing kcalloc() call instead of kzalloc_objs(). ]
+If spi_controller_resume() fails, the function currently reports success
+and leaves the clock enabled. Propagate the error and disable the clock
+before returning.
+
+Fixes: b42dfed83d95 ("spi: add Broadcom BCM63xx SPI controller driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Can Peng <pengcan@kylinos.cn>
+Link: https://patch.msgid.link/20260804071831.860784-1-pengcan@kylinos.cn
+Signed-off-by: Mark Brown <broonie@kernel.org>
+[ changed spi_controller_resume(host) to spi_master_resume(master) to match the older API and variable name. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/function/f_mass_storage.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/spi/spi-bcm63xx.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/usb/gadget/function/f_mass_storage.c b/drivers/usb/gadget/function/f_mass_storage.c
-index 42cd7112a89a9..b20aabf3fb2f3 100644
---- a/drivers/usb/gadget/function/f_mass_storage.c
-+++ b/drivers/usb/gadget/function/f_mass_storage.c
-@@ -2592,6 +2592,9 @@ int fsg_common_set_num_buffers(struct fsg_common *common, unsigned int n)
- 	struct fsg_buffhd *bh, *buffhds;
- 	int i;
+diff --git a/drivers/spi/spi-bcm63xx.c b/drivers/spi/spi-bcm63xx.c
+index e57e1f75cd9f9..1dc579d9e3c4c 100644
+--- a/drivers/spi/spi-bcm63xx.c
++++ b/drivers/spi/spi-bcm63xx.c
+@@ -669,7 +669,11 @@ static int bcm63xx_spi_resume(struct device *dev)
+ 	if (ret)
+ 		return ret;
  
-+	if (n < 2)
-+		return -EINVAL;
-+
- 	buffhds = kcalloc(n, sizeof(*buffhds), GFP_KERNEL);
- 	if (!buffhds)
- 		return -ENOMEM;
+-	spi_master_resume(master);
++	ret = spi_master_resume(master);
++	if (ret) {
++		clk_disable_unprepare(bs->clk);
++		return ret;
++	}
+ 
+ 	return 0;
+ }
 -- 
 2.53.0
 
