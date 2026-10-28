@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793208395;
-	b=q1TBxaF5I06ditOg/opf5QJDXJPIRiFT+zXkI+o501qvxTlXd0oNCN10x7jc6mjIrZPw
-	 oE3j4fwsZs4lrJ+SJFISIp1O1QcFW4aaUORR6PXXL25CdKZznsuX2zpk1npmKT78Xi1JZ
-	 fuSExXhkY3UkR08uUYsloWNqeNgTQIfXfefwMiZPm9BT1Lgl5uJah3p4fM4oTf1bTvTOe
-	 EJ20bRy/uMF1NTydkyIvwXOewB5fKrfZ3pKQkgm+ztIVmZPV6cX2x/C9oD0IMzLm4tZY/
-	 CtbD4I7J17eYcIuQSUh8hg1aRJehttVGe6ZVCi+CqXW3RTPK/jUBy4sw95cJ+xHHFTw==
+	t=1793208397;
+	b=sSoy9rSs4Jm1ctKaYhO5xyMbiUQytR81ksXQSzfRmBUbZ+WGIE4RaPVBlcN16wRz9OM8
+	 ZF19EynFWCUu2aNZf4WmcXnmSEUrcKcE3uCnLS0WMD7Wol3rOVXfi9fOdjeMCEDWDaoiZ
+	 kpq7KQKqv9bZ/FINStQIZZhRRe/3rdcuS5PT0FlPjQ5TDFbo9KlptfCEVikyzbydbZ/Kk
+	 0K7IOZ3UQBBUPTmYqLXecPWQ+XZ5yJ62BhCq5ovSTtqFzor7GiuXH6lYniCEwMSImuIoG
+	 h6dh8MAg2eVf7il3jAjtd+M/HvCXe00PBc7f/B6cYA5B6ElsIkBWh5X4Ol+wNwwQ5JQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793208395;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793208397;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=6fFjNKrt61JEOwss3UGnIZ7PAewkwNqEPH4V2DZL2Q0=;
-	b=B2tX6JQhOYpyI9AnPzk6gMG1KyO7w9F0LBkDXjV5PH1Bbrfs/B77FHl1YC+NtY6m2xqa
-	 E8xeLmUIkbIqbgg9FxW7KQbWZbW+btt9JRrElexZdS5yZXPwhz/UbJDFUsDbbcVnDlbjb
-	 51QNmAamr86ttwGogngfhzJD94pzWUTE51AWubX5AaQUQ0fHCA1krLfK5mP+wW/kQ/Yuu
-	 I67LBzg4E0FgO9oAxKewdEls3ljy60Yx7soYOFDXkJEnThVc9WQ6h+6ka0DRcjmDSV8FA
-	 ADSPt03p+Q6E30HFwI8xuieuRUsZGtNAvQW4SOVq7uMIeKiLXUKWs4xlSs8CJ8+WZ0A==
+	bh=+ZceTCZ4qirpfZ7dypdagBDJdOkGvTQLN7V2XEAO02E=;
+	b=WSGxSXL/JkKzGnVBVAuDL1EsPLiKVzy1vGkb6GITlBkIjtZhITh5ob0pBt8SkBNMFFBD
+	 hsun2bgFMgdQTz15mTSmJbWEBJ9fqDIMcIhByfLniCT9berhdaOT4BuxgkgXAqF+KLwOQ
+	 3yZd+/69ejZFSY4eTsoaddjnjtZQRrv4wQO2J0xqKgxVa6lozrr5xSr8KogXptT+eq0CK
+	 5RyDrRH1TRyoP/pq6aNkC++Oorzx9euk4Jqr2F925gLlSg+vGp/jDGiwxk6Mpj6exDIJ1
+	 DZIwF0aQSWb3IaRdMx4KchojKuq6ULytCxlIu5Ule1LcHgmzjdc0+1moe11udhfPTwg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZbGBpd0V;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VXQfnpa8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1E6D606A31C;
-	Wed, 28 Oct 2026 17:26:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FDF2606A31C;
+	Wed, 28 Oct 2026 17:26:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZbGBpd0V
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 105F41F031E1;
-	Wed, 28 Oct 2026 17:26:33 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VXQfnpa8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE4BA1F01825;
+	Wed, 28 Oct 2026 17:26:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793208394;
-	bh=6fFjNKrt61JEOwss3UGnIZ7PAewkwNqEPH4V2DZL2Q0=;
+	s=korg; t=1793208397;
+	bh=+ZceTCZ4qirpfZ7dypdagBDJdOkGvTQLN7V2XEAO02E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZbGBpd0VDIb5t8BdwVY8+BxwIf/NpO9HsOVl0hza8zgsBFGQ4mCgH27n/eN4w9wx1
-	 ziOIh3JOqq2v3d86Qiz5LcZVI+qKVc1G6AxAnqqjDN3A+hj1uNr4AkIlpthL0Zvc3N
-	 fb6snANqn8MUEpJAq0qc4uDapum887VhcimcXGd0=
+	b=VXQfnpa8MmgSICcFm/GcfJevPcffy1J4wdwaAGJNBkdFR8GyJlH7aaEJtJ/Le4Icx
+	 JnOWTUQUjVLDrlABsYeHTvM+GBVW+Jy+/rXgS6PLsRgHwYAfvo4VFrfXCax+dBoEj7
+	 dv4bE+E7DESVamGVBsRpw1txArPrSihI4ttfEfy8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tzung-Bi Shih <tzungbi@kernel.org>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Song Li <songl@zju.edu.cn>,
+	Fan Wu <fanwu01@zju.edu.cn>,
+	Loic Poulain <loic.poulain@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 105/516] watchdog: rtd119x: Avoid division by zero
-Date: Wed, 28 Oct 2026 17:54:17 +0100
-Message-ID: <20261028170006.004927692@linuxfoundation.org>
+Subject: [PATCH 5.10 106/516] wifi: wcn36xx: Fix potential use-after-free in TX ack timer teardown
+Date: Wed, 28 Oct 2026 17:54:18 +0100
+Message-ID: <20261028170006.028366000@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -68,50 +70,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tzung-Bi Shih <tzungbi@kernel.org>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-[ Upstream commit 5af7d2cbd20f893def03c8310a460ade66a5d822 ]
+[ Upstream commit d9be5e75530772fc31637070d51e5717d6aeaa2a ]
 
-clk_get_rate() could return 0.  Avoid a division by zero panic.
+wcn36xx_dxe_deinit() tears down the TX ack timer with timer_delete(),
+which only dequeues the timer and does not wait for a callback that is
+already executing; the preceding free_irq() calls synchronize the
+interrupt handlers only. The callback, wcn36xx_dxe_tx_timer(), can
+therefore be running past the teardown and use the wcn freed along
+with the ieee80211_hw in wcn36xx_remove(): it takes wcn->dxe_lock,
+reads wcn->tx_ack_skb and passes wcn->hw to
+ieee80211_tx_status_irqsafe().
 
-Fixes: 2bdf6acbfead ("watchdog: Add Realtek RTD1295")
+Fix this by using timer_shutdown_sync(), which waits for a running
+callback and also prevents the timer from being rearmed again. The
+timer is set up again by wcn36xx_dxe_init() on the next start, so the
+start/stop cycle is unaffected.
+
+This issue was found by an in-house static analysis tool.
+
+Fixes: fdf21cc37149 ("wcn36xx: Add TX ack support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
-Link: https://patch.msgid.link/20260913064851.8239-3-tzungbi@kernel.org
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Assisted-by: LLM
+Co-developed-by: Song Li <songl@zju.edu.cn>
+Signed-off-by: Song Li <songl@zju.edu.cn>
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Reviewed-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260910020907.3353-1-fanwu01@zju.edu.cn
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+[ Replaced unavailable timer_shutdown_sync() with timer_delete_sync(). ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/watchdog/rtd119x_wdt.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/net/wireless/ath/wcn36xx/dxe.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/watchdog/rtd119x_wdt.c b/drivers/watchdog/rtd119x_wdt.c
-index 95c8d7abce42e..e963be4df8c4e 100644
---- a/drivers/watchdog/rtd119x_wdt.c
-+++ b/drivers/watchdog/rtd119x_wdt.c
-@@ -98,6 +98,7 @@ static int rtd119x_wdt_probe(struct platform_device *pdev)
- {
- 	struct device *dev = &pdev->dev;
- 	struct rtd119x_watchdog_device *data;
-+	unsigned long rate;
+diff --git a/drivers/net/wireless/ath/wcn36xx/dxe.c b/drivers/net/wireless/ath/wcn36xx/dxe.c
+index 6c62ffc799a2b..6840aca0dd3ec 100644
+--- a/drivers/net/wireless/ath/wcn36xx/dxe.c
++++ b/drivers/net/wireless/ath/wcn36xx/dxe.c
+@@ -1007,7 +1007,7 @@ void wcn36xx_dxe_deinit(struct wcn36xx *wcn)
  
- 	data = devm_kzalloc(dev, sizeof(*data), GFP_KERNEL);
- 	if (!data)
-@@ -111,10 +112,14 @@ static int rtd119x_wdt_probe(struct platform_device *pdev)
- 	if (IS_ERR(data->clk))
- 		return PTR_ERR(data->clk);
+ 	free_irq(wcn->tx_irq, wcn);
+ 	free_irq(wcn->rx_irq, wcn);
+-	del_timer(&wcn->tx_ack_timer);
++	timer_delete_sync(&wcn->tx_ack_timer);
  
-+	rate = clk_get_rate(data->clk);
-+	if (!rate)
-+		return -EINVAL;
-+
- 	data->wdt_dev.info = &rtd119x_wdt_info;
- 	data->wdt_dev.ops = &rtd119x_wdt_ops;
- 	data->wdt_dev.timeout = 120;
--	data->wdt_dev.max_timeout = 0xffffffff / clk_get_rate(data->clk);
-+	data->wdt_dev.max_timeout = 0xffffffff / rate;
- 	data->wdt_dev.min_timeout = 1;
- 	data->wdt_dev.parent = dev;
- 
+ 	if (wcn->tx_ack_skb) {
+ 		ieee80211_tx_status_irqsafe(wcn->hw, wcn->tx_ack_skb);
 -- 
 2.53.0
 
