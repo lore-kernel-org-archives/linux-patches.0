@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793212922;
-	b=EKDy34M0KEzi3F99VOdZ5IG0tHR4WcVoFXeTBz/XaKZVOOT/ZbcY/IMONeF9OFhCE7mz
-	 N1Ofl8/+rv7YiN2WS1RZL+gtKvCCnFBGjUM5R4YuSwWSyPUhH+vkjoBp41ydz3+Vj0YVy
-	 ZXNWgtaCyL5uwN81M9pqFlA4u8q6/VvdIJYETD+hZjldPfh5uzmHfHCAl/CRcV6NPeqyP
-	 2nfMXjkx/zcClPkLHQy31uMGDlm3sS+I+aJRbBCkSzBmv57Pigfa+6dC4fBVzUBzmWknX
-	 eEZmKNj36i/KjhZ+0aWxWk5Hwtv0SCzRaoydccUuSaMjEEXXfzK5R5SxfJIYoIsgyHQ==
+	t=1793212925;
+	b=oqNDzfzYT/HiMa/a01GkzhqP9ZNLvbB+6YcCo0KEFnLjFrZid9z3v5LyXHqzqyc8g2hA
+	 fuBvbYfmOo5OQPyA82HUHHMnW28IhGgRdeRsh4yF2DXbVQvLWrTuH3DRDeAB52LKztDH6
+	 IOof7YrlrN6hhlsqifeqwBlkSROz5A5Ck4PTNEstOVwcfIrbOOa8EH+eB7S0c77ebG9Sm
+	 GAcQ7PWlEbrmudbbkF/2g1pxNmDv/aqxRO3fjUrXaNs/SK+KGnJagDWrSPKDma0mcWG9B
+	 1XifGvGc16dgGlL7O0spMECboPRnHJ0pzVJYAkb88L60sgQk2C+w3Wofr7kZhlg1XEA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793212922;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793212925;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=FoxO96WKAmuyrEAuVRmXWAAdiY3miSK4tGWrnLVH8aU=;
-	b=sUlo9TEMdzm4fBn1muxRIu1uruIestnY/AjT0kB7BiPx8eBWA/0s0vjWXnQGgVQVnU3H
-	 HrN9kY4NpG2vi5VR5Snw28RicKyFJr1PsE2qzB1VFmsfL+dhJ7d2/8NLmzK2uYMEjKuji
-	 eYhoxGlR2i7J+V1zHTNLE5DSWb7I5akXQERnzgkkgD/TlNI0cMOA4f1eUYcCD94QSmEjY
-	 jejpEayEp4+qbRBvoUQsJA5tVHkLjxIh8PKxHT4JOrAqVIAsFW2WTfO7E4Ml9Gd2e1bpz
-	 AsUsboETqXwBcVp+w2RSwxt3pXFxGcpov5OoS6lDKIabjiSbq0HBnAnUasWh5+PEhxQ==
+	bh=rpvC6D+ziRcO9k5iLmNtDSBiTNqDp9sa/ZQw20WhFYI=;
+	b=Ze2VqgzmogqdyvK9LtOszNnPyOFt42vGkPjM56AzbUuDJNnD6fjrJ/FbZFPK+6Beyq+Z
+	 KjcBijM5yxuCQkxfDADnBZF7Yq4GD7k9entv2XG4Fa6G0Rnq3VJ4N1sqNFY0mknotMS80
+	 VHppRnXTgu8yWjlFnCEjuMNq8XObhEvwn3lDweF6HGxEHhXlgd74O0MCK4xFEgdUhblyD
+	 xv8N8uCF7SLQFPCuFzt486V9PHkjQGmcYoxmJlFGdtVZSWHSa6YNOBnil1qVRzibtw2d6
+	 ZIGTzloUr4JQZcHwV8swlr79i8sXIEbG5HAwc77Pbq255QnpPPHO9WMG1uNkTIc9lcQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=heFchLQD;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lKXJSJak;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96C66606A31E;
-	Wed, 28 Oct 2026 18:42:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B1C3606A31A;
+	Wed, 28 Oct 2026 18:42:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=heFchLQD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F09B1F01825;
-	Wed, 28 Oct 2026 18:42:01 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lKXJSJak
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C958A1F01825;
+	Wed, 28 Oct 2026 18:42:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793212922;
-	bh=FoxO96WKAmuyrEAuVRmXWAAdiY3miSK4tGWrnLVH8aU=;
+	s=korg; t=1793212925;
+	bh=rpvC6D+ziRcO9k5iLmNtDSBiTNqDp9sa/ZQw20WhFYI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=heFchLQDzEhOCiwnArfpZ0RqqV5HcWBJEMrbQ1M8AdCbqF3cYkJbOfphOWSHXBSqz
-	 h3BWlsPvCVwA9fVgrN46OHNW8LCslGEqPZ6R4QfNTtQ1iwZyw1T4r50BvTEoL350/A
-	 N2aoxwg7xC6lvbt74essGpgBty3odzw9x833YhV8=
+	b=lKXJSJakvENoOekC2beaZSWgl2tLH3O8s16r+dqwIBX7OO8josWsJV10jh0IDUqPZ
+	 tf0ZDkFrmcdT+rlHbJRgRWJjehVw4FDaIkSuOZ4epx4QmkmzTzVQ0A7kSuU8xv7u1U
+	 h4JPETACIkGUPKdyVhcFbS4SttV/qiWO7RQbaHBw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Wentao Liang <vulab@iscas.ac.cn>
-Subject: [PATCH 6.1 0297/1887] serial: vt8500: Fix clock reference leak in vt8500_serial_probe()
-Date: Wed, 28 Oct 2026 17:39:53 +0100
-Message-ID: <20261028170505.988225351@linuxfoundation.org>
+	Zhao Dongdong <zhaodongdong@kylinos.cn>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.1 0324/1887] USB: serial: option: add support for SIMCom SIM8260C
+Date: Wed, 28 Oct 2026 17:40:20 +0100
+Message-ID: <20261028170506.605529907@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -67,34 +67,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Zhao Dongdong <zhaodongdong@kylinos.cn>
 
-commit 9d8955281d9229a899e2041659a59b389027b711 upstream.
+commit 35c950c9ec2c4c4d45dc9b63cfe8fca774ce33a0 upstream.
 
-of_clk_get() returns a clock with a reference that has to be released
-with clk_put(). If clk_prepare_enable() fails the function returns
-without doing so, leaking the reference.
+Add support for SIMCom SIM8260C (1e0e:902b).
 
-Add the missing clk_put() on that error path.
+T:  Bus=08 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  2 Spd=5000 MxCh= 0
+D:  Ver= 3.20 Cls=00(>ifc ) Sub=00 Prot=00 MxPS= 9 #Cfgs=  1
+P:  Vendor=1e0e ProdID=902b Rev= 5.04
+S:  Manufacturer=SIMCOM
+S:  Product=SDXLEMUR-LITE-MTP _SN:120696AB
+S:  SerialNumber=0123456789ABCDEF
+C:* #Ifs= 8 Cfg#= 1 Atr=a0 MxPwr=896mA
+A:  FirstIf#= 5 IfCount= 3 Cls=01(audio) Sub=00 Prot=20
+I:* If#= 0 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+E:  Ad=01(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=81(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+I:* If#= 1 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=60 Driver=option
+E:  Ad=83(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=82(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+I:* If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=85(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=84(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=03(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+I:* If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=87(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=86(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=04(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+I:* If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=50 Driver=qmi_wwan_simcom
+E:  Ad=88(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
+E:  Ad=8e(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=0f(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+I:* If#= 5 Alt= 0 #EPs= 0 Cls=01(audio) Sub=01 Prot=20 Driver=snd-usb-audio
+I:* If#= 6 Alt= 0 #EPs= 0 Cls=01(audio) Sub=02 Prot=20 Driver=snd-usb-audio
+I:  If#= 6 Alt= 1 #EPs= 1 Cls=01(audio) Sub=02 Prot=20 Driver=snd-usb-audio
+E:  Ad=05(O) Atr=0d(Isoc) MxPS=  34 Ivl=1ms
+I:* If#= 7 Alt= 0 #EPs= 0 Cls=01(audio) Sub=02 Prot=20 Driver=(none)
+I:  If#= 7 Alt= 1 #EPs= 1 Cls=01(audio) Sub=02 Prot=20 Driver=(none)
+E:  Ad=89(I) Atr=0d(Isoc) MxPS=  34 Ivl=1ms
 
-Fixes: 12faa35ae5cb ("serial: vt8500: UART uses gated clock rather than 24Mhz reference")
-Cc: stable@kernel.org
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Link: https://patch.msgid.link/20260917155834.2161361-1-vulab@iscas.ac.cn
+Signed-off-by: Zhao Dongdong <zhaodongdong@kylinos.cn>
+Cc: stable@vger.kernel.org
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/vt8500_serial.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/usb/serial/option.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/tty/serial/vt8500_serial.c
-+++ b/drivers/tty/serial/vt8500_serial.c
-@@ -682,6 +682,7 @@ static int vt8500_serial_probe(struct pl
- 	ret = clk_prepare_enable(vt8500_port->clk);
- 	if (ret) {
- 		dev_err(&pdev->dev, "failed to enable clock\n");
-+		clk_put(vt8500_port->clk);
- 		return ret;
- 	}
- 
+--- a/drivers/usb/serial/option.c
++++ b/drivers/usb/serial/option.c
+@@ -2169,6 +2169,8 @@ static const struct usb_device_id option
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x1e0e, 0x9003, 0xff) },	/* Simcom SIM7500/SIM7600 MBIM mode */
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x1e0e, 0x9011, 0xff),	/* Simcom SIM7500/SIM7600 RNDIS mode */
+ 	  .driver_info = RSVD(7) },
++	{ USB_DEVICE_INTERFACE_CLASS(0x1e0e, 0x902b, 0xff),
++	  .driver_info = RSVD(4) },
+ 	{ USB_DEVICE(0x1e0e, 0x9071),				/* Simcom SIM8230 RMNET mode */
+ 	  .driver_info = RSVD(3) | RSVD(4) },
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x1e0e, 0x9078, 0xff),	/* Simcom SIM8230 ECM mode */
 
 
