@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793212550;
-	b=TKy20/gRwR02bf3nSfl9q8/bBvHZfVzUYr1rLIGvOpNS/z0pUQuaBgmPEDMJwnm3CYBS
-	 WAITv+gwCDY8Qcrvf9L448u5RMfvhFiHKP4WSLX5ChmnpHHXq1VxtDkB7bLkR+xmlD8HL
-	 z6CzUflT6yHo9U3IgbqAlcSCaNm2UZW0Egc4xh7tT3O+9Jz0IIPIuLEE2I0D50JT+YTGa
-	 aHu8kOlHSMlQGwkfLfv3o4PSBHFfBwvSc6tz4c5qZnosGs4DE6xcc05bTx2585Wm916bs
-	 v4TzYCQtkLph/NiNVyv3MjUNqflJjhvmyElHGMoQaYOA9hdpE+k2zchVOjLhgjrFBwg==
+	t=1793212553;
+	b=siwNVCA322I2Fne0Wm0ENWqrBadzY5zrVUKg3c5J5vqAUXGlyOAcuhsdXIgWYJoqsLIO
+	 y6sJCpUZYVt5a+oCC0G1m6eGJ8FLMGyHvFYllixhv9vIhTxJ6P/UqEGZLHykL/O6iemNi
+	 jSHmS87ufm70uCc0z6MN/n8m0moaYRmXB11rKtf/ZQttSj0bDnpFWa9mCiV/dQUzH812p
+	 LqtUivxHxxoo+esaa1sxkFJgyXEQm6Wsp6q4+XGrwfO7RSsioMB5jCPHEkkUePUy2TCdw
+	 2yZC2s5NOOFo1wuIodl7NHdTatoB8g68+Vc69+jscJC/6lqn/rpD7iibXIFt8ifFOFA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793212550;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793212553;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=kE5OHKHKfSWWZB8HPAKD9fSO6+/TZ9ucaiNBjAo8ORo=;
-	b=WO32E6CoELe01gSD2v4WVVy2ehYpwcw7FcI9Ss1uG8axM9ZEiQ9jhzpA52E1qFcnIegw
-	 5pPO9ykDzwoaq04Oz7O0A623fJD090/S6bDeG8zV5ksnPyjWU/FJt3vPqZqxD4N0Pf2aK
-	 /5tRBZ6rbE87ohuZFbXyKvY0yp+N67f46Ily+tjmlcg4gy2xxteEhqil7EUYP7sLT7iWa
-	 PZs5sewr1fiLjvFwtwYF7EPeNvbqZMxK8fAjUl7xG/8KEHwfpHP1DQvA+K8ktkUtkx9/+
-	 P8UKE2IUrhYwNXkUmmNuGGQB6KAof1f/Mlq1bODvnmjjBPNt8O6ZWws4imeHZY0hUAA==
+	bh=KfrpTfbyA2hkO4+cvLWcs0tlz+O7KAkXQYqHssXrIXo=;
+	b=U4DCQijtJjFo5GqOGX/aG853gmtS/67imiTsLzxvMtP4sHDaTefrabXzjiYyCdBN5HwN
+	 AfiBfZhMbI5k/1/6GVNQEkMZAJjOPBDkkrCLfuQLP1AE8vPo8qp3fjFiFZ6dAhpXJav59
+	 8/FpaP1EBzTjCTxgCcb3sPYQdgbtig6LR3hTiy71meGJHzpsVXkZ3euEKCn5PJcCrtsp9
+	 fznuAVnXka9vcMEdwshQeB3PibTH+e0rR2G/sJb1TbbAwJuJ8uYKa2RfC2RPgUB6tXk/g
+	 ASKvz/z1VhT+aCQF9I6kGv72okpCYP4jaoTmsNdBGzy9pB0PCtpSxJG7geP0qovPhDw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QhscH3vA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JOGAkwaW;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1752606A31E;
-	Wed, 28 Oct 2026 18:35:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4308606A31A;
+	Wed, 28 Oct 2026 18:35:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QhscH3vA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C67F1F01825;
-	Wed, 28 Oct 2026 18:35:48 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JOGAkwaW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F29A21F01825;
+	Wed, 28 Oct 2026 18:35:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793212549;
-	bh=kE5OHKHKfSWWZB8HPAKD9fSO6+/TZ9ucaiNBjAo8ORo=;
+	s=korg; t=1793212552;
+	bh=KfrpTfbyA2hkO4+cvLWcs0tlz+O7KAkXQYqHssXrIXo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QhscH3vAvgrluGW2h/M4iQFQ8p73EOMzfe66tOfyi0eiDkeemyt/CXjZJdn4XtyyH
-	 pOwmGDveiHThXPzXHiZAKn+7pEiJbx85vWI+AOOs3X5pSH/0UcePC3/UpDXmDf7hB+
-	 nw+Un3RaF+5zgEr3iZc5tGs+JKqFMOVbG1qqldtY=
+	b=JOGAkwaW11hcp6JNw6DWHiVSzwM7qAy6h3vYMre9vqPydTxJb3/wEnDGfVC21eQxa
+	 8O7Ks97LaKX2suZ8z14pPIZ2Yu8C5S0Dj8hlvucYZbmPoYWYsOxFbDL47RsndmX2FE
+	 i+3Yb7M+3320ZCYrImR2f+MRrawvrXkdAKYfElgs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Dnyaneshwar Bhadane <dnyaneshwar.bhadane@intel.com>,
 	Artem Dinaburg <artem@trailofbits.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0192/1887] drm/i915/hdcp: Add encoder check in intel_hdcp_get_capability
-Date: Wed, 28 Oct 2026 17:38:08 +0100
-Message-ID: <20261028170503.605849244@linuxfoundation.org>
+Subject: [PATCH 6.1 0193/1887] drm/i915/hdcp: Add encoder check in hdcp2_get_capability
+Date: Wed, 28 Oct 2026 17:38:09 +0100
+Message-ID: <20261028170503.628328253@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -71,19 +71,23 @@ Content-Transfer-Encoding: 8bit
 
 From: Suraj Kandpal <suraj.kandpal@intel.com>
 
-[ Upstream commit 31b42af516afa1e184d1a9f9dd4096c54044269a ]
+[ Upstream commit d34f4f058edf1235c103ca9c921dc54820d14d40 ]
 
-Sometimes during hotplug scenario or suspend/resume scenario encoder is
-not always initialized when intel_hdcp_get_capability add
-a check to avoid kernel null pointer dereference.
+Add encoder check in intel_hdcp2_get_capability to avoid
+null pointer error.
 
-[ Backport to 6.1.y: this tree uses the older intel_hdcp_capable()
-  helper name. Apply the same guard there; the code change is otherwise
-  unchanged. ]
+[ Backport to 6.1.y: upstream adds the check in the DP shim's
+  intel_dp_hdcp2_get_capability(), which does not exist here. This tree
+  predates the intel_connector conversion of the shims: its
+  intel_dp_hdcp2_capable() takes a digital port, and the
+  intel_attached_dig_port() lookup is still done in the common
+  intel_hdcp2_capable() helper. Put the same encoder guard there, before
+  that lookup, and return false through the bool API when no encoder is
+  attached. ]
 
 Signed-off-by: Suraj Kandpal <suraj.kandpal@intel.com>
 Reviewed-by: Dnyaneshwar Bhadane <dnyaneshwar.bhadane@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240722064451.3610512-2-suraj.kandpal@intel.com
+Link: https://patchwork.freedesktop.org/patch/msgid/20240722064451.3610512-3-suraj.kandpal@intel.com
 Assisted-by: LLM
 Signed-off-by: Artem Dinaburg <artem@trailofbits.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
@@ -92,27 +96,27 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 6 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/gpu/drm/i915/display/intel_hdcp.c b/drivers/gpu/drm/i915/display/intel_hdcp.c
-index cb7f86de967a8..507721c94f2fd 100644
+index 507721c94f2fd..d31c1f1f0e507 100644
 --- a/drivers/gpu/drm/i915/display/intel_hdcp.c
 +++ b/drivers/gpu/drm/i915/display/intel_hdcp.c
-@@ -182,11 +182,16 @@ int intel_hdcp_read_valid_bksv(struct intel_digital_port *dig_port,
- /* Is HDCP1.4 capable on Platform and Sink */
- bool intel_hdcp_capable(struct intel_connector *connector)
+@@ -208,11 +208,16 @@ bool intel_hdcp_capable(struct intel_connector *connector)
+ /* Is HDCP2.2 capable on Platform and Sink */
+ bool intel_hdcp2_capable(struct intel_connector *connector)
  {
 -	struct intel_digital_port *dig_port = intel_attached_dig_port(connector);
 +	struct intel_digital_port *dig_port;
- 	const struct intel_hdcp_shim *shim = connector->hdcp.shim;
+ 	struct drm_i915_private *dev_priv = to_i915(connector->base.dev);
+ 	struct intel_hdcp *hdcp = &connector->hdcp;
  	bool capable = false;
- 	u8 bksv[5];
  
 +	if (!intel_attached_encoder(connector))
 +		return capable;
 +
 +	dig_port = intel_attached_dig_port(connector);
 +
- 	if (!shim)
- 		return capable;
- 
+ 	/* I915 support for HDCP2.2 */
+ 	if (!hdcp->hdcp2_supported)
+ 		return false;
 -- 
 2.53.0
 
