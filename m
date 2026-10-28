@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793209648;
-	b=R0TXMd99p/reewJntohNL01qqJOVBNeb2BteqKIivD68HA6powktywdpo81pQAinOUPk
-	 ZkApbg1biDtZYOzQTTVmNXxYXXb0hSzBcTWLPiLU/Pc6v/yT8miC8L1r/l+eS3dVXpPVw
-	 vRej06ON54fWApRBtNJF4xvlM/KPIhT8bVwgYTWK7fNoeqH+NeDIQnioNDVTwrqVVx4+b
-	 CxkmuHVAfB6MGwTa610txQAf9eZy8zGzycWtlOXQTX94FJV4QkN2Y3m6G2pOYgLwQ3Jvs
-	 oJL20UfTL8quUKXQpNG2hUQq8niygFeJdSYdlC7icWOYEZhbuFgFpCk6EEQahVD3kYg==
+	t=1793209651;
+	b=wluKcqFUCPCub+JLbKMpTk2y2Up5Hcb5B9Xi+Jo+EDjxshRqTGtkIjQYU4/Cjywb8FXI
+	 ONnQni5kUJFqsYPUqemKRAxS7OWh2OlHRKx5Luns3yRkoBeYJYkungVnShjY1zLwEtxJ5
+	 1Pqsmltc2odqX5vd/aU4YulkXdpGhcI+7XMAduoYrnspofWaimDPFyvl1OQnoKwuLzxOL
+	 jFniAWUXwyf5muptJnhMyAQ6R3zpMKPjpsNEQM83jSGJMIZBDBEKk8fmlcs0vA3ud3ygd
+	 DutmCXPIeQTOYHvazZ93xmLphNpycjwgPJAUcyTW0ttWHzB1tyTkBSdpjWeeXzuh9+g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793209648;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793209651;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=vscc2wnYGHPQpWl3K92W0hRdd8pCETQ7cX9ETxZMyBI=;
-	b=lWd82BBNT22ioXJUw8m80mohBXSQ7JuXfPfh3i7EKjq7Yp45XJrr9K5TxbTlE4pr0j5R
-	 Eot8zg2iPKWcIpJyM4Wn+bZ3GdHmDiHCmai+hyDNfqO0ZHbDxFA7SpW8ilnDtDlu6PUML
-	 2NyH+nptNW7TBh4d1KzcGDZapnMEJbXUX5LASEW76yCBujPhUMhzbixH7nIwvG2U/P/1i
-	 GlN4CQPgzlsWO/aqXtLrPeWcFpDx40gyMwitzE5pcPF2TfCkweWojtSK5P6kXNnJbAVNJ
-	 VqWGLpGOM1G7edy4u2UEMLQ8WStFrsNAtIM9D6TZOBb24hWvxtN72vOrLAGnF0CK0NQ==
+	bh=tkmJjGoQZc9db14g4HhXr8v7dqtlyPC9r6hPRLjPzxc=;
+	b=3tt3CP7jntK36NYLS/gXKx9BmNSsuJcyrxSMk/dX/HKNnodgkU4yaatzXuw0Pyz41+z4
+	 lF3pqXsfekLhpiddMHq0+IRxiTJdxlW74rfWfJePKQDxS9e5NaurPwCYSgzBt7k1dr/Mq
+	 dBQzAFm4Dwoi65XCF+7K8OZQZkqsVh1z5ZrJtgIm0WZaWw/kL3ZFIw9CoPJqX2Ieet0bF
+	 GaYsZSlRo9aTGEM3Bf0C60KagHEr05LHaS+pwEZmYB4DGmbg2YxSqB3Ao69SELkgYOeQQ
+	 QHo/azW6n53ubTgtzvCpZkCE9VkYPtM7Ior8kKXV1jJG0dJiMUpsQZSz1i/mvvo1vqA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dkbHZDkS;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OqujmoYo;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92C9B606A31F;
-	Wed, 28 Oct 2026 17:47:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71D3A606A322;
+	Wed, 28 Oct 2026 17:47:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dkbHZDkS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E28EF1F01829;
-	Wed, 28 Oct 2026 17:47:27 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OqujmoYo
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1C7E1F031E2;
+	Wed, 28 Oct 2026 17:47:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793209648;
-	bh=vscc2wnYGHPQpWl3K92W0hRdd8pCETQ7cX9ETxZMyBI=;
+	s=korg; t=1793209651;
+	bh=tkmJjGoQZc9db14g4HhXr8v7dqtlyPC9r6hPRLjPzxc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dkbHZDkSl4oEinHqhR6d5fTH5AkysgfZevYkftfZHIC+MaWaB1BZtprVbVnwwSyyY
-	 jm63jpRRqAdq8VXU7X4agYRsD4nBe7yVK3ST+4BEjb5exuCUT8P0Y/IJluRn/6zKnV
-	 wnxEucX7I6N9tgNrGZm7Duf5jvonxJODHCoKNvNc=
+	b=OqujmoYontbSeb84mKPOWzU3bg5yAun3zzkTCbcwG8ysdoJgmkYwus0w0pskQ0fGF
+	 GeQcHpOV7pjz8NO3xjrVXRUJxuaOpIFmkr/RtiwdPe5HDoguaK5M8cQbxQK2bgTraK
+	 nW8IOuwlUXFbNhIlIvxTPsL9y+72QyY1hi4zn6I4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Bernard Pidoux <bernard.f6bvp@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 028/109] ax25: send unacknowledged I frames again when a link is re-established
-Date: Wed, 28 Oct 2026 18:00:12 +0100
-Message-ID: <20261028165943.025484623@linuxfoundation.org>
+Subject: [PATCH 6.18 029/109] rose: bring up the link of the preferred route passed over by a connect request
+Date: Wed, 28 Oct 2026 18:00:13 +0100
+Message-ID: <20261028165943.048811234@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165942.357251485@linuxfoundation.org>
 References: <20261028165942.357251485@linuxfoundation.org>
@@ -69,93 +69,124 @@ Content-Transfer-Encoding: 8bit
 
 From: Bernard Pidoux <bernard.f6bvp@gmail.com>
 
-When a connection goes back through state 1 from state 3 or 4 (invalid
-N(R), FRMR, illegal frame), the UA that re-establishes it resets V(S),
-V(A) and V(R) but leaves the I frames that were waiting for their
-acknowledgment in the ack queue. From then on every acknowledgment
-frees the frame at the head of the queue, an old one, instead of the
-one it is for, so the queue keeps that many frames too many for ever:
+For a connect request rose_get_neigh() walks the routes that match the
+address, from the most specific to the least specific, and takes the
+first neighbour whose link is restarted. A neighbour whose link is down
+is only used when no matching route at all has a restarted neighbour.
 
-- they stay charged to the socket that sent them, whose send memory is
-  never given back;
-- they are sent again by the next go-back-N, long after the event, and
-  the peer gets duplicates;
-- they were not sent again when the link came back, so the layer above
-  lost them.
+A node that has both an exact route to a neighbouring node and a wide
+route through a relay therefore never uses the exact route once its
+link is down: the relay is restarted, it is always found first, and
+since no frame is ever sent over the direct link nothing brings it up
+again. The calls keep going through the relay, which may have no route
+other than back to the calling node and then clears them. Seen on a node
+whose White Pages daemon calls an adjacent node: every call goes to the
+relay and comes back as CLEAR REQUEST "not obtainable", for as long as
+the node runs.
 
-Seen on a live ROSE node: an AX.25 connection in state 3 with
-V(S) == V(A), empty write queue and 18 frames in its ack queue, and the
-ROSE sockets using it showing a send queue that never drains.
+Keep sending the call to the restarted neighbour, so that a call never
+waits for a link that may not answer, but when a neighbour of a more
+specific route, or an earlier neighbour of the same route, was passed
+over because its link is down, start the restart procedure on that link.
+If the other end answers, the next call finds the link restarted and
+uses it. A link that has just failed is left alone for
+link_fail_timeout, and nothing is done while a restart is under way.
 
-Requeue those frames when the UA is received, as is already done when
-the peer resets the link with a SABM in state 3 or 4. Same change in
-the DAMA slave state machine.
+Frames in transit are handled as before.
 
-Like that existing path, this can send again a frame that the peer had
-received just before the reset: AX.25 has no way to know. The layer
-above sees a duplicate instead of a silent loss. ROSE drops an exact
-duplicate, but resets the circuit when the replayed frame carries an
-N(R) that is no longer valid. On the nodes below those resets came
-with link re-establishments caused by a late N(R), which "ax25: send a
-private copy of each I frame" removes: with both patches the node that
-is instrumented saw no re-establishment and no reset in 49 hours,
-against five resets in the 47 hours before.
+Tested in QEMU with a lockdep and KASAN kernel, three nodes A - B - C
+where B has an exact route to C over their direct link and a wide route
+through A, and the link B - A is restarted while B - C is not. Before,
+every call from B to C goes to A and is cleared there, and the direct
+link stays down. After, the first call still goes to A, the direct link
+is restarted within 20 ms and the following calls go through it. With C
+switched off no call waits: they all go to A at once, the restart is
+attempted once, and after the AX.25 connection gives up the link is left
+alone for link_fail_timeout. A call from A to C in transit through B
+gets the same answer before and after. No lockdep, KASAN or refcount
+report.
 
-Tested in QEMU (6.12.94 with lockdep and KASAN), two nodes over a
-mkiss serial link, one ROSE circuit, 40 messages 150 ms apart, the
-link forced through state 1 three times by an injected FRMR. Before:
-6 runs of 6 deliver 40/40 and leave one frame in the ack queue, the
-ROSE socket keeps 960 bytes of send memory. After: 6 of 6 deliver
-40/40 and the send memory goes back to zero. No lockdep, KASAN or
-refcount report.
-
-On four production nodes since 3 October 2026, six since 6 October. A
-relay node that had 18 to 20 such frames on one link is sampled every
-hour: 124 samples and 1301 link states in five days, none with a frame
-left in an ack queue.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Bernard Pidoux <bernard.f6bvp@gmail.com>
 Assisted-by: Claude:claude-opus-5-5
-(cherry picked from commit 7b22827cb729de19ccba284ebaff3eeee21d4f11)
+Signed-off-by: Bernard Pidoux <bernard.f6bvp@gmail.com>
+(cherry picked from commit cdf5a2eba2bc4f79dabb013a3a935f54aedb85e9)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ax25/ax25_ds_in.c  | 2 ++
- net/ax25/ax25_std_in.c | 8 ++++++++
- 2 files changed, 10 insertions(+)
+ include/net/rose.h    |  1 +
+ net/rose/rose_link.c  | 14 ++++++++++++++
+ net/rose/rose_route.c | 14 ++++++++++++++
+ 3 files changed, 29 insertions(+)
 
-diff --git a/net/ax25/ax25_ds_in.c b/net/ax25/ax25_ds_in.c
-index c62f8fb06189e..b78a577760c6f 100644
---- a/net/ax25/ax25_ds_in.c
-+++ b/net/ax25/ax25_ds_in.c
-@@ -58,6 +58,8 @@ static int ax25_ds_state1_machine(ax25_cb *ax25, struct sk_buff *skb, int framet
- 		ax25->vr      = 0;
- 		ax25->state   = AX25_STATE_3;
- 		ax25->n2count = 0;
-+		/* I frames left unacknowledged by a link reset: send them again */
-+		ax25_requeue_frames(ax25);
- 		if (ax25->sk != NULL) {
- 			bh_lock_sock(ax25->sk);
- 			ax25->sk->sk_state = TCP_ESTABLISHED;
-diff --git a/net/ax25/ax25_std_in.c b/net/ax25/ax25_std_in.c
-index f280683f83fcf..d0269ece4fc58 100644
---- a/net/ax25/ax25_std_in.c
-+++ b/net/ax25/ax25_std_in.c
-@@ -66,6 +66,14 @@ static int ax25_std_state1_machine(ax25_cb *ax25, struct sk_buff *skb, int frame
- 			ax25->vr      = 0;
- 			ax25->state   = AX25_STATE_3;
- 			ax25->n2count = 0;
-+			/*
-+			 * The link may have been re-established from state
-+			 * 3 or 4 with I frames still waiting for their
-+			 * acknowledgment. V(S) and V(A) start again from
-+			 * zero: send those frames again, as is done when
-+			 * the peer resets the link with a SABM.
-+			 */
-+			ax25_requeue_frames(ax25);
- 			if (ax25->sk != NULL) {
- 				bh_lock_sock(ax25->sk);
- 				ax25->sk->sk_state = TCP_ESTABLISHED;
+diff --git a/include/net/rose.h b/include/net/rose.h
+index 2820b7e4697e6..2fa0331e36f09 100644
+--- a/include/net/rose.h
++++ b/include/net/rose.h
+@@ -240,6 +240,7 @@ void rose_link_rx_restart(struct sk_buff *, struct rose_neigh *,
+ void rose_transmit_clear_request(struct rose_neigh *, unsigned int,
+ 				 unsigned char, unsigned char);
+ void rose_link_restart(struct rose_neigh *neigh);
++void rose_link_bring_up(struct rose_neigh *neigh);
+ void rose_transmit_link(struct sk_buff *, struct rose_neigh *);
+ 
+ /* rose_loopback.c */
+diff --git a/net/rose/rose_link.c b/net/rose/rose_link.c
+index f2d9e5ffa4ea6..1fe48d58726f5 100644
+--- a/net/rose/rose_link.c
++++ b/net/rose/rose_link.c
+@@ -287,6 +287,20 @@ void rose_link_restart(struct rose_neigh *neigh)
+ 	rose_start_t0timer(neigh);
+ }
+ 
++/*
++ * Start the restart procedure on a link that is down without waiting for
++ * a frame to send over it. Nothing is done while a restart is under way.
++ */
++void rose_link_bring_up(struct rose_neigh *neigh)
++{
++	if (neigh->loopback || neigh->restarted || rose_t0timer_running(neigh))
++		return;
++
++	rose_transmit_restart_request(neigh);
++	neigh->dce_mode = 0;
++	rose_start_t0timer(neigh);
++}
++
+ void rose_transmit_link(struct sk_buff *skb, struct rose_neigh *neigh)
+ {
+ 	unsigned char *dptr;
+diff --git a/net/rose/rose_route.c b/net/rose/rose_route.c
+index 68a4f2385277b..6a1de0055e28b 100644
+--- a/net/rose/rose_route.c
++++ b/net/rose/rose_route.c
+@@ -741,6 +741,7 @@ struct rose_neigh *rose_get_neigh(rose_address *addr, unsigned char *cause,
+ 	unsigned char *diagnostic, int route_frame)
+ {
+ 	struct rose_neigh *res = NULL;
++	struct rose_neigh *down = NULL;
+ 	struct rose_node *node;
+ 	int failed = 0;
+ 	int i;
+@@ -752,8 +753,21 @@ struct rose_neigh *rose_get_neigh(rose_address *addr, unsigned char *cause,
+ 				if (node->neighbour[i]->restarted) {
+ 					res = node->neighbour[i];
+ 					rose_neigh_hold(node->neighbour[i]);
++					/*
++					 * A neighbour of a more specific route
++					 * was passed over because its link is
++					 * down: this call does not wait for it,
++					 * but have the link brought up for the
++					 * next ones.
++					 */
++					if (down)
++						rose_link_bring_up(down);
+ 					goto out;
+ 				}
++				/* The first one is the preferred one. */
++				if (!route_frame && !down &&
++				    !rose_ftimer_running(node->neighbour[i]))
++					down = node->neighbour[i];
+ 			}
+ 		}
+ 	}
 -- 
 2.53.0
 
