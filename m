@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216543;
-	b=CdmbrNvZWBjsnBjhr+KZMte4ZFOQ/VxSAuDPgZEHEa9UVFzaGFiUfur9k82t2MHwVoxB
-	 Ne556E0qyyrs+PS/tyoMbAtM39iPuzFXMch0qynMmIr5E4RDvXPJOtMtu1/+ZnQuPYg35
-	 qp1Cj4Zse+EWDq2PiNcOKMqj0ppKGHo+o3nThOQpUJIxwMHF8USu3Px3shGGPOf6+FQIb
-	 wB2HjlCfDaJc2EWPSffRj70MnhKzleGiZuX0Qe6vYGgWZnID+bg3FRWBGgvBMr9Rq+jPo
-	 ZbD3J9JkpCZeaTzjRZcc9VnVYGjzawdlzJesyak1uYoBWxjcyI3Sg4RhFuHdvbU9Wfw==
+	t=1793216546;
+	b=3WTksjg7soLMm3hLT1viAi2mxlgOhLFUAHeW3BlSuhfEcSwAHP90ttrArwIBCQGznZiV
+	 XLoB0GdgswdvMda0OqWzk7X0X0d7vDBo8sPdSii306mxbL6/pqU/UlA2IPZBevwUKMsnm
+	 kr62gUrT4mu/vlCe6gfjNEqIGCyQ2gJRALu45fKLRtnw/JvLrnNi2rDnevK9cD+BLSdIn
+	 FdKDP08ROtd4r73b7DhqbWKVNg7novCt0lFUTW3TVPsxHCaUyILf6ZRRhrPiAOj4ziFZJ
+	 spCy6RF4AAgnjT/CQh7FHifWiarh7MXHx0sOWIPpM2oP3HfdKzLPdUzbKu7xhONew/w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216543;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216546;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Af5OdZ8PYSE0P5OtXb4t5naHohggp/m6CLjMLjou50I=;
-	b=RyhN3Ty04Tmoi8WSEUwjS+eBS1Mo7bOOum5/R6ZEeisNwE3QQ9QBghkMtuDki0nzrmR2
-	 Rj7DCOt2J5vhdIqyMeswVPRA/nJJ0EIW6POKV2+0jEmAaa4F9oiSVJbtkdwDFAu2Ba1P9
-	 YVDVviqHosaapeSwcfQHDLdg1uK0N856lrPDPcoIFL7H7DJBcnyQsATw6Cepa4reUyfNc
-	 HzEFJAS4ALoYilVsYCPp/uKGR6oLx2wfxxZq1TsuwflATijfzsznlxPlo++c72HMplPm7
-	 CKkv7oUGQ/cS2KXGuZSE+3a+KEHZS/5B1sIzAvbPdQ1W4nFN59Of0WCqtnOFhvnO7Hg==
+	bh=jzySy0RfMoskprO8EVdcJU5yo5szUQh4ZDlUfxQjUZo=;
+	b=T4c4Rruz/7F407rSu8RcnSKkM9emDILklpQyVVbrCld6SitTk17997lCSNG78pHAHrQ6
+	 7iE0a5B2lJ3Qvc+e0j/qHUjr/9ogwVhl3Mu66+VwuXccOvf0R1XX0P3oTO21GRTBoMtIi
+	 myjF2HznBo03VYrQFdODvR1f2vxDSFewvm88MgumoKoAzs4ePnuQJteBhlZMcrnRW0bnG
+	 vN+Rdw+Q18+bGTP95hv8ozmticFBVwRqyo+z1f8lDmuIDGfkBfYZFvm5IDLDbmAm3weoM
+	 FXw2X+9YZzeToBnqT6thgTcA/+DocGABP4LhhY0XAGrX0hTYhTRYVLCrUlkIsMTxdZQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vn3bqkXE;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zz5Igvlq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38C53606A31D;
-	Wed, 28 Oct 2026 19:42:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1711C606A31C;
+	Wed, 28 Oct 2026 19:42:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vn3bqkXE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A9271F01825;
-	Wed, 28 Oct 2026 19:42:22 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zz5Igvlq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 664FD1F01829;
+	Wed, 28 Oct 2026 19:42:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216543;
-	bh=Af5OdZ8PYSE0P5OtXb4t5naHohggp/m6CLjMLjou50I=;
+	s=korg; t=1793216545;
+	bh=jzySy0RfMoskprO8EVdcJU5yo5szUQh4ZDlUfxQjUZo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vn3bqkXE2bcCSKM40xeefp68oKxB5hwJVz/OY+CiLyEUA0KXS0zofCwpRsBLAySu0
-	 6iyFhntoSlNUacCntjQdZtWjK+t01rWrNJmenywzRuUGu0YinUTVIWp+zVNtOan7et
-	 HpQkiWP1bgLQbl0aK/SEEqiF/zdHABf9ELXOdF5g=
+	b=zz5IgvlqvirlguEGN2kPVqbwhi6R+H/8+JhYilECnsS4eTFrbexr9Kp6cEpvYxoEy
+	 YYdRo5Vm7/WAZMv713NuO9Lxb3tomYAg4FtA3NyMB7GAMLFma5oOeMfy7nmPufrxBm
+	 DFa/wboMXJfVee09QjGw0mRoJ/wR/8+t/uFlxWhw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yonghong Song <yonghong.song@linux.dev>,
-	Leon Hwang <leon.hwang@linux.dev>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1591/1887] bpf, x86: Fix trampoline stack size for 128-bit arguments
-Date: Wed, 28 Oct 2026 18:01:27 +0100
-Message-ID: <20261028170535.676597931@linuxfoundation.org>
+Subject: [PATCH 6.1 1592/1887] wifi: mt76: cancel reset and rc work on device unregister
+Date: Wed, 28 Oct 2026 18:01:28 +0100
+Message-ID: <20261028170535.698808999@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,44 +67,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yonghong Song <yonghong.song@linux.dev>
+From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit 814cba835ef648e0c5eb79505c96c0493b29eea6 ]
+[ Upstream commit e995d3dccc9d980af13a60ad37409ed1561f9eeb ]
 
-btf_distill_func_proto() accepts a function argument up to 16 bytes, so a
-128-bit scalar such as __int128 reaches the x86 trampoline with
-arg_size == 16. But the current implementation assumes an __int128
-argument only needs one register, so the register save area is
-under-allocated and save_args() overwrites adjacent stack slots.
+Both drivers cancelled dump_work on unregister but left reset_work and
+rc_work to be flushed only by destroy_workqueue() in mt76_free_device(),
+which runs after the hw is unregistered and the hardware stopped. A
+reset_work that fires in that window calls ieee80211_restart_hw() and
+re-arms mac_work on an unregistered hw, and rc_work touches station state
+being torn down. Cancel both up front, alongside dump_work.
 
-Compute the register count from arg_size for all arguments to fix it.
-
-Fixes: a9c5ad31fbdc ("bpf: x86: Support in-register struct arguments in trampoline programs")
-Signed-off-by: Yonghong Song <yonghong.song@linux.dev>
-Acked-by: Leon Hwang <leon.hwang@linux.dev>
-Link: https://lore.kernel.org/bpf/20260729050204.2586457-1-yonghong.song@linux.dev
-Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Fixes: e57b7901469f ("mt76: add mac80211 driver for MT7915 PCIe-based chipsets")
+Fixes: 98686cd21624 ("wifi: mt76: mt7996: add driver for MediaTek Wi-Fi 7 (802.11be) devices")
+Link: https://patch.msgid.link/20260724124813.3961474-10-nbd@nbd.name
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/net/bpf_jit_comp.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7915/init.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/x86/net/bpf_jit_comp.c b/arch/x86/net/bpf_jit_comp.c
-index 30c6a021abcaf..803fa8b249e36 100644
---- a/arch/x86/net/bpf_jit_comp.c
-+++ b/arch/x86/net/bpf_jit_comp.c
-@@ -2131,10 +2131,8 @@ int arch_prepare_bpf_trampoline(struct bpf_tramp_image *im, void *image, void *i
- 	u8 *prog;
- 	bool save_ret;
- 
--	/* extra registers for struct arguments */
- 	for (i = 0; i < m->nr_args; i++)
--		if (m->arg_flags[i] & BTF_FMODEL_STRUCT_ARG)
--			nr_regs += (m->arg_size[i] + 7) / 8 - 1;
-+		nr_regs += (m->arg_size[i] + 7) / 8 - 1;
- 
- 	/* x86-64 supports up to 6 arguments. 7+ can be added in the future */
- 	if (nr_regs > 6)
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/init.c b/drivers/net/wireless/mediatek/mt76/mt7915/init.c
+index 782ce83bdab96..35a8052cf1e31 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7915/init.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7915/init.c
+@@ -1152,6 +1152,8 @@ int mt7915_register_device(struct mt7915_dev *dev)
+ void mt7915_unregister_device(struct mt7915_dev *dev)
+ {
+ 	cancel_work_sync(&dev->dump_work);
++	cancel_work_sync(&dev->reset_work);
++	cancel_work_sync(&dev->rc_work);
+ 	mt7915_unregister_ext_phy(dev);
+ 	mt7915_coredump_unregister(dev);
+ 	mt7915_unregister_thermal(&dev->phy);
 -- 
 2.53.0
 
