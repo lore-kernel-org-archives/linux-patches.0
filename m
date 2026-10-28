@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793212902;
-	b=wAI8lyrTtIibudElYMYi4Usrbk6nCFdRalp/uOXvByHZ0PJ+c1x/Vsx4RwnOEJvFPYrk
-	 8I3JDcyDhI6X7oc4PZ6vItmgCagzRqGO9wm6Kkq/1xwCzfRI3w5ZJQLLB9/Jyi6LuhXV6
-	 zzezWnnY8fgRjR/S1/UyofVoIR7M5jFqWpy6R5BrzpDv7XJVvfpXs/8l/LITq/3MjpmLs
-	 +M8qVNDaQ1K8N68JQ6b9zMoDCr9BNHYxtzgcbC6KWy9ZcVNcjplDaIfFimYVGGwjUcqmC
-	 ENp2ycYTcwHaEo1cyLUVJ9rF/6u9/yCn11zNQ9cLL7CBIX655mPV+pVBwWLOZvLgANA==
+	t=1793212905;
+	b=KEOLMkqpKUrCi0IAVswFwwk//QEvlpsNepyiU3sb7Bovw1mQqE069XDMUYccwh3ijoVM
+	 XGk492iqX3a6Ue3XIcfbNiJThUahclg6cPWuIIuBY/LGLl2rDYtdzyw3BaU84Onca79Ut
+	 O8ioSuLlzk6fPHPvTULxTKojkocGw9QzzRSHxYraEhRVNnHv8Va7jL4kEuhIajj5GCSwP
+	 Ew742gIwvv3syNE1sPqW61DarAv7Cazua2zp5GRPoK5xXbyUOwTU00dg4knU48SqABBzu
+	 CdnkT5ZttqrzBP1f9ltm2i+OdQNQwO3TlHxJHKkOFNY089kQn3BB+D/5D5G4SKJExMA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793212902;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793212905;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=MCpedhD3rnU9hveTww7WSU+PvfsXvcH/LowZjpJ0IuA=;
-	b=hkGacAdmLQ97KW2wQl5Ro9SNJFLA2jKzYDQcH64oW8Ep1q5ZVDdQBVDNP1qTl8sD7Eva
-	 ALFCuuoBnWCF5QZOHRu3AE2ukTAAv58V2Ng6mlJYHp5sIeONPpPwUCgcD3nGzY1dwL0L3
-	 hDfNQfDyDmmv+9/JexY/pYHx8hhYTMSXOGLUvYLdabzKojido8cDPVMp96Om+UBoSNFEU
-	 fninbPGJDI4rdmaudGZmyzmXRyU48m72pKsBOdRGD5PzM+3QhcCK62j/U0ImfIK57qxKH
-	 VknLfXtbR3ABBemQP6cfzt0omNYW/aEN47bpTPkQJyGbHHCufALiohukn0jbWGxi+Cg==
+	bh=7Ht120cX5p6z8xTBICOrOsUcDNlNWTDcNiivEqiw+kQ=;
+	b=5OC2jT+xdNeoLMeVpiKVKmEvMA3wXuRnEkrkDMY/8W9AjBz78VSyRoe4PE/FFNjJt+bS
+	 vIJAjNyaOUlx/n9II4eDSTdyO5sGmsLLfhCTPqQiHsf2LO6RhIwd3dvUe30u6JYw8rJiN
+	 6vIYmByPzbIi55vb8Hcwy0eveosRtPPKan+PbjE6lCJ2Z2rlZjHmjRJYSt53TX7Arrgmp
+	 hHNMG32OM3uoUDFJOImW+GXAIBPwu5/nCkJCEQQmHw2kxsJCysC5j+5K34qxZFmK6eCeE
+	 svMgeqlgzwIT7dB74Kqu3pHCZ0JmCqlfz0+qAJvmh9CJ1BfvOH8RWNoiyIDU+jsAMIg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ixRmhStK;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Bam0dVS7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C40660A2611;
-	Wed, 28 Oct 2026 18:41:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FFDE606A335;
+	Wed, 28 Oct 2026 18:41:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ixRmhStK
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDA621F031E8;
-	Wed, 28 Oct 2026 18:41:41 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Bam0dVS7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97D371F01828;
+	Wed, 28 Oct 2026 18:41:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793212902;
-	bh=MCpedhD3rnU9hveTww7WSU+PvfsXvcH/LowZjpJ0IuA=;
+	s=korg; t=1793212905;
+	bh=7Ht120cX5p6z8xTBICOrOsUcDNlNWTDcNiivEqiw+kQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ixRmhStKigR4za7ZFoUlxA2ZNqJiaVQAihPqySR7KFDx1ly81p83wevyscB6blhYh
-	 zI12aM/Rp1uNLTJYdmCJUuIpaq1gU2eRsbL9giHC9Ny9JvtJCEKVypkIcssMZ5aj30
-	 iKYn6msSMQhEXStR/R6LzYuYzv+j5JcMkEoUZZms=
+	b=Bam0dVS7UJkOusACbBDCuxkyhkJvO48AsLGKnjAfB7MKoESlgcumBhkxahsOZQehs
+	 IfIXS4bTqyLBlCNld3k9l9n6ZNpE5WsJDmgzUg/tnMQhs6rDJiq+8U1t6iqLBdT1vT
+	 Td8Z0wQUI5RfjqBylhfSzzGhy/5pHZmqzSg2DGdE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhao Li <enderaoelyther@gmail.com>,
+	Vega <vega@nebusec.ai>,
+	Yuqi Xu <xuyuqiabc@gmail.com>,
+	Ren Wei <weir@nebusec.ai>,
 	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.1 0317/1887] wifi: mac80211: release mesh path quota on failed additions
-Date: Wed, 28 Oct 2026 17:40:13 +0100
-Message-ID: <20261028170506.440823895@linuxfoundation.org>
+Subject: [PATCH 6.1 0318/1887] wifi: mac80211: handle empty FILS association request payload
+Date: Wed, 28 Oct 2026 17:40:14 +0100
+Message-ID: <20261028170506.463355523@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -67,55 +69,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhao Li <enderaoelyther@gmail.com>
+From: Yuqi Xu <xuyuqiabc@gmail.com>
 
-commit 7325a44474f20c1393a1c114c6811abce6ddfaf4 upstream.
+commit 5bfd4b0b40b79781d900cb2f7da0685070f53c67 upstream.
 
-Repeated failed or duplicate mesh path additions can exhaust
-MESH_MAX_MPATHS while the path table holds fewer paths, which stops new
-paths to reachable destinations from being created.
+fils_encrypt_assoc_req() accepts a (Re)Association Request frame whose
+last element is the FILS Session element.  crypt_len is then zero and
+aes_siv_encrypt() is called with an empty plaintext.
 
-mesh_path_add() reserves a slot before allocating and inserting a path.
-If allocation fails, the function returns without releasing the slot. If
-the rhashtable insertion reports an error or an existing destination, the
-function discards its candidate but retains the reservation. No new path
-is installed in any of these cases.
+kmemdup() returns ZERO_SIZE_PTR for a zero-length allocation, so the
+unconditional sg_init_one() puts an invalid page into the scatterlist.
+With CONFIG_DEBUG_SG this triggers a kernel BUG in sg_set_buf();
+without the debug check the bogus page is handed to the crypto backend.
 
-Release the reservation whenever the candidate is not installed.
+AES-SIV is defined for empty plaintext and the S2V result is then the
+complete output, so handle this case before the CTR step, which has
+nothing to encrypt.
 
-Fixes: ae76eef027f7 ("mac80211: return new mpath from mesh_path_add()")
-Fixes: 60854fd94573 ("mac80211: mesh: convert path table to rhashtable")
+Fixes: 39404feee691 ("mac80211: FILS AEAD protection for station mode association frames")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM sparse kasan
-Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
-Link: https://patch.msgid.link/20260916113649.28315-2-enderaoelyther@gmail.com
+Reported-by: Vega <vega@nebusec.ai>
+Assisted-by: LLM
+Signed-off-by: Yuqi Xu <xuyuqiabc@gmail.com>
+Reviewed-by: Ren Wei <weir@nebusec.ai>
+Link: https://patch.msgid.link/325c048982d637a3af80d74ac5b36e9369b93f1e.1789751126.git.xuyuqiabc@gmail.com
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac80211/mesh_pathtbl.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ net/mac80211/fils_aead.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/net/mac80211/mesh_pathtbl.c
-+++ b/net/mac80211/mesh_pathtbl.c
-@@ -407,8 +407,10 @@ struct mesh_path *mesh_path_add(struct i
- 		return ERR_PTR(-ENOSPC);
+--- a/net/mac80211/fils_aead.c
++++ b/net/mac80211/fils_aead.c
+@@ -95,6 +95,14 @@ static int aes_siv_encrypt(const u8 *key
+ 	if (res)
+ 		return res;
  
- 	new_mpath = mesh_path_new(sdata, dst, GFP_ATOMIC);
--	if (!new_mpath)
-+	if (!new_mpath) {
-+		atomic_dec(&sdata->u.mesh.mpaths);
- 		return ERR_PTR(-ENOMEM);
++	/* With an empty plaintext there is no ciphertext to produce and
++	 * the S2V result is the complete output.
++	 */
++	if (!plain_len) {
++		memcpy(out, v, AES_BLOCK_SIZE);
++		return 0;
 +	}
- 
- 	tbl = &sdata->u.mesh.mesh_paths;
- 	spin_lock_bh(&tbl->walk_lock);
-@@ -421,6 +423,7 @@ struct mesh_path *mesh_path_add(struct i
- 
- 	if (mpath) {
- 		kfree(new_mpath);
-+		atomic_dec(&sdata->u.mesh.mpaths);
- 
- 		if (IS_ERR(mpath))
- 			return mpath;
++
+ 	/* Use a temporary buffer of the plaintext to handle need for
+ 	 * overwriting this during AES-CTR.
+ 	 */
 
 
