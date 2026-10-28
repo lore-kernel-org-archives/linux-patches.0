@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215236;
-	b=OOKcYHbtFRu2OWBSPKXDwzfSpiBS12MSxvgZh3DQtdTZZ03Sz4iTR9SFmh52Lhej/Qfu
-	 3pwzch75d0bXREs0DoLmhpuTv4kUbgnD1hTw6vMo7Iw4I2eqKT0FONTkvxAetb/IuVsZ8
-	 wjpZL+q0UZ3CdqthY3rwZJPX4FmRFLuqV/zZXnf8QSPBEEwNUfeE3NJiwu++ad0NMBNJi
-	 bu0l4zNlSEZ9DuYFjcVJ6Jv9S/situ7gsxqv/yzq8besr4sy9PncL79Kc/oENanSL6rsn
-	 LSMyHzdjO36AxOza2Uwj/qvVqFtZl1TJFLCi+e6eylim0SVEv04d8dPcCYS4XVltl/A==
+	t=1793215239;
+	b=kFe1YKeaQyq+1eWa5U4Or/SmXzhMu597twFFQ+EVJGnTWFOy944+VK45ahTGj3RRUhJ2
+	 uEkl0nK1jh9TqK2g73lVEAtVnMfuDcEEiUKiWZWBwUSvi5MfzXTEXgicKwEmumOpG/0Ap
+	 xrNs5RrsZRS3gIOMvW+I85rnIL0qPY2Rku6bug3Qj86Df18JwRQraU39Cb/uA2+d8B4ve
+	 s1vml7NgD5h7TQBojIe8uaBAW+/AUXELB4G74KKLk/YyY3qDkwB1R32VHBEwwMT7m92zs
+	 1fM+EKt/Z5IU0xamt8Wdne8L7MfoeuMMEnQoMqf+8vUAzNaL3qcpsrKr6GRJOWleU7Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215236;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215239;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=YU/6XzeQATk03oR6H0bJNkMyxANBwB07p6QsGe/Lwdg=;
-	b=jni1twFNcovBloghIq54tJw7WnWOgQnkdJxRPJIAnAnMgGhm2ua9QqGDC8BQjDBl86XB
-	 4QsAreebNv054KbW8O8nN/SVzCf8xGvCRn3n+S1pTVhxjRpc+V6egZNuhFqh5k4M7WndX
-	 hQloF3zExkX+ConQtfzH5l02ykq5by9yDHvXLQLhgDi6b08A6MCyNfPnxo+Mp6FliMS/x
-	 5cYilqhCL3GIV7oXVhSuD4UWwcRb1FgsHMNdXd3zBdv0+M08HbEtbyPqYn0vO1l2z2W/c
-	 x9xb/4GXI/gkjDEgQd0viPfnjD7M8Der/K4jzLyV1eEorGpHAXYPA1TqmhJ1t2snwLQ==
+	bh=7+27MriC8M3M4/j6MdlP4mKZcOVmVZsUXQLpglrn8+U=;
+	b=OpIHPTturRS2hhiIolrOwEYI0qp2AZH/ai2UY2p/fcIti6mjENOI4FO6jqedG7Cc867D
+	 EaPODt8CXbplLl7Sq/5aO77d6+/IieVaDO+tTdIMgC24GzgooZLQQpk7Zqh2ek7nAlsk4
+	 cLLe7vXbuNdyODxZiMcBNyz30kuhpaFIXdwfrDdjyJyiH90F2MAkEESsLw62zLyaKZ/M+
+	 zoPyAtMyvqdjVoNNL1HBfhjXU2h5MyzrwgVHqycbyvEy7+flI59RwniUabZnDALRY218I
+	 xWveQanf9neEjzs3adx+V1w0ep9LMYKjHVUWsaJDOooG6ar9CF5QOnITR3CnXdG2eFQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PJh0mA9i;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=w3Tp4PFr;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6647606A31A;
-	Wed, 28 Oct 2026 19:20:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBEA2606A31A;
+	Wed, 28 Oct 2026 19:20:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PJh0mA9i
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42D4A1F01828;
-	Wed, 28 Oct 2026 19:20:35 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=w3Tp4PFr
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18DE41F01825;
+	Wed, 28 Oct 2026 19:20:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215235;
-	bh=YU/6XzeQATk03oR6H0bJNkMyxANBwB07p6QsGe/Lwdg=;
+	s=korg; t=1793215238;
+	bh=7+27MriC8M3M4/j6MdlP4mKZcOVmVZsUXQLpglrn8+U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PJh0mA9iwWoa/wrBwqqaaRMScKzbvRz2Bb7617+4jOATHYPxEXCVRV08O1RHQCi2l
-	 z6DJNBSFBgn1USlvzE9B1wiizv80KiPTRFF26mAWewQ3aL+3xPA0ogdMln1Rhk9mI7
-	 TI4bagDthHAuNuL+e/KlG/AlwTtOgmecKaWmLiz8=
+	b=w3Tp4PFrdf23VFB1+vlfZHKnLG9trH2gg81OORk32S8oj39IpLnqCFpRX9nWLE4k/
+	 3a3STOoEmuyd6crIOcY2KL/EVl8dt2K2B2VAmXYDZOPIxEsNvh+jg7ZI3ICCu4EC+2
+	 F9gKYm2Rqgh2HhoEXijgjulBKVI1WKxYy4QODKwQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sun Jian <sun.jian.kdev@gmail.com>,
-	Sechang Lim <rhkrqnwk98@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Xingwang Xiang <v3rdant.xiang@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1086/1887] bpf: Fix RCU stall in bpf_fd_array_map_clear()
-Date: Wed, 28 Oct 2026 17:53:02 +0100
-Message-ID: <20261028170524.118831853@linuxfoundation.org>
+Subject: [PATCH 6.1 1134/1887] bpf, skmsg: fix verdict sk_data_ready racing with ktls rx
+Date: Wed, 28 Oct 2026 17:53:50 +0100
+Message-ID: <20261028170525.210326672@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,60 +68,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sechang Lim <rhkrqnwk98@gmail.com>
+From: Xingwang Xiang <v3rdant.xiang@gmail.com>
 
-[ Upstream commit 4406942e65ca128c56c67443832988873c21d2e9 ]
+[ Upstream commit ddf8029623a1af20e984c040e89ff918158397ab ]
 
-Add a missing cond_resched() in bpf_fd_array_map_clear() loop.
+sk_psock_strp_data_ready() already checks tls_sw_has_ctx_rx() and
+defers to psock->saved_data_ready when a TLS RX context is present,
+avoiding a conflict with the TLS strparser's ownership of the receive
+queue (commit e91de6afa81c, "bpf: Fix running sk_skb program types
+with ktls").
 
-For PROG_ARRAY maps with many entries this loop calls
-prog_array_map_poke_run() per entry which can be expensive, and
-without yielding this can cause RCU stalls under load:
+sk_psock_verdict_data_ready() has no equivalent guard.  When a socket
+is inserted into a sockmap (BPF_SK_SKB_VERDICT) before TLS RX is
+configured, tls_sw_strparser_arm() saves sk_psock_verdict_data_ready
+as rx_ctx->saved_data_ready.  On data arrival:
 
-  rcu: Stack dump where RCU GP kthread last ran:
-  CPU: 0 UID: 0 PID: 30932 Comm: kworker/0:2 Not tainted 6.14.0-13195-g967e8def1100 #2 PREEMPT(undef)
-  Workqueue: events prog_array_map_clear_deferred
-  RIP: 0010:write_comp_data+0x38/0x90 kernel/kcov.c:246
-  Call Trace:
-   <TASK>
-   prog_array_map_poke_run+0x77/0x380 kernel/bpf/arraymap.c:1096
-   __fd_array_map_delete_elem+0x197/0x310 kernel/bpf/arraymap.c:925
-   bpf_fd_array_map_clear kernel/bpf/arraymap.c:1000 [inline]
-   prog_array_map_clear_deferred+0x119/0x1b0 kernel/bpf/arraymap.c:1141
-   process_one_work+0x898/0x19d0 kernel/workqueue.c:3238
-   process_scheduled_works kernel/workqueue.c:3319 [inline]
-   worker_thread+0x770/0x10b0 kernel/workqueue.c:3400
-   kthread+0x465/0x880 kernel/kthread.c:464
-   ret_from_fork+0x4d/0x80 arch/x86/kernel/process.c:153
-   ret_from_fork_asm+0x19/0x30 arch/x86/entry/entry_64.S:245
-   </TASK>
+  tls_data_ready -> tls_strp_data_ready -> tls_rx_msg_ready
+    -> saved_data_ready() = sk_psock_verdict_data_ready()
+      -> tcp_read_skb() drains sk_receive_queue via __skb_unlink()
+         without calling tcp_eat_skb(), so copied_seq is not advanced.
 
-Reviewed-by: Sun Jian <sun.jian.kdev@gmail.com>
-Fixes: da765a2f5993 ("bpf: Add poke dependency tracking for prog array maps")
-Signed-off-by: Sechang Lim <rhkrqnwk98@gmail.com>
-Link: https://lore.kernel.org/r/20260407103823.3942156-1-rhkrqnwk98@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+tls_strp_msg_load() then finds tcp_inq() >= full_len (stale), calls
+tcp_recv_skb() on the now-empty queue, hits WARN_ON_ONCE(!first), and
+returns with rx_ctx->strp.anchor.frag_list pointing at a psock-owned
+(potentially freed) skb.  tls_decrypt_sg() subsequently walks that
+frag_list: use-after-free.
+
+Apply the same fix as sk_psock_strp_data_ready(): if a TLS RX context
+is present, call psock->saved_data_ready (sock_def_readable) to wake
+recv() waiters and return immediately, leaving the receive queue
+untouched.  TLS retains sole ownership of the queue and decrypts the
+record normally through tls_sw_recvmsg().
+
+Fixes: ef5659280eb1 ("bpf, sockmap: Allow skipping sk_skb parser program")
+Signed-off-by: Xingwang Xiang <v3rdant.xiang@gmail.com>
+Link: https://patch.msgid.link/20260517145630.20521-2-v3rdant.xiang@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/arraymap.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/core/skmsg.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/bpf/arraymap.c b/kernel/bpf/arraymap.c
-index 220df952aeabe..6fc07a983dd0c 100644
---- a/kernel/bpf/arraymap.c
-+++ b/kernel/bpf/arraymap.c
-@@ -940,8 +940,10 @@ static void bpf_fd_array_map_clear(struct bpf_map *map)
- 	struct bpf_array *array = container_of(map, struct bpf_array, map);
- 	int i;
+diff --git a/net/core/skmsg.c b/net/core/skmsg.c
+index 8163bcf574f01..02d3f2ddd25d0 100644
+--- a/net/core/skmsg.c
++++ b/net/core/skmsg.c
+@@ -1267,10 +1267,17 @@ static int sk_psock_verdict_recv(struct sock *sk, struct sk_buff *skb)
+ static void sk_psock_verdict_data_ready(struct sock *sk)
+ {
+ 	const struct proto_ops *ops = NULL;
++	struct sk_psock *psock;
+ 	struct socket *sock;
+ 	int copied;
  
--	for (i = 0; i < array->map.max_entries; i++)
-+	for (i = 0; i < array->map.max_entries; i++) {
- 		fd_array_map_delete_elem(map, &i);
-+		cond_resched();
+ 	rcu_read_lock();
++	psock = sk_psock(sk);
++	if (psock && tls_sw_has_ctx_rx(sk)) {
++		psock->saved_data_ready(sk);
++		rcu_read_unlock();
++		return;
 +	}
- }
+ 	sock = READ_ONCE(sk->sk_socket);
+ 	if (likely(sock))
+ 		ops = READ_ONCE(sock->ops);
+@@ -1280,8 +1287,6 @@ static void sk_psock_verdict_data_ready(struct sock *sk)
  
- static void prog_array_map_seq_show_elem(struct bpf_map *map, void *key,
+ 	copied = ops->read_skb(sk, sk_psock_verdict_recv);
+ 	if (copied >= 0) {
+-		struct sk_psock *psock;
+-
+ 		rcu_read_lock();
+ 		psock = sk_psock(sk);
+ 		if (psock)
 -- 
 2.53.0
 
