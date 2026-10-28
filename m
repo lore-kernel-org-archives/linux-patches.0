@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793217283;
-	b=xp0V1gUQUjgUDisNeuyZxrd46ZnsBZzh7e5VCvl+KfHtz/UQKQbBKcv1gLY8MXTkFvOf
-	 gjwXH3FXgzCtU1w2yfaA1okG36JgIQAztMw0NShQY7CO73D6URNfiajTcD1qQu35f12BT
-	 o0Yv6Rm+ETH5jhdiIvzvLTS7jS0+lw/YDvLk/6uG0lY8JlRAGTLL5dbaMhFPzloxYTGLO
-	 dheE2mmjc+nZ0AkND3MvHxOpLBCgMYj9UFnrKuY7FAVN/E/gxhBAnkVQnPvxYn2DiV/y3
-	 fV2Bh2l3/ylOospOGXUh8bQ/viFxiGnC7+AVKCbb0R8AeQuAktwg3gRnMJweON/llxA==
+	t=1793217286;
+	b=2HA2HDsicFYhwvRaqdO598L+CEdtdjisixByG0+oIBuSBNfWAruBn3nXOQnQNpWEhy/S
+	 Z470UJvY5s/oulg54zg/udEUMMTZVdSyw1TKGa2aWhuagzf30ed5pm03ryQxQBdgOosiM
+	 Gcf7QG0o6MinVRFIjL5OnOQ45eEzH2rtt1Ow9INXXN1a8/EaThTnlS2/5/SApbjIZ72G+
+	 CNKTwaVPALs5L8FgOST+Cwao7EDNXkgNOJWQH8TfqBWczUyQ3uUX2rrMz3Cziq3/qURvK
+	 fAtYRm+mepSNwDL5srNCgoyUlkhqHxbzAvpOD6qa036AE44SwuONH/Aa38C/sASVHWg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793217283;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793217286;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=1rzphSgPxAJUnB/TQtkqYQE6CjzmkEGDKPO413eMx1c=;
-	b=IrXTA18BI4rSIPY+QZFgXG0nxGX+6ShCoJ4lTGlv3tLmcP3w2uXANPA7eObvJ7Pl/6Ub
-	 gb14oTZopleSlm6yDa/b7opKcXZU684ZJG3cRSQZxtedSejCSajynYXFq+HO9DeB01h6B
-	 UbjTe9bZnLuRzVgxjU9mLxdioTi6yP/Tfi+pMNpVK2OP6lc2Ax8odf7AGgqzBIw8ygxOx
-	 pCumdeRsOKtguIYnsRkT84F+DkTuF1U9/8/1Dq6JKnSMJ5DyvakejUuiA35o4HMS4ef7H
-	 S0uSORP3YFzeKnxTmyF0w+aEWoiDqejOJaX1tZU+sYCiaXNFkbrGML5rBfqYK0L4TNA==
+	bh=IEAkjQxqRVK2j8X2D4RoeMnii3Kms98ZwACF2k7zi0U=;
+	b=fA+LwpV7BUhazz8+xCg6bKnZQVP/sD+LuCiOgjKfEPPSlaFvpOopQTXs1IWVHoNZNfN2
+	 9GcGZ1DwWk4s4tKp/UvrfLzLqBnxd1yFmZuzavyYIhhPxWrKg2Tt7sjM0KoDmYcZIZllB
+	 ueufpDloUVCkSBkiiFUksSG8gZicHPOkSGB1nsVLvAbGtckOu6nt86zEe+7W+p3yM19nP
+	 angPlRqqMyoXiOEwVBmBeoQpHfAVPfESj6R77sTGessgPtqwftwMzw1loRYWJySRdMH7Q
+	 8vq9NTXky+BF9zVqHh1B+niYgjXaa+nnGBl0olQLUZKkeSx2/2GeGBmSCUQEhhSfQng==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LWSkwrSg;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yN0JiMJD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A481606A31A;
-	Wed, 28 Oct 2026 19:54:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4363606A31A;
+	Wed, 28 Oct 2026 19:54:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LWSkwrSg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C4EA1F01825;
-	Wed, 28 Oct 2026 19:54:42 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yN0JiMJD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3186E1F01825;
+	Wed, 28 Oct 2026 19:54:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793217282;
-	bh=1rzphSgPxAJUnB/TQtkqYQE6CjzmkEGDKPO413eMx1c=;
+	s=korg; t=1793217285;
+	bh=IEAkjQxqRVK2j8X2D4RoeMnii3Kms98ZwACF2k7zi0U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LWSkwrSgr5/3BxvUFBdx9Tc4cHLnE8sLqwaCnyWoEAPuM9a3EvQV/P0xnInydatFE
-	 JEY0NV3TVsT8f8nhedBfHHFrLZCfPFV4tCB7fZy7iB8lEGu6eHpJZ/aAeTZa95U77P
-	 46CbiLHKvv2ZPfrqa+7Gx5hjNYOiBRhjCiRChUdk=
+	b=yN0JiMJDHTUQ7fV2+OKB+gaX3Mpx03RbIm8Rp3PVdAB7SCdEk4X87MGmkNSllHSpT
+	 9V0uDQmsNpReMRW0hhAYbro5sqbDAKw+Uq2pRYb3Wom7YI40eVQd8qNlKLxiBTyrDo
+	 4ozlXz5Iy5+nBY5kULzaKD/WSXKFudBMxF4BLQks=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cristian Marussi <cristian.marussi@arm.com>,
-	Florian Fainelli <f.fainelli@gmail.com>,
-	Vincent Guittot <vincent.guittot@linaro.org>,
-	Sudeep Holla <sudeep.holla@arm.com>,
+	Norbert Szetei <norbert@doyensec.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1833/1887] firmware: arm_scmi: Add internal platform/channel identifiers
-Date: Wed, 28 Oct 2026 18:05:29 +0100
-Message-ID: <20261028170541.157794341@linuxfoundation.org>
+Subject: [PATCH 6.1 1851/1887] ksmbd: fix r_count dec/increment mismatch
+Date: Wed, 28 Oct 2026 18:05:47 +0100
+Message-ID: <20261028170541.571990277@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -70,128 +69,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cristian Marussi <cristian.marussi@arm.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 75c86dc72dc80604e5e50fabb3c0cadee8c6087a ]
+[ Upstream commit ddb7ea36ba7129c2ed107e2186591128618864e1 ]
 
-Add a couple of unique identifiers to channel and platform instance
-descriptors in order to emit more descriptive message dump traces.
+r_count is only increased when there is an oplock break wait,
+so r_count inc/decrement are not paired. This can cause r_count
+to become negative, which can lead to a problem where the ksmbd
+thread does not terminate.
 
-Signed-off-by: Cristian Marussi <cristian.marussi@arm.com>
-Tested-by: Florian Fainelli <f.fainelli@gmail.com>
-Tested-by: Vincent Guittot <vincent.guittot@linaro.org>
-Link: https://lore.kernel.org/r/20230118121426.492864-8-cristian.marussi@arm.com
-Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
-Stable-dep-of: a71a3d4d8a6e ("firmware: arm_scmi: Use channel ID for transport teardown")
+Fixes: 3aa660c05924 ("ksmbd: prevent connection release during oplock break notification")
+Reported-by: Norbert Szetei <norbert@doyensec.com>
+Tested-by: Norbert Szetei <norbert@doyensec.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/arm_scmi/common.h |  3 +++
- drivers/firmware/arm_scmi/driver.c | 17 +++++++++++++++--
- 2 files changed, 18 insertions(+), 2 deletions(-)
+ fs/smb/server/oplock.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/firmware/arm_scmi/common.h b/drivers/firmware/arm_scmi/common.h
-index 39bf362affa76..10409b43fb29e 100644
---- a/drivers/firmware/arm_scmi/common.h
-+++ b/drivers/firmware/arm_scmi/common.h
-@@ -159,6 +159,8 @@ void scmi_protocol_release(const struct scmi_handle *handle, u8 protocol_id);
- /**
-  * struct scmi_chan_info - Structure representing a SCMI channel information
-  *
-+ * @id: An identifier for this channel: this matches the protocol number
-+ *      used to initialize this channel
-  * @dev: Reference to device in the SCMI hierarchy corresponding to this
-  *	 channel
-  * @rx_timeout_ms: The configured RX timeout in milliseconds.
-@@ -170,6 +172,7 @@ void scmi_protocol_release(const struct scmi_handle *handle, u8 protocol_id);
-  * @transport_info: Transport layer related information
-  */
- struct scmi_chan_info {
-+	int id;
- 	struct device *dev;
- 	unsigned int rx_timeout_ms;
- 	struct scmi_handle *handle;
-diff --git a/drivers/firmware/arm_scmi/driver.c b/drivers/firmware/arm_scmi/driver.c
-index 49b4a938cdb20..6c9107c32993c 100644
---- a/drivers/firmware/arm_scmi/driver.c
-+++ b/drivers/firmware/arm_scmi/driver.c
-@@ -37,6 +37,8 @@
- #define CREATE_TRACE_POINTS
- #include <trace/events/scmi.h>
+diff --git a/fs/smb/server/oplock.c b/fs/smb/server/oplock.c
+index 9272b33340fc8..932e31a20216e 100644
+--- a/fs/smb/server/oplock.c
++++ b/fs/smb/server/oplock.c
+@@ -792,8 +792,8 @@ static int smb2_oplock_break_noti(struct oplock_info *opinfo)
+ 	work->conn = ksmbd_conn_get(conn);
+ 	work->sess = opinfo->sess;
  
-+static DEFINE_IDA(scmi_id);
-+
- static DEFINE_IDR(scmi_protocols);
- static DEFINE_SPINLOCK(protocol_lock);
++	ksmbd_conn_r_count_inc(conn);
+ 	if (opinfo->op_state == OPLOCK_ACK_WAIT) {
+-		ksmbd_conn_r_count_inc(conn);
+ 		INIT_WORK(&work->work, __smb2_oplock_break_noti);
+ 		ksmbd_queue_work(work);
  
-@@ -96,6 +98,7 @@ struct scmi_protocol_instance {
- /**
-  * struct scmi_info - Structure representing a SCMI instance
-  *
-+ * @id: A sequence number starting from zero identifying this instance
-  * @dev: Device pointer
-  * @desc: SoC description for this instance
-  * @version: SCMI revision information containing protocol version,
-@@ -128,6 +131,7 @@ struct scmi_protocol_instance {
-  *		bus
-  */
- struct scmi_info {
-+	int id;
- 	struct device *dev;
- 	const struct scmi_desc *desc;
- 	struct scmi_revision_info version;
-@@ -2102,6 +2106,7 @@ static int scmi_chan_setup(struct scmi_info *info, struct device_node *of_node,
- 	}
- 	of_node_get(of_node);
+@@ -902,8 +902,8 @@ static int smb2_lease_break_noti(struct oplock_info *opinfo)
+ 	work->conn = ksmbd_conn_get(conn);
+ 	work->sess = opinfo->sess;
  
-+	cinfo->id = prot_id;
- 	cinfo->dev = &tdev->dev;
- 	cinfo->handle = &info->handle;
- 	ret = info->desc->ops->chan_setup(cinfo, info->dev, tx);
-@@ -2314,6 +2319,10 @@ static int scmi_probe(struct platform_device *pdev)
- 	if (!info)
- 		return -ENOMEM;
- 
-+	info->id = ida_alloc_min(&scmi_id, 0, GFP_KERNEL);
-+	if (info->id < 0)
-+		return info->id;
-+
- 	info->dev = dev;
- 	info->desc = desc;
- 	info->bus_nb.notifier_call = scmi_bus_notifier;
-@@ -2345,13 +2354,13 @@ static int scmi_probe(struct platform_device *pdev)
- 	if (desc->ops->link_supplier) {
- 		ret = desc->ops->link_supplier(dev);
- 		if (ret)
--			return ret;
-+			goto clear_ida;
- 	}
- 
- 	/* Setup all channels described in the DT at first */
- 	ret = scmi_channels_setup(info);
- 	if (ret)
--		return ret;
-+		goto clear_ida;
- 
- 	ret = bus_register_notifier(&scmi_bus_type, &info->bus_nb);
- 	if (ret)
-@@ -2429,6 +2438,8 @@ static int scmi_probe(struct platform_device *pdev)
- 	bus_unregister_notifier(&scmi_bus_type, &info->bus_nb);
- clear_txrx_setup:
- 	scmi_cleanup_txrx_channels(info);
-+clear_ida:
-+	ida_free(&scmi_id, info->id);
- 	return ret;
- }
- 
-@@ -2462,6 +2473,8 @@ static int scmi_remove(struct platform_device *pdev)
- 	/* Safe to free channels since no more users */
- 	scmi_cleanup_txrx_channels(info);
- 
-+	ida_free(&scmi_id, info->id);
-+
- 	return 0;
- }
- 
++	ksmbd_conn_r_count_inc(conn);
+ 	if (opinfo->op_state == OPLOCK_ACK_WAIT) {
+-		ksmbd_conn_r_count_inc(conn);
+ 		INIT_WORK(&work->work, __smb2_lease_break_noti);
+ 		ksmbd_queue_work(work);
+ 		wait_for_break_ack(opinfo);
 -- 
 2.53.0
 
