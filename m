@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215789;
-	b=K5XwXmJj4CwxVddVeJzROZBSdLxsliCul6vkIi9axO4iPIj/dHmqSZLwb/T4mzZ1Zt9Q
-	 roZFMDUJ0gJDeHza/JO6vjPOkKbM/6C1Yr5TEOj3m2AqlCY6N5UxLGd2K+6yZyUW5qXa0
-	 rKOkmvvKr/z7/uSVSyeN/vqqSEDoB9/dfBOHlvBFk2yLja3YaDSGjmhtny6GPFT8SEZHL
-	 0bf63o9rHeST4KbxmhPgPeqpgue/r04RIxAtZKZfpHPjoqSotETABoyVyPB5RUbIQbKCW
-	 tD4rqiqNVMYrVOPeB6QDYielyWjWLWizs87Vx95UINDNA35g3ickSF398zb2/gEyrKQ==
+	t=1793215792;
+	b=3Sbfb8u976UoTU7ttfOF98AaEe756rrzbJc31rEntCv2ce76q2jjZqo8O+hXfbt5cjv+
+	 T+1JrxlQfh8M+DbHz0ztFCGi70iU0oYfaVT1RN3sc4jdRpz1OpWXdmiGH/vm1a+zYel6X
+	 cr0w9Jd8QjYPwOGjo2R4m8rjT49GWE/bQQ0DtO9CXxeeh12uHNf8omE9tEDxYWbKwLHiH
+	 WzaQLyjnkq9FPLK9ITllzKBKZrBvDwV92GQvW6hIzP7DxpQbu2xIvZLMld+LZl917zEmJ
+	 AppQfRmu3ug/wJU3JEgK5iChYPzqFU7hZOjG/cIX47bE0W+MlV+BUULLlpARNOCsCWg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215789;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215792;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=3Cyxwuk8MqaZlax4IF9Z1HYITa5drcX+bf2Mqdudr7g=;
-	b=X74e7jL8Oagun8M6C11XMYjJ2c0rh/qFuTbQMmMXN5T+u3vrNy73DXdXK+Reu+Zs1kkk
-	 5vSDnsHriMfnWMIsTbiKzUqCcoAcsi+fZmRyROIK/KRmM8JUxPMH1OzqwlCH64x8WfI0O
-	 NkpQEFBs8N73geFzn7YLQ8t/BBuqt2CCUXBDvhsftTQbyIxVL5WiIwOTcO+EhiPMip9u/
-	 wMVnb9VlNb8YU39asO9VwgLr5LDa769QOOLTs/4aYXt8HPhs3D2sgZEoJbILR9ZmV5Amy
-	 avHiS5o78v5MKh53NqFRvMbvTI42M0ZIHZtGvaWAxG6YHLJDXJNmDUxdcb4vMAQ+ZpQ==
+	bh=d5sGL5CDuTtPx+J0Qlq1q0aEdfAJAvqYn10vXfcEqPA=;
+	b=IO0LGga+ObW1UjBCF0s4EsUVJJLslAY1xr2Vyde2uKRfu22AsEtubS7HSi71c+NOMAVM
+	 +zak11BRgKdhcpnLVRDKSgSYkYa1rhK/P/QcT2AubwG7j/Or1X2WYfTzMCDhkyWRPTg5e
+	 xVaeVxczzFJC1veJ8el0TGsG7gZv7rnWs8KGB4VyZJR2YLKJpuyHghr7U9jVGJ6hIZbVh
+	 GvYVvqp0uaE2bkCrYz7Ahikd1C3a9uCdDszERbeU+dNu6BDIS1zHnIiGagdCcze7pfNVN
+	 dw3NJ1p2jNkCjC87tuqF1veJO0B4IFkcfOQ9XIwhKdNNYbG10s+iXrGdOB1O3jltQxQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lzkMQ7mk;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Dso5WxB3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D84E606A31E;
-	Wed, 28 Oct 2026 19:29:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BDC0606A31A;
+	Wed, 28 Oct 2026 19:29:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lzkMQ7mk
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 426F51F01825;
-	Wed, 28 Oct 2026 19:29:48 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Dso5WxB3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 263B11F01825;
+	Wed, 28 Oct 2026 19:29:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215788;
-	bh=3Cyxwuk8MqaZlax4IF9Z1HYITa5drcX+bf2Mqdudr7g=;
+	s=korg; t=1793215791;
+	bh=d5sGL5CDuTtPx+J0Qlq1q0aEdfAJAvqYn10vXfcEqPA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lzkMQ7mkQjNHZGajnBoaardmvjWQBeToxpLMON8iN7yJx8NCot+adlrsLSB0gtKg2
-	 7Mz0Ib2LVUpanrj1MrlaJM1sd7pMb7tPVw97brMOSpgzHs/aDXfP0qVZkqoLe5lF3c
-	 9oU+Zfv54tDhArLQP1U3vzAk33wIfmPmnftDIsjM=
+	b=Dso5WxB3cKLPv9E8pCqnZ60xLNm1rYi7vU+mKKIaXBaKLBacqXr4a8/HXEYMImxoU
+	 XA9mOFsacxgveYpH0x1oEO2W8gpJpRFhIPZUCvixjFoJznXY14Am9KbO6HUCTpBZtn
+	 krwPdyhMaEoMlac9N6nN70FBoRnmuNSqEG6Z+fwg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chenguang Zhao <zhaochenguang@kylinos.cn>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1334/1887] net: ethernet: mtk_eth_soc: pass eth to mtk_handle_irq_rx in poll_controller
-Date: Wed, 28 Oct 2026 17:57:10 +0100
-Message-ID: <20261028170529.792210969@linuxfoundation.org>
+Subject: [PATCH 6.1 1335/1887] hwmon: (sht3x) Fix unaligned accesses
+Date: Wed, 28 Oct 2026 17:57:11 +0100
+Message-ID: <20261028170529.815457940@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,37 +68,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chenguang Zhao <zhaochenguang@kylinos.cn>
+From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit e095f249e2209674f6366f6db0383a2b96e19239 ]
+[ Upstream commit f46d5ab43a572b84773015a76966f5da56fc1748 ]
 
-mtk_handle_irq_rx expects a struct mtk_eth * (matching the request_irq
-cookie), but mtk_poll_controller incorrectly passed the net_device *.
-Calling ndo_poll_controller with CONFIG_NET_POLL_CONTROLLER enabled
-would then crash.
+Sashiko reports:
 
-Fixes: 8186f6e382d8 ("net-next: mediatek: fix compile error inside mtk_poll_controller()")
-Signed-off-by: Chenguang Zhao <zhaochenguang@kylinos.cn>
-Link: https://patch.msgid.link/20260723055735.885112-1-chenguang.zhao@linux.dev
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+In sht3x_update_client(), the 16-bit temperature and humidity values are
+extracted from a stack-allocated byte array using be16_to_cpup(). The
+pointers passed to this function are calculated as buf and buf + 3. Since
+the difference between the two pointers is an odd number of bytes, at
+least one of them is guaranteed to be at an unaligned offset.
+
+This will trigger an alignment fault on strict-alignment architectures
+such as ARMv5 or SPARC, resulting in a kernel panic.
+
+Fix the problem by using get_unaligned_be16() instead of be16_to_cpup(),
+and put_unaligned_be16() instead of cpu_to_be16().
+
+Fixes: 7c84f7f80d6f ("hwmon: add support for Sensirion SHT3x sensors")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mediatek/mtk_eth_soc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hwmon/sht3x.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/mediatek/mtk_eth_soc.c b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-index 20d14e3ae6efd..a65d6b1317771 100644
---- a/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-+++ b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-@@ -2916,7 +2916,7 @@ static void mtk_poll_controller(struct net_device *dev)
+diff --git a/drivers/hwmon/sht3x.c b/drivers/hwmon/sht3x.c
+index 3f279aa1cee5e..381e33c6b4a2f 100644
+--- a/drivers/hwmon/sht3x.c
++++ b/drivers/hwmon/sht3x.c
+@@ -21,6 +21,7 @@
+ #include <linux/slab.h>
+ #include <linux/jiffies.h>
+ #include <linux/platform_data/sht3x.h>
++#include <asm/unaligned.h>
  
- 	mtk_tx_irq_disable(eth, MTK_TX_DONE_INT);
- 	mtk_rx_irq_disable(eth, eth->soc->txrx.rx_irq_done_mask);
--	mtk_handle_irq_rx(eth->irq[2], dev);
-+	mtk_handle_irq_rx(eth->irq[2], eth);
- 	mtk_tx_irq_enable(eth, MTK_TX_DONE_INT);
- 	mtk_rx_irq_enable(eth, eth->soc->txrx.rx_irq_done_mask);
- }
+ /* commands (high precision mode) */
+ static const unsigned char sht3x_cmd_measure_blocking_hpm[]    = { 0x2c, 0x06 };
+@@ -241,9 +242,9 @@ static struct sht3x_data *sht3x_update_client(struct device *dev)
+ 		if (ret)
+ 			goto out;
+ 
+-		val = be16_to_cpup((__be16 *)buf);
++		val = get_unaligned_be16(buf);
+ 		data->temperature = sht3x_extract_temperature(val);
+-		val = be16_to_cpup((__be16 *)(buf + 3));
++		val = get_unaligned_be16(buf + 3);
+ 		data->humidity = sht3x_extract_humidity(val);
+ 		data->last_update = jiffies;
+ 	}
+@@ -302,7 +303,7 @@ static int limits_update(struct sht3x_data *data)
+ 		if (ret)
+ 			return ret;
+ 
+-		raw = be16_to_cpup((__be16 *)buffer);
++		raw = get_unaligned_be16(buffer);
+ 		temperature = sht3x_extract_temperature((raw & 0x01ff) << 7);
+ 		humidity = sht3x_extract_humidity(raw & 0xfe00);
+ 		data->temperature_limits[index] = temperature;
+@@ -364,7 +365,7 @@ static size_t limit_store(struct device *dev,
+ 	raw = ((u32)(temperature + 45000) * 24543) >> (16 + 7);
+ 	raw |= ((humidity * 42950) >> 16) & 0xfe00;
+ 
+-	*((__be16 *)position) = cpu_to_be16(raw);
++	put_unaligned_be16(raw, position);
+ 	position += SHT3X_WORD_LEN;
+ 	*position = crc8(sht3x_crc8_table,
+ 			 position - SHT3X_WORD_LEN,
 -- 
 2.53.0
 
