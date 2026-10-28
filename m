@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214666;
-	b=V4dDUCK2wzFDyw6mFgz4zdm8nwTlvFUlac+z12QkkOsMH1NOUADTnc42NuQMhh64mIaN
-	 9IXpSMNp7GF2o03tHNxCWhk6bl/aSY2ZbUWov7kc8Zy+S8m6i2jRXgvs51GJG6Hkt3YA/
-	 92iyeVfLqb2FkNR3CJQrbKLJMbApJsm35thsECY9ig60QNp7Ml8+WIWlInr186rOtyIf/
-	 PACRPTmAdGMQEjq86jT82Jph1+urbtKExgBQ1QvMUy7OPTxp/svnPVj6pCo4L7qx3ioMD
-	 WUC2UG6wmj5++VdkraJvuo4bn/hFQ8YXD+tQNztNFZdhLq8fbQ+Tc+AGvH4XP0/nBJg==
+	t=1793214669;
+	b=NrssSleVUp2kp0RK7mSxp+JKes6/Tl6VfmzeMMvYDkWNnRT7ihpdfx/IuicAml5rzP4b
+	 r9UU2WfTuKTQA8jj377XH5i3K+ldxzRHhERdbOQIzjgMGUPC8kpFcctEICSKRvJN7hx3q
+	 zj69uKp4WxWp6GJDQ3Ue2f7z5g61c7wQUzCi/Zj/A8tyI9yOmgf709mWmmzuwXcFKK0OS
+	 21FNy2AFnTe7nhy1rLePjfVX6WrJg8Opq0LcIKOtOukLesBVODvoZtgRg+MjrqQv5H8qZ
+	 05rE/ae4mo+ZnIbsv3UZpSXIq+ki5TUPyIZtVFu3gHGUEHka94pwcweuZAPlUNAZwfQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214666;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214669;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=75jBMXRtPg95vWWYfWshUujSI4OUeV/zNIK8arzUZBM=;
-	b=u/ar3PPwhp6HdiRko2WdItrIg+/4YFKAu49Vz8u/d4X+lwVgmQPgcNPWZSTkPZDPe76F
-	 aXKfmPb5OwunCLYo71zuDgakEBvCDLIt6CDz5mOorh0kqNxY+ABxI/XUdK72FvctCdSzO
-	 9jc0bSZ2BKtmFYM2FUY1ObWF/8Z6NvoJPlf3yrk5+PalLggKgj87lJSZhJ6GIcWpGcHTG
-	 uQ8QwnILPtdLU+09ePGtMHMqZIWI9ZifzFFt5HUXCPvSInNmQXGnCEIMmOUBio9SunB14
-	 9jY8Cie9PKj8Deh+2nIgfSbLNMnEHm1ZrcvfFV9FUcPtZWiWB44N93Y1tdr6EnIS0Ew==
+	bh=MYdI/2wqbqA6qhMn6vOTrh5lfwIzEkq4WLLvehJQzr8=;
+	b=PxmTCNz0/9ZyOemkmXuk8yheZ0XIr/t9rmeVkZ+Ku6iCCEsdPo8kB0+7AwxWEUnnOrS8
+	 lTx0mGBZ3Eq8LxMxJid855g4Ei6OsxdkjpFidCPHp7LUUfhVr14X8faI3+9u5pjy+j+Xy
+	 LC+h34Ohua6p4RsQ9p2TqqUGVxPWk5Y2tBXDQtf4prpSQv++fxhV+OyOxlpBjfEkqJ+AE
+	 uTpr3awOpixcJ9uccwWN1riiGwM8A7MLst8O4HfIqh33wYLRNTu06q4Apo+RRfFcVIokr
+	 7Jk8TjVMP5WIAKHMrf21f2wbrDzeqCvcChQ8W9zSytIcaVP/VoSnryJ3w1jRDvQaH4A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YZst8Pq8;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=13LMNsKp;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B83B606AB18;
-	Wed, 28 Oct 2026 19:11:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3199A606AB18;
+	Wed, 28 Oct 2026 19:11:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YZst8Pq8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACFEF1F01828;
-	Wed, 28 Oct 2026 19:11:05 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=13LMNsKp
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83F661F01829;
+	Wed, 28 Oct 2026 19:11:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214666;
-	bh=75jBMXRtPg95vWWYfWshUujSI4OUeV/zNIK8arzUZBM=;
+	s=korg; t=1793214669;
+	bh=MYdI/2wqbqA6qhMn6vOTrh5lfwIzEkq4WLLvehJQzr8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YZst8Pq8qE5iTb6/ko+vf8xX4gcc7o8OjHayfzl1lxqD4SredvG8DyKSGSw3B3ZU0
-	 ZPSnadpvilDpDRo8qZZWiXLpZD3cykD02S/5B+09Ezpi3roGuxmeMy23L6RFOpIUzw
-	 mqZQ4eyUxplFIossbzoJ4V9m38TD5rJ3ye4/PRXI=
+	b=13LMNsKpF1LU4wPbA6q6pXS7X1RXp4N5YJT0PlcBQmRLQgaNGev6ZravJ345/DaQA
+	 kWK6oTbgCj4pu9PlYBu9ZfSvsOPB9lbcqoBPzGT+McBHkBbWkuautBmWkZd2Di3VBI
+	 LSZGVuLWtWrtJGQH7ZgeTNuWqbjByRe3/PNvLk40=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Niklas Cassel <cassel@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Frank Li <Frank.Li@nxp.com>,
+	Minseong Kim <ii4gsp@gmail.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0938/1887] PCI: dwc: ep: Flush MSI-X write before unmapping its ATU entry
-Date: Wed, 28 Oct 2026 17:50:34 +0100
-Message-ID: <20261028170520.757898827@linuxfoundation.org>
+Subject: [PATCH 6.1 0903/1887] Input: lkkbd - disable pending work before freeing device
+Date: Wed, 28 Oct 2026 17:49:59 +0100
+Message-ID: <20261028170519.965968783@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,62 +68,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Niklas Cassel <cassel@kernel.org>
+From: Minseong Kim <ii4gsp@gmail.com>
 
-[ Upstream commit c22533c66ccae10511ad6a7afc34bb26c47577e3 ]
+[ Upstream commit e58c88f0cb2d8ed89de78f6f17409d29cfab6c5c ]
 
-Endpoint drivers use dw_pcie_ep_raise_msix_irq() to raise an MSI-X
-interrupt to the host using a writel(), which generates a PCI posted write
-transaction.  There's no completion for posted writes, so the writel() may
-return before the PCI write completes.  dw_pcie_ep_raise_msix_irq() also
-unmaps the outbound ATU entry used for the PCI write, so the write races
-with the unmap.
+lkkbd_interrupt() schedules lk->tq via schedule_work(), and the work
+handler lkkbd_reinit() dereferences the lkkbd structure and its
+serio/input_dev fields.
 
-If the PCI write loses the race with the ATU unmap, the write may corrupt
-host memory or cause IOMMU errors, e.g., these when running fio with a
-larger queue depth against nvmet-pci-epf:
+lkkbd_disconnect() and error paths in lkkbd_connect() free the lkkbd
+structure without preventing the reinit work from being queued again
+until serio_close() returns. This can allow the work handler to run
+after the structure has been freed, leading to a potential use-after-free.
 
-  arm-smmu-v3 fc900000.iommu:      0x0000010000000010
-  arm-smmu-v3 fc900000.iommu:      0x0000020000000000
-  arm-smmu-v3 fc900000.iommu:      0x000000090000f040
-  arm-smmu-v3 fc900000.iommu:      0x0000000000000000
-  arm-smmu-v3 fc900000.iommu: event: F_TRANSLATION client: 0000:01:00.0 sid: 0x100 ssid: 0x0 iova: 0x90000f040 ipa: 0x0
-  arm-smmu-v3 fc900000.iommu: unpriv data write s1 "Input address caused fault" stag: 0x0
+Use disable_work_sync() instead of cancel_work_sync() to ensure the
+reinit work cannot be re-queued, and call it both in lkkbd_disconnect()
+and in lkkbd_connect() error paths after serio_open().
 
-Flush the write by performing a readl() of the same address to ensure that
-the write has reached the destination before the ATU entry is unmapped.
-
-The same problem was solved for dw_pcie_ep_raise_msi_irq() in commit
-8719c64e76bf ("PCI: dwc: ep: Cache MSI outbound iATU mapping"), but there
-it was solved by dedicating an outbound iATU only for MSI. We can't do the
-same for MSI-X because each vector can have a different msg_addr and the
-msg_addr may be changed while the vector is masked.
-
-Fixes: beb4641a787d ("PCI: dwc: Add MSI-X callbacks handler")
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
-[bhelgaas: commit log]
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260211175540.105677-2-cassel@kernel.org
+Signed-off-by: Minseong Kim <ii4gsp@gmail.com>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20251212052314.16139-1-ii4gsp@gmail.com
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/dwc/pcie-designware-ep.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/input/keyboard/lkkbd.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/pci/controller/dwc/pcie-designware-ep.c b/drivers/pci/controller/dwc/pcie-designware-ep.c
-index 32a04ff86c5c5..7a68574b90d34 100644
---- a/drivers/pci/controller/dwc/pcie-designware-ep.c
-+++ b/drivers/pci/controller/dwc/pcie-designware-ep.c
-@@ -633,6 +633,9 @@ int dw_pcie_ep_raise_msix_irq(struct dw_pcie_ep *ep, u8 func_no,
- 
- 	writel(msg_data, ep->msi_mem + aligned_offset);
- 
-+	/* flush posted write before unmap */
-+	readl(ep->msi_mem + aligned_offset);
-+
- 	dw_pcie_ep_unmap_addr(epc, func_no, 0, ep->msi_mem_phys);
- 
+diff --git a/drivers/input/keyboard/lkkbd.c b/drivers/input/keyboard/lkkbd.c
+index 047b654b3752c..7b57577a1715c 100644
+--- a/drivers/input/keyboard/lkkbd.c
++++ b/drivers/input/keyboard/lkkbd.c
+@@ -671,6 +671,7 @@ static int lkkbd_connect(struct serio *serio, struct serio_driver *drv)
  	return 0;
+ 
+  fail3:	serio_close(serio);
++	cancel_work_sync(&lk->tq);
+  fail2:	serio_set_drvdata(serio, NULL);
+  fail1:	input_free_device(input_dev);
+ 	kfree(lk);
+@@ -687,6 +688,7 @@ static void lkkbd_disconnect(struct serio *serio)
+ 	input_get_device(lk->dev);
+ 	input_unregister_device(lk->dev);
+ 	serio_close(serio);
++	cancel_work_sync(&lk->tq);
+ 	serio_set_drvdata(serio, NULL);
+ 	input_put_device(lk->dev);
+ 	kfree(lk);
 -- 
 2.53.0
 
