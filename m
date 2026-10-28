@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216677;
-	b=sQFVsCaF9x687X1MuOgbc66/xspa9f6g170Yvk2Ee3Elm5R5gRHdkxUEVqFjUOiH+RHH
-	 bInb4eErIvAANW5PdOiK+WI5WK502afI32OU7D584kzUexPKjEqpJHVmqouY9fJUzLGa5
-	 vonYiBvyDZhTu8IWgQlfxEOKLW4z8qicbDxSlG3PBxHF/OylYFTDrhbB4vXBPAKosVk49
-	 OQfJG0BP5mcICxwgq22E87UzBvVUlHkSlQFjkz88IMkLeobTpriaHH4+aCudhD6LU7la5
-	 KScg8eUNzaUN+naHLshjHCKQPqnVa46HdRoKHMqrrRV/IxexbeoB/z7PX6TiwiLKtQQ==
+	t=1793216680;
+	b=eBvCFJJkkiCypICQlPh+Z18Oaw46tZT5Z5K/TUjjunFXM/78xyvostApZwP1DlwMGRup
+	 S7bUez94jTH1RPf/akRGZy3HI+VRju5UG22fVzS035HK2fjDojg4XnX+L/p5fX1TkW7HL
+	 10j/LmwognpEqIeDYTYD0f9uaVyllEqvVJlf7ILJhYxJtAKTf0WPcTSapSBOpwWwh/EjF
+	 t2ouSUi+Etbd9Ps5KUEo6itFmbf8TAdVuOG7AfwFUTm2C1C0nuFuJhrH4SesjPs/B7/e7
+	 kcWHWolMc/PnzDpOcP5HVzzdYKi5MgLWnft9d6lMFGFCcu9JL9/3jkm6gNpA814dzrg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216677;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216680;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=3Li8SvGU0YBRm/McDaGE5qf7VwaVcjok/ghmPiJ8++U=;
-	b=k7PX7eLXkhE7k0eLTiAakuB2hMsnKLFtjV9uNZDgaib7ujRBn+qXIsIbaTPaV4dPGH2f
-	 GBM5mgSu4tH6XQk9L8D4OiS0LVUq9mn19+Kp1MBoTFijFppg5lQftsuLp25YTFiW8D6VC
-	 6JDqByBJI49BTewF5l/EN5C6hcwztva0jYBCah0MKMFM4i7r5bzpz7O5KjCg0I3p7FNv0
-	 fQMFNlPpJGBUd0yLKFrKyUR7JnX18b53Z+SvS16VuJuMW2PZj25CNmTixzqu77cochD2o
-	 sxCLWVjiK+wtoGV7078PyhaiQF04HN8pQHLjD9tvCknIWW09xbM7Vk84tAGk3xa9UEw==
+	bh=Aewe5TftfYmMdGTv6nyVEzrOTkbybgNdlP38lkjKHIA=;
+	b=IAwqfJjL1FyVOct/xu0Imy7EGjJ5D/DAag/zUib3FQhNjaxXzi+bV2hhK4EHX4ZD/+PO
+	 LH6IHDVh6dSKcgNVDHRjK1gg7nMh5QBe8G8PZAfmXaOos4bL6F9bTNAtKC8SnA8xGc5Y6
+	 /npMNDjrXlnb71eqNMgG/4LbVbLCNl42y5GC6iDEx2kWvUkOaDc/TtSwucSM15mwAa9tx
+	 T5rMAbmUTtzeMe1iN+wOiDsRrviw4kc+UBgWS7VAgIUhBxgtUXWpnC1LxL1FBO0HxTGzE
+	 szYMKT+xPnWMA0XrBHKLENJxGC1hi2Py05+tkflolol6Dvbg7FFZwV9rY2j+J55d4iw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WQYXLneV;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=q3qgQY5P;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D787E606A330;
-	Wed, 28 Oct 2026 19:44:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C138A606A31F;
+	Wed, 28 Oct 2026 19:44:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WQYXLneV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34FF61F01828;
-	Wed, 28 Oct 2026 19:44:36 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=q3qgQY5P
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B9891F01825;
+	Wed, 28 Oct 2026 19:44:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216676;
-	bh=3Li8SvGU0YBRm/McDaGE5qf7VwaVcjok/ghmPiJ8++U=;
+	s=korg; t=1793216679;
+	bh=Aewe5TftfYmMdGTv6nyVEzrOTkbybgNdlP38lkjKHIA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WQYXLneVGSp9kHZUoCKjrkURcsnPUsLpsDq07fafV/N25mjFNDuw1iYjkL1BsiFfo
-	 ZNBFziYlZUbHoP3JJxe9S9WjH9jJwHYi1dWpR60ptEPH5Edi93hjF+tVVpO2RDT11y
-	 J7O7YuMbSXj12AhXvrkKgjq7jzOPaeJry4k+xNPk=
+	b=q3qgQY5PKnG601cSXn99blGvcQK6Lc3FGTvOTAi+pVbO8N7cuI6S+dizec9HarupK
+	 8qs1NwM3+fOh8qBmE2cfEAN/7RBh5/v0Ml7JSkZCQVGQDXQkaUY85vPn5fW+1ELYS4
+	 +bjLFuLVdaMjY9Kh3+on20NpROYnqNatmCgww0ps=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Suraj Gupta <suraj.gupta2@amd.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Alex Bereza <alex@bereza.email>,
-	Vinod Koul <vkoul@kernel.org>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Gregory Price <gourry@gourry.net>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1638/1887] dmaengine: xilinx_dma: Fix CPU stall in xilinx_dma_poll_timeout
-Date: Wed, 28 Oct 2026 18:02:14 +0100
-Message-ID: <20261028170536.739244229@linuxfoundation.org>
+Subject: [PATCH 6.1 1639/1887] mm/mm_init: handle alloc_percpu failure in free_area_init_core_hotplug
+Date: Wed, 28 Oct 2026 18:02:15 +0100
+Message-ID: <20261028170536.761661015@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -70,100 +70,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Bereza <alex@bereza.email>
+From: Gregory Price <gourry@gourry.net>
 
-[ Upstream commit aa99c4d1d63bbc26a5fc4c667d89b2595743c19d ]
+[ Upstream commit 2ebce860bdd7ae5e13002811bc9bbbf33fcfc221 ]
 
-Currently when calling xilinx_dma_poll_timeout with delay_us=0 and a
-condition that is never fulfilled, the CPU busy-waits for prolonged time
-and the timeout triggers only with a massive delay causing a CPU stall.
+We miss a failed allocation check for pgdat->per_cpu_nodestats, which
+results in a NULL deref when we offset into the per-cpu area.
 
-This happens due to a huge underestimation of wall clock time in
-poll_timeout_us_atomic. Commit 7349a69cf312 ("iopoll: Do not use
-timekeeping in read_poll_timeout_atomic()") changed the behavior to no
-longer use ktime_get at the expense of underestimation of wall clock
-time which appears to be very large for delay_us=0. Instead of timing
-out after approximately XILINX_DMA_LOOP_COUNT microseconds, the timeout
-takes XILINX_DMA_LOOP_COUNT * 1000 * (time that the overhead of the for
-loop in poll_timeout_us_atomic takes) which is in the range of several
-minutes for XILINX_DMA_LOOP_COUNT=1000000. Fix this by using a non-zero
-value for delay_us. Use delay_us=10 to keep the delay in the hot path of
-starting DMA transfers minimal but still avoid CPU stalls in case of
-unexpected hardware failures.
+Propagate -ENOMEM up the stack and leave per_cpu_nodestats pointing
+at boot_nodestats so a later online can retry the allocation.
 
-One-off measurement with delay_us=0 causes the cpu to busy wait around 7
-minutes in the timeout case. After applying this patch with delay_us=10
-the measured timeout was 1053428 microseconds which is roughly
-equivalent to the expected 1000000 microseconds specified in
-XILINX_DMA_LOOP_COUNT.
+hotadd_init_pgdat() returns NULL on failure, which __try_online_node()
+already maps to -ENOMEM.
 
-Add a constant XILINX_DMA_POLL_DELAY_US for delay_us value.
+On failure nothing needs to be unwound:
+  - the node is never marked online
+  - per_cpu_nodestats is left pointing at boot_nodestats
+  - __add_memory_resource() cleans up pending memblock resources
+  - later online attempts retry the per_cpu_nodestats allocation
 
-Fixes: 9495f2648287 ("dmaengine: xilinx_vdma: Use readl_poll_timeout instead of do while loop's")
-Fixes: 7349a69cf312 ("iopoll: Do not use timekeeping in read_poll_timeout_atomic()")
-Reviewed-by: Suraj Gupta <suraj.gupta2@amd.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Alex Bereza <alex@bereza.email>
-Link: https://patch.msgid.link/20260402-fix-atomic-poll-timeout-regression-v4-1-f30d6a6c13cb@bereza.email
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Link: https://sashiko.dev/#/patchset/20260627202243.758289-1-gourry%40gourry.net
+Fixes: 75ef71840539 ("mm, vmstat: add infrastructure for per-node vmstats")
+Signed-off-by: Gregory Price <gourry@gourry.net>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Link: https://patch.msgid.link/20260701221613.2818148-1-gourry@gourry.net
+Signed-off-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/xilinx/xilinx_dma.c | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ include/linux/memory_hotplug.h |  2 +-
+ mm/memory_hotplug.c            |  3 ++-
+ mm/page_alloc.c                | 14 +++++++++++---
+ 3 files changed, 14 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/dma/xilinx/xilinx_dma.c b/drivers/dma/xilinx/xilinx_dma.c
-index 5fb423261c3f0..d1f83e315be7d 100644
---- a/drivers/dma/xilinx/xilinx_dma.c
-+++ b/drivers/dma/xilinx/xilinx_dma.c
-@@ -164,6 +164,8 @@
+diff --git a/include/linux/memory_hotplug.h b/include/linux/memory_hotplug.h
+index 9fcbf57065957..26846484aed7d 100644
+--- a/include/linux/memory_hotplug.h
++++ b/include/linux/memory_hotplug.h
+@@ -330,7 +330,7 @@ extern void set_zone_contiguous(struct zone *zone);
+ extern void clear_zone_contiguous(struct zone *zone);
  
- /* Delay loop counter to prevent hardware failure */
- #define XILINX_DMA_LOOP_COUNT		1000000
-+/* Delay between polls (avoid a delay of 0 to prevent CPU stalls) */
-+#define XILINX_DMA_POLL_DELAY_US	10
+ #ifdef CONFIG_MEMORY_HOTPLUG
+-extern void __ref free_area_init_core_hotplug(struct pglist_data *pgdat);
++int __ref free_area_init_core_hotplug(struct pglist_data *pgdat);
+ extern int __add_memory(int nid, u64 start, u64 size, mhp_t mhp_flags);
+ extern int add_memory(int nid, u64 start, u64 size, mhp_t mhp_flags);
+ extern int add_memory_resource(int nid, struct resource *resource,
+diff --git a/mm/memory_hotplug.c b/mm/memory_hotplug.c
+index 33b21fc6d90d9..1a6cc0161fb76 100644
+--- a/mm/memory_hotplug.c
++++ b/mm/memory_hotplug.c
+@@ -1185,7 +1185,8 @@ static pg_data_t __ref *hotadd_init_pgdat(int nid)
+ 	pgdat = NODE_DATA(nid);
  
- /* AXI DMA Specific Registers/Offsets */
- #define XILINX_DMA_REG_SRCDSTADDR	0x18
-@@ -1287,7 +1289,8 @@ static int xilinx_dma_stop_transfer(struct xilinx_dma_chan *chan)
+ 	/* init node's zones as empty zones, we don't have any present pages.*/
+-	free_area_init_core_hotplug(pgdat);
++	if (free_area_init_core_hotplug(pgdat))
++		return NULL;
  
- 	/* Wait for the hardware to halt */
- 	return xilinx_dma_poll_timeout(chan, XILINX_DMA_REG_DMASR, val,
--				       val & XILINX_DMA_DMASR_HALTED, 0,
-+				       val & XILINX_DMA_DMASR_HALTED,
-+				       XILINX_DMA_POLL_DELAY_US,
- 				       XILINX_DMA_LOOP_COUNT);
+ 	/*
+ 	 * The node we allocated has no zone fallback lists. For avoiding
+diff --git a/mm/page_alloc.c b/mm/page_alloc.c
+index 5f679f699477c..85b189bcab7ec 100644
+--- a/mm/page_alloc.c
++++ b/mm/page_alloc.c
+@@ -7730,7 +7730,7 @@ static void __meminit zone_init_internals(struct zone *zone, enum zone_type idx,
+  * NOTE: this function is only called during memory hotplug
+  */
+ #ifdef CONFIG_MEMORY_HOTPLUG
+-void __ref free_area_init_core_hotplug(struct pglist_data *pgdat)
++int __ref free_area_init_core_hotplug(struct pglist_data *pgdat)
+ {
+ 	int nid = pgdat->node_id;
+ 	enum zone_type z;
+@@ -7738,8 +7738,14 @@ void __ref free_area_init_core_hotplug(struct pglist_data *pgdat)
+ 
+ 	pgdat_init_internals(pgdat);
+ 
+-	if (pgdat->per_cpu_nodestats == &boot_nodestats)
+-		pgdat->per_cpu_nodestats = alloc_percpu(struct per_cpu_nodestat);
++	if (pgdat->per_cpu_nodestats == &boot_nodestats) {
++		struct per_cpu_nodestat __percpu *p;
++
++		p = alloc_percpu(struct per_cpu_nodestat);
++		if (!p)
++			return -ENOMEM;
++		pgdat->per_cpu_nodestats = p;
++	}
+ 
+ 	/*
+ 	 * Reset the nr_zones, order and highest_zoneidx before reuse.
+@@ -7767,6 +7773,8 @@ void __ref free_area_init_core_hotplug(struct pglist_data *pgdat)
+ 
+ 	for (z = 0; z < MAX_NR_ZONES; z++)
+ 		zone_init_internals(&pgdat->node_zones[z], z, nid, 0);
++
++	return 0;
  }
+ #endif
  
-@@ -1302,7 +1305,8 @@ static int xilinx_cdma_stop_transfer(struct xilinx_dma_chan *chan)
- 	u32 val;
- 
- 	return xilinx_dma_poll_timeout(chan, XILINX_DMA_REG_DMASR, val,
--				       val & XILINX_DMA_DMASR_IDLE, 0,
-+				       val & XILINX_DMA_DMASR_IDLE,
-+				       XILINX_DMA_POLL_DELAY_US,
- 				       XILINX_DMA_LOOP_COUNT);
- }
- 
-@@ -1319,7 +1323,8 @@ static void xilinx_dma_start(struct xilinx_dma_chan *chan)
- 
- 	/* Wait for the hardware to start */
- 	err = xilinx_dma_poll_timeout(chan, XILINX_DMA_REG_DMASR, val,
--				      !(val & XILINX_DMA_DMASR_HALTED), 0,
-+				      !(val & XILINX_DMA_DMASR_HALTED),
-+				      XILINX_DMA_POLL_DELAY_US,
- 				      XILINX_DMA_LOOP_COUNT);
- 
- 	if (err) {
-@@ -1742,7 +1747,8 @@ static int xilinx_dma_reset(struct xilinx_dma_chan *chan)
- 
- 	/* Wait for the hardware to finish reset */
- 	err = xilinx_dma_poll_timeout(chan, XILINX_DMA_REG_DMACR, tmp,
--				      !(tmp & XILINX_DMA_DMACR_RESET), 0,
-+				      !(tmp & XILINX_DMA_DMACR_RESET),
-+				      XILINX_DMA_POLL_DELAY_US,
- 				      XILINX_DMA_LOOP_COUNT);
- 
- 	if (err) {
 -- 
 2.53.0
 
