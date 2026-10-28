@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793207929;
-	b=MIEiaF03dINulFP4xdCOYOf/1gqOkDHT/Qnlg4oFKVJop3SvcYGRyWBBR4efafQdqX0J
-	 1w26G9ICVDdJuKDX82w8Y8PkyQeenxLpeux0cNc8/NCtes9wgWYKJJM0sOyR/cZybe9y1
-	 H/0WgcM7zBa5fZghEceKNCAKQn8ru4U4R3YdjcQWyvKwmRqezTkV97efZn59BjYbH1uk4
-	 YMmUxlhtwZtJP4T48YtpKfdRmmHJfc8gfx6lNA8Zidg8idXMKkAWLJ2UnLBjD0zFakZyD
-	 pt9i6L8s7hBRLNhOlcGOzzR1Hi8/d8wNJxYDK+m7AmUgwMSG88WowVzRtZVNvXF4cLw==
+	t=1793207932;
+	b=qmgKri0/Uhh9Ww2HvGY4jpF51OmkridWImfUr49kbD8dOc7buf57HcJYM3Qyq5v4oDz7
+	 OwJO/6Y3vDGXHeI0yE/NubffU+1yLH2HseFCX51ilwpUyF11nhI51s5lV/LIvd3WQFp/D
+	 6ND373u7nYKTtdcvbfekc6l2edd6wjjWNTmkuuE2mtDRgdIR/Zoqch5lxybv1+bDPQas6
+	 iLiynAXPkC8wvqxgs4Bqrl7H/iszGrUmHXN4Tf8i97omseCDgevtOz9J+IWqq0XqcfpvF
+	 s22QrCX4Svxts3PzwmKmVbX8Yz/te0s4MzO4q+XSvF0LfA/TIMJoZ2VDxcoxLfJyvJQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793207929;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793207932;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Hb6++S/FEuHcYtIl1JbiEHnLRkyrv7oAuGfanQ5J8Y4=;
-	b=QoNVF/vbxdwANckOyBxcEdRujJz2G1gC0QrRjR7MrBKqGRbPMVC7qia7BHleh7/OrsN9
-	 AdtVMHhb5YECqw5gNg4Sl92Ie7iWng8GHCd27tFuDAETsRRujj8uqWYGO9RjJIfzmV7D8
-	 lmslHyhvBviZHZ9CENm/6eiBiyHQJX/ukgFHmstAuZDZmhyLcfIlDb7so2Deopkg7Vuok
-	 QVH9GQom06aa92hajmeVX6Tls1JcxyAT5eXxz/PX3WuO+70VshrBHwdX326tvCiCtamFr
-	 d03MmvsmBEnRPxvrqK1CgGCEqhxyBYbMe1sPU8j7PS5pVEkMtUH7NZaqCgsIfJooFqQ==
+	bh=ZhxLIypkkN6q06lk4wx1LZB0RyYbQ+g+AxzWJtvyT/k=;
+	b=xuWTbSSwBz9aRwapbgn2Rm1tvMB/2iLuAp21mEr4Jbg1CCIXxvDBmIV6rQhpbMYU+fJq
+	 J7gmk7WPZtZkS5Uo8ilSl8Efi8Vr5auIfAov5DnzzN594uFXxRy77fVTgHPSKyaXzsuT4
+	 xW2tTNS4ursQbD5RMkDDMmjIO9LRHLmEbCJ39IuEky5DS9M9uIklQz49yxF7JH6BC036I
+	 T/pTHDujZ3RLe1Y32T1RKGEWO/8zRpPYPzfat0XHyJDV2uTWgldPorw4wpH6Lq+1RdILf
+	 TGvUMFc76hpnf5Fq9iDLsY3sEE2MrblaH0NnwO9tJibuc5CiW9PVFzLjN2/ZK5QqNkQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="SCD/XQbN";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="JTwSSl/v";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2965A606A31F;
-	Wed, 28 Oct 2026 17:18:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 499FF606A322;
+	Wed, 28 Oct 2026 17:18:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SCD/XQbN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 799871F031E0;
-	Wed, 28 Oct 2026 17:18:48 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JTwSSl/v
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E5921F01825;
+	Wed, 28 Oct 2026 17:18:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793207929;
-	bh=Hb6++S/FEuHcYtIl1JbiEHnLRkyrv7oAuGfanQ5J8Y4=;
+	s=korg; t=1793207931;
+	bh=ZhxLIypkkN6q06lk4wx1LZB0RyYbQ+g+AxzWJtvyT/k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SCD/XQbNnXuTTrUwnCC/DgFVi2CSdSCIe1RBGO3sb6eZAcl+Y2ubsTezoT6mUPlJJ
-	 PSHoxi/Lk9RwZi3anlhLryUWoPV1NfP6NHGWAXCGmENRDE1F2B3xpEwCmCtRJnw8+2
-	 qjYFXxBVXg4tkwaFK/7LFTlm/U+dm9CHQ8HFvsVE=
+	b=JTwSSl/v5MzxWq5F1hSTpCD5lhnNPukAID8VDZj4nIQHAfHd2ARNq7Ku5j34AZ+OO
+	 dikrsdi77rNsXr5oagkr2bWbN9yrRs6+7hz15ps3H4Y3lTab07H4shMujSB7cpddVq
+	 Lmj3OJnk/EhF00DIdgUpZ787BoT3PvgIcWhxLrC4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot@kernel.org,
-	Donggeun Yoo <donggeunyoo.kernel@gmail.com>,
+	Lee Jones <lee@kernel.org>,
 	Steven Rostedt <rostedt@goodmis.org>
-Subject: [PATCH 6.12 190/247] tracing: Fix 64-bit and signed histogram fields on 32-bit kernels
-Date: Wed, 28 Oct 2026 17:59:53 +0100
-Message-ID: <20261028165951.917519056@linuxfoundation.org>
+Subject: [PATCH 6.12 191/247] tracing/histograms: Verify event_call identity when updating synth_event refcount
+Date: Wed, 28 Oct 2026 17:59:54 +0100
+Message-ID: <20261028165951.941655831@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165947.349197979@linuxfoundation.org>
 References: <20261028165947.349197979@linuxfoundation.org>
@@ -68,56 +67,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
+From: Lee Jones <lee@kernel.org>
 
-commit 443d23176812803d0fa182b8d05ef066a7b8271f upstream.
+commit 3403d9bb27ebc3572bd048620746b4414e073bf9 upstream.
 
-DEFINE_HIST_FIELD_FN() reads a trace event field and widens it to the u64
-the histogram uses as a key or a value:
+In event_hist_trigger_parse() and hist_unreg_all(), the histogram
+registration and unregistration paths look up find_synth_event() using
+trace_event_name(file->event_call) and adjust se->ref if a match is
+found.
 
-	type *addr = (type *)(event + hist_field->field->offset);
+Because find_synth_event() only compares the event basename, registering
+or removing a histogram on a non-synthetic trace event whose basename
+matches a synthetic event erroneously modifies the synthetic event's
+reference count.  If a histogram is registered on the non-synthetic
+event before the synthetic event is created and removed afterwards,
+se->ref is decremented without a matching increment, allowing the
+synthetic event to be freed while an active histogram action still holds
+a pointer to it.
 
-	return (u64)(unsigned long)*addr;
+Introduce find_synth_event_call() to verify that &se->call matches
+file->event_call before adjusting se->ref.
 
-unsigned long is 32 bits on a 32-bit kernel, so the intermediate cast
-discards the upper half of a 64-bit field, and widens a signed field by
-zero extension from 32 bits rather than sign extension from its own
-width. Five of the eight instantiations are wrong there: s64, u64, s32,
-s16 and s8.
-
-The cast came in with commit 79e577cbce4c ("tracing: Support string type
-key properly"), which also added hist_field_dynstring() and
-hist_field_pstring(). Those convert a char * to u64 and do warn without
-an unsigned long in between on 32-bit. DEFINE_HIST_FIELD_FN() converts an
-integer and never a pointer, so it gains nothing from the cast and only
-loses information.
-
-Drop the intermediate cast and let the usual arithmetic conversions widen
-*addr according to its own type. unsigned long is 64 bits on LP64, so the
-two forms are identical there and 64-bit kernels are unaffected.
-
+Fixes: 4b147936fa50 ("tracing: Add support for 'synthetic' events")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260917015532.103081-1-donggeunyoo.kernel@gmail.com
-Fixes: 79e577cbce4c ("tracing: Support string type key properly")
-Reported-by: sashiko-bot@kernel.org
-Closes: https://lore.kernel.org/all/20260914054614.82A9B1F000FF@smtp.kernel.org/
-Signed-off-by: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
+Link: https://patch.msgid.link/20261019120730.2342739-1-lee@kernel.org
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_events_hist.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/trace/trace_events_hist.c  |   11 +++--------
+ kernel/trace/trace_events_synth.c |   10 ++++++++++
+ kernel/trace/trace_synth.h        |    1 +
+ 3 files changed, 14 insertions(+), 8 deletions(-)
 
 --- a/kernel/trace/trace_events_hist.c
 +++ b/kernel/trace/trace_events_hist.c
-@@ -460,7 +460,7 @@ static u64 hist_field_unary_minus(struct
- {									\
- 	type *addr = (type *)(event + hist_field->field->offset);	\
- 									\
--	return (u64)(unsigned long)*addr;				\
-+	return (u64)*addr;						\
+@@ -6725,7 +6725,6 @@ static void hist_unreg_all(struct trace_
+ 	struct event_trigger_data *test, *n;
+ 	struct hist_trigger_data *hist_data;
+ 	struct synth_event *se;
+-	const char *se_name;
+ 
+ 	lockdep_assert_held(&event_mutex);
+ 
+@@ -6738,8 +6737,7 @@ static void hist_unreg_all(struct trace_
+ 			list_del_rcu(&test->list);
+ 			trace_event_trigger_enable_disable(file, 0);
+ 
+-			se_name = trace_event_name(file->event_call);
+-			se = find_synth_event(se_name);
++			se = find_synth_event_call(file->event_call);
+ 			if (se)
+ 				se->ref--;
+ 
+@@ -6763,7 +6761,6 @@ static int event_hist_trigger_parse(stru
+ 	struct hist_trigger_data *hist_data;
+ 	char *param, *filter, *p, *start;
+ 	struct synth_event *se;
+-	const char *se_name;
+ 	bool remove;
+ 	int ret = 0;
+ 
+@@ -6857,8 +6854,7 @@ static int event_hist_trigger_parse(stru
+ 		}
+ 
+ 		event_trigger_unregister(cmd_ops, file, glob+1, trigger_data);
+-		se_name = trace_event_name(file->event_call);
+-		se = find_synth_event(se_name);
++		se = find_synth_event_call(file->event_call);
+ 		if (se)
+ 			se->ref--;
+ 		ret = 0;
+@@ -6893,8 +6889,7 @@ static int event_hist_trigger_parse(stru
+ 	if (ret)
+ 		goto out_unreg;
+ 
+-	se_name = trace_event_name(file->event_call);
+-	se = find_synth_event(se_name);
++	se = find_synth_event_call(file->event_call);
+ 	if (se)
+ 		se->ref++;
+  out:
+--- a/kernel/trace/trace_events_synth.c
++++ b/kernel/trace/trace_events_synth.c
+@@ -857,6 +857,16 @@ struct synth_event *find_synth_event(con
+ 	return NULL;
  }
  
- DEFINE_HIST_FIELD_FN(s64);
++struct synth_event *find_synth_event_call(struct trace_event_call *call)
++{
++	struct synth_event *se;
++	const char *name;
++
++	name = trace_event_name(call);
++	se = find_synth_event(name);
++	return se && &se->call == call ? se : NULL;
++}
++
+ static struct trace_event_fields synth_event_fields_array[] = {
+ 	{ .type = TRACE_FUNCTION_TYPE,
+ 	  .define_fields = synth_event_define_fields },
+--- a/kernel/trace/trace_synth.h
++++ b/kernel/trace/trace_synth.h
+@@ -37,5 +37,6 @@ struct synth_event {
+ };
+ 
+ extern struct synth_event *find_synth_event(const char *name);
++extern struct synth_event *find_synth_event_call(struct trace_event_call *call);
+ 
+ #endif /* __TRACE_SYNTH_H */
 
 
