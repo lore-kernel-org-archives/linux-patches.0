@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793209668;
-	b=qTYpQz5/lNxwyp/RIgo0nTHQp8KuAcOURJnwHDPsto4Kmm3eOIINmZHwCoq0bLYRDawB
-	 GC3TOmhj2kbqXy93SC/2jz44GQFkkx8tUVccmAU5yakcHBCN4TLAqoZMh4MwVSSFW18t5
-	 nDiKZYDtaIuBHbbhfJQaNrVzslYYXXRGh1ltAaGv5MvNM8BJXddkGBfPYBV+Vyko6DTNs
-	 vkbJS9OKH9E0Xjtn5susVoHAXwgGv12YTGGrhiyJ2aF3cObkjTPvQcotGlZM3UwWaFqCo
-	 QTVONmyO8jF03XVVF6G0jX52R+BEZ0WJ7ur9VjetOtbXJWmDyM5K4RacHYocvKH9zsA==
+	t=1793209672;
+	b=cTxhQ0CzbaxbwI7xCam9vrWG0guvYMBGyOc8gvvnCmPsm0aaLRShG4a3O251ha1KxySL
+	 BLfp4GYQY6gQ7Whg1q2EmGadcOhHal9hga/xMGiWD2Y2/3Gn8Wc7ISoHZwfzUQERSgmFi
+	 RDgNcOAFnvmBVesWtg3cUJquO7duYvrq/9jbu2xWpBmy38z+xFEm2BdeWJhSP5EjWCrtI
+	 a25CiWcYrwn78BJm4g3azb/jaq9zmjmeuvfPfhLnbIt16c7xcp/bmA/G78RDjo6q1K/NU
+	 zf3tTSC2BS9hrX6jYyLFJzfkLj9OWrcgEIBVWJ6ZokRa9OWjda7JknWBXp2Wl1kRDyw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793209668;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793209672;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=rjIT+Vgq/CgrxUTOq1ghgbUWRTa1Jl6hRl9Xu8EleRk=;
-	b=3m9we7LFpp9F88NkosYVWsO/S1dhdRGzZppOZjKjxIicP5YwtH5nzEL91Tnc3vIcjO1I
-	 n/fTvhkpi/jq7xuK+MfMrkehWWBHaxX78dy7l9+kdbrVRVZwX4V9YGlEU9eukjDO4yz2A
-	 BpdgA7gVp5vMvThQma7ji0c0f7ts4T+QjBss1AKD4E9FGznxdMxYihm0Zf716WvP/a4Ul
-	 05cU0rLksNp9HijIMS3Z8lx/yiimn6qeD1lvzcIa8RO4tpwiWog5WlAve424YuejRjoZH
-	 Pa4DBnZv1LI1Iyr7xZj5PG9uv0qkZnkUDDishQQSUehvA0UFOkkaFoqxPG/cs1NP2qw==
+	bh=vVrxKmsBzugMfWdKx55A8vkNJcZq0kd7/HJyl1vOvt8=;
+	b=IRIlAYMXqoLqeS2OfVUZ62iuuBEj1JvsQ+1DAo57Bnkpme2mzdFoPpJrp2e9WgE7SitX
+	 dR5ZChGk9ZAKVn2Z8MR+b8D1CGqR6RQj49eACbL7qXyS+QFlKddUM70uvmT/0uAh42Gnq
+	 eWYpRmYh9yKwYSe29mT7zjSxq9iO4oglk+UWvxtsgFWwsCh/6fE9Erruzq76cp42sRtnn
+	 pvQ4QXWPbVwpurQXn16/J/V1QkZq1n/DCpFtXBY6tf1b/AsaVVbnq2hwvdLNn2ZTXFDXx
+	 F6qswww7Otvw5t82wB4FGfO1lF67x6tsOx7oYeW5vk7FhskeXSMt5OFXx12MXYkVdoQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KQtdyrJt;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Np/exAlV";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75CB1606A31A;
-	Wed, 28 Oct 2026 17:47:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5680606A31A;
+	Wed, 28 Oct 2026 17:47:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KQtdyrJt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C74411F01825;
-	Wed, 28 Oct 2026 17:47:47 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Np/exAlV
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F9771F01825;
+	Wed, 28 Oct 2026 17:47:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793209668;
-	bh=rjIT+Vgq/CgrxUTOq1ghgbUWRTa1Jl6hRl9Xu8EleRk=;
+	s=korg; t=1793209671;
+	bh=vVrxKmsBzugMfWdKx55A8vkNJcZq0kd7/HJyl1vOvt8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KQtdyrJtV+kMe1VB7bL7DVbRmcxowMYqPqbqyqxkSQl9ROOjLePvhkoUixPDNfjmK
-	 ZUvsHnxn/5kcrGnEhhHpCz0N2KO0+qrm7kLUyhUWFuiiX5eNYnWhnF3RPkVUcG7NmD
-	 lpH3Y06QIQ92bXg2aaR0xjJ9lHM+v3eMC4qyk/oU=
+	b=Np/exAlV2SYlEplcSm2jw0jMMD+y7CmIa1J6hfWKRMWQqA7A4znGAk8dOJXlE/rKI
+	 C7wZyt84X2l0SvYjV40DGmZE7lHzSu/o+Yiw9Ge/362OE5BMcXjqX84EWyvH1P+k3U
+	 eUrTQWYD+rsHeo086NGIatFwPYZ6PXstOCjbhE3I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pauli Virtanen <pav@iki.fi>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 034/109] Bluetooth: L2CAP: refuse __l2cap_chan_add if chan already has conn
-Date: Wed, 28 Oct 2026 18:00:18 +0100
-Message-ID: <20261028165943.165054031@linuxfoundation.org>
+	David Carlier <devnexen@gmail.com>,
+	Steven Rostedt <rostedt@goodmis.org>
+Subject: [PATCH 6.18 035/109] tracing: Hold trace_types_lock when updating modules in persistent instances
+Date: Wed, 28 Oct 2026 18:00:19 +0100
+Message-ID: <20261028165943.188394872@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165942.357251485@linuxfoundation.org>
 References: <20261028165942.357251485@linuxfoundation.org>
@@ -68,94 +67,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pauli Virtanen <pav@iki.fi>
+From: David Carlier <devnexen@gmail.com>
 
-[ Upstream commit 86b55991d3cd690e73c5ef8d20b75ae4905b357a ]
+commit 66877a312ae3c2c3d849e82e882f642ffd4ec3e2 upstream.
 
-l2cap_chan may be linked to l2cap_conn at most once. This is assumed in
-several places, eg l2cap_chan_del cleanup.
+trace_module_record() walks ftrace_trace_arrays from the module notifier
+without trace_types_lock. A concurrent rmdir of an instance removes it
+from the list and frees it under that lock, so a module load or unload
+can walk into a freed trace_array.
 
-There is a TOCTOU race where the invariant is violated:
-
-    [Task 1]                          [Task 2]
-    l2cap_chan_connect                l2cap_sock_bind
-      l2cap_chan_lock                   lock_sock
-      l2cap_state_change                if (sk->sk_state != BT_OPEN)
-        chan->state = BT_CONNECT
-        l2cap_sock_state_change_cb      chan->state = BT_BOUND
-                                        sk->sk_state = BT_BOUND
-          lock_sock <------------------ release_sock
-          sk->sk_state = BT_CONNECT
-
-l2cap_sock_connect() does not check sk->sk_state, so since chan->state
-is now BT_BOUND, subsequent connect() ends up with second
-__l2cap_chan_add.
-
-Explicitly document and check the invariant in __l2cap_chan_add with
-WARN_ON_ONCE. The only callsite where it could be hit is
-l2cap_chan_connect, so add pre-check there to avoid relying on
-chan->state. chan->state read/write is not properly guarded currently so
-there can be other TOCTOUC problems.
-
-Add l2cap_lock_chan in l2cap_sock_bind() to guard chan->state write.
-
-Fixes: b66774b48dd9 ("Bluetooth: L2CAP: Fix UAF in channel timeout by holding conn ref")
-Assisted-by: deepseek-4-flash # finding the race condition
-Signed-off-by: Pauli Virtanen <pav@iki.fi>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: 5f3719f697c3 ("tracing: Update modules to persistent instances when loaded")
+Link: https://patch.msgid.link/20261016061638.214847-1-devnexen@gmail.com
+Signed-off-by: David Carlier <devnexen@gmail.com>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/l2cap_core.c | 7 ++++++-
- net/bluetooth/l2cap_sock.c | 2 ++
- 2 files changed, 8 insertions(+), 1 deletion(-)
+ kernel/trace/trace.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
-index 7d4115603d08e..462667a6e6ac2 100644
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -625,6 +625,10 @@ void __l2cap_chan_add(struct l2cap_conn *conn, struct l2cap_chan *chan)
- 	BT_DBG("conn %p, psm 0x%2.2x, dcid 0x%4.4x", conn,
- 	       __le16_to_cpu(chan->psm), chan->dcid);
+--- a/kernel/trace/trace.c
++++ b/kernel/trace/trace.c
+@@ -10693,6 +10693,8 @@ static void trace_module_record(struct m
+ 	struct trace_array *tr;
+ 	unsigned long flags;
  
-+	/* Caller must ensure l2cap_chan is linked to l2cap_conn only once */
-+	if (WARN_ON_ONCE(chan->conn || test_bit(FLAG_DEL, &chan->flags)))
-+		return;
++	guard(mutex)(&trace_types_lock);
 +
- 	conn->disc_reason = HCI_ERROR_REMOTE_USER_TERM;
- 
- 	chan->conn = l2cap_conn_get(conn);
-@@ -7410,7 +7414,8 @@ int l2cap_chan_connect(struct l2cap_chan *chan, __le16 psm, u16 cid,
- 		}
- 	}
- 
--	if (cid && __l2cap_get_chan_by_dcid(conn, cid)) {
-+	if ((cid && __l2cap_get_chan_by_dcid(conn, cid)) || chan->conn ||
-+	    test_bit(FLAG_DEL, &chan->flags)) {
- 		hci_conn_drop(hcon);
- 		err = -EBUSY;
- 		goto chan_unlock;
-diff --git a/net/bluetooth/l2cap_sock.c b/net/bluetooth/l2cap_sock.c
-index 9078a672e2dd3..e78866e02bfc2 100644
---- a/net/bluetooth/l2cap_sock.c
-+++ b/net/bluetooth/l2cap_sock.c
-@@ -111,6 +111,7 @@ static int l2cap_sock_bind(struct socket *sock, struct sockaddr_unsized *addr, i
- 			return -EINVAL;
- 	}
- 
-+	l2cap_chan_lock(chan);
- 	lock_sock(sk);
- 
- 	if (sk->sk_state != BT_OPEN) {
-@@ -176,6 +177,7 @@ static int l2cap_sock_bind(struct socket *sock, struct sockaddr_unsized *addr, i
- 
- done:
- 	release_sock(sk);
-+	l2cap_chan_unlock(chan);
- 	return err;
- }
- 
--- 
-2.53.0
-
+ 	list_for_each_entry(tr, &ftrace_trace_arrays, list) {
+ 		flags = tr->flags & (TRACE_ARRAY_FL_BOOT | TRACE_ARRAY_FL_LAST_BOOT);
+ 		/* Update any persistent trace array that has already been started */
 
 
