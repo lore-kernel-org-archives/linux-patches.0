@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793209276;
-	b=PQ9RMoV+viu+hpSqwg9ZbkUuReFRd6Xjfn3zW/O0uGtG4n4KdDCI6fd45fo4VUpAzrOT
-	 IugUPYe+A52j8GHG4Dawt+JBZVkLXaC6vD5t3etFD1kc6gq5eozV8/x+4rk/gGK0Vr2wD
-	 jJ9rdunjdJDhl4TC5v9x6jaTDZRl41kqfaBj0h6y/9JhHo96/0Btmgtp+oDEUBJ5jUohS
-	 Dabe/32TElNj14nOJtYZ8O/CKtDLEp7Os0N37+643aJvViGSNwCrpLoMM4K2Bd1gmthec
-	 GSQkCCPxhV0VMGa63Cm5g6411XH7Pteg6LLA0ZurftxNHIyW4BhXiZEEXZ79JygZwjQ==
+	t=1793209279;
+	b=q+vvMmLWrUDbU1P1Vyj6Po9PgB8T2dP5R2YBNr/w92VupqiqLz3p1xIdO3pf8Ka0IaBw
+	 pxK0lNeVsem8fuqt2Q4Rg344OxZBi8aS67q4/2cI5ZcaOZlhzSRF39+vD2ZI8uMmPnZSQ
+	 jGrm8qmsii3uHVGAL2vx2K5SHCxNcgYyBEc2wIeQpJBO2+QKQ0Xpe9fE+xSIQ3dpOcEHV
+	 Qr8ACI9rUJzTGYc2heYynxtSk6XP7QfjKkhfiynu/6Yo7dmS7scQfI/EqIl1bM87C2Jqr
+	 2JwjSGSLPOUGNxWW5Hahwqt4y42mM/2Qg0BtwRhKv0rtipKlvZW3pCCqZ+2f7ITZXZw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793209276;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793209279;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=kCaSFeOEy36DrrQP6o/wZ+fWZfhp/2aZfZlJIdwZIkg=;
-	b=gtI915HlEh+E6N5QQBDHw20ZaUHDnkHNF7jondioMiznsYA1KxNAB+RlEazInQgy5bgy
-	 Y0WaADkFNg6pzVeWqmffm93be4cIcUdZozVkMcK+gDT1+grBKUyJ+z/mevR7IjyMHi7Ea
-	 eGZiYHm6bm48khi18nnWlZ1l5smWMLl+L5rgbDfXcUpaM1F+bdbmB5qLM46F4srbgosoq
-	 zbfg5wTZ2pTeOXrrV0CsqCtxb1azcuW4P9R1HFk1REqRjiBCuzNqNojQnEzESIyqiznKk
-	 DZnAdH12CyKCL4y3BPBVw7sKJ86nEZ5yzjtDeWEcqICKS2ifob0Apw+0PGE6LojtYag==
+	bh=XaCwWXuSM9vmJxsN/ILDOjMoX50zkynVQt0hD55vBZQ=;
+	b=xoaEHbzgTWV509Jf2/ksqEMQdu8QtXpuLhBReFsbUxDk9McI2GVxWDFFvvhufCgvba3+
+	 93AdlhMpfr56oA3OZ3Vs+ONjO5+/VeWaM3sPKuyV6COhb9CGp2f+LnU8nYrIrIxW2V09q
+	 Fbt/vNZfu7kLVDPeMSx2JJWcN9s5dMAEfkCvFbBESTaSAmyzScMjnB2OqgW6dLsgDugjd
+	 ibzTmte9AHflNN7rcqKoHQVWpXYcDPg9iq1jRJZ0wTRcce2Xtgn47YRNAlyAHDhBAYMtM
+	 d89wIrYeNn+4jMB2CmiawKSc/EIG/hmqk+N7D5nE3KsWDgIoYVrZfbvsOxbAbtwbOAw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=U3DWU8jG;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jxsVj3S0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1EF9606A31C;
-	Wed, 28 Oct 2026 17:41:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF8D7606A31E;
+	Wed, 28 Oct 2026 17:41:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=U3DWU8jG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B3031F01825;
-	Wed, 28 Oct 2026 17:41:14 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jxsVj3S0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3E1A1F01825;
+	Wed, 28 Oct 2026 17:41:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793209275;
-	bh=kCaSFeOEy36DrrQP6o/wZ+fWZfhp/2aZfZlJIdwZIkg=;
+	s=korg; t=1793209278;
+	bh=XaCwWXuSM9vmJxsN/ILDOjMoX50zkynVQt0hD55vBZQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=U3DWU8jG0MfK/WeydSirl+pU5ET5XK5ln1PMAeZ6htsOPzdLsbjY4jBvPpGW+HizZ
-	 2CuriMFGxomV83r8WsBGvgjJG5Sed/jGVds1ZB5nqhgBW95mlHnD+pUfQ3a9TsBOVe
-	 sMxh4s9f9EOlmwplVS/8fv+UAR8lKU3qCKEUsdp0=
+	b=jxsVj3S0oGbanbbtL7N3PCsK3nF5HxRs+e9V/eVKW4jmw0WVONi3meD+Andqbf8hF
+	 ajoWPlHs14nwBgBkD4piANjEYyGXEPUiRXvpIliqjdyCRungwkk8jTgefdseG1+bsR
+	 RgVr1lQmlJktYPtDdWWyDhtUjogZEUajDpffmE60=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Dave Chinner <dchinner@redhat.com>,
-	"Darrick J. Wong" <djwong@kernel.org>,
+	"Darrick J. Wong" <darrick.wong@oracle.com>,
 	Siddh Raman Pant <siddh.raman.pant@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 412/516] xfs: aborting inodes on shutdown may need buffer lock
-Date: Wed, 28 Oct 2026 17:59:24 +0100
-Message-ID: <20261028170013.243449166@linuxfoundation.org>
+Subject: [PATCH 5.10 413/516] xfs: remove xfs_buf_t typedef
+Date: Wed, 28 Oct 2026 17:59:25 +0100
+Message-ID: <20261028170013.269313622@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -71,272 +71,770 @@ Content-Transfer-Encoding: 8bit
 
 From: Dave Chinner <dchinner@redhat.com>
 
-[ Upstream commit d2d7c0473586d2f22e85d615275f34cf19f94447 ]
+[ Upstream commit e82226138b20d4f638426413e83c6b5db532c6a2 ]
 
-Most buffer io list operations are run with the bp->b_lock held, but
-xfs_iflush_abort() can be called without the buffer lock being held
-resulting in inodes being removed from the buffer list while other
-list operations are occurring. This causes problems with corrupted
-bp->b_io_list inode lists during filesystem shutdown, leading to
-traversals that never end, double removals from the AIL, etc.
+Prepare for kernel xfs_buf  alignment by getting rid of the
+xfs_buf_t typedef from userspace.
 
-Fix this by passing the buffer to xfs_iflush_abort() if we have
-it locked. If the inode is attached to the buffer, we're going to
-have to remove it from the buffer list and we'd have to get the
-buffer off the inode log item to do that anyway.
-
-If we don't have a buffer passed in (e.g. from xfs_reclaim_inode())
-then we can determine if the inode has a log item and if it is
-attached to a buffer before we do anything else. If it does have an
-attached buffer, we can lock it safely (because the inode has a
-reference to it) and then perform the inode abort.
+[darrick: This patch is a port of a userspace patch removing the
+xfs_buf_t typedef in preparation to make the userspace xfs_buf code
+behave more like its kernel counterpart.]
 
 Signed-off-by: Dave Chinner <dchinner@redhat.com>
-Reviewed-by: Darrick J. Wong <djwong@kernel.org>
-Signed-off-by: Darrick J. Wong <djwong@kernel.org>
-Stable-dep-of: 09234a632be4 ("xfs: xfs_ifree_cluster vs xfs_iflush_shutdown_abort deadlock")
+Reviewed-by: Darrick J. Wong <darrick.wong@oracle.com>
+Signed-off-by: Darrick J. Wong <darrick.wong@oracle.com>
+Reviewed-by: Dave Chinner <dchinner@redhat.com>
+Stable-dep-of: d2fe5c4c8d25 ("xfs: rearrange code in xfs_buf_item.c")
+
+5.10:
+
+2 extra conversions in fs/xfs/xfs_inode.c due to missing:
+	1abcf261016e ("xfs: move on-disk inode allocation out of xfs_ialloc()")
+
 Signed-off-by: Siddh Raman Pant <siddh.raman.pant@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/xfs/xfs_icache.c     |   2 +-
- fs/xfs/xfs_inode.c      |   2 +-
- fs/xfs/xfs_inode_item.c | 162 +++++++++++++++++++++++++++++++++-------
- fs/xfs/xfs_inode_item.h |   1 +
- 4 files changed, 136 insertions(+), 31 deletions(-)
+ fs/xfs/libxfs/xfs_alloc.c    | 16 ++++++++--------
+ fs/xfs/libxfs/xfs_bmap.c     |  6 +++---
+ fs/xfs/libxfs/xfs_btree.c    | 10 +++++-----
+ fs/xfs/libxfs/xfs_ialloc.c   |  4 ++--
+ fs/xfs/libxfs/xfs_rtbitmap.c | 22 +++++++++++-----------
+ fs/xfs/xfs_buf.c             | 24 ++++++++++++------------
+ fs/xfs/xfs_buf.h             | 14 +++++++-------
+ fs/xfs/xfs_buf_item.c        |  4 ++--
+ fs/xfs/xfs_fsops.c           |  2 +-
+ fs/xfs/xfs_inode.c           |  4 ++--
+ fs/xfs/xfs_log_recover.c     |  8 ++++----
+ fs/xfs/xfs_rtalloc.c         | 20 ++++++++++----------
+ fs/xfs/xfs_rtalloc.h         |  4 ++--
+ fs/xfs/xfs_symlink.c         |  4 ++--
+ fs/xfs/xfs_trans.c           |  2 +-
+ fs/xfs/xfs_trans_buf.c       | 16 ++++++++--------
+ 16 files changed, 80 insertions(+), 80 deletions(-)
 
-diff --git a/fs/xfs/xfs_icache.c b/fs/xfs/xfs_icache.c
-index e69a08ed7de43..d973eca1a8815 100644
---- a/fs/xfs/xfs_icache.c
-+++ b/fs/xfs/xfs_icache.c
-@@ -1040,7 +1040,7 @@ xfs_reclaim_inode(
+diff --git a/fs/xfs/libxfs/xfs_alloc.c b/fs/xfs/libxfs/xfs_alloc.c
+index 15640015be9d2..7cb9f064ac645 100644
+--- a/fs/xfs/libxfs/xfs_alloc.c
++++ b/fs/xfs/libxfs/xfs_alloc.c
+@@ -690,9 +690,9 @@ xfs_alloc_read_agfl(
+ 	xfs_mount_t	*mp,		/* mount point structure */
+ 	xfs_trans_t	*tp,		/* transaction pointer */
+ 	xfs_agnumber_t	agno,		/* allocation group number */
+-	xfs_buf_t	**bpp)		/* buffer for the ag free block array */
++	struct xfs_buf	**bpp)		/* buffer for the ag free block array */
+ {
+-	xfs_buf_t	*bp;		/* return value */
++	struct xfs_buf	*bp;		/* return value */
+ 	int		error;
  
- 	if (XFS_FORCED_SHUTDOWN(ip->i_mount)) {
- 		xfs_iunpin_wait(ip);
--		xfs_iflush_abort(ip);
-+		xfs_iflush_shutdown_abort(ip);
- 		goto reclaim;
- 	}
- 	if (xfs_ipincount(ip))
-diff --git a/fs/xfs/xfs_inode.c b/fs/xfs/xfs_inode.c
-index 19008838df769..2de204f46216b 100644
---- a/fs/xfs/xfs_inode.c
-+++ b/fs/xfs/xfs_inode.c
-@@ -3613,7 +3613,7 @@ xfs_iflush_cluster(
- 
- 	/*
- 	 * We must use the safe variant here as on shutdown xfs_iflush_abort()
--	 * can remove itself from the list.
-+	 * will remove itself from the list.
- 	 */
- 	list_for_each_entry_safe(lip, n, &bp->b_li_list, li_bio_list) {
- 		iip = (struct xfs_inode_log_item *)lip;
-diff --git a/fs/xfs/xfs_inode_item.c b/fs/xfs/xfs_inode_item.c
-index 38b59e8070acc..c9ef341d4ee36 100644
---- a/fs/xfs/xfs_inode_item.c
-+++ b/fs/xfs/xfs_inode_item.c
-@@ -518,10 +518,17 @@ xfs_inode_item_push(
- 	uint			rval = XFS_ITEM_SUCCESS;
+ 	ASSERT(agno != NULLAGNUMBER);
+@@ -2647,12 +2647,12 @@ xfs_alloc_fix_freelist(
+ int				/* error */
+ xfs_alloc_get_freelist(
+ 	xfs_trans_t	*tp,	/* transaction pointer */
+-	xfs_buf_t	*agbp,	/* buffer containing the agf structure */
++	struct xfs_buf	*agbp,	/* buffer containing the agf structure */
+ 	xfs_agblock_t	*bnop,	/* block address retrieved from freelist */
+ 	int		btreeblk) /* destination is a AGF btree */
+ {
+ 	struct xfs_agf	*agf = agbp->b_addr;
+-	xfs_buf_t	*agflbp;/* buffer for a.g. freelist structure */
++	struct xfs_buf	*agflbp;/* buffer for a.g. freelist structure */
+ 	xfs_agblock_t	bno;	/* block number returned */
+ 	__be32		*agfl_bno;
+ 	int		error;
+@@ -2711,7 +2711,7 @@ xfs_alloc_get_freelist(
+ void
+ xfs_alloc_log_agf(
+ 	xfs_trans_t	*tp,	/* transaction pointer */
+-	xfs_buf_t	*bp,	/* buffer for a.g. freelist header */
++	struct xfs_buf	*bp,	/* buffer for a.g. freelist header */
+ 	int		fields)	/* mask of fields to be logged (XFS_AGF_...) */
+ {
+ 	int	first;		/* first byte offset */
+@@ -2757,7 +2757,7 @@ xfs_alloc_pagf_init(
+ 	xfs_agnumber_t		agno,	/* allocation group number */
+ 	int			flags)	/* XFS_ALLOC_FLAGS_... */
+ {
+-	xfs_buf_t		*bp;
++	struct xfs_buf		*bp;
  	int			error;
  
--	ASSERT(iip->ili_item.li_buf);
-+	if (!bp || (ip->i_flags & XFS_ISTALE)) {
-+		/*
-+		 * Inode item/buffer is being being aborted due to cluster
-+		 * buffer deletion. Trigger a log force to have that operation
-+		 * completed and items removed from the AIL before the next push
-+		 * attempt.
-+		 */
-+		return XFS_ITEM_PINNED;
-+	}
+ 	error = xfs_alloc_read_agf(mp, tp, agno, flags, &bp);
+@@ -2772,8 +2772,8 @@ xfs_alloc_pagf_init(
+ int					/* error */
+ xfs_alloc_put_freelist(
+ 	xfs_trans_t		*tp,	/* transaction pointer */
+-	xfs_buf_t		*agbp,	/* buffer for a.g. freelist header */
+-	xfs_buf_t		*agflbp,/* buffer for a.g. free block array */
++	struct xfs_buf		*agbp,	/* buffer for a.g. freelist header */
++	struct xfs_buf		*agflbp,/* buffer for a.g. free block array */
+ 	xfs_agblock_t		bno,	/* block being freed */
+ 	int			btreeblk) /* block came from a AGF btree */
+ {
+diff --git a/fs/xfs/libxfs/xfs_bmap.c b/fs/xfs/libxfs/xfs_bmap.c
+index de9c27ef68d86..5483572512edf 100644
+--- a/fs/xfs/libxfs/xfs_bmap.c
++++ b/fs/xfs/libxfs/xfs_bmap.c
+@@ -321,7 +321,7 @@ xfs_bmap_check_leaf_extents(
+ 	struct xfs_ifork	*ifp = XFS_IFORK_PTR(ip, whichfork);
+ 	struct xfs_btree_block	*block;	/* current btree block */
+ 	xfs_fsblock_t		bno;	/* block # of "block" */
+-	xfs_buf_t		*bp;	/* buffer for "block" */
++	struct xfs_buf		*bp;	/* buffer for "block" */
+ 	int			error;	/* error return value */
+ 	xfs_extnum_t		i=0, j;	/* index into the extents list */
+ 	int			level;	/* btree level, for checking */
+@@ -592,7 +592,7 @@ xfs_bmap_btree_to_extents(
+ 	struct xfs_btree_block	*rblock = ifp->if_broot;
+ 	struct xfs_btree_block	*cblock;/* child btree block */
+ 	xfs_fsblock_t		cbno;	/* child block number */
+-	xfs_buf_t		*cbp;	/* child block's buffer */
++	struct xfs_buf		*cbp;	/* child block's buffer */
+ 	int			error;	/* error return value */
+ 	__be64			*pp;	/* ptr to block address */
+ 	struct xfs_owner_info	oinfo;
+@@ -830,7 +830,7 @@ xfs_bmap_local_to_extents(
+ 	int		flags;		/* logging flags returned */
+ 	struct xfs_ifork *ifp;		/* inode fork pointer */
+ 	xfs_alloc_arg_t	args;		/* allocation arguments */
+-	xfs_buf_t	*bp;		/* buffer for extent block */
++	struct xfs_buf	*bp;		/* buffer for extent block */
+ 	struct xfs_bmbt_irec rec;
+ 	struct xfs_iext_cursor icur;
  
--	if (xfs_ipincount(ip) > 0 || xfs_buf_ispinned(bp) ||
--	    (ip->i_flags & XFS_ISTALE))
-+	if (xfs_ipincount(ip) > 0 || xfs_buf_ispinned(bp))
- 		return XFS_ITEM_PINNED;
+diff --git a/fs/xfs/libxfs/xfs_btree.c b/fs/xfs/libxfs/xfs_btree.c
+index 0926363179a76..aaa59daa77d05 100644
+--- a/fs/xfs/libxfs/xfs_btree.c
++++ b/fs/xfs/libxfs/xfs_btree.c
+@@ -394,7 +394,7 @@ xfs_btree_dup_cursor(
+ 	xfs_btree_cur_t	*cur,		/* input cursor */
+ 	xfs_btree_cur_t	**ncur)		/* output cursor */
+ {
+-	xfs_buf_t	*bp;		/* btree block's buffer pointer */
++	struct xfs_buf	*bp;		/* btree block's buffer pointer */
+ 	int		error;		/* error return value */
+ 	int		i;		/* level number of btree block */
+ 	xfs_mount_t	*mp;		/* mount structure for filesystem */
+@@ -698,7 +698,7 @@ xfs_btree_firstrec(
+ 	int			level)	/* level to change */
+ {
+ 	struct xfs_btree_block	*block;	/* generic btree block pointer */
+-	xfs_buf_t		*bp;	/* buffer containing block */
++	struct xfs_buf		*bp;	/* buffer containing block */
  
- 	if (xfs_iflags_test(ip, XFS_IFLUSHING))
-@@ -801,46 +808,143 @@ xfs_buf_inode_io_fail(
- }
+ 	/*
+ 	 * Get the block pointer for this level.
+@@ -728,7 +728,7 @@ xfs_btree_lastrec(
+ 	int			level)	/* level to change */
+ {
+ 	struct xfs_btree_block	*block;	/* generic btree block pointer */
+-	xfs_buf_t		*bp;	/* buffer containing block */
++	struct xfs_buf		*bp;	/* buffer containing block */
  
- /*
-- * This is the inode flushing abort routine.  It is called when
-- * the filesystem is shutting down to clean up the inode state.  It is
-- * responsible for removing the inode item from the AIL if it has not been
-- * re-logged and clearing the inode's flush state.
-+ * Clear the inode logging fields so no more flushes are attempted.  If we are
-+ * on a buffer list, it is now safe to remove it because the buffer is
-+ * guaranteed to be locked. The caller will drop the reference to the buffer
-+ * the log item held.
-+ */
-+static void
-+xfs_iflush_abort_clean(
-+	struct xfs_inode_log_item *iip)
-+{
-+	iip->ili_last_fields = 0;
-+	iip->ili_fields = 0;
-+	iip->ili_fsync_fields = 0;
-+	iip->ili_flush_lsn = 0;
-+	iip->ili_item.li_buf = NULL;
-+	list_del_init(&iip->ili_item.li_bio_list);
-+}
-+
-+/*
-+ * Abort flushing the inode from a context holding the cluster buffer locked.
-+ *
-+ * This is the normal runtime method of aborting writeback of an inode that is
-+ * attached to a cluster buffer. It occurs when the inode and the backing
-+ * cluster buffer have been freed (i.e. inode is XFS_ISTALE), or when cluster
-+ * flushing or buffer IO completion encounters a log shutdown situation.
-+ *
-+ * If we need to abort inode writeback and we don't already hold the buffer
-+ * locked, call xfs_iflush_shutdown_abort() instead as this should only ever be
-+ * necessary in a shutdown situation.
+ 	/*
+ 	 * Get the block pointer for this level.
+@@ -990,7 +990,7 @@ STATIC void
+ xfs_btree_setbuf(
+ 	xfs_btree_cur_t		*cur,	/* btree cursor */
+ 	int			lev,	/* level in btree */
+-	xfs_buf_t		*bp)	/* new buffer to set */
++	struct xfs_buf		*bp)	/* new buffer to set */
+ {
+ 	struct xfs_btree_block	*b;	/* btree block */
+ 
+@@ -1633,7 +1633,7 @@ xfs_btree_decrement(
+ 	int			*stat)		/* success/failure */
+ {
+ 	struct xfs_btree_block	*block;
+-	xfs_buf_t		*bp;
++	struct xfs_buf		*bp;
+ 	int			error;		/* error return value */
+ 	int			lev;
+ 	union xfs_btree_ptr	ptr;
+diff --git a/fs/xfs/libxfs/xfs_ialloc.c b/fs/xfs/libxfs/xfs_ialloc.c
+index 7e8ba9698abab..8fcb5c6810e9e 100644
+--- a/fs/xfs/libxfs/xfs_ialloc.c
++++ b/fs/xfs/libxfs/xfs_ialloc.c
+@@ -2454,7 +2454,7 @@ xfs_imap(
+ void
+ xfs_ialloc_log_agi(
+ 	xfs_trans_t	*tp,		/* transaction pointer */
+-	xfs_buf_t	*bp,		/* allocation group header buffer */
++	struct xfs_buf	*bp,		/* allocation group header buffer */
+ 	int		fields)		/* bitmask of fields to log */
+ {
+ 	int			first;		/* first byte number */
+@@ -2675,7 +2675,7 @@ xfs_ialloc_pagi_init(
+ 	xfs_trans_t	*tp,		/* transaction pointer */
+ 	xfs_agnumber_t	agno)		/* allocation group number */
+ {
+-	xfs_buf_t	*bp = NULL;
++	struct xfs_buf	*bp = NULL;
+ 	int		error;
+ 
+ 	error = xfs_ialloc_read_agi(mp, tp, agno, &bp);
+diff --git a/fs/xfs/libxfs/xfs_rtbitmap.c b/fs/xfs/libxfs/xfs_rtbitmap.c
+index 6c1aba16113c5..fe3a49575ff3c 100644
+--- a/fs/xfs/libxfs/xfs_rtbitmap.c
++++ b/fs/xfs/libxfs/xfs_rtbitmap.c
+@@ -56,9 +56,9 @@ xfs_rtbuf_get(
+ 	xfs_trans_t	*tp,		/* transaction pointer */
+ 	xfs_rtblock_t	block,		/* block number in bitmap or summary */
+ 	int		issum,		/* is summary not bitmap */
+-	xfs_buf_t	**bpp)		/* output: buffer for the block */
++	struct xfs_buf	**bpp)		/* output: buffer for the block */
+ {
+-	xfs_buf_t	*bp;		/* block buffer, result */
++	struct xfs_buf	*bp;		/* block buffer, result */
+ 	xfs_inode_t	*ip;		/* bitmap or summary inode */
+ 	xfs_bmbt_irec_t	map;
+ 	int		nmap = 1;
+@@ -101,7 +101,7 @@ xfs_rtfind_back(
+ 	xfs_rtword_t	*b;		/* current word in buffer */
+ 	int		bit;		/* bit number in the word */
+ 	xfs_rtblock_t	block;		/* bitmap block number */
+-	xfs_buf_t	*bp;		/* buf for the block */
++	struct xfs_buf	*bp;		/* buf for the block */
+ 	xfs_rtword_t	*bufp;		/* starting word in buffer */
+ 	int		error;		/* error value */
+ 	xfs_rtblock_t	firstbit;	/* first useful bit in the word */
+@@ -276,7 +276,7 @@ xfs_rtfind_forw(
+ 	xfs_rtword_t	*b;		/* current word in buffer */
+ 	int		bit;		/* bit number in the word */
+ 	xfs_rtblock_t	block;		/* bitmap block number */
+-	xfs_buf_t	*bp;		/* buf for the block */
++	struct xfs_buf	*bp;		/* buf for the block */
+ 	xfs_rtword_t	*bufp;		/* starting word in buffer */
+ 	int		error;		/* error value */
+ 	xfs_rtblock_t	i;		/* current bit number rel. to start */
+@@ -447,11 +447,11 @@ xfs_rtmodify_summary_int(
+ 	int		log,		/* log2 of extent size */
+ 	xfs_rtblock_t	bbno,		/* bitmap block number */
+ 	int		delta,		/* change to make to summary info */
+-	xfs_buf_t	**rbpp,		/* in/out: summary block buffer */
++	struct xfs_buf	**rbpp,		/* in/out: summary block buffer */
+ 	xfs_fsblock_t	*rsb,		/* in/out: summary block number */
+ 	xfs_suminfo_t	*sum)		/* out: summary info for this block */
+ {
+-	xfs_buf_t	*bp;		/* buffer for the summary block */
++	struct xfs_buf	*bp;		/* buffer for the summary block */
+ 	int		error;		/* error value */
+ 	xfs_fsblock_t	sb;		/* summary fsblock */
+ 	int		so;		/* index into the summary file */
+@@ -517,7 +517,7 @@ xfs_rtmodify_summary(
+ 	int		log,		/* log2 of extent size */
+ 	xfs_rtblock_t	bbno,		/* bitmap block number */
+ 	int		delta,		/* change to make to summary info */
+-	xfs_buf_t	**rbpp,		/* in/out: summary block buffer */
++	struct xfs_buf	**rbpp,		/* in/out: summary block buffer */
+ 	xfs_fsblock_t	*rsb)		/* in/out: summary block number */
+ {
+ 	return xfs_rtmodify_summary_int(mp, tp, log, bbno,
+@@ -539,7 +539,7 @@ xfs_rtmodify_range(
+ 	xfs_rtword_t	*b;		/* current word in buffer */
+ 	int		bit;		/* bit number in the word */
+ 	xfs_rtblock_t	block;		/* bitmap block number */
+-	xfs_buf_t	*bp;		/* buf for the block */
++	struct xfs_buf	*bp;		/* buf for the block */
+ 	xfs_rtword_t	*bufp;		/* starting word in buffer */
+ 	int		error;		/* error value */
+ 	xfs_rtword_t	*first;		/* first used word in the buffer */
+@@ -690,7 +690,7 @@ xfs_rtfree_range(
+ 	xfs_trans_t	*tp,		/* transaction pointer */
+ 	xfs_rtblock_t	start,		/* starting block to free */
+ 	xfs_extlen_t	len,		/* length to free */
+-	xfs_buf_t	**rbpp,		/* in/out: summary block buffer */
++	struct xfs_buf	**rbpp,		/* in/out: summary block buffer */
+ 	xfs_fsblock_t	*rsb)		/* in/out: summary block number */
+ {
+ 	xfs_rtblock_t	end;		/* end of the freed extent */
+@@ -773,7 +773,7 @@ xfs_rtcheck_range(
+ 	xfs_rtword_t	*b;		/* current word in buffer */
+ 	int		bit;		/* bit number in the word */
+ 	xfs_rtblock_t	block;		/* bitmap block number */
+-	xfs_buf_t	*bp;		/* buf for the block */
++	struct xfs_buf	*bp;		/* buf for the block */
+ 	xfs_rtword_t	*bufp;		/* starting word in buffer */
+ 	int		error;		/* error value */
+ 	xfs_rtblock_t	i;		/* current bit number rel. to start */
+@@ -969,7 +969,7 @@ xfs_rtfree_extent(
+ 	int		error;		/* error value */
+ 	xfs_mount_t	*mp;		/* file system mount structure */
+ 	xfs_fsblock_t	sb;		/* summary file block number */
+-	xfs_buf_t	*sumbp = NULL;	/* summary file block buffer */
++	struct xfs_buf	*sumbp = NULL;	/* summary file block buffer */
+ 
+ 	mp = tp->t_mountp;
+ 
+diff --git a/fs/xfs/xfs_buf.c b/fs/xfs/xfs_buf.c
+index 118819030dbb5..78f6f5bce3e0c 100644
+--- a/fs/xfs/xfs_buf.c
++++ b/fs/xfs/xfs_buf.c
+@@ -278,7 +278,7 @@ _xfs_buf_alloc(
+  */
+ STATIC int
+ _xfs_buf_get_pages(
+-	xfs_buf_t		*bp,
++	struct xfs_buf		*bp,
+ 	int			page_count)
+ {
+ 	/* Make sure that we have a page list */
+@@ -302,7 +302,7 @@ _xfs_buf_get_pages(
+  */
+ STATIC void
+ _xfs_buf_free_pages(
+-	xfs_buf_t	*bp)
++	struct xfs_buf	*bp)
+ {
+ 	if (bp->b_pages != bp->b_page_array) {
+ 		kmem_free(bp->b_pages);
+@@ -319,7 +319,7 @@ _xfs_buf_free_pages(
+  */
+ static void
+ xfs_buf_free(
+-	xfs_buf_t		*bp)
++	struct xfs_buf		*bp)
+ {
+ 	trace_xfs_buf_free(bp, _RET_IP_);
+ 
+@@ -352,7 +352,7 @@ xfs_buf_free(
+  */
+ STATIC int
+ xfs_buf_allocate_memory(
+-	xfs_buf_t		*bp,
++	struct xfs_buf		*bp,
+ 	uint			flags)
+ {
+ 	size_t			size;
+@@ -463,7 +463,7 @@ xfs_buf_allocate_memory(
+  */
+ STATIC int
+ _xfs_buf_map_pages(
+-	xfs_buf_t		*bp,
++	struct xfs_buf		*bp,
+ 	uint			flags)
+ {
+ 	ASSERT(bp->b_flags & _XBF_PAGES);
+@@ -590,7 +590,7 @@ xfs_buf_find(
+ 	struct xfs_buf		**found_bp)
+ {
+ 	struct xfs_perag	*pag;
+-	xfs_buf_t		*bp;
++	struct xfs_buf		*bp;
+ 	struct xfs_buf_map	cmap = { .bm_bn = map[0].bm_bn };
+ 	xfs_daddr_t		eofs;
+ 	int			i;
+@@ -762,7 +762,7 @@ xfs_buf_get_map(
+ 
+ int
+ _xfs_buf_read(
+-	xfs_buf_t		*bp,
++	struct xfs_buf		*bp,
+ 	xfs_buf_flags_t		flags)
+ {
+ 	ASSERT(!(flags & XBF_WRITE));
+@@ -1005,7 +1005,7 @@ xfs_buf_get_uncached(
   */
  void
- xfs_iflush_abort(
- 	struct xfs_inode	*ip)
+ xfs_buf_hold(
+-	xfs_buf_t		*bp)
++	struct xfs_buf		*bp)
  {
- 	struct xfs_inode_log_item *iip = ip->i_itemp;
--	struct xfs_buf		*bp = NULL;
-+	struct xfs_buf		*bp;
+ 	trace_xfs_buf_hold(bp, _RET_IP_);
+ 	atomic_inc(&bp->b_hold);
+@@ -1017,7 +1017,7 @@ xfs_buf_hold(
+  */
+ void
+ xfs_buf_rele(
+-	xfs_buf_t		*bp)
++	struct xfs_buf		*bp)
+ {
+ 	struct xfs_perag	*pag = bp->b_pag;
+ 	bool			release;
+@@ -1161,7 +1161,7 @@ xfs_buf_unlock(
  
--	if (iip) {
--		/*
--		 * Clear the failed bit before removing the item from the AIL so
--		 * xfs_trans_ail_delete() doesn't try to clear and release the
--		 * buffer attached to the log item before we are done with it.
--		 */
--		clear_bit(XFS_LI_FAILED, &iip->ili_item.li_flags);
--		xfs_trans_ail_delete(&iip->ili_item, 0);
-+	if (!iip) {
-+		/* clean inode, nothing to do */
-+		xfs_iflags_clear(ip, XFS_IFLUSHING);
-+		return;
-+	}
-+
-+	/*
-+	 * Remove the inode item from the AIL before we clear its internal
-+	 * state. Whilst the inode is in the AIL, it should have a valid buffer
-+	 * pointer for push operations to access - it is only safe to remove the
-+	 * inode from the buffer once it has been removed from the AIL.
-+	 *
-+	 * We also clear the failed bit before removing the item from the AIL
-+	 * as xfs_trans_ail_delete()->xfs_clear_li_failed() will release buffer
-+	 * references the inode item owns and needs to hold until we've fully
-+	 * aborted the inode log item and detached it from the buffer.
-+	 */
-+	clear_bit(XFS_LI_FAILED, &iip->ili_item.li_flags);
-+	xfs_trans_ail_delete(&iip->ili_item, 0);
-+
-+	/*
-+	 * Grab the inode buffer so can we release the reference the inode log
-+	 * item holds on it.
-+	 */
-+	spin_lock(&iip->ili_lock);
-+	bp = iip->ili_item.li_buf;
-+	xfs_iflush_abort_clean(iip);
-+	spin_unlock(&iip->ili_lock);
+ STATIC void
+ xfs_buf_wait_unpin(
+-	xfs_buf_t		*bp)
++	struct xfs_buf		*bp)
+ {
+ 	DECLARE_WAITQUEUE	(wait, current);
  
-+	xfs_iflags_clear(ip, XFS_IFLUSHING);
-+	if (bp)
-+		xfs_buf_rele(bp);
-+}
-+
-+/*
-+ * Abort an inode flush in the case of a shutdown filesystem. This can be called
-+ * from anywhere with just an inode reference and does not require holding the
-+ * inode cluster buffer locked. If the inode is attached to a cluster buffer,
-+ * it will grab and lock it safely, then abort the inode flush.
-+ */
-+void
-+xfs_iflush_shutdown_abort(
-+	struct xfs_inode	*ip)
-+{
-+	struct xfs_inode_log_item *iip = ip->i_itemp;
-+	struct xfs_buf		*bp;
-+
-+	if (!iip) {
-+		/* clean inode, nothing to do */
-+		xfs_iflags_clear(ip, XFS_IFLUSHING);
-+		return;
-+	}
-+
-+	spin_lock(&iip->ili_lock);
-+	bp = iip->ili_item.li_buf;
-+	if (!bp) {
-+		spin_unlock(&iip->ili_lock);
-+		xfs_iflush_abort(ip);
-+		return;
-+	}
-+
-+	/*
-+	 * We have to take a reference to the buffer so that it doesn't get
-+	 * freed when we drop the ili_lock and then wait to lock the buffer.
-+	 * We'll clean up the extra reference after we pick up the ili_lock
-+	 * again.
-+	 */
-+	xfs_buf_hold(bp);
-+	spin_unlock(&iip->ili_lock);
-+	xfs_buf_lock(bp);
-+
-+	spin_lock(&iip->ili_lock);
-+	if (!iip->ili_item.li_buf) {
- 		/*
--		 * Clear the inode logging fields so no more flushes are
--		 * attempted.
-+		 * Raced with another removal, hold the only reference
-+		 * to bp now. Inode should not be in the AIL now, so just clean
-+		 * up and return;
- 		 */
--		spin_lock(&iip->ili_lock);
--		iip->ili_last_fields = 0;
--		iip->ili_fields = 0;
--		iip->ili_fsync_fields = 0;
--		iip->ili_flush_lsn = 0;
--		bp = iip->ili_item.li_buf;
--		iip->ili_item.li_buf = NULL;
--		list_del_init(&iip->ili_item.li_bio_list);
-+		ASSERT(list_empty(&iip->ili_item.li_bio_list));
-+		ASSERT(!test_bit(XFS_LI_IN_AIL, &iip->ili_item.li_flags));
-+		xfs_iflush_abort_clean(iip);
- 		spin_unlock(&iip->ili_lock);
-+		xfs_iflags_clear(ip, XFS_IFLUSHING);
-+		xfs_buf_relse(bp);
-+		return;
- 	}
--	xfs_iflags_clear(ip, XFS_IFLUSHING);
--	if (bp)
--		xfs_buf_rele(bp);
-+
-+	/*
-+	 * Got two references to bp. The first will get dropped by
-+	 * xfs_iflush_abort() when the item is removed from the buffer list, but
-+	 * we can't drop our reference until _abort() returns because we have to
-+	 * unlock the buffer as well. Hence we abort and then unlock and release
-+	 * our reference to the buffer.
-+	 */
-+	ASSERT(iip->ili_item.li_buf == bp);
-+	spin_unlock(&iip->ili_lock);
-+	xfs_iflush_abort(ip);
-+	xfs_buf_relse(bp);
+@@ -1373,7 +1373,7 @@ xfs_buf_ioend_work(
+ 	struct work_struct	*work)
+ {
+ 	struct xfs_buf		*bp =
+-		container_of(work, xfs_buf_t, b_ioend_work);
++		container_of(work, struct xfs_buf, b_ioend_work);
+ 
+ 	xfs_buf_ioend(bp);
  }
+@@ -1388,7 +1388,7 @@ xfs_buf_ioend_async(
  
-+
- /*
-  * convert an xfs_inode_log_format struct from the old 32 bit version
-  * (which can have different field alignments) to the native 64 bit version
-diff --git a/fs/xfs/xfs_inode_item.h b/fs/xfs/xfs_inode_item.h
-index 403b45ab9aa28..9c829cf5c839f 100644
---- a/fs/xfs/xfs_inode_item.h
-+++ b/fs/xfs/xfs_inode_item.h
-@@ -44,6 +44,7 @@ static inline int xfs_inode_clean(struct xfs_inode *ip)
- extern void xfs_inode_item_init(struct xfs_inode *, struct xfs_mount *);
- extern void xfs_inode_item_destroy(struct xfs_inode *);
- extern void xfs_iflush_abort(struct xfs_inode *);
-+extern void xfs_iflush_shutdown_abort(struct xfs_inode *);
- extern int xfs_inode_item_format_convert(xfs_log_iovec_t *,
- 					 struct xfs_inode_log_format *);
+ void
+ __xfs_buf_ioerror(
+-	xfs_buf_t		*bp,
++	struct xfs_buf		*bp,
+ 	int			error,
+ 	xfs_failaddr_t		failaddr)
+ {
+diff --git a/fs/xfs/xfs_buf.h b/fs/xfs/xfs_buf.h
+index bfd2907e7bc45..5d91a31298a4b 100644
+--- a/fs/xfs/xfs_buf.h
++++ b/fs/xfs/xfs_buf.h
+@@ -124,7 +124,7 @@ struct xfs_buf_ops {
+ 	xfs_failaddr_t (*verify_struct)(struct xfs_buf *bp);
+ };
  
+-typedef struct xfs_buf {
++struct xfs_buf {
+ 	/*
+ 	 * first cacheline holds all the fields needed for an uncontended cache
+ 	 * hit to be fully processed. The semaphore straddles the cacheline
+@@ -190,7 +190,7 @@ typedef struct xfs_buf {
+ 	int			b_last_error;
+ 
+ 	const struct xfs_buf_ops	*b_ops;
+-} xfs_buf_t;
++};
+ 
+ /* Finding and Reading Buffers */
+ struct xfs_buf *xfs_buf_incore(struct xfs_buftarg *target,
+@@ -253,16 +253,16 @@ int _xfs_buf_read(struct xfs_buf *bp, xfs_buf_flags_t flags);
+ void xfs_buf_hold(struct xfs_buf *bp);
+ 
+ /* Releasing Buffers */
+-extern void xfs_buf_rele(xfs_buf_t *);
++extern void xfs_buf_rele(struct xfs_buf *);
+ 
+ /* Locking and Unlocking Buffers */
+-extern int xfs_buf_trylock(xfs_buf_t *);
+-extern void xfs_buf_lock(xfs_buf_t *);
+-extern void xfs_buf_unlock(xfs_buf_t *);
++extern int xfs_buf_trylock(struct xfs_buf *);
++extern void xfs_buf_lock(struct xfs_buf *);
++extern void xfs_buf_unlock(struct xfs_buf *);
+ #define xfs_buf_islocked(bp) \
+ 	((bp)->b_sema.count <= 0)
+ 
+-static inline void xfs_buf_relse(xfs_buf_t *bp)
++static inline void xfs_buf_relse(struct xfs_buf *bp)
+ {
+ 	xfs_buf_unlock(bp);
+ 	xfs_buf_rele(bp);
+diff --git a/fs/xfs/xfs_buf_item.c b/fs/xfs/xfs_buf_item.c
+index 132acdf0aac08..7794bd9568611 100644
+--- a/fs/xfs/xfs_buf_item.c
++++ b/fs/xfs/xfs_buf_item.c
+@@ -403,7 +403,7 @@ xfs_buf_item_unpin(
+ 	int			remove)
+ {
+ 	struct xfs_buf_log_item	*bip = BUF_ITEM(lip);
+-	xfs_buf_t		*bp = bip->bli_buf;
++	struct xfs_buf		*bp = bip->bli_buf;
+ 	int			stale = bip->bli_flags & XFS_BLI_STALE;
+ 	int			freed;
+ 
+@@ -931,7 +931,7 @@ xfs_buf_item_free(
+  */
+ void
+ xfs_buf_item_relse(
+-	xfs_buf_t	*bp)
++	struct xfs_buf	*bp)
+ {
+ 	struct xfs_buf_log_item	*bip = bp->b_log_item;
+ 
+diff --git a/fs/xfs/xfs_fsops.c b/fs/xfs/xfs_fsops.c
+index 775f833146e30..cb3d54893fbec 100644
+--- a/fs/xfs/xfs_fsops.c
++++ b/fs/xfs/xfs_fsops.c
+@@ -28,7 +28,7 @@ xfs_growfs_data_private(
+ 	xfs_mount_t		*mp,		/* mount point for filesystem */
+ 	xfs_growfs_data_t	*in)		/* growfs data input struct */
+ {
+-	xfs_buf_t		*bp;
++	struct xfs_buf		*bp;
+ 	int			error;
+ 	xfs_agnumber_t		nagcount;
+ 	xfs_agnumber_t		nagimax = 0;
+diff --git a/fs/xfs/xfs_inode.c b/fs/xfs/xfs_inode.c
+index 2de204f46216b..5c04c61964cec 100644
+--- a/fs/xfs/xfs_inode.c
++++ b/fs/xfs/xfs_inode.c
+@@ -799,7 +799,7 @@ xfs_ialloc(
+ 	xfs_nlink_t	nlink,
+ 	dev_t		rdev,
+ 	prid_t		prid,
+-	xfs_buf_t	**ialloc_context,
++	struct xfs_buf	**ialloc_context,
+ 	xfs_inode_t	**ipp)
+ {
+ 	struct inode	*dir = pip ? VFS_I(pip) : NULL;
+@@ -956,7 +956,7 @@ xfs_dir_ialloc(
+ {
+ 	xfs_trans_t	*tp;
+ 	xfs_inode_t	*ip;
+-	xfs_buf_t	*ialloc_context = NULL;
++	struct xfs_buf	*ialloc_context = NULL;
+ 	int		code;
+ 	void		*dqinfo;
+ 	uint		tflags;
+diff --git a/fs/xfs/xfs_log_recover.c b/fs/xfs/xfs_log_recover.c
+index 46b1213e8ff32..7cb7a0aa6c9a0 100644
+--- a/fs/xfs/xfs_log_recover.c
++++ b/fs/xfs/xfs_log_recover.c
+@@ -2633,7 +2633,7 @@ xlog_recover_clear_agi_bucket(
+ {
+ 	xfs_trans_t	*tp;
+ 	xfs_agi_t	*agi;
+-	xfs_buf_t	*agibp;
++	struct xfs_buf	*agibp;
+ 	int		offset;
+ 	int		error;
+ 
+@@ -2751,7 +2751,7 @@ xlog_recover_process_iunlinks(
+ 	xfs_mount_t	*mp;
+ 	xfs_agnumber_t	agno;
+ 	xfs_agi_t	*agi;
+-	xfs_buf_t	*agibp;
++	struct xfs_buf	*agibp;
+ 	xfs_agino_t	agino;
+ 	int		bucket;
+ 	int		error;
+@@ -3502,8 +3502,8 @@ xlog_recover_check_summary(
+ 	struct xlog	*log)
+ {
+ 	xfs_mount_t	*mp;
+-	xfs_buf_t	*agfbp;
+-	xfs_buf_t	*agibp;
++	struct xfs_buf	*agfbp;
++	struct xfs_buf	*agibp;
+ 	xfs_agnumber_t	agno;
+ 	uint64_t	freeblks;
+ 	uint64_t	itotal;
+diff --git a/fs/xfs/xfs_rtalloc.c b/fs/xfs/xfs_rtalloc.c
+index 915bc2950d4a9..d9ed4210fc98e 100644
+--- a/fs/xfs/xfs_rtalloc.c
++++ b/fs/xfs/xfs_rtalloc.c
+@@ -32,7 +32,7 @@ xfs_rtget_summary(
+ 	xfs_trans_t	*tp,		/* transaction pointer */
+ 	int		log,		/* log2 of extent size */
+ 	xfs_rtblock_t	bbno,		/* bitmap block number */
+-	xfs_buf_t	**rbpp,		/* in/out: summary block buffer */
++	struct xfs_buf	**rbpp,		/* in/out: summary block buffer */
+ 	xfs_fsblock_t	*rsb,		/* in/out: summary block number */
+ 	xfs_suminfo_t	*sum)		/* out: summary info for this block */
+ {
+@@ -50,7 +50,7 @@ xfs_rtany_summary(
+ 	int		low,		/* low log2 extent size */
+ 	int		high,		/* high log2 extent size */
+ 	xfs_rtblock_t	bbno,		/* bitmap block number */
+-	xfs_buf_t	**rbpp,		/* in/out: summary block buffer */
++	struct xfs_buf	**rbpp,		/* in/out: summary block buffer */
+ 	xfs_fsblock_t	*rsb,		/* in/out: summary block number */
+ 	int		*stat)		/* out: any good extents here? */
+ {
+@@ -104,7 +104,7 @@ xfs_rtcopy_summary(
+ 	xfs_trans_t	*tp)		/* transaction pointer */
+ {
+ 	xfs_rtblock_t	bbno;		/* bitmap block number */
+-	xfs_buf_t	*bp;		/* summary buffer */
++	struct xfs_buf	*bp;		/* summary buffer */
+ 	int		error;		/* error return value */
+ 	int		log;		/* summary level number (log length) */
+ 	xfs_suminfo_t	sum;		/* summary data */
+@@ -144,7 +144,7 @@ xfs_rtallocate_range(
+ 	xfs_trans_t	*tp,		/* transaction pointer */
+ 	xfs_rtblock_t	start,		/* start block to allocate */
+ 	xfs_extlen_t	len,		/* length to allocate */
+-	xfs_buf_t	**rbpp,		/* in/out: summary block buffer */
++	struct xfs_buf	**rbpp,		/* in/out: summary block buffer */
+ 	xfs_fsblock_t	*rsb)		/* in/out: summary block number */
+ {
+ 	xfs_rtblock_t	end;		/* end of the allocated extent */
+@@ -226,7 +226,7 @@ xfs_rtallocate_extent_block(
+ 	xfs_extlen_t	maxlen,		/* maximum length to allocate */
+ 	xfs_extlen_t	*len,		/* out: actual length allocated */
+ 	xfs_rtblock_t	*nextp,		/* out: next block to try */
+-	xfs_buf_t	**rbpp,		/* in/out: summary block buffer */
++	struct xfs_buf	**rbpp,		/* in/out: summary block buffer */
+ 	xfs_fsblock_t	*rsb,		/* in/out: summary block number */
+ 	xfs_extlen_t	prod,		/* extent product factor */
+ 	xfs_rtblock_t	*rtblock)	/* out: start block allocated */
+@@ -345,7 +345,7 @@ xfs_rtallocate_extent_exact(
+ 	xfs_extlen_t	minlen,		/* minimum length to allocate */
+ 	xfs_extlen_t	maxlen,		/* maximum length to allocate */
+ 	xfs_extlen_t	*len,		/* out: actual length allocated */
+-	xfs_buf_t	**rbpp,		/* in/out: summary block buffer */
++	struct xfs_buf	**rbpp,		/* in/out: summary block buffer */
+ 	xfs_fsblock_t	*rsb,		/* in/out: summary block number */
+ 	xfs_extlen_t	prod,		/* extent product factor */
+ 	xfs_rtblock_t	*rtblock)	/* out: start block allocated */
+@@ -424,7 +424,7 @@ xfs_rtallocate_extent_near(
+ 	xfs_extlen_t	minlen,		/* minimum length to allocate */
+ 	xfs_extlen_t	maxlen,		/* maximum length to allocate */
+ 	xfs_extlen_t	*len,		/* out: actual length allocated */
+-	xfs_buf_t	**rbpp,		/* in/out: summary block buffer */
++	struct xfs_buf	**rbpp,		/* in/out: summary block buffer */
+ 	xfs_fsblock_t	*rsb,		/* in/out: summary block number */
+ 	xfs_extlen_t	prod,		/* extent product factor */
+ 	xfs_rtblock_t	*rtblock)	/* out: start block allocated */
+@@ -626,7 +626,7 @@ xfs_rtallocate_extent_size(
+ 	xfs_extlen_t	minlen,		/* minimum length to allocate */
+ 	xfs_extlen_t	maxlen,		/* maximum length to allocate */
+ 	xfs_extlen_t	*len,		/* out: actual length allocated */
+-	xfs_buf_t	**rbpp,		/* in/out: summary block buffer */
++	struct xfs_buf	**rbpp,		/* in/out: summary block buffer */
+ 	xfs_fsblock_t	*rsb,		/* in/out: summary block number */
+ 	xfs_extlen_t	prod,		/* extent product factor */
+ 	xfs_rtblock_t	*rtblock)	/* out: start block allocated */
+@@ -900,7 +900,7 @@ xfs_growfs_rt(
+ 	xfs_growfs_rt_t	*in)		/* growfs rt input struct */
+ {
+ 	xfs_rtblock_t	bmbno;		/* bitmap block number */
+-	xfs_buf_t	*bp;		/* temporary buffer */
++	struct xfs_buf	*bp;		/* temporary buffer */
+ 	int		error;		/* error return value */
+ 	xfs_mount_t	*nmp;		/* new (fake) mount structure */
+ 	xfs_rfsblock_t	nrblocks;	/* new number of realtime blocks */
+@@ -1154,7 +1154,7 @@ xfs_rtallocate_extent(
+ 	int		error;		/* error value */
+ 	xfs_rtblock_t	r;		/* result allocated block */
+ 	xfs_fsblock_t	sb;		/* summary file block number */
+-	xfs_buf_t	*sumbp;		/* summary file block buffer */
++	struct xfs_buf	*sumbp;		/* summary file block buffer */
+ 
+ 	ASSERT(xfs_isilocked(mp->m_rbmip, XFS_ILOCK_EXCL));
+ 	ASSERT(minlen > 0 && minlen <= maxlen);
+diff --git a/fs/xfs/xfs_rtalloc.h b/fs/xfs/xfs_rtalloc.h
+index 93e77b2213559..ed885620589c4 100644
+--- a/fs/xfs/xfs_rtalloc.h
++++ b/fs/xfs/xfs_rtalloc.h
+@@ -115,10 +115,10 @@ int xfs_rtmodify_range(struct xfs_mount *mp, struct xfs_trans *tp,
+ 		       xfs_rtblock_t start, xfs_extlen_t len, int val);
+ int xfs_rtmodify_summary_int(struct xfs_mount *mp, struct xfs_trans *tp,
+ 			     int log, xfs_rtblock_t bbno, int delta,
+-			     xfs_buf_t **rbpp, xfs_fsblock_t *rsb,
++			     struct xfs_buf **rbpp, xfs_fsblock_t *rsb,
+ 			     xfs_suminfo_t *sum);
+ int xfs_rtmodify_summary(struct xfs_mount *mp, struct xfs_trans *tp, int log,
+-			 xfs_rtblock_t bbno, int delta, xfs_buf_t **rbpp,
++			 xfs_rtblock_t bbno, int delta, struct xfs_buf **rbpp,
+ 			 xfs_fsblock_t *rsb);
+ int xfs_rtfree_range(struct xfs_mount *mp, struct xfs_trans *tp,
+ 		     xfs_rtblock_t start, xfs_extlen_t len,
+diff --git a/fs/xfs/xfs_symlink.c b/fs/xfs/xfs_symlink.c
+index 8d3abf06c54f8..c835827ae3896 100644
+--- a/fs/xfs/xfs_symlink.c
++++ b/fs/xfs/xfs_symlink.c
+@@ -154,7 +154,7 @@ xfs_symlink(
+ 	const char		*cur_chunk;
+ 	int			byte_cnt;
+ 	int			n;
+-	xfs_buf_t		*bp;
++	struct xfs_buf		*bp;
+ 	prid_t			prid;
+ 	struct xfs_dquot	*udqp = NULL;
+ 	struct xfs_dquot	*gdqp = NULL;
+@@ -366,7 +366,7 @@ STATIC int
+ xfs_inactive_symlink_rmt(
+ 	struct xfs_inode *ip)
+ {
+-	xfs_buf_t	*bp;
++	struct xfs_buf	*bp;
+ 	int		done;
+ 	int		error;
+ 	int		i;
+diff --git a/fs/xfs/xfs_trans.c b/fs/xfs/xfs_trans.c
+index 4e1400ea6a99e..5cd296a75fbd2 100644
+--- a/fs/xfs/xfs_trans.c
++++ b/fs/xfs/xfs_trans.c
+@@ -460,7 +460,7 @@ xfs_trans_apply_sb_deltas(
+ 	xfs_trans_t	*tp)
+ {
+ 	xfs_dsb_t	*sbp;
+-	xfs_buf_t	*bp;
++	struct xfs_buf	*bp;
+ 	int		whole = 0;
+ 
+ 	bp = xfs_trans_getsb(tp);
+diff --git a/fs/xfs/xfs_trans_buf.c b/fs/xfs/xfs_trans_buf.c
+index 42d63b830cb9c..9aced0a00003c 100644
+--- a/fs/xfs/xfs_trans_buf.c
++++ b/fs/xfs/xfs_trans_buf.c
+@@ -121,7 +121,7 @@ xfs_trans_get_buf_map(
+ 	xfs_buf_flags_t		flags,
+ 	struct xfs_buf		**bpp)
+ {
+-	xfs_buf_t		*bp;
++	struct xfs_buf		*bp;
+ 	struct xfs_buf_log_item	*bip;
+ 	int			error;
+ 
+@@ -401,7 +401,7 @@ xfs_trans_brelse(
+ void
+ xfs_trans_bhold(
+ 	xfs_trans_t		*tp,
+-	xfs_buf_t		*bp)
++	struct xfs_buf		*bp)
+ {
+ 	struct xfs_buf_log_item	*bip = bp->b_log_item;
+ 
+@@ -422,7 +422,7 @@ xfs_trans_bhold(
+ void
+ xfs_trans_bhold_release(
+ 	xfs_trans_t		*tp,
+-	xfs_buf_t		*bp)
++	struct xfs_buf		*bp)
+ {
+ 	struct xfs_buf_log_item	*bip = bp->b_log_item;
+ 
+@@ -538,7 +538,7 @@ xfs_trans_log_buf(
+ void
+ xfs_trans_binval(
+ 	xfs_trans_t		*tp,
+-	xfs_buf_t		*bp)
++	struct xfs_buf		*bp)
+ {
+ 	struct xfs_buf_log_item	*bip = bp->b_log_item;
+ 	int			i;
+@@ -593,7 +593,7 @@ xfs_trans_binval(
+ void
+ xfs_trans_inode_buf(
+ 	xfs_trans_t		*tp,
+-	xfs_buf_t		*bp)
++	struct xfs_buf		*bp)
+ {
+ 	struct xfs_buf_log_item	*bip = bp->b_log_item;
+ 
+@@ -618,7 +618,7 @@ xfs_trans_inode_buf(
+ void
+ xfs_trans_stale_inode_buf(
+ 	xfs_trans_t		*tp,
+-	xfs_buf_t		*bp)
++	struct xfs_buf		*bp)
+ {
+ 	struct xfs_buf_log_item	*bip = bp->b_log_item;
+ 
+@@ -643,7 +643,7 @@ xfs_trans_stale_inode_buf(
+ void
+ xfs_trans_inode_alloc_buf(
+ 	xfs_trans_t		*tp,
+-	xfs_buf_t		*bp)
++	struct xfs_buf		*bp)
+ {
+ 	struct xfs_buf_log_item	*bip = bp->b_log_item;
+ 
+@@ -737,7 +737,7 @@ xfs_trans_buf_copy_type(
+ void
+ xfs_trans_dquot_buf(
+ 	xfs_trans_t		*tp,
+-	xfs_buf_t		*bp,
++	struct xfs_buf		*bp,
+ 	uint			type)
+ {
+ 	struct xfs_buf_log_item	*bip = bp->b_log_item;
 -- 
 2.53.0
 
