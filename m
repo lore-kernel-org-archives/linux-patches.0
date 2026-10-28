@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213620;
-	b=HUI5pAndgkfECZkuJYmUXN+GqmUKPRJPzpdh3hqCANaOiAM+HjCSDDZ/R8IasjTz/Rap
-	 I6KlN567kKSa5oU54EdlBxFAoDHaRPZ9C4sU1FWFWERFu5EsgOoBQ9tBjN1auYuLlMcWm
-	 /0Yjt5McqJT1YQPh+2HJtXuIq1ZM4qrf3YqFeFnkXkGix7sI/1fWHW4CkeobHJvbaAca6
-	 +bQeXOw9HMwQrvctm7IJMmMhBtulVwZxuyESC+Dridp8K5Lr39ez68baBlhQtYOeQRkNr
-	 JAeqWt/jEfiuFNacVPtUr3gqcsEvgvWIQ0xyTSp2JQ00PFJN56/cGJDg1OmxOUPuuIA==
+	t=1793213623;
+	b=ewzXju/2XaeUsjxleGYF00cWsXkkeXtrJUc61Pks7NZt7TphrguQAkFCEaU1SQ24U06L
+	 qN8ECDFB08DEUgKxe9NiSobW33PJkcQR4PUvXkcdiwxQRIvRWPkXBxyulc1sglGGJt4um
+	 fCHy4LV6begbQ2iBIfEganZXlkMGFTzocluTZcCRaZNXmaLM8LUnK0GpCLRL4Xb9XK3RC
+	 XtvFjV8lmbdmT8kW/7lQsiCfTIgbrfYzZUzViuVmeGuCAma7GgKNlOHN7TZoHzhcNzRVo
+	 RkS1/X6XS9jfMSGoG/PAckfnz6I5gEyMjvVB3YxMkHBKNMInsYlrTNKxx8B/owccUeg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213620;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213623;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=SmDDc/8dITcF8ZcA7douoqPM6Ix/2QWFr0opbqGc1JA=;
-	b=AqnSI6nfbTSZxMNtnkSleU1/IVt1xPYuS5ko+IKwl8xhvguJ1k5jQmBsCsvvgjRZLWu8
-	 cbif5oUThSrif9h8TOZ+nvPhqNOZl6oqwA6pjRTTDmSWcpdH9H2gRfnwwMfyNvl+lGN83
-	 NVMMWHHWTdA0iyZCTTZBQd0HMZxCmK7gMGSGCG4EZwI0Atkc9xfU/mQSkYGIlbeztchUz
-	 pm/lzyGg+fKREVh+yuy55HgkzXdBctys274tOSNfr/KL3stGPG4ZkrSG3ZhxUCEbmRObA
-	 DEkaiTmQH5h2WOHK93XH2lGpKoK+ppwZI/0ukZcCQTAiEikBPJKUbMRnIAhLkQ7tsNA==
+	bh=fKMSB4GUJZD8+lLNzDNylae+Vz5nVlhp4iMi26Zpdcs=;
+	b=NJTfE/UEelLXcHDp1ori1YB3RIMl1pxaT5SpBK2NrcGLLs5bNiv3Jbu3KmUXy+SBznFo
+	 FZJteSfISxicMrRYRoXQnCg5mgAQjtVT15F5sADbgBU/fukJzYfTs74BxESsTP8AU6m9l
+	 Bb9vSq5hOG4D7dHxTnCmhun10Ek8wyGgPcYpPNcnHZVb0dXadRtHCxM8VaG4l3AwgxXYX
+	 O7v8Ek2+zzpiR2pMjT0YaJam+fhbM+/vYckYkVQRvgp4rFr/Z+J55flWAgc+fIgwlQ1QV
+	 VGT1xnOuDSDlD4ggY+afuGrA44fu+q/UvFKNySTp49Pu7zbI/nV4i/cW6Vt4+ClTPpg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zligGbIM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kyYGN0fF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 679BD606A31A;
-	Wed, 28 Oct 2026 18:53:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CC9E606A31A;
+	Wed, 28 Oct 2026 18:53:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zligGbIM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A9371F01825;
-	Wed, 28 Oct 2026 18:53:39 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kyYGN0fF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D5121F01825;
+	Wed, 28 Oct 2026 18:53:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213620;
-	bh=SmDDc/8dITcF8ZcA7douoqPM6Ix/2QWFr0opbqGc1JA=;
+	s=korg; t=1793213622;
+	bh=fKMSB4GUJZD8+lLNzDNylae+Vz5nVlhp4iMi26Zpdcs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zligGbIMvGvUagfktSdRPKlZzeNxF0nrNJ5Ci2MaU77k2hEI3zmfmkyIdP9mIuwZG
-	 8r0Y1LgHvjHV2V9gB0ZxuEKK7e7T0KZEYcPh/WeUSYrk4dbUmkf4czpKTHTkw0n8CL
-	 R/1scZhOXKx1wSsd5IcKxyQvRTMaB4SeXn+BGdYI=
+	b=kyYGN0fFpesj4qzDSASM2f8fvMhQeg9eFgoDk5WwiruhBcWNCiUo6Nmim4qwMt8MV
+	 gprdHo+d0n7Y8VI6QNeipAGbViCxq5aVE/jKxBJxUY1nhOO31vBJerEpHiN1zN6ftU
+	 iRrmnk1OULB/yo3vWxcZvvAtFCiGuZjDxvfgPhes=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Whittington <git@jbrengineering.co.uk>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	syzbot+7e1e1bdb852961150198@syzkaller.appspotmail.com,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Tony Lu <tonylu@linux.alibaba.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0568/1887] can: gs_usb: fix time stamp counter initialization
-Date: Wed, 28 Oct 2026 17:44:24 +0100
-Message-ID: <20261028170512.325420932@linuxfoundation.org>
+Subject: [PATCH 6.1 0569/1887] smc: Fix use-after-free in tcp_write_timer_handler().
+Date: Wed, 28 Oct 2026 17:44:25 +0100
+Message-ID: <20261028170512.349981984@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,292 +70,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Kleine-Budde <mkl@pengutronix.de>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit 5886e4d5ecec3e22844efed90b2dd383ef804b3a ]
+[ Upstream commit 9744d2bf19762703704ecba885b7ac282c02eacf ]
 
-If the gs_usb device driver is unloaded (or unbound) before the
-interface is shut down, the USB stack first calls the struct
-usb_driver::disconnect and then the struct net_device_ops::ndo_stop
-callback.
+With Eric's ref tracker, syzbot finally found a repro for
+use-after-free in tcp_write_timer_handler() by kernel TCP
+sockets. [0]
 
-In gs_usb_disconnect() all pending bulk URBs are killed, i.e. no more
-RX'ed CAN frames are send from the USB device to the host. Later in
-gs_can_close() a reset control message is send to each CAN channel to
-remove the controller from the CAN bus. In this race window the USB
-device can still receive CAN frames from the bus and internally queue
-them to be send to the host.
+If SMC creates a kernel socket in __smc_create(), the kernel
+socket is supposed to be freed in smc_clcsock_release() by
+calling sock_release() when we close() the parent SMC socket.
 
-At least in the current version of the candlelight firmware, the queue
-of received CAN frames is not emptied during the reset command. After
-loading (or binding) the gs_usb driver, new URBs are submitted during
-the struct net_device_ops::ndo_open callback and the candlelight
-firmware starts sending its already queued CAN frames to the host.
+However, at the end of smc_clcsock_release(), the kernel
+socket's sk_state might not be TCP_CLOSE.  This means that
+we have not called inet_csk_destroy_sock() in __tcp_close()
+and have not stopped the TCP timers.
 
-However, this scenario was not considered when implementing the
-hardware timestamp function. The cycle counter/time counter
-infrastructure is set up (gs_usb_timestamp_init()) after the USBs are
-submitted, resulting in a NULL pointer dereference if
-timecounter_cyc2time() (via the call chain:
-gs_usb_receive_bulk_callback() -> gs_usb_set_timestamp() ->
-gs_usb_skb_set_timestamp()) is called too early.
+The kernel socket's TCP timers can be fired later, so we
+need to hold a refcnt for net as we do for MPTCP subflows
+in mptcp_subflow_create_socket().
 
-Move the gs_usb_timestamp_init() function before the URBs are
-submitted to fix this problem.
+[0]:
+leaked reference.
+ sk_alloc (./include/net/net_namespace.h:335 net/core/sock.c:2108)
+ inet_create (net/ipv4/af_inet.c:319 net/ipv4/af_inet.c:244)
+ __sock_create (net/socket.c:1546)
+ smc_create (net/smc/af_smc.c:3269 net/smc/af_smc.c:3284)
+ __sock_create (net/socket.c:1546)
+ __sys_socket (net/socket.c:1634 net/socket.c:1618 net/socket.c:1661)
+ __x64_sys_socket (net/socket.c:1672)
+ do_syscall_64 (arch/x86/entry/common.c:50 arch/x86/entry/common.c:80)
+ entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:120)
+==================================================================
+BUG: KASAN: slab-use-after-free in tcp_write_timer_handler (net/ipv4/tcp_timer.c:378 net/ipv4/tcp_timer.c:624 net/ipv4/tcp_timer.c:594)
+Read of size 1 at addr ffff888052b65e0d by task syzrepro/18091
 
-For a comprehensive solution, we need to consider gs_usb devices with
-more than 1 channel. The cycle counter/time counter infrastructure is
-setup per channel, but the RX URBs are per device. Once gs_can_open()
-of _a_ channel has been called, and URBs have been submitted, the
-gs_usb_receive_bulk_callback() can be called for _all_ available
-channels, even for channels that are not running, yet. As cycle
-counter/time counter has not set up, this will again lead to a NULL
-pointer dereference.
+CPU: 0 PID: 18091 Comm: syzrepro Tainted: G        W          6.3.0-rc4-01174-gb5d54eb5899a #7
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.0-1.amzn2022.0.1 04/01/2014
+Call Trace:
+ <IRQ>
+ dump_stack_lvl (lib/dump_stack.c:107)
+ print_report (mm/kasan/report.c:320 mm/kasan/report.c:430)
+ kasan_report (mm/kasan/report.c:538)
+ tcp_write_timer_handler (net/ipv4/tcp_timer.c:378 net/ipv4/tcp_timer.c:624 net/ipv4/tcp_timer.c:594)
+ tcp_write_timer (./include/linux/spinlock.h:390 net/ipv4/tcp_timer.c:643)
+ call_timer_fn (./arch/x86/include/asm/jump_label.h:27 ./include/linux/jump_label.h:207 ./include/trace/events/timer.h:127 kernel/time/timer.c:1701)
+ __run_timers.part.0 (kernel/time/timer.c:1752 kernel/time/timer.c:2022)
+ run_timer_softirq (kernel/time/timer.c:2037)
+ __do_softirq (./arch/x86/include/asm/jump_label.h:27 ./include/linux/jump_label.h:207 ./include/trace/events/irq.h:142 kernel/softirq.c:572)
+ __irq_exit_rcu (kernel/softirq.c:445 kernel/softirq.c:650)
+ irq_exit_rcu (kernel/softirq.c:664)
+ sysvec_apic_timer_interrupt (arch/x86/kernel/apic/apic.c:1107 (discriminator 14))
+ </IRQ>
 
-Convert the cycle counter/time counter from a "per channel" to a "per
-device" functionality. Also set it up, before submitting any URBs to
-the device.
-
-Further in gs_usb_receive_bulk_callback(), don't process any URBs for
-not started CAN channels, only resubmit the URB.
-
-Fixes: 45dfa45f52e6 ("can: gs_usb: add RX and TX hardware timestamp support")
-Closes: https://github.com/candle-usb/candleLight_fw/issues/137#issuecomment-1623532076
-Cc: stable@vger.kernel.org
-Cc: John Whittington <git@jbrengineering.co.uk>
-Link: https://lore.kernel.org/all/20230716-gs_usb-fix-time-stamp-counter-v1-2-9017cefcd9d5@pengutronix.de
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Fixes: ac7138746e14 ("smc: establish new socket family")
+Reported-by: syzbot+7e1e1bdb852961150198@syzkaller.appspotmail.com
+Link: https://lore.kernel.org/netdev/000000000000a3f51805f8bcc43a@google.com/
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Reviewed-by: Tony Lu <tonylu@linux.alibaba.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/usb/gs_usb.c | 100 ++++++++++++++++++-----------------
- 1 file changed, 52 insertions(+), 48 deletions(-)
+ net/smc/af_smc.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/drivers/net/can/usb/gs_usb.c b/drivers/net/can/usb/gs_usb.c
-index 3ce8cf4ecb2e5..d0fe0e5e9021f 100644
---- a/drivers/net/can/usb/gs_usb.c
-+++ b/drivers/net/can/usb/gs_usb.c
-@@ -297,12 +297,6 @@ struct gs_can {
- 	struct can_bittiming_const bt_const, data_bt_const;
- 	unsigned int channel;	/* channel number */
- 
--	/* time counter for hardware timestamps */
--	struct cyclecounter cc;
--	struct timecounter tc;
--	spinlock_t tc_lock; /* spinlock to guard access tc->cycle_last */
--	struct delayed_work timestamp;
--
- 	u32 feature;
- 	unsigned int hf_size_tx;
- 
-@@ -318,6 +312,13 @@ struct gs_can {
- struct gs_usb {
- 	struct usb_anchor rx_submitted;
- 	struct usb_device *udev;
-+
-+	/* time counter for hardware timestamps */
-+	struct cyclecounter cc;
-+	struct timecounter tc;
-+	spinlock_t tc_lock; /* spinlock to guard access tc->cycle_last */
-+	struct delayed_work timestamp;
-+
- 	unsigned int hf_size_rx;
- 	u8 active_channels;
- 	u8 channel_cnt;
-@@ -387,16 +388,15 @@ static int gs_cmd_reset(struct gs_can *dev)
- 				    GFP_KERNEL);
- }
- 
--static inline int gs_usb_get_timestamp(const struct gs_can *dev,
-+static inline int gs_usb_get_timestamp(const struct gs_usb *parent,
- 				       u32 *timestamp_p)
- {
- 	__le32 timestamp;
- 	int rc;
- 
--	rc = usb_control_msg_recv(interface_to_usbdev(dev->iface), 0,
--				  GS_USB_BREQ_TIMESTAMP,
-+	rc = usb_control_msg_recv(parent->udev, 0, GS_USB_BREQ_TIMESTAMP,
- 				  USB_DIR_IN | USB_TYPE_VENDOR | USB_RECIP_INTERFACE,
--				  dev->channel, 0,
-+				  0, 0,
- 				  &timestamp, sizeof(timestamp),
- 				  USB_CTRL_GET_TIMEOUT,
- 				  GFP_KERNEL);
-@@ -410,20 +410,20 @@ static inline int gs_usb_get_timestamp(const struct gs_can *dev,
- 
- static u64 gs_usb_timestamp_read(const struct cyclecounter *cc) __must_hold(&dev->tc_lock)
- {
--	struct gs_can *dev = container_of(cc, struct gs_can, cc);
-+	struct gs_usb *parent = container_of(cc, struct gs_usb, cc);
- 	u32 timestamp = 0;
- 	int err;
- 
--	lockdep_assert_held(&dev->tc_lock);
-+	lockdep_assert_held(&parent->tc_lock);
- 
- 	/* drop lock for synchronous USB transfer */
--	spin_unlock_bh(&dev->tc_lock);
--	err = gs_usb_get_timestamp(dev, &timestamp);
--	spin_lock_bh(&dev->tc_lock);
-+	spin_unlock_bh(&parent->tc_lock);
-+	err = gs_usb_get_timestamp(parent, &timestamp);
-+	spin_lock_bh(&parent->tc_lock);
- 	if (err)
--		netdev_err(dev->netdev,
--			   "Error %d while reading timestamp. HW timestamps may be inaccurate.",
--			   err);
-+		dev_err(&parent->udev->dev,
-+			"Error %d while reading timestamp. HW timestamps may be inaccurate.",
-+			err);
- 
- 	return timestamp;
- }
-@@ -431,14 +431,14 @@ static u64 gs_usb_timestamp_read(const struct cyclecounter *cc) __must_hold(&dev
- static void gs_usb_timestamp_work(struct work_struct *work)
- {
- 	struct delayed_work *delayed_work = to_delayed_work(work);
--	struct gs_can *dev;
-+	struct gs_usb *parent;
- 
--	dev = container_of(delayed_work, struct gs_can, timestamp);
--	spin_lock_bh(&dev->tc_lock);
--	timecounter_read(&dev->tc);
--	spin_unlock_bh(&dev->tc_lock);
-+	parent = container_of(delayed_work, struct gs_usb, timestamp);
-+	spin_lock_bh(&parent->tc_lock);
-+	timecounter_read(&parent->tc);
-+	spin_unlock_bh(&parent->tc_lock);
- 
--	schedule_delayed_work(&dev->timestamp,
-+	schedule_delayed_work(&parent->timestamp,
- 			      GS_USB_TIMESTAMP_WORK_DELAY_SEC * HZ);
- }
- 
-@@ -446,37 +446,38 @@ static void gs_usb_skb_set_timestamp(struct gs_can *dev,
- 				     struct sk_buff *skb, u32 timestamp)
- {
- 	struct skb_shared_hwtstamps *hwtstamps = skb_hwtstamps(skb);
-+	struct gs_usb *parent = dev->parent;
- 	u64 ns;
- 
--	spin_lock_bh(&dev->tc_lock);
--	ns = timecounter_cyc2time(&dev->tc, timestamp);
--	spin_unlock_bh(&dev->tc_lock);
-+	spin_lock_bh(&parent->tc_lock);
-+	ns = timecounter_cyc2time(&parent->tc, timestamp);
-+	spin_unlock_bh(&parent->tc_lock);
- 
- 	hwtstamps->hwtstamp = ns_to_ktime(ns);
- }
- 
--static void gs_usb_timestamp_init(struct gs_can *dev)
-+static void gs_usb_timestamp_init(struct gs_usb *parent)
- {
--	struct cyclecounter *cc = &dev->cc;
-+	struct cyclecounter *cc = &parent->cc;
- 
- 	cc->read = gs_usb_timestamp_read;
- 	cc->mask = CYCLECOUNTER_MASK(32);
- 	cc->shift = 32 - bits_per(NSEC_PER_SEC / GS_USB_TIMESTAMP_TIMER_HZ);
- 	cc->mult = clocksource_hz2mult(GS_USB_TIMESTAMP_TIMER_HZ, cc->shift);
- 
--	spin_lock_init(&dev->tc_lock);
--	spin_lock_bh(&dev->tc_lock);
--	timecounter_init(&dev->tc, &dev->cc, ktime_get_real_ns());
--	spin_unlock_bh(&dev->tc_lock);
-+	spin_lock_init(&parent->tc_lock);
-+	spin_lock_bh(&parent->tc_lock);
-+	timecounter_init(&parent->tc, &parent->cc, ktime_get_real_ns());
-+	spin_unlock_bh(&parent->tc_lock);
- 
--	INIT_DELAYED_WORK(&dev->timestamp, gs_usb_timestamp_work);
--	schedule_delayed_work(&dev->timestamp,
-+	INIT_DELAYED_WORK(&parent->timestamp, gs_usb_timestamp_work);
-+	schedule_delayed_work(&parent->timestamp,
- 			      GS_USB_TIMESTAMP_WORK_DELAY_SEC * HZ);
- }
- 
--static void gs_usb_timestamp_stop(struct gs_can *dev)
-+static void gs_usb_timestamp_stop(struct gs_usb *parent)
- {
--	cancel_delayed_work_sync(&dev->timestamp);
-+	cancel_delayed_work_sync(&parent->timestamp);
- }
- 
- static void gs_update_state(struct gs_can *dev, struct can_frame *cf)
-@@ -570,6 +571,9 @@ static void gs_usb_receive_bulk_callback(struct urb *urb)
- 	if (!netif_device_present(netdev))
- 		return;
- 
-+	if (!netif_running(netdev))
-+		goto resubmit_urb;
-+
- 	if (hf->echo_id == -1) { /* normal rx */
- 		if (hf->flags & GS_CAN_FLAG_FD) {
- 			skb = alloc_canfd_skb(dev->netdev, &cfd);
-@@ -891,6 +895,9 @@ static int gs_can_open(struct net_device *netdev)
- 	}
- 
- 	if (!parent->active_channels) {
-+		if (dev->feature & GS_CAN_FEATURE_HW_TIMESTAMP)
-+			gs_usb_timestamp_init(parent);
-+
- 		for (i = 0; i < GS_MAX_RX_URBS; i++) {
- 			u8 *buf;
- 
-@@ -973,10 +980,6 @@ static int gs_can_open(struct net_device *netdev)
+diff --git a/net/smc/af_smc.c b/net/smc/af_smc.c
+index 9e142f49a8102..35cf30486916e 100644
+--- a/net/smc/af_smc.c
++++ b/net/smc/af_smc.c
+@@ -3315,6 +3315,16 @@ static int __smc_create(struct net *net, struct socket *sock, int protocol,
+ 			sk_common_release(sk);
+ 			goto out;
  		}
- 	}
- 
--	/* start polling timestamp */
--	if (dev->feature & GS_CAN_FEATURE_HW_TIMESTAMP)
--		gs_usb_timestamp_init(dev);
--
- 	/* finally start device */
- 	dev->can.state = CAN_STATE_ERROR_ACTIVE;
- 	dm.flags = cpu_to_le32(flags);
-@@ -987,8 +990,6 @@ static int gs_can_open(struct net_device *netdev)
- 				  GFP_KERNEL);
- 	if (rc) {
- 		netdev_err(netdev, "Couldn't start device (err=%d)\n", rc);
--		if (dev->feature & GS_CAN_FEATURE_HW_TIMESTAMP)
--			gs_usb_timestamp_stop(dev);
- 		dev->can.state = CAN_STATE_STOPPED;
- 
- 		goto out_usb_kill_anchored_urbs;
-@@ -1005,9 +1006,13 @@ static int gs_can_open(struct net_device *netdev)
- out_usb_free_urb:
- 	usb_free_urb(urb);
- out_usb_kill_anchored_urbs:
--	if (!parent->active_channels)
-+	if (!parent->active_channels) {
- 		usb_kill_anchored_urbs(&parent->rx_submitted);
- 
-+		if (dev->feature & GS_CAN_FEATURE_HW_TIMESTAMP)
-+			gs_usb_timestamp_stop(parent);
-+	}
 +
- 	close_candev(netdev);
- 
- 	return rc;
-@@ -1021,14 +1026,13 @@ static int gs_can_close(struct net_device *netdev)
- 
- 	netif_stop_queue(netdev);
- 
--	/* stop polling timestamp */
--	if (dev->feature & GS_CAN_FEATURE_HW_TIMESTAMP)
--		gs_usb_timestamp_stop(dev);
--
- 	/* Stop polling */
- 	parent->active_channels--;
- 	if (!parent->active_channels) {
- 		usb_kill_anchored_urbs(&parent->rx_submitted);
-+
-+		if (dev->feature & GS_CAN_FEATURE_HW_TIMESTAMP)
-+			gs_usb_timestamp_stop(parent);
++		/* smc_clcsock_release() does not wait smc->clcsock->sk's
++		 * destruction;  its sk_state might not be TCP_CLOSE after
++		 * smc->sk is close()d, and TCP timers can be fired later,
++		 * which need net ref.
++		 */
++		sk = smc->clcsock->sk;
++		sk->sk_net_refcnt = 1;
++		get_net_track(net, &sk->ns_tracker, GFP_KERNEL);
++		sock_inuse_add(net, 1);
+ 	} else {
+ 		smc->clcsock = clcsock;
  	}
- 
- 	/* Stop sending URBs */
 -- 
 2.53.0
 
