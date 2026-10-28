@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213328;
-	b=lv5hyFMoc3kRAws2coolmLrlTnK0seQR7wgbxPTfoqFGHhCRlX/rW+FJHTMM7thyOSo4
-	 YuU9RMWBjgh0cirqQZTiB8eIN/bUjXZbJwy+Bj+zFLeYdmho7mjlAcvcpwtdrSu26Ek+j
-	 oCq3ElB1Z8GCb73Elc51U8xNAO08MFsrY3zcu7zxs32d6UYCN7i9SRA9tXKK4FYMI2Gtf
-	 K5X2Qum14ErgQU34NZms4R5hyN/EU23LjIeJfwn0r1s74OUOLC8o29lvEXfQOTjjwEchI
-	 OyviIshtELYYZWCp7rRaDfnBLzVp6TIaOL9MG7sOoqdtikexptY/LP+9zPxqjXF54kg==
+	t=1793213331;
+	b=1KsDCK9ssXop1LBYoQg+A5j5JaZXAh168VocjeXVSpeFj2Aqu4yxD15oPjQAuzDAv/SA
+	 oODTmRJCwWaou80R7Fh4gK3nwnDUAKlBNLPLT4RXYeMUFhtCKFZeOSfmyNj5uIr0NxA5d
+	 0CZ2MteW+yr1EvV2PauT1adLNU9wi/5ShyUGFTbw02MqnZvveAiNpoBN/ihGNRCKcejBS
+	 tOv+o3fiM3Nj9fBVgKsqpwNp8Yks8YzgK1CFgwWWSLPvjw5mtIXSJmdInN7hlMIqjpVoX
+	 5WCx7qGPIdQA9UcOag0DJar1lPCqk5CZiJxPpgaSs167X8SXtO7I0iVA75xCB26uqeg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213328;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213331;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=sgNc1EFcbFLo/RkXSWNYhy+8thvEsl1Hwagenpa4Ggg=;
-	b=Swqsrvh/n0iJ5BvlutO8Rd8HqqQRe9rYv0qJAtwQTEIEETSJ4Mm3dJr2HiYuMBz7xlCO
-	 HHPInnj8QtbrhMPgVOQxexwh2E8HtZkb9Mrmp+frfXVtzJ/+Ve612amPtMgPJKFfQNCtT
-	 SYzYXqY2Rt5Achh+97t+fg4APhR4orGfBZ2VxjAVhOOplCi47z8TLkFpV/WqZN5FzHjo5
-	 1hWOVpkfbE7COsbK61Gx7C1rbflpBFvg60sXAILIioawO8gpzDVjs+9YBpZ4ndHQgm5zV
-	 8vG75kIKD8Zk/ZtDyGh5GhSVLx3hm7Cec5bbchHMeGeqv8US768JVkmJVSB7W3IdU3w==
+	bh=Ax2NsdM5fwIGUsrBgSWXkYIWauV7w8oV2OB6NsiJnP0=;
+	b=IyfNjNP/RnMBf0otYe5LpNke7wBY3NPZb7YNXM013YcrWriM1RZ1ApEUWxolm6oRfKz7
+	 6r05cxMILKPei8O1sEnBF963Ib5TnlHTJ3YuWxQLPA9J4PNh6XA6Lbl2Q14MIAX6qgEGE
+	 1VkpDuFkt9cev2nrg9lP8fK6M5T8R3YQbYsiY+d2HrKuMNhPukv5aI76n94yU7dJ96vHc
+	 YNYaP6Dzy8V4vjTmOWkQITzMf9I0TXbHst2bjNYNP9NsmauOJa0EZ0P9K3paA5jDfU8+V
+	 RDq+u7Z1CIDCc+ySW2CMYiKRxakufI0CTaYupLkGK9/1C/CY8RtW0Vabc7KEU/kkcNw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q9KReNVo;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hVKwC3O8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97532606A31A;
-	Wed, 28 Oct 2026 18:48:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DBBF606A31A;
+	Wed, 28 Oct 2026 18:48:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q9KReNVo
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E75511F01828;
-	Wed, 28 Oct 2026 18:48:47 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hVKwC3O8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C13B61F01825;
+	Wed, 28 Oct 2026 18:48:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213328;
-	bh=sgNc1EFcbFLo/RkXSWNYhy+8thvEsl1Hwagenpa4Ggg=;
+	s=korg; t=1793213331;
+	bh=Ax2NsdM5fwIGUsrBgSWXkYIWauV7w8oV2OB6NsiJnP0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Q9KReNVodfNf+tNOGFlqC3EQL2U6ZmetHHHmijb06b0w2HN54vC8TbJgKQPHWVp/Q
-	 JE9AXW7btK9nZLMeksoHF7GUoN+NPbaSQU9Gs2QePiwAqQXlxS1UOQ5AKme6ImF7fN
-	 szPes/lZ9sZIJyD2NqITVwaIq+a2RNO7GhjN+D6k=
+	b=hVKwC3O8rHbQC8hC33o2NiO5LEzS4ajciH+s9/6VHpWg7jcT1e6eCKrv4eD8LAvtk
+	 eUdFufjO98pbsgzY2vC3zd/UiZDedVFGW+P5ifIAnQ70q2193hM6oZU9vW4K3mpgkH
+	 I/UIX64V7z4PkbWXa2BnwfaqErghPcTDoW4khfzY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Karl Bonde Torp <k.torp@samsung.com>,
-	Andreas Hindborg <a.hindborg@kernel.org>,
-	Keith Busch <kbusch@kernel.org>
-Subject: [PATCH 6.1 0466/1887] nvme: fix swapped ZRASF zone state values for full and read only
-Date: Wed, 28 Oct 2026 17:42:42 +0100
-Message-ID: <20261028170509.837891288@linuxfoundation.org>
+	"Denis V. Lunev" <den@openvz.org>,
+	Ilya Maximets <i.maximets@ovn.org>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 6.1 0467/1887] openvswitch: fix soft lockup in the netlink flow dump
+Date: Wed, 28 Oct 2026 17:42:43 +0100
+Message-ID: <20261028170509.860995444@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,50 +68,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Bonde Torp <k.torp@samsung.com>
+From: Denis V. Lunev <den@openvz.org>
 
-commit 564e46d9f6e87912effa03f123d37a511d520f09 upstream.
+commit aaaaf87ea99b8766c9a8aa0e71aa42e6bc8a5320 upstream.
 
-The Zone Management Receive command Zone Receive Action Specific (ZRASF)
-reporting option values for the Full and Read Only zone states are swapped
-compared to the NVM Express Zoned Namespace Command Set Specification,
-Revision 1.5, Figure 35:
+A production compute node carrying a few thousand datapath flows hit a
+soft lockup inside a single netlink flow dump and panicked.
 
-- 5h lists the zones in the ZSF:Full state.
-- 6h lists the zones in the ZSRO:Read Only state.
+ovs_flow_cmd_dump() calls ovs_flow_stats_get() for every flow it
+emits, and that releases stats->lock with spin_unlock_bh() once per
+CPU that has touched the flow. Every release is a local_bh_enable(),
+and each one runs the pending softirq backlog in the dumping thread's
+own context.
 
-The nvmet ZNS backend uses these constants to map the ZRASF value received
-from the host to a block layer zone condition when filtering zones in
-Report Zones. Because of the swap, a host asking for full zones was given
-the read only zones, and a host asking for read only zones was given the
-full zones.
+The skb bounds the flows one callback emits, but not the softirq work
+it absorbs. On a CPU that carries the box's packet load the backlog
+refills as fast as it drains, so the dumping thread becomes that CPU's
+softirq engine. It never sleeps and it has no reschedule point, so
+under voluntary preemption nothing can take the CPU away from it:
+neither the ksoftirqd the kernel woke to take the work over, nor the
+stopper thread the softlockup detector dispatches to refresh its
+timestamp.
 
-Swap the values of NVME_ZRASF_ZONE_STATE_FULL and
-NVME_ZRASF_ZONE_STATE_READONLY to match the specification.
+Hold BH off across the whole callback instead, the way
+ctnetlink_dump_table() does, so the nested spin_unlock_bh() stop
+draining softirqs. The loop already runs under rcu_read_lock() and
+cannot sleep. What it gives up is preemption under CONFIG_PREEMPT,
+since a BH-off region is not preemptible outside PREEMPT_RT. The
+region stays short: the skb caps the flows one callback emits, and
+empty buckets cost no skb space but are each visited once per dump, as
+the cursor only moves forward. The table grows on insert and shrinks
+only on flush, so the walk is bounded by the largest flow count the
+datapath has held. The softirq backlog the callback used to absorb has
+no bound at all.
 
-Fixes: aaf2e048af27 ("nvmet: add ZBD over ZNS backend support")
+Fixes: 63e7959c4b9b ("openvswitch: Per NUMA node flow stats.")
 Cc: stable@vger.kernel.org
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Signed-off-by: Karl Bonde Torp <k.torp@samsung.com>
-Signed-off-by: Andreas Hindborg <a.hindborg@kernel.org>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Signed-off-by: Denis V. Lunev <den@openvz.org>
+Reviewed-by: Ilya Maximets <i.maximets@ovn.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/nvme.h |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/openvswitch/datapath.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/include/linux/nvme.h
-+++ b/include/linux/nvme.h
-@@ -1060,8 +1060,8 @@ enum {
- 	NVME_ZRASF_ZONE_STATE_IMP_OPEN	= 0x02,
- 	NVME_ZRASF_ZONE_STATE_EXP_OPEN	= 0x03,
- 	NVME_ZRASF_ZONE_STATE_CLOSED	= 0x04,
--	NVME_ZRASF_ZONE_STATE_READONLY	= 0x05,
--	NVME_ZRASF_ZONE_STATE_FULL	= 0x06,
-+	NVME_ZRASF_ZONE_STATE_FULL	= 0x05,
-+	NVME_ZRASF_ZONE_STATE_READONLY	= 0x06,
- 	NVME_ZRASF_ZONE_STATE_OFFLINE	= 0x07,
- 	NVME_REPORT_ZONE_PARTIAL	= 1,
- };
+--- a/net/openvswitch/datapath.c
++++ b/net/openvswitch/datapath.c
+@@ -1476,6 +1476,12 @@ static int ovs_flow_cmd_dump(struct sk_b
+ 		return -ENODEV;
+ 	}
+ 
++	/*
++	 * Not needed for safety. Stops every spin_unlock_bh() in
++	 * ovs_flow_stats_get() from running the softirq backlog.
++	 */
++	local_bh_disable();
++
+ 	ti = rcu_dereference(dp->table.ti);
+ 	for (;;) {
+ 		struct sw_flow *flow;
+@@ -1496,6 +1502,8 @@ static int ovs_flow_cmd_dump(struct sk_b
+ 		cb->args[0] = bucket;
+ 		cb->args[1] = obj;
+ 	}
++
++	local_bh_enable();
+ 	rcu_read_unlock();
+ 	return skb->len;
+ }
 
 
