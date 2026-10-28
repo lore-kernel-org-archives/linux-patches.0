@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793212487;
-	b=p/FDIDWfsqwA3CCCTI7cOLfZg/45U2Xx76lLN6UODsiiXOYxqmwgzlh8WOzGmR3NSs2I
-	 lEBsuivY1pCt9s1kl3OwkpW1PJpBp8Q+QSLFJNQJTSQ/y+Vn+4WBb5bp8SG/XPwg0+6NY
-	 Kd4gcGOqXn3TZykT5NdiO+MKTQqndbYSnKAx0NSwn4ERh9M0NxOJsl+Crqz1VhT3iflz2
-	 2zA3VL4HJSUuoY5s7tX4ZGXamPElxAZ2bEAlmqZq74e+mB5BUnQgII/nuWQp7sbz02DWw
-	 DaQ9duT4H9MxxWOCCTQNDBHIKB6067nLG8/x/0fXTQGXxM3mYtpe+LuMVj6QTMqtzcQ==
+	t=1793212490;
+	b=zSwpkAANavJg1/sszpA0UfaNfau7TGRf/mfZUUoW9q6C4pgoo/LAG8KqVjHGkxyIMP3M
+	 u2c8yARLFG/TFYuzZFwkesvIk5LN8S3sINqzRwJNpLRk7RK4K+5vYfio/znui49fMvEEp
+	 H7jPLcuRo0kYMD2ShN6fpeSnRuEAlAwJdtPKYXxI5/ZZaS2Mid9AwLFdWy5jERTjgqqqe
+	 BEYMT52ubcQNC0S3VhU3ctRoMlPJbEOnTk68tzFN9qx45OnPcTHkALwKOMrnQdCRRV4KW
+	 +2U2UFnMtD/Unkw5Wgzjeca8hd0u0/LelKFCl0T4hwTi2mG5iVju0FemcGguEeZL45g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793212487;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793212490;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=xkeJHEyYW2hnNpAPBDbdZBOf/oqAcmsenV+BbRRZ5lY=;
-	b=w8F3q2VZu5MsSt2KVFvYw/RAbNvAMa2X6QTQ0ruT63Pt967wBouXvhcWntb/oeW/p/lG
-	 FzJ4/sZrFQOmgYOfu/5UPYLjwIamr3eRzlAx7KFT33xEydwHetIE3Vb83TtcUwZ5SqLmG
-	 txLigQws79FFoiwaKXi2h69ixpVZITYkTr7Vf923e3ny+EGGUaGjIe5BttGPTdDiYo7IP
-	 zQ/ZW2Td6NLxTVwiqhGAVva8AA/l49TLcA8hRfRRZpxakN6YhIX+Jm+zUxrG+3ogkFm1n
-	 /F/MtxZXwx/S20wy4PUSqMZEUxpY2aARtmu3vzZGNzfEKXa/NkiAdWzWiJo4p7klaEg==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=irwU2FV+8hI3eCGdMp2bdbtHmS+wt9h9yjXHjwgNaDA=;
+	b=e1peR34cfHngmh/mmmZ9RzQe1oFpJ/KFm5CdbM3B5IiwToOCcx1HGqgNMHSkH4cPBLtm
+	 KxGl9Q3O+sf6lQz5kgxQCiL6voMGkMRQ9Mkdxh/eSsXFgBhAbudKyJ1m+tYAYDjGxbbu/
+	 VgYJvzbPbix8qcsrEmEM8jTpclTf1D9hqkOcAxQqqa0xDLmDoVh0Cbb4ys41dAjj/lM2s
+	 BAP2q4SeuCY0vxZRYRYMOhSvd1eb0JY9Pmr/r4NlU0xntbAIJODSj1umg5sFugI19kH6r
+	 CppJcLwQJQTyW65fdLnX7dqO2Kt17JEDuEhrg4MynNN8RgtU7gd6u0gAleqcOO/f4HQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OehQuzKm;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=srXxCzC2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B9E1606A31C;
-	Wed, 28 Oct 2026 18:34:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 113AD606A323;
+	Wed, 28 Oct 2026 18:34:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OehQuzKm
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D9C21F01825;
-	Wed, 28 Oct 2026 18:34:46 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=srXxCzC2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62CFD1F01825;
+	Wed, 28 Oct 2026 18:34:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793212487;
-	bh=xkeJHEyYW2hnNpAPBDbdZBOf/oqAcmsenV+BbRRZ5lY=;
+	s=korg; t=1793212489;
+	bh=irwU2FV+8hI3eCGdMp2bdbtHmS+wt9h9yjXHjwgNaDA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OehQuzKm1S7nip5htIwPjSbNqKu6UNzfMQK6QStQEU7Wk/ACq551vzV9h2d1EecT+
-	 3UE7mEI2JdIDWHRVyCEQWK5WFdliFssfo6wAa1f0B2d+KigfyDdFySnat1YOnuMRhX
-	 QsEvpXzFcAn+rwtP175i1fkCI7gOX2zWW3EuBq+4=
+	b=srXxCzC2VDDHIrK4UBWtUNernToNBjEF1QyfEprigv2vhJUgXIw0vo9t8RfrWtobI
+	 Odh+K4ug9lrBKQBO4rCbxV4egh+256iQc19dlSpZbvT74FjjxxJjmMCJuXS/E9zBy5
+	 EhOCKU9hwvl6ZIk9YJxCd8shV6OpE3MYOsL8uI/w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
-	Ricardo Robaina <rrobaina@redhat.com>,
-	Bradley Morgan <brads@mainlining.org>,
-	Paul Moore <paul@paul-moore.com>
-Subject: [PATCH 6.1 0172/1887] audit: fix exe mark UAF in kill_rules()
-Date: Wed, 28 Oct 2026 17:37:48 +0100
-Message-ID: <20261028170503.153625442@linuxfoundation.org>
+	Leon Hwang <leon.hwang@linux.dev>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
+Subject: [PATCH 6.1 0173/1887] kprobes: Skip disarmed probes when checking optkprobe overlap
+Date: Wed, 28 Oct 2026 17:37:49 +0100
+Message-ID: <20261028170503.175511582@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -63,94 +61,63 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+From: Leon Hwang <leon.hwang@linux.dev>
 
-commit aa650d87a498844060eecb1d336f4d46f4d1b0b3 upstream.
+commit 7a39c732a22ec4a369af9e19fbe3d666ec83eec4 upstream.
 
-kill_rules() removes mixed AUDIT_DIR and AUDIT_EXE rules when an audit
-tree is pruned. It drops entry->rule.exe before removing the rule from
-the RCU-visible filter lists.
+On x86, an optkprobe at A replaces five bytes with a jump. If a disabled
+probe B is at A+2, get_optimized_kprobe() stops at B when arming a new
+probe C at A+4. It leaves A optimized:
 
-After a rule has been installed with AUDIT_ADD_RULE, which requires
-CAP_AUDIT_CONTROL, removing the watched directory can race with another
-task that is still evaluating the rule. In that case, fsnotify can free
-the executable mark before the reader reaches audit_mark_compare(),
-causing a use-after-free.
+              A    A+1  A+2  A+3  A+4
+  A's jump  | e9 | d0 | d1 | d2 | d3 |
+  after C   | e9 | d0 | d1 | d2 | cc |
 
-KASAN reports:
+The INT3 for C overwrites the last byte of A's jump displacement, so
+execution can jump to the wrong address. B can have prepared optinsns
+while disarmed, but has no jump to unoptimize.
 
-    BUG: KASAN: slab-use-after-free in audit_mark_compare+0x8d/0xa0
+Continue past disarmed and unprepared probes to find the active optimized
+probe before arming a probe in its jump.
 
-Unlink the published rules from the RCU-visible lists and retain them
-on tree->rules for cleanup. If any rule has an executable mark, wait for
-a single RCU grace period before removing the marks and scheduling the
-entries for freeing. Otherwise, call_rcu() already provides the required
-deferred freeing without a synchronous wait.
+Link: https://lore.kernel.org/all/20260930053618.104498-1-leon.hwang@linux.dev/
 
+Fixes: afd66255b9a4 ("kprobes: Introduce kprobes jump optimization")
 Cc: stable@vger.kernel.org
-Fixes: 34d99af52ad4 ("audit: implement audit by executable")
-Assisted-by: Codex:gpt-5
-Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
-Reviewed-by: Ricardo Robaina <rrobaina@redhat.com>
-Tested-by: Ricardo Robaina <rrobaina@redhat.com>
-Reviewed-by: Bradley Morgan <brads@mainlining.org>
-Signed-off-by: Paul Moore <paul@paul-moore.com>
+Signed-off-by: Leon Hwang <leon.hwang@linux.dev>
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/audit_tree.c |   24 ++++++++++++++++++++----
- 1 file changed, 20 insertions(+), 4 deletions(-)
+ kernel/kprobes.c |    8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
---- a/kernel/audit_tree.c
-+++ b/kernel/audit_tree.c
-@@ -543,22 +543,38 @@ static void kill_rules(struct audit_cont
+--- a/kernel/kprobes.c
++++ b/kernel/kprobes.c
+@@ -491,14 +491,16 @@ static bool kprobe_queued(struct kprobe
+ static struct kprobe *get_optimized_kprobe(kprobe_opcode_t *addr)
  {
- 	struct audit_krule *rule, *next;
- 	struct audit_entry *entry;
-+	bool need_sync = false;
+ 	int i;
+-	struct kprobe *p = NULL;
++	struct kprobe *p;
+ 	struct optimized_kprobe *op;
  
- 	list_for_each_entry_safe(rule, next, &tree->rules, rlist) {
- 		entry = container_of(rule, struct audit_entry, rule);
+ 	/* Don't check i == 0, since that is a breakpoint case. */
+-	for (i = 1; !p && i < MAX_OPTIMIZED_LENGTH / sizeof(kprobe_opcode_t); i++)
++	for (i = 1; i < MAX_OPTIMIZED_LENGTH / sizeof(kprobe_opcode_t); i++) {
+ 		p = get_kprobe(addr - i);
++		/* A disabled probe can have prepared, but inactive, optinsns. */
++		if (!p || !kprobe_optready(p) || kprobe_disarmed(p))
++			continue;
  
--		list_del_init(&rule->rlist);
- 		if (rule->tree) {
- 			/* not a half-baked one */
- 			audit_tree_log_remove_rule(context, rule);
--			if (entry->rule.exe)
--				audit_remove_mark(entry->rule.exe);
- 			rule->tree = NULL;
- 			list_del_rcu(&entry->list);
- 			list_del(&entry->rule.list);
--			call_rcu(&entry->rcu, audit_free_rule_rcu);
-+			if (entry->rule.exe)
-+				need_sync = true;
-+		} else {
-+			list_del_init(&rule->rlist);
- 		}
- 	}
-+
-+	if (list_empty(&tree->rules))
-+		return;
-+
-+	if (need_sync)
-+		synchronize_rcu();
-+
-+	list_for_each_entry_safe(rule, next, &tree->rules, rlist) {
-+		entry = container_of(rule, struct audit_entry, rule);
-+
-+		list_del_init(&rule->rlist);
-+		if (entry->rule.exe)
-+			audit_remove_mark(entry->rule.exe);
-+		call_rcu(&entry->rcu, audit_free_rule_rcu);
-+	}
- }
- 
- /*
+-	if (p && kprobe_optready(p)) {
+ 		op = container_of(p, struct optimized_kprobe, kp);
+ 		if (arch_within_optimized_kprobe(op, addr))
+ 			return p;
 
 
