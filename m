@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793211405;
-	b=VdW86vZmDS+XJ0k2pSZQALd+xriCewHk2XQ9/A/lnqkmaE/rYQWqmfPz9miSMJsryM4f
-	 ZSddk/CBAfZBoYjWf+//porIxqzCSUuMqAhiu8wwSvr8IhBsfM1LylxSJSsJQfa0TQwx0
-	 4W+BkAGovEk8SkMwT8ihux5ASoQKBwQ69JjrJjWbClFRxlQm6Gl/NxPRWfsegL7b/ZZ//
-	 12HKMOttaw3gSZY0Kh3GEFeP90hUWpcc3jJiCOA6V3HWiIAPF1AFy0rOlnb3MPOJsvhcB
-	 8Wcj/x9PzhBubjM8dHxxtydDucIFmiOSHx2X3zj1QJyt1vVCniAX7Ta5wT3o2MTcYPQ==
+	t=1793211407;
+	b=zvWT4IH9VwojVEK7DVgsCOdurK1xxgTxGOy771SuBbfrTL0FT1IZIQ9XWj/Tn39VLMLK
+	 PgrXbcK/lSYiDKxItMKOI6SRJBQIFwKA9T+cSt2IHdu2dV2wGXDNeJtG/NjNUOB3KoOnb
+	 vjHJ8QeGY07SdA/oGSHyrORiWyrwShWgiZOBruCK+pmjFL8OFwBaTBBxTLuNfcUGB0VRS
+	 D2VEvhNs1JvtPWks+rXsrgTnkkC5E45SZnjJnYrdj3GwwDWXHdNnzHRw62zmgYjN+BOmp
+	 6FRWoadZZnTGib1jk8ihsDfSlmqm151fTo84a16mQNpPaSuFKnN8qmPCBTREAMnsl+w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793211405;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793211407;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=sW1kOCg3Xi8xJFW45feT/gWGgaZI2oo9rxPF1BqYQDo=;
-	b=mNxr/7Rp60cnSHB3/ZPCHjLAXTkjzEeQHrwhQYWlBedwi2PMMXrxs26mcvADbd81nvTi
-	 0piWEt8O7GoG3+vEvlHdcGOX1Nr2ehSnv9AwypuC9arNnCao5Bjgkpfv1bcg4GanAwxWC
-	 aK6hdQ7Q+Hm01YBQVgdhouzK6Siy0AmM4JJxPbOqeUiwmho+knhryKc7mda8Ulr1+2ClI
-	 mKY94LWaYx4UqItMcomCEhM4uxK9hGKLNHRC//QCxyMKejBRfAiO8CWoZy6CAtyyKtz9I
-	 pMoeHMCGtvR68bZdBDU9UBmcyYqQGYkNzkaMJKugZ4CMk2t2U5F7zVvtoh/U0hlaIWg==
+	bh=x68vQlWjit/IIogwzw46D9feAzj94lTbisB24uaiF/I=;
+	b=qOM2qoypTFUPkzoxAR6dzBJ2MZul/oJgKr0VOEiUpUy67Kf7uDd+O3bMIe0KMCypxAKs
+	 fB+6H452vtkOYGoBvwiSI1It+Js7/on4Hu9Gne0HUj8c79MSGAcsZ0+jj0s0Jr3S8mc6e
+	 ldtTSf2vDwiuSBV8VMAHY06QmylMju3Ocpc0NQ2KuPG+cCENsgtaa+x3fNyc03BlrJ8To
+	 kZR1/UuhppeAoBjAem8MJb78uSU90pGQszkkuuZS3oM4WOQP2qzk16hdMcqZ3vvKB3ZY+
+	 VKQMivcnlwaPuq7nZOpH7UW52SXPZH5Mk+Amu2EgEFTWCIbZcRc35hvcnkUaLc6DXVw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VuF3CTG4;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=apEa2Vxi;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C32A4606A942;
-	Wed, 28 Oct 2026 18:16:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B9CF606A321;
+	Wed, 28 Oct 2026 18:16:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VuF3CTG4
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D6C31F01825;
-	Wed, 28 Oct 2026 18:16:43 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=apEa2Vxi
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDE3D1F01825;
+	Wed, 28 Oct 2026 18:16:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793211404;
-	bh=sW1kOCg3Xi8xJFW45feT/gWGgaZI2oo9rxPF1BqYQDo=;
+	s=korg; t=1793211407;
+	bh=x68vQlWjit/IIogwzw46D9feAzj94lTbisB24uaiF/I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VuF3CTG4UtzpyeARxwK5/6ti3lbL85YPmaUmmmaTf4Qyj3Ibyub8Oe8Zf+/o2NuS7
-	 uA5EWLtBu9h9FRsEvBsfxe+I00iQZLiKqzzSrqU7+QKw8EqIVapypgFaD3sNY7b4lQ
-	 cB1PG6CBxT6np52FHks3s43+UiKugCjVDECfWIUw=
+	b=apEa2Vxi0594TKjgRJNLTyT90JYeCj//iN9o/1ANuYBnuIu8kJGUWoz4kSnRBAdL9
+	 uTmWx5hO3nUPFXyto0xmSv1LO8hRb1vsIlFFggDaF8Xjk+3DOG8BcGyCGbmZ/3db0r
+	 OP+IXFNARnYt/y9daQLzp/cz4qch1gw9QUwXqE8A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>,
-	Ulf Hansson <ulfh@kernel.org>
-Subject: [PATCH 5.15 364/571] memstick: rtsx_usb_ms: complete requests after eject instead of dropping them
-Date: Wed, 28 Oct 2026 17:58:31 +0100
-Message-ID: <20261028170016.652504155@linuxfoundation.org>
+	Alan Borzeszkowski <alan.borzeszkowski@linux.intel.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 321/571] thunderbolt: Fix KASAN reported use-after-free when request is canceled
+Date: Wed, 28 Oct 2026 17:57:48 +0100
+Message-ID: <20261028170015.618913258@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -67,132 +68,238 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>
+From: Mika Westerberg <mika.westerberg@linux.intel.com>
 
-commit c96ca94425b076dc398d929366e378d1e22ec794 upstream.
+[ Upstream commit a02188ddc24b7872f0c5e0c5873f827318717803 ]
 
-memstick_check() can pass its host->removing check just before
-rtsx_usb_ms_drv_remove() sets eject/removing. Its next request is then
-silently dropped: rtsx_usb_ms_request() skips schedule_work() once eject
-is set, and drv_remove's cancel_work_sync() can also cancel a queued
-handle_req before it picks the request up. Nobody completes
-card->mrq_complete.
+Alan reported that when doing stress testing sometimes KASAN notices
+use-after-free during control channel operation (stripped down keeping
+the relevant parts):
 
-Once memstick core waits for requests without a timeout ("memstick: core:
-wait for request completion before freeing card"), this hangs removal:
-memstick_check() never returns and memstick_remove_host() blocks in
-flush_workqueue():
+ BUG: KASAN: slab-use-after-free in tb_cfg_request_sync+0x240/0x250 [thunderbolt]
+ Read of size 24 at addr ffff88811067f290 by task kworker/u40:2/1760
+  <TASK>
+  tb_cfg_request_sync+0x240/0x250 [thunderbolt]
+  tb_cfg_read_raw+0x367/0x510 [thunderbolt]
+  tb_cfg_read+0xec/0x240 [thunderbolt]
+  tb_port_get_link_generation+0x258/0x420 [thunderbolt]
+  tb_usb3_consumed_bandwidth+0x1c1/0x2c0 [thunderbolt]
+  tb_tunnel_consumed_bandwidth+0xfd/0x910 [thunderbolt]
+  tb_available_bandwidth+0x5f2/0xeb0 [thunderbolt]
+  tb_recalc_estimated_bandwidth+0x2a0/0x1bc0 [thunderbolt]
+  tb_handle_dp_bandwidth_request+0x1897/0x5e20 [thunderbolt]
+  process_one_work+0x675/0x1230
+  worker_thread+0x5e6/0xf70
+  kthread+0x365/0x470
+  ret_from_fork+0x54d/0x710
+  ret_from_fork_asm+0x1a/0x30
+  </TASK>
 
-  INFO: task kworker/u10:3:65 blocked for more than 20 seconds.
-  Workqueue: kmemstick memstick_check
-   __wait_for_common
-   memstick_check
+ Allocated by task 1760:
+  __kmalloc_cache_noprof+0x1ee/0x550
+  tb_cfg_read_raw+0x1d3/0x510 [thunderbolt]
+  tb_cfg_read+0xec/0x240 [thunderbolt]
+  tb_port_get_link_generation+0x258/0x420 [thunderbolt]
+  tb_usb3_consumed_bandwidth+0x1c1/0x2c0 [thunderbolt]
+  tb_tunnel_consumed_bandwidth+0xfd/0x910 [thunderbolt]
+  tb_available_bandwidth+0x5f2/0xeb0 [thunderbolt]
+  tb_recalc_estimated_bandwidth+0x2a0/0x1bc0 [thunderbolt]
+  tb_handle_dp_bandwidth_request+0x1897/0x5e20 [thunderbolt]
+  process_one_work+0x675/0x1230
+  worker_thread+0x5e6/0xf70
+  kthread+0x365/0x470
+  ret_from_fork+0x54d/0x710
+  ret_from_fork_asm+0x1a/0x30
 
-  INFO: task kworker/1:1:33 blocked for more than 20 seconds.
-  Workqueue: usb_hub_wq hub_event
-   __flush_workqueue
-   memstick_remove_host
-   rtsx_usb_ms_drv_remove
+ Freed by task 926:
+  kfree+0x18f/0x4a0
+  tb_cfg_request_put+0xb7/0xe0 [thunderbolt]
+  tb_cfg_request_work+0x82/0x120 [thunderbolt]
+  process_one_work+0x675/0x1230
+  worker_thread+0x5e6/0xf70
+  kthread+0x365/0x470
+  ret_from_fork+0x54d/0x710
+  ret_from_fork_asm+0x1a/0x30
 
-Never drop a request. rtsx_usb_ms_request() always schedules handle_req,
-and handle_req fails requests with -ENOMEDIUM once eject is set, without
-touching the device. drv_remove flushes handle_req instead of cancelling
-it, and cancels it only after memstick_remove_host(), when no new
-request can arrive, so it cannot run on a freed host.
+ Second to last potentially related work creation:
+  __queue_work+0x575/0xd00
+  queue_work_on+0x77/0x80
+  tb_cfg_request_cancel+0xc7/0x260 [thunderbolt]
+  tb_cfg_request_sync+0x1f6/0x250 [thunderbolt]
+  tb_cfg_read_raw+0x367/0x510 [thunderbolt]
+  tb_cfg_read+0xec/0x240 [thunderbolt]
+  tb_port_get_link_generation+0x258/0x420 [thunderbolt]
+  tb_usb3_consumed_bandwidth+0x1c1/0x2c0 [thunderbolt]
+  tb_tunnel_consumed_bandwidth+0xfd/0x910 [thunderbolt]
+  tb_available_bandwidth+0x5f2/0xeb0 [thunderbolt]
+  tb_recalc_estimated_bandwidth+0x2a0/0x1bc0 [thunderbolt]
+  tb_handle_dp_bandwidth_request+0x1897/0x5e20 [thunderbolt]
+  process_one_work+0x675/0x1230
+  worker_thread+0x5e6/0xf70
+  kthread+0x365/0x470
+  ret_from_fork+0x54d/0x710
+  ret_from_fork_asm+0x1a/0x30
 
-The host_mutex drain in drv_remove is removed: handle_req always leaves
-host->req NULL when it finishes, so the drain never had anything to do,
-and it would now race with handle_req.
+The last stack trace is helpful because it shows that we are cancelling
+a request and looking at tb_cfg_request_cancel() what might happen is
+that tb_cfg_request_work() completes right before tb_cfg_request_cancel()
+starts and because of this it will call schedule_work() queueing the
+same work to run again. However, it is already removed from the
+request_queue and reference count is dropped so when
+tb_cfg_request_work() triggers again it will access memory that is
+already released.
 
-Fixes: 99451dceeb5f ("memstick: Add realtek USB memstick host driver")
+Fix this so that we first make sure a cancelled request is not handed
+away from tb_cfg_request_find() or scheduled to run. Then instead of
+relying on the worker to clean up the request we will do it in
+tb_cfg_request_cancel() after the work is canceled from running. Make
+tb_cfg_request_dequeue() release the request only if it was actually
+removed from the queue.
+
+Reported-by: Alan Borzeszkowski <alan.borzeszkowski@linux.intel.com>
+Fixes: d7f781bfdbf4 ("thunderbolt: Rework control channel to be more reliable")
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/all/20260924204142.607-1-rajojha047@gmail.com/
-Signed-off-by: Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>
-Signed-off-by: Ulf Hansson <ulfh@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+[ sashal: Replaced guard()/scoped_guard() with explicit mutex locking for GNU89 compatibility. ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/memstick/host/rtsx_usb_ms.c |   31 +++++++++++--------------------
- 1 file changed, 11 insertions(+), 20 deletions(-)
+ drivers/thunderbolt/ctl.c | 47 +++++++++++++++++++--------------------
+ 1 file changed, 23 insertions(+), 24 deletions(-)
 
---- a/drivers/memstick/host/rtsx_usb_ms.c
-+++ b/drivers/memstick/host/rtsx_usb_ms.c
-@@ -27,7 +27,6 @@ struct rtsx_usb_ms {
- 	struct memstick_host	*msh;
- 	struct memstick_request	*req;
+diff --git a/drivers/thunderbolt/ctl.c b/drivers/thunderbolt/ctl.c
+index 7c070a58f4b95..36c64ed467d55 100644
+--- a/drivers/thunderbolt/ctl.c
++++ b/drivers/thunderbolt/ctl.c
+@@ -65,7 +65,6 @@ struct tb_ctl {
+ #define tb_ctl_dbg(ctl, format, arg...) \
+ 	dev_dbg(&(ctl)->nhi->pdev->dev, format, ## arg)
  
--	struct mutex		host_mutex;
- 	struct work_struct	handle_req;
- 	struct delayed_work	poll_card;
+-static DECLARE_WAIT_QUEUE_HEAD(tb_cfg_request_cancel_queue);
+ /* Serializes access to request kref_get/put */
+ static DEFINE_MUTEX(tb_cfg_request_lock);
  
-@@ -511,6 +510,13 @@ static void rtsx_usb_ms_handle_req(struc
- 	struct memstick_host *msh = host->msh;
- 	int rc;
- 
-+	/* Fail requests after eject so their waiters are released. */
-+	if (host->eject) {
-+		while (!memstick_next_req(msh, &host->req))
-+			host->req->error = -ENOMEDIUM;
-+		return;
-+	}
+@@ -123,11 +122,14 @@ void tb_cfg_request_put(struct tb_cfg_request *req)
+ static int tb_cfg_request_enqueue(struct tb_ctl *ctl,
+ 				  struct tb_cfg_request *req)
+ {
++	tb_cfg_request_get(req);
 +
- 	if (!host->req) {
- 		pm_runtime_get_sync(ms_dev(host));
- 		do {
-@@ -544,8 +550,7 @@ static void rtsx_usb_ms_request(struct m
+ 	WARN_ON(test_bit(TB_CFG_REQUEST_ACTIVE, &req->flags));
+ 	WARN_ON(req->ctl);
  
- 	dev_dbg(ms_dev(host), "--> %s\n", __func__);
- 
--	if (!host->eject)
--		schedule_work(&host->handle_req);
-+	schedule_work(&host->handle_req);
+ 	mutex_lock(&ctl->request_queue_lock);
+ 	if (!ctl->running) {
++		tb_cfg_request_put(req);
+ 		mutex_unlock(&ctl->request_queue_lock);
+ 		return -ENOTCONN;
+ 	}
+@@ -138,28 +140,24 @@ static int tb_cfg_request_enqueue(struct tb_ctl *ctl,
+ 	return 0;
  }
  
- static int rtsx_usb_ms_set_param(struct memstick_host *msh,
-@@ -778,7 +783,6 @@ static int rtsx_usb_ms_drv_probe(struct
- 	host->power_mode = MEMSTICK_POWER_OFF;
- 	platform_set_drvdata(pdev, host);
- 
--	mutex_init(&host->host_mutex);
- 	INIT_WORK(&host->handle_req, rtsx_usb_ms_handle_req);
- 
- 	INIT_DELAYED_WORK(&host->poll_card, rtsx_usb_ms_poll_card);
-@@ -809,27 +813,12 @@ static int rtsx_usb_ms_drv_remove(struct
++static bool tb_cfg_request_is_active(struct tb_cfg_request *req)
++{
++	return test_bit(TB_CFG_REQUEST_ACTIVE, &req->flags);
++}
++
+ static void tb_cfg_request_dequeue(struct tb_cfg_request *req)
  {
- 	struct rtsx_usb_ms *host = platform_get_drvdata(pdev);
- 	struct memstick_host *msh = host->msh;
--	int err;
+ 	struct tb_ctl *ctl = req->ctl;
  
- 	host->eject = true;
- 	msh->removing = true;
--	cancel_work_sync(&host->handle_req);
-+	flush_work(&host->handle_req);
- 	cancel_delayed_work_sync(&host->poll_card);
- 
--	mutex_lock(&host->host_mutex);
--	if (host->req) {
--		dev_dbg(ms_dev(host),
--			"%s: Controller removed during transfer\n",
--			dev_name(&msh->dev));
--		host->req->error = -ENOMEDIUM;
--		do {
--			err = memstick_next_req(msh, &host->req);
--			if (!err)
--				host->req->error = -ENOMEDIUM;
--		} while (!err);
--	}
--	mutex_unlock(&host->host_mutex);
+ 	mutex_lock(&ctl->request_queue_lock);
+-	if (!test_bit(TB_CFG_REQUEST_ACTIVE, &req->flags)) {
+-		mutex_unlock(&ctl->request_queue_lock);
+-		return;
++	if (tb_cfg_request_is_active(req)) {
++		list_del(&req->list);
++		clear_bit(TB_CFG_REQUEST_ACTIVE, &req->flags);
++		tb_cfg_request_put(req);
+ 	}
 -
- 	/* Balance possible unbalanced usage count
- 	 * e.g. unconditional module removal
- 	 */
-@@ -838,6 +827,8 @@ static int rtsx_usb_ms_drv_remove(struct
+-	list_del(&req->list);
+-	clear_bit(TB_CFG_REQUEST_ACTIVE, &req->flags);
+-	if (test_bit(TB_CFG_REQUEST_CANCELED, &req->flags))
+-		wake_up(&tb_cfg_request_cancel_queue);
+ 	mutex_unlock(&ctl->request_queue_lock);
+ }
  
- 	pm_runtime_disable(ms_dev(host));
- 	memstick_remove_host(msh);
-+	/* No card, no new requests; wait for the last failed one to finish. */
-+	cancel_work_sync(&host->handle_req);
- 	dev_dbg(ms_dev(host),
- 		": Realtek USB Memstick controller has been removed\n");
- 	memstick_free_host(msh);
+-static bool tb_cfg_request_is_active(struct tb_cfg_request *req)
+-{
+-	return test_bit(TB_CFG_REQUEST_ACTIVE, &req->flags);
+-}
+-
+ static struct tb_cfg_request *
+ tb_cfg_request_find(struct tb_ctl *ctl, struct ctl_pkg *pkg)
+ {
+@@ -169,7 +167,8 @@ tb_cfg_request_find(struct tb_ctl *ctl, struct ctl_pkg *pkg)
+ 	mutex_lock(&pkg->ctl->request_queue_lock);
+ 	list_for_each_entry(req, &pkg->ctl->request_queue, list) {
+ 		tb_cfg_request_get(req);
+-		if (req->match(req, pkg)) {
++		if (!test_bit(TB_CFG_REQUEST_CANCELED, &req->flags) &&
++		    req->match(req, pkg)) {
+ 			found = true;
+ 			break;
+ 		}
+@@ -496,8 +495,11 @@ static void tb_ctl_rx_callback(struct tb_ring *ring, struct ring_frame *frame,
+ 	 */
+ 	req = tb_cfg_request_find(pkg->ctl, pkg);
+ 	if (req) {
+-		if (req->copy(req, pkg))
++		mutex_lock(&pkg->ctl->request_queue_lock);
++		if (!test_bit(TB_CFG_REQUEST_CANCELED, &req->flags) &&
++		    req->copy(req, pkg))
+ 			schedule_work(&req->work);
++		mutex_unlock(&pkg->ctl->request_queue_lock);
+ 		tb_cfg_request_put(req);
+ 	}
+ 
+@@ -513,7 +515,6 @@ static void tb_cfg_request_work(struct work_struct *work)
+ 		req->callback(req->callback_data);
+ 
+ 	tb_cfg_request_dequeue(req);
+-	tb_cfg_request_put(req);
+ }
+ 
+ /**
+@@ -537,10 +538,9 @@ int tb_cfg_request(struct tb_ctl *ctl, struct tb_cfg_request *req,
+ 	INIT_WORK(&req->work, tb_cfg_request_work);
+ 	INIT_LIST_HEAD(&req->list);
+ 
+-	tb_cfg_request_get(req);
+ 	ret = tb_cfg_request_enqueue(ctl, req);
+ 	if (ret)
+-		goto err_put;
++		return ret;
+ 
+ 	ret = tb_ctl_tx(ctl, req->request, req->request_size,
+ 			req->request_type);
+@@ -554,9 +554,6 @@ int tb_cfg_request(struct tb_ctl *ctl, struct tb_cfg_request *req,
+ 
+ err_dequeue:
+ 	tb_cfg_request_dequeue(req);
+-err_put:
+-	tb_cfg_request_put(req);
+-
+ 	return ret;
+ }
+ 
+@@ -570,9 +567,11 @@ int tb_cfg_request(struct tb_ctl *ctl, struct tb_cfg_request *req,
+  */
+ void tb_cfg_request_cancel(struct tb_cfg_request *req, int err)
+ {
++	mutex_lock(&req->ctl->request_queue_lock);
+ 	set_bit(TB_CFG_REQUEST_CANCELED, &req->flags);
+-	schedule_work(&req->work);
+-	wait_event(tb_cfg_request_cancel_queue, !tb_cfg_request_is_active(req));
++	mutex_unlock(&req->ctl->request_queue_lock);
++	cancel_work_sync(&req->work);
++	tb_cfg_request_dequeue(req);
+ 	req->result.err = err;
+ }
+ 
+-- 
+2.53.0
+
 
 
