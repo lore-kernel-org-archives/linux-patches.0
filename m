@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793210509;
-	b=QpoyoXE3QGFhJnuHREBMevrMhQPeSomx4DqiFnARtTgaRw9QF84rMXJNCJ+awDE6+wMu
-	 BmMxV4bOrrSMxXpEsKrFxrYRMB7lOx9UIFpQByuACgl+vwK6A8ccovQlETUKE3Vj/MzIZ
-	 NGTI2WhULPt/RViui3DsXXlKkkXoPGMAsbY0NxjMBNRwCCxJISicmFxQMUptVa30+DdDk
-	 Q/T6VjItRbpgaKDzC6/VyLssJvgqm1qraJc1SNJLyMp4Qdl8g0QUt97ExnTqqc5Pp0uFA
-	 pE8ohhkzlzsM3dfuzbkAbMXdEEb6dUCnW9S+ZsqPwSZSo6UBlSy5WlkbU50uJBnrN3g==
+	t=1793210513;
+	b=LOshmjvAkjIYo6V/fxCKRJDJnv/fc9iQ0f/cIwLDmXWi7zyBdFqzggkPj2WersNOQaSa
+	 x+PInDDthX7v5g7IZJJzNzZ1wojtRshmgTg1CR+6+T8NMnJMRAyPKeJT7eXyTGGK1R8k0
+	 MBgD1hqxUAlwkt9/6m8syh4wbbnZ596iNosHB5leLcx1f0PXwKSPpjFEQe2kX7ZYM9Fgz
+	 7GEHXKvRt0FcYrdNw6yLumwAXd+6/pB8W2nMjw243rg1JzVKTzBv+M8ykLn6GR/wP8aTE
+	 FuKdhwhBqJTksQGAFudMwl8a6qARnhJnCNHcVgD5zLrTwbwQUYr2iXN0A71ZmhJfvqw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793210509;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793210513;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=B0ydesYXNNmaD/PQEpshz5xSqBApDCBBr48JOA+iNuY=;
-	b=wdOT1TIi6UiWveTNcXlu0dvhpto1+Kf7dWXoo8akIuXkczkIMVNlUnohpcIQ3c1PC3pK
-	 AMsUcSuBL1hcTGRPNURWRUhKdVDftPbIeHu3s2bnwZ5s4sKUy4HwE2rVFcd4LUqqrBo2r
-	 VrGA1arLeTyIObSEv+GbqyzeMXJQoIuC4HK9nEhxXpDj1KVR99FW14ILoy6z5GDSJLFVT
-	 BdTaGYRp4cBibi5cl8GMsWp0SYXgOfYCVMWwvV8Vlj63xrZQKYb5zlPKzHg/knsFaQiGL
-	 AgDQZc1wFYLA0RaDtFZc42CO7cvhBlq/TJzT5gLFZF+wD2W3AKSk1UE6L6ciUFjfp0w==
+	bh=fOlNnvL/77PITpZ5N6Co0cHPvjrwurIklv2QQIfUzck=;
+	b=hZf5H09uElYtNpWIZWWdOnGPHD9Putp0Xmkj6ZKqdAbCUJ2GehAjEHn1vR7CZmchip32
+	 wHqkbn96xec5uOt+/LBv3sUVqvJSSjmHQ16hcCazINn/fKZ6NQxbnJPVWxkaBJpgm1C9H
+	 Cn81JZCnF7Wm6ZAkKFowAB60CVSpmqvOMd6kENUajfj96nMkpcgquKr9dqNqp0Wfteu6s
+	 BYopJhz2JtuU3HaKFgI6guPXxWwiBYobXJmxaJ3CsY8ovVG/VFqWG5H69+tAII/7JVYB9
+	 dbE4MYnD9SynqR9mjuHkJhs+C0AXS8jiRxEOX35mdFulQ5HTRdUoAU+X+SAv/pNIMFw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sLh4jBDC;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Y/D6YA2n";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BA78606A31A;
-	Wed, 28 Oct 2026 18:01:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8322606A31A;
+	Wed, 28 Oct 2026 18:01:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sLh4jBDC
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB9721F01825;
-	Wed, 28 Oct 2026 18:01:48 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y/D6YA2n
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B434C1F01825;
+	Wed, 28 Oct 2026 18:01:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793210509;
-	bh=B0ydesYXNNmaD/PQEpshz5xSqBApDCBBr48JOA+iNuY=;
+	s=korg; t=1793210512;
+	bh=fOlNnvL/77PITpZ5N6Co0cHPvjrwurIklv2QQIfUzck=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sLh4jBDCSQTKvHv0TvYF5+Sgkm2nemkY0jfp8KZEXkRnzXwo/kT2eozStbjnEPWg+
-	 jew/d3Er425t/WCn36MjDV0z+Ks+g4BxYi29GdKN2WJ1MWzf1CyyyCjOZHW3fVrILl
-	 4wbc/zk6vQ2dP9Pa9GtUfLS1oa3SDwiLi/CHlvHM=
+	b=Y/D6YA2nf7CREjDM/Bgx9TyiSCk01utCmASYKd4NkhOnxsObfeDNw64zje85kp/Xx
+	 XeKQLmVfOg/mtqKKYMmDZDmrLvLUKUFSj/ZYMjvykc2nc++b79vx6Qn5xu52zSbN6J
+	 UT0VPdciAh83Ri+UT9DyCkLMtBaL6it4dTni+UP4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bjoern Doebel <doebel@amazon.de>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Paulo Alcantara <pc@manguebit.org>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <cel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 034/571] smb: client: avoid leaking refcount in cifs_queue_oplock_break()
-Date: Wed, 28 Oct 2026 17:53:01 +0100
-Message-ID: <20261028170008.834442315@linuxfoundation.org>
+Subject: [PATCH 5.15 052/571] nfsd: check nfsd4_acl_to_attr() return value in nfsd4_create()
+Date: Wed, 28 Oct 2026 17:53:19 +0100
+Message-ID: <20261028170009.262603714@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -69,64 +68,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bjoern Doebel <doebel@amazon.de>
+From: Jeff Layton <jlayton@kernel.org>
 
-[ Upstream commit 9f2e63f1b2d5fc5b5423424902c091123e220e7e ]
+[ Upstream commit 2c7912732184773dbd371a411da87af1cc080b86 ]
 
-cifs_queue_oplock_break() unconditionally takes a reference on the
-target file before queueing cifs_oplock_break(). Only that work item
-decreases the reference counter again.
+nfsd4_create() stores the return value of nfsd4_acl_to_attr() in
+status, but the switch(create->cr_type) block unconditionally
+overwrites it in every branch. ACL translation errors are silently
+discarded, and the CREATE proceeds without the requested ACL.
 
-If another oplock break arrives while that work is still queued,
-queue_work() will return false and not queue this second work item. As a
-result, we will never reach the point to drop the file reference again
-and are leaking this reference. This can be triggered when interacting
-with a slow-responding server.
+Add an early exit check after nfsd4_acl_to_attr(), matching the
+pattern already used in nfsd4_setattr().
 
-As a result, later unmount operations for this file system will fail with
-
-  BUG: Dentry ... still in use (1) [unmount of cifs cifs]
-  VFS: Busy inodes after unmount of cifs (cifs)
-  kernel BUG at fs/super.c:777!
-
-Fix this by only incrementing the reference count if the work has been
-queued successfully. Taking it after queue_work() is safe because all
-three callers hold tcon->open_file_lock across the call and
-_cifsFileInfo_put() decrements under that same lock, so a worker that
-starts the handler in the window cannot drop the reference before it has
-been taken.
-
-Fixes: b98749cac4a69 ("CIFS: keep FileInfo handle live during oplock break")
+Fixes: c0cbe70742f4 ("NFSD: add posix ACLs to struct nfsd_attrs")
 Cc: stable@vger.kernel.org
-Assisted-by: Kiro:claude-opus-5
-Signed-off-by: Bjoern Doebel <doebel@amazon.de>
-Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
-[ Adjusted the patch path from fs/smb/client/misc.c to fs/cifs/misc.c. ]
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+[ cel: prefer NFS4ERR_BADTYPE over NFS4ERR_ATTRNOTSUPP ]
+Link: https://patch.msgid.link/20260611-nfsd-testing-v2-5-5b90e276f2d9@kernel.org
+Signed-off-by: Chuck Lever <cel@kernel.org>
+[ retained unconditional ACL conversion because the older helper already handles null ACLs ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/cifs/misc.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ fs/nfsd/nfs4proc.c | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
-diff --git a/fs/cifs/misc.c b/fs/cifs/misc.c
-index cb7fb2c4ea71f..c7f846e50fc59 100644
---- a/fs/cifs/misc.c
-+++ b/fs/cifs/misc.c
-@@ -620,10 +620,11 @@ void cifs_queue_oplock_break(struct cifsFileInfo *cfile)
- 	 * open_file_lock to enforce the validity of it for the oplock
- 	 * break handler. The matching put is done at the end of the
- 	 * handler.
-+	 *
-+	 * Only take a reference if the work is actually queued.
- 	 */
--	cifsFileInfo_get(cfile);
--
--	queue_work(cifsoplockd_wq, &cfile->oplock_break);
-+	if (queue_work(cifsoplockd_wq, &cfile->oplock_break))
-+		cifsFileInfo_get(cfile);
- }
+diff --git a/fs/nfsd/nfs4proc.c b/fs/nfsd/nfs4proc.c
+index ecf10e6fdab36..4aa9c5e09bebb 100644
+--- a/fs/nfsd/nfs4proc.c
++++ b/fs/nfsd/nfs4proc.c
+@@ -762,7 +762,23 @@ nfsd4_create(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
+ 	if (status)
+ 		return status;
  
- void cifs_done_oplock_break(struct cifsInodeInfo *cinode)
++	/* Sanitize cr_type to avoid returning ATTRNOTSUPP. */
++	switch (create->cr_type) {
++	case NF4LNK:
++	case NF4BLK:
++	case NF4CHR:
++	case NF4SOCK:
++	case NF4FIFO:
++	case NF4DIR:
++		break;
++	default:
++		status = nfserr_badtype;
++		goto out_aftermask;
++	}
++
+ 	status = nfsd4_acl_to_attr(create->cr_type, create->cr_acl, &attrs);
++	if (status != nfs_ok)
++		goto out_aftermask;
+ 	current->fs->umask = create->cr_umask;
+ 	switch (create->cr_type) {
+ 	case NF4LNK:
+@@ -829,6 +845,7 @@ nfsd4_create(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
+ 	fh_put(&resfh);
+ out_umask:
+ 	current->fs->umask = 0;
++out_aftermask:
+ 	nfsd_attrs_free(&attrs);
+ 	return status;
+ }
 -- 
 2.53.0
 
