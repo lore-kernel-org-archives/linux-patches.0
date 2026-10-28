@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216271;
-	b=4fmehgKnYWwF35xWfVHBMCBF8tz9zbCl76pyUKwhwQqXu7XEP0KoprCJS6bkdAOp+T2J
-	 r5ZgLM3+yaTeLlhP2sSzJ+VcQ4p36pt7oR+kuMl8a/AMN/mweYDWwCnMjToNtWMgcPCy7
-	 /GIHTLU3TUOpEQ+JgUfOGV23/gqX7Ry9qkaN7vIRXfsQXbPMphKD7Gpx+xbueXCOI8ER+
-	 n/LhhzS5bwqx3M7Asa1F26nsZRLm4gVQUOtbkxu7utT744djXto/sbDiX8b9X6af4KgkE
-	 qDin7ip4k0+7pxkMzi717I+GCNC3I6OZnIpA/bNy/6IT7nkDWU3al5slGMkyNQGZSKQ==
+	t=1793216274;
+	b=As1PxuoNIVO2zwmVcptXKqaYANlgroy9z67bzbyIg+PBVXP+jD7ln7R2LZfCEHZeADMi
+	 xhbr5sdjPBI68j/eUerV2g/eEpn762Iqvp0ArWMNuWYg/qmAuTB0zXL2dCzu0xxqNYRoy
+	 fjDDBxTNBPHzm4vSYZxYCWZhptWXPVwTMw9sdT6DpBBePn7oE2Vh/+9NzLpDO6f0i9/dH
+	 dXxb/oluC7dWe4UFT4VpHBQIANF2pZLPm1IfdecbdKylG9ThIlR93+e3pSUGYs+A68tfm
+	 5xzAiX7L1IjI9+c6bRHGSYCR4PhHi43x5rg1zyzcuD7h2f/RTzm48L9jzH3v4UJYMyw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216271;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216274;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=sEYCMpb7E+Hy2k4oWF/J6x22ipHVHDITNzlrHWABU6I=;
-	b=MvhMfcH9gsKfZD4rXYXWJ3kSaibNrBRPXbr+C4Ts9RjpTO2wfDIcHiKMuubgrrQwdY5Y
-	 9tPXNy5ORAjq7nyM8Z19t0D0serPBe+Ee25dPK4VAGNhhO/Qyl3PqXG5q6EOxxksqBvgN
-	 XqXAHG7Bv52tavnvoIUPd4T0CIoO3lhNm7Eh9K9hdwheSAxlgAUJvvHiTtNXIOiclJwd5
-	 D7xgxNSojJUO32Zra+l88ZlpoS0D6JM4914wk5ITEKTQ9RIEfaKZk3yoePn2d7yNnKNCc
-	 ZI6FBD8gJTRZAceU0CA8mQ5LgDHrCZDNQ73NSbWx4gRfyUJMZ+v8ymN2HUBXGmCT7Cw==
+	bh=LC1HsQreULY5H3n9trB2/AdPjedGeJUI0zqdqrYWcjs=;
+	b=HLogz6t1AWNy++EVH3ekpBLEXj1RG4OlX1CKPOqBbFstHxkPcS7u1ebm/uaMwkKmdPoz
+	 9XEhRNaFqDXe4QKPk6ttIJTVLALAlXIDlVf1EFakSTp4yVR60oB/yKHX+sOQmbVPmGpQF
+	 yepwWHPn1Mks8HrDhmbw2coy/vgq7slT0faoJBYo3GNmOR5sn2iy4OUmUfM89M1osPT9c
+	 QeuICZR/NMDKk71P/terSzJE+B0fl3pcc8MHWnHGPyL3LQomDaSmrtzKAg1ktZstaKgAN
+	 kPgoEwh57lApNcHkcT5lO5+Jut939uwAda1A+LZzi6lPqsELR5K41E/iTgtmq9FkmqQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kkLaO1c1;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eEhMPRLD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 419BF606A31E;
-	Wed, 28 Oct 2026 19:37:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CE2A606A322;
+	Wed, 28 Oct 2026 19:37:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kkLaO1c1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9371A1F01828;
-	Wed, 28 Oct 2026 19:37:50 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eEhMPRLD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61B371F01825;
+	Wed, 28 Oct 2026 19:37:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216271;
-	bh=sEYCMpb7E+Hy2k4oWF/J6x22ipHVHDITNzlrHWABU6I=;
+	s=korg; t=1793216273;
+	bh=LC1HsQreULY5H3n9trB2/AdPjedGeJUI0zqdqrYWcjs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kkLaO1c1LNmULxqoFCwnolucJhSTw9cf9HDLoTocaygqghm74rKXvc6Ui0P24xeQM
-	 5SKeahi53fY7Mi8UTXTqG2gKEr1Lgg2X/K/Z1DeMN4Ii/6lMVejsgDOIvtWlLwIoG/
-	 HDIGghimGMI71OkXvSdpQbDiOr9TBoQn58lZNfVY=
+	b=eEhMPRLD9YMZC1hcJzvt4qZYPWrf/0BTNWqKWxGatZzc0b8p4S9/T7qxY9GOI3n5v
+	 YX03XImB+sihrU8H4CeWOcLRjBqKFO/BWWCD4ZmxmzOcfx6XeBu1rARMBaP5+Vka9A
+	 +/Qo3iqNs4fgj1oBH8sXcboo8UZat/5qVBxzqSew=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anthony Krowiak <akrowiak@linux.ibm.com>,
 	Matthew Rosato <mjrosato@linux.ibm.com>,
+	Anthony Krowiak <akrowiak@linux.ibm.com>,
 	Christian Borntraeger <borntraeger@linux.ibm.com>,
+	Claudio Imbrenda <imbrenda@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1498/1887] s390/vfio-ap: Fix dereference matrix_mdev->kvm without checking for NULL
-Date: Wed, 28 Oct 2026 17:59:54 +0100
-Message-ID: <20261028170533.546885457@linuxfoundation.org>
+Subject: [PATCH 6.1 1499/1887] s390/vfio-ap: fix stale pqap_hook pointer on error in vfio_ap_mdev_set_kvm()
+Date: Wed, 28 Oct 2026 17:59:55 +0100
+Message-ID: <20261028170533.570157826@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -71,162 +72,163 @@ Content-Transfer-Encoding: 8bit
 
 From: Anthony Krowiak <akrowiak@linux.ibm.com>
 
-[ Upstream commit d50346801b4f144e42b49cd4f1496010498ab114 ]
+[ Upstream commit 4400270ec0348d05dc0439d8f0130853ce7f9e20 ]
 
-The ap_driver structure has two fields which are function pointers to
-callbacks:
+In vfio_ap_mdev_set_kvm(), kvm->arch.crypto.pqap_hook is set to
+&matrix_mdev->pqap_hook before the update locks are acquired and the
+mdev list is checked for a conflicting assignment. If another mdev is
+already attached to the same KVM instance, the function returns -EPERM
+without restoring the hook pointer, leaving kvm->arch.crypto.pqap_hook
+pointing at the failing matrix_mdev instead of the mdev that legitimately
+owns the KVM.
 
-* .on_config_changed: called at the start of the AP bus scan function to
-                      notify the device driver that the host AP
-                      configuration has changed and the associated AP
-                      devices will be added or removed accordingly. This
-                      gives the implementor a chance to evaluate the
-                      configuration changes and respond to them before
-                      the associated devices are added or removed.
+Since matrix_mdev->kvm is never set on this error path,
+vfio_ap_mdev_unset_kvm() will not clean up the hook when matrix_mdev
+is later closed. If matrix_mdev is subsequently freed, any PQAP
+instruction executed by the guest will dereference the stale pointer
+through pqap_hook_rwsem, resulting in a use-after-free.
 
-* .on_scan_complete:  Called at the end of the AP bus scan function to
-                      notify the device driver that the host AP
-                      configuration has changed and the AP devices have
-                      been added or removed accordingly. This gives the
-                      implementor the opportunity to respond to the
-                      changes after the associated devices are added or
-                      removed.
+Since kvm->arch.crypto.pqap_hook is only set in the vfio_ap_mdev_set_kvm()
+function and is cleared in the vfio_ap_mdev_unset_kvm() function, a check
+for 'kvm->arch.crypto.pqap_hook != NULL' is all that is needed to determine
+whether it belongs to another mdev. This will alleviate the need to iterate
+the matrix_dev->mdev_list list to see if the kvm object is assigned to
+another mdev.This was introduced in v3 to alleviate the need to take the
+mdevs_lock while iterating the list; however, this did not prevent a
+potential race condition.
 
-These two callbacks are implemented in the vfio_ap device driver via the
-vfio_ap_on_cfg_changed and vfio_ap_on_scan_complete functions respectively.
+The pqap_hook_rwsem(write) is now performed inside
+get_update_locks_for_kvm(), which is updated to acquire
+pqap_hook_rwsem(write) between kvm->lock and mdevs_lock. This ordering
+is consistent with the PQAP intercept path, which acquires pqap_hook_rwsem
+in read mode while srcu is held under vcpu->mutex, establishing the
+dependency: kvm->lock -> vcpu->mutex -> srcu -> pqap_hook_rwsem(read).
 
-Within the call stack of these two callback functions the
-matrix_mdev->kvm->lock mutex is taken without checking whether
-matrix_mdev->kvm is NULL or not. If matrix_mdev->kvm has never been set,
-trying to take the lock will trigger a NULL pointer dereference. This patch
-adds checks for matrix_mdev->kvm == NULL before taking the
-matrix_mdev->kvm->lock mutex.
+The pqap_hook_rwsem is now released inside the
+release_update_locks_for_kvm(), which is updated to release
+pqap_hook_rwsem(write) between mdevs_lock and kvm->lock.
 
-Note that the matrix_mdev->kvm->lock mutex taken in the
-vfio_ap_mdev_hot_plug_config function is moved to the calling function
-along with the matrix_dev->mdevs_lock which is needed there to access
-the fields of the matrix_mdev. It makes little sense to make the change
-the check for matrix_mdev->kvm there before taking the kvm->lock
-mutex only to have to move it out via another patch, so it is done in
-this patch.
+Additionally, kvm_put_kvm() in vfio_ap_mdev_unset_kvm() is moved
+after release_update_locks_for_kvm(). Previously it was called while
+kvm->lock was held; if it were ever the last reference, kvm_destroy_vm()
+would run under kvm->lock, which would deadlock.
 
-It is important to make note of the following:
-1. The matrix_dev->guests_lock is acquired at the start of both callback
-   functions. This ensures that matrix_mdev will not be removed via the
-   vfio_ap_mdev_remove function because it too takes matrix_dev_guests_lock
-   before removing the object; so, matrix_mdev will be available for the
-   duration of the callback functions.
-
-2. The matrix_dev->mdevs_lock mutex must be taken in order to access
-   fields within the matrix_mdev structure
-
-3. matrix_mdev->kvm->lock mutex must be taken before the
-   matrix_dev->mdevs_lock to prevent a lockdep splat.
-
-4: The kvm->lock must be held while plugging the guest's AP configuration
-   into its SIE state description via the vfio_ap_mdev_update_guest_apcb
-   function.
-
-5. The vfio_ap_mdev_update_guest_apcb checks matrix_mdev->kvm to verify it
-   is not NULL before doing the hot plug of the guest's AP configuration.
-
-Fixes: eeb386aeb5b7c ("s390/vfio-ap: handle config changed and scan complete notification")
+Fixes: 86956e70761b3 ("s390/vfio-ap: replace open coded locks for VFIO_GROUP_NOTIFY_SET_KVM notification")
 Cc: stable@vger.kernel.org
+Co-developed-by: Matthew Rosato <mjrosato@linux.ibm.com>
+Signed-off-by: Matthew Rosato <mjrosato@linux.ibm.com>
 Signed-off-by: Anthony Krowiak <akrowiak@linux.ibm.com>
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Acked-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Signed-off-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
+Message-ID: <20260806173435.105044-1-akrowiak@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/s390/crypto/vfio_ap_ops.c | 39 ++++++++++++++++++++++++-------
- 1 file changed, 30 insertions(+), 9 deletions(-)
+ drivers/s390/crypto/vfio_ap_ops.c | 45 ++++++++++++++-----------------
+ 1 file changed, 20 insertions(+), 25 deletions(-)
 
 diff --git a/drivers/s390/crypto/vfio_ap_ops.c b/drivers/s390/crypto/vfio_ap_ops.c
-index 8f984ecef02b4..42999d0934628 100644
+index 42999d0934628..f6a543599ba88 100644
 --- a/drivers/s390/crypto/vfio_ap_ops.c
 +++ b/drivers/s390/crypto/vfio_ap_ops.c
-@@ -2074,8 +2074,20 @@ static void vfio_ap_mdev_cfg_remove(unsigned long *ap_remove,
- 	DECLARE_BITMAP(cdrem, AP_DOMAINS);
- 	int do_remove;
- 
-+	/*
-+	 * It is safe to traverse this list here because the
-+	 * required guard - matrix_dev->guests_lock - is taken in the
-+	 * vfio_ap_on_cfg_changed function prior to this function getting
-+	 * called.
-+	 */
- 	list_for_each_entry(matrix_mdev, &matrix_dev->mdev_list, node) {
--		mutex_lock(&matrix_mdev->kvm->lock);
-+		/*
-+		 * The mdevs_lock must be held to access fields within matrix_mdev,
-+		 * and kvm->lock must be taken before mdevs_lock to satisfy the lock
-+		 * ordering requirement and prevent a lockdep splat.
-+		 */
-+		if (matrix_mdev->kvm)
-+			mutex_lock(&matrix_mdev->kvm->lock);
- 		mutex_lock(&matrix_dev->mdevs_lock);
- 
- 		do_remove = bitmap_and(aprem, ap_remove,
-@@ -2093,7 +2105,8 @@ static void vfio_ap_mdev_cfg_remove(unsigned long *ap_remove,
- 						    cdrem);
- 
- 		mutex_unlock(&matrix_dev->mdevs_lock);
--		mutex_unlock(&matrix_mdev->kvm->lock);
-+		if (matrix_mdev->kvm)
-+			mutex_unlock(&matrix_mdev->kvm->lock);
- 	}
+@@ -45,15 +45,19 @@ static int vfio_ap_mdev_reset_queue(struct vfio_ap_queue *q, unsigned int retry)
+  * 1. matrix_dev->guests_lock: required to use the KVM pointer to update a KVM
+  *			       guest's APCB.
+  * 2. kvm->lock:	       required to update a guest's APCB
+- * 3. matrix_dev->mdevs_lock:  required to access data stored in a matrix_mdev
++ * 3. kvm->arch.crypto.pqap_hook_rwsem: required to update pqap_hook and
++ *					serialize against PQAP intercepts
++ * 4. matrix_dev->mdevs_lock:  required to access data stored in a matrix_mdev
+  *
+- * Note: If @kvm is NULL, the KVM lock will not be taken.
++ * Note: If @kvm is NULL, the KVM lock and pqap_hook_rwsem will not be taken.
+  */
+ static inline void get_update_locks_for_kvm(struct kvm *kvm)
+ {
+ 	mutex_lock(&matrix_dev->guests_lock);
+-	if (kvm)
++	if (kvm) {
+ 		mutex_lock(&kvm->lock);
++		down_write(&kvm->arch.crypto.pqap_hook_rwsem);
++	}
+ 	mutex_lock(&matrix_dev->mdevs_lock);
  }
  
-@@ -2309,9 +2322,6 @@ static void vfio_ap_mdev_hot_plug_cfg(struct ap_matrix_mdev *matrix_mdev)
+@@ -65,16 +69,19 @@ static inline void get_update_locks_for_kvm(struct kvm *kvm)
+  *
+  * The proper unlocking order is:
+  * 1. matrix_dev->mdevs_lock
+- * 2. kvm->lock
+- * 3. matrix_dev->guests_lock
++ * 2. kvm->arch.crypto.pqap_hook_rwsem
++ * 3. kvm->lock
++ * 4. matrix_dev->guests_lock
+  *
+- * Note: If @kvm is NULL, the KVM lock will not be released.
++ * Note: If @kvm is NULL, the KVM lock and pqap_hook_rwsem will not be released.
+  */
+ static inline void release_update_locks_for_kvm(struct kvm *kvm)
  {
- 	bool filter_domains, filter_adapters, filter_cdoms, do_hotplug = false;
+ 	mutex_unlock(&matrix_dev->mdevs_lock);
+-	if (kvm)
++	if (kvm) {
++		up_write(&kvm->arch.crypto.pqap_hook_rwsem);
+ 		mutex_unlock(&kvm->lock);
++	}
+ 	mutex_unlock(&matrix_dev->guests_lock);
+ }
  
--	mutex_lock(&matrix_mdev->kvm->lock);
--	mutex_lock(&matrix_dev->mdevs_lock);
+@@ -1531,26 +1538,17 @@ static const struct attribute_group *vfio_ap_mdev_attr_groups[] = {
+ static int vfio_ap_mdev_set_kvm(struct ap_matrix_mdev *matrix_mdev,
+ 				struct kvm *kvm)
+ {
+-	struct ap_matrix_mdev *m;
 -
- 	filter_adapters = bitmap_intersects(matrix_mdev->matrix.apm,
- 					    matrix_mdev->apm_add, AP_DEVICES);
- 	filter_domains = bitmap_intersects(matrix_mdev->matrix.aqm,
-@@ -2327,9 +2337,6 @@ static void vfio_ap_mdev_hot_plug_cfg(struct ap_matrix_mdev *matrix_mdev)
+ 	if (kvm->arch.crypto.crycbd) {
+-		down_write(&kvm->arch.crypto.pqap_hook_rwsem);
+-		kvm->arch.crypto.pqap_hook = &matrix_mdev->pqap_hook;
+-		up_write(&kvm->arch.crypto.pqap_hook_rwsem);
+-
+ 		get_update_locks_for_kvm(kvm);
+-
+-		list_for_each_entry(m, &matrix_dev->mdev_list, node) {
+-			if (m != matrix_mdev && m->kvm == kvm) {
+-				release_update_locks_for_kvm(kvm);
+-				return -EPERM;
+-			}
++		if (kvm->arch.crypto.pqap_hook) {
++			release_update_locks_for_kvm(kvm);
++			return -EPERM;
+ 		}
++		kvm->arch.crypto.pqap_hook = &matrix_mdev->pqap_hook;
  
- 	if (do_hotplug)
+ 		kvm_get_kvm(kvm);
+ 		matrix_mdev->kvm = kvm;
  		vfio_ap_mdev_update_guest_apcb(matrix_mdev);
 -
--	mutex_unlock(&matrix_dev->mdevs_lock);
--	mutex_unlock(&matrix_mdev->kvm->lock);
- }
- 
- void vfio_ap_on_scan_complete(struct ap_config_info *new_config_info,
-@@ -2340,15 +2347,29 @@ void vfio_ap_on_scan_complete(struct ap_config_info *new_config_info,
- 	mutex_lock(&matrix_dev->guests_lock);
- 
- 	list_for_each_entry(matrix_mdev, &matrix_dev->mdev_list, node) {
-+		/*
-+		 * The mdevs_lock must be held to access fields within matrix_mdev,
-+		 * and kvm->lock must be taken before mdevs_lock to satisfy the lock
-+		 * ordering requirement and prevent a lockdep splat.
-+		 */
-+		if (matrix_mdev->kvm)
-+			mutex_lock(&matrix_mdev->kvm->lock);
-+		mutex_lock(&matrix_dev->mdevs_lock);
-+
- 		if (bitmap_empty(matrix_mdev->apm_add, AP_DEVICES) &&
- 		    bitmap_empty(matrix_mdev->aqm_add, AP_DOMAINS) &&
- 		    bitmap_empty(matrix_mdev->adm_add, AP_DOMAINS))
--			continue;
-+			goto do_unlock;
- 
- 		vfio_ap_mdev_hot_plug_cfg(matrix_mdev);
- 		bitmap_clear(matrix_mdev->apm_add, 0, AP_DEVICES);
- 		bitmap_clear(matrix_mdev->aqm_add, 0, AP_DOMAINS);
- 		bitmap_clear(matrix_mdev->adm_add, 0, AP_DOMAINS);
-+
-+do_unlock:
-+		mutex_unlock(&matrix_dev->mdevs_lock);
-+		if (matrix_mdev->kvm)
-+			mutex_unlock(&matrix_mdev->kvm->lock);
+ 		release_update_locks_for_kvm(kvm);
  	}
  
- 	mutex_unlock(&matrix_dev->guests_lock);
+@@ -1577,18 +1575,15 @@ static void vfio_ap_mdev_unset_kvm(struct ap_matrix_mdev *matrix_mdev)
+ 	struct kvm *kvm = matrix_mdev->kvm;
+ 
+ 	if (kvm && kvm->arch.crypto.crycbd) {
+-		down_write(&kvm->arch.crypto.pqap_hook_rwsem);
+-		kvm->arch.crypto.pqap_hook = NULL;
+-		up_write(&kvm->arch.crypto.pqap_hook_rwsem);
+-
+ 		get_update_locks_for_kvm(kvm);
++		kvm->arch.crypto.pqap_hook = NULL;
+ 
+ 		kvm_arch_crypto_clear_masks(kvm);
+ 		vfio_ap_mdev_reset_queues(&matrix_mdev->qtable);
+-		kvm_put_kvm(kvm);
+ 		matrix_mdev->kvm = NULL;
+ 
+ 		release_update_locks_for_kvm(kvm);
++		kvm_put_kvm(kvm);
+ 	}
+ }
+ 
 -- 
 2.53.0
 
