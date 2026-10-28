@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213886;
-	b=ai3h90w2DNeJFD+KQnSlquqW+UPrQ4rzDvLIZMtLucxOD+xAr17p8QLBu3WpmhCvq4Iz
-	 enZw1TMjwQrF8/5CNWXRN4hq+JLPqd2LESZl5ys28lYEhwVEgRtw8m6jTPtlGIgf6dGbf
-	 0IiKfZi3cP13eo5k3h5JQzobSYY9/Bx2VdJcRevGYUyc9KbAwIfaG8u2yRnhU0X2b4+zA
-	 RfPg7SS/caysLEsi4NlntPBZK34tzYYFfbYZykP4l3yAlvHENoEvj5hmwKUovT/sqSYcu
-	 aOXfYF8PTKugwnUU+8aIDYYHk1E64qpjKUPwPkN12alzyapNT3A6URp/oiPFweXus6Q==
+	t=1793213889;
+	b=GdRMw601R0Aq8cYl+RLj5TFFAI3LDMOa3f1kwzpbvQ6Jk+xLz4XCgyXaozlBg6vW99od
+	 GMfvOmFzO6vpEjl+ywjZuC2E/wKFF+qGGAe8AD030p6AXzzaCkLCY0Xdijjc0+fA850Tj
+	 SERgbx2/d09ldVJNLrFMIxvmogWtn2mlgs1JG5kTZfNDue4uyTirU8OYJF90HgkYYRBqV
+	 AInVUci+unW9SQaVMMHP4Gk4LaTAhsH+GfVjtnwi+CQcvYZmgpRZgvgyN7APx1fIsb1v1
+	 OcyJ20aZKLz5KAKeGYRSvr3xeu/3EZveYuhA+bt0oPn7mt5pulUlVyh4bpevbdW4xBQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213886;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213889;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=BMsE1rUDemVUVEMTD8J2vf3xHir0Hdhxgo1hVtN67Mw=;
-	b=N4ko6NKF5WRHyHuQ1l7SBGzUpxg/24Dn2Y/3HHDa6cpOyuI5m0DgdaoklV5AUvyTNVOy
-	 i/GpMwsNVbzcoQBkqzDnq78Ov6q7T4uK44swp0duPVzqyvBwBIaESQywPEC9OUjeAUyLs
-	 hnZvElclQs3h5x0yXCKYxwSvg/8jrNbqyTneRTbcd+8Vn/uB+ZZsS3xma9Ec4LqMRszJ/
-	 LN4amqPpJfsWukQPAuXVLWYdC+amiRgjp5RY4uaH7xu2S4SGb1ndbtmrSpTbRil4zgo8E
-	 6mDwhDGZjmAC3bQL3kruA+3rbVXCKF0feMJI93mopL5TTtBCiKqzsJnVtNoElV29upA==
+	bh=kPtEoF+4tKFS4CfwqmkjC9R6YDQMnfLDO7Dwoc2El+s=;
+	b=ulrBKtnvCctWAlOi3Vz10lju8H9qI38Wpb4u79I1zZo90Ixyf7DRDaZtp99bp+12KJ4R
+	 XEw2iI8wjzNfJa9sJ5w66SpvZeecvLGIMfIIrR4q9NfVmtJhjnfhcWgoHLJfrpqK9/6hq
+	 85avqzCHq+FBcNN3iOmgk6hQaWZqSgtGJlgq9NZ6CvBi3P1R5S+Lbq2jmXCsXGV2UURJA
+	 kEcvIJYNhCRMJDnyebdG4i3eTEaIijdCreBLHCgrra1AJLAKYf/2VRQscjyufTTFIHcAt
+	 +WVwp7WA4woK5GSUyQ6ALJVySBpTETo2b87EBP3eTvaMrYCcq/NWfHaT1RLs59N0MtA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cTbegx8n;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1TvLaHTD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CDE5606A31A;
-	Wed, 28 Oct 2026 18:58:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AC76606A31A;
+	Wed, 28 Oct 2026 18:58:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cTbegx8n
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD3631F01825;
-	Wed, 28 Oct 2026 18:58:05 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1TvLaHTD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9B661F01825;
+	Wed, 28 Oct 2026 18:58:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213886;
-	bh=BMsE1rUDemVUVEMTD8J2vf3xHir0Hdhxgo1hVtN67Mw=;
+	s=korg; t=1793213889;
+	bh=kPtEoF+4tKFS4CfwqmkjC9R6YDQMnfLDO7Dwoc2El+s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cTbegx8nEgo2DwQ0WdwLIUPCvy9fTR5M6ngqRbhLYf22lnwqRXfmjrjDbEZfDfP/g
-	 cg83uPPmSQFKo/ydNOWL3xs8vkFaFSyPpLpiK6pZ2RF7CnMh7KDd9JlfDv6KxWWFcM
-	 IOnE8d/Mh+5UpSxUm04LhH9xqpeTLknPYyRz3N/w=
+	b=1TvLaHTDd1VFgKnoWeXxA9TA3oN2Rc/dQGQXm6k8b/dJzZbg0uux/oKH9PscKqeCT
+	 LNUIuK/BrpVYmaO+TMsFRye92rLryjy0JaHPgUDk+6hd2tJZXZvxk9RxumI9KLkbn0
+	 gqPKT6EN3S6eesCCIxjdLaBzbmH0GHNPmkhjYocw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Devyn Liu <liudingyuan@huawei.com>,
-	Jay Fang <f.fangjian@huawei.com>,
-	Mark Brown <broonie@kernel.org>,
+	Yunfei Dong <yunfei.dong@mediatek.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Sebastian Fricke <sebastian.fricke@collabora.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0662/1887] spi: hisi-kunpeng: Add verification for the max_frequency provided by the firmware
-Date: Wed, 28 Oct 2026 17:45:58 +0100
-Message-ID: <20261028170514.476444234@linuxfoundation.org>
+Subject: [PATCH 6.1 0663/1887] media: mediatek: vcodec: Fix H264 stateless decoder smatch warning
+Date: Wed, 28 Oct 2026 17:45:59 +0100
+Message-ID: <20261028170514.499285257@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,41 +70,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Devyn Liu <liudingyuan@huawei.com>
+From: Yunfei Dong <yunfei.dong@mediatek.com>
 
-[ Upstream commit 5127c42c77de18651aa9e8e0a3ced190103b449c ]
+[ Upstream commit 7878d3a385efab560dce793b595447867fb163f2 ]
 
-If the value of max_speed_hz is 0, it may cause a division by zero
-error in hisi_calc_effective_speed().
-The value of max_speed_hz is provided by firmware.
-Firmware is generally considered as a trusted domain. However, as
-division by zero errors can cause system failure, for defense measure,
-the value of max_speed is validated here. So 0 is regarded as invalid
-and an error code is returned.
+Fix a smatch static checker warning on vdec_h264_req_if.c.
+Which leads to a kernel crash when fb is NULL.
 
-Signed-off-by: Devyn Liu <liudingyuan@huawei.com>
-Reviewed-by: Jay Fang <f.fangjian@huawei.com>
-Link: https://patch.msgid.link/20240730032040.3156393-3-liudingyuan@huawei.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 06fa5f757dc5 ("media: mtk-vcodec: vdec: support stateless H.264 decoding")
+Signed-off-by: Yunfei Dong <yunfei.dong@mediatek.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: Sebastian Fricke <sebastian.fricke@collabora.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-hisi-kunpeng.c | 3 +++
- 1 file changed, 3 insertions(+)
+ .../platform/mediatek/vcodec/vdec/vdec_h264_req_if.c     | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/spi/spi-hisi-kunpeng.c b/drivers/spi/spi-hisi-kunpeng.c
-index d5cb4bb709748..562e23d66d13d 100644
---- a/drivers/spi/spi-hisi-kunpeng.c
-+++ b/drivers/spi/spi-hisi-kunpeng.c
-@@ -491,6 +491,9 @@ static int hisi_spi_probe(struct platform_device *pdev)
- 		return -EINVAL;
- 	}
+diff --git a/drivers/media/platform/mediatek/vcodec/vdec/vdec_h264_req_if.c b/drivers/media/platform/mediatek/vcodec/vdec/vdec_h264_req_if.c
+index 4bc05ab5afea0..d6fa1e249dc70 100644
+--- a/drivers/media/platform/mediatek/vcodec/vdec/vdec_h264_req_if.c
++++ b/drivers/media/platform/mediatek/vcodec/vdec/vdec_h264_req_if.c
+@@ -352,11 +352,16 @@ static int vdec_h264_slice_decode(void *h_vdec, struct mtk_vcodec_mem *bs,
+ 		return vpu_dec_reset(vpu);
  
-+	if (host->max_speed_hz == 0)
-+		return dev_err_probe(dev, -EINVAL, "spi-max-frequency can't be 0\n");
+ 	fb = inst->ctx->dev->vdec_pdata->get_cap_buffer(inst->ctx);
++	if (!fb) {
++		mtk_vcodec_err(inst, "fb buffer is NULL");
++		return -ENOMEM;
++	}
 +
- 	ret = device_property_read_u16(dev, "num-cs",
- 					&host->num_chipselect);
- 	if (ret)
+ 	src_buf_info = container_of(bs, struct mtk_video_dec_buf, bs_buffer);
+ 	dst_buf_info = container_of(fb, struct mtk_video_dec_buf, frame_buffer);
+ 
+-	y_fb_dma = fb ? (u64)fb->base_y.dma_addr : 0;
+-	c_fb_dma = fb ? (u64)fb->base_c.dma_addr : 0;
++	y_fb_dma = fb->base_y.dma_addr;
++	c_fb_dma = fb->base_c.dma_addr;
+ 
+ 	mtk_vcodec_debug(inst, "+ [%d] FB y_dma=%llx c_dma=%llx va=%p",
+ 			 inst->num_nalu, y_fb_dma, c_fb_dma, fb);
 -- 
 2.53.0
 
