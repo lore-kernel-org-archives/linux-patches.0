@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793217186;
-	b=NXsdnqFAghnTSoTAlc9W+g2Opcb1DQEP1IA/PyY7i94y+1yqYI3lX8KzRq/zBZqXBq2A
-	 xXLZsOZeREGTG30LrzuaM8GIE/s9M7yZpVWj5aPvnzBj4pclwcHnkEB9/svqO7fmClUJA
-	 UXROFoI72bueBFnunn5u3jsGoncI0eZXReZDBowM3J6ZuZP4SWUOAcXyMmz3MbHdbvc0c
-	 N5zMHtqrOhl/Z/SRfEdbQkqxzB9wpyR1k0+Rf5oh/m9caBjMzh45DCQiYIJmnsbkx7XBk
-	 BQtoN6qFgLdQbfi9zx4ksvKOgKs9Y9pWusDjKAwjVQ+UeEJGFfjj0gvN//hQHtpIvWQ==
+	t=1793217189;
+	b=gExkUy8B/LEMU9n0g+WdR75g45A9pfn4dnTwGz711YhbzT/zqSkF5A9Tp2Gs9NNvTj7h
+	 ztdjqQbBYDULszLRsnysqz048aM8t616h9vqTdsngBUfWhv1tpP4rFUZ6CMEs9a081w+Z
+	 517FykrOCqduh/1Y93M414JdJrup24IfUlXZFZc4jTn4bwIXpjlP2D7bfsEBBf+WIe5Kb
+	 Geq8zRBUvuI6kcDnbSGtga8l3F3Qn1j65Ud9kbrh8OQJVSbcztWEssmct6upPMvXrGtET
+	 s7nKIW5RJDIFCzeVtRyA1pTeDmlsojnvgFY5XtYX3qwkscdZmQLlKGeyjIzyfrDNsvg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793217186;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793217189;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=s5nLG+EFazdhNLthZuil4aMDWI4qMeVSGDr0fdkHZzQ=;
-	b=FnGxsDmk7Rn7Ut2lr45+feGa7XngHbARwsba3ljwzaKtkgIoeN/IMaowHFDFoXxFCays
-	 sWsaBuynf03nmCJyN/4+2falSneRaZaxXwjfBixE5XYTbz/S3KArpnjVNdI9Yb3Fg1hvk
-	 tZwXAqLYQUqAHNkXOVAxg7s8hDCGGFs4uxRfcz9QaoMayHg1aJ20G/ccKUupHOUmqPerh
-	 HaVWGe4swXeHRZI0+QQdUT2xRnDl9S+s/3wamk5TR6SUrhh0QBaGK3W4CD1lxGXPyFKNU
-	 e6qSBTObAyWVSUCDSY0u3lX5v/t1kCJiv0/pXxj1O4RYX/NKXAPaNDm2Ehl0QD3ccNQ==
+	bh=oeNE2bc1M759lGdiuBvfhJ34gya9ALS8o/5GQ+NWbQ0=;
+	b=dIuNch5fl6jLlYy8aJfScEzziNbr4A50CA9bdJuMzY+BvQN9QwErWV0L/2b4DENLW/Kc
+	 7ALDrze1mpcqHbZTnz1yUxDYbmVkC4UIezeRSDFD50qQdjPXgRQB7kGdfyc5hVpqNDqPc
+	 +RYDvZb2rYuMPFDhdBS2soYT9o/LrKwspBC5ukPQIEqr8OWHPHOHeCBGfzhGIOoKda/LW
+	 6f7O/h3nrdtlaH3mvzeBfD9JimyV3m3U21iexmYmEmsttD+kTQ8fsDUxKVBswDg29G8R8
+	 P98DkALasrWsnhCgxAR+/3Av/zQs6yAH5S5lfLLK/H1L8t+HQBHRb80ehoE5q4Zoxhw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rOahbodK;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YrSDKhxX;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F4016606A31A;
-	Wed, 28 Oct 2026 19:53:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05813606A31C;
+	Wed, 28 Oct 2026 19:53:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rOahbodK
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4752A1F01825;
-	Wed, 28 Oct 2026 19:53:05 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YrSDKhxX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4863B1F01825;
+	Wed, 28 Oct 2026 19:53:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793217185;
-	bh=s5nLG+EFazdhNLthZuil4aMDWI4qMeVSGDr0fdkHZzQ=;
+	s=korg; t=1793217188;
+	bh=oeNE2bc1M759lGdiuBvfhJ34gya9ALS8o/5GQ+NWbQ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rOahbodK2QCj4s95m7elHQxsWtUqjr7X3L7QiuhfCYfuDpbfnrY7ZbkC36FD9Z0rg
-	 7GwQZCWFSlMXTldSomRPtdhhFDB4pkjzl5dKCp9WNhG2f5lQ77n3uqJihENLYOqwjy
-	 KvkfIJlbmRMj65PEkXdREq9ZosJBWFsGbwyUG8rg=
+	b=YrSDKhxXrNyHf0D9YmHC4KPV7fw4s5qGAkWvmtmHoAbBYoTQhY+Kuc27pumd63CNJ
+	 UXZqO/A4nalxeccWUG8vr2aDDU1iTUm3ZNABRKM2iia5lg0IkP91V7ULfAz0mykQht
+	 c7XAPWdK9JOg4GghLu2xEUAhxj2v50FLTordsl38=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Oleg Nesterov <oleg@redhat.com>,
 	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 6.1 1817/1887] signal: dont retarget shared signals in a dying thread group
-Date: Wed, 28 Oct 2026 18:05:13 +0100
-Message-ID: <20261028170540.791728942@linuxfoundation.org>
+Subject: [PATCH 6.1 1818/1887] pid_namespace: prevent TIF_NOTIFY_SIGNAL from interrupting the reaper
+Date: Wed, 28 Oct 2026 18:05:14 +0100
+Message-ID: <20261028170540.814154371@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,52 +69,50 @@ Content-Transfer-Encoding: 8bit
 
 From: Christian Brauner <brauner@kernel.org>
 
-commit c0e659511d4f49087da095a95799edb5b775a705 upstream.
+commit 5c0985dd3c32fc2bbd0e8beaf13cf52cd97376a2 upstream.
 
-If the calling thread has blocked a signal then
-retarget_shared_pending() slingshots a shared pending signal to a
-sibling thread. Today it only skips PF_EXITING threads but not a
-coredumping thread.
+Since commit 7fea700e04bd ("zap_pid_ns_processes: clear
+TIF_NOTIFY_SIGNAL along with TIF_SIGPENDING") zap_pid_ns_processes()
+clears TIF_NOTIFY_SIGNAL before every kernel_wait4() call. Otherwise
+kernel_wait4() doesn't sleep and returns -ERESTARTSYS if
+signal_pending() is true and the reaper busy-waits.
 
-But if SIGNAL_GROUP_EXIT is set no thread in the thread-group can
-dequeue such signals anymore as get_signal() sends SIGKILL to every
-thread and prepare_signal() drops any other signal.
+But clearing TIF_NOTIFY_SIGNAL doesn't fix it. It can get raised again.
+For example, klp_send_signals() sets it raw against any task that hasn't
+transitioned yet. And it keeps sending it until the livepatch finishes.
 
-exit_signals() also returns early on SIGNAL_GROUP_EXIT. But neither
-sigprocmask() nor the mask restore in sigtimedwait() do.
+The sleep loop waiting for pid_allocated to drop has the same problem
+and it doesn't even clear anything. So a schedule() in
+TASK_INTERRUPTIBLE returns immediately.
 
-Say a thread sleeps in sigtimedwait() and a sibling thread crashes. The
-sleeping thread gets woken by the zap call. It restores its mask on the
-way out and retargets a signal that was queued for the coredumping
-process. That means TIF_SIGPENDING is set on the coredumping task which
-zap_threads() had cleared. So a blocking write sees TIF_SIGPENDING and
-truncates the dump.
+Use a no_notify_signal guard. signal_pending() will ignore
+TIF_NOTIFY_SIGNAL and the pid namespace reaper sleeps until a child
+exits or free_pid() wakes it.
 
-Stop retargeting signals when SIGNAL_GROUP_EXIT is set and avoid
-needlessly truncating coredumps.
-
-Fixes: e6fa16ab9c1e ("signal: sigprocmask() should do retarget_shared_pending()")
+Link: https://patch.msgid.link/20260824-work-tif_notify_signal-v2-5-6609e42b3157@kernel.org
+Fixes: 7fea700e04bd ("zap_pid_ns_processes: clear TIF_NOTIFY_SIGNAL along with TIF_SIGPENDING")
+Reviewed-by: Oleg Nesterov <oleg@redhat.com>
 Cc: stable@vger.kernel.org
-Acked-by: Oleg Nesterov <oleg@redhat.com>
-Link: https://patch.msgid.link/20260921-work-coredump-fixes-v3-5-8e4adb1619e6@kernel.org
+Suggested-by: Oleg Nesterov <oleg@redhat.com>
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/signal.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ kernel/pid_namespace.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/kernel/signal.c
-+++ b/kernel/signal.c
-@@ -2942,6 +2942,10 @@ static void retarget_shared_pending(stru
- 	sigset_t retarget;
- 	struct task_struct *t;
+--- a/kernel/pid_namespace.c
++++ b/kernel/pid_namespace.c
+@@ -212,9 +212,10 @@ void zap_pid_ns_processes(struct pid_nam
+ 	 * kernel_wait4() will also block until our children traced from the
+ 	 * parent namespace are detached and become EXIT_DEAD.
+ 	 */
++	/* Task work must not busy-loop the reaper, see signal_pending(). */
++	guard(no_notify_signal)();
+ 	do {
+ 		clear_thread_flag(TIF_SIGPENDING);
+-		clear_thread_flag(TIF_NOTIFY_SIGNAL);
+ 		rc = kernel_wait4(-1, NULL, __WALL, NULL);
+ 	} while (rc != -ECHILD);
  
-+	/* Nobody dequeues them in a dying group, see get_signal(). */
-+	if (tsk->signal->flags & SIGNAL_GROUP_EXIT)
-+		return;
-+
- 	sigandsets(&retarget, &tsk->signal->shared_pending.signal, which);
- 	if (sigisemptyset(&retarget))
- 		return;
 
 
