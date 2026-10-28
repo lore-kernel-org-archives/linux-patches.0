@@ -1,53 +1,49 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214000;
-	b=zY8IWqZCcAneD51Sh+a9xk/LFZZx2jhbBnlhclOfmZzOg1A4RgvsIepj0gSB9Dwx8HyN
-	 MhPCNUtmpRUyvLZAtOUmEj1GSstJbJgRIdb5BPTHJiLDok845r3wyzaYSoy0fxtoB8fLy
-	 62subv358YNenkokpdfRXSYyM+iDtMANy1hbdvO7froz1DFomCj8KBTS+WjSikulWPHfy
-	 kWB8Fu7h5RymovVksjGCUr73GIqnASHCZcX5mzXipNP3Ozmt1nDLs3FaqsQXuy7RvvLKo
-	 WxSPWGt4lh2gvrLl2C6g0cfUuRgLxMeGedDS5W12ajF6e8tNL4LodEbP/loLbDHUIwg==
+	t=1793214003;
+	b=OFeGOcG0b68LyeEf4Ka+4ed/khHlQHNERGhqQFnYSVlWSZb7khZ7SYhA61LuwhPno+mq
+	 OFYYOC/fbVDQU+E9Lq3p8NYnMJdl8sM5PU0X/9O10ozu/rCJfRlhN0H5O5zGwgA7HDS+C
+	 ef4T025dO1J9YQuvWCnOkkqLTofdak5yXcCykQvdo8D6SFlbA9bCYNT7ETf5l23M4yA4j
+	 qXO1VP+CAKh3F6IA/Tt4zxZtd7UoM1BazEjSqf8rDrPiyxMvJKxCI7959Y+cJrVQHdPp8
+	 sO+K95ZVjoTZe34GNOfJ/mQvtiLcm7kNn5pcQkGo5lRGmG6oO2FtgpuNxRCZiilC+nQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214000;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214003;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=YN0yrlgqbRdWdLRp/sHJ2YA3/Z7Z3rJwGSu9mRMzeLs=;
-	b=ifemsZApv3Mm6oYXSOizAbsNenErmHtqx4KFBSpFHmToLx39F2TuGpurla2EoH07oM0r
-	 qULQ4fC2ANqjByj9HyrLDQrtE1hcXqRDwOGMWSmKzWA7IDW5nTLZ/Oirih6Amlj4xMd3s
-	 qlFk7ZghAv6ACq+//sa+45QfxsM4h9bdLqERvPsoz+MfLWco4CWWbQcR59dgyTXnTEWkh
-	 iJpZm/EsLgl9LSQsiXX2CfRYvVFpix2TAF+7zEhFL9P93y/YOt3tJM6IVzDN/1WqR2VWG
-	 FmxE3udFlsE1rYMFDK9fKLdG9eFjHZ74Ery3fCgq7SyhGcgAna3Dy3n78ocjTyVskFA==
+	bh=GwqoHCxQUNoLY+MG4NWfpK4gIVVu94v1Yt7jQHsioBw=;
+	b=eknWipmVTmsxbcsH1IvbQnKWiAnWj6VdsHeV/cFPrIEWUluQD+J6fTSl2SwM615ivLIk
+	 gb/YA/ncNgz7H7SF8hW3pCCvNPZYVcCNLlP0NCG32ZL3jtF9ZsCi3mVQ6bKuTr4QlVR59
+	 ILod10KTj2iKRwF58furR5wot/y4p9eevo4laVziMV21FEOK8DLPzN9Zi2SYPfLtgAo6V
+	 hwp164a5WfanskgOyCaXOccwtCipBtohNDHt9swRQN8n4bAiDc6xRlrj3cqjJel1Jcl42
+	 W+srFY2jmIB9mtFr9jUqrYkdby8vmYOiMskk5x/Moja/ocDOTOCYlSKYTjDM1joI4+Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rbZEkJXy;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4285606A31A;
-	Wed, 28 Oct 2026 18:59:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rbZEkJXy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBCDF1F031E2;
-	Wed, 28 Oct 2026 18:59:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B3EE60A2630;
+	Wed, 28 Oct 2026 19:00:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB87A1F031E2;
+	Wed, 28 Oct 2026 19:00:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213999;
-	bh=YN0yrlgqbRdWdLRp/sHJ2YA3/Z7Z3rJwGSu9mRMzeLs=;
+	s=korg; t=1793214003;
+	bh=GwqoHCxQUNoLY+MG4NWfpK4gIVVu94v1Yt7jQHsioBw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rbZEkJXytRl8QEbucO/sDKmbB5oyQn+/EvF5r7Ftr38C7lm1H6JbQ8H21fU2dxMiP
-	 vGfFRQF9sbp10ebdzbGH6JTxtA1PbxIw3x+Pg5z7lnfdDASiTumjSJwn3fesQy+/qs
-	 VXqAJAMrBimFuct5LJ/KStZ+U2QHz1dBl7sGfIdo=
+	b=gN+tQBO8giwZKIZccalsfsqa9OjT6W4u+KFbk7mc7PyrEoKipxhcYm1zltuAWkbqD
+	 fnzWN46eUs9dt43mozvLb1oeqlGjGGAG2mRI69K8K9N6JEonLvHhpxicot/eFVYbgX
+	 w2kmgULC8laQX8XjGgX7epwv2zoICXZGVTpg/9Dg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Patrisious Haddad <phaddad@nvidia.com>,
-	Michael Guralnik <michaelgur@nvidia.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Phil Sutter <phil@nwl.cc>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0703/1887] RDMA/mlx5: Move events notifier registration to be after device registration
-Date: Wed, 28 Oct 2026 17:46:39 +0100
-Message-ID: <20261028170515.408689804@linuxfoundation.org>
+Subject: [PATCH 6.1 0704/1887] netfilter: IDLETIMER: Fix for possible ABBA deadlock
+Date: Wed, 28 Oct 2026 17:46:40 +0100
+Message-ID: <20261028170515.432303806@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,190 +65,128 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Patrisious Haddad <phaddad@nvidia.com>
+From: Phil Sutter <phil@nwl.cc>
 
-[ Upstream commit ede132a5cf559f3ab35a4c28bac4f4a6c20334d8 ]
+[ Upstream commit f36b01994d68ffc253c8296e2228dfe6e6431c03 ]
 
-Move pkey change work initialization and cleanup from device resources
-stage to notifier stage, since this is the stage which handles this work
-events.
+Deletion of the last rule referencing a given idletimer may happen at
+the same time as a read of its file in sysfs:
 
-Fix a race between the device deregistration and pkey change work by moving
-MLX5_IB_STAGE_DEVICE_NOTIFIER to be after MLX5_IB_STAGE_IB_REG in order to
-ensure that the notifier is deregistered before the device during cleanup.
-Which ensures there are no works that are being executed after the
-device has already unregistered which can cause the panic below.
+| ======================================================
+| WARNING: possible circular locking dependency detected
+| 6.12.0-rc7-01692-g5e9a28f41134-dirty #594 Not tainted
+| ------------------------------------------------------
+| iptables/3303 is trying to acquire lock:
+| ffff8881057e04b8 (kn->active#48){++++}-{0:0}, at: __kernfs_remove+0x20
+|
+| but task is already holding lock:
+| ffffffffa0249068 (list_mutex){+.+.}-{3:3}, at: idletimer_tg_destroy_v]
+|
+| which lock already depends on the new lock.
 
-BUG: kernel NULL pointer dereference, address: 0000000000000000
-PGD 0 P4D 0
-Oops: 0000 [#1] PREEMPT SMP PTI
-CPU: 1 PID: 630071 Comm: kworker/1:2 Kdump: loaded Tainted: G W OE --------- --- 5.14.0-162.6.1.el9_1.x86_64 #1
-Hardware name: Microsoft Corporation Virtual Machine/Virtual Machine, BIOS 090008 02/27/2023
-Workqueue: events pkey_change_handler [mlx5_ib]
-RIP: 0010:setup_qp+0x38/0x1f0 [mlx5_ib]
-Code: ee 41 54 45 31 e4 55 89 f5 53 48 89 fb 48 83 ec 20 8b 77 08 65 48 8b 04 25 28 00 00 00 48 89 44 24 18 48 8b 07 48 8d 4c 24 16 <4c> 8b 38 49 8b 87 80 0b 00 00 4c 89 ff 48 8b 80 08 05 00 00 8b 40
-RSP: 0018:ffffbcc54068be20 EFLAGS: 00010282
-RAX: 0000000000000000 RBX: ffff954054494128 RCX: ffffbcc54068be36
-RDX: ffff954004934000 RSI: 0000000000000001 RDI: ffff954054494128
-RBP: 0000000000000023 R08: ffff954001be2c20 R09: 0000000000000001
-R10: ffff954001be2c20 R11: ffff9540260133c0 R12: 0000000000000000
-R13: 0000000000000023 R14: 0000000000000000 R15: ffff9540ffcb0905
-FS: 0000000000000000(0000) GS:ffff9540ffc80000(0000) knlGS:0000000000000000
-CS: 0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000000000000000 CR3: 000000010625c001 CR4: 00000000003706e0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
-mlx5_ib_gsi_pkey_change+0x20/0x40 [mlx5_ib]
-process_one_work+0x1e8/0x3c0
-worker_thread+0x50/0x3b0
-? rescuer_thread+0x380/0x380
-kthread+0x149/0x170
-? set_kthread_struct+0x50/0x50
-ret_from_fork+0x22/0x30
-Modules linked in: rdma_ucm(OE) rdma_cm(OE) iw_cm(OE) ib_ipoib(OE) ib_cm(OE) ib_umad(OE) mlx5_ib(OE) mlx5_fwctl(OE) fwctl(OE) ib_uverbs(OE) mlx5_core(OE) mlxdevm(OE) ib_core(OE) mlx_compat(OE) psample mlxfw(OE) tls knem(OE) netconsole nfsv3 nfs_acl nfs lockd grace fscache netfs qrtr rfkill sunrpc intel_rapl_msr intel_rapl_common rapl hv_balloon hv_utils i2c_piix4 pcspkr joydev fuse ext4 mbcache jbd2 sr_mod sd_mod cdrom t10_pi sg ata_generic pci_hyperv pci_hyperv_intf hyperv_drm drm_shmem_helper drm_kms_helper hv_storvsc syscopyarea hv_netvsc sysfillrect sysimgblt hid_hyperv fb_sys_fops scsi_transport_fc hyperv_keyboard drm ata_piix crct10dif_pclmul crc32_pclmul crc32c_intel libata ghash_clmulni_intel hv_vmbus serio_raw [last unloaded: ib_core]
-CR2: 0000000000000000
----[ end trace f6f8be4eae12f7bc ]---
+A simple reproducer is:
 
-Fixes: 7722f47e71e5 ("IB/mlx5: Create GSI transmission QPs when P_Key table is changed")
-Signed-off-by: Patrisious Haddad <phaddad@nvidia.com>
-Reviewed-by: Michael Guralnik <michaelgur@nvidia.com>
-Link: https://patch.msgid.link/d271ceeff0c08431b3cbbbb3e2d416f09b6d1621.1731496944.git.leon@kernel.org
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+| #!/bin/bash
+|
+| while true; do
+|         iptables -A INPUT -i foo -j IDLETIMER --timeout 10 --label "testme"
+|         iptables -D INPUT -i foo -j IDLETIMER --timeout 10 --label "testme"
+| done &
+| while true; do
+|         cat /sys/class/xt_idletimer/timers/testme >/dev/null
+| done
+
+Avoid this by freeing list_mutex right after deleting the element from
+the list, then continuing with the teardown.
+
+Fixes: 0902b469bd25 ("netfilter: xtables: idletimer target implementation")
+Signed-off-by: Phil Sutter <phil@nwl.cc>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx5/main.c    | 40 +++++++++++++---------------
- drivers/infiniband/hw/mlx5/mlx5_ib.h |  2 +-
- 2 files changed, 20 insertions(+), 22 deletions(-)
+ net/netfilter/xt_IDLETIMER.c | 52 +++++++++++++++++++-----------------
+ 1 file changed, 28 insertions(+), 24 deletions(-)
 
-diff --git a/drivers/infiniband/hw/mlx5/main.c b/drivers/infiniband/hw/mlx5/main.c
-index 9da42edecb05c..993bdd815bbb2 100644
---- a/drivers/infiniband/hw/mlx5/main.c
-+++ b/drivers/infiniband/hw/mlx5/main.c
-@@ -2802,7 +2802,6 @@ static int mlx5_ib_dev_res_init(struct mlx5_ib_dev *dev)
- 	struct ib_srq_init_attr attr;
- 	struct ib_device *ibdev;
- 	struct ib_cq_init_attr cq_attr = {.cqe = 1};
--	int port;
- 	int ret = 0;
+diff --git a/net/netfilter/xt_IDLETIMER.c b/net/netfilter/xt_IDLETIMER.c
+index 9733f49847a6d..aa93c812317e2 100644
+--- a/net/netfilter/xt_IDLETIMER.c
++++ b/net/netfilter/xt_IDLETIMER.c
+@@ -415,21 +415,23 @@ static void idletimer_tg_destroy(const struct xt_tgdtor_param *par)
  
- 	ibdev = &dev->ib_dev;
-@@ -2851,10 +2850,6 @@ static int mlx5_ib_dev_res_init(struct mlx5_ib_dev *dev)
- 		goto error6;
+ 	mutex_lock(&list_mutex);
+ 
+-	if (--info->timer->refcnt == 0) {
+-		pr_debug("deleting timer %s\n", info->label);
+-
+-		list_del(&info->timer->entry);
+-		del_timer_sync(&info->timer->timer);
+-		cancel_work_sync(&info->timer->work);
+-		sysfs_remove_file(idletimer_tg_kobj, &info->timer->attr.attr);
+-		kfree(info->timer->attr.attr.name);
+-		kfree(info->timer);
+-	} else {
++	if (--info->timer->refcnt > 0) {
+ 		pr_debug("decreased refcnt of timer %s to %u\n",
+ 			 info->label, info->timer->refcnt);
++		mutex_unlock(&list_mutex);
++		return;
  	}
  
--	for (port = 0; port < ARRAY_SIZE(devr->ports); ++port)
--		INIT_WORK(&devr->ports[port].pkey_change_work,
--			  pkey_change_handler);
--
- 	return 0;
- 
- error6:
-@@ -2873,16 +2868,6 @@ static int mlx5_ib_dev_res_init(struct mlx5_ib_dev *dev)
- static void mlx5_ib_dev_res_cleanup(struct mlx5_ib_dev *dev)
- {
- 	struct mlx5_ib_resources *devr = &dev->devr;
--	int port;
--
--	/*
--	 * Make sure no change P_Key work items are still executing.
--	 *
--	 * At this stage, the mlx5_ib_event should be unregistered
--	 * and it ensures that no new works are added.
--	 */
--	for (port = 0; port < ARRAY_SIZE(devr->ports); ++port)
--		cancel_work_sync(&devr->ports[port].pkey_change_work);
- 
- 	ib_destroy_srq(devr->s1);
- 	ib_destroy_srq(devr->s0);
-@@ -4089,6 +4074,13 @@ static void mlx5_ib_stage_delay_drop_cleanup(struct mlx5_ib_dev *dev)
- 
- static int mlx5_ib_stage_dev_notifier_init(struct mlx5_ib_dev *dev)
- {
-+	struct mlx5_ib_resources *devr = &dev->devr;
-+	int port;
++	pr_debug("deleting timer %s\n", info->label);
 +
-+	for (port = 0; port < ARRAY_SIZE(devr->ports); ++port)
-+		INIT_WORK(&devr->ports[port].pkey_change_work,
-+			  pkey_change_handler);
++	list_del(&info->timer->entry);
+ 	mutex_unlock(&list_mutex);
 +
- 	dev->mdev_events.notifier_call = mlx5_ib_event;
- 	mlx5_notifier_register(dev->mdev, &dev->mdev_events);
- 	return 0;
-@@ -4096,7 +4088,13 @@ static int mlx5_ib_stage_dev_notifier_init(struct mlx5_ib_dev *dev)
- 
- static void mlx5_ib_stage_dev_notifier_cleanup(struct mlx5_ib_dev *dev)
- {
-+	struct mlx5_ib_resources *devr = &dev->devr;
-+	int port;
-+
- 	mlx5_notifier_unregister(dev->mdev, &dev->mdev_events);
-+
-+	for (port = 0; port < ARRAY_SIZE(devr->ports); ++port)
-+		cancel_work_sync(&devr->ports[port].pkey_change_work);
++	del_timer_sync(&info->timer->timer);
++	cancel_work_sync(&info->timer->work);
++	sysfs_remove_file(idletimer_tg_kobj, &info->timer->attr.attr);
++	kfree(info->timer->attr.attr.name);
++	kfree(info->timer);
  }
  
- void __mlx5_ib_remove(struct mlx5_ib_dev *dev,
-@@ -4170,9 +4168,6 @@ static const struct mlx5_ib_profile pf_profile = {
- 	STAGE_CREATE(MLX5_IB_STAGE_DEVICE_RESOURCES,
- 		     mlx5_ib_dev_res_init,
- 		     mlx5_ib_dev_res_cleanup),
--	STAGE_CREATE(MLX5_IB_STAGE_DEVICE_NOTIFIER,
--		     mlx5_ib_stage_dev_notifier_init,
--		     mlx5_ib_stage_dev_notifier_cleanup),
- 	STAGE_CREATE(MLX5_IB_STAGE_ODP,
- 		     mlx5_ib_odp_init_one,
- 		     mlx5_ib_odp_cleanup_one),
-@@ -4197,6 +4192,9 @@ static const struct mlx5_ib_profile pf_profile = {
- 	STAGE_CREATE(MLX5_IB_STAGE_IB_REG,
- 		     mlx5_ib_stage_ib_reg_init,
- 		     mlx5_ib_stage_ib_reg_cleanup),
-+	STAGE_CREATE(MLX5_IB_STAGE_DEVICE_NOTIFIER,
-+		     mlx5_ib_stage_dev_notifier_init,
-+		     mlx5_ib_stage_dev_notifier_cleanup),
- 	STAGE_CREATE(MLX5_IB_STAGE_POST_IB_REG_UMR,
- 		     mlx5_ib_stage_post_ib_reg_umr_init,
- 		     NULL),
-@@ -4233,9 +4231,6 @@ const struct mlx5_ib_profile raw_eth_profile = {
- 	STAGE_CREATE(MLX5_IB_STAGE_DEVICE_RESOURCES,
- 		     mlx5_ib_dev_res_init,
- 		     mlx5_ib_dev_res_cleanup),
--	STAGE_CREATE(MLX5_IB_STAGE_DEVICE_NOTIFIER,
--		     mlx5_ib_stage_dev_notifier_init,
--		     mlx5_ib_stage_dev_notifier_cleanup),
- 	STAGE_CREATE(MLX5_IB_STAGE_COUNTERS,
- 		     mlx5_ib_counters_init,
- 		     mlx5_ib_counters_cleanup),
-@@ -4257,6 +4252,9 @@ const struct mlx5_ib_profile raw_eth_profile = {
- 	STAGE_CREATE(MLX5_IB_STAGE_IB_REG,
- 		     mlx5_ib_stage_ib_reg_init,
- 		     mlx5_ib_stage_ib_reg_cleanup),
-+	STAGE_CREATE(MLX5_IB_STAGE_DEVICE_NOTIFIER,
-+		     mlx5_ib_stage_dev_notifier_init,
-+		     mlx5_ib_stage_dev_notifier_cleanup),
- 	STAGE_CREATE(MLX5_IB_STAGE_POST_IB_REG_UMR,
- 		     mlx5_ib_stage_post_ib_reg_umr_init,
- 		     NULL),
-diff --git a/drivers/infiniband/hw/mlx5/mlx5_ib.h b/drivers/infiniband/hw/mlx5/mlx5_ib.h
-index 0ef347e91ffeb..e8e285233b355 100644
---- a/drivers/infiniband/hw/mlx5/mlx5_ib.h
-+++ b/drivers/infiniband/hw/mlx5/mlx5_ib.h
-@@ -927,7 +927,6 @@ enum mlx5_ib_stages {
- 	MLX5_IB_STAGE_QP,
- 	MLX5_IB_STAGE_SRQ,
- 	MLX5_IB_STAGE_DEVICE_RESOURCES,
--	MLX5_IB_STAGE_DEVICE_NOTIFIER,
- 	MLX5_IB_STAGE_ODP,
- 	MLX5_IB_STAGE_COUNTERS,
- 	MLX5_IB_STAGE_CONG_DEBUGFS,
-@@ -936,6 +935,7 @@ enum mlx5_ib_stages {
- 	MLX5_IB_STAGE_PRE_IB_REG_UMR,
- 	MLX5_IB_STAGE_WHITELIST_UID,
- 	MLX5_IB_STAGE_IB_REG,
-+	MLX5_IB_STAGE_DEVICE_NOTIFIER,
- 	MLX5_IB_STAGE_POST_IB_REG_UMR,
- 	MLX5_IB_STAGE_DELAY_DROP,
- 	MLX5_IB_STAGE_RESTRACK,
+ static void idletimer_tg_destroy_v1(const struct xt_tgdtor_param *par)
+@@ -440,25 +442,27 @@ static void idletimer_tg_destroy_v1(const struct xt_tgdtor_param *par)
+ 
+ 	mutex_lock(&list_mutex);
+ 
+-	if (--info->timer->refcnt == 0) {
+-		pr_debug("deleting timer %s\n", info->label);
+-
+-		list_del(&info->timer->entry);
+-		if (info->timer->timer_type & XT_IDLETIMER_ALARM) {
+-			alarm_cancel(&info->timer->alarm);
+-		} else {
+-			del_timer_sync(&info->timer->timer);
+-		}
+-		cancel_work_sync(&info->timer->work);
+-		sysfs_remove_file(idletimer_tg_kobj, &info->timer->attr.attr);
+-		kfree(info->timer->attr.attr.name);
+-		kfree(info->timer);
+-	} else {
++	if (--info->timer->refcnt > 0) {
+ 		pr_debug("decreased refcnt of timer %s to %u\n",
+ 			 info->label, info->timer->refcnt);
++		mutex_unlock(&list_mutex);
++		return;
+ 	}
+ 
++	pr_debug("deleting timer %s\n", info->label);
++
++	list_del(&info->timer->entry);
+ 	mutex_unlock(&list_mutex);
++
++	if (info->timer->timer_type & XT_IDLETIMER_ALARM) {
++		alarm_cancel(&info->timer->alarm);
++	} else {
++		del_timer_sync(&info->timer->timer);
++	}
++	cancel_work_sync(&info->timer->work);
++	sysfs_remove_file(idletimer_tg_kobj, &info->timer->attr.attr);
++	kfree(info->timer->attr.attr.name);
++	kfree(info->timer);
+ }
+ 
+ 
 -- 
 2.53.0
 
