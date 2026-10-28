@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793207773;
-	b=yB4sojVx/Fz0Wiksyw7lNOxC7klimHEzp2IytbykZGEx6kLxTLt9aGKD/pbckLWYRs9J
-	 3ZVgNKK994Eq1F616Y0TVzit0TvxSQNi8v+BBa7lB4bXKYVrt0xsB22uNPKskUBszLfBq
-	 SaBFPVYiQUL9MOrDGOv4ZbWKYcz9mEC29ZdX7Ni82tYnDKX8uQ77W9XMAEoNHU1Z8XYO1
-	 ku+sYbHXtiV8Lv8s7IUx39ALfILS7WWFt6s9A1F9tq6P4gangJjM+sPB2TsmX8h9CLENv
-	 mbN3f/42SzWSuzyFH5rkjzDQG96XZ8xAAZ1+3FS1XghCdE0OkGV4dsmoBPRc6YOii7g==
+	t=1793207776;
+	b=x7+FvFMt8Rua5zG69hvEXbnMS3OPnhID0FWUYyQPzSLjoa6vPnn0SChzUkB7Paz5qmY7
+	 yn68+IgcrfTEfQuGl5xzzP7SJzbbxmwuPHpf2LJHoNY/5aGLRV7d4GWGa20iCjBMuCDF9
+	 uQ9yaDJKfhcSGQ8+x3qTedJzZV04wgZ3NOYZWZJXEBY+Wug0hQD/vxXzh9mC6QZ4yQYWU
+	 rMzNTKZJEUSvCRlPYQxK5p+UywrmZ6Caa/oPFPmLHo4YjhpjUpeizTkbZjUkR4PfwVLfi
+	 1acqbl0ZXxVOklFBX4aT9GtTF5s3vU1932D1QVuKqKr4OBIMMes3FX0tp9hzUIsDmXQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793207773;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793207776;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Lu76WtBKHXPuSViSGMXMIt/bsoQ19qFEmOMJecBoWJ8=;
-	b=tizH3TonovrLTNmoHUc+0sbdMib2bjkJT9i0JaHThO8B8VNxVw4yUC1q/DMdPeoa7cSv
-	 wnzHLUv8TXZSDhTy6ZNSeQ20WaLJO67iESkymQt1dhExi1fqmvrdHZIILUvFOIZjNPdFz
-	 NiIfkXbJmEogZGjNSCOWhifQ5wIQcg0L+ZQ4Yje/4eBK/eCJv7qeFlQX1gT0FIc9VakAV
-	 zdjf6hBHMigiwCTwjMYJdWhjkb7PlIdSeeOkbFMplEoipKAhsttNUGeNRn0giIvWfC0h4
-	 LBWplIUIEQhMPVKlxwLfAaO6Ihw7zn5ZuwpUA9LMqcetAqeANGOSi1jiDDk07F/bg9Q==
+	bh=h2L/iqoGqcqycG+uQ+j7fwTDQPRuhsXCNyKP0mjFmMI=;
+	b=XTHJZ9HuRXyDpYu3MCQG0RNYst9UOTQf3DhGuNLo591Sgr97w9YtMi2BWSV8PG6sryd/
+	 kxQ4y8S6foFwdSiaxZaHr9vWc11Qqgmb7KhdgJXckejBSxUQygkBi3seBu62WoB+FrO1w
+	 T3NodlZsHBnX+iRo8zG/l2SqhGFh/4k5Cs1lubfUcC7aEkZhvfIX+XXu/Ac7LPlWhJLB8
+	 dkNs0oQEdiv5rGvtyYmhHCL7lywk2SQOgHDSZTwipY4VWQxyGaIEWRJchbVRx3o1aRjL+
+	 2QXR35/wgZbMsY+XJ0j9q1kfvnyxAhiSj/i2hptuhkWKx10ZaCx3NcQeVuYxLA8q9Xw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hc8SrPgp;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VnCGtFlW;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5679606A31A;
-	Wed, 28 Oct 2026 17:16:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A98A9606A31D;
+	Wed, 28 Oct 2026 17:16:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hc8SrPgp
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 230971F01825;
-	Wed, 28 Oct 2026 17:16:11 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VnCGtFlW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0477F1F01825;
+	Wed, 28 Oct 2026 17:16:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793207772;
-	bh=Lu76WtBKHXPuSViSGMXMIt/bsoQ19qFEmOMJecBoWJ8=;
+	s=korg; t=1793207775;
+	bh=h2L/iqoGqcqycG+uQ+j7fwTDQPRuhsXCNyKP0mjFmMI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hc8SrPgpW8V6/wg12E6hxOeh2x9SDqojUWV9VmDpnejLyraLVoHPQEMnfCOgfgOk4
-	 S/OgV7Gf+Yrqc+IAPdeTgTBKGlQyURM7E4EJN7f5X9RMRONabwa04iMvdtWxjN1MyR
-	 2J1ORST1hslhh4bmRjgbN/yOG/MoiA04RunltPo8=
+	b=VnCGtFlWheROLc3mkcc0IWEA06mEWvPM7QIMTRm7x2Ivw4j+RdB3R55QHW15WHz1s
+	 v/Xol8KQFgU1dXlwa373GgWqqLg8lNm3v7COnHUo5jCfILYZwKDvMz37B3f0fDnvx8
+	 KdHD3QzB/Xn4bsC3M7XYXvM0C7xnOdoMH4ptFeXo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Donggeun Yoo <donggeunyoo.kernel@gmail.com>,
-	Vincent Donnefort <vdonnefort@google.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Steven Rostedt <rostedt@goodmis.org>
-Subject: [PATCH 6.12 080/247] ring-buffer: Fix the sub-buffer array base in rb_meta_subbuf_idx()
-Date: Wed, 28 Oct 2026 17:58:03 +0100
-Message-ID: <20261028165949.287551422@linuxfoundation.org>
+	Frank Sorenson <sorenson@redhat.com>,
+	Paulo Alcantara <pc@manguebit.org>
+Subject: [PATCH 6.12 128/247] smb: client: fix heap overflow in cifs_do_set_acl()
+Date: Wed, 28 Oct 2026 17:58:51 +0100
+Message-ID: <20261028165950.435140810@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165947.349197979@linuxfoundation.org>
 References: <20261028165947.349197979@linuxfoundation.org>
@@ -69,52 +67,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
+From: Frank Sorenson <sorenson@redhat.com>
 
-commit 25132363c723afc39aace8b098f547ab4a0ea759 upstream.
+commit 1dac61e2c29d1a71784604b48cf3b1234a65ec29 upstream.
 
-On a persistent ring buffer, rb_meta_subbuf_idx() can return an index one
-sub-buffer too high.  rb_setup_ids_meta_page() then fills subbuf_ids[]
-shifted by one and leaves subbuf_ids[0] NULL, which __rb_map_vma()
-dereferences when userspace maps trace_pipe_raw.  rb_update_meta_reader()
-writes two such indices into meta->buffers[], which rb_cpu_meta_valid()
-would reject on the next boot, discarding the previous boot's trace.
+cifs_set_acl() validates ACL size using posix_acl_xattr_size():
 
-A CPU's sub-buffer array starts after its meta header and the nr_subbufs
-integers that follow, aligned up to a sub-buffer.  rb_meta_subbuf_idx()
-inverts that calculation but skips only the integers, not the header, so
-its base is one sub-buffer low whenever the omitted header size crosses
-the alignment boundary.
+        4 + (count * 8)  // 4-byte header + 8 bytes per ACE
 
-Invert the calculation with rb_subbufs_from_meta() rather than repeating
-it.  rb_range_buffer() maps an index back to an address through the same
-helper, so the two directions can no longer disagree.
+cifs_do_set_acl() then calls posix_acl_to_cifs() to write the CIFS
+wire format into the same buffer:
 
+        6 + (count * 10)  // 6-byte header + 10 bytes per ACE
+
+An ACL that passes the xattr-based check in cifs_set_acl() can
+overflow the heap when posix_acl_to_cifs() writes the larger CIFS
+format.
+
+Validate the CIFS format size against the remaining buffer space and
+USHRT_MAX before converting--data_count is __u16, so sizes above
+USHRT_MAX truncate the on-wire packet length, causing the server to
+apply a partial ACL.  Replace MaxDataCount = 1000 with
+min(CIFSMaxBufSize, USHRT_MAX).
+
+Fixes: dc1af4c4b4721 ("cifs: implement set acl method")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260918071507.1019251-1-donggeunyoo.kernel@gmail.com
-Fixes: b14d032973d4 ("ring-buffer: Add ring_buffer_meta data")
-Signed-off-by: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
-Reviewed-by: Vincent Donnefort <vdonnefort@google.com>
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Signed-off-by: Frank Sorenson <sorenson@redhat.com>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/ring_buffer.c |    4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ fs/smb/client/cifssmb.c |   13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
---- a/kernel/trace/ring_buffer.c
-+++ b/kernel/trace/ring_buffer.c
-@@ -3203,10 +3203,8 @@ static void rb_inc_iter(struct ring_buff
- /* Return the index into the sub-buffers for a given sub-buffer */
- static int rb_meta_subbuf_idx(struct ring_buffer_meta *meta, void *subbuf)
- {
--	void *subbuf_array;
-+	void *subbuf_array = rb_subbufs_from_meta(meta);
+--- a/fs/smb/client/cifssmb.c
++++ b/fs/smb/client/cifssmb.c
+@@ -3188,6 +3188,7 @@ int cifs_do_set_acl(const unsigned int x
+ 	int rc = 0;
+ 	int bytes_returned = 0;
+ 	__u16 params, byte_count, data_count, param_offset, offset;
++	size_t cifs_acl_size, bytes_available;
  
--	subbuf_array = (void *)meta + sizeof(int) * meta->nr_subbufs;
--	subbuf_array = (void *)ALIGN((unsigned long)subbuf_array, meta->subbuf_size);
- 	return (subbuf - subbuf_array) / meta->subbuf_size;
- }
+ 	cifs_dbg(FYI, "In SetPosixACL (Unix) for path %s\n", fileName);
+ setAclRetry:
+@@ -3206,8 +3207,7 @@ setAclRetry:
+ 	}
+ 	params = 6 + name_len;
+ 	pSMB->MaxParameterCount = cpu_to_le16(2);
+-	/* BB find max SMB size from sess */
+-	pSMB->MaxDataCount = cpu_to_le16(1000);
++	pSMB->MaxDataCount = cpu_to_le16(min_t(unsigned int, CIFSMaxBufSize, USHRT_MAX));
+ 	pSMB->MaxSetupCount = 0;
+ 	pSMB->Reserved = 0;
+ 	pSMB->Flags = 0;
+@@ -3219,6 +3219,15 @@ setAclRetry:
+ 	parm_data = ((char *)pSMB) + sizeof(pSMB->hdr.smb_buf_length) + offset;
+ 	pSMB->ParameterOffset = cpu_to_le16(param_offset);
+ 
++	/* make sure we can fit the larger cifs_posix_aces in the buffer */
++	cifs_acl_size = sizeof(struct cifs_posix_acl) +
++		       (acl->a_count * sizeof(struct cifs_posix_ace));
++	bytes_available = (CIFSMaxBufSize + MAX_HEADER_SIZE(tcon->ses->server)) - offset;
++	if (cifs_acl_size > bytes_available || cifs_acl_size > USHRT_MAX) {
++		rc = -E2BIG;
++		goto setACLerrorExit;
++	}
++
+ 	/* convert to on the wire format for POSIX ACL */
+ 	data_count = posix_acl_to_cifs(parm_data, acl, acl_type);
  
 
 
