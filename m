@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793209313;
-	b=bfUKMuDtNJ8bgNBQQgrN1MfkPjVNihuO/CO198YP86TyYpJgANnqrbH/EJ8X1/QZHEaR
-	 hsnPa+tHIGjUVzTqu4fbJwbHDWfJ440Rp2wv87pl2fXGJrRz/Cm/qYfGhxcqEQVIN5hEc
-	 Yrnf+rqEjKZI9FXqD87To+WerTIp3skk1O/xdvePM8mxGXkLTpC6h8JnJUaFwkpWbNFag
-	 yvyzRnHSGlD4QBjH9OiEbv8H+4LZQ1HPj+R1TaNlcEIEiHMGdGpdx/k8eEWbjJSvxYLlc
-	 81iV0mBiueXrwirB4H7Jlud22mZI3Lr/PoF8nixMEHZsPNlsGjmPvNJy1ybEm+glcog==
+	t=1793209316;
+	b=ZIMEfhctNBZjnOxI5ixnl/cJJ32i9BB2LiQl1K9z0xUWNynXUcUSwNhTXxk5YLUdfDre
+	 1DTJHY2ftL3V4LLkHgcT1OiCazHEao7hxJSZT/SWfo/kw3Gpczb/ko4ctT6buvCjmA+O1
+	 SxhmYRqs3GHpr17gp6ik3sECbe4qyiotYjs5Od2npAAv0ziiIS9yMF24u3I72vhUxxB1l
+	 kGSGCL4o1RSSuhRSCAslypnLgE4Db2C9EeBPIFlX8jViccHwDE3dfYuMtRqGbgJFIL0G/
+	 /cuDgageBAP15DT3NupnoxJcyUhDQFEHW0cI0S9QQ1+W2MNUpZvCE0WQL+ALUD3ydkQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793209313;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793209316;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=JDHO/9l9mvgxnQ+8GjclDlHGNqTJp1YOIs+3sGGeLYs=;
-	b=ALSVB9jVd0Nsc2R6/k3K8EXWC3yEU2ffugqE0a0g6YXHzxtu8tFJpK2L5rcVN2gsrueX
-	 /BJuylqDcZr1Uk6nFOsc1u9gr4vAAB1c/FIkkzeW1wBivSlRx28RnLHD1/2cSbPvgPcw7
-	 lWQjJaWfnSodzLj2hDeCJeEf2VV8NhApva5j9P/DxiH5pDbQYSjFVEioOt3/kwHD17Y4K
-	 k47urK2W1+BkJf2Z2XJGJhMLEcp86vSCQwsHOda9j2ZZIfmaCiu7cLJdWoDc2z/NwCjXf
-	 ao/dUQ7KR/dSRmcdvx/VcD6fSP2UK+XY9FtJDFn8x6r04MbV/kUIPxyhWX+rqgDXRNw==
+	bh=Hw5EfZVp+iC7t8D+GyQAxub68tUTGteojdec8m1rWo4=;
+	b=Lz9JwX9vBBf062IkMqa8n9JBF3wiQl1GzRExs4ZluMMOHOAufgL0djc+9oMIgCmM3uzO
+	 P0WFiiXIl5a+fNaHmiXilna6JGtL+IdtZYC5QEY1I72AgRCCnTOCtgXVlrOT4EcSgdQfe
+	 BTv00KG9nCEzYNum0wDs6zjYxve2WiC8sCIOdmNlBRTGH57MenJyYRBJq7M+OVp1rfnlE
+	 dYcfkrTklHN0UCIyB0NBAEVxG28gHzM58yHmKUqE7NFiLlnoxLaxuwulmabn1xTtM7yZj
+	 7hBAtPDzN0j9QGy+S+l0lBCiyy5E6cBTGgljrx8X5u35taRZRmDSrbJShJVYNW7M9lQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="H+94Gtw/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Oz9VF67C;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB971606A31C;
-	Wed, 28 Oct 2026 17:41:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0811B606A31A;
+	Wed, 28 Oct 2026 17:41:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=H+94Gtw/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 370651F01825;
-	Wed, 28 Oct 2026 17:41:52 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Oz9VF67C
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 140291F01825;
+	Wed, 28 Oct 2026 17:41:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793209312;
-	bh=JDHO/9l9mvgxnQ+8GjclDlHGNqTJp1YOIs+3sGGeLYs=;
+	s=korg; t=1793209315;
+	bh=Hw5EfZVp+iC7t8D+GyQAxub68tUTGteojdec8m1rWo4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=H+94Gtw/8GZ8VPcXOp6SyeGmtOgdlDFNdSUOjdfR+b2Jy7i7tw2XZroDVq9S4/6+/
-	 BbkCWYkxYulVyicxAUlfq6W/qaxlYT0nHDsJUeEoGcwv4xkQ0jyBEsoqHiWBp5OuQX
-	 Jpm2iM0DABwTgUiFYSL6AE1QMMbFomtMFOPNSfNk=
+	b=Oz9VF67CvRHXgG/JfM7rwjU3ImrPRysjcMad44PEADl1wn6RAPUZrobr4kCyw0HXt
+	 kMFyB8jSM8Vur16PqBmSRZodPlrN/RnjyCeEa1D3c71r6rx4M3CNS4w5tEKxt1oqmp
+	 mXwe0400zBNLKtEO5ciXQz1BBifKo0bsuHtIfMYw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hyunwoo Kim <imv4bel@gmail.com>,
-	Michal Luczaj <mhal@rbox.co>,
-	Stefano Garzarella <sgarzare@redhat.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Avi Weiss <thnkslprpt@gmail.com>,
+	Olivier Moysan <olivier.moysan@foss.st.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 428/516] vsock: treat TCP_CLOSING as once-established
-Date: Wed, 28 Oct 2026 17:59:40 +0100
-Message-ID: <20261028170013.625355651@linuxfoundation.org>
+Subject: [PATCH 5.10 429/516] ASoC: stm32: spdifrx: fix synchronization state check
+Date: Wed, 28 Oct 2026 17:59:41 +0100
+Message-ID: <20261028170013.648700929@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -70,88 +69,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Luczaj <mhal@rbox.co>
+From: Avi Weiss <thnkslprpt@gmail.com>
 
-[ Upstream commit 4f6ac74fa594a918d41255c941256e1d51592d3b ]
+[ Upstream commit 0936bbd35a247665c64886135835faa3c3f4f29f ]
 
-Handle the TCP_ESTABLISHED -> TCP_CLOSING transition on OP_RST, which can
-race with the connect loop. Immediately break and return 0 on
-ESTABLISHED/CLOSING. The return value of connect() should reflect what
-happened up to the point the connection was established or failed. Events
-that occur afterwards must not affect it. E.g. even if OP_RW has already
-set sk_err, connect() should still return 0, not ENOBUFS because of it.
-Adapt the inaccurate comment above signal_pending().
+The interrupt handler uses a logical AND to check whether SPDIFRX
+was in the SYNC state before clearing errors. Since both SYNC (1)
+and ENABLE (3) are nonzero, this also treats ENABLE as SYNC (and
+any other non-zero value that might be added).
 
-Resetting a socket that is still present in connected_table can lead to
-memory corruption. The reporter noted lost transports for in-flight skbs,
-and I have reproduced crashes caused by re-insertion into connected_table.
+The logical && basically just converts this to check for != 0.
 
-  list_add double add: new=, prev=, next=.
-  kernel BUG at lib/list_debug.c:35!
-  Oops: invalid opcode: 0000 [#1] SMP KASAN NOPTI
-  Workqueue: vsock-loopback vsock_loopback_work
-  RIP: 0010:__list_add_valid_or_report+0x11f/0x130
-  Call Trace:
-   vsock_insert_connected.cold+0xe/0x13
-   virtio_transport_recv_pkt+0x10e9/0x1460
-   vsock_loopback_work+0x305/0x480
-   process_one_work+0xe4c/0x1560
-   worker_thread+0x4f1/0xd60
-   kthread+0x36e/0x470
-   ret_from_fork+0x47b/0x6b0
-   ret_from_fork_asm+0x1a/0x30
+So errors occurring while SPDIFRX is enabled cause the driver
+to retry synch instead of disconnecting the PCM stream.
 
-This fix is supplementary to commit 002541ef650b ("vsock: Ignore
-signal/timeout on connect() if already established"). Details under Link.
+Fix is to change the logical && to equality (==) and only retry
+when exactly in sync state.
 
-Fixes: d021c344051a ("VSOCK: Introduce VM Sockets")
-Reported-by: Hyunwoo Kim <imv4bel@gmail.com>
-Link: https://lore.kernel.org/netdev/anzT1fREOSyHT99k@v4bel/
-Signed-off-by: Michal Luczaj <mhal@rbox.co>
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
-Link: https://patch.msgid.link/20261005-vsock-connect-reset-closing-v4-1-15d41cfda3ed@rbox.co
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 0c93c291321f2 ("ASoC: stm32: spdifrx: retry synchronization in sync state")
+Signed-off-by: Avi Weiss <thnkslprpt@gmail.com>
+Reviewed-by: Olivier Moysan <olivier.moysan@foss.st.com>
+Link: https://patch.msgid.link/20261011035459.2289403-1-thnkslprpt@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/vmw_vsock/af_vsock.c | 17 ++++++++---------
- 1 file changed, 8 insertions(+), 9 deletions(-)
+ sound/soc/stm/stm32_spdifrx.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/vmw_vsock/af_vsock.c b/net/vmw_vsock/af_vsock.c
-index 15dd900beaf22..d49840fddbcb6 100644
---- a/net/vmw_vsock/af_vsock.c
-+++ b/net/vmw_vsock/af_vsock.c
-@@ -1464,23 +1464,22 @@ static int vsock_stream_connect(struct socket *sock, struct sockaddr *addr,
- 		timeout = schedule_timeout(timeout);
- 		lock_sock(sk);
+diff --git a/sound/soc/stm/stm32_spdifrx.c b/sound/soc/stm/stm32_spdifrx.c
+index 2bf834800cc08..d9214f69fc675 100644
+--- a/sound/soc/stm/stm32_spdifrx.c
++++ b/sound/soc/stm/stm32_spdifrx.c
+@@ -727,7 +727,7 @@ static irqreturn_t stm32_spdifrx_isr(int irq, void *devid)
  
--		/* Connection established. Whatever happens to socket once we
--		 * release it, that's not connect()'s concern. No need to go
-+		/* Connection was established. Whatever happens to socket once
-+		 * we release it, that's not connect()'s concern. No need to go
- 		 * into signal and timeout handling. Call it a day.
- 		 *
- 		 * Note that allowing to "reset" an already established socket
- 		 * here is racy and insecure.
- 		 */
--		if (sk->sk_state == TCP_ESTABLISHED)
--			break;
-+		if (sk->sk_state == TCP_ESTABLISHED ||
-+		    sk->sk_state == TCP_CLOSING) {
-+			err = 0;
-+			goto out_wait;
-+		}
+ 	if (err) {
+ 		regmap_read(spdifrx->regmap, STM32_SPDIFRX_CR, &cr);
+-		sync_state = FIELD_GET(SPDIFRX_CR_SPDIFEN_MASK, cr) &&
++		sync_state = FIELD_GET(SPDIFRX_CR_SPDIFEN_MASK, cr) ==
+ 			     SPDIFRX_SPDIFEN_SYNC;
  
- 		/* If connection was _not_ established and a signal/timeout came
- 		 * to be, we want the socket's state reset. User space may want
--		 * to retry.
--		 *
--		 * sk_state != TCP_ESTABLISHED implies that socket is not on
--		 * vsock_connected_table. We keep the binding and the transport
--		 * assigned.
-+		 * to retry, so we keep the binding and the transport assigned.
- 		 */
- 		if (signal_pending(current) || timeout == 0) {
- 			err = timeout == 0 ? -ETIMEDOUT : sock_intr_errno(timeout);
+ 		/* SPDIFRX is in STATE_STOP. Disable SPDIFRX to clear errors */
 -- 
 2.53.0
 
