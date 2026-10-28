@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793207083;
-	b=QJWmvKXRKvN2+WkNxt5szLoyAMuQNGbRHNxr4a0Hvik6z4HMUVmerXrOgTi2qki5SjiL
-	 ZjBccr4/uPskF6NTsg0cGzXF9GAmvo5crkEw4E6+OBCM6W8XXBNjCZN1GdswhopIMvBCg
-	 mr1zOkiJIrjoTzIObYaQ7/K2XIDIPl8jYsjYXU6wSa2Dsm5Xa3HQVLEV3bIWfPxA7KP33
-	 V8yZC1TecThUaq0Ddtgm/45efxZyGhjIJaw8ozHyC0oFHUa+Z6CBjOLT05AF92di3UWg1
-	 89y+ALgkSQVyWPez2ix8rwjBjLp5DiIEp+7UuCmpfGsxmwyblG2/00FTCBV1vsu1azQ==
+	t=1793207086;
+	b=iz5DmArfO3e0RFU5LMfWgsZyM+z/4Gh/WteNnNX1syFsbt3MzAZOlkJE4o+Fls5Nzwyr
+	 YDedm6X5xprJeXZG/UMGEZVAB1Cn8XOyN7ftKgisiA3IrJ4aOjDT4IZVEIXkDnbiBKlF8
+	 LggBjMa2xLH3ypG0BikK98/8RgPpHdIGW9aIAptVu1cNCZ/t3k/SSwsTox5VQzG2JLF7R
+	 QU79H29voqIGF+hC6rseBlFapIEwJ3t6wUZ7wt5zHtXJD1SVQMhYOqgL7Koc1N/6enGYR
+	 MpoFL03hIt8hwaLUXqr1x25bdjExDY1XnCSdHqMsUuarAxDePYVX5J0PTYw3X9dzfPA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793207083;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793207086;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=yCAaCGXt5izd4EAtdUh7cWzkQKvPcY0QgA3gktSGGb0=;
-	b=5aqin2dFQrjRIDzuj10uitn7GUvKcaDbpAVJueeL2BpvoJnuAvPaccyox32QAPvthIn4
-	 2JfUU1nK6h4FMcwhsqh/hA8gZv29Pv2JrDaPHP8CtwgTyNekTkkVrxOGu/NT6kve7xeH2
-	 xj5G8TCv+HiRM2F7qL9r0a+ByInbNSqYHkjURKt6regFxLZQ/Dm24aQNfamo8Fyb0YQg/
-	 XuzafCERt8U6rhG57UimUtDO8HmHLcTqrZ1hgyF7ORYkofVg9QOcaBm5P4Gc+cu+SgTcc
-	 0HKqQ+adiVIKXcQp6bfUSYV3uz0CvhnajLV2CWYQkGBcXWu/d2jApRu09DYSXJGvDrA==
+	bh=Iwov4QN1nm3cRA1qjiOFf37dN9p+PJSO7EBq5tFoUsU=;
+	b=2ZAW9JcMyoGidGY+APugw0wFtXsIXWIhT+/KfcKBXKx5oHHgGDtLAeG0Wg+7V+ZEcv0D
+	 sblziPwm4ONrd+xAL7lfL2chL5XDcY059htbdSVf842MT0JRyo9PgcUnz+EcvC+A/LILP
+	 PKl5/bwUtywGqoKRsn8v6X0nI9ZsKFo7FGsnrHS+eSjsbdhptbmKb0NWD/Sjyrg4NJqid
+	 8/3q3Bx8Cg+rr33dzkb2sw176MU5/FUVRNzYmEK/rpxNk+nKQXWmTb2qBxGlhBsM/eYf4
+	 QvWzTo+ZsWb34xrHzeZlMYyALbXeEku4dkGMs2K0kNlxHJ4/z0c3Nf/HOS+63y/sSHw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BPY3Jn+j;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="O/JlfKiu";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DA1E606A31C;
-	Wed, 28 Oct 2026 17:04:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D931D606A32A;
+	Wed, 28 Oct 2026 17:04:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BPY3Jn+j
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 643901F01825;
-	Wed, 28 Oct 2026 17:04:42 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O/JlfKiu
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3577A1F01825;
+	Wed, 28 Oct 2026 17:04:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793207082;
-	bh=yCAaCGXt5izd4EAtdUh7cWzkQKvPcY0QgA3gktSGGb0=;
+	s=korg; t=1793207085;
+	bh=Iwov4QN1nm3cRA1qjiOFf37dN9p+PJSO7EBq5tFoUsU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BPY3Jn+jjcXZzLv1YwlMNd91Pyp7lvfJgupsGtCy8LbRUN9ttTbhc9L/hdkDFAD+8
-	 0n1OWGvbzzm8sKe1P8T0GqRTHe0rXnnQcvmzNIOTLNxvDrGHuJiFqe1gq18xmnNzZu
-	 952tM9CE5m1SPVt68HrNjV+u+59rzoKCCjhsExH8=
+	b=O/JlfKiupvpulS/XV2wjveGHPUBqsszGkrJf4owNK/4ilM1O3Lpe6ee0+eDMWRRs6
+	 Ic1SmurNYJrg2UP0To0S3aRxfHuJh+FKOr1i6OUmWRkjAnuK6AoMZ4g/wRqShMflWY
+	 UBTy+wW3r5xM4x2LU2A1YKnVbeuyGpM4d5ENeUV4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SJ Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 02/38] mm/damon/core: error damos_commit_quota_goal() for zero target_value
-Date: Wed, 28 Oct 2026 17:59:49 +0100
-Message-ID: <20261028165940.465084933@linuxfoundation.org>
+	Cen Zhang <zzzccc427@gmail.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>
+Subject: [PATCH 7.3 20/38] keys: Check the authorization payload in process keyring searches
+Date: Wed, 28 Oct 2026 18:00:07 +0100
+Message-ID: <20261028165940.911781877@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165940.394092994@linuxfoundation.org>
 References: <20261028165940.394092994@linuxfoundation.org>
@@ -68,127 +67,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: SJ Park <sj@kernel.org>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit 610c4438fb66e06d9e693c0ad3b2c1be54c0d61f ]
+commit 0a0ec45bf577a9b4d4960567f20d3877ef480de9 upstream.
 
-Patch series "mm/damon: move zero damos quota target_value handling to the
-core layer".
+An authorization payload and its saved credentials must remain valid
+while search_process_keyrings_rcu() searches the requestor's keyrings.
+The function validates the authorization key, then separately loads
+payload.data[0] and unconditionally reads rka->cred. Validation does
+not prevent request_key_auth_revoke() from clearing the payload.
 
-Having zero DAMOS quota target value can cause division by zero.  DAMON
-API callers are checking the target value parameters to avoid that.  It is
-easy to make mistakes in some of the multiple API callers.  Move that to
-the core layer.
+A request-key helper can assume authority and fork a descendant that
+inherits the authorization key. If the descendant misses in its own
+keyrings, it falls back to the saved requestor credentials. Successful
+target instantiation invalidates the authorization key without clearing
+the payload. After the helper exits, UMH_WAIT_PROC returns to the
+requester, which calls complete_request_key() and revokes that key.
 
-Patch 1 adds the corner case handling into the core layer DAMON parameters
-validation logic.  Patches 2 and 3 remove no more needed DAMON API callers
-side handling of the corner case in DAMON_LRU_SORT and DMON_SAMPLIE_MTIER,
-respectively.
+With the descendant paused after validation, the paths can interleave
+as follows:
 
-This patch (of 3):
+  1. The descendant enters search_process_keyrings_rcu() under RCU and
+     key_validate() succeeds.
+  2. The helper instantiates the target, invalidates the authorization
+     key, and exits.
+  3. The requester resumes from UMH_WAIT_PROC, calls
+     complete_request_key(), and revokes the authorization key.
+     request_key_auth_revoke() sets its payload pointer to NULL.
+  4. The descendant loads NULL and dereferences rka->cred.
 
-If a DAMOS scheme has a damos_quota_goal of zero target_value,
-damos_quota_goal() could trigger division-by-zero error.  Hence each DAMON
-API callers should do the zero target_value validation.  It is easy to
-make mistakes.  Actually such bugs in DAMON_LRU_SORT and
-DAMON_SAMPLE_MTIER were found and fixed [1].
+This NULL dereference can oops the kernel. RCU delays payload disposal
+but does not prevent the pointer from being cleared.
 
-It is better to handle the corner case only once in the core layer,
-instead of multiple places in all DAMON API callers.  One straightforward
-option is using an alternative denominator for the corner case in the
-damos_quota_goal().  However, the zero target_value is meaningless.  In
-this case, the quota goal is always evaluated as achieved or
-over-achieved.  The quota will only keep being reduced.
+Load the payload with dereference_key_rcu() and require a non-NULL
+result before validating the authorization key and searching its saved
+credentials. A non-NULL payload and its credentials remain alive for
+the caller's RCU read-side section; a cleared payload skips the fallback
+search and follows the existing error selection.
 
-Simply avoid using zero target_value by adding a check in the core layer
-DAMOS quota goal parameters validation/commit path,
-damos_commit_quota_goal().  Update it to return an error in the case.
-Also update its caller to propagate the error.
+KASAN report as below:
 
-Notes for stable kernel porting.  The upstream commit doesn't have
-Fixes: and therefore not ported to stable kernels.  It turned out it
-fixes commit 8b549a4fd3c5 ("mm/damon/sysfs-schemes: commit damos quota
-goals user input to DAMOS") which was merged into v6.8.  The user impact
-is a race condition that can result in divide-by-zero.  Hence backport.
-Reproducing the issue requires sysfs write permission, certain DAMON ABI
-usages that are supposed to be uncommon, and a rare race timing, though.
-The issue was discovered [2] by Sashiko as a part [3] of its bug report.
+    Oops: general protection fault, probably for non-canonical address 0xdffffc0000000005: 0000 [#1] SMP KASAN NOPTI
+    KASAN: null-ptr-deref in range [0x0000000000000028-0x000000000000002f]
+    RIP: 0010:search_process_keyrings_rcu+0x32b/0x790
 
-[2] https://sashiko.dev/#/bug/linux-7f814c9a-986f-4103-a55a-ef9537dcf62b
-[3] https://lore.kernel.org/20261021005234.94107-1-sj@kernel.org
-
-Link: https://lore.kernel.org/20260903010722.94244-1-sj@kernel.org
-Link: https://lore.kernel.org/20260903010722.94244-2-sj@kernel.org
-Link: https://lore.kernel.org/20260803134034.15217-1-sj@kernel.org [1]
-Signed-off-by: SJ Park <sj@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: SJ Park <sj@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: e59428f721ee ("keys: Move the RCU locks outwards from the keyring search functions")
+Assisted-by: LLM
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Link: https://lore.kernel.org/r/pm-key-management-objects-candidate-0004-v3-598361863b76bc25d58d@gmail.com
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/damon/core.c | 22 ++++++++++++++++------
- 1 file changed, 16 insertions(+), 6 deletions(-)
+ security/keys/process_keys.c |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index ab3c4d7549644..74d22a596fc13 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -1136,15 +1136,18 @@ static void damos_commit_quota_goal_union(
- 	}
- }
+--- a/security/keys/process_keys.c
++++ b/security/keys/process_keys.c
+@@ -556,9 +556,8 @@ key_ref_t search_process_keyrings_rcu(st
+ 	    ) {
+ 		const struct cred *cred = ctx->cred;
  
--static void damos_commit_quota_goal(
-+static int damos_commit_quota_goal(
- 		struct damos_quota_goal *dst, struct damos_quota_goal *src)
- {
-+	if (!src->target_value)
-+		return  -EINVAL;
- 	dst->metric = src->metric;
- 	dst->target_value = src->target_value;
- 	if (dst->metric == DAMOS_QUOTA_USER_INPUT)
- 		dst->current_value = src->current_value;
- 	/* keep last_psi_total as is, since it will be updated in next cycle */
- 	damos_commit_quota_goal_union(dst, src);
-+	return 0;
- }
- 
- /**
-@@ -1162,14 +1165,17 @@ static void damos_commit_quota_goal(
- int damos_commit_quota_goals(struct damos_quota *dst, struct damos_quota *src)
- {
- 	struct damos_quota_goal *dst_goal, *next, *src_goal, *new_goal;
--	int i = 0, j = 0;
-+	int i = 0, j = 0, err;
- 
- 	damos_for_each_quota_goal_safe(dst_goal, next, dst) {
- 		src_goal = damos_nth_quota_goal(i++, src);
--		if (src_goal)
--			damos_commit_quota_goal(dst_goal, src_goal);
--		else
-+		if (src_goal) {
-+			err = damos_commit_quota_goal(dst_goal, src_goal);
-+			if (err)
-+				return err;
-+		} else {
- 			damos_destroy_quota_goal(dst_goal);
-+		}
- 	}
- 	damos_for_each_quota_goal_safe(src_goal, next, src) {
- 		if (j++ < i)
-@@ -1178,7 +1184,11 @@ int damos_commit_quota_goals(struct damos_quota *dst, struct damos_quota *src)
- 				src_goal->metric, src_goal->target_value);
- 		if (!new_goal)
- 			return -ENOMEM;
--		damos_commit_quota_goal(new_goal, src_goal);
-+		err = damos_commit_quota_goal(new_goal, src_goal);
-+		if (err) {
-+			damos_free_quota_goal(new_goal);
-+			return err;
-+		}
- 		damos_add_quota_goal(dst, new_goal);
- 	}
- 	return 0;
--- 
-2.53.0
-
+-		if (key_validate(cred->request_key_auth) == 0) {
+-			rka = ctx->cred->request_key_auth->payload.data[0];
+-
++		rka = dereference_key_rcu(cred->request_key_auth);
++		if (rka && key_validate(cred->request_key_auth) == 0) {
+ 			//// was search_process_keyrings() [ie. recursive]
+ 			ctx->cred = rka->cred;
+ 			key_ref = search_cred_keyrings_rcu(ctx);
 
 
