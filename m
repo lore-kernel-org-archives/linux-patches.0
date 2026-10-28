@@ -1,57 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793208232;
-	b=TpSQPWtrRwatdziSEAO1ki/xQsI3xapfzUS0JSnm1UP1PNz3Dnsei1DW0gwu8M/lRa+b
-	 a9z9YHmuvql3lMFbE2be6sBPZm7T56e8h9W4a/RfgmaUax05fQiYTJnYG3chzTkqxcGDC
-	 p02AbayJwKkl/ojImFjOYhjv+q0JajBfekbTBdE2W2zEemlK8PCf7V3RUhkLhxWfjLpsi
-	 5hRta6CIXNCedRotYe1bR665jOEgCyfNPEiQOV9P426M6udGPPFNYSMqQ5NcQxRGEpz7l
-	 nPtOGBGQEbKGZZduv5xJPTXMS6VUzXIxAzZ2LOfuIFPs7oeXG//DM3f2NAI7BDOWGzw==
+	t=1793208235;
+	b=5R9TGVBM4UwWMG8DozgMDa4yk5wLoaWIbeLziESQHs0XUULqGfgvHZWHAvtmAFhA1Qlu
+	 09jTYQebDpsXA0CYjOHJbz2u4M1xP/SRL2rp0IUh+L5wtPtKPiaU0/tb8QozmOEHjonza
+	 adEq+nFe/LCSY+IppYOQuLkPWtaBVOb1LHMfxQcohzLkxZK7oNJ4WeaV5DKyO/qYiSWzC
+	 Z3vAzk9zM0Of1nkXN7A4imPh9XoJZWfceScdY9lTzZ3jaYC4oV6YhZR9kz84UbjsDKYLT
+	 cV5ab/T9IWvQKN2SGcWtvok4q1BNT29O+K2uaJ6XfJuCh+qF3NX113/1/bE2By0Rvdw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793208232;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793208235;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=KxWbh+F3KCt+M2AdCmJNNfS+vpTGUOO6AkgYSWEeUJQ=;
-	b=0b9ltblQH+JWJdtmhaPhISv9Ifk6bC9GenHmRQsddVa10O4XSPa+f9ptDKWhnnwr5bLa
-	 u3FrDW3eypgLVIBe6kPS6DrwcUU8DrvP3e6AbVCElCKmjg6JbSWpdbMdE+yUEvks7hRno
-	 PR3+giN6up1/B8HQTetJNuaZo/waFHN0wERaDk4ak6emvTpiwRV0nI94p14k3J27/4jm3
-	 u+FCMNq7Pfyp1pLIk8/ByVmdaC5lADd0j9vOPfch/KqK2qziTYxSybC2PMuBfmIp50ZfR
-	 cCto7xnSRto5856VpsY2oqWZh16fzDK8UK8KNvjVlM5lfKESLSi8i+jqJ5DhSaBYkdw==
+	bh=UOypCvNaHqXYiOFje+1RWMnQs35Hz62VNOIzhYbgLm8=;
+	b=hIIfaAiIM2gyoEStkHLZ1nQ5thnh3w2o9UQ9e55cCAx+8kSmsldyD8eCijPDGaNbjhgd
+	 k84fF9cno08PWIDxuOLJgc+/DnavcHV00ms4dAbbm/QYxu5akaKPsQ2KrEQEybYEYQb6F
+	 4L1mb4cQEFEDLEDSS9OemGWndZvvjOe0SbrmolnxjFSbOMW3oi4zq+FG4EGt6cSFYyqjA
+	 TdgduG1lNw1ZZ4LIkB1EP537o6ZA6JYBXrGXc8JSJk9oJgGCN/3AMYdMDuvQTRZrzLIqn
+	 Kco4LF0VX6vMAs6+TErLheZY7v7jlTdfotilmcFIPdM183JUoEX8nMb14/eMJmuQTAg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="R/O6p7lH";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="fo3bs/YS";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0596C606A31A;
-	Wed, 28 Oct 2026 17:23:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDB8A606A31A;
+	Wed, 28 Oct 2026 17:23:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=R/O6p7lH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F6501F01825;
-	Wed, 28 Oct 2026 17:23:51 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fo3bs/YS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BAF11F031E0;
+	Wed, 28 Oct 2026 17:23:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793208231;
-	bh=KxWbh+F3KCt+M2AdCmJNNfS+vpTGUOO6AkgYSWEeUJQ=;
+	s=korg; t=1793208234;
+	bh=UOypCvNaHqXYiOFje+1RWMnQs35Hz62VNOIzhYbgLm8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=R/O6p7lHoHSyUzArWXhJTdzCu05ILJ0wec/XqjS62bObEqHSpiWqmLs1iQEnYNtlk
-	 H79EkaTV95arw7fRR38Q7ECXhy8zXmRCIKXMuRX4GBSFUIhuGJoKVaTmFcNqYHHo2u
-	 HBUtXrGnaJNSXssuEVlkLjrfmoetzsYzZW4YCMXo=
+	b=fo3bs/YSVoOYIfXgKg1d3ObRsin7M8S9QBV6tV1CFVN7SgM6Hetyncm8UtiDYsY86
+	 fwgdjHhbVjpqXv0XFWJn7PMtKO3sq0qvT6/kKR3Egvu7zfA099AB3RQb5ZxZQ1znhD
+	 pKMuyAKHLhn5UzePJXu7SvdSZz8WRmNWvYKxC0B4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Longlong Xia <xialonglong@kylinos.cn>,
 	Sergey Senozhatsky <senozhatsky@chromium.org>,
-	Chris Mason <clm@meta.com>,
-	Brian Geffon <bgeffon@google.com>,
-	David Stevens <stevensd@google.com>,
-	Minchan Kim <minchan@google.com>,
-	Richard Chang <richardycc@google.com>,
+	Jens Axboe <axboe@kernel.dk>,
+	Minchan Kim <minchan@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 045/516] zram: fixup read_block_state()
-Date: Wed, 28 Oct 2026 17:53:17 +0100
-Message-ID: <20261028170004.599880772@linuxfoundation.org>
+Subject: [PATCH 5.10 046/516] zram: fix out-of-bounds access in read_block_state()
+Date: Wed, 28 Oct 2026 17:53:18 +0100
+Message-ID: <20261028170004.623312480@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -73,55 +71,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sergey Senozhatsky <senozhatsky@chromium.org>
+From: Longlong Xia <xialonglong@kylinos.cn>
 
-[ Upstream commit 8b05d2d8af817c6a1e23032df51e7ad83030d543 ]
+[ Upstream commit 391f057f44a51cc9418da5cba78b014324174264 ]
 
-ac_time is now in seconds, do not use ktime_to_timespec64()
+read_block_state() calculates nr_pages before taking dev_lock.  If the
+device is reset and reinitialized with a smaller disksize before lock
+acquisition, nr_pages still describes the old table.  The subsequent loop
+can then call slot_lock() past the end of the newly allocated table.
 
-[akpm@linux-foundation.org: remove now-unused local `ts']
-[akpm@linux-foundation.org: fix build]
-Link: https://lkml.kernel.org/r/20260115033031.3818977-1-senozhatsky@chromium.org
-Signed-off-by: Sergey Senozhatsky <senozhatsky@chromium.org>
-Reported-by: Chris Mason <clm@meta.com>
-Closes: https://lkml.kernel.org/r/20260114124522.1326519-1-clm@meta.com
-Cc: Brian Geffon <bgeffon@google.com>
-Cc: David Stevens <stevensd@google.com>
-Cc: Minchan Kim <minchan@google.com>
-Cc: Richard Chang <richardycc@google.com>
+Read disksize after acquiring dev_lock and checking that the device is
+initialized.  The read lock then keeps the table and its bound stable for
+the duration of the scan.
+
+Link: https://lore.kernel.org/20260804065919.3970386-3-xialonglong2025@163.com
+Fixes: c0265342bff4 ("zram: introduce zram memory tracking")
+Assisted-by: Codex:gpt-5.6-sol
+Signed-off-by: Longlong Xia <xialonglong@kylinos.cn>
+Reviewed-by: Sergey Senozhatsky <senozhatsky@chromium.org>
+Cc: Jens Axboe <axboe@kernel.dk>
+Cc: Minchan Kim <minchan@kernel.org>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-
-[ Stable tree note: The ac_time conversion described above is not present
-  here, so retain the ktime_t conversion and microsecond output.  Move the
-  timespec64 temporary into the scan loop instead, allowing the follow-up
-  bounds fix to move nr_pages initialization under init_lock cleanly. ]
-
-Stable-dep-of: 391f057f44a5 ("zram: fix out-of-bounds access in read_block_state()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/zram/zram_drv.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/block/zram/zram_drv.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/block/zram/zram_drv.c b/drivers/block/zram/zram_drv.c
-index 16db4fae51456..ac5965ee64b2c 100644
+index ac5965ee64b2c..8a3670dbfa1ab 100644
 --- a/drivers/block/zram/zram_drv.c
 +++ b/drivers/block/zram/zram_drv.c
-@@ -883,7 +883,6 @@ static ssize_t read_block_state(struct file *file, char __user *buf,
+@@ -882,7 +882,7 @@ static ssize_t read_block_state(struct file *file, char __user *buf,
+ 	char *kbuf;
  	ssize_t index, written = 0;
  	struct zram *zram = file->private_data;
- 	unsigned long nr_pages = zram->disksize >> PAGE_SHIFT;
--	struct timespec64 ts;
+-	unsigned long nr_pages = zram->disksize >> PAGE_SHIFT;
++	unsigned long nr_pages;
  
  	kbuf = kvmalloc(count, GFP_KERNEL);
  	if (!kbuf)
-@@ -898,6 +897,7 @@ static ssize_t read_block_state(struct file *file, char __user *buf,
+@@ -895,6 +895,8 @@ static ssize_t read_block_state(struct file *file, char __user *buf,
+ 		return -EINVAL;
+ 	}
  
++	nr_pages = zram->disksize >> PAGE_SHIFT;
++
  	for (index = *ppos; index < nr_pages; index++) {
  		int copied;
-+		struct timespec64 ts;
- 
- 		zram_slot_lock(zram, index);
- 		if (!zram_allocated(zram, index))
+ 		struct timespec64 ts;
 -- 
 2.53.0
 
