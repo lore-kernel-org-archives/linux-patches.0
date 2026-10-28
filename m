@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793211067;
-	b=muiBZcFsbISSgZp5hxh9LCBg1WlcY3JwEY8BG8BrKZP2p4MkvZm9T3u5R0gjja/fs1HV
-	 5bNLSTYRvskywnA8KE87S8HU07CkmJZTXveNltsCJn4m4L0GxkvcnLBwRxyUBFUfgIw6P
-	 F+wbPE/RPT5OLscbUTo9UkVOmc68YMuW/z2xT/6xipiGsOzHo5EMAAHmNMNRMxPvMcNtv
-	 t/bYN/VJ3jRUXBQHZSswCggjAdl9lxRYJxBH5XjRp0MuVcE+8+zNVDVxtrBkwOmnK+SAY
-	 UwL8O+2hfyasjgCDdenEdioEhEutMCHEJ5qLVSlbcmU4icQAQYlJfVr4gT4c1tLXqyw==
+	t=1793211070;
+	b=bnPlq9B5KCIDsdqB1zAi88oqRErhFpoERCpYHyIb9K5Y5J4FS/OXwnwLvs55mUuoBuSD
+	 L9QQg9SNQ0v71byDo7ct1vy3l/F3tLfy+w1FnqP6P7cND2wEXN0NJe/dqSwSA0oPnhyoJ
+	 DJQWMDA85nktOaQGp+tdHckK74eCmQgmaSPxcu0nBJQDBZLi6ZA3zAoJe4MN5Dtm+Y51o
+	 mR3FL3NVUCEYel0nOB+J7ON6PZI0U9+Cl8i7WlXeIjHoNoNObuGUjlrDo+6Zx/8qYQKNU
+	 BcBVH7BvCuGAmcsjJWYpYAldQw8VecYN8WdO2cpk3cpADQ11M3VKPAm1rbqZjxghRIQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793211067;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793211070;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=4ld6MsVD3RaRmIn1kT6si4pFlTnfAsHK9hsL5DGu9bw=;
-	b=k2cUQjancBnGB36NXRxSffS3ktRQYFa9LMY1+HidExeIrCbGWxKiHYh/mKlZhhF0m6jw
-	 W98WMnaWkvkhsUOxGJgnc+ZvZTTmGSQ/g786FmZE30Ih64GWQz6fCHje6XukognNhsDdX
-	 TSV+uyg+r8AeLNu8ICb719waLD/2OL8pWh/HyLgqNfbg0Sfic6vLPKF8EFMwFjFwBzfrL
-	 l0hZsPHZ7hdExt+TJg5f3/tLa0Jj+kwupIO9W2PJKZ5KVH7Xqv43N2ixYbqaB5Dgptak1
-	 MvcGV+xAIDMtNoX0GMmyyzdE8KzVVIDH7ZumQ/5nXrQr1wpF9Pr6C42RoyTir6fhd7A==
+	bh=fjo8sgRKhcw4hsnkQkDN2tx6tqlp/MhUgD8xZG4zWLo=;
+	b=q2Rm3/JCtpyfYVTb69tsnOxHSjGUjlwR/igcWaPCvCZqTmh+QPG5mJcCqpKf6ovXs4Z9
+	 Vfybp/iEZhLep3j/vWbD7KqeaMGMOKR73sF0g+u7u5DOXhTS+yvLcDyzyQCNJNyQOCmWk
+	 99UWu5ulIKZjUnJRZFO6/4idLA1lQbKOD7rt1NitRpQtZiwwHJ8BIqEHhTqo6s68pnYCG
+	 BA/eNCBHfYLneep7lKebMvHqLNIVaP4ZfACCasyoOyI3uzuspjxhUi8oy0vt7H8fYUVcY
+	 gEjIZbsUCocreOS7V7uYBdF/2PQqmJFEGWl1BF/EFJE5HlFJztz7EGjel6MNbM6CiwA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=METeI0Vl;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lzDmUwk9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C05F260A2620;
-	Wed, 28 Oct 2026 18:11:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2D7960A2629;
+	Wed, 28 Oct 2026 18:11:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=METeI0Vl
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0ED271F01829;
-	Wed, 28 Oct 2026 18:11:05 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lzDmUwk9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E22851F01825;
+	Wed, 28 Oct 2026 18:11:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793211066;
-	bh=4ld6MsVD3RaRmIn1kT6si4pFlTnfAsHK9hsL5DGu9bw=;
+	s=korg; t=1793211069;
+	bh=fjo8sgRKhcw4hsnkQkDN2tx6tqlp/MhUgD8xZG4zWLo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=METeI0Vl0OPMdXj2FlWcCOhYP4Hkm3IZ5cj+p2vM1avo1j3pvGkYCbluzSGXfe+og
-	 Jw6ihJGQCwrPgCUTsFUDqYzBYz046Ahmd00ENj0uFlfFxcxk6JeFpxTy/LEiOJ04Mu
-	 /zIyDmsEB5fQW76x4J5c8UOeKPe/OXqAYs8y5iT8=
+	b=lzDmUwk9yi/6Zc099oDbpZZ30usgUPs7BmaHFbKn2hOkiedlhgFcOdHrnYBNV/ViT
+	 Nk23A+4ncToQlzL6shrlxgR5iZYMTYyn+8hmusqFSo3YBdQ6AFJWaPZdIj1KHWSxQG
+	 zZG1zw494sQFcMmOu4rloIhhNqrPSEnw3J2a4Cpw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Lin <jisayme@gmail.com>,
+	Sebastian Sjoholm <sebastian.sjoholm@gmail.com>,
 	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 5.15 247/571] USB: serial: option: add Compal EXM-G1x support
-Date: Wed, 28 Oct 2026 17:56:34 +0100
-Message-ID: <20261028170013.866370175@linuxfoundation.org>
+Subject: [PATCH 5.15 248/571] USB: serial: option: add Quectel RG660QB
+Date: Wed, 28 Oct 2026 17:56:35 +0100
+Message-ID: <20261028170013.889908423@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -67,33 +67,291 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Lin <jisayme@gmail.com>
+From: Sebastian Sjoholm <sebastian.sjoholm@gmail.com>
 
-commit 7f11480cda081de78a05d8c97073df66326b50b3 upstream.
+commit 6177bcd94be83f80a032c2e69a06606d325335b9 upstream.
 
-The Compal EXM-G1x is a Qualcomm SDX12-based LTE modem. Add support for
-its vendor-specific serial interfaces with protocols 0x30, 0x40, and
-0x60.
+Add support for the Quectel RG660QB 5G module (USB ID 2c7c:013d).
+The interface layout is the same as the RG650V:
 
-Relevant output from usb-devices:
+  If 0: DIAG   ff/ff/30, 2 endpoints
+  If 1: NMEA   ff/00/00, 2 endpoints
+  If 2: AT     ff/00/00, 3 endpoints
+  If 3: Modem  ff/00/00, 3 endpoints
+  If 4: QMI    ff/ff/ff, 3 endpoints
 
-T:  Bus=04 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  4 Spd=5000 MxCh= 0
-D:  Ver= 3.20 Cls=ef(misc ) Sub=02 Prot=01 MxPS= 9 #Cfgs=  1
-P:  Vendor=04b7 ProdID=8217 Rev=05.04
-S:  Manufacturer=COMPAL
-S:  Product=EXM-G1x
-C:  #Ifs= 6 Cfg#= 1 Atr=a0 MxPwr=896mA
-I:  If#= 0 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
-I:  If#= 1 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=(none)
-I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=60 Driver=option
-I:  If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-I:  If#= 4 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=ff Driver=(none)
-I:  If#= 8 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=50 Driver=qmi_wwan
+Match the serial interfaces on class/subclass/protocol so that the QMI
+interface is left to qmi_wwan.
 
-Tested on a Compal EXM-G1x modem.
+  # lsusb -v -d 2c7c:013d
 
-Assisted-by: Codex:GPT-5
-Signed-off-by: Ian Lin <jisayme@gmail.com>
+  Bus 004 Device 002: ID 2c7c:013d Quectel Wireless Solutions Co., Ltd. RG660QB-EU
+  Device Descriptor:
+    bLength                18
+    bDescriptorType         1
+    bcdUSB               3.20
+    bDeviceClass            0
+    bDeviceSubClass         0
+    bDeviceProtocol         0
+    bMaxPacketSize0         9
+    idVendor           0x2c7c Quectel Wireless Solutions Co., Ltd.
+    idProduct          0x013d
+    bcdDevice            6.06
+    iManufacturer           1 Quectel
+    iProduct                2 RG660QB-EU
+    iSerial                 3 f50119d0
+    bNumConfigurations      1
+    Configuration Descriptor:
+      bLength                 9
+      bDescriptorType         2
+      wTotalLength       0x0105
+      bNumInterfaces          5
+      bConfigurationValue     1
+      iConfiguration          4 DIAG_SER_RMNET
+      bmAttributes         0xa0
+        (Bus Powered)
+        Remote Wakeup
+      MaxPower              896mA
+      Interface Descriptor:
+        bLength                 9
+        bDescriptorType         4
+        bInterfaceNumber        0
+        bAlternateSetting       0
+        bNumEndpoints           2
+        bInterfaceClass       255 Vendor Specific Class
+        bInterfaceSubClass    255 Vendor Specific Subclass
+        bInterfaceProtocol     48
+        iInterface              0
+        Endpoint Descriptor:
+          bLength                 7
+          bDescriptorType         5
+          bEndpointAddress     0x01  EP 1 OUT
+          bmAttributes            2
+            Transfer Type            Bulk
+            Synch Type               None
+            Usage Type               Data
+          wMaxPacketSize     0x0400  1x 1024 bytes
+          bInterval               0
+          bMaxBurst               0
+        Endpoint Descriptor:
+          bLength                 7
+          bDescriptorType         5
+          bEndpointAddress     0x81  EP 1 IN
+          bmAttributes            2
+            Transfer Type            Bulk
+            Synch Type               None
+            Usage Type               Data
+          wMaxPacketSize     0x0400  1x 1024 bytes
+          bInterval               0
+          bMaxBurst               0
+      Interface Descriptor:
+        bLength                 9
+        bDescriptorType         4
+        bInterfaceNumber        1
+        bAlternateSetting       0
+        bNumEndpoints           2
+        bInterfaceClass       255 Vendor Specific Class
+        bInterfaceSubClass      0
+        bInterfaceProtocol      0
+        iInterface              0
+        Endpoint Descriptor:
+          bLength                 7
+          bDescriptorType         5
+          bEndpointAddress     0x82  EP 2 IN
+          bmAttributes            2
+            Transfer Type            Bulk
+            Synch Type               None
+            Usage Type               Data
+          wMaxPacketSize     0x0400  1x 1024 bytes
+          bInterval               0
+          bMaxBurst               0
+        Endpoint Descriptor:
+          bLength                 7
+          bDescriptorType         5
+          bEndpointAddress     0x02  EP 2 OUT
+          bmAttributes            2
+            Transfer Type            Bulk
+            Synch Type               None
+            Usage Type               Data
+          wMaxPacketSize     0x0400  1x 1024 bytes
+          bInterval               0
+          bMaxBurst               0
+      Interface Descriptor:
+        bLength                 9
+        bDescriptorType         4
+        bInterfaceNumber        2
+        bAlternateSetting       0
+        bNumEndpoints           3
+        bInterfaceClass       255 Vendor Specific Class
+        bInterfaceSubClass      0
+        bInterfaceProtocol      0
+        iInterface              6 CDEV Serial
+        ** UNRECOGNIZED:  05 24 00 10 01
+        ** UNRECOGNIZED:  05 24 01 00 00
+        ** UNRECOGNIZED:  04 24 02 02
+        ** UNRECOGNIZED:  05 24 06 00 00
+        Endpoint Descriptor:
+          bLength                 7
+          bDescriptorType         5
+          bEndpointAddress     0x84  EP 4 IN
+          bmAttributes            3
+            Transfer Type            Interrupt
+            Synch Type               None
+            Usage Type               Data
+          wMaxPacketSize     0x000a  1x 10 bytes
+          bInterval               9
+          bMaxBurst               0
+        Endpoint Descriptor:
+          bLength                 7
+          bDescriptorType         5
+          bEndpointAddress     0x83  EP 3 IN
+          bmAttributes            2
+            Transfer Type            Bulk
+            Synch Type               None
+            Usage Type               Data
+          wMaxPacketSize     0x0400  1x 1024 bytes
+          bInterval               0
+          bMaxBurst               0
+        Endpoint Descriptor:
+          bLength                 7
+          bDescriptorType         5
+          bEndpointAddress     0x03  EP 3 OUT
+          bmAttributes            2
+            Transfer Type            Bulk
+            Synch Type               None
+            Usage Type               Data
+          wMaxPacketSize     0x0400  1x 1024 bytes
+          bInterval               0
+          bMaxBurst               0
+      Interface Descriptor:
+        bLength                 9
+        bDescriptorType         4
+        bInterfaceNumber        3
+        bAlternateSetting       0
+        bNumEndpoints           3
+        bInterfaceClass       255 Vendor Specific Class
+        bInterfaceSubClass      0
+        bInterfaceProtocol      0
+        iInterface              6 CDEV Serial
+        ** UNRECOGNIZED:  05 24 00 10 01
+        ** UNRECOGNIZED:  05 24 01 00 00
+        ** UNRECOGNIZED:  04 24 02 02
+        ** UNRECOGNIZED:  05 24 06 00 00
+        Endpoint Descriptor:
+          bLength                 7
+          bDescriptorType         5
+          bEndpointAddress     0x86  EP 6 IN
+          bmAttributes            3
+            Transfer Type            Interrupt
+            Synch Type               None
+            Usage Type               Data
+          wMaxPacketSize     0x000a  1x 10 bytes
+          bInterval               9
+          bMaxBurst               0
+        Endpoint Descriptor:
+          bLength                 7
+          bDescriptorType         5
+          bEndpointAddress     0x85  EP 5 IN
+          bmAttributes            2
+            Transfer Type            Bulk
+            Synch Type               None
+            Usage Type               Data
+          wMaxPacketSize     0x0400  1x 1024 bytes
+          bInterval               0
+          bMaxBurst               0
+        Endpoint Descriptor:
+          bLength                 7
+          bDescriptorType         5
+          bEndpointAddress     0x04  EP 4 OUT
+          bmAttributes            2
+            Transfer Type            Bulk
+            Synch Type               None
+            Usage Type               Data
+          wMaxPacketSize     0x0400  1x 1024 bytes
+          bInterval               0
+          bMaxBurst               0
+      Interface Descriptor:
+        bLength                 9
+        bDescriptorType         4
+        bInterfaceNumber        4
+        bAlternateSetting       0
+        bNumEndpoints           3
+        bInterfaceClass       255 Vendor Specific Class
+        bInterfaceSubClass    255 Vendor Specific Subclass
+        bInterfaceProtocol    255 Vendor Specific Protocol
+        iInterface              7 RmNet
+        Endpoint Descriptor:
+          bLength                 7
+          bDescriptorType         5
+          bEndpointAddress     0x88  EP 8 IN
+          bmAttributes            3
+            Transfer Type            Interrupt
+            Synch Type               None
+            Usage Type               Data
+          wMaxPacketSize     0x0008  1x 8 bytes
+          bInterval               9
+          bMaxBurst               0
+        Endpoint Descriptor:
+          bLength                 7
+          bDescriptorType         5
+          bEndpointAddress     0x87  EP 7 IN
+          bmAttributes            2
+            Transfer Type            Bulk
+            Synch Type               None
+            Usage Type               Data
+          wMaxPacketSize     0x0400  1x 1024 bytes
+          bInterval               0
+          bMaxBurst               6
+        Endpoint Descriptor:
+          bLength                 7
+          bDescriptorType         5
+          bEndpointAddress     0x05  EP 5 OUT
+          bmAttributes            2
+            Transfer Type            Bulk
+            Synch Type               None
+            Usage Type               Data
+          wMaxPacketSize     0x0400  1x 1024 bytes
+          bInterval               0
+          bMaxBurst               2
+  Binary Object Store Descriptor:
+    bLength                 5
+    bDescriptorType        15
+    wTotalLength       0x0023
+    bNumDeviceCaps          2
+    SuperSpeed USB Device Capability:
+      bLength                10
+      bDescriptorType        16
+      bDevCapabilityType      3
+      bmAttributes         0x00
+      wSpeedsSupported   0x000f
+        Device can operate at Low Speed (1Mbps)
+        Device can operate at Full Speed (12Mbps)
+        Device can operate at High Speed (480Mbps)
+        Device can operate at SuperSpeed (5Gbps)
+      bFunctionalitySupport   1
+        Lowest fully-functional device speed is Full Speed (12Mbps)
+      bU1DevExitLat           0 micro seconds
+      bU2DevExitLat           0 micro seconds
+    SuperSpeedPlus USB Device Capability:
+      bLength                20
+      bDescriptorType        16
+      bDevCapabilityType     10
+      bmAttributes         0x00000001
+        Sublink Speed Attribute count 1
+        Sublink Speed ID count 0
+      wFunctionalitySupport   0x1100
+      bmSublinkSpeedAttr[0]   0x000a4030
+        Speed Attribute ID: 0 10Gb/s Symmetric RX SuperSpeedPlus
+      bmSublinkSpeedAttr[1]   0x000a40b0
+        Speed Attribute ID: 0 10Gb/s Symmetric TX SuperSpeedPlus
+  Device Status:     0x0000
+    (Bus Powered)
+
+Tested with an early sample of the module on a Quectel 5G EVB connected
+over USB 3 to a Raspberry Pi 5.
+
+Assisted-by: LLM
+Signed-off-by: Sebastian Sjoholm <sebastian.sjoholm@gmail.com>
 Cc: stable@vger.kernel.org
 Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
@@ -103,15 +361,22 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
 --- a/drivers/usb/serial/option.c
 +++ b/drivers/usb/serial/option.c
-@@ -2434,6 +2434,9 @@ static const struct usb_device_id option
- 	  .driver_info = RSVD(5) },
- 	{ USB_DEVICE_INTERFACE_CLASS(0x0489, 0xe167, 0xff),                     /* Foxconn T99W640 MBIM */
- 	  .driver_info = RSVD(3) },
-+	{ USB_DEVICE_AND_INTERFACE_INFO(0x04b7, 0x8217, 0xff, 0xff, 0x30) },	/* Compal EXM-G1x */
-+	{ USB_DEVICE_AND_INTERFACE_INFO(0x04b7, 0x8217, 0xff, 0xff, 0x40) },
-+	{ USB_DEVICE_AND_INTERFACE_INFO(0x04b7, 0x8217, 0xff, 0xff, 0x60) },
- 	{ USB_DEVICE(0x1508, 0x1001),						/* Fibocom NL668 (IOT version) */
- 	  .driver_info = RSVD(4) | RSVD(5) | RSVD(6) },
- 	{ USB_DEVICE(0x1782, 0x4d10) },						/* Fibocom L610 (AT mode) */
+@@ -261,6 +261,7 @@ static void option_instat_callback(struc
+ #define QUECTEL_PRODUCT_EM060K_12a		0x012a
+ #define QUECTEL_PRODUCT_EM060K_12b		0x012b
+ #define QUECTEL_PRODUCT_EM060K_12c		0x012c
++#define QUECTEL_PRODUCT_RG660QB			0x013d
+ #define QUECTEL_PRODUCT_EG91			0x0191
+ #define QUECTEL_PRODUCT_EG95			0x0195
+ #define QUECTEL_PRODUCT_BG96			0x0296
+@@ -1277,6 +1278,8 @@ static const struct usb_device_id option
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_RM500K, 0xff, 0x00, 0x00) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_RG650V, 0xff, 0xff, 0x30) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_RG650V, 0xff, 0, 0) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_RG660QB, 0xff, 0xff, 0x30) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_RG660QB, 0xff, 0, 0) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_RG255C, 0xff, 0xff, 0x30) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_RG255C, 0xff, 0, 0) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_RG255C, 0xff, 0xff, 0x40) },
 
 
