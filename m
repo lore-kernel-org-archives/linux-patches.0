@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793208588;
-	b=nTROJIm9vJks84Om8M2DgtT7s/E7A/G7e7T3mEr1pd+To0wZ6L6LFtR4FbS90zzCa4kr
-	 Ph8mKO0juxvdldw0v7/2Gc/YPHkN1QbGj+IY2e3qslWXTPzKv0rgdv/k9ZaeDQArgBQow
-	 7iw5Nbtd6j/vMJmKh5FuD/0/0BcXghQUTR4JX+3d/9kU4VnSx3cp9bGeqLibZ7QDdck3T
-	 6Y0RVDmFqWqzWOI9Ut4RZCTYAgjbCPndMo5TH9kZt7XAdmo3v7wD3/i3Fs4qUcf2dZ3Qe
-	 2hJlvDGwmmdr7ducz+1lXwxmEcBL7VRlPYnwmmUHQXvyVnzNa4s7z73T+iz0JH8c55Q==
+	t=1793208590;
+	b=UfCLYv+vBgTattlHWUsK9jA3gtYYikeNpa429/dSuZBTHFsTuL08D9G7ve/YlvBIub64
+	 rM98yebX7kM6qdqIPd8L7BPXRVW1b3GpIIDk19b0xtUJnHvz56BiFnjnMUyHCo2BO2QrU
+	 zw2XjXOcYU67QySkWbiRoogQFvPHGcez+uc5xMSXJwQKB96PmOfPhfT+adfl8c9PZfi9C
+	 +wtEu6LE208mTzeiSWYxhEpcVv5rb7fFnfhMnhruLrfytMmLSXcvOm+4GiwHrB3JpmxpE
+	 lEQvRNGaUOQcR7QYEWczdeSEqzhod3RttLJUYqjsdD9HSOrtDLZm9PRGLzZ2GMNIahA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793208588;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793208590;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=uhqrB99moITuYV8nE3jZL0dAMo3x+5fyY/hRT670+zg=;
-	b=lRmkvcGmKn87PtispXdqntz2hpRyGLF9HflNVRoZgElc98OwIcdRT/bHpfFdiUnzEfNo
-	 1wig0Ov7KBvpIZ4fmYNVqib6uhMxSoaZ7BwDKvccqs2HECYw+FPJ4eU7ARGHZj7u/52yq
-	 uK682rmDdIhnHnksyZGPD+Nz+zirYhRxSFWmVM5Qdb4w9hVwYPsTfJwxA1i3mUuHthS4O
-	 UngQaDXPEoFJI+BRhs5sjHvJ2Oy+zdJwH8/qcd3mefOKN6NrDGd5QikQLwFhUcq695BYA
-	 TkOo5uKmsSxDOvW9bUFNYdc9mGsecCAvzL/eqe3l2Ye5/pi3axzIOvTZ5quc+gZyLmw==
+	bh=UMLcuP/29Kv3gmTFf+j5iuw0fqjKXb1/jOR0zDig1ws=;
+	b=cH2caetUuYP0eLYvzsEn72mUNjEKk7umK3HhSpCGEXK7FcAYrMFjZDcQp5a5wWHjCQHi
+	 tQUOGCV8yAyMF/PEQn9gCXDVvb5RxFjh330b2BDzAnyjZUfv3gFidVZ/jg/alXqNSvEPV
+	 QNndJ4ouWujUsBjm0f/RVWNKY4VveCzkuYAp/9Vt3gC48855OdPV+0tqftGBT1tIeJc/5
+	 HW0dMC0SPkYzCZphd/21cDQz8Vx73GVM1wszoXHhg+29xA9QVit29c5YSBHr4s+US74jv
+	 8EiJuBaWQjnQdyqnp24e4VKQVU4oRrsrr27huaf1X/QeGMP6oPmeQBodluXIZ9QZmwQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PDkx7Mh6;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dBfm27HS;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF064606A31A;
-	Wed, 28 Oct 2026 17:29:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F0EC606A31A;
+	Wed, 28 Oct 2026 17:29:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PDkx7Mh6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D7111F01825;
-	Wed, 28 Oct 2026 17:29:46 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dBfm27HS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E227E1F01828;
+	Wed, 28 Oct 2026 17:29:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793208587;
-	bh=uhqrB99moITuYV8nE3jZL0dAMo3x+5fyY/hRT670+zg=;
+	s=korg; t=1793208590;
+	bh=UMLcuP/29Kv3gmTFf+j5iuw0fqjKXb1/jOR0zDig1ws=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PDkx7Mh6kk46UdXuqnCfZkzqXacdGHjDfhvyR+H8AStvBDtTK8cnl4tzImEdtzp3H
-	 vRkkjfBFlesKEYa7WhniYjNr/yANfUvqtN/xG4ZFCcUTJ9yOK6fJQcJae1w9NuBR+B
-	 4Cu6aeXTFRaNCKfFmid9N9mOi7qNvbKsdbPmKyDE=
+	b=dBfm27HSENxnA67fa238I4t9AOCH7sc/TYvYSuHwYUuSAD7o8bpUk4ThJjc5F0wUe
+	 sHCK9WK4WuEs8CKz2rsx2TVsCf+U9q7xMwOt5mw/vN6nFuJ2rgs+UI+Y2dYSHUXhVd
+	 qq4WtUEQGRx7MQxfVM+oae3X3e1esIQAYIEQUEfI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Jo <jeffjo@openai.com>,
-	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Julian Anastasov <ja@ssi.bg>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 171/516] tcp: refresh TS.Recent for accepted old ACKs
-Date: Wed, 28 Oct 2026 17:55:23 +0100
-Message-ID: <20261028170007.557038929@linuxfoundation.org>
+Subject: [PATCH 5.10 172/516] ipvs: fix missing counter decrement in lblc
+Date: Wed, 28 Oct 2026 17:55:24 +0100
+Message-ID: <20261028170007.581260171@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -69,60 +68,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeff Jo <jeffjo@openai.com>
+From: Julian Anastasov <ja@ssi.bg>
 
-[ Upstream commit 1b92780ae4fc3be64f05d97ed8833c445e73b0cf ]
+[ Upstream commit bdac17779f46817f60103baf09f0370546c3f023 ]
 
-A TCP packet can carry new data while acknowledging traffic in the
-opposite direction. With overlapping traffic in both directions, a
-delayed packet's acknowledgment can be older than one Linux has already
-accepted, even when that packet fills a gap in the received data.
+LBLC may delete cache entries for destinations that are
+removed or overloaded and replace them with available ones.
+But ip_vs_lblc_new() forgets to decrement the tbl->entries
+counter after calling ip_vs_lblc_del(). This can lead to
+increased shrinking of the cache with every new garbage
+collection.
 
-Linux accepts the data, but tcp_ack() takes the old_ack path and skips
-updating TS.Recent, the timestamp saved for outgoing acknowledgments.
-The reply therefore echoes an older timestamp. If the sender uses this
-echo to measure round-trip time after a long idle period, its estimate
-includes the idle time and can reduce its sending rate.
-
-Update TS.Recent in old_ack using tcp_replace_ts_recent(), before SACK
-processing can trigger a transmission. This reuses the existing timestamp
-and sequence checks, including PAWS protection against old duplicate
-packets. ACK validation already rejects old ACKs in SYN_RECV before this
-path, so no additional state check is needed.
-
-Echoing the timestamp of the packet that fills the receive gap follows
-RFC 7323 section 4.3. In a socket reproduction with 300 seconds idle,
-controlled reordering and retransmission to exercise timestamp-based RTT
-sampling, the sender's smoothed round-trip time was 37.5 seconds without
-the fix and 15.5 ms with it.
-
-Fixes: 12fb3dd9dc3c ("tcp: call tcp_replace_ts_recent() from tcp_ack()")
-Assisted-by: LLM sparse
-Signed-off-by: Jeff Jo <jeffjo@openai.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 2f3d771a35fe ("ipvs: do not use dest after ip_vs_dest_put in LBLC")
+Link: https://sashiko.dev/#/patchset/0bdd5abe9968ded7ca2b9cb6844ba83d94cc8d53.1787318053.git.zhilinz%40nebusec.ai
+Signed-off-by: Julian Anastasov <ja@ssi.bg>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_input.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ net/netfilter/ipvs/ip_vs_lblc.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
-index 43b718dd9583b..111d582dbba3b 100644
---- a/net/ipv4/tcp_input.c
-+++ b/net/ipv4/tcp_input.c
-@@ -3976,6 +3976,12 @@ static int tcp_ack(struct sock *sk, const struct sk_buff *skb, int flag)
- 	return 1;
- 
- old_ack:
-+	/* An old ACK can carry new data. Update TS.Recent before SACK
-+	 * processing can trigger a retransmission.
-+	 */
-+	if (flag & FLAG_UPDATE_TS_RECENT)
-+		tcp_replace_ts_recent(tp, TCP_SKB_CB(skb)->seq);
-+
- 	/* If data was SACKed, tag it and see if we should send more data.
- 	 * If data was DSACKed, see if we can undo a cwnd reduction.
- 	 */
+diff --git a/net/netfilter/ipvs/ip_vs_lblc.c b/net/netfilter/ipvs/ip_vs_lblc.c
+index e2480f33a1963..9b0832f56f14e 100644
+--- a/net/netfilter/ipvs/ip_vs_lblc.c
++++ b/net/netfilter/ipvs/ip_vs_lblc.c
+@@ -205,6 +205,7 @@ ip_vs_lblc_new(struct ip_vs_lblc_table *tbl, const union nf_inet_addr *daddr,
+ 		if (en->dest == dest)
+ 			return en;
+ 		ip_vs_lblc_del(en);
++		atomic_dec(&tbl->entries);
+ 	}
+ 	en = kmalloc(sizeof(*en), GFP_ATOMIC);
+ 	if (!en)
 -- 
 2.53.0
 
