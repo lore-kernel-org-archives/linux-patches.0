@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793211129;
-	b=1zkRb9DHRFBqryzBwiUtbq6UAtEAV/WlK8C7rovBYyCMGXR+IIbOlpB4tmwcsmHWVQlr
-	 VdODH9xyGhf+yqtzN4VQTq/XSXNzg2BOKhqDt5jMlR/fkTkulW3x9zTXZCHopWKtCrrVK
-	 1pAkDIB9aSDKwaSen/KCIr9Q8m6b0rhqyRQXsiaC1qQhFxg3ZjDRw2mP4PniiRWPQuDqB
-	 4MgR2lQw51sxh6vwWQGkdl/96N4VRm1rn3q1XBbbTRD/U1oiC66Y9bZU40EJz6EC3ouJM
-	 +Yalmd/UgdkdKXOAnbdt/esC4iO5sa/jxpC2wAlIyBUa+10h8PlN9snCcWEol+jt2uA==
+	t=1793211132;
+	b=IX9i4iASKCTtgfVvez6tykNfbpr3Enm8BJRVV9br7bZFIqByLa3nOs3XSOs2L3HsQceu
+	 1BDla22EhzEupizWXLCZXbfLxvrl90lcjMOpK/yRph1qSvUtnHh7Uh5VfGWMLBq7ZSC4e
+	 XmCLSjivZ8FYfuRJNcUXREKzOEmIdEJM2nT0/VGyLHBzaEcs+0wm/Mfj/sPIN+aAfEgis
+	 2r5er6f3aex2Kjj1Ex86925thYpc2FGhN/6qiW8jY4+K459bnZ/Kkc1QecclaukFm22RU
+	 R9Rus9sGHoNQyxBbf6dj/RvirKEjj2Hxou8hOLTPL7P7A2Snf7a4S0eLe/gQ5GQz4KA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793211129;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793211132;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=sSDQSIz4KIc4b7XA8WkttAD2UNgCT7Syi3SPrR4GegY=;
-	b=FQZ6CcejRLc40YjWd3wjGsgYAzFlwaOEHslhi27KMbUmxW8cpQSTiA1MZ1ud6IL3xriv
-	 WLC47Bm4IRpC1ZBDIaOxFvdwt1s1b/ONeG9dW0b58s0A1j/AmCNUUucH8/FvEHoYEOxYw
-	 SQtF6o2PL1teDVc2tWa3xar9nXTPypx7FUvpFVO7N85rnlTFj9WTvY89khxqT9cS5aiMW
-	 BG/MlDDnGR8FnUHYt675SlFYgHK8PhafuAeqWTeVcB46IObPgjEPQNgoUZ9eyaYq1fFBw
-	 L1HWCggxcqGzww//2dpAEuPBhTjpiZ8uBgOW0HrzvX/Cc0meEhtasdwXGVV5ZPrHr8g==
+	bh=iMxKPgIZXcRvq9UCs9fgz/Z+4VO7/pFaJlvXZcHEN3E=;
+	b=OnTEsfyOTgTKLdGr0XS5FUB0PZmLZNzrcNRA5AZWj5cBz8fd3sQVsR/Z/IEabdKj44A4
+	 byut63jAbrA8u63FWDEFxXXgOXZ2dP8WRpVs5Jki2m1JyVZnaJ8Wh+RQTdE3GSEx/aQ6/
+	 8PUEjd2H8VYNkV+PPLPAQwPeqB+TMUwq0JclVJHScQX0EqMoY2m6p/GVVM1kRgrLKjxnY
+	 OHGpy1GV+1NwXrbkr979B+ggjTR8Pz0T/rdoasIsgXfBAazYwtcy2/oNtnI/oXc/WlgTA
+	 KlKcLOPOdgoBjI7caIQWNUbtGLoXr8m193euiAwnYYd6/mCp00JMPTkE62dIi+cqung==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jioT50aU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ECRQ4FoB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6B43606B44D;
-	Wed, 28 Oct 2026 18:12:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C844F606B461;
+	Wed, 28 Oct 2026 18:12:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jioT50aU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EE621F01828;
-	Wed, 28 Oct 2026 18:12:08 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ECRQ4FoB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 107E71F01829;
+	Wed, 28 Oct 2026 18:12:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793211128;
-	bh=sSDQSIz4KIc4b7XA8WkttAD2UNgCT7Syi3SPrR4GegY=;
+	s=korg; t=1793211131;
+	bh=iMxKPgIZXcRvq9UCs9fgz/Z+4VO7/pFaJlvXZcHEN3E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jioT50aU6sJwJaCNSS+sEnGAtp7xjfTlMpdtSt9UakdlcwpN93uaEd8i3LelU9DWT
-	 Hs5+a3MwEQ6+/PnfFDN7gdSQDYiD9lC852sPVDWPoGrNTRS5WeiH3/VBMnbPaLHXeq
-	 bXr+H0UJ7Bjq1mCwhwjsvtxqPfchkfCJiAXmq2nY=
+	b=ECRQ4FoB9E1Gq/+Vp0dojXmZBQnFJAZs4Eiy6WlS12Kw0XhFJAXiS9FhC43llp8I9
+	 2xFfxs1gI7EOZ/lS0gfZwehQhezHT5P68BwyzYE43H/6sfhFdJhlEjRgiW0gCYqOuQ
+	 b1pL9f2PgvwM4EcYvdGGMTceEWre+zKCi1RVfydo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Asad Kamal <asad.kamal@amd.com>,
-	Lijo Lazar <lijo.lazar@amd.com>,
-	Yang Wang <kevinyang.wang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Chris Mason <clm@meta.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 267/571] drm/amd/powerplay: fix VoltageObjectInfo zero-stride loop and OOB read
-Date: Wed, 28 Oct 2026 17:56:54 +0100
-Message-ID: <20261028170014.339857844@linuxfoundation.org>
+Subject: [PATCH 5.15 268/571] SUNRPC: fix gssx_dec_option_array error path bugs
+Date: Wed, 28 Oct 2026 17:56:55 +0100
+Message-ID: <20261028170014.362920058@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -70,83 +69,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Asad Kamal <asad.kamal@amd.com>
+From: Chris Mason <clm@meta.com>
 
-[ Upstream commit 5d3cc8e388464f485d0944b87b8f9426e637d082 ]
+[ Upstream commit 5e9a94539b1ec17a89177d952badfd0d844d694a ]
 
-Reject voltage objects whose usSize is smaller than the header or would
-advance the cursor past the table end, preventing an infinite loop or
-heap OOB read when the VBIOS supplies a malformed VoltageObjectInfo table.
+Four coupled defects in the gssx XDR option-array decoder make the
+error paths unsafe: a NULL deref in the caller, a refcount leak on
+the decoded group_info, and a latent use-after-free that the leak
+fix would otherwise expose.
 
-Fixes: c82baa281843 ("drm/amd/powerplay: add Tonga dpm support (v3)")
-Fixes: 0d2c7569e196 ("drm/amdgpu: add new atomfirmware based helpers for powerplay")
-Signed-off-by: Asad Kamal <asad.kamal@amd.com>
-Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
-Reviewed-by: Yang Wang <kevinyang.wang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+gssx_dec_option_array() sets oa->count = 1 before allocating
+oa->data.  If that allocation fails, -ENOMEM is returned with
+oa->count == 1 and oa->data == NULL.  All other error paths jump
+to free_oa: which frees oa->data and NULLs it but also leaves
+oa->count == 1.  The caller trusts the count:
+
+    gssp_accept_sec_context_upcall()
+      gssx_dec_accept_sec_context()
+        gssx_dec_option_array()        /* fails, count=1 data=NULL */
+      data = res.options.data[0].value /* NULL deref */
+
+Independently, free_creds: releases the partially decoded svc_cred
+with a bare kfree(creds).  gssx_dec_linux_creds() installs a
+groups_alloc() result into creds->cr_group_info; that object is
+kvmalloc-backed and refcounted, and only put_group_info() reaches
+kvfree().  A plain kfree(creds) drops the wrapper and leaks the
+group_info allocation.
+
+The natural fix for the leak is to call free_svc_cred(creds) before
+kfree(creds), but free_svc_cred() invokes put_group_info() on
+creds->cr_group_info unconditionally when non-NULL.  The existing
+out_free_groups: path in gssx_dec_linux_creds() already called
+groups_free() on that pointer without clearing it, so once
+free_svc_cred() is wired in, the subsequent put_group_info() would
+touch freed memory.
+
+Fix all four together:
+
+  - Move the oa->count = 1 assignment below the oa->data allocation
+    so it is never set when oa->data is NULL.
+  - Reset oa->count to 0 at free_oa: so count and data stay
+    coherent and the caller sees an empty option array.
+  - Call free_svc_cred(creds) before kfree(creds) at free_creds:
+    so the refcounted cr_group_info is released.  free_svc_cred()
+    either NULL-guards each field explicitly (cr_group_info has
+    an if() check) or delegates to a helper that is NULL-safe
+    itself (kfree for the string fields, gss_mech_put() which
+    guards with if(gm) at gss_mech_switch.c:342), so it is safe
+    to call on a partially decoded svc_cred where only
+    cr_uid/cr_gid/cr_group_info have been written and everything
+    else is zero from kzalloc.
+  - In gssx_dec_linux_creds()'s out_free_groups: path, release
+    cr_group_info with put_group_info() rather than groups_free()
+    so the teardown matches free_svc_cred()'s refcount-aware path,
+    and clear the pointer so a later free_svc_cred() on the same
+    creds does not release it a second time.
+
+Fixes: 3cfcfc102a5e ("SUNRPC: fix some memleaks in gssx_dec_option_array")
+Cc: stable@vger.kernel.org
+Assisted-by: kres (claude-opus-4-7)
+Signed-off-by: Chris Mason <clm@meta.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Link: https://patch.msgid.link/20260528-tier2-v1-2-d026a1415e0b@oracle.com
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppatomctrl.c   | 10 ++++++++--
- drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppatomfwctrl.c | 11 ++++++++---
- 2 files changed, 16 insertions(+), 5 deletions(-)
+ net/sunrpc/auth_gss/gss_rpc_xdr.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppatomctrl.c b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppatomctrl.c
-index 7e37354a03411..640350bbd9085 100644
---- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppatomctrl.c
-+++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppatomctrl.c
-@@ -269,15 +269,21 @@ static const ATOM_VOLTAGE_OBJECT_V3 *atomctrl_lookup_voltage_type_v3(
- 	unsigned int offset = offsetof(ATOM_VOLTAGE_OBJECT_INFO_V3_1, asVoltageObj[0]);
- 	uint8_t *start = (uint8_t *)voltage_object_info_table;
+diff --git a/net/sunrpc/auth_gss/gss_rpc_xdr.c b/net/sunrpc/auth_gss/gss_rpc_xdr.c
+index ee91f4d641e6f..ac9ae42a69762 100644
+--- a/net/sunrpc/auth_gss/gss_rpc_xdr.c
++++ b/net/sunrpc/auth_gss/gss_rpc_xdr.c
+@@ -222,7 +222,8 @@ static int gssx_dec_linux_creds(struct xdr_stream *xdr,
  
--	while (offset < size) {
-+	while (offset + sizeof(ATOM_VOLTAGE_OBJECT_HEADER_V3) <= size) {
- 		const ATOM_VOLTAGE_OBJECT_V3 *voltage_object =
- 			(const ATOM_VOLTAGE_OBJECT_V3 *)(start + offset);
-+		u16 obj_size;
-+
-+		obj_size = le16_to_cpu(voltage_object->asGpioVoltageObj.sHeader.usSize);
-+		if (obj_size < sizeof(voltage_object->asGpioVoltageObj.sHeader) ||
-+		    offset + obj_size > size)
-+			break;
+ 	return 0;
+ out_free_groups:
+-	groups_free(creds->cr_group_info);
++	put_group_info(creds->cr_group_info);
++	creds->cr_group_info = NULL;
+ 	return err;
+ }
  
- 		if (voltage_type == voltage_object->asGpioVoltageObj.sHeader.ucVoltageType &&
- 			voltage_mode == voltage_object->asGpioVoltageObj.sHeader.ucVoltageMode)
- 			return voltage_object;
+@@ -242,12 +243,12 @@ static int gssx_dec_option_array(struct xdr_stream *xdr,
+ 		return 0;
  
--		offset += le16_to_cpu(voltage_object->asGpioVoltageObj.sHeader.usSize);
-+		offset += obj_size;
- 	}
- 
- 	return NULL;
-diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppatomfwctrl.c b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppatomfwctrl.c
-index a47a47238e2b9..e5aa787182025 100644
---- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppatomfwctrl.c
-+++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppatomfwctrl.c
-@@ -36,16 +36,21 @@ static const union atom_voltage_object_v4 *pp_atomfwctrl_lookup_voltage_type_v4(
- 			offsetof(struct atom_voltage_objects_info_v4_1, voltage_object[0]);
- 	unsigned long start = (unsigned long)voltage_object_info_table;
- 
--	while (offset < size) {
-+	while (offset + sizeof(struct atom_voltage_object_header_v4) <= size) {
- 		const union atom_voltage_object_v4 *voltage_object =
- 			(const union atom_voltage_object_v4 *)(start + offset);
-+		u16 obj_size;
-+
-+		obj_size = le16_to_cpu(voltage_object->gpio_voltage_obj.header.object_size);
-+		if (obj_size < sizeof(voltage_object->gpio_voltage_obj.header) ||
-+		    offset + obj_size > size)
-+			break;
- 
- 		if (voltage_type == voltage_object->gpio_voltage_obj.header.voltage_type &&
- 		    voltage_mode == voltage_object->gpio_voltage_obj.header.voltage_mode)
- 			return voltage_object;
- 
--		offset += le16_to_cpu(voltage_object->gpio_voltage_obj.header.object_size);
+ 	/* we recognize only 1 currently: CREDS_VALUE */
+-	oa->count = 1;
 -
-+		offset += obj_size;
- 	}
+ 	oa->data = kmalloc(sizeof(struct gssx_option), GFP_KERNEL);
+ 	if (!oa->data)
+ 		return -ENOMEM;
  
- 	return NULL;
++	oa->count = 1;
++
+ 	creds = kzalloc(sizeof(struct svc_cred), GFP_KERNEL);
+ 	if (!creds) {
+ 		err = -ENOMEM;
+@@ -294,8 +295,10 @@ static int gssx_dec_option_array(struct xdr_stream *xdr,
+ 	return 0;
+ 
+ free_creds:
++	free_svc_cred(creds);
+ 	kfree(creds);
+ free_oa:
++	oa->count = 0;
+ 	kfree(oa->data);
+ 	oa->data = NULL;
+ 	return err;
 -- 
 2.53.0
 
