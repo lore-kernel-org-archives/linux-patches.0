@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793210085;
-	b=Indmgv3eR59PP9q7mP4eA+ycQQKAxYpMmuHMWOJT+P6a/OgYT5AMaGUW4314tXWkFdNP
-	 vBwKk04vlNyUSuIRGfjUHhdgzRn1GmPAUzKcEvO6rYVYF6UOl0ygQX5x6O6U9LrYJdWsE
-	 LlPsCH1gJ0FlgNUB9epA/zQYDmCFi5rh3v+bLuHeOb4IzoWE8kxFRgkwN0qOwqOo4oPRI
-	 U2oUQUPZCVNXWHuzNRgqNRR2mVip7ghvI06dO3GWp5RgYlshu34j+I4p5y/5qLib7176e
-	 x0P3+4MCEW7ahFMFAzflB1NqSN6YZwD1D16UIFe26V9K8KGJQya1BysfRCduuPIl3kQ==
+	t=1793210088;
+	b=povR/PoPP+tzSP3QfsPfiTIfxF7gC6m7cwzPiPj/2SjzY8Jt7PsCk1fOwNRff+0c3yPD
+	 6RaDGyRkIfwvk5Acv8vLjzLwU4ukPZbYgDmmAOPLemd27q/CyyZOYfLy42gjJKIdsD9Ej
+	 nYCsdy/HaFJVO65xZW5GnmQ6vDvEW7gJx1/uQ9Mt50/t00ZFvX/JxaKd4PHh9mDE5ucs3
+	 XfoSH7+vLq6kVGbKOSU9eF5dbx7kGE/FwK8RxPpM+gs0/q3o7S09FkW3yn6SGXXnleexL
+	 mmBugoEpqfW49wqohN6bS3JN+CCG8R7QXRYiKNjWHcISGfTFpaFLSjaGZxNueWW1OVg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793210085;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793210088;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=r2SVYRQBSXTzQxxmwRSzS/ORlIs4QWDD4h8HEU/x5/M=;
-	b=KR+b6iLkpjS68QPDecYDjAZGrBStnEXn/r2i/Mn1IbWy56mqaSkMG9ozJRRNE+BXabgk
-	 yHuJm/s6RvDtQc1FPX/pdYfe+R8ZmNOtY7+wQM1VxgDPhBjCwfFJfzN3yvoG0iDsK7fb9
-	 UOQUxjOKofopsALnYntloV/y7/jjcM4UOGhH0JFcDiRFO6TqyrPDr2aIGccWJS9vNw35l
-	 KHAvTPoj1xzIGBVskMm81oGoooh0CRlj+alJgeli0a8mMWL7BkaKNxogUz8vSlE0bqE4q
-	 mKgYSD9on1YSYSYHZXvZjmKid42NN1RV93sWTsajVMggM6RrtLLQ9BcR78lWwOOdICA==
+	bh=X/O/JkDXvD+jpLvgrZTYhHcEpZn8Q+NpJ12ryP5kre0=;
+	b=EyaPcCZN77YFdf1UXlK1UNnKvYmwAk9ny9QLwX/ynIwFqI00Ql3b0Eo6aQaqdzTrJDuD
+	 NSaQ41HPqzQgaWpvVA17J12gSrzc3xlESKd5qsw48BvGYSx0Y6dwZNEaQ385g9aUpnHSr
+	 aEJkr2zteN/CPUkYnstIG/Ernf7DZHO/4YF37FX7TjgXSmKbN1HKtkq+Xl4OwpvooKksC
+	 AvH0NP8wj0hNJXpjakiUPAWr0GK+VzgE0oXoPk/zeOS3fP06EPJ+Tp8lDhqkYYUHJNAJk
+	 /QUjV3K87QWQuxG6540Jroi83AbnOJ/ZLc8bQijbyOLqcyLZxlSwWvXYBqOQcNrzNcA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jXVJfU9I;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wxQH7FyP;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1EE5606A337;
-	Wed, 28 Oct 2026 17:54:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6FB3606A31A;
+	Wed, 28 Oct 2026 17:54:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jXVJfU9I
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F52F1F01828;
-	Wed, 28 Oct 2026 17:54:44 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wxQH7FyP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 257991F01825;
+	Wed, 28 Oct 2026 17:54:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793210084;
-	bh=r2SVYRQBSXTzQxxmwRSzS/ORlIs4QWDD4h8HEU/x5/M=;
+	s=korg; t=1793210087;
+	bh=X/O/JkDXvD+jpLvgrZTYhHcEpZn8Q+NpJ12ryP5kre0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jXVJfU9Ix3oQPLlOeoBahF/pZmAO4TPYI1QJN4IfRRUm7G8M0hV/llIZo0752/7EJ
-	 FLw5J1gL+6nGVkEh7gcjrtYrtn+RV2vgghF/Eg8vLt+26y8sm18oOdgpga7MVjTijn
-	 OgkO2Kpykpy7Z1aI+mO9hOJve/xkphx6r+wmS3Qg=
+	b=wxQH7FyPsrFsXAHSNWsQ0gDvUv9AE/Mm2PLC2zq9o0AIgki6WeA+fuwjAneukZezE
+	 1zQqicbGN5rmp3rteOeFodeaa8azayJUgB556FfIzaIygVlf4rBfD2iA6YhYTSwwMh
+	 dVZFA5zEppbSNmO0QsNwfPJmfCaLbivLkmzpHp5M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Genjian Zhang <zhanggenjian@kylinos.cn>,
-	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 6.6 071/168] dm-ebs: fix incorrect device offset check in ebs_ctr()
-Date: Wed, 28 Oct 2026 18:00:07 +0100
-Message-ID: <20261028165944.767326189@linuxfoundation.org>
+	Aswin Karuvally <aswin@linux.ibm.com>,
+	Bryam Vargas <hexlabsecurity@proton.me>,
+	Alexandra Winter <wintera@linux.ibm.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 072/168] net/iucv: fix the recvmsg window update
+Date: Wed, 28 Oct 2026 18:00:08 +0100
+Message-ID: <20261028165944.790182073@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165943.089486480@linuxfoundation.org>
 References: <20261028165943.089486480@linuxfoundation.org>
@@ -67,39 +69,118 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Genjian Zhang <zhanggenjian@kylinos.cn>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-commit 7ac81e2d2240f2c57bd073b0733e0b2abca38e82 upstream.
+commit fa5acd038ea657ad5033713d6916214cbd349151 upstream.
 
-<offset> is a backing-device sector offset; ti->len is the virtual
-target length. Comparing them rejects valid tables, e.g.:
+iucv_sock_recvmsg() sends the HiperSockets-only AF_IUCV_FLAG_WIN without
+testing the transport, so on a classic z/VM socket iucv_send_ctrl() sizes
+the skb through a NULL iucv->hs_dev. SO_MSGLIMIT accepts 1, so msglimit / 2
+is zero and one recvmsg() on its own socket is enough for an unprivileged
+process to take a spurious disconnect.
 
-  dmsetup create ebs0 --table "0 1048576 ebs /dev/sda 2097152 1 8"
-  -> ebs: Invalid device offset sector (-EINVAL)
+It also calls iucv_send_ctrl() under spin_lock_bh(&message_q.lock), which
+allocates GFP_KERNEL inside a section the code treats as atomic. Sending
+outside that lock lets two recvmsg() reach afiucv_hs_send() at once, where
+msg_recv is sampled for the advertised window and subtracted after
+dev_queue_xmit() -- and sendmsg reaches that counter under lock_sock()
+while recvmsg holds no socket lock, so both can subtract the same value,
+the counter goes negative and the credit reaches the peer twice.
 
-Drop the check. Bounds against the backing device are already
-enforced later by device_area_is_invalid() via ebs_iterate_devices().
+Test the transport, claim the credit with atomic_xchg() after the last
+error exit and hand it back if the transmit fails, and send once the lock
+is dropped.
 
+Fixes: 3881ac441f64 ("af_iucv: add HiperSockets transport")
+Fixes: 238965b71b96 ("net/af_iucv: build proper skbs for HiperTransport")
 Cc: stable@vger.kernel.org
-Fixes: d3c7b35c20d6 ("dm: add emulated block size target")
-Signed-off-by: Genjian Zhang <zhanggenjian@kylinos.cn>
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Tested-by: Aswin Karuvally <aswin@linux.ibm.com>
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Reviewed-by: Alexandra Winter <wintera@linux.ibm.com>
+Link: https://patch.msgid.link/20260828-b4-disp-33fac0ed-v3-1-e6d061880ee0@proton.me
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-ebs-target.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ net/iucv/af_iucv.c |   42 +++++++++++++++++++++++++-----------------
+ 1 file changed, 25 insertions(+), 17 deletions(-)
 
---- a/drivers/md/dm-ebs-target.c
-+++ b/drivers/md/dm-ebs-target.c
-@@ -265,8 +265,7 @@ static int ebs_ctr(struct dm_target *ti,
- 
- 	r = -EINVAL;
- 	if (sscanf(argv[1], "%llu%c", &tmp, &dummy) != 1 ||
--	    tmp != (sector_t)tmp ||
--	    (sector_t)tmp >= ti->len) {
-+	    tmp != (sector_t)tmp) {
- 		ti->error = "Invalid device offset sector";
- 		goto bad;
+--- a/net/iucv/af_iucv.c
++++ b/net/iucv/af_iucv.c
+@@ -207,12 +207,6 @@ static int afiucv_hs_send(struct iucv_me
+ 	phs_hdr->flags = flags;
+ 	if (flags == AF_IUCV_FLAG_SYN)
+ 		phs_hdr->window = iucv->msglimit;
+-	else if ((flags == AF_IUCV_FLAG_WIN) || !flags) {
+-		confirm_recv = atomic_read(&iucv->msg_recv);
+-		phs_hdr->window = confirm_recv;
+-		if (confirm_recv)
+-			phs_hdr->flags = phs_hdr->flags | AF_IUCV_FLAG_WIN;
+-	}
+ 	memcpy(phs_hdr->destUserID, iucv->dst_user_id, 8);
+ 	memcpy(phs_hdr->destAppName, iucv->dst_name, 8);
+ 	memcpy(phs_hdr->srcUserID, iucv->src_user_id, 8);
+@@ -247,13 +241,22 @@ static int afiucv_hs_send(struct iucv_me
  	}
+ 	skb->protocol = cpu_to_be16(ETH_P_AF_IUCV);
+ 
++	/* Claim the receive credit here, not while building the header: every
++	 * way this frame can be dropped has now been ruled out, so the window
++	 * is zeroed only for as long as the transmit itself takes.
++	 */
++	if (flags == AF_IUCV_FLAG_WIN || !flags) {
++		confirm_recv = atomic_xchg(&iucv->msg_recv, 0);
++		phs_hdr->window = confirm_recv;
++		if (confirm_recv)
++			phs_hdr->flags = phs_hdr->flags | AF_IUCV_FLAG_WIN;
++	}
++
+ 	atomic_inc(&iucv->skbs_in_xmit);
+ 	err = dev_queue_xmit(skb);
+ 	if (net_xmit_eval(err)) {
+ 		atomic_dec(&iucv->skbs_in_xmit);
+-	} else {
+-		atomic_sub(confirm_recv, &iucv->msg_recv);
+-		WARN_ON(atomic_read(&iucv->msg_recv) < 0);
++		atomic_add(confirm_recv, &iucv->msg_recv);
+ 	}
+ 	return net_xmit_eval(err);
+ 
+@@ -1239,6 +1242,7 @@ static int iucv_sock_recvmsg(struct sock
+ 	struct iucv_sock *iucv = iucv_sk(sk);
+ 	unsigned int copied, rlen;
+ 	struct sk_buff *skb, *rskb, *cskb;
++	bool send_win = false;
+ 	int err = 0;
+ 	u32 offset;
+ 
+@@ -1329,16 +1333,20 @@ static int iucv_sock_recvmsg(struct sock
+ 		if (skb_queue_empty(&iucv->backlog_skb_q)) {
+ 			if (!list_empty(&iucv->message_q.list))
+ 				iucv_process_message_q(sk);
+-			if (atomic_read(&iucv->msg_recv) >=
+-							iucv->msglimit / 2) {
+-				err = iucv_send_ctrl(sk, AF_IUCV_FLAG_WIN);
+-				if (err) {
+-					sk->sk_state = IUCV_DISCONN;
+-					sk->sk_state_change(sk);
+-				}
+-			}
++			if (iucv->transport == AF_IUCV_TRANS_HIPER &&
++			    atomic_read(&iucv->msg_recv) >=
++							iucv->msglimit / 2)
++				send_win = true;
+ 		}
+ 		spin_unlock_bh(&iucv->message_q.lock);
++
++		if (send_win) {
++			err = iucv_send_ctrl(sk, AF_IUCV_FLAG_WIN);
++			if (err) {
++				sk->sk_state = IUCV_DISCONN;
++				sk->sk_state_change(sk);
++			}
++		}
+ 	}
+ 
+ done:
 
 
