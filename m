@@ -1,55 +1,68 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216173;
-	b=gjoTX2CRdui0Q0pxYfuU3oOA1v2I3uJhP5Mv0HT2zIvdYanji42X+/Mw/cV2U3a5EcTt
-	 13ui73NqKuMz3CVhLmSSZkL4tGsrDI6W09eGq2uJ2jJh46hh7W8koccKsUH6d4I98U/OR
-	 zYIKFnEdLhlY7ckdvJjkBKxTVdX5slLTrmvINWnI5cd8Se+hsmNXyWRNBegLVZEVA2Riw
-	 TTt1rOiCxd8QV3DwYxGPt0suJQndfvKeivZiVvwySuAsnuQzXDkiwEyR4mgf8LW10LqKL
-	 /pr5zymsLLwu7rUWB0lA4YZAlNWuVkpatVCynpFcoZAJc1rl9ci/Z8YQwawOj4j4e5Q==
+	t=1793216176;
+	b=yrCuPuI37AgzVgrnm3I1T2CSaNmPncCfiKSzf180cUNK5Mfld8Oi+CSnBxFGfVpUzJWu
+	 rxWr74XrZc9y9XuGJuXskD4vUgnKO4OyYiW1tlYmfuPqWdtZ+f2l0jzRi/wi89OTO55Nv
+	 mW0a08JyNV5KaDhPG/o/0xFkl2OiVfQvxVSLozImDbIKlE8VgJZn57eZBybCQ3AwLiTGN
+	 6rxRifVkRxmFBPStY3N9utsBu2eEXfbpT0X1RMDEb0ttuU/F456Iajf26fJkk/G/cZ13w
+	 LD9+pfSxilDE+3ryKh4phwRI8WVIK454YLnK5Di6XNJEn7zV497Hd/S94+kvDMr1npQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216173;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216176;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Xchktx0oJeb0x2KbS9cSJoiRtANV6rHwR3XteJuDkp8=;
-	b=2FkL5G7O5NiYu1vY/3d1pMs4aeTWkrEBREXSult9KTFpzSUH7OJOvwlv2J2wROYmmV7g
-	 YDEUkYP0lY9bJeBUDHzF4iCiQ8Lkoq2rSLVwlm3Q5HSkzoa9LfXunhDFyuc6HJkkWoHr0
-	 ndyco9AKUBtvrYsRyjI49FK4O8GIDJFP4nFLUJUhoJ2QG2eoo/ryvhY0SNEJFxw/9SB2H
-	 gkygckvFqzIaysSIr2Y8vgQwp03ye0CyxXO6iHw2QEU0hoKri/mKH+79Vz2wdUXekgOr/
-	 oUx3XRAxJUDlDS7mpSKYn4clyp7BMVUlMvN2D+j8zCD19Qjm55S6d/WmyuIF8+V+zRA==
+	bh=pkCB5IpeIbklKH+mrOUGRvR48Y4oGyAzEScoNBbHT3Q=;
+	b=gZh9P8dWNLFZr7wfIMmL2FJbIN2skRhGjU/FbX2/SOSSILmF5sLOcctd3IaPmFkftZLO
+	 to8eeYp2/vnJo5mwMIXHCDCr53Zarv8Ghjg86RzfIcVkA+WOhSiLzL0vUUiZbQTqcV8tD
+	 OKchZzzfGUY8t/fuRaQk3SmqaGgUFnzeUg0HTz1DW1lz6qrxCBqQ96D0+cAfx0NysQEwd
+	 W67wYgfTOfRERF09A0JZBZ8y96u72n05OEoxwZp4ElbCRXQC7PKgWsAkX4ITbyzGUPl3H
+	 zCClQkRORsZJlWtuatnSY8Au3EeBy35Q5TVMowXOu9M0G/hbgrmUXwsuWDSN1nLvG3w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uQRLSEJR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AccF3sWz;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7462A606A321;
-	Wed, 28 Oct 2026 19:36:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B1F1606A31A;
+	Wed, 28 Oct 2026 19:36:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uQRLSEJR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5AF31F01825;
-	Wed, 28 Oct 2026 19:36:12 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AccF3sWz
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7701D1F01825;
+	Wed, 28 Oct 2026 19:36:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216173;
-	bh=Xchktx0oJeb0x2KbS9cSJoiRtANV6rHwR3XteJuDkp8=;
+	s=korg; t=1793216176;
+	bh=pkCB5IpeIbklKH+mrOUGRvR48Y4oGyAzEScoNBbHT3Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uQRLSEJRj2ObXehyrxUpvqQcpeXLOrOAu/wwysKrCOCPDhMd85+hKeJgge189To5j
-	 8LAfemA8ZBRuBC1jlOB1U0962qL31e/sy+opxNzBKHgsVtp+QVFMFKHvUJRPtK1uzX
-	 lX37ZN9AlO3MiHWrQ07iYBdxfi2E9A2xX9xKdSWU=
+	b=AccF3sWz6DZ9GAJoq1q/1V+WHED+GNMcpA73W0TTJqjEO9kML/uxC1WIzOBL0oHeN
+	 0HXu9BN3NiTMWtIAAZv5OLURyQVvvF0GxzoSr07qerG6rHstxcgfwRedCuBf9pT9Am
+	 iAnvP4nCVX9Qyg1AAPjbMFCxzYdkE9AQczt0PKFo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tao Chen <chen.dylane@linux.dev>,
-	STAR Labs SG <info@starlabs.sg>,
-	Daniel Borkmann <borkmann@iogearbox.net>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Andrii Nakryiko <andrii@kernel.org>,
+	Kairui Song <kasong@tencent.com>,
+	Barry Song <baohua@kernel.org>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Axel Rasmussen <axelrasmussen@google.com>,
+	Brian Geffon <bgeffon@google.com>,
+	David Hildenbrand <david@kernel.org>,
+	"Jan Alexander Steffens (heftig)" <heftig@archlinux.org>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Michal Hocko <mhocko@kernel.org>,
+	Oleksandr Natalenko <oleksandr@natalenko.name>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	Steven Barrett <steven@liquorix.net>,
+	Suleiman Souhlal <suleiman@google.com>,
+	Wei Xu <weixugc@google.com>,
+	Yuanchu Xie <yuanchu@google.com>,
+	Yu Zhao <yuzhao@google.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1467/1887] bpf: Disable preemption in __bpf_get_stack
-Date: Wed, 28 Oct 2026 17:59:23 +0100
-Message-ID: <20261028170532.839410011@linuxfoundation.org>
+Subject: [PATCH 6.1 1468/1887] mm/mglru: fix and remove redundant unevictable folio handling
+Date: Wed, 28 Oct 2026 17:59:24 +0100
+Message-ID: <20261028170532.862251494@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -71,95 +84,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Borkmann <borkmann@iogearbox.net>
+From: Kairui Song <kasong@tencent.com>
 
-[ Upstream commit b1a47b2708d4e95dbd23aee2ec83752190897b3f ]
+[ Upstream commit f7e698e326b239a91ea15844817551921209e826 ]
 
-get_perf_callchain() returns a per-CPU perf_callchain_entry buffer and
-releases its recursion slot via put_callchain_entry() before returning,
-so nothing keeps the entry reserved while __bpf_get_stack() consumes
-it below.
+sort_folio() has a shortcut for moving folios that are no longer evictable
+but are still sitting on a generation list.  However, this shortcut is
+buggy.  It does not follow the PG_lru usage convention, and it has a more
+serious issue.
 
-A preemptible BPF program (e.g. a non-sleepable raw tracepoint program
-on a PREEMPT kernel, which runs under migrate_disable() but not
-preempt_disable()) can be scheduled out between obtaining the entry
-and the copy. Another task scheduled on the same CPU then reuses the
-same per-CPU buffer and overwrites trace->nr with a larger value.
-copy_len is then computed from the inflated trace->nr and can exceed
-the caller's buffer, causing an out-of-bounds write in the memcpy()
-and in the build_id path.
+Unevictable folios are not threaded on lists[LRU_UNEVICTABLE], so that
+folio->lru can be reused to hold folio->mlock_count (see the comment in
+lruvec_init()).  Hence lruvec_add_folio() skips the list_add() for them,
+and every other place that turns a folio unevictable initialises
+mlock_count explicitly: lru_add() sets it to 0, __mlock_folio() and
+__mlock_new_folio() set it to !!folio_test_mlocked(folio).  sort_folio()
+sets nothing, and the lru_gen_del_folio() right above it may have already
+poisoned folio->lru via list_del(), so mlock_count ends up aliasing
+LIST_POISON2, which reads as 0x122, i.e.  290.  The result is user
+visible.  On munlock, __munlock_folio() decrements that bogus count, finds
+it still non-zero and bails out before clearing PG_mlocked, so the folio
+remains unevictable and the Mlocked accounting stays inflated until the
+folio is freed.
 
-The rcu_read_lock() taken here alone does not prevent this. It is
-only taken on the may_fault path, and under CONFIG_PREEMPT_RCU it does
-not disable preemption; it merely keeps perf's callchain buffer array
-alive (freed via call_rcu()) and does nothing to stop another task
-from reusing the entry.
+The shortcut also touches the LRU flags in the wrong order.  It calls
+lru_gen_del_folio() while PG_lru is still set, so a concurrent
+folio_test_clear_lru() (e.g.  compaction, folio_isolate_lru()) can succeed
+on a folio that has already been taken off the generation list, which may
+lead to unexpected behavior.
 
-Disable preemption around obtaining the callchain entry and copying
-it into the caller's buffer, so the entry cannot be reused underneath
-us and trace->nr stays bounded by max_depth. Build ID resolution may
-fault and is therefore deferred until after preemption is re-enabled;
-by then the instruction pointers have already been copied into buf,
-so it operates only on that private copy. Note, preempt_disable() also
-subsumes the buffer-lifetime guarantee the rcu_read_lock() provided,
-since a preempt-disabled section is an RCU read-side critical section
-for the callchain buffers' call_rcu() reclaim.
+So fix it by isolating them as common folios and letting the generic
+shrink path cull them.  This matches the classical LRU behavior, and there
+should be no visible effect on the generic eviction or isolation behavior.
 
-Fixes: c195651e565a ("bpf: add bpf_get_stack helper")
-Reported-by: Tao Chen <chen.dylane@linux.dev>
-Reported-by: STAR Labs SG <info@starlabs.sg>
-Signed-off-by: Daniel Borkmann <borkmann@iogearbox.net>
-Signed-off-by: Jiri Olsa <jolsa@kernel.org>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/bpf/20260803210149.296496-11-jolsa@kernel.org
+There is no performance concern either, such a folio goes through this
+once, and then it is off the generation lists for good.
 
-Closes: https://lore.kernel.org/bpf/20260206090653.1336687-1-chen.dylane@linux.dev/
-[ changed Fixes: commit ]
-
+Link: https://lore.kernel.org/20260812-mglru-mlock-fix-v2-1-a3fec5853c08@tencent.com
+Fixes: ac35a4902374 ("mm: multi-gen LRU: minimal implementation")
+Signed-off-by: Kairui Song <kasong@tencent.com>
+Reviewed-by: Barry Song <baohua@kernel.org>
+Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
+Cc: Axel Rasmussen <axelrasmussen@google.com>
+Cc: Brian Geffon <bgeffon@google.com>
+Cc: David Hildenbrand <david@kernel.org>
+Cc: Jan Alexander Steffens (heftig) <heftig@archlinux.org>
+Cc: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Lorenzo Stoakes <ljs@kernel.org>
+Cc: Michal Hocko <mhocko@kernel.org>
+Cc: Oleksandr Natalenko <oleksandr@natalenko.name>
+Cc: Shakeel Butt <shakeel.butt@linux.dev>
+Cc: Steven Barrett <steven@liquorix.net>
+Cc: Suleiman Souhlal <suleiman@google.com>
+Cc: Wei Xu <weixugc@google.com>
+Cc: Yuanchu Xie <yuanchu@google.com>
+Cc: Yu Zhao <yuzhao@google.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/stackmap.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ mm/vmscan.c | 18 +++++-------------
+ 1 file changed, 5 insertions(+), 13 deletions(-)
 
-diff --git a/kernel/bpf/stackmap.c b/kernel/bpf/stackmap.c
-index dcbc3b314d5c3..49652d55ba708 100644
---- a/kernel/bpf/stackmap.c
-+++ b/kernel/bpf/stackmap.c
-@@ -433,6 +433,7 @@ static long __bpf_get_stack(struct pt_regs *regs, struct task_struct *task,
- 	if (sysctl_perf_event_max_stack < max_depth)
- 		max_depth = sysctl_perf_event_max_stack;
+diff --git a/mm/vmscan.c b/mm/vmscan.c
+index d39d3f88e0d27..0b87b66913bc6 100644
+--- a/mm/vmscan.c
++++ b/mm/vmscan.c
+@@ -4758,15 +4758,9 @@ static bool sort_folio(struct lruvec *lruvec, struct folio *folio, struct scan_c
  
-+	preempt_disable();
- 	if (trace_in)
- 		trace = trace_in;
- 	else if (kernel && task)
-@@ -440,11 +441,15 @@ static long __bpf_get_stack(struct pt_regs *regs, struct task_struct *task,
- 	else
- 		trace = get_perf_callchain(regs, 0, kernel, user, max_depth,
- 					   crosstask, false);
--	if (unlikely(!trace))
-+	if (unlikely(!trace)) {
-+		preempt_enable();
- 		goto err_fault;
-+	}
+ 	VM_WARN_ON_ONCE_FOLIO(gen >= MAX_NR_GENS, folio);
  
--	if (trace->nr < skip)
-+	if (trace->nr < skip) {
-+		preempt_enable();
- 		goto err_fault;
-+	}
+-	/* unevictable */
+-	if (!folio_evictable(folio)) {
+-		success = lru_gen_del_folio(lruvec, folio, true);
+-		VM_WARN_ON_ONCE_FOLIO(!success, folio);
+-		folio_set_unevictable(folio);
+-		lruvec_add_folio(lruvec, folio);
+-		__count_vm_events(UNEVICTABLE_PGCULLED, delta);
+-		return true;
+-	}
++	/* unevictable: let it through and the generic path will cull it */
++	if (!folio_evictable(folio))
++		return false;
  
- 	trace_nr = trace->nr - skip;
- 	trace_nr = (trace_nr <= num_elem) ? trace_nr : num_elem;
-@@ -455,6 +460,7 @@ static long __bpf_get_stack(struct pt_regs *regs, struct task_struct *task,
- 		stack_map_get_build_id_offset(buf, ips, trace_nr, user);
- 	else
- 		memcpy(buf, ips, copy_len);
-+	preempt_enable();
+ 	/* dirty lazyfree */
+ 	if (type == LRU_GEN_FILE && folio_test_anon(folio) && folio_test_dirty(folio)) {
+@@ -5054,11 +5048,9 @@ static int evict_folios(struct lruvec *lruvec, struct scan_control *sc, int swap
+ 	sc->nr_reclaimed += reclaimed;
  
- 	if (size > copy_len)
- 		memset(buf + copy_len, 0, size - copy_len);
+ 	list_for_each_entry_safe_reverse(folio, next, &list, lru) {
+-		if (!folio_evictable(folio)) {
+-			list_del(&folio->lru);
+-			folio_putback_lru(folio);
++		/* move_folios_to_lru() culls unevictable folios via folio_putback_lru() */
++		if (!folio_evictable(folio))
+ 			continue;
+-		}
+ 
+ 		if (folio_test_reclaim(folio) &&
+ 		    (folio_test_dirty(folio) || folio_test_writeback(folio))) {
 -- 
 2.53.0
 
