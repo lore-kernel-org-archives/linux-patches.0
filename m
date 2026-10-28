@@ -1,51 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215425;
-	b=P2IX8h4E6VU4bjmb2C3KlH1CqRROX6RrfAruYptLOUoL+CZRXBcOqZD6fCMsdtPW37Uc
-	 1YQtnxiZCW8vyEGQBI045qa0GT1lRfUTWi8HTt1C+vbOzWdQLNmmeUEKmfkVgGfutNOWF
-	 /wasgfQwc9BtZ4o9lRrhoqRj2SL+TPpBAL4jpVY97UfJ9ab8dviNXNQwi26cf9P9fITKe
-	 SLGzkQ1AWpGe94+b00m7oI5wraB+XYfHGOaqcLGmAIP91vo/j4e3i9Nq0zQZRPG1gIj7k
-	 YDS7KftxTkj37HGA06smQhVrSOIl2KXcgv6j7LJQRaDJJ+KFEoDxmbjS2HURVHKD0vg==
+	t=1793215428;
+	b=Saz0DhAKKF1kBVBeS99hrtKu4vSqMGCHgsBybmioqrSoG582U5GF5QL5F+Tx9XFugg5Y
+	 9rAwaNrphGsqPmVcSvd0RmWI6uk8heOwpPzgAKe5UxtX562otX65dseF316jEzP9hBilp
+	 7DXyw+GhGifqJv582ftZmvcr1IDPuTD11iLDMhEATJE1tEJoeXKVSa4TuuS5mc3CyYiK5
+	 xKPHwnD5rFq/hSVlsDIRD/S3p+5RcgSKJcTAkOWuWODvMJRPV7VImCjf0LoQ+mnG5/zzf
+	 qAhAOmNe0DFmhWfaXSUffudTscpeosXDOqD1tKonVaRNANMuWw82eQko+mWsrOosLmw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215425;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215428;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Mp+UzGg35QslZoIepi7iwmHd/5ZgtUkKGfoFhcMQ9/Q=;
-	b=FGv7KOTkI3SzvtA1RbFZXvn2HfoQGMKiTZQUb55s1QqMW57CPTMo8ZfQN2W32vEYMD+J
-	 IRqMIbtsxMVZSGTnhU/GsgUjuhbwwrSahGATaI/vAMeJnS5UKDcMed3GArvQL2O+JSrrz
-	 lmOsSDPdf/vViGfpxA9tT/Nf3XbDNLXt7QSEMplokBIr3KapdXqEThNq7SlhfbwZufqlJ
-	 IjiNh8YtbRu6qb1tr6zQr8NyASTjLrZVZV0jeGT2AaXqcKxS8wC9aQYHBLwmu1l0lnGbI
-	 FU1hgRol9fcPSR/YP6WFJwMR9SVDG8Jn64ukRsoAiBrt7sCmQ0sGXLoEWqm1UsnIOiQ==
+	bh=AsOdPEXotwdk5ir9NkTLzxLTr4zK/1RFutKJbizU6fg=;
+	b=uaTTkwTCXriAZooog64wMuSM9MayLYInffnAOgtOBIUmlxGMLgzBTUVFjAYCZwrkRBUh
+	 7YjCFdyOjdehm+FtbusU7KHaC9gj0WWt8+CsmCYqIBXLPmC1Ei8kAswu1t38klXWOaZld
+	 dxgkvaG8eeOI+0N3JSpp0sREJh+wHXUHeyUmZZ8xduBq8hzq25yMQJiLNO6ALGl+o1mUy
+	 nDxvfRjFuAR4XetzKC0qnrFVfQ5K+TcFD5iTGE0qemhbwmu32IAFiDN1Y2CP4wr8xfzUV
+	 d6ZV/H80U4z18leocv3bUxk+amXRevXIb3QKj5QBhUFXxoMYNASbqnX+Mu+TteqTMaw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jPpSrXEU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S6trVNAt;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08B3A606A31D;
-	Wed, 28 Oct 2026 19:23:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5103606A31D;
+	Wed, 28 Oct 2026 19:23:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jPpSrXEU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 596761F01825;
-	Wed, 28 Oct 2026 19:23:44 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S6trVNAt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F43E1F01825;
+	Wed, 28 Oct 2026 19:23:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215424;
-	bh=Mp+UzGg35QslZoIepi7iwmHd/5ZgtUkKGfoFhcMQ9/Q=;
+	s=korg; t=1793215427;
+	bh=AsOdPEXotwdk5ir9NkTLzxLTr4zK/1RFutKJbizU6fg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jPpSrXEUW+vEGbcwu55PDS3L4Bb+x9pLuCVntTDrsRJAE+fEvUqSiB5khg9wjivB7
-	 pHvddJMqJypBSQsbobqxrJWU/Bz8xFvwtZJBaOGlr9Tnh/02axacj26rMg0uFqi/u5
-	 ApKH5KIb92P5j4ToON6B1Guf6FZR031/EFGTw+h4=
+	b=S6trVNAttXSox9RC86SnCY34q/uPGxPMlKiexHRRf47lr6c68SXIujzDsla6xVgRH
+	 632aiREsKeuBJ/PbqIgDImHpL2jMmudZspS8i/EfxZocVzWKrkn/tOH4y84dWXqfOo
+	 c5m1MfzQR2iU7UL1gWT3BlbRIUA8Gk71qiHf0qYk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikulas Patocka <mpatocka@redhat.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Rick Wertenbroek <rick.wertenbroek@gmail.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1206/1887] dm-ioctl: fix a possible overflow in list_version_get_info
-Date: Wed, 28 Oct 2026 17:55:02 +0100
-Message-ID: <20261028170526.851270912@linuxfoundation.org>
+Subject: [PATCH 6.1 1207/1887] nvmet: Introduce nvmet_req_transfer_len()
+Date: Wed, 28 Oct 2026 17:55:03 +0100
+Message-ID: <20261028170526.873991063@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -67,39 +71,298 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikulas Patocka <mpatocka@redhat.com>
+From: Damien Le Moal <dlemoal@kernel.org>
 
-[ Upstream commit 76c6f845dc0c614304a6e6ee619b552f97cf24b3 ]
+[ Upstream commit 43043c9b97258a008b3402cfbbf1c5d82151c77f ]
 
-sizeof(tt->version) is 12 bytes, but the code writes 16 bytes into the
-output buffer - info->vers->version[0], info->vers->version[1],
-info->vers->version[2] and info->vers->next. This can cause buffer
-overflow.
+Add the new function nvmet_req_transfer_len() to parse a request command
+to extract the transfer length of the command. This function
+implementation relies on multiple helper functions for parsing I/O
+commands (nvmet_io_cmd_transfer_len()), admin commands
+(nvmet_admin_cmd_data_len()) and fabrics connect commands
+(nvmet_connect_cmd_data_len).
 
-Fix this buffer overflow by replacing "sizeof(tt->version)" with
-"sizeof(struct dm_target_versions)".
-
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Assisted-by: Claude:claude-opus-4.6
-Cc: stable@vger.kernel.org
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Tested-by: Rick Wertenbroek <rick.wertenbroek@gmail.com>
+Tested-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
+Stable-dep-of: 779575bc35c6 ("nvmet-auth: reject short AUTH_RECEIVE buffers")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm-ioctl.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/nvme/target/admin-cmd.c        | 21 +++++++++++++
+ drivers/nvme/target/core.c             | 37 ++++++++++++++++++++++
+ drivers/nvme/target/discovery.c        | 14 +++++++++
+ drivers/nvme/target/fabrics-cmd-auth.c | 14 +++++++--
+ drivers/nvme/target/fabrics-cmd.c      | 43 ++++++++++++++++++++++++++
+ drivers/nvme/target/nvmet.h            |  8 +++++
+ 6 files changed, 135 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/md/dm-ioctl.c b/drivers/md/dm-ioctl.c
-index de20e26fde291..49b83af62aa57 100644
---- a/drivers/md/dm-ioctl.c
-+++ b/drivers/md/dm-ioctl.c
-@@ -678,7 +678,7 @@ static void list_version_get_info(struct target_type *tt, void *param)
- 	struct vers_iter *info = param;
+diff --git a/drivers/nvme/target/admin-cmd.c b/drivers/nvme/target/admin-cmd.c
+index 5e88f2f5ae8ba..b28a31cbfeae4 100644
+--- a/drivers/nvme/target/admin-cmd.c
++++ b/drivers/nvme/target/admin-cmd.c
+@@ -1011,6 +1011,27 @@ void nvmet_execute_keep_alive(struct nvmet_req *req)
+ 	nvmet_req_complete(req, status);
+ }
  
- 	/* Check space - it might have changed since the first iteration */
--	if ((char *)info->vers + sizeof(tt->version) + strlen(tt->name) + 1 > info->end) {
-+	if ((char *)info->vers + sizeof(struct dm_target_versions) + strlen(tt->name) + 1 > info->end) {
- 		info->flags = DM_BUFFER_FULL_FLAG;
- 		return;
++u32 nvmet_admin_cmd_data_len(struct nvmet_req *req)
++{
++	struct nvme_command *cmd = req->cmd;
++
++	if (nvme_is_fabrics(cmd))
++		return nvmet_fabrics_admin_cmd_data_len(req);
++	if (nvmet_is_disc_subsys(nvmet_req_subsys(req)))
++		return nvmet_discovery_cmd_data_len(req);
++
++	switch (cmd->common.opcode) {
++	case nvme_admin_get_log_page:
++		return nvmet_get_log_page_len(cmd);
++	case nvme_admin_identify:
++		return NVME_IDENTIFY_DATA_SIZE;
++	case nvme_admin_get_features:
++		return nvmet_feat_data_len(req, le32_to_cpu(cmd->common.cdw10));
++	default:
++		return 0;
++	}
++}
++
+ u16 nvmet_parse_admin_cmd(struct nvmet_req *req)
+ {
+ 	struct nvme_command *cmd = req->cmd;
+diff --git a/drivers/nvme/target/core.c b/drivers/nvme/target/core.c
+index f9939a6076c26..ed0c3b451fd71 100644
+--- a/drivers/nvme/target/core.c
++++ b/drivers/nvme/target/core.c
+@@ -884,6 +884,33 @@ static inline u16 nvmet_io_cmd_check_access(struct nvmet_req *req)
+ 	return 0;
+ }
+ 
++static u32 nvmet_io_cmd_transfer_len(struct nvmet_req *req)
++{
++	struct nvme_command *cmd = req->cmd;
++	u32 metadata_len = 0;
++
++	if (nvme_is_fabrics(cmd))
++		return nvmet_fabrics_io_cmd_data_len(req);
++
++	if (!req->ns)
++		return 0;
++
++	switch (req->cmd->common.opcode) {
++	case nvme_cmd_read:
++	case nvme_cmd_write:
++	case nvme_cmd_zone_append:
++		if (req->sq->ctrl->pi_support && nvmet_ns_has_pi(req->ns))
++			metadata_len = nvmet_rw_metadata_len(req);
++		return nvmet_rw_data_len(req) + metadata_len;
++	case nvme_cmd_dsm:
++		return nvmet_dsm_len(req);
++	case nvme_cmd_zone_mgmt_recv:
++		return (le32_to_cpu(req->cmd->zmr.numd) + 1) << 2;
++	default:
++		return 0;
++	}
++}
++
+ static u16 nvmet_parse_io_cmd(struct nvmet_req *req)
+ {
+ 	struct nvme_command *cmd = req->cmd;
+@@ -1008,6 +1035,16 @@ void nvmet_req_uninit(struct nvmet_req *req)
+ }
+ EXPORT_SYMBOL_GPL(nvmet_req_uninit);
+ 
++size_t nvmet_req_transfer_len(struct nvmet_req *req)
++{
++	if (likely(req->sq->qid != 0))
++		return nvmet_io_cmd_transfer_len(req);
++	if (unlikely(!req->sq->ctrl))
++		return nvmet_connect_cmd_data_len(req);
++	return nvmet_admin_cmd_data_len(req);
++}
++EXPORT_SYMBOL_GPL(nvmet_req_transfer_len);
++
+ bool nvmet_check_transfer_len(struct nvmet_req *req, size_t len)
+ {
+ 	if (unlikely(len != req->transfer_len)) {
+diff --git a/drivers/nvme/target/discovery.c b/drivers/nvme/target/discovery.c
+index c143e7a0d3622..4ea79ee87f797 100644
+--- a/drivers/nvme/target/discovery.c
++++ b/drivers/nvme/target/discovery.c
+@@ -373,6 +373,20 @@ static void nvmet_execute_disc_get_features(struct nvmet_req *req)
+ 	nvmet_req_complete(req, stat);
+ }
+ 
++u32 nvmet_discovery_cmd_data_len(struct nvmet_req *req)
++{
++	struct nvme_command *cmd = req->cmd;
++
++	switch (cmd->common.opcode) {
++	case nvme_admin_get_log_page:
++		return nvmet_get_log_page_len(req->cmd);
++	case nvme_admin_identify:
++		return NVME_IDENTIFY_DATA_SIZE;
++	default:
++		return 0;
++	}
++}
++
+ u16 nvmet_parse_discovery_cmd(struct nvmet_req *req)
+ {
+ 	struct nvme_command *cmd = req->cmd;
+diff --git a/drivers/nvme/target/fabrics-cmd-auth.c b/drivers/nvme/target/fabrics-cmd-auth.c
+index e87fef24fed56..50eed28a7208c 100644
+--- a/drivers/nvme/target/fabrics-cmd-auth.c
++++ b/drivers/nvme/target/fabrics-cmd-auth.c
+@@ -188,6 +188,11 @@ static u8 nvmet_auth_failure2(void *d)
+ 	return data->rescode_exp;
+ }
+ 
++u32 nvmet_auth_send_data_len(struct nvmet_req *req)
++{
++	return le32_to_cpu(req->cmd->auth_send.tl);
++}
++
+ void nvmet_execute_auth_send(struct nvmet_req *req)
+ {
+ 	struct nvmet_ctrl *ctrl = req->sq->ctrl;
+@@ -215,7 +220,7 @@ void nvmet_execute_auth_send(struct nvmet_req *req)
+ 			offsetof(struct nvmf_auth_send_command, spsp1);
+ 		goto done;
  	}
+-	tl = le32_to_cpu(req->cmd->auth_send.tl);
++	tl = nvmet_auth_send_data_len(req);
+ 	if (!tl) {
+ 		status = NVME_SC_INVALID_FIELD | NVME_STATUS_DNR;
+ 		req->error_loc =
+@@ -442,6 +447,11 @@ static void nvmet_auth_failure1(struct nvmet_req *req, void *d, int al)
+ 	data->rescode_exp = req->sq->dhchap_status;
+ }
+ 
++u32 nvmet_auth_receive_data_len(struct nvmet_req *req)
++{
++	return le32_to_cpu(req->cmd->auth_receive.al);
++}
++
+ void nvmet_execute_auth_receive(struct nvmet_req *req)
+ {
+ 	struct nvmet_ctrl *ctrl = req->sq->ctrl;
+@@ -467,7 +477,7 @@ void nvmet_execute_auth_receive(struct nvmet_req *req)
+ 			offsetof(struct nvmf_auth_receive_command, spsp1);
+ 		goto done;
+ 	}
+-	al = le32_to_cpu(req->cmd->auth_receive.al);
++	al = nvmet_auth_receive_data_len(req);
+ 	if (!al) {
+ 		status = NVME_SC_INVALID_FIELD | NVME_STATUS_DNR;
+ 		req->error_loc =
+diff --git a/drivers/nvme/target/fabrics-cmd.c b/drivers/nvme/target/fabrics-cmd.c
+index da56af9bd8d25..6c882ca588bd9 100644
+--- a/drivers/nvme/target/fabrics-cmd.c
++++ b/drivers/nvme/target/fabrics-cmd.c
+@@ -82,6 +82,22 @@ static void nvmet_execute_prop_get(struct nvmet_req *req)
+ 	nvmet_req_complete(req, status);
+ }
+ 
++u32 nvmet_fabrics_admin_cmd_data_len(struct nvmet_req *req)
++{
++	struct nvme_command *cmd = req->cmd;
++
++	switch (cmd->fabrics.fctype) {
++#ifdef CONFIG_NVME_TARGET_AUTH
++	case nvme_fabrics_type_auth_send:
++		return nvmet_auth_send_data_len(req);
++	case nvme_fabrics_type_auth_receive:
++		return nvmet_auth_receive_data_len(req);
++#endif
++	default:
++		return 0;
++	}
++}
++
+ u16 nvmet_parse_fabrics_admin_cmd(struct nvmet_req *req)
+ {
+ 	struct nvme_command *cmd = req->cmd;
+@@ -111,6 +127,22 @@ u16 nvmet_parse_fabrics_admin_cmd(struct nvmet_req *req)
+ 	return 0;
+ }
+ 
++u32 nvmet_fabrics_io_cmd_data_len(struct nvmet_req *req)
++{
++	struct nvme_command *cmd = req->cmd;
++
++	switch (cmd->fabrics.fctype) {
++#ifdef CONFIG_NVME_TARGET_AUTH
++	case nvme_fabrics_type_auth_send:
++		return nvmet_auth_send_data_len(req);
++	case nvme_fabrics_type_auth_receive:
++		return nvmet_auth_receive_data_len(req);
++#endif
++	default:
++		return 0;
++	}
++}
++
+ u16 nvmet_parse_fabrics_io_cmd(struct nvmet_req *req)
+ {
+ 	struct nvme_command *cmd = req->cmd;
+@@ -343,6 +375,17 @@ static void nvmet_execute_io_connect(struct nvmet_req *req)
+ 	goto out;
+ }
+ 
++u32 nvmet_connect_cmd_data_len(struct nvmet_req *req)
++{
++	struct nvme_command *cmd = req->cmd;
++
++	if (!nvme_is_fabrics(cmd) ||
++	    cmd->fabrics.fctype != nvme_fabrics_type_connect)
++		return 0;
++
++	return sizeof(struct nvmf_connect_data);
++}
++
+ u16 nvmet_parse_connect_cmd(struct nvmet_req *req)
+ {
+ 	struct nvme_command *cmd = req->cmd;
+diff --git a/drivers/nvme/target/nvmet.h b/drivers/nvme/target/nvmet.h
+index 39861f014be0e..5a8bdd51e30c9 100644
+--- a/drivers/nvme/target/nvmet.h
++++ b/drivers/nvme/target/nvmet.h
+@@ -444,18 +444,24 @@ void nvmet_start_keep_alive_timer(struct nvmet_ctrl *ctrl);
+ void nvmet_stop_keep_alive_timer(struct nvmet_ctrl *ctrl);
+ 
+ u16 nvmet_parse_connect_cmd(struct nvmet_req *req);
++u32 nvmet_connect_cmd_data_len(struct nvmet_req *req);
+ void nvmet_bdev_set_limits(struct block_device *bdev, struct nvme_id_ns *id);
+ u16 nvmet_bdev_parse_io_cmd(struct nvmet_req *req);
+ u16 nvmet_file_parse_io_cmd(struct nvmet_req *req);
+ u16 nvmet_bdev_zns_parse_io_cmd(struct nvmet_req *req);
++u32 nvmet_admin_cmd_data_len(struct nvmet_req *req);
+ u16 nvmet_parse_admin_cmd(struct nvmet_req *req);
++u32 nvmet_discovery_cmd_data_len(struct nvmet_req *req);
+ u16 nvmet_parse_discovery_cmd(struct nvmet_req *req);
+ u16 nvmet_parse_fabrics_admin_cmd(struct nvmet_req *req);
++u32 nvmet_fabrics_admin_cmd_data_len(struct nvmet_req *req);
+ u16 nvmet_parse_fabrics_io_cmd(struct nvmet_req *req);
++u32 nvmet_fabrics_io_cmd_data_len(struct nvmet_req *req);
+ 
+ bool nvmet_req_init(struct nvmet_req *req, struct nvmet_cq *cq,
+ 		struct nvmet_sq *sq, const struct nvmet_fabrics_ops *ops);
+ void nvmet_req_uninit(struct nvmet_req *req);
++size_t nvmet_req_transfer_len(struct nvmet_req *req);
+ bool nvmet_check_transfer_len(struct nvmet_req *req, size_t len);
+ bool nvmet_check_data_len_lte(struct nvmet_req *req, size_t data_len);
+ void nvmet_req_complete(struct nvmet_req *req, u16 status);
+@@ -701,7 +707,9 @@ static inline void nvmet_req_bio_put(struct nvmet_req *req, struct bio *bio)
+ }
+ 
+ #ifdef CONFIG_NVME_TARGET_AUTH
++u32 nvmet_auth_send_data_len(struct nvmet_req *req);
+ void nvmet_execute_auth_send(struct nvmet_req *req);
++u32 nvmet_auth_receive_data_len(struct nvmet_req *req);
+ void nvmet_execute_auth_receive(struct nvmet_req *req);
+ int nvmet_auth_set_key(struct nvmet_host *host, const char *secret,
+ 		       bool set_ctrl);
 -- 
 2.53.0
 
