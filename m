@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793209874;
-	b=FzRSLi2QknCnU6Qsw9uhFA6V9MmmQrsKmpIYdpYKyNduuDFyQBmLHRqmuy9lDPZ/dHP7
-	 YvOnmnZIOChv362Aw+bFZS6MIEMN3jWAqDlV5nyazSZ1TjH96JhGeUB338rw1KRw8ApWv
-	 o/U66Wet7wFWZez10Szdl8EiCn/CcBS9bXqrkpJW7TNExwXkn3KaUrd1/iXge2ncPLGvJ
-	 MBEpcYLNtbx7ZuealgAtSDB5chofqjLRuQiR3XmZ4htVQpOfiFNgQXhs56/PM1M+dJUQI
-	 sxLnXq9nkXL0zDsKgru+A4Pqtg9DPE8EEwF6QDzlkDoN4Lnxcl8RNQceqeVrCE96WuA==
+	t=1793209880;
+	b=nVtzU0ZxDhli01XFt0+KUO1R1Dcfl6Xq2cpbwBwgcSuLj1uizvwIJaM8Gm3oZYTalymP
+	 fsmPX+Pgb+pBUSl+obSwjXxyFczP7oQ3wbLOOkULadoJMA5BbihwfL2UbSo5IxCzpxiDo
+	 i7/rQBHuwEbWPqAMS/J9N5kEOu8aIR3cw+/3fMKEVYxCAFr88xaiODAxFwC7Mf8KbAA67
+	 EVcDQ1xYN6WvoiQHa815q6E9TmNyWFf+jxAYE2Womr7FTNAdlNDvBiO7LpX4rhKA6al0K
+	 ir1F43CLaP1X04/UNxAMHuns0fa/2O8BNUlxNOeUs4cgX/PthpkpaYBdUH9piBeqNNQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793209874;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793209880;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=mIW5ljyzbi4w9vx6hffHfu6+S3VY6wVnG3on4hJTHhk=;
-	b=txDGA0dkpXjkg4u0bnGFXdHlR/sZY4qO9gcc2nEtUCQmsgEM/47YaOH50qDkA/zpJ884
-	 gHDhNVRv+UQi9uPtSvzmumDQFrrYkMMrzUAFUa8wlROjqt2HFQW5NWahAwtj4kRdbVlWi
-	 xWC0D+/ZmCIlfNo2jFLKFCHkmU/gleCUYiFoNDgNcbg+6FvIUXuawCG/RnhAeFotTCTq0
-	 E+n4EnV5QsWZH+XFZSqmZ+H9iPvRFH3c5IvRgo9FTCmFomYUEcY4kKxPObdVL/ep91aek
-	 wtDLcUIy5BdRKD6DSTiyJXTz5flpGNflToLSla3LRJPIw/1PGlxPjhwyE1n9iM+KnNQ==
+	bh=Zezn/f1/dspscY3K1FP3SNMuo8c4x9TN5la1Yz4Lzy4=;
+	b=sQA347R/sEs7Rmm/jDydSlmQ9Fc1BHdknEholjHuCWsKcHQyUwggtq7ULuK6jnuZuevu
+	 jauukUJOSj4oDXf+fweWv2dJk7jNFVMyltSL+J4WZIrsPB6NzgoMrGwBZL2rndolX4hl7
+	 hlspUZNS7Yjd+3VrVpu1OhuWp2D8wulXD5UswC+oouYq1iAePo1AYeYGujkkvIhGOcJNh
+	 itUZgbFu/C+fv92/3GMZL1dHbf1/1AsLv5tgXTOiJMw3XXd23sfnU+vYHj+XtY5kJflBd
+	 LEBNUkUsPuqkrod+jmq+YLvPthuIv0bN2ehWddE8bWBQMS0xidxObSdHVQwi9rTL1WA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vYJpPVbQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=U7nmkoeM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51DE2606A31F;
-	Wed, 28 Oct 2026 17:51:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07DEB606A31D;
+	Wed, 28 Oct 2026 17:51:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vYJpPVbQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 766111F01825;
-	Wed, 28 Oct 2026 17:51:13 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=U7nmkoeM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EFCF1F01828;
+	Wed, 28 Oct 2026 17:51:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793209874;
-	bh=mIW5ljyzbi4w9vx6hffHfu6+S3VY6wVnG3on4hJTHhk=;
+	s=korg; t=1793209879;
+	bh=Zezn/f1/dspscY3K1FP3SNMuo8c4x9TN5la1Yz4Lzy4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vYJpPVbQiSyjfzYDJd1YSTG1sKW9ROgjWWW4rmu4V7AmboKlH1O2xSHVSHWs2HrWI
-	 vdn+87UUQ4oIJbG7HSgYXO4QGKh3ZNrG0NE8FtsgnE27MWEfirfP7tsgMiXPxWkr89
-	 /frsa+ZFFN65RnNmaF78v3mWfo/hGkNVZwuZqfpA=
+	b=U7nmkoeMjSOv3qtL5UnHF+v4bqPZP9m1KR00p/J+N6Xp5qEAvSZpMC3xzKEVPCy5J
+	 kDpcqkvAfVH1KxwVA9Ghs/LXANOYbzEPZ8wnRzWaFvJ27nRe7zgyC0Scp0Ztt/SOaS
+	 4YuB53bm71+RJmtXrMgRlyft/bntVLsby8STFuPY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oleg Nesterov <oleg@redhat.com>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 6.18 107/109] pid_namespace: prevent TIF_NOTIFY_SIGNAL from interrupting the reaper
-Date: Wed, 28 Oct 2026 18:01:31 +0100
-Message-ID: <20261028165944.873935690@linuxfoundation.org>
+	Julien <julien82453@gmail.com>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 6.18 109/109] ACPI: scan: Avoid registering platform devices with resource overlaps
+Date: Wed, 28 Oct 2026 18:01:33 +0100
+Message-ID: <20261028165944.920350092@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165942.357251485@linuxfoundation.org>
 References: <20261028165942.357251485@linuxfoundation.org>
@@ -67,52 +69,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-commit 5c0985dd3c32fc2bbd0e8beaf13cf52cd97376a2 upstream.
+commit f234fdaae1cad8c39265e7ca0a14633076ec7154 upstream.
 
-Since commit 7fea700e04bd ("zap_pid_ns_processes: clear
-TIF_NOTIFY_SIGNAL along with TIF_SIGPENDING") zap_pid_ns_processes()
-clears TIF_NOTIFY_SIGNAL before every kernel_wait4() call. Otherwise
-kernel_wait4() doesn't sleep and returns -ERESTARTSYS if
-signal_pending() is true and the reaper busy-waits.
+If acpi_dev_get_resources() returns overlapping I/O or memory resources,
+the subsequent registration of a platform device will fail with -EBUSY
+due to a resource conflict.  This is reported to happen on Acer Aspire
+ES1-572 [1].
 
-But clearing TIF_NOTIFY_SIGNAL doesn't fix it. It can get raised again.
-For example, klp_send_signals() sets it raw against any task that hasn't
-transitioned yet. And it keeps sending it until the livepatch finishes.
+Avoid that by adjusting resources returned by acpi_dev_get_resources()
+to eliminate partial overlaps between them.
 
-The sleep loop waiting for pid_allocated to drop has the same problem
-and it doesn't even clear anything. So a schedule() in
-TASK_INTERRUPTIBLE returns immediately.
+This has not been regarded as necessary before because putting
+overlapping resources into the _CRS of one device is really pointless,
+but now that the issue has been reported to actually happen in the
+field, it needs to be done.
 
-Use a no_notify_signal guard. signal_pending() will ignore
-TIF_NOTIFY_SIGNAL and the pid namespace reaper sleeps until a child
-exits or free_pid() wakes it.
-
-Link: https://patch.msgid.link/20260824-work-tif_notify_signal-v2-5-6609e42b3157@kernel.org
-Fixes: 7fea700e04bd ("zap_pid_ns_processes: clear TIF_NOTIFY_SIGNAL along with TIF_SIGPENDING")
-Reviewed-by: Oleg Nesterov <oleg@redhat.com>
-Cc: stable@vger.kernel.org
-Suggested-by: Oleg Nesterov <oleg@redhat.com>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Fixes: ab06eb920401 ("ACPI: scan: Register platform devices for fixed event buttons")
+Fixes: 48fe2cddc85c ("tpm_crb: Convert ACPI driver to a platform one")
+Reported-by: Julien <julien82453@gmail.com>
+Tested-by: Julien <julien82453@gmail.com>
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Closes: https://lore.kernel.org/linux-integrity/CAJOGg3z6LJPDsdPNBxajgy8_wQxfhYBRxe4EiurZf3kPU5A5Bw@mail.gmail.com/ [1]
+Cc: All applicable <stable@vger.kernel.org>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+[ rjw: Tweaked the new message ]
+Link: https://patch.msgid.link/12955541.O9o76ZdvQC@rafael.j.wysocki
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/pid_namespace.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/acpi/acpi_platform.c |   39 +++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 37 insertions(+), 2 deletions(-)
 
---- a/kernel/pid_namespace.c
-+++ b/kernel/pid_namespace.c
-@@ -238,9 +238,10 @@ void zap_pid_ns_processes(struct pid_nam
- 	 * kernel_wait4() will also block until our children traced from the
- 	 * parent namespace are detached and become EXIT_DEAD.
- 	 */
-+	/* Task work must not busy-loop the reaper, see signal_pending(). */
-+	guard(no_notify_signal)();
- 	do {
- 		clear_thread_flag(TIF_SIGPENDING);
--		clear_thread_flag(TIF_NOTIFY_SIGNAL);
- 		rc = kernel_wait4(-1, NULL, __WALL, NULL);
- 	} while (rc != -ECHILD);
+--- a/drivers/acpi/acpi_platform.c
++++ b/drivers/acpi/acpi_platform.c
+@@ -12,6 +12,7 @@
+ #include <linux/bits.h>
+ #include <linux/device.h>
+ #include <linux/err.h>
++#include <linux/ioport.h>
+ #include <linux/kernel.h>
+ #include <linux/module.h>
+ #include <linux/dma-mapping.h>
+@@ -71,6 +72,36 @@ static struct notifier_block acpi_platfo
+ 	.notifier_call = acpi_platform_device_remove_notify,
+ };
  
++static unsigned int acpi_platform_adjust_resources(struct acpi_device *adev,
++						   struct resource *new_res,
++						   struct resource *resources,
++						   unsigned int count)
++{
++	unsigned int i;
++
++	if (!(new_res->flags & (IORESOURCE_IO | IORESOURCE_MEM)))
++		return count;
++
++	for (i = 0; i < count; ) {
++		struct resource *res = &resources[i];
++
++		if (resource_type(new_res) != resource_type(res) ||
++		    !resource_union(new_res, res, new_res)) {
++			i++;
++			continue;
++		}
++
++		dev_info(&adev->dev, "%pR expanded due to overlap\n", new_res);
++		/*
++		 * Eliminate the previously processed resource that overlapped
++		 * with the new one because it is not necessary any more.
++		 */
++		memmove(res, res + 1, (--count - i) * sizeof(*res));
++	}
++
++	return count;
++}
++
+ static void acpi_platform_fill_resource(struct acpi_device *adev,
+ 	const struct resource *src, struct resource *dest)
+ {
+@@ -151,10 +182,14 @@ struct platform_device *acpi_create_plat
+ 				return ERR_PTR(-ENOMEM);
+ 			}
+ 			count = 0;
+-			list_for_each_entry(rentry, &resource_list, node)
++			list_for_each_entry(rentry, &resource_list, node) {
++				count = acpi_platform_adjust_resources(adev,
++								       rentry->res,
++								       resources,
++								       count);
+ 				acpi_platform_fill_resource(adev, rentry->res,
+ 							    &resources[count++]);
+-
++			}
+ 			acpi_dev_free_resource_list(&resource_list);
+ 		}
+ 	}
 
 
