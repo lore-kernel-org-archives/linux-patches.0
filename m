@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213456;
-	b=1meS3KVcZ0Ulf5486KaNUUnuEJSiE9HBzqb0wsbBOPKcIBDqu8wyivLco6MmODY0CUT3
-	 d5JtlJDUMOgEF5Eghn3egBg9P3Q75yRdqAnxAzYJBPVFVBWGjlpmpey1VSldnKVHcCUAO
-	 7VTqjLyb9nSG2nq4gP34GESRgYFuoNhdY51WU67wroLvA+zeYU6Hf+sAne/0I830TIx90
-	 OQv44uSwN1UggNIV1czdlINr+1QI+6dknSNJN7rZlr3se+VEGLGmFnFuqAvDzi681khZ2
-	 yc+mJO80oB4xzTNiiwYrdf+PKfiqpgomUgI2Cw1q+kPsmr0YOV0f1JSqYHiG/FD/f2A==
+	t=1793213459;
+	b=Nnd/askjVXkepm1HmilCCD1uMIWvMsAl1FEoVZXfte3DnBFFsrtG4jnMNaNcatzXqQ1I
+	 39ndq3u2JkVM/qTZIcRLqwRDtqsEGbW8CrfTiQ9x5ZFbYi4jbXvxyx6EKrGxquwmJjFE+
+	 rz4OG8VJOTeQXVgBxCiY15KuWkkcVSmQFvQ4SEBifiNuY5pI8leXKLqhwpTu+EJ7F9a7T
+	 VLbJugSjrneMcARjQycnOtCKkQQDixRthlXKFrlfLC+8pd5VOo9C2lo5J536ot1QnfJI6
+	 iKSbjTiqEqwSednJD/kztgiifgQ/iGz12G0LsISwAtnAVSBjGTXZo8mxTd21ItqsBZA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213456;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213459;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=EdDk07mGoHX3D53saG+4/oR+BcjATLHJyOyuBcrcH1Q=;
-	b=0CzN1AmAfN1cT6U9ca+ShNbgH0McRpF11mbWbHcjW7Cmh+FU1yuhWPqwOEilQB4NAet1
-	 DiKw7txxMa0Dr5AG/zrdLYocYUCJ47ske3TWPudSV/aLS3deyXiS0msxeKv0c/HdP/DrN
-	 Gp1gqSgNlKgamh+30G00ULD0oDO/XF17SM0SCn+i63B+pnuoZYxr+3WpyGl/0fkM0lEBD
-	 1jDIVrdqLHo6XN6GQu5omIBdCgyT0sX5xdC3bX3gbO7dWmdbhpnFY1fSNN/7CnzG0wSkS
-	 a9d/0p1z+kpyLBf1EeoScA0UL0tiNk+TcgKLiHLVmhDC46SylgwgOrpP5wPvhpGvajQ==
+	bh=+RRT+3TbJxMBVrKOzyu/24XFJzG6RiNhyq3XRiXgYJ4=;
+	b=lLc3HGPzw5DaUrUszPvy70aEzBSedkfWWTIjjkl5QtlREw2ntLbcStp7iYVXRSo4c79n
+	 bIk3E47Y3mAZRgPzzD1CSlTOG9cKgFxu+tss8hrw884/J2SIm2s5X6vnvc2RyH7F7RMNU
+	 hh6GmI14I8oHev4VvO54cMxonKbU/E1Cni0/LHK4Lu0cwcwVnj+u68LOjg8sLcrcrlAc1
+	 Ne1BKCEkdSw5wvaLz9/icYcPkR3KH+8DZohY6TYa/MC/UCk9QKKAMGhqmqNB4eootoN7q
+	 HO16idY0nMlNhABM/0bmbhuOv/6IT8XM/2LpY2NNyiSYkpTW0ibSpr3kc6ODBsU1zgw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mfgPSR0z;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tqGBVAff;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61536606A31E;
-	Wed, 28 Oct 2026 18:50:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3586A606A31C;
+	Wed, 28 Oct 2026 18:50:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mfgPSR0z
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B26121F01828;
-	Wed, 28 Oct 2026 18:50:55 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tqGBVAff
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 875201F01828;
+	Wed, 28 Oct 2026 18:50:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213456;
-	bh=EdDk07mGoHX3D53saG+4/oR+BcjATLHJyOyuBcrcH1Q=;
+	s=korg; t=1793213459;
+	bh=+RRT+3TbJxMBVrKOzyu/24XFJzG6RiNhyq3XRiXgYJ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mfgPSR0zdiPbK2WzyU2TkP4/J4iKeUYgAOfV/cM7plBmiPHEkZx9BeGxRc/V5QA8Y
-	 9RoFk6oD2t0/MaWdJTC6bbkqavTYvzF/dW4NsbaovlNpdPuVwbX1XnFcbEgkZzaB6u
-	 ruOq5jhkmKfwV/DWAqFk/rgKDlCAMGZEwbHU3FMc=
+	b=tqGBVAffEwZI2i6ltb9scdTrPfpVl3UBdgrRhyoxLb4nq5TqYZAP+eujsEZReuDi2
+	 nhQkgQ8M/GGMhOkWeBdRezy5MhGfl84mbfRsR1POZTHSzoK7PZXPu7TM4vR0G4ycrm
+	 XmzAJdDextshUyhxa3yAQur2Q09PhdS7OmbMody4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ijae Kim <ae878000@gmail.com>,
-	Myeonghun Pak <mhun512@gmail.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Daehyeon Ko <4ncienth@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0485/1887] drm/aspeed: Balance the display clock enable on teardown
-Date: Wed, 28 Oct 2026 17:43:01 +0100
-Message-ID: <20261028170510.301062526@linuxfoundation.org>
+Subject: [PATCH 6.1 0512/1887] ip6_gre: remove obsolete ERSPAN PMTU update
+Date: Wed, 28 Oct 2026 17:43:28 +0100
+Message-ID: <20261028170510.965608686@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,54 +69,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Daehyeon Ko <4ncienth@gmail.com>
 
-[ Upstream commit ecce445c6489895463b7ddec2af66338287fee4c ]
+[ Upstream commit 8bc60db48e8cba35488bbd6e1f94aa990afa275a ]
 
-aspeed_gfx_load() enables the display clock without checking the return
-value and never disables it on probe failure or removal. devm_clk_get()
-only releases the clock reference, leaving the enable unbalanced.
+A tc tunnel_key action can attach a METADATA_IP_TUNNEL dst to an skb,
+and mirred can redirect it to a native ip6erspan device. The legacy PMTU
+update in ip6erspan_tunnel_xmit() treats that metadata dst as a route.
+Since it has no output device, dst_dev(dst)->mtu dereferences NULL.
 
-Use devm_clk_get_enabled() to handle enable failures and automatically
-disable and unprepare the clock on probe failure or removal.
+On v7.2 with KASAN, an initial UID/GID 65534 process with CapEff 0 used
+self-created user and network namespaces to trigger:
 
-This issue was identified during our ongoing static-analysis research
-while reviewing kernel code.
+  KASAN: null-ptr-deref
+  RIP: ip6erspan_tunnel_xmit+0x10fc/0x2cc0
+  Kernel panic - not syncing: Fatal exception in interrupt
 
-Fixes: 4f2a8f5898ec ("drm: Add ASPEED GFX driver")
-Co-developed-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Assisted-by: OpenAI:GPT-5.6
-Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Link: https://patch.msgid.link/20260913223019.89651-1-mhun512@gmail.com
-Link: https://patch.msgid.link/20260905080426.34224-1-kmehltretter@gmail.com
+The update is obsolete. Commit fe1a4ca0a2b7 ("ip6_gre: process toobig
+in a better way") changed IPv6 GRE Too Big handling to update the
+underlay route and removed the equivalent block from __gre6_xmit().
+ip6_tnl_xmit() then propagates the underlay PMTU to the overlay route.
+
+Remove the stale ERSPAN copy and its now-unused dst variable. This
+eliminates the metadata-dst dereference and keeps ERSPAN aligned with
+IPv6 GRE PMTU handling.
+
+Fixes: 5a963eb61b7c ("ip6_gre: Add ERSPAN native tunnel support")
+Cc: stable@vger.kernel.org
+Suggested-by: Ido Schimmel <idosch@nvidia.com>
+Signed-off-by: Daehyeon Ko <4ncienth@gmail.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20261002033058.358137-1-4ncienth@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ sashal: Adapted the removal to the PMTU check using dst->dev->mtu directly. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/aspeed/aspeed_gfx_drv.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ net/ipv6/ip6_gre.c | 5 -----
+ 1 file changed, 5 deletions(-)
 
-diff --git a/drivers/gpu/drm/aspeed/aspeed_gfx_drv.c b/drivers/gpu/drm/aspeed/aspeed_gfx_drv.c
-index a94f1a9e8f409..79f67413c1175 100644
---- a/drivers/gpu/drm/aspeed/aspeed_gfx_drv.c
-+++ b/drivers/gpu/drm/aspeed/aspeed_gfx_drv.c
-@@ -194,13 +194,12 @@ static int aspeed_gfx_load(struct drm_device *drm)
- 	}
- 	reset_control_deassert(priv->rst);
+diff --git a/net/ipv6/ip6_gre.c b/net/ipv6/ip6_gre.c
+index 950d5e74b094e..73ec4641f2201 100644
+--- a/net/ipv6/ip6_gre.c
++++ b/net/ipv6/ip6_gre.c
+@@ -962,7 +962,6 @@ static netdev_tx_t ip6erspan_tunnel_xmit(struct sk_buff *skb,
+ {
+ 	struct ip_tunnel_info *tun_info = NULL;
+ 	struct ip6_tnl *t = netdev_priv(dev);
+-	struct dst_entry *dst = skb_dst(skb);
+ 	bool truncate = false;
+ 	int encap_limit = -1;
+ 	__u8 dsfield = false;
+@@ -1094,10 +1093,6 @@ static netdev_tx_t ip6erspan_tunnel_xmit(struct sk_buff *skb,
+ 	/* Push GRE header. */
+ 	gre_build_header(skb, 8, TUNNEL_SEQ, proto, 0, htonl(atomic_fetch_inc(&t->o_seqno)));
  
--	priv->clk = devm_clk_get(drm->dev, NULL);
-+	priv->clk = devm_clk_get_enabled(drm->dev, NULL);
- 	if (IS_ERR(priv->clk)) {
- 		dev_err(&pdev->dev,
--			"missing or invalid clk device tree entry");
-+			"failed to get and enable clock\n");
- 		return PTR_ERR(priv->clk);
- 	}
--	clk_prepare_enable(priv->clk);
- 
- 	/* Sanitize control registers */
- 	writel(0, priv->base + CRT_CTRL1);
+-	/* TooBig packet may have updated dst->dev's mtu */
+-	if (!t->parms.collect_md && dst && dst_mtu(dst) > dst->dev->mtu)
+-		dst->ops->update_pmtu(dst, NULL, skb, dst->dev->mtu, false);
+-
+ 	err = ip6_tnl_xmit(skb, dev, dsfield, &fl6, encap_limit, &mtu,
+ 			   NEXTHDR_GRE);
+ 	if (err != 0) {
 -- 
 2.53.0
 
