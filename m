@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793209338;
-	b=OqfoDfV1DWoC0AGY0NIHnv2Ebox0+j9egimtClkHmuEm4jTj97IPXCsgkTY9U3jm1GUl
-	 OVZpANRnjjc2QWSf6wu2zR9Wou5njO8edTaiQmervwgaOIoxhmbua0cQdtS1xrrmJmzwu
-	 8uo6JONYoEpubkHfszwkqWUyuy/iUv/Awvqrr0gFIGf6sDxOkAhHZBEkHbIJurveoPKGL
-	 7gOCX4ZJwoz9Es2Wv/Pb6e51m0vY+fDDLw2Up/P/8NjziGaoR7LkH9yEP4DyU5boKwLOt
-	 78F0AU3vwo/PUhH5fpLLuwNu7ePz/htAOfbahRFtgxLtF043AbGGgxJ/3Ee2rsBwUrQ==
+	t=1793209341;
+	b=YQSYOjCCakqYMxt7EHd4HVEyR+1UVk/B56V+f3N19qPmYO3DVfS0MogsDec4AtI48sJJ
+	 Ire3YfT4ka/ZI5RA/JpsbTf+fWcXBadtll8aw44k7iAMWFwbHNiA2/lHeuK+sQ9I7K7EA
+	 9H1nuvonwiTMMaxWXDYwXHZrFAEo3MAMHTEeW8DoLl3j+we6blIOJxqgj7lFny9EZiLkk
+	 KgIgf253FFafs9XRLwLNIc9fLicDW23jBHs4t4RZK6ZqNlNA6zcTuunpvDlLCgPbwa5Du
+	 9/vHNaI137foFOMJZX8U7985TFj5JUIkEoY20sQH6Dl0MAqY8V9UBbbOu+IeukM2jOw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793209338;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793209341;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=UUUrE3bhlO20ZvXQV2SN03PRbwLOh1HiJv1gxfSx3D4=;
-	b=FBrYBWCT7X6od6gFtBSViZUmdD/d81w+GuIY2UhH1oiW55oVrK6LhnGwEimb+4cJHxaj
-	 sDaO0hHdy0araXNfk7xO00JcD9fWjtPzefjhCE0yzR6GuNG/Z0trjlvxndWkxDNKUKpoE
-	 HgXGj7+9lLp0nQauK1n3/beiOSLNcjWR8Y35RM67Ja/OMeG3bXQB7ZEa1JJ27u5SYJdmV
-	 u/xhga0QJgz37jz8Jq6FGftVbUMnLZm9k1YUXQG2+5pNt5mrT0zAocuPVCBbU6UnX+wZZ
-	 Fdhnyjmyem5X3PI+H2JOQleZJHIaw255h0WhGA8O+x+oOJfOq9O4TMIlBfMJrFLP2gQ==
+	bh=M9okiJa0GuEAZyb/0uwvD3db+1K2G1knn/s+A8+zm6U=;
+	b=Jpo3Bmvteud6X6kUHDbj881HAX7tN6EpFczXfxLadyZcYA5Wx0MMmINdTX3MprlgOwPO
+	 K/Rso89W8pALc38Y3Jjq2mo7U4lHIeDgkP2rfOv+LYwAotzJy5MZ2cjGz5kGx3c1JiLkw
+	 r95ThNCHZnPF92oya+5anznKJ2yDolV0OQDVb0WgQ84nBVPYrISw6nKDIPWhpdp5uztil
+	 67SzVasfUQSby8PE1WprD6OSfHe4cVncpjFsgEUdJG1U9Ml6F2xCcuk5QaQwAzcyFiJ+3
+	 /mut9FR5QdG9YOqzp42/wFnzxOfw2xNv5l5aatzOybLOSJvW8V2iUmGk/COZmodHLYQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rl0wFM0g;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EJ2GbeFM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57370606A31C;
-	Wed, 28 Oct 2026 17:42:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76D61606A31C;
+	Wed, 28 Oct 2026 17:42:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rl0wFM0g
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A86871F01825;
-	Wed, 28 Oct 2026 17:42:17 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EJ2GbeFM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8200B1F01825;
+	Wed, 28 Oct 2026 17:42:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793209338;
-	bh=UUUrE3bhlO20ZvXQV2SN03PRbwLOh1HiJv1gxfSx3D4=;
+	s=korg; t=1793209341;
+	bh=M9okiJa0GuEAZyb/0uwvD3db+1K2G1knn/s+A8+zm6U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rl0wFM0gArkAk6KYli2+8xNtPvyvL/y5cJmWf7l7hAAwIPaHQATbHQSCLel69gD6c
-	 DeYv1d74JlGLhWOpn5vcBn3Cusn2JICnf675MQ4XJECPouCZFVfAwguEGRGAtL/MvQ
-	 fdEeqGrNwwJjfPyCNbl/irFA13d8dE4zdBlAoOs8=
+	b=EJ2GbeFM/QEH7u3pSN8UVz1eJ9+3ic7rnYLJV7SfEtfkj+RfM03JFzllVgNi1e9Ej
+	 dO1Yn/xumtn5EmwL1wF7U2jwgUCeip1u8y6I5MXQMrFGprlWNgUb00nFrPOLeu5Z2u
+	 Hf4KIuh33pvEg33VRC5R4zl/KYMdH3zSx/pDCDsk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anjali Kulkarni <anjali.k.kulkarni@oracle.com>,
-	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
+	Dave Chinner <dchinner@redhat.com>,
+	Carlos Maiolino <cmaiolino@redhat.com>,
+	Carlos Maiolino <cem@kernel.org>,
+	Siddh Raman Pant <siddh.raman.pant@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 437/516] netlink: Reverse the patch which removed filtering
-Date: Wed, 28 Oct 2026 17:59:49 +0100
-Message-ID: <20261028170013.836675335@linuxfoundation.org>
+Subject: [PATCH 5.10 420/516] xfs: factor out stale buffer item completion
+Date: Wed, 28 Oct 2026 17:59:32 +0100
+Message-ID: <20261028170013.437101626@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -70,108 +70,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anjali Kulkarni <anjali.k.kulkarni@oracle.com>
+From: Dave Chinner <dchinner@redhat.com>
 
-[ Upstream commit a3377386b56420d78a4c0a931a40f9a25c3ca2bd ]
+[ Upstream commit 816c330b605c3f4813c0dc0ab5af5cce17ff06b3 ]
 
-To use filtering at the connector & cn_proc layers, we need to enable
-filtering in the netlink layer. This reverses the patch which removed
-netlink filtering - commit ID for that patch:
-549017aa1bb7 (netlink: remove netlink_broadcast_filtered).
+The stale buffer item completion handling is currently only done
+from BLI unpinning. We need to perform this function from where-ever
+the last reference to the BLI is dropped, so first we need to
+factor this code out into a helper.
 
-Signed-off-by: Anjali Kulkarni <anjali.k.kulkarni@oracle.com>
-Reviewed-by: Liam R. Howlett <Liam.Howlett@oracle.com>
-Acked-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: 8bf659bd54e1 ("netlink: reset skb headers before unicast and multicast filtering")
+Signed-off-by: Dave Chinner <dchinner@redhat.com>
+Reviewed-by: Carlos Maiolino <cmaiolino@redhat.com>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
+Signed-off-by: Siddh Raman Pant <siddh.raman.pant@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/netlink.h  |  5 +++++
- net/netlink/af_netlink.c | 27 +++++++++++++++++++++++++--
- 2 files changed, 30 insertions(+), 2 deletions(-)
+ fs/xfs/xfs_buf_item.c | 60 ++++++++++++++++++++++++++-----------------
+ 1 file changed, 37 insertions(+), 23 deletions(-)
 
-diff --git a/include/linux/netlink.h b/include/linux/netlink.h
-index 494cfae01b184..e79d509a1247b 100644
---- a/include/linux/netlink.h
-+++ b/include/linux/netlink.h
-@@ -154,6 +154,11 @@ bool netlink_strict_get_check(struct sk_buff *skb);
- int netlink_unicast(struct sock *ssk, struct sk_buff *skb, __u32 portid, int nonblock);
- int netlink_broadcast(struct sock *ssk, struct sk_buff *skb, __u32 portid,
- 		      __u32 group, gfp_t allocation);
-+int netlink_broadcast_filtered(struct sock *ssk, struct sk_buff *skb,
-+			       __u32 portid, __u32 group, gfp_t allocation,
-+			       int (*filter)(struct sock *dsk,
-+					     struct sk_buff *skb, void *data),
-+			       void *filter_data);
- int netlink_set_err(struct sock *ssk, __u32 portid, __u32 group, int code);
- int netlink_register_notifier(struct notifier_block *nb);
- int netlink_unregister_notifier(struct notifier_block *nb);
-diff --git a/net/netlink/af_netlink.c b/net/netlink/af_netlink.c
-index f7ca72934e47e..9f9b28b329b32 100644
---- a/net/netlink/af_netlink.c
-+++ b/net/netlink/af_netlink.c
-@@ -1413,6 +1413,8 @@ struct netlink_broadcast_data {
- 	int delivered;
- 	gfp_t allocation;
- 	struct sk_buff *skb, *skb2;
-+	int (*tx_filter)(struct sock *dsk, struct sk_buff *skb, void *data);
-+	void *tx_data;
- };
+diff --git a/fs/xfs/xfs_buf_item.c b/fs/xfs/xfs_buf_item.c
+index 3124f96ad6b32..3a96279f97a1a 100644
+--- a/fs/xfs/xfs_buf_item.c
++++ b/fs/xfs/xfs_buf_item.c
+@@ -459,6 +459,42 @@ xfs_buf_item_pin(
+ 	atomic_inc(&bip->bli_buf->b_pin_count);
+ }
  
- static void do_one_broadcast(struct sock *sk,
-@@ -1466,6 +1468,13 @@ static void do_one_broadcast(struct sock *sk,
- 			p->delivery_failure = 1;
- 		goto out;
- 	}
++/*
++ * For a stale BLI, process all the necessary completions that must be
++ * performed when the final BLI reference goes away. The buffer will be
++ * referenced and locked here - we return to the caller with the buffer still
++ * referenced and locked for them to finalise processing of the buffer.
++ */
++static void
++xfs_buf_item_finish_stale(
++	struct xfs_buf_log_item	*bip)
++{
++	struct xfs_buf		*bp = bip->bli_buf;
++	struct xfs_log_item	*lip = &bip->bli_item;
 +
-+	if (p->tx_filter && p->tx_filter(sk, p->skb2, p->tx_data)) {
-+		kfree_skb(p->skb2);
-+		p->skb2 = NULL;
-+		goto out;
++	ASSERT(bip->bli_flags & XFS_BLI_STALE);
++	ASSERT(xfs_buf_islocked(bp));
++	ASSERT(bp->b_flags & XBF_STALE);
++	ASSERT(bip->__bli_format.blf_flags & XFS_BLF_CANCEL);
++	ASSERT(list_empty(&lip->li_trans));
++	ASSERT(!bp->b_transp);
++
++	if (bip->bli_flags & XFS_BLI_STALE_INODE) {
++		xfs_buf_item_done(bp);
++		xfs_buf_inode_iodone(bp);
++		ASSERT(list_empty(&bp->b_li_list));
++		return;
 +	}
 +
- 	if (sk_filter(sk, p->skb2)) {
- 		kfree_skb(p->skb2);
- 		p->skb2 = NULL;
-@@ -1493,8 +1502,12 @@ static void do_one_broadcast(struct sock *sk,
- 	sock_put(sk);
- }
- 
--int netlink_broadcast(struct sock *ssk, struct sk_buff *skb, u32 portid,
--		      u32 group, gfp_t allocation)
-+int netlink_broadcast_filtered(struct sock *ssk, struct sk_buff *skb,
-+			       u32 portid,
-+			       u32 group, gfp_t allocation,
-+			       int (*filter)(struct sock *dsk,
-+					     struct sk_buff *skb, void *data),
-+			       void *filter_data)
- {
- 	struct net *net = sock_net(ssk);
- 	struct netlink_broadcast_data info;
-@@ -1513,6 +1526,8 @@ int netlink_broadcast(struct sock *ssk, struct sk_buff *skb, u32 portid,
- 	info.allocation = allocation;
- 	info.skb = skb;
- 	info.skb2 = NULL;
-+	info.tx_filter = filter;
-+	info.tx_data = filter_data;
- 
- 	/* While we sleep in clone, do not allow to change socket list */
- 
-@@ -1538,6 +1553,14 @@ int netlink_broadcast(struct sock *ssk, struct sk_buff *skb, u32 portid,
- 	}
- 	return -ESRCH;
- }
-+EXPORT_SYMBOL(netlink_broadcast_filtered);
-+
-+int netlink_broadcast(struct sock *ssk, struct sk_buff *skb, u32 portid,
-+		      u32 group, gfp_t allocation)
-+{
-+	return netlink_broadcast_filtered(ssk, skb, portid, group, allocation,
-+					  NULL, NULL);
++	/*
++	 * We may or may not be on the AIL here, xfs_trans_ail_delete() will do
++	 * the right thing regardless of the situation in which we are called.
++	 */
++	xfs_trans_ail_delete(lip, SHUTDOWN_LOG_IO_ERROR);
++	xfs_buf_item_relse(bip);
++	ASSERT(bp->b_log_item == NULL);
 +}
- EXPORT_SYMBOL(netlink_broadcast);
++
+ /*
+  * This is called to unpin the buffer associated with the buf log item which was
+  * previously pinned with a call to xfs_buf_item_pin().  We enter this function
+@@ -508,13 +544,6 @@ xfs_buf_item_unpin(
+ 	}
  
- struct netlink_set_err_data {
+ 	if (stale) {
+-		ASSERT(bip->bli_flags & XFS_BLI_STALE);
+-		ASSERT(xfs_buf_islocked(bp));
+-		ASSERT(bp->b_flags & XBF_STALE);
+-		ASSERT(bip->__bli_format.blf_flags & XFS_BLF_CANCEL);
+-		ASSERT(list_empty(&lip->li_trans));
+-		ASSERT(!bp->b_transp);
+-
+ 		trace_xfs_buf_item_unpin_stale(bip);
+ 
+ 		/*
+@@ -525,22 +554,7 @@ xfs_buf_item_unpin(
+ 		 * processing is complete.
+ 		 */
+ 		xfs_buf_rele(bp);
+-
+-		/*
+-		 * If we get called here because of an IO error, we may or may
+-		 * not have the item on the AIL. xfs_trans_ail_delete() will
+-		 * take care of that situation. xfs_trans_ail_delete() drops
+-		 * the AIL lock.
+-		 */
+-		if (bip->bli_flags & XFS_BLI_STALE_INODE) {
+-			xfs_buf_item_done(bp);
+-			xfs_buf_inode_iodone(bp);
+-			ASSERT(list_empty(&bp->b_li_list));
+-		} else {
+-			xfs_trans_ail_delete(lip, SHUTDOWN_LOG_IO_ERROR);
+-			xfs_buf_item_relse(bip);
+-			ASSERT(bp->b_log_item == NULL);
+-		}
++		xfs_buf_item_finish_stale(bip);
+ 		xfs_buf_relse(bp);
+ 		return;
+ 	}
 -- 
 2.53.0
 
