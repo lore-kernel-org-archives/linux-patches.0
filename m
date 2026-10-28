@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793212223;
-	b=AJZv7hZfThBgxR9jzaKstJ3oeo0MYutuW/A32lbUwrxBXVUEGySRXGG2HGubF922+ZCQ
-	 z6NKYhG0AWxvdWfOVN66RZ8aRSeDJQ1zF6VkP1GNgVwTOQFq4bzVD8MzTo4gLxpdRHxl/
-	 TVkVbPgnlCcj6H6hMu1/2bMx0CVjGTb844DRbRKT9sYjePWMrC3qGI0QP3AfySaZLLI/C
-	 gk+F+8c9RhNl1xG2PabWX4EyaQ0Va9Gp96lGkTVIIxdEqeb6bYFE4X76j9z8RNV2Op04Q
-	 GbbpXvJID4VBULUBCpekyxTW+/GICj86e18wG9v5keh53tGoixaxTXN4QgWAboBP9+w==
+	t=1793212226;
+	b=GdBdWtDSLmRIFUmj88JnB7RFzCJZOJ6VhN/U22DgCTI+5kqpHsXlITL1/VjbFJ4eR9k+
+	 wfFQOyVy+5Rm/UlEmGUDy64l7rwAGF32yqUEs3euODOByef322UU2EFM42coAn3yht6ux
+	 wK/v4J+7cL+UuMLH8mABbB7kYGDrcI7OaexpotsIEPnY0NgE6ndDwHqT3P83FH00quxNM
+	 QDdzQjF0EXK1Q1sKdIrDe6kuAmrhonr3y+whQBP+577GxAKab6qpfY1fYbN1LjnZkFTIm
+	 8Stf5Vf/UkorJyuX0rf69wp1JFEycETW9oKD73MNHuwtTDDMZaIv1FYM/nzYR5vg+cQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793212223;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793212226;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=lbAUmRzzQOXVdg4e9ntRNK4ubNvu6ioqxVlwmtpE6uQ=;
-	b=XxecPgVveM2nJ6idGFk2dI4ogYiYQQGVqWUJuVeS5+8x8bBcoymzDQRYZoaF6Y72EFsd
-	 WJM7xebaAnCbHFuo9ZnRwRd8VcnAHdCQyK469c544FHte+CCV9yuRY/XyTRqa9h/KPQfj
-	 WL60IXVPUJXML4MWELK658CkHQnSPEAm2GYUIG3he7HKR5IeDPbYkqx2resYZKVGsKhlr
-	 E87O/8mP4dkl0sHTTjXvy5xT46Oko4S/Q0OpL8HeJ+1Jf6i1BgS6iZZKi6Ikwp2lK9PC3
-	 sN2rQAyHuLsBB5dOo2+V5bEbDwYV6r/aTev8h1D9fRjeG7Gsy4XLu9eSxS0+H83FSjQ==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=hU5s2u0QZDewYZMtFXuvXoMD/tH+PhHTFPj6IBVGKYo=;
+	b=rB6/R6gOiU4rM52+s4wi2qHls8zOLu3S/10TbtN75nCpXpRa2FJjBPId146d8PPlvGdY
+	 EGqU7W5aVkTvDnh6oGm6G5yjXmxHZhoTrR1/m1p/KHaQWrAZ7zHOVnnwUL49NAC64UI5E
+	 6Mdkn75V4dEtqI/31astuQWBY0DHkiH+bg+4UYV/B3rGhqF/vYDO/emK6wpeCNAh/BBwB
+	 JjSe80rrUjj22Do0C2BVZbg3RCxiG4rl1oDPYB+h9JuDmXZdujN0BY49XfQT/4zEMjx9a
+	 3UtVeVQhNnQgTG5KJXlcCZ5RlQCayGJPQdtiHE7tyWpl2CXH8wQf4Ss4jqOZ3LB+xzg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SYEib2l4;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HobVY59v;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A1B7606A31A;
-	Wed, 28 Oct 2026 18:30:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54E61606A31A;
+	Wed, 28 Oct 2026 18:30:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SYEib2l4
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C79AD1F01825;
-	Wed, 28 Oct 2026 18:30:22 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HobVY59v
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4B821F01825;
+	Wed, 28 Oct 2026 18:30:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793212223;
-	bh=lbAUmRzzQOXVdg4e9ntRNK4ubNvu6ioqxVlwmtpE6uQ=;
+	s=korg; t=1793212226;
+	bh=hU5s2u0QZDewYZMtFXuvXoMD/tH+PhHTFPj6IBVGKYo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SYEib2l4Mzj3BIoZviuuSwurl8LCtxvYey4qU2De41GBXQan6ua1xnxZnwIaQSAEL
-	 8LlT+1JENEBbJE7V4ARfiDaSBePewzCXPAeBkc62pSVKbRPNq/h91bzzLFnkzdHkMf
-	 wt/jMD9gfP3zmm8huY3+R6zZ6XN1tGtd3hNndKmo=
+	b=HobVY59vXh/Ub6DpD0VhTdxg1EsaF8LtypzNfkcYUSsr/WcPw+f/VseITBrkht5xX
+	 8yUE0R0KGwSVlPGO8G0mLDqJzpSLr6pXDSlg9PCZGqZX3rihvL0krKT8ggs9Ktt8/j
+	 79b9gG8toYrEJBsy/J05JXHNgwvjSRoVpazpK8zQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiacheng Yu <yujiacheng3@huawei.com>,
-	Petr Pavlu <petr.pavlu@suse.com>,
+	=?UTF-8?q?Bence=20Cs=C3=B3k=C3=A1s?= <csokas.bence@prolan.hu>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0081/1887] params: fix charp corruption on allocation failure
-Date: Wed, 28 Oct 2026 17:36:17 +0100
-Message-ID: <20261028170501.076897052@linuxfoundation.org>
+Subject: [PATCH 6.1 0082/1887] dmaengine: Add devm_dma_request_chan()
+Date: Wed, 28 Oct 2026 17:36:18 +0100
+Message-ID: <20261028170501.101455520@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -62,86 +62,95 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jiacheng Yu <yujiacheng3@huawei.com>
+From: Bence Csókás <csokas.bence@prolan.hu>
 
-[ Upstream commit 3dfaae04243cde460d82dfc2a7dd0bb6664d20ae ]
+[ Upstream commit 08bf1663c21a3e815eda28fa242d84c945ca3b94 ]
 
-param_set_charp() stores charp parameters in allocated memory after slab is
-available, and releases the previous value when the parameter is updated.
+Expand the arsenal of devm functions for DMA devices, this time for
+requesting channels.
 
-The previous value is released before the replacement allocation succeeds.
-If kmalloc_parameter() fails, the setter returns -ENOMEM with the parameter
-left as NULL.
-
-Failing zswap's compressor update before zswap is initialized can later
-trigger:
-
-  BUG: kernel NULL pointer dereference, address: 0000000000000000
-  RIP: 0010:strcmp+0x10/0x30
-  Call Trace:
-    zswap_setup+0x3b1/0x490
-    zswap_enabled_param_set+0x5b/0xa0
-    param_attr_store+0x93/0xe0
-    module_attr_store+0x1c/0x30
-    kernfs_fop_write_iter+0x116/0x1f0
-
-Allocate and copy the replacement first, then replace the parameter value
-only after allocation succeeds.
-
-Fixes: e180a6b7759a ("param: fix charp parameters set via sysfs")
-Cc: stable@vger.kernel.org
-Signed-off-by: Jiacheng Yu <yujiacheng3@huawei.com>
-Reviewed-by: Petr Pavlu <petr.pavlu@suse.com>
-Signed-off-by: Petr Pavlu <petr.pavlu@suse.com>
+Signed-off-by: Bence Csókás <csokas.bence@prolan.hu>
+Link: https://lore.kernel.org/r/20250610082256.400492-2-csokas.bence@prolan.hu
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Stable-dep-of: 777979e62711 ("i2c: mxs: fix DMA channel leak on probe error")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/params.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ drivers/dma/dmaengine.c   | 30 ++++++++++++++++++++++++++++++
+ include/linux/dmaengine.h |  7 +++++++
+ 2 files changed, 37 insertions(+)
 
-diff --git a/kernel/params.c b/kernel/params.c
-index 03443c99496c6..1b699c7632598 100644
---- a/kernel/params.c
-+++ b/kernel/params.c
-@@ -265,6 +265,7 @@ EXPORT_SYMBOL_GPL(param_set_uint_minmax);
+diff --git a/drivers/dma/dmaengine.c b/drivers/dma/dmaengine.c
+index 53e755c03f414..96c3f455b7bd7 100644
+--- a/drivers/dma/dmaengine.c
++++ b/drivers/dma/dmaengine.c
+@@ -933,6 +933,36 @@ void dma_release_channel(struct dma_chan *chan)
+ }
+ EXPORT_SYMBOL_GPL(dma_release_channel);
  
- int param_set_charp(const char *val, const struct kernel_param *kp)
- {
-+	char *tmp;
- 	size_t len, maxlen = 1024;
- 
- 	len = strnlen(val, maxlen + 1);
-@@ -273,19 +274,20 @@ int param_set_charp(const char *val, const struct kernel_param *kp)
- 		return -ENOSPC;
- 	}
- 
--	maybe_kfree_parameter(*(char **)kp->arg);
--
- 	/*
- 	 * This is a hack. We can't kmalloc() in early boot, and we
- 	 * don't need to; this mangled commandline is preserved.
- 	 */
- 	if (slab_is_available()) {
--		*(char **)kp->arg = kmalloc_parameter(len + 1);
--		if (!*(char **)kp->arg)
-+		tmp = kmalloc_parameter(len + 1);
-+		if (!tmp)
- 			return -ENOMEM;
--		strcpy(*(char **)kp->arg, val);
-+		memcpy(tmp, val, len + 1);
- 	} else
--		*(const char **)kp->arg = val;
-+		tmp = (char *)val;
++static void dmaenginem_release_channel(void *chan)
++{
++	dma_release_channel(chan);
++}
 +
-+	maybe_kfree_parameter(*(char **)kp->arg);
-+	*(char **)kp->arg = tmp;
++/**
++ * devm_dma_request_chan - try to allocate an exclusive slave channel
++ * @dev:	pointer to client device structure
++ * @name:	slave channel name
++ *
++ * Returns pointer to appropriate DMA channel on success or an error pointer.
++ *
++ * The operation is managed and will be undone on driver detach.
++ */
++
++struct dma_chan *devm_dma_request_chan(struct device *dev, const char *name)
++{
++	struct dma_chan *chan = dma_request_chan(dev, name);
++	int ret = 0;
++
++	if (!IS_ERR(chan))
++		ret = devm_add_action_or_reset(dev, dmaenginem_release_channel, chan);
++
++	if (ret)
++		return ERR_PTR(ret);
++
++	return chan;
++}
++EXPORT_SYMBOL_GPL(devm_dma_request_chan);
++
+ /**
+  * dmaengine_get - register interest in dma_channels
+  */
+diff --git a/include/linux/dmaengine.h b/include/linux/dmaengine.h
+index 3576c6e89fea4..368a03920c928 100644
+--- a/include/linux/dmaengine.h
++++ b/include/linux/dmaengine.h
+@@ -1489,6 +1489,7 @@ struct dma_chan *__dma_request_channel(const dma_cap_mask_t *mask,
  
- 	return 0;
+ struct dma_chan *dma_request_chan(struct device *dev, const char *name);
+ struct dma_chan *dma_request_chan_by_mask(const dma_cap_mask_t *mask);
++struct dma_chan *devm_dma_request_chan(struct device *dev, const char *name);
+ 
+ void dma_release_channel(struct dma_chan *chan);
+ int dma_get_slave_caps(struct dma_chan *chan, struct dma_slave_caps *caps);
+@@ -1525,6 +1526,12 @@ static inline struct dma_chan *dma_request_chan_by_mask(
+ {
+ 	return ERR_PTR(-ENODEV);
+ }
++
++static inline struct dma_chan *devm_dma_request_chan(struct device *dev, const char *name)
++{
++	return ERR_PTR(-ENODEV);
++}
++
+ static inline void dma_release_channel(struct dma_chan *chan)
+ {
  }
 -- 
 2.53.0
