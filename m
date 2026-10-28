@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213555;
-	b=gtYIZ5ez1fNqhGcuK6fiE7gpsR9yVbs9tJcybUZPdaUqO+alJiMD/AU/ijo0RO9jRpFU
-	 nL0EU0ORd/9yVLtcmlzLAlCnMnfJVu8RXriwW33XNrvlRM4lYlI1Itq7WStGn2JLgQMwU
-	 Ps/JOcoiSs1cvIChyBa71JGmOt7HoWiXEKQ5i+sgWR70vW5FruYxDv4uFOPkj6fWaEGG8
-	 JsK4oD/staJMgFldTB9hHmAGWvoHJq1/hT84odR22Xqzm1l8EZEG0xoBWDN+19ec0qWYU
-	 c16x3AwL9cWrXC0yF4I5sNhZkC+EILJL/7SQmMppCNds769YX63Rp/2+BiL3bZMjDPA==
+	t=1793213558;
+	b=CFzutS4F5pCpOF4orbF8nocIxhEDmKfdaYp+hg59NRYP8wQedyxDlnpVvzZ1Tp5aP/oF
+	 PpnGleq6MiMiCEvJvADry4nYtr5pSdFbsIvzCZWmJc1yAEtWawOfJgG0K51x8kMF3Gkfa
+	 misB0Uv4yC1RZeZh/LhJ7xfnXWpl3o0Mbuu8r8GfjLoT436lhUk5TuI9CesFVnk/g16oO
+	 GImZDStiLr5m1f8JBTJPwL1654tWq8QiDiv60RqR2d2i4Vq7sLPGqgT9spD9JuKmGALj9
+	 ownb016ishj87PO/N5NoPac11PVDwnL5wuAylO9Pm9X6GGeO5TghJmpxZX7cCGDEQPg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213555;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213558;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ekkkkqZQTj5W7/MgqugwREYDIOXLrcpsJOCyNO00/pQ=;
-	b=39fxUr3x/pBmJm9+22udQGHf4uugqvlYcinvUVtuQ1ilyHzO0vlgZYQ9oqml/C/IVgEw
-	 GZ3y52pUGnHLAWeIyEtaub6lmWK4UaplEPfbJuclZehlDdwenr5OYlKCn/5ZALI8WAvdx
-	 424quDYfCCJu9fncuDpTR5p7iH4WmSrAWqeTYQXK8kN5rAjkZfBTp1JGYizQgRdK56krD
-	 jDVs6FR2TeE55K1ZtZP5pO9iy9YMKG4j8IDHSjey2tok4DxjxIM8oGWr7d3iTJrlYXcRK
-	 uoYlgSmJtrZVe09FE0jWoKpDK3kVr+maNkjcang25MMIn9iTOhhv4TMbm5wLmj0sCtw==
+	bh=ZQzahXW3ce6SlxuZnW1Dw7xrw+a6ouiQ2tZx0kgyWms=;
+	b=uObEYdJ/ZtxNDqOPpKC2gG86N42LWtDTHR0CwPxs1BwObq3HQ02cp3oaA7PMFkMiFdNs
+	 WkORPxQGEqpBoZyz6QY9IWrqTK3+Dw6adcYNx/tbKqSbPgevUJGgsFe86h/U8x1XYMUls
+	 GzPqL+J59XOo1SYxcD61vUJj5NiyEHlHC0FQMYQbU0Z2Wg8h1R3KeVtLLZPA6hLazKpNA
+	 VucC4zVTHh7FcGaRBODj2gFMzDliVfLH/sPnX00uYTpE+yPQoRvHXCtAhL53CdLq3+9Co
+	 EgOoURCoT3sCyo7tFm+Z7c79xOg3Zlmgp1fz9xqBXcqj4gXwaWe6MT54zoEh78t4/eg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RNWYNE9O;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kH6zowC7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 107A8606A320;
-	Wed, 28 Oct 2026 18:52:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA94B606A31A;
+	Wed, 28 Oct 2026 18:52:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RNWYNE9O
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F2191F01828;
-	Wed, 28 Oct 2026 18:52:34 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kH6zowC7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B16E1F01829;
+	Wed, 28 Oct 2026 18:52:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213554;
-	bh=ekkkkqZQTj5W7/MgqugwREYDIOXLrcpsJOCyNO00/pQ=;
+	s=korg; t=1793213557;
+	bh=ZQzahXW3ce6SlxuZnW1Dw7xrw+a6ouiQ2tZx0kgyWms=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RNWYNE9ObgLrK7n5O5yDoR8Wh1A0NSomL3SkQnMzj21G6jbhMn4vCSX6eqZBKcSVS
-	 P1nWps3OvXzQdl8QDDRRn4XmF4ETmsNbXorlTD4PMRAqfVEj6JDJsCNOo2Jft0niUQ
-	 kxAt9C+9N9BoQb8jJEZIlFub8j8jbdoCxbNvViUg=
+	b=kH6zowC7wmvSHuEb6slsQIpCvHzPn5D+vdsm72ed8VlsF5NWPxrnRemMKJJrQYz9k
+	 VdcZUiknI4vSSLCy695Bgycbqg++sxEK9jxtGfj83+iwAlIjtFvPza2G1Le2wYajl7
+	 2mWTQFDyW89vIiZi2RTs1nulro03cA1QuDm11b7c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikulas Patocka <mpatocka@redhat.com>,
-	syzbot+bdff1ecf726d2af66afd@syzkaller.appspotmail.com,
+	Dave Chinner <dchinner@redhat.com>,
+	Carlos Maiolino <cmaiolino@redhat.com>,
+	Carlos Maiolino <cem@kernel.org>,
+	Siddh Raman Pant <siddh.raman.pant@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0530/1887] dm: fix reading free memory in do_resume
-Date: Wed, 28 Oct 2026 17:43:46 +0100
-Message-ID: <20261028170511.400852675@linuxfoundation.org>
+Subject: [PATCH 6.1 0548/1887] xfs: rearrange code in xfs_buf_item.c
+Date: Wed, 28 Oct 2026 17:44:04 +0100
+Message-ID: <20261028170511.836992368@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,65 +70,217 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikulas Patocka <mpatocka@redhat.com>
+From: Dave Chinner <dchinner@redhat.com>
 
-[ Upstream commit c9417c1c5269e2bd0570fbe53e4ec03a8d31f008 ]
+[ Upstream commit d2fe5c4c8d25999862d615f616aea7befdd62799 ]
 
-When do_resume calls dm_table_get_mode(new_map), the call is done without
-holding any locks (it only holds a reference to the md). It may be
-possible that another concurrent ioctl on the same device will swap table
-after dm_swap_table and before dm_table_get_mode. In this case,
-dm_table_get_mode(new_map) reads freed memory.
+The code to initialise, release and free items is all the way down
+the bottom of the file. Upcoming fixes need to these functions
+earlier in the file, so move them to the top.
 
-This race condition was triggered by syzbot.
+There is one code change in this move - the parameter to
+xfs_buf_item_relse() is changed from the xfs_buf to the
+xfs_buf_log_item - the thing that the function is releasing.
 
-This commit fixes the race by reading mode of the new table before
-dm_swap_table. Note that new_map is also passed to dm_ima_need_measure,
-but this function doesn't attempt to dereference it, so this call should
-be safe.
+Signed-off-by: Dave Chinner <dchinner@redhat.com>
+Reviewed-by: Carlos Maiolino <cmaiolino@redhat.com>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
 
-Note that this is not a security bug because only root can trigger it and
-the commonly used tools such as lvm or cryptsetup do not call the ioctls
-concurrently, so that they can't trigger it acceidentally.
+6.6:
 
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Reported-by: syzbot+bdff1ecf726d2af66afd@syzkaller.appspotmail.com
-Cc: stable@vger.kernel.org
-[ sashal: Replaced blk_mode_t and BLK_OPEN_WRITE with fmode_t and FMODE_WRITE. ]
+Fixed conflict due to the following missing commits:
+	[Continuous range: 10634530f7ba^..d4c75a1b40cd]
+	d4c75a1b40cd ("xfs: convert remaining kmem_free() to kfree()")
+	49292576136f ("xfs: convert kmem_free() for kvmalloc users to kvfree()")
+	afdc115559c5 ("xfs: move kmem_to_page()")
+	f078d4ea8276 ("xfs: convert kmem_alloc() to kmalloc()")
+	10634530f7ba ("xfs: convert kmem_zalloc() to kzalloc()")
+
+Removed ASSERT in favour of existing atomic_read-and-return in
+xfs_buf_item_relse() due to the following missing commit:
+	3762113b597f ("xfs: don't lose solo superblock counter update transactions")
+
+Signed-off-by: Siddh Raman Pant <siddh.raman.pant@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm-ioctl.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/xfs/xfs_buf_item.c | 118 +++++++++++++++++++++---------------------
+ fs/xfs/xfs_buf_item.h |   1 -
+ 2 files changed, 60 insertions(+), 59 deletions(-)
 
-diff --git a/drivers/md/dm-ioctl.c b/drivers/md/dm-ioctl.c
-index 4cfdd50e32d70..57d0bc1545b73 100644
---- a/drivers/md/dm-ioctl.c
-+++ b/drivers/md/dm-ioctl.c
-@@ -1166,6 +1166,7 @@ static int do_resume(struct dm_ioctl *param)
- 	/* Do we need to load a new map ? */
- 	if (new_map) {
- 		sector_t old_size, new_size;
-+		fmode_t new_map_mode;
+diff --git a/fs/xfs/xfs_buf_item.c b/fs/xfs/xfs_buf_item.c
+index 72d6e2dd5ef54..1b323b3c0eb93 100644
+--- a/fs/xfs/xfs_buf_item.c
++++ b/fs/xfs/xfs_buf_item.c
+@@ -32,6 +32,63 @@ static inline struct xfs_buf_log_item *BUF_ITEM(struct xfs_log_item *lip)
+ 	return container_of(lip, struct xfs_buf_log_item, bli_item);
+ }
  
- 		/* Suspend if it isn't already suspended */
- 		if (param->flags & DM_SKIP_LOCKFS_FLAG)
-@@ -1193,6 +1194,7 @@ static int do_resume(struct dm_ioctl *param)
- 			}
++static void
++xfs_buf_item_get_format(
++	struct xfs_buf_log_item	*bip,
++	int			count)
++{
++	ASSERT(bip->bli_formats == NULL);
++	bip->bli_format_count = count;
++
++	if (count == 1) {
++		bip->bli_formats = &bip->__bli_format;
++		return;
++	}
++
++	bip->bli_formats = kmem_zalloc(count * sizeof(struct xfs_buf_log_format),
++				0);
++}
++
++static void
++xfs_buf_item_free_format(
++	struct xfs_buf_log_item	*bip)
++{
++	if (bip->bli_formats != &bip->__bli_format) {
++		kmem_free(bip->bli_formats);
++		bip->bli_formats = NULL;
++	}
++}
++
++static void
++xfs_buf_item_free(
++	struct xfs_buf_log_item	*bip)
++{
++	xfs_buf_item_free_format(bip);
++	kmem_free(bip->bli_item.li_lv_shadow);
++	kmem_cache_free(xfs_buf_item_cache, bip);
++}
++
++/*
++ * xfs_buf_item_relse() is called when the buf log item is no longer needed.
++ */
++static void
++xfs_buf_item_relse(
++	struct xfs_buf_log_item	*bip)
++{
++	struct xfs_buf		*bp = bip->bli_buf;
++
++	trace_xfs_buf_item_relse(bp, _RET_IP_);
++
++	ASSERT(!test_bit(XFS_LI_IN_AIL, &bip->bli_item.li_flags));
++
++	if (atomic_read(&bip->bli_refcount))
++		return;
++
++	bp->b_log_item = NULL;
++	xfs_buf_rele(bp);
++	xfs_buf_item_free(bip);
++}
++
+ /* Is this log iovec plausibly large enough to contain the buffer log format? */
+ bool
+ xfs_buf_log_check_iovec(
+@@ -563,7 +620,7 @@ xfs_buf_item_unpin(
+ 			ASSERT(list_empty(&bp->b_li_list));
+ 		} else {
+ 			xfs_trans_ail_delete(lip, SHUTDOWN_LOG_IO_ERROR);
+-			xfs_buf_item_relse(bp);
++			xfs_buf_item_relse(bip);
+ 			ASSERT(bp->b_log_item == NULL);
  		}
+ 		xfs_buf_relse(bp);
+@@ -673,7 +730,7 @@ xfs_buf_item_put(
+ 	 */
+ 	if (aborted)
+ 		xfs_trans_ail_delete(lip, 0);
+-	xfs_buf_item_relse(bip->bli_buf);
++	xfs_buf_item_relse(bip);
+ 	return true;
+ }
  
-+		new_map_mode = dm_table_get_mode(new_map);
- 		old_size = dm_get_size(md);
- 		old_map = dm_swap_table(md, new_map);
- 		if (IS_ERR(old_map)) {
-@@ -1205,7 +1207,7 @@ static int do_resume(struct dm_ioctl *param)
- 		if (old_size && new_size && old_size != new_size)
- 			need_resize_uevent = true;
+@@ -824,33 +881,6 @@ static const struct xfs_item_ops xfs_buf_item_ops = {
+ 	.iop_push	= xfs_buf_item_push,
+ };
  
--		if (dm_table_get_mode(new_map) & FMODE_WRITE)
-+		if (new_map_mode & FMODE_WRITE)
- 			set_disk_ro(dm_disk(md), 0);
- 		else
- 			set_disk_ro(dm_disk(md), 1);
+-STATIC void
+-xfs_buf_item_get_format(
+-	struct xfs_buf_log_item	*bip,
+-	int			count)
+-{
+-	ASSERT(bip->bli_formats == NULL);
+-	bip->bli_format_count = count;
+-
+-	if (count == 1) {
+-		bip->bli_formats = &bip->__bli_format;
+-		return;
+-	}
+-
+-	bip->bli_formats = kmem_zalloc(count * sizeof(struct xfs_buf_log_format),
+-				0);
+-}
+-
+-STATIC void
+-xfs_buf_item_free_format(
+-	struct xfs_buf_log_item	*bip)
+-{
+-	if (bip->bli_formats != &bip->__bli_format) {
+-		kmem_free(bip->bli_formats);
+-		bip->bli_formats = NULL;
+-	}
+-}
+-
+ /*
+  * Allocate a new buf log item to go with the given buffer.
+  * Set the buffer's b_log_item field to point to the new
+@@ -1072,34 +1102,6 @@ xfs_buf_item_dirty_format(
+ 	return false;
+ }
+ 
+-STATIC void
+-xfs_buf_item_free(
+-	struct xfs_buf_log_item	*bip)
+-{
+-	xfs_buf_item_free_format(bip);
+-	kmem_free(bip->bli_item.li_lv_shadow);
+-	kmem_cache_free(xfs_buf_item_cache, bip);
+-}
+-
+-/*
+- * xfs_buf_item_relse() is called when the buf log item is no longer needed.
+- */
+-void
+-xfs_buf_item_relse(
+-	struct xfs_buf	*bp)
+-{
+-	struct xfs_buf_log_item	*bip = bp->b_log_item;
+-
+-	trace_xfs_buf_item_relse(bp, _RET_IP_);
+-	ASSERT(!test_bit(XFS_LI_IN_AIL, &bip->bli_item.li_flags));
+-
+-	if (atomic_read(&bip->bli_refcount))
+-		return;
+-	bp->b_log_item = NULL;
+-	xfs_buf_rele(bp);
+-	xfs_buf_item_free(bip);
+-}
+-
+ void
+ xfs_buf_item_done(
+ 	struct xfs_buf		*bp)
+@@ -1119,5 +1121,5 @@ xfs_buf_item_done(
+ 	xfs_trans_ail_delete(&bp->b_log_item->bli_item,
+ 			     (bp->b_flags & _XBF_LOGRECOVERY) ? 0 :
+ 			     SHUTDOWN_CORRUPT_INCORE);
+-	xfs_buf_item_relse(bp);
++	xfs_buf_item_relse(bp->b_log_item);
+ }
+diff --git a/fs/xfs/xfs_buf_item.h b/fs/xfs/xfs_buf_item.h
+index 7ddda0aa9dac2..8a8a46e698be4 100644
+--- a/fs/xfs/xfs_buf_item.h
++++ b/fs/xfs/xfs_buf_item.h
+@@ -49,7 +49,6 @@ struct xfs_buf_log_item {
+ 
+ int	xfs_buf_item_init(struct xfs_buf *, struct xfs_mount *);
+ void	xfs_buf_item_done(struct xfs_buf *bp);
+-void	xfs_buf_item_relse(struct xfs_buf *);
+ bool	xfs_buf_item_put(struct xfs_buf_log_item *);
+ void	xfs_buf_item_log(struct xfs_buf_log_item *, uint, uint);
+ bool	xfs_buf_item_dirty_format(struct xfs_buf_log_item *);
 -- 
 2.53.0
 
