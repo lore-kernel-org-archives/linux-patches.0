@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793211496;
-	b=p3V89WdfTbjCpwMMk35g+jelNSfEGZk/jR3BeVADyHGDHR/BK8vgxxtizx35mhXdpXG8
-	 kWbH8QaG+fIRqJoYHbAdMqJSlb3ufh3ic69OUNA+w/zg/CvQSlvjv2U0dqrIWd/bwqbvk
-	 u6FI0XTSNFivWiMJ3BBgmVfodOZSIthqS+W15YeZGDrMhShPQiWR8FROF8E5zPEQCzmwx
-	 A9sbcDGBwdfiySM5n7Tg63HR6IqQRfLvro97dRGaBjReAG2hYRlqQIA/jTrSdfqSUg0A1
-	 Bn0bNEJD/ohtP4mOZK09f1B4W/bA5fDV8Spmcc0lMxYumuvioRXlpal3LNK/wRtEqTg==
+	t=1793211502;
+	b=beu7ZXJXIQd5cl0MJ6aI3LTpljyXAlAWfT5reuRRIjXLHkQdS93uL+PkYfMKecd37s7I
+	 nHVZhJN/KoASmGjP6YR5EJzi5o5cCsCDDH6vkZx0NzpFhuxdw9Oq5Qdk9Yo4sygaspRvj
+	 ZR0gEn9QEKTq8t7qSPaMLGlF0UizoTddcjDEz+8rhTnSc6rE65EzE3gKrYsT0eWDzYTwa
+	 0u+YoCVBp2O88KK6FBpVVXVvNWEfVyIxSpU5pnSe6sS459daV7ZTdaava8/5CGi1I72YQ
+	 xT9K/XMNyV1FCoDs17A2lqGpP+AdL7i7+aA31EWuL9aT+xTufUZhs0iR4eQ7lj8lWGA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793211496;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793211502;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=+8WnxTysLVF1+HItrdMKYW4yV0cZSYS+SH9CrICsCqo=;
-	b=2YhrufOOVVZUPcMIauctLIZkf9btYclH3l74zg9xZOIhdlsXmQaMst0ltBRIzY7pIM4u
-	 wtGS8fDjKpODYm6lGvnzAu0mU1kVvUajmwWVjNdHYieS8cHx61KpVKjveIzfG2rZ6E1VA
-	 BJFey5DHexGPex84u4IQ3w0xVhcBMTrWn7z+/eOyRwjWdaKQXOaDKuVpQ0tzr8pp7mO83
-	 i7059Lwjf+Q4eLyR9wGQ8NeZ4g80LwDa5aNGD1TUsiu/OX2uqIJTGQOjwsGd/HT7vmU6c
-	 3v3YAYovux7GBE8ZS+dRUSTpwqAAnWdLbfMo16ERfnmFsGqfmXJPmtW2zHNHZ/b4OUg==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=F8Z8lezuoLS4hyx+OCXmAKfcnJmwt+hgD0ykoS2mn30=;
+	b=b4QClZjPA7GPsmyAYEHP7LmsF0LBrwS0dqC6i0ZMjrgUltmHAsEn2EtOJb3Pg/P9ZCqd
+	 fczL6H94nuHMivcXcoRRpJJfOfOtunIWgfAQ824yXsPGQwo9ynD8Xqrre2dWBwK8kWIq5
+	 Qx8czX3ttbV8GTiVZ0kAYkM3tun5BKUS2XMf7G2gV1OXpCvNN244ZcaKxvTx58Z36d5er
+	 OyRKuF9bOPjj/u/ez0ayZ44KqwmmN/h2z2UpT/5RdoRw6VyL+DAVE6BmAnlyLfXS6ZESh
+	 JoGKxuv02nNM3GUupxXLYzS8biEPbUOzarUwMlY+xg4PXFL9kTGAv1ht5w9NNn7jW5Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C+soNXke;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BH7eCqoj;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 411DE606A32D;
-	Wed, 28 Oct 2026 18:18:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE3CE606A329;
+	Wed, 28 Oct 2026 18:18:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C+soNXke
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48F941F01825;
-	Wed, 28 Oct 2026 18:18:15 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BH7eCqoj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 001241F01829;
+	Wed, 28 Oct 2026 18:18:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793211495;
-	bh=+8WnxTysLVF1+HItrdMKYW4yV0cZSYS+SH9CrICsCqo=;
+	s=korg; t=1793211501;
+	bh=F8Z8lezuoLS4hyx+OCXmAKfcnJmwt+hgD0ykoS2mn30=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=C+soNXketL/vrgKsB44RD5f48jUTf1a0+Wo1WwCN+4w/zeNTvin8nKBLoYaRONmce
-	 YG66amPVv6nLxSijYQL5iIHNfnfEbBbVqc/9gOU7MV/I/oyrhqThNbePc57TCoK6PF
-	 cK8Szs6DOfh9GiM8waCHxbQR8HlAMAPcDTUZr5lI=
+	b=BH7eCqojlsYJeNTpASgJ6tfGFn5DTChS3Z9SmQ6/94jzV4pDWZwgkjqQ2Nw9B51M2
+	 0hbvVu4gFX8Mp4bykel8+UT6vZOoUBEzRXSgIN9QkLdZetFlr+zRJ5w1ogCv/eglFd
+	 UURQ20iQWp50cPdV2TmohESjdts9XisSzoGDrna8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Alvin=20=C5=A0ipraga?= <alvin.sipraga@analog.com>,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
 	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 397/571] ASoC: adau1372: allow sleepy powerdown GPIOs
-Date: Wed, 28 Oct 2026 17:59:04 +0100
-Message-ID: <20261028170017.432688345@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	"Claude Opus 5.5" <noreply@anthropic.com>
+Subject: [PATCH 5.15 399/571] ASoC: samsung: i2s: enable op_clk in probe to balance runtime PM
+Date: Wed, 28 Oct 2026 17:59:06 +0100
+Message-ID: <20261028170017.481246062@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -63,65 +63,82 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alvin Šipraga <alvin.sipraga@analog.com>
+From: Marek Szyprowski <m.szyprowski@samsung.com>
 
-[ Upstream commit 64dd172bbffe6135d79a06ddad53dd2da4d8bd62 ]
+[ Upstream commit 7529254014764ae0b8c33d5c61a58f36c65b1a1c ]
 
-gpiod_set_value() emits a WARN when the GPIO provider indicates that it
-can sleep, as is typical for I2C controlled GPIO expanders. Since the
-powerdown GPIO is only manipulated in process context, use the _cansleep
-variant instead. This lets the driver use sleepy GPIOs to power off the
-chip.
+The probe function puts the device into the runtime PM active state with
+only the "iis" bus clock enabled, but it also sets priv->op_clk to the
+parent of the RCLK_SRC mux without enabling it. The runtime PM suspend
+callback disables both clocks, so the first runtime suspend after probe
+disables op_clk once more than it was enabled.
 
-Fixes: 6cd4c6459e47 ("ASoC: Add ADAU1372 audio CODEC support")
-Signed-off-by: Alvin Šipraga <alvin.sipraga@analog.com>
-Acked-by: Nuno Sá <nuno.sa@analog.com>
-Link: https://patch.msgid.link/20261006-asoc-adau1372-fixes-v1-1-599cc17fb5f6@analog.com
+On Exynos5250 Arndale both clocks resolve to the same EXYNOS_I2S_BUS gate,
+so this triggers the following warning during boot:
+
+ WARNING: drivers/clk/clk.c:1270 at clk_core_disable+0xe4/0x23c, CPU#0: kworker/u8:3/45
+ i2s_bus already disabled
+ ...
+ Workqueue: pm pm_runtime_work
+ Call trace:
+  ...
+  clk_core_disable from clk_disable+0x28/0x34
+  clk_disable from i2s_runtime_suspend+0x58/0x68 [snd_soc_i2s]
+  i2s_runtime_suspend [snd_soc_i2s] from genpd_runtime_suspend+0xc4/0x298
+  genpd_runtime_suspend from __rpm_callback+0x48/0x18c
+  __rpm_callback from rpm_callback+0x4c/0x50
+  rpm_callback from rpm_suspend+0xf4/0x718
+  rpm_suspend from pm_runtime_work+0x9c/0xa0
+  ...
+
+Fix this by enabling op_clk in probe right after getting it, so the clock
+state matches the runtime PM active state, and by disabling it in remove.
+
+Fixes: 48279c53fd1d ("ASoC: samsung: i2s: Prevent external abort on exynos5433 I2S1 access")
+Assisted-by: Claude Opus 5.5 <noreply@anthropic.com>
+Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Link: https://patch.msgid.link/20261002092116.585466-1-m.szyprowski@samsung.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/adau1372.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ sound/soc/samsung/i2s.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/sound/soc/codecs/adau1372.c b/sound/soc/codecs/adau1372.c
-index 0dc5381cdc396..4cd30dc35f429 100644
---- a/sound/soc/codecs/adau1372.c
-+++ b/sound/soc/codecs/adau1372.c
-@@ -798,7 +798,7 @@ static int adau1372_set_power(struct adau1372 *adau1372, bool enable)
- 		if (ret)
- 			return ret;
- 		if (adau1372->pd_gpio)
--			gpiod_set_value(adau1372->pd_gpio, 0);
-+			gpiod_set_value_cansleep(adau1372->pd_gpio, 0);
+diff --git a/sound/soc/samsung/i2s.c b/sound/soc/samsung/i2s.c
+index 309badc972907..b63d381d02edc 100644
+--- a/sound/soc/samsung/i2s.c
++++ b/sound/soc/samsung/i2s.c
+@@ -1525,9 +1525,16 @@ static int samsung_i2s_probe(struct platform_device *pdev)
+ 		goto err_disable_pm;
  
- 		if (adau1372->switch_mode)
- 			adau1372->switch_mode(adau1372->dev);
-@@ -818,8 +818,7 @@ static int adau1372_set_power(struct adau1372 *adau1372, bool enable)
- 							   ADAU1372_CLK_CTRL_PLL_EN,
- 							   0);
- 				regcache_cache_only(adau1372->regmap, true);
--				if (adau1372->pd_gpio)
--					gpiod_set_value(adau1372->pd_gpio, 1);
-+				gpiod_set_value_cansleep(adau1372->pd_gpio, 1);
- 				clk_disable_unprepare(adau1372->mclk);
- 				return ret;
- 			}
-@@ -836,7 +835,7 @@ static int adau1372_set_power(struct adau1372 *adau1372, bool enable)
- 			 * map. No need to do any register writes to manually
- 			 * turn things off.
- 			 */
--			gpiod_set_value(adau1372->pd_gpio, 1);
-+			gpiod_set_value_cansleep(adau1372->pd_gpio, 1);
- 			regcache_mark_dirty(adau1372->regmap);
- 		} else {
- 			regmap_update_bits(adau1372->regmap, ADAU1372_REG_CLK_CTRL,
+ 	priv->op_clk = clk_get_parent(priv->clk_table[CLK_I2S_RCLK_SRC]);
++	ret = clk_prepare_enable(priv->op_clk);
++	if (ret < 0) {
++		priv->op_clk = NULL;
++		goto err_unregister_clk;
++	}
+ 
+ 	return 0;
+ 
++err_unregister_clk:
++	i2s_unregister_clock_provider(priv);
+ err_disable_pm:
+ 	pm_runtime_disable(&pdev->dev);
+ err_del_sec:
+@@ -1550,6 +1557,7 @@ static int samsung_i2s_remove(struct platform_device *pdev)
+ 
+ 	i2s_unregister_clock_provider(priv);
+ 	i2s_delete_secondary_device(priv);
++	clk_disable_unprepare(priv->op_clk);
+ 	clk_disable_unprepare(priv->clk);
+ 
+ 	pm_runtime_put_noidle(&pdev->dev);
 -- 
 2.53.0
 
