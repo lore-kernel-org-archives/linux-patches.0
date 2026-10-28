@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793211986;
-	b=HSYEq18RSSh14Fx5JrQr/MoUATrKirIarehuE8IuAFghOfBVWxxn1Q07WTWBx0REXHUA
-	 XpiWhu65iJ3b41+ZHRLrMwLUjhop+k0DU4M0luihhm72rTJjP5mdlg50T3nn6xUOJB4un
-	 tFdwzealPxluYVsqCND6dHJBDB1r//Octl9v9oMqcFO59lmxlYYwpPi4EHRNyL+ELbS58
-	 rNtNZqpCu5+RQJSHUlu+9niFdqJz5eQE0cSgVEnjpCBTJXGMoT+TxLuPLsk0HeoCTmRZM
-	 P0WD1D5IeiPywSmjmgHfD/+aiWDF6+w0E2QxsV+Ynba3TaF8lB4Nzhk2MPs9wpQZalA==
+	t=1793211989;
+	b=jdR/FNGACfYlcK+A4mo6TpcB0/fcUcDQSjnRVvi88NqAlGBnccrgo2RkPu8Q50bthQB2
+	 /GZPsUmUtNllYH4381Hy7fQD4IpNsSlS/Wm4fHN56JmGiP5f40wClVe43tcFUKlpLpb0f
+	 YPkDrWhM8M52UEduduxc3VO+Rb+YZ61gfaCyOZH1h0LuvZCUyrElVWIFJH7XtK+YE0dC2
+	 BQ2S/L3jWPSBnHPW3gTM2zSEMdoG/ilngjj+Kf4/I+3/DLjsn59gsdwrCJAw6pIQRzRH+
+	 W+Sf57urVMepXplprYud31FkKIFacdGHZwAVPpue4tfJwt1UdgoOuC63xGGBrYuS1Ew==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793211986;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793211989;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=0gJ63TWbbRb2gkJ4OLNgPhJRdl5/esQcqi60/g55Hps=;
-	b=tqfyBg5/IrR7U/5oIq0lhWNnPMbGY7OmuG+ADNXlQ5zTm2WvC4LHogMK0uQQdWp1i7oV
-	 +xgjBcv7perMIlSRinQzQBC2rg5nqLKClI9CnbBD148d+LUC92UeTCCDzYl0JOejIkvy5
-	 mhFFvNRp05wA3cvVVTv9kZSOiNpOYLTjTYXEvFRVE0aSrcbOFJYLI20IYx/MNo/9k8aCQ
-	 U8mh5FTCg7Su+3gwU3CRne1Avq4uGtaGhXafZNZCCN6UFAjZxcADc/+rPbUAephnMIJHj
-	 5mcChEwj/hOXjga5PaWlG45Gv1d5PTAY436evTfswMpLas4JFsG0SCtncliK/HKKDsg==
+	bh=PY37SMYDvirWPkZLaEVqqFdCndLeqSml7eI0WUGYfec=;
+	b=y0BsYCahOmnTXUaKbKJ4QfIhbYzU0hIQ3oyF9kWs5P4LSuNd3X8auDOIY0YCf5XMu5gQ
+	 3JJ0B9MrYVk5tvul2IOPQ45tV2iI2lyGNEgOMdo50Dr1O36XMqhvpYWAeGJETz3puNTpi
+	 gcB+OidU9p7Emsqn+RLZYc5q0HPCdyoGn9mRBhwP5ItJ4nDfelwSt6Cznivp6SVHaFZGJ
+	 VX/c8MUj7gU900Qd1N2zF0tBdylv8bLy9EVR1etgBrHFXwBg5U2GBqszc4jgWrq4nqD4j
+	 WeLGP4cNN+7rZSBb9drWekp5BoAED07FzAgz6h7NjahWyU26NUGi5qMKZxaf9Qz/Q1Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eLCpSfTA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=K5E6Tzbu;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE506606A31C;
-	Wed, 28 Oct 2026 18:26:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0934C606A31A;
+	Wed, 28 Oct 2026 18:26:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eLCpSfTA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39F041F01825;
-	Wed, 28 Oct 2026 18:26:25 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=K5E6Tzbu
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 131F61F01825;
+	Wed, 28 Oct 2026 18:26:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793211985;
-	bh=0gJ63TWbbRb2gkJ4OLNgPhJRdl5/esQcqi60/g55Hps=;
+	s=korg; t=1793211988;
+	bh=PY37SMYDvirWPkZLaEVqqFdCndLeqSml7eI0WUGYfec=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eLCpSfTAbaWLLybE4FmBV+6fHbZGxoXAH7BE2nuu1JqFOdYXn9IYHNHItjEEHlDXq
-	 ZgOi+pGuR2JNpvrk1ueKsLySCYTGWCtC1wRXxo5J0dOU3gTQyZi/Q6UH9F2rqCOeF4
-	 FJjC3Z85iyxszVih8mm3/ev47Tn0qYq5qTeQWFbQ=
+	b=K5E6TzbueU4SDRxu41pMTBxbIoYUjIws+sk+liWOZB0Cksypjae5RIaqek2L6VkrM
+	 cQeD+bJOm5pW/GXKy8/uISXyTx2Sp76J5ICDZEBe66ZIHh42JUJA/vOwOli+lk0kmZ
+	 cFYV3Q9fYL9LHEkZfUFhOWK7dPJbjbHoWVAuoQh4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oleg Nesterov <oleg@redhat.com>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 5.15 571/571] signal: dont retarget shared signals in a dying thread group
-Date: Wed, 28 Oct 2026 18:01:58 +0100
-Message-ID: <20261028170021.590532093@linuxfoundation.org>
+	sashiko-bot@kernel.org,
+	Donggeun Yoo <donggeunyoo.kernel@gmail.com>,
+	Steven Rostedt <rostedt@goodmis.org>
+Subject: [PATCH 5.15 561/571] tracing: Fix 64-bit and signed histogram fields on 32-bit kernels
+Date: Wed, 28 Oct 2026 18:01:48 +0100
+Message-ID: <20261028170021.345555998@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -67,54 +68,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
 
-commit c0e659511d4f49087da095a95799edb5b775a705 upstream.
+commit 443d23176812803d0fa182b8d05ef066a7b8271f upstream.
 
-If the calling thread has blocked a signal then
-retarget_shared_pending() slingshots a shared pending signal to a
-sibling thread. Today it only skips PF_EXITING threads but not a
-coredumping thread.
+DEFINE_HIST_FIELD_FN() reads a trace event field and widens it to the u64
+the histogram uses as a key or a value:
 
-But if SIGNAL_GROUP_EXIT is set no thread in the thread-group can
-dequeue such signals anymore as get_signal() sends SIGKILL to every
-thread and prepare_signal() drops any other signal.
+	type *addr = (type *)(event + hist_field->field->offset);
 
-exit_signals() also returns early on SIGNAL_GROUP_EXIT. But neither
-sigprocmask() nor the mask restore in sigtimedwait() do.
+	return (u64)(unsigned long)*addr;
 
-Say a thread sleeps in sigtimedwait() and a sibling thread crashes. The
-sleeping thread gets woken by the zap call. It restores its mask on the
-way out and retargets a signal that was queued for the coredumping
-process. That means TIF_SIGPENDING is set on the coredumping task which
-zap_threads() had cleared. So a blocking write sees TIF_SIGPENDING and
-truncates the dump.
+unsigned long is 32 bits on a 32-bit kernel, so the intermediate cast
+discards the upper half of a 64-bit field, and widens a signed field by
+zero extension from 32 bits rather than sign extension from its own
+width. Five of the eight instantiations are wrong there: s64, u64, s32,
+s16 and s8.
 
-Stop retargeting signals when SIGNAL_GROUP_EXIT is set and avoid
-needlessly truncating coredumps.
+The cast came in with commit 79e577cbce4c ("tracing: Support string type
+key properly"), which also added hist_field_dynstring() and
+hist_field_pstring(). Those convert a char * to u64 and do warn without
+an unsigned long in between on 32-bit. DEFINE_HIST_FIELD_FN() converts an
+integer and never a pointer, so it gains nothing from the cast and only
+loses information.
 
-Fixes: e6fa16ab9c1e ("signal: sigprocmask() should do retarget_shared_pending()")
+Drop the intermediate cast and let the usual arithmetic conversions widen
+*addr according to its own type. unsigned long is 64 bits on LP64, so the
+two forms are identical there and 64-bit kernels are unaffected.
+
 Cc: stable@vger.kernel.org
-Acked-by: Oleg Nesterov <oleg@redhat.com>
-Link: https://patch.msgid.link/20260921-work-coredump-fixes-v3-5-8e4adb1619e6@kernel.org
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Link: https://patch.msgid.link/20260917015532.103081-1-donggeunyoo.kernel@gmail.com
+Fixes: 79e577cbce4c ("tracing: Support string type key properly")
+Reported-by: sashiko-bot@kernel.org
+Closes: https://lore.kernel.org/all/20260914054614.82A9B1F000FF@smtp.kernel.org/
+Signed-off-by: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/signal.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ kernel/trace/trace_events_hist.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/kernel/signal.c
-+++ b/kernel/signal.c
-@@ -2974,6 +2974,10 @@ static void retarget_shared_pending(stru
- 	sigset_t retarget;
- 	struct task_struct *t;
+--- a/kernel/trace/trace_events_hist.c
++++ b/kernel/trace/trace_events_hist.c
+@@ -294,7 +294,7 @@ static u64 hist_field_unary_minus(struct
+ {									\
+ 	type *addr = (type *)(event + hist_field->field->offset);	\
+ 									\
+-	return (u64)(unsigned long)*addr;				\
++	return (u64)*addr;						\
+ }
  
-+	/* Nobody dequeues them in a dying group, see get_signal(). */
-+	if (tsk->signal->flags & SIGNAL_GROUP_EXIT)
-+		return;
-+
- 	sigandsets(&retarget, &tsk->signal->shared_pending.signal, which);
- 	if (sigisemptyset(&retarget))
- 		return;
+ DEFINE_HIST_FIELD_FN(s64);
 
 
