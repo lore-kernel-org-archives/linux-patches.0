@@ -1,84 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793210595;
-	b=roaDrLxXczWT8S77vKgSAbpZHZnZEl11fDKrZIUO3n2MEuCcLn6CU9wTFNGwbhulfMVx
-	 W7V9I8g+fntIAttJXSMBu0xIia+tIlB7W6IlFSjxmByDa0dxjpOpFol7lByBZN8SPDL1T
-	 OkFYJfvvKayJvyBlUADFBcwlEUkeaC6fwe0ZbovsbJrKiJ0PPMiS9tnqliwgu185ucNpw
-	 K6NG5oO+/mQaE0Qs407VnvFBx0DKeMY1VeQCpma1qi9oAdDweQjGEyyZBbJtL8HLUFUTi
-	 7AfDrwnKxxou8EtAkr3kxJwBe6ntQR5270qAyXu7lUfdTRWoy774u1EVCGl2agPJPgA==
+	t=1793210598;
+	b=Nz6UhUMzgpz+7xnbrrdfS8GNsidOhpe2IJrWU/9bO0GzNdTqiHX0WtXOIikn4WJmxnaK
+	 fJPkjmPG9XqtMlX5DepsVfasfsEeVV6r2LMX/v4VjVowhDObe4rt141kbIMfqsr3tA712
+	 nmLbsrnmVvWN/bWFgBiq6h71rV/74LD3e8Poun5QqQXAMys54KcCj27ftRMC17DxRNQNQ
+	 ewEJiOCbtR9T/c0P6WMiwMdi2eMPORGkNk/N8l7t9xjJ31tqvtOwu2pokz+ultpcZmQmJ
+	 8Es+2KT7T7apOV6VuLGgwBXwPKchSeyQ6thfiltPZiPhl7aHmrVLoiVH1MTb9qHG2Gw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793210595;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793210598;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=OV4kgtp19ypS/WvAeIrS0yr5jptEh85sQDUIeR57iz0=;
-	b=bvlDwvYa9T9u355m4sQ5xUvGeYtg1JBW9sVMulyhcmAYrX+Rz9wxIgobcpxm4Kl4Oyv3
-	 Q8RXO9xr9pJ54IH58gTN80N7InOF2Glrp857tFokWa6tvm+FyU+pbPeqrzwVILXUh6cr3
-	 4GtqmQquMaj1DF2cVN3/2xA2ejXAoJyGh3FggsO3jzH4DHlLrthbRGlCjYaPFSs/o+pKH
-	 NwazmjRh+VaNZqEqykflqV2JedhOgjntrc61Xm8ppYHBOu20h8KKSj/c4TJPoGBf0orDP
-	 PVJTnl6C0qmYi7Ih7H2vpydTxXh4j83wWc0mWkp3LUSdl+BAMbp8ZZNY1+si5uvetfQ==
+	bh=go9E8kQtiyrTTqbIZHphrV8ALp2C6jEmBc6qjgHQAuk=;
+	b=uR7lTC2eLK8m/V9/fo0ej1VbHrvkk+f8dfN5Qq6pPFgOeWFx83ClGxLPb3q1mBmNdyZi
+	 TY23dMzzwsqEeLehIUoM/hxLNbnkTCasqq/XRVNahojGSJ9EKQoVbVv79AoPiVQaWEAra
+	 2fLlhjVloACpTccN+hkleeX/qwUrvm1/ynlyGOlMKEAAj0ws3df/lavtpfJ1neUNmQms1
+	 2iI6M8txiJ7n2+gka8wWipr6qXn9j0EqzANhDRam/Fze2ZUDTAB730U2IHDybi+KbTQCd
+	 6i8uEr42CM+kZDWalNCOjBXAcZ4qS8SEy9h/SK08NPIGdf353DqEn6RsgGeY66HMRkQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MpUlURRO;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=crRlF4QL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57994606A31C;
-	Wed, 28 Oct 2026 18:03:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DA63606A321;
+	Wed, 28 Oct 2026 18:03:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MpUlURRO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75B361F01825;
-	Wed, 28 Oct 2026 18:03:14 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=crRlF4QL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CBB01F01825;
+	Wed, 28 Oct 2026 18:03:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793210595;
-	bh=OV4kgtp19ypS/WvAeIrS0yr5jptEh85sQDUIeR57iz0=;
+	s=korg; t=1793210598;
+	bh=go9E8kQtiyrTTqbIZHphrV8ALp2C6jEmBc6qjgHQAuk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MpUlURROHGYLvTmBUwE7MZetkAVS/+BReY77v+YT8OMTr6JqwThw2imrQr4AergYW
-	 V0vVYVuA4Y7xhE+BUJQ52DoIiAL9p1mxK1Fd0Rn/7cSvk5+UakE9hUvFgqdK/kDDGj
-	 L8YuuiEh+KRQpYU9qgNmziJutuBmb1NymwRMj6Ik=
+	b=crRlF4QLNoSRBtWH8H1frBArEQ3N09ROS2z22fHBPG7Fvp2gkNqtBRwUM0dQ7M8mu
+	 r7H2iiDO09nXcFZGqmHm+6IWknlVZLZae8JBJfYwg47sePQ/u+3dUnCgE04F4zVXtn
+	 UQUQEvpDahUEBOs1zZZhbdHxTTY/kIAHhGAn9iZ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hugh Dickins <hughd@google.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
-	Alexandre Ghiti <alexghiti@rivosinc.com>,
-	"Aneesh Kumar K.V" <aneesh.kumar@linux.ibm.com>,
-	Christian Borntraeger <borntraeger@linux.ibm.com>,
-	Chris Zankel <chris@zankel.net>,
-	Claudio Imbrenda <imbrenda@linux.ibm.com>,
-	David Hildenbrand <david@redhat.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
-	Greg Ungerer <gerg@linux-m68k.org>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Helge Deller <deller@gmx.de>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	John David Anglin <dave.anglin@bell.net>,
-	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
-	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Max Filippov <jcmvbkbc@gmail.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Michal Simek <monstr@monstr.eu>,
-	Mike Kravetz <mike.kravetz@oracle.com>,
-	"Mike Rapoport (IBM)" <rppt@kernel.org>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Qi Zheng <zhengqi.arch@bytedance.com>,
-	Russell King <linux@armlinux.org.uk>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Will Deacon <will@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	co+8eacd4fa193b1b28@bugs.sh,
+	Xiang Mei <xmei5@asu.edu>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 079/571] arm64: allow pte_offset_map() to fail
-Date: Wed, 28 Oct 2026 17:53:46 +0100
-Message-ID: <20261028170009.901738426@linuxfoundation.org>
+Subject: [PATCH 5.15 037/571] ALSA: usb-audio: Clamp implicit feedback packet count to URB capacity
+Date: Wed, 28 Oct 2026 17:53:04 +0100
+Message-ID: <20261028170008.906818560@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -100,68 +69,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hugh Dickins <hughd@google.com>
+From: Xiang Mei <xmei5@asu.edu>
 
-[ Upstream commit 52924726f4c06b3f77de75fb665e6efd8e777d07 ]
+[ Upstream commit 76a986c980bb502c7688d605ac7a67fd257a9a1b ]
 
-In rare transient cases, not yet made possible, pte_offset_map() and
-pte_offset_map_lock() may not find a page table: handle appropriately.
+data_ep_set_params() allocates each data URB for exactly u->packets
+isochronous frames, so urb->iso_frame_desc[] has u->packets slots and
+ctx->packets is the driver's only record of that limit. For an implicit
+feedback sink, snd_usb_queue_pending_output_urbs() overwrites it with the
+sync source's packet count, which is calculated independently from the
+capture endpoint's parameters. When that count is larger,
+prepare_playback_urb() and prepare_silent_urb() can write
+iso_frame_desc[] past the allocation; their existing bounds limit payload
+bytes, not the descriptor index.
 
-Link: https://lkml.kernel.org/r/35e46485-8499-4337-c51f-b8fa495a1a93@google.com
-Signed-off-by: Hugh Dickins <hughd@google.com>
-Acked-by: Catalin Marinas <catalin.marinas@arm.com>
-Cc: Alexander Gordeev <agordeev@linux.ibm.com>
-Cc: Alexandre Ghiti <alexghiti@rivosinc.com>
-Cc: Aneesh Kumar K.V <aneesh.kumar@linux.ibm.com>
-Cc: Christian Borntraeger <borntraeger@linux.ibm.com>
-Cc: Chris Zankel <chris@zankel.net>
-Cc: Claudio Imbrenda <imbrenda@linux.ibm.com>
-Cc: David Hildenbrand <david@redhat.com>
-Cc: "David S. Miller" <davem@davemloft.net>
-Cc: Geert Uytterhoeven <geert@linux-m68k.org>
-Cc: Greg Ungerer <gerg@linux-m68k.org>
-Cc: Heiko Carstens <hca@linux.ibm.com>
-Cc: Helge Deller <deller@gmx.de>
-Cc: "H. Peter Anvin" <hpa@zytor.com>
-Cc: Ingo Molnar <mingo@kernel.org>
-Cc: John David Anglin <dave.anglin@bell.net>
-Cc: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-Cc: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: Max Filippov <jcmvbkbc@gmail.com>
-Cc: Michael Ellerman <mpe@ellerman.id.au>
-Cc: Michal Simek <monstr@monstr.eu>
-Cc: Mike Kravetz <mike.kravetz@oracle.com>
-Cc: Mike Rapoport (IBM) <rppt@kernel.org>
-Cc: Palmer Dabbelt <palmer@dabbelt.com>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Qi Zheng <zhengqi.arch@bytedance.com>
-Cc: Russell King <linux@armlinux.org.uk>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Cc: Thomas Gleixner <tglx@linutronix.de>
-Cc: Will Deacon <will@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Stable-dep-of: a77644d009de ("arm64: mm: Fix the lockless page-table walk in show_pte()")
+The reproducer uses a high-speed UAC2 device declaring bInterval 1 for
+implicit feedback capture (8 packets) and bInterval 4 for playback
+(1 packet). On the first capture completion after the stream starts, it
+accesses seven descriptors spanning 112 bytes beyond the one-packet URB:
+
+  BUG: KASAN: slab-out-of-bounds in prepare_playback_urb (sound/usb/pcm.c:1560)
+  Write of size 4 at addr ffff88801e696ad0 by task vhci_rx/178
+   prepare_playback_urb (sound/usb/pcm.c:1560)
+   prepare_outbound_urb (sound/usb/endpoint.c:340)
+   snd_usb_queue_pending_output_urbs (sound/usb/endpoint.c:501)
+   snd_complete_urb (sound/usb/endpoint.c:1834)
+   __usb_hcd_giveback_urb (drivers/usb/core/hcd.c:1657)
+   usb_hcd_giveback_urb (drivers/usb/core/hcd.c:1741)
+   vhci_rx_loop (drivers/usb/usbip/vhci_rx.c:107)
+   kthread (kernel/kthread.c:436)
+  The buggy address belongs to the object at ffff88801e696a00
+   which belongs to the cache kmalloc-256 of size 256
+  The buggy address is located 0 bytes to the right of
+   allocated 208-byte region [ffff88801e696a00, ffff88801e696ad0)
+
+Record the allocated packet count per endpoint and clamp both the adopted
+count and the packet-size copy to it. Fold the Format Type II delimiter
+into urb_packs before the allocation loop so the recorded limit matches
+every URB.
+
+Fixes: cf044e441902 ("ALSA: usb-audio: Update the number of packets properly at receiving")
+Reported-by: co+8eacd4fa193b1b28@bugs.sh
+Closes: https://lore.kernel.org/all/22xPn8drvIUtYgVeQnBiNqXuevOTpBAjepLz%40bugs.sh/
+Cc: stable@vger.kernel.org
+Assisted-by: Claude:claude-opus-5
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
+Link: https://patch.msgid.link/20260912200530.1955491-1-xmei5@asu.edu
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/mm/fault.c | 3 +++
- 1 file changed, 3 insertions(+)
+ sound/usb/card.h     |  1 +
+ sound/usb/endpoint.c | 12 +++++++-----
+ 2 files changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/arch/arm64/mm/fault.c b/arch/arm64/mm/fault.c
-index d293aac8c554c..39f03d18717eb 100644
---- a/arch/arm64/mm/fault.c
-+++ b/arch/arm64/mm/fault.c
-@@ -176,6 +176,9 @@ static void show_pte(unsigned long addr)
- 			break;
+diff --git a/sound/usb/card.h b/sound/usb/card.h
+index ac5505ce046de..0d860c57d9d9d 100644
+--- a/sound/usb/card.h
++++ b/sound/usb/card.h
+@@ -115,6 +115,7 @@ struct snd_usb_endpoint {
+ 	unsigned int phase;		/* phase accumulator */
+ 	unsigned int maxpacksize;	/* max packet size in bytes */
+ 	unsigned int maxframesize;      /* max packet size in frames */
++	unsigned int max_urb_packs;	/* packets allocated per data URB */
+ 	unsigned int max_urb_frames;	/* max URB size in frames */
+ 	unsigned int curpacksize;	/* current packet size in bytes (for capture) */
+ 	unsigned int curframesize;      /* current packet size in frames (for capture) */
+diff --git a/sound/usb/endpoint.c b/sound/usb/endpoint.c
+index aab0ea614f4a8..5219111b79e58 100644
+--- a/sound/usb/endpoint.c
++++ b/sound/usb/endpoint.c
+@@ -496,9 +496,10 @@ int snd_usb_queue_pending_output_urbs(struct snd_usb_endpoint *ep,
  
- 		ptep = pte_offset_map(pmdp, addr);
-+		if (!ptep)
-+			break;
+ 		/* copy over the length information */
+ 		if (implicit_fb) {
+-			ctx->packets = packet->packets;
++			ctx->packets = min_t(int, packet->packets,
++					     ep->max_urb_packs);
+ 			memcpy(ctx->packet_size, packet->packet_size,
+-			       packet->packets * sizeof(packet->packet_size[0]));
++			       ctx->packets * sizeof(packet->packet_size[0]));
+ 		}
+ 
+ 		/* call the data handler to fill in playback data */
+@@ -1247,15 +1248,16 @@ static int data_ep_set_params(struct snd_usb_endpoint *ep)
+ 		ep->nurbs = min(max_urbs, urbs_per_period * ep->cur_buffer_periods);
+ 	}
+ 
++	if (fmt->fmt_type == UAC_FORMAT_TYPE_II)
++		urb_packs++; /* for transfer delimiter */
++	ep->max_urb_packs = urb_packs;
 +
- 		pte = READ_ONCE(*ptep);
- 		pr_cont(", pte=%016llx", pte_val(pte));
- 		pte_unmap(ptep);
+ 	/* allocate and initialize data urbs */
+ 	for (i = 0; i < ep->nurbs; i++) {
+ 		struct snd_urb_ctx *u = &ep->urb[i];
+ 		u->index = i;
+ 		u->ep = ep;
+ 		u->packets = urb_packs;
+-
+-		if (fmt->fmt_type == UAC_FORMAT_TYPE_II)
+-			u->packets++; /* for transfer delimiter */
+ 		u->buffer_size = maxsize * u->packets;
+ 		u->urb = usb_alloc_urb(u->packets, GFP_KERNEL);
+ 		if (!u->urb)
 -- 
 2.53.0
 
