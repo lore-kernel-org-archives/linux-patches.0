@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793212815;
-	b=4Om0VpC8e2CFSWTrK4UwN40RTiE/3vhKQwSAqFahomYdfWPGLu6Jv4C6hX789nFcufId
-	 qBXS68Rofh1g+95quDARzycGxwyNx5PybxzSK0Z9zQlavZ+G6laXHYBiNQ9m2rk1NMe4n
-	 4ZKnF+pFvh4pEaIdefPwRmno3exxwj3/BvMdu/6KUftKVh24yIFs0cZNgndGao4H/RTVu
-	 wnk8zZ8TWuMqvkcZKs+vTThIWt06soU/NQJNgNwNpVxvnczHHs0EzKEmKx79rpTfCa3bn
-	 2E4t/N0jwYrb8RXmoIMODxvnXvhhtmEjLthlWvaa5SPIb6mTAv+3Y40i9kwXIQX+Eog==
+	t=1793212817;
+	b=H/GumABBRDyt5p1QC/91iFe5ZAv8FepoZ9EEy9/8lEnUhY0or/KhkeGKs5tl5WYhGMFG
+	 2WnYxXGDJJTvOIUBsTTvMnEPGCdSmoRpgqioWUcn5YeOVgpCpDMtq7Wg3vKeEUycKM81Y
+	 Q/rneb1LkSHu+58opDNbGmdJoc3w5l3Ro+odvFr03S+VFajhfdonGzfRtoE9tn7I8UBpW
+	 knw8HSC1e9esBRg49l1nTiGq7UpSoxPywKTa/IeWS6vBGINWQGoFqcbJeLm/ScsTGKmAC
+	 YQ5ioBfv27jtMtXNIRhDVdOjYeOYlxsVXz2T+6XjDZm1N6J2nbUwLIPnItuqoalvBdg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793212815;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793212817;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ihKs/0fGrLhRGOnDBcI1/YJssryCFrLllCj+Ze4JHUw=;
-	b=jCKoy9eZQ8ClddL3CSd7owRM4Ffmz7AkiETgHz2OQKNMSIObbkXX/4b++XyyXn8QjfLe
-	 aSw6aKeUmoNY02hDaDcs8uMWDgFrR4oV0256169Wti3Pca0FQmVjCLw3NWh9CwczpC5uO
-	 KPK55zE2tvjcCe/BiwVq7fAsrNY74sxXscPnwonjrQsNzWQWVru/qvBqXRXoend7tffy4
-	 uY/zt13sVD7K45W57ynsx3akizYIsF2yId+hvzjX1f6RTnQuvjds8Z/vLiQmd+NeBfO91
-	 dNZj2QNglnqbgq4EEXslHzLbY6jZnqG2bhhW98D4dq1egl3WxfJlAP1m4hvdwZbejrg==
+	bh=t67Spv4pO8a80NhBdMvT8FROKSkcMk97MlOzhXdZRUY=;
+	b=JiK8o0XEscOZp+TsXH6qyTuuCvXz8EkPoeXFJvHjHjBElr7u4VfcXaEeGjoXWDPFWMEJ
+	 6i9wU0juWWDnlPneEiW/763GhTdYASnG3oeyRLOeqD6j3H06bopocWeSv4oYMwEfLnRJC
+	 gkYcxZtdR+8MXAC7DEpsPfLXO1siQ5usY1hQ/Dzqr2E4xwB7yGtrVr6JZyGn+Zn1rVKGK
+	 uX2QwynqpWZg2FyOQprqIcgrpdekMstQYo6Ip5KRmYpMSH3Dn9O59kZ1T0RGxZDkWXEiH
+	 CIgc3VmiqwLdpx5KceO1NsBU8mazxDgjQVTd2GIGRu445M9kKHG5YKiwTTjsF9K6iTA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Dd3JgWT2;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="XnMPC/AA";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6D7E606A31A;
-	Wed, 28 Oct 2026 18:40:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7078B606A31E;
+	Wed, 28 Oct 2026 18:40:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Dd3JgWT2
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 023F81F01825;
-	Wed, 28 Oct 2026 18:40:13 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XnMPC/AA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C43331F01829;
+	Wed, 28 Oct 2026 18:40:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793212814;
-	bh=ihKs/0fGrLhRGOnDBcI1/YJssryCFrLllCj+Ze4JHUw=;
+	s=korg; t=1793212817;
+	bh=t67Spv4pO8a80NhBdMvT8FROKSkcMk97MlOzhXdZRUY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Dd3JgWT2WlbVE7o3N0l3MopmsNzn/WgTWExvAcAaUaKRg8LhQm6t+rKPXOG/U14cA
-	 EXrXFrLmTg/2CZoC3LYspup03S7/x54ahXTuNfPtUNNTWAGUfjsuN75kKkDqkZ/mLR
-	 BFJonv6Ql1gUJFT2gxMsqE4FQ2xzzfSKvYkvLy4I=
+	b=XnMPC/AASzAab0TxigCN0L6i/wqBU66cpL7D4QR+jMcA8WFmaLevhs6IgYGF17N8G
+	 Am4Wp8KsdnMfLSSp9JESdZxra212DSRd8HYx9aLAF9drvFiB3P2l/tE7hRTuN06ygH
+	 Mp3isFuPh5OeQb0mqJopapQva2IuRJl98dtlGAAg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Prashanth K <prashanth.k@oss.qualcomm.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 6.1 0285/1887] usb: typec: ucsi: Get the connector fwnode based on reg value
-Date: Wed, 28 Oct 2026 17:39:41 +0100
-Message-ID: <20261028170505.715240895@linuxfoundation.org>
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Benson Leung <bleung@chromium.org>,
+	Jameson Thies <jthies@google.com>
+Subject: [PATCH 6.1 0286/1887] usb: typec: ucsi: displayport: Current CAM OOB index fixup
+Date: Wed, 28 Oct 2026 17:39:42 +0100
+Message-ID: <20261028170505.737639274@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,60 +69,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Prashanth K <prashanth.k@oss.qualcomm.com>
+From: Jameson Thies <jthies@google.com>
 
-commit 6c51f09c6db5868a5090e8dd4d7764660c87f1ad upstream.
+commit ea31c6498c61307dc0d8ce338a7f268cb8cbdd57 upstream.
 
-ucsi_find_fwnode() currently maps UCSI connectors to Device tree
-connector nodes based on the order in which connector child nodes
-are described in DT.
+Update ucsi_displayport_enter() to return invalid error when the PPM
+reports an current alternate mode greater than or equal to
+UCSI_MAX_ALTMODES. While here, remove 0xff current cam assignment on
+failed GET_CURRENT_CAM response.
 
-This can fail because the ordering of child nodes isn't guaranteed
-in Device-tree. For example, DTB may contain connector@1 before
-connector@0, causing connector numbers to be associated with the wrong
-fwnode. As a result, role switch and Type-C notifications can be
-delivered to the wrong remote endpoints.
-
-Fix this by using the "reg" property of each connector to match
-its corresponding fwnode. While at it, if the reg property isn't
-present, then fall back to the old method.
-
-Fixes: c1b0bc2dabfa ("usb: typec: Add support for UCSI interface")
+Fixes: 04cec690b1fd ("usb: typec: ucsi: displayport: Fix OOB altmode array index")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Prashanth K <prashanth.k@oss.qualcomm.com>
 Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://patch.msgid.link/20260916042808.2879079-1-prashanth.k@oss.qualcomm.com
+Reviewed-by: Benson Leung <bleung@chromium.org>
+Signed-off-by: Jameson Thies <jthies@google.com>
+Link: https://patch.msgid.link/20260917032008.1701888-1-jthies@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/ucsi/ucsi.c |   17 ++++++++++++++---
- 1 file changed, 14 insertions(+), 3 deletions(-)
+ drivers/usb/typec/ucsi/displayport.c |    9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
---- a/drivers/usb/typec/ucsi/ucsi.c
-+++ b/drivers/usb/typec/ucsi/ucsi.c
-@@ -1092,10 +1092,21 @@ static struct fwnode_handle *ucsi_find_f
- {
- 	struct fwnode_handle *fwnode;
- 	int i = 1;
-+	int ret;
-+	u32 port;
+--- a/drivers/usb/typec/ucsi/displayport.c
++++ b/drivers/usb/typec/ucsi/displayport.c
+@@ -71,11 +71,14 @@ static int ucsi_displayport_enter(struct
+ 	if (ret < 0) {
+ 		if (ucsi->version > 0x0100)
+ 			goto err_unlock;
+-		cur = 0xff;
+ 	}
  
--	device_for_each_child_node(con->ucsi->dev, fwnode)
--		if (i++ == con->num)
--			return fwnode;
-+	device_for_each_child_node(con->ucsi->dev, fwnode) {
-+		ret = fwnode_property_read_u32(fwnode, "reg", &port);
-+		if (ret < 0) {
-+			if (i == con->num)
-+				return fwnode;
-+		} else {
-+			if (port == con->num - 1)
-+				return fwnode;
-+		}
+-	if (cur < UCSI_MAX_ALTMODES) {
+-		ret = dp->con->port_altmode[cur] == alt ? 0 : -EBUSY;
++	if (cur != 0xff) {
++		if (cur < UCSI_MAX_ALTMODES)
++			ret = dp->con->port_altmode[cur] == alt ? 0 : -EBUSY;
++		else
++			ret = -EINVAL;
 +
-+		i++;
-+	}
- 	return NULL;
- }
+ 		goto err_unlock;
+ 	}
  
 
 
