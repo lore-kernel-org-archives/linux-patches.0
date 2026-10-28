@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793212304;
-	b=gVTTxW7H2otJgc4g1ceC/3WPwNKp/cSVp4kidD1UgdQlD/xwHDZqs2b5Sqoa/dPFtiaz
-	 yt3qR5xdgxNonXWGVk06N5vW6QMmzRkYmxE5WZXBP0uPuL4JrVhyTlx65LPZd1YGjfEAL
-	 xPiwUVNdnVGmmHeFEib0kFdUtw2NR2R99DIUVbNgStCC6/e+JgY+LGw3ghYXvDlHiyoY3
-	 y1/Npk9yqXBBWaOx/ZFd/UGh42hlJnD4GQyAsr9RrIMSq/tRrl1uxaulHgup90Nu6Stov
-	 LksOjrx7pOGbzxcv5jTDeLptxmkGvL9IJlB55R5iLOpLrzDLLYc6nkazcwPSjKm+aYw==
+	t=1793212308;
+	b=if06ylFG3J+UkuSs2dPnOoL1oXTLWzwuVJlrT8zaN1yfWJDZEDPZ64jViLIbdo92eAuT
+	 LpshovfJWg7ihh4NNYTD5mV5GcXI6+BzpwK3SvX3ETCVzcDwthIjr97Dht+BBxMtlDdOu
+	 GCTIF82mzunfYJdM7XLvWwgTfusx0qCKheAZX2EuXpH9k79idYfnTBhDZJ2EG8HW61ZDo
+	 ZATN7afupNivyzUPxC8YrVxusGSnCdisWHXAzRyu48XZu5OEPrvqDQKtM0NSPXX8+tQgL
+	 ZJ2Og9xmOg6fuDt7nM8PjzsKo9o0hfaRo+FqevRYLU1KoFg6wrX8oAvEOFVp1l7Dr0w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793212304;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793212308;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5tnyiGQX1tAlCWvXEePqS9BeBdwQFmaxw7xQ9QF6ANs=;
-	b=fAOLJUShBjB/p/ylOYKRUwiy/io5MU9+H1W3cV6BKAnM5w5rCdUT3qXtQr8ADeAAARn/
-	 ERpI9vf5J6ye77Mrz27fQp/BvovXrjG7L8mVYeEyrKnQ9nBp6gBjXE1VEkpVrycN6YRCq
-	 AWeRy4UOm+IggiQu7LkGoqlovPdSO0pRCGWPG2G3U81FOwa0MIEMbUcnc9MV8Uo+LX+yG
-	 vTJxoumy/xWP3tCHa0E8U6J9xhuOlD5GClxaGr/WHg6S7CXZbMa8GYjIXMyaI3GF21CAp
-	 V4mQ8zIoUZunqfH1HOTPG9OVDYC9DKQe3Lr2GMxuYONN5f6H5ui5sGefM2SeFf4pC/w==
+	bh=EJxBTjYfLDQhTDTRdxquYgCPQ1LCpwGtrPBzuq1cjLc=;
+	b=gkIgwscITf9YZIMTOSxhyNHizwflNsNajOMi9QAjIH7y7zTm8gwbsPD2rUNkkrr+AIL8
+	 U+1A4uEnnF7M5VCbH8L/EDPJs6zwvCHOB7zWwynGG0rBE/EKOJEQxj+EoFxXDxDrUkxQk
+	 au+zhITv2RLM82YH1AFT5E305teMmTTZuiNZ1z5gxv9NT1K3+/PpzCoJx3HjuFLjo8NV4
+	 sxZMCGKNHORoz0jScmjxC/R4zwnxv+U7d2REmSlg6OLonZPMAw2HDXJIklC0KKnUzHOqZ
+	 xRvd+tzqrC2XU2iSlB8wL7EGAPDtCf3uP/VTdJz/X08m7UJEGGY0uCm3oh3KmfDwh0w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LsyNj+7l;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="oewl8nT/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AEFF606A32A;
-	Wed, 28 Oct 2026 18:31:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E07E606A320;
+	Wed, 28 Oct 2026 18:31:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LsyNj+7l
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D784C1F031E1;
-	Wed, 28 Oct 2026 18:31:43 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oewl8nT/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CA921F031E3;
+	Wed, 28 Oct 2026 18:31:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793212304;
-	bh=5tnyiGQX1tAlCWvXEePqS9BeBdwQFmaxw7xQ9QF6ANs=;
+	s=korg; t=1793212307;
+	bh=EJxBTjYfLDQhTDTRdxquYgCPQ1LCpwGtrPBzuq1cjLc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LsyNj+7lPuwK6TxCd1WI9W0Mnb6MJUEI07RCAxi/N7Ly0WysXhJp9Fk8sjFah8Cry
-	 h9d1Y5d48h/3TCPBy+xAS2K6S5r2/mv1Lr0TvZDJ9hrqQrjeRTHzPIj2cv90kxo75E
-	 3wmuWrzl7iuvYKLQLRaG1GZ5zf9BEDDFk5gXi9Zk=
+	b=oewl8nT/0ifuSLOZf8YxscZLkExUolA+/zJyReKbqaeYnXYeG9Q9nefY9MnuuaxUx
+	 mKh5HPeX/1bzP/VtBtni6K1bXN+uZZ9YBzu0UQfg7GHxQEBZhkuL13fWsSwHnUmgdh
+	 RIAP8iBpAaV4wgeFEowm+pb5/4HVpRDj55F4CvBc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Moudy Ho <moudy.ho@mediatek.com>,
-	Johan Hovold <johan@kernel.org>,
+	Narasimharao Vadlamudi <ahmisaranrao@gmail.com>,
+	Detlev Casanova <detlev.casanova@collabora.com>,
 	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0106/1887] media: platform: mtk-mdp3: fix NULL deref on failed SCP lookup
-Date: Wed, 28 Oct 2026 17:36:42 +0100
-Message-ID: <20261028170501.646284752@linuxfoundation.org>
+Subject: [PATCH 6.1 0107/1887] media: rkvdec: Propagate platform_get_irq() errors
+Date: Wed, 28 Oct 2026 17:36:43 +0100
+Message-ID: <20261028170501.669181418@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -70,41 +70,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Narasimharao Vadlamudi <ahmisaranrao@gmail.com>
 
-[ Upstream commit 90368323fb244da0504e3da37a182f8e89bcc3b9 ]
+[ Upstream commit c37aca64206fafe938119e801a3fd10a537a051f ]
 
-Add the missing sanity check after looking up the SCP to avoid
-dereferencing a NULL-pointer in case its driver has not yet been bound.
+platform_get_irq() returns a positive IRQ number on success and a
+negative error code on failure. It no longer returns zero. The driver
+currently returns -ENXIO for all failures, which loses useful errors
+such as -EPROBE_DEFER.
 
-Fixes: 61890ccaefaf ("media: platform: mtk-mdp3: add MediaTek MDP3 driver")
-Cc: stable@vger.kernel.org	# 6.1
-Cc: Moudy Ho <moudy.ho@mediatek.com>
-Signed-off-by: Johan Hovold <johan@kernel.org>
+Return the error from platform_get_irq() directly.
+
+Fixes: cd33c830448b ("media: rkvdec: Add the rkvdec driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Narasimharao Vadlamudi <ahmisaranrao@gmail.com>
+Reviewed-by: Detlev Casanova <detlev.casanova@collabora.com>
 Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
-[ Adapted NULL-check placement to the older direct platform_get_drvdata() lookup. ]
+[ adjusted the patch path to drivers/staging/media/rkvdec/rkvdec.c. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/mediatek/mdp3/mtk-mdp3-core.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/staging/media/rkvdec/rkvdec.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/platform/mediatek/mdp3/mtk-mdp3-core.c b/drivers/media/platform/mediatek/mdp3/mtk-mdp3-core.c
-index 97edcd9d1c817..9a11064ecfa95 100644
---- a/drivers/media/platform/mediatek/mdp3/mtk-mdp3-core.c
-+++ b/drivers/media/platform/mediatek/mdp3/mtk-mdp3-core.c
-@@ -241,6 +241,11 @@ static int mdp_probe(struct platform_device *pdev)
- 		goto err_destroy_clock_wq;
- 	}
- 	mdp->scp = platform_get_drvdata(mm_pdev);
-+	if (!mdp->scp) {
-+		ret = -EPROBE_DEFER;
-+		goto err_destroy_clock_wq;
-+	}
-+
- 	mdp->rproc_handle = scp_get_rproc(mdp->scp);
- 	dev_dbg(&pdev->dev, "MDP rproc_handle: %pK", mdp->rproc_handle);
+diff --git a/drivers/staging/media/rkvdec/rkvdec.c b/drivers/staging/media/rkvdec/rkvdec.c
+index b5847259f4541..0b19a089e56ca 100644
+--- a/drivers/staging/media/rkvdec/rkvdec.c
++++ b/drivers/staging/media/rkvdec/rkvdec.c
+@@ -1044,8 +1044,8 @@ static int rkvdec_probe(struct platform_device *pdev)
+ 	vb2_dma_contig_set_max_seg_size(&pdev->dev, DMA_BIT_MASK(32));
  
+ 	irq = platform_get_irq(pdev, 0);
+-	if (irq <= 0)
+-		return -ENXIO;
++	if (irq < 0)
++		return irq;
+ 
+ 	ret = devm_request_threaded_irq(&pdev->dev, irq, NULL,
+ 					rkvdec_irq_handler, IRQF_ONESHOT,
 -- 
 2.53.0
 
