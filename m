@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793217145;
-	b=a89gJ/HPe6GMzOQ22eaa23TIuQ4TisQoDzKVTKRNesoWnxZXPWaNX/ZRKEgTv7gngahu
-	 dFfEWwtYmWTFCLBgkn6ON2PkQmh9o9dM+KTZ+AR4m1tmVzNV1xJy36+wSl4+zWw23q3E3
-	 D11tw4xuVI/eUn/WkmT+LnzSWS7PBLmFcwigyxzhpqu3mNQJvqXL6inbuKSjzibHsfiBq
-	 CBzETY9MyhZu/LRW+zzLz3ifT1wNGokQyfriusPSp6TE1ich/V5VLecsZKVFyx2VWCvcO
-	 l373WI4tZG7gfqviWDSe3TP7BLVl6l92iCxPQzyjxlk9EqjHebMagOwuRPHi5fwBGsA==
+	t=1793217148;
+	b=QgbiLCcbHURluJXSu2qPcUAKIqZ33YOLg9Koz1O7XUFIadubJPnlFu0y6znYdOZQm1y2
+	 XInoNxl2wO90mCBTS2jCz/UcTtVcIn+jYW5yvy8EvYDwg1xJdiNt5zAFV2ovY6BbliQb6
+	 a/Khc/tybXMRy3DT9Z8DkFnxs+Umdz6ivItpLrxGmVFKeHGmlTT97SJuoBRPjeGb8jIFC
+	 4rLQ7WwDVUoWuorYHDd0c0+fZal9Y3t3AsrSuEGvL6QkHTI81gCl0Abo1RszUNc0aRnkh
+	 XonmdIDDAd9539MDUiqZVD4XFOf0Vdb/EZL5c/5ktPR+DU4cZoG3iaHZemnpZphjEIw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793217145;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793217148;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Wq+yKL6nfqrXZLeVYGsxAL7aCFjJcCyuudz7p/ROXyw=;
-	b=ii4vGwG2k1aLR8rjPf22QV0Tw29VJFayIVg1cICa9nDJS4eRTSuK4KOvf2IZC7GQQQiB
-	 ikz76Eql/H+ijU6uB3RQsr8VWB7MpdxUeGObcFc7A4f11fbN8Oq2GgmsIcp55KhnrkBAd
-	 dHdeXPsFYFpanP4vWjZRRQaVOvNM/3qoRFJVtLl87huBEmSOAqCH7Ek1Y9nYuQ59KWuxJ
-	 u8fMI/MpLtZ5wydoXg5fpgmQacmU9dyjnqJq5sYkkxyhlNHZ6LoNrq5dXabs5iOVoZPRV
-	 hvBFbcxRUuB2HjyuuLpXc5Tq/9SHARgtxo2GwVV/+hLD31W9YJmN5NUvztGMaFBpYuQ==
+	bh=1YYmqEcwa9LpTADnJNeqXlXqO6coJfIjKyqS1KmHz+Y=;
+	b=sga2BfFsTCd8UDICGi5k0UP+p4o0gzs9mEOjXfS5DkQCWuKG8a31R2Jq5lpFJP4Al+tV
+	 Rcl4MTEx8aKS5AoYgZE5EE5o8CDyl+bHSvidyfRAQZD4h6hRdAPgmR7ov4ViuOjYezNuk
+	 oUguPjtUZjR+pFZKtGUilQLE+O7i0n84VtlRcwsL5rEGIofHbcQkSg7nNKFkwQDXKhTE0
+	 muKHuJR5/ZL0W9W2jMRO2r3LvWuCCuZstgtlOyO4FiGmzFtRBv5k7fU3riPUHBY+pMRsu
+	 42N0rhzFFM3RedF53iqT/laI1g90Ux2LWQ1oLomvqEY8HUmA1mothhq8MmfSmSMIZNA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IWX6qPkS;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uFM9w4Ks;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66B6A606A31C;
-	Wed, 28 Oct 2026 19:52:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49A05606A31F;
+	Wed, 28 Oct 2026 19:52:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IWX6qPkS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2E401F01825;
-	Wed, 28 Oct 2026 19:52:24 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uFM9w4Ks
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99BB01F01825;
+	Wed, 28 Oct 2026 19:52:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793217145;
-	bh=Wq+yKL6nfqrXZLeVYGsxAL7aCFjJcCyuudz7p/ROXyw=;
+	s=korg; t=1793217148;
+	bh=1YYmqEcwa9LpTADnJNeqXlXqO6coJfIjKyqS1KmHz+Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IWX6qPkSbexFJjgieRvqVSPnvutJIX37FbypuXcGYixqRRyfPKomzrTUBqrni1jhT
-	 3qWUrZKHPKnJIIEHQ7jgtvMkFOHgYOdS7jWe9tnychqMo8mevNojwvPl8z5fFCtG1m
-	 2LkD0nYoTot1fOTISJbIj8fFQhy9fTWhA6fvXa0I=
+	b=uFM9w4KsVI6SjxKCfFMxpoL71hB6QFW6Y0VbRNAFyK3l009W/1hFjjI0FnIG11zSy
+	 kuNOVrfa6Y/YeW86ij1bWKCqP1mFYnswgZLJ3Jm/vDwo129ZCeeLxKxeuuBAX8Qt3Z
+	 gRj1EqFZcQMv3OZUt3Y9ICM46K7NroEIkSA8YtH4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lee Jones <lee@kernel.org>,
-	Steven Rostedt <rostedt@goodmis.org>
-Subject: [PATCH 6.1 1804/1887] tracing/histograms: Verify event_call identity when updating synth_event refcount
-Date: Wed, 28 Oct 2026 18:05:00 +0100
-Message-ID: <20261028170540.501235169@linuxfoundation.org>
+	Cen Zhang <zzzccc427@gmail.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>
+Subject: [PATCH 6.1 1805/1887] keys: Avoid the owner account dereference in named keyring lookup
+Date: Wed, 28 Oct 2026 18:05:01 +0100
+Message-ID: <20261028170540.524186216@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -67,114 +67,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lee Jones <lee@kernel.org>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-commit 3403d9bb27ebc3572bd048620746b4414e073bf9 upstream.
+commit 51409aaa01f8602552c336009fd22b226b0cdf1d upstream.
 
-In event_hist_trigger_parse() and hist_unreg_all(), the histogram
-registration and unregistration paths look up find_synth_event() using
-trace_event_name(file->event_call) and adjust se->ref if a match is
-found.
+Named keyring lookup must keep the storage containing the owner UID
+alive through the namespace mapping check.  find_keyring_by_name()
+reads keyring->user->uid under keyring_name_lock, but that lock protects
+the keyring's name entry and allocation, not its separate key_user.
 
-Because find_synth_event() only compares the event basename, registering
-or removing a histogram on a non-synthetic trace event whose basename
-matches a synthetic event erroneously modifies the synthetic event's
-reference count.  If a histogram is registered on the non-synthetic
-event before the synthetic event is created and removed afterwards,
-se->ref is decremented without a matching increment, allowing the
-synthetic event to be freed while an active histogram action still holds
-a pointer to it.
+A named session-keyring join can overlap a privileged KEYCTL_CHOWN on
+another CPU.  If the keyring holds the last reference to its old dynamic
+key_user and the ownership transfer succeeds, the following ordering is
+possible:
 
-Introduce find_synth_event_call() to verify that &se->call matches
-file->event_call before adjusting se->ref.
+    Named join                         Chown
+    find_keyring_by_name()              keyctl_chown_key()
+      read_lock(keyring_name_lock)       down_write(key->sem)
+      load old keyring->user
+                                         replace key->user and key->uid
+                                         up_write(key->sem)
+                                         key_put(key)
+                                         key_user_put(old user): free
+      read old user->uid
+      read_unlock(keyring_name_lock)
 
-Fixes: 4b147936fa50 ("tracing: Add support for 'synthetic' events")
+Chown neither takes keyring_name_lock nor key_session_mutex, so it can
+free the old account between the pointer load and the UID read.  The
+lookup then reads freed memory even though the keyring itself is alive.
+
+Use keyring->uid for the mapping check.  key_alloc() initializes this
+inline owner UID and keyctl_chown_key() updates it on chown.
+The existing name lock keeps its containing keyring allocated throughout
+the check, so lookup no longer depends on the account's lifetime.  This
+also matches the owner UID used by the permission check.
+
+KASAN report as below:
+
+    BUG: KASAN: slab-use-after-free in find_keyring_by_name+0x577/0x5d0
+    Read of size 4 at addr ffff8881128ae2ec by task keycase/500
+
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20261019120730.2342739-1-lee@kernel.org
-Signed-off-by: Lee Jones <lee@kernel.org>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Fixes: 2ea190d0a006 ("keys: skip keys from another user namespace")
+Assisted-by: LLM
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Link: https://lore.kernel.org/r/pm-key-management-objects-candidate-0002-v3-2baa8cad2bb554364e10@gmail.com
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_events_hist.c  |   11 +++--------
- kernel/trace/trace_events_synth.c |   10 ++++++++++
- kernel/trace/trace_synth.h        |    1 +
- 3 files changed, 14 insertions(+), 8 deletions(-)
+ security/keys/keyring.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/kernel/trace/trace_events_hist.c
-+++ b/kernel/trace/trace_events_hist.c
-@@ -6416,7 +6416,6 @@ static void hist_unreg_all(struct trace_
- 	struct event_trigger_data *test, *n;
- 	struct hist_trigger_data *hist_data;
- 	struct synth_event *se;
--	const char *se_name;
+--- a/security/keys/keyring.c
++++ b/security/keys/keyring.c
+@@ -1158,7 +1158,7 @@ struct key *find_keyring_by_name(const c
+ 	 * grants Search permission and that hasn't been revoked
+ 	 */
+ 	list_for_each_entry(keyring, &ns->keyring_name_list, name_link) {
+-		if (!kuid_has_mapping(ns, keyring->user->uid))
++		if (!kuid_has_mapping(ns, keyring->uid))
+ 			continue;
  
- 	lockdep_assert_held(&event_mutex);
- 
-@@ -6429,8 +6428,7 @@ static void hist_unreg_all(struct trace_
- 			list_del_rcu(&test->list);
- 			trace_event_trigger_enable_disable(file, 0);
- 
--			se_name = trace_event_name(file->event_call);
--			se = find_synth_event(se_name);
-+			se = find_synth_event_call(file->event_call);
- 			if (se)
- 				se->ref--;
- 
-@@ -6454,7 +6452,6 @@ static int event_hist_trigger_parse(stru
- 	struct hist_trigger_data *hist_data;
- 	char *param, *filter, *p, *start;
- 	struct synth_event *se;
--	const char *se_name;
- 	bool remove;
- 	int ret = 0;
- 
-@@ -6548,8 +6545,7 @@ static int event_hist_trigger_parse(stru
- 		}
- 
- 		event_trigger_unregister(cmd_ops, file, glob+1, trigger_data);
--		se_name = trace_event_name(file->event_call);
--		se = find_synth_event(se_name);
-+		se = find_synth_event_call(file->event_call);
- 		if (se)
- 			se->ref--;
- 		ret = 0;
-@@ -6584,8 +6580,7 @@ static int event_hist_trigger_parse(stru
- 	if (ret)
- 		goto out_unreg;
- 
--	se_name = trace_event_name(file->event_call);
--	se = find_synth_event(se_name);
-+	se = find_synth_event_call(file->event_call);
- 	if (se)
- 		se->ref++;
-  out:
---- a/kernel/trace/trace_events_synth.c
-+++ b/kernel/trace/trace_events_synth.c
-@@ -867,6 +867,16 @@ struct synth_event *find_synth_event(con
- 	return NULL;
- }
- 
-+struct synth_event *find_synth_event_call(struct trace_event_call *call)
-+{
-+	struct synth_event *se;
-+	const char *name;
-+
-+	name = trace_event_name(call);
-+	se = find_synth_event(name);
-+	return se && &se->call == call ? se : NULL;
-+}
-+
- static struct trace_event_fields synth_event_fields_array[] = {
- 	{ .type = TRACE_FUNCTION_TYPE,
- 	  .define_fields = synth_event_define_fields },
---- a/kernel/trace/trace_synth.h
-+++ b/kernel/trace/trace_synth.h
-@@ -37,5 +37,6 @@ struct synth_event {
- };
- 
- extern struct synth_event *find_synth_event(const char *name);
-+extern struct synth_event *find_synth_event_call(struct trace_event_call *call);
- 
- #endif /* __TRACE_SYNTH_H */
+ 		if (test_bit(KEY_FLAG_REVOKED, &keyring->flags))
 
 
