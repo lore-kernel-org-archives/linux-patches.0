@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214116;
-	b=EAlee0AyrIq0bRoFeT+qpzJAtBf41By/f4jwy1M2BYxE1Th/Z36W+dLeiK4K0EdEUMw6
-	 5puBdYLswWgYxbKZqRA9aX623Hld94D4Rdcf8GnaYjAIPN2AELbjl38X7FsGGuwTLgT3F
-	 bKtCATrFwITWOEroUJJd9sZP4+4TOgWru9tKQZTl4K5k2ez2UwyrJNZghNDjSQfID7lgQ
-	 WCwF/yKlMorDjnJA2XZ8HhLgm0dpXLoUK7M0otqXcgMmaq8TJuhFRlcz9wyPdbkv/9/Mz
-	 0I+DJfa/mXWZgPScF9MYtNzuMo83Ua95pKzuMiImJ7V+o7FOz2/mkKKGUBUkQ1wJaOA==
+	t=1793214119;
+	b=J6Ph9w7QscCzUGyTnujVfhw8qEZZWPf2qotp+mQ0NVtKZTco47hIB6zlmHPMTUu7Xr/L
+	 OjsNHFTS0j1k4l2WNTILmS0Ze4yrSmjA5OK4J7mmHEL6d0yLx1CQXEOVbsr4qXBA/Sf8n
+	 JDNlFEKJq6Xavkpkpd3FSlDyh098vITFMBak49zZMeyu4m7v8h9SoX7VpD61UWu/wj8fR
+	 Kd8HPZGI8cyLonmH1xsaaRVWbYR8slx16Dxw2INnjPrsMOjwjhUv+PuQd10FS7NUQPngR
+	 OSx1FHUa+nEy1H7cddPFDxhiVK6sAgVIy9HbTuBJslSa1NkMIM41+RIM7guNCFLbpMA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214116;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214119;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Az+8biIuJxmtVj10AtBnJCTgAcLVTojC0e2ax/nxbYA=;
-	b=xTfhtOjP1/776UOH9NvzTQ38g8RknAjvS3g40lcIPbuS3Ic/4GlC/HY6Dex0Xxw/ls1H
-	 uBmajMgDksHhs/oRRoa4I8DZqbWYHseUClVedeNgAHib3dl0AQ4Tjuq4Oofo/vRuDnY6r
-	 Xjd+6ZdQc7WGq7ERk3pUh7ypzxW77GquduIXGVwp0lwnsbEgmTwhgDx7hILHYjSRPVmAc
-	 ri+KvBy9RsOVUSFwzIRPvWpLcrz/R9F9UAswh95Y9drOzMW1MXpmQ6C00kGR8d6mKBAgH
-	 SuxXmDI6iXNdrHnck+69tR72I/eBX0u92taOepYBbwIjTyFHfJAr8rRnhDawZ0gLRZw==
+	bh=EHlT1J398PSlYzNyPTKhs6Jk97aYvdAlYbd876WZwPY=;
+	b=cx34WpTOVesvlA/hlUFTHgIkEWbKWGt10qXCuyY9QpmSEBoPCzh0zmrJETirNg1C8NAD
+	 wvnI38L2hJE6A852AZYIPbr5H+Bqu4kbHEJfplQSRGLrDoGW5b7fIfUlQbH4eH+VshIcl
+	 DjPHWubgk5Dnw5xo0/EEhkaHjmCAninC2NorNFg5gviXHE59dSl0SDJdAAXJ3O7r79o1X
+	 7N1f7OOcNN7+nm2BmICngXXEcuElM9wHXLK9LOIHOaCCWxFfndTcIn7e4x5ljJi/JRa4W
+	 6BE0wOx0q+lg6ZWdK2MrlLfjFWPwrlauZWqnWfGh+9w0wa4j9zKX0eSKRrgof9lmSlw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SnElM6ph;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ty5UfBUn;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CF85606A31E;
-	Wed, 28 Oct 2026 19:01:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E365606A32E;
+	Wed, 28 Oct 2026 19:01:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SnElM6ph
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CA0E1F01825;
-	Wed, 28 Oct 2026 19:01:55 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ty5UfBUn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EDF71F01828;
+	Wed, 28 Oct 2026 19:01:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214116;
-	bh=Az+8biIuJxmtVj10AtBnJCTgAcLVTojC0e2ax/nxbYA=;
+	s=korg; t=1793214119;
+	bh=EHlT1J398PSlYzNyPTKhs6Jk97aYvdAlYbd876WZwPY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SnElM6phvDOSTIq1VW9FcoFRJdQmRg/p8DH6gWKUosTeZ8MR1HOoAayEQpIC/p4cA
-	 nwUmf8CyaXk2gDe3yh6WiQHIDPOYQJph9maSNQs1llPuR+g4MJW7NeNsIlA5oscpm2
-	 irZoQ48g+8VjfFs5em4qFLSz+m2PcoMWKRR1DpxE=
+	b=Ty5UfBUnulnm7i2rI8b0fbsncyPczJGRzOGMDVvJYGClw9qN+phc7ovk/bljuj3KB
+	 AxkAxzOPuDN90vl8OUJTfyUkKX9HBm5uIaA+4JsDDJEqy0F96ywvH7QHTNXU4qLyrr
+	 E4ZmKMBwY/WEvsd7lZDfE376CRSjwEBanV8dcS3g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+33379ce4ac76acf7d0c7@syzkaller.appspotmail.com,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Aharon Landau <aharonl@nvidia.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0718/1887] f2fs: fix to do sanity check on node blkaddr in truncate_node()
-Date: Wed, 28 Oct 2026 17:46:54 +0100
-Message-ID: <20261028170515.775196436@linuxfoundation.org>
+Subject: [PATCH 6.1 0745/1887] RDMA/mlx5: Dont keep umrable page_shift in cache entries
+Date: Wed, 28 Oct 2026 17:47:21 +0100
+Message-ID: <20261028170516.401229491@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,72 +68,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Aharon Landau <aharonl@nvidia.com>
 
-[ Upstream commit 6babe00ccd34fc65b78ef8b99754e32b4385f23d ]
+[ Upstream commit a2a88b8e22d1b202225d0e40b02ad068afab2ccb ]
 
-syzbot reports a f2fs bug as below:
+mkc.log_page_size can be changed using UMR. Therefore, don't treat it as a
+cache entry property.
 
-------------[ cut here ]------------
-kernel BUG at fs/f2fs/segment.c:2534!
-RIP: 0010:f2fs_invalidate_blocks+0x35f/0x370 fs/f2fs/segment.c:2534
-Call Trace:
- truncate_node+0x1ae/0x8c0 fs/f2fs/node.c:909
- f2fs_remove_inode_page+0x5c2/0x870 fs/f2fs/node.c:1288
- f2fs_evict_inode+0x879/0x15c0 fs/f2fs/inode.c:856
- evict+0x4e8/0x9b0 fs/inode.c:723
- f2fs_handle_failed_inode+0x271/0x2e0 fs/f2fs/inode.c:986
- f2fs_create+0x357/0x530 fs/f2fs/namei.c:394
- lookup_open fs/namei.c:3595 [inline]
- open_last_lookups fs/namei.c:3694 [inline]
- path_openat+0x1c03/0x3590 fs/namei.c:3930
- do_filp_open+0x235/0x490 fs/namei.c:3960
- do_sys_openat2+0x13e/0x1d0 fs/open.c:1415
- do_sys_open fs/open.c:1430 [inline]
- __do_sys_openat fs/open.c:1446 [inline]
- __se_sys_openat fs/open.c:1441 [inline]
- __x64_sys_openat+0x247/0x2a0 fs/open.c:1441
- do_syscall_x64 arch/x86/entry/common.c:52 [inline]
- do_syscall_64+0xf3/0x230 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-RIP: 0010:f2fs_invalidate_blocks+0x35f/0x370 fs/f2fs/segment.c:2534
+Removing it from struct mlx5_cache_ent.
 
-The root cause is: on a fuzzed image, blkaddr in nat entry may be
-corrupted, then it will cause system panic when using it in
-f2fs_invalidate_blocks(), to avoid this, let's add sanity check on
-nat blkaddr in truncate_node().
+All cache mkeys will be created with default PAGE_SHIFT, and updated with
+the needed page_shift using UMR when passing them to a user.
 
-Reported-by: syzbot+33379ce4ac76acf7d0c7@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/linux-f2fs-devel/0000000000009a6cd706224ca720@google.com/
-Cc: stable@vger.kernel.org
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Link: https://lore.kernel.org/r/20230125222807.6921-2-michaelgur@nvidia.com
+Signed-off-by: Aharon Landau <aharonl@nvidia.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Stable-dep-of: d97505baea64 ("RDMA/mlx5: Fix the recovery flow of the UMR QP")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/node.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/infiniband/hw/mlx5/mlx5_ib.h | 1 -
+ drivers/infiniband/hw/mlx5/mr.c      | 3 +--
+ drivers/infiniband/hw/mlx5/odp.c     | 2 --
+ 3 files changed, 1 insertion(+), 5 deletions(-)
 
-diff --git a/fs/f2fs/node.c b/fs/f2fs/node.c
-index 9d4ec1a061bfb..8b4e8e251649c 100644
---- a/fs/f2fs/node.c
-+++ b/fs/f2fs/node.c
-@@ -918,6 +918,16 @@ static int truncate_node(struct dnode_of_data *dn)
- 	if (err)
- 		return err;
+diff --git a/drivers/infiniband/hw/mlx5/mlx5_ib.h b/drivers/infiniband/hw/mlx5/mlx5_ib.h
+index e8e285233b355..3f805e935943c 100644
+--- a/drivers/infiniband/hw/mlx5/mlx5_ib.h
++++ b/drivers/infiniband/hw/mlx5/mlx5_ib.h
+@@ -759,7 +759,6 @@ struct mlx5_cache_ent {
+ 	char                    name[4];
+ 	u32                     order;
+ 	u32			access_mode;
+-	u32			page;
+ 	unsigned int		ndescs;
  
-+	if (ni.blk_addr != NEW_ADDR &&
-+		!f2fs_is_valid_blkaddr(sbi, ni.blk_addr, DATA_GENERIC_ENHANCE)) {
-+		f2fs_err(sbi,
-+			"nat entry is corrupted, run fsck to fix it, ino:%u, "
-+			"nid:%u, blkaddr:%u", ni.ino, ni.nid, ni.blk_addr);
-+		set_sbi_flag(sbi, SBI_NEED_FSCK);
-+		f2fs_handle_error(sbi, ERROR_INCONSISTENT_NAT);
-+		return -EFSCORRUPTED;
-+	}
-+
- 	/* Deallocate node address */
- 	f2fs_invalidate_blocks(sbi, ni.blk_addr);
- 	dec_valid_node_count(sbi, dn->inode, dn->nid == dn->inode->i_ino);
+ 	u8 disabled:1;
+diff --git a/drivers/infiniband/hw/mlx5/mr.c b/drivers/infiniband/hw/mlx5/mr.c
+index 6dfd425e28c1a..58f2d645404e6 100644
+--- a/drivers/infiniband/hw/mlx5/mr.c
++++ b/drivers/infiniband/hw/mlx5/mr.c
+@@ -297,7 +297,7 @@ static void set_cache_mkc(struct mlx5_cache_ent *ent, void *mkc)
+ 
+ 	MLX5_SET(mkc, mkc, translations_octword_size,
+ 		 get_mkc_octo_size(ent->access_mode, ent->ndescs));
+-	MLX5_SET(mkc, mkc, log_page_size, ent->page);
++	MLX5_SET(mkc, mkc, log_page_size, PAGE_SHIFT);
+ }
+ 
+ /* Asynchronously schedule new MRs to be populated in the cache. */
+@@ -765,7 +765,6 @@ int mlx5_mkey_cache_init(struct mlx5_ib_dev *dev)
+ 		if (ent->order > mkey_cache_max_order(dev))
+ 			continue;
+ 
+-		ent->page = PAGE_SHIFT;
+ 		ent->ndescs = 1 << ent->order;
+ 		ent->access_mode = MLX5_MKC_ACCESS_MODE_MTT;
+ 		if ((dev->mdev->profile.mask & MLX5_PROF_MASK_MR_CACHE) &&
+diff --git a/drivers/infiniband/hw/mlx5/odp.c b/drivers/infiniband/hw/mlx5/odp.c
+index aa24d395a2dc8..6eb86a475ce91 100644
+--- a/drivers/infiniband/hw/mlx5/odp.c
++++ b/drivers/infiniband/hw/mlx5/odp.c
+@@ -1616,14 +1616,12 @@ void mlx5_odp_init_mkey_cache_entry(struct mlx5_cache_ent *ent)
+ 
+ 	switch (ent->order - 2) {
+ 	case MLX5_IMR_MTT_CACHE_ENTRY:
+-		ent->page = PAGE_SHIFT;
+ 		ent->ndescs = MLX5_IMR_MTT_ENTRIES;
+ 		ent->access_mode = MLX5_MKC_ACCESS_MODE_MTT;
+ 		ent->limit = 0;
+ 		break;
+ 
+ 	case MLX5_IMR_KSM_CACHE_ENTRY:
+-		ent->page = MLX5_KSM_PAGE_SHIFT;
+ 		ent->ndescs = mlx5_imr_ksm_entries;
+ 		ent->access_mode = MLX5_MKC_ACCESS_MODE_KSM;
+ 		ent->limit = 0;
 -- 
 2.53.0
 
