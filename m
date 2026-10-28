@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793210162;
-	b=PVCfzjoJMHxPH9ZA36rIaA7croV3SanYEd/fKSRCzq/9ZN3zHrSbmrCRpCdDqO15yW6O
-	 /XyXA1/OSbIdrkqefCb9b/5ZYL//SjVT0V5AW95zFuR0kkabMv5qARduY9SIVcs5btjh+
-	 Ip10FbeVCrjfszMf9PHD+2aCroleF0XubqHYSSP3L3kTNclhaOH6lkjupYJBTC9nHCGvs
-	 FS+a9OBjI95JqurA7afok2Cm/6LaijXinx8EsglIgU+o2LtmyhYGf2wYvpwyztXuQ86lk
-	 TQ1yPTu7gZypqjfux7gHrApxLHXEnQX5730V1WlDj0dFgzBa3HsApbztHoPwi/bV2/g==
+	t=1793210165;
+	b=u0ZoM/WwMujdL+gP6xmVQ9QSyYnnIdGrFe/b+Du5wp0j8f6PVCBV9IXNKoAOwPWS2BpQ
+	 gcVGzP3J4IuMfzGR5CZ/zwKOoqb19oMCgQF7ukgdAQG84m04P8tmR3KSZAe3l3XDRpmmo
+	 r5/5TnsODREZ2c2CtT8smUEVa5/SiboP/p9u/IRLsu7vHpx61WLCPnvuw6cRZaDERLgx6
+	 SE4rhHG7PzafOY7/fy1gs4iCAmNC5UpnyVwXz2DDc38Rp3eXL9xA+yMI1GTcnEjpHsvqf
+	 xioPGot2cW7IS85+zed8pKnomhog0HDMfYqKGLCHDSmRxlyDzkJWJH//R5Dg150yGUA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793210162;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793210165;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=I6B+xnFaZg27JN2jHVdz9A8xR2SwXYbUhYXiIoP2dNI=;
-	b=DXn+QcJeuElzzd0qgjFeW2yVr0gOL4SlQviy/HAp324h8IvGJDvwcP0q+Icel4BGF3Ow
-	 lv8MbTG18drlx/A7HKaw/f32VeiHOn0rhFVkLk0sRieoGU/quk25RrViqm6TcurMPM72k
-	 oqbg8ziWqGBgkrtKCVC2PfVBTI3zuzutgRvZyLgtrbBg+36PSikuqpE0ZwZy9ZhC7Fm+Z
-	 l5ZUPktqOyhx7zGeLZyDliNnPx+0I59XCaszFoNE139a8catJoaha3eUfuTIuduqcLz5q
-	 2kD65OmiKz6s7kpy1v3IOBjCgI54MPhR+TQ/F37MtZK3NSN+hVrNmyDC5AfLxwMoEjQ==
+	bh=99iz1FwOYKtLcJk7CpFMg8ze42/inb8JyXEGV2N9gEo=;
+	b=Uhh1ytD51bopAE12nj+u2v8U97OwN2Jf1Q2iWfSqJgtB9VhyMiTRGguqXyW17HmqWkWo
+	 tq+B0Yhjz6CAutdFlclWdbWJNSqK55uKLt99BcMtcNpeoQKFZf0dmbq8eqDmv1K9gVXrS
+	 Uq86msQ47aPAS7QNIft1mTVMjwJxs+LADEkAPLovBksqAs4C4aX5wry2mjyTzVHVDTJO4
+	 bldB7xWExEn+VzO/bl57jAWmMDZ1EXZJpMQ28X2VOdfbgCXTgl4giGKPK56mLzO9d41Zj
+	 17NM+04CoS0nxbjAFrxdO7raIgwk8PdlIAZA8105ql6HXnpDAskLGE7ZpIbT6yhWYPA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wc+VdMkd;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PhNsOBpX;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D160760A380D;
-	Wed, 28 Oct 2026 17:56:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8F0C606A33A;
+	Wed, 28 Oct 2026 17:56:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wc+VdMkd
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DCF81F01825;
-	Wed, 28 Oct 2026 17:56:01 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PhNsOBpX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04C0B1F031E4;
+	Wed, 28 Oct 2026 17:56:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793210161;
-	bh=I6B+xnFaZg27JN2jHVdz9A8xR2SwXYbUhYXiIoP2dNI=;
+	s=korg; t=1793210164;
+	bh=99iz1FwOYKtLcJk7CpFMg8ze42/inb8JyXEGV2N9gEo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wc+VdMkdT5Dq8ddYdFZtkRDNGVgQJDLJQjQraW0Psnbjva5rEE1YH2RTDhqcOLvhu
-	 2L0ss7WfeZAfxE6fzZCSJFfyvGJbGvexwns995jPqwU7LLMOg0ifSCTYPBBOUlOHgK
-	 /SXqC0TBHOAZawX+qX5cZZrhShNHFh6Zg596z1mE=
+	b=PhNsOBpXr3E2W+fsGGklts829FOPs49yuL1A3YBQYFSK8vnXeXyQrAiHJsJfdwsMO
+	 1Ix70Wq0WPx3MjGY0QsFHMg10wKbpJ/Tomyx3eti+651Vc9qn1SI8LhC0nwtf5jZlA
+	 zf0yNKJTHJVv6mtVNdJ4yEYvtQ37uaWqVNPEu028=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 096/168] ntfs3: free the sbi after a grace period
-Date: Wed, 28 Oct 2026 18:00:32 +0100
-Message-ID: <20261028165945.361100689@linuxfoundation.org>
+	Antoine Huret <antoine.huret@bull.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>
+Subject: [PATCH 6.6 053/168] perf: Update cgroup time when rotating multiplexed events
+Date: Wed, 28 Oct 2026 17:59:49 +0100
+Message-ID: <20261028165944.344926621@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165943.089486480@linuxfoundation.org>
 References: <20261028165943.089486480@linuxfoundation.org>
@@ -67,162 +67,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Antoine Huret <antoine.huret@bull.com>
 
-[ Upstream commit c01b091b06412d3b1b53d8c2925f6de586c8a2fc ]
+commit e4c7c401c6b9174c0c893084fdaa6a84bd2520d7 upstream.
 
-If the "nocase" mount option ntfs3 uses custom hash and dentry compare
-functions. Both access ntfs3 superblock private information in rcu
-pathwalk. ntfs_put_super() and ntfs3_kill_sb() drop the info without any
-rcu delay. A lookup that's still inside the filesystem when the last
-reference to the mount is dropped causes a UAF. With a pathwalk held up
-in ntfs_d_hash() while the last reference to the mount goes away:
+Since commit bd2756811766 ("perf: Rewrite core context handling"),
+perf_rotate_context() only updates the context time before scheduling
+out the flexible events. It no longer updates the cgroup time, which
+ctx_sched_out() used to do.
 
-  BUG: KASAN: slab-use-after-free in ntfs_nls_to_utf16+0x752/0x940
-  Read of size 8 at addr ff1100010453c850 by task walker/99
-  Call Trace:
-   <TASK>
-   ntfs_nls_to_utf16+0x752/0x940
-   ntfs_d_hash+0x22b/0x500
-   link_path_walk+0x11ad/0x1d30
-   path_lookupat+0x63/0xb00
-   filename_lookup+0x1f1/0x5b0
-   vfs_statx+0xd7/0x3b0
-  [...]
-  Allocated by task 95:
-   __kmalloc_cache_noprof+0x249/0x560
-   ntfs_init_fs_context+0x2db/0x5a0
-   alloc_fs_context+0x52e/0xc70
-  [...]
-  Freed by task 98:
-   kfree+0x1db/0x5b0
-   deactivate_locked_super+0x9c/0xf0
-   cleanup_mnt+0x9f/0x130
-   task_work_run+0x131/0x250
+Cgroup events take their times from the per-cpu cgroup clock, so
+between two cgroup switches the rotations see a frozen clock. The
+events rotated out lose the running time they accumulated, and the next
+update, usually a read, credits the whole interval to the events that
+happen to be on the PMU at that moment.
 
-The bug is currently masked by the grace period in namespace_unlock()
-for umount(2). Keep the necessary information until the filesystem
-private info is freed and free it with an rcu delay.
+As a result, the time_running of multiplexed cgroup events is wrong,
+and so are their scaled counts, as long as no other cgroup runs on the
+CPU, e.g. a busy job alone on its CPUs. Counting cycles over one second
+of a busy loop in a cgroup gives from half to several times the max
+frequency of the CPU.
 
-ntfs3_free_sbi() now runs from an rcu callback and drops the upcase
-table via ntfs_put_shared(). So switch s_shared_lock over to
-spin_lock_bh(). Otherwise the callback can deadlock against a task
-holding the lock on the same cpu.
+Update the cgroup time before rotating the CPU context, as was done
+before the rewrite.
 
-Fixes: a3a956c78efa ("fs/ntfs3: Add option "nocase"")
+Fixes: bd2756811766 ("perf: Rewrite core context handling")
+Closes: https://lore.kernel.org/r/PR3PR07MB69223331EED5BEBE150375B7849C2@PR3PR07MB6922.eurprd07.prod.outlook.com/
+Assisted-by: Claude:claude-opus-5-5
+Signed-off-by: Antoine Huret <antoine.huret@bull.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20261009-work-fixes-rcu-v1-7-7446d2d335e6@kernel.org
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
-[ sashal: Omitted removal of mount-option cleanup already absent from ntfs_put_super(). ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://patch.msgid.link/20261015-perf-cgroup-rotation-time-v1-1-93e177dfee5d@bull.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ntfs3/ntfs_fs.h |  1 +
- fs/ntfs3/super.c   | 29 ++++++++++++++++++++++-------
- 2 files changed, 23 insertions(+), 7 deletions(-)
+ kernel/events/core.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/ntfs3/ntfs_fs.h b/fs/ntfs3/ntfs_fs.h
-index 5e7536ad0b94c..8850ee2b75b11 100644
---- a/fs/ntfs3/ntfs_fs.h
-+++ b/fs/ntfs3/ntfs_fs.h
-@@ -209,6 +209,7 @@ struct ntfs_index {
- /* Ntfs file system in-core superblock data. */
- struct ntfs_sb_info {
- 	struct super_block *sb;
-+	struct rcu_head rcu;
+--- a/kernel/events/core.c
++++ b/kernel/events/core.c
+@@ -4363,6 +4363,7 @@ static bool perf_rotate_context(struct p
  
- 	u32 discard_granularity;
- 	u64 discard_granularity_mask_inv; // ~(discard_granularity_mask_inv-1)
-diff --git a/fs/ntfs3/super.c b/fs/ntfs3/super.c
-index 15b1f2027b4ed..3b7731b188302 100644
---- a/fs/ntfs3/super.c
-+++ b/fs/ntfs3/super.c
-@@ -183,7 +183,7 @@ void *ntfs_set_shared(void *ptr, u32 bytes)
- 	void *ret = NULL;
- 	int i, j = -1;
- 
--	spin_lock(&s_shared_lock);
-+	spin_lock_bh(&s_shared_lock);
- 	for (i = 0; i < ARRAY_SIZE(s_shared); i++) {
- 		if (!s_shared[i].cnt) {
- 			j = i;
-@@ -201,7 +201,7 @@ void *ntfs_set_shared(void *ptr, u32 bytes)
- 		s_shared[j].cnt = 1;
- 		ret = ptr;
- 	}
--	spin_unlock(&s_shared_lock);
-+	spin_unlock_bh(&s_shared_lock);
- 
- 	return ret;
- }
-@@ -218,7 +218,7 @@ void *ntfs_put_shared(void *ptr)
- 	void *ret = ptr;
- 	int i;
- 
--	spin_lock(&s_shared_lock);
-+	spin_lock_bh(&s_shared_lock);
- 	for (i = 0; i < ARRAY_SIZE(s_shared); i++) {
- 		if (s_shared[i].cnt && s_shared[i].ptr == ptr) {
- 			if (--s_shared[i].cnt)
-@@ -226,7 +226,7 @@ void *ntfs_put_shared(void *ptr)
- 			break;
- 		}
- 	}
--	spin_unlock(&s_shared_lock);
-+	spin_unlock_bh(&s_shared_lock);
- 
- 	return ret;
- }
-@@ -624,6 +624,8 @@ static noinline void ntfs3_put_sbi(struct ntfs_sb_info *sbi)
- 
- static void ntfs3_free_sbi(struct ntfs_sb_info *sbi)
- {
-+	if (sbi->options)
-+		put_mount_options(sbi->options);
- 	kfree(sbi->new_rec);
- 	kvfree(ntfs_put_shared(sbi->upcase));
- 	kvfree(sbi->def_table);
-@@ -635,6 +637,11 @@ static void ntfs3_free_sbi(struct ntfs_sb_info *sbi)
- 	kfree(sbi);
- }
- 
-+static void ntfs3_free_sbi_rcu(struct rcu_head *head)
-+{
-+	ntfs3_free_sbi(container_of(head, struct ntfs_sb_info, rcu));
-+}
-+
- static void ntfs_put_super(struct super_block *sb)
- {
- 	struct ntfs_sb_info *sbi = sb->s_fs_info;
-@@ -651,6 +658,12 @@ static void ntfs_put_super(struct super_block *sb)
- 
- 	/* Mark rw ntfs as clear, if possible. */
- 	ntfs_set_state(sbi, NTFS_DIRTY_CLEAR);
-+
-+	/*
-+	 * The mount options stay until the sbi is freed: ->d_hash() and
-+	 * ->d_compare() of a pathwalk in rcu mode read the nls table through
-+	 * them.
-+	 */
- 	ntfs3_put_sbi(sbi);
- }
- 
-@@ -1807,9 +1820,11 @@ static void ntfs3_kill_sb(struct super_block *sb)
- 
- 	kill_block_super(sb);
- 
--	if (sbi->options)
--		put_mount_options(sbi->options);
--	ntfs3_free_sbi(sbi);
-+	/*
-+	 * A pathwalk in rcu mode may still be in ->d_hash() or ->d_compare()
-+	 * and read the upcase table and the nls table through the sbi.
-+	 */
-+	call_rcu(&sbi->rcu, ntfs3_free_sbi_rcu);
- }
- 
- // clang-format off
--- 
-2.53.0
-
+ 	if (cpu_event) {
+ 		update_context_time(&cpuctx->ctx);
++		update_cgrp_time_from_cpuctx(cpuctx, false);
+ 		__pmu_ctx_sched_out(cpu_epc, EVENT_FLEXIBLE);
+ 		rotate_ctx(&cpuctx->ctx, cpu_event);
+ 		__pmu_ctx_sched_in(&cpuctx->ctx, pmu);
 
 
