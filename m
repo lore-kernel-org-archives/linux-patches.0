@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216597;
-	b=jUmP4yGDlzLcQGeE/q3GxgavcZV2Rv8aq62BKl6wMl/YaNq16mDsYGOnwS+wsOCh2QUK
-	 iKOA8W2+cx02bJyfl81ekSq3lVa5E9L36bneurSiap0qBCqMU4dLH5iqJi8SmsKfAptMi
-	 OjoF/6RkJhM3RplJLDcaT/ss/lLctI0yMJhxFUR1WH9bnHuWP6QSdmNC4PKhOVYiYhjnV
-	 WbLTqlk0WYMGhC4qX0GIbZS3j0HRHTgR+zfPUU5ivBzYd31t9gNL7WW+XBllAtKCrt1fA
-	 Mff9fIsgW+BlWRQpEym4R23/pnmFd5zkutZoknipIsmgBo69jTHKeJuPCqCDkRhNqNA==
+	t=1793216600;
+	b=11kbzq/mrglDlVET4pojjLwFylH8hDHfSWgoOX09jWSJ/Hybt2kWqPo4qn1mn1SSfDwG
+	 WJ4hISdYjiYgzOVokZUjkPqwsWnfFrV3HdPEv4dj9FYBm4gmt5omiDE7uVVolOh8XsCxT
+	 GwZwHphfucZonBn+ACUx5TzcBn1BW1TEz8mTv3+HzeBunaxLcJhHSZs89WpOymzq0s/XT
+	 SZ22TEfzifBzYS6n8v1/mII1lrtFUNiZ6ZyKzR8gH/RBkj9KAuQnIA9W5V3Zl9CjeqC7O
+	 2XlouSn+EU5X244b/szUhrw11iOaCC5iRJhA5D/GSAH4zUnGBtdJcd4B/BBxqNW1IoQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216597;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216600;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Oty3+MFJLQinTP1tLbZhFR0v1JHu1U6L3cnCGA/vVEs=;
-	b=m0I31MXt1Ikw/AE3v77Ycyqj7EbFbesSwn30K1mTuUFr/xhmLuoN25/7515ol+5aK5Ja
-	 c6iuDt2LVz/Ii6pTR6hMi66BaKhLIi6ZxX4AfBWNbaUmN7Uu97Rti19z3lerRQr4uAlLO
-	 3RP7HnV0ynKnmQMQAm2olGI3b/qXUwd0eTJay1+uWOuMCTV0/ZRQS7uQf6Pqgb0rWJn8L
-	 nJkyIgjRNaRr2MggRQ7TF1OSDchUQ1b/OEN21UUSpYFHI2LWJYt9dS5zM1gB5htmHXi57
-	 QKtXioIe6OyDoQeviglIgvdqenp5Rm46OOzyJ6uYSdqrEZR0zeQnzlpLx29EKnXDTAA==
+	bh=hhxhQZfkdBjmmpWghmxICKhwEMMLflekXovqgeDscrw=;
+	b=PejHJy0xUFRcaqlUcS0Xhrl/Qs2Xy1DacC2dkzG1wi0bKB2vkaT61hqYbbcwaBXOORoj
+	 0sn6Q1ECfgXcuz4zRaMGIdz+ahZ7wDf4+hdqj3ESLRf1dt/YYLtQdK/jy9KTdsWOOXbyb
+	 AdL2pKl9pCTji7QxaqW903pQKsc3iKrI6X94/z3EyBPxFK/LWyQWWGs6ByIvakhSctXiV
+	 IuDP8OLMxFAkSCqTRHnj3uYh+OkgTP3nmHIFVtzc6XGFADf/xA3rwDop57X+oQElZFpmf
+	 vnZ8tfuAQ0tO4OjqSZKT5kEtUwUNqgbPa5y3o8C0CjL/GIccfLzaTehboto2X3SaZ1A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=be1dhTEg;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="hZoF/iFt";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78507606A31C;
-	Wed, 28 Oct 2026 19:43:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 587C7606A31A;
+	Wed, 28 Oct 2026 19:43:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=be1dhTEg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC7651F01825;
-	Wed, 28 Oct 2026 19:43:16 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hZoF/iFt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9B8A1F01825;
+	Wed, 28 Oct 2026 19:43:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216597;
-	bh=Oty3+MFJLQinTP1tLbZhFR0v1JHu1U6L3cnCGA/vVEs=;
+	s=korg; t=1793216600;
+	bh=hhxhQZfkdBjmmpWghmxICKhwEMMLflekXovqgeDscrw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=be1dhTEggrf3/79H5PiMk0f4UDiQtOZpUtSAwR7bE3in48Yz/8mEX1l79frynkxYj
-	 NmUU7bExbgMx/mYhkHid0buKhX5C+uLvatjkYhVJzVf6R8+JOEgUSJka3pIj433Xaq
-	 STgmp01n6ycWCTRdCRA2QCrMjjBXEkWR1tS41M+Q=
+	b=hZoF/iFtmvV12+7aHVUyFWLXi+LlZwJ4Wkpmv42AG/2CXjgSKwKvdsv5cj1alXZma
+	 prmRnnOJTzIs4EPVuhdFRl3kneztBymv8f7amIgdPUSfl+W+em4lcwwm1wEFVCj8Fx
+	 N6fIwfVwleDP8XWUgYwddY5CKReoQBkrpHsWbJdA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Justin Yeh <justin.yeh@mediatek.com>,
-	Chen-Yu Tsai <wenst@chromium.org>,
-	Linus Walleij <linusw@kernel.org>,
+	Leon Hwang <leon.hwang@linux.dev>,
+	Pu Lehui <pulehui@huawei.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1613/1887] pinctrl: mediatek: use devm_gpiochip_add_data() for GPIO chip
-Date: Wed, 28 Oct 2026 18:01:49 +0100
-Message-ID: <20261028170536.173078180@linuxfoundation.org>
+Subject: [PATCH 6.1 1614/1887] bpf: Fix WARNING in bpf_tracing_link_release
+Date: Wed, 28 Oct 2026 18:01:50 +0100
+Message-ID: <20261028170536.196050900@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,110 +70,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Justin Yeh <justin.yeh@mediatek.com>
+From: Leon Hwang <leon.hwang@linux.dev>
 
-[ Upstream commit 9c650317ba553d297f3fc5f0ae40ec53d86f9dab ]
+[ Upstream commit 61aaa8782bec59ecffd22e030f54ef9351bcabf9 ]
 
-The gpio_chip is allocated with device-managed memory but registered with
-the non-managed gpiochip_add_data(). This was harmless while the drivers
-were built-in, but once they can be built as modules and unbound/rmmod'd,
-devm frees the gpio_chip's memory while it is still registered, causing a
-use-after-free.
+The trampoline could be corrupted by the blindly
+'tr->flags = BPF_TRAMP_F_TAIL_CALL_CTX' in verifier.
 
-Register it with devm_gpiochip_add_data() so it shares the same
-device-managed lifecycle, which also lets the manual gpiochip_remove()
-error paths go away.
+1. A fexit attached to a tail_call_reachable prog. 'tr->flags' became
+   'BPF_TRAMP_F_CALL_ORIG | BPF_TRAMP_F_TAIL_CALL_CTX'. And, the
+   trampoline would poke the target prog's nop insn using jmp insn instead
+   of call insn.
+2. Another fexit loaded with the same tail_call_reachable prog target.
+   'tr->flags' became 'BPF_TRAMP_F_TAIL_CALL_CTX'.
+3. Close the first fexit link. Due to no BPF_TRAMP_F_CALL_ORIG in
+   'tr->flags', the trampoline will fail to restore the prog's nop insn
+   using call insn.
 
-Fixes: a6df410d420a ("pinctrl: mediatek: Add Pinctrl/GPIO driver for mt8135.")
-Fixes: 805250982bb5 ("pinctrl: mediatek: add pinctrl-paris that implements the vendor dt-bindings")
-Fixes: e78d57b2f87c ("pinctrl: mediatek: add pinctrl-moore that implements the generic pinctrl dt-bindings")
-Signed-off-by: Justin Yeh <justin.yeh@mediatek.com>
-Reviewed-by: Chen-Yu Tsai <wenst@chromium.org>
-Signed-off-by: Linus Walleij <linusw@kernel.org>
+[    3.410719] WARNING: kernel/bpf/syscall.c:3551 at bpf_tracing_link_release+0x53/0x60, CPU#1: test_progs/98
+...
+[    3.428793]  bpf_link_free+0x58/0x130
+[    3.429293]  bpf_link_release+0x23/0x30
+
+Fix the warning by updating 'tr->flags' with '|=' and lock.
+
+Fixes: 2b5dcb31a19a ("bpf, x64: Fix tailcall infinite loop")
+Signed-off-by: Leon Hwang <leon.hwang@linux.dev>
+Reviewed-by: Pu Lehui <pulehui@huawei.com>
+Acked-by: Jiri Olsa <jolsa@kernel.org>
+Link: https://lore.kernel.org/bpf/20260722151909.69142-2-leon.hwang@linux.dev
+Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/mediatek/pinctrl-moore.c      |  6 ++----
- drivers/pinctrl/mediatek/pinctrl-mtk-common.c | 14 ++++----------
- drivers/pinctrl/mediatek/pinctrl-paris.c      |  2 +-
- 3 files changed, 7 insertions(+), 15 deletions(-)
+ include/linux/bpf.h     | 3 +++
+ kernel/bpf/trampoline.c | 7 +++++++
+ kernel/bpf/verifier.c   | 2 +-
+ 3 files changed, 11 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/pinctrl/mediatek/pinctrl-moore.c b/drivers/pinctrl/mediatek/pinctrl-moore.c
-index 319da66d4f329..e91987d33fc65 100644
---- a/drivers/pinctrl/mediatek/pinctrl-moore.c
-+++ b/drivers/pinctrl/mediatek/pinctrl-moore.c
-@@ -538,7 +538,7 @@ static int mtk_build_gpiochip(struct mtk_pinctrl *hw)
- 	chip->ngpio		= hw->soc->npins;
- 	chip->of_gpio_n_cells	= 2;
+diff --git a/include/linux/bpf.h b/include/linux/bpf.h
+index 546d40d82edbc..7af010d1830d0 100644
+--- a/include/linux/bpf.h
++++ b/include/linux/bpf.h
+@@ -1025,6 +1025,8 @@ struct bpf_trampoline *bpf_trampoline_get(u64 key,
+ void bpf_trampoline_put(struct bpf_trampoline *tr);
+ int arch_prepare_bpf_dispatcher(void *image, void *buf, s64 *funcs, int num_funcs);
  
--	ret = gpiochip_add_data(chip, hw);
-+	ret = devm_gpiochip_add_data(hw->dev, chip, hw);
- 	if (ret < 0)
- 		return ret;
++void bpf_trampoline_set_flags(struct bpf_trampoline *tr, u32 flags);
++
+ /*
+  * When the architecture supports STATIC_CALL replace the bpf_dispatcher_fn
+  * indirection with a direct call to the bpf program. If the architecture does
+@@ -1132,6 +1134,7 @@ static inline bool bpf_prog_has_trampoline(const struct bpf_prog *prog)
+ {
+ 	return false;
+ }
++static inline void bpf_trampoline_set_flags(struct bpf_trampoline *tr, u32 flags) {}
+ #endif
  
-@@ -552,10 +552,8 @@ static int mtk_build_gpiochip(struct mtk_pinctrl *hw)
- 	if (!of_find_property(hw->dev->of_node, "gpio-ranges", NULL)) {
- 		ret = gpiochip_add_pin_range(chip, dev_name(hw->dev), 0, 0,
- 					     chip->ngpio);
--		if (ret < 0) {
--			gpiochip_remove(chip);
-+		if (ret < 0)
- 			return ret;
--		}
- 	}
- 
- 	return 0;
-diff --git a/drivers/pinctrl/mediatek/pinctrl-mtk-common.c b/drivers/pinctrl/mediatek/pinctrl-mtk-common.c
-index fe44867b4c289..1dada2b64b9e2 100644
---- a/drivers/pinctrl/mediatek/pinctrl-mtk-common.c
-+++ b/drivers/pinctrl/mediatek/pinctrl-mtk-common.c
-@@ -1121,30 +1121,24 @@ int mtk_pctrl_init(struct platform_device *pdev,
- 	pctl->chip->parent = &pdev->dev;
- 	pctl->chip->base = -1;
- 
--	ret = gpiochip_add_data(pctl->chip, pctl);
-+	ret = devm_gpiochip_add_data(&pdev->dev, pctl->chip, pctl);
- 	if (ret)
- 		return -EINVAL;
- 
- 	/* Register the GPIO to pin mappings. */
- 	ret = gpiochip_add_pin_range(pctl->chip, dev_name(&pdev->dev),
- 			0, 0, pctl->devdata->npins);
--	if (ret) {
--		ret = -EINVAL;
--		goto chip_error;
--	}
-+	if (ret)
-+		return -EINVAL;
- 
- 	/* Only initialize EINT if we have EINT pins */
- 	if (data->eint_hw.ap_num > 0) {
- 		ret = mtk_eint_init(pctl, pdev);
- 		if (ret)
--			goto chip_error;
-+			return ret;
- 	}
- 
- 	return 0;
--
--chip_error:
--	gpiochip_remove(pctl->chip);
--	return ret;
+ struct bpf_func_info_aux {
+diff --git a/kernel/bpf/trampoline.c b/kernel/bpf/trampoline.c
+index 930914f628c7a..3473e86a112a0 100644
+--- a/kernel/bpf/trampoline.c
++++ b/kernel/bpf/trampoline.c
+@@ -418,6 +418,13 @@ static struct bpf_tramp_image *bpf_tramp_image_alloc(u64 key)
+ 	return ERR_PTR(err);
  }
  
- int mtk_pctrl_common_probe(struct platform_device *pdev)
-diff --git a/drivers/pinctrl/mediatek/pinctrl-paris.c b/drivers/pinctrl/mediatek/pinctrl-paris.c
-index ab1c34e5a582e..464bedc0fe454 100644
---- a/drivers/pinctrl/mediatek/pinctrl-paris.c
-+++ b/drivers/pinctrl/mediatek/pinctrl-paris.c
-@@ -970,7 +970,7 @@ static int mtk_build_gpiochip(struct mtk_pinctrl *hw)
- 	chip->ngpio		= hw->soc->npins;
- 	chip->of_gpio_n_cells	= 2;
++void bpf_trampoline_set_flags(struct bpf_trampoline *tr, u32 flags)
++{
++	mutex_lock(&tr->mutex);
++	tr->flags |= flags;
++	mutex_unlock(&tr->mutex);
++}
++
+ static int bpf_trampoline_update(struct bpf_trampoline *tr, bool lock_direct_mutex)
+ {
+ 	struct bpf_tramp_image *im;
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index 1ba6ce6765e0c..b79581a941cd9 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -15493,7 +15493,7 @@ static int check_attach_btf_id(struct bpf_verifier_env *env)
+ 		return -ENOMEM;
  
--	ret = gpiochip_add_data(chip, hw);
-+	ret = devm_gpiochip_add_data(hw->dev, chip, hw);
- 	if (ret < 0)
- 		return ret;
+ 	if (tgt_prog && tgt_prog->aux->tail_call_reachable)
+-		tr->flags = BPF_TRAMP_F_TAIL_CALL_CTX;
++		bpf_trampoline_set_flags(tr, BPF_TRAMP_F_TAIL_CALL_CTX);
  
+ 	prog->aux->dst_trampoline = tr;
+ 	return 0;
 -- 
 2.53.0
 
