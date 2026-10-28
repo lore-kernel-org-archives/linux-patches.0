@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793212741;
-	b=GTpaZoaEeukK82XTpHCLSE7MHKuPlAUk15qKDHN6lnunVsXdA02AnncOYg2ZL7NeubtR
-	 jHkOQ1j87MQWLLiE9DZkA4bGQEZEfXvJNWflXW5BSGTjHxVf5UQUoMEwCru9XFZ0xuRIc
-	 XWp/gmT2lFX+VqWLJThF91FPi8HhexqGo/TXlYEBNeCdKU7obDSvnEI9JCeF5kaGwrF/F
-	 NUCSF5US7btA2I5QKsxsqpuchkIn5r5sS9CvXn1MR9szZeKzjm9Vg+lQ7q+qCBmErv0h1
-	 waR1o4zTufJ0t2pYrZeJo4GexLpUCmY0mVh+RruKG19UdCTeAssUZvb0Vq3rFXv/0PQ==
+	t=1793212743;
+	b=OtOc7ZIqaI8ZOlu+ge4umpP34mFf92wgKwdNFJSXjoV9Uw0rpoodJhncWrR54Hb93mFo
+	 rFgEGKlHnhMXlAJVbsFUDzVSE5tWr6FV8N8TiA1GWKrMJTb7zNXxeCTXo07s/C8Ovtfy6
+	 wO2wwtRd7kRLuKrFR6HfnqMDQtgCqYJmyjighZZc+bNVEJFugNBU8jg8Hckj9t0UWbkF9
+	 iK/BykfwlWvwkl3oUkWTXPC4iot7QN6hPeZA8r+dt2xZQnR17iA3G/Io69KUvgy7FLcT3
+	 3o9Lr3EpIaPRnmhDWT96ZrB5pzs3K4aRbtFbA/fphIEWQQiiG4hbF/mkwxxIit1J4Ng==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793212741;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793212743;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=05tbjtI9PiRZAxIXoa0961POwVbv+LbJVPa+mGNiNHM=;
-	b=dda8RvJ2+/yLQvmtfntxJ/9JXpdM8DhMBns+e22FrN65l3iPE+7XDh66HS3Ezp/CdPOB
-	 fpKN6kGhLf9I6kLMNQTBawYyT6UFlbqRqMSAE4KepF0x2IinpiwS+/RDviCrhswMTIGs+
-	 UMToi1vuEf88En2LZONV364Ze1AXlmvMmWYjAdY5XaRQ0IdQAYl94rC2tAvztwBkV5DJg
-	 f7cL4Dy1LuePsxc1yCWPXxln8MOJXPMee+fQQPbB1OnXis1oT0AfvSPwmGa+sbEJ3vBJM
-	 8IC/ZHGcn94T8b3/8wiejr9QksUl+RES186151WeWj+N/iTeg5G+QE2cPLn49usINtA==
+	bh=Dll4qN21eK0g4WTI4m7t8hQkl+dRX/aXbyJNKWvbq8k=;
+	b=CyBMHJKmbv7c5699q2UEouR9nbylfy5IW9E5WhQumzJo5K4pOaReFTuPOnAkik91BRAb
+	 MJybwZi7mGmblG9JnOzKF9mMOIECSw98RJLfN2F/3ROzmgfbukAsBCtMC8Xy42Q00AG1C
+	 abmb0jwVuR41m9RZKnf3/u3cyTL7QcA64fR2FIIcUea8dUMiNjhIVLtubPKg7Dj1byfaS
+	 WbqAkIt61rOH5ZoO1Q+NjcLAW+1Hv7qXuqVe6g6QWkQ6bg31ubSa4lvlIvlaWuoVvJkg6
+	 m/SL/WTJ2DIUMRDWANoGyLyQwkFOuJkL235hhkKZcHX9rf4FwyQZGT5g2Bwcc6KcUqw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mNtiqKno;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YVyMoz8P;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAC92606A31A;
-	Wed, 28 Oct 2026 18:39:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F6AA606A31C;
+	Wed, 28 Oct 2026 18:39:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mNtiqKno
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 020A81F01828;
-	Wed, 28 Oct 2026 18:38:59 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YVyMoz8P
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDDAE1F01825;
+	Wed, 28 Oct 2026 18:39:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793212740;
-	bh=05tbjtI9PiRZAxIXoa0961POwVbv+LbJVPa+mGNiNHM=;
+	s=korg; t=1793212743;
+	bh=Dll4qN21eK0g4WTI4m7t8hQkl+dRX/aXbyJNKWvbq8k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mNtiqKno9ie1H6cy6olXWHHrA0uGtG97XgwsaYrf3HYbPJYxOPo/717W+gobEXXcP
-	 zVSQ0ph1+0EuAf0L8Ntxm6UXYaVlo4bBVKyr3XqNIQsfC4e0N1kxztaKeT2gRJdx31
-	 N+oCWpKrOsakOKTTaxYe/6aw4iyOFHV6HpkyC8yY=
+	b=YVyMoz8Pb01pI1O5JRGiB4G6Cljo3CviBn7WyYXrvotQeHs15fLy4DwxKMBqPznG8
+	 EZ+AIh+x3BaL1yUwZvCSfEfF7xk/NBxleBSH4bmE3a/UEvQOUWG3vMN7/R2BJWEQVM
+	 xUdM5UUxjI8Q3bGSqfATa3eieyMlaja9asz76/rE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiko Brey <cico0815@gmx.de>,
-	Lovekesh Solanki <lovekeshsolanki00@gmail.com>,
+	David Heidelberg <david@ixit.cz>,
 	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.1 0261/1887] Input: i8042 - add nomux quirk for Fujitsu LIFEBOOK U7410
-Date: Wed, 28 Oct 2026 17:39:17 +0100
-Message-ID: <20261028170505.168785374@linuxfoundation.org>
+Subject: [PATCH 6.1 0262/1887] Input: s6sy761 - fix resume ordering and restore sensing
+Date: Wed, 28 Oct 2026 17:39:18 +0100
+Message-ID: <20261028170505.193156380@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,50 +67,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lovekesh Solanki <lovekeshsolanki00@gmail.com>
+From: David Heidelberg <david@ixit.cz>
 
-commit 495cd7f858b45d2ffa9b685bba3a8c23c1ca4dd3 upstream.
+commit a215720959c5450b3699e243904b39c3f8f68888 upstream.
 
-On the Fujitsu LIFEBOOK U7410 the internal keyboard and touchpad die
-shortly after boot if i8042 multiplexing controller is probed and
-switched to muxed mode. These multiplexing setup commands disturb the EC
-emulated keyboard and atkbd reports "Spurious ACK" and "Unknown key
-pressed" warnings, after which both keyboard and touchpad stop
-delivering events. Both touchpad and keyboard work in BIOS and GRUB.
+System suspend powers the controller off and resume powers it back on,
+but the resume path enables the interrupt before s6sy761_power_on()
+checks the boot. The firmware raises its boot-complete event on the
+interrupt line, the threaded handler consumes it, s6sy761_power_on()
+then reads an empty event and resume fails with -ENODEV, skipping the
+touch function setup:
 
-Disabling multiplexer using i8042.nomux=1 makes both devices work on
-warm/cold boot.
+s6sy761 2-0048: PM: dpm_run_callback(): s6sy761_resume [s6sy761] returns -19
 
-Add a DMI quirk to force nomux mode for this model.
+Power the chip on first and only then unmask the interrupt. Once resume
+completes the boot handshake the chip comes back with sensing off, as
+at probe where input_open() turns it on, so the touchscreen stays dead
+after resume. Send SENSE_ON again when the input device is open.
 
-Reported-by: Heiko Brey <cico0815@gmx.de>
-Link: https://lore.kernel.org/all/89f36f3f5e4c2d07b9ff72bc0b355875c336e498.camel@gmx.de/
-Signed-off-by: Lovekesh Solanki <lovekeshsolanki00@gmail.com>
-Link: https://patch.msgid.link/20260920113541.1484808-1-lovekeshsolanki00@gmail.com
+Tested on a Pixel 3 XL over several s2idle cycles: resume succeeds and
+the touch function and sense status match the pre-suspend state.
+
+Assisted-by: LLM
 Cc: stable@vger.kernel.org
+Fixes: 0145a7141e59 ("Input: add support for the Samsung S6SY761 touchscreen")
+Signed-off-by: David Heidelberg <david@ixit.cz>
+Link: https://patch.msgid.link/20260926-s6sy761-suspend-v2-1-8f00a96ee6e8@ixit.cz
 Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/serio/i8042-acpipnpio.h |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/input/touchscreen/s6sy761.c |   14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
 
---- a/drivers/input/serio/i8042-acpipnpio.h
-+++ b/drivers/input/serio/i8042-acpipnpio.h
-@@ -671,6 +671,15 @@ static const struct dmi_system_id i8042_
- 		.driver_data = (void *)(SERIO_QUIRK_NOAUX)
- 	},
- 	{
-+		/* Fujitsu LIFEBOOK U7410 */
-+		/* Mux mode also disturbs the EC keyboard, causing spurious ACKs */
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "FUJITSU CLIENT COMPUTING LIMITED"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "LIFEBOOK U7410"),
-+		},
-+		.driver_data = (void *)(SERIO_QUIRK_NOMUX)
-+	},
-+	{
- 		/* Gigabyte M912 */
- 		.matches = {
- 			DMI_MATCH(DMI_SYS_VENDOR, "GIGABYTE"),
+--- a/drivers/input/touchscreen/s6sy761.c
++++ b/drivers/input/touchscreen/s6sy761.c
+@@ -508,10 +508,22 @@ static int __maybe_unused s6sy761_suspen
+ static int __maybe_unused s6sy761_resume(struct device *dev)
+ {
+ 	struct s6sy761_data *sdata = dev_get_drvdata(dev);
++	int err;
++
++	err = s6sy761_power_on(sdata);
++	if (err)
++		return err;
+ 
+ 	enable_irq(sdata->client->irq);
+ 
+-	return s6sy761_power_on(sdata);
++	guard(mutex)(&sdata->input->mutex);
++
++	if (!input_device_enabled(sdata->input))
++		return 0;
++
++	err = i2c_smbus_write_byte(sdata->client, S6SY761_SENSE_ON);
++
++	return err;
+ }
+ 
+ static const struct dev_pm_ops s6sy761_pm_ops = {
 
 
