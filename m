@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215156;
-	b=SP8d1efDFN2uJlKEOTAExZZe9JVIMYcHoYVkcZArd3fjkkIvD1V/fOvqB3Gzq3v+Ya3F
-	 zmkqtnA29crpDFjEXRYRvaXerp9v6jXePvG6Mm3ySMqZ5AUufQFoaAqi4Ge41yC1qoaWP
-	 atCN1lNHv1vhrFkgn6um0QehKoiS1DvVtycfEs/UBYrMMX4aJ3kCy1cCeitzw3AP7pSSN
-	 6qKhb8Ix/7J6taceBHAdMd7RqGsvmi7n479Bunt+sizU9tpxgW8TYVNQf97fyb6FrGI9T
-	 sVrknQqTg/MBdMhZej6Y5nnuJhADI3HYurfa6DYmoEKS5nBTcryjtm09ogHCdMqSjRw==
+	t=1793215159;
+	b=gyAtSFtbM/Sydz32cbsbS5NTMik1dAUqsoVNca+mI90dlvxip7tf3SbbgQXP3zS/aXNI
+	 nO8TOF8GEjbF86gn77UwY69GRhxJzNti1YlUq9yNS5n8xrhszrJAzLcLCohVa9vlzp/QP
+	 8Rx6C1+wwOAshaxZvw9cx4rePzrjVQLJr+O9IU0AlvpNCJGCa1sKsfRZs4DqLfsjFQ0XD
+	 Nt19AeVOofxi5Gd36Kgt9FiaOefwpVoKRr3dAso00EGBu2x/94h5kRDVZTb44h+lM0uuH
+	 WsbxQBBHfFNVVlPzWVTCLaQYVBuKjCHEbANTuOECE+fhl2QD2xGtXBMKGFCuFVxhK+g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215156;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215159;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=52S9HXsy9R9k0OWEAt6qrIHUyUZLcxZyBHKTCzLnNeo=;
-	b=3Ot7MEnbfNrf3wXLrEMBEeW+K03ILUE9QcMKHhq8K4qf/5SIxzB6gyvmZWVKryMdHbC9
-	 xKR18LhVxKZT5LsOq3qWkubwxS1pcnxTPG4WE45dx1B50oVTYtgmUqjkfndowxXYd5zkL
-	 Nvmd5UE5JcuZW2TaFqMKopKzCEBQ3niwhmgDyJmxc9efVO8zzb2aHSMTpKNON0XFWnQRB
-	 +pOzhWlW9jGJa5AJjp/hjaJRfU86RjW1cu5mRhe6otlwaD72FgXqkmRmcML98A2q/r/Ru
-	 m/AtxSCbrvaUbTIL9Ucq2BAHRKkZ+8SXFzKjTeVxAjDBIq5URE4DqdyJuqQaWGIixWQ==
+	bh=KoaUl61JQSx1ya2wHhNW/OmmBzGzQ/KSu9RuQLeVMUQ=;
+	b=Cs7kL8Qd/t9B+Tu5vkeMB9HP9p/D93AEHTOeBZ7BNlIoxvbenjs5QKfYt5Krk8KXmCAg
+	 nFF2mPKPeQCm20TAY2hgV2GgRuoiBbJKI5y2VblXhOeTTWgsLeSIC+DXUAnfQL/ls5Z5Y
+	 qcY8Qsmjt7qklbYVl33jfYYOb52drW/eMfAZ+8/kgDMUqncRg6C7sCR202htYcMnXmoDS
+	 Z6dyvMxlw7zBRzYeDFwMOyEG9eCgNoL8YIfWRXDFpEkrxwp3cpIHbvMK1skU/w8qtftGI
+	 3Nh9Rwkw6TuQzjx3RQNbv4DOL68ZWJiMWDDCh4OMUqHowqtUWM+LC2FpFzsXbvDdJtQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="WqZ/I5zf";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OBnubqCg;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3904B606A31A;
-	Wed, 28 Oct 2026 19:19:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ABD8606A31A;
+	Wed, 28 Oct 2026 19:19:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WqZ/I5zf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8991C1F01825;
-	Wed, 28 Oct 2026 19:19:15 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OBnubqCg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D7311F01825;
+	Wed, 28 Oct 2026 19:19:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215156;
-	bh=52S9HXsy9R9k0OWEAt6qrIHUyUZLcxZyBHKTCzLnNeo=;
+	s=korg; t=1793215158;
+	bh=KoaUl61JQSx1ya2wHhNW/OmmBzGzQ/KSu9RuQLeVMUQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WqZ/I5zf75HV+hlYdR6ZdxY9E7bzjlr74IF81QTSvT3LzijtU+jvigCV9hccBvCt2
-	 QDe6OCKjifHRKk63mQ7OU4uBmav0oMB/msgF9sSEwa3dKGDUy5+wT9eExWWHpjyg4A
-	 +j5wxEYusDwOgIEV4W1brFoaNQSYmzbDCm63+QAg=
+	b=OBnubqCgG3vjWrmOmQf1L7HPboRP+erUoYuiuP1wHjgZyA+hibEuPSYSAcJOAlxt9
+	 4B64cKKVTrzuKrl0qDiyK+tIT3Rl9HTxvGNkqpLfA2nf7LfyW56IBARcL5328kxbjq
+	 L4amB2tW/ISjg6KfGUjqAzi8M9XyJgtB2sc3vMVo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anna Maniscalco <anna.maniscalco2000@gmail.com>,
-	Rob Clark <robin.clark@oss.qualcomm.com>,
+	kernel test robot <lkp@intel.com>,
+	Hongling Zeng <zenghongling@kylinos.cn>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1112/1887] drm/msm: always recover the gpu
-Date: Wed, 28 Oct 2026 17:53:28 +0100
-Message-ID: <20261028170524.709660396@linuxfoundation.org>
+Subject: [PATCH 6.1 1113/1887] fbdev: omap2: fix inconsistent lock returns in omapfb_mmap
+Date: Wed, 28 Oct 2026 17:53:29 +0100
+Message-ID: <20261028170524.731939555@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,78 +69,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anna Maniscalco <anna.maniscalco2000@gmail.com>
+From: Hongling Zeng <zenghongling@kylinos.cn>
 
-[ Upstream commit 01a0d6cd7032e9993feea19fadb03ef9d5b488f2 ]
+[ Upstream commit 98cf7df6e0844f7076df1db690c1ede9d69b61ff ]
 
-Previously, in case there was no more work to do, recover worker
-wouldn't trigger recovery and would instead rely on the gpu going to
-sleep and then resuming when more work is submitted.
+Fix the warning about inconsistent returns for '&rg->lock' in
+omapfb_mmap() function. The warning arises because the error path
+uses 'ofbi->region' while the normal path uses 'rg'.
 
-Recover_worker will first increment the fence of the hung ring so, if
-there's only one job submitted to a ring and that causes an hang, it
-will early out.
+smatch warnings:
+drivers/video/fbdev/omap2/omapfb/omapfb-main.c:1126 omapfb_mmap()
+warn: inconsistent returns '&rg->lock'.
 
-There's no guarantee that the gpu will suspend and resume before more
-work is submitted and if the gpu is in a hung state it will stay in that
-state and probably trigger a timeout again.
-
-Just stop checking and always recover the gpu.
-
-Signed-off-by: Anna Maniscalco <anna.maniscalco2000@gmail.com>
-Cc: stable@vger.kernel.org
-Patchwork: https://patchwork.freedesktop.org/patch/704066/
-Message-ID: <20260210-recovery_suspend_fix-v1-1-00ed9013da04@gmail.com>
-Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
+Reported-by: kernel test robot <lkp@intel.com>
+Signed-off-by: Hongling Zeng <zenghongling@kylinos.cn>
+Signed-off-by: Helge Deller <deller@gmx.de>
+Stable-dep-of: 7958e67375aa ("fbdev: omap2: fix use-after-free in omapfb_mmap")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/msm_gpu.c | 30 ++++++++++++++----------------
- 1 file changed, 14 insertions(+), 16 deletions(-)
+ drivers/video/fbdev/omap2/omapfb/omapfb-main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
-index f280c8f13dd49..55cbebe7a1681 100644
---- a/drivers/gpu/drm/msm/msm_gpu.c
-+++ b/drivers/gpu/drm/msm/msm_gpu.c
-@@ -421,25 +421,23 @@ static void recover_worker(struct kthread_work *work)
- 		msm_update_fence(ring->fctx, fence);
- 	}
+diff --git a/drivers/video/fbdev/omap2/omapfb/omapfb-main.c b/drivers/video/fbdev/omap2/omapfb/omapfb-main.c
+index 5ccddcfce7228..dc91d10209da2 100644
+--- a/drivers/video/fbdev/omap2/omapfb/omapfb-main.c
++++ b/drivers/video/fbdev/omap2/omapfb/omapfb-main.c
+@@ -1119,7 +1119,7 @@ static int omapfb_mmap(struct fb_info *fbi, struct vm_area_struct *vma)
+ 	return 0;
  
--	if (msm_gpu_active(gpu)) {
--		gpu->funcs->recover(gpu);
-+	gpu->funcs->recover(gpu);
+ error:
+-	omapfb_put_mem_region(ofbi->region);
++	omapfb_put_mem_region(rg);
  
--		/* retire completed submits, plus the one that hung: */
--		retire_submits(gpu);
-+	/* retire completed submits, plus the one that hung: */
-+	retire_submits(gpu);
- 
--		/*
--		 * Replay all remaining submits starting with highest priority
--		 * ring
--		 */
--		for (i = 0; i < gpu->nr_rings; i++) {
--			struct msm_ringbuffer *ring = gpu->rb[i];
--			unsigned long flags;
-+	/*
-+	 * Replay all remaining submits starting with highest priority
-+	 * ring
-+	 */
-+	for (i = 0; i < gpu->nr_rings; i++) {
-+		struct msm_ringbuffer *ring = gpu->rb[i];
-+		unsigned long flags;
- 
--			spin_lock_irqsave(&ring->submit_lock, flags);
--			list_for_each_entry(submit, &ring->submits, node)
--				gpu->funcs->submit(gpu, submit);
--			spin_unlock_irqrestore(&ring->submit_lock, flags);
--		}
-+		spin_lock_irqsave(&ring->submit_lock, flags);
-+		list_for_each_entry(submit, &ring->submits, node)
-+			gpu->funcs->submit(gpu, submit);
-+		spin_unlock_irqrestore(&ring->submit_lock, flags);
- 	}
- 
- 	pm_runtime_put(&gpu->pdev->dev);
+ 	return r;
+ }
 -- 
 2.53.0
 
