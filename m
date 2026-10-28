@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793209591;
-	b=Fy+kLV4dYdurwXhGx/gm0DovSa9LJD6Xh8/yt7Cd0LyMEVvmd3mTxtJKXrnpo74A7yD6
-	 4gjdvuWwSHD0DWeiC0hco+3p4Ah9c8S/By4OyPMjklFcg62DzsBLu22BVRR2J504FMxWr
-	 kjdATyRjkaC6wCfCRYHEDCmXVNLfd9ckAquXtA/Dxnalk5qSnEf433a0nlig5BdT8WTxD
-	 Kqw/zBmqWthYniQIhqN8JL/rugSoDnUDgFJD4G0HWH1Kj1jeLQlt+DzlRyDuvAWASJumK
-	 0mk8S8eBCGd+xoR2ZlWiNKSMsTnK44aS9HCPwQ7WbUZ9nxQXWUdo/oyW7osHZZ5dg5Q==
+	t=1793209594;
+	b=0Q48AzO+U6Pg/PgrboM5QcKLTpeJJdMgtQ+bjJiH+dv/9gd8DnTnwhv3RVWFQEvJhP1K
+	 IlWUM52VcEImCgPHWTz8UrNWnNtKJocWkQ5w5UFwAJkoL6T6RT4FYDIW+QDRdSa5Dt8SE
+	 QXzKHH+GwZIxG2sNol+YA8Sdqz4cdNB3hI4fVS62zCGHOJVaV5TLx8hkSlmv16QXm1GZk
+	 eswTbX96BjqsU4MAZzYT65hlVnRrMEX6xGkXTtDH38hULgzSzPX/llSEfaw/LeOoNV4y+
+	 v4rmzdmwYTVF2CNliBfC2PEp7o4wxHQHeGmDAJm0/RtZ7GY315CaTRFE8HVXgVfJ9+g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793209591;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793209594;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=8YjlawSs8GnVn7P0JDYBLi/hOHo4FxtE3meKxgoTI6E=;
-	b=D6zxnnmWEpW3sh06LbknDKwmqB9l3cRcCsV613+sm5kqEzLmIe13E0YYBaH1cBYNtHXv
-	 O6B2H/pNSbopcv6FafQD4OjfY9oQNKV4qFPAVVQkmFjJc0ttRcxhsqVKbt96kig08nxKC
-	 t+xKqZa6O1anXBOSVQCew/COjpS8tif6ayvXC5LUOZ5AwNBd+FLu6+ywX2eAvvO4SOIWR
-	 Iw2tJpvXpA2ZuL/l6+yZDVk/DmVUBGgGdyqtdwY09aZBjco1oUJFt49UAZayybInZekp5
-	 WOo/gduoxCRw3DoZz8UN6D2zEMioxvDy412+rXtlciEMOJnHmOU3c9tulB+Nnsyr0bw==
+	bh=jrXuF6++KwtWYwr0FbDGNbj1CfhdybovYdt65u4Tn2M=;
+	b=ILc0Cig38tOoNmQmtNUjG4Mq/f547M0FVcuAqS8oGylWic1OmoCVsWeSd/2uM3aJb/0K
+	 Cl5+WOv0bop7i1CSv7D6rthRcblNJMI0O/JP8ChCr3aChRB9+Qh2icvS2DBLkGXPQWyRS
+	 HtmtA17XCIEA76Jsg2iXVixpzleSFS3omxhMMWyQNCTOfxW+b/8s5OBCfTctbq8424pJn
+	 VpgXCr0zR/8+/8uI56s4ogyZswQsrfXAJ4jNpGx2uR9MmOrqGe11iTf/bucHOTO2NFACt
+	 GwWjcOAH+dv0w6CRfUuC65r803bTJytq1uFWB7wYv9nbAF5/RwD0cfVs+qK1jEYrUew==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pHE8ckeu;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fAyl+mtW;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 523B3606A31C;
-	Wed, 28 Oct 2026 17:46:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FC3B606A329;
+	Wed, 28 Oct 2026 17:46:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pHE8ckeu
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F9EC1F01825;
-	Wed, 28 Oct 2026 17:46:30 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fAyl+mtW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 825971F01825;
+	Wed, 28 Oct 2026 17:46:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793209591;
-	bh=8YjlawSs8GnVn7P0JDYBLi/hOHo4FxtE3meKxgoTI6E=;
+	s=korg; t=1793209594;
+	bh=jrXuF6++KwtWYwr0FbDGNbj1CfhdybovYdt65u4Tn2M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pHE8ckeubpwcmXdOuESm4RccBda4VQ0MdlRIKmlLho9NuOml6aeUHyd7XdbBi7BJt
-	 wxoU24dx0z4x9ZxfPl+6KUbcdo+cCyBOgB5R/icRUYQyL1PqyWhTeDFXy/meMpJunE
-	 m4cLg/Yf2bl2wObHMp2iCASy38+ZcohtB6Strago=
+	b=fAyl+mtWibmxEfISqaMc1db7sXWQkRrMUK+CFZL7KWDg7C/9LklmrZT6AMvtAV1BF
+	 Zx0K1unrswfyN4mMLtV8GRX4w7ACbdWmWd282/Xpej75CQJj7qV6y2MltuwPDRXCY2
+	 jlRWhn310VbZ9Xsc/mepn/xxrmwd6KLAlgm90lvk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Ashutosh Desai <ashutoshdesai993@gmail.com>,
+	Bernard Pidoux <bernard.f6bvp@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 001/109] eventfs: fix SRCU read lock leak in eventfs_iterate()
-Date: Wed, 28 Oct 2026 17:59:45 +0100
-Message-ID: <20261028165942.393568245@linuxfoundation.org>
+Subject: [PATCH 6.18 010/109] ax25: fix OOB read after address header strip in ax25_rcv()
+Date: Wed, 28 Oct 2026 17:59:54 +0100
+Message-ID: <20261028165942.605479686@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165942.357251485@linuxfoundation.org>
 References: <20261028165942.357251485@linuxfoundation.org>
@@ -67,53 +68,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joseph Qi <joseph.qi@linux.alibaba.com>
+From: Ashutosh Desai <ashutoshdesai993@gmail.com>
 
-Commit 2b80707b9e27 ("eventfs: Use children field for rcu head and add
-memory barriers") added an early bail out to the ei->children loop:
+A crafted AX.25 frame with a valid address header but no control byte
+causes skb->len to reach zero after skb_pull() strips the header.
+The subsequent reads of skb->data[0] (control) and skb->data[1] (PID)
+are then out of bounds.
 
-	smp_rmb();
-	if (ei->is_freed)
-		return -EINVAL;
+Linearize the skb after confirming the device is an AX.25 interface.
+Guard with skb->len < 1 after the pull - one byte suffices for LAPB
+control frames which have no PID byte. Add a separate skb->len < 2
+check inside the UI branch before accessing the PID byte.
 
-Upstream wraps eventfs_iterate() in guard(srcu)(&eventfs_srcu), so that
-return still drops the read lock. The 6.18.y backport instead brackets the
-function with srcu_read_lock() and a shared "out" label that calls
-srcu_read_unlock(), so this path returns while still holding eventfs_srcu
-for reading.
-
-The unbalanced reader prevents the grace period from ever completing, so
-the call_srcu() callback queued by free_ei() never runs and the
-eventfs_inode is leaked. Every readdir that races with removal adds
-another reader.
-
-Set ret and jump to "out" like the other bail out paths in this function
-do.
-
-Fixes: 2b80707b9e27 ("eventfs: Use children field for rcu head and add memory barriers")
-Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@vger.kernel.org
+Signed-off-by: Ashutosh Desai <ashutoshdesai993@gmail.com>
+[F6BVP: v5 as posted on netdev; the author withdrew it only because the
+subsystem was being removed from the kernel that day. Applied unchanged.]
+Signed-off-by: Bernard Pidoux <bernard.f6bvp@gmail.com>
+(cherry picked from commit e653f27001ca2a31a445ee20d9f90be65b85d7e3)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/tracefs/event_inode.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ net/ax25/ax25_in.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/fs/tracefs/event_inode.c b/fs/tracefs/event_inode.c
-index a992c2919f79a..e060dfe7cdac5 100644
---- a/fs/tracefs/event_inode.c
-+++ b/fs/tracefs/event_inode.c
-@@ -678,8 +678,10 @@ static int eventfs_iterate(struct file *file, struct dir_context *ctx)
- 		 * Matches the smp_wmb() in free_ei()
- 		 */
- 		smp_rmb();
--		if (ei->is_freed)
--			return -EINVAL;
-+		if (ei->is_freed) {
-+			ret = -EINVAL;
-+			goto out;
-+		}
+diff --git a/net/ax25/ax25_in.c b/net/ax25/ax25_in.c
+index f2d66af863595..f105e638611fa 100644
+--- a/net/ax25/ax25_in.c
++++ b/net/ax25/ax25_in.c
+@@ -199,6 +199,9 @@ static int ax25_rcv(struct sk_buff *skb, struct net_device *dev,
+ 	if ((ax25_dev = ax25_dev_ax25dev(dev)) == NULL)
+ 		goto free;
  
- 		if (c > 0) {
- 			c--;
++	if (skb_linearize(skb))
++		goto free;
++
+ 	/*
+ 	 *	Parse the address header.
+ 	 */
+@@ -217,6 +220,9 @@ static int ax25_rcv(struct sk_buff *skb, struct net_device *dev,
+ 	 */
+ 	skb_pull(skb, ax25_addr_size(&dp));
+ 
++	if (skb->len < 1)
++		goto free;
++
+ 	/* For our port addresses ? */
+ 	if (ax25cmp(&dest, dev_addr) == 0 && dp.lastrepeat + 1 == dp.ndigi)
+ 		mine = 1;
+@@ -227,6 +233,9 @@ static int ax25_rcv(struct sk_buff *skb, struct net_device *dev,
+ 
+ 	/* UI frame - bypass LAPB processing */
+ 	if ((*skb->data & ~0x10) == AX25_UI && dp.lastrepeat + 1 == dp.ndigi) {
++		if (skb->len < 2)
++			goto free;
++
+ 		skb_set_transport_header(skb, 2); /* skip control and pid */
+ 
+ 		ax25_send_to_raw(&dest, skb, skb->data[1]);
 -- 
 2.53.0
 
