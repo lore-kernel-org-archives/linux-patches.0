@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793207471;
-	b=nmcTiBl6k0j3zOengy4N7YcJtzWJUsVzS4lGKHlPsXtJDOYbxLSpp99hOxr5TJD+SSCa
-	 PjlXyAQipDqMNvOmW8CkdYWM7Z48MpcO3DpsoHs9uieSTnq9Z9IuYkuHfDO+FfSpFT4hz
-	 +o8aIzvONuLJjKJB6YFMHiQrYJu27xt1/SUc66Um3n7sRVwADUIRZlYZNRMsv/gQ1jd0t
-	 D+rldEnEdlaEh3s8qUVVgHTSb8/cPmY1sQlhQnU4I+ABhQMIz4u/2uJn3aaxoCYzy+5Bd
-	 +In/47nk1Zqild5rbhTxA7t4wG51k4Hb1DDJFVg0mKEx/Ux0rfK+j+BkqUWIp0kHufA==
+	t=1793207474;
+	b=eYfYMz6f0AT+a+mHB0D0U3TxMYGb3gtbkrxjrw8j9OHJp3UEokAvylaN8OQ0ziskgtBL
+	 c6nVgDsss/FjD4di35Nz+mV5cvNIrJ3JPGJ1L2qfaWon1GZ9vG8QAQy14qgWyTnE6xaOh
+	 NXiRfa1YDDWMB8Uvuu9TN0E8KqvnB13yDV0Eb0rqr/BgCin21odFZgUyClaoxj39pvAG4
+	 evEyY9mNEaTJxLU9lLtLBnVboKxMJzEYAMH4+5XFFHIK6hIs/+6AJ8V11ppSCMIDAymm5
+	 FgtFgYbEPSFMhWWiEFilHJdZDvrqTr3Xoo3SnL9OmCywWiKiCpd8gHxw3cfyyOi3cCg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793207471;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793207474;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=odKI7aA5rwSOIn+nU3bh41oqAwU3hssUWuer8i25Lmw=;
-	b=nzYo7qluCxvHtNsLuXoh/rtdQcrh4WLbfRQSa1SaSPWI+xwxQ22RZpfmsytv8eP6QGma
-	 ocAZlBEdo3peN9eIa5npeMi1Rl5K+WAwyNIzhvQ4oZJtuHs7ojS7nB8qyU9GZVYnpgSGh
-	 7Pw7//8Ow3cKmog+Wwvs4HbdWsk6j0FJuOJ79x6WXMzf3RNyz7YR4bIsVa3xI4s8Jn+TL
-	 RaUueVhVM/SQlN+jVBFKk+7U4LcDeliaq3ZUx5wmClP79HIdp5jVqC34xYXssbZKVK/2r
-	 W7UtcOELgHq5tyvqTjJWgQfBtkXQZXF8kqv0xWdoJslwIzRM4jhbVHP9Zv6vd8D/6EQ==
+	bh=f42yJlcmAb6qn+Pdg66YxpMO69CKLrmU+4fzV00Ys8A=;
+	b=JgxUWO7MKNzhbo4ZYDcjcWsTpQbhhOqYlt9P5emyijIwJJqTe9uSr2bkd5UZP/sMeB7h
+	 vhqPAKCZkbY8LcQaXLXwPk4lClklgT5DmpORd7zNQw1ILdK/kwP1sWkb9NkDoRKZYjCeV
+	 r+xFFSEgMpbAc4rRI8YEjm6eyAVFyou0uI77Dj7fKpLWM5F9uoY7AJbanh8tCISXGY7Ff
+	 oGX5Nvw5NX8gxGo4u608hvhI9HY+EtPNxQLMSb+ZVDyPdBnCfLdiWEiwtquw9PxhoAqEm
+	 PplADzaEBwRUQAiBJ7sijBcOc1yr82yGd7+RN/SbK65LGk3EpQVTc2UGWCuWBfc3boA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0LDTgy6m;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fGl2AeZ0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DC77606A31E;
-	Wed, 28 Oct 2026 17:11:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE4FA606A31E;
+	Wed, 28 Oct 2026 17:11:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0LDTgy6m
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A1611F01828;
-	Wed, 28 Oct 2026 17:11:10 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fGl2AeZ0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 293D41F01825;
+	Wed, 28 Oct 2026 17:11:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793207470;
-	bh=odKI7aA5rwSOIn+nU3bh41oqAwU3hssUWuer8i25Lmw=;
+	s=korg; t=1793207473;
+	bh=f42yJlcmAb6qn+Pdg66YxpMO69CKLrmU+4fzV00Ys8A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0LDTgy6muTMxgPA3GG0xBsGGSyaIKd1uK/itweBjz1KI8iHxZs9mvbCNyYB0SOfaJ
-	 pA8CxNvmPRlv1mr4dLvJfEYEXkHws6LoV1uYIwQNFbSXLPTyc3hF08+yeJfpGPjvyv
-	 fMnSFZ+f11q0SttvsMOmFGRwSS7bQmK4YxSL24Ww=
+	b=fGl2AeZ09kCXyqoERzCQolDmWYzv8DCXRReazVQ2ZyBUmDAMpAc6MErGxJddAFsra
+	 JyTkolODpuNFl7JLWerbeUiJh2FEPtVgQRahqqUwKGz2v6cJ9TGf4KOBW2WHp83Zq5
+	 lG85+8PdNSFLcRjBYT2y0boeQXbJwLqMzstnC9i0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Allison Henderson <achender@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Sergey Tiraspolsky <stiraspo@gmail.com>,
+	Cezary Rojewski <cezary.rojewski@intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 028/247] net/rds: dont let the rdma_cm destroy an id RDS still owns on route failure
-Date: Wed, 28 Oct 2026 17:57:11 +0100
-Message-ID: <20261028165948.033930079@linuxfoundation.org>
+Subject: [PATCH 6.12 029/247] ASoC: Intel: avs: Reset the stream unless it is already prepared
+Date: Wed, 28 Oct 2026 17:57:12 +0100
+Message-ID: <20261028165948.057407646@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165947.349197979@linuxfoundation.org>
 References: <20261028165947.349197979@linuxfoundation.org>
@@ -68,61 +69,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Allison Henderson <achender@kernel.org>
+From: Sergey Tiraspolsky <stiraspo@gmail.com>
 
-[ Upstream commit 98d446b7c013254a8a7b49720557676a3a851fde ]
+[ Upstream commit f6be9f558a83fe30a03bd3adae461c821a0cef8c ]
 
-rds_rdma_cm_event_handler_cmn() hands the return value of
-rdma_resolve_route() straight back to the rdma_cm on
-RDMA_CM_EVENT_ADDR_RESOLVED.  A synchronous failure there - -ENOMEM
-from the route work allocation, an SA query that cannot be set up, a
-RoCE route with no usable device - makes addr_handler() destroy the
-id the event was delivered on.  That id is ic->i_cm_id, and nothing
-clears the pointer: the connection sits in RDS_CONN_CONNECTING with a
-freed id until its shutdown calls rdma_disconnect() and
-rdma_destroy_id() on it.
+Commit cfca1637bc2b ("ASoC: Intel: avs: Unprepare a stream when XRUN
+occurs") resets the HDA stream when ->prepare() is called in the XRUN
+state. User space does not always recover that way. PipeWire's ALSA
+backend recovers from an underrun with snd_pcm_drop(), snd_pcm_prepare()
+and a new start, so ->prepare() runs in the SETUP state,
+hdac_stream->prepared is still set and the reset is skipped. Every
+recovery attempt then fails the same way:
 
-The ROUTE_RESOLVED case already avoids this: rds_ib_cm_initiate_connect()
-forces a zero return while ic->i_cm_id == cm_id, as the comment there
-explains.  Do the same here - drop the connection and return 0 - so
-the id stays RDS's to destroy from the shutdown, and the reconnect
-gets a fresh one.
+  spa.alsa: hw:avsmax98927,1p: snd_pcm_avail after recover: Broken pipe
 
-Fixes: 55b7ed0b582f ("RDS: Common RDMA transport code")
-Assisted-by: LLM
-Signed-off-by: Allison Henderson <achender@kernel.org>
-Link: https://patch.msgid.link/20261003163408.250568-3-achender@kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+On a Google Pixelbook (Kaby Lake, max98927 speakers) this happens after
+an occasional underrun during normal playback and silences the speakers
+for one to four minutes, until the PCM is closed. It can be provoked by
+stopping PipeWire with SIGSTOP for 0.5 s during playback: in one run
+that single underrun led to 1297 failed recoveries over two minutes,
+until the sink was suspended. A plain alsa-lib program that recovers
+with snd_pcm_drop() and snd_pcm_prepare() hits the same loop, while
+snd_pcm_prepare() straight from XRUN recovers at once.
+
+Skip the reset only when the stream is already PREPARED, the repeated
+->prepare() case the check exists for, and reset it otherwise. With
+this change both kinds of recovery succeed with a single restart.
+
+Fixes: cfca1637bc2b ("ASoC: Intel: avs: Unprepare a stream when XRUN occurs")
+Assisted-by: Claude:claude-opus-5-5
+Signed-off-by: Sergey Tiraspolsky <stiraspo@gmail.com>
+Acked-by: Cezary Rojewski <cezary.rojewski@intel.com>
+Link: https://patch.msgid.link/20261010103753.16969-1-stiraspo@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rds/rdma_transport.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ sound/soc/intel/avs/pcm.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/rds/rdma_transport.c b/net/rds/rdma_transport.c
-index b15cf316b23a2..21738a5690917 100644
---- a/net/rds/rdma_transport.c
-+++ b/net/rds/rdma_transport.c
-@@ -89,9 +89,19 @@ static int rds_rdma_cm_event_handler_cmn(struct rdma_cm_id *cm_id,
- 		if (conn) {
- 			rdma_set_service_type(cm_id, conn->c_tos);
- 			rdma_set_min_rnr_timer(cm_id, IB_RNR_TIMER_000_32);
--			/* XXX do we need to clean up if this fails? */
- 			ret = rdma_resolve_route(cm_id,
- 						 RDS_RDMA_RESOLVE_TIMEOUT_MS);
-+			if (ret) {
-+				/* A non-zero return has the rdma_cm destroy
-+				 * the id, but it is still ic->i_cm_id, which
-+				 * the connection's shutdown would then
-+				 * disconnect and destroy again.  Drop the
-+				 * connection and keep the id for that
-+				 * shutdown.
-+				 */
-+				rds_conn_drop(conn);
-+				ret = 0;
-+			}
- 		}
- 		break;
+diff --git a/sound/soc/intel/avs/pcm.c b/sound/soc/intel/avs/pcm.c
+index 81fe4f0218c1a..78b330e225704 100644
+--- a/sound/soc/intel/avs/pcm.c
++++ b/sound/soc/intel/avs/pcm.c
+@@ -660,7 +660,7 @@ static int avs_dai_fe_prepare(struct snd_pcm_substream *substream, struct snd_so
+ 	data = snd_soc_dai_get_dma_data(dai, substream);
+ 	host_stream = data->host_stream;
  
+-	if (runtime->state == SNDRV_PCM_STATE_XRUN)
++	if (runtime->state != SNDRV_PCM_STATE_PREPARED)
+ 		hdac_stream(host_stream)->prepared = false;
+ 	if (hdac_stream(host_stream)->prepared)
+ 		return 0;
 -- 
 2.53.0
 
