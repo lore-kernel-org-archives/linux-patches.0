@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216840;
-	b=f6rSQebDvuEEnccDh7I0IvXMXQ7xH4LSLUwOhc1IR3XhcR4CK3vuH+SXhtwE7eAtpQY9
-	 znhg3vOHKeKi0fy6AAcUPcd6H16f6K7yafIdPKImRxHyqs/Dymy/MuyLXM9d5OtCAF/kd
-	 /sG3oKc0FYilGSpBrGD+qCrYqUiDLt7SuW3EGorZO5ET960lQjwPS82JEbUC2D0UpgDF0
-	 t2kluCu8GlbcDZu8gpGgjY6ofClNWPi8F+lgMC5dfvOqG4jr1od2IgZH4sVx0pTaLiRh8
-	 tFAERSQoPWgH3JodOnCWph39sBsH7f1aUCVA+BTKkLamXHt8VgXbnGS1kc+y0p56+Xw==
+	t=1793216842;
+	b=n/zPxayZbizvHpEo3p+3uGhWpM2ze4amJzZhEQ738E0Fnz1jhQ8QAfD9ACaqZqSn81Vt
+	 heIT7lEU6MJeNCEZ0GnS/AjFon/5lzSbT5JGX5H9KHO9E2fxwgWVdVVyw3Rn62cJxTDej
+	 NBYbFApvjWpLB9BPbTfk34ZZJAcBL5OURz4u/3tm/jnne47PfsHM/c3ySH22ubi8Uc/bV
+	 H80fG6v6v7fptDyuO7wBY5n71z2cpedOYVTCAdCnvpbLD4++4qY9rLOWrXbI7kEYt/NYg
+	 l9wO7t/lbMYHJvwHfJ3ZQOO+Y/js5clxpm1efUhFevSw3stulkdiL+kW7TeHO93adZQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216840;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216842;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=4KUTjotL+Oz214+qtVKp+PslGTpsnkF4UZemeeqB23k=;
-	b=kqMotbsaZAz6hh4UT0rW5GQIt6cVUHqByNXaUTbW75geNxKh+NTN2oZPUo1AEbYpiuYe
-	 OkLb4E0o4AB+3B5FdXvdpwpWTC+ParFb2NCt9CNnccM8h655OVnDbnOF26KNoJ+Njxb7d
-	 HtupXWagJZkYI97xe30wlUGb3FNafPXvyqa6Dt8CpKOaR7BBQo4q/IdHwb46re4YRas7D
-	 shXmZ8+76jbICcifRPN3AW1YfsoEWp5MhM9fv0N1YZQubBIVZrwveyR8lAgMV+bn8sb6e
-	 elq3UgWkg1RNmLoC6lmHeVGKqylwVu+qECk+LC7iJFgA1lq3mZJwTe4LHCby0a+mfKw==
+	bh=hbPlPN8VOCSJqAXVpjz5b9fBVg8ceAYvD1mK6Qbp3qc=;
+	b=fHk2OliENNQ5UPZTTSZPsur55CBqdScz+up/DN/0d7tNTquFhmtz7rNLaaNEcuv/6JNB
+	 7kRMKLA4eGKbapBi6ydLsL0XyUo71A817jaDp62Tc8r23wtrLtUbEixHiKHSs+oJmMqbD
+	 YHaq7ALP6vCpoiYkoVUenU7inGXY/lmJtBAcpj0S3GVKKXbBvAFoIAfjjEekNYaEHw4mU
+	 ddHUDhdKQlJ7PUO7xunnkHXofUTE21zztAPK7Dbdh8eq23EW7yF9drNd21TciVMElCATQ
+	 plhWEnnW6tQpZBTHA0fuTjxRQpv7HJld2qVyDQsmMy+cByu5lDikwVhdowlCuzvWreg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="i6Gzhk/W";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="J+HXiyi/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF4DE606A31C;
-	Wed, 28 Oct 2026 19:47:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C9E6606A31A;
+	Wed, 28 Oct 2026 19:47:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i6Gzhk/W
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1453C1F01825;
-	Wed, 28 Oct 2026 19:47:18 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J+HXiyi/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC00E1F01825;
+	Wed, 28 Oct 2026 19:47:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216839;
-	bh=4KUTjotL+Oz214+qtVKp+PslGTpsnkF4UZemeeqB23k=;
+	s=korg; t=1793216842;
+	bh=hbPlPN8VOCSJqAXVpjz5b9fBVg8ceAYvD1mK6Qbp3qc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=i6Gzhk/WcJVXi2lwV+BwO9aRxxjKIpaQZuWgZSL3aUTfsZH+olg6DvQ7L12Cq9X2j
-	 yqbDx2TCiJWPZuPBtDzEQvQHL2jaXk6bGfIBSygflOI6sLaV1iz5HxkFEAkCOTquBl
-	 Bh6vX7iWH1cF0ur1Nru4UO553SG+K6Muj45yHo98=
+	b=J+HXiyi/lKsxoa1hAFNZpmDN4+C0NucZ7VeQ/f7KCvolF1wyv8Fs5S4le2blhgoqZ
+	 yNLUzINddHIqZP7LBUJ2PjbaubR2YvtrwKHqKrlFtrmaBTVNw/fk6b+VBeBYEfAEz3
+	 ADMrTMwzCH/czATvx0LC+jLH4815Q0oDkWfJV3q4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kai-Heng Feng <kaihengf@nvidia.com>,
-	Koba Ko <kobak@nvidia.com>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Davidlohr Bueso <dave@stgolabs.net>,
-	Richard Cheng <icheng@nvidia.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Bjoern Doebel <doebel@amazon.de>,
+	Paulo Alcantara <pc@manguebit.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1643/1887] cxl/mbox: Clamp mailbox output allocation to the payload size
-Date: Wed, 28 Oct 2026 18:02:19 +0100
-Message-ID: <20261028170536.853532645@linuxfoundation.org>
+Subject: [PATCH 6.1 1691/1887] smb: client: fail DACL rewrite when the new DACL exceeds 64K
+Date: Wed, 28 Oct 2026 18:03:07 +0100
+Message-ID: <20261028170537.936242721@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -71,50 +69,151 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Richard Cheng <icheng@nvidia.com>
+From: Bjoern Doebel <doebel@amazon.de>
 
-[ Upstream commit 8a13db9f899d149c3aab24abcb668121cfda5a4f ]
+[ Upstream commit d05045177a855386bca5e1909e08d06290e6e3b3 ]
 
-CXL_MEM_SEND_COMMAND bounds the user's in.size to the mailbox payload
-size but leaves out.size unbounded, then cxl_mbox_cmd_ctor() calls
-kvzalloc(out.size). A large out.size drives a huge allocation, above
-INT_MAX it WARNs and taints, and with panic_on_warn=1 it panics.
+replace_sids_and_copy_aces() and set_chmod_dacl() accumulate the size of
+the DACL they build in a u16. That accumulator can wrap.
 
-The transport __cxl_pci_mbox_send_cmd() already clamps the response copy
-to min(out.size, payload_size, device len), so the output buffer is
-never written beyond payload_size. Clamp the allocation to payload_size
-too, matching the RAW path.
+validate_dacl() caps num_aces at (dacl_size - sizeof(struct smb_acl)) /
+20, i.e. 3276 for a maximally sized DACL, while each rewritten ACE can
+grow to sizeof(struct smb_ace) (76 bytes) once its SID is replaced with
+one carrying SID_MAX_SUB_AUTHORITIES sub-authorities. The worst case is
+therefore sizeof(struct smb_acl) + 3276 * 76 = 248984 bytes, far beyond
+what a u16 can hold. A wraparound is reached with 863 ACEs.
 
-Fixes: 583fa5e71cae ("cxl/mem: Add basic IOCTL interface")
-Reviewed-by: Kai-Heng Feng <kaihengf@nvidia.com>
-Reviewed-by: Koba Ko <kobak@nvidia.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Reviewed-by: Davidlohr Bueso <dave@stgolabs.net>
-Signed-off-by: Richard Cheng <icheng@nvidia.com>
-Link: https://patch.msgid.link/20260624144147.53997-1-icheng@nvidia.com
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+After the wraparound, ndacl_ptr->size becomes meaningless and the offset
+will point anywhere in the ACE array. As a result, we will see
+corruption of the DACL, which then gets sent to the server. This is not
+an out-of-bounds write as the allocation now covers the worst-case
+expansion, so writes will always go into the buffer.
+
+Adjust the code to use a u32 internally and return -EOVERFLOW in the
+overflow case. The operation must be refused, because a DACL can only
+hold 2^16-1 bytes on the wire and larger DACLs cannot be represented.
+
+set_chmod_dacl() carries the same pattern and is fixed the same way. It
+only wraps once the source DACL comes within roughly 380 bytes of the
+64K ceiling, but the failure mode is identical.
+
+Suggested-by: Namjae Jeon <linkinjeon@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: f5065508897a ("cifs: Retain old ACEs when converting between mode bits and ACL.")
+Assisted-by: Kiro:claude-opus-5
+Signed-off-by: Bjoern Doebel <doebel@amazon.de>
+Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cxl/core/mbox.c | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ fs/smb/client/cifsacl.c | 31 ++++++++++++++++++++++---------
+ 1 file changed, 22 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/cxl/core/mbox.c b/drivers/cxl/core/mbox.c
-index 3e89dc2b60d84..43df0a3d20f1f 100644
---- a/drivers/cxl/core/mbox.c
-+++ b/drivers/cxl/core/mbox.c
-@@ -281,11 +281,7 @@ static int cxl_mbox_cmd_ctor(struct cxl_mbox_cmd *mbox,
- 		}
+diff --git a/fs/smb/client/cifsacl.c b/fs/smb/client/cifsacl.c
+index 39179e639b943..ba93199ef7327 100644
+--- a/fs/smb/client/cifsacl.c
++++ b/fs/smb/client/cifsacl.c
+@@ -1016,12 +1016,12 @@ unsigned int setup_special_user_owner_ACE(struct cifs_ace *pntace)
+ static void populate_new_aces(char *nacl_base,
+ 		struct cifs_sid *pownersid,
+ 		struct cifs_sid *pgrpsid,
+-		__u64 *pnmode, u32 *pnum_aces, u16 *pnsize,
++		__u64 *pnmode, u32 *pnum_aces, u32 *pnsize,
+ 		bool modefromsid)
+ {
+ 	__u64 nmode;
+ 	u32 num_aces = 0;
+-	u16 nsize = 0;
++	u32 nsize = 0;
+ 	__u64 user_mode;
+ 	__u64 group_mode;
+ 	__u64 other_mode;
+@@ -1118,16 +1118,16 @@ static void populate_new_aces(char *nacl_base,
+ 	*pnsize = nsize;
+ }
+ 
+-static __u16 replace_sids_and_copy_aces(struct cifs_acl *pdacl, struct cifs_acl *pndacl,
++static int replace_sids_and_copy_aces(struct cifs_acl *pdacl, struct cifs_acl *pndacl,
+ 		struct cifs_sid *pownersid, struct cifs_sid *pgrpsid,
+-		struct cifs_sid *pnownersid, struct cifs_sid *pngrpsid)
++		struct cifs_sid *pnownersid, struct cifs_sid *pngrpsid, u16 *pnsize)
+ {
+ 	int i;
+ 	u16 size = 0;
+ 	struct cifs_ace *pntace = NULL;
+ 	char *acl_base = NULL;
+ 	u32 src_num_aces = 0;
+-	u16 nsize = 0;
++	u32 nsize = 0;
+ 	struct cifs_ace *pnntace = NULL;
+ 	char *nacl_base = NULL;
+ 	u16 ace_size = 0;
+@@ -1153,9 +1153,12 @@ static __u16 replace_sids_and_copy_aces(struct cifs_acl *pdacl, struct cifs_acl
+ 
+ 		size += le16_to_cpu(pntace->size);
+ 		nsize += ace_size;
++		if (nsize > U16_MAX)
++			return -EOVERFLOW;
  	}
  
--	/* Prepare to handle a full payload for variable sized output */
--	if (out_size == CXL_VARIABLE_PAYLOAD)
--		mbox->size_out = cxlds->payload_size;
--	else
--		mbox->size_out = out_size;
-+	mbox->size_out = min_t(size_t, out_size, cxlds->payload_size);
+-	return nsize;
++	*pnsize = nsize;
++	return 0;
+ }
  
- 	if (mbox->size_out) {
- 		mbox->payload_out = kvzalloc(mbox->size_out, GFP_KERNEL);
+ static int set_chmod_dacl(struct cifs_acl *pdacl, struct cifs_acl *pndacl,
+@@ -1167,7 +1170,7 @@ static int set_chmod_dacl(struct cifs_acl *pdacl, struct cifs_acl *pndacl,
+ 	struct cifs_ace *pntace = NULL;
+ 	char *acl_base = NULL;
+ 	u32 src_num_aces = 0;
+-	u16 nsize = 0;
++	u32 nsize = 0;
+ 	struct cifs_ace *pnntace = NULL;
+ 	char *nacl_base = NULL;
+ 	u32 num_aces = 0;
+@@ -1218,6 +1221,8 @@ static int set_chmod_dacl(struct cifs_acl *pdacl, struct cifs_acl *pndacl,
+ 
+ 		nsize += cifs_copy_ace(pnntace, pntace, NULL);
+ 		num_aces++;
++		if (nsize > U16_MAX)
++			return -EOVERFLOW;
+ 
+ next_ace:
+ 		size += le16_to_cpu(pntace->size);
+@@ -1234,6 +1239,10 @@ static int set_chmod_dacl(struct cifs_acl *pdacl, struct cifs_acl *pndacl,
+ 	}
+ 
+ finalize_dacl:
++	/* The DACL size field is 16-bit on the wire, see MS-DTYP 2.4.5 */
++	if (nsize > U16_MAX)
++		return -EOVERFLOW;
++
+ 	pndacl->num_aces = cpu_to_le32(num_aces);
+ 	pndacl->size = cpu_to_le16(nsize);
+ 
+@@ -1394,6 +1403,8 @@ static int build_sec_desc(struct cifs_ntsd *pntsd, struct cifs_ntsd *pnntsd,
+ 
+ 		rc = set_chmod_dacl(dacl_ptr, ndacl_ptr, owner_sid_ptr, group_sid_ptr,
+ 				    pnmode, mode_from_sid);
++		if (rc)
++			return rc;
+ 
+ 		sidsoffset = ndacloffset + le16_to_cpu(ndacl_ptr->size);
+ 		/* copy the non-dacl portion of secdesc */
+@@ -1469,9 +1480,11 @@ static int build_sec_desc(struct cifs_ntsd *pntsd, struct cifs_ntsd *pnntsd,
+ 
+ 		if (dacloffset) {
+ 			/* Replace ACEs for old owner with new one */
+-			size = replace_sids_and_copy_aces(dacl_ptr, ndacl_ptr,
++			rc = replace_sids_and_copy_aces(dacl_ptr, ndacl_ptr,
+ 					owner_sid_ptr, group_sid_ptr,
+-					nowner_sid_ptr, ngroup_sid_ptr);
++					nowner_sid_ptr, ngroup_sid_ptr, &size);
++			if (rc)
++				goto chown_chgrp_exit;
+ 			ndacl_ptr->size = cpu_to_le16(size);
+ 		}
+ 
 -- 
 2.53.0
 
