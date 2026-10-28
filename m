@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793207196;
-	b=PpRZNFueQ9BkVpIjpkZd1XE9p3T1wEsC/MTEswZBuIcQP1WzvNAoq5bbT59RfrVy0uBI
-	 EQOE9AVA/TiWOqwLmjtvEHUQgybZUmuvQteF6MBCKnF7muUF8K0S1ZPQ/e6tgxFhQx57s
-	 H2IGfiw64k/XhLLhFMYFwvDz/sIBc1hudxScUnnporeiXyPyO4AzpUWjr6fEgpZR2eXok
-	 zNVvnG607haAa9wWTspWpUrmN2+YBU87EFg8JpS9fuyCraVTDSgrNGhl12FKJWsLCiQqe
-	 XIpRkvTuHFracgj9we37wTXfsAO5NALc0cehMonZ8o2/SOyOPS/eTLOX+Qktq54o7dQ==
+	t=1793207199;
+	b=W6A1v10kGNeaq6PwarE93voFKxn++g4DFAv4Rt5FSesILHFacBHsJViuQqhl+T8tkr7C
+	 3AvHljC8dTQT/SOkOdDj0bU7DzH9QouieCOB8wjoHtwhMjfiHwBRzq57qHEoUNoduMYLa
+	 7fuY/8Vem3ntFHPzcgCENy7W1zn5IU+lb8KiNwexQf6S5N9shUxAkON6mml6zbOexgpv0
+	 X4LAyEbduWyMfKunMxYoDKXMIBVya4Ojay7Tse7RPabVGxtSSdPnRghndv8Qjwwkfzd8k
+	 Z+oNrn2OoT+ynglYmAPaJuYD48kTPXHqRzW9tYLsu19DvHWSLfesa+o6xlNpnIZ/fYg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793207196;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793207199;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=IQqVQZGy3++6ahUmbEpxneyL5Hlu6kdF1ZECc7cYd9k=;
-	b=Z2LlLy5IZ/2sBZonvm5NlrIyZmtjFR95vSQyZhHlRrIOLkVvF+i06s/Ueb28GiN6ogOm
-	 jnA/uhLOR45JdpFjyWBKKQHGhqi708x++cqHBzJM8AP71GLRfP8XP9G9F3EHIKSfILHSs
-	 Ab1DQkT8wVXKi1eAe4VFeLHOhhs6Uau5tm6B6jEoiKogTMy13xtdsrEShv1HmhO4qZkev
-	 yhsdhAK1qHAS8tet8ILTyRvFFGpXFYu51gd2CGgKvsnBhhEgBNh3V9zKhNojhZihRaR3C
-	 N+O30QkDmZPdTwrPy13zxtc1Pq4ymxv3pGUyCBaj3hjY8EPxQdkZBIpq9Gt3bmZ0GxQ==
+	bh=YoFMiO4sExGrCZMqChe4hnY7E50ED43KmIxYswUYOiI=;
+	b=yIHarHAl7S63ExEdPpKgdqClkHT87QldCJq5CKuFQhcg7E9xWlYI1LUezsQnGVvP1g7v
+	 h6zXwSJpHAkeG16jJZkjIVkZZauN5Ijbu0W/81KPyuNJAk92rN/BKeW5GaDiPQMMTljXZ
+	 00SnCQA6IaOv481b8sXksvlvXfVl/ZB16DAGgqv9Ngbm1iOOpt7Vq8R/wT4GHn5Mh7CgL
+	 0J3eU+52NXyPpxH++hg1jWpTYPUwDfcmyl10BtyjDBux2DaAwy1gxCViAlvRusOFhQT/6
+	 U5CFZBobYX1umMsMX788PhLW5lEeamLkGd5UaTqiRvz3Gry2zKosff+hnXCbyvdDWzA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Kl1u0uxH;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Owd/d+aV";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2564606A31C;
-	Wed, 28 Oct 2026 17:06:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9910606A31D;
+	Wed, 28 Oct 2026 17:06:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Kl1u0uxH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FCE01F01825;
-	Wed, 28 Oct 2026 17:06:35 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Owd/d+aV
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 068911F01825;
+	Wed, 28 Oct 2026 17:06:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793207195;
-	bh=IQqVQZGy3++6ahUmbEpxneyL5Hlu6kdF1ZECc7cYd9k=;
+	s=korg; t=1793207198;
+	bh=YoFMiO4sExGrCZMqChe4hnY7E50ED43KmIxYswUYOiI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Kl1u0uxH9V0KAqR5uePa9JvJeNcvVD/bqhjgMDpkgcCWAfEsPXVO/pjxcJ5MEoXui
-	 UK+qLQa+J/5PY/0S3fzTHCFMVhjtl1myq2EYiydOUwFjZLSLiR2pDx030ZeblpFdF8
-	 o+6u2ZiRUoUiiggvo/ih1C/84aJmaWNdQNqH5/sc=
+	b=Owd/d+aVMpbvdbz+Brb0EDgfLbB58TcK7GIyOYwK8QIkVARYfyIymkqYWj7GxU1/v
+	 xRcB+x8Ueomg0yQqYdbO/XtE4Z0LXDRocxPYkkNucDt5IekfdZMAhhx74RfacFPf0u
+	 axs1BfeRzJlB18md5KWNTqJ8wvISGIZXa1nl3TzA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hui Su <sh_def@163.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Vincent Guittot <vincent.guittot@linaro.org>,
+	Pauli Virtanen <pav@iki.fi>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 05/88] sched/fair: Avoid overflow in place_entity()
-Date: Wed, 28 Oct 2026 17:59:13 +0100
-Message-ID: <20261028165942.239576640@linuxfoundation.org>
+Subject: [PATCH 7.2 06/88] Bluetooth: L2CAP: refuse __l2cap_chan_add if chan already has conn
+Date: Wed, 28 Oct 2026 17:59:14 +0100
+Message-ID: <20261028165942.262922950@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165942.107695352@linuxfoundation.org>
 References: <20261028165942.107695352@linuxfoundation.org>
@@ -69,95 +68,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hui Su <sh_def@163.com>
+From: Pauli Virtanen <pav@iki.fi>
 
-[ Upstream commit 2f93bcb3f9aaf6ceee1aec0a97d4fe386d48e781 ]
+[ Upstream commit 86b55991d3cd690e73c5ef8d20b75ae4905b357a ]
 
-place_entity() inflates an entity's virtual lag with
+l2cap_chan may be linked to l2cap_conn at most once. This is assumed in
+several places, eg l2cap_chan_del cleanup.
 
-    lag * (load + weight) / load
+There is a TOCTOU race where the invariant is violated:
 
-Commit 4823725d9d1d ("sched/fair: Increase weight bits for avg_vruntime")
-replaced the scaled-down weights used in this calculation with
-avg_vruntime_weight(), removing the arithmetic headroom provided by
-scale_load_down().
+    [Task 1]                          [Task 2]
+    l2cap_chan_connect                l2cap_sock_bind
+      l2cap_chan_lock                   lock_sock
+      l2cap_state_change                if (sk->sk_state != BT_OPEN)
+        chan->state = BT_CONNECT
+        l2cap_sock_state_change_cb      chan->state = BT_BOUND
+                                        sk->sk_state = BT_BOUND
+          lock_sock <------------------ release_sock
+          sk->sk_state = BT_CONNECT
 
-The multiplication can overflow s64 before the division even when the
-final quotient is representable. A task's hierarchical effective weight
-can be as small as 2 after avg_vruntime_weight() scaling under group
-scheduling, while entity_lag() bounds |vlag| by
+l2cap_sock_connect() does not check sk->sk_state, so since chan->state
+is now BT_BOUND, subsequent connect() ends up with second
+__l2cap_chan_add.
 
-    calc_delta_fair(cfs_rq_max_slice(cfs_rq) + TICK_NSEC, se)
+Explicitly document and check the invariant in __l2cap_chan_add with
+WARN_ON_ONCE. The only callsite where it could be hit is
+l2cap_chan_connect, so add pre-check there to avoid relying on
+chan->state. chan->state read/write is not properly guarded currently so
+there can be other TOCTOUC problems.
 
-For example, with HZ=1000, NICE_0_LOAD=1048576, and the minimum scaled
-hierarchical weight scale_load(2)=2048, this bound is 891289600. With 114
-maximum-weight entities, the runqueue load is 10361604096. The
-intermediate product is:
+Add l2cap_lock_chan in l2cap_sock_bind() to guard chan->state write.
 
-    891289600 * (10361604096 + 2)
-        = 9235189971864780800
-        > S64_MAX
-
-The signed overflow corrupts the entity's placement.
-
-Rewrite
-
-    lag * (load + weight) / load
-
-as
-
-    lag + lag * weight / load
-
-The two expressions are equivalent, but the latter avoids multiplying the
-virtual lag by the total runqueue weight. entity_lag() bounds vlag against
-the entity's effective weight, so the remaining lag * weight product stays
-bounded. rescale_entity() preserves this scale across h_load changes and
-already relies on the same product when rescaling vlag.
-
-Keep the original zero-load warning semantics by multiplying lag by weight
-after replacing the divisor with one.
-
-Fixes: 4823725d9d1d ("sched/fair: Increase weight bits for avg_vruntime")
-Signed-off-by: Hui Su <sh_def@163.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://patch.msgid.link/20260928124754.1692077-1-sh_def@163.com
-[ Backport to v7.2 which doesn't have flat hierarchy ]
-Signed-off-by: Vincent Guittot <vincent.guittot@linaro.org>
-Cc: stable@vger.kernel.org
+Fixes: b66774b48dd9 ("Bluetooth: L2CAP: Fix UAF in channel timeout by holding conn ref")
+Assisted-by: deepseek-4-flash # finding the race condition
+Signed-off-by: Pauli Virtanen <pav@iki.fi>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/fair.c | 16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ net/bluetooth/l2cap_core.c | 7 ++++++-
+ net/bluetooth/l2cap_sock.c | 2 ++
+ 2 files changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index b6cace1d0e322..9e1a28a158da2 100644
---- a/kernel/sched/fair.c
-+++ b/kernel/sched/fair.c
-@@ -6250,12 +6250,20 @@ place_entity(struct cfs_rq *cfs_rq, struct sched_entity *se, int flags)
- 		load = cfs_rq->sum_weight;
- 		if (curr && curr->on_rq)
- 			load += avg_vruntime_weight(cfs_rq, curr->load.weight);
--
--		weight = avg_vruntime_weight(cfs_rq, se->load.weight);
--		lag *= load + weight;
- 		if (WARN_ON_ONCE(!load))
- 			load = 1;
--		lag = div64_long(lag, load);
-+
-+		weight = avg_vruntime_weight(cfs_rq, se->load.weight);
-+
-+		/*
-+		 * Rewrite, because the product (W + w_i)*vl'_i might
-+		 * overflow s64:
-+		 *
-+		 *   vl_i = (W + w_i)*vl'_i / W
-+		 *        = (W*vl'_i + w_i*vl'_i) / W
-+		 *        = vl'_i + w_i*vl'_i/W
-+		 */
-+		lag += div64_long(lag * weight, load);
+diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
+index 9a1b0ae07679e..fa17f235d5e40 100644
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -622,6 +622,10 @@ void __l2cap_chan_add(struct l2cap_conn *conn, struct l2cap_chan *chan)
+ 	BT_DBG("conn %p, psm 0x%2.2x, dcid 0x%4.4x", conn,
+ 	       __le16_to_cpu(chan->psm), chan->dcid);
  
- 		/*
- 		 * A heavy entity (relative to the tree) will pull the
++	/* Caller must ensure l2cap_chan is linked to l2cap_conn only once */
++	if (WARN_ON_ONCE(chan->conn || test_bit(FLAG_DEL, &chan->flags)))
++		return;
++
+ 	conn->disc_reason = HCI_ERROR_REMOTE_USER_TERM;
+ 
+ 	chan->conn = l2cap_conn_get(conn);
+@@ -7412,7 +7416,8 @@ int l2cap_chan_connect(struct l2cap_chan *chan, __le16 psm, u16 cid,
+ 		}
+ 	}
+ 
+-	if (cid && __l2cap_get_chan_by_dcid(conn, cid)) {
++	if ((cid && __l2cap_get_chan_by_dcid(conn, cid)) || chan->conn ||
++	    test_bit(FLAG_DEL, &chan->flags)) {
+ 		hci_conn_drop(hcon);
+ 		err = -EBUSY;
+ 		goto chan_unlock;
+diff --git a/net/bluetooth/l2cap_sock.c b/net/bluetooth/l2cap_sock.c
+index 143654a47989d..7eefb46f06927 100644
+--- a/net/bluetooth/l2cap_sock.c
++++ b/net/bluetooth/l2cap_sock.c
+@@ -109,6 +109,7 @@ static int l2cap_sock_bind(struct socket *sock, struct sockaddr_unsized *addr, i
+ 			return -EINVAL;
+ 	}
+ 
++	l2cap_chan_lock(chan);
+ 	lock_sock(sk);
+ 
+ 	if (sk->sk_state != BT_OPEN) {
+@@ -174,6 +175,7 @@ static int l2cap_sock_bind(struct socket *sock, struct sockaddr_unsized *addr, i
+ 
+ done:
+ 	release_sock(sk);
++	l2cap_chan_unlock(chan);
+ 	return err;
+ }
+ 
 -- 
 2.53.0
 
