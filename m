@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793211867;
-	b=yBpJgInjqtWdpX2NKC5o+Gmt+uctF62AFWYryPAsptZWjhzzc0UckLXuCOhsaAq7srd5
-	 jR9GpeULhtjIu5gv2n3EyQlF1TPgjkLGkxBn38bOWjNkpAy1tO8MfBkegwzTp8LhrpZLA
-	 3e36sCLyr/nRi0A+k7fb/f8jaC1Izi+BGycjFwjVqwrZEgCy8cqdrrO8yrTyUUVar3cbI
-	 BDwUljD1vpWtNaRDFUASHUjFwqXqycgUjDmOO92w8ojIrp3lW7MCMCWkgCM3MVWcT9LEh
-	 EPlITf2D5fxi0RpIaKlsH40stAR3SlxIDdLmQUFmMD+PfDmeljBWiQggrGM0dSsYpSg==
+	t=1793211869;
+	b=d7kcvcYZgtiEWiRSbWTgiGC6YlDjupZBCobvbkCN+OQtyLVBpnhbrgQQ/V/7F+MYes+H
+	 zyIvbelSq002cEdJROkDjAEIaHkdJ/KlLwNxjQ41HAkBYlCA2A+4ha7D8ggqqBRyqVTze
+	 v+mIR6qsMnsebqzzvq4rMHpz353C3Ief4BdKBJ6F7xs9d/FoDPZJ8QyQn2bJchNY4jJxj
+	 pe5N8y6N+mhZIwgaBUpseSjBCbANpOMdJKDOJaMwFDgWjK93DIijfCpgAvMlSBp8p+JlC
+	 NWcwC4Z3/cNVRl5JN0V68gk2gDVv5sOlKMFXIkVmT2owJu/lBhwKUZ0K/jgdn/ivyAQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793211867;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793211869;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=y0VoHttG9kmL5ShlKjJ57AQXyhulufrswW50b0FuFs8=;
-	b=yjlt+rI5+vzPDK1rdeidfcCoecGrUbtfJFo/9v81/1kPuAvzKBoJCAwe+aIPkWqW+NGE
-	 vKCCHBIpMv6vOlMy8lxwDOzXi0o4fQhiMFSuXh8TTuU8iCAXUmUVopJ4qo+Nz7gLwo33y
-	 SvenYO1oB/1cFcKd9nOY+NU/hQoGlaoCXGrXcQj2QGWqUbF2oITbNzq7KPeOt11vMKuHN
-	 Fm5eA9OAztYNLTtmsK0Z8CVdAqN+hFHFymgEu9ly0fPPYQOHnRXQhBm3G4aQ0VbMb3eD0
-	 q5Dju+IQgWLlYuXf0rQLrIk4w0MFYgycZ491vPaAODtGxUfNoNp1nftkZVkiUcWDiIQ==
+	bh=i56i69OR2ujoczzzuYWNwI1bQDvlatkp8ggOY8jP/Ek=;
+	b=RjkwS4v6uk64YJBwZ5/glLd44e2NwXPIX1VOenMFgozGPYwCfebbXNXbKdaYsSQSlvGm
+	 fyUeKayZba4Tb95e2lFxwqVR3pCQxznba858JkZRTn+8SHvFPcQew+zPYdD7/MFYJ7A7H
+	 kS2tz6eSJMiVFHE3mR0LgNuW90P5Ry50dhW/hUP189wNJGl6oVhed09jajfCrKEOANKYS
+	 nMr7Up4acMjuzu4pREjIawI8HYjYjz97h6BhjXdCsG6EYEqBSz+SoobosVEDN5/ETre4D
+	 QIy5YlF3xMX3f2pjM8fZO4qvNb/T5C42MJprAbZrl9pzNnRzl3TlmIvQ2KDjhH409sg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nh+5No5Q;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P8Sc7WPI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCD67606A322;
-	Wed, 28 Oct 2026 18:24:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94ECD606A323;
+	Wed, 28 Oct 2026 18:24:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nh+5No5Q
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 179141F01825;
-	Wed, 28 Oct 2026 18:24:25 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P8Sc7WPI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3C1D1F01825;
+	Wed, 28 Oct 2026 18:24:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793211866;
-	bh=y0VoHttG9kmL5ShlKjJ57AQXyhulufrswW50b0FuFs8=;
+	s=korg; t=1793211869;
+	bh=i56i69OR2ujoczzzuYWNwI1bQDvlatkp8ggOY8jP/Ek=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nh+5No5Q1MygvdUmu7q1NkYs5HU+6LNx46kybZMd07ulRGCD8Z7Os8Ex1HIS6F6Z0
-	 t70m9buCdfbh4iMbnYLCERsSEVXphrfswPmJLxRgExkWTfitLXPmHHCWiZQww6L6Mr
-	 LwRHCzBP/GNoaVwAo87KNYEcvHSs3TYhLqECjQ1I=
+	b=P8Sc7WPIlBs32/uxISu5a5TWqiLz28xlXG7gz1dPqsuSYskdq0bl7MfhKLlgBuQGK
+	 v2Wvfg/qkQD/70lFs1ICOEQZRl2JVBmuUqQUQAjJJoRSDkxg37HH4UkpgU0Ng990Kt
+	 4tlHe3P5/tKvn1u6B+DxuGQZWsrOkhGb/NT3jPtI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lee Jones <lee@kernel.org>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Steven Rostedt <rostedt@goodmis.org>
-Subject: [PATCH 5.15 529/571] tracing/histograms: Reject non-stacktrace fields for synthetic stacktrace fields
-Date: Wed, 28 Oct 2026 18:01:16 +0100
-Message-ID: <20261028170020.583160004@linuxfoundation.org>
+	Dingisoul <dingiso.kernel@gmail.com>,
+	Laurence Oberman <loberman@redhat.com>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 530/571] scsi: st: Fix use-after-free race between st_remove() and st_open()
+Date: Wed, 28 Oct 2026 18:01:17 +0100
+Message-ID: <20261028170020.606598943@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -68,79 +69,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lee Jones <lee@kernel.org>
+From: Laurence Oberman <loberman@redhat.com>
 
-commit a244c241593b5b38a08f0df2cb43c26574efbdcb upstream.
+commit 71caf7f84bd62a4bf91cc95abd2de690afb8d15f upstream.
 
-In check_synth_field(), when a synthetic event field is a stacktrace
-(field->is_stack) and the histogram field is not a "long[" stacktrace
-array, validation falls through to the generic size and signedness
-comparison.
+st_remove() drops the probe reference on the scsi_tape with kref_put()
+and only afterwards removes its index from st_index_idr. If that was the
+last reference, scsi_tape_release() frees the structure while it is
+still published in the idr.
 
-Because parse_synth_field() sets a stacktrace field's type to
-"__data_loc unsigned long[]", its size is sizeof(u64) and
-synth_field_signed() marks it as signed.  Consequently, any 8-byte
-signed scalar histogram field passes the fallback check, and its scalar
-value is subsequently dereferenced as a kernel stacktrace pointer in
-get_field_size() and trace_stack().
+scsi_tape_get(), called from st_open(), looks up the tape in
+st_index_idr and takes a reference under st_ref_mutex and
+st_index_lock. remove_cdevs() does not wait for opens that are already
+past chrdev_open(), so an open that is blocked on st_ref_mutex while
+st_remove() holds it can take the mutex as soon as st_remove() drops it,
+find the freed tpnt in the idr and call kref_get() on it:
 
-Furthermore, checking strstr(hist_field->type, "long[") is insufficient
-because tracepoint fields defined with __bitmask() or __rel_bitmask()
-also have type "__data_loc unsigned long[]" or "__rel_loc unsigned
-long[]", whilst create_hist_field() treats them as 4-byte scalar values
-without HIST_FIELD_FL_STACKTRACE.
+  BUG: KASAN: slab-use-after-free in st_open
+  Write of size 4 ...
+   st_open (drivers/scsi/st.c:254 drivers/scsi/st.c:1291)
+   chrdev_open
+  ...
+  Freed by task ...:
+   kfree
+   st_remove (drivers/scsi/st.c:4512)
 
-Propagate HIST_FIELD_FL_STACKTRACE to variable references and field
-variables (whilst excluding variable aliases from per-element
-stacktrace capture), and reject any mismatch between
-HIST_FIELD_FL_STACKTRACE and field->is_stack in check_synth_field().
+Remove the index from the idr before dropping the reference, all under
+st_ref_mutex. A concurrent scsi_tape_get() now either runs first and
+holds a valid reference that keeps the tape alive, or runs afterwards
+and finds nothing, so st_open() fails with -ENXIO.
 
+This restores the ordering st_remove() had before the conversion to
+st_index_idr, where the tape was unpublished from scsi_tapes[] before
+the final kref_put().
+
+Fixes: 6c648d95a6af ("[SCSI] st: get rid of scsi_tapes array")
 Cc: stable@vger.kernel.org
-Fixes: 00cf3d672a9d ("tracing: Allow synthetic events to pass around stacktraces")
-Link: https://patch.msgid.link/20261013112449.1006088-1-lee@kernel.org
-Signed-off-by: Lee Jones <lee@kernel.org>
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
-[Lee: Omit create_var_field() and hist_trigger_elt_update() hunks as
-      288709c9f3b0 ("tracing: Allow stacktraces to be saved as histogram
-      variables") is not present]
-Signed-off-by: Lee Jones <lee@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: Dingisoul <dingiso.kernel@gmail.com>
+Closes: https://lore.kernel.org/linux-scsi/20261007211520.1428497-1-dingiso.kernel@gmail.com/
+Tested-by: Dingisoul <dingiso.kernel@gmail.com>
+Signed-off-by: Laurence Oberman <loberman@redhat.com>
+Link: https://patch.msgid.link/20261013202548.249628-1-loberman@redhat.com
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+[ loberman: st_remove() still returns int in 5.15; context adjusted ]
+Signed-off-by: Laurence Oberman <loberman@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace_events_hist.c |    9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/scsi/st.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/kernel/trace/trace_events_hist.c
-+++ b/kernel/trace/trace_events_hist.c
-@@ -1800,7 +1800,8 @@ static int init_var_ref(struct hist_fiel
- 	ref_field->size = var_field->size;
- 	ref_field->is_signed = var_field->is_signed;
- 	ref_field->flags |= var_field->flags &
--		(HIST_FIELD_FL_TIMESTAMP | HIST_FIELD_FL_TIMESTAMP_USECS);
-+		(HIST_FIELD_FL_TIMESTAMP | HIST_FIELD_FL_TIMESTAMP_USECS |
-+		 HIST_FIELD_FL_STACKTRACE);
+diff --git a/drivers/scsi/st.c b/drivers/scsi/st.c
+index 65b23015d1f23..2783419ef5f42 100644
+--- a/drivers/scsi/st.c
++++ b/drivers/scsi/st.c
+@@ -4439,11 +4439,11 @@ static int st_remove(struct device *dev)
+ 	remove_cdevs(tpnt);
  
- 	if (system) {
- 		ref_field->system = kstrdup(system, GFP_KERNEL);
-@@ -2812,6 +2813,7 @@ static struct field_var *create_field_va
- 		ret =  -ENOMEM;
- 		goto err;
- 	}
-+	var->flags |= val->flags & HIST_FIELD_FL_STACKTRACE;
+ 	mutex_lock(&st_ref_mutex);
+-	kref_put(&tpnt->kref, scsi_tape_release);
+-	mutex_unlock(&st_ref_mutex);
+ 	spin_lock(&st_index_lock);
+ 	idr_remove(&st_index_idr, index);
+ 	spin_unlock(&st_index_lock);
++	kref_put(&tpnt->kref, scsi_tape_release);
++	mutex_unlock(&st_ref_mutex);
+ 	return 0;
+ }
  
- 	field_var->var = var;
- 	field_var->val = val;
-@@ -3429,7 +3431,10 @@ static int check_synth_field(struct synt
- 	    && field->is_dynamic)
- 		return 0;
- 
--	if (strstr(hist_field->type, "long[") && field->is_stack)
-+	if (!!(hist_field->flags & HIST_FIELD_FL_STACKTRACE) != field->is_stack)
-+		return -EINVAL;
-+
-+	if (field->is_stack)
- 		return 0;
- 
- 	if (strcmp(field->type, hist_field->type) != 0) {
+-- 
+2.53.0
+
 
 
