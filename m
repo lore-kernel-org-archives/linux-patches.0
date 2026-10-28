@@ -1,56 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213962;
-	b=OkoeFgqPiY81EgpnRL4Pl2XdRF3jtTK0aFez1KnqCpm9/dizeUeKvc4VDEcuW9Tdx1lf
-	 3bjRxW1tFt6tW2amAzYjJhKrrAMKgZoONnvLOB4vxCnbUR7nZq2sqSJMTMGrm6Nq4Fnjs
-	 8OdWEOam2/0B7gYAMYxMsVC4nwexmQyk+4edslU0suL9UBs/Y3/N8o16l5lmhxtsRW2Ku
-	 hLimxcUtCDU/jgoxY4pCjJ1KzM5OkcQdWz0rMDYdAKyw2kbLVaJusaQUpNGt/nSt3SzXe
-	 3i5TueeEcpUM9EBR+GUdgVrbSe5ZM47mzn2Yxf0PfSq5sOqkFaiGeyr7kJ3ipzcJV9A==
+	t=1793213968;
+	b=RJU4AgAyPcy3sIvTx7RlEPQj42u+Npy/tj1zJMxaBRmiTpQsIyuypptko3NkDZC0GSqH
+	 QuOrdyY+KUTMDRkGR9ykyofsBkVfqMEKQDvrQfoMJwC2dUuSaGIhICdg1SrIIxzlWOq1s
+	 tACg74D7JqVwGtWsOt1HYsPF8N4A6YBmw8eBCiQcAJEbHQkSg3g+m0JORhDeHef1Ws8kT
+	 nTkngO+aSAh/QzZ5fdVaVnRwYYzvb5yccRCVWOH4p5szKFnhxIbTlDWSpPuXpCz/QqIAu
+	 S9WHsAbmbXoH+sJhtBLZVWq7OGGgvkq4sxLaNOwU87uLSnD1U6VwH4NnrQdsO+NJcaA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213962;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213968;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=c017aujLePOSPbdyd5IV5q+CRxi9rNrpm4Rn5SmzVic=;
-	b=qedXCURRRIEEG++E1rHRZuQHB6+05V/Gsl61BTErgvzIN5v6EIaWuvsf/g90LPBnJRwI
-	 OsxitPIi+71Mz3UFUFqnMRNSq2Aym2xYVahtQ0mumaIZh5/ZW4gac1Z2kJu+T1qcr1LG+
-	 e6CONQnsGnuDtJVQia+KYXPtTF1cAODy+v87Fv2uT+LBfjGKGyVa/ADbcBzjKawtp+1OL
-	 2JV+eoyeRAMiojaX4THIQc8T1aMcV/T7PIE27hapZBO+k4ML8ZctGiXSJ3ao+oVwCN1Ki
-	 e958IqPdOmUzKiZMOs/PFUwCQL3F+yFiQVyrEuxUo/Dw7og5ETLJpqbtlWc77xEvJWQ==
+	bh=Y4rSHHuPSLJI1pljvCRXvFGteefVW+oKOMLMwyuEMuw=;
+	b=4XTMLKTlNqV6F5Dgk6IE+7pR61qql/0qcFESnT0qrnE8KcJ6gxAGOiBa+qOPC0dXdOje
+	 +XeTRUyBGGn/Gp2Cw/JVnZU9lnLDcKV0INeCBD8A6drbjtXQujL2NkldS3w1XA9Sd0yzv
+	 6Yi0mPQGtkOzoYhEIPh4w3haKfc3FlnQUtrvsxKhoJ8cr2xvzu2cMCFxs1ohIqtQhWJa7
+	 6uz84C7BjKljEB26xL2A0/D5kQAOh7m5D4upsgpy20YKC2fuRUepd+MOiGfqmZ5kLYpFa
+	 ft3iTGHRy6ggC0nsU3IAQtb8S4NbtkHDAQy0FsHTUAQkQKn3sbu6GTYyuvOcsW1SMrA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xUPot6ML;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I01P7zJT;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 830D2606A31C;
-	Wed, 28 Oct 2026 18:59:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88A87606A325;
+	Wed, 28 Oct 2026 18:59:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xUPot6ML
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7AE31F01825;
-	Wed, 28 Oct 2026 18:59:21 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I01P7zJT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D9841F01828;
+	Wed, 28 Oct 2026 18:59:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213962;
-	bh=c017aujLePOSPbdyd5IV5q+CRxi9rNrpm4Rn5SmzVic=;
+	s=korg; t=1793213968;
+	bh=Y4rSHHuPSLJI1pljvCRXvFGteefVW+oKOMLMwyuEMuw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xUPot6MLcCCQxwp1akefoPTr7++RrUjp79m80xCJaZ+atNoSff0OU22nGzQZZbn0K
-	 akMLnkBW+//3XhM1Tg4o7CtrB96x8WLUEht27mZ+PkVdytR1pPYqd5rLyhPWsyimkc
-	 NMIOh9SX2+lY/MgASze48aHOIO95UnLJuDNkltWk=
+	b=I01P7zJTULa2DOzLzIKh/jwAcWLq4pGZZoxNrIBOVBPwXP4y5lPq7K+VDq0SmyM8D
+	 nEhiBLgRVFTMSPzw5idReBt0yqv82LUyifCfWD5r/4oA019Szox58hFc+vIN2+xQNe
+	 QywuBKQxb+WWb/xmgM8SwazI8FRTWfJgpyUlbkLg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zijian Zhang <zijianzhang@bytedance.com>,
-	Stanislav Fomichev <sdf@fomichev.me>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Cong Wang <cong.wang@bytedance.com>,
-	Stefano Garzarella <sgarzare@redhat.com>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Tom Talpey <tom@talpey.com>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0691/1887] bpf: Add sk_is_inet and IS_ICSK check in tls_sw_has_ctx_tx/rx
-Date: Wed, 28 Oct 2026 17:46:27 +0100
-Message-ID: <20261028170515.136575554@linuxfoundation.org>
+Subject: [PATCH 6.1 0693/1887] smb: client: Fix use-after-free of network namespace.
+Date: Wed, 28 Oct 2026 17:46:29 +0100
+Message-ID: <20261028170515.183619831@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -72,86 +69,203 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zijian Zhang <zijianzhang@bytedance.com>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit 44d0469f79bd3d0b3433732877358df7dc6b17b1 ]
+[ Upstream commit ef7134c7fc48e1441b398e55a862232868a6f0a7 ]
 
-As the introduction of the support for vsock and unix sockets in sockmap,
-tls_sw_has_ctx_tx/rx cannot presume the socket passed in must be IS_ICSK.
-vsock and af_unix sockets have vsock_sock and unix_sock instead of
-inet_connection_sock. For these sockets, tls_get_ctx may return an invalid
-pointer and cause page fault in function tls_sw_ctx_rx.
+Recently, we got a customer report that CIFS triggers oops while
+reconnecting to a server.  [0]
 
-BUG: unable to handle page fault for address: 0000000000040030
-Workqueue: vsock-loopback vsock_loopback_work
-RIP: 0010:sk_psock_strp_data_ready+0x23/0x60
-Call Trace:
- ? __die+0x81/0xc3
- ? no_context+0x194/0x350
- ? do_page_fault+0x30/0x110
- ? async_page_fault+0x3e/0x50
- ? sk_psock_strp_data_ready+0x23/0x60
- virtio_transport_recv_pkt+0x750/0x800
- ? update_load_avg+0x7e/0x620
- vsock_loopback_work+0xd0/0x100
- process_one_work+0x1a7/0x360
- worker_thread+0x30/0x390
- ? create_worker+0x1a0/0x1a0
- kthread+0x112/0x130
- ? __kthread_cancel_work+0x40/0x40
- ret_from_fork+0x1f/0x40
+The workload runs on Kubernetes, and some pods mount CIFS servers
+in non-root network namespaces.  The problem rarely happened, but
+it was always while the pod was dying.
 
-v2:
-  - Add IS_ICSK check
-v3:
-  - Update the commits in Fixes
+The root cause is wrong reference counting for network namespace.
 
-Fixes: 634f1a7110b4 ("vsock: support sockmap")
-Fixes: 94531cfcbe79 ("af_unix: Add unix_stream_proto for sockmap")
-Signed-off-by: Zijian Zhang <zijianzhang@bytedance.com>
-Acked-by: Stanislav Fomichev <sdf@fomichev.me>
-Acked-by: Jakub Kicinski <kuba@kernel.org>
-Reviewed-by: Cong Wang <cong.wang@bytedance.com>
-Acked-by: Stefano Garzarella <sgarzare@redhat.com>
-Link: https://lore.kernel.org/r/20241106003742.399240-1-zijianzhang@bytedance.com
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+CIFS uses kernel sockets, which do not hold refcnt of the netns that
+the socket belongs to.  That means CIFS must ensure the socket is
+always freed before its netns; otherwise, use-after-free happens.
+
+The repro steps are roughly:
+
+  1. mount CIFS in a non-root netns
+  2. drop packets from the netns
+  3. destroy the netns
+  4. unmount CIFS
+
+We can reproduce the issue quickly with the script [1] below and see
+the splat [2] if CONFIG_NET_NS_REFCNT_TRACKER is enabled.
+
+When the socket is TCP, it is hard to guarantee the netns lifetime
+without holding refcnt due to async timers.
+
+Let's hold netns refcnt for each socket as done for SMC in commit
+9744d2bf1976 ("smc: Fix use-after-free in tcp_write_timer_handler().").
+
+Note that we need to move put_net() from cifs_put_tcp_session() to
+clean_demultiplex_info(); otherwise, __sock_create() still could touch a
+freed netns while cifsd tries to reconnect from cifs_demultiplex_thread().
+
+Also, maybe_get_net() cannot be put just before __sock_create() because
+the code is not under RCU and there is a small chance that the same
+address happened to be reallocated to another netns.
+
+[0]:
+CIFS: VFS: \\XXXXXXXXXXX has not responded in 15 seconds. Reconnecting...
+CIFS: Serverclose failed 4 times, giving up
+Unable to handle kernel paging request at virtual address 14de99e461f84a07
+Mem abort info:
+  ESR = 0x0000000096000004
+  EC = 0x25: DABT (current EL), IL = 32 bits
+  SET = 0, FnV = 0
+  EA = 0, S1PTW = 0
+  FSC = 0x04: level 0 translation fault
+Data abort info:
+  ISV = 0, ISS = 0x00000004
+  CM = 0, WnR = 0
+[14de99e461f84a07] address between user and kernel address ranges
+Internal error: Oops: 0000000096000004 [#1] SMP
+Modules linked in: cls_bpf sch_ingress nls_utf8 cifs cifs_arc4 cifs_md4 dns_resolver tcp_diag inet_diag veth xt_state xt_connmark nf_conntrack_netlink xt_nat xt_statistic xt_MASQUERADE xt_mark xt_addrtype ipt_REJECT nf_reject_ipv4 nft_chain_nat nf_nat xt_conntrack nf_conntrack nf_defrag_ipv6 nf_defrag_ipv4 xt_comment nft_compat nf_tables nfnetlink overlay nls_ascii nls_cp437 sunrpc vfat fat aes_ce_blk aes_ce_cipher ghash_ce sm4_ce_cipher sm4 sm3_ce sm3 sha3_ce sha512_ce sha512_arm64 sha1_ce ena button sch_fq_codel loop fuse configfs dmi_sysfs sha2_ce sha256_arm64 dm_mirror dm_region_hash dm_log dm_mod dax efivarfs
+CPU: 5 PID: 2690970 Comm: cifsd Not tainted 6.1.103-109.184.amzn2023.aarch64 #1
+Hardware name: Amazon EC2 r7g.4xlarge/, BIOS 1.0 11/1/2018
+pstate: 00400005 (nzcv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+pc : fib_rules_lookup+0x44/0x238
+lr : __fib_lookup+0x64/0xbc
+sp : ffff8000265db790
+x29: ffff8000265db790 x28: 0000000000000000 x27: 000000000000bd01
+x26: 0000000000000000 x25: ffff000b4baf8000 x24: ffff00047b5e4580
+x23: ffff8000265db7e0 x22: 0000000000000000 x21: ffff00047b5e4500
+x20: ffff0010e3f694f8 x19: 14de99e461f849f7 x18: 0000000000000000
+x17: 0000000000000000 x16: 0000000000000000 x15: 0000000000000000
+x14: 0000000000000000 x13: 0000000000000000 x12: 3f92800abd010002
+x11: 0000000000000001 x10: ffff0010e3f69420 x9 : ffff800008a6f294
+x8 : 0000000000000000 x7 : 0000000000000006 x6 : 0000000000000000
+x5 : 0000000000000001 x4 : ffff001924354280 x3 : ffff8000265db7e0
+x2 : 0000000000000000 x1 : ffff0010e3f694f8 x0 : ffff00047b5e4500
+Call trace:
+ fib_rules_lookup+0x44/0x238
+ __fib_lookup+0x64/0xbc
+ ip_route_output_key_hash_rcu+0x2c4/0x398
+ ip_route_output_key_hash+0x60/0x8c
+ tcp_v4_connect+0x290/0x488
+ __inet_stream_connect+0x108/0x3d0
+ inet_stream_connect+0x50/0x78
+ kernel_connect+0x6c/0xac
+ generic_ip_connect+0x10c/0x6c8 [cifs]
+ __reconnect_target_unlocked+0xa0/0x214 [cifs]
+ reconnect_dfs_server+0x144/0x460 [cifs]
+ cifs_reconnect+0x88/0x148 [cifs]
+ cifs_readv_from_socket+0x230/0x430 [cifs]
+ cifs_read_from_socket+0x74/0xa8 [cifs]
+ cifs_demultiplex_thread+0xf8/0x704 [cifs]
+ kthread+0xd0/0xd4
+Code: aa0003f8 f8480f13 eb18027f 540006c0 (b9401264)
+
+[1]:
+CIFS_CRED="/root/cred.cifs"
+CIFS_USER="Administrator"
+CIFS_PASS="Password"
+CIFS_IP="X.X.X.X"
+CIFS_PATH="//${CIFS_IP}/Users/Administrator/Desktop/CIFS_TEST"
+CIFS_MNT="/mnt/smb"
+DEV="enp0s3"
+
+cat <<EOF > ${CIFS_CRED}
+username=${CIFS_USER}
+password=${CIFS_PASS}
+domain=EXAMPLE.COM
+EOF
+
+unshare -n bash -c "
+mkdir -p ${CIFS_MNT}
+ip netns attach root 1
+ip link add eth0 type veth peer veth0 netns root
+ip link set eth0 up
+ip -n root link set veth0 up
+ip addr add 192.168.0.2/24 dev eth0
+ip -n root addr add 192.168.0.1/24 dev veth0
+ip route add default via 192.168.0.1 dev eth0
+ip netns exec root sysctl net.ipv4.ip_forward=1
+ip netns exec root iptables -t nat -A POSTROUTING -s 192.168.0.2 -o ${DEV} -j MASQUERADE
+mount -t cifs ${CIFS_PATH} ${CIFS_MNT} -o vers=3.0,sec=ntlmssp,credentials=${CIFS_CRED},rsize=65536,wsize=65536,cache=none,echo_interval=1
+touch ${CIFS_MNT}/a.txt
+ip netns exec root iptables -t nat -D POSTROUTING -s 192.168.0.2 -o ${DEV} -j MASQUERADE
+"
+
+umount ${CIFS_MNT}
+
+[2]:
+ref_tracker: net notrefcnt@000000004bbc008d has 1/1 users at
+     sk_alloc (./include/net/net_namespace.h:339 net/core/sock.c:2227)
+     inet_create (net/ipv4/af_inet.c:326 net/ipv4/af_inet.c:252)
+     __sock_create (net/socket.c:1576)
+     generic_ip_connect (fs/smb/client/connect.c:3075)
+     cifs_get_tcp_session.part.0 (fs/smb/client/connect.c:3160 fs/smb/client/connect.c:1798)
+     cifs_mount_get_session (fs/smb/client/trace.h:959 fs/smb/client/connect.c:3366)
+     dfs_mount_share (fs/smb/client/dfs.c:63 fs/smb/client/dfs.c:285)
+     cifs_mount (fs/smb/client/connect.c:3622)
+     cifs_smb3_do_mount (fs/smb/client/cifsfs.c:949)
+     smb3_get_tree (fs/smb/client/fs_context.c:784 fs/smb/client/fs_context.c:802 fs/smb/client/fs_context.c:794)
+     vfs_get_tree (fs/super.c:1800)
+     path_mount (fs/namespace.c:3508 fs/namespace.c:3834)
+     __x64_sys_mount (fs/namespace.c:3848 fs/namespace.c:4057 fs/namespace.c:4034 fs/namespace.c:4034)
+     do_syscall_64 (arch/x86/entry/common.c:52 arch/x86/entry/common.c:83)
+     entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:130)
+
+Fixes: 26abe14379f8 ("net: Modify sk_alloc to not reference count the netns of kernel sockets.")
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Acked-by: Tom Talpey <tom@talpey.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/tls.h | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ fs/smb/client/connect.c | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/include/net/tls.h b/include/net/tls.h
-index b5856a28070da..cd0dfa25c591e 100644
---- a/include/net/tls.h
-+++ b/include/net/tls.h
-@@ -405,8 +405,12 @@ tls_offload_ctx_tx(const struct tls_context *tls_ctx)
+diff --git a/fs/smb/client/connect.c b/fs/smb/client/connect.c
+index 32c57b040e7cf..1661f6135e417 100644
+--- a/fs/smb/client/connect.c
++++ b/fs/smb/client/connect.c
+@@ -1083,6 +1083,7 @@ static void clean_demultiplex_info(struct TCP_Server_Info *server)
+ 		 */
+ 	}
  
- static inline bool tls_sw_has_ctx_tx(const struct sock *sk)
- {
--	struct tls_context *ctx = tls_get_ctx(sk);
-+	struct tls_context *ctx;
++	put_net(cifs_net_ns(server));
+ #ifdef CONFIG_CIFS_DFS_UPCALL
+ 	kfree(server->origin_fullpath);
+ 	kfree(server->leaf_fullpath);
+@@ -1677,8 +1678,6 @@ cifs_put_tcp_session(struct TCP_Server_Info *server, int from_reconnect)
+ 	/* srv_count can never go negative */
+ 	WARN_ON(server->srv_count < 0);
+ 
+-	put_net(cifs_net_ns(server));
+-
+ 	list_del_init(&server->tcp_ses_list);
+ 	spin_unlock(&cifs_tcp_ses_lock);
+ 
+@@ -3079,7 +3078,10 @@ generic_ip_connect(struct TCP_Server_Info *server)
+ 	}
+ 
+ 	if (socket == NULL) {
+-		rc = __sock_create(cifs_net_ns(server), sfamily, SOCK_STREAM,
++		struct net *net = cifs_net_ns(server);
++		struct sock *sk;
 +
-+	if (!sk_is_inet(sk) || !inet_sk(sk)->is_icsk)
-+		return false;
++		rc = __sock_create(net, sfamily, SOCK_STREAM,
+ 				   IPPROTO_TCP, &socket, 1);
+ 		if (rc < 0) {
+ 			cifs_server_dbg(VFS, "Error %d creating socket\n", rc);
+@@ -3087,6 +3089,11 @@ generic_ip_connect(struct TCP_Server_Info *server)
+ 			return rc;
+ 		}
  
-+	ctx = tls_get_ctx(sk);
- 	if (!ctx)
- 		return false;
- 	return !!tls_sw_ctx_tx(ctx);
-@@ -414,8 +418,12 @@ static inline bool tls_sw_has_ctx_tx(const struct sock *sk)
- 
- static inline bool tls_sw_has_ctx_rx(const struct sock *sk)
- {
--	struct tls_context *ctx = tls_get_ctx(sk);
-+	struct tls_context *ctx;
++		sk = socket->sk;
++		sk->sk_net_refcnt = 1;
++		get_net_track(net, &sk->ns_tracker, GFP_KERNEL);
++		sock_inuse_add(net, 1);
 +
-+	if (!sk_is_inet(sk) || !inet_sk(sk)->is_icsk)
-+		return false;
- 
-+	ctx = tls_get_ctx(sk);
- 	if (!ctx)
- 		return false;
- 	return !!tls_sw_ctx_rx(ctx);
+ 		/* BB other socket options to set KEEPALIVE, NODELAY? */
+ 		cifs_dbg(FYI, "Socket created\n");
+ 		server->ssocket = socket;
 -- 
 2.53.0
 
