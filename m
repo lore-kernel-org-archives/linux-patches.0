@@ -1,57 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793210661;
-	b=ycn6qx2iT8TGsnRLp36iErievW1FuJA2OLyRZA8MNQ72yf3laMM4J/F9ZWkoCZ313yiv
-	 6zlgEoTxilbMYYMPjAPIiRUXdp2LaKpXEsej8xz6rroaceuTEHE+PHgYZHB5Vkj6O7Ipw
-	 YAMwhAzdmoQIlPljtcEgYgZNr5zlAe6+SrFWnIQbHkb+rC52bsO23pSbC1Lank05spQSR
-	 WyhdV0qFFsIhz6onT5RWYgSD8z9m2q68V5jcnYxH9kgoZ9HAJEZ1yDLNlQh8al7OKCYxG
-	 warUkbIyM13eYb8g0xYXJ6JJB39pBgMkLt7M4g8dEsVFC5bJ94JCVP7ZOO73Mtb6ZdQ==
+	t=1793210664;
+	b=0d519XpoyGxM4PGey3UkX2492gWMjk2xPGUf0Tw6R5hwmNTX1uu0WH5q4id6WsSQpxlL
+	 XhMJZfIpfH4Q0fk1enIJmUky64qEnpo2amiy7FXuaHAnCMIIo+Tm2Dk55wH4LIwyariDX
+	 mw6YL+zlcr5pyK3gsHhUy505piTcGUw8jlTULGX3Q378QjesX2DfkjgPbAyeoLtqaCkYc
+	 lc0tW8OeUA0200lAuu7Dn0QNzNJwenKvAsPALFts9yNa516dTgpifPOwHc7bpa0gg1QUd
+	 Bpy+/l63F5mmxz97wFeFcj+29pT1p1Fpn+bkw9/2Td+/kJFKKzXk1D9otnScfliCG8g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793210661;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793210664;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=13AFdaBu4dm01pYUbfIMEOmTPtcFUtEg+Iv6Sj6ODqU=;
-	b=uQqv4Uxcj/W4LO8HaaSc6rcbZyxtAbwySuLbU7QxW5edmHLXmBL8BaDuAJctxw3hcktt
-	 06lEMMfQ7Pg1Ld4UT25llxkiCddcmIW7/e8a0jxF+MLOmvMH0/zq1d/QMP2xYfBjbt9/l
-	 lLvteHsXcZstVtIH66wlhq93pMNO+v9IATX7LrMdbiRrNfLSvT0xG2yr+nCS/Ztr9D95T
-	 Ct+rOR+kHPfP1pg+FZIuZ3A2nMqOYoso9lCaBKEk2sS0ItEZntRBBOK8HsyD76f6hxRUW
-	 zy6RUdurWcpmRedYufbHIM4eA25wtlOLTRqAH1XP1YamQLhmJGZhW5r/rjyMRozmgdA==
+	bh=MghCoaambyw0ML3VxoRbApfjRNQ+f3ndc0aB0jXQCtM=;
+	b=2BCOhwSdWOMK5DU41XL43IivUwLZIxcRUqvdQkntx+NnSIBevRxnG8PtN17eOJdu+E6m
+	 wf30zAEy5RwtDW5i45Km/9klz3FImsF+wLKO/pv7H7AVc0w9QOkySKVylsqauR42etBR1
+	 WjiasVgPoTrQCPH3DEkTK7+L3MyW/1MuIz/2FmW6aOQQH5lVR/YKUIsc024U/bPg0GV0c
+	 7vFIjABVieLLwGUKsUdMMuvGL3U1rCapjXqMQ4Oiejc19N8vyDaT8OES5NaTUqinribzG
+	 NRocOhteo+IB2v135h/X6mHDxW9WosLu0vwodHctlo12XAs+1M+RANoXuSo82Mld9ug==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=noLHDI3q;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2BO7XLhM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20F00606A334;
-	Wed, 28 Oct 2026 18:04:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4741606A321;
+	Wed, 28 Oct 2026 18:04:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=noLHDI3q
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B15F1F01828;
-	Wed, 28 Oct 2026 18:04:20 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2BO7XLhM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F63C1F01825;
+	Wed, 28 Oct 2026 18:04:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793210660;
-	bh=13AFdaBu4dm01pYUbfIMEOmTPtcFUtEg+Iv6Sj6ODqU=;
+	s=korg; t=1793210663;
+	bh=MghCoaambyw0ML3VxoRbApfjRNQ+f3ndc0aB0jXQCtM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=noLHDI3qLvXrEz3UZ2YhsKG9OBIUUzIIgP5K3U3JoPpNEmm3UkVAy4UjKKGG2Z/f3
-	 wZ9jSBXFc0anFBpyzOCcYv5bOdcVIw1piohHKw3WJgUD7X015MICc3qA6LP+bvXeXY
-	 /+wyB3JLU75zjnAykSXw9p4l2NycVe057zJHsjkY=
+	b=2BO7XLhMI19qUlp6wnJOT8gQIz8tIYVrwLcNzoRsS44l4rg9+Pw+s/BRccK20ug/q
+	 /VV8iZ+HyZdj1Q9zADGEUh1gi3cd/P5LOmfuBnNNPaLXjDFHBw9cSWVB70yH9EVNHC
+	 iuEsuPVTcBYtpcSREbWuKvKjtaFWOlVeYFVoTnIU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Paulo Alcantara <pc@manguebit.org>,
-	Tom Talpey <tom@talpey.com>,
-	Stefan Metzmacher <metze@samba.org>,
-	Shyam Prasad N <sprasad@microsoft.com>,
-	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
-	Bharath SM <bharathsm@microsoft.com>,
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 104/571] smb: client: fix smbd_connection leak on cifs_get_tcp_session() error
-Date: Wed, 28 Oct 2026 17:54:11 +0100
-Message-ID: <20261028170010.488256996@linuxfoundation.org>
+Subject: [PATCH 5.15 105/571] bna: prevent IOC timer rearm during teardown
+Date: Wed, 28 Oct 2026 17:54:12 +0100
+Message-ID: <20261028170010.512480922@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -73,47 +69,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.org>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-[ Upstream commit e75c96157d45e498970158c8f7373d90102e33b9 ]
+[ Upstream commit 77b1718e39e5c9f6956fb60807326af20baf889d ]
 
-When an RDMA connection is successfully established via
-smbd_get_connection() but cifs_get_tcp_session() later fails (e.g.
-kthread_create() returns an error), the error path frees tcp_ses
-without first destroying the smbd_connection.
+bna: prevent IOC timer rearm during teardown
 
-Fix this by calling smbd_destroy() in the out_err cleanup path before
-kfree(tcp_ses).  smbd_destroy() safely handles the case where
-smbd_conn is NULL, so it can be called unconditionally.
+bnad_pci_remove() and the probe disable_ioceth path call
+timer_delete_sync() for ioc_timer, sem_timer and hb_timer, but not for
+iocpf_timer.  bnad_iocpf_timeout() then takes bnad->bna_lock after
+free_netdev() has freed the struct bnad.
 
-Closes: https://sashiko.dev/#/patchset/20260912165503.521597-1-pc%40manguebit.org
-Fixes: 2f8946464b11 ("CIFS: SMBD: Upper layer connects to SMBDirect session")
-Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
-Cc: Tom Talpey <tom@talpey.com>
-Cc: Stefan Metzmacher <metze@samba.org>
-Cc: Shyam Prasad N <sprasad@microsoft.com>
-Cc: Ronnie Sahlberg <ronniesahlberg@gmail.com>
-Cc: Bharath SM <bharathsm@microsoft.com>
-Cc: Namjae Jeon <linkinjeon@kernel.org>
+Deleting iocpf_timer last does not fix this.  sem_timer and
+iocpf_timer rearm each other: bnad_iocpf_sem_timeout() can arm
+iocpf_timer, and bnad_iocpf_timeout() arms sem_timer from
+bfa_ioc_hw_sem_get() when the semaphore is busy.
+timer_delete_sync() only waits out its own callback.
+bnad_ioceth_disable() can time out and leave that callback live.
+
+Shut all four IOC timers down with timer_shutdown_sync() on both
+paths, so a later mod_timer() is ignored.
+
+This issue was identified during our ongoing static-analysis research
+while reviewing kernel code.
+
+Fixes: 1d32f7696286 ("bna: IOC failure auto recovery fix")
 Cc: stable@vger.kernel.org
+Assisted-by: LLM
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Link: https://patch.msgid.link/20260922014605.588040-1-mhun512@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+[ inlined bnad_ioc_timers_shutdown() into the existing teardown functions. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/cifs/connect.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/brocade/bna/bnad.c | 16 ++++++++++------
+ 1 file changed, 10 insertions(+), 6 deletions(-)
 
-diff --git a/fs/cifs/connect.c b/fs/cifs/connect.c
-index d35474b836007..a91d3f6ae5be6 100644
---- a/fs/cifs/connect.c
-+++ b/fs/cifs/connect.c
-@@ -1574,6 +1574,7 @@ cifs_get_tcp_session(struct smb3_fs_context *ctx)
- 		kfree(tcp_ses->hostname);
- 		if (tcp_ses->ssocket)
- 			sock_release(tcp_ses->ssocket);
-+		smbd_destroy(tcp_ses);
- 		kfree(tcp_ses);
- 	}
- 	return ERR_PTR(rc);
+diff --git a/drivers/net/ethernet/brocade/bna/bnad.c b/drivers/net/ethernet/brocade/bna/bnad.c
+index a3b6b9af0b057..437a87b1ed4f9 100644
+--- a/drivers/net/ethernet/brocade/bna/bnad.c
++++ b/drivers/net/ethernet/brocade/bna/bnad.c
+@@ -3745,9 +3745,11 @@ bnad_pci_probe(struct pci_dev *pdev,
+ 	bnad_res_free(bnad, &bnad->mod_res_info[0], BNA_MOD_RES_T_MAX);
+ disable_ioceth:
+ 	bnad_ioceth_disable(bnad);
+-	del_timer_sync(&bnad->bna.ioceth.ioc.ioc_timer);
+-	del_timer_sync(&bnad->bna.ioceth.ioc.sem_timer);
+-	del_timer_sync(&bnad->bna.ioceth.ioc.hb_timer);
++	/* The IOC timers rearm one another.  Shut down all of them. */
++	timer_shutdown_sync(&bnad->bna.ioceth.ioc.ioc_timer);
++	timer_shutdown_sync(&bnad->bna.ioceth.ioc.sem_timer);
++	timer_shutdown_sync(&bnad->bna.ioceth.ioc.hb_timer);
++	timer_shutdown_sync(&bnad->bna.ioceth.ioc.iocpf_timer);
+ 	spin_lock_irqsave(&bnad->bna_lock, flags);
+ 	bna_uninit(bna);
+ 	spin_unlock_irqrestore(&bnad->bna_lock, flags);
+@@ -3788,9 +3790,11 @@ bnad_pci_remove(struct pci_dev *pdev)
+ 
+ 	mutex_lock(&bnad->conf_mutex);
+ 	bnad_ioceth_disable(bnad);
+-	del_timer_sync(&bnad->bna.ioceth.ioc.ioc_timer);
+-	del_timer_sync(&bnad->bna.ioceth.ioc.sem_timer);
+-	del_timer_sync(&bnad->bna.ioceth.ioc.hb_timer);
++	/* The IOC timers rearm one another.  Shut down all of them. */
++	timer_shutdown_sync(&bnad->bna.ioceth.ioc.ioc_timer);
++	timer_shutdown_sync(&bnad->bna.ioceth.ioc.sem_timer);
++	timer_shutdown_sync(&bnad->bna.ioceth.ioc.hb_timer);
++	timer_shutdown_sync(&bnad->bna.ioceth.ioc.iocpf_timer);
+ 	spin_lock_irqsave(&bnad->bna_lock, flags);
+ 	bna_uninit(bna);
+ 	spin_unlock_irqrestore(&bnad->bna_lock, flags);
 -- 
 2.53.0
 
