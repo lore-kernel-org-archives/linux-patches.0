@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793208943;
-	b=fWenO8+HWfgWHggXGI9RIA7qDs097Q+wgdz8jGiHY25rdfefxtQgMdXsjTD3a+L/hitD
-	 +8CheiGpPvgJ8MqkPEX71j+HWMuBaW2T7KVaXX7OvXFkq+Kgd+SEAt4FNebitkX1Z/Gis
-	 fjRoAF7YASmlfAwdzWD65iqKi1zvb0CXTBHXD1lkIf2eXbZB1HGbMZ4wzZW5ky1Eplv8G
-	 o0oErgvu9jJ3ab0dDRQV3Z7reUsDMn3rpQ14lzFWMwk5gzKCfvV+twc/9VOetBILDZNs+
-	 e4KWPNQXRwm9DZbPY3WWwytgw1Eu90QRI5XLXmSzdVledmlMiSgS9Oo0jZoODNBO1GQ==
+	t=1793208949;
+	b=Z1o+4X/YxwzvtKW/GTJlq0Sx53Zs8Dd8N5YkS3hTCDiv+ogL/aaIJ0bomowhqYXz0LDX
+	 v3z/cW0ixZWk56ZmJHNOZ0N+5TRUTkPeFuh21JwVCg7cX33tmgt3vpRXOKk2DkFdutttJ
+	 1yP/f1M8cEDsbGux5fz82qIr1d3lyHAq95oUC/OGZAbbuwtWcpumJgCr7HrPCt/Eu7/x2
+	 6MyMu6mpMf9oP6oVlDDRvpnPL1IvI12q0fTOc7+1/6otospwjXSQ3C8hEDLSZgrJBIGvD
+	 K7dnn+WXt4n5mxRVmLC/oCI9o8SwNKMWIuMP8wodxADrlnx092Zmquvh45/caSlw0uQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793208943;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793208949;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ZBhAkBz2l6eYTFGAS9avKDq+q7VTAgYeN9MR9AgdAr4=;
-	b=AgOpgISPzLmps1zoCOPfGTWHDbxaxIXpr2U5splKaBHCK8uz3jT2NcJ4QXP3LWgiUBjF
-	 sRLEcUglv5zjlyh3ppSA0BGjII4Qly/We6wo0xirIFPzye0GyxtEsVdz1PctJz8czOLLE
-	 uWR6hVmzkQPlIMBszVPSycfOvC2HeBk7jzoVT/4ZZV4bKOvw1BBGUw7xkFe8W7cF+eDnL
-	 04rgODqWoHwkXfEyqCIE0xNmy+ywNqY8Jri01RfynX6sKA5+O3NDUheQ34DBE+6M9ulX/
-	 18l4RG1nBMPhESIgOvCyfdSDfaeJBV/JEf5K/3VWfdoe+jjrPiTtWuQJN4Fv1ZRiv8Q==
+	bh=bVwlHc/cEAu4rcq05XRlOBbLtS/qN5a+eJ8hnRhO/Bw=;
+	b=o5/pBElpSM3t6b3rLLaYJjqwAho/nAMF1nC3RwVRDSeg/hZ2QKw86C/EpCrNz8l/YizH
+	 rHvmdXrWJ5G4stqDKgQbx7ZvFxqhN6AquEwTVbUiEsqZFCgw74UtSRMgBeUVQNu2f/Rya
+	 u+h/cBrxKvBnSJ12FRVkrRji7/82wrH7iLyfVYEYObsVlXiJxgnwbcRLqSc3bpW7GXLxc
+	 vSY8qMfEYOOpGAF0tW4L41jmN+NnxXUgel10k1sTF+vhwi4VRdGYJuztQMQsyvXIUEC1Z
+	 LhhhtSrYXQLnqbL9jARyql/abzl6qfzgEQ1Z1/5ZOyUuePLdCZNpgd6FrbSeQhViYwQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MPh830np;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Mh2IqA0w;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 402C560A2630;
-	Wed, 28 Oct 2026 17:35:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBA59606A32D;
+	Wed, 28 Oct 2026 17:35:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MPh830np
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EBB61F031EF;
-	Wed, 28 Oct 2026 17:35:42 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Mh2IqA0w
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 416931F01825;
+	Wed, 28 Oct 2026 17:35:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793208943;
-	bh=ZBhAkBz2l6eYTFGAS9avKDq+q7VTAgYeN9MR9AgdAr4=;
+	s=korg; t=1793208948;
+	bh=bVwlHc/cEAu4rcq05XRlOBbLtS/qN5a+eJ8hnRhO/Bw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MPh830nplrA+mU+Ubm2e3QnHqCoymext4nf7dNB8jcj9W3wA6saFvrcWyCunNC1fF
-	 NL8iMaYrHRYtExe0i3KiBn5lnZhw/V6R/BjO3ir8j6so/FB2E95gkLpwqW2gyGCoNl
-	 SVjhxTrRNU+Aoeauz4UO7ms/ioGd7YieMFOVPJwE=
+	b=Mh2IqA0wyh9pIsp4TUS16O6ix7EzFX7XXVemTTlF049zDtI3TOYdSzfIkiZApnRbf
+	 mwcOFN4dWHdVo17BJoXmXK6amwHikIgGkWYRfOi04G4rV7k+/XYb7blnJu/+cP98qP
+	 1R1LDtKljXWPBegkGD0ArtwgfLM0yt8L8XhgjDzE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhao Li <enderaoelyther@gmail.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Chen Ni <nichen@iscas.ac.cn>,
+	Alan Stern <stern@rowland.harvard.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 298/516] wifi: mac80211: account proxy paths against the mesh path limit
-Date: Wed, 28 Oct 2026 17:57:30 +0100
-Message-ID: <20261028170010.552018773@linuxfoundation.org>
+Subject: [PATCH 5.10 282/516] usb: ohci-spear: Remove unnecessary NULL check before clk_disable_unprepare()
+Date: Wed, 28 Oct 2026 17:57:14 +0100
+Message-ID: <20261028170010.172742753@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -68,70 +68,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhao Li <enderaoelyther@gmail.com>
+From: Chen Ni <nichen@iscas.ac.cn>
 
-[ Upstream commit a5f35d4b112af1415ff06bd501c8cc26cc08aa8b ]
+[ Upstream commit a891b9aebcc7406fe2f439d184bac3948fb08645 ]
 
-Proxy-path churn can drive the interface path counter negative and let
-later mesh path additions exceed MESH_MAX_MPATHS.
+clk_disable_unprepare() already checks NULL by using IS_ERR_OR_NULL.
+Remove unneeded NULL check for clk here.
 
-mesh_path_free_rcu() decrements the interface mpaths counter for entries
-from both the mesh and proxy path tables, but mpp_path_add() never
-reserves a slot in that counter. Removing or expiring a proxy path
-therefore returns a slot that was never charged.
-
-mesh_path_add() uses the same counter to enforce MESH_MAX_MPATHS, so once
-it falls below the number of installed paths the limit no longer holds.
-
-Reserve the shared quota before allocating a proxy path and release it on
-every unsuccessful addition. Mesh and proxy paths now share one
-1024-entry budget, so mpp_path_add() can return -ENOSPC at that limit.
-
-Fixes: ece1a2e7e860 ("mac80211: Remove mesh paths when an interface is removed")
-Cc: stable@vger.kernel.org
-Assisted-by: LLM sparse kasan
-Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
-Link: https://patch.msgid.link/20260916113649.28315-3-enderaoelyther@gmail.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-[ sashal: adapted error handling to the absence of mesh_fast_tx_flush_addr() ]
+Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
+Acked-by: Alan Stern <stern@rowland.harvard.edu>
+Link: https://lore.kernel.org/r/20250617042050.1930940-1-nichen@iscas.ac.cn
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: b1b0f8bdbbc8 ("usb: ohci-spear: disable controller wakeup on removal")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/mesh_pathtbl.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/usb/host/ohci-spear.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/net/mac80211/mesh_pathtbl.c b/net/mac80211/mesh_pathtbl.c
-index 9482b49b7f333..7478ea5786299 100644
---- a/net/mac80211/mesh_pathtbl.c
-+++ b/net/mac80211/mesh_pathtbl.c
-@@ -449,10 +449,15 @@ int mpp_path_add(struct ieee80211_sub_if_data *sdata,
- 	if (is_multicast_ether_addr(dst))
- 		return -ENOTSUPP;
+diff --git a/drivers/usb/host/ohci-spear.c b/drivers/usb/host/ohci-spear.c
+index 5cc05449281c8..ed019c459ea0d 100644
+--- a/drivers/usb/host/ohci-spear.c
++++ b/drivers/usb/host/ohci-spear.c
+@@ -105,8 +105,7 @@ static int spear_ohci_hcd_drv_remove(struct platform_device *pdev)
+ 	struct spear_ohci *sohci_p = to_spear_ohci(hcd);
  
-+	if (!atomic_add_unless(&sdata->u.mesh.mpaths, 1, MESH_MAX_MPATHS))
-+		return -ENOSPC;
-+
- 	new_mpath = mesh_path_new(sdata, dst, GFP_ATOMIC);
+ 	usb_remove_hcd(hcd);
+-	if (sohci_p->clk)
+-		clk_disable_unprepare(sohci_p->clk);
++	clk_disable_unprepare(sohci_p->clk);
  
--	if (!new_mpath)
-+	if (!new_mpath) {
-+		atomic_dec(&sdata->u.mesh.mpaths);
- 		return -ENOMEM;
-+	}
- 
- 	memcpy(new_mpath->mpp, mpp, ETH_ALEN);
- 	tbl = &sdata->u.mesh.mpp_paths;
-@@ -465,8 +470,10 @@ int mpp_path_add(struct ieee80211_sub_if_data *sdata,
- 		hlist_add_head_rcu(&new_mpath->walk_list, &tbl->walk_head);
- 	spin_unlock_bh(&tbl->walk_lock);
- 
--	if (ret)
-+	if (ret) {
- 		kfree(new_mpath);
-+		atomic_dec(&sdata->u.mesh.mpaths);
-+	}
- 
- 	sdata->u.mesh.mpp_paths_generation++;
- 	return ret;
+ 	usb_put_hcd(hcd);
+ 	return 0;
 -- 
 2.53.0
 
