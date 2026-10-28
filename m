@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215933;
-	b=5YaJwgCbDRchEDxEpj1P5u3jtPbePWhxkRMxb7mQ5MG12jPyfPVZ3xMmWkBsqF1T0NqI
-	 Cq7h/1BrXEyNyvm+emSjRchAKqWlWOEeq5zuYeLblSiBNinnojEOXEIW1kv6O+mK78ox0
-	 /zdtX5TQfpTtq7uBa9usH4OHCOgGB+aVcmrvIwz7aSRdx26mR9cimj7b3dsLSrAJo9gbx
-	 96IxmyScE1T8ocInzl9BlAFO2L2dvzOj9VnnxFhMIoKeMyZfE9dE9JGVZokJ8PRS5b8bK
-	 4cs4wxlPcy8RzIk9yUUxbBboG4drnaUzDCcJOiUbDjxJ2snsoy+v/lbcBSmUZW2RUVQ==
+	t=1793215936;
+	b=vI9Dmc8o41VOtCL/jotSbMmbwMRZ8cqIrxFmiGf+vv/pUdQNJj+1emSX5umiKcSOP3KG
+	 XLNx1NMJLJIXFciSrMnWpMyRxWVQJ/2GuDoELZSS5VS0+i22zyhaO2IuQfnkNOsMcZB8L
+	 aC+KTwKqX6zp/R26MsbcSxn/ibuD4vgUmzqUaTSkFGG8EKbKtP0ibg22weFXwF1vjg4AI
+	 DwY4tW3hkD8wDjbIuHn3X3Yy/T6VU97iX0BR8inK8s8xooPU098UEOUJkExjBFKeNmYO8
+	 +ofAU6NsLaRK5nI/er2hhxpStA7/IjxzcEzNmnduT8109XVl2FoCnpTJ6XmD38atIpQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215933;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215936;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=owtfIbZjto+YiQqMivfccjdQJiWGvYSpx8q1NlPwMbc=;
-	b=4kfYL1u0MIH1jy+cNgYZKo9n5ljFvqJgrDTGURVqEpjOyLPVF/jhIGR9dcG/p911QMNC
-	 eF8NCEBBW3ROuEJIZ3M5ZM+jHhkhTKc2ch23phBe0mrWzcyuLBMLCDhekkKWiFMwsGFKO
-	 XReZeQfEou7szPME9S+aC5tK7qqmkZ6rFlSNH7fhj/KI4GaBdT/geOeYjVt9oP4ghg/0M
-	 LaNY3C/CKgPOUNcSUwz40TekiAeBHy8jzvXn50ijHK90zTZ/oFxBeEPTpTuxrvncsgZpP
-	 cVoZqMBTys3YP184rSwIkilNsgkqq3ylkS0WH8hCoTMRPm8/NSRPqaobSLbbJERzXeA==
+	bh=spSpYfP7NMvoIZwEk3WoAHPTfadaC3hiX23JHHQCZcw=;
+	b=kkd3d594ZAYpkafde8+0L9EHulJaNhC8M0SA6qKei8RzDkw4k4aWaeM23XazVSZQdH4c
+	 u71k9AnSGDiqMie6UPcZvMIU+DHqiErRSACDBm13XlIfCpUqwW2w7p+LBStXGYqSNYSgs
+	 3C6vzA1HdIfVAG+iBXR69NyGDEcWdst8nYqORfRoyuwqcZJXyhokaXWMJEKr44EVCRfSi
+	 7vgSBlhBprNJGWoFzgmyaJgIGv8sIE4cGpTdp1znEQOUae9CxYH7HC5MqyfcuSbS7von4
+	 tmeN/sutWn0YwpMQMrueAXM80SMnpnMwWBUbQFDHyHfDO14e52tsiFh9QPzDZos0fdQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=js5ElzO9;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jp4Jrhhk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82FA2606A31E;
-	Wed, 28 Oct 2026 19:32:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 635B5606A31A;
+	Wed, 28 Oct 2026 19:32:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=js5ElzO9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D24AD1F01825;
-	Wed, 28 Oct 2026 19:32:12 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jp4Jrhhk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3D541F01825;
+	Wed, 28 Oct 2026 19:32:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215933;
-	bh=owtfIbZjto+YiQqMivfccjdQJiWGvYSpx8q1NlPwMbc=;
+	s=korg; t=1793215936;
+	bh=spSpYfP7NMvoIZwEk3WoAHPTfadaC3hiX23JHHQCZcw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=js5ElzO9QlRtWrZAs6/6SZtkiuKI+k3RySq6FoOaWRLdIm3YqRPjrTHpgtA41u/Ad
-	 9Pvc4ZZa+ClSZnb+DDqq8qwn7tZnluYoNsgHMP/jMgI49y1Obe3aDwIOzX0IiPd8lu
-	 FHULevmTPrkOtYZlKfZLz5aXJxuoOGnhGJYvZ1aQ=
+	b=jp4JrhhkfY90z+95DcbBUx5Ghl5pZNV3ZHysFu9sGAEqg0i30IpxIJ28TMSK8x6Sb
+	 R5N+DT/jBaK6FFWkOuwQ63eoBdpuTAZxjEFTrciuXMcrHAQupdvRS+Xox7MwjJ/Kcq
+	 jfsneSGdhNdHTCcW5/ozUmqXeO/nTSWmNhqYnsfc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tangxin Xie <xietangxin@h-partners.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Jianing Li <m13940358460@163.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1366/1887] vlan: fix skb_under_panic and races when toggling HW VLAN offload
-Date: Wed, 28 Oct 2026 17:57:42 +0100
-Message-ID: <20261028170530.530889907@linuxfoundation.org>
+Subject: [PATCH 6.1 1384/1887] power: supply: max17040: propagate register read errors
+Date: Wed, 28 Oct 2026 17:58:00 +0100
+Message-ID: <20261028170530.939426466@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,126 +68,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Jianing Li <m13940358460@163.com>
 
-[ Upstream commit 447cbe95ebb95392b5d8f6a01c0556826919ce23 ]
+[ Upstream commit 659cc3d8d5ef246263873fce72c8cadeeed073cc ]
 
-Toggling hardware VLAN TX offload (NETIF_F_HW_VLAN_CTAG_TX or
-NETIF_F_HW_VLAN_STAG_TX) on a lower device invokes vlan_transfer_features(),
-which dynamically changed vlandev->hard_header_len.
+max17040_get_vcell() and max17040_get_soc() ignore errors returned by
+regmap_read().  When an I2C transfer fails, the uninitialized register
+value is converted and reported to userspace as a valid voltage or state
+of charge.  The polling worker can also replace the cached state of charge
+with the bogus value and emit a spurious change event.
 
-This causes two issues:
-1. Lockless TX paths (e.g. packet_snd in af_packet.c, ip6_finish_output2)
-   read dev->hard_header_len without holding RTNL lock. Mutating
-   hard_header_len dynamically under RTNL creates a data race where upper
-   layers reserve insufficient headroom based on a stale hard_header_len,
-   resulting in skb_under_panic when vlan_dev_hard_header() is called.
-2. In addition, vlan_transfer_features() updated hard_header_len without
-   updating header_ops, causing a mismatch between allocated headroom
-   and header creation.
+Propagate read errors through the power supply get_property callback and
+keep the last valid cached state of charge when polling fails.
 
-Always setting dev->hard_header_len = real_dev->hard_header_len and
-dev->needed_headroom = real_dev->needed_headroom + VLAN_HLEN unconditionally
-ensures:
-- dev->hard_header_len remains 100% static and immutable at real_dev->hard_header_len,
-  eliminating all dynamic runtime updates and data races on hard_header_len.
-- Upper layers allocating skbs via LL_RESERVED_SPACE() will always reserve
-  sufficient headroom for software VLAN tag insertion (real_dev->hard_header_len +
-  real_dev->needed_headroom + VLAN_HLEN).
-- vlandev inherits real_dev->needed_tailroom so underlying trailer/padding/ICV
-  requirements are honored.
-- AF_PACKET SOCK_RAW network header offsets remain correctly aligned at
-  real_dev->hard_header_len.
-- vlan_header_ops is used unconditionally.
-
-Note to stable teams: Make sure to backport these commits:
-
-e16e960d55a4 ("ipvlan: inherit needed_headroom and needed_tailroom from phy_dev")
-cef51860becd ("macvlan: inherit needed_headroom and needed_tailroom from lowerdev")
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: Tangxin Xie <xietangxin@h-partners.com>
-Closes: https://lore.kernel.org/netdev/99d678ae-c7b2-4b44-b534-b8320679deb3@h-partners.com/
-Cc: <stable@vger.kernel.org> # 3.19: e16e960d55a4: ipvlan: inherit needed_headroom and needed_tailroom from phy_dev
-Cc: <stable@vger.kernel.org> # 3.19: cef51860becd: macvlan: inherit needed_headroom and needed_tailroom from lowerdev
-Cc: <stable@vger.kernel.org> # 3.19
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260811085246.2267779-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: c6f4a42de60b ("Add MAX17040 Fuel Gauge driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Jianing Li <m13940358460@163.com>
+Link: https://patch.msgid.link/20260727064825.948-1-m13940358460@163.com
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/8021q/vlan.c     |  7 +++----
- net/8021q/vlan_dev.c | 32 ++++----------------------------
- 2 files changed, 7 insertions(+), 32 deletions(-)
+ drivers/power/supply/max17040_battery.c | 27 ++++++++++++++++++++-----
+ 1 file changed, 22 insertions(+), 5 deletions(-)
 
-diff --git a/net/8021q/vlan.c b/net/8021q/vlan.c
-index 7c77482f31594..8b38466fb0415 100644
---- a/net/8021q/vlan.c
-+++ b/net/8021q/vlan.c
-@@ -324,10 +324,9 @@ static void vlan_transfer_features(struct net_device *dev,
+diff --git a/drivers/power/supply/max17040_battery.c b/drivers/power/supply/max17040_battery.c
+index 2017acf67a32c..509b18d359343 100644
+--- a/drivers/power/supply/max17040_battery.c
++++ b/drivers/power/supply/max17040_battery.c
+@@ -190,8 +190,11 @@ static int max17040_raw_vcell_to_uvolts(struct max17040_chip *chip, u16 vcell)
+ static int max17040_get_vcell(struct max17040_chip *chip)
+ {
+ 	u32 vcell;
++	int ret;
  
- 	netif_inherit_tso_max(vlandev, dev);
+-	regmap_read(chip->regmap, MAX17040_VCELL, &vcell);
++	ret = regmap_read(chip->regmap, MAX17040_VCELL, &vcell);
++	if (ret)
++		return ret;
  
--	if (vlan_hw_offload_capable(dev->features, vlan->vlan_proto))
--		vlandev->hard_header_len = dev->hard_header_len;
--	else
--		vlandev->hard_header_len = dev->hard_header_len + VLAN_HLEN;
-+	vlandev->needed_headroom = dev->needed_headroom + VLAN_HLEN;
-+	vlandev->needed_tailroom = dev->needed_tailroom;
-+	vlandev->hard_header_len = dev->hard_header_len;
+ 	return max17040_raw_vcell_to_uvolts(chip, vcell);
+ }
+@@ -199,8 +202,11 @@ static int max17040_get_vcell(struct max17040_chip *chip)
+ static int max17040_get_soc(struct max17040_chip *chip)
+ {
+ 	u32 soc;
++	int ret;
  
- #if IS_ENABLED(CONFIG_FCOE)
- 	vlandev->fcoe_ddp_xid = dev->fcoe_ddp_xid;
-diff --git a/net/8021q/vlan_dev.c b/net/8021q/vlan_dev.c
-index a703d7f09f502..f43dfd8f19d96 100644
---- a/net/8021q/vlan_dev.c
-+++ b/net/8021q/vlan_dev.c
-@@ -505,26 +505,6 @@ static const struct header_ops vlan_header_ops = {
- 	.parse_protocol = vlan_parse_protocol,
- };
+-	regmap_read(chip->regmap, MAX17040_SOC, &soc);
++	ret = regmap_read(chip->regmap, MAX17040_SOC, &soc);
++	if (ret)
++		return ret;
  
--static int vlan_passthru_hard_header(struct sk_buff *skb, struct net_device *dev,
--				     unsigned short type,
--				     const void *daddr, const void *saddr,
--				     unsigned int len)
--{
--	struct vlan_dev_priv *vlan = vlan_dev_priv(dev);
--	struct net_device *real_dev = vlan->real_dev;
--
--	if (saddr == NULL)
--		saddr = dev->dev_addr;
--
--	return dev_hard_header(skb, real_dev, type, daddr, saddr, len);
--}
--
--static const struct header_ops vlan_passthru_header_ops = {
--	.create	 = vlan_passthru_hard_header,
--	.parse	 = eth_header_parse,
--	.parse_protocol = vlan_parse_protocol,
--};
--
- static struct device_type vlan_type = {
- 	.name	= "vlan",
- };
-@@ -577,14 +557,10 @@ static int vlan_dev_init(struct net_device *dev)
- 	dev->fcoe_ddp_xid = real_dev->fcoe_ddp_xid;
- #endif
+ 	return soc >> (chip->quirk_double_soc ? 9 : 8);
+ }
+@@ -259,7 +265,11 @@ static int max17040_get_of_data(struct max17040_chip *chip)
  
--	dev->needed_headroom = real_dev->needed_headroom;
--	if (vlan_hw_offload_capable(real_dev->features, vlan->vlan_proto)) {
--		dev->header_ops      = &vlan_passthru_header_ops;
--		dev->hard_header_len = real_dev->hard_header_len;
--	} else {
--		dev->header_ops      = &vlan_header_ops;
--		dev->hard_header_len = real_dev->hard_header_len + VLAN_HLEN;
--	}
-+	dev->needed_headroom = real_dev->needed_headroom + VLAN_HLEN;
-+	dev->needed_tailroom = real_dev->needed_tailroom;
-+	dev->header_ops      = &vlan_header_ops;
-+	dev->hard_header_len = real_dev->hard_header_len;
+ static void max17040_check_changes(struct max17040_chip *chip)
+ {
+-	chip->soc = max17040_get_soc(chip);
++	int soc;
++
++	soc = max17040_get_soc(chip);
++	if (soc >= 0)
++		chip->soc = soc;
+ }
  
- 	dev->netdev_ops = &vlan_netdev_ops;
+ static void max17040_queue_work(struct max17040_chip *chip)
+@@ -386,16 +396,23 @@ static int max17040_get_property(struct power_supply *psy,
+ 			    union power_supply_propval *val)
+ {
+ 	struct max17040_chip *chip = power_supply_get_drvdata(psy);
++	int ret;
  
+ 	switch (psp) {
+ 	case POWER_SUPPLY_PROP_ONLINE:
+ 		val->intval = max17040_get_online(chip);
+ 		break;
+ 	case POWER_SUPPLY_PROP_VOLTAGE_NOW:
+-		val->intval = max17040_get_vcell(chip);
++		ret = max17040_get_vcell(chip);
++		if (ret < 0)
++			return ret;
++		val->intval = ret;
+ 		break;
+ 	case POWER_SUPPLY_PROP_CAPACITY:
+-		val->intval = max17040_get_soc(chip);
++		ret = max17040_get_soc(chip);
++		if (ret < 0)
++			return ret;
++		val->intval = ret;
+ 		break;
+ 	case POWER_SUPPLY_PROP_CAPACITY_ALERT_MIN:
+ 		val->intval = chip->low_soc_alert;
 -- 
 2.53.0
 
