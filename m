@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793210315;
-	b=2bARFA9wOy2lkkkQclHaN6h3fbyh5OZ90DGxBfoxnuxuI7vmVzL1uZQ75bWgzP4JK2fN
-	 DGrOZjdFwzmXwqElelBOWfbRd1Ro7FNLEH1DboH4mLL96EaRt1q/ibw343UT6TMs9WgCS
-	 AV3zlq7aYQ8TM5JJ8LV47BHNutYbXmY6P979VI+eVtSH1XVs/GJN5nub1AAT9V3U9UYEp
-	 RKqhSrH2k+9gMkGspAhkHGU22Si/vEYkjITuubGUY2GqO3XkGCyGeTRt/86iYxZbzCly3
-	 dcGvYoBxWyROvHorxrPbMNjsRJzVQV06UuFAXT140QH/3B0HhYjKqguwAR20JaRPz3A==
+	t=1793210318;
+	b=aX5EXX+YZZcw5Qd7127uEf2cfnHJ8d8szQDtc3F2VP0+pApeip1TfPRv6CMLzSliKEnD
+	 wfjVslt6FCiTZqduXsCXGg/Hq6TdWrJsvBuSz2hugJKBHy2rUn/Nphgs8/UdlP6J3AgaA
+	 TKa1XrsvGA/p/GTUI4p8E0z13WoNusA2eN+XatQmGzJEoZynBw9ZuTzgsCK/POXueVmGN
+	 c/gvrU6AIwesxkk9cPu7ddEMB8k4NQknwFeNhzdP68yR1r1gvYlzZm66225Gk4Ulho/R1
+	 kzOqBR9+z7WH42lvq5oJwQOGTWAVA6wVDcNq6RWBF7Py7sedJdjaob1YXh/1FN7HorA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793210315;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793210318;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=IRrYKeT/76ddCQPlGjnPi0Ok2/AYluU5Bw6oFxG0KR4=;
-	b=dKa03BvWc7vK3kWiPy5ht16q9a801QGVC07s8J06P2ofYDBqkJKOYdhn9CcH/bNlDwLE
-	 tau4awTHemdYwPNNx6pXhG86rH+ThuwSAOAQUEYQjzlIc4hQHbWGBrIdFkz4qneTOGCqc
-	 GnxMiWqDg7y6WtKoLX/mEdTiSe2eCoUMNlnIvFMQq7D7wMgLcfmVVc0nJTGFbqRV8Ie7S
-	 oWe/fOYeMjDugbABDf/iz0KtgSqWpYl1948T8Cmnl9BBTBqH1ZCqi58j+SZDBUH4HnYp6
-	 nCeH/b8hQKcWb1RHDx7XO27B29VYr6LWo+FZfcGSyMqQOns/80wNrySit039KUEvARA==
+	bh=4zczNSZ+V16eIE8Pmizp8sXKJoJouqVTHJm/ddePJiQ=;
+	b=Q5HbTRzd/clViptnWfmonpYGDUp/Y+6+J1EftZYS/X9eyshZBq4UHjylbbOMX9gkXYXU
+	 OXBNiOffTPMn5zXwjZ/j1xfWc7hbmYZ/IRpCJ4TH55ak8ryPl4WNY0tFFBLKXmiUoZKyS
+	 8zV0v/85tUcMzy9uuGE6Y3g4FoAhDvSU5lhv4s7fyL+F1KQRkQri+HB+nUV463iSSQZcy
+	 0JatQyRpkmB/9yAvhTQZ/4aE7KlS5ZWac6PXWKYpxb4CPADoEWUQiWKRQ5Gp5DNT4yd2g
+	 W4ibCnuwetV1gkUazUAjnXptWTPkNzEup49ftv9dFaK8VQz49trNzb2mtQPn9tS+RAA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pApT2mfh;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A0tTU3WT;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34C1D606A31A;
-	Wed, 28 Oct 2026 17:58:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C1E6606A334;
+	Wed, 28 Oct 2026 17:58:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pApT2mfh
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8652B1F01825;
-	Wed, 28 Oct 2026 17:58:34 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A0tTU3WT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 698131F031E1;
+	Wed, 28 Oct 2026 17:58:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793210315;
-	bh=IRrYKeT/76ddCQPlGjnPi0Ok2/AYluU5Bw6oFxG0KR4=;
+	s=korg; t=1793210318;
+	bh=4zczNSZ+V16eIE8Pmizp8sXKJoJouqVTHJm/ddePJiQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pApT2mfh1eF/JoxQdkHV33GV+gAz5ArIftgrGFIrw6mcLTnXtnpZQkCwPpbO9xFYC
-	 djlLueX39ZQ2RazOssqVVpz3JIWuM5o4V2D4XC4YaeEvWxTAfIwxW+qBi3GosVrdbU
-	 enx8qPbkQ2VHxjxhZk0ZOWalLktJHaMIucVNeCZo=
+	b=A0tTU3WTORJvD4jvefud1OfnaiQaYd7wQ2vaWS/S0x+cGWgVJxi5PK9nuj6CixcE8
+	 kBipN3bW6CZI1I+S+G9Md6VCo9gWsC9/CIhXEx6oSsdC6eI9Kd5s2vBPKjInmThRyf
+	 rkF+Oe96XwCNjPrPUlUGa0TOlP2edTFu5v/5XzC8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 097/168] ext4: free the sbi after a grace period
-Date: Wed, 28 Oct 2026 18:00:33 +0100
-Message-ID: <20261028165945.384908101@linuxfoundation.org>
+	Josef Bacik <josef@toxicpanda.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.6 146/168] io_uring/timeout: no ABS update of multishot timeouts
+Date: Wed, 28 Oct 2026 18:01:22 +0100
+Message-ID: <20261028165946.542142503@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165943.089486480@linuxfoundation.org>
 References: <20261028165943.089486480@linuxfoundation.org>
@@ -67,158 +67,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit c17b44266a1f9fcb49b894d4611d1254bf1aa313 ]
+Commit b088ae34d4da730dc647261b893a6eb622fe5e1f upstream.
 
-ext4_get_link() follows a symlink that keeps its target in a data block
-in rcu pathwalk mode with ext4_getblk(EXT4_GET_BLOCKS_CACHED_NOWAIT).
-That reads s_mount_state in the ASSERT() of ext4_getblk() and again in
-ext4_es_lookup_extent(), and the lookup bumps the extent status hit or
-miss counter, all through sb->s_fs_info.
+IORING_TIMEOUT_MULTISHOT can't be combined with IORING_TIMEOUT_ABS, prep
+rejects that, as the request is armed again with the same value each time
+it fires. IORING_TIMEOUT_UPDATE doesn't check and takes an absolute time
+for a multishot timeout. The first expiry is as asked for, but
+io_timeout_complete() then arms the timer with ->mode of the original
+request, i.e. it uses the absolute time as the interval. With
+CLOCK_MONOTONIC the next expiry is an uptime away, with CLOCK_REALTIME
+more than fifty years.
 
-ext4_put_super() destroys those counters, clears sb->s_fs_info and frees
-the sbi without waiting for a grace period. A pathwalk that is still in
-ext4_get_link() when the last reference to the mount goes away then
-dereferences a NULL s_fs_info, the freed sbi or the destroyed percpu
-counters.
+Fail such an update with -EINVAL, and do so before the timeout is
+touched.
 
-With a pathwalk held up in ext4_get_link() while the last reference
-goes away:
-
-  KASAN: null-ptr-deref in range [0x00000000000000a8-0x00000000000000af]
-  RIP: 0010:ext4_getblk+0xf0/0x640
-  Call Trace:
-   <TASK>
-   ext4_get_link+0x26c/0x410
-   pick_link+0xf96/0x1780
-   step_into_slowpath+0x9b8/0x1250
-   path_lookupat+0x484/0xb00
-   filename_lookup+0x1f1/0x5b0
-   vfs_statx+0xd7/0x3b0
-   vfs_fstatat+0x4d/0x90
-   __do_sys_newfstatat+0xa0/0x100
-   do_syscall_64+0x10e/0x5e0
-   entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-So far that has been hard to hit. umount(2) waits for a grace period in
-namespace_unlock() before it drops the mount, so only a mount whose last
-reference goes away elsewhere, like the close of a file or a chdir out of
-a lazily unmounted directory, can race a walker.
-
-Keep sb->s_fs_info and free the sbi together with the extent status
-counters after a grace period. Split the counters out of
-ext4_es_unregister_shrinker() for that. The shrinker still gets wasted
-in ext4_put_super(), the counters go with the sbi.
-
-Fixes: 6493792d3299 ("ext4: convert symlink external data block mapping to bdev")
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20261009-work-fixes-rcu-v1-1-7446d2d335e6@kernel.org
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
-[ sashal: Replaced shrinker_free() with unregister_shrinker() for the embedded shrinker. ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: ea97f6c8558e ("io_uring: add support for multishot timeouts")
+Assisted-by: LLM
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Link: https://patch.msgid.link/20261015-b4-io-uring-fixes-v1-41-c1556f5d7bf5@toxicpanda.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/ext4.h           |  2 ++
- fs/ext4/extents_status.c |  7 ++++++-
- fs/ext4/extents_status.h |  1 +
- fs/ext4/super.c          | 13 +++++++++++--
- 4 files changed, 20 insertions(+), 3 deletions(-)
+ io_uring/timeout.c |   38 ++++++++++++++++++++++++++------------
+ 1 file changed, 26 insertions(+), 12 deletions(-)
 
-diff --git a/fs/ext4/ext4.h b/fs/ext4/ext4.h
-index 5654a1cd2b4af..58746c5130ac6 100644
---- a/fs/ext4/ext4.h
-+++ b/fs/ext4/ext4.h
-@@ -1669,6 +1669,8 @@ struct ext4_sb_info {
- 	struct list_head s_es_list;	/* List of inodes with reclaimable extents */
- 	long s_es_nr_inode;
- 	struct ext4_es_stats s_es_stats;
-+	/* ext4_get_link() reads the sbi in rcu pathwalk */
-+	struct rcu_head s_rcu;
- 	struct mb_cache *s_ea_block_cache;
- 	struct mb_cache *s_ea_inode_cache;
- 	spinlock_t s_es_lock ____cacheline_aligned_in_smp;
-diff --git a/fs/ext4/extents_status.c b/fs/ext4/extents_status.c
-index d9d5cfb9c951a..cd5160e72d5ae 100644
---- a/fs/ext4/extents_status.c
-+++ b/fs/ext4/extents_status.c
-@@ -1749,12 +1749,17 @@ int ext4_es_register_shrinker(struct ext4_sb_info *sbi)
+--- a/io_uring/timeout.c
++++ b/io_uring/timeout.c
+@@ -257,22 +257,29 @@ static enum hrtimer_restart io_timeout_f
+ 	return HRTIMER_NORESTART;
  }
  
- void ext4_es_unregister_shrinker(struct ext4_sb_info *sbi)
-+{
-+	unregister_shrinker(&sbi->s_es_shrinker);
+-static struct io_kiocb *io_timeout_extract(struct io_ring_ctx *ctx,
+-					   struct io_cancel_data *cd)
++static struct io_kiocb *io_timeout_find(struct io_ring_ctx *ctx,
++					struct io_cancel_data *cd)
+ 	__must_hold(&ctx->timeout_lock)
+ {
+ 	struct io_timeout *timeout;
+-	struct io_timeout_data *io;
+-	struct io_kiocb *req = NULL;
+ 
+ 	list_for_each_entry(timeout, &ctx->timeout_list, list) {
+-		struct io_kiocb *tmp = cmd_to_io_kiocb(timeout);
++		struct io_kiocb *req = cmd_to_io_kiocb(timeout);
+ 
+-		if (io_cancel_req_match(tmp, cd)) {
+-			req = tmp;
+-			break;
+-		}
++		if (io_cancel_req_match(req, cd))
++			return req;
+ 	}
++	return NULL;
 +}
 +
-+/* ext4_get_link() bumps the hit and miss counters in rcu pathwalk */
-+void ext4_es_destroy_stats(struct ext4_sb_info *sbi)
- {
- 	percpu_counter_destroy(&sbi->s_es_stats.es_stats_cache_hits);
- 	percpu_counter_destroy(&sbi->s_es_stats.es_stats_cache_misses);
- 	percpu_counter_destroy(&sbi->s_es_stats.es_stats_all_cnt);
- 	percpu_counter_destroy(&sbi->s_es_stats.es_stats_shk_cnt);
--	unregister_shrinker(&sbi->s_es_shrinker);
- }
- 
- /*
-diff --git a/fs/ext4/extents_status.h b/fs/ext4/extents_status.h
-index d9847a4a25dba..b2c6579b2c9dd 100644
---- a/fs/ext4/extents_status.h
-+++ b/fs/ext4/extents_status.h
-@@ -241,6 +241,7 @@ static inline void ext4_es_store_pblock_status(struct extent_status *es,
- 
- extern int ext4_es_register_shrinker(struct ext4_sb_info *sbi);
- extern void ext4_es_unregister_shrinker(struct ext4_sb_info *sbi);
-+extern void ext4_es_destroy_stats(struct ext4_sb_info *sbi);
- 
- extern int ext4_seq_es_shrinker_info_show(struct seq_file *seq, void *v);
- 
-diff --git a/fs/ext4/super.c b/fs/ext4/super.c
-index 349e2b087769d..94d40e03ff2f0 100644
---- a/fs/ext4/super.c
-+++ b/fs/ext4/super.c
-@@ -1289,6 +1289,14 @@ static void ext4_flex_groups_free(struct ext4_sb_info *sbi)
- 	}
- }
- 
-+static void ext4_put_sbi_rcu(struct rcu_head *head)
++static struct io_kiocb *io_timeout_extract(struct io_ring_ctx *ctx,
++					   struct io_cancel_data *cd)
++	__must_hold(&ctx->timeout_lock)
 +{
-+	struct ext4_sb_info *sbi = container_of(head, struct ext4_sb_info, s_rcu);
++	struct io_kiocb *req = io_timeout_find(ctx, cd);
++	struct io_timeout *timeout;
++	struct io_timeout_data *io;
 +
-+	ext4_es_destroy_stats(sbi);
-+	kfree(sbi);
-+}
-+
- static void ext4_put_super(struct super_block *sb)
+ 	if (!req)
+ 		return ERR_PTR(-ENOENT);
+ 
+@@ -404,14 +411,21 @@ static int io_timeout_update(struct io_r
+ 	__must_hold(&ctx->timeout_lock)
  {
- 	struct ext4_sb_info *sbi = EXT4_SB(sb);
-@@ -1378,7 +1386,6 @@ static void ext4_put_super(struct super_block *sb)
- 	ext4_stop_mmpd(sbi);
+ 	struct io_cancel_data cd = { .ctx = ctx, .data = user_data, };
+-	struct io_kiocb *req = io_timeout_extract(ctx, &cd);
++	struct io_kiocb *req = io_timeout_find(ctx, &cd);
+ 	struct io_timeout *timeout = io_kiocb_to_cmd(req, struct io_timeout);
+ 	struct io_timeout_data *data;
  
- 	brelse(sbi->s_sbh);
--	sb->s_fs_info = NULL;
- 	/*
- 	 * Now that we are completely done shutting down the
- 	 * superblock, we need to actually destroy the kobject.
-@@ -1393,7 +1400,8 @@ static void ext4_put_super(struct super_block *sb)
- #if IS_ENABLED(CONFIG_UNICODE)
- 	utf8_unload(sb->s_encoding);
- #endif
--	kfree(sbi);
-+	/* ext4_get_link() reads the sbi and the counters in rcu pathwalk */
-+	call_rcu(&sbi->s_rcu, ext4_put_sbi_rcu);
- }
+-	if (IS_ERR(req))
+-		return PTR_ERR(req);
++	if (!req)
++		return -ENOENT;
  
- static struct kmem_cache *ext4_inode_cachep;
-@@ -5688,6 +5696,7 @@ failed_mount8: __maybe_unused
- 	}
- failed_mount3a:
- 	ext4_es_unregister_shrinker(sbi);
-+	ext4_es_destroy_stats(sbi);
- failed_mount3:
- 	/* flush s_sb_upd_work before sbi destroy */
- 	flush_work(&sbi->s_sb_upd_work);
--- 
-2.53.0
-
+ 	data = req->async_data;
++	/* multishot requests only make sense with rel values */
++	if ((data->flags & IORING_TIMEOUT_MULTISHOT) && mode == HRTIMER_MODE_ABS)
++		return -EINVAL;
++
++	req = io_timeout_extract(ctx, &cd);
++	if (IS_ERR(req))
++		return PTR_ERR(req);
+ 	/* for a multishot request this isn't a sequence, keep the repeats */
+ 	if (!(data->flags & IORING_TIMEOUT_MULTISHOT))
+ 		timeout->off = 0; /* noseq */
 
 
