@@ -1,56 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216975;
-	b=qCyw7djk28FxePO1JmEWA48k07Nc3gWfEm6LNqzPow4zpH78TOF/Ew0QzgnXzgpnFf6F
-	 BUW2o7crHGukP6DdP293/8eLuQt9X4PtaAAygGFxbJf40xjzBmxcB3/qTaMYGmlaguXb+
-	 DGBRuRXzJIdTBnFtGP1QyS5/WbvOqseNz70SebM4+Ie8NCcsL72pAFTuRcEmXId771mVF
-	 0VVL1mcociZJ4JF0ue0jCurjFlgrtyCNuiZdj/qn58ZbRatYH3ZpmH1f/BCVTj8AAi9Ch
-	 PJ0iIs3k6MDOlgPqJzPLUd0l2YTVlvnKwuwcKxWmO5w9RyRuZ0UCzNkaUUTa7EQbJ9w==
+	t=1793216977;
+	b=C+6EW7fTUvbkr7ofLdoKM//U27sdJsOqsifcfFfRA9NNPtOzBgG8WxrFzSMcGLNRCaoa
+	 4yH2g8ljOQ9XISLpcGcxzatmtgbQo4Fc7r96XlBeTiaWlfhXE07vX+7NYc/feYwtqb0W5
+	 UPDm7uNHTmFKQTriZ00AYy24CQXUF5iai/vLW3WM3LVZM4nyivGbBm6tSpd1XD5+0nmi6
+	 qbsKzkuhZP3bx2+fVXMKi/b6VPM3pw3shvbjFq+cG/iv8b5pXLW42VO2HBH7E9ENc863F
+	 nRSLhOKAxvCQnxCPxloGGSGaR3zuaE8x7gRjRqCfiVuxfd3t9O6HVu0zjzqNO5rRbFw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216975;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216977;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=8q8QaE9ZEkg+epzj5SG1eS+4YXmATLdY6q232HdohMY=;
-	b=M5jZ0g6VVjQKfn8CZyJFZs/P/si6DElU686Q3uGmi6d4Zb6959+HUVKdtAB2j+EmlhWk
-	 g7X9/bqxuIckKyiPeNKfzwhGPAatX6g+ukKD0MNi+5tbWsksQmPmuKjFRAiexusvs4rcu
-	 MtBXACoWuELcMayAbQRwY46PvGmYfN5h/vD5fOHxtmx/RFFnXFpDdXKcZHPs/bNVjtBnG
-	 df0gyiv4RGG3nV1a0caQ4wK0bP2dMzOxxF6I05BeMAJ9UFvUn5xxg/eUmsudhrRLqwnXv
-	 JViL8fydUNGpNSQLcp8WpuLgVrPXyX3eJBiZ1Zo9yqwOk8W3rroLvSCv5Eo5CCw1vmw==
+	bh=pHqIaYrPUevwmKMB+wyn57L+bGzP6bsYyY7jTqwetWQ=;
+	b=DuYeUucWpUZb9mxg4xqREAaIr6JQerFgEiQAvzYG3EZpYxb0+6joopuqygOIjvKYfoPH
+	 lzwMr8cuxIBDUR6HtOb+vDYbftjv4Z9KHHDx/jwidtJZMWVW4UJxPkjG8DGX/Ef7EACz9
+	 IjiIRIcnTS/xQIuTNBS3U+XpwToszZ/v3htCYqNxB+bP6VtrfJ6IJZnd6QYDrJphsX5ao
+	 b4D0E8gL76Ar4bLwEy0L2mGNj/cW+F25ExNR5zh92xZccxB1B2sf2NoPJXQCFumiX+MJx
+	 JcQ7gQX483UcFF+YmQqLhtGQPVB+C60r+s5yeW1/7TgWDq/dHYLqIE2gW1x5L1PtTHw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G1MLIfFF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KfG6nsLi;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC168606A31E;
-	Wed, 28 Oct 2026 19:49:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50EDC606A31A;
+	Wed, 28 Oct 2026 19:49:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G1MLIfFF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4D7C1F01825;
-	Wed, 28 Oct 2026 19:49:33 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KfG6nsLi
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A103D1F01825;
+	Wed, 28 Oct 2026 19:49:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216974;
-	bh=8q8QaE9ZEkg+epzj5SG1eS+4YXmATLdY6q232HdohMY=;
+	s=korg; t=1793216977;
+	bh=pHqIaYrPUevwmKMB+wyn57L+bGzP6bsYyY7jTqwetWQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=G1MLIfFF/sx59f+QcYd9q9MLHqtmdbI663SsBhKjo0Cml28D4GP3/SW2Wexosxxsm
-	 c2bjb7t9m3mKNimYaZD4I9f7pDetHpxwcnZHsZahl9qLFNBULKvvuyTXOmVLFgArTJ
-	 MEOjC51mJm/el+Y3Pi6aZL4cbeohj8tP8qr3G49E=
+	b=KfG6nsLiM7ktbUQaINHh9I64Y9saqgXWqufOUnWWU07KzDIe17FtQEX5bV4Mc+jmi
+	 lyqk5aoqhACdLRZpkg2wPqAzlWqy4CW76KU4AUHZBUJkuhfAYvwp70h5RubNU03cjx
+	 upYckAdsFWbk7raXiJx6MLpUEmbynHfhzVKMzg+w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Paulo Alcantara <pc@manguebit.org>,
-	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
-	Shyam Prasad N <sprasad@microsoft.com>,
-	Tom Talpey <tom@talpey.com>,
-	Bharath SM <bharathsm@microsoft.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1690/1887] smb: client: avoid using uninitialized SIDs in cifs_posix_to_fattr()
-Date: Wed, 28 Oct 2026 18:03:06 +0100
-Message-ID: <20261028170537.914448589@linuxfoundation.org>
+	Daehyeon Ko <4ncienth@gmail.com>,
+	Xin Long <lucien.xin@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.1 1738/1887] sctp: revalidate output stream after association connect wait
+Date: Wed, 28 Oct 2026 18:03:54 +0100
+Message-ID: <20261028170539.005468836@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -72,73 +68,118 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.org>
+From: Daehyeon Ko <4ncienth@gmail.com>
 
-[ Upstream commit da6e25842431982d5a53cf00d925b98c690f4467 ]
+commit b7ad72414c673ce1fa1f463e807cd4f34f8be9bf upstream.
 
-cifs_posix_to_fattr() ignores the return value of posix_info_parse().
-When a malformed POSIX directory entry is encountered (e.g. invalid
-SID lengths from an untrusted server), posix_info_parse() returns -1
-without populating the 'parsed' struct.  The uninitialized stack
-memory in parsed.owner and parsed.group is then passed to
-sid_to_id(), which processes the garbage bytes and passes them to
-request_key() to construct a SID string, potentially leaking kernel
-stack contents to the userspace idmap daemon.
+When message interleaving is enabled, the first send waits for association
+establishment before building its data chunks.  The wait drops the socket
+lock, and handshake processing can reduce the output stream count to the
+peer-advertised inbound stream count.  sctp_stream_init() then frees the
+extension of every removed stream.
 
-Fix this by checking the return value and skipping the SID-to-id
-mapping when parsing fails.  The remaining fattr fields (timestamps,
-mode, etc.) are populated directly from the 'info' pointer so they
-are unaffected.
+The sender resumes with the stream that it checked before the wait.  If the
+peer removed that stream, sctp_outq_tail() later dereferences its NULL
+extension.  Fatal-oops policies then panic the host.
 
-Closes: https://sashiko.dev/#/patchset/20260906172005.627163-1-pc%40manguebit.org
-Closes: https://sashiko.dev/#/patchset/20260906181540.647469-1-pc%40manguebit.org
-Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
-Cc: Ronnie Sahlberg <ronniesahlberg@gmail.com>
-Cc: Shyam Prasad N <sprasad@microsoft.com>
-Cc: Tom Talpey <tom@talpey.com>
-Cc: Bharath SM <bharathsm@microsoft.com>
+KASAN: null-ptr-deref in range [0x38-0x3f]
+RIP: sctp_outq_tail+0x49e/0xaa0
+Call Trace:
+ sctp_primitive_SEND
+ sctp_sendmsg_to_asoc
+ sctp_sendmsg
+
+A range check alone is insufficient.  Stream reconfiguration can grow the
+output count again while the lock is released without recreating extensions
+freed by the earlier shrink.  The stream can then be in range while its
+extension remains NULL.  The send-buffer wait has the same issue.
+
+Factor the range and extension checks into a helper and repeat both after
+each send-path wait that drops the socket lock.  Once the lock is
+reacquired, the validation remains stable through data creation and
+queueing.
+
+If validation fails after the connect wait, the auto-created association is
+already established.  Return ESRCH so the existing caller path keeps it
+under state-machine ownership instead of freeing it directly, which would
+leave protocol, counter and socket state inconsistent.
+
+Fixes: 668c9beb9020 ("sctp: implement assign_number for sctp_stream_interleave")
 Cc: stable@vger.kernel.org
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Assisted-by: LLM
+Signed-off-by: Daehyeon Ko <4ncienth@gmail.com>
+Acked-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/20261007035739.3472432-1-4ncienth@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/readdir.c | 14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+ net/sctp/socket.c |   33 +++++++++++++++++++++------------
+ 1 file changed, 21 insertions(+), 12 deletions(-)
 
-diff --git a/fs/smb/client/readdir.c b/fs/smb/client/readdir.c
-index 7564927e2c427..ded9cf784c22d 100644
---- a/fs/smb/client/readdir.c
-+++ b/fs/smb/client/readdir.c
-@@ -234,8 +234,9 @@ cifs_posix_to_fattr(struct cifs_fattr *fattr, struct smb2_posix_info *info,
- 		    struct cifs_sb_info *cifs_sb)
- {
- 	struct smb2_posix_info_parsed parsed;
-+	int rc;
- 
--	posix_info_parse(info, NULL, &parsed);
-+	rc = posix_info_parse(info, NULL, &parsed);
- 
- 	memset(fattr, 0, sizeof(*fattr));
- 	fattr->cf_uniqueid = le64_to_cpu(info->Inode);
-@@ -277,8 +278,15 @@ cifs_posix_to_fattr(struct cifs_fattr *fattr, struct smb2_posix_info *info,
- 	if (reparse_file_needs_reval(fattr))
- 		fattr->cf_flags |= CIFS_FATTR_NEED_REVAL;
- 
--	sid_to_id(cifs_sb, &parsed.owner, fattr, SIDOWNER);
--	sid_to_id(cifs_sb, &parsed.group, fattr, SIDGROUP);
-+	fattr->cf_uid = cifs_sb->ctx->linux_uid;
-+	fattr->cf_gid = cifs_sb->ctx->linux_gid;
-+	if (rc < 0) {
-+		cifs_dbg(VFS, "%s: failed to parse SIDs: %d\n",
-+			 __func__, rc);
-+	} else {
-+		sid_to_id(cifs_sb, &parsed.owner, fattr, SIDOWNER);
-+		sid_to_id(cifs_sb, &parsed.group, fattr, SIDGROUP);
-+	}
+--- a/net/sctp/socket.c
++++ b/net/sctp/socket.c
+@@ -1784,6 +1784,18 @@ static int sctp_sendmsg_check_sflags(str
+ 	return 1;
  }
  
- static void __dir_info_to_fattr(struct cifs_fattr *fattr, const void *info)
--- 
-2.53.0
-
++static int sctp_sendmsg_check_stream(struct sctp_association *asoc,
++				     struct sctp_sndrcvinfo *sinfo)
++{
++	if (unlikely(sinfo->sinfo_stream >= asoc->stream.outcnt))
++		return -EINVAL;
++
++	if (unlikely(!SCTP_SO(&asoc->stream, sinfo->sinfo_stream)->ext))
++		return sctp_stream_init_ext(&asoc->stream, sinfo->sinfo_stream);
++
++	return 0;
++}
++
+ static int sctp_sendmsg_to_asoc(struct sctp_association *asoc,
+ 				struct msghdr *msg, size_t msg_len,
+ 				struct sctp_transport *transport,
+@@ -1798,16 +1810,9 @@ static int sctp_sendmsg_to_asoc(struct s
+ 	long timeo;
+ 	int err;
+ 
+-	if (sinfo->sinfo_stream >= asoc->stream.outcnt) {
+-		err = -EINVAL;
++	err = sctp_sendmsg_check_stream(asoc, sinfo);
++	if (err)
+ 		goto err;
+-	}
+-
+-	if (unlikely(!SCTP_SO(&asoc->stream, sinfo->sinfo_stream)->ext)) {
+-		err = sctp_stream_init_ext(&asoc->stream, sinfo->sinfo_stream);
+-		if (err)
+-			goto err;
+-	}
+ 
+ 	if (sp->disable_fragments && msg_len > asoc->frag_point) {
+ 		err = -EMSGSIZE;
+@@ -1828,10 +1833,9 @@ static int sctp_sendmsg_to_asoc(struct s
+ 		err = sctp_wait_for_sndbuf(asoc, transport, &timeo, msg_len);
+ 		if (err)
+ 			goto err;
+-		if (unlikely(sinfo->sinfo_stream >= asoc->stream.outcnt)) {
+-			err = -EINVAL;
++		err = sctp_sendmsg_check_stream(asoc, sinfo);
++		if (err)
+ 			goto err;
+-		}
+ 	}
+ 
+ 	if (sctp_state(asoc, CLOSED)) {
+@@ -1846,6 +1850,11 @@ static int sctp_sendmsg_to_asoc(struct s
+ 				err = -ESRCH;
+ 				goto err;
+ 			}
++			err = sctp_sendmsg_check_stream(asoc, sinfo);
++			if (err) {
++				err = -ESRCH;
++				goto err;
++			}
+ 		} else {
+ 			wait_connect = true;
+ 		}
 
 
