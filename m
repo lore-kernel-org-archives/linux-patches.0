@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793208616;
-	b=oAQQe7ktQahl3F5qVEJ4Ebg0mfwXxsXVs5ZxQgcML0gKfymdW21Qvp1hfg9QGGkPBUSm
-	 COuLnj1iiu3uJQevKXz2DiD3thz0HsFkCz87H9YLk/aR1ugyPB8Py7r9wA43Wy3ZYfikp
-	 j17dmSt1Xq9GzL2MMq4T8yzCSB2AJr3hVfy9qHZpB9Xvtu3Vz+r8CTN9k3nxWlk40Zt9I
-	 kXoBZBka+4VcpezJWGEUXwy0/Li3y3zvAg6CDi3/RCoToyr22OmvHgqEjM5bt0Ko8ojuh
-	 BzAG8cGLLvfZCfS+WPNzqf3+Eji1LF/d6QOLRwqo3bN6QfNXhPLFd5yKyLD8FXObk5Q==
+	t=1793208619;
+	b=K6V3vu1qToZgoWGmrSwKjQFYRdW8R/5/xrB/wEeh0+ke3HbLyDiPLW3M2goeDsd2+Zzp
+	 7TIK5jMm9w1eamN+9coG/AWP1Aj5iD91I5M21yQXJdS1NsiRx3A0jTGh7prfPN/xv5cxZ
+	 8px3nxMc7gv1NjWlpV3IkMguiO2QC2pYFgiXRjM1K3QYk3tvCXzJK0AtP9tqeHcl0dU/u
+	 g06FU09fbb4AWDW7ReqEZZIR6fTpH5J8tzmpsjx9Sdj5MzXPN//WR08LEZBTTkJK2FfXQ
+	 k1hAGFIaDewLKFw2XtzM3P8CFHXB0DYaLkjYYgFNoyZKf0JNPr9zlr1zLuLpnC9KxXQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793208616;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793208619;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=3sXVpIj00dbN3amM8zQ9hBZeDTREVNbGL+9mFdmRaPw=;
-	b=WL3BLI6TkvJDjU2SYETWNcd9FyV9yFBfQFq02DEKX5zltvotqImVClMQ2AcfNwavu62H
-	 b52DZaGHE//1qaY0oyOoNqm/djlFJSbOh3Dlxmp1yT8Seg6oekSiVmVtOt4XauWV5oymO
-	 4IONEI9Vuw2tuixWzlTBAorTT5IxI3bUboxpVjmYmbUS0LW5cdrnGXScc/RMvMhFQ3CZA
-	 7r4pv7TUBR1e6H59SYDfWeMVDjI+ILWq9knuKmZjd2BcGHQwlJKnaebyvI+QuSA+MphuM
-	 hjxMltZC17qojTazLRZxpeNX82JFUNAwaMgArQx8vBLpnuBvU8VPbuPRKu1WUp3+zFQ==
+	bh=BzhS72adfVqKQp6zl4d2SgEuQQ9FbRP4mC+qYtrCHNI=;
+	b=wc0scSlzVQZSy+1w817fuChM1bgWC0nRfLkQ6oRkv+MMhXu8Aw73Csr4uAPZCnlu0IbY
+	 B+an4YdGcw1M96zIRqjh4kZ8yfXyzQ3ajngb9djyTSiELs4dqU2ZLIKKi9MtkjPrGMfoM
+	 DJ7349f4jeaBngxcX3G+rDfctM9BzqimIjr3Vi4U4kuhH9LYn+MaXvkbrYlHQApaWkB/y
+	 wWgCuhRpxWup0LblxpGvZNy+p5dO/JSK9RwSut98WtS2UFwon3S8SrUHvQD+9c6SFeeF/
+	 OB9F9Aj1KWcy9TWscl6FpGPhREFeBQS78gcmjrzjV6Lg1irerzCCeb/yckmSRgU/DZQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DdJM8mCW;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GDsMpSE7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 560DB606A327;
-	Wed, 28 Oct 2026 17:30:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35136606A321;
+	Wed, 28 Oct 2026 17:30:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DdJM8mCW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A57721F031E0;
-	Wed, 28 Oct 2026 17:30:15 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GDsMpSE7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 856B41F031E4;
+	Wed, 28 Oct 2026 17:30:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793208616;
-	bh=3sXVpIj00dbN3amM8zQ9hBZeDTREVNbGL+9mFdmRaPw=;
+	s=korg; t=1793208619;
+	bh=BzhS72adfVqKQp6zl4d2SgEuQQ9FbRP4mC+qYtrCHNI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DdJM8mCWlhlHeFv45DRy3DG97qKU+rMtzb6otKyWlUh4rrgoUj9TXkzAjxRPB+qiL
-	 PilQLtEiCVlXGBsy81jzEbTRrqcW162oCaI6hFi0dJpBqmauNuh1OuZ1rfOVczJQ/A
-	 2cH7UitfDK0gvZKiGeRm6ryPdRE4VntfP5Trf8WE=
+	b=GDsMpSE7aOIhpf2uo409jpr3ngz5S3Zvqq1XhZC7TUOECE6imljN0JtVPqIET5OR3
+	 uvykt1/dwu0vvO6Z7+A0JURVlZMCoyf2K03b2Ku3m0vxtpI2m9EdAaKhID72qHqUdC
+	 3qKjkSwm++dAEqIOjBD0onL4UL47Wvl042nkw8c8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Berg <benjamin.berg@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 145/516] wifi: cfg80211: avoid double free if updating BSS fails
-Date: Wed, 28 Oct 2026 17:54:57 +0100
-Message-ID: <20261028170006.943703394@linuxfoundation.org>
+	stable@kernel.org,
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Douglas Anderson <dianders@chromium.org>
+Subject: [PATCH 5.10 181/516] kgdboc: Fix tty driver reference leak in configure_kgdboc()
+Date: Wed, 28 Oct 2026 17:55:33 +0100
+Message-ID: <20261028170007.792010280@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -69,48 +68,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Berg <benjamin.berg@intel.com>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit acc44cbd7727115f9381c35c2898b1b5af665ec8 ]
+commit ef3134cd0d4831ae2137aee2883987859b80b2c6 upstream.
 
-cfg80211_update_known_bss will always consume the passed IEs. As such,
-cfg80211_update_assoc_bss_entry also needs to always set the pointers to
-NULL so that no double free can occur.
+tty_find_polling_driver() returns the tty driver with an extra
+reference taken by tty_driver_kref_get(). configure_kgdboc() stores it
+in kgdb_tty_driver but the reference is never dropped: it is leaked when
+kgdb_register_io_module() fails, when the configuration is cleared, and
+on every reconfigure.
 
-Note that hitting this would probably require being connected to a
-hidden BSS which is then doing a channel switch while also switching to
-be not hidden anymore at the same time.
+Release the reference both when unconfiguring and on the error path.
 
-Signed-off-by: Benjamin Berg <benjamin.berg@intel.com>
-Reviewed-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://msgid.link/20231220133549.8891edb28d51.Id09c5145363e990ff5237decd58296302e2d53c8@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 7d7b93c1452f ("tty: kref the tty driver object")
+Cc: stable@kernel.org
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Link: https://patch.msgid.link/20260917155523.2161202-1-vulab@iscas.ac.cn
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/wireless/scan.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ drivers/tty/serial/kgdboc.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/net/wireless/scan.c b/net/wireless/scan.c
-index 058f3c1f87914..7e6e72ae6d5a9 100644
---- a/net/wireless/scan.c
-+++ b/net/wireless/scan.c
-@@ -2751,10 +2751,9 @@ void cfg80211_update_assoc_bss_entry(struct wireless_dev *wdev,
+--- a/drivers/tty/serial/kgdboc.c
++++ b/drivers/tty/serial/kgdboc.c
+@@ -190,6 +190,11 @@ static void cleanup_kgdboc(void)
+ 		return;
+ 	kgdboc_unregister_kbd();
+ 	kgdb_unregister_io_module(&kgdboc_io_ops);
++
++	if (kgdb_tty_driver) {
++		tty_driver_kref_put(kgdb_tty_driver);
++		kgdb_tty_driver = NULL;
++	}
+ }
  
- 	if (new) {
- 		/* to save time, update IEs for transmitting bss only */
--		if (cfg80211_update_known_bss(rdev, cbss, new, false)) {
--			new->pub.proberesp_ies = NULL;
--			new->pub.beacon_ies = NULL;
--		}
-+		cfg80211_update_known_bss(rdev, cbss, new, false);
-+		new->pub.proberesp_ies = NULL;
-+		new->pub.beacon_ies = NULL;
+ static int configure_kgdboc(void)
+@@ -250,6 +255,10 @@ nmi_con_failed:
+ 	kgdb_unregister_io_module(&kgdboc_io_ops);
+ noconfig:
+ 	kgdboc_unregister_kbd();
++	if (kgdb_tty_driver) {
++		tty_driver_kref_put(kgdb_tty_driver);
++		kgdb_tty_driver = NULL;
++	}
+ 	configured = 0;
  
- 		list_for_each_entry_safe(nontrans_bss, tmp,
- 					 &new->pub.nontrans_list,
--- 
-2.53.0
-
+ 	return err;
 
 
