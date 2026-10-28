@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793212823;
-	b=YX+VX3fZWolhdzcRjMR0WeH3eopKearL7tQqc3fybrHUzt0kNzbfHmp3k6kBI/0qtAp+
-	 c4sLDQmJYwLQwgS4u7vEL83sxVZ5C9DQTlX5Y9ayjuCugVG6cQ4ewZ+yWyOFU/NoErn2l
-	 y9D/pnDlXC000HCZLLN3ynlPVuVCv0A7GgQV75c00TVWGy6WGtKCKF3hSmJvOq7Fkjhpo
-	 MFNgjwie0N0R8+Ek3tnQZ9fp2IzrOIATeMjMKYlzGUnsZ7nIpDuNvOls+nDDdNjkX4YqW
-	 h3Oucu9KKT9mGSO75TIrDMK9MQmIsW9E/7zl7d7TsRlho379iWZMhEgS3EgwmTUmqAQ==
+	t=1793212826;
+	b=N7sBQIYX1ROcZcV/xeSy+seWB+YaD6JdjzeKhJyFc34DaeNBn6SrT/xBGPNjk3LdoyDw
+	 pLDmF6lZxFU2J0kXcHmfNxOKM0EFQ+cPbjqzKc/a1i3l/eH6nlYDAS/FocKEdcBipyS7Q
+	 6bclEUo6q/FtXlzUiciX4mhQDMal5esukgHXRLOLPHOBSgpqIP5f7gHw7JzpBJ9nxb6cx
+	 kpWNSjIjcPTrERW7nkFxkCbm/XNJOfjF4WzmlhPAjG+Mp15AK5B+Wi/XOfyuwdGDJM5ap
+	 a6hxN8Zt8Wy0w3I5gSNe16R62VDa++KZqS3vUkMpC/oMl81IyJUm7NW2qDplEbFSK2w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793212823;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793212826;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=KKmwtX2ehoR3vPsGt4Ksu/LNwmG0oPYq5jQ5/eig+nk=;
-	b=CUIh+7MONI+DvHOeYumtuIqE5n42BNh1blSuk60GP6i2djdHa1h5AFeJlZHv1HGVHJXW
-	 X3ePXfASg0T4xQMqojIJg2yjvNDrHP2xvvmMA2lyQDZNGZBpzHugRwugKxzelXYnMyOeC
-	 HvsZ6Nn22HUxokIGaJMdd0lLx8lpiqDy/zJ1uUkrSkbYjc40Aa3kOf8v3G5ojTIsy9O4g
-	 1BFWDSpTHp2/QoXSkr3Cfe6C1nVQlTIooHkIObH40aGrpjXrlbZ9NUGbWKHXOdsGjkpR/
-	 t9hBAU7ZZpxaeps9qlAGlujx/I0nGagZ7GpY+bfgpXgIQMfN0z2+5aowhk3CK7Kky/g==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=tUkTFHPKXvyO6wwe1XUoXjx5dbOICkyVZYHT9Yb44Co=;
+	b=MRbZjKkKyEfe2DYx6CzjBojVSh+nXJKrqMiKrMFAvx0uw6DhUKgNZ/9RjdF6FFAzbhhK
+	 olBZGUSgXNKBKNwjFT54acy5BVybWHHaC7OvCTuaZWdE53DMv4RyD3nCT9JyEP44sFxnv
+	 8mXX/F9KQ3FB3/JAXN+bvmtzITLH4w00RCJqWwak7ftWTSm8GUxGcrZhTEVF4cplvmuze
+	 Fd/f+7w1T5XQ5kgW3UuXetvC9Oq316vvHK4zzLC8Nsrowhaj/5ZWI/IpxfX+Zmae67mAf
+	 L4MYWHNvMrxTY7MkVrfEVtZoZCQZJgtDbxFYbO+oaFYj3UjgjDMbTFd3D2c2caZCuPg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=itD1qify;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rhx49JSG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A72E606A31C;
-	Wed, 28 Oct 2026 18:40:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC3C2606A321;
+	Wed, 28 Oct 2026 18:40:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=itD1qify
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69C0E1F01828;
-	Wed, 28 Oct 2026 18:40:22 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rhx49JSG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 485C41F01825;
+	Wed, 28 Oct 2026 18:40:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793212823;
-	bh=KKmwtX2ehoR3vPsGt4Ksu/LNwmG0oPYq5jQ5/eig+nk=;
+	s=korg; t=1793212825;
+	bh=tUkTFHPKXvyO6wwe1XUoXjx5dbOICkyVZYHT9Yb44Co=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=itD1qifyBWkO2n7ZWAomnBdXDRDyKqiHWuCrwXk3zXnwKMBiqsUscRU7Ulk+Ebp1x
-	 ywTUap/gQtndZR9SrMTDHRzGZcb3FsEisBIOm112uPMjF5zLqfnyWytS3EZxpMmnNm
-	 I4wEZ6uFXFkwnvatQTNIc8PseUb/4zLT8cQ1bqWk=
+	b=rhx49JSGPHlbCCHYEp8DuM67tntNF3EH2a8u380z00cKKdn5ANhzHjfN3zn7d+zGX
+	 qoSY1XttlPvuM0tWzduletFG2fidhnyaOGGsAOvE65qt9MotHwr2xlJpZO3vBIu9tf
+	 DGixC6oSdr8fn2cb2btYpO2iDdHEX/kyg9Vlr6nY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.1 0252/1887] drm/amd/pm/si: Fix updating clock limits on AC/DC
-Date: Wed, 28 Oct 2026 17:39:08 +0100
-Message-ID: <20261028170504.966064144@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Jie Deng <dengjie03@kylinos.cn>,
+	Peter Chen <peter.chen@kernel.org>
+Subject: [PATCH 6.1 0288/1887] usb: cdns3: Fix NULL pointer dereference in cdns3_pci_probe
+Date: Wed, 28 Oct 2026 17:39:44 +0100
+Message-ID: <20261028170505.783168409@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -62,96 +62,74 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Timur Kristóf <timur.kristof@gmail.com>
+From: Jie Deng <dengjie03@kylinos.cn>
 
-commit 08c9100f65299c64439e22e6057d750ae0e6c660 upstream.
+commit e5052f2c5c73c1dcca42bafc0bc737af2b2af059 upstream.
 
-Assume that the AC limits are the maximum of all power states,
-and the DC limits are the maximum of battery power states.
-This shouldn't make any difference in practice, but is
-cleaner and more robust against bogus information in the VBIOS.
+The Cadence USBSS controller is a two-function PCI device. The first
+probed function allocates the driver data and stores it with
+pci_set_drvdata(), while the second function reuses it via
+pci_get_drvdata() when pci_is_enabled() reports that the first
+function has already been probed.
 
-Fixes: e6c5d36756e7 ("drm/amd/pm/si: Fix updating clock limits from power states")
-Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
-Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
-Link: https://patch.msgid.link/20260923120354.1027996-2-timur.kristof@gmail.com
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit ef8cb9dcc7db7b7abcbdbe870a080cc81e4f0bf3)
-Cc: stable@vger.kernel.org
+When the second function is probed while the first one has been
+enabled but has not yet set its driver data, pci_get_drvdata()
+returns NULL, and the subsequent wrap->devfn assignment dereferences
+a NULL pointer and crashes the kernel.
+logs:
+Call trace:
+  cdns3_pci_probe+0xa4/0x300
+  local_pci_probe+0x44/0xa8
+  pci_call_probe+0x54/0x158
+  pci_device_probe+0x84/0x100
+  really_probe+0x184/0x3d0
+  __driver_probe_device+0x80/0x178
+  driver_probe_device+0x44/0xe8
+  __driver_attach+0xec/0x1f8
+  bus_for_each_dev+0x7c/0xe0
+  driver_attach+0x28/0x38
+  bus_add_driver+0x110/0x238
+  driver_register+0x64/0x128
+  __pci_register_driver+0x50/0x60
+  cdns3_pci_driver_init+0x28/0x38
+  do_one_initcall+0x5c/0x280
+  do_initcalls+0x104/0x1d8
+  kernel_init_freeable+0x140/0x218
+  kernel_init+0x28/0x1f8
+  ret_from_fork+0x10/0x20
+
+Return -EPROBE_DEFER in this case so that probing is retried after
+the first function has completed its probe.
+
+Fixes: 7733f6c32e36 ("usb: cdns3: Add Cadence USB3 DRD Driver")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Jie Deng <dengjie03@kylinos.cn>
+Acked-by: Peter Chen <peter.chen@kernel.org>
+Link: https://patch.msgid.link/20260810023626.70669-1-dengjie03@kylinos.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c |   36 ++++++++++++++---------------
- 1 file changed, 18 insertions(+), 18 deletions(-)
+ drivers/usb/cdns3/cdns3-pci-wrap.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c
-+++ b/drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c
-@@ -7211,6 +7211,19 @@ static void si_parse_pplib_non_clock_inf
- 		adev->pm.dpm.uvd_ps = rps;
- }
+--- a/drivers/usb/cdns3/cdns3-pci-wrap.c
++++ b/drivers/usb/cdns3/cdns3-pci-wrap.c
+@@ -99,6 +99,11 @@ static int cdns3_pci_probe(struct pci_de
  
-+static void si_update_limits(struct amdgpu_clock_and_voltage_limits *limits,
-+			     struct rv7xx_pl *pl)
-+{
-+	if (pl->sclk > limits->sclk)
-+		limits->sclk = pl->sclk;
-+	if (pl->mclk > limits->mclk)
-+		limits->mclk = pl->mclk;
-+	if (pl->vddc > limits->vddc)
-+		limits->vddc = pl->vddc;
-+	if (pl->vddci > limits->vddci)
-+		limits->vddci = pl->vddci;
-+}
-+
- static void si_parse_pplib_clock_info(struct amdgpu_device *adev,
- 				      struct amdgpu_ps *rps, int index,
- 				      union pplib_clock_info *clock_info)
-@@ -7219,7 +7232,6 @@ static void si_parse_pplib_clock_info(st
- 	struct evergreen_power_info *eg_pi = evergreen_get_pi(adev);
- 	struct si_power_info *si_pi = si_get_pi(adev);
- 	struct  si_ps *ps = si_get_ps(rps);
--	struct amdgpu_clock_and_voltage_limits *limits;
- 	u16 leakage_voltage;
- 	struct rv7xx_pl *pl = &ps->performance_levels[index];
- 	int ret;
-@@ -7284,26 +7296,14 @@ static void si_parse_pplib_clock_info(st
- 	 * VBIOS can contain conflicting values between:
- 	 * - the maximum allowed clocks and voltages on AC or DC
- 	 * - the clocks and voltages in power states on AC or DC
-+	 *
-+	 * Assume that the AC limits are the maximum of all power states,
-+	 * and the DC limits are the maximum of battery power states.
- 	 */
-+	si_update_limits(&adev->pm.dpm.dyn_state.max_clock_voltage_on_ac, pl);
- 	if ((rps->class & ATOM_PPLIB_CLASSIFICATION_UI_MASK) ==
--	    ATOM_PPLIB_CLASSIFICATION_UI_PERFORMANCE)
--		limits = &adev->pm.dpm.dyn_state.max_clock_voltage_on_ac;
--	else if ((rps->class & ATOM_PPLIB_CLASSIFICATION_UI_MASK) ==
- 		 ATOM_PPLIB_CLASSIFICATION_UI_BATTERY)
--		limits = &adev->pm.dpm.dyn_state.max_clock_voltage_on_dc;
--	else
--		limits = NULL;
--
--	if (limits) {
--		if (pl->sclk > limits->sclk)
--			limits->sclk = pl->sclk;
--		if (pl->mclk > limits->mclk)
--			limits->mclk = pl->mclk;
--		if (pl->vddc > limits->vddc)
--			limits->vddc = pl->vddc;
--		if (pl->vddci > limits->vddci)
--			limits->vddci = pl->vddci;
--	}
-+		si_update_limits(&adev->pm.dpm.dyn_state.max_clock_voltage_on_dc, pl);
- }
- 
- union pplib_power_state {
+ 	if (pci_is_enabled(func)) {
+ 		wrap = pci_get_drvdata(func);
++		if (!wrap) {
++			dev_err(&pdev->dev,
++				"second function not initialized, retrying\n");
++			return -EPROBE_DEFER;
++		}
+ 	} else {
+ 		wrap = kzalloc(sizeof(*wrap), GFP_KERNEL);
+ 		if (!wrap)
 
 
