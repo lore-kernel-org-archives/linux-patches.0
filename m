@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214298;
-	b=BGKDrO3qXnqpwIDiZ+0BY/1/VlIyboSLoU0d1tUxfbhUQdf+UyrlgaF1jhJ+byo+M4KQ
-	 GyUpWAyM/oPjkYI99oElvvkeBtIHXiCmUWRRjvBlGD85PPsoF9yTR7Go2e/oYYPO6adIf
-	 k23RV1Mdr0AESLXc2EioKtjNl0RkMiq3PBvZvwHVgqXTsiUqJonYbz4dgSA83axm0jd8N
-	 5Uw+Z+BM4BF4881VFBwwpJjF6oTW5+2Sh3XkYDX8fq0PwFFz3EDk8xcfNjSZTyl0bqQqE
-	 R7XEeNcayYiiRavImvuwqB1MWwT1i+CsPsel7hGKSITuxv39LYKP40xD7A1YhASiSNA==
+	t=1793214301;
+	b=D5IEVbjEoNTYaTA7GiIvT5LepqNIp+kHDJTCUQuN/6eZYSY/eXivZ/Lhd9PnzJII1hQl
+	 Hy3wwDaAV4NKqcjWPXbNwa6LORoUAQCqRJ/U1GdhQ2MP1tJrrEKnujo/cUuJPVcRtemiX
+	 3mgr0Aj18UnOpkZL3VR85UDEvofHoDcvVj8NRQ7TlG5QQoy7PFPDhZFM5Fk7ZjvRp4tOB
+	 LxXpj6RIalvHrmMTwgKDBJm6EiSctZSS+TJhFggr60e+cPX8X3vGEIRssaO566ve6OnMp
+	 1gvWwwE6BR+JXu/MoN63mfaIE5QZiyWj7mXuCVpt10IRJhNbqnVoVLjQlFzQkUs0Bhg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214298;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214301;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=WtHWTqaWiF8c9vT6tpLkdogA6p3BUsUODBAMJVjkxBg=;
-	b=VCKEo/iE8dLxqBu3WFfnwR8qI+uUTU7KN6QkzhKydzxmumbwHAV1FyCwX//W2rsUgVDx
-	 ewQwfPRtDexw9Wj9/pGezv+lIC5iemH1scyVbp8u4QohnLyYQdt36g6fljJrck8oK0fwx
-	 WEAaiUK7sy5PcXh0gG82YaX+K/IqdOgWSUCNY8fT9+ure2qfq6pm5xCPyHrbrKkE2gvH4
-	 shh0zO2LXRjguhp+NGlrLhiLdwhhNP+OKvhysU+VFw3vwbToTwQZ+bGUzzGfsTfKieAkR
-	 kSvlVgSHRrqNvn9+yBSLF+tomf4757M/4W6IZ3MymkxCK8WeH/VFb4wuJKVZ2NU30pQ==
+	bh=kv12QhfMnJ8NICfUOPLx2KTjwKLyqQrYa9ZJcLO2fPc=;
+	b=00w9i3wD1yXD1KVmZz3xee+CIcz6DQ7xrJjxugMnXPXMNrKf47zh8pgtSbzQITz0ahQP
+	 btATRlUCmGeHxGHXL68UyU17LfpnvXFst89/26oMakVlKmPQZ4NAgq1KzgvbSryBI/RgL
+	 J6wiuHRRdBVvFKxgbQTgdcvgzByA3Z5m8VbzmVMBYvb3wWHZHI4lrrARO5T2rA+kwFfVP
+	 qv1bwUwc/v1mmTs4sOhaxiJXNdIIcUV13q0mqxvXa2U/SOLUexwiCToeJTMU3KrBCSduD
+	 S8TS1v2i55sIN0K4OC0fYpJFlAJQ/+Y4ib/2Wv9p55UjmK82bz94c0Nc9/O49YmOSNQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NRq6drHH;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="qQR8io/X";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BB3B606A334;
-	Wed, 28 Oct 2026 19:04:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C41C606A334;
+	Wed, 28 Oct 2026 19:05:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NRq6drHH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA75D1F01825;
-	Wed, 28 Oct 2026 19:04:57 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qQR8io/X
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F1821F01825;
+	Wed, 28 Oct 2026 19:05:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214298;
-	bh=WtHWTqaWiF8c9vT6tpLkdogA6p3BUsUODBAMJVjkxBg=;
+	s=korg; t=1793214300;
+	bh=kv12QhfMnJ8NICfUOPLx2KTjwKLyqQrYa9ZJcLO2fPc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NRq6drHHpzFXcGicy9hVgHfcFQm0SHE5fSwKXvNF2KOjaIJqDFT4wqQJPzHo07SXi
-	 tO6GYfwUBUAN482v+uTIW1Gd5cfpmD9YPRQMc8/xG7iIEaPb/4uUStuM7WWsoEcXYB
-	 qic1nkB/vW9MgwaYXWm3vWNDKhxn9c/KNrIim9ks=
+	b=qQR8io/XknAjXPJFxfytahJN9V4bvEVG6LZrMPLHrPAyUwpCu8phRHOIsauUKCwfm
+	 FBCiZn8HAkAXVRDM4d/OTG6IFrY41N+B6zzzg4atOeXY340uxudJtSwFSXLxiwuNUY
+	 V2JfsuQj6AfReDappPOrqTSeBCPQvh26FtLEncOE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Wilcox <willy@infradead.org>,
+	Jan Prusakowski <jprusakowski@google.com>,
 	Chao Yu <chao@kernel.org>,
 	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0766/1887] f2fs: convert f2fs_handle_page_eio() to use folio
-Date: Wed, 28 Oct 2026 17:47:42 +0100
-Message-ID: <20261028170516.871912515@linuxfoundation.org>
+Subject: [PATCH 6.1 0767/1887] f2fs: fix potential deadloop in prepare_compress_overwrite()
+Date: Wed, 28 Oct 2026 17:47:43 +0100
+Message-ID: <20261028170516.893972776@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -71,68 +71,92 @@ Content-Transfer-Encoding: 8bit
 
 From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit 763a0dc792f9d7c79c1d85415c6cebc1f79bba16 ]
+[ Upstream commit 3147ee567dd9004a49826ddeaf0a4b12865d4409 ]
 
-Convert to use folio, so that we can get rid of 'page->index' to
-prepare for removal of 'index' field in structure page [1].
+Jan Prusakowski reported a kernel hang issue as below:
 
-[1] https://lore.kernel.org/all/Zp8fgUSIBGQ1TN0D@casper.infradead.org/
+When running xfstests on linux-next kernel (6.14.0-rc3, 6.12) I
+encountered a problem in generic/475 test where fsstress process
+gets blocked in __f2fs_write_data_pages() and the test hangs.
+The options I used are:
 
-Cc: Matthew Wilcox <willy@infradead.org>
+MKFS_OPTIONS  -- -O compression -O extra_attr -O project_quota -O quota /dev/vdc
+MOUNT_OPTIONS -- -o acl,user_xattr -o discard,compress_extension=* /dev/vdc /vdc
+
+INFO: task kworker/u8:0:11 blocked for more than 122 seconds.
+      Not tainted 6.14.0-rc3-xfstests-lockdep #1
+"echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
+task:kworker/u8:0    state:D stack:0     pid:11    tgid:11    ppid:2      task_flags:0x4208160 flags:0x00004000
+Workqueue: writeback wb_workfn (flush-253:0)
+Call Trace:
+ <TASK>
+ __schedule+0x309/0x8e0
+ schedule+0x3a/0x100
+ schedule_preempt_disabled+0x15/0x30
+ __mutex_lock+0x59a/0xdb0
+ __f2fs_write_data_pages+0x3ac/0x400
+ do_writepages+0xe8/0x290
+ __writeback_single_inode+0x5c/0x360
+ writeback_sb_inodes+0x22f/0x570
+ wb_writeback+0xb0/0x410
+ wb_do_writeback+0x47/0x2f0
+ wb_workfn+0x5a/0x1c0
+ process_one_work+0x223/0x5b0
+ worker_thread+0x1d5/0x3c0
+ kthread+0xfd/0x230
+ ret_from_fork+0x31/0x50
+ ret_from_fork_asm+0x1a/0x30
+ </TASK>
+
+The root cause is: once generic/475 starts toload error table to dm
+device, f2fs_prepare_compress_overwrite() will loop reading compressed
+cluster pages due to IO error, meanwhile it has held .writepages lock,
+it can block all other writeback tasks.
+
+Let's fix this issue w/ below changes:
+- add f2fs_handle_page_eio() in prepare_compress_overwrite() to
+detect IO error.
+- detect cp_error earler in f2fs_read_multi_pages().
+
+Fixes: 4c8ff7095bef ("f2fs: support data compression")
+Reported-by: Jan Prusakowski <jprusakowski@google.com>
 Signed-off-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
-Stable-dep-of: 3147ee567dd9 ("f2fs: fix potential deadloop in prepare_compress_overwrite()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/checkpoint.c | 2 +-
- fs/f2fs/f2fs.h       | 6 ++++--
- fs/f2fs/node.c       | 2 +-
- 3 files changed, 6 insertions(+), 4 deletions(-)
+ fs/f2fs/compress.c | 1 +
+ fs/f2fs/data.c     | 6 ++++++
+ 2 files changed, 7 insertions(+)
 
-diff --git a/fs/f2fs/checkpoint.c b/fs/f2fs/checkpoint.c
-index 84fc60d843bc2..3d3b0e313af8f 100644
---- a/fs/f2fs/checkpoint.c
-+++ b/fs/f2fs/checkpoint.c
-@@ -102,7 +102,7 @@ static struct page *__get_meta_page(struct f2fs_sb_info *sbi, pgoff_t index,
- 	}
+diff --git a/fs/f2fs/compress.c b/fs/f2fs/compress.c
+index 5d0c41abb4050..de64a621c729b 100644
+--- a/fs/f2fs/compress.c
++++ b/fs/f2fs/compress.c
+@@ -1123,6 +1123,7 @@ static int prepare_compress_overwrite(struct compress_ctx *cc,
+ 		f2fs_compress_ctx_add_page(cc, page);
  
- 	if (unlikely(!PageUptodate(page))) {
--		f2fs_handle_page_eio(sbi, page->index, META);
-+		f2fs_handle_page_eio(sbi, page_folio(page), META);
- 		f2fs_put_page(page, 1);
- 		return ERR_PTR(-EIO);
- 	}
-diff --git a/fs/f2fs/f2fs.h b/fs/f2fs/f2fs.h
-index 6d22c18f948d3..5b63b92a10276 100644
---- a/fs/f2fs/f2fs.h
-+++ b/fs/f2fs/f2fs.h
-@@ -4581,9 +4581,11 @@ static inline void f2fs_io_schedule_timeout(long timeout)
- 	io_schedule_timeout(timeout);
- }
+ 		if (!PageUptodate(page)) {
++			f2fs_handle_page_eio(sbi, page_folio(page), DATA);
+ release_and_retry:
+ 			f2fs_put_rpages(cc);
+ 			f2fs_unlock_rpages(cc, i + 1);
+diff --git a/fs/f2fs/data.c b/fs/f2fs/data.c
+index 082e09be4e8a9..6384ac931bb7d 100644
+--- a/fs/f2fs/data.c
++++ b/fs/f2fs/data.c
+@@ -2241,6 +2241,12 @@ int f2fs_read_multi_pages(struct compress_ctx *cc, struct bio **bio_ret,
+ 	int i;
+ 	int ret = 0;
  
--static inline void f2fs_handle_page_eio(struct f2fs_sb_info *sbi, pgoff_t ofs,
--					enum page_type type)
-+static inline void f2fs_handle_page_eio(struct f2fs_sb_info *sbi,
-+				struct folio *folio, enum page_type type)
- {
-+	pgoff_t ofs = folio->index;
++	if (unlikely(f2fs_cp_error(sbi))) {
++		ret = -EIO;
++		from_dnode = false;
++		goto out_put_dnode;
++	}
 +
- 	if (unlikely(f2fs_cp_error(sbi)))
- 		return;
+ 	f2fs_bug_on(sbi, f2fs_cluster_is_empty(cc));
  
-diff --git a/fs/f2fs/node.c b/fs/f2fs/node.c
-index 8b4e8e251649c..e69791dd74354 100644
---- a/fs/f2fs/node.c
-+++ b/fs/f2fs/node.c
-@@ -1512,7 +1512,7 @@ static struct page *__get_node_page(struct f2fs_sb_info *sbi, pgoff_t nid,
- out_put_err:
- 	/* ENOENT comes from read_node_page which is not an error. */
- 	if (err != -ENOENT)
--		f2fs_handle_page_eio(sbi, page->index, NODE);
-+		f2fs_handle_page_eio(sbi, page_folio(page), NODE);
- 	f2fs_put_page(page, 1);
- 	return ERR_PTR(err);
- }
+ 	last_block_in_file = bytes_to_blks(inode,
 -- 
 2.53.0
 
