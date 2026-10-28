@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793208619;
-	b=K6V3vu1qToZgoWGmrSwKjQFYRdW8R/5/xrB/wEeh0+ke3HbLyDiPLW3M2goeDsd2+Zzp
-	 7TIK5jMm9w1eamN+9coG/AWP1Aj5iD91I5M21yQXJdS1NsiRx3A0jTGh7prfPN/xv5cxZ
-	 8px3nxMc7gv1NjWlpV3IkMguiO2QC2pYFgiXRjM1K3QYk3tvCXzJK0AtP9tqeHcl0dU/u
-	 g06FU09fbb4AWDW7ReqEZZIR6fTpH5J8tzmpsjx9Sdj5MzXPN//WR08LEZBTTkJK2FfXQ
-	 k1hAGFIaDewLKFw2XtzM3P8CFHXB0DYaLkjYYgFNoyZKf0JNPr9zlr1zLuLpnC9KxXQ==
+	t=1793208622;
+	b=wfKuoxhxymd/4D7JwNkzWz5FNx7AFH9GI5v5R5g11PTBWzVNy846678GgN3mL1qj196n
+	 lTDTRgG1guwhWh6TuL3Lzt4hbozb1TQgfo0C/ayWOlrbjm/+I6NOMOzWHzS6j9RbAtmGA
+	 8OLnyAHD2Nfyg07KbvYrSPJAN8JSOp+1T89oODZhz8oFZ3tFExjBbF1A12AWDTXppZuzh
+	 B5cL6NLJ4uloLXFpzAzwvcn6ja5NYqyQ+8oEzwiPh1JabM7yGmYrnuliuXgczJ2myOSpY
+	 Dtqc9UjnATouD1YRaDyPRfobXAHVqvI8wAlDGHEVfp7oFoykXEFRurPsrGfO0MyRQiQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793208619;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793208622;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=BzhS72adfVqKQp6zl4d2SgEuQQ9FbRP4mC+qYtrCHNI=;
-	b=wc0scSlzVQZSy+1w817fuChM1bgWC0nRfLkQ6oRkv+MMhXu8Aw73Csr4uAPZCnlu0IbY
-	 B+an4YdGcw1M96zIRqjh4kZ8yfXyzQ3ajngb9djyTSiELs4dqU2ZLIKKi9MtkjPrGMfoM
-	 DJ7349f4jeaBngxcX3G+rDfctM9BzqimIjr3Vi4U4kuhH9LYn+MaXvkbrYlHQApaWkB/y
-	 wWgCuhRpxWup0LblxpGvZNy+p5dO/JSK9RwSut98WtS2UFwon3S8SrUHvQD+9c6SFeeF/
-	 OB9F9Aj1KWcy9TWscl6FpGPhREFeBQS78gcmjrzjV6Lg1irerzCCeb/yckmSRgU/DZQ==
+	bh=9UZWZ0h0BM203KFqzjxFkI82acLvZuX6J9fTMrugcI8=;
+	b=cHrX+DkokJ1tWv0FwhFBEwaSqViW9jsbmO8PXwB1zslR1lTpjVyfRnSa6BbEbVDg+YIt
+	 IK4FVUQbflhI7hm2aa0DikSVpTWZ/4dPwOIKWS5dk/Pyf/Z7ZP312ea+Qa/izdJ66Ubk3
+	 dzWRexWHLeJe1wnOJwa84IgzZHHHYjXhxcsSBwGWLSrbBBgfT3BYbqriSJKNrDYxdfVsl
+	 UDEuFex/fXZSrveMaxwDb4n8ymz7avToStVKZSp8fg/3FtaaKmZziAP0ARnh+Ig/3JZtg
+	 zHwKp27pTy8aC0qAZEGonD46QyUMr/t8KNUNf//0Vk/9xBy50GYCdJTv0BTUyOPQmfA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GDsMpSE7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Cgbn5G/I";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35136606A321;
-	Wed, 28 Oct 2026 17:30:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B0D3606A31A;
+	Wed, 28 Oct 2026 17:30:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GDsMpSE7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 856B41F031E4;
-	Wed, 28 Oct 2026 17:30:18 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Cgbn5G/I
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 682FF1F01825;
+	Wed, 28 Oct 2026 17:30:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793208619;
-	bh=BzhS72adfVqKQp6zl4d2SgEuQQ9FbRP4mC+qYtrCHNI=;
+	s=korg; t=1793208622;
+	bh=9UZWZ0h0BM203KFqzjxFkI82acLvZuX6J9fTMrugcI8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GDsMpSE7aOIhpf2uo409jpr3ngz5S3Zvqq1XhZC7TUOECE6imljN0JtVPqIET5OR3
-	 uvykt1/dwu0vvO6Z7+A0JURVlZMCoyf2K03b2Ku3m0vxtpI2m9EdAaKhID72qHqUdC
-	 3qKjkSwm++dAEqIOjBD0onL4UL47Wvl042nkw8c8=
+	b=Cgbn5G/IEwYZ9UF1YCvFukCZa3TribyjnfWM665O7HbEGGHI4yI54oE0+Alfp7yHa
+	 UlWsuAim53M8YLTyAQlWwTtWlo23ZxuB8xUAU34rDPngJisiGK2k3iNTPB65WO2o7X
+	 IeS/IUKGChuJ3kNowsnwJnNx5Yb8qTNPsuugB8Rw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Douglas Anderson <dianders@chromium.org>
-Subject: [PATCH 5.10 181/516] kgdboc: Fix tty driver reference leak in configure_kgdboc()
-Date: Wed, 28 Oct 2026 17:55:33 +0100
-Message-ID: <20261028170007.792010280@linuxfoundation.org>
+	Martino Papero <martino.papero@lcb.to.it>,
+	Hans de Goede <johannes.goede@oss.qualcomm.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 5.10 182/516] Input: atkbd - skip deactivate for Lenovo IdeaPad Slim 3 15IWC11
+Date: Wed, 28 Oct 2026 17:55:34 +0100
+Message-ID: <20261028170007.816681307@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -68,52 +68,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Martino Papero <martino.papero@lcb.to.it>
 
-commit ef3134cd0d4831ae2137aee2883987859b80b2c6 upstream.
+commit 3bf8d603fd45649c106cae6290a10f20b1bbb569 upstream.
 
-tty_find_polling_driver() returns the tty driver with an extra
-reference taken by tty_driver_kref_get(). configure_kgdboc() stores it
-in kgdb_tty_driver but the reference is never dropped: it is leaked when
-kgdb_register_io_module() fails, when the configuration is cleared, and
-on every reconfigure.
+The internal keyboard on the Lenovo IdeaPad Slim 3 15IWC11 (83RR)
+does not work correctly with the default i8042 settings. Using
+i8042.nopnp=1 and i8042.dumbkbd=1 restores keyboard input, but prevents
+the Caps Lock LED from working. Using i8042.nopnp=1 alone does not fix
+the keyboard.
 
-Release the reference both when unconfiguring and on the error path.
+The laptop works correctly when atkbd_deactivate_fixup is used instead.
+Add a DMI quirk for the 83RR to enable it.
 
-Fixes: 7d7b93c1452f ("tty: kref the tty driver object")
-Cc: stable@kernel.org
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Link: https://patch.msgid.link/20260917155523.2161202-1-vulab@iscas.ac.cn
+This was tested without any i8042 command-line parameters. Keyboard
+input and the Caps Lock LED work correctly, including after suspend
+and resume and after a cold boot.
+
+Link: https://lore.kernel.org/all/4f43465f-98ba-4722-8e29-03df20315369@kernel.org/
+Signed-off-by: Martino Papero <martino.papero@lcb.to.it>
+Reviewed-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
+Link: https://patch.msgid.link/c0b597b8-e7ad-4fba-a2bb-5d252e3dfbd3@lcb.to.it
+Cc: stable@vger.kernel.org
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/kgdboc.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/input/keyboard/atkbd.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/drivers/tty/serial/kgdboc.c
-+++ b/drivers/tty/serial/kgdboc.c
-@@ -190,6 +190,11 @@ static void cleanup_kgdboc(void)
- 		return;
- 	kgdboc_unregister_kbd();
- 	kgdb_unregister_io_module(&kgdboc_io_ops);
-+
-+	if (kgdb_tty_driver) {
-+		tty_driver_kref_put(kgdb_tty_driver);
-+		kgdb_tty_driver = NULL;
-+	}
- }
- 
- static int configure_kgdboc(void)
-@@ -250,6 +255,10 @@ nmi_con_failed:
- 	kgdb_unregister_io_module(&kgdboc_io_ops);
- noconfig:
- 	kgdboc_unregister_kbd();
-+	if (kgdb_tty_driver) {
-+		tty_driver_kref_put(kgdb_tty_driver);
-+		kgdb_tty_driver = NULL;
-+	}
- 	configured = 0;
- 
- 	return err;
+--- a/drivers/input/keyboard/atkbd.c
++++ b/drivers/input/keyboard/atkbd.c
+@@ -1955,6 +1955,14 @@ static const struct dmi_system_id atkbd_
+ 		.callback = atkbd_deactivate_fixup,
+ 	},
+ 	{
++		/* Lenovo IdeaPad Slim 3 15IWC11 (83RR) */
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "83RR"),
++		},
++		.callback = atkbd_deactivate_fixup,
++	},
++	{
+ 		/* Xiaomi Book Pro 14 (TM2424) */
+ 		.matches = {
+ 			DMI_MATCH(DMI_SYS_VENDOR, "XIAOMI"),
 
 
