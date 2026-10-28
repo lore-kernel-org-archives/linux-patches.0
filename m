@@ -1,56 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215032;
-	b=GZGlsdRhEe1FcbVFP8L++xjFRqI1mPPOChxmN4jaNA+RRqQeA0JIg4j4k+7WPR4sYj4w
-	 0h19lVdo68GEKRZcibxexFm7RtUFrQ6HaEFRlW74BaXG1F6L7TI+TxpNu6Ewq8apiA+po
-	 NFfrb0qZMfIdKbsqhiYrght2JJ5+AH4NCCvO6ZsjL89q/uWEWHfBkPGPOdnS4E3LA1oMG
-	 nKdliBjYH6zf02Nnf9NgRHHAghFygk3CpIJ2Nd2otXBLCrvlCq9imNgTlfK1uOweK3BO/
-	 he5+3TnkTcyQKrchQjbdwMWKCeoO3l4uOXeC3AK1iWefecg29VMa9E/+FQ7InitNYYA==
+	t=1793215035;
+	b=upx0A0sXroO2hb/d5A6/oBRdt0oxAHSAwOTeMJuPytsrsaCjhEeqVGbniAlU5vizul8A
+	 w7aNPaIsRNg1KljOi3scf/qRmX1IDlo6j8/Sn6gWZdmO4hnnWf59lM1SUVUCzlfYeeD8j
+	 9V/4Iqs7zO7OACbZvEo+Pv10zHwTcDlVSRE/82bU6aNubMMIVD7yxbz0N535Ij/LFE4Pw
+	 7RvKZ2CiVrdauvXK1E6E2SMsmgQfAY4qCJPvdEoxGwANEEsj89XZCqAfHj1MuxRm/zEQ4
+	 1jxF9xvYBKB9AHgzp5iD93YsqwxPeS7KeT0W/4xvER6x2vNTh7KQxF9wrbBzx2yOoAA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215032;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215035;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=pJU+Bx5Q9gv7q8Q6r33VAV3wKDK4XBtDKUc8c9dAJnI=;
-	b=TWzO0MZykb/flWGfr3ubOq9LPZOs+qfiehl85qlfT1llMEEc8o5PWMAv+t/R6IeK/ETI
-	 NVHNWVcQeIppOJZRW4XKOP+w8/ZUoZKUynCpzfCrC7TCfhShd/YLQticwHe/cUYpcVm5p
-	 jJatouO3gSsE+pmcY26k5NDqdH38RmGPFdapSzAAsx9wtxexVhbG3jCbMGQxygigapnPY
-	 8JVav+1HjGlUX5+yfLKnBOQZrErGDr1rOeVoqzyPpb4ULjhgcj8EdCbKKrR0fCfgaMroT
-	 Py3hZp+yAn77MFn9xDtAgl0A77FNT0vyo/Eu4pkusXM7XNZMLAXMBn0bozzfcAVdhLA==
+	bh=2l1uB1uJGmdOnR6sASxgIYlyyUMdiXyktbn7CF+D/Y4=;
+	b=Z1UKx2vJIPLEeiRpWDUbu715+V3rgTJGlHTFODMdIOKx1skdWLHoCiQNgpUS2wbBav0n
+	 UUiieocysMtDSDYKym3H6Zx9siSBJt5+zOiSYzLy7eWTMxR2NmUVv5K5YsBU3VgBbpBNx
+	 CVhlvt6fchS+/qGimCxF1n+13OZGciObmWZfEpHQ3NDjtMljVfWCz3vdLD4tLE6Xeve6r
+	 DFf3gRLLMIunIT7vVCk8hZiQY/3js9AYUhhAyOTJBlNOwn0CDyKXMAKSXazpI3puBe+In
+	 idE49ognbID9XAxmwwWVmgE9n+T4e7fxdXqhwQfalpXkoj3hxc8kmgSLUVCKQKjXoIw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="w8/jzy1J";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mIFGEsoL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD691606A31A;
-	Wed, 28 Oct 2026 19:17:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5257606A31A;
+	Wed, 28 Oct 2026 19:17:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=w8/jzy1J
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F4751F01825;
-	Wed, 28 Oct 2026 19:17:11 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mIFGEsoL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09B5C1F01825;
+	Wed, 28 Oct 2026 19:17:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215031;
-	bh=pJU+Bx5Q9gv7q8Q6r33VAV3wKDK4XBtDKUc8c9dAJnI=;
+	s=korg; t=1793215034;
+	bh=2l1uB1uJGmdOnR6sASxgIYlyyUMdiXyktbn7CF+D/Y4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=w8/jzy1JaAuX80ASqXIy3q9g5H32oFoIxXFeBWYvC/lQpq0iAYydWOtnJnvelkdfP
-	 w0swBB89S1/H0pwG2et8Kt5JSZReX+9EXp8LVGULwx/GHLN/6Afo3qZVX/f4n4FuG0
-	 /dwtamShQhz5g1ZBb8/R8EsGu5yHbz4IRRwkS1og=
+	b=mIFGEsoLPfenYTWUPz6MoXQwO9ckxstz3YsM1PTHCsHl/OuNlLawVnGRp7/3pLsrN
+	 bM13p+CM9xVpjkNy36OWQWQ+FA7PwZi5n0oktBvBgoJbREJP+nvC/AXzUOrUuN3B8k
+	 lNcA3WBH1oODXTVKAxFGAdsQMJJg33giFyDrvYWE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	"D. Wythe" <alibuda@linux.alibaba.com>,
-	Tony Lu <tonylu@linux.alibaba.com>,
-	Dust Li <dust.li@linux.alibaba.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Zhang Yi <yi.zhang@huawei.com>,
+	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
+	Baokun Li <libaokun1@huawei.com>,
+	stable@kernel.org,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1068/1887] Revert "net/smc: Introduce TCP ULP support"
-Date: Wed, 28 Oct 2026 17:52:44 +0100
-Message-ID: <20261028170523.712451367@linuxfoundation.org>
+Subject: [PATCH 6.1 1042/1887] ext4: dont set EXT4_GET_BLOCKS_CONVERT when splitting before submitting I/O
+Date: Wed, 28 Oct 2026 17:52:18 +0100
+Message-ID: <20261028170523.123584455@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -72,203 +71,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: D. Wythe <alibuda@linux.alibaba.com>
+From: Zhang Yi <yi.zhang@huawei.com>
 
-[ Upstream commit df31a6b0a3057e66994ad6ccf5d95b9b9514f033 ]
+[ Upstream commit feaf2a80e78f89ee8a3464126077ba8683b62791 ]
 
-This reverts commit d7cd421da9da2cc7b4d25b8537f66db5c8331c40.
+When allocating blocks during within-EOF DIO and writeback with
+dioread_nolock enabled, EXT4_GET_BLOCKS_PRE_IO was set to split an
+existing large unwritten extent. However, EXT4_GET_BLOCKS_CONVERT was
+set when calling ext4_split_convert_extents(), which may potentially
+result in stale data issues.
 
-As reported by Al Viro, the TCP ULP support for SMC is fundamentally
-broken. The implementation attempts to convert an active TCP socket
-into an SMC socket by modifying the underlying `struct file`, dentry,
-and inode in-place, which violates core VFS invariants that assume
-these structures are immutable for an open file, creating a risk of
-use after free errors and general system instability.
+Assume we have an unwritten extent, and then DIO writes the second half.
 
-Given the severity of this design flaw and the fact that cleaner
-alternatives (e.g., LD_PRELOAD, BPF) exist for legacy application
-transparency, the correct course of action is to remove this feature
-entirely.
+   [UUUUUUUUUUUUUUUU] on-disk extent        U: unwritten extent
+   [UUUUUUUUUUUUUUUU] extent status tree
+            |<-   ->| ----> dio write this range
 
-Fixes: d7cd421da9da ("net/smc: Introduce TCP ULP support")
-Link: https://lore.kernel.org/netdev/Yus1SycZxcd+wHwz@ZenIV/
-Reported-by: Al Viro <viro@zeniv.linux.org.uk>
-Signed-off-by: D. Wythe <alibuda@linux.alibaba.com>
-Reviewed-by: Tony Lu <tonylu@linux.alibaba.com>
-Reviewed-by: Dust Li <dust.li@linux.alibaba.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260128055452.98251-1-alibuda@linux.alibaba.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+First, ext4_iomap_alloc() call ext4_map_blocks() with
+EXT4_GET_BLOCKS_PRE_IO, EXT4_GET_BLOCKS_UNWRIT_EXT and
+EXT4_GET_BLOCKS_CREATE flags set. ext4_map_blocks() find this extent and
+call ext4_split_convert_extents() with EXT4_GET_BLOCKS_CONVERT and the
+above flags set.
+
+Then, ext4_split_convert_extents() calls ext4_split_extent() with
+EXT4_EXT_MAY_ZEROOUT, EXT4_EXT_MARK_UNWRIT2 and EXT4_EXT_DATA_VALID2
+flags set, and it calls ext4_split_extent_at() to split the second half
+with EXT4_EXT_DATA_VALID2, EXT4_EXT_MARK_UNWRIT1, EXT4_EXT_MAY_ZEROOUT
+and EXT4_EXT_MARK_UNWRIT2 flags set. However, ext4_split_extent_at()
+failed to insert extent since a temporary lack -ENOSPC. It zeroes out
+the first half but convert the entire on-disk extent to written since
+the EXT4_EXT_DATA_VALID2 flag set, but left the second half as unwritten
+in the extent status tree.
+
+   [0000000000SSSSSS]  data                S: stale data, 0: zeroed
+   [WWWWWWWWWWWWWWWW]  on-disk extent      W: written extent
+   [WWWWWWWWWWUUUUUU]  extent status tree
+
+Finally, if the DIO failed to write data to the disk, the stale data in
+the second half will be exposed once the cached extent entry is gone.
+
+Fix this issue by not passing EXT4_GET_BLOCKS_CONVERT when splitting
+an unwritten extent before submitting I/O, and make
+ext4_split_convert_extents() to zero out the entire extent range
+to zero for this case, and also mark the extent in the extent status
+tree for consistency.
+
+Fixes: b8a8684502a0 ("ext4: Introduce FALLOC_FL_ZERO_RANGE flag for fallocate")
+Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
+Reviewed-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
+Reviewed-by: Baokun Li <libaokun1@huawei.com>
+Cc: stable@kernel.org
+Message-ID: <20251129103247.686136-4-yi.zhang@huaweicloud.com>
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/smc/af_smc.c | 113 +++++++----------------------------------------
- 1 file changed, 17 insertions(+), 96 deletions(-)
+ fs/ext4/extents.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/net/smc/af_smc.c b/net/smc/af_smc.c
-index 75d9036282298..4c158cde1f504 100644
---- a/net/smc/af_smc.c
-+++ b/net/smc/af_smc.c
-@@ -3275,8 +3275,8 @@ static const struct proto_ops smc_sock_ops = {
- 	.splice_read	= smc_splice_read,
- };
- 
--static int __smc_create(struct net *net, struct socket *sock, int protocol,
--			int kern, struct socket *clcsock)
-+static int smc_create(struct net *net, struct socket *sock, int protocol,
-+		      int kern)
- {
- 	int family = (protocol == SMCPROTO_SMC6) ? PF_INET6 : PF_INET;
- 	struct smc_sock *smc;
-@@ -3306,102 +3306,33 @@ static int __smc_create(struct net *net, struct socket *sock, int protocol,
- 	/* default behavior from limit_smc_hs in every net namespace */
- 	smc->limit_smc_hs = net->smc.limit_smc_hs;
- 
--	rc = 0;
--	if (!clcsock) {
--		rc = sock_create_kern(net, family, SOCK_STREAM, IPPROTO_TCP,
--				      &smc->clcsock);
--		if (rc) {
--			sk_common_release(sk);
--			goto out;
--		}
--
--		/* smc_clcsock_release() does not wait smc->clcsock->sk's
--		 * destruction;  its sk_state might not be TCP_CLOSE after
--		 * smc->sk is close()d, and TCP timers can be fired later,
--		 * which need net ref.
--		 */
--		sk = smc->clcsock->sk;
--		sk->sk_net_refcnt = 1;
--		get_net_track(net, &sk->ns_tracker, GFP_KERNEL);
--		sock_inuse_add(net, 1);
--	} else {
--		smc->clcsock = clcsock;
-+	rc = sock_create_kern(net, family, SOCK_STREAM, IPPROTO_TCP,
-+			      &smc->clcsock);
-+	if (rc) {
-+		sk_common_release(sk);
-+		goto out;
+diff --git a/fs/ext4/extents.c b/fs/ext4/extents.c
+index 5f588728a27fb..ed62b52473580 100644
+--- a/fs/ext4/extents.c
++++ b/fs/ext4/extents.c
+@@ -3730,11 +3730,15 @@ static int ext4_split_convert_extents(handle_t *handle,
+ 	/* Convert to unwritten */
+ 	if (flags & EXT4_GET_BLOCKS_CONVERT_UNWRITTEN) {
+ 		split_flag |= EXT4_EXT_DATA_VALID1;
+-	/* Convert to initialized */
+-	} else if (flags & EXT4_GET_BLOCKS_CONVERT) {
++	/* Split the existing unwritten extent */
++	} else if (flags & (EXT4_GET_BLOCKS_UNWRIT_EXT |
++			    EXT4_GET_BLOCKS_CONVERT)) {
+ 		split_flag |= ee_block + ee_len <= eof_block ?
+ 			      EXT4_EXT_MAY_ZEROOUT : 0;
+-		split_flag |= (EXT4_EXT_MARK_UNWRIT2 | EXT4_EXT_DATA_VALID2);
++		split_flag |= EXT4_EXT_MARK_UNWRIT2;
++		/* Convert to initialized */
++		if (flags & EXT4_GET_BLOCKS_CONVERT)
++			split_flag |= EXT4_EXT_DATA_VALID2;
  	}
- 
-+	/* smc_clcsock_release() does not wait smc->clcsock->sk's
-+	 * destruction;  its sk_state might not be TCP_CLOSE after
-+	 * smc->sk is close()d, and TCP timers can be fired later,
-+	 * which need net ref.
-+	 */
-+	sk = smc->clcsock->sk;
-+	sk->sk_net_refcnt = 1;
-+	get_net_track(net, &sk->ns_tracker, GFP_KERNEL);
-+	sock_inuse_add(net, 1);
-+
- out:
- 	return rc;
- }
- 
--static int smc_create(struct net *net, struct socket *sock, int protocol,
--		      int kern)
--{
--	return __smc_create(net, sock, protocol, kern, NULL);
--}
--
- static const struct net_proto_family smc_sock_family_ops = {
- 	.family	= PF_SMC,
- 	.owner	= THIS_MODULE,
- 	.create	= smc_create,
- };
- 
--static int smc_ulp_init(struct sock *sk)
--{
--	struct socket *tcp = sk->sk_socket;
--	struct net *net = sock_net(sk);
--	struct socket *smcsock;
--	int protocol, ret;
--
--	/* only TCP can be replaced */
--	if (tcp->type != SOCK_STREAM || sk->sk_protocol != IPPROTO_TCP ||
--	    (sk->sk_family != AF_INET && sk->sk_family != AF_INET6))
--		return -ESOCKTNOSUPPORT;
--	/* don't handle wq now */
--	if (tcp->state != SS_UNCONNECTED || !tcp->file || tcp->wq.fasync_list)
--		return -ENOTCONN;
--
--	if (sk->sk_family == AF_INET)
--		protocol = SMCPROTO_SMC;
--	else
--		protocol = SMCPROTO_SMC6;
--
--	smcsock = sock_alloc();
--	if (!smcsock)
--		return -ENFILE;
--
--	smcsock->type = SOCK_STREAM;
--	__module_get(THIS_MODULE); /* tried in __tcp_ulp_find_autoload */
--	ret = __smc_create(net, smcsock, protocol, 1, tcp);
--	if (ret) {
--		sock_release(smcsock); /* module_put() which ops won't be NULL */
--		return ret;
--	}
--
--	/* replace tcp socket to smc */
--	smcsock->file = tcp->file;
--	smcsock->file->private_data = smcsock;
--	smcsock->file->f_inode = SOCK_INODE(smcsock); /* replace inode when sock_close */
--	smcsock->file->f_path.dentry->d_inode = SOCK_INODE(smcsock); /* dput() in __fput */
--	tcp->file = NULL;
--
--	return ret;
--}
--
--static void smc_ulp_clone(const struct request_sock *req, struct sock *newsk,
--			  const gfp_t priority)
--{
--	struct inet_connection_sock *icsk = inet_csk(newsk);
--
--	/* don't inherit ulp ops to child when listen */
--	icsk->icsk_ulp_ops = NULL;
--}
--
--static struct tcp_ulp_ops smc_ulp_ops __read_mostly = {
--	.name		= "smc",
--	.owner		= THIS_MODULE,
--	.init		= smc_ulp_init,
--	.clone		= smc_ulp_clone,
--};
--
- unsigned int smc_net_id;
- 
- static __net_init int smc_net_init(struct net *net)
-@@ -3521,17 +3452,9 @@ static int __init smc_init(void)
- 		goto out_sock;
- 	}
- 
--	rc = tcp_register_ulp(&smc_ulp_ops);
--	if (rc) {
--		pr_err("%s: tcp_ulp_register fails with %d\n", __func__, rc);
--		goto out_ib;
--	}
--
- 	static_branch_enable(&tcp_have_smc);
- 	return 0;
- 
--out_ib:
--	smc_ib_unregister_client();
- out_sock:
- 	sock_unregister(PF_SMC);
- out_proto6:
-@@ -3561,7 +3484,6 @@ static int __init smc_init(void)
- static void __exit smc_exit(void)
- {
- 	static_branch_disable(&tcp_have_smc);
--	tcp_unregister_ulp(&smc_ulp_ops);
- 	sock_unregister(PF_SMC);
- 	smc_core_exit();
- 	smc_ib_unregister_client();
-@@ -3585,5 +3507,4 @@ MODULE_AUTHOR("Ursula Braun <ubraun@linux.vnet.ibm.com>");
- MODULE_DESCRIPTION("smc socket address family");
- MODULE_LICENSE("GPL");
- MODULE_ALIAS_NETPROTO(PF_SMC);
--MODULE_ALIAS_TCP_ULP("smc");
- MODULE_ALIAS_GENL_FAMILY(SMC_GENL_FAMILY_NAME);
+ 	flags |= EXT4_GET_BLOCKS_PRE_IO;
+ 	return ext4_split_extent(handle, inode, ppath, map, split_flag, flags);
+@@ -3899,7 +3903,7 @@ ext4_ext_handle_unwritten_extents(handle_t *handle, struct inode *inode,
+ 	/* get_block() before submitting IO, split the extent */
+ 	if (flags & EXT4_GET_BLOCKS_PRE_IO) {
+ 		ret = ext4_split_convert_extents(handle, inode, map, ppath,
+-					 flags | EXT4_GET_BLOCKS_CONVERT);
++						 flags);
+ 		if (ret < 0) {
+ 			err = ret;
+ 			goto out2;
 -- 
 2.53.0
 
