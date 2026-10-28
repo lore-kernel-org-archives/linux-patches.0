@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216277;
-	b=YQTVRyQYe6nhz/y7hmk0AGTLx39XFDFoJe/CK9kdOt61RHxbajk5exqO1PL52ho8acd1
-	 hJEMyiE/BhbPnoqWXMEBjgsNcOtJG32cdzGzeCPjQdJIwH7jjjlqM/vOBKG74mM+ZHZFw
-	 XfKt6pDEeA+DS+e8V0dqbGquA2Ds0HWY5cnJvn68eGmSO4jTsKlIwbKtxGuj/S5R5D7mh
-	 E2UxDslbEN+L59Hk8frwy4M5mTOioBngQGBOd2oui44CEvl3OYdg38juhFfir3Fwy/Lrh
-	 OsNJ59cj5JkBf6MkgnZv7jSvCJ3e9liNi0jH7orUfD5w0aeAzg6qqfS9cxzD9Ta9tVA==
+	t=1793216280;
+	b=S34pWNA+ScjbMvVIneYrqFNJSVsm/pYrkvEBGyFRsQSmFwfxbfYjuhwjyr+mLgbIgj+w
+	 sd5kJrgiV/O9WmE3hNI87MG387XiQEn8rqU42SAqvfeqpz0GZT4nVX3fObDBbmv6lyFJP
+	 wgh/eOFQRJl38xh/On1YV0zL2nqMhA7BHMRoOhQr3Vcu0z0XyIYlTsTfU7nY24jz5CRI8
+	 HqZhcHixqrGtZmZJDz6feflXZQKFJyunOlhGDFoSiGemmcACl73w2ehwjufZ31mdoa1+s
+	 Ec92hP8BlIFoDk28BSjyb0CQtXQNHvvmiLHSOtKSxmbRRmKSl8xBedv0bpCRr/numdQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216277;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216280;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=bnpQWpQL0Bkt4CHUSHAEROU30VdA2qRgzOiRlwncpQw=;
-	b=QXK8M1XZTHcgqaP3odiVb13ev8RQFhtbQGrifNhA38lCjy/PNmyOLQ1pcTBYMT5dyVOI
-	 jnXTZzEWO7ETe/pQK3FLX8mXjE6PxgcBfgLgSj7Beqg9r4lbEEQuX1sk++uTmMz9oDsXF
-	 6QSHBSnDIDOrYDI2gX6UhLiOuVDflOeYxzdoBdDcQnp3ft810YKeK4Xm87KvgIKYzbTkj
-	 djjCMVXqiXqXd2IvS1a/QkPbT++Z6LfVgjHDWakB5Fj2d6uU+B9fO4C+ZbzsThsARcQkS
-	 FWFndoFCKrJ0GGCNsXOUKje6JEzl/hylSfqT1vyC4T+kF+uRRAuI//9K/QBzlaNqSPA==
+	bh=79me9rlSnnEjFjgEQ8GtdXAPEtg6rSZcDw2NFMk/YiQ=;
+	b=L6xb73vcCrJrepOGsgp1UjQRQqpW93b68heMg5x8QJVeGEh1rCysxrXhnS1HHTEwTPTJ
+	 iyBzoiRSq+aw2KjRFz3b1koWWoSrOw6KhnxX6C5GspGBijmwy50yewiabh3DiZ0szp+ks
+	 S5pWDio8ATxaW1eR/Wf8yzw6ofrDUsJoZ3ZkQdxC93uc1TYNNs0L0Lakhz2lxZYWxjFXD
+	 qAdaQCyPCb0t7wEVmPMKLOIxkH/dNeJHFmFYcpdQZIRqShKl8IQ+EXrrGUcGytFcYe+GH
+	 DBDBQGNf/Oa66IheLMLGeos07hPPl4I4NBgcK9ZJ38dVj58hbxM7r56+YYXEreq7GNg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IyxazDWR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WACAQuey;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB07B606A31C;
-	Wed, 28 Oct 2026 19:37:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B050B606A31C;
+	Wed, 28 Oct 2026 19:37:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IyxazDWR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36CC71F01825;
-	Wed, 28 Oct 2026 19:37:56 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WACAQuey
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EC331F01825;
+	Wed, 28 Oct 2026 19:37:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216276;
-	bh=bnpQWpQL0Bkt4CHUSHAEROU30VdA2qRgzOiRlwncpQw=;
+	s=korg; t=1793216279;
+	bh=79me9rlSnnEjFjgEQ8GtdXAPEtg6rSZcDw2NFMk/YiQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IyxazDWR999DCBFV56gB/veZg8ktC+2m03DDHMiWPIly1kW3g4ST0IWdVgQpt/ks5
-	 vheWI6y3lI1wjJBKomMhTGjP537pj9tHe6XxPVujoRr2fYNIMToGMdynme3aFiCFUQ
-	 m7YqXsB5FhdE6FqVnvJqHdIFFCaNTMbrOHHMtWJw=
+	b=WACAQueyVg4mCfTQO16CbFb/7U59CZw/O1bXfXyDHNzfASN76ojgqxrbfv5vxbWmn
+	 gecrtykDQ8NoxyggF9xWjvnr2rbR+n5HKcxRWTMHHq+2/IkBjqozPXV5Tq9vgjDnqC
+	 Ca3grIHgnm6ZDdevAbWb68Fz/7vwMTzEShcffmAc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinjie Ruan <ruanjinjie@huawei.com>,
-	Sourabh Jain <sourabhjain@linux.ibm.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Petr Tesarik <petrtesarik@huaweicloud.com>,
+	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1500/1887] powerpc/kexec_file: Prevent kexec range truncation
-Date: Wed, 28 Oct 2026 17:59:56 +0100
-Message-ID: <20261028170533.593242984@linuxfoundation.org>
+Subject: [PATCH 6.1 1501/1887] dma-direct: cleanup parameters to dma_direct_optimal_gfp_mask
+Date: Wed, 28 Oct 2026 17:59:57 +0100
+Message-ID: <20261028170533.616099470@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,95 +68,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinjie Ruan <ruanjinjie@huawei.com>
+From: Petr Tesarik <petrtesarik@huaweicloud.com>
 
-[ Upstream commit fa40f9dbdd4af53e7445d9135b5b207eb8adf372 ]
+[ Upstream commit 25a4ce564921db0973b74c04e0ea23bd2ee12a3a ]
 
-Sashiko AI review pointed out the following issue.
+Since both callers of dma_direct_optimal_gfp_mask() pass
+dev->coherent_dma_mask as the second argument, it is better to
+remove that parameter altogether.
 
-The __merge_memory_ranges() function incorrectly handles overlapping
-memory ranges when merging them. Although sort_memory_ranges() sorts all
-ranges by their start address in ascending order beforehand, the merge
-logic remains defective in two ways:
+Not only is reducing number of parameters good for readability, but
+the new function signature is also more logical: The optimal flags
+depend only on data contained in struct device.
 
-1. It compares the current range's start against the previous element (i-1)
-   instead of the running target index (idx)
+While touching this code, let's also rename phys_mask to phys_limit
+in dma_direct_alloc_from_pool(), because it is indeed a limit.
 
-2. It unconditionally overwrites 'ranges[idx].end' with 'ranges[i].end'.
-
-This logic flaw leads to critical memory truncation when a larger memory
-range completely subsumes subsequent smaller ranges.
-
-For example, consider a sorted input array with three ranges:
-  Range A (idx=0): [0x1000 - 0x9000]
-  Range B (i=1):   [0x2000 - 0x5000] (completely inside Range A)
-  Range C (i=2):   [0x6000 - 0x8000] (completely inside Range A)
-
-1. When i=1 (Range B):
-   ranges[1].start (0x2000) <= ranges[0].end + 1 (0x9001) is TRUE.
-   The code executes: ranges[0].end = ranges[1].end, which erroneously
-   shrinks Range A's end from 0x9000 down to 0x5000.
-
-2. When i=2 (Range C):
-   ranges[2].start (0x6000) <= ranges[1].end + 1 (0x5001) is FALSE.
-   The code falls into the else block, creating a broken new range.
-
-As a result, valid memory fragments [0x5001 - 0x5fff] and [0x8001 - 0x9000]
-are completely lost from the kexec exclude lists, potentially allowing
-the crash kernel to overwrite active memory, causing data corruption
-or crashes.
-
-Fix this by ensuring the start of the current range is compared against the
-end of the active merged range (idx), and use max() to safely prevent the
-outer boundary from being truncated.
-
-Cc: stable@vger.kernel.org
-Fixes: 180adfc532a8 ("powerpc/kexec_file: Add helper functions for getting memory ranges")
-Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Reviewed-by: Sourabh Jain <sourabhjain@linux.ibm.com>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20260729012948.2797865-4-ruanjinjie@huawei.com
+Signed-off-by: Petr Tesarik <petrtesarik@huaweicloud.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Stable-dep-of: 94a04ad732c9 ("dma-direct: return struct page from dma_direct_alloc_from_pool()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/kexec/ranges.c | 12 +++++-------
- 1 file changed, 5 insertions(+), 7 deletions(-)
+ kernel/dma/direct.c | 15 +++++++--------
+ 1 file changed, 7 insertions(+), 8 deletions(-)
 
-diff --git a/arch/powerpc/kexec/ranges.c b/arch/powerpc/kexec/ranges.c
-index 563e9989a5bf0..d169a862158c7 100644
---- a/arch/powerpc/kexec/ranges.c
-+++ b/arch/powerpc/kexec/ranges.c
-@@ -20,6 +20,7 @@
- #include <linux/kexec.h>
- #include <linux/of_device.h>
- #include <linux/slab.h>
-+#include <linux/minmax.h>
- #include <asm/sections.h>
- #include <asm/kexec_ranges.h>
+diff --git a/kernel/dma/direct.c b/kernel/dma/direct.c
+index d4215739efc71..d6871a3fe5f6a 100644
+--- a/kernel/dma/direct.c
++++ b/kernel/dma/direct.c
+@@ -44,10 +44,11 @@ u64 dma_direct_get_required_mask(struct device *dev)
+ 	return (1ULL << (fls64(max_dma) - 1)) * 2 - 1;
+ }
  
-@@ -101,19 +102,16 @@ static void __merge_memory_ranges(struct crash_mem *mem_rngs)
- 	struct crash_mem_range *ranges;
- 	int i, idx;
+-static gfp_t dma_direct_optimal_gfp_mask(struct device *dev, u64 dma_mask,
+-				  u64 *phys_limit)
++static gfp_t dma_direct_optimal_gfp_mask(struct device *dev, u64 *phys_limit)
+ {
+-	u64 dma_limit = min_not_zero(dma_mask, dev->bus_dma_limit);
++	u64 dma_limit = min_not_zero(
++		dev->coherent_dma_mask,
++		dev->bus_dma_limit);
  
--	if (!mem_rngs)
-+	if (!mem_rngs || mem_rngs->nr_ranges <= 1)
- 		return;
+ 	/*
+ 	 * Optimistically try the zone that the physical address mask falls
+@@ -126,8 +127,7 @@ static struct page *__dma_direct_alloc_pages(struct device *dev, size_t size,
+ 	if (is_swiotlb_for_alloc(dev))
+ 		return dma_direct_alloc_swiotlb(dev, size);
  
- 	idx = 0;
--	ranges = &(mem_rngs->ranges[0]);
-+	ranges = mem_rngs->ranges;
- 	for (i = 1; i < mem_rngs->nr_ranges; i++) {
--		if (ranges[i].start <= (ranges[i-1].end + 1))
--			ranges[idx].end = ranges[i].end;
-+		if (ranges[i].start <= (ranges[idx].end + 1))
-+			ranges[idx].end = max(ranges[idx].end, ranges[i].end);
- 		else {
- 			idx++;
--			if (i == idx)
--				continue;
--
- 			ranges[idx] = ranges[i];
- 		}
- 	}
+-	gfp |= dma_direct_optimal_gfp_mask(dev, dev->coherent_dma_mask,
+-					   &phys_limit);
++	gfp |= dma_direct_optimal_gfp_mask(dev, &phys_limit);
+ 	page = dma_alloc_contiguous(dev, size, gfp);
+ 	if (page) {
+ 		if (!dma_coherent_ok(dev, page_to_phys(page), size) ||
+@@ -172,14 +172,13 @@ static void *dma_direct_alloc_from_pool(struct device *dev, size_t size,
+ 		dma_addr_t *dma_handle, gfp_t gfp)
+ {
+ 	struct page *page;
+-	u64 phys_mask;
++	u64 phys_limit;
+ 	void *ret;
+ 
+ 	if (WARN_ON_ONCE(!IS_ENABLED(CONFIG_DMA_COHERENT_POOL)))
+ 		return NULL;
+ 
+-	gfp |= dma_direct_optimal_gfp_mask(dev, dev->coherent_dma_mask,
+-					   &phys_mask);
++	gfp |= dma_direct_optimal_gfp_mask(dev, &phys_limit);
+ 	page = dma_alloc_from_pool(dev, size, &ret, gfp, dma_coherent_ok);
+ 	if (!page)
+ 		return NULL;
 -- 
 2.53.0
 
