@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214162;
-	b=Jfp9niI2Stp6lTJE7+KSW5+7/6x0LoBullt4Oe2AJxGCSINdoPDayn1qcUGQhFaZ6g5F
-	 saUfKSFwyomFX2AB60iHQETXzp6HvTklyIEw4PKBcK/d2mZqrW5V8IM/sjLU2JFtjrOJN
-	 /Wo1XNP2bHrMnph983k/KpUWctST3LQGSy+S0cWWalOe21c2x0+jKdnEggiaFjd7SPsGd
-	 lYBdQBxE/oCmZKQqtrtB/m8otoBZQKYjdY/Thx1KctKvKYFxnP9R2mLtV5lYIk7whLb6g
-	 95z9egYn4RSt0J2Ot89sLgtMjIpNUfgUCJ+DHPPcv4UbM0LEobQP1oR5VfWXys5NwHg==
+	t=1793214164;
+	b=a2bL+Oziz/YeobbGVOgV3BSPvqzTbgVn2Ljmijmc9DBb78kf06OQwO7liRe+hKY7yVpC
+	 uhKRCUCAX04yhrcWmqHNqN/w0MwjqaFo1KClbRHQM6GYD8rLFkO+XbJD/C/u/BJ/5AgT4
+	 NINUPFm6rE4C4PzOFpsT1oJQWbB2r5HI8W3Qqc8kyIPL/XK97qeIXH1trzl0BlEOi32En
+	 AriXSc/7daOamsVH52mbB/RD1eAJ9CH9h1LjHPZ/qBKrBQ8CEExMmv5XUzKunXN1R0sZ+
+	 pvdATePv+gdz5Wv1qTdkq9DR22QCWOMS0lOgOzxYfZWcFmJWiIUikwC0BySrVWnJDSQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214162;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214164;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=MH8iRzh0x0o/a1Ld8dN22pm2M2emJEsOJb2abTBHmAg=;
-	b=2VbDij2jUHMu4itTxiHpUw+PadQG63J1QQDY9BP0w00aLp/KiocsAEwFIwhZ2LIHejlg
-	 srJQl1udCRzCwMq8gWRaNITv1slWhfmj+qEseZWepKh0HtoxqWNwoLjZzE/Tw6bZgpMyG
-	 QC3EJ+IvjXY8mpbRJL+dqREvOZBnyWM7zWrDngMlImNcjDmUfaErR6JBdhdpS5EPTXE55
-	 QXPMwFWGlKIUfJHtYaCZUtyLTC+bqf/kBRkXzyeOHvkaZD16VF+H1AEBsPYluseLFjEjN
-	 n8r9weoePkPgQlxXaXLkUiZ0mDOOTcQ2HsRR2d12CYOUAraWGQv0UZSLzHOosDLMkwg==
+	bh=RBhOhiPXxIYtofQTqB0HmrTIoOQH+4HCKN0rmMRz33U=;
+	b=uGLId7v2Q2D0OciiLX9mf0IWPMxE+ZJfeorROJTB9pF67UUy361Holdo23kHYNpOwRcM
+	 pVhqeboAwl7RwYoC9ag2ld0rag2r/F/VLu3Ao3HnMM0+z99eTDhUmH5HLBbCTSknwXwrA
+	 qhrvs8U6OA7f2TfDJQrYCceGqR41cgAFBSWoYeDYKGlu/oAQfzO19U6iQftW3GXshQEtQ
+	 mbKW15y2M/rQ7E20qbuIYxmzvKqK3d5XmYO0bUZWsG53QgqTXBq4JkqrO2qVMZi5ohXqN
+	 oMusYYd8pSW31eysCHcdIsZuBOjQT1qPJM+t9YM31Oe6oMQ2tMNaYlJVyDxRcw7ETCA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mHJ41M8v;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=n0WJE93S;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF118606A31C;
-	Wed, 28 Oct 2026 19:02:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A420606A330;
+	Wed, 28 Oct 2026 19:02:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mHJ41M8v
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E13E1F031E2;
-	Wed, 28 Oct 2026 19:02:40 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=n0WJE93S
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DACB41F01825;
+	Wed, 28 Oct 2026 19:02:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214161;
-	bh=MH8iRzh0x0o/a1Ld8dN22pm2M2emJEsOJb2abTBHmAg=;
+	s=korg; t=1793214164;
+	bh=RBhOhiPXxIYtofQTqB0HmrTIoOQH+4HCKN0rmMRz33U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mHJ41M8voxp7rHb8T/vi66jaUideJYGtixtRfHKapQD0uIo3QTCvFqVC+AB+YCnPP
-	 vpojKir6ZPJGa6yWLSvFulSk+L6yaz05zHch1BMJVY/Q8kA409lNsx6XasIR5b6622
-	 uPi5YBBhpgYWTtvho+qKWonJmX7Ws8d45nzWUUA4=
+	b=n0WJE93Si5LCwAPLrzSmxSGmLq8CeRpn+ZlprViFX8ApVfRdNZllEYUTka6Ht52N2
+	 8/prmgtrTjb5rD9EypXnefH/hTP1gefF6KPM2dHQxTYQvF42gmui7Fes55E6q5Nwr8
+	 +b/2vq8jAiGPzNcQ3S+SLzoBC49xEXrD2wwimz8w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hengqi Chen <hengqi.chen@gmail.com>,
-	Huacai Chen <chenhuacai@loongson.cn>,
+	Nick Child <nnac123@linux.ibm.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0759/1887] LoongArch: BPF: Dont override subprogs return value
-Date: Wed, 28 Oct 2026 17:47:35 +0100
-Message-ID: <20261028170516.716951957@linuxfoundation.org>
+Subject: [PATCH 6.1 0760/1887] ibmveth: Always stop tx queues during close
+Date: Wed, 28 Oct 2026 17:47:36 +0100
+Message-ID: <20261028170516.739326339@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,46 +68,154 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hengqi Chen <hengqi.chen@gmail.com>
+From: Nick Child <nnac123@linux.ibm.com>
 
-[ Upstream commit 60f3caff1492e5b8616b9578c4bedb5c0a88ed14 ]
+[ Upstream commit 127b7218bfdd60205cfe2fa3f06d95e85a2650ed ]
 
-The verifier test `calls: div by 0 in subprog` triggers a panic at the
-ld.bu instruction. The ld.bu insn is trying to load byte from memory
-address returned by the subprog. The subprog actually set the correct
-address at the a5 register (dedicated register for BPF return values).
-But at commit 73c359d1d356 ("LoongArch: BPF: Sign-extend return values")
-we also sign extended a5 to the a0 register (return value in LoongArch).
-For function call insn, we later propagate the a0 register back to a5
-register. This is right for native calls but wrong for bpf2bpf calls
-which expect zero-extended return value in a5 register. So only move a0
-to a5 for native calls (i.e. non-BPF_PSEUDO_CALL).
+netif_stop_all_queues must be called before calling H_FREE_LOGICAL_LAN.
+As a result, we can remove the pool_config field from the ibmveth
+adapter structure.
 
-Cc: stable@vger.kernel.org
-Fixes: 73c359d1d356 ("LoongArch: BPF: Sign-extend return values")
-Signed-off-by: Hengqi Chen <hengqi.chen@gmail.com>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Some device configuration changes call ibmveth_close in order to free
+the current resources held by the device. These functions then make
+their changes and call ibmveth_open to reallocate and reserve resources
+for the device.
+
+Prior to this commit, the flag pool_config was used to tell ibmveth_close
+that it should not halt the transmit queue. pool_config was introduced in
+commit 860f242eb534 ("[PATCH] ibmveth change buffer pools dynamically")
+to avoid interrupting the tx flow when making rx config changes. Since
+then, other commits adopted this approach, even if making tx config
+changes.
+
+The issue with this approach was that the hypervisor freed all of
+the devices control structures after the hcall H_FREE_LOGICAL_LAN
+was performed but the transmit queues were never stopped. So the higher
+layers in the network stack would continue transmission but any
+H_SEND_LOGICAL_LAN hcall would fail with H_PARAMETER until the
+hypervisor's structures for the device were allocated with the
+H_REGISTER_LOGICAL_LAN hcall in ibmveth_open. This resulted in
+no real networking harm but did cause several of these error
+messages to be logged: "h_send_logical_lan failed with rc=-4"
+
+So, instead of trying to keep the transmit queues alive during network
+configuration changes, just stop the queues, make necessary changes then
+restart the queues.
+
+Signed-off-by: Nick Child <nnac123@linux.ibm.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: 053f3ff67d7f ("net: ibmveth: make veth_pool_store stop hanging")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/loongarch/net/bpf_jit.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/ibm/ibmveth.c | 18 +-----------------
+ drivers/net/ethernet/ibm/ibmveth.h |  1 -
+ 2 files changed, 1 insertion(+), 18 deletions(-)
 
-diff --git a/arch/loongarch/net/bpf_jit.c b/arch/loongarch/net/bpf_jit.c
-index bd601c269a944..88772302f952c 100644
---- a/arch/loongarch/net/bpf_jit.c
-+++ b/arch/loongarch/net/bpf_jit.c
-@@ -775,7 +775,10 @@ static int build_insn(const struct bpf_insn *insn, struct jit_ctx *ctx, bool ext
+diff --git a/drivers/net/ethernet/ibm/ibmveth.c b/drivers/net/ethernet/ibm/ibmveth.c
+index 53ce857f9ec1c..468b3ac118af0 100644
+--- a/drivers/net/ethernet/ibm/ibmveth.c
++++ b/drivers/net/ethernet/ibm/ibmveth.c
+@@ -692,8 +692,7 @@ static int ibmveth_close(struct net_device *netdev)
  
- 		move_addr(ctx, t1, func_addr);
- 		emit_insn(ctx, jirl, t1, LOONGARCH_GPR_RA, 0);
--		move_reg(ctx, regmap[BPF_REG_0], LOONGARCH_GPR_A0);
-+
-+		if (insn->src_reg != BPF_PSEUDO_CALL)
-+			move_reg(ctx, regmap[BPF_REG_0], LOONGARCH_GPR_A0);
-+
- 		break;
+ 	napi_disable(&adapter->napi);
  
- 	/* tail call */
+-	if (!adapter->pool_config)
+-		netif_tx_stop_all_queues(netdev);
++	netif_tx_stop_all_queues(netdev);
+ 
+ 	h_vio_signal(adapter->vdev->unit_address, VIO_IRQ_DISABLE);
+ 
+@@ -801,9 +800,7 @@ static int ibmveth_set_csum_offload(struct net_device *dev, u32 data)
+ 
+ 	if (netif_running(dev)) {
+ 		restart = 1;
+-		adapter->pool_config = 1;
+ 		ibmveth_close(dev);
+-		adapter->pool_config = 0;
+ 	}
+ 
+ 	set_attr = 0;
+@@ -885,9 +882,7 @@ static int ibmveth_set_tso(struct net_device *dev, u32 data)
+ 
+ 	if (netif_running(dev)) {
+ 		restart = 1;
+-		adapter->pool_config = 1;
+ 		ibmveth_close(dev);
+-		adapter->pool_config = 0;
+ 	}
+ 
+ 	set_attr = 0;
+@@ -1536,9 +1531,7 @@ static int ibmveth_change_mtu(struct net_device *dev, int new_mtu)
+ 	   only the buffer pools necessary to hold the new MTU */
+ 	if (netif_running(adapter->netdev)) {
+ 		need_restart = 1;
+-		adapter->pool_config = 1;
+ 		ibmveth_close(adapter->netdev);
+-		adapter->pool_config = 0;
+ 	}
+ 
+ 	/* Look for an active buffer pool that can hold the new MTU */
+@@ -1724,7 +1717,6 @@ static int ibmveth_probe(struct vio_dev *dev, const struct vio_device_id *id)
+ 	adapter->vdev = dev;
+ 	adapter->netdev = netdev;
+ 	adapter->mcastFilterSize = be32_to_cpu(*mcastFilterSize_p);
+-	adapter->pool_config = 0;
+ 	ibmveth_init_link_settings(netdev);
+ 
+ 	netif_napi_add_weight(netdev, &adapter->napi, ibmveth_poll, 16);
+@@ -1865,9 +1857,7 @@ static ssize_t veth_pool_store(struct kobject *kobj, struct attribute *attr,
+ 					return -ENOMEM;
+ 				}
+ 				pool->active = 1;
+-				adapter->pool_config = 1;
+ 				ibmveth_close(netdev);
+-				adapter->pool_config = 0;
+ 				if ((rc = ibmveth_open(netdev)))
+ 					return rc;
+ 			} else {
+@@ -1893,10 +1883,8 @@ static ssize_t veth_pool_store(struct kobject *kobj, struct attribute *attr,
+ 			}
+ 
+ 			if (netif_running(netdev)) {
+-				adapter->pool_config = 1;
+ 				ibmveth_close(netdev);
+ 				pool->active = 0;
+-				adapter->pool_config = 0;
+ 				if ((rc = ibmveth_open(netdev)))
+ 					return rc;
+ 			}
+@@ -1907,9 +1895,7 @@ static ssize_t veth_pool_store(struct kobject *kobj, struct attribute *attr,
+ 			return -EINVAL;
+ 		} else {
+ 			if (netif_running(netdev)) {
+-				adapter->pool_config = 1;
+ 				ibmveth_close(netdev);
+-				adapter->pool_config = 0;
+ 				pool->size = value;
+ 				if ((rc = ibmveth_open(netdev)))
+ 					return rc;
+@@ -1922,9 +1908,7 @@ static ssize_t veth_pool_store(struct kobject *kobj, struct attribute *attr,
+ 			return -EINVAL;
+ 		} else {
+ 			if (netif_running(netdev)) {
+-				adapter->pool_config = 1;
+ 				ibmveth_close(netdev);
+-				adapter->pool_config = 0;
+ 				pool->buff_size = value;
+ 				if ((rc = ibmveth_open(netdev)))
+ 					return rc;
+diff --git a/drivers/net/ethernet/ibm/ibmveth.h b/drivers/net/ethernet/ibm/ibmveth.h
+index 0e1dff1024442..bc1c1bb83c40c 100644
+--- a/drivers/net/ethernet/ibm/ibmveth.h
++++ b/drivers/net/ethernet/ibm/ibmveth.h
+@@ -148,7 +148,6 @@ struct ibmveth_adapter {
+     dma_addr_t filter_list_dma;
+     struct ibmveth_buff_pool rx_buff_pool[IBMVETH_NUM_BUFF_POOLS];
+     struct ibmveth_rx_q rx_queue;
+-    int pool_config;
+     int rx_csum;
+     int large_send;
+     bool is_active_trunk;
 -- 
 2.53.0
 
