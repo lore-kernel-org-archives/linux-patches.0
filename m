@@ -1,55 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793217205;
-	b=1Ut4wHyWm0LKvMqZgk6nQ8n300HB6U/k+dl596JeATnKt0MTKEUe8tdKkHSb4Z3uLoFC
-	 EjFVtbooNJx151azYTIEjZHVopfwwk2HQmTPapz0yWimeAlgyG4N2n2KsI9FeuKjpzhh7
-	 lqyGrBYs0gO0Oq7JXj/uOP436QGVxV2t8lQymF8jhBBTHGVtD8BQ/ha4DsccbgQp2bAcV
-	 T+nmHOMoho/+dA4yd1bjuDdGO9HDlGp4/FYIXQT76LvkXpGvtweNfPme3I3GQi6HA5RIU
-	 8CGLajaSNTrgJON0gU6aPisVCqwuiwtZ+KpM9Tr51cOfhi2MfinipLISNXagKBGb5gw==
+	t=1793217208;
+	b=OFvvqiHnlLURUky80KH++cXC6S9T/Zw0il1JCzl39u/kvdnxF0sNTWuFlIkF3llqUKRW
+	 5zqcr87H1MGNDUHEWJMyq3jB+Z8zfciLn7M1ztmy1MJaWOVOLP9nWHrw4YokYzkmpt1Km
+	 uOPA3128NQG9jIjAgPOVzORQMYowabWQcDqgKholt/gmXbH+mSdYMqe3Kt/QFq69seT0u
+	 wQuVfvhdsMbvLjOwlEZyia/FWJXXQCPz82rq1OltTrKmga7ZcjjrVNUpNUqGtJg7j8C6d
+	 YUBZXcvNMIcjYVIOb+2S2hS1omDXMeO/jVeAqvGf+H9cLjJ+ARJDvQ3SALHxzYgr0ZQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793217205;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793217208;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=w+GhH6CVPI0Fuaz64fq9NfNfJPOhFmOanrGYo4K/Vxs=;
-	b=C8cNV0mKkOEGWImQP9kcv5FVVupqtEoVCe3wnHHapEHXNn4uXMY8i7GgOKQ9vq2Bj3Py
-	 qcy9XR9GOzxVEn/4MQPszfUu59kMFsB24f9i9y+BX5MnPntgpdB5lISY7GOmF0dlqQpZN
-	 Z0DQSNbxcLnq3r1Gyq6NP9r5H4ZTBC8RsIq/1q5+QMtKE2PX9oo6JgsFspAR+ujfrMoD9
-	 yLaDD1evuQ+AjV00cjBm8ydGUa/8NbGEHz0AVMsfFlXeeqkLEHgyub8irGu7Qp1Ol8YYI
-	 GC0/LKx8Ufs2bdNSwYqxcCktnORstHgnrDZD5GICx1TszptwVtpupAFTZaee7czZSyg==
+	bh=Qsldk/h697FXPql255ra2FsFsiEVzTzAjGLnIPnfgvw=;
+	b=XEu26MkYvHgD0qHy4swVKwH/BbLvs9fcSaesWo3f+38lTMnNxVGuApq0x/fS881Xv7gh
+	 RwAS/e1XMORDd70ecBUKtK2JUMYsFQW4aHGzHSHVFB6NSzghDG8eV3Sj02xs4RvSs6h5Y
+	 uaYMjXmhvnaTkvpAewuUFrcRuMe9lgyCqR8Brct5kIgh3Z9yIIoT/5pKQlzeU+0aERD6q
+	 9VIr+7IHdomZEdfT7QXBlOzF1pLSjq7kfCo8QPgNbL12weHkVV7Y8K2YLyIfQjZKvOalV
+	 09gSMC2mAh0BSoeXJ9TEGeMVCnt3LAqaO1qetHQ23ktLz6ubc9HLYYgSV/r9TGg3bKA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="c/13sHvd";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZK8gtZrQ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D1FE606A31E;
-	Wed, 28 Oct 2026 19:53:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A613606A31A;
+	Wed, 28 Oct 2026 19:53:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c/13sHvd
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FE3C1F01825;
-	Wed, 28 Oct 2026 19:53:24 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZK8gtZrQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3AFB1F01828;
+	Wed, 28 Oct 2026 19:53:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793217205;
-	bh=w+GhH6CVPI0Fuaz64fq9NfNfJPOhFmOanrGYo4K/Vxs=;
+	s=korg; t=1793217208;
+	bh=Qsldk/h697FXPql255ra2FsFsiEVzTzAjGLnIPnfgvw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=c/13sHvdl6st20kOKin1zns/YgLxWjUMTTsAbszALmE+2jBw1Yv82oXE0ffFJRVKJ
-	 sR19QLVUK0z4WRitdclLFwC5ZUENk5VZkWuKvsjaTg4cT2jN/WWDMQsEhHN5a5TbQf
-	 QtzGsHx9SPeEP1wzxbAaBecE3rcr3QOyZoLc1UeE=
+	b=ZK8gtZrQtbpL7hFgxSWIYCyp980ZseL5x/llQs4hFYvTLoomxrKePsBF9DCkpNkHm
+	 wV3hlI1nSvVcVDL5GTw4iae2wiFHQaDH03TA6UUp0TzrjJViAmSqwMUU+bgcUjCG3p
+	 DEOAJUNA6nI6650OQG0Bc2ULBWluCo9D8pN8v+JM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amit Klein <aksecurity@gmail.com>,
-	Noam Caspi <noam.caspi@mail.huji.ac.il>,
+	Petr Machata <petrm@nvidia.com>,
 	Ido Schimmel <idosch@nvidia.com>,
 	David Ahern <dsahern@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1787/1887] ipv4: udp: Create exceptions before socket matching
-Date: Wed, 28 Oct 2026 18:04:43 +0100
-Message-ID: <20261028170540.116084639@linuxfoundation.org>
+Subject: [PATCH 6.1 1823/1887] Documentation: networking: Add a caveat to nexthop_compat_mode sysctl
+Date: Wed, 28 Oct 2026 18:05:19 +0100
+Message-ID: <20261028170540.927551460@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -71,86 +70,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Petr Machata <petrm@nvidia.com>
 
-[ Upstream commit 4c3499f79f8c7e8561266bcc220a18538cec0458 ]
+[ Upstream commit bbe4b41259a3e255a16d795486d331c1670b4e75 ]
 
-Currently, when ICMP Fragmentation Needed and Redirect Message packets
-are locally delivered and quote a UDP packet, a FIB nexthop exception
-(FNHE) is only created if the kernel can match the UDP packet to an
-existing socket.
+net.ipv4.nexthop_compat_mode was added when nexthop objects were added to
+provide the view of nexthop objects through the usual lens of the route
+UAPI. As nexthop objects evolved, the information provided through this
+lens became incomplete. For example, details of resilient nexthop groups
+are obviously omitted.
 
-This behavior allows off-path attackers to conduct a side-channel attack
-on the FNHE cache in order to discover the ephemeral port used by a
-connected UDP socket.
+Now that 16-bit nexthop group weights are a thing, the 8-bit UAPI cannot
+convey the >8-bit weight accurately. Instead of inventing workarounds for
+an obsolete interface, just document the expectations of inaccuracy.
 
-Commit 6457378fe796 ("ipv4: use siphash instead of Jenkins in
-fnhe_hashfun()") and commit 67d6d681e15b ("ipv4: make exception cache
-less predictible") tried to mitigate such attacks by making it harder
-for attackers to discover hash collisions in the FNHE cache and by
-randomizing the number of exceptions a hash bucket can hold,
-respectively. Unfortunately, both of the mitigations can be bypassed.
-
-Instead, mitigate such attacks by always creating a FNHE, even before
-trying to find a matching socket. Do that by calling ipv4_update_pmtu()
-and ipv4_redirect(), the helpers used when the quoted packet did not
-originate from a socket.
-
-This means that guesses (right or wrong) from an off-path attacker will
-always result in a FNHE being created or updated in the cache that the
-attacker can observe.
-
-Pass an oif of 0, in a similar fashion to icmp_err(). This is also the
-oif used by the socket path for sockets that are not bound to a device.
-
-Note that this does not allow attackers to create FNHEs that they could
-not create before, as both helpers can already be reached with little to
-no validation. For example, by sending an ICMP error that quotes an ICMP
-Echo Reply or one that quotes a UDP source port that matches a wildcard
-socket.
-
-Also note that in the good case (matched socket) the above scheme comes
-at the cost of an extra route lookup, as the no socket helpers perform
-their own lookup before the one performed by ipv4_sk_update_pmtu() /
-ipv4_sk_redirect(). When the two resolve to different nexthops, it also
-results in two exceptions being created for the same destination IP. One
-in the FNHE cache of the nexthop resolved by the no socket helpers and
-another in the FNHE cache of the nexthop used by the socket.
-
-Fixes: 4895c771c7f0 ("ipv4: Add FIB nexthop exceptions.")
-Cc: stable@vger.kernel.org
-Reported-by: Amit Klein <aksecurity@gmail.com>
-Reported-by: Noam Caspi <noam.caspi@mail.huji.ac.il>
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Fixes: b72a6a7ab957 ("net: nexthop: Increase weight to u16")
+Signed-off-by: Petr Machata <petrm@nvidia.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
 Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://patch.msgid.link/20260828192344.2596928-3-idosch@nvidia.com
+Link: https://patch.msgid.link/b575e32399ccacd09079b2a218255164535123bd.1733740749.git.petrm@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ sashal: Inlined udp_err_update_exception() into the existing udp_err() wrapper before calling __udp4_lib_err(). ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/udp.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ Documentation/networking/ip-sysctl.rst | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/net/ipv4/udp.c b/net/ipv4/udp.c
-index 271bf781fe54b..3c41aed3788c0 100644
---- a/net/ipv4/udp.c
-+++ b/net/ipv4/udp.c
-@@ -879,6 +879,15 @@ int __udp4_lib_err(struct sk_buff *skb, u32 info, struct udp_table *udptable)
- 
- int udp_err(struct sk_buff *skb, u32 info)
- {
-+	const int type = icmp_hdr(skb)->type;
-+	const int code = icmp_hdr(skb)->code;
-+	struct net *net = dev_net(skb->dev);
+diff --git a/Documentation/networking/ip-sysctl.rst b/Documentation/networking/ip-sysctl.rst
+index 0a5ae93b44617..3fd6e0f0d3c96 100644
+--- a/Documentation/networking/ip-sysctl.rst
++++ b/Documentation/networking/ip-sysctl.rst
+@@ -2000,6 +2000,12 @@ nexthop_compat_mode - BOOLEAN
+ 	understands the new API, this sysctl can be disabled to achieve full
+ 	performance benefits of the new API by disabling the nexthop expansion
+ 	and extraneous notifications.
 +
-+	if (type == ICMP_DEST_UNREACH && code == ICMP_FRAG_NEEDED)
-+		ipv4_update_pmtu(skb, net, info, 0, IPPROTO_UDP);
-+	else if (type == ICMP_REDIRECT)
-+		ipv4_redirect(skb, net, 0, IPPROTO_UDP);
++	Note that as a backward-compatible mode, dumping of modern features
++	might be incomplete or wrong. For example, resilient groups will not be
++	shown as such, but rather as just a list of next hops. Also weights that
++	do not fit into 8 bits will show incorrectly.
 +
- 	return __udp4_lib_err(skb, info, &udp_table);
- }
+ 	Default: true (backward compat mode)
  
+ fib_notify_on_flag_change - INTEGER
 -- 
 2.53.0
 
