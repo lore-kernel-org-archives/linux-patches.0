@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793208977;
-	b=1V9auVHAfJbMSBtsaeJtBn0zmL6WHilLiOy/42nQSbHESd17GU7/FM9K3tx8m0rxsaWe
-	 RPIhnesprzkXMaNq92tFMI6Ibiq6LEa5f0cens6JsVWZI8GVVh4Kdcjr6yg+jc5UEflVZ
-	 wsXvj2dPXCcb8t2+VfWgeVXFeFra8t3Bz5hMK4f5wnLsfFpBKIMy9U+z5mxSFk0lGCnZ6
-	 orsB/J1mWOQtB6nKvMM3brRohPnDREEZ24Vl6vetqON1pMXBleuGwvw20gWTF7Afqsvex
-	 ax1QB6pjBXPTT4EE806GvkJMZU3yB3OGbK8EKSHr1af0VzlMiE07DA/bzMz2hPehgRQ==
+	t=1793208980;
+	b=ruS3UEBhI0vSB953Ss7tDEtSBeNWUtNjB3PQHHrSz8porpJSRnZhrv+D8guH4oEeWwbR
+	 JXALoyHy/R4gwHKC5cQ2jatGvK0yQeCuwH/bqAeoVN6tVUOCYuZ1JnmsX/S9URt0Ykvpf
+	 RVoXE9CTqKXOOjKunpbXxATLDCOLZrYeTjBcqDU8YNQhKhfYqjLMKpHoiIY6+fNuJjzPh
+	 bI8a2QGtME8S31rBcQif/KRkmq4Ok5hpXEQdCYnT9aM8IhqzLJo7yjGHN9qkPMbJD16Wg
+	 TIbueB6CgX/euyAsFVzSaW9ueachQpgvaZAA/AdKxZ43xguD/tF3FjkrHtlrz90xs9g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793208977;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793208980;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=FhiBphn4iMZMMUpfYC6mLTnIb1SQLxT2bTeD6CTxZtg=;
-	b=pqAFtbpBoMc+U5S2HSJv4FLCVtlM/Sf0uRznFxqyu8WAV79jPr2ilYENdnNe5XociSFR
-	 HGVkSqHVYI1eBR5RXhiaA+YL4yJzHEdC91U+x2EsUA9UKKI4IciT3s97xOcWjYOiC1wI9
-	 Sw94tG/zqauQV1iHp0kwSvYji8ZQ/26jMF3lAKMtC/3drgJsmmnjvtLsPcmzWBXnr4VyN
-	 w+l/0lF27g+VOX84pCdZb4ivNDKKwic/cO1FpHhhG0l+KIg59tFC9x6xfxI8191e8HUfN
-	 ZsHRB12dpE3WBtV0UkAA2RbIlbg+jXAGG1WPScBYez0PAZ9aa9oBAFjYZcgB3pnl6Gw==
+	bh=Groa30+0DX8Ym/N26LOCiE3zBSnbKVI6y5iFEriwi6k=;
+	b=y+RR4MI83NCGKK0TO5d0LYiaNrBAMk49a8QLsNl25kI72GgqNd+pBQxu1WERbyIBb6xI
+	 Yfj3ny1T1xKEU8Ff/uRWmGbRfhRvRkXJqmO1Gm1fKZCEygAxzJHHMvqb67XpaaPOA2hPN
+	 E2dLx6JCLKUbXpOEkhwILXyDlyuhPp0QkDbpq5CxdFvzlvuvX+gFJ3R1a9p1CDVqKPpL+
+	 enOVu5qRkc1yBZsqBpQET0t4JLNlgrwdj3u+m5qwuhI8ouc5sP/gCyuPrQMlYk5JCnn72
+	 MrAWlYXMTqWu0tIpkW5cB2Fnw+q4SFMw/n2KDIVy8UsvI+L5UYsZSdmZHblOb1n9HYw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J9HvLQve;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oe6C+q9b;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5D27606A31A;
-	Wed, 28 Oct 2026 17:36:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACFF2606A31A;
+	Wed, 28 Oct 2026 17:36:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J9HvLQve
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 352E51F01825;
-	Wed, 28 Oct 2026 17:36:16 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oe6C+q9b
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10EAA1F01825;
+	Wed, 28 Oct 2026 17:36:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793208976;
-	bh=FhiBphn4iMZMMUpfYC6mLTnIb1SQLxT2bTeD6CTxZtg=;
+	s=korg; t=1793208979;
+	bh=Groa30+0DX8Ym/N26LOCiE3zBSnbKVI6y5iFEriwi6k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=J9HvLQverQGQSVBze8Ica+caivLn9vK9u39jwhnlq3wNjQSVFjma+tf9KlpDOCge0
-	 f8jHqrQw7RW8xzNhF6qk3M8U1bANC4BBDdJ8PslzQcKIwuu0LmGD9cpXBs+4FOMZdW
-	 L5vjC2IhoL0x8g7wcZZGeHr3H8z5NYLjXzIrhk2I=
+	b=oe6C+q9bZrXXaayxzU9g590lF1NsG8dgcGSFvd86AeIZzUU61ZotjhQZMnhedOn2R
+	 l8Uxa/Wj40HcMTTdVc3ZFYRjCvuVTVkqmvDRWi1CZ6E3brWzswoPAmsjYwJ+8MU3VQ
+	 kW+/lnMKR8siSg3WjGfBVlC3aAugoQUtZhdeU7ew=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrea Pesaresi <andreapesaresi82@gmail.com>,
-	Felix Fietkau <nbd@nbd.name>,
-	Johannes Berg <johannes.berg@intel.com>,
+	stable <stable@kernel.org>,
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
+	Alan Stern <stern@rowland.harvard.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 309/516] wifi: mac80211: set info->band for 802.3 encap offload frames
-Date: Wed, 28 Oct 2026 17:57:41 +0100
-Message-ID: <20261028170010.811143254@linuxfoundation.org>
+Subject: [PATCH 5.10 283/516] usb: ohci-spear: disable controller wakeup on removal
+Date: Wed, 28 Oct 2026 17:57:15 +0100
+Message-ID: <20261028170010.195599158@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -69,53 +70,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Fietkau <nbd@nbd.name>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-[ Upstream commit 4febc02cd02f021f2b6d0768332be643ef14a12d ]
+[ Upstream commit b1b0f8bdbbc891a4ee7f3b1a878c633e02b7bbeb ]
 
-Unlike the 802.11 TX paths, ieee80211_8023_xmit() does not set
-info->band from the channel context on non-MLD interfaces. It stays at
-0, so ieee80211_get_tx_rates() uses the wrong band for these frames.
+Probe enables controller wakeup after the OHCI core marks controllers with
+RemoteWakeupConnected as wakeup-capable. Removal does not undo this, so the
+wakeup source can remain attached after driver unbind.
 
-Set it the same way as ieee80211_build_hdr(): drop the frame if there is
-no channel context, and leave the band at 0 on MLD interfaces.
+Disable controller wakeup after removing the HCD.
 
-Reported-by: Andrea Pesaresi <andreapesaresi82@gmail.com>
-Fixes: 50ff477a8639 ("mac80211: add 802.11 encapsulation offloading support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
-Link: https://patch.msgid.link/20260926120216.4054712-1-nbd@nbd.name
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-[ sashal: adapted MLD-aware channel-context handling to unconditional vif.chanctx_conf access with out_free cleanup. ]
+This issue was identified during our ongoing static-analysis research
+while reviewing kernel code.
+
+Fixes: a6eeeb9f45b5 ("USB: Update USB default wakeup settings")
+Cc: stable <stable@kernel.org>
+Assisted-by: LLM
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Acked-by: Alan Stern <stern@rowland.harvard.edu>
+Link: https://patch.msgid.link/20260915012011.61874-4-mhun512@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/tx.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/usb/host/ohci-spear.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/mac80211/tx.c b/net/mac80211/tx.c
-index 87fc109595959..73b79a9611011 100644
---- a/net/mac80211/tx.c
-+++ b/net/mac80211/tx.c
-@@ -4272,6 +4272,7 @@ static void ieee80211_8023_xmit(struct ieee80211_sub_if_data *sdata,
- {
- 	struct ieee80211_tx_info *info = IEEE80211_SKB_CB(skb);
- 	struct ieee80211_local *local = sdata->local;
-+	struct ieee80211_chanctx_conf *chanctx_conf;
- 	struct tid_ampdu_tx *tid_tx;
- 	u8 tid;
+diff --git a/drivers/usb/host/ohci-spear.c b/drivers/usb/host/ohci-spear.c
+index ed019c459ea0d..8dd9b77c12fd4 100644
+--- a/drivers/usb/host/ohci-spear.c
++++ b/drivers/usb/host/ohci-spear.c
+@@ -105,6 +105,7 @@ static int spear_ohci_hcd_drv_remove(struct platform_device *pdev)
+ 	struct spear_ohci *sohci_p = to_spear_ohci(hcd);
  
-@@ -4317,6 +4318,11 @@ static void ieee80211_8023_xmit(struct ieee80211_sub_if_data *sdata,
- 		sdata = container_of(sdata->bss,
- 				     struct ieee80211_sub_if_data, u.ap);
+ 	usb_remove_hcd(hcd);
++	device_wakeup_disable(hcd->self.controller);
+ 	clk_disable_unprepare(sohci_p->clk);
  
-+	chanctx_conf = rcu_dereference(sdata->vif.chanctx_conf);
-+	if (unlikely(!chanctx_conf))
-+		goto out_free;
-+	info->band = chanctx_conf->def.chan->band;
-+
- 	info->flags |= IEEE80211_TX_CTL_HW_80211_ENCAP;
- 	info->control.vif = &sdata->vif;
- 
+ 	usb_put_hcd(hcd);
 -- 
 2.53.0
 
