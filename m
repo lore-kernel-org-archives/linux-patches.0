@@ -1,51 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793211652;
-	b=0Vnc3y5W5eVYmZU6yKslTDjxIqkGyyJnfsJ+MlRd8LyoFc/zH6t1HAPqvRWlr/CyjVsB
-	 vKYGAuLUywGRaxMS9Exf+m8gkS9/Vhxz7JPkZQYxzA/Mlo+Gv9av7eI15SE9boFeCZygD
-	 Ln4ghNgu2NBSaNNk4uRHe9gse15sUwsx8XevaYk9rCyefd9BQoM2YKucf58hbXsg4C9nL
-	 nCDc0D5/EGXMywuOPvyUCm8EvgvD6LiQSM9d+crSx6wY4lxsYHddRgSL44kN/FedR7f4d
-	 j6X6skQsSL37Y06sVlqcIk3Z+1788DcrGF2hn8cotMVQ0q9IcrUEe+cZxj0/8Cu3G9g==
+	t=1793211655;
+	b=kxuuSzlcxixuzMKUUhy5c/kQt6Qsvl/E93jBrTzDnHhd+rGcwPCK4jvKB0dyxK+k6+Kd
+	 iVpnp35b84I5U3VDsiMgVX6wfJ+dlSDZNpIyHY93KNjQbIhEBSneNVGffg75RdYOLOEcA
+	 +WNuGL55mtrO+m55VK8V9tUE6WPpNTOxcedNzIKgKyvcUlA753pie/PbMoi2CE1pPAntP
+	 HWTFOO1l9SbrYzhXQVDCyr4jXo0ZazrayzIstvgARaeqpSMxLau5SyslJuEIeoceRCVyY
+	 kCv/zEPF+dSe39fIUzc+DhRvFlm/uPD/3XPopvSvuhEQ7X1nFGWunuw6OosZUuj3MiA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793211652;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793211655;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=VZ/keiFsGztNhXoJ8L45zbYRBIS+BRYd1n7ckd6DmGU=;
-	b=LpzZMKwf0PD7OzTWlktIGHdge43W+TVoEmibRI6OOtVFe20BfkatUfYogThmQPKIxxwj
-	 5cvx6VlIfBveh0jjksJnmdN4pIAutJphXvF1pL1ug2cB0oGa3PisuGVE41SV+Kigw2dfj
-	 QeoqNHhScMuEwtACEy2K7enXqMf/R8m5umSGNWJelWUoFqZWGCiWAWZ+/cM3+7C5bSIIj
-	 F/sxqE0Ac9Mg4WrxAolvLjjyTg8lzys3j9fdHOOLJUhUWh5UlLs1sdXH3+wPFeolqQslI
-	 k2paERtdALfdmhBNaNeilKQum/KXnlvn++FTUuJxZBiavRS1ksZdwSch6CdT6lmtU7g==
+	bh=1R2Bu7mQcOiHovj/jiNrx8QTaOSwwTifHhoo9d5rILY=;
+	b=Tx9a3h3AIjID952iKdLo8I+8lHBi/DePQURS0kTO+20fpcwaRB8frsseQ0ihfUMLp+im
+	 mu6HPCb46C+gOigbVXFn1F+MUKOkGD2jYzt0jL4o5GtzKdubjUWEqscQKeo6o7LT3DF+M
+	 OdRsHkALGNSO48FuKegtHddglAz7t9MnH9DeWKlmfO/oA/CLCS1k5ZrM5Z6g9wrznH6q9
+	 NwqlwlKTOcLDjWbsP7GfDRKcV8rDBbH69oTj4SCnNolBAVI9na63fHXBSbI8AMvuwPFgM
+	 RTOryzeiI/ybSwzGhKtKjw3QjpCV2oB8y6Rdjilg43A3NBowCd66CQnPzZSd6wGjJRA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TuVS4c0g;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C1V8UV2i;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89E24606A31A;
-	Wed, 28 Oct 2026 18:20:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56C68606A31A;
+	Wed, 28 Oct 2026 18:20:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TuVS4c0g
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8FA01F01828;
-	Wed, 28 Oct 2026 18:20:51 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C1V8UV2i
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9A161F01825;
+	Wed, 28 Oct 2026 18:20:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793211652;
-	bh=VZ/keiFsGztNhXoJ8L45zbYRBIS+BRYd1n7ckd6DmGU=;
+	s=korg; t=1793211655;
+	bh=1R2Bu7mQcOiHovj/jiNrx8QTaOSwwTifHhoo9d5rILY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TuVS4c0grFxDoyEAKvYjHyJnIRmv3oGg/QijQ06NTg1sAkSZHB5Xr6dxjOK6I88WE
-	 Snf8OfJ2Wa3g0noHBjuXdRlFZnCfUuvwnHQc2mcHF72CxLTKgpAk/te6/FC5BT6foJ
-	 YF7GOsw+LWrpcWMDFN9/OCJvrSDOrIIrhl0vsCmI=
+	b=C1V8UV2iUMkzr7uhpLsS36xoAQsi0YXRIBpxOOxRyNKqLK5ZasH27faYPvhNTWIFi
+	 PYHgYNMeFv9wNDLDmawjgWefFDrYYStJGMczh+M/DkasuG27Np6114X9IgFA7X5gfl
+	 cfsJGYdZmGgUk8SP0LF6Y81jJUlTMgOAeFhHTMP4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Adrian Betschart <adrian.betschart@cinemaone.ch>,
+	Dan Wheeler <daniel.wheeler@amd.com>,
+	Roman Li <roman.li@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 452/571] namespace: handle mount locking for automounts correctly
-Date: Wed, 28 Oct 2026 17:59:59 +0100
-Message-ID: <20261028170018.752025745@linuxfoundation.org>
+Subject: [PATCH 5.15 417/571] drm/amd/display: Dont replace a sink mode that shares the native totals
+Date: Wed, 28 Oct 2026 17:59:24 +0100
+Message-ID: <20261028170017.905634422@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -67,94 +70,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Adrian Betschart <adrian.betschart@cinemaone.ch>
 
-[ Upstream commit 33aadc7c72055fca93cb5a3691d836ebf8b31c9b ]
+commit 54c998c55fc9cbc391b350d67b86e0c2a0748f1a upstream.
 
-If mounts are propagated across user namespaces, attach_recursive_mnt()
-locks every copy of the source mount to protect overmounts from
-vanishing and revealing the underlying files or directories.
+decide_crtc_timing_for_drm_display_mode() copies the native mode's CRTC
+timing into the requested mode when clock, htotal and vtotal match.
+That is meant for the modes amdgpu inserts itself:
+amdgpu_dm_create_common_mode() duplicates the native mode and changes
+only hdisplay and vdisplay, so those are sent with the native timing
+and scaled.
 
-The user namespace is taken from the caller's mount namespaces since
-this is where the mounts end up. Except, that's not always true.
-Automounts may legitimately get popped in by tasks located in a
-different mount and user namespace during path lookup.
+A sink can also offer a real mode with the same clock and totals as
+its native mode. CTA-861 VIC 102 (4096x2160@60) and VIC 97
+(3840x2160@60) both use 594 MHz and 4400x2250. With 3840x2160@60 as
+the preferred mode, a 4096x2160@60 request goes out with the 3840x2160
+timing and the framebuffer scaled into it (dst 3840x2025 at y=67),
+while the AVI InfoFrame still carries VIC 102. A JVC projector then
+reports 3840x2160 and shows a corrupted right edge. 4096x2160@24,
+whose totals differ, is sent and displayed correctly.
 
-Then check doesn't make sense at that point. The copy in the namespace
-of the parent - which may be the host's - is now locked and the host
-cannot change the flags of its own mounts anymore.
+Inserted modes keep the native sync positions; a real mode with its
+own active width does not. Compare those too, so only inserted modes
+are patched.
 
-Here's the reproducer:
-
-- host has debugfs mounted nosuid,nodev,noexec and shared
-- tracefs automount below it is not yet active
-- hand a child process a directory descriptor on that mount
-- child process enters auser and mount namespace
-- child process' namespace now holds a locked copy of the host's debugfs
-  mount that receives propagation from it
-- child process stats "tracing/." through the descriptor
-- lookup runs on the host's mount so the automount lands below the host's mount
-- propagation puts a copy below the child's copy
-- both try to clear the flags on the mount they got, with a bind remount:
-
-    host, on its own automount:            MS_REMOUNT|MS_BIND = EPERM
-    child, on the copy in its namespace:   MS_REMOUNT|MS_BIND = 0
-
-So the lock landed on the host's mount instead of the child's copy.
-Congrats. So we need to compare with the owner of the namespace the
-mount actually gets mounted on. For all regular cases that is the
-caller's mount namespace and so nothing changes.
-
-Detached trees in anonymous mount namespaces by be handed over via
-SCM_RIGHTS or inherited in other ways on purpose so the attaching task's
-mount namespace is authoritative, not the creator of the detached tree.
-
-Fixes: 132c94e31b8b ("vfs: Carefully propogate mounts across user namespaces")
+Fixes: 4562236b3bc0 ("drm/amd/dc: Add dc display driver (v2)")
+Signed-off-by: Adrian Betschart <adrian.betschart@cinemaone.ch>
+Assisted-by: Claude-Code:claude-opus-5-5
+Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
+Reviewed-by: Roman Li <roman.li@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 22f9a2da101c37f821cd00954f81dc598754f4d5)
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20261002-work-mount-fixes-4-v1-6-dd44b89d44ce@kernel.org
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
-[ sashal: adjusted context for attach_recursive_mnt() using separate mount and mountpoint arguments instead of pinned_mountpoint ]
+(cherry picked from commit 54c998c55fc9cbc391b350d67b86e0c2a0748f1a)
+[ Adrian: this tree keeps the function in amdgpu_dm.c, with the equal-totals
+  case as its own else-if; added the sync checks there. Dropped the KUnit
+  test, its file does not exist here. ]
+Signed-off-by: Adrian Betschart <adrian.betschart@cinemaone.ch>
+Assisted-by: Claude-Code:claude-opus-5-5
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/namespace.c | 18 +++++++++++++++++-
- 1 file changed, 17 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/fs/namespace.c b/fs/namespace.c
-index 1b79364c27bf5..542ac0d7cc106 100644
---- a/fs/namespace.c
-+++ b/fs/namespace.c
-@@ -2175,14 +2175,30 @@ static int attach_recursive_mnt(struct mount *source_mnt,
- 			struct mountpoint *dest_mp,
- 			bool moving)
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+index 288ef18e70d05..d22c05f68f876 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -6029,11 +6029,16 @@ decide_crtc_timing_for_drm_display_mode(struct drm_display_mode *drm_mode,
+ 					const struct drm_display_mode *native_mode,
+ 					bool scale_enabled)
  {
--	struct user_namespace *user_ns = current->nsproxy->mnt_ns->user_ns;
- 	HLIST_HEAD(tree_list);
- 	struct mnt_namespace *ns = dest_mnt->mnt_ns;
-+	struct user_namespace *user_ns = ns->user_ns;
- 	struct mountpoint *smp;
- 	struct mount *child, *p;
- 	struct hlist_node *n;
- 	int err;
- 
-+	/*
-+	 * A caller in an unprivileged mount namespaces may trigger an
-+	 * automount and propagate locked mounts into privileged mount
-+	 * namespaces. Take ownership from the target mount namespace.
-+	 * It's equivalent for everything but the automount case.
-+	 *
-+	 * Detached trees in anonymous mount namespaces by be handed
-+	 * over via SCM_RIGHTS or inherited in other ways on purpose
-+	 * the attaching task's mount namespace is authoritative, not
-+	 * the creator of the detached tree.
-+	 */
-+	if (is_anon_ns(ns))
-+		user_ns = current->nsproxy->mnt_ns->user_ns;
-+	else
-+		user_ns = ns->user_ns;
-+
- 	/* Preallocate a mountpoint in case the new mounts need
- 	 * to be tucked under other mounts.
- 	 */
++	/* Inserted modes copy the native sync; a sink mode with equal totals may not */
+ 	if (scale_enabled) {
+ 		copy_crtc_timing_for_drm_display_mode(native_mode, drm_mode);
+ 	} else if (native_mode->clock == drm_mode->clock &&
+ 			native_mode->htotal == drm_mode->htotal &&
+-			native_mode->vtotal == drm_mode->vtotal) {
++			native_mode->vtotal == drm_mode->vtotal &&
++			native_mode->hsync_start == drm_mode->hsync_start &&
++			native_mode->hsync_end == drm_mode->hsync_end &&
++			native_mode->vsync_start == drm_mode->vsync_start &&
++			native_mode->vsync_end == drm_mode->vsync_end) {
+ 		copy_crtc_timing_for_drm_display_mode(native_mode, drm_mode);
+ 	} else {
+ 		/* no scaling nor amdgpu inserted, no need to patch */
 -- 
 2.53.0
 
