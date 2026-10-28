@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793211291;
-	b=0o4G4qGeQT2DmEqSZUkSC+4ZJ2WUvMe6CiIli0NaS1/a57HvLF1FAWeMK8kUrnssvufZ
-	 wjMdEbPvWOeAx3+OfpdJSuplWD+w1lNgDa0BaiLUefbb6PgCrbBtAnXJvDrjkQ7v0WCOH
-	 BRGe7KJuZE6mYL2yJbifBk0wdoXq+VpvBHoOO2dbxM94cHAlZEz57C8YKEZhUVPA1pXRX
-	 YBsPH8rU40wUGSoItLXRLd9krLlcJTCsoyQCk6EalHKQ6Dx3uf0RdZ7myruxkTTB8KWVJ
-	 VFIrgwtxgR+R9QiHzPUNF0QQxHWW9XGjv6UJDa3DNQc4WWijmC7KL/DtqKiAJrM6Txg==
+	t=1793211295;
+	b=qrlAGEFR3ZMe8ORL3hqV1XzjEq8kaM+YVwlgHA+AQO3u9UZzp3NFbBo6A7+Z9vO+ZZio
+	 7nr6FM5lBkQwX/QWcn2aZIx11F0Y32Dtl7mF4TpUy5i3MsnT0agpXgDx3pusw+nlSJal4
+	 e361WM1OmrEdwj3BGi4YYPA1rZ8h+GPn+HIAHX4ERJofgsn8q9XwHL1bu3EWelsHQsDgb
+	 PV0N0nw/nZToNyOe/3C5EAhCksN8paW1BqQi7y2SeG4T2ePC89+FiAC57ZY9VtNC5dAwe
+	 kfEacRcovMtOhbSxxQQQgYvSu7jUw3L45iFLjVOCgJ+uFK4Mfs+fC1KjeaFGkFkoNtQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793211291;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793211295;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=p8ETmxA5nDySAHIPr+gSXcO1MTn50T9g682P7WNQkC4=;
-	b=ca64tr2YfbtEGwbEfxEavHysDJifiWOqno7YcaF6r1mHEtB/vEiKd0Stu4lm3jC+falG
-	 IHnnb3b2movEDS5FQyGVPbZNgPmcC1zg1vVsX4sBlgaWa0skIm7XRHgwX1DyKQfaRsAsh
-	 8JQ/HnI1CepdjCR/4b9n7h2/4QMAwJF7jisOKJG6c23GGLXvO30tRItsmHXnm+d0qcCHt
-	 vw11cEoFEYXjLpa+nRiLboIz6o2MUF7PnS7k7nLjYas88lz2mU4iUugTH/WffVsBNKAm5
-	 ak0gZAqTbNLkbS3aiQZPi4kjpgPFBqDvW3/oIkyHQDfyJP7GN7nw6VQcQNhFwuF73AQ==
+	bh=pQVaRwSnqAPRsvhcSah6c3FkA4/6xjb2GC4NuHaniME=;
+	b=y/enKd6dotVmORXRrJIYfMqQ4usqZl0TLUBLkD/CmWpGNg0vkza7/ZhdS1pffl49jRmM
+	 SYdqfoWGOh5E8jTI22fNa1AsdYvr7FAaDkAp81qoDZ3md1QIIaQ1cu9dd7LD2ljKn2uCX
+	 dgwB7AXZR5JYYT2MyjYv1K6PB2A+1CN4bxkWDgZJU0ZHDWT4Tj15U5kc5sZXle8IjU0+O
+	 3OtpMMuQhICCQuRFVw+C639eL+WnFxW/BFeKcwFLgEaJYemfBOriiUL/8SMggTU3RmnvL
+	 xhCFhTiemsj5BKg+9r80X/+oQ6E5/jH70wKAWyNz/K60ToqDSBb6cFGPWUSTzkQkYPw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jkRWS3i3;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oez4TVk0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 846B760A383F;
-	Wed, 28 Oct 2026 18:14:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61D9B60A2622;
+	Wed, 28 Oct 2026 18:14:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jkRWS3i3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D59441F01825;
-	Wed, 28 Oct 2026 18:14:50 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oez4TVk0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFE7C1F01828;
+	Wed, 28 Oct 2026 18:14:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793211291;
-	bh=p8ETmxA5nDySAHIPr+gSXcO1MTn50T9g682P7WNQkC4=;
+	s=korg; t=1793211294;
+	bh=pQVaRwSnqAPRsvhcSah6c3FkA4/6xjb2GC4NuHaniME=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jkRWS3i3m833MwyDWEEBdA6SRLM9FQjtuEYLb7efNTDK4s1ORaLRz48KG4ayoeCAV
-	 l3FuLwEjiB1HZo93UGwCNl/oeHJv69B6ofhjeLe4Bl756O8TabaPysPDdRCRBaa3kN
-	 sCNAtZcGBdlrurZfzYVzrqWYPr+IePUtjqV1Cw+M=
+	b=oez4TVk0VePOdDKbRhsyhEt5In6xs5kYfjK4qjBSLP+3UjlqwrJ5RURqFr0P7F/Cp
+	 38klHVJLJ7vw5z+nSSaE60sUel8l9o59FgbNsT91gMrfddmdR8mIf7cMfx+88vDhia
+	 6qVzDnCh8T2GejwfPeVpiyLMcvT7KbMyTJG/Jycs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Stern <stern@rowland.harvard.edu>,
-	Johan Hovold <johan@kernel.org>,
+	Stefan Fleischmann <sfle@kth.se>,
+	Eric Dumazet <edumazet@google.com>,
+	Michael Chan <michael.chan@broadcom.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 327/571] USB: serial: fix driver deregistration order
-Date: Wed, 28 Oct 2026 17:57:54 +0100
-Message-ID: <20261028170015.763844697@linuxfoundation.org>
+Subject: [PATCH 5.15 328/571] bnxt_en: fix DMA mapping length for padded small packets
+Date: Wed, 28 Oct 2026 17:57:55 +0100
+Message-ID: <20261028170015.788154071@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -68,101 +70,146 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Eric Dumazet <edumazet@kernel.org>
 
-[ Upstream commit 646e5b28b4fdbc1b828a2398d6ced2c1dd308a46 ]
+[ Upstream commit a51d233ccd4889aadb71dace863525cc2b00271e ]
 
-USB serial driver modules register one driver for the USB bus and one or
-more drivers for the ports on the USB serial bus.
+Stefan Fleischmann reported Intel IOMMU DMA Read faults on BCM57412
+NetXtreme-E NICs when transmitting packets on VLAN/macvlan interfaces:
 
-When unloading a driver module, the USB driver must be deregistered
-before the USB serial bus drivers so that I/O is stopped before
-unbinding the ports to avoid use-after-free in completion handlers
-accessing port data.
+  DMAR: [DMA Read NO_PASID] Request device [18:00.0] fault addr 0xfc499000
+        [fault reason 0x06] PTE Read access is not set
+  bnxt_en 0000:18:00.0 eno1np0: Abandoning msg {0xb4 0x41a} len: 0 due to firmware status: 0x2000001
+  ...
+  NETDEV WATCHDOG: eno1np0 (bnxt_en): transmit queue 0 timed out
 
-Note that the "new_id" attributes must first be removed to prevent new
-ids from being added and triggering a probe of the USB driver after it
-has been deregistered.
+The fault address (0xfc499000) is on an exact 4KB page boundary,
+pointing to a DMA read buffer overrun.
 
-Fixes: 765e0ba62613 ("usb-serial: new API for driver registration")
-Cc: stable@vger.kernel.org	# 3.4
-Cc: Alan Stern <stern@rowland.harvard.edu>
-Signed-off-by: Johan Hovold <johan@kernel.org>
+In bnxt_start_xmit(), packets smaller than BNXT_MIN_PKT_SIZE (52 bytes),
+such as 42-byte untagged ARP frames, are padded:
+
+    if (length < BNXT_MIN_PKT_SIZE) {
+        pad = BNXT_MIN_PKT_SIZE - length;
+        if (skb_pad(skb, pad))
+            goto tx_kick_pending;
+        length = BNXT_MIN_PKT_SIZE;
+    }
+
+    mapping = dma_map_single(&pdev->dev, skb->data, len, DMA_TO_DEVICE);
+    ...
+    dma_unmap_len_set(tx_buf, len, len);
+
+However, 'len' was initialized earlier to skb_headlen(skb) (e.g. 42 bytes)
+and is left unadjusted after padding. Consequently, dma_map_single() and
+dma_unmap_len_set() map and track only 42 bytes.
+
+Later, the hardware TX buffer descriptor is programmed with the padded length:
+
+    txbd->tx_bd_len_flags_type =
+        cpu_to_le32(((len + pad) << TX_BD_LEN_SHIFT) | flags |
+                    TX_BD_FLAGS_PACKET_END);
+
+The NIC DMA engine is thus instructed to read 52 bytes from a region where
+only 42 bytes were DMA-mapped. If skb->data ends near the boundary of a 4KB
+page (within 'pad' bytes of the next page), the hardware DMA read overruns
+into the unmapped adjacent page, triggering an IOMMU fault.
+
+This issue was exposed after commit 447cbe95ebb9 ("vlan: fix skb_under_panic
+and races when toggling HW VLAN offload") because reserving extra VLAN
+headroom rounded LL_RESERVED_SPACE from 48 up to 64 bytes, shifting skb->data
+offsets and potentially causing small frames to land right against page
+boundaries.
+
+Fix this by using skb_put_padto(skb, BNXT_MIN_PKT_SIZE) in
+bnxt_start_xmit(), before skb_shinfo(skb)->nr_frags is sampled,
+because padding might linearize the skb.
+This ensures skb->len and skb_headlen(skb) reflect the padded size so
+that dma_map_single() maps the full buffer and the descriptor length is
+consistent. This also removes the temporary 'pad' variable and masking logic.
+
+The padding is done after the SW USO branch, otherwise
+bnxt_sw_udp_gso_xmit() would account the padding as UDP payload
+and send it in extra segments.
+
+Note that SW USO segments are still not padded: with IPv4, a segment
+carrying less than 10 bytes of UDP payload (small gso_size, or a short
+last segment) is sent as a frame shorter than BNXT_MIN_PKT_SIZE.
+This is a separate issue, left for a followup patch.
+
+Fixes: c0c050c58d84 ("bnxt_en: New Broadcom ethernet driver.")
+Cc: stable@vger.kernel.org
+Reported-by: Stefan Fleischmann <sfle@kth.se>
+Closes: https://lore.kernel.org/netdev/20261004122616.56714cbd@nargothrond/
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Michael Chan <michael.chan@broadcom.com>
+Link: https://patch.msgid.link/20261007051747.455273-1-edumazet@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+
+[ sashal: Dropped the SW USO and fragment linearize context, which this tree does not have. ]
+
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/serial/bus.c        |    4 ++++
- drivers/usb/serial/usb-serial.c |   21 ++++++++++++++++++---
- include/linux/usb/serial.h      |    1 +
- 3 files changed, 23 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/broadcom/bnxt/bnxt.c | 23 ++++++++++-------------
+ 1 file changed, 10 insertions(+), 13 deletions(-)
 
---- a/drivers/usb/serial/bus.c
-+++ b/drivers/usb/serial/bus.c
-@@ -171,3 +171,7 @@ void usb_serial_bus_deregister(struct us
- 	free_dynids(driver);
- }
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+index 9ea0d6e78ca6d..8fb7b98232706 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+@@ -439,7 +439,7 @@ static netdev_tx_t bnxt_start_xmit(struct sk_buff *skb, struct net_device *dev)
+ 	struct netdev_queue *txq;
+ 	int i;
+ 	dma_addr_t mapping;
+-	unsigned int length, pad = 0;
++	unsigned int length;
+ 	u32 len, free_size, vlan_tag_flags, cfa_action, flags;
+ 	u16 prod, last_frag;
+ 	struct pci_dev *pdev = bp->pdev;
+@@ -458,6 +458,14 @@ static netdev_tx_t bnxt_start_xmit(struct sk_buff *skb, struct net_device *dev)
+ 	txr = &bp->tx_ring[bp->tx_ring_map[i]];
+ 	prod = txr->tx_prod;
  
-+void usb_serial_bus_remove_new_id(struct usb_serial_driver *driver)
-+{
-+	driver_remove_file(&driver->driver, &driver_attr_new_id);
-+}
---- a/drivers/usb/serial/usb-serial.c
-+++ b/drivers/usb/serial/usb-serial.c
-@@ -1530,7 +1530,7 @@ int usb_serial_register_drivers(struct u
- {
- 	int rc;
- 	struct usb_driver *udriver;
--	struct usb_serial_driver * const *sd;
-+	struct usb_serial_driver * const *sd, * const *s;
- 
- 	/*
- 	 * udriver must be registered before any of the serial drivers,
-@@ -1582,9 +1582,11 @@ int usb_serial_register_drivers(struct u
- 	return 0;
- 
- err_deregister_drivers:
-+	for (s = serial_drivers; s < sd; ++s)
-+		usb_serial_bus_remove_new_id(*s);
-+	usb_deregister(udriver);
- 	while (sd-- > serial_drivers)
- 		usb_serial_deregister(*sd);
--	usb_deregister(udriver);
- err_free_driver:
- 	kfree(udriver);
- 	return rc;
-@@ -1602,10 +1604,23 @@ EXPORT_SYMBOL_GPL(usb_serial_register_dr
- void usb_serial_deregister_drivers(struct usb_serial_driver *const serial_drivers[])
- {
- 	struct usb_driver *udriver = (*serial_drivers)->usb_driver;
-+	struct usb_serial_driver * const *sd;
-+
-+	/*
-+	 * udriver must be deregistered before the serial drivers so that
-+	 * I/O is stopped before unbinding the ports.
-+	 *
-+	 * Remove the new_id attributes to prevent ids from being added and
-+	 * triggering a probe of udriver after it has been deregistered.
++	/* Must be done before skb_shinfo(skb)->nr_frags is sampled,
++	 * because skb_put_padto() might linearize the skb.
 +	 */
-+	for (sd = serial_drivers; *sd; ++sd)
-+		usb_serial_bus_remove_new_id(*sd);
++	if (skb_put_padto(skb, BNXT_MIN_PKT_SIZE)) {
++		/* SKB already freed. */
++		goto tx_kick_pending;
++	}
 +
-+	usb_deregister(udriver);
+ 	free_size = bnxt_tx_avail(bp, txr);
+ 	if (unlikely(free_size < skb_shinfo(skb)->nr_frags + 2)) {
+ 		/* We must have raced with NAPI cleanup */
+@@ -586,14 +594,6 @@ static netdev_tx_t bnxt_start_xmit(struct sk_buff *skb, struct net_device *dev)
+ 	}
  
- 	for (; *serial_drivers; ++serial_drivers)
- 		usb_serial_deregister(*serial_drivers);
--	usb_deregister(udriver);
-+
- 	kfree(udriver);
- }
- EXPORT_SYMBOL_GPL(usb_serial_deregister_drivers);
---- a/include/linux/usb/serial.h
-+++ b/include/linux/usb/serial.h
-@@ -382,6 +382,7 @@ void usb_serial_handle_dcd_change(struct
+ normal_tx:
+-	if (length < BNXT_MIN_PKT_SIZE) {
+-		pad = BNXT_MIN_PKT_SIZE - length;
+-		if (skb_pad(skb, pad))
+-			/* SKB already freed. */
+-			goto tx_kick_pending;
+-		length = BNXT_MIN_PKT_SIZE;
+-	}
+-
+ 	mapping = dma_map_single(&pdev->dev, skb->data, len, DMA_TO_DEVICE);
  
- int usb_serial_bus_register(struct usb_serial_driver *device);
- void usb_serial_bus_deregister(struct usb_serial_driver *device);
-+void usb_serial_bus_remove_new_id(struct usb_serial_driver *driver);
+ 	if (unlikely(dma_mapping_error(&pdev->dev, mapping)))
+@@ -668,10 +668,7 @@ static netdev_tx_t bnxt_start_xmit(struct sk_buff *skb, struct net_device *dev)
+ 		txbd->tx_bd_len_flags_type = cpu_to_le32(flags);
+ 	}
  
- extern struct bus_type usb_serial_bus_type;
- extern struct tty_driver *usb_serial_tty_driver;
+-	flags &= ~TX_BD_LEN;
+-	txbd->tx_bd_len_flags_type =
+-		cpu_to_le32(((len + pad) << TX_BD_LEN_SHIFT) | flags |
+-			    TX_BD_FLAGS_PACKET_END);
++	txbd->tx_bd_len_flags_type |= cpu_to_le32(TX_BD_FLAGS_PACKET_END);
+ 
+ 	netdev_tx_sent_queue(txq, skb->len);
+ 
+-- 
+2.53.0
+
 
 
