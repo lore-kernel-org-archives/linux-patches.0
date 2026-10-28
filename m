@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215355;
-	b=WspkvES67XjG4eI95WAwfIYQAziv8inxaJr6UxOhy4kq4wEJhcDnGGPiOYgrmCaBjMX9
-	 1zVYd017bSClPILgp5nyrDyNYwIW68v1e/1SOoXLyrLp/BDTChwM9DxVcqZLASdFqobj1
-	 8n4AIhvJBHd0qSv8zlAoAl6m0xMsQbhpYKKqR4EX5Z1FqLGa+yJUEiVV3TGRDGalIGxzp
-	 ZLLqNJKymLANLqMwROeRm6YPwI0/RRulcFYV9q0nHU0VytR/zRHFgbmuWyf5UqtaqDG5a
-	 mX5zpMhFZ9hYjDekFwQ5FkaMByTKrPu3aaqLg8M9AyFhp0pOfjeNabEXeupRIRw8Ifg==
+	t=1793215358;
+	b=1e9V/DQuNqA07v2MDWiagXAg677mb6ik47MNfXd3lr7cOekdLv+tJUycYaZ1hkRSCGoM
+	 ltAQ4T3Z1mWuoVMwCKfWs46rphWxLEMNXMrsKvaZwfTyQo2JhDkevE6Po7OtU8aJnzMr9
+	 BYY963y3U3HqLesCV8GVur6s9YXEhpSwgh0MOqmnf/Mpa9RjbMZp9taVxLMWKk1j/NQkL
+	 LtB3gE8ieJsZpUlxO/iOyE3i952tLKVR9tjsmiMI18FKQRPbmlbkaj7oyJXow2b18sBlF
+	 fQrmlSWiDH5/mrzrsttIM1Xu4ELkV7KuRWPakD3p8vr2xw1ObqAYj/PhG6uzk7xuPpA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215355;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215358;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=YvXkYvzUTPYrkjmRRA+j1N7yM5ed4QacFMjDQhv29FM=;
-	b=p2qUh1vNYqN0t+yOg4MORMcrF1w1+3/xYVmIxEWFNEz17xzzJskclOguGyB8QDb948W7
-	 qv5xP7wvxd1UbEdR/EnIefkJs0Mk9nUsBKV1wHbWSnBR1aIwAyC9ezbp4ijpAs3fH3r1/
-	 Z5JC73tBot+/8vmNHgmYuenrDhgH88WZLBB0+LlDXh2mBLLGimMrkbefp3YXM6gefpbBa
-	 63EvgNTrfq3j6nIZcobWiMf5ckR1zgKhCQ6KpPq3KVyLJnlBAYDIu1aFtM7LdxMSuQcEV
-	 zTcIp1pviOA3vt5Mw+WrMha5L7f+j6z+a/mVH/XhEFSHwg6Y8c6KKIJisOgIkrMd/Bg==
+	bh=STGZcNV3gP93CjfzKn39HdI9HKMRPA6OkMl0K181qaQ=;
+	b=usQLWoAIISlWJNs0TQx6ARD1RY+q5ZNj28okDd8QTganYxisvjxH5GwkP2RtfL3mK1w/
+	 5HwcwTHFY4gjYyByEv8cnb18oJHKbn+KfXwzs4DUB/43QceNn0bhvgbm0Q+wBZqW2Nfg0
+	 yndMGjqC5JYUQGINTxJMnUUOHbYyqogFtBF5mXhPWLAsUW8pkZ3nivVJo0IoJfoW8igil
+	 kKQGoEmiKULWJXZ4jPXMDaCCqia0/MfR+WmQNvnJnAbiMqMlDiQ0XoSY9QvBNdWk3csGC
+	 yCIbB5fHw3A25KBWq2ukN12NQnL//E6ATsaXHa7ptifc8fE5AiR3c6N1sAK1dG7J8RA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=itti0Tv3;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nZezei87;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 323F5606A31A;
-	Wed, 28 Oct 2026 19:22:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07DE5606A320;
+	Wed, 28 Oct 2026 19:22:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=itti0Tv3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82F881F01825;
-	Wed, 28 Oct 2026 19:22:34 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nZezei87
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 591C71F031E1;
+	Wed, 28 Oct 2026 19:22:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215355;
-	bh=YvXkYvzUTPYrkjmRRA+j1N7yM5ed4QacFMjDQhv29FM=;
+	s=korg; t=1793215357;
+	bh=STGZcNV3gP93CjfzKn39HdI9HKMRPA6OkMl0K181qaQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=itti0Tv3pNUTdosZZECNczJ/L5iw4S9y0v309aG07Bf3oN0ssQNuK9RBHZgNWSu+h
-	 nvAYmzTr4HZmu5g7vzvh7wAD1/C1wS8XByPinEk4d0ImbehS3p8Oo8iPgImQyc32YF
-	 gsGw3iLjRRri28EqFGCsHyyfet7gvK5A6mdd2RM0=
+	b=nZezei87My6MpbOMDEiRYzY7H/bWthfsQCfJpwHh4n66Cr0nnAOMPr5MzQin7D1b8
+	 n7Cl6DNwTwU5RwoQDfo9DwNXBe4Jmzl3TH47Jtdn1jHRL41xMfg5xtwk2D/bskJOpW
+	 x+xgr2ypnn6MekjS7ZsADXv3XeF5Sc80ebl9wb/8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiajia Liu <liujiajia@kylinos.cn>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Jia Zhu <zhujia.zj@bytedance.com>,
+	Gao Xiang <hsiangkao@linux.alibaba.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1139/1887] Bluetooth: btmtk: fix urb->setup_packet leak in error paths
-Date: Wed, 28 Oct 2026 17:53:55 +0100
-Message-ID: <20261028170525.326896349@linuxfoundation.org>
+Subject: [PATCH 6.1 1140/1887] erofs: fix metabuf leak in inode xattr initialization
+Date: Wed, 28 Oct 2026 17:53:56 +0100
+Message-ID: <20261028170525.349100526@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,41 +68,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiajia Liu <liujiajia@kylinos.cn>
+From: Jia Zhu <zhujia.zj@bytedance.com>
 
-[ Upstream commit dd1dda6b8d6e1f4376a5b3055a04f0ecbdb4d6bd ]
+[ Upstream commit 79b09c54c6563df9846ca3094bcfd72082c3e1d7 ]
 
-The setup_packet of control urb is not freed if usb_submit_urb fails or
-the submitted urb is killed. Add free in these two paths.
+commit bb88e8da0025 ("erofs: use meta buffers for xattr operations")
+converted xattr operations to use on-stack erofs_buf instances.
+erofs_init_inode_xattrs() uses such a metabuf while reading the inline
+xattr header and shared xattr id array.
 
-Fixes: a1c49c434e150 ("Bluetooth: btusb: Add protocol support for MediaTek MT7668U USB devices")
-Signed-off-by: Jiajia Liu <liujiajia@kylinos.cn>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Some error paths after erofs_read_metabuf() leave through out_unlock
+without dropping the metabuf, so the folio reference can leak.
+
+Consolidate the cleanup at out_unlock. erofs_put_metabuf() is a
+no-op if no folio has been acquired, and this keeps all paths after
+taking EROFS_I_BL_XATTR_BIT covered by a single cleanup site.
+
+Fixes: bb88e8da0025 ("erofs: use meta buffers for xattr operations")
+Signed-off-by: Jia Zhu <zhujia.zj@bytedance.com>
+Reviewed-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Fixes: bb88e8da0025 ("erofs: use meta buffers for xattr operations")
+Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btusb.c | 2 ++
- 1 file changed, 2 insertions(+)
+ fs/erofs/xattr.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index 3ffe8e3bcac9a..5196731ce892e 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -2562,6 +2562,7 @@ static void btusb_mtk_wmt_recv(struct urb *urb)
- 		return;
- 	} else if (urb->status == -ENOENT) {
- 		/* Avoid suspend failed when usb_kill_urb */
-+		kfree(urb->setup_packet);
- 		return;
+diff --git a/fs/erofs/xattr.c b/fs/erofs/xattr.c
+index 7c09ad1beb839..05e5733d78597 100644
+--- a/fs/erofs/xattr.c
++++ b/fs/erofs/xattr.c
+@@ -35,6 +35,7 @@ static int init_inode_xattrs(struct inode *inode)
+ 		return 0;
  	}
  
-@@ -2635,6 +2636,7 @@ static int btusb_mtk_submit_wmt_recv_urb(struct hci_dev *hdev)
- 		if (err != -EPERM && err != -ENODEV)
- 			bt_dev_err(hdev, "urb %p submission failed (%d)",
- 				   urb, -err);
-+		kfree(dr);
- 		usb_unanchor_urb(urb);
++	it.buf = __EROFS_BUF_INITIALIZER;
+ 	if (wait_on_bit_lock(&vi->flags, EROFS_I_BL_XATTR_BIT, TASK_KILLABLE))
+ 		return -ERESTARTSYS;
+ 
+@@ -67,7 +68,6 @@ static int init_inode_xattrs(struct inode *inode)
+ 		goto out_unlock;
  	}
  
+-	it.buf = __EROFS_BUF_INITIALIZER;
+ 	it.blkaddr = erofs_blknr(sb, erofs_iloc(inode) + vi->inode_isize);
+ 	it.ofs = erofs_blkoff(sb, erofs_iloc(inode) + vi->inode_isize);
+ 
+@@ -83,7 +83,6 @@ static int init_inode_xattrs(struct inode *inode)
+ 	vi->xattr_shared_xattrs = kmalloc_array(vi->xattr_shared_count,
+ 						sizeof(uint), GFP_KERNEL);
+ 	if (!vi->xattr_shared_xattrs) {
+-		erofs_put_metabuf(&it.buf);
+ 		ret = -ENOMEM;
+ 		goto out_unlock;
+ 	}
+@@ -110,13 +109,13 @@ static int init_inode_xattrs(struct inode *inode)
+ 			le32_to_cpu(*(__le32 *)(it.kaddr + it.ofs));
+ 		it.ofs += sizeof(__le32);
+ 	}
+-	erofs_put_metabuf(&it.buf);
+ 
+ 	/* paired with smp_mb() at the beginning of the function. */
+ 	smp_mb();
+ 	set_bit(EROFS_I_EA_INITED_BIT, &vi->flags);
+ 
+ out_unlock:
++	erofs_put_metabuf(&it.buf);
+ 	clear_and_wake_up_bit(EROFS_I_BL_XATTR_BIT, &vi->flags);
+ 	return ret;
+ }
 -- 
 2.53.0
 
