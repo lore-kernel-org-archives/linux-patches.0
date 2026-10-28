@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213468;
-	b=w8KWLK8pIvAxCars1VYhAC+vILiA1Ga90W1n5t/xGRzIvypBSK8R95ygOKXacHiJO2SV
-	 9pnBK6oeqsBGeB0FpAaS6EUuy8oroSIK9NAwSoyWfs9VBsOWscP7zbg1OIwbYZoJzZLre
-	 mWWL6FNfND/tu+6L+bf7nrLCraSCcLOBjwf84soKkfMDavE/oX1AGNf2MFY7obvZw/e62
-	 +sC6NJxrdlMdFcgVMnB1kSFS3F18LUf0CLu+N8tosnm/c/o2zDKksyKBgCD7cut1PkLJf
-	 cJw4Jw8OotCizEzl/K6ZzMdaWo8KRJUpZp6OVEep5zzClJr9t9YBqjAfnmPwiQxEs1w==
+	t=1793213476;
+	b=jPFfAY/cTDZ0sPjD3JzuLF7hjN1KDjxUzfuFpD2czG790Zx0Y/pCKTknzPf8PEh8Xsed
+	 JI1cdLHXAyeHq0Ck/jEhoiVlvNAZwhOOVq5rELl9y7v75XmEJaWEzZtqghpnjGv9L+dEs
+	 ZOteJHobHXMuOoQT0SYXZF4L4+iPJ+TvT+AnxWgrkz3ljnhknyUEqoIzWJkjhRaCzxK24
+	 0kYBy1ylsJ7ZAee/q/za97YsJAl4UlX73MsVMEdY65Kcb8qwlUK99NnBJ91DntGH1FSgA
+	 t0Sf0/ZXe+/IsnzbCf19RhXVXC01BIkdDhwhU7SLp3K2zQhRY360Z/BEgnR3oXmngew==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213468;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213476;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=HOE/SemSK95goGs/ISkHbr+d/PXaH/0NIwHDmknMyCk=;
-	b=26uvTzV/RgG+vR/31efkiuRxoztmlIZxXjL60ZTFb9BajOGqWckdpWNDRyYT8Ds396UX
-	 kuPqSy2SM8c8cueayM7/FQcp6KgFptMr0UTRUWOx+tSOfGukv0PdyGjRmwaVJv2YNigUX
-	 3WxmQFPANhbQL4BMdMElAvGoPDRUpiz/JUn3OCkmLYRYgK9svUcsNOVZ2b0Bmh2mSXrdR
-	 NVzobE3o/UyDC55Es+fHZ4TbSw2Ymww3FCZohpV0RJQpI32iUfsUWgqofeFJ40Yb9OUGn
-	 wC5L0CTUHf4/KSqKR3aVE4hFiKy/0pp+yreN4qdRbbrN5kvkG6YRjWc639Atmo7MgiA==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=wPrpzzhrGEcXi3IMuFJTwsLRX1pwQS1D70lwV0auEso=;
+	b=h6v5gXW2eiSF1TMLxVfGkLNhGeGAClHPf/TmkNMK7uL2xIpmVfJSbDQDi7pdqLOyatK/
+	 QpqaldROhAFMZdlWstWDym06089jIS9XcJ62nSeJuOf4oN8CYvrHwwLf4qSKiIXpGbDab
+	 P9sZmVoSD4Z7vmFannFSOcKGs26dM48+Fhp/aKMl0XRjN3FA03ysZ/SeRLYfpRuLTDz9u
+	 30wKdOQk9Meh3MNjagEU6wAqyTunWLfv5qA494DppU4jXwptX3HB7Ot0pZU5RVULdyy/H
+	 gx+AmNFN94IpjIEVRi6WzQNLrUbAN3UsyIYfRIYY2onG9wJeJMRHkhn0Us29/iawBow==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lbIvfHBj;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TBmMBq0K;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CD15606A31F;
-	Wed, 28 Oct 2026 18:51:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5155606A332;
+	Wed, 28 Oct 2026 18:51:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lbIvfHBj
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFE0E1F01825;
-	Wed, 28 Oct 2026 18:51:06 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TBmMBq0K
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 291441F01829;
+	Wed, 28 Oct 2026 18:51:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213467;
-	bh=HOE/SemSK95goGs/ISkHbr+d/PXaH/0NIwHDmknMyCk=;
+	s=korg; t=1793213475;
+	bh=wPrpzzhrGEcXi3IMuFJTwsLRX1pwQS1D70lwV0auEso=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lbIvfHBj4WI3rQRK2M37Pm5WUz1zOpqMfgwbh4GO18FwyhqpLkgsGkUuUZ08KHuNp
-	 eFEWwjktoqg83wXim/kQcV1Cl0H0JrOjbLgGFFyAcHOFz3YhW8AXaBvg/stR5dt1Kp
-	 tQ/K4wwVoPoXotnXJrtXIVt6wt7fVHcYy54IpmsU=
+	b=TBmMBq0KlryoCOgo0G81U7Zf8kty70T0CFNI4vivKs5XRwuBbVZ+E9bEMdB1MTAaL
+	 uXG3C9BQ3b0I/6oC0MhkRQ3DCe03RNHCsYxY/T/tZMGpWMvd/2fQ6T23AhTEvQALuD
+	 vPrxpdnonoGua2Q9966r3kJbhCIzygbB2LhOdJyI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yazen Ghannam <yazen.ghannam@amd.com>,
-	Vishal Badole <Vishal.Badole@amd.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Ramses de Norre <ramses@well-founded.dev>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	"Jason A. Donenfeld" <Jason@zx2c4.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0515/1887] EDAC/amd64: Mask UMC chip select to the four implemented selects
-Date: Wed, 28 Oct 2026 17:43:31 +0100
-Message-ID: <20261028170511.036568016@linuxfoundation.org>
+Subject: [PATCH 6.1 0518/1887] wireguard: queueing: preserve tstamp_type when encapsulating packet
+Date: Wed, 28 Oct 2026 17:43:34 +0100
+Message-ID: <20261028170511.110430009@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -63,58 +65,84 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Vishal Badole <Vishal.Badole@amd.com>
+From: Ramses de Norre <ramses@well-founded.dev>
 
-[ Upstream commit 7484bc43ba6b8e189b482db5b75e7842890a82b1 ]
+[ Upstream commit 65ab9de4bdd4c05d8277cfc20ae0b9f5aff60897 ]
 
-For DRAM ECC errors, the chip select value can be found in the
-MCA_SYND[ErrorInformation] field.
+Sending traffic through a wireguard tunnel on a host using the fq
+qdisc fills the log with:
 
-ErrorInformation[2:0] was first documented in Zen1. The 3 bit field
-implied that up to 8 chip selects may be used.
+  fq: likely mono tstamp with tstamp_type 0
 
-However, all Zen-based systems have only ever had up to 4 chip selects.
-So only bits [1:0] would contain a valid chip select value.
+An skb carries a timestamp in skb->tstamp and, separately, a
+skb->tstamp_type field recording which clock that timestamp came from.
+The two have to agree.
 
-Future systems are redefining the field to ErrorInformation[1:0]. This
-matches the existing 'up to 4 chip selects' implementations. And it
-frees up the extra bit for other decoding.
+When wireguard encapsulates a packet it calls wg_reset_packet(), which
+clears the fields that must not leak from the inner packet into the
+tunnel packet. It does so in two steps:
 
-Change the current chip select mask from 0x7 to 0x3 to prepare for the
-decode change.
+  skb_scrub_packet(skb, true);
+  memset(&skb->headers, 0, sizeof(skb->headers));
 
-Fixes: 713ad54675fd ("EDAC, amd64: Define and register UMC error decode function")
-Suggested-by: Yazen Ghannam <yazen.ghannam@amd.com>
-Signed-off-by: Vishal Badole <Vishal.Badole@amd.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Yazen Ghannam <yazen.ghannam@amd.com>
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20261002113204.3358815-2-Vishal.Badole@amd.com
-[ sashal: Applied the change in decode_umc_error() instead of the absent umc_get_err_info() helper. ]
+skb_scrub_packet() deliberately keeps skb->tstamp when it holds a
+monotonic timestamp: that value is the time the packet is scheduled to
+be sent, and the qdisc still needs it. The memset then zeroes
+skb->tstamp_type, because that field sits inside the headers group
+while skb->tstamp does not. The packet therefore leaves wireguard
+carrying a monotonic timestamp labelled as a realtime one.
+
+Nothing noticed until commit c4f796c4f16b ("net_sched: sch_fq: convert
+skb->tstamp if not monotonic"): fq used to assume every timestamp was
+monotonic. It now consults tstamp_type, spots the mismatch, warns, and
+falls back to treating the value as monotonic. Pacing still ends up
+correct, so the log spam is the actual problem.
+
+Save tstamp_type before the memset and restore it when encapsulating,
+next to the hash fields that are already carried over this way. When
+decapsulating it stays zeroed, which is right: an incoming packet's
+timestamp is a realtime receive timestamp.
+
+Fixes: d98d58a00261 ("net: Set skb->mono_delivery_time and clear it after sch_handle_ingress()")
+Signed-off-by: Ramses de Norre <ramses@well-founded.dev>
+Reviewed-by: Toke Høiland-Jørgensen <toke@kernel.org>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
+Link: https://patch.msgid.link/20261008130124.724119-3-Jason@zx2c4.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ sashal: Replaced `skb->tstamp_type` with the older `skb->mono_delivery_time` field. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/edac/amd64_edac.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireguard/queueing.h | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/edac/amd64_edac.c b/drivers/edac/amd64_edac.c
-index 2f854feeeb237..7b3d3615de5cd 100644
---- a/drivers/edac/amd64_edac.c
-+++ b/drivers/edac/amd64_edac.c
-@@ -3300,7 +3300,7 @@ static void decode_umc_error(int node_id, struct mce *m)
- 			err.err_code = ERR_CHANNEL;
+diff --git a/drivers/net/wireguard/queueing.h b/drivers/net/wireguard/queueing.h
+index 3ce70db9dd3fe..50ceff8d107ec 100644
+--- a/drivers/net/wireguard/queueing.h
++++ b/drivers/net/wireguard/queueing.h
+@@ -78,12 +78,14 @@ static inline void wg_reset_packet(struct sk_buff *skb, bool encapsulating)
+ 	u8 l4_hash = skb->l4_hash;
+ 	u8 sw_hash = skb->sw_hash;
+ 	u32 hash = skb->hash;
++	u8 mono_delivery_time = skb->mono_delivery_time;
+ 	skb_scrub_packet(skb, true);
+ 	memset(&skb->headers, 0, sizeof(skb->headers));
+ 	if (encapsulating) {
+ 		skb->l4_hash = l4_hash;
+ 		skb->sw_hash = sw_hash;
+ 		skb->hash = hash;
++		skb->mono_delivery_time = mono_delivery_time;
  	}
- 
--	err.csrow = m->synd & 0x7;
-+	err.csrow = m->synd & 0x3;
- 
- 	if (umc_normaddr_to_sysaddr(m->addr, pvt->mc_node_id, err.channel, &sys_addr)) {
- 		err.err_code = ERR_NORM_ADDR;
+ 	skb->queue_mapping = 0;
+ 	skb->nohdr = 0;
 -- 
 2.53.0
 
