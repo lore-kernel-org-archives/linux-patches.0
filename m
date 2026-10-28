@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214875;
-	b=FWfeu8YlE6wzR6P/4j246+yh4x0aEIMPt3s/6017QKuQvoV8l+ESqnFym54kraAgJLaw
-	 IKaU9ep1vMPwzANFmytU4NP07vB31YsemHtmTQUbG//S5yOVvVu7+vfRSWtF6bsCcKrdi
-	 CWA1H4c2zYsGNauz0tv0jibqeXtBRxGHGUAI1s49VvnG9xTFntNl4NlScd59PocluMwDA
-	 DDF/UmcX1qm3Smr+xHZeqE644k3GUsgU2Y2ejUSyZa8h+U0lhOtlbfx/un9TqhPugzyIv
-	 lci00q1lN5AZtkjY5n9Q+6fuU3hBZQeWFhV5tGzJ2/x82leHMkFsgT14j02ZGISpe6w==
+	t=1793214878;
+	b=dNxI8+MzG4M1nx4FpTxTrOpNwaqZPGMoHvAurZ7Ol9iUmpM9wIScKtH5AfC0yvWTC1Yr
+	 8Wo53JfDg3A/75zAnBzWlckA65oGfq3KfcbGdI/Z4b5UtuhV2+ast5SI9Ww4lqoMa95vs
+	 EEQXKhEHDYRRb5k9j0SB0uWrap3/Mj0GvBbxRJ2cuoB+7ZVCIPw07BPWI6O+WTgS6OIvC
+	 uvDyb4zWqqQ+NnO8DVnmDPJk5TBc6G0Tsxqvo4F4jk7y/IFAuYDYFpdmlafzNoblC6oZ4
+	 F9l4jhOy2Zm2pT5srcOTMmZOhJs6dZyzJSY5b621K72N7962SsEYDgy+8MAf3BRxpaQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214875;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214878;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=jzTtA3N9RpKVMOKuQ9BV50Pu8KCZP23KMterif+Gk9s=;
-	b=n2fGYxy+YQ7C2umgNYBzJunDwmRf7xEiN3ZAmQy/lw+PfeuY13dg+o0D571gaXR2ZYDm
-	 QrMTxrvCF29gIXIRuo51PusH5g/I4bOHS4T71fKsiwNhgj4lovep/UwfDaAzFw/1S1tLH
-	 YIfbUOeW+96Khj3fLRx1YCjyiftm3QgAueJX2uS+nk84ib1wwodym3PEJXWUcUWUNDaMQ
-	 8x4GkuOA3kiK5VDxF1+FLz9GvmFNW3MmPCnlMezQAqfLDg/caZcRXgl0bCXfGqRpQ4Kew
-	 c9sppA3FnCdR2rwAqhzrE0zT5i3ASoYZR4MIODz+NrCq7lV3XlL+pw2YECVtB41Q1cQ==
+	bh=/uW7WFm2b7L08msGnMuIya51wCMMtGPMQvUe2jOw804=;
+	b=DpS3cL8/SbAXpfKWgkTfjvLQ9Hzhlc7YSgpwHW9YSO7dXXmTgLdzwIathZBnsSl/Va2Z
+	 Y6Gi61bCI1rMrhQ7+ik6hi/V9SGRBQfp4xD0pLSlvAOM4DsfoWp5GgGeXzJdKrCKwfw2x
+	 oxBByCTaNMWZdXOmUf7l+6Kmt6CyLP+BvlNDuzHfFY2TFXXGm+jUesaLIsdLvxYD0492b
+	 5VsN0wy2IFMO4WC6RiIV7z3Yrcc+uwiVCH6vJrwc7+eIYWNufc9NkLizR27o6IRI7yTrl
+	 IoMTvreq9s6OMZfy9ZNyaVmUOwmrAGomMwYjUhyGIeyDy7Ef/ReuIGYonGzMsIq2fRA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ueK6ykrp;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2vhMV1vV;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72E24606A338;
-	Wed, 28 Oct 2026 19:14:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93349606A337;
+	Wed, 28 Oct 2026 19:14:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ueK6ykrp
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4E041F01825;
-	Wed, 28 Oct 2026 19:14:34 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2vhMV1vV
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E4E91F01825;
+	Wed, 28 Oct 2026 19:14:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214875;
-	bh=jzTtA3N9RpKVMOKuQ9BV50Pu8KCZP23KMterif+Gk9s=;
+	s=korg; t=1793214878;
+	bh=/uW7WFm2b7L08msGnMuIya51wCMMtGPMQvUe2jOw804=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ueK6ykrpgoVMJRj6STljejvg9a3tnxdLnLRU6mNjyaX4Ore6iQyjCWcQI08GZCq6i
-	 FjNxle04VSdSYRrkQ8KNTNm84n6InHnzA2P++JzINrntgajs3B9MYg4R8We/DuKHC9
-	 RrxJgYQ+xQ+YusdpYNvGtnxoJ9DEOKTmCXuDXFxw=
+	b=2vhMV1vVk8ll0Y0qfOAUtOJ8wo0OGe5Xq+QMaopURttqlseGYaqFmc+2+anpJ/pBp
+	 UklvvG9FEnvOXXVCN/JWKOMbjpCJ2p4GujrgSEbS4CFRpk65eywtc7LGTiOrzsqUlW
+	 q+x+o+V0A7h7QeRquPa+VJ/lG29jzVcGUl9s+Rx8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Frank Li <Frank.Li@nxp.com>,
 	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1013/1887] i3c: mipi-i3c-hci: Correct RING_CTRL_ABORT handling in DMA dequeue
-Date: Wed, 28 Oct 2026 17:51:49 +0100
-Message-ID: <20261028170522.468941627@linuxfoundation.org>
+Subject: [PATCH 6.1 1014/1887] i3c: mipi-i3c-hci: Fix race in DMA ring dequeue
+Date: Wed, 28 Oct 2026 17:51:50 +0100
+Message-ID: <20261028170522.492186865@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -71,73 +71,72 @@ Content-Transfer-Encoding: 8bit
 
 From: Adrian Hunter <adrian.hunter@intel.com>
 
-[ Upstream commit b795e68bf3073d67bebbb5a44d93f49efc5b8cc7 ]
+[ Upstream commit 1dca8aee80eea76d2aae21265de5dd64f6ba0f09 ]
 
-The logic used to abort the DMA ring contains several flaws:
+The HCI DMA dequeue path (hci_dma_dequeue_xfer()) may be invoked for
+multiple transfers that timeout around the same time.  However, the
+function is not serialized and can race with itself.
 
- 1. The driver unconditionally issues a ring abort even when the ring has
-    already stopped.
- 2. The completion used to wait for abort completion is never
-    re-initialized, resulting in incorrect wait behavior.
- 3. The abort sequence unintentionally clears RING_CTRL_ENABLE, which
-    resets hardware ring pointers and disrupts the controller state.
- 4. If the ring is already stopped, the abort operation should be
-    considered successful without attempting further action.
+When a timeout occurs, hci_dma_dequeue_xfer() stops the ring, processes
+incomplete transfers, and then restarts the ring.  If another timeout
+triggers a parallel call into the same function, the two instances may
+interfere with each other - stopping or restarting the ring at unexpected
+times.
 
-Fix the abort handling by checking whether the ring is running before
-issuing an abort, re-initializing the completion when needed, ensuring that
-RING_CTRL_ENABLE remains asserted during abort, and treating an already
-stopped ring as a successful condition.
+Add a mutex so that hci_dma_dequeue_xfer() is serialized with respect to
+itself.
 
 Fixes: 9ad9a52cce282 ("i3c/master: introduce the mipi-i3c-hci driver")
 Cc: stable@vger.kernel.org
 Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
 Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260306072451.11131-9-adrian.hunter@intel.com
+Link: https://patch.msgid.link/20260306072451.11131-7-adrian.hunter@intel.com
 Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i3c/master/mipi-i3c-hci/dma.c | 27 +++++++++++++++++----------
- 1 file changed, 17 insertions(+), 10 deletions(-)
+ drivers/i3c/master/mipi-i3c-hci/core.c | 2 ++
+ drivers/i3c/master/mipi-i3c-hci/dma.c  | 2 ++
+ drivers/i3c/master/mipi-i3c-hci/hci.h  | 1 +
+ 3 files changed, 5 insertions(+)
 
+diff --git a/drivers/i3c/master/mipi-i3c-hci/core.c b/drivers/i3c/master/mipi-i3c-hci/core.c
+index 3c5ce4a64f808..b9a6073499ee2 100644
+--- a/drivers/i3c/master/mipi-i3c-hci/core.c
++++ b/drivers/i3c/master/mipi-i3c-hci/core.c
+@@ -751,6 +751,8 @@ static int i3c_hci_probe(struct platform_device *pdev)
+ 	if (IS_ERR(hci->base_regs))
+ 		return PTR_ERR(hci->base_regs);
+ 
++	mutex_init(&hci->control_mutex);
++
+ 	platform_set_drvdata(pdev, hci);
+ 	/* temporary for dev_printk's, to be replaced in i3c_master_register */
+ 	hci->master.dev.init_name = dev_name(&pdev->dev);
 diff --git a/drivers/i3c/master/mipi-i3c-hci/dma.c b/drivers/i3c/master/mipi-i3c-hci/dma.c
-index 2cf4974fffa75..7b13508ccca66 100644
+index 7b13508ccca66..60da4be20c5f2 100644
 --- a/drivers/i3c/master/mipi-i3c-hci/dma.c
 +++ b/drivers/i3c/master/mipi-i3c-hci/dma.c
-@@ -448,16 +448,23 @@ static bool hci_dma_dequeue_xfer(struct i3c_hci *hci,
- 	struct hci_rh_data *rh = &rings->headers[xfer_list[0].ring_number];
- 	unsigned int i;
+@@ -450,6 +450,8 @@ static bool hci_dma_dequeue_xfer(struct i3c_hci *hci,
  	bool did_unqueue = false;
--
--	/* stop the ring */
--	rh_reg_write(RING_CONTROL, RING_CTRL_ABORT);
--	if (wait_for_completion_timeout(&rh->op_done, HZ) == 0) {
--		/*
--		 * We're deep in it if ever this condition is ever met.
--		 * Hardware might still be writing to memory, etc.
--		 */
--		dev_crit(&hci->master.dev, "unable to abort the ring\n");
--		WARN_ON(1);
-+	u32 ring_status;
-+
-+	ring_status = rh_reg_read(RING_STATUS);
-+	if (ring_status & RING_STATUS_RUNNING) {
-+		/* stop the ring */
-+		reinit_completion(&rh->op_done);
-+		rh_reg_write(RING_CONTROL, RING_CTRL_ENABLE | RING_CTRL_ABORT);
-+		wait_for_completion_timeout(&rh->op_done, HZ);
-+		ring_status = rh_reg_read(RING_STATUS);
-+		if (ring_status & RING_STATUS_RUNNING) {
-+			/*
-+			 * We're deep in it if ever this condition is ever met.
-+			 * Hardware might still be writing to memory, etc.
-+			 */
-+			dev_crit(&hci->master.dev, "unable to abort the ring\n");
-+			WARN_ON(1);
-+		}
- 	}
+ 	u32 ring_status;
  
- 	for (i = 0; i < n; i++) {
++	guard(mutex)(&hci->control_mutex);
++
+ 	ring_status = rh_reg_read(RING_STATUS);
+ 	if (ring_status & RING_STATUS_RUNNING) {
+ 		/* stop the ring */
+diff --git a/drivers/i3c/master/mipi-i3c-hci/hci.h b/drivers/i3c/master/mipi-i3c-hci/hci.h
+index f109923f6c3f3..39490bc9f84f6 100644
+--- a/drivers/i3c/master/mipi-i3c-hci/hci.h
++++ b/drivers/i3c/master/mipi-i3c-hci/hci.h
+@@ -43,6 +43,7 @@ struct i3c_hci {
+ 	const struct hci_io_ops *io;
+ 	void *io_data;
+ 	const struct hci_cmd_ops *cmd;
++	struct mutex control_mutex;
+ 	atomic_t next_cmd_tid;
+ 	u32 caps;
+ 	unsigned int quirks;
 -- 
 2.53.0
 
