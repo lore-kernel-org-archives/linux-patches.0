@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793210566;
-	b=BkDrbN3pyhZXGkhE6UfiI44lWxFHvKZQDPqMDUuTCgK6W+HLxrz5Rol2E4lfSDu1ovhU
-	 5hgggYSPeWKrfh0K7beLPJkAF8SM6FMHU4KY1BRz2iILSsFqEg5bzf6K4RC6GiwORMSit
-	 Bfh77o4Xf4h7eKt6lVnS1K/sth6gnzNIf/oBxNpLqie6qwcWwdU2oKInbP2+MUqGC1jrU
-	 +xElOhGeqblqnIyDw0Q8ptTkxegT90T8ocIJhAzm3wpAcc3pBt8lKYVqPvkXrx/uvEd+U
-	 fjQm6ZaYPgszf17Nzl5zKUDewZ1GTWNdWymKJcULzICpepR/0bA5/EMZemgZ3SM91IA==
+	t=1793210569;
+	b=HKA7HbEsfp+nq051PqdA64HwKqjaBFHjdDPPttfhdQiT9x5F+SfIundWRUw8oX/K6PWx
+	 +g0xA3qDGl921HO0I8U8ilHWieYkDwxqKmRKJZAoQb20/rALkGciTMRjvp6yCjCGFg/bS
+	 iaPwXe0Ulk+SfRD4pTqSAR/rAL3z71k717iTsF3nRzhiWAils+y0bms6Zeya8S3aRyHiO
+	 prrL6AATI10y4FrYZJVe18LuSJfJ1nZK/KLpsR54Pw5GN7/Sb2uB104+ks9HESGbrkKpl
+	 bpg8a8XyqSkse5Wl+HwugFRgGqshSrEGbfkK7ZCDj9oAFCc5MV6QsF/3cPDrEzmsFTg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793210566;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793210569;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=RRlqaoMlWjGWWDa/S46P6Qcpv53wHLe2kwYcbpJsxmE=;
-	b=xvbN9CN/XTQK2ifWT7ykh5/Kys2Gjldj3yOK+yY5rtLet06ZK6sAYwkeviMapZDIldpc
-	 Zd4T0rdsIk4hFcOuvdFlFFDFDRIa2t0T2dSX1QH8FEMDvuefuI70ySQo+10vnAAeejkjX
-	 jRwXVzVYsk3ND/hJ9QKCjSGYRj+7haRwudNFJxM5HZtIE4NxhqydH1ul1QMiJy731AlO0
-	 sspcSIqxwkm5BENjQDGQUD692CRGKPdXCudHO9f0vn+MmZP0W+KSpSy8O0RwCUJXwLz5E
-	 zweDWVnOuYMGIL1ObkJ93sxQ2JkW2l+BxmY+dYN+xhjm8b1Sep6q5XqFnd48NZkxABQ==
+	bh=teGCMIH99Vwq8BFhpNxS1m5haPuMTkTyun91ampDaYs=;
+	b=OKHodCWUoGio0mm23Baka7alBaVXbTWsv0NFqG6vBc3uu1pXAPR43eQA6vkbC4LUj8KM
+	 Rvf8XJXEKZxnb2sl5WCSSiAv+4OnaZqk4yAYXntdLxsmhrUKJNhl9aB87hUHPCTnPw6v2
+	 nkdwPVUm4bYc0/fOlrZ7h9Wsmh2sbu7MCwniY2XwyDf1ae/gS6EU/JlsqLkqocn2wYM46
+	 oE4Ilvg59cLARB44gWvefxzL7t9Rxv6fVn/DfbiOcWqu1QxCE9A1orHHETmydpASfJA3w
+	 thdbDEn3i4RbhyFhZW5wJl+aDlgrUnkFO4wjcvzrYVSG+pV2S8bAsXxe/UJy5htNEeA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=q1zWxzJZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nxNppKJq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F225606A31C;
-	Wed, 28 Oct 2026 18:02:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B4C1606A31A;
+	Wed, 28 Oct 2026 18:02:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=q1zWxzJZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE3E01F01825;
-	Wed, 28 Oct 2026 18:02:45 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nxNppKJq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C699A1F01825;
+	Wed, 28 Oct 2026 18:02:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793210566;
-	bh=RRlqaoMlWjGWWDa/S46P6Qcpv53wHLe2kwYcbpJsxmE=;
+	s=korg; t=1793210569;
+	bh=teGCMIH99Vwq8BFhpNxS1m5haPuMTkTyun91ampDaYs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=q1zWxzJZAcer77UkIoXhXKhnbfWrizFK88KA/rbXpiACcklTHaIQE6FzZJXOhuGF2
-	 Vlh6Z7JnA3FFNkH5L/hyZZtfw63B9MML/LdXl2CvC0dNDNp3JkrrlAG2iEq/sIki4d
-	 kyA5KyBIlblDlQ9RAacyB5kZQ0d6MhiwPO7r1r+I=
+	b=nxNppKJqXnynIbmaqK21Oqw6yjBMFSl/+NIQSNQjkxaMKrojqDytmHi6PdTntbepf
+	 I0YSYYkoZwlj46tS2z2JIMYZ3B2RwARUz7CXjQet1Ywp8DFahquACvOcOjJZTfiTjh
+	 1jXVYMHkaBJiZmdMgDRxCsE5g+ecF7AClFGJDxeQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jianing Li <m13940358460@163.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Fan Wu <fanwu01@zju.edu.cn>,
+	Ulf Hansson <ulfh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 070/571] power: supply: max17040: drop incorrect I2C functionality check
-Date: Wed, 28 Oct 2026 17:53:37 +0100
-Message-ID: <20261028170009.685926045@linuxfoundation.org>
+Subject: [PATCH 5.15 071/571] mmc: via-sdmmc: cancel card-detect work on remove
+Date: Wed, 28 Oct 2026 17:53:38 +0100
+Message-ID: <20261028170009.710843401@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -68,56 +68,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jianing Li <m13940358460@163.com>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-[ Upstream commit 4e4b9f5ce9dfb8ed4b8d1262a504b8043ac09d87 ]
+[ Upstream commit 57e5d877f898d5e5c9d672a77bb6bdd24f0d9bf5 ]
 
-max17040_probe() rejects adapters that do not advertise
-I2C_FUNC_SMBUS_BYTE. The driver does not issue SMBus byte transactions,
-however. Its regmap has 8-bit registers and 16-bit big-endian values, for
-which regmap-i2c supports either raw I2C transfers or SMBus word-data
-transactions.
+Disabling the device interrupt and freeing the IRQ prevents new card-detect
+work from being queued, but carddet_work already queued by the handler can
+still run after via_sd_remove() returns. via_sdc_card_detect() recovers the
+host through container_of() and dereferences its MMIO base; once remove()
+returns the host can be freed, so that work would touch freed memory.
 
-Consequently, an adapter providing raw I2C transfers or SMBus word data
-but not SMBus byte transactions is rejected even though regmap can access
-the device. Conversely, the current check can pass an adapter that regmap
-cannot use.
+Cancel carddet_work after freeing the IRQ and before cancelling
+finish_bh_work, which the card-detect handler can also queue. carddet_work
+can re-enable the interrupt through via_reset_pcictrl(); mask it again
+afterwards.
 
-Drop the stale check and let devm_regmap_init_i2c() validate and select
-the supported transfer method.
+This issue was found by an in-house static analysis tool and confirmed by
+manual code review.
 
-Fixes: 6455a8a84bdfd ("power: supply: max17040: Use regmap i2c")
+Fixes: f0bf7f61b840 ("mmc: Add new via-sdmmc host controller driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Jianing Li <m13940358460@163.com>
-Link: https://patch.msgid.link/20260731084259.916-1-m13940358460@163.com
-[Fixed Fixes tag, so that it points to the regmap introduction instead of the initial driver addition]
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Assisted-by: Codex:gpt-5.6
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Signed-off-by: Ulf Hansson <ulfh@kernel.org>
+[ adjusted context to retain del_timer_sync() instead of timer_delete_sync(). ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/max17040_battery.c | 4 ----
- 1 file changed, 4 deletions(-)
+ drivers/mmc/host/via-sdmmc.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/power/supply/max17040_battery.c b/drivers/power/supply/max17040_battery.c
-index 8e913f92af9cd..2017acf67a32c 100644
---- a/drivers/power/supply/max17040_battery.c
-+++ b/drivers/power/supply/max17040_battery.c
-@@ -433,16 +433,12 @@ static const struct power_supply_desc max17040_battery_desc = {
- static int max17040_probe(struct i2c_client *client)
- {
- 	const struct i2c_device_id *id = i2c_client_get_device_id(client);
--	struct i2c_adapter *adapter = client->adapter;
- 	struct power_supply_config psy_cfg = {};
- 	struct max17040_chip *chip;
- 	enum chip_id chip_id;
- 	bool enable_irq = false;
- 	int ret;
+diff --git a/drivers/mmc/host/via-sdmmc.c b/drivers/mmc/host/via-sdmmc.c
+index 5bf508b6db0e3..3ae8f005f8fe0 100644
+--- a/drivers/mmc/host/via-sdmmc.c
++++ b/drivers/mmc/host/via-sdmmc.c
+@@ -1208,6 +1208,10 @@ static void via_sd_remove(struct pci_dev *pcidev)
  
--	if (!i2c_check_functionality(adapter, I2C_FUNC_SMBUS_BYTE))
--		return -EIO;
--
- 	chip = devm_kzalloc(&client->dev, sizeof(*chip), GFP_KERNEL);
- 	if (!chip)
- 		return -ENOMEM;
+ 	free_irq(pcidev->irq, sdhost);
+ 
++	cancel_work_sync(&sdhost->carddet_work);
++	/* carddet_work may re-enable the interrupt via via_reset_pcictrl(). */
++	writeb(0x0, sdhost->pcictrl_mmiobase + VIA_CRDR_PCIINTCTRL);
++
+ 	del_timer_sync(&sdhost->timer);
+ 
+ 	tasklet_kill(&sdhost->finish_tasklet);
 -- 
 2.53.0
 
