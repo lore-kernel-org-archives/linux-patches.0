@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793210877;
-	b=crxKGt2lyNuQlCMVcGEARQ8kFQbH2EZv2Dcnxpu4kApV6658pJZodhH30PoCN30Ibom1
-	 KewAovHM8PR1lgjh5czKcjJcwlzp+ZTuAF6yii9Vi3cKKPDVbfW9YgH/7b2RtpzXRx5ON
-	 ZY7QO7B2wsjBGyCpecczCwg5gH3DCBvi3/T6obk6y+iOuxc5A6+QYsAotMmy/fH4JDlvo
-	 UM7AB/2SrHmH5cZwzpyEaq8oE610styg9tfWSgHzt5aR/Iv/1z09pZaRImQYO1EgBFbEv
-	 eCqpqxg9JrGkH8xBMimbTwIrJdpsulvsDuG9XbTjhuNJJLcZsXC/uSmw42xg/vN6UkA==
+	t=1793210879;
+	b=fPy6I3z1KhdMzRkKsGEAAXicg+7XHVmmjmtjUyG90ddLwt0N88XTaftuW5gPGOkcCpIQ
+	 aQoXOT0hqtD6eRQf0RRru7E1eIP7JifSVa4tTTJX8b/0X6Z/RaTwcKDTI1cH5TFNNDGSG
+	 XgtK3lI6XWDrpo1eNzNUopvfLJDND8m7GeDuJWpTIcNTM3IOiJnXPYZaaeMqSzYZ+mBHP
+	 vDh8MZR+KGEtmRmOfo6GfaGEW88jWLU+h8+DNkbE0NHWHdt6CkY4yde1k78iAk57KIzV0
+	 vaui4Z3Hr77BPrMLmJ+Q27QrAm0fK0XDfvHHT8kNZqx6+MPxByoQzV5iO+o8pMQTteQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793210877;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793210879;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/4ORiZKOg56tFI7VjlAQ9fnH4GvabDFctM0SOQgICXY=;
-	b=d0RzKaRLyO+pE7r3eO/nXxhEaIsTnuQnPo+SHkUqSkeI10ZcVKI9s9rtlkIGHAaffnPq
-	 urRdfihI9khv9mW/gwXOVsn8lhj1crI6U6V+8lObKl9TEbAXiDsoopYKCzsuVX4NHdjbP
-	 n/sFtgCzuE9UzI2L38yC235P0s6bjKPNN9kE+fbmajUnqWvULQBEgpwklWesE7oE8gZr1
-	 a7tQplRe5aUvaIqsXTdhO3fzOqZsOaPOXYyDo+yU3P+ErUBBxjC1slPOob56dC2X60kgY
-	 Nh/M9DcRqysPEJ5wBLuZ3mLLBvxzYKaT8OA/scCAeMn2F+SG3TP2LHTOFgf+TTrd80A==
+	bh=6wYdO5VbYliCBmIsW0tXcpEH0sp874XVC7pPtF0HJEE=;
+	b=TPq2meMJgrOycXN6HIcdvmVyVU4OakZQht2PKWX0SZtugFgg93bTRTMCEwCVt1AlkF4x
+	 8Tp0eBZIwAAMzqTA85Vpo/MY30MQN90CRXuIDo1kgt+AcoBaTi1XepzxAHYByKO5dGsoe
+	 +njPm43r8Idkobc4XQLqbgyKtbshC9pCF22WmD9UO8vZop4lt4prpVz1qoZAJZnG4bxDT
+	 1Z539G0agRCGPoKlZ0umXKb1beCWeOSAdD3fmEMMGYBHUG05U+loXt9Ayc5C9cqEOo7Z2
+	 F/veQzBywfoc45ovg/uSCfyVUEUS9Lrhvn242y885E09NifXcTQmD8eV2eoU1ZXdlfg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=URlD6LkB;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rwPHBCgV;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3AAC606A31A;
-	Wed, 28 Oct 2026 18:07:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9110D606A31C;
+	Wed, 28 Oct 2026 18:07:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=URlD6LkB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F8CA1F01825;
-	Wed, 28 Oct 2026 18:07:55 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rwPHBCgV
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E15B51F01825;
+	Wed, 28 Oct 2026 18:07:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793210876;
-	bh=/4ORiZKOg56tFI7VjlAQ9fnH4GvabDFctM0SOQgICXY=;
+	s=korg; t=1793210879;
+	bh=6wYdO5VbYliCBmIsW0tXcpEH0sp874XVC7pPtF0HJEE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=URlD6LkBpeVdAYC6r3Cv8fwBW1TgN9PukVIswYcMcnRWHkgZ1Okb9Xp03LxJCI1G6
-	 v1501wwGq4dEWs2FXrI7Bo+lIt+mnZTL4OOrE7vK/XEywH14i9XeTvMpeNUUp3P8YC
-	 kyV0VflFwJHDD/GcM1Av2U+S+6+U7og/pR3J4r/c=
+	b=rwPHBCgVGbZOeeeR8lkMSXf3PO0GVWdxERjIuoaouYhUVUjQI2VY5SW052PUMZzU9
+	 uC68Rn640uwu4ijew34vQ2kxiWzduHeo2H1+r/FWQT4btUthaM0qRKJvFFedK09wOP
+	 TEBWNv+s2MtkX7zLvapUmsAoHdeCCdfzxzKJHgQs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	"Rob Herring (Arm)" <robh@kernel.org>
-Subject: [PATCH 5.15 136/571] of/irq: Fix remaining refcount leaks in of_irq_init()
-Date: Wed, 28 Oct 2026 17:54:43 +0100
-Message-ID: <20261028170011.245118912@linuxfoundation.org>
+	Marcus Folkesson <marcus.folkesson@gmail.com>,
+	Jiri Kosina <jkosina@suse.cz>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 127/571] HID: hid-alps: use default remove for hid device
+Date: Wed, 28 Oct 2026 17:54:34 +0100
+Message-ID: <20261028170011.032958047@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -67,36 +68,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Marcus Folkesson <marcus.folkesson@gmail.com>
 
-commit 30724547b221e0e670ddfef140fc7d816b2aaec6 upstream.
+[ Upstream commit 989f7cc94f1174269282a4a46bb735c7f11527de ]
 
-Successfully initialized controllers are moved to intc_parent_list,
-but the final cleanup only frees the descriptors. The device node
-references taken with of_node_get() and the interrupt parent
-references are therefore leaked on the normal return path. Drop both
-before kfree(), as the intc_desc_list cleanup already does.
+hid_device_remove() will call hid_hw_stop() as default .remove function
+if no function is specified.
 
-Fixes: 8363ccb917c6 ("of/irq: add missing of_node_put")
-Cc: stable@vger.kernel.org
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Link: https://patch.msgid.link/20260917124247.2151674-1-vulab@iscas.ac.cn
-Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Marcus Folkesson <marcus.folkesson@gmail.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.cz>
+Stable-dep-of: aa9dde93e05a ("HID: alps: unregister DualPoint Stick input device on remove")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/of/irq.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/hid/hid-alps.c | 6 ------
+ 1 file changed, 6 deletions(-)
 
---- a/drivers/of/irq.c
-+++ b/drivers/of/irq.c
-@@ -582,6 +582,8 @@ void __init of_irq_init(const struct of_
+diff --git a/drivers/hid/hid-alps.c b/drivers/hid/hid-alps.c
+index 72c21014de845..8aed5e17e5819 100644
+--- a/drivers/hid/hid-alps.c
++++ b/drivers/hid/hid-alps.c
+@@ -825,11 +825,6 @@ static int alps_probe(struct hid_device *hdev, const struct hid_device_id *id)
+ 	return 0;
+ }
  
- 	list_for_each_entry_safe(desc, temp_desc, &intc_parent_list, list) {
- 		list_del(&desc->list);
-+		of_node_put(desc->interrupt_parent);
-+		of_node_put(desc->dev);
- 		kfree(desc);
- 	}
- err:
+-static void alps_remove(struct hid_device *hdev)
+-{
+-	hid_hw_stop(hdev);
+-}
+-
+ static const struct hid_device_id alps_id[] = {
+ 	{ HID_DEVICE(HID_BUS_ANY, HID_GROUP_ANY,
+ 		USB_VENDOR_ID_ALPS_JP, HID_DEVICE_ID_ALPS_U1_DUAL) },
+@@ -847,7 +842,6 @@ static struct hid_driver alps_driver = {
+ 	.name = "hid-alps",
+ 	.id_table		= alps_id,
+ 	.probe			= alps_probe,
+-	.remove			= alps_remove,
+ 	.raw_event		= alps_raw_event,
+ 	.input_mapping		= alps_input_mapping,
+ 	.input_configured	= alps_input_configured,
+-- 
+2.53.0
+
 
 
