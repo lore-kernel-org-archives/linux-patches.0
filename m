@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793211821;
-	b=2lGx2ga/FOqUes0wIao80WuPb4h9n7/TC+idZJbc34+Qkj+V0uM/CxhyfI/zhqMoe8CF
-	 QFHwBMBzukGRPNgB7v/cIwkX2OJXkYXOBckzZFGAb/T/sKgxEaM6O+KexdqO8kjCbnG8d
-	 tH7JXXDXoVMQojlWlf1f0TJ2BsHDJTsNgZVGy5dx0go/oF+SCKI9LgTFT3lfY3bQsgQAg
-	 /PowQqRZpDm7+ZPYg74ZZGGguAEwgUp0NceC6onDgRFGQXN3tocc0YRGR8/UUWFmFmuXt
-	 NcBkMc7LCWnmX+WxU2WKLMUhBI1MWaeQsuC+5HZd2OgcJ4kpav9Qm2q8Q4PMVx1jpMw==
+	t=1793211824;
+	b=2AVeYI2P8lqAB9D71xJMaKvEXbxOnobJcSjfF/PNY+AAwE6YhFyN2KDhbztyH3mU0KdB
+	 wODlJMa7v2M7HBYn3ob5uHoq6FKY0Kj5gyPIdDTHJX0kqpyrEduEgHBwfkH+R6692N5ih
+	 BxdLPshc9vY6tE6xVbdUM7DJy8OXv4QVKwIKnsKtggV2HOJ5G14/NUDsCn4zjRE/4mmLd
+	 jXZSpXhPKiW2pDkO4oFL3lryn/U5/gcl5q0aTE6EHexZLHewaOP+3BgLjA24QtKpNMbwg
+	 TkYT1kwzU7AweRYCx2z+fLz1ptEDsBgbqZhm93hnpXSbWUQeddUHV+SvoxkRESLrL1A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793211821;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793211824;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=c8WVqqRgPIOFitjG/5w+DXez1ML60mHQ5NKKhbY6oY8=;
-	b=GYF5h03KWY+J9Ret/V6TspFdfZQ6Zu5t4u4l6L1ZfM6tfbkprqHHM0MymZitxMyQadoQ
-	 piDj6vQhDPVk32j58yQz6/CQLm32PcZVN+OK0qEYra7aWG7V00Q4Ab+ca03j59jukir+0
-	 ASTXkrxBV/NPV5CAeqadhlgKN31/RefItgLSpAeePv29lR4FrPQgiSjGf7F97x4WMLAbw
-	 1RlRDDGgnpttIgy0525nlfVlecDHpi9Qj/BmPeCL+fuqim9t5fJnTsOYikmKh4T2Ac2uU
-	 RcCCJmuuJ4TSt9O0ldC2pjdjrNJ5efRtXPoPY0bMYxiUFPVkvO9OOAK9peLdAGCQ5BQ==
+	bh=8zQdEmC3g6XVxEFejIsndzwbqqamhGMXbJt0g+UKW04=;
+	b=wNj0IErPeQZWIkCczthXqgcGuIZNMQWrpkuQfCY9WljQoT63YAzI316DABXN78cwV5dE
+	 jWOhRc6JzgL8umd2pEVtOkgSJStsmcBu297w3RjI+Pr7QFpZt4DxNqfXrjJ5jGxEZFSt9
+	 E9UIFXoZCMBy/jrU+kegCtpX7LaOo1ODUpkq9CM//5Wdmgb5tyMO3rI8xg5yMAopb5v61
+	 n7dqnPbc2h1AmrdUrtnptgrQBn0H6SaaoSPazcfCfF/jAIXJsYAtFtp8AMRuI859fUvyN
+	 OIv2NFhol3x0ewwtWkHT3ccX6ypkhvGWMN+fyiyTfebEYN/veMlayxp6TDT7NcM9Slw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pnGe+mBr;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="2O7yG11/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24BE860A2626;
-	Wed, 28 Oct 2026 18:23:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02BA160A2623;
+	Wed, 28 Oct 2026 18:23:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pnGe+mBr
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 750CF1F031E8;
-	Wed, 28 Oct 2026 18:23:40 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2O7yG11/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5325C1F01825;
+	Wed, 28 Oct 2026 18:23:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793211821;
-	bh=c8WVqqRgPIOFitjG/5w+DXez1ML60mHQ5NKKhbY6oY8=;
+	s=korg; t=1793211823;
+	bh=8zQdEmC3g6XVxEFejIsndzwbqqamhGMXbJt0g+UKW04=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pnGe+mBrTlBVjgxgMEeIIX9HZeZ0UKYP2b/y5xBZOJZLBDJHzDA4uN3tzbBW6lccI
-	 S5uDtYvhn+KPRtY8biohqCDRvSOZm/qsnbEdEuXQjillyqGG0Ai8BM6P2wphpMt8lJ
-	 XD4HR+nUze8f4DJw0TOpxcp/it6zudeLr4L89u7s=
+	b=2O7yG11/MY+N1FD8XeT6w8pp1FxEMl2yy4+d2IwwtkXZkGXZOiBh9mx+F9/HT8Hmu
+	 f8arUmf+k+u8H8SW5VJkJwnS87GhyS6M9cX+xBd7Zyyqfi387QUs+Oz/yRMAYNksM9
+	 yiK3pPtkXtbi9SNT4XNKDp9XPd1Q0ubC1xFxEhbw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ben Marzinski <bmarzins@redhat.com>,
-	Ming-Hung Tsai <mtsai@redhat.com>,
-	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 5.15 510/571] dm cache: fix demotion stats in passthrough mode
-Date: Wed, 28 Oct 2026 18:00:57 +0100
-Message-ID: <20261028170020.130775280@linuxfoundation.org>
+	Jinu Kim <kimjw04271234@gmail.com>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 5.15 467/571] KVM: x86: Use active memslots for the per-vCPU MMIO cache
+Date: Wed, 28 Oct 2026 18:00:14 +0100
+Message-ID: <20261028170019.103396269@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -68,86 +67,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming-Hung Tsai <mtsai@redhat.com>
+From: Jinu Kim <kimjw04271234@gmail.com>
 
-commit 2ccb8878c149443c6acf628b438c9c942c20abb2 upstream.
+commit b3e6212dea2e4328a841ceb37f377583176dc735 upstream.
 
-The demotion counter is incremented per incoming write bio before the
-invalidation begins, causing the demotion count to exceed the actual
-number of cached blocks when multiple bios target the same cached
-block. Additionally, the counter is incremented unconditionally
-regardless of invalidation failure.
+KVM tags the per-vCPU MMIO cache with a memslot generation so that a
+memslot update invalidates cached MMIO information.  Both the fill and
+validation paths use kvm_memslots(), which unconditionally selects address
+space 0, even when the vCPU is running in SMM and using address space 1.
 
-Reproduce steps:
+Commit 56f17dd3fbc4 ("kvm: x86: fix stale mmio cache bug") added the
+memslot generation to the cache key so that a memslot update could not
+leave a stale entry valid.  When commit 699023e23965 ("KVM: x86: add SMM
+to the MMU role, support SMRAM address space") added the SMM address space,
+these helpers were not converted to use the active memslots.
 
-1. Create a cache device consisting of 512 cache entries
+Consequently, an update to the SMM memslots can leave an entry from the old
+SMM address space apparently valid after the vCPU returns to the normal
+address space.  A guest can then cause an access to valid RAM at the same
+GFN to be returned to userspace as KVM_EXIT_MMIO.
 
-modprobe brd rd_size=262144
-dmsetup create cmeta --table "0 8192 linear /dev/ram0 0"
-dmsetup create cdata --table "0 65536 linear /dev/ram0 8192"
-dmsetup create corig --table "0 65536 linear /dev/ram0 262144"
-dd if=/dev/zero of=/dev/mapper/cmeta bs=4k count=1 oflag=direct
-dmsetup create cache --table "0 65536 cache /dev/mapper/cmeta \
-/dev/mapper/cdata /dev/mapper/corig 128 2 metadata2 writethrough smq 0"
+Completing that exit through the VMM's RAM address space writes the backing
+page without going through KVM's write-tracking path.  If the page backs a
+nested EPT table, KVM can continue using shadow translations derived from
+the old contents.  The WARN_ON_ONCE() in kvm_mmu_write_protect_fault()
+catches this invalid cache and memslot combination.
 
-2. Populate the cache, and record the number of cached blocks
+Use the vCPU's active memslots when caching and validating the entry.
+Memslot generations are unique across address spaces, so the generation
+also distinguishes the normal and SMM views.  This matches the MMIO SPTE
+cache, which already uses kvm_vcpu_memslots().
 
-fio --name=populate --filename=/dev/mapper/cache --rw=randwrite --bs=4k \
---direct=1 --ioengine=libaio --iodepth=32 --io_size=2048m
-nr_cached=$(dmsetup status cache | awk '{split($7, a, "/"); print a[1]}')
+On an unpatched current-mainline kernel, a regression test that fills the
+cache in SMM and updates only the SMM memslots fails the intended RAM write
+and triggers the kvm_mmu_write_protect_fault() warning.  With this change,
+the same test completes the RAM write without a warning.  The x86/smm_test,
+set_memory_region_test, and memslot_modification_stress_test selftests also
+pass.
 
-3. Reload the cache into passthrough mode
-
-dmsetup suspend cache
-dmsetup reload cache --table "0 65536 cache /dev/mapper/cmeta \
-/dev/mapper/cdata /dev/mapper/corig 128 2 metadata2 passthrough smq 0"
-dmsetup resume cache
-
-4. Write to the passthrough cache with multiple jobs to trigger
-   multiple bios hitting the same cached block.
-
-fio --filename=/dev/mapper/cache --name=test --rw=write --bs=4k \
---direct=1 --ioengine=libaio --iodepth=32 --numjobs=4
-
-5. Check if demoted matches cached block count. These numbers should
-   match but may differ due to overcounting per bio.
-
-nr_demoted=$(dmsetup status cache | awk '{print $12}')
-echo "$nr_cached, $nr_demoted"
-
-Fix by moving the demotion counter increment into invalidate_complete(),
-gated on the success flag.
-
-Reported-by: Ben Marzinski <bmarzins@redhat.com>
-Fixes: b29d4986d0da ("dm cache: significant rework to leverage dm-bio-prison-v2")
+Fixes: 699023e23965 ("KVM: x86: add SMM to the MMU role, support SMRAM address space")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ming-Hung Tsai <mtsai@redhat.com>
-Reviewed-by: Benjamin Marzinski <bmarzins@redhat.com>
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Signed-off-by: Jinu Kim <kimjw04271234@gmail.com>
+Link: https://patch.msgid.link/20260807112818.958190-1-kimjw04271234@gmail.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-cache-target.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ arch/x86/kvm/x86.h |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/md/dm-cache-target.c
-+++ b/drivers/md/dm-cache-target.c
-@@ -1453,6 +1453,9 @@ static void invalidate_complete(struct d
- 	struct bio_list bios;
- 	struct cache *cache = mg->cache;
+--- a/arch/x86/kvm/x86.h
++++ b/arch/x86/kvm/x86.h
+@@ -219,7 +219,7 @@ static inline bool is_noncanonical_addre
+ static inline void vcpu_cache_mmio_info(struct kvm_vcpu *vcpu,
+ 					gva_t gva, gfn_t gfn, unsigned access)
+ {
+-	u64 gen = kvm_memslots(vcpu->kvm)->generation;
++	u64 gen = kvm_vcpu_memslots(vcpu)->generation;
  
-+	if (success)
-+		atomic_inc(&cache->stats.demotion);
-+
- 	bio_list_init(&bios);
- 	if (mg->cell) {
- 		if (dm_cell_unlock_v2(cache->prison, mg->cell, &bios))
-@@ -1697,7 +1700,6 @@ static int map_bio(struct cache *cache,
- 		if (passthrough_mode(cache)) {
- 			if (bio_data_dir(bio) == WRITE) {
- 				bio_drop_shared_lock(cache, bio);
--				atomic_inc(&cache->stats.demotion);
- 				invalidate_start(cache, cblock, block, bio);
- 				return DM_MAPIO_SUBMITTED;
- 			} else
+ 	if (unlikely(gen & KVM_MEMSLOT_GEN_UPDATE_IN_PROGRESS))
+ 		return;
+@@ -236,7 +236,7 @@ static inline void vcpu_cache_mmio_info(
+ 
+ static inline bool vcpu_match_mmio_gen(struct kvm_vcpu *vcpu)
+ {
+-	return vcpu->arch.mmio_gen == kvm_memslots(vcpu->kvm)->generation;
++	return vcpu->arch.mmio_gen == kvm_vcpu_memslots(vcpu)->generation;
+ }
+ 
+ /*
 
 
