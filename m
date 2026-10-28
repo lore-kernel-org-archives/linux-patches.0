@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793210535;
-	b=Nps+cs3Mcp1aDDEA1bxOGsfgManrS0MhfBPQ+ctR2JTUa7kgd12sgPPuPTwpzut3y3oa
-	 MhOHuy6Dk8ncQhOJNZxa4pjdNgf+Cq1T96HlRjsEaMWr9SPb1d1xNtofujAu7PBknYM78
-	 SRYlLF8XSnouCGB4vGn3izvV1gU571kMt90yADE7GjNvNkwoc18uWRP2K5D3QfC6VdfFp
-	 zjY5kZ2s+7KZ+RMcevfaPSIQRvhlq7zKu6ouSlpHvbYV1RuRXgT/uEGI1khbvDwIZbDaE
-	 D5Z7UOGh9pvMGyXu0ZE/EoNACBit6w7VEwo6zYRu1iKm2rpvxJ6yx+aFAADRgu14kUA==
+	t=1793210538;
+	b=4eguDRrkqVpkZN5OtfiVQlDHhdweENp/QuC4SG3pYa6oYlD3nUJTjucTTlyDxoQ1hA1v
+	 mkG0OQtJ9iEdOZpnL1wp8gg64WmMJjBHRr/LYiIAnLslH9TxPXOH9RB5DKqa8EUVuYgVp
+	 Nl+KMDLEZWAGtE45bNwgiKkhm459mCCOqrgs91QimFQqGjrWaLE1nl+30nJLSqK+cBkUm
+	 XRzjJcmlinxIkPIn41iGpUwVjOEXpY0z2XYPFGuscFj8PwQU4wL8d+rr5wpbpmQtpTTcu
+	 y2vOUKfLL74kLPWcTk6JOoEr6+6PTImSe4PQdnEhldYWtjVFLte0FiK7gVC9YiGBPIQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793210535;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793210538;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=n7pBxoAPO/of2XKB+EjO3A27LM4vfIfeNf9l//CoUmo=;
-	b=HEBvoDz1CUOGOnVDAk5NIhzR7iXpfncAMzIbWiuX4VnfOuonueA0RngQM0+Uk5/O9NVc
-	 mpkmkRE9leokbi+N9BRqjveLbzctlT6E13fiImmEDWfQyU8NEXN7B91V1BfaQNVRnPNIe
-	 lRRDHYn1iSckOsQUrT0LBY3ws0U24zNFs6soH1a8zeksP1GUN62BhoBZKydsJkky0JQ/Y
-	 2FfMKmijo+DDigkjV35bgUd1+ek79RcdLUhzLUqwcZoae4tfxlak/Vx1X1vZgEicCGzqA
-	 a3cszBzo4uApE2jKiwV10HbZ6u+LRTxuggtXwq2VsHvN6UBoZ6QD2OP9MIChyPih57g==
+	bh=XSCSQBQe/uRUUl3Z2BwKwfuu1l2NnDrEC84so8NqORE=;
+	b=EjKK/9yUBu5BWv+2iVih2eFZhzy4+z0BkR2pG8EPYSCIcLAKM2ZbUgZJ8w/rNTTMlyMj
+	 CipaG2KOb7PdhFE9E4SymWMHkRV6zTduygZw0SZPXyLRiGYCsX3jJ1DRE8xaNUmC7ZSYK
+	 W39VwZd2zQ2F+rkSneXJKWpkWQAa1jh7nfC/6w6zdZY2TmvSSx0K9FCcwS6A8tGeenfPQ
+	 PjTL6okC9zgNkScOWVY+fS68Pyrck5l/fS4tf/WbApewwCtn7S46JzIsJCgzGXplW0u8N
+	 SieIAAU97K3a86QnuIyM9sZ/tT4iQNNVil99qPqXOGU7FJfWWYhvbK1UfEZgAocmkxQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YWQQWRge;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Jw7Zg8WC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BB0C606A31D;
-	Wed, 28 Oct 2026 18:02:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 084E8606A31A;
+	Wed, 28 Oct 2026 18:02:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YWQQWRge
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D5D91F01825;
-	Wed, 28 Oct 2026 18:02:14 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Jw7Zg8WC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59A0C1F01825;
+	Wed, 28 Oct 2026 18:02:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793210535;
-	bh=n7pBxoAPO/of2XKB+EjO3A27LM4vfIfeNf9l//CoUmo=;
+	s=korg; t=1793210537;
+	bh=XSCSQBQe/uRUUl3Z2BwKwfuu1l2NnDrEC84so8NqORE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YWQQWRge03ji6NWnUQN69Yi7LH2d1oufS3QJaI23J1bgI5+swNKmsl8UEKmwieO4w
-	 tp+Ztx8Ef/DKMBbEFWvlHeGYxPwaqz8WFpkOdKKFQUDjLnl6w3SLkoe1dH2nfcDI2z
-	 97+PxUPA/hoEtLIuj3GjKnS15I6HroQy/ssJoz/c=
+	b=Jw7Zg8WCQ1hlWP5jeqxqJRA/bBB/Y9YnuVr5+Zhn/qToi35EUE7g1g7pmIb24p7u1
+	 vEx9k7jUJAVxGIRnhleGfMasfNGLhHzV4DG0mLrjChzlw3TVZlA68FQ7544F0OG8F7
+	 CDgpqlJC5VhXykfqwjbTGqX2uAIB9W0OkL44cnlM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Kees Cook <keescook@chromium.org>,
 	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 060/571] params: Sort headers
-Date: Wed, 28 Oct 2026 17:53:27 +0100
-Message-ID: <20261028170009.451418369@linuxfoundation.org>
+Subject: [PATCH 5.15 061/571] params: Fix multi-line comment style
+Date: Wed, 28 Oct 2026 17:53:28 +0100
+Message-ID: <20261028170009.474583577@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -71,51 +71,65 @@ Content-Transfer-Encoding: 8bit
 
 From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit a05f096c2c0ca52e8fd34740c7d4b53ab3e7123e ]
+[ Upstream commit b5e3f86a47d34f7b8af899f8cc70520f6daf8b53 ]
 
-Sort the headers in alphabetic order in order to ease
-the maintenance for this part.
+The multi-line comment style in the file is rather arbitrary.
+Make it follow the standard one.
 
 Reviewed-by: Luis Chamberlain <mcgrof@kernel.org>
 Reviewed-by: Kees Cook <keescook@chromium.org>
 Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/20231120151419.1661807-5-andriy.shevchenko@linux.intel.com
+Link: https://lore.kernel.org/r/20231120151419.1661807-6-andriy.shevchenko@linux.intel.com
 Signed-off-by: Kees Cook <keescook@chromium.org>
 Stable-dep-of: 3dfaae04243c ("params: fix charp corruption on allocation failure")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/params.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ kernel/params.c | 20 ++++++++++++--------
+ 1 file changed, 12 insertions(+), 8 deletions(-)
 
 diff --git a/kernel/params.c b/kernel/params.c
-index 0139fe38d0b2a..dc714a1c67cc4 100644
+index dc714a1c67cc4..e1eba5b8230c1 100644
 --- a/kernel/params.c
 +++ b/kernel/params.c
-@@ -3,18 +3,18 @@
-    Copyright (C) 2001 Rusty Russell.
+@@ -1,8 +1,8 @@
+ // SPDX-License-Identifier: GPL-2.0-or-later
+-/* Helpers for initial module or kernel cmdline parsing
+-   Copyright (C) 2001 Rusty Russell.
+-
+-*/
++/*
++ * Helpers for initial module or kernel cmdline parsing
++ * Copyright (C) 2001 Rusty Russell.
++ */
+ #include <linux/ctype.h>
+ #include <linux/device.h>
+ #include <linux/err.h>
+@@ -275,8 +275,10 @@ int param_set_charp(const char *val, const struct kernel_param *kp)
  
- */
-+#include <linux/ctype.h>
-+#include <linux/device.h>
-+#include <linux/err.h>
-+#include <linux/errno.h>
- #include <linux/kernel.h>
- #include <linux/kstrtox.h>
--#include <linux/string.h>
--#include <linux/errno.h>
- #include <linux/module.h>
- #include <linux/moduleparam.h>
--#include <linux/device.h>
--#include <linux/err.h>
- #include <linux/overflow.h>
--#include <linux/slab.h>
--#include <linux/ctype.h>
- #include <linux/security.h>
-+#include <linux/slab.h>
-+#include <linux/string.h>
+ 	maybe_kfree_parameter(*(char **)kp->arg);
  
- #ifdef CONFIG_SYSFS
- /* Protects all built-in parameters, modules use their own param_lock */
+-	/* This is a hack.  We can't kmalloc in early boot, and we
+-	 * don't need to; this mangled commandline is preserved. */
++	/*
++	 * This is a hack. We can't kmalloc() in early boot, and we
++	 * don't need to; this mangled commandline is preserved.
++	 */
+ 	if (slab_is_available()) {
+ 		*(char **)kp->arg = kmalloc_parameter(len + 1);
+ 		if (!*(char **)kp->arg)
+@@ -741,8 +743,10 @@ void module_param_sysfs_remove(struct module *mod)
+ {
+ 	if (mod->mkobj.mp) {
+ 		sysfs_remove_group(&mod->mkobj.kobj, &mod->mkobj.mp->grp);
+-		/* We are positive that no one is using any param
+-		 * attrs at this point.  Deallocate immediately. */
++		/*
++		 * We are positive that no one is using any param
++		 * attrs at this point. Deallocate immediately.
++		 */
+ 		free_module_param_attrs(&mod->mkobj);
+ 	}
+ }
 -- 
 2.53.0
 
