@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215262;
-	b=SyDbOyHS/hqYyT14FTMwW93UgDRRAL78iwPX71+Fo0Ng6Zi4vfEyy2H2tFTmuryTYK9s
-	 g3I6QO1dZmOQfk0v/TpyAhnNpoKVOjk4cmcgD7XIuoBrqdpcYbEE44twzLXl5IdA58oE0
-	 yYJ4LqrdQ1DvSkpdMg7ZLOqEND25WOoYMMpF2felRq5svECGiDMu/SrE1Y+E8DYZcKpRl
-	 9haOTC1P9N7DVjRK7c9wIWy1SbQNnUE+lCMmZwJcJtML0VsC3PLn/TIq17En+xggMyyN2
-	 4GV9yG8W7UVY6GQ/fmH/x2ycT9jSUVj8jLHO7fGzUNBWRiCmBpJSWj5yE9kutPqHTLg==
+	t=1793215264;
+	b=KRsWyQWWSBVXcWC5nieCvOX8XDmL65TVPmKRYlJibibjhGNJ6HmSPM6EqtgBWSE9i2EN
+	 33p6RwsIWORJOQG7v89EJx1TmrzG4bgAJgRVBasnlQRwjkjAujFiXrcZIXw0vwwAR3eJd
+	 NLz6zXAU0HAUUg/0/cJxV/BVHg+9KWC/BtqbIl71CDlw0zucvUyZoL51t2y0ZeZmCI5F0
+	 UMybL5ljCIaFRkTxDGr/5bsBhM/K5m0+YqQCdo4YpTAneofth+X0QRx0WFr6Vpkq13p0b
+	 2HJyr6/Qn+9Vhx+SGsyxq7uJRtZF52xXHBlOQxFa5jeOABYihW0Fmny8JZLDE6PmXtA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215262;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215264;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ABjXMYpneuY5xJNPJK++SZvRZvvdE28mjv1kki56WZw=;
-	b=ivzBD42svK2nR3aRqOsfRBXXLguDOKV638didVGo7E38bQp3R3ni8kUU4DgdOyaoAw7u
-	 nrR7A+y4nBwVkWBplNuOSjbCU99eF7xuwCTkNY/UhEJz3W2mt54Frl6edbS5bI0hvZ6ue
-	 VBL1KRIictxBRrRwagVP9aUGQLdc6ZVS0hvbgA5UFJBePuHF/WW9K2QZ0adSfIJdT0yuv
-	 1sFM9CnbG0wjyUGkwOfOmkOpNjX2qN4/Y73aDkNqKTKzYVW9lurODnZjL7h1udLKMUelh
-	 4KgRLSAelRdp5KYRGcJYadXg5DXK+h3ZmO7cXhhN3ZxAppMYjata40tDE+QxNM6f4VQ==
+	bh=pm4TwNMisJfqog8ykgJeD+nMt9YA3QqZba0LFTZtm80=;
+	b=hYS8hVabtWasfnv+vj40D87/7RqGOiV+iPyaUiDOWFeRPpC0FOeL9hx2l//FXbBQQgCn
+	 O/FGnss5+eK4aEX+CpC6m+fPdIjfPw4Bf/Qu5WG26tBm0ztotMNAcQ3rk7rywFeLW4E9B
+	 2BOfhuveLHfg6XzM2XyCkoc0H5QdoIokLHnl+pGZONbrjvKqtgV9Stp05qrow6PdEl0Qt
+	 J5Bu0HZXc+JCA9+9S/5pcltZ7cZS11m69+J42VD210i3K+JvHU18BktzeF+Lvy99cjyoR
+	 u7kRyYAAsZIHle2326EnSi8RPCcluVLHQ9MoceY0y4ipjrfNXis0T7lIu9rZhM3UUHQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F0QbxbcN;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bgjGtkEB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD3DD606A31D;
-	Wed, 28 Oct 2026 19:21:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54F82606A31C;
+	Wed, 28 Oct 2026 19:21:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F0QbxbcN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCDCB1F01825;
-	Wed, 28 Oct 2026 19:21:00 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bgjGtkEB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4BC21F01825;
+	Wed, 28 Oct 2026 19:21:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215261;
-	bh=ABjXMYpneuY5xJNPJK++SZvRZvvdE28mjv1kki56WZw=;
+	s=korg; t=1793215264;
+	bh=pm4TwNMisJfqog8ykgJeD+nMt9YA3QqZba0LFTZtm80=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=F0QbxbcNUa29MCkVrLXrYY6+EFFJGeaI1uRr2B7ITlyyNSckYa3oVZUoQMVImY0Qt
-	 QbOc5jFFsK5pi37xsF+zwpohG42/7QZLCWFLOgtnnYE5HkRgSPgB36w7FQ735oCOaZ
-	 J9j9dAFE4OBfCT7l9Yw2a8TeLVQn5K/ZkE2jvGrY=
+	b=bgjGtkEBz9MKScR/qyQn0IvUn17I1HStQWXnRDUusSMNPllwCoKNFv8hfkCGjXrXM
+	 qIFpderwwCS5ZhHZPkDOoWMox+jfgToVyaNETMQHr4VxZ03lablo5Ax0bVjzijHBcN
+	 3ev/JKOQ+FLQOSYmOq+xVbRrgNxNDzb6nAM4YIqM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Dawei Feng <dawei.feng@seu.edu.cn>,
-	Alan Stern <stern@rowland.harvard.edu>,
+	Ralph Boehme <slow@samba.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1150/1887] usb: free iso schedules on failed submit
-Date: Wed, 28 Oct 2026 17:54:06 +0100
-Message-ID: <20261028170525.576544901@linuxfoundation.org>
+Subject: [PATCH 6.1 1151/1887] smb/client: fix chown/chgrp with SMB3 POSIX Extensions
+Date: Wed, 28 Oct 2026 17:54:07 +0100
+Message-ID: <20261028170525.597833264@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,111 +68,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dawei Feng <dawei.feng@seu.edu.cn>
+From: Ralph Boehme <slow@samba.org>
 
-[ Upstream commit b9399d25fbb34a05bbe76eeedd730f62ff2670e9 ]
+[ Upstream commit 760ef2c579c2609cf17fb1cd5392f64d42d43d33 ]
 
-EHCI and FOTG210 isochronous submits build an ehci_iso_sched before
-linking the URB to the endpoint queue, and keep the staged schedule in
-urb->hcpriv until iso_stream_schedule() and the link helpers consume it.
-If the controller is no longer accessible, or usb_hcd_link_urb_to_ep()
-fails, submit jumps to done_not_linked before that handoff happens and
-leaks the staged schedule still attached to urb->hcpriv.
+Ownership (chown) and group (chgrp) modifications were being ignored when
+mounting with SMB3 POSIX Extensions unless CIFS_MOUNT_CIFS_ACL or
+CIFS_MOUNT_MODE_FROM_SID were also explicitly set.
 
-Free the staged schedule from done_not_linked when submit fails before
-the URB is linked and clear urb->hcpriv after the free.
+Fix this by checking for posix_extensions in cifs_setattr_nounix() when
+updating UID and GID, ensuring that id_mode_to_cifs_acl() is called to map
+and set the ownership/group information on the server.
 
-The bug was first flagged by an experimental analysis tool we are
-developing for kernel memory-management bugs while analyzing
-v6.13-rc1. The tool is still under development and is not yet publicly
-available. Manual inspection confirms that the bug is still
-present in v7.1.1.
-
-An x86_64 allyesconfig build showed no new warnings. As we do not have an
-EHCI host controller with a USB isochronous device to test with, no
-runtime testing was able to be performed.
-
-Fixes: 8de98402652c ("[PATCH] USB: Fix USB suspend/resume crasher (#2)")
-Fixes: e9df41c5c589 ("USB: make HCDs responsible for managing endpoint queues")
-Fixes: 7d50195f6c50 ("usb: host: Faraday fotg210-hcd driver")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Dawei Feng <dawei.feng@seu.edu.cn>
-Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://patch.msgid.link/20260630071419.349161-1-dawei.feng@seu.edu.cn
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Ralph Boehme <slow@samba.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/host/ehci-sched.c  | 11 +++++++++--
- drivers/usb/host/fotg210-hcd.c |  6 ++++--
- 2 files changed, 13 insertions(+), 4 deletions(-)
+ fs/smb/client/inode.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/usb/host/ehci-sched.c b/drivers/usb/host/ehci-sched.c
-index bd542b6fc46bd..d002e70171f6c 100644
---- a/drivers/usb/host/ehci-sched.c
-+++ b/drivers/usb/host/ehci-sched.c
-@@ -1623,6 +1623,7 @@ iso_stream_schedule(
- 			status = 1;	/* and give it back immediately */
- 			iso_sched_free(stream, sched);
- 			sched = NULL;
-+			urb->hcpriv = NULL;
- 		}
- 	}
- 	urb->error_count = skip / period;
-@@ -1653,8 +1654,6 @@ iso_stream_schedule(
- 	return status;
+diff --git a/fs/smb/client/inode.c b/fs/smb/client/inode.c
+index 9da26e43ea322..9ea5f5b9dca91 100644
+--- a/fs/smb/client/inode.c
++++ b/fs/smb/client/inode.c
+@@ -3004,7 +3004,8 @@ cifs_setattr_nounix(struct dentry *direntry, struct iattr *attrs)
+ 		gid = attrs->ia_gid;
  
-  fail:
--	iso_sched_free(stream, sched);
--	urb->hcpriv = NULL;
- 	return status;
- }
- 
-@@ -1966,6 +1965,10 @@ static int itd_submit(struct ehci_hcd *ehci, struct urb *urb,
- 		usb_hcd_unlink_urb_from_ep(ehci_to_hcd(ehci), urb);
- 	}
-  done_not_linked:
-+	if (status < 0) {
-+		iso_sched_free(stream, urb->hcpriv);
-+		urb->hcpriv = NULL;
-+	}
- 	spin_unlock_irqrestore(&ehci->lock, flags);
-  done:
- 	return status;
-@@ -2343,6 +2346,10 @@ static int sitd_submit(struct ehci_hcd *ehci, struct urb *urb,
- 		usb_hcd_unlink_urb_from_ep(ehci_to_hcd(ehci), urb);
- 	}
-  done_not_linked:
-+	if (status < 0) {
-+		iso_sched_free(stream, urb->hcpriv);
-+		urb->hcpriv = NULL;
-+	}
- 	spin_unlock_irqrestore(&ehci->lock, flags);
-  done:
- 	return status;
-diff --git a/drivers/usb/host/fotg210-hcd.c b/drivers/usb/host/fotg210-hcd.c
-index dc968960769e1..5cdae91211ece 100644
---- a/drivers/usb/host/fotg210-hcd.c
-+++ b/drivers/usb/host/fotg210-hcd.c
-@@ -4272,8 +4272,6 @@ static int iso_stream_schedule(struct fotg210_hcd *fotg210, struct urb *urb,
- 	return 0;
- 
- fail:
--	iso_sched_free(stream, sched);
--	urb->hcpriv = NULL;
- 	return status;
- }
- 
-@@ -4567,6 +4565,10 @@ static int itd_submit(struct fotg210_hcd *fotg210, struct urb *urb,
- 	else
- 		usb_hcd_unlink_urb_from_ep(fotg210_to_hcd(fotg210), urb);
- done_not_linked:
-+	if (status < 0) {
-+		iso_sched_free(stream, urb->hcpriv);
-+		urb->hcpriv = NULL;
-+	}
- 	spin_unlock_irqrestore(&fotg210->lock, flags);
- done:
- 	return status;
+ 	if ((cifs_sb->mnt_cifs_flags & CIFS_MOUNT_CIFS_ACL) ||
+-	    (cifs_sb->mnt_cifs_flags & CIFS_MOUNT_MODE_FROM_SID)) {
++	    (cifs_sb->mnt_cifs_flags & CIFS_MOUNT_MODE_FROM_SID) ||
++	    cifs_sb_master_tcon(cifs_sb)->posix_extensions) {
+ 		if (uid_valid(uid) || gid_valid(gid)) {
+ 			mode = NO_CHANGE_64;
+ 			rc = id_mode_to_cifs_acl(inode, full_path, &mode,
 -- 
 2.53.0
 
