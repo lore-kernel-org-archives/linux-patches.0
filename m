@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793209948;
-	b=CAYDfb7nUgAVLvrglqozYSKSiqj3SoXvZQw5boev0ghTIq2M07w3lkpJmcsWbNYHLbKR
-	 DAhkPyrKagax7NxHGhT3ib+q9qfzcD3f9clxmp0BeMY5IqVBk5BplGhzoKV1aD15Do1yZ
-	 VRXx5IG6glyKrHoGoCW3pLrF2QgpCIlL7ONY4wmNAIIYtnb2+/5vssWr42Cb2WY929hNV
-	 dC/pSSzxs1rOOz8nrCWZBytsteerboy9KcZ5+sBg5m3mWu1J1tBw4viZR9vSifHBaTSoN
-	 hbcJ3cTzww8c9DAtW30VZiw/O1VjMXLE601nXqTbBbNNiflGIjwqCFkqASGRKxLUNaw==
+	t=1793209951;
+	b=KNeLO9tXDEUNs+ef0r8Oc8Fta2o6JhHrzZGqzX392TvXYgDthUHJeD27CqwI/MtszzkO
+	 H/mqM3OCXxKvrShcgD8q61fe+m9YukU1CXvj/Kw3EecFtCSKWEMyGY0LJ/Ozy/6t4CcRd
+	 Zs7hjGPwffF9l0Wr2ANOhUgRjrwUY242jgBSef5JkWOrUjLSesC1iQ5LJl0f7ZyvLr+RZ
+	 abw4bPlh4/wBWz1kzT5xSJeAkuyXPuIdX5fj/t1u1/mx6xHdzPf56NDNWXi3FxD9avNX9
+	 W1SZwpd9A1SbeUxhKfpIeShdXtidNLDgEk8RBMUsOCH0WzQuScs0vffe5Re7orhgVdw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793209948;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793209951;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=VHdFv7AVDJDUHSszsK1PdazAkVSPt2Abh4t/WOW0/Do=;
-	b=n2hEd1+idAXa/pTKacUu9lWXc5+sNjFycBz/PPZdaeucbauWEjy3I2on6KNf0L6gRAjq
-	 EzuO4IS9W+NuFxhcAvkj/sphsqoXpgZ/cLxdPEcSuWemG+CnphHclV/VejJbVFDZQzfSP
-	 NEnFEOBqZqAz+Vks1IMoYYMIUgjnIhK9akYUVm+f+UbKgsauV3skdJKcNdAaDsCXLJVYm
-	 vFbRwsWW/QerTYO8QaPcW1/qgrBMhPaEoPGDj4ZYkAywxfdA699Qjl9K9KarSl3E9K0lF
-	 wI+u3O/SzW8RuWXIgYRHrT+M/vxUJ7+c8tqNdiPUFxk+QdIj3HYa5OEjGaU2SKpWAxw==
+	bh=x/8BAwcQhuwK00+p0sxmABMVivl6VFS6qc4tNtIgIwk=;
+	b=NdDGfuXTsvaZDdtRX8lwmyV766wWZGOBpDEeG8KWYVkK8cn76agQIuuIjjP2YEKdek4g
+	 hEhCAz7p8cP47ukLeyPTZ6bwrPguqn7Gvzr/v4jXBh7L1aLF/ajsmgG3vvC5NoKL8lNos
+	 9Oq6cpCOMD8wKp8Z1y0ftQdNFq/f+Vw7KynncczZQrum9HawFIzdpr3tr07CgDQNzvCLL
+	 DlSNh/6dsiQADpIxDlgOb68JLxTqGD+8QNNHSY9RfY/3yzlzKsILLymq9pMGP9zeIZ8W+
+	 XF9WkKogtGAsps/gUPbJn7aIV5+lFp3Tp0Yb52Zt5QX7R3ReU9soDoGDzUfZZf2Gbfg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bXx0em+T;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KFrUJckS;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E1D7606A31A;
-	Wed, 28 Oct 2026 17:52:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A61E606A31A;
+	Wed, 28 Oct 2026 17:52:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bXx0em+T
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EB3B1F01825;
-	Wed, 28 Oct 2026 17:52:27 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KFrUJckS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BF251F01825;
+	Wed, 28 Oct 2026 17:52:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793209948;
-	bh=VHdFv7AVDJDUHSszsK1PdazAkVSPt2Abh4t/WOW0/Do=;
+	s=korg; t=1793209951;
+	bh=x/8BAwcQhuwK00+p0sxmABMVivl6VFS6qc4tNtIgIwk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bXx0em+TeicZfYMpcS9DJZuQ5bT/Wd50wsgMdM7o4KQEnNLeelQd8ub8FxQc2TQJl
-	 oPvAXUQpKSK8cEAqoEjQWLsRvCZRYy4LaPb6v97yg3eH1aFcuTdu8Wib7f2TMj9N4g
-	 +bIT+l4ooJMQmXiRNHEL01H/LO7WVn0ELALFoHlY=
+	b=KFrUJckSbpzEZvZ5R8aMgC5mRBMdmVx6+RI/F+Xsx5zyG7/Ar86cd/O/0N2V2eAHi
+	 46dOfDxImzMYPCmb4gmta5izsiUw56EZ0tPo4KSARLqnXU1Tn9n+teO88z/6yOUtZH
+	 F/63j4TgEyXYJJpXcq/5GZkFmAtS3UXKjhu5XVqE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Carlos Jones Jr <carlosjr.jones@analog.com>,
-	Mark Brown <broonie@kernel.org>,
+	kernel test robot <lkp@intel.com>,
+	Keith Busch <kbusch@kernel.org>,
+	Dinh Nguyen <dinguyen@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 023/168] spi: tegra114: assert CS GPIO for every transfer in a message
-Date: Wed, 28 Oct 2026 17:59:19 +0100
-Message-ID: <20261028165943.645888658@linuxfoundation.org>
+Subject: [PATCH 6.6 024/168] nios2: fix __wsum type degradation in csum_fold()
+Date: Wed, 28 Oct 2026 17:59:20 +0100
+Message-ID: <20261028165943.669544472@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165943.089486480@linuxfoundation.org>
 References: <20261028165943.089486480@linuxfoundation.org>
@@ -68,58 +69,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Carlos Jones Jr <carlosjr.jones@analog.com>
+From: Keith Busch <kbusch@kernel.org>
 
-[ Upstream commit 8980bc573ae2d2b9d86d76aeb86c76e1597070bf ]
+[ Upstream commit b963f2345fa20417401c51a69dedb6a58eea33a9 ]
 
-The driver provides its own transfer_one_message() and therefore drives
-the chip-select GPIO itself rather than through the SPI core. The GPIO is
-asserted only in the is_first_of_msg path of
-tegra_spi_setup_transfer_one(), but tegra_spi_transfer_end() deasserts it
-whenever a transfer has cs_change set. For a multi-transfer message whose
-earlier transfers request cs_change -- for example a register read that
-sends the address in one transfer and clocks the data back in the next --
-the CS GPIO is released after the first transfer and never re-asserted,
-so the remaining transfers are clocked with chip-select inactive and the
-peripheral never drives the bus.
+csum_fold() shifts a bitwise __wsum type, which sparse reports as
+"restricted __wsum degrades to integer". Sparse only checks the body of
+a static inline once something instantiates it, so this went unnoticed
+until a recent block layer change added the first csum_fold() caller to
+a file built on this architecture.
 
-This was observed with an ADIS16470 IMU (adis16475 driver), whose
-register read is a two-transfer, cs_change-framed exchange: a logic
-analyzer showed the data frame clocked with CS high, and the driver read
-0 while the device drove 0x4056 on the wire.
+Force cast to a __u32 for the shift, as the other architectures do.
 
-Re-assert the CS GPIO for every transfer so that multi-transfer messages
-keep chip-select active across the whole message. gpiod_set_value() is
-idempotent and polarity-aware, so this is a no-op for the first transfer
-and for messages that keep CS asserted throughout.
-
-Fixes: 63c1440596ff ("spi: tegra114: add support for gpio based CS")
-Signed-off-by: Carlos Jones Jr <carlosjr.jones@analog.com>
-Link: https://patch.msgid.link/20261002085540.1625-1-carlosjr.jones@analog.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: eea9507a69d6 ("nios2: Library functions")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202609222053.5gjiJjtb-lkp@intel.com/
+Signed-off-by: Keith Busch <kbusch@kernel.org>
+Signed-off-by: Dinh Nguyen <dinguyen@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-tegra114.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ arch/nios2/include/asm/checksum.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/spi/spi-tegra114.c b/drivers/spi/spi-tegra114.c
-index ba2c9feab1cdf..2b7fc3e0c244e 100644
---- a/drivers/spi/spi-tegra114.c
-+++ b/drivers/spi/spi-tegra114.c
-@@ -859,6 +859,13 @@ static u32 tegra_spi_setup_transfer_one(struct spi_device *spi,
- 		command1 |= SPI_BIT_LENGTH(bits_per_word - 1);
- 	}
- 
-+	/*
-+	 * Re-assert the CS GPIO for every transfer: transfer_end() drops it
-+	 * on cs_change, and the assert above only covers is_first_of_msg.
-+	 */
-+	if (spi_get_csgpiod(spi, 0))
-+		gpiod_set_value(spi_get_csgpiod(spi, 0), 1);
-+
- 	return command1;
+diff --git a/arch/nios2/include/asm/checksum.h b/arch/nios2/include/asm/checksum.h
+index 69004e07a1ba3..b6b415ae17a08 100644
+--- a/arch/nios2/include/asm/checksum.h
++++ b/arch/nios2/include/asm/checksum.h
+@@ -27,7 +27,7 @@ static inline __sum16 csum_fold(__wsum sum)
+ 		"add	%0, %0, r8\n"
+ 		"nor	%0, %0, %0\n"
+ 		: "=r" (sum)
+-		: "r" (sum << 16), "0" (sum)
++		: "r" ((__force u32)sum << 16), "0" (sum)
+ 		: "r8");
+ 	return (__force __sum16) sum;
  }
- 
 -- 
 2.53.0
 
