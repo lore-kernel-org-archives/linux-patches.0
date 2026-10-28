@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215977;
-	b=oKFkjNMe2KSAyXBGXYZh7rZXQRktqWoeEzHVH0xtUqki3zHuqXN83KkUqrwfdgSWLaQm
-	 xjTTktDV/Kt7A3Zdg+LNm5UKUmnf6MwLjjABQEtH2FIo/SCvBga4BaZELynsR1cf06sQA
-	 QCW0BtdbhPiCI7baTb49mnBoLPrIlroNlCTtYz5qfs1XalhLZe2VBcxv9ZG/kzTvy1kZ/
-	 gDOMSilpgb3fBHc3giTatZggpMAKGrlrPx8nphJPHr07429jAJqv9TcH4UA4KUYTmjatP
-	 BEcp4DyySH9As0B/uu3ivhP+zwXVbJywn0Cilub94cy1p4kQSMUCzlzPyO+eXaM5PNQ==
+	t=1793215980;
+	b=H6QJADL88CHU8L+aH1nxmv22UcIfcG9CgaMP/P6Jmch+zjPwNV9TRSsD07UI39cpTXxL
+	 7dSSc/IiEAGXo87L9KZFxpem3A0jJZgmIstqJgu0NMUgYG6hecCx4JhHW069pt/Bl7QJg
+	 JkTpSc4ph2p/ZcziI7uR8a91VSKtpQRq4mixDQjIxODeAJv9vZWJZlEVR4jllFgGfesZp
+	 Xsmp9cwI48/ZySR4vi/00owAjchIJLMxshnUUK8TXLc/3QSEs6qKJvE1kE7klNDKf7Z9X
+	 YW4TLHfuQGOU+pBirdwpEA+QS1MK8fBtmogoJJIg3erBb8r03+TPdTACxzOVcdFYL8g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215977;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215980;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=LokrR7i+pEYfKSWHXRdSAJyab96w5zQjh5GixkJFQzo=;
-	b=aXoZ/U44krAcRNKWx35avpY5Mb6rPNe0Jntf4FxwGwNlAVxwvbVCr8xCCBYqqQ2v8vBb
-	 Synz6wTrtDB/lT93TU71iXuT1ATFuDcaK0RvxCn2tvIh2FTCKxhMzr2qfENfLMo2jR8tW
-	 fdi9srEXQo9wX2GZbF+syHmPWvdjtxX3JAkIEmOS7Kfs7VpcEhmu+dbZxkAFeuFbx3mJK
-	 egYi3QtYbixHai7D87rx8ShinLHv08D0KCEcWTkcwhtCajrxSac0Z+tnPrM16pHQDn4Q3
-	 Qx9+5MVm7LycjsxXIOV4NJHqTFqnRvK7sMOdvc2a4pMTEO8Za5MqD9N0dPoyfwahw+A==
+	bh=gUSDQLIp0b8Yc+ZjK5vL7/m3eXnFKDJKxkjwpANr9Ms=;
+	b=Dklvn+cedof+Nw/OsjCnoItjSRiYtOnNNPGEeJWVxcVol2xMQlZ3nF9rPbGpdSuEYyyw
+	 pH4p34P+iMQDLgIVGcUz7Jvd7dFd608h/E3Cvv7gCEYBnHEaYdfPaK6aADFIWEwrBuAAf
+	 EsEfgz+ousWJhmKpBWObJbu7dN3Gtxad9J/Lm1eoikGU8B06Cl78KxO4x2o5iNeqBdNcl
+	 wXd7qOcOQagdQ8YSRvHogNxdEVXHPIcVeLH6kAxlHs7NmmKhD7yGyIzhzdv0x5IO2aa17
+	 Skol8kzqy7biPJJgioINUwUN2PaRT00f9BfdjXYhMZHJxuAAoS9YyUbnj5WbIuV7GNQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RHfZ0u8f;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2DCeXSBQ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E897B606A31A;
-	Wed, 28 Oct 2026 19:32:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C13E1606A327;
+	Wed, 28 Oct 2026 19:32:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RHfZ0u8f
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F7FA1F01825;
-	Wed, 28 Oct 2026 19:32:56 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2DCeXSBQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FA341F01829;
+	Wed, 28 Oct 2026 19:32:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215976;
-	bh=LokrR7i+pEYfKSWHXRdSAJyab96w5zQjh5GixkJFQzo=;
+	s=korg; t=1793215979;
+	bh=gUSDQLIp0b8Yc+ZjK5vL7/m3eXnFKDJKxkjwpANr9Ms=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RHfZ0u8fVZBZbOYHeeS9n9Y4i2u7ONJoFlKxozMnZ4MMoDU8SE3K1iZRHDyzCwk6B
-	 fnHmkUWjaT0SLRPcgvv5NlbuQkj8oPchVgFZsexlYJaiz9CjJnPUeauOIKmEO9cgXK
-	 pnneTjBQ9ZpPLbI2hbC+wBup2J4vAzYUtLzcBIPQ=
+	b=2DCeXSBQZ0fCsZRQN4MwP+6i4a0cp8K32ELWxG45JAW79/NqE5DpH5jbJKGSjXkWz
+	 LfKoOyMLTSQ215WSty8xnbP2FDOCOZa9ZHPIEyCgwS5A6E0D6rjVrzUXZ5pMHzH6k3
+	 JDIWvajoOq5V53YDpEBcArkfNiAi+2d5aoltOqt0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sagi Grimberg <sagi@grimberg.me>,
+	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1397/1887] svcrdma: Handle ADDR_CHANGE CM event properly
-Date: Wed, 28 Oct 2026 17:58:13 +0100
-Message-ID: <20261028170531.240625453@linuxfoundation.org>
+Subject: [PATCH 6.1 1398/1887] svcrdma: Reject connection when transport allocation fails
+Date: Wed, 28 Oct 2026 17:58:14 +0100
+Message-ID: <20261028170531.263470982@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -70,60 +70,80 @@ Content-Transfer-Encoding: 8bit
 
 From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit d1b586e75ec619dde1af47e21a41a6b1b51874c2 ]
+[ Upstream commit 0944462247dcb7de7622cdaaadf5f05c52707dab ]
 
-Sagi tells me that when a bonded device reports an address change,
-the consumer must destroy its listener IDs and create new ones.
+handle_connect_req() returns without action when
+svc_rdma_create_xprt() fails to allocate the new transport.
+The CM core returns 0 for CONNECT_REQUEST events, so it does
+not destroy the new rdma_cm_id. Each allocation failure under
+memory pressure leaks one rdma_cm_id, and a remote peer driving
+connection attempts can amplify this.
 
-See commit a032e4f6d60d ("nvmet-rdma: fix bonding failover possible
-NULL deref").
+Reject the connection by returning a non-zero status from the
+CM event handler, which tells the CM core to destroy the
+orphaned cm_id.
 
-Suggested-by: Sagi Grimberg <sagi@grimberg.me>
-Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
+Fixes: 377f9b2f4529 ("rdma: SVCRDMA Core Transport Services")
+Cc: stable@vger.kernel.org
+Acked-by: Jeff Layton <jlayton@kernel.org>
+Link: https://patch.msgid.link/20260527-rdma-follow-on-v1-4-1b09bd87b6cd@oracle.com
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-Stable-dep-of: 0944462247dc ("svcrdma: Reject connection when transport allocation fails")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/xprtrdma/svc_rdma_transport.c | 16 +++++++++++++++-
- 1 file changed, 15 insertions(+), 1 deletion(-)
+ net/sunrpc/xprtrdma/svc_rdma_transport.c | 16 ++++++++++------
+ 1 file changed, 10 insertions(+), 6 deletions(-)
 
 diff --git a/net/sunrpc/xprtrdma/svc_rdma_transport.c b/net/sunrpc/xprtrdma/svc_rdma_transport.c
-index f573b555853c7..ccba5974b5121 100644
+index ccba5974b5121..c84e80ae374ea 100644
 --- a/net/sunrpc/xprtrdma/svc_rdma_transport.c
 +++ b/net/sunrpc/xprtrdma/svc_rdma_transport.c
-@@ -279,17 +279,31 @@ static void handle_connect_req(struct rdma_cm_id *new_cma_id,
+@@ -221,12 +221,16 @@ svc_rdma_parse_connect_private(struct svcxprt_rdma *newxprt,
+  * structure for the listening endpoint.
   *
-  * Return values:
-  *     %0: Do not destroy @cma_id
-- *     %1: Destroy @cma_id (never returned here)
-+ *     %1: Destroy @cma_id
-  *
-  * NB: There is never a DEVICE_REMOVAL event for INADDR_ANY listeners.
+  * This function creates a new xprt for the new connection and enqueues it on
+- * the accept queue for the listent xprt. When the listen thread is kicked, it
++ * the accept queue for the listen xprt. When the listen thread is kicked, it
+  * will call the recvfrom method on the listen xprt which will accept the new
+  * connection.
++ *
++ * Return values:
++ *     %0: Do not destroy @new_cma_id
++ *     %1: Destroy @new_cma_id (allocation failure)
   */
- static int svc_rdma_listen_handler(struct rdma_cm_id *cma_id,
- 				   struct rdma_cm_event *event)
+-static void handle_connect_req(struct rdma_cm_id *new_cma_id,
+-			       struct rdma_conn_param *param)
++static int handle_connect_req(struct rdma_cm_id *new_cma_id,
++			      struct rdma_conn_param *param)
  {
-+	struct sockaddr *sap = (struct sockaddr *)&cma_id->route.addr.src_addr;
-+	struct svcxprt_rdma *cma_xprt = cma_id->context;
-+	struct svc_xprt *cma_rdma = &cma_xprt->sc_xprt;
-+	struct rdma_cm_id *listen_id;
-+
+ 	struct svcxprt_rdma *listen_xprt = new_cma_id->context;
+ 	struct svcxprt_rdma *newxprt;
+@@ -236,7 +240,7 @@ static void handle_connect_req(struct rdma_cm_id *new_cma_id,
+ 				       listen_xprt->sc_xprt.xpt_net,
+ 				       ibdev_to_node(new_cma_id->device));
+ 	if (!newxprt)
+-		return;
++		return 1;
+ 	newxprt->sc_cm_id = new_cma_id;
+ 	new_cma_id->context = newxprt;
+ 	svc_rdma_parse_connect_private(newxprt, param);
+@@ -270,6 +274,7 @@ static void handle_connect_req(struct rdma_cm_id *new_cma_id,
+ 
+ 	set_bit(XPT_CONN, &listen_xprt->sc_xprt.xpt_flags);
+ 	svc_xprt_enqueue(&listen_xprt->sc_xprt);
++	return 0;
+ }
+ 
+ /**
+@@ -293,8 +298,7 @@ static int svc_rdma_listen_handler(struct rdma_cm_id *cma_id,
+ 
  	switch (event->event) {
  	case RDMA_CM_EVENT_CONNECT_REQUEST:
- 		handle_connect_req(cma_id, &event->param.conn);
- 		break;
-+	case RDMA_CM_EVENT_ADDR_CHANGE:
-+		listen_id = svc_rdma_create_listen_id(cma_rdma->xpt_net,
-+						      sap, cma_xprt);
-+		if (IS_ERR(listen_id)) {
-+			pr_err("Listener dead, address change failed for device %s\n",
-+				cma_id->device->name);
-+		} else
-+			cma_xprt->sc_cm_id = listen_id;
-+		return 1;
- 	default:
- 		break;
- 	}
+-		handle_connect_req(cma_id, &event->param.conn);
+-		break;
++		return handle_connect_req(cma_id, &event->param.conn);
+ 	case RDMA_CM_EVENT_ADDR_CHANGE:
+ 		listen_id = svc_rdma_create_listen_id(cma_rdma->xpt_net,
+ 						      sap, cma_xprt);
 -- 
 2.53.0
 
