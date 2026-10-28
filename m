@@ -1,55 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213875;
-	b=CH7Odh1zGcJaVE1ZdFUnaz4saGVbs9MylVfrsia+7dfQUzD7zgFGmBIjIRWALI6QXezd
-	 BIq1ktUb69VzPFHSZMFcBLbAN+GhGLMkBfKeM+sBmmyrelE407+2brTV7WkcCsT2kig8o
-	 TLmndEiFd6/h1hqH0oX5FnrmCU87jsQoIxkdtt1GKucxkWoXeVOSgqEEWyJ9hxHzuhiDa
-	 B1Br+ty4uONfRXMMBCkvE9RiXj64Ikg5khpN5kbxQ3yOhr1prfX9xSZau9W/O3OdYpPiV
-	 OIgqV+1X0aT7C52bxmJdO4NEqpWDW5APhrwmYYkIp8+neCsLTyyWR9x4/Mmv/dv0XnA==
+	t=1793213878;
+	b=RyOlg1HUAzDbWPh+eJzHh2p3AiL4emEGLnbo9SB8CBth7LKXLPtF58drteRdcZIvcOX9
+	 uimmLUvJAChit5imTCqABSws4F1WJ9eggnnlRfKRXiVTv5YWq6QbY+tvWqWqFpgKZvHwq
+	 vF/mT2PqGu/L94j+8BzP6NjVSWCdl6D9l59/Mw+kdYBJYjzIiu5QWHUFzLB7CfZdOJ8IM
+	 dvGPrG4wp3lPwZBHzadiYUynhw73Dd1vnM/Z2ILf1j4zplPYCWHmIdmw++8/TyaUp3B7k
+	 WNkh+JJJQUoqZ2/1wm1+XUqRwwcqFXb3tHtqrd17yqu1tL/o8nFWJGVwzbUGKtfC+Mw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213875;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213878;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=RexffTnStg3ZBFdxtPZ37Dx3HsfXvd5ocfYovK/f26I=;
-	b=RxatyshKDieMJKMe772EPVLkgq+WRrwXoLfZOWM8d/j4AUjg5TS+tyjUfea/hIe6mY1n
-	 1axAHzuXenppcrLQLTwYBth8z5hmdjy9GQ9fDazdNs1v1GNNSnu11/JMQlI69o6WjnMS1
-	 PcPUAUM99Ta+4BgTyS8RKbBtnTPdHs++KaSROaHTk81qU74X6tzkHs8gqVYoRc7WybPH+
-	 CYMQ3WkvDloQrE4lRFG8Dj4p+4hRJXjNiD0NRKH2rZTygkt6iCyymTnQtOyAKRAL433/k
-	 VFA5S/8SZ2JtZJmTkgdHKBV5J5iOO/ug+QpobO3AXPkNoXs5jm+emZY2hxNXhWQi4lw==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=+k/QV1e8Oq9JTkrn+u5QYxt0ZDYHyKrlVL/7nO64Bgs=;
+	b=f7/mv51fmgOZ3bc2dfXn/iFUwHI31V6Pg8zgBWy5x+jiR3XC2orcrz+U/lNdGcElUnx2
+	 Dq2j4kKN0LhPr53xGoblHC8aM1PIcZN/P3fEKPF1lxSqKNCuXAe3wPGFeYgRxCg6IEKRl
+	 yLppAmJEYGmO5Fi/X4Jxi/m5pUSYX/K+LGPnTAbZn0R7g2atRp+hUc6Y2q4DOAq3sCE64
+	 UQpNwaqnxgt01Di7B1ry1fLYCW+srT+lgAaQNogSE6QlTM/M3dIrlY5wNCbPDRuoJTgY8
+	 R+444VZ4hFZbbddKkPgYOuvN4B4/BqfdD/CiOUypMQqVR1LlsAKviVaOWiMIFe4HV+w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Rt+8Z6hv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Vhf0YakD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1287D606A31A;
-	Wed, 28 Oct 2026 18:57:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E42FC606A31A;
+	Wed, 28 Oct 2026 18:57:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Rt+8Z6hv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BACC1F01825;
-	Wed, 28 Oct 2026 18:57:54 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Vhf0YakD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E7D61F01825;
+	Wed, 28 Oct 2026 18:57:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213874;
-	bh=RexffTnStg3ZBFdxtPZ37Dx3HsfXvd5ocfYovK/f26I=;
+	s=korg; t=1793213877;
+	bh=+k/QV1e8Oq9JTkrn+u5QYxt0ZDYHyKrlVL/7nO64Bgs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Rt+8Z6hvyqZSJviT41H6qy85FPf6sQuJm1p+DPRzs/gCijbM/mnDD8nZygtIidTi5
-	 CIY7lyCExRk3yQeJHpdQeIZjm7yBLivrG+TIiarignYieTsqtlfeMTO+YgxRuco4X2
-	 DX4wTKJnAllMIKgyjFhJCXhAf4ywOqGs/yxFpEvs=
+	b=Vhf0YakD3Y/zNtCcj7XZ1EnFfumE5LORumM500QaMFaYg+wNCSzGL6drnMJr9/Epy
+	 PRIUHCL47QyyfSSvs5JLBhybZgsVe9KqBO6r33s+ioDzCRKSv8U9QYYS5aoJFBM3db
+	 SQXpVQQLoDgsalcg6/twpB0tB/2sB0AztUZfY8eE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rodrigo Siqueira <rodrigo.siqueira@amd.com>,
-	Zaeem Mohamed <zaeem.mohamed@amd.com>,
-	Alex Hung <alex.hung@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0659/1887] drm/amd/display: Avoid overflow from uint32_t to uint8_t
-Date: Wed, 28 Oct 2026 17:45:55 +0100
-Message-ID: <20261028170514.408983991@linuxfoundation.org>
+Subject: [PATCH 6.1 0660/1887] spi: hisi-kunpeng: Convert to platform remove callback returning void
+Date: Wed, 28 Oct 2026 17:45:56 +0100
+Message-ID: <20261028170514.431762500@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -65,59 +62,67 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alex Hung <alex.hung@amd.com>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit d6b54900c564e35989cf6813e4071504fa0a90e0 ]
+[ Upstream commit e77ccdfe0145211b5a20ab62950894aea881bbb3 ]
 
-[WHAT & HOW]
-dmub_rb_cmd's ramping_boundary has size of uint8_t and it is assigned
-0xFFFF. Fix it by changing it to uint8_t with value of 0xFF.
+The .remove() callback for a platform driver returns an int which makes
+many driver authors wrongly assume it's possible to do error handling by
+returning an error code. However the value returned is (mostly) ignored
+and this typically results in resource leaks. To improve here there is a
+quest to make the remove callback return void. In the first step of this
+quest all drivers are converted to .remove_new() which already returns
+void.
 
-This fixes 2 INTEGER_OVERFLOW issues reported by Coverity.
+Trivially convert this driver from always returning zero in the remove
+callback to the void returning variant.
 
-Reviewed-by: Rodrigo Siqueira <rodrigo.siqueira@amd.com>
-Acked-by: Zaeem Mohamed <zaeem.mohamed@amd.com>
-Signed-off-by: Alex Hung <alex.hung@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Link: https://lore.kernel.org/r/20230303172041.2103336-31-u.kleine-koenig@pengutronix.de
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: 5127c42c77de ("spi: hisi-kunpeng: Add verification for the max_frequency provided by the firmware")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dce/dmub_abm_lcd.c  | 2 +-
- drivers/gpu/drm/amd/display/dc/dcn21/dcn21_hwseq.c | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ drivers/spi/spi-hisi-kunpeng.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dce/dmub_abm_lcd.c b/drivers/gpu/drm/amd/display/dc/dce/dmub_abm_lcd.c
-index 4055d271ac57f..19a97da77df88 100644
---- a/drivers/gpu/drm/amd/display/dc/dce/dmub_abm_lcd.c
-+++ b/drivers/gpu/drm/amd/display/dc/dce/dmub_abm_lcd.c
-@@ -242,7 +242,7 @@ bool dmub_abm_set_pipe(struct abm *abm, uint32_t otg_inst, uint32_t option, uint
- {
- 	union dmub_rb_cmd cmd;
- 	struct dc_context *dc = abm->ctx;
--	uint32_t ramping_boundary = 0xFFFF;
-+	uint8_t ramping_boundary = 0xFF;
+diff --git a/drivers/spi/spi-hisi-kunpeng.c b/drivers/spi/spi-hisi-kunpeng.c
+index 06c8893243b7d..2cfc820c8adcc 100644
+--- a/drivers/spi/spi-hisi-kunpeng.c
++++ b/drivers/spi/spi-hisi-kunpeng.c
+@@ -531,15 +531,13 @@ static int hisi_spi_probe(struct platform_device *pdev)
+ 	return 0;
+ }
  
- 	memset(&cmd, 0, sizeof(cmd));
- 	cmd.abm_set_pipe.header.type = DMUB_CMD__ABM;
-diff --git a/drivers/gpu/drm/amd/display/dc/dcn21/dcn21_hwseq.c b/drivers/gpu/drm/amd/display/dc/dcn21/dcn21_hwseq.c
-index 5910cde0408d0..10c63c47097a5 100644
---- a/drivers/gpu/drm/amd/display/dc/dcn21/dcn21_hwseq.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn21/dcn21_hwseq.c
-@@ -141,7 +141,7 @@ static bool dmub_abm_set_pipe(struct abm *abm, uint32_t otg_inst, uint32_t optio
+-static int hisi_spi_remove(struct platform_device *pdev)
++static void hisi_spi_remove(struct platform_device *pdev)
  {
- 	union dmub_rb_cmd cmd;
- 	struct dc_context *dc = abm->ctx;
--	uint32_t ramping_boundary = 0xFFFF;
-+	uint8_t ramping_boundary = 0xFF;
+ 	struct spi_controller *master = platform_get_drvdata(pdev);
+ 	struct hisi_spi *hs = spi_controller_get_devdata(master);
  
- 	memset(&cmd, 0, sizeof(cmd));
- 	cmd.abm_set_pipe.header.type = DMUB_CMD__ABM;
+ 	debugfs_remove_recursive(hs->debugfs);
+ 	spi_unregister_controller(master);
+-
+-	return 0;
+ }
+ 
+ static const struct acpi_device_id hisi_spi_acpi_match[] = {
+@@ -550,7 +548,7 @@ MODULE_DEVICE_TABLE(acpi, hisi_spi_acpi_match);
+ 
+ static struct platform_driver hisi_spi_driver = {
+ 	.probe		= hisi_spi_probe,
+-	.remove		= hisi_spi_remove,
++	.remove_new	= hisi_spi_remove,
+ 	.driver		= {
+ 		.name	= "hisi-kunpeng-spi",
+ 		.acpi_match_table = hisi_spi_acpi_match,
 -- 
 2.53.0
 
