@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
 	t=1793214032;
-	b=BT+ljKZE6whpKBsPxLfc05ZDQAtNb9y4AV8sriQ2TonF9+44W7hk2SbwGXFO+/749dYB
-	 iwg8T9QOMsCGnNhAnD+kTcS4jGMr3NftScY/6RGudSkJT1fb65R8LA9g1HqAmZLnTgTZt
-	 mkqw5pbX0BTYbexwrDMrMAu09lchBf6SdVmtR7b+jIbx7JVAQK5xvpEZZyzMvKzHKZEOR
-	 5C00PERMmc4O7+ojJ41tMlQdEvb1lNbNTNKgj0bUhmqoMHKkysD2+STXN+RrWFeCAk50r
-	 +e/GAe8emAtrowJkqkvlriiNGD6TRNVfnztA7VHD4lFH5dSCNN1XZZyH3ukq0thuH3A==
+	b=KfXbLS7Ft8eykBBM5s+/OsmItYteCNJeOkxDGsB7O+nFarx0BZpL4X+QtcDi3KA4fCPQ
+	 vcMFo3te+6SeQ625gmVpMVfzMRVG0fpXZPGxnGrSGq37PBQ8zD+eg7maj2wwcINlCrNqA
+	 L5ZNcHjns0FwBTel3SP4csC81LIZvNP05ms1mfBre3VkHieLiLhosuPtv0Cn5ig0OquY1
+	 pG5fm7zJNix7FzpwvtM+OqxenHp06wLE8sooRZ+wJoZ/QGmqN39sPeWBKEhIAN+bvYByo
+	 zxZ9ifmUawweLmQpuf6PYwfBX1fWkIvI9qG9EIvEf3Fdvv3t7QMn7I77xPna1VUbLGQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
 	a=rsa-sha256; c=relaxed/relaxed; t=1793214032;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=CzhA8FLKqIe88Wkkz41Ie3xII/XLucvNKOEAGM9cI3M=;
-	b=49A9/PP2ZULuNltGQmLRfAgZubHICtGI7c2E4pO7W1jHIbxKxeKeDf0stFu7inOKpy9H
-	 NI0Yu7WIQJgZ88cN7DhN18UXyfYnNUfIKnj+Utr0ux2aOWYp7chi7ktLALu5DFadBAsFt
-	 DtyVhj+BNsS22H/shkG0+ocxmi1IdX/CqoW91VaCukrwBQqRr3tWBGXZNZCemTnzbR1ga
-	 se4lQfXzzgGNxP9T91EVsqKyYitrADmXImVmSvankwDcNzRAppbksyGVZBzD7LoyJsRl0
-	 SmT6WpQ/V1zVMd9SrEo9oU5wWKQzINwwsQvIItIB3yPuvbaxHe54fGqUfrpP5NiIjTQ==
+	bh=PyiSRrPqlqYxcTwbN4SHix78AipFYkcW0f0u8Ji2vbc=;
+	b=weO+Ht/7ter51mnViZixZZ5WGe4bWumNo/VrXu+Uh0gJPLDYKNLHkPMnafvOEvbT64EI
+	 5+aXFvArxHEVPjwQMzktDHNqSi1sHY3wbFq6Wh1igmqL+KGK7z6thNgDV5NiRGNY2dS92
+	 Vc77titzwYxuXFXiVwA7tWSL/3C16QiYMKtQmb5HDVWHz+7IpBCycTn6m+Spg/bUj2pDK
+	 QV4wxbWcCGqtDauueGhp+Anjj3ZDsKG2b3siBJV6RbVCqsBxi9uwZ9RCosobyJextaW/f
+	 DkXc+LfIiDGQzCnYdukufyuTnsH6VhJkhIdqYMiTBrIpfX0O4jGRHKnU1hg//Ptvntw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=b7HwUQWg;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GX8REde6;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9551606A324;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B533560A2604;
 	Wed, 28 Oct 2026 19:00:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=b7HwUQWg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 115D31F031E0;
-	Wed, 28 Oct 2026 19:00:30 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GX8REde6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 349151F031E9;
+	Wed, 28 Oct 2026 19:00:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214031;
-	bh=CzhA8FLKqIe88Wkkz41Ie3xII/XLucvNKOEAGM9cI3M=;
+	s=korg; t=1793214028;
+	bh=PyiSRrPqlqYxcTwbN4SHix78AipFYkcW0f0u8Ji2vbc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=b7HwUQWgO4LCVgYoJCm03HREP2rRT1E5ihY0oaNPtpFGfIpQJTro2p1/XEQ0VWPei
-	 eAkff8miA5fVRuxcb36QjdUTibiN7IxHtTLneRtfVMcrzImwQYeq8gwSaLJ6hr+I45
-	 z6twIiubG1K6YxqxM3dgCKmLPYcNl8ROFrcT6yok=
+	b=GX8REde6dTZcRw1hnbR+4296pr0WpmAGm0gz+BF75R2jnMufAr3zYfSMvpT/bN555
+	 FP/eOfkZwrr0grwr+/aIuhml4T39BU62zErUduRxO7OmVU9/7OPp7ZD2+5nNzYguQ0
+	 dObkm91HIP6H72wd+KZR7S2+A1HJR/TtiOl6Mgng=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Xiang Chen <chenxiang66@hisilicon.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0713/1887] scsi: hisi_sas: Allocate DFX memory during dump trigger
-Date: Wed, 28 Oct 2026 17:46:49 +0100
-Message-ID: <20261028170515.650466972@linuxfoundation.org>
+Subject: [PATCH 6.1 0712/1887] scsi: hisi_sas: Directly call register snapshot instead of using workqueue
+Date: Wed, 28 Oct 2026 17:46:48 +0100
+Message-ID: <20261028170515.626139040@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -71,253 +71,103 @@ Content-Transfer-Encoding: 8bit
 
 From: Yihang Li <liyihang9@huawei.com>
 
-[ Upstream commit 63f0733d07ce60252e885602b39571ade0441015 ]
+[ Upstream commit 2ff07b5c6fe9173e7a7de3b23f300d71ad4d8fde ]
 
-Currently, if CONFIG_SCSI_HISI_SAS_DEBUGFS_DEFAULT_ENABLE is enabled, the
-memory space used by DFX is allocated during device initialization, which
-occupies a large number of memory resources. The memory usage before and
-after the driver is loaded is as follows:
+Currently, register information dump is performed via workqueue, regardless
+of the trigger mode (automatic or manual). There is a delay in dumping
+register through workqueue, the exact register information at trigger time
+cannot be obtained.
 
-Memory usage before the driver is loaded:
-$ free -m
-         total        used        free      shared  buff/cache   available
-Mem:     867352        2578      864037          11         735  861681
-Swap:    4095           0        4095
-
-Memory usage after the driver which include 4 HBAs is loaded:
-$ insmod hisi_sas_v3_hw.ko
-$ free -m
-         total        used        free      shared  buff/cache	available
-Mem:     867352        4760      861848          11	  743   859495
-Swap:    4095           0        4095
-
-The driver with 4 HBAs connected will allocate about 110 MB of memory
-without enabling debugfs.
-
-Therefore, to avoid wasting memory resources, DFX memory is allocated
-during dump triggering. The dump may fail due to memory allocation
-failure. After this change, each dump costs about 10 MB of memory, and each
-dump lasts about 100 ms.
+Call register snapshot directly instead of through a workqueue.
 
 Signed-off-by: Yihang Li <liyihang9@huawei.com>
 Signed-off-by: Xiang Chen <chenxiang66@hisilicon.com>
-Link: https://lore.kernel.org/r/1694571327-78697-4-git-send-email-chenxiang66@hisilicon.com
+Link: https://lore.kernel.org/r/1694571327-78697-3-git-send-email-chenxiang66@hisilicon.com
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Stable-dep-of: 9f564f15f884 ("scsi: hisi_sas: Create all dump files during debugfs initialization")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/hisi_sas/hisi_sas.h       |   2 +-
- drivers/scsi/hisi_sas/hisi_sas_v3_hw.c | 113 +++++++++++++------------
- 2 files changed, 62 insertions(+), 53 deletions(-)
+ drivers/scsi/hisi_sas/hisi_sas.h       |  1 -
+ drivers/scsi/hisi_sas/hisi_sas_main.c  |  7 +++++--
+ drivers/scsi/hisi_sas/hisi_sas_v3_hw.c | 14 +++-----------
+ 3 files changed, 8 insertions(+), 14 deletions(-)
 
 diff --git a/drivers/scsi/hisi_sas/hisi_sas.h b/drivers/scsi/hisi_sas/hisi_sas.h
-index 2885ea87fd1eb..b0f3110c60558 100644
+index 423af1dc36487..2885ea87fd1eb 100644
 --- a/drivers/scsi/hisi_sas/hisi_sas.h
 +++ b/drivers/scsi/hisi_sas/hisi_sas.h
-@@ -342,7 +342,7 @@ struct hisi_sas_hw {
- 				u8 reg_index, u8 reg_count, u8 *write_data);
- 	void (*wait_cmds_complete_timeout)(struct hisi_hba *hisi_hba,
- 					   int delay_ms, int timeout_ms);
--	void (*debugfs_snapshot_regs)(struct hisi_hba *hisi_hba);
-+	int (*debugfs_snapshot_regs)(struct hisi_hba *hisi_hba);
- 	int complete_hdr_size;
- 	struct scsi_host_template *sht;
- };
+@@ -450,7 +450,6 @@ struct hisi_hba {
+ 	const struct hisi_sas_hw *hw;	/* Low level hw interface */
+ 	unsigned long sata_dev_bitmap[BITS_TO_LONGS(HISI_SAS_MAX_DEVICES)];
+ 	struct work_struct rst_work;
+-	struct work_struct debugfs_work;
+ 	u32 phy_state;
+ 	u32 intr_coal_ticks;	/* Time of interrupt coalesce in us */
+ 	u32 intr_coal_count;	/* Interrupt count to coalesce */
+diff --git a/drivers/scsi/hisi_sas/hisi_sas_main.c b/drivers/scsi/hisi_sas/hisi_sas_main.c
+index e13fa623ff5a6..85d544e016a61 100644
+--- a/drivers/scsi/hisi_sas/hisi_sas_main.c
++++ b/drivers/scsi/hisi_sas/hisi_sas_main.c
+@@ -1907,8 +1907,11 @@ static bool hisi_sas_internal_abort_timeout(struct sas_task *task,
+ 	struct hisi_hba *hisi_hba = dev_to_hisi_hba(device);
+ 	struct hisi_sas_internal_abort_data *timeout = data;
+ 
+-	if (hisi_sas_debugfs_enable && hisi_hba->debugfs_itct[0].itct)
+-		queue_work(hisi_hba->wq, &hisi_hba->debugfs_work);
++	if (hisi_sas_debugfs_enable && hisi_hba->debugfs_itct[0].itct) {
++		down(&hisi_hba->sem);
++		hisi_hba->hw->debugfs_snapshot_regs(hisi_hba);
++		up(&hisi_hba->sem);
++	}
+ 
+ 	if (task->task_state_flags & SAS_TASK_STATE_DONE) {
+ 		pr_err("Internal abort: timeout %016llx\n",
 diff --git a/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c b/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
-index 13019517e8469..c3d4c7e26b492 100644
+index 63db4a2ea7ba7..13019517e8469 100644
 --- a/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
 +++ b/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
-@@ -554,7 +554,7 @@ static int prot_mask;
+@@ -554,7 +554,6 @@ static int prot_mask;
  module_param(prot_mask, int, 0444);
  MODULE_PARM_DESC(prot_mask, " host protection capabilities mask, def=0x0 ");
  
--static void debugfs_snapshot_regs_v3_hw(struct hisi_hba *hisi_hba);
-+static int debugfs_snapshot_regs_v3_hw(struct hisi_hba *hisi_hba);
+-static void debugfs_work_handler_v3_hw(struct work_struct *work);
+ static void debugfs_snapshot_regs_v3_hw(struct hisi_hba *hisi_hba);
  
  static u32 hisi_sas_read32(struct hisi_hba *hisi_hba, u32 off)
- {
-@@ -3774,37 +3774,6 @@ static void debugfs_create_files_v3_hw(struct hisi_hba *hisi_hba)
- 			    &debugfs_ras_v3_hw_fops);
- }
+@@ -3311,7 +3310,6 @@ hisi_sas_shost_alloc_pci(struct pci_dev *pdev)
+ 	hisi_hba = shost_priv(shost);
  
--static void debugfs_snapshot_regs_v3_hw(struct hisi_hba *hisi_hba)
--{
--	int debugfs_dump_index = hisi_hba->debugfs_dump_index;
--	struct device *dev = hisi_hba->dev;
--	u64 timestamp = local_clock();
--
--	if (debugfs_dump_index >= hisi_sas_debugfs_dump_count) {
--		dev_warn(dev, "dump count exceeded!\n");
--		return;
--	}
--
--	do_div(timestamp, NSEC_PER_MSEC);
--	hisi_hba->debugfs_timestamp[debugfs_dump_index] = timestamp;
--
--	debugfs_snapshot_prepare_v3_hw(hisi_hba);
--
--	debugfs_snapshot_global_reg_v3_hw(hisi_hba);
--	debugfs_snapshot_port_reg_v3_hw(hisi_hba);
--	debugfs_snapshot_axi_reg_v3_hw(hisi_hba);
--	debugfs_snapshot_ras_reg_v3_hw(hisi_hba);
--	debugfs_snapshot_cq_reg_v3_hw(hisi_hba);
--	debugfs_snapshot_dq_reg_v3_hw(hisi_hba);
--	debugfs_snapshot_itct_reg_v3_hw(hisi_hba);
--	debugfs_snapshot_iost_reg_v3_hw(hisi_hba);
--
--	debugfs_create_files_v3_hw(hisi_hba);
--
--	debugfs_snapshot_restore_v3_hw(hisi_hba);
--	hisi_hba->debugfs_dump_index++;
--}
--
- static ssize_t debugfs_trigger_dump_v3_hw_write(struct file *file,
- 						const char __user *user_buf,
- 						size_t count, loff_t *ppos)
-@@ -3812,9 +3781,6 @@ static ssize_t debugfs_trigger_dump_v3_hw_write(struct file *file,
- 	struct hisi_hba *hisi_hba = file->f_inode->i_private;
- 	char buf[8];
- 
--	if (hisi_hba->debugfs_dump_index >= hisi_sas_debugfs_dump_count)
--		return -EFAULT;
--
- 	if (count > 8)
+ 	INIT_WORK(&hisi_hba->rst_work, hisi_sas_rst_work_handler);
+-	INIT_WORK(&hisi_hba->debugfs_work, debugfs_work_handler_v3_hw);
+ 	hisi_hba->hw = &hisi_sas_v3_hw;
+ 	hisi_hba->pci_dev = pdev;
+ 	hisi_hba->dev = dev;
+@@ -3826,7 +3824,9 @@ static ssize_t debugfs_trigger_dump_v3_hw_write(struct file *file,
+ 	if (buf[0] != '1')
  		return -EFAULT;
  
-@@ -3825,7 +3791,10 @@ static ssize_t debugfs_trigger_dump_v3_hw_write(struct file *file,
- 		return -EFAULT;
- 
- 	down(&hisi_hba->sem);
--	debugfs_snapshot_regs_v3_hw(hisi_hba);
-+	if (debugfs_snapshot_regs_v3_hw(hisi_hba)) {
-+		up(&hisi_hba->sem);
-+		return -EFAULT;
-+	}
- 	up(&hisi_hba->sem);
+-	queue_work(hisi_hba->wq, &hisi_hba->debugfs_work);
++	down(&hisi_hba->sem);
++	debugfs_snapshot_regs_v3_hw(hisi_hba);
++	up(&hisi_hba->sem);
  
  	return count;
-@@ -4583,22 +4552,34 @@ static void debugfs_release_v3_hw(struct hisi_hba *hisi_hba, int dump_index)
- 	int i;
- 
- 	devm_kfree(dev, hisi_hba->debugfs_iost_cache[dump_index].cache);
-+	hisi_hba->debugfs_iost_cache[dump_index].cache = NULL;
- 	devm_kfree(dev, hisi_hba->debugfs_itct_cache[dump_index].cache);
-+	hisi_hba->debugfs_itct_cache[dump_index].cache = NULL;
- 	devm_kfree(dev, hisi_hba->debugfs_iost[dump_index].iost);
-+	hisi_hba->debugfs_iost[dump_index].iost = NULL;
- 	devm_kfree(dev, hisi_hba->debugfs_itct[dump_index].itct);
-+	hisi_hba->debugfs_itct[dump_index].itct = NULL;
- 
--	for (i = 0; i < hisi_hba->queue_count; i++)
-+	for (i = 0; i < hisi_hba->queue_count; i++) {
- 		devm_kfree(dev, hisi_hba->debugfs_dq[dump_index][i].hdr);
-+		hisi_hba->debugfs_dq[dump_index][i].hdr = NULL;
-+	}
- 
--	for (i = 0; i < hisi_hba->queue_count; i++)
-+	for (i = 0; i < hisi_hba->queue_count; i++) {
- 		devm_kfree(dev,
- 			   hisi_hba->debugfs_cq[dump_index][i].complete_hdr);
-+		hisi_hba->debugfs_cq[dump_index][i].complete_hdr = NULL;
-+	}
- 
--	for (i = 0; i < DEBUGFS_REGS_NUM; i++)
-+	for (i = 0; i < DEBUGFS_REGS_NUM; i++) {
- 		devm_kfree(dev, hisi_hba->debugfs_regs[dump_index][i].data);
-+		hisi_hba->debugfs_regs[dump_index][i].data = NULL;
-+	}
- 
--	for (i = 0; i < hisi_hba->n_phy; i++)
-+	for (i = 0; i < hisi_hba->n_phy; i++) {
- 		devm_kfree(dev, hisi_hba->debugfs_port_reg[dump_index][i].data);
-+		hisi_hba->debugfs_port_reg[dump_index][i].data = NULL;
-+	}
+ }
+@@ -4577,14 +4577,6 @@ static void debugfs_fifo_init_v3_hw(struct hisi_hba *hisi_hba)
+ 	}
  }
  
- static const struct hisi_sas_debugfs_reg *debugfs_reg_array_v3_hw[DEBUGFS_REGS_NUM] = {
-@@ -4611,7 +4592,7 @@ static int debugfs_alloc_v3_hw(struct hisi_hba *hisi_hba, int dump_index)
- {
- 	const struct hisi_sas_hw *hw = hisi_hba->hw;
- 	struct device *dev = hisi_hba->dev;
--	int p, c, d, r, i;
-+	int p, c, d, r;
- 	size_t sz;
- 
- 	for (r = 0; r < DEBUGFS_REGS_NUM; r++) {
-@@ -4691,11 +4672,48 @@ static int debugfs_alloc_v3_hw(struct hisi_hba *hisi_hba, int dump_index)
- 
- 	return 0;
- fail:
--	for (i = 0; i < hisi_sas_debugfs_dump_count; i++)
--		debugfs_release_v3_hw(hisi_hba, i);
-+	debugfs_release_v3_hw(hisi_hba, dump_index);
- 	return -ENOMEM;
- }
- 
-+static int debugfs_snapshot_regs_v3_hw(struct hisi_hba *hisi_hba)
-+{
-+	int debugfs_dump_index = hisi_hba->debugfs_dump_index;
-+	struct device *dev = hisi_hba->dev;
-+	u64 timestamp = local_clock();
-+
-+	if (debugfs_dump_index >= hisi_sas_debugfs_dump_count) {
-+		dev_warn(dev, "dump count exceeded!\n");
-+		return -EINVAL;
-+	}
-+
-+	if (debugfs_alloc_v3_hw(hisi_hba, debugfs_dump_index)) {
-+		dev_warn(dev, "failed to alloc memory\n");
-+		return -ENOMEM;
-+	}
-+
-+	do_div(timestamp, NSEC_PER_MSEC);
-+	hisi_hba->debugfs_timestamp[debugfs_dump_index] = timestamp;
-+
-+	debugfs_snapshot_prepare_v3_hw(hisi_hba);
-+
-+	debugfs_snapshot_global_reg_v3_hw(hisi_hba);
-+	debugfs_snapshot_port_reg_v3_hw(hisi_hba);
-+	debugfs_snapshot_axi_reg_v3_hw(hisi_hba);
-+	debugfs_snapshot_ras_reg_v3_hw(hisi_hba);
-+	debugfs_snapshot_cq_reg_v3_hw(hisi_hba);
-+	debugfs_snapshot_dq_reg_v3_hw(hisi_hba);
-+	debugfs_snapshot_itct_reg_v3_hw(hisi_hba);
-+	debugfs_snapshot_iost_reg_v3_hw(hisi_hba);
-+
-+	debugfs_create_files_v3_hw(hisi_hba);
-+
-+	debugfs_snapshot_restore_v3_hw(hisi_hba);
-+	hisi_hba->debugfs_dump_index++;
-+
-+	return 0;
-+}
-+
- static void debugfs_phy_down_cnt_init_v3_hw(struct hisi_hba *hisi_hba)
- {
- 	struct dentry *dir = debugfs_create_dir("phy_down_cnt",
-@@ -4782,7 +4800,6 @@ static void debugfs_exit_v3_hw(struct hisi_hba *hisi_hba)
- static void debugfs_init_v3_hw(struct hisi_hba *hisi_hba)
- {
- 	struct device *dev = hisi_hba->dev;
--	int i;
- 
- 	hisi_hba->debugfs_dir = debugfs_create_dir(dev_name(dev),
- 						   hisi_sas_debugfs_dir);
-@@ -4799,14 +4816,6 @@ static void debugfs_init_v3_hw(struct hisi_hba *hisi_hba)
- 
- 	debugfs_phy_down_cnt_init_v3_hw(hisi_hba);
- 	debugfs_fifo_init_v3_hw(hisi_hba);
+-static void debugfs_work_handler_v3_hw(struct work_struct *work)
+-{
+-	struct hisi_hba *hisi_hba =
+-		container_of(work, struct hisi_hba, debugfs_work);
 -
--	for (i = 0; i < hisi_sas_debugfs_dump_count; i++) {
--		if (debugfs_alloc_v3_hw(hisi_hba, i)) {
--			debugfs_exit_v3_hw(hisi_hba);
--			dev_dbg(dev, "failed to init debugfs!\n");
--			break;
--		}
--	}
- }
- 
- static int
+-	debugfs_snapshot_regs_v3_hw(hisi_hba);
+-}
+-
+ static void debugfs_release_v3_hw(struct hisi_hba *hisi_hba, int dump_index)
+ {
+ 	struct device *dev = hisi_hba->dev;
 -- 
 2.53.0
 
