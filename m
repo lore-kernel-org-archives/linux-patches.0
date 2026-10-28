@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213414;
-	b=MUOAfjSebN+DuGl9NzlyP6EQEqaHJxlkDKqco6A5QOUaqMlAx4nPgmyQwXzHeDi5kFbb
-	 6aufPtLG2lImnkcF3ciLxVuG3fa+zN4q56OoNF/Eox1hQcdFBOhyoH158hAPNcHzqo3wB
-	 VUVM3Z6DpcwYRZz5fWgI2Q2Q0x4G2FPJC5tP5Vf9fvoP0/Et0lRetJtPAQvygo162mxPn
-	 YL0UJFUUBIpyoMuCXSlTPBP+xJnQFFfDFEuAnd5eeL+NQlcva6InLoItgJwW6BH1hT++A
-	 UG/O9v3fizlA325gFIpjfKn11DHxIA1KtIfJsi1M6kYoYBHjCOlznEQB2NthgdayZSA==
+	t=1793213416;
+	b=SJ76rz+GGBs8OuX0zVvUN6N4IRLeEAViNwW+gU1PyYUD6rSnmA7f/EvUwGODSD/Dvp2+
+	 cfZpsKoLJQp6M72Z3hsf7qLxJNT+lLaePQ8C8ohsqMwr361k1hGM0lsC9cg6jHzFTbBFC
+	 Sz0U5ZZrGhZt3vL2aQtvOC8Sjgqnzo/BCAGI5/E9pml2vF8QbHoKepciiASli/NYyrj85
+	 UTjZbrZXsCg27e0HYbnpoSGmD3MXOhzyT89QGJgUt94MLndX9pKhDjHG76ZYmRB9FuMzf
+	 SQQnLqY+QJ+Q9H56yLFB4Xa4GjLujYy5K7ZTtCIfalK3Zg4Ne6a3eqMuze87M3n4mbg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213414;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213416;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=zhV8ZhRBlHLhmquwd1lUSYQDaIaBnjr1TCFOAKZEPI4=;
-	b=esU69W8V3pDleCYg4lGL5KBhsYicyu47WOWaAJLejdRTMqzLuv1K/rL9xpJ77DexRcPR
-	 7d2CBpLbFKgRe0FG9Z0fTGw5/GWfgKyTZmiUy/ttMEC1iFyYSA2H0iKGBWg0nqhSvFlkI
-	 oHVbIrMuUR+k51OONsPoX05kTyxilFzDbsOIJkgyRCeE2vsyK6oEXRJbc2JbUR8n79y7/
-	 BCKUsaz3XOZurww7qVsNUOijG5YECBZpXFHZt0o6kv2uL3nypdArJcEz9MUE41HWi0SUe
-	 tWTn8alZVaAbJrAg0uuoFUGbyc9qFIriFeNvJY+e25onqJpBetqY0Sj87zv89p64Kbw==
+	bh=OepfVAuo+rkCNB/0GsG7cAjhMhuGCd1cW18qFjD20U4=;
+	b=5BEJJohbkfIUmzsvaMWC7TBlyuoHnUk/An8xaTgjci0jV7TEMlyj0aEEeMCEB/AgcnXi
+	 dJ4UwaeZVUeUVxkONuwp8WYNxZKvg1hDgCr+CEih15RUICn/igFVx+W3EISu7K8CLeQuZ
+	 gFAfSR/JJnZulSJFttdBuxddCR/LRfbQhW1K7XpQibK68mPJuKtMFPfz3Nci+WazkwCPj
+	 3pfvfZ3+RLmiQTCAN3OymxPs0r7RszMUaOVh7dlZhrdux+xqPNgoOWbBkKetYShKIy6nj
+	 WGkV6Dj/qGuZuJMn1h6HJVAftggKvpuCr5k8o7Sa6NRQFO4ALpEXOHdO36u6t8erv6A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MbqvhFBg;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hV5IGGTM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC2DB606A31A;
-	Wed, 28 Oct 2026 18:50:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D32C606A31C;
+	Wed, 28 Oct 2026 18:50:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MbqvhFBg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2945E1F01825;
-	Wed, 28 Oct 2026 18:50:12 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hV5IGGTM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECB3A1F01825;
+	Wed, 28 Oct 2026 18:50:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213413;
-	bh=zhV8ZhRBlHLhmquwd1lUSYQDaIaBnjr1TCFOAKZEPI4=;
+	s=korg; t=1793213416;
+	bh=OepfVAuo+rkCNB/0GsG7cAjhMhuGCd1cW18qFjD20U4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MbqvhFBgk3yQS5++PRQVWV8WU1sDAyZJTBwAsBRN4mSQe8FFSomtv/0D4mD3K9Cof
-	 k+7Yjoh0zrhEF3bFdpNiC/pJ0H1UG/mLnoUtE2eI5zsfPPLausyMwcut4ei9HEXloS
-	 2tKq9UGeXEtPAWAXrkee4Pb6M5Mf6UEHXfQljO0Q=
+	b=hV5IGGTMp3lY1L9j/jPxsTFX4yyc3tddS93vGdjNsAIS8YHgi1Pv8WXdGgt7U18F5
+	 AA50v6CYobleplXkIFT/vaPtbR0Qm8Ik0wxXXaMlojvZzkpE7bEkLgCFfrTLtskn6M
+	 ee5xr4j8V7azqhEuPIUFRWnFG4xYOAFGNFaF6jtM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tomas Winkler <tomas.winkler@intel.com>,
-	Alexander Usyskin <alexander.usyskin@intel.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Zhang Xiaoxu <zhangxiaoxu5@huawei.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 6.1 0498/1887] mtd: Clean refcounting with MTD_PARTITIONED_MASTER
-Date: Wed, 28 Oct 2026 17:43:14 +0100
-Message-ID: <20261028170510.621969547@linuxfoundation.org>
+	Tomas Winkler <tomas.winkler@intel.com>,
+	Alexander Usyskin <alexander.usyskin@intel.com>
+Subject: [PATCH 6.1 0499/1887] mtd: fix use-after-free in mtd release
+Date: Wed, 28 Oct 2026 17:43:15 +0100
+Message-ID: <20261028170510.646028756@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,66 +69,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miquel Raynal <miquel.raynal@bootlin.com>
+From: Alexander Usyskin <alexander.usyskin@intel.com>
 
-commit 264725e35fbc3b67e053a405e022393a6017e6da upstream.
+commit e9714c22c1a8238a85d069b1517941fc723312f7 upstream.
 
-The logic is way too convoluted, let's clean the kref_get/put section to
-clarify what this block does when using CONFIG_MTD_PARTITIONED_MASTER:
-- Iterate through all the parent mtd devices
-- Grab a reference over them all but the master
-- Only grab the master whith CONFIG_MTD_PARTITIONED_MASTER
-Same logic must apply in the put path, otherwise it would be broken.
+I case of partition device_unregister() in mtd_device_release()
+calls mtd_release() which frees mtd_info structure for partition.
+All code after device_unregister in mtd_device_release thus
+uses already freed memory.
 
-Cc: Tomas Winkler <tomas.winkler@intel.com>
-Cc: Alexander Usyskin <alexander.usyskin@intel.com>
+Move part of code to mtd_release() and restict mtd->dev cleanup
+to non-partion object.
+For partition object such cleanup have no sense as partition
+mtd_info is removed.
+
+Cc: Miquel Raynal <miquel.raynal@bootlin.com>
 Cc: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
 Fixes: 19bfa9ebebb5 ("mtd: use refcount to prevent corruption")
+Reviewed-by: Tomas Winkler <tomas.winkler@intel.com>
+Signed-off-by: Alexander Usyskin <alexander.usyskin@intel.com>
 Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Tested-by: Alexander Usyskin <alexander.usyskin@intel.com>
-Link: https://lore.kernel.org/linux-mtd/20230731090903.770277-1-miquel.raynal@bootlin.com
+Link: https://lore.kernel.org/linux-mtd/20230731115836.542747-1-alexander.usyskin@intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/mtdcore.c |   17 ++++++++++-------
- 1 file changed, 10 insertions(+), 7 deletions(-)
+ drivers/mtd/mtdcore.c |   16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
 
 --- a/drivers/mtd/mtdcore.c
 +++ b/drivers/mtd/mtdcore.c
-@@ -1221,14 +1221,15 @@ int __get_mtd_device(struct mtd_info *mt
- 		return -ENODEV;
- 	}
+@@ -92,6 +92,9 @@ static void mtd_release(struct device *d
+ 	struct mtd_info *mtd = dev_get_drvdata(dev);
+ 	dev_t index = MTD_DEVT(mtd->index);
  
--	kref_get(&mtd->refcnt);
--
--	while (mtd->parent) {
--		if (IS_ENABLED(CONFIG_MTD_PARTITIONED_MASTER) || mtd->parent != master)
--			kref_get(&mtd->parent->refcnt);
-+	while (mtd) {
-+		if (mtd != master)
-+			kref_get(&mtd->refcnt);
- 		mtd = mtd->parent;
- 	}
- 
-+	if (IS_ENABLED(CONFIG_MTD_PARTITIONED_MASTER))
-+		kref_get(&master->refcnt);
++	idr_remove(&mtd_idr, mtd->index);
++	of_node_put(mtd_get_of_node(mtd));
 +
- 	return 0;
- }
- EXPORT_SYMBOL_GPL(__get_mtd_device);
-@@ -1312,10 +1313,12 @@ void __put_mtd_device(struct mtd_info *m
+ 	if (mtd_is_partition(mtd))
+ 		release_mtd_partition(mtd);
+ 
+@@ -102,6 +105,7 @@ static void mtd_release(struct device *d
+ static void mtd_device_release(struct kref *kref)
  {
- 	struct mtd_info *master = mtd_get_master(mtd);
+ 	struct mtd_info *mtd = container_of(kref, struct mtd_info, refcnt);
++	bool is_partition = mtd_is_partition(mtd);
  
--	while (mtd != master) {
-+	while (mtd) {
-+		/* kref_put() can relese mtd, so keep a reference mtd->parent */
- 		struct mtd_info *parent = mtd->parent;
+ 	debugfs_remove_recursive(mtd->dbg.dfs_dir);
  
--		kref_put(&mtd->refcnt, mtd_device_release);
-+		if (mtd != master)
-+			kref_put(&mtd->refcnt, mtd_device_release);
- 		mtd = parent;
- 	}
+@@ -110,11 +114,13 @@ static void mtd_device_release(struct kr
  
+ 	device_unregister(&mtd->dev);
+ 
+-	/* Clear dev so mtd can be safely re-registered later if desired */
+-	memset(&mtd->dev, 0, sizeof(mtd->dev));
+-
+-	idr_remove(&mtd_idr, mtd->index);
+-	of_node_put(mtd_get_of_node(mtd));
++	/*
++	 *  Clear dev so mtd can be safely re-registered later if desired.
++	 *  Should not be done for partition,
++	 *  as it was already destroyed in device_unregister().
++	 */
++	if (!is_partition)
++		memset(&mtd->dev, 0, sizeof(mtd->dev));
+ 
+ 	module_put(THIS_MODULE);
+ }
 
 
