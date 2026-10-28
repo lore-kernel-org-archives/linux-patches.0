@@ -1,59 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793211322;
-	b=g4QrFk3fPodRLMITVv61PjzLwv6R+zO5zSwqSyH/SO5e6yHAFtGQC1aw2Bs2y5QZfxCO
-	 nhF7aMsnOABC97gz2/NGi7CFbGa7/hiDw44jOBQadoPK2eNzA5WUieqWDXM9SgK1cmyci
-	 /txj7yU4ilYwKhtfO5AlRFXCfSwAcqUbtgE/NUBayEbtgdGjcHiJmaWZp9Ry+oomIyIid
-	 ZSzaBUj/UOHvcVsj35qY7zcxteL0PmojN3o/JdWloquMdxwp50xapZ/1iZ5ClRcnns3LT
-	 /xxJ8BsilA8C7W33WDapOtdJj7XNsFqtNYagGtapnZyhqapkjL4ynAwjlRxTUDCdqdg==
+	t=1793211326;
+	b=BVVvxnRoVfW8q4741JcXjPpHW6ss1ONxsUIKAZIOdpUjz+DPU/RIJxQvw0/rToovSCVs
+	 BhDkSJLiMWotRWL8/abRhKdn+opkcvjHd0/3CHeGbnQnIsxEKfAYsdVDY3tR7PChgWbQT
+	 7LhHymEPBMCIJiqq4wv7z8ekp37C1YIqknoHoqRYS3PrVcwHPPhLNxAYriiUMG5wg40Mg
+	 /Sv7xFifa54fqrELzMoC07eSNgFa3mK4OIAhO8jiX8WPPkAguNnHIDQHBxh7SQEh4+SDY
+	 i4OYsBpa5m1XwcmE1x1vdulxDTzL4AUQ5WPNVPF2zIkKrrSWzGYfbrCguhR6lPYMezg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793211322;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793211326;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=dCbbW/+Y9uwRRwEZgS+yaLwLiL6WGu2S4v5rIdwzx3Y=;
-	b=EGxDwy7apv6TuskdDUEmW6CVC03raCUTNhNJOD5Ad+11awWyE29i2Khl0F8twBeMJpNW
-	 6GN/kzo7W/dGVpqdzsNlEFOGTB4vImaRadIfDD5Ews6FI5KKt0QHDn/55Y1Mim7I91X9p
-	 Haf6IDp4puRzUSr7BVeLPRw/f4xh6ObQ3IaXfHZnQRvMQJ9m+rgK1XrR2TPaV971fAQvp
-	 nOCnfSBVrBrbIKb3978Sv4iKADraYdsQVIaVKVZcejplqI9Neei3JfrNYNWDqih2xahXT
-	 1MUAyRsQmJAYQhezHFvSSjGqIwPE7LkDkqvnx8Ahffe/B+slzaqrk2K9vaWL10+hQJw==
+	bh=bt7IckuvYmhZq7jOYCLhj+vFwkIpBNeizH/t/b07A2Y=;
+	b=RlpYDFWgr6/rAofsgyUlR6SCWGBCq/QoD7mrNi/wptAcmDyKiGEwPBoCIzxRjKUIbI+k
+	 6LtNn2YsdogtQzOkxu3aGHqbw3OyNfaGDXF9KGVd2WfRhVoPvLUQqlU0y4ZQT0E2UDRQ9
+	 2x0lVuHwUraGFKkx7pr1b7zsR1n1P3PKBRqEkoucGYj9gToik/uS1Nn5jZoNGyPwOTgYt
+	 RqU0dy3spF33h28ye2Q0Uypp6bRf7/gmnDrglTbuCBmhVBDGCxyftnBmNmiVOmPFkzEXo
+	 nyp9HeZDyFbS8V0jN0lp8sk2V2WG+xknkSlEzRm3ilYsvKZWdi7neWzEibAj/YSXNvQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CxajyLwC;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="eMTWymF/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83552606A333;
-	Wed, 28 Oct 2026 18:15:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EF0F606A32E;
+	Wed, 28 Oct 2026 18:15:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CxajyLwC
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB3BD1F01825;
-	Wed, 28 Oct 2026 18:15:21 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eMTWymF/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93D711F01825;
+	Wed, 28 Oct 2026 18:15:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793211322;
-	bh=dCbbW/+Y9uwRRwEZgS+yaLwLiL6WGu2S4v5rIdwzx3Y=;
+	s=korg; t=1793211325;
+	bh=bt7IckuvYmhZq7jOYCLhj+vFwkIpBNeizH/t/b07A2Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CxajyLwC9thlbVPsOW9hF2zTSrkv7xjQoQ4DccCdtFui/1tddhbJP0mHr002bDnzw
-	 lLxiO6eKaTxFc+b6qE81yT/ZDTJIeNGBMMWqE21ncDmN3NxbTVrL+wHYFKZTAYMLj/
-	 W9TaiayjdRgzKY7m07ADi0cZ2BSwxfWDrtfFf4TE=
+	b=eMTWymF/ykB8luc1b4RAvh7/NMG/TTA0iTDvXiHhbDkhNPEbazH9znnFEOu6ilCfn
+	 HwzqH2EUkj7rHkVUyUDtPZT7vwnHw7a5TslQmj9nQtToATjLlgtFtHp4Ja689R1uN7
+	 weaCHDbKW4Tk6yGUYDhqXX0FUqpzZFy4Bna1Apk4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Paulo Alcantara <pc@manguebit.org>,
-	Christian Brauner <brauner@kernel.org>,
-	Matthew Wilcox <willy@infradead.org>,
-	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
-	Shyam Prasad N <sprasad@microsoft.com>,
-	Tom Talpey <tom@talpey.com>,
-	Bharath SM <bharathsm@microsoft.com>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 337/571] smb: client: discard post-EOF pagecache when extending a file via zero range
-Date: Wed, 28 Oct 2026 17:58:04 +0100
-Message-ID: <20261028170016.009935633@linuxfoundation.org>
+Subject: [PATCH 5.15 338/571] iio: adc: aspeed: propagate reset deassert errors
+Date: Wed, 28 Oct 2026 17:58:05 +0100
+Message-ID: <20261028170016.037032537@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -75,53 +68,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.org>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit da4fe97fb6c730d9c94a115c7bfa6f98e0d578d0 ]
+[ Upstream commit 95e4eb426b4bd666fa2f37886c0ddf74a0cc6167 ]
 
-smb3_zero_range() removed the pagecache only for the range being zeroed,
-so when it extends the file the folio straddling the old EOF - which may
-hold data dirtied past EOF through an mmap - was never dropped and became
-visible as file content once the file was extended.
+aspeed_adc_probe() continues to register ADC resources after deasserting
+the shared reset, even if the reset controller reports a failure.
 
-Lower the discard boundary to the smaller of the zero-range offset and the
-old EOF.
+A failed deassertion leaves the hardware unavailable, so stop probing
+before installing the cleanup action and enabling the ADC.
 
-Fixes: 72c419d9b073 ("cifs: fix smb3_zero_range so it can expand the file-size when required")
-Reviewed-by: David Howells <dhowells@redhat.com>
-Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
-Cc: Christian Brauner <brauner@kernel.org>
-Cc: Matthew Wilcox <willy@infradead.org>
-Cc: Ronnie Sahlberg <ronniesahlberg@gmail.com>
-Cc: Shyam Prasad N <sprasad@microsoft.com>
-Cc: Tom Talpey <tom@talpey.com>
-Cc: Bharath SM <bharathsm@microsoft.com>
+Fixes: edf7550a1f93 ("iio: adc: aspeed: Deassert reset in probe")
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
 Cc: stable@vger.kernel.org
-[ sashal: Replaced the unavailable local i_size variable with i_size_read(inode). ]
+Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+[ sashal: Replaced `return ret` with `goto reset_error` to accommodate manual clock cleanup. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/cifs/smb2ops.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/iio/adc/aspeed_adc.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/fs/cifs/smb2ops.c b/fs/cifs/smb2ops.c
-index deed3b5e78065..2f5c446de223c 100644
---- a/fs/cifs/smb2ops.c
-+++ b/fs/cifs/smb2ops.c
-@@ -3601,8 +3601,12 @@ static long smb3_zero_range(struct file *file, struct cifs_tcon *tcon,
- 	/*
- 	 * We zero the range through ioctl, so we need remove the page caches
- 	 * first, otherwise the data may be inconsistent with the server.
-+	 *
-+	 * Start at the old EOF when extending so the folio straddling it, which
-+	 * may hold data written past EOF through an mmap, is dropped too.
- 	 */
--	truncate_pagecache_range(inode, offset, offset + len - 1);
-+	truncate_pagecache_range(inode, min(offset, i_size_read(inode)),
-+				 offset + len - 1);
+diff --git a/drivers/iio/adc/aspeed_adc.c b/drivers/iio/adc/aspeed_adc.c
+index 34ec0c28b2dff..012cc9291bef3 100644
+--- a/drivers/iio/adc/aspeed_adc.c
++++ b/drivers/iio/adc/aspeed_adc.c
+@@ -221,7 +221,9 @@ static int aspeed_adc_probe(struct platform_device *pdev)
+ 		ret = PTR_ERR(data->rst);
+ 		goto reset_error;
+ 	}
+-	reset_control_deassert(data->rst);
++	ret = reset_control_deassert(data->rst);
++	if (ret)
++		goto reset_error;
  
- 	/* if file not oplocked can't be sure whether asking to extend size */
- 	if (!CIFS_CACHE_READ(cifsi))
+ 	model_data = of_device_get_match_data(&pdev->dev);
+ 
 -- 
 2.53.0
 
