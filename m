@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793212968;
-	b=VMenkwXqVIxYMU3JKAXg9U8ZvSki8ppeXIx6j9zyCIy8EWrVVyP8uGf7UCVja3wn/vZh
-	 btb6qhMBDZCS6fZEM+U6S5I0tJ/ZV/XClN8+Hw5wt2rC+Uqp8ht9dkNyFWAHnzWPdJL8m
-	 MJY6I3vno+qTAUg7UEWsj+aGrYzNEQa2mKhK3P6AIkG1HTK/+ALGnLliKTfiL8ryJ3dBH
-	 gqq1QjET3dsWqvYA9fgX5ZD0ki/F+T9LJ2NdGJuoYbbn4F4htidg0YbLjYb+eCW2AM/Dg
-	 Z+lcxWnFWzey/0SFD3axmRkbwGCQyIWek4RkYEC9WOjiD62ukZHjRmpGWG4YTbd0hSw==
+	t=1793212971;
+	b=rHpGnkMdK0eC0xZN0Ckv7mw6WP4yaUU30eAbUK2US26w7MFSthxBI0kMVx5B9XBcMFoR
+	 Hb/Bb3K27paVWrp8NiXRyb3/rASmWC2zS5uKC6sGwBi/WwWdccuQH3CPC2jO+2u+U/6Rm
+	 C1koALTLceMohsqoP/zoP7yV9WWMAwfTNb0cABHErNr+5iuOkDUMntpsqeG45lLM4omgZ
+	 Oc0/ARLcjSwWRNUX+tsSya5He+DmJ5nIpELdMFrd0KpR522zuSnu2Ds+SoSQl+lrwsbIH
+	 3CNYMUaePFVFfm8WfAgLtCkKD2Rd7/MPw9zml/QKHdRyjR4PUEVNdunnCzhonLymkqw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793212968;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793212971;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Z5/8dQ0vE9PrNrxK485FB6RlyH8JiOEZ08yv/8cEC2k=;
-	b=GYuvAjmJesjacDZ7ShgrjS7OApG5S8tkU1Tdcb2BZ7f68k1RIqXstlgQQd+B3fsjB7/g
-	 t2txfa+ikUB2tnuDEFtVcJKi8+WFCd/DRKgFbQlPo1Mu0aMTfAt3wWNDQebAnm8+dVZS3
-	 MRgyLyl+ghZeTyXAN0yerby5G2j8iDoafAN2LaW05SBPR6kUfeDpuRXEhrdkKMTOnXeMX
-	 TmTFwfK8yh7xn8sQHmBCT77nd2lNe6t0Mw1m0VEyYmeIKUu+LVGK6c0e6qAJSBBnvXbEC
-	 IUP+bkes27ZJDf49XzsUQpM/fGj8c/tLJTDpMYWBG/HQHmNZkOGSnjeFu38P0prfZPw==
+	bh=LTVq1g+1JkmgYbFGG7DGf1X94nnqP3QFhH4yDLdCg/M=;
+	b=dcyU2ND/earYB76S6dfN0AiAsEM+ZZuNLxGrteickh7DAXfc5vRZpQEi43nlAzIltkAN
+	 lHTJnVSmfo9LQO55KNFi0EkRp4k66DtFwJyc3kyagSoapFR35eDJ3Qa0NxfHdSmolN+hG
+	 OKtj0MqxvvQE5QDp5z+HIG0HT0TP5yF0o/CvVKiIQ3pdXRqFntlEuzP/YdB82sPD4BSlP
+	 +0bLzi6e0wB5WVnlKW7nGq8VWmybIsT3u/lY0Eq4jY1fvRVOy1SR7/NyV3pu9mN9sR9u9
+	 mLBXb9k70jcKzEg6qUVJlwfF2b0Vfl2//tzox3USbWHQMK4ARmeqgOlKzw93RAit33A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=W80iYFIo;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MDUVIm99;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB5A8606A320;
-	Wed, 28 Oct 2026 18:42:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B087E606A31D;
+	Wed, 28 Oct 2026 18:42:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=W80iYFIo
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 374DB1F01825;
-	Wed, 28 Oct 2026 18:42:47 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MDUVIm99
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C9E21F01825;
+	Wed, 28 Oct 2026 18:42:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793212967;
-	bh=Z5/8dQ0vE9PrNrxK485FB6RlyH8JiOEZ08yv/8cEC2k=;
+	s=korg; t=1793212970;
+	bh=LTVq1g+1JkmgYbFGG7DGf1X94nnqP3QFhH4yDLdCg/M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=W80iYFIofIG8nLVNjY2YjM+bQWQLDQtGbAa5De1ZRZafBEjvLnWzxHgmbSEAo5ghk
-	 1EWFpFJoHRnUOUyhxQINEt7RAZwELs31td8sbkDQv+vBFNwpcLhmWiUB+B+UYyo2aD
-	 hs6/GWnjEd+ZjZqrrmV2ppACOGz1dZvEe3+QZQy8=
+	b=MDUVIm99KYD0rf1k4OvngmdUriGvk9ArYlgMCYe8N+OkW9/3bGdI2CrMGXwKqCi1m
+	 wkTJ3gwf1JHbkiSFSIO3oPmKGamUoPPss81sMGQ/ndU3G1OK3F3BVYdR4vp72nkij9
+	 J53KlbyJd0AqjlWriDTtfa9vV0sHtMn7gIUrdES0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Salah Triki <salah.triki@gmail.com>,
+	Arka Mondal <arkamondalofficial@gmail.com>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
 	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Subject: [PATCH 6.1 0338/1887] iio: frequency: admv1013: fix wrong channel field used in admv1013_read_raw()
-Date: Wed, 28 Oct 2026 17:40:34 +0100
-Message-ID: <20261028170506.919444912@linuxfoundation.org>
+Subject: [PATCH 6.1 0339/1887] iio: gyro: adis16136: fix unprotected debugfs reads
+Date: Wed, 28 Oct 2026 17:40:35 +0100
+Message-ID: <20261028170506.941599335@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -67,41 +68,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Salah Triki <salah.triki@gmail.com>
+From: Arka Mondal <arkamondalofficial@gmail.com>
 
-commit 2093236e886ad9446ec3285ba520e024dd1464e1 upstream.
+commit 2b498df75d6c29aa3e760127ae0f0003df598b53 upstream.
 
-admv1013_read_raw() switches on chan->channel instead of
-chan->channel2 when handling IIO_CHAN_INFO_CALIBBIAS. The channel
-field only ever holds 0 or 1 (see ADMV1013_CHAN_CALIB()), while the
-IIO_MOD_I / IIO_MOD_Q modifiers are stored in channel2. As a result,
-the switch always falls through to the default case and calibbias
-reads always fail with -EINVAL, even though the corresponding
-admv1013_write_raw() path correctly uses channel2 and works as
-expected.
+The serial_number file operations are open coded and never call
+debugfs_file_get(), which debugfs_create_file_unsafe() requires.
+debugfs_remove_recursive() therefore does not wait for a read in
+progress, and unbind frees the iio_dev underneath it.
 
-Fix the read path to switch on chan->channel2, matching the write
-path and the actual channel_spec definition.
+Use debugfs_create_file() instead.
 
-Fixes: da35a7b526d9 ("iio: frequency: admv1013: add support for ADMV1013")
-Signed-off-by: Salah Triki <salah.triki@gmail.com>
+Fixes: 9aaea09b4cbd ("gyro:adis16136: fix debugfs_simple_attr.cocci warnings")
+Signed-off-by: Arka Mondal <arkamondalofficial@gmail.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
 Cc: stable@vger.kernel.org
 Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/frequency/admv1013.c |    2 +-
+ drivers/iio/gyro/adis16136.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/iio/frequency/admv1013.c
-+++ b/drivers/iio/frequency/admv1013.c
-@@ -197,7 +197,7 @@ static int admv1013_read_raw(struct iio_
+--- a/drivers/iio/gyro/adis16136.c
++++ b/drivers/iio/gyro/adis16136.c
+@@ -145,7 +145,7 @@ static int adis16136_debugfs_init(struct
+ 	struct adis16136 *adis16136 = iio_priv(indio_dev);
+ 	struct dentry *d = iio_get_debugfs_dentry(indio_dev);
  
- 	switch (info) {
- 	case IIO_CHAN_INFO_CALIBBIAS:
--		switch (chan->channel) {
-+		switch (chan->channel2) {
- 		case IIO_MOD_I:
- 			addr = ADMV1013_REG_OFFSET_ADJUST_I;
- 			break;
+-	debugfs_create_file_unsafe("serial_number", 0400,
++	debugfs_create_file("serial_number", 0400,
+ 		d, adis16136, &adis16136_serial_fops);
+ 	debugfs_create_file_unsafe("product_id", 0400,
+ 		d, adis16136, &adis16136_product_id_fops);
 
 
