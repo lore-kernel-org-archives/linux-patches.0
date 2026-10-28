@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793211613;
-	b=4XntWjWx1jNdcITCtGjCk8KKWEw1NQufl/r1cQYfHp9Epw5Xvrntrpjjb3JFWb5XhEIE
-	 jv8AC6vB+A2gK6UTMSR3L0/YhkYXpcmiphhybIVdGAr5QKKK2cVpc8b6QxKqpDnwaBTAR
-	 /rbuRQFvpdk39HdkC+I6perYikOFqRFDVbV6zw8rgkG0iaNMn2h1MNJXQ5Jb/FDAoyMVe
-	 /oBvZeA7Qlygu+TtpEanEy4SjSgDyBYstAgUPlKIkHMyd3hFWYgJOTTTpJ8RJASdYjPO4
-	 N1D8ceiGEaz2svhA8gYThpMkdHTaD54k61KZQmf2lflZFxMQ5nBdE1oeNbWb3RhCdPw==
+	t=1793211615;
+	b=EZrUaKJXwNAIvKqtopZLDHelox3g8YhyE5LaRS/QV/bMiG2cm0hYEwHb9aEqiOWy7C63
+	 D9d5hFG6c802AXG0wMNwGdhr7S0fIVcwgVfcvW283KTZX5H2l/VxFKABQ+bGzrjaqcnIL
+	 yemzJUOdkrhmTAF0T+7sjuXpxyFSuD5Hdeto65HZW/vrmROZAapgGHScfghI47RtiHqSy
+	 VAUt6xt5S5boMp9oGbtiRnHdhDLO5wjFglZj9eYjmPWODqOiYIgIuTCOAe1QWzi78Zjia
+	 CFxAlQUzeBDCnBYZe2MJMp3WBy95m+Y+cXkzqnvOaScIjELw0j9q0LX1B794sTdSJhw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793211613;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793211615;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=OyY7396BhfFHlbo5OwBXgQDqPba0Gfxvusk2gk1gw8E=;
-	b=LwlHdBknQm4oy7p38ByNJhPiThYsiK8brquRIdDj+WosI7H+mP7jTH38sdY7zO0WUw9X
-	 NkhgMthVdUP5Oy2q4IcJ8XN810X+T60yu2XfgIEZ1YwuEh9SoQnwBIf+0tLLL+vJLbj7E
-	 K2QaQqLsqAVW5mNcohM2zWWskVQQN7hmfV0JOFjwfJJYv6I1IcEUYjeajTrtIkoz+R5w7
-	 c0AR7ivRMFYEJc7VDq4zqGHex2RT6jDd9Bh82qQJlwp5FFvV4uFmbEJa06WjSY/UWPInt
-	 3mogZYCUb8r4hJ2y9wv3kTYQFUGnDZsM+MKzZfgGlnLzuULPPf/A/5JNgXKP2TjheHw==
+	bh=PV2kQEV57V4KfJ1oSdyYHZXnGH+vCpT7lxpUDQBxgJY=;
+	b=1LDoKKWrRhA8ilg2zfehu1NoQ+J/Oo184mbnokaTzwq7Vf+3JKvk/uhsDPw+7JIguahy
+	 3kfWsnBfTjNwkKEheFBDIoghj1i8tIX++AgMwh9RIpibPdbCYV+7jTo3k3kESLUniJiIs
+	 gPVd1bQCNP27N0c92swuX8vFVYJR88c3bF/Qmv8hzVznbV4RH2B53qAzTW3tjQ7BOLxbm
+	 edNasOBX2gr018ohMD+WBSr2VbLwICJXKT2BToGwjBdO72j9CG88gzLdaQXRDEqs0AFrD
+	 PrfPR994PMj9WN9BWLq/Bug4jp3kveRZ/CHg2oOIn/vvFvoLaXHQ/vspHWHgYejomyA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MEf2tg1F;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="pvu/4sog";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0AD8606A31A;
-	Wed, 28 Oct 2026 18:20:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6563606A31C;
+	Wed, 28 Oct 2026 18:20:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MEf2tg1F
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D8531F01825;
-	Wed, 28 Oct 2026 18:20:11 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pvu/4sog
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F30FF1F01825;
+	Wed, 28 Oct 2026 18:20:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793211612;
-	bh=OyY7396BhfFHlbo5OwBXgQDqPba0Gfxvusk2gk1gw8E=;
+	s=korg; t=1793211615;
+	bh=PV2kQEV57V4KfJ1oSdyYHZXnGH+vCpT7lxpUDQBxgJY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MEf2tg1FTHpzR8tLKxNC3ElxpiVCLxVNH+AErPosjOvSzNg9OG4eOKNmfFH8iy+wd
-	 rXIbl1I/kPzrj/8X8xOoMkY0PQJUSOGlEQe7Tk2Vnbuxald28MjFTkMp7j3LD08H3V
-	 bfMZKNGMkILsbil3N0p9OIkZYv/UQKbx6QCR/faw=
+	b=pvu/4sogSILtStGCsiqbuMgSX/gtElxcWsnHZ8SemDC8gq5/AztlFItGGjeqHVYE3
+	 CKMyPyXRmHItYrC+EoEnWHmBcmdKK+atfu2K+SymuV7Dn9FlkGwKL5ZEaPC2XRVOFy
+	 q/05xgZ40v0ERpKbZstNfv0TpNGBUBz4napqua5I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikulas Patocka <mpatocka@redhat.com>,
-	syzbot+bdff1ecf726d2af66afd@syzkaller.appspotmail.com,
+	Shawn Lin <shawn.lin@rock-chips.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Ulf Hansson <ulfh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 439/571] dm: fix reading free memory in do_resume
-Date: Wed, 28 Oct 2026 17:59:46 +0100
-Message-ID: <20261028170018.438543329@linuxfoundation.org>
+Subject: [PATCH 5.15 440/571] pmdomain: rockchip: fix clock leak on domain probe failure
+Date: Wed, 28 Oct 2026 17:59:47 +0100
+Message-ID: <20261028170018.464350609@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -68,65 +69,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikulas Patocka <mpatocka@redhat.com>
+From: Shawn Lin <shawn.lin@rock-chips.com>
 
-[ Upstream commit c9417c1c5269e2bd0570fbe53e4ec03a8d31f008 ]
+[ Upstream commit d8b3847770661b7109146e6479eeadcdab9cecf0 ]
 
-When do_resume calls dm_table_get_mode(new_map), the call is done without
-holding any locks (it only holds a reference to the md). It may be
-possible that another concurrent ioctl on the same device will swap table
-after dm_swap_table and before dm_table_get_mode. In this case,
-dm_table_get_mode(new_map) reads freed memory.
+When of_clk_get() failed in the middle of the loop, the references of
+the clocks acquired so far were leaked instead of being released by
+the error path.
 
-This race condition was triggered by syzbot.
-
-This commit fixes the race by reading mode of the new table before
-dm_swap_table. Note that new_map is also passed to dm_ima_need_measure,
-but this function doesn't attempt to dereference it, so this call should
-be safe.
-
-Note that this is not a security bug because only root can trigger it and
-the commonly used tools such as lvm or cryptsetup do not call the ioctls
-concurrently, so that they can't trigger it acceidentally.
-
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Reported-by: syzbot+bdff1ecf726d2af66afd@syzkaller.appspotmail.com
+Fixes: d909072d0521 ("soc: rockchip: power-domain: use clk_bulk APIs")
+Signed-off-by: Shawn Lin <shawn.lin@rock-chips.com>
+Reviewed-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Cc: stable@vger.kernel.org
-[ sashal: Replaced blk_mode_t and BLK_OPEN_WRITE with fmode_t and FMODE_WRITE. ]
+Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm-ioctl.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/soc/rockchip/pm_domains.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/md/dm-ioctl.c b/drivers/md/dm-ioctl.c
-index 2c1e6eb93b787..816b9527394cd 100644
---- a/drivers/md/dm-ioctl.c
-+++ b/drivers/md/dm-ioctl.c
-@@ -1151,6 +1151,7 @@ static int do_resume(struct dm_ioctl *param)
- 	/* Do we need to load a new map ? */
- 	if (new_map) {
- 		sector_t old_size, new_size;
-+		fmode_t new_map_mode;
- 
- 		/* Suspend if it isn't already suspended */
- 		if (param->flags & DM_SKIP_LOCKFS_FLAG)
-@@ -1178,6 +1179,7 @@ static int do_resume(struct dm_ioctl *param)
- 			}
+diff --git a/drivers/soc/rockchip/pm_domains.c b/drivers/soc/rockchip/pm_domains.c
+index 0868b7d406fba..67f78378d7f13 100644
+--- a/drivers/soc/rockchip/pm_domains.c
++++ b/drivers/soc/rockchip/pm_domains.c
+@@ -443,7 +443,7 @@ static int rockchip_pm_add_one_domain(struct rockchip_pmu *pmu,
+ 			dev_err(pmu->dev,
+ 				"%pOFn: failed to get clk at index %d: %d\n",
+ 				node, i, error);
+-			return error;
++			goto err_put_clocks;
  		}
+ 	}
  
-+		new_map_mode = dm_table_get_mode(new_map);
- 		old_size = dm_get_size(md);
- 		old_map = dm_swap_table(md, new_map);
- 		if (IS_ERR(old_map)) {
-@@ -1190,7 +1192,7 @@ static int do_resume(struct dm_ioctl *param)
- 		if (old_size && new_size && old_size != new_size)
- 			need_resize_uevent = true;
- 
--		if (dm_table_get_mode(new_map) & FMODE_WRITE)
-+		if (new_map_mode & FMODE_WRITE)
- 			set_disk_ro(dm_disk(md), 0);
- 		else
- 			set_disk_ro(dm_disk(md), 1);
 -- 
 2.53.0
 
