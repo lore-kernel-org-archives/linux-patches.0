@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213289;
-	b=yoQo953auWVu0gfTe/i5Bw1GA0IaQooriwtH0gQUvCc4XQ7PVfD0jJt2kyqOcgqhc8tp
-	 vTpv3+dmRvYWhFuQjI/oyB2N+VMRtV5svkpW3wnWZJYOGMpOyjZkv4Zg/Md7f14uitH4q
-	 EAONwEmP0EgRV+Keh/uPLE4TsOf/ocltoowMjMqqiCZ4v635qSUQMMERTJHn6Cp3GQPvF
-	 CqkQD/t5Wp9l6VveYTjFuzG5+TOOhHtI+fFFx43QaEdAHS3/RnAeaReO3LYHc8noYkdAG
-	 XMbXxBOz57m/DLl0oDi0SvZufrU2rkuDgucE5t53413a7EwExGxd0xW0/ETPixbdUNg==
+	t=1793213292;
+	b=wdjgF5kENkaWG+nelmMjYqAuwHATkIvYwS0SAOiX/QuwZgMYWLxK6Qu0k6OuX5ZStnit
+	 HPdCyhPed+j+23Izqa25JZ0GZoLsRap5X7oagOV48oLsrp5Gyjy9J0/Sz5P7ziCt1RKIa
+	 KxPTCrRCRyz4q7U+pn5wtrgKRYiTc8Xia0TAxjJnizH3e5NMeurOvuQG7CWShsqzItaA5
+	 J50Kc6CDmUIqAkigUaYwTh+Ok11rdkmKBRgFZfc0Hr7IRg+6SF0Ty1WKzov0Jb08F1qrL
+	 XosKQdVIHis6zo3iLLsoRDpYrcmDyzW0rKJ++pQkz+N0Nu02KkwsZUGMk14ieGRc8xw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213289;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213292;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=r10MCz0fAFL6xB7mhXjxUCLtG2gjVpY9e83h/hdAOgU=;
-	b=IXQzJx1uq3hQpyakeBSz8b45vxl0MFMVyQOIRUt3cwbe0k4glUM9m5RtKQlEELj5UZGo
-	 q4mfzRmRrEIKIvYj8dWZ3Lv7af7jGZg0D0y3nCD+rjzCLFn07TE3hjuh3Yq15n3hsU9BY
-	 0phHeL4vTyJv6Wg8BrsCRX+xDGMxGDpcT2BP3dUpb6uhd/iKZaI4tzkEm3rbKrEOPOL5Q
-	 bCuk9FRdnnJ4RAtrq545CVTf43hvAYzG5RYw8yMbntZ0HKpB5KX5Ubz/SbbNSx3wuyubm
-	 7liRml2yZyr+Y4aMgg4jFSQTb5y2oqyMGjwE4jR6au4CZ5nqf7b5AbwZa2V3l0YkaKw==
+	bh=Dn25BEj0ZQv4prVrYH/H//MoTM5heBO0KjA6s3fnae8=;
+	b=ui0m8Gv4Ncy5OxJfYFyEz3RPN0cbK6TyGUJn3++Z5sFfUu71YCVlmdts8vm0y1pzk/Tc
+	 Dm0B1GSqPp9+XlBqjMnLqusDr0FjiGbSDqtm+Js/iPpC0JGyNfNma8XXirBXoaXWFS7A6
+	 UzKPhAcocZHSHmzE9hzvtXRR5RC/dEHV+OfiGzkMNv1O7puNAOUszFtxlJJURPTdxFxwb
+	 QqyZWEHdWpSRN+7SJ4u347QJmNkiGmUteWFLHmihhx0op90D5IhOuxvRhcWN3f9Zbhl5D
+	 68gF3CXpXyh+39xC8GS4rJgurprn3df/ICf348wi73qIsL408tGxGBNlXXVEw7602iA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hVMHdKkK;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=arKNTITe;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D16EC606A31A;
-	Wed, 28 Oct 2026 18:48:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8277606A31A;
+	Wed, 28 Oct 2026 18:48:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hVMHdKkK
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31A4B1F01825;
-	Wed, 28 Oct 2026 18:48:08 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=arKNTITe
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECAAE1F01825;
+	Wed, 28 Oct 2026 18:48:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213288;
-	bh=r10MCz0fAFL6xB7mhXjxUCLtG2gjVpY9e83h/hdAOgU=;
+	s=korg; t=1793213291;
+	bh=Dn25BEj0ZQv4prVrYH/H//MoTM5heBO0KjA6s3fnae8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hVMHdKkKGq2znESq4k2lvXXLbh1R7hdIMUPKaJc9Ti58u2EfMGO3azqG6dz6zVBXV
-	 fDWregMzdAemtY7mM3YPwbMTwZpnSWboRzlvbLtQu4c24/APr0PSVdE2TQ0T80SS46
-	 a6jFAcEs5W2iGzH0/Odbgmm7KrAWf+4GjvTvjwU8=
+	b=arKNTITem3m3Xx3rDybDH+syN85oM2RykoYHrjIg5QHolK7cOO593tmuI5hMT5anJ
+	 RqEe1l09xF0bklVoPplQowCiPyOCHieVtYjwnb9MLsn81E+7Lv2eqEMuuLsiHtSV1u
+	 7/aERc3Poy1x9TPrgvs3FkQU2qo6WdarTlJI0bvk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>,
-	Ulf Hansson <ulfh@kernel.org>
-Subject: [PATCH 6.1 0454/1887] memstick: rtsx_usb_ms: complete requests after eject instead of dropping them
-Date: Wed, 28 Oct 2026 17:42:30 +0100
-Message-ID: <20261028170509.564157698@linuxfoundation.org>
+	syzbot+48d935cf48a4a76be346@syzkaller.appspotmail.com,
+	Palla Raghunath <raghunathpalla.0209@gmail.com>,
+	Mikulas Patocka <mpatocka@redhat.com>
+Subject: [PATCH 6.1 0437/1887] dm ioctl: dont let data_start run past the buffer
+Date: Wed, 28 Oct 2026 17:42:13 +0100
+Message-ID: <20261028170509.176271917@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -67,132 +68,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>
+From: Palla Raghunath <raghunathpalla.0209@gmail.com>
 
-commit c96ca94425b076dc398d929366e378d1e22ec794 upstream.
+commit 9b3fcf519d370df94a56f3b272d9eddffffa5be8 upstream.
 
-memstick_check() can pass its host->removing check just before
-rtsx_usb_ms_drv_remove() sets eject/removing. Its next request is then
-silently dropped: rtsx_usb_ms_request() skips schedule_work() once eject
-is set, and drv_remove's cancel_work_sync() can also cancel a queued
-handle_req before it picks the request up. Nobody completes
-card->mrq_complete.
+struct dm_ioctl has seven bytes of trailing padding, so the smallest
+buffer userspace is allowed to ask for, offsetof(struct dm_ioctl, data),
+is seven bytes shorter than sizeof(struct dm_ioctl).
 
-Once memstick core waits for requests without a timeout ("memstick: core:
-wait for request completion before freeing card"), this hangs removal:
-memstick_check() never returns and memstick_remove_host() blocks in
-flush_workqueue():
+get_result_buffer() sets data_start to sizeof(struct dm_ioctl) without
+looking at how big the buffer actually is. Ask for the minimum and
+data_start ends up seven bytes past the end. Callers add it to
+data_size, and ctl_ioctl() copies that much back to userspace:
 
-  INFO: task kworker/u10:3:65 blocked for more than 20 seconds.
-  Workqueue: kmemstick memstick_check
-   __wait_for_common
-   memstick_check
+  BUG: KASAN: slab-out-of-bounds in _copy_to_user+0xad/0xd0
+  Read of size 312 at addr ffff8880169e4c00 by task repro-dm/140
+   ctl_ioctl+0x5e3/0xcb0
+   dm_ctl_ioctl+0x25/0x40
+  allocated 305-byte region [ffff8880169e4c00, ffff8880169e4d31)
 
-  INFO: task kworker/1:1:33 blocked for more than 20 seconds.
-  Workqueue: usb_hub_wq hub_event
-   __flush_workqueue
-   memstick_remove_host
-   rtsx_usb_ms_drv_remove
+A DM_LIST_DEVICES with data_size set to 305 is enough to hit it, and the
+seven bytes that leak are whatever sat next to the allocation.
 
-Never drop a request. rtsx_usb_ms_request() always schedules handle_req,
-and handle_req fails requests with -ENOMEDIUM once eject is set, without
-touching the device. drv_remove flushes handle_req instead of cancelling
-it, and cancels it only after memstick_remove_host(), when no new
-request can arrive, so it cannot run on a freed host.
+Clamp data_start to the buffer size.
 
-The host_mutex drain in drv_remove is removed: handle_req always leaves
-host->req NULL when it finishes, so the drain never had anything to do,
-and it would now race with handle_req.
+Note that this is not a security bug because the out-of-bounds read can
+only be triggered by root.
 
-Fixes: 99451dceeb5f ("memstick: Add realtek USB memstick host driver")
+Reported-by: syzbot+48d935cf48a4a76be346@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=48d935cf48a4a76be346
+Fixes: 76c072b48e39 ("dm ioctl: move compat code")
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/all/20260924204142.607-1-rajojha047@gmail.com/
-Signed-off-by: Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>
-Signed-off-by: Ulf Hansson <ulfh@kernel.org>
+Signed-off-by: Palla Raghunath <raghunathpalla.0209@gmail.com>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/memstick/host/rtsx_usb_ms.c |   31 +++++++++++--------------------
- 1 file changed, 11 insertions(+), 20 deletions(-)
+ drivers/md/dm-ioctl.c |   10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
---- a/drivers/memstick/host/rtsx_usb_ms.c
-+++ b/drivers/memstick/host/rtsx_usb_ms.c
-@@ -27,7 +27,6 @@ struct rtsx_usb_ms {
- 	struct memstick_host	*msh;
- 	struct memstick_request	*req;
- 
--	struct mutex		host_mutex;
- 	struct work_struct	handle_req;
- 	struct delayed_work	poll_card;
- 
-@@ -511,6 +510,13 @@ static void rtsx_usb_ms_handle_req(struc
- 	struct memstick_host *msh = host->msh;
- 	int rc;
- 
-+	/* Fail requests after eject so their waiters are released. */
-+	if (host->eject) {
-+		while (!memstick_next_req(msh, &host->req))
-+			host->req->error = -ENOMEDIUM;
-+		return;
-+	}
-+
- 	if (!host->req) {
- 		pm_runtime_get_sync(ms_dev(host));
- 		do {
-@@ -544,8 +550,7 @@ static void rtsx_usb_ms_request(struct m
- 
- 	dev_dbg(ms_dev(host), "--> %s\n", __func__);
- 
--	if (!host->eject)
--		schedule_work(&host->handle_req);
-+	schedule_work(&host->handle_req);
- }
- 
- static int rtsx_usb_ms_set_param(struct memstick_host *msh,
-@@ -778,7 +783,6 @@ static int rtsx_usb_ms_drv_probe(struct
- 	host->power_mode = MEMSTICK_POWER_OFF;
- 	platform_set_drvdata(pdev, host);
- 
--	mutex_init(&host->host_mutex);
- 	INIT_WORK(&host->handle_req, rtsx_usb_ms_handle_req);
- 
- 	INIT_DELAYED_WORK(&host->poll_card, rtsx_usb_ms_poll_card);
-@@ -809,27 +813,12 @@ static int rtsx_usb_ms_drv_remove(struct
+--- a/drivers/md/dm-ioctl.c
++++ b/drivers/md/dm-ioctl.c
+@@ -545,10 +545,16 @@ static void *get_result_buffer(struct dm
  {
- 	struct rtsx_usb_ms *host = platform_get_drvdata(pdev);
- 	struct memstick_host *msh = host->msh;
--	int err;
+ 	param->data_start = align_ptr(param + 1) - (void *) param;
  
- 	host->eject = true;
- 	msh->removing = true;
--	cancel_work_sync(&host->handle_req);
-+	flush_work(&host->handle_req);
- 	cancel_delayed_work_sync(&host->poll_card);
+-	if (param->data_start < param_size)
++	if (param->data_start < param_size) {
+ 		*len = param_size - param->data_start;
+-	else
++	} else {
++		/*
++		 * The buffer can be as small as offsetof(*param, data), which
++		 * is less than sizeof(*param), so don't run off the end of it.
++		 */
+ 		*len = 0;
++		param->data_start = param_size;
++	}
  
--	mutex_lock(&host->host_mutex);
--	if (host->req) {
--		dev_dbg(ms_dev(host),
--			"%s: Controller removed during transfer\n",
--			dev_name(&msh->dev));
--		host->req->error = -ENOMEDIUM;
--		do {
--			err = memstick_next_req(msh, &host->req);
--			if (!err)
--				host->req->error = -ENOMEDIUM;
--		} while (!err);
--	}
--	mutex_unlock(&host->host_mutex);
--
- 	/* Balance possible unbalanced usage count
- 	 * e.g. unconditional module removal
- 	 */
-@@ -838,6 +827,8 @@ static int rtsx_usb_ms_drv_remove(struct
- 
- 	pm_runtime_disable(ms_dev(host));
- 	memstick_remove_host(msh);
-+	/* No card, no new requests; wait for the last failed one to finish. */
-+	cancel_work_sync(&host->handle_req);
- 	dev_dbg(ms_dev(host),
- 		": Realtek USB Memstick controller has been removed\n");
- 	memstick_free_host(msh);
+ 	return ((void *) param) + param->data_start;
+ }
 
 
