@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213255;
-	b=Od+qIlEcQ6PghduiCCISBH5BseQXuBKaRGobMmzuAJp0VX6DAS7LszHHrAmOb3FuwXdk
-	 DtKvkBQtwe0jQX342iMgC+Gvtb1FzSZpAbOi1jhOZR6hiYtbrE6niKLPp9kPbDk5i31JQ
-	 CeA5zU7SbKR0bC/72XgfVzBuC3b8bftKi2JO63QvdslKSc3Mv0mxqf7i75zQ6731dMaXS
-	 lkfMlMl53r3GruUPYl722Df2LbNjh3dV2cpWK3OBS1NH7v5k7lIpUJY8Kdp72+r1OfJKx
-	 8pgVZb22d29+3F4GzYeucoRsnK/jt5+VSwI+Fv5MokmS9YNBJ3Zt0wKaP3xupwHg4Tg==
+	t=1793213257;
+	b=t3bfaqJ9X6t9C1j+GzPzDKNVTl31M25BUTmAo27Vr8lxjLlY+OtGPZYZK81CMDcpV+Rk
+	 TJNREK/k/RaKV4EXies0w/vkOKf1Y8to92yKKRMD3CqJv//D63jvmeX2zxzw7jixrfFJM
+	 cvYr0vf88mkF6w354nDMgU5BCmHG+FILveaHA/MAykgmb2X88HRh3y1t3fiYzsphjeBZW
+	 iklnqXiUGku4YV72qFTcrzaawoBOuPs8+Dr4owFF7wIQHRthEdO3P3EjXI3zYpr1ZrNqK
+	 oaRIZh8oWqOgkDT0II+xfxtYw8aYzlUBopwcSFy81RT/8P9Tx7q2M/6V1zRo3gyMqaQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213255;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213257;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=enpu/ZRkUMSx4pAfR4+vZepczs0RCkQJ6YWhIh36tko=;
-	b=MqdIidyDbB1w8gOeWGYRAVp4L5HPIqAftHl+rbzCrFZoLraHx9ruCkUz4jTq8h0+X2Ah
-	 shJuG8m+MPnNvMI7VF2+Q+feCWXtBLTzIPtc6g8Y9RCagW6M6ut5drhqi/yAciZ62iSEQ
-	 CaSDUtpXT3YK8zt8XbdNHzJmS55ZCwqW6XLawNI7DCT3VDPPu4If0zUkMuqFCwjYuE9kJ
-	 JFg71a/h5JbRPskOq7XbojDssiMZKMZl7q6Pv7UkJbf5XtIIgXM+b79ebDS126zL7o5Oi
-	 x350Ywrmfv0rjqZhdzimMGXI4UseVQ55GwpVa4XM7rWjvfcUgYPjvRF4juiyf5P185g==
+	bh=i2Kk+Vgfci85R7+VeB/rzWRVGG1uxNp21LnLrWaJGLU=;
+	b=X04npJJmHX73qHt3YEJo/8XtOO3UHOxUTrX0nR/DmLfxLam0r8aj8EupNJnLvmmcKfky
+	 qggIv6Y4Z9T0Lajt4cmXiURm85Uxl9C6DqKuXFSmwC6uqzPN+W3gzUutD6vw7YaFqQHi2
+	 mB/05iuPH82i4wTIGXANQNo73rrsfcwBspoJlc7rA5emPdc7pTBjEVGi4cYcrSghd7Sbd
+	 wBoiPRJVUBcMtEF5w3Ll+XZNKkbpfzDVDt3fCsPJ1314ksNbsLVydf8G43+e8Ccw3N2bO
+	 VNGVTZ4g8SWYcP/PIcwMrmkeOqqNXpMLzrhWVqpvSuAWl2jekO9Wyb4vMob126GuK1w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hnQlLIp2;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=psLnsuMS;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA226606A31C;
-	Wed, 28 Oct 2026 18:47:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A4A7606A31D;
+	Wed, 28 Oct 2026 18:47:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hnQlLIp2
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25DFC1F01828;
-	Wed, 28 Oct 2026 18:47:33 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=psLnsuMS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA0E41F01825;
+	Wed, 28 Oct 2026 18:47:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213254;
-	bh=enpu/ZRkUMSx4pAfR4+vZepczs0RCkQJ6YWhIh36tko=;
+	s=korg; t=1793213257;
+	bh=i2Kk+Vgfci85R7+VeB/rzWRVGG1uxNp21LnLrWaJGLU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hnQlLIp2DHzIe37UMlke+Ykxc2anBbUexKh8MUmmSa37SRHCSbIOBMDi5v2x3n8BF
-	 doNqVm83nQkc2kr0fzgPWWfFnWZTVPlpuSZl8j+rQLfHfyufbxueQ2cVNui10ViVGj
-	 BxfoeaqlZr9SDKz3K+ybwE2O3LgxtgSFlOw1Ts98=
+	b=psLnsuMSRkxkzmBw79VtBzQ9Lj3QeZ5OpuJzn6aOVgTWP0/IZTH/z1kcTHjc07c6v
+	 G8JRUrvbAdE4k4EbHXDZ1t6iFIb+TwoLj82n/JkrKkDBSIwFzCnroF2zVoVBbQ1MvZ
+	 TSA4Bcd9EgiBmIo/ZPFXjYFz8jAnFd0V3kI1Ii3A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Corey Minyard <cminyard@mvista.com>,
-	Johan Hovold <johan@kernel.org>,
+	stable <stable@kernel.org>,
+	Pannarat Wiriyaarritham <pannarat.wiriyaarritham@danielcorp.dev>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0397/1887] USB: serial: report unsupported break signalling
-Date: Wed, 28 Oct 2026 17:41:33 +0100
-Message-ID: <20261028170508.268560628@linuxfoundation.org>
+Subject: [PATCH 6.1 0388/1887] usb: typec: ucsi: acpi: Assume UCSI 1.2 on Acer Nitro ANV15-41
+Date: Wed, 28 Oct 2026 17:41:24 +0100
+Message-ID: <20261028170508.063717487@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,35 +69,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Pannarat Wiriyaarritham <pannarat.wiriyaarritham@danielcorp.dev>
 
-[ Upstream commit c9d934053d9e850bc901b6425eacb5fe3d4b1738 ]
+[ Upstream commit 8c51ea651d043c786c37668c51624bd6b338a0ef ]
 
-Instead of returning success when a driver does not support break
-signalling, return an error to let user space know and to avoid waiting
-when break is not supported.
+The Acer Nitro ANV15-41 exposes a functional UCSI ACPI PPM but
+reports a UCSI VERSION value of zero.
 
-Tested-by: Corey Minyard <cminyard@mvista.com>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Stable-dep-of: ae0e61d95677 ("USB: serial: fix ioctl hangup race")
+ucsi_register() rejects a zero version with -ENODEV, leaving the
+system without registered USB Type-C connectors.
+
+The PPM works correctly when using the UCSI 1.2 layout. With UCSI
+1.2 assumed, both Type-C connectors register correctly and USB Power
+Delivery negotiation works.
+
+Add a DMI-specific UCSI operation for the Acer Nitro ANV15-41 that
+substitutes UCSI 1.2 only when firmware reports a zero version.
+Preserve any valid non-zero firmware version.
+
+Tested on an Acer Nitro ANV15-41 with BIOS V1.51.
+
+Fixes: c1b0bc2dabfa ("usb: typec: Add support for UCSI interface")
+Cc: stable <stable@kernel.org>
+Assisted-by: LLM
+Signed-off-by: Pannarat Wiriyaarritham <pannarat.wiriyaarritham@danielcorp.dev>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://patch.msgid.link/20260910023338.31816-1-pannarat.wiriyaarritham@danielcorp.dev
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+[ sashal: Adapted the dedicated read_version() callback to the generic read() interface with offset and length checks. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/serial/usb-serial.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/typec/ucsi/ucsi_acpi.c | 32 ++++++++++++++++++++++++++++++
+ 1 file changed, 32 insertions(+)
 
-diff --git a/drivers/usb/serial/usb-serial.c b/drivers/usb/serial/usb-serial.c
-index d0f9db08125e0..9ecc108c2d275 100644
---- a/drivers/usb/serial/usb-serial.c
-+++ b/drivers/usb/serial/usb-serial.c
-@@ -540,7 +540,7 @@ static int serial_break(struct tty_struct *tty, int break_state)
- 	if (port->serial->type->break_ctl)
- 		return port->serial->type->break_ctl(tty, break_state);
+diff --git a/drivers/usb/typec/ucsi/ucsi_acpi.c b/drivers/usb/typec/ucsi/ucsi_acpi.c
+index 03c820fe5b0c4..eeb457ff255e4 100644
+--- a/drivers/usb/typec/ucsi/ucsi_acpi.c
++++ b/drivers/usb/typec/ucsi/ucsi_acpi.c
+@@ -106,6 +106,31 @@ static const struct ucsi_operations ucsi_acpi_ops = {
+ 	.async_write = ucsi_acpi_async_write
+ };
  
--	return 0;
-+	return -ENOTTY;
- }
++static int ucsi_acer_read(struct ucsi *ucsi, unsigned int offset,
++			  void *val, size_t val_len)
++{
++	struct ucsi_acpi *ua = ucsi_get_drvdata(ucsi);
++	u16 *version = val;
++	int ret;
++
++	ret = ucsi_acpi_read(ucsi, offset, val, val_len);
++	if (ret)
++		return ret;
++
++	if (offset == UCSI_VERSION && val_len == sizeof(*version) && !*version) {
++		dev_warn(ua->dev, "UCSI version is zero, assuming 1.2\n");
++		*version = 0x0120;
++	}
++
++	return 0;
++}
++
++static const struct ucsi_operations ucsi_acer_ops = {
++	.read = ucsi_acer_read,
++	.sync_write = ucsi_acpi_sync_write,
++	.async_write = ucsi_acpi_async_write
++};
++
+ static int
+ ucsi_zenbook_read(struct ucsi *ucsi, unsigned int offset, void *val, size_t val_len)
+ {
+@@ -173,6 +198,13 @@ static const struct ucsi_operations ucsi_dell_ops = {
+ };
  
- static int serial_proc_show(struct seq_file *m, void *v)
+ static const struct dmi_system_id ucsi_acpi_quirks[] = {
++	{
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "Acer"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "Nitro ANV15-41"),
++		},
++		.driver_data = (void *)&ucsi_acer_ops,
++	},
+ 	{
+ 		.matches = {
+ 			DMI_MATCH(DMI_SYS_VENDOR, "ASUSTeK COMPUTER INC."),
 -- 
 2.53.0
 
