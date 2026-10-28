@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213861;
-	b=5eUYUBgcbPiapZ37SqAvPcq13jQKAgMEH2ZtJr+QD/yG8dtpG4ruQmtHt1eJdZYsqb7E
-	 cYrKvprDB1Br58b+3C1bMaXrMUQsw1CJwEusXYAoHdKMxnyYVMou08n6D4cYDRdG0YqVb
-	 9VmQLOu+dme9hVcVJTX9EFCAu7KpSq0WYdiYBqeubjs1I2rf0IEUL0ueQOwgsVoyqKhJ0
-	 CPSifVaJKv07OegDqBEOAxCqSoi3HIX+e01/p+uBLpvS7eK5p4i2wM2reLznfa+hYZiNn
-	 EiTH6/kOXUqBp09APRNZ96Rkp01h+adw2ayQS6r2a5HDQR+tDXzc5FUwL5T+IgIoHEA==
+	t=1793213864;
+	b=UtS9ZDHtp6GgEVIr/ECQZWwRMjBh9oU/OiXRCpZ5H8lhhHe9FLMI1m2t0dLhE1fJEsp4
+	 N5rjeUEHyMWOF1MeSQ7pa0tHRtp96lDPVeJemU4SeFVvqq9n/D7CTXIs6vfLqw93i7RlT
+	 1YLTfqrbJmVuqIo0SKyuvLUJeFXTxhdzgI+iNjQ6PIrlrve2M/AbsI8NPad9xPV6GbrOM
+	 B7vULlURSNPReyZur62Y6GBMbB1PxVSszzmDpd4omnQf8KHIHKzGOgey7QdxpEBHo+lMg
+	 WiSbdNER5UEyQCTA4G3YyBc19Vhbx5eqqwWABT34v/EyEhmPBQJapYhA2vCzynyjtwg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213861;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213864;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=oz5Vi3z489mAbzL9M4gqpA9RySDU7ivLeZRosQM1URY=;
-	b=SIDFLhBit8Qn7Hfk1rhmwApvxYOp67lDCLs9erVRvNq0RV2K0RcB6u34xnGFbic8dMtN
-	 OPFV6JPd3ovACTgYwO/8SLrDqI4glQJHnjyCFtCPY9ERHRQBFPF1osuyTZLyKigQ+voIZ
-	 OOh1xcFipgyi4KjBfFikOIXeq8gxk6jVv3e9pasGKqTaY/R5lqffbqjNa05nsRVjuCGoI
-	 qdr4flW+Kc4YMq/VmCWR9jEtf5AiRcRnnIQz/U9ZSrvNhNOKersEWmW+f33TpKoZogcAQ
-	 Eo6Wf6gI3ar7GxZuWhFlducjSMrVzsFyN6dgPsnDkdrnphTjGUbaDJ2hLKbk2seQqkA==
+	bh=kU6Odp6Md7bCEnijjzeL6BCM9K9PJ6eoqpfL2xqBepg=;
+	b=5bUSVkcYbAQL21bpqp6eA9e2AVQ1O3p2OB0OACB35Ext9WZtqYu3ovYsGuKfo3O53Ah4
+	 DhW4mVYNSHtCesk04IUCYLXGCzYy0qrX+OzxLRQu72g4scuDuilYIO23AGv1k1uaL4y6m
+	 +qEInvuZI0l9Vq6lg0MYugYcIC2CaosnTmp4ulN7TJok2r2CTxmAxo5m6U0k1PhhaY/jC
+	 53JIr+XjTtrtayDVazCJrl5/jsKyoImqhaNR7F3v0PcMerWt2ZkdG0Vy2cdk9ZvvqaI3s
+	 viEBmz/RBwm7SjzdDr0S76J0Qs/8ySkjEr5KJVzBvP3O8Gx4bZT5O/5n7BG9mukyFxg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Rsc15X6h;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dDr6FfC0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AA6C606A31C;
-	Wed, 28 Oct 2026 18:57:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA689606A31A;
+	Wed, 28 Oct 2026 18:57:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Rsc15X6h
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 421F71F01825;
-	Wed, 28 Oct 2026 18:57:40 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dDr6FfC0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 099091F01825;
+	Wed, 28 Oct 2026 18:57:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213860;
-	bh=oz5Vi3z489mAbzL9M4gqpA9RySDU7ivLeZRosQM1URY=;
+	s=korg; t=1793213863;
+	bh=kU6Odp6Md7bCEnijjzeL6BCM9K9PJ6eoqpfL2xqBepg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Rsc15X6hNmr/VyfA77Y3h+mL0YBVcIt/nPF679mmf8Dnd609NGDpgtVSY2JiTRb0U
-	 dPeP9bWSFiHpJy9H/Vj/cT3rd6hSSJ/cFNPQi4mQ3FfZd7NyfS51Bpg+5p8eQr7Srj
-	 oVKBWka8/m2uBT2wKcbKqSYONNgNwiClvO1+N8KU=
+	b=dDr6FfC0PemI/Jvw+4+4ng0Us8AAON/RRajfKXuIQeow/2X/Z7bQXW/7ZS3zUo3gq
+	 wvFS1F0E1LrcuWd6Bs5IBPYyBuXSEHjjvHfkZ4hK487SZgdAuKLXgQNxrQDGfDtcR1
+	 MkDmCZliuPKhfTWpT4OMhivuzsZdCJIUsN73U+Do=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Hung <alex.hung@amd.com>,
-	Tom Chung <chiahsuan.chung@amd.com>,
-	Hersen Wu <hersenxs.wu@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Bert Karwatzki <spasswolf@web.de>,
+	Felix Fietkau <nbd@nbd.name>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0654/1887] drm/amd/display: Fix index may exceed array range within fpu_update_bw_bounding_box
-Date: Wed, 28 Oct 2026 17:45:50 +0100
-Message-ID: <20261028170514.294828795@linuxfoundation.org>
+Subject: [PATCH 6.1 0655/1887] wifi: mt76: mt7921: fix NULL pointer access in mt7921_ipv6_addr_change
+Date: Wed, 28 Oct 2026 17:45:51 +0100
+Message-ID: <20261028170514.317277880@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -71,114 +69,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hersen Wu <hersenxs.wu@amd.com>
+From: Bert Karwatzki <spasswolf@web.de>
 
-[ Upstream commit 188fd1616ec43033cedbe343b6579e9921e2d898 ]
+[ Upstream commit 479ffee68d59c599f8aed8fa2dcc8e13e7bd13c3 ]
 
-[Why]
-Coverity reports OVERRUN warning. soc.num_states could
-be 40. But array range of bw_params->clk_table.entries is 8.
+When disabling wifi mt7921_ipv6_addr_change() is called as a notifier.
+At this point mvif->phy is already NULL so we cannot use it here.
 
-[How]
-Assert if soc.num_states greater than 8.
-
-Reviewed-by: Alex Hung <alex.hung@amd.com>
-Acked-by: Tom Chung <chiahsuan.chung@amd.com>
-Signed-off-by: Hersen Wu <hersenxs.wu@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Bert Karwatzki <spasswolf@web.de>
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://patch.msgid.link/20240812104542.80760-1-spasswolf@web.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dml/dcn302/dcn302_fpu.c | 10 ++++++++++
- drivers/gpu/drm/amd/display/dc/dml/dcn303/dcn303_fpu.c | 10 ++++++++++
- drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c   | 10 ++++++++++
- drivers/gpu/drm/amd/display/dc/dml/dcn321/dcn321_fpu.c | 10 ++++++++++
- 4 files changed, 40 insertions(+)
+ drivers/net/wireless/mediatek/mt76/mt7921/main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn302/dcn302_fpu.c b/drivers/gpu/drm/amd/display/dc/dml/dcn302/dcn302_fpu.c
-index e2bcd205aa936..8da97a96b1ceb 100644
---- a/drivers/gpu/drm/amd/display/dc/dml/dcn302/dcn302_fpu.c
-+++ b/drivers/gpu/drm/amd/display/dc/dml/dcn302/dcn302_fpu.c
-@@ -304,6 +304,16 @@ void dcn302_fpu_update_bw_bounding_box(struct dc *dc, struct clk_bw_params *bw_p
- 			dram_speed_mts[num_states++] = bw_params->clk_table.entries[j++].memclk_mhz * 16;
- 		}
- 
-+		/* bw_params->clk_table.entries[MAX_NUM_DPM_LVL].
-+		 * MAX_NUM_DPM_LVL is 8.
-+		 * dcn3_02_soc.clock_limits[DC__VOLTAGE_STATES].
-+		 * DC__VOLTAGE_STATES is 40.
-+		 */
-+		if (num_states > MAX_NUM_DPM_LVL) {
-+			ASSERT(0);
-+			return;
-+		}
-+
- 		dcn3_02_soc.num_states = num_states;
- 		for (i = 0; i < dcn3_02_soc.num_states; i++) {
- 			dcn3_02_soc.clock_limits[i].state = i;
-diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn303/dcn303_fpu.c b/drivers/gpu/drm/amd/display/dc/dml/dcn303/dcn303_fpu.c
-index 3eb3a021ab7d7..c283780ad0621 100644
---- a/drivers/gpu/drm/amd/display/dc/dml/dcn303/dcn303_fpu.c
-+++ b/drivers/gpu/drm/amd/display/dc/dml/dcn303/dcn303_fpu.c
-@@ -299,6 +299,16 @@ void dcn303_fpu_update_bw_bounding_box(struct dc *dc, struct clk_bw_params *bw_p
- 			dram_speed_mts[num_states++] = bw_params->clk_table.entries[j++].memclk_mhz * 16;
- 		}
- 
-+		/* bw_params->clk_table.entries[MAX_NUM_DPM_LVL].
-+		 * MAX_NUM_DPM_LVL is 8.
-+		 * dcn3_02_soc.clock_limits[DC__VOLTAGE_STATES].
-+		 * DC__VOLTAGE_STATES is 40.
-+		 */
-+		if (num_states > MAX_NUM_DPM_LVL) {
-+			ASSERT(0);
-+			return;
-+		}
-+
- 		dcn3_03_soc.num_states = num_states;
- 		for (i = 0; i < dcn3_03_soc.num_states; i++) {
- 			dcn3_03_soc.clock_limits[i].state = i;
-diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c b/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c
-index 9d8917f72d184..12bc611de4493 100644
---- a/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c
-+++ b/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c
-@@ -2508,6 +2508,16 @@ void dcn32_update_bw_bounding_box_fpu(struct dc *dc, struct clk_bw_params *bw_pa
- 				dram_speed_mts[num_states++] = bw_params->clk_table.entries[j++].memclk_mhz * 16;
- 			}
- 
-+			/* bw_params->clk_table.entries[MAX_NUM_DPM_LVL].
-+			 * MAX_NUM_DPM_LVL is 8.
-+			 * dcn3_02_soc.clock_limits[DC__VOLTAGE_STATES].
-+			 * DC__VOLTAGE_STATES is 40.
-+			 */
-+			if (num_states > MAX_NUM_DPM_LVL) {
-+				ASSERT(0);
-+				return;
-+			}
-+
- 			dcn3_2_soc.num_states = num_states;
- 			for (i = 0; i < dcn3_2_soc.num_states; i++) {
- 				dcn3_2_soc.clock_limits[i].state = i;
-diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn321/dcn321_fpu.c b/drivers/gpu/drm/amd/display/dc/dml/dcn321/dcn321_fpu.c
-index 383a409a3f54c..2c7d58ac6008e 100644
---- a/drivers/gpu/drm/amd/display/dc/dml/dcn321/dcn321_fpu.c
-+++ b/drivers/gpu/drm/amd/display/dc/dml/dcn321/dcn321_fpu.c
-@@ -652,6 +652,16 @@ void dcn321_update_bw_bounding_box_fpu(struct dc *dc, struct clk_bw_params *bw_p
- 				dram_speed_mts[num_states++] = bw_params->clk_table.entries[j++].memclk_mhz * 16;
- 			}
- 
-+			/* bw_params->clk_table.entries[MAX_NUM_DPM_LVL].
-+			 * MAX_NUM_DPM_LVL is 8.
-+			 * dcn3_02_soc.clock_limits[DC__VOLTAGE_STATES].
-+			 * DC__VOLTAGE_STATES is 40.
-+			 */
-+			if (num_states > MAX_NUM_DPM_LVL) {
-+				ASSERT(0);
-+				return;
-+			}
-+
- 			dcn3_21_soc.num_states = num_states;
- 			for (i = 0; i < dcn3_21_soc.num_states; i++) {
- 				dcn3_21_soc.clock_limits[i].state = i;
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7921/main.c b/drivers/net/wireless/mediatek/mt76/mt7921/main.c
+index fd91d2c537603..6c59ad33d3205 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7921/main.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7921/main.c
+@@ -1436,7 +1436,7 @@ static void mt7921_ipv6_addr_change(struct ieee80211_hw *hw,
+ 				    struct inet6_dev *idev)
+ {
+ 	struct mt7921_vif *mvif = (struct mt7921_vif *)vif->drv_priv;
+-	struct mt7921_dev *dev = mvif->phy->dev;
++	struct mt7921_dev *dev = mt7921_hw_dev(hw);
+ 	struct inet6_ifaddr *ifa;
+ 	struct in6_addr ns_addrs[IEEE80211_BSS_ARP_ADDR_LIST_LEN];
+ 	struct sk_buff *skb;
 -- 
 2.53.0
 
