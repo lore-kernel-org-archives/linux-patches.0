@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793211152;
-	b=EwL4YHsLgGI9GhUAltKJrM1EdIydMB2RvTU5pZZTyaU4z9dgpi9KfcdqozzW6M9Z6NSX
-	 8S3o6FylZ7g8ld65W9/NNYHNDfbesLwRPkNWSdDxNNBGZ5lL2c2fmeksAwDBrVL0Bx7hI
-	 k5B3VpIuNzMPFE/EBSL9ltCg9IveS7rmYUSxGeP7KgRpW9h32c1e0RUe51t0jHGw+t4e5
-	 x4VxD+18GyR+R7+i5oTyyvB6dXSD9kJXIlaHIEKFOk2arRRvjPb21Tog6/BD6VKBZJSOJ
-	 evM50N/fiPE4j39F3Yg7nZtMZW+dlwXsWAULS30peF080hcgJqEvEIOwVia4XWcuf3Q==
+	t=1793211155;
+	b=4IhIKN03y4vCXyxLIi8eAMN+XmW1VgPhzlR79/5iFUQAHzn5L+GRjuE5xwKEZDvo+Zsx
+	 2Vmmgq9ZHeuN1bqWjuSqepNJNY16OoMdks6mboaAToOVOKfJmUY7LoAtyxFXlsqBNcnq5
+	 JaQEPXpok1o6dq6YrEznbyl7GaqRpV0t+Lu+/wVZ3ddaUAIcme2Zj3DxqQx+Y4hnNGIBv
+	 m3F9FVlKwa6FoeDqCKgc+kdzoIRg3t0dI0dLowkzkmUL1H6UbjfpI0SJnHkW73qrxTPj9
+	 ixVIEd99eTX3N63VHjGDMm5WxJfT4ZqQciCm07zCCHQkv0yU8HEgxL1yDowSLXwwJ9w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793211152;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793211155;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=whcY1FG9Yaa0Z4HmxYiAm3eZ7+Bzf/XIrJ9VcoiWD3g=;
-	b=WnnI1d7m8rz2f+Bq3ukP+mF9j6t1XhXoOPgWRrnA1o/y4WiTbos5QN7YMBwG6NEFDqZ1
-	 JqBJplbzpwA0ruifWkOXnbvjC38pzLErnTKUJdvPOkswliVYohHLP0QDDkSa0S1MQcKcB
-	 iua1GcD05m+WI+nhDWq6BZ5B5gn86/nkJMgFF2kJ0y/7rbj2h+yb1ROCUMeYtprw+lTdK
-	 bVriDlet87UM+0xrGTPuG6ucmtr3rwiHtiW+3Qz/ytB9/fTQv2N29x5k3/NTD0SMCXKxN
-	 ++5Y74iv/qdo4G0vpePcxsbQxi5EZyhRkl5upjbUjHvT8oexn0lzooT7eYdPtDEE9pA==
+	bh=X34jXuwzmScdOch9IBHHyhgIW+cpcJrzLa56T2IB9gs=;
+	b=KvKS2VphezZ5jyy01alkG/Pni1kVqw9VNR1t4PsT4mkQR2PrhT6pcejcda5FMvuglQd4
+	 uWrUYZ/YKNiInY+j9TwSbcAqt7fJ83qSeULFcMwhvQdAd0dnY4H4/ndviwvqIZCM75otT
+	 NqjToIe1MNqrH6B0JF6CGJ6GaX11XRU8O/WcY0kNGN8Ap17n0DI0wvDhHSf0lLvj50Gok
+	 kAYV7Zg15A9S/dcYo7Het4IQuCQu3+sUz8YgdPCVufp1D3H9dzUoos/snC3Z2LxkuHOB3
+	 mVNw8mb6lQvGuGlhPv9xa3aB3JhBsGN5tkb+1yehJp/ltqJpPzxoE9zGrWHg+CTsMiw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MOy27Pao;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bDCV4qVc;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD0EE60A2603;
-	Wed, 28 Oct 2026 18:12:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A307160A260B;
+	Wed, 28 Oct 2026 18:12:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MOy27Pao
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 276561F01825;
-	Wed, 28 Oct 2026 18:12:30 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bDCV4qVc
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02E121F01825;
+	Wed, 28 Oct 2026 18:12:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793211151;
-	bh=whcY1FG9Yaa0Z4HmxYiAm3eZ7+Bzf/XIrJ9VcoiWD3g=;
+	s=korg; t=1793211154;
+	bh=X34jXuwzmScdOch9IBHHyhgIW+cpcJrzLa56T2IB9gs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MOy27PaoEgsS3rz945qidTgyyVKOZkuBCkTp4zBD0tAg9iyseJL/rEBd2wDttzK9l
-	 TvY523l4qqkr70H7FwCFz6m6urVCGvCyW8WvNBEz5eKdJwfcNukbR0tavuBRHqw5WC
-	 Syd45icsTYYBmBvzsIKFNsIgIwDcYgf5LlDazEHs=
+	b=bDCV4qVcYpPJDF1x42Q7t+wWCxy8LRPqrfwl8/uCipgc2k2YS456l3X3P3tnjHDpR
+	 qOCL4Npu0O5ejo8OY4B0qsQWT+WkszKFdd7vdoEOvfgoT0Gm8P1Clfa2R//xwBdH0F
+	 cLWbQ48G2XDjGeClWsnf6C4yQN43qmbnsA6QJ2aY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Yi Yang <yiyang13@huawei.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 270/571] vc_screen: reload vc pointer before if (ret) in vcs_write() to avoid UAF
-Date: Wed, 28 Oct 2026 17:56:57 +0100
-Message-ID: <20261028170014.408631837@linuxfoundation.org>
+	Gilberto Conde <gilbertorconde@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 279/571] net: usb: qmi_wwan: add Quectel EG120K-EA
+Date: Wed, 28 Oct 2026 17:57:06 +0100
+Message-ID: <20261028170014.623700072@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -68,91 +67,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yi Yang <yiyang13@huawei.com>
+From: Gilberto Conde <gilbertorconde@gmail.com>
 
-[ Upstream commit 226bd5603371cd9f6642cbb9e9a677f445de3530 ]
+commit 0f2fd31f63c65c409bd336af3a42d478a9207c1f upstream.
 
-The reload of 'vc' added by commit 8fb9ea65c9d1 ("vc_screen: reload load
-of struct vc_data pointer in vcs_write() to avoid UAF") sits after the
-'if (ret)' block, so the copy-failure break path exits the loop without
-reloading vc. If the vc was kfree()'d via vc_port_destruct during the
-unlocked copy_from_user() window, the post-loop
-'if (written && vc) vcs_scr_updated(vc)' is reached with a stale
-non-NULL vc. The '&& vc' guard from commit a287620312dc ("vc_screen:
-fix null-ptr-deref in vcs_notifier() during concurrent vcs_write") only
-handles the NULL case, not this stale-non-NULL case; vcs_notifier() then
-reads param->vc->vc_num from freed memory:
+Add support for the Quectel EG120K-EA LTE Cat.12 module (USB ID
+2c7c:030b). Its QMI interface (interface 4) uses class/subclass/protocol
+ff/ff/ff like the other recent Quectel modules, so match it the same way.
 
-  BUG: KASAN: slab-use-after-free in vcs_notifier+0x7c/0xd0
-  Read of size 2 at addr ffff888007149190
-  Call Trace:
-   vcs_notifier+0x7c/0xd0
-   atomic_notifier_call_chain+0x70/0xa0
-   vcs_scr_updated+0x77/0xa0
-   vcs_write+0x71b/0x7e0
-  Allocated by task: vc_allocate -> con_install -> tty_open
-  Freed by task: kfree <- vt_ioctl (VT_DISALLOCATE -> vc_port_destruct)
+The product ID is shared with the EM060K, which the option driver
+already knows and uses to claim the serial interfaces. Without a
+qmi_wwan entry the data interface is left unbound.
 
-Move the reload to immediately after console_lock(), before 'if (ret)',
-so every break path below passes a fresh vc to the post-loop
-vcs_scr_updated().
+Tested on a GL.iNet GL-X2000, where the module is soldered down and
+enumerates at SuperSpeed: cdc-wdm0 and wwan0 appear and ModemManager
+brings up a data session.
 
-Fixes: a287620312dc ("vc_screen: fix null-ptr-deref in vcs_notifier() during concurrent vcs_write")
-Cc: stable@kernel.org
-Signed-off-by: Yi Yang <yiyang13@huawei.com>
-Link: https://patch.msgid.link/20260901113131.2760010-1-yiyang13@huawei.com
+T:  Bus=02 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  2 Spd=5000 MxCh= 0
+D:  Ver= 3.10 Cls=00(>ifc ) Sub=00 Prot=00 MxPS= 9 #Cfgs=  1
+P:  Vendor=2c7c ProdID=030b Rev= 5.04
+S:  Manufacturer=Quectel
+S:  Product=EG120K-EA
+S:  SerialNumber=45546267
+C:* #Ifs= 6 Cfg#= 1 Atr=a0 MxPwr=896mA
+I:* If#= 0 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+E:  Ad=01(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=81(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+I:* If#= 1 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=40 Driver=option
+E:  Ad=83(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=82(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+I:* If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=85(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=84(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=03(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+I:* If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=87(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=86(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=04(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+I:* If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=ff Driver=qmi_wwan
+E:  Ad=88(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
+E:  Ad=8e(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=0f(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+I:* If#=12 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=70 Driver=(none)
+E:  Ad=89(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+
+Signed-off-by: Gilberto Conde <gilbertorconde@gmail.com>
+Link: https://patch.msgid.link/20260921093426.2870266-1-gilbertorconde@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-[ sashal: Replaced the direct -ENXIO return with a ret assignment and goto unlock_out. ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/vt/vc_screen.c | 25 +++++++++++++------------
- 1 file changed, 13 insertions(+), 12 deletions(-)
+ drivers/net/usb/qmi_wwan.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/tty/vt/vc_screen.c b/drivers/tty/vt/vc_screen.c
-index 27b44dc123859..22735ca14395a 100644
---- a/drivers/tty/vt/vc_screen.c
-+++ b/drivers/tty/vt/vc_screen.c
-@@ -643,6 +643,19 @@ vcs_write(struct file *file, const char __user *buf, size_t count, loff_t *ppos)
- 		ret = copy_from_user(con_buf, buf, this_round);
- 		console_lock();
- 
-+		/* The vc might have been freed or vcs_size might have changed
-+		 * while we slept to grab the user buffer; recheck here, before
-+		 * if (ret), so every break path below passes a fresh vc to the
-+		 * post-loop vcs_scr_updated(). Return data written so far.
-+		 */
-+		vc = vcs_vc(inode, &viewed);
-+		if (!vc) {
-+			if (written)
-+				break;
-+			ret = -ENXIO;
-+			goto unlock_out;
-+		}
-+
- 		if (ret) {
- 			this_round -= ret;
- 			if (!this_round) {
-@@ -655,18 +668,6 @@ vcs_write(struct file *file, const char __user *buf, size_t count, loff_t *ppos)
- 				goto unlock_out;
- 			}
- 		}
--
--		/* The vc might have been freed or vcs_size might have changed
--		 * while we slept to grab the user buffer, so recheck.
--		 * Return data written up to now on failure.
--		 */
--		vc = vcs_vc(inode, &viewed);
--		if (!vc) {
--			if (written)
--				break;
--			ret = -ENXIO;
--			goto unlock_out;
--		}
- 		size = vcs_size(vc, attr, false);
- 		if (size < 0) {
- 			if (written)
--- 
-2.53.0
-
+--- a/drivers/net/usb/qmi_wwan.c
++++ b/drivers/net/usb/qmi_wwan.c
+@@ -1090,6 +1090,7 @@ static const struct usb_device_id produc
+ 	{QMI_MATCH_FF_FF_FF(0x2c7c, 0x0122)},	/* Quectel RG650V */
+ 	{QMI_MATCH_FF_FF_FF(0x2c7c, 0x0125)},	/* Quectel EC25, EC20 R2.0  Mini PCIe */
+ 	{QMI_MATCH_FF_FF_FF(0x2c7c, 0x0306)},	/* Quectel EP06/EG06/EM06 */
++	{QMI_MATCH_FF_FF_FF(0x2c7c, 0x030b)},	/* Quectel EM060K/EG120K-EA */
+ 	{QMI_MATCH_FF_FF_FF(0x2c7c, 0x0512)},	/* Quectel EG12/EM12 */
+ 	{QMI_MATCH_FF_FF_FF(0x2c7c, 0x0620)},	/* Quectel EM160R-GL */
+ 	{QMI_MATCH_FF_FF_FF(0x2c7c, 0x0800)},	/* Quectel RM500Q-GL */
 
 
