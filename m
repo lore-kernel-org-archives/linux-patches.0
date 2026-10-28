@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793207938;
-	b=FFTmOT+HvAbsneLsFdUD7zauEDN2qB6tO143B54e8+t57ZFDm9cl/gbGRbwJ4/wwBEEO
-	 2UJjkV9Zj1eP6vE6omOn4ppnolTim5Pg4ZFm0mMSABIgs48b0eNKWF3f9T3FN4HUSZ1k5
-	 gfrp1La3OH3ri5q2ASM2zvPDevbq36o/7UDMf6jqPPvD35blDgd6osH5Cyzx0WxQLzdq7
-	 Xl+HwJupMOvzst8vs2tkYhrGMZvBVQzowGmVlpsD5qQzdCj+GYMp4HwvM7L06Mov6EodV
-	 QZhPL2P/7WetSih0aWyiG/r9SUo5UhdDrUMm7bcPopRqBir83NJUDc8/qGgLjTRHLYg==
+	t=1793207940;
+	b=KJdHsyJxzGB3h/xm+kUP+FqG1hTWi/QVCitg4WO4gLoY0E1HlXnU5xUY0q+nU12wmSZB
+	 IGedlfQ53fs94nNSVmiQue8mwpsuuphHv6YLqBD3Vd5irrRkmA4GxDymfOMTBPSpVndXn
+	 yz3sE016BG10SA6ARwN2kYxrg3LtbodErl8TH8JIT9mSRmU0qUh1bOCwUmnfRGv1PBPxs
+	 nlWc54e1VLyfcdJpe9kex3vV1NtOP/1GqhkHeMZAQOZGlhhyx5ozSvaZOTfvRNFOfHXxO
+	 Q+b89Ybl5RnOeC9K/mDh102Pseif23L+vPNx253PpXeDMtKAMFuToxdhr0IwkElzfxw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793207938;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793207940;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=NwNkXY3sjhcB3DI25mOq3EMAnpbghlYra29ElyPCm68=;
-	b=DRCH/T3xYYjEQ97InZXVwJZq0RGDDn+t3DLxoYs8sST3F1AVkGH/DC7X81yaLyPQT1bn
-	 uQNxEXIo72WySIcpod9p+598BA43FwFWS4xsUsUwIlrYyuTg6MIdOKC1EgEM+7DnUvU9b
-	 RC89d5OcsETePQkjS6ZI5inyXpBus6ahYFWP3IAfyHIk+hFOIKHUNe/bH9jmQUnoAELfo
-	 nEW03w3K1+3aXiYlFyzT7IbweqVDz/VIin/M3wMXvbQ6JkODJEQdKXKssW4sq47HQqiob
-	 qrU2lcf5JbXaKyAkfl50I4DTe8QTdbyPCMlF3vSshBLrN3lxlUvUGeGkQVwWeJjixlg==
+	bh=lDd0383T3wGsdNiXCVZE7sGSEjXINmc9qZvyeV2VN8o=;
+	b=e1lskzLWlRGBvk2bwtvrdN7SAY/KRfegn38Ho3F4xQrIhq4b/2No1/bqrqSu3SXqFkOL
+	 qrK1b9zECydvLNv3s3bd8cjsFcbxT2LdnJA4BRIQCUoHGHN/XckDVb4AeV2LQyhDKb8l4
+	 owWHfkq9VFmurCFP/jN6jVV2NjBvltWJKtTZQvdlyeAvh6bB2fATeR+eWK9ZHpvZFuPGo
+	 vciy6NdXKc74UP5qslh2LsHhiYYjt++kD3R6FXHLFvz17o4IaHQcqsXW5sgyg9f0ghHxv
+	 V8m9twJ51IiqPJ8JbugdUHbdvbFsivvexjejzFuCzQram8MeD6TTI/V7MMUWoMZltAQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dU7BxS89;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KRz0JAWw;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B63D3606A31E;
-	Wed, 28 Oct 2026 17:18:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F779606A31A;
+	Wed, 28 Oct 2026 17:19:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dU7BxS89
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13EF71F01825;
-	Wed, 28 Oct 2026 17:18:56 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KRz0JAWw
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFF841F031E6;
+	Wed, 28 Oct 2026 17:18:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793207937;
-	bh=NwNkXY3sjhcB3DI25mOq3EMAnpbghlYra29ElyPCm68=;
+	s=korg; t=1793207940;
+	bh=lDd0383T3wGsdNiXCVZE7sGSEjXINmc9qZvyeV2VN8o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dU7BxS89oRXXQzCGFBQDnPrhQdqFl7jzflq1G2rsT6rgSx0Q3k6sIOQRBDJmzKcWC
-	 lA8ke1ugi4Vi3GKljuWixn1+x8MSSy+QHAN+KjI4vbtG3POYqqLFELMtIOjlmYWCL6
-	 tnvh1q/BCgRvMV7Lh+Kje/jGLJNy81cTyRtREJRE=
+	b=KRz0JAWwHU0Jjdt0LVbLb/o3oMCzitcIs+jGWhnzjCxsHzdYWHX3ZC4FXIWbklo96
+	 GVpyYzf/7EZFX+/zJMJfTFQMVSFnYkpcEj7XGLqMq1Bs29h3aWjOI5o2oZ5oeY0ZN1
+	 /H3Sir3FdPVxaXq/hBl6Ge0PmBaVDbrd6kPIqMcM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+caa052a0958a9146870d@syzkaller.appspotmail.com,
-	Bernard Pidoux <bernard.f6bvp@gmail.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 175/247] ax25: wait for ax25_send_frame() before detaching the connections of a device
-Date: Wed, 28 Oct 2026 17:59:38 +0100
-Message-ID: <20261028165951.565534342@linuxfoundation.org>
+	Josef Bacik <josef@toxicpanda.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.12 193/247] io_uring/waitid: own the request before clearing ->head
+Date: Wed, 28 Oct 2026 17:59:56 +0100
+Message-ID: <20261028165951.990180579@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165947.349197979@linuxfoundation.org>
 References: <20261028165947.349197979@linuxfoundation.org>
@@ -68,198 +67,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bernard Pidoux <bernard.f6bvp@gmail.com>
+From: Josef Bacik <josef@toxicpanda.com>
 
-A connection created by ax25_send_frame(), for ROSE, NET/ROM or IP
-over AX.25, points to the ax25_dev of its device without holding a
-reference on it. It relies on ax25_kill_by_device() to detach it when
-the device goes down, before ax25_dev_device_down() frees the ax25_dev.
+Commit c254eec4364b9f4b4cbdce43be3fb4df5a651a70 upstream.
 
-On NETDEV_DOWN the two run one after the other. In between, the
-ax25_dev is still on ax25_dev_list, so ax25_send_frame() still finds
-it, creates a connection and adds it to ax25_list after
-ax25_kill_by_device() has finished walking that list. The connection is
-left with a pointer to an ax25_dev that is freed a moment later, which
-ax25_find_cb() and the AX.25 timers then dereference:
+io_waitid_remove_wq() only takes the wait queue lock if ->head is set.
+io_waitid_wait() clears ->head first thing, before it tries to become the
+owner of the request by bumping ->refs. If somebody else owns the request
+at that point, nothing keeps it from completing the request while the
+wake up handler is still going to touch it:
 
-  BUG: KASAN: slab-use-after-free in ax25_find_cb+0x2ed/0x330 [ax25]
-  Read of size 8 at addr ffff8880031e8c10 by task repro/3287
-   ax25_find_cb+0x2ed/0x330 [ax25]
-   rose_transmit_link+0xea/0x560 [rose]
-   rose_write_internal+0x3ab/0x15b0 [rose]
-   rose_release+0x2b2/0x4b0 [rose]
-  Allocated by: ax25_dev_device_up, ax25_device_event
-  Freed by: kfree_rcu_monitor, queued from ax25_device_event
-  The buggy address is located 16 bytes inside of
-   freed 256-byte region, cache kmalloc-256
+CPU0 (io_waitid_wait)                 CPU1 (io_waitid, holds a ref)
+list_del_init(&wait->entry)
+smp_store_release(&iw->head, NULL)
+                                      __do_wait() finds another child
+                                      io_waitid_remove_wq()
+                                        // ->head == NULL, no locking
+                                      io_waitid_finish(), IOU_COMPLETE
+                                      // request freed and reused
+atomic_fetch_inc(&iw->refs)
 
-This is the trace of the syzbot report below. An earlier commit, "rose:
-use timer_shutdown_sync() for t0timer teardown", attributed that
-report to the ROSE t0 timer; the freed object in the report is the
-ax25_dev, as it is here.
+The same goes for __io_waitid_cancel() if it claims the request in that
+window. ->refs is part of the per opcode data of the request, so this
+increments whatever the next user of the request keeps there. If that
+happens to be zero, the handler concludes that it owns the request, and
+queues io_waitid_cb() for it. With the window held open by a delay, and
+the request reused for a receive that is waiting for data:
 
-A connection that is on the list in time is not safe either while it
-is still being set up: ax25_kill_by_device() can detach it, clearing
-its ax25_dev pointer, between the moment ax25_send_frame() adds it and
-the moment it starts the link and queues the frame, which then
-dereference NULL.
+  BUG: KASAN: slab-use-after-free in __wake_up_common+0x1ca/0x1f0
+   __wake_up_sync_key+0x36/0x50
+   sock_def_readable+0xf1/0x420
+   unix_stream_sendmsg+0x60b/0x1110
+  Allocated by task 87:
+   io_arm_apoll+0x1ed/0x940
+  Freed by task 87:
+   __io_submit_flush_completions+0x118d/0x1a10
+   tctx_task_work_run+0x327/0x950
 
-Make the two exclude each other with RCU. ax25_send_frame() now runs
-entirely under rcu_read_lock() and gives up when the device is no
-longer marked up. ax25_kill_by_device() clears device_up and calls
-synchronize_rcu() before it walks the list: once that returns, every
-connection ax25_send_frame() was working on is complete and on the
-list, and no new one can appear behind the walk. This adds one RCU
-grace period to taking an AX.25 interface down.
+Only clear ->head once the handler owns the request. If it doesn't, the
+owner finds ->head set and has to wait for the lock, which is held by the
+caller of the handler. Deleting the already deleted entry again is
+harmless.
 
-Tested on 6.12.94 with KASAN and lockdep, with the modules of this
-tree and the rest of this series:
-
- - with a 100 ms delay inserted between ax25_kill_by_device() and
-   ax25_dev_device_down(), a single "ifconfig bpq0 down" during eight
-   ROSE call requests left connections on the list and ended in a
-   use-after-free in ax25_heartbeat_expiry(); with the series the list
-   is empty after the down and there is no report;
-
- - the syzbot C reproducer, with the interface brought up again in a
-   loop, caused 217 KASAN reports and a panic after 41 seconds; with
-   the series it ran for 600 seconds without any report;
-
- - 60 plain "ifconfig bpq0 down" / "up" under 20 ROSE call requests
-   per second, and a ROSE call through a three node chain over mkiss,
-   behave as before;
-
- - eight ROSE calls started at the same instant still end up on a
-   single AX.25 connection.
-
-Reported-by: syzbot+caa052a0958a9146870d@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=caa052a0958a9146870d
-Signed-off-by: Bernard Pidoux <bernard.f6bvp@gmail.com>
-Assisted-by: Claude:claude-opus-5-5
-(cherry picked from commit 45071a40f7d5db10350dbd177decd3f68fdaaa01)
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: ab673c1bcaf2 ("io_uring/waitid: use io_waitid_remove_wq() consistently")
+Assisted-by: LLM
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Link: https://patch.msgid.link/20261015-b4-io-uring-fixes-v1-1-c1556f5d7bf5@toxicpanda.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ax25/af_ax25.c  | 12 +++++++++++-
- net/ax25/ax25_out.c | 38 ++++++++++++++++++++------------------
- 2 files changed, 31 insertions(+), 19 deletions(-)
+ io_uring/waitid.c |   10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/net/ax25/af_ax25.c b/net/ax25/af_ax25.c
-index 0a5cd835d289d..11ac6c83b1442 100644
---- a/net/ax25/af_ax25.c
-+++ b/net/ax25/af_ax25.c
-@@ -81,7 +81,17 @@ static void ax25_kill_by_device(struct net_device *dev)
+--- a/io_uring/waitid.c
++++ b/io_uring/waitid.c
+@@ -291,12 +291,18 @@ static int io_waitid_wait(struct wait_qu
+ 		return 0;
  
- 	if ((ax25_dev = ax25_dev_ax25dev(dev)) == NULL)
- 		return;
--	ax25_dev->device_up = false;
-+	WRITE_ONCE(ax25_dev->device_up, false);
-+
+ 	list_del_init(&wait->entry);
+-	smp_store_release(&iw->head, NULL);
+ 
+-	/* cancel is in progress */
 +	/*
-+	 * ax25_send_frame() creates connections that hold no reference on
-+	 * the ax25_dev: they rely on the walk below to detach them before the
-+	 * ax25_dev is freed. It runs under rcu_read_lock() and gives up when
-+	 * device_up is clear, so once this returns every connection it was
-+	 * setting up is complete and on the list, and no new one can appear
-+	 * behind the walk.
++	 * Cancel or issue is in progress. Leave ->head alone, so that whoever
++	 * owns the request has to take the wait queue lock, which we hold,
++	 * before it can complete and free it.
 +	 */
-+	synchronize_rcu();
+ 	if (atomic_fetch_inc(&iw->refs) & IO_WAITID_REF_MASK)
+ 		return 1;
  
- 	spin_lock_bh(&ax25_list_lock);
- again:
-diff --git a/net/ax25/ax25_out.c b/net/ax25/ax25_out.c
-index eeb2aa1e2186f..f082b69126623 100644
---- a/net/ax25/ax25_out.c
-+++ b/net/ax25/ax25_out.c
-@@ -34,34 +34,34 @@ ax25_cb *ax25_send_frame(struct sk_buff *skb, int paclen, const ax25_address *sr
- 	ax25_dev *ax25_dev;
- 	ax25_cb *ax25, *existing;
- 
-+	/*
-+	 * The connection made or used here holds no reference on the
-+	 * ax25_dev. ax25_kill_by_device() clears device_up, waits for the RCU
-+	 * readers and only then detaches the connections of the device: stay
-+	 * under the RCU read lock until the frame is queued, and do not start
-+	 * anything on a device that is going down.
-+	 */
-+	rcu_read_lock();
-+	ax25_dev = ax25_dev_ax25dev(dev);
-+	if (!ax25_dev || !READ_ONCE(ax25_dev->device_up)) {
-+		rcu_read_unlock();
-+		return NULL;
-+	}
++	/* pairs with the smp_load_acquire() in io_waitid_remove_wq() */
++	smp_store_release(&iw->head, NULL);
 +
- 	/*
- 	 * Take the default packet length for the device if zero is
- 	 * specified.
- 	 */
--	if (paclen == 0) {
--		rcu_read_lock();
--		ax25_dev = ax25_dev_ax25dev(dev);
--		if (!ax25_dev) {
--			rcu_read_unlock();
--			return NULL;
--		}
-+	if (paclen == 0)
- 		paclen = ax25_dev->values[AX25_VALUES_PACLEN];
--		rcu_read_unlock();
--	}
- 
- 	/*
- 	 * Look for an existing connection.
- 	 */
- 	if ((ax25 = ax25_find_cb(src, dest, digi, dev)) != NULL) {
- 		ax25_output(ax25, paclen, skb);
--		return ax25;		/* It already existed */
--	}
--
--	rcu_read_lock();
--	ax25_dev = ax25_dev_ax25dev(dev);
--	if (!ax25_dev) {
- 		rcu_read_unlock();
--		return NULL;
-+		return ax25;		/* It already existed */
- 	}
- 
- 	if ((ax25 = ax25_create_cb()) == NULL) {
-@@ -69,7 +69,6 @@ ax25_cb *ax25_send_frame(struct sk_buff *skb, int paclen, const ax25_address *sr
- 		return NULL;
- 	}
- 	ax25_fillin_cb(ax25, ax25_dev);
--	rcu_read_unlock();
- 
- 	ax25->source_addr = *src;
- 	ax25->dest_addr   = *dest;
-@@ -78,6 +77,7 @@ ax25_cb *ax25_send_frame(struct sk_buff *skb, int paclen, const ax25_address *sr
- 		ax25->digipeat = kmemdup(digi, sizeof(*digi), GFP_ATOMIC);
- 		if (ax25->digipeat == NULL) {
- 			ax25_cb_put(ax25);
-+			rcu_read_unlock();
- 			return NULL;
- 		}
- 	}
-@@ -91,10 +91,11 @@ ax25_cb *ax25_send_frame(struct sk_buff *skb, int paclen, const ax25_address *sr
- 	if (existing) {
- 		ax25_cb_put(ax25);
- 		ax25_output(existing, paclen, skb);
-+		rcu_read_unlock();
- 		return existing;
- 	}
- 
--	switch (ax25->ax25_dev->values[AX25_VALUES_PROTOCOL]) {
-+	switch (ax25_dev->values[AX25_VALUES_PROTOCOL]) {
- 	case AX25_PROTO_STD_SIMPLEX:
- 	case AX25_PROTO_STD_DUPLEX:
- 		ax25_std_establish_data_link(ax25);
-@@ -121,6 +122,7 @@ ax25_cb *ax25_send_frame(struct sk_buff *skb, int paclen, const ax25_address *sr
- 	ax25_start_heartbeat(ax25);
- 
- 	ax25_output(ax25, paclen, skb);
-+	rcu_read_unlock();
- 
- 	return ax25;			/* We had to create it */
- }
--- 
-2.53.0
-
+ 	req->io_task_work.func = io_waitid_cb;
+ 	__io_req_task_work_add(req, IOU_F_TWQ_IN_WAKE);
+ 	return 1;
 
 
