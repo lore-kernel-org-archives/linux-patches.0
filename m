@@ -1,53 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213694;
-	b=d0ixZhm3PBCOlp/wHm3DtmNzITS43ylBhbIWJ78WdOHRuUN4xHm2JnbXTgGPT7d/DwGo
-	 EswwQMv9bPEcyHTynBzGboRU8fHjAuNSpI2XAKA2GG85k6R1wfjO7sxOqVufgpZ4lDo6c
-	 IxvRt+dG3WFDya9/MZtEGgRhEr9fOxDpPv4ijykRDmUdZDgqWMxsX2foxZ60TFYTXL9kl
-	 saeqSyfoTW2Y7r3Q+3RJ3W4kuc57Hr9vu7NoYTB0wqTLR9OPxKfE2M947muv6mq1PsG8o
-	 G4ufMj21InfKjauxN4t62p7QPDPN4MBkGtjIQxcbNI142DB1Rncf4b+Uuyzq9PmmAGw==
+	t=1793213696;
+	b=yarzkTus8zUhJOm1cFt2zRA6uzHJbhTK4CjQXFSitrLfLn5SAqeLCdsZlJvG1kMv9QG4
+	 atIlMyyBIzvfjN4mAAp/9Qz4UQ0Zzj0cCviQCfE7BB9ovqVZVDTQwwQG7hVOIAqXQr6Wo
+	 4OujrPBWe9OnoPYdgtHp5JEY7nnEsQSKBNS9p60OuRCO6lCqpfxjy/ePUuWX4ArHqYWIz
+	 TUHlhw3izBhij7j+/VMThqAdWG7e7mBxPy2F1rlS9GC30WPWqN/L7YUKrk1W6qB0ECx8k
+	 pdEeyPqwqa6JD3FwYUx28KNkQQMUxXzWsxwGE97nhs/UTFTll5KD87rPKnV79B6cMAw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213694;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213696;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=eL5obuI8WSwCGy2SZvpBHMK+CYe0aYu1tlyzOkyOn14=;
-	b=Aw06UYNtp3XKptvoedYcNNEB3l6dBee6aUbNKl0Of82dS9umdeMKmBFkFGmcmZEITtrl
-	 2zOlGL+7rz4vKzcIarpwgPf9AFw0cTzeV3+acCBojl7Exhcsb8DQMVoRTQDjq7Jgnsi9e
-	 ajGF7mnJXBK76fAnwW61YihvvkWib04yEg9CiCzVOOjP56GeD4N5Hg9OgpGfBTTQ1SupW
-	 NbIoz2Qq12x1Eini/Ew1hHX9S5iI100woOB44IXkGtLRkIzF20iDao0SRgR0ZN+tcdzy3
-	 AYL4amNUTg1g1BsFhvDikJC7MIBic4mscO8iXNKKAl44BbstpYIyQtx9z1IsoffKmLA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=JxIIZ9CGwjhvzkgbuiaq7MH8b/ZsCx1WzjKnVDhH8Hg=;
+	b=mqFfoKfge0KFDyWsEssgMJrLB3COiXcWcAQYt2W1TMZo09GlTFShtGXIy9f5X4CcGSmu
+	 oVovhwpN+SWBsEXO039sHjw6u4/gdEk837Jl4RgEQ0TYB6LcSb+FDNIGOqE+HlXOrzBlo
+	 YLQYG6BxQYsVMgLyWdCeb6w4hFLVmeRQdB1MlpP/7GSc3WBOEb3/VR4qFdDZFjI39AYCG
+	 uOkbvs9WMGhj41oZ56pqg/xtoFFdWK/7PKj2YGaEHGGL6yMyJutWL6s4YtAMB8vqLnal2
+	 7K1W226mROyTCQ843+OiNbHHf/tnhA1bPO33zqXlLoQrLSZqgx9ekP9gdpRxSdY+aew==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mAWCj5t9;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="z+hfcP/H";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D127E606A31F;
-	Wed, 28 Oct 2026 18:54:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 740AE606A31C;
+	Wed, 28 Oct 2026 18:54:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mAWCj5t9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F17BF1F01825;
-	Wed, 28 Oct 2026 18:54:52 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z+hfcP/H
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCAA01F01825;
+	Wed, 28 Oct 2026 18:54:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213693;
-	bh=eL5obuI8WSwCGy2SZvpBHMK+CYe0aYu1tlyzOkyOn14=;
+	s=korg; t=1793213696;
+	bh=JxIIZ9CGwjhvzkgbuiaq7MH8b/ZsCx1WzjKnVDhH8Hg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mAWCj5t9fLR3GsYZOjd1XZxo1Bui/vBYpUKn7oQBdRRIbtzDplVacAiey+QzSV8/c
-	 NLuiJx1HwghyAACp1rVky52KyhBmvWecGpqF+PrctKq8D9gzk4VPnP6Z+ddlCn/+Yo
-	 B701u+apJVEgpGrRQpdV94cySYmvaJ7xgcYtsnCI=
+	b=z+hfcP/HhhVCaHh8iSwEwkqZpacpQOV8xrs3PIKAZ/pZB7EjWIuA/lOUFt3JSQD+x
+	 N8IQogiDSzsCOg+GM0t2eyjnhfDIpGO/70y0r7u7tkhhBxlBYvIYCwEbRadOL1IiNI
+	 mBl2V6OhZPw5FGb+9UKhFuU3Kp6AVxTPT4RZhX90=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike Rapoport <rppt@linux.ibm.com>,
-	Yongqiang Liu <liuyongqiang13@huawei.com>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Charlene Liu <charlene.liu@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Allen Pan <allen.pan@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0596/1887] ARM: 9359/1: flush: check if the folio is reserved for no-mapping addresses
-Date: Wed, 28 Oct 2026 17:44:52 +0100
-Message-ID: <20261028170512.979747687@linuxfoundation.org>
+Subject: [PATCH 6.1 0597/1887] drm/amd/display: Add a dc_state NULL check in dc_state_release
+Date: Wed, 28 Oct 2026 17:44:53 +0100
+Message-ID: <20261028170513.003374327@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -63,76 +66,46 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yongqiang Liu <liuyongqiang13@huawei.com>
+From: Allen Pan <allen.pan@amd.com>
 
-[ Upstream commit 0c66c6f4e21cb22220cbd8821c5c73fc157d20dc ]
+[ Upstream commit 334b56cea5d9df5989be6cf1a5898114fa70ad98 ]
 
-Since commit a4d5613c4dc6 ("arm: extend pfn_valid to take into account
-freed memory map alignment") changes the semantics of pfn_valid() to check
-presence of the memory map for a PFN. A valid page for an address which
-is reserved but not mapped by the kernel[1], the system crashed during
-some uio test with the following memory layout:
+[How]
+Check wheather state is NULL before releasing it.
 
- node   0: [mem 0x00000000c0a00000-0x00000000cc8fffff]
- node   0: [mem 0x00000000d0000000-0x00000000da1fffff]
- the uio layout is：0xc0900000, 0x100000
-
-the crash backtrace like:
-
-  Unable to handle kernel paging request at virtual address bff00000
-  [...]
-  CPU: 1 PID: 465 Comm: startapp.bin Tainted: G           O      5.10.0 #1
-  Hardware name: Generic DT based system
-  PC is at b15_flush_kern_dcache_area+0x24/0x3c
-  LR is at __sync_icache_dcache+0x6c/0x98
-  [...]
-   (b15_flush_kern_dcache_area) from (__sync_icache_dcache+0x6c/0x98)
-   (__sync_icache_dcache) from (set_pte_at+0x28/0x54)
-   (set_pte_at) from (remap_pfn_range+0x1a0/0x274)
-   (remap_pfn_range) from (uio_mmap+0x184/0x1b8 [uio])
-   (uio_mmap [uio]) from (__mmap_region+0x264/0x5f4)
-   (__mmap_region) from (__do_mmap_mm+0x3ec/0x440)
-   (__do_mmap_mm) from (do_mmap+0x50/0x58)
-   (do_mmap) from (vm_mmap_pgoff+0xfc/0x188)
-   (vm_mmap_pgoff) from (ksys_mmap_pgoff+0xac/0xc4)
-   (ksys_mmap_pgoff) from (ret_fast_syscall+0x0/0x5c)
-  Code: e0801001 e2423001 e1c00003 f57ff04f (ee070f3e)
-  ---[ end trace 09cf0734c3805d52 ]---
-  Kernel panic - not syncing: Fatal exception
-
-So check if PG_reserved was set to solve this issue.
-
-[1]: https://lore.kernel.org/lkml/Zbtdue57RO0QScJM@linux.ibm.com/
-
-Fixes: a4d5613c4dc6 ("arm: extend pfn_valid to take into account freed memory map alignment")
-Suggested-by: Mike Rapoport <rppt@linux.ibm.com>
-Signed-off-by: Yongqiang Liu <liuyongqiang13@huawei.com>
-Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Cc: Mario Limonciello <mario.limonciello@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org
+Reviewed-by: Charlene Liu <charlene.liu@amd.com>
+Acked-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Allen Pan <allen.pan@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mm/flush.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/amd/display/dc/core/dc.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm/mm/flush.c b/arch/arm/mm/flush.c
-index 7ff9feea13a6a..b19ecc307ad46 100644
---- a/arch/arm/mm/flush.c
-+++ b/arch/arm/mm/flush.c
-@@ -280,6 +280,8 @@ void __sync_icache_dcache(pte_t pteval)
- 		return;
+diff --git a/drivers/gpu/drm/amd/display/dc/core/dc.c b/drivers/gpu/drm/amd/display/dc/core/dc.c
+index 6a415e2e6b8ee..7594aaf79a101 100644
+--- a/drivers/gpu/drm/amd/display/dc/core/dc.c
++++ b/drivers/gpu/drm/amd/display/dc/core/dc.c
+@@ -2283,7 +2283,8 @@ static void dc_state_free(struct kref *kref)
  
- 	page = pfn_to_page(pfn);
-+	if (PageReserved(page))
-+		return;
- 	if (cache_is_vipt_aliasing())
- 		mapping = page_mapping_file(page);
- 	else
+ void dc_release_state(struct dc_state *context)
+ {
+-	kref_put(&context->refcount, dc_state_free);
++	if (context != NULL)
++		kref_put(&context->refcount, dc_state_free);
+ }
+ 
+ bool dc_set_generic_gpio_for_stereo(bool enable,
 -- 
 2.53.0
 
