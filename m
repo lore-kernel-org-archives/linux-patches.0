@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793209785;
-	b=oJ/p7Vs38RYMrhkw3Wz14PzRl1NAtyKHx1wXafTh0T8zqwMV6RbDxk6okZXUMmHBMF6W
-	 vRSlKyLOxhMNKWLOR7kX8eVkSLvnSRdnZxWmanBkT4CI7u2mgHYOjnJxWxMTUFNqBgKbe
-	 CVJrvOL4/nN6JcbcokA0b04q88D4dnAOEkQ+2ifsEDOEbK3deV+LjQHo/OTmzSWR7WYls
-	 cckczhFSPEGqNJ3qZxtpGFUX9WKGfvUyEu1yHhjeTYDBPvxU25uHgulr6/VBYCaEYOetZ
-	 7L4ybCJes61mJ9rc3I5FWKSIiQeAVNRcXAwxOqeGzDrzagLCcZNF12O4gJbC046ISBA==
+	t=1793209788;
+	b=yWOSBQigbkNNvgsw1krohgS+ARYNCln1ZW2J2qQCQKYsELQwtbd5cdsOGhzRtpPhrwB8
+	 rAqEOzuYRaf5Br7gfbfhH5aj9Iv5Iq7cDGQdXN1T43Cd7jUC76bsnBcCMg+GkubwWXJ8y
+	 V9WvBrG6uJiBsf9fJCGHB/fKcHzP27bB25nJ6xWEZyMw2nJcGmLvRz7QsAxnUPqurms/2
+	 dr23gEhlKZk10N1YUqnsJJUCbNGugO6DJmbXCqoUXG/Dongf072qzyKMEaWFqHjuuWcGe
+	 5NskYgwNBjlTMHXW2AJBYM3Y3qdetAc66yxNLqHjqWSwHhzMkO9e89ttfsTYC+r+LyQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793209785;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793209788;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Pg8AUOaPwzdGRNr6YjohQ39BzBWLphLFFHzkU23hNyQ=;
-	b=4EdvWQVsmOt1f46ALkwUzuVNhDEvJJTnEqAJ0MIfUsGudqY4iyooLBO3T6LvyiEnSRbu
-	 oXnc4dBOhKQ4CRYlyeCEsmp/MF0vJi2niquWVRhTRSLz+ie7EUfayw/DCuv9oD77VOyVM
-	 HVBzlhqRwONPL9xBf6c6bHeqoAiIov/BT+HHyply9JGn7Ix2YuK/1GgCiWtNrxte8sdi6
-	 XIV56QgZrG9sZSxNB0Y1ikKyiwzCpZw46C9UQBj4TFI3wa2LdLmaEVZiKNWPAtgrhK2xk
-	 DquF9/aOpMl/5eQaRf9j6AB0D607ROCkKTGBEN0ZBaSMgJWhr5Mq2oh9YrmarcH2uIA==
+	bh=sadm7/RVKmpxwLwinsJ53MGj5Ke/t4WJOxPdFp7cIeA=;
+	b=0jxoh3BNlXAkrSZX6pcXp2Sa2Hp4516Ao30eITxHg0z7kLCR0rJ+6OMhlXZmGLvS5PTK
+	 jdYMaCO0KLPK0O/sEW0t2pwkT99ksZUpi1DIp21J/rFDsDx2oGtuKkY1Zd9GIc0VNl6Y+
+	 Kc2n4Z9WYjSrOxnpKFKQykqXgYsWHBlrDbZlaW1vMC0qUC05mqgemmoNXBYugZMW/5Kb6
+	 jNBpqvji2y0+AyBQ88vE5PQhWNYkVVV6K8n1WiH4z2KLxVtK9c9V0hnywTteMmDkuYcrp
+	 4HWGj+LOBi2Ab3wwn6G23g1UpbGK/oc6hrDUHcOkcLFNZSOTK7S9jU1bhsBuEAnHxag==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="0Q/pMu2l";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J11dUT5g;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C54E606A31A;
-	Wed, 28 Oct 2026 17:49:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F26FD606A31A;
+	Wed, 28 Oct 2026 17:49:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0Q/pMu2l
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B9421F01825;
-	Wed, 28 Oct 2026 17:49:44 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J11dUT5g
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 487091F01825;
+	Wed, 28 Oct 2026 17:49:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793209785;
-	bh=Pg8AUOaPwzdGRNr6YjohQ39BzBWLphLFFHzkU23hNyQ=;
+	s=korg; t=1793209787;
+	bh=sadm7/RVKmpxwLwinsJ53MGj5Ke/t4WJOxPdFp7cIeA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0Q/pMu2lNGKb/X7F0pm3mKg0OJz/b1k2pXGlzbOd9THegJJciv9h1/YJvzFfWTjAi
-	 C9LlyLyw1m2kBGAU7/dTlH/3aF1ifJSiNA/EfGhE5zBAnKppTcB6wUI8KGFDDidsp0
-	 bKv+l4qdDgnwhbDEIxRG/p75WyBz/DhG5+MA4Q/M=
+	b=J11dUT5gUBZlhoB2fbWSXvdeG8ub8saX7GVHdu7hUOfyXYKCwjYOfCDhSPSW0I9ie
+	 vBubzLWtVwXRqZqXep04njYQhWM/AvdMRHpUodz+suzqIGqE8kp/m+ADfz0zzMZXfA
+	 XsEMAy1d/Nuc/YyopsAiHT4aFWs5HvvAQvY1Hfr4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Josef Bacik <josef@toxicpanda.com>,
 	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.18 075/109] io_uring/openclose: keep the lock in io_pipe_fixed()
-Date: Wed, 28 Oct 2026 18:00:59 +0100
-Message-ID: <20261028165944.123199150@linuxfoundation.org>
+Subject: [PATCH 6.18 076/109] io_uring: dont pass restart error codes to userspace
+Date: Wed, 28 Oct 2026 18:01:00 +0100
+Message-ID: <20261028165944.147101583@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165942.357251485@linuxfoundation.org>
 References: <20261028165942.357251485@linuxfoundation.org>
@@ -69,54 +69,117 @@ Content-Transfer-Encoding: 8bit
 
 From: Josef Bacik <josef@toxicpanda.com>
 
-Commit a3d7ee11289f657aa9af826d8f0844221292a27a upstream.
+Commit e1a64bc64897f4c2fe460922c345f2ed8f889b5f upstream.
 
-io_pipe_fixed() installs both ends of the pipe in the fixed file table,
-drops ->uring_lock, and copies the slot numbers to the application. If
-that faults, it takes the lock again and removes whatever is in these
-slots.
+-ERESTARTSYS and friends are instructions for the system call exit code,
+which either restarts the call or turns them into -EINTR. They are not
+supposed to be seen by applications. A request isn't a system call,
+nobody looks at what it returns before that is put into a CQE.
 
-If the request is run by io-wq the lock really is dropped in between, and
-the slots are visible to everybody else. By the time the error path gets
-to them, they may have been closed and reused, by IORING_OP_CLOSE and a
-direct open or accept, or by IORING_REGISTER_FILES_UPDATE. Then a file is
-removed from the table that has nothing to do with the failed request.
+The read/write and the networking opcodes convert these codes to -EINTR
+by hand. The others don't. An io-wq worker that is blocked in the open of
+a FIFO, a tty or some other device, or in a splice from an empty pipe,
+and that gets interrupted because the request is cancelled, completes it
+with -512:
 
-Do the copy with the lock held. Faulting in user memory under
-->uring_lock is fine, the registration paths do it all the time.
+  IORING_OP_OPENAT, IOSQE_ASYNC       // FIFO without a writer
+  IORING_OP_ASYNC_CANCEL              // -EALREADY, worker is signalled
+  CQE of the open: res == -512
 
-Fixes: 53db8a71ecb4 ("io_uring: add support for IORING_OP_PIPE")
+There are more candidates, like whatever a file system or driver returns
+from ->flush(), ->fsync(), ->fallocate() or ->uring_cmd(), or breaking a
+lease or delegation.
+
+Take care of it in io_issue_sqe(), which all of them go through. The
+helper is moved from rw.c as is. The cost is a compare and a branch that
+is not taken per request.
+
+Fixes: 15b71abe7b52 ("io_uring: add support for IORING_OP_OPENAT")
 Assisted-by: LLM
 Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Link: https://patch.msgid.link/20261015-b4-io-uring-fixes-v1-38-c1556f5d7bf5@toxicpanda.com
+Link: https://patch.msgid.link/20261015-b4-io-uring-fixes-v1-39-c1556f5d7bf5@toxicpanda.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/openclose.c |   11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ io_uring/io_uring.c |    5 +++++
+ io_uring/io_uring.h |   18 ++++++++++++++++++
+ io_uring/rw.c       |   18 ------------------
+ 3 files changed, 23 insertions(+), 18 deletions(-)
 
---- a/io_uring/openclose.c
-+++ b/io_uring/openclose.c
-@@ -366,13 +366,16 @@ static int io_pipe_fixed(struct io_kiocb
- 	fds[1] = alloc_slot ? ret : slot - 1;
- 	files[1] = NULL;
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -1890,6 +1890,9 @@ static int io_issue_sqe(struct io_kiocb
+ 	ret = __io_issue_sqe(req, issue_flags, def);
  
--	io_ring_submit_unlock(ctx, issue_flags);
--
--	if (!copy_to_user(p->fds, fds, sizeof(fds)))
-+	/*
-+	 * Hang on to the lock. If this fails, the slots have to be cleared, and
-+	 * they must still hold what was put there.
-+	 */
-+	if (!copy_to_user(p->fds, fds, sizeof(fds))) {
-+		io_ring_submit_unlock(ctx, issue_flags);
- 		return 0;
+ 	if (ret == IOU_COMPLETE) {
++		/* not all handlers take care of the internal restart codes */
++		if (unlikely(req->cqe.res <= -ERESTARTSYS))
++			req->cqe.res = io_fixup_restart_res(req->cqe.res);
+ 		if (issue_flags & IO_URING_F_COMPLETE_DEFER)
+ 			io_req_complete_defer(req);
+ 		else
+@@ -1905,6 +1908,8 @@ static int io_issue_sqe(struct io_kiocb
+ 		if ((req->ctx->flags & IORING_SETUP_IOPOLL) && def->iopoll_queue)
+ 			io_iopoll_req_issued(req, issue_flags);
+ 	}
++	if (unlikely(ret <= -ERESTARTSYS))
++		ret = io_fixup_restart_res(ret);
+ 	return ret;
+ }
+ 
+--- a/io_uring/io_uring.h
++++ b/io_uring/io_uring.h
+@@ -334,6 +334,24 @@ static inline void io_req_set_res32(stru
+ 	req->big_cqe.extra2 = extra2;
+ }
+ 
++static inline ssize_t io_fixup_restart_res(ssize_t ret)
++{
++	switch (ret) {
++	case -ERESTARTSYS:
++	case -ERESTARTNOINTR:
++	case -ERESTARTNOHAND:
++	case -ERESTART_RESTARTBLOCK:
++		/*
++		 * We can't just restart the syscall, since previously
++		 * submitted sqes may already be in progress. Just fail
++		 * this IO with EINTR.
++		 */
++		return -EINTR;
++	default:
++		return ret;
 +	}
++}
++
+ static inline void *io_uring_alloc_async_data(struct io_alloc_cache *cache,
+ 					      struct io_kiocb *req)
+ {
+--- a/io_uring/rw.c
++++ b/io_uring/rw.c
+@@ -625,24 +625,6 @@ static void io_complete_rw_iopoll(struct
+ 	smp_store_release(&req->iopoll_completed, 1);
+ }
  
- 	ret = -EFAULT;
--	io_ring_submit_lock(ctx, issue_flags);
- err:
- 	if (fds[0] != -1)
- 		io_fixed_fd_remove(ctx, fds[0]);
+-static inline ssize_t io_fixup_restart_res(ssize_t ret)
+-{
+-	switch (ret) {
+-	case -ERESTARTSYS:
+-	case -ERESTARTNOINTR:
+-	case -ERESTARTNOHAND:
+-	case -ERESTART_RESTARTBLOCK:
+-		/*
+-		 * We can't just restart the syscall, since previously
+-		 * submitted sqes may already be in progress. Just fail
+-		 * this IO with EINTR.
+-		 */
+-		return -EINTR;
+-	default:
+-		return ret;
+-	}
+-}
+-
+ static inline void io_rw_done(struct io_kiocb *req, ssize_t ret)
+ {
+ 	struct io_rw *rw = io_kiocb_to_cmd(req, struct io_rw);
 
 
