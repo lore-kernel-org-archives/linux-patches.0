@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793207850;
-	b=jXG1jobeS/FlKsOCYEGuxeDpFJVHM2PXlKdqqInWk3tpQPEXx8xKZGNxYim+jn7m+Bmj
-	 +unsNqBwTD3HC9V79OB1PLyRJTiCjsMXH+S4uDnl0CRU/4+3LYKVV+ECIMIu5jMnxCUom
-	 S6qE2EHxLoRWA+hH66HVC/PmE38eQ1klXNUE5ELbfZJU8NBef7JU5SILhxg6IvPhAqAFZ
-	 j+3OLNNt0PtMLrV7EDyEKEs4M2nBIJlwXax2Y7voT10Hqrp3IA3AoxRPXQA9WJ2jHC1X0
-	 9lglloFSgrl6ZlkDpY0r75Q421Q7ZpaI+7Ii+89hwISY3ezJuq7Y5zWSs6yPmrH1T0A==
+	t=1793207855;
+	b=F5wV3r+GcCTSXc84SAI59SIWkv/rMDLhX7OA3wbq/5J3Ncqo/0j/bEW1fOtBBEhlMNIj
+	 RxLH/PeFNxlDGqww14HHu90IX1OPlVefZKBQlePZdln3kjIZ+oLq75pUyHIv+QcQYO66m
+	 afCbZv34F9VQxTLTVCO0oH/Qh66TX7vc5QBzuPFym6KS6tpCg7R78RoFM+Od0dilh9jfy
+	 gNPSGvjuKNUB6EDBE/ei999IcQjnaaF7Jsj3TMIaYAGep/jB5tYWB4/egnPrDNsfgdqKf
+	 Wg4MT4lOn+fX4A+g08HCaX8OLrpYErpj2wkO1Tcual82pSpakqL1SH/5A3gcrGf7Bug==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793207850;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793207855;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=6JoO36ZUmBbqBfwr/idBgFjIV3Z5o1Zo83d+CmBybAA=;
-	b=GF7dSdwlPGsSmJ3/EhA3i5mcrAfE5vgCtKV9ge4/+/nTQUTkRQNJZ5u61XvKJl6KgS+q
-	 uAfWWpjWPA6/ofsYZJFGKJv4lyCj0RtsOMlC+A2NLDLbGgVef/6+xOlcqDutSENE8ep7U
-	 JBl1IOfKVro1pghzyCD/PFFLWhatgAboGWg49kz4YX9ysba3OEe7zy+RmP395Nxnnajvv
-	 qcn1STxlc67hPOdoFbf4vl7JCtuzDsftVydPr1ViZFwkKOZiKjgld9YLa2o96mEkEQ6pS
-	 irbE06scxGoo/OwY0KPsux1+KuHU97yYKijkm8XpR/CZrfNENm6jgM2XBsLH60trk0g==
+	bh=nN+Vh/buCVTI/ltlCMkuNABa+yPpHWOQutDp5HaejOM=;
+	b=JUBiAybjY8zMpZAfpZcurMTLKdpdTxXDGdp764dQmjA3gnAkPULJQOMMxv+PTcC2WpxO
+	 j8lUl0bFtlME1KiBmPRJEI79D6eqcX2SE482zQ+Nbp2qCEJzcoX9rGEiKNsYjuwHhF6wN
+	 POgP4EueaBKWmyIgWXIahxr0776K0IzyDjSbVdaNpfE1Hr7JawmRf/ZUe0lceOAgzALQJ
+	 aJxwz3P6A2+0InGpzBO7kbaIEinVAWhFmKZ2k1s1CwNbdr+5lXhKOOZ6d/UA1Hl8pYxqg
+	 xmPLH9FjJ4AMkCN4/mE4h6QyT9mAPNnt2DDE3ClDS7A220aeurKoQW74OCh0LR5yDgw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kores2M4;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="ILp7/bFF";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9682606A325;
-	Wed, 28 Oct 2026 17:17:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21903606A31E;
+	Wed, 28 Oct 2026 17:17:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kores2M4
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBCD31F01825;
-	Wed, 28 Oct 2026 17:17:28 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ILp7/bFF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73BDB1F031E4;
+	Wed, 28 Oct 2026 17:17:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793207849;
-	bh=6JoO36ZUmBbqBfwr/idBgFjIV3Z5o1Zo83d+CmBybAA=;
+	s=korg; t=1793207855;
+	bh=nN+Vh/buCVTI/ltlCMkuNABa+yPpHWOQutDp5HaejOM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kores2M4FxXkUUqPQ1EmvngqBSF2HfZ+xT95oxpJvMLDLw70PFpmv1LxKIWdqg79N
-	 2e/yqY3gnpKH4UgnL3iU6MSZ5UW1r++AquAi8huOIwpysjeOliDosG+V/HYsSRSxv2
-	 xDp48N0sXns9yhDQGrRsJx4/L5Llv1P9X9mKSGHo=
+	b=ILp7/bFFplvYyBf9nGcab43v9QjzyhM6fZ92FU5SzQg/rUAiIvBYoNSCw9RR08XKJ
+	 Dw7SyIDoFxY9N93I+ZU1s8v5BSG9KyM4FWFPgcohKPWhvqtelZr7tBObe+zP9F2lAL
+	 L9Pk9yMrqAciDEAx8FdkBNLYKJQl7yeYKoytveRE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mashiro Chen <mashiro.chen@mailbox.org>,
 	Bernard Pidoux <bernard.f6bvp@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 160/247] netrom: bound fragment reassembly in nr_queue_rx_frame()
-Date: Wed, 28 Oct 2026 17:59:23 +0100
-Message-ID: <20261028165951.203777604@linuxfoundation.org>
+Subject: [PATCH 6.12 162/247] ax25: check frame length in ax25_decode() and ax25_rx_iframe()
+Date: Wed, 28 Oct 2026 17:59:25 +0100
+Message-ID: <20261028165951.252362061@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165947.349197979@linuxfoundation.org>
 References: <20261028165947.349197979@linuxfoundation.org>
@@ -70,105 +69,72 @@ Content-Transfer-Encoding: 8bit
 
 From: Bernard Pidoux <bernard.f6bvp@gmail.com>
 
-nr_sock.fraglen is an unsigned short, but nr_sendmsg() accepts messages
-of up to 65536 bytes, which nr_output() then splits into NR_INFO frames
-with the MORE flag. Reassembling such a message on the receiving side
-makes fraglen wrap to 0, so alloc_skb() returns a buffer far smaller
-than the data copied into it just after. The same happens with any
-stream of MORE fragments that adds up to more than 65535 bytes.
+Two more reads on the receive path assume bytes that a short frame
+does not have:
 
-Mashiro Chen proposed rejecting fragments once the total would exceed
-USHRT_MAX by returning 1 to the caller. Review pointed out that this
-return value makes nr_state3_machine() put the frame back on the
-resequencing queue after nr_queue_rx_frame() has already pulled its
-headers, and that the limit would reject a legitimate 65536-byte
-message.
+- On a connection set up with SABME (modulo 128), ax25_decode() reads
+  a two-byte control field for I and S frames (frame[1]) without
+  checking that the second byte is there.
+- ax25_rx_iframe() reads the PID byte of an I frame without checking
+  that anything is left after the control field, so an I frame made of
+  its control field alone is dispatched on a byte past its end. The
+  same function also receives reassembled segments.
 
-Instead:
-- make fraglen an unsigned int, so a full 64 KiB message fits;
-- when a message would grow beyond 65536 bytes, drop what has been
-  gathered so far, consume the frame and return 0, so the caller does
-  not retry it;
-- discard the remaining fragments of that message up to its last
-  fragment, using a new NR_COND_FRAG_DISCARD condition bit, rather
-  than delivering its tail as a separate message.
+Return AX25_ILLEGAL from ax25_decode() when the control field is
+incomplete, which the state machines already handle as a malformed
+frame, and drop an I frame that has no PID byte. The first check in
+ax25_decode() also covers an empty frame on its own, independently of
+the length check proposed for ax25_rcv().
 
 Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: Mashiro Chen <mashiro.chen@mailbox.org>
-Closes: https://patchwork.kernel.org/project/netdevbpf/patch/20260407171600.102988-2-mashiro.chen@mailbox.org/
 Signed-off-by: Bernard Pidoux <bernard.f6bvp@gmail.com>
-(cherry picked from commit 6ad8be739b22495d6edc3f6d7b916098ceb3fdf0)
+(cherry picked from commit 5b010290c0e627fd09b92eb8d690f0726d7cfe7c)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/netrom.h |  3 ++-
- net/netrom/nr_in.c   | 26 ++++++++++++++++++++++++++
- 2 files changed, 28 insertions(+), 1 deletion(-)
+ net/ax25/ax25_in.c   | 4 ++++
+ net/ax25/ax25_subr.c | 7 +++++++
+ 2 files changed, 11 insertions(+)
 
-diff --git a/include/net/netrom.h b/include/net/netrom.h
-index f0565a5987d1b..30ecf812b4ab4 100644
---- a/include/net/netrom.h
-+++ b/include/net/netrom.h
-@@ -46,6 +46,7 @@ enum {
- #define	NR_COND_REJECT			0x02
- #define	NR_COND_PEER_RX_BUSY		0x04
- #define	NR_COND_OWN_RX_BUSY		0x08
-+#define	NR_COND_FRAG_DISCARD		0x10
+diff --git a/net/ax25/ax25_in.c b/net/ax25/ax25_in.c
+index f105e638611fa..217f9a9b07631 100644
+--- a/net/ax25/ax25_in.c
++++ b/net/ax25/ax25_in.c
+@@ -104,6 +104,10 @@ int ax25_rx_iframe(ax25_cb *ax25, struct sk_buff *skb)
  
- #define NR_DEFAULT_T1			120000		/* Outstanding frames - 120 seconds */
- #define NR_DEFAULT_T2			5000		/* Response delay     - 5 seconds */
-@@ -74,7 +75,7 @@ struct nr_sock {
- 	unsigned short		vs, vr, va, vl;
- 	unsigned char		n2, n2count;
- 	unsigned long		t1, t2, t4, idle;
--	unsigned short		fraglen;
-+	unsigned int		fraglen;
- 	struct timer_list	t1timer;
- 	struct timer_list	t2timer;
- 	struct timer_list	t4timer;
-diff --git a/net/netrom/nr_in.c b/net/netrom/nr_in.c
-index 97944db6b5ac6..b90a47dcf165e 100644
---- a/net/netrom/nr_in.c
-+++ b/net/netrom/nr_in.c
-@@ -26,6 +26,9 @@
- #include <linux/interrupt.h>
- #include <net/netrom.h>
+ 	if (skb == NULL) return 0;
  
-+/* nr_sendmsg() never sends more than this in one message */
-+#define NR_MAX_REASM_LEN	65536
-+
- static int nr_queue_rx_frame(struct sock *sk, struct sk_buff *skb, int more)
- {
- 	struct sk_buff *skbo, *skbn = skb;
-@@ -35,6 +38,29 @@ static int nr_queue_rx_frame(struct sock *sk, struct sk_buff *skb, int more)
- 
- 	nr_start_idletimer(sk);
- 
-+	/* Rest of a message already found to be too long: drop it */
-+	if (nr->condition & NR_COND_FRAG_DISCARD) {
-+		if (!more)
-+			nr->condition &= ~NR_COND_FRAG_DISCARD;
-+		kfree_skb(skb);
++	/* An I frame must at least carry its PID byte */
++	if (skb->len < 1)
 +		return 0;
-+	}
 +
-+	/*
-+	 * Give up on a message that would grow beyond what a peer may
-+	 * send. The frame is consumed rather than handed back to the
-+	 * caller, which would queue it again after skb_pull().
-+	 */
-+	if ((more || nr->fraglen > 0) &&
-+	    nr->fraglen + skb->len > NR_MAX_REASM_LEN) {
-+		skb_queue_purge(&nr->frag_queue);
-+		nr->fraglen = 0;
-+		if (more)
-+			nr->condition |= NR_COND_FRAG_DISCARD;
-+		kfree_skb(skb);
-+		return 0;
-+	}
+ 	ax25_start_idletimer(ax25);
+ 
+ 	pid = *skb->data;
+diff --git a/net/ax25/ax25_subr.c b/net/ax25/ax25_subr.c
+index 9ff98f46dc6be..d0719267e5484 100644
+--- a/net/ax25/ax25_subr.c
++++ b/net/ax25/ax25_subr.c
+@@ -102,6 +102,9 @@ int ax25_decode(ax25_cb *ax25, struct sk_buff *skb, int *ns, int *nr, int *pf)
+ 	frame = skb->data;
+ 	*ns = *nr = *pf = 0;
+ 
++	if (skb->len < 1)
++		return frametype;
 +
- 	if (more) {
- 		nr->fraglen += skb->len;
- 		skb_queue_tail(&nr->frag_queue, skb);
+ 	if (ax25->modulus == AX25_MODULUS) {
+ 		if ((frame[0] & AX25_S) == 0) {
+ 			frametype = AX25_I;			/* I frame - carries NR/NS/PF */
+@@ -118,6 +121,10 @@ int ax25_decode(ax25_cb *ax25, struct sk_buff *skb, int *ns, int *nr, int *pf)
+ 		}
+ 		skb_pull(skb, 1);
+ 	} else {
++		/* I and S frames carry a two-byte control field here */
++		if ((frame[0] & AX25_U) != 3 && skb->len < 2)
++			return frametype;
++
+ 		if ((frame[0] & AX25_S) == 0) {
+ 			frametype = AX25_I;			/* I frame - carries NR/NS/PF */
+ 			*ns = (frame[0] >> 1) & 0x7F;
 -- 
 2.53.0
 
