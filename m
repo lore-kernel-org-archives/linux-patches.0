@@ -1,50 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793207577;
-	b=ZsuYSV36sprfL0xY5IirT+vArQQEH8jj9EeWKlxnOybx2g7bivmJEGvVRJq/8K2j1b/G
-	 PiJllrCNBaFbpNiXjHzqpwR1zxcfRMlXV3xAbfJ/Ha4bPkWW6BBV2EDNkbOXN1p3xN3/O
-	 3p1XmBsGEH5XZl89oYLpIef2sAJv/TRbOF2vtyHlTlayrlMMxQxDinKzwPol4SZgAxUzG
-	 NR576VcZaJmkOzkufaY4Z+jFmF/GHIYGYmVrlVDl1t8N8x0jrxn3TN3O821vOH+flkTCv
-	 iGRikijFrfbuZiFqhrTM7ouO7wurhoX1YbAMB8Lu3mQqM6tRzrjn7RIoSO/sloW+gsQ==
+	t=1793207579;
+	b=vZMraeXQl0r27K9u/dtoue8Puh7DXGVIlih1/8mAuZYrAIZEHRqdFl5nw6m5S2Puzfya
+	 4mTN0zDji7Lp0Ju9VgJomjwOVwu5xi7qsyngrh+4NaYqfFHleqTPmfqFX1fjCpajoxXX0
+	 VEgV7MPg2y9HdSz0ealvDeltwE7miMonYjhtgmmW4ROitV0+xPw1CXTYMKbgccLzNG/Hd
+	 BdsWF8GjUPtq18d/MU6oMlDHBToyaalexVcR/k0A3NeaqYyhP10xxFTxNwiOXq1vLEg1m
+	 eEOFferaPD6yaEyfD3Yvic2Jn7IPIqmztneCv83LPM/uRM/z3Oj4c3T7F0OgvXmxdDA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793207577;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793207579;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=r+0Izrx5o1xAURUuCj/2YfJcl2T0HkNKLxVKuIV76EU=;
-	b=RjywWFtyfTKhSm5HNO3HxdrGLBBAl3fJcVMjjc16cgsr1yV+W7pjG3QfRFw7/UYVYCHC
-	 dsFerPnZ0y9MUb1RMloEh1pWXRdyCQOpzCt/3kLR8mW1Xw5g9hxq7HE1Id0xqEeA9ZuiX
-	 MR4H8g1mnzWa5Q97ipP+vCK0k6128lAcP5HZAGCvq8FhzxYHZ0SvhqYEXppS1zbMMIpiL
-	 1/W+eCZYxThJMRc4SSfdOeKSkD4TRfZStkFPUJRwVD+M+FANC6HeZYAu+jb5tWEUGwIz/
-	 vSLmDUyE9waC3t3Ie+glThXScoA+untA7XIyp2if8p23639RzsbXlZrxVEdd72Lq3NQ==
+	bh=yYz5GMHCGMnWBkq8oLZdH3vsdNarAOCigT+u4xNBK0g=;
+	b=WjtjSzNiAmWX44gPY7KNy0A/PDpz+XOSYPtGbHHXawsMWI6UWyI3pYoHni7eOGiDVGoz
+	 gl1bs8OhWTQaXgT6z6zic/Q7/TZQqFaR0YOP8FOdZXndhZvN9GJ01cAUKSkjhcYurHkzc
+	 8kfQcm7Yco9mq9tOgaN2sLtF39DChRXCPrO/N0jDEuwZnfRmynoSj8MFtFbCTitpGVNOL
+	 sOUhxciVNucMGDvnVdkV5TFxSciUrv+MsqoTimr5sm6McFH1KXNyOlR9fhkjAiK8gFpAb
+	 dXImvfpxbVcoRMdk8BFtgrCuuVp35FmKMzRbFDBl24bXsuEYIoK+XBs/TlQRoz6r9/g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="ZUa/1oBU";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QJc28SLE;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6308606A31A;
-	Wed, 28 Oct 2026 17:12:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8679F606A31A;
+	Wed, 28 Oct 2026 17:12:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZUa/1oBU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF3391F01825;
-	Wed, 28 Oct 2026 17:12:55 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QJc28SLE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D281A1F01825;
+	Wed, 28 Oct 2026 17:12:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793207576;
-	bh=r+0Izrx5o1xAURUuCj/2YfJcl2T0HkNKLxVKuIV76EU=;
+	s=korg; t=1793207579;
+	bh=yYz5GMHCGMnWBkq8oLZdH3vsdNarAOCigT+u4xNBK0g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZUa/1oBUsDXIMhXScXQpppQ9qokXFuIQsqxxDp+X/mlwb+SIbs+NJIn2q+NQpjFqw
-	 T1npXxt9VfHEJ7IuPsiVGpYzXZeR4M+5oMbhd6lBgxEtCOQC5hBbSjrM19mj84T11I
-	 1iBN/klcIpsWC+FNtYfWu10QFHokShtDM0+IcYh8=
+	b=QJc28SLE7g5GdunVPaVKGWJOtdP0bh0kGLrxR9b5Shm1Kv41oeh6tZYehFLF+UDiS
+	 91dJE8rxXGPkccfjzyfYjUA2AZEflHRzXIJa0Xa8+hdmNSbA+M2kqgTZzDD1Ztd7AG
+	 7rtYEGW1JwRQohai5/UhbexUGs5ayHLGN6g7jdVc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 6.12 064/247] unicode: free the map after a grace period
-Date: Wed, 28 Oct 2026 17:57:47 +0100
-Message-ID: <20261028165948.902827082@linuxfoundation.org>
+	EJ Campbell <ejc3@meta.com>,
+	Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 6.12 065/247] x86/kvm: Dont consume async #PF flags on a kernel #PF in NMI context
+Date: Wed, 28 Oct 2026 17:57:48 +0100
+Message-ID: <20261028165948.927384227@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165947.349197979@linuxfoundation.org>
 References: <20261028165947.349197979@linuxfoundation.org>
@@ -66,122 +67,127 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: EJ Campbell <ejc3@meta.com>
 
-commit a96c5299bd7305eb984377681eb3222a57376405 upstream.
+commit 81d99abe2bd81379abfb595e403bbbee6fbfc624 upstream.
 
-generic_ci_d_hash() and generic_ci_d_compare() read sb->s_encoding and
-dereference the unicode map while a pathwalk in rcu mode holds nothing
-but rcu_read_lock(). The filesystems that use them, ext4, f2fs and
-tmpfs, drop the map with utf8_unload() from ->put_super(), which runs
-when the last reference to the mount goes away. A lookup that is still
-inside such a filesystem at that point reads a freed map.
+An async #PF "page not present" event arrives through the #PF vector,
+and its reason sits in the per-CPU apf_reason.flags until
+__kvm_handle_async_pf() reads and clears it. If an NMI arrives after
+the event is injected and before the #PF handler reads the flags, and
+the NMI handler itself takes a #PF, that fault reads and clears the
+flags belonging to the #PF it interrupted. It then finds interrupts
+disabled in the NMI context it interrupted, and panics:
 
-With a pathwalk held up in utf8_casefold_hash() while the last reference
-to a casefolded tmpfs goes away:
-
-  BUG: KASAN: slab-use-after-free in utf8nlookup+0x74c/0x950
-  Read of size 8 at addr ff110001030fe658 by task walker/98
+  Kernel panic - not syncing: Host injected async #PF in interrupt
+disabled region
   Call Trace:
-   <TASK>
-   utf8nlookup+0x74c/0x950
-   utf8byte+0x160/0x1560
-   utf8_casefold_hash+0x167/0x230
-   generic_ci_d_hash+0xdd/0x1c0
-   link_path_walk+0x11ad/0x1d30
-   path_lookupat+0x63/0xb00
-   filename_lookup+0x1f1/0x5b0
-   vfs_statx+0xd7/0x3b0
-  [...]
-  Allocated by task 94:
-   __kmalloc_cache_noprof+0x249/0x560
-   utf8_load+0x4e/0x570
-   shmem_parse_opt_casefold.isra.0+0x92/0x270
-  [...]
-  Freed by task 97:
-   kfree+0x1db/0x5b0
-   shmem_put_super+0x72/0x170
-   generic_shutdown_super+0x14c/0x530
-   kill_anon_super+0x3a/0x60
-   deactivate_locked_super+0x9c/0xf0
-   cleanup_mnt+0x9f/0x130
+   <NMI>
+   panic+0x52/0x60
+   __kvm_handle_async_pf+0xb0/0xb0
+   exc_page_fault+0x71/0xb0
+   asm_exc_page_fault+0x27/0x30
+  RIP: 0010:__get_user_nocheck_8+0x6/0x20
+   perf_callchain_user+0x147/0x1a0
+   get_perf_callchain+0x12d/0x1c0
+   ...
+   perf_event_nmi_handler+0x26/0x50
+   exc_nmi+0xe8/0x110
+  RIP: 0010:asm_exc_page_fault+0x0/0x30
+   </NMI>
 
-So far that has been hard to hit. umount(2) waits for a grace period
-in namespace_unlock() before it drops the mount, so only a mount whose
-last reference goes away elsewhere, like the close of a file or a chdir
-out of a lazily unmounted directory, can race a walker. So it is
-reachable.
+The last RIP line shows the NMI landing on the first instruction of
+the #PF entry. perf with user call chains takes such a fault: the
+sampling NMI walks the user stack with __get_user(), which faults when
+a saved frame pointer is not a valid user address or the walk runs off
+the top of the stack. The same window exists when KVM, running as an
+L1 hypervisor with DELIVERY_AS_PF_VMEXIT, reads the flags itself after
+a #PF VM-exit.
 
-Delay the free until a grace period has passed. The map and the data
-table it holds a reference to then outlive any pathwalk that found the
-superblock before the mount went away. The reference on the data table
-module is dropped from the rcu callback as well. utf8-core is built in
-whenever CONFIG_UNICODE is set, so there is no module exit that would
-have to wait for the callbacks.
+The NMI entry code saves and restores CR2 for this nesting, but not the
+async #PF reason. Andy Lutomirski described the race, with perf as the
+example, when async #PF delivery was reworked in 2020 [1]. Saving and
+clearing the flags across the NMI, next to CR2, was discussed there but
+not merged.
 
-Overlayfs points the s_encoding of an overlay at the map of its first
-layer without taking a reference of its own. That stays correct. The
-layer is held by the overlay, so its map is dropped only after the
-overlay is gone.
+Since that rework, Linux has stopped setting KVM_ASYNC_PF_SEND_ALWAYS,
+so the host delivers "page not present" only for user mode faults and
+a kernel-mode fault in NMI context (including kernel-mode #MC and #DB)
+cannot be an async page fault.  In that case, return without touching
+the flags so that the interrupted handler finds them intact.
 
-Fixes: b886ee3e778e ("ext4: Support case-insensitive file name lookups")
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20261009-work-fixes-rcu-v1-6-7446d2d335e6@kernel.org
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Tested on v7.3-rc5 in a 4-vCPU, 2 GiB guest restored from a snapshot
+whose memory is served on demand through userfaultfd, so that reading
+it back takes async #PFs, while every thread samples hardware cycles
+with user call chains and points its frame pointer at an unmapped page.
+Without this patch the guest panicked as above in 3 of 3 runs. With it,
+the guest survived 3 of 3 runs of 60 seconds, and the host counted
+148,441 to 153,334 kvm_async_pf_not_present events in the first 20
+seconds of each. On 6.18.50 the results were the same: the guest
+panicked without the patch and survived with it.
+
+Link: https://lore.kernel.org/all/ed71d0967113a35f670a9625a058b8e6e0b2f104.1583547991.git.luto@kernel.org/ [1]
+Link: https://lore.kernel.org/all/20211126123145.2772-1-jiangshanlai@gmail.com/ [2]
+Cc: stable@vger.kernel.org # v5.9+
+Signed-off-by: EJ Campbell <ejc3@meta.com>
+Link: https://patch.msgid.link/CADkxfh-uQTca_6jB1JPDq1MsKffF_UKGQR339oQSJNcoV75GNQ@mail.gmail.com
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/unicode/utf8-core.c  |   21 +++++++++++++++++----
- include/linux/unicode.h |    1 +
- 2 files changed, 18 insertions(+), 4 deletions(-)
+ arch/x86/kernel/kvm.c |   32 +++++++++++++++++++++++++++++---
+ 1 file changed, 29 insertions(+), 3 deletions(-)
 
---- a/fs/unicode/utf8-core.c
-+++ b/fs/unicode/utf8-core.c
-@@ -3,6 +3,7 @@
- #include <linux/kernel.h>
- #include <linux/string.h>
- #include <linux/slab.h>
-+#include <linux/rcupdate.h>
- #include <linux/parser.h>
- #include <linux/errno.h>
- #include <linux/stringhash.h>
-@@ -205,12 +206,24 @@ out_free_um:
+--- a/arch/x86/kernel/kvm.c
++++ b/arch/x86/kernel/kvm.c
+@@ -255,11 +255,39 @@ noinstr u32 kvm_read_and_reset_apf_flags
  }
- EXPORT_SYMBOL(utf8_load);
+ EXPORT_SYMBOL_GPL(kvm_read_and_reset_apf_flags);
  
-+static void utf8_unload_rcu(struct rcu_head *head)
++static __always_inline bool kvm_apf_reason_pending(void)
 +{
-+	struct unicode_map *um = container_of(head, struct unicode_map, rcu);
-+
-+	symbol_put(utf8_data_table);
-+	kfree(um);
++	return __this_cpu_read(async_pf_enabled) &&
++	       __this_cpu_read(apf_reason.flags);
 +}
 +
-+/*
-+ * A pathwalk in rcu mode may still be in ->d_hash() or ->d_compare() of a
-+ * filesystem that is being torn down and read the map through its
-+ * superblock, so the map and the tables it points to have to outlive the
-+ * grace period.
-+ */
- void utf8_unload(struct unicode_map *um)
+ noinstr bool __kvm_handle_async_pf(struct pt_regs *regs, u32 token)
  {
--	if (um) {
--		symbol_put(utf8_data_table);
--		kfree(um);
--	}
-+	if (um)
-+		call_rcu(&um->rcu, utf8_unload_rcu);
- }
- EXPORT_SYMBOL(utf8_unload);
+-	u32 flags = kvm_read_and_reset_apf_flags();
+ 	irqentry_state_t state;
++	u32 flags;
++
++	if (!kvm_apf_reason_pending())
++		return false;
++
++	/*
++	 * The guest does not enable KVM_ASYNC_PF_SEND_ALWAYS, so the host
++	 * delivers async #PF only to user mode (or as a #PF VM-exit, which KVM
++	 * reads itself). A #PF from kernel mode can still arrive between that
++	 * delivery and the read of the reason flags, inside an NMI that
++	 * interrupted it, for instance perf reading user memory for a call
++	 * chain. Such a fault is not async, so leave the async PF flags
++	 * untouched for the outer handler.  Outside NMI context, on the other
++	 * hand, async PF flags on a kernel-mode fault mean the host is broken.
++	 */
++	if (!user_mode(regs)) {
++		if (likely(in_nmi()))
++			return false;
++		state = irqentry_enter(regs);
++		instrumentation_begin();
++		panic("Host injected async #PF in kernel mode\n");
++	}
  
---- a/include/linux/unicode.h
-+++ b/include/linux/unicode.h
-@@ -51,6 +51,7 @@ struct unicode_map {
- 	unsigned int version;
- 	const struct utf8data *ntab[UTF8_NMAX];
- 	const struct utf8data_table *tables;
-+	struct rcu_head rcu;
- };
++	flags = kvm_read_and_reset_apf_flags();
+ 	if (!flags)
+ 		return false;
  
- int utf8_validate(const struct unicode_map *um, const struct qstr *str);
+@@ -275,8 +303,6 @@ noinstr bool __kvm_handle_async_pf(struc
+ 		panic("Host injected async #PF in interrupt disabled region\n");
+ 
+ 	if (flags & KVM_PV_REASON_PAGE_NOT_PRESENT) {
+-		if (unlikely(!(user_mode(regs))))
+-			panic("Host injected async #PF in kernel mode\n");
+ 		/* Page is swapped out by the host. */
+ 		kvm_async_pf_task_wait_schedule(token);
+ 	} else {
 
 
