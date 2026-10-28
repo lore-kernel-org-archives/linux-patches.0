@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793211004;
-	b=s3pcbt+EApVqrxQCkBDJdr13xt5DtqVWuQtO6SXv++E9r4MZYK3QrEaAABH4Rymy/VAd
-	 P4Lyi30oOcTeXpieRpRjsDTiPTShe24h8iO16wcT6DlINanlRTLnc/fFDb2htqvOdNMwa
-	 o5PygyQwHbaXYwzxvi+CsoQpCIb+/j2ix3t+hQyVEt3s6ggJyph62mG1HBgvn+MpHhgE/
-	 +HATpCKP1fQsNSyjo1Yij6/3pki73gQRXICCFOrvqgTOx4tx70v6bmV09gazJ0Yv+16LR
-	 G8KyW+9JJOWCCrXrgSvG8t02SDOUQcZHb9HXnl4lCMKt1aSrv4qORDsUiSO8dJ+hiaw==
+	t=1793211008;
+	b=w3m9Xp3jDLuFnOll3EbxT8xIadWSowdpneWL3ND3TRp5CTKgDkp3/2DcpwK0s9Itpm/u
+	 bF43AtcV9x09Nlxa2Id1wFQ1+6lsNznUr0Lp4wDhdRmBDDT2rSq/Ha8nUtsk2MBgYjgBN
+	 r8sg7R6aV6Ejvv/MomGrOZw6MZD7sRj0d01akUUAJSXPGId5cCLdEQwSs7kws7dLa/M+O
+	 5GVpcKHbeHL3mvhb7rXJmYURmDLURjNIUm63qKG40tUPN/HqmadsETA0uopYAiy16lcW4
+	 SBF6bAR2gpPXSfzrY9okss2+Hd1P4Y6CsoNR14Zaumwc5kl1ylGGQTZX2hmkv9FdE2Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793211004;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793211008;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=yd93KY7ShrqYot29vcw/7lG7h94+Ai8FIjyLgRysnJw=;
-	b=rfcib0T3RP3iF5hjU+Csa945TiKYkzmNCkLBJp6pM3RaGJW8JbuRbi+tB6mo8H9HZmL9
-	 dcPbz5sUq8q4vIk9wMdlmvOkVTbY7xfFN2IrUdZkAIbv4sv0s+326Lvoa+y3So+Hqn8hp
-	 QiaLoJblmubRFAxgCVfibbyPOqRtSnGOXAh8yf+oF7Ggln9XWxOVzgMtJfuebdxDl8MwN
-	 v7fuk5nHxAZXl/tvoVStkFHe9WxfgRPwB/dY8XzokhlKzXij7jzaoEDLlKQOi6Lc6fPEL
-	 eL1YJ8/Rzcx+Ya8SATNrlpaLFjk3KyAiM7XZwlI0CZTe7M1IoI7D6/u+3xMGsq4D3nw==
+	bh=5GqYCN6IbGaXfNpvNg/pCnQJl8VH3zcJlIC9zEgtZbs=;
+	b=I0+OKq1BguXi8FV21n2F08UoIRoH1wAEnHX3LlhWaXwG72+Vni5gVmL+8B1osBJpW9Hs
+	 QHlwZh1gBm+XCqDBg0Vm1Zk61x9IPGUPTBYJFfPXAMPjZFNAwF5LJ3HD6RUzLffCmrXbi
+	 HCpiBT3zXQiwKsowm+jZmxWPM9IXry+TU4yVWP3Ripzm0i2ncB72ASmcl4+hmACDJN9px
+	 QRmD1fn6IYyZ6j34qMldCSqnZqXVH4LUHADbxPX6qmnf3WV7CUJgMPxu/dwV8BKjfLktB
+	 +UiK9rBz0oBFT++RUPeqlsygiiuemNlQm8i0pXUp00Li0X8qosKA07nr2XfmnIOZm/A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="ZZIv/Rm3";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jY4mRw2G;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91BE4606A31E;
-	Wed, 28 Oct 2026 18:10:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 678E2606A322;
+	Wed, 28 Oct 2026 18:10:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZZIv/Rm3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3E8E1F01825;
-	Wed, 28 Oct 2026 18:10:03 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jY4mRw2G
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA2C01F01825;
+	Wed, 28 Oct 2026 18:10:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793211004;
-	bh=yd93KY7ShrqYot29vcw/7lG7h94+Ai8FIjyLgRysnJw=;
+	s=korg; t=1793211007;
+	bh=5GqYCN6IbGaXfNpvNg/pCnQJl8VH3zcJlIC9zEgtZbs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZZIv/Rm30QzzaMHUk2gKEFLuSL6i/qwrSuWTuJQZBv23kEX7KkB395cOx7fYaxXqW
-	 VtNUN42XYG9xuze3YxIgcXtX/RscvMQEKkGw5dq7O/x5yd+dIoFfz+cDNhB//bmguL
-	 u98XovMqcToigBn4hwV4d84xMoMV88QdaSvnRpPY=
+	b=jY4mRw2G++Fj+ry8dNYhcZQTepUc1CZrLtO8x39j4/+v/PtZww4BSx6jsDvZk9jh5
+	 YzvjDgPzDuFFxdHKTMDW6AZsvxcTiXZJnj0HCSgvxHIsaVp+Zzf7/kXsVL+JfG6m97
+	 ejHdyUnXGK10uQg2B4fz8RQT4+cv6kEhxba1CO+E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Sashiko (nipa)" <sashiko-bot@kernel.org>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Jeff Jo <jeffjo@openai.com>,
+	Eric Dumazet <edumazet@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 180/571] net/sched: sch_codel: match the no-drop threshold to the packet size
-Date: Wed, 28 Oct 2026 17:55:27 +0100
-Message-ID: <20261028170012.283723627@linuxfoundation.org>
+Subject: [PATCH 5.15 181/571] tcp: refresh TS.Recent for accepted old ACKs
+Date: Wed, 28 Oct 2026 17:55:28 +0100
+Message-ID: <20261028170012.307423608@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -69,51 +69,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jamal Hadi Salim <jhs@mojatatu.com>
+From: Jeff Jo <jeffjo@openai.com>
 
-[ Upstream commit 54518e0e827f4ca9229ae657022c60bf60f5c1bf ]
+[ Upstream commit 1b92780ae4fc3be64f05d97ed8833c445e73b0cf ]
 
-commit 6439461f1618 ("net/sched: sch_codel: clamp default mtu to avoid
-disabling CoDel") clamped q->params.mtu to [256, 1 << 20]. The value is
-the CoDel no-drop threshold (codel_impl.h "*backlog <= params->mtu"), so
-on a link whose maximum transmitted packet size is below 256 the floor
-extends CoDel's minimum-backlog exemption beyond one packet and delays
-drop or mark eligibility by several small packets.
+A TCP packet can carry new data while acknowledging traffic in the
+opposite direction. With overlapping traffic in both directions, a
+delayed packet's acknowledgment can be older than one Linux has already
+accepted, even when that packet fills a gap in the received data.
 
-Keep the upper bound that guards the original overflow (psched_mtu()
-wrapping to ~2 GiB on a huge-MTU device) but drop the 256 floor, so the
-threshold tracks the real device packet size.
+Linux accepts the data, but tcp_ack() takes the old_ack path and skips
+updating TS.Recent, the timestamp saved for outgoing acknowledgments.
+The reply therefore echoes an older timestamp. If the sender uses this
+echo to measure round-trip time after a long idle period, its estimate
+includes the idle time and can reduce its sending rate.
 
-Conditions to recreate the bug: attach a codel qdisc on a link whose
-MTU plus hard_header_len is below 256 (e.g. a CAN interface). At that
-MTU the no-drop threshold must equal the device MTU plus its
-hard-header length; before this patch it was forced to 256.
-Requires CAP_NET_ADMIN in a user namespace.
+Update TS.Recent in old_ack using tcp_replace_ts_recent(), before SACK
+processing can trigger a transmission. This reuses the existing timestamp
+and sequence checks, including PAWS protection against old duplicate
+packets. ACK validation already rejects old ACKs in SYN_RECV before this
+path, so no additional state check is needed.
 
-Fixes: 6439461f1618 ("net/sched: sch_codel: clamp default mtu to avoid disabling CoDel")
-Reported-by: Sashiko (nipa) <sashiko-bot@kernel.org>
-Link: https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20260819143136.57350-1-jhs@mojatatu.com
-Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://patch.msgid.link/QDISC-34MS.v1.20260925165535@mojatatu.com.2
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Echoing the timestamp of the packet that fills the receive gap follows
+RFC 7323 section 4.3. In a socket reproduction with 300 seconds idle,
+controlled reordering and retransmission to exercise timestamp-based RTT
+sampling, the sender's smoothed round-trip time was 37.5 seconds without
+the fix and 15.5 ms with it.
+
+Fixes: 12fb3dd9dc3c ("tcp: call tcp_replace_ts_recent() from tcp_ack()")
+Assisted-by: LLM sparse
+Signed-off-by: Jeff Jo <jeffjo@openai.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_codel.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv4/tcp_input.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/net/sched/sch_codel.c b/net/sched/sch_codel.c
-index 9e4e9b1a7ed88..31f601beb0f0d 100644
---- a/net/sched/sch_codel.c
-+++ b/net/sched/sch_codel.c
-@@ -231,7 +231,7 @@ static int codel_init(struct Qdisc *sch, struct nlattr *opt,
- 	codel_params_init(&q->params);
- 	codel_vars_init(&q->vars);
- 	codel_stats_init(&q->stats);
--	q->params.mtu = clamp_t(u32, psched_mtu(qdisc_dev(sch)), 256, 1 << 20);
-+	q->params.mtu = min_t(u32, psched_mtu(qdisc_dev(sch)), 1 << 20);
+diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
+index b746b62b854ab..4a481dd4579b1 100644
+--- a/net/ipv4/tcp_input.c
++++ b/net/ipv4/tcp_input.c
+@@ -4017,6 +4017,12 @@ static int tcp_ack(struct sock *sk, const struct sk_buff *skb, int flag)
+ 	return 1;
  
- 	if (opt) {
- 		int err = codel_change(sch, opt, extack);
+ old_ack:
++	/* An old ACK can carry new data. Update TS.Recent before SACK
++	 * processing can trigger a retransmission.
++	 */
++	if (flag & FLAG_UPDATE_TS_RECENT)
++		tcp_replace_ts_recent(tp, TCP_SKB_CB(skb)->seq);
++
+ 	/* If data was SACKed, tag it and see if we should send more data.
+ 	 * If data was DSACKed, see if we can undo a cwnd reduction.
+ 	 */
 -- 
 2.53.0
 
