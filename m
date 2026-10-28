@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215358;
-	b=1e9V/DQuNqA07v2MDWiagXAg677mb6ik47MNfXd3lr7cOekdLv+tJUycYaZ1hkRSCGoM
-	 ltAQ4T3Z1mWuoVMwCKfWs46rphWxLEMNXMrsKvaZwfTyQo2JhDkevE6Po7OtU8aJnzMr9
-	 BYY963y3U3HqLesCV8GVur6s9YXEhpSwgh0MOqmnf/Mpa9RjbMZp9taVxLMWKk1j/NQkL
-	 LtB3gE8ieJsZpUlxO/iOyE3i952tLKVR9tjsmiMI18FKQRPbmlbkaj7oyJXow2b18sBlF
-	 fQrmlSWiDH5/mrzrsttIM1Xu4ELkV7KuRWPakD3p8vr2xw1ObqAYj/PhG6uzk7xuPpA==
+	t=1793215361;
+	b=jyYUm5/Cbr70Q4B9S2izPRMeYBinYCi8oVS3cEKEWUy2xNuIfIM6xPstukOsbBNkSjS3
+	 xciLupbtzxA6vaUHN9MOhNLM7+zvlWkfdBmgQN2QGwPew7DQ+ec8Ljo0YXSuUJJ46eqMK
+	 ZuwySBuCuFxPMCOT0Q84Q33mcm8Hct3Xjfb+M5uQilPvtWaW1ptv2GP3TEqBrTktUhlMD
+	 A3kIo2QBUsB/ofPQYnvpiYl4qfPycOrXD/Tc5ZZmE6KuhkBpjGiwtQ9lNjCjG82dlyFkl
+	 Y4rohm+fqydMNvToRMkRfPJyKP4S6xThzaduztIEaxBSAGlSzzwwL7lIj7YgMN8vAKQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215358;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215361;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=STGZcNV3gP93CjfzKn39HdI9HKMRPA6OkMl0K181qaQ=;
-	b=usQLWoAIISlWJNs0TQx6ARD1RY+q5ZNj28okDd8QTganYxisvjxH5GwkP2RtfL3mK1w/
-	 5HwcwTHFY4gjYyByEv8cnb18oJHKbn+KfXwzs4DUB/43QceNn0bhvgbm0Q+wBZqW2Nfg0
-	 yndMGjqC5JYUQGINTxJMnUUOHbYyqogFtBF5mXhPWLAsUW8pkZ3nivVJo0IoJfoW8igil
-	 kKQGoEmiKULWJXZ4jPXMDaCCqia0/MfR+WmQNvnJnAbiMqMlDiQ0XoSY9QvBNdWk3csGC
-	 yCIbB5fHw3A25KBWq2ukN12NQnL//E6ATsaXHa7ptifc8fE5AiR3c6N1sAK1dG7J8RA==
+	bh=JILphpvScpL7a1+dfzzJc/uiLqrCqjOOHT8v9pnw6jc=;
+	b=P+6IVIxLu4Ly8kJtnbbTvu511dzYnQIm2igJFPNsfcddq9ukB28xtmJvc60b4G463lZY
+	 21Kp8X5yc4JB7g/UtAhNWeSvDTt3kQNmAwZvnNSa/v0BJLms2Z+Gi4hdHEblwtU0a/PV3
+	 31KbN6G3mPRAlxU4FIr27N9b0t40hGiNws9rIRClYoqqAIzwrszsNeb03Pguppm1EbXQF
+	 SQ3k3GNnZVRE0Xr8m40GJvaC/XoXCfvb5gK2p+gkEX93y9irDWDIZudL5gzSDqrXQPqMw
+	 xW9gKSZLu4txHYc+Hq/pVcJRddD1/n6NgL8YCgGZkwI3QdMqz0BPjl6Qu8dL5UUYONw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nZezei87;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Pcvjkh1d;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07DE5606A320;
-	Wed, 28 Oct 2026 19:22:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37148606A31D;
+	Wed, 28 Oct 2026 19:22:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nZezei87
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 591C71F031E1;
-	Wed, 28 Oct 2026 19:22:37 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Pcvjkh1d
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E4551F031E5;
+	Wed, 28 Oct 2026 19:22:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215357;
-	bh=STGZcNV3gP93CjfzKn39HdI9HKMRPA6OkMl0K181qaQ=;
+	s=korg; t=1793215360;
+	bh=JILphpvScpL7a1+dfzzJc/uiLqrCqjOOHT8v9pnw6jc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nZezei87My6MpbOMDEiRYzY7H/bWthfsQCfJpwHh4n66Cr0nnAOMPr5MzQin7D1b8
-	 n7Cl6DNwTwU5RwoQDfo9DwNXBe4Jmzl3TH47Jtdn1jHRL41xMfg5xtwk2D/bskJOpW
-	 x+xgr2ypnn6MekjS7ZsADXv3XeF5Sc80ebl9wb/8=
+	b=Pcvjkh1dNfiSQxR5NOnzFlBOQJ40e7iLN/Fsthpyv4co6SrSypZRp2r9j5WGDEV7q
+	 GBntOm+S1L+zEVhTm3gXTRcn4f0wCI85dpWcrNigfVc+707vAkxeXSef8y+ooshKyS
+	 D7BCwISN0aprWWCaJratsQ3NiQzMPHOIOeR1QZ5s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jia Zhu <zhujia.zj@bytedance.com>,
-	Gao Xiang <hsiangkao@linux.alibaba.com>,
+	Martin Kaiser <martin@kaiser.cx>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1140/1887] erofs: fix metabuf leak in inode xattr initialization
-Date: Wed, 28 Oct 2026 17:53:56 +0100
-Message-ID: <20261028170525.349100526@linuxfoundation.org>
+Subject: [PATCH 6.1 1141/1887] test_kprobes: clear kprobes between test runs
+Date: Wed, 28 Oct 2026 17:53:57 +0100
+Message-ID: <20261028170525.371497322@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,75 +68,125 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jia Zhu <zhujia.zj@bytedance.com>
+From: Martin Kaiser <martin@kaiser.cx>
 
-[ Upstream commit 79b09c54c6563df9846ca3094bcfd72082c3e1d7 ]
+[ Upstream commit ef5581bb30efb939cc2bf093475c6cc85258e5cd ]
 
-commit bb88e8da0025 ("erofs: use meta buffers for xattr operations")
-converted xattr operations to use on-stack erofs_buf instances.
-erofs_init_inode_xattrs() uses such a metabuf while reading the inline
-xattr header and shared xattr id array.
+Running the kprobes sanity tests twice makes all tests fail and
+eventually crashes the kernel.
 
-Some error paths after erofs_read_metabuf() leave through out_unlock
-without dropping the metabuf, so the folio reference can leak.
+[root@martin-riscv-1 ~]# echo 1 > /sys/kernel/debug/kunit/kprobes_test/run
+...
+   # Totals: pass:5 fail:0 skip:0 total:5
+   ok 1 kprobes_test
+[root@martin-riscv-1 ~]# echo 1 > /sys/kernel/debug/kunit/kprobes_test/run
+...
+  # test_kprobe: EXPECTATION FAILED at lib/tests/test_kprobes.c:64
+  Expected 0 == register_kprobe(&kp), but
+      register_kprobe(&kp) == -22 (0xffffffffffffffea)
+...
+  Unable to handle kernel paging request ...
 
-Consolidate the cleanup at out_unlock. erofs_put_metabuf() is a
-no-op if no folio has been acquired, and this keeps all paths after
-taking EROFS_I_BL_XATTR_BIT covered by a single cleanup site.
+The testsuite defines several kprobes and kretprobes as static variables
+that are preserved across test runs.
 
-Fixes: bb88e8da0025 ("erofs: use meta buffers for xattr operations")
-Signed-off-by: Jia Zhu <zhujia.zj@bytedance.com>
-Reviewed-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-Fixes: bb88e8da0025 ("erofs: use meta buffers for xattr operations")
-Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+After register_kprobe and unregister_kprobe, a kprobe contains some
+leftover data that must be cleared before the kprobe can be registered
+again. The tests are setting symbol_name to define the probe location.
+Address and flags must be cleared.
+
+The existing code clears some of the probes between subsequent tests, but
+not between two test runs. The leftover data from a previous test run
+makes the registrations fail in the next run.
+
+Move the cleanups for all kprobes into kprobes_test_init, this function
+is called before each single test (including the first test of a test
+run).
+
+Link: https://lore.kernel.org/all/20260507134615.1010905-1-martin@kaiser.cx/
+
+Fixes: e44e81c5b90f ("kprobes: convert tests to kunit")
+Signed-off-by: Martin Kaiser <martin@kaiser.cx>
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/erofs/xattr.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ lib/test_kprobes.c | 28 +++++++++++++++++-----------
+ 1 file changed, 17 insertions(+), 11 deletions(-)
 
-diff --git a/fs/erofs/xattr.c b/fs/erofs/xattr.c
-index 7c09ad1beb839..05e5733d78597 100644
---- a/fs/erofs/xattr.c
-+++ b/fs/erofs/xattr.c
-@@ -35,6 +35,7 @@ static int init_inode_xattrs(struct inode *inode)
- 		return 0;
- 	}
+diff --git a/lib/test_kprobes.c b/lib/test_kprobes.c
+index eeb1d728d9746..7f4d2a77b10ff 100644
+--- a/lib/test_kprobes.c
++++ b/lib/test_kprobes.c
+@@ -12,6 +12,12 @@
  
-+	it.buf = __EROFS_BUF_INITIALIZER;
- 	if (wait_on_bit_lock(&vi->flags, EROFS_I_BL_XATTR_BIT, TASK_KILLABLE))
- 		return -ERESTARTSYS;
+ #define div_factor 3
  
-@@ -67,7 +68,6 @@ static int init_inode_xattrs(struct inode *inode)
- 		goto out_unlock;
- 	}
++#define KP_CLEAR(_kp) \
++do { \
++	(_kp).addr = NULL; \
++	(_kp).flags = 0; \
++} while (0)
++
+ static u32 rand1, preh_val, posth_val;
+ static u32 (*target)(u32 value);
+ static u32 (*target2)(u32 value);
+@@ -115,10 +121,6 @@ static void test_kprobes(struct kunit *test)
  
--	it.buf = __EROFS_BUF_INITIALIZER;
- 	it.blkaddr = erofs_blknr(sb, erofs_iloc(inode) + vi->inode_isize);
- 	it.ofs = erofs_blkoff(sb, erofs_iloc(inode) + vi->inode_isize);
+ 	current_test = test;
  
-@@ -83,7 +83,6 @@ static int init_inode_xattrs(struct inode *inode)
- 	vi->xattr_shared_xattrs = kmalloc_array(vi->xattr_shared_count,
- 						sizeof(uint), GFP_KERNEL);
- 	if (!vi->xattr_shared_xattrs) {
--		erofs_put_metabuf(&it.buf);
- 		ret = -ENOMEM;
- 		goto out_unlock;
- 	}
-@@ -110,13 +109,13 @@ static int init_inode_xattrs(struct inode *inode)
- 			le32_to_cpu(*(__le32 *)(it.kaddr + it.ofs));
- 		it.ofs += sizeof(__le32);
- 	}
--	erofs_put_metabuf(&it.buf);
+-	/* addr and flags should be cleard for reusing kprobe. */
+-	kp.addr = NULL;
+-	kp.flags = 0;
+-
+ 	KUNIT_EXPECT_EQ(test, 0, register_kprobes(kps, 2));
+ 	preh_val = 0;
+ 	posth_val = 0;
+@@ -193,9 +195,6 @@ static void test_kretprobes(struct kunit *test)
+ 	struct kretprobe *rps[2] = {&rp, &rp2};
  
- 	/* paired with smp_mb() at the beginning of the function. */
- 	smp_mb();
- 	set_bit(EROFS_I_EA_INITED_BIT, &vi->flags);
+ 	current_test = test;
+-	/* addr and flags should be cleard for reusing kprobe. */
+-	rp.kp.addr = NULL;
+-	rp.kp.flags = 0;
+ 	KUNIT_EXPECT_EQ(test, 0, register_kretprobes(rps, 2));
  
- out_unlock:
-+	erofs_put_metabuf(&it.buf);
- 	clear_and_wake_up_bit(EROFS_I_BL_XATTR_BIT, &vi->flags);
- 	return ret;
- }
+ 	krph_val = 0;
+@@ -257,8 +256,6 @@ static void test_stacktrace_on_kretprobe(struct kunit *test)
+ 	unsigned long myretaddr = (unsigned long)__builtin_return_address(0);
+ 
+ 	current_test = test;
+-	rp3.kp.addr = NULL;
+-	rp3.kp.flags = 0;
+ 
+ 	/*
+ 	 * Run the stacktrace_driver() to record correct return address in
+@@ -319,8 +316,6 @@ static void test_stacktrace_on_nested_kretprobe(struct kunit *test)
+ 	struct kretprobe *rps[2] = {&rp3, &rp4};
+ 
+ 	current_test = test;
+-	rp3.kp.addr = NULL;
+-	rp3.kp.flags = 0;
+ 
+ 	//KUNIT_ASSERT_NE(test, myretaddr, stacktrace_driver());
+ 
+@@ -334,6 +329,17 @@ static void test_stacktrace_on_nested_kretprobe(struct kunit *test)
+ 
+ static int kprobes_test_init(struct kunit *test)
+ {
++	KP_CLEAR(kp);
++	KP_CLEAR(kp2);
++#ifdef CONFIG_KRETPROBES
++	KP_CLEAR(rp.kp);
++	KP_CLEAR(rp2.kp);
++#ifdef CONFIG_ARCH_CORRECT_STACKTRACE_ON_KRETPROBE
++	KP_CLEAR(rp3.kp);
++	KP_CLEAR(rp4.kp);
++#endif
++#endif
++
+ 	target = kprobe_target;
+ 	target2 = kprobe_target2;
+ 	stacktrace_target = kprobe_stacktrace_target;
 -- 
 2.53.0
 
