@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216190;
-	b=HUx5UL2lgua97eJXDV8IUKksGdvo/cy3MiFAeIDC12QTg09VAg2bBeYnVQj2TOciH56v
-	 +HWenGWYF51gfoplvlcs9XzLKCgLNpAqUCXthviUESd04xn9XzIgsb1is4YHh8usjVpC5
-	 N5wDO7PDtOhYp63+CJBIniXb6BI0lXOJWiaP9Y94KYusFttW7W/ma8crymGf2H/zE+rS8
-	 gs6wNdEtBGFVh2LPw26QJkSwjyN8WTix9hw/Dx8nF3luH1wvA5OJBw5BNyA/wZSA2enYz
-	 W0JSwEJkp14t+QAgVQPQm4fJaEwJ8Fd8ucs5iNgZOIVNtv/YbGfGIIImKWl5jVe0y4A==
+	t=1793216193;
+	b=dJDs9nTBhH9BvYHsePDb8ejhYUVUVYYlytaoSTqvreOczWEainKdoBKqVCP3BhesfgbI
+	 D33k5XWv8ddaWGbf3CsV9wUPHjWGgh6Dng/tfSXMqboYEdRwX+KCK12cSha5fvlXvjhi8
+	 BF8Fg4untG4MSTOMxIziOrc2vp5a3xaACJJKr1CmsT9oTyMURfo9xmLdwThIzKIfOuAS+
+	 RVLpK31mybOkWBe0IlXkxYRqQDUu8Z15bnmU+pkDl2We5JDLinCm6Vf+/sJfTGFve7CLv
+	 /ifl7bKZhJM5bZ7zTUFsJv4PWV3+KShLeDou0cSMdlB2P8blP78Ca/V1e2uIGBCwtOA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216190;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216193;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=rNCbD+ZN2ahWagwuGM4YVzdG2SLEvGqKBmNyHtdKk1s=;
-	b=B8Bp11XyD4vYuetMh7JYHnJ/lAD2y36SdEqWm/j/s6MuqOu17OXQvRiMbzty4O3dQKfK
-	 ePXTygHoGjw3+0fwVbRZUrMMVuyAyOcodI+giXwv9FBzRfdAmOc/KQDAi2CmXA7CKhILv
-	 DHW9TqZJnPk8QkmfMbFngyIvZw+sWabQSzdfQPM1PdPtQMrOZGT7HzVIfaQVDUOgq2NN6
-	 jrVpgKuOODVGdcGCcPP02V7UMNJ+8iENqypo58kPo8UNwgSVpCK09Q9jfOJNvY2KuQB8N
-	 7+Wn/BKWXKtzS36DCMxWz+THjkOlb25P4ZjcOMxz9AHdiFd2lBaiciPF7gine/Sq9GA==
+	bh=/zhbimnptEWOb+wZUf0NX4+nQI6OMzOenzJDwhpaPq4=;
+	b=yMj2ndrccGmOjCmxhH2Bo/Qb91DFIu77pwnas67CwB+nVUR8OhQY0R+RxH+ofGoTW6ap
+	 j7Iz42G62Jq3RYkuyy1I0txrKf2COQ8oVn6ztVKT1yCZYFPZmKrqM/VXvTrp2SNFo041r
+	 drHva1y7s1rZTm2BkZvPnkXMDh2x7rGdvQEIt8QqB+lSJLFBJWTvZRX7j/6908fapGSuo
+	 UnXkCmuZbADZicZUUeMWqL7W26zk2m5CMPObWLTPJ0ml/SzSZSdbk8Zos2tEQ9zITqd9g
+	 EJZKTXC62R4NnP8qlkEE67eYnGzjrrs8eTlSTvs/HRBFmOnYNRWq0qDKOWCd0ky5LAA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wj1EeqLt;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ybkOy6PA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82F68606A31A;
-	Wed, 28 Oct 2026 19:36:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 711F1606A31A;
+	Wed, 28 Oct 2026 19:36:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wj1EeqLt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D244B1F01825;
-	Wed, 28 Oct 2026 19:36:29 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ybkOy6PA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE6B31F01825;
+	Wed, 28 Oct 2026 19:36:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216190;
-	bh=rNCbD+ZN2ahWagwuGM4YVzdG2SLEvGqKBmNyHtdKk1s=;
+	s=korg; t=1793216193;
+	bh=/zhbimnptEWOb+wZUf0NX4+nQI6OMzOenzJDwhpaPq4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wj1EeqLtU8X5lBJoq1yatInrJ4oXpA+Sjn4Fmah4X9hvBH/yR5rN0ufPayFN3MoW3
-	 jIJgpjFb1jvb12YyV5dgnMVtC7b4mFP6EqZLVjhRi0QQE4ucOJhNLHNrMvr7iwY4+z
-	 6jlkmxed6e5gUH6mJHqw5bJOlfNEgdq6bbSKwHJU=
+	b=ybkOy6PAtUuDlzJQ9qsJzPf48flrF1FPf85gkpek6LDinJGeFp0Owkef+b/0wVZhL
+	 Ep89QxIS7DP1XuY2qLPuNsBjI9L3vnfVyaRdfAry2R5YkvGVEf0nI4AovLCPJI+UIB
+	 sQNrj3rsgZ96wiFbiXiOD7kOqxKrtrkTqWTMZqcc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jann Horn <jannh@google.com>,
-	John Johansen <john.johansen@canonical.com>,
+	"Xiang Mei (Microsoft)" <xmei5@asu.edu>,
+	AutonomousCodeSecurity@microsoft.com,
+	"Cen Zhang (Microsoft Security FORGE Labs)" <cenzhang@linux.microsoft.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1473/1887] apparmor: fix cred UAF caused by begin_current_label_crit_section()
-Date: Wed, 28 Oct 2026 17:59:29 +0100
-Message-ID: <20261028170532.975663405@linuxfoundation.org>
+Subject: [PATCH 6.1 1474/1887] ksmbd: fix tree connection use-after-free in smb2_tree_connect()
+Date: Wed, 28 Oct 2026 17:59:30 +0100
+Message-ID: <20261028170532.998816085@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,195 +70,210 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jann Horn <jannh@google.com>
+From: Cen Zhang (Microsoft Security FORGE Labs) <cenzhang@linux.microsoft.com>
 
-[ Upstream commit 3f4ae5fab613dca01d6a2a8210dd832e009fcf47 ]
+[ Upstream commit b5ec6c462aab1062cf5d1e667ba7c6442f737055 ]
 
-AppArmor's begin_current_label_crit_section() is a scary function called
-from lots of LSM hooks (in particular VFS/socket-related ones) that checks
-if the label referenced by the current creds is marked FLAG_STALE, and if
-so, attempts to use aa_replace_current_label() to replace the creds with an
-updated version that uses a new label.
+ksmbd_tree_conn_connect() publishes a new tree connection in
+sess->tree_conns with a single reference and returns its pointer to
+smb2_tree_connect(). The handler continues to initialize the object and
+build the response after publication. A concurrent session logoff can
+erase the connection and drop that reference, freeing the object while
+the handler still uses it.
 
-The first problem with this is that it would directly lead to UAF of
-`struct cred` if anything in the kernel takes a pointer to the current
-creds and accesses these past a security hook invocation that replaces
-creds, like so:
-```
-const struct cred *cred = current_cred();
-alloc_file_pseudo(...);
-uid_t uid = cred->euid;
-```
-I don't know if anything in the kernel actually does this, but I think it
-is very surprising that this pattern could lead to UAF.
+BUG: KASAN: slab-use-after-free in smb2_tree_connect+0xe3d/0xf90
+  smb2_tree_connect (fs/smb/server/smb2pdu.c:2872)
+  handle_ksmbd_work
+  process_one_work
+  worker_thread
+  kthread
 
-The second problem is that things go wrong when aa_replace_current_label()
-runs with overridden credentials. aa_replace_current_label() bails out if
-`current_cred() != current_real_cred()` (mirroring the check in
-proc_pid_attr_write()), but this check can't actually reliably detect
-overridden credentials because the overridden creds can be the same as the
-objective creds.
+After xa_store() succeeds, take a second reference before releasing
+tree_conns_lock. The original reference belongs to the xarray entry and
+the second belongs to the creating smb2_tree_connect() handler.
 
-So in approximately the following scenario, things go wrong:
+Keep the references balanced in every path:
 
-1. task begins with <creds A> (as both objective and subjective creds),
-   with refcount=2
-2. task grabs an extra reference on <creds A> for overriding
-3. task calls override_creds(<creds A>), which returns a pointer to the old
-   subjective creds (<creds A>)
-4. task enters AppArmor LSM hook
-5. AppArmor checks that objective/subjective creds are equal
-6. AppArmor replaces both cred pointers with <creds B> and drops 2 refs on
-   <creds A>
-7. task leaves AppArmor LSM hook
-8. task calls revert_creds(<creds A>)
-9. now task->cred is <creds A> while task->real_cred is <creds B>, but the
-   task_struct logically holds two references to <creds B>
-10. another task drops the extra reference on <creds A> that was used for
-    overriding, refcount drops to 0
-11. now task->real_cred points to freed creds
+- On normal exit or an error after publication, smb2_tree_connect()
+  drops its creator reference. Error cleanup also calls
+  ksmbd_tree_conn_disconnect(), which drops the xarray reference only if
+  it removes the exact entry.
+- SMB2 TREE_DISCONNECT uses the same helper to remove the entry and drop
+  its xarray reference. The request's existing lookup reference remains
+  owned by the request and is released by the existing cleanup.
+- Session LOGOFF removes each entry and drops its xarray reference. If
+  it wins the race, later cleanup sees that the entry is gone and does
+  not drop that reference again.
 
-At this point, any access to current_cred() will be UAF.
+To enforce this ownership, claim the disconnected state and erase the
+exact entry atomically under tree_conns_lock. This guarantees one drop
+for the xarray reference and one drop by each in-flight user, regardless
+of which teardown path wins. If logoff removes the entry before
+initialization completes, fail the connect instead of marking the
+detached object TREE_CONNECTED.
 
-I have a test case where I run aa-disable on a profile while a process
-using that profile is blocked on splice() from a FUSE passthrough file into
-a full pipe; after the profile update, the pipe becomes empty, splice()
-resumes, the credentials go out of sync, and a subsequent getuid() syscall
-results in a KASAN UAF splat.
-
-To fix this, instead of directly replacing creds, do it via task_work that
-will run at the end of the current syscall. (The point in time at which the
-cred replacement happens should have no correctness impact; it is just a
-performance optimization to avoid unnecessarily touching the refcount of
-the new label.)
-
-Note that AppArmor still performs direct cred replacements in the
-sb_pivotroot LSM hook after this change, and that direct cred replacements
-can still happen in VFS ->write() callbacks via proc_pid_attr_write().
-
-There are two options for what to do with aa_dup_task_ctx(): Either
-explicitly reset new->label_replacement_pending after the entire
-aa_task_ctx has been copied, or switch to manually copying members over.
-I am switching to manually copying members over because that should make
-bugs more obvious.
-
+Fixes: 33b235a6e6eb ("ksmbd: fix race condition between tree conn lookup and disconnect")
+Reported-by: Xiang Mei (Microsoft) <xmei5@asu.edu>
+Cc: AutonomousCodeSecurity@microsoft.com
 Cc: stable@vger.kernel.org
-Fixes: c75afcd153f6 ("AppArmor: contexts used in attaching policy to system objects")
-Signed-off-by: Jann Horn <jannh@google.com>
-Signed-off-by: John Johansen <john.johansen@canonical.com>
+Signed-off-by: Cen Zhang (Microsoft Security FORGE Labs) <cenzhang@linux.microsoft.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/apparmor/include/cred.h |  6 +-----
- security/apparmor/include/task.h | 15 +++++++++++----
- security/apparmor/task.c         | 27 +++++++++++++++++++++++++++
- 3 files changed, 39 insertions(+), 9 deletions(-)
+ fs/smb/server/mgmt/tree_connect.c | 28 +++++++++++--------------
+ fs/smb/server/smb2pdu.c           | 34 +++++++++++++++++--------------
+ 2 files changed, 31 insertions(+), 31 deletions(-)
 
-diff --git a/security/apparmor/include/cred.h b/security/apparmor/include/cred.h
-index 0b9ae4804ef73..ea38198277536 100644
---- a/security/apparmor/include/cred.h
-+++ b/security/apparmor/include/cred.h
-@@ -161,13 +161,9 @@ static inline struct aa_label *begin_current_label_crit_section(void)
- {
- 	struct aa_label *label = aa_current_raw_label();
+diff --git a/fs/smb/server/mgmt/tree_connect.c b/fs/smb/server/mgmt/tree_connect.c
+index 9bde1b58f9c46..02c46e07aa87a 100644
+--- a/fs/smb/server/mgmt/tree_connect.c
++++ b/fs/smb/server/mgmt/tree_connect.c
+@@ -76,7 +76,7 @@ ksmbd_tree_conn_connect(struct ksmbd_work *work, const char *share_name)
+ 	tree_conn->share_conf = sc;
+ 	tree_conn->t_state = TREE_NEW;
+ 	status.tree_conn = tree_conn;
+-	atomic_set(&tree_conn->refcount, 1);
++	atomic_set(&tree_conn->refcount, 2);
  
--	might_sleep();
+ 	ret = xa_err(xa_store(&sess->tree_conns, tree_conn->id, tree_conn,
+ 			      GFP_KERNEL));
+@@ -98,8 +98,10 @@ ksmbd_tree_conn_connect(struct ksmbd_work *work, const char *share_name)
+ 
+ void ksmbd_tree_connect_put(struct ksmbd_tree_connect *tcon)
+ {
+-	if (atomic_dec_and_test(&tcon->refcount))
++	if (atomic_dec_and_test(&tcon->refcount)) {
++		ksmbd_share_config_put(tcon->share_conf);
+ 		kfree(tcon);
++	}
+ }
+ 
+ int ksmbd_tree_conn_disconnect(struct ksmbd_session *sess,
+@@ -108,14 +110,18 @@ int ksmbd_tree_conn_disconnect(struct ksmbd_session *sess,
+ 	int ret;
+ 
+ 	write_lock(&sess->tree_conns_lock);
++	if (tree_conn->t_state == TREE_DISCONNECTED ||
++	    xa_load(&sess->tree_conns, tree_conn->id) != tree_conn) {
++		write_unlock(&sess->tree_conns_lock);
++		return -ENOENT;
++	}
++	tree_conn->t_state = TREE_DISCONNECTED;
+ 	xa_erase(&sess->tree_conns, tree_conn->id);
+ 	write_unlock(&sess->tree_conns_lock);
+ 
+ 	ret = ksmbd_ipc_tree_disconnect_request(sess->id, tree_conn->id);
+ 	ksmbd_release_tree_conn_id(sess, tree_conn->id);
+-	ksmbd_share_config_put(tree_conn->share_conf);
+-	if (atomic_dec_and_test(&tree_conn->refcount))
+-		kfree(tree_conn);
++	ksmbd_tree_connect_put(tree_conn);
+ 	return ret;
+ }
+ 
+@@ -146,18 +152,8 @@ int ksmbd_tree_conn_session_logoff(struct ksmbd_session *sess)
+ 	if (!sess)
+ 		return -EINVAL;
+ 
+-	xa_for_each(&sess->tree_conns, id, tc) {
+-		write_lock(&sess->tree_conns_lock);
+-		if (tc->t_state == TREE_DISCONNECTED) {
+-			write_unlock(&sess->tree_conns_lock);
+-			ret = -ENOENT;
+-			continue;
+-		}
+-		tc->t_state = TREE_DISCONNECTED;
+-		write_unlock(&sess->tree_conns_lock);
 -
- 	if (label_is_stale(label)) {
- 		label = aa_get_newest_label(label);
--		if (aa_replace_current_label(label) == 0)
--			/* task cred will keep the reference */
--			aa_put_label(label);
-+		aa_schedule_stale_label_replacement();
- 	}
++	xa_for_each(&sess->tree_conns, id, tc)
+ 		ret |= ksmbd_tree_conn_disconnect(sess, tc);
+-	}
+ 	xa_destroy(&sess->tree_conns);
+ 	return ret;
+ }
+diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
+index 487aff42b912c..7112d013b3529 100644
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -2008,6 +2008,7 @@ int smb2_tree_connect(struct ksmbd_work *work)
+ 	struct ksmbd_session *sess = work->sess;
+ 	char *treename = NULL, *name = NULL;
+ 	struct ksmbd_tree_conn_status status;
++	struct ksmbd_tree_connect *tree_conn = NULL;
+ 	struct ksmbd_share_config *share;
+ 	int rc = -EINVAL;
  
- 	return label;
-diff --git a/security/apparmor/include/task.h b/security/apparmor/include/task.h
-index 01717fe432c3b..3c203b622b435 100644
---- a/security/apparmor/include/task.h
-+++ b/security/apparmor/include/task.h
-@@ -21,15 +21,22 @@ static inline struct aa_task_ctx *task_ctx(struct task_struct *task)
-  * @onexec: profile to transition to on next exec  (MAY BE NULL)
-  * @previous: profile the task may return to     (MAY BE NULL)
-  * @token: magic value the task must know for returning to @previous_profile
-+ * @label_replacement_tw: for aa_schedule_stale_label_replacement()
-+ * @label_replacement_pending: is @label_replacement_tw pending?
-+ *
-+ * When changing this, check if aa_dup_task_ctx() needs to be updated.
-  */
- struct aa_task_ctx {
- 	struct aa_label *nnp;
- 	struct aa_label *onexec;
- 	struct aa_label *previous;
- 	u64 token;
-+	struct callback_head label_replacement_tw;
-+	bool label_replacement_pending;
- };
+@@ -2032,9 +2033,10 @@ int smb2_tree_connect(struct ksmbd_work *work)
+ 		    name, treename);
  
- int aa_replace_current_label(struct aa_label *label);
-+void aa_schedule_stale_label_replacement(void);
- void aa_set_current_onexec(struct aa_label *label, bool stack);
- int aa_set_current_hat(struct aa_label *label, u64 token);
- int aa_restore_previous_label(u64 cookie);
-@@ -56,10 +63,10 @@ static inline void aa_free_task_ctx(struct aa_task_ctx *ctx)
- static inline void aa_dup_task_ctx(struct aa_task_ctx *new,
- 				   const struct aa_task_ctx *old)
- {
--	*new = *old;
--	aa_get_label(new->nnp);
--	aa_get_label(new->previous);
--	aa_get_label(new->onexec);
-+	new->nnp = aa_get_label(old->nnp);
-+	new->onexec = aa_get_label(old->onexec);
-+	new->previous = aa_get_label(old->previous);
-+	new->token = old->token;
+ 	status = ksmbd_tree_conn_connect(work, name);
+-	if (status.ret == KSMBD_TREE_CONN_STATUS_OK)
++	if (status.ret == KSMBD_TREE_CONN_STATUS_OK) {
++		tree_conn = status.tree_conn;
+ 		rsp->hdr.Id.SyncId.TreeId = cpu_to_le32(status.tree_conn->id);
+-	else
++	} else
+ 		goto out_err1;
+ 
+ 	share = status.tree_conn->share_conf;
+@@ -2066,8 +2068,13 @@ int smb2_tree_connect(struct ksmbd_work *work)
+ 		status.tree_conn->posix_extensions = true;
+ 
+ 	write_lock(&sess->tree_conns_lock);
+-	status.tree_conn->t_state = TREE_CONNECTED;
++	if (status.tree_conn->t_state == TREE_DISCONNECTED)
++		status.ret = KSMBD_TREE_CONN_STATUS_ERROR;
++	else
++		status.tree_conn->t_state = TREE_CONNECTED;
+ 	write_unlock(&sess->tree_conns_lock);
++	if (status.ret != KSMBD_TREE_CONN_STATUS_OK)
++		goto out_err1;
+ 	rsp->StructureSize = cpu_to_le16(16);
+ out_err1:
+ 	rsp->Capabilities = 0;
+@@ -2076,8 +2083,13 @@ int smb2_tree_connect(struct ksmbd_work *work)
+ 	rsp->ShareFlags = SMB2_SHAREFLAG_MANUAL_CACHING;
+ 
+ 	rc = ksmbd_iov_pin_rsp(work, rsp, sizeof(struct smb2_tree_connect_rsp));
+-	if (rc)
++	if (rc) {
++		if (status.ret == KSMBD_TREE_CONN_STATUS_OK) {
++			ksmbd_tree_conn_disconnect(sess, status.tree_conn);
++			status.tree_conn = NULL;
++		}
+ 		status.ret = KSMBD_TREE_CONN_STATUS_NOMEM;
++	}
+ 
+ 	if (!IS_ERR(treename))
+ 		kfree(treename);
+@@ -2113,6 +2125,9 @@ int smb2_tree_connect(struct ksmbd_work *work)
+ 	if (status.ret != KSMBD_TREE_CONN_STATUS_OK)
+ 		smb2_set_err_rsp(work);
+ 
++	if (tree_conn)
++		ksmbd_tree_connect_put(tree_conn);
++
+ 	return rc;
  }
  
- /**
-diff --git a/security/apparmor/task.c b/security/apparmor/task.c
-index cd9d43a277314..1d60b1521ed8f 100644
---- a/security/apparmor/task.c
-+++ b/security/apparmor/task.c
-@@ -14,6 +14,7 @@
+@@ -2214,17 +2229,6 @@ int smb2_tree_disconnect(struct ksmbd_work *work)
  
- #include <linux/gfp.h>
- #include <linux/ptrace.h>
-+#include <linux/task_work.h>
+ 	ksmbd_close_tree_conn_fds(work);
  
- #include "include/audit.h"
- #include "include/cred.h"
-@@ -88,6 +89,32 @@ int aa_replace_current_label(struct aa_label *label)
- 	return 0;
- }
- 
-+static void aa_replace_stale_label_tw_func(struct callback_head *tw)
-+{
-+	struct aa_task_ctx *ctx = task_ctx(current);
-+	struct aa_label *label;
-+
-+	ctx->label_replacement_pending = false;
-+	label = aa_current_raw_label();
-+	if (!label_is_stale(label))
-+		return;
-+	label = aa_get_newest_label(label);
-+	aa_replace_current_label(label);
-+	aa_put_label(label);
-+}
-+
-+/* replace the current task's stale label on syscall return */
-+void aa_schedule_stale_label_replacement(void)
-+{
-+	struct aa_task_ctx *ctx = task_ctx(current);
-+
-+	if (ctx->label_replacement_pending)
-+		return;
-+	init_task_work(&ctx->label_replacement_tw, aa_replace_stale_label_tw_func);
-+	if (task_work_add(current, &ctx->label_replacement_tw, TWA_RESUME) == 0)
-+		ctx->label_replacement_pending = true;
-+}
-+
- 
- /**
-  * aa_set_current_onexec - set the tasks change_profile to happen onexec
+-	write_lock(&sess->tree_conns_lock);
+-	if (tcon->t_state == TREE_DISCONNECTED) {
+-		write_unlock(&sess->tree_conns_lock);
+-		rsp->hdr.Status = STATUS_NETWORK_NAME_DELETED;
+-		err = -ENOENT;
+-		goto err_out;
+-	}
+-
+-	tcon->t_state = TREE_DISCONNECTED;
+-	write_unlock(&sess->tree_conns_lock);
+-
+ 	err = ksmbd_tree_conn_disconnect(sess, tcon);
+ 	if (err) {
+ 		rsp->hdr.Status = STATUS_NETWORK_NAME_DELETED;
 -- 
 2.53.0
 
