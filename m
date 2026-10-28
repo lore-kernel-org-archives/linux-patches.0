@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793208679;
-	b=3xQVTx6VSZYGT3xUgcrYyM94aLv5YhC6dzD+Yqga+e4pwj8fp6p+cb9bXWRbxwOTnclV
-	 VQTo8ZJ8Jq67p6OARAnQoy+ldKb+ISCGEmQvyM8f+AaXikyCiDVWwVyE2WNFw7gXTfi0M
-	 23qGY2HykIY7VQWrGEOPaOjwjuB5d/JyvwClAvXSG/6VruRHxFf6rJOqQywI2tMt7MVXQ
-	 8UpwLMVAuj6LUytmg8FmSTMIDcJJEI27UeTPeNOq/p4/yPDRbt8NUo+nBkIG85bMACQPj
-	 SrLMmW9FCA9PtEgmY+P2lA++G6U4KI1L5gOCgIBIOXQ0hXjqj+PlraIg3u+0OcFbigw==
+	t=1793208682;
+	b=PzYoSd6L2wWkdPkSCQnhZZ8BglDxpESikw7neR5I6JHs5yZw/RyCCGp8kchGBdD9N48m
+	 F3jADmx9ypLeqyT5dPbIUvJxgW0nPvo17xTxw9fYyAFe3kpUblLM6GgWPM+803tjqt1ph
+	 s1rhcC+q6qRc4l4Dk2kwRbtoAZBm0JU8FvWv+QI8zUQ5/lE6o9T+C8aw2on0+bzO8zWmq
+	 yvcSNHjWfbQ/0jg27KDVLlfqB0F+VtvOZOedZoJdMzO5J9c5H0aHXbQjVVZdUTx36mNiy
+	 PNasl1dLpx/zLk3hccTDFMtTDLUxgJoICX3hVXWNL3sC9xNUKwD/pMbJLPo7oiHZlSA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793208679;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793208682;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=JETXaGfqyfnhF3enVEuh3YZbzYdvvfbsSzs9ZxRXfvU=;
-	b=loK1SHGGDM4ezle8nfwe2qu6JNuYrqD00D+8cwZrVxuhnsRAf4siAteRLLbMs3DF6BBR
-	 bBk0LYIYxcsqAPVtHK4mGdFZN6UYN14HaANOapiY1FI7R6uCmAwvWPSGKETzsXaoyx2no
-	 WXvQSKQWYLGMs6eZMseoUuB3v6kjCgrLMEvLrEOJydFC5UBSSYld6dwXeCzoXg68qB6ye
-	 b0AI4otAj3ExVq4o/cbIofcS8opBlwt/BjbbsJuPnaL7BUJspC6b/9BhoFgiJ6o7LbbKj
-	 R2JUSkJLSjjWfxShHAuvwy7y1uodMzmfk4ELs8zJEog3i7XpJ61Rj+zNT30MXAX0TOg==
+	bh=UVgy1hVJwR9M2ogJEc9r6G+TyJN85/0mImcy7wVrMyY=;
+	b=v5XiU+u5fWFwTsjlTpWrHQvdHC2fDgh8mP9+kRpwJ+I6Wy+KkH/guUz9ifnMiVGg1CB2
+	 vz0pvhR+D2DQ+6lhTPVovSwVXsFYqYCJBhEI1mitLZlg/UJxY2V4ZYu11BckOVzaG6JkK
+	 5+w8kLY1XqoTvjXiFAco0mAUGzLQH/wrlEsN3FHIl5YxhENToOC+zkEPvu+KhiHpQfU4c
+	 gNF5ZZNHkKgsd06Ff6yODGW44AWn6vH2kdZIH2lMnHVZk9Gl+1quhH8PiF1EtIsjUNz7S
+	 VBLQNZJFinhtI+jMB0WhgRdFb8Oi6tzCqbuuXCSdepM2ka8yM4B9yhYJoS90uW8Rq7g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xISk4GRS;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LYbbcRfs;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A1F1606A31D;
-	Wed, 28 Oct 2026 17:31:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6F75606A31C;
+	Wed, 28 Oct 2026 17:31:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xISk4GRS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BF051F031E2;
-	Wed, 28 Oct 2026 17:31:18 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LYbbcRfs
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 441CB1F01829;
+	Wed, 28 Oct 2026 17:31:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793208679;
-	bh=JETXaGfqyfnhF3enVEuh3YZbzYdvvfbsSzs9ZxRXfvU=;
+	s=korg; t=1793208681;
+	bh=UVgy1hVJwR9M2ogJEc9r6G+TyJN85/0mImcy7wVrMyY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xISk4GRSwbaF67RG9emjKPKO6qc0YsKEo4O/tCc9xNa/363+oVxe2zUsaEy1p0mn/
-	 RfTXMIucUPqPqNBlMugluAuKdetL00Ozc11Mysjftc1fqfAqQBZUnlmh/oiOxARRXi
-	 OHoQVV/PrZGk8ii7kxotEAn+qa4yYfYD9j/ejCUM=
+	b=LYbbcRfsxg6SnxbTWjmrcF+0YBTaMrSWJdEB044F8f41Rl38fe2BbbkKP9dbu+/gO
+	 bY1/HG0gRHKg4WUZQ43FDSKKyn+N+2qHrf/ngTTCMnNbEvsh+AyalwzQ4wGct6KzJT
+	 Ue2ioY54xkGINa10Kr6fbc+wgh3DTkWjmnTSjERI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable@kernel.org,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>
-Subject: [PATCH 5.10 205/516] tty: serial: qcom_geni_serial: Keep console RX functional after deep idle
-Date: Wed, 28 Oct 2026 17:55:57 +0100
-Message-ID: <20261028170008.358961587@linuxfoundation.org>
+	Simon Gassner <simon.gassner@noxsystems.com>
+Subject: [PATCH 5.10 206/516] serial: tegra: dont clear the Tx FIFO on an Rx-only reset
+Date: Wed, 28 Oct 2026 17:55:58 +0100
+Message-ID: <20261028170008.382477121@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -68,44 +67,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>
+From: Simon Gassner <simon.gassner@noxsystems.com>
 
-commit 63ef71d1474b5417b5b2dec700cd251c44a570d9 upstream.
+commit 8aebfde6e84dceb7d47fe8001e50b754eb45d5df upstream.
 
-At baud rates up to 115200, the serial console uses only a 1 kBps keepalive
-vote for the GENI_TO_CORE ("qup-core") ICC path. This vote keeps the path
-active but does not request a QUP Core 2X clock rate.
+tegra_uart_fifo_reset() applies the Tegra30 workaround for
+"cannot clear the Tx FIFO while FIFO mode is enabled"
+unconditionally: it leaves FIFO mode, writes the requested FCR
+clear bits, and re-enters FIFO mode. Leaving FIFO mode empties
+both FIFOs, so an Rx-only reset discards queued Tx data as well.
 
-When the CPU enters a deeper idle state, the missing Core clock vote can
-leave the console RX path unresponsive.
+The break handler in tegra_uart_decode_rx_error() calls it with
+UART_FCR_CLEAR_RCVR only. On a half-duplex RS485 board whose Rx
+line is pulled low while the transceiver drives the bus, every
+transmission raises a spurious break, and all but the first
+character of the frame is lost.
 
-Use the 19.2 MHz Core 2X vote at low baud rates, while retaining the 50 MHz
-vote at higher baud rates, so that console RX remains functional after deep
-idle transitions.
+Only take the FIFO-mode path when the caller actually asked for
+CLEAR_XMIT. Likewise only wait for TEMT in that case: with the Tx
+FIFO deliberately left intact, that loop would otherwise spin for
+a full frame time in hard IRQ context with the port lock held.
 
-Fixes: 7cf563b2c846 ("tty: serial: qcom_geni_serial: Add interconnect support")
+Tested on a Colibri T30 (Tegra30) with Rx DMA:
+
+ - Break during transmission: the reset still fires from
+   tegra_uart_decode_rx_error(), and the complete frame now
+   reaches the peer. Before this change only the character in
+   the shift register was sent.
+ - Internal loopback with a generated break: the Rx FIFO is
+   correctly cleared by the plain FCR write, and subsequent
+   receive works with no frame, parity or overrun errors.
+
+Fixes: e9ea096dd225 ("serial: tegra: add serial driver")
 Cc: stable@kernel.org
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260915-correct-icc-bandwidth-vote-constants-v2-2-f78eb611204e@oss.qualcomm.com
+Signed-off-by: Simon Gassner <simon.gassner@noxsystems.com>
+Link: https://patch.msgid.link/20261001060539.32659-1-simon.gassner@noxsystems.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/qcom_geni_serial.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/tty/serial/serial-tegra.c |   18 ++++++++++++++++--
+ 1 file changed, 16 insertions(+), 2 deletions(-)
 
---- a/drivers/tty/serial/qcom_geni_serial.c
-+++ b/drivers/tty/serial/qcom_geni_serial.c
-@@ -1017,9 +1017,8 @@ static void qcom_geni_serial_set_termios
- 	 * Bump up BW vote on CPU and CORE path as driver supports FIFO mode
- 	 * only.
- 	 */
--	avg_bw_core = (baud > 115200) ? Bps_to_icc(CORE_2X_50_MHZ)
--						: GENI_DEFAULT_BW;
--	port->se.icc_paths[GENI_TO_CORE].avg_bw = avg_bw_core;
-+	avg_bw_core = baud > 115200 ? CORE_2X_50_MHZ : CORE_2X_19_2_MHZ;
-+	port->se.icc_paths[GENI_TO_CORE].avg_bw = Bps_to_icc(avg_bw_core);
- 	port->se.icc_paths[CPU_TO_GENI].avg_bw = Bps_to_icc(baud);
- 	geni_icc_set_bw(&port->se);
+--- a/drivers/tty/serial/serial-tegra.c
++++ b/drivers/tty/serial/serial-tegra.c
+@@ -302,11 +302,19 @@ static void tegra_uart_fifo_reset(struct
+ {
+ 	unsigned long fcr = tup->fcr_shadow;
+ 	unsigned int lsr, tmout = 10000;
++	bool clear_tx = !!(fcr_bits & UART_FCR_CLEAR_XMIT);
  
+ 	if (tup->rts_active)
+ 		set_rts(tup, false);
+ 
+-	if (tup->cdata->allow_txfifo_reset_fifo_mode) {
++	/*
++	 * Leaving FIFO mode below is a workaround for a Tegra30
++	 * restriction on clearing the Tx FIFO while FIFO mode is
++	 * enabled. It empties both FIFOs, so applying it to an
++	 * Rx-only reset would destroy an in-flight transmission.
++	 * Only take that path when the caller asked for CLEAR_XMIT.
++	 */
++	if (tup->cdata->allow_txfifo_reset_fifo_mode || !clear_tx) {
+ 		fcr |= fcr_bits & (UART_FCR_CLEAR_RCVR | UART_FCR_CLEAR_XMIT);
+ 		tegra_uart_write(tup, fcr, UART_FCR);
+ 	} else {
+@@ -331,9 +339,15 @@ static void tegra_uart_fifo_reset(struct
+ 	 */
+ 	tegra_uart_wait_cycle_time(tup, 32);
+ 
++	/*
++	 * Only wait for the transmitter to drain when the Tx FIFO was
++	 * part of the reset. For an Rx-only reset it is left intact,
++	 * and waiting for TEMT here would spin for a full frame time.
++	 */
+ 	do {
+ 		lsr = tegra_uart_read(tup, UART_LSR);
+-		if ((lsr & UART_LSR_TEMT) && !(lsr & UART_LSR_DR))
++		if ((!clear_tx || (lsr & UART_LSR_TEMT)) &&
++		    !(lsr & UART_LSR_DR))
+ 			break;
+ 		udelay(1);
+ 	} while (--tmout);
 
 
