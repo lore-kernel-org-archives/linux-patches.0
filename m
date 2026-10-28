@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793211741;
-	b=Wd9992l1ORVWO2zvOKZBjk3MUJuoQq1sI+F8+zqlcTWIR4yKeqUo9fFuzrer/NE+mR7K
-	 +u0fM2WMG7edSAMism8yVREuwGXeI47cmaVHsjTDRmhx97pIxUOcGdED25mfyqns4mLNi
-	 T6LqybDxER28+XDJmApofj99BYQuOq3RSq9TVqPHIOBDl20kpe7ukj9+TEAgie5hVCjbg
-	 LjE9j/CE87y9k/6H750F/RBcAZhd4/NFzINe0wv5wI8O724XheIRNbXhwnnv2057kfqkr
-	 IAh4UPMQFeQGUl0tHkwM/Cu02eJteLSGJjGXPriRGafOmpgH5pcitPZWA+GLst2Dkhg==
+	t=1793211744;
+	b=UnKrj52D6HArE7r9dTdwQrEqxvXRAcgwkxUVBDwI4iL4RQ+OpfbkgbrjcdgG1xU/hs4S
+	 saQNH+kxaHML45pHQnAScK+skfkXEBkcHNqkmJIs6HwY7tdVdtQO7jzb25xi9hyYL4UU+
+	 VUxKeC9JyP43NmhmIUoX304dWzAfXU000X+1ZVpuCFQz1Mx9gSilMOzYBQUGE4Bbyr8r6
+	 Sz8wQY3E+/oiuQh2dT6UfyG2i+vz+A9acIn9wZShmlTZrTFboebZcjrowK2ebZGuVLGFo
+	 HAHUh3fBlvBeH6sVR0IdvKp9IBBx4IKShKtzqYSleTVlJ9k76Y5bErIatXbbty1LzTw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793211741;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793211744;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=pTkhDfVge2n71mSyN721LiApqBIeADEhf9deggEKSa0=;
-	b=rJA+WZG1WmQHsUtCxplD8LalrCUGlswFEc4YCKXnpTf3exL5S4P6iLu0ZpN7hIlV1hcS
-	 hjY21scqZjj4SlGJs3QLZQYDO24vu3V3Ud7drwKCXA53JQmA5CTc1zsDqObq/jPOMMrjU
-	 i0UZbP0hDKT0N1iVe5F7yQFz/T/ppdyX89G8UU7D5Jm/Potxl1vIA4xXHFw1bMIl/m7kY
-	 9gCcxtzWDs1W3iUtfoikFTLVW23a0RqseUWinvr0M1jdcSKqtT6dy5ltl9XtETHfrljiC
-	 /qV9TeaTHhdZmPvyDvG5eABNOe6rUklfcU4rBLmfx+s7QyrB0uwpizTZyiRf03pMPvA==
+	bh=qUUo/4HP+vB2UZ1FRofGum9/nOA/eIPbcgIz3ZHzXWg=;
+	b=pK9NTeaoBNsPwATVDl2HNsUOr9jZcmII+QyA2Yr4UvIj3X2WyXShZFXE3tNu3D8eX3c3
+	 Wa+EHjmzJ+pqQufmsEyCI48cBW3KDlZlf02lK0lw58xOvwDhKJWFz0pT7/2a3i034Vv0f
+	 1Be8QRS+Ehx2u+d+wUdrBdSVMU4+WZaaguaUYsVxekCaCSWk+aUzOZz54Sy5RvYvOV7b0
+	 j7MisAQU4vRC67oSbtY9EoGelECE8MmeU6VUp9WjwBTcKVq434k14iFu6DMLhZ/JRD0ty
+	 7ATBPwbJyXoqPQRfQ0hnDNYpVJsEylFOH4PXRTupOSfWnF/QeLni3E3MT6g5ePqe/iQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0o04WOw6;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FrRCC6wQ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 010B5606A326;
-	Wed, 28 Oct 2026 18:22:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D09B6606A321;
+	Wed, 28 Oct 2026 18:22:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0o04WOw6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C4561F01825;
-	Wed, 28 Oct 2026 18:22:20 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FrRCC6wQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D2B11F01825;
+	Wed, 28 Oct 2026 18:22:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793211740;
-	bh=pTkhDfVge2n71mSyN721LiApqBIeADEhf9deggEKSa0=;
+	s=korg; t=1793211743;
+	bh=qUUo/4HP+vB2UZ1FRofGum9/nOA/eIPbcgIz3ZHzXWg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0o04WOw6zY38Oo3T4vWtNpn0ndeB1jcLX1dnsC7OWoqOiXIeHEg/G9A/o+zr1KbCv
-	 g/P3JkJ75hapwFXYb/JsgSj5jrlZ0eYPsN4hpOjhVkimkTv940pYXvqFe3fyU9AgeX
-	 Kg2G0uMbV+hKRw6pGGFrDTLnD/orLTi3cQ0vhLm8=
+	b=FrRCC6wQjp5XNMiRh38LmvrWwcrwE5+3SuIqMPebxGOZ9y7fFv6dn6Fw1FEiTTAgn
+	 0kp4CJKTYS48DMzlzVxwbXXcGaS3r+vMq99VSAsSro6yIzOe9QCVV/tsUZ8cFJfdXu
+	 89y5t/YFDRhiz/78F2EJ2EkVzn5JBtMyWsSoW6qE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laurence Oberman <loberman@redhat.com>,
+	Linfeng Sun <linfeng.sun.dev@gmail.com>,
+	Mike Christie <michael.christie@oracle.com>,
 	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 484/571] scsi: st: Save the visited block for the partition the drive is in
-Date: Wed, 28 Oct 2026 18:00:31 +0100
-Message-ID: <20261028170019.510703074@linuxfoundation.org>
+Subject: [PATCH 5.15 485/571] scsi: target: iscsi: Fix race in discovery auth updates
+Date: Wed, 28 Oct 2026 18:00:32 +0100
+Message-ID: <20261028170019.534931056@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -68,91 +69,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Laurence Oberman <loberman@redhat.com>
+From: Linfeng Sun <linfeng.sun.dev@gmail.com>
 
-[ Upstream commit c9e9f024dd4f61f0f6636c9f2ed0830f87060e11 ]
+[ Upstream commit e15b81f602edbdee39c335546f25486a1747f3f0 ]
 
-set_location() saves the current tape location before switching
-partitions, so that switch_partition() can return to it later. It reads
-the location with READ POSITION but stores it in the st_partstat of
-STp->partition, ignoring the partition the drive reports.
+Separate configfs opens can concurrently update the discovery AuthMethod
+parameter. Both callers may free the same value in
+iscsi_update_param_value(), causing a double-free.
 
-The two differ after a device reset. When the reset is recovered with
-MTREW, MTSEEK or MTEOM, st_ioctl() sets STp->partition = 0 and calls
-switch_partition() to return to STp->new_partition. A drive that was in
-partition 1 is still there, so set_location() files the partition 1
-position under partition 0. The next switch to partition 0 locates to
-that block: if partition 0 holds less data, MTSETPART fails with EIO
-(BLANK CHECK), otherwise the tape is silently positioned at the wrong
-block.
+Protect the lookup and replacement with the discovery TPG access lock,
+as used by the other TPG configfs parameter updates.
 
-IBM ULTRIUM-TD5 (LTO-5), LU reset in partition 1 at block 1025:
-
-  st 12:0:0:0: [st0] Visited block 1025 for partition 0 saved.
-  ...
-  st 12:0:0:0: [st0] Setting block to 1025 and partition to 0.
-  st 12:0:0:0: [st0] Error: 402, cmd: 2b 2 0 0 0 4
-  st 12:0:0:0: [st0] Sense Key : Blank Check [current]
-  st 12:0:0:0: [st0] Add. Sense: End-of-data detected
-
-Store the location in the st_partstat of the partition reported by READ
-POSITION. With the fix:
-
-  st 12:0:0:0: [st0] Visited block 1025 for partition 1 saved.
-
-This is a pre-existing issue. It was not caught when testing the recent
-st reset series because the partition test was only run on scsi_debug:
-on the LTO drive it was skipped, since can-partitions is off in the test
-harness's stinit.conf, as is normal for LTO. scsi_debug hides the
-problem because its emulated tape returns to the beginning of partition
-0 on an LU reset. It was found while validating a backport of that
-series to RHEL 9.8, when the partition tests were run on real hardware
-with can-partitions enabled. The same failure then reproduced on
-unmodified RHEL 9.8 and on upstream, and the fix makes the test pass on
-v7.3-rc3 and RHEL 9.8 with an LTO-5.
-
-The harness (https://gitlab.com/loberman/tapetest, test X03) now refuses
-to silently skip the partition tests on hardware.
-
-Fixes: 7081dc75df79 ("scsi: st: Restore some drive settings after reset")
-Assisted-by: Claude
-Signed-off-by: Laurence Oberman <loberman@redhat.com>
-Link: https://patch.msgid.link/20261006164250.773840-1-loberman@redhat.com
+Fixes: e48354ce078c ("iscsi-target: Add iSCSI fabric support for target v4.1")
+Signed-off-by: Linfeng Sun <linfeng.sun.dev@gmail.com>
+Reviewed-by: Mike Christie <michael.christie@oracle.com>
+Link: https://patch.msgid.link/20260811124843.6817-1-linfeng.sun.dev@gmail.com
 Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/st.c | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ drivers/target/iscsi/iscsi_target_configfs.c | 26 ++++++++++++++------
+ 1 file changed, 19 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/scsi/st.c b/drivers/scsi/st.c
-index dc0c6508d254b..65b23015d1f23 100644
---- a/drivers/scsi/st.c
-+++ b/drivers/scsi/st.c
-@@ -3184,14 +3184,20 @@ static int set_location(struct scsi_tape *STp, unsigned int block, int partition
- 	    partition >= ST_NBR_PARTITIONS)
- 		return (-EINVAL);
- 	if (partition != STp->partition) {
--		if (get_location(STp, &blk, &p, 1))
-+		/*
-+		 * Save the location for the partition the drive reports,
-+		 * not for STp->partition: after a reset STp->partition may
-+		 * not match the partition the drive is in.
-+		 */
-+		if (get_location(STp, &blk, &p, 1) ||
-+		    p < 0 || p >= ST_NBR_PARTITIONS)
- 			STps->last_block_valid = 0;
- 		else {
--			STps->last_block_valid = 1;
--			STps->last_block_visited = blk;
-+			STp->ps[p].last_block_valid = 1;
-+			STp->ps[p].last_block_visited = blk;
- 			DEBC_printk(STp, "Visited block %d for "
- 				    "partition %d saved.\n",
--				    blk, STp->partition);
-+				    blk, p);
- 		}
+diff --git a/drivers/target/iscsi/iscsi_target_configfs.c b/drivers/target/iscsi/iscsi_target_configfs.c
+index 4ae5314e8c453..a0a024ae652f8 100644
+--- a/drivers/target/iscsi/iscsi_target_configfs.c
++++ b/drivers/target/iscsi/iscsi_target_configfs.c
+@@ -1284,17 +1284,24 @@ static ssize_t iscsi_disc_enforce_discovery_auth_store(struct config_item *item,
+ 		return -EINVAL;
  	}
  
++	if (iscsit_get_tpg(discovery_tpg) < 0)
++		return -EINVAL;
++
+ 	param = iscsi_find_param_from_key(AUTHMETHOD,
+ 				discovery_tpg->param_list);
+-	if (!param)
+-		return -EINVAL;
++	if (!param) {
++		err = -EINVAL;
++		goto out;
++	}
+ 
+ 	if (op) {
+ 		/*
+ 		 * Reset the AuthMethod key to CHAP.
+ 		 */
+-		if (iscsi_update_param_value(param, CHAP) < 0)
+-			return -EINVAL;
++		if (iscsi_update_param_value(param, CHAP) < 0) {
++			err = -EINVAL;
++			goto out;
++		}
+ 
+ 		discovery_tpg->tpg_attrib.authentication = 1;
+ 		iscsit_global->discovery_acl.node_auth.enforce_discovery_auth = 1;
+@@ -1305,8 +1312,10 @@ static ssize_t iscsi_disc_enforce_discovery_auth_store(struct config_item *item,
+ 		/*
+ 		 * Reset the AuthMethod key to CHAP,None
+ 		 */
+-		if (iscsi_update_param_value(param, "CHAP,None") < 0)
+-			return -EINVAL;
++		if (iscsi_update_param_value(param, "CHAP,None") < 0) {
++			err = -EINVAL;
++			goto out;
++		}
+ 
+ 		discovery_tpg->tpg_attrib.authentication = 0;
+ 		iscsit_global->discovery_acl.node_auth.enforce_discovery_auth = 0;
+@@ -1315,7 +1324,10 @@ static ssize_t iscsi_disc_enforce_discovery_auth_store(struct config_item *item,
+ 			" Discovery TPG\n");
+ 	}
+ 
+-	return count;
++	err = count;
++out:
++	iscsit_put_tpg(discovery_tpg);
++	return err;
+ }
+ 
+ CONFIGFS_ATTR(iscsi_disc_, enforce_discovery_auth);
 -- 
 2.53.0
 
