@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213980;
-	b=3F94F0HQcvbUxfgm/cmg14sD87fX5Z49wec+BvCf6x38WaoFUqSZGWRKOgqSk5b0yTvL
-	 nMPw3MUl7ErYskvEC0D1/y5E8oNhKQDNj4Yv+DiIs7n+1qK1V8hJHtTFDMewF6CcRBH1B
-	 t7Eql2pSdaR90yovmRlUG1IO8ci4RlO7hwC/x4M6KT5IIoeGQWMM9Y56tu7XfqN0ezz5i
-	 RcqXOngMfXgbjyO3hN10DvaArQZdF55ci8Ar/HlwMJLpDdwrUIK5Q+z9GpC/xQCpZCB0d
-	 NZdpQzXDSLWa8zMyx5qb5AOdIR3iar3ph29/Ne01go+fpLIww1W46pOKsFqlTinKe2g==
+	t=1793213982;
+	b=PP9UIXAjOLz7iroSMw2hDIVmg5bOoqTASNddBKg4kir9IkYcjEdPBz7UhAYCdnHrHwXM
+	 1uc05jbP6ErJM7/P/JEEEkcF9tP1yQIurTiW96+QbhfmmQgiDHZtvL3wsPaBnaEz9QT1p
+	 KQy8q0Iax++8SHWEK1DPp9YGqsyR37DD6LopZBIg0w0Bjf0DXxYZlUXg8aycTfAaDzbnE
+	 ZOnGGb/t0cHk8wbWFak2/swO8NiuvVww9PZJqIazLPENEyrq09lUGjCYUymUrsJHthVR3
+	 RMfcDSIKasEzmihYpXr4HN8WZKOcPwwtHZSP+SIMtGz8WwHIKTOoH7IsgfE9QZtSFrQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213980;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213982;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=x6qBnWPdFyvlx5gQAtRRmP6Ajugtigai3f6n7VDFuQE=;
-	b=TN1UDoN5VKSAD2QKgd4ZhuNPYNE37ubxGqaF7cGowiJNrF/R1+oiASR5MZ+MrLWvnaqK
-	 UGIg6v3t2R5RASFIkmB6pk6pmp6/sxLu4fsJTGIozttAhlW+FlVT8NdBcwbyMEhmU/xun
-	 pp0ISDqf+JL+D1IueQdXFyXsbdHy0TjZCAF4WngsjSPdaJO62+ngoX+PS5W/CeQ0nxzyL
-	 ZamNHoDoAF8WVLeUkA0Mt8n6+OQhrjXG2NZ2l0okYwk1yDwy/zwUyjXR1kGUDEFJYls0/
-	 rz2x4DNhhCv5aQIVBAWt5DsF9GXtnNHJJSF162FyR0++mkQIU0MPQnGw8FjkgMZ+Z0w==
+	bh=BurFSJZ0zUV86V9zzm1/8ea3xDM21kWwxK+UCQuFP9Y=;
+	b=1oDkVOCEDC6Czrb2IkxMDmvuTD7CHPe7LZjpN9r7/OEPKAMsuS5hKibi5fEVyri6/Ksd
+	 fEEbZeE8SZX4hE55sM+FEB+s+xGQOpmBwCZX6LRT1VIn/dj2rZ0eU/eRYxiDH+i5muJgr
+	 6K/xEpkTOvgekXj5EOyPyuB55ksZ+556WzZKAGZVBs41KSeknVIBMa0ojNdAjrLfAN06d
+	 vBUyAPGgmz6FUb7opo1Nr+XXb0uCkFmh+KUzbBidmC+7Q6Y90KFeyHsH3cEUUydK2cIxI
+	 +8oLCUfrgcCBonPlMRu9bOyHkW3s8YrhdBbNW6hs6SOpuRK+PIKSxdx14zIC3QWqRuQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="lhGY/hsm";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tj+D89VG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6D88606A31C;
-	Wed, 28 Oct 2026 18:59:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C140606A31C;
+	Wed, 28 Oct 2026 18:59:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lhGY/hsm
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAE261F01825;
-	Wed, 28 Oct 2026 18:59:38 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tj+D89VG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0FCD1F01825;
+	Wed, 28 Oct 2026 18:59:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213979;
-	bh=x6qBnWPdFyvlx5gQAtRRmP6Ajugtigai3f6n7VDFuQE=;
+	s=korg; t=1793213982;
+	bh=BurFSJZ0zUV86V9zzm1/8ea3xDM21kWwxK+UCQuFP9Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lhGY/hsmS4nqaeptNrLgUD62+6luaw8FbkEvnUaehVSWCKAuw1CLvQtToLl3mFP5a
-	 HnrIwpS1GsWkPVGlXPktvg/bnNtWyXGTbERH42z7mDQWCI4QHtSiCiNVS0aaLwrd36
-	 u8LzVQ6miZII0gf1V4lnjMRHK90CXi98PYu9JQTo=
+	b=tj+D89VGEkiVETg+6HpOqJb/QQerN+oxpUlJsMsPfd2EjSswN9OkRW77Uauk1cE2r
+	 7CEampimmzY2KlzGMfdGa0UVJJfGDuvOpLS5C0my6kFIlYNrd1YGTSZhTWa8HfDjRF
+	 WMfiJL6g1WvnTbwQlXC5BUWVX4G3fIfhORnLbQzk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Aurich <paul@darkrain42.org>,
-	Steve French <stfrench@microsoft.com>,
+	Rodrigo Siqueira <rodrigo.siqueira@amd.com>,
+	Jerry Zuo <jerry.zuo@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0697/1887] smb: Dont leak cfid when reconnect races with open_cached_dir
-Date: Wed, 28 Oct 2026 17:46:33 +0100
-Message-ID: <20261028170515.273161487@linuxfoundation.org>
+Subject: [PATCH 6.1 0671/1887] drm/amd/display: Check null pointers before used
+Date: Wed, 28 Oct 2026 17:46:07 +0100
+Message-ID: <20261028170514.682130981@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,228 +71,149 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paul Aurich <paul@darkrain42.org>
+From: Alex Hung <alex.hung@amd.com>
 
-[ Upstream commit 7afb86733685c64c604d32faf00fa4a1f22c2ab1 ]
+[ Upstream commit be1fb44389ca3038ad2430dac4234669bc177ee3 ]
 
-open_cached_dir() may either race with the tcon reconnection even before
-compound_send_recv() or directly trigger a reconnection via
-SMB2_open_init() or SMB_query_info_init().
+[WHAT & HOW]
+Poniters, such as dc->clk_mgr, are null checked previously in the same
+function, so Coverity warns "implies that "dc->clk_mgr" might be null".
+As a result, these pointers need to be checked when used again.
 
-The reconnection process invokes invalidate_all_cached_dirs() via
-cifs_mark_open_files_invalid(), which removes all cfids from the
-cfids->entries list but doesn't drop a ref if has_lease isn't true. This
-results in the currently-being-constructed cfid not being on the list,
-but still having a refcount of 2. It leaks if returned from
-open_cached_dir().
+This fixes 10 FORWARD_NULL issues reported by Coverity.
 
-Fix this by setting cfid->has_lease when the ref is actually taken; the
-cfid will not be used by other threads until it has a valid time.
-
-Addresses these kmemleaks:
-
-unreferenced object 0xffff8881090c4000 (size 1024):
-  comm "bash", pid 1860, jiffies 4295126592
-  hex dump (first 32 bytes):
-    00 01 00 00 00 00 ad de 22 01 00 00 00 00 ad de  ........".......
-    00 ca 45 22 81 88 ff ff f8 dc 4f 04 81 88 ff ff  ..E"......O.....
-  backtrace (crc 6f58c20f):
-    [<ffffffff8b895a1e>] __kmalloc_cache_noprof+0x2be/0x350
-    [<ffffffff8bda06e3>] open_cached_dir+0x993/0x1fb0
-    [<ffffffff8bdaa750>] cifs_readdir+0x15a0/0x1d50
-    [<ffffffff8b9a853f>] iterate_dir+0x28f/0x4b0
-    [<ffffffff8b9a9aed>] __x64_sys_getdents64+0xfd/0x200
-    [<ffffffff8cf6da05>] do_syscall_64+0x95/0x1a0
-    [<ffffffff8d00012f>] entry_SYSCALL_64_after_hwframe+0x76/0x7e
-unreferenced object 0xffff8881044fdcf8 (size 8):
-  comm "bash", pid 1860, jiffies 4295126592
-  hex dump (first 8 bytes):
-    00 cc cc cc cc cc cc cc                          ........
-  backtrace (crc 10c106a9):
-    [<ffffffff8b89a3d3>] __kmalloc_node_track_caller_noprof+0x363/0x480
-    [<ffffffff8b7d7256>] kstrdup+0x36/0x60
-    [<ffffffff8bda0700>] open_cached_dir+0x9b0/0x1fb0
-    [<ffffffff8bdaa750>] cifs_readdir+0x15a0/0x1d50
-    [<ffffffff8b9a853f>] iterate_dir+0x28f/0x4b0
-    [<ffffffff8b9a9aed>] __x64_sys_getdents64+0xfd/0x200
-    [<ffffffff8cf6da05>] do_syscall_64+0x95/0x1a0
-    [<ffffffff8d00012f>] entry_SYSCALL_64_after_hwframe+0x76/0x7e
-
-And addresses these BUG splats when unmounting the SMB filesystem:
-
-BUG: Dentry ffff888140590ba0{i=1000000000080,n=/}  still in use (2) [unmount of cifs cifs]
-WARNING: CPU: 3 PID: 3433 at fs/dcache.c:1536 umount_check+0xd0/0x100
-Modules linked in:
-CPU: 3 UID: 0 PID: 3433 Comm: bash Not tainted 6.12.0-rc4-g850925a8133c-dirty #49
-Hardware name: VMware, Inc. VMware Virtual Platform/440BX Desktop Reference Platform, BIOS 6.00 11/12/2020
-RIP: 0010:umount_check+0xd0/0x100
-Code: 8d 7c 24 40 e8 31 5a f4 ff 49 8b 54 24 40 41 56 49 89 e9 45 89 e8 48 89 d9 41 57 48 89 de 48 c7 c7 80 e7 db ac e8 f0 72 9a ff <0f> 0b 58 31 c0 5a 5b 5d 41 5c 41 5d 41 5e 41 5f e9 2b e5 5d 01 41
-RSP: 0018:ffff88811cc27978 EFLAGS: 00010286
-RAX: 0000000000000000 RBX: ffff888140590ba0 RCX: ffffffffaaf20bae
-RDX: dffffc0000000000 RSI: 0000000000000008 RDI: ffff8881f6fb6f40
-RBP: ffff8881462ec000 R08: 0000000000000001 R09: ffffed1023984ee3
-R10: ffff88811cc2771f R11: 00000000016cfcc0 R12: ffff888134383e08
-R13: 0000000000000002 R14: ffff8881462ec668 R15: ffffffffaceab4c0
-FS:  00007f23bfa98740(0000) GS:ffff8881f6f80000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000556de4a6f808 CR3: 0000000123c80000 CR4: 0000000000350ef0
-Call Trace:
- <TASK>
- d_walk+0x6a/0x530
- shrink_dcache_for_umount+0x6a/0x200
- generic_shutdown_super+0x52/0x2a0
- kill_anon_super+0x22/0x40
- cifs_kill_sb+0x159/0x1e0
- deactivate_locked_super+0x66/0xe0
- cleanup_mnt+0x140/0x210
- task_work_run+0xfb/0x170
- syscall_exit_to_user_mode+0x29f/0x2b0
- do_syscall_64+0xa1/0x1a0
- entry_SYSCALL_64_after_hwframe+0x76/0x7e
-RIP: 0033:0x7f23bfb93ae7
-Code: ff ff ff ff c3 66 0f 1f 44 00 00 48 8b 0d 11 93 0d 00 f7 d8 64 89 01 b8 ff ff ff ff eb bf 0f 1f 44 00 00 b8 50 00 00 00 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 8b 0d e9 92 0d 00 f7 d8 64 89 01 48
-RSP: 002b:00007ffee9138598 EFLAGS: 00000246 ORIG_RAX: 0000000000000050
-RAX: 0000000000000000 RBX: 0000558f1803e9a0 RCX: 00007f23bfb93ae7
-RDX: 0000000000000000 RSI: 0000000000000004 RDI: 0000558f1803e9a0
-RBP: 0000558f1803e600 R08: 0000000000000007 R09: 0000558f17fab610
-R10: d91d5ec34ab757b0 R11: 0000000000000246 R12: 0000000000000001
-R13: 0000000000000000 R14: 0000000000000015 R15: 0000000000000000
- </TASK>
-irq event stamp: 1163486
-hardirqs last  enabled at (1163485): [<ffffffffac98d344>] _raw_spin_unlock_irqrestore+0x34/0x60
-hardirqs last disabled at (1163486): [<ffffffffac97dcfc>] __schedule+0xc7c/0x19a0
-softirqs last  enabled at (1163482): [<ffffffffab79a3ee>] __smb_send_rqst+0x3de/0x990
-softirqs last disabled at (1163480): [<ffffffffac2314f1>] release_sock+0x21/0xf0
----[ end trace 0000000000000000 ]---
-
-VFS: Busy inodes after unmount of cifs (cifs)
-------------[ cut here ]------------
-kernel BUG at fs/super.c:661!
-Oops: invalid opcode: 0000 [#1] PREEMPT SMP KASAN NOPTI
-CPU: 1 UID: 0 PID: 3433 Comm: bash Tainted: G        W          6.12.0-rc4-g850925a8133c-dirty #49
-Tainted: [W]=WARN
-Hardware name: VMware, Inc. VMware Virtual Platform/440BX Desktop Reference Platform, BIOS 6.00 11/12/2020
-RIP: 0010:generic_shutdown_super+0x290/0x2a0
-Code: e8 15 7c f7 ff 48 8b 5d 28 48 89 df e8 09 7c f7 ff 48 8b 0b 48 89 ee 48 8d 95 68 06 00 00 48 c7 c7 80 7f db ac e8 00 69 af ff <0f> 0b 66 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 00 90 90 90 90 90 90
-RSP: 0018:ffff88811cc27a50 EFLAGS: 00010246
-RAX: 000000000000003e RBX: ffffffffae994420 RCX: 0000000000000027
-RDX: 0000000000000000 RSI: ffffffffab06180e RDI: ffff8881f6eb18c8
-RBP: ffff8881462ec000 R08: 0000000000000001 R09: ffffed103edd6319
-R10: ffff8881f6eb18cb R11: 00000000016d3158 R12: ffff8881462ec9c0
-R13: ffff8881462ec050 R14: 0000000000000001 R15: 0000000000000000
-FS:  00007f23bfa98740(0000) GS:ffff8881f6e80000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007f8364005d68 CR3: 0000000123c80000 CR4: 0000000000350ef0
-Call Trace:
- <TASK>
- kill_anon_super+0x22/0x40
- cifs_kill_sb+0x159/0x1e0
- deactivate_locked_super+0x66/0xe0
- cleanup_mnt+0x140/0x210
- task_work_run+0xfb/0x170
- syscall_exit_to_user_mode+0x29f/0x2b0
- do_syscall_64+0xa1/0x1a0
- entry_SYSCALL_64_after_hwframe+0x76/0x7e
-RIP: 0033:0x7f23bfb93ae7
- </TASK>
-Modules linked in:
----[ end trace 0000000000000000 ]---
-RIP: 0010:generic_shutdown_super+0x290/0x2a0
-Code: e8 15 7c f7 ff 48 8b 5d 28 48 89 df e8 09 7c f7 ff 48 8b 0b 48 89 ee 48 8d 95 68 06 00 00 48 c7 c7 80 7f db ac e8 00 69 af ff <0f> 0b 66 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 00 90 90 90 90 90 90
-RSP: 0018:ffff88811cc27a50 EFLAGS: 00010246
-RAX: 000000000000003e RBX: ffffffffae994420 RCX: 0000000000000027
-RDX: 0000000000000000 RSI: ffffffffab06180e RDI: ffff8881f6eb18c8
-RBP: ffff8881462ec000 R08: 0000000000000001 R09: ffffed103edd6319
-R10: ffff8881f6eb18cb R11: 00000000016d3158 R12: ffff8881462ec9c0
-R13: ffff8881462ec050 R14: 0000000000000001 R15: 0000000000000000
-FS:  00007f23bfa98740(0000) GS:ffff8881f6e80000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007f8364005d68 CR3: 0000000123c80000 CR4: 0000000000350ef0
-
-This reproduces eventually with an SMB mount and two shells running
-these loops concurrently
-
-- while true; do
-      cd ~; sleep 1;
-      for i in {1..3}; do cd /mnt/test/subdir;
-          echo $PWD; sleep 1; cd ..; echo $PWD; sleep 1;
-      done;
-      echo ...;
-  done
-- while true; do
-      iptables -F OUTPUT; mount -t cifs -a;
-      for _ in {0..2}; do ls /mnt/test/subdir/ | wc -l; done;
-      iptables -I OUTPUT -p tcp --dport 445 -j DROP;
-      sleep 10
-      echo "unmounting"; umount -l -t cifs -a; echo "done unmounting";
-      sleep 20
-      echo "recovering"; iptables -F OUTPUT;
-      sleep 10;
-  done
-
-Fixes: ebe98f1447bb ("cifs: enable caching of directories for which a lease is held")
-Fixes: 5c86919455c1 ("smb: client: fix use-after-free in smb2_query_info_compound()")
-Cc: stable@vger.kernel.org
-Signed-off-by: Paul Aurich <paul@darkrain42.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Reviewed-by: Rodrigo Siqueira <rodrigo.siqueira@amd.com>
+Signed-off-by: Jerry Zuo <jerry.zuo@amd.com>
+Signed-off-by: Alex Hung <alex.hung@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/cached_dir.c | 27 ++++++++++++++-------------
- 1 file changed, 14 insertions(+), 13 deletions(-)
+ .../gpu/drm/amd/display/dc/clk_mgr/dce110/dce110_clk_mgr.c   | 2 +-
+ drivers/gpu/drm/amd/display/dc/core/dc_link_dp.c             | 2 +-
+ drivers/gpu/drm/amd/display/dc/dce110/dce110_hw_sequencer.c  | 5 +++--
+ drivers/gpu/drm/amd/display/dc/dcn10/dcn10_hubp.c            | 3 ++-
+ drivers/gpu/drm/amd/display/dc/dcn10/dcn10_hw_sequencer.c    | 4 ++--
+ drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hubp.c            | 3 ++-
+ drivers/gpu/drm/amd/display/dc/dcn31/dcn31_hwseq.c           | 4 ++--
+ 7 files changed, 13 insertions(+), 10 deletions(-)
 
-diff --git a/fs/smb/client/cached_dir.c b/fs/smb/client/cached_dir.c
-index bac6ceccaaa9c..194cf24f52df9 100644
---- a/fs/smb/client/cached_dir.c
-+++ b/fs/smb/client/cached_dir.c
-@@ -57,6 +57,16 @@ static struct cached_fid *find_or_create_cached_dir(struct cached_fids *cfids,
- 	list_add(&cfid->entry, &cfids->entries);
- 	cfid->on_list = true;
- 	kref_get(&cfid->refcount);
-+	/*
-+	 * Set @cfid->has_lease to true during construction so that the lease
-+	 * reference can be put in cached_dir_lease_break() due to a potential
-+	 * lease break right after the request is sent or while @cfid is still
-+	 * being cached, or if a reconnection is triggered during construction.
-+	 * Concurrent processes won't be to use it yet due to @cfid->time being
-+	 * zero.
-+	 */
-+	cfid->has_lease = true;
-+
- 	spin_unlock(&cfids->cfid_list_lock);
- 	return cfid;
- }
-@@ -168,11 +178,11 @@ int open_cached_dir(unsigned int xid, struct cifs_tcon *tcon,
- 		return -ENOENT;
- 	}
- 	/*
--	 * At this point we either have a lease already and we can just
--	 * return it. If not we are guaranteed to be the only thread accessing
--	 * this cfid.
-+	 * Return cached fid if it is valid (has a lease and has a time).
-+	 * Otherwise, it is either a new entry or laundromat worker removed it
-+	 * from @cfids->entries.  Caller will put last reference if the latter.
+diff --git a/drivers/gpu/drm/amd/display/dc/clk_mgr/dce110/dce110_clk_mgr.c b/drivers/gpu/drm/amd/display/dc/clk_mgr/dce110/dce110_clk_mgr.c
+index bce53ab36f3e5..d50b9440210e4 100644
+--- a/drivers/gpu/drm/amd/display/dc/clk_mgr/dce110/dce110_clk_mgr.c
++++ b/drivers/gpu/drm/amd/display/dc/clk_mgr/dce110/dce110_clk_mgr.c
+@@ -218,7 +218,7 @@ void dce11_pplib_apply_display_requirements(
+ 	 * , then change minimum memory clock based on real-time bandwidth
+ 	 * limitation.
  	 */
--	if (cfid->has_lease) {
-+	if (cfid->has_lease && cfid->time) {
- 		*ret_cfid = cfid;
- 		kfree(utf16_path);
- 		return 0;
-@@ -263,15 +273,6 @@ int open_cached_dir(unsigned int xid, struct cifs_tcon *tcon,
+-	if ((dc->ctx->asic_id.chip_family == FAMILY_AI) &&
++	if (dc->bw_vbios && (dc->ctx->asic_id.chip_family == FAMILY_AI) &&
+ 	     ASICREV_IS_VEGA20_P(dc->ctx->asic_id.hw_internal_rev) && (context->stream_count >= 2)) {
+ 		pp_display_cfg->min_memory_clock_khz = max(pp_display_cfg->min_memory_clock_khz,
+ 							   (uint32_t) div64_s64(
+diff --git a/drivers/gpu/drm/amd/display/dc/core/dc_link_dp.c b/drivers/gpu/drm/amd/display/dc/core/dc_link_dp.c
+index f87c6174b7040..fa0ae49fa22b0 100644
+--- a/drivers/gpu/drm/amd/display/dc/core/dc_link_dp.c
++++ b/drivers/gpu/drm/amd/display/dc/core/dc_link_dp.c
+@@ -3330,7 +3330,7 @@ bool dp_verify_link_cap_with_retries(
  
- 	smb2_set_related(&rqst[1]);
+ 		memset(&link->verified_link_cap, 0,
+ 				sizeof(struct dc_link_settings));
+-		if (!dc_link_detect_sink(link, &type) || type == dc_connection_none) {
++		if (link->link_enc && (!dc_link_detect_sink(link, &type) || type == dc_connection_none)) {
+ 			link->verified_link_cap = fail_safe_link_settings;
+ 			break;
+ 		} else if (dp_verify_link_cap(link, known_limit_link_setting,
+diff --git a/drivers/gpu/drm/amd/display/dc/dce110/dce110_hw_sequencer.c b/drivers/gpu/drm/amd/display/dc/dce110/dce110_hw_sequencer.c
+index c542d2ab9160e..d2e71bf6b8f52 100644
+--- a/drivers/gpu/drm/amd/display/dc/dce110/dce110_hw_sequencer.c
++++ b/drivers/gpu/drm/amd/display/dc/dce110/dce110_hw_sequencer.c
+@@ -963,7 +963,7 @@ void dce110_edp_backlight_control(
+ {
+ 	struct dc_context *ctx = link->ctx;
+ 	struct bp_transmitter_control cntl = { 0 };
+-	uint8_t panel_instance;
++	uint8_t panel_instance = 0;
+ 	unsigned int pre_T11_delay = OLED_PRE_T11_DELAY;
+ 	unsigned int post_T7_delay = OLED_POST_T7_DELAY;
  
--	/*
--	 * Set @cfid->has_lease to true before sending out compounded request so
--	 * its lease reference can be put in cached_dir_lease_break() due to a
--	 * potential lease break right after the request is sent or while @cfid
--	 * is still being cached.  Concurrent processes won't be to use it yet
--	 * due to @cfid->time being zero.
--	 */
--	cfid->has_lease = true;
--
- 	rc = compound_send_recv(xid, ses, server,
- 				flags, 2, rqst,
- 				resp_buftype, rsp_iov);
+@@ -1016,7 +1016,8 @@ void dce110_edp_backlight_control(
+ 	 */
+ 	/* dc_service_sleep_in_milliseconds(50); */
+ 		/*edp 1.2*/
+-	panel_instance = link->panel_cntl->inst;
++	if (link->panel_cntl)
++		panel_instance = link->panel_cntl->inst;
+ 
+ 	if (cntl.action == TRANSMITTER_CONTROL_BACKLIGHT_ON) {
+ 		if (!link->dc->config.edp_no_power_sequencing)
+diff --git a/drivers/gpu/drm/amd/display/dc/dcn10/dcn10_hubp.c b/drivers/gpu/drm/amd/display/dc/dcn10/dcn10_hubp.c
+index a142a00bc4326..3bedc96714ceb 100644
+--- a/drivers/gpu/drm/amd/display/dc/dcn10/dcn10_hubp.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn10/dcn10_hubp.c
+@@ -749,7 +749,8 @@ bool hubp1_is_flip_pending(struct hubp *hubp)
+ 	if (flip_pending)
+ 		return true;
+ 
+-	if (earliest_inuse_address.grph.addr.quad_part != hubp->request_address.grph.addr.quad_part)
++	if (hubp &&
++	    earliest_inuse_address.grph.addr.quad_part != hubp->request_address.grph.addr.quad_part)
+ 		return true;
+ 
+ 	return false;
+diff --git a/drivers/gpu/drm/amd/display/dc/dcn10/dcn10_hw_sequencer.c b/drivers/gpu/drm/amd/display/dc/dcn10/dcn10_hw_sequencer.c
+index b120aa67d26c1..e2e8823f1371f 100644
+--- a/drivers/gpu/drm/amd/display/dc/dcn10/dcn10_hw_sequencer.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn10/dcn10_hw_sequencer.c
+@@ -1490,7 +1490,7 @@ void dcn10_init_hw(struct dc *dc)
+ 		dc->clk_mgr->funcs->init_clocks(dc->clk_mgr);
+ 
+ 	/* Align bw context with hw config when system resume. */
+-	if (dc->clk_mgr->clks.dispclk_khz != 0 && dc->clk_mgr->clks.dppclk_khz != 0) {
++	if (dc->clk_mgr && dc->clk_mgr->clks.dispclk_khz != 0 && dc->clk_mgr->clks.dppclk_khz != 0) {
+ 		dc->current_state->bw_ctx.bw.dcn.clk.dispclk_khz = dc->clk_mgr->clks.dispclk_khz;
+ 		dc->current_state->bw_ctx.bw.dcn.clk.dppclk_khz = dc->clk_mgr->clks.dppclk_khz;
+ 	}
+@@ -1630,7 +1630,7 @@ void dcn10_init_hw(struct dc *dc)
+ 		REG_UPDATE(DCFCLK_CNTL, DCFCLK_GATE_DIS, 0);
+ 	}
+ 
+-	if (dc->clk_mgr->funcs->notify_wm_ranges)
++	if (dc->clk_mgr && dc->clk_mgr->funcs->notify_wm_ranges)
+ 		dc->clk_mgr->funcs->notify_wm_ranges(dc->clk_mgr);
+ }
+ 
+diff --git a/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hubp.c b/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hubp.c
+index aa252dc263267..4040ec51ac578 100644
+--- a/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hubp.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hubp.c
+@@ -925,7 +925,8 @@ bool hubp2_is_flip_pending(struct hubp *hubp)
+ 	if (flip_pending)
+ 		return true;
+ 
+-	if (earliest_inuse_address.grph.addr.quad_part != hubp->request_address.grph.addr.quad_part)
++	if (hubp &&
++	    earliest_inuse_address.grph.addr.quad_part != hubp->request_address.grph.addr.quad_part)
+ 		return true;
+ 
+ 	return false;
+diff --git a/drivers/gpu/drm/amd/display/dc/dcn31/dcn31_hwseq.c b/drivers/gpu/drm/amd/display/dc/dcn31/dcn31_hwseq.c
+index d4ee533deff32..2ef1c227f1051 100644
+--- a/drivers/gpu/drm/amd/display/dc/dcn31/dcn31_hwseq.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn31/dcn31_hwseq.c
+@@ -281,10 +281,10 @@ void dcn31_init_hw(struct dc *dc)
+ 	if (!dcb->funcs->is_accelerated_mode(dcb) && dc->res_pool->hubbub->funcs->init_watermarks)
+ 		dc->res_pool->hubbub->funcs->init_watermarks(dc->res_pool->hubbub);
+ 
+-	if (dc->clk_mgr->funcs->notify_wm_ranges)
++	if (dc->clk_mgr && dc->clk_mgr->funcs->notify_wm_ranges)
+ 		dc->clk_mgr->funcs->notify_wm_ranges(dc->clk_mgr);
+ 
+-	if (dc->clk_mgr->funcs->set_hard_max_memclk && !dc->clk_mgr->dc_mode_softmax_enabled)
++	if (dc->clk_mgr && dc->clk_mgr->funcs->set_hard_max_memclk && !dc->clk_mgr->dc_mode_softmax_enabled)
+ 		dc->clk_mgr->funcs->set_hard_max_memclk(dc->clk_mgr);
+ 
+ 	if (dc->res_pool->hubbub->funcs->force_pstate_change_control)
 -- 
 2.53.0
 
