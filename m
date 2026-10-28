@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216557;
-	b=vRMJyqVE882fJxMxSJjLv2BKrUhiLJuM/vSGq1eMZIL4/h6/YY/J7h2YbetcfQmXbNsk
-	 tGMEfWwr1I/UQeNqViMiUkubnIxuObSo6TPvdfIqxiPPJe+GVEBZYAibiW3LdSSH/3oTg
-	 VdFPaR7yEDcZttDc+GeI65vgAMYG79txUU+SaO84FCSK4SN5MxCQJ/HgT9VD1J5Dh54rs
-	 WqVxJPSmzaX/C5Ek6UmGk9m+YesRzQJqXp8f13HRaVorZuZqAK2H/zCrbFEgNGV8MHyks
-	 XMMI1uJsjibBZfTrBGYOs9Srqw9a8WCd/CciN1ZphFJmRUNRFGgZt00TT6heKUKqmcw==
+	t=1793216560;
+	b=yY5jgp42T8pPQ2dnbhe7EXgm0dkpqJ9GCzMAsW+ELBvwmislp2QSLgpBQ7QapuEm5usC
+	 fITlyBPDI/IR79HgQDkB77m0h8VIm4oMv4XMBk9G11LdLJ3ULP93L3TtTmxwJ2s4DMMvk
+	 bz4xw6n8/i5E77585aITFiZ/9JpfzBvJ/V7hsUz/769DIIRO9J9t5dEyhh8aBkqxPw3Gk
+	 mCySAf3xBOomAranKozrPyHn8paLY0MHRiy0kytho/yETDYMju+6owfcH68N+6E8U+aFl
+	 RPjv4DXoJNOgIVCaO2wZyijbJjEjF12FdsFdY7hyZOKOgiWmx5FezQAdqH3bFB1rVNQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216557;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216560;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=tWCe9G1oOKxLE9zOsnx6a/Y0GQ9BEzXKwGR01EyVheI=;
-	b=RwbUQ0q0KZi7CyhO3BMhSxFn252714on6UBfklruMaR/Jfgq3CMZQ0byatAcEU3LVKlW
-	 rqdU1xBMyMuuZNkyUTcu91CEnbiIUex66f4KNMu1BEI4RQ8i9BJ25yxwpAhlH/FdwxpRB
-	 b29osgjEHPyiJyJp06MiMUErzdtqwyhgWP7hTmEQ434i6LjJ6l01N0114YJhMWmOwETPg
-	 8Dore0bRsikJ1/gCLk3RxYkMoePEF4Kv1OUD2b1wtct65pNoKCVhQh2r/zLH2kE8wDvj6
-	 WcbEtLIDE101y00E/XTo1kQTpM0Hf7rPpg5Ajw4IB3Z6eYCakow8gXLNz3QLL8n84Ew==
+	bh=C6Ukv/MD8I1Ki65001kAHzzAs3YdiVYyeJWXwZTyVR0=;
+	b=K0uqbr3W2w8wEwQM5x160a8yQWn1UlHSxtckOVuLU+HZ+JpS2PkE4GK+FhT9t+Ufxjkj
+	 QAyB4vgtmOQATmRFg3qKROdCtQ3KVkO1d1KXzFdkRJwE0mXptSjEz2JWLhARsH7sX9M2m
+	 vouEP3UrzTBwu8pJMSZy8v57gAcUC76iF8bsWkZL/y2hN5ccx0jrgtPFYDWFSd4SMdsgC
+	 3kD4tJ3b94JzjNPXGrPtZ/PooA/JIFD1MMwtB+nkHxUx2bJ10dyyDaaq627r8QEJkDTuA
+	 qV+PgzsA1e+aO8vvfzAQ8Op8ynhEDvzImcmtxYyaUm2g3X15OqfFlZzVeIsTIOY+9GA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XVFjrMWz;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qM4VILZu;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AF47606A31A;
-	Wed, 28 Oct 2026 19:42:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74368606A31D;
+	Wed, 28 Oct 2026 19:42:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XVFjrMWz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB6121F01825;
-	Wed, 28 Oct 2026 19:42:36 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qM4VILZu
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C55D21F01825;
+	Wed, 28 Oct 2026 19:42:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216557;
-	bh=tWCe9G1oOKxLE9zOsnx6a/Y0GQ9BEzXKwGR01EyVheI=;
+	s=korg; t=1793216560;
+	bh=C6Ukv/MD8I1Ki65001kAHzzAs3YdiVYyeJWXwZTyVR0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XVFjrMWzQURF8IrE0cQkZxyFalqgc/plphd74LTK9DEDzNtIbapbsy6RBWqPDSJC3
-	 D33RDx24Fj1NTPeDhJDqP/8+d1y1gHIu68Gtv3TQgD1OJsLjrXYUnx3ga2db9aYIRZ
-	 gEndqZ1fT7sFI9dIVaMpGS9kD8V46sZ9ddU70EcE=
+	b=qM4VILZuu4kSe4M+Oz9FQkEmlpVBHlfrLUcpWm1hN/SPWM3Bl7LN7KKz7JhgdGeLW
+	 MTxHl/o69jCKgAknhVsirYySTZF30mzAxFEpYQJQP7bj9zwYpbjB8TCkPIYsfed+X7
+	 rQGMGtsa26XQaDkrIrvzfv4UInKBaCRMD5HXH9UQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael-CY Lee <michael-cy.lee@mediatek.com>,
-	Felix Fietkau <nbd@nbd.name>,
+	Abdun Nihaal <nihaal@cse.iitm.ac.in>,
+	Takashi Sakamoto <o-takashi@sakamocchi.jp>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1596/1887] wifi: mt76: fix non-AQL packet accounting for MLO stations
-Date: Wed, 28 Oct 2026 18:01:32 +0100
-Message-ID: <20261028170535.789536082@linuxfoundation.org>
+Subject: [PATCH 6.1 1555/1887] firewire: core: fix memory leak in error path of build_tree()
+Date: Wed, 28 Oct 2026 18:00:51 +0100
+Message-ID: <20261028170534.852151636@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,43 +68,132 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael-CY Lee <michael-cy.lee@mediatek.com>
+From: Takashi Sakamoto <o-takashi@sakamocchi.jp>
 
-[ Upstream commit 8ae659743ba936b22ecb4620815887728e2820d6 ]
+[ Upstream commit 05bfb1327dc5fb61528bab31cd8f0c1e4bddec23 ]
 
-__mt76_tx_queue_skb() overrides the wcid passed by the driver with
-sta->drv_priv, so the wcid might incorrectly be changed after TX,
-causing wcid->non_aql_packets to be counted on the wrong wcid. For
-example, on the AP side, if a station's setup link is the 5G link and
-the station uses 2G to transmit a frame, the value of non_aql_packets
-is increased on the 5G wcid but decreased on the 2G wcid. Once the
-inflated counter exceeds MT_MAX_NON_AQL_PKT, the TX scheduler
-permanently refuses to service the station.
+In the error path of build_tree(), node instances can remain in the local
+linked list when the function returns.
 
-Drop the reassignment and account on the wcid used for transmission.
-This also records the actual wcid in the queue entry.
+Whenever an invalid value is detected in the self ID sequence, each
+allocated node instance is either an entry in the linked list or an
+entry in the ports array of its parent node. Therefore, the allocate
+node instances can be safely released by traversing the linked list from
+its head.
 
-Fixes: e1378e5228aa ("mt76: rely on AQL for burst size limits on tx queueing")
-Signed-off-by: Michael-CY Lee <michael-cy.lee@mediatek.com>
-Link: https://patch.msgid.link/20260722082610.2699628-4-nbd@nbd.name
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Release the remaining node instances with for_each_fw_node() before
+returning to the caller.
+
+Fixes: 3038e353cfaf ("firewire: Add core firewire stack.")
+Reported-by: Abdun Nihaal <nihaal@cse.iitm.ac.in>
+Link: https://lore.kernel.org/all/20260727095955.104972-1-nihaal@cse.iitm.ac.in/
+Link: https://lore.kernel.org/r/20260811120928.700577-4-o-takashi@sakamocchi.jp
+Signed-off-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/tx.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/firewire/core-topology.c | 40 +++++++++++++++++++++-----------
+ 1 file changed, 26 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/tx.c b/drivers/net/wireless/mediatek/mt76/tx.c
-index 4482e4ff78044..3551a013208d3 100644
---- a/drivers/net/wireless/mediatek/mt76/tx.c
-+++ b/drivers/net/wireless/mediatek/mt76/tx.c
-@@ -298,7 +298,6 @@ __mt76_tx_queue_skb(struct mt76_phy *phy, int qid, struct sk_buff *skb,
- 	if (idx < 0 || !sta)
- 		return idx;
+diff --git a/drivers/firewire/core-topology.c b/drivers/firewire/core-topology.c
+index f40c815343812..ddcc3fb6cfbd4 100644
+--- a/drivers/firewire/core-topology.c
++++ b/drivers/firewire/core-topology.c
+@@ -161,6 +161,17 @@ static inline struct fw_node *fw_node(struct list_head *l)
+ 	return list_entry(l, struct fw_node, link);
+ }
  
--	wcid = (struct mt76_wcid *)sta->drv_priv;
- 	q->entry[idx].wcid = wcid->idx;
++typedef void (*fw_node_callback_t)(struct fw_card *card, struct fw_node *node,
++				   struct fw_node *parent);
++
++static void for_each_fw_node(struct fw_card *card, struct fw_node *root,
++			     fw_node_callback_t callback);
++
++static void free_fw_node(struct fw_card *card, struct fw_node *node, struct fw_node *parent)
++{
++	fw_node_put(node);
++}
++
+ /*
+  * This function builds the tree representation of the topology given
+  * by the self IDs from the latest bus reset.  During the construction
+@@ -193,19 +204,19 @@ static struct fw_node *build_tree(struct fw_card *card,
  
- 	if (!non_aql)
+ 		if (next_sid == NULL) {
+ 			fw_err(card, "inconsistent extended self IDs\n");
+-			return NULL;
++			goto error;
+ 		}
+ 
+ 		q = *sid;
+ 		if (phy_id != SELF_ID_PHY_ID(q)) {
+ 			fw_err(card, "PHY ID mismatch in self ID: %d != %d\n",
+ 			       phy_id, SELF_ID_PHY_ID(q));
+-			return NULL;
++			goto error;
+ 		}
+ 
+ 		if (child_port_count > stack_depth) {
+ 			fw_err(card, "topology stack underflow\n");
+-			return NULL;
++			goto error;
+ 		}
+ 
+ 		/*
+@@ -223,7 +234,7 @@ static struct fw_node *build_tree(struct fw_card *card,
+ 		node = fw_node_create(q, port_count, card->color);
+ 		if (node == NULL) {
+ 			fw_err(card, "out of memory while building topology\n");
+-			return NULL;
++			goto error;
+ 		}
+ 
+ 		if (phy_id == (card->node_id & 0x3f))
+@@ -264,6 +275,11 @@ static struct fw_node *build_tree(struct fw_card *card,
+ 			}
+ 		}
+ 
++		/* Pop the child nodes off the stack and push the new node. */
++		__list_del(h->prev, &stack);
++		list_add_tail(&node->link, &stack);
++		stack_depth += 1 - child_port_count;
++
+ 		/*
+ 		 * Check that the node reports exactly one parent
+ 		 * port, except for the root, which of course should
+@@ -273,14 +289,9 @@ static struct fw_node *build_tree(struct fw_card *card,
+ 		    (next_sid < end && parent_count != 1)) {
+ 			fw_err(card, "parent port inconsistency for node %d: "
+ 			       "parent_count=%d\n", phy_id, parent_count);
+-			return NULL;
++			goto error;
+ 		}
+ 
+-		/* Pop the child nodes off the stack and push the new node. */
+-		__list_del(h->prev, &stack);
+-		list_add_tail(&node->link, &stack);
+-		stack_depth += 1 - child_port_count;
+-
+ 		if (node->phy_speed == SCODE_BETA &&
+ 		    parent_count + child_port_count > 1)
+ 			beta_repeaters_present = true;
+@@ -304,12 +315,13 @@ static struct fw_node *build_tree(struct fw_card *card,
+ 	card->beta_repeaters_present = beta_repeaters_present;
+ 
+ 	return local_node;
++error:
++	++card->color;
++	list_for_each_entry_safe(node, child, &stack, link)
++		for_each_fw_node(card, node, free_fw_node);
++	return NULL;
+ }
+ 
+-typedef void (*fw_node_callback_t)(struct fw_card * card,
+-				   struct fw_node * node,
+-				   struct fw_node * parent);
+-
+ static void for_each_fw_node(struct fw_card *card, struct fw_node *root,
+ 			     fw_node_callback_t callback)
+ {
 -- 
 2.53.0
 
