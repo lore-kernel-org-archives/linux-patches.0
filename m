@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793212894;
-	b=NyNsO+jPCk/gZsNgHgDtt8VQ8+GcaFPpLqivI+QIbRgXAv0A5XyesirrC37ImktqprE+
-	 AVMBJSd+gw2rsosWQz1Pl3VhiuCcQsvh/JHbJIU1iu48vzy9ohKE2iIQDRVrtnJjXO+1Z
-	 dADEE9nKUnXPJasxE8FnlezxgIpoEVKvrrVEUwCino3/OZUpO6AGqAUqrAN9qpzrr6z1a
-	 v6x5PD1++WkcFuY0lo4WWTTp5hPa8m7ej3Tew8fJH1jey5tw1tGaCChyXeYMIMyFHAass
-	 HpF8Nhw0YUvHVYp4aGeML8h/3POBFd3s4rDyYEe4zB5Qimd2G0Qdlb5/4gKLpY6B8zQ==
+	t=1793212897;
+	b=wmSEq+Rsi4g3WVvI/LUKw2N3dbvtu1Mq9ugIwKMWB3Pg/eO4Pmg5h5PJWpbAfzhzaAGD
+	 GizZZ+9VpLmiWKGdaf03nkT2oZPBJ9+7G4ZpLltOp/jyGTOXigDulWXrjUticRElmn5eY
+	 uBxO8nxJnugGx8KpxFCMlIA2okZRxzVk0QVgrLe63bJGuvhGRbgXbdOPeAxEL9TYJioO8
+	 7YwquVzgT8vkQ4C4D7NuSlCQn7jZuYL/WRUK6sIWTcxWbCggZ4a/G+Y5bX6XJAvoal3Xl
+	 alWsH1fpPsVuOVsLEtJnHhTVYZRUTQ5/HwehRw7YYoron/xdTlf9fcAAbZJSwlzIkQg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793212894;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793212897;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=leR0d2+VWQBAlj5FKkhaDY0ZR3MstCMudAmjp4y0PfA=;
-	b=LbBYjnNnajtHt20V1BX85yCwhBM7rl8/noBa4lBoRWdMuZjNYGwqEs/8/U+beN7KgyBj
-	 OsvKkB7B2gVK59zHdcsfdq+YIqzXhvNFA+w2t+5qkx0IT6Qk1QRNdve3ofK9Cqs3kMzov
-	 MSwvQ14UzvKMcwnS1TNtMJe2BKw8mPbLIDVt9kYOcLDGMkPAINpZJh1mAQi+g0yeC3IIu
-	 2gEAraQN4veZceDfH3iPY97ahuYL07UyDt62Y6+JyBtYsfor43pPoGAO9jJS1BPhg5BJM
-	 J3WH86zauDGmpAsit/u5cr1FbJbclTI3sP0GuWCL7KRPK8Wl6xB5FqIilWJVkVCwExw==
+	bh=G1APIT10zpJXj3nnizL5wd9yn6iZ6n8BRSfoZeqyado=;
+	b=BsPqhvGA1DvFTigQpt/zZWrN+6JTkDS5KkBM2gc6p8dJYfT4bU8hn21gEW8+ZWhUfXLI
+	 cCK0KtUC4Wwgg6YUYC8nHT8jMIoaK0QGcI8EOFkSgOH0nH0p68391+LHkk5vZT3YeqEjA
+	 I99sL+vVW2V0zh427zt41lIYwhX11UN68l7ZLx/ZlrPjEDTgpZq1MK+eM+Qc2nTVz2x2y
+	 36Ptcrdexpg8+BP4NzbRdG9wZdUWF+twGr5/aN2y4g/1gCMFBJlYQSvPK+U8h0h6gwMvc
+	 RYW+5Rz5ZBRuMlwNeBFBJ4oQNYD6i38Tl9XzWTFegIPbmz9s/jDpD41YUCNhniBfHJA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DmoQ8ZF1;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uSQKQiat;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4757F606A31A;
-	Wed, 28 Oct 2026 18:41:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2692E606A31D;
+	Wed, 28 Oct 2026 18:41:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DmoQ8ZF1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CC7B1F01825;
-	Wed, 28 Oct 2026 18:41:33 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uSQKQiat
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 307A61F01825;
+	Wed, 28 Oct 2026 18:41:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793212893;
-	bh=leR0d2+VWQBAlj5FKkhaDY0ZR3MstCMudAmjp4y0PfA=;
+	s=korg; t=1793212896;
+	bh=G1APIT10zpJXj3nnizL5wd9yn6iZ6n8BRSfoZeqyado=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DmoQ8ZF1BxRDLiA9dFAdl9fmxT2slaoUi47DXlbbtQqsybfyXIf1uQ+ORQfd+gd88
-	 2IrT10kuOXqrAO5IjbrkcaaU1nDjYvSBNfVQlUYtJiMulV3RPSwxK4uovF9CWYVN9+
-	 Iv88i51Cmpl5lLfjCTG1JnL2cq5Z3LQLjeLc0gJY=
+	b=uSQKQiat7/PG+XmUX1aMGd26zUgwXtpZFwGF/guEMlcGjd/zpbkBYS+K25TOyIens
+	 QfTkgt77n+StKwtmzEXgx8QtxfMFoHKgMsSMg5tthRBSQ/1XJKgQDUIVL6ppt3JmG8
+	 Ioo6LEBZnviSWqRnChao+f170+fqylE2+Psw5hLE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Stanislaw Gruszka <stf_xl@wp.pl>,
+	Zhao Li <enderaoelyther@gmail.com>,
 	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.1 0314/1887] wifi: iwlegacy: 3945: free EEPROM data on remove
-Date: Wed, 28 Oct 2026 17:40:10 +0100
-Message-ID: <20261028170506.373615971@linuxfoundation.org>
+Subject: [PATCH 6.1 0315/1887] wifi: mac80211: drain PS delivery work during station teardown
+Date: Wed, 28 Oct 2026 17:40:11 +0100
+Message-ID: <20261028170506.396285746@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,42 +67,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Zhao Li <enderaoelyther@gmail.com>
 
-commit f8ebe286394c0bbb4a6dbacb182a34ab6376922d upstream.
+commit 67a9e80c3ca20c9044cd6ee72cd6278dd19b5023 upstream.
 
-il3945_pci_probe() calls il_eeprom_init(), which allocates memory for
-the EEPROM data. The probe failure paths release this allocation with
-il_eeprom_free(), but the remove path does not free it after a
-successful probe.
+Removing an AP or mesh station can notify the driver and wake TXQs after
+the station has already been removed from the driver, and can update
+num_sta_ps and the power-save queues after station cleanup has purged
+them.
 
-As a result, the EEPROM data is leaked when the PCI device is removed.
+sta_deliver_ps_frames() tests sta->dead only before it starts delivery. A
+worker that passes that test can be delayed while teardown sets sta->dead
+and removes the station from the driver; when it resumes it still runs the
+full delivery.
 
-Free the EEPROM data in il3945_pci_remove() before releasing the
-mac80211 hardware structure.
+The existing cancel_work_sync() sits near the end of
+__cleanup_single_sta(), after the final driver state transition and after
+PS accounting and queue purging, so it drains the worker only once the
+state it has to protect has already changed. Before commit d34ba2168a3c
+("mac80211: don't delay station destruction") cleanup was deferred
+through the same ordered workqueue as the delivery work, which kept the
+two ordered.
 
-This issue was found by manual code inspection.
+Cancel the work after setting sta->dead and before moving the driver
+state, and move the existing cancellation to the start of
+__cleanup_single_sta(). The first drain closes the driver-lifetime window;
+driver callbacks during the remaining state transitions can still queue
+drv_deliver_wk through ieee80211_sta_block_awake(), so retain the second
+drain at the start of __cleanup_single_sta(). That drain also covers
+insertion failures, which reach cleanup without setting sta->dead.
 
-Fixes: 073d3f5f1b3b ("iwlwifi: changing EEPROM layout handling")
+Fixes: d34ba2168a3c ("mac80211: don't delay station destruction")
 Cc: stable@vger.kernel.org
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Acked-by: Stanislaw Gruszka <stf_xl@wp.pl>
-Link: https://patch.msgid.link/20260916073736.2952028-1-lgs201920130244@gmail.com
+Assisted-by: LLM sparse smatch coccinelle kasan
+Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
+Link: https://patch.msgid.link/20260916113735.31029-1-enderaoelyther@gmail.com
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/intel/iwlegacy/3945-mac.c |    1 +
- 1 file changed, 1 insertion(+)
+ net/mac80211/sta_info.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/net/wireless/intel/iwlegacy/3945-mac.c
-+++ b/drivers/net/wireless/intel/iwlegacy/3945-mac.c
-@@ -3845,6 +3845,7 @@ il3945_pci_remove(struct pci_dev *pdev)
+--- a/net/mac80211/sta_info.c
++++ b/net/mac80211/sta_info.c
+@@ -122,6 +122,8 @@ static void __cleanup_single_sta(struct
+ 	struct ieee80211_local *local = sdata->local;
+ 	struct ps_data *ps;
  
- 	il_free_channel_map(il);
- 	il_free_geos(il);
-+	il_eeprom_free(il);
- 	kfree(il->scan_cmd);
- 	dev_kfree_skb(il->beacon_skb);
- 	ieee80211_free_hw(il->hw);
++	cancel_work_sync(&sta->drv_deliver_wk);
++
+ 	if (test_sta_flag(sta, WLAN_STA_PS_STA) ||
+ 	    test_sta_flag(sta, WLAN_STA_PS_DRIVER) ||
+ 	    test_sta_flag(sta, WLAN_STA_PS_DELIVER)) {
+@@ -162,8 +164,6 @@ static void __cleanup_single_sta(struct
+ 	if (ieee80211_vif_is_mesh(&sdata->vif))
+ 		mesh_sta_cleanup(sta);
+ 
+-	cancel_work_sync(&sta->drv_deliver_wk);
+-
+ 	/*
+ 	 * Destroy aggregation state here. It would be nice to wait for the
+ 	 * driver to finish aggregation stop and then clean up, but for now
+@@ -1303,6 +1303,8 @@ static void __sta_info_destroy_part2(str
+ 
+ 	sta->dead = true;
+ 
++	cancel_work_sync(&sta->drv_deliver_wk);
++
+ 	local->num_sta--;
+ 	local->sta_generation++;
+ 
 
 
