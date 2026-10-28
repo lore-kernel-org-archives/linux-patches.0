@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215378;
-	b=XpyEGw7d2V7F2D3D4/YYPr6tO9kS1JHk421VmU8aP2oHw/7RDboesbuIlyPLsJaquEea
-	 DsS5zSrrP3zZRxVbF62eBRPSE2C3+GVA8Neo0umzFiCJXN4CYl06TlVGzgvfednnxhUAs
-	 7dGYRAbB3H3FetYGoAaQhgVWPrkx3WatV9YowQQ09VxgqJ+RSRfMGI8ZEBfT0OebmYYdG
-	 BHERTOO180uSgNW9o+rtN1iYVyWF1U5UBt5Ymvlo94TVfc9AUni42YApVIejxFA3tn5YY
-	 MRLO4JCR7W0DTng8vjEJcsUC+UTUo4sjehi2R7qlq1ZeVVdYM8WIhqZkZ/c6LE/+z7g==
+	t=1793215381;
+	b=3WnkfgIxNDKsEummndsAchUFIbqCAZ6Hfqwfs6ZBcrNYvpY5qTalcpfSJpXimiWqeMee
+	 neZfidpG0BQWjcUdGePbrODzxPoBSsYw7C4bxe0a8n9QObavpHPe1Ai+WbnBha2SR2DTG
+	 2xOU/Gqf0sfJdqva2bJUXPDiri29q8sJMRxucQytdNb8eYpo3zEOjEgW3s7+k7Vt+/1Re
+	 E0UV1RphPRxl76TCEXg2k+b0WUJ9880RuNeVZJRy5XhL5XUPhWuRn0QSrYSVdLjDv1pCx
+	 Ghpqd8dyeNIvrNBQQyX+Thjw2nJ5HJKFiBd9hVlouo3VE3d9hQ+Kf8Hbdq2fGduHxVQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215378;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215381;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=d2/RB31L4hzFHcxozl+74IHT3c0oXOKpqaoO9cx9xXE=;
-	b=c37Zlfto1uPZJaz57fYfCWReDdHJyStOzByjGANRxcROcQNWwyaivJ5TBBcRgFJsehkS
-	 VsqQaw1kpLMqDQbLy1fXQ2VwFnF1lAcKylhER1yovVEbwcUr5bx+S4dSL8YJLrQOOJztk
-	 ozDD1jqPIrZ+9VTH5nVUtyi/bbDZQD4XDZil73Z5FwMW03EEmJWGv+zKyC6Q+rrFlHxC/
-	 1a58kygKSB9MHrWsn7DkDZqsnqiLt3KjCdnqWCyLTtUO0zQ9RedragL7kbg9O9NaTnvWx
-	 0LoBt8KLkSSOyVgbPSOv1x6MXmiQ3eGPREXW3nezQf/VyuTFUBNJOXYkpEInKcU3bMA==
+	bh=ukASllKf1TcKG8mxvAky2npVvLCWIjfFu8E7VMNxtXM=;
+	b=xhBEVTBMixN2UQC1Jjvi4YBvolNmSSI0y5CJneJOoEedFY4OaGw8EZmxFKbMoi+pL/yV
+	 /7DjqP/rCBvWwVz19EhSfpkALau9CuDtr3BVMEwULNFxDVyHCld1zwQ1fu1Qy6TgI/OcX
+	 Y+41j+8uT6pGjUp0dJECwbPbNW/grdQBWep5EHBLsGsYKAo5Ayjboq79MtITkH+HQaHVQ
+	 oXHx3CG/S5QThMWnq/Bj4B35VYVDaB/Op7EVLmfRf3XPBvl0jeMD3+7u0zzHIerVimF5+
+	 DZh8YAXdkTVtO+S7js0a+LF+y8sYmSMbm6by99EDz/apZYPUYiOSNRj+kcQpaxpbkqg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=o7jqfGRd;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fLZEzE8U;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F235606A324;
-	Wed, 28 Oct 2026 19:22:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DC68606A31A;
+	Wed, 28 Oct 2026 19:23:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=o7jqfGRd
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BADCB1F01828;
-	Wed, 28 Oct 2026 19:22:57 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fLZEzE8U
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C6261F01825;
+	Wed, 28 Oct 2026 19:23:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215378;
-	bh=d2/RB31L4hzFHcxozl+74IHT3c0oXOKpqaoO9cx9xXE=;
+	s=korg; t=1793215381;
+	bh=ukASllKf1TcKG8mxvAky2npVvLCWIjfFu8E7VMNxtXM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=o7jqfGRd+7ahrGuADKE+LKA70kwAGKF0AmwmNpd28r0UeHjJA6NZgXNorZT2lJKAx
-	 xA267A7puBbvO9T5pJf6Ce/3oKZ/5wtOGPQ17wnRQv+0P8neM1T5728CQfclUj+CNP
-	 9Ibe1TcXPVU5uo8wUS6aQCJG/IB+w8Dg5iQa0MmA=
+	b=fLZEzE8UpWRbX6lAonQjMscjLRwdDMv0L411NAqzeOf01s/C7x1+WaI3GB66jpujc
+	 NJqCq7M9aKTFZLiS8bLqPpn2gv5qZw/IoibFKI14XzuOZKMXLAUQrDZKJTT4XG7UxZ
+	 RdEiFzd+zFEuXcR2i/6qL0IV7POXEB+SL3RYCLzE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jacob Moroni <jmoroni@google.com>,
-	David Hu <xuehaohu@google.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Petr Wozniak <petr.wozniak@gmail.com>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1191/1887] RDMA/irdma: Prevent user-triggered null deref on QP create
-Date: Wed, 28 Oct 2026 17:54:47 +0100
-Message-ID: <20261028170526.509834015@linuxfoundation.org>
+Subject: [PATCH 6.1 1192/1887] xfrm: fix stale skb->prev after async crypto steals a GSO segment
+Date: Wed, 28 Oct 2026 17:54:48 +0100
+Message-ID: <20261028170526.533030100@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,66 +68,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jacob Moroni <jmoroni@google.com>
+From: Petr Wozniak <petr.wozniak@gmail.com>
 
-[ Upstream commit b9b0889071569d43623c260074e159cd8f26adb1 ]
+[ Upstream commit 3f4c3919baf0944ad96580467c302bc6c7758b00 ]
 
-Previously, the user QP creation path would only attempt to
-populate iwqp->iwpbl if the user-provided req.user_wqe_bufs
-field was non-zero. The problem is that iwqp->iwpbl is
-unconditionally dereferenced later on in irdma_setup_virt_qp.
+skb_gso_segment() leaves the segment list head with ->prev pointing at
+the last segment, an invariant validate_xmit_skb_list() relies on when
+it sets its tail pointer (tail = skb->prev).
 
-While there was a check for iwqp->iwpbl != NULL, this check
-would only occur if req.user_wqe_bufs was non-zero. The end
-result is that a user could send a zero user_wqe_bufs value
-and trigger a null ptr deref.
+When validate_xmit_xfrm() walks a GSO list and some segments are stolen
+by async crypto (->xmit() returns -EINPROGRESS), those segments are
+unlinked from the list but the head ->prev is never updated.  If the
+last segment is the one stolen, the returned head still has ->prev
+pointing at it, even though it is now owned by the crypto engine and may
+be freed.  validate_xmit_skb_list() later does tail->next = skb, writing
+through that stale pointer -- a use-after-free.
 
-Fix this by unconditionally calling irdma_get_pbl and bailing
-if it fails, similar to the CQ and SRQ paths.
+Repoint skb->prev at the last retained segment before returning.
 
-Fixes: b48c24c2d710 ("RDMA/irdma: Implement device supported verb APIs")
-Link: https://patch.msgid.link/r/20260617164013.280790-1-jmoroni@google.com
-Signed-off-by: Jacob Moroni <jmoroni@google.com>
-Reviewed-by: David Hu <xuehaohu@google.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Fixes: f53c723902d1 ("net: Add asynchronous callbacks for xfrm on layer 2.")
+Signed-off-by: Petr Wozniak <petr.wozniak@gmail.com>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/irdma/verbs.c | 21 ++++++++++-----------
- 1 file changed, 10 insertions(+), 11 deletions(-)
+ net/xfrm/xfrm_device.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/infiniband/hw/irdma/verbs.c b/drivers/infiniband/hw/irdma/verbs.c
-index a8856a8613f45..246dfae3ce0e6 100644
---- a/drivers/infiniband/hw/irdma/verbs.c
-+++ b/drivers/infiniband/hw/irdma/verbs.c
-@@ -599,18 +599,17 @@ static int irdma_setup_umode_qp(struct ib_udata *udata,
- 
- 	iwqp->ctx_info.qp_compl_ctx = req.user_compl_ctx;
- 	iwqp->user_mode = 1;
--	if (req.user_wqe_bufs) {
--		info->qp_uk_init_info.legacy_mode = ucontext->legacy_mode;
--		spin_lock_irqsave(&ucontext->qp_reg_mem_list_lock, flags);
--		iwqp->iwpbl = irdma_get_pbl((unsigned long)req.user_wqe_bufs,
--					    &ucontext->qp_reg_mem_list);
--		spin_unlock_irqrestore(&ucontext->qp_reg_mem_list_lock, flags);
-+	info->qp_uk_init_info.legacy_mode = ucontext->legacy_mode;
- 
--		if (!iwqp->iwpbl) {
--			ret = -ENODATA;
--			ibdev_dbg(&iwdev->ibdev, "VERBS: no pbl info\n");
--			return ret;
--		}
-+	spin_lock_irqsave(&ucontext->qp_reg_mem_list_lock, flags);
-+	iwqp->iwpbl = irdma_get_pbl((unsigned long)req.user_wqe_bufs,
-+				    &ucontext->qp_reg_mem_list);
-+	spin_unlock_irqrestore(&ucontext->qp_reg_mem_list_lock, flags);
-+
-+	if (!iwqp->iwpbl) {
-+		ret = -ENODATA;
-+		ibdev_dbg(&iwdev->ibdev, "VERBS: no pbl info\n");
-+		return ret;
+diff --git a/net/xfrm/xfrm_device.c b/net/xfrm/xfrm_device.c
+index c676ff2f21acc..b16c4657fe0fe 100644
+--- a/net/xfrm/xfrm_device.c
++++ b/net/xfrm/xfrm_device.c
+@@ -215,6 +215,14 @@ struct sk_buff *validate_xmit_xfrm(struct sk_buff *skb, netdev_features_t featur
+ 		pskb = skb2;
  	}
  
- 	if (!ucontext->use_raw_attrs) {
++	/* skb_gso_segment() set skb->prev to the last segment, but async
++	 * crypto may have stolen it above without updating ->prev.  Repoint
++	 * it at the last retained segment so validate_xmit_skb_list() does
++	 * not chain onto a segment now owned by the crypto engine.
++	 */
++	if (skb)
++		skb->prev = pskb;
++
+ 	return skb;
+ }
+ EXPORT_SYMBOL_GPL(validate_xmit_xfrm);
 -- 
 2.53.0
 
