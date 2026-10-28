@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215431;
-	b=zs1wT5i0LlJJJ3u2cgWBqVlBIBZhD6TAW4bJ+vjmhUqAEUZv/tMimE6jkSwCc5B80mU0
-	 vqJxb/NBS7ZD8CsSGehBdNMqh2hOWfSOBGepxBfSkDH9RgPtGconwe825y1gHtmE2oZAz
-	 m60yOo3RqbrScGsvuhAXsIVFVtAys66ddjJcyUZLm8/1ykojMxvToCjeFB38/302F9mCQ
-	 4+xwxDjkeI6DKUSeUIen9DCnXzf55Bl278VYtXkaXiMULecaL85lc2/kknEo/4JjlNLoy
-	 XW0VQFW6AVCpLYycTjPjRYgKrj0H3sPFO5MpxJgaUkvANoDNoqNywbFh4f3qlQkOpBw==
+	t=1793215433;
+	b=u8KtJQMimwuLPzWjDu1VTrU178NY2RcA5PKccw7JxMKlgJ5huqpnF8mPY8Ro0nhhHH2I
+	 702smquA0cEib+yBVEdSvPsr3RSSxDcRIt15mPbKhCM9nrJHE76cgefj1HsQ5+MzlBiGa
+	 mdVQRRK0lUcvXYtohuKt0lhV20wy+UBUqQ0y6o2MYQDWt2eINcQEMz+38pxyb5BOaVRuy
+	 omyqoRdHPXlgkljjoBtTyJnASYsG2dML9GEiGXcm52EJz6rpE7EeubVN4fMbBvXxCtPOj
+	 DU7dM6ahRMDU9zzUsfaIXg5zQj82y00/ARUnklTprqhYsjcsT9xpudvmAMBTrRx6HMA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215431;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215433;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=asxGgXaZyWRVFxDWflK6xAaG98hbeB3+bnrlx/d/J6k=;
-	b=Hw46sinsl+wSUX9Gt97ShnqDM0ReiVdIczubI3mJmGlhWHm/okelgHRqHRT7dtpEwoFd
-	 kh9/J3xvZVJYKIgn40oHo+aeZXzQoQzngeSDak64/eW+Lv4iNJi1i7bFVrEkNbvpfzMDB
-	 Zcl23sxNlygglEfxlzCPwc1Qf0bWf19Fr/4kxWmYyXrAK2jvyndQS+2aVkbiipVd3KksR
-	 OYqZOwxQKP5+ET3/wDAjszPlsHrHe1GalN0eYxcSIuhoeuQPGe+Y05Rp16G2y9NZp7+RL
-	 UsRq5PdGc8W2HCmRGl3o4NxstRvuCxpanlTz57/m31xr67hkeEx8wWB96q2bvkQBfEg==
+	bh=9jDfLvVL1wvYESgXYVVZUKMrLA6u8FP4wyFYK14Upc0=;
+	b=wiMbjJCzYRb4OHCGNyhyA8I2BSM1mIMkfAKtEaupoSEtN/I/TdQEfncNkR81YeKCo2o1
+	 b73ny2/pm+OE2tbsEfTHcSa3n+CshzwtbIqEKiMDKS+y5+9igJK+i1TtrJ8wE3CY5BQah
+	 H3tfvOmyjeua0W//kMmkYn2RvUwcT5BWaJxkpBBvLfWyYaPbsjcpszxiydrGxqvRKSw0K
+	 Rnt+nsC3fAOGYm/+DxBDgpOES7Sge+oMb/WDMSUJfDuVYleIpqzU/Nk1+kn74uwsSXVcv
+	 62zALoSYG8kFTrEDMdbPguxJBDTFHyuce3SEX0VvtPVWZzrClWTd410HK5lImKkwcMg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qfCwXZT2;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nHSJqzpe;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF0DD606A324;
-	Wed, 28 Oct 2026 19:23:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99859606A31A;
+	Wed, 28 Oct 2026 19:23:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qfCwXZT2
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B77F1F01825;
-	Wed, 28 Oct 2026 19:23:49 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nHSJqzpe
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9EDB1F01825;
+	Wed, 28 Oct 2026 19:23:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215430;
-	bh=asxGgXaZyWRVFxDWflK6xAaG98hbeB3+bnrlx/d/J6k=;
+	s=korg; t=1793215433;
+	bh=9jDfLvVL1wvYESgXYVVZUKMrLA6u8FP4wyFYK14Upc0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qfCwXZT2G+UJFT86jcXYo6NtsgHpAvA45AsgZIEDpLYrl4ga/mrAZv9W86EmpRThy
-	 qMg3gqiNJ7dXqlpeFUDTVhsZILcSx3UyJRzW4i9OxlROoQgSlF2vRZ4jGmKVENZjoi
-	 vmmFZ2HwLHCx2Foej7mG+ZkM6Jv0If/mSTSsYatE=
+	b=nHSJqzpeI8w1GIImBUUDW5aD93hpbghSAgXH5nQTH+Vlmq2RupUQ2E1ZY0pQusAIx
+	 Xx+64ZL3iqicZMcgz++6O7uZuCTt/9GN7YJ3nzOs9HPXlAeZseJ8OoS6uwjzzsgjiW
+	 zoc/ZLXjkFP8KzZYtIyKe9GTqDkyfNQAvHJsgl+c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hannes Reinecke <hare@kernel.org>,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Keith Busch <kbusch@kernel.org>,
+	Guanghui Feng <guanghuifeng@linux.alibaba.com>,
+	Vasant Hegde <vasant.hegde@amd.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1208/1887] nvmet-auth: reject short AUTH_RECEIVE buffers
-Date: Wed, 28 Oct 2026 17:55:04 +0100
-Message-ID: <20261028170526.897191374@linuxfoundation.org>
+Subject: [PATCH 6.1 1182/1887] iommu/amd: Wait for completion instead of returning early in iommu_completion_wait()
+Date: Wed, 28 Oct 2026 17:54:38 +0100
+Message-ID: <20261028170526.303632988@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,84 +69,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Guanghui Feng <guanghuifeng@linux.alibaba.com>
 
-[ Upstream commit 779575bc35c687697ba69e904f2cd22e60112534 ]
+[ Upstream commit 1e75a8255f11c81fb07e81e5029cfd75804350a0 ]
 
-nvmet_execute_auth_receive() trusts the AUTH_RECEIVE allocation length
-after checking only that it is nonzero and matches the transfer length.
-In the SUCCESS1 and FAILURE1/default states, that lets a remote NVMe-oF
-initiator reach the fixed-size DH-HMAC-CHAP response builders with a
-kmalloc() buffer shorter than the response, so nvmet_auth_success1() and
-nvmet_auth_failure1() write past the allocation; both only WARN_ON the
-short length and then format the message anyway.
+need_sync is a per-IOMMU flag shared by all domains and devices behind
+that IOMMU. It is set whenever a command is queued with sync == true and
+cleared when a completion-wait (CWAIT) command is queued. However, a
+cleared need_sync only means that a covering CWAIT has been queued, not
+that all previously queued commands have actually completed in hardware.
 
-Impact: A remote NVMe-oF initiator with access to an auth-enabled target
-can trigger a 16-byte heap out-of-bounds write via a one-byte
-AUTH_RECEIVE allocation length.
+iommu_completion_wait() read need_sync locklessly and returned early
+when it was false. This breaks the "block until all previously queued
+commands have completed" contract in a multi-CPU scenario:
 
-Compute the minimum response length for the current DH-HMAC-CHAP step in
-nvmet_auth_receive_data_len() and report a zero data length when the
-host-supplied allocation length is shorter, so the existing zero-length
-check in nvmet_execute_auth_receive() rejects the command before any
-builder runs. The SUCCESS1 minimum is sizeof(struct
-nvmf_auth_dhchap_success1_data) plus the HMAC hash length, because the
-response hash is written into the rval[] flexible-array tail, so the
-minimum is state dependent rather than a flat sizeof. CHALLENGE keeps its
-existing variable-length guard in nvmet_auth_challenge().
+  CPU2: queue inv-B                  => need_sync = true
+  CPU1: queue CWAIT(N); need_sync = false; then wait_on_sem(N)
+  CPU2: read need_sync == false      => return 0 (no wait!)
 
-This is reachable only when in-band DH-HMAC-CHAP authentication is
-configured on the target.
+CPU2 returns without waiting for any sequence number even though its
+inv-B may not have completed yet (CWAIT(N), queued after inv-B, has not
+been signaled). CPU2 then proceeds to, for example, free page-table
+pages while the IOMMU can still walk stale translations, opening a
+use-after-free window. This is a logical race in the meaning of the
+flag, not a memory-visibility issue, so barriers alone do not help.
 
-Fixes: db1312dd9548 ("nvmet: implement basic In-Band Authentication")
-Cc: stable@vger.kernel.org
-Assisted-by: Codex:gpt-5-5-xhigh
-Assisted-by: Claude:claude-opus-4-8
-Reviewed-by: Hannes Reinecke <hare@kernel.org>
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Fix it without losing the optimization of avoiding redundant CWAIT
+commands: take iommu->lock before testing need_sync, and when it is
+false do not return early but wait for the last allocated sequence
+number (cmd_sem_val). Since need_sync == false implies no sync command
+was queued after the last CWAIT, that CWAIT is FIFO-ordered after every
+not-yet-completed command, so waiting for its sequence number guarantees
+all prior commands (possibly queued by another CPU) have completed. The
+common path with pending work is unchanged and no extra hardware command
+is issued.
+
+Signed-off-by: Guanghui Feng <guanghuifeng@linux.alibaba.com>
+Fixes: 815b33fdc279 ("x86/amd-iommu: Cleanup completion-wait handling")
+Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/fabrics-cmd-auth.c | 26 +++++++++++++++++++++++++-
- 1 file changed, 25 insertions(+), 1 deletion(-)
+ drivers/iommu/amd/iommu.c | 22 ++++++++++++++++------
+ 1 file changed, 16 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/nvme/target/fabrics-cmd-auth.c b/drivers/nvme/target/fabrics-cmd-auth.c
-index 50eed28a7208c..990bb7af4dc8b 100644
---- a/drivers/nvme/target/fabrics-cmd-auth.c
-+++ b/drivers/nvme/target/fabrics-cmd-auth.c
-@@ -449,7 +449,31 @@ static void nvmet_auth_failure1(struct nvmet_req *req, void *d, int al)
+diff --git a/drivers/iommu/amd/iommu.c b/drivers/iommu/amd/iommu.c
+index 07d9d2f09417a..dc47692db143e 100644
+--- a/drivers/iommu/amd/iommu.c
++++ b/drivers/iommu/amd/iommu.c
+@@ -1184,11 +1184,23 @@ static int iommu_completion_wait(struct amd_iommu *iommu)
+ 	int ret;
+ 	u64 data;
  
- u32 nvmet_auth_receive_data_len(struct nvmet_req *req)
- {
--	return le32_to_cpu(req->cmd->auth_receive.al);
-+	struct nvmet_ctrl *ctrl = req->sq->ctrl;
-+	u32 al = le32_to_cpu(req->cmd->auth_receive.al);
-+	u32 min_len;
-+
-+	/*
-+	 * Reject too-short al before kmalloc(al), since the SUCCESS1 and
-+	 * FAILURE1/default builders write fixed response headers into it.
-+	 */
-+	switch (req->sq->dhchap_step) {
-+	case NVME_AUTH_DHCHAP_MESSAGE_CHALLENGE:
-+		return al;
-+	case NVME_AUTH_DHCHAP_MESSAGE_SUCCESS1:
-+		min_len = sizeof(struct nvmf_auth_dhchap_success1_data);
-+		if (req->sq->dhchap_c2)
-+			min_len += nvme_auth_hmac_hash_len(ctrl->shash_id);
-+		break;
-+	default:
-+		min_len = sizeof(struct nvmf_auth_dhchap_failure_data);
-+		break;
+-	if (!iommu->need_sync)
+-		return 0;
+-
+ 	raw_spin_lock_irqsave(&iommu->lock, flags);
+ 
++	if (!iommu->need_sync) {
++		/*
++		 * No command has been queued since the last completion-wait.
++		 * A concurrent CPU may have already queued that CWAIT and
++		 * cleared need_sync; need_sync == false only means a covering
++		 * CWAIT is queued, not that all prior commands have completed.
++		 * Wait for the last allocated sequence number so that any
++		 * command queued before this call (possibly on another CPU)
++		 * is guaranteed to have completed before returning.
++		 */
++		data = iommu->cmd_sem_val;
++		raw_spin_unlock_irqrestore(&iommu->lock, flags);
++		return wait_on_sem(iommu, data);
 +	}
 +
-+	if (al < min_len)
-+		return 0;
-+
-+	return al;
+ 	data = ++iommu->cmd_sem_val;
+ 	build_completion_wait(&cmd, iommu, data);
+ 
+@@ -1198,9 +1210,7 @@ static int iommu_completion_wait(struct amd_iommu *iommu)
+ 	if (ret)
+ 		return ret;
+ 
+-	ret = wait_on_sem(iommu, data);
+-
+-	return ret;
++	return wait_on_sem(iommu, data);
  }
  
- void nvmet_execute_auth_receive(struct nvmet_req *req)
+ static int iommu_flush_dte(struct amd_iommu *iommu, u16 devid)
 -- 
 2.53.0
 
