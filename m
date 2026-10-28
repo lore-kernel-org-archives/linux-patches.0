@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793207531;
-	b=UwRDbTzVgYJ+eR4eiex6WVFleOUEOfQDaoJoh+Jsom+bXnNrJlxx9SINpTSrfWWVixsU
-	 +jz10km3lNW40+3VgOZ2CHFhAXf/9p0tX9dDBJCOI4gd96Y5Otfo5yMuqg+HqMZAf/0pP
-	 nSRpFDLn70lcVbVg+aHaE6hXyLfeniIZvX15p/HyFlRV7xkNoUTlh8pZ5GhyOT6ZetpQH
-	 r/WIQslrgQo8wGCrLZw0QspTrfWwDSrw3Kn53ApRdGBPPIy4ye3bQn2LUmCWojtf5zUWk
-	 gCe4Q38lFW1I/Cl4aU3hKJ4zPi4p1wkgX4DjeB0ME8LY4xJXYzYz+DboootLWpAv6+w==
+	t=1793207534;
+	b=3Jc0MrVllO9MeqRh5rAZQSpaVFGWyWBWojp+GNWQ+Qf2NT8K/2oW+FvutLyHeXo/3May
+	 1dWiE6rlCVgeV8jzEbU/7NANWlyZ27t8pLyB53hFafg7a1UUN9POOgd7StXfosxoYxv4X
+	 gtAI5WPHswrCnnueDks6FdXXyLaFy9ZZMl7l0H1gy5Rfn8Wn01+c8/kC5cdhvu/0ayN/x
+	 OV0FIlBDSpBvELKznCySNogahdJnaB2vFzu3OTQePpBQbN4CuWFxZxPa66TVH1rfjZDww
+	 /RrMxBAxQ89hUQmsM4FfpdsOJOsE0rfUyhnojWWeapTQzFPvW4Iv45RXRSRwZseT/9Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793207531;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793207534;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=G9uMnvr+/+UITcxSz262i4wttTa2iB+iRnGPHSaxAH8=;
-	b=3QWAnpblknyMZrv9owirjwBnaceBu1vwJhmCTR2SFCDf0t5n8BbA5fwKw/LO6mMztBrE
-	 DwQ69MHjhuX7u272jbGDmGmnFXUZ7G3cH4LENjN4Vqblnth9oe0XrIc+8IqOG6ZN87lB+
-	 xQ+3N2y0is5WnRSL1vHm1So/wa5vylUaN4gtdNcKuNCvIci5bisvoykDhPa3uXlgNHACJ
-	 ki2i4WRcP+c210fGRf8sumZ2Gm/bzXUQd7Roe+9aaU3qI+6W57xPHRZLIPpMtpnTqxbJy
-	 AQ6JKy1NU0dv6gT7JWVegHZf61LaW1tc4p5tkQ9M8Y2Emqy2QVBVji5XK8MN6zf/itw==
+	bh=q/7M6A9CErZwHbeKJEQfN5kmZ5rVFYeT9zu/iHi7RLo=;
+	b=UotMI5D9bRQu5Z1PukHucKQpsiNvvi/9lV7Z+4oeN30B3VAiSw9XDzYgMaQZsmDvvRNV
+	 Bf358gkewK82/17UBy6da4FPgSQ7i85t2NnIhDgM9YJzU2GdP/YDdxijbKJAWYRu3YXKV
+	 cymXy05NoPTt0TLF0eV5xFlz+Tho9M5Ebnz9EUGr6X/WCkyoRGJHgLhtO5I2nzOz+32iM
+	 bLbWxNcSF2HTqn04cz45vhdLxH1/ESryV94qt/mJDxsTSHjQOmUjh1GQ0EWcfsR+jKc4R
+	 /iKLa1JWCP+157sVbPm5jFjqA3xsSazBIgAldoCcrVRxlCB5IFUgXD4B5o7u/n888nQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MyidHizN;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="dg6ZbK9/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D082606A31C;
-	Wed, 28 Oct 2026 17:12:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00653606A31A;
+	Wed, 28 Oct 2026 17:12:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MyidHizN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E41D1F01825;
-	Wed, 28 Oct 2026 17:12:10 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dg6ZbK9/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51ED11F01828;
+	Wed, 28 Oct 2026 17:12:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793207531;
-	bh=G9uMnvr+/+UITcxSz262i4wttTa2iB+iRnGPHSaxAH8=;
+	s=korg; t=1793207533;
+	bh=q/7M6A9CErZwHbeKJEQfN5kmZ5rVFYeT9zu/iHi7RLo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MyidHizN1V3fjYX6KQYuT9JUwUV3JvPzYC8fUL5XO5udjbK+XytLNr2qEIz3lC3/t
-	 QZ/1S30tklQnaLUgQ6szFukw1GVE/7fvJgGA8M5kyIiT9DLJATajJSSW9LR49qmgVH
-	 Au3jBFK0HYY4PImetDidq353gu8smAvw1qQjkLIk=
+	b=dg6ZbK9/g4MaRGuSVcHiFJTuk54UrILvnxa/xJ6VHv9P2807yGDzvKrOz4EMwC1/Z
+	 1V5ZdbNam81EkzuRzySTZZ8vUR6hjAiKGE5q6PGEheJcpwmNxQvKNDitaZ8cfcLgW4
+	 v2QMkMTzNVFem+1Wi0jtKtNIHmRqhM05l/24Fz3Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Zeng <kylebot@openai.com>,
-	Simon Horman <horms@kernel.org>,
-	Eric Dumazet <edumazet@kernel.org>,
+	Nicolai Buchwitz <nb@tipi-net.de>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 050/247] netlink: avoid hashing the network namespace pointer
-Date: Wed, 28 Oct 2026 17:57:33 +0100
-Message-ID: <20261028165948.561638828@linuxfoundation.org>
+Subject: [PATCH 6.12 051/247] net: bcmgenet: unshare the skb before writing the control block
+Date: Wed, 28 Oct 2026 17:57:34 +0100
+Message-ID: <20261028165948.585831787@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165947.349197979@linuxfoundation.org>
 References: <20261028165947.349197979@linuxfoundation.org>
@@ -70,78 +69,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kyle Zeng <kylebot@openai.com>
+From: Nicolai Buchwitz <nb@tipi-net.de>
 
-[ Upstream commit f88bb3606e4bd11ee035b682cddc2999e604609a ]
+[ Upstream commit 89771ce4f8f67dcffae561b2ccac95c0f6e3aa01 ]
 
-The netlink rhashtable key includes a raw struct net pointer and a
-user-controlled port ID. Both /proc/net/netlink and socket diagnostics
-expose the table's bucket order. By binding and rebinding chosen
-NETLINK_USERSOCK port IDs, an unprivileged reader can distinguish equal
-buckets and recover the low bits of the Jenkins hash. Its 32-bit seed
-and the limited set of kernel-image slides can then be searched offline
-to recover the address of init_net.
+bcmgenet stores first_cb, last_cb and bytes_sent in the skb control
+block and reads them back on completion to free the skb and credit BQL.
+ether_setup() leaves IFF_TX_SKB_SHARING set, so the stack can resubmit
+a shared skb that is still in the ring. The next transmit overwrites
+last_cb, so the earlier slots complete without crediting their bytes
+and BQL stalls the queue until the watchdog resets it.
 
-Use the namespace's unique, non-address net_cookie in the comparison
-key instead. It is assigned before the per-net initializers run and
-remains unchanged for the namespace's lifetime. The lookup key and
-object hash are still built by netlink_compare_arg_init(), keeping
-lookup, insertion, removal and rehashing consistent while preserving
-namespace separation. Neither public table walker needs to change.
+Unshare the skb before writing the control block.
 
-Reading the socket's namespace cookie in netlink_compare() is safe
-under RCU, including during namespace teardown. netlink_release()
-removes the socket from the hash table and defers its final put with
-call_rcu(). cleanup_net() runs the per-net exit methods and waits for
-outstanding RCU callbacks with rcu_barrier() before freeing namespace
-storage.
+Reproduce with pktgen in clone_skb mode, which hands the driver the same
+skb while earlier copies are still in the ring:
 
-Unlike ns.ns_id, net_cookie is also available and initialized during
-setup_net() in older stable kernels, making the change straightforward
-to backport to v5.15 and later.
+  modprobe pktgen
+  pg=/proc/net/pktgen
+  echo "add_device eth0" > $pg/kpktgend_0
+  echo "dst_mac AA:BB:CC:DD:EE:FF" > $pg/eth0
+  echo "dst 192.0.2.1" > $pg/eth0
+  echo "clone_skb 8" > $pg/eth0
+  echo "count 0" > $pg/eth0
+  echo start > $pg/pgctrl &
+  sleep 5
+  echo stop > $pg/pgctrl
+  wait
+  cat /sys/class/net/eth0/queues/tx-0/byte_queue_limits/inflight
 
-Fixes: c428ecd1a21f ("netlink: Move namespace into hash key")
-Assisted-by: LLM
-Signed-off-by: Kyle Zeng <kylebot@openai.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Eric Dumazet <edumazet@kernel.org>
-Link: https://patch.msgid.link/20261008011359.63727-2-kylebot@openai.com
+inflight stays nonzero on the now idle queue. clone_skb 0 leaves it at
+zero.
+
+Fixes: f48bed16a756 ("net: bcmgenet: Free skb after last Tx frag")
+Signed-off-by: Nicolai Buchwitz <nb@tipi-net.de>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Link: https://patch.msgid.link/20261009-nb-genet-shared-skb-net-v1-1-c6d0a841977d@tipi-net.de
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netlink/af_netlink.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/broadcom/genet/bcmgenet.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/net/netlink/af_netlink.c b/net/netlink/af_netlink.c
-index a0a8f185ccdeb..7e1c087a98647 100644
---- a/net/netlink/af_netlink.c
-+++ b/net/netlink/af_netlink.c
-@@ -463,7 +463,7 @@ netlink_unlock_table(void)
+diff --git a/drivers/net/ethernet/broadcom/genet/bcmgenet.c b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
+index 7da4a2114a771..0402e8f69c6fa 100644
+--- a/drivers/net/ethernet/broadcom/genet/bcmgenet.c
++++ b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
+@@ -2095,6 +2095,16 @@ static netdev_tx_t bcmgenet_xmit(struct sk_buff *skb, struct net_device *dev)
+ 		goto out;
+ 	}
  
- struct netlink_compare_arg
- {
--	possible_net_t pnet;
-+	u64 net_cookie;
- 	u32 portid;
- };
- 
-@@ -478,14 +478,14 @@ static inline int netlink_compare(struct rhashtable_compare_arg *arg,
- 	const struct netlink_sock *nlk = ptr;
- 
- 	return nlk->portid != x->portid ||
--	       !net_eq(sock_net(&nlk->sk), read_pnet(&x->pnet));
-+	       sock_net(&nlk->sk)->net_cookie != x->net_cookie;
- }
- 
- static void netlink_compare_arg_init(struct netlink_compare_arg *arg,
- 				     struct net *net, u32 portid)
- {
- 	memset(arg, 0, sizeof(*arg));
--	write_pnet(&arg->pnet, net);
-+	arg->net_cookie = net->net_cookie;
- 	arg->portid = portid;
- }
- 
++	/* We store Tx state in the control block, so the skb must not be
++	 * shared, but ether_setup() leaves IFF_TX_SKB_SHARING set.
++	 */
++	skb = skb_share_check(skb, GFP_ATOMIC);
++	if (!skb) {
++		BCMGENET_STATS64_INC((&ring->stats64), dropped);
++		ret = NETDEV_TX_OK;
++		goto out;
++	}
++
+ 	/* Retain how many bytes will be sent on the wire, without TSB inserted
+ 	 * by transmit checksum offload
+ 	 */
 -- 
 2.53.0
 
