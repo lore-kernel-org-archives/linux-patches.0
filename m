@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793210375;
-	b=10ABFyhKVTj3NGNwVXqTHfbnAzbKcFCIK52uzWI+jdtRSvqX79QiT/6+rlxmvsWbphtq
-	 AohQgm4VcaRvftXtb4f17JEzCJNjMlScpmo0zmi2EEaRzzZRb5aB8Q8J9wgoR4vt1fk51
-	 BgFZiq7NIyo9k0tFQdik6z+Tzk2SdO2i5gdadGNzZDCaLVSnmWohGkGcK58YIA8Kvk9IV
-	 FwgtctonfjYiZWpqZOwQoi5sxfNXRSwBOoLIywkJ+7qkrMjxpi8fQ1eKH2MNdAaMJZgrh
-	 X/O7B8GVIWrYZPVO0XJaGrb/nrf65W2lvYkRgKP+kGXqU8zwOjQ3Rcyu5cX/ykedXmQ==
+	t=1793210378;
+	b=hPgycGaOxxw/yciXcmc2bgfRW3skmbHtuDmxWW0WnwtfB6syXlJCnkxWPR1gAQhoB29O
+	 S4nnTTyTIu6rqPqq16XpxlUBR1WNFya50LoEzToueHwChgVWAe/6/6K9sJsEHRINGCTqR
+	 /ClDXeJ8brSJipXzWcsqdM8wOgiXzE44INLYD1pPk0QeiuQhg2hdyJ6oFqTAkD4MRYqEC
+	 gw3kG2WJZk4NBBFPX4xzOFNWvDysiNWfs1UI+wzUQD+RnJKg3qEO8DCG3ZJmvj3RzT1TV
+	 nQEME6clDNvz9Q7OjaCg5SPnvn4kKSoB1zQIcRR6SCiH4Om4L6YxBnMuBE/wwQB2yXA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793210375;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793210378;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=DWhuMd6DGylPRZNwlYAYmYi2A3h6ElOmtvw/Fd5aFk4=;
-	b=UqNSyjGNGzqFyv+Gnscvc3pvxVHGZNOeyQ4Z7/7THKnt0m3LdwgRWPnrZRehHLewlxPn
-	 0SOLINiNGl2eSS94NW4oGSoBjmiyMOS+7j20alNCdOcF33kMiKoZXCLW/2rvN01PaeLMt
-	 uJ4etnKf7pnBuk8XQawZ+Fj1FFQHxCmuGJDYX7vmoMIPqNshOj3fUDOR4t9UMDQdMY0GF
-	 MHOtY+ere2JGtvns8C2mT59yktob+UGmbyonSilINcz9wTYCqiOFPQmOmPkHBOHW9hB+l
-	 EV9+HHKG5qv3lq/10Jqmt7jdBmDsy9rY2OwI9UuHg8iGx1IwX796a6h6E97+dyP1c9A==
+	bh=+baKTzbYzmDU4f6ZlowqCHUvCm2cOtrnhiOD/DuPBkI=;
+	b=4poCQW22yXNUQ80+hI9wOXLzmtvzeIWskE84dhvfiKFdwyRNt5A5e7oCPW8A1ZDNMHt2
+	 M9rNadpfhBG3BOKViYLciz0lsewXOT+N5HeMMGtf9W3dNYC3zsSDZzvBiIoOAwNgr/wTj
+	 An8hAFFCF5J3LjvEslVt1jcrEHnR7ludKMNo4/hE20Sdbe/ENa6u29/w5z/jeI7w2tR3O
+	 FmPXwMpRO2c2/mQQO96U1FitWDyYUUtPSmHquqMSbm/ilX/pklsdcLtpZBv1jh3OWjdua
+	 gpZV6z8kioZYEYMeXfz1/w+Y5fraSHPhLQDzv4FX3pPosEX88Ltdwi9ivPjvWFZ1gHg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lL5g+0Ab;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jXtOo0Fn;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 055CA606A31D;
-	Wed, 28 Oct 2026 17:59:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDDA8606A31A;
+	Wed, 28 Oct 2026 17:59:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lL5g+0Ab
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58A131F01825;
-	Wed, 28 Oct 2026 17:59:34 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jXtOo0Fn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C93B1F01825;
+	Wed, 28 Oct 2026 17:59:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793210374;
-	bh=DWhuMd6DGylPRZNwlYAYmYi2A3h6ElOmtvw/Fd5aFk4=;
+	s=korg; t=1793210377;
+	bh=+baKTzbYzmDU4f6ZlowqCHUvCm2cOtrnhiOD/DuPBkI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lL5g+0AbhRhbq+v0snBhuajmlkWMw8ZHytbTI1MdpRcxEulv+7Z6ZI4cYYqHYkj/K
-	 weRxJ2+/GKJsjNQMX5hLakOjlbIskZPc1GFv4JZQTq+H4WuwS1uQh/8Kvtxkh7kNfW
-	 31ulPqeMcIuLTiA83HHpraBmWv9bqYrPPOVzMpXg=
+	b=jXtOo0Fn/VeBXZ+E3q2qnZx+eoAGNDNrEu8NXjb7JGAlpuEOYQlTWy9ZJxOWixT2B
+	 0lMNHdYOlMOJTLkhatpV49Fjk0p+MhXT8MrG9QOqYxeVqPXqX7YUqqMX/BodSTRpv2
+	 1vW4Q0/v8D4hcZLodOp7LRsfETbuQtiih7JXhUaQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jens Axboe <axboe@kernel.dk>,
-	"Claude Fable 5.1" <noreply@anthropic.com>
-Subject: [PATCH 6.6 152/168] io_uring/poll: dont loop on HUP with multiple references
-Date: Wed, 28 Oct 2026 18:01:28 +0100
-Message-ID: <20261028165946.684582916@linuxfoundation.org>
+	Cen Zhang <zzzccc427@gmail.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>
+Subject: [PATCH 6.6 153/168] keys: Avoid the owner account dereference in named keyring lookup
+Date: Wed, 28 Oct 2026 18:01:29 +0100
+Message-ID: <20261028165946.707547143@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165943.089486480@linuxfoundation.org>
 References: <20261028165943.089486480@linuxfoundation.org>
@@ -67,76 +67,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-Commit cf1d5c9d335e2c673811da641531da82cb01393a upstream.
+commit 51409aaa01f8602552c336009fd22b226b0cdf1d upstream.
 
-io_poll_check_events() drops down to one reference when a multishot
-request sees HUP with more than one, so that the loop goes around once
-more. It did so by subtracting one less than it had. With the cmpxchg
-that only takes the local count down: the exchange fails, the next pass
-reads the unchanged count, and goes through the same motions again. The
-loop then only ends once io_poll_issue() stops the request.
+Named keyring lookup must keep the storage containing the owner UID
+alive through the namespace mapping check.  find_keyring_by_name()
+reads keyring->user->uid under keyring_name_lock, but that lock protects
+the keyring's name entry and allocation, not its separate key_user.
 
-Drop the extra references from the counter instead, and loop once more
-without trying the exchange. The next pass sees one reference, like it
-did before, and ends unless a wake up came in.
+A named session-keyring join can overlap a privileged KEYCTL_CHOWN on
+another CPU.  If the keyring holds the last reference to its old dynamic
+key_user and the ownership transfer succeeds, the following ordering is
+possible:
 
-[ 6.6: v still carries the flag bits here, mask it for the subtraction ]
-Fixes: 937d38dcacd6 ("io_uring/poll: avoid retry wakeup loss when dropping ownership")
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Co-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>
+    Named join                         Chown
+    find_keyring_by_name()              keyctl_chown_key()
+      read_lock(keyring_name_lock)       down_write(key->sem)
+      load old keyring->user
+                                         replace key->user and key->uid
+                                         up_write(key->sem)
+                                         key_put(key)
+                                         key_user_put(old user): free
+      read old user->uid
+      read_unlock(keyring_name_lock)
+
+Chown neither takes keyring_name_lock nor key_session_mutex, so it can
+free the old account between the pointer load and the UID read.  The
+lookup then reads freed memory even though the keyring itself is alive.
+
+Use keyring->uid for the mapping check.  key_alloc() initializes this
+inline owner UID and keyctl_chown_key() updates it on chown.
+The existing name lock keeps its containing keyring allocated throughout
+the check, so lookup no longer depends on the account's lifetime.  This
+also matches the owner UID used by the permission check.
+
+KASAN report as below:
+
+    BUG: KASAN: slab-use-after-free in find_keyring_by_name+0x577/0x5d0
+    Read of size 4 at addr ffff8881128ae2ec by task keycase/500
+
+Cc: stable@vger.kernel.org
+Fixes: 2ea190d0a006 ("keys: skip keys from another user namespace")
+Assisted-by: LLM
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Link: https://lore.kernel.org/r/pm-key-management-objects-candidate-0002-v3-2baa8cad2bb554364e10@gmail.com
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/poll.c |   17 +++++++++++++----
- 1 file changed, 13 insertions(+), 4 deletions(-)
+ security/keys/keyring.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/io_uring/poll.c
-+++ b/io_uring/poll.c
-@@ -258,12 +258,14 @@ static inline void io_poll_execute(struc
-  */
- static int io_poll_check_events(struct io_kiocb *req, struct io_tw_state *ts)
- {
-+	bool again;
- 	int v;
+--- a/security/keys/keyring.c
++++ b/security/keys/keyring.c
+@@ -1158,7 +1158,7 @@ struct key *find_keyring_by_name(const c
+ 	 * grants Search permission and that hasn't been revoked
+ 	 */
+ 	list_for_each_entry(keyring, &ns->keyring_name_list, name_link) {
+-		if (!kuid_has_mapping(ns, keyring->user->uid))
++		if (!kuid_has_mapping(ns, keyring->uid))
+ 			continue;
  
- 	if (unlikely(io_should_terminate_tw(req->ctx)))
- 		return -ECANCELED;
- 
- 	do {
-+		again = false;
- 		v = atomic_read(&req->poll_refs);
- 
- 		if (unlikely(v != 1)) {
-@@ -325,10 +327,17 @@ static int io_poll_check_events(struct i
- 		} else {
- 			int ret;
- 
--			/* multiple refs and HUP, ensure we loop once more */
-+			/*
-+			 * Multiple refs and HUP, ensure we loop once more. Drop
-+			 * down to one ref now, so the next pass ends unless a
-+			 * wake up came in.
-+			 */
- 			if ((req->cqe.res & (POLLHUP | POLLRDHUP)) &&
--			    (v & IO_POLL_REF_MASK) != 1)
--				v--;
-+			    (v & IO_POLL_REF_MASK) != 1) {
-+				atomic_sub((v & IO_POLL_REF_MASK) - 1,
-+					   &req->poll_refs);
-+				again = true;
-+			}
- 			ret = io_poll_issue(req, ts);
- 			if (ret == IOU_STOP_MULTISHOT)
- 				return IOU_POLL_REMOVE_POLL_USE_RES;
-@@ -346,7 +355,7 @@ static int io_poll_check_events(struct i
- 		 * task_work while we were executing it.
- 		 */
- 		v &= IO_POLL_REF_MASK;
--	} while (atomic_cmpxchg(&req->poll_refs, v, 0) != v);
-+	} while (again || atomic_cmpxchg(&req->poll_refs, v, 0) != v);
- 
- 	return IOU_POLL_NO_ACTION;
- }
+ 		if (test_bit(KEY_FLAG_REVOKED, &keyring->flags))
 
 
