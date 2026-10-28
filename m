@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213090;
-	b=F8M3FwYI6Y09EFJnSv46KQPSlMXidxmgBago5WXsYi1NAl3AhhbOKkRVBusB3EZlFqaP
-	 tKw7JI5X+1zHgGqMq4RfRmcmPDg8+zDsfMwI0hOPcfKzbnecSpnJHFrP9OVipcUhU0omY
-	 76VJ8EzETK0KdLLHnUFBx/WvtrmxpY2LuZQ3eOlhxnRqxlyRZcEw/KWLUvpW7o8sQbpjI
-	 3q3ORm9iN4NUTf9pIvTCFL7fTkUzV8S7FG8EIMFXW4WQxEl9ZVPsKNGFBa7U+F+zW7vpD
-	 53sABQzYdODQgB7lhGIDwRQUDnGSInvL2A59RxRbgJ0RvP3hheKCsdJGIBWXUEAHCtA==
+	t=1793213093;
+	b=GPPR3y7Cbh62tUTX37deeHVJdvL0KE9Q8Q9pk/7cFOdKF0+tSFG1ps18AEY8chSUWAQ+
+	 y6VNHFgHohV3I4o3Kdv2Gq059pcAEjLUSLhf+25jvVzyJ8ymmFEcUnUXaKsB4cibdP0HN
+	 GcP5a0ArEADomI6LegQo52bKpJY0Amc1Q3Q4aJE53SMrUf1vk9Uhyg7fXm8REZqDXCylg
+	 mxF4pUjOUvnlxZbSVkBEoX0Gs6mS3owx19N/GO8n6ulB+7WA2vLoTr6PDSry80sDwnYsm
+	 UKyxMXzTmyfPg4CuU8s7dgPOaZ3MqLuBufCuENxn6IxmCmOheG+xi9Bc2wi/Di58LqQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213090;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213093;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=dT3iNU/F2SIF3eMyYGD9+pm9fmpPlz7Vj4xfgqPHhsI=;
-	b=sB21mvoOolLTDih2rNreif5uytAwnP3PwjVeTeJzAQPQOB2ydIUcG76zgpnYSZg+s3Bi
-	 ruXaxlscJhxuWPnevVpeYUeGn6pakvaSMo325RvkKYe400ALli0E6rgBWMa97AQ2rsUOA
-	 ClHRJhccjGWVlo/AJz9p3DD5yOi5kx/+6cHrtYC2cwkXOSSSG9KHIglz7LdxoSBO6X9Ey
-	 GnNAbzPj9mzvOKVMHH9/okkIOxEJjossYhglz2sb9UqEm0iA4R5VUDRAUf+YyLIm3OEGx
-	 ss8fM+6qR/m+WdDX1IOCdbDmABNRQVQt3pGdQbCYrDijrG3Ne//DrFudQUHrXMziu9w==
+	bh=g0GEu+msrTkSSTwgBp3yM7A9GxKUW2omErB4tovxSnU=;
+	b=JL4E5P3uDPlyU8YjWYY+hQiRWStMeSEbhotWRj3lLPHnVCG5sEFoK6+SEyJJ84e9qBO8
+	 SUwMWWVsmuXoAG4Dxg4weZMkaZoBLv0kbo3enxwKchf8URVMJROVrVK+6DErgwp1HQOHx
+	 ieUB7Wr8V3AS0seThsgkNv0VLcitq0qQq7cxDmjerbkBBzCW/Yh+mT8v1o6ogm69N8Gt9
+	 KoABM4uX/qmG6GoytVlmDP1MiPWrnbIYTb5QPhCu71z9txdfrZUWMK14EWpHTNMc20W5D
+	 dN8sLEPk/KS6STGPVo4DAU/HXW6oHt+JLGKolSg0X3BANEUg2EHATRa3hlkVREOfZVA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zvB+V7qV;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="nXv4/+vP";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D634C606A31A;
-	Wed, 28 Oct 2026 18:44:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0AB5606A31E;
+	Wed, 28 Oct 2026 18:44:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zvB+V7qV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31BBD1F01825;
-	Wed, 28 Oct 2026 18:44:49 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nXv4/+vP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D55E1F01825;
+	Wed, 28 Oct 2026 18:44:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213089;
-	bh=dT3iNU/F2SIF3eMyYGD9+pm9fmpPlz7Vj4xfgqPHhsI=;
+	s=korg; t=1793213092;
+	bh=g0GEu+msrTkSSTwgBp3yM7A9GxKUW2omErB4tovxSnU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zvB+V7qV5Z9sY7BvMaNXQvd/mQaud4UiTr998xJ4MgNGZmj24mWtrsEwMmVmu95t6
-	 vfiAtoUZnxCebCOdXvE1v56DOksuE7jgtKyf/aKQfh5hVN7Fb+ULTWrb5fylF2i/Pv
-	 OcGlOH1YbMfm73IPb5kwWUyMK2PsDr6ABwH7aWa8=
+	b=nXv4/+vPOwVTKihxwpwgUoX7H5Q+gXlpMtmxiUUkPKHzCPU66b+BWdKKbrlqqi1eB
+	 expdJVN84Zc6hYPxtY1oo/Yxinwoej54v72Z2LF2pOcuYhU02Lo+/dh486f8OVOOY0
+	 KgnHezL1H6R4gIHq3ScYgw2cJu8+1om/ovW6r3kE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Theodore Tso <tytso@mit.edu>,
-	Eric Biggers <ebiggers@kernel.org>,
+	George Zhang <george.zhang@amd.com>,
+	Jiangshan Yi <yijiangshan@kylinos.cn>,
+	Dan Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0381/1887] fsverity: add dependency on 64K or smaller pages
-Date: Wed, 28 Oct 2026 17:41:17 +0100
-Message-ID: <20261028170507.903309079@linuxfoundation.org>
+Subject: [PATCH 6.1 0382/1887] drm/amd/display: check dc_state_create_copy() for NULL in dm_suspend
+Date: Wed, 28 Oct 2026 17:41:18 +0100
+Message-ID: <20261028170507.926983972@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,47 +70,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Biggers <ebiggers@kernel.org>
+From: Jiangshan Yi <yijiangshan@kylinos.cn>
 
-commit a300000233a9ff842e2fb450fb9a79f7827a586d upstream.
+[ Upstream commit 015e72cde567d2450e282c2790773463156b2d0a ]
 
-Currently, all filesystems that support fsverity (ext4, f2fs, and btrfs)
-cache the Merkle tree in the pagecache at a 64K aligned offset after the
-end of the file data.  This offset needs to be a multiple of the page
-size, which is guaranteed only when the page size is 64K or smaller.
+dc_state_create_copy() can return NULL on allocation failure.
+dm_suspend() only conditionally skips dm_gpureset_toggle_interrupts()
+and continues execution, returning success.  dm_resume() then
+dereferences the NULL cached_dc_state in link_enc_cfg_copy() and the
+following dc_state->stream_count loop, crashing during GPU reset
+recovery.
 
-64K was chosen to be the "largest reasonable page size".  But it isn't
-the largest *possible* page size: the hexagon and powerpc ports of Linux
-support 256K pages, though that configuration is rarely used.
+Return -ENOMEM immediately if the copy fails, so the caller aborts
+suspend instead of leaving a NULL cached state for resume.
 
-For now, just disable support for FS_VERITY in these odd configurations
-to ensure it isn't used in cases where it would have incorrect behavior.
-
-Fixes: 671e67b47e9f ("fs-verity: add Kconfig and the helper functions for hashing")
-Reported-by: Christoph Hellwig <hch@lst.de>
-Closes: https://lore.kernel.org/r/20260119063349.GA643@lst.de
-Reviewed-by: Theodore Ts'o <tytso@mit.edu>
-Link: https://lore.kernel.org/r/20260221204525.30426-1-ebiggers@kernel.org
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
+Fixes: 8092aa3ab8f7 ("drm/amd/display: Add null checker before passing variables")
+Reviewed-by: George Zhang <george.zhang@amd.com>
+Signed-off-by: Jiangshan Yi <yijiangshan@kylinos.cn>
+Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 84b6d7932fdd2857795a257f9f258562a3cddcab)
+Cc: stable@vger.kernel.org
+[ sashal: Adapted context from dc_state_create_copy() to the existing dc_copy_state() call. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/verity/Kconfig | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/fs/verity/Kconfig b/fs/verity/Kconfig
-index aad1f1d998b9d..6882f85e0a111 100644
---- a/fs/verity/Kconfig
-+++ b/fs/verity/Kconfig
-@@ -2,6 +2,9 @@
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+index deaf98957cb76..86282119252bd 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -2645,9 +2645,14 @@ static int dm_suspend(void *handle)
+ 		dc_allow_idle_optimizations(adev->dm.dc, false);
  
- config FS_VERITY
- 	bool "FS Verity (read-only file-based authenticity protection)"
-+	# Filesystems cache the Merkle tree at a 64K aligned offset in the
-+	# pagecache.  That approach assumes the page size is at most 64K.
-+	depends on !PAGE_SIZE_256KB
- 	select CRYPTO
- 	select CRYPTO_HASH_INFO
- 	# SHA-256 is implied as it's intended to be the default hash algorithm.
+ 		dm->cached_dc_state = dc_copy_state(dm->dc->current_state);
++		if (!dm->cached_dc_state) {
++			drm_err(adev_to_drm(adev),
++				"Failed to allocate cached DC state during suspend\n");
++			mutex_unlock(&dm->dc_lock);
++			return -ENOMEM;
++		}
+ 
+-		if (dm->cached_dc_state)
+-			dm_gpureset_toggle_interrupts(adev, dm->cached_dc_state, false);
++		dm_gpureset_toggle_interrupts(adev, dm->cached_dc_state, false);
+ 
+ 		amdgpu_dm_commit_zero_streams(dm->dc);
+ 
 -- 
 2.53.0
 
