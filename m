@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793207838;
-	b=khCtIX9enhpFVCmk0fN32SlotI9vt+dLNGruO21UVinb0u4L0FWZibxq2MJ/EsnoTX64
-	 /ZD+qtJW4A6ZH/Tdi9mVNXOGk2VYQTNhWtEIZllO9Km+52qQSqzeMok0qz0u9yKjh3GrU
-	 RtiAxPKKSdFXtwWzNr4XyIEt+U2HNLJLMVlY/fNz0sw8YmWceX/Jih46f20RDK2N+vnLf
-	 FcuFno1ElGyeLplmOHrV1uYrotULLFxV5a0OkfdtF/TX5CKwCca8JDYg3F14ETTFQWaUr
-	 n0PMq7Wx8MgRC8ICJ9AI/YnvEm+Mcae/l1gUrHMPuIxGQ42ux1u4cJTD8HH/vqp1MQw==
+	t=1793207841;
+	b=ilOnvDzKJCN515mwWbQnJSgRB9D7cdkj9nPtTDirwbKrTDkSxm7NgivM23EkDMB6fyQu
+	 lCI3C1gQvuAWUojRpGFGumfQNSaPHBGYZCe/L7zSvKyAp2GAPTmNwQPwSfypFNeU7JlLH
+	 PpL7lxp1aYt/Dt13cOB9TRSbIPe7ydRCKTrcZ3uOrMBk7uCfuuACPbFIT3FeMgEYTQP48
+	 NwPzaQ2n2Jl0rpM+RuTQNTfgGPVB6BgYV1U6dRui4pJt83J34j47xyOI5UcZfd/OUUpxB
+	 PGxqqrj6u+pIu4UjYxjQcSJTDJMLYamAfutMEMa4DvyjVW+q3Zag4hRm+z0WbrVUULg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793207838;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793207841;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=hFZRHWCM15nSoxy9zC0mMS7kRtzFnIsOc6U6M2tHFCA=;
-	b=cbPwwWZl6E/CilZw1mSL/ZTy6ehZYbFtmokdmhrqRMPduKmZMWgOHhAY8itMYWhVMo35
-	 uiCpDCEBdx6+DiF7jQV0ijrT4nHqyzvu+/bavkLkcgxa8pWD+AbUwotw8VfgUwnruCLue
-	 e9wc22LCjhjuP77pgMVyTtjNEDrqtfPs1+m3V/Zb0H7z1EnJPRvZr6gBR8XvKHnMvnDwb
-	 ocmQV7JcU4bth3jI3hFj+5erXkLw9r1sMgdDh2p0N+60L4i6V63s72uGErsEB2Gcensd8
-	 VtNcoGRWrs0LzRV7uosvyr9XjL5cy23wuSklf8VmLJKrL+UETk2NN+pkI5vfwJn36Ww==
+	bh=ZudLoNk3DIcuJCRs+C8PaOz2K7Tpq+q6J8dLKIdEXu0=;
+	b=b0qIdB3M+ADuOZrh78Nm0DbKtrq2UD4DgMM753GR5cc6xM1SOhxzvvS6kSmaOquVnXFa
+	 Uka7feBqn1NeLoJM56REa95yj1TDwnGFy/yUVDXmNmJ8LrKfYjrlIDCx+D0ii47N+qLO1
+	 SfNfEX8cUmrrPO9zSJi3jrXRavMf7m5erENmw6h0WvzSptWBbpaQH4m2F8d4Q79PMEyyI
+	 yVtAkdP1ohHzvoBpx3gIUwO6qNnCVUt0Z7b3vQ683qEZIY/GB24FqYELdWmSROuB12t+D
+	 S9Q7uJ0KliKVNhCl8KkhC0fZaNI9CHMWIXnY187OtRFtHf7h0ZOmcW21/3dYMS8bueA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nOIYzOWT;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TU0ztpMC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 750D2606A323;
-	Wed, 28 Oct 2026 17:17:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAF03606A31C;
+	Wed, 28 Oct 2026 17:17:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nOIYzOWT
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 793271F01825;
-	Wed, 28 Oct 2026 17:17:17 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TU0ztpMC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A9541F01825;
+	Wed, 28 Oct 2026 17:17:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793207838;
-	bh=hFZRHWCM15nSoxy9zC0mMS7kRtzFnIsOc6U6M2tHFCA=;
+	s=korg; t=1793207840;
+	bh=ZudLoNk3DIcuJCRs+C8PaOz2K7Tpq+q6J8dLKIdEXu0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nOIYzOWTpV2LwwdU7wNSp6ae22ogo+Rra80qa4SqM3icvDZlRYwBKm0JPXMvRbVZL
-	 BSy4QZFZGDjSAImvkQnyNonAC6wUZR1iqDAlh45ihktUsszLDrErW0yMop+nSL6D1U
-	 HW82NwySR3aI0jDydw7T1lcxbTzo5JnyOJs6V/RA=
+	b=TU0ztpMCE2aoen51akaPLnvwGHN/DGxfKkgnXfDX7edY5rGuFbnVoD4VCRfhtv3hk
+	 RCmYqmu5EO4b6NRZDc7Wjy2jKFQHdO/jdw7OOWY/UQ8V2G0YvGfmpppOZkMTRI6Q9Q
+	 an81MfpWGVEKJ+kQra8h9zubdE5rkbPkxdub8wKU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dingisoul <dingiso.kernel@gmail.com>,
-	Laurence Oberman <loberman@redhat.com>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Stanislav Fort <disclosure@aisle.com>,
+	Bernard Pidoux <bernard.f6bvp@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 130/247] scsi: st: Fix use-after-free race between st_remove() and st_open()
-Date: Wed, 28 Oct 2026 17:58:53 +0100
-Message-ID: <20261028165950.483245257@linuxfoundation.org>
+Subject: [PATCH 6.12 157/247] netrom: linearize and validate lengths in nr_rx_frame()
+Date: Wed, 28 Oct 2026 17:59:20 +0100
+Message-ID: <20261028165951.131407568@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165947.349197979@linuxfoundation.org>
 References: <20261028165947.349197979@linuxfoundation.org>
@@ -69,73 +69,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Laurence Oberman <loberman@redhat.com>
+From: Stanislav Fort <disclosure@aisle.com>
 
-commit 71caf7f84bd62a4bf91cc95abd2de690afb8d15f upstream.
+Linearize skb and add targeted length checks in nr_rx_frame() to
+prevent out-of-bounds reads when processing malformed NET/ROM frames.
 
-st_remove() drops the probe reference on the scsi_tape with kref_put()
-and only afterwards removes its index from st_index_idr. If that was the
-last reference, scsi_tape_release() frees the structure while it is
-still published in the idr.
+- Require skb to be linear and at least NR_NETWORK_LEN +
+  NR_TRANSPORT_LEN (20 bytes) before reading network/transport fields.
+- For the existing sockets path, ensure NR_CONNACK includes the window
+  byte (>= 21 bytes), which nr_state1_machine() reads.
+- For CONNREQ handling, ensure window (byte 20) and user address
+  (bytes 21-27) are present (>= 28 bytes), and do so before
+  nr_find_listener() so no listener reference can leak.
+- Preserve existing BPQ extension handling:
+  - NR_CONNACK len == 22 -> 1 extra byte (TTL)
+  - NR_CONNREQ len == 37 -> 2 extra bytes (timeout)
 
-scsi_tape_get(), called from st_open(), looks up the tape in
-st_index_idr and takes a reference under st_ref_mutex and
-st_index_lock. remove_cdevs() does not wait for opens that are already
-past chrdev_open(), so an open that is blocked on st_ref_mutex while
-st_remove() holds it can take the mutex as soon as st_remove() drops it,
-find the freed tpnt in the idr and call kref_get() on it:
+nr_route_frame() only guarantees 15 bytes before handing a frame
+addressed to a local node to nr_rx_frame(), so a short frame received
+from any AX.25 neighbour is enough to trigger the over-read.
 
-  BUG: KASAN: slab-use-after-free in st_open
-  Write of size 4 ...
-   st_open (drivers/scsi/st.c:254 drivers/scsi/st.c:1291)
-   chrdev_open
-  ...
-  Freed by task ...:
-   kfree
-   st_remove (drivers/scsi/st.c:4512)
-
-Remove the index from the idr before dropping the reference, all under
-st_ref_mutex. A concurrent scsi_tape_get() now either runs first and
-holds a valid reference that keeps the tape alive, or runs afterwards
-and finds nothing, so st_open() fails with -ENXIO.
-
-This restores the ordering st_remove() had before the conversion to
-st_index_idr, where the tape was unpublished from scsi_tapes[] before
-the final kref_put().
-
-Fixes: 6c648d95a6af ("[SCSI] st: get rid of scsi_tapes array")
-Cc: stable@vger.kernel.org
-Reported-by: Dingisoul <dingiso.kernel@gmail.com>
-Closes: https://lore.kernel.org/linux-scsi/20261007211520.1428497-1-dingiso.kernel@gmail.com/
-Tested-by: Dingisoul <dingiso.kernel@gmail.com>
-Signed-off-by: Laurence Oberman <loberman@redhat.com>
-Link: https://patch.msgid.link/20261013202548.249628-1-loberman@redhat.com
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
-[ loberman: st_remove() still returns int in 6.12; context adjusted ]
-Signed-off-by: Laurence Oberman <loberman@redhat.com>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Suggested-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Stanislav Fort <disclosure@aisle.com>
+[F6BVP: v4 never reached mainline (whitespace-damaged posting, subsystem
+ removed in 7.1); rebased onto mod-orphan, added comments. Tested on a
+ two-VM QEMU bench (6.12.94, mkiss link): an AX.25 peer sends CONNREQ
+ frames truncated to 20 and 27 bytes; without this patch both are
+ accepted as connections, the user callsign being read past the end of
+ the frame; with it only the complete 35-byte CONNREQ is accepted.
+ v2: apply the CONNACK length check to a plain CONNACK only, so that
+ 20-byte CONNACK|CHOKE refusals and resets are no longer dropped
+ (reported by Sasha Levin). Same fix submitted to mod-orphan.]
+Signed-off-by: Bernard Pidoux <bernard.f6bvp@gmail.com>
+(cherry picked from commit db51201afd46992c9206fa79878badb2236bb7d3)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/st.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/netrom/af_netrom.c | 22 +++++++++++++++++++++-
+ 1 file changed, 21 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/st.c b/drivers/scsi/st.c
-index 95da0d15e0490..53d37c8497714 100644
---- a/drivers/scsi/st.c
-+++ b/drivers/scsi/st.c
-@@ -4448,11 +4448,11 @@ static int st_remove(struct device *dev)
- 	remove_cdevs(tpnt);
+diff --git a/net/netrom/af_netrom.c b/net/netrom/af_netrom.c
+index 6ee148f0e6d04..4dac5ee58adc9 100644
+--- a/net/netrom/af_netrom.c
++++ b/net/netrom/af_netrom.c
+@@ -885,6 +885,11 @@ int nr_rx_frame(struct sk_buff *skb, struct net_device *dev)
+ 	 *	skb->data points to the netrom frame start
+ 	 */
  
- 	mutex_lock(&st_ref_mutex);
--	kref_put(&tpnt->kref, scsi_tape_release);
--	mutex_unlock(&st_ref_mutex);
- 	spin_lock(&st_index_lock);
- 	idr_remove(&st_index_idr, index);
- 	spin_unlock(&st_index_lock);
-+	kref_put(&tpnt->kref, scsi_tape_release);
-+	mutex_unlock(&st_ref_mutex);
- 	return 0;
- }
++	if (skb_linearize(skb))
++		return 0;
++	if (skb->len < NR_NETWORK_LEN + NR_TRANSPORT_LEN)
++		return 0;
++
+ 	src  = (ax25_address *)(skb->data + 0);
+ 	dest = (ax25_address *)(skb->data + 7);
  
+@@ -927,6 +932,17 @@ int nr_rx_frame(struct sk_buff *skb, struct net_device *dev)
+ 	}
+ 
+ 	if (sk != NULL) {
++		/*
++		 * nr_state1_machine() reads the window size at byte 20, but
++		 * only for a plain CONNACK. A CONNACK with the choke flag set
++		 * is a refusal or a reset, sent as a 20-byte frame by
++		 * __nr_transmit_reply(), and must not be dropped here.
++		 */
++		if (frametype == NR_CONNACK && !flags &&
++		    skb->len < NR_NETWORK_LEN + NR_TRANSPORT_LEN + 1) {
++			sock_put(sk);
++			return 0;
++		}
+ 		bh_lock_sock(sk);
+ 		skb_reset_transport_header(skb);
+ 
+@@ -961,10 +977,14 @@ int nr_rx_frame(struct sk_buff *skb, struct net_device *dev)
+ 		return 0;
+ 	}
+ 
+-	sk = nr_find_listener(dest);
++	/* Need window (byte 20) and user address (bytes 21-27) */
++	if (skb->len < NR_NETWORK_LEN + NR_TRANSPORT_LEN + 1 + AX25_ADDR_LEN)
++		return 0;
+ 
+ 	user = (ax25_address *)(skb->data + 21);
+ 
++	sk = nr_find_listener(dest);
++
+ 	if (sk == NULL || sk_acceptq_is_full(sk) ||
+ 	    (make = nr_make_new(sk)) == NULL) {
+ 		nr_transmit_refusal(skb, 0);
 -- 
 2.53.0
 
