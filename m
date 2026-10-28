@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213257;
-	b=t3bfaqJ9X6t9C1j+GzPzDKNVTl31M25BUTmAo27Vr8lxjLlY+OtGPZYZK81CMDcpV+Rk
-	 TJNREK/k/RaKV4EXies0w/vkOKf1Y8to92yKKRMD3CqJv//D63jvmeX2zxzw7jixrfFJM
-	 cvYr0vf88mkF6w354nDMgU5BCmHG+FILveaHA/MAykgmb2X88HRh3y1t3fiYzsphjeBZW
-	 iklnqXiUGku4YV72qFTcrzaawoBOuPs8+Dr4owFF7wIQHRthEdO3P3EjXI3zYpr1ZrNqK
-	 oaRIZh8oWqOgkDT0II+xfxtYw8aYzlUBopwcSFy81RT/8P9Tx7q2M/6V1zRo3gyMqaQ==
+	t=1793213260;
+	b=Wtk14f0s5npLQxyAuoPzZJzu2U2m4rr8JdtxUtnp3sEvOR8pGowEgbzALfwj/3Sx6pii
+	 hm0fB48nWKKV7JSawGr9CIUFAOesf9GZf2yGo850pTYTJpoH5WPoE7GajDLJJStvCNUYN
+	 wMNI5ojkRZUzlk/mJF1rjx6HQibBdVsn1dL3+NOJL4UTzTfiWhxS8eBGKtbTgWSzT8eDN
+	 D7gdEFgHFJa56ksRanEsVf+sK7cWpvplq/phECVr2bn2t79aKzIjkT4gX0V5Nnv06RcsP
+	 Ta+CyyIzw7FXVzXDnKJBIW+Q/HLmdlS+KJ4K9eBv528QCoiR9Z83GJ+2dc1XHgQfLYw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213257;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213260;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=i2Kk+Vgfci85R7+VeB/rzWRVGG1uxNp21LnLrWaJGLU=;
-	b=X04npJJmHX73qHt3YEJo/8XtOO3UHOxUTrX0nR/DmLfxLam0r8aj8EupNJnLvmmcKfky
-	 qggIv6Y4Z9T0Lajt4cmXiURm85Uxl9C6DqKuXFSmwC6uqzPN+W3gzUutD6vw7YaFqQHi2
-	 mB/05iuPH82i4wTIGXANQNo73rrsfcwBspoJlc7rA5emPdc7pTBjEVGi4cYcrSghd7Sbd
-	 wBoiPRJVUBcMtEF5w3Ll+XZNKkbpfzDVDt3fCsPJ1314ksNbsLVydf8G43+e8Ccw3N2bO
-	 VNGVTZ4g8SWYcP/PIcwMrmkeOqqNXpMLzrhWVqpvSuAWl2jekO9Wyb4vMob126GuK1w==
+	bh=FQDM7/Yn06xnIpBald1Z+eBpS3QBVjOViunvIuzNygg=;
+	b=Y9SbHUzFSoKdQbTbm9XhdPdfUi5dEB2sWeRvlBiJ+fB/LEDJUgOt6KQqoNixpmpJbXsA
+	 JISp7W//JY/QTNLx+4yCGB3EWk12vEDE81bSzPdGWu8h17OhkTGCgDhZSMqhSygS7B1EY
+	 mBzycYT4k3/YybnR5orcJRYgKvoSFbOhMegzEDf7cTBgalcSMZ6weun08GA7y51czNaXg
+	 l2CFkB4f4VcuDUGKripQYSK0SjgYEXE2bHT4l9nvgxz2mZUt2vBn/pPZ2FvBTkiLdvim8
+	 +ycNwTgp3ew6fFAZbNxqC7owWc2m8sj3IHz5N2TJp+b/VBlvgXpqa7dcFsy61fINaVQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=psLnsuMS;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=COUSWcgF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A4A7606A31D;
-	Wed, 28 Oct 2026 18:47:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7192E606A31A;
+	Wed, 28 Oct 2026 18:47:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=psLnsuMS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA0E41F01825;
-	Wed, 28 Oct 2026 18:47:36 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=COUSWcgF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C30A91F01825;
+	Wed, 28 Oct 2026 18:47:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213257;
-	bh=i2Kk+Vgfci85R7+VeB/rzWRVGG1uxNp21LnLrWaJGLU=;
+	s=korg; t=1793213260;
+	bh=FQDM7/Yn06xnIpBald1Z+eBpS3QBVjOViunvIuzNygg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=psLnsuMSRkxkzmBw79VtBzQ9Lj3QeZ5OpuJzn6aOVgTWP0/IZTH/z1kcTHjc07c6v
-	 G8JRUrvbAdE4k4EbHXDZ1t6iFIb+TwoLj82n/JkrKkDBSIwFzCnroF2zVoVBbQ1MvZ
-	 TSA4Bcd9EgiBmIo/ZPFXjYFz8jAnFd0V3kI1Ii3A=
+	b=COUSWcgFxcGQfVHw+gV1xGQMiEzRnCJ01Jeyw0b7zLeLG0cUKaUZCc2t/MclbNl3C
+	 1kdSp8QjOsOuA9HST9tBDe53xa3nd86q/GSj10kA7FCh8rUkNwr5jIS6RipzzlAbKw
+	 QwbKO1dZYmAxDgrGCHv55gqrfndPV4OHIsDXmzX0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Pannarat Wiriyaarritham <pannarat.wiriyaarritham@danielcorp.dev>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0388/1887] usb: typec: ucsi: acpi: Assume UCSI 1.2 on Acer Nitro ANV15-41
-Date: Wed, 28 Oct 2026 17:41:24 +0100
-Message-ID: <20261028170508.063717487@linuxfoundation.org>
+	Qu Wenruo <wqu@suse.com>,
+	Wentao Liang <vulab@iscas.ac.cn>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.1 0436/1887] btrfs: scrub: fix local_root reference leak in scrub_print_warning_inode()
+Date: Wed, 28 Oct 2026 17:42:12 +0100
+Message-ID: <20261028170509.152505157@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,91 +68,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pannarat Wiriyaarritham <pannarat.wiriyaarritham@danielcorp.dev>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit 8c51ea651d043c786c37668c51624bd6b338a0ef ]
+commit 1fd742c7479961da6d0bb794ef8ac6b7b9442847 upstream.
 
-The Acer Nitro ANV15-41 exposes a functional UCSI ACPI PPM but
-reports a UCSI VERSION value of zero.
+When paths_from_inode() fails, scrub_print_warning_inode() jumps to err
+without dropping the reference taken by btrfs_get_fs_root(), leaking a
+reference to the root every time path resolution fails while printing
+scrub warnings.  Every other error and success path of the function
+drops the reference.
 
-ucsi_register() rejects a zero version with -ENODEV, leaving the
-system without registered USB Type-C connectors.
+Drop the reference on the paths_from_inode() failure path too.
 
-The PPM works correctly when using the UCSI 1.2 layout. With UCSI
-1.2 assumed, both Type-C connectors register correctly and USB Power
-Delivery negotiation works.
-
-Add a DMI-specific UCSI operation for the Acer Nitro ANV15-41 that
-substitutes UCSI 1.2 only when firmware reports a zero version.
-Preserve any valid non-zero firmware version.
-
-Tested on an Acer Nitro ANV15-41 with BIOS V1.51.
-
-Fixes: c1b0bc2dabfa ("usb: typec: Add support for UCSI interface")
-Cc: stable <stable@kernel.org>
-Assisted-by: LLM
-Signed-off-by: Pannarat Wiriyaarritham <pannarat.wiriyaarritham@danielcorp.dev>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://patch.msgid.link/20260910023338.31816-1-pannarat.wiriyaarritham@danielcorp.dev
+Fixes: 558540c17771 ("btrfs scrub: print paths of corrupted files")
+CC: stable@vger.kernel.org
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-[ sashal: Adapted the dedicated read_version() callback to the generic read() interface with offset and length checks. ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/typec/ucsi/ucsi_acpi.c | 32 ++++++++++++++++++++++++++++++
- 1 file changed, 32 insertions(+)
+ fs/btrfs/scrub.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/usb/typec/ucsi/ucsi_acpi.c b/drivers/usb/typec/ucsi/ucsi_acpi.c
-index 03c820fe5b0c4..eeb457ff255e4 100644
---- a/drivers/usb/typec/ucsi/ucsi_acpi.c
-+++ b/drivers/usb/typec/ucsi/ucsi_acpi.c
-@@ -106,6 +106,31 @@ static const struct ucsi_operations ucsi_acpi_ops = {
- 	.async_write = ucsi_acpi_async_write
- };
+--- a/fs/btrfs/scrub.c
++++ b/fs/btrfs/scrub.c
+@@ -851,8 +851,10 @@ static int scrub_print_warning_inode(u64
+ 	}
+ 	ret = paths_from_inode(inum, ipath);
  
-+static int ucsi_acer_read(struct ucsi *ucsi, unsigned int offset,
-+			  void *val, size_t val_len)
-+{
-+	struct ucsi_acpi *ua = ucsi_get_drvdata(ucsi);
-+	u16 *version = val;
-+	int ret;
-+
-+	ret = ucsi_acpi_read(ucsi, offset, val, val_len);
-+	if (ret)
-+		return ret;
-+
-+	if (offset == UCSI_VERSION && val_len == sizeof(*version) && !*version) {
-+		dev_warn(ua->dev, "UCSI version is zero, assuming 1.2\n");
-+		*version = 0x0120;
+-	if (ret < 0)
++	if (ret < 0) {
++		btrfs_put_root(local_root);
+ 		goto err;
 +	}
-+
-+	return 0;
-+}
-+
-+static const struct ucsi_operations ucsi_acer_ops = {
-+	.read = ucsi_acer_read,
-+	.sync_write = ucsi_acpi_sync_write,
-+	.async_write = ucsi_acpi_async_write
-+};
-+
- static int
- ucsi_zenbook_read(struct ucsi *ucsi, unsigned int offset, void *val, size_t val_len)
- {
-@@ -173,6 +198,13 @@ static const struct ucsi_operations ucsi_dell_ops = {
- };
  
- static const struct dmi_system_id ucsi_acpi_quirks[] = {
-+	{
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "Acer"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "Nitro ANV15-41"),
-+		},
-+		.driver_data = (void *)&ucsi_acer_ops,
-+	},
- 	{
- 		.matches = {
- 			DMI_MATCH(DMI_SYS_VENDOR, "ASUSTeK COMPUTER INC."),
--- 
-2.53.0
-
+ 	/*
+ 	 * we deliberately ignore the bit ipath might have been too small to
 
 
