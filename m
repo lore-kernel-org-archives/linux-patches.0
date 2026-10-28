@@ -1,55 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213951;
-	b=bDm0Kp/Ty//jprJ7bRXxYk+i24zzi4fEdLfwABbkTBztWWyGjvOLkUIV86HokRXJJGcr
-	 QDhu8DArgjkvAqL7CqpopsI1nVFr7hpjld6dtlkt/ffvMcN5g5jp+tEc00F/nQ4KRDvaK
-	 KTrysxEzHcQe3apsYDAPZw92ucAYCyvtQnDemwxouRuw6zfJZxi2K4YuoSs5M7GedJFj6
-	 Eb75toECxDZLvZd5urEFSM+5nWChtebjg9r64TeV8iPcairguNSxKmN3dbF6UHaY27Ew5
-	 kvMd6H9tTFYA4qsLE+2EWZfpi3q0nalgoI8hY9t9gqa8b5T3j3fK3T/4/d4Yd2FnsNA==
+	t=1793213954;
+	b=BuiuHoiqfmZM/12FRn/VHLpxj0ugNTowhTR+DCTfTKYUg5tUkZ+X10NLU5E55Nzr7/ar
+	 0CA8gJC+oKKyRRGKs7UJbG5NRsYXV4QvNxKReoCHOf33x6vI9DwgS+jkRMfvnYlagROqp
+	 OvBaIZUG5nSJrlsrywy33a3v8lu1hFnEbH/gdU1sgbXspbqZ6cr03gP3hpFWilD0Y7Wqz
+	 gqnH1QdrkwtaBbkJ5OewQInaoRkeLG4ZiOdSz6jo60oS7KvV3fafnwyKh7M4D65BOgsjc
+	 PCWR5M6YPADMCLivS5CdSdNG0ksDlbcitMWgQVNtsNJEYMByCD60gl3sCq97uLMVAlA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213951;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213954;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=1xfLKSxD/r9VzOYKNtkLe/Nsgwqxc5AwoXTRf3tgmhM=;
-	b=oFgTcomlvxStzr0BpeWWlLZrEV3Ktzijtk3tdDTT+Gprj8ELiUF8zEC5vY7jZ3XsQ3VZ
-	 co9OiZWJ5Diru8q2hv5oOa2fB9oaGufJP7LDLQj2BQurxXJiEuxiEU7p9HCjloC1e0RIE
-	 CD6dWwLf868thAg8eP47qvcUwchSVkn2Ckhyqpz+NHkIQD+XbI2cQqr0LpbdodIR342eD
-	 hNig5HCoZUHCHvwOOwN2yrHvgam7nUQyXqNtmDPfNQ8OnimDzrhTw1M4++EVs8v+GX+Y1
-	 ylZuhiZDhqoAfrzS0VXPmaDKLGG4tpo7SCg360YcQ+0WQR3GbKRmOPNvUNAL+d7iPsQ==
+	bh=3e70iHbuKIWAiivadBlwRP56mrDV8MuCSCCwRbzLHWQ=;
+	b=LCmlQ8+WAbYqN74ZI2qAOT5rcZZgnTWP0Dwb0lhjdPkoEOQv+IACoqxx5438BPp6UAeZ
+	 AiKB8PqSWHNHw+rzx7GenVo5ZNYkKpk53uAGaqm3yP7H3HZUdUqoDeqGz4Ti2BU4oUZau
+	 SDDhalUqMOlFLg5OM0k7l227hoxnema5eyS3SmdvmWV+qBwBcyKZLI05KPTt7mER4TP1K
+	 MZivKxRUH84mQ0J+NZxhSABjSugiJLJm3bc+AR+YQf2gOGMRRoDkFTe8QJ7mI0kMq17bO
+	 m7Z+z68YX+WPX4PijOaiHgzeK1c991hrJax7HktMl13DjETrMQmqp8Rpzs/TzAGdsYQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=arFeGgZt;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dCSMZgrA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30D28606A31E;
-	Wed, 28 Oct 2026 18:59:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AE76606A31A;
+	Wed, 28 Oct 2026 18:59:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=arFeGgZt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B0851F01825;
-	Wed, 28 Oct 2026 18:59:10 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dCSMZgrA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59AA51F01825;
+	Wed, 28 Oct 2026 18:59:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213951;
-	bh=1xfLKSxD/r9VzOYKNtkLe/Nsgwqxc5AwoXTRf3tgmhM=;
+	s=korg; t=1793213953;
+	bh=3e70iHbuKIWAiivadBlwRP56mrDV8MuCSCCwRbzLHWQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=arFeGgZttSIIRCGbR1NqMl2st5pEXsrldHOAT6oNxFmftonpAQ9WwFLP4AtXCwFNk
-	 WRAQlcmqtqFkCnnYbHQCo+36ZIJdV3JcnrmYxY45W46C89amX5GHxg8uTuagJp8JK9
-	 jRTLDj8vBMEHX+mGBSUmyUZtV6E6F5V/13U8U5nk=
+	b=dCSMZgrAqByC9FFuCp4ROsFHEPM/ifIviN9cpXcPEvxh2oU+TFk//HxKHtUvxqVeG
+	 c2zaBlyWsV0s5kJRlnX1WOJ1a4DtmdlI1GV4UQM28Q2uApMX9SjCFEBDDoJ/hMSkVN
+	 B3fcJSnb4euanpB3lmwzxexVxStLcH4g/6iuW9Dg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rodrigo Siqueira <rodrigo.siqueira@amd.com>,
-	Jerry Zuo <jerry.zuo@amd.com>,
-	Alex Hung <alex.hung@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Cristian Marussi <cristian.marussi@arm.com>,
+	Sudeep Holla <sudeep.holla@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0670/1887] drm/amd/display: Check null pointers before multiple uses
-Date: Wed, 28 Oct 2026 17:46:06 +0100
-Message-ID: <20261028170514.659086674@linuxfoundation.org>
+Subject: [PATCH 6.1 0688/1887] firmware: arm_scmi: Refactor device create/destroy helpers
+Date: Wed, 28 Oct 2026 17:46:24 +0100
+Message-ID: <20261028170515.069513107@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -71,109 +68,322 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Hung <alex.hung@amd.com>
+From: Cristian Marussi <cristian.marussi@arm.com>
 
-[ Upstream commit fdd5ecbbff751c3b9061d8ebb08e5c96119915b4 ]
+[ Upstream commit 2c3e674465e73e2f7eb52c39dc5c5e97e78e68ea ]
 
-[WHAT & HOW]
-Poniters, such as stream_enc and dc->bw_vbios, are null checked previously
-in the same function, so Coverity warns "implies that stream_enc and
-dc->bw_vbios might be null". They are used multiple times in the
-subsequent code and need to be checked.
+Refactor SCMI device create/destroy helpers: it is now possible to ask
+for the creation of all the currently requested devices for a whole
+protocol, not only for the creation of a single well-defined device.
 
-This fixes 10 FORWARD_NULL issues reported by Coverity.
+While at that, re-instate uniqueness checks on the creation of SCMI
+SystemPower devices.
 
-Reviewed-by: Rodrigo Siqueira <rodrigo.siqueira@amd.com>
-Signed-off-by: Jerry Zuo <jerry.zuo@amd.com>
-Signed-off-by: Alex Hung <alex.hung@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Cristian Marussi <cristian.marussi@arm.com>
+Link: https://lore.kernel.org/r/20221222185049.737625-8-cristian.marussi@arm.com
+Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
+Stable-dep-of: 295416091e44 ("firmware: arm_scmi: Fix slab-use-after-free in scmi_bus_notifier()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/core/dc_link_dp.c        | 5 ++++-
- drivers/gpu/drm/amd/display/dc/dce112/dce112_resource.c | 5 ++++-
- drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c      | 3 +++
- drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource.c   | 3 +++
- drivers/gpu/drm/amd/display/dc/link/link_hwss_dio.c     | 5 ++++-
- 5 files changed, 18 insertions(+), 3 deletions(-)
+ drivers/firmware/arm_scmi/bus.c    | 141 ++++++++++++++++++++++++++---
+ drivers/firmware/arm_scmi/common.h |   8 +-
+ drivers/firmware/arm_scmi/driver.c |   9 +-
+ include/linux/scmi_protocol.h      |   5 -
+ 4 files changed, 141 insertions(+), 22 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/core/dc_link_dp.c b/drivers/gpu/drm/amd/display/dc/core/dc_link_dp.c
-index 717e36172a718..f87c6174b7040 100644
---- a/drivers/gpu/drm/amd/display/dc/core/dc_link_dp.c
-+++ b/drivers/gpu/drm/amd/display/dc/core/dc_link_dp.c
-@@ -6187,8 +6187,11 @@ bool dc_link_dp_set_test_pattern(
- 			break;
- 		}
+diff --git a/drivers/firmware/arm_scmi/bus.c b/drivers/firmware/arm_scmi/bus.c
+index 14f96583b6e0d..36f75b6629db0 100644
+--- a/drivers/firmware/arm_scmi/bus.c
++++ b/drivers/firmware/arm_scmi/bus.c
+@@ -7,6 +7,7 @@
  
-+		if (!pipe_ctx->stream)
-+			return false;
+ #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
+ 
++#include <linux/atomic.h>
+ #include <linux/types.h>
+ #include <linux/module.h>
+ #include <linux/of.h>
+@@ -30,6 +31,9 @@ struct scmi_requested_dev {
+ 	struct list_head node;
+ };
+ 
++/* Track globally the creation of SCMI SystemPower related devices */
++static atomic_t scmi_syspower_registered = ATOMIC_INIT(0);
 +
- 		if (pipe_ctx->stream_res.tg->funcs->lock_doublebuffer_enable) {
--			if (pipe_ctx->stream && should_use_dmub_lock(pipe_ctx->stream->link)) {
-+			if (should_use_dmub_lock(pipe_ctx->stream->link)) {
- 				union dmub_hw_lock_flags hw_locks = { 0 };
- 				struct dmub_hw_lock_inst_flags inst_flags = { 0 };
+ /**
+  * scmi_protocol_device_request  - Helper to request a device
+  *
+@@ -213,11 +217,11 @@ static int scmi_match_by_id_table(struct device *dev, void *data)
+ 	struct scmi_device_id *id_table = data;
  
-diff --git a/drivers/gpu/drm/amd/display/dc/dce112/dce112_resource.c b/drivers/gpu/drm/amd/display/dc/dce112/dce112_resource.c
-index 19d7cfa53211b..1f1f66d857698 100644
---- a/drivers/gpu/drm/amd/display/dc/dce112/dce112_resource.c
-+++ b/drivers/gpu/drm/amd/display/dc/dce112/dce112_resource.c
-@@ -1065,7 +1065,10 @@ static void bw_calcs_data_update_from_pplib(struct dc *dc)
- 	struct dm_pp_clock_levels clks = {0};
- 	int memory_type_multiplier = MEMORY_TYPE_MULTIPLIER_CZ;
+ 	return sdev->protocol_id == id_table->protocol_id &&
+-		!strcmp(sdev->name, id_table->name);
++		(id_table->name && !strcmp(sdev->name, id_table->name));
+ }
  
--	if (dc->bw_vbios && dc->bw_vbios->memory_type == bw_def_hbm)
-+	if (!dc->bw_vbios)
-+		return;
-+
-+	if (dc->bw_vbios->memory_type == bw_def_hbm)
- 		memory_type_multiplier = MEMORY_TYPE_HBM;
- 
- 	/*do system clock  TODO PPLIB: after PPLIB implement,
-diff --git a/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c b/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c
-index d0422e1c14fab..a554867ee1a93 100644
---- a/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c
-@@ -2139,6 +2139,9 @@ bool dcn20_wait_for_blank_complete(
+-struct scmi_device *scmi_child_dev_find(struct device *parent,
+-					int prot_id, const char *name)
++static struct scmi_device *scmi_child_dev_find(struct device *parent,
++					       int prot_id, const char *name)
  {
- 	int counter;
+ 	struct scmi_device_id id_table;
+ 	struct device *dev;
+@@ -300,13 +304,53 @@ static void scmi_device_release(struct device *dev)
+ 	kfree(to_scmi_dev(dev));
+ }
  
-+	if (!opp)
-+		return false;
+-struct scmi_device *
+-scmi_device_create(struct device_node *np, struct device *parent, int protocol,
+-		   const char *name)
++static void __scmi_device_destroy(struct scmi_device *scmi_dev)
++{
++	pr_debug("(%s) Destroying SCMI device '%s' for protocol 0x%x (%s)\n",
++		 of_node_full_name(scmi_dev->dev.parent->of_node),
++		 dev_name(&scmi_dev->dev), scmi_dev->protocol_id,
++		 scmi_dev->name);
 +
- 	for (counter = 0; counter < 1000; counter++) {
- 		if (opp->funcs->dpg_is_blanked(opp))
- 			break;
-diff --git a/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource.c b/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource.c
-index 591c3166a4687..9f5425e6474fb 100644
---- a/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource.c
-@@ -1664,6 +1664,9 @@ static void dcn32_enable_phantom_plane(struct dc *dc,
- 		else
- 			phantom_plane = dc_create_plane_state(dc);
- 
-+		if (!phantom_plane)
-+			break;
++	if (scmi_dev->protocol_id == SCMI_PROTOCOL_SYSTEM)
++		atomic_set(&scmi_syspower_registered, 0);
 +
- 		memcpy(&phantom_plane->address, &curr_pipe->plane_state->address, sizeof(phantom_plane->address));
- 		memcpy(&phantom_plane->scaling_quality, &curr_pipe->plane_state->scaling_quality,
- 				sizeof(phantom_plane->scaling_quality));
-diff --git a/drivers/gpu/drm/amd/display/dc/link/link_hwss_dio.c b/drivers/gpu/drm/amd/display/dc/link/link_hwss_dio.c
-index 4227adbc646a8..5ba7749ca52bb 100644
---- a/drivers/gpu/drm/amd/display/dc/link/link_hwss_dio.c
-+++ b/drivers/gpu/drm/amd/display/dc/link/link_hwss_dio.c
-@@ -56,7 +56,10 @@ void reset_dio_stream_encoder(struct pipe_ctx *pipe_ctx)
- 	struct link_encoder *link_enc = link_enc_cfg_get_link_enc(pipe_ctx->stream->link);
- 	struct stream_encoder *stream_enc = pipe_ctx->stream_res.stream_enc;
- 
--	if (stream_enc && stream_enc->funcs->disable_fifo)
-+	if (!stream_enc)
-+		return;
++	kfree_const(scmi_dev->name);
++	ida_free(&scmi_bus_id, scmi_dev->id);
++	device_unregister(&scmi_dev->dev);
++}
 +
-+	if (stream_enc->funcs->disable_fifo)
- 		stream_enc->funcs->disable_fifo(stream_enc);
++static struct scmi_device *
++__scmi_device_create(struct device_node *np, struct device *parent,
++		     int protocol, const char *name)
+ {
+ 	int id, retval;
+ 	struct scmi_device *scmi_dev;
  
- 	link_enc->funcs->connect_dig_be_to_fe(
++	/*
++	 * If the same protocol/name device already exist under the same parent
++	 * (i.e. SCMI instance) just return the existent device.
++	 * This avoids any race between the SCMI driver, creating devices for
++	 * each DT defined protocol at probe time, and the concurrent
++	 * registration of SCMI drivers.
++	 */
++	scmi_dev = scmi_child_dev_find(parent, protocol, name);
++	if (scmi_dev)
++		return scmi_dev;
++
++	/*
++	 * Ignore any possible subsequent failures while creating the device
++	 * since we are doomed anyway at that point; not using a mutex which
++	 * spans across this whole function to keep things simple and to avoid
++	 * to serialize all the __scmi_device_create calls across possibly
++	 * different SCMI server instances (parent)
++	 */
++	if (protocol == SCMI_PROTOCOL_SYSTEM &&
++	    atomic_cmpxchg(&scmi_syspower_registered, 0, 1)) {
++		dev_warn(parent,
++			 "SCMI SystemPower protocol device must be unique !\n");
++		return NULL;
++	}
++
+ 	scmi_dev = kzalloc(sizeof(*scmi_dev), GFP_KERNEL);
+ 	if (!scmi_dev)
+ 		return NULL;
+@@ -336,6 +380,10 @@ scmi_device_create(struct device_node *np, struct device *parent, int protocol,
+ 	if (retval)
+ 		goto put_dev;
+ 
++	pr_debug("(%s) Created SCMI device '%s' for protocol 0x%x (%s)\n",
++		 of_node_full_name(parent->of_node),
++		 dev_name(&scmi_dev->dev), protocol, name);
++
+ 	return scmi_dev;
+ put_dev:
+ 	kfree_const(scmi_dev->name);
+@@ -344,18 +392,85 @@ scmi_device_create(struct device_node *np, struct device *parent, int protocol,
+ 	return NULL;
+ }
+ 
+-void scmi_device_destroy(struct scmi_device *scmi_dev)
++/**
++ * scmi_device_create  - A method to create one or more SCMI devices
++ *
++ * @np: A reference to the device node to use for the new device(s)
++ * @parent: The parent device to use identifying a specific SCMI instance
++ * @protocol: The SCMI protocol to be associated with this device
++ * @name: The requested-name of the device to be created; this is optional
++ *	  and if no @name is provided, all the devices currently known to
++ *	  be requested on the SCMI bus for @protocol will be created.
++ *
++ * This method can be invoked to create a single well-defined device (like
++ * a transport device or a device requested by an SCMI driver loaded after
++ * the core SCMI stack has been probed), or to create all the devices currently
++ * known to have been requested by the loaded SCMI drivers for a specific
++ * protocol (typically during SCMI core protocol enumeration at probe time).
++ *
++ * Return: The created device (or one of them if @name was NOT provided and
++ *	   multiple devices were created) or NULL if no device was created;
++ *	   note that NULL indicates an error ONLY in case a specific @name
++ *	   was provided: when @name param was not provided, a number of devices
++ *	   could have been potentially created for a whole protocol, unless no
++ *	   device was found to have been requested for that specific protocol.
++ */
++struct scmi_device *scmi_device_create(struct device_node *np,
++				       struct device *parent, int protocol,
++				       const char *name)
+ {
+-	kfree_const(scmi_dev->name);
+-	ida_free(&scmi_bus_id, scmi_dev->id);
+-	device_unregister(&scmi_dev->dev);
++	struct list_head *phead;
++	struct scmi_requested_dev *rdev;
++	struct scmi_device *scmi_dev = NULL;
++
++	if (name)
++		return __scmi_device_create(np, parent, protocol, name);
++
++	mutex_lock(&scmi_requested_devices_mtx);
++	phead = idr_find(&scmi_requested_devices, protocol);
++	/* Nothing to do. */
++	if (!phead) {
++		mutex_unlock(&scmi_requested_devices_mtx);
++		return scmi_dev;
++	}
++
++	/* Walk the list of requested devices for protocol and create them */
++	list_for_each_entry(rdev, phead, node) {
++		struct scmi_device *sdev;
++
++		sdev = __scmi_device_create(np, parent,
++					    rdev->id_table->protocol_id,
++					    rdev->id_table->name);
++		/* Report errors and carry on... */
++		if (sdev)
++			scmi_dev = sdev;
++		else
++			pr_err("(%s) Failed to create device for protocol 0x%x (%s)\n",
++			       of_node_full_name(parent->of_node),
++			       rdev->id_table->protocol_id,
++			       rdev->id_table->name);
++	}
++	mutex_unlock(&scmi_requested_devices_mtx);
++
++	return scmi_dev;
+ }
++EXPORT_SYMBOL_GPL(scmi_device_create);
++
++void scmi_device_destroy(struct device *parent, int protocol, const char *name)
++{
++	struct scmi_device *scmi_dev;
++
++	scmi_dev = scmi_child_dev_find(parent, protocol, name);
++	if (scmi_dev)
++		__scmi_device_destroy(scmi_dev);
++}
++EXPORT_SYMBOL_GPL(scmi_device_destroy);
+ 
+ static int __scmi_devices_unregister(struct device *dev, void *data)
+ {
+ 	struct scmi_device *scmi_dev = to_scmi_dev(dev);
+ 
+-	scmi_device_destroy(scmi_dev);
++	__scmi_device_destroy(scmi_dev);
+ 	return 0;
+ }
+ 
+@@ -377,6 +492,10 @@ int __init scmi_bus_init(void)
+ 
+ void __exit scmi_bus_exit(void)
+ {
++	/*
++	 * Destroy all remaining devices: just in case the drivers were
++	 * manually unbound and at first and then the modules unloaded.
++	 */
+ 	scmi_devices_unregister();
+ 	bus_unregister(&scmi_bus_type);
+ 	ida_destroy(&scmi_bus_id);
+diff --git a/drivers/firmware/arm_scmi/common.h b/drivers/firmware/arm_scmi/common.h
+index 23f0ab3f2ed7f..a08d8da198be1 100644
+--- a/drivers/firmware/arm_scmi/common.h
++++ b/drivers/firmware/arm_scmi/common.h
+@@ -107,6 +107,11 @@ extern struct bus_type scmi_bus_type;
+ #define SCMI_BUS_NOTIFY_DEVICE_UNREQUEST	1
+ extern struct blocking_notifier_head scmi_requested_devices_nh;
+ 
++struct scmi_device *scmi_device_create(struct device_node *np,
++				       struct device *parent, int protocol,
++				       const char *name);
++void scmi_device_destroy(struct device *parent, int protocol, const char *name);
++
+ int scmi_protocol_acquire(const struct scmi_handle *handle, u8 protocol_id);
+ void scmi_protocol_release(const struct scmi_handle *handle, u8 protocol_id);
+ 
+@@ -168,9 +173,6 @@ struct scmi_transport_ops {
+ 	bool (*poll_done)(struct scmi_chan_info *cinfo, struct scmi_xfer *xfer);
+ };
+ 
+-struct scmi_device *scmi_child_dev_find(struct device *parent,
+-					int prot_id, const char *name);
+-
+ /**
+  * struct scmi_desc - Description of SoC integration
+  *
+diff --git a/drivers/firmware/arm_scmi/driver.c b/drivers/firmware/arm_scmi/driver.c
+index f01097b9e953a..4c3677a205a8f 100644
+--- a/drivers/firmware/arm_scmi/driver.c
++++ b/drivers/firmware/arm_scmi/driver.c
+@@ -2135,6 +2135,8 @@ static int scmi_chan_setup(struct scmi_info *info, struct device_node *of_node,
+ 	/* Create a uniquely named, dedicated transport device for this chan */
+ 	tdev = scmi_device_create(of_node, info->dev, prot_id, name);
+ 	if (!tdev) {
++		dev_err(info->dev,
++			"failed to create transport device (%s)\n", name);
+ 		devm_kfree(info->dev, cinfo);
+ 		return -EINVAL;
+ 	}
+@@ -2144,7 +2146,7 @@ static int scmi_chan_setup(struct scmi_info *info, struct device_node *of_node,
+ 	ret = info->desc->ops->chan_setup(cinfo, info->dev, tx);
+ 	if (ret) {
+ 		of_node_put(of_node);
+-		scmi_device_destroy(tdev);
++		scmi_device_destroy(info->dev, prot_id, name);
+ 		devm_kfree(info->dev, cinfo);
+ 		return ret;
+ 	}
+@@ -2167,7 +2169,7 @@ static int scmi_chan_setup(struct scmi_info *info, struct device_node *of_node,
+ 		/* Destroy channel and device only if created by this call. */
+ 		if (tdev) {
+ 			of_node_put(of_node);
+-			scmi_device_destroy(tdev);
++			scmi_device_destroy(info->dev, prot_id, name);
+ 			devm_kfree(info->dev, cinfo);
+ 		}
+ 		return ret;
+@@ -2246,10 +2248,11 @@ static int scmi_chan_destroy(int id, void *p, void *idr)
+ 	struct scmi_chan_info *cinfo = p;
+ 
+ 	if (cinfo->dev) {
++		struct scmi_info *info = handle_to_scmi_info(cinfo->handle);
+ 		struct scmi_device *sdev = to_scmi_dev(cinfo->dev);
+ 
+ 		of_node_put(cinfo->dev->of_node);
+-		scmi_device_destroy(sdev);
++		scmi_device_destroy(info->dev, id, sdev->name);
+ 		cinfo->dev = NULL;
+ 	}
+ 
+diff --git a/include/linux/scmi_protocol.h b/include/linux/scmi_protocol.h
+index 4f765bc788ffb..0ce5746a4470a 100644
+--- a/include/linux/scmi_protocol.h
++++ b/include/linux/scmi_protocol.h
+@@ -804,11 +804,6 @@ struct scmi_device {
+ 
+ #define to_scmi_dev(d) container_of(d, struct scmi_device, dev)
+ 
+-struct scmi_device *
+-scmi_device_create(struct device_node *np, struct device *parent, int protocol,
+-		   const char *name);
+-void scmi_device_destroy(struct scmi_device *scmi_dev);
+-
+ struct scmi_device_id {
+ 	u8 protocol_id;
+ 	const char *name;
 -- 
 2.53.0
 
