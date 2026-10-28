@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216589;
-	b=C1a7kXAWLJDxhQF82zN5oE/vTz4Qsk4gyYTukqyolcVRO9Y6+fXrMk7KYsoGNdWjRG5R
-	 A0eiVoKqdR9pD+uALK9GP5+tHbmUEWvpgWL5hg2EZYbvrUBERwrpiE0Ev1+Er9t+wV9qh
-	 KAylK8zJrX8uYHgWn6qXY9tf7jF1eVrg6sdvsf79kyoisBY5HB17S5416IJ52a/bb/YjX
-	 i6R4JTY0TxTmF0BwZ1TavhkdEflYOQxLy3hrS+Or5TNw6cpqHTPkZtY2WI6ek8AqdNb2w
-	 DozcfbboBXsbviQpRaopETLnfV8V8Fv/AoreW71DegI/aMNUYu0ZA9+I7aOrj2uuZEw==
+	t=1793216592;
+	b=RiZcft5oumOawtH+SbzpS1hC0hozJ9r5W6E7Hw/zi3ikhzyrwuKf/7AZYPuwYsNJtG9b
+	 jGbTaJXYXtLO6qA+89IYp5eHAoqvopB5Nqzsi94HvZxP90bBQUO2VtuEH0jQyMfscydAv
+	 kmiApIyBxNpjG2MsUFgePrF693KQ2TEjD3hvWTLTXlJwJzEgP2o4/kav6TZTtVDJ4Nv4t
+	 9CVGTloFvvoZQxtt8bHMP3kGly8tub8wmKYumc61YLfJ2N8k+pv25EULPE+wBxHaF69gf
+	 iUzsWoNmLH0+EijmyRrpsPWc1zepjkNNUMljlA9xh7+F6vX1PHnS51UE3+mF6vb99Hg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216589;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216592;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=rmvo+F178WTfoD6JkaW8rAw+D23VLPP2nhRgrwzXB68=;
-	b=PpEbiw2lggQa/GLTsHO/W6TCSfIfg3aYvOfTrbCB9JZLFuY7bsDDX0m451vPnm80hkaY
-	 /Rsxv342m1BAq4NZOaU8HeFi9vLOMfyPoYfxCl17GXgbl3cK0LmLQnpq3eTETqhgU33B6
-	 EePOX22iYM9Hgk5rGRpAs6a5NX3X9FYBmxzxfz8xPyIJ/k+WhIybH/2Jg27A4ndbYsBMV
-	 Wr+3O7kvLB01in5ZFE36LxBKp+cac6MMw4fZoCS2SjJ6pkJQH3/wSrNQLbg1P3uyBDjka
-	 HHkeIi3R0VgSwXykb7BltbWfz8uFcKDbtCsR9AoBdhtUM1K63FWQThqLVGBMGi6t3Eg==
+	bh=fHEXv3dWpDkeT76K074Juky06XAfzEQqhlCUXnIzE5k=;
+	b=gv7sC0GLJjdVMItmqcDNTH76Q1L1rR/9msTdieDb4+ofa+ZZ9WHEqZKjXj0StF761Em4
+	 GcVi0Q6Z1O2Jz9ihMTjzOD8Qchd7BbgeKKnHwN0jX59NgkM1zrjG0ere8kWqYw9HQuzsr
+	 Bob1fZLmeCFokfIB2kQc8CZZOZzZSlLaTOOS6Y/XdvQDg7J5+74/N/rNjJqO9EETTsv89
+	 PT0kD+ENdQV55hl3LACVVOQTX2sy7eyxoI6XTZdxeNEpN03F2NWWgH3ckME/QMkRBCnBL
+	 Bhxl2QLY+jQf974B+W0jDXsn2/2OComP9lkpr66+cjliVtv+o+h4DwPVH3M31bA6eQQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kKa7qdmt;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xFKZv6+k;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F8E0606A31A;
-	Wed, 28 Oct 2026 19:43:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD396606A31E;
+	Wed, 28 Oct 2026 19:43:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kKa7qdmt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 637FC1F01825;
-	Wed, 28 Oct 2026 19:43:08 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xFKZv6+k
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 391531F01825;
+	Wed, 28 Oct 2026 19:43:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216588;
-	bh=rmvo+F178WTfoD6JkaW8rAw+D23VLPP2nhRgrwzXB68=;
+	s=korg; t=1793216591;
+	bh=fHEXv3dWpDkeT76K074Juky06XAfzEQqhlCUXnIzE5k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kKa7qdmtJtq9QIDET0mG3jh7/RW/7iuz+J8JUW+uJgD5nr0ZqoxhWPwjP/uibnUPO
-	 4wQPJh9K/YJfMAY9udVquzJ8rynJHTqFylJ4u3mZjsyN7/RnQ3KWKdSJJnAPO3Ih7a
-	 rWWwF+OGKzT4KNRd5fNG3E+rCRsjrsfoivsKivwM=
+	b=xFKZv6+kk0i8dSiaqy1Ke5yjZIZ/9vn1EjU0kfe994zZJyUKzqJAoYfJVrEmDL7wW
+	 DsyZegXRveVEqfFTp/HLUOFB1QVA63QaUnO36rcLtD/TsRFudUJlvLQpLhEJDLbbVg
+	 WxqmYqLr+7AbSnyYA0yryLM+9d0WGcAXt2Uvjq3o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Gary Guo <gary@garyguo.net>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Danilo Krummrich <dakr@kernel.org>,
+	Fan Wu <fanwu01@zju.edu.cn>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1610/1887] PCI: Fix UAF when probe runs concurrent to dyn ID removal
-Date: Wed, 28 Oct 2026 18:01:46 +0100
-Message-ID: <20261028170536.105481602@linuxfoundation.org>
+Subject: [PATCH 6.1 1611/1887] spi: oc-tiny: switch to managed controller allocation
+Date: Wed, 28 Oct 2026 18:01:47 +0100
+Message-ID: <20261028170536.127100272@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -70,120 +68,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gary Guo <gary@garyguo.net>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-[ Upstream commit 3ffc4c9690c33ee28cdb3d0182b12f9c623e3acc ]
+[ Upstream commit d710f43ce30975d197f73c543bfe47b958d8ba17 ]
 
-Dynamic IDs are only guaranteed to be valid when dynids.lock is held,
-as remove_id_store() can free the node. Thus, make a copy in
-pci_match_device(). Also, clarify that the id parameter is only valid
-during probe.
+The controller is allocated with the non-managed spi_alloc_host() while
+the interrupt is registered with devm_request_irq().  During removal,
+spi_bitbang_stop() only unregisters the controller; the subsequent
+spi_controller_put() then frees the controller together with its
+embedded driver-private devdata, which is the IRQ handler's dev_id.  The
+devm_request_irq() release action (free_irq()), which drains the
+handler, does not run until after .remove() returns.  A late or latched
+interrupt can therefore reach tiny_spi_irq() and dereference
+already-freed memory (e.g. hw->base).
 
-Fixes: 0994375e9614 ("PCI: add remove_id sysfs entry")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Link: https://lore.kernel.org/all/20260619170503.518F61F00A3A@smtp.kernel.org/
-Signed-off-by: Gary Guo <gary@garyguo.net>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Danilo Krummrich <dakr@kernel.org>
-Link: https://patch.msgid.link/20260723-pci_id_fix-v4-9-3580726844e1@garyguo.net
+Switch to devm_spi_alloc_host() so that the devres LIFO order releases
+the controller only after free_irq() has drained the handler, and drop
+the now-redundant spi_controller_put() from .remove().  The probe error
+path is simplified to direct returns.
+
+This issue was found by an in-house static analysis tool.
+
+Fixes: ce792580ea2c ("spi: add OpenCores tiny SPI driver")
+Assisted-by: Codex:gpt-5.6
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Link: https://patch.msgid.link/20260719010014.3163356-1-fanwu01@zju.edu.cn
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/pci-driver.c | 28 +++++++++++++++-------------
- include/linux/pci.h      |  1 +
- 2 files changed, 16 insertions(+), 13 deletions(-)
+ drivers/spi/spi-oc-tiny.c | 24 ++++++++----------------
+ 1 file changed, 8 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/pci/pci-driver.c b/drivers/pci/pci-driver.c
-index 3a1bb9b43cf78..1fbf42f2c961a 100644
---- a/drivers/pci/pci-driver.c
-+++ b/drivers/pci/pci-driver.c
-@@ -180,6 +180,7 @@ static const struct pci_device_id pci_device_id_any = {
-  * pci_match_device - See if a device matches a driver's list of IDs
-  * @drv: the PCI driver to match against
-  * @dev: the PCI device structure to match against
-+ * @id_copy: place to store copy of pci_device_id for dynamic ID
-  *
-  * Used by a driver to check whether a PCI device is in its list of
-  * supported devices or in the dynids list, which may have been augmented
-@@ -187,9 +188,9 @@ static const struct pci_device_id pci_device_id_any = {
-  * structure or %NULL if there is no match.
-  */
- static const struct pci_device_id *pci_match_device(struct pci_driver *drv,
--						    struct pci_dev *dev)
-+						    struct pci_dev *dev,
-+						    struct pci_device_id *id_copy)
- {
--	struct pci_dynid *dynid;
- 	const struct pci_device_id *found_id = NULL;
- 	struct pci_device_id dev_id;
+diff --git a/drivers/spi/spi-oc-tiny.c b/drivers/spi/spi-oc-tiny.c
+index 38c14c4e4e212..e1c984a80ed25 100644
+--- a/drivers/spi/spi-oc-tiny.c
++++ b/drivers/spi/spi-oc-tiny.c
+@@ -213,11 +213,11 @@ static int tiny_spi_probe(struct platform_device *pdev)
+ 	struct tiny_spi_platform_data *platp = dev_get_platdata(&pdev->dev);
+ 	struct tiny_spi *hw;
+ 	struct spi_master *master;
+-	int err = -ENODEV;
++	int err;
  
-@@ -199,17 +200,16 @@ static const struct pci_device_id *pci_match_device(struct pci_driver *drv,
+-	master = spi_alloc_master(&pdev->dev, sizeof(struct tiny_spi));
++	master = devm_spi_alloc_master(&pdev->dev, sizeof(struct tiny_spi));
+ 	if (!master)
+-		return err;
++		return -ENOMEM;
  
- 	dev_id = pci_id_from_device(dev);
- 	/* Look at the dynamic ids first, before the static ones */
--	spin_lock(&drv->dynids.lock);
--	list_for_each_entry(dynid, &drv->dynids.list, node) {
--		if (pci_match_one_id(&dynid->id, &dev_id)) {
--			found_id = &dynid->id;
--			break;
-+	scoped_guard(spinlock, &drv->dynids.lock) {
-+		struct pci_dynid *dynid;
-+
-+		list_for_each_entry(dynid, &drv->dynids.list, node) {
-+			if (pci_match_one_id(&dynid->id, &dev_id)) {
-+				*id_copy = dynid->id;
-+				return id_copy;
-+			}
- 		}
+ 	/* setup the master state. */
+ 	master->bus_num = pdev->id;
+@@ -235,10 +235,8 @@ static int tiny_spi_probe(struct platform_device *pdev)
+ 
+ 	/* find and map our resources */
+ 	hw->base = devm_platform_ioremap_resource(pdev, 0);
+-	if (IS_ERR(hw->base)) {
+-		err = PTR_ERR(hw->base);
+-		goto exit;
+-	}
++	if (IS_ERR(hw->base))
++		return PTR_ERR(hw->base);
+ 	/* irq is optional */
+ 	hw->irq = platform_get_irq(pdev, 0);
+ 	if (hw->irq >= 0) {
+@@ -246,7 +244,7 @@ static int tiny_spi_probe(struct platform_device *pdev)
+ 		err = devm_request_irq(&pdev->dev, hw->irq, tiny_spi_irq, 0,
+ 				       pdev->name, hw);
+ 		if (err)
+-			goto exit;
++			return err;
  	}
--	spin_unlock(&drv->dynids.lock);
+ 	/* find platform data */
+ 	if (platp) {
+@@ -255,29 +253,23 @@ static int tiny_spi_probe(struct platform_device *pdev)
+ 	} else {
+ 		err = tiny_spi_of_probe(pdev);
+ 		if (err)
+-			goto exit;
++			return err;
+ 	}
+ 
+ 	/* register our spi controller */
+ 	err = spi_bitbang_start(&hw->bitbang);
+ 	if (err)
+-		goto exit;
++		return err;
+ 	dev_info(&pdev->dev, "base %p, irq %d\n", hw->base, hw->irq);
+ 
+ 	return 0;
 -
--	if (found_id)
--		return found_id;
+-exit:
+-	spi_master_put(master);
+-	return err;
+ }
  
- 	found_id = do_pci_match_id(drv->id_table, &dev_id, !!dev->driver_override);
- 	if (found_id)
-@@ -436,12 +436,13 @@ static int pci_call_probe(struct pci_driver *drv, struct pci_dev *dev,
- static int __pci_device_probe(struct pci_driver *drv, struct pci_dev *pci_dev)
+ static int tiny_spi_remove(struct platform_device *pdev)
  {
- 	const struct pci_device_id *id;
-+	struct pci_device_id id_copy;
- 	int error = 0;
+ 	struct tiny_spi *hw = platform_get_drvdata(pdev);
+-	struct spi_master *master = hw->bitbang.master;
  
- 	if (drv->probe) {
- 		error = -ENODEV;
+ 	spi_bitbang_stop(&hw->bitbang);
+-	spi_master_put(master);
+ 	return 0;
+ }
  
--		id = pci_match_device(drv, pci_dev);
-+		id = pci_match_device(drv, pci_dev, &id_copy);
- 		if (id)
- 			error = pci_call_probe(drv, pci_dev, id);
- 	}
-@@ -1546,12 +1547,13 @@ static int pci_bus_match(struct device *dev, struct device_driver *drv)
- 	struct pci_dev *pci_dev = to_pci_dev(dev);
- 	struct pci_driver *pci_drv;
- 	const struct pci_device_id *found_id;
-+	struct pci_device_id id_copy;
- 
- 	if (!pci_dev->match_driver)
- 		return 0;
- 
- 	pci_drv = to_pci_driver(drv);
--	found_id = pci_match_device(pci_drv, pci_dev);
-+	found_id = pci_match_device(pci_drv, pci_dev, &id_copy);
- 	if (found_id)
- 		return 1;
- 
-diff --git a/include/linux/pci.h b/include/linux/pci.h
-index 31ac4bb31251b..39e9aea18f5d3 100644
---- a/include/linux/pci.h
-+++ b/include/linux/pci.h
-@@ -882,6 +882,7 @@ struct module;
-  *		function returns zero when the driver chooses to
-  *		take "ownership" of the device or an error code
-  *		(negative number) otherwise.
-+ *		The pci_device_id parameter is only valid during probe.
-  *		The probe function always gets called from process
-  *		context, so it can sleep.
-  * @remove:	The remove() function gets called whenever a device
 -- 
 2.53.0
 
