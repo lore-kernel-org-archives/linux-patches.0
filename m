@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215896;
-	b=I7F/o6pRBcJdEBbY4uEgn6mjYj5tgrhoRPjY/iQ/AHBl59qwfVJ9zEsiVb+7M8I/D4nr
-	 PDJzuoDmJXeQ8xqEiPPfsm1pHiCNb3+ghrnRy/rB8rsESVFwh004kkbWW9Kg1GvcuUFNe
-	 DKbXabf2/tfhHnNcd97Ik+IRJG2GIb1/8oktXvDt1fTGBD0piplyyPNWyahWgUwTkvsbR
-	 vqUBTcvofU8WMNdYRlM29wihaSa0a40YZD/d0EFQL74IKamdRnuAgQzhi+3MVwWVd0uXV
-	 pPNXLnHuyJlf7DIDNd2F4h9ru4Zy34ePURO5zizXy4gGhFzIXqM1Rf+iLU+ZTv04X7Q==
+	t=1793215899;
+	b=n67PCx5n4YYEYzMYepSkaUk4VDsx4EhyTaSppKY/5ImXPGkXvU2mFGwcZMVd46q1wrt4
+	 l97t5cYOhNv6myhs3M45BGUNEpxg8492moLVr/riABU7dOVYOy+lAfp2DLjY6caJLV3KL
+	 MgPlBJqV9RhrBDbL1v8tYfLLj3hk6b8GkTP/YKJYOGZkgvF/eFqTuXJ6fLAG81yb2S83x
+	 Ixs6ZuF3llSXe/OOk1NTzqgiOXoDeebPJrqBhXzZnpzwut2ABKK8s3XcY0WkxLNHtblEQ
+	 1VG2wl3bMZ+kcu/j25pqcOvBjUloOX5uR2VbZxcufi2dhss4vjPgf3HKDA9ccIcOyQQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215896;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215899;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=RybddAd3TFxdeIJ7Kuk1vTKAC/yLJUjK6JBmsuSxL3E=;
-	b=ibDEfzu4EWYHQsGHk0mNcHhsCw3mLIjasZ9Nvhnb41p6Tydc6x545etX4oNa/BzxTYXz
-	 D1zhRvKr4k5ObzZ6YoO9p1yH6YufqSFoagLLERMCJd/BKmKY2n618pl/rutspt4lWl1RO
-	 TMcZnrI5I/jPGOt9HDoLUKxgj0eaQ2VmLyxOxMVKe8H6QfjZ7RsK/8XdGMtvVFUyV4Zn9
-	 odi2KwOJ8ieFuFYJ+/swT59Nx8xUNfcEfLH8itI5aw75OLVQPOuYs5hCMqOGmTnzz3UkI
-	 d12W98xVEhtDl+YkQDD/wPi8NJs1UO20ZS+UescqTiDoNA2DsjBF0Plj9U113dU6nTg==
+	bh=kbPplSfCWLLhW+eHXvgllCcPPAlbBsH0gvXHjQAgxXY=;
+	b=shutUHQ5SjPBRMBFZ8fsj5HeJoKG0WiOKmOnnO2ERY/wqGYmdGbkkz3VkIgW8CG6u5QI
+	 pJoJ0Ok0INBbu1Z41H8znRdCTYW3nrF1JjYOF9TmamxsD1UL3dA3xtpVOZqXpBEXoCrUZ
+	 3iOeFL7XFCUUl9NoBJXjNsME8CkhHZBQWtiwYO5HAH3vAV8IrL9MSotiqamfaxPgFiTfh
+	 BLYCWKiuDspNC6D3cekBhaj9RL/09c2D3qb3yFfR7BE2e9BEUUYpKiVBDXV4dZFwwDkkc
+	 TvZobYMjDT0fiXyM7FULCwRPSLOzaEVS0+x7ZbzYIwBjvLWmte9A3sx4mju/WjHuknA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="F2jsSZ/p";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0P1mCN1s;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A738606A31F;
-	Wed, 28 Oct 2026 19:31:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 842F0606A321;
+	Wed, 28 Oct 2026 19:31:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F2jsSZ/p
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACBD11F01825;
-	Wed, 28 Oct 2026 19:31:35 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0P1mCN1s
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 833261F01825;
+	Wed, 28 Oct 2026 19:31:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215896;
-	bh=RybddAd3TFxdeIJ7Kuk1vTKAC/yLJUjK6JBmsuSxL3E=;
+	s=korg; t=1793215899;
+	bh=kbPplSfCWLLhW+eHXvgllCcPPAlbBsH0gvXHjQAgxXY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=F2jsSZ/pxaKWQeSwcEpmMA682YJ0B5z2yniNiMI/sdT2u0/uKVDbEKyzLPyfPQ1NG
-	 s2lzr9oS+Ns/ELyd5qr91YDrQQYQQxgTYYOhK8JTI/RnuTQ0jJz0rn+V4X2R8JkOx1
-	 YkUeT2Ruvmot7jO6TJyidYb6yyjwIUTA4V5KE2bI=
+	b=0P1mCN1sOmtOerV5YcVtL6XoPT/8vejf0XxBZgijdN21LMMPWLpK/rNLZioNx607f
+	 KgrwJhEbzBj+IPJnMvUmT8CklsFY4nudD6hmLcccWSzSTDSYDdQ2Cy+T+x2O1CCcPh
+	 9zmcckQ6w9EqpagBjmzgZnKa5mdV0KWefFTt1UHQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Li RongQing <lirongqing@baidu.com>,
+	lihuisong@huawei.com,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1326/1887] netfilter: synproxy: adjust duplicate timestamp options
-Date: Wed, 28 Oct 2026 17:57:02 +0100
-Message-ID: <20261028170529.604478536@linuxfoundation.org>
+Subject: [PATCH 6.1 1317/1887] ACPI: processor_idle: Mark LPI enter functions as __cpuidle
+Date: Wed, 28 Oct 2026 17:56:53 +0100
+Message-ID: <20261028170529.400140041@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,41 +69,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fernando Fernandez Mancera <fmancera@suse.de>
+From: Li RongQing <lirongqing@baidu.com>
 
-[ Upstream commit 22bb132cfb9b94847d52d73614284b8c5ea8d36e ]
+[ Upstream commit 956ca5d72c76504824c8eb601879da9476973e15 ]
 
-RFC 9293 does not mention anything about duplicated options and each
-networking stack handles it in their own way. Currently, Linux kernel is
-processing options sequentially and in case of duplicated timestamp
-options, the value from the latest one overrides the others.
+When function tracing or Kprobes is enabled, entering an ACPI Low
+Power Idle (LPI) state triggers the following RCU splat:
 
-As SYNPROXY is modifying only the first timestamp option found, a packet
-can reach the backend server and it might parse the wrong timestamp
-value. Let's just continue parsing the following options and in case a
-duplicated timestamp is found, adjust it too.
+  RCU not on for: acpi_idle_lpi_enter+0x4/0xd8
+  WARNING: CPU: 8 PID: 0 at include/linux/trace_recursion.h:162 function_trace_call+0x1e8/0x228
 
-Fixes: 48b1de4c110a ("netfilter: add SYNPROXY core/target")
-Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Stable-dep-of: 992c20bc8a4a ("netfilter: synproxy: fix unaligned memory access in timestamp adjustment")
+The acpi_idle_lpi_enter() function is invoked within the cpuidle
+path after RCU has already been disabled for the current local CPU.
+Consequently, ftrace's function_trace_call() expects RCU to be
+actively watching before recording trace data, emitting a warning
+if it is not.
+
+Fix this by annotating acpi_idle_lpi_enter(), the generic __weak
+stub, and the RISC-V implementation of acpi_processor_ffh_lpi_enter()
+with __cpuidle. This moves these functions into the '.cpuidle.text'
+section, implicitly disabling ftrace instrumentation (notrace) along
+this sensitive path and preventing trace-induced RCU warnings during
+idle entry.
+
+Fixes: a36a7fecfe60 ("ACPI / processor_idle: Add support for Low Power Idle(LPI) states")
+Signed-off-by: Li RongQing <lirongqing@baidu.com>
+Acked-by: lihuisong@huawei.com
+Link: https://patch.msgid.link/20260616072617.2272-1-lirongqing@baidu.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_synproxy_core.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/acpi/processor_idle.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/netfilter/nf_synproxy_core.c b/net/netfilter/nf_synproxy_core.c
-index fb071401d5c33..52f1f30f95add 100644
---- a/net/netfilter/nf_synproxy_core.c
-+++ b/net/netfilter/nf_synproxy_core.c
-@@ -232,7 +232,6 @@ synproxy_tstamp_adjust(struct sk_buff *skb, unsigned int protoff,
- 				}
- 				inet_proto_csum_replace4(&th->check, skb,
- 							 old, *ptr, false);
--				return true;
- 			}
- 			optoff += op[1];
- 		}
+diff --git a/drivers/acpi/processor_idle.c b/drivers/acpi/processor_idle.c
+index 8df8e789a0dbe..90b9e8d725d41 100644
+--- a/drivers/acpi/processor_idle.c
++++ b/drivers/acpi/processor_idle.c
+@@ -1183,7 +1183,7 @@ static int acpi_processor_get_lpi_info(struct acpi_processor *pr)
+ 	return 0;
+ }
+ 
+-int __weak acpi_processor_ffh_lpi_enter(struct acpi_lpi_state *lpi)
++int __weak __cpuidle acpi_processor_ffh_lpi_enter(struct acpi_lpi_state *lpi)
+ {
+ 	return -ENODEV;
+ }
+@@ -1196,7 +1196,7 @@ int __weak acpi_processor_ffh_lpi_enter(struct acpi_lpi_state *lpi)
+  *
+  * Return: 0 for success or negative value for error
+  */
+-static int acpi_idle_lpi_enter(struct cpuidle_device *dev,
++static int __cpuidle acpi_idle_lpi_enter(struct cpuidle_device *dev,
+ 			       struct cpuidle_driver *drv, int index)
+ {
+ 	struct acpi_processor *pr;
 -- 
 2.53.0
 
