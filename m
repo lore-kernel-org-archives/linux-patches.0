@@ -1,57 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215066;
-	b=1kDQQ7E7wGqZa76SLcZwIjx9P50HLzJ3jPZBItqeJDiC7DQk1HSEOUgEZWaQDlaekcgu
-	 NVDGHFBuSa0yRap4nCYmaFceAL9pgGE0IDGN1ZqqayZ2hpl9OmNiEh/ht6xP9RrMsxEyx
-	 i7ZKKyzYvjHKzJwa0uZvA9TKczBdDvb1YkRTOuqgF93R+XaX0Um3kojYXvFJOG1rLFANI
-	 uZORZ0DQ878yok9VPYb0jASZoctmh0IwxfVJpWUMLX60JnH5st/KuRymEnhsQ26E5rfMQ
-	 jLpUf1DkF5nSaCv3WTGDFxMr4uduwejPQhfnuV2blQ61G8K3KzWFg0JRtsdf9Bc2N0w==
+	t=1793215068;
+	b=FdqQ2uEJs38PE5DpcAzNwvJKnocRem+gdNn/Lkoz7jHJT3oRtX2z4B2452w6HS2KvNCG
+	 fCbMnwxbxLSg/cRcCaeze8x3yirRaGQIRt4adcVtIBSRpg/KvpU+RUV6WfxzX8906TJbY
+	 3bAKT2v8gYStkB37xnQsJZhMQJAeb+n+ZSlxb2t3D5juGzGmVjJ7YUnnZHLb00dYtnmpM
+	 KoZGUaqVarkrNtosT9abxZLZmxPYH7K2vl3ih7fVZ1s/uVgVjZxwfet0uer90RpTJIsYr
+	 dmhxWC5uLBbySSbaHwhoGkqUaJFOoZ6jLeU9GQTM9CIu91uPgoxrRs5S0Szz/UnfDpQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215066;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215068;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=OOmnFDLnxBqTb6Ed3KHpFnyx8Rx9nQSoTGs82rcffO4=;
-	b=0Whb+lsHxqDPrqEcXcLJgUz7QZP+2Uk2lpJM81Di0evgOs7xGLxQOKsmLjvgCOcyHAs7
-	 saJtGyn0oFs7Yy8H3MD/to/yuQtV/XU1sTfk2i4EjffRbvWj1EQOMBTkEGF6YGMNd0ibv
-	 hAHp1oC6jD9LaNujAcYfxQYjdACdmD/8nMMv76CguqV1QTFBNjgYYMXIlUSU/BGvQyY08
-	 r2s+hrBpBFrO47ld/tJAgcCtgK65Jit7OpiNVLH2ne31uzh28pEuds7JsavoNRARWTO8u
-	 8WIj0SAfJGo/GXiId/ybMxp3+ZNox2E3CGmDcyhNIxkZ8PIH5tTDtsYy8VSarvR2H3Q==
+	bh=dQB4fG0HTLp33GC5wIyqSKexBpXLshabIszxpg0tFxw=;
+	b=rASJs0sk4uON6H7Z2XkwmZiJi3/ESCDc7hhgjeo8stHyLcGjXuof3Y31JzrQrM2QTJ6r
+	 wy34rBn3/VqiCpNwlk2zsoQOwdMSF31B8jaKXueotzSAkkzStG7PMIpMWghggqBAIfC6U
+	 WDVkNlJRbrdkQjUsx1Yylza4/X9QdpXdDKXsGndkf5EDqAoWyoCJzJdxXYPp04kFbrTOs
+	 uqc5008PqnVobnDhyNG4kMiuTkuyAeI/nHY4VqXCbH2yiloqbLdfZk7+EIxdGnqNDR3RD
+	 wTzns0jDM4yboAkzvsY6/W++1VangTD9IPo3vqCiXpoomUYv+BHjkNNLUnwuaoZiQ9g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=adrlJpSG;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CCG0tYsX;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF49B606A31A;
-	Wed, 28 Oct 2026 19:17:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 889B9606A31A;
+	Wed, 28 Oct 2026 19:17:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=adrlJpSG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F7541F01825;
-	Wed, 28 Oct 2026 19:17:44 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CCG0tYsX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8D891F01825;
+	Wed, 28 Oct 2026 19:17:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215065;
-	bh=OOmnFDLnxBqTb6Ed3KHpFnyx8Rx9nQSoTGs82rcffO4=;
+	s=korg; t=1793215068;
+	bh=dQB4fG0HTLp33GC5wIyqSKexBpXLshabIszxpg0tFxw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=adrlJpSGdoAZR0ZgpjIIH7orfxeoqfDvAL1SSAQ7Z3Er7q+kyOQsUovb3CSzAIzwX
-	 amCDCPcRwDaGtkB+NAz/1ymYCptSEp53sX/q11PZnqfGaQP2qi2gCKd8WxDPXrEmVa
-	 Ubpa+f8EVlDVHxV0YzZ7mJGPpAv07r1+1ZjfCAUg=
+	b=CCG0tYsXVhaHOD2w/CiclCrhIUALp63nZhy8l4x6qteSbeEHeOR/4lNTc1FgA9j+7
+	 D46FanCyRDpiptre57gFHBz9Q5s9397U9iElMkMhJAEr8Xt9AdyCns4zdtgMZJ3seb
+	 3stiT6hpfn8ipAgDZf8Qx2EybG0ycIkA65d+WNos=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	Jeffrey Altman <jaltman@auristor.com>,
-	Simon Horman <horms@kernel.org>,
-	linux-afs@lists.infradead.org,
-	stable@kernel.org,
-	Jakub Kicinski <kuba@kernel.org>,
+	Yongpeng Yang <yangyongpeng@xiaomi.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1043/1887] rxrpc: Fix conn-level packet handling to unshare RESPONSE packets
-Date: Wed, 28 Oct 2026 17:52:19 +0100
-Message-ID: <20261028170523.146854090@linuxfoundation.org>
+Subject: [PATCH 6.1 1079/1887] f2fs: fix data loss caused by incorrect use of nat_entry flag
+Date: Wed, 28 Oct 2026 17:52:55 +0100
+Message-ID: <20261028170523.958831707@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -73,80 +69,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Yongpeng Yang <yangyongpeng@xiaomi.com>
 
-[ Upstream commit 24481a7f573305706054c59e275371f8d0fe919f ]
+[ Upstream commit 238e14eb7226f883b72caccd2d37bf5707df066b ]
 
-The security operations that verify the RESPONSE packets decrypt bits of it
-in place - however, the sk_buff may be shared with a packet sniffer, which
-would lead to the sniffer seeing an apparently corrupt packet (actually
-decrypted).
+Data loss can occur when fsync is performed on a newly created file
+(before any checkpoint has been written) concurrently with a checkpoint
+operation. The scenario is as follows:
 
-Fix this by handing a copy of the packet off to the specific security
-handler if the packet was cloned.
+create & write & fsync 'file A'                 write checkpoint
+- f2fs_do_sync_file // inline inode
+ - f2fs_write_inode // inode folio is dirty
+                                                - f2fs_write_checkpoint
+                                                 - f2fs_flush_merged_writes
+                                                 - f2fs_sync_node_pages
+                                                 - f2fs_flush_nat_entries
+ - f2fs_fsync_node_pages // no dirty node
+ - f2fs_need_inode_block_update // return false
+ SPO and lost 'file A'
 
-Fixes: 17926a79320a ("[AF_RXRPC]: Provide secure RxRPC sockets for use by userspace and kernel both")
-Closes: https://sashiko.dev/#/patchset/20260408121252.2249051-1-dhowells%40redhat.com
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: Jeffrey Altman <jaltman@auristor.com>
-cc: Simon Horman <horms@kernel.org>
-cc: linux-afs@lists.infradead.org
-cc: stable@kernel.org
-Link: https://patch.msgid.link/20260422161438.2593376-5-dhowells@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+f2fs_flush_nat_entries() sets the IS_CHECKPOINTED and HAS_LAST_FSYNC
+flags for the nat_entry, but this does not mean that the checkpoint has
+actually completed successfully. However, f2fs_need_inode_block_update()
+checks these flags and incorrectly assumes that the checkpoint has
+finished.
+
+The root cause is that the semantics of IS_CHECKPOINTED and
+HAS_LAST_FSYNC are only guaranteed after the checkpoint write fully
+completes.
+
+This patch modifies f2fs_need_inode_block_update() to acquire the
+sbi->node_write lock before reading the nat_entry flags, ensuring that
+once IS_CHECKPOINTED and HAS_LAST_FSYNC are observed to be set, the
+checkpoint operation has already completed.
+
+Fixes: e05df3b115e7 ("f2fs: add node operations")
+Signed-off-by: Yongpeng Yang <yangyongpeng@xiaomi.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rxrpc/conn_event.c | 30 +++++++++++++++++++++++++++++-
- 1 file changed, 29 insertions(+), 1 deletion(-)
+ fs/f2fs/node.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/rxrpc/conn_event.c b/net/rxrpc/conn_event.c
-index 8079094844c0e..ef9303dcf7bd1 100644
---- a/net/rxrpc/conn_event.c
-+++ b/net/rxrpc/conn_event.c
-@@ -285,6 +285,34 @@ static void rxrpc_call_is_secure(struct rxrpc_call *call)
- 	}
+diff --git a/fs/f2fs/node.c b/fs/f2fs/node.c
+index e69791dd74354..d384c56c72b3e 100644
+--- a/fs/f2fs/node.c
++++ b/fs/f2fs/node.c
+@@ -417,6 +417,7 @@ bool f2fs_need_inode_block_update(struct f2fs_sb_info *sbi, nid_t ino)
+ 	struct nat_entry *e;
+ 	bool need_update = true;
+ 
++	f2fs_down_read(&sbi->node_write);
+ 	f2fs_down_read(&nm_i->nat_tree_lock);
+ 	e = __lookup_nat_cache(nm_i, ino);
+ 	if (e && get_nat_flag(e, HAS_LAST_FSYNC) &&
+@@ -424,6 +425,7 @@ bool f2fs_need_inode_block_update(struct f2fs_sb_info *sbi, nid_t ino)
+ 			 get_nat_flag(e, HAS_FSYNCED_INODE)))
+ 		need_update = false;
+ 	f2fs_up_read(&nm_i->nat_tree_lock);
++	f2fs_up_read(&sbi->node_write);
+ 	return need_update;
  }
- 
-+static int rxrpc_verify_response(struct rxrpc_connection *conn,
-+				 struct sk_buff *skb,
-+				 u32 *_abort_code)
-+{
-+	int ret;
-+
-+	if (skb_cloned(skb)) {
-+		/* Copy the packet if shared so that we can do in-place
-+		 * decryption.
-+		 */
-+		struct sk_buff *nskb = skb_copy(skb, GFP_NOFS);
-+
-+		if (nskb) {
-+			rxrpc_new_skb(nskb, rxrpc_skb_unshared);
-+			ret = conn->security->verify_response(conn, nskb, _abort_code);
-+			rxrpc_free_skb(nskb, rxrpc_skb_freed);
-+		} else {
-+			/* OOM - Drop the packet. */
-+			rxrpc_see_skb(skb, rxrpc_skb_unshared_nomem);
-+			ret = -ENOMEM;
-+		}
-+	} else {
-+		ret = conn->security->verify_response(conn, skb, _abort_code);
-+	}
-+
-+	return ret;
-+}
-+
- /*
-  * connection-level Rx packet processor
-  */
-@@ -345,7 +373,7 @@ static int rxrpc_process_event(struct rxrpc_connection *conn,
- 		}
- 		spin_unlock_bh(&conn->state_lock);
- 
--		ret = conn->security->verify_response(conn, skb, _abort_code);
-+		ret = rxrpc_verify_response(conn, skb, _abort_code);
- 		if (ret < 0)
- 			return ret;
  
 -- 
 2.53.0
