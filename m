@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793212991;
-	b=2bwFO/YsYrkmtYToobJJ0tKlLDxuYGxHVy23fGoBbjOoPkzFJ2Q0GfYu8uNv+UcGmsE3
-	 vze0lod4974pVZJqhrrb1Rp4E0FTnfmpbze7gobqdcjWcjxWYut93feH7t6aNb/uCvFeo
-	 becQSvLfnbOJsVh9a8VGKgHBNYasedNFnZRjxOutc4kfE+njjcP9rG/46NLzc0XtLx0Kw
-	 pTnZOYFV0oFtEVJ8FOnYSTBhbaFnT9qqffMX1nDrWoZ/L1Y5hAiNv7fQWqxtZlplg5c2K
-	 igUgIdju3TWrnkc+PMkoO2OA4dD0qq8ZV+6pKcOFVWvAGgml7sfNYeALfNLim9SH4RQ==
+	t=1793212993;
+	b=rmenAiylEZWuM7QBVA6bxlHREV0OCoaYmluqyyL1UrE3AbqcX8QgXHYzQ5gjjmB1AafH
+	 vwAJcZNdl8QZP6m26bA0I+6kr01tIBpsmvMK5zrYiVj0E2qvvBU9bodISs0nHbFm+UokA
+	 8P9vBDB2zKyV1nhj0v6hA0/p2MKCV/Gvl7T7c4gCKVmg+K9e3vJwmaaXT+Tb5fTAu+Fcn
+	 Q2CC7oJOyz2PuOfll73vS+VsKeouiGMBO+qkoYRl2uGFChME5P9O7eCrIqkuLri+bJ0IO
+	 jiBGwcHMKlpCbmSGpV8n8EqN+u4fYkGhQfavR12zDEb0ZNm9sy0COOrkhRsMElSuS4Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793212991;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793212993;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=TDZbdDuFsVtKGP2/zUTxl7/bPDhUOpf84ZyMR3iEP2I=;
-	b=qs5Spl2jJzCWDvMqa/6B1rYcr3lhS5jgpS8xMuIwEuu48VXcVDfpauJNfymB4Hvfqt3/
-	 sVxVsFbv0dZsaF2qq83ms3GekAZ9NS3OQq6Tz24obRsy5MBOafUcV05sLvyAmbUVpZ+4G
-	 Jh1AJA5KDu4xhUmLy8J+hHTnH/DSGrtdGPegI+CSqqXyV0sm6LpkRP9rM/1oXWXGW7YVN
-	 C1djW4m5MkU4MgY6T5qeJQekcz7AsVV8iVesoVImuPYKDv/Drtm4ArnIFZ5yPDSs+CoiG
-	 1kFLIreOzyhBM2QP2xsgrC6Cj6q9La1eMEuZX9HXRCNufDsUgIX+SpTXptliV4gacFw==
+	bh=Eh6eedSbfbHqO2q+zU9CuKXIYydS4bxDM1YUBzbOrzU=;
+	b=IMh2jrhiREK+kXPB/EZADAa946nkRZWoORejEu0QR2BkuNw/7NSU4L28DobDgS8poc8t
+	 8sfLEmy95XwGKgIbic5W7EoIcNE3a1XeypSKQVGcj9U9xUtI5IxgetOPkOnR+sDJ6cGgQ
+	 9V+91KdGMOtAjM159GV1bw532ewDYeX+mzHV7NZ6PGpi5xLJhJWT77B2S4tM86dAU0V6F
+	 hQM8qrUxe76OFA+A3fO4tC3H6kxT3P3URCATtn1SU+lZrNj48WG8UjBWlvvrpd0NlcHr5
+	 +LuBKkz1DcYnvagndJuihCIylOYLIrf92NPL4NFa5NK1Aq/ePdu2Uxoj9fV0kH5Ybbw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EprHkh0Q;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QxnrWUTZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0581606A320;
-	Wed, 28 Oct 2026 18:43:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EE94606A31A;
+	Wed, 28 Oct 2026 18:43:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EprHkh0Q
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D64F1F01825;
-	Wed, 28 Oct 2026 18:43:09 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QxnrWUTZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2D021F01825;
+	Wed, 28 Oct 2026 18:43:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793212990;
-	bh=TDZbdDuFsVtKGP2/zUTxl7/bPDhUOpf84ZyMR3iEP2I=;
+	s=korg; t=1793212993;
+	bh=Eh6eedSbfbHqO2q+zU9CuKXIYydS4bxDM1YUBzbOrzU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EprHkh0Qbbm1lpBzKmuMs9pWvfMVxeSc8wav8q7pvU1PhaWu/gsi9JRreBtDuJQJ2
-	 jrA7ANTwG8WiBc1XP/Z57l3WqnGgh5mnsVA0069O1SysYWIhi+jJLUUeP96M3FpLSf
-	 NsdOEYxZNHcuV5pedfOpkFGB/0ZpiU4xv3ee/1a4=
+	b=QxnrWUTZoqjnhtYG1wWesMq6LXPVIv2bHCFqzXLIjZbkjK0H6mKoU7FT4tQLEDqpD
+	 Bvc9SEGNhwliSOyu++/HEgxXv+OmJ6Xjfyd+uCog7qCKgkepKfvTgFbEdkwOofOqpd
+	 QJVcsNe0rQfI+1+fJzHyD1pLzinD4DfIlNrOLkY4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.1 0294/1887] tty: abort break signalling on hangup
-Date: Wed, 28 Oct 2026 17:39:50 +0100
-Message-ID: <20261028170505.920407342@linuxfoundation.org>
+	Fan Wu <fanwu01@zju.edu.cn>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Subject: [PATCH 6.1 0342/1887] iio: light: gp2ap020a00f: drain irq_work after free_irq
+Date: Wed, 28 Oct 2026 17:40:38 +0100
+Message-ID: <20261028170507.009488611@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -67,124 +67,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-commit 845a2737e0f5ffe5ca8d38de556012b0c9472cdd upstream.
+commit 63213927b141085b6c8719b8037dab3074b7e0fe upstream.
 
-The break ioctls can race with hangup and end up calling into a tty
-driver for a device that is already gone or powered down.
+The threaded IRQ handler queues data->work through irq_work_queue() so
+the trigger is polled from a per-CPU context.  free_irq() does not flush
+an irq_work the handler already queued, so after gp2ap020a00f_remove()
+returns that work may still run and call iio_trigger_poll() on data->trig,
+which the devm cleanup has already freed, causing a use-after-free.
 
-Drivers must handle this race, but TCSBRK and TCSBRKP should still be
-aborted to avoid calling back into the driver after a user-controlled
-timeout (possibly even after the tty has been reopened).
+Add irq_work_sync(&data->work) after free_irq() in remove() and in the
+probe error path, mirroring commit 78601726d4a5 ("iio: trigger: sysfs:
+fix use-after-free on remove").
 
-Note that drivers should disable any break state on shutdown so just
-return on hangup (calling break_ctl() again is racy and will most likely
-fail for drivers handling the race).
+Found by an in-house static analysis tool, confirmed by manual review.
 
-Fixes: f34d7a5b7010 ("tty: The big operations rework")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260903163736.1499280-1-johan@kernel.org
+Fixes: bf29fbeaa13d ("iio: gp2ap020a00f: Add a driver for the device")
+Cc: stable@vger.kernel.org
+Assisted-by: Codex:gpt-5.6
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/tty_io.c |   36 +++++++++++++++++++++++++++---------
- include/linux/tty.h  |    1 +
- 2 files changed, 28 insertions(+), 9 deletions(-)
+ drivers/iio/light/gp2ap020a00f.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/tty/tty_io.c
-+++ b/drivers/tty/tty_io.c
-@@ -630,6 +630,8 @@ static void __tty_hangup(struct tty_stru
- 
- 	tty_ldisc_hangup(tty, cons_filp != NULL);
- 
-+	wake_up_interruptible(&tty->break_wait);
-+
- 	spin_lock_irq(&tty->ctrl.lock);
- 	clear_bit(TTY_THROTTLED, &tty->flags);
- 	clear_bit(TTY_DO_WRITE_WAKEUP, &tty->flags);
-@@ -2457,6 +2459,7 @@ static int tiocgetd(struct tty_struct *t
-  * send_break	-	performed time break
-  * @tty: device to break on
-  * @duration: timeout in mS
-+ * @file: file object
-  *
-  * Perform a timed break on hardware that lacks its own driver level timed
-  * break functionality.
-@@ -2464,8 +2467,9 @@ static int tiocgetd(struct tty_struct *t
-  * Locking:
-  *	@tty->atomic_write_lock serializes
-  */
--static int send_break(struct tty_struct *tty, unsigned int duration)
-+static int send_break(struct file *file, struct tty_struct *tty, unsigned int duration)
- {
-+	long timeout;
- 	int retval;
- 
- 	if (tty->ops->break_ctl == NULL)
-@@ -2479,13 +2483,26 @@ static int send_break(struct tty_struct
- 		return -EINTR;
- 
- 	retval = tty->ops->break_ctl(tty, -1);
--	if (!retval) {
--		msleep_interruptible(duration);
--		retval = tty->ops->break_ctl(tty, 0);
--	} else if (retval == -EOPNOTSUPP) {
--		/* some drivers can tell only dynamically */
--		retval = 0;
-+	if (retval) {
-+		if (retval == -EOPNOTSUPP) {
-+			/* some drivers can tell only dynamically */
-+			retval = 0;
-+		}
-+		goto out_unlock;
-+	}
-+
-+	timeout = msecs_to_jiffies(duration);
-+	timeout = wait_event_interruptible_timeout(tty->break_wait,
-+						   tty_hung_up_p(file),
-+						   timeout);
-+	/* return early on hangup only */
-+	if (timeout > 0) {
-+		retval = -EIO;
-+		goto out_unlock;
- 	}
-+
-+	retval = tty->ops->break_ctl(tty, 0);
-+out_unlock:
- 	tty_write_unlock(tty);
- 
- 	if (signal_pending(current))
-@@ -2738,10 +2755,10 @@ long tty_ioctl(struct file *file, unsign
- 		 * This is used by the tcdrain() termios function.
- 		 */
- 		if (!arg)
--			return send_break(tty, 250);
-+			return send_break(file, tty, 250);
- 		return 0;
- 	case TCSBRKP:	/* support for POSIX tcsendbreak() */
--		return send_break(tty, arg ? arg*100 : 250);
-+		return send_break(file, tty, arg ? arg * 100 : 250);
- 
- 	case TIOCMGET:
- 		return tty_tiocmget(tty, p);
-@@ -3104,6 +3121,7 @@ struct tty_struct *alloc_tty_struct(stru
- 	init_ldsem(&tty->ldisc_sem);
- 	init_waitqueue_head(&tty->write_wait);
- 	init_waitqueue_head(&tty->read_wait);
-+	init_waitqueue_head(&tty->break_wait);
- 	INIT_WORK(&tty->hangup_work, do_tty_hangup);
- 	mutex_init(&tty->atomic_write_lock);
- 	spin_lock_init(&tty->ctrl.lock);
---- a/include/linux/tty.h
-+++ b/include/linux/tty.h
-@@ -235,6 +235,7 @@ struct tty_struct {
- 	struct fasync_struct *fasync;
- 	wait_queue_head_t write_wait;
- 	wait_queue_head_t read_wait;
-+	wait_queue_head_t break_wait;
- 	struct work_struct hangup_work;
- 	void *disc_data;
- 	void *driver_data;
+--- a/drivers/iio/light/gp2ap020a00f.c
++++ b/drivers/iio/light/gp2ap020a00f.c
+@@ -1565,6 +1565,7 @@ error_trigger_unregister:
+ 	iio_trigger_unregister(data->trig);
+ error_free_irq:
+ 	free_irq(client->irq, indio_dev);
++	irq_work_sync(&data->work);
+ error_uninit_buffer:
+ 	iio_triggered_buffer_cleanup(indio_dev);
+ error_regulator_disable:
+@@ -1587,6 +1588,7 @@ static void gp2ap020a00f_remove(struct i
+ 	iio_device_unregister(indio_dev);
+ 	iio_trigger_unregister(data->trig);
+ 	free_irq(client->irq, indio_dev);
++	irq_work_sync(&data->work);
+ 	iio_triggered_buffer_cleanup(indio_dev);
+ 	regulator_disable(data->vled_reg);
+ }
 
 
