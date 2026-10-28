@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215060;
-	b=yiq6bweR+jYyB2Ymu1BFE2rkVEH8D++E5cUHLEGFwwbcbvrppEwBZIe2KWIvELlKa3j7
-	 9TljiYQR2DNEEr/nd8HUuoK0HZxNCC7HOGF1D+nRQJC7gDN2FAuGAvPxengkL7b2U26R3
-	 9QOuB7xUlfqYqwWIEUh9qdNNQKaoG2w6tM8YYWteUUDacRi5G9yjhbgLDBdkGpkx9vePk
-	 lT8E3GlvHhh/M1mmKdR2Pvhs5LGfZFTNApj5wIVR4YqUB73WkkVG0UZ6rBQ/5PS5KZ2dY
-	 tQfIfGvkb0hUfJhBkpAhroj235d1HZhKfbq2xfiTLOq5JC+bE8uwXJZXu2QIpMgsAaw==
+	t=1793215063;
+	b=u8gM+66SomleJtVqFvnsya0aE60gZqZHeYIXMCJwHj57j/PIh/r3k2IJalmtuauYxU2N
+	 a9faneKGoWa58OYLTIOx5HiEsUyCwYqRijfzqE/SsLdzOcY11XxKwcC2OBRyVuCnBljPp
+	 M+23wGjdu3nCV2WJwpJsnakWkwdwa6msOvU4tvSPGDsDRj8HJQLJ57aDitCw0q2HtWRSl
+	 1YfU+IItCI3CJj8gBFOKu78wZ7cbtvq3DTtNC5UnO898JpBNNyB4WNoKUCoqaY5JxmSGY
+	 n+deLI6tx1um+1Uq4Crjf+ZWZvztbnLD5m0jUHjsEC3uVNGx1uu0sAwjSN4Sg+RC3TA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215060;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215063;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Fjhg//POjmXCx9op3CzQ4vnzjObKUsnDNDgXWWQC0YI=;
-	b=WToQcNAd0xDh2V0i6+3z/pLUOVCZZGHclHAMO0IBvMv1J8qcPw3uPJ0ahbfnbTV4LZoq
-	 MJkjfrsVtMdHhF15+B1mDa9ZGMgNBd0Gv2Sjd16peAE7rPOAVLtu5tlsjbYoSW26mNlSD
-	 xYCd2TzT8tW5FKaGfd8x5hfJxz/3aVlHPtsSLuIzRnGawxBcdo5hXvbjLr/549l4jJIie
-	 KGh8kPt1IYyYCuIJXWfrvE6XvgQK/ec1uQT77y9TD8W0XthQdNlpMpdZa9l8xPYYk3orm
-	 P8JcxjSo+Ki3d/Lx+OHSETlZFGKZ14TN/HcerR0y4bQiU7xrDdpDf3ArG79V1naqbow==
+	bh=6rY+n4BhajpaJnjktk8Y+MiKo9Ge+tYkSxrrkJikobc=;
+	b=qzGF6tv2i6qBbT+iT73K5ySOKOxKj3ptqZ2GBqVxLL1fnyAjyPD6F/8VIfQiHorgpUK+
+	 0xhms0SJmCEaaS6lhUiVxq6AyOUAU3oTZErgZycfE4Oi2gcH6WtWJMzmp7sn+R01Y1Rw3
+	 Jtmz1iY2GdibtiXfgDDsOC+Q8Juq+j/B/tp2D1F6oHC0QYUzQb+ITv4gqLNnYBrKdqbzP
+	 5ZzVISNEMl2KKbNjed9G2/0KbH30/PPdRztH7KCzzsFF3QTvgGYwyn9TsMdAMw38o5vbs
+	 85qnBDTfgxKdt7oLShiYxCbxlF+AlhQbBgMmDTS5HBtirngHIKrxb8KXrbrXiecUPzw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EFLRBJX5;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="yBBV6/ZA";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15EC5606A31A;
-	Wed, 28 Oct 2026 19:17:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB58E606A31C;
+	Wed, 28 Oct 2026 19:17:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EFLRBJX5
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65A901F01825;
-	Wed, 28 Oct 2026 19:17:39 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yBBV6/ZA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37DC01F01825;
+	Wed, 28 Oct 2026 19:17:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215059;
-	bh=Fjhg//POjmXCx9op3CzQ4vnzjObKUsnDNDgXWWQC0YI=;
+	s=korg; t=1793215062;
+	bh=6rY+n4BhajpaJnjktk8Y+MiKo9Ge+tYkSxrrkJikobc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EFLRBJX5uAZ0Omxjxq+S+0OyeNlySvaUjkFXl9WWUw4IYmIbnya8sBSZGjtJtG8xd
-	 ZFLlK79EmmptvJKey0WmnKxR+YSpEGKvjY215DiOdPgFFgd/vTwgR2qtmmi9d3igNi
-	 CvY/o1JWU0GleO9QF8dSFd7DZYweG8cO5E2HrxQg=
+	b=yBBV6/ZAJfbSYjC6S2AN7J68X8/TWxH/PVOQUxoitlEi/JO1FY2byxVDa6lUQhFqB
+	 cDBP3L7pSFJ/kJpg4c0KziDH63x8DgLMy3PGpjtjVn6XWtyvQ61QyamtEqF8poAz88
+	 UygKZpKjrpvvgsOKXFgWEJ9R/Od5vkRb2gFtnsxg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Schmidt <mschmidt@redhat.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Gao Xiang <hsiangkao@linux.alibaba.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1077/1887] ice: fix double-free of tx_buf skb
-Date: Wed, 28 Oct 2026 17:52:53 +0100
-Message-ID: <20261028170523.914543072@linuxfoundation.org>
+Subject: [PATCH 6.1 1078/1887] erofs: unify lcn as u64 for 32-bit platforms
+Date: Wed, 28 Oct 2026 17:52:54 +0100
+Message-ID: <20261028170523.936279598@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,74 +67,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Schmidt <mschmidt@redhat.com>
+From: Gao Xiang <hsiangkao@linux.alibaba.com>
 
-[ Upstream commit 1a303baa715e6b78d6a406aaf335f87ff35acfcd ]
+[ Upstream commit 2d8c7edcb661812249469f4a5b62e9339118846f ]
 
-If ice_tso() or ice_tx_csum() fail, the error path in
-ice_xmit_frame_ring() frees the skb, but the 'first' tx_buf still points
-to it and is marked as valid (ICE_TX_BUF_SKB).
-'next_to_use' remains unchanged, so the potential problem will
-likely fix itself when the next packet is transmitted and the tx_buf
-gets overwritten. But if there is no next packet and the interface is
-brought down instead, ice_clean_tx_ring() -> ice_unmap_and_free_tx_buf()
-will find the tx_buf and free the skb for the second time.
+As sashiko reported [1], `lcn` was typed as `unsigned long` (or
+`unsigned int` sometimes), which is only 32 bits wide on 32-bit
+platforms, which causes `(lcn << lclusterbits)` to be truncated
+at 4 GiB.
 
-The fix is to reset the tx_buf type to ICE_TX_BUF_EMPTY in the error
-path, so that ice_unmap_and_free_tx_buf().
-Move the initialization of 'first' up, to ensure it's already valid in
-case we hit the linearization error path.
+In order to consolidate the logic, just use `u64` consistently
+around the codebase.
 
-The bug was spotted by AI while I had it looking for something else.
-It also proposed an initial version of the patch.
+[1] https://sashiko.dev/r/20260420034612.1899973-1-hsiangkao%40linux.alibaba.com
 
-I reproduced the bug and tested the fix by adding code to inject
-failures, on a build with KASAN.
-
-I looked for similar bugs in related Intel drivers and did not find any.
-
-Fixes: d76a60ba7afb ("ice: Add support for VLANs and offloads")
-Assisted-by: Claude:claude-4.6-opus-high Cursor
-Signed-off-by: Michal Schmidt <mschmidt@redhat.com>
-Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://patch.msgid.link/20260416-iwl-net-submission-2026-04-14-v2-4-686c33c9828d@intel.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 152a333a5895 ("staging: erofs: add compacted compression indexes support")
+Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_txrx.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ fs/erofs/zmap.c | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_txrx.c b/drivers/net/ethernet/intel/ice/ice_txrx.c
-index 1d64966da1e8a..73c974747ac4a 100644
---- a/drivers/net/ethernet/intel/ice/ice_txrx.c
-+++ b/drivers/net/ethernet/intel/ice/ice_txrx.c
-@@ -2277,6 +2277,9 @@ ice_xmit_frame_ring(struct sk_buff *skb, struct ice_tx_ring *tx_ring)
+diff --git a/fs/erofs/zmap.c b/fs/erofs/zmap.c
+index d2d7fe826091f..c120de200eb37 100644
+--- a/fs/erofs/zmap.c
++++ b/fs/erofs/zmap.c
+@@ -30,7 +30,7 @@ struct z_erofs_maprecorder {
+ 	struct erofs_map_blocks *map;
+ 	void *kaddr;
  
- 	ice_trace(xmit_frame_ring, tx_ring, skb);
+-	unsigned long lcn;
++	u64 lcn;
+ 	/* compression extent information gathered */
+ 	u8  type, headtype;
+ 	u16 clusterofs;
+@@ -41,7 +41,7 @@ struct z_erofs_maprecorder {
+ };
  
-+	/* record the location of the first descriptor for this packet */
-+	first = &tx_ring->tx_buf[tx_ring->next_to_use];
-+
- 	count = ice_xmit_desc_count(skb);
- 	if (ice_chk_linearize(skb, count)) {
- 		if (__skb_linearize(skb))
-@@ -2302,8 +2305,6 @@ ice_xmit_frame_ring(struct sk_buff *skb, struct ice_tx_ring *tx_ring)
- 
- 	offload.tx_ring = tx_ring;
- 
--	/* record the location of the first descriptor for this packet */
--	first = &tx_ring->tx_buf[tx_ring->next_to_use];
- 	first->skb = skb;
- 	first->bytecount = max_t(unsigned int, skb->len, ETH_ZLEN);
- 	first->gso_segs = 1;
-@@ -2365,6 +2366,7 @@ ice_xmit_frame_ring(struct sk_buff *skb, struct ice_tx_ring *tx_ring)
- out_drop:
- 	ice_trace(xmit_frame_ring_drop, tx_ring, skb);
- 	dev_kfree_skb_any(skb);
-+	first->skb = NULL;
- 	return NETDEV_TX_OK;
+ static int legacy_load_cluster_from_disk(struct z_erofs_maprecorder *m,
+-					 unsigned long lcn)
++					 u64 lcn)
+ {
+ 	struct inode *const inode = m->inode;
+ 	struct erofs_inode *const vi = EROFS_I(inode);
+@@ -245,7 +245,7 @@ static int unpack_compacted_index(struct z_erofs_maprecorder *m,
  }
  
+ static int compacted_load_cluster_from_disk(struct z_erofs_maprecorder *m,
+-					    unsigned long lcn, bool lookahead)
++					    u64 lcn, bool lookahead)
+ {
+ 	struct inode *const inode = m->inode;
+ 	struct erofs_inode *const vi = EROFS_I(inode);
+@@ -296,7 +296,7 @@ static int compacted_load_cluster_from_disk(struct z_erofs_maprecorder *m,
+ }
+ 
+ static int z_erofs_load_cluster_from_disk(struct z_erofs_maprecorder *m,
+-					  unsigned int lcn, bool lookahead)
++					  u64 lcn, bool lookahead)
+ {
+ 	const unsigned int datamode = EROFS_I(m->inode)->datalayout;
+ 
+@@ -316,7 +316,7 @@ static int z_erofs_extent_lookback(struct z_erofs_maprecorder *m,
+ 	const unsigned int lclusterbits = vi->z_logical_clusterbits;
+ 
+ 	while (m->lcn >= lookback_distance) {
+-		unsigned long lcn = m->lcn - lookback_distance;
++		u64 lcn = m->lcn - lookback_distance;
+ 		int err;
+ 
+ 		/* load extent head logical cluster if needed */
+@@ -343,7 +343,7 @@ static int z_erofs_extent_lookback(struct z_erofs_maprecorder *m,
+ 			return 0;
+ 		default:
+ 			erofs_err(m->inode->i_sb,
+-				  "unknown type %u @ lcn %lu of nid %llu",
++				  "unknown type %u @ lcn %llu of nid %llu",
+ 				  m->type, lcn, vi->nid);
+ 			DBG_BUGON(1);
+ 			return -EOPNOTSUPP;
+@@ -363,7 +363,7 @@ static int z_erofs_get_extent_compressedlen(struct z_erofs_maprecorder *m,
+ 	struct erofs_inode *const vi = EROFS_I(m->inode);
+ 	struct erofs_map_blocks *const map = m->map;
+ 	const unsigned int lclusterbits = vi->z_logical_clusterbits;
+-	unsigned long lcn;
++	u64 lcn;
+ 	int err;
+ 
+ 	DBG_BUGON(m->type != Z_EROFS_LCLUSTER_TYPE_PLAIN &&
+@@ -416,7 +416,7 @@ static int z_erofs_get_extent_compressedlen(struct z_erofs_maprecorder *m,
+ 		fallthrough;
+ 	default:
+ 		erofs_err(m->inode->i_sb,
+-			  "cannot found CBLKCNT @ lcn %lu of nid %llu",
++			  "cannot found CBLKCNT @ lcn %llu of nid %llu",
+ 			  lcn, vi->nid);
+ 		DBG_BUGON(1);
+ 		return -EFSCORRUPTED;
+@@ -426,7 +426,7 @@ static int z_erofs_get_extent_compressedlen(struct z_erofs_maprecorder *m,
+ 	return 0;
+ err_bonus_cblkcnt:
+ 	erofs_err(m->inode->i_sb,
+-		  "bogus CBLKCNT @ lcn %lu of nid %llu",
++		  "bogus CBLKCNT @ lcn %llu of nid %llu",
+ 		  lcn, vi->nid);
+ 	DBG_BUGON(1);
+ 	return -EFSCORRUPTED;
 -- 
 2.53.0
 
