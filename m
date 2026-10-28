@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793208852;
-	b=WVYNGrz8Jzp2zmvayXlblGXwQq2Pjw/9WlyHLSQHpB9auOsxxiJ9IIAt10Olxi97PyXB
-	 DvS+hNZ3xyAtvgjeoEBnslYPsVHm8Ghcs/2VzSxr5FgOZmsh5qG1xIgU/sBw3je4cn25Q
-	 qBWU1BPwH27kxmJ6kiUibBRX5IyTTgamUndYfLjeDZ/gjLmPTfgwtTAXHgkSbhuxLeSw8
-	 u64FY8xJRxG4skpCYCN9qesG6ku7lvZaxchtlO7g+E8EAhDqzNWXzZW/nVjesTisquNV0
-	 bA6LFHGuI8GqSkQhbFc8s5+NsTWn3QaA65/Mfp0ifzgPru5TY9Fl8PV6zlnAUJztxOg==
+	t=1793208855;
+	b=EgBvJFvF8GEQr5ojXqQd1nU2HBI+ctttCOWe8twDP4r0WW/Pnaxu1I/rYswHgU+U3Caj
+	 HxDrdp4Dpph5YJ2BuUg/JIMFxPfabkUuyRpH4yXaWQgumOBfWWLrTbaO0yOJ4bMwz9+2T
+	 BeCOTXiTbPtDNZHQbJyuugnW8HgAU+M4awPINHoyyaZTBUVt29fVdAerbU3bOM4o6Dnxe
+	 fskvaiZyRI4ZxfneGIILUat0vxO8Xyj4l7VdGQRTjTAH7ZLtQY7aJRQ7Xa2HQ2sQo1Z2u
+	 SjgjCms418CWi+x8q7VGW+bG0rPXpsSYkpnwH6azllcZpu9v2y8zGBYQSufAdiY7/7g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793208852;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793208855;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=aWZ9wFpYDaXVQR4oST6y9wZoaAzR1m+P7zGD4mLnBks=;
-	b=zscjUzXBvFG88ldY6NfYdgltV+/8YdXc5dFOc7EEm/vKv0cGno7mhgjxKQEVNnaeEqYp
-	 GTIPRpmo8MD2OqFnY7zgi4d4+kPF7kOf1LvX8IQxCRbXIzw8Wzt5ebx4Z04HWRhz2DDrY
-	 kwwfrR83b1dvEAllfQrPOGgLbckniX2J9NUTd87Bu1NVlRZ5MhqXIOPtOT8esg4IH0AWu
-	 PK0wCZqEdYezmbpcwE9WnSwgkFZLsK4NSOUQaT103C5U6Uvn3qDVJNJkTG/FyhuporaEd
-	 lo2oSVcmjI9KbzLFmo/Fyr8inFz0AcvpdV02z/gLqgSePesu3DGrX0Pra3seSiPQKJA==
+	bh=GrovHx9xkcLS4ReKHMjPFjW2F+j3zl3sNT2VrxihfAU=;
+	b=nPsdU5RgHBjIqGs+xsYf2jHHv0GDwuam5GioPhVFML+Bx+08oP8sESFiRJbsIU/T9jyS
+	 ODxY4pYyBwv+ObexLzmDStmki+lU+2Qrxmyaxb/a+xMmTp+nbMgJckO7bqgUAJTdayMXM
+	 H/zZzGIWl71GYSzWxvfPSIr+yk1Yz1dIuRKnBgOk2Rinalfjnxmp71Zr76BFKy8xxDan6
+	 W74gvKpaAUL+NyuaDroAQsnClEAUH8l3VGDyw6LvuMY7fWY5MeuFSMcJIGtuvCRBVtipY
+	 e9iyO5slb9mHlf3mlJ1vmMBNPfYChIU30qfnFLtU6oz4lYSzdaGIE/UF4ZdDB9viSCA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FKGQytQ3;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RUU8COUP;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74F12606A31C;
-	Wed, 28 Oct 2026 17:34:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41B52606A31A;
+	Wed, 28 Oct 2026 17:34:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FKGQytQ3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5CA61F01825;
-	Wed, 28 Oct 2026 17:34:11 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RUU8COUP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94D341F01825;
+	Wed, 28 Oct 2026 17:34:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793208852;
-	bh=aWZ9wFpYDaXVQR4oST6y9wZoaAzR1m+P7zGD4mLnBks=;
+	s=korg; t=1793208855;
+	bh=GrovHx9xkcLS4ReKHMjPFjW2F+j3zl3sNT2VrxihfAU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FKGQytQ3n3MdKp4r89Z2HVQOftJchwAL8WYHyKY737ZhkN8u2FnYelGzEFugcXuLs
-	 F4/i36imK2BBdLX5wopQaYzpLaEcxZIfX/YQRk6/TT4PP7KVDZjJBd3oCPjG7Qr+np
-	 XANYHRMT5CR0mehzLfJMntZmQIrVtc5DTa2c9oZA=
+	b=RUU8COUPyihPOhkf4dDbm9ZyWpLbtDcX9A8sC/daVyzb6Ebo5NXTb8hudzVRu8TR3
+	 yiOKRgz6h1nn6YC2R9669z9Vur5ALrxjfCPz2iuCzagXZld/WWyagcIZ7lyAb+TZKP
+	 7DSPC0pl3sP7xk6u5/ynJQi0d2Pc4IT4LN3BRxDU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Xu Yang <xu.yang_2@nxp.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
 	Amit Sunil Dhamne <amitsd@google.com>,
+	Badhri Jagan Sridharan <badhri@google.com>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 264/516] usb: typec: tcpm: fix debug accessory mode detection for sink ports
-Date: Wed, 28 Oct 2026 17:56:56 +0100
-Message-ID: <20261028170009.744912491@linuxfoundation.org>
+Subject: [PATCH 5.10 265/516] usb: typec: tcpm: constrain TCPM_SOURCING_VBUS event handling
+Date: Wed, 28 Oct 2026 17:56:57 +0100
+Message-ID: <20261028170009.768178981@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -70,100 +70,120 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xu Yang <xu.yang_2@nxp.com>
+From: Amit Sunil Dhamne <amitsd@google.com>
 
-[ Upstream commit f6ec9bb4acc7182b25a793ad094a764e1cb819a7 ]
+[ Upstream commit cd3b9cea675bbfebc223f007dc2f4e79524fa54c ]
 
-The port in debug accessory mode can be either a source or sink. The
-previous tcpm_port_is_debug() function only checked for source port.
+When a sink detach occurs while waiting for TX send status, the old
+TCPM_SOURCING_VBUS event along with TCPM_VBUS_EVENT and TCPM_CC_EVENT
+can be queued in port->pd_events. Because TCPM_SOURCING_VBUS is
+evaluated after TCPM_VBUS_EVENT and TCPM_CC_EVENT in
+tcpm_pd_event_handler(), a stale TCPM_SOURCING_VBUS event can override
+the detach handling and incorrectly set port->vbus_source and
+port->vbus_present to true.
 
-Commit 8db73e6a42b6 ("usb: typec: tcpm: allow sink (ufp) to toggle into
-accessory mode debug") changed the detection logic to support both roles,
-but left some logic in _tcpm_cc_change() unchanged, This causes the state
-machine to transition to an incorrect state when operating as a sink in
-debug accessory mode. Log as below:
+Add a state guard to check that the port is either operating as a
+Source (tcpm_port_is_source(port)) or in a Fast Role Swap (FRS) state
+up to FR_SWAP_SNK_SRC_SOURCE_VBUS_APPLIED before processing
+TCPM_SOURCING_VBUS. Otherwise, discard and log the event.
 
-[  978.637541] CC1: 0 -> 5, CC2: 0 -> 5 [state TOGGLING, polarity 0, connected]
-[  978.637567] state change TOGGLING -> SRC_ATTACH_WAIT [rev1 NONE_AMS]
-[  978.637596] pending state change SRC_ATTACH_WAIT -> DEBUG_ACC_ATTACHED @ 180 ms [rev1 NONE_AMS]
-[  978.647098] CC1: 5 -> 0, CC2: 5 -> 5 [state SRC_ATTACH_WAIT, polarity 0, connected]
-[  978.647115] state change SRC_ATTACH_WAIT -> SRC_ATTACH_WAIT [rev1 NONE_AMS]
+Log snippet for error condition before fix:
+[72792.204955] state change SRC_ATTACHED -> SRC_STARTUP [rev3 NONE_AMS]
+[72792.204960] sourcing vbus
+[72792.204962] VBUS on
+[72792.204970] AMS POWER_NEGOTIATION start
+[72792.204974] cc:=4
+[72792.205319] state change SRC_STARTUP -> AMS_START [rev3 POWER_NEGOTIATION]
+[72792.205325] state change AMS_START -> SRC_SEND_CAPABILITIES [rev3 POWER_NEGOTIATION]
+[72792.205332] PD TX, header: 0x11a1
+[72792.216911] PD TX complete, status: 2
+[72792.216957] pending state change SRC_SEND_CAPABILITIES -> SRC_SEND_CAPABILITIES @ 150 ms [rev3 POWER_NEGOTIATION]
+[72792.218005] VBUS off
+[72792.218013] pending state change SRC_SEND_CAPABILITIES -> SNK_UNATTACHED @ 650 ms [rev3 POWER_NEGOTIATION]
+[72792.218020] VBUS VSAFE0V
+[72792.218024] state change SRC_SEND_CAPABILITIES -> SNK_UNATTACHED [rev3 POWER_NEGOTIATION]
+[72792.218458] CC1: 2 -> 0, CC2: 0 -> 0 [state SNK_UNATTACHED, polarity 0, disconnected]
+[72792.218467] VBUS on --> VBUS left on
+[72792.218980] disable vbus discharge ret:0
+[72792.235193] Start toggling
 
-It should go to SNK_ATTACH_WAIT instead of SRC_ATTACH_WAIT state.
+After fix:
+[ 1195.291691] state change SRC_ATTACHED -> SRC_STARTUP [rev3 NONE_AMS]
+[ 1195.291698] sourcing vbus
+[ 1195.291700] VBUS on
+[ 1195.291707] AMS POWER_NEGOTIATION start
+[ 1195.291710] cc:=4
+[ 1195.291758] state change SRC_STARTUP -> AMS_START [rev3 POWER_NEGOTIATION]
+[ 1195.291794] state change AMS_START -> SRC_SEND_CAPABILITIES [rev3 POWER_NEGOTIATION]
+[ 1195.291798] PD TX, header: 0x11a1
+[ 1195.297056] PD TX complete, status: 2
+[ 1195.297092] pending state change SRC_SEND_CAPABILITIES -> SRC_SEND_CAPABILITIES @ 150 ms [rev3 POWER_NEGOTIATION]
+[ 1195.297177] VBUS off
+[ 1195.297184] pending state change SRC_SEND_CAPABILITIES -> SNK_UNATTACHED @ 650 ms [rev3 POWER_NEGOTIATION]
+[ 1195.297227] CC1: 2 -> 0, CC2: 0 -> 0 [state SRC_SEND_CAPABILITIES, polarity 0, disconnected]
+[ 1195.307469] cc:=2
+[ 1195.307544] pending state change SRC_SEND_CAPABILITIES -> SNK_UNATTACHED @ 650 ms [rev3 POWER_NEGOTIATION]
+[ 1195.307555] Discarding sourcing vbus! Invalid state SRC_SEND_CAPABILITIES
+[ 1195.957636] state change SRC_SEND_CAPABILITIES -> SNK_UNATTACHED [delayed 650 ms]
+[ 1195.957732] disable vbus discharge ret:0
+[ 1195.970196] Start toggling
+[ 1195.970468] VBUS off
+[ 1196.051637] VBUS off
+[ 1196.051642] VBUS VSAFE0V
 
-To fix this, add tcpm_port_is_debug_source() and tcpm_port_is_debug_sink()
-helper to explicitly identify the power mode in debug accessory mode.
-Update the state transition logic in _tcpm_cc_change() to ensure the state
-machine transitions comply with Type-C specification. Also update the logic
-in run_state_machine() to keep consistency.
-
-Fixes: 8db73e6a42b6 ("usb: typec: tcpm: allow sink (ufp) to toggle into accessory mode debug")
+Fixes: 8dc4bd073663 ("usb: typec: tcpm: Add support for Sink Fast Role SWAP(FRS)")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
+Assisted-by: Gemini:gemini-3.1-pro
+Signed-off-by: Amit Sunil Dhamne <amitsd@google.com>
+Reviewed-by: Badhri Jagan Sridharan <badhri@google.com>
 Acked-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Reviewed-by: Amit Sunil Dhamne <amitsd@google.com>
-Link: https://patch.msgid.link/20260424074009.2979266-1-xu.yang_2@nxp.com
+Link: https://patch.msgid.link/20260827-sourcing-vbus-v1-1-9be1aca991a0@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-
-[5.10 dependency adaptation: This tree does not contain 8db73e6a42b6
-or sink debug accessory support. Retain the source debug predicate and
-its source-path callers, and keep tcpm_port_is_debug() source-only.
-Drop the sink predicate and sink accessory state transitions, which
-require the missing feature. This supplies tcpm_port_is_debug_source()
-for cd3b9cea675b without changing 5.10 accessory behavior or adding
-functions. The target applies with a three-way merge; its references
-to AMS_START and upcoming_state still require a separate 5.10 adaptation
-because AMS and Collision Avoidance was not backported.]
-
-Stable-dep-of: cd3b9cea675b ("usb: typec: tcpm: constrain TCPM_SOURCING_VBUS event handling")
+[ Removed the unavailable AMS_START/upcoming_state check to match the direct transition to FR_SWAP_SEND. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/tcpm/tcpm.c |   11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ drivers/usb/typec/tcpm/tcpm.c |   26 ++++++++++++++++++++------
+ 1 file changed, 20 insertions(+), 6 deletions(-)
 
 --- a/drivers/usb/typec/tcpm/tcpm.c
 +++ b/drivers/usb/typec/tcpm/tcpm.c
-@@ -420,9 +420,12 @@ struct pd_rx_event {
- 	 (tcpm_cc_is_source((port)->cc2) && \
- 	  !tcpm_cc_is_source((port)->cc1)))
- 
--#define tcpm_port_is_debug(port) \
-+#define tcpm_port_is_debug_source(port) \
- 	(tcpm_cc_is_source((port)->cc1) && tcpm_cc_is_source((port)->cc2))
- 
-+#define tcpm_port_is_debug(port) \
-+	tcpm_port_is_debug_source(port)
+@@ -4287,16 +4287,30 @@ static void tcpm_pd_event_handler(struct
+ 				tcpm_log(port, "Discarding FRS_SIGNAL! Not in sink ready");
+ 		}
+ 		if (events & TCPM_SOURCING_VBUS) {
+-			tcpm_log(port, "sourcing vbus");
+ 			/*
+ 			 * In fast role swap case TCPC autonomously sources vbus. Set vbus_source
+-			 * true as TCPM wouldn't have called tcpm_set_vbus.
++			 * true conditionally as TCPM wouldn't have called tcpm_set_vbus.
++			 * If TCPM calls tcpm_set_vbus to source vbus, vbus_source would already
++			 * be true.
+ 			 *
+-			 * When vbus is sourced on the command on TCPM i.e. TCPM called
+-			 * tcpm_set_vbus to source vbus, vbus_source would already be true.
++			 * When TCPM_FRS_EVENT and TCPM_SOURCING_VBUS arrive simultaneously,
++			 * handling TCPM_FRS_EVENT above transitions the state to FR_SWAP_SEND.
+ 			 */
+-			port->vbus_source = true;
+-			_tcpm_pd_vbus_on(port);
 +
- #define tcpm_port_is_audio(port) \
- 	(tcpm_cc_is_audio((port)->cc1) && tcpm_cc_is_audio((port)->cc2))
++			if (tcpm_port_is_source(port) ||
++			    tcpm_port_is_debug_source(port) ||
++			    port->state == FR_SWAP_SEND ||
++			    port->state == FR_SWAP_SEND_TIMEOUT ||
++			    port->state == FR_SWAP_SNK_SRC_TRANSITION_TO_OFF ||
++			    port->state == FR_SWAP_SNK_SRC_NEW_SINK_READY ||
++			    port->state == FR_SWAP_SNK_SRC_SOURCE_VBUS_APPLIED) {
++				tcpm_log(port, "sourcing vbus");
++				port->vbus_source = true;
++				_tcpm_pd_vbus_on(port);
++			} else {
++				tcpm_log(port, "Discarding sourcing vbus! Invalid state %s",
++					 tcpm_states[port->state]);
++			}
+ 		}
  
-@@ -3095,7 +3098,7 @@ static void run_state_machine(struct tcp
- 			tcpm_set_state(port, SNK_UNATTACHED, PD_T_DRP_SNK);
- 		break;
- 	case SRC_ATTACH_WAIT:
--		if (tcpm_port_is_debug(port))
-+		if (tcpm_port_is_debug_source(port))
- 			tcpm_set_state(port, DEBUG_ACC_ATTACHED,
- 				       PD_T_CC_DEBOUNCE);
- 		else if (tcpm_port_is_audio(port))
-@@ -3918,7 +3921,7 @@ static void _tcpm_cc_change(struct tcpm_
- 
- 	switch (port->state) {
- 	case TOGGLING:
--		if (tcpm_port_is_debug(port) || tcpm_port_is_audio(port) ||
-+		if (tcpm_port_is_debug_source(port) || tcpm_port_is_audio(port) ||
- 		    tcpm_port_is_source(port))
- 			tcpm_set_state(port, SRC_ATTACH_WAIT, 0);
- 		else if (tcpm_port_is_sink(port))
-@@ -3926,7 +3929,7 @@ static void _tcpm_cc_change(struct tcpm_
- 		break;
- 	case SRC_UNATTACHED:
- 	case ACC_UNATTACHED:
--		if (tcpm_port_is_debug(port) || tcpm_port_is_audio(port) ||
-+		if (tcpm_port_is_debug_source(port) || tcpm_port_is_audio(port) ||
- 		    tcpm_port_is_source(port))
- 			tcpm_set_state(port, SRC_ATTACH_WAIT, 0);
- 		break;
+ 		spin_lock(&port->pd_event_lock);
 
 
