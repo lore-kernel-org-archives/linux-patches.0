@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213098;
-	b=yHPzlF0Dqdhomsun/lQRiF0AXOzrc7injIdi74jwOGBKue6IRg16hBIuCUIYPAndDQSc
-	 lTJ+ZnPqSwFFzRqB5H7LvKQTaMpIn13vfGvVkJLiNeErHFGqphPrQrUkmgAZoo/3LyyAN
-	 mmqsCPte8CJYz5K35JjRKQPfVGaOmmpbltb1vwTu4+ck9VnZjO1Q9aMqihzJEhEHvSsMA
-	 e6aTCHnkd7PT8FN/ypqmzeafafmqDGQ5VXVK5BWNjkbKfQtiorVrAp/uRh5NuvGHYLZUT
-	 vppT6zHHiMppxyqR1X+vnyrK3WijhySIFjgAslNwbI/+8K2axnyV4s7Em1j2+JE0NYA==
+	t=1793213101;
+	b=XVzOBtfa5f/I4nyxaLD7KgvdCfPlsNOorzRmEv6Nh+maugM1ALJAB6Uinos7rAW3xIUf
+	 mf16A3QV3s0CMNGlvC9RgTUEhc5u93rsH4Wb95nsu6d4+xbg6ouK6xZ75UknlMxU/7SI3
+	 ZLUNI+eP0fVmBXhtF/N4fmsB5Rwa7gkTb21BenGMlISy4MKMchGkRszcYtPjlXXPmowa0
+	 JH8/tRVoK01BbopoMcJVRbX3nt3jzcLC/H5DSElZvA8vHRx0kR0m9aHPkRtbN5fP8B7IY
+	 b9TyOweLQcyybqZ0RjyEi1Kev7Dv0Vu8pBdXxPxSl5dRtLURSjW2lkzizJVbgHwK0jw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213098;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213101;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=foan6UAcF/aKYHhqZPgC7NQm+7aTJFWvC6q4fGwhIQM=;
-	b=Z5wM2tKvxtMqmAA8eq0owa8MD2abGIIhg7jTAeTM6Yyi9iNuthh6owzNWZ/iDyKiQ3C2
-	 nCiLG/7uVuDnqDBN62SR3H8ufwkrYvFIX49Xut76IKI9ffVAhVPq7jys7XozIGlVz0bbI
-	 Lbz/L0txRfhQJ8uKlOtPWBDw+8ZCL5LKp1fwZSalUaiShOid5+KpNi//uTMcIJZ/7BSzV
-	 8ojaHi0DgoCFNGuuYYXKeXCx6ZThdTVB+juCvNy8yGqfedSSNjSKs3FraN6lcaJdfQO5m
-	 c53WOE3EEionSskfMmsvRU9YWyL/xHQuOJXyfnFQ85rI0S5hVF60kvQPpqYfoABw0YA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=YyqlF8KyaTBgH4aIxB2OpgFrwJd7X2pjXnJzpYKTD4c=;
+	b=nwzGoZ+8QxS8wpLq7+xML0HNUrheAqCXb235JDJXlqIhF3MVDosMAWhBU6A9CimOiNmz
+	 iLuA6ept8qQT4Noh6flgvfouCoIktqqGtcVFr9fYJ6KNLiaKKQuill1wfILhFOoJl9pR5
+	 P06UAmg9cTaWEYMOvItoLv4ALib13vY66vCHMyp0BwKfKej4CkHofTeJcdE5SDZFnjyz0
+	 p93LGf9M5mm/riRC2ewYZ41zwRwaybZkqBxkbpgz2TLzcRDSyyaFnL7TJnGc6kZ+6+h38
+	 1A+OtyUiKZCNlkdnBqJwXQoaHKXMZ7HeUx0OPQuv7nI0ox1IaY/pLM53t3yKRLw1t6Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F0rdJxdO;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KmTmycfp;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 612C9606A31A;
-	Wed, 28 Oct 2026 18:44:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45C2B606A321;
+	Wed, 28 Oct 2026 18:45:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F0rdJxdO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0B541F01825;
-	Wed, 28 Oct 2026 18:44:57 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KmTmycfp
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFF001F01825;
+	Wed, 28 Oct 2026 18:45:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213098;
-	bh=foan6UAcF/aKYHhqZPgC7NQm+7aTJFWvC6q4fGwhIQM=;
+	s=korg; t=1793213101;
+	bh=YyqlF8KyaTBgH4aIxB2OpgFrwJd7X2pjXnJzpYKTD4c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=F0rdJxdOY3uUvc22bpxBv6RQT7rcjq3tAlFoRkQx2VJMNXiowE0SEZ/kh1JoQ7pR0
-	 gpsXKxlJJa0yldxzI+eAPftbWGN4aO/R8wuEEwlxK/qqDCbij7LVzN84yoGaQBjtgC
-	 /7ABAYkpeeINXyW+fzhwsMfPYYda7ewklZEFKzmQ=
+	b=KmTmycfppz/SxMOsgu4M4mTtEFTGTYzLDsC1DU5iV0EbyvGEtr08HnFMJtH/bEM67
+	 uyGjSABlRqkxYgIPzgNPS2feyFY7bWwBdmy5Sk/IAZ++/CuwyZ/xywyA7LP2S6aAcn
+	 LXTOqKJVIOpc6rZBrSWscFlQdmjmC3s1aTEucqtI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	=?UTF-8?q?Francisco=20Beltr=C3=A1n=20Millal=C3=A9n?= <fbeltranmillalen@gmail.com>,
+	Chen Ni <nichen@iscas.ac.cn>,
+	Alan Stern <stern@rowland.harvard.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0384/1887] drm/amdgpu: reset VI ASIC on MacBookPro14,3
-Date: Wed, 28 Oct 2026 17:41:20 +0100
-Message-ID: <20261028170507.971631766@linuxfoundation.org>
+Subject: [PATCH 6.1 0385/1887] usb: ohci-spear: Remove unnecessary NULL check before clk_disable_unprepare()
+Date: Wed, 28 Oct 2026 17:41:21 +0100
+Message-ID: <20261028170507.995911726@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -63,66 +62,43 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Francisco Beltrán Millalén <fbeltranmillalen@gmail.com>
+From: Chen Ni <nichen@iscas.ac.cn>
 
-[ Upstream commit a22e5e4f2ebbdbb962cc3233094d189c4dfaa051 ]
+[ Upstream commit a891b9aebcc7406fe2f439d184bac3948fb08645 ]
 
-On a MacBookPro14,3 with a Radeon Pro 555 (Polaris11), the framebuffer
-is at MC address 0 when amdgpu loads after a cold boot, as the firmware
-leaves it (MC_VM_FB_LOCATION = 0x007f0000), while the VBIOS ASIC_Init
-table places it at 0xF4_0000_0000 (0xf47ff400).  amdgpu reads the
-location once, at init, so after a re-POST (S3 resume or GPU reset)
-the framebuffer has moved and the driver keeps programming the old
-one: the SMU is handed a table that was never written and the GPU
-does not come back, which leaves the internal panel black.
+clk_disable_unprepare() already checks NULL by using IS_ERR_OR_NULL.
+Remove unneeded NULL check for clk here.
 
-Resetting the ASIC on load makes ASIC_Init run before the driver reads
-the location, so the driver uses the VBIOS placement from the start and
-every later re-POST puts the framebuffer back where it already is.
-
-Add the Radeon Pro 555 used in this machine to the existing VI reset
-quirk table.
-
-Tested on a MacBookPro14,3 on 6.18.49 with the quirk table backported
-(the kernel also carries unrelated local PCI and ACPI patches for this
-machine).  The framebuffer is at 0x000000F400000000 after both cold and
-warm boot, and the GPU survived 9 S3 cycles (lid close and rtcwake, one
-of them with the lid closed for about 7.5 minutes and a USB-C disk
-attached), each followed by a few minutes of 3D load; no ring timeouts
-or VM faults were reported.  The reset adds about 0.23 s to amdgpu init.
-
-Suggested-by: Christian König <christian.koenig@amd.com>
-Suggested-by: Alex Deucher <alexander.deucher@amd.com>
-Link: https://lore.kernel.org/all/20260924132952.25054-1-fbeltranmillalen@gmail.com/
-Assisted-by: Claude:claude-opus-5-5
-Signed-off-by: Francisco Beltrán Millalén <fbeltranmillalen@gmail.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit b6b1d97218518003107d4446fac278fa3e0a19a0)
-Cc: stable@vger.kernel.org
+Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
+Acked-by: Alan Stern <stern@rowland.harvard.edu>
+Link: https://lore.kernel.org/r/20250617042050.1930940-1-nichen@iscas.ac.cn
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: b1b0f8bdbbc8 ("usb: ohci-spear: disable controller wakeup on removal")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/vi.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/usb/host/ohci-spear.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/vi.c b/drivers/gpu/drm/amd/amdgpu/vi.c
-index c6f77e5207be6..4ad7db4e414db 100644
---- a/drivers/gpu/drm/amd/amdgpu/vi.c
-+++ b/drivers/gpu/drm/amd/amdgpu/vi.c
-@@ -1442,6 +1442,7 @@ struct vi_reset_quirk {
- static const struct vi_reset_quirk vi_reset_quirks[] = {
- 	{ 0x67ef, PCI_VENDOR_ID_APPLE, 0x0190, 0xe3 }, /* Radeon Pro 555X */
- 	{ 0x67ef, PCI_VENDOR_ID_APPLE, 0x018f, 0xc2 }, /* Radeon Pro 560X */
-+	{ 0x67ef, PCI_VENDOR_ID_APPLE, 0x017a, 0xc7 }, /* Radeon Pro 555 */
- };
+diff --git a/drivers/usb/host/ohci-spear.c b/drivers/usb/host/ohci-spear.c
+index 196951a27f3f2..0f646c35ca737 100644
+--- a/drivers/usb/host/ohci-spear.c
++++ b/drivers/usb/host/ohci-spear.c
+@@ -104,8 +104,7 @@ static int spear_ohci_hcd_drv_remove(struct platform_device *pdev)
+ 	struct spear_ohci *sohci_p = to_spear_ohci(hcd);
  
- static bool vi_need_reset_on_init(struct amdgpu_device *adev)
+ 	usb_remove_hcd(hcd);
+-	if (sohci_p->clk)
+-		clk_disable_unprepare(sohci_p->clk);
++	clk_disable_unprepare(sohci_p->clk);
+ 
+ 	usb_put_hcd(hcd);
+ 	return 0;
 -- 
 2.53.0
 
