@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793210664;
-	b=0d519XpoyGxM4PGey3UkX2492gWMjk2xPGUf0Tw6R5hwmNTX1uu0WH5q4id6WsSQpxlL
-	 XhMJZfIpfH4Q0fk1enIJmUky64qEnpo2amiy7FXuaHAnCMIIo+Tm2Dk55wH4LIwyariDX
-	 mw6YL+zlcr5pyK3gsHhUy505piTcGUw8jlTULGX3Q378QjesX2DfkjgPbAyeoLtqaCkYc
-	 lc0tW8OeUA0200lAuu7Dn0QNzNJwenKvAsPALFts9yNa516dTgpifPOwHc7bpa0gg1QUd
-	 Bpy+/l63F5mmxz97wFeFcj+29pT1p1Fpn+bkw9/2Td+/kJFKKzXk1D9otnScfliCG8g==
+	t=1793210666;
+	b=Yt4C/F5MXlACgQ6ARGSVx1QAOFiGhr/cK20A0FPo5kqMIhP/vyFl5q9WbVj3cDTCisHu
+	 5UiHUs2r0R23XGzy2697JmgOUF1LvkkK6nf0p8FplSR0qL9NC6lVytnHXS1ZV6fI5lb0k
+	 GGytUSjpfxEeA9Cgj88WLE0jCjLUHY1s6TJQ+6HDXIHeRK4GGCWt88NyimViVv5QBxmLa
+	 GGEjz5r3d5TAnllko1qwslNTtSadcZTwhyvuIb8FD4io0SDz356Q1ztxslzeLkjIR5HAX
+	 QddqSMVcEUBbTTasovgnubS4NkcpMSV0N5WLrZXeHSfohCuWjQf31FK7kteX4j5nTng==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793210664;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793210666;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=MghCoaambyw0ML3VxoRbApfjRNQ+f3ndc0aB0jXQCtM=;
-	b=2BCOhwSdWOMK5DU41XL43IivUwLZIxcRUqvdQkntx+NnSIBevRxnG8PtN17eOJdu+E6m
-	 wf30zAEy5RwtDW5i45Km/9klz3FImsF+wLKO/pv7H7AVc0w9QOkySKVylsqauR42etBR1
-	 WjiasVgPoTrQCPH3DEkTK7+L3MyW/1MuIz/2FmW6aOQQH5lVR/YKUIsc024U/bPg0GV0c
-	 7vFIjABVieLLwGUKsUdMMuvGL3U1rCapjXqMQ4Oiejc19N8vyDaT8OES5NaTUqinribzG
-	 NRocOhteo+IB2v135h/X6mHDxW9WosLu0vwodHctlo12XAs+1M+RANoXuSo82Mld9ug==
+	bh=7XvYymiHaJb04F9d1qag4vsE+SpN9aJT7styrDbH4Eg=;
+	b=C3IalOZo9Lw8n0+pSCV4Ya7hk9jqeGBKfDAuBeTS5GQhHD54SRonxrX7b8qKUSJozzT8
+	 ytBwhrug7PVavELRWWuI1u5mDW2LSC+PGfd/o92rYuhvOdZPYennCJxV+CQwrka6riyV0
+	 XNKoCCEGnJNLxCjtJh9BA6FjcCdjpi5fk4KNtvxX2/rz0/MQwaGrsZkAGtotwWmp6fWkt
+	 Gliq381LtTtor74UXkspLF92hWxppLsSEs1fNUPkJRA+KqDtLlI+8O2o31YRKQ46PwI5X
+	 /QQ1XZDnwwgRdgwLilxmRMQQXx77tMhsiFGGFnRFqiNdf+tzhXx2YR067UbfockaPMA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2BO7XLhM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bYMWlVN1;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4741606A321;
-	Wed, 28 Oct 2026 18:04:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81652606A321;
+	Wed, 28 Oct 2026 18:04:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2BO7XLhM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F63C1F01825;
-	Wed, 28 Oct 2026 18:04:22 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bYMWlVN1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1D371F01825;
+	Wed, 28 Oct 2026 18:04:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793210663;
-	bh=MghCoaambyw0ML3VxoRbApfjRNQ+f3ndc0aB0jXQCtM=;
+	s=korg; t=1793210666;
+	bh=7XvYymiHaJb04F9d1qag4vsE+SpN9aJT7styrDbH4Eg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2BO7XLhMI19qUlp6wnJOT8gQIz8tIYVrwLcNzoRsS44l4rg9+Pw+s/BRccK20ug/q
-	 /VV8iZ+HyZdj1Q9zADGEUh1gi3cd/P5LOmfuBnNNPaLXjDFHBw9cSWVB70yH9EVNHC
-	 iuEsuPVTcBYtpcSREbWuKvKjtaFWOlVeYFVoTnIU=
+	b=bYMWlVN1MKpHz/iRRf3UH+9cRIgrEgHSBJpJD7Vp4mdo3crJWB0Tg45MRnxG9f3XX
+	 QyldetQUomBGPTRfWwT+Q0N7yYR/RuOnpTq6Kvusvt+nTjjjBFpXIudZq5AF/WNnnh
+	 /QOicxeikRfBYXK8ZcbS9E7f0NdZE9OQcM8vciJ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ijae Kim <ae878000@gmail.com>,
-	Myeonghun Pak <mhun512@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Daniel Zahka <daniel.zahka@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 105/571] bna: prevent IOC timer rearm during teardown
-Date: Wed, 28 Oct 2026 17:54:12 +0100
-Message-ID: <20261028170010.512480922@linuxfoundation.org>
+Subject: [PATCH 5.15 106/571] tcp: prevent collapsing skbs across boundary in rtx queue
+Date: Wed, 28 Oct 2026 17:54:13 +0100
+Message-ID: <20261028170010.537087953@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -69,78 +70,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Willem de Bruijn <willemb@google.com>
 
-[ Upstream commit 77b1718e39e5c9f6956fb60807326af20baf889d ]
+[ Upstream commit fc6d80eb504458d6416b75a94188b268c95c6533 ]
 
-bna: prevent IOC timer rearm during teardown
+tcp_write_collapse_fence() sets TCP_SKB_CB(skb)->eor = 1 on
+tcp_write_queue_tail(sk) to prevent skbs queued after a switch to
+device encryption from being collapsed into earlier skbs.
 
-bnad_pci_remove() and the probe disable_ioceth path call
-timer_delete_sync() for ioc_timer, sem_timer and hb_timer, but not for
-iocpf_timer.  bnad_iocpf_timeout() then takes bnad->bna_lock after
-free_netdev() has freed the struct bnad.
+The fence is a no-op if all earlier data has already been transmitted
+when the switch happens: sk->sk_write_queue is empty. The not yet
+acknowledged earlier skbs wait in sk->tcp_rtx_queue with eor 0.
 
-Deleting iocpf_timer last does not fix this.  sem_timer and
-iocpf_timer rearm each other: bnad_iocpf_sem_timeout() can arm
-iocpf_timer, and bnad_iocpf_timeout() arms sem_timer from
-bfa_ioc_hw_sem_get() when the semaphore is busy.
-timer_delete_sync() only waits out its own callback.
-bnad_ioceth_disable() can time out and leave that callback live.
+On a subsequent retransmit or SACK shift, tcp_retrans_try_collapse() or
+tcp_shift_skb_data() can then merge an skb queued after the switch into
+one queued before it.
 
-Shut all four IOC timers down with timer_shutdown_sync() on both
-paths, so a later mod_timer() is ignored.
+Both users of the fence are affected:
 
-This issue was identified during our ongoing static-analysis research
-while reviewing kernel code.
+- psp: devices only encrypt skbs with skb->decrypted set. The merged skb
+  keeps decrypted = 0 from the earlier skb, so merged data sent after
+  psp_sock_assoc_set_tx() is retransmitted in cleartext.
 
-Fixes: 1d32f7696286 ("bna: IOC failure auto recovery fix")
+- tls device offload: the merged skb straddles the start marker set in
+  tls_set_device_offload(). The software fallback (fill_sg_in() returns
+  -EINVAL) and the mlx5, nfp and funeth drivers cannot handle such an
+  skb and drop it. Every retransmit rebuilds the same skb, so the
+  connection stalls.
+
+Fix this in two places, for defense in depth:
+
+1. Fall back to tcp_rtx_queue_tail(sk) in tcp_write_collapse_fence()
+   when tcp_write_queue_tail(sk) is NULL.
+
+2. Check !skb_cmp_decrypted(to, from) in tcp_skb_can_collapse(), as
+   tcp_skb_can_collapse_rx() does on receive. skb_shift(), which both
+   collapse paths call, already has a DEBUG_NET_WARN_ON_ONCE() for this
+   condition.
+
+Fixes: e8f69799810c ("net/tls: Add generic NIC offload infrastructure")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Co-developed-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Link: https://patch.msgid.link/20260922014605.588040-1-mhun512@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-[ inlined bnad_ioc_timers_shutdown() into the existing teardown functions. ]
+Signed-off-by: Willem de Bruijn <willemb@google.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Daniel Zahka <daniel.zahka@gmail.com>
+Link: https://patch.msgid.link/20260924154427.953800-1-willemdebruijn.kernel@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ inlined logic for missing skb_cmp_decrypted() and tcp_write_collapse_fence() helpers into existing functions. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/brocade/bna/bnad.c | 16 ++++++++++------
- 1 file changed, 10 insertions(+), 6 deletions(-)
+ include/net/tcp.h    | 4 ++++
+ net/tls/tls_device.c | 4 ++--
+ 2 files changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/brocade/bna/bnad.c b/drivers/net/ethernet/brocade/bna/bnad.c
-index a3b6b9af0b057..437a87b1ed4f9 100644
---- a/drivers/net/ethernet/brocade/bna/bnad.c
-+++ b/drivers/net/ethernet/brocade/bna/bnad.c
-@@ -3745,9 +3745,11 @@ bnad_pci_probe(struct pci_dev *pdev,
- 	bnad_res_free(bnad, &bnad->mod_res_info[0], BNA_MOD_RES_T_MAX);
- disable_ioceth:
- 	bnad_ioceth_disable(bnad);
--	del_timer_sync(&bnad->bna.ioceth.ioc.ioc_timer);
--	del_timer_sync(&bnad->bna.ioceth.ioc.sem_timer);
--	del_timer_sync(&bnad->bna.ioceth.ioc.hb_timer);
-+	/* The IOC timers rearm one another.  Shut down all of them. */
-+	timer_shutdown_sync(&bnad->bna.ioceth.ioc.ioc_timer);
-+	timer_shutdown_sync(&bnad->bna.ioceth.ioc.sem_timer);
-+	timer_shutdown_sync(&bnad->bna.ioceth.ioc.hb_timer);
-+	timer_shutdown_sync(&bnad->bna.ioceth.ioc.iocpf_timer);
- 	spin_lock_irqsave(&bnad->bna_lock, flags);
- 	bna_uninit(bna);
- 	spin_unlock_irqrestore(&bnad->bna_lock, flags);
-@@ -3788,9 +3790,11 @@ bnad_pci_remove(struct pci_dev *pdev)
+diff --git a/include/net/tcp.h b/include/net/tcp.h
+index a0f3dd3faf60c..0dec2857f5b5d 100644
+--- a/include/net/tcp.h
++++ b/include/net/tcp.h
+@@ -974,6 +974,10 @@ static inline bool tcp_skb_can_collapse_to(const struct sk_buff *skb)
+ static inline bool tcp_skb_can_collapse(const struct sk_buff *to,
+ 					const struct sk_buff *from)
+ {
++#ifdef CONFIG_TLS_DEVICE
++	if (from->decrypted != to->decrypted)
++		return false;
++#endif
+ 	return likely(tcp_skb_can_collapse_to(to) &&
+ 		      mptcp_skb_can_collapse(to, from));
+ }
+diff --git a/net/tls/tls_device.c b/net/tls/tls_device.c
+index 2060380265a75..636e106679056 100644
+--- a/net/tls/tls_device.c
++++ b/net/tls/tls_device.c
+@@ -224,7 +224,7 @@ static void tls_device_resync_tx(struct sock *sk, struct tls_context *tls_ctx,
+ 	int err = 0;
+ 	u8 *rcd_sn;
  
- 	mutex_lock(&bnad->conf_mutex);
- 	bnad_ioceth_disable(bnad);
--	del_timer_sync(&bnad->bna.ioceth.ioc.ioc_timer);
--	del_timer_sync(&bnad->bna.ioceth.ioc.sem_timer);
--	del_timer_sync(&bnad->bna.ioceth.ioc.hb_timer);
-+	/* The IOC timers rearm one another.  Shut down all of them. */
-+	timer_shutdown_sync(&bnad->bna.ioceth.ioc.ioc_timer);
-+	timer_shutdown_sync(&bnad->bna.ioceth.ioc.sem_timer);
-+	timer_shutdown_sync(&bnad->bna.ioceth.ioc.hb_timer);
-+	timer_shutdown_sync(&bnad->bna.ioceth.ioc.iocpf_timer);
- 	spin_lock_irqsave(&bnad->bna_lock, flags);
- 	bna_uninit(bna);
- 	spin_unlock_irqrestore(&bnad->bna_lock, flags);
+-	skb = tcp_write_queue_tail(sk);
++	skb = tcp_write_queue_tail(sk) ?: tcp_rtx_queue_tail(sk);
+ 	if (skb)
+ 		TCP_SKB_CB(skb)->eor = 1;
+ 
+@@ -1108,7 +1108,7 @@ int tls_set_device_offload(struct sock *sk, struct tls_context *ctx)
+ 	 * SKBs where only part of the payload needs to be encrypted.
+ 	 * So mark the last skb in the write queue as end of record.
+ 	 */
+-	skb = tcp_write_queue_tail(sk);
++	skb = tcp_write_queue_tail(sk) ?: tcp_rtx_queue_tail(sk);
+ 	if (skb)
+ 		TCP_SKB_CB(skb)->eor = 1;
+ 
 -- 
 2.53.0
 
