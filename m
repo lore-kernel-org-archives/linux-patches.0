@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793212314;
-	b=yZZ6aKEE0+uf1T2D3m0dLIfhXhdKSBDhxMDOLIwXlOf1ZxOptQ/RnR5HA12ir+znY+2G
-	 4y/eGmb/xSFzOZdfaSR7FDi6Ldk16ncB5/j7+4RDiJJuk+a5SgSPvokzwzw/cHpBNZuZ0
-	 FcnPaQKvuvJ17wkTgs3uY7s6lKlIh0iB5OnrxBM9FkKgf5q8hRJ0AVNp7ehgIFfUEzOcE
-	 jKBcJI/Y3uy/1WDaMbwAenO8yUBKmqT2zTa5ZPFw/ynI7xJaTAAQ9uQLpGZTNQUDerLjs
-	 mZcXs+yOaCTIa7Hj7eJc/RPPlJjWChGrHTuOa2x286Xql3pZhny8ASXLny12ZmvZXiA==
+	t=1793212318;
+	b=BDDUnD7LyQpuvCSXBDIJaOMHVrtx2Dio3KGV41dHAS7dnPHTnn/UO1y1vtxDW29kaeLD
+	 W4I76za1T6OucaOkOTHjl2tTlJZO5uQJuXBaYdo+qKS5CyBT/B8zcq0IqCpChQtApohwS
+	 vIh9xCckOpof+JALoqZoQARseat1HtKEgdBITWuw+ai9UroAuutmW/qBbuW7vAs+Ui7hK
+	 0kd0b0wHcvdvBkalxpPOV922LUm42SZ10kr3dIrH5sNymDTBDnZqQXlKqjtbh/dXNZUAD
+	 EsJLKkigm+ynogD1a181ilcLdsqcQGeWD5fFSNedP0DP9TI58Px/fideL6sbBvkzkwQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793212314;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793212318;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=dCtdZjAs45/C+ucPH84p+LfmMQpgaJ2WBr/ETvSlQ54=;
-	b=hpvmTmXrdjzIyc6SrlndSwYqyhGrJ5N3RHevRQNYLh66nJ3Lzy2VJH/vkM92RzRgtC0O
-	 AX5OqhRGcxz1uib+rlIovLO4w8ZUEcpy0+r7ES3YkZ770bMwzxF4TbIeNtIvUwaKLOV7K
-	 HKMVlAgyvwayNMSaNVNmw5t7ku0OLNZkZK7W8b3MiretkwHIqgk1e3aeS2tgdUZEbTZHM
-	 +/dX4SjGUV+lBnrLgOUBLhhVmykPXrMkKhANqM2Nx0CFzIO2sYt9kdD+yAakPsNs2cABA
-	 wGPuUYpw5jNK3gLiqj2vu9XjD8O99exgnvEHbwvJi3VWxI5TX6zmYtnELYNlE6NuoEA==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=/iJmKqDmEQwPpxzw9ijKODS/XAivehbIYesZxLiTUEc=;
+	b=xzOZI2dZXgt0zbU2L11avcLm5oaiEWQNmOMGcuZI3N59OxCtnJS96cEYDFoEBZ79pF/9
+	 boMUkT6FRFpL6tCG3tKP7cEfc1fUfSOe0kwz6PYQHlk6wOCCxhVi/CdKhpKmcEPfYdwpF
+	 GXgxJNB+yIwvk0TiJAB1nqIDuYD60XywkYdtgE4ilJaes0mf3y660Z0DHb16tHCghonbC
+	 28yfLv2V8u1K8nV1O91WKSCTR6GxBbN1Kvc9gCEauzfqqJpVPyBawvTI0GSI7A0cV3uoz
+	 SObzicy5BDzVeOxAozuDDdBeN5nm9x+OkRE2Ite4plHTTvSRG1dRHu5vtq6fKtNExOQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0tw5fuTJ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FXWhWM1M;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8211A606A31A;
-	Wed, 28 Oct 2026 18:31:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4C7B606A31A;
+	Wed, 28 Oct 2026 18:31:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0tw5fuTJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6D1C1F01825;
-	Wed, 28 Oct 2026 18:31:53 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FXWhWM1M
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E00651F01825;
+	Wed, 28 Oct 2026 18:31:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793212314;
-	bh=dCtdZjAs45/C+ucPH84p+LfmMQpgaJ2WBr/ETvSlQ54=;
+	s=korg; t=1793212317;
+	bh=/iJmKqDmEQwPpxzw9ijKODS/XAivehbIYesZxLiTUEc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0tw5fuTJMRjm6VYByjl08PiAG10yrA+e+tsPI11rtmLW4fFy6KnoXNDce9AAdChqV
-	 P4FkrzWlDd5gQYjW0q+z2aoIe5CtAeQ8MtX6x0LgOWqiwtbmqY/X9g66CKJ1xRvMlt
-	 8ZFpJsh1F7Ze3YX4JN5IBqXzP76wRPyWNl5JzeQ8=
+	b=FXWhWM1M8uCnGESEEHKGKKpoGOUwQUxRzApIQdMOTJOCiWxkG66yX4dAUIyECrpIW
+	 cJPhuxIt3+i+BuaR+Lkd2AjZnZU/QSf+pjX6fRBo/40SPxzfKUbfE7C7CP+CUvbBqK
+	 RV11jBUjwr6WidtB9zT7wT+D2TKa8aJzTX5lJffg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <cel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0067/1887] nfsd: check nfsd4_acl_to_attr() return value in nfsd4_create()
-Date: Wed, 28 Oct 2026 17:36:03 +0100
-Message-ID: <20261028170500.757474237@linuxfoundation.org>
+Subject: [PATCH 6.1 0068/1887] nfsd: fix clock domain mismatch in clients_still_reclaiming()
+Date: Wed, 28 Oct 2026 17:36:04 +0100
+Message-ID: <20261028170500.780258865@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -62,6 +62,7 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
@@ -70,65 +71,68 @@ Content-Transfer-Encoding: 8bit
 
 From: Jeff Layton <jlayton@kernel.org>
 
-[ Upstream commit 2c7912732184773dbd371a411da87af1cc080b86 ]
+[ Upstream commit 09ea3eb9a518565f5bca386e81b993ed8825f5e8 ]
 
-nfsd4_create() stores the return value of nfsd4_acl_to_attr() in
-status, but the switch(create->cr_type) block unconditionally
-overwrites it in every branch. ACL translation errors are silently
-discarded, and the CREATE proceeds without the requested ACL.
+clients_still_reclaiming() computes a deadline from nn->boot_time
+(CLOCK_REALTIME, ~1.7 billion) but compares it against
+ktime_get_boottime_seconds() (CLOCK_BOOTTIME, seconds since boot).
+The comparison is always false — it would take ~54 years of uptime
+for BOOTTIME to exceed the REALTIME-derived deadline.
 
-Add an early exit check after nfsd4_acl_to_attr(), matching the
-pattern already used in nfsd4_setattr().
+This means any client can hold the server in grace indefinitely by
+sending CLAIM_PREVIOUS OPEN requests, blocking all non-reclaim
+operations for all other clients.
 
-Fixes: c0cbe70742f4 ("NFSD: add posix ACLs to struct nfsd_attrs")
+Add boot_time_bt (CLOCK_BOOTTIME) alongside the existing boot_time
+and use it for the deadline computation. boot_time (CLOCK_REALTIME)
+is preserved for its cl_boot clientid-nonce role.
+
+Fixes: 20b7d86f29d3 ("nfsd: use boottime for lease expiry calculation")
 Cc: stable@vger.kernel.org
 Assisted-by: Claude:claude-opus-4-8
 Signed-off-by: Jeff Layton <jlayton@kernel.org>
-[ cel: prefer NFS4ERR_BADTYPE over NFS4ERR_ATTRNOTSUPP ]
-Link: https://patch.msgid.link/20260611-nfsd-testing-v2-5-5b90e276f2d9@kernel.org
+Link: https://patch.msgid.link/20260611-nfsd-testing-v2-12-5b90e276f2d9@kernel.org
 Signed-off-by: Chuck Lever <cel@kernel.org>
-[ retained unconditional ACL conversion because the older helper already handles null ACLs ]
+[ preserved the branch’s boolean fields instead of the upstream flags bitmap ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs4proc.c | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ fs/nfsd/netns.h     | 1 +
+ fs/nfsd/nfs4state.c | 3 ++-
+ 2 files changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/fs/nfsd/nfs4proc.c b/fs/nfsd/nfs4proc.c
-index 7486c470fe6f1..97d48dea5ac3a 100644
---- a/fs/nfsd/nfs4proc.c
-+++ b/fs/nfsd/nfs4proc.c
-@@ -761,7 +761,23 @@ nfsd4_create(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
- 	if (status)
- 		return status;
+diff --git a/fs/nfsd/netns.h b/fs/nfsd/netns.h
+index be0c8f1ce4e3e..b95ad49800533 100644
+--- a/fs/nfsd/netns.h
++++ b/fs/nfsd/netns.h
+@@ -67,6 +67,7 @@ struct nfsd_net {
+ 	bool grace_end_forced;
+ 	bool client_tracking_active;
+ 	time64_t boot_time;
++	time64_t boot_time_bt;	/* same instant in CLOCK_BOOTTIME */
  
-+	/* Sanitize cr_type to avoid returning ATTRNOTSUPP. */
-+	switch (create->cr_type) {
-+	case NF4LNK:
-+	case NF4BLK:
-+	case NF4CHR:
-+	case NF4SOCK:
-+	case NF4FIFO:
-+	case NF4DIR:
-+		break;
-+	default:
-+		status = nfserr_badtype;
-+		goto out_aftermask;
-+	}
-+
- 	status = nfsd4_acl_to_attr(create->cr_type, create->cr_acl, &attrs);
-+	if (status != nfs_ok)
-+		goto out_aftermask;
- 	current->fs->umask = create->cr_umask;
- 	switch (create->cr_type) {
- 	case NF4LNK:
-@@ -828,6 +844,7 @@ nfsd4_create(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
- 	fh_put(&resfh);
- out_umask:
- 	current->fs->umask = 0;
-+out_aftermask:
- 	nfsd_attrs_free(&attrs);
- 	return status;
- }
+ 	struct dentry *nfsd_client_dir;
+ 
+diff --git a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
+index 07c739f5f08d3..a342f6398e55e 100644
+--- a/fs/nfsd/nfs4state.c
++++ b/fs/nfsd/nfs4state.c
+@@ -6029,7 +6029,7 @@ bool nfsd4_force_end_grace(struct nfsd_net *nn)
+  */
+ static bool clients_still_reclaiming(struct nfsd_net *nn)
+ {
+-	time64_t double_grace_period_end = nn->boot_time +
++	time64_t double_grace_period_end = nn->boot_time_bt +
+ 					   2 * nn->nfsd4_lease;
+ 
+ 	if (READ_ONCE(nn->grace_end_forced))
+@@ -8277,6 +8277,7 @@ static int nfs4_state_create_net(struct net *net)
+ 	nn->conf_name_tree = RB_ROOT;
+ 	nn->unconf_name_tree = RB_ROOT;
+ 	nn->boot_time = ktime_get_real_seconds();
++	nn->boot_time_bt = ktime_get_boottime_seconds();
+ 	nn->grace_ended = false;
+ 	nn->grace_end_forced = false;
+ 	nn->client_tracking_active = false;
 -- 
 2.53.0
 
