@@ -1,53 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213965;
-	b=U0UcaPno0hUCGjC0t5NvJrSF45MfU+cHmaKG2nFlF28t6kpks/VZ03nB6vm3Y+kS15fO
-	 3qc1jE1O3Lw+RHYJzLHFpkOW7BcfijAozPJhIuEdBPrxTJJz6x+TgehScRYzbC5ICtkrj
-	 rzA3QWZsTP0xUFqrrt++3konRvxrjBxfHwORyUs+qzsmI/bvlJ9UpjbM4x0TIn3Xvf4lr
-	 XoMtJB+qQGx8CKEJiqhBwJTmbyDW8JtHotDG7dKRse6lydnDxPj/bB7Dsn0lv+cOolMHI
-	 1m+3wUd12fv3XIvbpIjJAFTp8WLQzBj1lK+/QbfMIxjuao7RrNkkd+zqo/JEbnG8RqQ==
+	t=1793213962;
+	b=OkoeFgqPiY81EgpnRL4Pl2XdRF3jtTK0aFez1KnqCpm9/dizeUeKvc4VDEcuW9Tdx1lf
+	 3bjRxW1tFt6tW2amAzYjJhKrrAMKgZoONnvLOB4vxCnbUR7nZq2sqSJMTMGrm6Nq4Fnjs
+	 8OdWEOam2/0B7gYAMYxMsVC4nwexmQyk+4edslU0suL9UBs/Y3/N8o16l5lmhxtsRW2Ku
+	 hLimxcUtCDU/jgoxY4pCjJ1KzM5OkcQdWz0rMDYdAKyw2kbLVaJusaQUpNGt/nSt3SzXe
+	 3i5TueeEcpUM9EBR+GUdgVrbSe5ZM47mzn2Yxf0PfSq5sOqkFaiGeyr7kJ3ipzcJV9A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213965;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213962;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+H2FGkDbyJhSjP+MR1X++jkiJraYni5eks8BGERTL9k=;
-	b=1FxSB05hAk/7kQhvVgF8HNX/b21dEXa/TQvVtg1f6IzlvjEsTNPIkIvTFzCbQw5rJ+Ki
-	 eo+oBASinWl1HRGZUqQ5yY8a2mvIVobrtyPXakEuNZwZFJtnhqjGo2Q9RtgAJkx+Lswcw
-	 SKXdeoyvhZVxfbzvjh9S1tN4L5fJAoHmyyGs+kl5/7ygrIn8P0smu6YDZpo9VtBIOvvcV
-	 Reob7gMvBO5wlQ31raYR2PzLaBUoXLa9Fo1vcXISJeJqb1eTttzb0YNAbUEFDrsDxC7Kx
-	 o7mWhOFUPUmw7KTNa4qNK+VooKeY03Qu95se8zMeqtuJzzmxGesRzdlKrHI90+yRwLA==
+	bh=c017aujLePOSPbdyd5IV5q+CRxi9rNrpm4Rn5SmzVic=;
+	b=qedXCURRRIEEG++E1rHRZuQHB6+05V/Gsl61BTErgvzIN5v6EIaWuvsf/g90LPBnJRwI
+	 OsxitPIi+71Mz3UFUFqnMRNSq2Aym2xYVahtQ0mumaIZh5/ZW4gac1Z2kJu+T1qcr1LG+
+	 e6CONQnsGnuDtJVQia+KYXPtTF1cAODy+v87Fv2uT+LBfjGKGyVa/ADbcBzjKawtp+1OL
+	 2JV+eoyeRAMiojaX4THIQc8T1aMcV/T7PIE27hapZBO+k4ML8ZctGiXSJ3ao+oVwCN1Ki
+	 e958IqPdOmUzKiZMOs/PFUwCQL3F+yFiQVyrEuxUo/Dw7og5ETLJpqbtlWc77xEvJWQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KaZEoxJu;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xUPot6ML;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F901606A323;
-	Wed, 28 Oct 2026 18:59:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 830D2606A31C;
+	Wed, 28 Oct 2026 18:59:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KaZEoxJu
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEA321F01828;
-	Wed, 28 Oct 2026 18:59:24 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xUPot6ML
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7AE31F01825;
+	Wed, 28 Oct 2026 18:59:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213965;
-	bh=+H2FGkDbyJhSjP+MR1X++jkiJraYni5eks8BGERTL9k=;
+	s=korg; t=1793213962;
+	bh=c017aujLePOSPbdyd5IV5q+CRxi9rNrpm4Rn5SmzVic=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KaZEoxJuZQPIVKxqCY7UWEGB0eZGuYGdM7kDY4Zgnax12X6nPfGjYkX0VhBSm50ey
-	 766pdH1FCqAxRG149iJ+ve161rkbUrhaV5HCtVWM8Ycrz5GHbGyIdDxqS00aDp//TT
-	 Mor5UPo63Au90Sat1zK4AZdNgmxcpJxl+FWbV5xM=
+	b=xUPot6MLcCCQxwp1akefoPTr7++RrUjp79m80xCJaZ+atNoSff0OU22nGzQZZbn0K
+	 akMLnkBW+//3XhM1Tg4o7CtrB96x8WLUEht27mZ+PkVdytR1pPYqd5rLyhPWsyimkc
+	 NMIOh9SX2+lY/MgASze48aHOIO95UnLJuDNkltWk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Showrya M N <showrya@chelsio.com>,
-	Potnuri Bharat Teja <bharat@chelsio.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Zijian Zhang <zijianzhang@bytedance.com>,
+	Stanislav Fomichev <sdf@fomichev.me>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Cong Wang <cong.wang@bytedance.com>,
+	Stefano Garzarella <sgarzare@redhat.com>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0692/1887] RDMA/siw: Add sendpage_ok() check to disable MSG_SPLICE_PAGES
-Date: Wed, 28 Oct 2026 17:46:28 +0100
-Message-ID: <20261028170515.160435313@linuxfoundation.org>
+Subject: [PATCH 6.1 0691/1887] bpf: Add sk_is_inet and IS_ICSK check in tls_sw_has_ctx_tx/rx
+Date: Wed, 28 Oct 2026 17:46:27 +0100
+Message-ID: <20261028170515.136575554@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,52 +72,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Showrya M N <showrya@chelsio.com>
+From: Zijian Zhang <zijianzhang@bytedance.com>
 
-[ Upstream commit 4e1e3dd88a4cedd5ccc1a3fc3d71e03b70a7a791 ]
+[ Upstream commit 44d0469f79bd3d0b3433732877358df7dc6b17b1 ]
 
-While running ISER over SIW, the initiator machine encounters a warning
-from skb_splice_from_iter() indicating that a slab page is being used in
-send_page. To address this, it is better to add a sendpage_ok() check
-within the driver itself, and if it returns 0, then MSG_SPLICE_PAGES flag
-should be disabled before entering the network stack.
+As the introduction of the support for vsock and unix sockets in sockmap,
+tls_sw_has_ctx_tx/rx cannot presume the socket passed in must be IS_ICSK.
+vsock and af_unix sockets have vsock_sock and unix_sock instead of
+inet_connection_sock. For these sockets, tls_get_ctx may return an invalid
+pointer and cause page fault in function tls_sw_ctx_rx.
 
-A similar issue has been discussed for NVMe in this thread:
-https://lore.kernel.org/all/20240530142417.146696-1-ofir.gal@volumez.com/
+BUG: unable to handle page fault for address: 0000000000040030
+Workqueue: vsock-loopback vsock_loopback_work
+RIP: 0010:sk_psock_strp_data_ready+0x23/0x60
+Call Trace:
+ ? __die+0x81/0xc3
+ ? no_context+0x194/0x350
+ ? do_page_fault+0x30/0x110
+ ? async_page_fault+0x3e/0x50
+ ? sk_psock_strp_data_ready+0x23/0x60
+ virtio_transport_recv_pkt+0x750/0x800
+ ? update_load_avg+0x7e/0x620
+ vsock_loopback_work+0xd0/0x100
+ process_one_work+0x1a7/0x360
+ worker_thread+0x30/0x390
+ ? create_worker+0x1a0/0x1a0
+ kthread+0x112/0x130
+ ? __kthread_cancel_work+0x40/0x40
+ ret_from_fork+0x1f/0x40
 
-  WARNING: CPU: 0 PID: 5342 at net/core/skbuff.c:7140 skb_splice_from_iter+0x173/0x320
-  Call Trace:
-   tcp_sendmsg_locked+0x368/0xe40
-   siw_tx_hdt+0x695/0xa40 [siw]
-   siw_qp_sq_process+0x102/0xb00 [siw]
-   siw_sq_resume+0x39/0x110 [siw]
-   siw_run_sq+0x74/0x160 [siw]
-   kthread+0xd2/0x100
-   ret_from_fork+0x34/0x40
-   ret_from_fork_asm+0x1a/0x30
+v2:
+  - Add IS_ICSK check
+v3:
+  - Update the commits in Fixes
 
-Link: https://patch.msgid.link/r/20241007125835.89942-1-showrya@chelsio.com
-Signed-off-by: Showrya M N <showrya@chelsio.com>
-Signed-off-by: Potnuri Bharat Teja <bharat@chelsio.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Fixes: 634f1a7110b4 ("vsock: support sockmap")
+Fixes: 94531cfcbe79 ("af_unix: Add unix_stream_proto for sockmap")
+Signed-off-by: Zijian Zhang <zijianzhang@bytedance.com>
+Acked-by: Stanislav Fomichev <sdf@fomichev.me>
+Acked-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Cong Wang <cong.wang@bytedance.com>
+Acked-by: Stefano Garzarella <sgarzare@redhat.com>
+Link: https://lore.kernel.org/r/20241106003742.399240-1-zijianzhang@bytedance.com
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/siw/siw_qp_tx.c | 2 ++
- 1 file changed, 2 insertions(+)
+ include/net/tls.h | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/sw/siw/siw_qp_tx.c b/drivers/infiniband/sw/siw/siw_qp_tx.c
-index b98a4100aeebf..1f06a7cb76500 100644
---- a/drivers/infiniband/sw/siw/siw_qp_tx.c
-+++ b/drivers/infiniband/sw/siw/siw_qp_tx.c
-@@ -338,6 +338,8 @@ static int siw_tcp_sendpages(struct socket *s, struct page **page, int offset,
- 			msg.msg_flags &= ~MSG_MORE;
+diff --git a/include/net/tls.h b/include/net/tls.h
+index b5856a28070da..cd0dfa25c591e 100644
+--- a/include/net/tls.h
++++ b/include/net/tls.h
+@@ -405,8 +405,12 @@ tls_offload_ctx_tx(const struct tls_context *tls_ctx)
  
- 		tcp_rate_check_app_limited(sk);
-+		if (!sendpage_ok(page[i]))
-+			msg.msg_flags &= ~MSG_SPLICE_PAGES;
- 		bvec_set_page(&bvec, page[i], bytes, offset);
- 		iov_iter_bvec(&msg.msg_iter, ITER_SOURCE, &bvec, 1, bytes);
+ static inline bool tls_sw_has_ctx_tx(const struct sock *sk)
+ {
+-	struct tls_context *ctx = tls_get_ctx(sk);
++	struct tls_context *ctx;
++
++	if (!sk_is_inet(sk) || !inet_sk(sk)->is_icsk)
++		return false;
  
++	ctx = tls_get_ctx(sk);
+ 	if (!ctx)
+ 		return false;
+ 	return !!tls_sw_ctx_tx(ctx);
+@@ -414,8 +418,12 @@ static inline bool tls_sw_has_ctx_tx(const struct sock *sk)
+ 
+ static inline bool tls_sw_has_ctx_rx(const struct sock *sk)
+ {
+-	struct tls_context *ctx = tls_get_ctx(sk);
++	struct tls_context *ctx;
++
++	if (!sk_is_inet(sk) || !inet_sk(sk)->is_icsk)
++		return false;
+ 
++	ctx = tls_get_ctx(sk);
+ 	if (!ctx)
+ 		return false;
+ 	return !!tls_sw_ctx_rx(ctx);
 -- 
 2.53.0
 
