@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793212447;
-	b=2Mlcn4OcIqM89gEU674p/KEb7xAd2HltzFAvvKn2sf7fmycCZk8o+Pk3WcLLVAO5jQvH
-	 5ZChrcG+l8mC/BmKjO6HZ3LhjNnKOrFyHS+rRTwDevbexev5f0sbqOYRZ6OeVlU5hrsw9
-	 llfVPMYMH3N8XbOvfPmrok+JPtI1q0YEUospJBzan+fzapEmLu+wP2VeUuFBIUgoRx0lR
-	 YMFX6JKayIgI7DVSyrEuUIwEIPVaGkiEhKPUDi6/UnTugHLCNnv0+7mzGgDGUiMgadAQD
-	 45sUIpI3JHyEO3/7/AWqH+Mvc1X2V4P+PUZfpRc03nmVJLGwggTE2LYuORN9R9JPp9Q==
+	t=1793212450;
+	b=cEAP/5hzG2juwWl+kUYD7mBvqKPpVhYPTAU5vbEAd7QxweTOslXdLoPgbrdWB+/HTuDe
+	 T+TG3VXCfmxZmsfsSaWCFNgELu8JfcKb91LRgd+kldeye89m2o/0DCbw0S06dHb68J79U
+	 VzWiNFl1PWOjzCfebMjxwLkyg2c6zzQ3QH3Y0aKmf0xkCj9PU7+QNansRH9gtjtMG0YKQ
+	 St12jvvnfe8aiGo+PpqgJhL3gyraANe9D6o+8SUH52rXYGHN/r6mTjQhSnlq99p/jlRuT
+	 zr8bbx5on3juS8PP7T2sl6PVFf+EehoDTXLe0QtKslZ0bz/t6ZTd9GEB5KAkjurlSVQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793212447;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793212450;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=oEmWWkSjLmgOsJNyuIHAxvej/lffQRtZRvTPZFgIUvQ=;
-	b=WN/ZdLBiaNzel9cFooucV/MKspQhnZ40byxiIB7ygBCBslu+d2ahXMbRnayCKdf9wW1G
-	 tcxN7m+GSS62LmLen4+v16FHR2S54GjFeLh/q1RrPqZNS9IkQgxB70GO3xCX0S3gJQehD
-	 WPAPL0rOoNGDRx4QiKCxY9Imn91qvHi3KT/kV0aozltuxhziRvK4Y61+ZqIG0+QKqKacY
-	 8WHLtpPlvE6fZ4PDG6PN1xFfBqeAKz04u0IQcVI9QTDc0hK+fjm801rvzzUbg10QkZ81+
-	 aw5Sxqi7+seh28atmibULKlJ5imaPggS5T40BD7kUaVwHwG+45OH3yOaRSrGomlHpYA==
+	bh=emCJPX04NX4ewAnlx8q+OK5pF+dxqZcw3lVsjTlB43s=;
+	b=ZeYPx/GcpX6En3m1TFPKWO5eZFOFQNdu8TRRLrm8qqPk8kAYZRie6XNGNEFV9T4eqbTM
+	 PHQYXjpNp25t6uky9GY5qzc/aj4TAee0CW4LzV0fqD//7I9k/+HKZVf8SEF7MB8LEgzCA
+	 RjkbD2BRmN3JE3zTVD17dXuZpVv9OqaYttdyv9bZeoPTxvaj2LO5kwfh8ZAWdyizZ8aI2
+	 LVHGGWdIFNgKWxuTXhPZqlkZNXXdtWLBc/dFaJ4HGl0ZVepFa9siwBkN5d/HZsFZocGRJ
+	 pJELJW81431dfi46T3IMnm29daKEZ/lgYPh/5vyr6U/EFegLE44t0ejLZDjYSiuAESw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GwHukMGd;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uPpMj+qg;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54132606A338;
-	Wed, 28 Oct 2026 18:34:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37A28606A320;
+	Wed, 28 Oct 2026 18:34:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GwHukMGd
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2EC71F01829;
-	Wed, 28 Oct 2026 18:34:06 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uPpMj+qg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86DB91F01828;
+	Wed, 28 Oct 2026 18:34:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793212447;
-	bh=oEmWWkSjLmgOsJNyuIHAxvej/lffQRtZRvTPZFgIUvQ=;
+	s=korg; t=1793212450;
+	bh=emCJPX04NX4ewAnlx8q+OK5pF+dxqZcw3lVsjTlB43s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GwHukMGdWDsH/Wtf76M4uSvlSFGbk+lC3C2bAY6KPOgYA82lvXPLBPXy4V6ALmMrv
-	 jydL9H7wJryKmIe2B3UQXa4yDrBzEWw1Wh//gizuC93wbMmtUkHeWrK9Tq1BkD9jgk
-	 uKAUt/vtqf9HVL2fh0eVoux7WYAUaTzl5QGrImQY=
+	b=uPpMj+qgk3LYpWsSOwCPM3tSXz7KjfAvNVDqLG2CIXaVPdH68BU6sfEdlVbm1WWrR
+	 vyo3NwfA1quhOFEXylHtSDrRxn3Pv8TttmFP8w4CKYh6fPV1CvruZsej+Cx5N5NNDr
+	 +ysSj7QEMyOjm53l9G/8eeoEk/idCXX1x+a3qnHs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chao Yu <chao@kernel.org>,
-	Guanghui Yang <3497809730@qq.com>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Thierry Reding <treding@nvidia.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Javier Martinez Canillas <javierm@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0114/1887] f2fs: fix dentry folio leak in find_in_level
-Date: Wed, 28 Oct 2026 17:36:50 +0100
-Message-ID: <20261028170501.829390467@linuxfoundation.org>
+Subject: [PATCH 6.1 0115/1887] drm/sysfb: simpledrm: Improve stride validation
+Date: Wed, 28 Oct 2026 17:36:51 +0100
+Message-ID: <20261028170501.852639030@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,41 +70,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guanghui Yang <3497809730@qq.com>
+From: Thomas Zimmermann <tzimmermann@suse.de>
 
-[ Upstream commit cca7d3e30bf30333314e31bc70b9a739f1342167 ]
+[ Upstream commit df6533f11688aa30be3bb883c7637f4ffdbb7cbd ]
 
-find_in_level() gets a dentry folio with f2fs_find_data_folio() before
-calling find_in_block().  If find_in_block() returns an error, the
-function stores the error in res_folio and breaks out of the loop without
-dropping the dentry folio.
+Validate the computed stride against the maximum value INT_MAX.
 
-This leaks the folio reference on the find_in_block() error path.  Drop
-the dentry folio before returning the error to the caller.
-
-Fixes: 7ad08a58bf67 ("f2fs: Handle casefolding with Encryption")
-Cc: stable@vger.kernel.org
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Guanghui Yang <3497809730@qq.com>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
-[ Replaced f2fs_folio_put(dentry_folio, false) with f2fs_put_page(dentry_page, 0) for the page-based API. ]
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Reviewed-by: Thierry Reding <treding@nvidia.com>
+Reviewed-by: Maxime Ripard <mripard@kernel.org>
+Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
+Fixes: 7bfa5c7b28d6 ("drm/simpledrm: Compute linestride with drm_format_info_min_pitch()")
+Cc: <stable@vger.kernel.org> # v6.1+
+Link: https://patch.msgid.link/20260625094509.157581-5-tzimmermann@suse.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/dir.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/tiny/simpledrm.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/fs/f2fs/dir.c b/fs/f2fs/dir.c
-index 29ac1e77b5d7a..cadc32959a23f 100644
---- a/fs/f2fs/dir.c
-+++ b/fs/f2fs/dir.c
-@@ -374,6 +374,7 @@ static struct f2fs_dir_entry *find_in_level(struct inode *dir,
+diff --git a/drivers/gpu/drm/tiny/simpledrm.c b/drivers/gpu/drm/tiny/simpledrm.c
+index 18489779fb8aa..4b5ccbb13ecfe 100644
+--- a/drivers/gpu/drm/tiny/simpledrm.c
++++ b/drivers/gpu/drm/tiny/simpledrm.c
+@@ -693,9 +693,15 @@ static struct simpledrm_device *simpledrm_device_create(struct drm_driver *drv,
+ 		return ERR_PTR(-ENODEV);
+ 	}
+ 	if (!stride) {
+-		stride = drm_format_info_min_pitch(format, 0, width);
+-		if (drm_WARN_ON(dev, !stride))
++		u64 pitch = drm_format_info_min_pitch(format, 0, width);
++
++		if (drm_WARN_ON(dev, !pitch)) {
++			return ERR_PTR(-EINVAL); /* driver bug */
++		} else if (pitch > INT_MAX) {
++			drm_warn(dev, "stride of %llu exceeds maximum\n", pitch);
+ 			return ERR_PTR(-EINVAL);
++		}
++		stride = pitch;
+ 	}
  
- 		de = find_in_block(dir, dentry_page, fname, &max_slots, use_hash);
- 		if (IS_ERR(de)) {
-+			f2fs_put_page(dentry_page, 0);
- 			*res_page = ERR_CAST(de);
- 			de = NULL;
- 			break;
+ 	sdev->mode = simpledrm_mode(width, height);
 -- 
 2.53.0
 
