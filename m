@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213144;
-	b=iszF5rzeTKFrAItW422qeIgGaKQZd4RghFh/xwiD8cRq5LfBye74ukEdPW4t7CYGCHUx
-	 9h7gw+sQ3OKjXhvrvpzOwhaSxDP9o3y5vHwhW4fNH0lJX/Oi1kaLEl3QBOKrPKAXSR8Br
-	 zO7AQ/SF0DTpyEu5ggEnSZSSjMou0A6vr/1FNby55PvqflTTFSuPeMVBOWDLZkt8DkrBT
-	 WVm83GyLCsnoIEEf68j+ZfPag0RsfOfz4vSHmutoo9m4uPCZqJimQyUTbwFBKrkgKXkFY
-	 ycvKFFcIoTBl8FScngf2C/irz4yDmt6LYBXMp88dBbhfCKJnuV1ywhjJ+WyUxhFoK+Q==
+	t=1793213147;
+	b=hIs63eUc1RhAFrPPrhRfAxfYzXZy9xPbsBlrVzfEDQirHVVtD2aQiGajivJsFQOooB5A
+	 J8C6AdwImYNX5owPsfZ4fT5c+ezZ1PutiBdbCBrn+ZmRdWUNph35oDQM/4OFwY32T5vxm
+	 YR+GHKVM3N972sDQkKAAkdcK353Gh209kwWoDmB8j9JzkEe/FTqxwC540DGa62Akc+mLH
+	 zARw4mT+q5qgxLZhVAZ8idpFRuCZYgPGwT+kz8Ev9DvHZt5K8ISSF+8bVRLFk6l3IY4Cj
+	 /0m+dQwU5RRmEc5DIFIsKmTCKIUkl+ItqEY0q+rlk3Z8wkV3j0LTY4ZrZKG3tSgdufw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213144;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213147;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=zyX2yV8NJRbYuvr+fPrVBWY+rRSS35RcaDQo405KX8o=;
-	b=c8Tb26KHIaV7vyQlYp/7omgD2Mz2SWLZYgDZNU9d6KqS3xLdCEZOm0LN4HsarFfvNucJ
-	 kYVxgxy/9eVXI5q+un9Nvpvps+Jfztb3QDuK7o+NHYIqiNs92zjjSkT/0YLrhtEwDXRk6
-	 ddFIekoV4ZXoprj8qHapMNP/NqXDfJbzojGdPsH/WEGo/TtnPZYJCfmfIjzJnws/Iqafi
-	 9CRoQ32+HRqM6q+LRTrFFcRcwRhFeTuOd15Ynyu841qEuB6oHkKNvs8RHgPiM8CoeSNQ4
-	 TAS+Fohs0Sztg9r6MhlXbRVxx0y31JYe9+t8TupXHR920UHhZ6uvrzxvvuq4q+7eLZQ==
+	bh=WC3vhkoK8BIbAZ8ucgLbOr4/wOvSpff4wWkd6XpZSNQ=;
+	b=Uto8f1/ejvQwI2vKaeSCe36qJ/rhqgCQ0GwR5U5+ztFvXzs4TUyb+UF1mcsXpxwV6dCt
+	 HjVC1Il8rZ17clWnCNqjvY4aj7p8Q/YZcbwBaribv1aOlGDBvygAZ2XwsfAs1r63NcZPL
+	 ggpyorcHk9RsF583KxyCHPG8q94nKePYQVJowlQIKr9j73NtCKCxXu8z//vwf314j6Xeu
+	 cGGLW66Xk4liU1zn9wTg+5vB9jlkdWLxnHB5KFSX3/uLQ46EDhrYMWSTwubAB3FVYnk8u
+	 no6D9Mc3aGVnQMjlT/sthDSkOJhN2ciBuVxUCrjKSgdCvdrtTMIRXDE+tuj/YHMG7xw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h13yKPFq;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0IR5IRkI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBC38606A322;
-	Wed, 28 Oct 2026 18:45:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5CBE606A320;
+	Wed, 28 Oct 2026 18:45:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h13yKPFq
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4743A1F01828;
-	Wed, 28 Oct 2026 18:45:43 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0IR5IRkI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F41D1F01825;
+	Wed, 28 Oct 2026 18:45:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213143;
-	bh=zyX2yV8NJRbYuvr+fPrVBWY+rRSS35RcaDQo405KX8o=;
+	s=korg; t=1793213146;
+	bh=WC3vhkoK8BIbAZ8ucgLbOr4/wOvSpff4wWkd6XpZSNQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=h13yKPFqGGxuK/Gw0nbeoBrhZ3m2MOtzvQfhIN8UxdRJTy//VJwZVh7d4rGtcHP+V
-	 UHFpj/DSQC88x0kLsucj8eyy9r4oDSEkjXCasTuM9rBRreMfIpIH28hs6PfWRh6ria
-	 jV1YqcydhHlZyYGhVPqtSjDIWbvAT7BtdsYYcGxU=
+	b=0IR5IRkISfqX/RSClzHiFXNSMlzqNgw6/6MsskONqy46bQtUQhejLFgzzbdXt/N5f
+	 u+CFsPd3Ol9737TF4q2960mjlbbhyxwDmxslZoHfOJi0+WCvbnfCWJqA9Aa8vY+e6c
+	 SZEgGbnqXEz0zmCiop1RoZmMONF3BsuSZElHYmNM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+5fabc1ae99ff40690d84@syzkaller.appspotmail.com,
-	Johan Hovold <johan@kernel.org>,
-	Ting-Han Hou <ue081723@gmail.com>,
-	Sasha Levin <sashal@kernel.org>,
-	stable@kernel.org
-Subject: [PATCH 6.1 0403/1887] tty: port: fix tty_port_tty_vhangup() race
-Date: Wed, 28 Oct 2026 17:41:39 +0100
-Message-ID: <20261028170508.403479242@linuxfoundation.org>
+	Vega <vega@nebusec.ai>,
+	Zhiling Zou <zhilinz@nebusec.ai>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 0404/1887] wifi: mac80211: keep paired old chanctx alive
+Date: Wed, 28 Oct 2026 17:41:40 +0100
+Message-ID: <20261028170508.426914245@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -70,204 +69,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Zhiling Zou <zhilinz@nebusec.ai>
 
-[ Upstream commit b48820de8c1a596c5b99775524dfce73c6576c5d ]
+[ Upstream commit 3412e9a800786d1dec4a58367db1cba275e7ef11 ]
 
-Drivers rely on tty_port_tty_vhangup() to synchronously hang up their
-ports before tearing down resources as part of deregistration (e.g. on
-physical disconnect).
+An in-place replacement keeps reciprocal replace_ctx pointers between
+the old WILL_BE_REPLACED chanctx and the new REPLACES_OTHER chanctx.
+However, the early free paths only consider assigned and reserved link
+users when deciding whether to free the old chanctx.
 
-If tty_port_tty_vhangup() races with another hangup it may however
-return before the port has been shut down. This is in turn can lead to
-use-after-free and NULL-pointer dereferences in racing ioctls (including
-a synchronous hangup) and in processing of racing asynchronous hangups
-(carrier loss).
+That lets the old chanctx be freed too early while the replacement
+partner still points back to it, either when the last assigned link is
+released or when that link successfully reassigns to another existing
+context. Later unreserve and switch-finalization paths can then follow a
+stale replace_ctx pointer.
 
-Add the missing serialisation to tty_port_tty_vhangup() and
-tty_port_hangup() so that the former does not return until the port has
-been shut down also when there is a racing hangup.
+Keep a paired old chanctx alive until the replacement pair has been torn
+down. Apply the same check to both __ieee80211_link_release_channel()
+and ieee80211_link_use_reserved_reassign(). If the replacement is later
+abandoned, ieee80211_link_unreserve_chanctx() already tears down the
+pairing before freeing the old chanctx once no users remain.
 
-Note that serial core does not use tty_port_hangup(), but it already
-holds the port mutex when clearing port->tty and shutting down the port
-in uart_hangup().
-
-Fixes: 7ca0ff9ab321 ("tty: Add a full port_close function")
-Cc: stable@kernel.org	# 2.6.32: 2b5eac0f8c6e: tty: introduce and use tty_port_tty_vhangup() helper
-Cc: stable@kernel.org	# 2.6.32
-Reported-by: syzbot+5fabc1ae99ff40690d84@syzkaller.appspotmail.com
-Link: https://lore.kernel.org/6a944641.4d659fcc.734b4.003c.GAE@google.com
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260910125114.640880-1-johan@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-[ Ting-Han: use mutex_lock()/spin_lock_irqsave() instead of guard(),
-  scoped_guard() and the tty_port_tty class, matching the existing code
-  in this version of tty_port.c ]
-Assisted-by: LLM
-Signed-off-by: Ting-Han Hou <ue081723@gmail.com>
+Fixes: 5bcae31d9cb1 ("mac80211: implement multi-vif in-place reservations")
+Cc: stable@vger.kernel.org
+Reported-by: Vega <vega@nebusec.ai>
+Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
+Link: https://patch.msgid.link/b9b582b0db3814f641648b8886bb50f9d68f93ac.1785730815.git.zhilinz@nebusec.ai
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+[ sashal: replaced ieee80211_chanctx_has_replace_partner() calls with inline checks ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/tty_port.c   | 74 +++++++++++++++++++++++++++-------------
- include/linux/tty_port.h | 22 ++----------
- 2 files changed, 53 insertions(+), 43 deletions(-)
+ net/mac80211/chan.c | 14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/tty/tty_port.c b/drivers/tty/tty_port.c
-index 6f3b4eeb44b38..82f7ddf449c0b 100644
---- a/drivers/tty/tty_port.c
-+++ b/drivers/tty/tty_port.c
-@@ -350,21 +350,12 @@ void tty_port_tty_set(struct tty_port *port, struct tty_struct *tty)
- }
- EXPORT_SYMBOL(tty_port_tty_set);
- 
--/**
-- * tty_port_shutdown - internal helper to shutdown the device
-- * @port: tty port to be shut down
-- * @tty: the associated tty
-- *
-- * It is used by tty_port_hangup() and tty_port_close(). Its task is to
-- * shutdown the device if it was initialized (note consoles remain
-- * functioning). It lowers DTR/RTS (if @tty has HUPCL set) and invokes
-- * @port->ops->shutdown().
-- */
--static void tty_port_shutdown(struct tty_port *port, struct tty_struct *tty)
-+static void tty_port_shutdown_locked(struct tty_port *port, struct tty_struct *tty)
+diff --git a/net/mac80211/chan.c b/net/mac80211/chan.c
+index 26e692a853d9b..81a6852cfb264 100644
+--- a/net/mac80211/chan.c
++++ b/net/mac80211/chan.c
+@@ -1062,6 +1062,7 @@ int ieee80211_link_unreserve_chanctx(struct ieee80211_link_data *link)
  {
--	mutex_lock(&port->mutex);
-+	lockdep_assert_held(&port->mutex);
-+
- 	if (port->console)
--		goto out;
-+		return;
+ 	struct ieee80211_sub_if_data *sdata = link->sdata;
+ 	struct ieee80211_chanctx *ctx = link->reserved_chanctx;
++	struct ieee80211_chanctx *old_ctx = NULL;
  
- 	if (tty_port_initialized(port)) {
- 		tty_port_set_initialized(port, 0);
-@@ -378,7 +369,22 @@ static void tty_port_shutdown(struct tty_port *port, struct tty_struct *tty)
- 		if (port->ops->shutdown)
- 			port->ops->shutdown(port);
+ 	lockdep_assert_held(&sdata->local->chanctx_mtx);
+ 
+@@ -1076,6 +1077,7 @@ int ieee80211_link_unreserve_chanctx(struct ieee80211_link_data *link)
+ 			if (WARN_ON(!ctx->replace_ctx))
+ 				return -EINVAL;
+ 
++			old_ctx = ctx->replace_ctx;
+ 			WARN_ON(ctx->replace_ctx->replace_state !=
+ 			        IEEE80211_CHANCTX_WILL_BE_REPLACED);
+ 			WARN_ON(ctx->replace_ctx->replace_ctx != ctx);
+@@ -1086,6 +1088,10 @@ int ieee80211_link_unreserve_chanctx(struct ieee80211_link_data *link)
+ 
+ 			list_del_rcu(&ctx->list);
+ 			kfree_rcu(ctx, rcu_head);
++
++			if (ieee80211_chanctx_refcount(sdata->local,
++						       old_ctx) == 0)
++				ieee80211_free_chanctx(sdata->local, old_ctx);
+ 		} else {
+ 			ieee80211_free_chanctx(sdata->local, ctx);
+ 		}
+@@ -1317,7 +1323,9 @@ ieee80211_link_use_reserved_reassign(struct ieee80211_link_data *link)
+ 
+ 	ieee80211_check_fast_xmit_iface(sdata);
+ 
+-	if (ieee80211_chanctx_refcount(local, old_ctx) == 0)
++	if (ieee80211_chanctx_refcount(local, old_ctx) == 0 &&
++	    !(old_ctx->replace_state == IEEE80211_CHANCTX_WILL_BE_REPLACED &&
++	      old_ctx->replace_ctx))
+ 		ieee80211_free_chanctx(local, old_ctx);
+ 
+ 	ieee80211_recalc_chanctx_min_def(local, new_ctx, NULL);
+@@ -1797,7 +1805,9 @@ static void __ieee80211_link_release_channel(struct ieee80211_link_data *link)
  	}
--out:
-+}
-+
-+/**
-+ * tty_port_shutdown - internal helper to shutdown the device
-+ * @port: tty port to be shut down
-+ * @tty: the associated tty
-+ *
-+ * It is used by tty_port_hangup() and tty_port_close(). Its task is to
-+ * shutdown the device if it was initialized (note consoles remain
-+ * functioning). It lowers DTR/RTS (if @tty has HUPCL set) and invokes
-+ * @port->ops->shutdown().
-+ */
-+static void tty_port_shutdown(struct tty_port *port, struct tty_struct *tty)
-+{
-+	mutex_lock(&port->mutex);
-+	tty_port_shutdown_locked(port, tty);
- 	mutex_unlock(&port->mutex);
- }
  
-@@ -396,6 +402,7 @@ void tty_port_hangup(struct tty_port *port)
- 	struct tty_struct *tty;
- 	unsigned long flags;
+ 	ieee80211_assign_link_chanctx(link, NULL);
+-	if (ieee80211_chanctx_refcount(local, ctx) == 0)
++	if (ieee80211_chanctx_refcount(local, ctx) == 0 &&
++	    !(ctx->replace_state == IEEE80211_CHANCTX_WILL_BE_REPLACED &&
++	      ctx->replace_ctx))
+ 		ieee80211_free_chanctx(local, ctx);
  
-+	mutex_lock(&port->mutex);
- 	spin_lock_irqsave(&port->lock, flags);
- 	port->count = 0;
- 	tty = port->tty;
-@@ -404,26 +411,47 @@ void tty_port_hangup(struct tty_port *port)
- 	port->tty = NULL;
- 	spin_unlock_irqrestore(&port->lock, flags);
- 	tty_port_set_active(port, 0);
--	tty_port_shutdown(port, tty);
-+	tty_port_shutdown_locked(port, tty);
-+	mutex_unlock(&port->mutex);
- 	tty_kref_put(tty);
- 	wake_up_interruptible(&port->open_wait);
- 	wake_up_interruptible(&port->delta_msr_wait);
- }
- EXPORT_SYMBOL(tty_port_hangup);
- 
--void __tty_port_tty_hangup(struct tty_port *port, bool check_clocal, bool async)
-+/**
-+ * tty_port_tty_hangup - helper to hang up a tty asynchronously
-+ * @port: tty port
-+ * @check_clocal: hang only ttys with %CLOCAL unset?
-+ */
-+void tty_port_tty_hangup(struct tty_port *port, bool check_clocal)
- {
- 	struct tty_struct *tty = tty_port_tty_get(port);
- 
--	if (tty && (!check_clocal || !C_CLOCAL(tty))) {
--		if (async)
--			tty_hangup(tty);
--		else
--			tty_vhangup(tty);
--	}
-+	if (tty && (!check_clocal || !C_CLOCAL(tty)))
-+		tty_hangup(tty);
- 	tty_kref_put(tty);
- }
--EXPORT_SYMBOL_GPL(__tty_port_tty_hangup);
-+EXPORT_SYMBOL_GPL(tty_port_tty_hangup);
-+
-+/**
-+ * tty_port_tty_vhangup - helper to hang up a tty synchronously
-+ * @port: tty port
-+ */
-+void tty_port_tty_vhangup(struct tty_port *port)
-+{
-+	struct tty_struct *tty;
-+
-+	mutex_lock(&port->mutex);
-+	tty = tty_port_tty_get(port);
-+	mutex_unlock(&port->mutex);
-+
-+	if (tty) {
-+		tty_vhangup(tty);
-+		tty_kref_put(tty);
-+	}
-+}
-+EXPORT_SYMBOL_GPL(tty_port_tty_vhangup);
- 
- /**
-  * tty_port_tty_wakeup - helper to wake up a tty
-diff --git a/include/linux/tty_port.h b/include/linux/tty_port.h
-index 1ec146b8d0f42..660edf9e741a1 100644
---- a/include/linux/tty_port.h
-+++ b/include/linux/tty_port.h
-@@ -234,7 +234,8 @@ int tty_port_carrier_raised(struct tty_port *port);
- void tty_port_raise_dtr_rts(struct tty_port *port);
- void tty_port_lower_dtr_rts(struct tty_port *port);
- void tty_port_hangup(struct tty_port *port);
--void __tty_port_tty_hangup(struct tty_port *port, bool check_clocal, bool async);
-+void tty_port_tty_hangup(struct tty_port *port, bool check_clocal);
-+void tty_port_tty_vhangup(struct tty_port *port);
- void tty_port_tty_wakeup(struct tty_port *port);
- int tty_port_block_til_ready(struct tty_port *port, struct tty_struct *tty,
- 		struct file *filp);
-@@ -253,23 +254,4 @@ static inline int tty_port_users(struct tty_port *port)
- 	return port->count + port->blocked_open;
- }
- 
--/**
-- * tty_port_tty_hangup - helper to hang up a tty asynchronously
-- * @port: tty port
-- * @check_clocal: hang only ttys with %CLOCAL unset?
-- */
--static inline void tty_port_tty_hangup(struct tty_port *port, bool check_clocal)
--{
--	__tty_port_tty_hangup(port, check_clocal, true);
--}
--
--/**
-- * tty_port_tty_vhangup - helper to hang up a tty synchronously
-- * @port: tty port
-- */
--static inline void tty_port_tty_vhangup(struct tty_port *port)
--{
--	__tty_port_tty_hangup(port, false, false);
--}
--
- #endif
+ 	link->radar_required = false;
 -- 
 2.53.0
 
