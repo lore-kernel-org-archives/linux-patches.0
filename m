@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215641;
-	b=oC+JZwAIuNItrt6SQ0G9mO1RAvcNMqCXMAvCpHhoapZPMDcKQVkTRM7YguH1TrffIPfq
-	 47XRjpuvVpAYen9crcCcH0jhsDJjhUNIWWkgPu9luqk/ytxxkv0jke4/5HKpaNBQZfzYv
-	 UWjfaK3+ojveXh3Dx0FWzO46a+A2SV/6tA74Ro6jvSN+eeoMX5ApzJKE3z4YRbtTEE4op
-	 08m5E5ciovxkRQr9qkKDqKJI9xtsmTbk8LgUA0XpBlZorSHUm+TfWOlJEd0UkiQtos959
-	 ffi7lTROabpooLJR0BHyMOruKXfFitWS1ikK5Pkk7pz9NkAYn6YzLS/70DTFx/hYmSw==
+	t=1793215643;
+	b=DGoIwuksB7yxh1lGV9D0axOJ25GVxuj9SXSF9mWeUO6W2JDiirkQnrYMSeg6wWFO3SeW
+	 c+DAWrWTayW66ASQawgGIRta+ImMzO+uw8KgYTwnQBsIcc/kF4e/Z70WNXTS3eB/zktmG
+	 YsSwpetOT9lYVI74c3xR9Q2wURGOBSLamwLPIfoTy4++xOuw3pVx3zGWJiK0Qnx4sVdS/
+	 0+hLCWRyLlqvN2ebI0ZyrjRUwIipF01YkN6K4RF3m6AtL4iaaRJmAUY6Ij+/0u5bhsbVV
+	 sZyhDzu4lbXk3u3bBmdvNjBPFwbfe/tYJYr6zRL/SKsudRqBbg3mieb7LsHInQmF+zQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215641;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215643;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=hHs7OCDB7aod2T5756Ymnh0IxKkb3hMNFrHtsHgmPxg=;
-	b=U1+SGG3ONmwUJp6x/nNZL7dbB7Jvu8K0HHKMBe2uLUZY6Yi0BF6zHMzbruPLi1yttsd+
-	 lchRLDHm1mSAqRV5lsenVTbRbgaY3ovFA8II3DGxqCn4BUo48KYDmnnGjUdDO8aT8MLKQ
-	 vb658XcQbrYjqQh8FYzlxZ+llIaFKLpgUzuMbWmAsX8Z96G2JLmcpNAi8ta5YDESrjbQN
-	 NMn2SzoGx9LgbWLbZLgC1OZ3hajp1KOsLjCZ/8ZSdMLQ0B6W1ugmRXTpCgIooT2rEBva7
-	 sLH2Dff9gk61xsBXG6vmGg1q9OXSCGvwGiTg6ZtXzo+BDnxmCIyPspzL6+6DsrEDA9w==
+	bh=azR/bW8FR/M4aItmA61wI7416rfelepDNChdryV6fTQ=;
+	b=Tp01n00SKvQsOAg6Nkz9sPLUZzE/vl3eJfnU7c4tQihmfjKlTzokwRcPJMbckymzNTcN
+	 pUf2gf1g6ua0yCO1qM3HCQ4SxUzYUBEtr/txXseIqYSmMa8foUwtBEnTJm9zX264dx/yi
+	 BWZP5YSBKrCrG4EcF6I+jEBYOpR2sjAxFckFic54VKBnaSE4d+AUtwQsi310DFDHQjJOy
+	 m85dO5H6tXykU4URqjUzpdoXaHceb/jkMSKSEdJoq5ZFYrxg7HSz2Ji6INliq5Z5tSetN
+	 wB907txzQkyriuC0X5Zg8xl8vqsmt8rdiCUq2AraNYKjTzwlygPKLlx5jLTrxngNIcA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1n8gI1ix;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=E88GXNai;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CACAE606A31E;
-	Wed, 28 Oct 2026 19:27:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A9E4606A31F;
+	Wed, 28 Oct 2026 19:27:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1n8gI1ix
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF1111F01825;
-	Wed, 28 Oct 2026 19:27:19 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=E88GXNai
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF1C51F01825;
+	Wed, 28 Oct 2026 19:27:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215640;
-	bh=hHs7OCDB7aod2T5756Ymnh0IxKkb3hMNFrHtsHgmPxg=;
+	s=korg; t=1793215643;
+	bh=azR/bW8FR/M4aItmA61wI7416rfelepDNChdryV6fTQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1n8gI1ixglE/Hfx/lOVzpnQLQUZgM2/52tDhNE2B1Zt9aMNOuCNezMVEVgF+36hNb
-	 iFGupa6JxG3X9fjN0VyFLufGGI3wnm3jKqWiP76I4PM68AnuSiMi7HjjMx0pAO7vyE
-	 l79H5jvywNEEztqLUe9gGDp9NorZPZ/HeERvFctM=
+	b=E88GXNai5zKArkHkcwBU7Kw9MyR2uGWUweKTOLj+h3tVTooPqb4jhCCZBWwm7c32x
+	 IrLeKKZ1vjGZT0o1bLm03MMN7YhAv7wJiyLXOX8Z54yYz7OE0198at6rZHTff28Kr7
+	 J3qAlkMXrNrhd0w4Q8VNWl4bxWEOFFlWkncVb0XQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+eca845fb8c18dd6b44c1@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
+	AutonomousCodeSecurity@microsoft.com,
+	"Cen Zhang (Microsoft)" <blbllhy@gmail.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Victor Nogueira <victor@mojatatu.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1282/1887] net: udp_tunnel: fix memory leak in udp_tunnel_nic_unregister()
-Date: Wed, 28 Oct 2026 17:56:18 +0100
-Message-ID: <20261028170528.601215549@linuxfoundation.org>
+Subject: [PATCH 6.1 1283/1887] net/sched: cls_u32: validate offshift to prevent shift-out-of-bounds
+Date: Wed, 28 Oct 2026 17:56:19 +0100
+Message-ID: <20261028170528.623742610@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,152 +71,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Cen Zhang (Microsoft) <blbllhy@gmail.com>
 
-[ Upstream commit 080695e6f005e2396f1207fd69d24c442cb230c6 ]
+[ Upstream commit aef96eead2860cbfa371e4471d4f04412213b958 ]
 
-syzbot reported a memory leak [1] in the UDP tunnel NIC offload code.
+u32_change() copies the user-provided tc_u32_sel.offshift (unsigned char,
+0-255) into the kernel knode object without bounds validation. When a
+packet later hits u32_classify() with TC_U32_VAROFFSET set, it evaluates
+`ntohs(offmask & *data) >> offshift` where the left operand is a 16-bit
+value promoted to a 32-bit int. Any offshift >= 32 is undefined behavior
+per C11 6.5.7p3, triggerable by an unprivileged user via user/network
+namespaces.
 
-When device registration fails (e.g. in register_netdevice()), netdev core
-unwinds by sending a single NETDEV_UNREGISTER notification. If work was queued
-during NETDEV_REGISTER (utn->work_pending is set), udp_tunnel_nic_unregister()
-returns early:
+UBSAN: shift-out-of-bounds in net/sched/cls_u32.c:236:43
+shift exponent 32 is too large for 32-bit type int
 
-	if (utn->work_pending)
-		return;
+Fix this by rejecting offshift >= 16 during filter creation in
+u32_change().
 
-Because failed registrations do not enter netdev_wait_allrefs_any(), no
-subsequent NETDEV_UNREGISTER rebroadcast will ever occur. As a result, the
-struct udp_tunnel_nic allocated in udp_tunnel_nic_alloc() is leaked
-permanently.
-
-Fix this by removing the early return. Instead, synchronously cancel any
-pending work with cancel_delayed_work_sync() before freeing @utn.
-
-To be able to call cancel_delayed_work_sync() while holding RTNL (the work also
-needs RTNL), switch udp_tunnel_nic_device_sync_work() to rtnl_trylock(). If RTNL
-is contended, requeue the work with a 1 jiffy delay (via queue_delayed_work())
-to prevent high CPU contention while waiting for RTNL lock.
-
-The utn->work_pending bookkeeping is no longer needed and is removed, as
-the workqueue core already tracks the pending/running state of the work.
-
-[1]
-BUG: memory leak
-unreferenced object 0xffff888127d5f840 (size 96):
-  comm "syz-executor", pid 5806, jiffies 4294942188
-  backtrace (crc 99fdb6c8):
-    __kmalloc_noprof+0x3bf/0x550
-    udp_tunnel_nic_alloc net/ipv4/udp_tunnel_nic.c:756 [inline]
-    udp_tunnel_nic_register net/ipv4/udp_tunnel_nic.c:833 [inline]
-    udp_tunnel_nic_netdevice_event+0x804/0xab0 net/ipv4/udp_tunnel_nic.c:931
-    notifier_call_chain+0x59/0x160 kernel/notifier.c:85
-    call_netdevice_notifiers_info+0x7d/0xb0 net/core/dev.c:2250
-    register_netdevice+0xc10/0xeb0 net/core/dev.c:11478
-
-Fixes: cc4e3835eff4 ("udp_tunnel: add central NIC RX port offload infrastructure")
-Reported-by: syzbot+eca845fb8c18dd6b44c1@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/6a632b15.dde6c935.cf6c8.0011.GAE@google.com/T/#u
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260724091137.1792543-1-edumazet@google.com
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: AutonomousCodeSecurity@microsoft.com
+Link: https://lore.kernel.org/all/20260720034514.23053-1-blbllhy@gmail.com
+Signed-off-by: Cen Zhang (Microsoft) <blbllhy@gmail.com>
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Tested-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Tested-by: Victor Nogueira <victor@mojatatu.com>
+Link: https://patch.msgid.link/20260723044955.89471-1-blbllhy@gmail.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/udp_tunnel_nic.c | 34 ++++++++++++++++++----------------
- 1 file changed, 18 insertions(+), 16 deletions(-)
+ net/sched/cls_u32.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/net/ipv4/udp_tunnel_nic.c b/net/ipv4/udp_tunnel_nic.c
-index e6d6c4f716379..98f73221a6bff 100644
---- a/net/ipv4/udp_tunnel_nic.c
-+++ b/net/ipv4/udp_tunnel_nic.c
-@@ -31,19 +31,17 @@ struct udp_tunnel_nic_table_entry {
-  * @dev:	netdev pointer
-  * @need_sync:	at least one port start changed
-  * @need_replay: space was freed, we need a replay of all ports
-- * @work_pending: @work is currently scheduled
-  * @n_tables:	number of tables under @entries
-  * @missed:	bitmap of tables which overflown
-  * @entries:	table of tables of ports currently offloaded
-  */
- struct udp_tunnel_nic {
--	struct work_struct work;
-+	struct delayed_work work;
+diff --git a/net/sched/cls_u32.c b/net/sched/cls_u32.c
+index 276ee95f65010..d1f2d194d2267 100644
+--- a/net/sched/cls_u32.c
++++ b/net/sched/cls_u32.c
+@@ -1128,6 +1128,13 @@ static int u32_change(struct net *net, struct sk_buff *in_skb,
+ 		goto erridr;
+ 	}
  
- 	struct net_device *dev;
- 
- 	u8 need_sync:1;
- 	u8 need_replay:1;
--	u8 work_pending:1;
- 
- 	unsigned int n_tables;
- 	unsigned long missed;
-@@ -301,7 +299,7 @@ udp_tunnel_nic_device_sync(struct net_device *dev, struct udp_tunnel_nic *utn)
- 	const struct udp_tunnel_nic_info *info = dev->udp_tunnel_nic_info;
- 	bool may_sleep;
- 
--	if (!utn->need_sync || utn->work_pending)
-+	if (!utn->need_sync)
- 		return;
- 
- 	/* Drivers which sleep in the callback need to update from
-@@ -310,10 +308,8 @@ udp_tunnel_nic_device_sync(struct net_device *dev, struct udp_tunnel_nic *utn)
- 	may_sleep = info->flags & UDP_TUNNEL_NIC_INFO_MAY_SLEEP;
- 	if (!may_sleep)
- 		__udp_tunnel_nic_device_sync(dev, utn);
--	if (may_sleep || utn->need_replay) {
--		queue_work(udp_tunnel_nic_workqueue, &utn->work);
--		utn->work_pending = 1;
--	}
-+	if (may_sleep || utn->need_replay)
-+		queue_delayed_work(udp_tunnel_nic_workqueue, &utn->work, 0);
- }
- 
- static bool
-@@ -705,10 +701,16 @@ udp_tunnel_nic_replay(struct net_device *dev, struct udp_tunnel_nic *utn)
- static void udp_tunnel_nic_device_sync_work(struct work_struct *work)
- {
- 	struct udp_tunnel_nic *utn =
--		container_of(work, struct udp_tunnel_nic, work);
-+		container_of(work, struct udp_tunnel_nic, work.work);
- 
--	rtnl_lock();
--	utn->work_pending = 0;
-+	/* We cannot block on RTNL here, otherwise we would deadlock with
-+	 * udp_tunnel_nic_unregister() calling cancel_delayed_work_sync()
-+	 * while holding RTNL. Requeue with 1 jiffy delay if RTNL is contended.
-+	 */
-+	if (!rtnl_trylock()) {
-+		queue_delayed_work(udp_tunnel_nic_workqueue, &utn->work, 1);
-+		return;
++	if (s->offshift >= 16) {
++		NL_SET_ERR_MSG_MOD(extack,
++				   "offshift must be less than 16");
++		err = -EINVAL;
++		goto erridr;
 +	}
- 	__udp_tunnel_nic_device_sync(utn->dev, utn);
- 
- 	if (utn->need_replay)
-@@ -727,7 +729,7 @@ udp_tunnel_nic_alloc(const struct udp_tunnel_nic_info *info,
- 	if (!utn)
- 		return NULL;
- 	utn->n_tables = n_tables;
--	INIT_WORK(&utn->work, udp_tunnel_nic_device_sync_work);
-+	INIT_DELAYED_WORK(&utn->work, udp_tunnel_nic_device_sync_work);
- 
- 	utn->entries = kmalloc_array(n_tables, sizeof(void *), GFP_KERNEL);
- 	if (!utn->entries)
-@@ -868,11 +870,11 @@ udp_tunnel_nic_unregister(struct net_device *dev, struct udp_tunnel_nic *utn)
- 	 */
- 	udp_tunnel_nic_flush(dev, utn);
- 
--	/* Wait for the work to be done using the state, netdev core will
--	 * retry unregister until we give up our reference on this device.
-+	/* Make sure no work is running or queued before freeing @utn.
-+	 * The work handler uses rtnl_trylock(), so it will not deadlock
-+	 * against the RTNL we are holding here.
- 	 */
--	if (utn->work_pending)
--		return;
-+	cancel_delayed_work_sync(&utn->work);
- 
- 	udp_tunnel_nic_free(utn);
- release_dev:
++
+ 	n = kzalloc(struct_size(n, sel.keys, s->nkeys), GFP_KERNEL);
+ 	if (n == NULL) {
+ 		err = -ENOBUFS;
 -- 
 2.53.0
 
