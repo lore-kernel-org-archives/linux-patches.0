@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214448;
-	b=kUkRtoXKQSxG97pVIFROYDs/Ub27ypSgDPqu9sZDQjXGGaIsODbAtonJ2Axdj1zk2Yvj
-	 SBLOnrX1TBn1g62iULZJiAjYoAPPChuCTL+9zkIYKjynRmcL/6Tp91yEs4qip6A1FnFb2
-	 Ey9DpClIS1O0peI2BOFSTl7MByQl3ViVRUg2HvB2bNP/VAyzV4hCVTq/GNg4YX6Pu2FiI
-	 LAKILfZGqj/ti9N8QhkRass+SMr44kU2mKuoydAxVyQx+ZxMdLpCwbaQjcI5lzkEgcbLi
-	 ZVXSWrpuQ3GHN0OaKNECLAF9LLM63zckrfmQjJq9hLl9F/irVr0BinTmIB6cW+jzaiw==
+	t=1793214450;
+	b=1uWwO9usXEV0hyEaFK/2A9ejp1WSFAufecNqfvnKEIQyW2ruVlTCtAO4QbqUYE+WFLou
+	 /yP9erIRjAIxnz/H61muvf+T5cQafyOUq66zwPCKSvwmnfHEWINYKN+KkSK8feRuG2KRD
+	 Hmi4jqCeZKj7XbEcbr+Q4UJ/rIF2IWR2QiZR/tIEKbq3H77nbbsy4ce93pAWz6ok/fytm
+	 wkc5UyKSb5zlYCQmAdhR5tb730xum1pFbPNx9JIVr1qJTyV7O4Ecb6ZvSN7PoiET1oooT
+	 /ZFqBks2DPzLHGnikDmi/33Lt/P7SyOHitlNyrlcpsSipgR/jaxxRWDdX61acZ/lE1A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214448;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214450;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=bvE/x/dz1W9cMMCWKpSQ4F/3lSLHPV8IiPfTF0JLFmg=;
-	b=VXqsfovn4W3K1bf0UC+9LDjbceZs8bzBh1RvJqPqzNzSGL2Z2mJz4nagS1HkxP3+demI
-	 IWR7tj3QFDQF91QataxDjj/KH/Zma6E04B7tH1V6nORFycuD+gbM9QxTDoE2PE6UfKkkO
-	 YPYlIKHsTiPeoZLKB60B/BhBJ6zp5q//nRHws+tbHwH3Ti/Iu8j0J1VieT9fHHxAh20Cb
-	 oGYrLyDxZMo2OLQd9a/gVnI8zoJejvvLBG0L2Yz9g0go5t1GKah8RCV26iDDj/7bJTMFo
-	 04atyGJRoNE0jBceQQMjSKT+o/7qnAx4DQY1pfpyTbuL8bKq17Pf2JB+rT9nvqT8D7Q==
+	bh=1ERfc572c/Z4+ti3JlWY5vXexgamX9v9x/s/Iv4cDwY=;
+	b=iDzgIPQl+8WnDxrLkBniC1jlDIpfKftq0FzxHkgGmbpv2bqFOH4EF5+EB6Nw88lAMBoK
+	 PpwATWxfkUd4PIpYLHi6OLtM1+kRRQLYdIsf8EEUmCMkJIAoCZY1uD/eVfELzLEDsLjrK
+	 yPO+Cxhu/lqdDKZw145SMgMGktkzARL8F+IecEbl4UAf2heRf3nGzOnlbm7+RNN4O654j
+	 Al1T7m8htXIM8rKnQNkm5W7NAdU5zdrjoOJDtGuFp4vMph13P9w9Q6Cihalb5aLIAfUBb
+	 d4dOJv1LiaKM6+9qsUCgMxoiyJ6Av9oXCxZK+1NT62TWHEkAnNyX0NhFchNTfR3okJg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A2IfTqdW;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N12iW7LO;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C200D606A31E;
-	Wed, 28 Oct 2026 19:07:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98B49606BFAD;
+	Wed, 28 Oct 2026 19:07:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A2IfTqdW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FFB51F01825;
-	Wed, 28 Oct 2026 19:07:26 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N12iW7LO
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAB041F01825;
+	Wed, 28 Oct 2026 19:07:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214447;
-	bh=bvE/x/dz1W9cMMCWKpSQ4F/3lSLHPV8IiPfTF0JLFmg=;
+	s=korg; t=1793214450;
+	bh=1ERfc572c/Z4+ti3JlWY5vXexgamX9v9x/s/Iv4cDwY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=A2IfTqdWBN7s2J8XRPS0Y9g5gHu+G4SwOh8aWSP5VE/DX/u2cTPgW9Epz73EjBmXA
-	 uIhcua3rhHESAcS/kgTc1Sux405witw7TyG/SJGpbNacP2+cM2dqpPSwyb6ZgYmMSW
-	 yU1+rRhavSJeLax9URADgreq6CxuGbO20Mrzw+uE=
+	b=N12iW7LOTrLbx5dG/coFTPKnBt61IGVWaJ6Mxva1yXECbbGHCPgYVQgIAIx+lIt9b
+	 7KvOmmV0ngYd3Hh8sZ6MYZuu1VHTyBSunN3CR38aRWpkehbDqscetIVI2wY6LqUFq5
+	 izmDo0OQht2rTd0bbgWz0jT3YrbSVxGCbA/ExSn4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+90266696fe5daacebd35@syzkaller.appspotmail.com,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	David Ahern <dsahern@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0863/1887] f2fs: fix to truncate first page in error path of f2fs_truncate()
-Date: Wed, 28 Oct 2026 17:49:19 +0100
-Message-ID: <20261028170519.057622903@linuxfoundation.org>
+Subject: [PATCH 6.1 0864/1887] ipv6: use RCU in ip6_output()
+Date: Wed, 28 Oct 2026 17:49:20 +0100
+Message-ID: <20261028170519.079511097@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,81 +69,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 9251a9e6e871cb03c4714a18efa8f5d4a8818450 ]
+[ Upstream commit 11709573cc4e48dc34c80fc7ab9ce5b159e29695 ]
 
-syzbot reports a bug as below:
+Use RCU in ip6_output() in order to use dst_dev_rcu() to prevent
+possible UAF.
 
-loop0: detected capacity change from 0 to 40427
-F2FS-fs (loop0): Wrong SSA boundary, start(3584) end(4096) blocks(3072)
-F2FS-fs (loop0): Can't find valid F2FS filesystem in 1th superblock
-F2FS-fs (loop0): invalid crc value
-F2FS-fs (loop0): f2fs_convert_inline_folio: corrupted inline inode ino=3, i_addr[0]:0x1601, run fsck to fix.
-------------[ cut here ]------------
-kernel BUG at fs/inode.c:753!
-RIP: 0010:clear_inode+0x169/0x190 fs/inode.c:753
-Call Trace:
- <TASK>
- evict+0x504/0x9c0 fs/inode.c:810
- f2fs_fill_super+0x5612/0x6fa0 fs/f2fs/super.c:5047
- get_tree_bdev_flags+0x40e/0x4d0 fs/super.c:1692
- vfs_get_tree+0x8f/0x2b0 fs/super.c:1815
- do_new_mount+0x2a2/0x9e0 fs/namespace.c:3808
- do_mount fs/namespace.c:4136 [inline]
- __do_sys_mount fs/namespace.c:4347 [inline]
- __se_sys_mount+0x317/0x410 fs/namespace.c:4324
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0xfa/0x3b0 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
+We can remove rcu_read_lock()/rcu_read_unlock() pairs
+from ip6_finish_output2().
 
-During f2fs_evict_inode(), clear_inode() detects that we missed to truncate
-all page cache before destorying inode, that is because in below path, we
-will create page #0 in cache, but missed to drop it in error path, let's fix
-it.
-
-- evict
- - f2fs_evict_inode
-  - f2fs_truncate
-   - f2fs_convert_inline_inode
-    - f2fs_grab_cache_folio
-    : create page #0 in cache
-    - f2fs_convert_inline_folio
-    : sanity check failed, return -EFSCORRUPTED
-  - clear_inode detects that inode->i_data.nrpages is not zero
-
-Fixes: 92dffd01790a ("f2fs: convert inline_data when i_size becomes large")
-Reported-by: syzbot+90266696fe5daacebd35@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/linux-f2fs-devel/68c09802.050a0220.3c6139.000e.GAE@google.com
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Fixes: 4a6ce2b6f2ec ("net: introduce a new function dst_dev_put()")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://patch.msgid.link/20250828195823.3958522-5-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/file.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ net/ipv6/ip6_output.c | 30 ++++++++++++++++--------------
+ 1 file changed, 16 insertions(+), 14 deletions(-)
 
-diff --git a/fs/f2fs/file.c b/fs/f2fs/file.c
-index 6755d23a90512..c35b2a25a66d6 100644
---- a/fs/f2fs/file.c
-+++ b/fs/f2fs/file.c
-@@ -828,8 +828,16 @@ int f2fs_truncate(struct inode *inode)
- 	/* we should check inline_data size */
- 	if (!f2fs_may_inline_data(inode)) {
- 		err = f2fs_convert_inline_inode(inode);
--		if (err)
-+		if (err) {
-+			/*
-+			 * Always truncate page #0 to avoid page cache
-+			 * leak in evict() path.
-+			 */
-+			truncate_inode_pages_range(inode->i_mapping,
-+					F2FS_BLK_TO_BYTES(0),
-+					F2FS_BLK_END_BYTES(0));
- 			return err;
-+		}
+diff --git a/net/ipv6/ip6_output.c b/net/ipv6/ip6_output.c
+index 7ad60793c853c..3ff6f43bd40ae 100644
+--- a/net/ipv6/ip6_output.c
++++ b/net/ipv6/ip6_output.c
+@@ -59,7 +59,7 @@
+ static int ip6_finish_output2(struct net *net, struct sock *sk, struct sk_buff *skb)
+ {
+ 	struct dst_entry *dst = skb_dst(skb);
+-	struct net_device *dev = dst->dev;
++	struct net_device *dev = dst_dev_rcu(dst);
+ 	struct inet6_dev *idev = ip6_dst_idev(dst);
+ 	unsigned int hh_len = LL_RESERVED_SPACE(dev);
+ 	const struct in6_addr *daddr, *nexthop;
+@@ -69,15 +69,12 @@ static int ip6_finish_output2(struct net *net, struct sock *sk, struct sk_buff *
+ 
+ 	/* Be paranoid, rather than too clever. */
+ 	if (unlikely(hh_len > skb_headroom(skb)) && dev->header_ops) {
+-		/* Make sure idev stays alive */
+-		rcu_read_lock();
++		/* idev stays alive because we hold rcu_read_lock(). */
+ 		skb = skb_expand_head(skb, hh_len);
+ 		if (!skb) {
+ 			IP6_INC_STATS(net, idev, IPSTATS_MIB_OUTDISCARDS);
+-			rcu_read_unlock();
+ 			return -ENOMEM;
+ 		}
+-		rcu_read_unlock();
  	}
  
- 	err = f2fs_truncate_blocks(inode, i_size_read(inode), true);
+ 	hdr = ipv6_hdr(skb);
+@@ -122,7 +119,6 @@ static int ip6_finish_output2(struct net *net, struct sock *sk, struct sk_buff *
+ 		daddr = &hdr->daddr;
+ 	}
+ 
+-	rcu_read_lock();
+ 	nexthop = rt6_nexthop(dst_rt6_info(dst), daddr);
+ 	neigh = __ipv6_neigh_lookup_noref(dev, nexthop);
+ 
+@@ -130,7 +126,6 @@ static int ip6_finish_output2(struct net *net, struct sock *sk, struct sk_buff *
+ 		if (unlikely(!neigh))
+ 			neigh = __neigh_create(&nd_tbl, nexthop, dev, false);
+ 		if (IS_ERR(neigh)) {
+-			rcu_read_unlock();
+ 			IP6_INC_STATS(net, idev, IPSTATS_MIB_OUTNOROUTES);
+ 			kfree_skb_reason(skb, SKB_DROP_REASON_NEIGH_CREATEFAIL);
+ 			return -EINVAL;
+@@ -138,7 +133,6 @@ static int ip6_finish_output2(struct net *net, struct sock *sk, struct sk_buff *
+ 	}
+ 	sock_confirm_neigh(skb, neigh);
+ 	ret = neigh_output(neigh, skb, false);
+-	rcu_read_unlock();
+ 	return ret;
+ }
+ 
+@@ -224,22 +218,30 @@ static int ip6_finish_output(struct net *net, struct sock *sk, struct sk_buff *s
+ 
+ int ip6_output(struct net *net, struct sock *sk, struct sk_buff *skb)
+ {
+-	struct net_device *dev = skb_dst(skb)->dev, *indev = skb->dev;
+-	struct inet6_dev *idev = ip6_dst_idev(skb_dst(skb));
++	struct dst_entry *dst = skb_dst(skb);
++	struct net_device *dev, *indev = skb->dev;
++	struct inet6_dev *idev;
++	int ret;
+ 
+ 	skb->protocol = htons(ETH_P_IPV6);
++	rcu_read_lock();
++	dev = dst_dev_rcu(dst);
++	idev = ip6_dst_idev(dst);
+ 	skb->dev = dev;
+ 
+ 	if (unlikely(!idev || READ_ONCE(idev->cnf.disable_ipv6))) {
+ 		IP6_INC_STATS(net, idev, IPSTATS_MIB_OUTDISCARDS);
++		rcu_read_unlock();
+ 		kfree_skb_reason(skb, SKB_DROP_REASON_IPV6DISABLED);
+ 		return 0;
+ 	}
+ 
+-	return NF_HOOK_COND(NFPROTO_IPV6, NF_INET_POST_ROUTING,
+-			    net, sk, skb, indev, dev,
+-			    ip6_finish_output,
+-			    !(IP6CB(skb)->flags & IP6SKB_REROUTED));
++	ret = NF_HOOK_COND(NFPROTO_IPV6, NF_INET_POST_ROUTING,
++			   net, sk, skb, indev, dev,
++			   ip6_finish_output,
++			   !(IP6CB(skb)->flags & IP6SKB_REROUTED));
++	rcu_read_unlock();
++	return ret;
+ }
+ EXPORT_SYMBOL(ip6_output);
+ 
 -- 
 2.53.0
 
