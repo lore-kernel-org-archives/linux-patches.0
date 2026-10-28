@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215222;
-	b=3C/T+miD0kNsgNuxx5JYXZmA9eWBG6WX3VW6qEMq8iDBiJtFSfwDBxXQ9RFHfcxT8e9h
-	 aCovAKPUCh29SzmJ9mM+4TOTymXffmPJXz2q29ETtQNSbvetDe+EVd2lsU8EvAM0DspVN
-	 5CumdDu8Kiyn67kICKJskcJHMtt+3k4RPxC4aQwXqUbrZDGDPdCH/FvsKhd+GO57QsB8O
-	 GbPzAzx1gUdojYydSA7k4EFgLrbj0tjNugz1bETXkHmVeXUEZa3DZA3dqnpFWK3N/07Ck
-	 siTZfC3eoeflkd+CHfy+Qh5/95v4R+XtRYGBa+0r/ECJwbSzN7/ceVvAKygqzR8Vtqg==
+	t=1793215224;
+	b=kbsyHgmWplCDnrwLOISXY1E6q1KrPGQsK/U8utquIceXZuxxlr4qFsdgtB17T8bwN9vp
+	 aAWTrekkp4wRu5XhBm9JDPBS8+4bJUHItw32Yb/FCRZl2jCuEjqGmGPfQbwCvPc8YHvtO
+	 fEhSnpmdDxk8SLn1GTSnxmD2pdFpVNKQet1wO/mE34ePWw20W0ffqWl2dBiRT/EXtjj3i
+	 rKyRDnmyrOJoMHhrOzLQngxT0dp6+DzOmWfNmlttQAq0pVmAKbCSwwJus0cUYBlBEkamw
+	 m9yLEC/8BRK8a8IN7OuJliedTjtyZKjnAPLd+isO66bVTg6c9yqqB59fBGUWeFwicgA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215222;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215224;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=FBc5vqIyuFfXwtxjf8UBEtgi7dLe+NRzMDNk6aTHY7E=;
-	b=JF248bsViS9knezfHZVJUt6B7jV/XZVkaIEloURK+ZfaurmVzrCc9vffP6mU7kNq1weW
-	 PJG0hj/RKCuSu/veJTsZuvXtXg/LLx4Drp+VvsjDFurbO62c+JCDD9MYvH7/ox5guvP5y
-	 4SdMErQuqZN7AKxNz+UZh+POhpAaKncJSnuGJ9tRn2n+91x4ZRZHgUVsdPPgT2NBt+IYY
-	 VIoQQM00/dQvSMmLgXMW4nCUZ1PfIAdkOeDjDoHLgabAu/2d6Q+4J5AM8/XjCKYOF8iMA
-	 ayTD+QHlDO8N8nnwk6T11UmB8ExtX+9+imdc82ZLdzSqNDNyNbNoXoqnsdEGTSlKN9g==
+	bh=vAa/R8uE46vZ4IERlcYOrl3uy9eFokQyW0Dh/EzEOPY=;
+	b=Ltk7cxYcuRah4ACBgcO3mAdwgtjtIXjj57oFe9f8xd6TIaZP2BYqyAnxNAda0GbUOye8
+	 AT0AALSJhgN/F7xsw5JtM/P9K0nkGgMfpoITKtSBHivIz0+ztljrPByK6rOZLPyjDvgjl
+	 p6V2/qt2fjdM2bYngHv4AbAfltCcSKSdCZ/+cpe/j5qyDbrKYaUJ0l7meB+LJp96zrG+2
+	 gCBf5rxXkUNvLc6dW0pVDEIDNtNla+xthhtQUc4yqWGIPiBRRKeGtM/LikXB8MtXURPG7
+	 rNUJxjSU4KuEeZHRa5Uif/QZLBf6ka+NHUz5mulMOizIruGNZ1R/53E8Ztwlqaj9H4A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MvJquC9c;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ocXh3uCq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BB35606A31A;
-	Wed, 28 Oct 2026 19:20:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96D61606A31A;
+	Wed, 28 Oct 2026 19:20:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MvJquC9c
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14A911F01825;
-	Wed, 28 Oct 2026 19:20:20 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ocXh3uCq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E59011F01825;
+	Wed, 28 Oct 2026 19:20:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215221;
-	bh=FBc5vqIyuFfXwtxjf8UBEtgi7dLe+NRzMDNk6aTHY7E=;
+	s=korg; t=1793215224;
+	bh=vAa/R8uE46vZ4IERlcYOrl3uy9eFokQyW0Dh/EzEOPY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MvJquC9cjtBEsyjxol9fiboDoaKF4DWyw0tcgzQ64qplAlrVp3WgVNvDNnY/1KK60
-	 nTHkEoltKUzmpBA3w6HMqMaFHv6JQH5q/Gc2AgA0EX4c+hrUwAXiOz/ixHLlGQx9mH
-	 RbMV/LVXqnWIQc2jV2qgeYQouTN/7soOGFEttYx0=
+	b=ocXh3uCqNmhEAOyDQ/ItHElC/T89q/Mh7sAyjkui71Ezck/4aegAeS4t3YarZ5Ycc
+	 Bnat0P0PI0mstnr+kLSx5PpwNsWrcVtX2MSDQ/n2++XQUGZ5ksafOoCTSMm2Pk18dn
+	 xHM6dr1ykn5fYPNXCCG/+o48kc8QnR2fLj5q30CA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Xin Long <lucien.xin@gmail.com>,
+	Dragos Tatulea <dtatulea@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1091/1887] sctp: validate embedded INIT chunk and address list lengths in cookie
-Date: Wed, 28 Oct 2026 17:53:07 +0100
-Message-ID: <20261028170524.234289312@linuxfoundation.org>
+Subject: [PATCH 6.1 1092/1887] net/mlx5e: xsk: Fix DMA and xdp_frame leak on XDP_TX xmit failure
+Date: Wed, 28 Oct 2026 17:53:08 +0100
+Message-ID: <20261028170524.257485116@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,111 +69,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xin Long <lucien.xin@gmail.com>
+From: Dragos Tatulea <dtatulea@nvidia.com>
 
-[ Upstream commit 6f4c80a2a7e6d06753b89a578b710a2499a5e62b ]
+[ Upstream commit b69004f5a6ad32da84d8aa5b23b9c0caafe6252e ]
 
-sctp_unpack_cookie() only checked that the embedded INIT chunk length
-did not exceed the remaining cookie payload, but did not ensure that the
-INIT chunk is large enough to contain a complete INIT header.
+In the XSK branch of mlx5e_xmit_xdp_buff(), when sq->xmit_xdp_frame()
+returns false (e.g. XDPSQ is full), the function returns without
+unmapping the DMA address or freeing the xdp_frame allocated by
+xdp_convert_zc_to_xdp_frame(). The xdpi_fifo push only happens on
+success, so the completion path cannot recover these entries.
 
-A malformed COOKIE_ECHO can therefore carry a truncated INIT chunk whose
-length field is smaller than sizeof(struct sctp_init_chunk).  Later,
-sctp_process_init() accesses INIT parameters unconditionally, which may
-lead to out-of-bounds reads.
+With CONFIG_DMA_API_DEBUG=y, the leak surfaces on driver unbind:
 
-In addition, raw_addr_list_len is not fully validated against the
-remaining cookie payload. When cookie authentication is disabled, an
-attacker can supply an oversized raw_addr_list_len and cause
-sctp_raw_to_bind_addrs() to read beyond the end of the cookie. The
-address parser also lacks sufficient bounds checks for parameter headers
-and lengths, allowing malformed address parameters to trigger
-out-of-bounds reads.
+  DMA-API: pci 0000:08:00.0: device driver has pending DMA
+  allocations while released from device [count=1116]
+  One of leaked entries details: [device address=0x000000010ffd7028]
+  [size=1534 bytes] [mapped with DMA_TO_DEVICE] [mapped as phy]
+  WARNING: kernel/dma/debug.c:881 at dma_debug_device_change+0x127/0x180
+  ...
+  DMA-API: Mapped at:
+   debug_dma_map_phys+0x4b/0xd0
+   dma_map_phys+0xfd/0x2d0
+   mlx5e_xdp_handle+0x5ae/0xac0 [mlx5_core]
+   mlx5e_xsk_skb_from_cqe_mpwrq_linear+0xc4/0x170 [mlx5_core]
+   mlx5e_handle_rx_cqe_mpwrq+0xc1/0x290 [mlx5_core]
 
-Fix this by:
+Add the missing unmap + xdp_return_frame, matching the cleanup already
+done in mlx5e_xdp_xmit(). has_frags is rejected earlier in this branch,
+so no per-frag unmap is needed.
 
-- requiring the embedded INIT chunk length to be at least sizeof(struct
-  sctp_init_chunk);
-- validating that the INIT chunk and raw address list together fit
-  within the cookie payload;
-- verifying sufficient data exists for each address parameter header and
-  payload before parsing it.
-
-Note that sctp_verify_init() must be called after sctp_unpack_cookie()
-and before sctp_process_init() when cookie authentication is disabled.
-This will be addressed in a separate patch.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Signed-off-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/75af23a89adf881a0895d511775e4770da367cbf.1780873427.git.lucien.xin@gmail.com
+Fixes: 84a0a2310d6d ("net/mlx5e: XDP_TX from UMEM support")
+Signed-off-by: Dragos Tatulea <dtatulea@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/20260604135446.456119-1-tariqt@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/bind_addr.c     | 11 ++++++++++-
- net/sctp/sm_make_chunk.c | 12 +++++++++++-
- 2 files changed, 21 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en/xdp.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/net/sctp/bind_addr.c b/net/sctp/bind_addr.c
-index 6b95d3ba8fe1c..0947b276d1e08 100644
---- a/net/sctp/bind_addr.c
-+++ b/net/sctp/bind_addr.c
-@@ -275,6 +275,16 @@ int sctp_raw_to_bind_addrs(struct sctp_bind_addr *bp, __u8 *raw_addr_list,
- 		param = (struct sctp_paramhdr *)raw_addr_list;
- 		rawaddr = (union sctp_addr_param *)raw_addr_list;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/xdp.c b/drivers/net/ethernet/mellanox/mlx5/core/en/xdp.c
+index 20507ef2f9569..98e9df752c4bb 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en/xdp.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en/xdp.c
+@@ -100,8 +100,12 @@ mlx5e_xmit_xdp_buff(struct mlx5e_xdpsq *sq, struct mlx5e_rq *rq,
+ 		xdpi.frame.dma_addr = dma_addr;
  
-+		if (addrs_len < sizeof(*param)) {
-+			retval = -EINVAL;
-+			goto out_err;
+ 		if (unlikely(!INDIRECT_CALL_2(sq->xmit_xdp_frame, mlx5e_xmit_xdp_frame_mpwqe,
+-					      mlx5e_xmit_xdp_frame, sq, &xdptxd, NULL, 0)))
++					      mlx5e_xmit_xdp_frame, sq, &xdptxd, NULL, 0))) {
++			dma_unmap_single(sq->pdev, dma_addr, xdptxd.len,
++					 DMA_TO_DEVICE);
++			xdp_return_frame(xdpf);
+ 			return false;
 +		}
-+		len = ntohs(param->length);
-+		if (addrs_len < len) {
-+			retval = -EINVAL;
-+			goto out_err;
-+		}
-+
- 		af = sctp_get_af_specific(param_type2af(param->type));
- 		if (unlikely(!af) ||
- 		    !af->from_addr_param(&addr, rawaddr, htons(port), 0)) {
-@@ -291,7 +301,6 @@ int sctp_raw_to_bind_addrs(struct sctp_bind_addr *bp, __u8 *raw_addr_list,
- 			goto out_err;
  
- next:
--		len = ntohs(param->length);
- 		addrs_len -= len;
- 		raw_addr_list += len;
- 	}
-diff --git a/net/sctp/sm_make_chunk.c b/net/sctp/sm_make_chunk.c
-index 649384ff0e547..742ba54755e8b 100644
---- a/net/sctp/sm_make_chunk.c
-+++ b/net/sctp/sm_make_chunk.c
-@@ -1750,8 +1750,9 @@ struct sctp_association *sctp_unpack_cookie(
- 	struct sk_buff *skb = chunk->skb;
- 	struct sctp_cookie *bear_cookie;
- 	__u8 *digest = ep->digest;
-+	struct sctp_chunkhdr *ch;
-+	unsigned int len, chlen;
- 	enum sctp_scope scope;
--	unsigned int len;
- 	ktime_t kt;
- 
- 	/* Header size is static data prior to the actual cookie, including
-@@ -1779,6 +1780,15 @@ struct sctp_association *sctp_unpack_cookie(
- 	cookie = chunk->subh.cookie_hdr;
- 	bear_cookie = &cookie->c;
- 
-+	ch = (struct sctp_chunkhdr *)(bear_cookie + 1);
-+	chlen = ntohs(ch->length);
-+	if (chlen < sizeof(struct sctp_init_chunk))
-+		goto malformed;
-+	if (chlen > len - fixed_size)
-+		goto malformed;
-+	if (bear_cookie->raw_addr_list_len > len - fixed_size - chlen)
-+		goto malformed;
-+
- 	if (!sctp_sk(ep->base.sk)->hmac)
- 		goto no_hmac;
- 
+ 		mlx5e_xdpi_fifo_push(&sq->db.xdpi_fifo, &xdpi);
+ 		return true;
 -- 
 2.53.0
 
