@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793211732;
-	b=xKaPqT5CA7YbXAGk6l9K7Rp8vgfjiLg9jOX4u4frC2TWQZvdoV3TcmibH5oiYBj1ed7w
-	 A4//bBEHIVw7ZX/1cchaWCQSTWeDjiUs/7CZOv+7VPAkgzA3vDDKyE2UHo44cuPGLN2jW
-	 aQ0Z0/g8TNBuUGJyzrpWY+C/gRoscqkkBcrWK/xLAgJtmUeKpi7S8boXuBAzkeWwBy3ua
-	 5KEjfrtUzsis9z8/WeH8GY6yOn4BtBDUMYUMc2yC4DQjYxUGg+i7toJnteTWIWobLir9K
-	 YQilrvravmNKbstt7bi9UZ4As4fHskWjvFDxNPCfZ4DmxsRcTiZNW1qvamOlIBpHmSg==
+	t=1793211735;
+	b=HwEsLUXhF0SMSxr38O8MHmy+tBRA/v5AXYLuhwXHH4gtyib2J8jrNlmo3/5xcgPJfAv9
+	 gf5F+RXPDR0r52wsI03bYfDI5IaSTFveH3UbQShzRdn/0TDfhGOH7rOtuHdamZA5l32nM
+	 xHZAyLGXwPV3ib5oZ73cTsWokcTDao/D76ymJh2/iFE7Qzs0WQKeNUS82njIMkqPvo9hv
+	 dRAR1JYwuR2msDTP608wQMQjUXF9zCnGguFjZbZzkD5VAkU4Pd9EG9sI0N3wnEF408RH8
+	 RxypZ0hBrLqGAqqANRXZFakn95jw/QJEKG26+zxsUppjkmSNlbTJLRgNJOdvmfYZwVw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793211732;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793211735;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=4d9KtBMhsx2zc1viskYthfSKxckmEhlQFftfsgkfjjo=;
-	b=U2Fdh9PlALE1Oq4edy4ePRvPo7zNe9SGh36HpMGz5GkER+vh/tldEa1kwLwLD44LVs6h
-	 KrxVo167yIMCxy+cuS5w58EzmYCEHa/Idv7q6Ht2x+a3Wbpm4L7AdWCXKA7HJFB4sGM3N
-	 uByLH2LlysXZqBuQHgxEiO+Gag6Og6/GS9romuSV4yPvSGbVPBbyj1mgUjOzKLTZMogjW
-	 AYvbXUknVwO5ze324UufSRv0HaXpFLMaSW+c2JdP+PsQ0EvZhsttzi9f1O23Dj0u4m7mA
-	 5MbZPBUrrpSxL3DughY9no1wgRBATO6YAyjCIpgBwf0dhh4zzN4k7nC2sw8+XfhrbRA==
+	bh=ufEidXq+P0tHgqdAVdJXpwbWVknD6Mk0Pl5Tv/urcXQ=;
+	b=ey/QX/aEd6U5pb7BLgyGA5COJBOqWXnmJoNb49uqGHmux+Pu28jIt2lHSxGhUL2VKZqq
+	 LpLmZXM4whT+SxVTmgZ7+wuQRauZgTxiDdvBvP+zMg9nUuoAl3WJ2bdaivb/8wTyHCg8/
+	 76Ycz4IchFVwM27s0aEnCuPS4QQcNe0vPSML3l5rQR4Mv289kBgC7yU8RS8TUiqezCq0G
+	 6DVZBCyuXVlP6Yd6yK370FgUAmXyaumX74U7wJvpIPPHrDOO59ISTusM2cq0/esaEgX3D
+	 yYVZiaWNU6mCC+YkKCgG0Y2iFiGwmcpS3lJbxw67ZTwGJt5a/JGnR9su9UkJ0xCRvmQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GJqEKdkE;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zaYbAAij;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99484606A31C;
-	Wed, 28 Oct 2026 18:22:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65EDF606A31C;
+	Wed, 28 Oct 2026 18:22:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GJqEKdkE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A86641F01825;
-	Wed, 28 Oct 2026 18:22:11 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zaYbAAij
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7ED381F01825;
+	Wed, 28 Oct 2026 18:22:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793211732;
-	bh=4d9KtBMhsx2zc1viskYthfSKxckmEhlQFftfsgkfjjo=;
+	s=korg; t=1793211735;
+	bh=ufEidXq+P0tHgqdAVdJXpwbWVknD6Mk0Pl5Tv/urcXQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GJqEKdkE3q64mkbVIRuxkHAxaxrJyfXnMtdBdrX4RYpi+yIFOT86zbUb7H9W/zBk5
-	 YMKVFTBZDXGfL1al79he74UNlkrq+VkyFKAqU5H09lClGN2pC07dZWhyjbgUtkk16E
-	 65pdmNvaFR7ut8tfIML2nX0aEfcd92I53WgnYzv0=
+	b=zaYbAAij49/jDxohWsiefpOizOviZbHGJbIMkSoHscunupGM30Fhb5p4z0pcGzrm6
+	 3hwAcFAGsiv0IDf1nWvVaI/PbMCINyaFQQu3YWLkxRW5FTQAlQ/JDdt02tE783kc9O
+	 WW65OY0Cp8Ov6HHDOHH2fXGUMAOpSwDYZ4nUWJ54=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Chinner <dchinner@redhat.com>,
-	Carlos Maiolino <cmaiolino@redhat.com>,
-	Carlos Maiolino <cem@kernel.org>,
-	Siddh Raman Pant <siddh.raman.pant@oracle.com>,
+	Kyle Zeng <kylebot@openai.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 464/571] xfs: factor out stale buffer item completion
-Date: Wed, 28 Oct 2026 18:00:11 +0100
-Message-ID: <20261028170019.032718130@linuxfoundation.org>
+Subject: [PATCH 5.15 482/571] netlink: reset skb headers before unicast and multicast filtering
+Date: Wed, 28 Oct 2026 18:00:29 +0100
+Message-ID: <20261028170019.461166889@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -70,109 +68,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dave Chinner <dchinner@redhat.com>
+From: Kyle Zeng <kylebot@openai.com>
 
-[ Upstream commit 816c330b605c3f4813c0dc0ab5af5cce17ff06b3 ]
+[ Upstream commit 8bf659bd54e1f00e34cf5244b1d289c506fa47c0 ]
 
-The stale buffer item completion handling is currently only done
-from BLI unpinning. We need to perform this function from where-ever
-the last reference to the BLI is dropped, so first we need to
-factor this code out into a helper.
+Socket filters can use SKF_NET_OFF and SKF_LL_OFF to read relative to
+an skb's network and MAC headers. Netlink producers may reserve
+headroom without resetting those headers, allowing a receiving socket's
+filter to read data before the initialized message.
 
-Signed-off-by: Dave Chinner <dchinner@redhat.com>
-Reviewed-by: Carlos Maiolino <cmaiolino@redhat.com>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
-Signed-off-by: Siddh Raman Pant <siddh.raman.pant@oracle.com>
+For example, IWPM HELLO replies are allocated with dev_alloc_skb(),
+which reserves NET_SKB_PAD bytes. An unprivileged NETLINK_RDMA user can
+attach a classic socket filter and disclose this headroom through the
+length of the delivered reply. The resets in netlink_dump() do not help
+because IWPM sends a separately allocated skb through netlink_unicast().
+
+Reset both headers before running the receiver's filter in unicast and
+broadcast delivery, as is already done for dump skbs. This also covers
+other netlink producers that reserve headroom without changing their
+allocation or message-building code.
+
+Fixes: b1153f29ee07 ("netlink: make socket filters work on netlink")
+Assisted-by: LLM
+Signed-off-by: Kyle Zeng <kylebot@openai.com>
+Link: https://patch.msgid.link/20261006224232.50724-1-kylebot@openai.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/xfs/xfs_buf_item.c | 60 ++++++++++++++++++++++++++-----------------
- 1 file changed, 37 insertions(+), 23 deletions(-)
+ net/netlink/af_netlink.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/fs/xfs/xfs_buf_item.c b/fs/xfs/xfs_buf_item.c
-index ebcaccc4ad66b..9c3918a63a23b 100644
---- a/fs/xfs/xfs_buf_item.c
-+++ b/fs/xfs/xfs_buf_item.c
-@@ -540,6 +540,42 @@ xfs_buf_item_pin(
- 	atomic_inc(&bip->bli_buf->b_pin_count);
- }
+diff --git a/net/netlink/af_netlink.c b/net/netlink/af_netlink.c
+index 0ec133e744af0..63065d2449509 100644
+--- a/net/netlink/af_netlink.c
++++ b/net/netlink/af_netlink.c
+@@ -1339,6 +1339,8 @@ int netlink_unicast(struct sock *ssk, struct sk_buff *skb,
+ 	if (netlink_is_kernel(sk))
+ 		return netlink_unicast_kernel(sk, skb, ssk);
  
-+/*
-+ * For a stale BLI, process all the necessary completions that must be
-+ * performed when the final BLI reference goes away. The buffer will be
-+ * referenced and locked here - we return to the caller with the buffer still
-+ * referenced and locked for them to finalise processing of the buffer.
-+ */
-+static void
-+xfs_buf_item_finish_stale(
-+	struct xfs_buf_log_item	*bip)
-+{
-+	struct xfs_buf		*bp = bip->bli_buf;
-+	struct xfs_log_item	*lip = &bip->bli_item;
-+
-+	ASSERT(bip->bli_flags & XFS_BLI_STALE);
-+	ASSERT(xfs_buf_islocked(bp));
-+	ASSERT(bp->b_flags & XBF_STALE);
-+	ASSERT(bip->__bli_format.blf_flags & XFS_BLF_CANCEL);
-+	ASSERT(list_empty(&lip->li_trans));
-+	ASSERT(!bp->b_transp);
-+
-+	if (bip->bli_flags & XFS_BLI_STALE_INODE) {
-+		xfs_buf_item_done(bp);
-+		xfs_buf_inode_iodone(bp);
-+		ASSERT(list_empty(&bp->b_li_list));
-+		return;
-+	}
-+
-+	/*
-+	 * We may or may not be on the AIL here, xfs_trans_ail_delete() will do
-+	 * the right thing regardless of the situation in which we are called.
-+	 */
-+	xfs_trans_ail_delete(lip, SHUTDOWN_LOG_IO_ERROR);
-+	xfs_buf_item_relse(bip);
-+	ASSERT(bp->b_log_item == NULL);
-+}
-+
- /*
-  * This is called to unpin the buffer associated with the buf log item which was
-  * previously pinned with a call to xfs_buf_item_pin().  We enter this function
-@@ -589,13 +625,6 @@ xfs_buf_item_unpin(
++	skb_reset_network_header(skb);
++	skb_reset_mac_header(skb);
+ 	if (sk_filter(sk, skb)) {
+ 		err = skb->len;
+ 		kfree_skb(skb);
+@@ -1475,6 +1477,8 @@ static void do_one_broadcast(struct sock *sk,
+ 		goto out;
  	}
  
- 	if (stale) {
--		ASSERT(bip->bli_flags & XFS_BLI_STALE);
--		ASSERT(xfs_buf_islocked(bp));
--		ASSERT(bp->b_flags & XBF_STALE);
--		ASSERT(bip->__bli_format.blf_flags & XFS_BLF_CANCEL);
--		ASSERT(list_empty(&lip->li_trans));
--		ASSERT(!bp->b_transp);
--
- 		trace_xfs_buf_item_unpin_stale(bip);
- 
- 		/*
-@@ -606,22 +635,7 @@ xfs_buf_item_unpin(
- 		 * processing is complete.
- 		 */
- 		xfs_buf_rele(bp);
--
--		/*
--		 * If we get called here because of an IO error, we may or may
--		 * not have the item on the AIL. xfs_trans_ail_delete() will
--		 * take care of that situation. xfs_trans_ail_delete() drops
--		 * the AIL lock.
--		 */
--		if (bip->bli_flags & XFS_BLI_STALE_INODE) {
--			xfs_buf_item_done(bp);
--			xfs_buf_inode_iodone(bp);
--			ASSERT(list_empty(&bp->b_li_list));
--		} else {
--			xfs_trans_ail_delete(lip, SHUTDOWN_LOG_IO_ERROR);
--			xfs_buf_item_relse(bip);
--			ASSERT(bp->b_log_item == NULL);
--		}
-+		xfs_buf_item_finish_stale(bip);
- 		xfs_buf_relse(bp);
- 		return;
- 	}
++	skb_reset_network_header(p->skb2);
++	skb_reset_mac_header(p->skb2);
+ 	if (sk_filter(sk, p->skb2)) {
+ 		kfree_skb(p->skb2);
+ 		p->skb2 = NULL;
 -- 
 2.53.0
 
