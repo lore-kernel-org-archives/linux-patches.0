@@ -1,55 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215134;
-	b=h4eNoKYj5V5XdGg9NB+/c5YcZLRceYAa7MOAEsiaTr+DLPY3ScEvRpgVpVWhPRWvFbZw
-	 +U0vu5qSXceaambv1PpKv0iSjZHpb5bPxAfv8jPgCmGJNxAbbSJ7VqwW0nlGEPlZ8Ul4n
-	 yIu9n0piJTf5/e1Y8h0/CqgX9ze9Kf4xCjUNMlx/RaN4ar6AWQW+P4dYvdbyVQvv76I/I
-	 HNu6dFwFYWduezCdDhNrcW4/T8E7fDVW5F8O8O5oBp2xfno6xpoWWQIFPWkCiv3bbC2b+
-	 gnJ4uYQ0tOFoxYKusv52s/PVB+PMsTKOUWWG1/GkVS8N9vfVYVEFNvx2ho3rYV7P9CA==
+	t=1793215137;
+	b=Im7micCXF/x5Rwv58Wi/i9RYqkO5Ec95MXMa2jqD6A3J3j0IPk+vwYC7Rs1KbGAyp9W9
+	 qD5j7uSVLMQOQoxyjDQCjHjV0YVTR5MEsjH603GhaTr3ZHAKQnkLuHqClRqEwV+pevxXR
+	 9Su+n0FgWM/nnnc/F50dVaYZ6Buw0Ul3TY2RPPQ1b77j6iqjXIgXrEROI5r82AunYybZR
+	 cwQtfwRi+/vgtJLpKBzLOUSmRcBDnKFBStD4bPjXvggXM9rmjKrRN3sdUS9uxuu/42xhG
+	 ctvsejP/XGBd+/byxR2YkGvwBKtD5IUtHShNJXiSvPdTIhU9utdDXBb5ymPDSCXLHQw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215134;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215137;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=GlyW8+nNRyAS/Cd59MceEXUZTUpRSmCxnj+xGdWzeUE=;
-	b=wuw2lsd54aHBGMqU74/2/K6VPhaMhrRe45rW/ENv/hKr/5K9r4qIyn1ZHFf1fC/lg5cf
-	 2hajDnmrZp7uNBgWaH52bnpccLv9bzwXX7dqp8KLyRCNQN7qIc7V5XKUMa6TMgNEXMxIa
-	 MCPoGaDPVSPFaEHOMgOray+u8GI/2oheGYthW68vH9bmKtIbNqeTSbYHPGhAos7+Cg2UV
-	 ZZds8uar6dPeyFOecTWAFe3aWHPLpptgd6npAGJ90SCV+H2VQWe8rGbM2SavaNURpFDY1
-	 +dnOuKbxCGAxD/au/osLtXP0vX6denj0qNoOXeLn1zKWUKpTnHP/WT37xgVuOieb1Xg==
+	bh=7OkxNcF43FRDHJnrGpSY5pZjtNDiZgT6iQqB9Z8UYPk=;
+	b=XKnzvh65giQwqcTSv3M1qGjOYUby07p0rZgOYRecjWZ8k7Sd2HN7kPo2M/RjbGwM7kHu
+	 twOt6Yu/yBeNvgP/wwewiCPowQvsWV0LtPDccK1XDe9UUm3iLO6qu3YsTcp7n8Yrhfmwx
+	 3GnC08bn2skO4FpHr9XU587fc94OwNIZkRBoyt/EMVUYhtimmfiXnxt4CJhZ/9k+B/gmQ
+	 VakdHslQ/IwUXtISYlTToStraDkj8D6p3be6CIJWDSFi4wWQqiA+MpRCFp9ZKns4Yl9LR
+	 RcV/gkI/wKTQ1elfdNpCONXqB5ws8Btu+5ERl6sxZ/1sHU6S4RMWcAGPVqF6hCNvH6Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JSzgrrX5;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iuvSExvu;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4CF960A260E;
-	Wed, 28 Oct 2026 19:18:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A04E0606A326;
+	Wed, 28 Oct 2026 19:18:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JSzgrrX5
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7D0F1F031E0;
-	Wed, 28 Oct 2026 19:18:52 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iuvSExvu
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFCDE1F01829;
+	Wed, 28 Oct 2026 19:18:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215133;
-	bh=GlyW8+nNRyAS/Cd59MceEXUZTUpRSmCxnj+xGdWzeUE=;
+	s=korg; t=1793215136;
+	bh=7OkxNcF43FRDHJnrGpSY5pZjtNDiZgT6iQqB9Z8UYPk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JSzgrrX5iCLgGFnSHUyCZsu8bgAOt6iag3RaOKq9/en+SfIrQDvRYW4HLzN27FFi+
-	 o3/AIalO/vhtcNQLyDLDLQziakaP0oUnUtQtHFpw3C5iGdEdnz4aaDP7x4lqskCfvh
-	 Wiw5s8XaPAuu9qOAwrSxUVwMrkpWzLEke+JRgBNY=
+	b=iuvSExvu4hOJ6517Mp7xUwQyrRMeGzMhFVMgM+CZ6rlI4syWhJBDDobrAYbVkbB6s
+	 kfK82FPRf7EUXn0vOghOjziOGfeEw/4E/rSojuN8mo7SZH6cEG8tCieKxjN/Q5Nf/2
+	 KwDDkFCYjRoseV/aPB30x9tW7w0D+If0yLvX3ze8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aurabindo Pillai <aurabindo.pillai@amd.com>,
-	Tom Chung <chiahsuan.chung@amd.com>,
-	Stylon Wang <stylon.wang@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Pavithra Prakash <pavrampu@linux.vnet.ibm.com>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	Venkat Rao Bagalkote <venkat88@linux.ibm.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1105/1887] drm/amd/display: Add interface to enable DPIA trace
-Date: Wed, 28 Oct 2026 17:53:21 +0100
-Message-ID: <20261028170524.551874551@linuxfoundation.org>
+Subject: [PATCH 6.1 1088/1887] powerpc/64s: Fix unmap race with PMD migration entries
+Date: Wed, 28 Oct 2026 17:53:04 +0100
+Message-ID: <20261028170524.163434308@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -71,111 +70,171 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stylon Wang <stylon.wang@amd.com>
+From: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
 
-[ Upstream commit 71ba6b577a353fa880b2e5c85cdd780765c51fed ]
+[ Upstream commit bbcbf045d6c778e82b47a35fc8728387708e9a3d ]
 
-[Why]
-DPIA traces from DMUB is not enabled by default, which is
-less convenient to debug DPIA related issues because we have
-to resort to other debug tools to enable DPIA trace.
+The following race is possible with migration swap entries or
+device-private THP entries. e.g. when move_pages is called on a PMD THP
+page, then there maybe an intermediate state, where PMD entry acts as
+a migration swap entry (pmd_present() is true). Then if an munmap
+happens at the same time, then this VM_BUG_ON() can happen in
+pmdp_huge_get_and_clear_full().
 
-[How]
-Exposes interfaces to update trace mask from the DMUB GPINT commands.
-Also provides DC implementations to enable DPIA trace.
+This patch fixes that.
 
-Reviewed-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Acked-by: Tom Chung <chiahsuan.chung@amd.com>
-Signed-off-by: Stylon Wang <stylon.wang@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Stable-dep-of: 4ae3e16f4b3b ("drm/amd/display: Avoid NULL dereference in dc_dmub_srv error paths")
+Thread A: move_pages() syscall
+  add_folio_for_migration()
+    mmap_read_lock(mm)
+    folio_isolate_lru(folio)
+    mmap_read_unlock(mm)
+
+  do_move_pages_to_node()
+    migrate_pages()
+      try_to_migrate_one()
+        spin_lock(ptl)
+        set_pmd_migration_entry()
+          pmdp_invalidate()     # PMD: _PAGE_INVALID | _PAGE_PTE | pfn
+          set_pmd_at()          # PMD: migration swap entry (pmd_present=0)
+        spin_unlock(ptl)
+        [page copy phase]       # <--- RACE WINDOW -->
+
+Thread B: munmap()
+  mmap_write_downgrade(mm)
+  unmap_vmas() -> zap_pmd_range()
+    zap_huge_pmd()
+      __pmd_trans_huge_lock()
+        pmd_is_huge():          # !pmd_present && !pmd_none -> TRUE (swap entry)
+        pmd_lock() -> 		# spin_lock(ptl), waits for Thread A to release ptl
+      pmdp_huge_get_and_clear_full()
+        VM_BUG_ON(!pmd_present(*pmdp))  # HITS!
+
+[  287.738700][ T1867] ------------[ cut here ]------------
+[  287.743843][ T1867] kernel BUG at arch/powerpc/mm/book3s64/pgtable.c:187!
+cpu 0x0: Vector: 700 (Program Check) at [c00000044037f4f0]
+    pc: c000000000094ca4: pmdp_huge_get_and_clear_full+0x6c/0x23c
+    lr: c000000000645dec: zap_huge_pmd+0xb0/0x868
+    sp: c00000044037f790
+   msr: 800000000282b033
+  current = 0xc0000004032c1a00
+  paca    = 0xc000000004fe0000   irqmask: 0x03   irq_happened: 0x09
+    pid   = 1867, comm = a.out
+kernel BUG at :187!
+Linux version 6.19.0-12136-g14360d4f917c-dirty (powerpc64le-linux-gnu-gcc (Debian 12.2.0-14) 12.2.0, GNU ld (GNU Binutils for Debian) 2.40) #27 SMP PREEMPT Sun Feb 22 10:38:56 IST 2026
+enter ? for help
+[link register   ] c000000000645dec zap_huge_pmd+0xb0/0x868
+[c00000044037f790] c00000044037f7d0 (unreliable)
+[c00000044037f7d0] c000000000645dcc zap_huge_pmd+0x90/0x868
+[c00000044037f840] c0000000005724cc unmap_page_range+0x176c/0x1f40
+[c00000044037fa00] c000000000572ea0 unmap_vmas+0xb0/0x1d8
+[c00000044037fa90] c0000000005af254 unmap_region+0xb4/0x128
+[c00000044037fb50] c0000000005af400 vms_complete_munmap_vmas+0x138/0x310
+[c00000044037fbe0] c0000000005b0f1c do_vmi_align_munmap+0x1ec/0x238
+[c00000044037fd30] c0000000005b3688 __vm_munmap+0x170/0x1f8
+[c00000044037fdf0] c000000000587f74 sys_munmap+0x2c/0x40
+[c00000044037fe10] c000000000032668 system_call_exception+0x128/0x350
+[c00000044037fe50] c00000000000d05c system_call_vectored_common+0x15c/0x2ec
+---- Exception: 3000 (System Call Vectored) at 0000000010064a2c
+SP (7fff9b1ee9c0) is in userspace
+0:mon> zh
+
+commit a30b48bf1b24 ("mm/migrate_device: implement THP migration of zone device pages"),
+enabled migration for device-private PMD entries. Hence this is one
+other path where this warning could get trigger from.
+
+ ------------[ cut here ]------------
+ WARNING: arch/powerpc/mm/book3s64/hash_pgtable.c:199 at hash__pmd_hugepage_update+0x48/0x284, CPU#3: hmm-tests/1905
+ Modules linked in: test_hmm
+ CPU: 3 UID: 0 PID: 1905 Comm: hmm-tests Tainted: G    B   W    L   N  7.0.0-rc1-01438-g7e2f0ee7581c #21 PREEMPT
+ Tainted: [B]=BAD_PAGE, [W]=WARN, [L]=SOFTLOCKUP, [N]=TEST
+ Hardware name: IBM pSeries (emulated by qemu) POWER10 (architected) 0x801200 0xf000006 of:SLOF,git-ee03ae pSeries
+ NIP [c000000000096b70] hash__pmd_hugepage_update+0x48/0x284
+ LR [c000000000096e7c] hash__pmdp_huge_get_and_clear+0xd0/0xd4
+ Call Trace:
+ [c000000604707670] [c000000004e102b8] 0xc000000004e102b8 (unreliable)
+ [c000000604707700] [c00000000064ec3c] set_pmd_migration_entry+0x414/0x498
+ [c000000604707760] [c00000000063e5a4] migrate_vma_collect_pmd+0x12e8/0x16c4
+ [c000000604707890] [c00000000059282c] walk_pgd_range+0x7fc/0xd2c
+ [c000000604707990] [c000000000592e40] __walk_page_range+0xe4/0x2ac
+ [c000000604707a10] [c000000000593534] walk_page_range_mm_unsafe+0x204/0x2a4
+ [c000000604707ab0] [c00000000063af10] migrate_vma_setup+0x1dc/0x2e8
+ [c000000604707b10] [c008000006a21838] dmirror_migrate_to_system.constprop.0+0x210/0x4b0 [test_hmm]
+ [c000000604707c30] [c008000006a245b0] dmirror_fops_unlocked_ioctl+0x454/0xa5c [test_hmm]
+ [c000000604707d20] [c0000000006aab84] sys_ioctl+0x4ec/0x1178
+ [c000000604707e10] [c0000000000326a8] system_call_exception+0x128/0x350
+ [c000000604707e50] [c00000000000d05c] system_call_vectored_common+0x15c/0x2ec
+ ---- interrupt: 3000 at 0x7fffbe44f50c
+
+Fixes: 75358ea359e7c ("powerpc/mm/book3s64: Fix MADV_DONTNEED and parallel page fault race")
+Fixes: a30b48bf1b24 ("mm/migrate_device: implement THP migration of zone device pages")
+Reported-by: Pavithra Prakash <pavrampu@linux.vnet.ibm.com>
+Signed-off-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Tested-by: Venkat Rao Bagalkote <venkat88@linux.ibm.com>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/9437e5ef28d1e2f5cbdd7f8286350ce93c1d43c5.1773078178.git.ritesh.list@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dc_dmub_srv.c  | 29 +++++++++++++++++++
- drivers/gpu/drm/amd/display/dc/dc_dmub_srv.h  |  3 ++
- .../gpu/drm/amd/display/dmub/inc/dmub_cmd.h   | 18 ++++++++++++
- 3 files changed, 50 insertions(+)
+ arch/powerpc/include/asm/book3s/64/pgtable.h | 16 ++++++++++++++++
+ arch/powerpc/mm/book3s64/pgtable.c           | 13 +++++++++----
+ 2 files changed, 25 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dc_dmub_srv.c b/drivers/gpu/drm/amd/display/dc/dc_dmub_srv.c
-index 35e8f22d30204..784c8144d2d0f 100644
---- a/drivers/gpu/drm/amd/display/dc/dc_dmub_srv.c
-+++ b/drivers/gpu/drm/amd/display/dc/dc_dmub_srv.c
-@@ -1034,3 +1034,32 @@ bool dc_dmub_check_min_version(struct dmub_srv *srv)
- 		return true;
- 	return srv->hw_funcs.is_psrsu_supported(srv);
- }
+diff --git a/arch/powerpc/include/asm/book3s/64/pgtable.h b/arch/powerpc/include/asm/book3s/64/pgtable.h
+index fdbe0b381f3ae..c51473f290dc5 100644
+--- a/arch/powerpc/include/asm/book3s/64/pgtable.h
++++ b/arch/powerpc/include/asm/book3s/64/pgtable.h
+@@ -1285,6 +1285,22 @@ extern int pmdp_test_and_clear_young(struct vm_area_struct *vma,
+ static inline pmd_t pmdp_huge_get_and_clear(struct mm_struct *mm,
+ 					    unsigned long addr, pmd_t *pmdp)
+ {
++	pmd_t old_pmd;
 +
-+void dc_dmub_srv_enable_dpia_trace(const struct dc *dc)
-+{
-+	struct dc_dmub_srv *dc_dmub_srv = dc->ctx->dmub_srv;
-+	struct dmub_srv *dmub;
-+	enum dmub_status status;
-+	static const uint32_t timeout_us = 30;
-+
-+	if (!dc_dmub_srv || !dc_dmub_srv->dmub) {
-+		DC_LOG_ERROR("%s: invalid parameters.", __func__);
-+		return;
++	/*
++	 * Non-present PMDs can be migration entries or device-private THP
++	 * entries. This can happen at 2 places:
++	 * - When the address space is being unmapped zap_huge_pmd(), and we
++	 *   encounter non-present pmds.
++	 * - migrate_vma_collect_huge_pmd() could calls this during migration
++	 *   of device-private pmd entries.
++	 */
++	if (!pmd_present(*pmdp)) {
++		old_pmd = READ_ONCE(*pmdp);
++		pmd_clear(pmdp);
++		return old_pmd;
 +	}
 +
-+	dmub = dc_dmub_srv->dmub;
+ 	if (radix_enabled())
+ 		return radix__pmdp_huge_get_and_clear(mm, addr, pmdp);
+ 	return hash__pmdp_huge_get_and_clear(mm, addr, pmdp);
+diff --git a/arch/powerpc/mm/book3s64/pgtable.c b/arch/powerpc/mm/book3s64/pgtable.c
+index a3bce0895b7d2..70488cc3ef11e 100644
+--- a/arch/powerpc/mm/book3s64/pgtable.c
++++ b/arch/powerpc/mm/book3s64/pgtable.c
+@@ -134,16 +134,21 @@ pmd_t pmdp_huge_get_and_clear_full(struct vm_area_struct *vma,
+ 				   unsigned long addr, pmd_t *pmdp, int full)
+ {
+ 	pmd_t pmd;
++	bool was_present = pmd_present(*pmdp);
 +
-+	status = dmub_srv_send_gpint_command(dmub, DMUB_GPINT__SET_TRACE_BUFFER_MASK_WORD1, 0x0010, timeout_us);
-+	if (status != DMUB_STATUS_OK) {
-+		DC_LOG_ERROR("timeout updating trace buffer mask word\n");
-+		return;
-+	}
-+
-+	status = dmub_srv_send_gpint_command(dmub, DMUB_GPINT__UPDATE_TRACE_BUFFER_MASK, 0x0000, timeout_us);
-+	if (status != DMUB_STATUS_OK) {
-+		DC_LOG_ERROR("timeout updating trace buffer mask word\n");
-+		return;
-+	}
-+
-+	DC_LOG_DEBUG("Enabled DPIA trace\n");
-+}
-\ No newline at end of file
-diff --git a/drivers/gpu/drm/amd/display/dc/dc_dmub_srv.h b/drivers/gpu/drm/amd/display/dc/dc_dmub_srv.h
-index 9a248ced03b9c..452fb1c2f5a69 100644
---- a/drivers/gpu/drm/amd/display/dc/dc_dmub_srv.h
-+++ b/drivers/gpu/drm/amd/display/dc/dc_dmub_srv.h
-@@ -90,4 +90,7 @@ void dc_dmub_srv_log_diagnostic_data(struct dc_dmub_srv *dc_dmub_srv);
- 
- void dc_send_update_cursor_info_to_dmu(struct pipe_ctx *pCtx, uint8_t pipe_idx);
- bool dc_dmub_check_min_version(struct dmub_srv *srv);
-+
-+void dc_dmub_srv_enable_dpia_trace(const struct dc *dc);
-+
- #endif /* _DMUB_DC_SRV_H_ */
-diff --git a/drivers/gpu/drm/amd/display/dmub/inc/dmub_cmd.h b/drivers/gpu/drm/amd/display/dmub/inc/dmub_cmd.h
-index d8c05bc45957b..06717e9a28e9d 100644
---- a/drivers/gpu/drm/amd/display/dmub/inc/dmub_cmd.h
-+++ b/drivers/gpu/drm/amd/display/dmub/inc/dmub_cmd.h
-@@ -540,6 +540,24 @@ enum dmub_gpint_command {
- 	 * DESC: Notifies DMCUB detection is done so detection required can be cleared.
+ 	VM_BUG_ON(addr & ~HPAGE_PMD_MASK);
+-	VM_BUG_ON((pmd_present(*pmdp) && !pmd_trans_huge(*pmdp) &&
+-		   !pmd_devmap(*pmdp)) || !pmd_present(*pmdp));
++	VM_BUG_ON(was_present && !pmd_trans_huge(*pmdp) && !pmd_devmap(*pmdp));
++	/*
++	 * Check pmdp_huge_get_and_clear() for non-present pmd case.
++	 */
+ 	pmd = pmdp_huge_get_and_clear(vma->vm_mm, addr, pmdp);
+ 	/*
+ 	 * if it not a fullmm flush, then we can possibly end up converting
+ 	 * this PMD pte entry to a regular level 0 PTE by a parallel page fault.
+-	 * Make sure we flush the tlb in this case.
++	 * Make sure we flush the tlb in this case. TLB flush not needed for
++	 * non-present case.
  	 */
- 	DMUB_GPINT__NOTIFY_DETECTION_DONE = 12,
-+	/**
-+	 * DESC: Updates the trace buffer lower 32-bit mask.
-+	 * ARGS: The new mask
-+	 * RETURN: Lower 32-bit mask.
-+	 */
-+	DMUB_GPINT__UPDATE_TRACE_BUFFER_MASK = 101,
-+	/**
-+	 * DESC: Updates the trace buffer lower 32-bit mask.
-+	 * ARGS: The new mask
-+	 * RETURN: Lower 32-bit mask.
-+	 */
-+	DMUB_GPINT__SET_TRACE_BUFFER_MASK_WORD0 = 102,
-+	/**
-+	 * DESC: Updates the trace buffer mask bi0~bit15.
-+	 * ARGS: The new mask
-+	 * RETURN: Lower 32-bit mask.
-+	 */
-+	DMUB_GPINT__SET_TRACE_BUFFER_MASK_WORD1 = 103,
- };
- 
- /**
+-	if (!full)
++	if (was_present && !full)
+ 		flush_pmd_tlb_range(vma, addr, addr + HPAGE_PMD_SIZE);
+ 	return pmd;
+ }
 -- 
 2.53.0
 
