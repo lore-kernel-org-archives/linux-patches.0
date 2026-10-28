@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793207485;
-	b=B4AZPDJK0DRlTb/tvWXVqr18VwauRRExaFoUhbMwgClaJYMCugOnN6tej12YTdWmAslH
-	 aFIK/n3Hi8Zg4oICs11Po3Bp4ZRISNSIpjrEPlrghILR+y/C2KYfB2Lzie8a0G+dFEF3Z
-	 lWrljxTq56QLX64izQAyQ/DU+WawDX3ulj7AiCo7FTC+Hlmm9A9ZBxHtkpMbxD0G3OW98
-	 J3jXPPBu2zd0pIj+YJYSdacTEyU48FOZADbNeLJlKGSnku8g/h8DQdFffgpyaOSY3thLA
-	 cDMfD3kzF+ul3HXFWSF6EURWLg7+GMPFi5Z7+0qH8TMQj7T8FP/hVhoIH4M0jYuHF0g==
+	t=1793207488;
+	b=P94h4aUHu52vW/IMdho3EppSy/L8Iv08XGFtUX7p/C2d2baqZcbmKwlOt/2zsmRO1gb3
+	 Z8JKzEB3xop6xSmon5V7nvXqKvHiGwpr4RSxtVJ5DqEaxtZTBvwz1y7Q8lCohDGzsy4l+
+	 cmvqfQEoVWtz6RTkdOxHOdiCJ7xiL1+SB6Fr1JzUOEqyWTKwErGFMaSt0sCGIg16bhMzs
+	 vzTDytgz91NnhUH3jE29IlifSeBfhICQCrD/5IF1TcWg0F19AiSmPV9pQb9fjqYLcgGm8
+	 Y2V2b06EXTaAJ4IElZiRa2ofpMdiyHZqNuOQbtQTOQYyAyO+KWlSqTmSssTV6KPIQAA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793207485;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793207488;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=RG95wp+x5DCblEocsl1pYXGDSi9GeztZ6+IYBa0tntg=;
-	b=pGHEvPTCH5Qi8x17258QC6Odyc3d85kLnWJCuvpRYezLNVD82/luG+sxup7dklm5twRY
-	 rdbOJO8e18ODQyJGzRV84F9J3mbUhcQiAsWILDjr9mVtfe9UH6BV+1fDLbN3WfbTSue3l
-	 pjny5bsrFtI8DVTQ3VXmkOW9CMAuwkqNs68LqnXArPBvy4JVKak5Yqy91wcHSwY9CpsAm
-	 QpAgT2uzIxiC4dlZULIE2RH/kClluOSFzuDrTpdY1K58nrSNoK8oROTVyvQUzJCaa1anG
-	 e5vSeRtGzmFfnPGRx3ZltPhkVf+B5qyJnKByngaFtSq5iYDuTiobYJCiGLw2IjOEsjQ==
+	bh=jZblX0CbneEdqdBruIMtZ/Zo+SElIvXhQtWD0iTwa0A=;
+	b=H2Dl4ZjNt/+FF/b/lBcWggpwJEzm9L9BiU00x5JwCiOR9SU6WjoSFkQT8XVTA4b9leCL
+	 wLFAJkWf+2NMaLDahXQcFJi4DlOi62WzEt6HssHF0T20+NIKy8o93gf75bhUdk4e07W0e
+	 f91CPDmiCJ0AgQhBwbqwEywF++5OXsCj7bXuLqxJ+/cvjsXOLWWocOKNpzkpYMWTUI4yT
+	 wG/XPsXo0b02cuybsNkG+t90+Di19QcjoY8HBuYmm5ENXXcQw1/OucrJmIXU1zIuRUKz8
+	 k6rJmI+HSCpmrklej4l9986VcFgEzGTf4aVk8NI3fTXpyZih8gYmKbwYWjG7oeAbunA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=b5rHKp6a;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Uqg720v4;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53256606A31A;
-	Wed, 28 Oct 2026 17:11:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42612606A337;
+	Wed, 28 Oct 2026 17:11:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=b5rHKp6a
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A21491F01825;
-	Wed, 28 Oct 2026 17:11:24 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Uqg720v4
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85EC11F031E4;
+	Wed, 28 Oct 2026 17:11:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793207485;
-	bh=RG95wp+x5DCblEocsl1pYXGDSi9GeztZ6+IYBa0tntg=;
+	s=korg; t=1793207488;
+	bh=jZblX0CbneEdqdBruIMtZ/Zo+SElIvXhQtWD0iTwa0A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=b5rHKp6axw/O+H/5BWTWSUyeo4aq8bUEY90a6/WTnplEn+5PwkR2ihFPhdkbElsa0
-	 l4sOw62LIA/GZJBqSHtmvTMsxss0YRzqeka5Mv/7BcZ61iHoBHWKn+oCVKwrRRPAP7
-	 ZcFiAvjGOWUAISfQoHB+aVIlhYGtiT3v4A1lYa3I=
+	b=Uqg720v4YFhxIInvC2mS8S0GPJnTVekal40CL5VJwKMXBqoiGN6WDiEQmPZbvunzU
+	 NeRq7HaasW3hUFIRoxxErMcVdDJWqXLrobt5vHHEtz2x8fJU0ZNCBStuklq+elPnj/
+	 P4g+6f8Wf2ixXPxlqJnxl9fVsilySAz9t5RrDlU8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	HyeongJun An <sammiee5311@gmail.com>,
+	Cezary Rojewski <cezary.rojewski@intel.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 032/247] ASoC: cs42l52: Fix the NG Type Switch bit
-Date: Wed, 28 Oct 2026 17:57:15 +0100
-Message-ID: <20261028165948.127195429@linuxfoundation.org>
+Subject: [PATCH 6.12 033/247] ASoC: pcm3168a: Fix the DAC zero flag polarity bit
+Date: Wed, 28 Oct 2026 17:57:16 +0100
+Message-ID: <20261028165948.149809170@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165947.349197979@linuxfoundation.org>
 References: <20261028165947.349197979@linuxfoundation.org>
@@ -70,44 +71,44 @@ Content-Transfer-Encoding: 8bit
 
 From: HyeongJun An <sammiee5311@gmail.com>
 
-[ Upstream commit 8b08b98796d2da103f2432550c14a7c687e72080 ]
+[ Upstream commit b26edc925c1cfa0184cd270ed81d4833db045ce0 ]
 
-The NG Type Switch enum selects between "Apply Specific" and "Apply
-All", which is the NGALL bit. The datasheet puts NGALL at bit 7 of the
-Noise Gate Control register. The enum uses bit 6, which is NG, the
-noise gate enable owned by the NG Enable Switch. cs42l52.h names it
-CS42L52_NG_ENABLE_SHIFT. cs42l56 has the same Noise Gate register and
-puts its NG All Switch at bit 7.
+The DAC Zero Flag Polarity enum uses PCM3168A_DAC_ATSPDA_SHIFT, which
+is bit 6 of register 70. That bit is ATSPDA, the attenuation speed,
+which the DAC Volume Rate Multiplier enum already owns. The datasheet
+puts ZREV, the zero flag polarity, at bit 0. The header defines
+PCM3168A_DAC_ZREV_SHIFT for it, but nothing uses it.
 
-So changing the noise gate type turns the noise gate on or off, and
-NGALL cannot be set.
+So changing the zero flag polarity changes the attenuation speed, and
+ZREV cannot be set.
 
-Use bit 7.
+Use PCM3168A_DAC_ZREV_SHIFT.
 
-Fixes: dfe0f98b8d2e ("ASoC: Add support for CS42L52 Codec")
-Link: https://statics.cirrus.com/pubs/proDatasheet/CS42L52_F2.pdf
+Fixes: a9b17a638af5 ("ASoC: pcm3168a: Add driver for pcm3168a codec")
+Link: https://www.ti.com/lit/ds/symlink/pcm3168a.pdf
 Assisted-by: Claude:claude-opus-5-5
 Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
-Link: https://patch.msgid.link/20261008130953.2446692-3-sammiee5311@gmail.com
+Reviewed-by: Cezary Rojewski <cezary.rojewski@intel.com>
+Link: https://patch.msgid.link/20261008130953.2446692-4-sammiee5311@gmail.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/cs42l52.c | 2 +-
+ sound/soc/codecs/pcm3168a.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/codecs/cs42l52.c b/sound/soc/codecs/cs42l52.c
-index 7128d4c62f504..dda012be02b96 100644
---- a/sound/soc/codecs/cs42l52.c
-+++ b/sound/soc/codecs/cs42l52.c
-@@ -273,7 +273,7 @@ static const char * const cs42l52_ng_type_text[] = {
- };
+diff --git a/sound/soc/codecs/pcm3168a.c b/sound/soc/codecs/pcm3168a.c
+index ad1564e7d8faa..ce68b239b9ef9 100644
+--- a/sound/soc/codecs/pcm3168a.c
++++ b/sound/soc/codecs/pcm3168a.c
+@@ -103,7 +103,7 @@ static SOC_ENUM_SINGLE_DECL(pcm3168a_dac_zf_func, PCM3168A_DAC_ATT_DEMP_ZF,
+ static const char *const pcm3168a_pol[] = { "Active High", "Active Low" };
  
- static SOC_ENUM_SINGLE_DECL(ng_type_enum,
--			    CS42L52_NOISE_GATE_CTL, 6,
-+			    CS42L52_NOISE_GATE_CTL, 7,
- 			    cs42l52_ng_type_text);
+ static SOC_ENUM_SINGLE_DECL(pcm3168a_dac_zf_pol, PCM3168A_DAC_ATT_DEMP_ZF,
+-		PCM3168A_DAC_ATSPDA_SHIFT, pcm3168a_pol);
++		PCM3168A_DAC_ZREV_SHIFT, pcm3168a_pol);
  
- static const char * const left_swap_text[] = {
+ static const char *const pcm3168a_con[] = { "Differential", "Single-Ended" };
+ 
 -- 
 2.53.0
 
