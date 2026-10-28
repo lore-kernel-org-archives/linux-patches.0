@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793207377;
-	b=Qzi8ijJlZSzrcn5S7hedQmtvVc2j7hpQYQvSrbWOrn5d2pfLWZzlcaXWsGNEOU/Eksr6
-	 KizYGgkUw91iL9qg/jBkmJ5IXNhbluz06pc5BH65pTAzqdvXUPXSkUngDCoKlMndlmiHD
-	 taIhycBjwk1BiQV0JOdEY6WKNstRoFh5cCxVE/rAmPYyxUrwXS4wvCn1DodWf11b1rfv3
-	 WOB4L8AK6KoulePKfcx5sI60oAiazThfz+PPhoeUC36GE96vjiVcypeQuOyvd1vmy67KG
-	 1IR33LIbNtzvWKj6QSmYQ0q3xjB7Jv3xXvTmBX+MC+jD4WeYqUUbE9RtZRhyQ+Y86JQ==
+	t=1793207380;
+	b=wEefXLZE06Siu6aycHFy2JeF7ETR3Fc42FGMkYSxSmfl5vo1Vhd23eiXEIQP7DcDo85H
+	 ePIZfuS5SkfqgzaO0YslCKA+FR2wCOdZhR0nwm9RjBa5ELmOddQx/8DbSdyzMOF9KlUj9
+	 PaCvsTWsbhzwh7666X74wHkWOmhUfj5X3aPwnmgPytoRLfrKb7bMQCHc2WMfqc7rdFKOv
+	 OHNrMZ5sEoN5E66h1Wl45jWRPJZek6ZEmkHwYM26DurT9wLPUb9xr4h+kc9uSvaWhYfdo
+	 Dfw93qKaxvvv0HdlnUouOXLTiDXja2P9OWJZx+LCkm4XsLK2O/GqNZly+Qh3J9XRBYQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793207377;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793207380;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=vX54YBdqC1NTk465lxGrlAXdSJL3jqwpmx8DS3eDp74=;
-	b=NWTsAeWneaEtRkKuw8xUtOeSvBMB51K/Cl9T/knLqVwbGino2vEov2GI8HbAYfRIQXzP
-	 u6eJebb8Rp8P+nf6DxzOYtIj4xGH37PF+nzAGTnxk4uBucKnPh5+Zt+z+TL60iHZnUbJU
-	 tY7do8oyAkNjVn+9WAbsFl4L45TX5umri5kL8g5kzp5OUNB+zfyyXs0JppPWeSUkQNq9n
-	 bt9cZ85a+zztiWjqAhCf8F9S5BiRxb/+U8PXt+JKWT52xGdgo9NQ1UAhQwjCgE/pK+ZXg
-	 LoAmKv7aEnuZ2igz20cCBZRXvp5Pvof/25dC0k4x1wd99gjCguFgqC83+3/A9mFEBxA==
+	bh=yFnaqla6dqWKmaYKQZHIVOZeuhBWV7xRklhCBEUWaKc=;
+	b=JfIwYKufJ9D1+YDWhxbfaXJ7yKXVUhD6OszkH3pCzQtTE0sC5HtBfMefk29jN9c8gqt6
+	 q65d6tnC5cg1W/szXgP58c5JEBVm1fAIffsQj/p/0LQry5Zrn2tt2Q2UmiDIAMRG0X3y5
+	 nJ1NyL2WW8sTQzGOqqILTjD1YEnpXIbgoBpenGhDixuaz8yeX0V9C3NpaO/s6LW9ZxbQ3
+	 Os345iOXMGSuqG+YUXVTc64+H2miZzUj9F25d6mflYUS7QFrnHVYDkKcc+CrbokU7VmxC
+	 f2i0OK3bqa07eHY/D6FMxMj3E7Cp+Mgu1IcjTpS5sbB96+jHIYYY4lpgi3SX8zCYXVQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=E6MIBOqo;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RcxVKxSa;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 996E5606A31A;
-	Wed, 28 Oct 2026 17:09:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 236F4606A31C;
+	Wed, 28 Oct 2026 17:09:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=E6MIBOqo
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A006D1F01825;
-	Wed, 28 Oct 2026 17:09:36 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RcxVKxSa
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 744951F01825;
+	Wed, 28 Oct 2026 17:09:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793207377;
-	bh=vX54YBdqC1NTk465lxGrlAXdSJL3jqwpmx8DS3eDp74=;
+	s=korg; t=1793207380;
+	bh=yFnaqla6dqWKmaYKQZHIVOZeuhBWV7xRklhCBEUWaKc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=E6MIBOqoy7p3N0dYtcGeyGwmku5FHtPN5XIWuBkbPS++yA3yHjSBn/L8KLd5iP/+G
-	 CqQohSflRodd0vMF7zlZ3XITzWy/RgiQzBKc1AGxjvJdLzEhWnqlFJzax9j96dpSKj
-	 W6o1ift5LsjEKqBWEx+BBJK2Z0Grvkp/fLhxS07Y=
+	b=RcxVKxSaDLwAeae4nhGeA/l/pKLHL+8RfKSaJxb85G7A0FNxF99Zj8O4nR+ON9AD6
+	 7nO0Wmo7I1G+kR4nuYA6tZaJMpC0WuR3WPZrbR1QgRZeu1BvWn5PT8K78GgH/IQ/lB
+	 AxRSx+MoFY/f2SlxNrXr1zCMs0WTyGoSDF/kLP5Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junyeong Lee <jylee5498@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 7.2 67/88] io_uring/waitid: prevent cancel reference wrap
-Date: Wed, 28 Oct 2026 18:00:15 +0100
-Message-ID: <20261028165943.693500446@linuxfoundation.org>
+	Chris Mason <mason@kernel.org>,
+	Oleg Nesterov <oleg@redhat.com>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>
+Subject: [PATCH 7.2 85/88] exit: hang up the tty before closing the files
+Date: Wed, 28 Oct 2026 18:00:33 +0100
+Message-ID: <20261028165944.113667696@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165942.107695352@linuxfoundation.org>
 References: <20261028165942.107695352@linuxfoundation.org>
@@ -67,59 +68,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junyeong Lee <jylee5498@gmail.com>
+From: Christian Brauner <brauner@kernel.org>
 
-Commit 98787d3fa4e99564d2b2bc21255b21f670c450d0 upstream.
+commit ad016f0131ebfec250a3360ea75d35128b3f4aa8 upstream.
 
-io_waitid packs the cancellation state into bit 31 of ->refs and uses
-bits 30:0 as a 31-bit reference counter:
+do_exit() closes the task's files in exit_files() and hangs up the
+controlling tty of a session leader in disassociate_ctty(1) after
+that. Since commit d99d38540bf0 ("fs: make close_files() synchronous")
+the final __fput() of every file runs inside exit_files(). So when the
+session leader holds the last open of its tty the tty is released
+before disassociate_ctty() runs. tty_release() clears signal->tty for
+the whole session in session_clear_tty() once the count drops to zero
+and sends no signal doing so. disassociate_ctty(1) then finds neither a
+tty nor a tty_old_pgrp and does nothing. The foreground process group
+loses its SIGHUP:
 
-  #define IO_WAITID_CANCEL_FLAG BIT(31)
-  #define IO_WAITID_REF_MASK    GENMASK(30, 0)
+    do_exit()
+      exit_files()
+        close_files()
+          tty_release()             tty->count == 0
+            session_clear_tty()     signal->tty = NULL, no signal
+      disassociate_ctty(1)
+        get_current_tty()           NULL
+        signal->tty_old_pgrp        NULL, nothing sent
 
-__io_waitid_cancel() marks a request canceled, then increments the low
-bits of ->refs to claim completion ownership. When another path owns the
-request, the increment remains even though cancellation returns false.
-The request remains discoverable by cancellation, so repeated failed
-attempts can wrap the 31-bit reference field to zero. A later
-cancellation can claim ownership and complete the request a second time.
+That only affects real ttys. For a pty the master's open keeps the
+slave's count above zero. And it only affects a foreground job that
+holds no descriptor to the tty anymore while its session leader exits.
+Everything else is unchanged. The DTR drop on the last close happens in
+tty_port_shutdown() regardless, stopped jobs get their SIGHUP from
+kill_orphaned_pgrp() and signal->tty is cleared either way.
 
-Use atomic_fetch_or() when setting the cancel flag and inspect the old
-flag value. The first cancel attempt continues to the existing ownership
-increment, preserving its wake and issuer handoff semantics. Later
-attempts see the cancel flag and return without incrementing the
-reference field.
+Before that commit the final __fput() ran from exit_task_work() which
+comes after disassociate_ctty(). That order isn't old. Until v3.14
+exit_task_work() came right after exit_files() and before v3.6 fput()
+was synchronous, so the tty was always released first. Commit
+c39df5fa37b0 ("exit: call disassociate_ctty() before
+exit_task_namespaces()") moved disassociate_ctty() up to fix a pppd
+crash and in front of exit_task_work() as a side effect. The hangup in
+this case has worked since then and that's eleven years of userspace
+being able to rely on it.
 
-This makes repeated failed cancellation attempts idempotent while
-leaving the first-cancel state transitions unchanged.
+Hang the tty up before closing the files. This is the ordinary hangup
+with the file still open: __tty_hangup() swaps in hung_up_tty_fops and
+tty_release() runs from the close afterwards as it does when a modem
+drops the line. disassociate_ctty() stays in front of
+exit_task_namespaces() which the pppd fix needs.
 
-Fixes: f31ecf671ddc ("io_uring: add IORING_OP_WAITID support")
-Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Junyeong Lee <jylee5498@gmail.com>
-Link: https://patch.msgid.link/20261019152100.63565-1-jylee5498@gmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Reported-by: Chris Mason <mason@kernel.org>
+Link: https://patch.msgid.link/20260921-work-coredump-fixes-v3-8-8e4adb1619e6@kernel.org
+Acked-by: Oleg Nesterov <oleg@redhat.com>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/waitid.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ kernel/exit.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/io_uring/waitid.c
-+++ b/io_uring/waitid.c
-@@ -154,9 +154,12 @@ static bool __io_waitid_cancel(struct io
+--- a/kernel/exit.c
++++ b/kernel/exit.c
+@@ -979,10 +979,11 @@ void __noreturn do_exit(long code)
  
- 	/*
- 	 * Mark us canceled regardless of ownership. This will prevent a
--	 * potential retry from a spurious wakeup.
-+	 * potential retry from a spurious wakeup. Only the first cancel
-+	 * attempt should take a reference for the ownership handoff.
- 	 */
--	atomic_or(IO_WAITID_CANCEL_FLAG, &iw->refs);
-+	if (atomic_fetch_or(IO_WAITID_CANCEL_FLAG, &iw->refs) &
-+	    IO_WAITID_CANCEL_FLAG)
-+		return false;
- 
- 	/* claim ownership */
- 	if (atomic_fetch_inc(&iw->refs) & IO_WAITID_REF_MASK)
+ 	exit_sem(tsk);
+ 	exit_shm(tsk);
+-	exit_files(tsk);
+-	exit_fs(tsk);
++	/* Hang the tty up before the last close of it can clear the session. */
+ 	if (group_dead)
+ 		disassociate_ctty(1);
++	exit_files(tsk);
++	exit_fs(tsk);
+ 	exit_nsproxy_namespaces(tsk);
+ 	exit_task_work(tsk);
+ 	exit_thread(tsk);
 
 
