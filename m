@@ -1,65 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793209196;
-	b=BfEUxfaER1DUinG6gHEMKCSo4gxQJn9ah/hGgNuptK6P02K4eAZ1AxgglejfxUwcH7Fg
-	 gXiustDWMs4U3ZIhhOcJIA7SpTGeUiszGxIFo04X3TfB4BSF5I86827GFe1KwRXUbBEiw
-	 MZ3G1QucLnsdUxYkDjV5FKOH+PU7Gvn4AjOX77G0rTMobXPSonrKHKVrKa4UfMwAXcR8e
-	 1UEWPW0yd0vtaeOtU0SDspF5b2zJuIAYMvq3eXVxZzZRBfpBrt6vDln4qZ05WvAX5G3ZQ
-	 a3S/Mb4aqWMZQ5fEb6Pm6bxatRm04s7o6OEDSua3hwB+I2tCbMo0l0C9MgLjF0Lx+8g==
+	t=1793209199;
+	b=ztxcphGLVmut5JQzKynUOnsqw0ZvuQgrKDwJHArBSSaCxzKe2upCSt+oYHAihh4wCyOb
+	 U7ThtEcQwdKwvTZ9dEfT6QoKYML5JwkIZl/7/dsqlsg7pWld1NqWqkIkRM4yO+0BHuqTj
+	 7x013xEl9b/87x6GNhGulggLzFcRwHayFG5w69I6YtuV9juRJCj8o7Tpi76ci8z5zeGLg
+	 x+O4RcDsSSWH0gsXhrj34XveHWpx83LkAtnAwslXdfTEzdA1/PSAP3DKhv/xgAVYrUDXg
+	 L4H8VGZFAk5iK1B1I/UO0CeCBzX9REOjDXMBtKNUoQZR3FLlOI9BMBjgZ0OHRgNSPUQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793209196;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793209199;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+RD6fbbA1nLuC5rCf1RCJ6aeMYisNTZrPKRAc4WKO5I=;
-	b=1oOXFGUG1tpgvF8OO5nLsacb+ZKuRrJqrW6mz3or5b/DHNvyN13dokeeKtu0xTa+hkI9
-	 CkJOnoyQgIO8YcSZHiNzVjd00DfVepnmE1N7iH0KgH4Tk5/R2xlf5PH8CT8eVeo6LlpNQ
-	 LCoz1nmUC++8UEJo/5AplNC7VGjEm7aucL7PGGkx6xOH2QDkZDTa7u6Ovxd/uTEBnJaQD
-	 BZ9CgJcyc/P4+t1skQCZIGFfpox5asWzxttc11/IqpvMgT4TNIi2HLvWLm9RtDNVCnju5
-	 3jI6tby8hjROIpbzbhow8bzREgWDpnZHNfQXNmuWNP5hi6jLNgfKu0tL7ZtYOltjMeg==
+	bh=cA8t1N97T6IhqPtmzx67TXHO96RmlqqF3pfFPIMSh28=;
+	b=OKGKS/2Dcn+7p1+drP4GgP8OZL/C2wQ16aTdfUs1jXXZHOHL7GrGBo/5xnaa7UJXjDvg
+	 CgGvIBt8ZtEig3p1PYqoNR7O0+dYalcNzxdVAT341i+6Gf0aJAg6FM2h4KWzi+5nWf34y
+	 1T/5XTtY5sUoeevjL5ix+wsDPs1v8RfKSTpHNBXkI7SZF+wPiQHCmsGB1ZuB45lPGRw9d
+	 y6NlJFg6bKYGD3s70jGA/qIeBcZaApqceVoOwj9NMLsTbjNfyDE/zTvkZhlIqxtjbsjDL
+	 GUxTW4Mj0oyB4sPu9oPR56JgSEm7jY6ROv9z566McxfTv7tFuWl0AlkI70AJCZdQhZw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UOeNd02v;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="HOyF3/il";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74CE1606A321;
-	Wed, 28 Oct 2026 17:39:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D8B7606A31A;
+	Wed, 28 Oct 2026 17:39:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UOeNd02v
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69FF51F01825;
-	Wed, 28 Oct 2026 17:39:55 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HOyF3/il
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 619EE1F01825;
+	Wed, 28 Oct 2026 17:39:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793209196;
-	bh=+RD6fbbA1nLuC5rCf1RCJ6aeMYisNTZrPKRAc4WKO5I=;
+	s=korg; t=1793209198;
+	bh=cA8t1N97T6IhqPtmzx67TXHO96RmlqqF3pfFPIMSh28=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UOeNd02vS/hNxFUBpbMxvv0+DgVY65Z9iYozD5WtDoEClZQzmKETqML6p5dc2R8K+
-	 NeYuQLdSiGADnOGlVRg+rrl5OjZeYziCrjSi9NN5cNUdNfz0/NvUh8bGSW8IoLnPw9
-	 DQs6vdfI3Sss/J/i/8MxSZItQqr0r3RYofIIz5n8=
+	b=HOyF3/ilBN6irtFbo87V3Nz3nA31Aj6D3udGebrF72o3qK9Gz14NIrBWRt5UZh1zR
+	 w5OHqHimQkG/lte6nTyfebsf2/dvP92Hj2ecMCCJ4eQOcOAD9BlNcuOfKaXKRr8dQ3
+	 b21NYui/cJQAqowfrKTKT/NorHlbYzk7omyihcPU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Ira Weiny <ira.weiny@intel.com>,
-	"Fabio M. De Francesco" <fmdefrancesco@gmail.com>,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Helge Deller <deller@gmx.de>,
-	Alexander Potapenko <glider@google.com>,
-	Andrey Konovalov <andreyknvl@gmail.com>,
-	Bagas Sanjaya <bagasdotme@gmail.com>,
-	David Sterba <dsterba@suse.com>,
-	Kees Cook <keescook@chromium.org>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Tony Luck <tony.luck@intel.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Gyokhan Kochmarla <gyokhan@amazon.de>,
+	Mikulas Patocka <mpatocka@redhat.com>,
+	syzbot+bdff1ecf726d2af66afd@syzkaller.appspotmail.com,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 387/516] highmem: round down the address passed to kunmap_flush_on_unmap()
-Date: Wed, 28 Oct 2026 17:58:59 +0100
-Message-ID: <20261028170012.649771961@linuxfoundation.org>
+Subject: [PATCH 5.10 388/516] dm: fix reading free memory in do_resume
+Date: Wed, 28 Oct 2026 17:59:00 +0100
+Message-ID: <20261028170012.673640845@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -81,55 +68,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthew Wilcox (Oracle) <willy@infradead.org>
+From: Mikulas Patocka <mpatocka@redhat.com>
 
-commit 88d7b12068b95731c280af8ce88e8ee9561f96de upstream.
+[ Upstream commit c9417c1c5269e2bd0570fbe53e4ec03a8d31f008 ]
 
-We already round down the address in kunmap_local_indexed() which is the
-other implementation of __kunmap_local().  The only implementation of
-kunmap_flush_on_unmap() is PA-RISC which is expecting a page-aligned
-address.  This may be causing PA-RISC to be flushing the wrong addresses
-currently.
+When do_resume calls dm_table_get_mode(new_map), the call is done without
+holding any locks (it only holds a reference to the md). It may be
+possible that another concurrent ioctl on the same device will swap table
+after dm_swap_table and before dm_table_get_mode. In this case,
+dm_table_get_mode(new_map) reads freed memory.
 
-Link: https://lkml.kernel.org/r/20230126200727.1680362-1-willy@infradead.org
-Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
-Fixes: 298fa1ad5571 ("highmem: Provide generic variant of kmap_atomic*")
-Reviewed-by: Ira Weiny <ira.weiny@intel.com>
-Cc: "Fabio M. De Francesco" <fmdefrancesco@gmail.com>
-Cc: Al Viro <viro@zeniv.linux.org.uk>
-Cc: Thomas Gleixner <tglx@linutronix.de>
-Cc: Helge Deller <deller@gmx.de>
-Cc: Alexander Potapenko <glider@google.com>
-Cc: Andrey Konovalov <andreyknvl@gmail.com>
-Cc: Bagas Sanjaya <bagasdotme@gmail.com>
-Cc: David Sterba <dsterba@suse.com>
-Cc: Kees Cook <keescook@chromium.org>
-Cc: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Cc: Tony Luck <tony.luck@intel.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-[ 5.10 has no include/linux/highmem-internal.h and no
-  kmap_local API, so __kunmap_local() does not exist. Therefore,
-  I applied the __kunmap_atomic() hunk to include/linux/highmem.h ]
-Signed-off-by: Gyokhan Kochmarla <gyokhan@amazon.de>
+This race condition was triggered by syzbot.
+
+This commit fixes the race by reading mode of the new table before
+dm_swap_table. Note that new_map is also passed to dm_ima_need_measure,
+but this function doesn't attempt to dereference it, so this call should
+be safe.
+
+Note that this is not a security bug because only root can trigger it and
+the commonly used tools such as lvm or cryptsetup do not call the ioctls
+concurrently, so that they can't trigger it acceidentally.
+
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Reported-by: syzbot+bdff1ecf726d2af66afd@syzkaller.appspotmail.com
+Cc: stable@vger.kernel.org
+[ sashal: Replaced blk_mode_t/BLK_OPEN_WRITE with fmode_t/FMODE_WRITE to match the existing API. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/highmem.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/md/dm-ioctl.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/include/linux/highmem.h b/include/linux/highmem.h
-index 5f7cd58db4780..a2a252a93d760 100644
---- a/include/linux/highmem.h
-+++ b/include/linux/highmem.h
-@@ -218,7 +218,7 @@ static inline void __kunmap_atomic(void *addr)
- 	 * handles re-enabling faults and preemption
- 	 */
- #ifdef ARCH_HAS_FLUSH_ON_KUNMAP
--	kunmap_flush_on_unmap(addr);
-+	kunmap_flush_on_unmap(PTR_ALIGN_DOWN(addr, PAGE_SIZE));
- #endif
- }
+diff --git a/drivers/md/dm-ioctl.c b/drivers/md/dm-ioctl.c
+index 12bc13bde0af5..d067006285e64 100644
+--- a/drivers/md/dm-ioctl.c
++++ b/drivers/md/dm-ioctl.c
+@@ -1065,6 +1065,8 @@ static int do_resume(struct dm_ioctl *param)
  
+ 	/* Do we need to load a new map ? */
+ 	if (new_map) {
++		fmode_t new_map_mode;
++
+ 		/* Suspend if it isn't already suspended */
+ 		if (param->flags & DM_SKIP_LOCKFS_FLAG)
+ 			suspend_flags &= ~DM_SUSPEND_LOCKFS_FLAG;
+@@ -1091,6 +1093,7 @@ static int do_resume(struct dm_ioctl *param)
+ 			}
+ 		}
+ 
++		new_map_mode = dm_table_get_mode(new_map);
+ 		old_map = dm_swap_table(md, new_map);
+ 		if (IS_ERR(old_map)) {
+ 			dm_sync_table(md);
+@@ -1099,7 +1102,7 @@ static int do_resume(struct dm_ioctl *param)
+ 			return PTR_ERR(old_map);
+ 		}
+ 
+-		if (dm_table_get_mode(new_map) & FMODE_WRITE)
++		if (new_map_mode & FMODE_WRITE)
+ 			set_disk_ro(dm_disk(md), 0);
+ 		else
+ 			set_disk_ro(dm_disk(md), 1);
 -- 
 2.53.0
 
