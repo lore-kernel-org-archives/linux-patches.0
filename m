@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216526;
-	b=2v0j1EU/dy9+aVAovz7flyF4qd2nS/zfTo1fswPWmKppNALJ2oup+EGj0trsFceb4w6o
-	 7kchCWRGQYEpbQhCPNkbe3zEsX1YyIzjUzlzr/4tw+zwQNLqQ2MT5HmIKC8bl3hqd1Eom
-	 qTZ25DsnBBlDHsHZJrVZOwI9usZtxAVtXvRyc07g0tx5RnqKXsxbkSyxYAE1+b2QJ4bjT
-	 z09TpMEkqHBi+RfPCuzu41mOfP9oTJ8CUdE3PejdkLDXdHY2jBBmbkm0+ldtJuCqL+Gdv
-	 F+EuLRKi4pbaQnUN75AeY8HAmrNqN1Tdb2A97mbADPhM/IEzeX19145adQknBGYeTyQ==
+	t=1793216529;
+	b=1hG2SFsSviThXpAFaXP8BwTWq0PnZK6CVJp0vanqlLiWH1WAWsSKlc5xS3w6zLtfueyL
+	 nSWxlDpTDn5XQzVmMFqLRilT9Sp4t3jRuINuX40+neEOFXzY+T/hobdeMFZKbUjgA+h2g
+	 vgzl0dltyG7O1bijtC/GEH1MGRvMBN2ZhbM4omFEblhfSKsIB1skX0LLKQBxUjongwMua
+	 Ju5FVgshB7yf04EtA/nzirGL4POnBv4vw9VStTLEj0QyH275IhqcCPUs0flC/OsZRXCTJ
+	 SyMZyC5MRKsU/HjzCKaXUWVp4bwslN0mapdeqdbCJmqvJDX+GN6IHOwktrrpAZse4Dg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216526;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216529;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=0nHudbokOex7dUKaCMF+/WCWOzCYXPBdhCzbA0VcYfM=;
-	b=sS1AfGKu7GM14YBWUXGO+SVr9BL0lfqvBwADVmYEW4cgiKEUGX2v1/fM+kdE6bEEDhNs
-	 BUiDQNG1bfsgPrC3BZCXQ+Fj+zC8BdvmAIUsqEAudDMR7W367RQtFxk8X8D6mDUntcPmd
-	 3vxTlyEihdB4P/mQ31FPRDowRpl/sLklM4f80zUyMN8UrYzbxyYSA/Z9N8qGRavpvs2QF
-	 NQo6e4ok/Rq3ryfDS/2r4DEk5dRxdYdZXWIzkUyb5zFTyNt3UgBQLC/zvvc42+9kGXxod
-	 hQaahFLwznXqy82OgHc/ffLRbzoOC05Kg7PbMATDRUsWjHH7xJ7PbbgdMRiqIo4rCUw==
+	bh=P9e2mtw15x5zYfHWmxINpu5rVDT25onHh8m588CqK+0=;
+	b=cwHucTCG4X9tfNa6TnuM4XFJVdxF6y1BbDo8eL6q5owrIjwDqFrHXot0U5TNxTvfcUaC
+	 VWq/t3qFUEmbNRkhjnA1HKL+4ariL5CjSahtCrCvoaIu+4YqYz9adV0RLsxpVBfR4lQVz
+	 0y3rFmeqelkr5OfPZ6xcH4VoB89nCYh+KyMEumu6AS/6wg2RlUimSY5fBJg+riD3L9u2N
+	 F0C4QhdypRPQ3XdnbcJwkb8d3GoJ03fFf6NVr2OCjt+GbuRQLbv4ZpyQaWPnIYZG2WIEz
+	 cFTTtYZFSY7qOGmOEnVZMMlRxQIrwT0orqTUdgWORd6bQCmzipi/Ls8M3U4u/6Sg9pg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fNGFjQlM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PvBRsywx;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B739606A31A;
-	Wed, 28 Oct 2026 19:42:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38400606A325;
+	Wed, 28 Oct 2026 19:42:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fNGFjQlM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6748A1F01825;
-	Wed, 28 Oct 2026 19:42:05 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PvBRsywx
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B4AF1F01825;
+	Wed, 28 Oct 2026 19:42:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216526;
-	bh=0nHudbokOex7dUKaCMF+/WCWOzCYXPBdhCzbA0VcYfM=;
+	s=korg; t=1793216528;
+	bh=P9e2mtw15x5zYfHWmxINpu5rVDT25onHh8m588CqK+0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fNGFjQlMmLeICIYhd3FDye+DqpFNQo888f7XtmU+Vf/eTQIclQSBqK9xTh/zxrbf9
-	 c/nW11aYN8ITpMVVYjAamnRc9es3foHANUTh3I7zOj9Pa+2HDPzWuaqTi1QQGU/ePt
-	 mFjEquNQxMPmuMTY8Fqaepcsulkqjj6cRYMaxW7s=
+	b=PvBRsywxCE6YNuaX2pRyxLCOvMX4pwTs+WW+fzFPSZ2ejPWCitkts1NBekqAxHYua
+	 dwG29eO2MX5Cox7+y5oBVo5IE9nDGKY5wGI4bFMTRJNSMlijtA6X1UXPiNvWcdC09Z
+	 5jhM6e6ij2QNLtAo7icwnJs+zU9p9HpQPwcojeko=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Karl Mehltretter <kmehltretter@gmail.com>,
+	Zhao Li <enderaoelyther@gmail.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1586/1887] serial: core: do fallible allocations before the console can be registered
-Date: Wed, 28 Oct 2026 18:01:22 +0100
-Message-ID: <20261028170535.559780943@linuxfoundation.org>
+Subject: [PATCH 6.1 1587/1887] wifi: cfg80211: stop PMSR before P2P and NAN teardown
+Date: Wed, 28 Oct 2026 18:01:23 +0100
+Message-ID: <20261028170535.583203527@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,104 +68,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Zhao Li <enderaoelyther@gmail.com>
 
-[ Upstream commit 1a0e4fbce5d9c1bc179a35a2fd9ed142664299e3 ]
+[ Upstream commit 6c5fc504d0d6934132637aa3db4b9b58148eaa78 ]
 
-serial_core_add_one_port() allocates uport->tty_groups after
-uart_configure_port(), which may register the console. If the allocation
-fails, the driver unwinds the port while its console remains registered.
-The earlier uport->name allocation has a related failure path that leaves
-state->uart_port linked to a port being freed.
+PMSR request teardown must abort active measurements while the
+wireless_dev is still present in the driver. cfg80211_leave_locked() and
+cfg80211_stop_pd() already do this before invoking the driver's stop
+callback, but cfg80211_stop_p2p_device() and cfg80211_stop_nan() do not.
 
-Failslab reproduced a NULL dereference in PL011 console output and a KASAN
-use-after-free in i.MX console output after failed binds.
+Those helpers are also called directly by nl80211, rfkill shutdown, and
+wireless_dev unregister paths. If one of these paths stops a P2P device
+or NAN interface with a pending request, it removes the mac80211
+subinterface from the driver first. Subsequent request cleanup cannot
+reach the lower driver's abort callback, but cfg80211 frees the request
+regardless. Driver state can then retain a stale request and use it when
+it later reports a result.
 
-Allocate the name and tty_groups before linking the port and configuring
-it. Reserve space for the optional driver attribute group because
-config_port() may populate uport->attr_group during configuration.
+Call cfg80211_pmsr_wdev_down() before stopping the P2P device or NAN
+interface. This keeps lower-driver request state and cfg80211 request
+ownership in sync for all of the helpers' callers.
 
-Fixes: 266dcff03eed ("Serial: allow port drivers to have a default attribute group")
-Fixes: f7048b15900f ("tty: serial_core: Add name field to uart_port struct")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/all/20260719070454.D6FA21F000E9@smtp.kernel.org/
-Assisted-by: Claude:claude-fable-5
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Link: https://patch.msgid.link/20260731181844.11330-2-kmehltretter@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 9bb7e0f24e7e ("cfg80211: add peer measurement with FTM initiator API")
+Assisted-by: Codex:gpt-5.6-sol
+Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
+Link: https://patch.msgid.link/20260731071103.73563-1-enderaoelyther@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/serial_core.c | 37 ++++++++++++++++----------------
- 1 file changed, 19 insertions(+), 18 deletions(-)
+ net/wireless/core.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/tty/serial/serial_core.c b/drivers/tty/serial/serial_core.c
-index 3e2ecbf5dd91d..69845f9e7aea0 100644
---- a/drivers/tty/serial/serial_core.c
-+++ b/drivers/tty/serial/serial_core.c
-@@ -3094,7 +3094,6 @@ int uart_add_one_port(struct uart_driver *drv, struct uart_port *uport)
- 	struct tty_port *port;
- 	int ret = 0;
- 	struct device *tty_dev;
--	int num_groups;
+diff --git a/net/wireless/core.c b/net/wireless/core.c
+index a781893473afe..1cd214a743428 100644
+--- a/net/wireless/core.c
++++ b/net/wireless/core.c
+@@ -232,6 +232,9 @@ void cfg80211_stop_p2p_device(struct cfg80211_registered_device *rdev,
+ 	if (!wdev_running(wdev))
+ 		return;
  
- 	if (uport->line >= drv->nr)
- 		return -EINVAL;
-@@ -3109,6 +3108,25 @@ int uart_add_one_port(struct uart_driver *drv, struct uart_port *uport)
- 		goto out;
- 	}
++	wdev_lock(wdev);
++	cfg80211_pmsr_wdev_down(wdev);
++	wdev_unlock(wdev);
+ 	rdev_stop_p2p_device(rdev, wdev);
+ 	wdev->is_running = false;
  
-+	uport->name = kasprintf(GFP_KERNEL, "%s%d", drv->dev_name,
-+				drv->tty_driver->name_base + uport->line);
-+	if (!uport->name) {
-+		ret = -ENOMEM;
-+		goto out;
-+	}
+@@ -257,6 +260,10 @@ void cfg80211_stop_nan(struct cfg80211_registered_device *rdev,
+ 	if (!wdev_running(wdev))
+ 		return;
+ 
++	wdev_lock(wdev);
++	cfg80211_pmsr_wdev_down(wdev);
++	wdev_unlock(wdev);
 +
-+	/*
-+	 * uart_configure_port() may set uport->attr_group and register the
-+	 * console. Allocate room for both groups and a NULL terminator first.
-+	 */
-+	uport->tty_groups = kcalloc(3, sizeof(*uport->tty_groups), GFP_KERNEL);
-+	if (!uport->tty_groups) {
-+		kfree(uport->name);
-+		ret = -ENOMEM;
-+		goto out;
-+	}
-+	uport->tty_groups[0] = &tty_dev_attr_group;
-+
- 	/* Link the port to the driver state table and vice versa */
- 	atomic_set(&state->refcount, 1);
- 	init_waitqueue_head(&state->remove_wait);
-@@ -3118,12 +3136,6 @@ int uart_add_one_port(struct uart_driver *drv, struct uart_port *uport)
- 	state->pm_state = UART_PM_STATE_UNDEFINED;
- 	uport->cons = drv->cons;
- 	uport->minor = drv->tty_driver->minor_start + uport->line;
--	uport->name = kasprintf(GFP_KERNEL, "%s%d", drv->dev_name,
--				drv->tty_driver->name_base + uport->line);
--	if (!uport->name) {
--		ret = -ENOMEM;
--		goto out;
--	}
- 
- 	/*
- 	 * If this port is in use as a console then the spinlock is already
-@@ -3140,17 +3152,6 @@ int uart_add_one_port(struct uart_driver *drv, struct uart_port *uport)
- 
- 	port->console = uart_console(uport);
- 
--	num_groups = 2;
--	if (uport->attr_group)
--		num_groups++;
--
--	uport->tty_groups = kcalloc(num_groups, sizeof(*uport->tty_groups),
--				    GFP_KERNEL);
--	if (!uport->tty_groups) {
--		ret = -ENOMEM;
--		goto out;
--	}
--	uport->tty_groups[0] = &tty_dev_attr_group;
- 	if (uport->attr_group)
- 		uport->tty_groups[1] = uport->attr_group;
+ 	rdev_stop_nan(rdev, wdev);
+ 	wdev->is_running = false;
  
 -- 
 2.53.0
