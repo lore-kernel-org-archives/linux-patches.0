@@ -1,60 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793217294;
-	b=ry1xrMWubrZgvOKuBxXxdVjFGTaPiMAuvd2z/3EUJgTuKgZzjp5Pp0uCrkMNPi1c+z0P
-	 tpFoP0+Rp156gYp0WqXehLfgNqUzTvBkc3pVwxciHBz9roMpCsqb7XLimJX7eZYLE9sjn
-	 n2ErM0eh3HY/ixd+PKRdsYtltQvBcAqe9xA6YX34FAbdSSqm1VcbzWRcJrnrz4EfFJfCp
-	 0aNDw2mFHMTj8Meb7sHw/+mDlB1xg3z0ikpPCiC6f+ZCOotpvhxWJiT+1nUlkQ4tgu4uu
-	 ySRlqlNHi6JLJ3qCZ58OeTMWjrnx/70mQR723Jt9CY4shNQVgIKPn/6seLA/hvhcjtw==
+	t=1793217297;
+	b=Kex3K0tx6yZQJyRYrKUJBUDLypGZtx1k1rZAK4Niu9cLTEFIdwSVO4zOElbn6Ew3DN9/
+	 VY/vxjsie63+WIMM+9iW6DOfYpGKwE85B599CPNt77ccidAnNeBu7WCHG/RPO4BF/4/pV
+	 wx4tOL3aGFtK1wD6YvHSbcL6BWUCuXxNX7uA5fi7GAZkL15r2pZ80rKhnr1h64/WBzOEO
+	 FfdaUv0fOes1gaQAjqUxQ3EQeNPljyuwlKeSEEaQoYLtDHdyRTU9dwd8nSRcg9M+IayaZ
+	 Nh6iQhM/DHkrbws1I04bL8HyYWEpcJXkxgylMVVfVfx+6LM9rFbtUx/g58GqyjkCzMQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793217294;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793217297;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=cV7zuCXanhO4QbWaX5wDlomYwH8VYX9fWMysn1CwfQY=;
-	b=cHNkDd2kXlciK8MTIFwKI7ukc8faqR9Wrq48bt1ucdiCf6gJ3qHB96Kzu+qlkSGvT8+k
-	 dNZQ//cFb0aHeZ67xoo3d+r7U4nFXMb7pT5d9Wo1wMeg2HNf8ynNlJTR2jm0XmdY5+6ar
-	 FFcRIvnzovXq8QwUHJeL9u3fw5rpg+WnEK4N2kxJcYrFFrTkgovrpUotqVrcUDfaopGpi
-	 cJCbaHXLCb6O31sSo67d0yN3AZoT7gYwbsJ1fD+mzn8FdLVzgLYMA4tNNRUX5yLhw9LPq
-	 2TU2+IPUuzUClqcYeOYF6nYNHzgb22WMcyGZIZ4xQv4ipp7GsNEq7e1FLu253xQHwrA==
+	bh=zIecAYwZ43dEsmzcYq6/8haPR3f+8UnaJld/0acLsTo=;
+	b=AgmlIzKN7ztdEhQ971n/o0HmkqhwhtkrWZ78fIaJHqK95lXeW0pi/T6xg/U6WiKBuUi+
+	 ywmq784wv9oFuHrMOG275NRcSai57AYo7xcjs7P2mI1dkCCiUCyrs97arwbpYZpdJqo5a
+	 etiJN9SOQaGlGJh11EXur3H+gF2zjFmxTygj7yBaPfxBHRvOF5/SlkSke6O3uoOFzeUE8
+	 x8ZqEo536TdcgYbUWoZhJ+ngUJG0WggdOdqMKGbUjPhMcwDHFEp+K5Rb4AcnbenQjEuXv
+	 jJWalsw43Mk+fylbfhP/cJb1u7otSB5DuYjPz7ZVZ2fhbHa8qU7Bszt1szetUSr6hVg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I770NgGX;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="i/6bQi5p";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31F09606A31A;
-	Wed, 28 Oct 2026 19:54:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28DBA606A31E;
+	Wed, 28 Oct 2026 19:54:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I770NgGX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8809E1F031E0;
-	Wed, 28 Oct 2026 19:54:53 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i/6bQi5p
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73A441F01825;
+	Wed, 28 Oct 2026 19:54:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793217294;
-	bh=cV7zuCXanhO4QbWaX5wDlomYwH8VYX9fWMysn1CwfQY=;
+	s=korg; t=1793217297;
+	bh=zIecAYwZ43dEsmzcYq6/8haPR3f+8UnaJld/0acLsTo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=I770NgGXkm7xiYk0rDawKvPsdXE0ZNRXH1fiVi09JfMpxqPmQAJr0N1i4qvWPJ6c6
-	 zLsn5QClE6enjlwLQR7DyjZ00OzZGOt3FmjEzGKy/6IVM1mgHYTs2GDff+r5tybYXl
-	 CNI3wjR3DtXDSFU6YYcOv316fnZUDqhvgp/u3OvY=
+	b=i/6bQi5ptkyWzFrDIc/U98YAdkqFcSVm25yGekdIQB/pKSolNCu3INJuDJb3MDHa1
+	 NBekeXMpVg1f7Gzhffc9K5eDeaFrKeoS1q/2qCsFh8Qh7sWyymjNVTNxYpv3qeGDZy
+	 P/LZppWOIIABS+Futq685u1fqvmGs54N7PkCjurE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Su Hui <suhui@nfschina.com>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Ira Weiny <ira.weiny@intel.com>,
-	Jiaqi Yan <jiaqiyan@google.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Peter Collingbourne <pcc@google.com>,
-	Tom Rix <trix@redhat.com>,
-	Tony Luck <tony.luck@intel.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1854/1887] highmem: fix a memory copy problem in memcpy_from_folio
-Date: Wed, 28 Oct 2026 18:05:50 +0100
-Message-ID: <20261028170541.640458281@linuxfoundation.org>
+Subject: [PATCH 6.1 1855/1887] Bluetooth: MGMT: Fix dangling pointer on mgmt_add_adv_patterns_monitor_complete
+Date: Wed, 28 Oct 2026 18:05:51 +0100
+Message-ID: <20261028170541.663907976@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -76,46 +68,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Su Hui <suhui@nfschina.com>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit 73424d00dc63ba681856e06cfb0a5abbdb62e2b5 ]
+[ Upstream commit 5f5fa4cd35f707344f65ce9e225b6528691dbbaa ]
 
-Clang static checker complains that value stored to 'from' is never read.
-And memcpy_from_folio() only copy the last chunk memory from folio to
-destination.  Use 'to += chunk' to replace 'from += chunk' to fix this
-typo problem.
+This fixes the condition checking so mgmt_pending_valid is executed
+whenever status != -ECANCELED otherwise calling mgmt_pending_free(cmd)
+would kfree(cmd) without unlinking it from the list first, leaving a
+dangling pointer. Any subsequent list traversal (e.g.,
+mgmt_pending_foreach during __mgmt_power_off, or another
+mgmt_pending_valid call) would dereference freed memory.
 
-Link: https://lkml.kernel.org/r/20231130034017.1210429-1-suhui@nfschina.com
-Fixes: b23d03ef7af5 ("highmem: add memcpy_to_folio() and memcpy_from_folio()")
-Signed-off-by: Su Hui <suhui@nfschina.com>
-Reviewed-by: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: Ira Weiny <ira.weiny@intel.com>
-Cc: Jiaqi Yan <jiaqiyan@google.com>
-Cc: Nathan Chancellor <nathan@kernel.org>
-Cc: Nick Desaulniers <ndesaulniers@google.com>
-Cc: Peter Collingbourne <pcc@google.com>
-Cc: Tom Rix <trix@redhat.com>
-Cc: Tony Luck <tony.luck@intel.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Link: https://lore.kernel.org/linux-bluetooth/20260315132013.75ab40c5@kernel.org/T/#m1418f9c82eeff8510c1beaa21cf53af20db96c06
+Fixes: 302a1f674c00 ("Bluetooth: MGMT: Fix possible UAFs")
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/highmem.h | 2 +-
+ net/bluetooth/mgmt.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/linux/highmem.h b/include/linux/highmem.h
-index c4d6ae968dfc3..1761b6d0c2c76 100644
---- a/include/linux/highmem.h
-+++ b/include/linux/highmem.h
-@@ -430,7 +430,7 @@ static inline void memcpy_from_folio(char *to, struct folio *folio,
- 		memcpy(to, from, chunk);
- 		kunmap_local(from);
+diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
+index e1c045d1c7887..99226fe3648dc 100644
+--- a/net/bluetooth/mgmt.c
++++ b/net/bluetooth/mgmt.c
+@@ -5409,7 +5409,7 @@ static void mgmt_add_adv_patterns_monitor_complete(struct hci_dev *hdev,
+ 	 * hci_adv_monitors_clear is about to be called which will take care of
+ 	 * freeing the adv_monitor instances.
+ 	 */
+-	if (status == -ECANCELED && !mgmt_pending_valid(hdev, cmd))
++	if (status == -ECANCELED || !mgmt_pending_valid(hdev, cmd))
+ 		return;
  
--		from += chunk;
-+		to += chunk;
- 		offset += chunk;
- 		len -= chunk;
- 	} while (len > 0);
+ 	monitor = cmd->user_data;
 -- 
 2.53.0
 
