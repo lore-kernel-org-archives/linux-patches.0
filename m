@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214595;
-	b=NakVo/29m/9NVUPx13KYQOcVqTXS+zd4dDU0hUdahzqSrPwiX2o00LqK3yTJJGkOyVt9
-	 MFWLxGXAPnxO/cvgd3qyXRmKG767o2pHuBi6G52C8U7J+sIRLoXTvxkHzWRwMK03k0cWE
-	 RufFe7PPb9/66fvbmDXF/PKFg5Nfc5lBE+HwzGnHlYi0Om9VvXE3D41YkIpmXhYN3KQMK
-	 HHtsjN/EREItcyDQYw8qYqSDJxees7igZVXsmP/YcnI8rtE6TaiGfo9dcsj7AHQKtfWcQ
-	 HX1ssrkrcxLMCZPKTPLY6iw3OT/oqvUZyjATbGOC0yOb0IZbX1fFbBBsazYPGTdB4/A==
+	t=1793214598;
+	b=EqqlbecTU815ZvEPmR4Dq/GcSkv+K2EeqyptndO2SkZZcuFXxZA/Cm11Varq3a9jsOUd
+	 K07zqHdIpRqETM/e+QKB4s1SfvNUzRaH4e0Wdlfn4m+ijVweaY9NStxfjW52XZp/e2piH
+	 MAs74yPZM7A5+ZzQqbXVykYs6sHzDnd0kGbSwWQAbKmG38IaZ1uIM1VsT7xbSl1KKp1Qf
+	 gfAyShSVzyfGOpejRVR6FMv9JVV+NINkCFhHIDbjLEOj7co+TCyOxDux7o7ApB3d9Alaa
+	 P1coqNAsLRRjPNRM7tkMb4vCPdJbhG33Abbr7qgblTK+eAo3ZfT6LVSrPbzMVoAANog==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214595;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214598;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Gi4GNvOhxT2q0hhGr3D+5G3C5Cp9WtxcW7JYrRFMiqY=;
-	b=cTG/0gLJQbiP3cWdymiQ11cXWb0qJyxI/xyVWtYw+zBFAjHhL7N1deIzTDhKsfXC9NtM
-	 CB5yr8tOtUnlgJieGXymu7CHDEKFELMoYAz3Do+0TGAgfGuJS3L/9FtmROARf8MWBv+52
-	 wnzl9VQLwA/OjVFCOkN3pdx9IF01duF52u1OYHciBsvZZQfXl4TACmmN3oGcT/IiN7gHj
-	 0IzqEeWYHKaeqEQhAG3EPYXPVQHgu/dT91u4g4q/bEK9hmj2AvrDwLE4mZivXDUoE/Rzv
-	 4ZVbzFENupkknyDXAESgSZ7nwhV2gyMyJlb9qqTLmjsCnvj9EZUD52Ar31JCAfVaRhg==
+	bh=qD6Z4ZQHa/4RI3yVwBV0Fu1Ebm0w09NhjbymFEkdrgM=;
+	b=sF35W/WFPzL0QGCL1JarOi16lmO0D/RjODWjSyVDtkbtmy5Z2UlAbjwfdoZtSd+LPKOP
+	 AlmCHvT7Vbc5aCrM4Wk9DBaDcT/P+d5H2IxYQtNBc1ykgBs4ogSOqwkTfijU+uiwdGMAV
+	 sshyIPqKd/d61ZBIw8EX3l6KhcVnYEyRQgCu8mMC/BsA0MVq6HL7nyHhl+tW43RFbC9an
+	 +HPvOxI1DDxqAMkaHrqRTdjk5i97TTbsiqJFQiMTOLE8LUcDwxIW3sYlK4Q1RUhkofQdI
+	 uzOue8nXHL0mHw1so+D2pkBEePcVGtbjjzFHI9AkvAVbCSY3/8rNOXSLP/s5xlHCb7g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Jr1ALN5b;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iZgU31JP;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FE2E606AB07;
-	Wed, 28 Oct 2026 19:09:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 889FB606A32E;
+	Wed, 28 Oct 2026 19:09:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Jr1ALN5b
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B164F1F01825;
-	Wed, 28 Oct 2026 19:09:54 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iZgU31JP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAC3A1F01829;
+	Wed, 28 Oct 2026 19:09:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214595;
-	bh=Gi4GNvOhxT2q0hhGr3D+5G3C5Cp9WtxcW7JYrRFMiqY=;
+	s=korg; t=1793214598;
+	bh=qD6Z4ZQHa/4RI3yVwBV0Fu1Ebm0w09NhjbymFEkdrgM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Jr1ALN5bDoAUN7iUBmzPmPLUwJTlYHGC8P/YcSr9BXiS2nYLALjQmimCIbbTNDyoN
-	 UCYSZrRdKoOa1FKAkzfkJkgIbAp8Gj4U2L2ddjhA0UEdFBsrjXTtX323DTnLU/Nx6A
-	 LQKJE71zbxw7rxvLQKUEPSwHq6B7HsqQRMmuuMno=
+	b=iZgU31JP+lNkCDzXYuImfL5a47eFOh5u+qb1Y6Kao7EZrKFRT7nmPgVOVsgh2NQQj
+	 Rd7Wv3+FZSOeMMVTBw5yKrLlqUqOhPBVTI14bNf2rYRmXDA350C50ZxTwfgme3G+Ab
+	 kaUBwMMr9zRRwaWYq9Vljb9U6mLF/BBqxFzNyeek=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Francesco Lavra <flavra@baylibre.com>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	syzbot+639af5aa411f2581ad38@syzkaller.appspotmail.com,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0915/1887] iio: imu: st_lsm6dsx: fix iio_chan_spec for sensors without event detection
-Date: Wed, 28 Oct 2026 17:50:11 +0100
-Message-ID: <20261028170520.236339269@linuxfoundation.org>
+Subject: [PATCH 6.1 0916/1887] wifi: mac80211: dont WARN for connections on invalid channels
+Date: Wed, 28 Oct 2026 17:50:12 +0100
+Message-ID: <20261028170520.258385289@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -70,60 +68,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Francesco Lavra <flavra@baylibre.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit c34e2e2d67b3bb8d5a6d09b0d6dac845cdd13fb3 ]
+[ Upstream commit 99067b58a408a384d2a45c105eb3dce980a862ce ]
 
-The st_lsm6dsx_acc_channels array of struct iio_chan_spec has a non-NULL
-event_spec field, indicating support for IIO events. However, event
-detection is not supported for all sensors, and if userspace tries to
-configure accelerometer wakeup events on a sensor device that does not
-support them (e.g. LSM6DS0), st_lsm6dsx_write_event() dereferences a NULL
-pointer when trying to write to the wakeup register.
-Define an additional struct iio_chan_spec array whose members have a NULL
-event_spec field, and use this array instead of st_lsm6dsx_acc_channels for
-sensors without event detection capability.
+It's not clear (to me) how exactly syzbot managed to hit this,
+but it seems conceivable that e.g. regulatory changed and has
+disabled a channel between scanning (channel is checked to be
+usable by cfg80211_get_ies_channel_number) and connecting on
+the channel later.
 
-Fixes: b5969abfa8b8 ("iio: imu: st_lsm6dsx: add motion events")
-Signed-off-by: Francesco Lavra <flavra@baylibre.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-Acked-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Cc: stable@vger.kernel.org
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+With one scenario that isn't covered elsewhere described above,
+the warning isn't good, replace it with a (more informative)
+error message.
+
+Reported-by: syzbot+639af5aa411f2581ad38@syzkaller.appspotmail.com
+Link: https://patch.msgid.link/20251202102511.5a8fb5184fa3.I961ee41b8f10538a54b8565dbf03ec1696e80e03@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/imu/st_lsm6dsx/st_lsm6dsx_core.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ net/mac80211/mlme.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/iio/imu/st_lsm6dsx/st_lsm6dsx_core.c b/drivers/iio/imu/st_lsm6dsx/st_lsm6dsx_core.c
-index 6936db2e72f88..3b3a04e5d9497 100644
---- a/drivers/iio/imu/st_lsm6dsx/st_lsm6dsx_core.c
-+++ b/drivers/iio/imu/st_lsm6dsx/st_lsm6dsx_core.c
-@@ -83,6 +83,13 @@ static const struct iio_chan_spec st_lsm6dsx_acc_channels[] = {
- 	IIO_CHAN_SOFT_TIMESTAMP(3),
- };
- 
-+static const struct iio_chan_spec st_lsm6ds0_acc_channels[] = {
-+	ST_LSM6DSX_CHANNEL(IIO_ACCEL, 0x28, IIO_MOD_X, 0),
-+	ST_LSM6DSX_CHANNEL(IIO_ACCEL, 0x2a, IIO_MOD_Y, 1),
-+	ST_LSM6DSX_CHANNEL(IIO_ACCEL, 0x2c, IIO_MOD_Z, 2),
-+	IIO_CHAN_SOFT_TIMESTAMP(3),
-+};
-+
- static const struct iio_chan_spec st_lsm6dsx_gyro_channels[] = {
- 	ST_LSM6DSX_CHANNEL(IIO_ANGL_VEL, 0x22, IIO_MOD_X, 0),
- 	ST_LSM6DSX_CHANNEL(IIO_ANGL_VEL, 0x24, IIO_MOD_Y, 1),
-@@ -124,8 +131,8 @@ static const struct st_lsm6dsx_settings st_lsm6dsx_sensor_settings[] = {
- 		},
- 		.channels = {
- 			[ST_LSM6DSX_ID_ACC] = {
--				.chan = st_lsm6dsx_acc_channels,
--				.len = ARRAY_SIZE(st_lsm6dsx_acc_channels),
-+				.chan = st_lsm6ds0_acc_channels,
-+				.len = ARRAY_SIZE(st_lsm6ds0_acc_channels),
- 			},
- 			[ST_LSM6DSX_ID_GYRO] = {
- 				.chan = st_lsm6ds0_gyro_channels,
+diff --git a/net/mac80211/mlme.c b/net/mac80211/mlme.c
+index 56120762c7fbf..05c7eda181968 100644
+--- a/net/mac80211/mlme.c
++++ b/net/mac80211/mlme.c
+@@ -452,7 +452,10 @@ ieee80211_determine_chantype(struct ieee80211_sub_if_data *sdata,
+ 	while (!cfg80211_chandef_usable(sdata->local->hw.wiphy, chandef,
+ 					tracking ? 0 :
+ 						   IEEE80211_CHAN_DISABLED)) {
+-		if (WARN_ON(chandef->width == NL80211_CHAN_WIDTH_20_NOHT)) {
++		if (chandef->width == NL80211_CHAN_WIDTH_20_NOHT) {
++			sdata_info(sdata,
++				   "unusable channel (%d MHz) for connection\n",
++				   chandef->chan->center_freq);
+ 			ret = IEEE80211_CONN_DISABLE_HT |
+ 			      IEEE80211_CONN_DISABLE_VHT |
+ 			      IEEE80211_CONN_DISABLE_HE |
 -- 
 2.53.0
 
