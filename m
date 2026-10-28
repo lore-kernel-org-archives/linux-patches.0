@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214204;
-	b=DqUNSdNJdCsOYGmx+gYJTKScRVHp68zbVvuU2a4PzV/RXP4TShgBqj+FtoJ7nQcxByl7
-	 HQwHuyK/0swUbJ+4WGNIQrHaKR2lCS66ypbKZCTJB1txOn3uaro/VExGJzKG3/0sJW8Tc
-	 1eocAY+j9x9txwncJl0ttgRLouh/OwpZ5+mvsrG9ETHblscXsLQsgBTp7GegZtENpRTE9
-	 yKc5N48jf3d+0jBbJKnLWmJ7s/6d5WHuycActxVgm1YSsw36i+tr2DND23opG7ZVJQmLv
-	 sg2BrAUsqnPXbiEndVxdd+U8CaX1vXh0g9I7JYqUG7C8h4ULna6HFGdr+rUqeMlAFfg==
+	t=1793214207;
+	b=Rmw+UTbccUCLj+WglK8ZFbEe6ct4VixVk5J2z0gKSjc08w7e38WEtrizP15SCaUIP8tC
+	 SdkDUBcLSOt30XXJM6EL8465JzNDDoKCNfkHNWdc7UnvQLE/IyQf6HZk4zJfAXWqyF3PH
+	 NYlKWtSfEcn4wkJfwZww05HkzfmsbM1RKXlAXevqG2ZOh0KCcK2Q/ZJ4bSKQm2VIgb8Ou
+	 9D4bRytiwsPBw0JMqKx/Gp1ZQXrnFW3QWl2YwjS24QGcWaB1isWvcRyqyYlPhZ3vXz6i+
+	 SfwVKTlZkwIwwk7AKSLrvpTEz8mlYZ3HwvnhOE2UAdxPp+FZ4yAYwFiwCiY4pmcacrA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214204;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214207;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=GYBpHWPOVID0UbA4U/vcMsRhp+ufO+UUeEi+hPObSs0=;
-	b=0VT9IpaTxHcsID9mfqugJuAO7XlwmRTmXEApjdqkwNGHk6uKpSIvGeoaFnyp8SvMMW5Q
-	 VOO4NKyQFW1pjwEUV1aHGDgVYUqHACFeL8/mjQfX0Pm1VAz7BJRGYWOtdMovlFHWFSxAG
-	 iLbth/h7SXwQjy5/yVesoLzCFlN3FfIy5+w1nPmptuWeNbKz36zZWzLEI3wdTTxRCNw75
-	 al/vyZQpY/Lo0v+fOLFivOImbEN0CCSgP5DRSsYw6JZiRmFZSwXIrOJiXm6YNtyJ2zIPe
-	 dTM06cBBr48yIeSFjW7u9HdRjY/4Tjs+xnuPH6E7EjolGFoiKVMHyaJSdiI0cLNhVrw==
+	bh=h3G+NpH65TL575Mmzl2V1G6T1Bg1ZUBNhPaWv153Lhk=;
+	b=g1jiQ8qdVVf8z6qZm22+z8rUqyi/VKbYHGrguCH97bhWEaG5yPFX5bldY4dcjXZlJpqj
+	 TDweu46ZkY3nActfLjBy5L2uCZApEDMc7ypOLQb7/fifOTHquf1VVdJ4bJhj0wgSuTJ/G
+	 ZZfpGVwRvR+nei94abTNPhWu3M+H6W3GOytJg7diUmusgvt9ViDh2LcCtI5LQTuDI16Ua
+	 D/TZHRdcJt/o7daZvYDH6K6JLp26azxDysliG12EBQg9XHoTKq03en7O9VfAMqUrI9SyM
+	 kD7C+oFI1Tm56fmRxiA15qoy74z8U/cVvR+rCa9dmNRxYiGvBUSbgCXXWamkc3xSXqw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gkRLFYAw;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J4KQVf7Y;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33BC9606BFA5;
-	Wed, 28 Oct 2026 19:03:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08212606BFAC;
+	Wed, 28 Oct 2026 19:03:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gkRLFYAw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86AA41F013CB;
-	Wed, 28 Oct 2026 19:03:23 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J4KQVf7Y
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57D9D1F013C6;
+	Wed, 28 Oct 2026 19:03:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214204;
-	bh=GYBpHWPOVID0UbA4U/vcMsRhp+ufO+UUeEi+hPObSs0=;
+	s=korg; t=1793214206;
+	bh=h3G+NpH65TL575Mmzl2V1G6T1Bg1ZUBNhPaWv153Lhk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gkRLFYAwJTgYIF5Q40KuOxZp0T629zCXGcXmOOekt4BZMYWyOGb9Myy49EDMTKfqp
-	 rxi6h3FxFG4NtSUEjf9SoyaKx9yZ2nSNvjYaQlImnIQGAiGH2TcTu7HW+Y5WJTBYU9
-	 vjdhjVXiN7g0hVGWo2y4ohEVT93wvLRSaTJiVIEA=
+	b=J4KQVf7YqSk75tPL1uJwLlgpaYJ3Xtrym9cKFDc+uJ0O7fOgIXaGCU29y2pX1p90N
+	 5ovHQy+5xqeKKlxNcGucA2qLyUnOhuOVXRTanDF3g2GF6rgEmfZX81UUYabPpVPG8v
+	 xworMJ4Hi8BB7LrWF1RNMSyl+CtgF7nrN5+kzKIM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
-	Richard Weinberger <richard@nod.at>,
+	Sean Heelan <seanheelan@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0777/1887] um: fix time-travel syscall scheduling hack
-Date: Wed, 28 Oct 2026 17:47:53 +0100
-Message-ID: <20261028170517.120622028@linuxfoundation.org>
+Subject: [PATCH 6.1 0778/1887] ksmbd: Fix UAF in __close_file_table_ids
+Date: Wed, 28 Oct 2026 17:47:54 +0100
+Message-ID: <20261028170517.142623121@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,84 +69,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Sean Heelan <seanheelan@gmail.com>
 
-[ Upstream commit 381d2f95c8aa575d5d42bf1fe0ea9a70c4bec0cf ]
+[ Upstream commit 36991c1ccde2d5a521577c448ffe07fcccfe104d ]
 
-The schedule() call there really never did anything at
-least since the introduction of the EEVDF scheduler,
-but now I found a case where we permanently hang in a
-loop of -ERESTARTNOINTR (due to locking.) Work around
-it by making any syscalls with error return take time
-(and then schedule after) so we cannot hang in such a
-loop forever.
+A use-after-free is possible if one thread destroys the file
+via __ksmbd_close_fd while another thread holds a reference to
+it. The existing checks on fp->refcount are not sufficient to
+prevent this.
 
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Richard Weinberger <richard@nod.at>
-Stable-dep-of: 887c5c12e80c ("um: work around sched_yield not yielding in time-travel mode")
+The fix takes ft->lock around the section which removes the
+file from the file table. This prevents two threads acquiring the
+same file pointer via __close_file_table_ids, as well as the other
+functions which retrieve a file from the IDR and which already use
+this same lock.
+
+Cc: stable@vger.kernel.org
+Signed-off-by: Sean Heelan <seanheelan@gmail.com>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/um/kernel/skas/syscall.c | 34 ++++++++++++++++++++--------------
- 1 file changed, 20 insertions(+), 14 deletions(-)
+ fs/smb/server/vfs_cache.c | 37 +++++++++++++++++++++++++++++++------
+ 1 file changed, 31 insertions(+), 6 deletions(-)
 
-diff --git a/arch/um/kernel/skas/syscall.c b/arch/um/kernel/skas/syscall.c
-index 9ee19e566da3b..b09e85279d2b8 100644
---- a/arch/um/kernel/skas/syscall.c
-+++ b/arch/um/kernel/skas/syscall.c
-@@ -12,23 +12,13 @@
- #include <sysdep/syscalls.h>
- #include <linux/time-internal.h>
- #include <asm/unistd.h>
-+#include <asm/delay.h>
- 
- void handle_syscall(struct uml_pt_regs *r)
+diff --git a/fs/smb/server/vfs_cache.c b/fs/smb/server/vfs_cache.c
+index 9eb9f892ac2b5..4b35e4f960694 100644
+--- a/fs/smb/server/vfs_cache.c
++++ b/fs/smb/server/vfs_cache.c
+@@ -648,21 +648,46 @@ __close_file_table_ids(struct ksmbd_file_table *ft,
+ 		       bool (*skip)(struct ksmbd_tree_connect *tcon,
+ 				    struct ksmbd_file *fp))
  {
- 	struct pt_regs *regs = container_of(r, struct pt_regs, regs);
- 	int syscall;
- 
--	/*
--	 * If we have infinite CPU resources, then make every syscall also a
--	 * preemption point, since we don't have any other preemption in this
--	 * case, and kernel threads would basically never run until userspace
--	 * went to sleep, even if said userspace interacts with the kernel in
--	 * various ways.
--	 */
--	if (time_travel_mode == TT_MODE_INFCPU ||
--	    time_travel_mode == TT_MODE_EXTERNAL)
--		schedule();
--
- 	/* Initialize the syscall number and default return value. */
- 	UPT_SYSCALL_NR(r) = PT_SYSCALL_NR(r->gp);
- 	PT_REGS_SET_SYSCALL_RETURN(regs, -ENOSYS);
-@@ -41,9 +31,25 @@ void handle_syscall(struct uml_pt_regs *r)
- 		goto out;
- 
- 	syscall = UPT_SYSCALL_NR(r);
--	if (syscall >= 0 && syscall < __NR_syscalls)
--		PT_REGS_SET_SYSCALL_RETURN(regs,
--				EXECUTE_SYSCALL(syscall, regs));
-+	if (syscall >= 0 && syscall < __NR_syscalls) {
-+		unsigned long ret = EXECUTE_SYSCALL(syscall, regs);
+-	unsigned int			id;
+-	struct ksmbd_file		*fp;
+-	int				num = 0;
++	struct ksmbd_file *fp;
++	unsigned int id = 0;
++	int num = 0;
 +
-+		PT_REGS_SET_SYSCALL_RETURN(regs, ret);
-+
-+		/*
-+		 * An error value here can be some form of -ERESTARTSYS
-+		 * and then we'd just loop. Make any error syscalls take
-+		 * some time, so that it won't just loop if something is
-+		 * not ready, and hopefully other things will make some
-+		 * progress.
-+		 */
-+		if (IS_ERR_VALUE(ret) &&
-+		    (time_travel_mode == TT_MODE_INFCPU ||
-+		     time_travel_mode == TT_MODE_EXTERNAL)) {
-+			um_udelay(1);
-+			schedule();
++	while (1) {
++		write_lock(&ft->lock);
++		fp = idr_get_next(ft->idr, &id);
++		if (!fp) {
++			write_unlock(&ft->lock);
++			break;
 +		}
-+	}
  
- out:
- 	syscall_trace_leave(regs);
+-	idr_for_each_entry(ft->idr, fp, id) {
+-		if (skip(tcon, fp))
++		if (skip(tcon, fp)) {
++			id++;
++			write_unlock(&ft->lock);
+ 			continue;
++		}
+ 
+ 		set_close_state_blocked_works(fp);
+ 
+-		if (!atomic_dec_and_test(&fp->refcount))
++		if (!atomic_dec_and_test(&fp->refcount)) {
++			id++;
++			write_unlock(&ft->lock);
+ 			continue;
++		}
++
++		idr_remove(ft->idr, fp->volatile_id);
++		fp->volatile_id = KSMBD_NO_FID;
++		write_unlock(&ft->lock);
++
++		write_lock(&fp->f_ci->m_lock);
++		list_del_init(&fp->node);
++		write_unlock(&fp->f_ci->m_lock);
++
+ 		__ksmbd_close_fd(ft, fp);
++
+ 		num++;
++		id++;
+ 	}
++
+ 	return num;
+ }
+ 
 -- 
 2.53.0
 
