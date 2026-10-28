@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793212118;
-	b=mZ3WMLSua2mV+uCMuMk/5Er8in8HLZc+p/dBi9B1HrJ45ONfsfcOYcbwtXfrC9GXCiS8
-	 xrTACyMBDFVP12qXYhHgEMJ1vfjN/z0JFd+e91+x917ttMM1fI162GnZcqEA6KhkT/8lg
-	 1LapkDaKRpKvRdUM1UhbpYon/7NZlPmEIm35Yh4qAy5iYwfPZrkhp+FRqHmfNv6sLI1Im
-	 qZFnCeAktmu7GSdCFShPPEBgmtHs0PmU/ZiiCckTh+qsYjBq6l798QYRSGDBON4XN7ftH
-	 4/fClqi6u38tn5CA4DxeC3sy72HTRCoo1Cykm3LKTpHWT/Q+Vy8s1EdU73aHFhDqqXA==
+	t=1793212121;
+	b=Nhlf2U2IOHf1ag1Yim9aUHJQ4Ra95FZ6veSeTftZ4v72LtzetV9ogvCe1xQhlckhlbp+
+	 mnT0o25Pm6+fJfDyge0U1j2migUwZOkbEWMlpBeqLisyNl9CTxFflcwZQGGoHCBV3oYrD
+	 OqNp2mwCSKD3tmPP6A8Wb3Oet7QkzGF/EGOcCLJp66pvKi+/+pnWAlCynQ1OSB/yrAzyK
+	 Dm44ttcnwM4H2bL2I1YQem7G4WZ5D1XG2YjprRWm7m2yAALIRbAEdz4PkGUVVThzhA53B
+	 OlSjRHLF4k+g+Qf8Nt3hSYPktMmiq+zohutiUwagDULYDvJSS0rfAxDpD36lx/jRElw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793212118;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793212121;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=Q5Jc9y2nKGr0Q1v2PhEX0iX9T4azYC+pl79EgJy5Jz4=;
-	b=k+JDqyopbS7AtihcD2b5on6UmHiiIPLFgH+o5GkHS++g/n/CSA+FQHY1z31vqmIohPTX
-	 /XvbwD4COpqW7L6YpFbjXDekyzq6yJc5mn3iAMQI7pmbIY/lXPCoOJslzRqy9y0FMmL8Y
-	 78Qnxni24gkPW3KHBimjDrbAq86gd/5dBU1W356s5rPFnEOOf4fB46ezKfjgETVL51ewU
-	 6ICsLsuM4H2O8e7XSpuDo0/diWA/iZxYFs57gTcBwlk2RkFVugK/sR03X5e7akG1DFIqn
-	 K68myrK7zUNaqeDs32kwSFZKAW0NybUlz56zID/V3hyxodRezfM5WAwV4qWqXKRwfQw==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=eeN0osw9VbK2jC3GEl9SaucJqnNyK9CR88KpQgSLUU4=;
+	b=RqWtLs6TMwsIoiKFNONo0hN6NHapgJA5t15tkfYj1fAInlHzXdMWbVm9mG/sH0tiFNxQ
+	 wI0jn2PqcCldMy2tNwGwAIvCw+PIFn8r/zMseS1UkIxGOHzIgdJm/HFM4qTITvIZ0DuiE
+	 T05xiWQCaS3KBRx48CiaAen1N4ODEqQ0eeE665K22hzmUW7S+IJsKs4TlQwVkuEznRfWf
+	 y8DTQqH8hYCNK6IV660GmMCQnRdHKuML8dx9dPi4eiH9th8oq8ofUKuEfajwlrLIoEaPS
+	 4GxD9KxQ5TApM2I4OwQ8XNm3I/35Thmx/g7344/TjF97efW+pfTzMQ674Q4Kqs1+YFg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oIfuGV2Q;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xAdtpzRs;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61F58606A31D;
-	Wed, 28 Oct 2026 18:28:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 387C2606A31A;
+	Wed, 28 Oct 2026 18:28:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oIfuGV2Q
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B10791F01829;
-	Wed, 28 Oct 2026 18:28:37 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xAdtpzRs
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 874DB1F01825;
+	Wed, 28 Oct 2026 18:28:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793212118;
-	bh=Q5Jc9y2nKGr0Q1v2PhEX0iX9T4azYC+pl79EgJy5Jz4=;
+	s=korg; t=1793212121;
+	bh=eeN0osw9VbK2jC3GEl9SaucJqnNyK9CR88KpQgSLUU4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oIfuGV2QMLC/6pzKksNwiSfESeWQmU5nUumFY91r4b2c9j6LPf/eb1gDJvBrAwJNQ
-	 5XHD/3B7xAz65ev378iP+O2JDo88R0qvTzo91P/GBEoJlleeVvyUnHHkLYpQ54y7Zb
-	 nIUlUOl/d4ZiunqcBdZsWVwkumBA6bjeTvQ2Fpx0=
+	b=xAdtpzRs3xw1is1lnyr+y7yCGRUXAsQIOSWi6mSTtMW2dv4fhBH61eAvuV2KW9JYw
+	 r4EkwzyUHEznmjY6iw3A5C8sKoJ2C2j2QkR2isIf0aHZglD0n0r+igCdTQT3OSS7kZ
+	 DV7kOBD/D9+0nMEBdWWludUHv3hIjjP+fH9+ax3M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	"Claude Fable 5.1" <noreply@anthropic.com>
-Subject: [PATCH 6.1 0017/1887] io_uring: look up the file before queueing to io-wq
-Date: Wed, 28 Oct 2026 17:35:13 +0100
-Message-ID: <20261028170459.614317947@linuxfoundation.org>
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 0044/1887] Bluetooth: btqcomsmd: Convert to platform remove callback returning void
+Date: Wed, 28 Oct 2026 17:35:40 +0100
+Message-ID: <20261028170500.228219901@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -62,144 +62,71 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-Commit 98bc044d5a5374f8d3605fe55a8e2df6d6fc3f82 upstream.
+[ Upstream commit 4a62832f565c950d645a4f7b199a0a7985815940 ]
 
-io_prep_async_work() decides by the file of a request what kind of work
-it is for io-wq. I/O on regular files and block devices is bounded work,
-limited to min(SQ entries, 4 * CPUs) workers, for anything else that may
-block indefinitely the limit is RLIMIT_NPROC. Writes to a regular file
-are hashed by the inode, so that they are run one after the other instead
-of having a bunch of workers fight for the inode lock.
+The .remove() callback for a platform driver returns an int which makes
+many driver authors wrongly assume it's possible to do error handling by
+returning an error code. However the value returned is ignored (apart
+from emitting a warning) and this typically results in resource leaks.
 
-Since the file is only assigned when a request is issued, a request that
-is queued without an attempt to issue it, REQ_F_FORCE_ASYNC, doesn't have
-one at that point. io_prep_async_work() takes that for "not a regular
-file or block device":
+To improve here there is a quest to make the remove callback return
+void. In the first step of this quest all drivers are converted to
+.remove_new(), which already returns void. Eventually after all drivers
+are converted, .remove_new() will be renamed to .remove().
 
-- Reads and writes end up as unbound work. 32 reads with IOSQE_ASYNC from
-  a slow block device on a ring with 4 SQ entries get 32 workers, not 4.
-- Writes aren't hashed. Four buffered writes to one file get four
-  workers, three of which do nothing but wait for the lock.
+Trivially convert this driver from always returning zero in the remove
+callback to the void returning variant.
 
-The late assignment is for the benefit of links, where a request may use
-a fixed file that one of its predecessors installs. By the time a request
-gets to io_queue_iowq() these are done, it is as good as issued. Assign
-the file there.
-
-io_assign_file() moves up and is forced inline. With a third caller the
-compiler may stop inlining it, and every request that is issued would
-pay for a call.
-
-IORING_OP_SPLICE is left as it is, unbound and not hashed. The file of
-the request is where it writes to, which says nothing about how long it
-takes: a splice from an empty pipe or a socket into a regular file waits
-for its input. As bounded work, four of these on a ring with 4 SQ entries
-keep all other bounded work of the task from running, and as hashed work
-one of them blocks all writes to that file.
-
-REQ_F_FORCE_ASYNC is not only set for IOSQE_ASYNC. What changes, and
-brings back what was the case before the file assignment was deferred:
-
-- Requests with IOSQE_ASYNC or IOSQE_IO_DRAIN, and all requests that are
-  submitted while a drain is active: reads and writes on regular files
-  and block devices count against the limit for bounded workers, including
-  the one set with IORING_REGISTER_IOWQ_MAX_WORKERS, so fewer of them run
-  at the same time.
-- Of these, writes to one regular file are run one at a time, unless they
-  are O_DIRECT and the filesystem has FOP_DIO_PARALLEL_WRITE.
-- IORING_OP_FALLOCATE and IORING_OP_FTRUNCATE, which always go to io-wq,
-  are run one at a time per file, and in turn with these writes.
-- The descriptor or the fixed file slot is looked up when the request is
-  queued, not when a worker gets around to it, so closing or replacing it
-  in between no longer has an effect on the request.
-
-[ 6.1: io_assign_file() takes no def argument here ]
-Fixes: 6bf9c47a3989 ("io_uring: defer file assignment")
-Assisted-by: LLM
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Link: https://patch.msgid.link/20261015-b4-io-uring-fixes-v1-43-c1556f5d7bf5@toxicpanda.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Co-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Stable-dep-of: f5a427b16e45 ("Bluetooth: btqcomsmd: destroy RPMsg endpoints before freeing hci_dev")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/io_uring.c |   41 ++++++++++++++++++++++++++++-------------
- 1 file changed, 28 insertions(+), 13 deletions(-)
+ drivers/bluetooth/btqcomsmd.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -417,17 +417,45 @@ static void io_prep_async_link(struct io
- 	}
+diff --git a/drivers/bluetooth/btqcomsmd.c b/drivers/bluetooth/btqcomsmd.c
+index 11c7e04bf3947..88dbb2f3fabf9 100644
+--- a/drivers/bluetooth/btqcomsmd.c
++++ b/drivers/bluetooth/btqcomsmd.c
+@@ -197,7 +197,7 @@ static int btqcomsmd_probe(struct platform_device *pdev)
+ 	return ret;
  }
  
-+/* Called for every request that is issued: keep it inline */
-+static __always_inline bool io_assign_file(struct io_kiocb *req,
-+					   unsigned int issue_flags)
-+{
-+	if (req->file || !io_op_defs[req->opcode].needs_file)
-+		return true;
-+
-+	if (req->flags & REQ_F_FIXED_FILE)
-+		req->file = io_file_get_fixed(req, req->cqe.fd, issue_flags);
-+	else
-+		req->file = io_file_get_normal(req, req->cqe.fd);
-+
-+	return !!req->file;
-+}
-+
- static void io_queue_iowq(struct io_kiocb *req)
+-static int btqcomsmd_remove(struct platform_device *pdev)
++static void btqcomsmd_remove(struct platform_device *pdev)
  {
- 	struct io_uring_task *tctx = req->task->io_uring;
+ 	struct btqcomsmd *btq = platform_get_drvdata(pdev);
  
- 	BUG_ON(!tctx);
-+	lockdep_assert_held(&req->ctx->uring_lock);
+@@ -206,8 +206,6 @@ static int btqcomsmd_remove(struct platform_device *pdev)
  
- 	if ((current->flags & PF_KTHREAD) || !tctx->io_wq) {
- 		io_req_task_queue_fail(req, -ECANCELED);
- 		return;
- 	}
- 
-+	/*
-+	 * The file is looked up as late as possible, as it may be the result
-+	 * of an earlier request of the link. This one is up now, and what kind
-+	 * of work it is depends on the file. If that fails, leave the error
-+	 * handling to the worker.
-+	 *
-+	 * Not for a splice: whatever it writes to, it may wait for its input
-+	 * for ever. It has to remain unbound work that isn't hashed.
-+	 */
-+	if (req->opcode != IORING_OP_SPLICE)
-+		io_assign_file(req, 0);
-+
- 	/* init ->work of the whole link before punting */
- 	io_prep_async_link(req);
- 
-@@ -1693,19 +1721,6 @@ static void io_clean_op(struct io_kiocb
- 	req->flags &= ~IO_REQ_CLEAN_FLAGS;
+ 	rpmsg_destroy_ept(btq->cmd_channel);
+ 	rpmsg_destroy_ept(btq->acl_channel);
+-
+-	return 0;
  }
  
--static bool io_assign_file(struct io_kiocb *req, unsigned int issue_flags)
--{
--	if (req->file || !io_op_defs[req->opcode].needs_file)
--		return true;
--
--	if (req->flags & REQ_F_FIXED_FILE)
--		req->file = io_file_get_fixed(req, req->cqe.fd, issue_flags);
--	else
--		req->file = io_file_get_normal(req, req->cqe.fd);
--
--	return !!req->file;
--}
--
- #define REQ_ISSUE_SLOW_FLAGS	(REQ_F_CREDS | REQ_F_ARM_LTIMEOUT)
+ static const struct of_device_id btqcomsmd_of_match[] = {
+@@ -218,7 +216,7 @@ MODULE_DEVICE_TABLE(of, btqcomsmd_of_match);
  
- static int io_issue_sqe(struct io_kiocb *req, unsigned int issue_flags)
+ static struct platform_driver btqcomsmd_driver = {
+ 	.probe = btqcomsmd_probe,
+-	.remove = btqcomsmd_remove,
++	.remove_new = btqcomsmd_remove,
+ 	.driver  = {
+ 		.name  = "btqcomsmd",
+ 		.of_match_table = btqcomsmd_of_match,
+-- 
+2.53.0
+
 
 
