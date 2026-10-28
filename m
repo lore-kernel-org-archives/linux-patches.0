@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793210817;
-	b=PzofFw/S5o8GRU7sz6V8jRrWP9AbTj2zL2zps+8M5VyFf6aMPdxRxOOpD1UYrqudr81N
-	 AdnHTx+i04QRLqHKflS1wqS5FOClrtFLBhPYjjoXqRf36pxPtySBJpk11TEduYc53qiOV
-	 FRR8bd/oTV11MQQDNXEYm9iqaC32op2bfp8Dm0UsxQDRrOaKbVpqAtydekODqvEzUsAWv
-	 QSvAGSj4v/6CSPW+QH7ljFPw4pFEPXb4vQrP5UjXlAVneR1XW1aZUkpu9H+yLbhodzuVo
-	 z5OdsPft/D4PANZoOBTgoT7vqU/OExM9U2+2IVw4a7fKJOesr+zov6Ll8L5bWM3U3dA==
+	t=1793210820;
+	b=kOehuRvOi3cuiVy1uhJAoBtzNpHxOsMrRuVCJ05m0iHDOwKiLQAVSOMnK4wgJkPJ0mSw
+	 1MkQmyIFW3uXI7fom4nCP4MO/F9fkOpOisJ+LSmjeNzzOiEY2JkbFEcfTb8rNsCgxewdg
+	 aFhE5Qde5Xzjz+yr9tbH5pzP+IZLGGbzlpHHObjT6gKsE2FCKkOWSWWm5YxkQscy5pCvt
+	 Vcg8HvBvAkyFoXhoFoO+WHY5EgTjY8MwuVsYXD4c0c/6vAOchysBwa6z/C5eG1G1RDtfw
+	 s4U6WTyjJzWretOCh9DeOZgCm0HAfwGYlaqCRq0nMyZyNDbIo9V7nghT6aGd7JsYY5A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793210817;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793210820;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=tlYwtDPXEaAfbnmPmxiUSHM771olpcpKFFeYIZWYHqo=;
-	b=fqtn0dta8ZXSj4N8JVIlag0CfNhpc7QXeuecw1zi8OoUxcZkNMDLdYLcbxxTqmFF0LZM
-	 m0aa7oK+RLXsxzVLHMGFd6+KNYh9D9TXOm1FKApNSFrvEgqKfQ6lHL3I97rShucENCEtZ
-	 YUl2IxnZLj5zLogdzyJr4dJJpdK9FsCmK1w4ILpf9LA9HIe4PypaOmqmL9ejjyDXn3YG3
-	 2BpPwQb/y1HS3/piwRodWoGtvs7yDwcp+Bj6813CCdRzXM77Y/AALzM6DyzA6TwLwQ9Tj
-	 ip1n/DICP074tXZ/k+TeweMY0kCT+s9IXGUEvrlfxqRsKpc4g4fjEkz3UwLi9N3etiw==
+	bh=R8J9/goWCY/sjVQgYK4uUphKIDqVi8BY3R8vh7bGKMo=;
+	b=tnAXnYfisn2oCzVcVa/xbvRJgcLBK6FgyNKTvn6mlXE7A82Y/TDfublzRHdtSf0zitix
+	 XE9eJYUd98DHwRVlWsDeyUAfkVeGLYQUK90g4Xjrcw2XTGHTDdsrDaYMWcmzkl2dH2WAk
+	 Qv+CCktpCOO+zl++ICCPjiOZfXbKptaatpbGJYrGd+dCpFlj9N/5kbvudoOnKbWhiJLS5
+	 1kdQvvvlpWiJQUIjcWrSDe1l9xY8LGI2Ef3+miXjo++IUFOu6zqXjmhM3HS5gQDf27yxf
+	 apj3r/rHCi//xZwwkweNIlzeWf+payuy0OJjIaLXTx2s1GbiS0NYQlnBkKUzOd7m9SA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="bp6/A40D";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S1w+v6pU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5227D606A322;
-	Wed, 28 Oct 2026 18:06:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C9D2606A31E;
+	Wed, 28 Oct 2026 18:07:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bp6/A40D
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EA7E1F01828;
-	Wed, 28 Oct 2026 18:06:56 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S1w+v6pU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A0191F031E0;
+	Wed, 28 Oct 2026 18:06:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793210817;
-	bh=tlYwtDPXEaAfbnmPmxiUSHM771olpcpKFFeYIZWYHqo=;
+	s=korg; t=1793210820;
+	bh=R8J9/goWCY/sjVQgYK4uUphKIDqVi8BY3R8vh7bGKMo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bp6/A40D0ryFMsKpnF4MmtzPcR7Wz06U9w3+eKtKOat021NCKBaN8RtAbtF+999gZ
-	 a1hE9iioIXsoIebYL4OPLu01WX5lnX2+QyYpyEG3H3rCClvE0zHqrkYRqFEY6WC6Lp
-	 lz/79za/YJucjYw54UteG6IsLTRKWEfPuP9jXEUQ=
+	b=S1w+v6pUiDyllyS+QBVZa4DoTqS/pcf4Zf9HValFyl+jp36KS4WRSHtAGMtr9QCNX
+	 0up2gphFLFQUNS7Vbdi3mbEOdtfWHQqtr8nXD9lm2O98aMfsEnaAsM+/e0VilG7ykF
+	 2839UKGK5Bn2RvwgmASCQ/dayiGZGnuaKvv/+tCA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zev Weiss <zev@bewilderbeest.net>,
 	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 158/571] mtd: core: clear out unregistered devices a bit more
-Date: Wed, 28 Oct 2026 17:55:05 +0100
-Message-ID: <20261028170011.765573663@linuxfoundation.org>
+Subject: [PATCH 5.15 159/571] mtd: core: Drop duplicate NULL checks around nvmem_unregister()
+Date: Wed, 28 Oct 2026 17:55:06 +0100
+Message-ID: <20261028170011.790359712@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -68,49 +69,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zev Weiss <zev@bewilderbeest.net>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit 00596576a05145a1b5672897a82ef87af00becf4 ]
+[ Upstream commit bcf4ef28b0839a55bfae75b2bf4794c1d7244e61 ]
 
-This allows an MTD device that has been unregistered to be easily
-re-registered later without triggering spurious "already registered"
-warnings in mtd_device_parse_register() and add_mtd_device().
+Since nvmem_unregister() checks for NULL, no need to repeat in
+the caller. Drop duplicate NULL checks.
 
-Signed-off-by: Zev Weiss <zev@bewilderbeest.net>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://lore.kernel.org/linux-mtd/20211015185049.3318-1-zev@bewilderbeest.net
+Acked-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Link: https://lore.kernel.org/r/20220220151527.17216-13-srinivas.kandagatla@linaro.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Stable-dep-of: 12b31d1acd20 ("mtd: core: call _get_device() with the master MTD")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/mtdcore.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/mtd/mtdcore.c | 13 ++++---------
+ 1 file changed, 4 insertions(+), 9 deletions(-)
 
 diff --git a/drivers/mtd/mtdcore.c b/drivers/mtd/mtdcore.c
-index 16077e5a2df1c..cd49719ca3410 100644
+index cd49719ca3410..74e449db33ac3 100644
 --- a/drivers/mtd/mtdcore.c
 +++ b/drivers/mtd/mtdcore.c
-@@ -750,6 +750,9 @@ int del_mtd_device(struct mtd_info *mtd)
+@@ -745,8 +745,7 @@ int del_mtd_device(struct mtd_info *mtd)
+ 		debugfs_remove_recursive(mtd->dbg.dfs_dir);
+ 
+ 		/* Try to remove the NVMEM provider */
+-		if (mtd->nvmem)
+-			nvmem_unregister(mtd->nvmem);
++		nvmem_unregister(mtd->nvmem);
  
  		device_unregister(&mtd->dev);
  
-+		/* Clear dev so mtd can be safely re-registered later if desired */
-+		memset(&mtd->dev, 0, sizeof(mtd->dev));
-+
- 		idr_remove(&mtd_idr, mtd->index);
- 		of_node_put(mtd_get_of_node(mtd));
+@@ -927,8 +926,7 @@ static int mtd_otp_nvmem_add(struct mtd_info *mtd)
+ 	return 0;
  
-@@ -1031,8 +1034,10 @@ int mtd_device_unregister(struct mtd_info *master)
- {
- 	int err;
+ err:
+-	if (mtd->otp_user_nvmem)
+-		nvmem_unregister(mtd->otp_user_nvmem);
++	nvmem_unregister(mtd->otp_user_nvmem);
+ 	return err;
+ }
  
--	if (master->_reboot)
-+	if (master->_reboot) {
- 		unregister_reboot_notifier(&master->reboot_notifier);
-+		memset(&master->reboot_notifier, 0, sizeof(master->reboot_notifier));
-+	}
+@@ -1039,11 +1037,8 @@ int mtd_device_unregister(struct mtd_info *master)
+ 		memset(&master->reboot_notifier, 0, sizeof(master->reboot_notifier));
+ 	}
  
- 	if (master->otp_user_nvmem)
- 		nvmem_unregister(master->otp_user_nvmem);
+-	if (master->otp_user_nvmem)
+-		nvmem_unregister(master->otp_user_nvmem);
+-
+-	if (master->otp_factory_nvmem)
+-		nvmem_unregister(master->otp_factory_nvmem);
++	nvmem_unregister(master->otp_user_nvmem);
++	nvmem_unregister(master->otp_factory_nvmem);
+ 
+ 	err = del_mtd_partitions(master);
+ 	if (err)
 -- 
 2.53.0
 
