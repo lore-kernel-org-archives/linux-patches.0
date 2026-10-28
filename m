@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215899;
-	b=n67PCx5n4YYEYzMYepSkaUk4VDsx4EhyTaSppKY/5ImXPGkXvU2mFGwcZMVd46q1wrt4
-	 l97t5cYOhNv6myhs3M45BGUNEpxg8492moLVr/riABU7dOVYOy+lAfp2DLjY6caJLV3KL
-	 MgPlBJqV9RhrBDbL1v8tYfLLj3hk6b8GkTP/YKJYOGZkgvF/eFqTuXJ6fLAG81yb2S83x
-	 Ixs6ZuF3llSXe/OOk1NTzqgiOXoDeebPJrqBhXzZnpzwut2ABKK8s3XcY0WkxLNHtblEQ
-	 1VG2wl3bMZ+kcu/j25pqcOvBjUloOX5uR2VbZxcufi2dhss4vjPgf3HKDA9ccIcOyQQ==
+	t=1793215902;
+	b=ZrClRDUl73P4Hf7pAtp7HWs9JES17r7QUEWm4/Vtq7yMMopGRQyBe2PbDdL+aOQAFyIn
+	 OTFrndR6uQnB2uQXSXUrFIJlWUurTA/NGIoRpdzGgNpmlrZfJOb9mc4HhjMeR1jD7k5Ad
+	 VtXsIvhh54PecR0rJbLUcXe2+ShF0r5l3Alx9TYkpNU3b1cW7RXyjuA2uudxSx+Ge/JS/
+	 K1CHCPLRNe+C4PEiOVKvju6gFbJHf147xO9oh/LYmz/Po6uhzEDLGIYTns4XfKatvT9xi
+	 VyPD2PGoNhwhSbJNENE2wokhXbCjDKqyXsI6DNBC/Kfc31ISPI8PYfXtAHfeGxHh6Gg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215899;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215902;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=kbPplSfCWLLhW+eHXvgllCcPPAlbBsH0gvXHjQAgxXY=;
-	b=shutUHQ5SjPBRMBFZ8fsj5HeJoKG0WiOKmOnnO2ERY/wqGYmdGbkkz3VkIgW8CG6u5QI
-	 pJoJ0Ok0INBbu1Z41H8znRdCTYW3nrF1JjYOF9TmamxsD1UL3dA3xtpVOZqXpBEXoCrUZ
-	 3iOeFL7XFCUUl9NoBJXjNsME8CkhHZBQWtiwYO5HAH3vAV8IrL9MSotiqamfaxPgFiTfh
-	 BLYCWKiuDspNC6D3cekBhaj9RL/09c2D3qb3yFfR7BE2e9BEUUYpKiVBDXV4dZFwwDkkc
-	 TvZobYMjDT0fiXyM7FULCwRPSLOzaEVS0+x7ZbzYIwBjvLWmte9A3sx4mju/WjHuknA==
+	bh=Ur3qGMQEv/4DZU1gonBYwEM4kXeUrLcJBK+fBzkdv6o=;
+	b=qm1/F7BxVCQLfu56KV2zMsJn0toZM4+HI0QBeovEAVqjlccb3fFmXxkSsFuK7v4F9EXS
+	 +ItcjCiJrD/+Qq3TtDdMcnFIHHPGhtTKHKXPa+cxzvCOigNssbwH1BOi4wcDaIN+UndS7
+	 Uts+LjYuJ6MXl5zpHE0c+jYXyJ/iP0AWJyehjrSnUIDy6pUlm0siPYBScfcEL2JOEHGax
+	 ispchgFEZnt+zxWJ6lIYH5R2rgmwFAVMQraNabkXc+ZnTPsNQm6Ul23puY6yFQ58P4AOh
+	 ayTbT8LH5fLRoAEfZ0pgb8K2t46Bqu3wkiwTmy4yE+a8o4eSMMSVrke9i1lTtpojk3Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0P1mCN1s;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XfeDoxUN;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 842F0606A321;
-	Wed, 28 Oct 2026 19:31:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A6B6606A329;
+	Wed, 28 Oct 2026 19:31:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0P1mCN1s
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 833261F01825;
-	Wed, 28 Oct 2026 19:31:38 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XfeDoxUN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BA331F01825;
+	Wed, 28 Oct 2026 19:31:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215899;
-	bh=kbPplSfCWLLhW+eHXvgllCcPPAlbBsH0gvXHjQAgxXY=;
+	s=korg; t=1793215901;
+	bh=Ur3qGMQEv/4DZU1gonBYwEM4kXeUrLcJBK+fBzkdv6o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0P1mCN1sOmtOerV5YcVtL6XoPT/8vejf0XxBZgijdN21LMMPWLpK/rNLZioNx607f
-	 KgrwJhEbzBj+IPJnMvUmT8CklsFY4nudD6hmLcccWSzSTDSYDdQ2Cy+T+x2O1CCcPh
-	 9zmcckQ6w9EqpagBjmzgZnKa5mdV0KWefFTt1UHQ=
+	b=XfeDoxUNTRHAAtvgS+bcrVzYb1GYWJDU8r4Q0yLmRM3O4QqGqgs5l5oI71NPUNP8m
+	 HTwKJllH1Tb6ALhTvFZ9Gffz3Iix+r1q7gdR+o2jmC9rqASeILEkmWFlfJSSfuR6xM
+	 6JPEXGQa7azxgmQlxDT+ZSfAYAqkm63JJEDXrZCg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li RongQing <lirongqing@baidu.com>,
-	lihuisong@huawei.com,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	David Rosca <david.rosca@amd.com>,
+	Leo Liu <leo.liu@amd.com>,
+	Ruijing Dong <ruijing.dong@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1317/1887] ACPI: processor_idle: Mark LPI enter functions as __cpuidle
-Date: Wed, 28 Oct 2026 17:56:53 +0100
-Message-ID: <20261028170529.400140041@linuxfoundation.org>
+Subject: [PATCH 6.1 1365/1887] drm/amdgpu: Fix UVD dpb min size calculation for H264
+Date: Wed, 28 Oct 2026 17:57:41 +0100
+Message-ID: <20261028170530.507864519@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,61 +70,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li RongQing <lirongqing@baidu.com>
+From: David Rosca <david.rosca@amd.com>
 
-[ Upstream commit 956ca5d72c76504824c8eb601879da9476973e15 ]
+[ Upstream commit 21a8084cd76223a13493237e04d45f5226d7cee6 ]
 
-When function tracing or Kprobes is enabled, entering an ACPI Low
-Power Idle (LPI) state triggers the following RCU splat:
+This should use actual number of references from the decode
+message, instead of maximum derived from level.
 
-  RCU not on for: acpi_idle_lpi_enter+0x4/0xd8
-  WARNING: CPU: 8 PID: 0 at include/linux/trace_recursion.h:162 function_trace_call+0x1e8/0x228
-
-The acpi_idle_lpi_enter() function is invoked within the cpuidle
-path after RCU has already been disabled for the current local CPU.
-Consequently, ftrace's function_trace_call() expects RCU to be
-actively watching before recording trace data, emitting a warning
-if it is not.
-
-Fix this by annotating acpi_idle_lpi_enter(), the generic __weak
-stub, and the RISC-V implementation of acpi_processor_ffh_lpi_enter()
-with __cpuidle. This moves these functions into the '.cpuidle.text'
-section, implicitly disabling ftrace instrumentation (notrace) along
-this sensitive path and preventing trace-induced RCU warnings during
-idle entry.
-
-Fixes: a36a7fecfe60 ("ACPI / processor_idle: Add support for Low Power Idle(LPI) states")
-Signed-off-by: Li RongQing <lirongqing@baidu.com>
-Acked-by: lihuisong@huawei.com
-Link: https://patch.msgid.link/20260616072617.2272-1-lirongqing@baidu.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: David Rosca <david.rosca@amd.com>
+Acked-by: Leo Liu <leo.liu@amd.com>
+Reviewed-by: Ruijing Dong <ruijing.dong@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 64b525edb7e7bdfcdc77883c5e413804e2396856)
+Cc: stable@vger.kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/processor_idle.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_uvd.c | 62 ++-----------------------
+ 1 file changed, 4 insertions(+), 58 deletions(-)
 
-diff --git a/drivers/acpi/processor_idle.c b/drivers/acpi/processor_idle.c
-index 8df8e789a0dbe..90b9e8d725d41 100644
---- a/drivers/acpi/processor_idle.c
-+++ b/drivers/acpi/processor_idle.c
-@@ -1183,7 +1183,7 @@ static int acpi_processor_get_lpi_info(struct acpi_processor *pr)
- 	return 0;
- }
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_uvd.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_uvd.c
+index c144f4ed4f75c..f34199ac3e0ba 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_uvd.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_uvd.c
+@@ -623,11 +623,9 @@ static int amdgpu_uvd_cs_msg_decode(struct amdgpu_device *adev, uint32_t *msg,
+ 	unsigned int height = msg[7];
+ 	unsigned int dpb_size = msg[9];
+ 	unsigned int pitch = msg[28];
+-	unsigned int level = msg[57];
  
--int __weak acpi_processor_ffh_lpi_enter(struct acpi_lpi_state *lpi)
-+int __weak __cpuidle acpi_processor_ffh_lpi_enter(struct acpi_lpi_state *lpi)
- {
- 	return -ENODEV;
- }
-@@ -1196,7 +1196,7 @@ int __weak acpi_processor_ffh_lpi_enter(struct acpi_lpi_state *lpi)
-  *
-  * Return: 0 for success or negative value for error
-  */
--static int acpi_idle_lpi_enter(struct cpuidle_device *dev,
-+static int __cpuidle acpi_idle_lpi_enter(struct cpuidle_device *dev,
- 			       struct cpuidle_driver *drv, int index)
- {
- 	struct acpi_processor *pr;
+ 	unsigned int width_in_mb = width / 16;
+ 	unsigned int height_in_mb = ALIGN(height / 16, 2);
+-	unsigned int fs_in_mb = width_in_mb * height_in_mb;
+ 
+ 	unsigned int image_size, tmp, min_dpb_size, num_dpb_buffer;
+ 	unsigned int min_ctx_size = ~0;
+@@ -646,35 +644,9 @@ static int amdgpu_uvd_cs_msg_decode(struct amdgpu_device *adev, uint32_t *msg,
+ 
+ 	switch (stream_type) {
+ 	case 0: /* H264 */
+-		switch (level) {
+-		case 30:
+-			num_dpb_buffer = 8100 / fs_in_mb;
+-			break;
+-		case 31:
+-			num_dpb_buffer = 18000 / fs_in_mb;
+-			break;
+-		case 32:
+-			num_dpb_buffer = 20480 / fs_in_mb;
+-			break;
+-		case 41:
+-			num_dpb_buffer = 32768 / fs_in_mb;
+-			break;
+-		case 42:
+-			num_dpb_buffer = 34816 / fs_in_mb;
+-			break;
+-		case 50:
+-			num_dpb_buffer = 110400 / fs_in_mb;
+-			break;
+-		case 51:
+-			num_dpb_buffer = 184320 / fs_in_mb;
+-			break;
+-		default:
+-			num_dpb_buffer = 184320 / fs_in_mb;
+-			break;
+-		}
+-		num_dpb_buffer++;
++		num_dpb_buffer = ((msg[61] >> 16) & 0xff) + 1;
+ 		if (num_dpb_buffer > 17)
+-			num_dpb_buffer = 17;
++			return -EINVAL;
+ 
+ 		/* reference picture buffer */
+ 		min_dpb_size = image_size * num_dpb_buffer;
+@@ -724,35 +696,9 @@ static int amdgpu_uvd_cs_msg_decode(struct amdgpu_device *adev, uint32_t *msg,
+ 		break;
+ 
+ 	case 7: /* H264 Perf */
+-		switch (level) {
+-		case 30:
+-			num_dpb_buffer = 8100 / fs_in_mb;
+-			break;
+-		case 31:
+-			num_dpb_buffer = 18000 / fs_in_mb;
+-			break;
+-		case 32:
+-			num_dpb_buffer = 20480 / fs_in_mb;
+-			break;
+-		case 41:
+-			num_dpb_buffer = 32768 / fs_in_mb;
+-			break;
+-		case 42:
+-			num_dpb_buffer = 34816 / fs_in_mb;
+-			break;
+-		case 50:
+-			num_dpb_buffer = 110400 / fs_in_mb;
+-			break;
+-		case 51:
+-			num_dpb_buffer = 184320 / fs_in_mb;
+-			break;
+-		default:
+-			num_dpb_buffer = 184320 / fs_in_mb;
+-			break;
+-		}
+-		num_dpb_buffer++;
++		num_dpb_buffer = ((msg[61] >> 16) & 0xff) + 1;
+ 		if (num_dpb_buffer > 17)
+-			num_dpb_buffer = 17;
++			return -EINVAL;
+ 
+ 		/* reference picture buffer */
+ 		min_dpb_size = image_size * num_dpb_buffer;
 -- 
 2.53.0
 
