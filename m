@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793207349;
-	b=iO2gzB2J0jn1OLMeJ6S19t7P/AHu6nNYkS8KbVF3H6h1X8fOs3PiiIBx4lT1ebskaHOJ
-	 wCaxfW+lgVEevfDJVijCJIY/ta/nVn3REl/RAZvtZv1EKSPKZZT6wiowT4qt1GzX2FOzK
-	 B7xBTDvcjwV+nSZfeYWGybOltPgX/1QbxtvVdkqhnYf5t+NevVd64ODYJQ0olmy8VWiOw
-	 pCnMU6a67EMrl2E6d3dm0IRl/cG7C+X+JN/dDasL2kIuwxkUaB06h8r3JuTGn6wGuLWLw
-	 gZ7YHPBUGYFSR7VQv/U2SEyue+sFg4Wr0Rh6x6a8W5oQZr9GX2Ja4T3sQt175+zb0mA==
+	t=1793207352;
+	b=D0JQLsD8weFqiqfTiSXT37YuJgcG8TUHVTYhZRtTyUL8qBlYahPIb5RC6K2AINKU9feR
+	 Nznr1d69KED2K0awyhzp6WpimKCNa26MhWOfYrY786iWYgOkCiSwE5+lvcW41+Bm4Sk6J
+	 nnaLVEM3VwOEDHU2Rq5xgYFlq255YRYCNq+1EBXrLo9OuZuoj287mdRskKbCTKquiCrAk
+	 vuZQDR36JruC0K21Fr+/NCHdbwL7U9CyX+Vv0rv0WFgG1+i3yFrlMoqNv6RPyQ4ixXica
+	 PW83lcWCTFs+t1YtwWP4MRjcszTwqQEh2ueX4ojysWmmxKMuZ1SXUhUh/uwBBBwrDrw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793207349;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793207352;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=jxsC0r4D3qpyDpkIH+Mo+/w22zyfKoyourhWSKgwvS0=;
-	b=SJERs+EM/3GSuZ4arCh3SEg0nKdRj8oJq5NeW7V9Z3pIzpOIIiun1d1od3pay+4dQs1a
-	 Cy+Y7PBHW+tCaRIOh//EaxB3xPWAH99tgIinDC1PWpCosC35ENoOGYNtTAN4PjA/Uyvc1
-	 BHb18t49M0d3wdOZJopbG71N1Hi/uyhGnqYVQ2NXS6cjxbeo8qdWhRfgFZ0DzSZ9tPl4l
-	 YiRevgjFdip4VZH+672TW37etsiZaOu6pq/m8DgLxX5d2f8sOAf41dcDJOKRZzw+x+gl0
-	 sc7aYZp3/LP8mjEKICRZs2HbLIMv9402zjpQVr3eZaA+7Gk+tiZm5/DCpKHT4T1HzJQ==
+	bh=b2WBO+B7N3mmqjc0YYxs+dG1vMH05k63/O1+QJf0Hn0=;
+	b=mWjlRX6Lar3+uIbr1CFHunGFClbTs9DTGIsrLJwaoX25GXDC8XIk4TNA3YWG3ByDKOls
+	 7gQB98s+rcb5+IcP15kbyCX0t1TtjAwdBvb65jKDtogzt1XU+AAzaNQbruM8Yoyw2EsNF
+	 CdW3Nu6JoF1sBo1RZGbguvsIYT0JV2H3wZLf3pEyGNSwSME7gaRFGhgvJsZrUQZdAfalP
+	 UkJUSnWUiSPh3MF103beOIChJmfMLvmyImgpVdLVR8vwdBJJbHrT89830euam94sVEV24
+	 0BgWVdJB4k92Imb18/WwBDKylW3LaQrOoKHyJ3BSK1la3m97jrbmk3uV1OZ+xTcT9pA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="SQMS/TcY";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=r5iB8i1O;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 122DC606A320;
-	Wed, 28 Oct 2026 17:09:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC598606A327;
+	Wed, 28 Oct 2026 17:09:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SQMS/TcY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 633701F031E6;
-	Wed, 28 Oct 2026 17:09:08 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=r5iB8i1O
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A1D51F01829;
+	Wed, 28 Oct 2026 17:09:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793207348;
-	bh=jxsC0r4D3qpyDpkIH+Mo+/w22zyfKoyourhWSKgwvS0=;
+	s=korg; t=1793207351;
+	bh=b2WBO+B7N3mmqjc0YYxs+dG1vMH05k63/O1+QJf0Hn0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SQMS/TcYgK1isfULoyqALb1IDoCK1y+x9Td7GG7jK0/zjJZdQxTtRmDggO4vhzeQo
-	 9fCydJfK+q36mYUs70QLKGe+TNzdeyJqlpLLvKX1OLWbDxSfgJ1a3x2LhxZ8brQEgS
-	 DBegJPn9jSmbQyIep5AVtxsw4cMPWUzpkB9os0Bc=
+	b=r5iB8i1OERdd5Cz051IjASgAKtIoaiyWPFVh36rZBx+r8yNeW9EXtl8DxOx2g1PgX
+	 iw4kqAdn2AV2bk2aAunCqt5+T0IgOZnDfiLsghU1HPWMOzC+Th8YnwOuknXp9YBlLf
+	 2+jDVyngYxqJCD3VzRapYAoxdC2oc47h+MqbtZEs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jarkko Sakkinen <jarkko@kernel.org>,
-	Adrian Martinez <adrimg3196@gmail.com>
-Subject: [PATCH 7.2 75/88] KEYS: Fix key_reject_and_link() race with keyring restriction
-Date: Wed, 28 Oct 2026 18:00:23 +0100
-Message-ID: <20261028165943.881612698@linuxfoundation.org>
+	Stefano Garzarella <sgarzare@redhat.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>
+Subject: [PATCH 7.2 76/88] KEYS: trusted: Fix blob allocation size in tpm2_key_decode()
+Date: Wed, 28 Oct 2026 18:00:24 +0100
+Message-ID: <20261028165943.904109774@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165942.107695352@linuxfoundation.org>
 References: <20261028165942.107695352@linuxfoundation.org>
@@ -67,52 +67,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adrian Martinez <adrimg3196@gmail.com>
+From: Stefano Garzarella <sgarzare@redhat.com>
 
-commit 0b157166e612b70f98a332b6c7be7eac6f8e9593 upstream.
+commit 11077cbcc2695f71c944a84a5f08c6672ab759f1 upstream.
 
-The restrict_link check in key_reject_and_link() is done before taking
-the keyring semaphore, racing with a concurrent keyring_restrict()
-that installs the restriction while holding the semaphore in write
-mode.
+tpm2_key_decode() allocates 4 bytes more than needed. The ASN.1
+callbacks tpm2_key_priv() and tpm2_key_pub() provide the lengths
+of TPM2B_PRIVATE and TPM2B_PUBLIC, so ctx.priv_len and ctx.pub_len
+already account for the 2-byte `size` field each of those structures
+starts with.
 
-Move the check to after __key_link_lock(), so it is done under the
-semaphore, matching the pattern used in __key_create_or_update().
+I noticed this while reviewing commit 114f00d738f1 ("KEYS: trusted:
+Fix tpm2_load_cmd() boundary check"), which correctly reports
+ctx.priv_len + ctx.pub_len as the decoded blob size [1].
 
-Cc: stable@vger.kernel.org
-Fixes: 5ac7eace2d00 ("KEYS: Add a facility to restrict new links into a keyring")
+Let's allocate exactly that amount, matching the data copied into
+the blob.
+
+[1] https://lore.kernel.org/linux-integrity/apfoKo-BdwaLXtkT@sgarzare-redhat/
+
+Cc: stable@vger.kernel.org # v5.13+
+Fixes: f2219745250f ("security: keys: trusted: use ASN.1 TPM2 key format for the blobs")
+Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
+Link: https://lore.kernel.org/r/20260923173506.41519-1-sgarzare@redhat.com
 Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Signed-off-by: Adrian Martinez <adrimg3196@gmail.com>
-Link: https://lore.kernel.org/r/CACO1+RT+m==BY+ZPkE+fo536D0qu3wog4xE1dfuXQ56g+=Qv=A@mail.gmail.com
 Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/keys/key.c |   13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ security/keys/trusted-keys/trusted_tpm2.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/security/keys/key.c
-+++ b/security/keys/key.c
-@@ -588,11 +588,18 @@ int key_reject_and_link(struct key *key,
- 	ret = -EBUSY;
+--- a/security/keys/trusted-keys/trusted_tpm2.c
++++ b/security/keys/trusted-keys/trusted_tpm2.c
+@@ -116,7 +116,7 @@ static int tpm2_key_decode(struct truste
+ 	if (ctx.priv_len + ctx.pub_len > MAX_BLOB_SIZE)
+ 		return -EINVAL;
  
- 	if (keyring) {
--		if (keyring->restrict_link)
--			return -EPERM;
--
- 		link_ret = __key_link_lock(keyring, &key->index_key);
- 		if (link_ret == 0) {
-+			/*
-+			 * Check the restriction under the keyring semaphore.
-+			 * keyring_restrict() installs it while holding the
-+			 * semaphore, so testing it beforehand races with a
-+			 * concurrent restriction install.
-+			 */
-+			if (keyring->restrict_link) {
-+				__key_link_end(keyring, &key->index_key, edit);
-+				return -EPERM;
-+			}
- 			link_ret = __key_link_begin(keyring, &key->index_key, &edit);
- 			if (link_ret < 0)
- 				__key_link_end(keyring, &key->index_key, edit);
+-	blob = kmalloc(ctx.priv_len + ctx.pub_len + 4, GFP_KERNEL);
++	blob = kmalloc(ctx.priv_len + ctx.pub_len, GFP_KERNEL);
+ 	if (!blob)
+ 		return -ENOMEM;
+ 
 
 
