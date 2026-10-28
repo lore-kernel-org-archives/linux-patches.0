@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793211166;
-	b=LeevI2Tec2GmBVpLWnlYo11JtH1SHnLjMImWGQ7bqXEVNyZXlq7t/M97X5pwEjIplfj6
-	 mhIPh/HGWaXgSQQtuhkot4dHJNiUxpRK70uXgvTO1kgpj5VJVGWOqamMl5SfbrwtMSsHc
-	 qkJO6n54PkGmo0SEBVHXHAHwHQ8JKR1AtuUaBA3qr9Y44+LVOIyDDjyj8VBqjbBSuNl6j
-	 SAw5f5BEk1a/meI7swkRrCWkIQv1zMX6RHkqAeHU4NnKkHKOsnqI2CubofdRkGVVPT1k6
-	 fmd9ER4+IcQQ0Xa+1cJh1j/+h+97SBIKrmBkKzrtT1I6mJaBpbcnoN5Raze/AS3tELA==
+	t=1793211163;
+	b=DqRLck4AWFPiXU87NkzVfKdFzw5MCaN8U51f5/kPymGg7ur8Sirvb6HNZKtox/JPwIYN
+	 JWd1nrrL5cQIT4fPYdFrQHbD7nTif3xTrW9FJ5Pzkuwa/UQy0/4mLQUz7qtFMa9Ixj3wx
+	 IkrWk/olAX4VNl9NI/uSUTBtpwDy5Kpx14C+aFSRyJEVWWOTKBGJ995oRQo1s3PLgE5Ye
+	 TPs3Z2GbzHk6xn/nBcLscjc+G4TIUtFQ03aKXzdeCF9d9J0VIvu28HTgDwWqguidu52bA
+	 G+KcmmqzS8BbtxF85w2G6GZUjsaSRn2mX6/DrukJy6/k0e8i1KVuEvwYisRAn/JzBEg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793211166;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793211163;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=WwKqdOYaR47UvYQjnxVuLLtBeZlR1KUFqIGAPxbvnhM=;
-	b=0s5gTxc96FkSPAm2iTzDeu+q7SwHw+XmNuEPtCuV86t2e2aDJUUWtlhme7hLwtapLdV9
-	 RWTet158jVq8/FO4ulw2C+f3kbX0AGoZoBs1ir8T9s7cMvKohx3xpGIjztEcbJ33mIWMk
-	 uv+m67y+aZlpAtQ5+M0VnXY928T/TFp509Y7G5urwBd82E2DvJXHeP1MNu/oiur+8QAQv
-	 0+bMKvsWR49r5xCf1BWH11DHJz2KqNxNVBBSGqXWQjHEo0ADZSiTWVgwLnVRLfQ6GxPiy
-	 byzReP3lO+SDZh9d7JnzPuSkzIUzsms/L+/6jnBb5MnQQTNpjvhz29c5EQ0Wzi5eFuQ==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=P+QN5HG1wyKOMNOnKVAfDJvYLfZYVpgceu3SUneyJJM=;
+	b=vR6c7WxkQXTfL5WdMdsnMsKbyY24KQ6NQbi+IItLsDn9hGQv8BH0lxXgRf1qytoUK7w1
+	 c8F8wppwL0Z6OChjYkjQJQ47aYHXiKcmWIP0IKZoiLR7KvjknuYz8d7C+lIOocuHYrhkV
+	 EV0WlBmucCfCt1i4DuTX3DPpcejVV8s2nICQxIp8DuwKrrycorsqeMvNivqp1uIz5ajmj
+	 7pvF+2awJTxqrQs60+xVXZeIt2paOSsMyvcdCEU0vgh7CeurEvMNO0xzpPvim6DtQkXjt
+	 xi1BDgRVYPiALTpy/yxuC3b5XJXel07hFmc2CWZlXxKx46TGRPZ4h7hTvDQDyW9Qv6A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="dedj/RxE";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="ygMt/LOE";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 317C7606BF57;
-	Wed, 28 Oct 2026 18:12:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5131860A6F62;
+	Wed, 28 Oct 2026 18:12:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dedj/RxE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EF871F01825;
-	Wed, 28 Oct 2026 18:12:45 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ygMt/LOE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9420F1F031E5;
+	Wed, 28 Oct 2026 18:12:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793211166;
-	bh=WwKqdOYaR47UvYQjnxVuLLtBeZlR1KUFqIGAPxbvnhM=;
+	s=korg; t=1793211163;
+	bh=P+QN5HG1wyKOMNOnKVAfDJvYLfZYVpgceu3SUneyJJM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dedj/RxEo/S+/38ouAgvEKdOp8uW+j9Uv6r5XL+PHm4EfJiTfmzGP003KZ10odqZU
-	 QViY/G/h/pLM3GTvgXR41scbBz7GiCuzP+I4IpYpJlolyhkbouA7xMUu4iCES40V3j
-	 59uXdgCr+gKbV2eBxlLcXi1WNQ76N+l0VYZOYdHg=
+	b=ygMt/LOEdXKNQgqAobq81Drk6pZInxnYKTeX5Qw2l/pHI9lUg09N5uzoiwSfLWubz
+	 nMKJcHE9pII8gw5a4d4RBpBn69UbaqB3+UKCcf/r33DtLa5TZ5jURIni6No4tT59Pw
+	 9VcxFb+H9ORxiukOjLN40fBpu8xgs4mBHXSyKPAU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fan Wu <fanwu01@zju.edu.cn>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 283/571] usb: gadget: at91_udc: drain polled-VBUS timer/work before udc is freed
-Date: Wed, 28 Oct 2026 17:57:10 +0100
-Message-ID: <20261028170014.716266885@linuxfoundation.org>
+Subject: [PATCH 5.15 282/571] usb: gadget: at91_udc: Convert to platform remove callback returning void
+Date: Wed, 28 Oct 2026 17:57:09 +0100
+Message-ID: <20261028170014.692849939@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -61,103 +61,83 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit c27d13ce4bab80fbdf6523928071b6c24b37606c ]
+[ Upstream commit cbd1b152519a581bfe14fb6b14ea6e57cca426c1 ]
 
-In polled-VBUS mode (board.vbus_pin && board.vbus_polled), probe arms a
-self-restarting cycle: at91_vbus_timer() schedules vbus_timer_work, and
-at91_vbus_timer_work() calls at91_vbus_update() and re-arms the timer via
-mod_timer(). Both recover the same udc through container_of and dereference
-it on every iteration.
+The .remove() callback for a platform driver returns an int which makes
+many driver authors wrongly assume it's possible to do error handling by
+returning an error code. However the value returned is ignored (apart
+from emitting a warning) and this typically results in resource leaks.
 
-Neither teardown path cancels this cycle. udc is devm-allocated, so it is
-freed after at91udc_remove() returns, and is likewise freed when probe
-fails and devres runs. A timer callback or work item that is pending or
-running at either point dereferences the freed udc.
+To improve here there is a quest to make the remove callback return
+void. In the first step of this quest all drivers are converted to
+.remove_new(), which already returns void. Eventually after all drivers
+are converted, .remove_new() will be renamed to .remove().
 
-Add at91_udc_shutdown_vbus_timer() and call it from at91udc_remove() and
-from the usb_add_gadget_udc() failure path in probe; the remaining probe
-error paths fail before the timer is armed. timer_shutdown_sync() waits
-for a running callback and clears timer->function, which makes the work
-handler's mod_timer() a permanent no-op; cancel_work_sync() then drains
-any pending or running work whose re-arm attempt now does nothing. The
-timer must be shut down first, since cancelling the work alone would let
-the timer re-queue it. The guard mirrors probe: in IRQ mode the timer and
-work_struct are never initialized.
+In the error path emit an error message replacing the (less useful)
+message by the core. Apart from the improved error message there is no
+change in behaviour.
 
-This does not require a fault; a normal driver unbind can interleave with
-an already queued work item.
-
-This issue was found by an in-house static analysis tool.
-
-Fixes: 4037242c4f5f ("ARM: 6209/3: at91_udc: Add vbus polarity and polling mode")
-Cc: stable@vger.kernel.org
-Assisted-by: Codex:gpt-5.6
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
-Link: https://patch.msgid.link/20260719042839.3167094-1-fanwu01@zju.edu.cn
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Link: https://lore.kernel.org/r/20231120215830.71071-2-u.kleine-koenig@pengutronix.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: c27d13ce4bab ("usb: gadget: at91_udc: drain polled-VBUS timer/work before udc is freed")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/udc/at91_udc.c |   20 +++++++++++++++++++-
- 1 file changed, 19 insertions(+), 1 deletion(-)
+ drivers/usb/gadget/udc/at91_udc.c |   13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
 --- a/drivers/usb/gadget/udc/at91_udc.c
 +++ b/drivers/usb/gadget/udc/at91_udc.c
-@@ -1803,6 +1803,19 @@ static void at91udc_of_init(struct at91_
- 		udc->caps = match->data;
+@@ -1942,7 +1942,7 @@ err_unprepare_fclk:
+ 	return retval;
  }
  
-+/*
-+ * The work handler re-arms this timer, so shut the timer down before
-+ * draining the work; otherwise it restarts the polling cycle.
-+ */
-+static void at91_udc_shutdown_vbus_timer(struct at91_udc *udc)
-+{
-+	if (!(udc->board.vbus_pin && udc->board.vbus_polled))
-+		return;
-+
-+	timer_shutdown_sync(&udc->vbus_timer);
-+	cancel_work_sync(&udc->vbus_timer_work);
-+}
-+
- static int at91udc_probe(struct platform_device *pdev)
+-static int at91udc_remove(struct platform_device *pdev)
++static void at91udc_remove(struct platform_device *pdev)
  {
- 	struct device	*dev = &pdev->dev;
-@@ -1924,7 +1937,7 @@ static int at91udc_probe(struct platform
- 	}
- 	retval = usb_add_gadget_udc(dev, &udc->gadget);
- 	if (retval)
--		goto err_unprepare_iclk;
-+		goto err_shutdown_vbus;
- 	dev_set_drvdata(dev, udc);
- 	device_init_wakeup(dev, 1);
- 	create_debug_file(udc);
-@@ -1932,6 +1945,8 @@ static int at91udc_probe(struct platform
- 	INFO("%s version %s\n", driver_name, DRIVER_VERSION);
- 	return 0;
- 
-+err_shutdown_vbus:
-+	at91_udc_shutdown_vbus_timer(udc);
- err_unprepare_iclk:
- 	clk_unprepare(udc->iclk);
- err_unprepare_fclk:
-@@ -1950,6 +1965,9 @@ static void at91udc_remove(struct platfo
+ 	struct at91_udc *udc = platform_get_drvdata(pdev);
+ 	unsigned long	flags;
+@@ -1950,8 +1950,11 @@ static int at91udc_remove(struct platfor
  	DBG("remove\n");
  
  	usb_del_gadget_udc(&udc->gadget);
-+
-+	at91_udc_shutdown_vbus_timer(udc);
-+
- 	if (udc->driver) {
- 		dev_err(&pdev->dev,
- 			"Driver still in use but removing anyhow\n");
+-	if (udc->driver)
+-		return -EBUSY;
++	if (udc->driver) {
++		dev_err(&pdev->dev,
++			"Driver still in use but removing anyhow\n");
++		return;
++	}
+ 
+ 	spin_lock_irqsave(&udc->lock, flags);
+ 	pullup(udc, 0);
+@@ -1961,8 +1964,6 @@ static int at91udc_remove(struct platfor
+ 	remove_debug_file(udc);
+ 	clk_unprepare(udc->fclk);
+ 	clk_unprepare(udc->iclk);
+-
+-	return 0;
+ }
+ 
+ #ifdef CONFIG_PM
+@@ -2018,7 +2019,7 @@ static int at91udc_resume(struct platfor
+ #endif
+ 
+ static struct platform_driver at91_udc_driver = {
+-	.remove		= at91udc_remove,
++	.remove_new	= at91udc_remove,
+ 	.shutdown	= at91udc_shutdown,
+ 	.suspend	= at91udc_suspend,
+ 	.resume		= at91udc_resume,
 
 
