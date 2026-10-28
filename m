@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793212985;
-	b=l9hHs2L00i5IxovpwulA7LrfmZ4khbbftdQcHvaNg3Bx8i+/r6zcCzlRpkN+sjTHNize
-	 8lVcAlkSEbGzpUSb5j+JPzZ4+JflkYyax2MLx7/bHIuX9j/yAzV8RUJ6fOFkscC8QMgFV
-	 SXf5T3Lobgsgl2E6PNDV4yH0HnTWEFS7Z21a0J5wqyL9lx33lNAG4o45PisnLgqyv/7Rb
-	 EOYQU0Of+CovIMnmzQK37ifxOXUvhehwcvUOGkRDofImyyLGIK3jFdnNPePFQqSN+bRy6
-	 rDq8r4GwYYMUuL9+2ntbNqFIeRrPAkmVuMOy1lC6sSR1xZ2RoqV9aWGxJF5Ed5GTCww==
+	t=1793212988;
+	b=uTP4c0c3Nn3G7gikCfkOUhxoAJPVDTuZFiEDosTGElD4+FH96vMr0zVGE1Jo+Vzd3l6t
+	 9T57ZfrFHBQLXYI5t3TVlO9j5WuNFzl5W03fSkDrOqQJJ2CPINzpX513hRbUJ2d/kass3
+	 8nspkQ2XD+5FxvwCctO2ERgMhrkVBNTF3auyogHF3pCqQrGNLVCKENik90eFX+9Fg2B5X
+	 k7goRMzWCRN5tw5xIRAPmi1tmxJFTBgR4x1rfqwEVkrQMnaH/Yhp+eVshoIBQHDZ6gkW1
+	 bV4WgCTt2JX1IF3ebzKOB0ZXCK/qP7g7iAgOgA0bT8ANnHbM+Q4VziZvVKL7Vo60YNg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793212985;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793212988;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=fWgdCGitUWdM+okniB57iRxfPN/mSLSdRjKJ5b30H/s=;
-	b=j1hZh1oQYQpoiUK2nfeZs6ZUmpawuGCIzpUwG9RRO/56FlreY9TSTpc5hjOHfFHFc1Jx
-	 OTBGg5Nt603tZswrsa6Wt9li97e4FJqlfEgYeeE6TK7wJiEGmzULnu38xxkcFlhW7YjeO
-	 d22xIuZObYLX9SC8wQ/nrGg4JPP6uelh+U2Zg+ecWF/AvmPM33jAou1zsjKFDgxUS9J9u
-	 HmBlpCl9Gg52Y4kOJtydbWyo2jcVyGRL+mTcadzGrpwdzV/ujxtU8N9H1AzjKtvjPlBd5
-	 k8ZwaPD/D1+LRXMGMREWjh08GwgunPosdF8s3jUjUSNirQXvXWdASIFw0z/2Z9qRGDQ==
+	bh=2p7vzHSdRI9RptD9D4LEnd/5HNpuV9eTK85uOj9O204=;
+	b=cj3ZbwTgljDJwtSxEz3t1q2+1kIy73RoBY/krOrflJgzIHejcUyFYpHyottuuMVuoqfH
+	 XV7bozKtmx5NxcHhw2grnGUE9hj9X4MPvbfQ1EnVYW/OTNhILxUKaJJr0JGYwnr5ojxer
+	 DirXFPfsOpKx1gQeoDb+3Blp3bUQBlCs86lYR+Uo7xUarSxFKwrlEAzwMxZp6MouTY5I3
+	 m+q2pzSKcbMQuvAcYCGPbSq63f1cVlv9jVbBCAu2yunPJLXMUu7y5Xixg1UK+/rzMpW5p
+	 g8Pv8qpMgLn53x3G9sXCLUb/dGbUsx0ZVaq0T7xkyxuEJPz6LBTCrRG9Xwrr9FTpydQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SdzA3UFQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BDWPP1YV;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C0DB606A31C;
-	Wed, 28 Oct 2026 18:43:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9066606A321;
+	Wed, 28 Oct 2026 18:43:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SdzA3UFQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A65C1F01825;
-	Wed, 28 Oct 2026 18:43:04 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BDWPP1YV
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35CE21F01825;
+	Wed, 28 Oct 2026 18:43:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793212984;
-	bh=fWgdCGitUWdM+okniB57iRxfPN/mSLSdRjKJ5b30H/s=;
+	s=korg; t=1793212987;
+	bh=2p7vzHSdRI9RptD9D4LEnd/5HNpuV9eTK85uOj9O204=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SdzA3UFQ7nyMD8mG+hV7JnfJMA18WmClTCOHeOw1tDfQzseZeWdn1HkYpubjlE7iW
-	 EfM33QU52Ev4g8SXXDXeg3kzVRHFlFg9vRJfsUl/ulOuR5qrjxGaR84wwJ3Y9MYJ2d
-	 DQylfORupxCgTACMNe/3jE8TiWoNsIEcA+l1fR7c=
+	b=BDWPP1YVfOZ/nH8NdnmwVVym3jvnYNNxmklTS9GCDSnFpDOc4C+bQ27zW93Sz9Qre
+	 UWlbOt3z75THrrjUqrHw6OxLPU+vtLp/slAiviMNevVG7lRJwzGDac87vGHReYa98U
+	 TKKegLdo+dTcCws92kLOlQvURD1BKbhFKCU+TSnk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengfeng Ye <nicoyip.dev@gmail.com>,
+	Linmao Li <lilinmao@kylinos.cn>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.1 0302/1887] Bluetooth: hci_conn: Lock parent access during enhanced SCO setup
-Date: Wed, 28 Oct 2026 17:39:58 +0100
-Message-ID: <20261028170506.100584404@linuxfoundation.org>
+Subject: [PATCH 6.1 0303/1887] Bluetooth: hci_core: Fix inquiry cache timestamps on 64-bit systems
+Date: Wed, 28 Oct 2026 17:39:59 +0100
+Message-ID: <20261028170506.123461070@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -67,148 +67,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chengfeng Ye <nicoyip.dev@gmail.com>
+From: Linmao Li <lilinmao@kylinos.cn>
 
-commit 024e05f73a4c1263d031614bc36700ec135eecb4 upstream.
+commit 74847177eca5638827ab74cdf77f0b10fc40ca6c upstream.
 
-Bluetooth: hci_conn: Lock parent access during enhanced SCO setup
+On 64-bit systems, outgoing BR/EDR connections always fall back to page
+scan repetition mode R2 with no clock offset once the system has been
+up for more than five minutes, even when inquiry found the peer only
+seconds earlier. This lengthens paging and can increase the risk of a
+Page Timeout.
 
-hci_enhanced_setup_sync() runs on the request workqueue without the
-hci_dev_lock held by its caller when setup was queued. Its CVSD
-capability check and find_next_esco_param() dereference conn->parent
-while the receive workqueue can unlink and release that parent.
+The inquiry cache stores jiffies in __u32 timestamps, but its age
+helpers subtract them from unsigned long jiffies. INITIAL_JIFFIES casts
+-300 * HZ through unsigned int, so jiffies crosses 2^32 five minutes
+after boot on 64-bit systems. Assigning it to __u32 then drops the upper
+32 bits. In one trace, a 7.6-second-old entry (HZ=1000) was reported as
+2^32 + 7620 ticks old and rejected by hci_acl_create_conn_sync().
+hci_inquiry() is affected by the same truncation when checking the whole
+cache. 32-bit systems are unaffected because unsigned long is 32 bits
+wide there.
 
-The following interleaving can cause a use-after-free:
+Use unsigned long for both timestamps so they have the same width as
+jiffies on 32-bit and 64-bit systems, and update the debugfs format
+specifier accordingly.
 
-  hci_enhanced_setup_sync()       hci_disconn_complete_evt()
-  load conn->parent
-                                 hci_dev_lock()
-                                 hci_conn_del(ACL parent)
-                                   unlink SCO child
-                                   drop link's parent reference
-                                   clear child->parent
-                                   release ACL parent
-                                     bt_link_release()
-                                       kfree(parent)
-                                 hci_dev_unlock()
-  read parent->features[0][3]
-
-The reference held for the queued SCO child does not keep its ACL parent
-alive after unlinking. Commit 42de40abe25d ("Bluetooth: hci_conn: fix the
-SCO setup context lifetime") protects the child stored in the queued
-context, but leaves these parent accesses unprotected.
-
-With a 40 ms diagnostic delay after loading conn->parent, an instrumented
-kernel based on fd179f8a05be, which already contains 42de40abe25d,
-reported:
-
-  BUG: KASAN: slab-use-after-free in hci_enhanced_setup_sync+0xda5/0xdf0
-  Read of size 1 at addr ffff888102204047 by task kworker/u17:0/93
-  Call Trace:
-   hci_enhanced_setup_sync+0xda5/0xdf0
-   hci_cmd_sync_work+0x13c/0x290
-   process_one_work+0x6b4/0x10e0
-
-  Allocated by task 92:
-   __hci_conn_add+0x304/0x1df0
-   hci_connect_acl+0x349/0x3e0
-   hci_connect_sco+0x3b/0x9a0
-   sco_sock_connect+0x475/0xca0
-
-  Freed by task 94:
-   kfree+0x121/0x3c0
-   bt_link_release+0x79/0xa0
-   device_release+0xc8/0x240
-   kobject_put+0x14d/0x280
-   hci_conn_del+0x524/0xe30
-   hci_disconn_complete_evt+0x403/0x8c0
-   hci_event_packet+0x71b/0xb20
-   hci_rx_work+0x293/0x730
-
-The accessed address is 71 bytes into the freed ACL parent, at its
-features[0][3] byte; the queued SCO child is a different object. The
-diagnostic preserves the loaded parent across the delay, matching the
-unmodified compiled capability check, and does not change the parent
-references or teardown path.
-
-Hold hci_dev_lock() across the codec switch, including every call to
-find_next_esco_param(), and release it on all selection errors. Keep
-configure_datapath_sync() outside the critical section because it waits
-for HCI events. Preserve parameter selection and existing return values.
-
-Fixes: e07a06b4eb41 ("Bluetooth: Convert SCO configure_datapath to hci_sync")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Assisted-by: GPT-6-Astra
-Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
+Signed-off-by: Linmao Li <lilinmao@kylinos.cn>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/hci_conn.c |   18 +++++++++++++-----
- 1 file changed, 13 insertions(+), 5 deletions(-)
+ include/net/bluetooth/hci_core.h |    4 ++--
+ net/bluetooth/hci_debugfs.c      |    2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
---- a/net/bluetooth/hci_conn.c
-+++ b/net/bluetooth/hci_conn.c
-@@ -412,11 +412,13 @@ static int hci_enhanced_setup_sync(struc
- 	cp.tx_bandwidth   = cpu_to_le32(0x00001f40);
- 	cp.rx_bandwidth   = cpu_to_le32(0x00001f40);
+--- a/include/net/bluetooth/hci_core.h
++++ b/include/net/bluetooth/hci_core.h
+@@ -63,7 +63,7 @@ struct inquiry_entry {
+ 		NAME_PENDING,
+ 		NAME_KNOWN,
+ 	} name_state;
+-	__u32			timestamp;
++	unsigned long		timestamp;
+ 	struct inquiry_data	data;
+ };
  
-+	hci_dev_lock(hdev);
-+
- 	switch (conn->codec.id) {
- 	case BT_CODEC_MSBC:
- 		if (!find_next_esco_param(conn, esco_param_msbc,
- 					  ARRAY_SIZE(esco_param_msbc)))
--			return -EINVAL;
-+			goto unlock;
+@@ -79,7 +79,7 @@ struct discovery_state {
+ 	struct list_head	all;	/* All devices found during inquiry */
+ 	struct list_head	unknown;	/* Name state not known */
+ 	struct list_head	resolve;	/* Name needs to be resolved */
+-	__u32			timestamp;
++	unsigned long		timestamp;
+ 	bdaddr_t		last_adv_addr;
+ 	u8			last_adv_addr_type;
+ 	s8			last_adv_rssi;
+--- a/net/bluetooth/hci_debugfs.c
++++ b/net/bluetooth/hci_debugfs.c
+@@ -367,7 +367,7 @@ static int inquiry_cache_show(struct seq
  
- 		param = &esco_param_msbc[conn->attempt - 1];
- 		cp.tx_coding_format.id = 0x05;
-@@ -442,7 +444,7 @@ static int hci_enhanced_setup_sync(struc
- 	case BT_CODEC_TRANSPARENT:
- 		if (!find_next_esco_param(conn, esco_param_msbc,
- 					  ARRAY_SIZE(esco_param_msbc)))
--			return -EINVAL;
-+			goto unlock;
- 
- 		param = &esco_param_msbc[conn->attempt - 1];
- 		cp.tx_coding_format.id = 0x03;
-@@ -469,11 +471,11 @@ static int hci_enhanced_setup_sync(struc
- 		if (lmp_esco_capable(conn->link)) {
- 			if (!find_next_esco_param(conn, esco_param_cvsd,
- 						  ARRAY_SIZE(esco_param_cvsd)))
--				return -EINVAL;
-+				goto unlock;
- 			param = &esco_param_cvsd[conn->attempt - 1];
- 		} else {
- 			if (conn->attempt > ARRAY_SIZE(sco_param_cvsd))
--				return -EINVAL;
-+				goto unlock;
- 			param = &sco_param_cvsd[conn->attempt - 1];
- 		}
- 		cp.tx_coding_format.id = 2;
-@@ -496,9 +498,11 @@ static int hci_enhanced_setup_sync(struc
- 		cp.out_transport_unit_size = 16;
- 		break;
- 	default:
--		return -EINVAL;
-+		goto unlock;
- 	}
- 
-+	hci_dev_unlock(hdev);
-+
- 	cp.retrans_effort = param->retrans_effort;
- 	cp.pkt_type = __cpu_to_le16(param->pkt_type);
- 	cp.max_latency = __cpu_to_le16(param->max_latency);
-@@ -507,6 +511,10 @@ static int hci_enhanced_setup_sync(struc
- 		return -EIO;
- 
- 	return 0;
-+
-+unlock:
-+	hci_dev_unlock(hdev);
-+	return -EINVAL;
- }
- 
- static bool hci_setup_sync_conn(struct hci_conn *conn, __u16 handle)
+ 	list_for_each_entry(e, &cache->all, all) {
+ 		struct inquiry_data *data = &e->data;
+-		seq_printf(f, "%pMR %d %d %d 0x%.2x%.2x%.2x 0x%.4x %d %d %u\n",
++		seq_printf(f, "%pMR %d %d %d 0x%.2x%.2x%.2x 0x%.4x %d %d %lu\n",
+ 			   &data->bdaddr,
+ 			   data->pscan_rep_mode, data->pscan_period_mode,
+ 			   data->pscan_mode, data->dev_class[2],
 
 
