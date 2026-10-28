@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216785;
-	b=ybsxVjuo3ZNYhUuRI2SNj87jPieJgudSawCaJLoQL7rs/mryJ4zIbIoPkTJABxtVCCJ+
-	 2SAm9OWBCkcmgN094j7+gmDTgw+ZRkMwt/f3/aNPW42wVWFa9mpKThTzeeEXIVBEnb0QK
-	 GkwdQKEhvK+Vzgvx0p8TP5jA6qcXGvf4Y2L9LdsAeY1NwfcG32vZpFs1VufetVHD6HjMp
-	 g/6AKpKLaXSxoUFrQXVBFLKoscnpVLgj82Vm5UTcbg1fE8wbSCoymdVWfRsY1b9JhmrKX
-	 RPOXxgLy7h5iDnUK8+M0njB60f6KhaRW6Ze4ra8/mBlD6HB+dZ1bBO72t64SPcblx4g==
+	t=1793216788;
+	b=0mH6pm/7gr3vc3m9DuBTH6K6IgKSNt+ALaEDvoPgGYD2wrZ0ZEbeAuDlJRMplWUph1ie
+	 KxaqmAvtRlsplSisNqr2iCiI/WziKxPrshnA8EuxumvFA9rdH+0dDwqxyCa/yux6h4Qqm
+	 ELnW4VQqIQzp7YxL76aDoS0aUd/QX26x3xND8Q5rnmbPmC5MKwSfKImzVZdUYYi+M0+Ab
+	 /bhbG/kZgeHRk+dgXqf7eEUqtRAlMhhRdtjg7LaoAAi14l7U8JogIY3zifxZM8nBDc7xc
+	 t9qiZ7gNjQPyu5/Brrjbtk4HE662VhHuupuZAn80t6xBfmdTz8Jjla2qHDiLEGnvqRA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216785;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216788;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=QhW3TqWPvQthN6yDIj54MQsTwG4p20Euk7Cqmm7eH2Q=;
-	b=sU62M9lIclg5rTt8Rq0xaCe9z+9As0zdKRKgxOOcoH2SvsdSCh4kuB8ZRwnTA8xjmu76
-	 DcJXTG6g64dGdaTXgLpcrYVSq+YiKZDwLyqyVEK0rxPT1i0sgx0o7qP8BIyELT4wFZZmg
-	 wXZlzWstlNIP5mzo8LFbSZpuIv8TizJ2Fq+nDLKkVsbjI021An6exEInUNpTyGhho/EgQ
-	 /7M0QSu11/rKgRf5lTPc+GxU2lAJGpfhDfRDrAyHd/qm7r6WKkCB23yHkaOlccZccDQ7s
-	 PlZc8zMEn5Q3FPDEywB1dqLE24x1pVKO4GXKYIy/gQXVgu7PpQkYSBp7oh3kWqYuIVw==
+	bh=WJT+ceGqMuHrOXdjAj2uodi3nJvManGx3xAEIiQu+3w=;
+	b=AgP4tidkQ+j8g9qrH/Zxo52b2YxHdL76bmMoaIl8VoYIQpfPVf67DjtveJYQqNcLnqmp
+	 h5K3ULGpkc06w2l8dR/GDZJvXlSNIVcQinKPhB661SsEm8wwwYWTuX6Xg04BYYsPyKBzq
+	 9CWQxgNhkf/1L/DdXowr4VlRrdFZRR8k4WLDgQHdS3fTr+/BH+n4iic3edE7yco+wHmX6
+	 LW0MOFl4oU8FhUbTtBwOvwjOdYNFuaW1BbJFlNu93r48js0E/RkEOS0d/e3xJPlapBIAk
+	 SiIEbcsNL+Xo7QUu2ccxT1IfuSdBKeRsTlYQaRUtXatPeYxftQzd8oL6kiyNNC7UjhA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ObVC377Z;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Jsj2NL/4";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CCA0606A31A;
-	Wed, 28 Oct 2026 19:46:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56BC8606A31A;
+	Wed, 28 Oct 2026 19:46:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ObVC377Z
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C95241F01825;
-	Wed, 28 Oct 2026 19:46:24 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Jsj2NL/4
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A81BB1F01825;
+	Wed, 28 Oct 2026 19:46:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216785;
-	bh=QhW3TqWPvQthN6yDIj54MQsTwG4p20Euk7Cqmm7eH2Q=;
+	s=korg; t=1793216788;
+	bh=WJT+ceGqMuHrOXdjAj2uodi3nJvManGx3xAEIiQu+3w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ObVC377ZtlliashP0/rGCl00T95SXYLEDVkbVcwRHSLstBt/tMox3MyMl3ViiMHU7
-	 pMSmHjqoicpoLvlY3B/M06fXkpYJxb+b0ElS10JGp1pxosXgdCc+vUK8SWHWVYMqMA
-	 QAjL49920tweaKEqqgx+fqdGkFw8PPEaGBMYc650=
+	b=Jsj2NL/4qLFg/dg7L4aMT0i+oFhlnCGDe9UZuubu91oRKdFHjdXhgn4/nFdbMP4xp
+	 YSUfZD4D4+ISspreiIpeA2Curvp0n4Qb3ZGUlfy/tsAbNx4KnpsR7GOt4wGCp/ebG5
+	 tTFpvW42rXACLjjXMlZu4jsPFOtAx+OqZqf+JM+o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stepan Ionichev <sozdayvek@gmail.com>,
+	Candice Li <candice.li@amd.com>,
+	Tao Zhou <tao.zhou1@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1677/1887] tty: serial: 8250: protect against NULL uart->port.dev in register
-Date: Wed, 28 Oct 2026 18:02:53 +0100
-Message-ID: <20261028170537.621710701@linuxfoundation.org>
+Subject: [PATCH 6.1 1678/1887] drm/amdgpu: Bound GPIO I2C table entry count from VBIOS
+Date: Wed, 28 Oct 2026 18:02:54 +0100
+Message-ID: <20261028170537.644440406@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -67,62 +69,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stepan Ionichev <sozdayvek@gmail.com>
+From: Candice Li <candice.li@amd.com>
 
-[ Upstream commit 941c9f84c9b6310f7aaa1c8c785dcc634ee33050 ]
+[ Upstream commit a99cd231cd924b7160fecb9fb3a94b801522323b ]
 
-serial8250_register_8250_port() conditionally copies uart->port.dev
-from up->port.dev only when up->port.dev is non-NULL:
+Reject undersized tables and cap the derived entry count
+to AMDGPU_MAX_I2C_BUS so we do not overrun adev->i2c_bus[]
+or walk an absurd number of entries on corrupt size fields.
 
-	if (up->port.dev) {
-		uart->port.dev = up->port.dev;
-		...
-	}
-
-So if both the existing uart slot and up have a NULL ->dev,
-uart->port.dev remains NULL. The very next ACPI companion check
-then dereferences it unconditionally:
-
-	if (!has_acpi_companion(uart->port.dev)) {
-
-has_acpi_companion() reads dev->fwnode without a NULL guard
-(include/linux/acpi.h), so this NULL-derefs the kernel for the
-remaining no-dev case rather than just skipping the
-mctrl_gpio_init() initialisation as intended.
-
-smatch flags the inconsistency:
-
-  drivers/tty/serial/8250/8250_core.c:767
-  serial8250_register_8250_port() error: 'uart->port.dev' could be
-  null (see line 719)
-
-Guard the call with a NULL check so register continues to work
-for callers that legitimately have no parent device (legacy
-non-OF/non-ACPI registrations).
-
-No functional change for callers that pass a non-NULL ->dev.
-
-Signed-off-by: Stepan Ionichev <sozdayvek@gmail.com>
-Link: https://patch.msgid.link/20260508181237.11146-1-sozdayvek@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Candice Li <candice.li@amd.com>
+Reviewed-by: Tao Zhou <tao.zhou1@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/8250/8250_core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_atombios.c | 21 ++++++++++++++++----
+ 1 file changed, 17 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/tty/serial/8250/8250_core.c b/drivers/tty/serial/8250/8250_core.c
-index 81a5dab1a8286..6ba421d97d30f 100644
---- a/drivers/tty/serial/8250/8250_core.c
-+++ b/drivers/tty/serial/8250/8250_core.c
-@@ -1038,7 +1038,7 @@ int serial8250_register_8250_port(const struct uart_8250_port *up)
- 		 * Only call mctrl_gpio_init(), if the device has no ACPI
- 		 * companion device
- 		 */
--		if (!has_acpi_companion(uart->port.dev)) {
-+		if (uart->port.dev && !has_acpi_companion(uart->port.dev)) {
- 			gpios = mctrl_gpio_init(&uart->port, 0);
- 			if (IS_ERR(gpios)) {
- 				ret = PTR_ERR(gpios);
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_atombios.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_atombios.c
+index 6511ece584760..679473a48d996 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_atombios.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_atombios.c
+@@ -43,6 +43,21 @@ static void amdgpu_atombios_lookup_i2c_gpio_quirks(struct amdgpu_device *adev,
+ 
+ }
+ 
++/* VBIOS-reported table size is unchecked against the image; cap iterations and
++ * adev->i2c_bus[] indexing to AMDGPU_MAX_I2C_BUS.
++ */
++static int amdgpu_atombios_gpio_i2c_num_entries(uint16_t size)
++{
++	u32 bytes;
++
++	if (size < sizeof(ATOM_COMMON_TABLE_HEADER))
++		return 0;
++
++	bytes = size - sizeof(ATOM_COMMON_TABLE_HEADER);
++	return (int)min_t(u32, bytes / sizeof(ATOM_GPIO_I2C_ASSIGMENT),
++			  AMDGPU_MAX_I2C_BUS);
++}
++
+ static struct amdgpu_i2c_bus_rec amdgpu_atombios_get_bus_rec_for_i2c_gpio(ATOM_GPIO_I2C_ASSIGMENT *gpio)
+ {
+ 	struct amdgpu_i2c_bus_rec i2c;
+@@ -103,8 +118,7 @@ struct amdgpu_i2c_bus_rec amdgpu_atombios_lookup_i2c_gpio(struct amdgpu_device *
+ 	if (amdgpu_atom_parse_data_header(ctx, index, &size, NULL, NULL, &data_offset)) {
+ 		i2c_info = (struct _ATOM_GPIO_I2C_INFO *)(ctx->bios + data_offset);
+ 
+-		num_indices = (size - sizeof(ATOM_COMMON_TABLE_HEADER)) /
+-			sizeof(ATOM_GPIO_I2C_ASSIGMENT);
++		num_indices = amdgpu_atombios_gpio_i2c_num_entries(size);
+ 
+ 		gpio = &i2c_info->asGPIO_Info[0];
+ 		for (i = 0; i < num_indices; i++) {
+@@ -137,8 +151,7 @@ void amdgpu_atombios_i2c_init(struct amdgpu_device *adev)
+ 	if (amdgpu_atom_parse_data_header(ctx, index, &size, NULL, NULL, &data_offset)) {
+ 		i2c_info = (struct _ATOM_GPIO_I2C_INFO *)(ctx->bios + data_offset);
+ 
+-		num_indices = (size - sizeof(ATOM_COMMON_TABLE_HEADER)) /
+-			sizeof(ATOM_GPIO_I2C_ASSIGMENT);
++		num_indices = amdgpu_atombios_gpio_i2c_num_entries(size);
+ 
+ 		gpio = &i2c_info->asGPIO_Info[0];
+ 		for (i = 0; i < num_indices; i++) {
 -- 
 2.53.0
 
