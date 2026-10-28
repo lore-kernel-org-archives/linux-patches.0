@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793209236;
-	b=06+l1zW+1vIXPaCnZHQJwTC9IgCTAqeu49W8g4Hit3UxOIUuuY9zSE0SdGB4VL0ZYU0e
-	 rUNki92h8rzbwFy22qAU+gOP9vHTue+Ix85i+Xc8FCI2wzrGao9+ZKQy77b9/tlsFMdIS
-	 pTcDV97KMSDvNCMN5ZUImihWlOmXvKmCMh1ZJp6huk8DAcbik8HPceahgZoYJuf1cZ3fT
-	 IweHtjM4PqABkLEeOPR9F0fJ3WGHaNiALPzIHM0Oz1hTvpWYRs2hCTpxoGLONcdBbcn+z
-	 aY7Di3DAo9EmXdTsQuWw8hYu81JQiCw/4QxntyzH8Y1kNyUH/xEChxn09cRoWlrs2rA==
+	t=1793209239;
+	b=34VUMf1cqIDI+sL3bj776st+FF06iIVh9CDX0bwSp9HOTsIaFWrerpQoCh2P0pf6wKAV
+	 p6UzX+HVItvOCAChb5OcqYsJTENHn7Za/Cf18PTAw079yjjyEcRcXEccWAvAsbvmJccHO
+	 xP1LEt8xYMI6MAY24ouCfDKat0TVs251Z9BwM4EjJSB8vnJYUocgZCMi8C418LIu8TPz3
+	 xIj0Bi9jNvOa3iQzoEYR4jcbcST9wxo7CZZ6m7nfF15mDefHKFodn+6kxs2w5n/Peq+5r
+	 wZyzXY/QcLLG25Omu143h6NFow4EAwfiEuymypoZXbNphw1hpAodlTml1UFxMGQLDvQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793209236;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793209239;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=3/Xydn463h5hd6TkD29zfS5T/BT7RgZgR8LPzrN5MM8=;
-	b=OVoj3+FSNHr6qEfUxAY7WXt6L42qNRKd0J+PYhjH6/m1iL2HZYzP/Nicqt5BPBPwotds
-	 7N0Ve7/EECtbqKvfLjf0j6c9YRsAHncjGfQX4nQncNH5xVDg33x2noceoQxlNutbL1ciT
-	 m5kC7IVtoKesymbcbFkm+u/r1eWPlX+qfy7Toa80G3cJsGXL5X+0rimkHmvmlkjt5gzRI
-	 EftU420AvfUULE4ihyd9Nz6s9LWMKGDs7K65w0lj0r0Mh2G8imjVxeZbh/xCbogHibKal
-	 0FojFKDfujQWXZAbi0rWDHZmv0kuhdKGiHFbrrkxIwpBcD2P8MLS8f1As559YrJ5/rw==
+	bh=rsA9y3rscfP2VVewzLyygswpBSCmPkoxPFa7/Uwj0tE=;
+	b=UAjS9j19OScUseXRPHSsydMQulKG092tqzxZetIle9OgRWq609SmDZYrbbVxnz8ASv4X
+	 7K25IahH0vrmwiEaVuZyWFOoU5YD+N0UmdzqD80D+NrVpXMuU6CjzYQ4rCGDMP+zawkoO
+	 KJhxVki49PKF18x97Aft5vLWEadTqve3T931i8LLa6fce97fgdXxMRs9IlIALYs2LlS1o
+	 PVaTZTLL3LH5caE0lqt81CmYY+CqbJWOcOVHvlmShXj7bzagoH9eCCt04ZIyo277rQCDc
+	 pxHdNa8Fe53UF2EmiH1YaduGCAQlV30zY+GgfKCuK0AQ8jfBG3f8KfGQkCjI9X5UXUA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XIQ8iHSF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pC4Tzx5k;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37519606A31A;
-	Wed, 28 Oct 2026 17:40:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AEEF606A31A;
+	Wed, 28 Oct 2026 17:40:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XIQ8iHSF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 520B21F01825;
-	Wed, 28 Oct 2026 17:40:35 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pC4Tzx5k
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2862A1F01825;
+	Wed, 28 Oct 2026 17:40:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793209235;
-	bh=3/Xydn463h5hd6TkD29zfS5T/BT7RgZgR8LPzrN5MM8=;
+	s=korg; t=1793209238;
+	bh=rsA9y3rscfP2VVewzLyygswpBSCmPkoxPFa7/Uwj0tE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XIQ8iHSFPbEXWFe9ZxwiLG7ewxzVG75O/Q60b4XLfjPntqePEv7aQ01ctQt4KrHEG
-	 ul0gtJPbuWefE//1zIL3vM8qfVPdlKMLA3RSdZiBEugUp507FCikb7jg4lLboGBf3Z
-	 6s6b6dktao7ULE8Z5Ulzf4pCE69sPzqdBOpfhWeM=
+	b=pC4Tzx5kgvxhyYDk7bEfFnDzA5N8e5aHAAGAtdleqeEp9Dr44DuELmzpz1jiRMrPJ
+	 2haZjfBs9P6r9LqPdQfdX2CtgVaLcUPilUcEUb83qnocprsI1akJRFeJWJYgTwWC3z
+	 nxTtPkFJG6EHalIiQcsuC16mutFxnqnHzleVfKjA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>,
+	Hangbin Liu <liuhangbin@gmail.com>,
+	Florian Westphal <fw@strlen.de>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 400/516] devm-helpers: Fix devm_delayed_work_autocancel() kerneldoc
-Date: Wed, 28 Oct 2026 17:59:12 +0100
-Message-ID: <20261028170012.956372337@linuxfoundation.org>
+Subject: [PATCH 5.10 401/516] netfilter: nf_tables: fix crash when nf_trace is enabled
+Date: Wed, 28 Oct 2026 17:59:13 +0100
+Message-ID: <20261028170012.979876664@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -68,52 +69,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit a943d76352dbb4707a5e5537bbe696c00f5ddd36 ]
+[ Upstream commit 399a14ec7993d605740de7b2cd5c0ce8407d12ed ]
 
-The kerneldoc for devm_delayed_work_autocancel() contains invalid
-parameter description.
+do not access info->pkt when info->trace is not 1.
+nft_traceinfo is not initialized, except when tracing is enabled.
 
-Fix the parameter description. And while at it - make it more obvous that
-this function operates on delayed_work. That helps differentiating with
-resource-managed INIT_WORK description (which should follow in near future)
+The 'nft_trace_enabled' static key cannot be used for this, we must
+always check info->trace first.
 
-Fixes: 0341ce544394 ("workqueue: Add resource managed version of delayed work init")
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>
-Link: https://lore.kernel.org/r/db3a8b4b8899fdf109a0cc760807de12d3b4f09b.1619028482.git.matti.vaittinen@fi.rohmeurope.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Pass nft_pktinfo directly to avoid this.
+
+Fixes: e34b9ed96ce3 ("netfilter: nf_tables: avoid skb access on nf_stolen")
+Reported-by: Hangbin Liu <liuhangbin@gmail.com>
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/devm-helpers.h | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ net/netfilter/nf_tables_core.c | 21 ++++++++++-----------
+ 1 file changed, 10 insertions(+), 11 deletions(-)
 
-diff --git a/include/linux/devm-helpers.h b/include/linux/devm-helpers.h
-index 50557f04ce802..74891802200d6 100644
---- a/include/linux/devm-helpers.h
-+++ b/include/linux/devm-helpers.h
-@@ -32,13 +32,14 @@ static inline void devm_delayed_work_drop(void *res)
+diff --git a/net/netfilter/nf_tables_core.c b/net/netfilter/nf_tables_core.c
+index cc6504628a759..4637163b17bc8 100644
+--- a/net/netfilter/nf_tables_core.c
++++ b/net/netfilter/nf_tables_core.c
+@@ -34,25 +34,23 @@ static noinline void __nft_trace_packet(struct nft_traceinfo *info,
+ 	nft_trace_notify(info);
  }
  
- /**
-- * devm_delayed_work_autocancel - Resource-managed work allocation
-- * @dev: Device which lifetime work is bound to
-- * @pdata: work to be cancelled when driver is detached
-+ * devm_delayed_work_autocancel - Resource-managed delayed work allocation
-+ * @dev:	Device which lifetime work is bound to
-+ * @w:		Work item to be queued
-+ * @worker:	Worker function
-  *
-- * Initialize work which is automatically cancelled when driver is detached.
-- * A few drivers need delayed work which must be cancelled before driver
-- * is detached to avoid accessing removed resources.
-+ * Initialize delayed work which is automatically cancelled when driver is
-+ * detached. A few drivers need delayed work which must be cancelled before
-+ * driver is detached to avoid accessing removed resources.
-  * devm_delayed_work_autocancel() can be used to omit the explicit
-  * cancelleation when driver is detached.
-  */
+-static inline void nft_trace_packet(struct nft_traceinfo *info,
++static inline void nft_trace_packet(const struct nft_pktinfo *pkt,
++				    struct nft_traceinfo *info,
+ 				    const struct nft_chain *chain,
+ 				    const struct nft_rule *rule,
+ 				    enum nft_trace_types type)
+ {
+ 	if (static_branch_unlikely(&nft_trace_enabled)) {
+-		const struct nft_pktinfo *pkt = info->pkt;
+-
+ 		info->nf_trace = pkt->skb->nf_trace;
+ 		info->rule = rule;
+ 		__nft_trace_packet(info, chain, type);
+ 	}
+ }
+ 
+-static inline void nft_trace_copy_nftrace(struct nft_traceinfo *info)
++static inline void nft_trace_copy_nftrace(const struct nft_pktinfo *pkt,
++					  struct nft_traceinfo *info)
+ {
+ 	if (static_branch_unlikely(&nft_trace_enabled)) {
+-		const struct nft_pktinfo *pkt = info->pkt;
+-
+ 		if (info->trace)
+ 			info->nf_trace = pkt->skb->nf_trace;
+ 	}
+@@ -96,7 +94,6 @@ static noinline void __nft_trace_verdict(struct nft_traceinfo *info,
+ 					 const struct nft_chain *chain,
+ 					 const struct nft_regs *regs)
+ {
+-	const struct nft_pktinfo *pkt = info->pkt;
+ 	enum nft_trace_types type;
+ 
+ 	switch (regs->verdict.code) {
+@@ -110,7 +107,9 @@ static noinline void __nft_trace_verdict(struct nft_traceinfo *info,
+ 		break;
+ 	default:
+ 		type = NFT_TRACETYPE_RULE;
+-		info->nf_trace = pkt->skb->nf_trace;
++
++		if (info->trace)
++			info->nf_trace = info->pkt->skb->nf_trace;
+ 		break;
+ 	}
+ 
+@@ -261,10 +260,10 @@ nft_do_chain(struct nft_pktinfo *pkt, void *priv)
+ 		switch (regs.verdict.code) {
+ 		case NFT_BREAK:
+ 			regs.verdict.code = NFT_CONTINUE;
+-			nft_trace_copy_nftrace(&info);
++			nft_trace_copy_nftrace(pkt, &info);
+ 			continue;
+ 		case NFT_CONTINUE:
+-			nft_trace_packet(&info, chain, rule,
++			nft_trace_packet(pkt, &info, chain, rule,
+ 					 NFT_TRACETYPE_RULE);
+ 			continue;
+ 		}
+@@ -306,7 +305,7 @@ nft_do_chain(struct nft_pktinfo *pkt, void *priv)
+ 		goto next_rule;
+ 	}
+ 
+-	nft_trace_packet(&info, basechain, NULL, NFT_TRACETYPE_POLICY);
++	nft_trace_packet(pkt, &info, basechain, NULL, NFT_TRACETYPE_POLICY);
+ 
+ 	if (static_branch_unlikely(&nft_counters_enabled))
+ 		nft_update_chain_stats(basechain, pkt);
 -- 
 2.53.0
 
