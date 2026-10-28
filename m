@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213685;
-	b=kZ+xC2GGPgAmAQdlQwNY0iRR9XNkSiTUlHdrlLP/pYiswmJBvYcg/QS2b80iSlil5YOT
-	 tW7vBxGfHFXhtYpGYFmMSuvYbVjSITzRMBEexQuYEMzfEkiJ/1Ls5xqfHY+/LVNAnhmh/
-	 sS4g2KwTaRNPm13FghRPLozlgCv2WY1kBowdTtsHN3qIG1nwgzzhWs53l49zABHHhF2Zt
-	 0qP5ih8sNEBWL/Twi5JvhY+c5W3xIVNyuoeWU8HnPoS3Ae6cB7bkl21Cc+i8VSKs7eaDJ
-	 iyTPP5ultrOn7L34TsG8OaIGc4vvHkLbvq9X9rN4xo1Pg4V/FQXy8edIYwMj6fhTCZg==
+	t=1793213688;
+	b=mzij8xg6vRosV9U8iVSs/8gPMtVuHpnIwaFISvsLwxrHB0bIBpTTsjDWiMf6Zs8HP8ot
+	 T2IUNj2Fz6kmtFsRv1x2TdX6QXNTWg6VE5WSYhmvGmBoN9cFzZzrV2s+k3G+1ie3tJMug
+	 tVnigfFgHpPaze/ON9FQWj6KG/ZvQU18teBy3HR5hhaZpOxbG0LaWD7soERXtXJrS5X00
+	 BqXQyi/V8Rlxl2lYaku0De+MvWzCbSGg0Y6+i2slGIITItvfF0rwHN673X5qeo3jB6/XA
+	 QEToD0CUDXg/1y9YU8ad13WSsejilHEZ7kc+Bsc4el1qm8F7/pdTtxEceT6KtBXPTgw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213685;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213688;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=iHRyYCnmSUk/e8U2d7J2zlTq52//2t9mlgb0q+bvd4o=;
-	b=aKfe9uwqOehDL4xt9Onph8EBeT+Sb4C2JJBDO0Jo759hsz0rKsUfTLSJFvNlVU7bwthb
-	 0TR7MJgnzJ9Vu2X8Ffd8pGILpEpA/fh3EXw05gVI+rX1tYupp6JdFbZbW06VFh8NxmsN7
-	 XtV1EST0VnpqvKUbNdeKyo+Pw/lWGInagkULS1swQ9Eh64YVtkMeQ+FR3jBfLI4qcp+EO
-	 zrMkMs9XhWa+noA1iOBsidefNareMji3wYW72gDDcD//GaHldIY1uwb865H4/DMT/bAzx
-	 gXdF9yofg2xcqR8fa0IJCjrP4FpFb/Wmk44UgbdfNYwZykS/Gngrjz6IeRo3O/63Tww==
+	bh=rXkmPQzoz1uU1sFqNiPqWAqAF3LVCqaUq0nQ0s5oh5w=;
+	b=zd4OtmBJKjYcyTF0RB7Gv0jF/uJUFArHaBe8cUzmD+uqK84buwWwl+ISOA0cB/O/fL43
+	 LVvY4ZXJCc/e23QeE51YQzI0DR3wiGQq6jANJ1lMorQ0cH0OCT4M09sPWv7qHzFFN/MhE
+	 2z8bAcELbT4+mtCfk2q4O0KIm86kdYrc/8duTS3hsZmzpY4f2yJr5vm8Qpj0B6CCKsNrj
+	 n9O2OjAxlOBIGuKghegvZnsc24I+ke9YSkXnoKbLI/ZKbiHHLiS1siYegzhTXPdmZUSQ6
+	 aXgfJl6MZ1Ss397uuwSolH/GlAcT8UJ/itzQ+B7UsXbnPX+/zwv9J3ewwwxMTpUovwA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NjcAVkMf;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cB+QXt0i;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 675AE606A33D;
-	Wed, 28 Oct 2026 18:54:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F12FD606A321;
+	Wed, 28 Oct 2026 18:54:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NjcAVkMf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 770621F01825;
-	Wed, 28 Oct 2026 18:54:44 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cB+QXt0i
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CE931F01825;
+	Wed, 28 Oct 2026 18:54:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213685;
-	bh=iHRyYCnmSUk/e8U2d7J2zlTq52//2t9mlgb0q+bvd4o=;
+	s=korg; t=1793213687;
+	bh=rXkmPQzoz1uU1sFqNiPqWAqAF3LVCqaUq0nQ0s5oh5w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NjcAVkMfLm0zTeaM2lDu42q736gkZzZIg3QzW4KJXqTvwhX0/oKAncnKNUxCrAvYl
-	 LdovfqFyaUl5aZKNwc3jLHu37RR4Wva197tvhcGrU5/vDVi7V2R7bAqQmeUYGjZNQZ
-	 33nHTHZt+1Rb73j5eQd6vQ/JxSLhAj9/osjQERmM=
+	b=cB+QXt0iCB0oC1buI77iCfG7hwmh/LKOxlubdzrK69Ho+gP8GUrFnq+zIJmQwelE0
+	 8lhglbeLTOQuAOhih2RYkZnO8vCGMl0ldO4prInSp+qZ8sTJvlGk4ET6cKX/lPnSwU
+	 aVSKmnjsGIu4VeOhIsMSPDcNkvxRqT0Kqchk3dyo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anup Patel <anup@brainfault.org>,
-	Andrew Jones <ajones@ventanamicro.com>,
-	Atish Patra <atishp@rivosinc.com>,
+	Petr Machata <petrm@nvidia.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0594/1887] perf: RISC-V: Define helper functions expose hpm counter width and count
-Date: Wed, 28 Oct 2026 17:44:50 +0100
-Message-ID: <20261028170512.935769327@linuxfoundation.org>
+Subject: [PATCH 6.1 0577/1887] net: nexthop: Have all NH notifiers carry NH ID
+Date: Wed, 28 Oct 2026 17:44:33 +0100
+Message-ID: <20261028170512.543657669@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,112 +69,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Atish Patra <atishp@rivosinc.com>
+From: Petr Machata <petrm@nvidia.com>
 
-[ Upstream commit 585e351ff359c032ea7ab48d999b252ba09f8051 ]
+[ Upstream commit e99eb57e9b14d830a571c5255248d4d7eb08b27e ]
 
-KVM module needs to know how many hardware counters and the counter
-width that the platform supports. Otherwise, it will not be able to show
-optimal value of virtual counters to the guest. The virtual hardware
-counters also need to have the same width as the logical hardware
-counters for simplicity. However, there shouldn't be mapping between
-virtual hardware counters and logical hardware counters. As we don't
-support hetergeneous harts or counters with different width as of now,
-the implementation relies on the counter width of the first available
-programmable counter.
+When sending the notifications to collect NH statistics for resilient
+groups, the driver will need to know the nexthop IDs in individual buckets
+to look up the right counter. To that end, move the nexthop ID from struct
+nh_notifier_grp_entry_info to nh_notifier_single_info.
 
-Reviewed-by: Anup Patel <anup@brainfault.org>
-Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
-Signed-off-by: Atish Patra <atishp@rivosinc.com>
-Signed-off-by: Anup Patel <anup@brainfault.org>
-Stable-dep-of: 34b567868777 ("perf: RISCV: Fix panic on pmu overflow handler")
+Signed-off-by: Petr Machata <petrm@nvidia.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://lore.kernel.org/r/8f964cd50b1a56d3606ce7ab4c50354ae019c43b.1709901020.git.petrm@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: b72a6a7ab957 ("net: nexthop: Increase weight to u16")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/perf/riscv_pmu_sbi.c   | 37 ++++++++++++++++++++++++++++++++--
- include/linux/perf/riscv_pmu.h |  3 +++
- 2 files changed, 38 insertions(+), 2 deletions(-)
+ include/net/nexthop.h | 2 +-
+ net/ipv4/nexthop.c    | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/perf/riscv_pmu_sbi.c b/drivers/perf/riscv_pmu_sbi.c
-index 5aab43a3ffb92..622fe7c982509 100644
---- a/drivers/perf/riscv_pmu_sbi.c
-+++ b/drivers/perf/riscv_pmu_sbi.c
-@@ -43,12 +43,15 @@ static const struct attribute_group *riscv_pmu_attr_groups[] = {
+diff --git a/include/net/nexthop.h b/include/net/nexthop.h
+index 2b12725de9c09..f7d4239347351 100644
+--- a/include/net/nexthop.h
++++ b/include/net/nexthop.h
+@@ -173,6 +173,7 @@ struct nh_notifier_single_info {
+ 		__be32 ipv4;
+ 		struct in6_addr ipv6;
+ 	};
++	u32 id;
+ 	u8 is_reject:1,
+ 	   is_fdb:1,
+ 	   has_encap:1;
+@@ -180,7 +181,6 @@ struct nh_notifier_single_info {
+ 
+ struct nh_notifier_grp_entry_info {
+ 	u8 weight;
+-	u32 id;
+ 	struct nh_notifier_single_info nh;
  };
  
- /*
-- * RISC-V doesn't have hetergenous harts yet. This need to be part of
-+ * RISC-V doesn't have heterogeneous harts yet. This need to be part of
-  * per_cpu in case of harts with different pmu counters
-  */
- static union sbi_pmu_ctr_info *pmu_ctr_list;
- static unsigned int riscv_pmu_irq;
+diff --git a/net/ipv4/nexthop.c b/net/ipv4/nexthop.c
+index 5dc50bbdd2d07..0bf7b83bec1b9 100644
+--- a/net/ipv4/nexthop.c
++++ b/net/ipv4/nexthop.c
+@@ -92,6 +92,7 @@ __nh_notifier_single_info_init(struct nh_notifier_single_info *nh_info,
+ 	else if (nh_info->gw_family == AF_INET6)
+ 		nh_info->ipv6 = nhi->fib_nhc.nhc_gw.ipv6;
  
-+/* Cache the available counters in a bitmask */
-+static unsigned long cmask;
-+
- struct sbi_pmu_event_data {
- 	union {
- 		union {
-@@ -264,6 +267,37 @@ static bool pmu_sbi_ctr_is_fw(int cidx)
- 	return (info->type == SBI_PMU_CTR_TYPE_FW) ? true : false;
- }
++	nh_info->id = nhi->nh_parent->id;
+ 	nh_info->is_reject = nhi->reject_nh;
+ 	nh_info->is_fdb = nhi->fdb_nh;
+ 	nh_info->has_encap = !!nhi->fib_nhc.nhc_lwtstate;
+@@ -137,7 +138,6 @@ static int nh_notifier_mpath_info_init(struct nh_notifier_info *info,
+ 		struct nh_info *nhi;
  
-+/*
-+ * Returns the counter width of a programmable counter and number of hardware
-+ * counters. As we don't support heterogeneous CPUs yet, it is okay to just
-+ * return the counter width of the first programmable counter.
-+ */
-+int riscv_pmu_get_hpm_info(u32 *hw_ctr_width, u32 *num_hw_ctr)
-+{
-+	int i;
-+	union sbi_pmu_ctr_info *info;
-+	u32 hpm_width = 0, hpm_count = 0;
-+
-+	if (!cmask)
-+		return -EINVAL;
-+
-+	for_each_set_bit(i, &cmask, RISCV_MAX_COUNTERS) {
-+		info = &pmu_ctr_list[i];
-+		if (!info)
-+			continue;
-+		if (!hpm_width && info->csr != CSR_CYCLE && info->csr != CSR_INSTRET)
-+			hpm_width = info->width;
-+		if (info->type == SBI_PMU_CTR_TYPE_HW)
-+			hpm_count++;
-+	}
-+
-+	*hw_ctr_width = hpm_width;
-+	*num_hw_ctr = hpm_count;
-+
-+	return 0;
-+}
-+EXPORT_SYMBOL_GPL(riscv_pmu_get_hpm_info);
-+
- static int pmu_sbi_ctr_get_idx(struct perf_event *event)
- {
- 	struct hw_perf_event *hwc = &event->hw;
-@@ -798,7 +832,6 @@ static void riscv_pmu_destroy(struct riscv_pmu *pmu)
- static int pmu_sbi_device_probe(struct platform_device *pdev)
- {
- 	struct riscv_pmu *pmu = NULL;
--	unsigned long cmask = 0;
- 	int ret = -ENODEV;
- 	int num_counters;
- 
-diff --git a/include/linux/perf/riscv_pmu.h b/include/linux/perf/riscv_pmu.h
-index e17e86ad6f3a2..a1c3f77714810 100644
---- a/include/linux/perf/riscv_pmu.h
-+++ b/include/linux/perf/riscv_pmu.h
-@@ -73,6 +73,9 @@ void riscv_pmu_legacy_skip_init(void);
- static inline void riscv_pmu_legacy_skip_init(void) {};
- #endif
- struct riscv_pmu *riscv_pmu_alloc(void);
-+#ifdef CONFIG_RISCV_PMU_SBI
-+int riscv_pmu_get_hpm_info(u32 *hw_ctr_width, u32 *num_hw_ctr);
-+#endif
- 
- #endif /* CONFIG_RISCV_PMU */
- 
+ 		nhi = rtnl_dereference(nhge->nh->nh_info);
+-		info->nh_grp->nh_entries[i].id = nhge->nh->id;
+ 		info->nh_grp->nh_entries[i].weight = nhge->weight;
+ 		__nh_notifier_single_info_init(&info->nh_grp->nh_entries[i].nh,
+ 					       nhi);
 -- 
 2.53.0
 
