@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793208386;
-	b=31mJHFIvx6HRJbEt2IbpwKpWt5Ad+EtNcvK72nZg/YKaPT9y0aj3BDfJuRPyzaJaKG99
-	 LZzDjvziQYlJ7bbCeIkJRaFx5gPtoA6pB5iQBwDHYJSgkoV7R1DlnysWJKRhd/Z/XDjD5
-	 Lh71AtvTe5GjZPxUODPFuX0A3D+jgwo/2PCaNNtatwpbtHHOHxo3IlwmGGQXoxY0A9RiJ
-	 U7wxWnoXKmOqolv/Kom7WFwUdwEIqbPgzN4/26gL3ejTZIQ7pn0/kuSNi6YkYc1obxGGj
-	 pTxPal6x/gn8qgilNKUPxSv9F/LfAhzTE9ApIVB0sgW7RdmJBmfJmv4qvAv2DMCkCbg==
+	t=1793208389;
+	b=cemrPGYTCGGyMA/s06UxnkOZ0IgkAOyEQI159sa5vV+OvjcyOub/zyVEmwGs5AqLwVDn
+	 C0SUk8cpzOcCXl4yCmXHE1+KYF7wa+uzugS587UfHj+Jc66xJzsTLXrbwWwVUplaCe+St
+	 Ze+mLBJI8dgXxmIxtks9d7JBEP/+ZPbWwTbQirjY35ZHgu/mIYgOCYAFfhS29dNm0fWTD
+	 fWj4a+M6GhHjtB8U/xPRN4YGgdGAzFbQhAs3P/xyor0DBGbcM/zt0rDghhuKcPxy4dddD
+	 Osj0/+Nkof2CVyPKHnA+2R/Gs8ZV2yeNCaYfDk978EYiWKQmUIQOc6DRng9qvKNfEtw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793208386;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793208389;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=QpEes12LQW9bJfpQWkPHqAimNC11wtqIVqOSsUjUujc=;
-	b=G77PMGDAA+KcmQ3I2wnPQz+I5I6GbQE952JKYcEfvX0gb604VjF2wpbFPNHKOdf9EvYz
-	 pEr0vODI2lzBPASQGLzWiQW50pPOTNO4HO8ACvfTnGjA3cT6P/I/H8VnGZzjPBJUWHn3F
-	 gpEkvc3GVmcfty1ZtBC4hF4LPeQFoR6bKwB0meI4O18rLqXGjK776VIrHpSXYuKJNPg6k
-	 q8Mq0DKB1TVUJHYOnabPy36+LORtILpo83KpYmKDdaL0YlPPxBniMw9B7p8uIlvj2ra+w
-	 mVppLGF/SxAdIWurmv0O5OjdWC3pH7frBJuVkQ/EEHbTBMxxhq7jOZr23qdsAwrAAnw==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=8RoDt3mDBo3vA+65SAWobLXfuoHoualfbd68gHPGEtA=;
+	b=PBJQ9aMRVX/5MKkeMCf2CJZOX/jW8o+YPFp6wdfgiXkWcyS1VhDGLV1hdarYunRq0H1h
+	 A+wZKkJGUavUSesLrQi8i8TTLop8QPFiJvRT1EjsAOmW7ZBt+JEocT1x3JuAnhllrk05z
+	 x5mgjUx8OB7T7oIYJ30V/dA0JIyLgDyPMG9z1hG89+KY4YSWSnPubeDIGL1gs00MvdyRf
+	 tYqZDOJqtQ0afWFoCR3vY7KIN6l//nqiXdnTnUXdl8Y6S5MALOsu6815gujw+KwcHsN1K
+	 9pCu1qHBS2yRoyQPrV/PVTS5ZrcrK8xtTvp/Jm2qX6a1QCumtuUBNZa9z4HeY9mN/5w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lUhkcaGY;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N8PNOFz8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E8CB606A320;
-	Wed, 28 Oct 2026 17:26:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49D5E606A31A;
+	Wed, 28 Oct 2026 17:26:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lUhkcaGY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79B341F01825;
-	Wed, 28 Oct 2026 17:26:25 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N8PNOFz8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52F311F01825;
+	Wed, 28 Oct 2026 17:26:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793208386;
-	bh=QpEes12LQW9bJfpQWkPHqAimNC11wtqIVqOSsUjUujc=;
+	s=korg; t=1793208388;
+	bh=8RoDt3mDBo3vA+65SAWobLXfuoHoualfbd68gHPGEtA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lUhkcaGYyv8eK1Tad/oBKkmlxf3P8wiv2iMoGsX4bIwOhvFL9mb2x2pcwn1B0+r/x
-	 J+3RJhl1VFVnN09VvP2ZYGaCvApFTNEzNil2xd4zvIhX75gEdpeRKATfdGLAOs0uMN
-	 poL1/x96MWlSDcjXoC47dNGy+Jqncn5HBIMUk/6I=
+	b=N8PNOFz8LmSVsfPs23EhcfC3O6Xn0RNibMCmOGGRuoSDWAPAEyFPg0253YQCosLzo
+	 18Jb1oduAz1AunAndq8tC2VIUscuyUxpFcNzRjK6r7WcvRtZMQv8640L7RhT0RXpv/
+	 tGMfc95o2psxFhN4hg93DzQ5517WQdOk8+hi1QRU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiacheng Yu <yujiacheng3@huawei.com>,
-	Petr Pavlu <petr.pavlu@suse.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <cel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 058/516] params: fix charp corruption on allocation failure
-Date: Wed, 28 Oct 2026 17:53:30 +0100
-Message-ID: <20261028170004.902836743@linuxfoundation.org>
+Subject: [PATCH 5.10 049/516] nfsd: fix clock domain mismatch in clients_still_reclaiming()
+Date: Wed, 28 Oct 2026 17:53:21 +0100
+Message-ID: <20261028170004.693715556@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -62,87 +62,77 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jiacheng Yu <yujiacheng3@huawei.com>
+From: Jeff Layton <jlayton@kernel.org>
 
-[ Upstream commit 3dfaae04243cde460d82dfc2a7dd0bb6664d20ae ]
+[ Upstream commit 09ea3eb9a518565f5bca386e81b993ed8825f5e8 ]
 
-param_set_charp() stores charp parameters in allocated memory after slab is
-available, and releases the previous value when the parameter is updated.
+clients_still_reclaiming() computes a deadline from nn->boot_time
+(CLOCK_REALTIME, ~1.7 billion) but compares it against
+ktime_get_boottime_seconds() (CLOCK_BOOTTIME, seconds since boot).
+The comparison is always false — it would take ~54 years of uptime
+for BOOTTIME to exceed the REALTIME-derived deadline.
 
-The previous value is released before the replacement allocation succeeds.
-If kmalloc_parameter() fails, the setter returns -ENOMEM with the parameter
-left as NULL.
+This means any client can hold the server in grace indefinitely by
+sending CLAIM_PREVIOUS OPEN requests, blocking all non-reclaim
+operations for all other clients.
 
-Failing zswap's compressor update before zswap is initialized can later
-trigger:
+Add boot_time_bt (CLOCK_BOOTTIME) alongside the existing boot_time
+and use it for the deadline computation. boot_time (CLOCK_REALTIME)
+is preserved for its cl_boot clientid-nonce role.
 
-  BUG: kernel NULL pointer dereference, address: 0000000000000000
-  RIP: 0010:strcmp+0x10/0x30
-  Call Trace:
-    zswap_setup+0x3b1/0x490
-    zswap_enabled_param_set+0x5b/0xa0
-    param_attr_store+0x93/0xe0
-    module_attr_store+0x1c/0x30
-    kernfs_fop_write_iter+0x116/0x1f0
-
-Allocate and copy the replacement first, then replace the parameter value
-only after allocation succeeds.
-
-Fixes: e180a6b7759a ("param: fix charp parameters set via sysfs")
+Fixes: 20b7d86f29d3 ("nfsd: use boottime for lease expiry calculation")
 Cc: stable@vger.kernel.org
-Signed-off-by: Jiacheng Yu <yujiacheng3@huawei.com>
-Reviewed-by: Petr Pavlu <petr.pavlu@suse.com>
-Signed-off-by: Petr Pavlu <petr.pavlu@suse.com>
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Link: https://patch.msgid.link/20260611-nfsd-testing-v2-12-5b90e276f2d9@kernel.org
+Signed-off-by: Chuck Lever <cel@kernel.org>
+[ preserved the branch’s boolean fields instead of the upstream flags bitmap ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/params.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ fs/nfsd/netns.h     | 1 +
+ fs/nfsd/nfs4state.c | 3 ++-
+ 2 files changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/params.c b/kernel/params.c
-index e6d96f84ac1b5..ca87641c289f1 100644
---- a/kernel/params.c
-+++ b/kernel/params.c
-@@ -265,6 +265,7 @@ EXPORT_SYMBOL_GPL(param_set_uint_minmax);
+diff --git a/fs/nfsd/netns.h b/fs/nfsd/netns.h
+index be0c8f1ce4e3e..b95ad49800533 100644
+--- a/fs/nfsd/netns.h
++++ b/fs/nfsd/netns.h
+@@ -67,6 +67,7 @@ struct nfsd_net {
+ 	bool grace_end_forced;
+ 	bool client_tracking_active;
+ 	time64_t boot_time;
++	time64_t boot_time_bt;	/* same instant in CLOCK_BOOTTIME */
  
- int param_set_charp(const char *val, const struct kernel_param *kp)
+ 	struct dentry *nfsd_client_dir;
+ 
+diff --git a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
+index 9219171653004..91d17c948fb1f 100644
+--- a/fs/nfsd/nfs4state.c
++++ b/fs/nfsd/nfs4state.c
+@@ -6026,7 +6026,7 @@ bool nfsd4_force_end_grace(struct nfsd_net *nn)
+  */
+ static bool clients_still_reclaiming(struct nfsd_net *nn)
  {
-+	char *tmp;
- 	size_t len, maxlen = 1024;
+-	time64_t double_grace_period_end = nn->boot_time +
++	time64_t double_grace_period_end = nn->boot_time_bt +
+ 					   2 * nn->nfsd4_lease;
  
- 	len = strnlen(val, maxlen + 1);
-@@ -273,19 +274,20 @@ int param_set_charp(const char *val, const struct kernel_param *kp)
- 		return -ENOSPC;
- 	}
- 
--	maybe_kfree_parameter(*(char **)kp->arg);
--
- 	/*
- 	 * This is a hack. We can't kmalloc() in early boot, and we
- 	 * don't need to; this mangled commandline is preserved.
- 	 */
- 	if (slab_is_available()) {
--		*(char **)kp->arg = kmalloc_parameter(len + 1);
--		if (!*(char **)kp->arg)
-+		tmp = kmalloc_parameter(len + 1);
-+		if (!tmp)
- 			return -ENOMEM;
--		strcpy(*(char **)kp->arg, val);
-+		memcpy(tmp, val, len + 1);
- 	} else
--		*(const char **)kp->arg = val;
-+		tmp = (char *)val;
-+
-+	maybe_kfree_parameter(*(char **)kp->arg);
-+	*(char **)kp->arg = tmp;
- 
- 	return 0;
- }
+ 	if (READ_ONCE(nn->grace_end_forced))
+@@ -8287,6 +8287,7 @@ static int nfs4_state_create_net(struct net *net)
+ 	nn->conf_name_tree = RB_ROOT;
+ 	nn->unconf_name_tree = RB_ROOT;
+ 	nn->boot_time = ktime_get_real_seconds();
++	nn->boot_time_bt = ktime_get_boottime_seconds();
+ 	nn->grace_ended = false;
+ 	nn->grace_end_forced = false;
+ 	nn->client_tracking_active = false;
 -- 
 2.53.0
 
