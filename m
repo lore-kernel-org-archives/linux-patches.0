@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793207074;
-	b=w06uALJHePWPrM+AkEGG66QvW6CleOgQ7eIoVwTr9+JEBsDYj+M+eTifISUgoSzk291U
-	 NWzMN99Qsl7t5TrmGTm68W7y72kFWBCmRlURQ4/D5uBt/nwCDaUPkhGSy9urzlgeVGYij
-	 lDJsCbxjDEdZrJi9xt6Ok8JoZGdh0O/KRT5d4WCoZsW7eQtZmHj7VQ8IRMxQBgGWc2+x3
-	 JBKhwluk7K9RS7ch6BMGcTR2FfN1lMCuX/8Lgmv5Z1XjiP173R/PSDzCpz1hFvNESOU2x
-	 KZq4p/eXpYFdBolet2DTgm4jccph1Qd89Pd0Sf8/OZWd4skWHV9hWcCtMQq5wmPVcvg==
+	t=1793207078;
+	b=TUqVr6hywIeLWp8cFC40kGcG64vfjTP0LSp/wN89NifrFUXUsmLg0ZJFL+CSgS3cOHt+
+	 eDhLkzJUhAfjw9WNYcO/W66PdCKUmtH0h0JeY+BqC949SAQGAs/GlN1WFptqNb4m3v5Qk
+	 KqMWa7+yPpUGj1+6RAdu40EWtVnTF6xyr7wetLJdF9wN9AS7w7hc2+mcZd0T7FM7aWr07
+	 9S6yEEwtjM43D6tIL0rXEDm2HnepHFcyLeCE9AV+vS9dvBXru5I51Marc1bVDfFPnZoPL
+	 MIOHM1XpBWNMIe66GnRBziGqbkE/c2H1TjGvwNjJEPlL30oB3YohhkwMu260m8OXApA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793207074;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793207078;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=4OIakcl79qACRvX1ToX66UeBYVRvcV2RLKF+ll7YbR4=;
-	b=rW2QA4EuHeV9AUdR7SaOuO8UvQtvk1CFSe5HLOT5bkE2KDTRgE746KhUbWi0dxo63BMl
-	 To7XYAyXbEDib6XdPzT9fQYSK/mlv16SyUZ/DqRj+EdrmYu4ss6ln8GoWvjk167bJcVuT
-	 m9GZwlPPY7WcBDZISFtzpU7lwGfMBMeOh0pvbWLpzLUhnorWxNDYWW+GMzB3Zsr3tzld0
-	 8HvXJt9QDwZmhPDTV+IAffzSK7zQepTNMdXvTjCTYf2qnKYaEQdWv+NitZ8cRWXIJPJkO
-	 Ovv9WUPVbiDz9o38Qo7irYsMcuLduFUtfs3WPJ6i0RL0o5iItvJbxrhjaIeLM17UaGg==
+	bh=TNVAR/9/mLQWe/3mwIk9ac1b8ncYChpVdVnqKLRUsCI=;
+	b=uul7SNdel67G5ayBh+CMFLLgkjBuZOep7rUk7adHtZakILq9OSzDcAgwo2F9UuOutaWM
+	 Axq234QS8+yw2N5gKCBXPsDkA0lLxowjL92vQQwnd/lsE/6EBoLSB88bgx7KjhnkjKUcB
+	 3JyDbZwcxr0q8JGwdDEDOcfCHfbIoyt6f7ZoG4DoAxTZsb6ZuWLdW9XJU9qR9ynQacYiY
+	 uRpuBZnspEBuTQHqZywrV2Y7vXQIbXwk96LmjWIT503Yp6UZrg4bjEeEYN8rBFhv+N8jR
+	 W9+w72yTfZtc1bBH+qzwoq2bVph1Z2CSjTPT7M3gXuGZLiPO6ilpynEXxB6d4xXRRCw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1alxqAp2;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QdocSiVW;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E621F606A31C;
-	Wed, 28 Oct 2026 17:04:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9800606A31D;
+	Wed, 28 Oct 2026 17:04:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1alxqAp2
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 062DC1F01828;
-	Wed, 28 Oct 2026 17:04:32 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QdocSiVW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCAC41F01825;
+	Wed, 28 Oct 2026 17:04:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793207073;
-	bh=4OIakcl79qACRvX1ToX66UeBYVRvcV2RLKF+ll7YbR4=;
+	s=korg; t=1793207077;
+	bh=TNVAR/9/mLQWe/3mwIk9ac1b8ncYChpVdVnqKLRUsCI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1alxqAp2vgzVHK56KcJiJNmmK39bOia4jPONHuRhEuMs90m5ETHkozOCb7CUzpRsA
-	 HwrsHXq9XFB2VX/pO3aAQEsIOslCewX+AZA693krtkwbatjsxJ91/t94+NthGkr1Uq
-	 vtlT9qMt/O6H9tCBslgfmxU4mrmps4qs9miV1vL8=
+	b=QdocSiVWgzwmb9RNhp9aYJH4R74CUFMO3L/eoYzud3GhP+dmZECKRYGlpkUO6QVfV
+	 9bn7VOwVcFMtPXmly5yztuSsfIMHfShYkR5Ka59gQtGg71b54qes8AJSPohkzjTn/+
+	 mBKp+nNO8X/bUO+zP+NBcHnSDsazFsh5//1/YfE8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junyeong Lee <jylee5498@gmail.com>,
+	Wei Gao <wegao@suse.com>,
 	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 7.3 17/38] io_uring/waitid: prevent cancel reference wrap
-Date: Wed, 28 Oct 2026 18:00:04 +0100
-Message-ID: <20261028165940.835757551@linuxfoundation.org>
+Subject: [PATCH 7.3 18/38] io_uring: end the drain when the drain request completes
+Date: Wed, 28 Oct 2026 18:00:05 +0100
+Message-ID: <20261028165940.861225633@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165940.394092994@linuxfoundation.org>
 References: <20261028165940.394092994@linuxfoundation.org>
@@ -67,59 +67,136 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junyeong Lee <jylee5498@gmail.com>
+From: Jens Axboe <axboe@kernel.dk>
 
-commit 98787d3fa4e99564d2b2bc21255b21f670c450d0 upstream.
+commit ecb6817b769fd7d71af2c9f446188649020b2e53 upstream.
 
-io_waitid packs the cancellation state into bit 31 of ->refs and uses
-bits 30:0 as a 31-bit reference counter:
+Since requests are drained based on allocated requests, the drain stays
+active after the drain request has posted its CQE, until it is freed and
+a new request finds the defer list empty. A drain request run by io-wq
+is freed only after the worker drops its reference, so a request
+submitted after the drain completed can still be deferred behind it,
+and get issued much later than the application expects.
 
-  #define IO_WAITID_CANCEL_FLAG BIT(31)
-  #define IO_WAITID_REF_MASK    GENMASK(30, 0)
+A drain request dispatched from the defer list runs alone. Track it,
+and end the drain when its CQE is flushed and nothing else is deferred.
+Have io-wq complete drain requests through task_work, so that this
+happens under ->uring_lock before the CQE is visible. Linked drain
+requests keep waiting until the link is freed.
 
-__io_waitid_cancel() marks a request canceled, then increments the low
-bits of ->refs to claim completion ownership. When another path owns the
-request, the increment remains even though cancellation returns false.
-The request remains discoverable by cancellation, so repeated failed
-attempts can wrap the 31-bit reference field to zero. A later
-cancellation can claim ownership and complete the request a second time.
-
-Use atomic_fetch_or() when setting the cancel flag and inspect the old
-flag value. The first cancel attempt continues to the existing ownership
-increment, preserving its wake and issuer handoff semantics. Later
-attempts see the cancel flag and return without incrementing the
-reference field.
-
-This makes repeated failed cancellation attempts idempotent while
-leaving the first-cancel state transitions unchanged.
-
-Fixes: f31ecf671ddc ("io_uring: add IORING_OP_WAITID support")
+Reported-by: Wei Gao <wegao@suse.com>
+Link: https://lore.kernel.org/io-uring/20261018070154.16944-1-wegao@suse.com/
+Fixes: 8fb7aee05591 ("io_uring: drain based on allocates reqs")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Junyeong Lee <jylee5498@gmail.com>
-Link: https://patch.msgid.link/20261019152100.63565-1-jylee5498@gmail.com
+Tested-by: Wei Gao <wegao@suse.com>
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/waitid.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ include/linux/io_uring_types.h |    2 +
+ io_uring/io_uring.c            |   42 ++++++++++++++++++++++++++++++++++++++---
+ 2 files changed, 41 insertions(+), 3 deletions(-)
 
---- a/io_uring/waitid.c
-+++ b/io_uring/waitid.c
-@@ -154,9 +154,12 @@ static bool __io_waitid_cancel(struct io
+--- a/include/linux/io_uring_types.h
++++ b/include/linux/io_uring_types.h
+@@ -521,6 +521,8 @@ struct io_ring_ctx {
+ 	struct callback_head		poll_wq_task_work;
+ 	struct list_head		defer_list;
+ 	unsigned			nr_drained;
++	/* drain request dispatched from ->defer_list, until it completes */
++	struct io_kiocb			*drain_req;
+ 
+ 	/* protected by ->completion_lock */
+ 	unsigned			nr_req_allocated;
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -451,6 +451,9 @@ static __cold noinline void io_queue_def
+ 
+ 	lockdep_assert_held(&ctx->uring_lock);
+ 	__io_req_caches_free(ctx);
++	/* nothing outside of ->defer_list is alive */
++	if (ctx->nr_req_allocated == ctx->nr_drained)
++		ctx->drain_req = NULL;
+ 
+ 	while (!list_empty(&ctx->defer_list)) {
+ 		struct io_defer_entry *de = list_first_entry(&ctx->defer_list,
+@@ -462,6 +465,9 @@ static __cold noinline void io_queue_def
+ 
+ 		list_del_init(&de->list);
+ 		ctx->nr_drained -= io_linked_nr(de->req);
++		/* it runs alone, track its completion unless it's a link */
++		if ((de->req->flags & REQ_F_IO_DRAIN) && !de->req->link)
++			ctx->drain_req = de->req;
+ 		io_req_task_queue(de->req);
+ 		kfree(de);
+ 		first = false;
+@@ -923,9 +929,11 @@ static void io_req_complete_post(struct
  
  	/*
- 	 * Mark us canceled regardless of ownership. This will prevent a
--	 * potential retry from a spurious wakeup.
-+	 * potential retry from a spurious wakeup. Only the first cancel
-+	 * attempt should take a reference for the ownership handoff.
+ 	 * Handle special CQ sync cases via task_work. DEFER_TASKRUN requires
+-	 * the submitter task context, IOPOLL protects with uring_lock.
++	 * the submitter task context, IOPOLL protects with uring_lock. A drain
++	 * request ends the drain under uring_lock as its CQE is posted.
  	 */
--	atomic_or(IO_WAITID_CANCEL_FLAG, &iw->refs);
-+	if (atomic_fetch_or(IO_WAITID_CANCEL_FLAG, &iw->refs) &
-+	    IO_WAITID_CANCEL_FLAG)
-+		return false;
+-	if ((ctx->int_flags & IO_RING_F_LOCKLESS_CQ) || (req->flags & REQ_F_REISSUE)) {
++	if ((ctx->int_flags & IO_RING_F_LOCKLESS_CQ) ||
++	    (req->flags & (REQ_F_REISSUE | REQ_F_IO_DRAIN))) {
+ defer_complete:
+ 		req->io_task_work.func = io_req_task_complete;
+ 		io_req_task_work_add(req);
+@@ -1126,11 +1134,33 @@ static void io_free_batch_list(struct io
+ 	} while (node);
+ }
  
- 	/* claim ownership */
- 	if (atomic_fetch_inc(&iw->refs) & IO_WAITID_REF_MASK)
++/*
++ * The dispatched drain request ran alone, and anything submitted after it was
++ * deferred. Once it completed, new requests may run if nothing is waiting.
++ */
++static __cold bool io_drain_req_completed(struct io_ring_ctx *ctx)
++{
++	struct io_wq_work_node *node;
++
++	__wq_list_for_each(node, &ctx->submit_state.compl_reqs) {
++		struct io_kiocb *req = container_of(node, struct io_kiocb,
++					    comp_list);
++
++		/* a requeued request hasn't completed */
++		if (req == ctx->drain_req && !(req->flags & REQ_F_REISSUE)) {
++			ctx->drain_req = NULL;
++			return true;
++		}
++	}
++	return false;
++}
++
+ void __io_submit_flush_completions(struct io_ring_ctx *ctx)
+ 	__must_hold(&ctx->uring_lock)
+ {
+ 	struct io_submit_state *state = &ctx->submit_state;
+ 	struct io_wq_work_node *node;
++	bool drain_done = false;
+ 
+ 	__io_cq_lock(ctx);
+ 	__wq_list_for_each(node, &state->compl_reqs) {
+@@ -1152,13 +1182,19 @@ void __io_submit_flush_completions(struc
+ 	}
+ 	__io_cq_unlock_post(ctx);
+ 
++	if (unlikely(ctx->int_flags & IO_RING_F_DRAIN_ACTIVE) && ctx->drain_req)
++		drain_done = io_drain_req_completed(ctx);
++
+ 	if (!wq_list_empty(&state->compl_reqs)) {
+ 		io_free_batch_list(ctx, state->compl_reqs.first);
+ 		INIT_WQ_LIST(&state->compl_reqs);
+ 	}
+ 
+-	if (unlikely(ctx->int_flags & IO_RING_F_DRAIN_ACTIVE))
++	if (unlikely(ctx->int_flags & IO_RING_F_DRAIN_ACTIVE)) {
+ 		io_queue_deferred(ctx);
++		if (drain_done && list_empty(&ctx->defer_list))
++			ctx->int_flags &= ~IO_RING_F_DRAIN_ACTIVE;
++	}
+ 
+ 	ctx->submit_state.cq_flush = false;
+ }
 
 
