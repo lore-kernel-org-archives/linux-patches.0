@@ -1,60 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215164;
-	b=aIdJOahM27dZTi3AKe5CeSP1gfJiuzJEUEHogz9w3/zoO1w07w2QcxDj3Lm50rn0X7DN
-	 phc8IOd1qCI1FPvYusyG9Nuc3mF71u8kxjjBS5OSVXS3CPXm+AbSlbQZ2IwRHzjsKZGIt
-	 fTW1a027SKIGpARxKA/+RIMYsO1gcRawnnxrAEkz+MZRxb/bNlWixvu4pJtP3Gtvjm5Cy
-	 3JBQc46cVVh2Ml7hBxNZs+/yy++AleCDxSp5zkfUHBBEWbtCfMB+CyXxVlz1ndkKzokI/
-	 KDA8QxiRKvXEzAnTtoJY5auWxjU5fRUI/Wp4zu/jKMyOSa3E4WWKd6c64Htfd1LDdJw==
+	t=1793215168;
+	b=syp7L5R3U5r3toSssc9GK6eKmnT7kmYVsGsm2J4JFzLOpZV8FU0Z3a5tSGqHRHVX5FMN
+	 qrwdZphkOVHV2/8u5qJOIn9SNOeg54FNgL5ZSHRy4sL8ReUUyPWw0rJMCf6t6dMfpxAr4
+	 mxOaPtskgUppzFDu2fcEfvmvGtqxi6RX0KPFVL+aFykLzVJDihdTg0Wzyeo06CjIFswci
+	 pVFJrNjBMO6MdYz494h8TjGjnLgX9yo445QAnqzgip6SrpnU04kScC20xISSvzWw1LTPi
+	 WRTPgpdObFUTEXE7JOn21yIeir8yYzkPaVGkJdvly69wzPro0QgjOf9DwaLkyoi0cgA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215164;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215168;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=oeCBKU1PA+LHgd4E+QoiVb7ILB+8izEciksgwKEYVOQ=;
-	b=n/LKdX7YOpWGkwu9JoPj5wxPK0iN3mY8dlsRXKUoyIbl8dg3WsemoAIJCOK//H7U97XJ
-	 qFtAOxaQ2l7AbJgTYV58hPog3y1NaxiTGZMBShCwmrtVpGQ+tYbejhNiWVdcXXqGD9hVk
-	 +gwhxJlKognunGsBwih7wsh4Nc5N+WUz0y30tkbVqT9J4DDSUy1MKZICB7VcarMZYcjEt
-	 wTQH0G4uv0pvAGnAn9isUqaeKY9jWo8LBO32JYozRZvyepUm0Ay0JOKiEayK/fpkj2kP1
-	 x5D1zGrFVre89Cu+PvNQK6ywJQcE6kwtyg2Cw5RQN4z8pOLD4d1l+0sNurIGtUTiSPA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=XYC8yzLJwt7UEUoMMG9OxUtqkK1cnFvC3AYHHiKSfRY=;
+	b=P7RIc0sbXqpVhUEtCyCdGHoSRe6uDdb1jgCjP8pLPUCDUUhMEay1t7rzmks2IrkWp2qR
+	 eAkUW3gGWppfnK2cy2xW7UXt70XyiJ2O3WkyIO9b1vfMpcPfQUuJ8SEVYV/oU/30IpDjz
+	 EONf4OZcsqg82hMJknwMyxz3dXLOJexE34B21IdWZ3L9gZuj4RFKR75a1Q9MCiY6ktXMW
+	 oTANgFoTyEIlU451Jz0DXcL9knlUy0OqB2RDe/DEoKtJvm8BtXMzB2WjttYfT17HZyZ3K
+	 gWEJzeqRAZ5QE0/l06feERBvOexPV9vi8Uz8aMg9YzBSNVyK0BNV0EppAkDCXN2F9Jg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tnvbj5cX;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qjsVfxgq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88D87606A31A;
-	Wed, 28 Oct 2026 19:19:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC04D606A31A;
+	Wed, 28 Oct 2026 19:19:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tnvbj5cX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D30641F01825;
-	Wed, 28 Oct 2026 19:19:23 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qjsVfxgq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBAA51F01825;
+	Wed, 28 Oct 2026 19:19:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215164;
-	bh=oeCBKU1PA+LHgd4E+QoiVb7ILB+8izEciksgwKEYVOQ=;
+	s=korg; t=1793215167;
+	bh=XYC8yzLJwt7UEUoMMG9OxUtqkK1cnFvC3AYHHiKSfRY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tnvbj5cXdHlDlD/mwrOXxwhlnth/el0t08tCB5C1k8co+vHhn2O8EGLcfU41H7grO
-	 28xTOxl/+Ov07MAUdnp9gMrQDPd9NVyVKnptJBFXgbqy5de1Nz4bwj9iTqrUQn1lVd
-	 7EPfa01kX2DYsemZX8HgIcifKbxuuOyOST1VTzGg=
+	b=qjsVfxgqh/ax/reTgGwDv992EHDGzHIFQnMB3Q0Jz6jfB300MDrWNembq+a3tiuuA
+	 dym7s3IYc6E6mBEIPQDtm3+zemtjvb/kSpOwXOeCPvUJ82NeuD3XfcPioj8kW9LVcY
+	 IZea1E7AxqvsrdnMgS61U5JhWxyl3qZbD8XfXmLw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konstantin Khorenko <khorenko@virtuozzo.com>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Peter Oberparleiter <oberpar@linux.ibm.com>,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Miguel Ojeda <ojeda@kernel.org>,
-	Mikhail Zaslonko <zaslonko@linux.ibm.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Pavel Tikhomirov <ptikhomirov@virtuozzo.com>,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	syzbot+63056bf627663701bbbf@syzkaller.appspotmail.com,
+	Boris Burkov <boris@bur.io>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1115/1887] gcov: use atomic counter updates to fix concurrent access crashes
-Date: Wed, 28 Oct 2026 17:53:31 +0100
-Message-ID: <20261028170524.776203954@linuxfoundation.org>
+Subject: [PATCH 6.1 1089/1887] btrfs: fix deadlock between reflink and transaction commit when using flushoncommit
+Date: Wed, 28 Oct 2026 17:53:05 +0100
+Message-ID: <20261028170524.186136793@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -70,131 +64,233 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Konstantin Khorenko <khorenko@virtuozzo.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit 56cb9b7d96b28a1173a510ab25354b6599ad3a33 ]
+[ Upstream commit b48c980b6a7e409050bb3067165db31cc6205e3e ]
 
-GCC's GCOV instrumentation can merge global branch counters with loop
-induction variables as an optimization.  In inflate_fast(), the inner copy
-loops get transformed so that the GCOV counter value is loaded multiple
-times to compute the loop base address, start index, and end bound.  Since
-GCOV counters are global (not per-CPU), concurrent execution on different
-CPUs causes the counter to change between loads, producing inconsistent
-values and out-of-bounds memory writes.
+When using the flushoncommit mount option, we can have a deadlock between
+a transaction commit and a reflink operation that copied an inline extent
+to an offset beyond the current i_size of the destination node.
 
-The crash manifests during IPComp (IP Payload Compression) processing when
-inflate_fast() runs concurrently on multiple CPUs:
+The deadlock happens like this:
 
-  BUG: unable to handle page fault for address: ffffd0a3c0902ffa
-  RIP: inflate_fast+1431
+1) Task A clones an inline extent from inode X to an offset of inode Y
+   that is beyond Y's current i_size. This means we copied the inline
+   extent's data to a folio of inode Y that is beyond its EOF, using a
+   call to copy_inline_to_page();
+
+2) Task B starts a transaction commit and calls
+   btrfs_start_delalloc_flush() to flush delalloc;
+
+3) The delalloc flushing sees the new dirty folio of inode Y and when it
+   attempts to flush it, it ends up at extent_writepage() and sees that
+   the offset of the folio is beyond the i_size of inode Y, so it attempts
+   to invalidate the folio by calling folio_invalidate(), which ends up at
+   btrfs' folio invalidate callback - btrfs_invalidate_folio(). There it
+   tries to lock the folio's range in inode Y's extent io tree, but it
+   blocks since it's currently locked by task A - during a reflink we lock
+   the inodes and the source and destination ranges after flushing all
+   delalloc and waiting for ordered extent completion - after that we
+   don't expect to have dirty folios in the ranges, the exception is if
+   we have to copy an inline extent's data (because the destination offset
+   is not zero);
+
+4) Task A then attempts to start a transaction to update the inode item,
+   and then it's blocked since the current transaction is in the
+   TRANS_STATE_COMMIT_START state. Therefore task A has to wait for the
+   current transaction to become unblocked (its state >=
+   TRANS_STATE_UNBLOCKED).
+
+   So task A is waiting for the transaction commit done by task B, and
+   the later waiting on the extent lock of inode Y that is currently
+   held by task A.
+
+Syzbot recently reported this with the following stack traces:
+
+  INFO: task kworker/u8:7:1053 blocked for more than 143 seconds.
+        Not tainted syzkaller #0
+  "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
+  task:kworker/u8:7    state:D stack:23520 pid:1053  tgid:1053  ppid:2      task_flags:0x4208060 flags:0x00080000
+  Workqueue: writeback wb_workfn (flush-btrfs-46)
   Call Trace:
-   zlib_inflate
-   __deflate_decompress
-   crypto_comp_decompress
-   ipcomp_decompress [xfrm_ipcomp]
-   ipcomp_input [xfrm_ipcomp]
-   xfrm_input
+   <TASK>
+   context_switch kernel/sched/core.c:5298 [inline]
+   __schedule+0x1553/0x5240 kernel/sched/core.c:6911
+   __schedule_loop kernel/sched/core.c:6993 [inline]
+   schedule+0x164/0x360 kernel/sched/core.c:7008
+   wait_extent_bit fs/btrfs/extent-io-tree.c:811 [inline]
+   btrfs_lock_extent_bits+0x59c/0x700 fs/btrfs/extent-io-tree.c:1914
+   btrfs_lock_extent fs/btrfs/extent-io-tree.h:152 [inline]
+   btrfs_invalidate_folio+0x43d/0xc40 fs/btrfs/inode.c:7704
+   extent_writepage fs/btrfs/extent_io.c:1852 [inline]
+   extent_write_cache_pages fs/btrfs/extent_io.c:2580 [inline]
+   btrfs_writepages+0x12ff/0x2440 fs/btrfs/extent_io.c:2713
+   do_writepages+0x32e/0x550 mm/page-writeback.c:2554
+   __writeback_single_inode+0x133/0x11a0 fs/fs-writeback.c:1750
+   writeback_sb_inodes+0x995/0x19d0 fs/fs-writeback.c:2042
+   wb_writeback+0x456/0xb70 fs/fs-writeback.c:2227
+   wb_do_writeback fs/fs-writeback.c:2374 [inline]
+   wb_workfn+0x41a/0xf60 fs/fs-writeback.c:2414
+   process_one_work kernel/workqueue.c:3276 [inline]
+   process_scheduled_works+0xb6e/0x18c0 kernel/workqueue.c:3359
+   worker_thread+0xa53/0xfc0 kernel/workqueue.c:3440
+   kthread+0x388/0x470 kernel/kthread.c:436
+   ret_from_fork+0x51e/0xb90 arch/x86/kernel/process.c:158
+   ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:245
+   </TASK>
+  INFO: task syz.4.64:6910 blocked for more than 143 seconds.
+        Not tainted syzkaller #0
+  "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
+  task:syz.4.64        state:D stack:22752 pid:6910  tgid:6905  ppid:5944   task_flags:0x400140 flags:0x00080002
+  Call Trace:
+   <TASK>
+   context_switch kernel/sched/core.c:5298 [inline]
+   __schedule+0x1553/0x5240 kernel/sched/core.c:6911
+   __schedule_loop kernel/sched/core.c:6993 [inline]
+   schedule+0x164/0x360 kernel/sched/core.c:7008
+   wait_current_trans+0x39f/0x590 fs/btrfs/transaction.c:535
+   start_transaction+0x6a7/0x1650 fs/btrfs/transaction.c:705
+   clone_copy_inline_extent fs/btrfs/reflink.c:299 [inline]
+   btrfs_clone+0x128a/0x24d0 fs/btrfs/reflink.c:529
+   btrfs_clone_files+0x271/0x3f0 fs/btrfs/reflink.c:750
+   btrfs_remap_file_range+0x76b/0x1320 fs/btrfs/reflink.c:903
+   vfs_copy_file_range+0xda7/0x1390 fs/read_write.c:1600
+   __do_sys_copy_file_range fs/read_write.c:1683 [inline]
+   __se_sys_copy_file_range+0x2fb/0x480 fs/read_write.c:1650
+   do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+   do_syscall_64+0x14d/0xf80 arch/x86/entry/syscall_64.c:94
+   entry_SYSCALL_64_after_hwframe+0x77/0x7f
+  RIP: 0033:0x7f5f73afc799
+  RSP: 002b:00007f5f7315e028 EFLAGS: 00000246 ORIG_RAX: 0000000000000146
+  RAX: ffffffffffffffda RBX: 00007f5f73d75fa0 RCX: 00007f5f73afc799
+  RDX: 0000000000000005 RSI: 0000000000000000 RDI: 0000000000000005
+  RBP: 00007f5f73b92c99 R08: 0000000000000863 R09: 0000000000000000
+  R10: 00002000000000c0 R11: 0000000000000246 R12: 0000000000000000
+  R13: 00007f5f73d76038 R14: 00007f5f73d75fa0 R15: 00007fff138a5068
+   </TASK>
+  INFO: task syz.4.64:6975 blocked for more than 143 seconds.
+        Not tainted syzkaller #0
+  "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
+  task:syz.4.64        state:D stack:24736 pid:6975  tgid:6905  ppid:5944   task_flags:0x400040 flags:0x00080002
+  Call Trace:
+   <TASK>
+   context_switch kernel/sched/core.c:5298 [inline]
+   __schedule+0x1553/0x5240 kernel/sched/core.c:6911
+   __schedule_loop kernel/sched/core.c:6993 [inline]
+   schedule+0x164/0x360 kernel/sched/core.c:7008
+   wb_wait_for_completion+0x3e8/0x790 fs/fs-writeback.c:227
+   __writeback_inodes_sb_nr+0x24c/0x2d0 fs/fs-writeback.c:2838
+   try_to_writeback_inodes_sb+0x9a/0xc0 fs/fs-writeback.c:2886
+   btrfs_start_delalloc_flush fs/btrfs/transaction.c:2175 [inline]
+   btrfs_commit_transaction+0x82e/0x31a0 fs/btrfs/transaction.c:2364
+   btrfs_ioctl+0xca7/0xd00 fs/btrfs/ioctl.c:5206
+   vfs_ioctl fs/ioctl.c:51 [inline]
+   __do_sys_ioctl fs/ioctl.c:597 [inline]
+   __se_sys_ioctl+0xff/0x170 fs/ioctl.c:583
+   do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+   do_syscall_64+0x14d/0xf80 arch/x86/entry/syscall_64.c:94
+   entry_SYSCALL_64_after_hwframe+0x77/0x7f
+  RIP: 0033:0x7f5f73afc799
+  RSP: 002b:00007f5f7313d028 EFLAGS: 00000246 ORIG_RAX: 0000000000000010
+  RAX: ffffffffffffffda RBX: 00007f5f73d76090 RCX: 00007f5f73afc799
+  RDX: 0000000000000000 RSI: 0000000000009408 RDI: 0000000000000004
+  RBP: 00007f5f73b92c99 R08: 0000000000000000 R09: 0000000000000000
+  R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
+  R13: 00007f5f73d76128 R14: 00007f5f73d76090 R15: 00007fff138a5068
+   </TASK>
 
-At the crash point, the compiler generated three loads from the same
-global GCOV counter (__gcov0.inflate_fast+216) to compute base, start, and
-end for an indexed loop.  Another CPU modified the counter between loads,
-making the values inconsistent - the write went 3.4 MB past a 65 KB
-buffer.
+Fix this by updating the i_size of the destination inode of a reflink
+operation after we copy an inline extent's data to an offset beyond the
+i_size and before attempting to start a transaction to update the inode's
+item.
 
-Add -fprofile-update=prefer-atomic to CFLAGS_GCOV at the global level in
-the top-level Makefile, guarded by a try-run compile test.  The test
-compiles a minimal program with and without -fprofile-update=prefer-atomic
-using the full KBUILD_CFLAGS, then compares undefined symbols in the
-resulting object files.  If prefer-atomic introduces new undefined
-references (such as __atomic_fetch_add_8 on i386 or __aarch64_ldadd8_relax
-on arm64 with outline-atomics), the flag is not added -- the kernel does
-not link against libatomic.
-
-On architectures where GCC inlines 64-bit atomic counter updates (x86_64,
-s390, ...) the test passes and the flag is enabled, preventing the
-compiler from merging counters with loop induction variables and fixing
-the observed concurrent-access crash.
-
-On architectures where the flag would introduce libatomic dependencies, it
-is silently omitted and behaviour is no worse than before this patch.
-
-Move the CFLAGS_GCOV block from its original position (before the arch
-Makefile include) to after the core KBUILD_CFLAGS assignments but before
-the scripts/Makefile.gcc-plugins include.  This placement ensures the
-try-run test sees arch-specific flags (-m32, -march=,
--mno-outline-atomics) while avoiding GCC plugin flags (-fplugin=) that
-would break the test on clean builds when plugin shared objects do not yet
-exist.
-
-Link: https://lore.kernel.org/20260511105052.417187-2-khorenko@virtuozzo.com
-Signed-off-by: Konstantin Khorenko <khorenko@virtuozzo.com>
-Tested-by: Arnd Bergmann <arnd@arndb.de>
-Tested-by: Peter Oberparleiter <oberpar@linux.ibm.com>
-Reviewed-by: Peter Oberparleiter <oberpar@linux.ibm.com>
-Cc: Masahiro Yamada <masahiroy@kernel.org>
-Cc: Miguel Ojeda <ojeda@kernel.org>
-Cc: Mikhail Zaslonko <zaslonko@linux.ibm.com>
-Cc: Nathan Chancellor <nathan@kernel.org>
-Cc: Pavel Tikhomirov <ptikhomirov@virtuozzo.com>
-Cc: Thomas Weißschuh <linux@weissschuh.net>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reported-by: syzbot+63056bf627663701bbbf@syzkaller.appspotmail.com
+Link: https://lore.kernel.org/linux-btrfs/69bba3fe.050a0220.227207.002f.GAE@google.com/
+Fixes: 05a5a7621ce6 ("Btrfs: implement full reflink support for inline extents")
+Reviewed-by: Boris Burkov <boris@bur.io>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Makefile | 27 +++++++++++++++++++++------
- 1 file changed, 21 insertions(+), 6 deletions(-)
+ fs/btrfs/reflink.c | 53 ++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 53 insertions(+)
 
-diff --git a/Makefile b/Makefile
-index e4c0c25b58ed0..f77ce14254027 100644
---- a/Makefile
-+++ b/Makefile
-@@ -760,12 +760,6 @@ endif # KBUILD_EXTMOD
- # Defaults to vmlinux, but the arch makefile usually adds further targets
- all: vmlinux
- 
--CFLAGS_GCOV	:= -fprofile-arcs -ftest-coverage
--ifdef CONFIG_CC_IS_GCC
--CFLAGS_GCOV	+= -fno-tree-loop-im
--endif
--export CFLAGS_GCOV
--
- # The arch Makefiles can override CC_FLAGS_FTRACE. We may also append it later.
- ifdef CONFIG_FUNCTION_TRACER
-   CC_FLAGS_FTRACE := -pg
-@@ -1090,6 +1084,27 @@ KBUILD_CFLAGS   += $(call cc-option,-Werror=designated-init)
- # Ensure compilers do not transform certain loops into calls to wcslen()
- KBUILD_CFLAGS += -fno-builtin-wcslen
- 
-+CFLAGS_GCOV	:= -fprofile-arcs -ftest-coverage
-+ifdef CONFIG_CC_IS_GCC
-+CFLAGS_GCOV	+= -fno-tree-loop-im
-+# Use atomic counter updates to avoid concurrent-access crashes in GCOV.
-+# Only enable if -fprofile-update=prefer-atomic does not introduce new
-+# undefined symbols (e.g. libatomic calls that the kernel cannot link).
-+CFLAGS_GCOV	+= $(call try-run,\
-+	echo 'long long x; void f(void){x++;}' | \
-+	$(CC) $(KBUILD_CPPFLAGS) $(KBUILD_CFLAGS) -w -fprofile-arcs \
-+	-ftest-coverage -x c - -c -o "$$TMP.base" && \
-+	echo 'long long x; void f(void){x++;}' | \
-+	$(CC) $(KBUILD_CPPFLAGS) $(KBUILD_CFLAGS) -w -fprofile-arcs \
-+	-ftest-coverage -fprofile-update=prefer-atomic \
-+	-x c - -c -o "$$TMP" && \
-+	$(NM) "$$TMP.base" | grep ' U ' > "$$TMP.ubase" || true ; \
-+	$(NM) "$$TMP" | grep ' U ' > "$$TMP.utest" || true ; \
-+	cmp -s "$$TMP.ubase" "$$TMP.utest",\
-+	-fprofile-update=prefer-atomic)
-+endif
-+export CFLAGS_GCOV
+diff --git a/fs/btrfs/reflink.c b/fs/btrfs/reflink.c
+index be33fd5a21768..2b424fa577ba8 100644
+--- a/fs/btrfs/reflink.c
++++ b/fs/btrfs/reflink.c
+@@ -179,6 +179,14 @@ static int clone_copy_inline_extent(struct inode *dst,
+ 	if (new_key->offset > 0) {
+ 		ret = copy_inline_to_page(BTRFS_I(dst), new_key->offset,
+ 					  inline_data, size, datal, comp_type);
 +
- # change __FILE__ to the relative path from the srctree
- KBUILD_CPPFLAGS += $(call cc-option,-fmacro-prefix-map=$(srctree)/=)
++		/*
++		 * Increase the i_size before starting a transaction, see the
++		 * comment at the copy_to_page label below.
++		 */
++		if (ret == 0 && new_key->offset + datal > i_size_read(dst))
++			i_size_write(dst, new_key->offset + datal);
++
+ 		goto out;
+ 	}
+ 
+@@ -312,6 +320,51 @@ static int clone_copy_inline_extent(struct inode *dst,
+ 
+ 	ret = copy_inline_to_page(BTRFS_I(dst), new_key->offset,
+ 				  inline_data, size, datal, comp_type);
++
++	/*
++	 * If we copied the inline extent data to a page/folio beyond the i_size
++	 * of the destination inode, then we need to increase the i_size before
++	 * we start a transaction to update the inode item. This is to prevent a
++	 * deadlock when the flushoncommit mount option is used, which happens
++	 * like this:
++	 *
++	 * 1) Task A clones an inline extent from inode X to an offset of inode
++	 *    Y that is beyond Y's current i_size. This means we copied the
++	 *    inline extent's data to a folio of inode Y that is beyond its EOF,
++	 *    using the call above to copy_inline_to_page();
++	 *
++	 * 2) Task B starts a transaction commit and calls
++	 *    btrfs_start_delalloc_flush() to flush delalloc;
++	 *
++	 * 3) The delalloc flushing sees the new dirty folio of inode Y and when
++	 *    it attempts to flush it, it ends up at extent_writepage() and sees
++	 *    that the offset of the folio is beyond the i_size of inode Y, so
++	 *    it attempts to invalidate the folio by calling folio_invalidate(),
++	 *    which ends up at btrfs' folio invalidate callback -
++	 *    btrfs_invalidate_folio(). There it tries to lock the folio's range
++	 *    in inode Y's extent io tree, but it blocks since it's currently
++	 *    locked by task A - during reflink we lock the inodes and the
++	 *    source and destination ranges after flushing all delalloc and
++	 *    waiting for ordered extent completion - after that we don't expect
++	 *    to have dirty folios in the ranges, the exception is if we have to
++	 *    copy an inline extent's data (because the destination offset is
++	 *    not zero);
++	 *
++	 * 4) Task A then does the 'goto out' below and attempts to start a
++	 *    transaction to update the inode item, and then it's blocked since
++	 *    the current transaction is in the TRANS_STATE_COMMIT_START state.
++	 *    Therefore task A has to wait for the current transaction to become
++	 *    unblocked (its state >= TRANS_STATE_UNBLOCKED).
++	 *
++	 * This leads to a deadlock - the task committing the transaction
++	 * waiting for the delalloc flushing which is blocked during folio
++	 * invalidation on the inode's extent lock and the reflink task waiting
++	 * for the current transaction to be unblocked so that it can start a
++	 * a new one to update the inode item (while holding the extent lock).
++	 */
++	if (ret == 0 && new_key->offset + datal > i_size_read(dst))
++		i_size_write(dst, new_key->offset + datal);
++
+ 	goto out;
+ }
  
 -- 
 2.53.0
