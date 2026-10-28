@@ -1,59 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216475;
-	b=JOBCk2UVDQtSP2zkfyiMUPNV6k1hlDMq+bUQuQpt9PRe6mb5eTCxWcPT0stf/eUEL/DQ
-	 GT+lPz+s1wMA4Ydg0zZT6HYPz9Vi7u2EPxlRiGEormMNxMqAcyRY+zuxCBQNsig+j3/R8
-	 og+T7ii49i+X77YYRIf9eNoHj3Dl5dJT6El2jOcLQJVExDLChCgDLaIdGMauZNhcPpTxu
-	 WxVafFTeRJioYWAMP5XugwV7DK0GfHTQMqJakTI+7ZW//+7oE2HinU2KzNipJ7BH+Qt7l
-	 9yPjhM3UwtnQxGm+Gltx+vToZrd+CqgF7ZCJo5BjgU9plt4XMC7mq+PyPFTA9BvXlnQ==
+	t=1793216478;
+	b=ukasdnejIvq8Hxyxzf2KiTOVvqmgToddvlpej3Yql8eKf0qaeBNmAy1hlEJKsaDeaVyn
+	 cfsf+AKNZrCcBNCXfOHMVKlAfd+TqFIjBdDzOtZi49D6o27AAqONx+Y6hnUUmP/tDP7GT
+	 45OiU86hIdDwUWSfUUlCVpfVkJJKL/JOZAu/TE7HBeLriiWDAkFuzDFBptFMnX1/Tq7rH
+	 ShHsDMtjhkZ8OyfR53E6LrUH1YuCurh3Sv18YUgF9WdosvSvJ8vlb7lWJVn8pD4ksSZFC
+	 euu47E/Vo8spww1Qxg5npGTUsz28Gx9DAtD1GC9dX/mw4LFC1gjxniWbKlnu0GmR21g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216475;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216478;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=HqkwRV0xW2DkuYxmFWik6Ij37iVpX1LDlDHWOMZj3iI=;
-	b=Wq3BJ4IkvyfvTYB6SrmEOyUZ6EbeqIB6bhEJO/2ch+vJvV7SSYn98mnA1HFwwk9zq5XN
-	 AqNfmpM6kt3rZnCIVuDdu51huq2/QbYl5DwE2TqeBIU4D/l9q5dsf2sh9gh9RoTUHC+/J
-	 gyo8PKwXt+WVjHoSrhgjD+2DJgrdiP3A9W2ypoZvkUdbc6Gaj3AjNF48owwAnfYOp+RXa
-	 0eXepS6F7JLkeWjtjbCxJMz/SljfkFsJCy2vZ+nNkFS+KfBJ+8mcvakJ/SVFfYbRAivMV
-	 nohx2rKUaJPayNDTWGeqWbLR3dhYZl7EJ51xQM5OiOD6vYYNXw2wO5MMoqOnHX8+/uQ==
+	bh=/0Dyk4F+OMeJG63wZFNvnc2/q2KNNNOaD3ic/n0HL/g=;
+	b=4NcSa+/0RDj0GdaiO4Tv/cp1kvO1fYcyO+0hc5ivqZDoyCkuOczqh6ztIku0PiWKhCGt
+	 3b3ZKit71bcj5jSlNNkB0y0pg0lsjt9patGEf6b3/2WIyF9gEn50r8gBKw2RiLj0c4W4J
+	 xJMYMZMZEQ4Y0ie+pgHt3ONTvdrizSXTZcf6qEu/2edZJoU3a25GLTGY/O744rIqr04W6
+	 Kf7+kijHhxM623XZrAr/XkCkVkKNVhjtcZpSMEgsSRLTEsB8Cur5SybPI6TGMCnjYp+oM
+	 YkUImRYlF3aKq49Bd6jCvq/LPmaGp8EIu0tsw5IqT3guPeD9zL6UN6h5+IrvWwqTHRg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BpVyARA3;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2XhlIvl3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7091B606A31E;
-	Wed, 28 Oct 2026 19:41:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 050CF606A324;
+	Wed, 28 Oct 2026 19:41:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BpVyARA3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 810581F01825;
-	Wed, 28 Oct 2026 19:41:14 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2XhlIvl3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 550591F01825;
+	Wed, 28 Oct 2026 19:41:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216475;
-	bh=HqkwRV0xW2DkuYxmFWik6Ij37iVpX1LDlDHWOMZj3iI=;
+	s=korg; t=1793216477;
+	bh=/0Dyk4F+OMeJG63wZFNvnc2/q2KNNNOaD3ic/n0HL/g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BpVyARA3iilhVHmw3njto7aaHvH7S2uAgXSU2VtdRzdYaaCpDlDVX6L+FKJ+pP+MA
-	 1fCtT/BjKoYLfsqj8CTsTJjV6AoIqLnU/CvysC33UAk/gYssdtgM7AuKqECZAgFaZf
-	 HHjJPdao8qjf4uZR3NlPrzfY/Arya+MKxcGtmJJo=
+	b=2XhlIvl3d0ElUMs1lWkhjXXohMZtniNR74+FyMDesgZmnOHGDuIZ2Slkdlo6PZJ+0
+	 ICuNGY136iY835Ziii9TK+pS+O6RoquWKbONcLMbgRIaAXcIYFkxdoiw8PLEa5vMzl
+	 TQWhFHgdPK4s11qc5uaPGlvChRmc06/YwvnI1s1g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ZhengYuan Huang <gality369@gmail.com>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Jun Piao <piaojun@huawei.com>,
-	Heming Zhao <heming.zhao@suse.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Qu Wenruo <wqu@suse.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1552/1887] ocfs2: validate orphan slot during inode read
-Date: Wed, 28 Oct 2026 18:00:48 +0100
-Message-ID: <20261028170534.785362229@linuxfoundation.org>
+Subject: [PATCH 6.1 1570/1887] btrfs: defrag: fix deadlock between defrag and delalloc space reservation
+Date: Wed, 28 Oct 2026 18:01:06 +0100
+Message-ID: <20261028170535.195077025@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -75,91 +69,296 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: ZhengYuan Huang <gality369@gmail.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit b2d31acbd3b182755b019183fb46949ba5e39b9f ]
+[ Upstream commit ba02eab28041f9a4bbe9fc90c7249644fef6de0f ]
 
-Patch series "ocfs2: validate active orphan slots during inode read".
+While running fsstress with autodefrag and flushoncommit, hit a deadlock
+due to the fact that defrag reserves delalloc space while it's holding
+dirty and locked folios, besides the extent range lock. The stack traces
+are the following:
 
-OCFS2 trusts active ordinary and append-DIO orphan slots read from dinodes.
-A corrupted slot can therefore index osb_orphan_wipes or the slot-local
-system-inode cache outside their allocations before the corruption is
-reported.
+   [958.624] task:kworker/u50:3   state:D stack:0     pid:20365 tgid:20365 ppid:2      task_flags:0x4208060 flags:0x00080000
+   [958.626] Workqueue: events_unbound btrfs_async_reclaim_metadata_space [btrfs]
+   [958.627] Call Trace:
+   [958.628]  <TASK>
+   [958.628]  __schedule+0x4be/0x10f0
+   [958.629]  ? preempt_count_add+0x69/0xa0
+   [958.630]  schedule+0x26/0xd0
+   [958.631]  wait_current_trans+0x102/0x160 [btrfs]
+   [958.632]  ? __pfx_autoremove_wake_function+0x10/0x10
+   [958.633]  start_transaction+0x374/0x900 [btrfs]
+   [958.634]  btrfs_commit_current_transaction+0x1d/0x70 [btrfs]
+   [958.635]  flush_space+0xca/0x5e0 [btrfs]
+   [958.636]  ? _raw_spin_unlock+0x15/0x30
+   [958.637]  ? btrfs_reduce_alloc_profile+0x8c/0x190 [btrfs]
+   [958.639]  ? _raw_spin_unlock+0x15/0x30
+   [958.640]  ? calc_available_free_space.isra.0+0x6f/0x110 [btrfs]
+   [958.641]  do_async_reclaim_metadata_space+0x84/0x190 [btrfs]
+   [958.642]  btrfs_async_reclaim_metadata_space+0x64/0x80 [btrfs]
+   [958.644]  process_one_work+0x19d/0x3a0
+   [958.644]  worker_thread+0x1c4/0x330
+   [958.645]  ? __pfx_worker_thread+0x10/0x10
+   [958.646]  kthread+0xfc/0x130
+   [958.647]  ? __pfx_kthread+0x10/0x10
+   [958.648]  ret_from_fork+0x1f7/0x2c0
+   [958.648]  ? __pfx_kthread+0x10/0x10
+   [958.649]  ret_from_fork_asm+0x1a/0x30
+   [958.650]  </TASK>
+   [958.651] task:kworker/u49:7   state:D stack:0     pid:52990 tgid:52990 ppid:2      task_flags:0x4208060 flags:0x00080000
+   [958.653] Workqueue: writeback wb_workfn (flush-btrfs-334)
+   [958.655] Call Trace:
+   [958.655]  <TASK>
+   [958.656]  __schedule+0x4be/0x10f0
+   [958.657]  ? __blk_flush_plug+0xe9/0x140
+   [958.658]  schedule+0x26/0xd0
+   [958.658]  io_schedule+0x42/0x70
+   [958.659]  folio_wait_bit_common+0x12b/0x330
+   [958.660]  ? folio_wait_bit_common+0x100/0x330
+   [958.662]  ? __pfx_wake_page_function+0x10/0x10
+   [958.663]  extent_write_cache_pages+0x599/0x830 [btrfs]
+   [958.664]  ? acpi_fwnode_get_reference_args+0x1fa/0x270
+   [958.665]  btrfs_writepages+0x77/0x130 [btrfs]
+   [958.666]  ? __pfx_end_bbio_data_write+0x10/0x10 [btrfs]
+   [958.667]  do_writepages+0xc6/0x160
+   [958.668]  __writeback_single_inode+0x42/0x310
+   [958.669]  writeback_sb_inodes+0x231/0x570
+   [958.670]  wb_writeback+0x8a/0x340
+   [958.671]  wb_workfn+0xbf/0x450
+   [958.672]  ? finish_task_switch.isra.0+0xc1/0x350
+   [958.673]  process_one_work+0x19d/0x3a0
+   [958.673]  worker_thread+0x1c4/0x330
+   [958.674]  ? __pfx_worker_thread+0x10/0x10
+   [958.675]  kthread+0xfc/0x130
+   [958.676]  ? __pfx_kthread+0x10/0x10
+   [958.676]  ret_from_fork+0x1f7/0x2c0
+   [958.677]  ? __pfx_kthread+0x10/0x10
+   [958.678]  ret_from_fork_asm+0x1a/0x30
+   [958.679]  </TASK>
+   [958.679] task:btrfs-cleaner   state:D stack:0     pid:296750 tgid:296750 ppid:2      task_flags:0x208040 flags:0x00080000
+   [958.681] Call Trace:
+   [958.682]  <TASK>
+   [958.682]  __schedule+0x4be/0x10f0
+   [958.683]  schedule+0x26/0xd0
+   [958.684]  handle_reserve_ticket+0x1b9/0x2c0 [btrfs]
+   [958.685]  ? __pfx_autoremove_wake_function+0x10/0x10
+   [958.686]  reserve_bytes+0x283/0x4c0 [btrfs]
+   [958.687]  btrfs_reserve_metadata_bytes+0x18/0xb0 [btrfs]
+   [958.688]  btrfs_delalloc_reserve_metadata+0x121/0x320 [btrfs]
+   [958.690]  btrfs_delalloc_reserve_space+0x46/0xb0 [btrfs]
+   [958.691]  btrfs_defrag_file+0x903/0x1110 [btrfs]
+   [958.692]  btrfs_run_defrag_inodes+0x334/0x430 [btrfs]
+   [958.694]  cleaner_kthread+0x97/0x1c0 [btrfs]
+   [958.694]  ? __pfx_cleaner_kthread+0x10/0x10 [btrfs]
+   [958.696]  kthread+0xfc/0x130
+   [958.696]  ? __pfx_kthread+0x10/0x10
+   [958.697]  ret_from_fork+0x1f7/0x2c0
+   [958.698]  ? __pfx_kthread+0x10/0x10
+   [958.699]  ret_from_fork_asm+0x1a/0x30
+   [958.700]  </TASK>
+   [958.716] task:fsstress        state:D stack:0     pid:296769 tgid:296769 ppid:296768 task_flags:0x400140 flags:0x00080000
+   [958.718] Call Trace:
+   [958.719]  <TASK>
+   [958.719]  __schedule+0x4be/0x10f0
+   [958.720]  ? preempt_count_add+0x69/0xa0
+   [958.721]  schedule+0x26/0xd0
+   [958.722]  wb_wait_for_completion+0x79/0xc0
+   [958.723]  ? __pfx_autoremove_wake_function+0x10/0x10
+   [958.724]  __writeback_inodes_sb_nr+0xc5/0xf0
+   [958.725]  try_to_writeback_inodes_sb+0x55/0x70
+   [958.726]  btrfs_commit_transaction+0x19d/0xeb0 [btrfs]
+   [958.727]  ? start_transaction+0x343/0x900 [btrfs]
+   [958.728]  btrfs_mksubvol+0x28b/0x4e0 [btrfs]
+   [958.729]  btrfs_mksnapshot+0x74/0xa0 [btrfs]
+   [958.730]  __btrfs_ioctl_snap_create+0x194/0x210 [btrfs]
+   [958.732]  btrfs_ioctl_snap_create_v2+0xef/0x150 [btrfs]
+   [958.733]  btrfs_ioctl+0x7ec/0x2a70 [btrfs]
+   [958.734]  ? __virt_addr_valid+0xe4/0x180
+   [958.735]  ? __check_object_size+0x1cd/0x1f0
+   [958.736]  ? kmem_cache_free+0x146/0x380
+   [958.737]  ? _raw_spin_unlock+0x15/0x30
+   [958.738]  ? do_sys_openat2+0x83/0xd0
+   [958.739]  __x64_sys_ioctl+0x92/0xe0
+   [958.740]  do_syscall_64+0x60/0x590
+   [958.741]  ? clear_bhb_loop+0x60/0xb0
+   [958.742]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+   [958.743] RIP: 0033:0x7f4431e108db
+   [958.744] RSP: 002b:00007ffcd147db20 EFLAGS: 00000246 ORIG_RAX: 0000000000000010
+   [958.746] RAX: ffffffffffffffda RBX: 0000000000000004 RCX: 00007f4431e108db
+   [958.747] RDX: 00007ffcd147eb90 RSI: 0000000050009417 RDI: 0000000000000005
+   [958.749] RBP: 0000000000000000 R08: 0000000000000000 R09: 0000000000000000
+   [958.751] R10: 0000000000000000 R11: 0000000000000246 R12: 00007ffcd147fbf0
+   [958.752] R13: 00007ffcd147eb90 R14: 0000000000000005 R15: 0000000000000003
+   [958.754]  </TASK>
 
-Patch 1 validates the ordinary orphan slot used by inode wipe processing.
-Patch 2 validates the append-DIO orphan slot used by DIO completion and
-orphan recovery.  Both checks reject corrupt metadata at the existing inode
-validation boundary.
+What happens is the following:
 
-This patch (of 2):
+1) The cleaner kthread is running autodefrag, and in defrag_one_range()
+   it acquired all the folios for the range and locked them.
 
-[BUG]
-A corrupted dinode with OCFS2_ORPHANED_FL can carry an
-i_orphaned_slot outside the mounted filesystem slot range.
-ocfs2_wipe_inode() uses it to index osb_orphan_wipes before looking
-up the orphan directory, causing an out-of-bounds memory access.
+   Then it locked the extent range in the inode's iotree.
 
-BUG: KASAN: slab-use-after-free in ocfs2_get_system_file_inode+0x780/0x820 fs/ocfs2/sysfile.c:102
-Read of size 8 at addr ffff88800b767c00 by task kworker/u8:3/85
-Call Trace:
- ...
- ocfs2_get_system_file_inode+0x780/0x820 fs/ocfs2/sysfile.c:102
- ocfs2_wipe_inode+0x292/0xf70 fs/ocfs2/inode.c:840
- ocfs2_delete_inode fs/ocfs2/inode.c:1155 [inline]
- ocfs2_evict_inode+0x6c9/0x1170 fs/ocfs2/inode.c:1295
- evict+0x38e/0x8f0 fs/inode.c:810
- iput_final fs/inode.c:1914 [inline]
- iput fs/inode.c:1966 [inline]
- iput+0x55b/0x8b0 fs/inode.c:1926
- ocfs2_recover_orphans+0x610/0xe40 fs/ocfs2/journal.c:2374
- ocfs2_complete_recovery+0x5af/0xd00 fs/ocfs2/journal.c:1373
- ...
+   It got two subranges from defrag_collect_targets(), the first one
+   with folio A and the second one with folio B.
 
-[CAUSE]
-ocfs2_validate_inode_block() validates i_suballoc_slot but leaves
-the active ordinary orphan slot unchecked. Downstream consumers
-assume that the value is smaller than osb->max_slots.
+   After it defragged the first subrange, folio A remains locked and
+   dirty - it's only unlocked when defrag_one_range() returns.
 
-[FIX]
-Reject an active i_orphaned_slot outside the slot range during
-dinode validation, before the inode reaches orphan wipe processing.
+   When it attempts to defrag the second subrange (containing folio B),
+   btrfs_delalloc_reserve_space() creates a space reservation ticket,
+   due to lack of free metadata space and blocks waiting for the async
+   metadata reclaim task to free space and wake it up;
 
-Link: https://lore.kernel.org/20260803030007.3993199-1-gality369@gmail.com
-Link: https://lore.kernel.org/20260803030007.3993199-2-gality369@gmail.com
-Fixes: b4df6ed8db0c ("[PATCH] ocfs2: fix orphan recovery deadlock")
-Signed-off-by: ZhengYuan Huang <gality369@gmail.com>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: Heming Zhao <heming.zhao@suse.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+2) The async reclaim metadata task attempts to commit the current
+   transaction, but it blocks because there is another task that
+   started the commit first;
+
+3) A task creating a snapshot is committing the transaction and
+   because the fs was mounted with flushoncommit, it calls
+   try_to_writeback_inodes_sb(), which spawns a task to flush
+   delalloc and waits for it to complete;
+
+4) The task flushing delalloc (kworker/u49:7), finds that folio A for
+   the inode being defragged is dirty, so it tries to lock it...
+
+   But it blocks because folio A is locked by the defrag task (the
+   cleaner kthread) which is blocked waiting for the reservation
+   ticket to be served, but the async reclaim metadata task is
+   blocked waiting for the transaction commit, which in turn is
+   blocked waiting for the delalloc flush task, which is trying to
+   lock folio A, resulting in a deadlock.
+
+The same type of problem can happen if the async reclaim task starts to
+flush delalloc, as that requires both locking the folio and the extent
+range in the inode's io tree, and in this case we don't need the fs to
+be mounted with flushoncommit. This type of problem has ocurred several
+times in the past with reflinks for example, where we had a dirty folio
+while holding the extent range locked and then starting a transaction
+blocked waiting for the async reclaim task due to lack of free metadata
+space.
+
+So fix this by reserving delalloc space before locking folios and locking
+the extent range in the inode's iotree. We can not simply unlock the
+folios for each subrange given by defrag_collect_targets() after we defrag
+it because the same folio may be present too in the next subrange (due to
+large folios).
+
+Fixes: 22b398eeeed4 ("btrfs: defrag: introduce helper to defrag a contiguous prepared range")
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/inode.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ fs/btrfs/ioctl.c | 50 ++++++++++++++++++++++++++++++++----------------
+ 1 file changed, 33 insertions(+), 17 deletions(-)
 
-diff --git a/fs/ocfs2/inode.c b/fs/ocfs2/inode.c
-index 8cd76357d3bf9..10c2759e16e85 100644
---- a/fs/ocfs2/inode.c
-+++ b/fs/ocfs2/inode.c
-@@ -1585,6 +1585,14 @@ int ocfs2_validate_inode_block(struct super_block *sb,
- 		goto bail;
- 	}
+diff --git a/fs/btrfs/ioctl.c b/fs/btrfs/ioctl.c
+index cae064c262cc9..46534e5d40bca 100644
+--- a/fs/btrfs/ioctl.c
++++ b/fs/btrfs/ioctl.c
+@@ -1630,26 +1630,21 @@ static_assert(IS_ALIGNED(CLUSTER_SIZE, PAGE_SIZE));
+  *
+  * - Extent bits are locked
+  */
+-static int defrag_one_locked_target(struct btrfs_inode *inode,
+-				    struct defrag_target_range *target,
+-				    struct page **pages, int nr_pages,
+-				    struct extent_state **cached_state)
++static void defrag_one_locked_target(struct btrfs_inode *inode,
++				     struct defrag_target_range *target,
++				     struct page **pages, int nr_pages,
++				     struct extent_state **cached_state)
+ {
+ 	struct btrfs_fs_info *fs_info = inode->root->fs_info;
+-	struct extent_changeset *data_reserved = NULL;
+ 	const u64 start = target->start;
+ 	const u64 len = target->len;
+ 	unsigned long last_index = (start + len - 1) >> PAGE_SHIFT;
+ 	unsigned long start_index = start >> PAGE_SHIFT;
+ 	unsigned long first_index = page_index(pages[0]);
+-	int ret = 0;
+ 	int i;
  
-+	if ((le32_to_cpu(di->i_flags) & OCFS2_ORPHANED_FL) &&
-+	    le16_to_cpu(di->i_orphaned_slot) >= OCFS2_SB(sb)->max_slots) {
-+		rc = ocfs2_error(sb, "Invalid dinode %llu: orphaned slot %u\n",
-+				 (unsigned long long)bh->b_blocknr,
-+				 le16_to_cpu(di->i_orphaned_slot));
-+		goto bail;
+ 	ASSERT(last_index - first_index + 1 <= nr_pages);
+ 
+-	ret = btrfs_delalloc_reserve_space(inode, &data_reserved, start, len);
+-	if (ret < 0)
+-		return ret;
+ 	clear_extent_bit(&inode->io_tree, start, start + len - 1,
+ 			 EXTENT_DELALLOC | EXTENT_DO_ACCOUNTING |
+ 			 EXTENT_DEFRAG, cached_state);
+@@ -1660,10 +1655,6 @@ static int defrag_one_locked_target(struct btrfs_inode *inode,
+ 		ClearPageChecked(pages[i]);
+ 		btrfs_page_clamp_set_dirty(fs_info, pages[i], start, len);
+ 	}
+-	btrfs_delalloc_release_extents(inode, len);
+-	extent_changeset_free(data_reserved);
+-
+-	return ret;
+ }
+ 
+ static int defrag_one_range(struct btrfs_inode *inode, u64 start, u32 len,
+@@ -1679,6 +1670,8 @@ static int defrag_one_range(struct btrfs_inode *inode, u64 start, u32 len,
+ 	u64 last_index = (start + len - 1) >> PAGE_SHIFT;
+ 	u64 start_index = start >> PAGE_SHIFT;
+ 	unsigned int nr_pages = last_index - start_index + 1;
++	struct extent_changeset *data_reserved = NULL;
++	u64 last_defrag_end = start;
+ 	int ret = 0;
+ 	int i;
+ 
+@@ -1689,6 +1682,22 @@ static int defrag_one_range(struct btrfs_inode *inode, u64 start, u32 len,
+ 	if (!pages)
+ 		return -ENOMEM;
+ 
++	/*
++	 * Reserve delalloc space before locking the range and before locking
++	 * and dirtying any pages - otherwise we could deadlock, for example
++	 * after defrag of one range we dirty pages and keep them locked when
++	 * we move to the next range, so reserving delalloc space right before
++	 * each range could trigger flushing of delalloc and deadlock on the
++	 * extent lock or trigger a transaction commit with flushoncommit, which
++	 * can either deadlock on the lock of a page made dirty in the previous
++	 * range or the extent lock.
++	 */
++	ret = btrfs_delalloc_reserve_space(inode, &data_reserved, start, len);
++	if (ret < 0) {
++		kfree(pages);
++		return ret;
 +	}
 +
- 	if ((le32_to_cpu(di->i_flags) & OCFS2_DIO_ORPHANED_FL) &&
- 	    le16_to_cpu(di->i_dio_orphaned_slot) >= OCFS2_SB(sb)->max_slots) {
- 		rc = ocfs2_error(sb, "Invalid dinode %llu: DIO orphaned slot %u\n",
+ 	/* Prepare all pages */
+ 	for (i = 0; i < nr_pages; i++) {
+ 		pages[i] = defrag_prepare_one_page(inode, start_index + i);
+@@ -1719,10 +1728,11 @@ static int defrag_one_range(struct btrfs_inode *inode, u64 start, u32 len,
+ 		goto unlock_extent;
+ 
+ 	list_for_each_entry(entry, &target_list, list) {
+-		ret = defrag_one_locked_target(inode, entry, pages, nr_pages,
+-					       &cached_state);
+-		if (ret < 0)
+-			break;
++		defrag_one_locked_target(inode, entry, pages, nr_pages, &cached_state);
++		if (entry->start > last_defrag_end)
++			btrfs_delalloc_release_space(inode, data_reserved, last_defrag_end,
++						     entry->start - last_defrag_end, true);
++		last_defrag_end = entry->start + entry->len;
+ 	}
+ 
+ 	list_for_each_entry_safe(entry, tmp, &target_list, list) {
+@@ -1741,6 +1751,12 @@ static int defrag_one_range(struct btrfs_inode *inode, u64 start, u32 len,
+ 		}
+ 	}
+ 	kfree(pages);
++	btrfs_delalloc_release_extents(inode, len);
++	if (last_defrag_end < start + len)
++		btrfs_delalloc_release_space(inode, data_reserved, last_defrag_end,
++					     start + len - last_defrag_end, true);
++	extent_changeset_free(data_reserved);
++
+ 	return ret;
+ }
+ 
 -- 
 2.53.0
 
