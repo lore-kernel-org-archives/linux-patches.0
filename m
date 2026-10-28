@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215094;
-	b=WoThWqPMjqhKMW363gUGOGH8LcfEu3qCfUmdFOt4R8Phjsp0da3bX819EwmKGAFcNAjJ
-	 QOoWsMdbSEa5vBbD7V1N/Qrhw3p0RjeP6Ors0dgkpbWuV8/MXbNqE39WgRbTlaUJxNPBV
-	 x/uKpwdRhmGKdkni+rBkv2Wztu6j03mPxjG3JtIVuPpqweJlYaCB+E6HttbiR0eelANrV
-	 6umFt5QJB0iv6vVL6hiTDe/md84ZXZA+7zbzHj/tZo2jZNtgEhlXbPvki+abird3y3dlM
-	 IUBTm05lIXWSQrrns71t+jP1uQ0yNGmFFOjHkf0SyCL0rb9oge9JynBx87aVXlgbsoA==
+	t=1793215097;
+	b=2TFiOzlMWvs3VBZB77d1CLEgjihd7HPqryqMeSySJotpUoXStzFSX3u2kZPCBAAAISzH
+	 zswhGFpctvpU7bIkNrBulM/kDJKV4dbFJbgzuopQ2MbwgWaVWNTXUTclvAFBQEWMte7PM
+	 b2gHSn29iZj5NRGGnL4EDA9fkI3aAhaZg36spIFpXRuzn9aE4nN6k5El7yW6JoNxhXPYa
+	 rbLpLGJiYSTQ1eNEMz32zptg/rvAaM5Qr3VO34kiF9rLXx+HfzPtucNRtk7HEJdMzEwvC
+	 qfqI9KITYUx2wIhQhhn9dd1hegL8DblKbcQVb+6c36Y2/e9+hJw0XFbQdWUCtX4iMdw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215094;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215097;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=QoOMU35Kgt+7ZRhDzDYHTlx3siAiFVvpoEuOhsvjuUg=;
-	b=JRoirM9eVlDt1dmfAZJsXLqw/GdtwyqToi35NqaT0auIrR0H8HfSvHW4HK62ioO2+F5n
-	 P/hrppA8crgfIGm826FbYYdKIEg2mHJyRWJ1iG06iFQJjdyWYU5QU556Dp/Uh6i2S/mof
-	 DKPyFrhqeRm9lJSyL6F6ij6hVSBOdfqpJp/FJAtJZ8vzdNOeyUBqM8wPqp3LImT6H74Y6
-	 vH2lK+cgjEoeEZpcGYWrMjlkRGe8Zw0bVwofsYbB6vVm/PQfENwycBTkdtG0dhkLfbuzk
-	 nh7qD+V+Yv0go7wauJf69+21SQfIRIVpXO05QfoHriCzGUslLYUJW38h3+SUVe2HKDA==
+	bh=cl2etKhJYzbMxjeTWc7vbyi05rBbXOMBomK+mMHCab4=;
+	b=y/wVjhk/7I6ekmKarRVavpc8q88x+ivqKODCMoK/M/aWdw+mR8lCIq9DxfFsyjfGzGLi
+	 Wmpeiwu5Viw0qWuJ2ktr98eu+vmO+S1JOrkNL+Ez8fzUy9x4PSoKxuVlaOIBKO3nVZlPT
+	 ENSiGEEZLhAVPFsCx6bnhbOIfmohx04ILdCQsw44qoJzOaIZjB341mjj508966+72QFaT
+	 EwxWGyVU6HBDM5KHwa52l+f3hjxdCh6zFAF36ZUGpNZqKdfEv5fvAF+aUGvI3YmnLBSQE
+	 PBi38VG3aMbgTMuftBEKc6fwPs0hMsTrmQXjCBDwWtklEeb+u7UaPPzCH0so9ZrVCbQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="oE5dcN/h";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N0OwNAhd;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2123606A31D;
-	Wed, 28 Oct 2026 19:18:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C707F606A31C;
+	Wed, 28 Oct 2026 19:18:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oE5dcN/h
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BF841F01825;
-	Wed, 28 Oct 2026 19:18:13 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N0OwNAhd
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 240821F01825;
+	Wed, 28 Oct 2026 19:18:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215093;
-	bh=QoOMU35Kgt+7ZRhDzDYHTlx3siAiFVvpoEuOhsvjuUg=;
+	s=korg; t=1793215096;
+	bh=cl2etKhJYzbMxjeTWc7vbyi05rBbXOMBomK+mMHCab4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oE5dcN/hxsVC6wlNxnYZ2yOFmLTQQHQDhdd8iee/ttMOlL4p6q7RZmBV3qGya+2DS
-	 8nJfqOWAj7E2hcb3qswz+BMxHc6glfh2E8wyp2dFZeigsODgz/Ty0ACbgLoC+x9O1e
-	 N/D3uN43OpnBc3QmAsg4G1STi+JMYP/bWP6DLZg8=
+	b=N0OwNAhdFMFQoRdJM4ejfcSt1mtZtFR0DOB7ptWYYWcuhcnkmtqvCLJu5ILduzSwJ
+	 j0Q7wZ7GQ3YXFpL5C0T6W6axKSd9gS+wH3Tk6+6fE7RSajgg2RG/wnAoXif25v4hCT
+	 63GoybTMLDzejUX6G1tX3LxUxyC7wuddAuGb/I2c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Yosry Ahmed <yosry@kernel.org>,
 	Sean Christopherson <seanjc@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1046/1887] KVM: nSVM: Always use NextRIP as vmcb02s NextRIP after first L2 VMRUN
-Date: Wed, 28 Oct 2026 17:52:22 +0100
-Message-ID: <20261028170523.214309807@linuxfoundation.org>
+Subject: [PATCH 6.1 1047/1887] KVM: nSVM: Avoid clearing VMCB_LBR in vmcb12
+Date: Wed, 28 Oct 2026 17:52:23 +0100
+Message-ID: <20261028170523.236793042@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -70,75 +70,90 @@ Content-Transfer-Encoding: 8bit
 
 From: Yosry Ahmed <yosry@kernel.org>
 
-[ Upstream commit 8d397582f6b5e9fbcf09781c7c934b4910e94a50 ]
+[ Upstream commit b53ab5167a81537777ac780bbd93d32613aa3bda ]
 
-For guests with NRIPS disabled, L1 does not provide NextRIP when running
-an L2 with an injected soft interrupt, instead it advances the current RIP
-before running it. KVM uses the current RIP as the NextRIP in vmcb02 to
-emulate a CPU without NRIPS.
+svm_copy_lbrs() always marks VMCB_LBR dirty in the destination VMCB.
+However, nested_svm_vmexit() uses it to copy LBRs to vmcb12, and
+clearing clean bits in vmcb12 is not architecturally defined.
 
-However, after L2 runs the first time, NextRIP will be updated by the CPU
-and/or KVM, and the current RIP is no longer the correct value to use in
-vmcb02.  Hence, after save/restore, use the current RIP if and only if a
-nested run is pending, otherwise use NextRIP.  Give soft_int_next_rip the
-same treatment, as it's the same logic, just for a narrower use case.
+Move vmcb_mark_dirty() to callers and drop it for vmcb12.
 
-Fixes: cc440cdad5b7 ("KVM: nSVM: implement KVM_GET_NESTED_STATE and KVM_SET_NESTED_STATE")
-CC: stable@vger.kernel.org
+This also facilitates incoming refactoring that does not pass the entire
+VMCB to svm_copy_lbrs().
+
+Fixes: d20c796ca370 ("KVM: x86: nSVM: implement nested LBR virtualization")
+Cc: stable@vger.kernel.org
 Signed-off-by: Yosry Ahmed <yosry@kernel.org>
-Link: https://patch.msgid.link/20260225005950.3739782-6-yosry@kernel.org
-[sean: give soft_int_next_rip the same treatment]
+Link: https://patch.msgid.link/20260303003421.2185681-2-yosry@kernel.org
 Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/svm/nested.c | 26 ++++++++++++++++----------
- 1 file changed, 16 insertions(+), 10 deletions(-)
+ arch/x86/kvm/svm/nested.c |  3 +++
+ arch/x86/kvm/svm/svm.c    | 10 ++++++----
+ 2 files changed, 9 insertions(+), 4 deletions(-)
 
 diff --git a/arch/x86/kvm/svm/nested.c b/arch/x86/kvm/svm/nested.c
-index dbb4b3d2c8046..313f9e952d6a8 100644
+index 313f9e952d6a8..a35fc16ba3841 100644
 --- a/arch/x86/kvm/svm/nested.c
 +++ b/arch/x86/kvm/svm/nested.c
-@@ -684,24 +684,30 @@ static void nested_vmcb02_prepare_control(struct vcpu_svm *svm,
- 	vmcb02->control.event_inj_err       = svm->nested.ctl.event_inj_err;
+@@ -589,10 +589,12 @@ static void nested_vmcb02_prepare_save(struct vcpu_svm *svm, struct vmcb *vmcb12
+ 		 */
+ 		svm_copy_lbrs(vmcb02, vmcb12);
+ 		vmcb02->save.dbgctl &= ~DEBUGCTL_RESERVED_BITS;
++		vmcb_mark_dirty(vmcb02, VMCB_LBR);
+ 		svm_update_lbrv(&svm->vcpu);
  
- 	/*
--	 * next_rip is consumed on VMRUN as the return address pushed on the
-+	 * NextRIP is consumed on VMRUN as the return address pushed on the
- 	 * stack for injected soft exceptions/interrupts.  If nrips is exposed
--	 * to L1, take it verbatim from vmcb12.  If nrips is supported in
--	 * hardware but not exposed to L1, stuff the actual L2 RIP to emulate
--	 * what a nrips=0 CPU would do (L1 is responsible for advancing RIP
--	 * prior to injecting the event).
-+	 * to L1, take it verbatim from vmcb12.
-+	 *
-+	 * If nrips is supported in hardware but not exposed to L1, stuff the
-+	 * actual L2 RIP to emulate what a nrips=0 CPU would do (L1 is
-+	 * responsible for advancing RIP prior to injecting the event). This is
-+	 * only the case for the first L2 run after VMRUN. After that (e.g.
-+	 * during save/restore), NextRIP is updated by the CPU and/or KVM, and
-+	 * the value of the L2 RIP from vmcb12 should not be used.
- 	 */
--	if (svm->nrips_enabled)
--		vmcb02->control.next_rip    = svm->nested.ctl.next_rip;
--	else if (boot_cpu_has(X86_FEATURE_NRIPS))
--		vmcb02->control.next_rip    = vmcb12_rip;
-+	if (boot_cpu_has(X86_FEATURE_NRIPS)) {
-+		if (svm->nrips_enabled || !svm->nested.nested_run_pending)
-+			vmcb02->control.next_rip    = svm->nested.ctl.next_rip;
-+		else
-+			vmcb02->control.next_rip    = vmcb12_rip;
+ 	} else if (unlikely(vmcb01->control.virt_ext & LBR_CTL_ENABLE_MASK)) {
+ 		svm_copy_lbrs(vmcb02, vmcb01);
++		vmcb_mark_dirty(vmcb02, VMCB_LBR);
+ 	}
+ }
+ 
+@@ -1012,6 +1014,7 @@ int nested_svm_vmexit(struct vcpu_svm *svm)
+ 		svm_update_lbrv(vcpu);
+ 	} else if (unlikely(vmcb01->control.virt_ext & LBR_CTL_ENABLE_MASK)) {
+ 		svm_copy_lbrs(vmcb01, vmcb02);
++		vmcb_mark_dirty(vmcb01, VMCB_LBR);
+ 		svm_update_lbrv(vcpu);
+ 	}
+ 
+diff --git a/arch/x86/kvm/svm/svm.c b/arch/x86/kvm/svm/svm.c
+index d2a84597711ed..7b6110ca9f681 100644
+--- a/arch/x86/kvm/svm/svm.c
++++ b/arch/x86/kvm/svm/svm.c
+@@ -910,8 +910,6 @@ void svm_copy_lbrs(struct vmcb *to_vmcb, struct vmcb *from_vmcb)
+ 	to_vmcb->save.br_to		= from_vmcb->save.br_to;
+ 	to_vmcb->save.last_excp_from	= from_vmcb->save.last_excp_from;
+ 	to_vmcb->save.last_excp_to	= from_vmcb->save.last_excp_to;
+-
+-	vmcb_mark_dirty(to_vmcb, VMCB_LBR);
+ }
+ 
+ static void svm_enable_lbrv(struct kvm_vcpu *vcpu)
+@@ -925,8 +923,10 @@ static void svm_enable_lbrv(struct kvm_vcpu *vcpu)
+ 	set_msr_interception(vcpu, svm->msrpm, MSR_IA32_LASTINTTOIP, 1, 1);
+ 
+ 	/* Move the LBR msrs to the vmcb02 so that the guest can see them. */
+-	if (is_guest_mode(vcpu))
++	if (is_guest_mode(vcpu)) {
+ 		svm_copy_lbrs(svm->vmcb, svm->vmcb01.ptr);
++		vmcb_mark_dirty(svm->vmcb, VMCB_LBR);
 +	}
+ }
  
- 	svm->nmi_l1_to_l2 = is_evtinj_nmi(vmcb02->control.event_inj);
- 	if (is_evtinj_soft(vmcb02->control.event_inj)) {
- 		svm->soft_int_injected = true;
- 		svm->soft_int_csbase = vmcb12_csbase;
- 		svm->soft_int_old_rip = vmcb12_rip;
--		if (svm->nrips_enabled)
-+		if (svm->nrips_enabled || !svm->nested.nested_run_pending)
- 			svm->soft_int_next_rip = svm->nested.ctl.next_rip;
- 		else
- 			svm->soft_int_next_rip = vmcb12_rip;
+ static void svm_disable_lbrv(struct kvm_vcpu *vcpu)
+@@ -943,8 +943,10 @@ static void svm_disable_lbrv(struct kvm_vcpu *vcpu)
+ 	 * Move the LBR msrs back to the vmcb01 to avoid copying them
+ 	 * on nested guest entries.
+ 	 */
+-	if (is_guest_mode(vcpu))
++	if (is_guest_mode(vcpu)) {
+ 		svm_copy_lbrs(svm->vmcb01.ptr, svm->vmcb);
++		vmcb_mark_dirty(svm->vmcb01.ptr, VMCB_LBR);
++	}
+ }
+ 
+ static int svm_get_lbr_msr(struct vcpu_svm *svm, u32 index)
 -- 
 2.53.0
 
