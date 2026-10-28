@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214507;
-	b=JbefnzMSyZRQytpzKiP7eKGKRkRw/mBuWK8mNKVzdgTT1pLFwe+Y6tXhOXiccMnNU46/
-	 vq/C2bQ6jmjqF45NKVJyTlRBYgg6aK/umUkkGd4bZCPHDnHCaANlqI9EMri0j8czvwCAV
-	 BUxKQn3T0tvt3R978gLiHYI0Rc04b/GpUUJoTCkjC/cQ+I9v7+B1LABfdFwJXJPS02q2m
-	 FbkxeFmJBniCwmc2meqc2W9cT5yyunHawz1N6GxQLsA13/3EIJT/ykmFsVug0l0lOD+3b
-	 RHs9ydfDPJh94zPWCiixGYIIIx/+m5T2UXDF8AqovFCqoPfMDDfIAqrj7ntuuA0Tjbg==
+	t=1793214510;
+	b=cwAW0VxEhPcJS0ubi7U7lfaITgHu3AR0Z/5UrSnQJwaoE/jU8P5reedKLlw6VC78zBwU
+	 3YLzoY+wLqOg0I66oyZtcskfZp6JrBOe7IhAdTfImYDvWB5W3XgM4Gc46XUgvjYYA26eH
+	 Enx3sEpRattbg2FqsDCNS9VTeFezFNRnrYGTERDEpMPlo5A82ANjWu/53mo+tJEFNm2v+
+	 qoliF6i2/OhDpaQhkFIVZijdhVmRrGsZHDh/xvnFJ/P5gbDk5Uiv0FldtUkjU20/NXXvt
+	 gdeEbiTlbuDWu1mpzFn3YsLiVvTZhd+EYXLb+Q//l+GsI5c3+rZRl1LW2eG20scw5tA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214507;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214510;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=8lBVzV5D1BD4w+8qqLwrQ4xbwykawaJuQf4koQr/OVY=;
-	b=NkGHJ9F0GJyJsG3MvibpQuOSinYM8auYSrLuY1p3HSL0ACzUEOvKXu6I/MyX82diWHbP
-	 20W+iam1K2CTPd5IGwS/TRyX2zwbiHYoEzXxvV9PyRcMSuvrAivZyrv4P1zv3+dRltqIV
-	 GW6Z96WQ+LLxMKmtsS977+yLbKGnwHxHL1rKiuxqjJlFzfDy8WFY/niWKsaDJ2ZWRi2ZJ
-	 Zy5qptijdeKv1GFKKUXBuTcDU3SyOXesNVNv4bzrgguKyE+Rg8kcJfeZPNxowjFtCz0C4
-	 8dZF4q4LjrlzzUgSD3ItshjzWkqZV7pjHIGi/URLKSPWYNsWTJP57Op9Ncv5Svo7jAg==
+	bh=H1Be75+ilEYyMy9Bn7uo/lPDkY+sMDnuN3zfxmoiixY=;
+	b=SfhSTXzUso/U95OD/e4cwhI4i/WbUEc/1zhU4Db2583UCHAAFhguLD5Cz4xhW2ACWZc8
+	 G8vRFJkIt9OL7y8XefFQCh+ltQLdcKfWtgDqyNctJ/FZkNzHGidXHgveaFRHlXVM/O1jY
+	 F7Jd4cqxqDmU4ApeGIG0IriIdkpeFDSKq3P8ONewbId8JdlYmc1U+/fnfcD3p2fZwGzVl
+	 nG1tyH5gbhP9wEwpl8LAUMRCp8KF93yxmuWPWyt4Xl0oi4+BH32Kppf87n0M0E3nn+1ku
+	 Eyp5lG4zS1wbhcCXTfyAmzPdGGGAvC02cOgPgG0F3Ea66mXzXJb9LmMgEFWCIhvjsxA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NdPdwhGK;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rAjz8Rvk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6968A606BFBD;
-	Wed, 28 Oct 2026 19:08:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DF72606BFBD;
+	Wed, 28 Oct 2026 19:08:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NdPdwhGK
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 891121F031E1;
-	Wed, 28 Oct 2026 19:08:26 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rAjz8Rvk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EF001F031E6;
+	Wed, 28 Oct 2026 19:08:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214507;
-	bh=8lBVzV5D1BD4w+8qqLwrQ4xbwykawaJuQf4koQr/OVY=;
+	s=korg; t=1793214509;
+	bh=H1Be75+ilEYyMy9Bn7uo/lPDkY+sMDnuN3zfxmoiixY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NdPdwhGKds9qK0eEeWutiFR++VX9+ecEO52X/IAE1OgaG0f4LX3lwtXky4xRFaF5v
-	 O59gkg46RZRJDMVyUda5x489zW97WUZlmKsriJ6m8J32XoSQvmX6KX+pY6mJbxNDjP
-	 rz0TJb4bJbXaMOa0wygCq0d4ZryygD5fS6UJWvaI=
+	b=rAjz8RvkaLQHQpg/k4VDmIMO0EnPnkxPRPF7XFt4R9qf++BFjZs3Gp+EeKqvYBDbA
+	 5kMG9erd40ta9WRKopL5344pH67atxmCxeeJxkwo6zkpYeEKCudycx8VNfaDYotzPQ
+	 5PeY6Eecu7vHzvxa3F5GRfOuGhLrM+82Cb3to92I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Starke <daniel.starke@siemens.com>,
+	Xiao Ni <xni@redhat.com>,
+	Coly Li <colyli@kernel.org>,
+	Yu Kuai <yukuai3@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0856/1887] tty: n_gsm: introduce macro for minimal unit size
-Date: Wed, 28 Oct 2026 17:49:12 +0100
-Message-ID: <20261028170518.903123487@linuxfoundation.org>
+Subject: [PATCH 6.1 0883/1887] md/raid10: wait barrier before returning discard request with REQ_NOWAIT
+Date: Wed, 28 Oct 2026 17:49:39 +0100
+Message-ID: <20261028170519.514929217@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -67,57 +69,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Starke <daniel.starke@siemens.com>
+From: Xiao Ni <xni@redhat.com>
 
-[ Upstream commit 7a1212475f5e313c11300272f34ffa32462bbeef ]
+[ Upstream commit 3db4404435397a345431b45f57876a3df133f3b4 ]
 
-n_gsm has a minimal protocol overhead of 7 bytes. The current code already
-checks whether the configured MRU/MTU size is at least one byte more than
-this.
+raid10_handle_discard should wait barrier before returning a discard bio
+which has REQ_NOWAIT. And there is no need to print warning calltrace
+if a discard bio has REQ_NOWAIT flag. Quality engineer usually checks
+dmesg and reports error if dmesg has warning/error calltrace.
 
-Introduce the macro MIN_MTU to make this value more obvious.
-
-Signed-off-by: Daniel Starke <daniel.starke@siemens.com>
-Link: https://lore.kernel.org/r/20221103091743.2119-1-daniel.starke@siemens.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: 3cf0b3c243e5 ("tty: n_gsm: Don't block input queue by waiting MSC")
+Fixes: c9aa889b035f ("md: raid10 add nowait support")
+Signed-off-by: Xiao Ni <xni@redhat.com>
+Acked-by: Coly Li <colyli@kernel.org>
+Link: https://lore.kernel.org/linux-raid/20250306094938.48952-1-xni@redhat.com
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/n_gsm.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/md/raid10.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/tty/n_gsm.c b/drivers/tty/n_gsm.c
-index fc52a7a38df32..165a70ab1f004 100644
---- a/drivers/tty/n_gsm.c
-+++ b/drivers/tty/n_gsm.c
-@@ -89,6 +89,7 @@ module_param(debug, int, 0600);
-  */
- #define MAX_MRU 1500
- #define MAX_MTU 1500
-+#define MIN_MTU (PROT_OVERHEAD + 1)
- /* SOF, ADDR, CTRL, LEN1, LEN2, ..., FCS, EOF */
- #define PROT_OVERHEAD 7
- #define	GSM_NET_TX_TIMEOUT (HZ*10)
-@@ -2771,7 +2772,9 @@ static int gsm_config(struct gsm_mux *gsm, struct gsm_config *c)
- 	if ((c->adaption != 1 && c->adaption != 2) || c->k)
- 		return -EOPNOTSUPP;
- 	/* Check the MRU/MTU range looks sane */
--	if (c->mru > MAX_MRU || c->mtu > MAX_MTU || c->mru < 8 || c->mtu < 8)
-+	if (c->mru < MIN_MTU || c->mtu < MIN_MTU)
-+		return -EINVAL;
-+	if (c->mru > MAX_MRU || c->mtu > MAX_MTU)
- 		return -EINVAL;
- 	if (c->n2 > 255)
- 		return -EINVAL;
-@@ -3360,7 +3363,7 @@ static int gsm_create_network(struct gsm_dlci *dlci, struct gsm_netconfig *nc)
- 		return -ENOMEM;
+diff --git a/drivers/md/raid10.c b/drivers/md/raid10.c
+index 508b461eabe88..82562c49a14e2 100644
+--- a/drivers/md/raid10.c
++++ b/drivers/md/raid10.c
+@@ -1676,11 +1676,10 @@ static int raid10_handle_discard(struct mddev *mddev, struct bio *bio)
+ 	if (test_bit(MD_RECOVERY_RESHAPE, &mddev->recovery))
+ 		return -EAGAIN;
+ 
+-	if (WARN_ON_ONCE(bio->bi_opf & REQ_NOWAIT)) {
++	if (!wait_barrier(conf, bio->bi_opf & REQ_NOWAIT)) {
+ 		bio_wouldblock_error(bio);
+ 		return 0;
  	}
- 	net->mtu = dlci->gsm->mtu;
--	net->min_mtu = 8;
-+	net->min_mtu = MIN_MTU;
- 	net->max_mtu = dlci->gsm->mtu;
- 	mux_net = netdev_priv(net);
- 	mux_net->dlci = dlci;
+-	wait_barrier(conf, false);
+ 
+ 	/*
+ 	 * Check reshape again to avoid reshape happens after checking
 -- 
 2.53.0
 
