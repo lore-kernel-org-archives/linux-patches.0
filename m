@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215012;
-	b=yzTsDzmztyBbMdMmuqlwZXG/le/zG7CTRqswhrzVhUdSn04MCMraFcxjSIscMzy3puGs
-	 g/tvZVLxZrk4g7/q6jemeK7EYxmoUaLiRcuQYmvtUPgUWp7Umskx1ek2p/NI1XvaKC6tT
-	 KDLQC98yFwQvg2anLxlRgi97panVP5RzGR+Avj5Q4Zt9CLizyjq5rke6isxc4wZq62uhr
-	 XiAlBfqsgnMwlnuolObXrQ5oXhp9IFqHDjYmQjHdWSxejPz5nNC6GfnfTVLRcOW68vyR7
-	 vwCk57lOmxwqKt4vpYoJPCgsfqxJMGXL3iFIZtf3Wjn1N9tWSSnggu60ljQLH2y/wHw==
+	t=1793215015;
+	b=cHA4uLCGmeM2tVAjtbEqgGHw1Yv3i283k3+X4hH2wQDRefgiz1OKwYK9aYqtWjEdp4mQ
+	 Ynq5nirPOcmuoZC0yrqcSbSeQ22V+ItXM0yp5r5kK0z7g1KhHoRF3tnDqgRigKD9yZAyl
+	 d3irqQx594SXVqs06Cg2RAagBNlq38B628ARKSZLcMX4XJwZ/AT3LNGUdfUER61GSQh1D
+	 qucorV3e8Nq9OWtRYQwJXSehIj20ooI4Dpdd52kgmo7PB9XdrumnqLS28S0vOnxhKp2ny
+	 ngr0WNUDIv181YpZBqW9+DhjN7TZlo29F+jZTiMYqi0JwApegbh0FdlOKDiuJtpI2mA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215012;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215015;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=dAEFaFYPmdXM0UEJAbAu1M3XJzY8EboRE4FbYC3vVkY=;
-	b=mdbNjkueJZk++KDinqvN1/6sHluF3abPu4jRdSJ6B9ePk/WAao55Dy6rJrwuvwl1maH4
-	 eM8LDCw1zO9LGteLcJcP9PCz1X+iJv563PX+OwUoP/zpxOf4Xp4jxzOKjbo9WtiA13JRH
-	 pWTjujvxPVv8xi4Qx+MvIbi31asoAAbqZ3WcwSkhmm5d08ryAUJiAPfbjIg7gqPhYRzD0
-	 h3j9igN5hOBQTc5qyH5SEXbt5mH6mw0vsZDECDvx5HN5pLqtk8bQ/LCOlVBCj6rS8WE+P
-	 5pwSAw4RrzSi0/KfEr3QumoWx/mH9Wr7DYWP7ol3eBMr89YRvXdICFyUFy2jj/L6lGg==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=gyJqKxlyUr6k0ko8lX+Hqm5hMNlB63LbckHSuQoHaaQ=;
+	b=u69X5aoOMReJrzT94VECzdmQEM8bFFaRmT694DNL5Vxm0N75Ex+5IW9w/dDSExKORgfa
+	 CxdeMG/m4dI3Awedvi9ytGQPUnRnK603/l9AxaXraJkpoPKmgN3G6iZBuB+F3FW8t25uj
+	 wbeOapcLDtRb5oL1as5pJKloXyO+TGsa21dANchbwIpGPSBUHi4+4kWH5tEgGh5J1O9wL
+	 58jX69yDDBTZrLAcnNL2TULGRPNhctj0j5DFw6OCzG2wclf7AITwQRxXHvETxjStsEL41
+	 yX5jWTKD0fMvAJS1Y+wNlbEbov6735wt1r7vCEXUHHaKsVXCPZ4/2FDWskQLyveGmjQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sesw7Btk;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="heb/NFEc";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EC8D606A31A;
-	Wed, 28 Oct 2026 19:16:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FD3E606A333;
+	Wed, 28 Oct 2026 19:16:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sesw7Btk
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 609EA1F01825;
-	Wed, 28 Oct 2026 19:16:51 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=heb/NFEc
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33A621F031E2;
+	Wed, 28 Oct 2026 19:16:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215011;
-	bh=dAEFaFYPmdXM0UEJAbAu1M3XJzY8EboRE4FbYC3vVkY=;
+	s=korg; t=1793215014;
+	bh=gyJqKxlyUr6k0ko8lX+Hqm5hMNlB63LbckHSuQoHaaQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sesw7BtkOn/wHzFtekUhVwjEkSIB9ibpDYpPrczlDY4NZ59lHuDwsg/frQuKv8a77
-	 CuYBGFMYdcWg10Q7avqnfwU0HBsAIYGZb8/ZdoVi7YRUXZBVrj+TlNzVRBMywyClo4
-	 pLOV+PmuN5jtgj8oaFeXKM3b5u05+rUcJQE3y91s=
+	b=heb/NFEcSv9+Rk+WppaSpiLsimpkwt8QQBx2HD9GY+jx1KmvMsieBNfW+0RsKRCZm
+	 Lqg5uBaurhhumzbR+EeVnWR7/KxOMgHKcS/PgSCnbEDjHmdcp23eLnVCmbCXQldXPi
+	 JHyE1F1tlrEynGX7s1CQCySm0vwErIhhLIgiAX9I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Johan Hovold <johan@kernel.org>,
-	Mark Brown <broonie@kernel.org>,
+	Amir Shetaia <Amir.Shetaia@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1061/1887] spi: fsl: fix controller deregistration
-Date: Wed, 28 Oct 2026 17:52:37 +0100
-Message-ID: <20261028170523.550274227@linuxfoundation.org>
+Subject: [PATCH 6.1 1062/1887] drm/amdkfd: Clear VRAM on allocation to prevent stale data exposure
+Date: Wed, 28 Oct 2026 17:52:38 +0100
+Message-ID: <20261028170523.575174407@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -63,71 +63,52 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Amir Shetaia <Amir.Shetaia@amd.com>
 
-[ Upstream commit 9b7abfed4c3754062d1f3ffd452e65a38667f586 ]
+[ Upstream commit ad52d61d82181dbdb7f05826de38352d5e550cc2 ]
 
-Make sure to deregister the controller before releasing underlying
-resources like DMA during driver unbind.
+KFD VRAM allocations set AMDGPU_GEM_CREATE_VRAM_WIPE_ON_RELEASE
+but not AMDGPU_GEM_CREATE_VRAM_CLEARED, leaving freshly allocated
+VRAM with stale data from prior use observable by compute kernels.
 
-Fixes: 4178b6b1b595 ("spi: fsl-(e)spi: migrate to using devm_ functions to simplify cleanup")
-Cc: stable@vger.kernel.org	# 4.3
-Cc: Heiner Kallweit <hkallweit1@gmail.com>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260410064749.496888-1-johan@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+The GEM ioctl path already sets VRAM_CLEARED for all userspace
+allocations via amdgpu_gem_create_ioctl() and
+amdgpu_mode_dumb_create(). The KFD path was missing this flag,
+allowing stale page table remnants to leak into user buffers.
+
+This causes crashes in RCCL P2P transport where non-zero data in
+ptrExchange/head/tail fields corrupts the protocol handshake.
+
+Signed-off-by: Amir Shetaia <Amir.Shetaia@amd.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-fsl-spi.c | 14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/spi/spi-fsl-spi.c b/drivers/spi/spi-fsl-spi.c
-index c63e20ae956da..a92671faca2ab 100644
---- a/drivers/spi/spi-fsl-spi.c
-+++ b/drivers/spi/spi-fsl-spi.c
-@@ -631,7 +631,7 @@ static struct spi_controller *fsl_spi_probe(struct device *dev,
- 
- 	mpc8xxx_spi_write_reg(&reg_base->mode, regval);
- 
--	ret = devm_spi_register_controller(dev, host);
-+	ret = spi_register_controller(host);
- 	if (ret < 0)
- 		goto err_probe;
- 
-@@ -722,7 +722,13 @@ static void of_fsl_spi_remove(struct platform_device *ofdev)
- 	struct spi_controller *host = platform_get_drvdata(ofdev);
- 	struct mpc8xxx_spi *mpc8xxx_spi = spi_controller_get_devdata(host);
- 
-+	spi_controller_get(host);
-+
-+	spi_unregister_controller(host);
-+
- 	fsl_spi_cpm_free(mpc8xxx_spi);
-+
-+	spi_controller_put(host);
- }
- 
- static struct platform_driver of_fsl_spi_driver = {
-@@ -768,7 +774,13 @@ static void plat_mpc8xxx_spi_remove(struct platform_device *pdev)
- 	struct spi_controller *host = platform_get_drvdata(pdev);
- 	struct mpc8xxx_spi *mpc8xxx_spi = spi_controller_get_devdata(host);
- 
-+	spi_controller_get(host);
-+
-+	spi_unregister_controller(host);
-+
- 	fsl_spi_cpm_free(mpc8xxx_spi);
-+
-+	spi_controller_put(host);
- }
- 
- MODULE_ALIAS("platform:mpc8xxx_spi");
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
+index aaeb915a776d0..eabba7037b8ab 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
+@@ -1665,7 +1665,8 @@ int amdgpu_amdkfd_gpuvm_alloc_memory_of_gpu(
+ 	 */
+ 	if (flags & KFD_IOC_ALLOC_MEM_FLAGS_VRAM) {
+ 		domain = alloc_domain = AMDGPU_GEM_DOMAIN_VRAM;
+-		alloc_flags = AMDGPU_GEM_CREATE_VRAM_WIPE_ON_RELEASE;
++		alloc_flags = AMDGPU_GEM_CREATE_VRAM_WIPE_ON_RELEASE |
++			AMDGPU_GEM_CREATE_VRAM_CLEARED;
+ 		alloc_flags |= (flags & KFD_IOC_ALLOC_MEM_FLAGS_PUBLIC) ?
+ 			AMDGPU_GEM_CREATE_CPU_ACCESS_REQUIRED : 0;
+ 	} else if (flags & KFD_IOC_ALLOC_MEM_FLAGS_GTT) {
 -- 
 2.53.0
 
