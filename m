@@ -1,54 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214765;
-	b=NppzLxYqDY/W6kSLZTow/35ctlB4Q5DSOK0xmqU7IE03g/dy6KQoDG8lvFAqrWVso1E4
-	 nxCk0uZpxE9qbHiabPly5Og/XB4gqBiirC+Wj9aG+eg7XD2oGp+JdTxmZBFEHcWDeuOA0
-	 WP+KJ4l3gpCn3ApdeyTwG2ehukmKZZubQvzlt+K9n7FHyJKeHZnvai0gm23+6Tw0Oe5xn
-	 wAIs+S3LDrdo7CQlVcRNEuZeFCmEw1FzHdggZEiVD/YICvcgewH/njAWpo7TIZV8ZD+if
-	 XQab9QRi+72cIjsZLtRVaVDN18yV23wgXzQP5yFQmTfU6OcbRn2hvwskHC6lm5YH6Bw==
+	t=1793214768;
+	b=Xf6wmHAmaauuQvcO8FxkxM73tny1r4BhyJFZLKiAuMycMN/+72wvTzVJ6sMGkJ47gOvL
+	 ESzaAr3Tt7EvEo2iHyLx9E5H4muHDKrM6xu5ius58f++YXUmnE0UBcGFG+M/Z1vGvyG89
+	 4qE1A/PMexfvmA2MShrRClnhKUaCuLs0Zv8fMI3oPl8rZhySEGoFh5b2JCC7beye1k99k
+	 dr85jTUT6lCD9mJ3GrmD9CAMjVKCb81pLQrIMyXp8qjZUZNvrOcDH6SvBViwLrh718Gfd
+	 g+mK1Y0/j2I9hyJg+KgnLzYPZFD018qqAQowS0CNq8f6f+eK1eRT6q9+zv+zYkZvNzg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214765;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214768;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=xQ/OvXOKRq2cnIICsuuzh7gIHwT0e9a2h/PBYoFiSF0=;
-	b=mLL771BBpi1cNNkSjir1uHVSrkReOPWIzvKb2MNXjcWtr4PasjitFSegjkhp7kgiPNZa
-	 c/PJMbSJh2IruuaCYBpgPuWNEMiOwllgtajObZAirscqvCe0bADnrs553hav2ofd7eYRT
-	 J7YlP5dPKvmLskPPKpeYhKCajdSTqHVpmRIqPGyXJlKwUrHVGZgpE3JDGBhVqO9OBHqU2
-	 xCdMnTU7GesQXY38uuCjs9t5rK9LjYH3cY084UjxctOjgEpNHeVuzmKaGEAczspjf1fE3
-	 pRMHUayjOzgzb0A86jmY+5jX9she75w0Pkd570cJ6L2MA11N062HOhBbeqLsc3GnbQQ==
+	bh=3mIbD/0ge9o46+zHmSYVFFq0k7UHUOnwkmXAQrp87cI=;
+	b=BDzombOW63QPIeqbs07vRQzsmBp1nQ6mOvYH7+ltTqeFec2FoIc3+PQVb3EXwwPhE3Ac
+	 bdvFOCRioYwML3KSyrbaHl3r4uSTTPmSZC0VKgZlQq06wYQowyknYShktn38CeqWnHXpL
+	 c+EvcTZJrz51sKDD4lMSQHZjMw+aZPAh19v4/IJwLmATNhgqOSpGriDB1HG+UYvB3sTNN
+	 N6q2Z8JVak1GEEXT4B51ExVOOXtRo6V3BNVk+x0Dgwo2VG3F4QSHZcpZVjtMUQal+KsJ/
+	 cxo8t1dXAu1Jl32kEW4zDyz6hV2lP8nCrt5tWuWpzdzdfxbdQRHGAtpVvFGkj5GA5cw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=K3bljQgy;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1w480cVA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B84F606A330;
-	Wed, 28 Oct 2026 19:12:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15717606A322;
+	Wed, 28 Oct 2026 19:12:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=K3bljQgy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A03391F01825;
-	Wed, 28 Oct 2026 19:12:44 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1w480cVA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E4081F01825;
+	Wed, 28 Oct 2026 19:12:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214765;
-	bh=xQ/OvXOKRq2cnIICsuuzh7gIHwT0e9a2h/PBYoFiSF0=;
+	s=korg; t=1793214767;
+	bh=3mIbD/0ge9o46+zHmSYVFFq0k7UHUOnwkmXAQrp87cI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=K3bljQgyxhAmGutcaqFTn+bl26WCmtezW5lfX3Xwc5ysUDimck4WtHjJGL9D1jsm+
-	 sOT64Nx1atMlRVqiP+2U//bF6wSeuZonwd5w/3i8GxxnuJwB3FkrWEWIyxw7lcLGgJ
-	 Z/4O00M+3CYEth9p0TQslrX3KBSkeKclt6fnaGRA=
+	b=1w480cVAdlO0AFn+RV+j0ssPxFtBkAFgCcFo7T3bbEIAgnWplL6GmiuLOtWz4RFWw
+	 xSYcKyHqspVt/qKzkJPn/5UejLJtwtxG3SzW3PbfbWvE276d2b8nbwXk2SdgK5HhdM
+	 z7oD14dz5KrTec8qOoLS5OHwrU4wp9OcCFTo9kcs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+1543a7d954d9c6d00407@syzkaller.appspotmail.com,
-	Guoyu Su <yss2813483011xxl@gmail.com>,
-	Willem de Bruijn <willemb@google.com>,
+	Yuan Tan <tanyuan98@outlook.com>,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Sabrina Dubroca <sd@queasysnail.net>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0974/1887] net: use skb_header_pointer() for TCPv4 GSO frag_off check
-Date: Wed, 28 Oct 2026 17:51:10 +0100
-Message-ID: <20261028170521.575395781@linuxfoundation.org>
+Subject: [PATCH 6.1 0975/1887] mpls: add seqcount to protect the platform_label{,s} pair
+Date: Wed, 28 Oct 2026 17:51:11 +0100
+Message-ID: <20261028170521.597561490@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -70,60 +72,126 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guoyu Su <yss2813483011xxl@gmail.com>
+From: Sabrina Dubroca <sd@queasysnail.net>
 
-[ Upstream commit ddc748a391dd8642ba6b2e4fe22e7f2ddf84b7f0 ]
+[ Upstream commit 629ec78ef8608d955ce217880cdc3e1873af3a15 ]
 
-Syzbot reported a KMSAN uninit-value warning in gso_features_check()
-called from netif_skb_features() [1].
+The RCU-protected codepaths (mpls_forward, mpls_dump_routes) can have
+an inconsistent view of platform_labels vs platform_label in case of a
+concurrent resize (resize_platform_label_table, under
+platform_mutex). This can lead to OOB accesses.
 
-gso_features_check() reads iph->frag_off to decide whether to clear
-mangleid_features. Accessing the IPv4 header via ip_hdr()/inner_ip_hdr()
-can rely on skb header offsets that are not always safe for direct
-dereference on packets injected from PF_PACKET paths.
+This patch adds a seqcount, so that we get a consistent snapshot.
 
-Use skb_header_pointer() for the TCPv4 frag_off check so the header read
-is robust whether data is already linear or needs copying.
+Note that mpls_label_ok is also susceptible to this, so the check
+against RTA_DST in rtm_to_route_config, done outside platform_mutex,
+is not sufficient. This value gets passed to mpls_label_ok once more
+in both mpls_route_add and mpls_route_del, so there is no issue, but
+that additional check must not be removed.
 
-[1] https://syzkaller.appspot.com/bug?extid=1543a7d954d9c6d00407
-
-Link: https://lore.kernel.org/netdev/willemdebruijn.kernel.1a9f35039caab@gmail.com/
-Fixes: cbc53e08a793 ("GSO: Add GSO type for fixed IPv4 ID")
-Reported-by: syzbot+1543a7d954d9c6d00407@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=1543a7d954d9c6d00407
-Tested-by: syzbot+1543a7d954d9c6d00407@syzkaller.appspotmail.com
-Signed-off-by: Guoyu Su <yss2813483011xxl@gmail.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20260327153507.39742-1-yss2813483011xxl@gmail.com
+Reported-by: Yuan Tan <tanyuan98@outlook.com>
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Reported-by: Xin Liu <bird@lzu.edu.cn>
+Fixes: 7720c01f3f590 ("mpls: Add a sysctl to control the size of the mpls label table")
+Fixes: dde1b38e873c ("mpls: Convert mpls_dump_routes() to RCU.")
+Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
+Link: https://patch.msgid.link/cd8fca15e3eb7e212b094064cd83652e20fd9d31.1774284088.git.sd@queasysnail.net
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/dev.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ include/net/netns/mpls.h |  1 +
+ net/mpls/af_mpls.c       | 40 ++++++++++++++++++++++++++++++----------
+ 2 files changed, 31 insertions(+), 10 deletions(-)
 
-diff --git a/net/core/dev.c b/net/core/dev.c
-index e467e81226396..c8d0f98d375e6 100644
---- a/net/core/dev.c
-+++ b/net/core/dev.c
-@@ -3633,10 +3633,15 @@ static netdev_features_t gso_features_check(const struct sk_buff *skb,
- 	 * IPv4 header has the potential to be fragmented.
- 	 */
- 	if (skb_shinfo(skb)->gso_type & SKB_GSO_TCPV4) {
--		struct iphdr *iph = skb->encapsulation ?
--				    inner_ip_hdr(skb) : ip_hdr(skb);
-+		const struct iphdr *iph;
-+		struct iphdr _iph;
-+		int nhoff = skb->encapsulation ?
-+			    skb_inner_network_offset(skb) :
-+			    skb_network_offset(skb);
+diff --git a/include/net/netns/mpls.h b/include/net/netns/mpls.h
+index 19ad2574b267c..f364286adf288 100644
+--- a/include/net/netns/mpls.h
++++ b/include/net/netns/mpls.h
+@@ -16,6 +16,7 @@ struct netns_mpls {
+ 	int default_ttl;
+ 	size_t platform_labels;
+ 	struct mpls_route __rcu * __rcu *platform_label;
++	seqcount_t platform_label_seq;
  
--		if (!(iph->frag_off & htons(IP_DF)))
-+		iph = skb_header_pointer(skb, nhoff, sizeof(_iph), &_iph);
+ 	struct ctl_table_header *ctl;
+ };
+diff --git a/net/mpls/af_mpls.c b/net/mpls/af_mpls.c
+index 5e0900bd48b6b..73443cf8b69ce 100644
+--- a/net/mpls/af_mpls.c
++++ b/net/mpls/af_mpls.c
+@@ -74,16 +74,31 @@ static void rtmsg_lfib(int event, u32 label, struct mpls_route *rt,
+ 		       struct nlmsghdr *nlh, struct net *net, u32 portid,
+ 		       unsigned int nlm_flags);
+ 
+-static struct mpls_route *mpls_route_input_rcu(struct net *net, unsigned index)
++static struct mpls_route __rcu **mpls_platform_label_rcu(struct net *net, size_t *platform_labels)
+ {
+-	struct mpls_route *rt = NULL;
++	struct mpls_route __rcu **platform_label;
++	unsigned int sequence;
+ 
+-	if (index < net->mpls.platform_labels) {
+-		struct mpls_route __rcu **platform_label =
+-			rcu_dereference_rtnl(net->mpls.platform_label);
+-		rt = rcu_dereference_rtnl(platform_label[index]);
+-	}
+-	return rt;
++	do {
++		sequence = read_seqcount_begin(&net->mpls.platform_label_seq);
++		platform_label = rcu_dereference_rtnl(net->mpls.platform_label);
++		*platform_labels = net->mpls.platform_labels;
++	} while (read_seqcount_retry(&net->mpls.platform_label_seq, sequence));
 +
-+		if (!iph || !(iph->frag_off & htons(IP_DF)))
- 			features &= ~NETIF_F_TSO_MANGLEID;
++	return platform_label;
++}
++
++static struct mpls_route *mpls_route_input_rcu(struct net *net, unsigned int index)
++{
++	struct mpls_route __rcu **platform_label;
++	size_t platform_labels;
++
++	platform_label = mpls_platform_label_rcu(net, &platform_labels);
++
++	if (index >= platform_labels)
++		return NULL;
++
++	return rcu_dereference_rtnl(platform_label[index]);
+ }
+ 
+ bool mpls_output_possible(const struct net_device *dev)
+@@ -2209,8 +2224,7 @@ static int mpls_dump_routes(struct sk_buff *skb, struct netlink_callback *cb)
+ 	if (index < MPLS_LABEL_FIRST_UNRESERVED)
+ 		index = MPLS_LABEL_FIRST_UNRESERVED;
+ 
+-	platform_label = rtnl_dereference(net->mpls.platform_label);
+-	platform_labels = net->mpls.platform_labels;
++	platform_label = mpls_platform_label_rcu(net, &platform_labels);
+ 
+ 	if (filter.filter_set)
+ 		flags |= NLM_F_DUMP_FILTERED;
+@@ -2597,8 +2611,12 @@ static int resize_platform_label_table(struct net *net, size_t limit)
  	}
  
+ 	/* Update the global pointers */
++	local_bh_disable();
++	write_seqcount_begin(&net->mpls.platform_label_seq);
+ 	net->mpls.platform_labels = limit;
+ 	rcu_assign_pointer(net->mpls.platform_label, labels);
++	write_seqcount_end(&net->mpls.platform_label_seq);
++	local_bh_enable();
+ 
+ 	rtnl_unlock();
+ 
+@@ -2679,6 +2697,8 @@ static int mpls_net_init(struct net *net)
+ 	struct ctl_table *table;
+ 	int i;
+ 
++	seqcount_init(&net->mpls.platform_label_seq);
++
+ 	net->mpls.platform_labels = 0;
+ 	net->mpls.platform_label = NULL;
+ 	net->mpls.ip_ttl_propagate = 1;
 -- 
 2.53.0
 
