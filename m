@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793207827;
-	b=lr5WHNQulbUhmWrJTstWCqwVwPPAtkJCbJl9Zlab9ODjMUiMuK97iwp6vlEoqDsOmmWX
-	 jjDuCt5fenRRrj8Mz0e6/2lUGmawst3qnukBMSQ4yemTh73YUmIruJfOgcs53IYNWXyQ+
-	 21vQb8y286AteH0uQThW7AhXesVPVwRu+vrTSqw2RDiRrfVT6PHOAIyW6EkLYctkxRO6I
-	 i4SxGkWEo/N1L9OjoWVz9MjTrkeEVhHkURmFfzzn7w82XSwS5dXLgVpZMDH+NyG0+9G95
-	 S9yWE41dVebp7pCL5fX1e3qOop82aIvrX30ixsMkptgKwh7Drw1co+AuI6tFBLwrcVg==
+	t=1793207829;
+	b=sxO6rxEYFo7BdMgVfRSHSuRZJGmA3H3WHLFiz+J91meo1mJix3dDpmFnIRD46TNmyM3h
+	 7AYoxwnaQs+O8u5pSnIGG4vcJxzzaQjeM6Bk+7+Y7Vo9ArBaKCo44WeQwkFs2QTUfCemr
+	 fckhRVFy5QM3gN7UoF+3OukJrOrovKYYgKWcOEraegGmrYUdliSvU52UI1vlb4jubcWkv
+	 +A8txR2A1Xoa5UOReb2jgFzQRr4h2HNsVjCjFd6tXpe4JegXUr6h43cvSNYkEt3OXUbkJ
+	 ZO+zsFvK4BgWjb/wWdH25278CTq3OfRy8RcgzVVbQvZC2Iq9ss7OJJO5ARd/PnFyi4Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793207827;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793207829;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=H4ckKj0EJOsOm2bPf59nk/NzfTdS8DrnQ3LEBQTakWo=;
-	b=EaRENk3EdN+wzckEIdggzvVhysfqACJHYcSz+v8fK37KZp2BjloHaaEim5+HOwpg+DIp
-	 lmvL1gA4AMdD20uT8Lo8yr8kQ7Y90OnvyujBZx+AlYAuMnLyNmdkREHgJ7KiCmmIpXpfw
-	 RX/xAA7cskcCqpmB4skUhRuNQQ9sSKh/q1coZE2qEAOk99KogdOTI8mimahtiJ6LHu1rr
-	 I9rb6G6lcyj0v9BsE3eXnmFCA7eoeX5geB8KynjGihZ9zXGP/brLLXD4SsxmzEjwSKKAO
-	 wIuc8TOoNQo+wSOVw+lv0TIkCLU25xdrKwSAxrRg8pbkTarWz/hrjhUYPm9DyaLdWeQ==
+	bh=O+ewpsoqhoR8GUNAhLwuUf+m9sAUsNvSMuPkmGi2vpw=;
+	b=G1JFvdH0LqMig5Q8zdplqG8RLFxaa1w4N3OBk5vWxQ6AOmRVfjqD3b7VljpnASwZyFUg
+	 523WIz2C+BsbzqGDUBpy2NoZZDo39xNwhKIIczgOgihzDJLou3oxjvr1rPf8/rBldCFuD
+	 14KjYdRUb7RlbUlV7s2npph1b0Ai8Iwm/P+0mSBO1b09kogY+YTK0E1ceflvFAZUH5Sj3
+	 dUl6rVTe6T0GB8hc18rCN3a/+AZbzNG17EGfSCHw/Yz9/eTTmJTHftCkBYEP6wIlp9PfW
+	 g5DsoXDjMpIiWlpWLrlgAO5HU4fDO0m3dhJrV0Rm7uhnhmntx+imdcn5LZCMFZ8nn3A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EJCWmUEx;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DRRJ5a42;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6326606A31F;
-	Wed, 28 Oct 2026 17:17:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B524606A32A;
+	Wed, 28 Oct 2026 17:17:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EJCWmUEx
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 220351F01825;
-	Wed, 28 Oct 2026 17:17:05 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DRRJ5a42
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC1B31F031E1;
+	Wed, 28 Oct 2026 17:17:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793207826;
-	bh=H4ckKj0EJOsOm2bPf59nk/NzfTdS8DrnQ3LEBQTakWo=;
+	s=korg; t=1793207829;
+	bh=O+ewpsoqhoR8GUNAhLwuUf+m9sAUsNvSMuPkmGi2vpw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EJCWmUEx9GZkuDaDZdUWMvy0t8R552+oD5siwV+wCF4k2kUoZJtTi3QiPq61m4rqP
-	 TMlTrdZtyeRtTiCKEU70sgOlpcVRGrw5V+UIqbsHIfr2EYXPa2tMPHfxZkW5RQKeHH
-	 zTogdznWQb0KnDrg8Cb1UBZXJ7Se4VE/nTPEeKao=
+	b=DRRJ5a4267Bzb7JGT0cXXyg/T9YCOdbHg6SF4lbF7D/SEkuw+D7DQLFG/0kPxL/tE
+	 3h3J/j+YUv1sBaCT0TfSKxlNUk3xfcbc0rofWCr5Bed4fms0czs0Qi+vomzq9rRfSw
+	 EDvwzxckz+WsqInx1MtcHR9PaHg1ERRWAOuNeOCU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiangyu Bu <xbu@meta.com>,
-	Tejun Heo <tj@kernel.org>,
-	Dan Schatzberg <schatzberg.dan@gmail.com>,
+	Frank Sorenson <sorenson@redhat.com>,
+	Paulo Alcantara <pc@manguebit.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 153/247] sched_ext: Fix stall when a task enqueued with SCX_ENQ_LAST lands back on its CPUs local DSQ
-Date: Wed, 28 Oct 2026 17:59:16 +0100
-Message-ID: <20261028165951.035978543@linuxfoundation.org>
+Subject: [PATCH 6.12 154/247] cifs: add revalidation on FSCTL failure in smb2_duplicate_extents()
+Date: Wed, 28 Oct 2026 17:59:17 +0100
+Message-ID: <20261028165951.058929701@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165947.349197979@linuxfoundation.org>
 References: <20261028165947.349197979@linuxfoundation.org>
@@ -69,84 +68,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tejun Heo <tj@kernel.org>
+From: Frank Sorenson <sorenson@redhat.com>
 
-[ Upstream commit 7a9df76679633cf26e0fea882a684012c6ec245a ]
+[ Upstream commit 53676a5e28231186c9f56d87b7998b640699bc15 ]
 
-With SCX_OPS_ENQ_LAST, the last runnable task on a CPU is passed to
-ops.enqueue() instead of being kept running. Exiting tasks without
-SCX_OPS_ENQ_EXITING, migration disabled tasks without
-SCX_OPS_ENQ_MIGRATION_DISABLED and tasks on an offline rq skip ops.enqueue()
-and go straight to the local DSQ. This happens in put_prev_task_scx() after
-the pick has settled on idle, so nothing reschedules the CPU, which idles
-with the task queued until an unrelated wakeup lands on it or the watchdog
-fires.
+smb2_duplicate_extents() has no handling for
+FSCTL_DUPLICATE_EXTENTS_TO_FILE failure: when the FSCTL fails, local
+inode metadata may be stale from the pre-extension or from concurrent
+remote writes, but is never refreshed.
 
-scx_mitosis, which sets SCX_OPS_ENQ_LAST without SCX_OPS_ENQ_EXITING, hit
-this during mass cgroup teardown: exiting tasks stuck in exit_mmap() for
-over 40 seconds.
+Force revalidation on FSCTL failure and use i_size_read() for the
+pre-extension check.
 
-A task put on the local DSQ runs, as anywhere else. If the SCX_ENQ_LAST
-enqueue left the task on this CPU's local DSQ, set need_resched on the task
-being switched in, as proxy_resched_idle() does. resched_curr() would flag
-the task being put instead, and __schedule() clears that right after the
-pick.
-
-Fixes: f0e1a0643a59 ("sched_ext: Implement BPF extensible scheduler class")
-Cc: stable@vger.kernel.org # v6.12+
-Reported-by: Xiangyu Bu <xbu@meta.com>
-Link: https://github.com/sched-ext/scx/pull/3870
-Signed-off-by: Tejun Heo <tj@kernel.org>
-Cc: Dan Schatzberg <schatzberg.dan@gmail.com>
-[ sashal: Relocated the hunks from separate source and header files into the monolithic sched_ext source file. ]
+Fixes: cfc63fc8126a ("smb3: fix cached file size problems in duplicate extents (reflink)")
+Cc: stable@vger.kernel.org
+Signed-off-by: Frank Sorenson <sorenson@redhat.com>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+[ sashal: Used a standalone failure block because the upstream success branch is absent. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/ext.c | 18 ++++++++++++++----
- 1 file changed, 14 insertions(+), 4 deletions(-)
+ fs/smb/client/smb2ops.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-index 876adf5568ed1..ded7a0dd2e533 100644
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -730,8 +730,9 @@ enum scx_enq_flags {
- 	 * %SCX_OPS_ENQ_LAST is specified, they're ops.enqueue()'d with the
- 	 * %SCX_ENQ_LAST flag set.
- 	 *
--	 * The BPF scheduler is responsible for triggering a follow-up
--	 * scheduling event. Otherwise, Execution may stall.
-+	 * If the task is queued on the local DSQ of the CPU it was running on,
-+	 * it continues to run. Otherwise, the CPU goes idle. A scheduler that
-+	 * wants a full dispatch cycle on the CPU should kick it.
- 	 */
- 	SCX_ENQ_LAST		= 1LLU << 41,
+diff --git a/fs/smb/client/smb2ops.c b/fs/smb/client/smb2ops.c
+index 6ef0fcd9a05c2..7cd2e88a86b72 100644
+--- a/fs/smb/client/smb2ops.c
++++ b/fs/smb/client/smb2ops.c
+@@ -2292,7 +2292,7 @@ smb2_duplicate_extents(const unsigned int xid,
+ 			       trgtfile->fid.volatile_fid, tcon->tid,
+ 			       tcon->ses->Suid, src_off, dest_off, len);
+ 	inode = d_inode(trgtfile->dentry);
+-	if (inode->i_size < dest_off + len) {
++	if (i_size_read(inode) < dest_off + len) {
+ 		rc = smb2_set_file_size(xid, tcon, trgtfile, dest_off + len, false);
+ 		if (rc)
+ 			goto duplicate_extents_out;
+@@ -2318,6 +2318,11 @@ smb2_duplicate_extents(const unsigned int xid,
+ 	if (ret_data_len > 0)
+ 		cifs_dbg(FYI, "Non-zero response length in duplicate extents\n");
  
-@@ -3083,8 +3084,7 @@ static void put_prev_task_scx(struct rq *rq, struct task_struct *p,
- 		/*
- 		 * If @p is runnable but we're about to enter a lower
- 		 * sched_class, %SCX_OPS_ENQ_LAST must be set. Tell
--		 * ops.enqueue() that @p is the only one available for this cpu,
--		 * which should trigger an explicit follow-up scheduling event.
-+		 * ops.enqueue() that @p is the only one available for this cpu.
- 		 *
- 		 * Core scheduling can force this CPU idle while @p stays
- 		 * runnable. @p's cookie then won't match the core's, so skip
-@@ -3094,6 +3094,16 @@ static void put_prev_task_scx(struct rq *rq, struct task_struct *p,
- 			WARN_ON_ONCE(sched_cpu_cookie_match(rq, p) &&
- 				     !static_branch_unlikely(&scx_ops_enq_last));
- 			do_enqueue_task(rq, p, SCX_ENQ_LAST, -1);
++	if (rc) {
++		CIFS_I(inode)->time = 0; /* force reval */
++		cifs_invalidate_cache(inode, 0);
++	}
 +
-+			/*
-+			 * A task put on the local DSQ runs, as anywhere else.
-+			 * Here the insert can't reschedule on its own: the pick
-+			 * has settled on @next and @p is still curr, so
-+			 * resched_curr() would flag @p and __schedule() clears
-+			 * that right after the pick. Flag @next instead.
-+			 */
-+			if (p->scx.dsq == &rq->scx.local_dsq)
-+				set_tsk_need_resched(next);
- 		} else {
- 			do_enqueue_task(rq, p, 0, -1);
- 		}
+ duplicate_extents_out:
+ 	if (rc)
+ 		trace_smb3_clone_err(xid, srcfile->fid.volatile_fid,
 -- 
 2.53.0
 
