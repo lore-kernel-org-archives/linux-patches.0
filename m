@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793209065;
-	b=f7NeZkBHmtFaSrZvT6InOoa4NkHanYqz6KOF9WbkhuI8qvSzSxavOv/omuy4dRpgYWxS
-	 ctJWZ3PVJcH8WbCEtRGh6a/rbBEHokYWxQVnNNuw9juID9OENXxehUM2yVQz7NiDXliey
-	 IFlOgIq1i/3Sz5mYIVsYKZvFfQfwOKxfYZTlfMKAJrEDJ5pP/biH1HPvqw/TBrFTOSkV5
-	 zfmYwqZpVkgOhX61cDvdTg7PNDxQJ1wqwcFNq9SoO0ZXJRztNRAZPPexA+jerPSxQH59C
-	 DIQ1EaWuMgjmH7LnUVYU2+Zl8M92gKLZFXDdhXL31LJZHuDfGhr557hWEZxxRhjPpDQ==
+	t=1793209068;
+	b=tcSWX1g73APRn5Nu/AkuDsmnvxxPZld9OWm9e0BirhPZhsU+Am2JelDX2gmBdLe8RpqB
+	 XtDTVTfzc/BVfNI/fuB2pFRcFhAlbFGjprbCofLGeInaYfBy3QtDxJJQYXYPFKmwAQ5yj
+	 LucYUaM8R8PiXHAWAHGjsQVQ5RcmB0biZM7eG0+w7VUqScT85hCyw1JanOHTvaUW5pl0/
+	 446xGG091VOxbMCKEtN4L5ZOZFZKuzqRgQcmCFfUhu0CCGT/5HPzqI6tVMPqLoFcl3qQh
+	 hPJIrqILzwkM2P2dBrVmHKlnW4b3fvY3Do4oIU9L7EXG/ILH5Xnm3YHXAiiPzUFnfqg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793209065;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793209068;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=dG7G3rj9RHleX98gsGwayNZNSfIVbP10O/skZU+rlfA=;
-	b=BGIxrk60f1Rrnwl9CInHKzoP0Sp27+SeOK913eTgy6XJ+N35sZXA+K7r4VtopzeqByEL
-	 sVXcS68OPBHxA3fX2JkEEQHOzZt+Vsbw+/3CRM/wE1lldtDqh7A80JmYuxkthA3TEhaLc
-	 5FFdOjzS3n2wyQYO1/jXJ+aJaoiOA5kwsDarSU7YrAs+uTxB7jA4U6H+yrEyk/1jM9bKp
-	 HKhAaVJ6GKYyO0S0d2MWifzb3TN1AbGGQDCBHkcyhdZAvQb50nY/14G1SPu0Lz6pUnl92
-	 DWAgMNlwBmMNAjYm6Rqs5TcUn7UJtpf8G8EUOMnT7dT7AuzIRBeJUeF6rbo1xwpvrdg==
+	bh=40fmYs2XtzWCLY/VZQp9/Oh4zJphjCCEzoQBmO+jxeo=;
+	b=SNf9R8RZxu83QXAv8aDukT+lr+iyEHl4VXSOh2GRmRcf7oGJ57n2hOdEUGon0gelKio6
+	 xwxm7kgacIQhuqE5oCtUYGX1h2SZxwuUhrEOv8DdZ5mtAplLy4YMoIFaeJ6rAMj+k0EqZ
+	 DcjxTue7bqP8krkvOjcjDBiE22OBX0XkClOMo3WpYjCXu8Gw4Knz4IwiXfJ5DcnyxSj0A
+	 yL/cvSmPCxRwQw13YtRXxe0NbmdKmElIWKZ6oXdqgMBbD2XMVVBHV75DyKbMPJlfZ3z4d
+	 0BiMQUAyO5R+GBgROYJxAs86TIxr+KV38bDle8VpiL0rR/pS40oold24uFf0AdYHXzA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aPu6c0MY;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0ayFWALV;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6441960A5BCD;
-	Wed, 28 Oct 2026 17:37:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83584606A326;
+	Wed, 28 Oct 2026 17:37:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aPu6c0MY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5C7B1F031E6;
-	Wed, 28 Oct 2026 17:37:44 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0ayFWALV
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9009F1F01825;
+	Wed, 28 Oct 2026 17:37:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793209065;
-	bh=dG7G3rj9RHleX98gsGwayNZNSfIVbP10O/skZU+rlfA=;
+	s=korg; t=1793209068;
+	bh=40fmYs2XtzWCLY/VZQp9/Oh4zJphjCCEzoQBmO+jxeo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aPu6c0MYAH+oNBse3OwBMhfKQUnxgIgVPTps9QDjmFtdACL3hVGTQMYRgFdC/31+5
-	 QTuKTe5KzF+9S9ElDS4/YlQcBGA8NjcTChqdbF/+NYQZqOpyppO/lSBSnZtXmBQKhU
-	 pQMo+zWyYnqRiX5gJLmnwG4DysfZf0wWi0Zgj0sk=
+	b=0ayFWALVOEnv4zjMItDr7oDl39PWZPoDS9KbivM8txeN4FAp9hRoiWLfnLKAiRoVF
+	 CYa54nUlDR0w7kDj2JHQUPy2ICWZRiYW8czUqK1SId6KsKGWACb+wz0Y+B/GJxdk92
+	 Z7iJ2T1LP01kedwBpIKT5lbkUMfZh/4OSssw1oiU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abhishek Ojha <Abhishek.ojha@savoirfairelinux.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 5.10 341/516] regulator: ltc3676: dont read the write-only HRST and CLIRQ registers
-Date: Wed, 28 Oct 2026 17:58:13 +0100
-Message-ID: <20261028170011.565025802@linuxfoundation.org>
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>
+Subject: [PATCH 5.10 342/516] scsi: qedi: Initialize callback state before registration
+Date: Wed, 28 Oct 2026 17:58:14 +0100
+Message-ID: <20261028170011.589459353@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -67,71 +67,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abhishek Ojha <Abhishek.ojha@savoirfairelinux.com>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-commit 28c2388ee24cdbefbcc458fa41ef7bffaaa1cc83 upstream.
+commit 85de8b3a5eaa23d153aff4c7c83dddbc949064c9 upstream.
 
-HRST (0x1e) and CLIRQ (0x1f) are write-only command strobes. Writing HRST
-triggers a hard reset of the chip and writing CLIRQ clears the interrupt;
-reading them returns nothing useful, and the read itself fires the command.
+qedi_get_protocol_tlv_data() can be called asynchronously by QED after
+qedi_ops->register_ops(). It takes stats_lock and reads ll2_mtu, but
+__qedi_probe() currently registers the callback before initializing the
+mutex and assigning the default MTU on the normal probe path.
 
-The result is that a plain register dump resets the board:
+Initialize the callback-visible state before registering qedi_cb_ops. Keep
+the recovery path from reinitializing state because it reuses the existing
+qedi context.
 
-  cat /sys/kernel/debug/regmap/2-003c/registers
-
-walks every readable register, hits HRST, and the board reboots.
-
-Split the callback back in two so HRST and CLIRQ stay writable but are no
-longer readable. The readable range is left unchanged
-(LTC3676_BUCK1 ... LTC3676_IRQSTAT).
-
-Fixes: 37b918a034fe ("regulator: Add LTC3676 support")
+Fixes: 3cc5746e5ad7 ("scsi: qedi: Initialize the stats mutex lock")
 Cc: stable@vger.kernel.org
-Signed-off-by: Abhishek Ojha <Abhishek.ojha@savoirfairelinux.com>
-Link: https://patch.msgid.link/20260902010701.3360310-1-Abhishek.ojha@savoirfairelinux.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Assisted-by: LLM Codex
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Link: https://patch.msgid.link/20260910092405.1300129-1-runyu.xiao@seu.edu.cn
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/regulator/ltc3676.c |   15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+ drivers/scsi/qedi/qedi_main.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/drivers/regulator/ltc3676.c
-+++ b/drivers/regulator/ltc3676.c
-@@ -232,7 +232,7 @@ static const struct regulator_desc ltc36
- 	LTC3676_FIXED_REG(LDO4, ldo4, LDOB, 2),
- };
+--- a/drivers/scsi/qedi/qedi_main.c
++++ b/drivers/scsi/qedi/qedi_main.c
+@@ -2671,8 +2671,6 @@ retry_probe:
+ 	snprintf(host_buf, sizeof(host_buf), "host_%d", qedi->shost->host_no);
+ 	qedi_ops->common->set_name(qedi->cdev, host_buf);
  
--static bool ltc3676_readable_writeable_reg(struct device *dev, unsigned int reg)
-+static bool ltc3676_writeable_reg(struct device *dev, unsigned int reg)
- {
- 	switch (reg) {
- 	case LTC3676_BUCK1 ... LTC3676_IRQSTAT:
-@@ -243,6 +243,15 @@ static bool ltc3676_readable_writeable_r
- 	return false;
- }
+-	qedi_ops->register_ops(qedi->cdev, &qedi_cb_ops, qedi);
+-
+ 	memset(&params, 0, sizeof(params));
+ 	params.mtu = DEF_PATH_MTU + IPV6_HDR_LEN + TCP_HDR_LEN;
+ 	qedi->ll2_mtu = DEF_PATH_MTU;
+@@ -2689,6 +2687,7 @@ retry_probe:
+ 		spin_lock_init(&qedi->task_idx_lock);
+ 		mutex_init(&qedi->stats_lock);
+ 	}
++	qedi_ops->register_ops(qedi->cdev, &qedi_cb_ops, qedi);
+ 	qedi_ops->ll2->register_cb_ops(qedi->cdev, &qedi_ll2_cb_ops, qedi);
+ 	qedi_ops->ll2->start(qedi->cdev, &params);
  
-+static bool ltc3676_readable_reg(struct device *dev, unsigned int reg)
-+{
-+	switch (reg) {
-+	case LTC3676_BUCK1 ... LTC3676_IRQSTAT:
-+		return true;
-+	}
-+	return false;
-+}
-+
- static bool ltc3676_volatile_reg(struct device *dev, unsigned int reg)
- {
- 	switch (reg) {
-@@ -255,8 +264,8 @@ static bool ltc3676_volatile_reg(struct
- static const struct regmap_config ltc3676_regmap_config = {
- 	.reg_bits = 8,
- 	.val_bits = 8,
--	.writeable_reg = ltc3676_readable_writeable_reg,
--	.readable_reg = ltc3676_readable_writeable_reg,
-+	.writeable_reg = ltc3676_writeable_reg,
-+	.readable_reg = ltc3676_readable_reg,
- 	.volatile_reg = ltc3676_volatile_reg,
- 	.max_register = LTC3676_CLIRQ,
- 	.use_single_read = true,
 
 
