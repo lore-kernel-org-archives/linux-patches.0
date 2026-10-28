@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793217401;
-	b=DwLSDuZovoeNmI+VmBQj8XTOIQgzT9Pc5szAetrQ0j2XTVmBcSy6yhwTC/M4kyWqb6JO
-	 zTEhXnpXmFSmuM5nUDTZw9G3ta7U7I80l4qoz6yeAYnFu/7KvHVuv/PoDRGJhKPUEcdlS
-	 tvOZIlBNqDRX4HksMnTD19QnKMt10cYKtHxpqgg2JomoQQl50ih0x3mrGhH1Qle/M2Pji
-	 hXJYZPuN7oVac148ADbXGVsXs3wauN1TBwnwz1V8Wzc4B7fQFsi0Y08XhPVcooRRTGrFQ
-	 Sp313R32witghru9iMyYG54edbJPPxARchxLOH0FuVFEb8vTdL3Nv4FuYvcPWI/UMrQ==
+	t=1793217406;
+	b=qe5LrUSr17/3R+3ZH6n2PXo64/7EyFO0jxhomezhxpYqDATvYvDyZXUUMghZnjqJZUbk
+	 rf2KtrLLxixZyvb8GVl1GZhz77mrKu4+/UdGv7rNyRV2G0zpUq4EomhMczLqt5HBJ3TCM
+	 LPCkjPKe+n6iAm5cAgpT3Q20cItRcyry6Una6iw/elA7UpF7+7ae4LPbUozIMzgtoziAa
+	 G9pgs28J3AFM5oie7QVSYNU+cLH/CCiGdkAizTgxk8PoXAVn2qC0gGhQfWJPxO7HbfEyw
+	 AdRkfRtq7QOXqu8XL56rlFDPoR/Pz2g4qm2jirCOz8q5tC5jmop6aQ1NthkVR1h4lag==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793217401;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793217406;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=wxUqn7vtSQ+JQpiuL5OJdxcoY/6+vh5uagu7kxHPu5k=;
-	b=cx462gt48d5ZtHTB021xj1owY53IixMxpXAWAxv3C4kYYndf1MEkNopYv2t5A97Mx5eT
-	 t5z0ShHQx6QY17JZbOX2ad7YomEzaLvx2cwy8zGnSPxaThVWqlXBZa2Nl0NH9AnSes9il
-	 IDGG+f4x5/r780Gk6NUy+ImN6IOhBJoBfl3VmHFN6RAMUc/1r81fxJgNUm1pWaCKsqiCa
-	 dv4NatSBh5wULTNkP5egi/CUiXNIaUqRy+Os0/6LFgrmlzWlX1CG0498Asq+xGCXhp3aG
-	 FPNQ1Kx/qz9M4+G0vVsXPdfTmFrs5Fit9b1t0NfUrHf3GaV+TvpGT8H5XROH4nepC+w==
+	bh=8DrLHwr63wdE96HUlzUcQsKab3qbwyThsh+Adn1j+wI=;
+	b=0GL9Okg7J8QPUBTtpzHoq9WQQwFpK3Kd3xEeI2qANiy133dQRB4u05pH/H0IBGdWh36g
+	 /o7YPbDP058L85mOFZRdNyQzunXtQilEKRCIzuxN2+8/u1yS4dGKaSY7Pg2OgaD4F1bDz
+	 5Zau6FCbsHxZscEByjKmWNKIzOci2mhuq5fobmmlYc9fc+pbK7d34M3PryWzPN/P7XEeX
+	 WVA7AT+8TTphWGdOZ8cyqoP1hIkJtKVf2SdTyNrrAOrujNIlA4M/+DrM92+86et2lvS8V
+	 Lsr9S0liYuc61/9CZpbWYxBbr/jOek48IUtLUPgYEoYPPYz/QmZRyA8wNe5kkHw8IeQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XFFSlavN;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DBB79LyB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4521606A31A;
-	Wed, 28 Oct 2026 19:56:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4B50606A31A;
+	Wed, 28 Oct 2026 19:56:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XFFSlavN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 008761F01825;
-	Wed, 28 Oct 2026 19:56:39 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DBB79LyB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA7D01F01825;
+	Wed, 28 Oct 2026 19:56:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793217400;
-	bh=wxUqn7vtSQ+JQpiuL5OJdxcoY/6+vh5uagu7kxHPu5k=;
+	s=korg; t=1793217406;
+	bh=8DrLHwr63wdE96HUlzUcQsKab3qbwyThsh+Adn1j+wI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XFFSlavNYRq/wKuA5LKNCqTJ2RIeDmpP9M/0t6YBWmws5KReoCZzSfRgl91h8TvCO
-	 C9zIJRn4RYZwI/BAN3alIyvn+G9/DWSO2K+uq5ldK7pRuq4bBbO3nR8HSjbGV+++JA
-	 Hi0yt3gKvIO/zEDDyKD/vzBZT9QQWKpWGs8/fEPg=
+	b=DBB79LyBp/jCtSoJ4hMCFPefx/8tJ24uZqCAQKa28JUxQ/WEyUI7lBjgNLh0KQQwB
+	 5tdP/2YNOW4twGVNdn1/5rA7OnRxSxDC/okNP0J1Uotfj7EMzN1BGSX2uj0wrszAQY
+	 gbzcVi+MMXe5W2Y5HVe2NF3loqP5E9fOghAxwbA8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haojie Li <lihaojie@kylinos.cn>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Xiaolei Wang <xiaolei.wang@windriver.com>,
+	Peng Fan <peng.fan@nxp.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1884/1887] drm/amdkfd: fix dma_buf reference leak in get_dmabuf_info
-Date: Wed, 28 Oct 2026 18:06:20 +0100
-Message-ID: <20261028170542.330548196@linuxfoundation.org>
+Subject: [PATCH 6.1 1886/1887] pinctrl: freescale: Fix a memory out of bounds when num_configs is 1
+Date: Wed, 28 Oct 2026 18:06:22 +0100
+Message-ID: <20261028170542.375558293@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,43 +69,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haojie Li <lihaojie@kylinos.cn>
+From: Xiaolei Wang <xiaolei.wang@windriver.com>
 
-[ Upstream commit e6895021a328594368a2a19406a53ffca1ce51c7 ]
+[ Upstream commit 9063777ca1e2e895c5fdd493ee0c3f18fa710ed4 ]
 
-When kzalloc fails for metadata_buffer in
-amdgpu_amdkfd_get_dmabuf_info(), the function returns -ENOMEM directly
-without calling dma_buf_put(), leaking the dma_buf reference obtained
-earlier via dma_buf_get().
+The config passed in by pad wakeup is 1, when num_configs is 1,
+Configuration [1] should not be fetched, which will be detected
+by KASAN as a memory out of bounds condition. Modify to get
+configs[1] when num_configs is 2.
 
-Fix both issues by:
-- Adding an error check after the first amdgpu_bo_get_metadata() call
-- Replacing the direct return with r = -ENOMEM and goto out_put to
-  ensure dma_buf_put() is called on all error paths
-
-Fixes: f54ce9e8cbd3 ("drm/amdkfd: Let driver decide buffer size at AMDKFD_IOC_GET_DMABUF_INFO ioctl")
-Signed-off-by: Haojie Li <lihaojie@kylinos.cn>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit ffa699553332f8caf8688d312279ddcea9e3c141)
-Cc: stable@vger.kernel.org
+Fixes: f60c9eac54af ("gpio: mxc: enable pad wakeup on i.MX8x platforms")
+Signed-off-by: Xiaolei Wang <xiaolei.wang@windriver.com>
+Reviewed-by: Peng Fan <peng.fan@nxp.com>
+Link: https://lore.kernel.org/r/20230504233736.3766296-1-xiaolei.wang@windriver.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/pinctrl/freescale/pinctrl-scu.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c
-index 596abe49c19c4..355173a6ac3d6 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c
-@@ -534,6 +534,8 @@ int amdgpu_amdkfd_get_dmabuf_info(struct amdgpu_device *adev, int dma_buf_fd,
- 		/* first get metadata_size by buffer = NULL */
- 		r = amdgpu_bo_get_metadata(bo, NULL, 0,
- 					   metadata_size, NULL);
-+		if (r)
-+			goto out_put;
+diff --git a/drivers/pinctrl/freescale/pinctrl-scu.c b/drivers/pinctrl/freescale/pinctrl-scu.c
+index 59b5f8a35111b..c38ec7ee439d6 100644
+--- a/drivers/pinctrl/freescale/pinctrl-scu.c
++++ b/drivers/pinctrl/freescale/pinctrl-scu.c
+@@ -77,7 +77,7 @@ int imx_pinconf_set_scu(struct pinctrl_dev *pctldev, unsigned pin_id,
+ 	struct imx_sc_msg_req_pad_set msg;
+ 	struct imx_sc_rpc_msg *hdr = &msg.hdr;
+ 	unsigned int mux = configs[0];
+-	unsigned int conf = configs[1];
++	unsigned int conf;
+ 	unsigned int val;
+ 	int ret;
  
- 		/* user buf_size is bigger than bo metadata_size
- 		 * allocate a buf at kernel space and copy */
+@@ -85,6 +85,7 @@ int imx_pinconf_set_scu(struct pinctrl_dev *pctldev, unsigned pin_id,
+ 	 * Set mux and conf together in one IPC call
+ 	 */
+ 	WARN_ON(num_configs != 2);
++	conf = configs[1];
+ 
+ 	val = conf | BM_PAD_CTL_IFMUX_ENABLE | BM_PAD_CTL_GP_ENABLE;
+ 	val |= mux << BP_PAD_CTL_IFMUX;
 -- 
 2.53.0
 
