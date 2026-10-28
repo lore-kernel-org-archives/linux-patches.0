@@ -1,56 +1,68 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214380;
-	b=Y+nKMbhMndfvB/Xw/Jz3mACGe9yjQpaEMQ0YaufsuQyzTJuRzoLq4SMj20ZjjWX1PIRJ
-	 gZQl22g1WIqf/Z12Fdo4EwaXvpzw8ysxXqeVyy2g3qdtlupK163l35Cg6VdR3DzVj/Xcf
-	 fGRSjEho6fKOlQ2z25Y7jfwYuqQTHagcdlZidn3rGUThJfyoRNa2TQtrK8DcAAy/j7K3H
-	 AjqxmpcqyjRA1OkMSADju523gOqkrmMYqJq5WN5//7dgmKoyD8o6u1xCx6mYhIE6zONT9
-	 s+lTago+GZQa+pxUnVNT57J1uFu9CES3Gh5016nhu1sM1mWmPqvy48y1AGBpp//4ohQ==
+	t=1793214383;
+	b=K8qVb3DekIstJbkvm3chrnwWf7O9DmYm90eucDywCDvmpMwp9VvBGpUFrhOOgM+3ZN2l
+	 wqWB9T089XKVqNkHtwBZNJAQVxV0aa1cQ+sOir45YOV6VuR0bfN6rPoY3zuYW/bPS4R12
+	 ZXkdgQu0fIaesFPqZSY86m7TGs8SeW4rE+Io3PKOYBeBz6zXo62tH4opNGlZ5GBaEOULs
+	 Muv/qJeNhK4B8tYnD2vrWZUO2MP//RRwungBP3RKXfSRDH1jkIEFAjA3skVFSIZadTRvw
+	 dXttKpFaDzlC82bKjo6eQq5IV045+lWpmFLbMPEa/Gd5B3neWc079iAOeld8iXPVt6A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214380;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214383;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=f28tOee5ToZYHMKPxzwix/CH3wN8HXrY6+FDGlx+M30=;
-	b=Oi0gWy3ta+umHrwF1KjbpbPIvZXKAvp/o18MhSkKYRrMZYwgAzgExBfqOiUZC8jSDQLf
-	 oW4DqD9YgHrLOne/Lq4xNMZw+RMDdZA1E8zfJ3OKQUfKYuz/Nmc+SuV0HBt/g5atFEgzD
-	 MX1PL5JtLakZNHEYU2IV/MBHk6pJdjES/20zAx5XirfnCnI6ep1bDGrtv54zcFgjWmZVz
-	 gvSc2wTCuyMCIm97JN6+/ZHW1nyPLOVB4oA415q6a6wCEfvub3wTr4FNmdqdDllkjQ9Gn
-	 0tCzqhDf35by3Ut0+sUMWeufRHEwftfMGhzTV/PNgNijeJYocm5n6b1CHpx++iS1myg==
+	bh=HCOazxDGeOTNkGpAX9w3vECCzj/VoJ2H6j8kyMFnUbo=;
+	b=oCmeM4dZlwwbf7/i+GChg9wOtK4rUCHwcp8hmXsmHyY2PWhPf4pF0wckVJC+BfG9Hpll
+	 v/G+DKU2gyxbOI3eQ9G63EPQ5Y0RBgnP0SiRvmyjwGaqIk47160wqm2OYaSZJgeAaFIF0
+	 2OIxTi277wqPvyByEUJnluDNBWJ9BKA/QMNFoeKCss5uCBpZjRsGuryG7+RclPVibBMfr
+	 DmSRhHhcq6ptGv7ZJKpCZUii7+pKE66Z/KGMhSi4OabT4Y5jMM9cYHS4EGeg7505OeIdE
+	 aMgFCMaNU9BoPztO5caFK300R+GCrf+7mbXqUge2tPPY5NiZlXSSBm+kqEjBGI1aBPw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BEjMfm1l;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y8yAOVIL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1EF560A262F;
-	Wed, 28 Oct 2026 19:06:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5C04606A33D;
+	Wed, 28 Oct 2026 19:06:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BEjMfm1l
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 355D11F01829;
-	Wed, 28 Oct 2026 19:06:19 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y8yAOVIL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D438F1F01828;
+	Wed, 28 Oct 2026 19:06:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214379;
-	bh=f28tOee5ToZYHMKPxzwix/CH3wN8HXrY6+FDGlx+M30=;
+	s=korg; t=1793214382;
+	bh=HCOazxDGeOTNkGpAX9w3vECCzj/VoJ2H6j8kyMFnUbo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BEjMfm1lEt1P582eE94cXRxk6i3lzIHLkUYwuO3hRAPUUAxBhwe+2sOR/Ltx/UKAh
-	 VzfnbFtlj82tb/Wt5Bew12nNyN8g1XpWQ5ZJDtX8TWbDzZXkZjcGL+r012ibYZkFGE
-	 43Eqwh7Kt28pmBnUop5OG7cVP7dmCPdkPY3hO0rE=
+	b=Y8yAOVILiOar87QnbmXM0/HhHPm7rKoTHsgPhZRvC9FL58aA5DmugieDqAXKrTV38
+	 /60oVQxd4NnxpJ5nmtg1T11qV7zK5s3kqqH0hs4HGcB2zPBCYlrP3wO8MLNCaNzXH2
+	 gxMVFvigd/p/jhA/GN0JDuRMX0y8/fcVJNf5/Xik=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiongfeng Wang <wangxiongfeng2@huawei.com>,
-	Qi Xi <xiqi2@huawei.com>,
-	Joel Fernandes <joelagnelf@nvidia.com>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	Linux Kernel Functional Testing <lkft@linaro.org>,
-	"Neeraj Upadhyay (AMD)" <neeraj.upadhyay@kernel.org>,
+	Jinjiang Tu <tujinjiang@huawei.com>,
+	David Hildenbrand <david@redhat.com>,
+	Andrei Vagin <avagin@gmail.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Brahmajit Das <brahmajit.xyz@gmail.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	David Rientjes <rientjes@google.com>,
+	Dev Jain <dev.jain@arm.com>,
+	Hugh Dickins <hughd@google.com>,
+	Joern Engel <joern@logfs.org>,
+	Kefeng Wang <wangkefeng.wang@huawei.com>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	Michal Hocko <mhocko@suse.com>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Thiago Jung Bauermann <thiago.bauermann@linaro.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0837/1887] rcu: Fix rcu_read_unlock() deadloop due to IRQ work
-Date: Wed, 28 Oct 2026 17:48:53 +0100
-Message-ID: <20261028170518.473639966@linuxfoundation.org>
+Subject: [PATCH 6.1 0838/1887] mm/smaps: fix race between smaps_hugetlb_range and migration
+Date: Wed, 28 Oct 2026 17:48:54 +0100
+Message-ID: <20261028170518.496932996@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -72,157 +84,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joel Fernandes <joelagnelf@nvidia.com>
+From: Jinjiang Tu <tujinjiang@huawei.com>
 
-[ Upstream commit b41642c87716bbd09797b1e4ea7d904f06c39b7b ]
+[ Upstream commit 45d19b4b6c2d422771c29b83462d84afcbb33f01 ]
 
-During rcu_read_unlock_special(), if this happens during irq_exit(), we
-can lockup if an IPI is issued. This is because the IPI itself triggers
-the irq_exit() path causing a recursive lock up.
+smaps_hugetlb_range() handles the pte without holdling ptl, and may be
+concurrenct with migration, leaing to BUG_ON in pfn_swap_entry_to_page().
+The race is as follows.
 
-This is precisely what Xiongfeng found when invoking a BPF program on
-the trace_tick_stop() tracepoint As shown in the trace below. Fix by
-managing the irq_work state correctly.
+smaps_hugetlb_range              migrate_pages
+  huge_ptep_get
+                                   remove_migration_ptes
+				   folio_unlock
+  pfn_swap_entry_folio
+    BUG_ON
 
-irq_exit()
-  __irq_exit_rcu()
-    /* in_hardirq() returns false after this */
-    preempt_count_sub(HARDIRQ_OFFSET)
-    tick_irq_exit()
-      tick_nohz_irq_exit()
-	    tick_nohz_stop_sched_tick()
-	      trace_tick_stop()  /* a bpf prog is hooked on this trace point */
-		   __bpf_trace_tick_stop()
-		      bpf_trace_run2()
-			    rcu_read_unlock_special()
-                              /* will send a IPI to itself */
-			      irq_work_queue_on(&rdp->defer_qs_iw, rdp->cpu);
+To fix it, hold ptl lock in smaps_hugetlb_range().
 
-A simple reproducer can also be obtained by doing the following in
-tick_irq_exit(). It will hang on boot without the patch:
-
-  static inline void tick_irq_exit(void)
-  {
- +	rcu_read_lock();
- +	WRITE_ONCE(current->rcu_read_unlock_special.b.need_qs, true);
- +	rcu_read_unlock();
- +
-
-Reported-by: Xiongfeng Wang <wangxiongfeng2@huawei.com>
-Closes: https://lore.kernel.org/all/9acd5f9f-6732-7701-6880-4b51190aa070@huawei.com/
-Tested-by: Qi Xi <xiqi2@huawei.com>
-Signed-off-by: Joel Fernandes <joelagnelf@nvidia.com>
-Reviewed-by: "Paul E. McKenney" <paulmck@kernel.org>
-Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
-[neeraj: Apply Frederic's suggested fix for PREEMPT_RT]
-Signed-off-by: Neeraj Upadhyay (AMD) <neeraj.upadhyay@kernel.org>
+Link: https://lkml.kernel.org/r/20250724090958.455887-1-tujinjiang@huawei.com
+Link: https://lkml.kernel.org/r/20250724090958.455887-2-tujinjiang@huawei.com
+Fixes: 25ee01a2fca0 ("mm: hugetlb: proc: add hugetlb-related fields to /proc/PID/smaps")
+Signed-off-by: Jinjiang Tu <tujinjiang@huawei.com>
+Acked-by: David Hildenbrand <david@redhat.com>
+Cc: Andrei Vagin <avagin@gmail.com>
+Cc: Andrii Nakryiko <andrii@kernel.org>
+Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
+Cc: Brahmajit Das <brahmajit.xyz@gmail.com>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Cc: Christophe Leroy <christophe.leroy@csgroup.eu>
+Cc: David Rientjes <rientjes@google.com>
+Cc: Dev Jain <dev.jain@arm.com>
+Cc: Hugh Dickins <hughd@google.com>
+Cc: Joern Engel <joern@logfs.org>
+Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
+Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Ryan Roberts <ryan.roberts@arm.com>
+Cc: Thiago Jung Bauermann <thiago.bauermann@linaro.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/rcu/tree.h        | 13 ++++++++++++-
- kernel/rcu/tree_plugin.h | 37 ++++++++++++++++++++++++++-----------
- 2 files changed, 38 insertions(+), 12 deletions(-)
+ fs/proc/task_mmu.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/kernel/rcu/tree.h b/kernel/rcu/tree.h
-index aa16d3cd62ba5..4770ff998f27d 100644
---- a/kernel/rcu/tree.h
-+++ b/kernel/rcu/tree.h
-@@ -158,6 +158,17 @@ union rcu_noqs {
- 	u16 s; /* Set of bits, aggregate OR here. */
- };
+diff --git a/fs/proc/task_mmu.c b/fs/proc/task_mmu.c
+index 484886cdd272c..eb002adf9f59f 100644
+--- a/fs/proc/task_mmu.c
++++ b/fs/proc/task_mmu.c
+@@ -727,7 +727,9 @@ static int smaps_hugetlb_range(pte_t *pte, unsigned long hmask,
+ 	struct mem_size_stats *mss = walk->private;
+ 	struct vm_area_struct *vma = walk->vma;
+ 	struct page *page = NULL;
++	spinlock_t *ptl;
  
-+/*
-+ * An IRQ work (deferred_qs_iw) is used by RCU to get the scheduler's attention.
-+ * to report quiescent states at the soonest possible time.
-+ * The request can be in one of the following states:
-+ * - DEFER_QS_IDLE: An IRQ work is yet to be scheduled.
-+ * - DEFER_QS_PENDING: An IRQ work was scheduled but either not yet run, or it
-+ *                     ran and we still haven't reported a quiescent state.
-+ */
-+#define DEFER_QS_IDLE		0
-+#define DEFER_QS_PENDING	1
-+
- /* Per-CPU data for read-copy update. */
- struct rcu_data {
- 	/* 1) quiescent-state and grace-period handling : */
-@@ -175,7 +186,7 @@ struct rcu_data {
- 					/*  during and after the last grace */
- 					/* period it is aware of. */
- 	struct irq_work defer_qs_iw;	/* Obtain later scheduler attention. */
--	bool defer_qs_iw_pending;	/* Scheduler attention pending? */
-+	int defer_qs_iw_pending;	/* Scheduler attention pending? */
- 	struct work_struct strict_work;	/* Schedule readers for strict GPs. */
- 
- 	/* 2) batch handling */
-diff --git a/kernel/rcu/tree_plugin.h b/kernel/rcu/tree_plugin.h
-index 4cb5c901a2049..7dd83a4d86810 100644
---- a/kernel/rcu/tree_plugin.h
-+++ b/kernel/rcu/tree_plugin.h
-@@ -474,13 +474,16 @@ rcu_preempt_deferred_qs_irqrestore(struct task_struct *t, unsigned long flags)
- 	struct rcu_node *rnp;
- 	union rcu_special special;
- 
-+	rdp = this_cpu_ptr(&rcu_data);
-+	if (rdp->defer_qs_iw_pending == DEFER_QS_PENDING)
-+		rdp->defer_qs_iw_pending = DEFER_QS_IDLE;
-+
- 	/*
- 	 * If RCU core is waiting for this CPU to exit its critical section,
- 	 * report the fact that it has exited.  Because irqs are disabled,
- 	 * t->rcu_read_unlock_special cannot change.
- 	 */
- 	special = t->rcu_read_unlock_special;
--	rdp = this_cpu_ptr(&rcu_data);
- 	if (!special.s && !rdp->cpu_no_qs.b.exp) {
- 		local_irq_restore(flags);
- 		return;
-@@ -617,7 +620,23 @@ static void rcu_preempt_deferred_qs_handler(struct irq_work *iwp)
- 
- 	rdp = container_of(iwp, struct rcu_data, defer_qs_iw);
- 	local_irq_save(flags);
--	rdp->defer_qs_iw_pending = false;
-+
-+	/*
-+	 * If the IRQ work handler happens to run in the middle of RCU read-side
-+	 * critical section, it could be ineffective in getting the scheduler's
-+	 * attention to report a deferred quiescent state (the whole point of the
-+	 * IRQ work). For this reason, requeue the IRQ work.
-+	 *
-+	 * Basically, we want to avoid following situation:
-+	 * 1. rcu_read_unlock() queues IRQ work (state -> DEFER_QS_PENDING)
-+	 * 2. CPU enters new rcu_read_lock()
-+	 * 3. IRQ work runs but cannot report QS due to rcu_preempt_depth() > 0
-+	 * 4. rcu_read_unlock() does not re-queue work (state still PENDING)
-+	 * 5. Deferred QS reporting does not happen.
-+	 */
-+	if (rcu_preempt_depth() > 0)
-+		WRITE_ONCE(rdp->defer_qs_iw_pending, DEFER_QS_IDLE);
-+
- 	local_irq_restore(flags);
++	ptl = huge_pte_lock(hstate_vma(vma), walk->mm, pte);
+ 	if (pte_present(*pte)) {
+ 		page = vm_normal_page(vma, addr, *pte);
+ 	} else if (is_swap_pte(*pte)) {
+@@ -742,6 +744,7 @@ static int smaps_hugetlb_range(pte_t *pte, unsigned long hmask,
+ 		else
+ 			mss->private_hugetlb += huge_page_size(hstate_vma(vma));
+ 	}
++	spin_unlock(ptl);
+ 	return 0;
  }
- 
-@@ -664,17 +683,13 @@ static void rcu_read_unlock_special(struct task_struct *t)
- 			set_tsk_need_resched(current);
- 			set_preempt_need_resched();
- 			if (IS_ENABLED(CONFIG_IRQ_WORK) && irqs_were_disabled &&
--			    expboost && !rdp->defer_qs_iw_pending && cpu_online(rdp->cpu)) {
-+			    expboost && rdp->defer_qs_iw_pending != DEFER_QS_PENDING &&
-+			    cpu_online(rdp->cpu)) {
- 				// Get scheduler to re-evaluate and call hooks.
- 				// If !IRQ_WORK, FQS scan will eventually IPI.
--				if (IS_ENABLED(CONFIG_RCU_STRICT_GRACE_PERIOD) &&
--				    IS_ENABLED(CONFIG_PREEMPT_RT))
--					rdp->defer_qs_iw = IRQ_WORK_INIT_HARD(
--								rcu_preempt_deferred_qs_handler);
--				else
--					init_irq_work(&rdp->defer_qs_iw,
--						      rcu_preempt_deferred_qs_handler);
--				rdp->defer_qs_iw_pending = true;
-+				rdp->defer_qs_iw =
-+					IRQ_WORK_INIT_HARD(rcu_preempt_deferred_qs_handler);
-+				rdp->defer_qs_iw_pending = DEFER_QS_PENDING;
- 				irq_work_queue_on(&rdp->defer_qs_iw, rdp->cpu);
- 			}
- 		}
+ #else
 -- 
 2.53.0
 
