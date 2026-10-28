@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793208375;
-	b=JqRzHOGr90jtoy6T33IzBC7+/0DTeXOTuQTEJ558U/o0dvEo2z8LkXohKPYgpk06UHKt
-	 OZPK/ojdsR6E6J8ZoZz+x8Z21sPFizDvWMU6TKTAPENEYZ+UxVEg/nMBYIuFo9H9Rcoa1
-	 zEb+L2aHPk5Dpec6a6/Y6X9yu8+dOVjr3ej1uZv4nZUoxoUgEsuQbQMiSOho+CftRKbSi
-	 jTlxizI0SESQZfyoFMFkdjHhzkdcDBctAIUsUqSfA2lv7v2Ueaxsd/amAukG1mc6mJGwT
-	 MryYuHz8o/5cwSw+1hseOSNfBImEkmA0QKzM2Ul1uJt+a0YRK2kfnbt4kk//vwg3vsg==
+	t=1793208377;
+	b=zuR5EOdC8enmy4pFpya8niF9lACqqAv4h8YYvEyRm7ZRD0GrhXYQyGCdYRXEzYHtwMXg
+	 YWbUmjzYt0YtFqveNrmJvTnVe916oTWusXvSaCdGtjbibWnBgsDdyxLNJf90UFAD9MzyY
+	 a311lHKPVRUNha+1jiN7JuHzraveLLSK6x1VzkZccYliMAU4vpuFQCwkwoDODdktCfRN6
+	 tUZJWofCqxxhzmCT7s/rPL1IDBEhtA2jG96/4XdA9YCnh7ps2bMgT9p/30PcqDfasrPlo
+	 TMyOO1RJ4MI/vvIg/64335GB8iWsXpDWmBgGi1p89TxlfnVB9x/tCWhbKijh8/FN3JQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793208375;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793208377;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=SinG8I+vpGmNMl2Dex9h/PrUmZPZWmsyP2RX0914pVg=;
-	b=R5gujFOy81cb7aA1iO8c2hgCQdrEKc0jCghAYR/lN0jM4dU+wt7l/fvSXlPAgRrv+Ppl
-	 S9B37xAU9nia4iGbcDqKM2x1jkmQ38tuvBJrvNGnl3hAKsi86ZxPyDSCBaByAReIPAMQG
-	 JaYANFYUIYM55zUfu4m9YICK7kqKN0wWqiQcXstum/A0Tfhs7CO1DPU7kJIcTuRh1+m+S
-	 vQte2h6l+rbI9fHXuCIyAlsfIzgOFUj8Jr+U3Gx1v5NPbT3F+97yvn61b8f0UGOipK8+G
-	 lvAdM0cgt8QY83lAc77iN92Pdgh1GqnEsiM95IjexqMLIk7ERb50fr7I1B/WGUCTfAA==
+	bh=wfYD7dXa1ZMkX5wp0bCb5Z7cvkSsWmEy1gRCBL7r9jo=;
+	b=rDzAE8toB0V3xM4BLEtMNEhcmwHwx7VKEz5IXrIlhPEdRHOseCJWFuIISOuyptGgOLcj
+	 RO7EjHsIr57LDcOPh9rwG1eq3Fb7XOc+hsndIugQC6i4yCZbBAPRu0QRXWHy+IoAYNfXR
+	 c8WiKuf6NfeywUf3iej9lMtIHnMVRI0zm2g4Mg2WsOOUtV1S6F38Q9BLxAze66yJKsI9i
+	 jM1z9qOSprD8i1IXC3k4w/jwc0Vp4ad67rTotUkobScF79WWF5CzAnOQ6tjH8I/IMQyuv
+	 6kmCQwSkFFn5HJNb2gx1LAX2NYuzBMsNwwX5LoBIL4hXqFzJwvcC6TCSBP9183Y+2Aw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="m/VGLvX6";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="vMI1tz/2";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E42F7606A31A;
-	Wed, 28 Oct 2026 17:26:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2140606A31A;
+	Wed, 28 Oct 2026 17:26:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=m/VGLvX6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 113A41F01828;
-	Wed, 28 Oct 2026 17:26:13 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vMI1tz/2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4AF61F01828;
+	Wed, 28 Oct 2026 17:26:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793208374;
-	bh=SinG8I+vpGmNMl2Dex9h/PrUmZPZWmsyP2RX0914pVg=;
+	s=korg; t=1793208377;
+	bh=wfYD7dXa1ZMkX5wp0bCb5Z7cvkSsWmEy1gRCBL7r9jo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=m/VGLvX6lfXURNtbli8HhWwcHOczavDZD297wzvwWZXtB2FNQ0aE4Q++1tbpC28Vj
-	 5ahXHO/KQDV6Ns+FmPyX4ugsQ0U6TzrhA8dJDmhjv7wIbLViXrhSh99G3fliJzr2Gr
-	 tzcu3A1QZnBix4aNqMEaXJCPfXaiqu4nErXVAJyM=
+	b=vMI1tz/2RAI6iqlIoySmHc3kC2LhfCqbdy9MLLwOFyyVGYeR9a/bhKj3cwAmKzJDO
+	 JSjU0zUktGLPyzCljcfX4r1z8H+oHXjftlKp16RCIhCyA9l43k/3HO+VY6dtMoVvx0
+	 yV8bICY74UJw0gGMww9VLF9Tfdo5mDdfSfRL+xaA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Kees Cook <keescook@chromium.org>,
 	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 054/516] params: Do not go over the limit when getting the string length
-Date: Wed, 28 Oct 2026 17:53:26 +0100
-Message-ID: <20261028170004.810652083@linuxfoundation.org>
+Subject: [PATCH 5.10 055/516] params: Use size_add() for kmalloc()
+Date: Wed, 28 Oct 2026 17:53:27 +0100
+Message-ID: <20261028170004.832761899@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -71,56 +71,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit fd0cd057a1b7351604daa6ffc91dfe28adf7225d ]
+[ Upstream commit 0fc79cbc937f2a754a302a710a94b68c61d0a89a ]
 
-We can use strnlen() even on early stages and it prevents from
-going over the string boundaries in case it's already too long.
+Prevent allocations from integer overflow by using size_add().
 
 Reviewed-by: Luis Chamberlain <mcgrof@kernel.org>
 Reviewed-by: Kees Cook <keescook@chromium.org>
 Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/20231120151419.1661807-3-andriy.shevchenko@linux.intel.com
+Link: https://lore.kernel.org/r/20231120151419.1661807-4-andriy.shevchenko@linux.intel.com
 Signed-off-by: Kees Cook <keescook@chromium.org>
 Stable-dep-of: 3dfaae04243c ("params: fix charp corruption on allocation failure")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/params.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ kernel/params.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/kernel/params.c b/kernel/params.c
-index 9f0f059571a0a..30c0a7388024e 100644
+index 30c0a7388024e..b930d3a4677cc 100644
 --- a/kernel/params.c
 +++ b/kernel/params.c
-@@ -264,7 +264,10 @@ EXPORT_SYMBOL_GPL(param_set_uint_minmax);
- 
- int param_set_charp(const char *val, const struct kernel_param *kp)
+@@ -11,6 +11,7 @@
+ #include <linux/moduleparam.h>
+ #include <linux/device.h>
+ #include <linux/err.h>
++#include <linux/overflow.h>
+ #include <linux/slab.h>
+ #include <linux/ctype.h>
+ #include <linux/security.h>
+@@ -48,7 +49,7 @@ static void *kmalloc_parameter(unsigned int size)
  {
--	if (strlen(val) > 1024) {
-+	size_t len, maxlen = 1024;
-+
-+	len = strnlen(val, maxlen + 1);
-+	if (len == maxlen + 1) {
- 		pr_err("%s: string parameter too long\n", kp->name);
- 		return -ENOSPC;
- 	}
-@@ -274,7 +277,7 @@ int param_set_charp(const char *val, const struct kernel_param *kp)
- 	/* This is a hack.  We can't kmalloc in early boot, and we
- 	 * don't need to; this mangled commandline is preserved. */
- 	if (slab_is_available()) {
--		*(char **)kp->arg = kmalloc_parameter(strlen(val)+1);
-+		*(char **)kp->arg = kmalloc_parameter(len + 1);
- 		if (!*(char **)kp->arg)
- 			return -ENOMEM;
- 		strcpy(*(char **)kp->arg, val);
-@@ -512,7 +515,7 @@ int param_set_copystring(const char *val, const struct kernel_param *kp)
- {
- 	const struct kparam_string *kps = kp->str;
+ 	struct kmalloced_param *p;
  
--	if (strlen(val)+1 > kps->maxlen) {
-+	if (strnlen(val, kps->maxlen) == kps->maxlen) {
- 		pr_err("%s: string doesn't fit in %u chars.\n",
- 		       kp->name, kps->maxlen-1);
- 		return -ENOSPC;
+-	p = kmalloc(sizeof(*p) + size, GFP_KERNEL);
++	p = kmalloc(size_add(sizeof(*p), size), GFP_KERNEL);
+ 	if (!p)
+ 		return NULL;
+ 
 -- 
 2.53.0
 
