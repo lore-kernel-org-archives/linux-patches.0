@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793211217;
-	b=LktGoynCr53AJTfMFBY163/+KTfBwVHqZuYiiW/9lEnTLUQcba9buZsEqJ+kk6rEY4xo
-	 Y60Sse4oqDAOIdFZ2zh04k+Zf0R8CT3rr5+Q3Fo0y3LbUI9H3EeRiuodY8wy3NRNkwjYp
-	 MN9W9BtFVbRWv8Wv3p6sWxuX+mwpI75Q5XZGFBGEoz+7sa/fsMoOXbM6KBrGlJAQ6hELY
-	 vBNToWSX6kd6Fe4N7ktpDr5MQQoWOyTEwFhJdpka1c5wTYt1V07Ot8oEKXAZ2/2Nx41Pf
-	 pHsb6YVPPOJxq17OhPGx0fK4MoDxQU22T1+NOdTP1OkdE5fr0rMvyVaEUMQWjbw25iQ==
+	t=1793211220;
+	b=3Nd7azNl/2sRQOxL/Ig4VUxakJ6a47DOXmaMWbENbXdw1rzlrq0eH61SrcMN8RoXxT6t
+	 GeXSKBGGJn54ilsnYROXhE14udO6y63V3rwvFNMoe8WXVqxEeYzMeAFrJB4IfUYHnVIWT
+	 w+ouSYoiJztLyARkJriGDBD0BbGXonKl7zeDuEveLhJf8Q2zwXPmGr5eu9uy/5MBipKNk
+	 AT2fjK5fxcfaLo3dtgU8dD2SR2EgtklESeFDyuw4+md4BqhzoCCWMU5n3lI+R9WYr+r5q
+	 1MG5G7TaE25V1DzHpiqicAUBNnTCArqxmjbIbEX0BKGna1uKjuypxj1XGEnGhft8WQw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793211217;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793211220;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=nXIMFH3rPTlk/CRmbR/HkSAqHKDAq7Fgw0PCDUyTXq0=;
-	b=3zafWQlFrgUw/R9zivSbUlgNG3v1SxndyT3/zSI+eSUpAVmZUNAAIokIdIaHezfOX1Os
-	 EQNhnM3drpFEZeLjO493+aEEqNMpqmAAYh8hUif0p9IhuflAiOSB5v9i6pKGVJkRdPiiP
-	 JExj1d3AsXh7rVHrXv9o9lBwhU77Yz9fB4kNgADq4L2H17hm4BNWZsFHKiPt1QXNX4Etw
-	 17A2pgUk/A5RuXLQFQPrrCDURQxZmVrmlEI0imsG+R6/wVMMnGWqViDsa9cPGmfAiKSUW
-	 bOUTKaqH448clCsXthT+YDxOqChy8k4s7O0nYcGScXugAdRDZvXg1yzUuwmtnpgHISA==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=UqaY8fo1TGVSs1K8D3InogOK/b+y1qhlloOzymLNFbY=;
+	b=B818dAM9Ohx60TgYf4We4/GU5bn16zwbjmYXbuVvHwifdX0jdGegCC1Ovy1l9Ae+4uw7
+	 86l626dADOi0lJ44tJLJaAAY81uk0bCdNd+3tc2ZwvnFywBSIGX+pk4KI0Uaus3SvRH1b
+	 Qhi1zvHiykqXzmmFEZwAjCggQxhgcOdC67B67Y+cy5jC1Qv7vbn1TsWjAH3r+3yEOwRyn
+	 RPbifV6xpHXqHAdKTSeNzadS8GJs2u7LD9ioSIARKD2r/8kurBZJ1zSaUJmZl95ncjwoY
+	 NK0LIe1E2Cz/EMpgKkIU+Dht2IFcOke/wXidWRUoNij6tsF7UiLDQMtNq9ojjM9QkGQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="wJ+a/3Xv";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1M9wg1R1;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40068606A96C;
-	Wed, 28 Oct 2026 18:13:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19CF0606A97B;
+	Wed, 28 Oct 2026 18:13:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wJ+a/3Xv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90B0D1F01825;
-	Wed, 28 Oct 2026 18:13:36 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1M9wg1R1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DC9C1F01828;
+	Wed, 28 Oct 2026 18:13:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793211217;
-	bh=nXIMFH3rPTlk/CRmbR/HkSAqHKDAq7Fgw0PCDUyTXq0=;
+	s=korg; t=1793211220;
+	bh=UqaY8fo1TGVSs1K8D3InogOK/b+y1qhlloOzymLNFbY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wJ+a/3Xvg8w2DjSs7LHcKOyVfXePBNa33OKyR/VLhQ32xkfed4i5stnISIZzb8vTh
-	 m5m8n5q79okLjkVIbGpY86aGDbXcy38kYE0PHnU4CyojvDxSAWMwZm017aEjzsKD2J
-	 znAAVD6fZ+35KswD9XKYQsh6GGmVP9vDAlfoMOdM=
+	b=1M9wg1R18rdf38yVJNJElnxndtGqF+gQB+NPzkYFxPCToY0GO+EbJXuukm3uFrW6m
+	 t3joLSoepIJvGCy2oFWjUwJ+JfNo1PZLhcwoZiKNbG0a97HL9td/QPUMq0SH7z2eSs
+	 1DKAG73roaWQ8y4IKYVtNtOVNTHxXUgpMwY/fYto=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	George Zhang <george.zhang@amd.com>,
-	Jiangshan Yi <yijiangshan@kylinos.cn>,
-	Dan Wheeler <daniel.wheeler@amd.com>,
+	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 299/571] drm/amd/display: check dc_state_create_copy() for NULL in dm_suspend
-Date: Wed, 28 Oct 2026 17:57:26 +0100
-Message-ID: <20261028170015.093868564@linuxfoundation.org>
+Subject: [PATCH 5.15 300/571] drm/amd/pm/si: Fix updating clock limits on AC/DC
+Date: Wed, 28 Oct 2026 17:57:27 +0100
+Message-ID: <20261028170015.116877969@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -64,60 +63,99 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jiangshan Yi <yijiangshan@kylinos.cn>
+From: Timur Kristóf <timur.kristof@gmail.com>
 
-[ Upstream commit 015e72cde567d2450e282c2790773463156b2d0a ]
+[ Upstream commit 08c9100f65299c64439e22e6057d750ae0e6c660 ]
 
-dc_state_create_copy() can return NULL on allocation failure.
-dm_suspend() only conditionally skips dm_gpureset_toggle_interrupts()
-and continues execution, returning success.  dm_resume() then
-dereferences the NULL cached_dc_state in link_enc_cfg_copy() and the
-following dc_state->stream_count loop, crashing during GPU reset
-recovery.
+Assume that the AC limits are the maximum of all power states,
+and the DC limits are the maximum of battery power states.
+This shouldn't make any difference in practice, but is
+cleaner and more robust against bogus information in the VBIOS.
 
-Return -ENOMEM immediately if the copy fails, so the caller aborts
-suspend instead of leaving a NULL cached state for resume.
-
-Fixes: 8092aa3ab8f7 ("drm/amd/display: Add null checker before passing variables")
-Reviewed-by: George Zhang <george.zhang@amd.com>
-Signed-off-by: Jiangshan Yi <yijiangshan@kylinos.cn>
-Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
+Fixes: e6c5d36756e7 ("drm/amd/pm/si: Fix updating clock limits from power states")
+Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
+Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
+Link: https://patch.msgid.link/20260923120354.1027996-2-timur.kristof@gmail.com
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 84b6d7932fdd2857795a257f9f258562a3cddcab)
+(cherry picked from commit ef8cb9dcc7db7b7abcbdbe870a080cc81e4f0bf3)
 Cc: stable@vger.kernel.org
-[ sashal: Adapted dc_state_create_copy() usage to dc_copy_state(). ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/pm/powerplay/si_dpm.c | 36 +++++++++++------------
+ 1 file changed, 18 insertions(+), 18 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-index 4530d22139355..288ef18e70d05 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -2440,9 +2440,14 @@ static int dm_suspend(void *handle)
- #endif
+diff --git a/drivers/gpu/drm/amd/pm/powerplay/si_dpm.c b/drivers/gpu/drm/amd/pm/powerplay/si_dpm.c
+index be459903139fb..f24eda530e210 100644
+--- a/drivers/gpu/drm/amd/pm/powerplay/si_dpm.c
++++ b/drivers/gpu/drm/amd/pm/powerplay/si_dpm.c
+@@ -7133,6 +7133,19 @@ static void si_parse_pplib_non_clock_info(struct amdgpu_device *adev,
+ 		adev->pm.dpm.uvd_ps = rps;
+ }
  
- 		dm->cached_dc_state = dc_copy_state(dm->dc->current_state);
-+		if (!dm->cached_dc_state) {
-+			drm_err(adev_to_drm(adev),
-+				"Failed to allocate cached DC state during suspend\n");
-+			mutex_unlock(&dm->dc_lock);
-+			return -ENOMEM;
-+		}
++static void si_update_limits(struct amdgpu_clock_and_voltage_limits *limits,
++			     struct rv7xx_pl *pl)
++{
++	if (pl->sclk > limits->sclk)
++		limits->sclk = pl->sclk;
++	if (pl->mclk > limits->mclk)
++		limits->mclk = pl->mclk;
++	if (pl->vddc > limits->vddc)
++		limits->vddc = pl->vddc;
++	if (pl->vddci > limits->vddci)
++		limits->vddci = pl->vddci;
++}
++
+ static void si_parse_pplib_clock_info(struct amdgpu_device *adev,
+ 				      struct amdgpu_ps *rps, int index,
+ 				      union pplib_clock_info *clock_info)
+@@ -7141,7 +7154,6 @@ static void si_parse_pplib_clock_info(struct amdgpu_device *adev,
+ 	struct evergreen_power_info *eg_pi = evergreen_get_pi(adev);
+ 	struct si_power_info *si_pi = si_get_pi(adev);
+ 	struct  si_ps *ps = si_get_ps(rps);
+-	struct amdgpu_clock_and_voltage_limits *limits;
+ 	u16 leakage_voltage;
+ 	struct rv7xx_pl *pl = &ps->performance_levels[index];
+ 	int ret;
+@@ -7206,26 +7218,14 @@ static void si_parse_pplib_clock_info(struct amdgpu_device *adev,
+ 	 * VBIOS can contain conflicting values between:
+ 	 * - the maximum allowed clocks and voltages on AC or DC
+ 	 * - the clocks and voltages in power states on AC or DC
++	 *
++	 * Assume that the AC limits are the maximum of all power states,
++	 * and the DC limits are the maximum of battery power states.
+ 	 */
++	si_update_limits(&adev->pm.dpm.dyn_state.max_clock_voltage_on_ac, pl);
+ 	if ((rps->class & ATOM_PPLIB_CLASSIFICATION_UI_MASK) ==
+-	    ATOM_PPLIB_CLASSIFICATION_UI_PERFORMANCE)
+-		limits = &adev->pm.dpm.dyn_state.max_clock_voltage_on_ac;
+-	else if ((rps->class & ATOM_PPLIB_CLASSIFICATION_UI_MASK) ==
+ 		 ATOM_PPLIB_CLASSIFICATION_UI_BATTERY)
+-		limits = &adev->pm.dpm.dyn_state.max_clock_voltage_on_dc;
+-	else
+-		limits = NULL;
+-
+-	if (limits) {
+-		if (pl->sclk > limits->sclk)
+-			limits->sclk = pl->sclk;
+-		if (pl->mclk > limits->mclk)
+-			limits->mclk = pl->mclk;
+-		if (pl->vddc > limits->vddc)
+-			limits->vddc = pl->vddc;
+-		if (pl->vddci > limits->vddci)
+-			limits->vddci = pl->vddci;
+-	}
++		si_update_limits(&adev->pm.dpm.dyn_state.max_clock_voltage_on_dc, pl);
+ }
  
--		if (dm->cached_dc_state)
--			dm_gpureset_toggle_interrupts(adev, dm->cached_dc_state, false);
-+		dm_gpureset_toggle_interrupts(adev, dm->cached_dc_state, false);
- 
- 		amdgpu_dm_commit_zero_streams(dm->dc);
- 
+ union pplib_power_state {
 -- 
 2.53.0
 
