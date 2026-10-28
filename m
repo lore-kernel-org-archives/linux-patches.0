@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793208900;
-	b=oV+xxZAIW/FG+/ZJx91EOU6iGDlhxQqOWVLOdlcuJTqoThpMMp5CROiBEJj2IpElUXkV
-	 X0EXv3x4qvb8Q2T/zFpPXxyPVoA4HVMA+VRXWD8taC44/HK8tx4nRzdiNqhNrEGVQC6/Q
-	 S5uUF/rmTuDev9+BcxQ82UWldc8P4vw5blr6OwbGrTIbFup/I6ec+yAhGGnp9A7Z8Yub2
-	 LuaE1QXna+gP+MRgOpq8e++McHdaEWXksQimGmAVmkcjm0Zw6L0TbSbGr8akPwqswqbO8
-	 kyc/XVwtaLOMaw0iF6dnsr9a1aV7xu4PVUpNN0tCDDqQYLYvaU+QqTYJzUllvsR/Nww==
+	t=1793208903;
+	b=PDX6KNkmUMBOJae1ICIgAmKTOKEWNVGHuVnEfd2XtpAgDlfRaHtXoXj4mLM1ZH2KPXnO
+	 4cwk4aZQBih+1LFzlPd/y/zCPXmgImAxRez/NwwLVho8gW2MVaJHWrfe4o/ByTS0sfvwb
+	 sCgwLttUzKvRv7xwf6uzqOjLfXc4H/KS2DjrV1auIkIERpDw6RAw/3mioq87Cz9jCzOys
+	 FNcDm4cz1tCMvPEOAxohkRvWQeKGwDdXvtnOC4EgKo4oCnlwO2Y2qpO4s9QHmVSwZJ2Rd
+	 s1poiLfZDSGFP+GkqFuIVEg624/EsKNuRli6BveH5WQ3SfjgVZd13zEao5qDUfRD/Kw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793208900;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793208903;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ZlJmT7lkiiJp+VeoBBE+n2t9DCVqPqOVfnfrhJJ2RBE=;
-	b=uhQO+E8ZsbY3Q16ZzMfJvA56PjaOh+QjWxU0qR22EI62eszArDSLcr97sSRyEeYPJbOe
-	 CyUDK3gANlxTKjDeZyiJyWr7gUErLohaCm3/xsIk/hczQljycXc2LDjiL9alWh/bVznTN
-	 dua9piDXiu0xhkEtKifTGBQV1BrpcjgRDU1q9wedc8ZissRFiJrZmk3sHmxJwq81YfXVY
-	 US3OkRxFRYJsS9IIse32bXPzPOb8OM/4lNXY+4SC5DaEv5fNmWiSOC8dzetmZRRq818bD
-	 B7b33L9xcMQ86n50XGp1ZzPF9bpuXZRoRc3PeP+z4Io72sFj5CMoB9gXZ/6mCM8iVzg==
+	bh=VXFTXcudzWpuiJo1HI5e5r7RuTdkLcsjIdiM14nMhjU=;
+	b=IOaE4pEo5aU8ijOJV1l2yfx67Ytq88t72mZc9DFTnyS2IB8/n7NcL234puK6T3zj+qBV
+	 pMLNnkQfKNGI++V99nXxhFHXLHQpKpz1hZx75vTrKeera3B8DNMGlEaiC+Qjq7WAphsky
+	 +xNFcnJk27en1kzvSzmw4gFZotuIRVfjTYM17LGE5u+UT/92DzpkCMJUmCoS6jVJV89ui
+	 qOKHf094wDQ0b6ssCUCYJArFG11bWGaRhqT6UVmPdvoNr8bUU/XTYHsLFCfsCPklG2o4U
+	 XafL9XWVI5ozErOu9I3HbNPkCBdQQ3RnBhkYhvcXzqBY1HphdKqf+fXbJgMKv9LGscA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UrjlJfHO;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GAMu0y6n;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 835B6606A321;
-	Wed, 28 Oct 2026 17:35:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6800B606A31A;
+	Wed, 28 Oct 2026 17:35:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UrjlJfHO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D504D1F01825;
-	Wed, 28 Oct 2026 17:34:59 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GAMu0y6n
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7BF21F01825;
+	Wed, 28 Oct 2026 17:35:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793208900;
-	bh=ZlJmT7lkiiJp+VeoBBE+n2t9DCVqPqOVfnfrhJJ2RBE=;
+	s=korg; t=1793208903;
+	bh=VXFTXcudzWpuiJo1HI5e5r7RuTdkLcsjIdiM14nMhjU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UrjlJfHOWkOQJmwFmDqYLzR4da7M3k9+ZA1mhbUngOxVFh4irkYt/dPNCmGqjjpvR
-	 nyQP+JdG9udD9LE5Ms0YuIX+9EmPq85ln+N64RPRdzmFYa/x1e9M7NSEECHpq7gsNt
-	 4GCur99lpNuK+GYmIvfTk8PhlKMEbG2FPgXAgDQw=
+	b=GAMu0y6nksI1r5/TEKDvdiO492EIR0Wk8Xr7vCeZ3lDeMRCVamMaC9lsee3QwGe3k
+	 GzvwkZNmek+uFxRiG1QcE5JXnyhqTB1DGxOWFAbpI6MtCK6cFd3ul87sTTXWu0Kbsc
+	 vQdRFVccKRgYkx72yvLTb+ATvfV+gEECAx72sGRA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arka Mondal <arkamondalofficial@gmail.com>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Fan Wu <fanwu01@zju.edu.cn>,
 	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Subject: [PATCH 5.10 239/516] iio: imu: adis16480: fix unprotected debugfs reads
-Date: Wed, 28 Oct 2026 17:56:31 +0100
-Message-ID: <20261028170009.164164845@linuxfoundation.org>
+Subject: [PATCH 5.10 240/516] iio: light: gp2ap020a00f: drain irq_work after free_irq
+Date: Wed, 28 Oct 2026 17:56:32 +0100
+Message-ID: <20261028170009.187809022@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -68,40 +67,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arka Mondal <arkamondalofficial@gmail.com>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-commit e1dea54496f90a62318cf4eeaa1e9ef8316e92b6 upstream.
+commit 63213927b141085b6c8719b8037dab3074b7e0fe upstream.
 
-The firmware_revision and firmware_date file operations are open coded
-and never call debugfs_file_get(), which debugfs_create_file_unsafe()
-requires. debugfs_remove_recursive() therefore does not wait for a read
-in progress, and unbind frees the iio_dev underneath it.
+The threaded IRQ handler queues data->work through irq_work_queue() so
+the trigger is polled from a per-CPU context.  free_irq() does not flush
+an irq_work the handler already queued, so after gp2ap020a00f_remove()
+returns that work may still run and call iio_trigger_poll() on data->trig,
+which the devm cleanup has already freed, causing a use-after-free.
 
-Use debugfs_create_file() instead.
+Add irq_work_sync(&data->work) after free_irq() in remove() and in the
+probe error path, mirroring commit 78601726d4a5 ("iio: trigger: sysfs:
+fix use-after-free on remove").
 
-Fixes: 9bf94f836e32 ("imu:adis16480: fix debugfs_simple_attr.cocci warnings")
-Signed-off-by: Arka Mondal <arkamondalofficial@gmail.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Found by an in-house static analysis tool, confirmed by manual review.
+
+Fixes: bf29fbeaa13d ("iio: gp2ap020a00f: Add a driver for the device")
 Cc: stable@vger.kernel.org
+Assisted-by: Codex:gpt-5.6
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
 Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/imu/adis16480.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/iio/light/gp2ap020a00f.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/iio/imu/adis16480.c
-+++ b/drivers/iio/imu/adis16480.c
-@@ -286,9 +286,9 @@ static int adis16480_debugfs_init(struct
- 	struct adis16480 *adis16480 = iio_priv(indio_dev);
- 	struct dentry *d = iio_get_debugfs_dentry(indio_dev);
+--- a/drivers/iio/light/gp2ap020a00f.c
++++ b/drivers/iio/light/gp2ap020a00f.c
+@@ -1571,6 +1571,7 @@ error_trigger_unregister:
+ 	iio_trigger_unregister(data->trig);
+ error_free_irq:
+ 	free_irq(client->irq, indio_dev);
++	irq_work_sync(&data->work);
+ error_uninit_buffer:
+ 	iio_triggered_buffer_cleanup(indio_dev);
+ error_regulator_disable:
+@@ -1593,6 +1594,7 @@ static int gp2ap020a00f_remove(struct i2
+ 	iio_device_unregister(indio_dev);
+ 	iio_trigger_unregister(data->trig);
+ 	free_irq(client->irq, indio_dev);
++	irq_work_sync(&data->work);
+ 	iio_triggered_buffer_cleanup(indio_dev);
+ 	regulator_disable(data->vled_reg);
  
--	debugfs_create_file_unsafe("firmware_revision", 0400,
-+	debugfs_create_file("firmware_revision", 0400,
- 		d, adis16480, &adis16480_firmware_revision_fops);
--	debugfs_create_file_unsafe("firmware_date", 0400,
-+	debugfs_create_file("firmware_date", 0400,
- 		d, adis16480, &adis16480_firmware_date_fops);
- 	debugfs_create_file_unsafe("serial_number", 0400,
- 		d, adis16480, &adis16480_serial_number_fops);
 
 
