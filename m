@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793210518;
-	b=q9GzNnYZMnjYEMdDs+qPfr7hzM1XUvBqA/FbK4sseGunqmdnk6fMos6Urio4wDmiExNo
-	 QVEhSI/qvojb9GOlDbreBB/Uz0P4FGhrHopGjH0nYeDFHYxCYCPxOwcH2yoa+gmD3gK3t
-	 igA5MBhOw5B6WiGETWh32hrv9BFZbQZFAUoMvvfhl1mjumAnKHqbJqoO7CW/mZLcnV195
-	 eUc6xoVTC752TFj4vdjxXuArZ4hMTUxlYnYDktcfXZMMB8Dsjo80okgcOkNkG/W5q8nFb
-	 pOERUerr/b4wFkCAKTFBSnMG37dlt9IK68Zjay7tQ8i2q4MV24RsMcSL4UwNm09ZTZQ==
+	t=1793210521;
+	b=uwV8KEnG5dDebpPs3j5Y8eqFC27c/pzjZOxn8fNhafXGzITTItkulIoU6MMpbW361pXz
+	 BQeYloIWXAKnmi2arUwdzMi1BotN1hz9F+pbhcD3Jh7yk0ahjj6VBp1tL+cwVq/lPtotx
+	 v1J0U6xlTtJaVzA8FViAcYldBLGPY8SmIsUyWlrbCKUTKpFQPc6x+kQCiLu0EkcIO05xE
+	 LlXEjGsywEImzQDBTKnsPiLpwZ2eba30URbtAwE1QV//VGEPiSAScc2df54NvtaoR3yp9
+	 oeVJcdmFj2FDFf3JL1RJGbfsjTCE8dfVl6RxGCnwx4ZW51R5WcJhW4sh6aCbopGaTSw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793210518;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793210521;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=yX+I4c3gdTHowZI1UnKHltg+s1kesLc6QnI2pq2xbn8=;
-	b=0gFz2JISTyXbR5EIgJU4XxICH00mAZdppWmkIC5U5rwNOP5LJ2kjgsFRpL7asoHAI92I
-	 js5vXHX9rAnxbPljAGF60/459i+T63T/lWRVsEjvLmGa0OPO/akOzO967WYz52Di8Op52
-	 zw/0R/u7TsoipoeQ4JLXShbn3I2OvxWbGECPIydt/6rTfcDgY6b64xLNZOODPRPlp/FPT
-	 dsAEmm+TUb4aw2dQCIZEM/o1cfLPIcLj7PWwJn6pYR3PGREdeuX5a9HDi/gcqqgFWHV81
-	 4cWlAkhd+RxQIwfXQ1lpgqatHHpZ6O3B45NNYSjPdWRsHfE3kXP1l4admnbBi028EqQ==
+	bh=MHdHYTKw9lT8F5Xg8Ra+kuYzELjwVUeUCP4FV2igIF4=;
+	b=HVahshyQiBGNFYzCfrul5xxmCGtd4oPKmulBE+TbtCyry4DXDxq7oDvrJcSzbN1TlBKO
+	 ibXzQHmLlu9JQosfcYUyCxFLekrAkmZc6w/TaIyCfig+foSBBh9+79lPJPWs7qZEdb4ai
+	 4FPczHK5bsvM0zTnh94aUDOZZHlG4oSYd44S51dTP+jugJJJMyZ4CcCq8feQpxiFJUyPs
+	 VL1AiAOZyK9p8GTDeZyBQyLumLJ3SufHYGK3WC3OSFhhRfUVctOgkP/BPx8W9zzkLLTCc
+	 ppCoZDLyMgU8FQLRClOt/IefKbpbG64B2cq+HIROMYeQ04vmb4uxsrZkckd+xBzqraw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nAMOICnM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vndBTqTL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DCEC606A32F;
-	Wed, 28 Oct 2026 18:01:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17C8A606A31D;
+	Wed, 28 Oct 2026 18:02:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nAMOICnM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6822D1F01829;
-	Wed, 28 Oct 2026 18:01:57 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vndBTqTL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 332C41F01829;
+	Wed, 28 Oct 2026 18:02:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793210517;
-	bh=yX+I4c3gdTHowZI1UnKHltg+s1kesLc6QnI2pq2xbn8=;
+	s=korg; t=1793210520;
+	bh=MHdHYTKw9lT8F5Xg8Ra+kuYzELjwVUeUCP4FV2igIF4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nAMOICnM+22JClSMm6PRN+6+U9lCx73Siec/a7Yi2C1kLa3g9jio5G36NgwpKc07c
-	 lNq3X3rcljXhvErvay23uFED087KMDOuz8WJMLlQzlhMRKFb/E+DAeTGSmVSnbAkCI
-	 fgzbi/IG3U2M8q+xuWmNIF/15tTRN5GBc4kWiAPA=
+	b=vndBTqTLf//AbRwlx2sKaITYQJPwihzgyu6KgvhsfloQn1EROk4w9VYywGUWGBEET
+	 rrV4cFzgdA/Q/Z5fnFWs9eKSd0aD8dhdF4ANmTm+aQI7nPo0TkDVSmmH3OkBF6Qq11
+	 43IZAct77S3Yb8uA7qBVUiPgSgQC6Ab51jtuV3Ig=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chuck Lever <chuck.lever@oracle.com>,
+	Frank Sorenson <sorenson@redhat.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Paulo Alcantara <pc@manguebit.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 054/571] nfsd: gate nfs2 setacl by argp->mask
-Date: Wed, 28 Oct 2026 17:53:21 +0100
-Message-ID: <20261028170009.309330735@linuxfoundation.org>
+Subject: [PATCH 5.15 055/571] cifs: fix loff_t underflow in cifs_remap_file_range() when len == 0
+Date: Wed, 28 Oct 2026 17:53:22 +0100
+Message-ID: <20261028170009.333986258@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -67,71 +69,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Frank Sorenson <sorenson@redhat.com>
 
-[ Upstream commit a3a7e20ed66d3f04d37883c398da8a113b430769 ]
+[ Upstream commit 6c322f5cf7476ded7a9a20f7be72462065a03c68 ]
 
-The NFSACL v2 SETACL path shares the decoder convention used by its
-v3 sibling: nfsaclsvc_decode_setaclargs() fills in argp->acl_access
-only when NFS_ACL is set in the request mask and argp->acl_default
-only when NFS_DFACL is set, leaving the other pointer NULL because
-the argument buffer is zeroed up to pc_argzero before decode.
+With len == 0 (clone to EOF), the effective length is computed as:
 
-nfsacld_proc_setacl() then hands both pointers to set_posix_acl()
-unconditionally. set_posix_acl(idmap, dentry, type, NULL) is the VFS
-"remove this ACL type" operation, so an omitted arm is
-indistinguishable from an explicit request to delete that ACL. A
-SETACL carrying only NFS_ACL silently strips the directory's default
-ACL; mask=0 strips both.
+    len = src_inode->i_size - off;
 
-This is the same defect just fixed in nfsd3_proc_setacl(); apply the
-same remedy. Gate each set_posix_acl() call on its mask bit and
-initialize error to 0 so that a request with neither bit set leaves
-the on-disk ACLs untouched and returns success. The out_drop_lock
-path and the unconditional posix_acl_release() in
-nfsaclsvc_release_setacl() already tolerate the skipped arms.
+If off > i_size, this is a negative loff_t, corrupting the ByteCount
+in the FSCTL_DUPLICATE_EXTENTS_TO_FILE request and inverting the range
+in filemap_write_and_wait_range().  The existing off >= i_size check
+fires only after the ioctl has already been sent.
 
-Fixes: a257cdd0e217 ("[PATCH] NFSD: Add server support for NFSv3 ACLs.")
+Snapshot i_size_read() once for both the bounds check and the length
+calculation, eliminating the TOCTOU and 32-bit torn-read risk.  Reject
+off > src_size with -EINVAL.  Treat off == src_size as a no-op,
+consistent with __generic_remap_file_range_prep().
+
+Fixes: 04b38d601239 ("vfs: pull btrfs clone API to vfs layer")
 Cc: stable@vger.kernel.org
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-[ retained the older user-namespace and inode set_posix_acl() API in place of the newer mount-idmap and dentry API. ]
+Signed-off-by: Frank Sorenson <sorenson@redhat.com>
+Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+[ added the missing unlock label at the existing common unlock path ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs2acl.c | 21 +++++++++++++--------
- 1 file changed, 13 insertions(+), 8 deletions(-)
+ fs/cifs/cifsfs.c | 16 ++++++++++++++--
+ 1 file changed, 14 insertions(+), 2 deletions(-)
 
-diff --git a/fs/nfsd/nfs2acl.c b/fs/nfsd/nfs2acl.c
-index f8b91aacd8174..cd6de7aca989f 100644
---- a/fs/nfsd/nfs2acl.c
-+++ b/fs/nfsd/nfs2acl.c
-@@ -115,14 +115,19 @@ static __be32 nfsacld_proc_setacl(struct svc_rqst *rqstp)
+diff --git a/fs/cifs/cifsfs.c b/fs/cifs/cifsfs.c
+index 7bdeaecc6c508..e3572c30be4f9 100644
+--- a/fs/cifs/cifsfs.c
++++ b/fs/cifs/cifsfs.c
+@@ -1171,8 +1171,19 @@ static loff_t cifs_remap_file_range(struct file *src_file, loff_t off,
+ 	 */
+ 	lock_two_nondirectories(target_inode, src_inode);
  
- 	inode_lock(inode);
- 
--	error = set_posix_acl(&init_user_ns, inode, ACL_TYPE_ACCESS,
--			      argp->acl_access);
--	if (error)
--		goto out_drop_lock;
--	error = set_posix_acl(&init_user_ns, inode, ACL_TYPE_DEFAULT,
--			      argp->acl_default);
--	if (error)
--		goto out_drop_lock;
-+	error = 0;
-+	if (argp->mask & NFS_ACL) {
-+		error = set_posix_acl(&init_user_ns, inode, ACL_TYPE_ACCESS,
-+				      argp->acl_access);
-+		if (error)
-+			goto out_drop_lock;
-+	}
-+	if (argp->mask & NFS_DFACL) {
-+		error = set_posix_acl(&init_user_ns, inode, ACL_TYPE_DEFAULT,
-+				      argp->acl_default);
-+		if (error)
-+			goto out_drop_lock;
+-	if (len == 0)
+-		len = src_inode->i_size - off;
++	if (len == 0) {
++		loff_t src_size = i_size_read(src_inode);
++
++		if (off > src_size) {
++			rc = -EINVAL;
++			goto unlock;
++		}
++		len = src_size - off;
++		if (!len) {
++			rc = 0;
++			goto unlock;
++		}
 +	}
  
- 	inode_unlock(inode);
- 
+ 	cifs_dbg(FYI, "about to flush pages\n");
+ 	/* should we flush first and last page first */
+@@ -1188,6 +1199,7 @@ static loff_t cifs_remap_file_range(struct file *src_file, loff_t off,
+ 	/* force revalidate of size and timestamps of target file now
+ 	   that target is updated on the server */
+ 	CIFS_I(target_inode)->time = 0;
++unlock:
+ 	/* although unlocking in the reverse order from locking is not
+ 	   strictly necessary here it is a little cleaner to be consistent */
+ 	unlock_two_nondirectories(src_inode, target_inode);
 -- 
 2.53.0
 
