@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214915;
-	b=kghT1mSALrISThX0BXudG/t+aqwKkIR4Yg+DIritrKoSMPpSSs4HrKQUnQ0SmGIQLjf5
-	 GTFHqzgFOdLDBV/oaRoxC4RucCRYgzCxRDbh92VCExBdHKN1IFeYlJgeTQ4y73GOMZtDV
-	 4W3086jtCxnJjiqUQLnuDEzSHTf7H4WJx6+UhQ7fivNoWXIA1A0iEsXetG7D+HVFnDSRH
-	 tp//FiTS2wZ03difC+Iia3Vg9cLXLsw8fADcJDOMSz73K0W3z+ZCwSl44M+Kh8wwmlvyh
-	 tVsXTs1PtH9Lx0npahTUiquBNMbOJDdbGMNV8wxGBv42DT9BhwxsV3c4UUdl4M9nwPA==
+	t=1793214918;
+	b=seGuI12Kieq8McPFNQWPLeVlQzInFv2KkfKXxlusRx8+qJ/vyPZAYS3ywQfHcyBzq/9E
+	 jVxRBHni3ZHX5MyT67eBWTWyJ3QQfHu6NQZiP3r0SkUliQWBgy5DY//Ee5gW2oX9o9tQe
+	 RgPFgaojV+Fh3crZIoOYJHMo4yiEN+qu+pQ+d81keV0pyI4d1O0EH32g5LdZ1gEs6rSUJ
+	 BW7q0loe9wK3EoVrcu23pxfA7mZORl2HB0r1O+MyyUdtMFXKyPIVQdz81NIWYDvzvC5XD
+	 elMvEndz99Znwx/Xd4f3sz7ogZlZSfef+GrwCzAp2OLlLgr8etAEw1IBMiJj+Tu2iGg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214915;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214918;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=b9TtkSYnhveD/H0CVOirVL9Qy1etIe/lXxyN3RQuMmA=;
-	b=w90/HDpbYLK47qXzJ6qHGQeWIUPRUJOSpQzQ64Da+ki6vP58gcNebsx1vOd7CKtRmuSl
-	 67CBmeBOUlMAclOg3USB+R/WE1JYx6r+i3nblcFgEDuZOvMgyx5N0vMYuSjTqSriHEvOb
-	 RTGL8HhF6hXOnM6VhSlukMEIJfEnaNtBbeWGSSDpERiKvjRMfo/U7bofr30UQsRQyWXPH
-	 NrlttvO1s07OxTwiYAg96FuELR/fPidRxxbPduJ7gSV5/+XRpty97eFh8xNhrWaV2T7OP
-	 UxYCggaJWT0Z3ZE2wTDMtUyR7PoYbt5U5rlScGHJkTX2S1b8jRAqypRRJA3TsHHpV/Q==
+	bh=hPEOdps2AWdteLnO5JZBuUUzr3RPGYppnH3mRbZa4II=;
+	b=p3oc4RMBMzUKQpruosxz0+VfS1go1TDh880YRPakNmB/CZwE6eKObkmUtF42lDXnX43h
+	 awuB7m4Xq3C+9aYfSxcLRuVYRRAJpT+yZ/X/kMn78LL1+YrC+IJw9qkeQF+F/jNmWjIuR
+	 ETYLMIUlt1zHzgZ/HCxa+5Z7bEBKCSfbsZvRbADHoIKmby7EeDuttvZWsxsEeVgwTIpg7
+	 8+EfBnCsaZr3RHuuZuyv1MKgoHJxfm+BV7WjyG+c+lZoCMb9eV824AzwB8AS1Mf66giay
+	 BXpctCfR6eO/MY3pSdA99JgZblXkSYgDMFEETBUf7aPLl2KoVr0Xa0DffH8TEXC39zg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=H1WBPXAR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ywEUfVHs;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 189D5606A326;
-	Wed, 28 Oct 2026 19:15:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E22A8606A31A;
+	Wed, 28 Oct 2026 19:15:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=H1WBPXAR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 680081F01825;
-	Wed, 28 Oct 2026 19:15:14 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ywEUfVHs
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45C551F01825;
+	Wed, 28 Oct 2026 19:15:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214915;
-	bh=b9TtkSYnhveD/H0CVOirVL9Qy1etIe/lXxyN3RQuMmA=;
+	s=korg; t=1793214917;
+	bh=hPEOdps2AWdteLnO5JZBuUUzr3RPGYppnH3mRbZa4II=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=H1WBPXARF3Lz7AwNER7hEmQgVIl1TAmKUjOzS2076y7PRNeD1BC+HONYcfaaggDVs
-	 45m2jh792NmQ+yrKyn3nNPvvOmnaSW1NXbbC1t+1gyJwT1jW0tCeYpnWZd78gzz12h
-	 CqN5adEdQmZbmkPdd8r2CUFeY4D1bqJpLwLGUZu8=
+	b=ywEUfVHsZfQqppucoO3ihcavHGLNevCCkzVQRn/odJVO+zYcuKJKQUW+N1mwzhwyJ
+	 0eDc3Gp2gnd34kyhV7H6zFDwtrHyBqkWMoUrzBevAoU+yxSa3CTYqVAgT0Sg92hd89
+	 gKLP0x3TT8hDRQ+NDUkHqMOm0dp5LNRDSu4t67FI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Helge Deller <deller@gmx.de>,
-	John Johansen <john.johansen@canonical.com>,
+	Lu Baolu <baolu.lu@linux.intel.com>,
+	Dmytro Maluka <dmaluka@chromium.org>,
+	Samiullah Khawaja <skhawaja@google.com>,
+	Kevin Tian <kevin.tian@intel.com>,
+	Joerg Roedel <joerg.roedel@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1026/1887] apparmor: Fix & Optimize table creation from possibly unaligned memory
-Date: Wed, 28 Oct 2026 17:52:02 +0100
-Message-ID: <20261028170522.763156420@linuxfoundation.org>
+Subject: [PATCH 6.1 1027/1887] iommu/vt-d: Clear Present bit before tearing down PASID entry
+Date: Wed, 28 Oct 2026 17:52:03 +0100
+Message-ID: <20261028170522.786683310@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,84 +71,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Helge Deller <deller@kernel.org>
+From: Lu Baolu <baolu.lu@linux.intel.com>
 
-[ Upstream commit 6fc367bfd4c8886e6b1742aabbd1c0bdc310db3a ]
+[ Upstream commit 75ed00055c059dedc47b5daaaa2f8a7a019138ff ]
 
-Source blob may come from userspace and might be unaligned.
-Try to optize the copying process by avoiding unaligned memory accesses.
+The Intel VT-d Scalable Mode PASID table entry consists of 512 bits (64
+bytes). When tearing down an entry, the current implementation zeros the
+entire 64-byte structure immediately using multiple 64-bit writes.
 
-- Added Fixes tag
-- Added "Fix &" to description as this doesn't just optimize but fixes
-        a potential unaligned memory access
-Fixes: e6e8bf418850d ("apparmor: fix restricted endian type warnings for dfa unpack")
-Signed-off-by: Helge Deller <deller@gmx.de>
-[jj: remove duplicate word "convert" in comment trigger checkpatch warning]
-Signed-off-by: John Johansen <john.johansen@canonical.com>
+Since the IOMMU hardware may fetch these 64 bytes using multiple
+internal transactions (e.g., four 128-bit bursts), updating or zeroing
+the entire entry while it is active (P=1) risks a "torn" read. If a
+hardware fetch occurs simultaneously with the CPU zeroing the entry, the
+hardware could observe an inconsistent state, leading to unpredictable
+behavior or spurious faults.
+
+Follow the "Guidance to Software for Invalidations" in the VT-d spec
+(Section 6.5.3.3) by implementing the recommended ownership handshake:
+
+1. Clear only the 'Present' (P) bit of the PASID entry.
+2. Use a dma_wmb() to ensure the cleared bit is visible to hardware
+   before proceeding.
+3. Execute the required invalidation sequence (PASID cache, IOTLB, and
+   Device-TLB flush) to ensure the hardware has released all cached
+   references.
+4. Only after the flushes are complete, zero out the remaining fields
+   of the PASID entry.
+
+Also, add a dma_wmb() in pasid_set_present() to ensure that all other
+fields of the PASID entry are visible to the hardware before the Present
+bit is set.
+
+Fixes: 0bbeb01a4faf ("iommu/vt-d: Manage scalalble mode PASID tables")
+Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
+Reviewed-by: Dmytro Maluka <dmaluka@chromium.org>
+Reviewed-by: Samiullah Khawaja <skhawaja@google.com>
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Link: https://lore.kernel.org/r/20260120061816.2132558-2-baolu.lu@linux.intel.com
+Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/apparmor/include/match.h | 12 +++++++-----
- security/apparmor/match.c         |  8 ++++----
- 2 files changed, 11 insertions(+), 9 deletions(-)
+ drivers/iommu/intel/pasid.c | 22 ++++++++++++++++++++--
+ 1 file changed, 20 insertions(+), 2 deletions(-)
 
-diff --git a/security/apparmor/include/match.h b/security/apparmor/include/match.h
-index 611ae908469be..72562aaab9aea 100644
---- a/security/apparmor/include/match.h
-+++ b/security/apparmor/include/match.h
-@@ -105,16 +105,18 @@ struct aa_dfa {
- extern struct aa_dfa *nulldfa;
- extern struct aa_dfa *stacksplitdfa;
+diff --git a/drivers/iommu/intel/pasid.c b/drivers/iommu/intel/pasid.c
+index 178ca6fadb736..e0647142c6af1 100644
+--- a/drivers/iommu/intel/pasid.c
++++ b/drivers/iommu/intel/pasid.c
+@@ -262,7 +262,7 @@ intel_pasid_clear_entry(struct device *dev, u32 pasid, bool fault_ignore)
+ 	if (WARN_ON(!pe))
+ 		return;
  
--#define byte_to_byte(X) (X)
--
- #define UNPACK_ARRAY(TABLE, BLOB, LEN, TTYPE, BTYPE, NTOHX)	\
- 	do { \
- 		typeof(LEN) __i; \
- 		TTYPE *__t = (TTYPE *) TABLE; \
- 		BTYPE *__b = (BTYPE *) BLOB; \
--		for (__i = 0; __i < LEN; __i++) { \
--			__t[__i] = NTOHX(__b[__i]); \
--		} \
-+		BUILD_BUG_ON(sizeof(TTYPE) != sizeof(BTYPE)); \
-+		if (IS_ENABLED(CONFIG_CPU_BIG_ENDIAN)) \
-+			memcpy(__t, __b, (LEN) * sizeof(BTYPE)); \
-+		else /* copy & convert from big-endian */ \
-+			for (__i = 0; __i < LEN; __i++) { \
-+				__t[__i] = NTOHX(&__b[__i]); \
-+			} \
- 	} while (0)
- 
- static inline size_t table_size(size_t len, size_t el_size)
-diff --git a/security/apparmor/match.c b/security/apparmor/match.c
-index 8972d1b57b7a6..93d54dd7a065d 100644
---- a/security/apparmor/match.c
-+++ b/security/apparmor/match.c
-@@ -8,6 +8,7 @@
-  * Copyright 2009-2012 Canonical Ltd.
+-	if (fault_ignore && pasid_pte_is_present(pe))
++	if (fault_ignore)
+ 		pasid_clear_entry_with_fpd(pe);
+ 	else
+ 		pasid_clear_entry(pe);
+@@ -358,9 +358,23 @@ static inline void pasid_set_wpe(struct pasid_entry *pe)
   */
+ static inline void pasid_set_present(struct pasid_entry *pe)
+ {
++	dma_wmb();
+ 	pasid_set_bits(&pe->val[0], 1 << 0, 1);
+ }
  
-+#include <asm/unaligned.h>
- #include <linux/errno.h>
- #include <linux/kernel.h>
- #include <linux/mm.h>
-@@ -110,14 +111,13 @@ static struct table_header *unpack_table(char *blob, size_t bsize)
- 		table->td_flags = th.td_flags;
- 		table->td_lolen = th.td_lolen;
- 		if (th.td_flags == YYTD_DATA8)
--			UNPACK_ARRAY(table->td_data, blob, th.td_lolen,
--				     u8, u8, byte_to_byte);
-+			memcpy(table->td_data, blob, th.td_lolen);
- 		else if (th.td_flags == YYTD_DATA16)
- 			UNPACK_ARRAY(table->td_data, blob, th.td_lolen,
--				     u16, __be16, be16_to_cpu);
-+				     u16, __be16, get_unaligned_be16);
- 		else if (th.td_flags == YYTD_DATA32)
- 			UNPACK_ARRAY(table->td_data, blob, th.td_lolen,
--				     u32, __be32, be32_to_cpu);
-+				     u32, __be32, get_unaligned_be32);
- 		else
- 			goto fail;
- 		/* if table was vmalloced make sure the page tables are synced
++/*
++ * Clear the Present (P) bit (bit 0) of a scalable-mode PASID table entry.
++ * This initiates the transition of the entry's ownership from hardware
++ * to software. The caller is responsible for fulfilling the invalidation
++ * handshake recommended by the VT-d spec, Section 6.5.3.3 (Guidance to
++ * Software for Invalidations).
++ */
++static inline void pasid_clear_present(struct pasid_entry *pe)
++{
++	pasid_set_bits(&pe->val[0], 1 << 0, 0);
++	dma_wmb();
++}
++
+ /*
+  * Setup Page Walk Snoop bit (Bit 87) of a scalable mode PASID
+  * entry.
+@@ -470,7 +484,7 @@ void intel_pasid_tear_down_entry(struct intel_iommu *iommu, struct device *dev,
+ 
+ 	did = pasid_get_domain_id(pte);
+ 	pgtt = pasid_pte_get_pgtt(pte);
+-	intel_pasid_clear_entry(dev, pasid, fault_ignore);
++	pasid_clear_present(pte);
+ 	spin_unlock(&iommu->lock);
+ 
+ 	if (!ecap_coherent(iommu->ecap))
+@@ -486,6 +500,10 @@ void intel_pasid_tear_down_entry(struct intel_iommu *iommu, struct device *dev,
+ 	/* Device IOTLB doesn't need to be flushed in caching mode. */
+ 	if (!cap_caching_mode(iommu->cap))
+ 		devtlb_invalidation_with_pasid(iommu, dev, pasid);
++
++	intel_pasid_clear_entry(dev, pasid, fault_ignore);
++	if (!ecap_coherent(iommu->ecap))
++		clflush_cache_range(pte, sizeof(*pte));
+ }
+ 
+ /*
 -- 
 2.53.0
 
