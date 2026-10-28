@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214114;
-	b=Z40Y9i/WE2aRcI/RHetKqssgdBSKhlVZQ/bx1x94oYqlReCUbW+5oQ5BD52U1ZlZ1HTY
-	 LSN12uWso3dQFyH92rRqcrPLLcPEBQ/sMPCk/V2U+V68YV1PuIhfyjHjf72B2ZFO7dXg5
-	 F19bqMZZMR4MT2b2zNpaIhSHLwgMgP9A50bUq6HvzqRIxp0CD4TQ+6EFnEzo2UfIx34HM
-	 IOuoYSpO8iW1F/ILA8RuFcIEtybrZvtXY5CDxTlh9508u/fYbAnktiX8yd37tE7wjOD5m
-	 4v6DGpAPEAcSb7KoY3/qzgRN0EWgBVnNIPX/sY7tMUS4zD4m4hOYHpKNXsV6mb95RoQ==
+	t=1793214116;
+	b=EAlee0AyrIq0bRoFeT+qpzJAtBf41By/f4jwy1M2BYxE1Th/Z36W+dLeiK4K0EdEUMw6
+	 5puBdYLswWgYxbKZqRA9aX623Hld94D4Rdcf8GnaYjAIPN2AELbjl38X7FsGGuwTLgT3F
+	 bKtCATrFwITWOEroUJJd9sZP4+4TOgWru9tKQZTl4K5k2ez2UwyrJNZghNDjSQfID7lgQ
+	 WCwF/yKlMorDjnJA2XZ8HhLgm0dpXLoUK7M0otqXcgMmaq8TJuhFRlcz9wyPdbkv/9/Mz
+	 0I+DJfa/mXWZgPScF9MYtNzuMo83Ua95pKzuMiImJ7V+o7FOz2/mkKKGUBUkQ1wJaOA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214114;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214116;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=kyhdov7FXiHXmwU3fJfiWGGYbirqZ0lqAOaEB68kDMg=;
-	b=b+1ebjSS+Fy99b+MS7d/h69WsQQ9TJ+ivpdEaudZNtiSVPIa0wTTV69j41E8KSNIewXx
-	 kGT2Ag57cDLoATtxpvUfOptukqxnRdjQciSHbb64vY9pAFbcFNdtzaohe5qxNzotFgyla
-	 1ss29Q7grKQzbgrRjvNf8wYWRzFlAi80W3oiVSjX78EFR6wEVXjWfzb5nzrPnhHaMKfI3
-	 OnIMInswwuHHkYkCL/oRNeYi0mD7MSs0jSE/mMnShm56axac+HS4VEy96JLmCfzl8hVCy
-	 Iu2mRIXa9qGeR6w38C1LERRIvMNsgh6ivqbMXbe21lx7AuR8lZ7oOH4NSLJUiXfA/9A==
+	bh=Az+8biIuJxmtVj10AtBnJCTgAcLVTojC0e2ax/nxbYA=;
+	b=xTfhtOjP1/776UOH9NvzTQ38g8RknAjvS3g40lcIPbuS3Ic/4GlC/HY6Dex0Xxw/ls1H
+	 uBmajMgDksHhs/oRRoa4I8DZqbWYHseUClVedeNgAHib3dl0AQ4Tjuq4Oofo/vRuDnY6r
+	 Xjd+6ZdQc7WGq7ERk3pUh7ypzxW77GquduIXGVwp0lwnsbEgmTwhgDx7hILHYjSRPVmAc
+	 ri+KvBy9RsOVUSFwzIRPvWpLcrz/R9F9UAswh95Y9drOzMW1MXpmQ6C00kGR8d6mKBAgH
+	 SuxXmDI6iXNdrHnck+69tR72I/eBX0u92taOepYBbwIjTyFHfJAr8rRnhDawZ0gLRZw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Bd00NERo;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SnElM6ph;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF4E4606A31C;
-	Wed, 28 Oct 2026 19:01:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CF85606A31E;
+	Wed, 28 Oct 2026 19:01:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Bd00NERo
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCAF71F01825;
-	Wed, 28 Oct 2026 19:01:52 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SnElM6ph
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CA0E1F01825;
+	Wed, 28 Oct 2026 19:01:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214113;
-	bh=kyhdov7FXiHXmwU3fJfiWGGYbirqZ0lqAOaEB68kDMg=;
+	s=korg; t=1793214116;
+	bh=Az+8biIuJxmtVj10AtBnJCTgAcLVTojC0e2ax/nxbYA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Bd00NERoCp+H2wFXrS7SU8/bh3ghWPwh2dugllPnBjzOrF06nRx1qKrbn7apNawT0
-	 2rRpLzCp0ClfeOXLxisNSByPw3tmTxuha0fE5eKmkT/QJdO4IwNskK/k+jxyxkSeyw
-	 nxey6jFRI3rcZ6OOLmUEEpUqkcFH6VzAjaYRa41I=
+	b=SnElM6phvDOSTIq1VW9FcoFRJdQmRg/p8DH6gWKUosTeZ8MR1HOoAayEQpIC/p4cA
+	 nwUmf8CyaXk2gDe3yh6WiQHIDPOYQJph9maSNQs1llPuR+g4MJW7NeNsIlA5oscpm2
+	 irZoQ48g+8VjfFs5em4qFLSz+m2PcoMWKRR1DpxE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yishai Hadas <yishaih@nvidia.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	syzbot+33379ce4ac76acf7d0c7@syzkaller.appspotmail.com,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0744/1887] RDMA/mlx5: Fix a WARN during dereg_mr for DM type
-Date: Wed, 28 Oct 2026 17:47:20 +0100
-Message-ID: <20261028170516.377666116@linuxfoundation.org>
+Subject: [PATCH 6.1 0718/1887] f2fs: fix to do sanity check on node blkaddr in truncate_node()
+Date: Wed, 28 Oct 2026 17:46:54 +0100
+Message-ID: <20261028170515.775196436@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,103 +69,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yishai Hadas <yishaih@nvidia.com>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit abc7b3f1f056d69a8f11d6dceecc0c9549ace770 ]
+[ Upstream commit 6babe00ccd34fc65b78ef8b99754e32b4385f23d ]
 
-Memory regions (MR) of type DM (device memory) do not have an associated
-umem.
+syzbot reports a f2fs bug as below:
 
-In the __mlx5_ib_dereg_mr() -> mlx5_free_priv_descs() flow, the code
-incorrectly takes the wrong branch, attempting to call
-dma_unmap_single() on a DMA address that is not mapped.
-
-This results in a WARN [1], as shown below.
-
-The issue is resolved by properly accounting for the DM type and
-ensuring the correct branch is selected in mlx5_free_priv_descs().
-
-[1]
-WARNING: CPU: 12 PID: 1346 at drivers/iommu/dma-iommu.c:1230 iommu_dma_unmap_page+0x79/0x90
-Modules linked in: ip6table_mangle ip6table_nat ip6table_filter ip6_tables iptable_mangle xt_conntrack xt_MASQUERADE nf_conntrack_netlink nfnetlink xt_addrtype iptable_nat nf_nat br_netfilter rpcsec_gss_krb5 auth_rpcgss oid_registry ovelay rpcrdma rdma_ucm ib_iser libiscsi scsi_transport_iscsi ib_umad rdma_cm ib_ipoib iw_cm ib_cm mlx5_ib ib_uverbs ib_core fuse mlx5_core
-CPU: 12 UID: 0 PID: 1346 Comm: ibv_rc_pingpong Not tainted 6.12.0-rc7+ #1631
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.13.0-0-gf21b5a4aeb02-prebuilt.qemu.org 04/01/2014
-RIP: 0010:iommu_dma_unmap_page+0x79/0x90
-Code: 2b 49 3b 29 72 26 49 3b 69 08 73 20 4d 89 f0 44 89 e9 4c 89 e2 48 89 ee 48 89 df 5b 5d 41 5c 41 5d 41 5e 41 5f e9 07 b8 88 ff <0f> 0b 5b 5d 41 5c 41 5d 41 5e 41 5f c3 cc cc cc cc 66 0f 1f 44 00
-RSP: 0018:ffffc90001913a10 EFLAGS: 00010246
-RAX: 0000000000000000 RBX: ffff88810194b0a8 RCX: 0000000000000000
-RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000001
-RBP: ffff88810194b0a8 R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000000001 R11: 0000000000000000 R12: 0000000000000000
-R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000000
-FS:  00007f537abdd740(0000) GS:ffff88885fb00000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007f537aeb8000 CR3: 000000010c248001 CR4: 0000000000372eb0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+------------[ cut here ]------------
+kernel BUG at fs/f2fs/segment.c:2534!
+RIP: 0010:f2fs_invalidate_blocks+0x35f/0x370 fs/f2fs/segment.c:2534
 Call Trace:
-<TASK>
-? __warn+0x84/0x190
-? iommu_dma_unmap_page+0x79/0x90
-? report_bug+0xf8/0x1c0
-? handle_bug+0x55/0x90
-? exc_invalid_op+0x13/0x60
-? asm_exc_invalid_op+0x16/0x20
-? iommu_dma_unmap_page+0x79/0x90
-dma_unmap_page_attrs+0xe6/0x290
-mlx5_free_priv_descs+0xb0/0xe0 [mlx5_ib]
-__mlx5_ib_dereg_mr+0x37e/0x520 [mlx5_ib]
-? _raw_spin_unlock_irq+0x24/0x40
-? wait_for_completion+0xfe/0x130
-? rdma_restrack_put+0x63/0xe0 [ib_core]
-ib_dereg_mr_user+0x5f/0x120 [ib_core]
-? lock_release+0xc6/0x280
-destroy_hw_idr_uobject+0x1d/0x60 [ib_uverbs]
-uverbs_destroy_uobject+0x58/0x1d0 [ib_uverbs]
-uobj_destroy+0x3f/0x70 [ib_uverbs]
-ib_uverbs_cmd_verbs+0x3e4/0xbb0 [ib_uverbs]
-? __pfx_uverbs_destroy_def_handler+0x10/0x10 [ib_uverbs]
-? lock_acquire+0xc1/0x2f0
-? ib_uverbs_ioctl+0xcb/0x170 [ib_uverbs]
-? ib_uverbs_ioctl+0x116/0x170 [ib_uverbs]
-? lock_release+0xc6/0x280
-ib_uverbs_ioctl+0xe7/0x170 [ib_uverbs]
-? ib_uverbs_ioctl+0xcb/0x170 [ib_uverbs]
-__x64_sys_ioctl+0x1b0/0xa70
-do_syscall_64+0x6b/0x140
-entry_SYSCALL_64_after_hwframe+0x76/0x7e
-RIP: 0033:0x7f537adaf17b
-Code: 0f 1e fa 48 8b 05 1d ad 0c 00 64 c7 00 26 00 00 00 48 c7 c0 ff ff ff ff c3 66 0f 1f 44 00 00 f3 0f 1e fa b8 10 00 00 00 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 8b 0d ed ac 0c 00 f7 d8 64 89 01 48
-RSP: 002b:00007ffff218f0b8 EFLAGS: 00000246 ORIG_RAX: 0000000000000010
-RAX: ffffffffffffffda RBX: 00007ffff218f1d8 RCX: 00007f537adaf17b
-RDX: 00007ffff218f1c0 RSI: 00000000c0181b01 RDI: 0000000000000003
-RBP: 00007ffff218f1a0 R08: 00007f537aa8d010 R09: 0000561ee2e4f270
-R10: 00007f537aace3a8 R11: 0000000000000246 R12: 00007ffff218f190
-R13: 000000000000001c R14: 0000561ee2e4d7c0 R15: 00007ffff218f450
-</TASK>
+ truncate_node+0x1ae/0x8c0 fs/f2fs/node.c:909
+ f2fs_remove_inode_page+0x5c2/0x870 fs/f2fs/node.c:1288
+ f2fs_evict_inode+0x879/0x15c0 fs/f2fs/inode.c:856
+ evict+0x4e8/0x9b0 fs/inode.c:723
+ f2fs_handle_failed_inode+0x271/0x2e0 fs/f2fs/inode.c:986
+ f2fs_create+0x357/0x530 fs/f2fs/namei.c:394
+ lookup_open fs/namei.c:3595 [inline]
+ open_last_lookups fs/namei.c:3694 [inline]
+ path_openat+0x1c03/0x3590 fs/namei.c:3930
+ do_filp_open+0x235/0x490 fs/namei.c:3960
+ do_sys_openat2+0x13e/0x1d0 fs/open.c:1415
+ do_sys_open fs/open.c:1430 [inline]
+ __do_sys_openat fs/open.c:1446 [inline]
+ __se_sys_openat fs/open.c:1441 [inline]
+ __x64_sys_openat+0x247/0x2a0 fs/open.c:1441
+ do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+ do_syscall_64+0xf3/0x230 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+RIP: 0010:f2fs_invalidate_blocks+0x35f/0x370 fs/f2fs/segment.c:2534
 
-Fixes: f18ec4223117 ("RDMA/mlx5: Use a union inside mlx5_ib_mr")
-Signed-off-by: Yishai Hadas <yishaih@nvidia.com>
-Link: https://patch.msgid.link/2039c22cfc3df02378747ba4d623a558b53fc263.1738587076.git.leon@kernel.org
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+The root cause is: on a fuzzed image, blkaddr in nat entry may be
+corrupted, then it will cause system panic when using it in
+f2fs_invalidate_blocks(), to avoid this, let's add sanity check on
+nat blkaddr in truncate_node().
+
+Reported-by: syzbot+33379ce4ac76acf7d0c7@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/linux-f2fs-devel/0000000000009a6cd706224ca720@google.com/
+Cc: stable@vger.kernel.org
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx5/mr.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/f2fs/node.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/drivers/infiniband/hw/mlx5/mr.c b/drivers/infiniband/hw/mlx5/mr.c
-index 60a67a77cd910..6dfd425e28c1a 100644
---- a/drivers/infiniband/hw/mlx5/mr.c
-+++ b/drivers/infiniband/hw/mlx5/mr.c
-@@ -1571,7 +1571,7 @@ mlx5_alloc_priv_descs(struct ib_device *device,
- static void
- mlx5_free_priv_descs(struct mlx5_ib_mr *mr)
- {
--	if (!mr->umem && mr->descs) {
-+	if (!mr->umem && mr->ibmr.type != IB_MR_TYPE_DM && mr->descs) {
- 		struct ib_device *device = mr->ibmr.device;
- 		int size = mr->max_descs * mr->desc_size;
- 		struct mlx5_ib_dev *dev = to_mdev(device);
+diff --git a/fs/f2fs/node.c b/fs/f2fs/node.c
+index 9d4ec1a061bfb..8b4e8e251649c 100644
+--- a/fs/f2fs/node.c
++++ b/fs/f2fs/node.c
+@@ -918,6 +918,16 @@ static int truncate_node(struct dnode_of_data *dn)
+ 	if (err)
+ 		return err;
+ 
++	if (ni.blk_addr != NEW_ADDR &&
++		!f2fs_is_valid_blkaddr(sbi, ni.blk_addr, DATA_GENERIC_ENHANCE)) {
++		f2fs_err(sbi,
++			"nat entry is corrupted, run fsck to fix it, ino:%u, "
++			"nid:%u, blkaddr:%u", ni.ino, ni.nid, ni.blk_addr);
++		set_sbi_flag(sbi, SBI_NEED_FSCK);
++		f2fs_handle_error(sbi, ERROR_INCONSISTENT_NAT);
++		return -EFSCORRUPTED;
++	}
++
+ 	/* Deallocate node address */
+ 	f2fs_invalidate_blocks(sbi, ni.blk_addr);
+ 	dec_valid_node_count(sbi, dn->inode, dn->nid == dn->inode->i_ino);
 -- 
 2.53.0
 
