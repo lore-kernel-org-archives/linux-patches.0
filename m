@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793212385;
-	b=AE6M+az3SSYOg+CDqMXv6n8/DPG6V9RPrdJp7Dpw2b2H8AU7Uuk6plXnX035hbFZcQ1O
-	 GwonNd72CJr4XzD7pzLjpdBexpTqyF9+xwbEHbl+PCNKdAIZoZ3s18wMWA4Elq4bK4QCv
-	 Hdx1niGRFADF8nTPp+H3JN62P3mHVJI+T9ocFu2GHVnijj5t+bRK03ezulDiPDfmGJ9E1
-	 IMDrsi1GOMO5fNBwiWMQ8q8YhxSFrrbN5hALm9G219XOnZKInOPyKA5cSyAL8KintrdH1
-	 yvxjWjVgWBjJ44ArBEr4R5A3HmhgUxA96QfF4KE0ci+1MPW12bO06GnBtOKpOfvkm2A==
+	t=1793212388;
+	b=SCs95lekbAkGi2ibr/tvkwPiEsa8Af1HBaISBaLgMihgCxKHg2MQJM+FzVGfe88MSNBp
+	 DYpa8V2xppmt0GcFX7i9kOpLJhA0/S99PxiSDR7/ny8oIs59pJ9YCPkOZ3qMVjIhdjwaE
+	 MkIDL9dUdHD3h/76DLaFc//orH7rTl5P+bhTXw3oZr6WRIDNqNKAiyJAZWQdPZpPNRQVh
+	 l6973KEOJMz6zXiSoIw2ZgqQgq+3pW1seX3k+THekpM6wQIG9tYrIYFXpGzzVi5yy4dkR
+	 gyh5xUoFjXScgu2o7Y9sf2sk5IQc0CuOHvGpu/VD64UiF8LzuRH3ssgi4CRBhreF8fw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793212385;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793212388;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ueRYI/Ha/AmhfB7ZBforjMiETQaaQQhArK1Er4bjVa8=;
-	b=wJBAkLsAnJmikrrWPjPI4qse78O7hrfVABuCOJ9ai4hsLAeBmfrv1tYR5nc19TMoqzRs
-	 jKqhWJhRAEWHNsQBu7ll7XprQM/hEf2QwRtf6+qc5nLCmIFhTXixzpG1Huz+4VAS4s0i4
-	 F0mHagUmRPICpOMZkkZiTB/4mhJnfKqsFbHHLoBmgJMAWr6Q/YZvbu6BFmqG1jw8SUqQY
-	 1LEvE41Ir0cKuWyYw4Obqj7byFCBIOJ9bbtIaTq8UaEyvsoeWO2BdATAiZZTZyrJyFkTE
-	 +LBtZVZH7Zvg8DOAYb1T28aO4BOel4J4m1MVUAxrc312zsTyuYVcC2WuC37gDQ7zpdQ==
+	bh=CGOz/cG24cp9QxLCjnpO5QdFDPouAtB49FyCov/IKaE=;
+	b=n6plibTztSptOzlw8GlmNxyFqHv0PGNGVRv8u6EvH9E7Ocex6347/tXCp2g17ELMCYtp
+	 +8VWUBT5n1YbnGSFmGbdwCMAYl2RBK+ioWaojEQggXa1ioSuO6hh7aXlkTxmiTxpyvp5I
+	 jMT/MsktJ+KI+WfdVdL7H8SlQgAkBC7rjnNmxH8jINsBYQA1dlAO1WTiBBo0y9fzF0rTU
+	 a68oLYPktA2FBNE7Nc6XFBONKNwZEdRvJZsi0eSktV1bEkza9tsd7o3NeriS4XVT8dicj
+	 sb7QSZ1edT0qeF3od6fE6cb31tTxsJ0id2/tuj8q6aeyH6PGf1aDLRy8BA7yFeHo7Bg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nsN9TdF2;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=phwT9xDd;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E259D606A31D;
-	Wed, 28 Oct 2026 18:33:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5C29606A31A;
+	Wed, 28 Oct 2026 18:33:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nsN9TdF2
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D1BA1F01825;
-	Wed, 28 Oct 2026 18:33:04 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=phwT9xDd
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FFCD1F01825;
+	Wed, 28 Oct 2026 18:33:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793212384;
-	bh=ueRYI/Ha/AmhfB7ZBforjMiETQaaQQhArK1Er4bjVa8=;
+	s=korg; t=1793212387;
+	bh=CGOz/cG24cp9QxLCjnpO5QdFDPouAtB49FyCov/IKaE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nsN9TdF2FTnM6Mo0SAzR8TDy8OcnV93JvFhlHnL2H/61hWImzfFWUbDJnvYq0Iysx
-	 AmK3fTayZ+rxa9VDbzChql8mzMVUu0vA2nSfxyz22gVPq+AVRewi/iayLf9SVxE6Uo
-	 LAYvprCcvIYvDkj/yx7SsXK2Nz8oL1aXalSYSpq4=
+	b=phwT9xDdISF/X/H4Tf8gWzNhJF07/l1qqGdYdkICyFzj1lTnElhAk2XQpwhAQQA9F
+	 HRpa2FY7whqAoya8a1m2l+l/dXs8Jfhqhg22Xs2w6T/cE7RPvm2XNvMLtGSNeqlgx/
+	 BF9b2dGppmjS+hd4j4NI/2YS964qLFqYqKF8l/Uo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Song Li <songl@zju.edu.cn>,
-	Fan Wu <fanwu01@zju.edu.cn>,
-	Loic Poulain <loic.poulain@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	April Cardenas <april.cardenas@canonical.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Bharath S M <bharathsm@microsoft.com>,
+	Paulo Alcantara <pc@manguebit.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0135/1887] wifi: wcn36xx: Fix potential use-after-free in TX ack timer teardown
-Date: Wed, 28 Oct 2026 17:37:11 +0100
-Message-ID: <20261028170502.307743762@linuxfoundation.org>
+Subject: [PATCH 6.1 0136/1887] smb/client: send lease break ACKs thru correct session for multiuser mounts
+Date: Wed, 28 Oct 2026 17:37:12 +0100
+Message-ID: <20261028170502.331801229@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -70,54 +70,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: April Cardenas <april.cardenas@canonical.com>
 
-[ Upstream commit d9be5e75530772fc31637070d51e5717d6aeaa2a ]
+[ Upstream commit ebc5660132ddd244b57f03ed324922013a3d7363 ]
 
-wcn36xx_dxe_deinit() tears down the TX ack timer with timer_delete(),
-which only dequeues the timer and does not wait for a callback that is
-already executing; the preceding free_irq() calls synchronize the
-interrupt handlers only. The callback, wcn36xx_dxe_tx_timer(), can
-therefore be running past the teardown and use the wcn freed along
-with the ieee80211_hw in wcn36xx_remove(): it takes wcn->dxe_lock,
-reads wcn->tx_ack_skb and passes wcn->hw to
-ieee80211_tx_status_irqsafe().
+Currently, when cifs_oplock_break handles a break request from the server
+it searches for the appropriate tlink to handle the request
+but incorrectly uses the current fsuid as the search key, eventually
+causing read errors for users with multiuser mounts on NetApp.
+Fix this by using the tlink from the cfile struct instead to respond
+through the correct session.
 
-Fix this by using timer_shutdown_sync(), which waits for a running
-callback and also prevents the timer from being rearmed again. The
-timer is set up again by wcn36xx_dxe_init() on the next start, so the
-start/stop cycle is unaffected.
+As breaks are handled in a worker thread, the current fsuid
+isn't guaranteed to match the session that the break is intended for.
+This means that cifs_sb_tlink may search the rbtree using the wrong fsuid,
+and return a tlink with an incorrect session than
+the lease break was intended for. As a result, the breaks
+may be ACKed through an incorrect session.
 
-This issue was found by an in-house static analysis tool.
+While it seems that Samba/Windows Servers 2016-2025 ignore this as long as
+the lease key is correct, we ran into a case where if you're using
+NetApp ONTAP or Azure NetApp Files they will reject the ACK
+and return `STATUS_LOCK_NOT_GRANTED` errors on any future read requests
+a user may initiate through their still held open file handle,
+and the server will eventually close the file.
 
-Fixes: fdf21cc37149 ("wcn36xx: Add TX ack support")
+In the dmesg logs, the user may see errors like these:
+
+CIFS: Status code returned 0xc0000128 STATUS_FILE_CLOSED
+CIFS: VFS: Send error in read = -9
+
+With a multiuser mount using NetApp, this issue is really easy
+for users to hit on a wide variety of kernel versions
+by attempting to copy a file from the share
+to the local machine through GNOME Files/Nautilus.
+This copy will always result in Nautilus throwing
+a `Bad File Descriptor` error to the user and fail.
+With this fix, you can copy files through Nautilus without issue.
+
+>From looking at the traces, it seems that glib will
+open the file first, and call listxattr before actually attempting
+to copy the file data. The listxattr call always triggers a break,
+causing the copy to fail.
+
+The proposed fix returns to the way the client grabbed the tlink before
+commit e8f5f849ffce2 ("cifs: fix potential oops in cifs_oplock_break").
+
+The bulk of that commit (checking for list empty) remains untouched, and
+I think the change to using cifs_sb_tlink was intended to avoid a
+NULL/ERR deference on the tlink as well as update the reference count.
+
+I believe this fix should preserve those safety properties, but of course
+I'd appreciate any corrections here.
+
+Fixes: e8f5f849ffce2 ("cifs: fix potential oops in cifs_oplock_break")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Co-developed-by: Song Li <songl@zju.edu.cn>
-Signed-off-by: Song Li <songl@zju.edu.cn>
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
-Reviewed-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260910020907.3353-1-fanwu01@zju.edu.cn
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-[ Adapted the patch to replace del_timer() instead of timer_delete(). ]
+Signed-off-by: April Cardenas <april.cardenas@canonical.com>
+Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
+Reviewed-by: Bharath S M <bharathsm@microsoft.com>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+[ Removed unused cifs_sb and sb declarations because this branch lacks their remaining upstream use. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/wcn36xx/dxe.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/smb/client/file.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/wcn36xx/dxe.c b/drivers/net/wireless/ath/wcn36xx/dxe.c
-index 4e9e13941c8f4..b168db800e07e 100644
---- a/drivers/net/wireless/ath/wcn36xx/dxe.c
-+++ b/drivers/net/wireless/ath/wcn36xx/dxe.c
-@@ -1054,7 +1054,7 @@ void wcn36xx_dxe_deinit(struct wcn36xx *wcn)
+diff --git a/fs/smb/client/file.c b/fs/smb/client/file.c
+index 35689e7bb16a7..d2187882c236f 100644
+--- a/fs/smb/client/file.c
++++ b/fs/smb/client/file.c
+@@ -5180,8 +5180,6 @@ void cifs_oplock_break(struct work_struct *work)
+ 	struct cifsFileInfo *cfile = container_of(work, struct cifsFileInfo,
+ 						  oplock_break);
+ 	struct inode *inode = d_inode(cfile->dentry);
+-	struct super_block *sb = inode->i_sb;
+-	struct cifs_sb_info *cifs_sb = CIFS_SB(sb);
+ 	struct cifsInodeInfo *cinode = CIFS_I(inode);
+ 	struct cifs_tcon *tcon;
+ 	struct TCP_Server_Info *server;
+@@ -5194,8 +5192,8 @@ void cifs_oplock_break(struct work_struct *work)
+ 	wait_on_bit(&cinode->flags, CIFS_INODE_PENDING_WRITERS,
+ 			TASK_UNINTERRUPTIBLE);
  
- 	free_irq(wcn->tx_irq, wcn);
- 	free_irq(wcn->rx_irq, wcn);
--	del_timer(&wcn->tx_ack_timer);
-+	timer_shutdown_sync(&wcn->tx_ack_timer);
- 
- 	if (wcn->tx_ack_skb) {
- 		ieee80211_tx_status_irqsafe(wcn->hw, wcn->tx_ack_skb);
+-	tlink = cifs_sb_tlink(cifs_sb);
+-	if (IS_ERR(tlink)) {
++	tlink = cifs_get_tlink(cfile->tlink);
++	if (IS_ERR_OR_NULL(tlink)) {
+ 		/* drop the reference taken when the break was queued */
+ 		_cifsFileInfo_put(cfile, false /* do not wait for ourself */, false);
+ 		goto out;
 -- 
 2.53.0
 
