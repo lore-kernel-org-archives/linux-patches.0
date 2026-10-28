@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213824;
-	b=bVZ/h7Ir5Ei1eNyynF3rWQOYjgJQ35q/arrUjbDBvm3hTEfJ+Leo3+KAtkegTggq8lBT
-	 KGI3odau0TJoiFxhoO364VD9uukmwY0VlF0pDoXjF96j+nymqDAeahnwK30I5jnRHVu+l
-	 Is52EHwTUlL5oDlrW5calAE89m0K+Ujn/aqaa8n7Hk/Upmu1kcII6x6N8fgG1cc2fjvkP
-	 /YrkwCce6Ivcf3vwJLfQccaBWRQdLy8H74Q/Gl/MBLedj6SsHma8nlc+d/cr88GekEZpp
-	 7MORWeH5bVF4BcA/CcJtyGwE8OcU98xKA8re4bCXUyFxtf4je05quTMjLEyzEDdiv9w==
+	t=1793213827;
+	b=A+8i+zd1dAgYijWAnDGpcrjCaEOqRsJ1AXSBo5WBjnaEDcMheU9dsPovv9Tl3O2mJTHI
+	 OiqdqOyIzdnH45EJdPV2nvF5ANiLumEKIucrUvvsAi+eRQj7eWTD3UUgVLVT6yzovu94H
+	 xEzdq/cHWbbDTmjrBsNBHaJM/IxFZONqVR1JANxdZTN7bxhtYpRUfTNcpdRCr4If+Ouw+
+	 qC1LIiuRhj9Ji4Hxu5Bke2wVZFgqy3WpexJpLz9Y3L0acLGoor9KShz4X9vCzsU/FVpGJ
+	 u1WYKPZD8m8uA9DyTGTMDhp+R68jSsAoB0HwgfqPXSLA3C1JqOav5q88II8ElHXcQuw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213824;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213827;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=faJIOs7e/MDyTb63EupV4+84tD5gWayNsAc897srWbE=;
-	b=O9k0Lh7viwj0msTA8WGAh8qyktTlAMookSbqrENWaHzkJSAcPfdr5dhcoqOQW0Y50GMq
-	 2RYklo1LGnSTV7rkYzDCCdc2hJV53/CWO5vSIrptBlJWwgRSRT99GTUabRqT7kqf6t8rW
-	 AHjk13xueGzwuWhKrKDUleYuVN5Rs4ztoTpSpc7HYgH5iVBDqPxo2aYdnc2delrbxdMie
-	 oku6aGhTiHIMvR0rlNnQrUnecl7v66/q0p5LHqHqLVMtUn4+3Ez6CliOuS1/wa2NHDfL8
-	 7hSPXiMHlqip7Y6tWbWZO4sGiCYlubGWl8u7gVbdaJklngHNB91fIJ2qIfbTC9ocBpA==
+	bh=cK74aiF/gK+l7fY6SBYPeQU/b7r/e8f0ecEkUj5Kih4=;
+	b=rBDRl9paVbvKgkmwtMy8THccHEvCRrvnSZEqEDD+viwWmfOVwR0J0nkHtyKhx/Hbqeqt
+	 tO9dfrI0c6Ct6Pz2ENYPMi4aSaFYuYEjlZxBiLKt/m5BLHVlC48pcyk8JhVJ26zUTATkj
+	 EqGSW/JJLyUDOTtR301HryYmBJy7KEETDDxgC3ROcYR+IoMAzetaAY8zp397q38tyFX7R
+	 MMcrgX19ttlWXnmD6RelwbT5a6V/ddBZrpHuDMDvDK10Z7orCDqvHzscq3Kindds0gYIL
+	 OVRqLNbJEF1YzRYW99LmaJUdWTa9Mh6X0O25D7Fo6KFBSlJTL8kFMVv2AOPtZDHDFpQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JEiE2i2i;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uEkcpS+w;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EC0A606A31A;
-	Wed, 28 Oct 2026 18:57:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03E32606A31A;
+	Wed, 28 Oct 2026 18:57:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JEiE2i2i
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F9251F01825;
-	Wed, 28 Oct 2026 18:57:03 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uEkcpS+w
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54FE91F01828;
+	Wed, 28 Oct 2026 18:57:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213824;
-	bh=faJIOs7e/MDyTb63EupV4+84tD5gWayNsAc897srWbE=;
+	s=korg; t=1793213826;
+	bh=cK74aiF/gK+l7fY6SBYPeQU/b7r/e8f0ecEkUj5Kih4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JEiE2i2ix1MrA0/MKQpS92JtjX+9UlcM0q7SZ8uuneMGWL0o+3Ni+cDa3dYXBIYIu
-	 H0cwQrHQH/ka30xDng4U6gkFiFQoi39S3kTnqk5WwtGzIC//D2a5ukklRgLVzVoGM+
-	 Wgtfosb1Apoe6eqU6a9X8lUxsZHxfWILaGF04Lzs=
+	b=uEkcpS+wMqOwBYUq3kxlZODQPkIbtq91ESjUjes3Xsxy7xVlvDXDvFSNZfVCZ4bk8
+	 cZ2PQIW67KgrnRjabe8HNv0RnpcxN23fVOV4+Fd4SrEMBobO72mg8aRotRNdgqBROk
+	 YWQh2QgNtVpU3Vq684GASFCQg32MqYVfOKEBJx+E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aurabindo Pillai <aurabindo.pillai@amd.com>,
-	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0642/1887] drm/amd/display: Fix null pointer deref in dcn20_resource.c
-Date: Wed, 28 Oct 2026 17:45:38 +0100
-Message-ID: <20261028170514.020176718@linuxfoundation.org>
+Subject: [PATCH 6.1 0643/1887] nvme: apple: fix device reference counting
+Date: Wed, 28 Oct 2026 17:45:39 +0100
+Message-ID: <20261028170514.043284190@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,81 +69,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aurabindo Pillai <aurabindo.pillai@amd.com>
+From: Keith Busch <kbusch@kernel.org>
 
-[ Upstream commit ecbf60782662f0a388493685b85a645a0ba1613c ]
+[ Upstream commit b9ecbfa45516182cd062fecd286db7907ba84210 ]
 
-Fixes a hang thats triggered when MPV is run on a DCN401 dGPU:
+Drivers must call nvme_uninit_ctrl after a successful nvme_init_ctrl.
+Split the allocation side out to make the error handling boundary easier
+to navigate. The apple driver had been doing this wrong, leaking the
+controller device memory on a tagset failure.
 
-mpv --hwdec=vaapi --vo=gpu --hwdec-codecs=all
-
-and then enabling fullscreen playback (double click on the video)
-
-The following calltrace will be seen:
-
-[  181.843989] BUG: kernel NULL pointer dereference, address: 0000000000000000
-[  181.843997] #PF: supervisor instruction fetch in kernel mode
-[  181.844003] #PF: error_code(0x0010) - not-present page
-[  181.844009] PGD 0 P4D 0
-[  181.844020] Oops: 0010 [#1] PREEMPT SMP NOPTI
-[  181.844028] CPU: 6 PID: 1892 Comm: gnome-shell Tainted: G        W  OE      6.5.0-41-generic #41~22.04.2-Ubuntu
-[  181.844038] Hardware name: System manufacturer System Product Name/CROSSHAIR VI HERO, BIOS 6302 10/23/2018
-[  181.844044] RIP: 0010:0x0
-[  181.844079] Code: Unable to access opcode bytes at 0xffffffffffffffd6.
-[  181.844084] RSP: 0018:ffffb593c2b8f7b0 EFLAGS: 00010246
-[  181.844093] RAX: 0000000000000000 RBX: 0000000000000000 RCX: 0000000000000004
-[  181.844099] RDX: ffffb593c2b8f804 RSI: ffffb593c2b8f7e0 RDI: ffff9e3c8e758400
-[  181.844105] RBP: ffffb593c2b8f7b8 R08: ffffb593c2b8f9c8 R09: ffffb593c2b8f96c
-[  181.844110] R10: 0000000000000000 R11: 0000000000000000 R12: ffffb593c2b8f9c8
-[  181.844115] R13: 0000000000000001 R14: ffff9e3c88000000 R15: 0000000000000005
-[  181.844121] FS:  00007c6e323bb5c0(0000) GS:ffff9e3f85f80000(0000) knlGS:0000000000000000
-[  181.844128] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[  181.844134] CR2: ffffffffffffffd6 CR3: 0000000140fbe000 CR4: 00000000003506e0
-[  181.844141] Call Trace:
-[  181.844146]  <TASK>
-[  181.844153]  ? show_regs+0x6d/0x80
-[  181.844167]  ? __die+0x24/0x80
-[  181.844179]  ? page_fault_oops+0x99/0x1b0
-[  181.844192]  ? do_user_addr_fault+0x31d/0x6b0
-[  181.844204]  ? exc_page_fault+0x83/0x1b0
-[  181.844216]  ? asm_exc_page_fault+0x27/0x30
-[  181.844237]  dcn20_get_dcc_compression_cap+0x23/0x30 [amdgpu]
-[  181.845115]  amdgpu_dm_plane_validate_dcc.constprop.0+0xe5/0x180 [amdgpu]
-[  181.845985]  amdgpu_dm_plane_fill_plane_buffer_attributes+0x300/0x580 [amdgpu]
-[  181.846848]  fill_dc_plane_info_and_addr+0x258/0x350 [amdgpu]
-[  181.847734]  fill_dc_plane_attributes+0x162/0x350 [amdgpu]
-[  181.848748]  dm_update_plane_state.constprop.0+0x4e3/0x6b0 [amdgpu]
-[  181.849791]  ? dm_update_plane_state.constprop.0+0x4e3/0x6b0 [amdgpu]
-[  181.850840]  amdgpu_dm_atomic_check+0xdfe/0x1760 [amdgpu]
-
-Signed-off-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Reviewed-by: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dcn20/dcn20_resource.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ drivers/nvme/host/apple.c | 29 +++++++++++++++++++++++------
+ 1 file changed, 23 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_resource.c b/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_resource.c
-index 8224b9bf01d1b..2a567c4fd80b6 100644
---- a/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_resource.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_resource.c
-@@ -2173,10 +2173,11 @@ bool dcn20_get_dcc_compression_cap(const struct dc *dc,
- 		const struct dc_dcc_surface_param *input,
- 		struct dc_surface_dcc_cap *output)
- {
--	return dc->res_pool->hubbub->funcs->get_dcc_compression_cap(
--			dc->res_pool->hubbub,
--			input,
--			output);
-+	if (dc->res_pool->hubbub->funcs->get_dcc_compression_cap)
-+		return dc->res_pool->hubbub->funcs->get_dcc_compression_cap(
-+			dc->res_pool->hubbub, input, output);
-+
-+	return false;
+diff --git a/drivers/nvme/host/apple.c b/drivers/nvme/host/apple.c
+index 994cf755de093..4822248a624ad 100644
+--- a/drivers/nvme/host/apple.c
++++ b/drivers/nvme/host/apple.c
+@@ -1387,7 +1387,7 @@ static void devm_apple_nvme_mempool_destroy(void *data)
+ 	mempool_destroy(data);
  }
  
- static void dcn20_destroy_resource_pool(struct resource_pool **pool)
+-static int apple_nvme_probe(struct platform_device *pdev)
++static struct apple_nvme *apple_nvme_alloc(struct platform_device *pdev)
+ {
+ 	struct device *dev = &pdev->dev;
+ 	struct apple_nvme *anv;
+@@ -1395,7 +1395,7 @@ static int apple_nvme_probe(struct platform_device *pdev)
+ 
+ 	anv = devm_kzalloc(dev, sizeof(*anv), GFP_KERNEL);
+ 	if (!anv)
+-		return -ENOMEM;
++		return ERR_PTR(-ENOMEM);
+ 
+ 	anv->dev = get_device(dev);
+ 	anv->adminq.is_adminq = true;
+@@ -1515,10 +1515,26 @@ static int apple_nvme_probe(struct platform_device *pdev)
+ 		goto put_dev;
+ 	}
+ 
++	return anv;
++put_dev:
++	put_device(anv->dev);
++	return ERR_PTR(ret);
++}
++
++static int apple_nvme_probe(struct platform_device *pdev)
++{
++	struct apple_nvme *anv;
++	int ret;
++
++	anv = apple_nvme_alloc(pdev);
++	if (IS_ERR(anv))
++		return PTR_ERR(anv);
++
+ 	anv->ctrl.admin_q = blk_mq_init_queue(&anv->admin_tagset);
+ 	if (IS_ERR(anv->ctrl.admin_q)) {
+ 		ret = -ENOMEM;
+-		goto put_dev;
++		anv->ctrl.admin_q = NULL;
++		goto out_uninit_ctrl;
+ 	}
+ 
+ 	if (!blk_get_queue(anv->ctrl.admin_q)) {
+@@ -1527,7 +1543,7 @@ static int apple_nvme_probe(struct platform_device *pdev)
+ 		blk_put_queue(anv->ctrl.admin_q);
+ 		anv->ctrl.admin_q = NULL;
+ 		ret = -ENODEV;
+-		goto put_dev;
++		goto out_uninit_ctrl;
+ 	}
+ 
+ 	nvme_reset_ctrl(&anv->ctrl);
+@@ -1535,8 +1551,9 @@ static int apple_nvme_probe(struct platform_device *pdev)
+ 
+ 	return 0;
+ 
+-put_dev:
+-	put_device(anv->dev);
++out_uninit_ctrl:
++	nvme_uninit_ctrl(&anv->ctrl);
++	nvme_put_ctrl(&anv->ctrl);
+ 	return ret;
+ }
+ 
 -- 
 2.53.0
 
