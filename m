@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213215;
-	b=brMAzBqUWI6EjtCpgKqGUqYwOEsOGWpx/6S0f3uHdvunTnASqz32YzS1SzE/y99mSesO
-	 K4IRhk2l/UxkmwcAalIVzoqNVCHAkRj1KvV+CsR/iodUqYj4RKU5PJUWTkrMmWjCPbxq5
-	 +3/z5vC6hkvHDRPnWnm3D68PjTqN97uUjayNCiu4M/cNODRQXOntYr6rje3zXOTH8vPpM
-	 TCVR7zplJ+V7qJM5k9616A1oQ99pG3609blHUF/qpwrjJ9WEmn61hVCRIUBgOpaz2XhLt
-	 xfjXUUHvxxqWUcKL6V8yv7+KD2Aub84DE4EVJYurkmB214Rn13DTs89TvQGtVb/xjJw==
+	t=1793213218;
+	b=FxiFCNpbqrAMPKlAjx+Tkqo9eIKgVTvunaTcoMSR2eriSUxl/TiI9VTSe4bJ3nlKa05a
+	 uSC0Mgj+2IEFGjLbqkQeASB+FpIZnFAH64vMHAryxT+qfoS9P1b39kqiTh1vvL4Xr/co3
+	 GNU30xy+Nzz7IpcrlXUQnGwLo6yKzIK20xezXB+nwFz7qjDBfk+gkV32z2XIIrJ28ABUT
+	 xIfpdqUkuGFzlYIMJhc3YZEt4pcSuPiQOj3VivUvGXBCVCHXpCWXkANe8f7ohwPMPdftH
+	 niF30ar8skWgrZg5W9D8F0GbveP/PZ9PIzRo2wquhgmF2S81Sylve9b/3/5vQd7vlaQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213215;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213218;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=edFTxKy4e1BqQo0XffgFQmbZNxes0zmMtnEvaufvtzk=;
-	b=NeUmfv6uqdK8sGyeuf3KU9/9OEuG4KWuKUTFY9htKxRHmxrALilFrBQGdUEAcuxcm5Cw
-	 E04J+0QvK67W/SPEZ2GuK+NZiqAvb/hX7A7aMaGOOqaKO1DE0RlWtwS/I+cjzXrrTHk3d
-	 k6NRxNtbYjXEOWpclHgkTIt8Gg6iQ1+QiNaankx7R+37I9yJG793smn4yjwBwz8q8DX7h
-	 73R56JP/AIrj073chzeSHLQ5PPVuPIaGF5Etj3odoPcuAiTGqijsojKWOnp5IKwVH6suy
-	 VOE0OAbFWGPdzWOuekgD6C63sEWrEfAQmLqz0mHSVoDRVUGFI3Ra9k2jCEWikhgdWRg==
+	bh=fpwSUpTOsIX5D+TsYUeXZbVzD15GvSTOZikU5I3LfGk=;
+	b=RI7cgGHGvOsDR4bKK23vGjes50RSS2gv8BFZt6mrbvpg1Y9QE1zGOsvPL9m+TEgsqX+G
+	 yXUEquOvYFx0Nt8eudyGP+OYWWQXZ6iiBNNcw6aob1nNz2wxHIo0CvQ/9G0RbT0ramKz4
+	 aDFOVQAJMl/suFTMltq51xak7c+AegqTN4Ci8f8lsY9iNduy8VKJrS4mUnyhWU4ecxmU7
+	 6iNV+SzyQwQMqRXQkAS2b7NjAvgroS1rezMQ2kK7jan60+v5NDN+ZRJCnKj6oPjdr920e
+	 5UUUZcJTZw7FWpwAQWcbjTsGWzTBuloC5z5WbRLuom0ErLT29ducj803mFq2LGFhFLg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CQPS3qMo;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Wbj8jtiR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1C3B606A31D;
-	Wed, 28 Oct 2026 18:46:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F21DF606A31A;
+	Wed, 28 Oct 2026 18:46:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CQPS3qMo
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B7531F01828;
-	Wed, 28 Oct 2026 18:46:54 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Wbj8jtiR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C2141F01825;
+	Wed, 28 Oct 2026 18:46:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213214;
-	bh=edFTxKy4e1BqQo0XffgFQmbZNxes0zmMtnEvaufvtzk=;
+	s=korg; t=1793213217;
+	bh=fpwSUpTOsIX5D+TsYUeXZbVzD15GvSTOZikU5I3LfGk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CQPS3qMoHAmywT3VUDDcLxPgsgS1/DgRLt55GorjfKtqDptdgjpNh2eN5fT5wZFOG
-	 CaWbk0mp4tD5ElFZ32LCSSbfestsEWF8PfjbW0s5GmKzPKUReDL4JHW6MxE1UohAkM
-	 JY0KZ+nnOGtxlBAXeIilEcySCpQve9pu13GsmIYI=
+	b=Wbj8jtiRVZphFuhW2Y2E9wbjopFuFXZgoI1FIMeZEYxdmchvsNl7g16gY0p1CtA81
+	 prliW6ncBnHeW61Tk8fnpWUNklVB3EWHnaZzHLLVCrnULlRGgTpt0IecZtCg8vNWC+
+	 UL0UJnu9Y4fS+sorBVKDg8FEK2wdiNa/yxbhUrfU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liew Rui Yan <aethernet65535@gmail.com>,
-	SJ Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Jiajia Liu <liujiajia@kylinos.cn>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Iaroslav Voitovych <yaroslav.voytovych@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0426/1887] mm/damon/core: fix unconditionally skip last region
-Date: Wed, 28 Oct 2026 17:42:02 +0100
-Message-ID: <20261028170508.928304096@linuxfoundation.org>
+Subject: [PATCH 6.1 0427/1887] Bluetooth: hci_event: fix simultaneous discovery stuck in FINDING
+Date: Wed, 28 Oct 2026 17:42:03 +0100
+Message-ID: <20261028170508.951483896@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,106 +69,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Liew Rui Yan <aethernet65535@gmail.com>
+From: Jiajia Liu <liujiajia@kylinos.cn>
 
-[ Upstream commit b3723b596b548c837a766aae3553c14a7b15af2b ]
+[ Upstream commit 96d006ae6445679436b945593950fd465eba7e76 ]
 
-Once quota set, the charge_{target,addr}_from unconditionally skips and
-resets at the last region of the tracked target, so the last region can be
-skipped even when it has not been processed.
+When hci_inquiry_complete_evt is called between le_scan_disable and
+le_set_scan_enable_complete and no remote name needs to be resolved,
+the interleaved discovery with SIMULTANEOUS quirk gets stuck in
+DISCOVERY_FINDING. le_set_scan_enable_complete does not check inquiry
+state. No one sets DISCOVERY_STOPPED in this process.
 
-Example:
+Add state check in le_set_scan_enable_complete and change state if
+the state is DISCOVERY_FINDING. Tested with AX201 (8087:0026) in Dell
+Vostro 13. Discovering disabled MGMT Event below is reported when
+running into the above condition.
 
-    1. Target has 2 regions: R1 (0-100 bytes) and R2 (100-200 bytes).
-    2. Quota is configured to process only 100 bytes per window.
-    3. Window 1: Processes R1 (0-100).  Quota is full.  charge_{target,
-       addr}_from is saved at (Target, 100).
-    4. Window 2: The loop reaches R2.  Because R2 is
-       damon_last_region(t), the old code unconditionally returns true,
-       skipping R2 entirely and resetting the charge_{target,addr}_from.
+ @ MGMT Command: Start Discovery (0x0023)    {0x0001} [hci0] 10885.970873
+         Address type: 0x07
+           BR/EDR
+           LE Public
+           LE Random
+ ...
+ < HCI Command: LE Set Extended Scan Enable    #38205 [hci0] 10886.131438
+         Extended scan: Enabled (0x01)
+         Filter duplicates: Enabled (0x01)
+         Duration: 0 msec (0x0000)
+         Period: 0.00 sec (0x0000)
+ > HCI Event: Command Complete (0x0e) plen 4   #38206 [hci0] 10886.133295
+       LE Set Extended Scan Enable (0x08|0x0042) ncmd 2
+         Status: Success (0x00)
+ @ MGMT Event: Discovering (0x0013) plen 2   {0x0001} [hci0] 10886.133414
+         Address type: 0x07
+           BR/EDR
+           LE Public
+           LE Random
+         Discovery: Enabled (0x01)
+ < HCI Command: Inquiry (0x01|0x0001) plen 5   #38207 [hci0] 10886.133528
+         Access code: 0x9e8b33 (General Inquiry)
+         Length: 10.24s (0x08)
+         Num responses: 0
+ > HCI Event: Command Status (0x0f) plen 4     #38208 [hci0] 10886.141333
+       Inquiry (0x01|0x0001) ncmd 2
+         Status: Success (0x00)
+ ...
+ < HCI Command: LE Set Extended Scan Enable    #38242 [hci0] 10896.381802
+         Extended scan: Disabled (0x00)
+         Filter duplicates: Disabled (0x00)
+         Duration: 0 msec (0x0000)
+         Period: 0.00 sec (0x0000)
+ > HCI Event: Inquiry Complete (0x01) plen 1   #38243 [hci0] 10896.383419
+         Status: Success (0x00)
+ > HCI Event: Command Complete (0x0e) plen 4   #38244 [hci0] 10896.394378
+       LE Set Extended Scan Enable (0x08|0x0042) ncmd 2
+         Status: Success (0x00)
+ @ MGMT Event: Device Found (0x0012) plen 22 {0x0001} [hci0] 10896.394497
+         LE Address: 88:12:AC:92:43:69
+         RSSI: -101 dBm (0x9b)
+         Flags: 0x00000004
+           Not Connectable
+         Data length: 8
+         Company: Xiaomi Inc. (911)
+           Data[0]:
+         16-bit Service UUIDs (complete): 1 entry
+           Xiaomi Inc. (0xfdaa)
+ @ MGMT Event: Discovering (0x0013) plen 2   {0x0001} [hci0] 10896.394506
+         Address type: 0x07
+           BR/EDR
+           LE Public
+           LE Random
+         Discovery: Disabled (0x00)
 
-    Result: R2 is permanently skipped even though it has never been
-    processed.
-
-However, it is important to note that this is a very minor issue.  This is
-because it is triggered only when the previous window saved/kept
-charge_{target,addr}_from, and in the next window, all regions except the
-last region were skipped by damos_skip_charged_region().
-
-Fix this by only resetting the charge_{target,addr}_from when last region
-is reached, only skipping when it is applied or cannot split.
-
-Link: https://lore.kernel.org/20260908134739.96919-1-sj@kernel.org
-Fixes: 50585192bc2e ("mm/damon/schemes: skip already charged targets and regions")
-Signed-off-by: Liew Rui Yan <aethernet65535@gmail.com>
-Reviewed-by: SJ Park <sj@kernel.org>
-Signed-off-by: SJ Park <sj@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Cc: <stable@vger.kernel.org> # v5.16.x
-Signed-off-by: SJ Park <sj@kernel.org>
+Fixes: 8ffde2a73f2c ("Bluetooth: Convert le_scan_disable timeout to hci_sync")
+Signed-off-by: Jiajia Liu <liujiajia@kylinos.cn>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+[ Iaroslav: test the quirk with test_bit() on hdev->quirks, as
+  this branch does elsewhere; hci_test_quirk() does not exist here ]
+Signed-off-by: Iaroslav Voitovych <yaroslav.voytovych@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/damon/core.c | 25 +++++++++++++++----------
- 1 file changed, 15 insertions(+), 10 deletions(-)
+ net/bluetooth/hci_event.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 6d7a5f18158a0..f0da5cb2b88a0 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -756,6 +756,7 @@ static void damon_do_apply_schemes(struct damon_ctx *c,
- 		unsigned long sz = damon_sz_region(r);
- 		struct timespec64 begin, end;
- 		unsigned long sz_applied = 0;
-+		bool skip = false;
+diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
+index aa879b0b64cf5..c6cf8b348314e 100644
+--- a/net/bluetooth/hci_event.c
++++ b/net/bluetooth/hci_event.c
+@@ -1748,6 +1748,13 @@ static void le_set_scan_enable_complete(struct hci_dev *hdev, u8 enable)
  
- 		if (!s->wmarks.activated)
- 			continue;
-@@ -768,14 +769,11 @@ static void damon_do_apply_schemes(struct damon_ctx *c,
- 		if (quota->charge_target_from) {
- 			if (t != quota->charge_target_from)
- 				continue;
--			if (r == damon_last_region(t)) {
--				quota->charge_target_from = NULL;
--				quota->charge_addr_from = 0;
--				continue;
--			}
- 			if (quota->charge_addr_from &&
--					r->ar.end <= quota->charge_addr_from)
--				continue;
-+					r->ar.end <= quota->charge_addr_from) {
-+				skip = true;
-+				goto clean_charge_from_skip;
-+			}
+ 		hci_dev_clear_flag(hdev, HCI_LE_SCAN);
  
- 			if (quota->charge_addr_from && r->ar.start <
- 					quota->charge_addr_from) {
-@@ -783,16 +781,23 @@ static void damon_do_apply_schemes(struct damon_ctx *c,
- 						r->ar.start, DAMON_MIN_REGION);
- 				if (!sz) {
- 					if (damon_sz_region(r) <=
--					    DAMON_MIN_REGION)
--						continue;
-+					    DAMON_MIN_REGION) {
-+						skip = true;
-+						goto clean_charge_from_skip;
-+					}
- 					sz = DAMON_MIN_REGION;
- 				}
- 				damon_split_region_at(t, r, sz);
--				continue;
-+				skip = true;
- 			}
++		if (hdev->discovery.type == DISCOV_TYPE_INTERLEAVED &&
++		    test_bit(HCI_QUIRK_SIMULTANEOUS_DISCOVERY, &hdev->quirks) &&
++		    !test_bit(HCI_INQUIRY, &hdev->flags) &&
++		    hdev->discovery.state == DISCOVERY_FINDING) {
++			hci_discovery_set_state(hdev, DISCOVERY_STOPPED);
 +		}
-+clean_charge_from_skip:
-+		if (r == damon_last_region(t)) {
- 			quota->charge_target_from = NULL;
- 			quota->charge_addr_from = 0;
- 		}
-+		if (skip)
-+			continue;
- 
- 		if (!damos_valid_target(c, t, r, s))
- 			continue;
++
+ 		/* The HCI_LE_SCAN_INTERRUPTED flag indicates that we
+ 		 * interrupted scanning due to a connect request. Mark
+ 		 * therefore discovery as stopped.
 -- 
 2.53.0
 
