@@ -1,54 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793210658;
-	b=b++oBLxVCuU6G9NmtPkFCIHEhoRJbG2xZpDCTC+W8FH8Sdyma4ArXynDaoCPMum4HsAP
-	 gD8Z1h784I4f/LB7TlOeZ720zWTHR82wMnwXHbI+tfnLTji1tQ9/JiA0Z6Ti3U2ILx1qP
-	 Zuqy5LoYcE115oTIDF9FiHlEwEuWQWtDqn+kCcykrnFP0lM6SaGk10NYYGMnRz/72+Do2
-	 jUqSzgw5eKKue3moK6saSzyFZRJzwBhKNdBn3Jni9XO2HmOJ7e5aLKrartSh+in+m2aS1
-	 /hJsT4KbMK9GZZWt4AZPMjX3wG7yZXFcNTmUR8Fs1E2m/LhukhXS4Z3hE4rJoF8n30A==
+	t=1793210661;
+	b=ycn6qx2iT8TGsnRLp36iErievW1FuJA2OLyRZA8MNQ72yf3laMM4J/F9ZWkoCZ313yiv
+	 6zlgEoTxilbMYYMPjAPIiRUXdp2LaKpXEsej8xz6rroaceuTEHE+PHgYZHB5Vkj6O7Ipw
+	 YAMwhAzdmoQIlPljtcEgYgZNr5zlAe6+SrFWnIQbHkb+rC52bsO23pSbC1Lank05spQSR
+	 WyhdV0qFFsIhz6onT5RWYgSD8z9m2q68V5jcnYxH9kgoZ9HAJEZ1yDLNlQh8al7OKCYxG
+	 warUkbIyM13eYb8g0xYXJ6JJB39pBgMkLt7M4g8dEsVFC5bJ94JCVP7ZOO73Mtb6ZdQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793210658;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793210661;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=lq23yrwNp+OIX8hE53UFFj3I+uz5DFXyEeQWdIAO3FA=;
-	b=nK1rfdLWwMOuPCkxajRDKs3ZNuzeUVcFO50V+4aa4i21wmEHwLzELGFMyLK8qiJefx1t
-	 rz+yFCIcbAIsOFl8qsvV+O/0dS2QIQg2Kq+FhZqrs8MBIhdWnLHwL4z0BCdVkYCeusjhE
-	 XB8ZFbLSQS9fdPVErbqirjvPB6GI29ui7CNuSqHwzmFUnUzach1qwVWMvkzJ1g+tXjXjV
-	 qssrWANFzxmzz5dX6ulF3tTyeiFts9VZYb/SGBL8nVffcH3Od+Lnpb9tJ06xo/jH7CQbP
-	 Mr/7UkvOf6lRo7ffjawtmbJuMonB2n0ZMld2q5ECtNnzMPtLLbFEkoYToHucvY04GQg==
+	bh=13AFdaBu4dm01pYUbfIMEOmTPtcFUtEg+Iv6Sj6ODqU=;
+	b=uQqv4Uxcj/W4LO8HaaSc6rcbZyxtAbwySuLbU7QxW5edmHLXmBL8BaDuAJctxw3hcktt
+	 06lEMMfQ7Pg1Ld4UT25llxkiCddcmIW7/e8a0jxF+MLOmvMH0/zq1d/QMP2xYfBjbt9/l
+	 lLvteHsXcZstVtIH66wlhq93pMNO+v9IATX7LrMdbiRrNfLSvT0xG2yr+nCS/Ztr9D95T
+	 Ct+rOR+kHPfP1pg+FZIuZ3A2nMqOYoso9lCaBKEk2sS0ItEZntRBBOK8HsyD76f6hxRUW
+	 zy6RUdurWcpmRedYufbHIM4eA25wtlOLTRqAH1XP1YamQLhmJGZhW5r/rjyMRozmgdA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hw7qVBTo;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=noLHDI3q;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42966606A31A;
-	Wed, 28 Oct 2026 18:04:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20F00606A334;
+	Wed, 28 Oct 2026 18:04:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hw7qVBTo
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 623AF1F031E2;
-	Wed, 28 Oct 2026 18:04:17 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=noLHDI3q
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B15F1F01828;
+	Wed, 28 Oct 2026 18:04:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793210657;
-	bh=lq23yrwNp+OIX8hE53UFFj3I+uz5DFXyEeQWdIAO3FA=;
+	s=korg; t=1793210660;
+	bh=13AFdaBu4dm01pYUbfIMEOmTPtcFUtEg+Iv6Sj6ODqU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hw7qVBTohqlv+ILNKdfdfby+uH7CcH4BRKpRFK0bQIwmQ5hROOlx2OV+T3cjJquxJ
-	 /t753zdUNrLBsc/f4RFBeAu3/bSFlG8aRtTla6qmjjjANv67MdhAXiluvBz5fXyMWB
-	 qTt+9pcDde/GdtqBG5MZhGBxY7V1aP3bDf+TICJg=
+	b=noLHDI3qLvXrEz3UZ2YhsKG9OBIUUzIIgP5K3U3JoPpNEmm3UkVAy4UjKKGG2Z/f3
+	 wZ9jSBXFc0anFBpyzOCcYv5bOdcVIw1piohHKw3WJgUD7X015MICc3qA6LP+bvXeXY
+	 /+wyB3JLU75zjnAykSXw9p4l2NycVe057zJHsjkY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Song Li <songl@zju.edu.cn>,
-	Fan Wu <fanwu01@zju.edu.cn>,
-	Loic Poulain <loic.poulain@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Paulo Alcantara <pc@manguebit.org>,
+	Tom Talpey <tom@talpey.com>,
+	Stefan Metzmacher <metze@samba.org>,
+	Shyam Prasad N <sprasad@microsoft.com>,
+	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
+	Bharath SM <bharathsm@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 103/571] wifi: wcn36xx: Fix potential use-after-free in TX ack timer teardown
-Date: Wed, 28 Oct 2026 17:54:10 +0100
-Message-ID: <20261028170010.464239910@linuxfoundation.org>
+Subject: [PATCH 5.15 104/571] smb: client: fix smbd_connection leak on cifs_get_tcp_session() error
+Date: Wed, 28 Oct 2026 17:54:11 +0100
+Message-ID: <20261028170010.488256996@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -70,54 +73,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: Paulo Alcantara <pc@manguebit.org>
 
-[ Upstream commit d9be5e75530772fc31637070d51e5717d6aeaa2a ]
+[ Upstream commit e75c96157d45e498970158c8f7373d90102e33b9 ]
 
-wcn36xx_dxe_deinit() tears down the TX ack timer with timer_delete(),
-which only dequeues the timer and does not wait for a callback that is
-already executing; the preceding free_irq() calls synchronize the
-interrupt handlers only. The callback, wcn36xx_dxe_tx_timer(), can
-therefore be running past the teardown and use the wcn freed along
-with the ieee80211_hw in wcn36xx_remove(): it takes wcn->dxe_lock,
-reads wcn->tx_ack_skb and passes wcn->hw to
-ieee80211_tx_status_irqsafe().
+When an RDMA connection is successfully established via
+smbd_get_connection() but cifs_get_tcp_session() later fails (e.g.
+kthread_create() returns an error), the error path frees tcp_ses
+without first destroying the smbd_connection.
 
-Fix this by using timer_shutdown_sync(), which waits for a running
-callback and also prevents the timer from being rearmed again. The
-timer is set up again by wcn36xx_dxe_init() on the next start, so the
-start/stop cycle is unaffected.
+Fix this by calling smbd_destroy() in the out_err cleanup path before
+kfree(tcp_ses).  smbd_destroy() safely handles the case where
+smbd_conn is NULL, so it can be called unconditionally.
 
-This issue was found by an in-house static analysis tool.
-
-Fixes: fdf21cc37149 ("wcn36xx: Add TX ack support")
+Closes: https://sashiko.dev/#/patchset/20260912165503.521597-1-pc%40manguebit.org
+Fixes: 2f8946464b11 ("CIFS: SMBD: Upper layer connects to SMBDirect session")
+Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+Cc: Tom Talpey <tom@talpey.com>
+Cc: Stefan Metzmacher <metze@samba.org>
+Cc: Shyam Prasad N <sprasad@microsoft.com>
+Cc: Ronnie Sahlberg <ronniesahlberg@gmail.com>
+Cc: Bharath SM <bharathsm@microsoft.com>
+Cc: Namjae Jeon <linkinjeon@kernel.org>
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Co-developed-by: Song Li <songl@zju.edu.cn>
-Signed-off-by: Song Li <songl@zju.edu.cn>
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
-Reviewed-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260910020907.3353-1-fanwu01@zju.edu.cn
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-[ Adapted the patch to replace del_timer() instead of timer_delete(). ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/wcn36xx/dxe.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/cifs/connect.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/wireless/ath/wcn36xx/dxe.c b/drivers/net/wireless/ath/wcn36xx/dxe.c
-index e1a35c2eadb6c..f3d850edbdbc7 100644
---- a/drivers/net/wireless/ath/wcn36xx/dxe.c
-+++ b/drivers/net/wireless/ath/wcn36xx/dxe.c
-@@ -1007,7 +1007,7 @@ void wcn36xx_dxe_deinit(struct wcn36xx *wcn)
- 
- 	free_irq(wcn->tx_irq, wcn);
- 	free_irq(wcn->rx_irq, wcn);
--	del_timer(&wcn->tx_ack_timer);
-+	timer_shutdown_sync(&wcn->tx_ack_timer);
- 
- 	if (wcn->tx_ack_skb) {
- 		ieee80211_tx_status_irqsafe(wcn->hw, wcn->tx_ack_skb);
+diff --git a/fs/cifs/connect.c b/fs/cifs/connect.c
+index d35474b836007..a91d3f6ae5be6 100644
+--- a/fs/cifs/connect.c
++++ b/fs/cifs/connect.c
+@@ -1574,6 +1574,7 @@ cifs_get_tcp_session(struct smb3_fs_context *ctx)
+ 		kfree(tcp_ses->hostname);
+ 		if (tcp_ses->ssocket)
+ 			sock_release(tcp_ses->ssocket);
++		smbd_destroy(tcp_ses);
+ 		kfree(tcp_ses);
+ 	}
+ 	return ERR_PTR(rc);
 -- 
 2.53.0
 
