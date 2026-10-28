@@ -1,54 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793208610;
-	b=4cUwGey4IzBFvzG6QUB2CGDsFeRLGJgzPkq6IiQdVwaPgFCGgjGK4vgn7G1zeGXNfJv7
-	 ylzQ47ZfLcU3dZV0cVTF9Ml+XK8yCOetI6tQ4vvvQLZaXusu5zH2w58VRmaVPakbXzZCk
-	 is/qOw8mFLMdhIT1vWHY8uFegP/kZ1EHHtnJ5c8J63xy1TRqnfBcYNEML6Af4zvSqrz1y
-	 za7UmchBUQRzukffdQoKDXkgWA/yYhWo43ge09QXYU3COlRs+cyjCTG2aR32f+Dy20sk4
-	 0aJsTAuaUHZRMMz1cHADAa5ECw8qMz/ygUp0I/TGS3W0FkaMQ/QrXgfj73uq8fIlsTA==
+	t=1793208613;
+	b=WiA8Py6I+Iry/O9j9k9VCsP1nQgqkQtHVyeZb6gQxQFCZR3Y5G72yVucK+Vp3RqLu6e9
+	 Xsy4MBP+QeWfUYjakve5KuxaQNdNyyL06F9tS41pTBGna5AnHalmf7NjVYJMj55oizcFq
+	 AI6QTky1KP3t46mRYjeaTBZ2rH9ZqOYGYDWT4PJkcWu7UDm4kPRwjPZJ0tB34+TeosCd3
+	 K1ALiqGeesYAusokuF2QXwIZfqjUweHH2c92XDMkgixRdaTrDixMwXOVXky1gLcibfsod
+	 agbapb3BIIfg9SDiEckq/FOO+8LxVW1zV6Xp2zXGjHC8C8AIaf0bhhMCmoatplH6DuA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793208610;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793208613;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=Jxh+ZSpYmlOtec818goJa/A97WHxGgTT0JECMN2L/+o=;
-	b=gETQ3pFjyKXg01uXdn1xiOKFP7kJTeUMQ0vuRPBt6e/e5EgYNFjQWzQ/xSWi6Q3zNh5U
-	 rqkd4XNBNXiXmOixRX2voQdji4AHaLBYoQ3oTEGa7qVVThmcOA7H8I+/zYUIX9sOcEhHP
-	 cTMuPAR4yM69eq0/nMFty5jQmK0MHmsnx6TXbu+qlomWw0EMDegQPE7KPico4iH8s+GvZ
-	 aCSjjv9q3gsuHsGniRKy6vsfdQ7wXDAz2zE8x/GiT12vVPdnv1xtCxUWskSU7E9nelxzw
-	 MdAfW2n7a0oY+vkD+4AyvSouln/tACB3++VGEvCPQ72bH6SZUzoDsMVE3ALhP2oj0Yg==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=qPLFmXDjpIydrUYQHHbcf9pYN7fc2SbYKYjECf/7LEg=;
+	b=DvAdP68wy5/B1yumFuEPi9lLnUCPO1y5Lrcbb3ez9+SL7YK6dXnKyDtDZJf0zj4fu4dE
+	 BnFIV+bqaWd4qWW2MZnhKFOzs6W7gCKF4w96iuqrjIKzQOz0lfPWiw40YqmUDL5lRB5I3
+	 waB9c51MNahYIGAOOUiHezVottpwXCkqIKFYxQNRqqZ2V7BiZ2n23DNM0B1P6OL85iG4v
+	 xoJjR+z7GGyFgRjBBVcGChcK0/1ZnNk9SI/ofksMtICSdH5+ER4coZzQC+8V2T/BtlELk
+	 pXgtAoVyAzNAm3tZ0gs8t4pM48mUr+vaByfDLJq3wWgCNqfY2ATi2QZqlrFcH996KFw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Iyo3+2kB;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zF5AIJAf;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1902606A322;
-	Wed, 28 Oct 2026 17:30:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A046606A31C;
+	Wed, 28 Oct 2026 17:30:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Iyo3+2kB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 024B21F01825;
-	Wed, 28 Oct 2026 17:30:09 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zF5AIJAf
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA1B91F01825;
+	Wed, 28 Oct 2026 17:30:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793208610;
-	bh=Jxh+ZSpYmlOtec818goJa/A97WHxGgTT0JECMN2L/+o=;
+	s=korg; t=1793208613;
+	bh=qPLFmXDjpIydrUYQHHbcf9pYN7fc2SbYKYjECf/7LEg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Iyo3+2kBd+N1Nz7QnIJ1nBzLFXA+Kue//wtTRnv5h9ysDYKhCI97KAx4Qxvs5IL7O
-	 iamJSa31iWKn6cTTYW5UpnxoDK93ukTjVVI8PfIjN7o6l7h9m5bBpCAFD2EzNhwWo1
-	 oybZjAsuU8hkQLjZrrjQl4ZPIE4omlGyWtVvFCLw=
+	b=zF5AIJAfB2CMOeoUV7axVl49wReoOaCErpg5jdtGbYMIv+j67GplsKB9Uy/sfNFWQ
+	 C/wdHt0iy3HyoqJtnd2Kxtam+1GFlK1LGLd9itp5hF071LGIRlVUa/C2J5vfkPFfib
+	 k1jZ6dB8oPKHnpV7ODbrjLQ2/R6KAaAQUivEb1M8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikola Prica <nikola.prica@amd.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Gerd Bayer <gbayer@linux.ibm.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 179/516] PCI: Accept AtomicOps already enabled by the hypervisor
-Date: Wed, 28 Oct 2026 17:55:31 +0100
-Message-ID: <20261028170007.745553674@linuxfoundation.org>
+	Imre Kaloz <kaloz@kernel.org>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 5.10 180/516] drm/radeon: Read the VRAM VBIOS signature with readb()
+Date: Wed, 28 Oct 2026 17:55:32 +0100
+Message-ID: <20261028170007.768419914@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -64,76 +61,53 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nikola Prica <nikola.prica@amd.com>
+From: Imre Kaloz <kaloz@kernel.org>
 
-[ Upstream commit 40cce45b921f7930886bcba43069edc579725457 ]
+commit de1eab13efef83fd2b76f4688de5bf672644596f upstream.
 
-pci_enable_atomic_ops_to_root() currently fails when no Root Port is
-visible. That is common in passthrough guests (ESXi, Hyper-V): the Endpoint
-is assigned to the VM, but the Root Port above it is not visible in the
-guest topology.
+igp_read_bios_from_vram() checked bios[0]/bios[1] with a plain
+__iomem load, which faults on sparc64 before the copy runs at all.
+radeon_read_bios() already reads its two signature bytes with
+readb() ahead of its own copy; use the same accessor here, keeping
+the check before the allocation.
 
-In those setups the hypervisor may already have enabled AtomicOp Requester
-Enable on the device. If PCI_EXP_DEVCTL2_ATOMIC_REQ is set, treat AtomicOps
-as already enabled and return success instead of failing the Root Port
-walk.
-
-After 1ae8c4ce1570 ("PCI: Enable AtomicOps only if Root Port supports
-them"), pci_enable_atomic_ops_to_root() always returns failure if the Root
-Port is not visible, so drivers don't use atomics when they could.  On
-systems where the Root Port is not visible but *does* support AtomicOps,
-this is a regression: prior to 1ae8c4ce1570, it enabled AtomicOps in the
-endpoint and returned success.
-
-Fixes: 1ae8c4ce1570 ("PCI: Enable AtomicOps only if Root Port supports them")
-Signed-off-by: Nikola Prica <nikola.prica@amd.com>
-[bhelgaas: commit log, code comment]
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Tested-by: Gerd Bayer <gbayer@linux.ibm.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Reviewed-by: Gerd Bayer <gbayer@linux.ibm.com>
-Link: https://patch.msgid.link/20260921111903.978687-1-nikprica@amd.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: b442962a9e82 ("drm/radeon/kms: add support for "Surround View"")
+Signed-off-by: Imre Kaloz <kaloz@kernel.org>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 09155b8932e5013dbce0f5cdff7d75264a279ee5)
+Cc: stable@vger.kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/pci.c | 15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/radeon/radeon_bios.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/pci/pci.c b/drivers/pci/pci.c
-index 6658bba9717d7..9ebe741e23938 100644
---- a/drivers/pci/pci.c
-+++ b/drivers/pci/pci.c
-@@ -3598,8 +3598,21 @@ int pci_enable_atomic_ops_to_root(struct pci_dev *dev, u32 cap_mask)
+--- a/drivers/gpu/drm/radeon/radeon_bios.c
++++ b/drivers/gpu/drm/radeon/radeon_bios.c
+@@ -49,6 +49,7 @@
+ static bool igp_read_bios_from_vram(struct radeon_device *rdev)
+ {
+ 	uint8_t __iomem *bios;
++	uint8_t val1, val2;
+ 	resource_size_t vram_base;
+ 	resource_size_t size = 256 * 1024; /* ??? */
+ 
+@@ -63,7 +64,10 @@ static bool igp_read_bios_from_vram(stru
+ 		return false;
  	}
  
- 	root = pcie_find_root_port(dev);
--	if (!root)
-+	if (!root) {
+-	if (size == 0 || bios[0] != 0x55 || bios[1] != 0xaa) {
++	val1 = readb(&bios[0]);
++	val2 = readb(&bios[1]);
 +
-+		/*
-+		 * A hypervisor may expose a topology with the root port
-+		 * not visible to the guest.  If the hypervisor has already
-+		 * set AtomicOp Requester Enable in the endpoint, we assume
-+		 * it has verified support in the root port, so it is safe
-+		 * for the driver to use AtomicOps.
-+		 */
-+		pcie_capability_read_dword(dev, PCI_EXP_DEVCTL2, &ctl2);
-+		if (ctl2 & PCI_EXP_DEVCTL2_ATOMIC_REQ)
-+			return 0;
-+
- 		return -EINVAL;
-+	}
- 
- 	pcie_capability_read_dword(root, PCI_EXP_DEVCAP2, &cap);
- 	if ((cap & cap_mask) != cap_mask)
--- 
-2.53.0
-
++	if (size == 0 || val1 != 0x55 || val2 != 0xaa) {
+ 		iounmap(bios);
+ 		return false;
+ 	}
 
 
