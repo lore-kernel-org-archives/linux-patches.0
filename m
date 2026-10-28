@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793207534;
-	b=3Jc0MrVllO9MeqRh5rAZQSpaVFGWyWBWojp+GNWQ+Qf2NT8K/2oW+FvutLyHeXo/3May
-	 1dWiE6rlCVgeV8jzEbU/7NANWlyZ27t8pLyB53hFafg7a1UUN9POOgd7StXfosxoYxv4X
-	 gtAI5WPHswrCnnueDks6FdXXyLaFy9ZZMl7l0H1gy5Rfn8Wn01+c8/kC5cdhvu/0ayN/x
-	 OV0FIlBDSpBvELKznCySNogahdJnaB2vFzu3OTQePpBQbN4CuWFxZxPa66TVH1rfjZDww
-	 /RrMxBAxQ89hUQmsM4FfpdsOJOsE0rfUyhnojWWeapTQzFPvW4Iv45RXRSRwZseT/9Q==
+	t=1793207537;
+	b=crwDjYe+zx8Id5xrBdhw3F0d8W5nO0GzMoXCkXDbsYrvSNN+DdD1tbsOnWTbC3KajLfx
+	 UZmVolmOYK7vuVNB9blaQMnOXHdiA06Zdimwxp1M6tzxe6bx2sQ5cTjSTHso7xGcCf493
+	 fvWkWFBBOZ0uTO3g/Rp5bNH1LlnCaTQp/+nDJFoHw2hu7CVFhOQt6HSzQqP/vRzPxDBy9
+	 c4nOoyevcstRKJY3Co1EC1MuBN27EcO08NNc0AqBe0Ib51mfkZ4KNF2UwKORCVpuh9rTY
+	 0rITFOTrWGV4WXBruvvUXtCOW3EqwlxOd5/209opshQ8S4LjuesFix8BpdF+KMrSE9w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793207534;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793207537;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=q/7M6A9CErZwHbeKJEQfN5kmZ5rVFYeT9zu/iHi7RLo=;
-	b=UotMI5D9bRQu5Z1PukHucKQpsiNvvi/9lV7Z+4oeN30B3VAiSw9XDzYgMaQZsmDvvRNV
-	 Bf358gkewK82/17UBy6da4FPgSQ7i85t2NnIhDgM9YJzU2GdP/YDdxijbKJAWYRu3YXKV
-	 cymXy05NoPTt0TLF0eV5xFlz+Tho9M5Ebnz9EUGr6X/WCkyoRGJHgLhtO5I2nzOz+32iM
-	 bLbWxNcSF2HTqn04cz45vhdLxH1/ESryV94qt/mJDxsTSHjQOmUjh1GQ0EWcfsR+jKc4R
-	 /iKLa1JWCP+157sVbPm5jFjqA3xsSazBIgAldoCcrVRxlCB5IFUgXD4B5o7u/n888nQ==
+	bh=3Lxr2figc2CX0m9z+BJxpEBC46PCYq0qswbwY+sCje8=;
+	b=A6+6rRgbY/Rj2OBaGyiITprxo7AEim/cgZIz1qeXWamFYH46m23Hn0e7PlUF56CIjVlk
+	 uIkhYdPCTQ1Z3jiQE+n6we5vfhmKW8rYdSbvL5NMOjjZXHCq9uTQrFWQu7yB/caMvd9DH
+	 KLm+nAbv/cVMn6PzLRnJPYTI8CmMmH1seBMYH2TpTMstVP70IK8tBWxD6ivzmu4mtCZUP
+	 scJLu/x3zt9n1pKWi9AX9+fuB8fAMmZbd+8I6KnrcaC4WeTZOyAqY8BTI/2gcg+WolcWU
+	 YHcWthJm5y8jePkrKNuw7XJyL8BRmwXPUVHEj/mmv7mFzr3ukkTGxiGTG8cLa9pePzA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="dg6ZbK9/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oa4S+nvJ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00653606A31A;
-	Wed, 28 Oct 2026 17:12:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C61F4606A31C;
+	Wed, 28 Oct 2026 17:12:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dg6ZbK9/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51ED11F01828;
-	Wed, 28 Oct 2026 17:12:13 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oa4S+nvJ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2337C1F01825;
+	Wed, 28 Oct 2026 17:12:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793207533;
-	bh=q/7M6A9CErZwHbeKJEQfN5kmZ5rVFYeT9zu/iHi7RLo=;
+	s=korg; t=1793207536;
+	bh=3Lxr2figc2CX0m9z+BJxpEBC46PCYq0qswbwY+sCje8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dg6ZbK9/g4MaRGuSVcHiFJTuk54UrILvnxa/xJ6VHv9P2807yGDzvKrOz4EMwC1/Z
-	 1V5ZdbNam81EkzuRzySTZZ8vUR6hjAiKGE5q6PGEheJcpwmNxQvKNDitaZ8cfcLgW4
-	 v2QMkMTzNVFem+1Wi0jtKtNIHmRqhM05l/24Fz3Q=
+	b=oa4S+nvJqOw67kufCdwxmDEhAEyYB+g55/ZQIy2pwQAyJAJ7yOUR1B//vdmJDyU08
+	 WTH/J8folgIGqg0dvN77txX7deJ2aH+kJnEFiRm6BlwCWLcv+IsXzsC5iPpByRhH6E
+	 VbXhi9Q126s3eti82a88Vi0boRZxZ/uBtuIxnlBE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolai Buchwitz <nb@tipi-net.de>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Alice Mikityanska <alice@isovalent.com>,
 	Paolo Abeni <pabeni@redhat.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 051/247] net: bcmgenet: unshare the skb before writing the control block
-Date: Wed, 28 Oct 2026 17:57:34 +0100
-Message-ID: <20261028165948.585831787@linuxfoundation.org>
+Subject: [PATCH 6.12 052/247] net/ipv6: Introduce payload_len helpers
+Date: Wed, 28 Oct 2026 17:57:35 +0100
+Message-ID: <20261028165948.609715513@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165947.349197979@linuxfoundation.org>
 References: <20261028165947.349197979@linuxfoundation.org>
@@ -69,69 +70,250 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolai Buchwitz <nb@tipi-net.de>
+From: Alice Mikityanska <alice@isovalent.com>
 
-[ Upstream commit 89771ce4f8f67dcffae561b2ccac95c0f6e3aa01 ]
+[ Upstream commit b2936b4fd56294e49d6c8e9152ea6c4982757c7d ]
 
-bcmgenet stores first_cb, last_cb and bytes_sent in the skb control
-block and reads them back on completion to free the skb and credit BQL.
-ether_setup() leaves IFF_TX_SKB_SHARING set, so the stack can resubmit
-a shared skb that is still in the ring. The next transmit overwrites
-last_cb, so the earlier slots complete without crediting their bytes
-and BQL stalls the queue until the watchdog resets it.
+The next commits will transition away from using the hop-by-hop
+extension header to encode packet length for BIG TCP. Add wrappers
+around ip6->payload_len that return the actual value if it's non-zero,
+and calculate it from skb->len if payload_len is set to zero (and a
+symmetrical setter).
 
-Unshare the skb before writing the control block.
+The new helpers are used wherever the surrounding code supports the
+hop-by-hop jumbo header for BIG TCP IPv6, or the corresponding IPv4 code
+uses skb_ip_totlen (e.g., in include/net/netfilter/nf_tables_ipv6.h).
 
-Reproduce with pktgen in clone_skb mode, which hands the driver the same
-skb while earlier copies are still in the ring:
+No behavioral change in this commit.
 
-  modprobe pktgen
-  pg=/proc/net/pktgen
-  echo "add_device eth0" > $pg/kpktgend_0
-  echo "dst_mac AA:BB:CC:DD:EE:FF" > $pg/eth0
-  echo "dst 192.0.2.1" > $pg/eth0
-  echo "clone_skb 8" > $pg/eth0
-  echo "count 0" > $pg/eth0
-  echo start > $pg/pgctrl &
-  sleep 5
-  echo stop > $pg/pgctrl
-  wait
-  cat /sys/class/net/eth0/queues/tx-0/byte_queue_limits/inflight
-
-inflight stays nonzero on the now idle queue. clone_skb 0 leaves it at
-zero.
-
-Fixes: f48bed16a756 ("net: bcmgenet: Free skb after last Tx frag")
-Signed-off-by: Nicolai Buchwitz <nb@tipi-net.de>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://patch.msgid.link/20261009-nb-genet-shared-skb-net-v1-1-c6d0a841977d@tipi-net.de
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Alice Mikityanska <alice@isovalent.com>
+Acked-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260205133925.526371-2-alice.kernel@fastmail.im
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 8070ed578b6b ("calipso: keep BIG TCP payload_len in calipso_skbuff_setattr()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/genet/bcmgenet.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ include/linux/ipv6.h                       | 22 ++++++++++++++++++++++
+ include/net/ipv6.h                         |  2 --
+ include/net/netfilter/nf_tables_ipv6.h     |  4 ++--
+ net/bridge/br_netfilter_ipv6.c             |  2 +-
+ net/bridge/netfilter/nf_conntrack_bridge.c |  4 ++--
+ net/ipv6/ip6_input.c                       |  2 +-
+ net/ipv6/ip6_offload.c                     |  7 +++----
+ net/ipv6/output_core.c                     |  7 +------
+ net/netfilter/ipvs/ip_vs_xmit.c            |  2 +-
+ net/netfilter/nf_conntrack_ovs.c           |  2 +-
+ net/netfilter/nf_log_syslog.c              |  2 +-
+ net/sched/sch_cake.c                       |  2 +-
+ 12 files changed, 36 insertions(+), 22 deletions(-)
 
-diff --git a/drivers/net/ethernet/broadcom/genet/bcmgenet.c b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
-index 7da4a2114a771..0402e8f69c6fa 100644
---- a/drivers/net/ethernet/broadcom/genet/bcmgenet.c
-+++ b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
-@@ -2095,6 +2095,16 @@ static netdev_tx_t bcmgenet_xmit(struct sk_buff *skb, struct net_device *dev)
- 		goto out;
+diff --git a/include/linux/ipv6.h b/include/linux/ipv6.h
+index ad5f09765e0c7..6f3c5d4049e24 100644
+--- a/include/linux/ipv6.h
++++ b/include/linux/ipv6.h
+@@ -125,6 +125,28 @@ static inline unsigned int ipv6_transport_len(const struct sk_buff *skb)
+ 	       skb_network_header_len(skb);
+ }
+ 
++static inline unsigned int
++ipv6_payload_len(const struct sk_buff *skb, const struct ipv6hdr *ip6)
++{
++	u32 len = ntohs(ip6->payload_len);
++
++	return (len || !skb_is_gso(skb) || !skb_is_gso_tcp(skb)) ?
++		len :
++		skb->len - skb_network_offset(skb) - sizeof(struct ipv6hdr);
++}
++
++static inline unsigned int skb_ipv6_payload_len(const struct sk_buff *skb)
++{
++	return ipv6_payload_len(skb, ipv6_hdr(skb));
++}
++
++#define IPV6_MAXPLEN		65535
++
++static inline void ipv6_set_payload_len(struct ipv6hdr *ip6, unsigned int len)
++{
++	ip6->payload_len = len <= IPV6_MAXPLEN ? htons(len) : 0;
++}
++
+ /* 
+    This structure contains results of exthdrs parsing
+    as offsets from skb->nh.
+diff --git a/include/net/ipv6.h b/include/net/ipv6.h
+index 3f3e312bced4f..e87eb9769516a 100644
+--- a/include/net/ipv6.h
++++ b/include/net/ipv6.h
+@@ -25,8 +25,6 @@ struct ip_tunnel_info;
+ 
+ #define SIN6_LEN_RFC2133	24
+ 
+-#define IPV6_MAXPLEN		65535
+-
+ /*
+  *	NextHeader field of IPv6 header
+  */
+diff --git a/include/net/netfilter/nf_tables_ipv6.h b/include/net/netfilter/nf_tables_ipv6.h
+index a0633eeaec977..c53ac00bb974d 100644
+--- a/include/net/netfilter/nf_tables_ipv6.h
++++ b/include/net/netfilter/nf_tables_ipv6.h
+@@ -42,7 +42,7 @@ static inline int __nft_set_pktinfo_ipv6_validate(struct nft_pktinfo *pkt)
+ 	if (ip6h->version != 6)
+ 		return -1;
+ 
+-	pkt_len = ntohs(ip6h->payload_len);
++	pkt_len = ipv6_payload_len(pkt->skb, ip6h);
+ 	skb_len = pkt->skb->len - skb_network_offset(pkt->skb);
+ 	if (pkt_len + sizeof(*ip6h) > skb_len)
+ 		return -1;
+@@ -86,7 +86,7 @@ static inline int nft_set_pktinfo_ipv6_ingress(struct nft_pktinfo *pkt)
+ 	if (ip6h->version != 6)
+ 		goto inhdr_error;
+ 
+-	pkt_len = ntohs(ip6h->payload_len);
++	pkt_len = ipv6_payload_len(pkt->skb, ip6h);
+ 	if (pkt_len + sizeof(*ip6h) > pkt->skb->len) {
+ 		idev = __in6_dev_get(nft_in(pkt));
+ 		__IP6_INC_STATS(nft_net(pkt), idev, IPSTATS_MIB_INTRUNCATEDPKTS);
+diff --git a/net/bridge/br_netfilter_ipv6.c b/net/bridge/br_netfilter_ipv6.c
+index e0421eaa3abc7..76ce70b4e7f3b 100644
+--- a/net/bridge/br_netfilter_ipv6.c
++++ b/net/bridge/br_netfilter_ipv6.c
+@@ -58,7 +58,7 @@ int br_validate_ipv6(struct net *net, struct sk_buff *skb)
+ 	if (hdr->version != 6)
+ 		goto inhdr_error;
+ 
+-	pkt_len = ntohs(hdr->payload_len);
++	pkt_len = ipv6_payload_len(skb, hdr);
+ 	if (hdr->nexthdr == NEXTHDR_HOP && nf_ip6_check_hbh_len(skb, &pkt_len))
+ 		goto drop;
+ 
+diff --git a/net/bridge/netfilter/nf_conntrack_bridge.c b/net/bridge/netfilter/nf_conntrack_bridge.c
+index cfa8091102426..b17962672ebfc 100644
+--- a/net/bridge/netfilter/nf_conntrack_bridge.c
++++ b/net/bridge/netfilter/nf_conntrack_bridge.c
+@@ -234,7 +234,7 @@ static int nf_ct_br_ipv6_check(const struct sk_buff *skb)
+ 	if (hdr->version != 6)
+ 		return -1;
+ 
+-	len = ntohs(hdr->payload_len) + sizeof(struct ipv6hdr) + nhoff;
++	len = ipv6_payload_len(skb, hdr) + sizeof(struct ipv6hdr) + nhoff;
+ 	if (skb->len < len)
+ 		return -1;
+ 
+@@ -274,7 +274,7 @@ static unsigned int nf_ct_bridge_pre(void *priv, struct sk_buff *skb,
+ 		if (!pskb_may_pull(skb, sizeof(struct ipv6hdr)))
+ 			return NF_ACCEPT;
+ 
+-		len = sizeof(struct ipv6hdr) + ntohs(ipv6_hdr(skb)->payload_len);
++		len = sizeof(struct ipv6hdr) + skb_ipv6_payload_len(skb);
+ 		if (pskb_trim_rcsum(skb, len))
+ 			return NF_ACCEPT;
+ 
+diff --git a/net/ipv6/ip6_input.c b/net/ipv6/ip6_input.c
+index f0a98c61a087a..54fc4b0eb57ba 100644
+--- a/net/ipv6/ip6_input.c
++++ b/net/ipv6/ip6_input.c
+@@ -262,7 +262,7 @@ static struct sk_buff *ip6_rcv_core(struct sk_buff *skb, struct net_device *dev,
+ 	skb->transport_header = skb->network_header + sizeof(*hdr);
+ 	IP6CB(skb)->nhoff = offsetof(struct ipv6hdr, nexthdr);
+ 
+-	pkt_len = ntohs(hdr->payload_len);
++	pkt_len = ipv6_payload_len(skb, hdr);
+ 
+ 	/* pkt_len may be zero if Jumbo payload option is present */
+ 	if (pkt_len || hdr->nexthdr != NEXTHDR_HOP) {
+diff --git a/net/ipv6/ip6_offload.c b/net/ipv6/ip6_offload.c
+index fce91183797a6..6762ce7909c8a 100644
+--- a/net/ipv6/ip6_offload.c
++++ b/net/ipv6/ip6_offload.c
+@@ -372,12 +372,11 @@ INDIRECT_CALLABLE_SCOPE int ipv6_gro_complete(struct sk_buff *skb, int nhoff)
+ 		hop_jumbo->jumbo_payload_len = htonl(payload_len + hoplen);
+ 
+ 		iph->nexthdr = NEXTHDR_HOP;
+-		iph->payload_len = 0;
+-	} else {
+-		iph = (struct ipv6hdr *)(skb->data + nhoff);
+-		iph->payload_len = htons(payload_len);
  	}
  
-+	/* We store Tx state in the control block, so the skb must not be
-+	 * shared, but ether_setup() leaves IFF_TX_SKB_SHARING set.
-+	 */
-+	skb = skb_share_check(skb, GFP_ATOMIC);
-+	if (!skb) {
-+		BCMGENET_STATS64_INC((&ring->stats64), dropped);
-+		ret = NETDEV_TX_OK;
-+		goto out;
-+	}
++	iph = (struct ipv6hdr *)(skb->data + nhoff);
++	ipv6_set_payload_len(iph, payload_len);
 +
- 	/* Retain how many bytes will be sent on the wire, without TSB inserted
- 	 * by transmit checksum offload
- 	 */
+ 	nhoff += sizeof(*iph) + ipv6_exthdrs_len(iph, &ops);
+ 	if (WARN_ON(!ops || !ops->callbacks.gro_complete))
+ 		goto out;
+diff --git a/net/ipv6/output_core.c b/net/ipv6/output_core.c
+index d21fe27fe21e3..4396a6b58b607 100644
+--- a/net/ipv6/output_core.c
++++ b/net/ipv6/output_core.c
+@@ -123,12 +123,7 @@ EXPORT_SYMBOL(ip6_dst_hoplimit);
+ 
+ int __ip6_local_out(struct net *net, struct sock *sk, struct sk_buff *skb)
+ {
+-	int len;
+-
+-	len = skb->len - sizeof(struct ipv6hdr);
+-	if (len > IPV6_MAXPLEN)
+-		len = 0;
+-	ipv6_hdr(skb)->payload_len = htons(len);
++	ipv6_set_payload_len(ipv6_hdr(skb), skb->len - sizeof(struct ipv6hdr));
+ 	IP6CB(skb)->nhoff = offsetof(struct ipv6hdr, nexthdr);
+ 
+ 	/* if egress device is enslaved to an L3 master device pass the
+diff --git a/net/netfilter/ipvs/ip_vs_xmit.c b/net/netfilter/ipvs/ip_vs_xmit.c
+index e0c2820be57ee..9589abea2f034 100644
+--- a/net/netfilter/ipvs/ip_vs_xmit.c
++++ b/net/netfilter/ipvs/ip_vs_xmit.c
+@@ -985,7 +985,7 @@ ip_vs_prepare_tunneled_skb(struct sk_buff *skb, int skb_af,
+ 		*next_protocol = IPPROTO_IPV6;
+ 		if (payload_len)
+ 			*payload_len =
+-				ntohs(old_ipv6h->payload_len) +
++				ipv6_payload_len(skb, old_ipv6h) +
+ 				sizeof(*old_ipv6h);
+ 		old_dsfield = ipv6_get_dsfield(old_ipv6h);
+ 		*ttl = old_ipv6h->hop_limit;
+diff --git a/net/netfilter/nf_conntrack_ovs.c b/net/netfilter/nf_conntrack_ovs.c
+index 068e9489e1c27..a6988eeb15797 100644
+--- a/net/netfilter/nf_conntrack_ovs.c
++++ b/net/netfilter/nf_conntrack_ovs.c
+@@ -121,7 +121,7 @@ int nf_ct_skb_network_trim(struct sk_buff *skb, int family)
+ 		len = skb_ip_totlen(skb);
+ 		break;
+ 	case NFPROTO_IPV6:
+-		len = ntohs(ipv6_hdr(skb)->payload_len);
++		len = skb_ipv6_payload_len(skb);
+ 		if (ipv6_hdr(skb)->nexthdr == NEXTHDR_HOP) {
+ 			int err = nf_ip6_check_hbh_len(skb, &len);
+ 
+diff --git a/net/netfilter/nf_log_syslog.c b/net/netfilter/nf_log_syslog.c
+index de51b15cf53d9..e2c109d5f069c 100644
+--- a/net/netfilter/nf_log_syslog.c
++++ b/net/netfilter/nf_log_syslog.c
+@@ -562,7 +562,7 @@ dump_ipv6_packet(struct net *net, struct nf_log_buf *m,
+ 
+ 	/* Max length: 44 "LEN=65535 TC=255 HOPLIMIT=255 FLOWLBL=FFFFF " */
+ 	nf_log_buf_add(m, "LEN=%zu TC=%u HOPLIMIT=%u FLOWLBL=%u ",
+-		       ntohs(ih->payload_len) + sizeof(struct ipv6hdr),
++		       ipv6_payload_len(skb, ih) + sizeof(struct ipv6hdr),
+ 		       (ntohl(*(__be32 *)ih) & 0x0ff00000) >> 20,
+ 		       ih->hop_limit,
+ 		       (ntohl(*(__be32 *)ih) & 0x000fffff));
+diff --git a/net/sched/sch_cake.c b/net/sched/sch_cake.c
+index a60aae42398a3..62390153abccc 100644
+--- a/net/sched/sch_cake.c
++++ b/net/sched/sch_cake.c
+@@ -1263,7 +1263,7 @@ static struct sk_buff *cake_ack_filter(struct cake_sched_data *q,
+ 			    ipv6_addr_cmp(&ipv6h_check->daddr, &ipv6h->daddr))
+ 				continue;
+ 
+-			seglen = ntohs(ipv6h_check->payload_len);
++			seglen = ipv6_payload_len(skb, ipv6h_check);
+ 		} else {
+ 			continue;
+ 		}
 -- 
 2.53.0
 
