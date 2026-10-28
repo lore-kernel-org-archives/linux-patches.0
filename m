@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216751;
-	b=YLDoq2OLE83AISVIJFuuQRR9jqw7I24oN/RydAb3QuKBvJ2XtgNLeh4BuDCEMGAFY/te
-	 LXLB1SzanSx5fGSImCYO973NMEdF76D10I8obZHNaG7N8XidlaWNJDChcT9R27AZc5A2m
-	 AX1enR10/BpdeMRb04hxSzezVOqkFh2+AkeVAsCbmsHMpcv4+qabM2BItAagAEbVvQJVR
-	 5DUaFUNlHBY2DNeHVzB2T7GvwjK3pNf0V1laKUMjZpSdx4bi0l7OMxEX63RH5m8Ywkwal
-	 bue1hW/MqWqutqeBubCZd6OvlWM4vk7PuTxWmnxQwfgXDqVSI+vmr2PoRqajKgE/02Q==
+	t=1793216754;
+	b=zimJ6czNJKs91vSI4rarqH7YHLXv7qxX7NbhFrXcvpymLMifY/23zqgT//Jcn7jQVrV6
+	 3W3AxlaeJ7HeP46F9fvKmjJfNpO/xz+NyHzooUmzVLkyAPz9STKhSgysKCfUnLGG5onKJ
+	 BcEScps8TD2QRwxoqn4JnIL0czmchMWvgdpi7wHUn0r5OaPjX1zPyQ5wG2PH2eGbArdbv
+	 WUr4YsLtKthe1nTp+NBYVftGKXMxCytM0nSEc+3Zf9nSsZbMovDtBu5o0YCZQdObALbCq
+	 2dM0Ik1FBRoZL06may0M1bvgcuiTSs52bN6sw7tyzWynMb4hXmWIyBl3xD0mvu7F0lQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216751;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216754;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=gcRfK1p8VSWL+c4HSEWNaOp5p9Jv8ioozOpOvxgecv8=;
-	b=w75dci92Zdi8sCUFgPYgXXxrNcHbqVh9ikagBmQqZjukg+SClw2tszCl50xwHx8uzfpk
-	 MqBpsBNOE06NqSPq2gF/707fKH395N3bCdjunq4Zqy6kId64yGCj1V4+fSJ0ogQHt9pvl
-	 rxmVIJsFp4uWCNP1dtJJKU073iip+QpNZcIqYZ7tQnsavbrtD9yopMd9H7J0dUGwcMcLb
-	 WGadCAHkxxoOVA2tc/Zc4LHPkbFI54Za5HAStYMjkB1HCQVG099cMzQvrB1BPM5+DpDcI
-	 5eZjKr2Um+j4+2hUFFFIgUy68OLkH898IhcgGrl/oe/5boRh0OV7BpWzHtRn8uxyRag==
+	bh=46gIwSjZ4jO4CrBP55mtNk4+2I61zXUpGGSF347y9RY=;
+	b=mS9WGB0wjlx1n3xvacnxXioWEAfP/+FVrNieSUerj4Vlf53sthPGDzJRkKf/5vwMLiK+
+	 sf9Ai0xrnmBwqjYkilAQSRP8f6fwT/DNSpYgFRg1lbE1261jIINI+5335B2ZqnRZeDCIy
+	 RkOM2DH0qsZBXW/UZOJpJCSGjMogpGkCFMeCDPLj+qAXTfve6miP5lgyNb8Rgh3aXPLLh
+	 Jgz70GKGhpEPT9gnSganA9jK/iVcUiG6Toig+gkcUL0ThG3vxK+Hr7YvmxErDQBRSEk0T
+	 Cq72/8CpJr33gFWclBG/GBYfXxaFZzvwAAjo9508XTgXrvAYv9ZZYA/FsuJBWtza5xg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NvJiCxOm;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RraP7hg9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39940606A31A;
-	Wed, 28 Oct 2026 19:45:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E5AB606A31A;
+	Wed, 28 Oct 2026 19:45:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NvJiCxOm
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 869261F01825;
-	Wed, 28 Oct 2026 19:45:50 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RraP7hg9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E4521F01825;
+	Wed, 28 Oct 2026 19:45:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216751;
-	bh=gcRfK1p8VSWL+c4HSEWNaOp5p9Jv8ioozOpOvxgecv8=;
+	s=korg; t=1793216753;
+	bh=46gIwSjZ4jO4CrBP55mtNk4+2I61zXUpGGSF347y9RY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NvJiCxOmbLKkLtEr/JsaqGNpTO3vGMm3dYvxXjvSx4gta6L60El2vezuzWkcziFa9
-	 X1Fba6NJdcBwplWD2DsGYa16bjUbGVszE7RVb+fX1pOa6ncK5dNNvptZnlYakp2JnX
-	 riKVRiZT5k6vXNfTch4L+mp1YfmavX9onnNbZbnE=
+	b=RraP7hg9HBmF3y+GTDxMCvpfbO06P03zl9P5wshmNfTRntVOwl4gTsGrCrb6Ug9Rn
+	 8SoK/40Jrxx8Ilhz6/u9ObOWfPP6uT2hfESLa+n+FPSf7JJqqrf0xyxjuyfFCorM7D
+	 0meXDz2zIYvAmscjixsx+WD+lwZ0t9juZAqQnXMI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Timber <dxdt@dev.snart.me>,
-	Namjae Jeon <linkinjeon@kernel.org>,
+	"Paulo Alcantara (SUSE)" <pc@manguebit.com>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1666/1887] exfat: fix handling of damaged volume in exfat_create_upcase_table()
-Date: Wed, 28 Oct 2026 18:02:42 +0100
-Message-ID: <20261028170537.371018584@linuxfoundation.org>
+Subject: [PATCH 6.1 1667/1887] cifs: get rid of dns resolve worker
+Date: Wed, 28 Oct 2026 18:02:43 +0100
+Message-ID: <20261028170537.393740097@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,64 +68,164 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Timber <dxdt@dev.snart.me>
+From: Paulo Alcantara <pc@manguebit.com>
 
-[ Upstream commit 20dd3185d13865214ff25b0bf7b931e8d73be1ac ]
+[ Upstream commit 0e9bd27b2a635d54665fcc1d6398a5f6aeb6b0cb ]
 
-When the size of the upcase table is set to zero in the dentry for any
-reason(e.g. corrupted media or misbehaving device), an integer overflow
-causes the module to loop indefinitely.
+We already upcall to resolve hostnames during reconnect by calling
+reconn_set_ipaddr_from_hostname(), so there is no point in having a
+worker to periodically call it.
 
-If the size of the upcase table is read zero, do not attempt to load the
-table. Instead, fallback to loading the default upcase table. If the
-size of the upcase table is zero or no upcase table is found, raise
-exfat_fs_error() to mark the volume read-only.
-
-Signed-off-by: David Timber <dxdt@dev.snart.me>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Paulo Alcantara (SUSE) <pc@manguebit.com>
+Reviewed-by <lsahlber@redhat.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Stable-dep-of: e8a5cf2ff5a1 ("smb: client: fix races in cifsd thread creation")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/exfat/nls.c | 19 +++++++++++++------
- 1 file changed, 13 insertions(+), 6 deletions(-)
+ fs/smb/client/cifsglob.h |  5 ----
+ fs/smb/client/connect.c  | 50 ++--------------------------------------
+ 2 files changed, 2 insertions(+), 53 deletions(-)
 
-diff --git a/fs/exfat/nls.c b/fs/exfat/nls.c
-index e027b34356969..4bfe807716deb 100644
---- a/fs/exfat/nls.c
-+++ b/fs/exfat/nls.c
-@@ -778,13 +778,18 @@ int exfat_create_upcase_table(struct super_block *sb)
+diff --git a/fs/smb/client/cifsglob.h b/fs/smb/client/cifsglob.h
+index 761dd1795fbf4..a9dce6fe2705f 100644
+--- a/fs/smb/client/cifsglob.h
++++ b/fs/smb/client/cifsglob.h
+@@ -80,10 +80,6 @@
+ #define SMB_ECHO_INTERVAL_MAX 600
+ #define SMB_ECHO_INTERVAL_DEFAULT 60
  
- 			tbl_clu  = le32_to_cpu(ep->dentry.upcase.start_clu);
- 			tbl_size = le64_to_cpu(ep->dentry.upcase.size);
+-/* dns resolution intervals in seconds */
+-#define SMB_DNS_RESOLVE_INTERVAL_MIN     120
+-#define SMB_DNS_RESOLVE_INTERVAL_DEFAULT 600
 -
--			sector = exfat_cluster_to_sector(sbi, tbl_clu);
--			num_sectors = ((tbl_size - 1) >> blksize_bits) + 1;
--			ret = exfat_load_upcase_table(sb, sector, num_sectors,
--				le32_to_cpu(ep->dentry.upcase.checksum));
--
-+			if (tbl_size) {
-+				sector = exfat_cluster_to_sector(sbi, tbl_clu);
-+				num_sectors = ((tbl_size - 1) >> blksize_bits) + 1;
-+				ret = exfat_load_upcase_table(sb, sector, num_sectors,
-+					le32_to_cpu(ep->dentry.upcase.checksum));
-+			} else {
-+				exfat_fs_error(sb,
-+					       "bad upcase table size (0 bytes). Please run fsck");
-+				ret = -EINVAL;
-+			}
- 			brelse(bh);
-+
- 			if (ret && ret != -EIO) {
- 				/* free memory from exfat_load_upcase_table call */
- 				exfat_free_upcase_table(sbi);
-@@ -799,6 +804,8 @@ int exfat_create_upcase_table(struct super_block *sb)
- 			return -EIO;
+ /* smb multichannel query server interfaces interval in seconds */
+ #define SMB_INTERFACE_POLL_INTERVAL	600
+ 
+@@ -672,7 +668,6 @@ struct TCP_Server_Info {
+ 	/* point to the SMBD connection if RDMA is used instead of socket */
+ 	struct smbd_connection *smbd_conn;
+ 	struct delayed_work	echo; /* echo ping workqueue job */
+-	struct delayed_work	resolve; /* dns resolution workqueue job */
+ 	char	*smallbuf;	/* pointer to current "small" buffer */
+ 	char	*bigbuf;	/* pointer to current "big" buffer */
+ 	/* Total size of this PDU. Only valid from cifs_demultiplex_thread */
+diff --git a/fs/smb/client/connect.c b/fs/smb/client/connect.c
+index cb1bf349411d8..10f0009fc7a16 100644
+--- a/fs/smb/client/connect.c
++++ b/fs/smb/client/connect.c
+@@ -91,8 +91,6 @@ static int reconn_set_ipaddr_from_hostname(struct TCP_Server_Info *server)
+ 	int rc;
+ 	int len;
+ 	char *unc, *ipaddr = NULL;
+-	time64_t expiry, now;
+-	unsigned long ttl = SMB_DNS_RESOLVE_INTERVAL_DEFAULT;
+ 
+ 	if (!server->hostname)
+ 		return -EINVAL;
+@@ -110,13 +108,13 @@ static int reconn_set_ipaddr_from_hostname(struct TCP_Server_Info *server)
+ 	}
+ 	scnprintf(unc, len, "\\\\%s", server->hostname);
+ 
+-	rc = dns_resolve_server_name_to_ip(unc, &ipaddr, &expiry);
++	rc = dns_resolve_server_name_to_ip(unc, &ipaddr, NULL);
+ 	kfree(unc);
+ 
+ 	if (rc < 0) {
+ 		cifs_dbg(FYI, "%s: failed to resolve server part of %s to IP: %d\n",
+ 			 __func__, server->hostname, rc);
+-		goto requeue_resolve;
++		return rc;
  	}
  
-+	exfat_fs_error(sb, "no upcase table entry. Please run fsck");
-+
- load_default:
- 	/* load default upcase table */
- 	return exfat_load_default_upcase_table(sb);
+ 	spin_lock(&server->srv_lock);
+@@ -125,23 +123,8 @@ static int reconn_set_ipaddr_from_hostname(struct TCP_Server_Info *server)
+ 	spin_unlock(&server->srv_lock);
+ 	kfree(ipaddr);
+ 
+-	/* rc == 1 means success here */
+-	if (rc) {
+-		now = ktime_get_real_seconds();
+-		if (expiry && expiry > now)
+-			/*
+-			 * To make sure we don't use the cached entry, retry 1s
+-			 * after expiry.
+-			 */
+-			ttl = max_t(unsigned long, expiry - now, SMB_DNS_RESOLVE_INTERVAL_MIN) + 1;
+-	}
+ 	rc = !rc ? -1 : 0;
+ 
+-requeue_resolve:
+-	cifs_dbg(FYI, "%s: next dns resolution scheduled for %lu seconds in the future\n",
+-		 __func__, ttl);
+-	mod_delayed_work(cifsiod_wq, &server->resolve, (ttl * HZ));
+-
+ 	return rc;
+ }
+ 
+@@ -165,26 +148,6 @@ static void smb2_query_server_interfaces(struct work_struct *work)
+ 			   (SMB_INTERFACE_POLL_INTERVAL * HZ));
+ }
+ 
+-static void cifs_resolve_server(struct work_struct *work)
+-{
+-	int rc;
+-	struct TCP_Server_Info *server = container_of(work,
+-					struct TCP_Server_Info, resolve.work);
+-
+-	cifs_server_lock(server);
+-
+-	/*
+-	 * Resolve the hostname again to make sure that IP address is up-to-date.
+-	 */
+-	rc = reconn_set_ipaddr_from_hostname(server);
+-	if (rc) {
+-		cifs_dbg(FYI, "%s: failed to resolve hostname: %d\n",
+-				__func__, rc);
+-	}
+-
+-	cifs_server_unlock(server);
+-}
+-
+ #define set_need_reco(server) \
+ do { \
+ 	spin_lock(&server->srv_lock); \
+@@ -1026,7 +989,6 @@ static void clean_demultiplex_info(struct TCP_Server_Info *server)
+ 	spin_unlock(&server->srv_lock);
+ 
+ 	cancel_delayed_work_sync(&server->echo);
+-	cancel_delayed_work_sync(&server->resolve);
+ 
+ 	spin_lock(&server->srv_lock);
+ 	server->tcpStatus = CifsExiting;
+@@ -1705,7 +1667,6 @@ cifs_put_tcp_session(struct TCP_Server_Info *server, int from_reconnect)
+ 		cifs_put_tcp_session(server->primary_server, from_reconnect);
+ 
+ 	cancel_delayed_work_sync(&server->echo);
+-	cancel_delayed_work_sync(&server->resolve);
+ 
+ 	if (from_reconnect)
+ 		/*
+@@ -1801,7 +1762,6 @@ cifs_get_tcp_session(struct smb3_fs_context *ctx,
+ 	INIT_LIST_HEAD(&tcp_ses->tcp_ses_list);
+ 	INIT_LIST_HEAD(&tcp_ses->smb_ses_list);
+ 	INIT_DELAYED_WORK(&tcp_ses->echo, cifs_echo_request);
+-	INIT_DELAYED_WORK(&tcp_ses->resolve, cifs_resolve_server);
+ 	INIT_DELAYED_WORK(&tcp_ses->reconnect, smb2_reconnect_server);
+ 	mutex_init(&tcp_ses->reconnect_mutex);
+ #ifdef CONFIG_CIFS_DFS_UPCALL
+@@ -1890,12 +1850,6 @@ cifs_get_tcp_session(struct smb3_fs_context *ctx,
+ 	/* queue echo request delayed work */
+ 	queue_delayed_work(cifsiod_wq, &tcp_ses->echo, tcp_ses->echo_interval);
+ 
+-	/* queue dns resolution delayed work */
+-	cifs_dbg(FYI, "%s: next dns resolution scheduled for %d seconds in the future\n",
+-		 __func__, SMB_DNS_RESOLVE_INTERVAL_DEFAULT);
+-
+-	queue_delayed_work(cifsiod_wq, &tcp_ses->resolve, (SMB_DNS_RESOLVE_INTERVAL_DEFAULT * HZ));
+-
+ 	return tcp_ses;
+ 
+ out_err_crypto_release:
 -- 
 2.53.0
 
