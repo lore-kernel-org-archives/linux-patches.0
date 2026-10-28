@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793212070;
-	b=xFFaEorEXDcySUtl4xmtpIeW6ebuTQNXLzk4T9nxla+8JzEfYo3PnuEsZvb3PuOZkXXI
-	 wlOKGwCM3Ub/XvMf+gIwpZzjq2z65Q62A5ctcVr51hx95RKclXPujqQs6ul+wki9+6rB4
-	 25jf+iT7/mzzMbJpTn4wBQi0eg42wynlG3dsklOlmOIephB8zn3BD8bAk8HtIMsdLe98X
-	 Ni2QKNmY95wlINg8I43rX1rZzFIvydRMc+cmEVS9TkQOQ0GaYxTTVEggyndsbdZHWnSsm
-	 vuIjtCsjY83kXJ8koHZHUE7u9RJOgBKjoYNyWeodTMo/A2AdX/Bc1JWvbXAXrubDNwQ==
+	t=1793212073;
+	b=hb/z4t1oVS3fhAMedh5KUCyobgpsId46nln6dNrSUoQ4xnrTOu5I7APN3mkLlZIxVuT5
+	 tnXa3Ep22Yv+3sLNoljJZlveXMm3VaEU9L4fyaInRMcOBmI8++14hDbEXLaI0h9vmU+9S
+	 8U/1oU30QX90H8gSnlUDlVnTJ/vNB8U2zJjZ6WqdpbCdr4Wu6eAjv7iIPPS3Mvec1p+hU
+	 47PZurdEiZDyIP3hTgDdqYo68pTrpAJUCudt2dpUtkrfOksvbdXIyiFUT1bHr+m5vTuFj
+	 n8e1GcMIa5O89MEukjqqXeHrr2kgWKJb2V/3AejOTu5X2vEtW8+Va33XapYl0RRiGUw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793212070;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793212073;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=drzyxQA4H/fkfBqZOlhbrY+sy/ViaUkogKwbLHoiVvg=;
-	b=0JRzq9jIwOCbryBajqNjKTFOTds3+AYq2eqB+NTpK+XGtqV3hBEqSisFCCBixNPSapLj
-	 lrU+RAOFoND2UIhrUKB1SigKbbi6+wVbAcCu1utUSwYp30ugrrhXR8fSYm8sFLi4FQy1L
-	 3P1ktHkzDtPq1A13vX9rSJisE9BKoaNLHFmN86X9s7dEEcFSkiFk7oqN6zwQFYb0oDGGo
-	 uwwl02GT6Ma4e5gHpThLuRWfLvudC9lg2GwRyHnqVGQb34D7VrydeQSbKof49QjNh5T6N
-	 XFFHyN3U1X2bqbx/v2JyTtuf05s+AlIshiPOqSfrDr4sJai7fmzWQAVa7gHlwCTxH9w==
+	bh=9srR1PIz4PacsBYDXyND8hkerHtTNkzE5uPuzpgZiHk=;
+	b=m+5oXhCNwBqFijhGgghfwQnbmb0CQ9LMpQT7VW49wJBkQqpLhYn+W1DRCBco4Hyn7odf
+	 OAYweYURZyMVBffwDKWQjyCPbX/Y9LKcsywDuOMkqpJqTuoIMPlnT0wEKFAYD10mzTprv
+	 lb3OJGYO9v0rM7TFUJk3jannSohtKkff4XQQMHNJj/vrI4jY/sfhcAfm3qfqzcAvrI9DH
+	 Lg7jwKt0u4wa4ffDPM/L7iIqrSO/uiz6rB8DObRKfAjFSqpJnW4sg3MnpAo7uXFNC3krd
+	 i9UJfwhvEh7Hdle77/LA4R48RJLiTwSQVzfxc87A9a1aKBQov1kDFQVSvJikTFxdHYA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AntnKlJj;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y9Y7lxgq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6166B606A31A;
-	Wed, 28 Oct 2026 18:27:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CB11606A31A;
+	Wed, 28 Oct 2026 18:27:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AntnKlJj
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1B5D1F01825;
-	Wed, 28 Oct 2026 18:27:49 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y9Y7lxgq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CF231F01825;
+	Wed, 28 Oct 2026 18:27:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793212070;
-	bh=drzyxQA4H/fkfBqZOlhbrY+sy/ViaUkogKwbLHoiVvg=;
+	s=korg; t=1793212073;
+	bh=9srR1PIz4PacsBYDXyND8hkerHtTNkzE5uPuzpgZiHk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AntnKlJjZroKfhuVsXUh2kawGlymrFAXGhGT7Nxdgm0YE5QqwlJ1m+4MbZLcrG+uc
-	 0kDm9SHbRaBnQuYr/MvQ3cOHVYBtx2DjSu7AMg6eRmJWq4kyXEhuC7mW5ymCAjzrMU
-	 lPKq/oCYrziYfXy98oyNbRksN2k471cj/wtvR5p4=
+	b=Y9Y7lxgqAs+r9cSf0sB0OPRuCFqalP13IuZBU+I9pTVLpwtzvdb9J4AYo0CGww+TL
+	 lg9D9CeFK37CEtZGpUe15OI51Ln2vMtwSBUnmFM2ZnsAVCDewdpgkxoPUZuovs9WmH
+	 4vRaU3pz7Ox1iSlr2MmnzrE49NpcwhGNgCELfRBc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Doruk Tan Ozturk <doruk@0sec.ai>,
-	Jiri Kosina <jkosina@suse.com>,
+	Dave Airlie <airlied@redhat.com>,
+	Danilo Krummrich <dakr@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0028/1887] HID: sony: fix UAF of ghl_poke_timer / ghl_urb at driver unbind
-Date: Wed, 28 Oct 2026 17:35:24 +0100
-Message-ID: <20261028170459.865910143@linuxfoundation.org>
+Subject: [PATCH 6.1 0029/1887] nouveau/gem: reserve the bo in the info ioctl around the vma lookup
+Date: Wed, 28 Oct 2026 17:35:25 +0100
+Message-ID: <20261028170459.890294119@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,82 +68,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Doruk Tan Ozturk <doruk@0sec.ai>
+From: Dave Airlie <airlied@redhat.com>
 
-[ Upstream commit a26705bd2e2728833e7a538ce91e58a5eeff496a ]
+[ Upstream commit 5e17160d41d92823f3379c1982e1369680c5ce4d ]
 
-For GHL (Guitar Hero Live) dongles, sony_probe() arms a periodic timer:
-ghl_magic_poke() (the timer callback) submits sc->ghl_urb, and the URB
-completion ghl_magic_poke_cb() re-arms the timer with mod_timer().
+In the non-uvmm path, there could be a race between the info lookup
+finding the vma, and the gem close path closing the vma leading
+to a use-after-free.
 
-sony_remove() drained the timer with timer_delete_sync() and then freed
-the URB with usb_free_urb():
+Spotted with the help of Opus 4.6.
 
-	timer_delete_sync(&sc->ghl_poke_timer);
-	usb_free_urb(sc->ghl_urb);
-
-timer_delete_sync() does not block re-arming, and while the URB is in
-flight the timer is not pending, so the sync delete is a no-op. A URB
-completion that runs after the delete re-arms the timer, and usb_free_urb()
-only drops a reference -- it does not kill an in-flight URB. sc is
-allocated with devm_kzalloc() and freed once sony_remove() returns, so the
-re-armed ghl_poke_timer (embedded in sc) then fires on freed memory, a
-use-after-free from timer softirq. This is a disconnect/rmmod race.
-
-Poison the URB first, then shut the timer down, before freeing the URB.
-usb_poison_urb() kills any in-flight URB and permanently rejects further
-submissions, so a poke timer that is still pending cannot re-submit the
-URB from ghl_magic_poke() in the window before timer_shutdown_sync() runs.
-usb_kill_urb() would not suffice: it only cancels the in-flight URB and
-leaves it submittable once it returns, so the pending timer could
-re-submit it and put a fresh URB in flight over the freed sc.
-timer_shutdown_sync() then drains any last callback and blocks re-arming.
-The probe error path is unaffected: it is only reached before the timer
-is armed.
-
-Reproduced under KASAN on next-20260710 via dummy_hcd + raw-gadget
-emulation of the GHL PS4 dongle (VID 0x1430 / PID 0x07bb): hid-sony binds
-and arms the poke timer, the poke URB is held in flight, the driver is
-unbound (freeing sc), then the URB is released. The completion re-arms the
-timer on the freed sc, and the re-armed timer fires ~8 s later:
-
-  BUG: KASAN: slab-use-after-free in ghl_magic_poke+0x98/0xb0
-  Read of size 8 at addr ffff88810b02fd50 by task swapper/0/0
-   ghl_magic_poke+0x98/0xb0
-   call_timer_fn+0x35/0x2b0
-   __run_timers+0x69c/0x9a0
-   run_timer_softirq+0x173/0x2a0
-  Allocated by task 169:  sony_probe
-  Freed by task 338:      devres_release_group <- hid_device_remove (sony_remove)
-
-Found by 0sec (https://0sec.ai) using automated source analysis.
-
-Fixes: cc894ac55360 ("HID: sony: support for ghlive ps3/wii u dongles")
+Signed-off-by: Dave Airlie <airlied@redhat.com>
+Fixes: e758a3111914 ("drm/nouveau: fixup gem_info ioctl to return client-specific bo virtual")
 Cc: stable@vger.kernel.org
-Assisted-by: 0sec:multi-model
-Signed-off-by: Doruk Tan Ozturk <doruk@0sec.ai>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
-[ changed the old del_timer_sync() call to timer_shutdown_sync() ]
+Link: https://patch.msgid.link/20260612020658.3176270-1-airlied@gmail.com
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+[ adapted VMM and UVMM handling to the legacy direct VMM selection and condition. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-sony.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/nouveau/nouveau_gem.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/hid/hid-sony.c b/drivers/hid/hid-sony.c
-index f7f7252d839ee..01745b5df2e4e 100644
---- a/drivers/hid/hid-sony.c
-+++ b/drivers/hid/hid-sony.c
-@@ -3085,7 +3085,9 @@ static void sony_remove(struct hid_device *hdev)
- 	struct sony_sc *sc = hid_get_drvdata(hdev);
+diff --git a/drivers/gpu/drm/nouveau/nouveau_gem.c b/drivers/gpu/drm/nouveau/nouveau_gem.c
+index cde21cc0083b1..4c9942f651b6f 100644
+--- a/drivers/gpu/drm/nouveau/nouveau_gem.c
++++ b/drivers/gpu/drm/nouveau/nouveau_gem.c
+@@ -277,11 +277,20 @@ nouveau_gem_info(struct drm_file *file_priv, struct drm_gem_object *gem,
+ 		rep->domain = NOUVEAU_GEM_DOMAIN_VRAM;
+ 	rep->offset = nvbo->offset;
+ 	if (vmm->vmm.object.oclass >= NVIF_CLASS_VMM_NV50) {
++		int ret;
++
++		ret = ttm_bo_reserve(&nvbo->bo, false, false, NULL);
++		if (ret)
++			return ret;
++
+ 		vma = nouveau_vma_find(nvbo, vmm);
+-		if (!vma)
++		if (!vma) {
++			ttm_bo_unreserve(&nvbo->bo);
+ 			return -EINVAL;
++		}
  
- 	if (sc->quirks & (GHL_GUITAR_PS3WIIU | GHL_GUITAR_PS4)) {
--		del_timer_sync(&sc->ghl_poke_timer);
-+		/* poison, not kill: a pending timer must not re-submit during teardown */
-+		usb_poison_urb(sc->ghl_urb);
-+		timer_shutdown_sync(&sc->ghl_poke_timer);
- 		usb_free_urb(sc->ghl_urb);
+ 		rep->offset = vma->addr;
++		ttm_bo_unreserve(&nvbo->bo);
  	}
  
+ 	rep->size = nvbo->bo.base.size;
 -- 
 2.53.0
 
